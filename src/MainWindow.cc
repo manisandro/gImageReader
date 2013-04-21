@@ -87,9 +87,12 @@ MainWindow::MainWindow()
 	m_stateStack.push_back(State::Idle);
 	setState(State::Idle);
 
+	m_config->readSettings(); // Read settings only after all objects are constructed (and all signals connected)
 	if(!m_config->isValid()){
 		m_config->showDialog();
 	}
+
+	m_acquirer->setOutputPath(); // Need to delay this until settings are read
 
 	const std::vector<int>& geom = m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->getValue();
 	if(geom.size() == 4){

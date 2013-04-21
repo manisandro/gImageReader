@@ -28,6 +28,8 @@ public:
 	Acquirer();
 	~Acquirer();
 
+	void setOutputPath();
+
 private:
 	class DevicesComboColumns : public Gtk::TreeModel::ColumnRecord {
 	public:

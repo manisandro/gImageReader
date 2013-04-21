@@ -36,6 +36,7 @@ public:
 	Config();
 	~Config();
 
+	void readSettings();
 	template<class T>
 	T* getSetting(const Glib::ustring& key) const{
 		auto it = m_settings.find(key);

@@ -62,6 +62,17 @@ Acquirer::Acquirer()
 	CONNECT(m_scanner, scan_failed, [this](int code, const std::string& msg){ m_msgLabel->set_markup(Glib::ustring::compose("<span color='red'>%1: %2</span>", _("Scan failed"), msg)); });
 	CONNECT(m_scanner, scanning_changed, [this](bool scanning){ if(!scanning){ doneScan(); } });
 
+	startDetectDevices();
+	m_scanner->start();
+}
+
+Acquirer::~Acquirer()
+{
+	m_scanner->stop();
+}
+
+void Acquirer::setOutputPath()
+{
 	m_outputPath = MAIN->getConfig()->getSetting<VarSetting<std::string>>("scanoutput")->getValue();
 	if(m_outputPath.empty() || !Glib::file_test(Glib::path_get_dirname(m_outputPath), Glib::FILE_TEST_IS_DIR)){
 		m_outputPath = Glib::build_filename(Glib::get_user_special_dir(G_USER_DIRECTORY_DOCUMENTS), _("scan.png"));
@@ -71,14 +82,6 @@ Acquirer::Acquirer()
 	}
 	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);
 	genOutputPath();
-
-	startDetectDevices();
-	m_scanner->start();
-}
-
-Acquirer::~Acquirer()
-{
-	m_scanner->stop();
 }
 
 void Acquirer::selectOutputPath()

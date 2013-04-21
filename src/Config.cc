@@ -145,11 +145,9 @@ Config::Config()
 	CONNECT(m_addLangCode, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangCode); return false; });
 
 	for(const auto& keyval : m_settings){
-		keyval.second->reread();
 		CONNECT(keyval.second, changed, [this]{ m_dialogOkButton->set_sensitive(isValid()); });
 	}
 	CONNECT(m_gioSettings, changed, [this](const Glib::ustring& key){ getSetting<AbstractSetting>(key)->reread(); });
-	updateLanguagesMenu();
 }
 
 Config::~Config()
@@ -157,6 +155,14 @@ Config::~Config()
 	for(const auto& keyVal : m_settings){
 		delete keyVal.second;
 	}
+}
+
+void Config::readSettings()
+{
+	for(const auto& keyval : m_settings){
+		keyval.second->reread();
+	}
+	updateLanguagesMenu();
 }
 
 bool Config::searchLangSpec(const Glib::RefPtr<Gtk::TreeModel> model, const Glib::ustring& prefix, Lang& lang) const
