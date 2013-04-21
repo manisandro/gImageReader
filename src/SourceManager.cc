@@ -186,7 +186,7 @@ void SourceManager::takeScreenshot()
 void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf> &pixbuf, const std::string &displayname)
 {
 	std::string path;
-	int fd = Glib::file_open_tmp(path);
+	int fd = Glib::file_open_tmp(path, PACKAGE_NAME);
 	close(fd);
 	pixbuf->save(path, "png");
 	Glib::signal_idle().connect_once([this,path,displayname]{ savePixbufDone(path, displayname); });

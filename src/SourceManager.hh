@@ -60,8 +60,8 @@ private:
 
 	Glib::RefPtr<Gtk::Clipboard> m_clipboard;
 	ListViewColumns m_listViewCols;
-	int m_screenshotCount;
-	int m_pasteCount;
+	int m_screenshotCount = 0;
+	int m_pasteCount = 0;
 	sigc::signal<void,std::string> m_signal_sourceChanged;
 
 	void addSourcesBrowse();
