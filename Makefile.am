@@ -1,5 +1,7 @@
 SUBDIRS = data po src
 
+ACLOCAL_AMFLAGS = -I build
+
 INTLTOOL_FILES = \
 	intltool-extract.in \
 	intltool-merge.in \

@@ -134,8 +134,8 @@ do
 	  libtoolize --force --copy
 	fi
       fi
-      echo "Running aclocal $aclocalinclude ..."
-      aclocal $aclocalinclude
+      echo "Running aclocal --install $aclocalinclude ..."
+      aclocal --install $aclocalinclude
       if grep "^A[CM]_CONFIG_HEADER" configure.ac >/dev/null; then
 	echo "Running autoheader..."
 	autoheader
