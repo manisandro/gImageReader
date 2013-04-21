@@ -21,9 +21,7 @@ GLIB_GSETTINGS
 
 dnl *************************** Internationalization **************************
 IT_PROG_INTLTOOL([0.35.0])
-
-GETTEXT_PACKAGE=gimagereader
-AC_SUBST(GETTEXT_PACKAGE)
+AC_SUBST([GETTEXT_PACKAGE], [$PACKAGE_TARNAME])
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
 AM_GLIB_GNU_GETTEXT
 

@@ -86,7 +86,7 @@
     <property name="skip_pager_hint">True</property>
     <property name="transient_for">window:main</property>
     <property name="program_name">gImageReader</property>
-    <property name="copyright" translatable="yes">Copyright © 2009-2013 Sandro Mani</property>
+    <property name="copyright">Copyright © 2009-2013 Sandro Mani</property>
     <property name="comments" translatable="yes">A graphical frontend to tesseract-ocr</property>
     <property name="website">http://sourceforge.net/projects/gimagereader/</property>
     <property name="license">Copyright 2009-2012 Sandro Mani &lt;manisandro@gmail.com&gt;
@@ -106,10 +106,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 MA 02110-1301, USA.</property>
     <property name="authors">Sandro Mani &lt;manisandro@gmail.com&gt;</property>
-    <property name="translator_credits" translatable="yes">French: Sandro Mani &lt;manisandro@gmail.com&gt;
-German: Sandro Mani &lt;manisandro@gmail.com&gt;
-Italian: Sandro Mani &lt;manisandro@gmail.com&gt;
-Russian: boobaloo &lt;koptev.oleg@gmail.com&gt;, Oleg Moiseichuk &lt;berroll@gmail.com&gt;</property>
+    <property name="translator_credits">German: Sandro Mani &lt;manisandro@gmail.com&gt;
+</property>
     <property name="logo">icons/gimagereader.svg</property>
     <property name="license_type">custom</property>
     <child internal-child="vbox">
@@ -961,40 +959,6 @@ If a language you need is missing above, add it here:</property>
       <column type="gchararray"/>
     </columns>
   </object>
-  <object class="GtkListStore" id="liststore:sources.acquire.res">
-    <columns>
-      <!-- column-name name -->
-      <column type="gchararray"/>
-      <!-- column-name dpi -->
-      <column type="gint"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">75 dpi</col>
-        <col id="1">75</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">100 dpi</col>
-        <col id="1">100</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">200 dpi</col>
-        <col id="1">200</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">300 dpi</col>
-        <col id="1">300</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">600 dpi</col>
-        <col id="1">600</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">1200 dpi</col>
-        <col id="1">1200</col>
-      </row>
-    </data>
-  </object>
   <object class="GtkMenu" id="menu:main">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -1113,7 +1077,7 @@ If a language you need is missing above, add it here:</property>
       <object class="GtkCheckMenuItem" id="menuitem:output.stripcrlf.joinhyphen">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Join hyphenized words</property>
+        <property name="label" translatable="yes">Join hyphenated words</property>
         <property name="use_underline">True</property>
       </object>
     </child>
@@ -1196,7 +1160,7 @@ If a language you need is missing above, add it here:</property>
   <object class="GtkWindow" id="window:main">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">gImageReader</property>
+    <property name="title">gImageReader</property>
     <property name="icon">icons/gimagereader.svg</property>
     <child>
       <object class="GtkBox" id="box:main">
@@ -1793,12 +1757,12 @@ If a language you need is missing above, add it here:</property>
                                 <property name="entry_text_column">0</property>
                                 <property name="id_column">1</property>
                                 <items>
-                                  <item translatable="yes">75 dpi</item>
-                                  <item translatable="yes">100 dpi</item>
-                                  <item translatable="yes">200 dpi</item>
-                                  <item translatable="yes">300 dpi</item>
-                                  <item translatable="yes">600 dpi</item>
-                                  <item translatable="yes">1200 dpi</item>
+                                  <item>75 dpi</item>
+                                  <item>100 dpi</item>
+                                  <item>200 dpi</item>
+                                  <item>300 dpi</item>
+                                  <item>600 dpi</item>
+                                  <item>1200 dpi</item>
                                 </items>
                               </object>
                               <packing>

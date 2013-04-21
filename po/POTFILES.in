@@ -1,3 +1,39 @@
 # List of source files containing translatable strings.
 
-src/main.c
+[type: gettext/glade]data/gimagereader.ui
+src/Acquirer.cc
+src/Acquirer.hh
+src/AsyncQueue.hh
+src/common.hh
+src/Config.cc
+src/Config.hh
+src/ConfigSettings.cc
+src/ConfigSettings.hh
+src/Displayer.cc
+src/Displayer.hh
+src/DisplayManipulator.cc
+src/DisplayManipulator.hh
+src/DisplayRenderer.cc
+src/DisplayRenderer.hh
+src/DisplaySelection.cc
+src/DisplaySelection.hh
+src/Geometry.hh
+src/main.cc
+src/MainWindow.cc
+src/MainWindow.hh
+src/Makefile.am
+src/Makefile.in
+src/Notifier.cc
+src/Notifier.hh
+src/OutputManager.cc
+src/OutputManager.hh
+src/Recognizer.cc
+src/Recognizer.hh
+src/SaneScanner.cc
+src/SaneScanner.hh
+src/SourceManager.cc
+src/SourceManager.hh
+src/UndoableBuffer.cc
+src/UndoableBuffer.hh
+src/Utils.cc
+src/Utils.hh

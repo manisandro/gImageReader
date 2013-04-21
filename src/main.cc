@@ -48,11 +48,6 @@ public:
 			activate();
 		}
 		m_mainWindow->openFiles(files);
-//		std::vector<std::string> paths;
-//		for(const Glib::RefPtr<Gio::File>& file : files){
-//			paths.push_back(file->get_path());
-//		}
-//		m_mainWindow->openFiles(paths);
 	}
 
 private:
@@ -61,6 +56,10 @@ private:
 
 int main (int argc, char *argv[])
 {
+	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+	textdomain(GETTEXT_PACKAGE);
+
 	GtkSpell::init();
 	Application app(argc, argv);
 
