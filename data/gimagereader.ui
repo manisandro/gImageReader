@@ -1161,7 +1161,6 @@ If a language you need is missing above, add it here:</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="title">gImageReader</property>
-    <property name="icon">icons/gimagereader.svg</property>
     <child>
       <object class="GtkBox" id="box:main">
         <property name="visible">True</property>
