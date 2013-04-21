@@ -1,0 +1,62 @@
+Name:          gimagereader
+Version:       @PACKAGE_VERSION@
+Release:       1%{?dist}
+License:       GPLv3+
+Group:         Applications/Productivity
+Summary:       OCR application
+URL:           http://sourceforge.net/projects/gimagereader/
+Source:        %{name}-%{version}.tar.xz
+
+BuildRequires: gtkmm30-devel
+BuildRequires: gtkspellmm30-devel
+BuildRequires: cairomm-devel
+BuildRequires: enchant-devel
+BuildRequires: poppler-glib-devel
+BuildRequires: tesseract-devel
+BuildRequires: curlpp-devel
+BuildRequires: sane-backends-devel
+
+%description
+gImageReader is a simple Gtk front-end to tesseract. Features include:
+ - Automatic page layout detection
+ - User can manually define and adjust recognition regions
+ - Import images from disk, scanning devices, clipboard and screenshots
+ - Supports multipage PDF documents
+ - Recognized text displayed directly next to the image
+ - Basic editing of output text, including search/replace and removing line breaks
+ - Spellchecking for output text (if corresponding dictionary installed)
+
+%prep
+%setup -q
+
+%build
+%configure
+make %{?_smp_mflags}
+
+%install
+make DESTDIR=$RPM_BUILD_ROOT install
+
+%find_lang %{name}
+
+%post
+update-desktop-database &> /dev/null || :
+
+%postun
+update-desktop-database &> /dev/null || :
+
+%posttrans
+gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+
+%files -f %{name}.lang
+%doc AUTHORS ChangeLog COPYING NEWS README TODO
+%{_bindir}/%{name}
+%{_datadir}/%{name}
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+%{_datadir}/glib-2.0/schemas/apps.%{name}.gschema.xml
+
+%changelog
+* Sat Apr 20 2013 Sandro Mani <manisandro@gmail.com> - @PACKAGE_VERSION@-1
+- Initial RPM package.

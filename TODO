@@ -1,0 +1,15 @@
+High prio:
+- notifier web links do not work?
+- replace all
+- insensitive when busy?
+
+Low prio:
+- markers in buffer to find corresponding page from cursor position
+- blur downscaled -> this should really be fixed in cairoy
+
+Cleanup:
+- const in private member functions?
+
+
+win32: uninstall previous version during setup
+win32: twain, papersize

@@ -1,0 +1,17 @@
+autom4te.cache
+build
+aclocal.m4
+config.h.in
+configure
+gImageReader.config
+gImageReader.creator
+gImageReader.creator.user
+gImageReader.files
+gImageReader.includes
+intltool-extract.in
+intltool-merge.in
+intltool-update.in
+Makefile.in
+data/Makefile.in
+src/Makefile.in
+

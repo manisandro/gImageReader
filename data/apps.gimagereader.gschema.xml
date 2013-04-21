@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.gimagereader" path="/org/gnome/gimagereader/" gettext-domain="gimagereader">
+    <key type="s" name="tesspath">
+      <default>""</default>
+      <summary>tesseract path</summary>
+      <description>Folder containing the tesseract executable.</description>
+    </key>
+    <key type="s" name="langpath">
+      <default>""</default>
+      <summary>tesseract data path</summary>
+      <description>Folder containing the tesseract language files.</description>
+    </key>
+    <key type="i" name="outputorient">
+      <default>0</default>
+      <summary>Output pane orientation</summary>
+      <description>Output pane orientation.</description>
+    </key>
+    <key type="b" name="showcontrols">
+      <default>false</default>
+      <summary>Show advanced controls</summary>
+      <description>Show advanced controls.</description>
+    </key>
+    <key type="b" name="dictinstall">
+      <default>true</default>
+      <summary>Autoinstall missing spelling dictionaries</summary>
+      <description>Autoinstall missing spelling dictionaries.</description>
+    </key>
+    <key type="b" name="antialias">
+      <default>true</default>
+      <summary>Smooth downscaled images</summary>
+      <description>Smooth downscaled images.</description>
+    </key>
+    <key type="b" name="updatecheck">
+      <default>true</default>
+      <summary>Automatically check for updates</summary>
+      <description>Automatically check for updates.</description>
+    </key>
+    <key type="s" name="language">
+      <default>"en_EN"</default>
+      <summary>Default recongition language</summary>
+      <description>Default recongition language.</description>
+    </key>
+    <key type="s" name="customlangs">
+      <default>""</default>
+      <summary>Custom language definitions</summary>
+      <description>Custom language definitions.</description>
+    </key>
+    <key type="i" name="scanres">
+      <default>150</default>
+      <summary>Scanning resolution</summary>
+      <description>Scanning resolution in dpi.</description>
+    </key>
+    <key type="i" name="scandev">
+      <default>0</default>
+      <summary>Scanning device</summary>
+      <description>Scanning device.</description>
+    </key>
+    <key type="i" name="scanmode">
+      <default>0</default>
+      <summary>Scanning mode</summary>
+      <description>Scanning mode.</description>
+    </key>
+    <key type="s" name="scanoutput">
+        <default>""</default>
+        <summary>Output path for scanned files</summary>
+        <description>Output path for scanned files.</description>
+    </key>
+    <key type="ai" name="wingeom">
+      <default>[0,0,640,480]</default>
+      <summary>Window geometry</summary>
+      <description>Window geometry.</description>
+    </key>
+    <key type="b" name="keepdot">
+      <default>true</default>
+      <summary>Keep line break if preceded by dot</summary>
+      <description>Keep line break if preceded by dot.</description>
+    </key>
+    <key type="b" name="keepquote">
+      <default>false</default>
+      <summary>Keep line break if preceded by quote</summary>
+      <description>Keep line break if preceded by quote.</description>
+    </key>
+    <key type="b" name="joinhyphen">
+      <default>true</default>
+      <summary>Join word split by hypen</summary>
+      <description>Join word split by hyphen.</description>
+    </key>
+    <key type="b" name="joinspace">
+      <default>true</default>
+      <summary>Clean whitespace</summary>
+      <description>Clean whitespace.</description>
+    </key>
+  </schema>
+</schemalist>
