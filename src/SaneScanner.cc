@@ -868,7 +868,7 @@ void Scanner::start(){
 		try{
 			thread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Scanner::scan_thread));
 		}catch(const Glib::Error& e){
-			g_critical("Unable to create thread: %1", e.what().c_str());
+			g_critical("Unable to create thread: %s", e.what().c_str());
 		}
 	}
 }
