@@ -108,7 +108,7 @@ MA 02110-1301, USA.</property>
     <property name="authors">Sandro Mani &lt;manisandro@gmail.com&gt;</property>
     <property name="translator_credits">German: Sandro Mani &lt;manisandro@gmail.com&gt;
 </property>
-    <property name="logo">icons/gimagereader.svg</property>
+    <property name="logo_icon_name">gimagereader</property>
     <property name="license_type">custom</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="box:about">
