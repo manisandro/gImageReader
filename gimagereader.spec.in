@@ -15,6 +15,7 @@ BuildRequires: poppler-glib-devel
 BuildRequires: tesseract-devel
 BuildRequires: curlpp-devel
 BuildRequires: sane-backends-devel
+BuildRequires: intltool
 
 %description
 gImageReader is a simple Gtk front-end to tesseract. Features include:

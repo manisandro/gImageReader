@@ -37,6 +37,7 @@ EXTRA_DIST += $(desktop_DATA)
 # GSettings schema
 gsettings_SCHEMAS = apps.gimagereader.gschema.xml
 @GSETTINGS_RULES@
+EXTRA_DIST += $(gsettings_SCHEMAS)
 
 # Hooks
 install-data-hook: install-update-icon-cache
