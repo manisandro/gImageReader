@@ -53,9 +53,8 @@ Displayer::Displayer()
 
 	m_renderer = 0;
 	clearImage(); // Assigns default values to all state variables
-//	selectionUpdateColors();
+	selectionUpdateColors();
 
-	Gtk::Settings::get_default()->connect_property_changed("gtk-color-scheme", [this]{ selectionUpdateColors(); });
 	m_connection_positionAndZoomCanvas = CONNECT(m_scrollwin, size_allocate, [this](Gdk::Rectangle&){ positionAndZoomCanvas(); });
 	m_connection_saveHScrollMark = CONNECT(m_hadjustment, value_changed, [this]{ saveScrollMark(m_hadjustment, m_geo.sx); });
 	m_connection_saveVScrollMark = CONNECT(m_vadjustment, value_changed, [this]{ saveScrollMark(m_vadjustment, m_geo.sy); });
@@ -491,6 +490,7 @@ void Displayer::selectionRemove(const DisplaySelection* sel)
 
 void Displayer::selectionUpdateColors()
 {
+	std::cout << "> Update" << std::endl;
 	m_selColors[0] = Gtk::Entry().get_style_context()->get_color(Gtk::STATE_FLAG_SELECTED);
 	m_selColors[1] = Gtk::Entry().get_style_context()->get_background_color(Gtk::STATE_FLAG_SELECTED);
 }
