@@ -61,6 +61,7 @@ Acquirer::Acquirer()
 	CONNECT(m_scanner, update_devices, [this](const std::vector<Scanner::ScanDevice>& devices){ doneDetectDevices(devices); });
 	CONNECT(m_scanner, scan_failed, [this](int code, const std::string& msg){ m_msgLabel->set_markup(Glib::ustring::compose("<span color='red'>%1: %2</span>", _("Scan failed"), msg)); });
 	CONNECT(m_scanner, scanning_changed, [this](bool scanning){ if(!scanning){ doneScan(); } });
+	CONNECT(m_devCombo, changed, [this]{ auto it = m_devCombo->get_active(); m_devCombo->set_tooltip_text(it ? static_cast<std::string>((*it)[m_devComboCols.label]) : ""); });
 
 	startDetectDevices();
 	m_scanner->start();
