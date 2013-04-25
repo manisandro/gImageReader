@@ -3,7 +3,6 @@ High prio:
 - replace all
 - insensitive when busy?
 - Either implement blur-downscaled or remove checkbox in settings
-- More elegant approach for local execution? (in common.hh)
 
 Low prio:
 - markers in buffer to find corresponding page from cursor position
