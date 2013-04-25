@@ -33,7 +33,6 @@ class Scanner {
 public:
 	enum class ScanMode { DEFAULT = 0, COLOR, GRAY, LINEART };
 	enum class ScanType { SINGLE = 0, ADF_FRONT, ADF_BACK, ADF_BOTH };
-	enum class ScanState { IDLE = 0, REDETECT, OPEN, GET_OPTION, START, GET_PARAMETERS, READ };
 	enum class Channel { GRAY = 0, RGB, RED, GREEN, BLUE };
 
 	struct ScanDevice {
@@ -59,13 +58,6 @@ public:
 		std::vector<unsigned char> data;	// Raw line data
 	};
 
-	struct PageHandler {
-		virtual ~PageHandler() {}
-		virtual void setupPage(const ScanPageInfo& info) = 0;
-		virtual void handleData(const ScanLine& line) = 0;
-		virtual void finalizePage() = 0;
-	};
-
 	struct ScanOptions {
 		int dpi;
 		ScanMode scan_mode;
@@ -73,6 +65,13 @@ public:
 		ScanType type;
 		int paper_width;
 		int paper_height;
+	};
+
+	struct PageHandler {
+		virtual ~PageHandler() {}
+		virtual void setupPage(const ScanPageInfo& info) = 0;
+		virtual void handleData(const ScanLine& line) = 0;
+		virtual void finalizePage() = 0;
 	};
 
 	sigc::signal<void> signal_init_failed(){ return m_signal_init_failed; }
@@ -83,57 +82,35 @@ public:
 
 	void start();
 	void redetect();
-	void scan(const std::string& device, PageHandler* handler, ScanOptions options);
+	void scan(const std::string& device, PageHandler* handler, ScanOptions m_options);
 	void cancel();
 	void stop();
-	void authorize(const Glib::ustring& username, const Glib::ustring& password){ authorize_queue.push({username, password}); }
-	bool is_scanning(){ return scanning; }
+	void authorize(const Glib::ustring& username, const Glib::ustring& password){ m_authorizeQueue.push({username, password}); }
 
 	static Scanner* get_instance();
 
 private:
-	struct Request;
-	struct RequestCancel;
-	struct RequestStartScan;
-	struct RequestQuit;
+	enum class ScanState { IDLE = 0, OPEN, GET_OPTION, START, GET_PARAMETERS, READ };
 
 	struct Credentials {
 		Glib::ustring username;
 		Glib::ustring password;
 	};
 
-	struct ScanJob {
-		int id;
-		std::string device;
-		double dpi;
-		Scanner::ScanMode scan_mode;
-		int depth;
-		Scanner::ScanType type;
-		int page_width;
-		int page_height;
-		PageHandler* handler;
+	struct Request {
+		enum class Type { Redetect, StartScan, Cancel, Quit } type;
+		void* data;
 	};
 
-	Glib::Threads::Thread* thread = nullptr;	// Thread communicating with SANE
-	AsyncQueue<Request*> request_queue;			// Queue of requests from main thread
-	AsyncQueue<Credentials> authorize_queue;	// Queue of responses to authorization requests
+	struct ScanJob;
 
-	ScanState state;
-	bool scanning;
-	bool need_redetect;
-	std::queue<ScanJob> job_queue;
-	int first_job_id;
-	int job_id;
-	int line_count;
-	int pass_number;
-	int page_number;
-
-	SANE_Handle handle = nullptr;
-	std::string current_device;
-	SANE_Parameters parameters;
-	std::map<std::string, int> options;			// Table of options
-	std::vector<unsigned char> buffer;			// Buffer for received line
-	int n_used;
+	ScanState m_state;
+	SANE_Handle m_handle = nullptr;
+	std::map<std::string, int> m_options;
+	Glib::Threads::Thread* m_thread = nullptr;
+	AsyncQueue<Request> m_requestQueue;
+	AsyncQueue<Credentials> m_authorizeQueue;
+	std::queue<ScanJob*> m_jobQueue;
 
 	sigc::signal<void> m_signal_init_failed;
 	sigc::signal<void,const std::vector<ScanDevice>&> m_signal_update_devices;
@@ -145,15 +122,14 @@ private:
 	Scanner(){}
 
 	const SANE_Option_Descriptor *get_option_by_name(SANE_Handle, const std::string& name, int& index);
-	bool set_default_option(SANE_Handle handle, const SANE_Option_Descriptor *option, SANE_Int option_index);
-	void set_bool_option(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool*result);
-	void set_int_option(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index, int value, int* result);
-	void set_fixed_option(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index, double value, double* result);
-	bool set_string_option(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const std::string& value, std::string* result);
-	bool set_constrained_string_option(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const std::vector<std::string>& values, std::string *result);
+	bool set_default_option(SANE_Handle m_handle, const SANE_Option_Descriptor *option, SANE_Int option_index);
+	void set_bool_option(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool*result);
+	void set_int_option(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, int value, int* result);
+	void set_fixed_option(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, double value, double* result);
+	bool set_string_option(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const std::string& value, std::string* result);
+	bool set_constrained_string_option(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const std::vector<std::string>& values, std::string *result);
 	void log_option(SANE_Int index, const SANE_Option_Descriptor* option);
 
-	void set_scanning(bool is_scanning);
 	void close_device();
 	void fail_scan(int error_code, const Glib::ustring& error_string);
 
@@ -165,7 +141,6 @@ private:
 	void do_read();
 	void do_redetect();
 	void do_start();
-	bool handle_requests();
 	void scan_thread();
 
 	static void authorization_cb(const char* resource, char* username, char* password);

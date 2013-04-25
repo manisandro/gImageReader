@@ -34,17 +34,24 @@
 #undef g_debug
 #define g_debug(...) printf(__VA_ARGS__); printf("\n"); fflush(stdout);
 
-struct Scanner::Request {
-	virtual ~Request() {}
+
+struct Scanner::ScanJob {
+	std::string device;
+	double dpi;
+	Scanner::ScanMode scan_mode;
+	int depth;
+	Scanner::ScanType type;
+	int page_width;
+	int page_height;
+	PageHandler* handler;
+
+	int line_count = 0;
+	int pass_number = 0;
+	int page_number = 0;
+	std::vector<unsigned char> buffer;	// Buffer for received line
+	int n_used = 0;						// Number of used bytes in the buffer
+	SANE_Parameters parameters;
 };
-
-struct Scanner::RequestCancel : Scanner::Request {};
-
-struct Scanner::RequestStartScan : Scanner::Request {
-	Scanner::ScanJob job;
-};
-
-class Scanner::RequestQuit : public Scanner::Request {};
 
 Scanner* Scanner::s_instance = nullptr;
 
@@ -58,10 +65,10 @@ Scanner* Scanner::get_instance(){
 
 const SANE_Option_Descriptor* Scanner::get_option_by_name(SANE_Handle, const std::string& name, int &index)
 {
-	std::map<std::string, int>::const_iterator it = options.find(name);
-	if(it != options.end()){
+	std::map<std::string, int>::const_iterator it = m_options.find(name);
+	if(it != m_options.end()){
 		index = it->second;
-		return sane_get_option_descriptor(handle, index);
+		return sane_get_option_descriptor(m_handle, index);
 	}
 	index = 0;
 	return nullptr;
@@ -77,7 +84,6 @@ bool Scanner::set_default_option(SANE_Handle handle, const SANE_Option_Descripto
 	g_debug("sane_control_option(%d, SANE_ACTION_SET_AUTO) -> %s", option_index, sane_strstatus(status));
 	if(status != SANE_STATUS_GOOD)
 		g_warning("Error setting default option %s: %s", option->name, sane_strstatus(status));
-
 	return status == SANE_STATUS_GOOD;
 }
 
@@ -310,38 +316,31 @@ void Scanner::authorization_cb(const char *resource, char *username, char *passw
 	Glib::signal_idle().connect_once([resource]{ s_instance->m_signal_request_authorization.emit(resource); });
 
 	/* Pop waits until there is something in the queue */
-	Scanner::Credentials credentials = s_instance->authorize_queue.pop();
+	Scanner::Credentials credentials = s_instance->m_authorizeQueue.pop();
 	strncpy(username, credentials.username.c_str(), SANE_MAX_USERNAME_LEN);
 	strncpy(password, credentials.password.c_str(), SANE_MAX_PASSWORD_LEN);
 }
 
-void Scanner::set_scanning(bool is_scanning)
-{
-	if(scanning != is_scanning){
-		scanning = is_scanning;
-		Glib::signal_idle().connect_once([this,is_scanning]{ m_signal_scanning_changed.emit(is_scanning); });
-	}
-}
-
 void Scanner::close_device()
 {
-	if(handle != nullptr){
-		sane_close(handle);
+	if(m_handle != nullptr){
+		sane_close(m_handle);
 		g_debug("sane_close()");
-		handle = nullptr;
+		m_handle = nullptr;
 	}
 
-	current_device = "";
-	options.clear();
-	buffer.clear();
-	state = ScanState::IDLE;
-	set_scanning(false);
+	m_options.clear();
+	m_state = ScanState::IDLE;
+	Glib::signal_idle().connect_once([this]{ m_signal_scanning_changed.emit(false); });
 }
 
 void Scanner::fail_scan(int error_code, const Glib::ustring &error_string)
 {
 	close_device();
-	job_queue = std::queue<ScanJob>();
+	while(!m_jobQueue.empty()){
+		delete m_jobQueue.front();
+		m_jobQueue.pop();
+	}
 	Glib::signal_idle().connect_once([this,error_code,error_string]{ m_signal_scan_failed.emit(error_code, error_string); });
 }
 
@@ -349,8 +348,7 @@ void Scanner::fail_scan(int error_code, const Glib::ustring &error_string)
 
 void Scanner::do_redetect()
 {
-	need_redetect = false;
-	state = ScanState::IDLE;
+	m_state = ScanState::IDLE;
 
 	const SANE_Device** device_list = nullptr;
 	SANE_Status status = sane_get_devices(&device_list, false);
@@ -387,29 +385,18 @@ void Scanner::do_redetect()
 
 void Scanner::do_open()
 {
-	ScanJob job = job_queue.front();
+	Glib::signal_idle().connect_once([this]{ m_signal_scanning_changed.emit(true); });
 
-	line_count = 0;
-	pass_number = 0;
-	page_number = 0;
+	ScanJob* job = m_jobQueue.front();
 
-	if(job.device.empty()){
+	if(job->device.empty()){
 		g_warning("No scan device specified");
 		fail_scan(0, _("No scanner specified."));
 		return;
 	}
 
-	/* See if we can use the already open device */
-	if(handle != nullptr){
-		if(current_device == job.device){
-			state = ScanState::GET_OPTION;
-			return;
-		}
-		close_device();
-	}
-
-	SANE_Status status = sane_open(job.device.c_str(), &handle);
-	g_debug("sane_open(\"%s\") -> %s", job.device.c_str(), sane_strstatus(status));
+	SANE_Status status = sane_open(job->device.c_str(), &m_handle);
+	g_debug("sane_open(\"%s\") -> %s", job->device.c_str(), sane_strstatus(status));
 
 	if(status != SANE_STATUS_GOOD){
 		g_warning("Unable to get open device: %s", sane_strstatus(status));
@@ -417,19 +404,18 @@ void Scanner::do_open()
 		return;
 	}
 
-	current_device = job.device;
-	state = ScanState::GET_OPTION;
+	m_state = ScanState::GET_OPTION;
 }
 
 void Scanner::do_get_option()
 {
-	ScanJob job = job_queue.front();
+	ScanJob* job = m_jobQueue.front();
 	int index = 0;
 	const SANE_Option_Descriptor* option;
 
 	/* Build the option table if it was not yet done */
-	if(options.empty()){
-		while((option = sane_get_option_descriptor(handle, index)) != nullptr){
+	if(m_options.empty()){
+		while((option = sane_get_option_descriptor(m_handle, index)) != nullptr){
 			log_option(index, option);
 			if(
 				/* Ignore groups */
@@ -439,7 +425,7 @@ void Scanner::do_get_option()
 				/* Some options are unnamed (e.g. Option 0) */
 				option->name != nullptr && strlen(option->name) > 0
 			){
-				options.insert(std::make_pair(std::string(option->name), index));
+				m_options.insert(std::make_pair(std::string(option->name), index));
 			}
 			++index;
 		}
@@ -448,7 +434,7 @@ void Scanner::do_get_option()
 	/* Apply settings */
 
 	/* Pick source */
-	option = get_option_by_name(handle, SANE_NAME_SCAN_SOURCE, index);
+	option = get_option_by_name(m_handle, SANE_NAME_SCAN_SOURCE, index);
 	if(option != nullptr){
 		std::vector<std::string> flatbed_sources = {
 			"Auto",
@@ -479,32 +465,32 @@ void Scanner::do_get_option()
 			SANE_I18N("ADF Duplex")
 		};
 
-		switch(job.type) {
+		switch(job->type) {
 		case ScanType::SINGLE:
-			if(!set_default_option(handle, option, index))
-				if(!set_constrained_string_option(handle, option, index, flatbed_sources, nullptr))
+			if(!set_default_option(m_handle, option, index))
+				if(!set_constrained_string_option(m_handle, option, index, flatbed_sources, nullptr))
 					g_warning("Unable to set single page source, please file a bug");
 			break;
 		case ScanType::ADF_FRONT:
-			if(!set_constrained_string_option(handle, option, index, adf_front_sources, nullptr))
-				if(!set_constrained_string_option(handle, option, index, adf_sources, nullptr))
+			if(!set_constrained_string_option(m_handle, option, index, adf_front_sources, nullptr))
+				if(!set_constrained_string_option(m_handle, option, index, adf_sources, nullptr))
 					g_warning("Unable to set front ADF source, please file a bug");
 			break;
 		case ScanType::ADF_BACK:
-			if(!set_constrained_string_option(handle, option, index, adf_back_sources, nullptr))
-				if(!set_constrained_string_option(handle, option, index, adf_sources, nullptr))
+			if(!set_constrained_string_option(m_handle, option, index, adf_back_sources, nullptr))
+				if(!set_constrained_string_option(m_handle, option, index, adf_sources, nullptr))
 					g_warning("Unable to set back ADF source, please file a bug");
 			break;
 		case ScanType::ADF_BOTH:
-			if(!set_constrained_string_option(handle, option, index, adf_duplex_sources, nullptr))
-				if(!set_constrained_string_option(handle, option, index, adf_sources, nullptr))
+			if(!set_constrained_string_option(m_handle, option, index, adf_duplex_sources, nullptr))
+				if(!set_constrained_string_option(m_handle, option, index, adf_sources, nullptr))
 					g_warning("Unable to set duplex ADF source, please file a bug");
 			break;
 		}
 	}
 
 	/* Scan mode (before resolution as it tends to affect that */
-	option = get_option_by_name(handle, SANE_NAME_SCAN_MODE, index);
+	option = get_option_by_name(m_handle, SANE_NAME_SCAN_MODE, index);
 	if(option != nullptr){
 		/* The names of scan modes often used in drivers, as taken from the sane-backends source */
 		std::vector<std::string> color_scan_modes = {
@@ -536,17 +522,17 @@ void Scanner::do_get_option()
 			"True Gray" /* Seen in the proprietary brother3 driver */
 		};
 
-		switch(job.scan_mode) {
+		switch(job->scan_mode) {
 		case ScanMode::COLOR:
-			if(!set_constrained_string_option(handle, option, index, color_scan_modes, nullptr))
+			if(!set_constrained_string_option(m_handle, option, index, color_scan_modes, nullptr))
 				g_warning("Unable to set Color mode, please file a bug");
 			break;
 		case ScanMode::GRAY:
-			if(!set_constrained_string_option(handle, option, index, gray_scan_modes, nullptr))
+			if(!set_constrained_string_option(m_handle, option, index, gray_scan_modes, nullptr))
 				g_warning("Unable to set Gray mode, please file a bug");
 			break;
 		case ScanMode::LINEART:
-			if(!set_constrained_string_option(handle, option, index, lineart_scan_modes, nullptr))
+			if(!set_constrained_string_option(m_handle, option, index, lineart_scan_modes, nullptr))
 				g_warning("Unable to set Lineart mode, please file a bug");
 			break;
 		default:
@@ -555,17 +541,17 @@ void Scanner::do_get_option()
 	}
 
 	/* Duplex */
-	option = get_option_by_name(handle, "duplex", index);
+	option = get_option_by_name(m_handle, "duplex", index);
 	if(option != nullptr && option->type == SANE_TYPE_BOOL)
-		set_bool_option(handle, option, index, job.type == ScanType::ADF_BOTH, nullptr);
+		set_bool_option(m_handle, option, index, job->type == ScanType::ADF_BOTH, nullptr);
 
 	/* Multi-page options */
-	option = get_option_by_name(handle, "batch-scan", index);
+	option = get_option_by_name(m_handle, "batch-scan", index);
 	if(option != nullptr && option->type == SANE_TYPE_BOOL)
-		set_bool_option(handle, option, index, job.type != ScanType::SINGLE, nullptr);
+		set_bool_option(m_handle, option, index, job->type != ScanType::SINGLE, nullptr);
 
 	/* Disable compression, we will compress after scanning */
-	option = get_option_by_name(handle, "compression", index);
+	option = get_option_by_name(m_handle, "compression", index);
 	if(option != nullptr){
 		std::vector<std::string> disable_compression_names = {
 			SANE_I18N("None"),
@@ -574,66 +560,68 @@ void Scanner::do_get_option()
 			"none"
 		};
 
-		if(!set_constrained_string_option(handle, option, index, disable_compression_names, nullptr))
+		if(!set_constrained_string_option(m_handle, option, index, disable_compression_names, nullptr))
 			g_warning("Unable to disable compression, please file a bug");
 	}
 
 	/* Set resolution and bit depth */
-	option = get_option_by_name(handle, SANE_NAME_SCAN_RESOLUTION, index);
+	option = get_option_by_name(m_handle, SANE_NAME_SCAN_RESOLUTION, index);
 	if(option != nullptr){
 		if(option->type == SANE_TYPE_FIXED)
-			set_fixed_option(handle, option, index, job.dpi, &job.dpi);
+			set_fixed_option(m_handle, option, index, job->dpi, &job->dpi);
 		else{
 			int dpi;
-			set_int_option(handle, option, index, job.dpi, &dpi);
-			job.dpi = dpi;
+			set_int_option(m_handle, option, index, job->dpi, &dpi);
+			job->dpi = dpi;
 		}
-		option = get_option_by_name(handle, SANE_NAME_BIT_DEPTH, index);
-		if(option != nullptr && job.depth > 0)
-			set_int_option(handle, option, index, job.depth, nullptr);
+		option = get_option_by_name(m_handle, SANE_NAME_BIT_DEPTH, index);
+		if(option != nullptr && job->depth > 0)
+			set_int_option(m_handle, option, index, job->depth, nullptr);
 	}
 
 	/* Always use maximum scan area - some scanners default to using partial areas.  This should be patched in sane-backends */
-	option = get_option_by_name(handle, SANE_NAME_SCAN_BR_X, index);
+	option = get_option_by_name(m_handle, SANE_NAME_SCAN_BR_X, index);
 	if(option != nullptr && option->constraint_type == SANE_CONSTRAINT_RANGE){
 		if(option->type == SANE_TYPE_FIXED)
-			set_fixed_option(handle, option, index, SANE_UNFIX(option->constraint.range->max), nullptr);
+			set_fixed_option(m_handle, option, index, SANE_UNFIX(option->constraint.range->max), nullptr);
 		else
-			set_int_option(handle, option, index, option->constraint.range->max, nullptr);
+			set_int_option(m_handle, option, index, option->constraint.range->max, nullptr);
 	}
-	option = get_option_by_name(handle, SANE_NAME_SCAN_BR_Y, index);
+	option = get_option_by_name(m_handle, SANE_NAME_SCAN_BR_Y, index);
 	if(option != nullptr && option->constraint_type == SANE_CONSTRAINT_RANGE){
 		if(option->type == SANE_TYPE_FIXED)
-			set_fixed_option(handle, option, index, SANE_UNFIX(option->constraint.range->max), nullptr);
+			set_fixed_option(m_handle, option, index, SANE_UNFIX(option->constraint.range->max), nullptr);
 		else
-			set_int_option(handle, option, index, option->constraint.range->max, nullptr);
+			set_int_option(m_handle, option, index, option->constraint.range->max, nullptr);
 	}
 
 	/* Set page dimensions */
-	option = get_option_by_name(handle, SANE_NAME_PAGE_WIDTH, index);
-	if(option != nullptr && job.page_width > 0.0){
+	option = get_option_by_name(m_handle, SANE_NAME_PAGE_WIDTH, index);
+	if(option != nullptr && job->page_width > 0.0){
 		if(option->type == SANE_TYPE_FIXED)
-			set_fixed_option(handle, option, index, job.page_width / 10.0, nullptr);
+			set_fixed_option(m_handle, option, index, job->page_width / 10.0, nullptr);
 		else
-			set_int_option(handle, option, index, job.page_width / 10, nullptr);
+			set_int_option(m_handle, option, index, job->page_width / 10, nullptr);
 	}
-	option = get_option_by_name(handle, SANE_NAME_PAGE_HEIGHT, index);
-	if(option != nullptr && job.page_height > 0.0){
+	option = get_option_by_name(m_handle, SANE_NAME_PAGE_HEIGHT, index);
+	if(option != nullptr && job->page_height > 0.0){
 		if(option->type == SANE_TYPE_FIXED)
-			set_fixed_option(handle, option, index, job.page_height / 10.0, nullptr);
+			set_fixed_option(m_handle, option, index, job->page_height / 10.0, nullptr);
 		else
-			set_int_option(handle, option, index, job.page_height / 10, nullptr);
+			set_int_option(m_handle, option, index, job->page_height / 10, nullptr);
 	}
 
-	state = ScanState::START;
+	m_state = ScanState::START;
 }
 
 void Scanner::do_start()
 {
-	SANE_Status status = sane_start(handle);
-	g_debug("sane_start(page=%d, pass=%d) -> %s", page_number, pass_number, sane_strstatus(status));
+	ScanJob* job = m_jobQueue.front();
+
+	SANE_Status status = sane_start(m_handle);
+	g_debug("sane_start(page=%d, pass=%d) -> %s", job->page_number, job->pass_number, sane_strstatus(status));
 	if(status == SANE_STATUS_GOOD)
-		state = ScanState::GET_PARAMETERS;
+		m_state = ScanState::GET_PARAMETERS;
 	else if(status == SANE_STATUS_NO_DOCS)
 		do_complete_document();
 	else{
@@ -642,8 +630,11 @@ void Scanner::do_start()
 	}
 }
 
-void Scanner::do_get_parameters() {
-	SANE_Status status = sane_get_parameters(handle, &parameters);
+void Scanner::do_get_parameters()
+{
+	ScanJob* job = m_jobQueue.front();
+
+	SANE_Status status = sane_get_parameters(m_handle, &job->parameters);
 	g_debug("sane_get_parameters() -> %s", sane_strstatus(status));
 	if(status != SANE_STATUS_GOOD){
 		g_warning("Unable to get device parameters: %s", sane_strstatus(status));
@@ -651,55 +642,49 @@ void Scanner::do_get_parameters() {
 		return;
 	}
 
-	ScanJob job = job_queue.front();
 	g_debug("Parameters: format=%s last_frame=%s bytes_per_line=%d pixels_per_line=%d lines=%d depth=%d",
-			get_frame_mode_string(parameters.format).c_str(),
-			parameters.last_frame ? "SANE_TRUE" : "SANE_FALSE",
-			parameters.bytes_per_line,
-			parameters.pixels_per_line,
-			parameters.lines,
-			parameters.depth);
+			get_frame_mode_string(job->parameters.format).c_str(),
+			job->parameters.last_frame ? "SANE_TRUE" : "SANE_FALSE",
+			job->parameters.bytes_per_line,
+			job->parameters.pixels_per_line,
+			job->parameters.lines,
+			job->parameters.depth);
 
 	ScanPageInfo info;
-	info.width = parameters.pixels_per_line;
-	info.height = parameters.lines;
-	info.depth = parameters.depth;
-	info.n_channels = parameters.format == SANE_FRAME_GRAY ? 1 : 3;
-	info.dpi = job.dpi;
-	info.device = current_device;
+	info.width = job->parameters.pixels_per_line;
+	info.height = job->parameters.lines;
+	info.depth = job->parameters.depth;
+	info.n_channels = job->parameters.format == SANE_FRAME_GRAY ? 1 : 3;
+	info.dpi = job->dpi;
+	info.device = job->device;
 
-	if(job.id >= first_job_id && job.id < job_id){
-		SYNC_INIT;
-		Glib::signal_idle().connect_once([&]{ job.handler->setupPage(info); SYNC_NOTIFY; });
-		SYNC_WAIT;
-	}
+	SYNC_INIT;
+	Glib::signal_idle().connect_once([&]{ job->handler->setupPage(info); SYNC_NOTIFY; });
+	SYNC_WAIT;
 
 	/* Prepare for read */
-	buffer.resize(parameters.bytes_per_line);
-	n_used = 0;
-	line_count = 0;
-	pass_number = 0;
-	state = ScanState::READ;
+	job->buffer.resize(job->parameters.bytes_per_line);
+	m_state = ScanState::READ;
 }
 
 void Scanner::do_read()
 {
-	ScanJob job = job_queue.front();
+	ScanJob* job = m_jobQueue.front();
 
 	/* Read as many bytes as we need to complete a line */
-	int n_to_read = buffer.size() - n_used;
+	int n_to_read = job->buffer.size() - job->n_used;
 
 	SANE_Int n_read;
-	unsigned char* b = &buffer[n_used];
-	SANE_Status status = sane_read(handle, b, n_to_read, &n_read);
+	unsigned char* b = &job->buffer[job->n_used];
+	SANE_Status status = sane_read(m_handle, b, n_to_read, &n_read);
 	g_debug("sane_read(%d) -> (%s, %d)", n_to_read, sane_strstatus(status), n_read);
 
 	/* Completed read */
 	if(status == SANE_STATUS_EOF){
-		if(parameters.lines > 0 && line_count != parameters.lines)
-			g_warning("Scan completed with %d lines, expected %d lines", line_count, parameters.lines);
-		if(n_used > 0)
-			g_warning("Scan complete with %d bytes of unused data", n_used);
+		if(job->parameters.lines > 0 && job->line_count != job->parameters.lines)
+			g_warning("Scan completed with %d lines, expected %d lines", job->line_count, job->parameters.lines);
+		if(job->n_used > 0)
+			g_warning("Scan complete with %d bytes of unused data", job->n_used);
 		do_complete_page();
 		return;
 	}else if(status != SANE_STATUS_GOOD){
@@ -708,54 +693,51 @@ void Scanner::do_read()
 		return;
 	}
 
-	n_used += n_read;
+	job->n_used += n_read;
 
 	/* If we completed a line, feed it out */
-	if(n_used >= int(buffer.size())){
-		assert(n_used == parameters.bytes_per_line);
+	if(job->n_used >= int(job->buffer.size())){
+		assert(job->n_used == job->parameters.bytes_per_line);
 		ScanLine line;
-		line.channel = Channel(parameters.format); /* Channel enum is 1:1 copy of SANE_Frame, but without requiring inclusion of sane header */
-		line.width = parameters.pixels_per_line;
-		line.depth = parameters.depth;
-		std::swap(buffer, line.data);
-		line.number = line_count;
+		line.channel = Channel(job->parameters.format); /* Channel enum is 1:1 copy of SANE_Frame, but without requiring inclusion of sane header */
+		line.width = job->parameters.pixels_per_line;
+		line.depth = job->parameters.depth;
+		std::swap(job->buffer, line.data);
+		line.number = job->line_count;
 		line.n_lines = 1;
 
-		line_count += line.n_lines;
+		job->line_count += line.n_lines;
 
 		/* Reset buffer */
-		n_used = 0;
-		buffer.resize(parameters.bytes_per_line);
-		if(job.id >= first_job_id && job.id < job_id){
-			SYNC_INIT;
-			Glib::signal_idle().connect_once([&]{ job.handler->handleData(line); SYNC_NOTIFY; });
-			SYNC_WAIT;
-		}
+		job->n_used = 0;
+		job->buffer.resize(job->parameters.bytes_per_line);
+
+		SYNC_INIT;
+		Glib::signal_idle().connect_once([&]{ job->handler->handleData(line); SYNC_NOTIFY; });
+		SYNC_WAIT;
 	}
 }
 
 void Scanner::do_complete_page()
 {
-	ScanJob job = job_queue.front();
+	ScanJob* job = m_jobQueue.front();
 
-	if(job.id >= first_job_id && job.id < job_id){
-		SYNC_INIT;
-		Glib::signal_idle().connect_once([&]{ job.handler->finalizePage(); SYNC_NOTIFY; });
-		SYNC_WAIT;
-	}
+	SYNC_INIT;
+	Glib::signal_idle().connect_once([&]{ job->handler->finalizePage(); SYNC_NOTIFY; });
+	SYNC_WAIT;
 
 	/* If multi-pass then scan another page */
-	if(!parameters.last_frame){
-		++pass_number;
-		state = ScanState::START;
+	if(!job->parameters.last_frame){
+		++job->pass_number;
+		m_state = ScanState::START;
 		return;
 	}
 
 	/* Go back for another page */
-	if(job.type != ScanType::SINGLE){
-		++page_number;
-		pass_number = 0;
-		state = ScanState::START;
+	if(job->type != ScanType::SINGLE){
+		++job->page_number;
+		job->pass_number = 0;
+		m_state = ScanState::START;
 		return;
 	}
 
@@ -764,56 +746,26 @@ void Scanner::do_complete_page()
 
 void Scanner::do_complete_document()
 {
-	sane_cancel(handle);
+	sane_cancel(m_handle);
 	g_debug("sane_cancel()");
 
-	job_queue.pop();
+	delete m_jobQueue.front();
+	m_jobQueue.pop();
 
 	/* Continue onto the next job */
-	if(!job_queue.empty()){
-		state = ScanState::OPEN;
+	if(!m_jobQueue.empty()){
+		m_state = ScanState::OPEN;
 		return;
 	}
 
 	close_device();
 }
 
-/****************** Main scanner thread functions ******************/
-
-bool Scanner::handle_requests()
-{
-	/* Redetect when idle */
-	if(state == ScanState::IDLE && need_redetect)
-		state = ScanState::REDETECT;
-
-	/* Process all requests */
-	int request_count = 0;
-	while(true){
-		Request* request;
-		if((state == ScanState::IDLE && request_count == 0) || !request_queue.empty())
-			request = request_queue.pop();
-		else
-			return true;
-
-		g_debug("Processing request");
-		++request_count;
-
-		if(dynamic_cast<RequestStartScan*>(request) != nullptr){
-			RequestStartScan* r = static_cast<RequestStartScan*>(request);
-			job_queue.push(r->job);
-		}else if(dynamic_cast<RequestCancel*>(request) != nullptr){
-			fail_scan(SANE_STATUS_CANCELLED, _("Scan cancelled"));
-		}else if(dynamic_cast<RequestQuit*>(request) != nullptr){
-			close_device();
-			return false;
-		}
-	}
-	return true;
-}
+/*********************** Main scanner thread ***********************/
 
 void Scanner::scan_thread()
 {
-	state = ScanState::IDLE;
+	m_state = ScanState::IDLE;
 
 	SANE_Int version_code;
 	SANE_Status status = sane_init(&version_code, authorization_cb);
@@ -831,32 +783,41 @@ void Scanner::scan_thread()
 	/* Scan for devices on first start */
 	redetect();
 
-	while(handle_requests()){
-		switch(state){
-		case ScanState::IDLE:
-			 if(!job_queue.empty()){
-				 set_scanning(true);
-				 state = ScanState::OPEN;
-			 }
-			 break;
-		case ScanState::REDETECT:
-			do_redetect();
-			break;
-		case ScanState::OPEN:
+	bool need_redetect = false;
+	while(true){
+		// Fetch request if requests are pending or wait for request if idle
+		if(!m_requestQueue.empty() || m_state == ScanState::IDLE){
+			Request request = m_requestQueue.pop();
+			if(request.type == Request::Type::Redetect){
+				need_redetect = true;
+			}else if(request.type == Request::Type::StartScan){
+				m_jobQueue.push(static_cast<ScanJob*>(request.data));
+			}else if(request.type == Request::Type::Cancel){
+				fail_scan(SANE_STATUS_CANCELLED, _("Scan cancelled"));
+			}else if(request.type == Request::Type::Quit){
+				close_device();
+				break;
+			}
+		}
+		// Perform operations according to state
+		if(m_state == ScanState::IDLE){
+			if(need_redetect){
+				do_redetect();
+				need_redetect = false;
+			}
+			if(!m_jobQueue.empty()){
+				m_state = ScanState::OPEN;
+			}
+		}else if(m_state == ScanState::OPEN){
 			do_open();
-			break;
-		case ScanState::GET_OPTION:
+		}else if(m_state == ScanState::GET_OPTION){
 			do_get_option();
-			break;
-		case ScanState::START:
+		}else if(m_state == ScanState::START){
 			do_start();
-			break;
-		case ScanState::GET_PARAMETERS:
+		}else if(m_state == ScanState::GET_PARAMETERS){
 			do_get_parameters();
-			break;
-		case ScanState::READ:
+		}else if(m_state == ScanState::READ){
 			do_read();
-			break;
 		}
 	}
 }
@@ -864,9 +825,9 @@ void Scanner::scan_thread()
 /****************** Public, main thread functions ******************/
 
 void Scanner::start(){
-	if(thread == nullptr){
+	if(m_thread == nullptr){
 		try{
-			thread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Scanner::scan_thread));
+			m_thread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Scanner::scan_thread));
 		}catch(const Glib::Error& e){
 			g_critical("Unable to create thread: %s", e.what().c_str());
 		}
@@ -874,8 +835,8 @@ void Scanner::start(){
 }
 
 void Scanner::redetect(){
-	need_redetect = true;
 	g_debug("Requesting redetection of scan devices");
+	m_requestQueue.push({Request::Type::Redetect});
 }
 
 void Scanner::scan(const std::string& device, PageHandler* handler, ScanOptions options)
@@ -884,34 +845,32 @@ void Scanner::scan(const std::string& device, PageHandler* handler, ScanOptions 
 			!device.empty() ? device.c_str() : "(null)", options.dpi, get_scan_mode_string(options.scan_mode).c_str(),
 			options.depth, get_scan_type_string(options.type).c_str(), options.paper_width, options.paper_height);
 	assert(options.depth == 8);
-	RequestStartScan* request = new RequestStartScan();
-	request->job.id = job_id++;
-	request->job.device = device;
-	request->job.dpi = options.dpi;
-	request->job.scan_mode = options.scan_mode;
-	request->job.depth = options.depth;
-	request->job.type = options.type;
-	request->job.page_width = options.paper_width;
-	request->job.page_height = options.paper_height;
-	request->job.handler = handler;
-	request_queue.push(request);
+	ScanJob* job = new ScanJob;
+	job->device = device;
+	job->dpi = options.dpi;
+	job->scan_mode = options.scan_mode;
+	job->depth = options.depth;
+	job->type = options.type;
+	job->page_width = options.paper_width;
+	job->page_height = options.paper_height;
+	job->handler = handler;
+	m_requestQueue.push({Request::Type::StartScan, job});
 }
 
 void Scanner::cancel()
 {
-	first_job_id = job_id;
-	request_queue.push(new RequestCancel());
+	m_requestQueue.push({Request::Type::Cancel});
 }
 
 void Scanner::stop()
 {
 	g_debug("Stopping scan thread");
 
-	if(thread != nullptr){
-		request_queue.push(new RequestQuit());
-		thread->join();
+	if(m_thread != nullptr){
+		m_requestQueue.push({Request::Type::Quit});
+		m_thread->join();
 		sane_exit();
-		thread = nullptr;
+		m_thread = nullptr;
 	}
 
 	g_debug("sane_exit()");
