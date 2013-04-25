@@ -148,7 +148,7 @@ void Acquirer::startDetectDevices()
 	m_refreshSpinner->show();
 	m_refreshSpinner->start();
 	m_msgLabel->set_text("");
-	Glib::RefPtr<Gtk::ListStore>::cast_static(m_devCombo->get_model())->clear();
+	m_devCombo->set_model(Gtk::ListStore::create(m_devComboCols));
 	m_scanButton->set_sensitive(false);
 	m_scanner->redetect();
 }
