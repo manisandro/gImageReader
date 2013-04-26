@@ -26,11 +26,6 @@
       <summary>Autoinstall missing spelling dictionaries</summary>
       <description>Autoinstall missing spelling dictionaries.</description>
     </key>
-    <key type="b" name="antialias">
-      <default>true</default>
-      <summary>Smooth downscaled images</summary>
-      <description>Smooth downscaled images.</description>
-    </key>
     <key type="b" name="updatecheck">
       <default>true</default>
       <summary>Automatically check for updates</summary>

@@ -12,5 +12,6 @@ intltool-merge.in
 intltool-update.in
 Makefile.in
 data/Makefile.in
+data/glib-2.0
 src/Makefile.in
 

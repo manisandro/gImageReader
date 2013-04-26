@@ -2,7 +2,6 @@ High prio:
 - notifier web links do not work?
 - replace all
 - insensitive when busy?
-- Either implement blur-downscaled or remove checkbox in settings
 
 Low prio:
 - markers in buffer to find corresponding page from cursor position

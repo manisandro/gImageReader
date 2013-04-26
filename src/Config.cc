@@ -119,7 +119,6 @@ Config::Config()
 	m_settings.insert(std::make_pair("outputorient", new ComboSetting("outputorient", m_gioSettings, "combo:config.settings.paneorient")));
 	m_settings.insert(std::make_pair("showcontrols", new SwitchSettingT<Gtk::ToggleToolButton>("showcontrols", m_gioSettings, "tbbutton:main.controls")));
 	m_settings.insert(std::make_pair("dictinstall", new SwitchSettingT<Gtk::CheckButton>("dictinstall", m_gioSettings, "check:config.settings.dictinstall")));
-	m_settings.insert(std::make_pair("antialias", new SwitchSettingT<Gtk::CheckButton>("antialias", m_gioSettings, "check:config.settings.antialias")));
 	m_settings.insert(std::make_pair("updatecheck", new SwitchSettingT<Gtk::CheckButton>("updatecheck", m_gioSettings, "check:config.settings.update")));
 	m_settings.insert(std::make_pair("language", new VarSetting<Glib::ustring>("language", m_gioSettings)));
 	m_settings.insert(std::make_pair("customlangs", new ListStoreSetting("customlangs", m_gioSettings, Glib::RefPtr<Gtk::ListStore>::cast_static(m_customLangView->get_model()))));
