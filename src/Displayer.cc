@@ -55,7 +55,7 @@ Displayer::Displayer()
 	clearImage(); // Assigns default values to all state variables
 	selectionUpdateColors();
 
-	m_connection_positionAndZoomCanvas = CONNECT(m_scrollwin, size_allocate, [this](Gdk::Rectangle&){ positionAndZoomCanvas(); });
+	m_connection_positionAndZoomCanvas = CONNECT(m_scrollwin, size_allocate, [this](Gdk::Rectangle&){ positionCanvas(true); });
 	m_connection_saveHScrollMark = CONNECT(m_hadjustment, value_changed, [this]{ saveScrollMark(m_hadjustment, m_geo.sx); });
 	m_connection_saveVScrollMark = CONNECT(m_vadjustment, value_changed, [this]{ saveScrollMark(m_vadjustment, m_geo.sy); });
 	CONNECT(m_pagespin, value_changed, [this]{ spinChanged(); });
@@ -123,29 +123,27 @@ void Displayer::canvasDraw(const Cairo::RefPtr<Cairo::Context> &ctx)
 	return;
 }
 
-void Displayer::positionAndZoomCanvas()
+void Displayer::positionCanvas(bool zoom)
 {
 	if(!m_image){
 		return;
 	}
-	if(m_zoomFit){
-		setZoom(ZoomMode::Fit);
-	}else{
-		positionCanvas();
-	}
-}
-
-void Displayer::positionCanvas()
-{
 	double bbw, bbh;
 	getBBSize(bbw, bbh);
 	m_canvas->get_window()->freeze_updates();
 	m_connection_positionAndZoomCanvas.block();
 	m_connection_saveHScrollMark.block();
 	m_connection_saveVScrollMark.block();
+	if(zoom && m_zoomFit){
+		m_geo.s = std::min(m_viewport->get_allocated_width() / bbw, m_viewport->get_allocated_height() / bbh);
+	}
 	m_canvas->set_size_request(Utils::round(bbw * m_geo.s), Utils::round(bbh * m_geo.s));
-	while(Gtk::Main::events_pending()){ // Wait for resize to occur
-		Gtk::Main::iteration();
+	m_scrollwin->resize_children(); // Immediately resize the children
+	// Repeat to cover cases where scrollbars did disappear
+	if(zoom && m_zoomFit){
+		m_geo.s = std::min(m_viewport->get_allocated_width() / bbw, m_viewport->get_allocated_height() / bbh);
+		m_canvas->set_size_request(Utils::round(bbw * m_geo.s), Utils::round(bbh * m_geo.s));
+		m_scrollwin->resize_children();
 	}
 	m_hadjustment->set_value(m_geo.sx *(m_hadjustment->get_upper() - m_hadjustment->get_page_size()));
 	m_vadjustment->set_value(m_geo.sy *(m_vadjustment->get_upper() - m_vadjustment->get_page_size()));
@@ -236,7 +234,7 @@ void Displayer::rotate()
 	for(DisplaySelection* sel : m_selections){
 		sel->rotate(deltaR);
 	}
-	positionAndZoomCanvas();
+	positionCanvas(true);
 }
 
 void Displayer::spinChanged()
@@ -491,7 +489,6 @@ void Displayer::selectionRemove(const DisplaySelection* sel)
 
 void Displayer::selectionUpdateColors()
 {
-	std::cout << "> Update" << std::endl;
 	m_selColors[0] = Gtk::Entry().get_style_context()->get_color(Gtk::STATE_FLAG_SELECTED);
 	m_selColors[1] = Gtk::Entry().get_style_context()->get_background_color(Gtk::STATE_FLAG_SELECTED);
 }
