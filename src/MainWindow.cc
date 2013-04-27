@@ -218,8 +218,6 @@ void MainWindow::checkVersion(const Glib::ustring& newver)
 {
 	m_newVerThread->join();
 	Glib::ustring curver = m_aboutdialog->get_version();
-	curver = "0.8";
-	std::cout << curver << " " << newver << std::endl;
 	// Remove anything after a - (i.e. 1.0.0-svn)
 	Glib::ustring::size_type pos = curver.find('-');
 	if(pos != Glib::ustring::npos){
