@@ -1644,7 +1644,6 @@ If a language you need is missing above, add it here:</property>
                                 </child>
                                 <child>
                                   <object class="GtkButton" id="button:inpute.acquire.device.refresh">
-                                    <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
                                     <property name="has_tooltip">True</property>
@@ -1667,9 +1666,11 @@ If a language you need is missing above, add it here:</property>
                                 </child>
                                 <child>
                                   <object class="GtkSpinner" id="spinner:input.acquire.device">
+                                    <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_top">4</property>
                                     <property name="margin_bottom">4</property>
+                                    <property name="active">True</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1818,6 +1819,7 @@ If a language you need is missing above, add it here:</property>
                               <object class="GtkButton" id="button:sources.acquire.scan">
                                 <property name="label" translatable="yes">Scan</property>
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="image">image:input.acquire.scan</property>
