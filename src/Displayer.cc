@@ -482,10 +482,9 @@ void Displayer::hideSelectionMenu()
 
 void Displayer::selectionRemove(const DisplaySelection* sel)
 {
-	Geometry::Rectangle damage = getSelectionDamageArea(sel->getRect());
-	m_canvas->queue_draw_area(damage.x, damage.y, damage.width, damage.height);
 	m_selections.erase(std::find(m_selections.begin(), m_selections.end(), sel));
 	delete sel;
+	m_canvas->queue_draw();
 }
 
 void Displayer::selectionUpdateColors()
