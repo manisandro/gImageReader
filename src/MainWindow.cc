@@ -143,21 +143,13 @@ void MainWindow::popState()
 
 void MainWindow::setState(State state)
 {
-//	m_timeout.disconnect();
-//	m_connection_event.disconnect();
-//	m_window->set_sensitive(true);
+	m_window->set_sensitive(true);
 	if(state == State::Idle){
 		for(Gtk::Widget* w : m_idlegroup){ w->set_sensitive(false); }
 	}else if(state == State::Normal){
 		for(Gtk::Widget* w : m_idlegroup){ w->set_sensitive(true); }
 	}else if(state == State::Busy){
-//		m_window->set_sensitive(false);
-//		m_connection_event = CONNECT(m_window, event, [](GdkEvent* e){ return true;});
-//		m_timeout = Glib::signal_timeout().connect([this]{
-//			m_connection_event.disconnect();
-//			m_window->set_sensitive(false);
-//			return false;
-//		}, 500);
+		m_window->set_sensitive(false);
 	}
 }
 

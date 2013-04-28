@@ -294,9 +294,10 @@ bool Displayer::setImage(int page)
 	int bri = m_brispin->get_value_as_int();
 	int con = m_conspin->get_value_as_int();
 	return Utils::busyTask([this, page, res, bri, con] {
-		m_image = m_renderer->render(page, res);
-		Manipulators::adjustBrightness(m_image, bri);
-		Manipulators::adjustContrast(m_image, con);
+		Cairo::RefPtr<Cairo::ImageSurface> image = m_renderer->render(page, res);
+		Manipulators::adjustBrightness(image, bri);
+		Manipulators::adjustContrast(image, con);
+		m_image = image;
 		return bool(m_image);
 	}, _("Rendering image..."));
 }

@@ -73,9 +73,6 @@ private:
 
 	Glib::Threads::Thread* m_newVerThread = nullptr;
 
-	sigc::connection m_timeout;
-	sigc::connection m_connection_event;
-
 	std::vector<Gtk::Widget*> m_idlegroup;
 	std::vector<State> m_stateStack;
 
