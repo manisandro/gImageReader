@@ -1973,6 +1973,7 @@ If a language you need is missing above, add it here:</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="shadow_type">in</property>
+                        <property name="kinetic_scrolling">False</property>
                         <child>
                           <object class="GtkViewport" id="viewport:display">
                             <property name="visible">True</property>
