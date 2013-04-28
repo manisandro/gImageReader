@@ -3,7 +3,6 @@ High prio:
 - replace all
 - manual
 - drag from empty regions oxygen-gtk interferes with selection
-- failed to init tesseract?
 
 Low prio:
 - play with resize mode on viewport and scrolledwindow
