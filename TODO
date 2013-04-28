@@ -1,9 +1,12 @@
 High prio:
 - notifier web links do not work?
 - replace all
-- insensitive when busy?
+- manual
+- drag from empty regions oxygen-gtk interferes with selection
+- failed to init tesseract?
 
 Low prio:
+- play with resize mode on viewport and scrolledwindow
 - markers in buffer to find corresponding page from cursor position
 - blur downscaled -> this should really be fixed in cairo
 
