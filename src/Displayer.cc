@@ -244,7 +244,7 @@ void Displayer::spinChanged()
 		m_timer = Glib::signal_timeout().connect([this]{
 			if(setImage()){ rotate(); }
 			return false;
-		}, 250);
+		}, 200);
 	}
 }
 
