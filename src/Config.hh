@@ -30,7 +30,7 @@
 class Config {
 public:
 	struct Lang {
-		Glib::ustring prefix, name, code;
+		Glib::ustring prefix, code, name;
 	};
 
 	Config();
@@ -52,9 +52,9 @@ public:
 private:
 	struct LangViewColumns : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Glib::ustring> prefix;
-		Gtk::TreeModelColumn<Glib::ustring> name;
 		Gtk::TreeModelColumn<Glib::ustring> code;
-		LangViewColumns() { add(prefix); add(name); add(code); }
+		Gtk::TreeModelColumn<Glib::ustring> name;
+		LangViewColumns() { add(prefix); add(code); add(name); }
 	};
 
 	static const std::vector<Lang> LANGUAGES;
@@ -86,7 +86,7 @@ private:
 	void toggleAddLanguage();
 	void addLanguage();
 	void removeLanguage();
-	bool searchLangSpec(const Glib::RefPtr<Gtk::TreeModel> model, const Glib::ustring& prefix, Lang& lang) const;
+	bool searchLangSpec(const Glib::RefPtr<Gtk::TreeModel> model, Lang& lang) const;
 };
 
 #endif // CONFIG_HH

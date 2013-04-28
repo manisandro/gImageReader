@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema id="org.gnome.gimagereader" path="/org/gnome/gimagereader/" gettext-domain="gimagereader">
-    <key type="s" name="tesspath">
-      <default>""</default>
-      <summary>tesseract path</summary>
-      <description>Folder containing the tesseract executable.</description>
-    </key>
-    <key type="s" name="langpath">
-      <default>""</default>
-      <summary>tesseract data path</summary>
-      <description>Folder containing the tesseract language files.</description>
-    </key>
     <key type="i" name="outputorient">
       <default>1</default>
       <summary>Output pane orientation</summary>
@@ -32,7 +22,7 @@
       <description>Automatically check for updates.</description>
     </key>
     <key type="s" name="language">
-      <default>"en_EN"</default>
+      <default>"eng:en_EN"</default>
       <summary>Default recongition language</summary>
       <description>Default recongition language.</description>
     </key>

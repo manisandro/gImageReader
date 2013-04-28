@@ -25,11 +25,7 @@ void ListStoreSetting::reread(){
 	m_settings->get_value(m_key, v);
 	Glib::ustring str = v.get();
 
-
 	// Split string into table, string has format a11,a12,a13;a21,a22,a23;...
-	m_connection_rowChanged.block();
-	m_connection_rowDeleted.block();
-	m_connection_rowInserted.block();
 	m_liststore->clear();
 	int nCols = m_liststore->get_n_columns();
 
@@ -44,9 +40,6 @@ void ListStoreSetting::reread(){
 			treerow.set_value(colidx++, col);
 		}
 	}
-	m_connection_rowChanged.unblock();
-	m_connection_rowDeleted.unblock();
-	m_connection_rowInserted.unblock();
 }
 
 void ListStoreSetting::serialize(){

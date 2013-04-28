@@ -31,14 +31,11 @@ public:
 	AbstractSetting(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings)
 		: m_settings(settings), m_key(key) { }
 	virtual ~AbstractSetting() {}
-	sigc::signal<void> signal_changed(){ return m_signal_changed; }
 	virtual void reread() = 0;
 
 protected:
 	Glib::RefPtr<Gio::Settings> m_settings;
 	Glib::ustring m_key;
-	sigc::signal<void> m_signal_changed;
-
 };
 
 template <class T>
@@ -123,24 +120,12 @@ private:
 class ListStoreSetting : public AbstractSetting {
 public:
 	ListStoreSetting(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings, Glib::RefPtr<Gtk::ListStore> liststore)
-		: AbstractSetting(key, settings), m_liststore(liststore)
-	{
-		m_connection_rowChanged = CONNECT(m_liststore, row_changed, [this](const Path&,const Iter&){ serialize(); });
-		m_connection_rowDeleted = CONNECT(m_liststore, row_deleted, [this](const Path&){ serialize(); });
-		m_connection_rowInserted = CONNECT(m_liststore, row_inserted, [this](const Path&,const Iter&){ serialize(); });
-	}
-
+		: AbstractSetting(key, settings), m_liststore(liststore) {}
 	void reread();
+	void serialize();
 
 private:
 	Glib::RefPtr<Gtk::ListStore> m_liststore;
-	typedef Gtk::TreeModel::Path Path;
-	typedef Gtk::TreeModel::iterator Iter;
-	sigc::connection m_connection_rowChanged;
-	sigc::connection m_connection_rowDeleted;
-	sigc::connection m_connection_rowInserted;
-
-	void serialize();
 };
 
 #endif // CONFIGSETTINGS_HH
