@@ -577,5 +577,8 @@ void Displayer::autodetectLayout(bool rotated)
 		autodetectLayout(true);
 	}else{
 		m_canvas->queue_draw();
+		if(!m_selections.empty()){
+			m_ocrstatelabel->set_markup(Glib::ustring::compose("<small>%1</small>", _("Recognize selection")));
+		}
 	}
 }
