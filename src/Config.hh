@@ -46,7 +46,6 @@ public:
 	const Lang& getSelectedLanguage() const{ return m_curlang; }
 	sigc::signal<void, const Lang&> signal_languageChanged(){ return m_signal_languageChanged; }
 
-	bool isValid() const;
 	void showDialog();
 	void updateLanguagesMenu();
 

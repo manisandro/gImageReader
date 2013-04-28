@@ -142,10 +142,6 @@ Config::Config()
 	CONNECT(m_addLangPrefix, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangPrefix); return false; });
 	CONNECT(m_addLangName, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangName); return false; });
 	CONNECT(m_addLangCode, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangCode); return false; });
-
-	for(const auto& keyval : m_settings){
-		CONNECT(keyval.second, changed, [this]{ m_dialogOkButton->set_sensitive(isValid()); });
-	}
 	CONNECT(m_gioSettings, changed, [this](const Glib::ustring& key){ getSetting<AbstractSetting>(key)->reread(); });
 }
 
@@ -180,7 +176,7 @@ void Config::updateLanguagesMenu()
 	m_langsMenu.forall([this](Gtk::Widget& w){ m_langsMenu.remove(w); });
 	m_radioGroup = Gtk::RadioButtonGroup();
 
-	Gtk::RadioMenuItem* radioitem = 0;
+	Gtk::RadioMenuItem* radioitem = nullptr;
 	Glib::ustring curlang = getSetting<VarSetting<Glib::ustring>>("language")->getValue();
 
 	std::vector<Glib::ustring> dicts;
@@ -239,39 +235,16 @@ void Config::updateLanguagesMenu()
 	}
 }
 
-bool Config::isValid() const
-{
-	bool valid = true;
-	for(const auto& keyval : m_settings){
-		valid &= getSetting<AbstractSetting>(keyval.first)->isValid();
-	}
-	return valid;
-}
-
 void Config::showDialog()
 {
 	m_gioSettings->delay();
-	int response;
-	bool oldvalid = isValid();
-	while(true){
-		response = m_dialog->run();
-		m_dialog->hide();
-		if(response != Gtk::RESPONSE_OK && !oldvalid){
-			if(Utils::question_dialog(_("Need valid paths to continue"),
-									  _("Correct the configuration? (Pressing 'No' will quit the program.)")) == 0)
-			{
-				Gtk::Application::get_default()->quit();
-			}
-		}else{
-			break;
-		}
-	}
-	if(response != Gtk::RESPONSE_OK){
+	if(m_dialog->run() != Gtk::RESPONSE_OK){
 		m_gioSettings->revert();
 	}else{
 		m_gioSettings->apply();
 		updateLanguagesMenu();
 	}
+	m_dialog->hide();
 }
 
 void Config::setLanguage(const Gtk::RadioMenuItem* item, const Lang &lang, const Glib::ustring &prettyname)

@@ -31,7 +31,6 @@ public:
 	AbstractSetting(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings)
 		: m_settings(settings), m_key(key) { }
 	virtual ~AbstractSetting() {}
-	virtual bool isValid() const{ return true; }
 	sigc::signal<void> signal_changed(){ return m_signal_changed; }
 	virtual void reread() = 0;
 
