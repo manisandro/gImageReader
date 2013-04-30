@@ -466,8 +466,15 @@ void Displayer::showSelectionMenu(GdkEventButton *ev, int i)
 		MAIN->getRecognizer()->recognizeImage(getTransformedImage(sel->getRect()), Recognizer::OutputDestination::Clipboard);
 		hideSelectionMenu();
 	});
-	m_selmenu->move(ev->x_root, ev->y_root);
+	Glib::RefPtr<const Gdk::Screen> screen = MAIN->getWindow()->get_screen();
+	Gdk::Rectangle rect = screen->get_monitor_workarea(screen->get_monitor_at_point(ev->x_root, ev->y_root));
 	m_selmenu->show_all();
+	int w, h, trash;
+	m_selmenu->get_preferred_width(trash, w);
+	m_selmenu->get_preferred_height(trash, h);
+	int x = std::min(std::max(int(ev->x_root), rect.get_x()), rect.get_x() + rect.get_width() - w);
+	int y = std::min(std::max(int(ev->y_root), rect.get_y()), rect.get_y() + rect.get_height() - h);
+	m_selmenu->move(x, y);
 	GdkWindow* gdkwin = m_selmenu->get_window()->gobj();
 	gdk_device_grab(gtk_get_current_event_device(), gdkwin, GDK_OWNERSHIP_APPLICATION, true, GDK_BUTTON_PRESS_MASK, nullptr, ev->time);
 }
