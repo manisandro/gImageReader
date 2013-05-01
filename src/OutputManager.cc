@@ -252,7 +252,7 @@ bool OutputManager::clearBuffer()
 
 void OutputManager::setLanguage(const Config::Lang& lang)
 {
-	MAIN->getNotifier()->hide();
+	Notifier::hide(m_notifierHandle);
 	m_spell.detach();
 	if(!lang.code.empty()){
 		try{
@@ -270,9 +270,9 @@ void OutputManager::setLanguage(const Config::Lang& lang)
 					g_warning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
 				}
 	#endif
-				Notifier::Action actionDontShowAgain = {_("Don't show again"), []{ MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->setValue(false); MAIN->getNotifier()->hide(); }};
-				Notifier::Action actionInstall = proxy ? Notifier::Action{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); }} : Notifier::Action{_("Help"), []{ MAIN->showHelp(); MAIN->getNotifier()->hide(); }};
-				MAIN->getNotifier()->notify(_("Spelling dictionary missing"), Glib::ustring::compose(_("The spellcheck dictionary for %1 is not installed"), lang.name), {actionInstall, actionDontShowAgain});
+				Notifier::Action actionDontShowAgain = {_("Don't show again"), []{ MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->setValue(false); return true; }};
+				Notifier::Action actionInstall = proxy ? Notifier::Action{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); return true; }} : Notifier::Action{_("Help"), []{ MAIN->showHelp(); return false; }};
+				Notifier::notify(_("Spelling dictionary missing"), Glib::ustring::compose(_("The spellcheck dictionary for %1 is not installed"), lang.name), {actionInstall, actionDontShowAgain}, &m_notifierHandle);
 			}
 		}
 	}
@@ -297,7 +297,7 @@ void OutputManager::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> pro
 		proxy->call_finish(result);
 		MAIN->getConfig()->updateLanguagesMenu();
 	} catch (const Glib::Error& e) {
-//		Utils::error_dialog(_("Failed to install spelling dictionary"), e.what());
+		Utils::error_dialog(_("Failed to install spelling dictionary"), e.what());
 	}
 	MAIN->popState();
 }

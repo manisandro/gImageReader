@@ -19,38 +19,48 @@
 
 #include "Notifier.hh"
 
-Notifier::Notifier()
-{
-	m_notifyEvBox = Builder("evbox:notifier");
-	m_notifyBox = Builder("box:notifier");
-	m_notifyTitle = Builder("label:notifier.title");
-	m_notifyMessage = Builder("label:notifier.message");
-	m_notifyEvBox->override_background_color(Gdk::RGBA("#FFE090"), Gtk::STATE_FLAG_NORMAL);
-	CONNECT(Builder("button:notifier.close").as<Gtk::Button>(), clicked, [this]{ hide(); });
-}
+static Glib::Quark handleQuark("handle");
 
-void Notifier::notify(const Glib::ustring &title, const Glib::ustring &message, const std::vector<Action> &actions)
+void Notifier::notify(const Glib::ustring &title, const Glib::ustring &message, const std::vector<Action> &actions, Notifier::Handle* handle)
 {
-	hide();
-	m_notifyTitle->set_markup(Glib::ustring::compose("<b>%1:</b>", title));
-	m_notifyMessage->set_text(message);
+	Gtk::Frame* frame = Gtk::manage(new Gtk::Frame);
+	frame->set_data(handleQuark, handle);
+	Gtk::Box* box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 5));
+	Gtk::Label* titlelabel = Gtk::manage(new Gtk::Label);
+	Gtk::Label* msglabel = Gtk::manage(new Gtk::Label("", 0.0, 0.5));
+	Gtk::Button* closebtn = Gtk::manage(new Gtk::Button);
+	frame->set_shadow_type(Gtk::SHADOW_OUT);
+	frame->override_background_color(Gdk::RGBA("#FFD000"), Gtk::STATE_FLAG_NORMAL);
+	titlelabel->set_markup(Glib::ustring::compose("<b>%1:</b>", title));
+	msglabel->set_markup(message);
+	closebtn->set_image(*Gtk::manage(new Gtk::Image(Gtk::StockID("gtk-close"), Gtk::ICON_SIZE_MENU)));
+	frame->add(*box);
+	CONNECT(closebtn, clicked, [frame]{ Notifier::hide(frame); });
+	box->pack_start(*titlelabel, false, true);
+	box->pack_start(*msglabel, true, true);
+	box->pack_end(*closebtn, false, true);
 	for(const Action& action : actions){
-		Gtk::Button* btn = new Gtk::Button(action.label);
+		Gtk::Button* btn = Gtk::manage(new Gtk::Button(action.label));
 		btn->set_relief(Gtk::RELIEF_NONE);
-		CONNECT(btn, clicked, action.action);
-		m_notifyBox->pack_start(*btn, Gtk::PACK_SHRINK);
-		m_buttons.push_back(btn);
+		CONNECT(btn, clicked, [frame,action]{ if(action.action()){ Notifier::hide(frame); }});
+		box->pack_start(*btn, false, true);
 		btn->get_child()->override_color(Gdk::RGBA("#0000FF"), Gtk::STATE_FLAG_NORMAL);
 	}
-	m_notifyEvBox->show_all();
+	frame->show_all();
+	Builder("box:main").as<Gtk::Box>()->pack_end(*frame, false, true);
+	if(handle != nullptr){
+		*handle = frame;
+	}
 }
 
-void Notifier::hide()
+void Notifier::hide(Handle handle)
 {
-	m_notifyEvBox->hide();
-	for(Gtk::Button* btn : m_buttons){
-		m_notifyBox->remove(*btn);
-		delete btn;
+	if(handle){
+		Gtk::Frame* frame = static_cast<Gtk::Frame*>(handle);
+		void* data = frame->get_data(handleQuark);
+		if(data != nullptr){
+			*static_cast<Gtk::Frame**>(data) = nullptr;
+		}
+		Builder("box:main").as<Gtk::Box>()->remove(*frame);
 	}
-	m_buttons.clear();
 }

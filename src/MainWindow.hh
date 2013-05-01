@@ -27,7 +27,6 @@
 class Config;
 class Acquirer;
 class Displayer;
-class Notifier;
 class OutputManager;
 class Recognizer;
 class SourceManager;
@@ -47,7 +46,6 @@ public:
 
 	Config* getConfig(){ return m_config; }
 	Displayer* getDisplayer(){ return m_displayer; }
-	Notifier* getNotifier(){ return m_notifier; }
 	OutputManager* getOutputManager(){ return m_outputManager; }
 	Recognizer* getRecognizer(){ return m_recognizer; }
 	SourceManager* getSourceManager(){ return m_sourceManager; }
@@ -66,7 +64,6 @@ private:
 	Config* m_config;
 	Acquirer* m_acquirer;
 	Displayer* m_displayer;
-	Notifier* m_notifier;
 	OutputManager* m_outputManager;
 	Recognizer* m_recognizer;
 	SourceManager* m_sourceManager;
@@ -82,7 +79,6 @@ private:
 	void setOutputPaneOrientation(Gtk::ComboBoxText* combo);
 	void getNewestVersion();
 	void checkVersion(const Glib::ustring& newver);
-	void disableVersionCheck();
 };
 
 #endif

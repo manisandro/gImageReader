@@ -24,25 +24,18 @@
 
 #include <functional>
 
-class Notifier {
-public:
-	struct Action {
-		Glib::ustring label;
-		std::function<void()> action;
-	};
+namespace Notifier {
 
-	Notifier();
-	~Notifier(){ hide(); }
-
-	void notify(const Glib::ustring& title, const Glib::ustring& message, const std::vector<Action>& actions);
-	void hide();
-
-private:
-	Gtk::EventBox* m_notifyEvBox;
-	Gtk::Box* m_notifyBox;
-	Gtk::Label* m_notifyTitle;
-	Gtk::Label* m_notifyMessage;
-	std::vector<Gtk::Button*> m_buttons;
+struct Action {
+	Glib::ustring label;
+	std::function<bool()> action;
 };
+
+typedef void* Handle;
+
+void notify(const Glib::ustring& title, const Glib::ustring& message, const std::vector<Action>& actions, Handle* handle = nullptr);
+void hide(Handle handle);
+
+} // Notifier
 
 #endif // NOTIFIER_HH

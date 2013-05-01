@@ -42,7 +42,6 @@ MainWindow::MainWindow()
 	m_config = new Config;
 	m_acquirer = new Acquirer;
 	m_displayer = new Displayer;
-	m_notifier = new Notifier;
 	m_outputManager = new OutputManager;
 	m_recognizer = new Recognizer;
 	m_sourceManager = new SourceManager;
@@ -108,7 +107,6 @@ MainWindow::~MainWindow()
 	delete m_config;
 	delete m_acquirer;
 	delete m_displayer;
-	delete m_notifier;
 	delete m_outputManager;
 	delete m_recognizer;
 	delete m_sourceManager;
@@ -208,15 +206,9 @@ void MainWindow::checkVersion(const Glib::ustring& newver)
 	}
 
 	if(newver.compare(curver) > 0){
-		m_notifier->notify(_("New version"), Glib::ustring::compose(_("gImageReader %1 is available"), newver),
-			{{_("Download"), []{ gtk_show_uri(Gdk::Screen::get_default()->gobj(), DOWNLOADURL, GDK_CURRENT_TIME, 0); }},
-			 {_("Changelog"), []{ gtk_show_uri(Gdk::Screen::get_default()->gobj(), CHANGELOGURL, GDK_CURRENT_TIME, 0); }},
-			 {_("Don't notify again"), [this]{ disableVersionCheck(); }}});
+		Notifier::notify(_("New version"), Glib::ustring::compose(_("gImageReader %1 is available"), newver),
+			{{_("Download"), []{ gtk_show_uri(Gdk::Screen::get_default()->gobj(), DOWNLOADURL, GDK_CURRENT_TIME, 0); return false; }},
+			 {_("Changelog"), []{ gtk_show_uri(Gdk::Screen::get_default()->gobj(), CHANGELOGURL, GDK_CURRENT_TIME, 0); return false; }},
+			 {_("Don't notify again"), [this]{ m_config->getSetting<SwitchSetting>("updatecheck")->setValue(false); return true; }}});
 	}
-}
-
-void MainWindow::disableVersionCheck()
-{
-	m_notifier->hide();
-	m_config->getSetting<SwitchSetting>("updatecheck")->setValue(false);
 }

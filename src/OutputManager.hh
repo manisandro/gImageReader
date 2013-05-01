@@ -23,6 +23,7 @@
 #include "common.hh"
 #include "UndoableBuffer.hh"
 #include "Config.hh"
+#include "Notifier.hh"
 
 #include <gtkspellmm.h>
 
@@ -56,6 +57,7 @@ private:
 	InsertMode m_insertMode;
 	Gtk::TextIter m_searchIter;
 	GtkSpell::Checker m_spell;
+	Notifier::Handle m_notifierHandle = nullptr;
 
 	void showInsertMenu();
 	void setInsertMode(InsertMode mode, Gtk::ImageMenuItem *item);
