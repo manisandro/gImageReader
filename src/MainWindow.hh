@@ -59,9 +59,9 @@ private:
 
 	Gtk::Window* m_window;
 	Gtk::Menu* m_menu;
-	Gtk::ToggleToolButton* m_menubutton;
 	Gtk::AboutDialog* m_aboutdialog;
 	Gtk::Statusbar* m_statusbar;
+	Gtk::MenuButton m_menubutton;
 
 	Config* m_config;
 	Acquirer* m_acquirer;
@@ -78,7 +78,6 @@ private:
 
 	void setState(State state);
 	bool quit(GdkEventAny*);
-	void showMainMenu();
 	void showAbout();
 	void setOutputPaneOrientation(Gtk::ComboBoxText* combo);
 	void getNewestVersion();

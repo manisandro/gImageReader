@@ -901,6 +901,7 @@ MA 02110-1301, USA.</property>
   <object class="GtkMenu" id="menu:main">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="halign">end</property>
     <child>
       <object class="GtkImageMenuItem" id="menuitem:main.configure">
         <property name="label">gtk-preferences</property>
@@ -1370,14 +1371,14 @@ MA 02110-1301, USA.</property>
               </packing>
             </child>
             <child>
-              <object class="GtkToggleToolButton" id="tbbutton:options">
+              <object class="GtkToolItem" id="tbbutton:options">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="has_tooltip">True</property>
                 <property name="tooltip_text" translatable="yes">Options</property>
-                <property name="label" translatable="yes">Options</property>
-                <property name="use_underline">True</property>
-                <property name="stock_id">gtk-preferences</property>
+                <child>
+                  <placeholder/>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>

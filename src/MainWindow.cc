@@ -49,10 +49,15 @@ MainWindow::MainWindow()
 
 	m_window = Builder("window:main");
 	m_menu = Builder("menu:main");
-	m_menubutton = Builder("tbbutton:options");
 	m_aboutdialog = Builder("dialog:about");
 	m_statusbar = Builder("statusbar:main");
 	m_aboutdialog->set_version(PACKAGE_VERSION);
+
+	Builder("tbbutton:options").as<Gtk::ToolItem>()->add(m_menubutton);
+	m_menubutton.set_popup(*Builder("menu:main").as<Gtk::Menu>());
+	m_menubutton.set_image(*Gtk::manage(new Gtk::Image(Gtk::StockID("gtk-preferences"), Gtk::ICON_SIZE_LARGE_TOOLBAR)));
+	m_menubutton.set_relief(Gtk::RELIEF_NONE);
+	m_menubutton.show();
 
 	m_idlegroup.push_back(Builder("tbbutton:main.zoomin"));
 	m_idlegroup.push_back(Builder("tbbutton:main.zoomout"));
@@ -69,8 +74,6 @@ MainWindow::MainWindow()
 	m_idlegroup.push_back(Builder("tbmenu:main.recognize"));
 
 	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) { return quit(ev); });
-	CONNECT(m_menubutton, toggled, [this]{ showMainMenu(); });
-	CONNECT(m_menu, deactivate, [this]{ m_menubutton->set_active(false); });
 	CONNECT(Builder("menuitem:main.configure").as<Gtk::MenuItem>(), activate, [this]{ m_config->showDialog(); });
 	CONNECT(Builder("menuitem:main.about").as<Gtk::MenuItem>(), activate, [this]{ showAbout(); });
 	CONNECTS(Builder("combo:config.settings.paneorient").as<Gtk::ComboBoxText>(), changed,
@@ -161,14 +164,6 @@ bool MainWindow::quit(GdkEventAny*)
 		m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->setValue(geom);
 	}
 	return false;
-}
-
-void MainWindow::showMainMenu()
-{
-	if(m_menubutton->get_active()){
-		auto positioner = sigc::bind(sigc::ptr_fun(Utils::popup_positioner), m_menubutton, m_menu, true, true);
-		m_menu->popup(positioner, 0, gtk_get_current_event_time());
-	}
 }
 
 void MainWindow::showAbout()
