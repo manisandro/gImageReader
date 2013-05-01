@@ -295,10 +295,10 @@ void OutputManager::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> pro
 {
 	try {
 		proxy->call_finish(result);
-		MAIN->getConfig()->updateLanguagesMenu();
 	} catch (const Glib::Error& e) {
 		Utils::error_dialog(_("Failed to install spelling dictionary"), e.what());
 	}
+	MAIN->getConfig()->updateLanguagesMenu();
 	MAIN->popState();
 }
 #endif
