@@ -37,8 +37,9 @@ public:
 	{
 		delete m_mainWindow;
 	}
-	void on_activate()
+	void on_startup()
 	{
+		Gtk::Application::on_startup();
 		m_mainWindow = new MainWindow;
 		add_window(*m_mainWindow->getWindow());
 	}
