@@ -62,8 +62,8 @@ Displayer::Displayer()
 	CONNECT(m_resspin, value_changed, [this]{ spinChanged(); });
 	CONNECT(m_brispin, value_changed, [this]{ spinChanged(); });
 	CONNECT(m_conspin, value_changed, [this]{ spinChanged(); });
-	m_connection_mouseMove = CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev){ mouseMove(ev); return false; });
-	m_connection_mousePress = CONNECT(m_viewport, button_press_event, [this](GdkEventButton* ev){ mousePress(ev); return false; });
+	m_connection_mouseMove = CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev){ mouseMove(ev); return true; });
+	m_connection_mousePress = CONNECT(m_viewport, button_press_event, [this](GdkEventButton* ev){ mousePress(ev); return true; });
 	CONNECT(m_viewport, scroll_event, [this](GdkEventScroll* ev){ return scrollZoom(ev); });
 	CONNECT(m_canvas, draw, [this](const Cairo::RefPtr<Cairo::Context>& ctx){ canvasDraw(ctx); return false; });
 	CONNECT(m_zoominbtn, clicked, [this]{ setZoom(ZoomMode::In); });
@@ -77,14 +77,13 @@ Displayer::Displayer()
 	CONNECT(m_rotspin, value_changed, [this]{ rotate(); });
 	CONNECT(Builder("tbbutton:main.autolayout").as<Gtk::ToolButton>(), clicked, [this]{ autodetectLayout(); });
 	CONNECT(m_selmenu, button_press_event, [this](GdkEventButton* ev){
-		if(ev->x < m_selmenu->get_allocation().get_x() || ev->x > m_selmenu->get_allocation().get_width() ||
-		   ev->y < m_selmenu->get_allocation().get_y() || ev->y > m_selmenu->get_allocation().get_height())
-		{
+		Gtk::Allocation a = m_selmenu->get_allocation();
+		if(ev->x < a.get_x() || ev->x > a.get_x() + a.get_width() || ev->y < a.get_y() || ev->y > a.get_y() + a.get_height()){
 			hideSelectionMenu();
 		}
-		return false; });
+		return true; });
 	CONNECT(m_selmenu, key_press_event, [this](GdkEventKey* ev){
-		if(ev->keyval == GDK_KEY_Escape) hideSelectionMenu(); return false;
+		if(ev->keyval == GDK_KEY_Escape) hideSelectionMenu(); return true;
 	});
 
 	CONNECT(Builder("window:main").as<Gtk::Window>()->get_style_context(), changed, [this]{ selectionUpdateColors(); });
@@ -384,8 +383,8 @@ void Displayer::mousePress(GdkEventButton* ev)
 		m_curSel = new DisplaySelectionHandle(sel);
 		m_selections.insert(m_selections.end(), sel);
 	}
-	m_connection_selDo = CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev){ selectionDo(ev); return false; });
-	m_connection_selEnd = CONNECT(m_viewport, button_release_event, [this](GdkEventButton* ev){ selectionEnd(); return false; });
+	m_connection_selDo = CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev){ selectionDo(ev); return true; });
+	m_connection_selEnd = CONNECT(m_viewport, button_release_event, [this](GdkEventButton* ev){ selectionEnd(); return true; });
 }
 
 void Displayer::selectionDo(GdkEventMotion* ev)
