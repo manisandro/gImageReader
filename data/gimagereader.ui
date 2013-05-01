@@ -841,6 +841,12 @@ MA 02110-1301, USA.</property>
       </packing>
     </child>
   </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-refresh</property>
+    <property name="icon-size">1</property>
+  </object>
   <object class="GtkImage" id="image:input.acquire.scan">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -908,6 +914,16 @@ MA 02110-1301, USA.</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="halign">end</property>
+    <child>
+      <object class="GtkImageMenuItem" id="menuitem:main.redetect">
+        <property name="label" translatable="yes">_Redetect Languages</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_underline">True</property>
+        <property name="image">image1</property>
+        <property name="use_stock">False</property>
+      </object>
+    </child>
     <child>
       <object class="GtkImageMenuItem" id="menuitem:main.configure">
         <property name="label">gtk-preferences</property>
