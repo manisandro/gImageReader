@@ -282,7 +282,7 @@ void OutputManager::setLanguage(const Config::Lang& lang)
 void OutputManager::dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring &lang)
 {
 	MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), lang));
-	unsigned long xid = gdk_x11_window_get_xid(MAIN->getWindow()->get_window()->gobj());
+	std::uint32_t xid = gdk_x11_window_get_xid(MAIN->getWindow()->get_window()->gobj());
 	std::vector<Glib::ustring> files = {"/usr/share/myspell/" + lang + ".dic", "/usr/share/hunspell/" + lang + ".dic"};
 	std::vector<Glib::VariantBase> params = { Glib::Variant<std::uint32_t>::create(xid),
 											  Glib::Variant<std::vector<Glib::ustring>>::create(files),
