@@ -52,7 +52,6 @@ public:
 	Geometry::Rectangle setPoint(const Geometry::Point& point){ return m_sel->setPoint(point, m_idx); }
 	DisplaySelection* getSelection(){ return m_sel; }
 	Gdk::CursorType getResizeCursor() const;
-	bool isNull() const{ return m_sel == nullptr; }
 
 private:
 	DisplaySelection* m_sel;

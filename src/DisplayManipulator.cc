@@ -20,52 +20,7 @@
 #include "DisplayManipulator.hh"
 #include "Geometry.hh"
 
-//#include <pixman.h>
 #include <set>
-
-/*Cairo::RefPtr<Cairo::ImageSurface> blur_image(Cairo::RefPtr<Cairo::ImageSurface> in, int radius)
-{
-	// Create gaussian blur kernel
-	const double sigma = 2.0;
-	const double scale2 = 2.0 * sigma * sigma;
-	const double scale1 = 1.0 / (M_PI * scale2);
-
-	const int size = 2 * radius + 1;
-	const int n_params = size * size;
-
-	double* tmp = new double[n_params];
-	double sum = 0;
-	int i = 0;
-	for(int x = -radius; x <= radius; ++x){
-		for(int y = -radius; y <= radius; ++y){
-			sum += tmp[i++] = scale1 * std::exp(-(x*x + y*y)/scale2);
-		}
-	}
-	pixman_fixed_t* params = new pixman_fixed_t[n_params + 2];
-	params[0] = pixman_int_to_fixed(size);
-	params[1] = pixman_int_to_fixed(size);
-	for(i = 0; i < n_params; ++i){
-		params[2 + 1] = pixman_double_to_fixed(tmp[i] / sum);
-	}
-	delete[] tmp;
-
-	int w = in->get_width();
-	int h = in->get_height();
-	int s = in->get_stride();
-
-	pixman_image_t* src = pixman_image_create_bits(PIXMAN_a8r8g8b8, w, h, (uint32_t*)in->get_data(), s);
-	pixman_image_set_filter(src, PIXMAN_FILTER_CONVOLUTION, params, n_params + 2);
-
-	Cairo::RefPtr<Cairo::ImageSurface> out = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, w, h);
-	pixman_image_t* dst = pixman_image_create_bits(PIXMAN_a8b8g8r8, w, h, (uint32_t*)out->get_data(), s);
-	pixman_image_composite(PIXMAN_OP_SRC, src, NULL, dst, 0, 0, 0, 0, 0, 0, w, h);
-
-	pixman_image_unref(src);
-	pixman_image_unref(dst);
-	delete[] params;
-
-	return in;
-}*/
 
 void Manipulators::adjustBrightness(Cairo::RefPtr<Cairo::ImageSurface> surf, int adjustment)
 {
