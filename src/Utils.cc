@@ -129,8 +129,11 @@ bool Utils::busyTask(const std::function<bool()> &f, const Glib::ustring &msg)
 	Glib::Threads::Mutex mutex;
 	MAIN->pushState(MainWindow::State::Busy, msg);
 
-	Glib::Threads::Thread* thread = Glib::Threads::Thread::create([&f, &taskState ]{
-		taskState  = f() ? TaskState::Succeeded : TaskState::Failed;
+	Glib::Threads::Thread* thread = Glib::Threads::Thread::create([&]{
+		bool success = f();
+		mutex.lock();
+		taskState = success ? TaskState::Succeeded : TaskState::Failed;
+		mutex.unlock();
 	});
 	mutex.lock();
 	while(taskState  == TaskState::Waiting){
