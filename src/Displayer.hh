@@ -112,6 +112,22 @@ private:
 	void showSelectionMenu(GdkEventButton* ev, int i);
 	void hideSelectionMenu();
 	Cairo::RefPtr<Cairo::ImageSurface> getTransformedImage(const Geometry::Rectangle& rect) const;
+
+	// Stuff for workaround until cairo supports propper downscaling...
+	Cairo::RefPtr<Cairo::ImageSurface> m_blurImage;
+	Glib::Threads::Thread* m_blurThread;
+	Glib::Threads::Mutex m_blurMutex;
+	Glib::Threads::Cond m_blurReqCond;
+	Glib::Threads::Cond m_blurIdleCond;
+	bool m_blurRequestPending = false;
+	bool m_blurThreadIdle = true;
+	struct BlurRequest {
+		enum Action { Start, Stop, Quit } action;
+		double res;
+		int page, brightness, contrast;
+	} m_blurRequest;
+	void blurThread();
+	void sendBlurRequest(BlurRequest::Action action, bool wait = false);
 };
 
 #endif // IMAGEDISPLAYER_HH

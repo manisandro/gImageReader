@@ -87,12 +87,78 @@ Displayer::Displayer()
 	});
 
 	CONNECT(Builder("window:main").as<Gtk::Window>()->get_style_context(), changed, [this]{ selectionUpdateColors(); });
+
+	m_blurThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::blurThread));
 }
 
 Displayer::~Displayer()
 {
 	delete m_renderer;
 	for(const DisplaySelection* sel : m_selections){ delete sel; }
+	sendBlurRequest(BlurRequest::Quit, true);
+}
+
+void Displayer::blurThread()
+{
+	m_blurMutex.lock();
+	while(true){
+		m_blurThreadIdle = true;
+		m_blurIdleCond.signal();
+		while(!m_blurRequestPending){
+			m_blurReqCond.wait(m_blurMutex);
+		}
+		m_blurRequestPending = false;
+		if(m_blurRequest.action == BlurRequest::Quit){
+			m_blurIdleCond.signal();
+			break;
+		}else if(m_blurRequest.action == BlurRequest::Stop){
+			continue;
+		}
+		BlurRequest req = m_blurRequest;
+		m_blurThreadIdle = false;
+		m_blurMutex.unlock();
+#define CHECK_PENDING { m_blurMutex.lock(); bool pending = m_blurRequestPending; m_blurMutex.unlock(); if(pending) continue;}
+		Cairo::RefPtr<Cairo::ImageSurface> blurred = m_renderer->render(req.page, req.res);
+		CHECK_PENDING
+		Manipulators::adjustBrightness(blurred, req.brightness);
+		CHECK_PENDING
+		Manipulators::adjustContrast(blurred, req.contrast);
+		CHECK_PENDING
+		Glib::signal_idle().connect_once([=]{
+			if(!m_blurRequestPending){
+				m_blurImage = blurred;
+				m_canvas->queue_draw();
+			}
+		});
+	};
+	m_blurMutex.unlock();
+}
+
+void Displayer::sendBlurRequest(BlurRequest::Action action, bool wait)
+{
+	m_blurImage.clear();
+	BlurRequest request = {action};
+	if(request.action == BlurRequest::Start){
+		request.res = m_resspin->get_value() * m_geo.s;
+		request.page = m_pagespin->get_value_as_int();
+		request.brightness = m_brispin->get_value_as_int();
+		request.contrast = m_conspin->get_value_as_int();
+	}
+	m_blurMutex.lock();
+	m_blurRequest = request;
+	m_blurRequestPending = true;
+	m_blurReqCond.signal();
+	m_blurMutex.unlock();
+	if(wait){
+		m_blurMutex.lock();
+		while(!m_blurThreadIdle){
+			m_blurIdleCond.wait(m_blurMutex);
+		}
+		m_blurMutex.unlock();
+	}
+	if(action == BlurRequest::Quit){
+		m_blurThread->join();
+	}
 }
 
 void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx)
@@ -105,11 +171,19 @@ void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx)
 	// Set up transformations
 	ctx->translate(0.5 * alloc.get_width(), 0.5 * alloc.get_height());
 	ctx->rotate(m_geo.a);
-	ctx->scale(m_geo.s, m_geo.s);
-	ctx->translate(-0.5 * m_image->get_width(), -0.5 * m_image->get_height());
+//	ctx->scale(m_geo.s, m_geo.s);
+//	ctx->translate(-0.5 * m_image->get_width(), -0.5 * m_image->get_height());
 	// Set source and apply all transformations to it
-	ctx->set_source(m_image, 0, 0);
-	Cairo::RefPtr<Cairo::SurfacePattern>::cast_dynamic(ctx->get_source())->set_filter(Cairo::FILTER_BEST);
+	if(!m_blurImage){
+		ctx->scale(m_geo.s, m_geo.s);
+		ctx->translate(-0.5 * m_image->get_width(), -0.5 * m_image->get_height());
+		ctx->set_source(m_image, 0, 0);
+	}else{
+		ctx->translate(-0.5 * m_blurImage->get_width(), -0.5 * m_blurImage->get_height());
+		ctx->set_source(m_blurImage, 0, 0);
+	}
+//	ctx->set_source(m_image, 0, 0);
+//	Cairo::RefPtr<Cairo::SurfacePattern>::cast_dynamic(ctx->get_source())->set_filter(Cairo::FILTER_BEST);
 	ctx->paint();
 	// Draw selections
 	ctx->restore();
@@ -141,6 +215,7 @@ void Displayer::positionCanvas(bool zoom)
 	// Repeat to cover cases where scrollbars did disappear
 	if(zoom && m_zoomFit){
 		m_geo.s = std::min(m_viewport->get_allocated_width() / bbw, m_viewport->get_allocated_height() / bbh);
+		sendBlurRequest(BlurRequest::Start);
 		m_canvas->set_size_request(Utils::round(bbw * m_geo.s), Utils::round(bbh * m_geo.s));
 		m_scrollwin->resize_children();
 	}
@@ -207,6 +282,7 @@ void Displayer::setZoom(ZoomMode zoom)
 	m_zoomoutbtn->set_sensitive(m_geo.s > 0.05);
 	m_zoominbtn->set_sensitive(m_geo.s < 10.);
 	m_zoomonebtn->set_sensitive(m_geo.s != 1.);
+	sendBlurRequest(BlurRequest::Start);
 	positionCanvas();
 }
 
@@ -293,6 +369,7 @@ bool Displayer::setImage(int page)
 	int bri = m_brispin->get_value_as_int();
 	int con = m_conspin->get_value_as_int();
 	Cairo::RefPtr<Cairo::ImageSurface> image;
+	sendBlurRequest(BlurRequest::Stop, true);
 	bool success = Utils::busyTask([this, page, res, bri, con, &image] {
 		image = m_renderer->render(page, res);
 		Manipulators::adjustBrightness(image, bri);
@@ -300,6 +377,7 @@ bool Displayer::setImage(int page)
 		return bool(image);
 	}, _("Rendering image..."));
 	m_image = image;
+	sendBlurRequest(BlurRequest::Start);
 	return success;
 }
 
