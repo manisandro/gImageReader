@@ -90,7 +90,7 @@ private:
 	sigc::connection m_connection_selmenu_recognize;
 	sigc::connection m_connection_selmenu_clipboard;
 
-	void canvasDraw(const Cairo::RefPtr<Cairo::Context>& ctx);
+	void drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx);
 	void positionCanvas(bool zoom = false);
 	bool scrollZoom(GdkEventScroll* ev);
 	void saveScrollMark(Glib::RefPtr<Gtk::Adjustment> adj, double& s);

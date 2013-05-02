@@ -65,7 +65,7 @@ Displayer::Displayer()
 	m_connection_mouseMove = CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev){ mouseMove(ev); return true; });
 	m_connection_mousePress = CONNECT(m_viewport, button_press_event, [this](GdkEventButton* ev){ mousePress(ev); return true; });
 	CONNECT(m_viewport, scroll_event, [this](GdkEventScroll* ev){ return scrollZoom(ev); });
-	CONNECT(m_canvas, draw, [this](const Cairo::RefPtr<Cairo::Context>& ctx){ canvasDraw(ctx); return false; });
+	CONNECT(m_canvas, draw, [this](const Cairo::RefPtr<Cairo::Context>& ctx){ drawCanvas(ctx); return false; });
 	CONNECT(m_zoominbtn, clicked, [this]{ setZoom(ZoomMode::In); });
 	CONNECT(m_zoomoutbtn, clicked, [this]{ setZoom(ZoomMode::Out); });
 	CONNECT(m_zoomfitbtn, clicked, [this]{ setZoom(ZoomMode::Fit); });
@@ -95,7 +95,7 @@ Displayer::~Displayer()
 	for(const DisplaySelection* sel : m_selections){ delete sel; }
 }
 
-void Displayer::canvasDraw(const Cairo::RefPtr<Cairo::Context> &ctx)
+void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx)
 {
 	if(!m_image){
 		return;
