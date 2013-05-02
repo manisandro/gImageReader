@@ -31,8 +31,8 @@
 #define SYNC_NOTIFY __finished = true; __cond.signal();
 #define SYNC_WAIT __mutex.lock(); while(!__finished){ __cond.wait(__mutex); }
 
-#undef g_debug
-#define g_debug(...) printf(__VA_ARGS__); printf("\n"); fflush(stdout);
+//#undef g_debug
+//#define g_debug(...) printf(__VA_ARGS__); printf("\n"); fflush(stdout);
 
 
 struct Scanner::ScanJob {
