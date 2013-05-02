@@ -1298,7 +1298,7 @@ MA 02110-1301, USA.</property>
                   <object class="GtkSpinButton" id="spin:display.page">
                     <property name="can_focus">True</property>
                     <property name="invisible_char">●</property>
-                    <property name="width_chars">6</property>
+                    <property name="width_chars">7</property>
                     <property name="truncate_multiline">True</property>
                     <property name="invisible_char_set">True</property>
                     <property name="caps_lock_warning">False</property>
@@ -1844,7 +1844,7 @@ MA 02110-1301, USA.</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">●</property>
-                                <property name="width_chars">6</property>
+                                <property name="width_chars">7</property>
                                 <property name="truncate_multiline">True</property>
                                 <property name="primary_icon_pixbuf">icons/brightness.png</property>
                                 <property name="primary_icon_activatable">False</property>
@@ -1870,7 +1870,7 @@ MA 02110-1301, USA.</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">●</property>
-                                <property name="width_chars">6</property>
+                                <property name="width_chars">7</property>
                                 <property name="truncate_multiline">True</property>
                                 <property name="invisible_char_set">True</property>
                                 <property name="primary_icon_pixbuf">icons/contrast.png</property>
@@ -1897,7 +1897,7 @@ MA 02110-1301, USA.</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">●</property>
-                                <property name="width_chars">6</property>
+                                <property name="width_chars">7</property>
                                 <property name="truncate_multiline">True</property>
                                 <property name="invisible_char_set">True</property>
                                 <property name="primary_icon_pixbuf">icons/resolution.png</property>
