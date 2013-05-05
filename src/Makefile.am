@@ -35,15 +35,18 @@ gimagereader_SOURCES = \
 	OutputManager.hh \
 	Recognizer.cc \
 	Recognizer.hh \
-	SaneScanner.cc \
-	SaneScanner.hh \
+	Scanner.cc \
+	Scanner.hh \
+	ScannerSane.hh \
+	ScannerTwain.hh \
 	SourceManager.cc \
 	SourceManager.hh \
 	UndoableBuffer.cc \
 	UndoableBuffer.hh \
 	Utils.cc \
-	Utils.hh
+	Utils.hh \
+	twain.h
 
 gimagereader_LDFLAGS =
 
-gimagereader_LDADD = $(GIMAGEREADER_LIBS)
+gimagereader_LDADD = $(GIMAGEREADER_LIBS) -ldl

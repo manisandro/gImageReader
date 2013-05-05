@@ -21,9 +21,11 @@
 #define ACQUIRER_HH
 
 #include "common.hh"
-#include "SaneScanner.hh"
+#include "Scanner.hh"
 
-class Acquirer : public Scanner::PageHandler {
+class Scanner;
+
+class Acquirer {
 public:
 	Acquirer();
 	~Acquirer();
@@ -53,21 +55,15 @@ private:
 
 	Scanner* m_scanner;
 
-	int m_height, m_rowstride;
-	std::vector<uint8_t> m_buf;
-
 	void selectOutputPath();
 	void genOutputPath();
 	void scanInitFailed();
-	void authorizeScanner(const std::string &res);
 	void startDetectDevices();
 	void doneDetectDevices(const std::vector<Scanner::ScanDevice>& devices);
 	void startScan();
 	void cancelScan();
 	void doneScan();
-	void setupPage(const Scanner::ScanPageInfo &info);
-	void handleData(const Scanner::ScanLine &line);
-	void finalizePage();
+	void setScanState(Scanner::ScanState state);
 };
 
 #endif // ACQUIRER_HH

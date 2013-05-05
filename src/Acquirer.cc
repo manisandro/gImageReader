@@ -20,7 +20,6 @@
 #include "Acquirer.hh"
 #include "Config.hh"
 #include "MainWindow.hh"
-#include "SaneScanner.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
 
@@ -57,10 +56,10 @@ Acquirer::Acquirer()
 	CONNECT(m_cancelButton, clicked, [this]{ cancelScan(); });
 	CONNECT(Builder("button:sources.acquire.output").as<Gtk::Button>(), clicked, [this]{ selectOutputPath(); });
 	CONNECT(m_scanner, init_failed, [this]{ scanInitFailed(); });
-	CONNECT(m_scanner, request_authorization, [this](const std::string& res){ authorizeScanner(res); });
 	CONNECT(m_scanner, update_devices, [this](const std::vector<Scanner::ScanDevice>& devices){ doneDetectDevices(devices); });
-	CONNECT(m_scanner, scan_failed, [this](int code, const std::string& msg){ m_msgLabel->set_markup(Glib::ustring::compose("<span color='red'>%1: %2</span>", _("Scan failed"), msg)); });
-	CONNECT(m_scanner, scanning_changed, [this](bool scanning){ if(!scanning){ doneScan(); } });
+	CONNECT(m_scanner, scan_failed, [this](const std::string& msg){ m_msgLabel->set_markup(Glib::ustring::compose("<span color='red'>%1: %2</span>", _("Scan failed"), msg)); });
+	CONNECT(m_scanner, scanning_changed, [this](Scanner::ScanState state){ setScanState(state); });
+	CONNECT(m_scanner, page_available, [this](const std::string& file){ MAIN->getSourceManager()->addSources({Gio::File::create_for_path(file)});});
 	CONNECT(m_devCombo, changed, [this]{ auto it = m_devCombo->get_active(); m_devCombo->set_tooltip_text(it ? static_cast<std::string>((*it)[m_devComboCols.label]) : ""); });
 
 	m_scanner->start();
@@ -129,18 +128,6 @@ void Acquirer::scanInitFailed()
 	m_scanner->stop();
 }
 
-void Acquirer::authorizeScanner(const std::string& /*res*/)
-{
-	Gtk::Dialog* pwdDialog = Builder("dialog:scanpwd");
-	Gtk::Label* username = Builder("entry:scanpwd.username");
-	Gtk::Label* password = Builder("entry:scanpwd.password");
-	if(pwdDialog->run() == Gtk::RESPONSE_OK){
-		m_scanner->authorize(username->get_text(), password->get_text());
-	}else{
-		m_scanner->authorize("", "");
-	}
-}
-
 void Acquirer::startDetectDevices()
 {
 	m_refreshButton->hide();
@@ -180,9 +167,27 @@ void Acquirer::startScan()
 
 	int res[] = {75, 100, 200, 300, 600, 1200};
 	Scanner::ScanMode modes[] = {Scanner::ScanMode::COLOR, Scanner::ScanMode::GRAY};
+	genOutputPath();
+	Scanner::ScanOptions opts = {m_outputPath, res[m_resCombo->get_active_row_number()], modes[m_modeCombo->get_active_row_number()], 8, Scanner::ScanType::SINGLE, 0, 0};
+	genOutputPath();
+	m_scanner->scan((*m_devCombo->get_active())[m_devComboCols.name], opts);
+}
 
-	Scanner::ScanOptions opts = {res[m_resCombo->get_active_row_number()], modes[m_modeCombo->get_active_row_number()], 8, Scanner::ScanType::SINGLE, 0, 0};
-	m_scanner->scan((*m_devCombo->get_active())[m_devComboCols.name], this, opts);
+void Acquirer::setScanState(Scanner::ScanState state)
+{
+	if(state == Scanner::ScanState::OPEN){
+		m_msgLabel->set_text(_("Opening device..."));
+	}else if(state == Scanner::ScanState::SET_OPTIONS){
+		m_msgLabel->set_text(_("Setting options..."));
+	}else if(state == Scanner::ScanState::START){
+		m_msgLabel->set_text(_("Starting scan..."));
+	}else if(state == Scanner::ScanState::GET_PARAMETERS){
+		m_msgLabel->set_text(_("Getting parameters..."));
+	}else if(state == Scanner::ScanState::READ){
+		m_msgLabel->set_text(_("Transferring data..."));
+	}else if(state == Scanner::ScanState::IDLE){
+		doneScan();
+	}
 }
 
 void Acquirer::cancelScan()
@@ -197,53 +202,4 @@ void Acquirer::doneScan()
 	m_buttonBox->remove(*m_cancelButton);
 	m_buttonBox->pack_start(*m_scanButton, false, true);
 	m_msgLabel->set_text("");
-}
-
-void Acquirer::setupPage(const Scanner::ScanPageInfo &info)
-{
-	m_height = std::max(1, info.height);
-	m_rowstride = info.width * 3; // Buffer is for a 24 bit RGB image
-	m_buf.resize(m_rowstride * info.height);
-	m_msgLabel->set_text(_("Transferring data..."));
-}
-
-void Acquirer::handleData(const Scanner::ScanLine &line)
-{
-	// Resize image if necessary
-	if(line.number + line.n_lines > m_height){
-		m_height = line.number + line.n_lines;
-		m_buf.resize(m_rowstride * m_height);
-	}
-
-	for(int n = line.number; n < line.number + line.n_lines; ++n){
-		int offset = n * m_rowstride;
-		if(line.channel == Scanner::Channel::GRAY){
-			for(std::size_t i = 0; i < line.data.size(); ++i){
-				memset(&m_buf[offset + 3*i], line.data[i], 3);
-			}
-		}else if(line.channel == Scanner::Channel::RGB){
-			std::memcpy(&m_buf[offset], &line.data[0], line.data.size());
-		}else if(line.channel == Scanner::Channel::RED){
-			for(std::size_t i = 0; i < line.data.size(); ++i){
-				m_buf[offset + 3*i + 0] = line.data[i];
-			}
-		}else if(line.channel == Scanner::Channel::GREEN){
-			for(std::size_t i = 0; i < line.data.size(); ++i){
-				m_buf[offset + 3*i + 1] = line.data[i];
-			}
-		}else if(line.channel == Scanner::Channel::BLUE){
-			for(std::size_t i = 0; i < line.data.size(); ++i){
-				m_buf[offset + 3*i + 2] = line.data[i];
-			}
-		}
-	}
-}
-
-void Acquirer::finalizePage()
-{
-	genOutputPath();
-	Gdk::Pixbuf::create_from_data(m_buf.data(), Gdk::COLORSPACE_RGB, false, 8, m_rowstride/3, m_height, m_rowstride)->save(m_outputPath, "png");
-	MAIN->getSourceManager()->addSources({Gio::File::create_for_path(m_outputPath)});
-	genOutputPath();
-	m_buf.clear();
 }
