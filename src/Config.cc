@@ -217,7 +217,7 @@ void Config::updateLanguagesMenu()
 				Glib::ustring prettyname = lang.name + " (" + dict + ")";
 				CONNECT(radioitem, toggled, [this, radioitem, itemlang, prettyname]{ setLanguage(radioitem, itemlang, prettyname); });
 				if((curlang.prefix == lang.prefix) &&
-				   (curlang.code.empty() || curlang.code.substr(0, 2) == dict.substr(0, 2) || curlang.code == dict))
+				   (curlang.code.empty() || curlang.code == dict.substr(0, 2) || curlang.code == dict))
 				{
 					curlang = itemlang;
 					radioitem->set_active(true);
