@@ -1441,6 +1441,7 @@ MA 02110-1301, USA.</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="model">liststore:input.acquire.device</property>
+                                    <property name="popup_fixed_width">False</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>

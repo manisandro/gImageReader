@@ -44,7 +44,6 @@ Acquirer::Acquirer()
 	cell->property_ellipsize() = Pango::ELLIPSIZE_END;
 	m_devCombo->pack_start(*cell, true);
 	m_devCombo->add_attribute(*cell, "text", 0);
-	m_devCombo->set_popup_fixed_width(false);
 
 	if(m_resCombo->get_active_row_number() == -1) m_resCombo->set_active(2);
 	if(m_modeCombo->get_active_row_number() == -1) m_modeCombo->set_active(0);
