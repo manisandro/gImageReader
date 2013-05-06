@@ -16,6 +16,7 @@ BuildRequires: tesseract-devel
 BuildRequires: curlpp-devel
 BuildRequires: sane-backends-devel
 BuildRequires: intltool
+BuildRequires: desktop-file-utils
 
 %description
 gImageReader is a simple Gtk front-end to tesseract. Features include:
@@ -35,7 +36,9 @@ gImageReader is a simple Gtk front-end to tesseract. Features include:
 make %{?_smp_mflags}
 
 %install
+rm -rf %{buildroot}
 make DESTDIR=$RPM_BUILD_ROOT install
+%{_bindir}/desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 %find_lang %{name}
 

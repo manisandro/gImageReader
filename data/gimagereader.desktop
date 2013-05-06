@@ -1,6 +1,6 @@
 [Desktop Entry]
-_Name=gImageReader
-_Comment=OCR application
+Name=gImageReader
+Comment=OCR application
 Exec=gimagereader %U
 Icon=gimagereader
 Terminal=false
