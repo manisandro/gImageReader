@@ -9,8 +9,8 @@ gImageReader is a simple Gtk front-end to tesseract. Features include:
 
 Translations:
   To create translations, follow the following steps:
-    1. In the po folder, type "intltool-update --pot"
-    2. Rename the generated gImageReader.pot file to <language>.po (i.e. de.po)
+    1. In the po folder, type "intltool-update --gettext-package=gimagereader --pot"
+    2. Rename the generated gimagereader.pot file to <language>.po (i.e. de.po)
     3. Add the language to LINGUAS
     4. Translate the strings in <language>.po
     5. To update the translation strings of an existing translation, type

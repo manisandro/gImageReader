@@ -120,7 +120,7 @@ For contributions of any kind, bug reports etc. please contact me at <a href="ma
 <ol>
     <li>Download the source archive from the <a href="https://sourceforge.net/projects/gimagereader/files/?source=navbar">project homepage</a>.</li>
     <li>Enter the <tt>po</tt> folder.</li>
-    <li>To create a new translation, copy the <tt>gImageReader.pot</tt> file to <tt>&lt;language&gt;.po</tt> (i.e. <tt>de.po</tt> for German). To edit an existing translation, simply pick the corresponding file.</li>
+    <li>To create a new translation, copy the <tt>gimagereader.pot</tt> file to <tt>&lt;language&gt;.po</tt> (i.e. <tt>de.po</tt> for German). To edit an existing translation, simply pick the corresponding file.</li>
     <li>Translate the strings in <tt>&lt;language&gt;.po</tt>.</li>
     <li>Send the <b>po</b> file to <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. Thanks!</li>
 </ol>
