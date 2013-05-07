@@ -72,8 +72,8 @@ OutputManager::OutputManager()
 	CONNECT(Builder("button:output.search").as<Gtk::Button>(), clicked, [this]{ findInBuffer(); });
 	CONNECT(m_replaceEntry, activate, [this]{ findInBuffer(true); });
 	CONNECT(Builder("button:output.replace").as<Gtk::Button>(), clicked, [this]{ findInBuffer(true); });
-	CONNECT(m_undoButton, clicked, [this]{ m_textBuffer->undo(); });
-	CONNECT(m_redoButton, clicked, [this]{ m_textBuffer->redo(); });
+	CONNECT(m_undoButton, clicked, [this]{ m_textBuffer->undo(); m_textView->grab_focus(); });
+	CONNECT(m_redoButton, clicked, [this]{ m_textBuffer->redo(); m_textView->grab_focus(); });
 	CONNECT(Builder("tbbutton:output.save").as<Gtk::ToolButton>(), clicked, [this]{ saveBuffer(); });
 	CONNECT(Builder("tbbutton:output.clear").as<Gtk::ToolButton>(), clicked, [this]{ clearBuffer(); });
 }
