@@ -1,17 +1,11 @@
-High prio:
-- notifier web links do not work?
-- replace all
-- manual
-- drag from empty regions oxygen-gtk interferes with selection
-
 Low prio:
-- play with resize mode on viewport and scrolledwindow
+- replace all ?
 - markers in buffer to find corresponding page from cursor position
-- blur downscaled -> this should really be fixed in cairo
+- packagekit is broken
 
 Cleanup:
 - const in private member functions?
-
+- add GtkMenuButton in glade instead of in the code, as soon as glade supports it
 
 win32: uninstall previous version during setup
-win32: twain, papersize
+win32: menu entries
