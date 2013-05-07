@@ -50,11 +50,11 @@ SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
 #endif
 
 #define APPLICATION_ID "org.gnome.gimagereader"
-#define UI_FILE PACKAGE_DATA_DIR"/gimagereader.ui"
+#define UI_FILE PACKAGE_DATA_DIR "gimagereader.ui"
 #define CHECKURL "http://sourceforge.net/projects/gimagereader/files/LATEST/download?use_mirror=autoselect"
 #define DOWNLOADURL "http://sourceforge.net/projects/gimagereader/files"
 #define CHANGELOGURL "http://sourceforge.net/projects/gimagereader/files/changelog.txt/download?use_mirror=autoselect"
-#define MANUALURL PACKAGE_DATA_DIR"/manual.html"
+#define MANUALURL "file://" PACKAGE_DATA_DIR "manual.html"
 
 struct Builder {
 public:

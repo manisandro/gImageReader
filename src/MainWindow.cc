@@ -75,6 +75,7 @@ MainWindow::MainWindow()
 	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) { return quit(ev); });
 	CONNECT(Builder("menuitem:main.redetect").as<Gtk::MenuItem>(), activate, [this]{ m_config->updateLanguagesMenu(); });
 	CONNECT(Builder("menuitem:main.configure").as<Gtk::MenuItem>(), activate, [this]{ m_config->showDialog(); });
+	CONNECT(Builder("menuitem:main.help").as<Gtk::MenuItem>(), activate, [this]{ showHelp(); });
 	CONNECT(Builder("menuitem:main.about").as<Gtk::MenuItem>(), activate, [this]{ showAbout(); });
 	CONNECTS(Builder("combo:config.settings.paneorient").as<Gtk::ComboBoxText>(), changed,
 			 [this](Gtk::ComboBoxText* box){ setOutputPaneOrientation(box); });

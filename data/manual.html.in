@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <title>@PACKAGE_NAME@ @PACKAGE_VERSION@ Manual</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+
+<body>
+
+<h1>@PACKAGE_NAME@ @PACKAGE_VERSION@ Manual</h1>
+<h2>Contents</h2>
+<ul>
+    <li><a href="#About">About</a>
+    <ul>
+        <li><a href="#Features">Features</a></li>
+        <li><a href="#News">News</a></li>
+    </ul>
+    </li>
+    <li><a href="#Usage">Usage</a>
+    <ul>
+        <li><a href="#Usage_Open">Opening and importing images</a></li>
+        <li><a href="#Usage_View">Viewing and adjusting images</a></li>
+        <li><a href="#Usage_Recognize">Recognizing text</a></li>
+        <li><a href="#Usage_PostProc">Post-processing the recognized text</a></li>
+        <li><a href="#Usage_Options">Program options</a></li>
+    </ul></li>
+    <li><a href="#InstallTessdata">Installation of tesseract language definitions</a></li>
+    <li><a href="#InstallSpelling">Installation of spelling dictionaries</a></li>
+</ul>
+
+<h2><a name="About">About</a></h2>
+<p>gImageReader is a frontent to <a href="http://code.google.com/p/tesseract-ocr/">tesseract-ocr</a> written in C++ using the gtkmm bindings.</p>
+<h3><a name="Features">Features</a></h3>
+<ul>
+    <li>Allows the user to select the parts of the image they want to be recognized or directly recognize the entire image.</li>
+    <li>Supports page layout autodetection.</li>
+    <li>Supports opening images and PDF documents, as well as importing images from scanning devices, from the clipboard and from screenshots.</li>
+    <li>Recognized text displayed directly next to the image.</li>
+    <li>Basic editing of output text, including search/replace and removing line breaks on selected text.</li>
+    <li>Spellcheck enabled for the selected language in the output textfield if corresponding dictionary installed.</li>
+    <li>User is prompted to install missing spellcheck languages.</li>
+</ul>
+<h3><a name="News">News</a></h3>
+<p>gImageReader 3.0:</p>
+<ul>
+    <li>Support multiple selections (via CTRL-key). Rightclicking a selection opens a context menu which allows to:
+    <ul>
+        <li>Deleted and reordered individual selections.</li>
+        <li>Recognize the selected text, either to clipboard or to the output pane.</li>
+    </ul></li>
+    <li>Basic automatic page layout detection.</li>
+    <li>The output pane now supports undo and redo.</li>
+    <li>Configuration is now automatic.</li>
+    <li>Proper arbitrary rotation of images.</li>
+    <li>Detect deleted/renamed files.</li>
+    <li>Cleaner UI.</li>
+    <li>Port to Gtk+3, rewrite in C++ using the Gtkmm bindings.</li>
+</ul>
+
+<h2><a name="Usage">Usage</a></h2>
+<h3><a name="Usage_Open">Opening and importing images</a></h3>
+<ul>
+    <li>Images can be opened/imported from the <i>sources pane</i>, which is activated by clicking on the top-left button in the <i>main toolbar</i>.</li>
+    <li>To open an existing image or PDF document, click on the open button in the <i>images tab</i>.</li>
+    <li>To capture a screenshot, paste image data from the clipboard, or open a recently opened file, click on the arrow next to the open button.</li>
+    <li>You can manage the list of opened images with the buttons next to the open button. Temporary files (such as screenshots and clipboard data) are automatically deleted when the program exists.</li>
+    <li>To acquire an image from a scanning device, click on the <i>acquire tab</i> in the <i>sources pane</i>.</li>
+</ul>
+<h3><a name="Usage_View">Viewing and adjusting images</a></h3>
+<ul>
+    <li>Buttons in the <i>main toolbar</i> to zoom in and out as well as rotate the image by an arbitrary angle. Zooming can also be performed by scrolling on the image with the CTRL key pressed.</li>
+    <li>Scrolling on the image pans the image vertically. If SHIFT is pressed while scrolling, the image is panned horizontally.</li>
+    <li>Basic image manipulation tools are provided in the <i>image controls toolbar</i>, which is activated by clicking on the <i>image controls button</i> in the <i>main toolbar</i>. The provided tools currently allow brightness and contrast adjustments as well as adjusting the image resolution (through interpolation).</li>
+</ul>
+<h3><a name="Usage_Recognize">Recognizing text</a></h3>
+<ul>
+    <li>Areas to be recognized can be selected by dragging (left click + mouse move) a rectangular area around portions of the image. Multiple selections are possible by pressing the CTRL key while selecting.</li>
+    <li>Alternatively, the <i>automatic layout detection button</i>, accessible from the <i>main toolbar</i> will attempt to automatically define appropriate recognition areas, as well as adjust the rotation of the image if necessary.</li>
+    <li>Selections can be deleted and reordered by right-clicking on them. It is also possible to resize existing selections by dragging the corners of the selection rectangle.</li>
+    <li>The recognition language can be selected from the drop-down menu of the <i>recognize button</i> in the <i>main toolbar</i>. If a spelling dictionary is installed for a tesseract language definition, it is possible to choose between available regional flavors of the language. This will only affect the language for spell-checking the recognized text. Unrecognized tesseract language definitions will appear by their filename prefix, one can however teach the program to recognize such files by defining appropriate rules in the program configuration (see below).</li>
+    <li>The selected portions of the image (or the entire image, if no selections are defined) can be recognized by pressing on the <i>recognize button</i> in the <i>main toolbar</i>. Alternatively, individual areas can be recognized by right-clicking a selection. From the selection menu, it is also possible to redirect the recognized text to the clipboard, instead of the output pane.</li>
+</ul>
+<h3><a name="Usage_PostProc">Post-processing the recognized text</a></h3>
+<ul>
+    <li>Recognized text will appear in the <i>output pane</i> (unless the text was redirected to the clipboard), which appears as soon as some text was recognized.</li>
+    <li>If a spelling dictionary for the recognition language is available, automatic spell-checking will be enabled for the outputted text. The used spelling dictionary can be changed either from the language menu next to the <i>recognize button</i>, or from the menu which appears when right-clicking in the text area.</li>
+    <li>When additional text is recognized, it will either get appended, inserted at cursor position, or replace the previous content of the text buffer, depending on the mode selected in the <i>append mode menu</i>, which can be found in the <i>output pane toolbar</i>.</li>
+    <li>Other post-processing tools include stripping line breaks, collapsing spaces and more (available from the second button in the <i>output pane toolbar</i>), as well as searching and replacing text.</li>
+    <li>Changes to the text buffer can be undone and redone by clicking on the appropriate buttons in the <i>output pane toolbar</i>.</li>
+    <li>The contents of the text buffer can be saved to a file by clicking on the <i>save button</i> in the <i>output pane toolbar</i>.</li>
+    <li>The output pane can be hidden by clicking the right-most button in the <i>output pane toolbar</i>. This will also clear the contents of the text buffer.</li>
+</ul>
+<h3><a name="Usage_Options">Program options</a></h3>
+<ul>
+    <li>The program options can be accessed from the <i>application menu</i>, which opens when clicking the right-most button of the <i>main toolbar</i>.</li>
+    <li>Options allow setting the orientation of the <i>output pane</i> (if vertical, it will occupy the right portion of the application, if horizontal, it will occupy the lower portion), as well as determining whether the application will notify about missing spelling dictionaries and new program versions.</li>
+    <li>Additionally, one can define new rules to match tesseract language definitions to a language (unfortunately, the tesseract language definitions do not include this information). The list of predefined rules can be seen in the <i>Predefined language definitions</i> section. Additional definitions can be added clicking on the <i>Add</i> button below. The rules for a language definition, which consists of three fields, are as follows:
+    <ul>
+        <li><b>Filename prefix</b>: The filename of tesseract language data files is of the format <i>&gt;prefix&lt;.traineddata</i>, i.e. for English, the file is called <i>eng.traineddata</i> and the prefix is <i>eng</i>.</li>
+        <li><b>ISO code</b>: This is a combination of the <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 639-1 language code</a> and the <a href="http://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2 country code</a>, separated by an underscore (i.e. <i>en_US</i>). This information is necessary to match spelling dictionaries to the language. The choice of the actual country code is not strictly relevant, but it is necessary for the automatic installation of spelling dictionaries to find a relevant package of dictionaries. This code can also be made up if no appropriate choices exist, the only result being that no relevant spelling-dictionaries will be matched with the language.</li>
+        <li><b>Native name</b>: The native name of the language simply determines the label of the entry for the language in the <i>language menu</i>.</li>
+    </ul></li>
+</ul>
+<h2><a name="InstallTessdata">Installation of tesseract language definitions</a></h2>
+<ul>
+    <li>On <b>Linux</b>, it's sufficient to install the package corresponding to the language definition one wants to install via the package management application (the packages may be called something like <i>tesseract-langpack-&gt;lang&lt;</i>).</li>
+    <li>On <b>Windows</b>, one needs to download the desired language definitions from the <a href="http://code.google.com/p/tesseract-ocr/downloads/list">project download page</a>, the copy the <i>&gt;lang&lt;.traineddata</i> files to <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Tesseract language definitions</tt>.</li>
+    <li>To re-detect the available languages, one can restart the program, or select <i>Redetect Languages</i> from the <i>application menu</i>.</li>
+</ul>
+<h2><a name="InstallSpelling">Installation of spelling dictionaries</a></h2>
+<ul>
+    <li>On <b>Linux</b>, if your distribution supports PackageKit, the program will offer to automatically install missing dictionaries when necessary. If automatic installation does not work for some reason, you can install the spelling dictionaries from the package management application (the packages may be called something like <i>hunspell-&gt;lang&lt;</i>).</li>
+    <li>On <b>Windows</b>, you need to download the desired spelling dictionary from <a href="http://wiki.services.openoffice.org/wiki/Dictionaries">http://wiki.services.openoffice.org/wiki/Dictionaries</a>, and extract the <b>*.dic and *.aff</b> files to <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Spelling dictionaries</tt>.</li>
+</ul>
+<h2><a name="Contributing">Contributing</a></h2>
+<p>
+For contributions of any kind, bug reports etc. please contact me at <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. I'd especially appreciate translations - here are the main steps for creating a translation:
+</p>
+<ol>
+    <li>Download the source archive from the <a href="https://sourceforge.net/projects/gimagereader/files/?source=navbar">project homepage</a>.</li>
+    <li>Enter the <tt>po</tt> folder.</li>
+    <li>To create a new translation, copy the <tt>gImageReader.pot</tt> file to <tt>&lt;language&gt;.po</tt> (i.e. <tt>de.po</tt> for German). To edit an existing translation, simply pick the corresponding file.</li>
+    <li>Translate the strings in <tt>&lt;language&gt;.po</tt>.</li>
+    <li>Send the <b>po</b> file to <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. Thanks!</li>
+</ol>
+<hr />
+<p>Copyright &copy;2009-2013 Sandro Mani, revision: Tue, 7 May 2013</p>
+</body>
+
+</html>

@@ -36,6 +36,7 @@ AC_OUTPUT([
 gimagereader.spec
 Makefile
 data/Makefile
+data/manual.html
 src/Makefile
 po/Makefile.in
 ])
