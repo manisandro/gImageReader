@@ -171,6 +171,7 @@ void OutputManager::findInBuffer(bool replace)
 		if(replace){
 			m_textBuffer->erase(start, end);
 			m_textBuffer->insert_at_cursor(m_replaceEntry->get_text());
+			m_insertIter = m_textBuffer->get_iter_at_mark(m_textBuffer->get_insert());
 		}else{
 			m_insertIter.forward_char();
 		}
