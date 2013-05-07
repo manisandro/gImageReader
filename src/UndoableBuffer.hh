@@ -54,6 +54,9 @@ private:
 	void onInsertText(const Gtk::TextIter& it, const Glib::ustring& text, int len);
 	void onDeleteRange(const Gtk::TextIter& start, const Gtk::TextIter& end);
 	void freeStack(std::stack<Action*>& stack);
+	bool insertMergeable(const UndoableInsert* prev, const UndoableInsert* cur) const;
+	bool deleteMergeable(const UndoableDelete* prev, const UndoableDelete* cur) const;
+	bool isReplace(const UndoableDelete* del, const UndoableInsert* ins) const;
 };
 
 #endif // UNDOABLEBUFFER_HH

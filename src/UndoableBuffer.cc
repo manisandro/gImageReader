@@ -39,12 +39,6 @@ struct UndoableBuffer::UndoableInsert : public UndoableBuffer::Action {
 		isWhitespace = text.length() == 1 && !isspace(text[0]);
 		isMergeable = (text.length() == 1);
 	}
-
-	static bool canBeMerged(const UndoableInsert& prev, const UndoableInsert& cur){
-		return (cur.offset == prev.offset + int(prev.text.length())) &&
-			   (cur.isWhitespace == prev.isWhitespace) &&
-			   (cur.isMergeable && prev.isMergeable);
-	}
 };
 
 struct UndoableBuffer::UndoableDelete : public UndoableBuffer::Action {
@@ -61,13 +55,6 @@ struct UndoableBuffer::UndoableDelete : public UndoableBuffer::Action {
 		deleteKeyUsed = (_buffer.get_iter_at_mark(_buffer.get_insert()).get_offset() <= start);
 		isWhitespace = text.length() == 1 && !isspace(text[0]);
 		isMergeable = (text.length() == 1);
-	}
-
-	static bool canBeMerged(const UndoableDelete& prev, const UndoableDelete& cur){
-		return (prev.deleteKeyUsed == cur.deleteKeyUsed) &&
-			   (cur.isWhitespace == prev.isWhitespace) &&
-			   (cur.isMergeable && prev.isMergeable) &&
-			   (prev.start == cur.start || prev.start == cur.end);
 	}
 };
 
@@ -92,7 +79,7 @@ void UndoableBuffer::onInsertText(const Gtk::TextIter &it, const Glib::ustring &
 		return;
 	}
 	UndoableInsert* prevInsert = static_cast<UndoableInsert*>(m_undoStack.top());
-	if(UndoableInsert::canBeMerged(*prevInsert, *undoAction)){
+	if(insertMergeable(prevInsert, undoAction)){
 		prevInsert->text += undoAction->text;
 	}else{
 		m_undoStack.push(undoAction);
@@ -113,7 +100,7 @@ void UndoableBuffer::onDeleteRange(const Gtk::TextIter &start, const Gtk::TextIt
 		return;
 	}
 	UndoableDelete* prevDelete = static_cast<UndoableDelete*>(m_undoStack.top());
-	if(UndoableDelete::canBeMerged(*prevDelete, *undoAction)){
+	if(deleteMergeable(prevDelete, undoAction)){
 		if(prevDelete->start == undoAction->start){ // Delete key used
 			prevDelete->text += undoAction->text;
 			prevDelete->end += (undoAction->end - undoAction->start);
@@ -141,6 +128,9 @@ void UndoableBuffer::undo()
 		Gtk::TextIter start = get_iter_at_offset(insertAction->offset);
 		Gtk::TextIter end = get_iter_at_offset(insertAction->offset + insertAction->text.length());
 		place_cursor(erase(start, end));
+		if(!m_undoStack.empty() && isReplace(dynamic_cast<UndoableDelete*>(m_undoStack.top()), insertAction)){
+			undo();
+		}
 	}else{
 		UndoableDelete* deleteAction = static_cast<UndoableDelete*>(undoAction);
 		Gtk::TextIter start = get_iter_at_offset(deleteAction->start);
@@ -174,6 +164,9 @@ void UndoableBuffer::redo()
 		Gtk::TextIter start = get_iter_at_offset(deleteAction->start);
 		Gtk::TextIter end = get_iter_at_offset(deleteAction->end);
 		place_cursor(erase(start, end));
+		if(!m_redoStack.empty() && isReplace(deleteAction, dynamic_cast<UndoableInsert*>(m_redoStack.top()))){
+			redo();
+		}
 	}
 	m_signal_histroyChanged.emit();
 	m_undoInProgress = false;
@@ -191,4 +184,24 @@ void UndoableBuffer::freeStack(std::stack<Action *> &stack)
 		delete stack.top();
 		stack.pop();
 	}
+}
+
+bool UndoableBuffer::insertMergeable(const UndoableInsert* prev, const UndoableInsert* cur) const
+{
+	return (cur->offset == prev->offset + int(prev->text.length())) &&
+		   (cur->isWhitespace == prev->isWhitespace) &&
+		   (cur->isMergeable && prev->isMergeable);
+}
+
+bool UndoableBuffer::deleteMergeable(const UndoableDelete* prev, const UndoableDelete* cur) const
+{
+	return (prev->deleteKeyUsed == cur->deleteKeyUsed) &&
+		   (cur->isWhitespace == prev->isWhitespace) &&
+		   (cur->isMergeable && prev->isMergeable) &&
+		   (prev->start == cur->start || prev->start == cur->end);
+}
+
+bool UndoableBuffer::isReplace(const UndoableDelete* del, const UndoableInsert* ins) const
+{
+	return del && ins && del->start == ins->offset;
 }
