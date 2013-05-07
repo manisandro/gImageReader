@@ -1,0 +1,651 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-07 19:01+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/gimagereader.ui.h:1
+msgid "Select append mode"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:2
+msgid "A graphical frontend to tesseract-ocr"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:3
+msgid "Configuration"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:4
+msgid "Output pane orientation:"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:5
+msgid "Horizontal"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:6
+msgid "Vertical"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:7
+msgid "Query to install missing spellcheck dictionaries"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:8
+msgid "Automatically check for new program versions"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:9
+msgid "Predefined language definitions:"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:10
+msgid "Additional language definitions:"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:11
+msgid "The prefix of the tesseract language data file."
+msgstr ""
+
+#: ../data/gimagereader.ui.h:12
+msgid "The ISO 639-1 language code followed by the country code."
+msgstr ""
+
+#: ../data/gimagereader.ui.h:13
+msgid "The name of the language."
+msgstr ""
+
+#: ../data/gimagereader.ui.h:14
+msgid "Page Range"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:15
+msgid "<b>Insert page range:</b>"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:16
+msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:17
+msgid "_Redetect Languages"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:18
+msgid "Append to current text"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:19
+msgid "Insert at cursor"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:20
+msgid "Replace current text"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:21
+msgid "Keep line break if..."
+msgstr ""
+
+#: ../data/gimagereader.ui.h:22
+msgid "Preceeded by dot"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:23
+msgid "Preceded or succeeded by quote"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:24
+msgid "Other options"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:25
+msgid "Join hyphenated words"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:26
+msgid "Collapse whitespace"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:27
+msgid "Current Page"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:28
+msgid "All Pages"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:29
+msgid "Selected Pages..."
+msgstr ""
+
+#: ../data/gimagereader.ui.h:30
+msgid "_Recent"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:31
+msgid "Take _Screenshot"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:32
+msgid "Select sources"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:33
+msgid "Sources"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:34
+msgid "Zoom in"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:35
+msgid "Zoom In"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:36
+msgid "Zoom out"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:37
+msgid "Zoom Out"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:38
+msgid "Normal size"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:39
+msgid "Normal Size"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:40
+msgid "Best fit"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:41
+msgid "Best Fit"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:42
+msgid "Rotate left"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:43
+msgid "Rotate Left"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:44
+msgid "Rotate right"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:45
+msgid "Rotate Right"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:46
+msgid "Image controls"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:47
+msgid "Image Controls"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:48
+msgid "Autodetect layout"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:49
+msgid "Autolayout"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:50
+msgid "Options"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:51
+msgid "Add images"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:52
+msgid "Add Images"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:53
+msgid "Remove image from list"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:54
+msgid "Remove Image"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:55
+msgid "Delete image"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:56
+msgid "Clear list"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:57
+msgid "Clear List"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:58 ../src/SourceManager.cc:37
+msgid "Images"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:59
+msgid "Device:"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:60
+msgid "Output:"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:61
+msgid "Resolution:"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:62
+msgid "Refresh"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:63
+msgid "Mode:"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:64
+msgid "Color"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:65
+msgid "Grayscale"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:66
+msgid "Scan"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:67
+msgid "Acquire"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:68
+msgid "Brightness"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:69
+msgid "Contrast"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:70 ../src/Displayer.cc:339
+msgid "Resolution"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:71
+msgid "Strip line breaks on selected text"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:72
+msgid "Strip Line Breaks"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:73
+msgid "Find and replace"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:74
+msgid "Find and Replace"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:75
+msgid "Undo"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:76
+msgid "Redo"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:77
+msgid "Save output"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:78
+msgid "Save Output"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:79
+msgid "Clear output"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:80
+msgid "Clear Output"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:81
+msgid "Find"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:82
+msgid "Replace"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:83
+msgid "Order:"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:84
+msgid "_Recognize"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:85
+msgid "Recognize to _clipboard"
+msgstr ""
+
+#: ../src/Acquirer.cc:59
+msgid "Scan failed"
+msgstr ""
+
+#: ../src/Acquirer.cc:76 ../src/Acquirer.cc:78 ../src/OutputManager.cc:217
+msgid "scan.png"
+msgstr ""
+
+#: ../src/Acquirer.cc:87
+msgid "Choose Output Filename..."
+msgstr ""
+
+#: ../src/Acquirer.cc:95
+msgid "PNG Images"
+msgstr ""
+
+#: ../src/Acquirer.cc:124
+msgid "Failed to initialize the scanning backend."
+msgstr ""
+
+#: ../src/Acquirer.cc:147
+msgid "No scanners were detected."
+msgstr ""
+
+#: ../src/Acquirer.cc:165 ../src/Acquirer.cc:182
+msgid "Starting scan..."
+msgstr ""
+
+#: ../src/Acquirer.cc:178
+msgid "Opening device..."
+msgstr ""
+
+#: ../src/Acquirer.cc:180
+msgid "Setting options..."
+msgstr ""
+
+#: ../src/Acquirer.cc:184
+msgid "Getting parameters..."
+msgstr ""
+
+#: ../src/Acquirer.cc:186
+msgid "Transferring data..."
+msgstr ""
+
+#: ../src/Acquirer.cc:196
+msgid "Cancelling scan..."
+msgstr ""
+
+#: ../src/Config.cc:96
+msgid "Filename prefix"
+msgstr ""
+
+#: ../src/Config.cc:97
+msgid "Code"
+msgstr ""
+
+#: ../src/Config.cc:98
+msgid "Native name"
+msgstr ""
+
+#: ../src/Config.cc:190
+msgid "No languages available"
+msgstr ""
+
+#: ../src/Config.cc:190
+msgid ""
+"No tesseract languages are available for use. Recognition will not work."
+msgstr ""
+
+#: ../src/Displayer.cc:345
+msgid "Scale"
+msgstr ""
+
+#: ../src/Displayer.cc:350
+msgid "To recognize specific areas, drag rectangles over them."
+msgstr ""
+
+#: ../src/Displayer.cc:356
+msgid "Failed to load image"
+msgstr ""
+
+#: ../src/Displayer.cc:356
+msgid ""
+"The file might not be an image or be corrupt:\n"
+"%1"
+msgstr ""
+
+#: ../src/Displayer.cc:378
+msgid "Rendering image..."
+msgstr ""
+
+#: ../src/Displayer.cc:506 ../src/Displayer.cc:667
+msgid "Recognize selection"
+msgstr ""
+
+#: ../src/Displayer.cc:508
+msgid "Recognize all"
+msgstr ""
+
+#: ../src/Displayer.cc:653
+msgid "Performing layout analysis"
+msgstr ""
+
+#: ../src/MainWindow.cc:90
+msgid "Select an image to begin..."
+msgstr ""
+
+#: ../src/MainWindow.cc:211
+msgid "New version"
+msgstr ""
+
+#: ../src/MainWindow.cc:211
+msgid "gImageReader %1 is available"
+msgstr ""
+
+#: ../src/MainWindow.cc:212
+msgid "Download"
+msgstr ""
+
+#: ../src/MainWindow.cc:213
+msgid "Changelog"
+msgstr ""
+
+#: ../src/MainWindow.cc:214
+msgid "Don't notify again"
+msgstr ""
+
+#: ../src/OutputManager.cc:49
+msgid "Search for"
+msgstr ""
+
+#: ../src/OutputManager.cc:50
+msgid "Replace with"
+msgstr ""
+
+#: ../src/OutputManager.cc:220
+msgid "Save Output..."
+msgstr ""
+
+#: ../src/OutputManager.cc:226
+msgid "Text Files"
+msgstr ""
+
+#: ../src/OutputManager.cc:238
+msgid "Failed to save output"
+msgstr ""
+
+#: ../src/OutputManager.cc:238
+msgid "Check that you have writing permissions in the selected folder."
+msgstr ""
+
+#: ../src/OutputManager.cc:253
+msgid "Output not saved"
+msgstr ""
+
+#: ../src/OutputManager.cc:253
+msgid "Save output before proceeding?"
+msgstr ""
+
+#: ../src/OutputManager.cc:284
+msgid "Don't show again"
+msgstr ""
+
+#: ../src/OutputManager.cc:285
+msgid "Install"
+msgstr ""
+
+#: ../src/OutputManager.cc:285
+msgid "Help"
+msgstr ""
+
+#: ../src/OutputManager.cc:286
+msgid "Spelling dictionary missing"
+msgstr ""
+
+#: ../src/OutputManager.cc:286
+msgid "The spellcheck dictionary for %1 is not installed"
+msgstr ""
+
+#: ../src/OutputManager.cc:295
+msgid "Installing spelling dictionary for '%1'"
+msgstr ""
+
+#: ../src/OutputManager.cc:310
+msgid "Failed to install spelling dictionary"
+msgstr ""
+
+#: ../src/Recognizer.cc:55 ../src/Recognizer.cc:128
+msgid "Recognizing..."
+msgstr ""
+
+#: ../src/Recognizer.cc:139
+msgid ""
+"\n"
+"\tFailed to initialize tesseract"
+msgstr ""
+
+#: ../src/Recognizer.cc:143
+msgid "Recognizing page %1 of %2"
+msgstr ""
+
+#: ../src/Recognizer.cc:151
+msgid ""
+"\n"
+"\tPage %1: failed to render page"
+msgstr ""
+
+#: ../src/Recognizer.cc:152
+msgid ""
+"\n"
+"[Failed to recognize page %1]\n"
+msgstr ""
+
+#: ../src/Recognizer.cc:173
+msgid "Recognition errors occured"
+msgstr ""
+
+#: ../src/Recognizer.cc:173
+msgid "The following errors occured:%1"
+msgstr ""
+
+#: ../src/Scanner.cc:95
+msgid "No scanner specified."
+msgstr ""
+
+#: ../src/Scanner.cc:98
+msgid "Unable to connect to scanner"
+msgstr ""
+
+#: ../src/Scanner.cc:127
+msgid "Unable to start scan"
+msgstr ""
+
+#: ../src/Scanner.cc:134 ../src/Scanner.cc:148
+msgid "Error communicating with scanner"
+msgstr ""
+
+#: ../src/Scanner.cc:205
+msgid "Scan cancelled"
+msgstr ""
+
+#: ../src/SourceManager.cc:116
+msgid "Unable to open files"
+msgstr ""
+
+#: ../src/SourceManager.cc:116
+msgid "The following files could not be opened:%1"
+msgstr ""
+
+#: ../src/SourceManager.cc:132
+msgid "Select sources..."
+msgstr ""
+
+#: ../src/SourceManager.cc:138
+msgid "Images and PDFs"
+msgstr ""
+
+#: ../src/SourceManager.cc:164
+msgid "Pasted %1"
+msgstr ""
+
+#: ../src/SourceManager.cc:165
+msgid "Pasting clipboard..."
+msgstr ""
+
+#: ../src/SourceManager.cc:181
+msgid "Screenshot %1"
+msgstr ""
+
+#: ../src/SourceManager.cc:182
+msgid "Taking screenshot..."
+msgstr ""
+
+#: ../src/SourceManager.cc:217
+msgid "Delete the file?"
+msgstr ""
+
+#: ../src/SourceManager.cc:217
+msgid ""
+"The following file will be deleted:\n"
+"%1"
+msgstr ""
+
+#: ../src/SourceManager.cc:262
+msgid "Deleted file"
+msgstr ""
+
+#: ../src/SourceManager.cc:262
+msgid ""
+"The following file has been deleted:\n"
+"%1"
+msgstr ""
