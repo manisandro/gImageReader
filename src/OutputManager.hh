@@ -55,7 +55,8 @@ private:
 
 	Glib::RefPtr<UndoableBuffer> m_textBuffer;
 	InsertMode m_insertMode;
-	Gtk::TextIter m_searchIter;
+	Gtk::TextIter m_insertIter;
+	Gtk::TextIter m_selectIter;
 	GtkSpell::Checker m_spell;
 	Notifier::Handle m_notifierHandle = nullptr;
 
@@ -64,7 +65,7 @@ private:
 	void filterBuffer();
 	void toggleReplaceBox(Gtk::ToggleToolButton *button);
 	void historyChanged();
-	void setSearchIter();
+	void saveIters();
 	void findInBuffer(bool replace = false);
 #ifdef G_OS_UNIX
 	void dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring& lang);

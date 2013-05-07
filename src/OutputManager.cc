@@ -52,7 +52,8 @@ OutputManager::OutputManager()
 	m_textBuffer = UndoableBuffer::create();
 	m_textView->set_buffer(m_textBuffer);
 	m_insertMode = InsertMode::Append;
-	m_searchIter = m_textBuffer->end();
+	m_insertIter = m_textBuffer->end();
+	m_selectIter = m_textBuffer->end();
 
 	Builder("tbbutton:output.stripcrlf").as<Gtk::MenuToolButton>()->set_menu(*Builder("menu:output.stripcrlf").as<Gtk::Menu>());
 	Builder("tbbutton:output.insert").as<Gtk::ToggleToolButton>()->set_homogeneous(false);
@@ -64,7 +65,7 @@ OutputManager::OutputManager()
 	CONNECTS(Builder("menuitem:output.insert.replace").as<Gtk::ImageMenuItem>(), activate, [this](Gtk::ImageMenuItem* i){ setInsertMode(InsertMode::Replace, i); });
 	CONNECT(Builder("tbbutton:output.stripcrlf").as<Gtk::ToolButton>(), clicked, [this]{ filterBuffer(); });
 	CONNECTS(Builder("tbbutton:output.findreplace").as<Gtk::ToggleToolButton>(), toggled, [this](Gtk::ToggleToolButton* b){ toggleReplaceBox(b); });
-	CONNECT(m_textView, set_anchor, [this]{ setSearchIter(); });
+	CONNECT(m_textBuffer, mark_set, [this](const Gtk::TextIter&,const Glib::RefPtr<Gtk::TextMark>&){ saveIters(); });
 	CONNECT(m_textBuffer, history_changed, [this]{ historyChanged(); });
 	CONNECT(m_searchEntry, changed, [this]{ Utils::clear_error_state(m_searchEntry); });
 	CONNECT(m_searchEntry, activate, [this]{ findInBuffer(); });
@@ -125,7 +126,7 @@ void OutputManager::filterBuffer()
 	if(m_filterJoinSpace->get_active()){
 		txt = Glib::Regex::create("\\s+")->replace(txt, 0, " ", static_cast<Glib::RegexMatchFlags>(0));
 	}
-	m_textBuffer->replace_selection(txt, true);
+	m_textBuffer->replace_range(txt, start, end);
 	start = end = m_textBuffer->get_iter_at_mark(m_textBuffer->get_insert());
 	start.backward_chars(txt.size());
 	m_textBuffer->select_range(start, end);
@@ -147,9 +148,12 @@ void OutputManager::historyChanged()
 	m_redoButton->set_sensitive(m_textBuffer->can_redo());
 }
 
-void OutputManager::setSearchIter()
+void OutputManager::saveIters()
 {
-	m_searchIter = m_textBuffer->get_iter_at_mark(m_textBuffer->get_insert());
+	if(m_textView->has_focus()){
+		m_insertIter = m_textBuffer->get_iter_at_mark(m_textBuffer->get_insert());
+		m_selectIter = m_textBuffer->get_iter_at_mark(m_textBuffer->get_selection_bound());
+	}
 }
 
 void OutputManager::findInBuffer(bool replace)
@@ -159,8 +163,8 @@ void OutputManager::findInBuffer(bool replace)
 	if(find.empty()){
 		return;
 	}
-	if(m_searchIter.is_end()){
-		m_searchIter = m_textBuffer->begin();
+	if(m_insertIter.is_end()){
+		m_insertIter = m_textBuffer->begin();
 	}
 	Gtk::TextIter start, end;
 	if(m_textBuffer->get_selection_bounds(start, end) && m_textBuffer->get_text(start, end, false) == find){
@@ -168,18 +172,18 @@ void OutputManager::findInBuffer(bool replace)
 			m_textBuffer->erase(start, end);
 			m_textBuffer->insert_at_cursor(m_replaceEntry->get_text());
 		}else{
-			m_searchIter.forward_char();
+			m_insertIter.forward_char();
 		}
 	}
-	bool found = m_searchIter.forward_search(find, Gtk::TEXT_SEARCH_VISIBLE_ONLY, m_searchIter, end);
-	if(!found && m_searchIter != m_textBuffer->begin()){
-		m_searchIter = m_textBuffer->begin();
-		found = m_searchIter.forward_search(find, Gtk::TEXT_SEARCH_VISIBLE_ONLY, m_searchIter, end);
+	bool found = m_insertIter.forward_search(find, Gtk::TEXT_SEARCH_VISIBLE_ONLY, m_insertIter, end);
+	if(!found && m_insertIter != m_textBuffer->begin()){
+		m_insertIter = m_textBuffer->begin();
+		found = m_insertIter.forward_search(find, Gtk::TEXT_SEARCH_VISIBLE_ONLY, m_insertIter, end);
 	}
 	if(!found){
 		Utils::set_error_state(m_searchEntry);
 	}else{
-		m_textBuffer->select_range(m_searchIter, end);
+		m_textBuffer->select_range(m_insertIter, end);
 		m_textView->scroll_to(end);
 	}
 }
@@ -192,7 +196,8 @@ void OutputManager::addText(const Glib::ustring& text, bool insert)
 		if(m_insertMode == InsertMode::Append){
 			m_textBuffer->insert(m_textBuffer->end(), text);
 		}else if(m_insertMode == InsertMode::Cursor){
-			m_textBuffer->replace_selection(text);
+			m_textBuffer->replace_range(text, m_insertIter, m_selectIter);
+			m_insertIter = m_selectIter = m_textBuffer->get_iter_at_mark(m_textBuffer->get_insert());
 		}else if(m_insertMode == InsertMode::Replace){
 			m_textBuffer->replace_all(text);
 		}

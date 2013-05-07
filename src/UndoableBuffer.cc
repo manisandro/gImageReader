@@ -179,23 +179,9 @@ void UndoableBuffer::redo()
 	m_undoInProgress = false;
 }
 
-void UndoableBuffer::replace_selection(const Glib::ustring &text, bool allIfNoSelection)
+void UndoableBuffer::replace_range(const Glib::ustring &text, const Gtk::TextIter& start, const Gtk::TextIter& end)
 {
-	Gtk::TextIter startIt = begin(), endIt = end();
-	if(get_has_selection()){
-		get_selection_bounds(startIt, endIt);
-	}else if(!allIfNoSelection){
-		insert_at_cursor(text);
-		return;
-	}
-	erase(startIt, endIt);
-	insert_at_cursor(text);
-}
-
-void UndoableBuffer::replace_all(const Glib::ustring &text)
-{
-	Gtk::TextIter startIt = begin(), endIt = end();
-	erase(startIt, endIt);
+	erase(start, end);
 	insert_at_cursor(text);
 }
 

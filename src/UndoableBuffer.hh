@@ -32,8 +32,8 @@ public:
 	void undo();
 	void redo();
 	void clear_history(){ freeStack(m_undoStack); freeStack(m_redoStack); }
-	void replace_selection(const Glib::ustring& text, bool allIfNoSelection = false);
-	void replace_all(const Glib::ustring& text);
+	void replace_range(const Glib::ustring& text, const Gtk::TextIter& start, const Gtk::TextIter& end);
+	void replace_all(const Glib::ustring& text){ replace_range(text, begin(), end()); }
 	sigc::signal<void> signal_history_changed() const{ return m_signal_histroyChanged; }
 
 	static Glib::RefPtr<UndoableBuffer> create(){
