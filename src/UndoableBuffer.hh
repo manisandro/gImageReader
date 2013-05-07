@@ -22,21 +22,16 @@
 
 #include "common.hh"
 
+#include <memory>
 #include <stack>
 
 class UndoableBuffer : public Gtk::TextBuffer {
 public:
-	UndoableBuffer();
-	~UndoableBuffer(){ clear_history(); }
 	bool can_undo() const{ return !m_undoStack.empty(); }
 	bool can_redo() const{ return !m_redoStack.empty(); }
-	void begin_not_undoable_action(){ m_notUndoableAction = true; }
-	void end_not_undoable_action(){ m_notUndoableAction = false; }
-	void begin_chain(){ m_isChain = true; }
-	void end_chain(){ m_isChain = false; }
 	void undo();
 	void redo();
-	void clear_history();
+	void clear_history(){ freeStack(m_undoStack); freeStack(m_redoStack); }
 	void replace_selection(const Glib::ustring& text, bool allIfNoSelection = false);
 	void replace_all(const Glib::ustring& text);
 	sigc::signal<void> signal_history_changed() const{ return m_signal_histroyChanged; }
@@ -46,20 +41,19 @@ public:
 	}
 
 private:
+	UndoableBuffer();
+	~UndoableBuffer(){ clear_history(); }
 	struct Action;
 	struct UndoableInsert;
 	struct UndoableDelete;
 	std::stack<Action*> m_undoStack;
 	std::stack<Action*> m_redoStack;
-	bool m_notUndoableAction;
 	bool m_undoInProgress;
-	bool m_isChain;
 	sigc::signal<void> m_signal_histroyChanged;
 
 	void onInsertText(const Gtk::TextIter& it, const Glib::ustring& text, int len);
 	void onDeleteRange(const Gtk::TextIter& start, const Gtk::TextIter& end);
-
-	void clearStack(std::stack<Action*>& stack);
+	void freeStack(std::stack<Action*>& stack);
 };
 
 #endif // UNDOABLEBUFFER_HH
