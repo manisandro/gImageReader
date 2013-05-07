@@ -2,16 +2,11 @@ autom4te.cache
 aclocal.m4
 config.h.in
 configure
-gImageReader.config
-gImageReader.creator
 gImageReader.creator.user
-gImageReader.files
-gImageReader.includes
 intltool-extract.in
 intltool-merge.in
 intltool-update.in
 Makefile.in
 data/Makefile.in
-data/glib-2.0
 src/Makefile.in
 
