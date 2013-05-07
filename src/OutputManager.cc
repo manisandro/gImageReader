@@ -209,9 +209,14 @@ void OutputManager::addText(const Glib::ustring& text, bool insert)
 bool OutputManager::saveBuffer()
 {
 	std::string base, ext;
-	const std::string& currentSource = MAIN->getSourceManager()->getSelectedSource();
+	const std::string& currentSource = Glib::path_get_basename(MAIN->getSourceManager()->getSelectedSource());
 	Utils::get_filename_parts(currentSource, base, ext);
-	std::string output = base + ".txt";
+	std::string outputName = base + ".txt";
+	std::string outputDir = Glib::get_user_special_dir(G_USER_DIRECTORY_DOCUMENTS);
+	if(!Glib::file_test(outputDir, Glib::FILE_TEST_IS_DIR)){
+		outputDir = Glib::build_filename(Glib::get_home_dir(), _("scan.png"));
+	}
+
 	Gtk::FileChooserDialog savedialog(*MAIN->getWindow(), _("Save Output..."), Gtk::FILE_CHOOSER_ACTION_SAVE);
 	savedialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
 	savedialog.add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
@@ -221,8 +226,8 @@ bool OutputManager::saveBuffer()
 	filter->set_name(_("Text Files"));
 	filter->add_pattern(("*.txt"));
 	savedialog.add_filter(filter);
-	savedialog.set_current_folder(Glib::path_get_dirname(output));
-	savedialog.set_current_name(Glib::path_get_basename(output));
+	savedialog.set_current_folder(outputDir);
+	savedialog.set_current_name(outputName);
 	int response = savedialog.run();
 	savedialog.hide();
 	if(response != Gtk::RESPONSE_OK){
@@ -234,7 +239,7 @@ bool OutputManager::saveBuffer()
 		return false;
 	}
 	Glib::ustring txt = m_textBuffer->get_text(false);
-	file.write(txt.c_str(), txt.size());
+	file << txt;
 	m_textBuffer->set_modified(false);
 	return true;
 }
