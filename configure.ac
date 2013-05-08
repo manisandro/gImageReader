@@ -30,7 +30,22 @@ LT_INIT
 
 dnl ********************************* Modules *********************************
 PKG_CHECK_MODULES(GIMAGEREADER, [gtkmm-3.0 gtkspellmm-3.0 cairomm-1.0 enchant
-                                 poppler-glib tesseract curlpp sane-backends])
+                                 poppler-glib tesseract sane-backends])
+
+dnl *************************** Enable version check **************************
+AC_ARG_ENABLE([versioncheck],
+     AS_HELP_STRING([--enable-versioncheck], [enable version check (default is yes)]),
+      [case "${enableval}" in
+        yes) versioncheck=true ;;
+        no)  versioncheck=false ;;
+        *) AC_MSG_ERROR([bad value ${enableval} for --enable-versioncheck]) ;;
+      esac],[versioncheck=true])
+AM_CONDITIONAL([ENABLE_VERSIONCHECK], [test x$versioncheck = xtrue])
+
+if test x$versioncheck = xtrue; then
+    PKG_CHECK_MODULES(CURLPP, [curlpp])
+    AC_DEFINE(ENABLE_VERSIONCHECK, 1, [Whether version-check is enabled.])
+fi
 
 AC_OUTPUT([
 gimagereader.spec

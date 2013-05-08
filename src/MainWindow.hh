@@ -77,8 +77,10 @@ private:
 	bool quit(GdkEventAny*);
 	void showAbout();
 	void setOutputPaneOrientation(Gtk::ComboBoxText* combo);
+#if ENABLE_VERSIONCHECK
 	void getNewestVersion();
 	void checkVersion(const Glib::ustring& newver);
+#endif
 };
 
 #endif

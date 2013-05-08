@@ -30,8 +30,10 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+#if ENABLE_VERSIONCHECK
 #include <curlpp/Easy.hpp>
 #include <curlpp/Options.hpp>
+#endif
 
 MainWindow* MainWindow::s_instance = nullptr;
 
@@ -99,9 +101,13 @@ MainWindow::MainWindow()
 		m_window->resize(geom[2], geom[3]);
 		m_window->move(geom[0], geom[1]);
 	}
+#if ENABLE_VERSIONCHECK
 	if(m_config->getSetting<SwitchSetting>("updatecheck")->getValue()){
 		m_newVerThread = Glib::Threads::Thread::create([this]{ getNewestVersion(); });
 	}
+#else
+	Builder("check:config.settings.update").as<Gtk::Widget>()->hide();
+#endif
 }
 
 MainWindow::~MainWindow()
@@ -184,6 +190,7 @@ void MainWindow::setOutputPaneOrientation(Gtk::ComboBoxText* combo)
 	Builder("paned:output").as<Gtk::Paned>()->set_orientation(orient);
 }
 
+#if ENABLE_VERSIONCHECK
 void MainWindow::getNewestVersion()
 {
 	std::ostringstream ss;
@@ -214,3 +221,4 @@ void MainWindow::checkVersion(const Glib::ustring& newver)
 			 {_("Don't notify again"), [this]{ m_config->getSetting<SwitchSetting>("updatecheck")->setValue(false); return true; }}});
 	}
 }
+#endif // ENABLE_VERSIONCHECK
