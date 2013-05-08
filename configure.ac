@@ -6,6 +6,7 @@ AC_INIT(gImageReader, 2.90, http://sourceforge.net/projects/gimagereader/,
 AC_CONFIG_AUX_DIR([build])
 AC_CONFIG_MACRO_DIR([build])
 AC_CONFIG_HEADERS([config.h])
+AC_CANONICAL_HOST
 
 AM_INIT_AUTOMAKE([1.11])
 
@@ -30,7 +31,7 @@ LT_INIT
 
 dnl ********************************* Modules *********************************
 PKG_CHECK_MODULES(GIMAGEREADER, [gtkmm-3.0 gtkspellmm-3.0 cairomm-1.0 enchant
-                                 poppler-glib tesseract sane-backends])
+                                 poppler-glib tesseract])
 
 dnl *************************** Enable version check **************************
 AC_ARG_ENABLE([versioncheck],
@@ -46,6 +47,15 @@ if test x$versioncheck = xtrue; then
     PKG_CHECK_MODULES(CURLPP, [curlpp])
     AC_DEFINE(ENABLE_VERSIONCHECK, 1, [Whether version-check is enabled.])
 fi
+
+dnl ************************** Look for SANE on linux *************************
+case $host_os in
+  linux*)
+        PKG_CHECK_MODULES(SANE, [sane-backends])
+        ;;
+    *)
+        ;;
+esac
 
 AC_OUTPUT([
 gimagereader.spec

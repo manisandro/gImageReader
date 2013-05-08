@@ -2,7 +2,7 @@ AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\" \
-	$(GIMAGEREADER_CFLAGS) $(CURLPP_CFLAGS)
+	$(GIMAGEREADER_CFLAGS) $(CURLPP_CFLAGS) $(SANE_CFLAGS)
 
 AM_CFLAGS = -Wall -g
 
@@ -49,4 +49,4 @@ gimagereader_SOURCES = \
 
 gimagereader_LDFLAGS =
 
-gimagereader_LDADD = $(GIMAGEREADER_LIBS) $(CURLPP_LIBS) -ldl
+gimagereader_LDADD = $(GIMAGEREADER_LIBS) $(CURLPP_LIBS) $(SANE_LIBS) -ldl
