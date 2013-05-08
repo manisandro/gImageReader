@@ -56,6 +56,10 @@ SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
 #define CHANGELOGURL "http://sourceforge.net/projects/gimagereader/files/changelog.txt/download?use_mirror=autoselect"
 #define MANUALURL "file://" PACKAGE_DATA_DIR "manual.html"
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 struct Builder {
 public:
 	static Glib::RefPtr<Gtk::Builder> builder;

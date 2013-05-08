@@ -27,6 +27,10 @@
 #include <cstdint>
 #include <vector>
 
+#ifdef G_OS_WIN32
+#include <gdk/gdkwin32.h>
+#endif
+
 class ScannerTwain : public Scanner {
 private:
 	void* m_dllHandle = nullptr;
@@ -248,7 +252,7 @@ bool ScannerTwain::requestAcquire(bool showUI, bool modalUI)
 	m_twUI.ShowUI = showUI;
 	m_twUI.ModalUI = modalUI;
 #ifdef G_OS_WIN32
-	m_twUI.hParent = GDK_WINDOW_HWND(MAIN->getWindow()->get_window()->gobj());
+	m_twUI.hParent = gdk_win32_window_get_impl_hwnd(MAIN->getWindow()->get_window()->gobj());
 #endif
 	TW_UINT16 twRC = m_dsmAddr(&m_appID, &m_objID, DG_CONTROL, DAT_USERINTERFACE, MSG_ENABLEDS, (TW_MEMREF)&m_twUI);
 	if(twRC != TWRC_SUCCESS) {

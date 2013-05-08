@@ -271,18 +271,19 @@ void OutputManager::setLanguage(const Config::Lang& lang)
 			m_spell.attach(*m_textView);
 		}catch(const GtkSpell::Error& e){
 			if(MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->getValue()){
+				Notifier::Action actionDontShowAgain = {_("Don't show again"), []{ MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->setValue(false); return true; }};
+				Notifier::Action actionInstall = Notifier::Action{_("Help"), []{ MAIN->showHelp(); return false; }};
 				// Try initiating a DBUS connection for PackageKit
 				Glib::RefPtr<Gio::DBus::Proxy> proxy;
 	#ifdef G_OS_UNIX
 				try{
 					proxy = Gio::DBus::Proxy::create_for_bus_sync(Gio::DBus::BUS_TYPE_SESSION, "org.freedesktop.PackageKit",
 																  "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify");
+					actionInstall = Notifier::Action{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); return true; }};
 				}catch(const Glib::Error&){
 					g_warning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
 				}
 	#endif
-				Notifier::Action actionDontShowAgain = {_("Don't show again"), []{ MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->setValue(false); return true; }};
-				Notifier::Action actionInstall = proxy ? Notifier::Action{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); return true; }} : Notifier::Action{_("Help"), []{ MAIN->showHelp(); return false; }};
 				Notifier::notify(_("Spelling dictionary missing"), Glib::ustring::compose(_("The spellcheck dictionary for %1 is not installed"), lang.name), {actionInstall, actionDontShowAgain}, &m_notifierHandle);
 			}
 		}

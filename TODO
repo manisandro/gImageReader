@@ -1,3 +1,4 @@
+- showHelp -> showHelp(std::string& chapter)
 Low prio:
 - replace all ?
 - markers in buffer to find corresponding page from cursor position
