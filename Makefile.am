@@ -7,7 +7,7 @@ INTLTOOL_FILES = \
 	intltool-merge.in \
 	intltool-update.in
 
-EXTRA_DIST = $(INTLTOOL_FILES)
+EXTRA_DIST = $(INTLTOOL_FILES) po/$(GETTEXT_PACKAGE).pot
 
 DISTCLEANFILES = \
 	intltool-extract \
