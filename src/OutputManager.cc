@@ -121,7 +121,7 @@ void OutputManager::filterBuffer()
 	if(m_filterKeepIfQuote->get_active()){
 		expr += "(?!['\"])";
 	}
-	txt = Glib::Regex::create(expr)->replace(txt, 0, "\\1", static_cast<Glib::RegexMatchFlags>(0));
+	txt = Glib::Regex::create(expr)->replace(txt, 0, "\\1 ", static_cast<Glib::RegexMatchFlags>(0));
 
 	if(m_filterJoinSpace->get_active()){
 		txt = Glib::Regex::create("\\s+")->replace(txt, 0, " ", static_cast<Glib::RegexMatchFlags>(0));
