@@ -39,6 +39,11 @@ gsettings_SCHEMAS = apps.gimagereader.gschema.xml
 @GSETTINGS_RULES@
 EXTRA_DIST += $(gsettings_SCHEMAS)
 
+# Manual
+manualdir = $(pkgdatadir)
+manual_DATA = manual.html
+EXTRA_DIST += $(manual_DATA)
+
 # Hooks
 install-data-hook: install-update-icon-cache
 uninstall-hook: uninstall-update-icon-cache
