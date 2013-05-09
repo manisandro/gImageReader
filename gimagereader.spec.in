@@ -43,14 +43,17 @@ make DESTDIR=$RPM_BUILD_ROOT install
 %find_lang %{name}
 
 %post
-update-desktop-database &> /dev/null || :
+/usr/bin/update-desktop-database &> /dev/null || :
 
 %postun
-update-desktop-database &> /dev/null || :
+/usr/bin/update-desktop-database &> /dev/null || :
+if [ $1 -eq 0 ] ; then
+    /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+fi
 
 %posttrans
-gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+/usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 %files -f %{name}.lang
 %doc AUTHORS ChangeLog COPYING NEWS README TODO
@@ -59,7 +62,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
-%{_datadir}/glib-2.0/schemas/apps.%{name}.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.gnome.%{name}.gschema.xml
 
 %changelog
 * Sat Apr 20 2013 Sandro Mani <manisandro@gmail.com> - @PACKAGE_VERSION@-1

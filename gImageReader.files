@@ -7,7 +7,7 @@ INSTALL
 NEWS
 README
 TODO
-data/apps.gimagereader.gschema.xml
+data/org.gnome.gimagereader.gschema.xml
 data/gimagereader.desktop
 data/gimagereader.ui
 data/Makefile.am

@@ -35,7 +35,7 @@ desktop_DATA = gimagereader.desktop
 EXTRA_DIST += $(desktop_DATA)
 
 # GSettings schema
-gsettings_SCHEMAS = apps.gimagereader.gschema.xml
+gsettings_SCHEMAS = org.gnome.gimagereader.gschema.xml
 @GSETTINGS_RULES@
 EXTRA_DIST += $(gsettings_SCHEMAS)
 
