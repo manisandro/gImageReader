@@ -266,7 +266,7 @@ bool ScannerTwain::getImageInfo(TW_IMAGEINFO& twImageInfo)
 {
 	TW_UINT16 twRC = m_dsmAddr(&m_appID, &m_objID, DG_IMAGE, DAT_IMAGEINFO, MSG_GET, (TW_MEMREF)&twImageInfo);
 	if(twRC != TWRC_SUCCESS){
-		g_debug("DAT_IMAGEINFO:MSG_GET failed: %s", twRC);
+		g_debug("DAT_IMAGEINFO:MSG_GET failed: %d", twRC);
 		return false;
 	}
 	return true;
