@@ -94,7 +94,6 @@ void OutputManager::setInsertMode(InsertMode mode, Gtk::ImageMenuItem* item)
 
 void OutputManager::filterBuffer()
 {
-	m_textView->set_editable(false);
 	Gtk::TextIter start, end;
 	if(!m_textBuffer->get_selection_bounds(start, end)){
 		start = m_textBuffer->begin();
@@ -102,35 +101,38 @@ void OutputManager::filterBuffer()
 	}
 	Glib::ustring txt = m_textBuffer->get_text(start, end);
 
-	if(m_filterJoinHyphen->get_active()){
-		txt = Glib::Regex::create("-\\s*\n\\s*")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags>(0));
-	}
-	Glib::ustring expr;
-	if(m_filterKeepIfDot->get_active()){
-		expr += "\\.";
-	}
-	if(m_filterKeepIfQuote->get_active()){
-		expr += "'\"";
-	}
-	if(!expr.empty()){
-		expr = "([^" + expr + "])";
-	}else{
-		expr = "(.)";
-	}
-	expr += "\n";
-	if(m_filterKeepIfQuote->get_active()){
-		expr += "(?!['\"])";
-	}
-	txt = Glib::Regex::create(expr)->replace(txt, 0, "\\1 ", static_cast<Glib::RegexMatchFlags>(0));
+	Utils::busyTask([this,&txt]{
+		if(m_filterJoinHyphen->get_active()){
+			txt = Glib::Regex::create("-\\s*\n\\s*")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags>(0));
+		}
+		Glib::ustring expr;
+		if(m_filterKeepIfDot->get_active()){
+			expr += "\\.";
+		}
+		if(m_filterKeepIfQuote->get_active()){
+			expr += "'\"";
+		}
+		if(!expr.empty()){
+			expr = "([^" + expr + "])";
+		}else{
+			expr = "(.)";
+		}
+		expr += "\n";
+		if(m_filterKeepIfQuote->get_active()){
+			expr += "(?!['\"])";
+		}
+		txt = Glib::Regex::create(expr)->replace(txt, 0, "\\1 ", static_cast<Glib::RegexMatchFlags>(0));
 
-	if(m_filterJoinSpace->get_active()){
-		txt = Glib::Regex::create("\\s+")->replace(txt, 0, " ", static_cast<Glib::RegexMatchFlags>(0));
-	}
+		if(m_filterJoinSpace->get_active()){
+			txt = Glib::Regex::create("\\s+")->replace(txt, 0, " ", static_cast<Glib::RegexMatchFlags>(0));
+		}
+		return true;
+	}, _("Stripping line breaks..."));
+
 	m_textBuffer->replace_range(txt, start, end);
 	start = end = m_textBuffer->get_iter_at_mark(m_textBuffer->get_insert());
 	start.backward_chars(txt.size());
 	m_textBuffer->select_range(start, end);
-	m_textView->set_editable(true);
 }
 
 void OutputManager::toggleReplaceBox(Gtk::ToggleToolButton* button)
