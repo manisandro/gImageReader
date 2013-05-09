@@ -56,7 +56,6 @@ OutputManager::OutputManager()
 	m_selectIter = m_textBuffer->end();
 
 	Builder("tbbutton:output.stripcrlf").as<Gtk::MenuToolButton>()->set_menu(*Builder("menu:output.stripcrlf").as<Gtk::Menu>());
-	Builder("tbbutton:output.insert").as<Gtk::ToggleToolButton>()->set_homogeneous(false);
 
 	CONNECT(m_insButton, toggled, [this]{ showInsertMenu(); });
 	CONNECT(m_insMenu, deactivate, [this]{ m_insButton->set_active(false); });

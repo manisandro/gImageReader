@@ -38,7 +38,7 @@ public:
 private:
 	enum class InsertMode { Append, Cursor, Replace };
 
-	Gtk::ToggleToolButton* m_insButton;
+	Gtk::ToggleButton* m_insButton;
 	Gtk::Menu* m_insMenu;
 	Gtk::Image* m_insImage;
 	Gtk::EventBox* m_replaceBox;

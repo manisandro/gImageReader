@@ -44,36 +44,6 @@
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
-  <object class="GtkBox" id="box:output.insert">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkImage" id="image:output.insert">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="has_tooltip">True</property>
-        <property name="tooltip_text" translatable="yes">Select append mode</property>
-        <property name="pixbuf">icons/ins_append.png</property>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkArrow" id="arrow:output.insert">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="arrow_type">down</property>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">1</property>
-      </packing>
-    </child>
-  </object>
   <object class="GtkAboutDialog" id="dialog:about">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -1827,14 +1797,52 @@ MA 02110-1301, USA.</property>
                     <property name="show_arrow">False</property>
                     <property name="icon_size">1</property>
                     <child>
-                      <object class="GtkToggleToolButton" id="tbbutton:output.insert">
+                      <object class="GtkToolItem" id="tbbutton:output.insert.holder">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label_widget">box:output.insert</property>
+                        <child>
+                          <object class="GtkToggleButton" id="tbbutton:output.insert">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="relief">none</property>
+                            <child>
+                              <object class="GtkBox" id="box:output.insert">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkImage" id="image:output.insert">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="has_tooltip">True</property>
+                                    <property name="tooltip_text" translatable="yes">Select append mode</property>
+                                    <property name="pixbuf">icons/ins_append.png</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkArrow" id="arrow:output.insert">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="arrow_type">down</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
-                        <property name="homogeneous">True</property>
                       </packing>
                     </child>
                     <child>
