@@ -31,12 +31,6 @@
 	#define _(x) x
 #endif
 
-#ifdef G_OS_UNIX
-	#define PATHSEP ':'
-#else
-	#define PATHSEP ';'
-#endif
-
 namespace sigc{
 SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
 }
@@ -50,11 +44,6 @@ SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
 #endif
 
 #define APPLICATION_ID "org.gnome.gimagereader"
-#define UI_FILE PACKAGE_DATA_DIR "gimagereader.ui"
-#define CHECKURL "http://sourceforge.net/projects/gimagereader/files/LATEST/download?use_mirror=autoselect"
-#define DOWNLOADURL "http://sourceforge.net/projects/gimagereader/files"
-#define CHANGELOGURL "http://sourceforge.net/projects/gimagereader/files/changelog.txt/download?use_mirror=autoselect"
-#define MANUALURL "file://" PACKAGE_DATA_DIR "manual.html"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846

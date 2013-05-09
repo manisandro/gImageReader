@@ -57,7 +57,22 @@ private:
 
 int main (int argc, char *argv[])
 {
-	bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+	std::string uiFile;
+	std::string localeDir;
+
+#ifdef G_OS_WIN32
+	gchar* dir = g_win32_get_package_installation_directory_of_module(0);
+	uiFile = Glib::build_path("/", std::vector<std::string>{dir, "share", PACKAGE, "gimagereader.ui"});
+	localeDir = Glib::build_path("/", std::vector<std::string>{dir, "share", "locale"});
+	Glib::setenv("TESSDATA_PREFIX", Glib::build_path("/", std::vector<std::string>{dir, "share"}));
+	Glib::setenv("DICTDIR", Glib::build_path("/", std::vector<std::string>{dir, "share", "myspell", "dicts"}));
+	g_free(dir);
+#else
+	uiFile = PACKAGE_DATA_DIR "/gimagereader.ui";
+	localeDir = PACKAGE_LOCALE_DIR;
+#endif
+
+	bindtextdomain(GETTEXT_PACKAGE, localeDir.c_str());
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 	textdomain(GETTEXT_PACKAGE);
 
@@ -65,7 +80,7 @@ int main (int argc, char *argv[])
 	Application app(argc, argv);
 
 	try {
-		Builder::builder = Gtk::Builder::create_from_file(UI_FILE);
+		Builder::builder = Gtk::Builder::create_from_file(uiFile);
 		Builder::builder->set_translation_domain(GETTEXT_PACKAGE);
 	} catch (const Glib::FileError & ex) {
 		std::cerr << ex.what() << std::endl;

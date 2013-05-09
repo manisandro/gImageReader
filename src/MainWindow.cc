@@ -30,10 +30,15 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+
 #if ENABLE_VERSIONCHECK
 #include <curlpp/Easy.hpp>
 #include <curlpp/Options.hpp>
-#endif
+
+#define CHECKURL "http://sourceforge.net/projects/gimagereader/files/LATEST/download?use_mirror=autoselect"
+#define DOWNLOADURL "http://sourceforge.net/projects/gimagereader/files"
+#define CHANGELOGURL "http://sourceforge.net/projects/gimagereader/files/changelog.txt/download?use_mirror=autoselect"
+#endif // ENABLE_VERSIONCHECK
 
 MainWindow* MainWindow::s_instance = nullptr;
 
@@ -180,7 +185,15 @@ void MainWindow::showAbout()
 
 void MainWindow::showHelp()
 {
-	gtk_show_uri(0, MANUALURL, GDK_CURRENT_TIME, 0);
+	std::string manualFile;
+#ifdef G_OS_WIN32
+	gchar* dir = g_win32_get_package_installation_directory_of_module(0);
+	manualFile = Glib::build_path("/", std::vector<std::string>{dir, "share", PACKAGE, "manual.html"});
+	g_free(dir);
+#else
+	manualFile = PACKAGE_DATA_DIR "/manual.html";
+#endif
+	gtk_show_uri(0, Glib::filename_to_uri(manualFile).c_str(), GDK_CURRENT_TIME, 0);
 }
 
 void MainWindow::setOutputPaneOrientation(Gtk::ComboBoxText* combo)
