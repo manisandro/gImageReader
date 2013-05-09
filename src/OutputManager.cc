@@ -124,7 +124,7 @@ void OutputManager::filterBuffer()
 		txt = Glib::Regex::create(expr)->replace(txt, 0, "\\1 ", static_cast<Glib::RegexMatchFlags>(0));
 
 		if(m_filterJoinSpace->get_active()){
-			txt = Glib::Regex::create("\\s+")->replace(txt, 0, " ", static_cast<Glib::RegexMatchFlags>(0));
+			txt = Glib::Regex::create("[ \t]+")->replace(txt, 0, " ", static_cast<Glib::RegexMatchFlags>(0));
 		}
 		return true;
 	}, _("Stripping line breaks..."));
