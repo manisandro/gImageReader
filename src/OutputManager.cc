@@ -272,7 +272,7 @@ void OutputManager::setLanguage(const Config::Lang& lang)
 		}catch(const GtkSpell::Error& e){
 			if(MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->getValue()){
 				Notifier::Action actionDontShowAgain = {_("Don't show again"), []{ MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->setValue(false); return true; }};
-				Notifier::Action actionInstall = Notifier::Action{_("Help"), []{ MAIN->showHelp(); return false; }};
+				Notifier::Action actionInstall = Notifier::Action{_("Help"), []{ MAIN->showHelp("#InstallSpelling"); return false; }};
 				// Try initiating a DBUS connection for PackageKit
 				Glib::RefPtr<Gio::DBus::Proxy> proxy;
 	#ifdef G_OS_UNIX

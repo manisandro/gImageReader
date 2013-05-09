@@ -183,7 +183,7 @@ void MainWindow::showAbout()
 	m_aboutdialog->hide();
 }
 
-void MainWindow::showHelp()
+void MainWindow::showHelp(const std::string& chapter)
 {
 	std::string manualFile;
 #ifdef G_OS_WIN32
@@ -193,7 +193,8 @@ void MainWindow::showHelp()
 #else
 	manualFile = PACKAGE_DATA_DIR "/manual.html";
 #endif
-	gtk_show_uri(0, Glib::filename_to_uri(manualFile).c_str(), GDK_CURRENT_TIME, 0);
+	std::string manualURI = Glib::filename_to_uri(manualFile) + chapter;
+	gtk_show_uri(0, manualURI.c_str(), GDK_CURRENT_TIME, 0);
 }
 
 void MainWindow::setOutputPaneOrientation(Gtk::ComboBoxText* combo)

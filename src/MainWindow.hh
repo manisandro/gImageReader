@@ -50,7 +50,7 @@ public:
 	Recognizer* getRecognizer(){ return m_recognizer; }
 	SourceManager* getSourceManager(){ return m_sourceManager; }
 	Gtk::Window* getWindow() const{ return m_window; }
-	void showHelp();
+	void showHelp(const std::string& chapter = "");
 
 private:
 	static MainWindow* s_instance;
