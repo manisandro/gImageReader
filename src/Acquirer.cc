@@ -60,8 +60,6 @@ Acquirer::Acquirer()
 	CONNECT(m_scanner, scanning_changed, [this](Scanner::ScanState state){ setScanState(state); });
 	CONNECT(m_scanner, page_available, [this](const std::string& file){ MAIN->getSourceManager()->addSources({Gio::File::create_for_path(file)});});
 	CONNECT(m_devCombo, changed, [this]{ auto it = m_devCombo->get_active(); m_devCombo->set_tooltip_text(it ? static_cast<std::string>((*it)[m_devComboCols.label]) : ""); });
-
-	m_scanner->start();
 }
 
 Acquirer::~Acquirer()
@@ -69,7 +67,7 @@ Acquirer::~Acquirer()
 	m_scanner->stop();
 }
 
-void Acquirer::setOutputPath()
+void Acquirer::init()
 {
 	m_outputPath = MAIN->getConfig()->getSetting<VarSetting<std::string>>("scanoutput")->getValue();
 	if(m_outputPath.empty() || !Glib::file_test(Glib::path_get_dirname(m_outputPath), Glib::FILE_TEST_IS_DIR)){
@@ -80,6 +78,8 @@ void Acquirer::setOutputPath()
 	}
 	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);
 	genOutputPath();
+
+	m_scanner->start();
 }
 
 void Acquirer::selectOutputPath()

@@ -30,7 +30,7 @@ public:
 	Acquirer();
 	~Acquirer();
 
-	void setOutputPath();
+	void init();
 
 private:
 	class DevicesComboColumns : public Gtk::TreeModel::ColumnRecord {

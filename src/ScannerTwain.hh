@@ -29,6 +29,10 @@
 
 #ifdef G_OS_WIN32
 #include <gdk/gdkwin32.h>
+typedef HWND WindowHandle_t;
+#else
+#include <gdk/gdkx.h>
+typedef XID WindowHandle_t;
 #endif
 
 class ScannerTwain : public Scanner {
@@ -36,6 +40,7 @@ private:
 	void* m_dllHandle = nullptr;
 	DSMENTRYPROC m_dsmAddr;
 	TW_IDENTITY m_appID;
+	WindowHandle_t m_hwnd;
 
 	TW_IDENTITY m_objID;
 	TW_USERINTERFACE m_twUI;
@@ -97,7 +102,12 @@ bool ScannerTwain::initBackend()
 	std::strcpy(m_appID.Manufacturer, "");
 	std::strcpy(m_appID.ProductFamily, "");
 
-	TW_UINT16 twRC = m_dsmAddr(&m_appID, NULL, DG_CONTROL, DAT_PARENT, MSG_OPENDSM, (TW_MEMREF)&m_appID);
+#ifdef G_OS_WIN32
+	m_hwnd = gdk_win32_window_get_impl_hwnd(MAIN->getWindow()->get_window()->gobj());
+#else
+	m_hwnd = gdk_x11_window_get_xid(MAIN->getWindow()->get_window()->gobj());
+#endif
+	TW_UINT16 twRC = m_dsmAddr(&m_appID, NULL, DG_CONTROL, DAT_PARENT, MSG_OPENDSM, (TW_MEMREF)&m_hwnd);
 	if(twRC != TWRC_SUCCESS) {
 		g_debug("DAT_PARENT:OPENDSM failed: %d", twRC);
 		return false;
@@ -251,9 +261,7 @@ bool ScannerTwain::requestAcquire(bool showUI, bool modalUI)
 {
 	m_twUI.ShowUI = showUI;
 	m_twUI.ModalUI = modalUI;
-#ifdef G_OS_WIN32
-	m_twUI.hParent = gdk_win32_window_get_impl_hwnd(MAIN->getWindow()->get_window()->gobj());
-#endif
+	m_twUI.hParent = m_hwnd;
 	TW_UINT16 twRC = m_dsmAddr(&m_appID, &m_objID, DG_CONTROL, DAT_USERINTERFACE, MSG_ENABLEDS, (TW_MEMREF)&m_twUI);
 	if(twRC != TWRC_SUCCESS) {
 		g_debug("DAT_USERINTERFACE:MSG_ENABLEDS failed: %d", twRC);
