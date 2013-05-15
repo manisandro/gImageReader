@@ -94,13 +94,13 @@ bool ScannerTwain::initBackend()
 	m_appID.Version.MinorNum = 0;
 	m_appID.Version.Language = TWLG_ENGLISH_USA;
 	m_appID.Version.Country  = TWCY_USA;
-	std::strcpy(m_appID.Version.Info, "TWAIN Interface");
-	std::strcpy(m_appID.ProductName, "TWAIN Interface");
+	std::strcpy(m_appID.Version.Info, PACKAGE_VERSION);
 	m_appID.ProtocolMajor = TWON_PROTOCOLMAJOR;
 	m_appID.ProtocolMinor = TWON_PROTOCOLMINOR;
 	m_appID.SupportedGroups =  DG_IMAGE | DG_CONTROL;
-	std::strcpy(m_appID.Manufacturer, "");
-	std::strcpy(m_appID.ProductFamily, "");
+	std::strcpy(m_appID.Manufacturer, "Sandro Mani");
+	std::strcpy(m_appID.ProductFamily, "-");
+	std::strcpy(m_appID.ProductName, "gImageReader");
 
 #ifdef G_OS_WIN32
 	m_hwnd = gdk_win32_window_get_impl_hwnd(MAIN->getWindow()->get_window()->gobj());
@@ -117,6 +117,7 @@ bool ScannerTwain::initBackend()
 
 void ScannerTwain::closeBackend()
 {
+	m_dsmAddr(&m_appID, NULL, DG_CONTROL, DAT_PARENT, MSG_CLOSEDSM, (TW_MEMREF)&m_hwnd);
 	dlclose(m_dllHandle);
 }
 
