@@ -397,6 +397,7 @@ void Displayer::clearImage()
 	}
 	m_brispin->set_value(0);
 	m_conspin->set_value(0);
+	m_rotspin->set_value(0);
 }
 
 Geometry::Point Displayer::getSelectionCoords(double evx, double evy) const
