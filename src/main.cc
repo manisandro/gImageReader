@@ -65,7 +65,6 @@ int main (int argc, char *argv[])
 	uiFile = Glib::build_path("/", std::vector<std::string>{dir, "share", PACKAGE, "gimagereader.ui"});
 	localeDir = Glib::build_path("/", std::vector<std::string>{dir, "share", "locale"});
 	Glib::setenv("TESSDATA_PREFIX", Glib::build_path("/", std::vector<std::string>{dir, "share"}));
-	Glib::setenv("DICTDIR", Glib::build_path("/", std::vector<std::string>{dir, "share", "myspell", "dicts"}));
 	g_free(dir);
 #else
 	uiFile = PACKAGE_DATA_DIR "/gimagereader.ui";
