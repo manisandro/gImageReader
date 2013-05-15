@@ -25,6 +25,8 @@
 #include <iterator>
 #include <utility>
 
+namespace tesseract { class TessBaseAPI; }
+
 namespace Utils {
 	void popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gtk::Menu* menu, bool alignRight, bool alignBottom);
 
@@ -63,6 +65,7 @@ namespace Utils {
 	}
 
 	bool busyTask(const std::function<bool()>& f, const Glib::ustring& msg);
+	bool initTess(tesseract::TessBaseAPI& tess, const char* datapath, const char* language);
 }
 
 #endif

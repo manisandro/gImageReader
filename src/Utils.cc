@@ -20,6 +20,9 @@
 #include "Utils.hh"
 #include "MainWindow.hh"
 
+#include <clocale>
+#include <tesseract/baseapi.h>
+
 void Utils::popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gtk::Menu* menu, bool alignRight, bool alignBottom)
 {
 	ref->get_window()->get_origin(x, y);
@@ -145,4 +148,13 @@ bool Utils::busyTask(const std::function<bool()> &f, const Glib::ustring &msg)
 	thread->join();
 	MAIN->popState();
 	return taskState  == TaskState::Succeeded;
+}
+
+bool Utils::initTess(tesseract::TessBaseAPI& tess, const char* datapath, const char* language)
+{
+	std::string current = setlocale(LC_NUMERIC, NULL);
+	setlocale(LC_NUMERIC, "C");
+	int ret = tess.Init(datapath, language);
+	setlocale(LC_NUMERIC, current.c_str());
+	return ret != -1;
 }

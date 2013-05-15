@@ -48,7 +48,7 @@ bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, O
 	Glib::ustring text;
 	if(!Utils::busyTask([&img,&lang,&text,this]{
 		tesseract::TessBaseAPI tess;
-		if(tess.Init(0, lang.c_str()) == -1){ return false; }
+		if(!Utils::initTess(tess, nullptr, lang.c_str())){ return false; }
 		tess.SetImage(img->get_data(), img->get_width(), img->get_height(), 4, 4 * img->get_width());
 		text = tess.GetUTF8Text();
 		return true;
@@ -135,7 +135,7 @@ void Recognizer::recognizeDo(const std::vector<int> &pages, const Glib::ustring&
 {
 	Glib::ustring failed;
 	tesseract::TessBaseAPI tess;
-	if(tess.Init(0, lang.c_str()) == -1){
+	if(!Utils::initTess(tess, nullptr, lang.c_str())){
 		failed.append(_("\n\tFailed to initialize tesseract"));
 	}else{
 		int npages = pages.size();

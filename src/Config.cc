@@ -182,7 +182,7 @@ void Config::updateLanguagesMenu()
 	enchant::Broker::instance()->list_dicts(dictDescribe, &dicts);
 
 	tesseract::TessBaseAPI tess;
-	tess.Init(0, 0);
+	Utils::initTess(tess, nullptr, nullptr);
 	GenericVector<STRING> availLanguages;
 	tess.GetAvailableLanguagesAsVector(&availLanguages);
 
