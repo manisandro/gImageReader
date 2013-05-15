@@ -26,8 +26,6 @@
 #include <utility>
 
 namespace Utils {
-	extern Glib::ustring FALLBACK_COLOR_SCHEME;
-
 	void popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gtk::Menu* menu, bool alignRight, bool alignBottom);
 
 	void error_dialog(const Glib::ustring& title, const Glib::ustring& text, Gtk::Window* parent = 0);
