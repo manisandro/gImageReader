@@ -333,7 +333,11 @@ bool Displayer::setSource(const std::string &filename)
 	if(filename.empty()){
 		return false;
 	}
+#ifdef G_OS_WIN32
+	if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf"){
+#else
 	if(Utils::get_content_type(filename) == "application/pdf"){
+#endif
 		DisplayRenderer* renderer = new PDFRenderer(filename);
 		Utils::configure_spin(m_resspin, 300, 50, 600, 50, 100);
 		Utils::configure_spin(m_pagespin, 1, 1, renderer->getNPages(), 1, 10);
