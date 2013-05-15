@@ -117,7 +117,7 @@ void Displayer::blurThread()
 		BlurRequest req = m_blurRequest;
 		m_blurThreadIdle = false;
 		m_blurMutex.unlock();
-#define CHECK_PENDING { m_blurMutex.lock(); bool pending = m_blurRequestPending; m_blurMutex.unlock(); if(pending) continue;}
+#define CHECK_PENDING m_blurMutex.lock(); if(m_blurRequestPending) continue; m_blurMutex.unlock();
 		Cairo::RefPtr<Cairo::ImageSurface> blurred = m_renderer->render(req.page, req.res);
 		CHECK_PENDING
 		Manipulators::adjustBrightness(blurred, req.brightness);
@@ -130,6 +130,7 @@ void Displayer::blurThread()
 				m_canvas->queue_draw();
 			}
 		});
+		m_blurMutex.lock();
 	};
 	m_blurMutex.unlock();
 }
