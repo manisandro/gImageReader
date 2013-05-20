@@ -100,8 +100,6 @@ private:
 	sigc::signal<void,ScanState> m_signal_scanning_changed;
 	sigc::signal<void,const std::string&> m_signal_page_available;
 
-	static Scanner* s_instance;
-
 	// Scan thread functions
 	void do_complete_document();
 	void do_complete_page();

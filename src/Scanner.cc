@@ -34,16 +34,13 @@
 #include "ScannerTwain.hh"
 #endif
 
-Scanner* Scanner::s_instance = nullptr;
-
 Scanner* Scanner::get_instance(){
 #if defined(G_OS_UNIX)
 	static ScannerSane instance;
 #elif defined(G_OS_WIN32)
 	static ScannerTwain instance;
 #endif
-	s_instance = &instance;
-	return s_instance;
+	return &instance;
 }
 
 Glib::ustring Scanner::get_scan_mode_string(ScanMode mode)
