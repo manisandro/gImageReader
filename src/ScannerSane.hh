@@ -32,6 +32,8 @@
 #include <sane/sane.h>
 #include <sane/saneopts.h>
 
+typedef class ScannerSane ScannerImpl;
+
 class ScannerSane : public Scanner{
 private:
 	SANE_Handle m_handle = nullptr;

@@ -35,11 +35,7 @@
 #endif
 
 Scanner* Scanner::get_instance(){
-#if defined(G_OS_UNIX)
-	static ScannerSane instance;
-#elif defined(G_OS_WIN32)
-	static ScannerTwain instance;
-#endif
+	static ScannerImpl instance;
 	return &instance;
 }
 
