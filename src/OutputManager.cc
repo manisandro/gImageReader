@@ -207,34 +207,37 @@ void OutputManager::addText(const Glib::ustring& text, bool insert)
 	m_outputBox->show();
 }
 
-bool OutputManager::saveBuffer()
+bool OutputManager::saveBuffer(std::string filename)
 {
-	std::string base, ext;
-	const std::string& currentSource = Glib::path_get_basename(MAIN->getSourceManager()->getSelectedSource());
-	Utils::get_filename_parts(currentSource, base, ext);
-	std::string outputName = base + ".txt";
-	std::string outputDir = Glib::get_user_special_dir(G_USER_DIRECTORY_DOCUMENTS);
-	if(!Glib::file_test(outputDir, Glib::FILE_TEST_IS_DIR)){
-		outputDir = Glib::build_filename(Glib::get_home_dir(), _("scan.png"));
-	}
+	if(filename.empty()){
+		std::string base, ext;
+		const std::string& currentSource = Glib::path_get_basename(MAIN->getSourceManager()->getSelectedSource());
+		Utils::get_filename_parts(currentSource, base, ext);
+		std::string outputName = base + ".txt";
+		std::string outputDir = Glib::get_user_special_dir(G_USER_DIRECTORY_DOCUMENTS);
+		if(!Glib::file_test(outputDir, Glib::FILE_TEST_IS_DIR)){
+			outputDir = Glib::build_filename(Glib::get_home_dir(), _("scan.png"));
+		}
 
-	Gtk::FileChooserDialog savedialog(*MAIN->getWindow(), _("Save Output..."), Gtk::FILE_CHOOSER_ACTION_SAVE);
-	savedialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-	savedialog.add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
-	savedialog.set_local_only(false);
-	savedialog.set_do_overwrite_confirmation(true);
-	Glib::RefPtr<Gtk::FileFilter> filter = Gtk::FileFilter::create();
-	filter->set_name(_("Text Files"));
-	filter->add_pattern(("*.txt"));
-	savedialog.add_filter(filter);
-	savedialog.set_current_folder(outputDir);
-	savedialog.set_current_name(outputName);
-	int response = savedialog.run();
-	savedialog.hide();
-	if(response != Gtk::RESPONSE_OK){
-		return false;
+		Gtk::FileChooserDialog savedialog(*MAIN->getWindow(), _("Save Output..."), Gtk::FILE_CHOOSER_ACTION_SAVE);
+		savedialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
+		savedialog.add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
+		savedialog.set_local_only(false);
+		savedialog.set_do_overwrite_confirmation(true);
+		Glib::RefPtr<Gtk::FileFilter> filter = Gtk::FileFilter::create();
+		filter->set_name(_("Text Files"));
+		filter->add_pattern(("*.txt"));
+		savedialog.add_filter(filter);
+		savedialog.set_current_folder(outputDir);
+		savedialog.set_current_name(outputName);
+		int response = savedialog.run();
+		savedialog.hide();
+		if(response != Gtk::RESPONSE_OK){
+			return false;
+		}
+		filename = savedialog.get_filename();
 	}
-	std::ofstream file(savedialog.get_filename());
+	std::ofstream file(filename);
 	if(!file.is_open()){
 		Utils::error_dialog(_("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;

@@ -31,9 +31,10 @@ class OutputManager {
 public:
 	OutputManager();
 	void addText(const Glib::ustring& text, bool insert = false);
-	bool saveBuffer();
+	bool saveBuffer(std::string filename = "");
 	bool clearBuffer();
 	void setLanguage(const Config::Lang &lang);
+	bool getModified() const{ return m_textBuffer->get_modified(); }
 
 private:
 	enum class InsertMode { Append, Cursor, Replace };
