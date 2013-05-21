@@ -62,10 +62,11 @@ int main (int argc, char *argv[])
 
 #ifdef G_OS_WIN32
 	gchar* dir = g_win32_get_package_installation_directory_of_module(0);
-	uiFile = Glib::build_path("/", std::vector<std::string>{dir, "share", PACKAGE, "gimagereader.ui"});
-	localeDir = Glib::build_path("/", std::vector<std::string>{dir, "share", "locale"});
-	Glib::setenv("TESSDATA_PREFIX", Glib::build_path("/", std::vector<std::string>{dir, "share"}));
-	Glib::setenv("TWAINDSM_LOG", Glib::build_path("/", std::vector<std::string>{"twain.log"}));
+	uiFile = Glib::build_filename(dir, "share", PACKAGE, "gimagereader.ui");
+	localeDir = Glib::build_filename(dir, "share", "locale");
+	Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(dir, "share"));
+	Glib::setenv("TWAINDSM_LOG", Glib::build_filename(dir, "twain.log"));
+	freopen(Glib::build_filename(dir, "gimagereader.log").c_str(), "w", stderr);
 	g_free(dir);
 #else
 	uiFile = PACKAGE_DATA_DIR "/gimagereader.ui";
