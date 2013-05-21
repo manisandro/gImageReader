@@ -7,7 +7,11 @@ INTLTOOL_FILES = \
 	intltool-merge.in \
 	intltool-update.in
 
-EXTRA_DIST = $(INTLTOOL_FILES) po/$(GETTEXT_PACKAGE).pot
+EXTRA_DIST = \
+	$(INTLTOOL_FILES) \
+	po/$(GETTEXT_PACKAGE).pot \
+	win32/$(GETTEXT_PACKAGE).ico \
+	win32/$(GETTEXT_PACKAGE)-icon.rc
 
 DISTCLEANFILES = \
 	intltool-extract \

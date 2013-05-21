@@ -69,6 +69,9 @@ case "$host" in
 esac
 AC_MSG_RESULT([$platform_win32])
 AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
+if test "$with_platform" = "win32"; then
+  AC_CHECK_TOOL([WINDRES],[windres])
+fi
 
 AC_OUTPUT([
 gimagereader.spec
