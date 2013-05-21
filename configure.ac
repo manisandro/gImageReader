@@ -57,6 +57,19 @@ case $host_os in
         ;;
 esac
 
+dnl ****************************** Detect Windows *****************************
+AC_MSG_CHECKING([for some Win32 platform])
+case "$host" in
+  *-*-mingw*|*-*-cygwin*)
+    platform_win32=yes
+    ;;
+  *)
+    platform_win32=no
+    ;;
+esac
+AC_MSG_RESULT([$platform_win32])
+AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
+
 AC_OUTPUT([
 gimagereader.spec
 Makefile

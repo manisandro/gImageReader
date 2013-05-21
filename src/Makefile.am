@@ -49,4 +49,8 @@ gimagereader_SOURCES = \
 
 gimagereader_LDFLAGS =
 
+if PLATFORM_WIN32
+gimagereader_LDFLAGS += -mwindows
+endif
+
 gimagereader_LDADD = $(GIMAGEREADER_LIBS) $(CURLPP_LIBS) $(SANE_LIBS) -ldl
