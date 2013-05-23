@@ -84,20 +84,21 @@ bool ScannerTwain::initBackend()
 	}
 
 #ifdef G_OS_WIN32
-	char twaindsm[] = "twaindsm.dll";
+	gchar* dir = g_win32_get_package_installation_directory_of_module(0);
+	std::string twaindsm = Glib::build_filename(dir, "bin", "twaindsm.dll");
 #else
-	char twaindsm[] = "libtwaindsm.so.2.2.0";
+	std::string twaindsm = "libtwaindsm.so.2.2.0";
 #endif
 
-	m_dlHandle = dlopen(twaindsm, RTLD_LAZY);
+	m_dlHandle = dlopen(twaindsm.c_str(), RTLD_LAZY);
 	if(m_dlHandle == nullptr){
-		g_critical("LoadLibrary failed on %s", twaindsm);
+		g_critical("LoadLibrary failed on %s", twaindsm.c_str());
 		return false;
 	}
 
 	m_dsmEntry = (DSMENTRYPROC)dlsym(m_dlHandle, "DSM_Entry");
 	if(m_dsmEntry == nullptr){
-		g_critical("GetProcAddress failed on %s::DSM_Entry", twaindsm );
+		g_critical("GetProcAddress failed on %s::DSM_Entry", twaindsm.c_str());
 		return false;
 	}
 
