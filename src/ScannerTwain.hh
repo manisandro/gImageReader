@@ -136,8 +136,10 @@ void ScannerTwain::closeBackend()
 		// State 3 to 2
 		call(nullptr, DG_CONTROL, DAT_PARENT, MSG_CLOSEDSM, nullptr);
 	}
-
-	dlclose(m_dlHandle);
+	if(m_dlHandle != nullptr){
+		dlclose(m_dlHandle);
+		m_dlHandle = nullptr;
+	}
 }
 
 std::vector<Scanner::ScanDevice> ScannerTwain::detectDevices()
