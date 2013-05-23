@@ -124,6 +124,9 @@ void Acquirer::scanInitFailed()
 	m_msgLabel->set_markup(Glib::ustring::compose("<span color='red'>%1</span>", _("Failed to initialize the scanning backend.")));
 	m_scanButton->set_sensitive(false);
 	m_refreshButton->set_sensitive(false);
+	m_refreshButton->show();
+	m_refreshSpinner->hide();
+	m_refreshSpinner->stop();
 	m_scanner->stop();
 }
 
