@@ -1,0 +1,11 @@
+gImageReader 3.0
+ * Support multiple selections (via CTRL-key). Rightclicking a selection opens a context menu which allows to:
+    - Deleted and reordered individual selections.
+    - Recognize the selected text, either to clipboard or to the output pane.
+ * Basic automatic page layout detection.
+ * The output pane now supports undo and redo.
+ * Configuration is now automatic.
+ * Proper arbitrary rotation of images.
+ * Detect deleted/renamed files.
+ * Cleaner UI.
+ * Port to Gtk+3, rewrite in C++ using the Gtkmm bindings.
