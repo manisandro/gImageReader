@@ -1,0 +1,8 @@
+*:myspell,aspell,ispell
+fi:voikko,ispell,myspell,aspell
+fi_FI:voikko,ispell,myspell,aspell
+he:hspell,myspell
+he_IL:hspell,myspell
+yi:uspell
+tr:zemberek
+tr_TR:zemberek

@@ -10,8 +10,7 @@ INTLTOOL_FILES = \
 EXTRA_DIST = \
 	$(INTLTOOL_FILES) \
 	po/$(GETTEXT_PACKAGE).pot \
-	win32/$(GETTEXT_PACKAGE).ico \
-	win32/$(GETTEXT_PACKAGE)-icon.rc
+	win32
 
 DISTCLEANFILES = \
 	intltool-extract \
