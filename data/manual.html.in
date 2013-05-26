@@ -46,7 +46,7 @@
 <ul>
     <li>Support multiple selections (via CTRL-key). Rightclicking a selection opens a context menu which allows to:
     <ul>
-        <li>Deleted and reordered individual selections.</li>
+        <li>Delete and reorder individual selections.</li>
         <li>Recognize the selected text, either to clipboard or to the output pane.</li>
     </ul></li>
     <li>Basic automatic page layout detection.</li>
