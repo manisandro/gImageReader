@@ -125,7 +125,11 @@ MainWindow::MainWindow()
 	setState(State::Idle);
 
 	m_config->readSettings(); // Read settings only after all objects are constructed (and all signals connected)
+#ifdef G_OS_WIN32 // Disable scanning on win32 since something with the twain interface is broken (argh)
+	Builder("notebook:sources").as<Gtk::Notebook>()->remove_page(1);
+#else
 	m_acquirer->init(); // Need to delay this until settings are read
+#endif
 
 	const std::vector<int>& geom = m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->getValue();
 	if(geom.size() == 4){
