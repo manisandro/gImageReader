@@ -10,7 +10,6 @@ Source:        %{name}-%{version}.tar.xz
 BuildRequires: gtkmm30-devel
 BuildRequires: gtkspellmm30-devel
 BuildRequires: cairomm-devel
-BuildRequires: enchant-devel
 BuildRequires: poppler-glib-devel
 BuildRequires: tesseract-devel
 BuildRequires: curlpp-devel

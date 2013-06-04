@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(gImageReader, 2.99, http://sourceforge.net/projects/gimagereader/,
-        gimagereader)
+		gimagereader)
 
 AC_CONFIG_AUX_DIR([build])
 AC_CONFIG_MACRO_DIR([build])
@@ -30,42 +30,42 @@ dnl ************************** Libtool initialization *************************
 LT_INIT
 
 dnl ********************************* Modules *********************************
-PKG_CHECK_MODULES(GIMAGEREADER, [gtkmm-3.0 gtkspellmm-3.0 cairomm-1.0 enchant
-                                 poppler-glib tesseract])
+PKG_CHECK_MODULES(GIMAGEREADER, [gtkmm-3.0 gtkspellmm-3.0 cairomm-1.0
+								 poppler-glib tesseract])
 
 dnl *************************** Enable version check **************************
 AC_ARG_ENABLE([versioncheck],
-     AS_HELP_STRING([--enable-versioncheck], [enable version check (default is yes)]),
-      [case "${enableval}" in
-        yes) versioncheck=true ;;
-        no)  versioncheck=false ;;
-        *) AC_MSG_ERROR([bad value ${enableval} for --enable-versioncheck]) ;;
-      esac],[versioncheck=true])
+	 AS_HELP_STRING([--enable-versioncheck], [enable version check (default is yes)]),
+	  [case "${enableval}" in
+		yes) versioncheck=true ;;
+		no)  versioncheck=false ;;
+		*) AC_MSG_ERROR([bad value ${enableval} for --enable-versioncheck]) ;;
+	  esac],[versioncheck=true])
 AM_CONDITIONAL([ENABLE_VERSIONCHECK], [test x$versioncheck = xtrue])
 
 if test x$versioncheck = xtrue; then
-    PKG_CHECK_MODULES(CURLPP, [curlpp])
-    AC_DEFINE(ENABLE_VERSIONCHECK, 1, [Whether version-check is enabled.])
+	PKG_CHECK_MODULES(CURLPP, [curlpp])
+	AC_DEFINE(ENABLE_VERSIONCHECK, 1, [Whether version-check is enabled.])
 fi
 
 dnl ************************** Look for SANE on linux *************************
 case $host_os in
   linux*)
-        PKG_CHECK_MODULES(SANE, [sane-backends])
-        ;;
-    *)
-        ;;
+		PKG_CHECK_MODULES(SANE, [sane-backends])
+		;;
+	*)
+		;;
 esac
 
 dnl ****************************** Detect Windows *****************************
 AC_MSG_CHECKING([for some Win32 platform])
 case "$host" in
   *-*-mingw*|*-*-cygwin*)
-    platform_win32=yes
-    ;;
+	platform_win32=yes
+	;;
   *)
-    platform_win32=no
-    ;;
+	platform_win32=no
+	;;
 esac
 AC_MSG_RESULT([$platform_win32])
 AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")

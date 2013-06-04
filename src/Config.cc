@@ -21,14 +21,8 @@
 #include "MainWindow.hh"
 #include "Utils.hh"
 
-#include <enchant++.h>
+#include <gtkspellmm.h>
 #include <tesseract/baseapi.h>
-
-static void dictDescribe(const char* const tag, const char* const /*providerName*/,
-						 const char* const /*providerDesc*/, const char* const /*providerFile*/, void* data)
-{
-	((std::vector<Glib::ustring>*)data)->push_back(tag);
-}
 
 const std::vector<Config::Lang> Config::LANGUAGES = {
 	// {ISO 639-2, ISO 639-1, name}
@@ -178,8 +172,8 @@ void Config::updateLanguagesMenu()
 	std::vector<Glib::ustring> parts = Utils::string_split(getSetting<VarSetting<Glib::ustring>>("language")->getValue(), ':');
 	Lang curlang = {parts.empty() ? "eng" : parts[0], parts.size() < 2 ? "" : parts[1]};
 
-	std::vector<Glib::ustring> dicts;
-	enchant::Broker::instance()->list_dicts(dictDescribe, &dicts);
+	GtkSpell::Checker spell;
+	std::vector<Glib::ustring> dicts = spell.get_language_list();
 
 	tesseract::TessBaseAPI tess;
 	Utils::initTess(tess, nullptr, nullptr);
@@ -212,7 +206,7 @@ void Config::updateLanguagesMenu()
 			Gtk::ImageMenuItem* item = Gtk::manage(new Gtk::ImageMenuItem(*image, lang.name));
 			Gtk::Menu* submenu = Gtk::manage(new Gtk::Menu);
 			for(const Glib::ustring& dict : spelldicts){
-				radioitem = Gtk::manage(new Gtk::RadioMenuItem(m_radioGroup, dict));
+				radioitem = Gtk::manage(new Gtk::RadioMenuItem(m_radioGroup, spell.decode_language_code(dict)));
 				Lang itemlang = {lang.prefix, dict, lang.name};
 				Glib::ustring prettyname = lang.name + " (" + dict + ")";
 				CONNECT(radioitem, toggled, [this, radioitem, itemlang, prettyname]{ setLanguage(radioitem, itemlang, prettyname); });

@@ -55,6 +55,8 @@ OutputManager::OutputManager()
 	m_insertIter = m_textBuffer->end();
 	m_selectIter = m_textBuffer->end();
 
+	m_spell.property_decode_language_codes() = true;
+
 	Builder("tbbutton:output.stripcrlf").as<Gtk::MenuToolButton>()->set_menu(*Builder("menu:output.stripcrlf").as<Gtk::Menu>());
 
 	CONNECT(m_insButton, toggled, [this]{ showInsertMenu(); });
