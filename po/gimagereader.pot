@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-08 01:17+0200\n"
+"POT-Creation-Date: 2013-06-08 22:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,283 +18,283 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/gimagereader.ui.h:1
-msgid "Select append mode"
-msgstr ""
-
-#: ../data/gimagereader.ui.h:2
 msgid "A graphical frontend to tesseract-ocr"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:3
+#: ../data/gimagereader.ui.h:2
 msgid "Configuration"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:4
+#: ../data/gimagereader.ui.h:3
 msgid "Output pane orientation:"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:5
+#: ../data/gimagereader.ui.h:4
 msgid "Horizontal"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:6
+#: ../data/gimagereader.ui.h:5
 msgid "Vertical"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:7
+#: ../data/gimagereader.ui.h:6
 msgid "Query to install missing spellcheck dictionaries"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:8
+#: ../data/gimagereader.ui.h:7
 msgid "Automatically check for new program versions"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:9
+#: ../data/gimagereader.ui.h:8
 msgid "Predefined language definitions:"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:10
+#: ../data/gimagereader.ui.h:9
 msgid "Additional language definitions:"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:11
+#: ../data/gimagereader.ui.h:10
 msgid "The prefix of the tesseract language data file."
 msgstr ""
 
-#: ../data/gimagereader.ui.h:12
+#: ../data/gimagereader.ui.h:11
 msgid "The ISO 639-1 language code followed by the country code."
 msgstr ""
 
-#: ../data/gimagereader.ui.h:13
+#: ../data/gimagereader.ui.h:12
 msgid "The name of the language."
 msgstr ""
 
-#: ../data/gimagereader.ui.h:14
+#: ../data/gimagereader.ui.h:13
 msgid "Page Range"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:15
+#: ../data/gimagereader.ui.h:14
 msgid "<b>Insert page range:</b>"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:16
+#: ../data/gimagereader.ui.h:15
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:17
+#: ../data/gimagereader.ui.h:16
 msgid "_Redetect Languages"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:18
+#: ../data/gimagereader.ui.h:17
 msgid "Append to current text"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:19
+#: ../data/gimagereader.ui.h:18
 msgid "Insert at cursor"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:20
+#: ../data/gimagereader.ui.h:19
 msgid "Replace current text"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:21
+#: ../data/gimagereader.ui.h:20
 msgid "Keep line break if..."
 msgstr ""
 
-#: ../data/gimagereader.ui.h:22
+#: ../data/gimagereader.ui.h:21
 msgid "Preceeded by dot"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:23
+#: ../data/gimagereader.ui.h:22
 msgid "Preceded or succeeded by quote"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:24
+#: ../data/gimagereader.ui.h:23
 msgid "Other options"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:25
+#: ../data/gimagereader.ui.h:24
 msgid "Join hyphenated words"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:26
+#: ../data/gimagereader.ui.h:25
 msgid "Collapse whitespace"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:27
+#: ../data/gimagereader.ui.h:26
 msgid "Current Page"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:28
+#: ../data/gimagereader.ui.h:27
 msgid "All Pages"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:29
+#: ../data/gimagereader.ui.h:28
 msgid "Selected Pages..."
 msgstr ""
 
-#: ../data/gimagereader.ui.h:30
+#: ../data/gimagereader.ui.h:29
 msgid "_Recent"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:31
+#: ../data/gimagereader.ui.h:30
 msgid "Take _Screenshot"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:32
+#: ../data/gimagereader.ui.h:31
 msgid "Select sources"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:33
+#: ../data/gimagereader.ui.h:32
 msgid "Sources"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:34
+#: ../data/gimagereader.ui.h:33
 msgid "Zoom in"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:35
+#: ../data/gimagereader.ui.h:34
 msgid "Zoom In"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:36
+#: ../data/gimagereader.ui.h:35
 msgid "Zoom out"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:37
+#: ../data/gimagereader.ui.h:36
 msgid "Zoom Out"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:38
+#: ../data/gimagereader.ui.h:37
 msgid "Normal size"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:39
+#: ../data/gimagereader.ui.h:38
 msgid "Normal Size"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:40
+#: ../data/gimagereader.ui.h:39
 msgid "Best fit"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:41
+#: ../data/gimagereader.ui.h:40
 msgid "Best Fit"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:42
+#: ../data/gimagereader.ui.h:41
 msgid "Rotate left"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:43
+#: ../data/gimagereader.ui.h:42
 msgid "Rotate Left"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:44
+#: ../data/gimagereader.ui.h:43
 msgid "Rotate right"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:45
+#: ../data/gimagereader.ui.h:44
 msgid "Rotate Right"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:46
+#: ../data/gimagereader.ui.h:45
 msgid "Image controls"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:47
+#: ../data/gimagereader.ui.h:46
 msgid "Image Controls"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:48
+#: ../data/gimagereader.ui.h:47
 msgid "Autodetect layout"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:49
+#: ../data/gimagereader.ui.h:48
 msgid "Autolayout"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:50
+#: ../data/gimagereader.ui.h:49
 msgid "Options"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:51
+#: ../data/gimagereader.ui.h:50
 msgid "Add images"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:52
+#: ../data/gimagereader.ui.h:51
 msgid "Add Images"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:53
+#: ../data/gimagereader.ui.h:52
 msgid "Remove image from list"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:54
+#: ../data/gimagereader.ui.h:53
 msgid "Remove Image"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:55
+#: ../data/gimagereader.ui.h:54
 msgid "Delete image"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:56
+#: ../data/gimagereader.ui.h:55
 msgid "Clear list"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:57
+#: ../data/gimagereader.ui.h:56
 msgid "Clear List"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:58 ../src/SourceManager.cc:37
+#: ../data/gimagereader.ui.h:57 ../src/SourceManager.cc:37
 msgid "Images"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:59
+#: ../data/gimagereader.ui.h:58
 msgid "Device:"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:60
+#: ../data/gimagereader.ui.h:59
 msgid "Output:"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:61
+#: ../data/gimagereader.ui.h:60
 msgid "Resolution:"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:62
+#: ../data/gimagereader.ui.h:61
 msgid "Refresh"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:63
+#: ../data/gimagereader.ui.h:62
 msgid "Mode:"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:64
+#: ../data/gimagereader.ui.h:63
 msgid "Color"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:65
+#: ../data/gimagereader.ui.h:64
 msgid "Grayscale"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:66
+#: ../data/gimagereader.ui.h:65
 msgid "Scan"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:67
+#: ../data/gimagereader.ui.h:66
 msgid "Acquire"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:68
+#: ../data/gimagereader.ui.h:67
 msgid "Brightness"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:69
+#: ../data/gimagereader.ui.h:68
 msgid "Contrast"
 msgstr ""
 
-#: ../data/gimagereader.ui.h:70 ../src/Displayer.cc:339
+#: ../data/gimagereader.ui.h:69 ../src/Displayer.cc:344
 msgid "Resolution"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:70
+msgid "Select append mode"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:71
@@ -361,7 +361,7 @@ msgstr ""
 msgid "Scan failed"
 msgstr ""
 
-#: ../src/Acquirer.cc:76 ../src/Acquirer.cc:78 ../src/OutputManager.cc:217
+#: ../src/Acquirer.cc:74 ../src/Acquirer.cc:76 ../src/OutputManager.cc:221
 msgid "scan.png"
 msgstr ""
 
@@ -377,110 +377,128 @@ msgstr ""
 msgid "Failed to initialize the scanning backend."
 msgstr ""
 
-#: ../src/Acquirer.cc:147
+#: ../src/Acquirer.cc:150
 msgid "No scanners were detected."
 msgstr ""
 
-#: ../src/Acquirer.cc:165 ../src/Acquirer.cc:182
+#: ../src/Acquirer.cc:168 ../src/Acquirer.cc:185
 msgid "Starting scan..."
 msgstr ""
 
-#: ../src/Acquirer.cc:178
+#: ../src/Acquirer.cc:181
 msgid "Opening device..."
 msgstr ""
 
-#: ../src/Acquirer.cc:180
+#: ../src/Acquirer.cc:183
 msgid "Setting options..."
 msgstr ""
 
-#: ../src/Acquirer.cc:184
+#: ../src/Acquirer.cc:187
 msgid "Getting parameters..."
 msgstr ""
 
-#: ../src/Acquirer.cc:186
+#: ../src/Acquirer.cc:189
 msgid "Transferring data..."
 msgstr ""
 
-#: ../src/Acquirer.cc:196
+#: ../src/Acquirer.cc:199
 msgid "Cancelling scan..."
 msgstr ""
 
-#: ../src/Config.cc:96
+#: ../src/Config.cc:90
 msgid "Filename prefix"
 msgstr ""
 
-#: ../src/Config.cc:97
+#: ../src/Config.cc:91
 msgid "Code"
 msgstr ""
 
-#: ../src/Config.cc:98
+#: ../src/Config.cc:92
 msgid "Native name"
 msgstr ""
 
-#: ../src/Config.cc:190
+#: ../src/Config.cc:184
 msgid "No languages available"
 msgstr ""
 
-#: ../src/Config.cc:190
+#: ../src/Config.cc:184
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
 
-#: ../src/Displayer.cc:345
+#: ../src/Displayer.cc:350
 msgid "Scale"
 msgstr ""
 
-#: ../src/Displayer.cc:350
+#: ../src/Displayer.cc:355
 msgid "To recognize specific areas, drag rectangles over them."
 msgstr ""
 
-#: ../src/Displayer.cc:356
+#: ../src/Displayer.cc:361
 msgid "Failed to load image"
 msgstr ""
 
-#: ../src/Displayer.cc:356
+#: ../src/Displayer.cc:361
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
 
-#: ../src/Displayer.cc:378
+#: ../src/Displayer.cc:383
 msgid "Rendering image..."
 msgstr ""
 
-#: ../src/Displayer.cc:506 ../src/Displayer.cc:667
+#: ../src/Displayer.cc:512 ../src/Displayer.cc:673
 msgid "Recognize selection"
 msgstr ""
 
-#: ../src/Displayer.cc:508
+#: ../src/Displayer.cc:514
 msgid "Recognize all"
 msgstr ""
 
-#: ../src/Displayer.cc:653
+#: ../src/Displayer.cc:659
 msgid "Performing layout analysis"
 msgstr ""
 
-#: ../src/MainWindow.cc:90
+#: ../src/MainWindow.cc:61 ../src/MainWindow.cc:63
+msgid "A crash has been detected."
+msgstr ""
+
+#: ../src/MainWindow.cc:61
+msgid ""
+"The application cannot continue. Your work has been saved under %1.\n"
+"\n"
+"Please report this issue."
+msgstr ""
+
+#: ../src/MainWindow.cc:63
+msgid ""
+"The application cannot continue. There was no unsaved work.\n"
+"\n"
+"Please report this issue."
+msgstr ""
+
+#: ../src/MainWindow.cc:123
 msgid "Select an image to begin..."
 msgstr ""
 
-#: ../src/MainWindow.cc:211
+#: ../src/MainWindow.cc:265
 msgid "New version"
 msgstr ""
 
-#: ../src/MainWindow.cc:211
+#: ../src/MainWindow.cc:265
 msgid "gImageReader %1 is available"
 msgstr ""
 
-#: ../src/MainWindow.cc:212
+#: ../src/MainWindow.cc:266
 msgid "Download"
 msgstr ""
 
-#: ../src/MainWindow.cc:213
+#: ../src/MainWindow.cc:267
 msgid "Changelog"
 msgstr ""
 
-#: ../src/MainWindow.cc:214
+#: ../src/MainWindow.cc:268
 msgid "Don't notify again"
 msgstr ""
 
@@ -492,55 +510,59 @@ msgstr ""
 msgid "Replace with"
 msgstr ""
 
-#: ../src/OutputManager.cc:220
+#: ../src/OutputManager.cc:131
+msgid "Stripping line breaks..."
+msgstr ""
+
+#: ../src/OutputManager.cc:224
 msgid "Save Output..."
 msgstr ""
 
-#: ../src/OutputManager.cc:226
+#: ../src/OutputManager.cc:230
 msgid "Text Files"
 msgstr ""
 
-#: ../src/OutputManager.cc:238
+#: ../src/OutputManager.cc:244
 msgid "Failed to save output"
 msgstr ""
 
-#: ../src/OutputManager.cc:238
+#: ../src/OutputManager.cc:244
 msgid "Check that you have writing permissions in the selected folder."
 msgstr ""
 
-#: ../src/OutputManager.cc:253
+#: ../src/OutputManager.cc:259
 msgid "Output not saved"
 msgstr ""
 
-#: ../src/OutputManager.cc:253
+#: ../src/OutputManager.cc:259
 msgid "Save output before proceeding?"
 msgstr ""
 
-#: ../src/OutputManager.cc:284
+#: ../src/OutputManager.cc:280
 msgid "Don't show again"
 msgstr ""
 
-#: ../src/OutputManager.cc:285
-msgid "Install"
-msgstr ""
-
-#: ../src/OutputManager.cc:285
+#: ../src/OutputManager.cc:281
 msgid "Help"
 msgstr ""
 
-#: ../src/OutputManager.cc:286
+#: ../src/OutputManager.cc:288
+msgid "Install"
+msgstr ""
+
+#: ../src/OutputManager.cc:293
 msgid "Spelling dictionary missing"
 msgstr ""
 
-#: ../src/OutputManager.cc:286
+#: ../src/OutputManager.cc:293
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr ""
 
-#: ../src/OutputManager.cc:295
+#: ../src/OutputManager.cc:302
 msgid "Installing spelling dictionary for '%1'"
 msgstr ""
 
-#: ../src/OutputManager.cc:310
+#: ../src/OutputManager.cc:317
 msgid "Failed to install spelling dictionary"
 msgstr ""
 
@@ -578,23 +600,23 @@ msgstr ""
 msgid "The following errors occured:%1"
 msgstr ""
 
-#: ../src/Scanner.cc:95
+#: ../src/Scanner.cc:88
 msgid "No scanner specified."
 msgstr ""
 
-#: ../src/Scanner.cc:98
+#: ../src/Scanner.cc:91
 msgid "Unable to connect to scanner"
 msgstr ""
 
-#: ../src/Scanner.cc:127
+#: ../src/Scanner.cc:120
 msgid "Unable to start scan"
 msgstr ""
 
-#: ../src/Scanner.cc:134 ../src/Scanner.cc:148
+#: ../src/Scanner.cc:127 ../src/Scanner.cc:141
 msgid "Error communicating with scanner"
 msgstr ""
 
-#: ../src/Scanner.cc:205
+#: ../src/Scanner.cc:198
 msgid "Scan cancelled"
 msgstr ""
 
