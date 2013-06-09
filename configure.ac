@@ -23,9 +23,10 @@ GLIB_GSETTINGS
 
 dnl *************************** Internationalization **************************
 IT_PROG_INTLTOOL([0.35.0])
+AM_GNU_GETTEXT_VERSION([0.17])
+AM_GNU_GETTEXT([external])
 AC_SUBST([GETTEXT_PACKAGE], [$PACKAGE_TARNAME])
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
-AM_GLIB_GNU_GETTEXT
 
 dnl ************************** Libtool initialization *************************
 LT_INIT
@@ -69,12 +70,12 @@ case "$host" in
 	;;
 esac
 AC_MSG_RESULT([$platform_win32])
-AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
+AM_CONDITIONAL([PLATFORM_WIN32], [test "$platform_win32" = "yes"])
 if test "$with_platform" = "win32"; then
   AC_CHECK_TOOL([WINDRES],[windres])
 fi
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 gimagereader.spec
 Makefile
 data/Makefile
@@ -82,3 +83,5 @@ data/manual.html
 src/Makefile
 po/Makefile.in
 ])
+
+AC_OUTPUT
