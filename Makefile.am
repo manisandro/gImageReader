@@ -8,6 +8,7 @@ INTLTOOL_FILES = \
 	intltool-update.in
 
 EXTRA_DIST = \
+	autogen.sh \
 	$(INTLTOOL_FILES) \
 	po/$(GETTEXT_PACKAGE).pot \
 	win32
