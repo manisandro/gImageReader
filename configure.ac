@@ -32,8 +32,8 @@ dnl ************************** Libtool initialization *************************
 LT_INIT
 
 dnl ********************************* Modules *********************************
-PKG_CHECK_MODULES(GIMAGEREADER, [gtkmm-3.0 gtkspellmm-3.0 cairomm-1.0
-								 poppler-glib tesseract])
+PKG_CHECK_MODULES(GIMAGEREADER, [gtkmm-3.0 >= 3.6 gtkspellmm-3.0 >= 3.0.2 cairomm-1.0
+								 poppler-glib tesseract >= 3.02.02])
 
 dnl *************************** Enable version check **************************
 AC_ARG_ENABLE([versioncheck],
