@@ -37,10 +37,10 @@ srcdir="$(dirname "$(readlink -f $0)")"
 (
   cd "$srcdir"
   echo "Running autoreconf..."
-  autoreconf -fiv
+  autoreconf -iv
 
   echo "Running intltoolize..."
-  intltoolize --copy --force --automake
+  intltoolize --copy --automake
 )
 
 
