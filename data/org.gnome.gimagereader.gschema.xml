@@ -6,6 +6,16 @@
       <summary>Output pane orientation</summary>
       <description>Output pane orientation.</description>
     </key>
+    <key type="b" name="systemoutputfont">
+      <default>true</default>
+      <summary>Whether to use the system default font in the output pane</summary>
+      <description>Whether to use the system default font in the output pane.</description>
+    </key>
+    <key type="s" name="customoutputfont">
+      <default>"Sans 10"</default>
+      <summary>Output pane font</summary>
+      <description>Output pane font.</description>
+    </key>
     <key type="b" name="showcontrols">
       <default>false</default>
       <summary>Show advanced controls</summary>

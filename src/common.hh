@@ -37,6 +37,8 @@ SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
 
 #define CONNECT(src, signal, ...) (src)->signal_##signal().connect(__VA_ARGS__)
 #define CONNECTS(src, signal, ...) {auto sender = (src); sender->signal_##signal().connect(sigc::bind(__VA_ARGS__, sender)); }
+#define CONNECTP(src, property, ...) (src)->property_##property().signal_changed().connect(__VA_ARGS__)
+#define CONNECTPS(src, property, ...) {auto sender = src; sender->property_##property().signal_changed().connect(sigc::bind(__VA_ARGS__, sender)); }
 
 #ifdef SRCTREE_EXEC // Execute from source tree
 #undef  PACKAGE_DATA_DIR

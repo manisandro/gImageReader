@@ -107,6 +107,8 @@ Config::Config()
 	m_gioSettings = Gio::Settings::create(APPLICATION_ID);
 
 	m_settings.insert(std::make_pair("outputorient", new ComboSetting("outputorient", m_gioSettings, "combo:config.settings.paneorient")));
+	m_settings.insert(std::make_pair("systemoutputfont", new SwitchSettingT<Gtk::CheckButton>("systemoutputfont", m_gioSettings, "checkbutton:config.settings.defaultoutputfont")));
+	m_settings.insert(std::make_pair("customoutputfont", new FontSetting("customoutputfont", m_gioSettings, "fontbutton:config.settings.customoutputfont")));
 	m_settings.insert(std::make_pair("showcontrols", new SwitchSettingT<Gtk::ToggleToolButton>("showcontrols", m_gioSettings, "tbbutton:main.controls")));
 	m_settings.insert(std::make_pair("dictinstall", new SwitchSettingT<Gtk::CheckButton>("dictinstall", m_gioSettings, "check:config.settings.dictinstall")));
 	m_settings.insert(std::make_pair("updatecheck", new SwitchSettingT<Gtk::CheckButton>("updatecheck", m_gioSettings, "check:config.settings.update")));
@@ -123,6 +125,9 @@ Config::Config()
 	m_settings.insert(std::make_pair("joinspace", new SwitchSettingT<Gtk::CheckMenuItem>("joinspace", m_gioSettings, "menuitem:output.stripcrlf.joinspace")));
 
 	Builder("tbmenu:main.recognize").as<Gtk::MenuToolButton>()->set_menu(m_langsMenu);
+	CONNECTS(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [](Gtk::CheckButton* btn){
+		Builder("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>()->set_sensitive(!btn->get_active());
+	});
 	CONNECT(Builder("button:config.langs.custom.edit.add").as<Gtk::Button>(), clicked, [this]{ toggleAddLanguage(); });
 	CONNECT(m_removeLangButton, clicked, [this]{ removeLanguage(); });
 	CONNECT(Builder("button:config.langs.custom.add.ok").as<Gtk::Button>(), clicked, [this]{ addLanguage(); });

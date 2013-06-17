@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
+  <!-- interface-requires gtk+ 3.6 -->
   <object class="GtkAdjustment" id="adjustment:display.angle">
     <property name="lower">-10</property>
     <property name="upper">10</property>
@@ -224,7 +224,7 @@ MA 02110-1301, USA.</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">1</property>
+                <property name="top_attach">2</property>
                 <property name="width">2</property>
                 <property name="height">1</property>
               </packing>
@@ -240,7 +240,7 @@ MA 02110-1301, USA.</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">2</property>
+                <property name="top_attach">3</property>
                 <property name="width">2</property>
                 <property name="height">1</property>
               </packing>
@@ -254,7 +254,7 @@ MA 02110-1301, USA.</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">3</property>
+                <property name="top_attach">4</property>
                 <property name="width">2</property>
                 <property name="height">1</property>
               </packing>
@@ -269,7 +269,7 @@ MA 02110-1301, USA.</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">4</property>
+                <property name="top_attach">5</property>
                 <property name="width">2</property>
                 <property name="height">1</property>
               </packing>
@@ -294,7 +294,7 @@ MA 02110-1301, USA.</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">5</property>
+                <property name="top_attach">6</property>
                 <property name="width">2</property>
                 <property name="height">1</property>
               </packing>
@@ -310,7 +310,7 @@ MA 02110-1301, USA.</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">6</property>
+                <property name="top_attach">7</property>
                 <property name="width">2</property>
                 <property name="height">1</property>
               </packing>
@@ -335,7 +335,7 @@ MA 02110-1301, USA.</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">7</property>
+                <property name="top_attach">8</property>
                 <property name="width">2</property>
                 <property name="height">1</property>
               </packing>
@@ -379,7 +379,7 @@ MA 02110-1301, USA.</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">8</property>
+                <property name="top_attach">9</property>
                 <property name="width">2</property>
                 <property name="height">1</property>
               </packing>
@@ -396,7 +396,6 @@ MA 02110-1301, USA.</property>
                     <property name="tooltip_text" translatable="yes">The prefix of the tesseract language data file.</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">2</property>
-                    <property name="invisible_char_set">True</property>
                     <property name="placeholder_text">Prefix</property>
                   </object>
                   <packing>
@@ -414,7 +413,6 @@ MA 02110-1301, USA.</property>
                     <property name="tooltip_text" translatable="yes">The ISO 639-1 language code followed by the country code.</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">2</property>
-                    <property name="invisible_char_set">True</property>
                     <property name="placeholder_text">ISO Code</property>
                   </object>
                   <packing>
@@ -432,7 +430,6 @@ MA 02110-1301, USA.</property>
                     <property name="tooltip_text" translatable="yes">The name of the language.</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">2</property>
-                    <property name="invisible_char_set">True</property>
                     <property name="placeholder_text">Name</property>
                   </object>
                   <packing>
@@ -472,8 +469,67 @@ MA 02110-1301, USA.</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">9</property>
+                <property name="top_attach">10</property>
                 <property name="width">2</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label:config.settings.outputfont">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="xalign">0</property>
+                <property name="xpad">4</property>
+                <property name="label" translatable="yes">Output pane font size:</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="box:config.settings.outputfont">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="spacing">3</property>
+                <child>
+                  <object class="GtkCheckButton" id="checkbutton:config.settings.defaultoutputfont">
+                    <property name="label" translatable="yes">Default</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="xalign">0</property>
+                    <property name="active">True</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkFontButton" id="fontbutton:config.settings.customoutputfont">
+                    <property name="visible">True</property>
+                    <property name="sensitive">False</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="font">Sans 12</property>
+                    <property name="preview_text"/>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">1</property>
+                <property name="width">1</property>
                 <property name="height">1</property>
               </packing>
             </child>
@@ -570,7 +626,6 @@ MA 02110-1301, USA.</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="invisible_char">●</property>
-            <property name="invisible_char_set">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -658,7 +713,7 @@ MA 02110-1301, USA.</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-refresh</property>
-    <property name="icon-size">1</property>
+    <property name="icon_size">1</property>
   </object>
   <object class="GtkImage" id="image:input.acquire.scan">
     <property name="visible">True</property>
@@ -1113,7 +1168,6 @@ MA 02110-1301, USA.</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">7</property>
                     <property name="truncate_multiline">True</property>
-                    <property name="invisible_char_set">True</property>
                     <property name="caps_lock_warning">False</property>
                     <property name="primary_icon_pixbuf">icons/page.png</property>
                     <property name="primary_icon_activatable">False</property>
@@ -1432,7 +1486,7 @@ MA 02110-1301, USA.</property>
                                         <property name="can_focus">False</property>
                                         <property name="pixel_size">16</property>
                                         <property name="icon_name">view-refresh</property>
-                                        <property name="icon-size">1</property>
+                                        <property name="icon_size">1</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1497,8 +1551,6 @@ MA 02110-1301, USA.</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="active">0</property>
-                                <property name="entry_text_column">0</property>
-                                <property name="id_column">1</property>
                                 <items>
                                   <item translatable="yes">Color</item>
                                   <item translatable="yes">Grayscale</item>
@@ -1516,8 +1568,6 @@ MA 02110-1301, USA.</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="active">2</property>
-                                <property name="entry_text_column">0</property>
-                                <property name="id_column">1</property>
                                 <items>
                                   <item>75 dpi</item>
                                   <item>100 dpi</item>
@@ -1687,7 +1737,6 @@ MA 02110-1301, USA.</property>
                                 <property name="invisible_char">●</property>
                                 <property name="width_chars">7</property>
                                 <property name="truncate_multiline">True</property>
-                                <property name="invisible_char_set">True</property>
                                 <property name="primary_icon_pixbuf">icons/contrast.png</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="adjustment">adjustment:display.contrast</property>
@@ -1714,7 +1763,6 @@ MA 02110-1301, USA.</property>
                                 <property name="invisible_char">●</property>
                                 <property name="width_chars">7</property>
                                 <property name="truncate_multiline">True</property>
-                                <property name="invisible_char_set">True</property>
                                 <property name="primary_icon_pixbuf">icons/resolution.png</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="adjustment">adjustment:display.resolution</property>
@@ -1959,7 +2007,6 @@ MA 02110-1301, USA.</property>
                             <property name="hexpand">True</property>
                             <property name="invisible_char">●</property>
                             <property name="width_chars">2</property>
-                            <property name="invisible_char_set">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -1976,7 +2023,6 @@ MA 02110-1301, USA.</property>
                             <property name="hexpand">True</property>
                             <property name="invisible_char">●</property>
                             <property name="width_chars">2</property>
-                            <property name="invisible_char_set">True</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>

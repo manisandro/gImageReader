@@ -61,6 +61,33 @@ private:
 	T m_value;
 };
 
+class FontSetting : public AbstractSetting {
+public:
+	FontSetting(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings, const Glib::ustring& builderpath)
+		: AbstractSetting(key, settings), m_widget(Builder(builderpath))
+	{
+		m_connection_font_set = CONNECTP(m_widget, font_name, [this]{ m_settings->set_value(m_key, Glib::Variant<Glib::ustring>::create(m_widget->get_font_name())); });
+	}
+
+	Glib::ustring getValue() const{
+		return m_widget->get_font_name();
+	}
+	void setValue(const Glib::ustring& value){
+		m_widget->set_font_name(value);
+	}
+	void reread(){
+		Glib::Variant<Glib::ustring> v;
+		m_settings->get_value(m_key, v);
+		m_connection_font_set.block();
+		m_widget->set_font_name(v.get());
+		m_connection_font_set.unblock();
+	}
+
+private:
+	Gtk::FontButton* m_widget;
+	sigc::connection m_connection_font_set;
+};
+
 class SwitchSetting : public AbstractSetting {
 public:
 	SwitchSetting(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings)
