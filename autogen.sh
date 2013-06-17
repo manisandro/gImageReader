@@ -33,14 +33,22 @@ srcdir="$(dirname "$(readlink -f $0)")"
   exit 1
 }
 
+(stat "$(aclocal --print-ac-dir)/ax_cxx_compile_stdcxx_11.m4") < /dev/null > /dev/null 2>&1 || {
+  echo "**Error**: You must have the \`ax_cxx_compile_stdcxx_11.m4' macro installed-"
+  echo "Download the appropriate package for your distribution,"
+  echo "or get it from http://mirror.switch.ch/ftp/mirror/gnu/autoconf-archive/"
+  echo
+  exit 1
+}
+
 
 (
   cd "$srcdir"
   echo "Running autoreconf..."
-  autoreconf -iv
+  autoreconf -fiv
 
   echo "Running intltoolize..."
-  intltoolize --copy --automake
+  intltoolize --force --copy --automake
 )
 
 
