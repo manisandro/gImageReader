@@ -94,7 +94,7 @@
 <h3><a name="Usage_Options">Program options</a></h3>
 <ul>
     <li>The program options can be accessed from the <i>application menu</i>, which opens when clicking the right-most button of the <i>main toolbar</i>.</li>
-    <li>Options allow setting the orientation of the <i>output pane</i> (if vertical, it will occupy the right portion of the application, if horizontal, it will occupy the lower portion), as well as determining whether the application will notify about missing spelling dictionaries and new program versions.</li>
+    <li>Options allow setting the orientation of the <i>output pane</i> (if vertical, it will occupy the right portion of the application, if horizontal, it will occupy the lower portion), the font of the output pane, as well as determining whether the application will notify about missing spelling dictionaries and new program versions.</li>
     <li>Additionally, one can define new rules to match tesseract language definitions to a language (unfortunately, the tesseract language definitions do not include this information). The list of predefined rules can be seen in the <i>Predefined language definitions</i> section. Additional definitions can be added clicking on the <i>Add</i> button below. The rules for a language definition, which consists of three fields, are as follows:
     <ul>
         <li><b>Filename prefix</b>: The filename of tesseract language data files is of the format <i>&lt;prefix&gt;.traineddata</i>, i.e. for English, the file is called <i>eng.traineddata</i> and the prefix is <i>eng</i>.</li>
