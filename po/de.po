@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-08 22:15+0200\n"
+"POT-Creation-Date: 2013-06-17 19:38+0200\n"
 "PO-Revision-Date: 2013-06-08 22:30+0200\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -67,294 +67,302 @@ msgid "The name of the language."
 msgstr "Der Name der Sprache."
 
 #: ../data/gimagereader.ui.h:13
+msgid "Output pane font size:"
+msgstr "Ausgabebereich Schriftart:"
+
+#: ../data/gimagereader.ui.h:14
+msgid "Default"
+msgstr "Standard"
+
+#: ../data/gimagereader.ui.h:15
 msgid "Page Range"
 msgstr "Seiten"
 
-#: ../data/gimagereader.ui.h:14
+#: ../data/gimagereader.ui.h:16
 msgid "<b>Insert page range:</b>"
 msgstr "<b>Seiten:</b>"
 
-#: ../data/gimagereader.ui.h:15
+#: ../data/gimagereader.ui.h:17
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Beispiel:</b> 1-10, 13, 14-18</small>"
 
-#: ../data/gimagereader.ui.h:16
+#: ../data/gimagereader.ui.h:18
 msgid "_Redetect Languages"
 msgstr "Sprachen _neu detektieren"
 
-#: ../data/gimagereader.ui.h:17
+#: ../data/gimagereader.ui.h:19
 msgid "Append to current text"
 msgstr "Existierendem Text hinzufügen"
 
-#: ../data/gimagereader.ui.h:18
+#: ../data/gimagereader.ui.h:20
 msgid "Insert at cursor"
 msgstr "An Cursor-Stelle einfügen"
 
-#: ../data/gimagereader.ui.h:19
+#: ../data/gimagereader.ui.h:21
 msgid "Replace current text"
 msgstr "Existierender Text ersetzen"
 
-#: ../data/gimagereader.ui.h:20
+#: ../data/gimagereader.ui.h:22
 msgid "Keep line break if..."
 msgstr "Behalte Zeilenumbruch falls..."
 
-#: ../data/gimagereader.ui.h:21
+#: ../data/gimagereader.ui.h:23
 msgid "Preceeded by dot"
 msgstr "Einen Punkt davor steht"
 
-#: ../data/gimagereader.ui.h:22
+#: ../data/gimagereader.ui.h:24
 msgid "Preceded or succeeded by quote"
 msgstr "Ein Anführungszeichen davor oder danach steht"
 
-#: ../data/gimagereader.ui.h:23
+#: ../data/gimagereader.ui.h:25
 msgid "Other options"
 msgstr "Weitere Optionen"
 
-#: ../data/gimagereader.ui.h:24
+#: ../data/gimagereader.ui.h:26
 msgid "Join hyphenated words"
 msgstr "Wörter mit Bindestrich zusammenfügen"
 
-#: ../data/gimagereader.ui.h:25
+#: ../data/gimagereader.ui.h:27
 msgid "Collapse whitespace"
 msgstr "Leerstellen bereinigen"
 
-#: ../data/gimagereader.ui.h:26
+#: ../data/gimagereader.ui.h:28
 msgid "Current Page"
 msgstr "Aktuelle Seite"
 
-#: ../data/gimagereader.ui.h:27
+#: ../data/gimagereader.ui.h:29
 msgid "All Pages"
 msgstr "Alle Seiten"
 
-#: ../data/gimagereader.ui.h:28
+#: ../data/gimagereader.ui.h:30
 msgid "Selected Pages..."
 msgstr "Ausgewählte Seiten..."
 
-#: ../data/gimagereader.ui.h:29
+#: ../data/gimagereader.ui.h:31
 msgid "_Recent"
 msgstr "_Zuletzt Geöffnet"
 
-#: ../data/gimagereader.ui.h:30
+#: ../data/gimagereader.ui.h:32
 msgid "Take _Screenshot"
 msgstr "_Bildschirmfoto"
 
-#: ../data/gimagereader.ui.h:31
+#: ../data/gimagereader.ui.h:33
 msgid "Select sources"
 msgstr "Quellen selektieren"
 
-#: ../data/gimagereader.ui.h:32
+#: ../data/gimagereader.ui.h:34
 msgid "Sources"
 msgstr "Quellen"
 
-#: ../data/gimagereader.ui.h:33
+#: ../data/gimagereader.ui.h:35
 msgid "Zoom in"
 msgstr "Heranzoomen"
 
-#: ../data/gimagereader.ui.h:34
+#: ../data/gimagereader.ui.h:36
 msgid "Zoom In"
 msgstr "Heranzoomen"
 
-#: ../data/gimagereader.ui.h:35
+#: ../data/gimagereader.ui.h:37
 msgid "Zoom out"
 msgstr "Weg zoomen"
 
-#: ../data/gimagereader.ui.h:36
+#: ../data/gimagereader.ui.h:38
 msgid "Zoom Out"
 msgstr "Weg zoomen"
 
-#: ../data/gimagereader.ui.h:37
+#: ../data/gimagereader.ui.h:39
 msgid "Normal size"
 msgstr "Originalgrösse"
 
-#: ../data/gimagereader.ui.h:38
+#: ../data/gimagereader.ui.h:40
 msgid "Normal Size"
 msgstr "Originalgrösse"
 
-#: ../data/gimagereader.ui.h:39
+#: ../data/gimagereader.ui.h:41
 msgid "Best fit"
 msgstr "Einpassen"
 
-#: ../data/gimagereader.ui.h:40
+#: ../data/gimagereader.ui.h:42
 msgid "Best Fit"
 msgstr "Einpassen"
 
-#: ../data/gimagereader.ui.h:41
+#: ../data/gimagereader.ui.h:43
 msgid "Rotate left"
 msgstr "Links rotieren"
 
-#: ../data/gimagereader.ui.h:42
+#: ../data/gimagereader.ui.h:44
 msgid "Rotate Left"
 msgstr "Links Rotieren"
 
-#: ../data/gimagereader.ui.h:43
+#: ../data/gimagereader.ui.h:45
 msgid "Rotate right"
 msgstr "Rechts rotieren"
 
-#: ../data/gimagereader.ui.h:44
+#: ../data/gimagereader.ui.h:46
 msgid "Rotate Right"
 msgstr "Rechts Rotieren"
 
-#: ../data/gimagereader.ui.h:45
+#: ../data/gimagereader.ui.h:47
 msgid "Image controls"
 msgstr "Bildbearbeitung"
 
-#: ../data/gimagereader.ui.h:46
+#: ../data/gimagereader.ui.h:48
 msgid "Image Controls"
 msgstr "Bildbearbeitung"
 
-#: ../data/gimagereader.ui.h:47
+#: ../data/gimagereader.ui.h:49
 msgid "Autodetect layout"
 msgstr "Layout automatisch erkennen"
 
-#: ../data/gimagereader.ui.h:48
+#: ../data/gimagereader.ui.h:50
 msgid "Autolayout"
 msgstr "Autolayout"
 
-#: ../data/gimagereader.ui.h:49
+#: ../data/gimagereader.ui.h:51
 msgid "Options"
 msgstr "Optionen"
 
-#: ../data/gimagereader.ui.h:50
+#: ../data/gimagereader.ui.h:52
 msgid "Add images"
 msgstr "Bilder hinzufügen"
 
-#: ../data/gimagereader.ui.h:51
+#: ../data/gimagereader.ui.h:53
 msgid "Add Images"
 msgstr "Bilder hinzufügen"
 
-#: ../data/gimagereader.ui.h:52
+#: ../data/gimagereader.ui.h:54
 msgid "Remove image from list"
 msgstr "Bild von Liste entfernen"
 
-#: ../data/gimagereader.ui.h:53
+#: ../data/gimagereader.ui.h:55
 msgid "Remove Image"
 msgstr "Bild entfernen"
 
-#: ../data/gimagereader.ui.h:54
+#: ../data/gimagereader.ui.h:56
 msgid "Delete image"
 msgstr "Bild löschen"
 
-#: ../data/gimagereader.ui.h:55
+#: ../data/gimagereader.ui.h:57
 msgid "Clear list"
 msgstr "Liste leeren"
 
-#: ../data/gimagereader.ui.h:56
+#: ../data/gimagereader.ui.h:58
 msgid "Clear List"
 msgstr "Liste leeren"
 
-#: ../data/gimagereader.ui.h:57 ../src/SourceManager.cc:37
+#: ../data/gimagereader.ui.h:59 ../src/SourceManager.cc:37
 msgid "Images"
 msgstr "Bilder"
 
-#: ../data/gimagereader.ui.h:58
+#: ../data/gimagereader.ui.h:60
 msgid "Device:"
 msgstr "Gerät:"
 
-#: ../data/gimagereader.ui.h:59
+#: ../data/gimagereader.ui.h:61
 msgid "Output:"
 msgstr "Ausgabebild:"
 
-#: ../data/gimagereader.ui.h:60
+#: ../data/gimagereader.ui.h:62
 msgid "Resolution:"
 msgstr "Auflösung:"
 
-#: ../data/gimagereader.ui.h:61
+#: ../data/gimagereader.ui.h:63
 msgid "Refresh"
 msgstr "Aktualisieren"
 
-#: ../data/gimagereader.ui.h:62
+#: ../data/gimagereader.ui.h:64
 msgid "Mode:"
 msgstr "Modus:"
 
-#: ../data/gimagereader.ui.h:63
+#: ../data/gimagereader.ui.h:65
 msgid "Color"
 msgstr "Farbig"
 
-#: ../data/gimagereader.ui.h:64
+#: ../data/gimagereader.ui.h:66
 msgid "Grayscale"
 msgstr "Graustufen"
 
-#: ../data/gimagereader.ui.h:65
+#: ../data/gimagereader.ui.h:67
 msgid "Scan"
 msgstr "Scannen"
 
-#: ../data/gimagereader.ui.h:66
+#: ../data/gimagereader.ui.h:68
 msgid "Acquire"
 msgstr "Erwerben"
 
-#: ../data/gimagereader.ui.h:67
+#: ../data/gimagereader.ui.h:69
 msgid "Brightness"
 msgstr "Helligkeit"
 
-#: ../data/gimagereader.ui.h:68
+#: ../data/gimagereader.ui.h:70
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../data/gimagereader.ui.h:69 ../src/Displayer.cc:344
+#: ../data/gimagereader.ui.h:71 ../src/Displayer.cc:344
 msgid "Resolution"
 msgstr "Auflösung"
 
-#: ../data/gimagereader.ui.h:70
+#: ../data/gimagereader.ui.h:72
 msgid "Select append mode"
 msgstr "Anhängemodus selektieren"
 
-#: ../data/gimagereader.ui.h:71
+#: ../data/gimagereader.ui.h:73
 msgid "Strip line breaks on selected text"
 msgstr "Zeilenumbrüche im markierten Text entfernen"
 
-#: ../data/gimagereader.ui.h:72
+#: ../data/gimagereader.ui.h:74
 msgid "Strip Line Breaks"
 msgstr "Zeilenumbrüche entfernen"
 
-#: ../data/gimagereader.ui.h:73
+#: ../data/gimagereader.ui.h:75
 msgid "Find and replace"
 msgstr "Suchen und ersetzten"
 
-#: ../data/gimagereader.ui.h:74
+#: ../data/gimagereader.ui.h:76
 msgid "Find and Replace"
 msgstr "Suchen und ersetzten"
 
-#: ../data/gimagereader.ui.h:75
+#: ../data/gimagereader.ui.h:77
 msgid "Undo"
 msgstr "Rückgängig"
 
-#: ../data/gimagereader.ui.h:76
+#: ../data/gimagereader.ui.h:78
 msgid "Redo"
 msgstr "Wiederholen"
 
-#: ../data/gimagereader.ui.h:77
+#: ../data/gimagereader.ui.h:79
 msgid "Save output"
 msgstr "Ausgabe speichern"
 
-#: ../data/gimagereader.ui.h:78
+#: ../data/gimagereader.ui.h:80
 msgid "Save Output"
 msgstr "Ausgabe speichern"
 
-#: ../data/gimagereader.ui.h:79
+#: ../data/gimagereader.ui.h:81
 msgid "Clear output"
 msgstr "Ausgabe löschen"
 
-#: ../data/gimagereader.ui.h:80
+#: ../data/gimagereader.ui.h:82
 msgid "Clear Output"
 msgstr "Ausgabe löschen"
 
-#: ../data/gimagereader.ui.h:81
+#: ../data/gimagereader.ui.h:83
 msgid "Find"
 msgstr "Suche"
 
-#: ../data/gimagereader.ui.h:82
+#: ../data/gimagereader.ui.h:84
 msgid "Replace"
 msgstr "Ersetzten"
 
-#: ../data/gimagereader.ui.h:83
+#: ../data/gimagereader.ui.h:85
 msgid "Order:"
 msgstr "Reihenfolge:"
 
-#: ../data/gimagereader.ui.h:84
+#: ../data/gimagereader.ui.h:86
 msgid "_Recognize"
 msgstr "Alles _erkennen"
 
-#: ../data/gimagereader.ui.h:85
+#: ../data/gimagereader.ui.h:87
 msgid "Recognize to _clipboard"
 msgstr "Ins _Clipboard erkennen"
 
@@ -418,14 +426,15 @@ msgstr "Code"
 msgid "Native name"
 msgstr "Nativer Name"
 
-#: ../src/Config.cc:184
+#: ../src/Config.cc:189
 msgid "No languages available"
 msgstr "Keine Sprachen sind verfügbar"
 
-#: ../src/Config.cc:184
+#: ../src/Config.cc:189
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
-msgstr "Keine tesseract Sprachen sind verfügbar. OCR-Erkennung ist nicht möglich."
+msgstr ""
+"Keine tesseract Sprachen sind verfügbar. OCR-Erkennung ist nicht möglich."
 
 #: ../src/Displayer.cc:350
 msgid "Scale"
@@ -473,36 +482,43 @@ msgid ""
 "The application cannot continue. Your work has been saved under %1.\n"
 "\n"
 "Please report this issue."
-msgstr "Die Applikation muss beendet werden. Die Arbeit wurde unter %1 gespeichert.\n\nBitte melden Sie dieses Problem."
+msgstr ""
+"Die Applikation muss beendet werden. Die Arbeit wurde unter %1 gespeichert.\n"
+"\n"
+"Bitte melden Sie dieses Problem."
 
 #: ../src/MainWindow.cc:63
 msgid ""
 "The application cannot continue. There was no unsaved work.\n"
 "\n"
 "Please report this issue."
-msgstr "Die Applikation muss beendet werden. Es gibt keine nicht-gespeicherte Arbeit.\n\nBitte melden Sie dieses Problem."
+msgstr ""
+"Die Applikation muss beendet werden. Es gibt keine nicht-gespeicherte "
+"Arbeit.\n"
+"\n"
+"Bitte melden Sie dieses Problem."
 
-#: ../src/MainWindow.cc:123
+#: ../src/MainWindow.cc:125
 msgid "Select an image to begin..."
 msgstr "Ein Bild wählen um zu beginnen..."
 
-#: ../src/MainWindow.cc:265
+#: ../src/MainWindow.cc:277
 msgid "New version"
 msgstr "Neue version"
 
-#: ../src/MainWindow.cc:265
+#: ../src/MainWindow.cc:277
 msgid "gImageReader %1 is available"
 msgstr "gImageReader %1 is erhältlich"
 
-#: ../src/MainWindow.cc:266
+#: ../src/MainWindow.cc:278
 msgid "Download"
 msgstr "Herunterlanden"
 
-#: ../src/MainWindow.cc:267
+#: ../src/MainWindow.cc:279
 msgid "Changelog"
 msgstr "Anderungsnachweis"
 
-#: ../src/MainWindow.cc:268
+#: ../src/MainWindow.cc:280
 msgid "Don't notify again"
 msgstr "Nicht mehr fragen"
 

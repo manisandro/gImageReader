@@ -14,4 +14,5 @@ Translations:
     3. Add the language to LINGUAS
     4. Translate the strings in <language>.po
     5. To update the translation strings of an existing translation, type
-       "intltool-update --gettext-package=gimagereader <language>" (i.e. "intltool-update de")
+       "intltool-update --gettext-package=gimagereader <language>"
+       (i.e. "intltool-update --gettext-package=gimagereader de")
