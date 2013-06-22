@@ -257,10 +257,16 @@ void MainWindow::getNewestVersion()
 	request.setOpt(curlpp::Options::Url(CHECKURL));
 	request.setOpt(curlpp::Options::WriteStream(&ss));
 	request.setOpt(curlpp::Options::FollowLocation(true));
-	request.perform();
+	try{
+		request.perform();
+	}catch(const std::exception&){
+		return;
+	}
 	std::string newver = ss.str();
 	newver.erase(std::remove_if(newver.begin(), newver.end(), ::isspace), newver.end());
-	Glib::signal_idle().connect_once([this,newver]{ checkVersion(newver); });
+	if(Glib::Regex::create(R"(^[\d+\.]+\d+?$)")->match(newver, 0, Glib::RegexMatchFlags(0))){
+		Glib::signal_idle().connect_once([this,newver]{ checkVersion(newver); });
+	}
 }
 
 void MainWindow::checkVersion(const Glib::ustring& newver)
