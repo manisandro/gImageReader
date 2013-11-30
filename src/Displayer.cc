@@ -47,8 +47,6 @@ Displayer::Displayer()
 	m_conspin = Builder("spin:display.contrast");
 	m_selmenu = Builder("window:selectionmenu");
 
-	m_viewport->override_background_color(Gdk::RGBA("7F7F7F"), Gtk::STATE_FLAG_NORMAL);
-	m_canvas->override_background_color(Gdk::RGBA("000000"), Gtk::STATE_FLAG_NORMAL);
 	m_canvas->set_redraw_on_allocate(false);
 
 	m_renderer = 0;
