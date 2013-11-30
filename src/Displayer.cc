@@ -32,9 +32,9 @@ Displayer::Displayer()
 {
 	m_canvas = Builder("drawingarea:display");
 	m_viewport = Builder("viewport:display");
-	m_scrollwin = Builder("scrollwin:display");
-	m_hadjustment = m_scrollwin->get_hadjustment();
-	m_vadjustment = m_scrollwin->get_vadjustment();
+	Gtk::ScrolledWindow* scrollwin = Builder("scrollwin:display");
+	m_hadjustment = scrollwin->get_hadjustment();
+	m_vadjustment = scrollwin->get_vadjustment();
 	m_zoominbtn = Builder("tbbutton:main.zoomin");
 	m_zoomoutbtn = Builder("tbbutton:main.zoomout");
 	m_zoomonebtn = Builder("tbbutton:main.normsize");
@@ -53,7 +53,7 @@ Displayer::Displayer()
 	clearImage(); // Assigns default values to all state variables
 	selectionUpdateColors();
 
-	m_connection_positionAndZoomCanvas = CONNECT(m_scrollwin, size_allocate, [this](Gdk::Rectangle&){ positionCanvas(true); });
+	m_connection_positionAndZoomCanvas = CONNECT(m_viewport, size_allocate, [this](Gdk::Rectangle&){ positionCanvas(true); });
 	m_connection_saveHScrollMark = CONNECT(m_hadjustment, value_changed, [this]{ saveScrollMark(m_hadjustment, m_geo.sx); });
 	m_connection_saveVScrollMark = CONNECT(m_vadjustment, value_changed, [this]{ saveScrollMark(m_vadjustment, m_geo.sy); });
 	CONNECT(m_pagespin, value_changed, [this]{ spinChanged(); });
@@ -210,17 +210,16 @@ void Displayer::positionCanvas(bool zoom)
 		m_geo.s = std::min(m_viewport->get_allocated_width() / bbw, m_viewport->get_allocated_height() / bbh);
 	}
 	m_canvas->set_size_request(Utils::round(bbw * m_geo.s), Utils::round(bbh * m_geo.s));
-#if !GTK_CHECK_VERSION(3, 9, 0)
-	m_scrollwin->resize_children(); // Immediately resize the children
-#endif
+	// Immediately resize the children
+	m_viewport->size_allocate(m_viewport->get_allocation());
+	m_viewport->set_allocation(m_viewport->get_allocation());
 	// Repeat to cover cases where scrollbars did disappear
 	if(zoom && m_zoomFit){
 		m_geo.s = std::min(m_viewport->get_allocated_width() / bbw, m_viewport->get_allocated_height() / bbh);
 		sendBlurRequest(BlurRequest::Start);
 		m_canvas->set_size_request(Utils::round(bbw * m_geo.s), Utils::round(bbh * m_geo.s));
-#if !GTK_CHECK_VERSION(3, 9, 0)
-		m_scrollwin->resize_children();
-#endif
+		m_viewport->size_allocate(m_viewport->get_allocation());
+		m_viewport->set_allocation(m_viewport->get_allocation());
 	}
 	m_hadjustment->set_value(m_geo.sx *(m_hadjustment->get_upper() - m_hadjustment->get_page_size()));
 	m_vadjustment->set_value(m_geo.sy *(m_vadjustment->get_upper() - m_vadjustment->get_page_size()));

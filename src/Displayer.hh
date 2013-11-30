@@ -52,7 +52,6 @@ private:
 
 	Gtk::DrawingArea* m_canvas;
 	Gtk::Viewport* m_viewport;
-	Gtk::ScrolledWindow* m_scrollwin;
 	Glib::RefPtr<Gtk::Adjustment> m_hadjustment;
 	Glib::RefPtr<Gtk::Adjustment> m_vadjustment;
 	Gtk::ToolButton* m_zoominbtn;
