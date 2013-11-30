@@ -206,9 +206,7 @@ void Config::updateLanguagesMenu()
 			std::sort(spelldicts.begin(), spelldicts.end());
 		}
 		if(!spelldicts.empty()){
-			Gtk::Image* image = Gtk::manage(new Gtk::Image());
-			image->set_from_icon_name("tools-check-spelling", Gtk::ICON_SIZE_MENU);
-			Gtk::ImageMenuItem* item = Gtk::manage(new Gtk::ImageMenuItem(*image, lang.name));
+			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(lang.name));
 			Gtk::Menu* submenu = Gtk::manage(new Gtk::Menu);
 			for(const Glib::ustring& dict : spelldicts){
 				radioitem = Gtk::manage(new Gtk::RadioMenuItem(m_radioGroup, spell.decode_language_code(dict)));

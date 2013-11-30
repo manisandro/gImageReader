@@ -212,13 +212,17 @@ void Displayer::positionCanvas(bool zoom)
 		m_geo.s = std::min(m_viewport->get_allocated_width() / bbw, m_viewport->get_allocated_height() / bbh);
 	}
 	m_canvas->set_size_request(Utils::round(bbw * m_geo.s), Utils::round(bbh * m_geo.s));
+#if !GTK_CHECK_VERSION(3, 9, 0)
 	m_scrollwin->resize_children(); // Immediately resize the children
+#endif
 	// Repeat to cover cases where scrollbars did disappear
 	if(zoom && m_zoomFit){
 		m_geo.s = std::min(m_viewport->get_allocated_width() / bbw, m_viewport->get_allocated_height() / bbh);
 		sendBlurRequest(BlurRequest::Start);
 		m_canvas->set_size_request(Utils::round(bbw * m_geo.s), Utils::round(bbh * m_geo.s));
+#if !GTK_CHECK_VERSION(3, 9, 0)
 		m_scrollwin->resize_children();
+#endif
 	}
 	m_hadjustment->set_value(m_geo.sx *(m_hadjustment->get_upper() - m_hadjustment->get_page_size()));
 	m_vadjustment->set_value(m_geo.sy *(m_vadjustment->get_upper() - m_vadjustment->get_page_size()));

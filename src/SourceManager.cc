@@ -130,8 +130,8 @@ std::string SourceManager::getSelectedSource() const
 void SourceManager::addSourcesBrowse()
 {
 	Gtk::FileChooserDialog dialog(*MAIN->getWindow(), _("Select sources..."));
-	dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-	dialog.add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
+	dialog.add_button(_("Cancel"), Gtk::RESPONSE_CANCEL);
+	dialog.add_button(_("OK"), Gtk::RESPONSE_OK);
 	dialog.set_select_multiple(true);
 	dialog.set_local_only(false);
 	Glib::RefPtr<Gtk::FileFilter> filter = Gtk::FileFilter::create();

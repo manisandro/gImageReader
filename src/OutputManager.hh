@@ -62,7 +62,7 @@ private:
 	Notifier::Handle m_notifierHandle = nullptr;
 
 	void showInsertMenu();
-	void setInsertMode(InsertMode mode, Gtk::ImageMenuItem *item);
+	void setInsertMode(InsertMode mode, const std::string& iconName);
 	void filterBuffer();
 	void toggleReplaceBox(Gtk::ToggleToolButton *button);
 	void historyChanged();

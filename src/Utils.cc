@@ -23,6 +23,13 @@
 #include <clocale>
 #include <tesseract/baseapi.h>
 
+Gtk::Image* Utils::image_from_icon_name(const std::string& icon_name, Gtk::IconSize size)
+{
+	Gtk::Image* image = new Gtk::Image;
+	image->set_from_icon_name(icon_name, size);
+	return image;
+}
+
 void Utils::popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gtk::Menu* menu, bool alignRight, bool alignBottom)
 {
 	ref->get_window()->get_origin(x, y);

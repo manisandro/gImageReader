@@ -28,6 +28,10 @@
 namespace tesseract { class TessBaseAPI; }
 
 namespace Utils {
+	Gtk::Image* image_from_icon_name(const std::string& icon_name, Gtk::IconSize size);
+
+	Gtk::MenuItem* image_menu_item(const std::string& label, Gtk::Image& image);
+
 	void popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gtk::Menu* menu, bool alignRight, bool alignBottom);
 
 	void error_dialog(const Glib::ustring& title, const Glib::ustring& text, Gtk::Window* parent = 0);

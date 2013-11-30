@@ -87,7 +87,7 @@ MainWindow::MainWindow()
 
 	Builder("tbbutton:options").as<Gtk::ToolItem>()->add(m_menubutton);
 	m_menubutton.set_popup(*Builder("menu:main").as<Gtk::Menu>());
-	m_menubutton.set_image(*Gtk::manage(new Gtk::Image(Gtk::StockID("gtk-preferences"), Gtk::ICON_SIZE_LARGE_TOOLBAR)));
+	m_menubutton.set_image(*Gtk::manage(Utils::image_from_icon_name("gtk-preferences", Gtk::ICON_SIZE_LARGE_TOOLBAR)));
 	m_menubutton.set_relief(Gtk::RELIEF_NONE);
 	m_menubutton.show();
 

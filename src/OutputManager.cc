@@ -61,9 +61,9 @@ OutputManager::OutputManager()
 
 	CONNECT(m_insButton, toggled, [this]{ showInsertMenu(); });
 	CONNECT(m_insMenu, deactivate, [this]{ m_insButton->set_active(false); });
-	CONNECTS(Builder("menuitem:output.insert.append").as<Gtk::ImageMenuItem>(), activate, [this](Gtk::ImageMenuItem* i){ setInsertMode(InsertMode::Append, i); });
-	CONNECTS(Builder("menuitem:output.insert.cursor").as<Gtk::ImageMenuItem>(), activate, [this](Gtk::ImageMenuItem* i){ setInsertMode(InsertMode::Cursor, i); });
-	CONNECTS(Builder("menuitem:output.insert.replace").as<Gtk::ImageMenuItem>(), activate, [this](Gtk::ImageMenuItem* i){ setInsertMode(InsertMode::Replace, i); });
+	CONNECT(Builder("menuitem:output.insert.append").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Append, PACKAGE_DATA_DIR "icons/ins_append.png"); });
+	CONNECT(Builder("menuitem:output.insert.cursor").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Cursor, PACKAGE_DATA_DIR "icons/ins_cursor.png"); });
+	CONNECT(Builder("menuitem:output.insert.replace").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Replace, PACKAGE_DATA_DIR "icons/ins_replace.png"); });
 	CONNECT(Builder("tbbutton:output.stripcrlf").as<Gtk::ToolButton>(), clicked, [this]{ filterBuffer(); });
 	CONNECTS(Builder("tbbutton:output.findreplace").as<Gtk::ToggleToolButton>(), toggled, [this](Gtk::ToggleToolButton* b){ toggleReplaceBox(b); });
 	CONNECT(m_textBuffer, mark_set, [this](const Gtk::TextIter&,const Glib::RefPtr<Gtk::TextMark>&){ saveIters(); });
@@ -87,10 +87,10 @@ void OutputManager::showInsertMenu()
 	}
 }
 
-void OutputManager::setInsertMode(InsertMode mode, Gtk::ImageMenuItem* item)
+void OutputManager::setInsertMode(InsertMode mode, const std::string& iconName)
 {
 	m_insertMode = mode;
-	m_insImage->set(((Gtk::Image*)item->get_image())->get_pixbuf());
+	m_insImage->set(Gdk::Pixbuf::create_from_file(iconName));
 }
 
 void OutputManager::filterBuffer()
@@ -222,8 +222,8 @@ bool OutputManager::saveBuffer(std::string filename)
 		}
 
 		Gtk::FileChooserDialog savedialog(*MAIN->getWindow(), _("Save Output..."), Gtk::FILE_CHOOSER_ACTION_SAVE);
-		savedialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
-		savedialog.add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);
+		savedialog.add_button(_("Cancel"), Gtk::RESPONSE_CANCEL);
+		savedialog.add_button(_("OK"), Gtk::RESPONSE_OK);
 		savedialog.set_local_only(false);
 		savedialog.set_do_overwrite_confirmation(true);
 		Glib::RefPtr<Gtk::FileFilter> filter = Gtk::FileFilter::create();
