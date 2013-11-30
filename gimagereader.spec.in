@@ -17,6 +17,7 @@ BuildRequires: sane-backends-devel
 BuildRequires: intltool
 BuildRequires: desktop-file-utils
 
+
 %description
 gImageReader is a simple Gtk front-end to tesseract. Features include:
  - Automatic page layout detection
@@ -27,22 +28,26 @@ gImageReader is a simple Gtk front-end to tesseract. Features include:
  - Basic editing of output text, including search/replace and removing line breaks
  - Spellchecking for output text (if corresponding dictionary installed)
 
+
 %prep
 %setup -q
+
 
 %build
 %configure
 make %{?_smp_mflags}
 
+
 %install
-rm -rf %{buildroot}
-make DESTDIR=$RPM_BUILD_ROOT install
+%make_install
 %{_bindir}/desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 %find_lang %{name}
 
+
 %post
 /usr/bin/update-desktop-database &> /dev/null || :
+
 
 %postun
 /usr/bin/update-desktop-database &> /dev/null || :
@@ -50,9 +55,11 @@ if [ $1 -eq 0 ] ; then
     /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 fi
 
+
 %posttrans
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+
 
 %files -f %{name}.lang
 %doc AUTHORS ChangeLog COPYING NEWS README TODO
@@ -63,6 +70,7 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 %{_datadir}/glib-2.0/schemas/org.gnome.%{name}.gschema.xml
 
+
 %changelog
-* Sat Apr 20 2013 Sandro Mani <manisandro@gmail.com> - @PACKAGE_VERSION@-1
-- Initial RPM package.
+* @PACKAGE_DATE@ Sandro Mani <manisandro@gmail.com> - @PACKAGE_VERSION@-1
+- gImageReader @PACKAGE_VERSION@.

@@ -75,6 +75,8 @@ if test "$with_platform" = "win32"; then
   AC_CHECK_TOOL([WINDRES],[windres])
 fi
 
+AC_SUBST(PACKAGE_DATE, `LANG=en date  +'%a %b %d %Y'`)
+
 AC_CONFIG_FILES([
 gimagereader.spec
 Makefile
