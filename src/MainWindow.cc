@@ -34,9 +34,6 @@
 #include <sstream>
 
 #if ENABLE_VERSIONCHECK
-#include <curlpp/Easy.hpp>
-#include <curlpp/Options.hpp>
-
 #define CHECKURL "http://sourceforge.net/projects/gimagereader/files/LATEST/download?use_mirror=autoselect"
 #define DOWNLOADURL "http://sourceforge.net/projects/gimagereader/files"
 #define CHANGELOGURL "http://sourceforge.net/projects/gimagereader/files/changelog.txt/download?use_mirror=autoselect"
@@ -127,11 +124,11 @@ MainWindow::MainWindow()
 	setState(State::Idle);
 
 	m_config->readSettings(); // Read settings only after all objects are constructed (and all signals connected)
-#ifdef G_OS_WIN32 // Disable scanning on win32 since something with the twain interface is broken (argh)
-	Builder("notebook:sources").as<Gtk::Notebook>()->remove_page(1);
-#else
+//#ifdef G_OS_WIN32 // Disable scanning on win32 since something with the twain interface is broken (argh)
+//	Builder("notebook:sources").as<Gtk::Notebook>()->remove_page(1);
+//#else
 	m_acquirer->init(); // Need to delay this until settings are read
-#endif
+//#endif
 
 	const std::vector<int>& geom = m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->getValue();
 	if(geom.size() == 4){
@@ -252,17 +249,12 @@ void MainWindow::setOutputPaneFont()
 #if ENABLE_VERSIONCHECK
 void MainWindow::getNewestVersion()
 {
-	std::ostringstream ss;
-	curlpp::Easy request;
-	request.setOpt(curlpp::Options::Url(CHECKURL));
-	request.setOpt(curlpp::Options::WriteStream(&ss));
-	request.setOpt(curlpp::Options::FollowLocation(true));
-	try{
-		request.perform();
-	}catch(const std::exception&){
-		return;
-	}
-	std::string newver = ss.str();
+	Glib::RefPtr<Gio::File> file = Gio::File::create_for_uri(CHECKURL);
+	Glib::RefPtr<Gio::FileInputStream> stream = file->read();
+	char buf[16] = {};
+	stream->read(buf, 16);
+	std::string newver(buf);
+	std::cout << newver << std::endl;
 	newver.erase(std::remove_if(newver.begin(), newver.end(), ::isspace), newver.end());
 	if(Glib::Regex::create(R"(^[\d+\.]+\d+?$)")->match(newver, 0, Glib::RegexMatchFlags(0))){
 		Glib::signal_idle().connect_once([this,newver]{ checkVersion(newver); });

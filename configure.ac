@@ -46,7 +46,6 @@ AC_ARG_ENABLE([versioncheck],
 AM_CONDITIONAL([ENABLE_VERSIONCHECK], [test x$versioncheck = xtrue])
 
 if test x$versioncheck = xtrue; then
-	PKG_CHECK_MODULES(CURLPP, [curlpp])
 	AC_DEFINE(ENABLE_VERSIONCHECK, 1, [Whether version-check is enabled.])
 fi
 

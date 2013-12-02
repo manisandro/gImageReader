@@ -12,7 +12,6 @@ BuildRequires: gtkspellmm30-devel
 BuildRequires: cairomm-devel
 BuildRequires: poppler-glib-devel
 BuildRequires: tesseract-devel
-BuildRequires: curlpp-devel
 BuildRequires: sane-backends-devel
 BuildRequires: intltool
 BuildRequires: desktop-file-utils
