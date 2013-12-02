@@ -14,9 +14,8 @@ win32dir="$(dirname $(readlink -f $0))"
 pushd "$win32dir" > /dev/null
 
 # Build
-pushd .. > /dev/null
-mkdir -p $win32dir/_root
-mingw32-configure --disable-versioncheck
+pushd ../build-win32 > /dev/null
+mingw32-configure
 mingw32-make -j4 DESTDIR="$win32dir/_root" install
 rm -rf $win32dir/root
 mv $win32dir/_root$MINGWROOT $win32dir/root
@@ -102,6 +101,9 @@ rm -rf root/share/applications
 glib-compile-schemas root/share/glib-2.0/schemas
 
 # Build the installer
-progName=$(cat ../config.h | grep PACKAGE_NAME | awk -F'"' '{print $2}')
-progVersion=$(cat ../config.h | grep PACKAGE_VERSION | awk -F'"' '{print $2}')
+progName=$(cat ../build-win32/config.h | grep PACKAGE_NAME | awk -F'"' '{print $2}')
+progVersion=$(cat ../build-win32/config.h | grep PACKAGE_VERSION | awk -F'"' '{print $2}')
 makensis -DNAME=$progName -DPROGVERSION="$progVersion" installer.nsi;
+
+# Cleanup
+rm -rf $win32dir/root

@@ -41,12 +41,11 @@ srcdir="$(dirname "$(readlink -f $0)")"
   exit 1
 }
 
+echo "Running autoreconf..."
+autoreconf -fiv "$srcdir"
 
 (
   cd "$srcdir"
-  echo "Running autoreconf..."
-  autoreconf -fiv
-
   echo "Running intltoolize..."
   intltoolize --force --copy --automake
 )
