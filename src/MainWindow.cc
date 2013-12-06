@@ -249,10 +249,14 @@ void MainWindow::setOutputPaneFont()
 #if ENABLE_VERSIONCHECK
 void MainWindow::getNewestVersion()
 {
-	Glib::RefPtr<Gio::File> file = Gio::File::create_for_uri(CHECKURL);
-	Glib::RefPtr<Gio::FileInputStream> stream = file->read();
 	char buf[16] = {};
-	stream->read(buf, 16);
+	try {
+		Glib::RefPtr<Gio::File> file = Gio::File::create_for_uri(CHECKURL);
+		Glib::RefPtr<Gio::FileInputStream> stream = file->read();
+		stream->read(buf, 16);
+	} catch (const Glib::Error&) {
+		return;
+	}
 	std::string newver(buf);
 	std::cout << newver << std::endl;
 	newver.erase(std::remove_if(newver.begin(), newver.end(), ::isspace), newver.end());
