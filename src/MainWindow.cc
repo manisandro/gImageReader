@@ -39,28 +39,26 @@
 #define CHANGELOGURL "http://sourceforge.net/projects/gimagereader/files/changelog.txt/download?use_mirror=autoselect"
 #endif // ENABLE_VERSIONCHECK
 
-void crash_handler(int)
+void crash_handler(int sig)
 {
-	static int crashcount = 0;
-	if(crashcount == 0){ // Prevent infinite calls to the crash handler
-		++crashcount;
+	std::signal(sig, nullptr);
 
-		if(MAIN->getOutputManager()->getModified()){
-			// Use classic c-strings to avoid any kind of memory allocation in the handler
-			gchar filename[100];
-			snprintf(filename, sizeof(filename), "%s%c%s_crash-save.txt", g_get_home_dir(), G_DIR_SEPARATOR, PACKAGE_NAME);
-			int i = 0;
-			while(g_file_test(filename, G_FILE_TEST_EXISTS)){
-				++i;
-				snprintf(filename, sizeof(filename), "%s%c%s_crash-save_%d.txt", g_get_home_dir(), G_DIR_SEPARATOR, PACKAGE_NAME, i);
-			}
-			MAIN->getOutputManager()->saveBuffer(filename);
-			Utils::error_dialog(_("A crash has been detected."), Glib::ustring::compose(_("The application cannot continue. Your work has been saved under %1.\n\nPlease report this issue."), filename));
-		}else{
-			Utils::error_dialog(_("A crash has been detected."), _("The application cannot continue. There was no unsaved work.\n\nPlease report this issue."));
+	if(MAIN->getOutputManager()->getModified()){
+		// Use classic c-strings to avoid any kind of memory allocation in the handler
+		gchar filename[100];
+		snprintf(filename, sizeof(filename), "%s%c%s_crash-save.txt", g_get_home_dir(), G_DIR_SEPARATOR, PACKAGE_NAME);
+		int i = 0;
+		while(g_file_test(filename, G_FILE_TEST_EXISTS)){
+			++i;
+			snprintf(filename, sizeof(filename), "%s%c%s_crash-save_%d.txt", g_get_home_dir(), G_DIR_SEPARATOR, PACKAGE_NAME, i);
 		}
+		MAIN->getOutputManager()->saveBuffer(filename);
+		Utils::error_dialog(_("A crash has been detected."), Glib::ustring::compose(_("The application cannot continue. Your work has been saved under %1.\n\nPlease report this issue."), filename));
+	}else{
+		Utils::error_dialog(_("A crash has been detected."), _("The application cannot continue. There was no unsaved work.\n\nPlease report this issue."));
 	}
-	exit(1);
+
+	std::raise(sig);
 }
 
 MainWindow* MainWindow::s_instance = nullptr;
@@ -143,8 +141,8 @@ MainWindow::MainWindow()
 	Builder("check:config.settings.update").as<Gtk::Widget>()->hide();
 #endif
 
-	signal(SIGSEGV, crash_handler);
-	signal(SIGABRT, crash_handler);
+	std::signal(SIGSEGV, crash_handler);
+	std::signal(SIGABRT, crash_handler);
 }
 
 MainWindow::~MainWindow()
