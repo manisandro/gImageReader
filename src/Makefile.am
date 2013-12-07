@@ -44,8 +44,7 @@ gimagereader_SOURCES = \
 	UndoableBuffer.cc \
 	UndoableBuffer.hh \
 	Utils.cc \
-	Utils.hh \
-	twain.h
+	Utils.hh
 
 gimagereader_LDFLAGS =
 

@@ -21,7 +21,7 @@
 #define SCANNERTWAIN_HH
 
 #include "Scanner.hh"
-#include "twain.h"
+#include <twain.h>
 #include <dlfcn.h>
 
 typedef class ScannerTwain ScannerImpl;

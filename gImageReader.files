@@ -52,4 +52,3 @@ src/Utils.cc
 src/Utils.hh
 src/UndoableBuffer.hh
 src/UndoableBuffer.cc
-src/twain.h
