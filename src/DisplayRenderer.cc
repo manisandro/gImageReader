@@ -28,7 +28,7 @@ Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::render(int page, double resolu
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf;
 	try{
 		pixbuf = Gdk::Pixbuf::create_from_file(m_filename);
-	}catch(const Glib::FileError&){
+	}catch(const Glib::Error&){
 		return Cairo::RefPtr<Cairo::ImageSurface>();
 	}
 
