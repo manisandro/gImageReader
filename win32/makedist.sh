@@ -7,10 +7,11 @@ MINGWROOT=/usr/i686-w64-mingw32/sys-root/mingw
 set -e
 
 if [ "$1" == "--debug" ]; then
-	withdebug=1
+    withdebug=1
 fi
 
 win32dir="$(dirname $(readlink -f $0))"
+installroot="$win32dir/root"
 pushd "$win32dir" > /dev/null
 
 # Build
@@ -24,77 +25,75 @@ cp -R $win32dir/skel/* $win32dir/root
 popd > /dev/null
 
 # Collect dependencies
-function linkdep {
-	echo "Linking $1..."
-	test -e "$MINGWROOT/$1" || return 1
-	mkdir -p "root/$(dirname $1)" || return 1
-	ln -sf "$MINGWROOT/$1" "root/$1" || return 1
-	if [ $withdebug ]; then test -e "$MINGWROOT/$1.debug" && ln -sf "$MINGWROOT/$1.debug" "root/$1.debug"; fi
-	return 0
+function isnativedll {
+    # If the import library exists but not the dynamic library, the dll ist most likely a native one
+    local lower=${1,,}
+    [ ! -e $MINGWROOT/bin/$1 ] && [ -f $MINGWROOT/lib/lib${lower/.dll/.a} ] && return 0;
+    return 1;
 }
 
-function cpdep {
-	echo "Copying $1..."
-	mkdir -p "root/$(dirname $1)" || return 1
-	cp -R "$MINGWROOT/$1" "root/$1" || return 1
-	return 0
+function linkDep {
+# Link the specified binary dependency and it's dependencies
+    local destdir="$installroot/${2:-$(dirname $1)}"
+    local name="$(basename $1)"
+    test -e "$destdir/$name" && return 0
+    echo "Linking $1..."
+    [ ! -e "$MINGWROOT/$1" ] && (echo "Error: missing $MINGWROOT/$1"; return 1)
+    mkdir -p "$destdir" || return 1
+    ln -sf "$MINGWROOT/$1" "$destdir/$name" || return 1
+    autoLinkDeps $destdir/$name || return 1
+    if [ $withdebug ]; then
+        [ -e "$MINGWROOT/$1.debug" ] && ln -sf "$MINGWROOT/$1.debug" "$destdir/$name.debug" || echo "Warning: missing $name.debug"
+    fi
+    return 0
 }
 
-function finddeps {
-	local deps
-	read -a deps <<< $(mingw-objdump -p "$1" | grep "DLL Name" | awk '{print $3}')
-    for dep in "${deps[@]}"; do
-		case "${deplist[@]}" in *"$dep"*) continue;; esac
-		if [ -e "$MINGWROOT/bin/$dep" ]; then
-			deplist=("${deplist[@]}" "$dep")
-			finddeps "$MINGWROOT/bin/$dep"
-		fi
-	done
+function autoLinkDeps {
+# Collects and links the dependencies of the specified binary
+    for dep in $(mingw-objdump -p "$1" | grep "DLL Name" | awk '{print $3}'); do
+        if ! isnativedll "$dep"; then
+            linkDep bin/$dep || return 1
+        fi
+    done
+    return 0
 }
 
-function installdeps {
-	local deplist
-	finddeps "$1"
-	for dep in "${deplist[@]}"; do
-		linkdep bin/$dep
-	done
+function cpDep {
+    echo "Copying $1..."
+    srcdir=${2:-$MINGWROOT}
+    mkdir -p "$installroot/$(dirname $1)" || return 1
+    cp -a "$srcdir/$1" "$installroot/$1" || return 1
+    return 0
 }
 
-installdeps root/bin/gimagereader.exe
+autoLinkDeps root/bin/gimagereader.exe
+linkDep bin/gdb.exe
 
-if [ $withdebug ]; then
-	linkdep bin/gdb.exe
-	installdeps root/bin/gdb.exe
-fi
+linkDep bin/twaindsm.dll
+linkDep lib/enchant/libenchant_myspell.dll
+linkDep lib/pango/1.8.0/modules/pango-arabic-lang.dll
+linkDep lib/pango/1.8.0/modules/pango-indic-lang.dll
+linkDep lib/pango/1.8.0/modules/pango-basic-fc.dll
 
-linkdep bin/twaindsm.dll
-installdeps bin/twaindsm.dll
-
-linkdep lib/enchant/libenchant_myspell.dll
-installdeps root/lib/enchant/libenchant_myspell.dll
-
-linkdep lib/pango/1.8.0/modules/pango-arabic-lang.dll
-installdeps root/lib/pango/1.8.0/modules/pango-arabic-lang.dll
-
-linkdep lib/pango/1.8.0/modules/pango-indic-lang.dll
-installdeps root/lib/pango/1.8.0/modules/pango-indic-lang.dll
-
-linkdep lib/pango/1.8.0/modules/pango-basic-fc.dll
-installdeps root/lib/pango/1.8.0/modules/pango-basic-fc.dll
-
-cpdep share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
-cpdep share/locale
+cpDep share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
+# Install locale files
+(
+    cd $MINGWROOT
+    for file in $(find share/locale -type f -name "gtk*.mo" -or -name "glib*.mo" -or -name "gdk*.mo" -or -name "atk*.mo"); do
+        cpDep $file
+    done
+)
 
 # Add english language data and spelling dictionaries
-stat /usr/share/tesseract/tessdata/eng.traineddata > /dev/null
-ln -sf /usr/share/tesseract/tessdata/eng.traineddata root/share/tessdata/eng.traineddata
-stat /usr/share/myspell/en_US.dic > /dev/null
-ln -sf /usr/share/myspell/en_US.dic root/share/myspell/dicts/en_US.dic
-stat /usr/share/myspell/en_US.aff > /dev/null
-ln -sf /usr/share/myspell/en_US.aff root/share/myspell/dicts/en_US.aff
+cpDep share/tesseract/tessdata/eng.traineddata /usr
+cpDep share/myspell/en_US.dic /usr
+cpDep share/myspell/en_US.aff /usr
+
+# Copy isocodes
+cpDep share/xml/iso-codes/iso_639.xml /usr
+cpDep share/xml/iso-codes/iso_3166.xml /usr
 
 # Remove unused files
-find root/share/locale/ -type f -not -name "gtk*.mo" -not -name "glib*.mo" -not -name "gdk*.mo" -not -name "atk*.mo" -not -name "gimagereader.mo" -exec rm -f {} \;
 rm -rf root/share/applications
 
 # Compile schemas
