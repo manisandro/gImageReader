@@ -58,14 +58,6 @@ function autoLinkDeps {
     return 0
 }
 
-function cpDep {
-    echo "Copying $1..."
-    srcdir=${2:-$MINGWROOT}
-    mkdir -p "$installroot/$(dirname $1)" || return 1
-    cp -a "$srcdir/$1" "$installroot/$1" || return 1
-    return 0
-}
-
 autoLinkDeps root/bin/gimagereader.exe
 linkDep bin/gdb.exe
 
@@ -75,23 +67,23 @@ linkDep lib/pango/1.8.0/modules/pango-arabic-lang.dll
 linkDep lib/pango/1.8.0/modules/pango-indic-lang.dll
 linkDep lib/pango/1.8.0/modules/pango-basic-fc.dll
 
-cpDep share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
+install -Dpm 0644 /usr/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml $installroot/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
 # Install locale files
 (
     cd $MINGWROOT
     for file in $(find share/locale -type f -name "gtk*.mo" -or -name "glib*.mo" -or -name "gdk*.mo" -or -name "atk*.mo"); do
-        cpDep $file
+        install -Dpm 0644 $file $installroot/$file
     done
 )
 
 # Add english language data and spelling dictionaries
-cpDep share/tesseract/tessdata/eng.traineddata /usr
-cpDep share/myspell/en_US.dic /usr
-cpDep share/myspell/en_US.aff /usr
+install -Dpm 0644 /usr/share/tesseract/tessdata/eng.traineddata $installroot/share/tessdata/eng.traineddata
+install -Dpm 0644 /usr/share/myspell/en_US.dic $installroot/share/myspell/dicts/en_US.dic
+install -Dpm 0644 /usr/share/myspell/en_US.aff $installroot/share/myspell/dicts/en_US.aff
 
 # Copy isocodes
-cpDep share/xml/iso-codes/iso_639.xml /usr
-cpDep share/xml/iso-codes/iso_3166.xml /usr
+install -Dpm 0644 /usr/share/xml/iso-codes/iso_639.xml $installroot/share/xml/iso-codes/iso_639.xml
+install -Dpm 0644 /usr/share/xml/iso-codes/iso_3166.xml $installroot/share/xml/iso-codes/iso_3166.xml
 
 # Remove unused files
 rm -rf root/share/applications
