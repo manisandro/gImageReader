@@ -28,7 +28,7 @@ popd > /dev/null
 function isnativedll {
     # If the import library exists but not the dynamic library, the dll ist most likely a native one
     local lower=${1,,}
-    [ ! -e $MINGWROOT/bin/$1 ] && [ -f $MINGWROOT/lib/lib${lower/.dll/.a} ] && return 0;
+    [ ! -e $MINGWROOT/bin/$1 ] && [ -f $MINGWROOT/lib/lib${lower/%.*/.a} ] && return 0;
     return 1;
 }
 
