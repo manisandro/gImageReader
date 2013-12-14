@@ -85,23 +85,9 @@ void Acquirer::init()
 
 void Acquirer::selectOutputPath()
 {
-	Gtk::FileChooserDialog dialog(*MAIN->getWindow(), _("Choose Output Filename..."), Gtk::FILE_CHOOSER_ACTION_SAVE);
-	dialog.add_button("gtk-cancel", Gtk::RESPONSE_CANCEL);
-	dialog.add_button("gtk-ok", Gtk::RESPONSE_OK);
-	dialog.set_select_multiple(false);
-	dialog.set_create_folders(true);
-	dialog.set_do_overwrite_confirmation(true);
-	dialog.set_local_only(false);
-	Glib::RefPtr<Gtk::FileFilter> filter = Gtk::FileFilter::create();
-	filter->set_name(_("PNG Images"));
-	filter->add_mime_type("image/png");
-	filter->add_pattern("*.png");
-	dialog.add_filter(filter);
-	dialog.set_filter(filter);
-
-	int response = dialog.run();
-	if(response == Gtk::RESPONSE_OK){
-		m_outputPath = dialog.get_filename();
+	std::string filename = Utils::save_image_dialog(_("Choose Output Filename..."), m_outputPath);
+	if(!filename.empty()){
+		m_outputPath = filename;
 		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);
 		genOutputPath();
 	}

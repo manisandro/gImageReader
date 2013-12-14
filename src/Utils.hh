@@ -36,6 +36,7 @@ namespace Utils {
 
 	void error_dialog(const Glib::ustring& title, const Glib::ustring& text, Gtk::Window* parent = 0);
 	int question_dialog(const Glib::ustring& title, const Glib::ustring& text, Gtk::Window* parent = 0);
+	std::string save_image_dialog(const Glib::ustring& title, const std::string& initialPath, Gtk::Window* parent = 0);
 
 	void configure_spin(Gtk::SpinButton* spin, double value, double min, double max, double step, double page, sigc::connection* block = 0);
 	void set_error_state(Gtk::Entry* entry);

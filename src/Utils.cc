@@ -68,6 +68,31 @@ int Utils::question_dialog(const Glib::ustring &title, const Glib::ustring &text
 	}
 }
 
+std::string Utils::save_image_dialog(const Glib::ustring &title, const std::string &initialPath, Gtk::Window *parent)
+{
+	if(!parent){ parent = MAIN->getWindow(); }
+	Gtk::FileChooserDialog dialog(*parent, title, Gtk::FILE_CHOOSER_ACTION_SAVE);
+	dialog.add_button("gtk-cancel", Gtk::RESPONSE_CANCEL);
+	dialog.add_button("gtk-ok", Gtk::RESPONSE_OK);
+	dialog.set_select_multiple(false);
+	dialog.set_create_folders(true);
+	dialog.set_do_overwrite_confirmation(true);
+	dialog.set_local_only(false);
+	dialog.set_filename(initialPath);
+	Glib::RefPtr<Gtk::FileFilter> filter = Gtk::FileFilter::create();
+	filter->set_name(_("PNG Images"));
+	filter->add_mime_type("image/png");
+	filter->add_pattern("*.png");
+	dialog.add_filter(filter);
+	dialog.set_filter(filter);
+
+	int response = dialog.run();
+	if(response == Gtk::RESPONSE_OK){
+		return dialog.get_filename();
+	}
+	return "dialog""";
+}
+
 void Utils::configure_spin(Gtk::SpinButton *spin, double value, double min, double max, double step, double page, sigc::connection* block)
 {
 	if(block) block->block();
