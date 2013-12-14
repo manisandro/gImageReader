@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.16.0 on Wed Dec 11 00:08:48 2013 -->
+<!-- Generated with glade 3.16.0 on Sun Dec 15 00:07:05 2013 -->
 <interface>
   <!-- interface-requires gtk+ 3.6 -->
   <object class="GtkAdjustment" id="adjustment:display.angle">
@@ -761,7 +761,13 @@ MA 02110-1301, USA.</property>
   <object class="GtkImage" id="image:selectionmenu.recognize">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="pixel_size">16</property>
     <property name="icon_name">insert-text</property>
+  </object>
+  <object class="GtkImage" id="image:selectionmenu:save">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-save-as</property>
   </object>
   <object class="GtkImage" id="image:sources.images.recent">
     <property name="visible">True</property>
@@ -2235,6 +2241,7 @@ MA 02110-1301, USA.</property>
             <property name="relief">none</property>
             <property name="use_underline">True</property>
             <property name="xalign">0</property>
+            <property name="always_show_image">True</property>
           </object>
           <packing>
             <property name="left_attach">0</property>
@@ -2253,6 +2260,7 @@ MA 02110-1301, USA.</property>
             <property name="relief">none</property>
             <property name="use_underline">True</property>
             <property name="xalign">0</property>
+            <property name="always_show_image">True</property>
           </object>
           <packing>
             <property name="left_attach">0</property>
@@ -2269,6 +2277,25 @@ MA 02110-1301, USA.</property>
           <packing>
             <property name="left_attach">0</property>
             <property name="top_attach">1</property>
+            <property name="width">2</property>
+            <property name="height">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="button:selectionmenu.save">
+            <property name="label" translatable="yes">Save as _image</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="image">image:selectionmenu:save</property>
+            <property name="relief">none</property>
+            <property name="use_underline">True</property>
+            <property name="xalign">0</property>
+            <property name="always_show_image">True</property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">5</property>
             <property name="width">2</property>
             <property name="height">1</property>
           </packing>

@@ -88,6 +88,7 @@ private:
 	sigc::connection m_connection_selmenu_reorder;
 	sigc::connection m_connection_selmenu_recognize;
 	sigc::connection m_connection_selmenu_clipboard;
+	sigc::connection m_connection_selmenu_save;
 
 	void drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx);
 	void positionCanvas(bool zoom = false);
@@ -111,6 +112,7 @@ private:
 	void showSelectionMenu(GdkEventButton* ev, int i);
 	void hideSelectionMenu();
 	Cairo::RefPtr<Cairo::ImageSurface> getTransformedImage(const Geometry::Rectangle& rect) const;
+	void saveSelection(const Geometry::Rectangle& rect) const;
 
 	// Stuff for workaround until cairo supports propper downscaling...
 	Cairo::RefPtr<Cairo::ImageSurface> m_blurImage;

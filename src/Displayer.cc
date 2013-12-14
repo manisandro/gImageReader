@@ -539,16 +539,20 @@ void Displayer::showSelectionMenu(GdkEventButton *ev, int i)
 		m_canvas->queue_draw();
 	});
 	m_connection_selmenu_delete = CONNECT(Builder("button:selectionmenu.delete").as<Gtk::Button>(), clicked, [this,sel]{
-		selectionRemove(sel);
 		hideSelectionMenu();
+		selectionRemove(sel);
 	});
 	m_connection_selmenu_recognize = CONNECT(Builder("button:selectionmenu.recognize").as<Gtk::Button>(), clicked, [this, sel]{
-		MAIN->getRecognizer()->recognizeImage(getTransformedImage(sel->getRect()), Recognizer::OutputDestination::Buffer);
 		hideSelectionMenu();
+		MAIN->getRecognizer()->recognizeImage(getTransformedImage(sel->getRect()), Recognizer::OutputDestination::Buffer);
 	});
 	m_connection_selmenu_clipboard = CONNECT(Builder("button:selectionmenu.clipboard").as<Gtk::Button>(), clicked, [this, sel]{
-		MAIN->getRecognizer()->recognizeImage(getTransformedImage(sel->getRect()), Recognizer::OutputDestination::Clipboard);
 		hideSelectionMenu();
+		MAIN->getRecognizer()->recognizeImage(getTransformedImage(sel->getRect()), Recognizer::OutputDestination::Clipboard);
+	});
+	m_connection_selmenu_save = CONNECT(Builder("button:selectionmenu.save").as<Gtk::Button>(), clicked, [this, sel]{
+		hideSelectionMenu();
+		saveSelection(sel->getRect());
 	});
 	Glib::RefPtr<const Gdk::Screen> screen = MAIN->getWindow()->get_screen();
 	Gdk::Rectangle rect = screen->get_monitor_workarea(screen->get_monitor_at_point(ev->x_root, ev->y_root));
@@ -570,6 +574,7 @@ void Displayer::hideSelectionMenu()
 	m_connection_selmenu_delete.disconnect();
 	m_connection_selmenu_recognize.disconnect();
 	m_connection_selmenu_clipboard.disconnect();
+	m_connection_selmenu_save.disconnect();
 	gdk_device_ungrab(gtk_get_current_event_device(), gtk_get_current_event_time());
 }
 
@@ -618,6 +623,16 @@ std::vector<Cairo::RefPtr<Cairo::ImageSurface> > Displayer::getSelections() cons
 		images.push_back(getTransformedImage(rect));
 	}
 	return images;
+}
+
+void Displayer::saveSelection(const Geometry::Rectangle& rect) const
+{
+	Cairo::RefPtr<Cairo::ImageSurface> img = getTransformedImage(rect);
+	std::string initialPath = Glib::build_filename(Glib::get_user_special_dir(G_USER_DIRECTORY_DOCUMENTS), _("selection.png"));
+	std::string filename = Utils::save_image_dialog(_("Select Selection Image"), initialPath);
+	if(!filename.empty()){
+		img->write_to_png(filename);
+	}
 }
 
 void Displayer::autodetectLayout(bool rotated)
