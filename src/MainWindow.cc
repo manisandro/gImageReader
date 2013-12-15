@@ -223,8 +223,8 @@ void MainWindow::showHelp(const std::string& chapter)
 #else
 	manualFile = PACKAGE_DATA_DIR "/manual.html";
 #endif
-	std::string manualURI = Glib::filename_to_uri(manualFile) + chapter;
-	gtk_show_uri(0, manualURI.c_str(), GDK_CURRENT_TIME, 0);
+	std::string manualURI = Glib::filename_to_uri(Utils::make_absolute_path(manualFile)) + chapter;
+	gtk_show_uri(0, (manualURI + chapter).c_str(), GDK_CURRENT_TIME, 0);
 }
 
 void MainWindow::setOutputPaneOrientation(Gtk::ComboBoxText* combo)

@@ -139,6 +139,14 @@ void Utils::get_filename_parts(const std::string& filename, std::string& base, s
 	}
 }
 
+std::string Utils::make_absolute_path(const std::string& path)
+{
+	if(Glib::path_is_absolute(path)){
+		return path;
+	}
+	return Glib::build_path("/", std::vector<std::string>{Glib::get_current_dir(), path});
+}
+
 std::vector<Glib::ustring> Utils::string_split(const Glib::ustring &text, char delim, bool keepEmpty)
 {
 	std::vector<Glib::ustring> parts;

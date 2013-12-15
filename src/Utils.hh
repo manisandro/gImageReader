@@ -44,6 +44,7 @@ namespace Utils {
 
 	Glib::ustring get_content_type(const std::string& filename);
 	void get_filename_parts(const std::string& filename, std::string& base, std::string& ext);
+	std::string make_absolute_path(const std::string& path);
 
 	std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, bool keepEmpty = false);
 
