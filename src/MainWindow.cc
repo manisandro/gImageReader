@@ -32,6 +32,10 @@
 #include <cstdio>
 #include <iostream>
 #include <sstream>
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 
 #if ENABLE_VERSIONCHECK
 #define CHECKURL "http://sourceforge.net/projects/gimagereader/files/LATEST/download?use_mirror=autoselect"
@@ -224,7 +228,11 @@ void MainWindow::showHelp(const std::string& chapter)
 	manualFile = PACKAGE_DATA_DIR "/manual.html";
 #endif
 	std::string manualURI = Glib::filename_to_uri(Utils::make_absolute_path(manualFile)) + chapter;
-	gtk_show_uri(0, (manualURI + chapter).c_str(), GDK_CURRENT_TIME, 0);
+#ifdef G_OS_WIN32
+	ShellExecute(nullptr, "open", manualURI.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+#else
+	gtk_show_uri(nullptr, (manualURI + chapter).c_str(), GDK_CURRENT_TIME, 0);
+#endif
 }
 
 void MainWindow::setOutputPaneOrientation(Gtk::ComboBoxText* combo)
