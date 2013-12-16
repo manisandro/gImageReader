@@ -21,6 +21,7 @@
 #define SCANNERTWAIN_HH
 
 #include "Scanner.hh"
+#include <windows.h>
 #include <twain.h>
 #include <dlfcn.h>
 
