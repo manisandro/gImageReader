@@ -239,6 +239,7 @@ bool OutputManager::saveBuffer(std::string filename)
 		}
 		filename = savedialog.get_filename();
 	}
+	Utils::ensure_extension(filename, ".txt");
 	std::ofstream file(filename);
 	if(!file.is_open()){
 		Utils::error_dialog(_("Failed to save output"), _("Check that you have writing permissions in the selected folder."));

@@ -88,9 +88,11 @@ std::string Utils::save_image_dialog(const Glib::ustring &title, const std::stri
 
 	int response = dialog.run();
 	if(response == Gtk::RESPONSE_OK){
-		return dialog.get_filename();
+		std::string filename = dialog.get_filename();
+		Utils::ensure_extension(filename, ".png");
+		return filename;
 	}
-	return "dialog""";
+	return "";
 }
 
 void Utils::configure_spin(Gtk::SpinButton *spin, double value, double min, double max, double step, double page, sigc::connection* block)
@@ -136,6 +138,15 @@ void Utils::get_filename_parts(const std::string& filename, std::string& base, s
 	if(base.size() > 3 && base.substr(pos - 4) == ".tar"){
 		base = base.substr(0, pos - 4);
 		ext = "tar." + ext;
+	}
+}
+
+void Utils::ensure_extension(std::string &filename, const std::string &ext)
+{
+	std::string fext = filename.substr(filename.length() - 4);
+	std::transform(fext.begin(), fext.end(), fext.begin(), ::tolower);
+	if(fext != ext){
+		filename += ext;
 	}
 }
 
