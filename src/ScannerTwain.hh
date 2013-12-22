@@ -21,7 +21,11 @@
 #define SCANNERTWAIN_HH
 
 #include "Scanner.hh"
+#include "MainWindow.hh"
+#ifdef G_OS_WIN32
 #include <windows.h>
+#include <gdk/gdkwin32.h>
+#endif
 #include <twain.h>
 #include <dlfcn.h>
 
@@ -34,12 +38,13 @@ private:
 	TW_IDENTITY    m_appID           = {};
 	TW_ENTRYPOINT  m_entryPoint      = {};
 
-	enum class Status { Closed, Waiting, Ready, UiOK, CloseDS};
-	Status               m_status     = Status::Closed;
 	TW_IDENTITY          m_srcID      = {};
 	TW_USERINTERFACE     m_ui         = {};
+	TW_UINT16            m_dsMsg = MSG_NULL;
+#ifndef G_OS_WIN32
 	Glib::Threads::Mutex m_mutex;
 	Glib::Threads::Cond  m_cond;
+#endif
 
 	bool initBackend();
 	void closeBackend();
@@ -70,7 +75,7 @@ private:
 
 	TW_UINT16 call(TW_IDENTITY* idDS, TW_UINT32 dataGroup, TW_UINT16 dataType, TW_UINT16 msg, TW_MEMREF data);
 	void setCapability(TW_UINT16 capCode, const CapOneVal& cap);
-	static TW_UINT16 callback(TW_IDENTITY* origin, TW_IDENTITY* dest, TW_UINT32 DG, TW_UINT16 DAT, TW_UINT16 MSG, TW_MEMREF data);
+	static PASCAL TW_UINT16 callback(TW_IDENTITY* origin, TW_IDENTITY* dest, TW_UINT32 DG, TW_UINT16 DAT, TW_UINT16 MSG, TW_MEMREF data);
 	static inline float fix32ToFloat(TW_FIX32 fix32);
 	static inline TW_FIX32 floatToFix32(float float32);
 };
@@ -118,7 +123,14 @@ bool ScannerTwain::initBackend()
 	m_appID.ProtocolMinor = TWON_PROTOCOLMINOR;
 
 	// State 2 to 3
-	call(nullptr, DG_CONTROL, DAT_PARENT, MSG_OPENDSM, nullptr);
+	TW_MEMREF phwnd = nullptr;
+#ifdef G_OS_WIN32
+	HWND hwnd = gdk_win32_window_get_impl_hwnd(MAIN->getWindow()->get_window()->gobj());
+	phwnd = &hwnd;
+#endif
+	if(call(nullptr, DG_CONTROL, DAT_PARENT, MSG_OPENDSM, phwnd) != TWRC_SUCCESS){
+		return false;
+	}
 	if((m_appID.SupportedGroups & DF_DSM2) == 0){
 		g_critical("Twain 2.x interface is not supported");
 		return false;
@@ -126,7 +138,9 @@ bool ScannerTwain::initBackend()
 
 	// Get entry point of memory management functions
 	m_entryPoint.Size = sizeof(TW_ENTRYPOINT);
-	call(nullptr, DG_CONTROL, DAT_ENTRYPOINT, MSG_GET, &m_entryPoint);
+	if(call(nullptr, DG_CONTROL, DAT_ENTRYPOINT, MSG_GET, &m_entryPoint) != TWRC_SUCCESS){
+		return false;
+	}
 	return true;
 }
 
@@ -181,14 +195,11 @@ bool ScannerTwain::openDevice(const std::string &device)
 void ScannerTwain::closeDevice()
 {
 	if(m_srcID.Id != 0){
-		if(m_status != Status::Closed){
-			TW_PENDINGXFERS twPendingXFers = {};
-			// State 7/6 to 5
-			call(&m_srcID, DG_CONTROL, DAT_PENDINGXFERS, MSG_RESET, &twPendingXFers);
-			//	State 5 to 4
-			call(&m_srcID, DG_CONTROL, DAT_USERINTERFACE, MSG_DISABLEDS, &m_ui);
-			m_status = Status::Closed;
-		}
+		TW_PENDINGXFERS twPendingXFers = {};
+		// State 7/6 to 5
+		call(&m_srcID, DG_CONTROL, DAT_PENDINGXFERS, MSG_RESET, &twPendingXFers);
+		//	State 5 to 4
+		call(&m_srcID, DG_CONTROL, DAT_USERINTERFACE, MSG_DISABLEDS, &m_ui);
 		//	State 4 to 3
 		call(nullptr, DG_CONTROL, DAT_IDENTITY, MSG_CLOSEDS, &m_srcID);
 		m_srcID = {};
@@ -236,24 +247,51 @@ void ScannerTwain::setOptions(ScanJob* job)
 
 Scanner::StartStatus ScannerTwain::startDevice()
 {
+	m_dsMsg = MSG_NULL;
+
 	m_ui.ShowUI = false;
 	m_ui.ModalUI = false;
-	m_ui.hParent = nullptr;
+	m_ui.hParent = nullptr;;
+#ifdef G_OS_WIN32
+	m_ui.hParent = gdk_win32_window_get_impl_hwnd(MAIN->getWindow()->get_window()->gobj());
+#endif
 
 	// State 4 to 5
-	m_status = Status::Waiting;
-	call(&m_srcID, DG_CONTROL, DAT_USERINTERFACE, MSG_ENABLEDS, &m_ui);
+	if(call(&m_srcID, DG_CONTROL, DAT_USERINTERFACE, MSG_ENABLEDS, &m_ui) != TWRC_SUCCESS){
+		return StartStatus::Fail;
+	}
 
-	// Wait until transfer is ready
+#ifdef G_OS_WIN32
+	while(m_dsMsg == 0) {
+		TW_EVENT twEvent = {0};
+
+		MSG msg;
+		if(GetMessage((LPMSG)&msg, NULL, 0, 0) == 0) {
+			break; // WM_QUIT
+		}
+		twEvent.pEvent = (TW_MEMREF)&msg;
+
+		twEvent.TWMessage = MSG_NULL;
+		TW_UINT16 twRC = m_dsmEntry(&m_appID, &m_srcID, DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT, (TW_MEMREF)&twEvent);
+
+		if(twRC == TWRC_DSEVENT) {
+			if(twEvent.TWMessage == MSG_XFERREADY || twEvent.TWMessage == MSG_CLOSEDSREQ || twEvent.TWMessage == MSG_CLOSEDSOK || twEvent.TWMessage == MSG_NULL){
+				m_dsMsg = twEvent.TWMessage;
+			}
+		}
+	}
+#else
 	m_mutex.lock();
-	while(m_status == Status::Waiting){
+	while(m_dsMsg == 0){
 		m_cond.wait(m_mutex);
 	}
 	m_mutex.unlock();
-	if(m_status == Status::CloseDS){
-		return StartStatus::Fail;
+#endif
+
+	if(m_dsMsg == MSG_XFERREADY) {
+		return StartStatus::Success;
 	}
-	return StartStatus::Success;
+	return StartStatus::Fail;
 }
 
 bool ScannerTwain::getParameters()
@@ -266,6 +304,11 @@ Scanner::ReadStatus ScannerTwain::read()
 	TW_UINT16 twRC = call(&m_srcID, DG_IMAGE, DAT_IMAGEFILEXFER, MSG_GET, nullptr);
 	TW_PENDINGXFERS twPendingXFers = {};
 	call(&m_srcID, DG_CONTROL, DAT_PENDINGXFERS, MSG_ENDXFER, &twPendingXFers);
+	if(twPendingXFers.Count != 0) {
+		// Discard any additional pending transfers
+		std::memset(&twPendingXFers, 0, sizeof(twPendingXFers));
+		call(&m_srcID, DG_CONTROL, DAT_PENDINGXFERS, MSG_RESET, &twPendingXFers);
+	}
 	return twRC == TWRC_FAILURE ? ReadStatus::Fail : ReadStatus::Done;
 }
 
@@ -274,7 +317,7 @@ Scanner::PageStatus ScannerTwain::completePage(ScanJob* job)
 	return Scanner::PageStatus::Done;
 }
 
-/********* ScannerTwain internal Mmthods **********/
+/********* ScannerTwain internal Methods **********/
 TW_UINT16 ScannerTwain::call(TW_IDENTITY* idDS, TW_UINT32 dataGroup, TW_UINT16 dataType, TW_UINT16 msg, TW_MEMREF data)
 {
 	TW_UINT16 rc = m_dsmEntry(&m_appID, idDS, dataGroup, dataType, msg, data);
@@ -293,11 +336,17 @@ static std::size_t TWTY_Size[] = {   1,     2,     4,     1,      2,      4,    
 void ScannerTwain::setCapability(TW_UINT16 capCode, const CapOneVal& cap)
 {
 	TW_CAPABILITY twCapability = {capCode, TWON_DONTCARE16, nullptr};
-	call(&m_srcID, DG_CONTROL, DAT_CAPABILITY, MSG_GETCURRENT, &twCapability);
+	TW_UINT16 rc = call(&m_srcID, DG_CONTROL, DAT_CAPABILITY, MSG_GETCURRENT, &twCapability);
+	// Unsupported capability
+	if(rc != TWRC_SUCCESS) {
+		return;
+	}
 	g_assert(twCapability.ConType == TWON_ONEVALUE);
 
 	pTW_ONEVALUE val = static_cast<pTW_ONEVALUE>(m_entryPoint.DSM_MemLock(twCapability.hContainer));
 	g_assert(val->ItemType == cap.type && val->ItemType <= TWTY_STR255);
+	// This works because the DSM should return a TW_ONEVALUE container allocated sufficiently large to hold
+	// the value of type ItemType.
 	std::memcpy(&val->Item, &cap.data, TWTY_Size[cap.type]);
 	m_entryPoint.DSM_MemUnlock(twCapability.hContainer);
 
@@ -309,22 +358,19 @@ TW_UINT16 ScannerTwain::callback(TW_IDENTITY* origin, TW_IDENTITY* /*dest*/, TW_
 {
 	ScannerTwain* instance = static_cast<ScannerTwain*>(Scanner::get_instance());
 
-	if(origin == nullptr || origin->Id != instance->m_srcID.Id){
+	if(origin == nullptr || origin->Id != instance->m_srcID.Id) {
 		return TWRC_FAILURE;
 	}
-
-	instance->m_mutex.lock();
-	if(MSG == MSG_XFERREADY){
-		instance->m_status = Status::Ready; // Transfer is ready
-	}else if(MSG == MSG_CLOSEDSREQ){
-		instance->m_status = Status::CloseDS; // The transfer was completed in the UI, or aborted - close the device
-	}else if(MSG == MSG_CLOSEDSOK){
-		instance->m_status = Status::UiOK; // Ok was pressed in the UI (and possibly capabilities set), proceed with transfer
+	if(MSG == MSG_XFERREADY || MSG == MSG_CLOSEDSREQ || MSG == MSG_CLOSEDSOK || MSG == MSG_NULL) {
+		instance->m_dsMsg = MSG;
+#ifndef G_OS_WIN32
+		instance->m_mutex.lock();
+		instance->m_cond.signal();
+		instance->m_mutex.unlock();
+#endif
+		return TWRC_SUCCESS;
 	}
-	instance->m_cond.signal();
-	instance->m_mutex.unlock();
-
-	return TWRC_SUCCESS;
+	return TWRC_FAILURE;
 }
 
 inline TW_FIX32 ScannerTwain::floatToFix32(float float32)
