@@ -629,7 +629,7 @@ void Displayer::saveSelection(const Geometry::Rectangle& rect) const
 {
 	Cairo::RefPtr<Cairo::ImageSurface> img = getTransformedImage(rect);
 	std::string initialPath = Glib::build_filename(Glib::get_user_special_dir(G_USER_DIRECTORY_DOCUMENTS), _("selection.png"));
-	std::string filename = Utils::save_image_dialog(_("Select Selection Image"), initialPath);
+	std::string filename = Utils::save_image_dialog(_("Save Selection Image"), initialPath);
 	if(!filename.empty()){
 		img->write_to_png(filename);
 	}
