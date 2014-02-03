@@ -29,6 +29,11 @@ public:
 		: Gtk::Application(argc, argv, APPLICATION_ID, Gio::APPLICATION_HANDLES_OPEN)
 	{
 		Glib::set_application_name(PACKAGE_NAME);
+
+		m_executablePath = argv[0];
+		if(!Glib::path_is_absolute(m_executablePath)) {
+			m_executablePath = Glib::build_filename(Glib::get_current_dir(), argv[0]);
+		}
 	}
 	~Application()
 	{
@@ -47,9 +52,13 @@ public:
 		}
 		m_mainWindow->openFiles(files);
 	}
+	const std::string& get_executable_path() const {
+		return m_executablePath;
+	}
 
 private:
 	MainWindow* m_mainWindow = nullptr;
+	std::string m_executablePath;
 };
 
 #endif // APPLICATION_HPP
