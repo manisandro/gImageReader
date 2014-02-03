@@ -60,6 +60,8 @@ function autoLinkDeps {
 
 autoLinkDeps root/bin/gimagereader.exe
 linkDep bin/gdb.exe
+linkDep bin/gspawn-win32-helper-console.exe
+linkDep bin/gspawn-win32-helper.exe
 
 linkDep bin/twaindsm.dll
 linkDep lib/enchant/libenchant_myspell.dll
