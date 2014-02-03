@@ -18,6 +18,8 @@ gimagereader_SOURCES = \
 	Config.hh \
 	ConfigSettings.cc \
 	ConfigSettings.hh \
+	CrashHandler.cc \
+	CrashHandler.hh \
 	Displayer.cc \
 	Displayer.hh \
 	DisplayRenderer.cc \
@@ -49,6 +51,7 @@ gimagereader_SOURCES = \
 gimagereader_LDFLAGS =
 
 gimagereader_LDADD = $(GIMAGEREADER_LIBS) $(CURLPP_LIBS) $(SANE_LIBS) -ldl
+
 
 if PLATFORM_WIN32
 gimagereader_LDFLAGS += -mwindows

@@ -20,9 +20,11 @@
 #include <gtkmm.h>
 #include <gtkspellmm.h>
 #include <iostream>
+#include <cstring>
 
 #include "common.hh"
 #include "MainWindow.hh"
+#include "CrashHandler.hh"
 
 Glib::RefPtr<Gtk::Builder> Builder::builder;
 
@@ -57,19 +59,16 @@ private:
 
 int main (int argc, char *argv[])
 {
-	std::string uiFile;
+	std::string dataDir;
 	std::string localeDir;
 
 #ifdef G_OS_WIN32
 	gchar* dir = g_win32_get_package_installation_directory_of_module(0);
-	uiFile = Glib::build_filename(dir, "share", PACKAGE, "gimagereader.ui");
+	dataDir = Glib::build_filename(dir, "share", PACKAGE);
 	localeDir = Glib::build_filename(dir, "share", "locale");
-	Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(dir, "share"));
-	Glib::setenv("TWAINDSM_LOG", Glib::build_filename(dir, "twain.log"));
-	freopen(Glib::build_filename(dir, "gimagereader.log").c_str(), "w", stderr);
 	g_free(dir);
 #else
-	uiFile = PACKAGE_DATA_DIR "/gimagereader.ui";
+	dataDir = PACKAGE_DATA_DIR;
 	localeDir = PACKAGE_LOCALE_DIR;
 #endif
 
@@ -77,17 +76,43 @@ int main (int argc, char *argv[])
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 	textdomain(GETTEXT_PACKAGE);
 
-	GtkSpell::init();
-	Application app(argc, argv);
+	if(argc > 2 && std::strcmp("crashhandle", argv[1]) == 0) {
+		// Run the crash handler
 
-	try {
-		Builder::builder = Gtk::Builder::create_from_file(uiFile);
-		Builder::builder->set_translation_domain(GETTEXT_PACKAGE);
-	} catch (const Glib::FileError & ex) {
-		std::cerr << ex.what() << std::endl;
-		return 1;
+		CrashHandler app(argc, argv);
+
+		try {
+			Builder::builder = Gtk::Builder::create_from_file(Glib::build_filename(dataDir, "crashhandler.ui"));
+			Builder::builder->set_translation_domain(GETTEXT_PACKAGE);
+		} catch (const Glib::FileError & ex) {
+			std::cerr << ex.what() << std::endl;
+			return 1;
+		}
+
+		return app.run();
+	} else {
+		// Run the normal application
+
+#ifdef G_OS_WIN32
+		gchar* dir = g_win32_get_package_installation_directory_of_module(0);
+		Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(dir, "share"));
+		Glib::setenv("TWAINDSM_LOG", Glib::build_filename(dir, "twain.log"));
+		freopen(Glib::build_filename(dir, "gimagereader.log").c_str(), "w", stderr);
+		g_free(dir);
+#endif
+
+		GtkSpell::init();
+		Application app(argc, argv);
+
+		try {
+			Builder::builder = Gtk::Builder::create_from_file(Glib::build_filename(dataDir, "gimagereader.ui"));
+			Builder::builder->set_translation_domain(GETTEXT_PACKAGE);
+		} catch (const Glib::FileError & ex) {
+			std::cerr << ex.what() << std::endl;
+			return 1;
+		}
+
+		return app.run();
 	}
-
-	return app.run();
 }
 

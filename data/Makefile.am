@@ -3,7 +3,7 @@ CLEANFILES =
 
 # UI files
 uidir = $(pkgdatadir)
-ui_DATA = gimagereader.ui
+ui_DATA = gimagereader.ui crashhandler.ui
 EXTRA_DIST += $(ui_DATA)
 
 # Icons

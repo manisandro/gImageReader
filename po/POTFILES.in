@@ -1,6 +1,7 @@
 # List of source files containing translatable strings.
 
 [type: gettext/glade]data/gimagereader.ui
+[type: gettext/glade]data/crashhandler.ui
 src/Acquirer.cc
 src/Acquirer.hh
 src/AsyncQueue.hh
@@ -9,6 +10,7 @@ src/Config.cc
 src/Config.hh
 src/ConfigSettings.cc
 src/ConfigSettings.hh
+src/CrashHandler.cc
 src/Displayer.cc
 src/Displayer.hh
 src/DisplayRenderer.cc

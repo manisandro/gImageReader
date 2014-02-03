@@ -10,6 +10,7 @@ TODO
 data/org.gnome.gimagereader.gschema.xml
 data/gimagereader.desktop
 data/gimagereader.ui
+data/crashhandler.ui
 data/Makefile.am
 data/manual.html.in
 po/ChangeLog
@@ -27,6 +28,8 @@ src/Config.hh
 src/Config.cc
 src/ConfigSettings.hh
 src/ConfigSettings.cc
+src/CrashHandler.hh
+src/CrashHandler.cc
 src/Displayer.hh
 src/Displayer.cc
 src/DisplayManipulator.hh
