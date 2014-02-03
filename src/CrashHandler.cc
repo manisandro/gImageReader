@@ -67,7 +67,7 @@ void CrashHandler::generate_backtrace()
 	int child_stdin;
 	int child_stdout;
 	try {
-		Glib::spawn_async_with_pipes("", std::vector<std::string>{"gdb", "-p", Glib::ustring::compose("%1", m_pid)}, Glib::SPAWN_DO_NOT_REAP_CHILD|Glib::SPAWN_SEARCH_PATH|Glib::SPAWN_STDERR_TO_DEV_NULL, sigc::slot<void>(), &child_pid, &child_stdin, &child_stdout);
+		Glib::spawn_async_with_pipes("", std::vector<std::string>{"gdb", "-q", "-p", Glib::ustring::compose("%1", m_pid)}, Glib::SPAWN_DO_NOT_REAP_CHILD|Glib::SPAWN_SEARCH_PATH|Glib::SPAWN_STDERR_TO_DEV_NULL, sigc::slot<void>(), &child_pid, &child_stdin, &child_stdout);
 	} catch(Glib::Error&) {
 		generate_backtrace_end(false);
 		return;
