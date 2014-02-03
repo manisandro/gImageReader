@@ -21,6 +21,7 @@ src/main.cc
 src/common.hh
 src/Acquirer.hh
 src/Acquirer.cc
+src/Application.hh
 src/MainWindow.cc
 src/MainWindow.hh
 src/AsyncQueue.hh

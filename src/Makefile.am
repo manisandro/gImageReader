@@ -13,6 +13,7 @@ gimagereader_SOURCES = \
 	common.hh \
 	Acquirer.cc \
 	Acquirer.hh \
+	Application.hh \
 	AsyncQueue.hh \
 	Config.cc \
 	Config.hh \

@@ -23,39 +23,10 @@
 #include <cstring>
 
 #include "common.hh"
-#include "MainWindow.hh"
+#include "Application.hh"
 #include "CrashHandler.hh"
 
 Glib::RefPtr<Gtk::Builder> Builder::builder;
-
-class Application : public Gtk::Application {
-public:
-	Application(int argc, char* argv[])
-		: Gtk::Application(argc, argv, APPLICATION_ID, Gio::APPLICATION_HANDLES_OPEN)
-	{
-		Glib::set_application_name(PACKAGE_NAME);
-	}
-	~Application()
-	{
-		delete m_mainWindow;
-	}
-	void on_startup()
-	{
-		Gtk::Application::on_startup();
-		m_mainWindow = new MainWindow;
-		add_window(*m_mainWindow->getWindow());
-	}
-	void on_open(const type_vec_files& files, const Glib::ustring& /*hint*/)
-	{
-		if(m_mainWindow == nullptr){
-			activate();
-		}
-		m_mainWindow->openFiles(files);
-	}
-
-private:
-	MainWindow* m_mainWindow = nullptr;
-};
 
 int main (int argc, char *argv[])
 {
