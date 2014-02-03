@@ -60,7 +60,7 @@ void CrashHandler::generate_backtrace()
 	m_progressConnection = Glib::signal_timeout().connect([this]{ return pulse_progress(); }, 200);
 	m_refreshButton->set_sensitive(false);
 	m_textview->set_sensitive(false);
-	m_textview->get_buffer()->set_text("");
+	m_textview->get_buffer()->set_text(Glib::ustring::compose("%1 %2 (rev %3)\n\n", PACKAGE_NAME, PACKAGE_VERSION, PACKAGE_REVISION));
 	m_progressBar->show();
 
 	int child_pid;
