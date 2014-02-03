@@ -35,7 +35,6 @@ src/ScannerSane.hh
 src/ScannerTwain.hh
 src/SourceManager.cc
 src/SourceManager.hh
-src/twain.h
 src/UndoableBuffer.cc
 src/UndoableBuffer.hh
 src/Utils.cc
