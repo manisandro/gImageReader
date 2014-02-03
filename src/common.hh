@@ -42,7 +42,7 @@ SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
 
 #ifdef SRCTREE_EXEC // Execute from source tree
 #undef  PACKAGE_DATA_DIR
-#define PACKAGE_DATA_DIR "../data/"
+#define PACKAGE_DATA_DIR "data/"
 #endif
 
 #define APPLICATION_ID "org.gnome.gimagereader"
