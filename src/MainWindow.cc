@@ -33,6 +33,7 @@
 #include <cstdio>
 #include <iostream>
 #include <sstream>
+#include <unistd.h>
 #ifdef G_OS_WIN32
 #include <windows.h>
 #endif

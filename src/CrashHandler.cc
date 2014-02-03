@@ -63,7 +63,7 @@ void CrashHandler::generate_backtrace()
 	m_textview->get_buffer()->set_text(Glib::ustring::compose("%1 %2 (rev %3)\n\n", PACKAGE_NAME, PACKAGE_VERSION, PACKAGE_REVISION));
 	m_progressBar->show();
 
-	int child_pid;
+	GPid child_pid;
 	int child_stdin;
 	int child_stdout;
 	try {
