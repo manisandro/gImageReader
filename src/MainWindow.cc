@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Application.hh"
 #include "MainWindow.hh"
 #include "Acquirer.hh"
 #include "Config.hh"
@@ -46,22 +47,18 @@
 void crash_handler(int sig)
 {
 	std::signal(sig, nullptr);
-
+	std::string filename;
 	if(MAIN->getOutputManager()->getModified()){
-		// Use classic c-strings to avoid any kind of memory allocation in the handler
-		gchar filename[100];
-		snprintf(filename, sizeof(filename), "%s%c%s_crash-save.txt", g_get_home_dir(), G_DIR_SEPARATOR, PACKAGE_NAME);
+		filename = Glib::build_filename(g_get_home_dir(), Glib::ustring::compose("%1_crash-save.txt", PACKAGE_NAME));
 		int i = 0;
-		while(g_file_test(filename, G_FILE_TEST_EXISTS)){
+		while(Glib::file_test(filename, Glib::FILE_TEST_EXISTS)){
 			++i;
-			snprintf(filename, sizeof(filename), "%s%c%s_crash-save_%d.txt", g_get_home_dir(), G_DIR_SEPARATOR, PACKAGE_NAME, i);
+			filename = Glib::build_filename(g_get_home_dir(), Glib::ustring::compose("%1_crash-save_i.txt", PACKAGE_NAME));
 		}
 		MAIN->getOutputManager()->saveBuffer(filename);
-		Utils::error_dialog(_("A crash has been detected."), Glib::ustring::compose(_("The application cannot continue. Your work has been saved under %1.\n\nPlease report this issue."), filename));
-	}else{
-		Utils::error_dialog(_("A crash has been detected."), _("The application cannot continue. There was no unsaved work.\n\nPlease report this issue."));
 	}
-
+	Glib::RefPtr<Application> app = Glib::RefPtr<Application>::cast_static(Gio::Application::get_default());
+	Glib::spawn_sync("", std::vector<std::string>{app->get_executable_path(), "crashhandle", Glib::ustring::compose("%1", getpid()), filename});
 	std::raise(sig);
 }
 
