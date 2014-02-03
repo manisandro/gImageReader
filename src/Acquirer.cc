@@ -37,7 +37,7 @@ Acquirer::Acquirer()
 	m_buttonBox = Builder("buttonbox:sources.acquire");
 	m_scanButton = Builder("button:sources.acquire.scan");
 	m_cancelButton = Gtk::manage(new Gtk::Button(_("Cancel")));
-	m_cancelButton->set_image(*Gtk::manage(Utils::image_from_icon_name("gtk-cancel", Gtk::ICON_SIZE_BUTTON)));
+	m_cancelButton->set_image(*Gtk::manage(Utils::image_from_icon_name("dialog-cancel", Gtk::ICON_SIZE_BUTTON)));
 	m_cancelButton->show();
 
 	m_devCombo->set_model(Gtk::ListStore::create(m_devComboCols));
