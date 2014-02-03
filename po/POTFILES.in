@@ -10,6 +10,7 @@ src/Config.cc
 src/Config.hh
 src/ConfigSettings.cc
 src/ConfigSettings.hh
+src/CrashHandler.hh
 src/CrashHandler.cc
 src/Displayer.cc
 src/Displayer.hh
