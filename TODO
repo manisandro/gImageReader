@@ -4,6 +4,3 @@ High prio:
 Low prio:
 - replace all ?
 - markers in buffer to find corresponding page from cursor position
-
-Cleanup:
-- add GtkMenuButton in glade instead of in the code, as soon as glade supports it

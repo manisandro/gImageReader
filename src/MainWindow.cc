@@ -82,12 +82,6 @@ MainWindow::MainWindow()
 	m_statusbar = Builder("statusbar:main");
 	m_aboutdialog->set_version(PACKAGE_VERSION);
 
-	Builder("tbbutton:options").as<Gtk::ToolItem>()->add(m_menubutton);
-	m_menubutton.set_popup(*Builder("menu:main").as<Gtk::Menu>());
-	m_menubutton.set_image(*Gtk::manage(Utils::image_from_icon_name("gtk-preferences", Gtk::ICON_SIZE_LARGE_TOOLBAR)));
-	m_menubutton.set_relief(Gtk::RELIEF_NONE);
-	m_menubutton.show();
-
 	m_idlegroup.push_back(Builder("tbbutton:main.zoomin"));
 	m_idlegroup.push_back(Builder("tbbutton:main.zoomout"));
 	m_idlegroup.push_back(Builder("tbbutton:main.normsize"));

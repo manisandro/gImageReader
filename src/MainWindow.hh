@@ -59,7 +59,6 @@ private:
 	Gtk::Menu* m_menu;
 	Gtk::AboutDialog* m_aboutdialog;
 	Gtk::Statusbar* m_statusbar;
-	Gtk::MenuButton m_menubutton;
 
 	Config* m_config;
 	Acquirer* m_acquirer;
