@@ -100,7 +100,22 @@
       </packing>
     </child>
   </object>
-  <object class="GtkImage" id="image1">
+  <object class="GtkImage" id="image:input.acquire.scan">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">scanner</property>
+  </object>
+  <object class="GtkImage" id="image:main.autolayout">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">icons/autolayout.png</property>
+  </object>
+  <object class="GtkImage" id="image:main.controls">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">icons/controls.png</property>
+  </object>
+  <object class="GtkImage" id="image:main.redetect">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-refresh</property>
@@ -116,7 +131,7 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="use_underline">True</property>
-        <property name="image">image1</property>
+        <property name="image">image:main.redetect</property>
         <property name="use_stock">False</property>
       </object>
     </child>
@@ -153,21 +168,6 @@
         <property name="use_stock">True</property>
       </object>
     </child>
-  </object>
-  <object class="GtkImage" id="image:input.acquire.scan">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">scanner</property>
-  </object>
-  <object class="GtkImage" id="image:main.autolayout">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixbuf">icons/autolayout.png</property>
-  </object>
-  <object class="GtkImage" id="image:main.controls">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixbuf">icons/controls.png</property>
   </object>
   <object class="GtkImage" id="image:output.insert.append">
     <property name="visible">True</property>
@@ -575,6 +575,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="icon_name">configure</property>
+                        <property name="icon_size">3</property>
                       </object>
                     </child>
                   </object>
