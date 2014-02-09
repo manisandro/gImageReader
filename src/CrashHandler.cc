@@ -35,18 +35,18 @@ CrashHandler::CrashHandler(int argc, char* argv[])
 void CrashHandler::on_startup()
 {
 	Gtk::Application::on_startup();
-	m_dialog = Builder("dialog");
-	m_progressBar = Builder("progressbar");
-	m_textview = Builder("textview");
-	m_refreshButton = Builder("button:regenerate");
+	m_dialog = Builder("dialog:crashhandler");
+	m_progressBar = Builder("progressbar:backtrace");
+	m_textview = Builder("textview:backtrace");
+	m_refreshButton = Builder("button:backtrace.regenerate");
 	m_dialog->set_title(Glib::ustring::compose("%1 %2", PACKAGE_NAME, _("Crash Handler")));
 	if(!m_saveFile.empty()) {
-		Builder("label:autosave").as<Gtk::Label>()->set_markup(Glib::ustring::compose("Your work has been saved under <b>%1</b>.", m_saveFile));
+		Builder("label:crashhandler.autosave").as<Gtk::Label>()->set_markup(Glib::ustring::compose("Your work has been saved under <b>%1</b>.", m_saveFile));
 	}else{
-		Builder("label:autosave").as<Gtk::Label>()->set_text("There was no usaved work.");
+		Builder("label:crashhandler.autosave").as<Gtk::Label>()->set_text("There was no usaved work.");
 	}
 	CONNECT(m_dialog, delete_event, [this](GdkEventAny* ev) { quit(); return true; });
-	CONNECT(Builder("button:close").as<Gtk::Button>(), clicked, [this]{ quit(); });
+	CONNECT(Builder("button:crashhandler.close").as<Gtk::Button>(), clicked, [this]{ quit(); });
 	CONNECT(m_refreshButton, clicked, [this]{ generate_backtrace(); });
 
 	add_window(*m_dialog);
