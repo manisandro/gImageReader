@@ -27,6 +27,7 @@
     </ul></li>
     <li><a href="#InstallTessdata">Installation of tesseract language definitions</a></li>
     <li><a href="#InstallSpelling">Installation of spelling dictionaries</a></li>
+    <li><a href="#Support">Support</a></li>
 </ul>
 
 <h2><a name="About">About</a></h2>
@@ -124,6 +125,8 @@ For contributions of any kind, bug reports etc. please contact me at <a href="ma
     <li>Translate the strings in <tt>&lt;language&gt;.po</tt>.</li>
     <li>Send the <b>po</b> file to <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. Thanks!</li>
 </ol>
+<h2><a name="Support">Support</a></h2>
+If you encounter any issues or have some suggestions, feel free to contact me at <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>.
 <hr />
 <p>Copyright &copy;2009-2013 Sandro Mani, revision: Tue, 7 May 2013</p>
 </body>
