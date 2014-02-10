@@ -22,11 +22,10 @@ dnl ******************************** GSettings ********************************
 GLIB_GSETTINGS
 
 dnl *************************** Internationalization **************************
+GETTEXT_PACKAGE=AC_PACKAGE_NAME
 IT_PROG_INTLTOOL([0.35.0])
-AM_GNU_GETTEXT_VERSION([0.17])
-AM_GNU_GETTEXT([external])
 AC_SUBST([GETTEXT_PACKAGE], [$PACKAGE_TARNAME])
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[The name of the gettext domain])
 
 dnl ************************** Libtool initialization *************************
 LT_INIT

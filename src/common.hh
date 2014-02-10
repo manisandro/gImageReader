@@ -23,13 +23,8 @@
 #include "config.h"
 #include <gtkmm.h>
 #include <iostream>
-
-#ifdef ENABLE_NLS
-	#include <libintl.h>
-	#include <glibmm/i18n.h>
-#else
-	#define _(x) x
-#endif
+#include <libintl.h>
+#include <glibmm/i18n.h>
 
 namespace sigc{
 SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
