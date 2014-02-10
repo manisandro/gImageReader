@@ -2,7 +2,6 @@ AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(pkgdatadir)"\" \
-	-DPACKAGE_REVISION=\""$(shell (cd $(srcdir); git rev-parse HEAD || echo "?"))"\" \
 	$(GIMAGEREADER_CFLAGS) $(SANE_CFLAGS)
 
 AM_CFLAGS = -Wall -g

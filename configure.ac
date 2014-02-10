@@ -75,6 +75,7 @@ if test "$with_platform" = "win32"; then
 fi
 
 AC_SUBST(PACKAGE_DATE, `LANG=en date  +'%a %b %d %Y'`)
+AC_DEFINE_UNQUOTED(PACKAGE_REVISION, "`git rev-parse HEAD 2>/dev/null || echo "?"`", [Package git revision])
 
 AC_CONFIG_FILES([
 gimagereader.spec
