@@ -37,6 +37,7 @@ void CrashHandler::on_startup()
 	Gtk::Application::on_startup();
 	m_dialog = Builder("dialog:crashhandler");
 	m_progressBar = Builder("progressbar:backtrace");
+	m_progressBar->hide();
 	m_textview = Builder("textview:backtrace");
 	m_refreshButton = Builder("button:backtrace.regenerate");
 	m_dialog->set_title(Glib::ustring::compose("%1 %2", PACKAGE_NAME, _("Crash Handler")));
@@ -52,7 +53,11 @@ void CrashHandler::on_startup()
 	add_window(*m_dialog);
 	m_dialog->show_all();
 
+#ifndef G_OS_WIN32
 	generate_backtrace();
+#else
+	m_refreshButton->hide();
+#endif
 }
 
 void CrashHandler::generate_backtrace()

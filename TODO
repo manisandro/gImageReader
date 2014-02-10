@@ -1,7 +1,8 @@
 High prio:
-- Fix TWAIN!
+- Fix TWAIN
 
 Mid prio:
+- Fix backtrace on windows
 - output pane in separate window
 - native windows file dialogs
 - installation of tesseract langpacks through packagekit?
