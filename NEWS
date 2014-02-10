@@ -1,4 +1,4 @@
-gImageReader 2.99 (Feb 10 2014):
+gImageReader 2.90 (Feb 11 2014):
  * First beta of the grand new gImageReader:
    - Support multiple selections (via CTRL-key). Rightclicking a selection opens a context menu which allows to:
      - Deleted and reordered individual selections.
