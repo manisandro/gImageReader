@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-03 03:14+0100\n"
+"POT-Creation-Date: 2014-02-10 02:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -370,29 +370,24 @@ msgid "Selected Pages..."
 msgstr ""
 
 #: ../data/crashhandler.ui.h:1
-msgid "Regenerate backtrace"
+msgid "<b>The application has crashed</b>"
 msgstr ""
 
 #: ../data/crashhandler.ui.h:2
-msgid "<b>The application has crashed</b>"
+msgid "Regenerate backtrace"
 msgstr ""
 
 #: ../data/crashhandler.ui.h:4
 #, no-c-format
 msgid ""
 "Apologies for the inconvenience. To help improve the application, please "
-"consider sending the information below to <a href=\"mailto:manisandro@gmail."
-"com?subject=gImageReader%20Crash%20Report\">manisandro@gmail.com</a>. If "
-"possible, also try to describe what you were doing before the application "
-"crashed. Thank you."
+"consider reporting the issue <a href=\"mailto:manisandro@gmail.com?"
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Please try to "
+"describe what you were doing before the application crashed. Also, include "
+"the information below. Thank you."
 msgstr ""
 
-#: ../data/crashhandler.ui.h:5
-msgid "Generating backtrace..."
-msgstr ""
-
-#: ../src/Acquirer.cc:39 ../src/OutputManager.cc:225
-#: ../src/SourceManager.cc:133
+#: ../src/Acquirer.cc:39 ../src/SourceManager.cc:133
 msgid "Cancel"
 msgstr ""
 
@@ -400,7 +395,7 @@ msgstr ""
 msgid "Scan failed"
 msgstr ""
 
-#: ../src/Acquirer.cc:75 ../src/Acquirer.cc:77 ../src/OutputManager.cc:221
+#: ../src/Acquirer.cc:75 ../src/Acquirer.cc:77
 msgid "scan.png"
 msgstr ""
 
@@ -461,11 +456,11 @@ msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
 
-#: ../src/CrashHandler.cc:6 ../src/CrashHandler.cc:23
+#: ../src/CrashHandler.cc:25 ../src/CrashHandler.cc:43
 msgid "Crash Handler"
 msgstr ""
 
-#: ../src/CrashHandler.cc:78
+#: ../src/CrashHandler.cc:102
 msgid "Failed to obtain backtrace. Is gdb installed?"
 msgstr ""
 
@@ -511,45 +506,27 @@ msgstr ""
 msgid "Performing layout analysis"
 msgstr ""
 
-#: ../src/MainWindow.cc:60 ../src/MainWindow.cc:62
-msgid "A crash has been detected."
-msgstr ""
-
-#: ../src/MainWindow.cc:60
-msgid ""
-"The application cannot continue. Your work has been saved under %1.\n"
-"\n"
-"Please report this issue."
-msgstr ""
-
-#: ../src/MainWindow.cc:62
-msgid ""
-"The application cannot continue. There was no unsaved work.\n"
-"\n"
-"Please report this issue."
-msgstr ""
-
-#: ../src/MainWindow.cc:124
+#: ../src/MainWindow.cc:119
 msgid "Select an image to begin..."
 msgstr ""
 
-#: ../src/MainWindow.cc:284
+#: ../src/MainWindow.cc:275
 msgid "New version"
 msgstr ""
 
-#: ../src/MainWindow.cc:284
+#: ../src/MainWindow.cc:275
 msgid "gImageReader %1 is available"
 msgstr ""
 
-#: ../src/MainWindow.cc:285
+#: ../src/MainWindow.cc:276
 msgid "Download"
 msgstr ""
 
-#: ../src/MainWindow.cc:286
+#: ../src/MainWindow.cc:277
 msgid "Changelog"
 msgstr ""
 
-#: ../src/MainWindow.cc:287
+#: ../src/MainWindow.cc:278
 msgid "Don't notify again"
 msgstr ""
 
@@ -565,59 +542,55 @@ msgstr ""
 msgid "Stripping line breaks..."
 msgstr ""
 
-#: ../src/OutputManager.cc:224
-msgid "Save Output..."
-msgstr ""
-
-#: ../src/OutputManager.cc:226 ../src/SourceManager.cc:134
-msgid "OK"
-msgstr ""
-
-#: ../src/OutputManager.cc:230
+#: ../src/OutputManager.cc:225
 msgid "Text Files"
 msgstr ""
 
-#: ../src/OutputManager.cc:245
+#: ../src/OutputManager.cc:228
+msgid "Save Output..."
+msgstr ""
+
+#: ../src/OutputManager.cc:237
 msgid "Failed to save output"
 msgstr ""
 
-#: ../src/OutputManager.cc:245
+#: ../src/OutputManager.cc:237
 msgid "Check that you have writing permissions in the selected folder."
 msgstr ""
 
-#: ../src/OutputManager.cc:260
+#: ../src/OutputManager.cc:252
 msgid "Output not saved"
 msgstr ""
 
-#: ../src/OutputManager.cc:260
+#: ../src/OutputManager.cc:252
 msgid "Save output before proceeding?"
 msgstr ""
 
-#: ../src/OutputManager.cc:281
+#: ../src/OutputManager.cc:273
 msgid "Don't show again"
 msgstr ""
 
-#: ../src/OutputManager.cc:282
+#: ../src/OutputManager.cc:274
 msgid "Help"
 msgstr ""
 
-#: ../src/OutputManager.cc:289
+#: ../src/OutputManager.cc:281
 msgid "Install"
 msgstr ""
 
-#: ../src/OutputManager.cc:294
+#: ../src/OutputManager.cc:286
 msgid "Spelling dictionary missing"
 msgstr ""
 
-#: ../src/OutputManager.cc:294
+#: ../src/OutputManager.cc:286
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr ""
 
-#: ../src/OutputManager.cc:303
+#: ../src/OutputManager.cc:295
 msgid "Installing spelling dictionary for '%1'"
 msgstr ""
 
-#: ../src/OutputManager.cc:318
+#: ../src/OutputManager.cc:310
 msgid "Failed to install spelling dictionary"
 msgstr ""
 
@@ -687,6 +660,10 @@ msgstr ""
 msgid "Select sources..."
 msgstr ""
 
+#: ../src/SourceManager.cc:134
+msgid "OK"
+msgstr ""
+
 #: ../src/SourceManager.cc:138
 msgid "Images and PDFs"
 msgstr ""
@@ -727,6 +704,6 @@ msgid ""
 "%1"
 msgstr ""
 
-#: ../src/Utils.cc:83
+#: ../src/Utils.cc:74
 msgid "PNG Images"
 msgstr ""
