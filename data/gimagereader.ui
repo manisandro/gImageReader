@@ -574,7 +574,7 @@
                       <object class="GtkImage" id="image:options">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="icon_name">configure</property>
+                        <property name="stock">gtk-preferences</property>
                         <property name="icon_size">3</property>
                       </object>
                     </child>
