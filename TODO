@@ -1,8 +1,10 @@
 High prio:
 - Fix TWAIN!
+
+Mid prio:
 - output pane in separate window
+- native windows file dialogs
+- installation of tesseract langpacks through packagekit?
 
 Low prio:
-- replace all ?
-- markers in buffer to find corresponding page from cursor position
-- installation of tesseract langpacks through tesseract?
+- replace all (how to integrate it in the UI?)
