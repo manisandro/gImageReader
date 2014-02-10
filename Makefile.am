@@ -12,7 +12,8 @@ EXTRA_DIST = \
 	$(INTLTOOL_FILES) \
 	po/$(GETTEXT_PACKAGE).pot \
 	win32 \
-	debian
+	debian \
+	gimagereader.spec
 
 DISTCLEANFILES = \
 	intltool-extract \
