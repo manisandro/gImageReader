@@ -62,7 +62,7 @@ void crash_handler(int sig)
 	Glib::spawn_sync("", std::vector<std::string>{app->get_executable_path(), "crashhandle", Glib::ustring::compose("%1", getpid()), filename});
 	std::raise(sig);
 #ifdef G_OS_WIN32
-	std::exit(1)
+	std::exit(1);
 #endif
 }
 
