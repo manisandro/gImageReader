@@ -1,0 +1,28 @@
+Source: gimagereader
+Section: graphics
+Priority: optional
+Maintainer: Sandro Mani <manisandro@gmail.com>
+Build-Depends: debhelper (>= 9),
+ dh-autoreconf,
+ intltool (>= 0.35.0),
+ libgtkspellmm-3.0-dev,
+ libgtkmm-3.0-dev,
+ libcairomm-1.0-dev,
+ libpoppler-glib-dev,
+ libtesseract-dev,
+ libsane-dev
+Standards-Version: 3.9.4
+Homepage: http://sourceforge.net/projects/gimagereader/
+
+Package: gimagereader
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A graphical GTK frontend to tesseract-ocr
+ gImageReader is a simple Gtk front-end to tesseract. Features include:
+  - Automatic page layout detection
+  - User can manually define and adjust recognition regions
+  - Import images from disk, scanning devices, clipboard and screenshots
+  - Supports multipage PDF documents
+  - Recognized text displayed directly next to the image
+  - Basic editing of output text, including search/replace and removing line breaks
+  - Spellchecking for output text (if corresponding dictionary installed)

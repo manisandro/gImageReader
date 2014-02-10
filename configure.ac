@@ -73,6 +73,7 @@ if test "$with_platform" = "win32"; then
   AC_CHECK_TOOL([WINDRES],[windres])
 fi
 
+AC_SUBST(PACKAGE_RFC_DATE, `date -R`)
 AC_SUBST(PACKAGE_DATE, `LANG=en date  +'%a %b %d %Y'`)
 AC_DEFINE_UNQUOTED(PACKAGE_REVISION, "`git rev-parse HEAD 2>/dev/null || echo "?"`", [Package git revision])
 
@@ -83,6 +84,7 @@ data/Makefile
 data/manual.html
 src/Makefile
 po/Makefile.in
+debian/changelog
 ])
 
 AC_OUTPUT

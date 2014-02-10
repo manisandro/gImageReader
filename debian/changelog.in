@@ -1,0 +1,5 @@
+gimagereader (@PACKAGE_VERSION@-1) experimental; urgency=low
+
+  * gImageReader @PACKAGE_VERSION@.
+
+ -- Sandro Mani <manisandro@gmail.com>  @PACKAGE_RFC_DATE@

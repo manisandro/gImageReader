@@ -11,7 +11,8 @@ EXTRA_DIST = \
 	autogen.sh \
 	$(INTLTOOL_FILES) \
 	po/$(GETTEXT_PACKAGE).pot \
-	win32
+	win32 \
+	debian
 
 DISTCLEANFILES = \
 	intltool-extract \
