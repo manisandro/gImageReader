@@ -1,7 +1,7 @@
-diff -rupN gimagereader-2.99/configure.ac gimagereader-2.99-new/configure.ac
---- gimagereader-2.99/configure.ac	2014-02-10 03:07:22.000000000 +0100
-+++ gimagereader-2.99-new/configure.ac	2014-02-10 12:50:23.359124414 +0100
-@@ -33,7 +33,10 @@ LT_INIT
+diff -rupN gimagereader-2.90/configure.ac gimagereader-2.90-new/configure.ac
+--- gimagereader-2.90/configure.ac	2014-02-10 23:59:20.000000000 +0100
++++ gimagereader-2.90-new/configure.ac	2014-02-11 00:52:40.155730562 +0100
+@@ -32,7 +32,10 @@ LT_INIT
  
  dnl ********************************* Modules *********************************
  PKG_CHECK_MODULES(GIMAGEREADER, [gtkmm-3.0 >= 3.6 gtkspellmm-3.0 >= 3.0.2
