@@ -84,7 +84,7 @@ data/Makefile
 data/manual.html
 src/Makefile
 po/Makefile.in
-debian/changelog
+debian/changelog.template
 ])
 
 AC_OUTPUT
