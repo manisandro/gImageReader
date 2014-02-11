@@ -11,11 +11,13 @@ if [ "$1" == "--debug" ]; then
 fi
 
 win32dir="$(dirname $(readlink -f $0))"
+builddir="$win32dir/../../build-win32"
 installroot="$win32dir/root"
 pushd "$win32dir" > /dev/null
 
 # Build
-pushd ../build-win32 > /dev/null
+mkdir -p $builddir
+pushd $builddir > /dev/null
 mingw32-configure
 mingw32-make -j4 DESTDIR="$win32dir/_root" install
 rm -rf $win32dir/root
@@ -94,8 +96,8 @@ rm -rf root/share/applications
 glib-compile-schemas root/share/glib-2.0/schemas
 
 # Build the installer
-progName=$(cat ../build-win32/config.h | grep PACKAGE_NAME | awk -F'"' '{print $2}')
-progVersion=$(cat ../build-win32/config.h | grep PACKAGE_VERSION | awk -F'"' '{print $2}')
+progName=$(cat $builddir/config.h | grep PACKAGE_NAME | awk -F'"' '{print $2}')
+progVersion=$(cat $builddir/config.h | grep PACKAGE_VERSION | awk -F'"' '{print $2}')
 makensis -DNAME=$progName -DPROGVERSION="$progVersion" installer.nsi;
 
 # Cleanup

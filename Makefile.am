@@ -11,9 +11,7 @@ EXTRA_DIST = \
 	autogen.sh \
 	$(INTLTOOL_FILES) \
 	po/$(GETTEXT_PACKAGE).pot \
-	win32 \
-	debian \
-	gimagereader.spec
+	packaging
 
 DISTCLEANFILES = \
 	intltool-extract \

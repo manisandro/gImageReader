@@ -78,13 +78,13 @@ AC_SUBST(PACKAGE_DATE, `LANG=en date  +'%a %b %d %Y'`)
 AC_DEFINE_UNQUOTED(PACKAGE_REVISION, "`git rev-parse HEAD 2>/dev/null || echo "?"`", [Package git revision])
 
 AC_CONFIG_FILES([
-gimagereader.spec
 Makefile
 data/Makefile
 data/manual.html
 src/Makefile
 po/Makefile.in
-debian/changelog.template
+packaging/gimagereader.spec
+packaging/debian/changelog
 ])
 
 AC_OUTPUT

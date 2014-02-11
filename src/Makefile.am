@@ -58,7 +58,7 @@ if PLATFORM_WIN32
 gimagereader_LDFLAGS += -mwindows
 gimagereader_LDADD += gimagereader-icon.o
 
-gimagereader-icon.o: $(top_srcdir)/win32/gimagereader-icon.rc $(top_srcdir)/win32/gimagereader.ico
-	$(AM_V_GEN)$(WINDRES) $(top_srcdir)/win32/gimagereader-icon.rc -I $(top_srcdir)/win32 gimagereader-icon.o
+gimagereader-icon.o: $(top_srcdir)/packaging/win32/gimagereader-icon.rc $(top_srcdir)/packaging/win32/gimagereader.ico
+	$(AM_V_GEN)$(WINDRES) $(top_srcdir)/packaging/win32/gimagereader-icon.rc -I $(top_srcdir)/packaging/win32 gimagereader-icon.o
 
 endif
