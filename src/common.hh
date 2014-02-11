@@ -27,6 +27,17 @@
 #include <glibmm/i18n.h>
 
 namespace sigc{
+
+#ifndef SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
+#define SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE \
+template <typename T_functor>          \
+struct functor_trait<T_functor, false> \
+{                                      \
+  typedef typename functor_trait<decltype(&T_functor::operator()), false>::result_type result_type; \
+  typedef T_functor functor_type;      \
+};
+#endif
+
 SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
 }
 
