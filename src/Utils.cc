@@ -111,16 +111,27 @@ void Utils::configure_spin(Gtk::SpinButton *spin, double value, double min, doub
 	if(block) block->unblock();
 }
 
+static Glib::RefPtr<Gtk::CssProvider> createErrorStyleProvider()
+{
+	Glib::RefPtr<Gtk::CssProvider> provider = Gtk::CssProvider::create();
+	provider->load_from_data("GtkEntry { background: #FF7777; color: #FFFFFF; }");
+	return provider;
+}
+
+static Glib::RefPtr<Gtk::CssProvider> getErrorStyleProvider()
+{
+	static Glib::RefPtr<Gtk::CssProvider> provider = createErrorStyleProvider();
+	return provider;
+}
+
 void Utils::set_error_state(Gtk::Entry *entry)
 {
-	entry->override_background_color(Gdk::RGBA("#ffff77777777"));
-	entry->override_color(Gdk::RGBA("#ffffffffffff"));
+	entry->get_style_context()->add_provider(getErrorStyleProvider(), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 void Utils::clear_error_state(Gtk::Entry *entry)
 {
-	entry->unset_background_color();
-	entry->unset_color();
+	entry->get_style_context()->remove_provider(getErrorStyleProvider());
 }
 
 Glib::ustring Utils::get_content_type(const std::string &filename)
