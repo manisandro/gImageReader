@@ -15,6 +15,7 @@ BuildRequires: tesseract-devel
 BuildRequires: sane-backends-devel
 BuildRequires: intltool
 BuildRequires: desktop-file-utils
+BuildRequires: appdata-tools
 
 
 %description
@@ -40,6 +41,7 @@ make %{?_smp_mflags}
 %install
 %make_install
 %{_bindir}/desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
+%{_bindir}/appdata-validate %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml || :
 
 %find_lang %{name}
 
@@ -65,6 +67,7 @@ fi
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 %{_datadir}/glib-2.0/schemas/org.gnome.%{name}.gschema.xml

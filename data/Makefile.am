@@ -44,6 +44,11 @@ manualdir = $(pkgdatadir)
 manual_DATA = manual.html
 EXTRA_DIST += $(manual_DATA)
 
+# Appdata file
+appdatadir=$(datadir)/appdata
+appdata_DATA = gimagereader.appdata.xml
+EXTRA_DIST += $(appdata_DATA)
+
 # Hooks
 install-data-hook: install-update-icon-cache
 uninstall-hook: uninstall-update-icon-cache

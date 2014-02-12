@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Sandro Mani <manisandro@gmail.com> -->
+<application>
+ <id type="desktop">gimagereader.desktop</id>
+ <licence>CC0</licence>
+ <name>gImageReader</name>
+ <summary>A graphical GTK frontend to tesseract-ocr </summary>
+ <description>
+  <p>
+  gImageReader is a simple OCR application which acts as a frontend to the tesseract OCR engine. It is written in Gtk+.
+  </p>
+  <p>Features include:</p>
+  <ul>
+   <li>Automatic page layout detection</li>
+   <li>User can manually define and adjust recognition regions</li>
+   <li>Import images from disk, scanning devices, clipboard and screenshots</li>
+   <li>Supports multipage PDF documents</li>
+   <li>Recognized text displayed directly next to the image</li>
+   <li>Basic editing of output text, including search/replace and removing line breaks</li>
+   <li>Spellchecking for output text (if corresponding dictionary installed)</li>
+  </ul>
+ </description>
+ <screenshots>
+  <screenshot type="default" width="917" height="643">http://a.fsdn.com/con/app/proj/gimagereader/screenshots/v2.90.png</screenshot>
+ </screenshots>
+ <url type="homepage">http://sourceforge.net/projects/gimagereader/</url>
+ <updatecontact>manisandro@gmail.com</updatecontact>
+</application>
