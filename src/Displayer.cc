@@ -246,7 +246,7 @@ bool Displayer::scrollZoom(GdkEventScroll *ev)
 		if(ev->direction == GDK_SCROLL_UP){
 			m_hadjustment->set_value(m_hadjustment->get_value() - m_hadjustment->get_step_increment());
 		}else if(ev->direction == GDK_SCROLL_DOWN){
-			m_vadjustment->set_value(m_vadjustment->get_value() - m_vadjustment->get_step_increment());
+			m_hadjustment->set_value(m_hadjustment->get_value() + m_hadjustment->get_step_increment());
 		}
 		return true;
 	}
