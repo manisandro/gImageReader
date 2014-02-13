@@ -22,12 +22,26 @@ icons_DATA = \
 	icons/stripcrlf.png
 EXTRA_DIST += $(icons_DATA)
 
-# Logo
-logo48dir = $(datadir)/icons/hicolor/48x48/apps
-logoSVGdir = $(datadir)/icons/hicolor/scalable/apps
-logo48_DATA = icons/gimagereader.png
-logoSVG_DATA = icons/gimagereader.svg
-EXTRA_DIST += $(logo48_DATA) $(logoSVG_DATA)
+# Application icons
+app_icons = \
+	icons/gimagereader_48.png \
+	icons/gimagereader_256.png
+
+install-icons:
+	for size in 48 256; do \
+		mkdir -p $(DESTDIR)$(datadir)/icons/hicolor/$${size}x$${size}/apps; \
+		$(INSTALL_DATA) $(srcdir)/icons/gimagereader_$${size}.png $(DESTDIR)$(datadir)/icons/hicolor/$${size}x$${size}/apps/gimagereader.png; \
+	done
+
+uninstall-icons:
+	for size in 48 256; do \
+		rm -f $(DESTDIR)$(datadir)/icons/hicolor/$${size}x$${size}/apps/gimagereader.png; \
+	done
+
+install-data-local: install-icons
+uninstall-local: uninstall-icons
+
+EXTRA_DIST += $(app_icons)
 
 # Desktop file
 desktopdir=$(datadir)/applications
