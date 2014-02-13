@@ -17,6 +17,8 @@ BuildRequires: intltool
 BuildRequires: desktop-file-utils
 BuildRequires: appdata-tools
 
+Requires:      hicolor-icon-theme
+
 
 %description
 gImageReader is a simple Gtk front-end to tesseract. Features include:
@@ -48,12 +50,15 @@ make %{?_smp_mflags}
 
 %post
 /usr/bin/update-desktop-database &> /dev/null || :
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %postun
 /usr/bin/update-desktop-database &> /dev/null || :
 if [ $1 -eq 0 ] ; then
     /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
 
 
