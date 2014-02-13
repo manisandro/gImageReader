@@ -23,6 +23,8 @@
 
 #include <gtkspellmm.h>
 #include <tesseract/baseapi.h>
+#include <tesseract/strngs.h>
+#include <tesseract/genericvector.h>
 
 const std::vector<Config::Lang> Config::LANGUAGES = {
 	// {ISO 639-2, ISO 639-1, name}
