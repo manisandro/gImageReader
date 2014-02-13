@@ -6,7 +6,12 @@ export DEB_LDFLAGS_MAINT_APPEND=-Wl,--as-needed
 	dh $@ --with autoreconf
 
 override_dh_auto_configure:
-	dh_auto_configure -- --disable-silent-rules
+	dh_auto_configure -- --disable-versioncheck
 
 override_dh_install:
 	dh_install --fail-missing
+
+override_dh_strip:
+	dh_strip --dbg-package=gimagereader-dbg
+
+.PHONY: override_dh_strip override_dh_auto_configure override_dh_install
