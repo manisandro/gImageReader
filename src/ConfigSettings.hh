@@ -135,7 +135,8 @@ public:
 		Glib::Variant<int> v;
 		m_settings->get_value(m_key, v);
 		m_connection_changed.block();
-		m_widget->set_active(v.get());
+		int nrows = m_widget->get_model()->children().size();
+		m_widget->set_active(std::min(std::max(0, v.get()), nrows - 1));
 		m_connection_changed.unblock();
 	}
 
