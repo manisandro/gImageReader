@@ -9,25 +9,28 @@ EXTRA_DIST += $(ui_DATA)
 # Icons
 iconsdir = $(pkgdatadir)/icons
 icons_DATA = \
-	icons/angle.png \
-	icons/autolayout.png \
-	icons/brightness.png \
-	icons/contrast.png \
-	icons/controls.png \
-	icons/ins_append.png \
-	icons/ins_cursor.png \
-	icons/ins_replace.png \
-	icons/page.png \
-	icons/resolution.png \
-	icons/stripcrlf.png
+	icons/angle.png icons/angle.svg \
+	icons/autolayout.png icons/autolayout.svg \
+	icons/brightness.png icons/brightness.svg \
+	icons/contrast.png icons/contrast.svg \
+	icons/controls.png icons/controls.svg \
+	icons/ins_append.png icons/ins_append.svg \
+	icons/ins_cursor.png icons/ins_cursor.svg \
+	icons/ins_replace.png icons/ins_replace.svg \
+	icons/page.png icons/page.svg \
+	icons/resolution.png icons/resolution.svg \
+	icons/stripcrlf.png icons/stripcrlf.svg
 EXTRA_DIST += $(icons_DATA)
 
 # Application icons
 app_icons = \
 	icons/gimagereader_48.png \
-	icons/gimagereader_256.png
+	icons/gimagereader_256.png \
+	icons/gimagereader.svg
 
 install-icons:
+	mkdir -p $(DESTDIR)$(datadir)/icons/hicolor/scalable/apps
+	$(INSTALL_DATA) $(srcdir)/icons/gimagereader.svg $(DESTDIR)$(datadir)/icons/hicolor/scalable/apps/gimagereader.svg
 	for size in 48 256; do \
 		mkdir -p $(DESTDIR)$(datadir)/icons/hicolor/$${size}x$${size}/apps; \
 		$(INSTALL_DATA) $(srcdir)/icons/gimagereader_$${size}.png $(DESTDIR)$(datadir)/icons/hicolor/$${size}x$${size}/apps/gimagereader.png; \
