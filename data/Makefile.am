@@ -9,17 +9,17 @@ EXTRA_DIST += $(ui_DATA)
 # Icons
 iconsdir = $(pkgdatadir)/icons
 icons_DATA = \
-	icons/angle.png \
-	icons/autolayout.png \
-	icons/brightness.png \
-	icons/contrast.png \
-	icons/controls.png \
-	icons/ins_append.png \
-	icons/ins_cursor.png \
-	icons/ins_replace.png \
-	icons/page.png \
-	icons/resolution.png \
-	icons/stripcrlf.png
+	icons/angle.png icons/angle.svg \
+	icons/autolayout.png icons/autolayout.svg \
+	icons/brightness.png icons/brightness.svg \
+	icons/contrast.png icons/contrast.svg \
+	icons/controls.png icons/controls.svg \
+	icons/ins_append.png icons/ins_append.svg \
+	icons/ins_cursor.png icons/ins_cursor.svg \
+	icons/ins_replace.png icons/ins_replace.svg \
+	icons/page.png icons/page.svg \
+	icons/resolution.png icons/resolution.svg \
+	icons/stripcrlf.png icons/stripcrlf.svg
 EXTRA_DIST += $(icons_DATA)
 
 # Application icons
