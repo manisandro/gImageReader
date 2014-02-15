@@ -25,9 +25,12 @@ EXTRA_DIST += $(icons_DATA)
 # Application icons
 app_icons = \
 	icons/gimagereader_48.png \
-	icons/gimagereader_256.png
+	icons/gimagereader_256.png \
+	icons/gimagereader.svg
 
 install-icons:
+	mkdir -p $(DESTDIR)$(datadir)/icons/hicolor/scalable/apps
+	$(INSTALL_DATA) $(srcdir)/icons/gimagereader.svg $(DESTDIR)$(datadir)/icons/hicolor/scalable/apps/gimagereader.svg
 	for size in 48 256; do \
 		mkdir -p $(DESTDIR)$(datadir)/icons/hicolor/$${size}x$${size}/apps; \
 		$(INSTALL_DATA) $(srcdir)/icons/gimagereader_$${size}.png $(DESTDIR)$(datadir)/icons/hicolor/$${size}x$${size}/apps/gimagereader.png; \
