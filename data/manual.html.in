@@ -126,9 +126,9 @@ For contributions of any kind, bug reports etc. please contact me at <a href="ma
     <li>Send the <b>po</b> file to <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. Thanks!</li>
 </ol>
 <h2><a name="Support">Support</a></h2>
-If you encounter any issues or have some suggestions, feel free to contact me at <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>.
+If you find an issue or have a suggestion, please file a ticket to the <a href="https://github.com/manisandro/gImageReader/issues">gImageReader issue tracker</a>. Feel free to also contact me directly at <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>.
 <hr />
-<p>Copyright &copy;2009-2013 Sandro Mani, revision: Tue, 7 May 2013</p>
+<p>Copyright &copy;2009-2014 Sandro Mani, revision: Sun, 16 Feb 2014</p>
 </body>
 
 </html>
