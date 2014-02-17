@@ -103,6 +103,7 @@ private:
 	Geometry::Rectangle getSelectionDamageArea(const Geometry::Rectangle& rect) const;
 	void mouseMove(GdkEventMotion* ev);
 	void mousePress(GdkEventButton* ev);
+	void clearSelections();
 	void selectionRemove(const DisplaySelection* sel);
 	void selectionDo(GdkEventMotion* ev);
 	bool scroll();

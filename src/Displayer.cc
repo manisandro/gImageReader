@@ -56,7 +56,7 @@ Displayer::Displayer()
 	m_connection_positionAndZoomCanvas = CONNECT(m_viewport, size_allocate, [this](Gdk::Rectangle&){ positionCanvas(true); });
 	m_connection_saveHScrollMark = CONNECT(m_hadjustment, value_changed, [this]{ saveScrollMark(m_hadjustment, m_geo.sx); });
 	m_connection_saveVScrollMark = CONNECT(m_vadjustment, value_changed, [this]{ saveScrollMark(m_vadjustment, m_geo.sy); });
-	CONNECT(m_pagespin, value_changed, [this]{ spinChanged(); });
+	CONNECT(m_pagespin, value_changed, [this]{ clearSelections(); spinChanged(); });
 	CONNECT(m_resspin, value_changed, [this]{ spinChanged(); });
 	CONNECT(m_brispin, value_changed, [this]{ spinChanged(); });
 	CONNECT(m_conspin, value_changed, [this]{ spinChanged(); });
@@ -92,7 +92,7 @@ Displayer::Displayer()
 Displayer::~Displayer()
 {
 	delete m_renderer;
-	for(const DisplaySelection* sel : m_selections){ delete sel; }
+	clearSelections();
 	sendBlurRequest(BlurRequest::Quit, true);
 }
 
@@ -393,8 +393,7 @@ void Displayer::clearImage()
 	m_image = Cairo::RefPtr<Cairo::ImageSurface>();
 	delete m_renderer;
 	m_renderer = 0;
-	for(const DisplaySelection* sel : m_selections){ delete sel; }
-	m_selections.clear();
+	clearSelections();
 	m_zoomFit = true;
 	m_canvas->hide();
 	if(m_viewport->get_window()){
@@ -459,8 +458,7 @@ void Displayer::mousePress(GdkEventButton* ev)
 	if(m_curSel == nullptr){
 		if((ev->state & Gdk::CONTROL_MASK) == 0){
 			// Clear all existing selections
-			for(const DisplaySelection* sel : m_selections){ delete sel; }
-			m_selections.clear();
+			clearSelections();
 			m_canvas->queue_draw();
 		}
 		// Start new selection
@@ -514,6 +512,12 @@ void Displayer::selectionEnd()
 	}else{
 		m_ocrstatelabel->set_markup(Glib::ustring::compose("<small>%1</small>", _("Recognize all")));
 	}
+}
+
+void Displayer::clearSelections()
+{
+	for(const DisplaySelection* sel : m_selections){ delete sel; }
+	m_selections.clear();
 }
 
 bool Displayer::scroll()
@@ -605,7 +609,7 @@ Cairo::RefPtr<Cairo::ImageSurface> Displayer::getTransformedImage(const Geometry
 		return surf;
 }
 
-std::vector<Cairo::RefPtr<Cairo::ImageSurface> > Displayer::getSelections() const
+std::vector<Cairo::RefPtr<Cairo::ImageSurface>> Displayer::getSelections() const
 {
 	std::vector<Geometry::Rectangle> rects;
 	if(m_selections.empty()){
@@ -637,9 +641,7 @@ void Displayer::saveSelection(const Geometry::Rectangle& rect) const
 
 void Displayer::autodetectLayout(bool rotated)
 {
-	// Delete all selections
-	for(const DisplaySelection* sel : m_selections){ delete sel; }
-	m_selections.clear();
+	clearSelections();
 
 	float avgDeskew = 0.f;
 	int nDeskew = 0;
