@@ -655,6 +655,7 @@ void Displayer::autodetectLayout(bool rotated)
 		tess.SetImage(img->get_data(), img->get_width(), img->get_height(), 4, img->get_stride());
 		tesseract::PageIterator* it = tess.AnalyseLayout();
 		if(it && !it->Empty(tesseract::RIL_BLOCK)){
+			std::vector<Geometry::Rectangle> rects;
 			do{
 				int x1, y1, x2, y2;
 				tesseract::Orientation orient;
@@ -666,9 +667,23 @@ void Displayer::autodetectLayout(bool rotated)
 				avgDeskew += deskew;
 				++nDeskew;
 				if(x2-x1 > 10 && y2-y1 > 10){
-					m_selections.push_back(new DisplaySelection(x1 - img->get_width()*.5, y1 - img->get_height()*.5, x2-x1, y2-y1));
+					rects.push_back(Geometry::Rectangle(x1 - img->get_width()*.5, y1 - img->get_height()*.5, x2-x1, y2-y1));
 				}
 			}while(it->Next(tesseract::RIL_BLOCK));
+
+			// Merge overlapping rectangles
+			for(unsigned i = rects.size() - 1; i-- > 1;) {
+				for(unsigned j = i - 1; j-- > 0;) {
+					if(rects[j].overlaps(rects[i])) {
+						rects[j] = rects[j].unite(rects[i]);
+						rects.pop_back();
+						break;
+					}
+				}
+			}
+			for(const Geometry::Rectangle& rect : rects) {
+				m_selections.push_back(new DisplaySelection(rect.x, rect.y, rect.width, rect.height));
+			}
 		}
 		delete it;
 		return true;
