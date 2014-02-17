@@ -2,9 +2,10 @@ High prio:
 - Fix TWAIN
 
 Mid prio:
+- Don't set whole window to inactive when loading page, just display a "working" image and queue the rendering operation. If another rendering request comes in, cancel the active one.
 - Fix backtrace on windows
 - output pane in separate window
-- native windows file dialogs
+- native windows/kde file dialogs
 - installation of tesseract langpacks through packagekit?
 
 Low prio:
