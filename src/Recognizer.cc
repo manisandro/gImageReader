@@ -108,7 +108,7 @@ void Recognizer::selectPages(std::vector<int>& pages)
 void Recognizer::recognizeStart(PageSelection pagesel)
 {
 	int nPages = MAIN->getDisplayer()->getNPages();
-	if(nPages == 1){
+	if(nPages == 1 || MAIN->getDisplayer()->getHasSelections()){
 		pagesel = PageSelection::Current;
 	}
 	std::vector<int> pages;

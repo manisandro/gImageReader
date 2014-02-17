@@ -38,6 +38,7 @@ public:
 	bool setSource(const std::string& filename);
 	bool setImage(int page = -1);
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getSelections() const;
+	bool getHasSelections() const{ return !m_selections.empty(); }
 	int getCurrentPage() const{ return m_pagespin->get_value_as_int(); }
 	int getNPages(){ double min, max; m_pagespin->get_range(min, max); return int(max); }
 
