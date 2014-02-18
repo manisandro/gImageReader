@@ -125,6 +125,7 @@ Config::Config()
 	m_settings.insert(std::make_pair("keepquote", new SwitchSettingT<Gtk::CheckMenuItem>("keepquote", m_gioSettings, "menuitem:output.stripcrlf.keepquote")));
 	m_settings.insert(std::make_pair("joinhyphen", new SwitchSettingT<Gtk::CheckMenuItem>("joinhyphen", m_gioSettings, "menuitem:output.stripcrlf.joinhyphen")));
 	m_settings.insert(std::make_pair("joinspace", new SwitchSettingT<Gtk::CheckMenuItem>("joinspace", m_gioSettings, "menuitem:output.stripcrlf.joinspace")));
+	m_settings.insert(std::make_pair("ocrregionstrategy", new ComboSetting("ocrregionstrategy", m_gioSettings, "comboboxtext:dialog.regions")));
 
 	Builder("tbmenu:main.recognize").as<Gtk::MenuToolButton>()->set_menu(m_langsMenu);
 	CONNECTS(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [](Gtk::CheckButton* btn){

@@ -31,13 +31,13 @@ Recognizer::Recognizer()
 	m_pagesMenu = Builder("menu:recognize.pages");
 	m_pagesDialog = Builder("dialog:recognize.pages");
 	m_pagesEntry = Builder("entry:dialog.pages");
+	m_regionStrategyCombo = Builder("comboboxtext:dialog.regions");
 	Gtk::MenuToolButton* tbbtn = Builder("tbmenu:main.recognize");
 	m_recognizeBtn = static_cast<Gtk::ToolButton*>(((Gtk::Container*)tbbtn->get_children()[0])->get_children()[0]);
 
 	CONNECT(m_recognizeBtn, clicked, [this]{ recognizeStart(); });
 	CONNECT(Builder("menuitem:recognize.pages.current").as<Gtk::MenuItem>(), activate, [this]{ recognizeStart(PageSelection::Current); });
-	CONNECT(Builder("menuitem:recognize.pages.all").as<Gtk::MenuItem>(), activate, [this]{ recognizeStart(PageSelection::All); });
-	CONNECT(Builder("menuitem:recognize.pages.selected").as<Gtk::MenuItem>(), activate, [this]{ recognizeStart(PageSelection::Selected); });
+	CONNECT(Builder("menuitem:recognize.pages.multiple").as<Gtk::MenuItem>(), activate, [this]{ recognizeStart(PageSelection::Multiple); });
 	CONNECTS(m_pagesEntry, focus_in_event, [](GdkEventFocus*, Gtk::Entry* e){ Utils::clear_error_state(e); return false; });
 	m_textDispatcher.connect([this]{ addText(); });
 }
@@ -66,39 +66,35 @@ bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, O
 
 void Recognizer::selectPages(std::vector<int>& pages)
 {
-	m_pagesEntry->set_text("");
+	m_pagesEntry->set_text(Glib::ustring::compose("%1-%2", 1, MAIN->getDisplayer()->getNPages()));
 	m_pagesEntry->grab_focus();
 	int nPages = MAIN->getDisplayer()->getNPages();
 
-	while(true){
-		if(m_pagesDialog->run() == Gtk::RESPONSE_OK){
-			pages.clear();
-			Glib::ustring text = m_pagesEntry->get_text();
-			text = Glib::Regex::create("\\s+")->replace(text, 0, "", static_cast<Glib::RegexMatchFlags>(0));
-			std::vector<Glib::ustring>&& blocks = Utils::string_split(text, ',');
-			for(const Glib::ustring& block : blocks){
-				std::vector<Glib::ustring>&& ranges = Utils::string_split(block, '-');
-				if(ranges.size() == 1){
-					int page = atoi(ranges[0].c_str());
-					if(page > 0 && page <= nPages){
-						pages.push_back(page);
-					}
-				}else if(ranges.size() == 2){
-					int start = std::max(1, atoi(ranges[0].c_str()));
-					int end = std::min(nPages, atoi(ranges[1].c_str()));
-					for(int page = start; page <= end; ++page){
-						pages.push_back(page);
-					}
-				}else{
-					pages.clear();
-					break;
+	if(m_pagesDialog->run() == Gtk::RESPONSE_OK){
+		pages.clear();
+		Glib::ustring text = m_pagesEntry->get_text();
+		text = Glib::Regex::create("\\s+")->replace(text, 0, "", static_cast<Glib::RegexMatchFlags>(0));
+		std::vector<Glib::ustring>&& blocks = Utils::string_split(text, ',');
+		for(const Glib::ustring& block : blocks){
+			std::vector<Glib::ustring>&& ranges = Utils::string_split(block, '-');
+			if(ranges.size() == 1){
+				int page = atoi(ranges[0].c_str());
+				if(page > 0 && page <= nPages){
+					pages.push_back(page);
 				}
-			}
-			if(pages.empty()){
-				Utils::set_error_state(m_pagesEntry);
+			}else if(ranges.size() == 2){
+				int start = std::max(1, atoi(ranges[0].c_str()));
+				int end = std::min(nPages, atoi(ranges[1].c_str()));
+				for(int page = start; page <= end; ++page){
+					pages.push_back(page);
+				}
 			}else{
+				pages.clear();
 				break;
 			}
+		}
+		if(pages.empty()){
+			Utils::set_error_state(m_pagesEntry);
 		}
 	}
 	std::sort(pages.begin(), pages.end());
@@ -118,12 +114,11 @@ void Recognizer::recognizeStart(PageSelection pagesel)
 		return;
 	}else if(pagesel == PageSelection::Current){
 		pages.push_back(MAIN->getDisplayer()->getCurrentPage());
-	}else if(pagesel == PageSelection::All){
-		pages.resize(nPages);
-		int page = 1;
-		std::generate(pages.begin(), pages.end(), [&page]{ return page++; });
-	}else if(pagesel == PageSelection::Selected){
+	}else if(pagesel == PageSelection::Multiple){
 		selectPages(pages);
+	}
+	if(pages.empty()) {
+		return;
 	}
 	MAIN->pushState(MainWindow::State::Busy, _("Recognizing..."));
 	m_textInsert = false;
@@ -177,6 +172,9 @@ void Recognizer::recognizeDone(const Glib::ustring &errors)
 void Recognizer::setPage(int page)
 {
 	bool success = MAIN->getDisplayer()->setImage(page);
+	if(m_regionStrategyCombo->get_active_row_number() == RegionStrategy::Autodetect) {
+		MAIN->getDisplayer()->autodetectLayout();
+	}
 	Glib::Threads::Mutex::Lock lock(m_mutex);
 	m_taskState = success ? TaskState::Succeeded : TaskState::Failed;
 	m_cond.signal();

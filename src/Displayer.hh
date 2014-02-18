@@ -41,6 +41,7 @@ public:
 	bool getHasSelections() const{ return !m_selections.empty(); }
 	int getCurrentPage() const{ return m_pagespin->get_value_as_int(); }
 	int getNPages(){ double min, max; m_pagespin->get_range(min, max); return int(max); }
+	void autodetectLayout(bool rotated = false);
 
 private:
 	enum class ZoomMode { In, Out, Fit, One };
@@ -110,7 +111,6 @@ private:
 	bool scroll();
 	void selectionEnd();
 	void selectionUpdateColors();
-	void autodetectLayout(bool rotated = false);
 	void showSelectionMenu(GdkEventButton* ev, int i);
 	void hideSelectionMenu();
 	Cairo::RefPtr<Cairo::ImageSurface> getTransformedImage(const Geometry::Rectangle& rect) const;

@@ -33,12 +33,14 @@ public:
 	bool recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
 
 private:
-	enum class PageSelection { Prompt, Current, All, Selected };
+	enum class PageSelection { Prompt, Current, Multiple };
 	enum class TaskState { Waiting, Succeeded, Failed };
+	struct RegionStrategy { enum {EntirePage, Autodetect }; };
 	Gtk::Menu* m_pagesMenu;
 	Gtk::Dialog* m_pagesDialog;
 	Gtk::Entry* m_pagesEntry;
 	Gtk::ToolButton* m_recognizeBtn;
+	Gtk::ComboBoxText* m_regionStrategyCombo;
 	Glib::Threads::Mutex m_mutex;
 	Glib::Threads::Cond m_cond;
 	Glib::Threads::Thread* m_thread;

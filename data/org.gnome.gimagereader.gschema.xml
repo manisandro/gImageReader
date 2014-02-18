@@ -86,5 +86,10 @@
       <summary>Clean whitespace</summary>
       <description>Clean whitespace.</description>
     </key>
+    <key type="i" name="ocrregionstrategy">
+      <default>0</default>
+      <summary>OCR Page Region Strategy</summary>
+      <description>Whether to recognize the entire page or peform page layout autodetection.</description>
+    </key>
   </schema>
 </schemalist>
