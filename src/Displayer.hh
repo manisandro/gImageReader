@@ -36,9 +36,9 @@ public:
 	Displayer();
 	~Displayer();
 	bool setSource(const std::string& filename);
-	bool setImage(int page = -1);
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getSelections() const;
 	bool getHasSelections() const{ return !m_selections.empty(); }
+	bool setCurrentPage(int page);
 	int getCurrentPage() const{ return m_pagespin->get_value_as_int(); }
 	int getNPages(){ double min, max; m_pagespin->get_range(min, max); return int(max); }
 	void autodetectLayout(bool rotated = false);
@@ -85,6 +85,7 @@ private:
 	sigc::connection m_connection_saveVScrollMark;
 	sigc::connection m_connection_mouseMove;
 	sigc::connection m_connection_mousePress;
+	sigc::connection m_connection_pageSpinChanged;
 
 	sigc::connection m_connection_selmenu_delete;
 	sigc::connection m_connection_selmenu_reorder;
@@ -92,6 +93,7 @@ private:
 	sigc::connection m_connection_selmenu_clipboard;
 	sigc::connection m_connection_selmenu_save;
 
+	bool setImage();
 	void drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx);
 	void positionCanvas(bool zoom = false);
 	bool scrollZoom(GdkEventScroll* ev);

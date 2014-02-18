@@ -56,7 +56,7 @@ Displayer::Displayer()
 	m_connection_positionAndZoomCanvas = CONNECT(m_viewport, size_allocate, [this](Gdk::Rectangle&){ positionCanvas(true); });
 	m_connection_saveHScrollMark = CONNECT(m_hadjustment, value_changed, [this]{ saveScrollMark(m_hadjustment, m_geo.sx); });
 	m_connection_saveVScrollMark = CONNECT(m_vadjustment, value_changed, [this]{ saveScrollMark(m_vadjustment, m_geo.sy); });
-	CONNECT(m_pagespin, value_changed, [this]{ clearSelections(); spinChanged(); });
+	m_connection_pageSpinChanged = CONNECT(m_pagespin, value_changed, [this]{ clearSelections(); spinChanged(); });
 	CONNECT(m_resspin, value_changed, [this]{ spinChanged(); });
 	CONNECT(m_brispin, value_changed, [this]{ spinChanged(); });
 	CONNECT(m_conspin, value_changed, [this]{ spinChanged(); });
@@ -352,7 +352,7 @@ bool Displayer::setSource(const std::string &filename)
 		m_pagespin->hide();
 		m_renderer = new ImageRenderer(filename);
 	}
-	if(setImage(1)){
+	if(setImage()){
 		MAIN->pushState(MainWindow::State::Normal, _("To recognize specific areas, drag rectangles over them."));
 		m_canvas->show();
 		m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
@@ -365,12 +365,21 @@ bool Displayer::setSource(const std::string &filename)
 	}
 }
 
-bool Displayer::setImage(int page)
+bool Displayer::setCurrentPage(int page)
+{
+	m_connection_pageSpinChanged.block();
+	m_pagespin->set_value(page);
+	bool success = setImage();
+	m_connection_pageSpinChanged.unblock();
+	return success;
+}
+
+bool Displayer::setImage()
 {
 	if(!m_renderer){
 		return false;
 	}
-	page = page < 1 ? m_pagespin->get_value_as_int() : page;
+	int page = m_pagespin->get_value_as_int();
 	double res = m_resspin->get_value();
 	int bri = m_brispin->get_value_as_int();
 	int con = m_conspin->get_value_as_int();

@@ -173,7 +173,7 @@ void Recognizer::recognizeDone(const Glib::ustring &errors)
 
 void Recognizer::setPage(int page)
 {
-	bool success = MAIN->getDisplayer()->setImage(page);
+	bool success = MAIN->getDisplayer()->setCurrentPage(page);
 	if(m_regionStrategyCombo->get_active_row_number() == RegionStrategy::Autodetect) {
 		MAIN->getDisplayer()->autodetectLayout();
 	}
