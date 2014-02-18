@@ -134,8 +134,10 @@ void Recognizer::recognizeDo(const std::vector<int> &pages, const Glib::ustring&
 		failed.append(_("\n\tFailed to initialize tesseract"));
 	}else{
 		int npages = pages.size();
+		int idx = 0;
 		for(int page : pages){
-			Glib::signal_idle().connect_once([page, npages]{ MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 of %2"), page, npages)); });
+			++idx;
+			Glib::signal_idle().connect_once([page, npages, idx]{ MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
 			m_taskState = TaskState::Waiting;
 			Glib::signal_idle().connect_once([this,page]{ setPage(page); });
 			Glib::Threads::Mutex::Lock lock(m_mutex);
