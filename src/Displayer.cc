@@ -683,11 +683,11 @@ void Displayer::autodetectLayout(bool rotated)
 			}while(it->Next(tesseract::RIL_BLOCK));
 
 			// Merge overlapping rectangles
-			for(unsigned i = rects.size() - 1; i-- > 1;) {
-				for(unsigned j = i - 1; j-- > 0;) {
+			for(unsigned i = rects.size(); i-- > 1;) {
+				for(unsigned j = i; j-- > 0;) {
 					if(rects[j].overlaps(rects[i])) {
 						rects[j] = rects[j].unite(rects[i]);
-						rects.pop_back();
+						rects.erase(rects.begin() + i);
 						break;
 					}
 				}
