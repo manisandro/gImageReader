@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-10 02:30+0100\n"
+"POT-Creation-Date: 2014-02-19 01:14+0100\n"
 "PO-Revision-Date: 2013-06-08 22:30+0200\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -311,64 +311,72 @@ msgid "Page Range"
 msgstr "Seiten"
 
 #: ../data/gimagereader.ui.h:74
-msgid "<b>Insert page range:</b>"
-msgstr "<b>Seiten:</b>"
+msgid "Page range:"
+msgstr "Seiten:"
 
 #: ../data/gimagereader.ui.h:75
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Beispiel:</b> 1-10, 13, 14-18</small>"
 
 #: ../data/gimagereader.ui.h:76
+msgid "Recognition area:"
+msgstr "Erkennungsbereich"
+
+#: ../data/gimagereader.ui.h:77
+msgid "Entire page"
+msgstr "Ganze Seite"
+
+#: ../data/gimagereader.ui.h:78
+msgid "Autodetect"
+msgstr "Automatisch detektieren"
+
+#: ../data/gimagereader.ui.h:79
 msgid "Order:"
 msgstr "Reihenfolge:"
 
-#: ../data/gimagereader.ui.h:77
+#: ../data/gimagereader.ui.h:80
 msgid "_Recognize"
 msgstr "Alles _erkennen"
 
-#: ../data/gimagereader.ui.h:78
+#: ../data/gimagereader.ui.h:81
 msgid "Recognize to _clipboard"
 msgstr "Ins _Clipboard erkennen"
 
-#: ../data/gimagereader.ui.h:79
+#: ../data/gimagereader.ui.h:82
 msgid "Save as _image"
 msgstr "Als _Bild speichern"
 
-#: ../data/gimagereader.ui.h:80
+#: ../data/gimagereader.ui.h:83
 msgid "Keep line break if..."
 msgstr "Behalte Zeilenumbruch falls..."
 
-#: ../data/gimagereader.ui.h:81
+#: ../data/gimagereader.ui.h:84
 msgid "Preceeded by dot"
 msgstr "Einen Punkt davor steht"
 
-#: ../data/gimagereader.ui.h:82
+#: ../data/gimagereader.ui.h:85
 msgid "Preceded or succeeded by quote"
 msgstr "Ein Anführungszeichen davor oder danach steht"
 
-#: ../data/gimagereader.ui.h:83
+#: ../data/gimagereader.ui.h:86
 msgid "Other options"
 msgstr "Weitere Optionen"
 
-#: ../data/gimagereader.ui.h:84
+#: ../data/gimagereader.ui.h:87
 msgid "Join hyphenated words"
 msgstr "Wörter mit Bindestrich zusammenfügen"
 
-#: ../data/gimagereader.ui.h:85
+#: ../data/gimagereader.ui.h:88
 msgid "Collapse whitespace"
 msgstr "Leerstellen bereinigen"
 
-#: ../data/gimagereader.ui.h:86
+#: ../data/gimagereader.ui.h:89
 msgid "Current Page"
 msgstr "Aktuelle Seite"
 
-#: ../data/gimagereader.ui.h:87
-msgid "All Pages"
-msgstr "Alle Seiten"
-
-#: ../data/gimagereader.ui.h:88
-msgid "Selected Pages..."
-msgstr "Ausgewählte Seiten..."
+#: ../data/gimagereader.ui.h:90
+msgid "Multiple Pages..."
+msgstr "Mehrere Seiten..."
 
 #: ../data/crashhandler.ui.h:1
 msgid "<b>The application has crashed</b>"
@@ -388,11 +396,11 @@ msgid ""
 "the information below. Thank you."
 msgstr ""
 "Entschuldigung für die Unannehmlichkeit. Um zu helfen, die Applikation zu "
-"verbessern, melden Sie bitte das Problem an <a href="
-"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>. Versuchen Sie zu "
-"beschreiben, was Sie am machen waren, bevor die Applikation abgestürtzt ist. "
-"Senden Sie bitte auch die untenstehenden Informationen. Danke."
+"verbessern, melden Sie bitte das Problem an <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Versuchen Sie zu beschreiben, was Sie am machen waren, bevor die "
+"Applikation abgestürtzt ist. Senden Sie bitte auch die untenstehenden "
+"Informationen. Danke."
 
 #: ../src/Acquirer.cc:39 ../src/SourceManager.cc:133
 msgid "Cancel"
@@ -442,23 +450,23 @@ msgstr "Bildinformation wird übertragen..."
 msgid "Cancelling scan..."
 msgstr "Scan wird unterbrochen..."
 
-#: ../src/Config.cc:90
+#: ../src/Config.cc:92
 msgid "Filename prefix"
 msgstr "Dateiname-Präfix"
 
-#: ../src/Config.cc:91
+#: ../src/Config.cc:93
 msgid "Code"
 msgstr "Code"
 
-#: ../src/Config.cc:92
+#: ../src/Config.cc:94
 msgid "Native name"
 msgstr "Nativer Name"
 
-#: ../src/Config.cc:189
+#: ../src/Config.cc:192
 msgid "No languages available"
 msgstr "Keine Sprachen sind verfügbar"
 
-#: ../src/Config.cc:189
+#: ../src/Config.cc:192
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
@@ -493,27 +501,27 @@ msgstr ""
 "Die Datei ist möglicherweise kein Bild oder Korrupt:\n"
 "%1"
 
-#: ../src/Displayer.cc:384
+#: ../src/Displayer.cc:393
 msgid "Rendering image..."
 msgstr "Bild wird gerendert..."
 
-#: ../src/Displayer.cc:513 ../src/Displayer.cc:689
+#: ../src/Displayer.cc:520 ../src/Displayer.cc:715
 msgid "Recognize selection"
 msgstr "Selektion erkennen"
 
-#: ../src/Displayer.cc:515
+#: ../src/Displayer.cc:522
 msgid "Recognize all"
 msgstr "Alles erkennen"
 
-#: ../src/Displayer.cc:631
+#: ../src/Displayer.cc:644
 msgid "selection.png"
 msgstr "auswahl.png"
 
-#: ../src/Displayer.cc:632
+#: ../src/Displayer.cc:645
 msgid "Save Selection Image"
 msgstr "Bild speichern"
 
-#: ../src/Displayer.cc:675
+#: ../src/Displayer.cc:701
 msgid "Performing layout analysis"
 msgstr "Layout-Analyse wird durchgeführt"
 
@@ -605,11 +613,11 @@ msgstr "Rechtschreibewörterbuch für '%1' wird installiert"
 msgid "Failed to install spelling dictionary"
 msgstr "Rechtschreibewörterbuch konnte nicht installiert werden"
 
-#: ../src/Recognizer.cc:55 ../src/Recognizer.cc:128
+#: ../src/Recognizer.cc:55 ../src/Recognizer.cc:123
 msgid "Recognizing..."
 msgstr "Erkennung wird durchgeführt..."
 
-#: ../src/Recognizer.cc:139
+#: ../src/Recognizer.cc:134
 msgid ""
 "\n"
 "\tFailed to initialize tesseract"
@@ -617,11 +625,11 @@ msgstr ""
 "\n"
 "\tTesseract konnte nicht initialisiert werden"
 
-#: ../src/Recognizer.cc:143
-msgid "Recognizing page %1 of %2"
-msgstr "Erkennung von Seite %1 von %2 wurd durchgeführt"
+#: ../src/Recognizer.cc:140
+msgid "Recognizing page %1 (%2 of %3)"
+msgstr "Erkennung von Seite %1 (%2 von %3) wird durchgeführt"
 
-#: ../src/Recognizer.cc:151
+#: ../src/Recognizer.cc:148
 msgid ""
 "\n"
 "\tPage %1: failed to render page"
@@ -629,7 +637,7 @@ msgstr ""
 "\n"
 "\tSeite %1: Seite konnte nicht gerendert werden"
 
-#: ../src/Recognizer.cc:152
+#: ../src/Recognizer.cc:149
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -637,11 +645,11 @@ msgstr ""
 "\n"
 "[Seite %1 konnte nicht erkennt werden]\n"
 
-#: ../src/Recognizer.cc:173
+#: ../src/Recognizer.cc:170
 msgid "Recognition errors occured"
 msgstr "Erkennungsfehler sind aufgetreten"
 
-#: ../src/Recognizer.cc:173
+#: ../src/Recognizer.cc:170
 msgid "The following errors occured:%1"
 msgstr "Folgende Fehler sind aufgetreten:%1"
 
@@ -728,6 +736,12 @@ msgstr ""
 #: ../src/Utils.cc:74
 msgid "PNG Images"
 msgstr "PNG Bilder"
+
+#~ msgid "<b>Insert page range:</b>"
+#~ msgstr "<b>Seiten:</b>"
+
+#~ msgid "All Pages"
+#~ msgstr "Alle Seiten"
 
 #~ msgid "Generating backtrace..."
 #~ msgstr "Backtrace wird generiert..."

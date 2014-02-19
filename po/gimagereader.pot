@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-10 02:30+0100\n"
+"POT-Creation-Date: 2014-02-19 01:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -310,7 +310,7 @@ msgid "Page Range"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:74
-msgid "<b>Insert page range:</b>"
+msgid "Page range:"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:75
@@ -318,55 +318,63 @@ msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:76
-msgid "Order:"
+msgid "Recognition area:"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:77
-msgid "_Recognize"
+msgid "Entire page"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:78
-msgid "Recognize to _clipboard"
+msgid "Autodetect"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:79
-msgid "Save as _image"
+msgid "Order:"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:80
-msgid "Keep line break if..."
+msgid "_Recognize"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:81
-msgid "Preceeded by dot"
+msgid "Recognize to _clipboard"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:82
-msgid "Preceded or succeeded by quote"
+msgid "Save as _image"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:83
-msgid "Other options"
+msgid "Keep line break if..."
 msgstr ""
 
 #: ../data/gimagereader.ui.h:84
-msgid "Join hyphenated words"
+msgid "Preceeded by dot"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:85
-msgid "Collapse whitespace"
+msgid "Preceded or succeeded by quote"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:86
-msgid "Current Page"
+msgid "Other options"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:87
-msgid "All Pages"
+msgid "Join hyphenated words"
 msgstr ""
 
 #: ../data/gimagereader.ui.h:88
-msgid "Selected Pages..."
+msgid "Collapse whitespace"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:89
+msgid "Current Page"
+msgstr ""
+
+#: ../data/gimagereader.ui.h:90
+msgid "Multiple Pages..."
 msgstr ""
 
 #: ../data/crashhandler.ui.h:1
@@ -435,23 +443,23 @@ msgstr ""
 msgid "Cancelling scan..."
 msgstr ""
 
-#: ../src/Config.cc:90
+#: ../src/Config.cc:92
 msgid "Filename prefix"
 msgstr ""
 
-#: ../src/Config.cc:91
+#: ../src/Config.cc:93
 msgid "Code"
 msgstr ""
 
-#: ../src/Config.cc:92
+#: ../src/Config.cc:94
 msgid "Native name"
 msgstr ""
 
-#: ../src/Config.cc:189
+#: ../src/Config.cc:192
 msgid "No languages available"
 msgstr ""
 
-#: ../src/Config.cc:189
+#: ../src/Config.cc:192
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
@@ -482,27 +490,27 @@ msgid ""
 "%1"
 msgstr ""
 
-#: ../src/Displayer.cc:384
+#: ../src/Displayer.cc:393
 msgid "Rendering image..."
 msgstr ""
 
-#: ../src/Displayer.cc:513 ../src/Displayer.cc:689
+#: ../src/Displayer.cc:520 ../src/Displayer.cc:715
 msgid "Recognize selection"
 msgstr ""
 
-#: ../src/Displayer.cc:515
+#: ../src/Displayer.cc:522
 msgid "Recognize all"
 msgstr ""
 
-#: ../src/Displayer.cc:631
+#: ../src/Displayer.cc:644
 msgid "selection.png"
 msgstr ""
 
-#: ../src/Displayer.cc:632
+#: ../src/Displayer.cc:645
 msgid "Save Selection Image"
 msgstr ""
 
-#: ../src/Displayer.cc:675
+#: ../src/Displayer.cc:701
 msgid "Performing layout analysis"
 msgstr ""
 
@@ -594,37 +602,37 @@ msgstr ""
 msgid "Failed to install spelling dictionary"
 msgstr ""
 
-#: ../src/Recognizer.cc:55 ../src/Recognizer.cc:128
+#: ../src/Recognizer.cc:55 ../src/Recognizer.cc:123
 msgid "Recognizing..."
 msgstr ""
 
-#: ../src/Recognizer.cc:139
+#: ../src/Recognizer.cc:134
 msgid ""
 "\n"
 "\tFailed to initialize tesseract"
 msgstr ""
 
-#: ../src/Recognizer.cc:143
-msgid "Recognizing page %1 of %2"
+#: ../src/Recognizer.cc:140
+msgid "Recognizing page %1 (%2 of %3)"
 msgstr ""
 
-#: ../src/Recognizer.cc:151
+#: ../src/Recognizer.cc:148
 msgid ""
 "\n"
 "\tPage %1: failed to render page"
 msgstr ""
 
-#: ../src/Recognizer.cc:152
+#: ../src/Recognizer.cc:149
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
 msgstr ""
 
-#: ../src/Recognizer.cc:173
+#: ../src/Recognizer.cc:170
 msgid "Recognition errors occured"
 msgstr ""
 
-#: ../src/Recognizer.cc:173
+#: ../src/Recognizer.cc:170
 msgid "The following errors occured:%1"
 msgstr ""
 
