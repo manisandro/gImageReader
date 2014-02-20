@@ -108,6 +108,7 @@ void Recognizer::recognizeStart(PageSelection pagesel)
 		pagesel = PageSelection::Current;
 	}
 	std::vector<int> pages;
+	bool autodetectLayout = false;
 	if(pagesel == PageSelection::Prompt){
 		auto positioner = sigc::bind(sigc::ptr_fun(Utils::popup_positioner), m_recognizeBtn, m_pagesMenu, false, true);
 		m_pagesMenu->popup(positioner, 0, gtk_get_current_event_time());
@@ -116,6 +117,7 @@ void Recognizer::recognizeStart(PageSelection pagesel)
 		pages.push_back(MAIN->getDisplayer()->getCurrentPage());
 	}else if(pagesel == PageSelection::Multiple){
 		selectPages(pages);
+		autodetectLayout = (m_regionStrategyCombo->get_active_row_number() == RegionStrategy::Autodetect);
 	}
 	if(pages.empty()) {
 		return;
@@ -123,10 +125,10 @@ void Recognizer::recognizeStart(PageSelection pagesel)
 	MAIN->pushState(MainWindow::State::Busy, _("Recognizing..."));
 	m_textInsert = false;
 	Glib::ustring lang = MAIN->getConfig()->getSelectedLanguage().prefix;
-	m_thread = Glib::Threads::Thread::create([this,pages,lang]{ recognizeDo(pages, lang); });
+	m_thread = Glib::Threads::Thread::create([this,pages,lang,autodetectLayout]{ recognizeDo(pages, lang, autodetectLayout); });
 }
 
-void Recognizer::recognizeDo(const std::vector<int> &pages, const Glib::ustring& lang)
+void Recognizer::recognizeDo(const std::vector<int> &pages, const Glib::ustring& lang, bool autodetectLayout)
 {
 	Glib::ustring failed;
 	tesseract::TessBaseAPI tess;
@@ -139,7 +141,7 @@ void Recognizer::recognizeDo(const std::vector<int> &pages, const Glib::ustring&
 			++idx;
 			Glib::signal_idle().connect_once([page, npages, idx]{ MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
 			m_taskState = TaskState::Waiting;
-			Glib::signal_idle().connect_once([this,page]{ setPage(page); });
+			Glib::signal_idle().connect_once([this,page,autodetectLayout]{ setPage(page, autodetectLayout); });
 			Glib::Threads::Mutex::Lock lock(m_mutex);
 			while(m_taskState == TaskState::Waiting){
 				m_cond.wait(m_mutex);
@@ -171,10 +173,10 @@ void Recognizer::recognizeDone(const Glib::ustring &errors)
 	}
 }
 
-void Recognizer::setPage(int page)
+void Recognizer::setPage(int page, bool autodetectLayout)
 {
 	bool success = MAIN->getDisplayer()->setCurrentPage(page);
-	if(m_regionStrategyCombo->get_active_row_number() == RegionStrategy::Autodetect) {
+	if(autodetectLayout) {
 		MAIN->getDisplayer()->autodetectLayout();
 	}
 	Glib::Threads::Mutex::Lock lock(m_mutex);

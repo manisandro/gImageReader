@@ -51,9 +51,9 @@ private:
 
 	void selectPages(std::vector<int> &pages);
 	void recognizeStart(PageSelection pagessel = PageSelection::Prompt);
-	void recognizeDo(const std::vector<int>& pages, const Glib::ustring &lang);
+	void recognizeDo(const std::vector<int>& pages, const Glib::ustring &lang, bool autodetectLayout);
 	void recognizeDone(const Glib::ustring &errors);
-	void setPage(int page);
+	void setPage(int page, bool autodetectLayout);
 	void addText();
 };
 
