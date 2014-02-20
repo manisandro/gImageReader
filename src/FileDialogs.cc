@@ -223,25 +223,38 @@ static std::vector<Glib::RefPtr<Gio::File>> kde_open_sources_dialog(const std::s
 
 static std::string kde_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, const FileDialogs::FileFilter& filter, Gtk::Window *parent)
 {
-	// Command line
-	std::vector<Glib::ustring> argv = {
-		"/usr/bin/kdialog",
-		"--getsavefilename", suggestedFile, filter.mime_type,
-		"--attach", Glib::ustring::compose("%1", gdk_x11_window_get_xid(parent->get_window()->gobj())),
-		"--title", title,
-		"--caption", PACKAGE_NAME
-	};
-
-	// Spawn process
-	std::string stdout;
-	int exit_status = -1;
-	Glib::spawn_sync("", argv, Glib::SPAWN_DEFAULT, sigc::slot<void>(), &stdout, nullptr, &exit_status);
-	if(exit_status == 0) {
+	std::string filename = suggestedFile;
+	do {
+		std::vector<Glib::ustring> argv = {
+			"/usr/bin/kdialog",
+			"--getsavefilename", filename, filter.mime_type,
+			"--attach", Glib::ustring::compose("%1", gdk_x11_window_get_xid(parent->get_window()->gobj())),
+			"--title", title,
+			"--caption", PACKAGE_NAME
+		};
+		int exit_status = -1;
+		std::string stdout;
+		Glib::spawn_sync("", argv, Glib::SPAWN_DEFAULT, sigc::slot<void>(), &stdout, nullptr, &exit_status);
+		if(exit_status != 0) {
+			break;
+		}
 		std::istringstream iss(stdout);
-		std::string filename;
 		std::getline(iss, filename);
+		if(Glib::file_test(filename, Glib::FILE_TEST_EXISTS)) {
+			std::vector<Glib::ustring> argv = {
+				"/usr/bin/kdialog",
+				"--yesno", Glib::ustring::compose(_("A file named \"%1\" already exists. Are you sure you want to overwrite it?"), Glib::path_get_basename(filename)),
+				"--attach", Glib::ustring::compose("%1", gdk_x11_window_get_xid(parent->get_window()->gobj())),
+				"--title", _("Overwrite File?"),
+				"--caption", PACKAGE_NAME
+			};
+			Glib::spawn_sync("", argv, Glib::SPAWN_DEFAULT, sigc::slot<void>(), nullptr, nullptr, &exit_status);
+			if(exit_status != 0){
+				continue;
+			}
+		}
 		return filename;
-	}
+	} while(true);
 	return std::string();
 }
 
