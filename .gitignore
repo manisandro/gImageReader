@@ -9,6 +9,8 @@ intltool-update.in
 Makefile.in
 data/Makefile.in
 src/Makefile.in
+po/POTFILES
+po/stamp-it
 po/Makefile.in.in~
 po/Makevars.template
 po/Rules-quot
@@ -19,3 +21,4 @@ po/insert-header.sin
 po/quot.sed
 po/remove-potcdate.sin
 build*
+packaging/win32/*.exe
