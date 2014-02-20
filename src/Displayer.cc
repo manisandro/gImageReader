@@ -171,8 +171,6 @@ void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx)
 	// Set up transformations
 	ctx->translate(0.5 * alloc.get_width(), 0.5 * alloc.get_height());
 	ctx->rotate(m_geo.a);
-//	ctx->scale(m_geo.s, m_geo.s);
-//	ctx->translate(-0.5 * m_image->get_width(), -0.5 * m_image->get_height());
 	// Set source and apply all transformations to it
 	if(!m_blurImage){
 		ctx->scale(m_geo.s, m_geo.s);
@@ -182,8 +180,6 @@ void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx)
 		ctx->translate(-0.5 * m_blurImage->get_width(), -0.5 * m_blurImage->get_height());
 		ctx->set_source(m_blurImage, 0, 0);
 	}
-//	ctx->set_source(m_image, 0, 0);
-//	Cairo::RefPtr<Cairo::SurfacePattern>::cast_dynamic(ctx->get_source())->set_filter(Cairo::FILTER_BEST);
 	ctx->paint();
 	// Draw selections
 	ctx->restore();
