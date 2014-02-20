@@ -1,7 +1,17 @@
 #!/bin/sh
 
+arch=${1:-i686}
+
+if [ "$arch" == "i686" ]; then
+    bits=32
+elif [ "$arch" == "x86_64" ]; then
+    bits=64
+else
+    echo "Error: unrecognized architecture $arch"
+    exit 1
+fi
 # Note: This script is written to be used with the Fedora mingw environment
-MINGWROOT=/usr/i686-w64-mingw32/sys-root/mingw
+MINGWROOT=/usr/$arch-w64-mingw32/sys-root/mingw
 
 # Halt on errors
 set -e
@@ -11,15 +21,15 @@ if [ "$1" == "--debug" ]; then
 fi
 
 win32dir="$(dirname $(readlink -f $0))"
-builddir="$win32dir/../../build-win32"
+builddir="$win32dir/../../build-mingw$bits"
 installroot="$win32dir/root"
 pushd "$win32dir" > /dev/null
 
 # Build
 mkdir -p $builddir
 pushd $builddir > /dev/null
-mingw32-configure
-mingw32-make -j4 DESTDIR="$win32dir/_root" install
+mingw$bits-configure
+mingw$bits-make -j4 DESTDIR="$win32dir/_root" install
 rm -rf $win32dir/root
 mv $win32dir/_root$MINGWROOT $win32dir/root
 rm -rf $win32dir/_root
@@ -62,8 +72,8 @@ function autoLinkDeps {
 
 autoLinkDeps root/bin/gimagereader.exe
 linkDep bin/gdb.exe
-linkDep bin/gspawn-win32-helper-console.exe
-linkDep bin/gspawn-win32-helper.exe
+linkDep bin/gspawn-win$bits-helper-console.exe
+linkDep bin/gspawn-win$bits-helper.exe
 
 linkDep bin/twaindsm.dll
 linkDep lib/enchant/libenchant_myspell.dll
@@ -98,7 +108,7 @@ glib-compile-schemas root/share/glib-2.0/schemas
 # Build the installer
 progName=$(cat $builddir/config.h | grep PACKAGE_NAME | awk -F'"' '{print $2}')
 progVersion=$(cat $builddir/config.h | grep PACKAGE_VERSION | awk -F'"' '{print $2}')
-makensis -DNAME=$progName -DPROGVERSION="$progVersion" installer.nsi;
+makensis -DNAME=$progName -DARCH=$arch -DPROGVERSION="$progVersion" installer.nsi;
 
 # Cleanup
 rm -rf $win32dir/root

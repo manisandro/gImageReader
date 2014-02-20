@@ -17,7 +17,7 @@ SetCompressor /SOLID /FINAL lzma
 
 ;********** General **********
 Name "${NAME} ${PROGVERSION}"
-OutFile "${NAME}_${PROGVERSION}.exe"
+OutFile "${NAME}_${PROGVERSION}_${ARCH}.exe"
 
 ;********** Functions **********
 Function .onInit
