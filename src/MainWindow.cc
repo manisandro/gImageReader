@@ -54,7 +54,7 @@ void crash_handler(int sig)
 		int i = 0;
 		while(Glib::file_test(filename, Glib::FILE_TEST_EXISTS)){
 			++i;
-			filename = Glib::build_filename(g_get_home_dir(), Glib::ustring::compose("%1_crash-save_i.txt", PACKAGE_NAME));
+			filename = Glib::build_filename(g_get_home_dir(), Glib::ustring::compose("%1_crash-save_%2.txt", PACKAGE_NAME, i));
 		}
 		MAIN->getOutputManager()->saveBuffer(filename);
 	}
