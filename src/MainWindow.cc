@@ -59,10 +59,12 @@ void crash_handler(int sig)
 		MAIN->getOutputManager()->saveBuffer(filename);
 	}
 	Glib::RefPtr<Application> app = Glib::RefPtr<Application>::cast_static(Gio::Application::get_default());
+#ifdef G_OS_WIN32
+	Glib::spawn_async("", std::vector<std::string>{app->get_executable_path(), "crashhandle", Glib::ustring::compose("%1", getpid()), filename});
+	std::exit(1);
+#else
 	Glib::spawn_sync("", std::vector<std::string>{app->get_executable_path(), "crashhandle", Glib::ustring::compose("%1", getpid()), filename});
 	std::raise(sig);
-#ifdef G_OS_WIN32
-	std::exit(1);
 #endif
 }
 

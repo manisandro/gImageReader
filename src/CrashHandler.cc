@@ -57,6 +57,7 @@ void CrashHandler::on_startup()
 	generate_backtrace();
 #else
 	m_refreshButton->hide();
+	m_progressBar->hide();
 #endif
 }
 
