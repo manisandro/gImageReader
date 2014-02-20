@@ -60,7 +60,7 @@
       <object class="GtkLabel" id="label:main.recognize.state">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label">&lt;small&gt;Recognize all&lt;/small&gt;</property>
+        <property name="label" translatable="yes">&lt;small&gt;Recognize all&lt;/small&gt;</property>
         <property name="use_markup">True</property>
         <property name="justify">center</property>
       </object>
