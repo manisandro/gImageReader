@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "Notifier.hh"
 #include "OutputManager.hh"
@@ -221,11 +222,8 @@ bool OutputManager::saveBuffer(std::string filename)
 		}
 		std::string outputName = Glib::build_filename(outputDir, base + ".txt");
 
-		Glib::RefPtr<Gtk::FileFilter> filter = Gtk::FileFilter::create();
-		filter->set_name(_("Text Files"));
-		filter->add_mime_type("text/plain");
-		filter->add_pattern("*.txt");
-		filename = Utils::save_dialog(_("Save Output..."), outputName, filter, MAIN->getWindow());
+		FileDialogs::FileFilter filter = {_("Text Files"), "text/plain", "*.txt"};
+		filename = FileDialogs::save_dialog(_("Save Output..."), outputName, filter);
 
 		if(filename.empty()) {
 			return false;

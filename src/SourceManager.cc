@@ -17,8 +17,9 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "SourceManager.hh"
+#include "FileDialogs.hh"
 #include "MainWindow.hh"
+#include "SourceManager.hh"
 #include "Utils.hh"
 
 #include <pangomm.h>
@@ -129,29 +130,9 @@ std::string SourceManager::getSelectedSource() const
 
 void SourceManager::addSourcesBrowse()
 {
-	Gtk::FileChooserDialog dialog(*MAIN->getWindow(), _("Select sources..."));
-	dialog.add_button(_("Cancel"), Gtk::RESPONSE_CANCEL);
-	dialog.add_button(_("OK"), Gtk::RESPONSE_OK);
-	dialog.set_select_multiple(true);
-	dialog.set_local_only(false);
-	Glib::RefPtr<Gtk::FileFilter> filter = Gtk::FileFilter::create();
-	filter->set_name(_("Images and PDFs"));
-	filter->add_pixbuf_formats();
-	filter->add_mime_type("application/pdf");
-	dialog.add_filter(filter);
-
-	std::string&& current = getSelectedSource();
-	if(!current.empty()){
-		dialog.set_current_folder(Glib::path_get_dirname(current));
-	}else{
-		dialog.set_current_folder(Glib::get_home_dir());
-	}
-
-	int response = dialog.run();
-	dialog.hide();
-	if(response == Gtk::RESPONSE_OK){
-		addSources(dialog.get_files());
-	}
+	std::string curSrc = getSelectedSource();
+	std::string initialFolder = curSrc.empty() ? "" : Glib::path_get_dirname(curSrc);
+	addSources(FileDialogs::open_sources_dialog(initialFolder));
 }
 
 void SourceManager::pasteClipboard()

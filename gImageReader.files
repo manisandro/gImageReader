@@ -39,6 +39,8 @@ src/DisplayRenderer.hh
 src/DisplayRenderer.cc
 src/DisplaySelection.hh
 src/DisplaySelection.cc
+src/FileDialogs.cc
+src/FileDialogs.hh
 src/Geometry.hh
 src/Notifier.hh
 src/Notifier.cc

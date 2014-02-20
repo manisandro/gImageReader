@@ -24,6 +24,7 @@
 #include "DisplaySelection.hh"
 #include "Recognizer.hh"
 #include "Utils.hh"
+#include "FileDialogs.hh"
 
 #include <tesseract/baseapi.h>
 #include <cassert>
@@ -642,7 +643,8 @@ void Displayer::saveSelection(const Geometry::Rectangle& rect) const
 {
 	Cairo::RefPtr<Cairo::ImageSurface> img = getTransformedImage(rect);
 	std::string initialPath = Glib::build_filename(Glib::get_user_special_dir(G_USER_DIRECTORY_DOCUMENTS), _("selection.png"));
-	std::string filename = Utils::save_image_dialog(_("Save Selection Image"), initialPath);
+	FileDialogs::FileFilter filter = {_("PNG Images"), "image/png", "*.png"};
+	std::string filename = FileDialogs::save_dialog(_("Save Selection Image"), initialPath, filter);
 	if(!filename.empty()){
 		img->write_to_png(filename);
 	}

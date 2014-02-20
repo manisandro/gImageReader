@@ -19,6 +19,7 @@
 
 #include "Acquirer.hh"
 #include "Config.hh"
+#include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
@@ -85,7 +86,8 @@ void Acquirer::init()
 
 void Acquirer::selectOutputPath()
 {
-	std::string filename = Utils::save_image_dialog(_("Choose Output Filename..."), m_outputPath);
+	FileDialogs::FileFilter filter = {_("PNG Images"), "image/png", "*.png"};
+	std::string filename = FileDialogs::save_dialog(_("Choose Output Filename..."), m_outputPath, filter);
 	if(!filename.empty()){
 		m_outputPath = filename;
 		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);

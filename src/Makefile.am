@@ -29,6 +29,8 @@ gimagereader_SOURCES = \
 	DisplayManipulator.hh \
 	DisplaySelection.cc \
 	DisplaySelection.hh \
+	FileDialogs.hh \
+	FileDialogs.cc \
 	Geometry.hh \
 	MainWindow.cc \
 	MainWindow.hh \

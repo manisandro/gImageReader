@@ -20,6 +20,8 @@ src/DisplayManipulator.cc
 src/DisplayManipulator.hh
 src/DisplaySelection.cc
 src/DisplaySelection.hh
+src/FileDialogs.cc
+src/FileDialogs.hh
 src/Geometry.hh
 src/main.cc
 src/MainWindow.cc

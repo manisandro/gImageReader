@@ -68,40 +68,6 @@ int Utils::question_dialog(const Glib::ustring &title, const Glib::ustring &text
 	}
 }
 
-std::string Utils::save_image_dialog(const Glib::ustring &title, const std::string &suggestedFile, Gtk::Window *parent)
-{
-	Glib::RefPtr<Gtk::FileFilter> filter = Gtk::FileFilter::create();
-	filter->set_name(_("PNG Images"));
-	filter->add_mime_type("image/png");
-	filter->add_pattern("*.png");
-
-	return save_dialog(title, suggestedFile, filter, parent);
-}
-
-std::string Utils::save_dialog(const Glib::ustring &title, const std::string &suggestedFile, Glib::RefPtr<Gtk::FileFilter> filter, Gtk::Window *parent)
-{
-	if(!parent){ parent = MAIN->getWindow(); }
-	Gtk::FileChooserDialog dialog(*parent, title, Gtk::FILE_CHOOSER_ACTION_SAVE);
-	dialog.add_button("gtk-cancel", Gtk::RESPONSE_CANCEL);
-	dialog.add_button("gtk-ok", Gtk::RESPONSE_OK);
-	dialog.set_select_multiple(false);
-	dialog.set_create_folders(true);
-	dialog.set_do_overwrite_confirmation(true);
-	dialog.set_local_only(false);
-	dialog.set_current_folder(Glib::path_get_dirname(suggestedFile));
-	dialog.set_current_name(Glib::path_get_basename(suggestedFile));
-	dialog.add_filter(filter);
-	dialog.set_filter(filter);
-
-	int response = dialog.run();
-	if(response == Gtk::RESPONSE_OK){
-		std::string filename = dialog.get_filename();
-		Utils::ensure_extension(filename, suggestedFile.substr(suggestedFile.length() - 4));
-		return filename;
-	}
-	return "";
-}
-
 void Utils::configure_spin(Gtk::SpinButton *spin, double value, double min, double max, double step, double page, sigc::connection* block)
 {
 	if(block) block->block();
