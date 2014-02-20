@@ -67,7 +67,8 @@ OutputManager::OutputManager()
 	CONNECT(Builder("menuitem:output.insert.replace").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Replace, PACKAGE_DATA_DIR "icons/ins_replace.png"); });
 	CONNECT(Builder("tbbutton:output.stripcrlf").as<Gtk::ToolButton>(), clicked, [this]{ filterBuffer(); });
 	CONNECTS(Builder("tbbutton:output.findreplace").as<Gtk::ToggleToolButton>(), toggled, [this](Gtk::ToggleToolButton* b){ toggleReplaceBox(b); });
-	CONNECT(m_textBuffer, mark_set, [this](const Gtk::TextIter&,const Glib::RefPtr<Gtk::TextMark>&){ saveIters(); });
+	CONNECT(m_textBuffer, changed, [this]{ saveIters(); });
+	CONNECT(m_textBuffer, mark_set, [this](const Gtk::TextIter&,const Glib::RefPtr<Gtk::TextMark>&){ if(m_textView->is_focus()) { saveIters(); }});
 	CONNECT(m_textBuffer, history_changed, [this]{ historyChanged(); });
 	CONNECT(m_searchEntry, changed, [this]{ Utils::clear_error_state(m_searchEntry); });
 	CONNECT(m_searchEntry, activate, [this]{ findInBuffer(); });
@@ -154,10 +155,8 @@ void OutputManager::historyChanged()
 
 void OutputManager::saveIters()
 {
-	if(m_textView->has_focus()){
-		m_insertIter = m_textBuffer->get_iter_at_mark(m_textBuffer->get_insert());
-		m_selectIter = m_textBuffer->get_iter_at_mark(m_textBuffer->get_selection_bound());
-	}
+	m_insertIter = m_textBuffer->get_iter_at_mark(m_textBuffer->get_insert());
+	m_selectIter = m_textBuffer->get_iter_at_mark(m_textBuffer->get_selection_bound());
 }
 
 void OutputManager::findInBuffer(bool replace)
@@ -202,7 +201,6 @@ void OutputManager::addText(const Glib::ustring& text, bool insert)
 			m_textBuffer->insert(m_textBuffer->end(), text);
 		}else if(m_insertMode == InsertMode::Cursor){
 			m_textBuffer->replace_range(text, m_insertIter, m_selectIter);
-			m_insertIter = m_selectIter = m_textBuffer->get_iter_at_mark(m_textBuffer->get_insert());
 		}else if(m_insertMode == InsertMode::Replace){
 			m_textBuffer->replace_all(text);
 		}
