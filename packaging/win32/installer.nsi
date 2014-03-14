@@ -20,12 +20,39 @@ Name "${NAME} ${PROGVERSION}"
 OutFile "${NAME}_${PROGVERSION}_${ARCH}.exe"
 
 ;********** Functions **********
+Function GetParent
+  Exch $R0
+  Push $R1
+  Push $R2
+  Push $R3
+ 
+  StrCpy $R1 0
+  StrLen $R2 $R0
+ 
+  loop:
+    IntOp $R1 $R1 + 1
+    IntCmp $R1 $R2 get 0 get
+    StrCpy $R3 $R0 1 -$R1
+    StrCmp $R3 "\" get
+  Goto loop
+ 
+  get:
+    StrCpy $R0 $R0 -$R1
+ 
+    Pop $R3
+    Pop $R2
+    Pop $R1
+    Exch $R0
+FunctionEnd
+
 Function .onInit
   !insertmacro MULTIUSER_INIT
+  
+  InitPluginsDir
 
   ; Remove previous versions before installing new one
-  ReadRegStr $R0 SHCTX "${REG_UNINSTALL}" "UninstallString"
-  StrCmp $R0 "" done
+  ReadRegStr $0 SHCTX "${REG_UNINSTALL}" "UninstallString"
+  StrCmp "$0" "" done
 
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
     "${NAME} is already installed.$\n$\nTo remove the installed version, press 'OK'. To cancel the installation, press 'Cancel'." \
@@ -33,8 +60,18 @@ Function .onInit
   Abort
 
   uninst:
+    ; Backup dictionaries and language definitions
+    Push $0
+    Call GetParent
+    Pop $R0
+    StrCpy $1 $R0 "" 1 ; Remove leading quote
+    CreateDirectory "$PLUGINSDIR\dicts"
+    CreateDirectory "$PLUGINSDIR\tessdata"
+    CopyFiles "$1\share\myspell\dicts\*" "$PLUGINSDIR\dicts\"
+    CopyFiles "$1\share\tessdata\*" "$PLUGINSDIR\tessdata\"
+
     ClearErrors
-    ExecWait '$R0 _?=$INSTDIR'
+    ExecWait '$0 _?=$INSTDIR'
     IfErrors uninst_err done
 
   uninst_err:
@@ -46,7 +83,15 @@ Function .onInit
   done:
 FunctionEnd
 
-Function un.onInit
+Function .onInstSuccess
+  ; Restore dictionaries and language definitions
+  IfFileExists "$PLUGINSDIR\dicts" backupExists
+  backupExists:
+    CopyFiles "$PLUGINSDIR\dicts\*" "$INSTDIR\share\myspell\dicts"
+    CopyFiles "$PLUGINSDIR\tessdata\*" "$INSTDIR\share\tessdata"
+FunctionEnd
+
+Function un.onInit 
   !insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
@@ -120,7 +165,7 @@ LangString DESC_IntlSection ${LANG_ENGLISH} "${NAME} translations."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;********** Uninstall **********
-Section "Uninstall" 
+Section "Uninstall"
   Delete "$INSTDIR\*.*"
   RmDir /r "$SMPROGRAMS\${NAME}\"
   RmDir /r "$INSTDIR"
