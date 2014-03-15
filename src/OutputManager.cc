@@ -109,6 +109,7 @@ void OutputManager::filterBuffer()
 			txt = Glib::Regex::create("-\\s*\n\\s*")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags>(0));
 		}
 		Glib::ustring expr;
+		expr += "\\n"; // Keep if preceeded by line break
 		if(m_filterKeepIfDot->get_active()){
 			expr += "\\.";
 		}
