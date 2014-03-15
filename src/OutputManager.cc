@@ -234,7 +234,7 @@ bool OutputManager::saveBuffer(std::string filename)
 		return false;
 	}
 	Glib::ustring txt = m_textBuffer->get_text(false);
-	file << txt;
+	file.write(txt.data(), txt.length());
 	m_textBuffer->set_modified(false);
 	return true;
 }
