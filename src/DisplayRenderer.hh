@@ -51,6 +51,7 @@ public:
 
 private:
 	PopplerDocument* m_document;
+	mutable Glib::Threads::Mutex m_mutex;
 };
 
 #endif // IMAGERENDERER_HH

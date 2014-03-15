@@ -62,6 +62,7 @@ Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::render(int page, double resoluti
 	if(!m_document){
 		return Cairo::RefPtr<Cairo::ImageSurface>();
 	}
+	m_mutex.lock();
 	double scale = resolution / 72;
 	PopplerPage* poppage = poppler_document_get_page(m_document, page - 1);
 	double width, height;
@@ -75,6 +76,7 @@ Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::render(int page, double resoluti
 	ctx->scale(scale, scale);
 	poppler_page_render(poppage, ctx->cobj());
 	g_object_unref(poppage);
+	m_mutex.unlock();
 	return surf;
 }
 
