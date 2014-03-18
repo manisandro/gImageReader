@@ -28,9 +28,16 @@ struct FileFilter {
 	std::string name;
 	std::string mime_type;
 	std::string pattern;
+
+#ifdef G_OS_WIN32
+	std::wstring to_win32_filter() const;
+#endif
+	Glib::RefPtr<Gtk::FileFilter> to_gnome_filter() const;
+	Glib::ustring to_kde_filter() const;
 };
 
 std::vector<Glib::RefPtr<Gio::File>> open_sources_dialog(const std::string& initialDirectory, Gtk::Window* parent = nullptr);
+std::vector<Glib::RefPtr<Gio::File> > open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const FileFilter& filter, bool multiple, Gtk::Window* parent = nullptr);
 std::string save_dialog(const Glib::ustring &title, const std::string& suggestedFile, const FileFilter& filter, Gtk::Window *parent = nullptr);
 
 

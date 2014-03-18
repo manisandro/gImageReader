@@ -52,20 +52,18 @@ static std::string ws2s(const std::wstring& s)
 	return out;
 }
 
-static std::vector<Glib::RefPtr<Gio::File>> win32_open_sources_dialog(const std::string& initialDirectory, Gtk::Window* parent)
+
+std::wstring FileDialogs::FileFilter::to_win32_filter() const
 {
-	std::string title = _("Select sources...");
+	std::wstring filterstr = s2ws(name);
+	filterstr += L'\0';
+	filterstr += s2ws(pattern);
+	filterstr += L'\0';
+	return filterstr;
+}
 
-	// Get formats
-	std::wstring filter = s2ws(_("Images and PDFs"));
-	filter += L'\0';
-	for(const Gdk::PixbufFormat& format : Gdk::Pixbuf::get_formats()) {
-		for(const Glib::ustring& ext : format.get_extensions()) {
-			filter += s2ws(Glib::ustring::compose("*.%1;", ext));
-		}
-	}
-	filter += L"*.pdf\0";
-
+static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustring &title, const std::string& initialDirectory, const std::wstring& filter, bool multiple, Gtk::Window *parent)
+{
 	wchar_t wfile[1024] = {};
 	std::wstring winitialDirectory = s2ws(initialDirectory);
 	std::wstring wtitle = s2ws(title);
@@ -79,7 +77,8 @@ static std::vector<Glib::RefPtr<Gio::File>> win32_open_sources_dialog(const std:
 	ofn.nMaxFile = sizeof(wfile);
 	ofn.lpstrInitialDir = winitialDirectory.c_str();
 	ofn.lpstrTitle = wtitle.c_str();
-	ofn.Flags = OFN_ALLOWMULTISELECT|OFN_NONETWORKBUTTON|OFN_EXPLORER;
+	ofn.Flags = OFN_NONETWORKBUTTON|OFN_EXPLORER;
+	if(multiple) ofn.Flags |= OFN_ALLOWMULTISELECT;
 	bool ok = GetOpenFileNameW(&ofn);
 
 	std::vector<Glib::RefPtr<Gio::File>> files;
@@ -106,13 +105,27 @@ static std::vector<Glib::RefPtr<Gio::File>> win32_open_sources_dialog(const std:
 	return files;
 }
 
+static std::vector<Glib::RefPtr<Gio::File>> win32_open_sources_dialog(const std::string& initialDirectory, Gtk::Window* parent)
+{
+	std::string title = _("Select sources...");
+
+	// Get formats
+	std::wstring filter = s2ws(_("Images and PDFs"));
+	filter += L'\0';
+	for(const Gdk::PixbufFormat& format : Gdk::Pixbuf::get_formats()) {
+		for(const Glib::ustring& ext : format.get_extensions()) {
+			filter += s2ws(Glib::ustring::compose("*.%1;", ext));
+		}
+	}
+	filter += L"*.pdf\0";
+
+	return win32_open_dialog(title, initialDirectory, filter, true, parent);
+}
+
 static std::string win32_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, const FileDialogs::FileFilter& filter, Gtk::Window *parent)
 {
 	// Get formats
-	std::wstring filterstr = s2ws(filter.name);
-	filterstr += L'\0';
-	filterstr += s2ws(filter.pattern);
-	filterstr += L'\0';
+	std::wstring filterstr = filter.to_win32_filter();
 
 	std::wstring wsuggestedFile = s2ws(suggestedFile);
 	std::wstring wtitle = s2ws(title);
@@ -141,17 +154,23 @@ static std::string win32_save_dialog(const Glib::ustring &title, const std::stri
 }
 
 #else
-static std::vector<Glib::RefPtr<Gio::File>> gnome_open_sources_dialog(const std::string& initialDirectory, Gtk::Window* parent)
+
+Glib::RefPtr<Gtk::FileFilter> FileDialogs::FileFilter::to_gnome_filter() const
+{
+	Glib::RefPtr<Gtk::FileFilter> filefilter = Gtk::FileFilter::create();
+	filefilter->set_name(name);
+	filefilter->add_mime_type(mime_type);
+	filefilter->add_pattern(pattern);
+	return filefilter;
+}
+
+static std::vector<Glib::RefPtr<Gio::File>> gnome_open_dialog(const std::string& title, const std::string& initialDirectory, Glib::RefPtr<Gtk::FileFilter> filter, bool multiple, Gtk::Window* parent)
 {
 	Gtk::FileChooserDialog dialog(*MAIN->getWindow(), _("Select sources..."));
 	dialog.add_button(_("Cancel"), Gtk::RESPONSE_CANCEL);
 	dialog.add_button(_("OK"), Gtk::RESPONSE_OK);
-	dialog.set_select_multiple(true);
+	dialog.set_select_multiple(multiple);
 	dialog.set_local_only(false);
-	Glib::RefPtr<Gtk::FileFilter> filter = Gtk::FileFilter::create();
-	filter->set_name(_("Images and PDFs"));
-	filter->add_pixbuf_formats();
-	filter->add_mime_type("application/pdf");
 	dialog.set_filter(filter);
 	dialog.set_current_folder(initialDirectory);
 
@@ -159,6 +178,15 @@ static std::vector<Glib::RefPtr<Gio::File>> gnome_open_sources_dialog(const std:
 		return dialog.get_files();
 	}
 	return std::vector<Glib::RefPtr<Gio::File>>();
+}
+
+static std::vector<Glib::RefPtr<Gio::File>> gnome_open_sources_dialog(const std::string& initialDirectory, Gtk::Window* parent)
+{
+	Glib::RefPtr<Gtk::FileFilter> filter = Gtk::FileFilter::create();
+	filter->set_name(_("Images and PDFs"));
+	filter->add_pixbuf_formats();
+	filter->add_mime_type("application/pdf");
+	return gnome_open_dialog(_("Select sources..."), initialDirectory, filter, true, parent);
 }
 
 static std::string gnome_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, const FileDialogs::FileFilter& filter, Gtk::Window *parent)
@@ -173,11 +201,7 @@ static std::string gnome_save_dialog(const Glib::ustring &title, const std::stri
 	dialog.set_current_folder(Glib::path_get_dirname(suggestedFile));
 	dialog.set_current_name(Glib::path_get_basename(suggestedFile));
 
-	Glib::RefPtr<Gtk::FileFilter> filefilter = Gtk::FileFilter::create();
-	filefilter->set_name(filter.name);
-	filefilter->add_mime_type(filter.mime_type);
-	filefilter->add_pattern(filter.pattern);
-	dialog.set_filter(filefilter);
+	dialog.set_filter(filter.to_gnome_filter());
 
 	if(dialog.run() == Gtk::RESPONSE_OK){
 		return dialog.get_filename();
@@ -185,24 +209,20 @@ static std::string gnome_save_dialog(const Glib::ustring &title, const std::stri
 	return "";
 }
 
-static std::vector<Glib::RefPtr<Gio::File>> kde_open_sources_dialog(const std::string& initialDirectory, Gtk::Window* parent)
+Glib::ustring FileDialogs::FileFilter::to_kde_filter() const
 {
-	// Get formats
-	std::string filter;
-	for(const Gdk::PixbufFormat& format : Gdk::Pixbuf::get_formats()) {
-		for(const Glib::ustring& mime : format.get_mime_types()) {
-			filter += Glib::ustring::compose(" %1", mime);
-		}
-	}
-	filter += " application/pdf";
+	return mime_type;
+}
 
+static std::vector<Glib::RefPtr<Gio::File>> kde_open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const Glib::ustring& filter, bool multiple, Gtk::Window* parent)
+{
 	// Command line
 	std::vector<Glib::ustring> argv = {
 		"/usr/bin/kdialog",
 		"--getopenfilename", initialDirectory, filter,
-		"--multiple", "--separate-output",
+		multiple ? "--multiple" : "", "--separate-output",
 		"--attach", Glib::ustring::compose("%1", gdk_x11_window_get_xid(parent->get_window()->gobj())),
-		"--title", _("Select sources"),
+		"--title", title,
 		"--caption", PACKAGE_NAME
 	};
 
@@ -219,6 +239,20 @@ static std::vector<Glib::RefPtr<Gio::File>> kde_open_sources_dialog(const std::s
 		}
 	}
 	return files;
+}
+
+static std::vector<Glib::RefPtr<Gio::File>> kde_open_sources_dialog(const std::string& initialDirectory, Gtk::Window* parent)
+{
+	// Get formats
+	Glib::ustring filter;
+	for(const Gdk::PixbufFormat& format : Gdk::Pixbuf::get_formats()) {
+		for(const Glib::ustring& mime : format.get_mime_types()) {
+			filter += Glib::ustring::compose(" %1", mime);
+		}
+	}
+	filter += " application/pdf";
+
+	return kde_open_dialog(_("Select sources"), initialDirectory, filter, true, parent);
 }
 
 static std::string kde_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, const FileDialogs::FileFilter& filter, Gtk::Window *parent)
@@ -295,6 +329,22 @@ std::vector<Glib::RefPtr<Gio::File>> open_sources_dialog(const std::string& init
 	}
 #endif
 	return files;
+}
+
+std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, const std::string& initialDirectory, const FileFilter &filter, bool multiple, Gtk::Window *parent)
+{
+	std::vector<Glib::RefPtr<Gio::File>> filenames;
+	parent = parent == nullptr ? MAIN->getWindow() : parent;
+#ifdef G_OS_WIN32
+	filenames = win32_open_dialog(title, initialDirectory, filter.to_win32_filter(), multiple, parent);
+#else
+	if(is_kde()) {
+		filenames = kde_open_dialog(title, initialDirectory, filter.to_kde_filter(), multiple, parent);
+	} else {
+		filenames = gnome_open_dialog(title, initialDirectory, filter.to_gnome_filter(), multiple, parent);
+	}
+#endif
+	return filenames;
 }
 
 std::string save_dialog(const Glib::ustring &title, const std::string& suggestedFile, const FileFilter& filter, Gtk::Window *parent)
