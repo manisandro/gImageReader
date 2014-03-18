@@ -28,8 +28,10 @@
 
 class AbstractSetting {
 public:
-	AbstractSetting(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings)
-		: m_settings(settings), m_key(key) { }
+	void setSettingsAndKey(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings) {
+		m_settings = settings;
+		m_key = key;
+	}
 	virtual ~AbstractSetting() {}
 	virtual void reread() = 0;
 
@@ -41,9 +43,6 @@ protected:
 template <class T>
 class VarSetting : public AbstractSetting {
 public:
-	VarSetting(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings)
-		: AbstractSetting(key, settings) { }
-
 	const T& getValue() const{
 		return m_value;
 	}
@@ -63,8 +62,8 @@ private:
 
 class FontSetting : public AbstractSetting {
 public:
-	FontSetting(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings, const Glib::ustring& builderpath)
-		: AbstractSetting(key, settings), m_widget(Builder(builderpath))
+	FontSetting(const Glib::ustring& builderpath)
+		: m_widget(Builder(builderpath))
 	{
 		m_connection_font_set = CONNECTP(m_widget, font_name, [this]{ m_settings->set_value(m_key, Glib::Variant<Glib::ustring>::create(m_widget->get_font_name())); });
 	}
@@ -90,8 +89,6 @@ private:
 
 class SwitchSetting : public AbstractSetting {
 public:
-	SwitchSetting(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings)
-		: AbstractSetting(key, settings) {}
 	virtual void setValue(bool value) = 0;
 	virtual bool getValue() const = 0;
 };
@@ -99,8 +96,8 @@ public:
 template <class T>
 class SwitchSettingT : public SwitchSetting {
 public:
-	SwitchSettingT(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings, const Glib::ustring& builderpath)
-		: SwitchSetting(key, settings), m_widget(Builder(builderpath))
+	SwitchSettingT(const Glib::ustring& builderpath)
+		: m_widget(Builder(builderpath))
 	{
 		m_connection_toggled = CONNECT(m_widget, toggled, [this]{ m_settings->set_value(m_key, Glib::Variant<bool>::create(m_widget->get_active())); });
 	}
@@ -125,8 +122,8 @@ private:
 
 class ComboSetting : public AbstractSetting {
 public:
-	ComboSetting(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings, const Glib::ustring& builderpath)
-		: AbstractSetting(key, settings), m_widget(Builder(builderpath))
+	ComboSetting(const Glib::ustring& builderpath)
+		: m_widget(Builder(builderpath))
 	{
 		CONNECT(m_widget, changed, [this]{ m_settings->set_value(m_key, Glib::Variant<int>::create(m_widget->get_active_row_number())); });
 	}
@@ -147,8 +144,8 @@ private:
 
 class ListStoreSetting : public AbstractSetting {
 public:
-	ListStoreSetting(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings, Glib::RefPtr<Gtk::ListStore> liststore)
-		: AbstractSetting(key, settings), m_liststore(liststore) {}
+	ListStoreSetting(Glib::RefPtr<Gtk::ListStore> liststore)
+		: m_liststore(liststore) {}
 	void reread();
 	void serialize();
 

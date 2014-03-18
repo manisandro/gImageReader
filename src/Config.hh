@@ -37,6 +37,10 @@ public:
 	~Config();
 
 	void readSettings();
+	void addSetting(const Glib::ustring& key, AbstractSetting* setting) {
+		m_settings.insert(std::make_pair(key, setting));
+		setting->setSettingsAndKey(key, m_gioSettings);
+	}
 	template<class T>
 	T* getSetting(const Glib::ustring& key) const{
 		auto it = m_settings.find(key);

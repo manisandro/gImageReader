@@ -108,24 +108,24 @@ Config::Config()
 
 	m_gioSettings = Gio::Settings::create(APPLICATION_ID);
 
-	m_settings.insert(std::make_pair("outputorient", new ComboSetting("outputorient", m_gioSettings, "combo:config.settings.paneorient")));
-	m_settings.insert(std::make_pair("systemoutputfont", new SwitchSettingT<Gtk::CheckButton>("systemoutputfont", m_gioSettings, "checkbutton:config.settings.defaultoutputfont")));
-	m_settings.insert(std::make_pair("customoutputfont", new FontSetting("customoutputfont", m_gioSettings, "fontbutton:config.settings.customoutputfont")));
-	m_settings.insert(std::make_pair("showcontrols", new SwitchSettingT<Gtk::ToggleToolButton>("showcontrols", m_gioSettings, "tbbutton:main.controls")));
-	m_settings.insert(std::make_pair("dictinstall", new SwitchSettingT<Gtk::CheckButton>("dictinstall", m_gioSettings, "check:config.settings.dictinstall")));
-	m_settings.insert(std::make_pair("updatecheck", new SwitchSettingT<Gtk::CheckButton>("updatecheck", m_gioSettings, "check:config.settings.update")));
-	m_settings.insert(std::make_pair("language", new VarSetting<Glib::ustring>("language", m_gioSettings)));
-	m_settings.insert(std::make_pair("customlangs", new ListStoreSetting("customlangs", m_gioSettings, Glib::RefPtr<Gtk::ListStore>::cast_static(m_customLangView->get_model()))));
-	m_settings.insert(std::make_pair("scanres", new ComboSetting("scanres", m_gioSettings, "combo:sources.acquire.resolution")));
-	m_settings.insert(std::make_pair("scanmode", new ComboSetting("scanmode", m_gioSettings, "combo:sources.acquire.mode")));
-	m_settings.insert(std::make_pair("scanoutput", new VarSetting<Glib::ustring>("scanoutput", m_gioSettings)));
-	m_settings.insert(std::make_pair("scandev", new ComboSetting("scandev", m_gioSettings, "combo:input.acquire.device")));
-	m_settings.insert(std::make_pair("wingeom", new VarSetting<std::vector<int>>("wingeom", m_gioSettings)));
-	m_settings.insert(std::make_pair("keepdot", new SwitchSettingT<Gtk::CheckMenuItem>("keepdot", m_gioSettings, "menuitem:output.stripcrlf.keepdot")));
-	m_settings.insert(std::make_pair("keepquote", new SwitchSettingT<Gtk::CheckMenuItem>("keepquote", m_gioSettings, "menuitem:output.stripcrlf.keepquote")));
-	m_settings.insert(std::make_pair("joinhyphen", new SwitchSettingT<Gtk::CheckMenuItem>("joinhyphen", m_gioSettings, "menuitem:output.stripcrlf.joinhyphen")));
-	m_settings.insert(std::make_pair("joinspace", new SwitchSettingT<Gtk::CheckMenuItem>("joinspace", m_gioSettings, "menuitem:output.stripcrlf.joinspace")));
-	m_settings.insert(std::make_pair("ocrregionstrategy", new ComboSetting("ocrregionstrategy", m_gioSettings, "comboboxtext:dialog.regions")));
+	addSetting("outputorient", new ComboSetting("combo:config.settings.paneorient"));
+	addSetting("systemoutputfont", new SwitchSettingT<Gtk::CheckButton>("checkbutton:config.settings.defaultoutputfont"));
+	addSetting("customoutputfont", new FontSetting("fontbutton:config.settings.customoutputfont"));
+	addSetting("showcontrols", new SwitchSettingT<Gtk::ToggleToolButton>("tbbutton:main.controls"));
+	addSetting("dictinstall", new SwitchSettingT<Gtk::CheckButton>("check:config.settings.dictinstall"));
+	addSetting("updatecheck", new SwitchSettingT<Gtk::CheckButton>("check:config.settings.update"));
+	addSetting("language", new VarSetting<Glib::ustring>());
+	addSetting("customlangs", new ListStoreSetting(Glib::RefPtr<Gtk::ListStore>::cast_static(m_customLangView->get_model())));
+	addSetting("scanres", new ComboSetting("combo:sources.acquire.resolution"));
+	addSetting("scanmode", new ComboSetting("combo:sources.acquire.mode"));
+	addSetting("scanoutput", new VarSetting<Glib::ustring>());
+	addSetting("scandev", new ComboSetting("combo:input.acquire.device"));
+	addSetting("wingeom", new VarSetting<std::vector<int>>());
+	addSetting("keepdot", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.keepdot"));
+	addSetting("keepquote", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.keepquote"));
+	addSetting("joinhyphen", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.joinhyphen"));
+	addSetting("joinspace", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.joinspace"));
+	addSetting("ocrregionstrategy", new ComboSetting("comboboxtext:dialog.regions"));
 
 	Builder("tbmenu:main.recognize").as<Gtk::MenuToolButton>()->set_menu(m_langsMenu);
 	CONNECTS(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [](Gtk::CheckButton* btn){
@@ -189,7 +189,7 @@ void Config::updateLanguagesMenu()
 	tess.GetAvailableLanguagesAsVector(&availLanguages);
 
 	if(availLanguages.empty()){
-		Utils::error_dialog(_("No languages available"), _("No tesseract languages are available for use. Recognition will not work."));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("No languages available"), _("No tesseract languages are available for use. Recognition will not work."));
 		m_langLabel->set_text("");
 		return;
 	}
