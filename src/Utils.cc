@@ -142,6 +142,36 @@ std::string Utils::make_absolute_path(const std::string& path)
 	return Glib::build_path("/", std::vector<std::string>{Glib::get_current_dir(), path});
 }
 
+std::string Utils::get_documents_dir()
+{
+	std::string dir = Glib::get_user_special_dir(G_USER_DIRECTORY_DOCUMENTS);
+	if(Glib::file_test(dir, Glib::FILE_TEST_IS_DIR)) {
+		return dir;
+	}
+	return Glib::get_home_dir();
+}
+
+std::string Utils::make_output_filename(const std::string& filename)
+{
+	// Ensure directory exists
+	std::string dirname = Glib::path_get_dirname(filename);
+	std::string basename = Glib::path_get_basename(filename);
+	if(!Glib::file_test(dirname, Glib::FILE_TEST_IS_DIR)){
+		dirname = get_documents_dir();
+	}
+	std::string newfilename = Glib::build_filename(dirname, basename);
+	// Generate non-existing file
+	int i = 0;
+	std::string base, ext;
+	Utils::get_filename_parts(newfilename, base, ext);
+	base = Glib::Regex::create("_[0-9]+$")->replace(base, 0, "", static_cast<Glib::RegexMatchFlags>(0));
+	newfilename = Glib::ustring::compose("%1.%2", base, ext);
+	while(Glib::file_test(newfilename, Glib::FILE_TEST_EXISTS)){
+		newfilename = Glib::ustring::compose("%1_%2.%3", base, ++i, ext);
+	}
+	return newfilename;
+}
+
 std::vector<Glib::ustring> Utils::string_split(const Glib::ustring &text, char delim, bool keepEmpty)
 {
 	std::vector<Glib::ustring> parts;

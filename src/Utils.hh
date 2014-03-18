@@ -45,6 +45,8 @@ namespace Utils {
 	void get_filename_parts(const std::string& filename, std::string& base, std::string& ext);
 	void ensure_extension(std::string& filename, const std::string& ext);
 	std::string make_absolute_path(const std::string& path);
+	std::string get_documents_dir();
+	std::string make_output_filename(const std::string& filename);
 
 	std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, bool keepEmpty = false);
 
