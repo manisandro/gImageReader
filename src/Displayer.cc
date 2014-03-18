@@ -53,6 +53,7 @@ Displayer::Displayer()
 	m_renderer = 0;
 	clearImage(); // Assigns default values to all state variables
 	selectionUpdateColors();
+	m_selectionSaveFilename = Glib::build_filename(Utils::get_documents_dir(), _("selection.png"));
 
 	m_connection_positionAndZoomCanvas = CONNECT(m_viewport, size_allocate, [this](Gdk::Rectangle&){ positionCanvas(true); });
 	m_connection_saveHScrollMark = CONNECT(m_hadjustment, value_changed, [this]{ saveScrollMark(m_hadjustment, m_geo.sx); });
@@ -635,14 +636,15 @@ std::vector<Cairo::RefPtr<Cairo::ImageSurface>> Displayer::getSelections() const
 	return images;
 }
 
-void Displayer::saveSelection(const Geometry::Rectangle& rect) const
+void Displayer::saveSelection(const Geometry::Rectangle& rect)
 {
 	Cairo::RefPtr<Cairo::ImageSurface> img = getTransformedImage(rect);
-	std::string initialPath = Glib::build_filename(Glib::get_user_special_dir(G_USER_DIRECTORY_DOCUMENTS), _("selection.png"));
+	m_selectionSaveFilename = Utils::make_output_filename(m_selectionSaveFilename);
 	FileDialogs::FileFilter filter = {_("PNG Images"), "image/png", "*.png"};
-	std::string filename = FileDialogs::save_dialog(_("Save Selection Image"), initialPath, filter);
+	std::string filename = FileDialogs::save_dialog(_("Save Selection Image"), m_selectionSaveFilename, filter);
 	if(!filename.empty()){
 		img->write_to_png(filename);
+		m_selectionSaveFilename = filename;
 	}
 }
 

@@ -72,14 +72,11 @@ Acquirer::~Acquirer()
 void Acquirer::init()
 {
 	m_outputPath = MAIN->getConfig()->getSetting<VarSetting<std::string>>("scanoutput")->getValue();
-	if(m_outputPath.empty() || !Glib::file_test(Glib::path_get_dirname(m_outputPath), Glib::FILE_TEST_IS_DIR)){
-		m_outputPath = Glib::build_filename(Glib::get_user_special_dir(G_USER_DIRECTORY_DOCUMENTS), _("scan.png"));
-		if(!Glib::file_test(Glib::path_get_dirname(m_outputPath), Glib::FILE_TEST_IS_DIR)){
-			m_outputPath = Glib::build_filename(Glib::get_home_dir(), _("scan.png"));
-		}
+	if(m_outputPath.empty()) {
+		m_outputPath = Glib::build_filename(Utils::get_documents_dir(), _("scan.png"));
 	}
-	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);
 	genOutputPath();
+	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);
 
 	m_scanner->start();
 }
@@ -97,13 +94,7 @@ void Acquirer::selectOutputPath()
 
 void Acquirer::genOutputPath()
 {
-	int i = 0;
-	std::string base, ext;
-	Utils::get_filename_parts(m_outputPath, base, ext);
-	base = Glib::Regex::create("_[0-9]+$")->replace(base, 0, "", static_cast<Glib::RegexMatchFlags>(0));
-	while(Glib::file_test(m_outputPath, Glib::FILE_TEST_EXISTS)){
-		m_outputPath = Glib::ustring::compose("%1_%2.%3", base, ++i, ext);
-	}
+	m_outputPath = Utils::make_output_filename(m_outputPath);
 	m_outputLabel->set_text(m_outputPath);
 	m_outputLabel->set_tooltip_text(m_outputPath);
 }

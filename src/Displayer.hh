@@ -76,6 +76,7 @@ private:
 	Gdk::RGBA m_selColors[2];
 	DisplaySelectionHandle* m_curSel = nullptr;
 	std::vector<DisplaySelection*> m_selections;
+	std::string m_selectionSaveFilename;
 
 	sigc::connection m_timer;
 	sigc::connection m_connection_selDo;
@@ -116,7 +117,7 @@ private:
 	void showSelectionMenu(GdkEventButton* ev, int i);
 	void hideSelectionMenu();
 	Cairo::RefPtr<Cairo::ImageSurface> getTransformedImage(const Geometry::Rectangle& rect) const;
-	void saveSelection(const Geometry::Rectangle& rect) const;
+	void saveSelection(const Geometry::Rectangle& rect);
 
 	// Stuff for workaround until cairo supports propper downscaling...
 	Cairo::RefPtr<Cairo::ImageSurface> m_blurImage;
