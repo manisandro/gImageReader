@@ -24,6 +24,7 @@
 #include "UndoableBuffer.hh"
 #include "Config.hh"
 #include "Notifier.hh"
+#include "ReplaceListManager.hh"
 
 #include <gtkspellmm.h>
 
@@ -60,6 +61,8 @@ private:
 	Gtk::TextIter m_selectIter;
 	GtkSpell::Checker m_spell;
 	Notifier::Handle m_notifierHandle = nullptr;
+
+	ReplaceListManager m_replaceListManager;
 
 	void showInsertMenu();
 	void setInsertMode(InsertMode mode, const std::string& iconName);

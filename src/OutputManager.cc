@@ -36,7 +36,7 @@ OutputManager::OutputManager()
 	m_insButton = Builder("tbbutton:output.insert");
 	m_insMenu = Builder("menu:output.insert");
 	m_insImage = Builder("image:output.insert");
-	m_replaceBox = Builder("evbox:findreplace");
+	m_replaceBox = Builder("box:output.findreplace");
 	m_outputBox = Builder("box:output");
 	m_textView = Builder("textview:output");
 	m_searchEntry = Builder("entry:output.search");
@@ -80,6 +80,8 @@ OutputManager::OutputManager()
 	CONNECT(m_redoButton, clicked, [this]{ m_textBuffer->redo(); m_textView->grab_focus(); });
 	CONNECT(Builder("tbbutton:output.save").as<Gtk::ToolButton>(), clicked, [this]{ saveBuffer(); });
 	CONNECT(Builder("tbbutton:output.clear").as<Gtk::ToolButton>(), clicked, [this]{ clearBuffer(); });
+	CONNECT(Builder("button:output.postproc.manage").as<Gtk::ToolButton>(), clicked, [this]{ m_replaceListManager.show(); });
+	CONNECT(Builder("button:output.postproc.apply").as<Gtk::ToolButton>(), clicked, [this]{ m_replaceListManager.apply(m_textBuffer); });
 }
 
 void OutputManager::showInsertMenu()
@@ -254,6 +256,7 @@ bool OutputManager::clearBuffer()
 	m_textBuffer->set_text("");
 	m_textBuffer->clear_history();
 	m_outputBox->hide();
+	m_replaceListManager.hide();
 	return true;
 }
 

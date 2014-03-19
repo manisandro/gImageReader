@@ -40,6 +40,8 @@ gimagereader_SOURCES = \
 	OutputManager.hh \
 	Recognizer.cc \
 	Recognizer.hh \
+	ReplaceListManager.cc \
+	ReplaceListManager.hh \
 	Scanner.cc \
 	Scanner.hh \
 	ScannerSane.hh \

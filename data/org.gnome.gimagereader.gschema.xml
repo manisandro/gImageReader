@@ -91,5 +91,10 @@
       <summary>OCR Page Region Strategy</summary>
       <description>Whether to recognize the entire page or peform page layout autodetection.</description>
     </key>
+    <key type="s" name="replacelist">
+      <default>""</default>
+      <summary>Replacement list</summary>
+      <description>List of search-replace strings.</description>
+    </key>
   </schema>
 </schemalist>

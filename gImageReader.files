@@ -48,6 +48,8 @@ src/OutputManager.hh
 src/OutputManager.cc
 src/Recognizer.hh
 src/Recognizer.cc
+src/ReplaceListManager.cc
+src/ReplaceListManager.hh
 src/Scanner.hh
 src/Scanner.cc
 src/ScannerSane.hh
