@@ -114,7 +114,7 @@ void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files
 		m_listView->get_selection()->select(it);
 	}
 	if(!failed.empty()){
-		Utils::error_dialog(_("Unable to open files"), Glib::ustring::compose(_("The following files could not be opened:%1"), failed));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Unable to open files"), Glib::ustring::compose(_("The following files could not be opened:%1"), failed));
 	}
 }
 
@@ -240,7 +240,7 @@ void SourceManager::sourceChanged(const Glib::RefPtr<Gio::File>& file, const Gli
 			m_signal_sourceChanged.emit(getSelectedSource());
 		}
 	}else if(event == Gio::FILE_MONITOR_EVENT_DELETED){
-		Utils::error_dialog(_("Deleted file"), Glib::ustring::compose(_("The following file has been deleted:\n%1"), file->get_path()));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Deleted file"), Glib::ustring::compose(_("The following file has been deleted:\n%1"), file->get_path()));
 		it = store->erase(it);
 		if(m_listView->get_selection()->get_selected()){
 			return;

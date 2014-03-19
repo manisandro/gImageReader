@@ -45,10 +45,10 @@ void Utils::popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gt
 	push_in = true;
 }
 
-void Utils::error_dialog(const Glib::ustring &title, const Glib::ustring &text, Gtk::Window *parent)
+void Utils::message_dialog(Gtk::MessageType message, const Glib::ustring &title, const Glib::ustring &text, Gtk::Window *parent)
 {
 	if(!parent){ parent = MAIN->getWindow(); }
-	Gtk::MessageDialog dialog(*parent, title, false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, true);
+	Gtk::MessageDialog dialog(*parent, title, false, message, Gtk::BUTTONS_OK, true);
 	dialog.set_secondary_text(text);
 	dialog.run();
 }

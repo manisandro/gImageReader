@@ -357,7 +357,7 @@ bool Displayer::setSource(const std::string &filename)
 		rotate();
 		return true;
 	}else{
-		Utils::error_dialog(_("Failed to load image"), Glib::ustring::compose(_("The file might not be an image or be corrupt:\n%1"), filename));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to load image"), Glib::ustring::compose(_("The file might not be an image or be corrupt:\n%1"), filename));
 		m_image = Cairo::RefPtr<Cairo::ImageSurface>();
 		return false;
 	}

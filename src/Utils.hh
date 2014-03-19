@@ -34,7 +34,7 @@ namespace Utils {
 
 	void popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gtk::Menu* menu, bool alignRight, bool alignBottom);
 
-	void error_dialog(const Glib::ustring& title, const Glib::ustring& text, Gtk::Window* parent = 0);
+	void message_dialog(Gtk::MessageType message, const Glib::ustring& title, const Glib::ustring& text, Gtk::Window* parent = 0);
 	int question_dialog(const Glib::ustring& title, const Glib::ustring& text, Gtk::Window* parent = 0);
 
 	void configure_spin(Gtk::SpinButton* spin, double value, double min, double max, double step, double page, sigc::connection* block = 0);

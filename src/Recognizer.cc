@@ -169,7 +169,7 @@ void Recognizer::recognizeDone(const Glib::ustring &errors)
 	m_thread->join();
 	MAIN->popState();
 	if(!errors.empty()){
-		Utils::error_dialog(_("Recognition errors occured"), Glib::ustring::compose(_("The following errors occured:%1"), errors));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occured"), Glib::ustring::compose(_("The following errors occured:%1"), errors));
 	}
 }
 

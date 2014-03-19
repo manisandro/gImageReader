@@ -230,7 +230,7 @@ bool OutputManager::saveBuffer(std::string filename)
 	}
 	std::ofstream file(filename);
 	if(!file.is_open()){
-		Utils::error_dialog(_("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
 	Glib::ustring txt = m_textBuffer->get_text(false);
@@ -303,7 +303,7 @@ void OutputManager::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> pro
 	try {
 		proxy->call_finish(result);
 	} catch (const Glib::Error& e) {
-		Utils::error_dialog(_("Failed to install spelling dictionary"), e.what());
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to install spelling dictionary"), e.what());
 	}
 	MAIN->getConfig()->updateLanguagesMenu();
 	MAIN->popState();
