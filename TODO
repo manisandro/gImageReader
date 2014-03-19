@@ -2,7 +2,6 @@ High prio:
 - Fix TWAIN
 
 Mid prio:
-- post processing list for find/replace pairs
 - Left click to add selection, right click in the empty space to remove them?
 - Don't set whole window to inactive when loading page, just display a "working" image and queue the rendering operation. If another rendering request comes in, cancel the active one.
 - Fix backtrace window on windows (spawn async?)
