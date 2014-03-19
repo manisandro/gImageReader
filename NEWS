@@ -1,3 +1,12 @@
+gImageReader 2.92 (Mar 19 2014):
+ * gImageReader 3.0 beta 3
+ * Add replacement-list feature, allowing the user to specify a list of replacements to perform on the recognized text
+ * Fix saving output resulting in empty files
+ * Fix crashes when rendering PDF files
+ * Keep line-breaks if preeded by line-break
+ * Fix localization not working on Windows
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+ 
 gImageReader 2.91 (Feb 20 2014):
  * gImageReader 3.0 beta 2
  * Improve page-layout autodetection by merging overlapping regions
