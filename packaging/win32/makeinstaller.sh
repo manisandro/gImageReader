@@ -34,6 +34,8 @@ rm -rf $win32dir/root
 mv $win32dir/_root$MINGWROOT $win32dir/root
 rm -rf $win32dir/_root
 cp -R $win32dir/skel/* $win32dir/root
+# Move incorrectly installed locale
+mv $win32dir/root/lib/locale $win32dir/root/share/locale
 popd > /dev/null
 
 # Collect dependencies

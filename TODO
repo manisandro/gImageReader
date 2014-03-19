@@ -7,7 +7,6 @@ Mid prio:
 - Fix backtrace window on windows (spawn async?)
 - output pane in separate window
 - User dictionary is not saved on some windows versions?
-- Check whether localization works on windows
 
 Low prio:
 - installation of tesseract langpacks through packagekit?

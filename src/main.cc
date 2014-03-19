@@ -38,9 +38,11 @@ int main (int argc, char *argv[])
 	dataDir = Glib::build_filename(dir, "share", PACKAGE);
 	localeDir = Glib::build_filename(dir, "share", "locale");
 	g_free(dir);
-	gchar* locale = g_win32_getlocale();
-	Glib::setenv("LANG", locale);
-	g_free(locale);
+	if(Glib::getenv("LANG").empty()) {
+		gchar* locale = g_win32_getlocale();
+		Glib::setenv("LANG", locale);
+		g_free(locale);
+	}
 #else
 	dataDir = PACKAGE_DATA_DIR;
 	localeDir = PACKAGE_LOCALE_DIR;

@@ -115,7 +115,7 @@ FunctionEnd
 
 ;********** Installation types **********
 InstType "Standard"
-InstType "Standard (intl)"
+InstType "Standard (localized)"
 InstType /NOCUSTOM
 
 Section "Standard" MainSection
@@ -123,7 +123,7 @@ Section "Standard" MainSection
 
   ; Main program files
   SetOutPath "$INSTDIR"
-  File /r /x locale "root/*.*"
+  File /r /x locale "root\*.*"
 
   ; Uninstaller
   WriteRegStr SHCTX "${REG_UNINSTALL}" "DisplayName" "${NAME}"
@@ -151,8 +151,8 @@ SectionEnd
 Section "intl" IntlSection
   SectionIn 2
 
-  SetOutPath "$INSTDIR"
-  File /r "root/share/locale"
+  SetOutPath "$INSTDIR\share\"
+  File /r "root\share\locale"
 SectionEnd
 
 ; Installation section language strings
