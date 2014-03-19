@@ -32,7 +32,16 @@ LT_INIT
 
 dnl ********************************* Modules *********************************
 PKG_CHECK_MODULES(GIMAGEREADER, [gtkmm-3.0 >= 3.6 gtkspellmm-3.0 >= 3.0.2
-								 cairomm-1.0 poppler-glib tesseract >= 3.02.02])
+								 cairomm-1.0 poppler-glib])
+
+PKG_CHECK_MODULES(TESSERACT, [tesseract >= 3.02.02], [], [
+    AC_MSG_NOTICE([tesseract not found via pkg-config, using hardcoded CFLAGS and LIBS])
+    TESSERACT_CFLAGS+=-I/usr/include/tesseract
+    TESSERACT_LIBS+=-ltesseract
+])
+
+GIMAGEREADER_CFLAGS+=$TESSERACT_CFLAGS
+GIMAGEREADER_LIBS+=$TESSERACT_LIBS
 
 dnl *************************** Enable version check **************************
 AC_ARG_ENABLE([versioncheck],
