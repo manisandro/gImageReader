@@ -396,6 +396,7 @@ bool Displayer::setImage()
 
 void Displayer::clearImage()
 {
+	sendBlurRequest(BlurRequest::Stop, true);
 	m_geo = {0.0, 0.5, 0.5, 1.0, Geometry::Rotation(0)};
 	m_image = Cairo::RefPtr<Cairo::ImageSurface>();
 	delete m_renderer;
