@@ -25,6 +25,7 @@
 #include "Utils.hh"
 
 #include <fstream>
+#include <cstring>
 
 #ifdef G_OS_UNIX
 #include <gdk/gdkx.h>
@@ -234,7 +235,7 @@ bool OutputManager::saveBuffer(std::string filename)
 		return false;
 	}
 	Glib::ustring txt = m_textBuffer->get_text(false);
-	file.write(txt.data(), txt.length());
+	file.write(txt.data(), std::strlen(txt.data()));
 	m_textBuffer->set_modified(false);
 	return true;
 }
