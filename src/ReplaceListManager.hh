@@ -46,7 +46,6 @@ private:
 	Gtk::Button* m_removeButton;
 	Glib::RefPtr<Gtk::ListStore> m_listStore;
 
-	void resizeListViewCols(const Gtk::Allocation &alloc);
 	void openList();
 	bool saveList();
 	bool clearList();

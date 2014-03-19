@@ -37,11 +37,12 @@ ReplaceListManager::ReplaceListManager()
 
 	m_listStore = Gtk::ListStore::create(m_viewCols);
 	m_listView->set_model(m_listStore);
-	CONNECT(m_listView, size_allocate, [this](Gtk::Allocation& a){ resizeListViewCols(a); });
 	m_listView->append_column_editable(_("Search for"), m_viewCols.search);
 	m_listView->append_column_editable(_("Replace with"), m_viewCols.replace);
 	m_listView->get_column(0)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
 	m_listView->get_column(1)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
+	m_listView->get_column(0)->set_expand(true);
+	m_listView->get_column(1)->set_expand(true);
 	m_listView->set_fixed_height_mode();
 
 	MAIN->getConfig()->addSetting("replacelist", new ListStoreSetting(Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model())));
@@ -53,14 +54,6 @@ ReplaceListManager::ReplaceListManager()
 	CONNECT(m_removeButton, clicked, [this]{ removeRows(); });
 	CONNECT(m_listView->get_selection(), changed, [this]{ m_removeButton->set_sensitive(m_listView->get_selection()->count_selected_rows() != 0); });
 	CONNECT(m_dialog, hide, [this] { dialogClosed(); });
-}
-
-void ReplaceListManager::resizeListViewCols(const Gtk::Allocation& alloc)
-{
-	int width = alloc.get_width()/double(m_listView->get_columns().size());
-	for(Gtk::TreeViewColumn* col : m_listView->get_columns()){
-		col->set_fixed_width(width);
-	}
 }
 
 void ReplaceListManager::openList()

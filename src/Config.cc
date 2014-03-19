@@ -88,12 +88,12 @@ Config::Config()
 
 	for(Gtk::TreeView* view : {m_predefLangView, m_customLangView}){
 		view->set_model(Gtk::ListStore::create(m_langViewCols));
-		CONNECT(view, size_allocate, [this,view](Gtk::Allocation& a){ viewResizeCols(view, a); });
 		view->append_column(_("Filename prefix"), m_langViewCols.prefix);
 		view->append_column(_("Code"), m_langViewCols.code);
 		view->append_column(_("Native name"), m_langViewCols.name);
 		for(int i=0; i<3; ++i){
 			view->get_column(i)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
+			view->get_column(i)->set_expand(true);
 		}
 		view->set_fixed_height_mode();
 	}
@@ -268,14 +268,6 @@ void Config::setLanguage(const Gtk::RadioMenuItem* item, const Lang &lang, const
 		m_curlang = lang;
 		getSetting<VarSetting<Glib::ustring>>("language")->setValue(lang.prefix + ":" + lang.code);
 		m_signal_languageChanged.emit(lang);
-	}
-}
-
-void Config::viewResizeCols(Gtk::TreeView *view, const Gtk::Allocation& alloc)
-{
-	int width = alloc.get_width()/double(view->get_columns().size());
-	for(Gtk::TreeViewColumn* col : view->get_columns()){
-		col->set_fixed_width(width);
 	}
 }
 

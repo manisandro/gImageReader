@@ -86,7 +86,6 @@ private:
 	sigc::signal<void, const Lang&> m_signal_languageChanged;
 
 	void setLanguage(const Gtk::RadioMenuItem *item, const Lang& lang, const Glib::ustring& prettyname);
-	void viewResizeCols(Gtk::TreeView* view, const Gtk::Allocation &alloc);
 	void toggleAddLanguage();
 	void addLanguage();
 	void removeLanguage();
