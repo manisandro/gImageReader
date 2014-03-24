@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
 		try {
 			Builder::builder = Gtk::Builder::create_from_file(Glib::build_filename(dataDir, "crashhandler.ui"));
 			Builder::builder->set_translation_domain(GETTEXT_PACKAGE);
-		} catch (const Glib::FileError & ex) {
+		} catch (const Glib::Error & ex) {
 			std::cerr << ex.what() << std::endl;
 			return 1;
 		}
@@ -83,7 +83,7 @@ int main (int argc, char *argv[])
 		try {
 			Builder::builder = Gtk::Builder::create_from_file(Glib::build_filename(dataDir, "gimagereader.ui"));
 			Builder::builder->set_translation_domain(GETTEXT_PACKAGE);
-		} catch (const Glib::FileError & ex) {
+		} catch (const Glib::Error & ex) {
 			std::cerr << ex.what() << std::endl;
 			return 1;
 		}
