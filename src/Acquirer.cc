@@ -28,9 +28,9 @@
 
 Acquirer::Acquirer()
 {
-	m_devCombo = Builder("combo:input.acquire.device");
+	m_devCombo = Builder("combo:sources.acquire.device");
 	m_refreshButton = Builder("button:inpute.acquire.device.refresh");
-	m_refreshSpinner = Builder("spinner:input.acquire.device");
+	m_refreshSpinner = Builder("spinner:sources.acquire.device");
 	m_resCombo = Builder("combo:sources.acquire.resolution");
 	m_modeCombo = Builder("combo:sources.acquire.mode");
 	m_msgLabel = Builder("label:sources.acquire.message");
@@ -62,16 +62,13 @@ Acquirer::Acquirer()
 	CONNECT(m_scanner, scanning_changed, [this](Scanner::ScanState state){ setScanState(state); });
 	CONNECT(m_scanner, page_available, [this](const std::string& file){ MAIN->getSourceManager()->addSources({Gio::File::create_for_path(file)});});
 	CONNECT(m_devCombo, changed, [this]{ auto it = m_devCombo->get_active(); m_devCombo->set_tooltip_text(it ? static_cast<std::string>((*it)[m_devComboCols.label]) : ""); });
-}
 
-Acquirer::~Acquirer()
-{
-	m_scanner->stop();
-}
+	MAIN->getConfig()->addSetting("scanres", new ComboSetting("combo:sources.acquire.resolution"));
+	MAIN->getConfig()->addSetting("scanmode", new ComboSetting("combo:sources.acquire.mode"));
+	MAIN->getConfig()->addSetting("scanoutput", new VarSetting<Glib::ustring>());
+	MAIN->getConfig()->addSetting("scandev", new ComboSetting("combo:sources.acquire.device"));
 
-void Acquirer::init()
-{
-	m_outputPath = MAIN->getConfig()->getSetting<VarSetting<std::string>>("scanoutput")->getValue();
+	m_outputPath = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->getValue();
 	if(m_outputPath.empty()) {
 		m_outputPath = Glib::build_filename(Utils::get_documents_dir(), _("scan.png"));
 	}
@@ -79,6 +76,11 @@ void Acquirer::init()
 	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);
 
 	m_scanner->start();
+}
+
+Acquirer::~Acquirer()
+{
+	m_scanner->stop();
 }
 
 void Acquirer::selectOutputPath()

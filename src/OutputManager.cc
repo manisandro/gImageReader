@@ -82,6 +82,11 @@ OutputManager::OutputManager()
 	CONNECT(Builder("tbbutton:output.clear").as<Gtk::ToolButton>(), clicked, [this]{ clearBuffer(); });
 	CONNECT(Builder("button:output.postproc.manage").as<Gtk::ToolButton>(), clicked, [this]{ m_replaceListManager.show(); });
 	CONNECT(Builder("button:output.postproc.apply").as<Gtk::ToolButton>(), clicked, [this]{ m_replaceListManager.apply(m_textBuffer); });
+
+	MAIN->getConfig()->addSetting("keepdot", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.keepdot"));
+	MAIN->getConfig()->addSetting("keepquote", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.keepquote"));
+	MAIN->getConfig()->addSetting("joinhyphen", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.joinhyphen"));
+	MAIN->getConfig()->addSetting("joinspace", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.joinspace"));
 }
 
 void OutputManager::showInsertMenu()

@@ -118,12 +118,13 @@ MainWindow::MainWindow()
 		m_window->set_title(newsrc.empty() ? PACKAGE_NAME : Glib::path_get_basename(newsrc) + " - " + PACKAGE_NAME);
 	});
 
+	m_config->addSetting("showcontrols", new SwitchSettingT<Gtk::ToggleToolButton>("tbbutton:main.controls"));
+
+	m_config->updateLanguagesMenu();
+
 	m_statusbar->push(_("Select an image to begin..."));
 	m_stateStack.push_back(State::Idle);
 	setState(State::Idle);
-
-	m_config->readSettings(); // Read settings only after all objects are constructed (and all signals connected)
-	m_acquirer->init(); // Need to delay this until settings are read
 
 	const std::vector<int>& geom = m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->getValue();
 	if(geom.size() == 4){
@@ -144,12 +145,12 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
-	delete m_config;
 	delete m_acquirer;
 	delete m_displayer;
 	delete m_outputManager;
 	delete m_recognizer;
 	delete m_sourceManager;
+	delete m_config;
 	s_instance = nullptr;
 }
 

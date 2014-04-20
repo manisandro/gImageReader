@@ -40,6 +40,8 @@ Recognizer::Recognizer()
 	CONNECT(Builder("menuitem:recognize.pages.multiple").as<Gtk::MenuItem>(), activate, [this]{ recognizeStart(PageSelection::Multiple); });
 	CONNECTS(m_pagesEntry, focus_in_event, [](GdkEventFocus*, Gtk::Entry* e){ Utils::clear_error_state(e); return false; });
 	m_textDispatcher.connect([this]{ addText(); });
+
+	MAIN->getConfig()->addSetting("ocrregionstrategy", new ComboSetting("comboboxtext:dialog.regions"));
 }
 
 bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, OutputDestination dest)

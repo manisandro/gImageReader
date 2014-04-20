@@ -50,7 +50,7 @@
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
-  <object class="GtkFileFilter" id="filefilter:input.acquire.output">
+  <object class="GtkFileFilter" id="filefilter:sources.acquire.output">
     <mime-types>
       <mime-type>image/png</mime-type>
     </mime-types>
@@ -105,7 +105,7 @@
       </packing>
     </child>
   </object>
-  <object class="GtkImage" id="image:input.acquire.scan">
+  <object class="GtkImage" id="image:sources.acquire.scan">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="icon_name">scanner</property>
@@ -295,7 +295,7 @@
       </object>
     </child>
   </object>
-  <object class="GtkListStore" id="liststore:input.acquire.device">
+  <object class="GtkListStore" id="liststore:sources.acquire.device">
     <columns>
       <!-- column-name device -->
       <column type="gchararray"/>
@@ -805,10 +805,10 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <child>
-                                  <object class="GtkComboBox" id="combo:input.acquire.device">
+                                  <object class="GtkComboBox" id="combo:sources.acquire.device">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="model">liststore:input.acquire.device</property>
+                                    <property name="model">liststore:sources.acquire.device</property>
                                     <property name="popup_fixed_width">False</property>
                                   </object>
                                   <packing>
@@ -824,7 +824,7 @@
                                     <property name="has_tooltip">True</property>
                                     <property name="tooltip_text" translatable="yes">Refresh</property>
                                     <child>
-                                      <object class="GtkImage" id="image:input.acquire.refresh">
+                                      <object class="GtkImage" id="image:sources.acquire.refresh">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="pixel_size">16</property>
@@ -840,7 +840,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkSpinner" id="spinner:input.acquire.device">
+                                  <object class="GtkSpinner" id="spinner:sources.acquire.device">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_top">4</property>
@@ -993,7 +993,7 @@
                                 <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <property name="image">image:input.acquire.scan</property>
+                                <property name="image">image:sources.acquire.scan</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -2225,7 +2225,7 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
   <object class="GtkSizeGroup" id="sizegroup:sources.acquire.device">
     <property name="mode">both</property>
     <widgets>
-      <widget name="spinner:input.acquire.device"/>
+      <widget name="spinner:sources.acquire.device"/>
       <widget name="button:inpute.acquire.device.refresh"/>
     </widgets>
   </object>

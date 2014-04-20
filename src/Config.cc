@@ -108,25 +108,6 @@ Config::Config()
 
 	m_gioSettings = Gio::Settings::create(APPLICATION_ID);
 
-	addSetting("outputorient", new ComboSetting("combo:config.settings.paneorient"));
-	addSetting("systemoutputfont", new SwitchSettingT<Gtk::CheckButton>("checkbutton:config.settings.defaultoutputfont"));
-	addSetting("customoutputfont", new FontSetting("fontbutton:config.settings.customoutputfont"));
-	addSetting("showcontrols", new SwitchSettingT<Gtk::ToggleToolButton>("tbbutton:main.controls"));
-	addSetting("dictinstall", new SwitchSettingT<Gtk::CheckButton>("check:config.settings.dictinstall"));
-	addSetting("updatecheck", new SwitchSettingT<Gtk::CheckButton>("check:config.settings.update"));
-	addSetting("language", new VarSetting<Glib::ustring>());
-	addSetting("customlangs", new ListStoreSetting(Glib::RefPtr<Gtk::ListStore>::cast_static(m_customLangView->get_model())));
-	addSetting("scanres", new ComboSetting("combo:sources.acquire.resolution"));
-	addSetting("scanmode", new ComboSetting("combo:sources.acquire.mode"));
-	addSetting("scanoutput", new VarSetting<Glib::ustring>());
-	addSetting("scandev", new ComboSetting("combo:input.acquire.device"));
-	addSetting("wingeom", new VarSetting<std::vector<int>>());
-	addSetting("keepdot", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.keepdot"));
-	addSetting("keepquote", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.keepquote"));
-	addSetting("joinhyphen", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.joinhyphen"));
-	addSetting("joinspace", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.joinspace"));
-	addSetting("ocrregionstrategy", new ComboSetting("comboboxtext:dialog.regions"));
-
 	Builder("tbmenu:main.recognize").as<Gtk::MenuToolButton>()->set_menu(m_langsMenu);
 	CONNECTS(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [](Gtk::CheckButton* btn){
 		Builder("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>()->set_sensitive(!btn->get_active());
@@ -141,6 +122,15 @@ Config::Config()
 	CONNECT(m_addLangName, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangName); return false; });
 	CONNECT(m_addLangCode, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangCode); return false; });
 	CONNECT(m_gioSettings, changed, [this](const Glib::ustring& key){ getSetting<AbstractSetting>(key)->reread(); });
+
+	addSetting("outputorient", new ComboSetting("combo:config.settings.paneorient"));
+	addSetting("systemoutputfont", new SwitchSettingT<Gtk::CheckButton>("checkbutton:config.settings.defaultoutputfont"));
+	addSetting("customoutputfont", new FontSetting("fontbutton:config.settings.customoutputfont"));
+	addSetting("dictinstall", new SwitchSettingT<Gtk::CheckButton>("check:config.settings.dictinstall"));
+	addSetting("updatecheck", new SwitchSettingT<Gtk::CheckButton>("check:config.settings.update"));
+	addSetting("language", new VarSetting<Glib::ustring>());
+	addSetting("customlangs", new ListStoreSetting(Glib::RefPtr<Gtk::ListStore>::cast_static(m_customLangView->get_model())));
+	addSetting("wingeom", new VarSetting<std::vector<int>>());
 }
 
 Config::~Config()
@@ -148,14 +138,6 @@ Config::~Config()
 	for(const auto& keyVal : m_settings){
 		delete keyVal.second;
 	}
-}
-
-void Config::readSettings()
-{
-	for(const auto& keyval : m_settings){
-		keyval.second->reread();
-	}
-	updateLanguagesMenu();
 }
 
 bool Config::searchLangSpec(const Glib::RefPtr<Gtk::TreeModel> model, Lang& lang) const
