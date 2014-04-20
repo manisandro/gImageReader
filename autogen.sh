@@ -45,11 +45,11 @@ srcdir="$(dirname "$(readlink -f $0)")"
 (
   cd "$srcdir"
   echo "Running intltoolize..."
-  intltoolize --force --copy --automake
+  intltoolize --force --copy --automake || exit 1
 )
 
 echo "Running autoreconf..."
-autoreconf -fiv "$srcdir"
+autoreconf -fiv "$srcdir" || exit 1
 
 
 if test x$NOCONFIGURE = x; then
