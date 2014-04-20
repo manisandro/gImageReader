@@ -122,6 +122,8 @@ MainWindow::MainWindow()
 
 	m_config->updateLanguagesMenu();
 
+	m_acquirer->start();
+
 	m_statusbar->push(_("Select an image to begin..."));
 	m_stateStack.push_back(State::Idle);
 	setState(State::Idle);

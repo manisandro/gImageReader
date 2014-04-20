@@ -74,7 +74,9 @@ Acquirer::Acquirer()
 	}
 	genOutputPath();
 	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);
+}
 
+void Acquirer::start() {
 	m_scanner->start();
 }
 
