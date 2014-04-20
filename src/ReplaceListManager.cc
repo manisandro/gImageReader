@@ -29,8 +29,6 @@
 
 ReplaceListManager::ReplaceListManager()
 {
-	m_currentFile = Glib::build_filename(Utils::get_documents_dir(), _("replace_list.txt"));
-
 	m_dialog = Builder("window:postproc");
 	m_listView = Builder("treeview:postproc");
 	m_removeButton = Builder("toolbutton:postproc.remove");
@@ -45,7 +43,6 @@ ReplaceListManager::ReplaceListManager()
 	m_listView->get_column(1)->set_expand(true);
 	m_listView->set_fixed_height_mode();
 
-	MAIN->getConfig()->addSetting("replacelist", new ListStoreSetting(Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model())));
 
 	CONNECT(Builder("toolbutton:postproc.open").as<Gtk::Button>(), clicked, [this]{ openList(); });
 	CONNECT(Builder("toolbutton:postproc.save").as<Gtk::Button>(), clicked, [this]{ saveList(); });
@@ -54,6 +51,15 @@ ReplaceListManager::ReplaceListManager()
 	CONNECT(m_removeButton, clicked, [this]{ removeRows(); });
 	CONNECT(m_listView->get_selection(), changed, [this]{ m_removeButton->set_sensitive(m_listView->get_selection()->count_selected_rows() != 0); });
 	CONNECT(m_dialog, hide, [this] { dialogClosed(); });
+
+	MAIN->getConfig()->addSetting("replacelist", new ListStoreSetting(Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model())));
+	MAIN->getConfig()->addSetting("replacelistfile", new VarSetting<Glib::ustring>());
+
+	m_currentFile = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("replacelistfile")->getValue();
+	if(m_currentFile.empty()) {
+		m_currentFile = Glib::build_filename(Utils::get_documents_dir(), _("replace_list.txt"));
+		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("replacelistfile")->setValue(m_currentFile);
+	}
 }
 
 void ReplaceListManager::openList()
@@ -72,6 +78,7 @@ void ReplaceListManager::openList()
 			return;
 		}
 		m_currentFile = files.front()->get_path();
+		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("replacelistfile")->setValue(m_currentFile);
 
 		std::string line;
 		bool errors = false;
@@ -105,6 +112,7 @@ bool ReplaceListManager::saveList()
 		return false;
 	}
 	m_currentFile = filename;
+	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("replacelistfile")->setValue(m_currentFile);
 	Glib::ustring str;
 	for(const Gtk::TreeModel::Row& row : m_listStore->children()){
 		Glib::ustring search, replace;

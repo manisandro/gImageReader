@@ -96,5 +96,10 @@
       <summary>Replacement list</summary>
       <description>List of search-replace strings.</description>
     </key>
+    <key type="s" name="replacelistfile">
+        <default>""</default>
+        <summary>Path of replacement list</summary>
+        <description>Path of replacement list.</description>
+    </key>
   </schema>
 </schemalist>
