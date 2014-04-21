@@ -123,9 +123,6 @@ Config::Config()
 	CONNECT(m_addLangCode, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangCode); return false; });
 	CONNECT(m_gioSettings, changed, [this](const Glib::ustring& key){ getSetting<AbstractSetting>(key)->reread(); });
 
-	addSetting("outputorient", new ComboSetting("combo:config.settings.paneorient"));
-	addSetting("systemoutputfont", new SwitchSettingT<Gtk::CheckButton>("checkbutton:config.settings.defaultoutputfont"));
-	addSetting("customoutputfont", new FontSetting("fontbutton:config.settings.customoutputfont"));
 	addSetting("dictinstall", new SwitchSettingT<Gtk::CheckButton>("check:config.settings.dictinstall"));
 	addSetting("updatecheck", new SwitchSettingT<Gtk::CheckButton>("check:config.settings.update"));
 	addSetting("language", new VarSetting<Glib::ustring>());

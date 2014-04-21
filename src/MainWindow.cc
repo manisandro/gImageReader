@@ -108,8 +108,6 @@ MainWindow::MainWindow()
 	CONNECT(Builder("menuitem:main.about").as<Gtk::MenuItem>(), activate, [this]{ showAbout(); });
 	CONNECTS(Builder("combo:config.settings.paneorient").as<Gtk::ComboBoxText>(), changed,
 			 [this](Gtk::ComboBoxText* box){ setOutputPaneOrientation(box); });
-	CONNECTP(Builder("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setOutputPaneFont(); });
-	CONNECT(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setOutputPaneFont(); });
 	CONNECTS(Builder("tbbutton:main.controls").as<Gtk::ToggleToolButton>(), toggled,
 			 [this](Gtk::ToggleToolButton* b) { Builder("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
 	CONNECT(m_config, languageChanged, [this](const Config::Lang& lang){ m_outputManager->setLanguage(lang); });
@@ -118,6 +116,7 @@ MainWindow::MainWindow()
 		m_window->set_title(newsrc.empty() ? PACKAGE_NAME : Glib::path_get_basename(newsrc) + " - " + PACKAGE_NAME);
 	});
 
+	m_config->addSetting("outputorient", new ComboSetting("combo:config.settings.paneorient"));
 	m_config->addSetting("showcontrols", new SwitchSettingT<Gtk::ToggleToolButton>("tbbutton:main.controls"));
 
 	m_config->updateLanguagesMenu();
@@ -236,16 +235,6 @@ void MainWindow::setOutputPaneOrientation(Gtk::ComboBoxText* combo)
 	int active = combo->get_active_row_number();
 	Gtk::Orientation orient = active ? Gtk::ORIENTATION_HORIZONTAL : Gtk::ORIENTATION_VERTICAL;
 	Builder("paned:output").as<Gtk::Paned>()->set_orientation(orient);
-}
-
-void MainWindow::setOutputPaneFont()
-{
-	if(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>()->get_active()){
-		Builder("textview:output").as<Gtk::TextView>()->unset_font();
-	}else{
-		Gtk::FontButton* fontBtn = Builder("fontbutton:config.settings.customoutputfont");
-		Builder("textview:output").as<Gtk::TextView>()->override_font(Pango::FontDescription(fontBtn->get_font_name()));
-	}
 }
 
 #if ENABLE_VERSIONCHECK

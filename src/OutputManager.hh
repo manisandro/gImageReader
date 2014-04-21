@@ -64,6 +64,7 @@ private:
 
 	ReplaceListManager m_replaceListManager;
 
+	void setFont();
 	void showInsertMenu();
 	void setInsertMode(InsertMode mode, const std::string& iconName);
 	void filterBuffer();

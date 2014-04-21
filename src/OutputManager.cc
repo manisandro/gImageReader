@@ -82,11 +82,25 @@ OutputManager::OutputManager()
 	CONNECT(Builder("tbbutton:output.clear").as<Gtk::ToolButton>(), clicked, [this]{ clearBuffer(); });
 	CONNECT(Builder("button:output.postproc.manage").as<Gtk::ToolButton>(), clicked, [this]{ m_replaceListManager.show(); });
 	CONNECT(Builder("button:output.postproc.apply").as<Gtk::ToolButton>(), clicked, [this]{ m_replaceListManager.apply(m_textBuffer); });
+	CONNECTP(Builder("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
+	CONNECT(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
 
+	MAIN->getConfig()->addSetting("systemoutputfont", new SwitchSettingT<Gtk::CheckButton>("checkbutton:config.settings.defaultoutputfont"));
+	MAIN->getConfig()->addSetting("customoutputfont", new FontSetting("fontbutton:config.settings.customoutputfont"));
 	MAIN->getConfig()->addSetting("keepdot", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.keepdot"));
 	MAIN->getConfig()->addSetting("keepquote", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.keepquote"));
 	MAIN->getConfig()->addSetting("joinhyphen", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.joinhyphen"));
 	MAIN->getConfig()->addSetting("joinspace", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.joinspace"));
+}
+
+void OutputManager::setFont()
+{
+	if(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>()->get_active()){
+		Builder("textview:output").as<Gtk::TextView>()->unset_font();
+	}else{
+		Gtk::FontButton* fontBtn = Builder("fontbutton:config.settings.customoutputfont");
+		Builder("textview:output").as<Gtk::TextView>()->override_font(Pango::FontDescription(fontBtn->get_font_name()));
+	}
 }
 
 void OutputManager::showInsertMenu()
