@@ -261,6 +261,15 @@ bool OutputManager::saveBuffer(std::string filename)
 	return true;
 }
 
+bool OutputManager::toggleVisible() {
+	if(!m_outputBox->get_visible()) {
+		m_outputBox->show();
+		return true;
+	} else {
+		return !clearBuffer();
+	}
+}
+
 bool OutputManager::clearBuffer()
 {
 	if(!m_outputBox->get_visible()){
@@ -274,6 +283,7 @@ bool OutputManager::clearBuffer()
 	}
 	m_textBuffer->set_text("");
 	m_textBuffer->clear_history();
+	m_textBuffer->set_modified(false);
 	m_outputBox->hide();
 	m_replaceListManager.hide();
 	return true;

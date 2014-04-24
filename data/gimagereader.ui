@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.16.1 -->
+<!-- Generated with glade 3.18.2 -->
 <interface>
   <requires lib="gtk+" version="3.6"/>
   <object class="GtkAdjustment" id="adjustment:display.angle">
@@ -72,8 +72,6 @@
       <packing>
         <property name="left_attach">1</property>
         <property name="top_attach">0</property>
-        <property name="width">1</property>
-        <property name="height">1</property>
       </packing>
     </child>
     <child>
@@ -86,8 +84,6 @@
       <packing>
         <property name="left_attach">1</property>
         <property name="top_attach">1</property>
-        <property name="width">1</property>
-        <property name="height">1</property>
       </packing>
     </child>
     <child>
@@ -100,15 +96,9 @@
       <packing>
         <property name="left_attach">0</property>
         <property name="top_attach">0</property>
-        <property name="width">1</property>
         <property name="height">2</property>
       </packing>
     </child>
-  </object>
-  <object class="GtkImage" id="image:sources.acquire.scan">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">scanner</property>
   </object>
   <object class="GtkImage" id="image:main.autolayout">
     <property name="visible">True</property>
@@ -243,6 +233,11 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-save-as</property>
+  </object>
+  <object class="GtkImage" id="image:sources.acquire.scan">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">scanner</property>
   </object>
   <object class="GtkImage" id="image:sources.images.recent">
     <property name="visible">True</property>
@@ -550,6 +545,18 @@
               </packing>
             </child>
             <child>
+              <object class="GtkToggleToolButton" id="tbbutton:main.outputpane">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="tooltip_text" translatable="yes">Toggle output pane</property>
+                <property name="stock_id">gtk-edit</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkToolItem" id="tbbutton:main.spacer">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -766,8 +773,6 @@
                               <packing>
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -781,8 +786,6 @@
                               <packing>
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">1</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -796,8 +799,6 @@
                               <packing>
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">3</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -857,8 +858,6 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -871,7 +870,6 @@
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">4</property>
                                 <property name="width">2</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -885,8 +883,6 @@
                               <packing>
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">2</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -902,8 +898,6 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="top_attach">2</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -923,8 +917,6 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="top_attach">3</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -969,8 +961,6 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="top_attach">1</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                           </object>
@@ -1365,8 +1355,6 @@
                           <packing>
                             <property name="left_attach">0</property>
                             <property name="top_attach">0</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
@@ -1381,8 +1369,6 @@
                           <packing>
                             <property name="left_attach">0</property>
                             <property name="top_attach">1</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
@@ -1405,8 +1391,6 @@
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="top_attach">0</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
@@ -1429,8 +1413,6 @@
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="top_attach">1</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
                           </packing>
                         </child>
                       </object>
@@ -1696,8 +1678,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
               <packing>
                 <property name="left_attach">0</property>
                 <property name="top_attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -1713,8 +1693,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -1730,7 +1708,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
                 <property name="left_attach">0</property>
                 <property name="top_attach">2</property>
                 <property name="width">2</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -1746,7 +1723,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
                 <property name="left_attach">0</property>
                 <property name="top_attach">3</property>
                 <property name="width">2</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -1760,7 +1736,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
                 <property name="left_attach">0</property>
                 <property name="top_attach">4</property>
                 <property name="width">2</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -1775,7 +1750,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
                 <property name="left_attach">0</property>
                 <property name="top_attach">5</property>
                 <property name="width">2</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -1801,7 +1775,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
                 <property name="left_attach">0</property>
                 <property name="top_attach">6</property>
                 <property name="width">2</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -1817,7 +1790,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
                 <property name="left_attach">0</property>
                 <property name="top_attach">7</property>
                 <property name="width">2</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -1843,7 +1815,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
                 <property name="left_attach">0</property>
                 <property name="top_attach">8</property>
                 <property name="width">2</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -1887,7 +1858,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
                 <property name="left_attach">0</property>
                 <property name="top_attach">9</property>
                 <property name="width">2</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -1977,7 +1947,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
                 <property name="left_attach">0</property>
                 <property name="top_attach">10</property>
                 <property name="width">2</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -1991,8 +1960,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
               <packing>
                 <property name="left_attach">0</property>
                 <property name="top_attach">1</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -2035,8 +2002,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">1</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
           </object>
@@ -2088,8 +2053,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -2103,8 +2066,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
               <packing>
                 <property name="left_attach">0</property>
                 <property name="top_attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -2119,8 +2080,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">1</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -2134,8 +2093,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
               <packing>
                 <property name="left_attach">0</property>
                 <property name="top_attach">2</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -2151,8 +2108,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">2</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -2163,8 +2118,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
               <packing>
                 <property name="left_attach">0</property>
                 <property name="top_attach">1</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
           </object>
@@ -2404,7 +2357,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
             <property name="left_attach">0</property>
             <property name="top_attach">2</property>
             <property name="width">2</property>
-            <property name="height">1</property>
           </packing>
         </child>
         <child>
@@ -2417,8 +2369,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
           <packing>
             <property name="left_attach">0</property>
             <property name="top_attach">0</property>
-            <property name="width">1</property>
-            <property name="height">1</property>
           </packing>
         </child>
         <child>
@@ -2436,8 +2386,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
           <packing>
             <property name="left_attach">1</property>
             <property name="top_attach">0</property>
-            <property name="width">1</property>
-            <property name="height">1</property>
           </packing>
         </child>
         <child>
@@ -2456,7 +2404,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
             <property name="left_attach">0</property>
             <property name="top_attach">3</property>
             <property name="width">2</property>
-            <property name="height">1</property>
           </packing>
         </child>
         <child>
@@ -2475,7 +2422,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
             <property name="left_attach">0</property>
             <property name="top_attach">4</property>
             <property name="width">2</property>
-            <property name="height">1</property>
           </packing>
         </child>
         <child>
@@ -2487,7 +2433,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
             <property name="left_attach">0</property>
             <property name="top_attach">1</property>
             <property name="width">2</property>
-            <property name="height">1</property>
           </packing>
         </child>
         <child>
@@ -2506,7 +2451,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
             <property name="left_attach">0</property>
             <property name="top_attach">5</property>
             <property name="width">2</property>
-            <property name="height">1</property>
           </packing>
         </child>
       </object>
