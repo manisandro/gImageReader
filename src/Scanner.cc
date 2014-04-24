@@ -154,7 +154,8 @@ void Scanner::do_complete_page()
 		return;
 	}
 
-	m_signal_page_available.emit(job->filename);
+	std::string filename = job->filename;
+	Glib::signal_idle().connect_once([this, filename]{ m_signal_page_available.emit(filename); });
 
 	if(job->type != ScanType::SINGLE){
 		++job->page_number;
