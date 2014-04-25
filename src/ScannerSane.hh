@@ -94,7 +94,7 @@ std::vector<Scanner::ScanDevice> ScannerSane::detectDevices()
 	std::vector<ScanDevice> devices;
 
 	const SANE_Device** device_list = nullptr;
-	SANE_Status status = sane_get_devices(&device_list, true);
+	SANE_Status status = sane_get_devices(&device_list, false);
 	g_debug("sane_get_devices() -> %s", sane_strstatus(status));
 	if(status != SANE_STATUS_GOOD){
 		g_warning("Unable to get SANE devices: %s", sane_strstatus(status));
