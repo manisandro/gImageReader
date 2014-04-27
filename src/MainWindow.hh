@@ -72,13 +72,10 @@ private:
 	std::vector<Gtk::Widget*> m_idlegroup;
 	std::vector<State> m_stateStack;
 
-	sigc::connection m_connectionToggleOutputPane;
-
 	void setState(State state);
 	bool quit(GdkEventAny*);
 	void showAbout();
 	void setOutputPaneOrientation(Gtk::ComboBoxText* combo);
-	void toggleOutputPane(Gtk::ToggleToolButton* btn);
 #if ENABLE_VERSIONCHECK
 	void getNewestVersion();
 	void checkVersion(const Glib::ustring& newver);

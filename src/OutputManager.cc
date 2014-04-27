@@ -261,13 +261,8 @@ bool OutputManager::saveBuffer(std::string filename)
 	return true;
 }
 
-bool OutputManager::toggleVisible() {
-	if(!m_outputBox->get_visible()) {
-		m_outputBox->show();
-		return true;
-	} else {
-		return !clearBuffer();
-	}
+void OutputManager::setVisible(bool visible) {
+	m_outputBox->set_visible(visible);
 }
 
 bool OutputManager::clearBuffer()

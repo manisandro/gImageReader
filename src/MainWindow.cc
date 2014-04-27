@@ -101,6 +101,8 @@ MainWindow::MainWindow()
 	m_idlegroup.push_back(Builder("tbbutton:main.autolayout"));
 	m_idlegroup.push_back(Builder("tbmenu:main.recognize"));
 
+	Gtk::ToggleToolButton* showOutputPaneBtn = Builder("tbbutton:main.outputpane");
+
 	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) { return quit(ev); });
 	CONNECT(Builder("menuitem:main.redetect").as<Gtk::MenuItem>(), activate, [this]{ m_config->updateLanguagesMenu(); });
 	CONNECT(Builder("menuitem:main.configure").as<Gtk::MenuItem>(), activate, [this]{ m_config->showDialog(); });
@@ -108,8 +110,7 @@ MainWindow::MainWindow()
 	CONNECT(Builder("menuitem:main.about").as<Gtk::MenuItem>(), activate, [this]{ showAbout(); });
 	CONNECTS(Builder("combo:config.settings.paneorient").as<Gtk::ComboBoxText>(), changed,
 			 [this](Gtk::ComboBoxText* box){ setOutputPaneOrientation(box); });
-	m_connectionToggleOutputPane = CONNECTS(Builder("tbbutton:main.outputpane").as<Gtk::ToggleToolButton>(), toggled,
-			 [this](Gtk::ToggleToolButton* b) { toggleOutputPane(b); });
+	CONNECT(showOutputPaneBtn, toggled, [this,showOutputPaneBtn] { m_outputManager->setVisible(showOutputPaneBtn->get_active()); });
 	CONNECTS(Builder("tbbutton:main.controls").as<Gtk::ToggleToolButton>(), toggled,
 			 [this](Gtk::ToggleToolButton* b) { Builder("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
 	CONNECT(m_config, languageChanged, [this](const Config::Lang& lang){ m_outputManager->setLanguage(lang); });
@@ -117,6 +118,8 @@ MainWindow::MainWindow()
 		m_displayer->setSource(newsrc);
 		m_window->set_title(newsrc.empty() ? PACKAGE_NAME : Glib::path_get_basename(newsrc) + " - " + PACKAGE_NAME);
 	});
+	CONNECT(Builder("box:output").as<Gtk::Widget>(), show, [showOutputPaneBtn]{ showOutputPaneBtn->set_active(true); });
+	CONNECT(Builder("box:output").as<Gtk::Widget>(), hide, [showOutputPaneBtn]{ showOutputPaneBtn->set_active(false); });
 
 	m_config->addSetting("outputorient", new ComboSetting("combo:config.settings.paneorient"));
 	m_config->addSetting("showcontrols", new SwitchSettingT<Gtk::ToggleToolButton>("tbbutton:main.controls"));
@@ -237,13 +240,6 @@ void MainWindow::setOutputPaneOrientation(Gtk::ComboBoxText* combo)
 	int active = combo->get_active_row_number();
 	Gtk::Orientation orient = active ? Gtk::ORIENTATION_HORIZONTAL : Gtk::ORIENTATION_VERTICAL;
 	Builder("paned:output").as<Gtk::Paned>()->set_orientation(orient);
-}
-
-void MainWindow::toggleOutputPane(Gtk::ToggleToolButton *btn)
-{
-	m_connectionToggleOutputPane.block();
-	btn->set_active(m_outputManager->toggleVisible());
-	m_connectionToggleOutputPane.unblock();
 }
 
 #if ENABLE_VERSIONCHECK
