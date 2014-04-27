@@ -229,7 +229,7 @@ static std::vector<Glib::RefPtr<Gio::File>> kde_open_dialog(const Glib::ustring&
 	// Spawn process
 	std::string stdout;
 	int exit_status = -1;
-	Glib::spawn_sync("", argv, Glib::SPAWN_DEFAULT, sigc::slot<void>(), &stdout, nullptr, &exit_status);
+	Glib::spawn_sync("", argv, /*Glib::SPAWN_DEFAULT*/Glib::SpawnFlags(0), sigc::slot<void>(), &stdout, nullptr, &exit_status);
 	std::vector<Glib::RefPtr<Gio::File>> files;
 	if(exit_status == 0) {
 		std::istringstream iss(stdout);
@@ -268,7 +268,7 @@ static std::string kde_save_dialog(const Glib::ustring &title, const std::string
 		};
 		int exit_status = -1;
 		std::string stdout;
-		Glib::spawn_sync("", argv, Glib::SPAWN_DEFAULT, sigc::slot<void>(), &stdout, nullptr, &exit_status);
+		Glib::spawn_sync("", argv, /*Glib::SPAWN_DEFAULT*/Glib::SpawnFlags(0), sigc::slot<void>(), &stdout, nullptr, &exit_status);
 		if(exit_status != 0) {
 			break;
 		}
@@ -282,7 +282,7 @@ static std::string kde_save_dialog(const Glib::ustring &title, const std::string
 				"--title", _("Overwrite File?"),
 				"--caption", PACKAGE_NAME
 			};
-			Glib::spawn_sync("", argv, Glib::SPAWN_DEFAULT, sigc::slot<void>(), nullptr, nullptr, &exit_status);
+			Glib::spawn_sync("", argv, /*Glib::SPAWN_DEFAULT*/Glib::SpawnFlags(0), sigc::slot<void>(), nullptr, nullptr, &exit_status);
 			if(exit_status != 0){
 				continue;
 			}
