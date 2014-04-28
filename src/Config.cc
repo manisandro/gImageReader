@@ -153,6 +153,7 @@ void Config::updateLanguagesMenu()
 	m_langsMenu.forall([this](Gtk::Widget& w){ m_langsMenu.remove(w); });
 	m_curlang = Lang();
 	m_radioGroup = Gtk::RadioButtonGroup();
+	m_checkboxGroup = std::vector<std::pair<Gtk::CheckMenuItem*, Glib::ustring>>();
 	Gtk::RadioMenuItem* radioitem = nullptr;
 	Gtk::RadioMenuItem* activeradio = nullptr;
 
@@ -173,6 +174,7 @@ void Config::updateLanguagesMenu()
 		return;
 	}
 
+	// Add menu items for languages, with spelling submenu if available
 	for(int i = 0; i < availLanguages.size(); ++i){
 		Lang lang = {availLanguages[i].string()};
 		if(!searchLangSpec(m_predefLangView->get_model(), lang) && !searchLangSpec(m_customLangView->get_model(), lang)){
@@ -217,6 +219,30 @@ void Config::updateLanguagesMenu()
 			m_langsMenu.append(*radioitem);
 		}
 	}
+	// Add multilanguage menu
+	m_langsMenu.append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+	radioitem = Gtk::manage(new Gtk::RadioMenuItem(m_radioGroup, _("Multilingual")));
+	CONNECT(radioitem, toggled, [this, radioitem]{ setMultiLanguage(radioitem); });
+	Gtk::Menu* submenu = Gtk::manage(new Gtk::Menu);
+	std::vector<Glib::ustring> sellangs = Utils::string_split(curlang.prefix, '+');
+	if(!sellangs.size() > 1) {
+		activeradio = radioitem;
+	}
+	for(int i = 0; i < availLanguages.size(); ++i){
+		Lang lang = {availLanguages[i].string()};
+		if(!searchLangSpec(m_predefLangView->get_model(), lang) && !searchLangSpec(m_customLangView->get_model(), lang)){
+			lang.name = lang.prefix;
+		}
+		Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(lang.name));
+		item->set_active((std::find(sellangs.begin(), sellangs.end(), lang.prefix) != sellangs.end()));
+		CONNECT(item, toggled, [this,radioitem]{ setMultiLanguage(radioitem); });
+		submenu->append(*item);
+		m_checkboxGroup.push_back(std::make_pair(item, lang.prefix));
+	}
+	radioitem->set_submenu(*submenu);
+	m_langsMenu.append(*radioitem);
+
+	// Show and set active item
 	m_langsMenu.show_all();
 	if(activeradio == nullptr){
 		radioitem->set_active(true);
@@ -247,6 +273,26 @@ void Config::setLanguage(const Gtk::RadioMenuItem* item, const Lang &lang, const
 		m_curlang = lang;
 		getSetting<VarSetting<Glib::ustring>>("language")->setValue(lang.prefix + ":" + lang.code);
 		m_signal_languageChanged.emit(lang);
+	}
+}
+
+void Config::setMultiLanguage(const Gtk::RadioMenuItem* item)
+{
+	if(item->get_active()){
+		Glib::ustring langs;
+		for(const auto& pair : m_checkboxGroup) {
+			if(pair.first->get_active()) {
+				langs += pair.second + "+";
+			}
+		}
+		langs = langs.substr(0, langs.length() - 1);
+		if(langs.empty()) {
+			langs = "eng";
+		}
+		m_langLabel->set_markup("<small>" + langs + "</small>");
+		m_curlang = {langs, "", "Multilingual"};
+		getSetting<VarSetting<Glib::ustring>>("language")->setValue(langs + ":");
+		m_signal_languageChanged.emit(m_curlang);
 	}
 }
 

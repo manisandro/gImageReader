@@ -76,6 +76,7 @@ private:
 	Gtk::Button* m_dialogOkButton;
 	Gtk::Menu m_langsMenu;
 	Gtk::RadioButtonGroup m_radioGroup;
+	std::vector<std::pair<Gtk::CheckMenuItem*,Glib::ustring>> m_checkboxGroup;
 
 	LangViewColumns m_langViewCols;
 
@@ -86,6 +87,7 @@ private:
 	sigc::signal<void, const Lang&> m_signal_languageChanged;
 
 	void setLanguage(const Gtk::RadioMenuItem *item, const Lang& lang, const Glib::ustring& prettyname);
+	void setMultiLanguage(const Gtk::RadioMenuItem *item);
 	void toggleAddLanguage();
 	void addLanguage();
 	void removeLanguage();
