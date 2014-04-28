@@ -79,9 +79,8 @@ linkDep bin/gspawn-win$bits-helper.exe
 
 linkDep bin/twaindsm.dll
 linkDep lib/enchant/libenchant_myspell.dll
-linkDep lib/pango/1.8.0/modules/pango-arabic-lang.dll
-linkDep lib/pango/1.8.0/modules/pango-indic-lang.dll
-linkDep lib/pango/1.8.0/modules/pango-basic-fc.dll
+linkDep lib/pango/
+linkDep lib/gdk-pixbuf-2.0/
 
 install -Dpm 0644 /usr/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml $installroot/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
 # Install locale files
