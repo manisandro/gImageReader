@@ -1,3 +1,10 @@
+gImageReader 2.93 (Apr 29 2014):
+ * gImageReader 3.0 beta 4
+ * Add possibility to choose multiple recognition languages
+ * Add button to show/hide output pane
+ * Fix a crash when loading a scanned document
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
 gImageReader 2.92 (Mar 19 2014):
  * gImageReader 3.0 beta 3
  * Add replacement-list feature, allowing the user to specify a list of replacements to perform on the recognized text
