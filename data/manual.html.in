@@ -37,28 +37,55 @@
     <li>Allows the user to select the parts of the image they want to be recognized or directly recognize the entire image.</li>
     <li>Supports page layout autodetection.</li>
     <li>Supports opening images and PDF documents, as well as importing images from scanning devices, from the clipboard and from screenshots.</li>
-    <li>Recognized text displayed directly next to the image.</li>
+    <li>Recognized text displayed directly next to the image, or copied directly to clipboard.</li>
+    <li>Multilingual recognition.</li>
     <li>Basic editing of output text, including search/replace and removing line breaks on selected text.</li>
     <li>Spellcheck enabled for the selected language in the output textfield if corresponding dictionary installed.</li>
     <li>User is prompted to install missing spellcheck languages.</li>
 </ul>
 <h3><a name="News">News</a></h3>
-<p>gImageReader 3.0:</p>
+<p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
+<p>gImageReader 2.93 (Apr 29 2014):</p>
 <ul>
+    <li>gImageReader 3.0 beta 4</li>
+    <li>Add possibility to choose multiple recognition languages</li>
+    <li>Add button to show/hide output pane</li>
+    <li>Fix a crash when loading a scanned document</li>
+</ul>
+<p>gImageReader 2.92 (Mar 19 2014):</p>
+<ul>
+    <li>gImageReader 3.0 beta 3</li>
+    <li>Add replacement-list feature, allowing the user to specify a list of replacements to perform on the recognized text</li>
+    <li>Fix saving output resulting in empty files</li>
+    <li>Fix crashes when rendering PDF files</li>
+    <li>Keep line-breaks if preeded by line-break</li>
+    <li>Fix localization not working on Windows</li>
+</ul>
+<p>gImageReader 2.91 (Feb 20 2014):</p>
+<ul>
+    <li>gImageReader 3.0 beta 2</li>
+    <li>Improve page-layout autodetection by merging overlapping regions</li>
+    <li>Use native file-chooser dialogs on Gnome/KDE/Windows</li>
+    <li>Allow performing multipage-recognition with page-layout autodetection</li>
+    <li>Fix broken search/replace which caused the application to crash</li>
+    <li>Add Win64 packages</li>
+</ul>
+<p>gImageReader 2.90 (Feb 11 2014):</p>
+<ul>
+    <li>gImageReader 3.0 beta 1</li>
     <li>Support multiple selections (via CTRL-key). Rightclicking a selection opens a context menu which allows to:
     <ul>
-        <li>Delete and reorder individual selections.</li>
-        <li>Recognize the selected text, either to clipboard or to the output pane.</li>
+        <li>Deleted and reordered individual selections</li>
+        <li>Recognize the selected text, either to clipboard or to the output pane</li>
     </ul></li>
-    <li>Basic automatic page layout detection.</li>
-    <li>The output pane now supports undo and redo.</li>
-    <li>Configuration is now automatic.</li>
-    <li>Proper arbitrary rotation of images.</li>
-    <li>Detect deleted/renamed files.</li>
-    <li>Cleaner UI.</li>
-    <li>Port to Gtk+3, rewrite in C++ using the Gtkmm bindings.</li>
+    <li>Basic automatic page layout detection</li>
+    <li>The output pane now supports undo and redo</li>
+    <li>Configuration is now automatic</li>
+    <li>Proper arbitrary rotation of images</li>
+    <li>Detect deleted/renamed files</li>
+    <li>Cleaner UI</li>
+    <li>Port to Gtk+3, rewrite in C++ using the Gtkmm bindings</li>
 </ul>
-
 <h2><a name="Usage">Usage</a></h2>
 <h3><a name="Usage_Open">Opening and importing images</a></h3>
 <ul>
@@ -79,7 +106,7 @@
     <li>Areas to be recognized can be selected by dragging (left click + mouse move) a rectangular area around portions of the image. Multiple selections are possible by pressing the CTRL key while selecting.</li>
     <li>Alternatively, the <i>automatic layout detection button</i>, accessible from the <i>main toolbar</i> will attempt to automatically define appropriate recognition areas, as well as adjust the rotation of the image if necessary.</li>
     <li>Selections can be deleted and reordered by right-clicking on them. It is also possible to resize existing selections by dragging the corners of the selection rectangle.</li>
-    <li>The recognition language can be selected from the drop-down menu of the <i>recognize button</i> in the <i>main toolbar</i>. If a spelling dictionary is installed for a tesseract language definition, it is possible to choose between available regional flavors of the language. This will only affect the language for spell-checking the recognized text. Unrecognized tesseract language definitions will appear by their filename prefix, one can however teach the program to recognize such files by defining appropriate rules in the program configuration (see below).</li>
+    <li>The recognition language can be selected from the drop-down menu of the <i>recognize button</i> in the <i>main toolbar</i>. If a spelling dictionary is installed for a tesseract language definition, it is possible to choose between available regional flavors of the language. This will only affect the language for spell-checking the recognized text. Unrecognized tesseract language definitions will appear by their filename prefix, one can however teach the program to recognize such files by defining appropriate rules in the program configuration (see below). Multiple recognition languages can be specified at once from the <i>Multilingual</i> submenu of the drop-down menu.</li>
     <li>The selected portions of the image (or the entire image, if no selections are defined) can be recognized by pressing on the <i>recognize button</i> in the <i>main toolbar</i>. Alternatively, individual areas can be recognized by right-clicking a selection. From the selection menu, it is also possible to redirect the recognized text to the clipboard, instead of the output pane.</li>
 </ul>
 <h3><a name="Usage_PostProc">Post-processing the recognized text</a></h3>
@@ -87,7 +114,7 @@
     <li>Recognized text will appear in the <i>output pane</i> (unless the text was redirected to the clipboard), which appears as soon as some text was recognized.</li>
     <li>If a spelling dictionary for the recognition language is available, automatic spell-checking will be enabled for the outputted text. The used spelling dictionary can be changed either from the language menu next to the <i>recognize button</i>, or from the menu which appears when right-clicking in the text area.</li>
     <li>When additional text is recognized, it will either get appended, inserted at cursor position, or replace the previous content of the text buffer, depending on the mode selected in the <i>append mode menu</i>, which can be found in the <i>output pane toolbar</i>.</li>
-    <li>Other post-processing tools include stripping line breaks, collapsing spaces and more (available from the second button in the <i>output pane toolbar</i>), as well as searching and replacing text.</li>
+    <li>Other post-processing tools include stripping line breaks, collapsing spaces and more (available from the second button in the <i>output pane toolbar</i>), as well as searching and replacing text. A list of search and replace rules can be defined by clicking on the <i>Find and replace</i> button in the <i>output pane toolbar</i> and then expanding the <i>Replacement list</i> section.</li>
     <li>Changes to the text buffer can be undone and redone by clicking on the appropriate buttons in the <i>output pane toolbar</i>.</li>
     <li>The contents of the text buffer can be saved to a file by clicking on the <i>save button</i> in the <i>output pane toolbar</i>.</li>
     <li>The output pane can be hidden by clicking the right-most button in the <i>output pane toolbar</i>. This will also clear the contents of the text buffer.</li>
@@ -116,7 +143,7 @@
 </ul>
 <h2><a name="Contributing">Contributing</a></h2>
 <p>
-For contributions of any kind, bug reports etc. please contact me at <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. I'd especially appreciate translations - here are the main steps for creating a translation:
+For suggestions and contributions of any kind, please contact me at <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. I'd especially appreciate translations - here are the main steps for creating a translation:
 </p>
 <ol>
     <li>Download the source archive from the <a href="https://sourceforge.net/projects/gimagereader/files/?source=navbar">project homepage</a>.</li>
@@ -128,7 +155,7 @@ For contributions of any kind, bug reports etc. please contact me at <a href="ma
 <h2><a name="Support">Support</a></h2>
 If you find an issue or have a suggestion, please file a ticket to the <a href="https://github.com/manisandro/gImageReader/issues">gImageReader issue tracker</a>. Feel free to also contact me directly at <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>.
 <hr />
-<p>Copyright &copy;2009-2014 Sandro Mani, revision: Sun, 16 Feb 2014</p>
+<p>Copyright &copy;2009-2014 Sandro Mani, revision: Mon, 28 Apr 2014</p>
 </body>
 
 </html>
