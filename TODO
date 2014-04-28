@@ -2,19 +2,12 @@ High prio:
 - Fix TWAIN
 
 Mid prio:
-- output pane always visible
-- multiple recognition languages (i.e. "+" on tesseract commandline)
-- text2image
-- Left click to add selection, right click in the empty space to remove them?
 - Don't set whole window to inactive when loading page, just display a "working" image and queue the rendering operation. If another rendering request comes in, cancel the active one.
 - Fix backtrace window on windows (spawn async?)
-- output pane in separate window
 - User dictionary is not saved on some windows versions?
 
 Low prio:
+- output pane in separate window
 - installation of tesseract langpacks through packagekit?
 - text on image: check whether tesseract is able to provide me sufficient metrics for properly scaling and aligning the output text within the source image
 - replace all (how to integrate it in the UI?)
-
--> Remove the need for the Glib::SPAWN_DEFAULT patch
--> Update manual for latest features
