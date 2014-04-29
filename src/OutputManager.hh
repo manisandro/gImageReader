@@ -35,7 +35,7 @@ public:
 	bool saveBuffer(std::string filename = "");
 	void setVisible(bool visible);
 	bool clearBuffer();
-	void setLanguage(const Config::Lang &lang);
+	void setLanguage(const Config::Lang &lang, bool force = false);
 	bool getModified() const{ return m_textBuffer->get_modified(); }
 
 private:
@@ -73,6 +73,7 @@ private:
 	void historyChanged();
 	void saveIters();
 	void findInBuffer(bool replace = false);
+	void populateTextViewMenu(Gtk::Menu* menu);
 #ifdef G_OS_UNIX
 	void dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring& lang);
 	void dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result);

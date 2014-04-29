@@ -84,6 +84,7 @@ OutputManager::OutputManager()
 	CONNECT(Builder("button:output.postproc.apply").as<Gtk::ToolButton>(), clicked, [this]{ m_replaceListManager.apply(m_textBuffer); });
 	CONNECTP(Builder("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
 	CONNECT(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
+	CONNECT(m_textView, populate_popup, [this](Gtk::Menu* menu){ populateTextViewMenu(menu); });
 
 	MAIN->getConfig()->addSetting("systemoutputfont", new SwitchSettingT<Gtk::CheckButton>("checkbutton:config.settings.defaultoutputfont"));
 	MAIN->getConfig()->addSetting("customoutputfont", new FontSetting("fontbutton:config.settings.customoutputfont"));
@@ -215,6 +216,22 @@ void OutputManager::findInBuffer(bool replace)
 	}
 }
 
+void OutputManager::populateTextViewMenu(Gtk::Menu *menu)
+{
+	Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(_("Check spelling")));
+	item->set_active(GtkSpell::Checker::get_from_text_view(*m_textView));
+	CONNECT(item, toggled, [this, item]{
+		if(item->get_active()) {
+			setLanguage(MAIN->getConfig()->getSelectedLanguage(), true);
+		} else {
+			setLanguage(Config::Lang(), false);
+		}
+	});
+	menu->prepend(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+	menu->prepend(*item);
+	menu->show_all();
+}
+
 void OutputManager::addText(const Glib::ustring& text, bool insert)
 {
 	if(insert){
@@ -284,13 +301,17 @@ bool OutputManager::clearBuffer()
 	return true;
 }
 
-void OutputManager::setLanguage(const Config::Lang& lang)
+void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 {
 	Notifier::hide(m_notifierHandle);
 	m_spell.detach();
-	if(!lang.code.empty()){
+	std::string code = lang.code;
+	if(force && lang.code.empty()) {
+		code = _("en_US");
+	}
+	if(!code.empty()){
 		try{
-			m_spell.set_language(lang.code);
+			m_spell.set_language(code);
 			m_spell.attach(*m_textView);
 		}catch(const GtkSpell::Error& e){
 			if(MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->getValue()){
