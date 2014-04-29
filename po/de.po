@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-28 21:44+0200\n"
+"POT-Creation-Date: 2014-04-30 01:01+0200\n"
 "PO-Revision-Date: 2013-06-08 22:30+0200\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -119,7 +119,6 @@ msgid "Autolayout"
 msgstr "Autolayout"
 
 #: ../data/gimagereader.ui.h:26
-#, fuzzy
 msgid "Toggle output pane"
 msgstr "Ausgabebereich ein/ausblenden"
 
@@ -634,59 +633,67 @@ msgstr "Suche nach:"
 msgid "Replace with"
 msgstr "Ersetzten mit:"
 
-#: ../src/OutputManager.cc:156
+#: ../src/OutputManager.cc:157
 msgid "Stripping line breaks..."
 msgstr "Zeilenumbrüche werden entfernt..."
 
-#: ../src/OutputManager.cc:246
+#: ../src/OutputManager.cc:221
+msgid "Check spelling"
+msgstr "Rechtschreibprüfung"
+
+#: ../src/OutputManager.cc:263
 msgid "Text Files"
 msgstr "Text Dateien"
 
-#: ../src/OutputManager.cc:247
+#: ../src/OutputManager.cc:264
 msgid "Save Output..."
 msgstr "Ausgabe speichern..."
 
-#: ../src/OutputManager.cc:255
+#: ../src/OutputManager.cc:272
 msgid "Failed to save output"
 msgstr "Konnte Ausgabe nicht speichern"
 
-#: ../src/OutputManager.cc:255
+#: ../src/OutputManager.cc:272
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Überprüfen, dass man Schreibrechte im gewählten Ordner hat."
 
-#: ../src/OutputManager.cc:274
+#: ../src/OutputManager.cc:291
 msgid "Output not saved"
 msgstr "Ausgabe nicht gespeichert"
 
-#: ../src/OutputManager.cc:274
+#: ../src/OutputManager.cc:291
 msgid "Save output before proceeding?"
 msgstr "Vor dem fortsetzen speichern?"
 
-#: ../src/OutputManager.cc:297
+#: ../src/OutputManager.cc:310
+msgid "en_US"
+msgstr "de_DE"
+
+#: ../src/OutputManager.cc:318
 msgid "Don't show again"
 msgstr "Nicht mehr fragen"
 
-#: ../src/OutputManager.cc:298
+#: ../src/OutputManager.cc:319
 msgid "Help"
 msgstr "Hilfe"
 
-#: ../src/OutputManager.cc:305
+#: ../src/OutputManager.cc:326
 msgid "Install"
 msgstr "Installieren"
 
-#: ../src/OutputManager.cc:310
+#: ../src/OutputManager.cc:331
 msgid "Spelling dictionary missing"
 msgstr "Fehlendes Rechtschreibewörterbuch"
 
-#: ../src/OutputManager.cc:310
+#: ../src/OutputManager.cc:331
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Das Rechtschreibewörterbuch für %1 ist nicht installiert"
 
-#: ../src/OutputManager.cc:319
+#: ../src/OutputManager.cc:340
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Rechtschreibewörterbuch für '%1' wird installiert"
 
-#: ../src/OutputManager.cc:334
+#: ../src/OutputManager.cc:355
 msgid "Failed to install spelling dictionary"
 msgstr "Rechtschreibewörterbuch konnte nicht installiert werden"
 

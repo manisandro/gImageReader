@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-28 21:44+0200\n"
+"POT-Creation-Date: 2014-04-30 01:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -622,59 +622,67 @@ msgstr ""
 msgid "Replace with"
 msgstr ""
 
-#: ../src/OutputManager.cc:156
+#: ../src/OutputManager.cc:157
 msgid "Stripping line breaks..."
 msgstr ""
 
-#: ../src/OutputManager.cc:246
+#: ../src/OutputManager.cc:221
+msgid "Check spelling"
+msgstr ""
+
+#: ../src/OutputManager.cc:263
 msgid "Text Files"
 msgstr ""
 
-#: ../src/OutputManager.cc:247
+#: ../src/OutputManager.cc:264
 msgid "Save Output..."
 msgstr ""
 
-#: ../src/OutputManager.cc:255
+#: ../src/OutputManager.cc:272
 msgid "Failed to save output"
 msgstr ""
 
-#: ../src/OutputManager.cc:255
+#: ../src/OutputManager.cc:272
 msgid "Check that you have writing permissions in the selected folder."
 msgstr ""
 
-#: ../src/OutputManager.cc:274
+#: ../src/OutputManager.cc:291
 msgid "Output not saved"
 msgstr ""
 
-#: ../src/OutputManager.cc:274
+#: ../src/OutputManager.cc:291
 msgid "Save output before proceeding?"
 msgstr ""
 
-#: ../src/OutputManager.cc:297
+#: ../src/OutputManager.cc:310
+msgid "en_US"
+msgstr ""
+
+#: ../src/OutputManager.cc:318
 msgid "Don't show again"
 msgstr ""
 
-#: ../src/OutputManager.cc:298
+#: ../src/OutputManager.cc:319
 msgid "Help"
 msgstr ""
 
-#: ../src/OutputManager.cc:305
+#: ../src/OutputManager.cc:326
 msgid "Install"
 msgstr ""
 
-#: ../src/OutputManager.cc:310
+#: ../src/OutputManager.cc:331
 msgid "Spelling dictionary missing"
 msgstr ""
 
-#: ../src/OutputManager.cc:310
+#: ../src/OutputManager.cc:331
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr ""
 
-#: ../src/OutputManager.cc:319
+#: ../src/OutputManager.cc:340
 msgid "Installing spelling dictionary for '%1'"
 msgstr ""
 
-#: ../src/OutputManager.cc:334
+#: ../src/OutputManager.cc:355
 msgid "Failed to install spelling dictionary"
 msgstr ""
 
