@@ -79,8 +79,21 @@ linkDep bin/gspawn-win$bits-helper.exe
 
 linkDep bin/twaindsm.dll
 linkDep lib/enchant/libenchant_myspell.dll
-linkDep lib/pango/
-linkDep lib/gdk-pixbuf-2.0/
+linkDep lib/pango/1.8.0/modules/pango-arabic-lang.dll
+linkDep lib/pango/1.8.0/modules/pango-indic-lang.dll
+linkDep lib/pango/1.8.0/modules/pango-basic-fc.dll
+linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-pcx.dll
+linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-xbm.dll
+linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-ani.dll
+linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-wbmp.dll
+linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-pnm.dll
+linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-icns.dll
+linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-tga.dll
+linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-jasper.dll
+linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-qtif.dll
+linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-xpm.dll
+linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-ras.dll
+
 
 install -Dpm 0644 /usr/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml $installroot/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
 # Install locale files
