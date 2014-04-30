@@ -16,27 +16,28 @@ MINGWROOT=/usr/$arch-w64-mingw32/sys-root/mingw
 # Halt on errors
 set -e
 
-if [ "$1" == "--debug" ]; then
+if [ "$2" == "--debug" ]; then
     withdebug=1
 fi
 
 win32dir="$(dirname $(readlink -f $0))"
 builddir="$win32dir/../../build-mingw$bits"
-installroot="$win32dir/root"
-pushd "$win32dir" > /dev/null
+installroot="$builddir/root"
 
 # Build
 mkdir -p $builddir
 pushd $builddir > /dev/null
 mingw$bits-configure
-mingw$bits-make -j4 DESTDIR="$win32dir/_root" install
-rm -rf $win32dir/root
-mv $win32dir/_root$MINGWROOT $win32dir/root
-rm -rf $win32dir/_root
-cp -R $win32dir/skel/* $win32dir/root
+mingw$bits-make -j4 DESTDIR="${installroot}_" install
+rm -rf $installroot
+mv ${installroot}_$MINGWROOT $installroot
+rm -rf ${installroot}_
+cp -R $win32dir/skel/* $installroot
+cp $win32dir/gimagereader-icon.rc $builddir
+cp $win32dir/gimagereader.ico $builddir
+cp $win32dir/installer.nsi $builddir
 # Move incorrectly installed locale
-mv $win32dir/root/lib/locale $win32dir/root/share/locale
-popd > /dev/null
+mv $installroot/lib/locale $installroot/share/locale
 
 # Collect dependencies
 function isnativedll {
@@ -125,4 +126,6 @@ progVersion=$(cat $builddir/config.h | grep PACKAGE_VERSION | awk -F'"' '{print 
 makensis -DNAME=$progName -DARCH=$arch -DPROGVERSION="$progVersion" installer.nsi;
 
 # Cleanup
-rm -rf $win32dir/root
+rm -rf $builddir/root
+
+echo "Installer written to $PWD/${progName}_${progVersion}_${arch}.exe"
