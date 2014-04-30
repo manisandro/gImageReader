@@ -25,11 +25,11 @@ builddir="$win32dir/../../build-mingw$bits"
 installroot="$builddir/root"
 
 # Build
+rm -rf $builddir
 mkdir -p $builddir
 pushd $builddir > /dev/null
 mingw$bits-configure
 mingw$bits-make -j4 DESTDIR="${installroot}_" install
-rm -rf $installroot
 mv ${installroot}_$MINGWROOT $installroot
 rm -rf ${installroot}_
 cp -R $win32dir/skel/* $installroot
