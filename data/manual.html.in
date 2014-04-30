@@ -45,11 +45,12 @@
 </ul>
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
-<p>gImageReader 2.93 (Apr 29 2014):</p>
+<p>gImageReader 2.93 (Apr 30 2014):</p>
 <ul>
     <li>gImageReader 3.0 beta 4</li>
     <li>Add possibility to choose multiple recognition languages</li>
     <li>Add button to show/hide output pane</li>
+    <li>Allow toggling spell checking from context menu</li>
     <li>Fix a crash when loading a scanned document</li>
 </ul>
 <p>gImageReader 2.92 (Mar 19 2014):</p>

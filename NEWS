@@ -3,6 +3,7 @@ gImageReader 2.93 (Apr 30 2014):
  * Add possibility to choose multiple recognition languages
  * Add button to show/hide output pane
  * Fix a crash when loading a scanned document
+ * Allow toggling spell checking from context menu
  * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
 
 gImageReader 2.92 (Mar 19 2014):
