@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(gImageReader, 2.93, http://sourceforge.net/projects/gimagereader/,
+AC_INIT(gImageReader, 2.94, http://sourceforge.net/projects/gimagereader/,
 		gimagereader)
 
 AC_CONFIG_AUX_DIR([build])
