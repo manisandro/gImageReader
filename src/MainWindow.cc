@@ -82,7 +82,6 @@ MainWindow::MainWindow()
 	m_sourceManager = new SourceManager;
 
 	m_window = Builder("window:main");
-	m_menu = Builder("menu:main");
 	m_aboutdialog = Builder("dialog:about");
 	m_statusbar = Builder("statusbar:main");
 	m_aboutdialog->set_version(PACKAGE_VERSION);

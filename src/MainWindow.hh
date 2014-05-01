@@ -56,7 +56,6 @@ private:
 	static MainWindow* s_instance;
 
 	Gtk::Window* m_window;
-	Gtk::Menu* m_menu;
 	Gtk::AboutDialog* m_aboutdialog;
 	Gtk::Statusbar* m_statusbar;
 
