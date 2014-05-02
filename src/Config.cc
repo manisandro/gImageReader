@@ -150,7 +150,7 @@ bool Config::searchLangSpec(const Glib::RefPtr<Gtk::TreeModel> model, Lang& lang
 
 void Config::updateLanguagesMenu()
 {
-	m_langsMenu.forall([this](Gtk::Widget& w){ m_langsMenu.remove(w); });
+	m_langsMenu.foreach([this](Gtk::Widget& w){ m_langsMenu.remove(w); });
 	m_curlang = Lang();
 	m_radioGroup = Gtk::RadioButtonGroup();
 	m_checkboxGroup = std::vector<std::pair<Gtk::CheckMenuItem*, Glib::ustring>>();
