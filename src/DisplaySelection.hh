@@ -46,7 +46,7 @@ private:
 
 class DisplaySelectionHandle {
 public:
-	DisplaySelectionHandle(DisplaySelection* sel, const std::vector<int> idx = {1, 0, 0, 1, 1, 1})
+	DisplaySelectionHandle(DisplaySelection* sel, const std::vector<int>& idx = {1, 0, 0, 1, 1, 1})
 		: m_sel(sel), m_idx(idx) {}
 
 	Geometry::Rectangle setPoint(const Geometry::Point& point){ return m_sel->setPoint(point, m_idx); }
