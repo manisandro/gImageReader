@@ -254,11 +254,18 @@ void Config::updateLanguagesMenu()
 void Config::showDialog()
 {
 	m_gioSettings->delay();
-	if(m_dialog->run() != Gtk::RESPONSE_OK){
-		m_gioSettings->revert();
-	}else{
-		m_gioSettings->apply();
-		updateLanguagesMenu();
+	while(true) {
+		int code = m_dialog->run();
+		if(code == Gtk::RESPONSE_HELP) {
+			continue;
+		}else if(code != Gtk::RESPONSE_OK){
+			m_gioSettings->revert();
+			break;
+		}else{
+			m_gioSettings->apply();
+			updateLanguagesMenu();
+			break;
+		}
 	}
 	m_dialog->hide();
 	if(m_addLangBox->get_visible()){
