@@ -230,7 +230,7 @@ void MainWindow::showHelp(const std::string& chapter)
 #ifdef G_OS_WIN32
 	ShellExecute(nullptr, "open", manualURI.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
 #else
-	gtk_show_uri(nullptr, (manualURI + chapter).c_str(), GDK_CURRENT_TIME, 0);
+	gtk_show_uri(nullptr, manualURI.c_str(), GDK_CURRENT_TIME, 0);
 #endif
 }
 
