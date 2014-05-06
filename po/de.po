@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-30 01:01+0200\n"
+"POT-Creation-Date: 2014-05-06 10:49+0200\n"
 "PO-Revision-Date: 2013-06-08 22:30+0200\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: German <>\n"
@@ -601,27 +601,27 @@ msgstr "Eine Datei mit Name \"%1\" existiert bereits. Soll sie ersetzt werden?"
 msgid "Overwrite File?"
 msgstr "Datei ersetzen?"
 
-#: ../src/MainWindow.cc:131
+#: ../src/MainWindow.cc:130
 msgid "Select an image to begin..."
 msgstr "Ein Bild wählen um zu beginnen..."
 
-#: ../src/MainWindow.cc:274
+#: ../src/MainWindow.cc:273
 msgid "New version"
 msgstr "Neue version"
 
-#: ../src/MainWindow.cc:274
+#: ../src/MainWindow.cc:273
 msgid "gImageReader %1 is available"
 msgstr "gImageReader %1 is erhältlich"
 
-#: ../src/MainWindow.cc:275
+#: ../src/MainWindow.cc:274
 msgid "Download"
 msgstr "Herunterlanden"
 
-#: ../src/MainWindow.cc:276
+#: ../src/MainWindow.cc:275
 msgid "Changelog"
 msgstr "Anderungsnachweis"
 
-#: ../src/MainWindow.cc:277
+#: ../src/MainWindow.cc:276
 msgid "Don't notify again"
 msgstr "Nicht mehr fragen"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-30 01:01+0200\n"
+"POT-Creation-Date: 2014-05-06 10:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -590,27 +590,27 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr ""
 
-#: ../src/MainWindow.cc:131
+#: ../src/MainWindow.cc:130
 msgid "Select an image to begin..."
 msgstr ""
 
-#: ../src/MainWindow.cc:274
+#: ../src/MainWindow.cc:273
 msgid "New version"
 msgstr ""
 
-#: ../src/MainWindow.cc:274
+#: ../src/MainWindow.cc:273
 msgid "gImageReader %1 is available"
 msgstr ""
 
-#: ../src/MainWindow.cc:275
+#: ../src/MainWindow.cc:274
 msgid "Download"
 msgstr ""
 
-#: ../src/MainWindow.cc:276
+#: ../src/MainWindow.cc:275
 msgid "Changelog"
 msgstr ""
 
-#: ../src/MainWindow.cc:277
+#: ../src/MainWindow.cc:276
 msgid "Don't notify again"
 msgstr ""
 
