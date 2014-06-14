@@ -214,13 +214,13 @@ void ScannerTwain::setOptions(ScanJob* job)
 	xferFile.Format = TWFF_PNG;
 	xferFile.VRefNum = TWON_DONTCARE16;
 
-	if(call(&m_srcID, DG_CONTROL, DAT_SETUPFILEXFER, MSG_SET, &xferFile) == TWRC_CHECKSTATUS){
-		// Probably unsupported file format. Get the default format, and try again with that one
+	if(call(&m_srcID, DG_CONTROL, DAT_SETUPFILEXFER, MSG_SET, &xferFile) != TWRC_SUCCESS){
+		// Possibly unsupported file format. Get the default format, and try again with that one
 		call(&m_srcID, DG_CONTROL, DAT_SETUPFILEXFER, MSG_GET, &xferFile);
 		std::string defaultfile = xferFile.FileName;
 		job->filename = job->filename.substr(0, job->filename.rfind('.')) + defaultfile.substr(defaultfile.rfind('.'));
 		std::strncpy(xferFile.FileName, job->filename.c_str(), sizeof(xferFile.FileName));
-		if(call(&m_srcID, DG_CONTROL, DAT_SETUPFILEXFER, MSG_SET, &xferFile) == TWRC_CHECKSTATUS){
+		if(call(&m_srcID, DG_CONTROL, DAT_SETUPFILEXFER, MSG_SET, &xferFile) != TWRC_SUCCESS){
 			// If we failed again, just return the default file...
 			job->filename = defaultfile;
 		}
@@ -326,6 +326,7 @@ TW_UINT16 ScannerTwain::call(TW_IDENTITY* idDS, TW_UINT32 dataGroup, TW_UINT16 d
 		rc = m_dsmEntry(&m_appID, idDS, DG_CONTROL, DAT_STATUS, MSG_GET, &status);
 		TW_UINT16 cc = rc == TWRC_SUCCESS ? status.ConditionCode : TWCC_BUMMER;
 		g_critical("Call failed with code 0x%x: DataGroup: 0x%x, DataType = 0x%x, Msg = 0x%x", cc, dataGroup, dataType, msg);
+		return TWRC_FAILURE;
 	}
 	return rc;
 }
