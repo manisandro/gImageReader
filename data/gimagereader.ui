@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.2 -->
+<!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.6"/>
   <object class="GtkAdjustment" id="adjustment:display.angle">
@@ -92,6 +92,7 @@
         <property name="can_focus">False</property>
         <property name="margin_right">4</property>
         <property name="icon_name">insert-text</property>
+        <property name="icon_size">3</property>
       </object>
       <packing>
         <property name="left_attach">0</property>
@@ -344,7 +345,7 @@
                 <property name="tooltip_text" translatable="yes">Zoom in</property>
                 <property name="label" translatable="yes">Zoom In</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-zoom-in</property>
+                <property name="icon_name">zoom-in</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -360,7 +361,7 @@
                 <property name="tooltip_text" translatable="yes">Zoom out</property>
                 <property name="label" translatable="yes">Zoom Out</property>
                 <property name="use_underline">True</property>
-                <property name="stock_id">gtk-zoom-out</property>
+                <property name="icon_name">zoom-out</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -2037,6 +2038,47 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="actionarea:dialog.pages">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="button_pages_cancel">
+                <property name="label">gtk-cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_pages_ok">
+                <property name="label">gtk-ok</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
         <child>
           <object class="GtkGrid" id="grid:dialog.pages">
             <property name="visible">True</property>
@@ -2125,47 +2167,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">0</property>
-          </packing>
-        </child>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="actionarea:dialog.pages">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="button_pages_cancel">
-                <property name="label">gtk-cancel</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button_pages_ok">
-                <property name="label">gtk-ok</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
-            <property name="position">4</property>
           </packing>
         </child>
       </object>
@@ -2337,7 +2338,6 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
     <property name="deletable">False</property>
     <property name="transient_for">window:main</property>
     <property name="attached_to">viewport:display</property>
-    <property name="has_resize_grip">False</property>
     <child>
       <object class="GtkGrid" id="grid:selectionmenu">
         <property name="visible">True</property>
