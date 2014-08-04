@@ -28,7 +28,8 @@ void Notifier::notify(const Glib::ustring &title, const Glib::ustring &message, 
 	frame->set_data(handleQuark, handle);
 	Gtk::Box* box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 5));
 	Gtk::Label* titlelabel = Gtk::manage(new Gtk::Label);
-	Gtk::Label* msglabel = Gtk::manage(new Gtk::Label("", 0.0, 0.5));
+	Gtk::Label* msglabel = Gtk::manage(new Gtk::Label(""));
+	msglabel->set_halign(Gtk::ALIGN_START);
 	Gtk::Button* closebtn = Gtk::manage(new Gtk::Button);
 	frame->set_shadow_type(Gtk::SHADOW_OUT);
 	box->override_background_color(Gdk::RGBA("#FFD000"), Gtk::STATE_FLAG_NORMAL);
