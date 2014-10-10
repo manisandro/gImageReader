@@ -59,7 +59,7 @@ fi
 
 dnl ************************** Look for SANE on linux *************************
 case "$host_os" in
-  linux*)
+  linux*|k*bsd-gnu*|gnu*)
 		PKG_CHECK_MODULES(SANE, [sane-backends])
 		;;
 	*)
