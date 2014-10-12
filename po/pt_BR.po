@@ -1,0 +1,854 @@
+# Portoguese translation of gImageReader package
+# Portoguese messages for gImageReader
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gImageReader package.
+# André Alencar <andre.tre@gmail.com>, 2014
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-08-18 00:42+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/gimagereader.ui.h:1
+msgid "<small>Recognize all</small>"
+msgstr "Reconhecer tudo"
+
+#: ../data/gimagereader.ui.h:2
+msgid "_Redetect Languages"
+msgstr "_Redetectar Linguagens"
+
+#: ../data/gimagereader.ui.h:3
+msgid "Append to current text"
+msgstr "Anexar ao texto atual"
+
+#: ../data/gimagereader.ui.h:4
+msgid "Insert at cursor"
+msgstr "Insira no cursor"
+
+#: ../data/gimagereader.ui.h:5
+msgid "Replace current text"
+msgstr "Substituir o texto atual"
+
+#: ../data/gimagereader.ui.h:6
+msgid "_Recent"
+msgstr "_Recente"
+
+#: ../data/gimagereader.ui.h:7
+msgid "Take _Screenshot"
+msgstr "Tirar _Screenshot"
+
+#: ../data/gimagereader.ui.h:8 ../src/FileDialogs.cc:255
+msgid "Select sources"
+msgstr "Selecionar fontes"
+
+#: ../data/gimagereader.ui.h:9
+msgid "Sources"
+msgstr "Fontes"
+
+#: ../data/gimagereader.ui.h:10
+msgid "Zoom in"
+msgstr "Zoom in"
+
+#: ../data/gimagereader.ui.h:11
+msgid "Zoom In"
+msgstr "Zoom In"
+
+#: ../data/gimagereader.ui.h:12
+msgid "Zoom out"
+msgstr "Zoom out"
+
+#: ../data/gimagereader.ui.h:13
+msgid "Zoom Out"
+msgstr "Zoom Out"
+
+#: ../data/gimagereader.ui.h:14
+msgid "Normal size"
+msgstr "Tamanho normal"
+
+#: ../data/gimagereader.ui.h:15
+msgid "Normal Size"
+msgstr "Tamanho normal"
+
+#: ../data/gimagereader.ui.h:16
+msgid "Best fit"
+msgstr "Melhor ajuste"
+
+#: ../data/gimagereader.ui.h:17
+msgid "Best Fit"
+msgstr "Melhor ajuste"
+
+#: ../data/gimagereader.ui.h:18
+msgid "Rotate left"
+msgstr "Rotacionar a esquerda"
+
+#: ../data/gimagereader.ui.h:19
+msgid "Rotate Left"
+msgstr "Rotacionar a esquerda"
+
+#: ../data/gimagereader.ui.h:20
+msgid "Rotate right"
+msgstr "Rotacionar a direita"
+
+#: ../data/gimagereader.ui.h:21
+msgid "Rotate Right"
+msgstr "Rotacionar a direita"
+
+#: ../data/gimagereader.ui.h:22
+msgid "Image controls"
+msgstr "Controles de imagem"
+
+#: ../data/gimagereader.ui.h:23
+msgid "Image Controls"
+msgstr "Controles de imagem"
+
+#: ../data/gimagereader.ui.h:24
+msgid "Autodetect layout"
+msgstr "Autodetectar layout"
+
+#: ../data/gimagereader.ui.h:25
+msgid "Autolayout"
+msgstr "Autolayout"
+
+#: ../data/gimagereader.ui.h:26
+msgid "Toggle output pane"
+msgstr "Alternar painel de sada"
+
+#: ../data/gimagereader.ui.h:27
+msgid "Options"
+msgstr "Opes"
+
+#: ../data/gimagereader.ui.h:28
+msgid "Add images"
+msgstr "Adicionar imagens"
+
+#: ../data/gimagereader.ui.h:29
+msgid "Add Images"
+msgstr "Adicionar Imagens"
+
+#: ../data/gimagereader.ui.h:30
+msgid "Remove image from list"
+msgstr "Remover imagem da lista"
+
+#: ../data/gimagereader.ui.h:31
+msgid "Remove Image"
+msgstr "Remover imagem"
+
+#: ../data/gimagereader.ui.h:32
+msgid "Delete image"
+msgstr "Deletar imagem"
+
+#: ../data/gimagereader.ui.h:33
+msgid "Clear list"
+msgstr "Limpar lista"
+
+#: ../data/gimagereader.ui.h:34
+msgid "Clear List"
+msgstr "Limpar lista"
+
+#: ../data/gimagereader.ui.h:35 ../src/SourceManager.cc:38
+msgid "Images"
+msgstr "Imagens"
+
+#: ../data/gimagereader.ui.h:36
+msgid "Device:"
+msgstr "Dispositivo:"
+
+#: ../data/gimagereader.ui.h:37
+msgid "Output:"
+msgstr "Sada:"
+
+#: ../data/gimagereader.ui.h:38
+msgid "Resolution:"
+msgstr "Resoluo:"
+
+#: ../data/gimagereader.ui.h:39
+msgid "Refresh"
+msgstr "Atualizar"
+
+#: ../data/gimagereader.ui.h:40
+msgid "Mode:"
+msgstr "Modo:"
+
+#: ../data/gimagereader.ui.h:41
+msgid "Color"
+msgstr "Cor"
+
+#: ../data/gimagereader.ui.h:42
+msgid "Grayscale"
+msgstr "Escala de cinza"
+
+#: ../data/gimagereader.ui.h:43
+msgid "Scan"
+msgstr "Scan"
+
+#: ../data/gimagereader.ui.h:44
+msgid "Acquire"
+msgstr "Adquirir imagem"
+
+#: ../data/gimagereader.ui.h:45
+msgid "Brightness"
+msgstr "Brilho"
+
+#: ../data/gimagereader.ui.h:46
+msgid "Contrast"
+msgstr "Contraste"
+
+#: ../data/gimagereader.ui.h:47 ../src/Displayer.cc:343
+msgid "Resolution"
+msgstr "Resoluo"
+
+#: ../data/gimagereader.ui.h:48
+msgid "Select append mode"
+msgstr "Selecione modo de anexao"
+
+#: ../data/gimagereader.ui.h:49
+msgid "Strip line breaks on selected text"
+msgstr "Quebras de linha no texto selecionado"
+
+#: ../data/gimagereader.ui.h:50
+msgid "Strip Line Breaks"
+msgstr "Quebras de linha"
+
+#: ../data/gimagereader.ui.h:51
+msgid "Find and replace"
+msgstr "Localizar e substituir"
+
+#: ../data/gimagereader.ui.h:52
+msgid "Find and Replace"
+msgstr "Localizar e substituir"
+
+#: ../data/gimagereader.ui.h:53
+msgid "Undo"
+msgstr "Desfazer"
+
+#: ../data/gimagereader.ui.h:54
+msgid "Redo"
+msgstr "Refazer"
+
+#: ../data/gimagereader.ui.h:55
+msgid "Save output"
+msgstr "Salvar sada"
+
+#: ../data/gimagereader.ui.h:56
+msgid "Save Output"
+msgstr "Salvar sada"
+
+#: ../data/gimagereader.ui.h:57
+msgid "Clear output"
+msgstr "Limpar sada"
+
+#: ../data/gimagereader.ui.h:58
+msgid "Clear Output"
+msgstr "Limpar sada"
+
+#: ../data/gimagereader.ui.h:59
+msgid "Find"
+msgstr "Encontrar"
+
+#: ../data/gimagereader.ui.h:60
+msgid "Replace"
+msgstr "Substituir"
+
+#: ../data/gimagereader.ui.h:61
+msgid "Manage list"
+msgstr "Gerenciar lista"
+
+#: ../data/gimagereader.ui.h:62
+msgid "Apply"
+msgstr "Aplicar"
+
+#: ../data/gimagereader.ui.h:63 ../src/ReplaceListManager.cc:71
+#: ../src/ReplaceListManager.cc:104
+msgid "Replacement list"
+msgstr "Lista de substituio"
+
+#: ../data/gimagereader.ui.h:64
+msgid "A graphical frontend to tesseract-ocr"
+msgstr "Um frontend grfico para tesseract-ocr"
+
+#: ../data/gimagereader.ui.h:65
+msgid "Configuration"
+msgstr "Configurao"
+
+#: ../data/gimagereader.ui.h:66
+msgid "Output pane orientation:"
+msgstr "Orientao do painel de sada"
+
+#: ../data/gimagereader.ui.h:67
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#: ../data/gimagereader.ui.h:68
+msgid "Vertical"
+msgstr "Vertical"
+
+#: ../data/gimagereader.ui.h:69
+msgid "Query to install missing spellcheck dictionaries"
+msgstr ""
+"Perguntar pela instalao de dicionrios de verificao ortogrfica no encontrados"
+
+#: ../data/gimagereader.ui.h:70
+msgid "Automatically check for new program versions"
+msgstr "Procurar automaticamente por novas verses do programa"
+
+#: ../data/gimagereader.ui.h:71
+msgid "Predefined language definitions:"
+msgstr "Definies de linguagem predefinidas:"
+
+#: ../data/gimagereader.ui.h:72
+msgid "Additional language definitions:"
+msgstr "Definies de linguagens adicionais"
+
+#: ../data/gimagereader.ui.h:73
+msgid "The prefix of the tesseract language data file."
+msgstr "O prefixo do arquivo de dados da linguagem tesseract"
+
+#: ../data/gimagereader.ui.h:74
+msgid "The ISO 639-1 language code followed by the country code."
+msgstr "O cdigo de linguagem ISO 639-1 seguido do cdigo do pas"
+
+#: ../data/gimagereader.ui.h:75
+msgid "The name of the language."
+msgstr "O nome da linguagem"
+
+#: ../data/gimagereader.ui.h:76
+msgid "Output pane font:"
+msgstr "Fonte do painel de sada"
+
+#: ../data/gimagereader.ui.h:77
+msgid "Default"
+msgstr "Padro"
+
+#: ../data/gimagereader.ui.h:78
+msgid "Page Range"
+msgstr "Intervalo de pginas"
+
+#: ../data/gimagereader.ui.h:79
+msgid "Page range:"
+msgstr "Intervalo de pginas:"
+
+#: ../data/gimagereader.ui.h:80
+msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
+msgstr "<small><b>Exemplo:</b> 1-10, 13, 14-18</small>"
+
+#: ../data/gimagereader.ui.h:81
+msgid "Recognition area:"
+msgstr "rea de reconhecimento"
+
+#: ../data/gimagereader.ui.h:82
+msgid "Entire page"
+msgstr "Pgina inteira"
+
+#: ../data/gimagereader.ui.h:83
+msgid "Autodetect"
+msgstr "Autodetectar"
+
+#: ../data/gimagereader.ui.h:84
+msgid "Manage Replacement Rules"
+msgstr "Gerenciar regras de substituio"
+
+#: ../data/gimagereader.ui.h:85
+msgid "Open"
+msgstr "Abrir"
+
+#: ../data/gimagereader.ui.h:86
+msgid "Save"
+msgstr "Salvar"
+
+#: ../data/gimagereader.ui.h:87
+msgid "Clear"
+msgstr "Limpar"
+
+#: ../data/gimagereader.ui.h:88
+msgid "Add"
+msgstr "Adicionar"
+
+#: ../data/gimagereader.ui.h:89
+msgid "Remove"
+msgstr "Remover"
+
+#: ../data/gimagereader.ui.h:90
+msgid "Order:"
+msgstr "Ordem:"
+
+#: ../data/gimagereader.ui.h:91
+msgid "_Recognize"
+msgstr "_Reconhecer"
+
+#: ../data/gimagereader.ui.h:92
+msgid "Recognize to _clipboard"
+msgstr "Reconhecer para o _clipboard"
+
+#: ../data/gimagereader.ui.h:93
+msgid "Save as _image"
+msgstr "Salvar como _imagem"
+
+#: ../data/gimagereader.ui.h:94
+msgid "Keep line break if..."
+msgstr "Manter quebra de pgina se..."
+
+#: ../data/gimagereader.ui.h:95
+msgid "Preceeded by dot"
+msgstr "Precedido por ponto"
+
+#: ../data/gimagereader.ui.h:96
+msgid "Preceded or succeeded by quote"
+msgstr "Precedido ou sucedido por citao"
+
+#: ../data/gimagereader.ui.h:97
+msgid "Other options"
+msgstr "Outras opes"
+
+#: ../data/gimagereader.ui.h:98
+msgid "Join hyphenated words"
+msgstr "Juntar palavras com hfen"
+
+#: ../data/gimagereader.ui.h:99
+msgid "Collapse whitespace"
+msgstr "Fechar espaos em branco"
+
+#: ../data/gimagereader.ui.h:100
+msgid "Current Page"
+msgstr "Pgina atual"
+
+#: ../data/gimagereader.ui.h:101
+msgid "Multiple Pages..."
+msgstr "Pginas mltiplas"
+
+#: ../data/crashhandler.ui.h:1
+msgid "<b>The application has crashed</b>"
+msgstr "<b>A aplicao parou de funcionar</b>"
+
+#: ../data/crashhandler.ui.h:2
+msgid "Regenerate backtrace"
+msgstr "Regenerar backtrace"
+
+#: ../data/crashhandler.ui.h:4
+#, no-c-format
+msgid ""
+"Apologies for the inconvenience. To help improve the application, please "
+"consider reporting the issue <a href=\"mailto:manisandro@gmail.com?"
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Please try to "
+"describe what you were doing before the application crashed. Also, include "
+"the information below. Thank you."
+msgstr ""
+"Pedimos desculpas pelo inconveniente. Para ajudar a melhorar esta aplicao, "
+"por favor envieum relatrio de erro para <a href=\"mailto:manisandro@gmail."
+"com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Tente descrever "
+"o que vocestava fazendo antes da aplicao parar. Inclua tambma informao "
+"abaixo. Obrigado."
+
+#: ../src/Acquirer.cc:40 ../src/FileDialogs.cc:170
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: ../src/Acquirer.cc:61
+msgid "Scan failed"
+msgstr "O scan falhou"
+
+#: ../src/Acquirer.cc:73
+msgid "scan.png"
+msgstr "scan.png"
+
+#: ../src/Acquirer.cc:90 ../src/Displayer.cc:644
+msgid "PNG Images"
+msgstr "Imagens PNG"
+
+#: ../src/Acquirer.cc:91
+msgid "Choose Output Filename..."
+msgstr "Escolha arquivo de sada"
+
+#: ../src/Acquirer.cc:108
+msgid "Failed to initialize the scanning backend."
+msgstr "Falha ao inicializar o backend de scan"
+
+#: ../src/Acquirer.cc:134
+msgid "No scanners were detected."
+msgstr "Nenhum scanner  foi detectado"
+
+#: ../src/Acquirer.cc:152 ../src/Acquirer.cc:169
+msgid "Starting scan..."
+msgstr "Iniciando scan..."
+
+#: ../src/Acquirer.cc:165
+msgid "Opening device..."
+msgstr "Abrindo dispositivo..."
+
+#: ../src/Acquirer.cc:167
+msgid "Setting options..."
+msgstr "Setando opes"
+
+#: ../src/Acquirer.cc:171
+msgid "Getting parameters..."
+msgstr "Obtendo parmetros..."
+
+#: ../src/Acquirer.cc:173
+msgid "Transferring data..."
+msgstr "Transferindo dados..."
+
+#: ../src/Acquirer.cc:183
+msgid "Cancelling scan..."
+msgstr "Cancelando o scan..."
+
+#: ../src/Config.cc:91
+msgid "Filename prefix"
+msgstr "Prefixo do arquivo"
+
+#: ../src/Config.cc:92
+msgid "Code"
+msgstr "Cdigo"
+
+#: ../src/Config.cc:93
+msgid "Native name"
+msgstr "Nome nativo"
+
+#: ../src/Config.cc:172
+msgid "No languages available"
+msgstr "Nenhuma linguagem disponvel"
+
+#: ../src/Config.cc:172
+msgid ""
+"No tesseract languages are available for use. Recognition will not work."
+msgstr ""
+"Nenhuma linguagem tesseract disponvel para uso. O reconhecimento de "
+"caracteres no funcionar"
+
+#: ../src/Config.cc:224
+msgid "Multilingual"
+msgstr "Multilngua"
+
+#: ../src/CrashHandler.cc:25 ../src/CrashHandler.cc:43
+msgid "Crash Handler"
+msgstr "Gerenciador de bug"
+
+#: ../src/CrashHandler.cc:103
+msgid "Failed to obtain backtrace. Is gdb installed?"
+msgstr "Falha ao obter backtrace. Gdb est instalado?"
+
+#: ../src/Displayer.cc:56
+msgid "selection.png"
+msgstr "selection.png"
+
+#: ../src/Displayer.cc:349
+msgid "Scale"
+msgstr "Escala"
+
+#: ../src/Displayer.cc:354
+msgid "To recognize specific areas, drag rectangles over them."
+msgstr "Para reconhecer reas especficas, arraste retngulos sobre elas"
+
+#: ../src/Displayer.cc:360
+msgid "Failed to load image"
+msgstr "Falha ao carregar imagem"
+
+#: ../src/Displayer.cc:360
+msgid ""
+"The file might not be an image or be corrupt:\n"
+"%1"
+msgstr ""
+"O arquivo pode no ser uma imagem ou est corrompido:\n"
+"%1"
+
+#: ../src/Displayer.cc:391
+msgid "Rendering image..."
+msgstr "Renderizando imagem..."
+
+#: ../src/Displayer.cc:519 ../src/Displayer.cc:716
+msgid "Recognize selection"
+msgstr "Reconhecer seleo"
+
+#: ../src/Displayer.cc:521
+msgid "Recognize all"
+msgstr "Reconhecer tudo"
+
+#: ../src/Displayer.cc:645
+msgid "Save Selection Image"
+msgstr "Salvar imagem selecionada"
+
+#: ../src/Displayer.cc:702
+msgid "Performing layout analysis"
+msgstr "Executando anlise de layout"
+
+#: ../src/FileDialogs.cc:110 ../src/FileDialogs.cc:169
+#: ../src/FileDialogs.cc:189
+msgid "Select sources..."
+msgstr "Selecione fontes..."
+
+#. Get formats
+#: ../src/FileDialogs.cc:113 ../src/FileDialogs.cc:186
+msgid "Images and PDFs"
+msgstr "Imagens e PDFs"
+
+#: ../src/FileDialogs.cc:171
+msgid "OK"
+msgstr "OK"
+
+#: ../src/FileDialogs.cc:280
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr "Um arquivo chamado \"%1\" j existe. Voce deseja sobreescrev-lo?"
+
+#: ../src/FileDialogs.cc:282
+msgid "Overwrite File?"
+msgstr "Sobreescrever arquivo?"
+
+#: ../src/MainWindow.cc:130
+msgid "Select an image to begin..."
+msgstr "Selecione uma imagem para comear..."
+
+#: ../src/MainWindow.cc:273
+msgid "New version"
+msgstr "Nova verso"
+
+#: ../src/MainWindow.cc:273
+msgid "gImageReader %1 is available"
+msgstr "gImageReader %1 est disponvel"
+
+#: ../src/MainWindow.cc:274
+msgid "Download"
+msgstr "Download"
+
+#: ../src/MainWindow.cc:275
+msgid "Changelog"
+msgstr "Registro de mudanas"
+
+#: ../src/MainWindow.cc:276
+msgid "Don't notify again"
+msgstr "No avisar novamente"
+
+#: ../src/OutputManager.cc:51 ../src/ReplaceListManager.cc:38
+msgid "Search for"
+msgstr "Procurar por"
+
+#: ../src/OutputManager.cc:52 ../src/ReplaceListManager.cc:39
+msgid "Replace with"
+msgstr "Substituir por"
+
+#: ../src/OutputManager.cc:157
+msgid "Stripping line breaks..."
+msgstr "Marcando quebras de linhas"
+
+#: ../src/OutputManager.cc:221
+msgid "Check spelling"
+msgstr "Verificando ortografia"
+
+#: ../src/OutputManager.cc:263
+msgid "Text Files"
+msgstr "Arquivos de Texto"
+
+#: ../src/OutputManager.cc:264
+msgid "Save Output..."
+msgstr "Salvar sada..."
+
+#: ../src/OutputManager.cc:272
+msgid "Failed to save output"
+msgstr "Falha ao salvar sada"
+
+#: ../src/OutputManager.cc:272
+msgid "Check that you have writing permissions in the selected folder."
+msgstr "Verifique se voc tem permisso de escrita na pasta selecionada."
+
+#: ../src/OutputManager.cc:291
+msgid "Output not saved"
+msgstr "Sada no salva"
+
+#: ../src/OutputManager.cc:291
+msgid "Save output before proceeding?"
+msgstr "Salvar sada antes de proceder?"
+
+#: ../src/OutputManager.cc:310
+msgid "en_US"
+msgstr "en_US"
+
+#: ../src/OutputManager.cc:318
+msgid "Don't show again"
+msgstr "No mostrar novamente"
+
+#: ../src/OutputManager.cc:319
+msgid "Help"
+msgstr "Ajuda"
+
+#: ../src/OutputManager.cc:326
+msgid "Install"
+msgstr "Instalar"
+
+#: ../src/OutputManager.cc:331
+msgid "Spelling dictionary missing"
+msgstr "Dicionrio ortogrfico no encontrado"
+
+#: ../src/OutputManager.cc:331
+msgid "The spellcheck dictionary for %1 is not installed"
+msgstr "O dicionrio ortogrfico para %1 no foi instalado"
+
+#: ../src/OutputManager.cc:340
+msgid "Installing spelling dictionary for '%1'"
+msgstr "Instalando dicionrio ortogrfico para '%1'"
+
+#: ../src/OutputManager.cc:355
+msgid "Failed to install spelling dictionary"
+msgstr "Falha ao instalar dicionrio ortogrfico"
+
+#: ../src/Recognizer.cc:57 ../src/Recognizer.cc:127
+msgid "Recognizing..."
+msgstr "Reconhecendo..."
+
+#: ../src/Recognizer.cc:138
+msgid ""
+"\n"
+"\tFailed to initialize tesseract"
+msgstr ""
+"\n"
+"\tFalha ao inicializar a engine do tesseract"
+
+#: ../src/Recognizer.cc:144
+msgid "Recognizing page %1 (%2 of %3)"
+msgstr "Reconhecendo pgina %1 (%2 de %3)"
+
+#: ../src/Recognizer.cc:152
+msgid ""
+"\n"
+"\tPage %1: failed to render page"
+msgstr ""
+"\n"
+"\tPage %1: falha ao renderizar pgina"
+
+#: ../src/Recognizer.cc:153
+msgid ""
+"\n"
+"[Failed to recognize page %1]\n"
+msgstr ""
+"\n"
+"[Falha ao reconhecer pgina %1]\n"
+
+#: ../src/Recognizer.cc:174
+msgid "Recognition errors occured"
+msgstr "Ocorreram erros de reconhecimento"
+
+#: ../src/Recognizer.cc:174
+msgid "The following errors occured:%1"
+msgstr "Os seguinte erros ocorreram: %1"
+
+#: ../src/ReplaceListManager.cc:60
+msgid "replace_list.txt"
+msgstr "replace_list.txt"
+
+#: ../src/ReplaceListManager.cc:72
+msgid "Open replacement list"
+msgstr "Abrir lista de substituio"
+
+#: ../src/ReplaceListManager.cc:77
+msgid "Error reading file"
+msgstr "Erro ao ler arquivo"
+
+#: ../src/ReplaceListManager.cc:77
+msgid "Unable to read from the file %1."
+msgstr "Impossvel ler do arquivo %1."
+
+#: ../src/ReplaceListManager.cc:97
+msgid "Errors occurred reading file"
+msgstr "Erros ocorreram na leitura do arquivo"
+
+#: ../src/ReplaceListManager.cc:97
+msgid "Some entries of the replacement list could not be read."
+msgstr "Algumas entradas da lista de substituio no puderam ser lidas"
+
+#: ../src/ReplaceListManager.cc:105
+msgid "Save replacement list"
+msgstr "Salvar lista de substituio"
+
+#: ../src/ReplaceListManager.cc:111
+msgid "Error saving file"
+msgstr "Erro ao salvar arquivo"
+
+#: ../src/ReplaceListManager.cc:111
+msgid "Unable to write to the file %1."
+msgstr "Impossvel escrever no arquivo %1."
+
+#: ../src/ReplaceListManager.cc:130
+msgid "Save the current list?"
+msgstr "Salva a lista atual?"
+
+#: ../src/ReplaceListManager.cc:130
+msgid "Do you want to save the current list?"
+msgstr "Voc quer salvar a lista atual"
+
+#: ../src/ReplaceListManager.cc:203
+msgid "Applying replacement list..."
+msgstr "Aplicando lista de substituio..."
+
+#: ../src/Scanner.cc:88
+msgid "No scanner specified."
+msgstr "Scanner no especificado"
+
+#: ../src/Scanner.cc:91
+msgid "Unable to connect to scanner"
+msgstr "No foi possvel conectar ao scanner"
+
+#: ../src/Scanner.cc:120
+msgid "Unable to start scan"
+msgstr "No foi possivel iniciar o scan"
+
+#: ../src/Scanner.cc:127 ../src/Scanner.cc:141
+msgid "Error communicating with scanner"
+msgstr "Erro de comunicao com o scanner"
+
+#: ../src/Scanner.cc:199
+msgid "Scan cancelled"
+msgstr "Scan cancelado"
+
+#: ../src/SourceManager.cc:117
+msgid "Unable to open files"
+msgstr "No foi possvel abrir os arquivos"
+
+#: ../src/SourceManager.cc:117
+msgid "The following files could not be opened:%1"
+msgstr "As linhas a seguir no puderam ser abertas: %1"
+
+#: ../src/SourceManager.cc:145
+msgid "Pasted %1"
+msgstr "Colado %1"
+
+#: ../src/SourceManager.cc:146
+msgid "Pasting clipboard..."
+msgstr "Colando clipboard..."
+
+#: ../src/SourceManager.cc:162
+msgid "Screenshot %1"
+msgstr "Screenshot %'"
+
+#: ../src/SourceManager.cc:163
+msgid "Taking screenshot..."
+msgstr "Tirando screenshot..."
+
+#: ../src/SourceManager.cc:198
+msgid "Delete the file?"
+msgstr "Deletar o arquivo?"
+
+#: ../src/SourceManager.cc:198
+msgid ""
+"The following file will be deleted:\n"
+"%1"
+msgstr ""
+"A seguinte linha ser deletada:\n"
+"%1"
+
+#: ../src/SourceManager.cc:243
+msgid "Deleted file"
+msgstr "Arquivo deletado"
+
+#: ../src/SourceManager.cc:243
+msgid ""
+"The following file has been deleted:\n"
+"%1"
+msgstr ""
+"A seguinte linha foi deletada:\n"
+"%1"
