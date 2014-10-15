@@ -221,7 +221,7 @@ void MainWindow::showHelp(const std::string& chapter)
 	std::string manualFile;
 #ifdef G_OS_WIN32
 	gchar* dir = g_win32_get_package_installation_directory_of_module(0);
-	manualFile = Glib::build_path("/", std::vector<std::string>{dir, "share", PACKAGE, "manual.html"});
+	manualFile = Glib::build_path("/", std::vector<std::string>{dir, "share", PACKAGE_NAME, "manual.html"});
 	g_free(dir);
 #else
 	manualFile = PACKAGE_DATA_DIR "/manual.html";

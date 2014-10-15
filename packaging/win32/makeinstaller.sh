@@ -21,14 +21,15 @@ if [ "$2" == "--debug" ]; then
 fi
 
 win32dir="$(dirname $(readlink -f $0))"
-builddir="$win32dir/../../build-mingw$bits"
+srcdir="$win32dir/../../"
+builddir="$win32dir/../../build/mingw$bits"
 installroot="$builddir/root"
 
 # Build
 rm -rf $builddir
 mkdir -p $builddir
 pushd $builddir > /dev/null
-mingw$bits-configure
+mingw$bits-cmake ../../
 mingw$bits-make -j4 DESTDIR="${installroot}_" install
 mv ${installroot}_$MINGWROOT $installroot
 rm -rf ${installroot}_
@@ -36,8 +37,6 @@ cp -R $win32dir/skel/* $installroot
 cp $win32dir/gimagereader-icon.rc $builddir
 cp $win32dir/gimagereader.ico $builddir
 cp $win32dir/installer.nsi $builddir
-# Move incorrectly installed locale
-mv $installroot/lib/locale $installroot/share/locale
 
 # Collect dependencies
 function isnativedll {
@@ -121,8 +120,8 @@ rm -rf root/share/applications
 glib-compile-schemas root/share/glib-2.0/schemas
 
 # Build the installer
-progName=$(cat $builddir/config.h | grep PACKAGE_NAME | awk -F'"' '{print $2}')
-progVersion=$(cat $builddir/config.h | grep PACKAGE_VERSION | awk -F'"' '{print $2}')
+progName=$(grep -oP 'SET\(PACKAGE_NAME \K(\w+)(?=\))' $srcdir/CMakeLists.txt)
+progVersion=$(grep -oP 'SET\(PACKAGE_VERSION \K([\d\.]+)(?=\))' $srcdir/CMakeLists.txt)
 makensis -DNAME=$progName -DARCH=$arch -DPROGVERSION="$progVersion" installer.nsi;
 
 # Cleanup

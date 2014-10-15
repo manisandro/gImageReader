@@ -35,7 +35,7 @@ int main (int argc, char *argv[])
 
 #ifdef G_OS_WIN32
 	gchar* dir = g_win32_get_package_installation_directory_of_module(0);
-	dataDir = Glib::build_filename(dir, "share", PACKAGE);
+	dataDir = Glib::build_filename(dir, "share", PACKAGE_NAME);
 	localeDir = Glib::build_filename(dir, "share", "locale");
 	g_free(dir);
 	if(Glib::getenv("LANG").empty()) {

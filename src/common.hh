@@ -20,7 +20,6 @@
 #ifndef COMMON_HH
 #define COMMON_HH
 
-#include "config.h"
 #include <gtkmm.h>
 #include <iostream>
 #include <libintl.h>
