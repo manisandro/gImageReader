@@ -58,13 +58,13 @@ INCLUDE_DIRECTORIES(
 
 
 # Files
-FILE(GLOB gimagereader_SRCS src/*.cc)
-FILE(GLOB gimagereader_HDRS src/*.hh)
-FILE(GLOB gimagereader_FORMS data/*.ui)
+FILE(GLOB gimagereader_SRCS gtk/src/*.cc)
+FILE(GLOB gimagereader_HDRS gtk/src/*.hh)
+FILE(GLOB gimagereader_FORMS gtk/data/*.ui)
 FILE(GLOB gimagereader_ICONS data/icons/*.png)
 FILE(GLOB gimagereader_PO po/*.po)
 
-ADD_SCHEMA("data/org.gnome.gimagereader.gschema.xml")
+ADD_SCHEMA("gtk/data/org.gnome.gimagereader.gschema.xml")
 
 FILE(READ po/LINGUAS langs_string)
 STRING(REGEX MATCHALL "[a-zA-Z_]+" langs "${langs_string}")
