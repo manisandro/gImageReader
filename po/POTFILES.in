@@ -44,3 +44,43 @@ gtk/src/UndoableBuffer.cc
 gtk/src/UndoableBuffer.hh
 gtk/src/Utils.cc
 gtk/src/Utils.hh
+[type: gettext/qtdesigner]qt/data/AboutDialog.ui
+[type: gettext/qtdesigner]qt/data/ConfigDialog.ui
+[type: gettext/qtdesigner]qt/data/MainWindow.ui
+[type: gettext/qtdesigner]qt/data/PageRangeDialog.ui
+[type: gettext/qtdesigner]qt/data/ReplaceListManager.ui
+qt/src/AboutDialog.hh
+qt/src/Acquirer.cc
+qt/src/Acquirer.hh
+qt/src/AsyncQueue.hh
+qt/src/common.hh
+qt/src/Config.cc
+qt/src/Config.hh
+qt/src/ConfigSettings.cc
+qt/src/ConfigSettings.hh
+qt/src/Displayer.cc
+qt/src/Displayer.hh
+qt/src/DisplayRenderer.cc
+qt/src/DisplayRenderer.hh
+qt/src/DisplaySelection.cc
+qt/src/DisplaySelection.hh
+qt/src/Geometry.hh
+qt/src/main.cc
+qt/src/MainWindow.cc
+qt/src/MainWindow.hh
+qt/src/OutputManager.cc
+qt/src/OutputManager.hh
+qt/src/Recognizer.cc
+qt/src/Recognizer.hh
+qt/src/ScanBackend.hh
+qt/src/ScanBackendSane.hh
+qt/src/ScanBackendTwain.hh
+qt/src/ScanThread.cc
+qt/src/ScanThread.hh
+qt/src/SourceManager.cc
+qt/src/SourceManager.hh
+qt/src/SubstitutionsManager.cc
+qt/src/SubstitutionsManager.hh
+qt/src/Ui_MainWindow.hh
+qt/src/Utils.cc
+qt/src/Utils.hh

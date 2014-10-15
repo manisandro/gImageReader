@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="angle">../../data/icons/angle.png</file>
+        <file alias="autolayout">../../data/icons/autolayout.png</file>
+        <file alias="brightness">../../data/icons/brightness.png</file>
+        <file alias="contrast">../../data/icons/contrast.png</file>
+        <file alias="controls">../../data/icons/controls.png</file>
+        <file alias="filtering">../../data/icons/filtering.png</file>
+        <file alias="ins_append">../../data/icons/ins_append.png</file>
+        <file alias="ins_cursor">../../data/icons/ins_cursor.png</file>
+        <file alias="ins_replace">../../data/icons/ins_replace.png</file>
+        <file alias="page">../../data/icons/page.png</file>
+        <file alias="resolution">../../data/icons/resolution.png</file>
+        <file alias="stripcrlf">../../data/icons/stripcrlf.png</file>
+        <file alias="logo_48">../../data/icons/48x48/gimagereader.png</file>
+        <file alias="logo_128">../../data/icons/128x128/gimagereader.png</file>
+        <file alias="logo_256">../../data/icons/256x256/gimagereader.png</file>
+    </qresource>
+</RCC>

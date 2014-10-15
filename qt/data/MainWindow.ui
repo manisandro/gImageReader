@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1064</width>
+    <height>572</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>gImageReader</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_4">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QWidget" name="widgetImageControls" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>4</number>
+       </property>
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <item>
+        <widget class="QFrame" name="frameBrightness">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>1</number>
+          </property>
+          <property name="topMargin">
+           <number>1</number>
+          </property>
+          <property name="rightMargin">
+           <number>1</number>
+          </property>
+          <property name="bottomMargin">
+           <number>1</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="labelBrightness">
+            <property name="pixmap">
+             <pixmap resource="gimagereader.qrc">:/icons/brightness</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinBoxBrightness">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="frame">
+             <bool>false</bool>
+            </property>
+            <property name="minimum">
+             <number>-100</number>
+            </property>
+            <property name="maximum">
+             <number>100</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frameContrast">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>1</number>
+          </property>
+          <property name="topMargin">
+           <number>1</number>
+          </property>
+          <property name="rightMargin">
+           <number>1</number>
+          </property>
+          <property name="bottomMargin">
+           <number>1</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="labelContrast">
+            <property name="pixmap">
+             <pixmap resource="gimagereader.qrc">:/icons/contrast</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinBoxContrast">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="frame">
+             <bool>false</bool>
+            </property>
+            <property name="minimum">
+             <number>-100</number>
+            </property>
+            <property name="maximum">
+             <number>100</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frameResolution">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>1</number>
+          </property>
+          <property name="topMargin">
+           <number>1</number>
+          </property>
+          <property name="rightMargin">
+           <number>1</number>
+          </property>
+          <property name="bottomMargin">
+           <number>1</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="labelResolution">
+            <property name="pixmap">
+             <pixmap resource="gimagereader.qrc">:/icons/resolution</pixmap>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinBoxResolution">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="frame">
+             <bool>false</bool>
+            </property>
+            <property name="minimum">
+             <number>50</number>
+            </property>
+            <property name="maximum">
+             <number>600</number>
+            </property>
+            <property name="singleStep">
+             <number>10</number>
+            </property>
+            <property name="value">
+             <number>100</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBarMain">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionSources"/>
+   <addaction name="separator"/>
+   <addaction name="actionZoomIn"/>
+   <addaction name="actionZoomOut"/>
+   <addaction name="actionOriginalSize"/>
+   <addaction name="actionBestFit"/>
+   <addaction name="separator"/>
+   <addaction name="actionRotateLeft"/>
+   <addaction name="actionRotateRight"/>
+   <addaction name="actionImageControls"/>
+   <addaction name="separator"/>
+   <addaction name="actionAutodetectLayout"/>
+   <addaction name="actionToggleOutputPane"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetSources">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>Sources</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetSourcesContents">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>2</number>
+     </property>
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tabSources">
+        <attribute name="title">
+         <string>Files</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>2</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
+         <item>
+          <widget class="QListWidget" name="listWidgetSources"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tabAcquire">
+        <attribute name="title">
+         <string>Acquire</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout">
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>2</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="lineEditScanOutput">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="labelScanResolution">
+           <property name="text">
+            <string>Resolution:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="labelScanMode">
+           <property name="text">
+            <string>Mode:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1" colspan="2">
+          <widget class="QComboBox" name="comboBoxScanMode">
+           <item>
+            <property name="text">
+             <string>Grayscale</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Color</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="labelScanOutput">
+           <property name="text">
+            <string>Output:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0" colspan="3">
+          <widget class="QLabel" name="labelScanMessage">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1" colspan="2">
+          <widget class="QComboBox" name="comboBoxScanResolution">
+           <item>
+            <property name="text">
+             <string>75 dpi</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>100 dpi</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>200 dpi</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>300 dpi</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>600 dpi</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>1200 dpi</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QToolButton" name="toolButtonScanOutput">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="icon">
+            <iconset theme="document-open">
+             <normaloff/>
+            </iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0" rowspan="2" colspan="3">
+          <layout class="QFormLayout" name="formLayoutScan">
+           <property name="formAlignment">
+            <set>Qt::AlignHCenter|Qt::AlignTop</set>
+           </property>
+           <property name="horizontalSpacing">
+            <number>0</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>0</number>
+           </property>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="pushButtonScan">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Scan</string>
+             </property>
+             <property name="icon">
+              <iconset theme="scanner">
+               <normaloff/>
+              </iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="pushButtonScanCancel">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Cancel</string>
+             </property>
+             <property name="icon">
+              <iconset theme="dialog-cancel">
+               <normaloff/>
+              </iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="comboBoxScanDevice">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QToolButton" name="toolButtonScanDevicesRefresh">
+           <property name="icon">
+            <iconset theme="view-refresh">
+             <normaloff/>
+            </iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="labelScanDevice">
+           <property name="text">
+            <string>Device:</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetOutput">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>Output</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContentsOutput">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="spacing">
+      <number>2</number>
+     </property>
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
+     <item>
+      <widget class="QFrame" name="frameOutputSearch">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <property name="leftMargin">
+         <number>2</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
+         <number>2</number>
+        </property>
+        <property name="spacing">
+         <number>2</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLineEdit" name="lineEditOutputSearch">
+          <property name="placeholderText">
+           <string>Search</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLineEdit" name="lineEditOutputReplace">
+          <property name="placeholderText">
+           <string>Replace</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QToolButton" name="toolButtonOutputFindNext">
+          <property name="toolTip">
+           <string>Find next</string>
+          </property>
+          <property name="icon">
+           <iconset theme="go-down">
+            <normaloff/>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QToolButton" name="toolButtonOutputReplace">
+          <property name="toolTip">
+           <string>Replace</string>
+          </property>
+          <property name="icon">
+           <iconset theme="edit-find-replace">
+            <normaloff/>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QToolButton" name="toolButtonOutputReplaceAll">
+          <property name="toolTip">
+           <string>Replace all</string>
+          </property>
+          <property name="icon">
+           <iconset theme="edit-find-replace">
+            <normaloff/>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QToolButton" name="toolButtonOutputFindPrev">
+          <property name="toolTip">
+           <string>Find previous</string>
+          </property>
+          <property name="icon">
+           <iconset theme="go-up">
+            <normaloff/>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="3">
+         <widget class="QPushButton" name="pushButtonOutputReplacementList">
+          <property name="text">
+           <string>Substitutions</string>
+          </property>
+          <property name="icon">
+           <iconset theme="document-edit">
+            <normaloff/>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="3">
+         <widget class="QCheckBox" name="checkBoxOutputSearchMatchCase">
+          <property name="text">
+           <string>Match case</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPlainTextEdit" name="plainTextEditOutput"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="actionSources">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="insert-image">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Sources</string>
+   </property>
+   <property name="toolTip">
+    <string>Sources</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="icon">
+    <iconset theme="zoom-in">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom In</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="icon">
+    <iconset theme="zoom-out">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom out</string>
+   </property>
+  </action>
+  <action name="actionOriginalSize">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="zoom-original">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Original Size</string>
+   </property>
+   <property name="toolTip">
+    <string>Original size</string>
+   </property>
+  </action>
+  <action name="actionBestFit">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="zoom-fit-best">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Best Fit</string>
+   </property>
+   <property name="toolTip">
+    <string>Best fit</string>
+   </property>
+  </action>
+  <action name="actionRotateLeft">
+   <property name="icon">
+    <iconset theme="object-rotate-left">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Rotate Left</string>
+   </property>
+   <property name="toolTip">
+    <string>Rotate left</string>
+   </property>
+  </action>
+  <action name="actionRotateRight">
+   <property name="icon">
+    <iconset theme="object-rotate-right">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Rotate Right</string>
+   </property>
+   <property name="toolTip">
+    <string>Rotate right</string>
+   </property>
+  </action>
+  <action name="actionImageControls">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="gimagereader.qrc">
+     <normaloff>:/icons/controls</normaloff>:/icons/controls</iconset>
+   </property>
+   <property name="text">
+    <string>Image Controls</string>
+   </property>
+   <property name="toolTip">
+    <string>Image controls</string>
+   </property>
+  </action>
+  <action name="actionAutodetectLayout">
+   <property name="icon">
+    <iconset resource="gimagereader.qrc">
+     <normaloff>:/icons/autolayout</normaloff>:/icons/autolayout</iconset>
+   </property>
+   <property name="text">
+    <string>Autodetect Layout</string>
+   </property>
+   <property name="toolTip">
+    <string>Autodetect layout</string>
+   </property>
+  </action>
+  <action name="actionToggleOutputPane">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="document-edit">
+     <normaloff/>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Toggle Output Pane</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle output pane</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="gimagereader.qrc"/>
+ </resources>
+ <connections/>
+</ui>

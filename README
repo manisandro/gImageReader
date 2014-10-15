@@ -1,4 +1,4 @@
-gImageReader is a simple Gtk front-end to tesseract. Features include:
+gImageReader is a simple Gtk/Qt front-end to tesseract. Features include:
  - Automatic page layout detection
  - User can manually define and adjust recognition regions
  - Import images from disk, scanning devices, clipboard and screenshots

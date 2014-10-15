@@ -11,6 +11,8 @@ SET(PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share/gimagereader")
 SET(PACKAGE_LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/share/locale")
 
 # Variables
+SET(INTERFACE_TYPE "Qt4" CACHE STRING "Select interface type: Qt4/Qt5/gtk")
+MESSAGE(STATUS "${INTERFACE_TYPE} interface will be built")
 SET(ENABLE_VERSIONCHECK 1 CACHE BOOL "Enable version check")
 EXECUTE_PROCESS(COMMAND date +%a\ %b\ %d\ %Y OUTPUT_VARIABLE PACKAGE_DATE OUTPUT_STRIP_TRAILING_WHITESPACE)
 EXECUTE_PROCESS(COMMAND date -R OUTPUT_VARIABLE PACKAGE_RFC_DATE OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -38,33 +40,78 @@ ADD_DEFINITIONS(-std=c++11)
 FIND_PACKAGE(Gettext REQUIRED)
 FIND_PACKAGE(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(TESSERACT REQUIRED tesseract)
-PKG_CHECK_MODULES(GTKMM REQUIRED gtkmm-3.0)
-PKG_CHECK_MODULES(GTKSPELLMM REQUIRED gtkspellmm-3.0)
-PKG_CHECK_MODULES(CAIROMM REQUIRED cairomm-1.0)
-PKG_CHECK_MODULES(POPPLER REQUIRED poppler-glib)
 IF(UNIX)
 	PKG_CHECK_MODULES(SANE sane-backends)
 ENDIF(UNIX)
 
-INCLUDE_DIRECTORIES(
-	${CMAKE_BINARY_DIR}
-	${TESSERACT_INCLUDE_DIRS}
-	${GTKMM_INCLUDE_DIRS}
-	${GTKSPELLMM_INCLUDE_DIRS}
-	${CAIROMM_INCLUDE_DIRS}
-	${POPPLER_INCLUDE_DIRS}
-	${SANE_INCLUDE_DIRS}
-)
+INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} ${TESSERACT_INCLUDE_DIRS} ${SANE_INCLUDE_DIRS})
+
+IF("${INTERFACE_TYPE}" STREQUAL "gtk")
+	PKG_CHECK_MODULES(GTKMM REQUIRED gtkmm-3.0)
+	PKG_CHECK_MODULES(GTKSPELLMM REQUIRED gtkspellmm-3.0)
+	PKG_CHECK_MODULES(CAIROMM REQUIRED cairomm-1.0)
+	PKG_CHECK_MODULES(POPPLER REQUIRED poppler-glib)
+	INCLUDE_DIRECTORIES(
+		${GTKMM_INCLUDE_DIRS}
+		${GTKSPELLMM_INCLUDE_DIRS}
+		${CAIROMM_INCLUDE_DIRS}
+		${POPPLER_INCLUDE_DIRS}
+	)
+	SET(gimagereader_LIBS
+		${GTKMM_LDFLAGS}
+		${GTKSPELLMM_LDFLAGS}
+		${CAIROMM_LDFLAGS}
+		${POPPLER_LDFLAGS}
+	)
+	SET(srcdir "gtk")
+ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt4")
+	SET(CMAKE_AUTOMOC ON)
+	FIND_PACKAGE(Qt4 REQUIRED)
+	PKG_CHECK_MODULES(QTSPELL REQUIRED QtSpell-qt4)
+	PKG_CHECK_MODULES(POPPLER REQUIRED poppler-qt4)
+	INCLUDE_DIRECTORIES(${QTSPELL_INCLUDE_DIRS} ${POPPLER_INCLUDE_DIRS})
+	SET(gimagereader_LIBS ${QTSPELL_LDFLAGS} ${POPPLER_LDFLAGS})
+	SET(srcdir "qt")
+ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt5")
+	SET(CMAKE_AUTOMOC ON)
+	FIND_PACKAGE(Qt5Widgets REQUIRED)
+	PKG_CHECK_MODULES(QTSPELL REQUIRED QtSpell-qt5)
+	PKG_CHECK_MODULES(POPPLER REQUIRED poppler-qt5)
+	INCLUDE_DIRECTORIES(${QTSPELL_INCLUDE_DIRS} ${POPPLER_INCLUDE_DIRS})
+	SET(gimagereader_LIBS ${QTSPELL_LDFLAGS} ${POPPLER_LDFLAGS})
+	SET(srcdir "qt")
+ELSE()
+	MESSAGE(FATAL_ERROR "Invalid interface type ${INTERFACE_TYPE}")
+ENDIF()
 
 
 # Files
-FILE(GLOB gimagereader_SRCS gtk/src/*.cc)
-FILE(GLOB gimagereader_HDRS gtk/src/*.hh)
-FILE(GLOB gimagereader_FORMS gtk/data/*.ui)
+FILE(GLOB gimagereader_SRCS ${srcdir}/src/*.cc)
+FILE(GLOB gimagereader_HDRS ${srcdir}/src/*.hh)
+FILE(GLOB gimagereader_FORMS ${srcdir}/data/*.ui)
 FILE(GLOB gimagereader_ICONS data/icons/*.png)
 FILE(GLOB gimagereader_PO po/*.po)
 
-ADD_SCHEMA("gtk/data/org.gnome.gimagereader.gschema.xml")
+IF("${srcdir}" STREQUAL "qt")
+	FILE(GLOB gimagereader_RESOURCES qt/data/*.qrc)
+	
+	# Gettextize ui files
+	ADD_CUSTOM_TARGET(
+		gettextizeui
+		COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/gettextizeui.cmake ${gimagereader_FORMS_HEADERS}
+		DEPENDS ${gimagereader_FORMS_HEADERS}
+	)
+ENDIF()
+
+IF("${srcdir}" STREQUAL "gtk")
+	ADD_SCHEMA("gtk/data/org.gnome.gimagereader.gschema.xml")
+ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt4")
+	QT4_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})
+	QT4_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
+ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt5")
+	QT5_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})
+	QT5_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
+ENDIF()
 
 FILE(READ po/LINGUAS langs_string)
 STRING(REGEX MATCHALL "[a-zA-Z_]+" langs "${langs_string}")
@@ -80,25 +127,37 @@ ENDIF(MINGW)
 
 
 # Build and install
-ADD_EXECUTABLE(gimagereader ${gimagereader_HDRS} ${gimagereader_SRCS})
+ADD_EXECUTABLE(gimagereader
+	${gimagereader_HDRS}
+	${gimagereader_SRCS}
+	${gimagereader_FORMS_HEADERS}
+	${gimagereader_RESOURCES_RCC}
+)
 TARGET_LINK_LIBRARIES(gimagereader
 	${TESSERACT_LDFLAGS}
-	${GTKMM_LDFLAGS}
-	${GTKSPELLMM_LDFLAGS}
-	${CAIROMM_LDFLAGS}
-	${POPPLER_LDFLAGS}
+	${gimagereader_LIBS}
 	${SANE_LDFLAGS}
 	-ldl
 )
+IF("${INTERFACE_TYPE}" STREQUAL "Qt4")
+	QT4_USE_MODULES(gimagereader Core Gui Network DBus)
+	ADD_DEPENDENCIES(gimagereader gettextizeui)
+ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt5")
+	QT5_USE_MODULES(gimagereader Widgets Network DBus Concurrent)    
+	ADD_DEPENDENCIES(gimagereader gettextizeui)
+ENDIF()
 
 INSTALL(TARGETS gimagereader DESTINATION bin)
-INSTALL(FILES ${gimagereader_FORMS} DESTINATION ${PACKAGE_DATA_DIR})
 INSTALL(FILES ${gimagereader_ICONS} DESTINATION ${PACKAGE_DATA_DIR}/icons)
 INSTALL(FILES data/icons/48x48/gimagereader.png DESTINATION share/icons/hicolor/48x48/apps/)
+INSTALL(FILES data/icons/128x128/gimagereader.png DESTINATION share/icons/hicolor/128x128/apps/)
 INSTALL(FILES data/icons/256x256/gimagereader.png DESTINATION share/icons/hicolor/256x256/apps/)
 INSTALL(FILES data/gimagereader.desktop DESTINATION share/applications)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/manual.html DESTINATION ${PACKAGE_DATA_DIR})
 INSTALL(FILES data/gimagereader.appdata.xml DESTINATION share/appdata)
+IF("${srcdir}" STREQUAL "gtk")
+	INSTALL(FILES ${gimagereader_FORMS} DESTINATION ${PACKAGE_DATA_DIR})
+ENDIF()
 
 
 # Dist
