@@ -42,9 +42,9 @@ void CrashHandler::on_startup()
 	m_refreshButton = Builder("button:backtrace.regenerate");
 	m_dialog->set_title(Glib::ustring::compose("%1 %2", PACKAGE_NAME, _("Crash Handler")));
 	if(!m_saveFile.empty()) {
-		Builder("label:crashhandler.autosave").as<Gtk::Label>()->set_markup(Glib::ustring::compose("Your work has been saved under <b>%1</b>.", m_saveFile));
+		Builder("label:crashhandler.autosave").as<Gtk::Label>()->set_markup(Glib::ustring::compose(_("Your work has been saved under <b>%1</b>."), m_saveFile));
 	}else{
-		Builder("label:crashhandler.autosave").as<Gtk::Label>()->set_text("There was no usaved work.");
+		Builder("label:crashhandler.autosave").as<Gtk::Label>()->set_text(_("There was no usaved work."));
 	}
 	CONNECT(m_dialog, delete_event, [this](GdkEventAny* ev) { quit(); return true; });
 	CONNECT(Builder("button:crashhandler.close").as<Gtk::Button>(), clicked, [this]{ quit(); });
