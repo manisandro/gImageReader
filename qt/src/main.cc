@@ -63,7 +63,13 @@ int main (int argc, char *argv[])
 		QString savefile = argc >= 4 ? argv[3] : "";
 		window = new CrashHandler(pid, savefile);
 	}else{
-		window = new MainWindow();
+		QStringList files;
+		for(int i = 1; i < argc; ++i){
+			if(QFile(argv[i]).exists()){
+				files.append(argv[i]);
+			}
+		}
+		window = new MainWindow(files);
 	}
 	window->show();
 

@@ -55,7 +55,7 @@ public:
 
 	static MainWindow* getInstance(){ return s_instance; }
 
-	MainWindow();
+	MainWindow(const QStringList& files);
 	~MainWindow();
 
 	void openFiles(const QStringList& files);

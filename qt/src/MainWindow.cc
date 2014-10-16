@@ -71,7 +71,7 @@ static void signalHandler(int signal)
 
 MainWindow* MainWindow::s_instance = nullptr;
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(const QStringList& files)
 	: m_idleActions(0)
 {
 
@@ -142,6 +142,8 @@ MainWindow::MainWindow()
 		m_versionCheckWatcher.setFuture(QtConcurrent::run(this, &MainWindow::getNewestVersion));
 	}
 #endif
+
+	m_sourceManager->addSources(files);
 }
 
 MainWindow::~MainWindow()
