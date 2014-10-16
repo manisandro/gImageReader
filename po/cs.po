@@ -1,0 +1,853 @@
+# Czech translations for gImageReader package
+# Czech messages for gImageReader.
+# Copyright (C) 2010-2013 THE GIMAGEREADER'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gImageReader package.
+# Pavel Borecki <pavel.borecki@gmail.com>, 2014
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-04-30 01:01+0200\n"
+"PO-Revision-Date: 2014-09-10 22:30+0200\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
+"Language-Team: Czech <>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../data/gimagereader.ui.h:1
+msgid "<small>Recognize all</small>"
+msgstr "<small>Rozpoznat vše</small>"
+
+#: ../data/gimagereader.ui.h:2
+msgid "_Redetect Languages"
+msgstr "Znovu zkont_rolovat přítomnost jazykových dat"
+
+#: ../data/gimagereader.ui.h:3
+msgid "Append to current text"
+msgstr "Připojit k současnému textu"
+
+#: ../data/gimagereader.ui.h:4
+msgid "Insert at cursor"
+msgstr "Vložit na pozici kurzoru"
+
+#: ../data/gimagereader.ui.h:5
+msgid "Replace current text"
+msgstr "Nahradit současný text"
+
+#: ../data/gimagereader.ui.h:6
+msgid "_Recent"
+msgstr "_Nedávno použité"
+
+#: ../data/gimagereader.ui.h:7
+msgid "Take _Screenshot"
+msgstr "Zachytit _snímek obrazovky"
+
+#: ../data/gimagereader.ui.h:8 ../src/FileDialogs.cc:255
+msgid "Select sources"
+msgstr "Vybrat zdroje"
+
+#: ../data/gimagereader.ui.h:9
+msgid "Sources"
+msgstr "Zdroje"
+
+#: ../data/gimagereader.ui.h:10
+msgid "Zoom in"
+msgstr "Přiblížit"
+
+#: ../data/gimagereader.ui.h:11
+msgid "Zoom In"d
+msgstr "Přiblížit"
+
+#: ../data/gimagereader.ui.h:12
+msgid "Zoom out"
+msgstr "Oddálit"
+
+#: ../data/gimagereader.ui.h:13
+msgid "Zoom Out"
+msgstr "Oddálit"
+
+#: ../data/gimagereader.ui.h:14
+msgid "Normal size"
+msgstr "Původní velikost"
+
+#: ../data/gimagereader.ui.h:15
+msgid "Normal Size"
+msgstr "Původní velikost"
+
+#: ../data/gimagereader.ui.h:16
+msgid "Best fit"
+msgstr "Přizpůsobit"
+
+#: ../data/gimagereader.ui.h:17
+msgid "Best Fit"
+msgstr "Přizpůsobit"
+
+#: ../data/gimagereader.ui.h:18
+msgid "Rotate left"
+msgstr "Otočit vlevo"
+
+#: ../data/gimagereader.ui.h:19
+msgid "Rotate Left"
+msgstr "Otočit vlevo"
+
+#: ../data/gimagereader.ui.h:20
+msgid "Rotate right"
+msgstr "Otočit vpravo"
+
+#: ../data/gimagereader.ui.h:21
+msgid "Rotate Right"
+msgstr "Otočit vpravo"
+
+#: ../data/gimagereader.ui.h:22
+msgid "Ovládání parametrů obrázku"
+msgstr "Bildbearbeitung"
+
+#: ../data/gimagereader.ui.h:23
+msgid "Ovládání parametrů obrázku"
+msgstr "Bildbearbeitung"
+
+#: ../data/gimagereader.ui.h:24
+msgid "Autodetect layout"
+msgstr "Zjistit rozvržení automaticky"
+
+#: ../data/gimagereader.ui.h:25
+msgid "Autolayout"
+msgstr "Autorozvržení"
+
+#: ../data/gimagereader.ui.h:26
+msgid "Toggle output pane"
+msgstr "Přepnout podokno výstupu"
+
+#: ../data/gimagereader.ui.h:27
+msgid "Options"
+msgstr "Možnosti"
+
+#: ../data/gimagereader.ui.h:28
+msgid "Add images"
+msgstr "Přidat obrázky"
+
+#: ../data/gimagereader.ui.h:29
+msgid "Add Images"
+msgstr "Přidat obrázky"
+
+#: ../data/gimagereader.ui.h:30
+msgid "Remove image from list"
+msgstr "Odebrat obrázek ze seznamu"
+
+#: ../data/gimagereader.ui.h:31
+msgid "Remove Image"
+msgstr "Odebrat obrázek"
+
+#: ../data/gimagereader.ui.h:32
+msgid "Delete image"
+msgstr "Smazat obrázek"
+
+#: ../data/gimagereader.ui.h:33
+msgid "Clear list"
+msgstr "Vyčistit seznam"
+
+#: ../data/gimagereader.ui.h:34
+msgid "Clear List"
+msgstr "Vyčistit seznam"
+
+#: ../data/gimagereader.ui.h:35 ../src/SourceManager.cc:38
+msgid "Images"
+msgstr "Obrázky"
+
+#: ../data/gimagereader.ui.h:36
+msgid "Device:"
+msgstr "Zařízení:"
+
+#: ../data/gimagereader.ui.h:37
+msgid "Output:"
+msgstr "Výstup:"
+
+#: ../data/gimagereader.ui.h:38
+msgid "Resolution:"
+msgstr "Rozlišení:"
+
+#: ../data/gimagereader.ui.h:39
+msgid "Refresh"
+msgstr "Znovu načíst"
+
+#: ../data/gimagereader.ui.h:40
+msgid "Mode:"
+msgstr "Režim:"
+
+#: ../data/gimagereader.ui.h:41
+msgid "Color"
+msgstr "Barva"
+
+#: ../data/gimagereader.ui.h:42
+msgid "Grayscale"
+msgstr "Stupně šedé"
+
+#: ../data/gimagereader.ui.h:43
+msgid "Scan"
+msgstr "Skenovat"
+
+#: ../data/gimagereader.ui.h:44
+msgid "Acquire"
+msgstr "Získat"
+
+#: ../data/gimagereader.ui.h:45
+msgid "Brightness"
+msgstr "Světlost"
+
+#: ../data/gimagereader.ui.h:46
+msgid "Contrast"
+msgstr "Kontrast"
+
+#: ../data/gimagereader.ui.h:47 ../src/Displayer.cc:343
+msgid "Resolution"
+msgstr "Rozlišení"
+
+#: ../data/gimagereader.ui.h:48
+msgid "Select append mode"
+msgstr "Zvolte režim připojování"
+
+#: ../data/gimagereader.ui.h:49
+msgid "Strip line breaks on selected text"
+msgstr "Z označeného textu odebrat konce řádků"
+
+#: ../data/gimagereader.ui.h:50
+msgid "Strip Line Breaks"
+msgstr "Odebrat konce řádků"
+
+#: ../data/gimagereader.ui.h:51
+msgid "Find and replace"
+msgstr "Najít a nahradit"
+
+#: ../data/gimagereader.ui.h:52
+msgid "Find and Replace"
+msgstr "Najít a nahradit"
+
+#: ../data/gimagereader.ui.h:53
+msgid "Undo"
+msgstr "Zpět"
+
+#: ../data/gimagereader.ui.h:54
+msgid "Redo"
+msgstr "Znovu"
+
+#: ../data/gimagereader.ui.h:55
+msgid "Save output"
+msgstr "Uložit výstup"
+
+#: ../data/gimagereader.ui.h:56
+msgid "Save Output"
+msgstr "Uložit výstup"
+
+#: ../data/gimagereader.ui.h:57
+msgid "Clear output"
+msgstr "Vyčistit výstup"
+
+#: ../data/gimagereader.ui.h:58
+msgid "Clear Output"
+msgstr "Vyčistit výstup"
+
+#: ../data/gimagereader.ui.h:59
+msgid "Find"
+msgstr "Najít"
+
+#: ../data/gimagereader.ui.h:60
+msgid "Replace"
+msgstr "Nahradit"
+
+#: ../data/gimagereader.ui.h:61
+msgid "Manage list"
+msgstr "Spravovat seznamy"
+
+#: ../data/gimagereader.ui.h:62
+msgid "Apply"
+msgstr "Použít"
+
+#: ../data/gimagereader.ui.h:63 ../src/ReplaceListManager.cc:71
+#: ../src/ReplaceListManager.cc:104
+msgid "Replacement list"
+msgstr "Seznam nahrazování"
+
+#: ../data/gimagereader.ui.h:64
+msgid "A graphical frontend to tesseract-ocr"
+msgstr "Grafická nadstavba pro tesseract-ocr"
+
+#: ../data/gimagereader.ui.h:65
+msgid "Configuration"
+msgstr "Nastavení"
+
+#: ../data/gimagereader.ui.h:66
+msgid "Output pane orientation:"
+msgstr "Orientace výstupní stránky:"
+
+#: ../data/gimagereader.ui.h:67
+msgid "Horizontal"
+msgstr "Vodorovně"
+
+#: ../data/gimagereader.ui.h:68
+msgid "Vertical"
+msgstr "Svisle"
+
+#: ../data/gimagereader.ui.h:69
+msgid "Query to install missing spellcheck dictionaries"
+msgstr "Dotazovat se na instalaci slovníků pro kontrolu překlepů"
+
+#: ../data/gimagereader.ui.h:70
+msgid "Automatically check for new program versions"
+msgstr "Automaticky zjišťovat případnou novější verzi aplikace"
+
+#: ../data/gimagereader.ui.h:71
+msgid "Predefined language definitions:"
+msgstr "Předdefinované jazykové definice:"
+
+#: ../data/gimagereader.ui.h:72
+msgid "Additional language definitions:"
+msgstr "Další jazykové definice:"
+
+#: ../data/gimagereader.ui.h:73
+msgid "The prefix of the tesseract language data file."
+msgstr "Předpona souboru s jazykovými daty engine tesseract."
+
+#: ../data/gimagereader.ui.h:74
+msgid "The ISO 639-1 language code followed by the country code."
+msgstr "Kód jazyka dle normy ISO 639-1, nálsledovaný kódem území."
+
+#: ../data/gimagereader.ui.h:75
+msgid "The name of the language."
+msgstr "Název jazyka."
+
+#: ../data/gimagereader.ui.h:76
+msgid "Output pane font:"
+msgstr "Písmo podokna výstupu:"
+
+#: ../data/gimagereader.ui.h:77
+msgid "Default"
+msgstr "Výchozí"
+
+#: ../data/gimagereader.ui.h:78
+msgid "Page Range"
+msgstr "Strany"
+
+#: ../data/gimagereader.ui.h:79
+msgid "Page range:"
+msgstr "Strany:"
+
+#: ../data/gimagereader.ui.h:80
+msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
+msgstr "<small><b>Příklad:</b> 1-10, 13, 14-18</small>"
+
+#: ../data/gimagereader.ui.h:81
+msgid "Recognition area:"
+msgstr "Oblast k rozpoznání"
+
+#: ../data/gimagereader.ui.h:82
+msgid "Entire page"
+msgstr "Celá strana"
+
+#: ../data/gimagereader.ui.h:83
+msgid "Autodetect"
+msgstr "Automaticky"
+
+#: ../data/gimagereader.ui.h:84
+msgid "Manage Replacement Rules"
+msgstr "Spravovat pravidla nahrazování"
+
+#: ../data/gimagereader.ui.h:85
+msgid "Open"
+msgstr "Otevřít"
+
+#: ../data/gimagereader.ui.h:86
+msgid "Save"
+msgstr "Uložit"
+
+#: ../data/gimagereader.ui.h:87
+msgid "Clear"
+msgstr "Vyčistit"
+
+#: ../data/gimagereader.ui.h:88
+msgid "Add"
+msgstr "Přidat"
+
+#: ../data/gimagereader.ui.h:89
+msgid "Remove"
+msgstr "Odebrat"
+
+#: ../data/gimagereader.ui.h:90
+msgid "Order:"
+msgstr "Pořadí:"
+
+#: ../data/gimagereader.ui.h:91
+msgid "_Recognize"
+msgstr "_Rozpoznat"
+
+#: ../data/gimagereader.ui.h:92
+msgid "Recognize to _clipboard"
+msgstr "Rozpoznat do _schránky"
+
+#: ../data/gimagereader.ui.h:93
+msgid "Save as _image"
+msgstr "Ulož_it jako obrázek"
+
+#: ../data/gimagereader.ui.h:94
+msgid "Keep line break if..."
+msgstr "Ponechat konec řádku pokud..."
+
+#: ../data/gimagereader.ui.h:95
+msgid "Preceeded by dot"
+msgstr "Následuje za tečkou"
+
+#: ../data/gimagereader.ui.h:96
+msgid "Preceded or succeeded by quote"
+msgstr "Pokud mu předchází či za ním následuje citát (uvozovky)"
+
+#: ../data/gimagereader.ui.h:97
+msgid "Other options"
+msgstr "Další možnosti"
+
+#: ../data/gimagereader.ui.h:98
+msgid "Join hyphenated words"
+msgstr "Spojit rozdělená slova"
+
+#: ../data/gimagereader.ui.h:99
+msgid "Collapse whitespace"
+msgstr "Odstranit prázdná místa"
+
+#: ../data/gimagereader.ui.h:100
+msgid "Current Page"
+msgstr "Současná strana"
+
+#: ../data/gimagereader.ui.h:101
+msgid "Multiple Pages..."
+msgstr "Více stran..."
+
+#: ../data/crashhandler.ui.h:1
+msgid "<b>The application has crashed</b>"
+msgstr "<b>Aplikace zhavarovala</b>"
+
+#: ../data/crashhandler.ui.h:2
+msgid "Regenerate backtrace"
+msgstr "Obnovit backtrace"
+
+#: ../data/crashhandler.ui.h:4
+#, no-c-format
+msgid ""
+"Apologies for the inconvenience. To help improve the application, please "
+"consider reporting the issue <a href=\"mailto:manisandro@gmail.com?"
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Please try to "
+"describe what you were doing before the application crashed. Also, include "
+"the information below. Thank you."
+msgstr ""
+"Omlouváme se za nepohodlí. Chcete-li pomoci aplikaci zlepšit "
+"nahlaste problém na <a href=\"mailto:manisandro@gmail.com?"
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>."
+"Zde se pokuste popsat svou činnost před pádem aplikace. Též přiložte níže uvedené."
+"Díky"
+
+#: ../src/Acquirer.cc:40 ../src/FileDialogs.cc:170
+msgid "Cancel"
+msgstr "Zrušit"
+
+#: ../src/Acquirer.cc:61
+msgid "Scan failed"
+msgstr "Skenování se nezdařilo"
+
+#: ../src/Acquirer.cc:73
+msgid "scan.png"
+msgstr "scan.png"
+
+#: ../src/Acquirer.cc:90 ../src/Displayer.cc:644
+msgid "PNG Images"
+msgstr "obrázky PNG"
+
+#: ../src/Acquirer.cc:91
+msgid "Choose Output Filename..."
+msgstr "Zvolte název souboru pro výstup..."
+
+#: ../src/Acquirer.cc:108
+msgid "Failed to initialize the scanning backend."
+msgstr "Nezdařilo se inicializovat skenovací backend."
+
+#: ../src/Acquirer.cc:134
+msgid "No scanners were detected."
+msgstr "Nebyly nalezeny žádné skenery."
+
+#: ../src/Acquirer.cc:152 ../src/Acquirer.cc:169
+msgid "Starting scan..."
+msgstr "Zahájení skenování..."
+
+#: ../src/Acquirer.cc:165
+msgid "Opening device..."
+msgstr "Navazování komunikace se skenerem..."
+
+#: ../src/Acquirer.cc:167
+msgid "Setting options..."
+msgstr "Nastavování předvoleb..."
+
+#: ../src/Acquirer.cc:171
+msgid "Getting parameters..."
+msgstr "Získávání parametrů..."
+
+#: ../src/Acquirer.cc:173
+msgid "Transferring data..."
+msgstr "Přenášení dat..."
+
+#: ../src/Acquirer.cc:183
+msgid "Cancelling scan..."
+msgstr "Rušení skenování..."
+
+#: ../src/Config.cc:91
+msgid "Filename prefix"
+msgstr "Předpona názvu souboru"
+
+#: ../src/Config.cc:92
+msgid "Code"
+msgstr "Kód"
+
+#: ../src/Config.cc:93
+msgid "Native name"
+msgstr "Název v daném jazyce"
+
+#: ../src/Config.cc:172
+msgid "No languages available"
+msgstr "Nejsou k dispozici žádné jazyky"
+
+#: ../src/Config.cc:172
+msgid ""
+"No tesseract languages are available for use. Recognition will not work."
+msgstr ""
+"Nejsou k dispozici žádné jazyky pro tesseract. Rozpoznávání proto nemůže fungovat."
+
+#: ../src/Config.cc:224
+msgid "Multilingual"
+msgstr "Vícejazyčné"
+
+#: ../src/CrashHandler.cc:25 ../src/CrashHandler.cc:43
+msgid "Crash Handler"
+msgstr "Ošetření pádu aplikace"
+
+#: ../src/CrashHandler.cc:103
+msgid "Failed to obtain backtrace. Is gdb installed?"
+msgstr "Nezdařilo se získat backtrace. Je nainstalován ladící nástroj gdb?"
+
+#: ../src/Displayer.cc:56
+msgid "selection.png"
+msgstr "výběr.png"
+
+#: ../src/Displayer.cc:349
+msgid "Scale"
+msgstr "Měřítko"
+
+#: ../src/Displayer.cc:354
+msgid "To recognize specific areas, drag rectangles over them."
+msgstr ""
+"Nad oblasti, které mají být rozpoznány, natáhněte obdélníky."
+
+#: ../src/Displayer.cc:360
+msgid "Failed to load image"
+msgstr "Obrázek se nezdařilo načíst"
+
+#: ../src/Displayer.cc:360
+msgid ""
+"The file might not be an image or be corrupt:\n"
+"%1"
+msgstr ""
+"Soubor nejspíš neobsahuje obrazová data či je poškozený:\n"
+"%1"
+
+#: ../src/Displayer.cc:391
+msgid "Rendering image..."
+msgstr "Vykreslování obrázku..."
+
+#: ../src/Displayer.cc:519 ../src/Displayer.cc:716
+msgid "Recognize selection"
+msgstr "Rozpoznat výběr"
+
+#: ../src/Displayer.cc:521
+msgid "Recognize all"
+msgstr "Rozpoznat vše"
+
+#: ../src/Displayer.cc:645
+msgid "Save Selection Image"
+msgstr "Uložit obrázek výběru"
+
+#: ../src/Displayer.cc:702
+msgid "Performing layout analysis"
+msgstr "Analyzovat rozvržení strany"
+
+#: ../src/FileDialogs.cc:110 ../src/FileDialogs.cc:169
+#: ../src/FileDialogs.cc:189
+msgid "Select sources..."
+msgstr "Vybrat zdroje..."
+
+#. Get formats
+#: ../src/FileDialogs.cc:113 ../src/FileDialogs.cc:186
+msgid "Images and PDFs"
+msgstr "Obrázky a PDF soubory"
+
+#: ../src/FileDialogs.cc:171
+msgid "OK"
+msgstr "OK"
+
+#: ../src/FileDialogs.cc:280
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr "Soubor s názvem \"%1\" již existuje. Opravdu jej chcete přepsat?"
+
+#: ../src/FileDialogs.cc:282
+msgid "Overwrite File?"
+msgstr "Přepsat soubor?"
+
+#: ../src/MainWindow.cc:131
+msgid "Select an image to begin..."
+msgstr "Začněte výběrem obrázku..."
+
+#: ../src/MainWindow.cc:274
+msgid "New version"
+msgstr "Nová verze"
+
+#: ../src/MainWindow.cc:274
+msgid "gImageReader %1 is available"
+msgstr "je k dispozici gImageReader %1"
+
+#: ../src/MainWindow.cc:275
+msgid "Download"
+msgstr "Stáhnout"
+
+#: ../src/MainWindow.cc:276
+msgid "Changelog"
+msgstr "Seznam změn"
+
+#: ../src/MainWindow.cc:277
+msgid "Don't notify again"
+msgstr "Příště již neupozorňovat"
+
+#: ../src/OutputManager.cc:51 ../src/ReplaceListManager.cc:38
+msgid "Search for"
+msgstr "Hledat výskyt:"
+
+#: ../src/OutputManager.cc:52 ../src/ReplaceListManager.cc:39
+msgid "Replace with"
+msgstr "Nahradit pomocí:"
+
+#: ../src/OutputManager.cc:157
+msgid "Stripping line breaks..."
+msgstr "Odebírání konců řádek..."
+
+#: ../src/OutputManager.cc:221
+msgid "Check spelling"
+msgstr "Zkontrolovat na překlepy"
+
+#: ../src/OutputManager.cc:263
+msgid "Text Files"
+msgstr "Textové soubory"
+
+#: ../src/OutputManager.cc:264
+msgid "Save Output..."
+msgstr "Uložit výstup..."
+
+#: ../src/OutputManager.cc:272
+msgid "Failed to save output"
+msgstr "Uložení výstupu se nezdařilo"
+
+#: ../src/OutputManager.cc:272
+msgid "Check that you have writing permissions in the selected folder."
+msgstr "Zkontrolujte své oprávnění zapisovat do zvolené složky."
+
+#: ../src/OutputManager.cc:291
+msgid "Output not saved"
+msgstr "Výstup nebyl uložen"
+
+#: ../src/OutputManager.cc:291
+msgid "Save output before proceeding?"
+msgstr "Uložit před pokračováním výstup?"
+
+#: ../src/OutputManager.cc:310
+msgid "en_US"
+msgstr "cs_CZ"
+
+#: ../src/OutputManager.cc:318
+msgid "Don't show again"
+msgstr "Příště již nezobrazovat"
+
+#: ../src/OutputManager.cc:319
+msgid "Help"
+msgstr "Nápověda"
+
+#: ../src/OutputManager.cc:326
+msgid "Install"
+msgstr "Instalovat"
+
+#: ../src/OutputManager.cc:331
+msgid "Spelling dictionary missing"
+msgstr "Chybí slovník pro kontrolu překlepů"
+
+#: ../src/OutputManager.cc:331
+msgid "The spellcheck dictionary for %1 is not installed"
+msgstr "Slovník pro kontrolu překlepů pro %1 není nainstalován"
+
+#: ../src/OutputManager.cc:340
+msgid "Installing spelling dictionary for '%1'"
+msgstr "Probíhá instalace slovníku pro kontrolu překlepů pro '%1'"
+
+#: ../src/OutputManager.cc:355
+msgid "Failed to install spelling dictionary"
+msgstr "Instalace slovníku pro kontrolu překlepů se nezdařila"
+
+#: ../src/Recognizer.cc:57 ../src/Recognizer.cc:127
+msgid "Recognizing..."
+msgstr "Rozpoznávání..."
+
+#: ../src/Recognizer.cc:138
+msgid ""
+"\n"
+"\tFailed to initialize tesseract"
+msgstr ""
+"\n"
+"\tNepodařilo se inicializovat Tesseract"
+
+#: ../src/Recognizer.cc:144
+msgid "Recognizing page %1 (%2 of %3)"
+msgstr "Probíhá rozpoznávání strany %1 (%2 ze %3)"
+
+#: ../src/Recognizer.cc:152
+msgid ""
+"\n"
+"\tPage %1: failed to render page"
+msgstr ""
+"\n"
+"\tStrana %1: vykreslování stránky se nezdařilo"
+
+#: ../src/Recognizer.cc:153
+msgid ""
+"\n"
+"[Failed to recognize page %1]\n"
+msgstr ""
+"\n"
+"[Stránku %1 se nezdařilo rozpoznat]\n"
+
+#: ../src/Recognizer.cc:174
+msgid "Recognition errors occured"
+msgstr "Vyskytly se chyby při rozpoznávání"
+
+#: ../src/Recognizer.cc:174
+msgid "The following errors occured:%1"
+msgstr "Došlo k následujícím chybám:%1"
+
+#: ../src/ReplaceListManager.cc:60
+msgid "replace_list.txt"
+msgstr "seznam_nahrazovani.txt"
+
+#: ../src/ReplaceListManager.cc:72
+msgid "Open replacement list"
+msgstr "Otevřít seznam nahrazování"
+
+#: ../src/ReplaceListManager.cc:77
+msgid "Error reading file"
+msgstr "Chyba při načítání souboru"
+
+#: ../src/ReplaceListManager.cc:77
+msgid "Unable to read from the file %1."
+msgstr "Ze souboru %1 nelze číst."
+
+#: ../src/ReplaceListManager.cc:97
+msgid "Errors occurred reading file"
+msgstr "Při načítání souboru došlo k chybám"
+
+#: ../src/ReplaceListManager.cc:97
+msgid "Some entries of the replacement list could not be read."
+msgstr "Některé položky seznamu nahrazování se nezdařilo načíst."
+
+#: ../src/ReplaceListManager.cc:105
+msgid "Save replacement list"
+msgstr "Uložit seznam nahrazování"
+
+#: ../src/ReplaceListManager.cc:111
+msgid "Error saving file"
+msgstr "Chyba při ukládání do souboru"
+
+#: ../src/ReplaceListManager.cc:111
+msgid "Unable to write to the file %1."
+msgstr "Do souboru %1 nelze zapisovat."
+
+#: ../src/ReplaceListManager.cc:130
+msgid "Save the current list?"
+msgstr "Uložit současný seznam?"
+
+#: ../src/ReplaceListManager.cc:130
+msgid "Do you want to save the current list?"
+msgstr "Chcete současný seznam uložit?"
+
+#: ../src/ReplaceListManager.cc:203
+msgid "Applying replacement list..."
+msgstr "Použití seznamu nahrazování..."
+
+#: ../src/Scanner.cc:88
+msgid "No scanner specified."
+msgstr "Nebyl určen žádný skener."
+
+#: ../src/Scanner.cc:91
+msgid "Unable to connect to scanner"
+msgstr "Nedaří se komunikovat se skenerem"
+
+#: ../src/Scanner.cc:120
+msgid "Unable to start scan"
+msgstr "Nedaří se zahájit skenování"
+
+#: ../src/Scanner.cc:127 ../src/Scanner.cc:141
+msgid "Error communicating with scanner"
+msgstr "Chyba komunikace se skenerem"
+
+#: ../src/Scanner.cc:199
+msgid "Scan cancelled"
+msgstr "Skenování bylo zrušeno"
+
+#: ../src/SourceManager.cc:117
+msgid "Unable to open files"
+msgstr "Soubory nelze otevřít"
+
+#: ../src/SourceManager.cc:117
+msgid "The following files could not be opened:%1"
+msgstr "Následující soubory nebylo možné otevřít:%1"
+
+#: ../src/SourceManager.cc:145
+msgid "Pasted %1"
+msgstr "Vloženo %1"
+
+#: ../src/SourceManager.cc:146
+msgid "Pasting clipboard..."
+msgstr "Vkládání ze schránky..."
+
+#: ../src/SourceManager.cc:162
+msgid "Screenshot %1"
+msgstr "Snímek obrazovky %1"
+
+#: ../src/SourceManager.cc:163
+msgid "Taking screenshot..."
+msgstr "Pořizování snímku obrazovky..."
+
+#: ../src/SourceManager.cc:198
+msgid "Delete the file?"
+msgstr "Opravdu smazat tento soubor?"
+
+#: ../src/SourceManager.cc:198
+msgid ""
+"The following file will be deleted:\n"
+"%1"
+msgstr ""
+"Tento soubor bude smazán:\n"
+"%1"
+
+#: ../src/SourceManager.cc:243
+msgid "Deleted file"
+msgstr "Smazaný soubor"
+
+#: ../src/SourceManager.cc:243
+msgid ""
+"The following file has been deleted:\n"
+"%1"
+msgstr ""
+"Následující soubory byly smazány:\n"
+"%1"
