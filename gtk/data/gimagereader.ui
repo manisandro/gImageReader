@@ -1558,9 +1558,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 MA 02110-1301, USA.</property>
     <property name="authors">Sandro Mani &lt;manisandro@gmail.com&gt;</property>
-    <property name="translator_credits">Deutsch: Sandro Mani &lt;manisandro@gmail.com&gt;
-Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
-</property>
+    <property name="translator_credits">Chinese (simplified): kaiman &lt;kaigfm@gmail.com&gt;
+Czech: Pavel Borecki &lt;pavel.borecki@gmail.com&gt;
+German: Sandro Mani &lt;manisandro@gmail.com&gt;
+Italian: Sandro Mani &lt;manisandro@gmail.com&gt;
+Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
     <property name="logo_icon_name">gimagereader</property>
     <property name="license_type">custom</property>
     <child internal-child="vbox">
