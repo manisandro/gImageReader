@@ -283,6 +283,11 @@ bool OutputManager::clearBuffer()
 	return true;
 }
 
+bool OutputManager::getBufferModified() const
+{
+	return ui.plainTextEditOutput->document()->isModified();
+}
+
 void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 {
 	MAIN->hideNotification(m_notifierHandle);

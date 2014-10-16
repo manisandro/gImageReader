@@ -24,9 +24,11 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QProcess>
 #include <QStatusBar>
 #include <QtConcurrentRun>
 #include <QUrl>
+#include <csignal>
 
 #include "AboutDialog.hh"
 #include "MainWindow.hh"
@@ -45,11 +47,37 @@
 #define CHANGELOGURL "http://sourceforge.net/projects/gimagereader/files/changelog.txt/download?use_mirror=autoselect"
 #endif // ENABLE_VERSIONCHECK
 
+static void signalHandler(int signal)
+{
+	std::signal(signal, nullptr);
+
+	QString filename;
+	if(MAIN->getOutputManager() && MAIN->getOutputManager()->getBufferModified()){
+		filename = QDir(Utils::documentsFolder()).absoluteFilePath(QString("%1_crash-save.txt").arg(PACKAGE_NAME));
+		int i = 0;
+		while(QFile(filename).exists()){
+			++i;
+			filename = QDir(Utils::documentsFolder()).absoluteFilePath(QString("%1_crash-save_%2.txt").arg(PACKAGE_NAME).arg(i));
+		}
+		MAIN->getOutputManager()->saveBuffer(filename);
+	}
+
+	QProcess process;
+	process.start(QApplication::applicationFilePath(), QStringList() << "crashhandle" << QString::number(QApplication::applicationPid()) << filename);
+	process.waitForFinished(-1);
+	std::raise(signal);
+}
+
+
 MainWindow* MainWindow::s_instance = nullptr;
 
 MainWindow::MainWindow()
 	: m_idleActions(0)
 {
+
+	std::signal(SIGSEGV, signalHandler);
+	std::signal(SIGABRT, signalHandler);
+
 	qRegisterMetaType<MainWindow::State>();
 
 	s_instance = this;
@@ -114,9 +142,6 @@ MainWindow::MainWindow()
 		m_versionCheckWatcher.setFuture(QtConcurrent::run(this, &MainWindow::getNewestVersion));
 	}
 #endif
-
-//TODO	std::signal(SIGSEGV, crash_handler);
-//TODO	std::signal(SIGABRT, crash_handler);
 }
 
 MainWindow::~MainWindow()

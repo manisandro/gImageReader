@@ -78,12 +78,12 @@ private:
 
 	UI_MainWindow ui;
 
-	Config* m_config;
-	Acquirer* m_acquirer;
-	Displayer* m_displayer;
-	OutputManager* m_outputManager;
-	Recognizer* m_recognizer;
-	SourceManager* m_sourceManager;
+	Config* m_config = nullptr;
+	Acquirer* m_acquirer = nullptr;
+	Displayer* m_displayer = nullptr;
+	OutputManager* m_outputManager = nullptr;
+	Recognizer* m_recognizer = nullptr;
+	SourceManager* m_sourceManager = nullptr;
 
 	QActionGroup m_idleActions;
 	QList<QWidget*> m_idleWidgets;

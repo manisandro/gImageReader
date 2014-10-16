@@ -23,8 +23,10 @@
 #include <QLocale>
 #include <QTextCodec>
 #include <libintl.h>
+#include <cstring>
 
 #include "MainWindow.hh"
+#include "CrashHandler.hh"
 
 int main (int argc, char *argv[])
 {
@@ -55,9 +57,18 @@ int main (int argc, char *argv[])
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 	textdomain(GETTEXT_PACKAGE);
 
-	MainWindow mainWindow;
-	mainWindow.show();
+	QWidget* window;
+	if(argc >= 3 && std::strcmp("crashhandle", argv[1]) == 0) {
+		int pid = std::atoi(argv[2]);
+		QString savefile = argc >= 4 ? argv[3] : "";
+		window = new CrashHandler(pid, savefile);
+	}else{
+		window = new MainWindow();
+	}
+	window->show();
 
-	return app.exec();
+	int exitcode = app.exec();
+	delete window;
+	return exitcode;
 }
 

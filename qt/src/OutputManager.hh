@@ -36,9 +36,11 @@ class OutputManager : public QObject {
 public:
 	OutputManager(const UI_MainWindow& _ui);
 	void addText(const QString& text, bool insert = false);
+	bool getBufferModified() const;
 
 public slots:
 	bool clearBuffer();
+	bool saveBuffer(const QString& filename = "");
 	void setLanguage(const Config::Lang &lang, bool force = false);
 
 private:
@@ -65,7 +67,6 @@ private slots:
 	void findPrev();
 	void replaceAll();
 	void replaceNext();
-	bool saveBuffer(const QString& filename = "");
 	void setFont();
 	void setInsertMode(QAction* action);
 #ifdef Q_OS_LINUX
