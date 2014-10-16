@@ -252,7 +252,12 @@ bool OutputManager::saveBuffer(std::string filename)
 {
 	if(filename.empty()){
 		std::string base, ext;
-		const std::string& currentSource = Glib::path_get_basename(MAIN->getSourceManager()->getSelectedSource());
+		std::string currentSource = MAIN->getSourceManager()->getSelectedSource();
+		if(!currentSource.empty()){
+			currentSource = Glib::path_get_basename(currentSource);
+		}else{
+			currentSource = _("output");
+		}
 		Utils::get_filename_parts(currentSource, base, ext);
 		std::string outputDir = Glib::get_user_special_dir(G_USER_DIRECTORY_DOCUMENTS);
 		if(!Glib::file_test(outputDir, Glib::FILE_TEST_IS_DIR)){
@@ -306,7 +311,7 @@ void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 	Notifier::hide(m_notifierHandle);
 	m_spell.detach();
 	std::string code = lang.code;
-	if(force && lang.code.empty()) {
+	if(force && code.empty()) {
 		code = _("en_US");
 	}
 	if(!code.empty()){

@@ -50,6 +50,9 @@
        </property>
        <item>
         <widget class="QFrame" name="frameBrightness">
+         <property name="toolTip">
+          <string>Brightness</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -100,6 +103,9 @@
        </item>
        <item>
         <widget class="QFrame" name="frameContrast">
+         <property name="toolTip">
+          <string>Contrast</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -150,6 +156,9 @@
        </item>
        <item>
         <widget class="QFrame" name="frameResolution">
+         <property name="toolTip">
+          <string>Resolution</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -224,9 +233,6 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBarMain">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
    <property name="movable">
     <bool>false</bool>
    </property>
@@ -395,32 +401,32 @@
           <widget class="QComboBox" name="comboBoxScanResolution">
            <item>
             <property name="text">
-             <string>75 dpi</string>
+             <string notr="true">75 dpi</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>100 dpi</string>
+             <string notr="true">100 dpi</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>200 dpi</string>
+             <string notr="true">200 dpi</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>300 dpi</string>
+             <string notr="true">300 dpi</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>600 dpi</string>
+             <string notr="true">600 dpi</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>1200 dpi</string>
+             <string notr="true">1200 dpi</string>
             </property>
            </item>
           </widget>
@@ -501,6 +507,9 @@
          </item>
          <item row="1" column="2">
           <widget class="QToolButton" name="toolButtonScanDevicesRefresh">
+           <property name="toolTip">
+            <string>Refresh</string>
+           </property>
            <property name="icon">
             <iconset theme="view-refresh">
              <normaloff/>
@@ -576,7 +585,7 @@
         <item row="0" column="0">
          <widget class="QLineEdit" name="lineEditOutputSearch">
           <property name="placeholderText">
-           <string>Search</string>
+           <string>Find</string>
           </property>
          </widget>
         </item>
@@ -689,7 +698,7 @@
     <string>Zoom In</string>
    </property>
    <property name="toolTip">
-    <string>Zoom In</string>
+    <string>Zoom in</string>
    </property>
   </action>
   <action name="actionZoomOut">
@@ -715,10 +724,10 @@
     </iconset>
    </property>
    <property name="text">
-    <string>Original Size</string>
+    <string>Normal Size</string>
    </property>
    <property name="toolTip">
-    <string>Original size</string>
+    <string>Normal size</string>
    </property>
   </action>
   <action name="actionBestFit">

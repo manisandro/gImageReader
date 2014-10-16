@@ -59,7 +59,7 @@ msgid "Zoom in"
 msgstr "Přiblížit"
 
 #: ../data/gimagereader.ui.h:11
-msgid "Zoom In"d
+msgid "Zoom In"
 msgstr "Přiblížit"
 
 #: ../data/gimagereader.ui.h:12
@@ -103,12 +103,12 @@ msgid "Rotate Right"
 msgstr "Otočit vpravo"
 
 #: ../data/gimagereader.ui.h:22
-msgid "Ovládání parametrů obrázku"
-msgstr "Bildbearbeitung"
+msgid "Image controls"
+msgstr "Ovládání parametrů obrázku"
 
 #: ../data/gimagereader.ui.h:23
-msgid "Ovládání parametrů obrázku"
-msgstr "Bildbearbeitung"
+msgid "Image Controls"
+msgstr "Ovládání parametrů obrázku"
 
 #: ../data/gimagereader.ui.h:24
 msgid "Autodetect layout"

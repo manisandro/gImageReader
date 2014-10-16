@@ -34,7 +34,7 @@
    <item row="2" column="0">
     <widget class="QLabel" name="labelRecognitionArea">
      <property name="text">
-      <string>Recogition area:</string>
+      <string>Recognition area:</string>
      </property>
     </widget>
    </item>

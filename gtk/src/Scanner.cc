@@ -85,7 +85,7 @@ void Scanner::do_open()
 	g_debug("do_open");
 	ScanJob* job = m_jobQueue.front();
 	if(job->device.empty()){
-		fail_scan(_("No scanner specified."));
+		fail_scan(_("No scanner specified"));
 		return;
 	}else if(!openDevice(job->device)){
 		fail_scan(_("Unable to connect to scanner"));

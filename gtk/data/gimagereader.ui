@@ -123,10 +123,9 @@
     <property name="halign">end</property>
     <child>
       <object class="GtkImageMenuItem" id="menuitem:main.redetect">
-        <property name="label" translatable="yes">_Redetect Languages</property>
+        <property name="label" translatable="yes">Redetect Languages</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="use_underline">True</property>
         <property name="image">image:main.redetect</property>
         <property name="use_stock">False</property>
       </object>
@@ -257,10 +256,9 @@
     <property name="can_focus">False</property>
     <child>
       <object class="GtkImageMenuItem" id="menuitem:sources.images.recent">
-        <property name="label" translatable="yes">_Recent</property>
+        <property name="label" translatable="yes">Recent</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="use_underline">True</property>
         <property name="image">image:sources.images.recent</property>
         <property name="use_stock">False</property>
       </object>
@@ -282,10 +280,9 @@
     </child>
     <child>
       <object class="GtkImageMenuItem" id="menuitem:sources.images.screenshot">
-        <property name="label" translatable="yes">Take _Screenshot</property>
+        <property name="label" translatable="yes">Take Screenshot</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="use_underline">True</property>
         <property name="image">image:sources.images.screenshot</property>
         <property name="use_stock">False</property>
       </object>
@@ -522,7 +519,7 @@
                 <property name="sensitive">False</property>
                 <property name="can_focus">False</property>
                 <property name="tooltip_text" translatable="yes">Autodetect layout</property>
-                <property name="label" translatable="yes">Autolayout</property>
+                <property name="label" translatable="yes">Autodetect Layout</property>
                 <property name="use_underline">True</property>
                 <property name="icon_widget">image:main.autolayout</property>
               </object>
@@ -550,6 +547,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="tooltip_text" translatable="yes">Toggle output pane</property>
+                <property name="label" translatable="yes">Toggle Output Pane</property>
                 <property name="stock_id">gtk-edit</property>
               </object>
               <packing>
@@ -574,8 +572,6 @@
               <object class="GtkToolItem" id="tbbutton:options">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="has_tooltip">True</property>
-                <property name="tooltip_text" translatable="yes">Options</property>
                 <child>
                   <object class="GtkMenuButton" id="menubutton:options">
                     <property name="visible">True</property>
@@ -683,7 +679,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="has_tooltip">True</property>
                                 <property name="tooltip_text" translatable="yes">Delete image</property>
-                                <property name="label" translatable="yes">Delete image</property>
+                                <property name="label" translatable="yes">Delete Image</property>
                                 <property name="use_underline">True</property>
                                 <property name="icon_name">user-trash</property>
                               </object>
@@ -742,7 +738,7 @@
                       <object class="GtkLabel" id="label:sources.images">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Images</property>
+                        <property name="label" translatable="yes">Files</property>
                       </object>
                       <packing>
                         <property name="tab_fill">False</property>
@@ -1206,7 +1202,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="has_tooltip">True</property>
-                                    <property name="tooltip_text" translatable="yes">Select append mode</property>
+                                    <property name="tooltip_text" translatable="yes">Select insert mode</property>
                                     <property name="pixbuf">icons/ins_append.png</property>
                                   </object>
                                   <packing>
@@ -1870,10 +1866,10 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="has_tooltip">True</property>
-                    <property name="tooltip_text" translatable="yes">The prefix of the tesseract language data file.</property>
+                    <property name="tooltip_text" translatable="yes">The prefix of the tesseract language data file</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">2</property>
-                    <property name="placeholder_text">Prefix</property>
+                    <property name="placeholder_text" translatable="yes">Prefix</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -1887,10 +1883,10 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="has_tooltip">True</property>
-                    <property name="tooltip_text" translatable="yes">The ISO 639-1 language code followed by the country code.</property>
+                    <property name="tooltip_text" translatable="yes">The ISO 639-1 language code followed by the country code</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">2</property>
-                    <property name="placeholder_text">ISO Code</property>
+                    <property name="placeholder_text" translatable="yes">ISO Code</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -1904,10 +1900,10 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="has_tooltip">True</property>
-                    <property name="tooltip_text" translatable="yes">The name of the language.</property>
+                    <property name="tooltip_text" translatable="yes">The name of the language</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">2</property>
-                    <property name="placeholder_text">Name</property>
+                    <property name="placeholder_text" translatable="yes">Name</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -2390,13 +2386,12 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
         </child>
         <child>
           <object class="GtkButton" id="button:selectionmenu.recognize">
-            <property name="label" translatable="yes">_Recognize</property>
+            <property name="label" translatable="yes">Recognize</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="image">image:selectionmenu.recognize</property>
             <property name="relief">none</property>
-            <property name="use_underline">True</property>
             <property name="xalign">0</property>
             <property name="always_show_image">True</property>
           </object>
@@ -2408,13 +2403,12 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
         </child>
         <child>
           <object class="GtkButton" id="button:selectionmenu.clipboard">
-            <property name="label" translatable="yes">Recognize to _clipboard</property>
+            <property name="label" translatable="yes">Recognize to clipboard</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="image">image:selectionmenu.clipboard</property>
             <property name="relief">none</property>
-            <property name="use_underline">True</property>
             <property name="xalign">0</property>
             <property name="always_show_image">True</property>
           </object>
@@ -2437,13 +2431,12 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
         </child>
         <child>
           <object class="GtkButton" id="button:selectionmenu.save">
-            <property name="label" translatable="yes">Save as _image</property>
+            <property name="label" translatable="yes">Save as image</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="image">image:selectionmenu:save</property>
             <property name="relief">none</property>
-            <property name="use_underline">True</property>
             <property name="xalign">0</property>
             <property name="always_show_image">True</property>
           </object>
@@ -2480,7 +2473,7 @@ Italiano: Sandro Mani &lt;manisandro@gmail.com&gt;
       <object class="GtkCheckMenuItem" id="menuitem:output.stripcrlf.keepquote">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Preceded or succeeded by quote</property>
+        <property name="label" translatable="yes">Preceeded or succeeded by quote</property>
         <property name="use_underline">True</property>
       </object>
     </child>

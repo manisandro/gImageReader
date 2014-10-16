@@ -7,6 +7,7 @@ Summary:       OCR application
 URL:           http://sourceforge.net/projects/gimagereader/
 Source:        %{name}-%{version}.tar.xz
 
+BuildRequires: cmake
 BuildRequires: gtkmm30-devel
 BuildRequires: gtkspellmm30-devel
 BuildRequires: cairomm-devel
@@ -36,7 +37,7 @@ gImageReader is a simple Gtk front-end to tesseract. Features include:
 
 
 %build
-%configure
+%cmake ..
 make %{?_smp_mflags}
 
 

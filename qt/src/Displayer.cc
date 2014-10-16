@@ -293,7 +293,7 @@ void Displayer::saveSelection(DisplaySelection *selection)
 {
 	QImage img = getImage(selection->rect());
 	QString filename = Utils::makeOutputFilename(MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->getValue());
-	filename = QFileDialog::getSaveFileName(MAIN, _("Save selection image"), filename, _("PNG Images %1").arg("(*.png)"));
+	filename = QFileDialog::getSaveFileName(MAIN, _("Save Selection Image"), filename, QString("%1 (*.png)").arg(_("PNG Images")));
 	if(!filename.isEmpty()){
 		MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->setValue(filename);
 		img.save(filename);

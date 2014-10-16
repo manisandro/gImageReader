@@ -42,7 +42,7 @@ Recognizer::Recognizer(QWidget* parent) :
 	QAction* currentPageAction = new QAction(_("Current Page"), this);
 	currentPageAction->setData(static_cast<int>(PageSelection::Current));
 
-	QAction* multiplePagesAction = new QAction(_("Multiple Pages"), this);
+	QAction* multiplePagesAction = new QAction(_("Multiple Pages..."), this);
 	multiplePagesAction->setData(static_cast<int>(PageSelection::Multiple));
 
 	m_pagesMenu = new QMenu(this);

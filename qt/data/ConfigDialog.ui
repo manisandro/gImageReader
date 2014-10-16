@@ -99,14 +99,14 @@
    <item row="4" column="0" colspan="3">
     <widget class="QLabel" name="labelPredefLang">
      <property name="text">
-      <string>Predefined language definitions</string>
+      <string>Predefined language definitions:</string>
      </property>
     </widget>
    </item>
    <item row="6" column="0" colspan="3">
     <widget class="QLabel" name="labelAdditionalLang">
      <property name="text">
-      <string>Additional language definitions</string>
+      <string>Additional language definitions:</string>
      </property>
     </widget>
    </item>
@@ -171,6 +171,9 @@
       </property>
       <item>
        <widget class="QLineEdit" name="lineEditLangPrefix">
+        <property name="toolTip">
+         <string>The prefix of the tesseract language data file</string>
+        </property>
         <property name="placeholderText">
          <string>Prefix</string>
         </property>
@@ -178,6 +181,9 @@
       </item>
       <item>
        <widget class="QLineEdit" name="lineEditLangCode">
+        <property name="toolTip">
+         <string>The ISO 639-1 language code followed by the country code</string>
+        </property>
         <property name="placeholderText">
          <string>ISO Code</string>
         </property>
@@ -185,6 +191,9 @@
       </item>
       <item>
        <widget class="QLineEdit" name="lineEditLangName">
+        <property name="toolTip">
+         <string>The name of the language</string>
+        </property>
         <property name="placeholderText">
          <string>Name</string>
         </property>
@@ -193,7 +202,7 @@
       <item>
        <widget class="QPushButton" name="pushButtonAddLangOk">
         <property name="text">
-         <string>Ok</string>
+         <string>OK</string>
         </property>
         <property name="icon">
          <iconset theme="dialog-ok">

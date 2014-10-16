@@ -158,15 +158,15 @@ public:
 
 		toolButtonSourceAdd = new QToolButton(MainWindow);
 		toolButtonSourceAdd->setIcon(QIcon::fromTheme("document-open"));
-		toolButtonSourceAdd->setToolTip(gettext("Open"));
+		toolButtonSourceAdd->setToolTip(gettext("Add images"));
 		toolButtonSourceAdd->setPopupMode(QToolButton::MenuButtonPopup);
 		toolButtonSourceAdd->setMenu(menuAddSource);
 
-		actionSourceRemove = new QAction(QIcon::fromTheme("list-remove"), gettext("Remove Source"), MainWindow);
-		actionSourceRemove->setToolTip(gettext("Remove source"));
+		actionSourceRemove = new QAction(QIcon::fromTheme("list-remove"), gettext("Remove Image"), MainWindow);
+		actionSourceRemove->setToolTip(gettext("Remove image from list"));
 		actionSourceRemove->setEnabled(false);
-		actionSourceDelete = new QAction(QIcon::fromTheme("user-trash"), gettext("Delete Source"), MainWindow);
-		actionSourceDelete->setToolTip(gettext("Delete source"));
+		actionSourceDelete = new QAction(QIcon::fromTheme("user-trash"), gettext("Delete Image"), MainWindow);
+		actionSourceDelete->setToolTip(gettext("Delete image"));
 		actionSourceDelete->setEnabled(false);
 		actionSourceClear = new QAction(QIcon::fromTheme("edit-clear"), gettext("Clear List"), MainWindow);
 		actionSourceClear->setToolTip(gettext("Clear list"));

@@ -107,7 +107,7 @@ void SubstitutionsManager::openList()
 		return;
 	}
 	QString dir = !m_currentFile.isEmpty() ? QFileInfo(m_currentFile).absolutePath() : Utils::documentsFolder();
-	QString filename = QFileDialog::getOpenFileName(this, _("Open Substitutions List"), dir, QString("%1 (*.txt)").arg(_("Substitution List")));
+	QString filename = QFileDialog::getOpenFileName(this, _("Open Substitutions List"), dir, QString("%1 (*.txt)").arg(_("Substitutions List")));
 
 	if(!filename.isEmpty()) {
 		QFile file(filename);

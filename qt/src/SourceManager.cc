@@ -188,7 +188,7 @@ void SourceManager::openSources()
 	}
 	formats.insert("*.pdf");
 	QString filter = QString("%1 (%2)").arg(_("Images and PDFs")).arg(QStringList(formats.toList()).join(" "));
-	addSources(QFileDialog::getOpenFileNames(MAIN, _("Select Sources"), dir, filter));
+	addSources(QFileDialog::getOpenFileNames(MAIN, _("Select Files"), dir, filter));
 }
 
 void SourceManager::currentSourceChanged()
@@ -204,7 +204,7 @@ void SourceManager::takeScreenshot()
 {
 	QPixmap pixmap = QPixmap::grabWindow(QApplication::desktop()->winId());
 	if(pixmap.isNull()){
-		QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take the screenshot."));
+		QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot."));
 		return;
 	}
 	++m_screenshotCount;

@@ -107,7 +107,7 @@ static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustrin
 
 static std::vector<Glib::RefPtr<Gio::File>> win32_open_sources_dialog(const std::string& initialDirectory, Gtk::Window* parent)
 {
-	std::string title = _("Select sources...");
+	std::string title = _("Select Files");
 
 	// Get formats
 	std::wstring filter = s2ws(_("Images and PDFs"));
@@ -166,7 +166,7 @@ Glib::RefPtr<Gtk::FileFilter> FileDialogs::FileFilter::to_gnome_filter() const
 
 static std::vector<Glib::RefPtr<Gio::File>> gnome_open_dialog(const std::string& title, const std::string& initialDirectory, Glib::RefPtr<Gtk::FileFilter> filter, bool multiple, Gtk::Window* parent)
 {
-	Gtk::FileChooserDialog dialog(*MAIN->getWindow(), _("Select sources..."));
+	Gtk::FileChooserDialog dialog(*MAIN->getWindow(), _("Select Files"));
 	dialog.add_button(_("Cancel"), Gtk::RESPONSE_CANCEL);
 	dialog.add_button(_("OK"), Gtk::RESPONSE_OK);
 	dialog.set_select_multiple(multiple);
@@ -186,7 +186,7 @@ static std::vector<Glib::RefPtr<Gio::File>> gnome_open_sources_dialog(const std:
 	filter->set_name(_("Images and PDFs"));
 	filter->add_pixbuf_formats();
 	filter->add_mime_type("application/pdf");
-	return gnome_open_dialog(_("Select sources..."), initialDirectory, filter, true, parent);
+	return gnome_open_dialog(_("Select Files"), initialDirectory, filter, true, parent);
 }
 
 static std::string gnome_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, const FileDialogs::FileFilter& filter, Gtk::Window *parent)
@@ -252,7 +252,7 @@ static std::vector<Glib::RefPtr<Gio::File>> kde_open_sources_dialog(const std::s
 	}
 	filter += " application/pdf";
 
-	return kde_open_dialog(_("Select sources"), initialDirectory, filter, true, parent);
+	return kde_open_dialog(_("Select Files"), initialDirectory, filter, true, parent);
 }
 
 static std::string kde_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, const FileDialogs::FileFilter& filter, Gtk::Window *parent)

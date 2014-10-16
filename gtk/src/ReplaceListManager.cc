@@ -57,7 +57,7 @@ ReplaceListManager::ReplaceListManager()
 
 	m_currentFile = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("replacelistfile")->getValue();
 	if(m_currentFile.empty()) {
-		m_currentFile = Glib::build_filename(Utils::get_documents_dir(), _("replace_list.txt"));
+		m_currentFile = Glib::build_filename(Utils::get_documents_dir(), _("substitution_list.txt"));
 		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("replacelistfile")->setValue(m_currentFile);
 	}
 }
@@ -68,13 +68,13 @@ void ReplaceListManager::openList()
 		return;
 	}
 	std::string dir = Glib::path_get_dirname(m_currentFile);
-	FileDialogs::FileFilter filter = { _("Replacement list"), "text/plain", "*.txt"};
-	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open replacement list"), dir, filter, false, m_dialog);
+	FileDialogs::FileFilter filter = { _("Substitutions List"), "text/plain", "*.txt"};
+	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open Substitutions List"), dir, filter, false, m_dialog);
 
 	if(!files.empty()) {
 		std::ifstream file(files.front()->get_path());
 		if(!file.is_open()) {
-			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error reading file"), Glib::ustring::compose(_("Unable to read from the file %1."), files.front()->get_path()));
+			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error Reading File"), Glib::ustring::compose(_("Unable to read '%1'."), files.front()->get_path()));
 			return;
 		}
 		m_currentFile = files.front()->get_path();
@@ -94,21 +94,21 @@ void ReplaceListManager::openList()
 			(*it)[m_viewCols.replace] = fields[1];
 		}
 		if(errors) {
-			Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Errors occurred reading file"), _("Some entries of the replacement list could not be read."));
+			Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Errors Occurred Reading File"), _("Some entries of the substitutions list could not be read."));
 		}
 	}
 }
 
 bool ReplaceListManager::saveList()
 {
-	FileDialogs::FileFilter filter = { _("Replacement list"), "text/plain", "*.txt" };
-	std::string filename = FileDialogs::save_dialog(_("Save replacement list"), m_currentFile, filter, m_dialog);
+	FileDialogs::FileFilter filter = { _("Substitutions list"), "text/plain", "*.txt" };
+	std::string filename = FileDialogs::save_dialog(_("Save Substitutions List"), m_currentFile, filter, m_dialog);
 	if(filename.empty()) {
 		return false;
 	}
 	std::ofstream file(filename);
 	if(!file.is_open()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error saving file"), Glib::ustring::compose(_("Unable to write to the file %1."), filename));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error Saving File"), Glib::ustring::compose(_("Unable to write to '%1'."), filename));
 		return false;
 	}
 	m_currentFile = filename;
@@ -127,7 +127,7 @@ bool ReplaceListManager::saveList()
 bool ReplaceListManager::clearList()
 {
 	if(m_listStore->children().size() > 0) {
-		int ret = Utils::question_dialog(_("Save the current list?"), _("Do you want to save the current list?"), m_dialog);
+		int ret = Utils::question_dialog(_("Save List?"), _("Do you want to save the current list?"), m_dialog);
 		if(ret == 2) {
 			return false;
 		} else if(ret == 1) {
@@ -200,7 +200,7 @@ void ReplaceListManager::apply(Glib::RefPtr<UndoableBuffer> buffer)
 			}
 		}
 		return true;
-	}, _("Applying replacement list..."));
+	}, _("Applying substitutions..."));
 
 	buffer->replace_range(text, start, end);
 	start = end = buffer->get_iter_at_mark(buffer->get_insert());

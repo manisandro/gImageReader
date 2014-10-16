@@ -4,20 +4,21 @@
 [type: gettext/glade]gtk/data/crashhandler.ui
 gtk/src/Acquirer.cc
 gtk/src/Acquirer.hh
+gtk/src/Application.hh
 gtk/src/AsyncQueue.hh
 gtk/src/common.hh
 gtk/src/Config.cc
 gtk/src/Config.hh
 gtk/src/ConfigSettings.cc
 gtk/src/ConfigSettings.hh
-gtk/src/CrashHandler.hh
 gtk/src/CrashHandler.cc
+gtk/src/CrashHandler.hh
 gtk/src/Displayer.cc
 gtk/src/Displayer.hh
-gtk/src/DisplayRenderer.cc
-gtk/src/DisplayRenderer.hh
 gtk/src/DisplayManipulator.cc
 gtk/src/DisplayManipulator.hh
+gtk/src/DisplayRenderer.cc
+gtk/src/DisplayRenderer.hh
 gtk/src/DisplaySelection.cc
 gtk/src/DisplaySelection.hh
 gtk/src/FileDialogs.cc
@@ -46,9 +47,9 @@ gtk/src/Utils.cc
 gtk/src/Utils.hh
 [type: gettext/qtdesigner]qt/data/AboutDialog.ui
 [type: gettext/qtdesigner]qt/data/ConfigDialog.ui
+[type: gettext/qtdesigner]qt/data/CrashHandler.ui
 [type: gettext/qtdesigner]qt/data/MainWindow.ui
 [type: gettext/qtdesigner]qt/data/PageRangeDialog.ui
-[type: gettext/qtdesigner]qt/data/ReplaceListManager.ui
 qt/src/AboutDialog.hh
 qt/src/Acquirer.cc
 qt/src/Acquirer.hh
@@ -58,6 +59,8 @@ qt/src/Config.cc
 qt/src/Config.hh
 qt/src/ConfigSettings.cc
 qt/src/ConfigSettings.hh
+qt/src/CrashHandler.cc
+qt/src/CrashHandler.hh
 qt/src/Displayer.cc
 qt/src/Displayer.hh
 qt/src/DisplayRenderer.cc

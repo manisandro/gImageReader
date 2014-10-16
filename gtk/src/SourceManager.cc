@@ -139,6 +139,7 @@ void SourceManager::pasteClipboard()
 {
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf = m_clipboard->wait_for_image();
 	if(!pixbuf){
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Clipboard Error"),  _("Failed to read the clipboard."));
 		return;
 	}
 	++m_pasteCount;
@@ -156,6 +157,7 @@ void SourceManager::takeScreenshot()
 	h = root->get_height();
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(root, x, y, w, h);
 	if(!pixbuf){
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Screenshot Error"),  _("Failed to take screenshot."));
 		return;
 	}
 	++m_screenshotCount;
@@ -167,8 +169,13 @@ void SourceManager::takeScreenshot()
 void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf> &pixbuf, const std::string &displayname)
 {
 	std::string path;
-	int fd = Glib::file_open_tmp(path, PACKAGE_NAME);
-	close(fd);
+	try{
+		int fd = Glib::file_open_tmp(path, PACKAGE_NAME);
+		close(fd);
+	}catch(Glib::FileError&){
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Cannot Write File"),  Glib::ustring::compose(_("Could not write to %1."), path));
+		return;
+	}
 	pixbuf->save(path, "png");
 	Glib::signal_idle().connect_once([this,path,displayname]{ savePixbufDone(path, displayname); });
 }
@@ -195,7 +202,7 @@ void SourceManager::removeItem(bool deleteFile)
 	}
 	if(deleteFile){
 		std::string path = it->get_value(m_listViewCols.source).file->get_path();
-		if(1 != Utils::question_dialog(_("Delete the file?"), Glib::ustring::compose(_("The following file will be deleted:\n%1"), path))){
+		if(1 != Utils::question_dialog(_("Delete File?"), Glib::ustring::compose(_("The following file will be deleted:\n%1"), path))){
 			return;
 		}
 		Gio::File::create_for_path(path)->remove();
@@ -240,7 +247,7 @@ void SourceManager::sourceChanged(const Glib::RefPtr<Gio::File>& file, const Gli
 			m_signal_sourceChanged.emit(getSelectedSource());
 		}
 	}else if(event == Gio::FILE_MONITOR_EVENT_DELETED){
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Deleted file"), Glib::ustring::compose(_("The following file has been deleted:\n%1"), file->get_path()));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Missing File"), Glib::ustring::compose(_("The following file has been deleted or moved:\n%1"), file->get_path()));
 		it = store->erase(it);
 		if(m_listView->get_selection()->get_selected()){
 			return;
