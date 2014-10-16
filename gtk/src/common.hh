@@ -45,11 +45,6 @@ SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
 #define CONNECTP(src, property, ...) (src)->property_##property().signal_changed().connect(__VA_ARGS__)
 #define CONNECTPS(src, property, ...) {auto sender = src; sender->property_##property().signal_changed().connect(sigc::bind(__VA_ARGS__, sender)); }
 
-#ifdef SRCTREE_EXEC // Execute from source tree
-#undef  PACKAGE_DATA_DIR
-#define PACKAGE_DATA_DIR "data/"
-#endif
-
 #define APPLICATION_ID "org.gnome.gimagereader"
 
 #ifndef M_PI
@@ -70,5 +65,8 @@ public:
 private:
 	Gtk::Widget* m_widget;
 };
+
+extern std::string pkgExePath;
+extern std::string pkgDataDir;
 
 #endif

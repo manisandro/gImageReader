@@ -60,10 +60,10 @@ void crash_handler(int sig)
 	}
 	Glib::RefPtr<Application> app = Glib::RefPtr<Application>::cast_static(Gio::Application::get_default());
 #ifdef G_OS_WIN32
-	Glib::spawn_async("", std::vector<std::string>{app->get_executable_path(), "crashhandle", Glib::ustring::compose("%1", getpid()), filename});
+	Glib::spawn_async("", std::vector<std::string>{pkgExePath, "crashhandle", Glib::ustring::compose("%1", getpid()), filename});
 	std::exit(1);
 #else
-	Glib::spawn_sync("", std::vector<std::string>{app->get_executable_path(), "crashhandle", Glib::ustring::compose("%1", getpid()), filename});
+	Glib::spawn_sync("", std::vector<std::string>{pkgExePath, "crashhandle", Glib::ustring::compose("%1", getpid()), filename});
 	std::raise(sig);
 #endif
 }
@@ -218,14 +218,7 @@ void MainWindow::showAbout()
 
 void MainWindow::showHelp(const std::string& chapter)
 {
-	std::string manualFile;
-#ifdef G_OS_WIN32
-	gchar* dir = g_win32_get_package_installation_directory_of_module(0);
-	manualFile = Glib::build_path("/", std::vector<std::string>{dir, "share", PACKAGE_NAME, "manual.html"});
-	g_free(dir);
-#else
-	manualFile = PACKAGE_DATA_DIR "/manual.html";
-#endif
+	std::string manualFile = Glib::build_path("/", std::vector<std::string>{pkgDataDir, "manual.html"});
 	std::string manualURI = Glib::filename_to_uri(Utils::make_absolute_path(manualFile)) + chapter;
 #ifdef G_OS_WIN32
 	ShellExecute(nullptr, "open", manualURI.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
