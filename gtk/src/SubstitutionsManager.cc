@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * ReplaceListManager.cc
+ * SubstitutionsManager.cc
  * Copyright (C) 2013-2014 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
@@ -17,7 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ReplaceListManager.hh"
+#include "SubstitutionsManager.hh"
 #include "MainWindow.hh"
 #include "Config.hh"
 #include "ConfigSettings.hh"
@@ -27,7 +27,8 @@
 #include <fstream>
 #include <cstring>
 
-ReplaceListManager::ReplaceListManager()
+SubstitutionsManager::SubstitutionsManager(const Glib::RefPtr<UndoableBuffer>& buffer)
+	: m_buffer(buffer)
 {
 	m_dialog = Builder("window:postproc");
 	m_listView = Builder("treeview:postproc");
@@ -43,11 +44,12 @@ ReplaceListManager::ReplaceListManager()
 	m_listView->get_column(1)->set_expand(true);
 	m_listView->set_fixed_height_mode();
 
-
 	CONNECT(Builder("toolbutton:postproc.open").as<Gtk::Button>(), clicked, [this]{ openList(); });
 	CONNECT(Builder("toolbutton:postproc.save").as<Gtk::Button>(), clicked, [this]{ saveList(); });
 	CONNECT(Builder("toolbutton:postproc.clear").as<Gtk::Button>(), clicked, [this]{ clearList(); });
 	CONNECT(Builder("toolbutton:postproc.add").as<Gtk::Button>(), clicked, [this]{ addRow(); });
+	CONNECT(Builder("button:postproc.apply").as<Gtk::Button>(), clicked, [this]{ apply(); });
+	CONNECT(Builder("button:postproc.close").as<Gtk::Button>(), clicked, [this]{ m_dialog->hide(); });
 	CONNECT(m_removeButton, clicked, [this]{ removeRows(); });
 	CONNECT(m_listView->get_selection(), changed, [this]{ m_removeButton->set_sensitive(m_listView->get_selection()->count_selected_rows() != 0); });
 	CONNECT(m_dialog, hide, [this] { dialogClosed(); });
@@ -62,7 +64,7 @@ ReplaceListManager::ReplaceListManager()
 	}
 }
 
-void ReplaceListManager::openList()
+void SubstitutionsManager::openList()
 {
 	if(!clearList()) {
 		return;
@@ -99,7 +101,7 @@ void ReplaceListManager::openList()
 	}
 }
 
-bool ReplaceListManager::saveList()
+bool SubstitutionsManager::saveList()
 {
 	FileDialogs::FileFilter filter = { _("Substitutions list"), "text/plain", "*.txt" };
 	std::string filename = FileDialogs::save_dialog(_("Save Substitutions List"), m_currentFile, filter, m_dialog);
@@ -124,7 +126,7 @@ bool ReplaceListManager::saveList()
 	return true;
 }
 
-bool ReplaceListManager::clearList()
+bool SubstitutionsManager::clearList()
 {
 	if(m_listStore->children().size() > 0) {
 		int ret = Utils::question_dialog(_("Save List?"), _("Do you want to save the current list?"), m_dialog);
@@ -140,13 +142,13 @@ bool ReplaceListManager::clearList()
 	return true;
 }
 
-void ReplaceListManager::addRow()
+void SubstitutionsManager::addRow()
 {
 	Gtk::TreeIter it = m_listStore->append();
 	m_listView->set_cursor(m_listStore->get_path(it), *m_listView->get_column(0), true);
 }
 
-void ReplaceListManager::removeRows()
+void SubstitutionsManager::removeRows()
 {
 	if(m_listView->get_selection()->count_selected_rows() != 0){
 		std::vector<Gtk::ListStore::RowReference> rows;
@@ -159,29 +161,29 @@ void ReplaceListManager::removeRows()
 	}
 }
 
-void ReplaceListManager::dialogClosed()
+void SubstitutionsManager::dialogClosed()
 {
 	MAIN->getConfig()->getSetting<ListStoreSetting>("replacelist")->serialize();
 }
 
-void ReplaceListManager::show()
+void SubstitutionsManager::show()
 {
 	m_dialog->show();
 }
 
-void ReplaceListManager::hide()
+void SubstitutionsManager::hide()
 {
 	m_dialog->hide();
 }
 
-void ReplaceListManager::apply(Glib::RefPtr<UndoableBuffer> buffer)
+void SubstitutionsManager::apply()
 {
 	Gtk::TextIter start, end;
-	if(!buffer->get_selection_bounds(start, end)){
-		start = buffer->begin();
-		end = buffer->end();
+	if(!m_buffer->get_selection_bounds(start, end)){
+		start = m_buffer->begin();
+		end = m_buffer->end();
 	}
-	Glib::ustring text = buffer->get_text(start, end);
+	Glib::ustring text = m_buffer->get_text(start, end);
 
 	Utils::busyTask([this,&text]{
 		for(const Gtk::TreeModel::Row& row : m_listStore->children()){
@@ -202,8 +204,8 @@ void ReplaceListManager::apply(Glib::RefPtr<UndoableBuffer> buffer)
 		return true;
 	}, _("Applying substitutions..."));
 
-	buffer->replace_range(text, start, end);
-	start = end = buffer->get_iter_at_mark(buffer->get_insert());
+	m_buffer->replace_range(text, start, end);
+	start = end = m_buffer->get_iter_at_mark(m_buffer->get_insert());
 	start.backward_chars(text.size());
-	buffer->select_range(start, end);
+	m_buffer->select_range(start, end);
 }

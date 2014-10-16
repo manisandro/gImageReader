@@ -22,6 +22,7 @@
 #include "Notifier.hh"
 #include "OutputManager.hh"
 #include "SourceManager.hh"
+#include "SubstitutionsManager.hh"
 #include "Utils.hh"
 
 #include <fstream>
@@ -57,6 +58,8 @@ OutputManager::OutputManager()
 	m_insertIter = m_textBuffer->end();
 	m_selectIter = m_textBuffer->end();
 
+	m_substitutionsManager = new SubstitutionsManager(m_textBuffer);
+
 	m_spell.property_decode_language_codes() = true;
 
 	Builder("tbbutton:output.stripcrlf").as<Gtk::MenuToolButton>()->set_menu(*Builder("menu:output.stripcrlf").as<Gtk::Menu>());
@@ -80,8 +83,7 @@ OutputManager::OutputManager()
 	CONNECT(m_redoButton, clicked, [this]{ m_textBuffer->redo(); m_textView->grab_focus(); });
 	CONNECT(Builder("tbbutton:output.save").as<Gtk::ToolButton>(), clicked, [this]{ saveBuffer(); });
 	CONNECT(Builder("tbbutton:output.clear").as<Gtk::ToolButton>(), clicked, [this]{ clearBuffer(); });
-	CONNECT(Builder("button:output.postproc.manage").as<Gtk::ToolButton>(), clicked, [this]{ m_replaceListManager.show(); });
-	CONNECT(Builder("button:output.postproc.apply").as<Gtk::ToolButton>(), clicked, [this]{ m_replaceListManager.apply(m_textBuffer); });
+	CONNECT(Builder("button:output.substitutions").as<Gtk::ToolButton>(), clicked, [this]{ m_substitutionsManager->show(); });
 	CONNECTP(Builder("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
 	CONNECT(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
 	CONNECT(m_textView, populate_popup, [this](Gtk::Menu* menu){ populateTextViewMenu(menu); });
@@ -92,6 +94,10 @@ OutputManager::OutputManager()
 	MAIN->getConfig()->addSetting("keepquote", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.keepquote"));
 	MAIN->getConfig()->addSetting("joinhyphen", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.joinhyphen"));
 	MAIN->getConfig()->addSetting("joinspace", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.joinspace"));
+}
+
+OutputManager::~OutputManager(){
+	delete m_substitutionsManager;
 }
 
 void OutputManager::setFont()
@@ -302,7 +308,7 @@ bool OutputManager::clearBuffer()
 	m_textBuffer->clear_history();
 	m_textBuffer->set_modified(false);
 	m_outputBox->hide();
-	m_replaceListManager.hide();
+	m_substitutionsManager->hide();
 	return true;
 }
 

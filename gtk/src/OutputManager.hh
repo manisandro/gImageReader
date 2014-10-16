@@ -24,13 +24,15 @@
 #include "UndoableBuffer.hh"
 #include "Config.hh"
 #include "Notifier.hh"
-#include "ReplaceListManager.hh"
 
 #include <gtkspellmm.h>
+
+class SubstitutionsManager;
 
 class OutputManager {
 public:
 	OutputManager();
+	~OutputManager();
 	void addText(const Glib::ustring& text, bool insert = false);
 	bool saveBuffer(std::string filename = "");
 	void setVisible(bool visible);
@@ -63,7 +65,7 @@ private:
 	GtkSpell::Checker m_spell;
 	Notifier::Handle m_notifierHandle = nullptr;
 
-	ReplaceListManager m_replaceListManager;
+	SubstitutionsManager* m_substitutionsManager = nullptr;
 
 	void setFont();
 	void showInsertMenu();

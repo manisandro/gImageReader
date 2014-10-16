@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * ReplaceListManager.hh
+ * SubstitutionsManager.hh
  * Copyright (C) 2013-2014 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
@@ -17,20 +17,19 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef REPLACE_LIST_MANAGER_HH
-#define REPLACE_LIST_MANAGER_HH
+#ifndef SUBSTITUTIONS_MANAGER_HH
+#define SUBSTITUTIONS_MANAGER_HH
 
 #include "common.hh"
 #include "UndoableBuffer.hh"
 
 class ListStoreSetting;
 
-class ReplaceListManager {
+class SubstitutionsManager {
 public:
-	ReplaceListManager();
+	SubstitutionsManager(const Glib::RefPtr<UndoableBuffer>& buffer);
 	void show();
 	void hide();
-	void apply(Glib::RefPtr<UndoableBuffer> buffer);
 
 private:
 	struct ReplaceListColumns : public Gtk::TreeModel::ColumnRecord {
@@ -45,7 +44,9 @@ private:
 	Gtk::TreeView* m_listView = nullptr;
 	Gtk::Button* m_removeButton;
 	Glib::RefPtr<Gtk::ListStore> m_listStore;
+	Glib::RefPtr<UndoableBuffer> m_buffer;
 
+	void apply();
 	void openList();
 	bool saveList();
 	bool clearList();
@@ -54,4 +55,4 @@ private:
 	void dialogClosed();
 };
 
-#endif // REPLACE_LIST_MANAGER_HH
+#endif // SUBSTITUTIONS_MANAGER_HH
