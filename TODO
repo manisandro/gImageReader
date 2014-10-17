@@ -4,7 +4,6 @@ High prio:
 Mid prio:
 - Option to disable scanning (especially on windows, since twain causes problems. Or use WIA?)
 - Add "insert file" button in output pane
-- User dictionary is not saved on some windows versions?
 
 Low prio:
 - installation of tesseract langpacks through packagekit?
@@ -12,13 +11,9 @@ Low prio:
 
 
 Gtk:
-- clearing sources list does not unwatch items?
-- OutputManager::saveBuffer: if there is no selected source, output filename is probably garbage
 - ReplacementManger::openList: m_currentFile empty, initial dir is garbage
 - ScannerSane.hh::doCompletePage: clear is called too early
 
 Qt:
-- crash handler
-- command line parameters
 - detect pdf from content type when using Qt5?
 - check whether translations work
