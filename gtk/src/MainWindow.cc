@@ -49,7 +49,7 @@ void crash_handler(int sig)
 {
 	std::signal(sig, nullptr);
 	std::string filename;
-	if(MAIN->getOutputManager()->getModified()){
+	if(MAIN->getOutputManager() && MAIN->getOutputManager()->getModified()){
 		filename = Glib::build_filename(g_get_home_dir(), Glib::ustring::compose("%1_crash-save.txt", PACKAGE_NAME));
 		int i = 0;
 		while(Glib::file_test(filename, Glib::FILE_TEST_EXISTS)){
@@ -73,6 +73,9 @@ MainWindow* MainWindow::s_instance = nullptr;
 MainWindow::MainWindow()
 {
 	s_instance = this;
+
+	std::signal(SIGSEGV, crash_handler);
+	std::signal(SIGABRT, crash_handler);
 
 	m_config = new Config;
 	m_acquirer = new Acquirer;
@@ -143,9 +146,6 @@ MainWindow::MainWindow()
 #else
 	Builder("check:config.settings.update").as<Gtk::Widget>()->hide();
 #endif
-
-	std::signal(SIGSEGV, crash_handler);
-	std::signal(SIGABRT, crash_handler);
 }
 
 MainWindow::~MainWindow()
