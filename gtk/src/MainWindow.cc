@@ -95,7 +95,7 @@ MainWindow::MainWindow()
 	m_idlegroup.push_back(Builder("tbbutton:main.bestfit"));
 	m_idlegroup.push_back(Builder("tbbutton:main.rotleft"));
 	m_idlegroup.push_back(Builder("tbbutton:main.rotright"));
-	m_idlegroup.push_back(Builder("spin:main.rotate"));
+	m_idlegroup.push_back(Builder("spin:display.rotate"));
 	m_idlegroup.push_back(Builder("spin:display.page"));
 	m_idlegroup.push_back(Builder("spin:display.brightness"));
 	m_idlegroup.push_back(Builder("spin:display.contrast"));

@@ -103,6 +103,12 @@ ENDIF()
 
 IF("${srcdir}" STREQUAL "gtk")
 	ADD_SCHEMA("gtk/data/org.gnome.gimagereader.gschema.xml")
+	ADD_CUSTOM_COMMAND(
+		OUTPUT gimagereader.gresource.c
+		COMMAND glib-compile-resources gimagereader.gresource.xml --target=${CMAKE_CURRENT_BINARY_DIR}/gimagereader.gresource.c --generate-source
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/gtk/data/
+		DEPENDS ${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.gresource.xml ${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.ui ${CMAKE_SOURCE_DIR}/gtk/data/crashhandler.ui)
+	LIST(APPEND gimagereader_SRCS gimagereader.gresource.c)
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt4")
 	QT4_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})
 	QT4_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
@@ -152,10 +158,6 @@ INSTALL(FILES data/icons/256x256/gimagereader.png DESTINATION share/icons/hicolo
 INSTALL(FILES data/gimagereader.desktop DESTINATION share/applications)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/manual.html DESTINATION ${PACKAGE_DATA_DIR})
 INSTALL(FILES data/gimagereader.appdata.xml DESTINATION share/appdata)
-IF("${srcdir}" STREQUAL "gtk")
-	INSTALL(FILES ${gimagereader_ICONS} DESTINATION ${PACKAGE_DATA_DIR}/icons)
-	INSTALL(FILES ${gimagereader_FORMS} DESTINATION ${PACKAGE_DATA_DIR})
-ENDIF()
 
 
 # Dist

@@ -41,12 +41,18 @@ Displayer::Displayer()
 	m_zoomonebtn = Builder("tbbutton:main.normsize");
 	m_zoomfitbtn = Builder("tbbutton:main.bestfit");
 	m_ocrstatelabel = Builder("label:main.recognize.state");
-	m_rotspin = Builder("spin:main.rotate");
+	m_rotspin = Builder("spin:display.rotate");
 	m_pagespin = Builder("spin:display.page");
 	m_resspin = Builder("spin:display.resolution");
 	m_brispin = Builder("spin:display.brightness");
 	m_conspin = Builder("spin:display.contrast");
 	m_selmenu = Builder("window:selectionmenu");
+
+	m_rotspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/angle.png"));
+	m_pagespin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/angle.png"));
+	m_resspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/resolution.png"));
+	m_brispin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/contrast.png"));
+	m_conspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/brightness.png"));
 
 	m_canvas->set_redraw_on_allocate(false);
 

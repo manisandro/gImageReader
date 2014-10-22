@@ -66,9 +66,9 @@ OutputManager::OutputManager()
 
 	CONNECT(m_insButton, toggled, [this]{ showInsertMenu(); });
 	CONNECT(m_insMenu, deactivate, [this]{ m_insButton->set_active(false); });
-	CONNECT(Builder("menuitem:output.insert.append").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Append, Glib::build_path("/", std::vector<std::string>{pkgDataDir, "icons", "ins_append.png"})); });
-	CONNECT(Builder("menuitem:output.insert.cursor").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Cursor, Glib::build_path("/", std::vector<std::string>{pkgDataDir, "icons", "ins_cursor.png"})); });
-	CONNECT(Builder("menuitem:output.insert.replace").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Replace, Glib::build_path("/", std::vector<std::string>{pkgDataDir, "icons", "ins_replace.png"})); });
+	CONNECT(Builder("menuitem:output.insert.append").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Append, "ins_append.png"); });
+	CONNECT(Builder("menuitem:output.insert.cursor").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Cursor, "ins_cursor.png"); });
+	CONNECT(Builder("menuitem:output.insert.replace").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Replace, "ins_replace.png"); });
 	CONNECT(Builder("tbbutton:output.stripcrlf").as<Gtk::ToolButton>(), clicked, [this]{ filterBuffer(); });
 	CONNECTS(Builder("tbbutton:output.findreplace").as<Gtk::ToggleToolButton>(), toggled, [this](Gtk::ToggleToolButton* b){ toggleReplaceBox(b); });
 	CONNECT(m_textBuffer, changed, [this]{ saveIters(); });
@@ -121,7 +121,7 @@ void OutputManager::showInsertMenu()
 void OutputManager::setInsertMode(InsertMode mode, const std::string& iconName)
 {
 	m_insertMode = mode;
-	m_insImage->set(Gdk::Pixbuf::create_from_file(iconName));
+	m_insImage->set(Gdk::Pixbuf::create_from_resource(std::string("/org/gnome/gimagereader/") + iconName));
 }
 
 void OutputManager::filterBuffer()

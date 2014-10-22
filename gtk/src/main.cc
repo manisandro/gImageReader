@@ -80,7 +80,7 @@ int main (int argc, char *argv[])
 		CrashHandler app(argc, argv);
 
 		try {
-			Builder::builder = Gtk::Builder::create_from_file(Glib::build_filename(pkgDataDir, "crashhandler.ui"));
+			Builder::builder = Gtk::Builder::create_from_resource("/org/gnome/gimagereader/crashhandler.ui");
 			Builder::builder->set_translation_domain(GETTEXT_PACKAGE);
 		} catch (const Glib::Error & ex) {
 			std::cerr << ex.what() << std::endl;
@@ -103,7 +103,7 @@ int main (int argc, char *argv[])
 		Application app(argc, argv);
 
 		try {
-			Builder::builder = Gtk::Builder::create_from_file(Glib::build_filename(pkgDataDir, "gimagereader.ui"));
+			Builder::builder = Gtk::Builder::create_from_resource("/org/gnome/gimagereader/gimagereader.ui");
 			Builder::builder->set_translation_domain(GETTEXT_PACKAGE);
 		} catch (const Glib::Error & ex) {
 			std::cerr << ex.what() << std::endl;
