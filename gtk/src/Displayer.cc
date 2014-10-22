@@ -55,6 +55,7 @@ Displayer::Displayer()
 	m_conspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/brightness.png"));
 
 	m_canvas->set_redraw_on_allocate(false);
+	m_viewport->override_background_color(Gdk::RGBA("#a0a0a4"));
 
 	m_renderer = 0;
 	clearImage(); // Assigns default values to all state variables
