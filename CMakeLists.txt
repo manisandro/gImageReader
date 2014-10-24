@@ -107,7 +107,10 @@ IF("${srcdir}" STREQUAL "gtk")
 		OUTPUT gimagereader.gresource.c
 		COMMAND glib-compile-resources gimagereader.gresource.xml --target=${CMAKE_CURRENT_BINARY_DIR}/gimagereader.gresource.c --generate-source
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/gtk/data/
-		DEPENDS ${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.gresource.xml ${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.ui ${CMAKE_SOURCE_DIR}/gtk/data/crashhandler.ui)
+		DEPENDS ${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.gresource.xml
+				${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.ui
+				${CMAKE_SOURCE_DIR}/gtk/data/crashhandler.ui
+				${CMAKE_SOURCE_DIR}/gtk/data/appmenu.ui)
 	LIST(APPEND gimagereader_SRCS gimagereader.gresource.c)
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt4")
 	QT4_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})

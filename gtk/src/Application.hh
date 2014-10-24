@@ -25,30 +25,61 @@
 
 class Application : public Gtk::Application {
 public:
-	Application(int argc, char* argv[])
-		: Gtk::Application(argc, argv, APPLICATION_ID, Gio::APPLICATION_HANDLES_OPEN)
+	Application(int &argc, char **&argv, const Glib::ustring &application_id, Gio::ApplicationFlags flags)
+		: Gtk::Application(argc, argv, application_id, flags)
 	{
 		Glib::set_application_name(PACKAGE_NAME);
 	}
-	~Application()
+
+private:
+	void on_activate()
 	{
-		delete m_mainWindow;
+		if(m_mainWindow){
+			m_mainWindow->getWindow()->present();
+		}
 	}
+
 	void on_startup()
 	{
 		Gtk::Application::on_startup();
-		m_mainWindow = new MainWindow;
-		add_window(*m_mainWindow->getWindow());
-	}
-	void on_open(const type_vec_files& files, const Glib::ustring& /*hint*/)
-	{
-		if(m_mainWindow == nullptr){
-			activate();
+
+		add_action("redetectLangs", [this]{ m_mainWindow->redetectLanguages(); });
+		add_action("preferences", [this]{ m_mainWindow->showConfig(); });
+		add_action("help", [this]{ m_mainWindow->showHelp(); });
+		add_action("about", [this]{ m_mainWindow->showAbout(); });
+		add_action("quit", [this]{ on_quit(); });
+
+		Glib::RefPtr<Gtk::Builder> appMenuBuilder = Gtk::Builder::create_from_resource("/org/gnome/gimagereader/appmenu.ui");
+		Glib::RefPtr<Gio::MenuModel> menuModel = Glib::RefPtr<Gio::MenuModel>::cast_static(appMenuBuilder->get_object("appmenu"));
+
+		if(prefers_app_menu()){
+			set_app_menu(menuModel);
 		}
-		m_mainWindow->openFiles(files);
+
+		g_assert(m_mainWindow == nullptr);
+		m_mainWindow = new MainWindow();
+		CONNECT(m_mainWindow->getWindow(), hide, [this]{ on_quit(); });
+		if(!prefers_app_menu()){
+			m_mainWindow->setMenuModel(menuModel);
+		}
+		add_window(*m_mainWindow->getWindow());
+		m_mainWindow->getWindow()->show();
 	}
 
-private:
+	void on_open(const type_vec_files& files, const Glib::ustring& /*hint*/)
+	{
+		m_mainWindow->openFiles(files);
+		m_mainWindow->getWindow()->present();
+	}
+
+	void on_quit(){
+		if(m_mainWindow){
+			remove_window(*m_mainWindow->getWindow());
+			delete m_mainWindow;
+			m_mainWindow = nullptr;
+		}
+	}
+
 	MainWindow* m_mainWindow = nullptr;
 };
 

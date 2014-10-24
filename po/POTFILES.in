@@ -1,6 +1,7 @@
 # List of source files containing translatable strings.
 
 [type: gettext/glade]gtk/data/gimagereader.ui
+[type: gettext/glade]gtk/data/appmenu.ui
 [type: gettext/glade]gtk/data/crashhandler.ui
 gtk/src/Acquirer.cc
 gtk/src/Acquirer.hh

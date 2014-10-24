@@ -100,7 +100,7 @@ int main (int argc, char *argv[])
 #endif
 
 		GtkSpell::init();
-		Application app(argc, argv);
+		Application app(argc, argv, APPLICATION_ID, Gio::APPLICATION_HANDLES_OPEN);
 
 		try {
 			Builder::builder = Gtk::Builder::create_from_resource("/org/gnome/gimagereader/gimagereader.ui");

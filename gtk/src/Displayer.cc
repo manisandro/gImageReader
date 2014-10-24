@@ -93,7 +93,7 @@ Displayer::Displayer()
 		if(ev->keyval == GDK_KEY_Escape) hideSelectionMenu(); return true;
 	});
 
-	CONNECT(Builder("window:main").as<Gtk::Window>()->get_style_context(), changed, [this]{ selectionUpdateColors(); });
+	CONNECT(Builder("applicationwindow:main").as<Gtk::Window>()->get_style_context(), changed, [this]{ selectionUpdateColors(); });
 
 	m_blurThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::blurThread));
 }

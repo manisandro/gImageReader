@@ -40,6 +40,7 @@ public:
 	MainWindow();
 	~MainWindow();
 
+	void setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel);
 	void openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files);
 	void pushState(State state, const Glib::ustring& msg);
 	void popState();
@@ -50,12 +51,15 @@ public:
 	Recognizer* getRecognizer(){ return m_recognizer; }
 	SourceManager* getSourceManager(){ return m_sourceManager; }
 	Gtk::Window* getWindow() const{ return m_window; }
+	void redetectLanguages();
+	void showConfig();
 	void showHelp(const std::string& chapter = "");
+	void showAbout();
 
 private:
 	static MainWindow* s_instance;
 
-	Gtk::Window* m_window;
+	Gtk::ApplicationWindow* m_window;
 	Gtk::AboutDialog* m_aboutdialog;
 	Gtk::Statusbar* m_statusbar;
 
@@ -73,7 +77,6 @@ private:
 
 	void setState(State state);
 	bool quit(GdkEventAny*);
-	void showAbout();
 	void setOutputPaneOrientation(Gtk::ComboBoxText* combo);
 #if ENABLE_VERSIONCHECK
 	void getNewestVersion();

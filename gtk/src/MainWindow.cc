@@ -84,7 +84,7 @@ MainWindow::MainWindow()
 	m_recognizer = new Recognizer;
 	m_sourceManager = new SourceManager;
 
-	m_window = Builder("window:main");
+	m_window = Builder("applicationwindow:main");
 	m_aboutdialog = Builder("dialog:about");
 	m_statusbar = Builder("statusbar:main");
 	m_aboutdialog->set_version(PACKAGE_VERSION);
@@ -106,10 +106,6 @@ MainWindow::MainWindow()
 	Gtk::ToggleToolButton* showOutputPaneBtn = Builder("tbbutton:main.outputpane");
 
 	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) { return quit(ev); });
-	CONNECT(Builder("menuitem:main.redetect").as<Gtk::MenuItem>(), activate, [this]{ m_config->updateLanguagesMenu(); });
-	CONNECT(Builder("menuitem:main.configure").as<Gtk::MenuItem>(), activate, [this]{ m_config->showDialog(); });
-	CONNECT(Builder("menuitem:main.help").as<Gtk::MenuItem>(), activate, [this]{ showHelp(); });
-	CONNECT(Builder("menuitem:main.about").as<Gtk::MenuItem>(), activate, [this]{ showAbout(); });
 	CONNECTS(Builder("combo:config.settings.paneorient").as<Gtk::ComboBoxText>(), changed,
 			 [this](Gtk::ComboBoxText* box){ setOutputPaneOrientation(box); });
 	CONNECT(showOutputPaneBtn, toggled, [this,showOutputPaneBtn] { m_outputManager->setVisible(showOutputPaneBtn->get_active()); });
@@ -157,6 +153,12 @@ MainWindow::~MainWindow()
 	delete m_sourceManager;
 	delete m_config;
 	s_instance = nullptr;
+}
+
+void MainWindow::setMenuModel(const Glib::RefPtr<Gio::MenuModel> &menuModel)
+{
+	Builder("menubutton:options").as<Gtk::MenuButton>()->set_menu_model(menuModel);
+	Builder("tbbutton:options").as<Gtk::ToolItem>()->set_visible(true);
 }
 
 void MainWindow::openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files)
@@ -207,7 +209,18 @@ bool MainWindow::quit(GdkEventAny*)
 		m_window->get_size(geom[2], geom[3]);
 		m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->setValue(geom);
 	}
+	m_window->hide();
 	return false;
+}
+
+void MainWindow::redetectLanguages()
+{
+	m_config->updateLanguagesMenu();
+}
+
+void MainWindow::showConfig()
+{
+	m_config->showDialog();
 }
 
 void MainWindow::showAbout()
