@@ -67,7 +67,7 @@ SourceManager::SourceManager()
 	CONNECT(m_removeButton, clicked, [this]{ removeItem(false); });
 	CONNECT(m_deleteButton, clicked, [this]{ removeItem(true); });
 	CONNECT(m_clearButton, clicked, [this]{ clearItems(); });
-	CONNECT(m_listView->get_selection(), changed, [this]{ selectionChanged(); });
+	m_connectionSelectionChanged = CONNECT(m_listView->get_selection(), changed, [this]{ selectionChanged(); });
 	CONNECT(recentChooser, item_activated, [this, recentChooser]{ addSources({Gio::File::create_for_uri(recentChooser->get_current_uri())}); });
 
 	toggleSourcesBtn->set_active(true);
@@ -75,13 +75,7 @@ SourceManager::SourceManager()
 
 SourceManager::~SourceManager()
 {
-	// Remove temporary files
-	for(const Gtk::TreeModel::Row& row : m_listView->get_model()->children()){
-		Source source = row.get_value(m_listViewCols.source);
-		if(source.isTemp){
-			source.file->remove();
-		}
-	}
+	clearItems();
 }
 
 void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files)
@@ -96,7 +90,7 @@ void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files
 		}
 		bool contains = false;
 		for(const Gtk::TreeModel::Row& row : store->children()){
-			if(row.get_value(m_listViewCols.source).file->get_uri() == file->get_uri()){
+			if(row.get_value(m_listViewCols.source)->file->get_uri() == file->get_uri()){
 				contains = true;
 				break;
 			}
@@ -106,9 +100,9 @@ void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files
 		}
 		it = store->append();
 		it->set_value(m_listViewCols.filename, file->get_basename());
-		Source source = {file, file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false};
+		Source* source = new Source(file, file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false);
 		it->set_value(m_listViewCols.source, source);
-		CONNECT(source.monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::sourceChanged), it));
+		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::sourceChanged), it));
 	}
 	if(it){
 		m_listView->get_selection()->select(it);
@@ -118,20 +112,19 @@ void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files
 	}
 }
 
-std::string SourceManager::getSelectedSource() const
+Source* SourceManager::getSelectedSource() const
 {
-	std::string path;
 	Gtk::TreeIter it = m_listView->get_selection()->get_selected();
 	if(it){
-		path = it->get_value(m_listViewCols.source).file->get_path();
+		return it->get_value(m_listViewCols.source);
 	}
-	return path;
+	return nullptr;
 }
 
 void SourceManager::addSourcesBrowse()
 {
-	std::string curSrc = getSelectedSource();
-	std::string initialFolder = curSrc.empty() ? "" : Glib::path_get_dirname(curSrc);
+	Source* curSrc = getSelectedSource();
+	std::string initialFolder = curSrc ? Glib::path_get_dirname(curSrc->file->get_path()) : "";
 	addSources(FileDialogs::open_sources_dialog(initialFolder));
 }
 
@@ -186,11 +179,11 @@ void SourceManager::savePixbufDone(const std::string &path, const std::string &d
 	MAIN->popState();
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model());
 	Glib::RefPtr<Gio::File> file = Gio::File::create_for_path(path);
-	Source source = {file, file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), true};
+	Source* source = new Source(file, file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), true);
 	Gtk::TreeIter it = store->append();
 	it->set_value(m_listViewCols.filename, displayname);
 	it->set_value(m_listViewCols.source, source);
-	CONNECT(source.monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::sourceChanged), it));
+	CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::sourceChanged), it));
 	m_listView->get_selection()->select(it);
 }
 
@@ -200,13 +193,15 @@ void SourceManager::removeItem(bool deleteFile)
 	if(!it){
 		return;
 	}
-	if(deleteFile){
-		std::string path = it->get_value(m_listViewCols.source).file->get_path();
-		if(1 != Utils::question_dialog(_("Delete File?"), Glib::ustring::compose(_("The following file will be deleted:\n%1"), path))){
-			return;
-		}
-		Gio::File::create_for_path(path)->remove();
+	Source* source = it->get_value(m_listViewCols.source);
+	const std::string& path = source->file->get_path();
+	if(deleteFile && 1 != Utils::question_dialog(_("Delete File?"), Glib::ustring::compose(_("The following file will be deleted:\n%1"), path))){
+		return;
 	}
+	if(deleteFile || source->isTemp){
+		source->file->remove();
+	}
+	delete source;
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model());
 	it = store->erase(it);
 	if(!it){
@@ -221,7 +216,16 @@ void SourceManager::removeItem(bool deleteFile)
 void SourceManager::clearItems()
 {
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model());
+	for(const Gtk::TreeModel::Row& row : store->children()){
+		Source* source = row.get_value(m_listViewCols.source);
+		if(source->isTemp){
+			source->file->remove();
+		}
+		delete source;
+	}
+	m_connectionSelectionChanged.block(true);
 	store->clear();
+	m_connectionSelectionChanged.block(false);
 	m_signal_sourceChanged.emit(getSelectedSource());
 }
 
@@ -238,20 +242,19 @@ void SourceManager::selectionChanged()
 void SourceManager::sourceChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event, Gtk::TreeIter it)
 {
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model());
+	Source* source = it->get_value(m_listViewCols.source);
 	if(event == Gio::FILE_MONITOR_EVENT_MOVED){
-		Source source = {otherFile, otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false};
+		source->file = otherFile;
+		source->monitor = otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED);
 		it->set_value(m_listViewCols.filename, otherFile->get_basename());
-		it->set_value(m_listViewCols.source, source);
-		CONNECT(source.monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::sourceChanged), it));
+		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::sourceChanged), it));
 		if(it == m_listView->get_selection()->get_selected()){
 			m_signal_sourceChanged.emit(getSelectedSource());
 		}
 	}else if(event == Gio::FILE_MONITOR_EVENT_DELETED){
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Missing File"), Glib::ustring::compose(_("The following file has been deleted or moved:\n%1"), file->get_path()));
+		delete source;
 		it = store->erase(it);
-		if(m_listView->get_selection()->get_selected()){
-			return;
-		}
 		if(!it){
 			it = store->children().begin();
 		}

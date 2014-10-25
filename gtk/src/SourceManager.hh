@@ -22,30 +22,35 @@
 
 #include "common.hh"
 
+
+struct Source {
+	Source(const Glib::RefPtr<Gio::File>& _file, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
+		: file(_file), monitor(_monitor), isTemp(_isTemp) {}
+	Glib::RefPtr<Gio::File> file;
+	Glib::RefPtr<Gio::FileMonitor> monitor;
+	bool isTemp;
+	int brightness = 0;
+	int contrast = 0;
+	int resolution = -1;
+	int page = 1;
+	double angle = 0.;
+};
+
 class SourceManager {
 public:
 	SourceManager();
 	~SourceManager();
 
 	void addSources(const std::vector<Glib::RefPtr<Gio::File>>& files);
-	std::string getSelectedSource() const;
-	sigc::signal<void,std::string> signal_sourceChanged(){ return m_signal_sourceChanged; }
+	Source* getSelectedSource() const;
+	sigc::signal<void,Source*> signal_sourceChanged(){ return m_signal_sourceChanged; }
 
 private:
-	struct Source {
-		Glib::RefPtr<Gio::File> file;
-		Glib::RefPtr<Gio::FileMonitor> monitor;
-		bool isTemp;
-	};
-
 	class ListViewColumns : public Gtk::TreeModel::ColumnRecord {
 	public:
 		Gtk::TreeModelColumn<std::string> filename;
-		Gtk::TreeModelColumn<Source> source;
-//		Gtk::TreeModelColumn<std::string> path;
-//		Gtk::TreeModelColumn<bool> isTemp;
+		Gtk::TreeModelColumn<Source*> source;
 		ListViewColumns(){ add(filename); add(source); }
-//		ListViewColumns() { add(filename); add(path); add(isTemp); }
 	};
 
 	Gtk::Notebook* m_notebook;
@@ -62,7 +67,8 @@ private:
 	ListViewColumns m_listViewCols;
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;
-	sigc::signal<void,std::string> m_signal_sourceChanged;
+	sigc::signal<void,Source*> m_signal_sourceChanged;
+	sigc::connection m_connectionSelectionChanged;
 
 	void addSourcesBrowse();
 	void pasteClipboard();

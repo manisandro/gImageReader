@@ -258,13 +258,14 @@ bool OutputManager::saveBuffer(std::string filename)
 {
 	if(filename.empty()){
 		std::string base, ext;
-		std::string currentSource = MAIN->getSourceManager()->getSelectedSource();
-		if(!currentSource.empty()){
-			currentSource = Glib::path_get_basename(currentSource);
+		Source* currentSource = MAIN->getSourceManager()->getSelectedSource();
+		std::string currentPath;
+		if(currentSource){
+			currentPath = Glib::path_get_basename(currentSource->file->get_path());
 		}else{
-			currentSource = _("output");
+			currentPath = _("output");
 		}
-		Utils::get_filename_parts(currentSource, base, ext);
+		Utils::get_filename_parts(currentPath, base, ext);
 		std::string outputDir = Glib::get_user_special_dir(G_USER_DIRECTORY_DOCUMENTS);
 		if(!Glib::file_test(outputDir, Glib::FILE_TEST_IS_DIR)){
 			outputDir = Glib::get_home_dir();

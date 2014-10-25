@@ -112,9 +112,9 @@ MainWindow::MainWindow()
 	CONNECTS(Builder("tbbutton:main.controls").as<Gtk::ToggleToolButton>(), toggled,
 			 [this](Gtk::ToggleToolButton* b) { Builder("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
 	CONNECT(m_config, languageChanged, [this](const Config::Lang& lang){ m_outputManager->setLanguage(lang); });
-	CONNECT(m_sourceManager, sourceChanged, [this](const std::string& newsrc){
+	CONNECT(m_sourceManager, sourceChanged, [this](Source* newsrc){
 		m_displayer->setSource(newsrc);
-		m_window->set_title(newsrc.empty() ? PACKAGE_NAME : Glib::path_get_basename(newsrc) + " - " + PACKAGE_NAME);
+		m_window->set_title(newsrc ? Glib::path_get_basename(newsrc->file->get_path()) + " - " + PACKAGE_NAME : PACKAGE_NAME);
 	});
 	CONNECT(Builder("box:output").as<Gtk::Widget>(), show, [showOutputPaneBtn]{ showOutputPaneBtn->set_active(true); });
 	CONNECT(Builder("box:output").as<Gtk::Widget>(), hide, [showOutputPaneBtn]{ showOutputPaneBtn->set_active(false); });

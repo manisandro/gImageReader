@@ -30,12 +30,13 @@
 class DisplayRenderer;
 class DisplaySelection;
 class DisplaySelectionHandle;
+class Source;
 
 class Displayer {
 public:
 	Displayer();
 	~Displayer();
-	bool setSource(const std::string& filename);
+	bool setSource(Source* source);
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getSelections() const;
 	bool getHasSelections() const{ return !m_selections.empty(); }
 	bool setCurrentPage(int page);
@@ -77,6 +78,7 @@ private:
 	DisplaySelectionHandle* m_curSel = nullptr;
 	std::vector<DisplaySelection*> m_selections;
 	std::string m_selectionSaveFilename;
+	Source* m_source;
 
 	sigc::connection m_timer;
 	sigc::connection m_connection_selDo;
@@ -87,6 +89,10 @@ private:
 	sigc::connection m_connection_mouseMove;
 	sigc::connection m_connection_mousePress;
 	sigc::connection m_connection_pageSpinChanged;
+	sigc::connection m_connection_rotSpinChanged;
+	sigc::connection m_connection_resSpinChanged;
+	sigc::connection m_connection_briSpinChanged;
+	sigc::connection m_connection_conSpinChanged;
 
 	sigc::connection m_connection_selmenu_delete;
 	sigc::connection m_connection_selmenu_reorder;

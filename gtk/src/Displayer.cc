@@ -23,6 +23,7 @@
 #include "DisplayRenderer.hh"
 #include "DisplaySelection.hh"
 #include "Recognizer.hh"
+#include "SourceManager.hh"
 #include "Utils.hh"
 #include "FileDialogs.hh"
 
@@ -51,8 +52,8 @@ Displayer::Displayer()
 	m_rotspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/angle.png"));
 	m_pagespin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/angle.png"));
 	m_resspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/resolution.png"));
-	m_brispin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/contrast.png"));
-	m_conspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/brightness.png"));
+	m_brispin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/brightness.png"));
+	m_conspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/contrast.png"));
 
 	m_canvas->set_redraw_on_allocate(false);
 	m_viewport->override_background_color(Gdk::RGBA("#a0a0a4"));
@@ -66,9 +67,9 @@ Displayer::Displayer()
 	m_connection_saveHScrollMark = CONNECT(m_hadjustment, value_changed, [this]{ saveScrollMark(m_hadjustment, m_geo.sx); });
 	m_connection_saveVScrollMark = CONNECT(m_vadjustment, value_changed, [this]{ saveScrollMark(m_vadjustment, m_geo.sy); });
 	m_connection_pageSpinChanged = CONNECT(m_pagespin, value_changed, [this]{ clearSelections(); spinChanged(); });
-	CONNECT(m_resspin, value_changed, [this]{ spinChanged(); });
-	CONNECT(m_brispin, value_changed, [this]{ spinChanged(); });
-	CONNECT(m_conspin, value_changed, [this]{ spinChanged(); });
+	m_connection_resSpinChanged = CONNECT(m_resspin, value_changed, [this]{ spinChanged(); });
+	m_connection_briSpinChanged = CONNECT(m_brispin, value_changed, [this]{ spinChanged(); });
+	m_connection_conSpinChanged = CONNECT(m_conspin, value_changed, [this]{ spinChanged(); });
 	m_connection_mouseMove = CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev){ mouseMove(ev); return true; });
 	m_connection_mousePress = CONNECT(m_viewport, button_press_event, [this](GdkEventButton* ev){ mousePress(ev); return true; });
 	CONNECT(m_viewport, scroll_event, [this](GdkEventScroll* ev){ return scrollZoom(ev); });
@@ -77,11 +78,11 @@ Displayer::Displayer()
 	CONNECT(m_zoomoutbtn, clicked, [this]{ setZoom(ZoomMode::Out); });
 	CONNECT(m_zoomfitbtn, clicked, [this]{ setZoom(ZoomMode::Fit); });
 	CONNECT(m_zoomonebtn, clicked, [this]{ setZoom(ZoomMode::One); });
-	CONNECT(Builder("tbbutton:main.rotleft").as<Gtk::ToolButton>(), clicked,
-			[this]{ m_rotspin->set_value((int(m_rotspin->get_value()*10.f + 900.f) % 3600) / 10.f); });
 	CONNECT(Builder("tbbutton:main.rotright").as<Gtk::ToolButton>(), clicked,
+			[this]{ m_rotspin->set_value((int(m_rotspin->get_value()*10.f + 900.f) % 3600) / 10.f); });
+	CONNECT(Builder("tbbutton:main.rotleft").as<Gtk::ToolButton>(), clicked,
 			[this]{ m_rotspin->set_value((int(3600.f + m_rotspin->get_value()*10.f - 900.f) % 3600) / 10.f); });
-	CONNECT(m_rotspin, value_changed, [this]{ rotate(); });
+	m_connection_rotSpinChanged = CONNECT(m_rotspin, value_changed, [this]{ rotate(); });
 	CONNECT(Builder("tbbutton:main.autolayout").as<Gtk::ToolButton>(), clicked, [this]{ autodetectLayout(); });
 	CONNECT(m_selmenu, button_press_event, [this](GdkEventButton* ev){
 		Gtk::Allocation a = m_selmenu->get_allocation();
@@ -309,6 +310,7 @@ void Displayer::rotate()
 		return;
 	}
 	double angle = -m_rotspin->get_value() * 0.0174532925199;
+	m_source->angle = m_rotspin->get_value();
 	double delta = angle - m_geo.a;
 	m_geo.a = angle;
 	m_geo.R = Geometry::Rotation(angle);
@@ -330,33 +332,41 @@ void Displayer::spinChanged()
 	}
 }
 
-bool Displayer::setSource(const std::string &filename)
+bool Displayer::setSource(Source* source)
 {
 	if(m_image){
 		MAIN->popState();
 		clearImage();
 	}
-	if(filename.empty()){
+	if(!source){
 		return false;
 	}
+	m_source = source;
+	std::string filename = source->file->get_path();
 #ifdef G_OS_WIN32
 	if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf"){
 #else
 	if(Utils::get_content_type(filename) == "application/pdf"){
 #endif
 		DisplayRenderer* renderer = new PDFRenderer(filename);
-		Utils::configure_spin(m_resspin, 300, 50, 600, 50, 100);
-		Utils::configure_spin(m_pagespin, 1, 1, renderer->getNPages(), 1, 10);
+		if(source->resolution == -1) source->resolution = 300;
+		Utils::configure_spin(m_resspin, source->resolution, 50, 600, 50, 100, &m_connection_resSpinChanged);
+		Utils::configure_spin(m_pagespin, source->page, 1, renderer->getNPages(), 1, 10, &m_connection_pageSpinChanged);
 		m_resspin->set_tooltip_text(_("Resolution"));
 		m_pagespin->show();
 		m_renderer = renderer;
 	}else{
-		Utils::configure_spin(m_resspin, 100, 50, 200, 10, 50);
-		Utils::configure_spin(m_pagespin, 1, 1, 1, 1, 1);
+		m_renderer = new ImageRenderer(filename);
+		if(source->resolution == -1) source->resolution = 100;
+		Utils::configure_spin(m_resspin, source->resolution, 50, 200, 10, 50, &m_connection_resSpinChanged);
+		Utils::configure_spin(m_pagespin, 1, 1, 1, 1, 1, &m_connection_pageSpinChanged);
 		m_resspin->set_tooltip_text(_("Scale"));
 		m_pagespin->hide();
-		m_renderer = new ImageRenderer(filename);
 	}
+	Utils::configure_spin(m_brispin, source->brightness, -100, 100, 1, 10, &m_connection_briSpinChanged);
+	Utils::configure_spin(m_conspin, source->contrast, -100, 100, 1, 10, &m_connection_conSpinChanged);
+	Utils::configure_spin(m_rotspin, source->angle, 0, 359.9, 0.1, 10, &m_connection_rotSpinChanged);
+
 	if(setImage()){
 		MAIN->pushState(MainWindow::State::Normal, _("To recognize specific areas, drag rectangles over them."));
 		m_canvas->show();
@@ -364,7 +374,7 @@ bool Displayer::setSource(const std::string &filename)
 		rotate();
 		return true;
 	}else{
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to load image"), Glib::ustring::compose(_("The file might not be an image or be corrupt:\n%1"), filename));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to load image"), Glib::ustring::compose(_("The file might not be an image or be corrupt:\n%1"), source));
 		m_image = Cairo::RefPtr<Cairo::ImageSurface>();
 		return false;
 	}
@@ -388,6 +398,10 @@ bool Displayer::setImage()
 	double res = m_resspin->get_value();
 	int bri = m_brispin->get_value_as_int();
 	int con = m_conspin->get_value_as_int();
+	m_source->brightness = bri;
+	m_source->contrast = con;
+	m_source->resolution = res;
+	m_source->page = page;
 	Cairo::RefPtr<Cairo::ImageSurface> image;
 	sendBlurRequest(BlurRequest::Stop, true);
 	bool success = Utils::busyTask([this, page, res, bri, con, &image] {
@@ -417,6 +431,7 @@ void Displayer::clearImage()
 	m_brispin->set_value(0);
 	m_conspin->set_value(0);
 	m_rotspin->set_value(0);
+	m_source = nullptr;
 }
 
 Geometry::Point Displayer::getSelectionCoords(double evx, double evy) const
