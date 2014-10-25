@@ -309,7 +309,7 @@ void Displayer::rotate()
 	if(!m_renderer){
 		return;
 	}
-	double angle = -m_rotspin->get_value() * 0.0174532925199;
+	double angle = m_rotspin->get_value() * 0.0174532925199;
 	m_source->angle = m_rotspin->get_value();
 	double delta = angle - m_geo.a;
 	m_geo.a = angle;
