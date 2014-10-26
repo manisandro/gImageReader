@@ -125,8 +125,6 @@ MainWindow::MainWindow(const QStringList& files)
 	m_config->addSetting(new VarSetting<QByteArray>("winstate"));
 	m_config->addSetting(new ActionSetting("showcontrols", ui.actionImageControls));
 
-	m_acquirer->start();
-
 	m_recognizer->updateLanguagesMenu();
 
 	pushState(State::Idle, _("Select an image to begin..."));

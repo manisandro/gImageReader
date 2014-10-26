@@ -31,8 +31,6 @@ public:
 	Acquirer(const UI_MainWindow& _ui);
 	~Acquirer();
 
-	void start();
-
 signals:
 	void scanPageAvailable(QString);
 

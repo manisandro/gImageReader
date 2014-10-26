@@ -62,9 +62,6 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 
 	m_outputPath = MAIN->getConfig()->getSetting<VarSetting<QString>>("scanoutput")->getValue();
 	genOutputPath();
-}
-
-void Acquirer::start() {
 	m_thread->start();
 }
 
