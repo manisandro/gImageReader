@@ -238,7 +238,9 @@ MainWindow::Notification MainWindow::addNotification(const QString& title, const
 	frame->setStyleSheet("background: #FFD000;");
 	QHBoxLayout* layout = new QHBoxLayout(frame);
 	layout->addWidget(new QLabel(QString("<b>%1</b>").arg(title), frame));
-	layout->addWidget(new QLabel(message, frame), 1);
+	QLabel* msgLabel = new QLabel(message, frame);
+	msgLabel->setWordWrap(true);
+	layout->addWidget(msgLabel, 1);
 	for(const NotificationAction& action : actions){
 		QToolButton* btn = new QToolButton(frame);
 		btn->setText(action.text);
