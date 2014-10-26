@@ -364,7 +364,7 @@ void OutputManager::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> pro
 	try {
 		proxy->call_finish(result);
 	} catch (const Glib::Error& e) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to install spelling dictionary"), e.what());
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Failed to install spelling dictionary: %1"), e.what()));
 	}
 	MAIN->getConfig()->updateLanguagesMenu();
 	MAIN->popState();
