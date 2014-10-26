@@ -56,9 +56,6 @@ private:
 	SubstitutionsManager* m_substitutionsManager;
 
 	void findReplace(bool backwards, bool replace);
-#ifdef Q_OS_LINUX
-	void dictionaryAutoinstall();
-#endif
 
 private slots:
 	void clearErrorState();
@@ -69,10 +66,9 @@ private slots:
 	void replaceNext();
 	void setFont();
 	void setInsertMode(QAction* action);
-#ifdef Q_OS_LINUX
+	void dictionaryAutoinstall();
 	void dictionaryAutoinstallDone();
 	void dictionaryAutoinstallError(const QDBusError& error);
-#endif
 };
 
 #endif // OUTPUTMANAGER_HH

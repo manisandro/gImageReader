@@ -30,6 +30,7 @@
 #include "SubstitutionsManager.hh"
 #include "Utils.hh"
 
+
 OutputManager::OutputManager(const UI_MainWindow& _ui)
 	: ui(_ui)
 {
@@ -291,6 +292,7 @@ bool OutputManager::getBufferModified() const
 void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 {
 	MAIN->hideNotification(m_notifierHandle);
+	m_notifierHandle = nullptr;
 	m_spell.setTextEdit(static_cast<QTextEdit*>(nullptr));
 	QString code = lang.code;
 	if(!code.isEmpty() || force){
@@ -315,13 +317,12 @@ void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 	}
 }
 
-#ifdef Q_OS_LINUX
 void OutputManager::dictionaryAutoinstall()
 {
-	const QString& lang = m_spell.getLanguage();
-	MAIN->pushState(MainWindow::State::Busy, _("Installing spelling dictionary for '%1'").arg(lang));
-	QStringList files = {"/usr/share/myspell/" + lang + ".dic", "/usr/share/hunspell/" + lang + ".dic"};
-	QList<QVariant> params = {QVariant::fromValue(MAIN->winId()), QVariant::fromValue(files), QVariant::fromValue(QString("always"))};
+	const QString& code = MAIN->getRecognizer()->getSelectedLanguage().code;
+	MAIN->pushState(MainWindow::State::Busy, _("Installing spelling dictionary for '%1'").arg(code));
+	QStringList files = {"/usr/share/myspell/" + code + ".dic", "/usr/share/hunspell/" + code + ".dic"};
+	QList<QVariant> params = {QVariant::fromValue((quint32)MAIN->winId()), QVariant::fromValue(files), QVariant::fromValue(QString("always"))};
 	m_dbusIface->setTimeout(3600000);
 	m_dbusIface->callWithCallback("InstallProvideFiles", params, this, SLOT(dictionaryAutoinstallDone()), SLOT(dictionaryAutoinstallError(QDBusError)));
 }
@@ -334,7 +335,6 @@ void OutputManager::dictionaryAutoinstallDone()
 
 void OutputManager::dictionaryAutoinstallError(const QDBusError& error)
 {
-	QMessageBox::critical(MAIN, _("Failed to install spelling dictionary"), error.errorString(error.type()));
+	QMessageBox::critical(MAIN, _("Error"), _("Failed to install spelling dictionary: %1").arg(error.errorString(error.type())));
 	MAIN->popState();
 }
-#endif
