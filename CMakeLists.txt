@@ -7,7 +7,6 @@ SET(ENV{LC_ALL} "C")
 PROJECT(gimagereader)
 SET(PACKAGE_NAME gImageReader)
 SET(PACKAGE_VERSION 2.94)
-SET(PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share/gimagereader")
 SET(PACKAGE_LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/share/locale")
 
 # Variables
@@ -159,7 +158,7 @@ INSTALL(FILES data/icons/48x48/gimagereader.png DESTINATION share/icons/hicolor/
 INSTALL(FILES data/icons/128x128/gimagereader.png DESTINATION share/icons/hicolor/128x128/apps/)
 INSTALL(FILES data/icons/256x256/gimagereader.png DESTINATION share/icons/hicolor/256x256/apps/)
 INSTALL(FILES data/gimagereader.desktop DESTINATION share/applications)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/manual.html DESTINATION ${PACKAGE_DATA_DIR})
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/manual.html DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/gimagereader")
 INSTALL(FILES data/gimagereader.appdata.xml DESTINATION share/appdata)
 
 

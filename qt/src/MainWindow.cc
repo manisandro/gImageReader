@@ -217,7 +217,7 @@ void MainWindow::showAbout()
 
 void MainWindow::showHelp(const QString& chapter)
 {
-	QString manualFile = QDir(QString("%1/../share/gimagereader").arg(QApplication::applicationDirPath())).absoluteFilePath("manual.html");
+	QString manualFile = QDir(QString("%1/../share/doc/gimagereader").arg(QApplication::applicationDirPath())).absoluteFilePath("manual.html");
 	QUrl manualUrl = QUrl::fromLocalFile(manualFile);
 	manualUrl.setFragment(chapter);
 	QDesktopServices::openUrl(manualUrl);

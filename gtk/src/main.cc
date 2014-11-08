@@ -27,48 +27,45 @@
 #include "CrashHandler.hh"
 
 Glib::RefPtr<Gtk::Builder> Builder::builder;
-std::string pkgExePath;
-std::string pkgDataDir;
+std::string pkgDir;
 
 static std::string get_application_dir(char* argv0)
 {
+#ifdef G_OS_WIN32
+	gchar* dir = g_win32_get_package_installation_directory_of_module(0);
+	std::string pathstr = dir;
+	g_free(dir);
+#else
 	pid_t pid = getpid();
 	std::string exe = Glib::ustring::compose("/proc/%1/exe", pid);
 	GError* err;
 	char* path = g_file_read_link(exe.c_str(), &err);
-	std::string pathstr = path;
+	std::string pathstr = Glib::build_filename(path, "..");
 	g_free(path);
-	if(!err){
-		return pathstr;
-	}else{
+	if(err){
 		if(Glib::path_is_absolute(argv0)){
-			return Glib::path_get_dirname(argv0);
+			pathstr = Glib::build_filename(Glib::path_get_dirname(argv0), "..");
 		}else{
-			return Glib::build_path("/", std::vector<std::string>{Glib::get_current_dir(), Glib::path_get_dirname(argv0)});
+			pathstr = Glib::build_filename(Glib::get_current_dir(), Glib::path_get_dirname(argv0), "..");
 		}
 	}
+#endif
+	return pathstr;
 }
 
 int main (int argc, char *argv[])
 {
+	std::string pkgDir = get_application_dir(argv[0]);
+
 #ifdef G_OS_WIN32
-	gchar* dir = g_win32_get_package_installation_directory_of_module(0);
-	std::string dataDir = Glib::build_filename(dir, "share");
-	pkgExePath = Glib::build_path("/", std::vector<std::string>{"/", dir, "bin", Glib::path_get_basename(argv[0])});
-	g_free(dir);
 	if(Glib::getenv("LANG").empty()) {
 		gchar* locale = g_win32_getlocale();
 		Glib::setenv("LANG", locale);
 		g_free(locale);
 	}
-#else
-	std::string execDir = get_application_dir(argv[0]);
-	pkgExePath = Glib::build_path("/", std::vector<std::string>{"/", execDir, Glib::path_get_basename(argv[0])});
-	std::string dataDir = Glib::build_path("/", std::vector<std::string>{execDir, "..", "share"});
 #endif
 
-	pkgDataDir = Glib::build_path("/", std::vector<std::string>{dataDir, GETTEXT_PACKAGE});
-	std::string localeDir = Glib::build_path("/", std::vector<std::string>{dataDir, "locale"});
+	std::string localeDir = Glib::build_filename(pkgDir, "share", "locale");
 
 	bindtextdomain(GETTEXT_PACKAGE, localeDir.c_str());
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -92,11 +89,9 @@ int main (int argc, char *argv[])
 		// Run the normal application
 
 #ifdef G_OS_WIN32
-		gchar* dir = g_win32_get_package_installation_directory_of_module(0);
-		Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(dir, "share"));
-		Glib::setenv("TWAINDSM_LOG", Glib::build_filename(dir, "twain.log"));
+		Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(pkgDir, "share"));
+		Glib::setenv("TWAINDSM_LOG", Glib::build_filename(pkgDir, "twain.log"));
 		freopen(Glib::build_filename(dir, "gimagereader.log").c_str(), "w", stderr);
-		g_free(dir);
 #endif
 
 		GtkSpell::init();
