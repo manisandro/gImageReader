@@ -35,7 +35,7 @@ void Notifier::notify(const Glib::ustring &title, const Glib::ustring &message, 
 	box->override_background_color(Gdk::RGBA("#FFD000"), Gtk::STATE_FLAG_NORMAL);
 	titlelabel->set_markup(Glib::ustring::compose("<b>%1:</b>", title));
 	msglabel->set_markup(message);
-	closebtn->set_image(*Gtk::manage(Utils::image_from_icon_name("dialog-close", Gtk::ICON_SIZE_MENU)));
+	closebtn->set_image(*Gtk::manage(Utils::image_from_icon_name("window-close", Gtk::ICON_SIZE_MENU)));
 	frame->add(*box);
 	CONNECT(closebtn, clicked, [frame]{ Notifier::hide(frame); });
 	box->pack_start(*titlelabel, false, true);
