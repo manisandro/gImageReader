@@ -303,6 +303,8 @@ void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 				MainWindow::NotificationAction actionDontShowAgain = {_("Don't show again"), MAIN->getConfig(), SLOT(disableDictInstall()), true};
 				MainWindow::NotificationAction actionInstall = {_("Help"), MAIN, SLOT(showHelp()), false}; // TODO #InstallSpelling
 #ifdef Q_OS_LINUX
+				// Wake up the daemon?
+				QDBusInterface("org.freedesktop.PackageKit", "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit", QDBusConnection::sessionBus(), this).call(QDBus::BlockWithGui, "VersionMajor");
 				delete m_dbusIface;
 				m_dbusIface = new QDBusInterface("org.freedesktop.PackageKit", "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify", QDBusConnection::sessionBus(), this);
 				if(m_dbusIface->isValid()){
@@ -335,6 +337,6 @@ void OutputManager::dictionaryAutoinstallDone()
 
 void OutputManager::dictionaryAutoinstallError(const QDBusError& error)
 {
-	QMessageBox::critical(MAIN, _("Error"), _("Failed to install spelling dictionary: %1").arg(error.errorString(error.type())));
+	QMessageBox::critical(MAIN, _("Error"), _("Failed to install spelling dictionary: %1").arg(error.message()));
 	MAIN->popState();
 }
