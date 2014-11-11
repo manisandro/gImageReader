@@ -34,14 +34,14 @@ gtk/src/OutputManager.cc
 gtk/src/OutputManager.hh
 gtk/src/Recognizer.cc
 gtk/src/Recognizer.hh
-gtk/src/ReplaceListManager.cc
-gtk/src/ReplaceListManager.hh
 gtk/src/Scanner.cc
 gtk/src/Scanner.hh
 gtk/src/ScannerSane.hh
 gtk/src/ScannerTwain.hh
 gtk/src/SourceManager.cc
 gtk/src/SourceManager.hh
+gtk/src/SubstitutionsManager.cc
+gtk/src/SubstitutionsManager.hh
 gtk/src/UndoableBuffer.cc
 gtk/src/UndoableBuffer.hh
 gtk/src/Utils.cc
@@ -68,7 +68,6 @@ qt/src/DisplayRenderer.cc
 qt/src/DisplayRenderer.hh
 qt/src/DisplaySelection.cc
 qt/src/DisplaySelection.hh
-qt/src/Geometry.hh
 qt/src/main.cc
 qt/src/MainWindow.cc
 qt/src/MainWindow.hh
