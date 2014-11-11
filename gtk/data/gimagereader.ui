@@ -261,7 +261,8 @@ MA 02110-1301, USA.</property>
 Czech: Pavel Borecki &lt;pavel.borecki@gmail.com&gt;
 German: Sandro Mani &lt;manisandro@gmail.com&gt;
 Italian: Sandro Mani &lt;manisandro@gmail.com&gt;
-Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
+Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;
+Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
     <property name="logo_icon_name">gimagereader</property>
     <property name="license_type">custom</property>
     <child internal-child="vbox">
@@ -364,8 +365,8 @@ Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
               <object class="GtkLabel" id="label:config.settings.paneorient">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
                 <property name="label" translatable="yes">Output pane orientation:</property>
+                <property name="xalign">0</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -432,9 +433,9 @@ Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
               <object class="GtkLabel" id="label:config.langs.predef">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
                 <property name="label" translatable="yes">Predefined language definitions:</property>
                 <property name="use_markup">True</property>
+                <property name="xalign">0</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -471,10 +472,10 @@ Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
               <object class="GtkLabel" id="label:config.langs.custom">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
                 <property name="label" translatable="yes">Additional language definitions:</property>
                 <property name="use_markup">True</property>
                 <property name="wrap">True</property>
+                <property name="xalign">0</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -643,8 +644,8 @@ Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
               <object class="GtkLabel" id="label:config.settings.outputfont">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
                 <property name="label" translatable="yes">Output pane font:</property>
+                <property name="xalign">0</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -795,9 +796,9 @@ Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
               <object class="GtkLabel" id="label:dialog.pages">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
                 <property name="label" translatable="yes">Page range:</property>
                 <property name="use_markup">True</property>
+                <property name="xalign">0</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -809,9 +810,9 @@ Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
-                <property name="xalign">0</property>
                 <property name="label" translatable="yes">&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;</property>
                 <property name="use_markup">True</property>
+                <property name="xalign">0</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -822,9 +823,9 @@ Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
               <object class="GtkLabel" id="label:dialog.regions">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
                 <property name="label" translatable="yes">Recognition area:</property>
                 <property name="use_markup">True</property>
+                <property name="xalign">0</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -1531,8 +1532,8 @@ Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
                               <object class="GtkLabel" id="label:sources.acquire.device">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">Device:</property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -1543,8 +1544,8 @@ Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
                               <object class="GtkLabel" id="label:sources.acquire.output">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">Output:</property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -1555,8 +1556,8 @@ Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
                               <object class="GtkLabel" id="label:sources.acquire.resolution">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">Resolution:</property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -1636,8 +1637,8 @@ Portoguese: André Alencar &lt;andre.tre@gmail.com&gt;</property>
                               <object class="GtkLabel" id="label:sources.acquire.mode">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">Mode:</property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
