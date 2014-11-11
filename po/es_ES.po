@@ -222,11 +222,11 @@ msgstr "Rotar a la Derecha"
 
 #: ../gtk/data/gimagereader.ui.h:50
 msgid "0.0"
-msgstr ""
+msgstr "0.0"
 
 #: ../gtk/data/gimagereader.ui.h:51
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../gtk/data/gimagereader.ui.h:52 ../qt/data/MainWindow.ui.h:38
 msgid "Image controls"
@@ -330,7 +330,7 @@ msgstr "Brillo"
 
 #: ../gtk/data/gimagereader.ui.h:77
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../gtk/data/gimagereader.ui.h:78 ../qt/data/MainWindow.ui.h:3
 msgid "Contrast"
@@ -343,7 +343,7 @@ msgstr "Resolución"
 
 #: ../gtk/data/gimagereader.ui.h:80
 msgid "200"
-msgstr ""
+msgstr "200"
 
 #: ../gtk/data/gimagereader.ui.h:81 ../qt/src/Ui_MainWindow.hh:219
 msgid "Select insert mode"
@@ -476,7 +476,7 @@ msgstr "Acerca de"
 
 #: ../gtk/data/appmenu.ui.h:5
 msgid "Quit"
-msgstr ""
+msgstr "Salir"
 
 #: ../gtk/data/crashhandler.ui.h:1 ../qt/src/CrashHandler.cc:37
 msgid "Regenerate backtrace"
@@ -766,7 +766,7 @@ msgstr "Instalando diccionario para '%1'"
 
 #: ../gtk/src/OutputManager.cc:367 ../qt/src/OutputManager.cc:340
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: ../gtk/src/OutputManager.cc:367 ../qt/src/OutputManager.cc:340
 #, fuzzy
