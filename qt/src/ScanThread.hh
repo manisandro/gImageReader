@@ -23,8 +23,8 @@
 #include <QMetaType>
 #include <QObject>
 
-#include "AsyncQueue.hh"
 #include "ScanBackend.hh"
+#include "Utils.hh"
 
 class ScanThread : public QObject {
 	Q_OBJECT
@@ -56,7 +56,7 @@ private:
 
 	ScanBackend* m_backend = nullptr;
 	State m_state = State::IDLE;
-	AsyncQueue<Request> m_requestQueue;
+	Utils::AsyncQueue<Request> m_requestQueue;
 	QQueue<ScanBackend::Job*> m_jobQueue;
 
 	void doCompleteDocument();

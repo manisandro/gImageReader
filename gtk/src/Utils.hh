@@ -21,8 +21,9 @@
 #define UTILS_HH
 
 #include <gtkmm.h>
-#include <type_traits>
 #include <iterator>
+#include <queue>
+#include <type_traits>
 #include <utility>
 
 namespace tesseract { class TessBaseAPI; }
@@ -72,6 +73,34 @@ namespace Utils {
 
 	bool busyTask(const std::function<bool()>& f, const Glib::ustring& msg);
 	bool initTess(tesseract::TessBaseAPI& tess, const char* datapath, const char* language);
+
+	template<typename T, typename S = std::deque<T>>
+	class AsyncQueue {
+		std::queue<T,S>   queue_;
+		Glib::Mutex       mutex_;
+		Glib::Cond        cond_;
+	public:
+		bool empty(){
+			Glib::Mutex::Lock queue_guard(mutex_);
+			return queue_.empty();
+		}
+		void push(const T& item){
+			Glib::Mutex::Lock queue_guard(mutex_);
+			queue_.push(item);
+			cond_.signal();
+		}
+		T pop(){
+			Glib::Mutex::Lock queue_guard(mutex_);
+			if(queue_.empty())
+			{
+				while ( queue_.empty() )
+					cond_.wait(mutex_);
+			}
+			T result(queue_.front());
+			queue_.pop();
+			return result;
+		}
+	};
 }
 
 #endif

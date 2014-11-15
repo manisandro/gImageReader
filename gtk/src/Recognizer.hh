@@ -21,7 +21,7 @@
 #define RECOGNIZER_HH
 
 #include "common.hh"
-#include "AsyncQueue.hh"
+#include "Utils.hh"
 
 #include <cairomm/cairomm.h>
 
@@ -46,7 +46,7 @@ private:
 	Glib::Threads::Thread* m_thread;
 	TaskState m_taskState;
 	Glib::Dispatcher m_textDispatcher;
-	AsyncQueue<Glib::ustring> m_textQueue;
+	Utils::AsyncQueue<Glib::ustring> m_textQueue;
 	bool m_textInsert;
 
 	void selectPages(std::vector<int> &pages);

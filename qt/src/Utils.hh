@@ -21,7 +21,10 @@
 #define UTILS_HH
 
 #include <functional>
+#include <QMutex>
+#include <QQueue>
 #include <QString>
+#include <QWaitCondition>
 
 class QSpinBox;
 class QDoubleSpinBox;
@@ -34,6 +37,34 @@ namespace Utils {
 
 	void setSpinBlocked(QSpinBox* spin, int value);
 	void setSpinBlocked(QDoubleSpinBox* spin, double value);
+
+	template<typename T>
+	class AsyncQueue {
+	public:
+		bool isEmpty(){
+			QMutexLocker locker(&m_mutex);
+			return m_queue.isEmpty();
+		}
+		void enqueue(const T& item){
+			QMutexLocker locker(&m_mutex);
+			m_queue.enqueue(item);
+			m_cond.wakeOne();
+		}
+		T dequeue(){
+			QMutexLocker locker(&m_mutex);
+			if(m_queue.isEmpty()){
+				while(m_queue.isEmpty()){
+					m_cond.wait(&m_mutex);
+				}
+			}
+			return m_queue.dequeue();
+		}
+
+	private:
+		QQueue<T> m_queue;
+		QMutex m_mutex;
+		QWaitCondition m_cond;
+	};
 }
 
 #endif

@@ -25,7 +25,7 @@
 #define SCANNER_HPP
 
 #include "common.hh"
-#include "AsyncQueue.hh"
+#include "Utils.hh"
 
 class Scanner {
 public:
@@ -91,7 +91,7 @@ private:
 
 	ScanState m_state = ScanState::IDLE;
 	Glib::Threads::Thread* m_thread = nullptr;
-	AsyncQueue<Request> m_requestQueue;
+	Utils::AsyncQueue<Request> m_requestQueue;
 	std::queue<ScanJob*> m_jobQueue;
 
 	sigc::signal<void> m_signal_init_failed;
