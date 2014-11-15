@@ -23,6 +23,35 @@
 #include <poppler-document.h>
 #include <poppler-page.h>
 
+void DisplayRenderer::adjustBrightnessContrast(const Cairo::RefPtr<Cairo::ImageSurface> &surf, int brightness, int contrast) const
+{
+	if(brightness == 0 && contrast == 0){
+		return;
+	}
+
+	float kBr = 1.f - std::abs(brightness / 200.f);
+	float dBr = brightness > 0 ? 255.f : 0.f;
+
+	float kCn = contrast * 2.55f;
+	// http://thecryptmag.com/Online/56/imgproc_5.html
+	float FCn = (259.f * (kCn + 255.f)) / (255.f * (259.f - kCn));
+
+	int n = surf->get_height() * surf->get_width();
+	uint8_t* data = surf->get_data();
+#pragma omp parallel for
+	for(int i = 0; i < n; ++i){
+		uint8_t& r = data[4*i + 2];
+		uint8_t& g = data[4*i + 1];
+		uint8_t& b = data[4*i + 0];
+		r = dBr * (1.f - kBr) + r * kBr;
+		g = dBr * (1.f - kBr) + g * kBr;
+		b = dBr * (1.f - kBr) + b * kBr;
+		r = std::max(0.f, std::min(FCn * (r - 128.f) + 128.f, 255.f));
+		g = std::max(0.f, std::min(FCn * (g - 128.f) + 128.f, 255.f));
+		b = std::max(0.f, std::min(FCn * (b - 128.f) + 128.f, 255.f));
+	}
+}
+
 Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::render(int page, double resolution) const
 {
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf;

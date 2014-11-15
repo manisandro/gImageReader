@@ -19,7 +19,6 @@
 
 #include "MainWindow.hh"
 #include "Displayer.hh"
-#include "DisplayManipulator.hh"
 #include "DisplayRenderer.hh"
 #include "DisplaySelection.hh"
 #include "Recognizer.hh"
@@ -128,9 +127,7 @@ void Displayer::blurThread()
 #define CHECK_PENDING m_blurMutex.lock(); if(m_blurRequestPending) continue; m_blurMutex.unlock();
 		Cairo::RefPtr<Cairo::ImageSurface> blurred = m_renderer->render(req.page, req.res);
 		CHECK_PENDING
-		Manipulators::adjustBrightness(blurred, req.brightness);
-		CHECK_PENDING
-		Manipulators::adjustContrast(blurred, req.contrast);
+		m_renderer->adjustBrightnessContrast(blurred, req.brightness, req.contrast);
 		CHECK_PENDING
 		Glib::signal_idle().connect_once([=]{
 			if(!m_blurRequestPending){
@@ -406,8 +403,7 @@ bool Displayer::setImage()
 	sendBlurRequest(BlurRequest::Stop, true);
 	bool success = Utils::busyTask([this, page, res, bri, con, &image] {
 		image = m_renderer->render(page, res);
-		Manipulators::adjustBrightness(image, bri);
-		Manipulators::adjustContrast(image, con);
+		m_renderer->adjustBrightnessContrast(image, bri, con);
 		return bool(image);
 	}, _("Rendering image..."));
 	m_image = image;

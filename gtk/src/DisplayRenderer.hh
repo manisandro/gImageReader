@@ -31,6 +31,8 @@ public:
 	virtual Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const = 0;
 	virtual int getNPages() const = 0;
 
+	void adjustBrightnessContrast(const Cairo::RefPtr<Cairo::ImageSurface>& surf, int brightness, int contrast) const;
+
 protected:
 	std::string m_filename;
 };
