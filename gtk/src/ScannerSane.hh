@@ -452,11 +452,11 @@ Scanner::ReadStatus ScannerSane::read()
 
 Scanner::PageStatus ScannerSane::completePage(ScanJob* job)
 {
+	Gdk::Pixbuf::create_from_data(m_buf.data(), Gdk::COLORSPACE_RGB, false, 8, m_rowstride/3, m_height, m_rowstride)->save(job->filename, "png");
 	m_buf.clear();
 	if(!m_parameters.last_frame){
 		return PageStatus::AnotherPass;
 	}
-	Gdk::Pixbuf::create_from_data(m_buf.data(), Gdk::COLORSPACE_RGB, false, 8, m_rowstride/3, m_height, m_rowstride)->save(job->filename, "png");
 	return PageStatus::Done;
 }
 
