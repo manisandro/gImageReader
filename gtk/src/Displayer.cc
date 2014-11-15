@@ -47,6 +47,7 @@ Displayer::Displayer()
 	m_brispin = Builder("spin:display.brightness");
 	m_conspin = Builder("spin:display.contrast");
 	m_selmenu = Builder("window:selectionmenu");
+	m_invcheck = Builder("check:display.invert");
 
 	m_rotspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/angle.png"));
 	m_pagespin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/angle.png"));
@@ -69,6 +70,7 @@ Displayer::Displayer()
 	m_connection_resSpinChanged = CONNECT(m_resspin, value_changed, [this]{ spinChanged(); });
 	m_connection_briSpinChanged = CONNECT(m_brispin, value_changed, [this]{ spinChanged(); });
 	m_connection_conSpinChanged = CONNECT(m_conspin, value_changed, [this]{ spinChanged(); });
+	m_connection_invcheckToggled = CONNECT(m_invcheck, toggled, [this]{ spinChanged(); });
 	m_connection_mouseMove = CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev){ mouseMove(ev); return true; });
 	m_connection_mousePress = CONNECT(m_viewport, button_press_event, [this](GdkEventButton* ev){ mousePress(ev); return true; });
 	CONNECT(m_viewport, scroll_event, [this](GdkEventScroll* ev){ return scrollZoom(ev); });
@@ -127,7 +129,7 @@ void Displayer::blurThread()
 #define CHECK_PENDING m_blurMutex.lock(); if(m_blurRequestPending) continue; m_blurMutex.unlock();
 		Cairo::RefPtr<Cairo::ImageSurface> blurred = m_renderer->render(req.page, req.res);
 		CHECK_PENDING
-		m_renderer->adjustBrightnessContrast(blurred, req.brightness, req.contrast);
+		m_renderer->adjustImage(blurred, req.brightness, req.contrast, req.invert);
 		CHECK_PENDING
 		Glib::signal_idle().connect_once([=]{
 			if(!m_blurRequestPending){
@@ -149,6 +151,7 @@ void Displayer::sendBlurRequest(BlurRequest::Action action, bool wait)
 		request.page = m_pagespin->get_value_as_int();
 		request.brightness = m_brispin->get_value_as_int();
 		request.contrast = m_conspin->get_value_as_int();
+		request.invert = m_invcheck->get_active();
 	}
 	m_blurMutex.lock();
 	m_blurRequest = request;
@@ -395,15 +398,17 @@ bool Displayer::setImage()
 	double res = m_resspin->get_value();
 	int bri = m_brispin->get_value_as_int();
 	int con = m_conspin->get_value_as_int();
+	bool inv = m_invcheck->get_active();
 	m_source->brightness = bri;
 	m_source->contrast = con;
 	m_source->resolution = res;
 	m_source->page = page;
+	m_source->invert = inv;
 	Cairo::RefPtr<Cairo::ImageSurface> image;
 	sendBlurRequest(BlurRequest::Stop, true);
-	bool success = Utils::busyTask([this, page, res, bri, con, &image] {
+	bool success = Utils::busyTask([this, page, res, bri, con, inv, &image] {
 		image = m_renderer->render(page, res);
-		m_renderer->adjustBrightnessContrast(image, bri, con);
+		m_renderer->adjustImage(image, bri, con, inv);
 		return bool(image);
 	}, _("Rendering image..."));
 	m_image = image;

@@ -68,6 +68,7 @@ private:
 	Gtk::SpinButton* m_brispin;
 	Gtk::SpinButton* m_conspin;
 	Gtk::Window* m_selmenu;
+	Gtk::CheckButton* m_invcheck;
 
 	Cairo::RefPtr<Cairo::ImageSurface> m_image;
 	DisplayRenderer* m_renderer;
@@ -93,6 +94,7 @@ private:
 	sigc::connection m_connection_resSpinChanged;
 	sigc::connection m_connection_briSpinChanged;
 	sigc::connection m_connection_conSpinChanged;
+	sigc::connection m_connection_invcheckToggled;
 
 	sigc::connection m_connection_selmenu_delete;
 	sigc::connection m_connection_selmenu_reorder;
@@ -137,6 +139,7 @@ private:
 		enum Action { Start, Stop, Quit } action;
 		double res;
 		int page, brightness, contrast;
+		bool invert;
 	} m_blurRequest;
 	void blurThread();
 	void sendBlurRequest(BlurRequest::Action action, bool wait = false);

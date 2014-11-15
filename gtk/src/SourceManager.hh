@@ -34,6 +34,7 @@ struct Source {
 	int resolution = -1;
 	int page = 1;
 	double angle = 0.;
+	bool invert = false;
 };
 
 class SourceManager {

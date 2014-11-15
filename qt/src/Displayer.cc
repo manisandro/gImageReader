@@ -55,6 +55,7 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	connect(ui.spinBoxBrightness, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
 	connect(ui.spinBoxContrast, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
 	connect(ui.spinBoxResolution, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
+	connect(ui.checkBoxInvertColors, SIGNAL(toggled(bool)), this, SLOT(queueRenderImage()));
 	connect(ui.actionZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
 	connect(ui.actionZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
 	connect(ui.actionBestFit, SIGNAL(triggered()), this, SLOT(zoomFit()));
@@ -116,6 +117,9 @@ void Displayer::setSource(Source* source)
 	Utils::setSpinBlocked(ui.spinBoxBrightness, source->brightness);
 	Utils::setSpinBlocked(ui.spinBoxContrast, source->contrast);
 	Utils::setSpinBlocked(ui.spinBoxResolution, source->resolution);
+	ui.checkBoxInvertColors->blockSignals(true);
+	ui.checkBoxInvertColors->setChecked(source->invert);
+	ui.checkBoxInvertColors->blockSignals(false);
 	setCursor(Qt::CrossCursor);
 
 	m_imageItem = new QGraphicsPixmapItem();
@@ -140,11 +144,12 @@ bool Displayer::renderImage()
 	m_source->brightness = ui.spinBoxBrightness->value();
 	m_source->contrast = ui.spinBoxContrast->value();
 	m_source->resolution = ui.spinBoxResolution->value();
+	m_source->invert = ui.checkBoxInvertColors->isChecked();
 	QImage image = m_renderer->render(m_source->page, m_source->resolution);
 	if(image.isNull()){
 		return false;
 	}
-	m_renderer->adjustBrightnessContrast(image, m_source->brightness, m_source->contrast);
+	m_renderer->adjustImage(image, m_source->brightness, m_source->contrast, m_source->invert);
 	m_pixmap = QPixmap::fromImage(image);
 	m_imageItem->setPixmap(m_pixmap);
 	m_imageItem->setScale(1.);
@@ -399,7 +404,6 @@ void Displayer::autodetectLayout(bool rotated)
 		tess.InitForAnalysePage();
 		tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
 		tess.SetImage(img.bits(), img.width(), img.height(), 4, img.bytesPerLine());
-		img.save("/home/sandro/test.png");
 		tesseract::PageIterator* it = tess.AnalyseLayout();
 		if(it && !it->Empty(tesseract::RIL_BLOCK)){
 			do{
@@ -451,7 +455,7 @@ void Displayer::autodetectLayout(bool rotated)
 
 void Displayer::queueScaleImage()
 {
-	sendScaleRequest({ScaleRequest::Scale, m_scale, ui.spinBoxPage->value(), ui.spinBoxResolution->value(), ui.spinBoxBrightness->value(), ui.spinBoxContrast->value()});
+	sendScaleRequest({ScaleRequest::Scale, m_scale, ui.spinBoxPage->value(), ui.spinBoxResolution->value(), ui.spinBoxBrightness->value(), ui.spinBoxContrast->value(), ui.checkBoxInvertColors->isChecked()});
 }
 
 void Displayer::sendScaleRequest(const ScaleRequest &request)
@@ -484,7 +488,7 @@ void Displayer::scaleLoop()
 			}
 			m_scaleMutex.unlock();
 
-			m_renderer->adjustBrightnessContrast(image, req.brightness, req.contrast);
+			m_renderer->adjustImage(image, req.brightness, req.contrast, req.invert);
 
 			m_scaleMutex.lock();
 			if(!m_scaleRequests.isEmpty() && m_scaleRequests.first().type == ScaleRequest::Abort){

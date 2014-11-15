@@ -23,9 +23,9 @@
 #include <poppler-document.h>
 #include <poppler-page.h>
 
-void DisplayRenderer::adjustBrightnessContrast(const Cairo::RefPtr<Cairo::ImageSurface> &surf, int brightness, int contrast) const
+void DisplayRenderer::adjustImage(const Cairo::RefPtr<Cairo::ImageSurface> &surf, int brightness, int contrast, bool invert) const
 {
-	if(brightness == 0 && contrast == 0){
+	if(brightness == 0 && contrast == 0 && !invert){
 		return;
 	}
 
@@ -43,12 +43,20 @@ void DisplayRenderer::adjustBrightnessContrast(const Cairo::RefPtr<Cairo::ImageS
 		uint8_t& r = data[4*i + 2];
 		uint8_t& g = data[4*i + 1];
 		uint8_t& b = data[4*i + 0];
+		// Brightness
 		r = dBr * (1.f - kBr) + r * kBr;
 		g = dBr * (1.f - kBr) + g * kBr;
 		b = dBr * (1.f - kBr) + b * kBr;
+		// Contrast
 		r = std::max(0.f, std::min(FCn * (r - 128.f) + 128.f, 255.f));
 		g = std::max(0.f, std::min(FCn * (g - 128.f) + 128.f, 255.f));
 		b = std::max(0.f, std::min(FCn * (b - 128.f) + 128.f, 255.f));
+		// Invert
+		if(invert){
+			r = 255 - r;
+			g = 255 - g;
+			b = 255 - b;
+		}
 	}
 }
 

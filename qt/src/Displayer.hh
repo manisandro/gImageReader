@@ -91,6 +91,7 @@ private:
 		int resolution;
 		int brightness;
 		int contrast;
+		bool invert;
 	};
 	QMutex m_scaleMutex;
 	QWaitCondition m_scaleCond;

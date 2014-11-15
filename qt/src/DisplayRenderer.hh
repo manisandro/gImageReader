@@ -33,7 +33,7 @@ public:
 	virtual QImage render(int page, double resolution) const = 0;
 	virtual int getNPages() const = 0;
 
-	void adjustBrightnessContrast(QImage& image, int brightness, int contrast) const;
+	void adjustImage(QImage& image, int brightness, int contrast, bool invert) const;
 
 protected:
 	QString m_filename;

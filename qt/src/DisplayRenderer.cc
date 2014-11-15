@@ -26,10 +26,11 @@
 
 #include "DisplayRenderer.hh"
 #include "Utils.hh"
+#include <QTextStream>
 
-void DisplayRenderer::adjustBrightnessContrast(QImage &image, int brightness, int contrast) const
+void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, bool invert) const
 {
-	if(brightness == 0 && contrast == 0){
+	if(brightness == 0 && contrast == 0 && !invert){
 		return;
 	}
 
@@ -56,6 +57,12 @@ void DisplayRenderer::adjustBrightnessContrast(QImage &image, int brightness, in
 			red = qMax(0., qMin(FCn * (red - 128.) + 128., 255.));
 			green = qMax(0., qMin(FCn * (green - 128.) + 128., 255.));
 			blue = qMax(0., qMin(FCn * (blue - 128.) + 128., 255.));
+			// Invert
+			if(invert){
+				red = 255 - red;
+				green = 255 - green;
+				blue = 255 - blue;
+			}
 
 			rgb[i] = qRgb(red, green, blue);
 		}
