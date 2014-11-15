@@ -28,6 +28,7 @@
 
 Glib::RefPtr<Gtk::Builder> Builder::builder;
 std::string pkgDir;
+std::string pkgExePath;
 
 static std::string get_application_dir(char* argv0)
 {
@@ -55,7 +56,8 @@ static std::string get_application_dir(char* argv0)
 
 int main (int argc, char *argv[])
 {
-	std::string pkgDir = get_application_dir(argv[0]);
+	pkgDir = get_application_dir(argv[0]);
+	pkgExePath = argv[0];
 
 #ifdef G_OS_WIN32
 	if(Glib::getenv("LANG").empty()) {

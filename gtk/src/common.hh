@@ -66,6 +66,7 @@ private:
 	Gtk::Widget* m_widget;
 };
 
+extern std::string pkgExePath;
 extern std::string pkgDir;
 
 #endif
