@@ -74,15 +74,13 @@ MainWindow* MainWindow::s_instance = nullptr;
 MainWindow::MainWindow(const QStringList& files)
 	: m_idleActions(0)
 {
+	s_instance = this;
 
 	std::signal(SIGSEGV, signalHandler);
 	std::signal(SIGABRT, signalHandler);
 
 	qRegisterMetaType<MainWindow::State>();
 
-	s_instance = this;
-
-	// Setup UI
 	ui.setupUi(this);
 
 	m_config = new Config();
