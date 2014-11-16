@@ -48,6 +48,7 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	m_spell.setShowCheckSpellingCheckbox(true);
 
 	connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), ui.dockWidgetOutput, SLOT(setVisible(bool)));
+	connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), m_substitutionsManager, SLOT(hide()));
 	connect(ui.menuOutputMode, SIGNAL(triggered(QAction*)), this, SLOT(setInsertMode(QAction*)));
 	connect(ui.toolButtonOutputPostproc, SIGNAL(clicked()), this, SLOT(filterBuffer()));
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.frameOutputSearch, SLOT(setVisible(bool)));
@@ -279,8 +280,7 @@ bool OutputManager::clearBuffer()
 	}
 	ui.plainTextEditOutput->clear();
 	ui.plainTextEditOutput->document()->setModified(false);
-	ui.dockWidgetOutput->setVisible(false);
-	m_substitutionsManager->hide();
+	ui.actionToggleOutputPane->setChecked(false);
 	return true;
 }
 
