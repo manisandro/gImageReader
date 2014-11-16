@@ -30,7 +30,6 @@
 #include <QUrl>
 #include <csignal>
 
-#include "AboutDialog.hh"
 #include "MainWindow.hh"
 #include "Acquirer.hh"
 #include "Config.hh"
@@ -39,6 +38,7 @@
 #include "Recognizer.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
+#include "ui_AboutDialog.h"
 
 
 #if ENABLE_VERSIONCHECK
@@ -213,7 +213,11 @@ void MainWindow::onSourceChanged(Source* source)
 
 void MainWindow::showAbout()
 {
-	AboutDialog(this).exec();
+	QDialog d(this);
+	Ui::AboutDialog aboutDialogUi;
+	aboutDialogUi.setupUi(&d);
+	aboutDialogUi.labelAbout->setText(aboutDialogUi.labelAbout->text().arg(PACKAGE_VERSION));
+	d.exec();
 }
 
 void MainWindow::showHelp(const QString& chapter)
