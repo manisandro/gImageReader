@@ -30,8 +30,6 @@ public:
 	Acquirer();
 	~Acquirer();
 
-	void start();
-
 private:
 	class DevicesComboColumns : public Gtk::TreeModel::ColumnRecord {
 	public:

@@ -21,9 +21,9 @@
 #define OUTPUTMANAGER_HH
 
 #include "common.hh"
-#include "UndoableBuffer.hh"
 #include "Config.hh"
-#include "Notifier.hh"
+#include "MainWindow.hh"
+#include "UndoableBuffer.hh"
 
 #include <gtkspellmm.h>
 
@@ -35,7 +35,6 @@ public:
 	~OutputManager();
 	void addText(const Glib::ustring& text, bool insert = false);
 	bool saveBuffer(std::string filename = "");
-	void setVisible(bool visible);
 	bool clearBuffer();
 	void setLanguage(const Config::Lang &lang, bool force = false);
 	bool getModified() const{ return m_textBuffer->get_modified(); }
@@ -43,6 +42,7 @@ public:
 private:
 	enum class InsertMode { Append, Cursor, Replace };
 
+	Gtk::ToggleToolButton* m_togglePaneButton;
 	Gtk::ToggleButton* m_insButton;
 	Gtk::Menu* m_insMenu;
 	Gtk::Image* m_insImage;
@@ -63,7 +63,7 @@ private:
 	Gtk::TextIter m_insertIter;
 	Gtk::TextIter m_selectIter;
 	GtkSpell::Checker m_spell;
-	Notifier::Handle m_notifierHandle = nullptr;
+	MainWindow::Notification m_notifierHandle = nullptr;
 
 	SubstitutionsManager* m_substitutionsManager = nullptr;
 

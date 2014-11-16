@@ -36,15 +36,17 @@ class MainWindow {
 public:
 	enum class State { Idle, Normal, Busy };
 
+	struct NotificationAction {
+		Glib::ustring label;
+		std::function<bool()> action;
+	};
+
+	typedef void* Notification;
+
 	static MainWindow* getInstance(){ return s_instance; }
 
 	MainWindow();
 	~MainWindow();
-
-	void setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel);
-	void openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files);
-	void pushState(State state, const Glib::ustring& msg);
-	void popState();
 
 	Config* getConfig(){ return m_config; }
 	Displayer* getDisplayer(){ return m_displayer; }
@@ -52,10 +54,16 @@ public:
 	Recognizer* getRecognizer(){ return m_recognizer; }
 	SourceManager* getSourceManager(){ return m_sourceManager; }
 	Gtk::Window* getWindow() const{ return m_window; }
+	void setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel);
 	void redetectLanguages();
 	void showConfig();
 	void showHelp(const std::string& chapter = "");
 	void showAbout();
+	void addNotification(const Glib::ustring& title, const Glib::ustring& message, const std::vector<NotificationAction>& actions, Notification* handle = nullptr);
+	void hideNotification(Notification handle);
+	void openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files);
+	void pushState(State state, const Glib::ustring& msg);
+	void popState();
 
 private:
 	static MainWindow* s_instance;
@@ -76,9 +84,8 @@ private:
 	std::vector<Gtk::Widget*> m_idlegroup;
 	std::vector<State> m_stateStack;
 
+	bool closeEvent(GdkEventAny*);
 	void onSourceChanged(Source* source);
-	bool quit(GdkEventAny*);
-	void setOutputPaneOrientation(Gtk::ComboBoxText* combo);
 	void setState(State state);
 #if ENABLE_VERSIONCHECK
 	void getNewestVersion();

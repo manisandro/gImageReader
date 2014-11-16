@@ -58,14 +58,13 @@ public:
 	MainWindow(const QStringList& files);
 	~MainWindow();
 
-	void openFiles(const QStringList& files);
-
 	Config* getConfig(){ return m_config; }
 	Displayer* getDisplayer(){ return m_displayer; }
 	OutputManager* getOutputManager(){ return m_outputManager; }
 	Recognizer* getRecognizer(){ return m_recognizer; }
 	SourceManager* getSourceManager(){ return m_sourceManager; }
 	void addNotification(const QString& title, const QString& message, const QList<NotificationAction>& actions, Notification* handle = nullptr);
+	void openFiles(const QStringList& files);
 
 public slots:
 	void popState();

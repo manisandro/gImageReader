@@ -18,8 +18,6 @@
  */
 
 #include "FileDialogs.hh"
-#include "MainWindow.hh"
-#include "Notifier.hh"
 #include "OutputManager.hh"
 #include "SourceManager.hh"
 #include "SubstitutionsManager.hh"
@@ -34,6 +32,7 @@
 
 OutputManager::OutputManager()
 {
+	m_togglePaneButton = Builder("tbbutton:main.outputpane");
 	m_insButton = Builder("tbbutton:output.insert");
 	m_insMenu = Builder("menu:output.insert");
 	m_insImage = Builder("image:output.insert");
@@ -64,6 +63,10 @@ OutputManager::OutputManager()
 
 	Builder("tbbutton:output.stripcrlf").as<Gtk::MenuToolButton>()->set_menu(*Builder("menu:output.stripcrlf").as<Gtk::Menu>());
 
+	CONNECTS(Builder("combo:config.settings.paneorient").as<Gtk::ComboBoxText>(), changed, [this](Gtk::ComboBoxText* combo){
+		Builder("paned:output").as<Gtk::Paned>()->set_orientation(static_cast<Gtk::Orientation>(!combo->get_active_row_number())); });
+	CONNECT(m_togglePaneButton, toggled, [this]{ m_outputBox->set_visible(m_togglePaneButton->get_active());});
+	CONNECT(m_togglePaneButton, toggled, [this]{ m_substitutionsManager->set_visible(false);});
 	CONNECT(m_insButton, toggled, [this]{ showInsertMenu(); });
 	CONNECT(m_insMenu, deactivate, [this]{ m_insButton->set_active(false); });
 	CONNECT(Builder("menuitem:output.insert.append").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Append, "ins_append.png"); });
@@ -83,11 +86,12 @@ OutputManager::OutputManager()
 	CONNECT(m_redoButton, clicked, [this]{ m_textBuffer->redo(); m_textView->grab_focus(); });
 	CONNECT(Builder("tbbutton:output.save").as<Gtk::ToolButton>(), clicked, [this]{ saveBuffer(); });
 	CONNECT(Builder("tbbutton:output.clear").as<Gtk::ToolButton>(), clicked, [this]{ clearBuffer(); });
-	CONNECT(Builder("button:output.substitutions").as<Gtk::ToolButton>(), clicked, [this]{ m_substitutionsManager->show(); });
+	CONNECT(Builder("button:output.substitutions").as<Gtk::ToolButton>(), clicked, [this]{ m_substitutionsManager->set_visible(true); });
 	CONNECTP(Builder("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
 	CONNECT(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
 	CONNECT(m_textView, populate_popup, [this](Gtk::Menu* menu){ populateTextViewMenu(menu); });
 
+	MAIN->getConfig()->addSetting("outputorient", new ComboSetting("combo:config.settings.paneorient"));
 	MAIN->getConfig()->addSetting("systemoutputfont", new SwitchSettingT<Gtk::CheckButton>("checkbutton:config.settings.defaultoutputfont"));
 	MAIN->getConfig()->addSetting("customoutputfont", new FontSetting("fontbutton:config.settings.customoutputfont"));
 	MAIN->getConfig()->addSetting("keepdot", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.keepdot"));
@@ -290,10 +294,6 @@ bool OutputManager::saveBuffer(std::string filename)
 	return true;
 }
 
-void OutputManager::setVisible(bool visible) {
-	m_outputBox->set_visible(visible);
-}
-
 bool OutputManager::clearBuffer()
 {
 	if(!m_outputBox->get_visible()){
@@ -308,14 +308,14 @@ bool OutputManager::clearBuffer()
 	m_textBuffer->set_text("");
 	m_textBuffer->clear_history();
 	m_textBuffer->set_modified(false);
-	m_outputBox->hide();
-	m_substitutionsManager->hide();
+	m_togglePaneButton->set_active(false);
 	return true;
 }
 
 void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 {
-	Notifier::hide(m_notifierHandle);
+	MAIN->hideNotification(m_notifierHandle);
+	m_notifierHandle = nullptr;
 	m_spell.detach();
 	std::string code = lang.code;
 	if(force && code.empty()) {
@@ -327,20 +327,20 @@ void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 			m_spell.attach(*m_textView);
 		}catch(const GtkSpell::Error& e){
 			if(MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->getValue()){
-				Notifier::Action actionDontShowAgain = {_("Don't show again"), []{ MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->setValue(false); return true; }};
-				Notifier::Action actionInstall = Notifier::Action{_("Help"), []{ MAIN->showHelp("#InstallSpelling"); return false; }};
+				MainWindow::NotificationAction actionDontShowAgain = {_("Don't show again"), []{ MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->setValue(false); return true; }};
+				MainWindow::NotificationAction actionInstall = {_("Help"), []{ MAIN->showHelp("#InstallSpelling"); return false; }};
 				// Try initiating a DBUS connection for PackageKit
 				Glib::RefPtr<Gio::DBus::Proxy> proxy;
 	#ifdef G_OS_UNIX
 				try{
 					proxy = Gio::DBus::Proxy::create_for_bus_sync(Gio::DBus::BUS_TYPE_SESSION, "org.freedesktop.PackageKit",
 																  "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify");
-					actionInstall = Notifier::Action{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); return true; }};
+					actionInstall = MainWindow::NotificationAction{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); return true; }};
 				}catch(const Glib::Error&){
 					g_warning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
 				}
 	#endif
-				Notifier::notify(_("Spelling dictionary missing"), Glib::ustring::compose(_("The spellcheck dictionary for %1 is not installed"), lang.name), {actionInstall, actionDontShowAgain}, &m_notifierHandle);
+				MAIN->addNotification(_("Spelling dictionary missing"), Glib::ustring::compose(_("The spellcheck dictionary for %1 is not installed"), lang.name), {actionInstall, actionDontShowAgain}, &m_notifierHandle);
 			}
 		}
 	}

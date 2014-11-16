@@ -28,8 +28,7 @@ class ListStoreSetting;
 class SubstitutionsManager {
 public:
 	SubstitutionsManager(const Glib::RefPtr<UndoableBuffer>& buffer);
-	void show();
-	void hide();
+	void set_visible(bool visible){ m_dialog->set_visible(visible); }
 
 private:
 	struct ReplaceListColumns : public Gtk::TreeModel::ColumnRecord {

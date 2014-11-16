@@ -22,7 +22,6 @@
 #include "Acquirer.hh"
 #include "Config.hh"
 #include "Displayer.hh"
-#include "Notifier.hh"
 #include "OutputManager.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
@@ -44,6 +43,8 @@
 #define DOWNLOADURL "http://sourceforge.net/projects/gimagereader/files"
 #define CHANGELOGURL "http://sourceforge.net/projects/gimagereader/files/changelog.txt/download?use_mirror=autoselect"
 #endif // ENABLE_VERSIONCHECK
+
+static Glib::Quark notificationHandleKey("handle");
 
 void crash_handler(int sig)
 {
@@ -102,29 +103,17 @@ MainWindow::MainWindow()
 	m_idlegroup.push_back(Builder("tbbutton:main.autolayout"));
 	m_idlegroup.push_back(Builder("tbmenu:main.recognize"));
 
-	Gtk::ToggleToolButton* showOutputPaneBtn = Builder("tbbutton:main.outputpane");
-
-	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) { return quit(ev); });
-	CONNECTS(Builder("combo:config.settings.paneorient").as<Gtk::ComboBoxText>(), changed,
-			 [this](Gtk::ComboBoxText* box){ setOutputPaneOrientation(box); });
-	CONNECT(showOutputPaneBtn, toggled, [this,showOutputPaneBtn] { m_outputManager->setVisible(showOutputPaneBtn->get_active()); });
+	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) { return closeEvent(ev); });
 	CONNECTS(Builder("tbbutton:main.controls").as<Gtk::ToggleToolButton>(), toggled,
 			 [this](Gtk::ToggleToolButton* b) { Builder("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
 	CONNECT(m_config, languageChanged, [this](const Config::Lang& lang){ m_outputManager->setLanguage(lang); });
 	CONNECT(m_sourceManager, sourceChanged, [this](Source* source){ onSourceChanged(source); });
-	CONNECT(Builder("box:output").as<Gtk::Widget>(), show, [showOutputPaneBtn]{ showOutputPaneBtn->set_active(true); });
-	CONNECT(Builder("box:output").as<Gtk::Widget>(), hide, [showOutputPaneBtn]{ showOutputPaneBtn->set_active(false); });
 
-	m_config->addSetting("outputorient", new ComboSetting("combo:config.settings.paneorient"));
 	m_config->addSetting("showcontrols", new SwitchSettingT<Gtk::ToggleToolButton>("tbbutton:main.controls"));
 
 	m_config->updateLanguagesMenu();
 
-	m_acquirer->start();
-
-	m_statusbar->push(_("Select an image to begin..."));
-	m_stateStack.push_back(State::Idle);
-	setState(State::Idle);
+	pushState(State::Idle, _("Select an image to begin..."));
 
 	const std::vector<int>& geom = m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->getValue();
 	if(geom.size() == 4){
@@ -164,51 +153,31 @@ void MainWindow::openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files)
 
 void MainWindow::pushState(State state, const Glib::ustring &msg)
 {
-	m_statusbar->push(msg);
-	State old = m_stateStack.back();
 	m_stateStack.push_back(state);
-	if(m_stateStack.back() != old){
-		setState(m_stateStack.back());
-	}
+	m_statusbar->push(msg);
+	setState(state);
 }
 
 void MainWindow::popState()
 {
 	m_statusbar->pop();
-	State old = m_stateStack.back();
 	m_stateStack.pop_back();
-	if(m_stateStack.back() != old){
-		setState(m_stateStack.back());
-	}
+	setState(m_stateStack.back());
 }
 
 void MainWindow::setState(State state)
 {
+	bool isIdle = state == State::Idle;
+	bool isBusy = state == State::Busy;
+	for(Gtk::Widget* w : m_idlegroup){ w->set_sensitive(!isIdle); }
+	m_window->set_sensitive(!isBusy);
 	m_window->set_sensitive(true);
-	if(state == State::Idle){
-		for(Gtk::Widget* w : m_idlegroup){ w->set_sensitive(false); }
-	}else if(state == State::Normal){
-		for(Gtk::Widget* w : m_idlegroup){ w->set_sensitive(true); }
-	}else if(state == State::Busy){
-		m_window->set_sensitive(false);
+	if(m_window->get_window()){
+		m_window->get_window()->set_cursor(isBusy ? Gdk::Cursor::create(Gdk::WATCH) : Glib::RefPtr<Gdk::Cursor>());
 	}
 }
 
-void MainWindow::onSourceChanged(Source* source)
-{
-	if(m_stateStack.back() == State::Normal){
-		popState();
-	}
-	if(m_displayer->setSource(source)){
-		m_window->set_title(Glib::ustring::compose("%1 - %2", source->displayname, PACKAGE_NAME));
-		pushState(State::Normal, _("To recognize specific areas, drag rectangles over them."));
-	}else{
-		m_window->set_title(PACKAGE_NAME);
-	}
-}
-
-
-bool MainWindow::quit(GdkEventAny*)
+bool MainWindow::closeEvent(GdkEventAny*)
 {
 	if(!m_outputManager->clearBuffer()){
 		return true;
@@ -223,14 +192,17 @@ bool MainWindow::quit(GdkEventAny*)
 	return false;
 }
 
-void MainWindow::redetectLanguages()
+void MainWindow::onSourceChanged(Source* source)
 {
-	m_config->updateLanguagesMenu();
-}
-
-void MainWindow::showConfig()
-{
-	m_config->showDialog();
+	if(m_stateStack.back() == State::Normal){
+		popState();
+	}
+	if(m_displayer->setSource(source)){
+		m_window->set_title(Glib::ustring::compose("%1 - %2", source->displayname, PACKAGE_NAME));
+		pushState(State::Normal, _("To recognize specific areas, drag rectangles over them."));
+	}else{
+		m_window->set_title(PACKAGE_NAME);
+	}
 }
 
 void MainWindow::showAbout()
@@ -250,11 +222,57 @@ void MainWindow::showHelp(const std::string& chapter)
 #endif
 }
 
-void MainWindow::setOutputPaneOrientation(Gtk::ComboBoxText* combo)
+void MainWindow::showConfig()
 {
-	int active = combo->get_active_row_number();
-	Gtk::Orientation orient = active ? Gtk::ORIENTATION_HORIZONTAL : Gtk::ORIENTATION_VERTICAL;
-	Builder("paned:output").as<Gtk::Paned>()->set_orientation(orient);
+	m_config->showDialog();
+}
+
+void MainWindow::redetectLanguages()
+{
+	m_config->updateLanguagesMenu();
+}
+
+void MainWindow::addNotification(const Glib::ustring &title, const Glib::ustring &message, const std::vector<NotificationAction> &actions, Notification* handle)
+{
+	Gtk::Frame* frame = Gtk::manage(new Gtk::Frame);
+	frame->set_data(notificationHandleKey, handle);
+	frame->set_shadow_type(Gtk::SHADOW_OUT);
+	Gtk::Box* box = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 5));
+	box->override_background_color(Gdk::RGBA("#FFD000"), Gtk::STATE_FLAG_NORMAL);
+	frame->add(*box);
+	Gtk::Label* titlelabel = Gtk::manage(new Gtk::Label);
+	titlelabel->set_markup(Glib::ustring::compose("<b>%1:</b>", title));
+	box->pack_start(*titlelabel, false, true);
+	box->pack_start(*Gtk::manage(new Gtk::Label(message, Gtk::ALIGN_START)), true, true);
+	Gtk::Button* closebtn = Gtk::manage(new Gtk::Button());
+	closebtn->set_image_from_icon_name("window-close", Gtk::ICON_SIZE_MENU);
+	CONNECT(closebtn, clicked, [this,frame]{ hideNotification(frame); });
+	box->pack_end(*closebtn, false, true);
+	for(const NotificationAction& action : actions){
+		Gtk::Button* btn = Gtk::manage(new Gtk::Button(action.label));
+		btn->set_relief(Gtk::RELIEF_NONE);
+		CONNECT(btn, clicked, [this,frame,action]{ if(action.action()){ hideNotification(frame); }});
+		box->pack_start(*btn, false, true);
+		btn->get_child()->override_color(Gdk::RGBA("#0000FF"), Gtk::STATE_FLAG_NORMAL);
+	}
+	frame->show_all();
+	Builder("box:main").as<Gtk::Box>()->pack_end(*frame, false, true);
+	if(handle != nullptr){
+		*handle = frame;
+	}
+}
+
+void MainWindow::hideNotification(Notification handle)
+{
+	if(handle){
+		Gtk::Frame* frame = static_cast<Gtk::Frame*>(handle);
+		Notification* h = reinterpret_cast<Notification*>(frame->get_data(notificationHandleKey));
+		if(h){
+			*h = nullptr;
+		}
+		Builder("box:main").as<Gtk::Box>()->remove(*frame);
+		delete frame;
+	}
 }
 
 #if ENABLE_VERSIONCHECK
@@ -270,7 +288,7 @@ void MainWindow::getNewestVersion()
 	}
 	std::string newver(buf);
 	newver.erase(std::remove_if(newver.begin(), newver.end(), ::isspace), newver.end());
-	if(Glib::Regex::create(R"(^[\d+\.]+\d+?$)")->match(newver, 0, Glib::RegexMatchFlags(0))){
+	if(Glib::Regex::create(R"(^[\d+\.]+\d+$)")->match(newver, 0, Glib::RegexMatchFlags(0))){
 		Glib::signal_idle().connect_once([this,newver]{ checkVersion(newver); });
 	}
 }
@@ -278,15 +296,10 @@ void MainWindow::getNewestVersion()
 void MainWindow::checkVersion(const Glib::ustring& newver)
 {
 	m_newVerThread->join();
-	Glib::ustring curver = m_aboutdialog->get_version();
-	// Remove anything after a - (i.e. 1.0.0-svn)
-	Glib::ustring::size_type pos = curver.find('-');
-	if(pos != Glib::ustring::npos){
-		curver = curver.substr(0, pos);
-	}
+	Glib::ustring curver = PACKAGE_VERSION;
 
 	if(newver.compare(curver) > 0){
-		Notifier::notify(_("New version"), Glib::ustring::compose(_("gImageReader %1 is available"), newver),
+		addNotification(_("New version"), Glib::ustring::compose(_("gImageReader %1 is available"), newver),
 			{{_("Download"), []{ gtk_show_uri(Gdk::Screen::get_default()->gobj(), DOWNLOADURL, GDK_CURRENT_TIME, 0); return false; }},
 			 {_("Changelog"), []{ gtk_show_uri(Gdk::Screen::get_default()->gobj(), CHANGELOGURL, GDK_CURRENT_TIME, 0); return false; }},
 			 {_("Don't notify again"), [this]{ m_config->getSetting<SwitchSetting>("updatecheck")->setValue(false); return true; }}});

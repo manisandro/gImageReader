@@ -166,16 +166,6 @@ void SubstitutionsManager::dialogClosed()
 	MAIN->getConfig()->getSetting<ListStoreSetting>("replacelist")->serialize();
 }
 
-void SubstitutionsManager::show()
-{
-	m_dialog->show();
-}
-
-void SubstitutionsManager::hide()
-{
-	m_dialog->hide();
-}
-
 void SubstitutionsManager::apply()
 {
 	Gtk::TextIter start, end;
