@@ -278,19 +278,33 @@ void MainWindow::hideNotification(Notification handle)
 QString MainWindow::getNewestVersion()
 {
 	QNetworkAccessManager networkMgr;
-	QNetworkReply* reply = networkMgr.get(QNetworkRequest(QUrl(CHECKURL)));
+	QUrl url(CHECKURL);
+	QNetworkReply* reply = nullptr;
 
-	QEventLoop loop;
-	connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
-	loop.exec();
+	while(true){
+		QNetworkRequest req(url);
+		req.setRawHeader("User-Agent" , "Wget/1.13.4");
+		reply = networkMgr.get(req);
+		QEventLoop loop;
+		connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+		loop.exec();
+
+		QUrl redirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
+		if(redirectUrl.isValid() && url != redirectUrl){
+			delete reply;
+			url = redirectUrl;
+		}else{
+			break;
+		}
+	}
 
 	QString newver = reply->readAll();
 	delete reply;
 
 	newver.replace(QRegExp("\\s+"), "");
-	QRegExp pat("(^[\\d+\\.]+\\d+?$)");
+	QRegExp pat(R"(^[\d+\.]+\d+$)");
 	if(pat.exactMatch(newver)){
-		return "newver";
+		return newver;
 	}
 	return QString();
 }
