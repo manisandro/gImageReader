@@ -18,6 +18,7 @@
  */
 
 #include "MainWindow.hh"
+#include "Config.hh"
 #include "Displayer.hh"
 #include "DisplayRenderer.hh"
 #include "DisplaySelection.hh"
@@ -27,15 +28,14 @@
 #include "FileDialogs.hh"
 
 #include <tesseract/baseapi.h>
-#include <cassert>
 
 Displayer::Displayer()
 {
 	m_canvas = Builder("drawingarea:display");
 	m_viewport = Builder("viewport:display");
-	Gtk::ScrolledWindow* scrollwin = Builder("scrollwin:display");
-	m_hadjustment = scrollwin->get_hadjustment();
-	m_vadjustment = scrollwin->get_vadjustment();
+	m_scrollwin = Builder("scrollwin:display");
+	m_hadj = m_scrollwin->get_hadjustment();
+	m_vadj = m_scrollwin->get_vadjustment();
 	m_zoominbtn = Builder("tbbutton:main.zoomin");
 	m_zoomoutbtn = Builder("tbbutton:main.zoomout");
 	m_zoomonebtn = Builder("tbbutton:main.normsize");
@@ -55,35 +55,26 @@ Displayer::Displayer()
 	m_brispin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/brightness.png"));
 	m_conspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/contrast.png"));
 
-	m_canvas->set_redraw_on_allocate(false);
 	m_viewport->override_background_color(Gdk::RGBA("#a0a0a4"));
 
-	m_renderer = 0;
-	clearImage(); // Assigns default values to all state variables
-	selectionUpdateColors();
-	m_selectionSaveFilename = Glib::build_filename(Utils::get_documents_dir(), _("selection.png"));
-
-	m_connection_positionAndZoomCanvas = CONNECT(m_viewport, size_allocate, [this](Gdk::Rectangle&){ positionCanvas(true); });
-	m_connection_saveHScrollMark = CONNECT(m_hadjustment, value_changed, [this]{ saveScrollMark(m_hadjustment, m_geo.sx); });
-	m_connection_saveVScrollMark = CONNECT(m_vadjustment, value_changed, [this]{ saveScrollMark(m_vadjustment, m_geo.sy); });
-	m_connection_pageSpinChanged = CONNECT(m_pagespin, value_changed, [this]{ clearSelections(); spinChanged(); });
-	m_connection_resSpinChanged = CONNECT(m_resspin, value_changed, [this]{ spinChanged(); });
-	m_connection_briSpinChanged = CONNECT(m_brispin, value_changed, [this]{ spinChanged(); });
-	m_connection_conSpinChanged = CONNECT(m_conspin, value_changed, [this]{ spinChanged(); });
-	m_connection_invcheckToggled = CONNECT(m_invcheck, toggled, [this]{ spinChanged(); });
-	m_connection_mouseMove = CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev){ mouseMove(ev); return true; });
-	m_connection_mousePress = CONNECT(m_viewport, button_press_event, [this](GdkEventButton* ev){ mousePress(ev); return true; });
-	CONNECT(m_viewport, scroll_event, [this](GdkEventScroll* ev){ return scrollZoom(ev); });
+	m_connection_rotSpinChanged = CONNECT(m_rotspin, value_changed, [this]{ setRotation(m_rotspin->get_value()); });
+	m_connection_pageSpinChanged = CONNECT(m_pagespin, value_changed, [this]{ clearSelections(); queueRenderImage(); });
+	m_connection_briSpinChanged = CONNECT(m_brispin, value_changed, [this]{ queueRenderImage(); });
+	m_connection_conSpinChanged = CONNECT(m_conspin, value_changed, [this]{ queueRenderImage(); });
+	m_connection_resSpinChanged = CONNECT(m_resspin, value_changed, [this]{ queueRenderImage(); });
+	m_connection_invcheckToggled = CONNECT(m_invcheck, toggled, [this]{ queueRenderImage(); });
+	CONNECT(m_viewport, size_allocate, [this](Gdk::Rectangle&){ resizeEvent(); });
+	CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev){ return mouseMoveEvent(ev); });
+	CONNECT(m_viewport, button_press_event, [this](GdkEventButton* ev){ return mousePressEvent(ev); });
+	CONNECT(m_viewport, button_release_event, [this](GdkEventButton* ev){ return mouseReleaseEvent(ev); });
+	CONNECT(m_viewport, scroll_event, [this](GdkEventScroll* ev){ return scrollEvent(ev); });
 	CONNECT(m_canvas, draw, [this](const Cairo::RefPtr<Cairo::Context>& ctx){ drawCanvas(ctx); return false; });
-	CONNECT(m_zoominbtn, clicked, [this]{ setZoom(ZoomMode::In); });
-	CONNECT(m_zoomoutbtn, clicked, [this]{ setZoom(ZoomMode::Out); });
-	CONNECT(m_zoomfitbtn, clicked, [this]{ setZoom(ZoomMode::Fit); });
-	CONNECT(m_zoomonebtn, clicked, [this]{ setZoom(ZoomMode::One); });
-	CONNECT(Builder("tbbutton:main.rotright").as<Gtk::ToolButton>(), clicked,
-			[this]{ m_rotspin->set_value((int(m_rotspin->get_value()*10.f + 900.f) % 3600) / 10.f); });
-	CONNECT(Builder("tbbutton:main.rotleft").as<Gtk::ToolButton>(), clicked,
-			[this]{ m_rotspin->set_value((int(3600.f + m_rotspin->get_value()*10.f - 900.f) % 3600) / 10.f); });
-	m_connection_rotSpinChanged = CONNECT(m_rotspin, value_changed, [this]{ rotate(); });
+	CONNECT(m_zoominbtn, clicked, [this]{ setZoom(Zoom::In); });
+	CONNECT(m_zoomoutbtn, clicked, [this]{ setZoom(Zoom::Out); });
+	m_connection_zoomfitClicked = CONNECT(m_zoomfitbtn, clicked, [this]{ setZoom(Zoom::Fit); });
+	m_connection_zoomoneClicked = CONNECT(m_zoomonebtn, clicked, [this]{ setZoom(Zoom::One); });
+	CONNECT(Builder("tbbutton:main.rotright").as<Gtk::ToolButton>(), clicked, [this]{ setRotation(m_rotspin->get_value() + 90.); });
+	CONNECT(Builder("tbbutton:main.rotleft").as<Gtk::ToolButton>(), clicked, [this]{ setRotation(m_rotspin->get_value() - 90.); });
 	CONNECT(Builder("tbbutton:main.autolayout").as<Gtk::ToolButton>(), clicked, [this]{ autodetectLayout(); });
 	CONNECT(m_selmenu, button_press_event, [this](GdkEventButton* ev){
 		Gtk::Allocation a = m_selmenu->get_allocation();
@@ -94,79 +85,13 @@ Displayer::Displayer()
 	CONNECT(m_selmenu, key_press_event, [this](GdkEventKey* ev){
 		if(ev->keyval == GDK_KEY_Escape) hideSelectionMenu(); return true;
 	});
+	CONNECT(Builder("applicationwindow:main").as<Gtk::Window>()->get_style_context(), changed, [this]{ m_canvas->queue_draw(); });
 
-	CONNECT(Builder("applicationwindow:main").as<Gtk::Window>()->get_style_context(), changed, [this]{ selectionUpdateColors(); });
-
-	m_blurThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::blurThread));
-}
-
-Displayer::~Displayer()
-{
-	delete m_renderer;
-	clearSelections();
-	sendBlurRequest(BlurRequest::Quit, true);
-}
-
-void Displayer::blurThread()
-{
-	m_blurMutex.lock();
-	while(true){
-		m_blurThreadIdle = true;
-		m_blurIdleCond.signal();
-		while(!m_blurRequestPending){
-			m_blurReqCond.wait(m_blurMutex);
-		}
-		m_blurRequestPending = false;
-		if(m_blurRequest.action == BlurRequest::Quit){
-			m_blurIdleCond.signal();
-			break;
-		}else if(m_blurRequest.action == BlurRequest::Stop){
-			continue;
-		}
-		BlurRequest req = m_blurRequest;
-		m_blurThreadIdle = false;
-		m_blurMutex.unlock();
-#define CHECK_PENDING m_blurMutex.lock(); if(m_blurRequestPending) continue; m_blurMutex.unlock();
-		Cairo::RefPtr<Cairo::ImageSurface> blurred = m_renderer->render(req.page, req.res);
-		CHECK_PENDING
-		m_renderer->adjustImage(blurred, req.brightness, req.contrast, req.invert);
-		CHECK_PENDING
-		Glib::signal_idle().connect_once([=]{
-			if(!m_blurRequestPending){
-				m_blurImage = blurred;
-				m_canvas->queue_draw();
-			}
-		});
-		m_blurMutex.lock();
-	};
-	m_blurMutex.unlock();
-}
-
-void Displayer::sendBlurRequest(BlurRequest::Action action, bool wait)
-{
-	m_blurImage.clear();
-	BlurRequest request = {action};
-	if(request.action == BlurRequest::Start){
-		request.res = m_resspin->get_value() * m_geo.s;
-		request.page = m_pagespin->get_value_as_int();
-		request.brightness = m_brispin->get_value_as_int();
-		request.contrast = m_conspin->get_value_as_int();
-		request.invert = m_invcheck->get_active();
-	}
-	m_blurMutex.lock();
-	m_blurRequest = request;
-	m_blurRequestPending = true;
-	m_blurReqCond.signal();
-	m_blurMutex.unlock();
-	if(wait){
-		m_blurMutex.lock();
-		while(!m_blurThreadIdle){
-			m_blurIdleCond.wait(m_blurMutex);
-		}
-		m_blurMutex.unlock();
-	}
-	if(action == BlurRequest::Quit){
-		m_blurThread->join();
+	MAIN->getConfig()->addSetting("selectionsavefile", new VarSetting<Glib::ustring>());
+	std::string selectionsavefile = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->getValue();
+	if(selectionsavefile.empty()) {
+		selectionsavefile = Glib::build_filename(Utils::get_documents_dir(), _("selection.png"));
+		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->setValue(selectionsavefile);
 	}
 }
 
@@ -179,13 +104,14 @@ void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx)
 	ctx->save();
 	// Set up transformations
 	ctx->translate(0.5 * alloc.get_width(), 0.5 * alloc.get_height());
-	ctx->rotate(m_geo.a);
+	ctx->rotate(m_source->angle);
 	// Set source and apply all transformations to it
 	if(!m_blurImage){
 		ctx->scale(m_geo.s, m_geo.s);
 		ctx->translate(-0.5 * m_image->get_width(), -0.5 * m_image->get_height());
 		ctx->set_source(m_image, 0, 0);
 	}else{
+		ctx->scale(m_geo.s / m_blurScale, m_geo.s / m_blurScale);
 		ctx->translate(-0.5 * m_blurImage->get_width(), -0.5 * m_blurImage->get_height());
 		ctx->set_source(m_blurImage, 0, 0);
 	}
@@ -196,353 +122,339 @@ void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx)
 	ctx->scale(m_geo.s, m_geo.s);
 	int i = 0;
 	for(const DisplaySelection* sel : m_selections){
-		sel->draw(ctx, m_geo.s, Glib::ustring::compose("%1", ++i), m_selColors);
+		sel->draw(ctx, m_geo.s, Glib::ustring::compose("%1", ++i));
 	}
 	return;
 }
 
-void Displayer::positionCanvas(bool zoom)
+void Displayer::positionCanvas()
 {
-	if(!m_image){
-		return;
-	}
-	double bbw, bbh;
-	getBBSize(bbw, bbh);
-	m_canvas->get_window()->freeze_updates();
-	m_connection_positionAndZoomCanvas.block();
-	m_connection_saveHScrollMark.block();
-	m_connection_saveVScrollMark.block();
-	if(zoom && m_zoomFit){
-		m_geo.s = std::min(m_viewport->get_allocated_width() / bbw, m_viewport->get_allocated_height() / bbh);
-	}
-	m_canvas->set_size_request(Utils::round(bbw * m_geo.s), Utils::round(bbh * m_geo.s));
-	// Immediately resize the children
+	Geometry::Size bb = getImageBoundingBox();
+	m_canvas->set_size_request(Utils::round(bb.x * m_geo.s), Utils::round(bb.y * m_geo.s));
+	// Immediately resize viewport, so that adjustment values are correct below
 	m_viewport->size_allocate(m_viewport->get_allocation());
 	m_viewport->set_allocation(m_viewport->get_allocation());
-	// Repeat to cover cases where scrollbars did disappear
-	if(zoom && m_zoomFit){
-		m_geo.s = std::min(m_viewport->get_allocated_width() / bbw, m_viewport->get_allocated_height() / bbh);
-		sendBlurRequest(BlurRequest::Start);
-		m_canvas->set_size_request(Utils::round(bbw * m_geo.s), Utils::round(bbh * m_geo.s));
-		m_viewport->size_allocate(m_viewport->get_allocation());
-		m_viewport->set_allocation(m_viewport->get_allocation());
-	}
-	m_hadjustment->set_value(m_geo.sx *(m_hadjustment->get_upper() - m_hadjustment->get_page_size()));
-	m_vadjustment->set_value(m_geo.sy *(m_vadjustment->get_upper() - m_vadjustment->get_page_size()));
+	m_hadj->set_value(m_geo.sx *(m_hadj->get_upper() - m_hadj->get_page_size()));
+	m_vadj->set_value(m_geo.sy *(m_vadj->get_upper() - m_vadj->get_page_size()));
 	m_canvas->queue_draw();
-	m_connection_positionAndZoomCanvas.unblock();
-	m_connection_saveHScrollMark.unblock();
-	m_connection_saveVScrollMark.unblock();
-	m_canvas->get_window()->thaw_updates();
 }
 
-bool Displayer::scrollZoom(GdkEventScroll *ev)
+bool Displayer::setCurrentPage(int page)
 {
-	if((ev->state & Gdk::CONTROL_MASK) != 0){
-		if((ev->direction == GDK_SCROLL_UP || ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y < 0) && m_geo.s * 1.25 < 10){
-			Gtk::Allocation alloc = m_canvas->get_allocation();
-			m_geo.sx = std::max(0., std::min((ev->x + m_hadjustment->get_value() - alloc.get_x())/alloc.get_width(), 1.0));
-			m_geo.sy = std::max(0., std::min((ev->y + m_vadjustment->get_value() - alloc.get_y())/alloc.get_height(), 1.0));
-			setZoom(ZoomMode::In);
-		}else if((ev->direction == GDK_SCROLL_DOWN || ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y > 0) && m_geo.s * 0.8 > 0.05){
-			setZoom(ZoomMode::Out);
-		}
-		return true;
-	}else if((ev->state & Gdk::SHIFT_MASK) != 0){
-		if(ev->direction == GDK_SCROLL_UP){
-			m_hadjustment->set_value(m_hadjustment->get_value() - m_hadjustment->get_step_increment());
-		}else if(ev->direction == GDK_SCROLL_DOWN){
-			m_hadjustment->set_value(m_hadjustment->get_value() + m_hadjustment->get_step_increment());
-		}
-		return true;
-	}
-	return false;
-}
-
-void Displayer::saveScrollMark(Glib::RefPtr<Gtk::Adjustment> adj, double &s)
-{
-	double den = adj->get_upper() - adj->get_page_size();
-	s = std::abs(den) > 1E-4 ? adj->get_value() / den : 0.5;
-}
-
-void Displayer::setZoom(ZoomMode zoom)
-{
-	for(Gtk::Widget* w : {m_zoominbtn, m_zoomoutbtn, m_zoomonebtn, m_zoomfitbtn}){
-		w->set_sensitive(true);
-	}
-	m_zoomFit = false;
-	Gtk::Allocation alloc = m_viewport->get_allocation();
-	double bbw, bbh;
-	getBBSize(bbw, bbh);
-	double fit = std::min(alloc.get_width() / bbw, alloc.get_height() / bbh);
-	if(zoom == ZoomMode::In){
-		m_geo.s = std::min(10., m_geo.s * 1.25);
-	}else if(zoom == ZoomMode::Out){
-		m_geo.s = std::max(0.05, m_geo.s * 0.8);
-	}else if(zoom == ZoomMode::One){
-		m_geo.s = 1.0;
-	}
-	if(zoom == ZoomMode::Fit || (m_geo.s / fit >= 0.9 && m_geo.s / fit <= 1.09)){
-		m_zoomFit = true;
-		m_geo.s = fit;
-		m_zoomfitbtn->set_sensitive(false);
-	}
-	m_zoomoutbtn->set_sensitive(m_geo.s > 0.05);
-	m_zoominbtn->set_sensitive(m_geo.s < 10.);
-	m_zoomonebtn->set_sensitive(m_geo.s != 1.);
-	sendBlurRequest(BlurRequest::Start);
-	positionCanvas();
-}
-
-void Displayer::getBBSize(double& w, double& h) const
-{
-	int iw = m_image->get_width();
-	int ih = m_image->get_height();
-	double Rex[] = {m_geo.R(0, 0) * iw, m_geo.R(1, 0) * iw};
-	double Rey[] = {m_geo.R(0, 1) * ih, m_geo.R(1, 1) * ih};
-	w = std::abs(Rex[0]) + std::abs(Rey[0]);
-	h = std::abs(Rey[1]) + std::abs(Rex[1]);
-}
-
-void Displayer::rotate()
-{
-	if(!m_renderer){
-		return;
-	}
-	double angle = m_rotspin->get_value() * 0.0174532925199;
-	m_source->angle = m_rotspin->get_value();
-	double delta = angle - m_geo.a;
-	m_geo.a = angle;
-	m_geo.R = Geometry::Rotation(angle);
-	Geometry::Rotation deltaR(delta);
-	for(DisplaySelection* sel : m_selections){
-		sel->rotate(deltaR);
-	}
-	positionCanvas(true);
-}
-
-void Displayer::spinChanged()
-{
-	if(m_renderer){
-		m_timer.disconnect();
-		m_timer = Glib::signal_timeout().connect([this]{
-			if(setImage()){ rotate(); }
-			return false;
-		}, 200);
-	}
+	Utils::set_spin_blocked(m_pagespin, page, m_connection_pageSpinChanged);
+	return renderImage();
 }
 
 bool Displayer::setSource(Source* source)
 {
-	if(m_image){
-		MAIN->popState();
-		clearImage();
+	m_scaleTimer.disconnect();
+	if(m_scaleThread){
+		sendScaleRequest(ScaleRequest::Quit);
+		m_scaleThread->join();
+		m_scaleThread = nullptr;
 	}
+	m_geo = {0.5, 0.5, 1.0};
+	clearSelections();
+	m_renderTimer.disconnect();
+	m_scrollTimer.disconnect();
+	m_image.clear();
+	m_blurImage.clear();
+	delete m_renderer;
+	m_renderer = 0;
+	m_canvas->hide();
+	m_pagespin->set_value(1);
+	m_rotspin->set_value(0);
+	m_brispin->set_value(0);
+	m_conspin->set_value(0);
+	m_resspin->set_value(100);
+	m_invcheck->set_active(false);
+	m_zoomfitbtn->set_active(true);
+	m_zoomonebtn->set_active(false);
+	m_zoominbtn->set_sensitive(true);
+	m_zoomoutbtn->set_sensitive(true);
+	if(m_viewport->get_window()) m_viewport->get_window()->set_cursor();
+
+	m_source = source;
 	if(!source){
 		return false;
 	}
-	m_source = source;
 	std::string filename = source->file->get_path();
 #ifdef G_OS_WIN32
 	if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf"){
 #else
 	if(Utils::get_content_type(filename) == "application/pdf"){
 #endif
-		DisplayRenderer* renderer = new PDFRenderer(filename);
+		m_renderer = new PDFRenderer(filename);
 		if(source->resolution == -1) source->resolution = 300;
-		Utils::configure_spin(m_resspin, source->resolution, 50, 600, 50, 100, &m_connection_resSpinChanged);
-		Utils::configure_spin(m_pagespin, source->page, 1, renderer->getNPages(), 1, 10, &m_connection_pageSpinChanged);
-		m_resspin->set_tooltip_text(_("Resolution"));
-		m_pagespin->show();
-		m_renderer = renderer;
 	}else{
 		m_renderer = new ImageRenderer(filename);
 		if(source->resolution == -1) source->resolution = 100;
-		Utils::configure_spin(m_resspin, source->resolution, 50, 200, 10, 50, &m_connection_resSpinChanged);
-		Utils::configure_spin(m_pagespin, 1, 1, 1, 1, 1, &m_connection_pageSpinChanged);
-		m_resspin->set_tooltip_text(_("Scale"));
-		m_pagespin->hide();
 	}
-	Utils::configure_spin(m_brispin, source->brightness, -100, 100, 1, 10, &m_connection_briSpinChanged);
-	Utils::configure_spin(m_conspin, source->contrast, -100, 100, 1, 10, &m_connection_conSpinChanged);
-	Utils::configure_spin(m_rotspin, source->angle, 0, 359.9, 0.1, 10, &m_connection_rotSpinChanged);
+	m_pagespin->get_adjustment()->set_upper(m_renderer->getNPages());
+	m_pagespin->set_visible(m_renderer->getNPages() > 1);
+	Utils::set_spin_blocked(m_rotspin, source->angle, m_connection_rotSpinChanged);
+	Utils::set_spin_blocked(m_pagespin, source->page, m_connection_pageSpinChanged);
+	Utils::set_spin_blocked(m_brispin, source->brightness, m_connection_briSpinChanged);
+	Utils::set_spin_blocked(m_conspin, source->contrast, m_connection_conSpinChanged);
+	Utils::set_spin_blocked(m_resspin, source->resolution, m_connection_resSpinChanged);
+	m_connection_invcheckToggled.block(true);
+	m_invcheck->set_active(source->invert);
+	m_connection_invcheckToggled.block(false);
 
-	if(setImage()){
-		MAIN->pushState(MainWindow::State::Normal, _("To recognize specific areas, drag rectangles over them."));
+	if(renderImage()){
 		m_canvas->show();
 		m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
-		rotate();
-		return true;
+		m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
 	}else{
+		setSource(nullptr);
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to load image"), Glib::ustring::compose(_("The file might not be an image or be corrupt:\n%1"), source));
-		m_image = Cairo::RefPtr<Cairo::ImageSurface>();
 		return false;
 	}
+	return true;
 }
 
-bool Displayer::setCurrentPage(int page)
+bool Displayer::renderImage()
 {
-	m_connection_pageSpinChanged.block();
-	m_pagespin->set_value(page);
-	bool success = setImage();
-	m_connection_pageSpinChanged.unblock();
-	return success;
-}
-
-bool Displayer::setImage()
-{
-	if(!m_renderer){
-		return false;
-	}
-	int page = m_pagespin->get_value_as_int();
-	double res = m_resspin->get_value();
-	int bri = m_brispin->get_value_as_int();
-	int con = m_conspin->get_value_as_int();
-	bool inv = m_invcheck->get_active();
-	m_source->brightness = bri;
-	m_source->contrast = con;
-	m_source->resolution = res;
-	m_source->page = page;
-	m_source->invert = inv;
+	sendScaleRequest(ScaleRequest::Abort);
+	m_blurImage.clear();
+	m_source->page = m_pagespin->get_value_as_int();
+	m_source->brightness = m_conspin->get_value_as_int();
+	m_source->contrast = m_conspin->get_value_as_int();
+	m_source->resolution = m_resspin->get_value();
+	m_source->invert = m_invcheck->get_active();
 	Cairo::RefPtr<Cairo::ImageSurface> image;
-	sendBlurRequest(BlurRequest::Stop, true);
-	bool success = Utils::busyTask([this, page, res, bri, con, inv, &image] {
-		image = m_renderer->render(page, res);
-		m_renderer->adjustImage(image, bri, con, inv);
+	if(!Utils::busyTask([this, &image] {
+		image = m_renderer->render(m_source->page, m_source->resolution);
+		m_renderer->adjustImage(image, m_source->brightness, m_source->contrast, m_source->contrast);
 		return bool(image);
-	}, _("Rendering image..."));
-	m_image = image;
-	sendBlurRequest(BlurRequest::Start);
-	return success;
-}
-
-void Displayer::clearImage()
-{
-	sendBlurRequest(BlurRequest::Stop, true);
-	m_geo = {0.0, 0.5, 0.5, 1.0, Geometry::Rotation(0)};
-	m_image = Cairo::RefPtr<Cairo::ImageSurface>();
-	delete m_renderer;
-	m_renderer = 0;
-	clearSelections();
-	m_zoomFit = true;
-	m_canvas->hide();
-	if(m_viewport->get_window()){
-		m_viewport->get_window()->set_cursor();
+	}, _("Rendering image..."))){
+		return false;
 	}
-	m_brispin->set_value(0);
-	m_conspin->set_value(0);
-	m_rotspin->set_value(0);
-	m_source = nullptr;
+	m_image = image;
+	setRotation(m_rotspin->get_value());
+	if(m_geo.s < 1.0){
+		m_scaleTimer.disconnect();
+		m_scaleTimer = Glib::signal_timeout().connect([this]{ sendScaleRequest(); return false; }, 100);
+	}
+	return true;
 }
 
-Geometry::Point Displayer::getSelectionCoords(double evx, double evy) const
-{
-	// Selection coordinates are with respect to the center of the image in unscaled (but rotate) coordinates
-	Gtk::Allocation alloc = m_canvas->get_allocation();
-	double x = (std::max(0., std::min(evx - alloc.get_x(), double(alloc.get_width()))) - 0.5 * alloc.get_width()) / m_geo.s;
-	double y = (std::max(0., std::min(evy - alloc.get_y(), double(alloc.get_height()))) - 0.5 * alloc.get_height()) / m_geo.s;
-	return Geometry::Point(x, y);
-}
-
-Geometry::Rectangle Displayer::getSelectionDamageArea(const Geometry::Rectangle &rect) const
-{
-	Gtk::Allocation alloc = m_canvas->get_allocation();
-	int x = std::floor(rect.x * m_geo.s + 0.5 * alloc.get_width()) - 1;
-	int y = std::floor(rect.y * m_geo.s + 0.5 * alloc.get_height()) - 1;
-	int w = std::ceil(rect.width * m_geo.s) + 3;
-	int h = std::ceil(rect.height * m_geo.s) + 3;
-	return Geometry::Rectangle(x, y, w, h);
-}
-
-void Displayer::mouseMove(GdkEventMotion *ev)
+void Displayer::setZoom(Zoom zoom)
 {
 	if(!m_image){
 		return;
 	}
-	Geometry::Point point = getSelectionCoords(ev->x, ev->y);
-	for(DisplaySelection* sel : Utils::reverse(m_selections)){
-		m_curSel = sel->getResizeHandle(point, m_geo.s);
-		if(m_curSel != nullptr){
-			m_viewport->get_window()->set_cursor(Gdk::Cursor::create(m_curSel->getResizeCursor()));
-			return;
+	sendScaleRequest(ScaleRequest::Abort);
+	m_connection_zoomfitClicked.block(true);
+	m_connection_zoomoneClicked.block(true);
+
+	Gtk::Allocation alloc = m_viewport->get_allocation();
+	Geometry::Size bb = getImageBoundingBox();
+	double fit = std::min(alloc.get_width() / bb.x, alloc.get_height() / bb.y);
+
+	if(zoom == Zoom::In){
+		m_geo.s = std::min(10., m_geo.s * 1.25);
+	}else if(zoom == Zoom::Out){
+		m_geo.s = std::max(0.05, m_geo.s * 0.8);
+	}else if(zoom == Zoom::One){
+		m_geo.s = 1.0;
+	}
+	m_zoomfitbtn->set_active(false);
+	if(zoom == Zoom::Fit || (m_geo.s / fit >= 0.9 && m_geo.s / fit <= 1.09)){
+		m_geo.s = fit;
+		m_zoomfitbtn->set_active(true);
+	}
+	bool scrollVisible = m_geo.s > fit;
+	m_scrollwin->get_hscrollbar()->set_visible(scrollVisible);
+	m_scrollwin->get_vscrollbar()->set_visible(scrollVisible);
+	m_zoomoutbtn->set_sensitive(m_geo.s > 0.05);
+	m_zoominbtn->set_sensitive(m_geo.s < 10.);
+	m_zoomonebtn->set_active(m_geo.s == 1.);
+	if(m_geo.s < 1.0){
+		m_scaleTimer.disconnect();
+		m_scaleTimer = Glib::signal_timeout().connect([this]{ sendScaleRequest(); return false; }, 100);
+	}else{
+		m_blurImage.clear();
+	}
+	positionCanvas();
+
+	m_connection_zoomfitClicked.block(false);
+	m_connection_zoomoneClicked.block(false);
+}
+
+void Displayer::setRotation(double angle)
+{
+	if(m_image){
+		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
+		Utils::set_spin_blocked(m_rotspin, angle, m_connection_rotSpinChanged);
+		angle *= 0.0174532925199;
+		double delta = m_source->angle - angle;
+		m_source->angle = angle;
+		Geometry::Rotation deltaR(delta);
+		for(DisplaySelection* sel : m_selections){
+			sel->rotate(deltaR);
+		}
+		if(m_zoomfitbtn->get_active() == true){
+			setZoom(Zoom::Fit);
+		}else{
+			positionCanvas();
 		}
 	}
-	m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
 }
 
-void Displayer::mousePress(GdkEventButton* ev)
+void Displayer::queueRenderImage()
 {
-	if(!m_image){
-		return;
+	if(m_image){
+		m_renderTimer.disconnect();
+		m_renderTimer = Glib::signal_timeout().connect([this]{ renderImage(); return false; }, 200);
 	}
-	Geometry::Point point = getSelectionCoords(ev->x, ev->y);
+}
+
+bool Displayer::mousePressEvent(GdkEventButton* ev)
+{
+	if(!m_image || m_curSel){
+		return false;
+	}
+	Geometry::Point point = mapToSceneClamped(ev->x, ev->y);
 	if(ev->button == 3){
 		for(int i = m_selections.size() - 1; i >= 0; --i){
 			if(m_selections[i]->getRect().contains(point)){
 				showSelectionMenu(ev, i);
-				return;
+				return true;
 			}
 		}
-	}
-	m_connection_mouseMove.block();
-	m_connection_mousePress.block();
-	if(m_curSel == nullptr){
-		if((ev->state & Gdk::CONTROL_MASK) == 0){
-			// Clear all existing selections
-			clearSelections();
-			m_canvas->queue_draw();
+	}else{
+		for(int i = m_selections.size() - 1; i >= 0; --i){
+			m_curSel = m_selections[i]->getResizeHandle(point, m_geo.s);
+			if(m_curSel) break;
 		}
-		// Start new selection
-		DisplaySelection* sel = new DisplaySelection(point);
-		m_curSel = new DisplaySelectionHandle(sel);
-		m_selections.insert(m_selections.end(), sel);
+		if(!m_curSel){
+			if((ev->state & Gdk::CONTROL_MASK) == 0){
+				// Clear all existing selections
+				clearSelections();
+				m_canvas->queue_draw();
+			}
+			DisplaySelection* sel = new DisplaySelection(point.x, point.y);
+			m_selections.push_back(sel);
+			m_curSel = sel->getResizeHandle(point, m_geo.s);
+		}
 	}
-	m_connection_selDo = CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev){ selectionDo(ev); return true; });
-	m_connection_selEnd = CONNECT(m_viewport, button_release_event, [this](GdkEventButton* ev){ selectionEnd(); return true; });
+	return true;
 }
 
-void Displayer::selectionDo(GdkEventMotion* ev)
+void Displayer::resizeEvent()
 {
-	assert(m_curSel != nullptr);
-	Geometry::Point point = getSelectionCoords(ev->x, ev->y);
-	m_viewport->get_window()->set_cursor(Gdk::Cursor::create(m_curSel->getResizeCursor()));
-	Geometry::Rectangle damage = getSelectionDamageArea(m_curSel->setPoint(point));
-	m_canvas->queue_draw_area(damage.x, damage.y, damage.width, damage.height);
-
-	m_scrollspeed[0] = m_scrollspeed[1] = 0;
-	if(ev->x < m_hadjustment->get_value()){
-		m_scrollspeed[0] = ev->x - m_hadjustment->get_value();
-	}else if(ev->x > m_hadjustment->get_value() + m_hadjustment->get_page_size()){
-		m_scrollspeed[0] = ev->x - m_hadjustment->get_value() - m_hadjustment->get_page_size();
-	}
-	if(ev->y < m_vadjustment->get_value()){
-		m_scrollspeed[1] = ev->y - m_vadjustment->get_value();
-	}else if(ev->y > m_vadjustment->get_value() + m_vadjustment->get_page_size()){
-		m_scrollspeed[1] = ev->y - m_vadjustment->get_value() - m_vadjustment->get_page_size();
-	}
-	if((m_scrollspeed[0] != 0 || m_scrollspeed[1] != 0) && !m_timer.connected()){
-		m_timer = Glib::signal_timeout().connect([this]{ return scroll(); }, 25);
+	if(m_zoomfitbtn->get_active() == true){
+		setZoom(Zoom::Fit);
 	}
 }
 
-void Displayer::selectionEnd()
+bool Displayer::mouseMoveEvent(GdkEventMotion *ev)
 {
-	assert(m_curSel != nullptr);
-	if(m_curSel->getSelection()->isEmpty()){
-		selectionRemove(m_curSel->getSelection());
+	if(!m_image){
+		return false;
+	}
+	Geometry::Point point = mapToSceneClamped(ev->x, ev->y);
+	if(m_curSel){
+		m_curSel->setPoint(point);
+		m_canvas->queue_draw();
+
+		m_scrollspeed[0] = m_scrollspeed[1] = 0;
+		if(ev->x < m_hadj->get_value()){
+			m_scrollspeed[0] = ev->x - m_hadj->get_value();
+		}else if(ev->x > m_hadj->get_value() + m_hadj->get_page_size()){
+			m_scrollspeed[0] = ev->x - m_hadj->get_value() - m_hadj->get_page_size();
+		}
+		if(ev->y < m_vadj->get_value()){
+			m_scrollspeed[1] = ev->y - m_vadj->get_value();
+		}else if(ev->y > m_vadj->get_value() + m_vadj->get_page_size()){
+			m_scrollspeed[1] = ev->y - m_vadj->get_value() - m_vadj->get_page_size();
+		}
+		if((m_scrollspeed[0] != 0 || m_scrollspeed[1] != 0) && !m_scrollTimer.connected()){
+			m_scrollTimer = Glib::signal_timeout().connect([this]{ return panViewport(); }, 25);
+		}
+	}else{
+		for(DisplaySelection* sel : Utils::reverse(m_selections)){
+			Gdk::CursorType cursor = sel->getResizeCursor(point, m_geo.s);
+			if(cursor != Gdk::BLANK_CURSOR){
+				m_viewport->get_window()->set_cursor(Gdk::Cursor::create(cursor));
+				return true;
+			}
+		}
+		m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
+	}
+	return true;
+}
+
+bool Displayer::mouseReleaseEvent(GdkEventButton* /*ev*/)
+{
+	if(!m_curSel){
+		return false;
+	}
+	if(m_curSel->sel->isEmpty()){
+		removeSelection(m_curSel->sel);
 	}
 	delete m_curSel;
 	m_curSel = nullptr;
-	m_timer.disconnect();
-	m_connection_selDo.disconnect();
-	m_connection_selEnd.disconnect();
-	m_connection_mouseMove.unblock();
-	m_connection_mousePress.unblock();
+	m_scrollTimer.disconnect();
 	if(!m_selections.empty()){
 		m_ocrstatelabel->set_markup(Glib::ustring::compose("<small>%1</small>", _("Recognize selection")));
 	}else{
 		m_ocrstatelabel->set_markup(Glib::ustring::compose("<small>%1</small>", _("Recognize all")));
 	}
+	return true;
+}
+
+bool Displayer::scrollEvent(GdkEventScroll *ev)
+{
+	if((ev->state & Gdk::CONTROL_MASK) != 0){
+		if((ev->direction == GDK_SCROLL_UP || ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y < 0) && m_geo.s * 1.25 < 10){
+			Gtk::Allocation alloc = m_canvas->get_allocation();
+			m_geo.sx = std::max(0., std::min((ev->x + m_hadj->get_value() - alloc.get_x())/alloc.get_width(), 1.0));
+			m_geo.sy = std::max(0., std::min((ev->y + m_vadj->get_value() - alloc.get_y())/alloc.get_height(), 1.0));
+			setZoom(Zoom::In);
+		}else if((ev->direction == GDK_SCROLL_DOWN || ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y > 0) && m_geo.s * 0.8 > 0.05){
+			setZoom(Zoom::Out);
+		}
+		return true;
+	}else if((ev->state & Gdk::SHIFT_MASK) != 0){
+		if(ev->direction == GDK_SCROLL_UP){
+			m_hadj->set_value(m_hadj->get_value() - m_hadj->get_step_increment());
+		}else if(ev->direction == GDK_SCROLL_DOWN){
+			m_hadj->set_value(m_hadj->get_value() + m_hadj->get_step_increment());
+		}
+		return true;
+	}
+	return false;
+}
+
+bool Displayer::panViewport()
+{
+	if(m_scrollspeed[0] == 0 && m_scrollspeed[1] == 0){
+		return false;
+	}
+	m_hadj->set_value(std::min(std::max(0., m_hadj->get_value() + m_scrollspeed[0] / 10.), m_hadj->get_upper() - m_hadj->get_page_size()));
+	m_vadj->set_value(std::min(std::max(0., m_vadj->get_value() + m_scrollspeed[1] / 10.), m_vadj->get_upper() - m_vadj->get_page_size()));
+	return true;
+}
+Geometry::Size Displayer::getImageBoundingBox() const
+{
+	int w = m_image->get_width();
+	int h = m_image->get_height();
+	Geometry::Rotation R(m_source->angle);
+	return Geometry::Size(
+			std::abs(R(0, 0) * w) + std::abs(R(0, 1) * h),
+			std::abs(R(1, 0) * w) + std::abs(R(1, 1) * h)
+	);
+}
+
+Geometry::Point Displayer::mapToSceneClamped(double evx, double evy) const
+{
+	// Selection coordinates are with respect to the center of the image in unscaled (but rotated) coordinates
+	Gtk::Allocation alloc = m_canvas->get_allocation();
+	double x = (std::max(0., std::min(evx - alloc.get_x(), double(alloc.get_width()))) - 0.5 * alloc.get_width()) / m_geo.s;
+	double y = (std::max(0., std::min(evy - alloc.get_y(), double(alloc.get_height()))) - 0.5 * alloc.get_height()) / m_geo.s;
+	return Geometry::Point(x, y);
 }
 
 void Displayer::clearSelections()
@@ -551,44 +463,73 @@ void Displayer::clearSelections()
 	m_selections.clear();
 }
 
-bool Displayer::scroll()
+void Displayer::removeSelection(const DisplaySelection* sel)
 {
-	if(m_scrollspeed[0] == 0 && m_scrollspeed[1] == 0){
-		return false;
+	m_selections.erase(std::find(m_selections.begin(), m_selections.end(), sel));
+	delete sel;
+	m_canvas->queue_draw();
+}
+
+std::vector<Cairo::RefPtr<Cairo::ImageSurface>> Displayer::getSelections() const
+{
+	std::vector<Geometry::Rectangle> rects;
+	if(m_selections.empty()){
+		Geometry::Size bb = getImageBoundingBox();
+		rects.push_back(Geometry::Rectangle(-0.5 * bb.x, -0.5 * bb.y, bb.x, bb.y));
+	}else{
+		rects.reserve(m_selections.size());
+		for(const DisplaySelection* sel : m_selections){
+			rects.push_back(sel->getRect());
+		}
 	}
-	m_geo.sx = std::min(std::max(0., m_geo.sx + m_scrollspeed[0] / 2000.), 1.);
-	m_geo.sy = std::min(std::max(0., m_geo.sy + m_scrollspeed[1] / 2000.), 1.);
-	positionCanvas();
-	return true;
+	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> images;
+	for(const Geometry::Rectangle& rect : rects){
+		images.push_back(getImage(rect));
+	}
+	return images;
+}
+
+void Displayer::saveSelection(const Geometry::Rectangle& rect)
+{
+	Cairo::RefPtr<Cairo::ImageSurface> img = getImage(rect);
+	std::string filename = Utils::make_output_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->getValue());
+	FileDialogs::FileFilter filter = {_("PNG Images"), "image/png", "*.png"};
+	filename = FileDialogs::save_dialog(_("Save Selection Image"), filename, filter);
+	if(!filename.empty()){
+		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->setValue(filename);
+		img->write_to_png(filename);
+	}
 }
 
 void Displayer::showSelectionMenu(GdkEventButton *ev, int i)
 {
-	DisplaySelection *sel = m_selections[i];
+	DisplaySelection* sel = m_selections[i];
 	Gtk::SpinButton* spin = Builder("spin:selectionmenu.order");
 	spin->get_adjustment()->set_upper(m_selections.size());
 	spin->get_adjustment()->set_value(i + 1);
-	m_connection_selmenu_reorder = CONNECT(spin, value_changed, [this,spin,sel]{
-		m_selections.erase(std::find(m_selections.begin(), m_selections.end(), sel));
-		m_selections.insert(m_selections.begin() + spin->get_value_as_int() - 1, sel);
-		m_canvas->queue_draw();
-	});
-	m_connection_selmenu_delete = CONNECT(Builder("button:selectionmenu.delete").as<Gtk::Button>(), clicked, [this,sel]{
-		hideSelectionMenu();
-		selectionRemove(sel);
-	});
-	m_connection_selmenu_recognize = CONNECT(Builder("button:selectionmenu.recognize").as<Gtk::Button>(), clicked, [this, sel]{
-		hideSelectionMenu();
-		MAIN->getRecognizer()->recognizeImage(getTransformedImage(sel->getRect()), Recognizer::OutputDestination::Buffer);
-	});
-	m_connection_selmenu_clipboard = CONNECT(Builder("button:selectionmenu.clipboard").as<Gtk::Button>(), clicked, [this, sel]{
-		hideSelectionMenu();
-		MAIN->getRecognizer()->recognizeImage(getTransformedImage(sel->getRect()), Recognizer::OutputDestination::Clipboard);
-	});
-	m_connection_selmenu_save = CONNECT(Builder("button:selectionmenu.save").as<Gtk::Button>(), clicked, [this, sel]{
-		hideSelectionMenu();
-		saveSelection(sel->getRect());
-	});
+	m_selmenuConnections = {
+		CONNECT(spin, value_changed, [this,spin,sel]{
+			m_selections.erase(std::find(m_selections.begin(), m_selections.end(), sel));
+			m_selections.insert(m_selections.begin() + spin->get_value_as_int() - 1, sel);
+			m_canvas->queue_draw();
+		}),
+		CONNECT(Builder("button:selectionmenu.delete").as<Gtk::Button>(), clicked, [this,sel]{
+			hideSelectionMenu();
+			removeSelection(sel);
+		}),
+		CONNECT(Builder("button:selectionmenu.recognize").as<Gtk::Button>(), clicked, [this, sel]{
+			hideSelectionMenu();
+			MAIN->getRecognizer()->recognizeImage(getImage(sel->getRect()), Recognizer::OutputDestination::Buffer);
+		}),
+		CONNECT(Builder("button:selectionmenu.clipboard").as<Gtk::Button>(), clicked, [this, sel]{
+			hideSelectionMenu();
+			MAIN->getRecognizer()->recognizeImage(getImage(sel->getRect()), Recognizer::OutputDestination::Clipboard);
+		}),
+		CONNECT(Builder("button:selectionmenu.save").as<Gtk::Button>(), clicked, [this, sel]{
+			hideSelectionMenu();
+			saveSelection(sel->getRect());
+		})
+	};
 	Glib::RefPtr<const Gdk::Screen> screen = MAIN->getWindow()->get_screen();
 	Gdk::Rectangle rect = screen->get_monitor_workarea(screen->get_monitor_at_point(ev->x_root, ev->y_root));
 	m_selmenu->show_all();
@@ -605,92 +546,45 @@ void Displayer::showSelectionMenu(GdkEventButton *ev, int i)
 void Displayer::hideSelectionMenu()
 {
 	m_selmenu->hide();
-	m_connection_selmenu_reorder.disconnect();
-	m_connection_selmenu_delete.disconnect();
-	m_connection_selmenu_recognize.disconnect();
-	m_connection_selmenu_clipboard.disconnect();
-	m_connection_selmenu_save.disconnect();
+	for(sigc::connection& conn : m_selmenuConnections){
+		conn.disconnect();
+	}
 	gdk_device_ungrab(gtk_get_current_event_device(), gtk_get_current_event_time());
 }
 
-void Displayer::selectionRemove(const DisplaySelection* sel)
-{
-	m_selections.erase(std::find(m_selections.begin(), m_selections.end(), sel));
-	delete sel;
-	m_canvas->queue_draw();
-}
-
-void Displayer::selectionUpdateColors()
-{
-	m_selColors[0] = Gtk::Entry().get_style_context()->get_color(Gtk::STATE_FLAG_SELECTED);
-	m_selColors[1] = Gtk::Entry().get_style_context()->get_background_color(Gtk::STATE_FLAG_SELECTED);
-}
-
-Cairo::RefPtr<Cairo::ImageSurface> Displayer::getTransformedImage(const Geometry::Rectangle &rect) const
+Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle &rect) const
 {
 	Cairo::RefPtr<Cairo::ImageSurface> surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, std::ceil(rect.width), std::ceil(rect.height));
 		Cairo::RefPtr<Cairo::Context> ctx = Cairo::Context::create(surf);
 		ctx->set_source_rgba(1., 1., 1., 1.);
 		ctx->paint();
 		ctx->translate(-rect.x, -rect.y);
-		ctx->rotate(m_geo.a);
+		ctx->rotate(m_source->angle);
 		ctx->translate(-0.5 * m_image->get_width(), -0.5 * m_image->get_height());
 		ctx->set_source(m_image, 0, 0);
 		ctx->paint();
 		return surf;
 }
 
-std::vector<Cairo::RefPtr<Cairo::ImageSurface>> Displayer::getSelections() const
-{
-	std::vector<Geometry::Rectangle> rects;
-	if(m_selections.empty()){
-		double bbw, bbh;
-		getBBSize(bbw, bbh);
-		rects.push_back(Geometry::Rectangle(-0.5 * bbw, -0.5 * bbh, bbw, bbh));
-	}else{
-		rects.reserve(m_selections.size());
-		for(const DisplaySelection* sel : m_selections){
-			rects.push_back(sel->getRect());
-		}
-	}
-	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> images;
-	for(const Geometry::Rectangle& rect : rects){
-		images.push_back(getTransformedImage(rect));
-	}
-	return images;
-}
-
-void Displayer::saveSelection(const Geometry::Rectangle& rect)
-{
-	Cairo::RefPtr<Cairo::ImageSurface> img = getTransformedImage(rect);
-	m_selectionSaveFilename = Utils::make_output_filename(m_selectionSaveFilename);
-	FileDialogs::FileFilter filter = {_("PNG Images"), "image/png", "*.png"};
-	std::string filename = FileDialogs::save_dialog(_("Save Selection Image"), m_selectionSaveFilename, filter);
-	if(!filename.empty()){
-		img->write_to_png(filename);
-		m_selectionSaveFilename = filename;
-	}
-}
-
 void Displayer::autodetectLayout(bool rotated)
 {
 	clearSelections();
 
-	float avgDeskew = 0.f;
+	double avgDeskew = 0.;
 	int nDeskew = 0;
+	std::vector<Geometry::Rectangle> rects;
+	Geometry::Size bb = getImageBoundingBox();
+	Geometry::Rectangle rect(-0.5 * bb.x, -0.5 * bb.y, bb.x, bb.y);
+	Cairo::RefPtr<Cairo::ImageSurface> img = getImage(rect);
+
 	// Perform layout analysis
-	Utils::busyTask([this,&nDeskew,&avgDeskew]{
+	Utils::busyTask([this,&nDeskew,&avgDeskew,&rects,&img]{
 		tesseract::TessBaseAPI tess;
 		tess.InitForAnalysePage();
 		tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
-		double bbw, bbh;
-		getBBSize(bbw, bbh);
-		Geometry::Rectangle rect = Geometry::Rectangle(-0.5 * bbw, -0.5 * bbh, bbw, bbh);
-		Cairo::RefPtr<Cairo::ImageSurface> img = getTransformedImage(rect);
 		tess.SetImage(img->get_data(), img->get_width(), img->get_height(), 4, img->get_stride());
 		tesseract::PageIterator* it = tess.AnalyseLayout();
 		if(it && !it->Empty(tesseract::RIL_BLOCK)){
-			std::vector<Geometry::Rectangle> rects;
 			do{
 				int x1, y1, x2, y2;
 				tesseract::Orientation orient;
@@ -705,20 +599,6 @@ void Displayer::autodetectLayout(bool rotated)
 					rects.push_back(Geometry::Rectangle(x1 - img->get_width()*.5, y1 - img->get_height()*.5, x2-x1, y2-y1));
 				}
 			}while(it->Next(tesseract::RIL_BLOCK));
-
-			// Merge overlapping rectangles
-			for(unsigned i = rects.size(); i-- > 1;) {
-				for(unsigned j = i; j-- > 0;) {
-					if(rects[j].overlaps(rects[i])) {
-						rects[j] = rects[j].unite(rects[i]);
-						rects.erase(rects.begin() + i);
-						break;
-					}
-				}
-			}
-			for(const Geometry::Rectangle& rect : rects) {
-				m_selections.push_back(new DisplaySelection(rect.x, rect.y, rect.width, rect.height));
-			}
 		}
 		delete it;
 		return true;
@@ -726,17 +606,97 @@ void Displayer::autodetectLayout(bool rotated)
 
 	// If a somewhat large deskew angle is detected, automatically rotate image and redetect layout,
 	// unless we already attempted to rotate (to prevent endless loops)
-	avgDeskew = (avgDeskew/nDeskew)/M_PI * 180.f;
-	if(std::abs(avgDeskew > 1.f) && !rotated){
-		m_rotspin->set_value((int((m_rotspin->get_value() + avgDeskew) * 10.f) % 3600) / 10.f);
-		while(Gtk::Main::events_pending()){ // Wait for rotate to occur
-			Gtk::Main::iteration();
-		}
+	avgDeskew = Utils::round(((avgDeskew/nDeskew)/M_PI * 180.) * 10.) / 10.;
+
+	if(std::abs(avgDeskew > .1) && !rotated){
+		setRotation(m_rotspin->get_value() - avgDeskew);
 		autodetectLayout(true);
 	}else{
+		// Merge overlapping rectangles
+		for(unsigned i = rects.size(); i-- > 1;) {
+			for(unsigned j = i; j-- > 0;) {
+				if(rects[j].overlaps(rects[i])) {
+					rects[j] = rects[j].unite(rects[i]);
+					rects.erase(rects.begin() + i);
+					break;
+				}
+			}
+		}
+		for(const Geometry::Rectangle& rect : rects) {
+			m_selections.push_back(new DisplaySelection(rect.x, rect.y, rect.width, rect.height));
+		}
 		m_canvas->queue_draw();
 		if(!m_selections.empty()){
 			m_ocrstatelabel->set_markup(Glib::ustring::compose("<small>%1</small>", _("Recognize selection")));
 		}
 	}
+}
+
+void Displayer::sendScaleRequest(const ScaleRequest::Request& action)
+{
+	ScaleRequest request = {action};
+	if(request.type == ScaleRequest::Scale){
+		request.scale = m_geo.s;
+		request.resolution = m_resspin->get_value();
+		request.page = m_pagespin->get_value_as_int();
+		request.brightness = m_brispin->get_value_as_int();
+		request.contrast = m_conspin->get_value_as_int();
+		request.invert = m_invcheck->get_active();
+	}
+	m_scaleMutex.lock();
+	m_scaleRequests.push(request);
+	m_scaleCond.signal();
+	m_scaleMutex.unlock();
+}
+
+void Displayer::scaleThread()
+{
+	m_scaleMutex.lock();
+	while(true){
+		while(m_scaleRequests.empty()){
+			m_scaleCond.wait(m_scaleMutex);
+		}
+		ScaleRequest req = m_scaleRequests.front();
+		m_scaleRequests.pop();
+		if(req.type == ScaleRequest::Quit){
+			break;
+		}else if(req.type == ScaleRequest::Scale){
+			m_scaleMutex.unlock();
+			Cairo::RefPtr<Cairo::ImageSurface> image = m_renderer->render(req.page, req.scale * req.resolution);
+
+			m_scaleMutex.lock();
+			if(!m_scaleRequests.empty() && m_scaleRequests.front().type == ScaleRequest::Abort){
+				m_scaleRequests.pop();
+				continue;
+			}
+			m_scaleMutex.unlock();
+
+			m_renderer->adjustImage(image, req.brightness, req.contrast, req.invert);
+
+			m_scaleMutex.lock();
+			if(!m_scaleRequests.empty() && m_scaleRequests.front().type == ScaleRequest::Abort){
+				m_scaleRequests.pop();
+				continue;
+			}
+			m_scaleMutex.unlock();
+
+			double scale = req.scale;
+			Glib::signal_idle().connect_once([this,image,scale]{ setScaledImage(image, scale); });
+			m_scaleMutex.lock();
+		}
+	};
+	m_scaleMutex.unlock();
+}
+
+void Displayer::setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image, double scale)
+{
+	m_scaleMutex.lock();
+	if(!m_scaleRequests.empty() && m_scaleRequests.front().type == ScaleRequest::Abort){
+		m_scaleRequests.pop();
+	}else{
+		m_blurImage = image;
+		m_blurScale = scale;
+		m_canvas->queue_draw();
+	}
+	m_scaleMutex.unlock();
 }

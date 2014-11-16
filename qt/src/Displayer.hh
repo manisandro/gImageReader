@@ -40,15 +40,15 @@ class Displayer : public QGraphicsView {
 	Q_OBJECT
 public:
 	Displayer(const UI_MainWindow& _ui, QWidget* parent = nullptr);
-	~Displayer();
+	~Displayer(){ setSource(nullptr); }
 	bool setCurrentPage(int page);
 	int getCurrentPage() const;
 	int getNPages() const;
 	QList<QImage> getSelections();
 	bool getHasSelections() const{ return !m_selections.isEmpty(); }
+	bool setSource(Source* source);
 
 public slots:
-	void setSource(Source* source);
 	void autodetectLayout(bool rotated = false);
 
 signals:
@@ -80,6 +80,7 @@ private:
 	void removeSelection(int num);
 	void reorderSelection(int oldNum, int newNum);
 	void saveSelection(DisplaySelection* selection);
+
 	QImage getImage(const QRectF& rect);
 	QPointF mapToSceneClamped(const QPoint& p) const;
 	void setZoom(Zoom action, QGraphicsView::ViewportAnchor anchor = QGraphicsView::AnchorViewCenter);
@@ -98,12 +99,12 @@ private:
 	QQueue<ScaleRequest> m_scaleRequests;
 	QTimer m_scaleTimer;
 	QFuture<void> m_scaleFuture;
-	void sendScaleRequest(const ScaleRequest& request);
-	void scaleLoop();
+
+	void scaleThread();
 
 private slots:
 	void queueRenderImage();
-	void queueScaleImage();
+	void sendScaleRequest(const ScaleRequest::Request& request = ScaleRequest::Scale);
 	bool renderImage();
 	void rotate90();
 	void setRotation(double angle);

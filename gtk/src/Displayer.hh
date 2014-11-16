@@ -22,20 +22,20 @@
 
 #include "common.hh"
 #include "Geometry.hh"
+#include "DisplaySelection.hh"
 
-#include <cstdint>
-#include <vector>
 #include <cairomm/cairomm.h>
+#include <cstdint>
+#include <queue>
+#include <vector>
 
 class DisplayRenderer;
-class DisplaySelection;
-class DisplaySelectionHandle;
 class Source;
 
 class Displayer {
 public:
 	Displayer();
-	~Displayer();
+	~Displayer(){ setSource(nullptr); }
 	bool setSource(Source* source);
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getSelections() const;
 	bool getHasSelections() const{ return !m_selections.empty(); }
@@ -45,104 +45,93 @@ public:
 	void autodetectLayout(bool rotated = false);
 
 private:
-	enum class ZoomMode { In, Out, Fit, One };
+	enum class Zoom { In, Out, Fit, One };
 	struct Geo {
-		double a;       // Angle
 		double sx, sy;  // Scroll x, y
 		double s;       // Scale
-		Geometry::Rotation R; // Rotation
 	};
 
 	Gtk::DrawingArea* m_canvas;
 	Gtk::Viewport* m_viewport;
-	Glib::RefPtr<Gtk::Adjustment> m_hadjustment;
-	Glib::RefPtr<Gtk::Adjustment> m_vadjustment;
+	Glib::RefPtr<Gtk::Adjustment> m_hadj;
+	Glib::RefPtr<Gtk::Adjustment> m_vadj;
 	Gtk::ToolButton* m_zoominbtn;
 	Gtk::ToolButton* m_zoomoutbtn;
-	Gtk::ToolButton* m_zoomfitbtn;
-	Gtk::ToolButton* m_zoomonebtn;
+	Gtk::ToggleToolButton* m_zoomfitbtn;
+	Gtk::ToggleToolButton* m_zoomonebtn;
 	Gtk::Label* m_ocrstatelabel;
 	Gtk::SpinButton* m_rotspin;
 	Gtk::SpinButton* m_pagespin;
 	Gtk::SpinButton* m_resspin;
 	Gtk::SpinButton* m_brispin;
 	Gtk::SpinButton* m_conspin;
+	Gtk::ScrolledWindow* m_scrollwin;
 	Gtk::Window* m_selmenu;
 	Gtk::CheckButton* m_invcheck;
 
+	Source* m_source = nullptr;
+	DisplayRenderer* m_renderer = nullptr;
 	Cairo::RefPtr<Cairo::ImageSurface> m_image;
-	DisplayRenderer* m_renderer;
-	bool m_zoomFit;
 	int m_scrollspeed[2];
 	Geo m_geo;
-	Gdk::RGBA m_selColors[2];
-	DisplaySelectionHandle* m_curSel = nullptr;
+	DisplaySelection::Handle* m_curSel = nullptr;
 	std::vector<DisplaySelection*> m_selections;
-	std::string m_selectionSaveFilename;
-	Source* m_source;
 
-	sigc::connection m_timer;
-	sigc::connection m_connection_selDo;
-	sigc::connection m_connection_selEnd;
-	sigc::connection m_connection_positionAndZoomCanvas;
-	sigc::connection m_connection_saveHScrollMark;
-	sigc::connection m_connection_saveVScrollMark;
-	sigc::connection m_connection_mouseMove;
-	sigc::connection m_connection_mousePress;
+	sigc::connection m_renderTimer;
+	sigc::connection m_scrollTimer;
 	sigc::connection m_connection_pageSpinChanged;
 	sigc::connection m_connection_rotSpinChanged;
 	sigc::connection m_connection_resSpinChanged;
 	sigc::connection m_connection_briSpinChanged;
 	sigc::connection m_connection_conSpinChanged;
 	sigc::connection m_connection_invcheckToggled;
+	sigc::connection m_connection_zoomfitClicked;
+	sigc::connection m_connection_zoomoneClicked;
+	std::vector<sigc::connection> m_selmenuConnections;
 
-	sigc::connection m_connection_selmenu_delete;
-	sigc::connection m_connection_selmenu_reorder;
-	sigc::connection m_connection_selmenu_recognize;
-	sigc::connection m_connection_selmenu_clipboard;
-	sigc::connection m_connection_selmenu_save;
-
-	bool setImage();
+	bool renderImage();
 	void drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx);
-	void positionCanvas(bool zoom = false);
-	bool scrollZoom(GdkEventScroll* ev);
-	void saveScrollMark(Glib::RefPtr<Gtk::Adjustment> adj, double& s);
-	void setZoom(ZoomMode zoom);
-	void getBBSize(double& w, double& h) const;
-	void rotate();
-	void spinChanged();
-	void clearImage();
-	Geometry::Point getSelectionCoords(double evx, double evy) const;
-	Geometry::Rectangle getSelectionDamageArea(const Geometry::Rectangle& rect) const;
-	void mouseMove(GdkEventMotion* ev);
-	void mousePress(GdkEventButton* ev);
+	void positionCanvas();
+	bool panViewport();
+	void setZoom(Zoom zoom);
+	Geometry::Size getImageBoundingBox() const;
+	void setRotation(double angle);
+	void queueRenderImage();
+	Geometry::Point mapToSceneClamped(double evx, double evy) const;
+	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
+
+	void resizeEvent();
+	bool mouseMoveEvent(GdkEventMotion* ev);
+	bool mousePressEvent(GdkEventButton* ev);
+	bool mouseReleaseEvent(GdkEventButton* ev);
+	bool scrollEvent(GdkEventScroll* ev);
+
 	void clearSelections();
-	void selectionRemove(const DisplaySelection* sel);
-	void selectionDo(GdkEventMotion* ev);
-	bool scroll();
-	void selectionEnd();
-	void selectionUpdateColors();
+	void removeSelection(const DisplaySelection* sel);
+	void saveSelection(const Geometry::Rectangle& rect);
 	void showSelectionMenu(GdkEventButton* ev, int i);
 	void hideSelectionMenu();
-	Cairo::RefPtr<Cairo::ImageSurface> getTransformedImage(const Geometry::Rectangle& rect) const;
-	void saveSelection(const Geometry::Rectangle& rect);
 
-	// Stuff for workaround until cairo supports propper downscaling...
-	Cairo::RefPtr<Cairo::ImageSurface> m_blurImage;
-	Glib::Threads::Thread* m_blurThread;
-	Glib::Threads::Mutex m_blurMutex;
-	Glib::Threads::Cond m_blurReqCond;
-	Glib::Threads::Cond m_blurIdleCond;
-	bool m_blurRequestPending = false;
-	bool m_blurThreadIdle = true;
-	struct BlurRequest {
-		enum Action { Start, Stop, Quit } action;
-		double res;
-		int page, brightness, contrast;
+	struct ScaleRequest {
+		enum Request { Scale, Abort, Quit } type;
+		double scale;
+		double resolution;
+		int page;
+		int brightness;
+		int contrast;
 		bool invert;
-	} m_blurRequest;
-	void blurThread();
-	void sendBlurRequest(BlurRequest::Action action, bool wait = false);
+	};
+	Cairo::RefPtr<Cairo::ImageSurface> m_blurImage;
+	double m_blurScale;
+	Glib::Threads::Thread* m_scaleThread = nullptr;
+	Glib::Threads::Mutex m_scaleMutex;
+	Glib::Threads::Cond m_scaleCond;
+	std::queue<ScaleRequest> m_scaleRequests;
+	sigc::connection m_scaleTimer;
+
+	void sendScaleRequest(const ScaleRequest::Request& action = ScaleRequest::Scale);
+	void scaleThread();
+	void setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image, double scale);
 };
 
 #endif // IMAGEDISPLAYER_HH

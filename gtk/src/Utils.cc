@@ -68,13 +68,11 @@ int Utils::question_dialog(const Glib::ustring &title, const Glib::ustring &text
 	}
 }
 
-void Utils::configure_spin(Gtk::SpinButton *spin, double value, double min, double max, double step, double page, sigc::connection* block)
+void Utils::set_spin_blocked(Gtk::SpinButton *spin, double value, sigc::connection &conn)
 {
-	if(block) block->block();
-	spin->set_range(min, max);
-	spin->set_increments(step, page);
+	conn.block(true);
 	spin->set_value(value);
-	if(block) block->unblock();
+	conn.block(false);
 }
 
 static Glib::RefPtr<Gtk::CssProvider> createErrorStyleProvider()

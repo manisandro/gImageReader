@@ -44,8 +44,8 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	m_renderTimer.setSingleShot(true);
 	m_scaleTimer.setSingleShot(true);
 
-	ui.actionRotateLeft->setData(270.0);
-	ui.actionRotateRight->setData(90.0);
+	ui.actionRotateLeft->setData(-90.);
+	ui.actionRotateRight->setData(90.);
 
 	connect(ui.actionRotateLeft, SIGNAL(triggered()), this, SLOT(rotate90()));
 	connect(ui.actionRotateRight, SIGNAL(triggered()), this, SLOT(rotate90()));
@@ -61,38 +61,53 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	connect(ui.actionBestFit, SIGNAL(triggered()), this, SLOT(zoomFit()));
 	connect(ui.actionOriginalSize, SIGNAL(triggered()), this, SLOT(zoomOriginal()));
 	connect(&m_renderTimer, SIGNAL(timeout()), this, SLOT(renderImage()));
-	connect(&m_scaleTimer, SIGNAL(timeout()), this, SLOT(queueScaleImage()));
+	connect(&m_scaleTimer, SIGNAL(timeout()), this, SLOT(sendScaleRequest()));
 
 	MAIN->getConfig()->addSetting(new VarSetting<QString>("selectionsavefile", QDir(Utils::documentsFolder()).absoluteFilePath(_("selection.png"))));
 }
 
-Displayer::~Displayer()
+bool Displayer::setCurrentPage(int page)
 {
-	setSource(nullptr);
+	Utils::setSpinBlocked(ui.spinBoxPage, page);
+	return renderImage();
 }
 
-void Displayer::setSource(Source* source)
+int Displayer::getCurrentPage() const
 {
+	return ui.spinBoxPage->value();
+}
+
+int Displayer::getNPages() const
+{
+	return ui.spinBoxPage->maximum();
+}
+
+bool Displayer::setSource(Source* source)
+{
+	m_scaleTimer.stop();
 	if(m_scaleFuture.isRunning()){
-		sendScaleRequest({ScaleRequest::Quit, 0., 0, 0, 0, 0});
+		sendScaleRequest(ScaleRequest::Quit);
 		m_scaleFuture.waitForFinished();
 	}
 	clearSelections();
 	m_renderTimer.stop();
-	m_scaleTimer.stop();
-	setZoom(Zoom::Fit);
 	m_scene.clear();
 	delete m_renderer;
-	m_pixmap = QPixmap();
 	m_renderer = nullptr;
+	m_pixmap = QPixmap();
 	m_imageItem = nullptr;
 	ui.actionBestFit->setChecked(true);
 	ui.spinBoxPage->setEnabled(false);
-	Utils::setSpinBlocked(ui.spinBoxRotation, 0.);
-	Utils::setSpinBlocked(ui.spinBoxPage, 1);
-	Utils::setSpinBlocked(ui.spinBoxBrightness, 0);
-	Utils::setSpinBlocked(ui.spinBoxContrast, 0);
-	Utils::setSpinBlocked(ui.spinBoxResolution, 100);
+	ui.spinBoxPage->setValue(1);
+	ui.spinBoxRotation->setValue(0.);
+	ui.spinBoxBrightness->setValue(0);
+	ui.spinBoxContrast->setValue(0);
+	ui.spinBoxResolution->setValue(100);
+	ui.checkBoxInvertColors->setChecked(false);
+	ui.actionBestFit->setChecked(true);
+	ui.actionOriginalSize->setChecked(false);
+	ui.actionZoomIn->setEnabled(true);
+	ui.actionZoomOut->setEnabled(true);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	unsetCursor();
@@ -100,7 +115,7 @@ void Displayer::setSource(Source* source)
 	m_source = source;
 
 	if(!m_source){
-		return;
+		return false;
 	}
 
 	if(source->path.endsWith(".pdf", Qt::CaseInsensitive)){
@@ -125,15 +140,18 @@ void Displayer::setSource(Source* source)
 	m_imageItem = new QGraphicsPixmapItem();
 	m_imageItem->setTransformationMode(Qt::SmoothTransformation);
 	m_scene.addItem(m_imageItem);
-	m_scaleFuture = QtConcurrent::run(this, &Displayer::scaleLoop);
+	m_scaleFuture = QtConcurrent::run(this, &Displayer::scaleThread);
 	if(!renderImage()){
 		setSource(nullptr);
 		QMessageBox::critical(this, _("Failed to load image"), _("The file might not be an image or be corrupt:\n%1").arg(source->path));
+		return false;
 	}
+	return true;
 }
 
 bool Displayer::renderImage()
 {
+	sendScaleRequest(ScaleRequest::Abort);
 	if(m_source->resolution != ui.spinBoxResolution->value()){
 		double factor = double(ui.spinBoxResolution->value()) / double(m_source->resolution);
 		for(DisplaySelection* sel : m_selections){
@@ -156,36 +174,88 @@ bool Displayer::renderImage()
 	m_scene.setSceneRect(m_imageItem->sceneBoundingRect());
 	centerOn(sceneRect().center());
 	setRotation(ui.spinBoxRotation->value());
+	if(m_scale < 1.0){
+		m_scaleTimer.start(100);
+	}
 	return true;
 }
 
-bool Displayer::setCurrentPage(int page)
+void Displayer::setZoom(Zoom action, ViewportAnchor anchor)
 {
-	Utils::setSpinBlocked(ui.spinBoxPage, page);
-	return renderImage();
-}
+	if(!m_imageItem){
+		return;
+	}
+	sendScaleRequest(ScaleRequest::Abort);
 
-int Displayer::getCurrentPage() const
-{
-	return ui.spinBoxPage->value();
-}
+	QRectF bb = m_imageItem->sceneBoundingRect();
+	double fit = qMin(viewport()->width() / bb.width(), viewport()->height() / bb.height());
 
-int Displayer::getNPages() const
-{
-	return ui.spinBoxPage->maximum();
-}
-
-QList<QImage> Displayer::getSelections()
-{
-	QList<QImage> images;
-	if(m_selections.empty()){
-		images.append(getImage(m_imageItem->sceneBoundingRect()));
+	if(action == Zoom::Original){
+		m_scale = 1.0;
+	}else if(action == Zoom::In){
+		m_scale = qMin(10., m_scale * 1.25);
+	}else if(action == Zoom::Out){
+		m_scale = qMax(0.05, m_scale * 0.8);
+	}
+	ui.actionBestFit->setChecked(false);
+	if(action == Zoom::Fit || (m_scale / fit >= 0.9 && m_scale / fit <= 1.09)){
+		m_scale = fit;
+		ui.actionBestFit->setChecked(true);
+	}
+	Qt::ScrollBarPolicy scrollPolicy = m_scale <= fit ? Qt::ScrollBarAlwaysOff : Qt::ScrollBarAsNeeded;
+	setHorizontalScrollBarPolicy(scrollPolicy);
+	setVerticalScrollBarPolicy(scrollPolicy);
+	ui.actionOriginalSize->setChecked(m_scale == 1.0);
+	ui.actionZoomIn->setEnabled(m_scale < 10);
+	ui.actionZoomOut->setEnabled(m_scale > 0.01);
+	setTransformationAnchor(anchor);
+	QTransform t;
+	t.scale(m_scale, m_scale);
+	setTransform(t);
+	if(m_scale < 1.0){
+		m_scaleTimer.start(100);
 	}else{
-		for(const DisplaySelection* sel : m_selections){
-			images.append(getImage(sel->rect()));
+		m_imageItem->setPixmap(m_pixmap);
+		m_imageItem->setScale(1.);
+	}
+}
+
+void Displayer::setRotation(double angle)
+{
+	if(m_imageItem){
+		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
+		Utils::setSpinBlocked(ui.spinBoxRotation, angle);
+		double delta = angle - m_source->angle;
+		m_source->angle = angle;
+		QTransform t;
+		QPointF c = m_imageItem->sceneBoundingRect().center();
+		t.translate(c.x(), c.y());
+		t.rotate(delta);
+		t.translate(-c.x(), -c.y());
+		m_imageItem->setTransform(t, true);
+		for(DisplaySelection* sel : m_selections){
+			sel->rotate(t);
+		}
+		m_scene.setSceneRect(m_imageItem->sceneBoundingRect());
+		if(ui.actionBestFit->isChecked()){
+			setZoom(Zoom::Fit);
 		}
 	}
-	return images;
+}
+
+void Displayer::queueRenderImage()
+{
+	if(m_renderer){
+		m_renderTimer.start(500);
+	}
+}
+
+void Displayer::resizeEvent(QResizeEvent *event)
+{
+	QGraphicsView::resizeEvent(event);
+	if(ui.actionBestFit->isChecked()){
+		setZoom(Zoom::Fit);
+	}
 }
 
 void Displayer::mousePressEvent(QMouseEvent *event)
@@ -231,14 +301,6 @@ void Displayer::mouseReleaseEvent(QMouseEvent *event)
 	}
 }
 
-void Displayer::resizeEvent(QResizeEvent *event)
-{
-	QGraphicsView::resizeEvent(event);
-	if(ui.actionBestFit->isChecked()){
-		setZoom(Zoom::Fit);
-	}
-}
-
 void Displayer::wheelEvent(QWheelEvent *event)
 {
 	if(event->modifiers() & Qt::ControlModifier){
@@ -247,6 +309,21 @@ void Displayer::wheelEvent(QWheelEvent *event)
 	}else{
 		QGraphicsView::wheelEvent(event);
 	}
+}
+
+QPointF Displayer::mapToSceneClamped(const QPoint &p) const
+{
+	QPointF q = mapToScene(p);
+	QRectF bb = m_imageItem->sceneBoundingRect();
+	q.rx() = qMin(qMax(bb.x(), q.x()), bb.x() + bb.width());
+	q.ry() = qMin(qMax(bb.y(), q.y()), bb.y() + bb.height());
+	return q;
+}
+
+void Displayer::rotate90()
+{
+	double angle = ui.spinBoxRotation->value() + qobject_cast<QAction*>(QObject::sender())->data().toDouble();
+	ui.spinBoxRotation->setValue(angle > 360. ? angle - 360. : angle);
 }
 
 void Displayer::clearSelections()
@@ -279,6 +356,30 @@ void Displayer::reorderSelection(int oldNum, int newNum)
 	}
 }
 
+QList<QImage> Displayer::getSelections()
+{
+	QList<QImage> images;
+	if(m_selections.empty()){
+		images.append(getImage(m_imageItem->sceneBoundingRect()));
+	}else{
+		for(const DisplaySelection* sel : m_selections){
+			images.append(getImage(sel->rect()));
+		}
+	}
+	return images;
+}
+
+void Displayer::saveSelection(DisplaySelection *selection)
+{
+	QImage img = getImage(selection->rect());
+	QString filename = Utils::makeOutputFilename(MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->getValue());
+	filename = QFileDialog::getSaveFileName(MAIN, _("Save Selection Image"), filename, QString("%1 (*.png)").arg(_("PNG Images")));
+	if(!filename.isEmpty()){
+		MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->setValue(filename);
+		img.save(filename);
+	}
+}
+
 QImage Displayer::getImage(const QRectF& rect)
 {
 	QImage image(rect.width(), rect.height(), QImage::Format_RGB32);
@@ -294,106 +395,11 @@ QImage Displayer::getImage(const QRectF& rect)
 	return image;
 }
 
-void Displayer::saveSelection(DisplaySelection *selection)
-{
-	QImage img = getImage(selection->rect());
-	QString filename = Utils::makeOutputFilename(MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->getValue());
-	filename = QFileDialog::getSaveFileName(MAIN, _("Save Selection Image"), filename, QString("%1 (*.png)").arg(_("PNG Images")));
-	if(!filename.isEmpty()){
-		MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->setValue(filename);
-		img.save(filename);
-	}
-}
-
-QPointF Displayer::mapToSceneClamped(const QPoint &p) const
-{
-	QPointF q = mapToScene(p);
-	QRectF bb = m_imageItem->sceneBoundingRect();
-	q.rx() = qMin(qMax(bb.x(), q.x()), bb.x() + bb.width());
-	q.ry() = qMin(qMax(bb.y(), q.y()), bb.y() + bb.height());
-	return q;
-}
-
-void Displayer::setZoom(Zoom action, ViewportAnchor anchor)
-{
-	if(!m_imageItem){
-		return;
-	}
-
-	QRectF bb = m_imageItem->sceneBoundingRect();
-	double fit = qMin(viewport()->width() / bb.width(), viewport()->height() / bb.height());
-
-	if(action == Zoom::Original){
-		m_scale = 1.0;
-	}else if(action == Zoom::In){
-		m_scale = qMin(10., m_scale * 1.25);
-	}else if(action == Zoom::Out){
-		m_scale = qMax(0.05, m_scale * 0.8);
-	}
-	if(action == Zoom::Fit || (m_scale / fit >= 0.9 && m_scale / fit <= 1.09)){
-		m_scale = fit;
-		ui.actionBestFit->setChecked(true);
-	}
-	Qt::ScrollBarPolicy scrollPolicy = m_scale <= fit ? Qt::ScrollBarAlwaysOff : Qt::ScrollBarAsNeeded;
-	setHorizontalScrollBarPolicy(scrollPolicy);
-	setVerticalScrollBarPolicy(scrollPolicy);
-	ui.actionBestFit->setChecked(m_scale == fit);
-	ui.actionOriginalSize->setChecked(m_scale == 1.0);
-	ui.actionZoomIn->setEnabled(m_scale < 10);
-	ui.actionZoomOut->setEnabled(m_scale > 0.01);
-	setTransformationAnchor(anchor);
-	QTransform t;
-	t.scale(m_scale, m_scale);
-	setTransform(t);
-	sendScaleRequest({ScaleRequest::Abort, 0., 0, 0, 0, 0});
-	if(m_scale < 1.0){
-		m_scaleTimer.start(100);
-	}else{
-		m_imageItem->setPixmap(m_pixmap);
-		m_imageItem->setScale(1.f);
-	}
-}
-
-void Displayer::queueRenderImage()
-{
-	m_renderTimer.start(500);
-}
-
-void Displayer::rotate90()
-{
-	double angle = ui.spinBoxRotation->value() + qobject_cast<QAction*>(QObject::sender())->data().toDouble();
-	ui.spinBoxRotation->setValue(angle > 360. ? angle - 360. : angle);
-}
-
-void Displayer::setRotation(double angle)
-{
-	if(m_imageItem){
-		double delta = angle - m_source->angle;
-		m_source->angle = angle;
-		QTransform t;
-		QPointF c = m_imageItem->sceneBoundingRect().center();
-		t.translate(c.x(), c.y());
-		t.rotate(delta);
-		t.translate(-c.x(), -c.y());
-		m_imageItem->setTransform(t, true);
-		for(DisplaySelection* sel : m_selections){
-			sel->rotate(t);
-		}
-		m_scene.setSceneRect(m_imageItem->sceneBoundingRect());
-		if(ui.actionBestFit->isChecked()){
-			setZoom(Zoom::Fit);
-		}else if(m_scale < 1.0){
-			sendScaleRequest({ScaleRequest::Abort, 0., 0, 0, 0, 0});
-			m_scaleTimer.start(100);
-		}
-	}
-}
-
 void Displayer::autodetectLayout(bool rotated)
 {
 	clearSelections();
 
-	double avgDeskew = 0.f;
+	double avgDeskew = 0.;
 	int nDeskew = 0;
 	QList<QRectF> rects;
 	QImage img = getImage(m_imageItem->sceneBoundingRect());
@@ -427,11 +433,9 @@ void Displayer::autodetectLayout(bool rotated)
 
 	// If a somewhat large deskew angle is detected, automatically rotate image and redetect layout,
 	// unless we already attempted to rotate (to prevent endless loops)
-	avgDeskew = (avgDeskew/nDeskew)/M_PI * 180.;
-	if(qAbs(avgDeskew > 1.) && !rotated){
-		double angle = ((int((ui.spinBoxRotation->value() - avgDeskew) * 10.0) + 3600) % 3600) / 10.;
-		Utils::setSpinBlocked(ui.spinBoxRotation, angle);
-		setRotation(angle);
+	avgDeskew = qRound(((avgDeskew/nDeskew)/M_PI * 180.) * 10.) / 10.;
+	if(qAbs(avgDeskew > .1) && !rotated){
+		setRotation(ui.spinBoxRotation->value() - avgDeskew);
 		autodetectLayout(true);
 	}else{
 		// Merge overlapping rectangles
@@ -453,20 +457,24 @@ void Displayer::autodetectLayout(bool rotated)
 	}
 }
 
-void Displayer::queueScaleImage()
+void Displayer::sendScaleRequest(const ScaleRequest::Request& action)
 {
-	sendScaleRequest({ScaleRequest::Scale, m_scale, ui.spinBoxPage->value(), ui.spinBoxResolution->value(), ui.spinBoxBrightness->value(), ui.spinBoxContrast->value(), ui.checkBoxInvertColors->isChecked()});
-}
-
-void Displayer::sendScaleRequest(const ScaleRequest &request)
-{
+	ScaleRequest request = {action};
+	if(request.type == ScaleRequest::Scale){
+		request.scale = m_scale;
+		request.resolution = m_source->resolution;
+		request.page = m_source->page;
+		request.brightness = m_source->brightness;
+		request.contrast = m_source->contrast;
+		request.invert = m_source->invert;
+	}
 	m_scaleMutex.lock();
 	m_scaleRequests.append(request);
 	m_scaleCond.wakeOne();
 	m_scaleMutex.unlock();
 }
 
-void Displayer::scaleLoop()
+void Displayer::scaleThread()
 {
 	m_scaleMutex.lock();
 	while(true){
@@ -476,8 +484,7 @@ void Displayer::scaleLoop()
 		ScaleRequest req = m_scaleRequests.takeFirst();
 		if(req.type == ScaleRequest::Quit){
 			break;
-		}
-		if(req.type == ScaleRequest::Scale){
+		}else if(req.type == ScaleRequest::Scale){
 			m_scaleMutex.unlock();
 			QImage image = m_renderer->render(req.page, req.scale * req.resolution);
 
@@ -506,12 +513,12 @@ void Displayer::scaleLoop()
 
 void Displayer::setScaledImage(const QImage &image, double scale)
 {
-	QMutexLocker lock(&m_scaleMutex);
+	m_scaleMutex.lock();
 	if(!m_scaleRequests.isEmpty() && m_scaleRequests.first().type == ScaleRequest::Abort){
 		m_scaleRequests.removeFirst();
-		return;
+	}else{
+		m_imageItem->setPixmap(QPixmap::fromImage(image));
+		m_imageItem->setScale(1.f / scale);
 	}
-	lock.unlock();
-	m_imageItem->setPixmap(QPixmap::fromImage(image));
-	m_imageItem->setScale(1.f / scale);
+	m_scaleMutex.unlock();
 }

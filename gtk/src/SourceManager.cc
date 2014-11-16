@@ -100,7 +100,7 @@ void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files
 		}
 		it = store->append();
 		it->set_value(m_listViewCols.filename, file->get_basename());
-		Source* source = new Source(file, file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false);
+		Source* source = new Source(file, file->get_basename(), file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false);
 		it->set_value(m_listViewCols.source, source);
 		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::sourceChanged), it));
 	}
@@ -179,7 +179,7 @@ void SourceManager::savePixbufDone(const std::string &path, const std::string &d
 	MAIN->popState();
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model());
 	Glib::RefPtr<Gio::File> file = Gio::File::create_for_path(path);
-	Source* source = new Source(file, file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), true);
+	Source* source = new Source(file, displayname, file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), true);
 	Gtk::TreeIter it = store->append();
 	it->set_value(m_listViewCols.filename, displayname);
 	it->set_value(m_listViewCols.source, source);

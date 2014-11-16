@@ -135,42 +135,23 @@ void DisplaySelection::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	QPointF p = event->pos();
 	double tol = 10.0 / m_displayer->m_scale;
-
-	bool anchorx = qAbs(m_anchor.x() - p.x()) < tol;
-	bool anchory = qAbs(m_anchor.y() - p.y()) < tol;
-	bool pointx = qAbs(m_point.x() - p.x()) < tol;
-	bool pointy = qAbs(m_point.y() - p.y()) < tol;
-
-	if(anchorx && anchory){
-		m_resizeHandlers = {resizeAnchorX, resizeAnchorY};
-		m_resizeOffset = event->pos() - m_anchor;
-	}else if(pointx && pointy){
-		m_resizeHandlers = {resizePointX, resizePointY};
-		m_resizeOffset = event->pos() - m_point;
-	}else if(anchorx && pointy){
-		m_resizeHandlers = {resizeAnchorX, resizePointY};
-		m_resizeOffset = QPointF(event->pos().x() - m_anchor.x(), event->pos().y() - m_point.y());
-	}else if(pointx && anchory){
-		m_resizeHandlers = {resizePointX, resizeAnchorY};
-		m_resizeOffset = QPointF(event->pos().x() - m_point.x(), event->pos().y() - m_anchor.y());
-	}else if(anchorx){
-		m_resizeHandlers = {resizeAnchorX};
-		m_resizeOffset = QPointF(event->pos().x() - m_anchor.x(), 0.0);
-	}else if(anchory){
-		m_resizeHandlers = {resizeAnchorY};
-		m_resizeOffset = QPointF(0.0, event->pos().y() - m_anchor.y());
-	}else if(pointx){
-		m_resizeHandlers = {resizePointX};
-		m_resizeOffset = QPointF(event->pos().x() - m_point.x(), 0.0);
-	}else if(pointy){
-		m_resizeHandlers = {resizePointY};
-		m_resizeOffset = QPointF(0.0, event->pos().y() - m_point.y());
-	}else{
-		event->ignore();
-		m_resizeHandlers = {};
-		return;
+	m_resizeHandlers.clear();
+	m_resizeOffset = QPointF(0., 0.);
+	if(qAbs(m_point.x() - p.x()) < tol){ // pointx
+		m_resizeHandlers.append(resizePointX);
+		m_resizeOffset.setX(event->pos().x() - m_point.x());
+	}else if(qAbs(m_anchor.x() - p.x()) < tol){ // anchorx
+		m_resizeHandlers.append(resizeAnchorX);
+		m_resizeOffset.setX(event->pos().x() - m_anchor.x());
 	}
-	event->accept();
+	if(qAbs(m_point.y() - p.y()) < tol){ // pointy
+		m_resizeHandlers.append(resizePointY);
+		m_resizeOffset.setY(event->pos().y() - m_point.y());
+	}else if(qAbs(m_anchor.y() - p.y()) < tol){ // anchory
+		m_resizeHandlers.append(resizeAnchorY);
+		m_resizeOffset.setY(event->pos().y() - m_anchor.y());
+	}
+	return m_resizeHandlers.empty() ? event->ignore() : event->accept();
 }
 
 void DisplaySelection::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

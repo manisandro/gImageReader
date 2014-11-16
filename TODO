@@ -9,11 +9,6 @@ Low prio:
 - installation of tesseract langpacks through packagekit?
 - text on image: check whether tesseract is able to provide me sufficient metrics for properly scaling and aligning the output text within the source image
 
-
-Gtk:
-- ReplacementManger::openList: m_currentFile empty, initial dir is garbage
-- ScannerSane.hh::doCompletePage: clear is called too early
-
 Qt:
 - detect pdf from content type when using Qt5?
 - check whether translations work

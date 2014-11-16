@@ -29,9 +29,9 @@
   <object class="GtkAdjustment" id="adjustment:display.resolution">
     <property name="lower">50</property>
     <property name="upper">600</property>
-    <property name="value">200</property>
-    <property name="step_increment">50</property>
-    <property name="page_increment">100</property>
+    <property name="value">100</property>
+    <property name="step_increment">10</property>
+    <property name="page_increment">50</property>
   </object>
   <object class="GtkAdjustment" id="adjustment:display.rotate">
     <property name="upper">359.89999999999998</property>
@@ -1143,7 +1143,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="tbbutton:main.normsize">
+              <object class="GtkToggleToolButton" id="tbbutton:main.normsize">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can_focus">False</property>
@@ -1159,7 +1159,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="tbbutton:main.bestfit">
+              <object class="GtkToggleToolButton" id="tbbutton:main.bestfit">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can_focus">False</property>
@@ -1168,6 +1168,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                 <property name="label" translatable="yes">Best Fit</property>
                 <property name="use_underline">True</property>
                 <property name="icon_name">zoom-fit-best</property>
+                <property name="active">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1860,7 +1861,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                                 <property name="adjustment">adjustment:display.resolution</property>
                                 <property name="snap_to_ticks">True</property>
                                 <property name="numeric">True</property>
-                                <property name="value">200</property>
+                                <property name="value">100</property>
                               </object>
                             </child>
                           </object>
@@ -1923,7 +1924,6 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                             <property name="shadow_type">none</property>
                             <child>
                               <object class="GtkDrawingArea" id="drawingarea:display">
-                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="halign">center</property>
                                 <property name="valign">center</property>

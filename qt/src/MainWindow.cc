@@ -118,8 +118,7 @@ MainWindow::MainWindow(const QStringList& files)
 	connect(m_displayer, SIGNAL(selectionChanged(bool)), m_recognizer, SLOT(setRecognizeMode(bool)));
 	connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), m_outputManager, SLOT(setLanguage(Config::Lang)));
 	connect(m_acquirer, SIGNAL(scanPageAvailable(QString)), m_sourceManager, SLOT(addSource(QString)));
-	connect(m_sourceManager, SIGNAL(sourceChanged(Source*)), m_displayer, SLOT(setSource(Source*)));
-	connect(m_sourceManager, SIGNAL(sourceChanged(Source*)), this, SLOT(setWindowState(Source*)));
+	connect(m_sourceManager, SIGNAL(sourceChanged(Source*)), this, SLOT(onSourceChanged(Source*)));
 
 	m_config->addSetting(new VarSetting<QByteArray>("wingeom"));
 	m_config->addSetting(new VarSetting<QByteArray>("winstate"));
@@ -147,10 +146,10 @@ MainWindow::MainWindow(const QStringList& files)
 MainWindow::~MainWindow()
 {
 	delete m_acquirer;
-	delete m_displayer;
 	delete m_outputManager;
 	delete m_sourceManager;
 	delete m_recognizer;
+	delete m_displayer;
 	delete m_config;
 	s_instance = nullptr;
 }
@@ -199,14 +198,16 @@ void MainWindow::closeEvent(QCloseEvent* ev)
 	}
 }
 
-void MainWindow::setWindowState(Source* source)
+void MainWindow::onSourceChanged(Source* source)
 {
-	if(!source){
-		setWindowTitle("gImageReader");
+	if(m_stateStack.top().first == State::Normal){
 		popState();
-	}else{
-		setWindowTitle(QString("%1 - gImageReader").arg(source->displayname));
+	}
+	if(m_displayer->setSource(source)){
+		setWindowTitle(QString("%1 - %2").arg(source->displayname).arg(PACKAGE_NAME));
 		pushState(State::Normal, _("To recognize specific areas, drag rectangles over them."));
+	}else{
+		setWindowTitle(PACKAGE_NAME);
 	}
 }
 

@@ -33,11 +33,9 @@ public:
 	Point(double _x = 0., double _y = 0.) : x(_x), y(_y) {}
 	double operator[](int i) const{ return data[i]; }
 	double& operator[](int i){ return data[i]; }
-	double sqrDist(const Point& p) const{
-		double dx = this->x - p.x, dy = this->y - p.y;
-		return dx*dx + dy*dy;
-	}
 };
+
+typedef Point Size;
 
 class Rotation {
 public:
@@ -50,7 +48,6 @@ public:
 		return Point(m_data[0] * p.x + m_data[1] * p.y, m_data[2] * p.x + m_data[3] * p.y);
 	}
 	double operator()(int i, int j) const{ return m_data[2*i + j]; }
-	double& operator()(int i, int j){ return m_data[2*i + j]; }
 private:
 	double m_data[4];
 };
@@ -62,21 +59,15 @@ public:
 
 	Rectangle(double _x = 0., double _y = 0., double _width = 0., double _height = 0.)
 		: x(_x), y(_y), width(_width), height(_height) {}
-	Rectangle(const Rectangle& r)
-		: x(r.x), y(r.y), width(r.width), height(r.height) {}
 	Rectangle(const Point& p1, const Point& p2)
 		: x(std::min(p1.x, p2.x)), y(std::min(p1.y, p2.y)),
 		  width(std::abs(p2.x - p1.x)), height(std::abs(p2.y - p1.y)) {}
-	Point center() const{
-		return Point(x + 0.5 * width, y + 0.5 * height);
-	}
 	bool contains(const Point& p) const{
 		return p.x >= x && p.x <= x + width && p.y >= y && p.y <= y + height;
 	}
 	bool overlaps(const Rectangle& r) {
 		return x < r.x + r.width && x + width > r.x && y < r.y + r.height && y + height > r.y;
 	}
-
 	Rectangle unite(const Rectangle& r) const{
 		double _x = std::min(x, r.x);
 		double _y = std::min(y, r.y);

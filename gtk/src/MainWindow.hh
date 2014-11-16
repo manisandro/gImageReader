@@ -29,6 +29,7 @@ class Acquirer;
 class Displayer;
 class OutputManager;
 class Recognizer;
+class Source;
 class SourceManager;
 
 class MainWindow {
@@ -75,9 +76,10 @@ private:
 	std::vector<Gtk::Widget*> m_idlegroup;
 	std::vector<State> m_stateStack;
 
-	void setState(State state);
+	void onSourceChanged(Source* source);
 	bool quit(GdkEventAny*);
 	void setOutputPaneOrientation(Gtk::ComboBoxText* combo);
+	void setState(State state);
 #if ENABLE_VERSIONCHECK
 	void getNewestVersion();
 	void checkVersion(const Glib::ustring& newver);

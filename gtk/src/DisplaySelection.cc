@@ -20,13 +20,6 @@
 #include "DisplaySelection.hh"
 #include "Utils.hh"
 
-DisplaySelection::DisplaySelection(const Geometry::Point &anchor)
-{
-	m_points[0] = anchor;
-	m_points[1] = anchor;
-	m_rect = Geometry::Rectangle(m_points[0], m_points[1]);
-}
-
 DisplaySelection::DisplaySelection(double x, double y, double width, double height)
 {
 	m_points[0] = Geometry::Point(x, y);
@@ -34,15 +27,13 @@ DisplaySelection::DisplaySelection(double x, double y, double width, double heig
 	m_rect = Geometry::Rectangle(x, y, width, height);
 }
 
-Geometry::Rectangle DisplaySelection::setPoint(const Geometry::Point &p, const std::vector<int> idx)
+void DisplaySelection::setPoint(const Geometry::Point &p, const Handle* handle)
 {
-	m_points[idx[0]][idx[1]] = p[idx[2]];
-	if(idx.size() > 3){
-		m_points[idx[3]][idx[4]] = p[idx[5]];
+	Geometry::Point pos(p.x - handle->resizeOffset.x, p.y - handle->resizeOffset.y);
+	for(const ResizeHandle& h : handle->resizeHandles){
+		h(pos, m_points);
 	}
-	Geometry::Rectangle oldrect = m_rect;
 	m_rect = Geometry::Rectangle(m_points[0], m_points[1]);
-	return oldrect.unite(m_rect);
 }
 
 void DisplaySelection::rotate(const Geometry::Rotation &R)
@@ -52,35 +43,54 @@ void DisplaySelection::rotate(const Geometry::Rotation &R)
 	m_rect = Geometry::Rectangle(m_points[0], m_points[1]);
 }
 
-DisplaySelectionHandle* DisplaySelection::getResizeHandle(const Geometry::Point &p, double scale)
+DisplaySelection::Handle* DisplaySelection::getResizeHandle(const Geometry::Point& p, double scale)
 {
-	double r = 5. / scale, rsq = r * r;
-	if(p.sqrDist(m_points[0]) < rsq){
-		return new DisplaySelectionHandle(this, {0, 0, 0, 0, 1, 1}); // Anchor.x, Anchor.y
-	}else if(p.sqrDist(m_points[1]) < rsq){
-		return new DisplaySelectionHandle(this, {1, 0, 0, 1, 1, 1}); // Point.x, Point.y
-	}else if(p.sqrDist(Geometry::Point(m_points[0].x, m_points[1].y)) < rsq){
-		return new DisplaySelectionHandle(this, {0, 0, 0, 1, 1, 1}); // Anchor.x, Point.y
-	}else if(p.sqrDist(Geometry::Point(m_points[1].x, m_points[0].y)) < rsq){
-		return new DisplaySelectionHandle(this, {1, 0, 0, 0, 1, 1}); // Point.x, Anchor.y
-	}else if(p.x > m_rect.x && p.x < m_rect.x + m_rect.width){
-		if(std::abs(p.y - m_points[0].y) < r){
-			return new DisplaySelectionHandle(this, {0, 1, 1}); // Anchor.y
-		}else if(std::abs(p.y - m_points[1].y) < r){
-			return new DisplaySelectionHandle(this, {1, 1, 1}); // Point.y
-		}
-	}else if(p.y > m_rect.y && p.y < m_rect.y + m_rect.height){
-		if(std::abs(p.x - m_points[0].x) < r){
-			return new DisplaySelectionHandle(this, {0, 0, 0}); // Anchor.x
-		}else if(std::abs(p.x - m_points[1].x) < r){
-			return new DisplaySelectionHandle(this, {1, 0, 0}); // Point.x
-		}
+	double tol = 10.0 / scale;
+	std::vector<ResizeHandle> resizeHandles;
+	Geometry::Point resizeOffset;
+	if(std::abs(m_points[1].x - p.x) < tol){ // pointx
+		resizeHandles.push_back(resizePointX);
+		resizeOffset.x = p.x - m_points[1].x;
+	}else if(std::abs(m_points[0].x - p.x) < tol){ // anchorx
+		resizeHandles.push_back(resizeAnchorX);
+		resizeOffset.x = p.x - m_points[0].x;
 	}
-	return nullptr;
+	if(std::abs(m_points[1].y - p.y) < tol){ // pointy
+		resizeHandles.push_back(resizePointY);
+		resizeOffset.y = p.y - m_points[1].y;
+	}else if(std::abs(m_points[0].y - p.y) < tol){ // anchory
+		resizeHandles.push_back(resizeAnchorY);
+		resizeOffset.y = p.y - m_points[0].y;
+	}
+	return !resizeHandles.empty() ? new DisplaySelection::Handle{this, resizeHandles, resizeOffset} : nullptr;
 }
 
-void DisplaySelection::draw(Cairo::RefPtr<Cairo::Context> ctx, double scale, const Glib::ustring &idx, Gdk::RGBA *colors) const
+Gdk::CursorType DisplaySelection::getResizeCursor(const Geometry::Point& p, double scale) const
 {
+	double tol = 10.0 / scale;
+
+	if(p.x > m_rect.x - tol && p.x < m_rect.x + m_rect.width + tol && p.y > m_rect.y - tol && p.y < m_rect.y + m_rect.height + tol){
+		bool left = std::abs(m_rect.x - p.x) < tol;
+		bool right = std::abs(m_rect.x + m_rect.width - p.x) < tol;
+		bool top = std::abs(m_rect.y - p.y) < tol;
+		bool bottom = std::abs(m_rect.y + m_rect.height - p.y) < tol;
+
+		if(top){
+			return left ? Gdk::TOP_LEFT_CORNER : right ? Gdk::TOP_RIGHT_CORNER : Gdk::TOP_SIDE;
+		}else if(bottom){
+			return left ? Gdk::BOTTOM_LEFT_CORNER : right ? Gdk::BOTTOM_RIGHT_CORNER : Gdk::BOTTOM_SIDE;
+		}else{
+			return left ? Gdk::LEFT_SIDE : right ? Gdk::RIGHT_SIDE : Gdk::BLANK_CURSOR;
+		}
+	}
+	return Gdk::BLANK_CURSOR;
+}
+
+void DisplaySelection::draw(Cairo::RefPtr<Cairo::Context> ctx, double scale, const Glib::ustring &idx) const
+{
+	Gdk::RGBA fgcolor = Gtk::Entry().get_style_context()->get_color(Gtk::STATE_FLAG_SELECTED);
+	Gdk::RGBA bgcolor = Gtk::Entry().get_style_context()->get_background_color(Gtk::STATE_FLAG_SELECTED);
+
 	double d = 0.5 / scale;
 	double x1 = Utils::round(m_rect.x * scale) / scale + d;
 	double y1 = Utils::round(m_rect.y * scale) / scale + d;
@@ -91,14 +101,14 @@ void DisplaySelection::draw(Cairo::RefPtr<Cairo::Context> ctx, double scale, con
 	// Semitransparent rectangle with frame
 	ctx->set_line_width(2. * d);
 	ctx->rectangle(rect.x, rect.y, rect.width, rect.height);
-	ctx->set_source_rgba(colors[1].get_red(), colors[1].get_green(), colors[1].get_blue(), 0.25);
+	ctx->set_source_rgba(bgcolor.get_red(), bgcolor.get_green(), bgcolor.get_blue(), 0.25);
 	ctx->fill_preserve();
-	ctx->set_source_rgba(colors[1].get_red(), colors[1].get_green(), colors[1].get_blue(), 1.0);
+	ctx->set_source_rgba(bgcolor.get_red(), bgcolor.get_green(), bgcolor.get_blue(), 1.0);
 	ctx->stroke();
 	// Text box
 	double w = std::min(std::min(40. * d, rect.width), rect.height);
 	ctx->rectangle(rect.x, rect.y, w - d, w - d);
-	ctx->set_source_rgba(colors[1].get_red(), colors[1].get_green(), colors[1].get_blue(), 1.0);
+	ctx->set_source_rgba(bgcolor.get_red(), bgcolor.get_green(), bgcolor.get_blue(), 1.0);
 	ctx->fill();
 	// Text
 	ctx->select_font_face("sans", Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
@@ -106,42 +116,7 @@ void DisplaySelection::draw(Cairo::RefPtr<Cairo::Context> ctx, double scale, con
 	Cairo::TextExtents ext; ctx->get_text_extents(idx, ext);
 	ctx->translate(rect.x + .5 * w, rect.y + .5 * w);
 	ctx->translate(-ext.x_bearing - .5 * ext.width, -ext.y_bearing - .5 * ext.height);
-	ctx->set_source_rgba(colors[0].get_red(), colors[0].get_green(), colors[1].get_blue(), 1.0);
+	ctx->set_source_rgba(fgcolor.get_red(), fgcolor.get_green(), bgcolor.get_blue(), 1.0);
 	ctx->show_text(idx);
 	ctx->restore();
-}
-
-Gdk::CursorType DisplaySelectionHandle::getResizeCursor() const
-{
-	const Geometry::Point* points = m_sel->getPoints();
-	if(m_idx.size() == 3){
-		if(m_idx[1] == 0){
-			if(points[m_idx[0]][0] > points[1 - m_idx[0]][0]){
-				return Gdk::RIGHT_SIDE;
-			}else{
-				return Gdk::LEFT_SIDE;
-			}
-		}else{
-			if(points[m_idx[0]][1] > points[1 - m_idx[0]][1]){
-				return Gdk::BOTTOM_SIDE;
-			}else{
-				return Gdk::TOP_SIDE;
-			}
-		}
-	}else if(m_idx.size() == 6){
-		if(points[m_idx[0]][0] > points[1 - m_idx[0]][0]){
-			if(points[m_idx[3]][1] > points[1 - m_idx[3]][1]){
-				return Gdk::BOTTOM_RIGHT_CORNER;
-			}else{
-				return Gdk::TOP_RIGHT_CORNER;
-			}
-		}else{
-			if(points[m_idx[3]][1] > points[1 - m_idx[3]][1]){
-				return Gdk::BOTTOM_LEFT_CORNER;
-			}else{
-				return Gdk::TOP_LEFT_CORNER;
-			}
-		}
-	}
-	return Gdk::CROSSHAIR;
 }

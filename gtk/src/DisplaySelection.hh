@@ -23,39 +23,36 @@
 #include <vector>
 #include "Geometry.hh"
 
-class DisplaySelectionHandle;
-
 class DisplaySelection {
 public:
-	DisplaySelection(const Geometry::Point& anchor);
-	DisplaySelection(double x, double y, double width, double height);
-	Geometry::Rectangle setPoint(const Geometry::Point& p, const std::vector<int> idx);
-	void rotate(const Geometry::Rotation& R);
-	DisplaySelectionHandle* getResizeHandle(const Geometry::Point& p, double scale);
-	void draw(Cairo::RefPtr<Cairo::Context> ctx, double scale, const Glib::ustring& idx, Gdk::RGBA* colors) const;
+	typedef void(*ResizeHandle)(const Geometry::Point&, Geometry::Point*);
 
-	const Geometry::Point* getPoints() const{ return m_points; }
+	struct Handle {
+		DisplaySelection* sel;
+		std::vector<ResizeHandle> resizeHandles;
+		Geometry::Point resizeOffset;
+
+		void setPoint(const Geometry::Point& p){ sel->setPoint(p, this); }
+	};
+
+	DisplaySelection(double x, double y, double width = 0., double height = 0.);
+	void setPoint(const Geometry::Point& p, const Handle* handle);
+	void rotate(const Geometry::Rotation& R);
+	Handle* getResizeHandle(const Geometry::Point& p, double scale);
+	Gdk::CursorType getResizeCursor(const Geometry::Point& p, double scale) const;
+	void draw(Cairo::RefPtr<Cairo::Context> ctx, double scale, const Glib::ustring& idx) const;
+
 	const Geometry::Rectangle& getRect() const{ return m_rect; }
 	bool isEmpty() const{ return m_rect.width < 5 || m_rect.height < 5; }
-
 
 private:
 	Geometry::Point m_points[2];
 	Geometry::Rectangle m_rect;
-};
 
-class DisplaySelectionHandle {
-public:
-	DisplaySelectionHandle(DisplaySelection* sel, const std::vector<int>& idx = {1, 0, 0, 1, 1, 1})
-		: m_sel(sel), m_idx(idx) {}
-
-	Geometry::Rectangle setPoint(const Geometry::Point& point){ return m_sel->setPoint(point, m_idx); }
-	DisplaySelection* getSelection(){ return m_sel; }
-	Gdk::CursorType getResizeCursor() const;
-
-private:
-	DisplaySelection* m_sel;
-	std::vector<int> m_idx;
+	static void resizeAnchorX(const Geometry::Point& pos, Geometry::Point* points){ points[0].x = pos.x; }
+	static void resizeAnchorY(const Geometry::Point& pos, Geometry::Point* points){ points[0].y = pos.y; }
+	static void resizePointX(const Geometry::Point& pos, Geometry::Point* points){ points[1].x = pos.x; }
+	static void resizePointY(const Geometry::Point& pos, Geometry::Point* points){ points[1].y = pos.y; }
 };
 
 #endif // DISPLAYSELECTION_HH

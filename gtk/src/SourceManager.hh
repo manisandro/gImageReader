@@ -24,9 +24,10 @@
 
 
 struct Source {
-	Source(const Glib::RefPtr<Gio::File>& _file, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
-		: file(_file), monitor(_monitor), isTemp(_isTemp) {}
+	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
+		: file(_file), displayname(_displayname), monitor(_monitor), isTemp(_isTemp) {}
 	Glib::RefPtr<Gio::File> file;
+	std::string displayname;
 	Glib::RefPtr<Gio::FileMonitor> monitor;
 	bool isTemp;
 	int brightness = 0;

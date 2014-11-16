@@ -111,10 +111,7 @@ MainWindow::MainWindow()
 	CONNECTS(Builder("tbbutton:main.controls").as<Gtk::ToggleToolButton>(), toggled,
 			 [this](Gtk::ToggleToolButton* b) { Builder("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
 	CONNECT(m_config, languageChanged, [this](const Config::Lang& lang){ m_outputManager->setLanguage(lang); });
-	CONNECT(m_sourceManager, sourceChanged, [this](Source* newsrc){
-		m_displayer->setSource(newsrc);
-		m_window->set_title(newsrc ? Glib::path_get_basename(newsrc->file->get_path()) + " - " + PACKAGE_NAME : PACKAGE_NAME);
-	});
+	CONNECT(m_sourceManager, sourceChanged, [this](Source* source){ onSourceChanged(source); });
 	CONNECT(Builder("box:output").as<Gtk::Widget>(), show, [showOutputPaneBtn]{ showOutputPaneBtn->set_active(true); });
 	CONNECT(Builder("box:output").as<Gtk::Widget>(), hide, [showOutputPaneBtn]{ showOutputPaneBtn->set_active(false); });
 
@@ -146,10 +143,10 @@ MainWindow::MainWindow()
 MainWindow::~MainWindow()
 {
 	delete m_acquirer;
-	delete m_displayer;
 	delete m_outputManager;
 	delete m_recognizer;
 	delete m_sourceManager;
+	delete m_displayer;
 	delete m_config;
 	s_instance = nullptr;
 }
@@ -196,6 +193,20 @@ void MainWindow::setState(State state)
 		m_window->set_sensitive(false);
 	}
 }
+
+void MainWindow::onSourceChanged(Source* source)
+{
+	if(m_stateStack.back() == State::Normal){
+		popState();
+	}
+	if(m_displayer->setSource(source)){
+		m_window->set_title(Glib::ustring::compose("%1 - %2", source->displayname, PACKAGE_NAME));
+		pushState(State::Normal, _("To recognize specific areas, drag rectangles over them."));
+	}else{
+		m_window->set_title(PACKAGE_NAME);
+	}
+}
+
 
 bool MainWindow::quit(GdkEventAny*)
 {
