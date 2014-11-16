@@ -232,7 +232,7 @@ void MainWindow::showConfig()
 	m_recognizer->updateLanguagesMenu();
 }
 
-MainWindow::Notification MainWindow::addNotification(const QString& title, const QString& message, const QList<NotificationAction> &actions)
+void MainWindow::addNotification(const QString& title, const QString& message, const QList<NotificationAction> &actions, MainWindow::Notification* handle)
 {
 	QFrame* frame = new QFrame();
 	frame->setFrameStyle(QFrame::StyledPanel|QFrame::Raised);
@@ -250,14 +250,28 @@ MainWindow::Notification MainWindow::addNotification(const QString& title, const
 	}
 	QToolButton* closeBtn = new QToolButton();
 	closeBtn->setIcon(QIcon::fromTheme("dialog-close"));
-	connect(closeBtn, SIGNAL(clicked()), frame, SLOT(deleteLater()));
+	closeBtn->setProperty("handle", QVariant::fromValue(reinterpret_cast<void*>(handle)));
+	closeBtn->setProperty("frame", QVariant::fromValue(reinterpret_cast<void*>(frame)));
+	connect(closeBtn, SIGNAL(clicked()), this, SLOT(hideNotification()));
+	layout->addWidget(closeBtn);
 	ui.centralwidget->layout()->addWidget(frame);
-	return frame;
+	if(handle){
+		*handle = frame;
+	}
 }
 
-void MainWindow::hideNotification(Notification notification)
+void MainWindow::hideNotification(Notification handle)
 {
-	delete static_cast<QFrame*>(notification);
+	if(!handle && QObject::sender()){
+		handle = static_cast<QFrame*>(static_cast<QToolButton*>(QObject::sender())->property("frame").value<void*>());
+		Notification* h = reinterpret_cast<void**>(static_cast<QToolButton*>(QObject::sender())->property("handle").value<void*>());
+		if(h){
+			*h = nullptr;
+		}
+	}
+	if(handle){
+		static_cast<QFrame*>(handle)->deleteLater();
+	}
 }
 
 #if ENABLE_VERSIONCHECK
@@ -276,7 +290,7 @@ QString MainWindow::getNewestVersion()
 	newver.replace(QRegExp("\\s+"), "");
 	QRegExp pat("(^[\\d+\\.]+\\d+?$)");
 	if(pat.exactMatch(newver)){
-		return newver;
+		return "newver";
 	}
 	return QString();
 }

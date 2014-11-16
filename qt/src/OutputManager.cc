@@ -313,7 +313,7 @@ void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 					qWarning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
 				}
 #endif
-				m_notifierHandle = MAIN->addNotification(_("Spelling dictionary missing"), _("The spellcheck dictionary for %1 is not installed").arg(lang.name), {actionInstall, actionDontShowAgain});
+				MAIN->addNotification(_("Spelling dictionary missing"), _("The spellcheck dictionary for %1 is not installed").arg(lang.name), {actionInstall, actionDontShowAgain}, &m_notifierHandle);
 			}
 		}
 	}
