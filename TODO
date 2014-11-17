@@ -1,9 +1,9 @@
 High prio:
 - Fix TWAIN
+- possible crash when source is removed when scale time is active since m_source is invalid when timer elapses?
 
 Mid prio:
 - Option to disable scanning (especially on windows, since twain causes problems. Or use WIA?)
-- Add "insert file" button in output pane
 
 Low prio:
 - installation of tesseract langpacks through packagekit?
