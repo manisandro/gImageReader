@@ -56,12 +56,12 @@ Acquirer::Acquirer()
 	CONNECT(m_scanButton, clicked, [this]{ startScan(); });
 	CONNECT(m_cancelButton, clicked, [this]{ cancelScan(); });
 	CONNECT(Builder("button:sources.acquire.output").as<Gtk::Button>(), clicked, [this]{ selectOutputPath(); });
+	CONNECT(m_devCombo, changed, [this]{ setDeviceComboTooltip(); });
 	CONNECT(m_scanner, init_failed, [this]{ scanInitFailed(); });
 	CONNECT(m_scanner, update_devices, [this](const std::vector<Scanner::ScanDevice>& devices){ doneDetectDevices(devices); });
-	CONNECT(m_scanner, scan_failed, [this](const std::string& msg){ m_msgLabel->set_markup(Glib::ustring::compose("<span color='red'>%1: %2</span>", _("Scan failed"), msg)); });
+	CONNECT(m_scanner, scan_failed, [this](const std::string& msg){ scanFailed(msg); });
 	CONNECT(m_scanner, scanning_changed, [this](Scanner::ScanState state){ setScanState(state); });
 	CONNECT(m_scanner, page_available, [this](const std::string& file){ MAIN->getSourceManager()->addSources({Gio::File::create_for_path(file)});});
-	CONNECT(m_devCombo, changed, [this]{ auto it = m_devCombo->get_active(); m_devCombo->set_tooltip_text(it ? static_cast<std::string>((*it)[m_devComboCols.label]) : ""); });
 
 	MAIN->getConfig()->addSetting("scanres", new ComboSetting("combo:sources.acquire.resolution"));
 	MAIN->getConfig()->addSetting("scanmode", new ComboSetting("combo:sources.acquire.mode"));
@@ -73,7 +73,6 @@ Acquirer::Acquirer()
 		m_outputPath = Glib::build_filename(Utils::get_documents_dir(), _("scan.png"));
 	}
 	genOutputPath();
-	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);
 	m_scanner->start();
 }
 
@@ -88,7 +87,6 @@ void Acquirer::selectOutputPath()
 	std::string filename = FileDialogs::save_dialog(_("Choose Output Filename..."), m_outputPath, filter);
 	if(!filename.empty()){
 		m_outputPath = filename;
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);
 		genOutputPath();
 	}
 }
@@ -98,6 +96,7 @@ void Acquirer::genOutputPath()
 	m_outputPath = Utils::make_output_filename(m_outputPath);
 	m_outputLabel->set_text(m_outputPath);
 	m_outputLabel->set_tooltip_text(m_outputPath);
+	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);
 }
 
 void Acquirer::scanInitFailed()
@@ -109,6 +108,11 @@ void Acquirer::scanInitFailed()
 	m_refreshSpinner->hide();
 	m_refreshSpinner->stop();
 	m_scanner->stop();
+}
+
+void Acquirer::scanFailed(const Glib::ustring &msg)
+{
+	m_msgLabel->set_markup(Glib::ustring::compose("<span color='red'>%1: %2</span>", _("Scan failed"), msg));
 }
 
 void Acquirer::startDetectDevices()
@@ -185,4 +189,10 @@ void Acquirer::doneScan()
 	m_buttonBox->remove(*m_cancelButton);
 	m_buttonBox->pack_start(*m_scanButton, false, true);
 	m_msgLabel->set_text("");
+}
+
+void Acquirer::setDeviceComboTooltip()
+{
+	auto it = m_devCombo->get_active();
+	m_devCombo->set_tooltip_text(it ? static_cast<std::string>((*it)[m_devComboCols.label]) : "");
 }

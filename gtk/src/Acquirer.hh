@@ -53,15 +53,17 @@ private:
 
 	Scanner* m_scanner;
 
-	void selectOutputPath();
 	void genOutputPath();
-	void scanInitFailed();
-	void startDetectDevices();
-	void doneDetectDevices(const std::vector<Scanner::ScanDevice>& devices);
-	void startScan();
 	void cancelScan();
+	void doneDetectDevices(const std::vector<Scanner::ScanDevice>& devices);
 	void doneScan();
+	void scanInitFailed();
+	void scanFailed(const Glib::ustring& msg);
+	void selectOutputPath();
+	void setDeviceComboTooltip();
 	void setScanState(Scanner::ScanState state);
+	void startDetectDevices();
+	void startScan();
 };
 
 #endif // ACQUIRER_HH

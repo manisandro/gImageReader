@@ -98,6 +98,11 @@ void Acquirer::scanInitFailed()
 	m_scanThread->stop();
 }
 
+void Acquirer::scanFailed(const QString &msg)
+{
+	ui.labelScanMessage->setText(QString("<span style=\"color:#FF0000;\">%1: %2.</span>").arg(_("Scan failed")).arg(msg));
+}
+
 void Acquirer::startDetectDevices()
 {
 	ui.toolButtonScanDevicesRefresh->setEnabled(false);
@@ -166,11 +171,6 @@ void Acquirer::doneScan()
 	ui.pushButtonScanCancel->setVisible(false);
 	ui.pushButtonScan->setVisible(true);
 	ui.labelScanMessage->setText("");
-}
-
-void Acquirer::scanFailed(const QString &msg)
-{
-	ui.labelScanMessage->setText(QString("<span style=\"color:#FF0000;\">%1: %2.</span>").arg(_("Scan failed")).arg(msg));
 }
 
 void Acquirer::setDeviceComboTooltip()
