@@ -26,7 +26,6 @@
 
 #include "DisplayRenderer.hh"
 #include "Utils.hh"
-#include <QTextStream>
 
 void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, bool invert) const
 {
