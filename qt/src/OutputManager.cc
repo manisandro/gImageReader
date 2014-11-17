@@ -46,6 +46,7 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 
 	m_spell.setDecodeLanguageCodes(true);
 	m_spell.setShowCheckSpellingCheckbox(true);
+	m_spell.setTextEdit(ui.plainTextEditOutput);
 
 	connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), ui.dockWidgetOutput, SLOT(setVisible(bool)));
 	connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), m_substitutionsManager, SLOT(hide()));
@@ -54,8 +55,8 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.frameOutputSearch, SLOT(setVisible(bool)));
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.lineEditOutputSearch, SLOT(clear()));
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.lineEditOutputReplace, SLOT(clear()));
-	connect(ui.actionOutputUndo, SIGNAL(triggered()), ui.plainTextEditOutput, SLOT(undo()));
-	connect(ui.actionOutputRedo, SIGNAL(triggered()), ui.plainTextEditOutput, SLOT(redo()));
+	connect(ui.actionOutputUndo, SIGNAL(triggered()), &m_spell, SLOT(undo()));
+	connect(ui.actionOutputRedo, SIGNAL(triggered()), &m_spell, SLOT(redo()));
 	connect(ui.actionOutputSave, SIGNAL(triggered()), this, SLOT(saveBuffer()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clearBuffer()));
 	connect(ui.plainTextEditOutput, SIGNAL(undoAvailable(bool)), ui.actionOutputUndo, SLOT(setEnabled(bool)));
@@ -293,12 +294,9 @@ void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 {
 	MAIN->hideNotification(m_notifierHandle);
 	m_notifierHandle = nullptr;
-	m_spell.setTextEdit(static_cast<QTextEdit*>(nullptr));
 	QString code = lang.code;
 	if(!code.isEmpty() || force){
-		if(m_spell.setLanguage(code)) {
-			m_spell.setTextEdit(ui.plainTextEditOutput);
-		} else {
+		if(!m_spell.setLanguage(code)) {
 			if(MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->getValue()){
 				MainWindow::NotificationAction actionDontShowAgain = {_("Don't show again"), MAIN->getConfig(), SLOT(disableDictInstall()), true};
 				MainWindow::NotificationAction actionInstall = {_("Help"), MAIN, SLOT(showHelp()), false}; // TODO #InstallSpelling
