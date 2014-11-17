@@ -365,7 +365,6 @@ bool Recognizer::recognizeImage(const QImage& img, OutputDestination dest)
 
 bool Recognizer::setPage(int page, bool autodetectLayout)
 {
-	QTextStream(stdout) << "Autodetect: " << autodetectLayout << endl;
 	bool success = MAIN->getDisplayer()->setCurrentPage(page);
 	if(success && autodetectLayout) {
 		MAIN->getDisplayer()->autodetectLayout();
