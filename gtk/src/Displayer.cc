@@ -408,12 +408,12 @@ bool Displayer::mouseReleaseEvent(GdkEventButton* /*ev*/)
 bool Displayer::scrollEvent(GdkEventScroll *ev)
 {
 	if((ev->state & Gdk::CONTROL_MASK) != 0){
-		if((ev->direction == GDK_SCROLL_UP || ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y < 0) && m_geo.s * 1.25 < 10){
+		if((ev->direction == GDK_SCROLL_UP || (ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y < 0)) && m_geo.s * 1.25 < 10){
 			Gtk::Allocation alloc = m_canvas->get_allocation();
 			m_geo.sx = std::max(0., std::min((ev->x + m_hadj->get_value() - alloc.get_x())/alloc.get_width(), 1.0));
 			m_geo.sy = std::max(0., std::min((ev->y + m_vadj->get_value() - alloc.get_y())/alloc.get_height(), 1.0));
 			setZoom(Zoom::In);
-		}else if((ev->direction == GDK_SCROLL_DOWN || ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y > 0) && m_geo.s * 0.8 > 0.05){
+		}else if((ev->direction == GDK_SCROLL_DOWN || (ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y > 0)) && m_geo.s * 0.8 > 0.05){
 			setZoom(Zoom::Out);
 		}
 		return true;
