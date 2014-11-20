@@ -42,7 +42,6 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	ui.actionOutputModeCursor->setData(static_cast<int>(InsertMode::Cursor));
 	ui.actionOutputModeReplace->setData(static_cast<int>(InsertMode::Replace));
 	ui.frameOutputSearch->setVisible(false);
-	ui.dockWidgetOutput->setVisible(false);
 	ui.plainTextEditOutput->setUndoRedoEnabled(true);
 
 	m_spell.setDecodeLanguageCodes(true);
