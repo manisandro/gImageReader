@@ -25,10 +25,10 @@
 #include <QLibrary>
 #include <QMutex>
 #include <QWaitCondition>
-#include <twain.h>
 #ifdef G_OS_WIN32
 #include <windows.h>
 #endif
+#include <twain.h>
 
 #include "ScanBackend.hh"
 #include "MainWindow.hh"
@@ -58,6 +58,8 @@ private:
 	TW_USERINTERFACE     m_ui         = {};
 	TW_UINT16            m_dsMsg = MSG_NULL;
 
+	static ScanBackendTwain* s_instance;
+
 #ifndef G_OS_WIN32
 	QMutex m_mutex;
 	QWaitCondition  m_cond;
@@ -86,6 +88,8 @@ private:
 };
 
 /********** ScannerTwain interface methods **********/
+
+ScanBackendTwain* ScanBackendTwain::s_instance = nullptr;
 
 bool ScanBackendTwain::init()
 {
@@ -145,6 +149,7 @@ bool ScanBackendTwain::init()
 	if(call(nullptr, DG_CONTROL, DAT_ENTRYPOINT, MSG_GET, &m_entryPoint) != TWRC_SUCCESS){
 		return false;
 	}
+	s_instance = this;
 	return true;
 }
 
@@ -158,6 +163,7 @@ void ScanBackendTwain::closeBackend()
 	if(m_dsmLib.isLoaded()){
 		m_dsmLib.unload();
 	}
+	s_instance = nullptr;
 }
 
 QList<ScanBackend::Device> ScanBackendTwain::detectDevices()
@@ -360,17 +366,15 @@ void ScanBackendTwain::setCapability(TW_UINT16 capCode, const CapOneVal& cap)
 
 TW_UINT16 ScanBackendTwain::callback(TW_IDENTITY* origin, TW_IDENTITY* /*dest*/, TW_UINT32 /*DG*/, TW_UINT16 /*DAT*/, TW_UINT16 MSG, TW_MEMREF /*data*/)
 {
-	ScanBackendTwain* instance = static_cast<ScannerTwain*>(Scanner::get_instance());
-
-	if(origin == nullptr || origin->Id != instance->m_srcID.Id) {
+	if(origin == nullptr || origin->Id != s_instance->m_srcID.Id) {
 		return TWRC_FAILURE;
 	}
 	if(MSG == MSG_XFERREADY || MSG == MSG_CLOSEDSREQ || MSG == MSG_CLOSEDSOK || MSG == MSG_NULL) {
-		instance->m_dsMsg = MSG;
+		s_instance->m_dsMsg = MSG;
 #ifndef G_OS_WIN32
-		instance->m_mutex.lock();
-		instance->m_cond.wakeOne();
-		instance->m_mutex.unlock();
+		s_instance->m_mutex.lock();
+		s_instance->m_cond.wakeOne();
+		s_instance->m_mutex.unlock();
 #endif
 		return TWRC_SUCCESS;
 	}
