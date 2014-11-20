@@ -93,7 +93,7 @@ int main (int argc, char *argv[])
 #ifdef G_OS_WIN32
 		Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(pkgDir, "share"));
 		Glib::setenv("TWAINDSM_LOG", Glib::build_filename(pkgDir, "twain.log"));
-		freopen(Glib::build_filename(dir, "gimagereader.log").c_str(), "w", stderr);
+		std::freopen(Glib::build_filename(pkgDir, "gimagereader.log").c_str(), "w", stderr);
 #endif
 
 		GtkSpell::init();
