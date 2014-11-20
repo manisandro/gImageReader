@@ -119,7 +119,7 @@ void SubstitutionsManager::openList()
 		MAIN->getConfig()->getSetting<VarSetting<QString>>("substitutionslistfile")->setValue(m_currentFile);
 
 		bool errors = false;
-		//TODO m_tableWidget->blockSignals(true);
+		m_tableWidget->blockSignals(true);
 		while(!file.atEnd()){
 			QList<QByteArray> fields = file.readLine().split('\t');
 			if(fields.size() < 2) {
@@ -131,7 +131,8 @@ void SubstitutionsManager::openList()
 			m_tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromLocal8Bit(fields[0])));
 			m_tableWidget->setItem(row, 1, new QTableWidgetItem(QString::fromLocal8Bit(fields[1])));
 		}
-		//TODO m_tableWidget->blockSignals(false);
+		m_tableWidget->blockSignals(false);
+		MAIN->getConfig()->getSetting<TableSetting>("substitutionslist")->serialize();
 		if(errors){
 			QMessageBox::warning(this, _("Errors Occurred Reading File"), _("Some entries of the substitutions list could not be read."));
 		}
@@ -166,6 +167,7 @@ bool SubstitutionsManager::clearList()
 			return false;
 		}
 		m_tableWidget->setRowCount(0);
+		MAIN->getConfig()->getSetting<TableSetting>("substitutionslist")->serialize();
 	}
 	return true;
 }
@@ -181,12 +183,13 @@ void SubstitutionsManager::addRow()
 
 void SubstitutionsManager::removeRows()
 {
-	//TODO m_tableWidget->blockSignals(true);
+	m_tableWidget->blockSignals(true);
 	for(const QModelIndex& index : m_tableWidget->selectionModel()->selectedRows())
 	{
 		m_tableWidget->removeRow(index.row());
 	}
-	//TODO m_tableWidget->blockSignals(false);
+	m_tableWidget->blockSignals(false);
+	MAIN->getConfig()->getSetting<TableSetting>("substitutionslist")->serialize();
 }
 
 void SubstitutionsManager::onTableSelectionChanged(const QItemSelection& selected, const QItemSelection& /*deselected*/)

@@ -20,32 +20,31 @@
 #include "ConfigSettings.hh"
 
 TableSetting::TableSetting(const QString& key, QTableWidget* table)
-	: AbstractSetting(key)
+	: AbstractSetting(key), m_table(table)
 {
-	table->setRowCount(0);
+	m_table->setRowCount(0);
 	QStringList rows = QSettings().value(m_key).toString().split(";", QString::SkipEmptyParts);
 	for(int row = 0, nRows = rows.size(); row < nRows; ++row)
 	{
-		table->insertRow(row);
+		m_table->insertRow(row);
 		QStringList cols = rows[row].split(",");
 		for(int col = 0, nCols = cols.size(); col < nCols; ++col)
 		{
-			table->setItem(row, col, new QTableWidgetItem(cols[col]));
+			m_table->setItem(row, col, new QTableWidgetItem(cols[col]));
 		}
 	}
-	connect(table, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(storeTable()));
+	connect(m_table, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(serialize()));
 }
 
-void TableSetting::storeTable()
+void TableSetting::serialize()
 {
-	QTableWidget* table = qobject_cast<QTableWidget*>(QObject::sender());
 	QStringList rows;
-	for(int row = 0, nRows = table->rowCount(); row < nRows; ++row)
+	for(int row = 0, nRows = m_table->rowCount(); row < nRows; ++row)
 	{
 		QStringList cols;
-		for(int col = 0, nCols = table->columnCount(); col < nCols; ++col)
+		for(int col = 0, nCols = m_table->columnCount(); col < nCols; ++col)
 		{
-			QTableWidgetItem* item = table->item(row, col);
+			QTableWidgetItem* item = m_table->item(row, col);
 			cols.append(item ? item->text() : QString());
 		}
 		rows.append(cols.join(","));

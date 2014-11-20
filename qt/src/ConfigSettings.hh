@@ -36,6 +36,9 @@ public:
 	virtual ~AbstractSetting() {}
 	const QString& key() const{ return m_key; }
 
+public slots:
+	virtual void serialize() {}
+
 signals:
 	void changed();
 
@@ -71,15 +74,15 @@ public:
 		if(font.fromString(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toString())){
 			m_dialog->setCurrentFont(font);
 		}
-		QObject::connect(dialog, SIGNAL(fontSelected(QFont)), this, SLOT(storeValue(QFont)));
+		QObject::connect(dialog, SIGNAL(fontSelected(QFont)), this, SLOT(serialize()));
 	}
 	QFont getValue() const{
 		return m_dialog->selectedFont();
 	}
 
-private slots:
-	void storeValue(const QFont& font){
-		QSettings().setValue(m_key, QVariant::fromValue(font.toString()));
+public slots:
+	void serialize(){
+		QSettings().setValue(m_key, QVariant::fromValue(m_dialog->selectedFont().toString()));
 		emit changed();
 	}
 
@@ -94,7 +97,7 @@ public:
 		: AbstractSetting(key), m_button(button)
 	{
 		button->setChecked(QSettings().value(m_key, QVariant::fromValue(defaultState)).toBool());
-		connect(button, SIGNAL(toggled(bool)), this, SLOT(storeState(bool)));
+		connect(button, SIGNAL(toggled(bool)), this, SLOT(serialize()));
 	}
 	void setValue(bool value) {
 		m_button->setChecked(value);
@@ -103,9 +106,9 @@ public:
 		return m_button->isChecked();
 	}
 
-private slots:
-	void storeState(bool state){
-		QSettings().setValue(m_key, QVariant::fromValue(state));
+public slots:
+	void serialize(){
+		QSettings().setValue(m_key, QVariant::fromValue(m_button->isChecked()));
 		emit changed();
 	}
 
@@ -120,7 +123,7 @@ public:
 		: AbstractSetting(key), m_button(button)
 	{
 		button->setChecked(QSettings().value(m_key, QVariant::fromValue(defaultState)).toBool());
-		connect(button, SIGNAL(toggled(bool)), this, SLOT(storeState(bool)));
+		connect(button, SIGNAL(toggled(bool)), this, SLOT(serialize()));
 	}
 	void setValue(bool value) {
 		m_button->setChecked(value);
@@ -129,9 +132,9 @@ public:
 		return m_button->isChecked();
 	}
 
-private slots:
-	void storeState(bool state){
-		QSettings().setValue(m_key, QVariant::fromValue(state));
+public slots:
+	void serialize(){
+		QSettings().setValue(m_key, QVariant::fromValue(m_button->isChecked()));
 		emit changed();
 	}
 
@@ -146,16 +149,16 @@ public:
 		: AbstractSetting(key), m_combo(combo)
 	{
 		combo->setCurrentIndex(QSettings().value(m_key, QVariant::fromValue(defaultIndex)).toInt());
-		connect(combo, SIGNAL(currentIndexChanged(int)), this, SLOT(storeState(int)));
+		connect(combo, SIGNAL(currentIndexChanged(int)), this, SLOT(serialize()));
 	}
 
 	int getValue() const{
 		return m_combo->currentIndex();
 	}
 
-private slots:
-	void storeState(int state){
-		QSettings().setValue(m_key, QVariant::fromValue(state));
+public slots:
+	void serialize(){
+		QSettings().setValue(m_key, QVariant::fromValue(m_combo->currentIndex()));
 		emit changed();
 	}
 
@@ -168,8 +171,11 @@ class TableSetting : public AbstractSetting {
 public:
 	TableSetting(const QString& key, QTableWidget* table);
 
-private slots:
-	void storeTable();
+public slots:
+	void serialize();
+
+private:
+	QTableWidget* m_table;
 };
 
 #endif // CONFIGSETTINGS_HH
