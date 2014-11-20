@@ -153,7 +153,7 @@ bool SubstitutionsManager::saveList()
 	m_currentFile = filename;
 	MAIN->getConfig()->getSetting<VarSetting<QString>>("substitutionslistfile")->setValue(m_currentFile);
 	for(int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row){
-		QByteArray line = QString("%1\t%2").arg(m_tableWidget->item(row, 0)->text()).arg(m_tableWidget->item(row, 1)->text()).toLocal8Bit();
+		QByteArray line = QString("%1\t%2\n").arg(m_tableWidget->item(row, 0)->text()).arg(m_tableWidget->item(row, 1)->text()).toLocal8Bit();
 		file.write(line);
 	}
 	return true;
