@@ -217,13 +217,15 @@ void SubstitutionsManager::applySubstitutions()
 	for(int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row){
 		QString search = m_tableWidget->item(row, 0)->text();
 		QString replace = m_tableWidget->item(row, 1)->text();
+		int diff = replace.length() - search.length();
 		cursor.setPosition(start);
 		while(true){
 			cursor = m_textEdit->document()->find(search, cursor, flags);
-			if(cursor.isNull() || cursor.position() >= end){
+			if(cursor.isNull() || qMax(cursor.anchor(), cursor.position()) > end){
 				break;
 			}
 			cursor.insertText(replace);
+			end += diff;
 		}
 		QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 	}
