@@ -158,7 +158,7 @@ void ScanBackendSane::setOptions(Job* job)
 			/* Option disabled */
 			(option->cap & SANE_CAP_INACTIVE) == 0 &&
 			/* Some options are unnamed (e.g. Option 0) */
-			option->name != nullptr && strlen(option->name) > 0
+			option->name != nullptr && std::strlen(option->name) > 0
 		){
 			options.insert(option->name, index);
 		}
@@ -425,7 +425,7 @@ ScanBackendSane::ReadStatus ScanBackendSane::read()
 		int offset = (m_lineCount - 1) * m_rowstride;
 		if(m_parameters.format == SANE_FRAME_GRAY){
 			for(int i = 0; i < m_lineBuffer.size(); ++i){
-				memset(&m_imgbuf[offset + 3*i], m_lineBuffer[i], 3);
+				std::memset(&m_imgbuf[offset + 3*i], m_lineBuffer[i], 3);
 			}
 		}else if(m_parameters.format == SANE_FRAME_RGB){
 			std::memcpy(&m_imgbuf[offset], &m_lineBuffer[0], m_lineBuffer.size());
@@ -604,10 +604,10 @@ void ScanBackendSane::logOption(SANE_Int index, const SANE_Option_Descriptor *op
 {
 	QString s = QString("Option %1:").arg(index);
 
-	if(option->name && strlen(option->name) > 0)
+	if(option->name && std::strlen(option->name) > 0)
 		s += QString(" name='%1'").arg(option->name);
 
-	if(option->title && strlen(option->title) > 0)
+	if(option->title && std::strlen(option->title) > 0)
 		s += QString(" title='%1'").arg(option->title);
 
 	QString typestr[] = {"bool", "int", "fixed", "string", "button", "group"};
