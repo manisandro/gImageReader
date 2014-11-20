@@ -23,7 +23,6 @@
 #include "common.hh"
 #include "UndoableBuffer.hh"
 
-class ListStoreSetting;
 
 class SubstitutionsManager {
 public:
