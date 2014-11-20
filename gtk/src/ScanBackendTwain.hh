@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * ScannerTwain.hh
+ * ScanBackendTwain.hh
  * Copyright (C) 2013-2014 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
@@ -17,23 +17,39 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCANNERTWAIN_HH
-#define SCANNERTWAIN_HH
+#ifndef SCANBACKENDTWAIN_HH
+#define SCANBACKENDTWAIN_HH
 
-#include "Scanner.hh"
-#include "MainWindow.hh"
+#include <cstring>
+#include <dlfcn.h>
 #ifdef G_OS_WIN32
 #include <windows.h>
 #include <gdk/gdkwin32.h>
 #endif
 #include <twain.h>
-#include <dlfcn.h>
+#include <glibmm/threads.h>
+
+
+#include "ScanBackend.hh"
+#include "MainWindow.hh"
 
 typedef class ScannerTwain ScannerImpl;
 
-class ScannerTwain : public Scanner {
+class ScanBackendTwain : public ScanBackend {
+public:
+	bool init();
+	void close();
+	std::vector<Device> detectDevices();
+	bool openDevice(const std::string& device);
+	void closeDevice();
+	void setOptions(Job* job);
+	StartStatus startDevice();
+	bool getParameters();
+	ReadStatus read();
+	PageStatus completePage(Job* job);
+
 private:
-	void*          m_dlHandle       = nullptr;
+	void*          m_dsmLib;
 	DSMENTRYPROC   m_dsmEntry        = nullptr;
 	TW_IDENTITY    m_appID           = {};
 	TW_ENTRYPOINT  m_entryPoint      = {};
@@ -41,22 +57,13 @@ private:
 	TW_IDENTITY          m_srcID      = {};
 	TW_USERINTERFACE     m_ui         = {};
 	TW_UINT16            m_dsMsg = MSG_NULL;
+
+	static ScanBackendTwain* s_instance;
+
 #ifndef G_OS_WIN32
 	Glib::Threads::Mutex m_mutex;
 	Glib::Threads::Cond  m_cond;
 #endif
-
-	bool initBackend();
-	void closeBackend();
-	std::vector<ScanDevice> detectDevices();
-	bool openDevice(const std::string& device);
-	void closeDevice();
-	void setOptions(ScanJob* job);
-	StartStatus startDevice();
-	bool getParameters();
-	ReadStatus read();
-	PageStatus completePage(ScanJob* job);
-
 
 	struct CapOneVal {
 		CapOneVal() = default;
@@ -82,27 +89,28 @@ private:
 
 /********** ScannerTwain interface methods **********/
 
-bool ScannerTwain::initBackend()
+ScanBackendTwain* ScanBackendTwain::s_instance = nullptr;
+
+bool ScanBackendTwain::init()
 {
-	if(m_dlHandle != nullptr){
+	if(m_dsmLib != nullptr){
 		g_critical("Init already called!");
 		return false;
 	}
 
 #ifdef G_OS_WIN32
-	gchar* dir = g_win32_get_package_installation_directory_of_module(0);
-	std::string twaindsm = Glib::build_filename(dir, "bin", "twaindsm.dll");
+	std::string twaindsm = Glib::build_filename(pkgDir, "bin", "twaindsm.dll");
 #else
 	std::string twaindsm = "libtwaindsm.so.2.2.0";
 #endif
 
-	m_dlHandle = dlopen(twaindsm.c_str(), RTLD_LAZY);
-	if(m_dlHandle == nullptr){
+	m_dsmLib = dlopen(twaindsm.c_str(), RTLD_LAZY);
+	if(m_dsmLib == nullptr){
 		g_critical("LoadLibrary failed on %s", twaindsm.c_str());
 		return false;
 	}
 
-	m_dsmEntry = (DSMENTRYPROC)dlsym(m_dlHandle, "DSM_Entry");
+	m_dsmEntry = (DSMENTRYPROC)dlsym(m_dsmLib, "DSM_Entry");
 	if(m_dsmEntry == nullptr){
 		g_critical("GetProcAddress failed on %s::DSM_Entry", twaindsm.c_str());
 		return false;
@@ -141,26 +149,28 @@ bool ScannerTwain::initBackend()
 	if(call(nullptr, DG_CONTROL, DAT_ENTRYPOINT, MSG_GET, &m_entryPoint) != TWRC_SUCCESS){
 		return false;
 	}
+	s_instance = this;
 	return true;
 }
 
-void ScannerTwain::closeBackend()
+void ScanBackendTwain::close()
 {
 	closeDevice();
 	if(m_appID.Id != 0){
 		// State 3 to 2
 		call(nullptr, DG_CONTROL, DAT_PARENT, MSG_CLOSEDSM, nullptr);
 	}
-	if(m_dlHandle != nullptr){
-		dlclose(m_dlHandle);
-		m_dlHandle = nullptr;
+	if(m_dsmLib != nullptr){
+		dlclose(m_dsmLib);
+		m_dsmLib = nullptr;
 	}
+	s_instance = nullptr;
 }
 
-std::vector<Scanner::ScanDevice> ScannerTwain::detectDevices()
+std::vector<ScanBackend::Device> ScanBackendTwain::detectDevices()
 {
 	TW_IDENTITY sourceID;
-	std::vector<ScanDevice> sources;
+	std::vector<Device> sources;
 
 	// Get the first source
 	TW_UINT16 twRC = call(nullptr, DG_CONTROL, DAT_IDENTITY, MSG_GETFIRST, &sourceID);
@@ -173,7 +183,7 @@ std::vector<Scanner::ScanDevice> ScannerTwain::detectDevices()
 	return sources;
 }
 
-bool ScannerTwain::openDevice(const std::string &device)
+bool ScanBackendTwain::openDevice(const std::string& device)
 {
 	closeDevice();
 
@@ -192,7 +202,7 @@ bool ScannerTwain::openDevice(const std::string &device)
 	return true;
 }
 
-void ScannerTwain::closeDevice()
+void ScanBackendTwain::closeDevice()
 {
 	if(m_srcID.Id != 0){
 		TW_PENDINGXFERS twPendingXFers = {};
@@ -206,7 +216,7 @@ void ScannerTwain::closeDevice()
 	}
 }
 
-void ScannerTwain::setOptions(ScanJob* job)
+void ScanBackendTwain::setOptions(Job* job)
 {
 	// Set the filename
 	TW_SETUPFILEXFER xferFile = {};
@@ -245,7 +255,7 @@ void ScannerTwain::setOptions(ScanJob* job)
 	// TODO: ADF, duplex, paper size
 }
 
-Scanner::StartStatus ScannerTwain::startDevice()
+ScanBackend::StartStatus ScanBackendTwain::startDevice()
 {
 	m_dsMsg = MSG_NULL;
 
@@ -294,12 +304,12 @@ Scanner::StartStatus ScannerTwain::startDevice()
 	return StartStatus::Fail;
 }
 
-bool ScannerTwain::getParameters()
+bool ScanBackendTwain::getParameters()
 {
 	return true;
 }
 
-Scanner::ReadStatus ScannerTwain::read()
+ScanBackend::ReadStatus ScanBackendTwain::read()
 {
 	TW_UINT16 twRC = call(&m_srcID, DG_IMAGE, DAT_IMAGEFILEXFER, MSG_GET, nullptr);
 	TW_PENDINGXFERS twPendingXFers = {};
@@ -312,13 +322,13 @@ Scanner::ReadStatus ScannerTwain::read()
 	return twRC == TWRC_FAILURE ? ReadStatus::Fail : ReadStatus::Done;
 }
 
-Scanner::PageStatus ScannerTwain::completePage(ScanJob* job)
+ScanBackend::PageStatus ScanBackendTwain::completePage(Job* job)
 {
-	return Scanner::PageStatus::Done;
+	return PageStatus::Done;
 }
 
 /********* ScannerTwain internal Methods **********/
-TW_UINT16 ScannerTwain::call(TW_IDENTITY* idDS, TW_UINT32 dataGroup, TW_UINT16 dataType, TW_UINT16 msg, TW_MEMREF data)
+TW_UINT16 ScanBackendTwain::call(TW_IDENTITY* idDS, TW_UINT32 dataGroup, TW_UINT16 dataType, TW_UINT16 msg, TW_MEMREF data)
 {
 	TW_UINT16 rc = m_dsmEntry(&m_appID, idDS, dataGroup, dataType, msg, data);
 	if(rc == TWRC_FAILURE){
@@ -334,7 +344,7 @@ TW_UINT16 ScannerTwain::call(TW_IDENTITY* idDS, TW_UINT32 dataGroup, TW_UINT16 d
 // TWTY_** size:                  INT8, INT16, INT32, UINT8, UINT16, UINT32, BOOL, FIX32, FRAME, STR32, STR64, STR128, STR255;
 static std::size_t TWTY_Size[] = {   1,     2,     4,     1,      2,      4,    2,     4,    16,    32,    64,    128,    255};
 
-void ScannerTwain::setCapability(TW_UINT16 capCode, const CapOneVal& cap)
+void ScanBackendTwain::setCapability(TW_UINT16 capCode, const CapOneVal& cap)
 {
 	TW_CAPABILITY twCapability = {capCode, TWON_DONTCARE16, nullptr};
 	TW_UINT16 rc = call(&m_srcID, DG_CONTROL, DAT_CAPABILITY, MSG_GETCURRENT, &twCapability);
@@ -355,26 +365,24 @@ void ScannerTwain::setCapability(TW_UINT16 capCode, const CapOneVal& cap)
 	m_entryPoint.DSM_MemFree(twCapability.hContainer);
 }
 
-TW_UINT16 ScannerTwain::callback(TW_IDENTITY* origin, TW_IDENTITY* /*dest*/, TW_UINT32 /*DG*/, TW_UINT16 /*DAT*/, TW_UINT16 MSG, TW_MEMREF /*data*/)
+TW_UINT16 ScanBackendTwain::callback(TW_IDENTITY* origin, TW_IDENTITY* /*dest*/, TW_UINT32 /*DG*/, TW_UINT16 /*DAT*/, TW_UINT16 MSG, TW_MEMREF /*data*/)
 {
-	ScannerTwain* instance = static_cast<ScannerTwain*>(Scanner::get_instance());
-
-	if(origin == nullptr || origin->Id != instance->m_srcID.Id) {
+	if(origin == nullptr || origin->Id != s_instance->m_srcID.Id) {
 		return TWRC_FAILURE;
 	}
 	if(MSG == MSG_XFERREADY || MSG == MSG_CLOSEDSREQ || MSG == MSG_CLOSEDSOK || MSG == MSG_NULL) {
-		instance->m_dsMsg = MSG;
+		s_instance->m_dsMsg = MSG;
 #ifndef G_OS_WIN32
-		instance->m_mutex.lock();
-		instance->m_cond.signal();
-		instance->m_mutex.unlock();
+		s_instance->m_mutex.lock();
+		s_instance->m_cond.wakeOne();
+		s_instance->m_mutex.unlock();
 #endif
 		return TWRC_SUCCESS;
 	}
 	return TWRC_FAILURE;
 }
 
-inline TW_FIX32 ScannerTwain::floatToFix32(float float32)
+inline TW_FIX32 ScanBackendTwain::floatToFix32(float float32)
 {
 	TW_FIX32 fix32;
 	TW_INT32 value = (TW_INT32)(float32 * 65536.0 + 0.5);
@@ -383,9 +391,9 @@ inline TW_FIX32 ScannerTwain::floatToFix32(float float32)
 	return fix32;
 }
 
-inline float ScannerTwain::fix32ToFloat(TW_FIX32 fix32)
+inline float ScanBackendTwain::fix32ToFloat(TW_FIX32 fix32)
 {
 	return float(fix32.Whole) + float(fix32.Frac) / (1 << 16);
 }
 
-#endif // SCANNERTWAIN_HH
+#endif // SCANBACKENDTWAIN_HH

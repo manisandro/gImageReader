@@ -50,18 +50,18 @@ Acquirer::Acquirer()
 	if(m_resCombo->get_active_row_number() == -1) m_resCombo->set_active(2);
 	if(m_modeCombo->get_active_row_number() == -1) m_modeCombo->set_active(0);
 
-	m_scanner = Scanner::get_instance();
+	m_scanThread = new ScanThread();
 
 	CONNECT(m_refreshButton, clicked, [this]{ startDetectDevices(); });
 	CONNECT(m_scanButton, clicked, [this]{ startScan(); });
 	CONNECT(m_cancelButton, clicked, [this]{ cancelScan(); });
 	CONNECT(Builder("button:sources.acquire.output").as<Gtk::Button>(), clicked, [this]{ selectOutputPath(); });
 	CONNECT(m_devCombo, changed, [this]{ setDeviceComboTooltip(); });
-	CONNECT(m_scanner, init_failed, [this]{ scanInitFailed(); });
-	CONNECT(m_scanner, update_devices, [this](const std::vector<Scanner::ScanDevice>& devices){ doneDetectDevices(devices); });
-	CONNECT(m_scanner, scan_failed, [this](const std::string& msg){ scanFailed(msg); });
-	CONNECT(m_scanner, scanning_changed, [this](Scanner::ScanState state){ setScanState(state); });
-	CONNECT(m_scanner, page_available, [this](const std::string& file){ MAIN->getSourceManager()->addSources({Gio::File::create_for_path(file)});});
+	CONNECT(m_scanThread, initFailed, [this]{ scanInitFailed(); });
+	CONNECT(m_scanThread, devicesDetected, [this](const std::vector<ScanBackend::Device>& devices){ doneDetectDevices(devices); });
+	CONNECT(m_scanThread, scanFailed, [this](const std::string& msg){ scanFailed(msg); });
+	CONNECT(m_scanThread, scanStateChanged, [this](ScanThread::State state){ setScanState(state); });
+	CONNECT(m_scanThread, pageAvailable, [this](const std::string& file){ MAIN->getSourceManager()->addSources({Gio::File::create_for_path(file)});});
 
 	MAIN->getConfig()->addSetting("scanres", new ComboSetting("combo:sources.acquire.resolution"));
 	MAIN->getConfig()->addSetting("scanmode", new ComboSetting("combo:sources.acquire.mode"));
@@ -73,12 +73,16 @@ Acquirer::Acquirer()
 		m_outputPath = Glib::build_filename(Utils::get_documents_dir(), _("scan.png"));
 	}
 	genOutputPath();
-	m_scanner->start();
+	m_thread = Glib::Threads::Thread::create(sigc::mem_fun(m_scanThread, &ScanThread::run));
 }
 
 Acquirer::~Acquirer()
 {
-	m_scanner->stop();
+	m_scanThread->stop();
+	if(m_thread != nullptr){
+		m_thread->join();
+		m_thread = nullptr;
+	}
 }
 
 void Acquirer::selectOutputPath()
@@ -107,7 +111,7 @@ void Acquirer::scanInitFailed()
 	m_refreshButton->show();
 	m_refreshSpinner->hide();
 	m_refreshSpinner->stop();
-	m_scanner->stop();
+	m_scanThread->stop();
 }
 
 void Acquirer::scanFailed(const Glib::ustring &msg)
@@ -123,10 +127,10 @@ void Acquirer::startDetectDevices()
 	m_msgLabel->set_text("");
 	m_devCombo->set_model(Gtk::ListStore::create(m_devComboCols));
 	m_scanButton->set_sensitive(false);
-	m_scanner->redetect();
+	m_scanThread->redetect();
 }
 
-void Acquirer::doneDetectDevices(const std::vector<Scanner::ScanDevice>& devices)
+void Acquirer::doneDetectDevices(const std::vector<ScanBackend::Device>& devices)
 {
 	m_refreshButton->show();
 	m_refreshSpinner->hide();
@@ -135,7 +139,7 @@ void Acquirer::doneDetectDevices(const std::vector<Scanner::ScanDevice>& devices
 		m_msgLabel->set_markup(Glib::ustring::compose("<span color='red'>%1</span>", _("No scanners were detected.")));
 	}else{
 		Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_devCombo->get_model());
-		for(const Scanner::ScanDevice& device : devices){
+		for(const ScanBackend::Device& device : devices){
 			Gtk::TreeIter it = store->append();
 			it->set_value(m_devComboCols.label, device.label);
 			it->set_value(m_devComboCols.name, device.name);
@@ -153,33 +157,33 @@ void Acquirer::startScan()
 	m_msgLabel->set_text(_("Starting scan..."));
 
 	int res[] = {75, 100, 200, 300, 600, 1200};
-	Scanner::ScanMode modes[] = {Scanner::ScanMode::COLOR, Scanner::ScanMode::GRAY};
+	ScanBackend::ScanMode modes[] = {ScanBackend::ScanMode::COLOR, ScanBackend::ScanMode::GRAY};
 	genOutputPath();
-	Scanner::ScanOptions opts = {m_outputPath, res[m_resCombo->get_active_row_number()], modes[m_modeCombo->get_active_row_number()], 8, Scanner::ScanType::SINGLE, 0, 0};
+	ScanBackend::Options opts = {m_outputPath, res[m_resCombo->get_active_row_number()], modes[m_modeCombo->get_active_row_number()], 8, ScanBackend::ScanType::SINGLE, 0, 0};
 	genOutputPath();
-	m_scanner->scan((*m_devCombo->get_active())[m_devComboCols.name], opts);
+	m_scanThread->scan((*m_devCombo->get_active())[m_devComboCols.name], opts);
 }
 
-void Acquirer::setScanState(Scanner::ScanState state)
+void Acquirer::setScanState(ScanThread::State state)
 {
-	if(state == Scanner::ScanState::OPEN){
+	if(state == ScanThread::State::OPEN){
 		m_msgLabel->set_text(_("Opening device..."));
-	}else if(state == Scanner::ScanState::SET_OPTIONS){
+	}else if(state == ScanThread::State::SET_OPTIONS){
 		m_msgLabel->set_text(_("Setting options..."));
-	}else if(state == Scanner::ScanState::START){
+	}else if(state == ScanThread::State::START){
 		m_msgLabel->set_text(_("Starting scan..."));
-	}else if(state == Scanner::ScanState::GET_PARAMETERS){
+	}else if(state == ScanThread::State::GET_PARAMETERS){
 		m_msgLabel->set_text(_("Getting parameters..."));
-	}else if(state == Scanner::ScanState::READ){
+	}else if(state == ScanThread::State::READ){
 		m_msgLabel->set_text(_("Transferring data..."));
-	}else if(state == Scanner::ScanState::IDLE){
+	}else if(state == ScanThread::State::IDLE){
 		doneScan();
 	}
 }
 
 void Acquirer::cancelScan()
 {
-	m_scanner->cancel();
+	m_scanThread->cancel();
 	m_cancelButton->set_sensitive(false);
 	m_msgLabel->set_text(_("Cancelling scan..."));
 }
