@@ -10,6 +10,9 @@ else
     echo "Error: unrecognized architecture $arch"
     exit 1
 fi
+
+iface=${2:-qt4}
+
 # Note: This script is written to be used with the Fedora mingw environment
 MINGWROOT=/usr/$arch-w64-mingw32/sys-root/mingw
 
@@ -29,7 +32,7 @@ installroot="$builddir/root"
 rm -rf $builddir
 mkdir -p $builddir
 pushd $builddir > /dev/null
-mingw$bits-cmake ../../
+mingw$bits-cmake -DINTERFACE_TYPE=$iface ../../
 mingw$bits-make -j4 DESTDIR="${installroot}_" install
 mv ${installroot}_$MINGWROOT $installroot
 rm -rf ${installroot}_
