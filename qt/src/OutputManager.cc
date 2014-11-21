@@ -81,6 +81,11 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	MAIN->getConfig()->addSetting(new SwitchSetting("searchmatchcase", ui.checkBoxOutputSearchMatchCase));
 }
 
+OutputManager::~OutputManager()
+{
+	delete m_substitutionsManager;
+}
+
 void OutputManager::clearErrorState()
 {
 	ui.lineEditOutputSearch->setStyleSheet("");

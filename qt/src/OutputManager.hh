@@ -35,6 +35,7 @@ class OutputManager : public QObject {
 	Q_OBJECT
 public:
 	OutputManager(const UI_MainWindow& _ui);
+	~OutputManager();
 	void addText(const QString& text, bool insert = false);
 	bool getBufferModified() const;
 
