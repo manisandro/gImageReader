@@ -84,7 +84,7 @@ void Recognizer::updateLanguagesMenu()
 	m_langMenuCheckGroup = new QActionGroup(this);
 	m_langMenuCheckGroup->setExclusive(false);
 	m_curLang = Config::Lang();
-	QAction* radioitem = nullptr;
+	QAction* curitem = nullptr;
 	QAction* activeitem = nullptr;
 
 	QStringList parts = MAIN->getConfig()->getSetting<VarSetting<QString>>("language")->getValue().split(":");
@@ -124,30 +124,30 @@ void Recognizer::updateLanguagesMenu()
 			QMenu* submenu = new QMenu();
 			for(const QString& dict : spelldicts){
 				Config::Lang itemlang = {lang.prefix, dict, lang.name};
-				radioitem = new QAction(QtSpell::Checker::decodeLanguageCode(dict), m_langMenuRadioGroup);
-				connect(radioitem, SIGNAL(triggered()), this, SLOT(setLanguage()));
-				radioitem->setCheckable(true);
-				radioitem->setData(QVariant::fromValue(itemlang));
+				curitem = new QAction(QtSpell::Checker::decodeLanguageCode(dict), m_langMenuRadioGroup);
+				curitem->setCheckable(true);
+				curitem->setData(QVariant::fromValue(itemlang));
+				connect(curitem, SIGNAL(triggered()), this, SLOT(setLanguage()));
 				if((curlang.prefix == lang.prefix) &&
 				   (curlang.code.isEmpty() || curlang.code == dict.left(2) || curlang.code == dict))
 				{
 					curlang = itemlang;
-					radioitem->setChecked(true);
-					activeitem = radioitem;
+					activeitem = curitem;
 				}
-				submenu->addAction(radioitem);
+				submenu->addAction(curitem);
 			}
 			item->setMenu(submenu);
 			ui.menuLanguages->addAction(item);
 		}else{
-			radioitem = new QAction(lang.name, m_langMenuRadioGroup);
-			connect(radioitem, SIGNAL(triggered()), this, SLOT(setLanguage()));
-			radioitem->setCheckable(true);
-			radioitem->setData(QVariant::fromValue(lang));
+			curitem = new QAction(lang.name, m_langMenuRadioGroup);
+			curitem->setCheckable(true);
+			curitem->setData(QVariant::fromValue(lang));
+			connect(curitem, SIGNAL(triggered()), this, SLOT(setLanguage()));
 			if(curlang.prefix == lang.prefix){
-				activeitem = radioitem;
+				curlang = lang;
+				activeitem = curitem;
 			}
-			ui.menuLanguages->addAction(radioitem);
+			ui.menuLanguages->addAction(curitem);
 		}
 	}
 
@@ -164,10 +164,10 @@ void Recognizer::updateLanguagesMenu()
 			lang.name = lang.prefix;
 		}
 		QAction* item = new QAction(lang.name, m_langMenuCheckGroup);
-		connect(item, SIGNAL(triggered()), this, SLOT(setMultiLanguage()));
 		item->setCheckable(true);
 		item->setData(QVariant::fromValue(lang.prefix));
 		item->setChecked(isMultilingual && sellangs.contains(lang.prefix));
+		connect(item, SIGNAL(triggered()), this, SLOT(setMultiLanguage()));
 		submenu->addAction(item);
 	}
 	m_multilingualAction->setMenu(submenu);
@@ -175,19 +175,10 @@ void Recognizer::updateLanguagesMenu()
 	if(isMultilingual){
 		activeitem = m_multilingualAction;
 		setMultiLanguage();
-	}
-
-	// Check active item
-	if(activeitem == nullptr){
-		activeitem = radioitem;
+	}else if(activeitem == nullptr){
+		activeitem = curitem;
 	}
 	activeitem->trigger();
-}
-
-void Recognizer::setRecognizeMode(bool haveSelection)
-{
-	m_modeLabel = haveSelection ? _("Recognize selection") : _("Recognize all");
-	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 }
 
 void Recognizer::setLanguage()
@@ -222,6 +213,12 @@ void Recognizer::setMultiLanguage()
 	emit languageChanged(m_curLang);
 }
 
+void Recognizer::setRecognizeMode(bool haveSelection)
+{
+	m_modeLabel = haveSelection ? _("Recognize selection") : _("Recognize all");
+	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
+}
+
 void Recognizer::clearLineEditPageRangeStyle()
 {
 	qobject_cast<QLineEdit*>(QObject::sender())->setStyleSheet("");
@@ -231,7 +228,7 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout)
 {
 	int nPages = MAIN->getDisplayer()->getNPages();
 
-	m_pagesLineEdit->setText(QString("%1-%2").arg(1).arg(nPages));
+	m_pagesLineEdit->setText(QString("1-%1").arg(nPages));
 	m_pagesLineEdit->setFocus();
 
 	QList<int> pages;
@@ -269,7 +266,7 @@ void Recognizer::recognizeButtonClicked()
 {
 	int nPages = MAIN->getDisplayer()->getNPages();
 	if(nPages == 1 || MAIN->getDisplayer()->getHasSelections()){
-		recognize(QList<int>() << MAIN->getDisplayer()->getCurrentPage());
+		recognize({MAIN->getDisplayer()->getCurrentPage()});
 	}else{
 		ui.toolButtonRecognize->setCheckable(true);
 		ui.toolButtonRecognize->setChecked(true);
@@ -281,7 +278,7 @@ void Recognizer::recognizeButtonClicked()
 
 void Recognizer::recognizeCurrentPage()
 {
-	recognize(QList<int>() << MAIN->getDisplayer()->getCurrentPage());
+	recognize({MAIN->getDisplayer()->getCurrentPage()});
 }
 
 void Recognizer::recognizeMultiplePages()
@@ -298,7 +295,7 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 	if(!initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())){
 		failed.append(_("\n\tFailed to initialize tesseract"));
 	}else{
-		Utils::busyTask([&pages, &failed, &tess, autodetectLayout, this]{
+		Utils::busyTask([&]{
 			int npages = pages.size();
 			int idx = 0;
 			bool insertText = false;
@@ -310,13 +307,16 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 				QMetaObject::invokeMethod(this, "setPage", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(int, page), Q_ARG(bool, autodetectLayout));
 				if(!success){
 					failed.append(_("\n\tPage %1: failed to render page").arg(page));
-					QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, _("\n[Failed to recognize page %1]\n")));
+					QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, _("\n[Failed to recognize page %1]\n")), Q_ARG(bool, insertText));
+					insertText = true;
 					continue;
 				}
 				for(const QImage& image : MAIN->getDisplayer()->getSelections()){
 					tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
-					QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(tess.GetUTF8Text())), Q_ARG(bool, insertText));
-					insertText = false;
+					char* text = tess.GetUTF8Text();
+					QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(text)), Q_ARG(bool, insertText));
+					delete[] text;
+					insertText = true;
 				}
 				QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
 			}
@@ -332,21 +332,21 @@ bool Recognizer::recognizeImage(const QImage& img, OutputDestination dest)
 {
 	tesseract::TessBaseAPI tess;
 	if(!initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())){
+		QMessageBox::critical(MAIN, _("Recognition errors occured"), _("Failed to initialize tesseract"));
 		return false;
 	}
-	QString text;
-	if(!Utils::busyTask([&img,&tess,&text]{
+	QString output;
+	Utils::busyTask([&]{
 		tess.SetImage(img.bits(), img.width(), img.height(), 4, img.bytesPerLine());
-		text = QString::fromUtf8(tess.GetUTF8Text());
+		char* text = tess.GetUTF8Text();
+		output = QString::fromUtf8(text);
+		delete[] text;
 		return true;
-	}, _("Recognizing...")))
-	{
-		return false;
-	}
+	}, _("Recognizing..."));
 	if(dest == OutputDestination::Buffer){
-		MAIN->getOutputManager()->addText(text, false);
+		MAIN->getOutputManager()->addText(output, false);
 	}else if(dest == OutputDestination::Clipboard){
-		QApplication::clipboard()->setText(text);
+		QApplication::clipboard()->setText(output);
 	}
 	return true;
 }

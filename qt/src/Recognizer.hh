@@ -65,6 +65,7 @@ private:
 	void recognize(const QList<int>& pages, bool autodetectLayout = false);
 
 private slots:
+	void addText(const QString& text, bool insertText);
 	void clearLineEditPageRangeStyle();
 	void recognizeButtonClicked();
 	void recognizeCurrentPage();
@@ -72,7 +73,6 @@ private slots:
 	void setLanguage();
 	void setMultiLanguage();
 	bool setPage(int page, bool autodetectLayout);
-	void addText(const QString& text, bool insertText);
 };
 
 #endif // RECOGNIZER_HPP
