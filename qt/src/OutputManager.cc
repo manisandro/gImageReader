@@ -273,7 +273,7 @@ bool OutputManager::saveBuffer(const QString& filename)
 	QString outname = filename;
 	if(outname.isEmpty()){
 		Source* source = MAIN->getSourceManager()->getSelectedSource();
-		QString base = source ? source->displayname : _("output");
+		QString base = source ? QFileInfo(source->displayname).baseName() : _("output");
 		outname = QDir(Utils::documentsFolder()).absoluteFilePath(base + ".txt");
 		outname = QFileDialog::getSaveFileName(MAIN, _("Save Output..."), filename, QString("%1 (*.txt)").arg(_("Text Files")));
 		if(outname.isEmpty()){
@@ -302,6 +302,8 @@ bool OutputManager::clearBuffer()
 		}
 	}
 	ui.plainTextEditOutput->clear();
+	ui.plainTextEditOutput->undo();
+	ui.plainTextEditOutput->document()->clearUndoRedoStacks();
 	ui.plainTextEditOutput->document()->setModified(false);
 	ui.actionToggleOutputPane->setChecked(false);
 	return true;
