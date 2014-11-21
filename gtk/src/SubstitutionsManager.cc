@@ -27,8 +27,8 @@
 #include <fstream>
 #include <cstring>
 
-SubstitutionsManager::SubstitutionsManager(const Glib::RefPtr<UndoableBuffer>& buffer)
-	: m_buffer(buffer)
+SubstitutionsManager::SubstitutionsManager(const Glib::RefPtr<UndoableBuffer>& buffer, Gtk::CheckButton* csCheckBox)
+	: m_buffer(buffer), m_csCheckBox(csCheckBox)
 {
 	m_dialog = Builder("window:postproc");
 	m_listView = Builder("treeview:postproc");
@@ -48,7 +48,7 @@ SubstitutionsManager::SubstitutionsManager(const Glib::RefPtr<UndoableBuffer>& b
 	CONNECT(Builder("toolbutton:postproc.save").as<Gtk::Button>(), clicked, [this]{ saveList(); });
 	CONNECT(Builder("toolbutton:postproc.clear").as<Gtk::Button>(), clicked, [this]{ clearList(); });
 	CONNECT(Builder("toolbutton:postproc.add").as<Gtk::Button>(), clicked, [this]{ addRow(); });
-	CONNECT(Builder("button:postproc.apply").as<Gtk::Button>(), clicked, [this]{ apply(); });
+	CONNECT(Builder("button:postproc.apply").as<Gtk::Button>(), clicked, [this]{ applySubstitutions(); });
 	CONNECT(Builder("button:postproc.close").as<Gtk::Button>(), clicked, [this]{ m_dialog->hide(); });
 	CONNECT(m_removeButton, clicked, [this]{ removeRows(); });
 	CONNECT(m_listView->get_selection(), changed, [this]{ m_removeButton->set_sensitive(m_listView->get_selection()->count_selected_rows() != 0); });
@@ -61,6 +61,14 @@ SubstitutionsManager::SubstitutionsManager(const Glib::RefPtr<UndoableBuffer>& b
 	if(m_currentFile.empty()) {
 		m_currentFile = Glib::build_filename(Utils::get_documents_dir(), _("substitution_list.txt"));
 		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("replacelistfile")->setValue(m_currentFile);
+	}
+}
+
+void SubstitutionsManager::set_visible(bool visible)
+{
+	m_dialog->set_visible(visible);
+	if(visible && m_dialog->is_visible()){
+		m_dialog->raise();
 	}
 }
 
@@ -166,36 +174,38 @@ void SubstitutionsManager::dialogClosed()
 	MAIN->getConfig()->getSetting<ListStoreSetting>("replacelist")->serialize();
 }
 
-void SubstitutionsManager::apply()
+void SubstitutionsManager::applySubstitutions()
 {
+	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
 	Gtk::TextIter start, end;
 	if(!m_buffer->get_selection_bounds(start, end)){
 		start = m_buffer->begin();
 		end = m_buffer->end();
 	}
-	Glib::ustring text = m_buffer->get_text(start, end);
-
-	Utils::busyTask([this,&text]{
-		for(const Gtk::TreeModel::Row& row : m_listStore->children()){
-			Glib::ustring search, replace;
-			row.get_value(0, search);
-			row.get_value(1, replace);
-			std::size_t pos = 0;
-			std::size_t search_len = search.length();
-			while(true) {
-				pos = text.find(search, pos);
-				if(pos == std::string::npos) {
-					break;
-				}
-				text.replace(pos, search_len, replace);
-				pos += 1;
+	int startpos = start.get_offset();
+	int endpos = end.get_offset();
+	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY|Gtk::TEXT_SEARCH_TEXT_ONLY;
+	if(!m_csCheckBox->get_active()){
+		flags |= Gtk::TEXT_SEARCH_CASE_INSENSITIVE;
+	}
+	for(const Gtk::TreeModel::Row& row : m_listStore->children()){
+		Glib::ustring search, replace;
+		row.get_value(0, search);
+		row.get_value(1, replace);
+		int diff = replace.length() - search.length();
+		Gtk::TextIter it = m_buffer->get_iter_at_offset(startpos);
+		while(true){
+			Gtk::TextIter matchStart, matchEnd;
+			if(!it.forward_search(search, flags, matchStart, matchEnd) || matchEnd.get_offset() > endpos){
+				break;
 			}
+			it = m_buffer->replace_range(replace, matchStart, matchEnd);
+			endpos += diff;
 		}
-		return true;
-	}, _("Applying substitutions..."));
-
-	m_buffer->replace_range(text, start, end);
-	start = end = m_buffer->get_iter_at_mark(m_buffer->get_insert());
-	start.backward_chars(text.size());
-	m_buffer->select_range(start, end);
+		while(Gtk::Main::events_pending()){
+			Gtk::Main::iteration();
+		}
+	}
+	m_buffer->select_range(m_buffer->get_iter_at_offset(startpos), m_buffer->get_iter_at_offset(endpos));
+	MAIN->popState();
 }

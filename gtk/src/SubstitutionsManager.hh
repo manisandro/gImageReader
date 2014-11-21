@@ -26,8 +26,8 @@
 
 class SubstitutionsManager {
 public:
-	SubstitutionsManager(const Glib::RefPtr<UndoableBuffer>& buffer);
-	void set_visible(bool visible){ m_dialog->set_visible(visible); }
+	SubstitutionsManager(const Glib::RefPtr<UndoableBuffer>& buffer, Gtk::CheckButton* csCheckBox);
+	void set_visible(bool visible);
 
 private:
 	struct ReplaceListColumns : public Gtk::TreeModel::ColumnRecord {
@@ -39,18 +39,19 @@ private:
 	std::string m_currentFile;
 	ReplaceListColumns m_viewCols;
 	Gtk::Window* m_dialog;
-	Gtk::TreeView* m_listView = nullptr;
+	Gtk::TreeView* m_listView;
 	Gtk::Button* m_removeButton;
 	Glib::RefPtr<Gtk::ListStore> m_listStore;
 	Glib::RefPtr<UndoableBuffer> m_buffer;
+	Gtk::CheckButton* m_csCheckBox;
 
-	void apply();
-	void openList();
-	bool saveList();
-	bool clearList();
 	void addRow();
-	void removeRows();
+	void applySubstitutions();
+	bool clearList();
 	void dialogClosed();
+	void openList();
+	void removeRows();
+	bool saveList();
 };
 
 #endif // SUBSTITUTIONS_MANAGER_HH

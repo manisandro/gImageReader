@@ -50,7 +50,7 @@ void crash_handler(int sig)
 {
 	std::signal(sig, nullptr);
 	std::string filename;
-	if(MAIN->getOutputManager() && MAIN->getOutputManager()->getModified()){
+	if(MAIN->getOutputManager() && MAIN->getOutputManager()->getBufferModified()){
 		filename = Glib::build_filename(g_get_home_dir(), Glib::ustring::compose("%1_crash-save.txt", PACKAGE_NAME));
 		int i = 0;
 		while(Glib::file_test(filename, Glib::FILE_TEST_EXISTS)){
@@ -77,17 +77,17 @@ MainWindow::MainWindow()
 	std::signal(SIGSEGV, crash_handler);
 	std::signal(SIGABRT, crash_handler);
 
+	m_window = Builder("applicationwindow:main");
+	m_aboutdialog = Builder("dialog:about");
+	m_statusbar = Builder("statusbar:main");
+	m_aboutdialog->set_version(PACKAGE_VERSION);
+
 	m_config = new Config;
 	m_acquirer = new Acquirer;
 	m_displayer = new Displayer;
 	m_outputManager = new OutputManager;
 	m_recognizer = new Recognizer;
 	m_sourceManager = new SourceManager;
-
-	m_window = Builder("applicationwindow:main");
-	m_aboutdialog = Builder("dialog:about");
-	m_statusbar = Builder("statusbar:main");
-	m_aboutdialog->set_version(PACKAGE_VERSION);
 
 	m_idlegroup.push_back(Builder("tbbutton:main.zoomin"));
 	m_idlegroup.push_back(Builder("tbbutton:main.zoomout"));

@@ -106,5 +106,10 @@
             <summary>Path for saving selections</summary>
             <description>Path for saving selections.</description>
         </key>
+        <key type="b" name="searchmatchcase">
+            <default>false</default>
+            <summary>Match case when searching</summary>
+            <description>Match case when searching.</description>
+        </key>
     </schema>
 </schemalist>

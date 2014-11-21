@@ -32,7 +32,9 @@ public:
 	void undo();
 	void redo();
 	void clear_history(){ freeStack(m_undoStack); freeStack(m_redoStack); }
-	void replace_range(const Glib::ustring& text, const Gtk::TextIter& start, const Gtk::TextIter& end);
+	void save_selection_bounds(bool viewSelected);
+	bool get_selection_bounds(Gtk::TextIter& start, Gtk::TextIter& end) const;
+	Gtk::TextIter replace_range(const Glib::ustring& text, const Gtk::TextIter& start, const Gtk::TextIter& end);
 	void replace_all(const Glib::ustring& text){ replace_range(text, begin(), end()); }
 	sigc::signal<void> signal_history_changed() const{ return m_signal_histroyChanged; }
 
@@ -50,6 +52,8 @@ private:
 	std::stack<Action*> m_redoStack;
 	bool m_undoInProgress;
 	sigc::signal<void> m_signal_histroyChanged;
+	Gtk::TextIter m_selStart;
+	Gtk::TextIter m_selEnd;
 
 	void onInsertText(const Gtk::TextIter& it, const Glib::ustring& text, int len);
 	void onDeleteRange(const Gtk::TextIter& start, const Gtk::TextIter& end);

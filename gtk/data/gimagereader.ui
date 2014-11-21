@@ -2125,6 +2125,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                             <property name="hexpand">True</property>
                             <property name="invisible_char">●</property>
                             <property name="width_chars">2</property>
+                            <property name="placeholder_text" translatable="yes">Search for</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -2139,6 +2140,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                             <property name="hexpand">True</property>
                             <property name="invisible_char">●</property>
                             <property name="width_chars">2</property>
+                            <property name="placeholder_text" translatable="yes">Replace with</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -2146,34 +2148,10 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="button:output.search">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="has_tooltip">True</property>
-                            <property name="tooltip_markup" translatable="yes">Find</property>
-                            <property name="tooltip_text" translatable="yes">Find</property>
-                            <child>
-                              <object class="GtkImage" id="image:output.search">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="pixel_size">16</property>
-                                <property name="icon_name">edit-find</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="top_attach">0</property>
-                          </packing>
-                        </child>
-                        <child>
                           <object class="GtkButton" id="button:output.replace">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="has_tooltip">True</property>
-                            <property name="tooltip_markup" translatable="yes">Replace</property>
                             <property name="tooltip_text" translatable="yes">Replace</property>
                             <child>
                               <object class="GtkImage" id="image:output.replace">
@@ -2189,11 +2167,86 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                             <property name="top_attach">1</property>
                           </packing>
                         </child>
+                        <child>
+                          <object class="GtkButton" id="button:output.replaceall">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="tooltip_text" translatable="yes">Replace all</property>
+                            <child>
+                              <object class="GtkImage" id="image:output.replaceall">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="pixel_size">16</property>
+                                <property name="icon_name">edit-find-replace</property>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">2</property>
+                            <property name="top_attach">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="button:output.searchprev">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="tooltip_text" translatable="yes">Find previous</property>
+                            <child>
+                              <object class="GtkImage" id="image:output.searchprev">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="pixel_size">16</property>
+                                <property name="icon_name">go-up</property>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">2</property>
+                            <property name="top_attach">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="button:output.searchnext">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="tooltip_text" translatable="yes">Find next</property>
+                            <child>
+                              <object class="GtkImage" id="image:output.searchnext">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="pixel_size">16</property>
+                                <property name="icon_name">go-down</property>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">0</property>
+                          </packing>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="checkbutton:output.matchcase">
+                        <property name="label" translatable="yes">Match case</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="xalign">0</property>
+                        <property name="draw_indicator">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                     <child>
@@ -2207,7 +2260,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                   </object>

@@ -34,10 +34,10 @@ public:
 	OutputManager();
 	~OutputManager();
 	void addText(const Glib::ustring& text, bool insert = false);
-	bool saveBuffer(std::string filename = "");
+	bool getBufferModified() const;
 	bool clearBuffer();
+	bool saveBuffer(const std::string& filename = "");
 	void setLanguage(const Config::Lang &lang, bool force = false);
-	bool getModified() const{ return m_textBuffer->get_modified(); }
 
 private:
 	enum class InsertMode { Append, Cursor, Replace };
@@ -57,25 +57,22 @@ private:
 	Gtk::CheckMenuItem* m_filterJoinSpace;
 	Gtk::ToolButton* m_undoButton;
 	Gtk::ToolButton* m_redoButton;
+	Gtk::CheckButton* m_csCheckBox;
 
 	Glib::RefPtr<UndoableBuffer> m_textBuffer;
 	InsertMode m_insertMode;
-	Gtk::TextIter m_insertIter;
-	Gtk::TextIter m_selectIter;
 	GtkSpell::Checker m_spell;
 	MainWindow::Notification m_notifierHandle = nullptr;
+	SubstitutionsManager* m_substitutionsManager;
 
-	SubstitutionsManager* m_substitutionsManager = nullptr;
-
-	void setFont();
-	void showInsertMenu();
-	void setInsertMode(InsertMode mode, const std::string& iconName);
+	void completeTextViewMenu(Gtk::Menu* menu);
 	void filterBuffer();
+	void findReplace(bool backwards, bool replace);
+	void replaceAll();
+	void setFont();
+	void setInsertMode(InsertMode mode, const std::string& iconName);
+	void showInsertMenu();
 	void toggleReplaceBox(Gtk::ToggleToolButton *button);
-	void historyChanged();
-	void saveIters();
-	void findInBuffer(bool replace = false);
-	void populateTextViewMenu(Gtk::Menu* menu);
 #ifdef G_OS_UNIX
 	void dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring& lang);
 	void dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result);

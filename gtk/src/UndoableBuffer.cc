@@ -172,10 +172,32 @@ void UndoableBuffer::redo()
 	m_undoInProgress = false;
 }
 
-void UndoableBuffer::replace_range(const Glib::ustring &text, const Gtk::TextIter& start, const Gtk::TextIter& end)
+void UndoableBuffer::save_selection_bounds(bool viewSelected)
 {
-	erase(start, end);
-	insert_at_cursor(text);
+	Gtk::TextIter ins = get_iter_at_mark(get_insert());
+	Gtk::TextIter sel = get_iter_at_mark(get_selection_bound());
+	if(viewSelected || ins.get_offset() != sel.get_offset()){
+		if(ins.get_offset() < sel.get_offset()){
+			m_selStart = ins;
+			m_selEnd = sel;
+		}else{
+			m_selStart = sel;
+			m_selEnd = ins;
+		}
+	}
+}
+
+bool UndoableBuffer::get_selection_bounds(Gtk::TextIter& start, Gtk::TextIter& end) const
+{
+	start = m_selStart;
+	end = m_selEnd;
+	return m_selEnd.get_offset() - m_selStart.get_offset() > 0;
+}
+
+Gtk::TextIter UndoableBuffer::replace_range(const Glib::ustring &text, const Gtk::TextIter& start, const Gtk::TextIter& end)
+{
+	Gtk::TextIter it = erase(start, end);
+	return insert(it, text);
 }
 
 void UndoableBuffer::freeStack(std::stack<Action *> &stack)
