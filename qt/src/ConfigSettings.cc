@@ -22,15 +22,20 @@
 TableSetting::TableSetting(const QString& key, QTableWidget* table)
 	: AbstractSetting(key), m_table(table)
 {
+	QString str = QSettings().value(m_key).toString();
 	m_table->setRowCount(0);
-	QStringList rows = QSettings().value(m_key).toString().split(";", QString::SkipEmptyParts);
-	for(int row = 0, nRows = rows.size(); row < nRows; ++row)
-	{
-		m_table->insertRow(row);
-		QStringList cols = rows[row].split(",");
-		for(int col = 0, nCols = cols.size(); col < nCols; ++col)
-		{
-			m_table->setItem(row, col, new QTableWidgetItem(cols[col]));
+	int nCols = m_table->columnCount();
+
+	for(const QString& row : str.split(';')){
+		int colidx = 0;
+		QStringList cols = row.split(',');
+		if(cols.size() != nCols){
+			continue;
+		}
+		int rowidx = m_table->rowCount();
+		m_table->insertRow(rowidx);
+		for(const QString& col : cols){
+			m_table->setItem(rowidx, colidx++, new QTableWidgetItem(col));
 		}
 	}
 	connect(m_table, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(serialize()));
@@ -38,11 +43,12 @@ TableSetting::TableSetting(const QString& key, QTableWidget* table)
 
 void TableSetting::serialize()
 {
+	// Serialized string has format a11,a12,a13;a21,a22,a23;...
 	QStringList rows;
-	for(int row = 0, nRows = m_table->rowCount(); row < nRows; ++row)
-	{
+	int nCols = m_table->columnCount();
+	for(int row = 0, nRows = m_table->rowCount(); row < nRows; ++row){
 		QStringList cols;
-		for(int col = 0, nCols = m_table->columnCount(); col < nCols; ++col)
+		for(int col = 0; col < nCols; ++col)
 		{
 			QTableWidgetItem* item = m_table->item(row, col);
 			cols.append(item ? item->text() : QString());

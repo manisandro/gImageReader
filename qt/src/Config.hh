@@ -41,10 +41,8 @@ public:
 	}
 	template<class T>
 	T* getSetting(const QString& key) const{
-		if(m_settings.contains(key)){
-			return static_cast<T*>(m_settings[key]);
-		}
-		return 0;
+		auto it = m_settings.find(key);
+		return it == m_settings.end() ? nullptr : static_cast<T*>(it.value());
 	}
 
 	bool searchLangSpec(Lang& lang) const;
@@ -52,9 +50,7 @@ public:
 
 public slots:
 	void disableDictInstall();
-#if ENABLE_VERSIONCHECK
 	void disableUpdateCheck();
-#endif
 
 private:
 	static const QList<Lang> LANGUAGES;
@@ -68,7 +64,7 @@ private slots:
 	void addLanguage();
 	void removeLanguage();
 	void updateFontButton(const QFont& font);
-	void langTableSelectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
+	void langTableSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 	void clearLineEditErrorState();
 	void toggleAddLanguage(bool forceHide = false);
 };

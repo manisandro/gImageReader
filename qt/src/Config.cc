@@ -92,19 +92,15 @@ Config::Config(QWidget* parent)
 		ui.tableWidgetPredefLang->setItem(row, 2, new QTableWidgetItem(lang.name));
 	}
 
-	m_fontDialog.setCurrentFont(QFont());
-
 	connect(ui.checkBoxDefaultOutputFont, SIGNAL(toggled(bool)), ui.pushButtonOutputFont, SLOT(setDisabled(bool)));
 	connect(ui.pushButtonOutputFont, SIGNAL(clicked()), &m_fontDialog, SLOT(exec()));
 	connect(&m_fontDialog, SIGNAL(fontSelected(QFont)), this, SLOT(updateFontButton(QFont)));
-	connect(ui.pushButtonAddLang, SIGNAL(clicked()), ui.widgetAddLang, SLOT(show()));
-	connect(ui.pushButtonAddLang, SIGNAL(clicked()), ui.widgetAddRemoveLang, SLOT(hide()));
+	connect(ui.pushButtonAddLang, SIGNAL(clicked()), this, SLOT(toggleAddLanguage()));
 	connect(ui.pushButtonRemoveLang, SIGNAL(clicked()), this, SLOT(removeLanguage()));
 	connect(ui.pushButtonAddLangOk, SIGNAL(clicked()), this, SLOT(addLanguage()));
 	connect(ui.pushButtonAddLangCancel, SIGNAL(clicked()), this, SLOT(toggleAddLanguage()));
 	connect(ui.tableWidgetAdditionalLang->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(langTableSelectionChanged(QItemSelection,QItemSelection)));
 	connect(ui.buttonBox->button(QDialogButtonBox::Help), SIGNAL(clicked()), MAIN, SLOT(showHelp()));
-
 	connect(ui.lineEditLangPrefix, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditErrorState()));
 	connect(ui.lineEditLangName, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditErrorState()));
 	connect(ui.lineEditLangCode, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditErrorState()));
@@ -214,6 +210,5 @@ void Config::langTableSelectionChanged(const QItemSelection &selected, const QIt
 
 void Config::clearLineEditErrorState()
 {
-	QLineEdit* lineEdit = static_cast<QLineEdit*>(QObject::sender());
-	lineEdit->setStyleSheet("");
+	static_cast<QLineEdit*>(QObject::sender())->setStyleSheet("");
 }

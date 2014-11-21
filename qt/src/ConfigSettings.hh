@@ -152,10 +152,6 @@ public:
 		connect(combo, SIGNAL(currentIndexChanged(int)), this, SLOT(serialize()));
 	}
 
-	int getValue() const{
-		return m_combo->currentIndex();
-	}
-
 public slots:
 	void serialize(){
 		QSettings().setValue(m_key, QVariant::fromValue(m_combo->currentIndex()));
