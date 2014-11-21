@@ -199,6 +199,7 @@ void SubstitutionsManager::onTableSelectionChanged(const QItemSelection& selecte
 
 void SubstitutionsManager::applySubstitutions()
 {
+	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
 	QTextCursor cursor =  m_textEdit->textCursor();
 	int end = qMax(cursor.anchor(), cursor.position());
 	if(cursor.anchor() == cursor.position()){
@@ -229,4 +230,5 @@ void SubstitutionsManager::applySubstitutions()
 		}
 		QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 	}
+	MAIN->popState();
 }
