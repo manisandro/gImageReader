@@ -285,9 +285,17 @@ QString MainWindow::getNewestVersion()
 		QNetworkRequest req(url);
 		req.setRawHeader("User-Agent" , "Wget/1.13.4");
 		reply = networkMgr.get(req);
+		QTimer timeout;
 		QEventLoop loop;
+		connect(&timeout, SIGNAL(timeout()), &loop, SLOT(quit()));
 		connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+		timeout.setSingleShot(true);
+		timeout.start(5000);
 		loop.exec();
+		if(reply->isRunning()){
+			reply->close();
+			break;
+		}
 
 		QUrl redirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
 		if(redirectUrl.isValid() && url != redirectUrl){
