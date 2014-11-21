@@ -106,12 +106,13 @@ MainWindow::MainWindow()
 	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) { return closeEvent(ev); });
 	CONNECTS(Builder("tbbutton:main.controls").as<Gtk::ToggleToolButton>(), toggled,
 			 [this](Gtk::ToggleToolButton* b) { Builder("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
-	CONNECT(m_config, languageChanged, [this](const Config::Lang& lang){ m_outputManager->setLanguage(lang); });
+	CONNECT(m_displayer, selectionChanged, [this](bool haveSelection){ m_recognizer->setRecognizeMode(haveSelection); });
+	CONNECT(m_recognizer, languageChanged, [this](const Config::Lang& lang){ m_outputManager->setLanguage(lang); });
 	CONNECT(m_sourceManager, sourceChanged, [this](Source* source){ onSourceChanged(source); });
 
 	m_config->addSetting("showcontrols", new SwitchSettingT<Gtk::ToggleToolButton>("tbbutton:main.controls"));
 
-	m_config->updateLanguagesMenu();
+	m_recognizer->updateLanguagesMenu();
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
@@ -224,11 +225,12 @@ void MainWindow::showHelp(const std::string& chapter)
 void MainWindow::showConfig()
 {
 	m_config->showDialog();
+	m_recognizer->updateLanguagesMenu();
 }
 
 void MainWindow::redetectLanguages()
 {
-	m_config->updateLanguagesMenu();
+	m_recognizer->updateLanguagesMenu();
 }
 
 void MainWindow::addNotification(const Glib::ustring &title, const Glib::ustring &message, const std::vector<NotificationAction> &actions, Notification* handle)

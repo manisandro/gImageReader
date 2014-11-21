@@ -884,7 +884,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
     <property name="can_focus">False</property>
     <property name="column_spacing">4</property>
     <child>
-      <object class="GtkLabel" id="label:main.recognize.state">
+      <object class="GtkLabel" id="label:main.recognize.mode">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">&lt;small&gt;Recognize all&lt;/small&gt;</property>
@@ -2459,6 +2459,10 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkMenu" id="menu:main.languages">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
   </object>
   <object class="GtkMenu" id="menu:output.stripcrlf">
     <property name="visible">True</property>

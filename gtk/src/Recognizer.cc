@@ -24,56 +24,185 @@
 #include "Recognizer.hh"
 #include "Utils.hh"
 
+#include <gtkspellmm.h>
 #include <tesseract/baseapi.h>
+#include <tesseract/strngs.h>
+#include <tesseract/genericvector.h>
 
 Recognizer::Recognizer()
 {
-	m_pagesMenu = Builder("menu:recognize.pages");
+	m_menuPages = Builder("menu:recognize.pages");
+	m_menuLanguages = Builder("menu:main.languages");
 	m_pagesDialog = Builder("dialog:recognize.pages");
 	m_pagesEntry = Builder("entry:dialog.pages");
-	m_regionStrategyCombo = Builder("comboboxtext:dialog.regions");
-	Gtk::MenuToolButton* tbbtn = Builder("tbmenu:main.recognize");
-	m_recognizeBtn = static_cast<Gtk::ToolButton*>(((Gtk::Container*)tbbtn->get_children()[0])->get_children()[0]);
+	m_langLabel = Builder("label:main.recognize.lang");
+	m_modeLabel = Builder("label:main.recognize.mode");
+	m_pageAreaCombo = Builder("comboboxtext:dialog.regions");
+	Gtk::MenuToolButton* recognizeBtn = Builder("tbmenu:main.recognize");
+	recognizeBtn->set_menu(*m_menuLanguages);
+	m_recognizeBtn = static_cast<Gtk::ToolButton*>(((Gtk::Container*)recognizeBtn->get_children()[0])->get_children()[0]);
 
-	CONNECT(m_recognizeBtn, clicked, [this]{ recognizeStart(); });
-	CONNECT(Builder("menuitem:recognize.pages.current").as<Gtk::MenuItem>(), activate, [this]{ recognizeStart(PageSelection::Current); });
-	CONNECT(Builder("menuitem:recognize.pages.multiple").as<Gtk::MenuItem>(), activate, [this]{ recognizeStart(PageSelection::Multiple); });
+	CONNECT(m_recognizeBtn, clicked, [this]{ recognizeButtonClicked(); });
+	CONNECT(Builder("menuitem:recognize.pages.current").as<Gtk::MenuItem>(), activate, [this]{ recognizeCurrentPage(); });
+	CONNECT(Builder("menuitem:recognize.pages.multiple").as<Gtk::MenuItem>(), activate, [this]{ recognizeMultiplePages();; });
 	CONNECTS(m_pagesEntry, focus_in_event, [](GdkEventFocus*, Gtk::Entry* e){ Utils::clear_error_state(e); return false; });
-	m_textDispatcher.connect([this]{ addText(); });
 
+	MAIN->getConfig()->addSetting("language", new VarSetting<Glib::ustring>());
 	MAIN->getConfig()->addSetting("ocrregionstrategy", new ComboSetting("comboboxtext:dialog.regions"));
 }
 
-bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, OutputDestination dest)
+bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* language) const
 {
-	Glib::ustring lang = MAIN->getConfig()->getSelectedLanguage().prefix;
-	Glib::ustring text;
-	if(!Utils::busyTask([&img,&lang,&text,this]{
-		tesseract::TessBaseAPI tess;
-		if(!Utils::initTess(tess, nullptr, lang.c_str())){ return false; }
-		tess.SetImage(img->get_data(), img->get_width(), img->get_height(), 4, 4 * img->get_width());
-		text = tess.GetUTF8Text();
-		return true;
-	}, _("Recognizing...")))
-	{
-		return false;
-	}
-	if(dest == OutputDestination::Buffer){
-		MAIN->getOutputManager()->addText(text, false);
-	}else if(dest == OutputDestination::Clipboard){
-		Gtk::Clipboard::get()->set_text(text);
-	}
-	return true;
+	std::string current = std::setlocale(LC_NUMERIC, NULL);
+	std::setlocale(LC_NUMERIC, "C");
+	int ret = tess.Init(nullptr, language);
+	std::setlocale(LC_NUMERIC, current.c_str());
+	return ret != -1;
 }
 
-void Recognizer::selectPages(std::vector<int>& pages)
+void Recognizer::updateLanguagesMenu()
 {
-	m_pagesEntry->set_text(Glib::ustring::compose("%1-%2", 1, MAIN->getDisplayer()->getNPages()));
-	m_pagesEntry->grab_focus();
+	m_menuLanguages->foreach([this](Gtk::Widget& w){ m_menuLanguages->remove(w); });
+	m_langMenuRadioGroup = Gtk::RadioButtonGroup();
+	m_langMenuCheckGroup = std::vector<std::pair<Gtk::CheckMenuItem*, Glib::ustring>>();
+	m_curLang = Config::Lang();
+	Gtk::RadioMenuItem* curitem = nullptr;
+	Gtk::RadioMenuItem* activeitem = nullptr;
+
+	std::vector<Glib::ustring> parts = Utils::string_split(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("language")->getValue(), ':');
+	Config::Lang curlang = {parts.empty() ? "eng" : parts[0], parts.size() < 2 ? "" : parts[1]};
+
+	std::vector<Glib::ustring> dicts = GtkSpell::Checker::get_language_list();
+
+	tesseract::TessBaseAPI tess;
+	initTesseract(tess);
+	GenericVector<STRING> availLanguages;
+	tess.GetAvailableLanguagesAsVector(&availLanguages);
+
+	if(availLanguages.empty()){
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("No languages available"), _("No tesseract languages are available for use. Recognition will not work."));
+		m_langLabel->set_text("");
+		return;
+	}
+
+	// Add menu items for languages, with spelling submenu if available
+	for(int i = 0; i < availLanguages.size(); ++i){
+		Config::Lang lang = {availLanguages[i].string()};
+		if(!MAIN->getConfig()->searchLangSpec(lang)){
+			lang.name = lang.prefix;
+		}
+		std::vector<Glib::ustring> spelldicts;
+		if(!lang.code.empty()){
+			for(const Glib::ustring& dict : dicts){
+				if(dict.substr(0, 2) == lang.code.substr(0, 2)){
+					spelldicts.push_back(dict);
+				}
+			}
+			std::sort(spelldicts.begin(), spelldicts.end());
+		}
+		if(!spelldicts.empty()){
+			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(lang.name));
+			Gtk::Menu* submenu = Gtk::manage(new Gtk::Menu);
+			for(const Glib::ustring& dict : spelldicts){
+				Config::Lang itemlang = {lang.prefix, dict, lang.name};
+				curitem = Gtk::manage(new Gtk::RadioMenuItem(m_langMenuRadioGroup, GtkSpell::Checker::decode_language_code(dict)));
+				CONNECT(curitem, toggled, [this, curitem, itemlang]{ setLanguage(curitem, itemlang); });
+				if((curlang.prefix == lang.prefix) &&
+				   (curlang.code.empty() || curlang.code == dict.substr(0, 2) || curlang.code == dict))
+				{
+					curlang = itemlang;
+					activeitem = curitem;
+				}
+				submenu->append(*curitem);
+			}
+			item->set_submenu(*submenu);
+			m_menuLanguages->append(*item);
+		}else{
+			curitem = Gtk::manage(new Gtk::RadioMenuItem(m_langMenuRadioGroup, lang.name));
+			CONNECT(curitem, toggled, [this, curitem, lang]{ setLanguage(curitem, lang); });
+			if(curlang.prefix == lang.prefix){
+				curlang = lang;
+				activeitem = curitem;
+			}
+			m_menuLanguages->append(*curitem);
+		}
+	}
+	// Add multilanguage menu
+	m_menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+	m_multilingualRadio = Gtk::manage(new Gtk::RadioMenuItem(m_langMenuRadioGroup, _("Multilingual")));
+	Gtk::Menu* submenu = Gtk::manage(new Gtk::Menu);
+	bool isMultilingual = curlang.prefix.find('+') != curlang.prefix.npos;
+	std::vector<Glib::ustring> sellangs = Utils::string_split(curlang.prefix, '+');
+	for(int i = 0; i < availLanguages.size(); ++i){
+		Config::Lang lang = {availLanguages[i].string()};
+		if(!MAIN->getConfig()->searchLangSpec(lang)){
+			lang.name = lang.prefix;
+		}
+		Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(lang.name));
+		item->set_active(isMultilingual && std::find(sellangs.begin(), sellangs.end(), lang.prefix) != sellangs.end());
+		CONNECT(item, toggled, [this]{ setMultiLanguage(); });
+		submenu->append(*item);
+		m_langMenuCheckGroup.push_back(std::make_pair(item, lang.prefix));
+	}
+	m_multilingualRadio->set_submenu(*submenu);
+	m_menuLanguages->append(*m_multilingualRadio);
+	if(isMultilingual){
+		activeitem = m_multilingualRadio;
+		setMultiLanguage();
+	}else if(activeitem == nullptr){
+		activeitem = curitem;
+	}
+	m_menuLanguages->show_all();
+	activeitem->set_active(true);
+}
+
+void Recognizer::setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang &lang)
+{
+	if(item->get_active()){
+		m_langLabel->set_markup(Glib::ustring::compose("<small> %1 (%2)</small>", lang.name, lang.code));
+		m_curLang = lang;
+		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("language")->setValue(lang.prefix + ":" + lang.code);
+		m_signal_languageChanged.emit(m_curLang);
+	}
+}
+
+void Recognizer::setMultiLanguage()
+{
+	m_multilingualRadio->set_active(true);
+	Glib::ustring langs;
+	for(const auto& pair : m_langMenuCheckGroup) {
+		if(pair.first->get_active()) {
+			langs += pair.second + "+";
+		}
+	}
+	if(langs.empty()) {
+		langs = "eng+";
+	}
+	langs = langs.substr(0, langs.length() - 1);
+	m_langLabel->set_markup("<small>" + langs + "</small>");
+	m_curLang = {langs, "", "Multilingual"};
+	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("language")->setValue(langs + ":");
+	m_signal_languageChanged.emit(m_curLang);
+}
+
+void Recognizer::setRecognizeMode(bool haveSelection)
+{
+	if(haveSelection){
+		m_modeLabel->set_markup(Glib::ustring::compose("<small>%1</small>", _("Recognize selection")));
+	}else{
+		m_modeLabel->set_markup(Glib::ustring::compose("<small>%1</small>", _("Recognize all")));
+	}
+}
+
+std::vector<int> Recognizer::selectPages(bool& autodetectLayout)
+{
 	int nPages = MAIN->getDisplayer()->getNPages();
 
+	m_pagesEntry->set_text(Glib::ustring::compose("1-%1", nPages));
+	m_pagesEntry->grab_focus();
+
+	std::vector<int> pages;
 	if(m_pagesDialog->run() == Gtk::RESPONSE_OK){
-		pages.clear();
 		Glib::ustring text = m_pagesEntry->get_text();
 		text = Glib::Regex::create("\\s+")->replace(text, 0, "", static_cast<Glib::RegexMatchFlags>(0));
 		std::vector<Glib::ustring>&& blocks = Utils::string_split(text, ',');
@@ -99,96 +228,103 @@ void Recognizer::selectPages(std::vector<int>& pages)
 			Utils::set_error_state(m_pagesEntry);
 		}
 	}
-	std::sort(pages.begin(), pages.end());
+	autodetectLayout = m_pageAreaCombo->get_active_row_number() == 1;
 	m_pagesDialog->hide();
+	std::sort(pages.begin(), pages.end());
+	return pages;
 }
 
-void Recognizer::recognizeStart(PageSelection pagesel)
+void Recognizer::recognizeButtonClicked()
 {
 	int nPages = MAIN->getDisplayer()->getNPages();
 	if(nPages == 1 || MAIN->getDisplayer()->getHasSelections()){
-		pagesel = PageSelection::Current;
+		recognize({MAIN->getDisplayer()->getCurrentPage()});
+	}else{
+		auto positioner = sigc::bind(sigc::ptr_fun(Utils::popup_positioner), m_recognizeBtn, m_menuPages, false, true);
+		m_menuPages->popup(positioner, 0, gtk_get_current_event_time());
 	}
-	std::vector<int> pages;
-	bool autodetectLayout = false;
-	if(pagesel == PageSelection::Prompt){
-		auto positioner = sigc::bind(sigc::ptr_fun(Utils::popup_positioner), m_recognizeBtn, m_pagesMenu, false, true);
-		m_pagesMenu->popup(positioner, 0, gtk_get_current_event_time());
-		return;
-	}else if(pagesel == PageSelection::Current){
-		pages.push_back(MAIN->getDisplayer()->getCurrentPage());
-	}else if(pagesel == PageSelection::Multiple){
-		selectPages(pages);
-		autodetectLayout = (m_regionStrategyCombo->get_active_row_number() == RegionStrategy::Autodetect);
-	}
-	if(pages.empty()) {
-		return;
-	}
-	MAIN->pushState(MainWindow::State::Busy, _("Recognizing..."));
-	m_textInsert = false;
-	Glib::ustring lang = MAIN->getConfig()->getSelectedLanguage().prefix;
-	m_thread = Glib::Threads::Thread::create([this,pages,lang,autodetectLayout]{ recognizeDo(pages, lang, autodetectLayout); });
 }
 
-void Recognizer::recognizeDo(const std::vector<int> &pages, const Glib::ustring& lang, bool autodetectLayout)
+void Recognizer::recognizeCurrentPage()
+{
+	recognize({MAIN->getDisplayer()->getCurrentPage()});
+}
+
+void Recognizer::recognizeMultiplePages()
+{
+	bool autodetectLayout = false;
+	std::vector<int> pages = selectPages(autodetectLayout);
+	recognize(pages, autodetectLayout);
+}
+
+void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 {
 	Glib::ustring failed;
 	tesseract::TessBaseAPI tess;
-	if(!Utils::initTess(tess, nullptr, lang.c_str())){
+	if(!initTesseract(tess, m_curLang.prefix.c_str())){
 		failed.append(_("\n\tFailed to initialize tesseract"));
 	}else{
-		int npages = pages.size();
-		int idx = 0;
-		for(int page : pages){
-			++idx;
-			Glib::signal_idle().connect_once([page, npages, idx]{ MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
-			m_taskState = TaskState::Waiting;
-			Glib::signal_idle().connect_once([this,page,autodetectLayout]{ setPage(page, autodetectLayout); });
-			Glib::Threads::Mutex::Lock lock(m_mutex);
-			while(m_taskState == TaskState::Waiting){
-				m_cond.wait(m_mutex);
+		Utils::busyTask([&]{
+			int npages = pages.size();
+			int idx = 0;
+			bool insertText = false;
+			for(int page : pages){
+				++idx;
+				Glib::signal_idle().connect_once([=]{ MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
+
+				bool success = false;
+				Utils::runInMainThreadBlocking([&]{ success = setPage(page, autodetectLayout); });
+				if(!success){
+					failed.append(Glib::ustring::compose(_("\n\tPage %1: failed to render page"), page));
+					Utils::runInMainThreadBlocking([&]{ MAIN->getOutputManager()->addText(_("\n[Failed to recognize page %1]\n"), insertText); });
+					insertText = true;
+					continue;
+				}
+				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : MAIN->getDisplayer()->getSelections()){
+					tess.SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
+					char* text = tess.GetUTF8Text();
+					Utils::runInMainThreadBlocking([&]{ MAIN->getOutputManager()->addText(text, insertText); });
+					delete[] text;
+					insertText = true;
+				}
+				Glib::signal_idle().connect_once([]{ MAIN->popState(); });
 			}
-			if(m_taskState == TaskState::Failed){
-				failed.append(Glib::ustring::compose(_("\n\tPage %1: failed to render page"), page));
-				m_textQueue.push(Glib::ustring::compose(_("\n[Failed to recognize page %1]\n"), page));
-				m_textDispatcher.emit();
-				continue;
-			}
-			std::vector<Cairo::RefPtr<Cairo::ImageSurface>>&& selections = MAIN->getDisplayer()->getSelections();
-			for(Cairo::RefPtr<Cairo::ImageSurface> image : selections){
-				tess.SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
-				m_textQueue.push(tess.GetUTF8Text());
-				m_textDispatcher.emit();
-			}
-			Glib::signal_idle().connect_once([]{ MAIN->popState(); });
-		}
+			return true;
+		}, _("Recognizing..."));
 	}
-	Glib::signal_idle().connect_once([this, failed]{ recognizeDone(failed); });
+	if(!failed.empty()){
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occured"), Glib::ustring::compose(_("The following errors occured:%1"), failed));
+	}
 }
 
-void Recognizer::recognizeDone(const Glib::ustring &errors)
+bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, OutputDestination dest)
 {
-	m_thread->join();
-	MAIN->popState();
-	if(!errors.empty()){
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occured"), Glib::ustring::compose(_("The following errors occured:%1"), errors));
+	tesseract::TessBaseAPI tess;
+	if(!initTesseract(tess, m_curLang.prefix.c_str())){
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occured"), _("Failed to initialize tesseract"));
+		return false;
 	}
+	Glib::ustring output;
+	Utils::busyTask([&]{
+		tess.SetImage(img->get_data(), img->get_width(), img->get_height(), 4, 4 * img->get_width());
+		char* text = tess.GetUTF8Text();
+		output = text;
+		delete[] text;
+		return true;
+	}, _("Recognizing..."));
+	if(dest == OutputDestination::Buffer){
+		MAIN->getOutputManager()->addText(output, false);
+	}else if(dest == OutputDestination::Clipboard){
+		Gtk::Clipboard::get()->set_text(output);
+	}
+	return true;
 }
 
-void Recognizer::setPage(int page, bool autodetectLayout)
+bool Recognizer::setPage(int page, bool autodetectLayout)
 {
 	bool success = MAIN->getDisplayer()->setCurrentPage(page);
 	if(autodetectLayout) {
 		MAIN->getDisplayer()->autodetectLayout();
 	}
-	Glib::Threads::Mutex::Lock lock(m_mutex);
-	m_taskState = success ? TaskState::Succeeded : TaskState::Failed;
-	m_cond.signal();
-}
-
-void Recognizer::addText()
-{
-	Glib::ustring text = m_textQueue.pop();
-	MAIN->getOutputManager()->addText(text, m_textInsert);
-	m_textInsert = true;
+	return success;
 }

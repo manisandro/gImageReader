@@ -21,40 +21,51 @@
 #define RECOGNIZER_HH
 
 #include "common.hh"
-#include "Utils.hh"
+#include "Config.hh"
 
 #include <cairomm/cairomm.h>
+
+namespace tesseract { class TessBaseAPI; }
 
 class Recognizer
 {
 public:
 	enum class OutputDestination { Buffer, Clipboard };
+
 	Recognizer();
+	const Config::Lang& getSelectedLanguage() const{ return m_curLang; }
 	bool recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
+	void setRecognizeMode(bool haveSelection);
+	void updateLanguagesMenu();
+	sigc::signal<void,Config::Lang> signal_languageChanged(){ return m_signal_languageChanged; }
 
 private:
-	enum class PageSelection { Prompt, Current, Multiple };
+	enum class PageArea { EntirePage, Autodetect };
 	enum class TaskState { Waiting, Succeeded, Failed };
-	struct RegionStrategy { enum {EntirePage, Autodetect }; };
-	Gtk::Menu* m_pagesMenu;
+
+	Gtk::Menu* m_menuLanguages;
+	Gtk::Menu* m_menuPages;
 	Gtk::Dialog* m_pagesDialog;
 	Gtk::Entry* m_pagesEntry;
+	Gtk::Label* m_langLabel;
+	Gtk::Label* m_modeLabel;
 	Gtk::ToolButton* m_recognizeBtn;
-	Gtk::ComboBoxText* m_regionStrategyCombo;
-	Glib::Threads::Mutex m_mutex;
-	Glib::Threads::Cond m_cond;
-	Glib::Threads::Thread* m_thread;
-	TaskState m_taskState;
-	Glib::Dispatcher m_textDispatcher;
-	Utils::AsyncQueue<Glib::ustring> m_textQueue;
-	bool m_textInsert;
+	Gtk::ComboBoxText* m_pageAreaCombo;
+	sigc::signal<void,Config::Lang> m_signal_languageChanged;
+	Gtk::RadioButtonGroup m_langMenuRadioGroup;
+	std::vector<std::pair<Gtk::CheckMenuItem*,Glib::ustring>> m_langMenuCheckGroup;
+	Gtk::RadioMenuItem* m_multilingualRadio = nullptr;
+	Config::Lang m_curLang;
 
-	void selectPages(std::vector<int> &pages);
-	void recognizeStart(PageSelection pagessel = PageSelection::Prompt);
-	void recognizeDo(const std::vector<int>& pages, const Glib::ustring &lang, bool autodetectLayout);
-	void recognizeDone(const Glib::ustring &errors);
-	void setPage(int page, bool autodetectLayout);
-	void addText();
+	bool initTesseract(tesseract::TessBaseAPI& tess, const char* language = nullptr) const;
+	void recognizeButtonClicked();
+	void recognizeCurrentPage();
+	void recognizeMultiplePages();
+	void recognize(const std::vector<int>& pages, bool autodetectLayout = false);
+	std::vector<int> selectPages(bool& autodetectLayout);
+	void setLanguage(const Gtk::RadioMenuItem *item, const Config::Lang& lang);
+	void setMultiLanguage();
+	bool setPage(int page, bool autodetectLayout);
 };
 
 #endif // RECOGNIZER_HH

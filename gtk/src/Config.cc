@@ -21,11 +21,6 @@
 #include "MainWindow.hh"
 #include "Utils.hh"
 
-#include <gtkspellmm.h>
-#include <tesseract/baseapi.h>
-#include <tesseract/strngs.h>
-#include <tesseract/genericvector.h>
-
 const std::vector<Config::Lang> Config::LANGUAGES = {
 	// {ISO 639-2, ISO 639-1, name}
 	{"ara", "ar_AE", "\u0627\u0644\u0639\u0631\u0628\u064a\u0629"},
@@ -75,7 +70,6 @@ const std::vector<Config::Lang> Config::LANGUAGES = {
 Config::Config()
 {
 	m_dialog = Builder("dialog:config");
-	m_langLabel = Builder("label:main.recognize.lang");
 	m_addLangBox = Builder("box:config.langs.custom.add");
 	m_addLangPrefix = Builder("entry:config.langs.custom.add.prefix");
 	m_addLangName = Builder("entry:config.langs.custom.add.name");
@@ -108,7 +102,6 @@ Config::Config()
 
 	m_gioSettings = Gio::Settings::create(APPLICATION_ID);
 
-	Builder("tbmenu:main.recognize").as<Gtk::MenuToolButton>()->set_menu(m_langsMenu);
 	CONNECTS(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [](Gtk::CheckButton* btn){
 		Builder("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>()->set_sensitive(!btn->get_active());
 	});
@@ -125,7 +118,6 @@ Config::Config()
 
 	addSetting("dictinstall", new SwitchSettingT<Gtk::CheckButton>("check:config.settings.dictinstall"));
 	addSetting("updatecheck", new SwitchSettingT<Gtk::CheckButton>("check:config.settings.update"));
-	addSetting("language", new VarSetting<Glib::ustring>());
 	addSetting("customlangs", new ListStoreSetting(Glib::RefPtr<Gtk::ListStore>::cast_static(m_customLangView->get_model())));
 	addSetting("wingeom", new VarSetting<std::vector<int>>());
 }
@@ -137,118 +129,17 @@ Config::~Config()
 	}
 }
 
-bool Config::searchLangSpec(const Glib::RefPtr<Gtk::TreeModel> model, Lang& lang) const
+bool Config::searchLangSpec(Lang& lang) const
 {
-	Gtk::TreeIter it = std::find_if(model->children().begin(), model->children().end(),
-		[this, &lang](const Gtk::TreeRow& row){ return row[m_langViewCols.prefix] == lang.prefix; });
-	if(!it){
-		return false;
-	}
-	lang = {(*it)[m_langViewCols.prefix], (*it)[m_langViewCols.code], (*it)[m_langViewCols.name]};
-	return true;
-}
-
-void Config::updateLanguagesMenu()
-{
-	m_langsMenu.foreach([this](Gtk::Widget& w){ m_langsMenu.remove(w); });
-	m_curlang = Lang();
-	m_radioGroup = Gtk::RadioButtonGroup();
-	m_checkboxGroup = std::vector<std::pair<Gtk::CheckMenuItem*, Glib::ustring>>();
-	Gtk::RadioMenuItem* radioitem = nullptr;
-	Gtk::RadioMenuItem* activeradio = nullptr;
-
-	std::vector<Glib::ustring> parts = Utils::string_split(getSetting<VarSetting<Glib::ustring>>("language")->getValue(), ':');
-	Lang curlang = {parts.empty() ? "eng" : parts[0], parts.size() < 2 ? "" : parts[1]};
-
-	GtkSpell::Checker spell;
-	std::vector<Glib::ustring> dicts = spell.get_language_list();
-
-	tesseract::TessBaseAPI tess;
-	Utils::initTess(tess, nullptr, nullptr);
-	GenericVector<STRING> availLanguages;
-	tess.GetAvailableLanguagesAsVector(&availLanguages);
-
-	if(availLanguages.empty()){
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("No languages available"), _("No tesseract languages are available for use. Recognition will not work."));
-		m_langLabel->set_text("");
-		return;
-	}
-
-	// Add menu items for languages, with spelling submenu if available
-	for(int i = 0; i < availLanguages.size(); ++i){
-		Lang lang = {availLanguages[i].string()};
-		if(!searchLangSpec(m_predefLangView->get_model(), lang) && !searchLangSpec(m_customLangView->get_model(), lang)){
-			lang.name = lang.prefix;
-		}
-		std::vector<Glib::ustring> spelldicts;
-		if(!lang.code.empty()){
-			for(const Glib::ustring& dict : dicts){
-				if(dict.substr(0, 2) == lang.code.substr(0, 2)){
-					spelldicts.push_back(dict);
-				}
-			}
-			std::sort(spelldicts.begin(), spelldicts.end());
-		}
-		if(!spelldicts.empty()){
-			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(lang.name));
-			Gtk::Menu* submenu = Gtk::manage(new Gtk::Menu);
-			for(const Glib::ustring& dict : spelldicts){
-				radioitem = Gtk::manage(new Gtk::RadioMenuItem(m_radioGroup, spell.decode_language_code(dict)));
-				Lang itemlang = {lang.prefix, dict, lang.name};
-				Glib::ustring prettyname = lang.name + " (" + dict + ")";
-				CONNECT(radioitem, toggled, [this, radioitem, itemlang, prettyname]{ setLanguage(radioitem, itemlang, prettyname); });
-				if((curlang.prefix == lang.prefix) &&
-				   (curlang.code.empty() || curlang.code == dict.substr(0, 2) || curlang.code == dict))
-				{
-					curlang = itemlang;
-					radioitem->set_active(true);
-					activeradio = radioitem;
-				}
-				submenu->append(*radioitem);
-			}
-			item->set_submenu(*submenu);
-			m_langsMenu.append(*item);
-		}else{
-			radioitem = Gtk::manage(new Gtk::RadioMenuItem(m_radioGroup, lang.name));
-			CONNECT(radioitem, toggled, [this, radioitem, lang]{ setLanguage(radioitem, lang, lang.name); });
-			if(curlang.prefix == lang.prefix){
-				curlang = lang;
-				radioitem->set_active(true);
-				activeradio = radioitem;
-			}
-			m_langsMenu.append(*radioitem);
+	for(const Glib::RefPtr<Gtk::TreeModel>& model : {m_predefLangView->get_model(), m_customLangView->get_model()}){
+		Gtk::TreeIter it = std::find_if(model->children().begin(), model->children().end(),
+			[this, &lang](const Gtk::TreeRow& row){ return row[m_langViewCols.prefix] == lang.prefix; });
+		if(it){
+			lang = {(*it)[m_langViewCols.prefix], (*it)[m_langViewCols.code], (*it)[m_langViewCols.name]};
+			return true;
 		}
 	}
-	// Add multilanguage menu
-	m_langsMenu.append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
-	radioitem = Gtk::manage(new Gtk::RadioMenuItem(m_radioGroup, _("Multilingual")));
-	CONNECT(radioitem, toggled, [this, radioitem]{ setMultiLanguage(radioitem); });
-	Gtk::Menu* submenu = Gtk::manage(new Gtk::Menu);
-	std::vector<Glib::ustring> sellangs = Utils::string_split(curlang.prefix, '+');
-	if(!sellangs.size() > 1) {
-		activeradio = radioitem;
-	}
-	for(int i = 0; i < availLanguages.size(); ++i){
-		Lang lang = {availLanguages[i].string()};
-		if(!searchLangSpec(m_predefLangView->get_model(), lang) && !searchLangSpec(m_customLangView->get_model(), lang)){
-			lang.name = lang.prefix;
-		}
-		Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(lang.name));
-		item->set_active((std::find(sellangs.begin(), sellangs.end(), lang.prefix) != sellangs.end()));
-		CONNECT(item, toggled, [this,radioitem]{ setMultiLanguage(radioitem); });
-		submenu->append(*item);
-		m_checkboxGroup.push_back(std::make_pair(item, lang.prefix));
-	}
-	radioitem->set_submenu(*submenu);
-	m_langsMenu.append(*radioitem);
-
-	// Show and set active item
-	m_langsMenu.show_all();
-	if(activeradio == nullptr){
-		radioitem->set_active(true);
-		activeradio = radioitem;
-	}
-	activeradio->toggled();
+	return false;
 }
 
 void Config::showDialog()
@@ -263,43 +154,12 @@ void Config::showDialog()
 			break;
 		}else{
 			m_gioSettings->apply();
-			updateLanguagesMenu();
 			break;
 		}
 	}
 	m_dialog->hide();
 	if(m_addLangBox->get_visible()){
 		toggleAddLanguage();
-	}
-}
-
-void Config::setLanguage(const Gtk::RadioMenuItem* item, const Lang &lang, const Glib::ustring &prettyname)
-{
-	if(item->get_active()){
-		m_langLabel->set_markup("<small>" + prettyname + "</small>");
-		m_curlang = lang;
-		getSetting<VarSetting<Glib::ustring>>("language")->setValue(lang.prefix + ":" + lang.code);
-		m_signal_languageChanged.emit(lang);
-	}
-}
-
-void Config::setMultiLanguage(const Gtk::RadioMenuItem* item)
-{
-	if(item->get_active()){
-		Glib::ustring langs;
-		for(const auto& pair : m_checkboxGroup) {
-			if(pair.first->get_active()) {
-				langs += pair.second + "+";
-			}
-		}
-		langs = langs.substr(0, langs.length() - 1);
-		if(langs.empty()) {
-			langs = "eng";
-		}
-		m_langLabel->set_markup("<small>" + langs + "</small>");
-		m_curlang = {langs, "", "Multilingual"};
-		getSetting<VarSetting<Glib::ustring>>("language")->setValue(langs + ":");
-		m_signal_languageChanged.emit(m_curlang);
 	}
 }
 
@@ -341,7 +201,6 @@ void Config::addLanguage()
 		m_addLangPrefix->set_text("");
 		m_addLangCode->set_text("");
 		m_addLangName->set_text("");
-		updateLanguagesMenu();
 		toggleAddLanguage();
 	}
 }

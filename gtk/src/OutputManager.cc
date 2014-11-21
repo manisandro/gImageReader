@@ -19,6 +19,7 @@
 
 #include "FileDialogs.hh"
 #include "OutputManager.hh"
+#include "Recognizer.hh"
 #include "SourceManager.hh"
 #include "SubstitutionsManager.hh"
 #include "Utils.hh"
@@ -281,7 +282,7 @@ void OutputManager::completeTextViewMenu(Gtk::Menu *menu)
 	item->set_active(GtkSpell::Checker::get_from_text_view(*m_textView));
 	CONNECT(item, toggled, [this, item]{
 		if(item->get_active()) {
-			setLanguage(MAIN->getConfig()->getSelectedLanguage(), true);
+			setLanguage(MAIN->getRecognizer()->getSelectedLanguage(), true);
 		} else {
 			setLanguage(Config::Lang(), false);
 		}
@@ -414,7 +415,7 @@ void OutputManager::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> pro
 	} catch (const Glib::Error& e) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Failed to install spelling dictionary: %1"), e.what()));
 	}
-	MAIN->getConfig()->updateLanguagesMenu();
+	MAIN->getRecognizer()->updateLanguagesMenu();
 	MAIN->popState();
 }
 #endif

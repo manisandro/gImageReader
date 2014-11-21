@@ -64,13 +64,13 @@ namespace Utils {
 		return { t.rbegin(), t.rend() };
 	}
 
-	template <class T, class It = std::reverse_iterator<typename T::const_iterator>>
+	template<class T, class It = std::reverse_iterator<typename T::const_iterator>>
 	rev_iters<It> reverse(const T& t){
 		return { t.crbegin(), t.crend() };
 	}
 
 	bool busyTask(const std::function<bool()>& f, const Glib::ustring& msg);
-	bool initTess(tesseract::TessBaseAPI& tess, const char* datapath, const char* language);
+	void runInMainThreadBlocking(const std::function<void()>& f);
 
 	template<typename T, typename S = std::deque<T>>
 	class AsyncQueue {

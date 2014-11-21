@@ -40,7 +40,6 @@ Displayer::Displayer()
 	m_zoomoutbtn = Builder("tbbutton:main.zoomout");
 	m_zoomonebtn = Builder("tbbutton:main.normsize");
 	m_zoomfitbtn = Builder("tbbutton:main.bestfit");
-	m_ocrstatelabel = Builder("label:main.recognize.state");
 	m_rotspin = Builder("spin:display.rotate");
 	m_pagespin = Builder("spin:display.page");
 	m_resspin = Builder("spin:display.resolution");
@@ -393,15 +392,13 @@ bool Displayer::mouseReleaseEvent(GdkEventButton* /*ev*/)
 	}
 	if(m_curSel->sel->isEmpty()){
 		removeSelection(m_curSel->sel);
+	}else{
+		m_signal_selectionChanged.emit(true);
 	}
 	delete m_curSel;
 	m_curSel = nullptr;
 	m_scrollTimer.disconnect();
-	if(!m_selections.empty()){
-		m_ocrstatelabel->set_markup(Glib::ustring::compose("<small>%1</small>", _("Recognize selection")));
-	}else{
-		m_ocrstatelabel->set_markup(Glib::ustring::compose("<small>%1</small>", _("Recognize all")));
-	}
+
 	return true;
 }
 
@@ -461,6 +458,7 @@ void Displayer::clearSelections()
 {
 	for(const DisplaySelection* sel : m_selections){ delete sel; }
 	m_selections.clear();
+	m_signal_selectionChanged.emit(false);
 }
 
 void Displayer::removeSelection(const DisplaySelection* sel)
@@ -626,9 +624,7 @@ void Displayer::autodetectLayout(bool rotated)
 			m_selections.push_back(new DisplaySelection(rect.x, rect.y, rect.width, rect.height));
 		}
 		m_canvas->queue_draw();
-		if(!m_selections.empty()){
-			m_ocrstatelabel->set_markup(Glib::ustring::compose("<small>%1</small>", _("Recognize selection")));
-		}
+		m_signal_selectionChanged.emit(true);
 	}
 }
 

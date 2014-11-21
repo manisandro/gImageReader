@@ -43,6 +43,7 @@ public:
 	int getCurrentPage() const{ return m_pagespin->get_value_as_int(); }
 	int getNPages(){ double min, max; m_pagespin->get_range(min, max); return int(max); }
 	void autodetectLayout(bool rotated = false);
+	sigc::signal<void, bool> signal_selectionChanged(){ return m_signal_selectionChanged; }
 
 private:
 	enum class Zoom { In, Out, Fit, One };
@@ -59,7 +60,6 @@ private:
 	Gtk::ToolButton* m_zoomoutbtn;
 	Gtk::ToggleToolButton* m_zoomfitbtn;
 	Gtk::ToggleToolButton* m_zoomonebtn;
-	Gtk::Label* m_ocrstatelabel;
 	Gtk::SpinButton* m_rotspin;
 	Gtk::SpinButton* m_pagespin;
 	Gtk::SpinButton* m_resspin;
@@ -76,6 +76,8 @@ private:
 	Geo m_geo;
 	DisplaySelection::Handle* m_curSel = nullptr;
 	std::vector<DisplaySelection*> m_selections;
+
+	sigc::signal<void, bool> m_signal_selectionChanged;
 
 	sigc::connection m_renderTimer;
 	sigc::connection m_scrollTimer;

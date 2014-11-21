@@ -206,11 +206,20 @@ bool Utils::busyTask(const std::function<bool()> &f, const Glib::ustring &msg)
 	return taskState  == TaskState::Succeeded;
 }
 
-bool Utils::initTess(tesseract::TessBaseAPI& tess, const char* datapath, const char* language)
-{
-	std::string current = setlocale(LC_NUMERIC, NULL);
-	setlocale(LC_NUMERIC, "C");
-	int ret = tess.Init(datapath, language);
-	setlocale(LC_NUMERIC, current.c_str());
-	return ret != -1;
+void Utils::runInMainThreadBlocking(const std::function<void()>& f){
+	Glib::Threads::Mutex mutex;
+	Glib::Threads::Cond cond;
+	bool finished = false;
+	Glib::signal_idle().connect_once([&]{
+		f();
+		mutex.lock();
+		finished = true;
+		cond.signal();
+		mutex.unlock();
+	});
+	mutex.lock();
+	while(!finished){
+		cond.wait(mutex);
+	}
+	mutex.unlock();
 }

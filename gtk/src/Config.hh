@@ -47,11 +47,9 @@ public:
 		assert(it != m_settings.end());
 		return (T*)(it->second);
 	}
-	const Lang& getSelectedLanguage() const{ return m_curlang; }
-	sigc::signal<void, const Lang&> signal_languageChanged(){ return m_signal_languageChanged; }
 
+	bool searchLangSpec(Lang& lang) const;
 	void showDialog();
-	void updateLanguagesMenu();
 
 private:
 	struct LangViewColumns : public Gtk::TreeModel::ColumnRecord {
@@ -64,7 +62,6 @@ private:
 	static const std::vector<Lang> LANGUAGES;
 
 	Gtk::Dialog* m_dialog;
-	Gtk::Label* m_langLabel;
 	Gtk::Box* m_addLangBox;
 	Gtk::Entry* m_addLangPrefix;
 	Gtk::Entry* m_addLangName;
@@ -74,24 +71,14 @@ private:
 	Gtk::TreeView* m_predefLangView;
 	Gtk::TreeView* m_customLangView;
 	Gtk::Button* m_dialogOkButton;
-	Gtk::Menu m_langsMenu;
-	Gtk::RadioButtonGroup m_radioGroup;
-	std::vector<std::pair<Gtk::CheckMenuItem*,Glib::ustring>> m_checkboxGroup;
 
 	LangViewColumns m_langViewCols;
-
-	Lang m_curlang;
 	std::map<Glib::ustring,AbstractSetting*> m_settings;
 	Glib::RefPtr<Gio::Settings> m_gioSettings;
 
-	sigc::signal<void, const Lang&> m_signal_languageChanged;
-
-	void setLanguage(const Gtk::RadioMenuItem *item, const Lang& lang, const Glib::ustring& prettyname);
-	void setMultiLanguage(const Gtk::RadioMenuItem *item);
 	void toggleAddLanguage();
 	void addLanguage();
 	void removeLanguage();
-	bool searchLangSpec(const Glib::RefPtr<Gtk::TreeModel> model, Lang& lang) const;
 };
 
 #endif // CONFIG_HH
