@@ -206,8 +206,8 @@ void OutputManager::findReplace(bool backwards, bool replace)
 		flags |= QTextDocument::FindCaseSensitively;
 		cs = Qt::CaseSensitive;
 	}
-	QTextCursor cursor = ui.plainTextEditOutput->textCursor();
 
+	QTextCursor cursor = ui.plainTextEditOutput->textCursor();
 	if(cursor.selectedText().compare(findStr, cs) == 0){
 		if(replace){
 			cursor.beginEditBlock();
@@ -240,7 +240,6 @@ void OutputManager::findReplace(bool backwards, bool replace)
 		}
 	}
 	ui.plainTextEditOutput->setTextCursor(findcursor);
-	ui.lineEditOutputSearch->setStyleSheet("");
 	ui.plainTextEditOutput->ensureCursorVisible();
 }
 
