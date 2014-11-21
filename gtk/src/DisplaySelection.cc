@@ -48,19 +48,21 @@ DisplaySelection::Handle* DisplaySelection::getResizeHandle(const Geometry::Poin
 	double tol = 10.0 / scale;
 	std::vector<ResizeHandle> resizeHandles;
 	Geometry::Point resizeOffset;
-	if(std::abs(m_points[1].x - p.x) < tol){ // pointx
-		resizeHandles.push_back(resizePointX);
-		resizeOffset.x = p.x - m_points[1].x;
-	}else if(std::abs(m_points[0].x - p.x) < tol){ // anchorx
-		resizeHandles.push_back(resizeAnchorX);
-		resizeOffset.x = p.x - m_points[0].x;
-	}
-	if(std::abs(m_points[1].y - p.y) < tol){ // pointy
-		resizeHandles.push_back(resizePointY);
-		resizeOffset.y = p.y - m_points[1].y;
-	}else if(std::abs(m_points[0].y - p.y) < tol){ // anchory
-		resizeHandles.push_back(resizeAnchorY);
-		resizeOffset.y = p.y - m_points[0].y;
+	if(p.x > m_rect.x - tol && p.x < m_rect.x + m_rect.width + tol && p.y > m_rect.y - tol && p.y < m_rect.y + m_rect.height + tol){
+		if(std::abs(m_points[1].x - p.x) < tol){ // pointx
+			resizeHandles.push_back(resizePointX);
+			resizeOffset.x = p.x - m_points[1].x;
+		}else if(std::abs(m_points[0].x - p.x) < tol){ // anchorx
+			resizeHandles.push_back(resizeAnchorX);
+			resizeOffset.x = p.x - m_points[0].x;
+		}
+		if(std::abs(m_points[1].y - p.y) < tol){ // pointy
+			resizeHandles.push_back(resizePointY);
+			resizeOffset.y = p.y - m_points[1].y;
+		}else if(std::abs(m_points[0].y - p.y) < tol){ // anchory
+			resizeHandles.push_back(resizeAnchorY);
+			resizeOffset.y = p.y - m_points[0].y;
+		}
 	}
 	return !resizeHandles.empty() ? new DisplaySelection::Handle{this, resizeHandles, resizeOffset} : nullptr;
 }
