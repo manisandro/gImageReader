@@ -82,7 +82,7 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 
 void OutputManager::clearErrorState()
 {
-	static_cast<QLineEdit*>(QObject::sender())->setStyleSheet("");
+	ui.lineEditOutputSearch->setStyleSheet("");
 }
 
 void OutputManager::setFont()
@@ -154,6 +154,7 @@ void OutputManager::replaceNext()
 
 void OutputManager::replaceAll()
 {
+	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
 	QTextCursor cursor =  ui.plainTextEditOutput->textCursor();
 	int end = qMax(cursor.anchor(), cursor.position());
 	if(cursor.anchor() == cursor.position()){
@@ -164,13 +165,28 @@ void OutputManager::replaceAll()
 	}else{
 		cursor.setPosition(qMin(cursor.anchor(), cursor.position()));
 	}
+	QTextDocument::FindFlags flags = 0;
+	if(ui.checkBoxOutputSearchMatchCase->isChecked()){
+		flags = QTextDocument::FindCaseSensitively;
+	}
+	QString search = ui.lineEditOutputSearch->text();
+	QString replace = ui.lineEditOutputReplace->text();
+	int diff = replace.length() - search.length();
+	int count = 0;
 	while(true){
-		cursor = ui.plainTextEditOutput->document()->find(ui.lineEditOutputSearch->text(), cursor);
-		if(cursor.isNull() || cursor.position() >= end){
+		cursor = ui.plainTextEditOutput->document()->find(search, cursor, flags);
+		if(cursor.isNull() || cursor.position() > end){
 			break;
 		}
-		cursor.insertText(ui.lineEditOutputReplace->text());
+		cursor.insertText(replace);
+		end += diff;
+		++count;
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 	}
+	if(count == 0){
+		ui.lineEditOutputSearch->setStyleSheet("background: #FF7777; color: #FFFFFF;");
+	}
+	MAIN->popState();
 }
 
 void OutputManager::findReplace(bool backwards, bool replace)
