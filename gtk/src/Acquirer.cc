@@ -63,10 +63,10 @@ Acquirer::Acquirer()
 	CONNECT(m_scanThread, scanStateChanged, [this](ScanThread::State state){ setScanState(state); });
 	CONNECT(m_scanThread, pageAvailable, [this](const std::string& file){ MAIN->getSourceManager()->addSources({Gio::File::create_for_path(file)});});
 
-	MAIN->getConfig()->addSetting("scanres", new ComboSetting("combo:sources.acquire.resolution"));
-	MAIN->getConfig()->addSetting("scanmode", new ComboSetting("combo:sources.acquire.mode"));
-	MAIN->getConfig()->addSetting("scanoutput", new VarSetting<Glib::ustring>());
-	MAIN->getConfig()->addSetting("scandev", new ComboSetting("combo:sources.acquire.device"));
+	MAIN->getConfig()->addSetting(new ComboSetting("scanres", "combo:sources.acquire.resolution"));
+	MAIN->getConfig()->addSetting(new ComboSetting("scanmode", "combo:sources.acquire.mode"));
+	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("scanoutput"));
+	MAIN->getConfig()->addSetting(new ComboSetting("scandev", "combo:sources.acquire.device"));
 
 	m_outputPath = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->getValue();
 	if(m_outputPath.empty()) {

@@ -36,16 +36,13 @@ public:
 	Config();
 	~Config();
 
-	void addSetting(const Glib::ustring& key, AbstractSetting* setting) {
-		m_settings.insert(std::make_pair(key, setting));
-		setting->setSettingsAndKey(key, m_gioSettings);
-		setting->reread();
+	void addSetting(AbstractSetting* setting) {
+		m_settings.insert(std::make_pair(setting->key(), setting));
 	}
 	template<class T>
 	T* getSetting(const Glib::ustring& key) const{
 		auto it = m_settings.find(key);
-		assert(it != m_settings.end());
-		return (T*)(it->second);
+		return it == m_settings.end() ? nullptr : static_cast<T*>(it->second);
 	}
 
 	bool searchLangSpec(Lang& lang) const;
@@ -74,11 +71,11 @@ private:
 
 	LangViewColumns m_langViewCols;
 	std::map<Glib::ustring,AbstractSetting*> m_settings;
-	Glib::RefPtr<Gio::Settings> m_gioSettings;
 
-	void toggleAddLanguage();
 	void addLanguage();
 	void removeLanguage();
+	void langTableSelectionChanged();
+	void toggleAddLanguage(bool forceHide = false);
 };
 
 #endif // CONFIG_HH

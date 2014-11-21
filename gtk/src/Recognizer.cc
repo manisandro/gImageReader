@@ -47,8 +47,8 @@ Recognizer::Recognizer()
 	CONNECT(Builder("menuitem:recognize.pages.multiple").as<Gtk::MenuItem>(), activate, [this]{ recognizeMultiplePages();; });
 	CONNECTS(m_pagesEntry, focus_in_event, [](GdkEventFocus*, Gtk::Entry* e){ Utils::clear_error_state(e); return false; });
 
-	MAIN->getConfig()->addSetting("language", new VarSetting<Glib::ustring>());
-	MAIN->getConfig()->addSetting("ocrregionstrategy", new ComboSetting("comboboxtext:dialog.regions"));
+	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("language"));
+	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", "comboboxtext:dialog.regions"));
 }
 
 bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* language) const

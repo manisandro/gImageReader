@@ -99,14 +99,11 @@ OutputManager::OutputManager()
 	CONNECTP(m_textBuffer, cursor_position, [this]{ m_textBuffer->save_selection_bounds(m_textView->is_focus()); });
 	CONNECTP(m_textBuffer, has_selection, [this]{ m_textBuffer->save_selection_bounds(m_textView->is_focus()); });
 
-	MAIN->getConfig()->addSetting("outputorient", new ComboSetting("combo:config.settings.paneorient"));
-	MAIN->getConfig()->addSetting("systemoutputfont", new SwitchSettingT<Gtk::CheckButton>("checkbutton:config.settings.defaultoutputfont"));
-	MAIN->getConfig()->addSetting("customoutputfont", new FontSetting("fontbutton:config.settings.customoutputfont"));
-	MAIN->getConfig()->addSetting("keepdot", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.keepdot"));
-	MAIN->getConfig()->addSetting("keepquote", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.keepquote"));
-	MAIN->getConfig()->addSetting("joinhyphen", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.joinhyphen"));
-	MAIN->getConfig()->addSetting("joinspace", new SwitchSettingT<Gtk::CheckMenuItem>("menuitem:output.stripcrlf.joinspace"));
-	MAIN->getConfig()->addSetting("searchmatchcase", new SwitchSettingT<Gtk::CheckButton>("checkbutton:output.matchcase"));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepdot", "menuitem:output.stripcrlf.keepdot"));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepquote", "menuitem:output.stripcrlf.keepquote"));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinhyphen", "menuitem:output.stripcrlf.joinhyphen"));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinspace", "menuitem:output.stripcrlf.joinspace"));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("searchmatchcase", "checkbutton:output.matchcase"));
 }
 
 OutputManager::~OutputManager(){
@@ -374,7 +371,7 @@ void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 		try{
 			m_spell.set_language(code);
 			m_spell.attach(*m_textView);
-		}catch(const GtkSpell::Error& e){
+		}catch(const GtkSpell::Error& /*e*/){
 			if(MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->getValue()){
 				MainWindow::NotificationAction actionDontShowAgain = {_("Don't show again"), []{ MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->setValue(false); return true; }};
 				MainWindow::NotificationAction actionInstall = {_("Help"), []{ MAIN->showHelp("#InstallSpelling"); return false; }};

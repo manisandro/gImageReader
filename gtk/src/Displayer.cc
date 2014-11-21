@@ -86,7 +86,7 @@ Displayer::Displayer()
 	});
 	CONNECT(Builder("applicationwindow:main").as<Gtk::Window>()->get_style_context(), changed, [this]{ m_canvas->queue_draw(); });
 
-	MAIN->getConfig()->addSetting("selectionsavefile", new VarSetting<Glib::ustring>());
+	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("selectionsavefile"));
 	std::string selectionsavefile = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->getValue();
 	if(selectionsavefile.empty()) {
 		selectionsavefile = Glib::build_filename(Utils::get_documents_dir(), _("selection.png"));

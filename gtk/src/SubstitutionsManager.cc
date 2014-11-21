@@ -54,8 +54,8 @@ SubstitutionsManager::SubstitutionsManager(const Glib::RefPtr<UndoableBuffer>& b
 	CONNECT(m_listView->get_selection(), changed, [this]{ m_removeButton->set_sensitive(m_listView->get_selection()->count_selected_rows() != 0); });
 	CONNECT(m_dialog, hide, [this] { dialogClosed(); });
 
-	MAIN->getConfig()->addSetting("replacelist", new ListStoreSetting(Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model())));
-	MAIN->getConfig()->addSetting("replacelistfile", new VarSetting<Glib::ustring>());
+	MAIN->getConfig()->addSetting(new ListStoreSetting("replacelist", Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model())));
+	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("replacelistfile"));
 
 	m_currentFile = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("replacelistfile")->getValue();
 	if(m_currentFile.empty()) {

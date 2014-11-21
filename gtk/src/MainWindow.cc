@@ -110,7 +110,8 @@ MainWindow::MainWindow()
 	CONNECT(m_recognizer, languageChanged, [this](const Config::Lang& lang){ m_outputManager->setLanguage(lang); });
 	CONNECT(m_sourceManager, sourceChanged, [this](Source* source){ onSourceChanged(source); });
 
-	m_config->addSetting("showcontrols", new SwitchSettingT<Gtk::ToggleToolButton>("tbbutton:main.controls"));
+	m_config->addSetting(new VarSetting<std::vector<int>>("wingeom"));
+	m_config->addSetting(new SwitchSettingT<Gtk::ToggleToolButton>("showcontrols", "tbbutton:main.controls"));
 
 	m_recognizer->updateLanguagesMenu();
 

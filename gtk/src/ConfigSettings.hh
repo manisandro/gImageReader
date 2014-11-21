@@ -26,80 +26,71 @@
 
 #include "common.hh"
 
+Glib::RefPtr<Gio::Settings> get_default_settings();
+
 class AbstractSetting {
 public:
-	void setSettingsAndKey(const Glib::ustring& key, Glib::RefPtr<Gio::Settings> settings) {
-		m_settings = settings;
-		m_key = key;
-	}
+	AbstractSetting(const Glib::ustring& key)
+		: m_key(key) {}
 	virtual ~AbstractSetting() {}
-	virtual void reread() = 0;
+	const Glib::ustring& key() const{ return m_key; }
+	virtual void serialize() {}
 
 protected:
-	Glib::RefPtr<Gio::Settings> m_settings;
 	Glib::ustring m_key;
 };
 
 template <class T>
 class VarSetting : public AbstractSetting {
 public:
-	const T& getValue() const{
-		return m_value;
+	using AbstractSetting::AbstractSetting;
+	T getValue() const{
+		Glib::Variant<T> v;
+		get_default_settings()->get_value(m_key, v);
+		return v.get();
 	}
 	void setValue(const T& value){
-		m_value = value;
-		m_settings->set_value(m_key, Glib::Variant<T>::create(m_value));
+		get_default_settings()->set_value(m_key, Glib::Variant<T>::create(value));
 	}
-	void reread(){
-		Glib::Variant<T> v;
-		m_settings->get_value(m_key, v);
-		m_value = v.get();
-	}
-
-private:
-	T m_value;
 };
 
 class FontSetting : public AbstractSetting {
 public:
-	FontSetting(const Glib::ustring& builderpath)
-		: m_widget(Builder(builderpath))
+	FontSetting(const Glib::ustring& key, const Glib::ustring& builderpath)
+		: AbstractSetting(key), m_widget(Builder(builderpath))
 	{
-		m_connection_font_set = CONNECTP(m_widget, font_name, [this]{ m_settings->set_value(m_key, Glib::Variant<Glib::ustring>::create(m_widget->get_font_name())); });
+		m_widget->set_font_name(get_default_settings()->get_string(m_key));
+		CONNECTP(m_widget, font_name, [this]{ serialize(); });
 	}
-
+	void serialize(){
+		get_default_settings()->set_string(m_key, m_widget->get_font_name());
+	}
 	Glib::ustring getValue() const{
 		return m_widget->get_font_name();
-	}
-	void setValue(const Glib::ustring& value){
-		m_widget->set_font_name(value);
-	}
-	void reread(){
-		Glib::Variant<Glib::ustring> v;
-		m_settings->get_value(m_key, v);
-		m_connection_font_set.block();
-		m_widget->set_font_name(v.get());
-		m_connection_font_set.unblock();
 	}
 
 private:
 	Gtk::FontButton* m_widget;
-	sigc::connection m_connection_font_set;
 };
 
 class SwitchSetting : public AbstractSetting {
 public:
+	using AbstractSetting::AbstractSetting;
 	virtual void setValue(bool value) = 0;
 	virtual bool getValue() const = 0;
 };
 
-template <class T>
+template<class T>
 class SwitchSettingT : public SwitchSetting {
 public:
-	SwitchSettingT(const Glib::ustring& builderpath)
-		: m_widget(Builder(builderpath))
+	SwitchSettingT(const Glib::ustring& key, const Glib::ustring& builderpath)
+		: SwitchSetting(key), m_widget(Builder(builderpath))
 	{
-		m_connection_toggled = CONNECT(m_widget, toggled, [this]{ m_settings->set_value(m_key, Glib::Variant<bool>::create(m_widget->get_active())); });
+		m_widget->set_active(get_default_settings()->get_boolean(m_key));
+		CONNECT(m_widget, toggled, [this]{ serialize(); });
+	}
+	void serialize(){
+		get_default_settings()->set_boolean(m_key, m_widget->get_active());
 	}
 	void setValue(bool value){
 		m_widget->set_active(value);
@@ -107,46 +98,32 @@ public:
 	bool getValue() const{
 		return m_widget->get_active();
 	}
-	void reread(){
-		Glib::Variant<bool> v;
-		m_settings->get_value(m_key, v);
-		m_connection_toggled.block();
-		m_widget->set_active(v.get());
-		m_connection_toggled.unblock();
-	}
 
 private:
 	T* m_widget;
-	sigc::connection m_connection_toggled;
 };
 
 class ComboSetting : public AbstractSetting {
 public:
-	ComboSetting(const Glib::ustring& builderpath)
-		: m_widget(Builder(builderpath))
+	ComboSetting(const Glib::ustring& key, const Glib::ustring& builderpath)
+		: AbstractSetting(key), m_widget(Builder(builderpath))
 	{
-		CONNECT(m_widget, changed, [this]{ m_settings->set_value(m_key, Glib::Variant<int>::create(m_widget->get_active_row_number())); });
-	}
-
-	void reread(){
-		Glib::Variant<int> v;
-		m_settings->get_value(m_key, v);
-		m_connection_changed.block();
+		int idx = get_default_settings()->get_int(m_key);
 		int nrows = m_widget->get_model()->children().size();
-		m_widget->set_active(std::min(std::max(0, v.get()), nrows - 1));
-		m_connection_changed.unblock();
+		m_widget->set_active(std::min(std::max(0, idx), nrows - 1));
+		CONNECT(m_widget, changed, [this]{ serialize(); });
+	}
+	void serialize(){
+		get_default_settings()->set_int(m_key, m_widget->get_active_row_number());
 	}
 
 private:
 	Gtk::ComboBox* m_widget;
-	sigc::connection m_connection_changed;
 };
 
 class ListStoreSetting : public AbstractSetting {
 public:
-	ListStoreSetting(Glib::RefPtr<Gtk::ListStore> liststore)
-		: m_liststore(liststore) {}
-	void reread();
+	ListStoreSetting(const Glib::ustring& key, Glib::RefPtr<Gtk::ListStore> liststore);
 	void serialize();
 
 private:
