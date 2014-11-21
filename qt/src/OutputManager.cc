@@ -244,6 +244,7 @@ void OutputManager::addText(const QString& text, bool insert)
 		cursor.insertText(text);
 	}
 	ui.dockWidgetOutput->show();
+	ui.actionToggleOutputPane->setChecked(true);
 }
 
 bool OutputManager::saveBuffer(const QString& filename)
