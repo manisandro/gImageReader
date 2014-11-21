@@ -166,7 +166,7 @@ void Recognizer::updateLanguagesMenu()
 		QAction* item = new QAction(lang.name, m_langMenuCheckGroup);
 		connect(item, SIGNAL(triggered()), this, SLOT(setMultiLanguage()));
 		item->setCheckable(true);
-		radioitem->setData(QVariant::fromValue(lang.prefix));
+		item->setData(QVariant::fromValue(lang.prefix));
 		item->setChecked(isMultilingual && sellangs.contains(lang.prefix));
 		submenu->addAction(item);
 	}
@@ -212,7 +212,6 @@ void Recognizer::setMultiLanguage()
 			langs += action->data().value<QString>() + "+";
 		}
 	}
-	langs = langs.left(langs.length() - 1);
 	if(langs.isEmpty()) {
 		langs = "eng+";
 	}
