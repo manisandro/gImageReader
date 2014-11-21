@@ -25,23 +25,21 @@
 #include "Config.hh"
 
 namespace tesseract { class TessBaseAPI; }
+class UI_MainWindow;
 
-class Recognizer : public QToolButton
+class Recognizer : public QObject
 {
 	Q_OBJECT
 public:
 	enum class OutputDestination { Buffer, Clipboard };
 
-	explicit Recognizer(QWidget *parent = 0);
+	Recognizer(const UI_MainWindow& _ui);
 	const Config::Lang& getSelectedLanguage() const{ return m_curLang; }
 
-//	QSize sizeHint() const{ return layout()->sizeHint(); }
-//	QSize minimumSizeHint() const{ return layout()->minimumSize(); }
-
 public slots:
-	void updateLanguagesMenu();
-	void setRecognizeMode(bool haveSelection);
 	bool recognizeImage(const QImage& img, OutputDestination dest);
+	void setRecognizeMode(bool haveSelection);
+	void updateLanguagesMenu();
 
 signals:
 	void languageChanged(const Config::Lang& lang);
@@ -50,17 +48,16 @@ private:
 	enum class PageSelection { Prompt, Current, Multiple };
 	enum class PageArea { EntirePage, Autodetect };
 
-	QString m_modeLabel;
-	QString m_langLabel;
-	QMenu* m_languagesMenu;
-	QMenu* m_pagesMenu;
+	const UI_MainWindow& ui;
+	QMenu* m_menuPages;
 	QDialog* m_pagesDialog;
 	QLineEdit* m_pagesLineEdit;
 	QComboBox* m_pageAreaComboBox;
-
 	QActionGroup* m_langMenuRadioGroup = nullptr;
 	QActionGroup* m_langMenuCheckGroup = nullptr;
 	QAction* m_multilingualAction = nullptr;
+	QString m_modeLabel;
+	QString m_langLabel;
 	Config::Lang m_curLang;
 
 	bool initTesseract(tesseract::TessBaseAPI& tess, const char* language = nullptr) const;

@@ -87,10 +87,9 @@ MainWindow::MainWindow(const QStringList& files)
 	m_acquirer = new Acquirer(ui);
 	m_displayer = new Displayer(ui);
 	m_outputManager = new OutputManager(ui);
-	m_recognizer = new Recognizer();
+	m_recognizer = new Recognizer(ui);
 	m_sourceManager = new SourceManager(ui);
 
-	ui.toolBarMain->insertWidget(ui.actionToggleOutputPane, m_recognizer);
 	ui.centralwidget->layout()->addWidget(m_displayer);
 
 	m_idleActions.setExclusive(false);
@@ -106,7 +105,7 @@ MainWindow::MainWindow(const QStringList& files)
 	m_idleWidgets.append(ui.spinBoxBrightness);
 	m_idleWidgets.append(ui.spinBoxContrast);
 	m_idleWidgets.append(ui.spinBoxResolution);
-	m_idleWidgets.append(m_recognizer);
+	m_idleWidgets.append(ui.toolButtonRecognize);
 
 	connect(ui.actionRedetectLanguages, SIGNAL(triggered()), m_recognizer, SLOT(updateLanguagesMenu()));
 	connect(ui.actionPreferences, SIGNAL(triggered()), this, SLOT(showConfig()));

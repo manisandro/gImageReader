@@ -41,10 +41,12 @@ public:
 	QLabel* labelPage;
 	QMenu* menuAppMenu;
 	QMenu* menuAddSource;
+	QMenu* menuLanguages;
 	QMenu* menuOutputMode;
 	QMenu* menuOutputPostproc;
 	QToolBar* toolBarOutput;
 	QToolBar* toolBarSources;
+	QToolButton* toolButtonRecognize;
 	QToolButton* toolButtonAppMenu;
 	QToolButton* toolButtonOutputMode;
 	QToolButton* toolButtonOutputPostproc;
@@ -114,6 +116,19 @@ public:
 
 		toolBarMain->insertAction(actionImageControls, actionPage);
 		actionPage->setVisible(false);
+
+		// Recognizer button
+		toolButtonRecognize = new QToolButton(MainWindow);
+		toolButtonRecognize->setIcon(QIcon::fromTheme("insert-text"));
+		toolButtonRecognize->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+		QFont font;
+		font.setPointSizeF(font.pointSizeF() * 0.9);
+		toolButtonRecognize->setFont(font);
+		toolButtonRecognize->setPopupMode(QToolButton::MenuButtonPopup);
+		toolBarMain->insertWidget(actionToggleOutputPane, toolButtonRecognize);
+
+		menuLanguages = new QMenu(toolButtonRecognize);
+		toolButtonRecognize->setMenu(menuLanguages);
 
 		// Spacer before app menu button
 		QWidget* toolBarMainSpacer = new QWidget(toolBarMain);

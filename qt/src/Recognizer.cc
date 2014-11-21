@@ -34,40 +34,30 @@
 #include "Utils.hh"
 #include "ui_PageRangeDialog.h"
 
-Recognizer::Recognizer(QWidget* parent) :
-	QToolButton(parent)
+Recognizer::Recognizer(const UI_MainWindow& _ui) :
+	ui(_ui)
 {
-	m_languagesMenu = new QMenu(this);
-
 	QAction* currentPageAction = new QAction(_("Current Page"), this);
 	currentPageAction->setData(static_cast<int>(PageSelection::Current));
 
 	QAction* multiplePagesAction = new QAction(_("Multiple Pages..."), this);
 	multiplePagesAction->setData(static_cast<int>(PageSelection::Multiple));
 
-	m_pagesMenu = new QMenu(this);
-	m_pagesMenu->addAction(currentPageAction);
-	m_pagesMenu->addAction(multiplePagesAction);
+	m_menuPages = new QMenu(ui.toolButtonRecognize);
+	m_menuPages->addAction(currentPageAction);
+	m_menuPages->addAction(multiplePagesAction);
 
-	m_pagesDialog = new QDialog(this);
+	m_pagesDialog = new QDialog(MAIN);
 	Ui::PageRangeDialog uiPageRangeDialog;
 	uiPageRangeDialog.setupUi(m_pagesDialog);
 	m_pagesLineEdit = uiPageRangeDialog.lineEditPageRange;
 	m_pageAreaComboBox = uiPageRangeDialog.comboBoxRecognitionArea;
 
 	m_modeLabel = _("Recognize all");
-	m_langLabel = _("English (en_US)");
 
-	setIcon(QIcon::fromTheme("insert-text"));
-	setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
-	setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	QFont font;
-	font.setPointSizeF(font.pointSizeF() * 0.9);
-	setFont(font);
-	setMenu(m_languagesMenu);
-	setPopupMode(QToolButton::MenuButtonPopup);
+	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 
-	connect(this, SIGNAL(clicked()), this, SLOT(recognizeButtonClicked()));
+	connect(ui.toolButtonRecognize, SIGNAL(clicked()), this, SLOT(recognizeButtonClicked()));
 	connect(currentPageAction, SIGNAL(triggered()), this, SLOT(recognizeCurrentPage()));
 	connect(multiplePagesAction, SIGNAL(triggered()), this, SLOT(recognizeMultiplePages()));
 	connect(uiPageRangeDialog.lineEditPageRange, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditPageRangeStyle()));
@@ -87,7 +77,7 @@ bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* languag
 
 void Recognizer::updateLanguagesMenu()
 {
-	m_languagesMenu->clear();
+	ui.menuLanguages->clear();
 	delete m_langMenuRadioGroup;
 	m_langMenuRadioGroup = new QActionGroup(this);
 	delete m_langMenuCheckGroup;
@@ -110,7 +100,7 @@ void Recognizer::updateLanguagesMenu()
 	if(availLanguages.empty()){
 		QMessageBox::warning(MAIN, _("No languages available"), _("No tesseract languages are available for use. Recognition will not work."));
 		m_langLabel = "";
-		setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
+		ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 		return;
 	}
 
@@ -130,7 +120,7 @@ void Recognizer::updateLanguagesMenu()
 			qSort(spelldicts);
 		}
 		if(!spelldicts.empty()){
-			QAction* item = new QAction(lang.name, m_languagesMenu);
+			QAction* item = new QAction(lang.name, ui.menuLanguages);
 			QMenu* submenu = new QMenu();
 			for(const QString& dict : spelldicts){
 				Config::Lang itemlang = {lang.prefix, dict, lang.name};
@@ -148,7 +138,7 @@ void Recognizer::updateLanguagesMenu()
 				submenu->addAction(radioitem);
 			}
 			item->setMenu(submenu);
-			m_languagesMenu->addAction(item);
+			ui.menuLanguages->addAction(item);
 		}else{
 			radioitem = new QAction(lang.name, m_langMenuRadioGroup);
 			connect(radioitem, SIGNAL(triggered()), this, SLOT(setLanguage()));
@@ -157,12 +147,12 @@ void Recognizer::updateLanguagesMenu()
 			if(curlang.prefix == lang.prefix){
 				activeitem = radioitem;
 			}
-			m_languagesMenu->addAction(radioitem);
+			ui.menuLanguages->addAction(radioitem);
 		}
 	}
 
 	// Add multilanguage menu
-	m_languagesMenu->addSeparator();
+	ui.menuLanguages->addSeparator();
 	m_multilingualAction = new QAction(_("Multilingual"), m_langMenuRadioGroup);
 	m_multilingualAction->setCheckable(true);
 	QMenu* submenu = new QMenu();
@@ -181,7 +171,7 @@ void Recognizer::updateLanguagesMenu()
 		submenu->addAction(item);
 	}
 	m_multilingualAction->setMenu(submenu);
-	m_languagesMenu->addAction(m_multilingualAction);
+	ui.menuLanguages->addAction(m_multilingualAction);
 	if(isMultilingual){
 		activeitem = m_multilingualAction;
 		setMultiLanguage();
@@ -192,13 +182,12 @@ void Recognizer::updateLanguagesMenu()
 		activeitem = radioitem;
 	}
 	activeitem->trigger();
-//	activeitem->setChecked(true);
 }
 
 void Recognizer::setRecognizeMode(bool haveSelection)
 {
 	m_modeLabel = haveSelection ? _("Recognize selection") : _("Recognize all");
-	setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
+	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 }
 
 void Recognizer::setLanguage()
@@ -207,7 +196,7 @@ void Recognizer::setLanguage()
 	if(item->isChecked()) {
 		Config::Lang lang = item->data().value<Config::Lang>();
 		m_langLabel = QString("%1 (%2)").arg(lang.name, lang.code);
-		setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
+		ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 		m_curLang = lang;
 		MAIN->getConfig()->getSetting<VarSetting<QString>>("language")->setValue(lang.prefix + ":" + lang.code);
 		emit languageChanged(m_curLang);
@@ -228,7 +217,7 @@ void Recognizer::setMultiLanguage()
 		langs = "eng+";
 	}
 	m_langLabel = langs.left(langs.length() - 1);
-	setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
+	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 	m_curLang = {langs, "", "Multilingual"};
 	MAIN->getConfig()->getSetting<VarSetting<QString>>("language")->setValue(langs + ":");
 	emit languageChanged(m_curLang);
@@ -283,11 +272,11 @@ void Recognizer::recognizeButtonClicked()
 	if(nPages == 1 || MAIN->getDisplayer()->getHasSelections()){
 		recognize(QList<int>() << MAIN->getDisplayer()->getCurrentPage());
 	}else{
-		setCheckable(true);
-		setChecked(true);
-		m_pagesMenu->popup(mapToGlobal(QPoint(0, height())));
-		setChecked(false);
-		setCheckable(false);
+		ui.toolButtonRecognize->setCheckable(true);
+		ui.toolButtonRecognize->setChecked(true);
+		m_menuPages->popup(ui.toolButtonRecognize->mapToGlobal(QPoint(0, ui.toolButtonRecognize->height())));
+		ui.toolButtonRecognize->setChecked(false);
+		ui.toolButtonRecognize->setCheckable(false);
 	}
 }
 
@@ -336,7 +325,7 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 		}, _("Recognizing..."));
 	}
 	if(!failed.isEmpty()){
-		QMessageBox::critical(this, _("Recognition errors occured"), _("The following errors occured:%1").arg(failed));
+		QMessageBox::critical(MAIN, _("Recognition errors occured"), _("The following errors occured:%1").arg(failed));
 	}
 }
 
