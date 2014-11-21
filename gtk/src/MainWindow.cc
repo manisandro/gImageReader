@@ -171,7 +171,6 @@ void MainWindow::setState(State state)
 	bool isBusy = state == State::Busy;
 	for(Gtk::Widget* w : m_idlegroup){ w->set_sensitive(!isIdle); }
 	m_window->set_sensitive(!isBusy);
-	m_window->set_sensitive(true);
 	if(m_window->get_window()){
 		m_window->get_window()->set_cursor(isBusy ? Gdk::Cursor::create(Gdk::WATCH) : Glib::RefPtr<Gdk::Cursor>());
 	}
