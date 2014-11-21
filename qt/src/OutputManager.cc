@@ -61,6 +61,7 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clearBuffer()));
 	connect(ui.plainTextEditOutput, SIGNAL(undoAvailable(bool)), ui.actionOutputUndo, SLOT(setEnabled(bool)));
 	connect(ui.plainTextEditOutput, SIGNAL(redoAvailable(bool)), ui.actionOutputRedo, SLOT(setEnabled(bool)));
+	connect(ui.checkBoxOutputSearchMatchCase, SIGNAL(toggled(bool)), this, SLOT(clearErrorState()));
 	connect(ui.lineEditOutputSearch, SIGNAL(textChanged(QString)), this, SLOT(clearErrorState()));
 	connect(ui.lineEditOutputSearch, SIGNAL(returnPressed()), this, SLOT(findNext()));
 	connect(ui.lineEditOutputReplace, SIGNAL(returnPressed()), this, SLOT(replaceNext()));
