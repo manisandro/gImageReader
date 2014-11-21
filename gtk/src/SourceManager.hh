@@ -63,8 +63,6 @@ private:
 	Gtk::ToolButton* m_clearButton;
 	Gtk::MenuItem* m_pasteItem;
 
-	Glib::Threads::Thread* m_thread;
-
 	Glib::RefPtr<Gtk::Clipboard> m_clipboard;
 	ListViewColumns m_listViewCols;
 	int m_screenshotCount = 0;
@@ -72,15 +70,14 @@ private:
 	sigc::signal<void,Source*> m_signal_sourceChanged;
 	sigc::connection m_connectionSelectionChanged;
 
-	void addSourcesBrowse();
+	void clearSources();
+	void fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event, Gtk::TreeIter it);
+	void openSources();
 	void pasteClipboard();
-	void takeScreenshot();
+	void removeSource(bool deleteFile);
 	void savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const std::string& displayname);
-	void savePixbufDone(const std::string& path, const std::string& displayname);
-	void removeItem(bool deleteFile);
-	void clearItems();
 	void selectionChanged();
-	void sourceChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event, Gtk::TreeIter it);
+	void takeScreenshot();
 };
 
 #endif // SOURCEMANAGER_HH

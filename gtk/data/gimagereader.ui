@@ -1094,6 +1094,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                 <property name="label" translatable="yes">Sources</property>
                 <property name="use_underline">True</property>
                 <property name="icon_name">insert-image</property>
+                <property name="active">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1392,6 +1393,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                 <property name="position_set">True</property>
                 <child>
                   <object class="GtkNotebook" id="notebook:sources">
+                    <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <child>
                       <object class="GtkBox" id="box:sources.images">

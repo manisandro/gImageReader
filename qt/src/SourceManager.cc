@@ -40,8 +40,6 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	m_recentMenu = new QMenu(MAIN);
 	ui.actionSourceRecent->setMenu(m_recentMenu);
 
-	connect(ui.listWidgetSources, SIGNAL(itemSelectionChanged()), this, SLOT(currentSourceChanged()));
-	connect(&m_fsWatcher, SIGNAL(fileChanged(QString)), this, SLOT(fileChanged(QString)));
 	connect(ui.actionSources, SIGNAL(toggled(bool)), ui.dockWidgetSources, SLOT(setVisible(bool)));
 	connect(ui.toolButtonSourceAdd, SIGNAL(clicked()), this, SLOT(openSources()));
 	connect(ui.menuAddSource, SIGNAL(aboutToShow()), this, SLOT(prepareSourcesMenu()));
@@ -50,6 +48,8 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	connect(ui.actionSourceRemove, SIGNAL(triggered()), this, SLOT(removeSource()));
 	connect(ui.actionSourceDelete, SIGNAL(triggered()), this, SLOT(deleteSource()));
 	connect(ui.actionSourceClear, SIGNAL(triggered()), this, SLOT(clearSources()));
+	connect(ui.listWidgetSources, SIGNAL(itemSelectionChanged()), this, SLOT(currentSourceChanged()));
+	connect(&m_fsWatcher, SIGNAL(fileChanged(QString)), this, SLOT(fileChanged(QString)));
 
 	MAIN->getConfig()->addSetting(new VarSetting<QStringList>("recentitems"));
 }
@@ -104,40 +104,6 @@ Source* SourceManager::getSelectedSource() const
 	return nullptr;
 }
 
-void SourceManager::clearSources()
-{
-	if(!m_fsWatcher.files().isEmpty()){
-		m_fsWatcher.removePaths(m_fsWatcher.files());
-	}
-	for(int row = 0, nRows = ui.listWidgetSources->count(); row < nRows; ++row){
-		Source* source = ui.listWidgetSources->item(row)->data(Qt::UserRole).value<Source*>();
-		if(source->isTemp){
-			QFile(source->path).remove();
-		}
-		delete source;
-		ui.listWidgetSources->item(row)->setData(Qt::UserRole, QVariant::fromValue((Source*)nullptr));
-	}
-	ui.listWidgetSources->clear();
-}
-
-void SourceManager::openRecentItem()
-{
-	const QString& filename = qobject_cast<QAction*>(QObject::sender())->toolTip();
-	addSources(QStringList() << filename);
-}
-
-void SourceManager::pasteClipboard()
-{
-	QPixmap pixmap = QApplication::clipboard()->pixmap();
-	if(pixmap.isNull()){
-		QMessageBox::critical(MAIN, _("Clipboard Error"),  _("Failed to read the clipboard."));
-		return;
-	}
-	++m_pasteCount;
-	QString displayname = _("Pasted %1").arg(m_pasteCount);
-	savePixmap(pixmap, displayname);
-}
-
 void SourceManager::prepareSourcesMenu()
 {
 	// Build recent menu
@@ -154,23 +120,6 @@ void SourceManager::prepareSourcesMenu()
 
 	// Set paste action sensitivity
 	ui.actionSourcePaste->setEnabled(!QApplication::clipboard()->pixmap().isNull());
-}
-
-void SourceManager::removeSource(bool deleteFile)
-{
-	Source* source = getSelectedSource();
-	if(!source){
-		return;
-	}
-	if(deleteFile && QMessageBox::Yes != QMessageBox::question(MAIN, _("Delete File?"), _("The following file will be deleted:\n%1").arg(source->path), QMessageBox::Yes, QMessageBox::No)){
-		return;
-	}
-	m_fsWatcher.removePath(source->path);
-	if(deleteFile || source->isTemp){
-		QFile(source->path).remove();
-	}
-	delete source;
-	delete ui.listWidgetSources->currentItem();
 }
 
 void SourceManager::openSources()
@@ -191,13 +140,22 @@ void SourceManager::openSources()
 	addSources(QFileDialog::getOpenFileNames(MAIN, _("Select Files"), dir, filter));
 }
 
-void SourceManager::currentSourceChanged()
+void SourceManager::openRecentItem()
 {
-	bool enabled = ui.listWidgetSources->currentItem() != 0;
-	ui.actionSourceRemove->setEnabled(enabled);
-	ui.actionSourceDelete->setEnabled(enabled);
-	ui.actionSourceClear->setEnabled(enabled);
-	emit sourceChanged(getSelectedSource());
+	const QString& filename = qobject_cast<QAction*>(QObject::sender())->toolTip();
+	addSources(QStringList() << filename);
+}
+
+void SourceManager::pasteClipboard()
+{
+	QPixmap pixmap = QApplication::clipboard()->pixmap();
+	if(pixmap.isNull()){
+		QMessageBox::critical(MAIN, _("Clipboard Error"),  _("Failed to read the clipboard."));
+		return;
+	}
+	++m_pasteCount;
+	QString displayname = _("Pasted %1").arg(m_pasteCount);
+	savePixmap(pixmap, displayname);
 }
 
 void SourceManager::takeScreenshot()
@@ -214,6 +172,7 @@ void SourceManager::takeScreenshot()
 
 void SourceManager::savePixmap(const QPixmap& pixmap, const QString& displayname)
 {
+	MAIN->pushState(MainWindow::State::Busy, _("Saving image..."));
 	QString filename;
 	bool success = true;
 	QTemporaryFile tmpfile(QDir::temp().absoluteFilePath("gimagereader_XXXXXX.png"));
@@ -224,17 +183,60 @@ void SourceManager::savePixmap(const QPixmap& pixmap, const QString& displayname
 		filename = tmpfile.fileName();
 		success = pixmap.save(filename);
 	}
+	MAIN->popState();
 	if(!success){
 		QMessageBox::critical(MAIN, _("Cannot Write File"),  _("Could not write to %1.").arg(filename));
+	}else{
+		QListWidgetItem* item = new QListWidgetItem(displayname, ui.listWidgetSources);
+		item->setToolTip(filename);
+		Source* source = new Source(filename, displayname, true);
+		item->setData(Qt::UserRole, QVariant::fromValue(source));
+		m_fsWatcher.addPath(filename);
+		ui.listWidgetSources->setCurrentItem(item);
+	}
+}
+
+void SourceManager::removeSource(bool deleteFile)
+{
+	Source* source = getSelectedSource();
+	if(!source){
 		return;
 	}
+	if(deleteFile && QMessageBox::Yes != QMessageBox::question(MAIN, _("Delete File?"), _("The following file will be deleted:\n%1").arg(source->path), QMessageBox::Yes, QMessageBox::No)){
+		return;
+	}
+	m_fsWatcher.removePath(source->path);
+	if(deleteFile || source->isTemp){
+		QFile(source->path).remove();
+	}
+	delete source;
+	delete ui.listWidgetSources->currentItem();
+}
 
-	QListWidgetItem* item = new QListWidgetItem(displayname, ui.listWidgetSources);
-	item->setToolTip(filename);
-	Source* source = new Source(filename, displayname, true);
-	item->setData(Qt::UserRole, QVariant::fromValue(source));
-	m_fsWatcher.addPath(filename);
-	ui.listWidgetSources->setCurrentItem(item);
+
+void SourceManager::clearSources()
+{
+	if(!m_fsWatcher.files().isEmpty()){
+		m_fsWatcher.removePaths(m_fsWatcher.files());
+	}
+	for(int row = 0, nRows = ui.listWidgetSources->count(); row < nRows; ++row){
+		Source* source = ui.listWidgetSources->item(row)->data(Qt::UserRole).value<Source*>();
+		if(source->isTemp){
+			QFile(source->path).remove();
+		}
+		delete source;
+		ui.listWidgetSources->item(row)->setData(Qt::UserRole, QVariant::fromValue((Source*)nullptr));
+	}
+	ui.listWidgetSources->clear();
+}
+
+void SourceManager::currentSourceChanged()
+{
+	bool enabled = getSelectedSource() != nullptr;
+	ui.actionSourceRemove->setEnabled(enabled);
+	ui.actionSourceDelete->setEnabled(enabled);
+	ui.actionSourceClear->setEnabled(enabled);
+	emit sourceChanged(getSelectedSource());
 }
 
 void SourceManager::fileChanged(const QString& filename)
