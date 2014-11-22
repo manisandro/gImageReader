@@ -90,6 +90,9 @@ FILE(GLOB gimagereader_HDRS ${srcdir}/src/*.hh)
 FILE(GLOB gimagereader_FORMS ${srcdir}/data/*.ui)
 FILE(GLOB gimagereader_ICONS data/icons/*.png)
 FILE(GLOB gimagereader_PO po/*.po)
+IF("${srcdir}" STREQUAL "qt")
+    FILE(GLOB gimagereader_RESOURCES qt/data/*.qrc)
+ENDIF()
 
 IF("${srcdir}" STREQUAL "gtk")
     ADD_SCHEMA("gtk/data/org.gnome.gimagereader.gschema.xml")
@@ -111,8 +114,6 @@ ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
 ENDIF()
 
 IF("${srcdir}" STREQUAL "qt")
-    FILE(GLOB gimagereader_RESOURCES qt/data/*.qrc)
-
     # Gettextize ui files
     ADD_CUSTOM_TARGET(
         gettextizeui
