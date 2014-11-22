@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2014 Sandro Mani <manisandro@gmail.com> -->
 <application>
- <id type="desktop">gimagereader.desktop</id>
+ <id type="desktop">gimagereader-@INTERFACE_TYPE@.desktop</id>
  <licence>CC0</licence>
  <name>gImageReader</name>
- <summary>A graphical GTK frontend to tesseract-ocr </summary>
+ <summary>A graphical frontend to tesseract-ocr </summary>
  <description>
   <p>
   gImageReader is a simple OCR application which acts as a frontend to the tesseract OCR engine. It is written in Gtk+.

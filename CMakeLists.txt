@@ -10,7 +10,7 @@ SET(PACKAGE_VERSION 2.94)
 SET(PACKAGE_LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/share/locale")
 
 # Variables
-SET(INTERFACE_TYPE "Qt4" CACHE STRING "Select interface type: Qt4/Qt5/gtk")
+SET(INTERFACE_TYPE "qt4" CACHE STRING "Select interface type: qt4/qt5/gtk")
 MESSAGE(STATUS "${INTERFACE_TYPE} interface will be built")
 SET(ENABLE_VERSIONCHECK 1 CACHE BOOL "Enable version check")
 EXECUTE_PROCESS(COMMAND date +%a\ %b\ %d\ %Y OUTPUT_VARIABLE PACKAGE_DATE OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -19,6 +19,8 @@ EXECUTE_PROCESS(COMMAND git rev-parse HEAD OUTPUT_VARIABLE PACKAGE_REVISION OUTP
 
 
 # Configure files
+CONFIGURE_FILE(data/gimagereader.appdata.xml.in data/gimagereader-${INTERFACE_TYPE}.appdata.xml @ONLY)
+CONFIGURE_FILE(data/gimagereader.desktop.in data/gimagereader-${INTERFACE_TYPE}.desktop @ONLY)
 CONFIGURE_FILE(data/manual.html.in data/manual.html @ONLY)
 CONFIGURE_FILE(packaging/gimagereader.spec.in packaging/gimagereader.spec @ONLY)
 CONFIGURE_FILE(packaging/debian/changelog.in packaging/debian/changelog @ONLY)
@@ -61,7 +63,7 @@ IF("${INTERFACE_TYPE}" STREQUAL "gtk")
         ${POPPLER_LDFLAGS}
     )
     SET(srcdir "gtk")
-ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt4")
+ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt4")
     SET(CMAKE_AUTOMOC ON)
     FIND_PACKAGE(Qt4 REQUIRED)
     PKG_CHECK_MODULES(QTSPELL REQUIRED QtSpell-qt4)
@@ -69,7 +71,7 @@ ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt4")
     INCLUDE_DIRECTORIES(${QTSPELL_INCLUDE_DIRS} ${POPPLER_INCLUDE_DIRS})
     SET(gimagereader_LIBS ${QTSPELL_LDFLAGS} ${POPPLER_LDFLAGS})
     SET(srcdir "qt")
-ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt5")
+ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
     SET(CMAKE_AUTOMOC ON)
     FIND_PACKAGE(Qt5Widgets REQUIRED)
     PKG_CHECK_MODULES(QTSPELL REQUIRED QtSpell-qt5)
@@ -111,10 +113,10 @@ IF("${srcdir}" STREQUAL "gtk")
                 ${CMAKE_SOURCE_DIR}/gtk/data/crashhandler.ui
                 ${CMAKE_SOURCE_DIR}/gtk/data/appmenu.ui)
     LIST(APPEND gimagereader_SRCS gimagereader.gresource.c)
-ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt4")
+ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt4")
     QT4_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})
     QT4_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
-ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt5")
+ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
     QT5_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})
     QT5_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
 ENDIF()
@@ -129,6 +131,7 @@ IF(MINGW)
   SET(CMAKE_RC_COMPILER_INIT ${CMAKE_GENERATOR_RC})
   SET(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
   SET(gimagereader_SRCS ${gimagereader_SRCS} packaging/win32/gimagereader-icon.rc)
+  LIST(APPEND gimagereader_LIBS -lintl)
 ENDIF(MINGW)
 
 
@@ -147,10 +150,11 @@ TARGET_LINK_LIBRARIES(gimagereader
     -lgomp
 )
 SET_TARGET_PROPERTIES(gimagereader PROPERTIES COMPILE_FLAGS "-fopenmp")
-IF("${INTERFACE_TYPE}" STREQUAL "Qt4")
+SET_TARGET_PROPERTIES(gimagereader PROPERTIES OUTPUT_NAME gimagereader-${INTERFACE_TYPE})
+IF("${INTERFACE_TYPE}" STREQUAL "qt4")
     QT4_USE_MODULES(gimagereader Core Gui Network DBus)
     ADD_DEPENDENCIES(gimagereader gettextizeui)
-ELSEIF("${INTERFACE_TYPE}" STREQUAL "Qt5")
+ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
     QT5_USE_MODULES(gimagereader Widgets Network DBus Concurrent)
     ADD_DEPENDENCIES(gimagereader gettextizeui)
 ENDIF()
@@ -159,13 +163,13 @@ INSTALL(TARGETS gimagereader DESTINATION bin)
 INSTALL(FILES data/icons/48x48/gimagereader.png DESTINATION share/icons/hicolor/48x48/apps/)
 INSTALL(FILES data/icons/128x128/gimagereader.png DESTINATION share/icons/hicolor/128x128/apps/)
 INSTALL(FILES data/icons/256x256/gimagereader.png DESTINATION share/icons/hicolor/256x256/apps/)
-INSTALL(FILES data/gimagereader.desktop DESTINATION share/applications)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.appdata.xml DESTINATION share/appdata)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop DESTINATION share/applications)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/manual.html DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/gimagereader")
-INSTALL(FILES data/gimagereader.appdata.xml DESTINATION share/appdata)
 
 
 # Dist
-add_custom_target(dist
+ADD_CUSTOM_TARGET(dist
     COMMAND git archive --format=tar --prefix=${CMAKE_PROJECT_NAME}-${PACKAGE_VERSION}/ HEAD | xz > ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}-${PACKAGE_VERSION}.tar.xz
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )

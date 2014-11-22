@@ -3,7 +3,7 @@ Version:       @PACKAGE_VERSION@
 Release:       1%{?dist}
 License:       GPLv3+
 Group:         Applications/Productivity
-Summary:       OCR application
+Summary:       A front-end to tesseract-ocr
 URL:           http://sourceforge.net/projects/gimagereader/
 Source:        %{name}-%{version}.tar.xz
 
@@ -17,12 +17,14 @@ BuildRequires: sane-backends-devel
 BuildRequires: intltool
 BuildRequires: desktop-file-utils
 BuildRequires: appdata-tools
+BuildRequires: qt4-devel
+BuildRequires: qtspell-devel
+BuildRequires: poppler-qt-devel
 
 Requires:      hicolor-icon-theme
 
-
 %description
-gImageReader is a simple Gtk front-end to tesseract. Features include:
+gImageReader is a simple front-end to tesseract. Features include:
  - Automatic page layout detection
  - User can manually define and adjust recognition regions
  - Import images from disk, scanning devices, clipboard and screenshots
@@ -30,6 +32,45 @@ gImageReader is a simple Gtk front-end to tesseract. Features include:
  - Recognized text displayed directly next to the image
  - Editing of output text, including search/replace and removing line breaks
  - Spellchecking for output text (if corresponding dictionary installed)
+ 
+
+%package gtk
+Summary:       A Gtk+ front-end to tesseract-ocr
+Requires:      %{name}-common = %{version}-%{release}
+
+%description gtk
+gImageReader is a simple front-end to tesseract. Features include:
+ - Automatic page layout detection
+ - User can manually define and adjust recognition regions
+ - Import images from disk, scanning devices, clipboard and screenshots
+ - Supports multipage PDF documents
+ - Recognized text displayed directly next to the image
+ - Editing of output text, including search/replace and removing line breaks
+ - Spellchecking for output text (if corresponding dictionary installed)
+This package contains the Gtk+ front-end.
+
+
+%package qt
+Summary:       A Qt front-end to tesseract-ocr
+Requires:      %{name}-common = %{version}-%{release}
+
+%description qt
+gImageReader is a simple front-end to tesseract. Features include:
+ - Automatic page layout detection
+ - User can manually define and adjust recognition regions
+ - Import images from disk, scanning devices, clipboard and screenshots
+ - Supports multipage PDF documents
+ - Recognized text displayed directly next to the image
+ - Editing of output text, including search/replace and removing line breaks
+ - Spellchecking for output text (if corresponding dictionary installed)
+This package contains the Qt front-end.
+
+%package common
+Summary:       Common files for %{name}
+BuildArch:     noarch
+
+%description common
+Common files for %{name}.
 
 
 %prep
@@ -37,24 +78,37 @@ gImageReader is a simple Gtk front-end to tesseract. Features include:
 
 
 %build
-%cmake ..
+mkdir build_gtk
+(
+cd build_gtk
+%cmake -DINTERFACE_TYPE=gtk -DENABLE_VERSIONCHECK=0 ..
 make %{?_smp_mflags}
+)
+mkdir build_qt
+(
+cd build_qt
+%cmake -DINTERFACE_TYPE=qt4 -DENABLE_VERSIONCHECK=0 ..
+make %{?_smp_mflags}
+)
 
 
 %install
-%make_install
-%{_bindir}/desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
-%{_bindir}/appdata-validate %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml || :
+%make_install -C build_gtk
+%make_install -C build_qt
+%{_bindir}/desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-gtk.desktop
+%{_bindir}/desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-qt4.desktop
+%{_bindir}/appdata-validate %{buildroot}%{_datadir}/appdata/%{name}-gtk.appdata.xml || :
+%{_bindir}/appdata-validate %{buildroot}%{_datadir}/appdata/%{name}-qt4.appdata.xml || :
 
 %find_lang %{name}
 
 
-%post
+%post gtk
 /usr/bin/update-desktop-database &> /dev/null || :
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
 
-%postun
+%postun gtk
 /usr/bin/update-desktop-database &> /dev/null || :
 if [ $1 -eq 0 ] ; then
     /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
@@ -62,24 +116,44 @@ if [ $1 -eq 0 ] ; then
     /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
 
-
-%posttrans
+%posttrans gtk
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
-%files -f %{name}.lang
+%post qt
+/usr/bin/update-desktop-database &> /dev/null || :
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+
+
+%postun qt
+/usr/bin/update-desktop-database &> /dev/null || :
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+%posttrans qt
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
+
+%files common -f %{name}.lang
 %doc AUTHORS ChangeLog COPYING NEWS README TODO
-%{_bindir}/%{name}
-%{_datadir}/%{name}
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 %{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 %{_datadir}/icons/hicolor/256x256/apps/%{name}.png
-%{_datadir}/glib-2.0/schemas/org.gnome.%{name}.gschema.xml
 %doc %{_defaultdocdir}/%{name}/manual.html
 
+%files gtk
+%{_bindir}/%{name}-gtk
+%{_datadir}/appdata/%{name}-gtk.appdata.xml
+%{_datadir}/applications/%{name}-gtk.desktop
+%{_datadir}/glib-2.0/schemas/org.gnome.%{name}.gschema.xml
+
+%files qt
+%{_bindir}/%{name}-qt4
+%{_datadir}/appdata/%{name}-qt4.appdata.xml
+%{_datadir}/applications/%{name}-qt4.desktop
 
 %changelog
 * @PACKAGE_DATE@ Sandro Mani <manisandro@gmail.com> - @PACKAGE_VERSION@-1

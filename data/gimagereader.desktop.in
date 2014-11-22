@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=gImageReader
 Comment=OCR application
-Exec=gimagereader %U
+Exec=gimagereader-@INTERFACE_TYPE@ %U
 Icon=gimagereader
 Terminal=false
 Type=Application

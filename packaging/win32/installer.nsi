@@ -136,7 +136,7 @@ Section "Standard" MainSection
 
   ; Create application shortcut (first in installation dir to have the correct "start in" target)
   SetOutPath "$INSTDIR\bin"
-  CreateShortCut "$INSTDIR\bin\${NAME}.lnk" "$INSTDIR\bin\gimagereader.exe"
+  CreateShortCut "$INSTDIR\bin\${NAME}.lnk" "$INSTDIR\bin\gimagereader-${IFACE}.exe"
 
   ; Start menu entries
   SetOutPath "$SMPROGRAMS\${NAME}\"

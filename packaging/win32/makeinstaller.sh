@@ -35,8 +35,7 @@ pushd $builddir > /dev/null
 mingw$bits-cmake -DINTERFACE_TYPE=$iface ../../
 mingw$bits-make -j4 DESTDIR="${installroot}_" install
 mv ${installroot}_$MINGWROOT $installroot
-rm -rf ${installroot}_
-cp -R $win32dir/skel/* $installroot
+rm -rf $installroot_
 cp $win32dir/gimagereader-icon.rc $builddir
 cp $win32dir/gimagereader.ico $builddir
 cp $win32dir/installer.nsi $builddir
@@ -75,37 +74,81 @@ function autoLinkDeps {
     return 0
 }
 
-autoLinkDeps root/bin/gimagereader.exe
+autoLinkDeps $installroot/bin/gimagereader-$iface.exe
 linkDep bin/gdb.exe
-linkDep bin/gspawn-win$bits-helper-console.exe
-linkDep bin/gspawn-win$bits-helper.exe
 
 linkDep bin/twaindsm.dll
 linkDep lib/enchant/libenchant_myspell.dll
-linkDep lib/pango/1.8.0/modules/pango-arabic-lang.dll
-linkDep lib/pango/1.8.0/modules/pango-indic-lang.dll
-linkDep lib/pango/1.8.0/modules/pango-basic-fc.dll
-linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-pcx.dll
-linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-xbm.dll
-linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-ani.dll
-linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-wbmp.dll
-linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-pnm.dll
-linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-icns.dll
-linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-tga.dll
-linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-jasper.dll
-linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-qtif.dll
-linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-xpm.dll
-linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-ras.dll
 
+if [ "$iface" == "gtk" ]; then
 
-install -Dpm 0644 /usr/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml $installroot/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
-# Install locale files
-(
-    cd $MINGWROOT
-    for file in $(find share/locale -type f -name "gtk*.mo" -or -name "glib*.mo" -or -name "gdk*.mo" -or -name "atk*.mo"); do
-        install -Dpm 0644 $file $installroot/$file
-    done
-)
+    linkDep bin/gspawn-win$bits-helper-console.exe
+    linkDep bin/gspawn-win$bits-helper.exe
+    linkDep lib/pango/1.8.0/modules/pango-arabic-lang.dll
+    linkDep lib/pango/1.8.0/modules/pango-indic-lang.dll
+    linkDep lib/pango/1.8.0/modules/pango-basic-fc.dll
+    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-pcx.dll
+    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-xbm.dll
+    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-ani.dll
+    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-wbmp.dll
+    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-pnm.dll
+    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-icns.dll
+    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-tga.dll
+    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-jasper.dll
+    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-qtif.dll
+    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-xpm.dll
+    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-ras.dll
+    
+    # Install locale files
+    (
+        cd $MINGWROOT
+        for file in $(find share/locale -type f -name "gtk*.mo" -or -name "glib*.mo" -or -name "gdk*.mo" -or -name "atk*.mo"); do
+            install -Dpm 0644 $file $installroot/$file
+        done
+    )
+    
+    # Copy skeleton
+    cp -R $win32dir/gtk_skel/* $installroot
+    
+    # Install and compile schemas
+    install -Dpm 0644 /usr/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml $installroot/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
+    glib-compile-schemas $installroot/share/glib-2.0/schemas
+
+elif [ "$iface" == "qt4" ]; then
+
+    linkDep lib/qt4/plugins/imageformats/qgif4.dll  bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qtiffd4.dll  bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qico4.dll  bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qmng4.dll  bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qtgad4.dll  bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qtga4.dll  bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qmngd4.dll bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qsvg4.dll  bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qtiff4.dll  bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qsvgd4.dll  bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qicod4.dll bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qgifd4.dll bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qjpeg4.dll bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qjpegd4.dll  bin/imageformats
+    
+    # Install locale files
+    mkdir -p $installroot/share/qt4/translations/
+    cp -a /usr/share/qt4/translations/qt_*.qm  $installroot/share/qt4/translations
+    cp -a $MINGWROOT/share/qt4/translations/QtSpell_*.qm  $installroot/share/qt4/translations
+
+elif [ "$iface" == "qt5" ]; then
+    linkDep lib/qt5/plugins/imageformats/qgif.dll  bin/imageformats
+    linkDep lib/qt5/plugins/imageformats/qico.dll  bin/imageformats
+    linkDep lib/qt5/plugins/imageformats/qjpeg.dll  bin/imageformats
+
+    # Install locale files
+    mkdir -p $installroot/share/qt5/translations/
+    cp -a /usr/share/qt5/translations/qt_*.qm  $installroot/share/qt5/translations
+    cp -a $MINGWROOT/share/qt4/translations/QtSpell_*.qm  $installroot/share/qt4/translations
+
+fi
+
+cp -R $win32dir/skel/* $installroot
 
 # Add english language data and spelling dictionaries
 install -Dpm 0644 /usr/share/tesseract/tessdata/eng.traineddata $installroot/share/tessdata/eng.traineddata
@@ -117,17 +160,14 @@ install -Dpm 0644 /usr/share/xml/iso-codes/iso_639.xml $installroot/share/xml/is
 install -Dpm 0644 /usr/share/xml/iso-codes/iso_3166.xml $installroot/share/xml/iso-codes/iso_3166.xml
 
 # Remove unused files
-rm -rf root/share/applications
-
-# Compile schemas
-glib-compile-schemas root/share/glib-2.0/schemas
+rm -rf $installroot/share/applications
 
 # Build the installer
 progName=$(grep -oP 'SET\(PACKAGE_NAME \K(\w+)(?=\))' $srcdir/CMakeLists.txt)
 progVersion=$(grep -oP 'SET\(PACKAGE_VERSION \K([\d\.]+)(?=\))' $srcdir/CMakeLists.txt)
-makensis -DNAME=$progName -DARCH=$arch -DPROGVERSION="$progVersion" installer.nsi;
+makensis -DNAME=$progName -DARCH=$arch -DPROGVERSION="$progVersion" -DIFACE="$iface" installer.nsi;
 
 # Cleanup
-rm -rf $builddir/root
+rm -rf $installroot
 
 echo "Installer written to $PWD/${progName}_${progVersion}_${arch}.exe"
