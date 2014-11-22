@@ -1,6 +1,6 @@
 # German translations for gImageReader package
 # German messages for gImageReader.
-# Copyright (C) 2010-2013 THE GIMAGEREADER'S COPYRIGHT HOLDER
+# Copyright (C) 2010-2014 THE GIMAGEREADER'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gImageReader package.
 #
 # Sandro Mani <manisandro@gmail.com>, 2010-2011, 2013, 2014.
@@ -10,8 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-22 14:41+0100\n"
 "PO-Revision-Date: 2014-11-22 13:16+0100\n"
-"Last-Translator: Sandro Mani\n"
-"Language-Team: German <kde-i18n-doc@kde.org>\n"
+"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
+"Language-Team: German <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
