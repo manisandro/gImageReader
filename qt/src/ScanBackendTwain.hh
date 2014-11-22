@@ -61,7 +61,7 @@ private:
 
 	static ScanBackendTwain* s_instance;
 
-#ifndef G_OS_WIN32
+#ifndef Q_OS_WIN32
 	QMutex m_mutex;
 	QWaitCondition  m_cond;
 #endif
@@ -99,7 +99,7 @@ bool ScanBackendTwain::init()
 		return false;
 	}
 
-#ifdef G_OS_WIN32
+#ifdef Q_OS_WIN32
 	QString twaindsm = QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("twaindsm.dll");
 #else
 	QString twaindsm = "libtwaindsm.so.2.2.0";
@@ -133,7 +133,7 @@ bool ScanBackendTwain::init()
 
 	// State 2 to 3
 	TW_MEMREF phwnd = nullptr;
-#ifdef G_OS_WIN32
+#ifdef Q_OS_WIN32
 	HWND hwnd = MAIN->winId();
 	phwnd = &hwnd;
 #endif
@@ -262,7 +262,7 @@ ScanBackend::StartStatus ScanBackendTwain::startDevice()
 	m_ui.ShowUI = false;
 	m_ui.ModalUI = false;
 	m_ui.hParent = nullptr;;
-#ifdef G_OS_WIN32
+#ifdef Q_OS_WIN32
 	m_ui.hParent = MAIN->winId();
 #endif
 
@@ -271,7 +271,7 @@ ScanBackend::StartStatus ScanBackendTwain::startDevice()
 		return StartStatus::Fail;
 	}
 
-#ifdef G_OS_WIN32
+#ifdef Q_OS_WIN32
 	while(m_dsMsg == 0) {
 		TW_EVENT twEvent = {0};
 
@@ -372,7 +372,7 @@ TW_UINT16 ScanBackendTwain::callback(TW_IDENTITY* origin, TW_IDENTITY* /*dest*/,
 	}
 	if(MSG == MSG_XFERREADY || MSG == MSG_CLOSEDSREQ || MSG == MSG_CLOSEDSOK || MSG == MSG_NULL) {
 		s_instance->m_dsMsg = MSG;
-#ifndef G_OS_WIN32
+#ifndef Q_OS_WIN32
 		s_instance->m_mutex.lock();
 		s_instance->m_cond.wakeOne();
 		s_instance->m_mutex.unlock();
