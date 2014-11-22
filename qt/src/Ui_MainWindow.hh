@@ -173,6 +173,7 @@ public:
 
 		toolButtonSourceAdd = new QToolButton(MainWindow);
 		toolButtonSourceAdd->setIcon(QIcon::fromTheme("document-open"));
+		toolButtonSourceAdd->setText(gettext("Add Images"));
 		toolButtonSourceAdd->setToolTip(gettext("Add images"));
 		toolButtonSourceAdd->setPopupMode(QToolButton::MenuButtonPopup);
 		toolButtonSourceAdd->setMenu(menuAddSource);
@@ -188,6 +189,7 @@ public:
 		actionSourceClear->setEnabled(false);
 
 		toolBarSources = new QToolBar(MainWindow);
+		toolBarSources->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		toolBarSources->setIconSize(QSize(1, 1) * toolBarSources->style()->pixelMetric(QStyle::PM_SmallIconSize));
 		toolBarSources->addWidget(toolButtonSourceAdd);
 		toolBarSources->addSeparator();
@@ -209,9 +211,9 @@ public:
 		// Output postprocessing
 		actionOutputPostprocTitle1 = new QAction(gettext("Keep line break if..."), MainWindow);
 		actionOutputPostprocTitle1->setEnabled(false);
-		actionOutputPostprocKeepDot = new QAction(gettext("Preceeded by dot"), MainWindow);
+		actionOutputPostprocKeepDot = new QAction(gettext("Preceded by dot"), MainWindow);
 		actionOutputPostprocKeepDot->setCheckable(true);
-		actionOutputPostprocKeepQuote = new QAction(gettext("Preceeded or succeeded by quote"), MainWindow);
+		actionOutputPostprocKeepQuote = new QAction(gettext("Preceded or succeeded by quote"), MainWindow);
 		actionOutputPostprocKeepQuote->setCheckable(true);
 		actionOutputPostprocTitle2 = new QAction(gettext("Other options"), MainWindow);
 		actionOutputPostprocTitle2->setEnabled(false);
@@ -237,6 +239,7 @@ public:
 
 		toolButtonOutputPostproc = new QToolButton(MainWindow);
 		toolButtonOutputPostproc->setIcon(QIcon(":/icons/stripcrlf"));
+		toolButtonOutputPostproc->setText(gettext("Strip Line Breaks"));
 		toolButtonOutputPostproc->setToolTip(gettext("Strip line breaks on selected text"));
 		toolButtonOutputPostproc->setPopupMode(QToolButton::MenuButtonPopup);
 		toolButtonOutputPostproc->setMenu(menuOutputPostproc);
@@ -256,6 +259,7 @@ public:
 		actionOutputClear->setToolTip(gettext("Clear output"));
 
 		toolBarOutput = new QToolBar(MainWindow);
+		toolBarOutput->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		toolBarOutput->setIconSize(QSize(1, 1) * toolBarSources->style()->pixelMetric(QStyle::PM_SmallIconSize));
 		toolBarOutput->addWidget(toolButtonOutputMode);
 		toolBarOutput->addWidget(toolButtonOutputPostproc);

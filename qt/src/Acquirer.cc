@@ -163,7 +163,7 @@ void Acquirer::cancelScan()
 {
 	m_scanThread->cancel();
 	ui.pushButtonScanCancel->setEnabled(false);
-	ui.labelScanMessage->setText(_("Cancelling scan..."));
+	ui.labelScanMessage->setText(_("Canceling scan..."));
 }
 
 void Acquirer::doneScan()

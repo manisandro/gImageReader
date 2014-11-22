@@ -29,7 +29,7 @@ CrashHandler::CrashHandler(int pid, const QString& savefile, QWidget *parent):
 	if(!savefile.isEmpty()) {
 		ui.labelAutosave->setText(_("Your work has been saved under <b>%1</b>.").arg(savefile));
 	}else{
-		ui.labelAutosave->setText(_("There was no usaved work."));
+		ui.labelAutosave->setText(_("There was no unsaved work."));
 	}
 
 	setWindowTitle(QString("%1 %2").arg(PACKAGE_NAME).arg( _("Crash Handler")));

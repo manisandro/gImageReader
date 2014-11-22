@@ -35,7 +35,8 @@ SourceManager::SourceManager()
 	m_pasteItem = Builder("menuitem:sources.images.paste");
 
 	m_listView->set_model(Gtk::ListStore::create(m_listViewCols));
-	m_listView->append_column(_("Images"), m_listViewCols.filename);
+	m_listView->append_column("", m_listViewCols.filename);
+	m_listView->set_headers_visible(false);
 	Gtk::TreeViewColumn* col = m_listView->get_column(0);
 	col->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
 	Gtk::CellRendererText* cell = static_cast<Gtk::CellRendererText*>(col->get_cells().front());

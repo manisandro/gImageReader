@@ -45,7 +45,7 @@
   </object>
   <object class="GtkWindow" id="window:postproc">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Manage Replacement Rules</property>
+    <property name="title" translatable="yes">Substitutions</property>
     <property name="window_position">center-on-parent</property>
     <property name="default_width">320</property>
     <property name="default_height">240</property>
@@ -351,6 +351,11 @@
     <property name="can_focus">False</property>
     <property name="icon_name">edit-copy</property>
   </object>
+  <object class="GtkImage" id="image:selectionmenu.delete">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">edit-delete</property>
+  </object>
   <object class="GtkImage" id="image:selectionmenu.recognize">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -404,7 +409,7 @@
     </child>
     <child>
       <object class="GtkImageMenuItem" id="menuitem:sources.images.paste">
-        <property name="label">Paste</property>
+        <property name="label" translatable="yes">Paste</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="image">image:sources.images.paste</property>
@@ -444,8 +449,7 @@
               <object class="GtkToggleToolButton" id="tbbutton:main.sources">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="has_tooltip">True</property>
-                <property name="tooltip_text" translatable="yes">Select sources</property>
+                <property name="tooltip_text" translatable="yes">Sources</property>
                 <property name="label" translatable="yes">Sources</property>
                 <property name="use_underline">True</property>
                 <property name="icon_name">insert-image</property>
@@ -582,7 +586,7 @@
                     <property name="max_length">5</property>
                     <property name="invisible_char">•</property>
                     <property name="width_chars">8</property>
-                    <property name="text" translatable="yes">0.0</property>
+                    <property name="text">0.0</property>
                     <property name="xalign">1</property>
                     <property name="truncate_multiline">True</property>
                     <property name="adjustment">adjustment:display.rotate</property>
@@ -608,7 +612,7 @@
                     <property name="can_focus">True</property>
                     <property name="invisible_char">●</property>
                     <property name="width_chars">6</property>
-                    <property name="text" translatable="yes">1</property>
+                    <property name="text">1</property>
                     <property name="truncate_multiline">True</property>
                     <property name="caps_lock_warning">False</property>
                     <property name="primary_icon_activatable">False</property>
@@ -759,6 +763,7 @@
                           <object class="GtkToolbar" id="toolbar:sources.images">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="toolbar_style">icons</property>
                             <property name="show_arrow">False</property>
                             <property name="icon_size">1</property>
                             <child>
@@ -1160,7 +1165,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">●</property>
                                 <property name="width_chars">7</property>
-                                <property name="text" translatable="yes">0</property>
+                                <property name="text">0</property>
                                 <property name="truncate_multiline">True</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="adjustment">adjustment:display.brightness</property>
@@ -1186,7 +1191,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">●</property>
                                 <property name="width_chars">7</property>
-                                <property name="text" translatable="yes">0</property>
+                                <property name="text">0</property>
                                 <property name="truncate_multiline">True</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="adjustment">adjustment:display.contrast</property>
@@ -1212,7 +1217,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">●</property>
                                 <property name="width_chars">7</property>
-                                <property name="text" translatable="yes">200</property>
+                                <property name="text">200</property>
                                 <property name="truncate_multiline">True</property>
                                 <property name="primary_icon_activatable">False</property>
                                 <property name="adjustment">adjustment:display.resolution</property>
@@ -1315,6 +1320,7 @@
                   <object class="GtkToolbar" id="toolbar:output">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="toolbar_style">icons</property>
                     <property name="show_arrow">False</property>
                     <property name="icon_size">1</property>
                     <child>
@@ -1482,7 +1488,7 @@
                             <property name="hexpand">True</property>
                             <property name="invisible_char">●</property>
                             <property name="width_chars">2</property>
-                            <property name="placeholder_text" translatable="yes">Search for</property>
+                            <property name="placeholder_text" translatable="yes">Find</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -1497,7 +1503,7 @@
                             <property name="hexpand">True</property>
                             <property name="invisible_char">●</property>
                             <property name="width_chars">2</property>
-                            <property name="placeholder_text" translatable="yes">Replace with</property>
+                            <property name="placeholder_text" translatable="yes">Replace</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -2340,12 +2346,12 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
         <property name="column_spacing">2</property>
         <child>
           <object class="GtkButton" id="button:selectionmenu.delete">
-            <property name="label">gtk-delete</property>
+            <property name="label" translatable="yes">Delete</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="image">image:selectionmenu.delete</property>
             <property name="relief">none</property>
-            <property name="use_stock">True</property>
             <property name="xalign">0</property>
             <property name="always_show_image">True</property>
           </object>
@@ -2468,7 +2474,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
       <object class="GtkCheckMenuItem" id="menuitem:output.stripcrlf.keepdot">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Preceeded by dot</property>
+        <property name="label" translatable="yes">Preceded by dot</property>
         <property name="use_underline">True</property>
       </object>
     </child>
@@ -2476,7 +2482,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
       <object class="GtkCheckMenuItem" id="menuitem:output.stripcrlf.keepquote">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Preceeded or succeeded by quote</property>
+        <property name="label" translatable="yes">Preceded or succeeded by quote</property>
         <property name="use_underline">True</property>
       </object>
     </child>

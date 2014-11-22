@@ -1,35 +1,39 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# French translations for gImageReader package
+# Traductions françaises du paquet gImageReader.
+# Copyright (C) 2010-2011 THE GIMAGEREADER'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gImageReader package.
 #
-#, fuzzy
+# Sandro Mani <manisandro@gmail.com>, 2010-2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-22 13:36+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2011-03-21 23:34+0100\n"
+"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
+"Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 1.1\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:141
+#, fuzzy
 msgid "Redetect Languages"
-msgstr ""
+msgstr "Langues"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:144
 #: ../qt/src/Ui_MainWindow.hh:158
+#, fuzzy
 msgid "Preferences"
-msgstr ""
+msgstr "Langue préféré"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/src/OutputManager.cc:377
 #: ../qt/src/OutputManager.cc:326 ../qt/src/Ui_MainWindow.hh:149
 msgid "Help"
-msgstr ""
+msgstr "Aide"
 
 #: ../gtk/data/appmenu.ui.h:4 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:152
@@ -66,12 +70,13 @@ msgstr ""
 #: ../gtk/data/gimagereader.ui.h:2 ../qt/src/SubstitutionsManager.cc:42
 #: ../qt/src/SubstitutionsManager.cc:43
 msgid "Open"
-msgstr ""
+msgstr "Ouvrir"
 
 #: ../gtk/data/gimagereader.ui.h:3 ../qt/src/SubstitutionsManager.cc:45
 #: ../qt/src/SubstitutionsManager.cc:46
+#, fuzzy
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer sous"
 
 #: ../gtk/data/gimagereader.ui.h:4 ../qt/src/SubstitutionsManager.cc:48
 #: ../qt/src/SubstitutionsManager.cc:49
@@ -81,16 +86,17 @@ msgstr ""
 #: ../gtk/data/gimagereader.ui.h:5 ../qt/data/ConfigDialog.ui.h:19
 #: ../qt/src/SubstitutionsManager.cc:51 ../qt/src/SubstitutionsManager.cc:52
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: ../gtk/data/gimagereader.ui.h:6 ../qt/data/ConfigDialog.ui.h:20
 #: ../qt/src/SubstitutionsManager.cc:54 ../qt/src/SubstitutionsManager.cc:55
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 #: ../gtk/data/gimagereader.ui.h:7
+#, fuzzy
 msgid "<small>Recognize all</small>"
-msgstr ""
+msgstr "Reconnaître toute"
 
 #. Output insert mode
 #: ../gtk/data/gimagereader.ui.h:8 ../qt/src/Ui_MainWindow.hh:202
@@ -98,8 +104,9 @@ msgid "Append to current text"
 msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:9 ../qt/src/Ui_MainWindow.hh:203
+#, fuzzy
 msgid "Insert at cursor"
-msgstr ""
+msgstr "Au curseur"
 
 #: ../gtk/data/gimagereader.ui.h:10 ../qt/src/Ui_MainWindow.hh:204
 msgid "Replace current text"
@@ -107,8 +114,9 @@ msgstr ""
 
 #. Sources toolbar
 #: ../gtk/data/gimagereader.ui.h:11 ../qt/src/Ui_MainWindow.hh:164
+#, fuzzy
 msgid "Recent"
-msgstr ""
+msgstr "Fichiers _Récents"
 
 #: ../gtk/data/gimagereader.ui.h:12 ../qt/src/Ui_MainWindow.hh:165
 msgid "Paste"
@@ -124,59 +132,61 @@ msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:15 ../qt/data/MainWindow.ui.h:27
 msgid "Zoom in"
-msgstr ""
+msgstr "Zoom avant"
 
 #: ../gtk/data/gimagereader.ui.h:16 ../qt/data/MainWindow.ui.h:26
 msgid "Zoom In"
-msgstr ""
+msgstr "Zoom Avant"
 
 #: ../gtk/data/gimagereader.ui.h:17 ../qt/data/MainWindow.ui.h:29
 msgid "Zoom out"
-msgstr ""
+msgstr "Zoom arrière"
 
 #: ../gtk/data/gimagereader.ui.h:18 ../qt/data/MainWindow.ui.h:28
 msgid "Zoom Out"
-msgstr ""
+msgstr "Zoom Arrière"
 
 #: ../gtk/data/gimagereader.ui.h:19 ../qt/data/MainWindow.ui.h:31
 msgid "Normal size"
-msgstr ""
+msgstr "Taille normale"
 
 #: ../gtk/data/gimagereader.ui.h:20 ../qt/data/MainWindow.ui.h:30
 msgid "Normal Size"
-msgstr ""
+msgstr "Taille Normale"
 
 #: ../gtk/data/gimagereader.ui.h:21 ../qt/data/MainWindow.ui.h:33
 msgid "Best fit"
-msgstr ""
+msgstr "Ajuster au mieux"
 
 #: ../gtk/data/gimagereader.ui.h:22 ../qt/data/MainWindow.ui.h:32
 msgid "Best Fit"
-msgstr ""
+msgstr "Ajuster au Mieux"
 
 #: ../gtk/data/gimagereader.ui.h:23 ../qt/data/MainWindow.ui.h:35
 msgid "Rotate left"
-msgstr ""
+msgstr "Tourner à gauche"
 
 #: ../gtk/data/gimagereader.ui.h:24 ../qt/data/MainWindow.ui.h:34
 msgid "Rotate Left"
-msgstr ""
+msgstr "Tourner à Gauche"
 
 #: ../gtk/data/gimagereader.ui.h:25 ../qt/data/MainWindow.ui.h:37
 msgid "Rotate right"
-msgstr ""
+msgstr "Tourner à droit"
 
 #: ../gtk/data/gimagereader.ui.h:26 ../qt/data/MainWindow.ui.h:36
 msgid "Rotate Right"
-msgstr ""
+msgstr "Tourner à Droit"
 
 #: ../gtk/data/gimagereader.ui.h:27 ../qt/data/MainWindow.ui.h:39
+#, fuzzy
 msgid "Image controls"
-msgstr ""
+msgstr "Monter contrôles image"
 
 #: ../gtk/data/gimagereader.ui.h:28 ../qt/data/MainWindow.ui.h:38
+#, fuzzy
 msgid "Image Controls"
-msgstr ""
+msgstr "Monter Contrôles Image"
 
 #: ../gtk/data/gimagereader.ui.h:29 ../qt/data/MainWindow.ui.h:41
 msgid "Autodetect layout"
@@ -187,64 +197,74 @@ msgid "Autodetect Layout"
 msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:31 ../qt/data/MainWindow.ui.h:43
+#, fuzzy
 msgid "Toggle output pane"
-msgstr ""
+msgstr "Supprimer restitution"
 
 #: ../gtk/data/gimagereader.ui.h:32 ../qt/data/MainWindow.ui.h:42
+#, fuzzy
 msgid "Toggle Output Pane"
-msgstr ""
+msgstr "Choisir Image de Restitution..."
 
 #: ../gtk/data/gimagereader.ui.h:33 ../qt/src/Ui_MainWindow.hh:177
+#, fuzzy
 msgid "Add images"
-msgstr ""
+msgstr "Ajouter une image"
 
 #: ../gtk/data/gimagereader.ui.h:34 ../qt/src/Ui_MainWindow.hh:176
+#, fuzzy
 msgid "Add Images"
-msgstr ""
+msgstr "Ajouter une image"
 
 #: ../gtk/data/gimagereader.ui.h:35 ../qt/src/Ui_MainWindow.hh:182
+#, fuzzy
 msgid "Remove image from list"
-msgstr ""
+msgstr "Supprimer image"
 
 #: ../gtk/data/gimagereader.ui.h:36 ../qt/src/Ui_MainWindow.hh:181
+#, fuzzy
 msgid "Remove Image"
-msgstr ""
+msgstr "Supprimer image"
 
 #: ../gtk/data/gimagereader.ui.h:37 ../qt/src/Ui_MainWindow.hh:185
+#, fuzzy
 msgid "Delete image"
-msgstr ""
+msgstr "Supprimer image"
 
 #: ../gtk/data/gimagereader.ui.h:38 ../qt/src/Ui_MainWindow.hh:184
 msgid "Delete Image"
 msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:39 ../qt/src/Ui_MainWindow.hh:188
+#, fuzzy
 msgid "Clear list"
-msgstr ""
+msgstr "Supprimer Restitution"
 
 #: ../gtk/data/gimagereader.ui.h:40 ../qt/src/Ui_MainWindow.hh:187
+#, fuzzy
 msgid "Clear List"
-msgstr ""
+msgstr "Supprimer Restitution"
 
 #: ../gtk/data/gimagereader.ui.h:41 ../qt/data/MainWindow.ui.h:7
+#, fuzzy
 msgid "Files"
-msgstr ""
+msgstr "_Fichier"
 
 #: ../gtk/data/gimagereader.ui.h:42 ../qt/data/MainWindow.ui.h:17
 msgid "Device:"
-msgstr ""
+msgstr "Dispositif:"
 
 #: ../gtk/data/gimagereader.ui.h:43 ../qt/data/MainWindow.ui.h:13
 msgid "Output:"
-msgstr ""
+msgstr "Restitution:"
 
 #: ../gtk/data/gimagereader.ui.h:44 ../qt/data/MainWindow.ui.h:9
 msgid "Resolution:"
-msgstr ""
+msgstr "Résolution:"
 
 #: ../gtk/data/gimagereader.ui.h:45 ../qt/data/MainWindow.ui.h:16
 msgid "Refresh"
-msgstr ""
+msgstr "Actualiser"
 
 #: ../gtk/data/gimagereader.ui.h:46 ../qt/data/MainWindow.ui.h:10
 msgid "Mode:"
@@ -260,23 +280,23 @@ msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:49 ../qt/data/MainWindow.ui.h:14
 msgid "Scan"
-msgstr ""
+msgstr "Scanner"
 
 #: ../gtk/data/gimagereader.ui.h:50 ../qt/data/MainWindow.ui.h:8
 msgid "Acquire"
-msgstr ""
+msgstr "Acquérir"
 
 #: ../gtk/data/gimagereader.ui.h:51 ../qt/data/MainWindow.ui.h:2
 msgid "Brightness"
-msgstr ""
+msgstr "Luminosité"
 
 #: ../gtk/data/gimagereader.ui.h:52 ../qt/data/MainWindow.ui.h:3
 msgid "Contrast"
-msgstr ""
+msgstr "Contraste"
 
 #: ../gtk/data/gimagereader.ui.h:53 ../qt/data/MainWindow.ui.h:4
 msgid "Resolution"
-msgstr ""
+msgstr "Résolution"
 
 #: ../gtk/data/gimagereader.ui.h:54 ../qt/data/MainWindow.ui.h:5
 msgid "Invert colors"
@@ -288,19 +308,20 @@ msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:56 ../qt/src/Ui_MainWindow.hh:243
 msgid "Strip line breaks on selected text"
-msgstr ""
+msgstr "Supprimer sauts de ligne dans le text sélectionnée"
 
 #: ../gtk/data/gimagereader.ui.h:57 ../qt/src/Ui_MainWindow.hh:242
 msgid "Strip Line Breaks"
-msgstr ""
+msgstr "Supprimer Sauts de Ligne"
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/src/Ui_MainWindow.hh:248
 msgid "Find and replace"
-msgstr ""
+msgstr "Trouver et remplacer"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/src/Ui_MainWindow.hh:247
+#, fuzzy
 msgid "Find and Replace"
-msgstr ""
+msgstr "Trouver et remplacer"
 
 #: ../gtk/data/gimagereader.ui.h:60 ../qt/src/Ui_MainWindow.hh:250
 #: ../qt/src/Ui_MainWindow.hh:251
@@ -314,39 +335,42 @@ msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:62 ../qt/src/Ui_MainWindow.hh:257
 msgid "Save output"
-msgstr ""
+msgstr "Enregistrer restitution"
 
 #: ../gtk/data/gimagereader.ui.h:63 ../qt/src/Ui_MainWindow.hh:256
+#, fuzzy
 msgid "Save Output"
-msgstr ""
+msgstr "Enregistrer restitution"
 
 #: ../gtk/data/gimagereader.ui.h:64 ../qt/src/Ui_MainWindow.hh:259
 msgid "Clear output"
-msgstr ""
+msgstr "Supprimer restitution"
 
 #: ../gtk/data/gimagereader.ui.h:65 ../qt/src/Ui_MainWindow.hh:258
 msgid "Clear Output"
-msgstr ""
+msgstr "Supprimer Restitution"
 
 #: ../gtk/data/gimagereader.ui.h:66 ../qt/data/MainWindow.ui.h:19
 msgid "Find"
-msgstr ""
+msgstr "Trouver"
 
 #: ../gtk/data/gimagereader.ui.h:67 ../qt/data/MainWindow.ui.h:20
 msgid "Replace"
-msgstr ""
+msgstr "Remplacer"
 
 #: ../gtk/data/gimagereader.ui.h:68 ../qt/data/MainWindow.ui.h:22
+#, fuzzy
 msgid "Replace all"
-msgstr ""
+msgstr "Remplacer"
 
 #: ../gtk/data/gimagereader.ui.h:69 ../qt/data/MainWindow.ui.h:23
 msgid "Find previous"
 msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:70 ../qt/data/MainWindow.ui.h:21
+#, fuzzy
 msgid "Find next"
-msgstr ""
+msgstr "Trouver"
 
 #: ../gtk/data/gimagereader.ui.h:71 ../qt/data/MainWindow.ui.h:25
 msgid "Match case"
@@ -354,35 +378,36 @@ msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:72
 msgid "A graphical frontend to tesseract-ocr"
-msgstr ""
+msgstr "Une interface graphique pour tesseract-ocr"
 
 #: ../gtk/data/gimagereader.ui.h:73 ../qt/data/ConfigDialog.ui.h:1
 msgid "Configuration"
-msgstr ""
+msgstr "Configuration"
 
 #: ../gtk/data/gimagereader.ui.h:74
 msgid "Output pane orientation:"
-msgstr ""
+msgstr "Orientation de la région de restitution:"
 
 #: ../gtk/data/gimagereader.ui.h:75
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontal"
 
 #: ../gtk/data/gimagereader.ui.h:76
 msgid "Vertical"
-msgstr ""
+msgstr "Vertical"
 
 #: ../gtk/data/gimagereader.ui.h:77 ../qt/data/ConfigDialog.ui.h:3
 msgid "Query to install missing spellcheck dictionaries"
-msgstr ""
+msgstr "Proposer d'installer dictionnaires manquantes"
 
 #: ../gtk/data/gimagereader.ui.h:78 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr ""
+msgstr "Vérifier si une nouvelle version est disponible"
 
 #: ../gtk/data/gimagereader.ui.h:79 ../qt/data/ConfigDialog.ui.h:9
+#, fuzzy
 msgid "Predefined language definitions:"
-msgstr ""
+msgstr "Langue préféré"
 
 #: ../gtk/data/gimagereader.ui.h:80 ../qt/data/ConfigDialog.ui.h:10
 msgid "Additional language definitions:"
@@ -394,15 +419,16 @@ msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:82 ../qt/data/ConfigDialog.ui.h:12
 msgid "Prefix"
-msgstr ""
+msgstr "Préfixe"
 
 #: ../gtk/data/gimagereader.ui.h:83 ../qt/data/ConfigDialog.ui.h:13
 msgid "The ISO 639-1 language code followed by the country code"
 msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:84 ../qt/data/ConfigDialog.ui.h:14
+#, fuzzy
 msgid "ISO Code"
-msgstr ""
+msgstr "Code ISO"
 
 #: ../gtk/data/gimagereader.ui.h:85 ../qt/data/ConfigDialog.ui.h:15
 msgid "The name of the language"
@@ -410,11 +436,12 @@ msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:86 ../qt/data/ConfigDialog.ui.h:16
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: ../gtk/data/gimagereader.ui.h:87 ../qt/data/ConfigDialog.ui.h:5
+#, fuzzy
 msgid "Output pane font:"
-msgstr ""
+msgstr "Orientation de la région de restitution:"
 
 #: ../gtk/data/gimagereader.ui.h:88 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
@@ -422,19 +449,21 @@ msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:89 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
-msgstr ""
+msgstr "Pages"
 
 #: ../gtk/data/gimagereader.ui.h:90 ../qt/data/PageRangeDialog.ui.h:2
+#, fuzzy
 msgid "Page range:"
-msgstr ""
+msgstr "Pages"
 
 #: ../gtk/data/gimagereader.ui.h:91
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
-msgstr ""
+msgstr "<small><b>Par exemple:</b> 1-10, 13, 14-18</small>"
 
 #: ../gtk/data/gimagereader.ui.h:92 ../qt/data/PageRangeDialog.ui.h:4
+#, fuzzy
 msgid "Recognition area:"
-msgstr ""
+msgstr "Définir la langue de reconnaissance"
 
 #: ../gtk/data/gimagereader.ui.h:93 ../qt/data/PageRangeDialog.ui.h:5
 msgid "Entire page"
@@ -453,29 +482,34 @@ msgid "Order:"
 msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:97 ../qt/src/DisplaySelection.cc:57
+#, fuzzy
 msgid "Recognize"
-msgstr ""
+msgstr "Reconnaître toute"
 
 #: ../gtk/data/gimagereader.ui.h:98 ../qt/src/DisplaySelection.cc:58
+#, fuzzy
 msgid "Recognize to clipboard"
-msgstr ""
+msgstr "Reconnaître toute l'image"
 
 #: ../gtk/data/gimagereader.ui.h:99 ../qt/src/DisplaySelection.cc:59
+#, fuzzy
 msgid "Save as image"
-msgstr ""
+msgstr "Supprimer tous les images"
 
 #. Output postprocessing
 #: ../gtk/data/gimagereader.ui.h:100 ../qt/src/Ui_MainWindow.hh:212
+#, fuzzy
 msgid "Keep line break if..."
-msgstr ""
+msgstr "Tenir saut de ligne si précédée par '.'"
 
 #: ../gtk/data/gimagereader.ui.h:101 ../qt/src/Ui_MainWindow.hh:214
 msgid "Preceded by dot"
 msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:102 ../qt/src/Ui_MainWindow.hh:216
+#, fuzzy
 msgid "Preceded or succeeded by quote"
-msgstr ""
+msgstr "Tenir saut de ligne si précédée par guillemet"
 
 #: ../gtk/data/gimagereader.ui.h:103 ../qt/src/Ui_MainWindow.hh:218
 msgid "Other options"
@@ -491,16 +525,17 @@ msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:106 ../qt/src/Recognizer.cc:40
 msgid "Current Page"
-msgstr ""
+msgstr "Page courant"
 
 #: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Recognizer.cc:43
+#, fuzzy
 msgid "Multiple Pages..."
-msgstr ""
+msgstr "Pages..."
 
 #: ../gtk/src/Acquirer.cc:39 ../gtk/src/FileDialogs.cc:170
 #: ../qt/data/ConfigDialog.ui.h:18 ../qt/data/MainWindow.ui.h:15
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: ../gtk/src/Acquirer.cc:72 ../qt/src/Acquirer.cc:61
 msgid "scan.png"
@@ -508,33 +543,37 @@ msgstr ""
 
 #: ../gtk/src/Acquirer.cc:89 ../gtk/src/Displayer.cc:494
 #: ../qt/src/Acquirer.cc:78 ../qt/src/Displayer.cc:376
+#, fuzzy
 msgid "PNG Images"
-msgstr ""
+msgstr "Images"
 
 #: ../gtk/src/Acquirer.cc:90 ../qt/src/Acquirer.cc:78
+#, fuzzy
 msgid "Choose Output Filename..."
-msgstr ""
+msgstr "Choisir Image de Restitution..."
 
 #: ../gtk/src/Acquirer.cc:107 ../qt/src/Acquirer.cc:95
 msgid "Failed to initialize the scanning backend."
 msgstr ""
 
 #: ../gtk/src/Acquirer.cc:118 ../qt/src/Acquirer.cc:103
+#, fuzzy
 msgid "Scan failed"
-msgstr ""
+msgstr "Transaction a échoué"
 
 #: ../gtk/src/Acquirer.cc:138 ../qt/src/Acquirer.cc:119
 msgid "No scanners were detected."
-msgstr ""
+msgstr "Aucun scanners ont été détectés."
 
 #: ../gtk/src/Acquirer.cc:156 ../gtk/src/Acquirer.cc:173
 #: ../qt/src/Acquirer.cc:134 ../qt/src/Acquirer.cc:152
+#, fuzzy
 msgid "Starting scan..."
-msgstr ""
+msgstr "Recherchant paquet..."
 
 #: ../gtk/src/Acquirer.cc:169 ../qt/src/Acquirer.cc:148
 msgid "Opening device..."
-msgstr ""
+msgstr "Ouverture du dispositif..."
 
 #: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:150
 msgid "Setting options..."
@@ -546,15 +585,16 @@ msgstr ""
 
 #: ../gtk/src/Acquirer.cc:177 ../qt/src/Acquirer.cc:156
 msgid "Transferring data..."
-msgstr ""
+msgstr "Transfert de données..."
 
 #: ../gtk/src/Acquirer.cc:187 ../qt/src/Acquirer.cc:166
+#, fuzzy
 msgid "Canceling scan..."
-msgstr ""
+msgstr "Recherchant paquet..."
 
 #: ../gtk/src/Config.cc:85 ../qt/data/ConfigDialog.ui.h:6
 msgid "Filename prefix"
-msgstr ""
+msgstr "Préfixe nom ficher"
 
 #: ../gtk/src/Config.cc:86 ../qt/data/ConfigDialog.ui.h:7
 msgid "Code"
@@ -562,7 +602,7 @@ msgstr ""
 
 #: ../gtk/src/Config.cc:87 ../qt/data/ConfigDialog.ui.h:8
 msgid "Native name"
-msgstr ""
+msgstr "Nom"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:43
 #: ../qt/src/CrashHandler.cc:35
@@ -587,17 +627,19 @@ msgstr ""
 
 #: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:146
 msgid "Failed to load image"
-msgstr ""
+msgstr "Manqué de ouvrir l'image"
 
 #: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:146
+#, fuzzy
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
-msgstr ""
+msgstr "Le fichier pourrait non entre une image ou être corrompu."
 
 #: ../gtk/src/Displayer.cc:229
+#, fuzzy
 msgid "Rendering image..."
-msgstr ""
+msgstr "Recherchant paquet..."
 
 #: ../gtk/src/Displayer.cc:495 ../qt/src/Displayer.cc:376
 msgid "Save Selection Image"
@@ -610,14 +652,15 @@ msgstr ""
 #: ../gtk/src/FileDialogs.cc:110 ../gtk/src/FileDialogs.cc:169
 #: ../gtk/src/FileDialogs.cc:189 ../gtk/src/FileDialogs.cc:255
 #: ../qt/src/SourceManager.cc:140
+#, fuzzy
 msgid "Select Files"
-msgstr ""
+msgstr "Fichiers texte"
 
 #. Get formats
 #: ../gtk/src/FileDialogs.cc:113 ../gtk/src/FileDialogs.cc:186
 #: ../qt/src/SourceManager.cc:139
 msgid "Images and PDFs"
-msgstr ""
+msgstr "Images et PDFs"
 
 #: ../gtk/src/FileDialogs.cc:171 ../qt/data/ConfigDialog.ui.h:17
 msgid "OK"
@@ -634,19 +677,21 @@ msgstr ""
 
 #: ../gtk/src/MainWindow.cc:119 ../qt/src/MainWindow.cc:124
 msgid "Select an image to begin..."
-msgstr ""
+msgstr "Sélectionner une image pour commencer..."
 
 #: ../gtk/src/MainWindow.cc:204 ../qt/src/MainWindow.cc:204
+#, fuzzy
 msgid "To recognize specific areas, drag rectangles over them."
-msgstr ""
+msgstr "Pour reconnaître une région spécifique, traîner un rectangle sur la."
 
 #: ../gtk/src/MainWindow.cc:305 ../qt/src/MainWindow.cc:326
 msgid "New version"
-msgstr ""
+msgstr "Nouveau version"
 
 #: ../gtk/src/MainWindow.cc:305 ../qt/src/MainWindow.cc:326
+#, fuzzy
 msgid "gImageReader %1 is available"
-msgstr ""
+msgstr "gImageReader"
 
 #: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:327
 msgid "Download"
@@ -657,48 +702,53 @@ msgid "Changelog"
 msgstr ""
 
 #: ../gtk/src/MainWindow.cc:308 ../qt/src/MainWindow.cc:329
+#, fuzzy
 msgid "Don't notify again"
-msgstr ""
+msgstr "Ne plus demander"
 
 #: ../gtk/src/OutputManager.cc:173 ../qt/src/OutputManager.cc:139
+#, fuzzy
 msgid "Stripping line breaks..."
-msgstr ""
+msgstr "Supprimer Sauts de Ligne"
 
 #: ../gtk/src/OutputManager.cc:189 ../qt/src/OutputManager.cc:163
+#, fuzzy
 msgid "Replacing..."
-msgstr ""
+msgstr "Remplacer"
 
 #: ../gtk/src/OutputManager.cc:278
 msgid "Check spelling"
 msgstr ""
 
 #: ../gtk/src/OutputManager.cc:317 ../qt/src/OutputManager.cc:276
+#, fuzzy
 msgid "output"
-msgstr ""
+msgstr "Restitution:"
 
 #: ../gtk/src/OutputManager.cc:321 ../qt/src/OutputManager.cc:278
 msgid "Text Files"
-msgstr ""
+msgstr "Fichiers texte"
 
 #: ../gtk/src/OutputManager.cc:322 ../qt/src/OutputManager.cc:278
 msgid "Save Output..."
-msgstr ""
+msgstr "Enregistrer Restitution..."
 
 #: ../gtk/src/OutputManager.cc:329 ../qt/src/OutputManager.cc:285
 msgid "Failed to save output"
-msgstr ""
+msgstr "Manque de enregistrer la restitution"
 
 #: ../gtk/src/OutputManager.cc:329 ../qt/src/OutputManager.cc:285
 msgid "Check that you have writing permissions in the selected folder."
 msgstr ""
+"Vérifier qu'on a autorisations te écriture dans le dossier sélectionné."
 
 #: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:299
 msgid "Output not saved"
-msgstr ""
+msgstr "Restitution non enregistré"
 
 #: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:299
 msgid "Save output before proceeding?"
-msgstr ""
+msgstr "Enregistrer la restitution avant précéder?"
 
 #: ../gtk/src/OutputManager.cc:368
 msgid "en_US"
@@ -706,19 +756,23 @@ msgstr ""
 
 #: ../gtk/src/OutputManager.cc:376 ../qt/src/OutputManager.cc:325
 msgid "Don't show again"
-msgstr ""
+msgstr "Ne plus demander"
 
 #: ../gtk/src/OutputManager.cc:384 ../qt/src/OutputManager.cc:333
 msgid "Install"
-msgstr ""
+msgstr "Installer"
 
 #: ../gtk/src/OutputManager.cc:389 ../qt/src/OutputManager.cc:338
+#, fuzzy
 msgid "Spelling dictionary missing"
-msgstr ""
+msgstr "Dictionnaire manquant"
 
 #: ../gtk/src/OutputManager.cc:389 ../qt/src/OutputManager.cc:338
+#, fuzzy
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr ""
+"Le dictionnaire de vérification orthographique pour '%(one)s' ('%(two)s') "
+"n'est pas installé."
 
 #: ../gtk/src/OutputManager.cc:398 ../qt/src/OutputManager.cc:347
 msgid "Installing spelling dictionary for '%1'"
@@ -729,12 +783,14 @@ msgid "Error"
 msgstr ""
 
 #: ../gtk/src/OutputManager.cc:413 ../qt/src/OutputManager.cc:362
+#, fuzzy
 msgid "Failed to install spelling dictionary: %1"
-msgstr ""
+msgstr "Impossible d'installer le dictionnaire"
 
 #: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
+#, fuzzy
 msgid "No languages available"
-msgstr ""
+msgstr "est disponible."
 
 #: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
 msgid ""
@@ -747,18 +803,19 @@ msgstr ""
 
 #: ../gtk/src/Recognizer.cc:191 ../qt/src/Recognizer.cc:218
 msgid "Recognize selection"
-msgstr ""
+msgstr "Reconnaître sélection"
 
 #: ../gtk/src/Recognizer.cc:193 ../qt/src/Recognizer.cc:56
 #: ../qt/src/Recognizer.cc:218
 msgid "Recognize all"
-msgstr ""
+msgstr "Reconnaître toute"
 
 #: ../gtk/src/Recognizer.cc:265 ../qt/src/Recognizer.cc:296
+#, fuzzy
 msgid ""
 "\n"
 "\tFailed to initialize tesseract"
-msgstr ""
+msgstr "Dossier contenant tesseract:"
 
 #: ../gtk/src/Recognizer.cc:273 ../qt/src/Recognizer.cc:304
 msgid "Recognizing page %1 (%2 of %3)"
@@ -778,33 +835,43 @@ msgstr ""
 
 #: ../gtk/src/Recognizer.cc:293 ../gtk/src/Recognizer.cc:314
 #: ../qt/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:345
+#, fuzzy
 msgid "Recognizing..."
-msgstr ""
+msgstr "Reconnaissant, attendre..."
 
 #: ../gtk/src/Recognizer.cc:296 ../gtk/src/Recognizer.cc:304
 #: ../qt/src/Recognizer.cc:327 ../qt/src/Recognizer.cc:335
+#, fuzzy
 msgid "Recognition errors occurred"
 msgstr ""
+"L'erreur suivante s'est produite:\n"
+"%s"
 
 #: ../gtk/src/Recognizer.cc:296 ../qt/src/Recognizer.cc:327
+#, fuzzy
 msgid "The following errors occurred:%1"
 msgstr ""
+"L'erreur suivante s'est produite:\n"
+"%s"
 
 #: ../gtk/src/Recognizer.cc:304 ../qt/src/Recognizer.cc:335
+#, fuzzy
 msgid "Failed to initialize tesseract"
-msgstr ""
+msgstr "Dossier contenant tesseract:"
 
 #: ../gtk/src/ScanThread.cc:62 ../qt/src/ScanThread.cc:62
+#, fuzzy
 msgid "No scanner specified"
-msgstr ""
+msgstr "Aucun scanners ont été détectés."
 
 #: ../gtk/src/ScanThread.cc:65 ../qt/src/ScanThread.cc:65
 msgid "Unable to connect to scanner"
 msgstr ""
 
 #: ../gtk/src/ScanThread.cc:93 ../qt/src/ScanThread.cc:93
+#, fuzzy
 msgid "Unable to start scan"
-msgstr ""
+msgstr "Impossible de ouvrir fichiers"
 
 #: ../gtk/src/ScanThread.cc:101 ../gtk/src/ScanThread.cc:115
 #: ../qt/src/ScanThread.cc:101 ../qt/src/ScanThread.cc:115
@@ -812,24 +879,29 @@ msgid "Error communicating with scanner"
 msgstr ""
 
 #: ../gtk/src/ScanThread.cc:180 ../qt/src/ScanThread.cc:178
+#, fuzzy
 msgid "Scan canceled"
-msgstr ""
+msgstr "Transaction a échoué"
 
 #: ../gtk/src/SourceManager.cc:110 ../qt/src/SourceManager.cc:95
 msgid "Unable to open files"
-msgstr ""
+msgstr "Impossible de ouvrir fichiers"
 
 #: ../gtk/src/SourceManager.cc:110 ../qt/src/SourceManager.cc:95
+#, fuzzy
 msgid "The following files could not be opened:%1"
 msgstr ""
+"Fichiers suivants n'ont pas pu être ouvert:\n"
+"%s"
 
 #: ../gtk/src/SourceManager.cc:134 ../qt/src/SourceManager.cc:153
 msgid "Clipboard Error"
 msgstr ""
 
 #: ../gtk/src/SourceManager.cc:134 ../qt/src/SourceManager.cc:153
+#, fuzzy
 msgid "Failed to read the clipboard."
-msgstr ""
+msgstr "Manque de récupérer les données d'image"
 
 #: ../gtk/src/SourceManager.cc:138 ../qt/src/SourceManager.cc:157
 msgid "Pasted %1"
@@ -840,16 +912,18 @@ msgid "Screenshot Error"
 msgstr ""
 
 #: ../gtk/src/SourceManager.cc:151 ../qt/src/SourceManager.cc:165
+#, fuzzy
 msgid "Failed to take screenshot."
-msgstr ""
+msgstr "Manque de enregistrer la restitution"
 
 #: ../gtk/src/SourceManager.cc:155 ../qt/src/SourceManager.cc:169
 msgid "Screenshot %1"
 msgstr ""
 
 #: ../gtk/src/SourceManager.cc:161 ../qt/src/SourceManager.cc:175
+#, fuzzy
 msgid "Saving image..."
-msgstr ""
+msgstr "Recherchant paquet..."
 
 #: ../gtk/src/SourceManager.cc:168 ../qt/src/SourceManager.cc:188
 msgid "Cannot Write File"
@@ -860,32 +934,41 @@ msgid "Could not write to %1."
 msgstr ""
 
 #: ../gtk/src/SourceManager.cc:190 ../qt/src/SourceManager.cc:205
+#, fuzzy
 msgid "Delete File?"
-msgstr ""
+msgstr "Fichiers _Récents"
 
 #: ../gtk/src/SourceManager.cc:190 ../qt/src/SourceManager.cc:205
+#, fuzzy
 msgid ""
 "The following file will be deleted:\n"
 "%1"
 msgstr ""
+"Fichiers suivants n'ont pas pu être ouvert:\n"
+"%s"
 
 #: ../gtk/src/SourceManager.cc:245 ../qt/src/SourceManager.cc:249
 msgid "Missing File"
 msgstr ""
 
 #: ../gtk/src/SourceManager.cc:245 ../qt/src/SourceManager.cc:249
+#, fuzzy
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
 msgstr ""
+"L'erreur suivante s'est produite:\n"
+"%s"
 
 #: ../gtk/src/SubstitutionsManager.cc:39 ../qt/src/SubstitutionsManager.cc:77
+#, fuzzy
 msgid "Search for"
-msgstr ""
+msgstr "Chercher:"
 
 #: ../gtk/src/SubstitutionsManager.cc:40 ../qt/src/SubstitutionsManager.cc:77
+#, fuzzy
 msgid "Replace with"
-msgstr ""
+msgstr "Remplacer avec:"
 
 #: ../gtk/src/SubstitutionsManager.cc:62 ../qt/src/SubstitutionsManager.cc:99
 msgid "substitution_list.txt"
@@ -906,8 +989,9 @@ msgid "Error Reading File"
 msgstr ""
 
 #: ../gtk/src/SubstitutionsManager.cc:87 ../qt/src/SubstitutionsManager.cc:115
+#, fuzzy
 msgid "Unable to read '%1'."
-msgstr ""
+msgstr "Impossible de ouvrir fichiers"
 
 #: ../gtk/src/SubstitutionsManager.cc:107
 #: ../qt/src/SubstitutionsManager.cc:137
@@ -936,8 +1020,9 @@ msgstr ""
 
 #: ../gtk/src/SubstitutionsManager.cc:140
 #: ../qt/src/SubstitutionsManager.cc:165
+#, fuzzy
 msgid "Save List?"
-msgstr ""
+msgstr "Enregistrer sous"
 
 #: ../gtk/src/SubstitutionsManager.cc:140
 #: ../qt/src/SubstitutionsManager.cc:165
@@ -950,8 +1035,9 @@ msgid "Applying substitutions..."
 msgstr ""
 
 #: ../qt/data/AboutDialog.ui.h:1
+#, fuzzy
 msgid "About gImageReader"
-msgstr ""
+msgstr "gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:4
 #, no-c-format
@@ -986,12 +1072,271 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
-msgstr ""
+msgstr "gImageReader"
 
 #: ../qt/data/MainWindow.ui.h:18
+#, fuzzy
 msgid "Output"
-msgstr ""
+msgstr "Restitution:"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
+#, fuzzy
 msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr ""
+msgstr "<small><b>Par exemple:</b> 1-10, 13, 14-18</small>"
+
+#~ msgid "Images"
+#~ msgstr "Images"
+
+#~ msgid "Failed to open the selected device"
+#~ msgstr "Impossible d'ouvrir le périphérique sélectionné"
+
+#~ msgid "Failed to save image"
+#~ msgstr "Manqué de enregistrer l'image"
+
+#~ msgid "Failed to set output file"
+#~ msgstr "Impossible de définir le fichier de sortie"
+
+#~ msgid "ISO 639-1 code"
+#~ msgstr "Code ISO 639-1"
+
+#~ msgid "(none)"
+#~ msgstr "(aucun)"
+
+#~ msgid "Need valid paths to continue"
+#~ msgstr "Des chemines valides sont nécessaires pour continuer"
+
+#~ msgid "Correct the configuration? (Pressing 'No' will quit the program.)"
+#~ msgstr "Corriger la configuration? ('Non' quittera le programme)"
+
+#~ msgid "This path is required for the program to work."
+#~ msgstr "Cette chemin est nécessaire pour que le programme fonctionne."
+
+#~ msgid "Following features will not work:\n"
+#~ msgstr "Les fonctionnalités suivants ne fonctionneront pas:\n"
+
+#~ msgid "Choose Image(s)..."
+#~ msgstr "Choisir Images..."
+
+#~ msgid "All Pages"
+#~ msgstr "Tous les page"
+
+#~ msgid "Recognize selected region"
+#~ msgstr "Reconnaître région sélectionné"
+
+#~ msgid "Loading '%s'..."
+#~ msgstr "Chargement de '%s'..."
+
+#~ msgid "Failed to perform recognition"
+#~ msgstr "Manque de effectuer la reconnaissance"
+
+#~ msgid "Could not save selection to temporary folder."
+#~ msgstr "Impossible d'enregistrer la sélection dans le dossier temporaire."
+
+#~ msgid "returned"
+#~ msgstr "retour"
+
+#~ msgid ""
+#~ "This probabily is a bug in tesseract, retry using an image at a different "
+#~ "resolution or by varying the selected region."
+#~ msgstr ""
+#~ "Cette est probablement un bug dans tesseract, reprouver en utilisant une "
+#~ "image avec une autre résolution ou en en changeant la région sélectionné."
+
+#~ msgid "At end"
+#~ msgstr "À la fin"
+
+#~ msgid "Don't ask again"
+#~ msgstr "Ne plus demander"
+
+#~ msgid "No package providing the requested file found."
+#~ msgstr "Aucun paquet fournissant le fichier demandé trouvée."
+
+#~ msgid "Running transaction..."
+#~ msgstr "Exécution de transaction..."
+
+#~ msgid ""
+#~ "<b>Custom tesseract languages</b>\n"
+#~ "If a language you need is missing above, add it here:"
+#~ msgstr ""
+#~ "<b>Langues tesseract personnalisées</b>\n"
+#~ "Si la langue manque ci-dessus, ajouter-la ici:"
+
+#~ msgid "<b>Insert page range:</b>"
+#~ msgstr "<b>Pages:</b>"
+
+#~ msgid ""
+#~ "<b>Note:</b>\n"
+#~ "If the entry for an installed tesseract language is missing, you may need "
+#~ "to manually add a rule under the 'Languages' tab."
+#~ msgstr ""
+#~ "<b>Note:</b>\n"
+#~ "Si une langue pour tesseract est manquant dans la liste ci-dessus, il "
+#~ "peut-être ajoutée sous la rubrique 'Langues'."
+
+#~ msgid ""
+#~ "<b>Predefined tesseract languages</b>\n"
+#~ "The following languages are detected automatically:"
+#~ msgstr ""
+#~ "<b>Langues tesseract prédéfinies</b>\n"
+#~ "Les langues suivants sont détectés automatiquement:"
+
+#~ msgid "Acquire image from scanner"
+#~ msgstr "Acquérir Image"
+
+#~ msgid "Cancel recognition"
+#~ msgstr "Annuler la reconnaissance"
+
+#~ msgid "Directory containing tesseract languages:"
+#~ msgstr "Dossier contenant langues pour tesseract:"
+
+#~ msgid "Enable antialiasing for downscaled images"
+#~ msgstr "Activer l'antialiasing pour des images à échelle réduite"
+
+#~ msgid "Folder containing the tesseract executable 'tesseract(.exe)'."
+#~ msgstr "Dossier contenant l'exécutable tesseract 'tesseract(.exe)'."
+
+#~ msgid ""
+#~ "Folder containing the tesseract languages, contains '*.unicharset' or '*."
+#~ "traineddata' files among others."
+#~ msgstr ""
+#~ "Dossier contenant les langues pour tesseract, entre autres les fichiers "
+#~ "'*.unicharset' ou '*.traineddata'."
+
+#~ msgid "Hide"
+#~ msgstr "Cacher"
+
+#~ msgid "Insert"
+#~ msgstr "Insérer"
+
+#~ msgid "Keep line break if preceded by '!'"
+#~ msgstr "Tenir saut de ligne si précédée par '!'"
+
+#~ msgid "Keep line break if preceded by '?'"
+#~ msgstr "Tenir saut de ligne si précédée par '?'"
+
+#~ msgid "Open one or more images"
+#~ msgstr "Ouvrier une out plus images"
+
+#~ msgid "Page:"
+#~ msgstr "Page:"
+
+#~ msgid "Rotate _Left"
+#~ msgstr "Tourner à _Gauche"
+
+#~ msgid "Rotate _Right"
+#~ msgstr "Tourner à _Droit"
+
+#~ msgid "Toggle Image Controls"
+#~ msgstr "Monter Contrôles Image"
+
+#~ msgid ""
+#~ "Whether the user should be prompted to install missing spellcheck "
+#~ "dictionaries."
+#~ msgstr ""
+#~ "Si l'utilisateur doit être invité à installer dictionnaires de "
+#~ "vérification orthographique manquantes."
+
+#~ msgid "Whether to enable antialiasing when displaying downscaled images."
+#~ msgstr "Si activer l'antialiasing pour les images dézoomées."
+
+#~ msgid "_Acquire Image"
+#~ msgstr "_Acquérir Image"
+
+#~ msgid "_Configure"
+#~ msgstr "_Configurer"
+
+#~ msgid "_Help"
+#~ msgstr "A_ide"
+
+#~ msgid "_Open Image(s)"
+#~ msgstr "_Ouvrir Images"
+
+#~ msgid "_Show Sources Pane"
+#~ msgstr "_Montrer Région Sources"
+
+#~ msgid "_View"
+#~ msgstr "_Affichage"
+
+#~ msgid "Open Image(s)"
+#~ msgstr "Ouvrir Images"
+
+#~ msgid "Dictionaries"
+#~ msgstr "Dictionnaires"
+
+#~ msgid "Directory containing dictionaries:"
+#~ msgstr "Dossiert contenant dictionaries:"
+
+#~ msgid "PDF Import"
+#~ msgstr "Importation PDF"
+
+#~ msgid "Dependencies missing"
+#~ msgstr "Dépendances manquantes"
+
+#~ msgid ""
+#~ "The following programs required for this feature are not installed or "
+#~ "were not found:\n"
+#~ "%s\n"
+#~ "Open the configuration dialog?"
+#~ msgstr ""
+#~ "Les programmes suivants requis pour cette fonction ne sont pas installés "
+#~ "ou ne pouvait pas être trouvé:\n"
+#~ "%s\n"
+#~ "Ouvrir le dialogue de configuration?"
+
+#~ msgid "Choose PDF(s)..."
+#~ msgstr "Choisir Fichiers PDF..."
+
+#~ msgid "PDF Documents"
+#~ msgstr "Fichiers PDF"
+
+#~ msgid "Failed to import the following files"
+#~ msgstr "Impossible d'importer les fichiers suivants"
+
+#~ msgid "Importing '%s'..."
+#~ msgstr "Importation de '%s'..."
+
+#~ msgid "The source file '%s' could not be found."
+#~ msgstr "Le fichier de origine '%s' ne peut pas être trouvé."
+
+#~ msgid "Directory containing ghostscript:"
+#~ msgstr "Dossier contenant ghostscript:"
+
+#~ msgid ""
+#~ "Folder containing the convert executable 'convert(.exe)' (part of "
+#~ "ImageMagick)."
+#~ msgstr ""
+#~ "Dossier contenant l'exécutable convert 'convert(.exe)' (partie de "
+#~ "ImageMagick)."
+
+#~ msgid ""
+#~ "Folder containing the ghostscript executable 'gs' resp. 'gswin32c.exe' or "
+#~ "'gswin64c.exe'."
+#~ msgstr ""
+#~ "Dossier contenant l'exécutable ghostscript 'gs' resp. 'gswin32c.exe' ou "
+#~ "'gswin64c.exe'."
+
+#~ msgid "Rasterization resolution (DPI):"
+#~ msgstr "Résolution de pixellisation (DPI):"
+
+#~ msgid "_Import PDF(s)"
+#~ msgstr "_Importer Fichiers PDF"
+
+#~ msgid "Hide file list"
+#~ msgstr "Cacher la liste des images"
+
+#~ msgid "Strip new lines"
+#~ msgstr "Supprimer sauts de ligne"
+
+#~ msgid "No dictionaries found"
+#~ msgstr "Aucun dictionnaire trouvé"
+
+#~ msgid ""
+#~ "Do you want to correct the configuration? (Pressing 'No' will quit the "
+#~ "program.)"
+#~ msgstr "Corriger la configuration? ('Non' quittera le programme)"
+
+#~ msgid "Open an image to begin."
+#~ msgstr "Ouvrir un image pour commencer."
+
+#~ msgid "Initializing..."
+#~ msgstr "Initialisation..."

@@ -177,7 +177,7 @@ void ScanThread::run()
 			}else if(request.type == Request::Type::StartScan){
 				m_jobQueue.push(static_cast<ScanBackend::Job*>(request.data));
 			}else if(request.type == Request::Type::Cancel){
-				failScan(_("Scan cancelled"));
+				failScan(_("Scan canceled"));
 			}else if(request.type == Request::Type::Quit){
 				doClose();
 				break;

@@ -324,7 +324,7 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 		}, _("Recognizing..."));
 	}
 	if(!failed.isEmpty()){
-		QMessageBox::critical(MAIN, _("Recognition errors occured"), _("The following errors occured:%1").arg(failed));
+		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("The following errors occurred:%1").arg(failed));
 	}
 }
 
@@ -332,7 +332,7 @@ bool Recognizer::recognizeImage(const QImage& img, OutputDestination dest)
 {
 	tesseract::TessBaseAPI tess;
 	if(!initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())){
-		QMessageBox::critical(MAIN, _("Recognition errors occured"), _("Failed to initialize tesseract"));
+		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 		return false;
 	}
 	QString output;

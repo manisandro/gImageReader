@@ -111,7 +111,7 @@ void SubstitutionsManager::openList()
 
 bool SubstitutionsManager::saveList()
 {
-	FileDialogs::FileFilter filter = { _("Substitutions list"), "text/plain", "*.txt" };
+	FileDialogs::FileFilter filter = { _("Substitutions List"), "text/plain", "*.txt" };
 	std::string filename = FileDialogs::save_dialog(_("Save Substitutions List"), m_currentFile, filter, m_dialog);
 	if(filename.empty()) {
 		return false;

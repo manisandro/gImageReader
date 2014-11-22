@@ -119,7 +119,7 @@ void OutputManager::filterBuffer()
 		if(ui.actionOutputPostprocJoinHyphen->isChecked()){
 			txt.replace(QRegExp("-\\s*\u2029\\s*"), "");
 		}
-		QString expr = "\u2029"; // Keep if preceeded by line break
+		QString expr = "\u2029"; // Keep if preceded by line break
 		if(ui.actionOutputPostprocKeepDot->isChecked()){
 			expr += "\\.";
 		}

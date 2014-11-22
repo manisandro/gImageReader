@@ -74,7 +74,7 @@ SubstitutionsManager::SubstitutionsManager(QPlainTextEdit* textEdit, QCheckBox* 
 #endif
 	m_tableWidget->horizontalHeader()->setVisible(true);
 	m_tableWidget->verticalHeader()->setVisible(false);
-	m_tableWidget->setHorizontalHeaderLabels(QStringList() << _("Search for") << ("Replace with"));
+	m_tableWidget->setHorizontalHeaderLabels(QStringList() << _("Search for") << _("Replace with"));
 
 	QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Apply|QDialogButtonBox::Close);
 

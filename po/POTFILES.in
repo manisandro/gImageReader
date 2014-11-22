@@ -1,12 +1,11 @@
 # List of source files containing translatable strings.
 
-[type: gettext/glade]gtk/data/gimagereader.ui
 [type: gettext/glade]gtk/data/appmenu.ui
 [type: gettext/glade]gtk/data/crashhandler.ui
+[type: gettext/glade]gtk/data/gimagereader.ui
 gtk/src/Acquirer.cc
 gtk/src/Acquirer.hh
 gtk/src/Application.hh
-gtk/src/AsyncQueue.hh
 gtk/src/common.hh
 gtk/src/Config.cc
 gtk/src/Config.hh
@@ -16,8 +15,6 @@ gtk/src/CrashHandler.cc
 gtk/src/CrashHandler.hh
 gtk/src/Displayer.cc
 gtk/src/Displayer.hh
-gtk/src/DisplayManipulator.cc
-gtk/src/DisplayManipulator.hh
 gtk/src/DisplayRenderer.cc
 gtk/src/DisplayRenderer.hh
 gtk/src/DisplaySelection.cc
@@ -28,16 +25,15 @@ gtk/src/Geometry.hh
 gtk/src/main.cc
 gtk/src/MainWindow.cc
 gtk/src/MainWindow.hh
-gtk/src/Notifier.cc
-gtk/src/Notifier.hh
 gtk/src/OutputManager.cc
 gtk/src/OutputManager.hh
 gtk/src/Recognizer.cc
 gtk/src/Recognizer.hh
-gtk/src/Scanner.cc
-gtk/src/Scanner.hh
-gtk/src/ScannerSane.hh
-gtk/src/ScannerTwain.hh
+gtk/src/ScanBackend.hh
+gtk/src/ScanBackendSane.hh
+gtk/src/ScanBackendTwain.hh
+gtk/src/ScanThread.cc
+gtk/src/ScanThread.hh
 gtk/src/SourceManager.cc
 gtk/src/SourceManager.hh
 gtk/src/SubstitutionsManager.cc
@@ -51,10 +47,8 @@ gtk/src/Utils.hh
 [type: gettext/qtdesigner]qt/data/CrashHandler.ui
 [type: gettext/qtdesigner]qt/data/MainWindow.ui
 [type: gettext/qtdesigner]qt/data/PageRangeDialog.ui
-qt/src/AboutDialog.hh
 qt/src/Acquirer.cc
 qt/src/Acquirer.hh
-qt/src/AsyncQueue.hh
 qt/src/common.hh
 qt/src/Config.cc
 qt/src/Config.hh

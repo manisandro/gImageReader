@@ -44,7 +44,7 @@ void CrashHandler::on_startup()
 	if(!m_saveFile.empty()) {
 		Builder("label:crashhandler.autosave").as<Gtk::Label>()->set_markup(Glib::ustring::compose(_("Your work has been saved under <b>%1</b>."), m_saveFile));
 	}else{
-		Builder("label:crashhandler.autosave").as<Gtk::Label>()->set_text(_("There was no usaved work."));
+		Builder("label:crashhandler.autosave").as<Gtk::Label>()->set_text(_("There was no unsaved work."));
 	}
 	CONNECT(m_dialog, delete_event, [this](GdkEventAny* ev) { quit(); return true; });
 	CONNECT(Builder("button:crashhandler.close").as<Gtk::Button>(), clicked, [this]{ quit(); });

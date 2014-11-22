@@ -293,7 +293,7 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 		}, _("Recognizing..."));
 	}
 	if(!failed.empty()){
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occured"), Glib::ustring::compose(_("The following errors occured:%1"), failed));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), Glib::ustring::compose(_("The following errors occurred:%1"), failed));
 	}
 }
 
@@ -301,7 +301,7 @@ bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, O
 {
 	tesseract::TessBaseAPI tess;
 	if(!initTesseract(tess, m_curLang.prefix.c_str())){
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occured"), _("Failed to initialize tesseract"));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 		return false;
 	}
 	Glib::ustring output;

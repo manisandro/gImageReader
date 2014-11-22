@@ -184,7 +184,7 @@ void Acquirer::cancelScan()
 {
 	m_scanThread->cancel();
 	m_cancelButton->set_sensitive(false);
-	m_msgLabel->set_text(_("Cancelling scan..."));
+	m_msgLabel->set_text(_("Canceling scan..."));
 }
 
 void Acquirer::doneScan()
