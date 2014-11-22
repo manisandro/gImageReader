@@ -137,6 +137,12 @@ ENDIF(MINGW)
 
 
 # Build and install
+IF("${srcdir}" STREQUAL "qt")
+    IF(NOT CMAKE_BUILD_TYPE_TOLOWER MATCHES "debug")
+        ADD_DEFINITIONS(-DQT_NO_DEBUG_OUTPUT)
+    ENDIF(NOT CMAKE_BUILD_TYPE_TOLOWER MATCHES "debug")
+ENDIF()
+
 ADD_EXECUTABLE(gimagereader
     ${gimagereader_HDRS}
     ${gimagereader_SRCS}
