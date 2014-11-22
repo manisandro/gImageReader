@@ -6,10 +6,7 @@
  <name>gImageReader</name>
  <summary>A graphical frontend to tesseract-ocr </summary>
  <description>
-  <p>
-  gImageReader is a simple OCR application which acts as a frontend to the tesseract OCR engine. It is written in Gtk+.
-  </p>
-  <p>Features include:</p>
+  <p>gImageReader is a simple OCR application which acts as a frontend to the tesseract OCR engine. Features include:</p>
   <ul>
    <li>Automatic page layout detection</li>
    <li>User can manually define and adjust recognition regions</li>
