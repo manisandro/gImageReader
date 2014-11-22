@@ -37,7 +37,7 @@ public:
 	bool recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
 	void setRecognizeMode(bool haveSelection);
 	void updateLanguagesMenu();
-	sigc::signal<void,Config::Lang> signal_languageChanged(){ return m_signal_languageChanged; }
+	sigc::signal<void,Config::Lang> signal_languageChanged() const{ return m_signal_languageChanged; }
 
 private:
 	enum class PageArea { EntirePage, Autodetect };
