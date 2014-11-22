@@ -39,9 +39,9 @@ static std::string get_application_dir(char* argv0)
 #else
 	pid_t pid = getpid();
 	std::string exe = Glib::ustring::compose("/proc/%1/exe", pid);
-	GError* err;
+	GError* err = nullptr;
 	char* path = g_file_read_link(exe.c_str(), &err);
-	std::string pathstr = Glib::build_filename(path, "..");
+	std::string pathstr = Glib::build_filename(Glib::path_get_dirname(path), "..");
 	g_free(path);
 	if(err){
 		if(Glib::path_is_absolute(argv0)){
@@ -57,6 +57,7 @@ static std::string get_application_dir(char* argv0)
 int main (int argc, char *argv[])
 {
 	pkgDir = get_application_dir(argv[0]);
+	std::cout << "pkgDir: " << pkgDir << std::endl;
 	pkgExePath = argv[0];
 
 #ifdef G_OS_WIN32
