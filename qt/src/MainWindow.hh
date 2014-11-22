@@ -92,19 +92,15 @@ private:
 	void closeEvent(QCloseEvent* ev);
 	void setState(State state);
 
-#if ENABLE_VERSIONCHECK
 	QString getNewestVersion();
-#endif
 
 private slots:
 	void checkVersion();
 	void onSourceChanged(Source* source);
 	void showAbout();
 	void showConfig();
-#if ENABLE_VERSIONCHECK
 	void openDownloadUrl();
 	void openChangeLogUrl();
-#endif
 };
 
 Q_DECLARE_METATYPE(MainWindow::State)

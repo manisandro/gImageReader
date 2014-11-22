@@ -41,11 +41,9 @@
 #include "ui_AboutDialog.h"
 
 
-#if ENABLE_VERSIONCHECK
 #define CHECKURL "http://sourceforge.net/projects/gimagereader/files/LATEST/download?use_mirror=autoselect"
 #define DOWNLOADURL "http://sourceforge.net/projects/gimagereader/files"
 #define CHANGELOGURL "http://sourceforge.net/projects/gimagereader/files/changelog.txt/download?use_mirror=autoselect"
-#endif // ENABLE_VERSIONCHECK
 
 static void signalHandler(int signal)
 {
@@ -274,7 +272,6 @@ void MainWindow::hideNotification(Notification handle)
 	}
 }
 
-#if ENABLE_VERSIONCHECK
 QString MainWindow::getNewestVersion()
 {
 	QNetworkAccessManager networkMgr;
@@ -342,5 +339,3 @@ void MainWindow::openChangeLogUrl()
 {
 	QDesktopServices::openUrl(QUrl(CHANGELOGURL));
 }
-
-#endif // ENABLE_VERSIONCHECK
