@@ -39,7 +39,6 @@ public:
 	sigc::signal<void,Glib::ustring> signal_scanFailed() const{ return m_signal_scanFailed; }
 	sigc::signal<void,ScanThread::State> signal_scanStateChanged() const{ return m_signal_scanStateChanged; }
 	sigc::signal<void,std::string> signal_pageAvailable() const{ return m_signal_pageAvailable; }
-	sigc::signal<void> signal_stopped() const{ return m_signal_stopped; }
 
 private:
 	struct Request {
@@ -69,7 +68,6 @@ private:
 	sigc::signal<void,Glib::ustring> m_signal_scanFailed;
 	sigc::signal<void,ScanThread::State> m_signal_scanStateChanged;
 	sigc::signal<void,std::string> m_signal_pageAvailable;
-	sigc::signal<void> m_signal_stopped;
 };
 
 #endif // SCANTHREAD_HPP

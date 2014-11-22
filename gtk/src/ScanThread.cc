@@ -160,7 +160,6 @@ void ScanThread::run()
 
 	if(!m_backend->init()){
 		Glib::signal_idle().connect_once([this]{ m_signal_initFailed.emit(); });
-		Glib::signal_idle().connect_once([this]{ m_signal_stopped.emit(); });
 		return;
 	}
 
@@ -205,7 +204,6 @@ void ScanThread::run()
 		}
 	}
 	m_backend->close();
-	Glib::signal_idle().connect_once([this]{ m_signal_stopped.emit(); });
 }
 
 void ScanThread::redetect(){
