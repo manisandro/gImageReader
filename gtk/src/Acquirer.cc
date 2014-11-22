@@ -21,7 +21,6 @@
 #include "Config.hh"
 #include "FileDialogs.hh"
 #include "MainWindow.hh"
-#include "SourceManager.hh"
 #include "Utils.hh"
 
 #include <cstring>
@@ -61,7 +60,7 @@ Acquirer::Acquirer()
 	CONNECT(m_scanThread, devicesDetected, [this](const std::vector<ScanBackend::Device>& devices){ doneDetectDevices(devices); });
 	CONNECT(m_scanThread, scanFailed, [this](const std::string& msg){ scanFailed(msg); });
 	CONNECT(m_scanThread, scanStateChanged, [this](ScanThread::State state){ setScanState(state); });
-	CONNECT(m_scanThread, pageAvailable, [this](const std::string& file){ MAIN->getSourceManager()->addSources({Gio::File::create_for_path(file)});});
+	CONNECT(m_scanThread, pageAvailable, [this](const std::string& file){ m_signal_scanPageAvailable.emit(file); });
 
 	MAIN->getConfig()->addSetting(new ComboSetting("scanres", "combo:sources.acquire.resolution"));
 	MAIN->getConfig()->addSetting(new ComboSetting("scanmode", "combo:sources.acquire.mode"));

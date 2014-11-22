@@ -108,6 +108,7 @@ MainWindow::MainWindow()
 			 [this](Gtk::ToggleToolButton* b) { Builder("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
 	CONNECT(m_displayer, selectionChanged, [this](bool haveSelection){ m_recognizer->setRecognizeMode(haveSelection); });
 	CONNECT(m_recognizer, languageChanged, [this](const Config::Lang& lang){ m_outputManager->setLanguage(lang); });
+	CONNECT(m_acquirer, scanPageAvailable, [this](const std::string& filename){ m_sourceManager->addSources({Gio::File::create_for_path(filename)}); });
 	CONNECT(m_sourceManager, sourceChanged, [this](Source* source){ onSourceChanged(source); });
 
 	m_config->addSetting(new VarSetting<std::vector<int>>("wingeom"));

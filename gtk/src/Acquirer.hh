@@ -30,6 +30,8 @@ public:
 	Acquirer();
 	~Acquirer();
 
+	sigc::signal<void,std::string> signal_scanPageAvailable() const{ return m_signal_scanPageAvailable; }
+
 private:
 	class DevicesComboColumns : public Gtk::TreeModel::ColumnRecord {
 	public:
@@ -50,7 +52,7 @@ private:
 	Gtk::Spinner* m_refreshSpinner;
 	DevicesComboColumns m_devComboCols;
 	std::string m_outputPath;
-
+	sigc::signal<void,std::string> m_signal_scanPageAvailable;
 	Glib::Threads::Thread* m_thread;
 	ScanThread* m_scanThread;
 
