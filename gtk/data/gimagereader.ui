@@ -1753,7 +1753,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
     <property name="window_position">center-on-parent</property>
     <property name="default_width">500</property>
     <property name="destroy_with_parent">True</property>
-    <property name="icon_name">gtk-preferences</property>
+    <property name="icon_name">preferences-system</property>
     <property name="type_hint">dialog</property>
     <property name="transient_for">applicationwindow:main</property>
     <child internal-child="vbox">

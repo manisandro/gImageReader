@@ -141,7 +141,7 @@ public:
 		actionRedetectLanguages = new QAction(QIcon::fromTheme("view-refresh"), gettext("Redetect Languages"), MainWindow);
 		menuAppMenu->addAction(actionRedetectLanguages);
 
-		actionPreferences = new QAction(QIcon::fromTheme("configure"), gettext("Preferences"), MainWindow);
+		actionPreferences = new QAction(QIcon::fromTheme("preferences-system"), gettext("Preferences"), MainWindow);
 		menuAppMenu->addAction(actionPreferences);
 
 		menuAppMenu->addSeparator();
@@ -154,7 +154,7 @@ public:
 
 		// App menu button
 		toolButtonAppMenu = new QToolButton(MainWindow);
-		toolButtonAppMenu->setIcon(QIcon::fromTheme("configure"));
+		toolButtonAppMenu->setIcon(QIcon::fromTheme("preferences-system"));
 		toolButtonAppMenu->setToolTip(gettext("Preferences"));
 		toolButtonAppMenu->setPopupMode(QToolButton::InstantPopup);
 		toolButtonAppMenu->setMenu(menuAppMenu);
