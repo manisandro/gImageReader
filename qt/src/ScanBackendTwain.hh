@@ -25,7 +25,8 @@
 #include <QLibrary>
 #include <QMutex>
 #include <QWaitCondition>
-#ifdef G_OS_WIN32
+#include <cstring>
+#ifdef Q_OS_WIN32
 #include <windows.h>
 #endif
 #include <twain.h>
@@ -153,7 +154,7 @@ bool ScanBackendTwain::init()
 	return true;
 }
 
-void ScanBackendTwain::closeBackend()
+void ScanBackendTwain::close()
 {
 	closeDevice();
 	if(m_appID.Id != 0){
@@ -292,7 +293,7 @@ ScanBackend::StartStatus ScanBackendTwain::startDevice()
 #else
 	m_mutex.lock();
 	while(m_dsMsg == 0){
-		m_cond.wait(m_mutex);
+		m_cond.wait(&m_mutex);
 	}
 	m_mutex.unlock();
 #endif
@@ -334,7 +335,7 @@ TW_UINT16 ScanBackendTwain::call(TW_IDENTITY* idDS, TW_UINT32 dataGroup, TW_UINT
 		TW_STATUS status = {};
 		rc = m_dsmEntry(&m_appID, idDS, DG_CONTROL, DAT_STATUS, MSG_GET, &status);
 		TW_UINT16 cc = rc == TWRC_SUCCESS ? status.ConditionCode : TWCC_BUMMER;
-		qCritical("Call failed with code 0x%x: DataGroup: 0x%x, DataType = 0x%x, Msg = 0x%x", cc, dataGroup, dataType, msg);
+		qCritical("Call failed with code 0x%x: DataGroup: 0x%lx, DataType = 0x%x, Msg = 0x%x", cc, dataGroup, dataType, msg);
 		return TWRC_FAILURE;
 	}
 	return rc;

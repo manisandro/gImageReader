@@ -43,13 +43,13 @@ int main (int argc, char *argv[])
 #endif
 
 #ifdef Q_OS_WIN
-	QIcon::setThemeSearchPaths(dataDir.absoluteFilePath("icons"));
+	QIcon::setThemeSearchPaths({dataDir.absoluteFilePath("icons")});
 	QIcon::setThemeName("Vista");
-	qputenv("TESSDATA_PREFIX", dataDir.absolutePath());
+	qputenv("TESSDATA_PREFIX", dataDir.absolutePath().toLocal8Bit());
 	QDir packageDir = QDir(QString("%1/../").arg(QApplication::applicationDirPath()));
-	qputenv("TWAINDSM_LOG", packageDir.absoluteFilePath("twain.log"));
+	qputenv("TWAINDSM_LOG", packageDir.absoluteFilePath("twain.log").toLocal8Bit());
 	if(qgetenv("LANG").isEmpty()){
-		qputenv("LANG", QLocale::system().name());
+		qputenv("LANG", QLocale::system().name().toLocal8Bit());
 	}
 #endif
 

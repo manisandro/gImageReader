@@ -47,9 +47,7 @@ public slots:
 private:
 	enum class InsertMode { Append, Cursor, Replace };
 
-#ifdef Q_OS_LINUX
 	QDBusInterface* m_dbusIface = nullptr;
-#endif
 	const UI_MainWindow& ui;
 	InsertMode m_insertMode;
 	QtSpell::TextEditChecker m_spell;

@@ -68,10 +68,10 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 
 bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* language) const
 {
-	QByteArray current = std::setlocale(LC_NUMERIC, NULL);
-	std::setlocale(LC_NUMERIC, "C");
+	QByteArray current = setlocale(LC_NUMERIC, NULL);
+	setlocale(LC_NUMERIC, "C");
 	int ret = tess.Init(nullptr, language);
-	std::setlocale(LC_NUMERIC, current.constData());
+	setlocale(LC_NUMERIC, current.constData());
 	return ret != -1;
 }
 
