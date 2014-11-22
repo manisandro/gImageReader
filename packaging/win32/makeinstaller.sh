@@ -117,19 +117,12 @@ if [ "$iface" == "gtk" ]; then
 elif [ "$iface" == "qt4" ]; then
 
     linkDep lib/qt4/plugins/imageformats/qgif4.dll  bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qtiffd4.dll  bin/imageformats
     linkDep lib/qt4/plugins/imageformats/qico4.dll  bin/imageformats
     linkDep lib/qt4/plugins/imageformats/qmng4.dll  bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qtgad4.dll  bin/imageformats
     linkDep lib/qt4/plugins/imageformats/qtga4.dll  bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qmngd4.dll bin/imageformats
     linkDep lib/qt4/plugins/imageformats/qsvg4.dll  bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qtiff4.dll  bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qsvgd4.dll  bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qicod4.dll bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qgifd4.dll bin/imageformats
+    linkDep lib/qt4/plugins/imageformats/qtiff4.dll bin/imageformats
     linkDep lib/qt4/plugins/imageformats/qjpeg4.dll bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qjpegd4.dll  bin/imageformats
     
     # Install locale files
     mkdir -p $installroot/share/qt4/translations/
