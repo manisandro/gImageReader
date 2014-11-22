@@ -167,6 +167,7 @@ install -Dpm 0644 /usr/share/xml/iso-codes/iso_3166.xml $installroot/share/xml/i
 
 # Remove unused files
 rm -rf $installroot/share/applications
+rm -rf $installroot/share/appdata
 
 # Build the installer
 progName=$(grep -oP 'SET\(PACKAGE_NAME \K(\w+)(?=\))' $srcdir/CMakeLists.txt)

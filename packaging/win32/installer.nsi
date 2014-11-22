@@ -123,7 +123,7 @@ Section "Standard" MainSection
 
   ; Main program files
   SetOutPath "$INSTDIR"
-  File /r /x locale "root\*.*"
+  File /r /x locale /x translations "root\*.*"
 
   ; Uninstaller
   WriteRegStr SHCTX "${REG_UNINSTALL}" "DisplayName" "${NAME}"
@@ -153,6 +153,8 @@ Section "intl" IntlSection
 
   SetOutPath "$INSTDIR\share\"
   File /r "root\share\locale"
+  File /nonfatal /r "root\share\qt4\translations"
+  File /nonfatal /r "root\share\qt5\translations"
 SectionEnd
 
 ; Installation section language strings
