@@ -46,7 +46,6 @@ signals:
 	void scanFailed(const QString& message);
 	void scanStateChanged(ScanThread::State state);
 	void pageAvailable(const QString& filename);
-	void stopped();
 
 private:
 	struct Request {

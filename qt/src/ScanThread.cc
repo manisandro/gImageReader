@@ -22,6 +22,7 @@
  */
 
 #include <QDebug>
+#include <QThread>
 
 #include "common.hh"
 #include "ScanThread.hh"
@@ -158,7 +159,6 @@ void ScanThread::run()
 
 	if(!m_backend->init()){
 		emit initFailed();
-		emit stopped();
 		return;
 	}
 
@@ -203,7 +203,6 @@ void ScanThread::run()
 		}
 	}
 	m_backend->close();
-	emit stopped();
 }
 
 void ScanThread::redetect(){

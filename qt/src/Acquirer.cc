@@ -52,8 +52,6 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 	connect(m_scanThread, SIGNAL(scanFailed(QString)), this, SLOT(scanFailed(QString)));
 	connect(m_scanThread, SIGNAL(scanStateChanged(ScanThread::State)), this, SLOT(setScanState(ScanThread::State)));
 	connect(m_scanThread, SIGNAL(pageAvailable(QString)), this, SIGNAL(scanPageAvailable(QString)));
-	connect(m_scanThread, SIGNAL(stopped()), m_thread, SLOT(quit()));
-	connect(m_scanThread, SIGNAL(stopped()), m_scanThread, SLOT(deleteLater()));
 	connect(m_thread, SIGNAL(started()), m_scanThread, SLOT(run()));
 
 	MAIN->getConfig()->addSetting(new ComboSetting("scanres", ui.comboBoxScanResolution, 2));
@@ -69,9 +67,10 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 Acquirer::~Acquirer()
 {
 	m_scanThread->stop();
-	while(!m_thread->wait(100)){
-		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
-	}
+	m_thread->quit();
+	m_thread->wait();
+	delete m_thread;
+	delete m_scanThread;
 }
 
 void Acquirer::selectOutputPath()
