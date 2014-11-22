@@ -110,7 +110,6 @@ void Acquirer::scanInitFailed()
 	m_refreshButton->show();
 	m_refreshSpinner->hide();
 	m_refreshSpinner->stop();
-	m_scanThread->stop();
 }
 
 void Acquirer::scanFailed(const Glib::ustring &msg)

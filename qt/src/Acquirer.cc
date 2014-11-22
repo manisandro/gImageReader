@@ -96,7 +96,6 @@ void Acquirer::scanInitFailed()
 	ui.labelScanMessage->setText(QString("<span style=\"color:#FF0000;\">%1</span>").arg(_("Failed to initialize the scanning backend.")));
 	ui.pushButtonScan->setEnabled(false);
 	ui.toolButtonScanDevicesRefresh->setEnabled(false);
-	m_scanThread->stop();
 }
 
 void Acquirer::scanFailed(const QString &msg)
