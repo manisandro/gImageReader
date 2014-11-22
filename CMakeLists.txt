@@ -91,17 +91,6 @@ FILE(GLOB gimagereader_FORMS ${srcdir}/data/*.ui)
 FILE(GLOB gimagereader_ICONS data/icons/*.png)
 FILE(GLOB gimagereader_PO po/*.po)
 
-IF("${srcdir}" STREQUAL "qt")
-    FILE(GLOB gimagereader_RESOURCES qt/data/*.qrc)
-
-    # Gettextize ui files
-    ADD_CUSTOM_TARGET(
-        gettextizeui
-        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/gettextizeui.cmake ${gimagereader_FORMS_HEADERS}
-        DEPENDS ${gimagereader_FORMS_HEADERS}
-    )
-ENDIF()
-
 IF("${srcdir}" STREQUAL "gtk")
     ADD_SCHEMA("gtk/data/org.gnome.gimagereader.gschema.xml")
     ADD_CUSTOM_COMMAND(
@@ -119,6 +108,17 @@ ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt4")
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
     QT5_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})
     QT5_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
+ENDIF()
+
+IF("${srcdir}" STREQUAL "qt")
+    FILE(GLOB gimagereader_RESOURCES qt/data/*.qrc)
+
+    # Gettextize ui files
+    ADD_CUSTOM_TARGET(
+        gettextizeui
+        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/gettextizeui.cmake ${gimagereader_FORMS_HEADERS}
+        DEPENDS ${gimagereader_FORMS_HEADERS}
+    )
 ENDIF()
 
 FILE(READ po/LINGUAS langs_string)
