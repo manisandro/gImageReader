@@ -16,7 +16,7 @@ BuildRequires: tesseract-devel
 BuildRequires: sane-backends-devel
 BuildRequires: intltool
 BuildRequires: desktop-file-utils
-BuildRequires: appdata-tools
+BuildRequires: libappstream-glib
 BuildRequires: qt4-devel
 BuildRequires: qtspell-devel
 BuildRequires: poppler-qt-devel
@@ -97,8 +97,8 @@ make %{?_smp_mflags}
 %make_install -C build_qt
 %{_bindir}/desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-gtk.desktop
 %{_bindir}/desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-qt4.desktop
-%{_bindir}/appdata-validate %{buildroot}%{_datadir}/appdata/%{name}-gtk.appdata.xml || :
-%{_bindir}/appdata-validate %{buildroot}%{_datadir}/appdata/%{name}-qt4.appdata.xml || :
+%{_bindir}/appstream-util validate %{buildroot}%{_datadir}/appdata/%{name}-gtk.appdata.xml || :
+%{_bindir}/appstream-util validate %{buildroot}%{_datadir}/appdata/%{name}-qt4.appdata.xml || :
 
 %find_lang %{name}
 
