@@ -32,6 +32,7 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 	ui.pushButtonScanCancel->setVisible(false);
 	ui.toolButtonScanDevicesRefresh->setEnabled(false);
 	ui.pushButtonScan->setEnabled(false);
+	ui.comboBoxScanDevice->setCursor(Qt::WaitCursor);
 	// TODO: Elide combobox
 
 	m_thread = new QThread(this);
@@ -109,11 +110,13 @@ void Acquirer::startDetectDevices()
 	ui.pushButtonScan->setEnabled(false);
 	ui.labelScanMessage->setText("");
 	ui.comboBoxScanDevice->clear();
+	ui.comboBoxScanDevice->setCursor(Qt::WaitCursor);
 	m_scanThread->redetect();
 }
 
 void Acquirer::doneDetectDevices(QList<ScanBackend::Device> devices)
 {
+	ui.comboBoxScanDevice->unsetCursor();
 	ui.toolButtonScanDevicesRefresh->setEnabled(true);
 	if(devices.isEmpty()){
 		ui.labelScanMessage->setText(QString("<span style=\"color:#FF0000;\">%1</span>").arg(_("No scanners were detected.")));
