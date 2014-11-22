@@ -106,7 +106,7 @@ bool ScanBackendTwain::init()
 #endif
 
 	m_dsmLib.setFileName(twaindsm);
-	if(m_dsmLib.load()){
+	if(!m_dsmLib.load()){
 		qCritical("LoadLibrary failed on %s", qPrintable(twaindsm));
 		return false;
 	}
