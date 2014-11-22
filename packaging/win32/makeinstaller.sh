@@ -158,6 +158,12 @@ install -Dpm 0644 /usr/share/myspell/en_US.aff $installroot/share/myspell/dicts/
 # Copy isocodes
 install -Dpm 0644 /usr/share/xml/iso-codes/iso_639.xml $installroot/share/xml/iso-codes/iso_639.xml
 install -Dpm 0644 /usr/share/xml/iso-codes/iso_3166.xml $installroot/share/xml/iso-codes/iso_3166.xml
+(
+    cd /usr/
+    for file in $(find share/locale -type f -name "iso_*.mo"); do
+        install -Dpm 0644 $file $installroot/$file
+    done
+)
 
 # Remove unused files
 rm -rf $installroot/share/applications
