@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * ScanThread.cc
+ * Scanner.cc
  * Based on code from Simple Scan, which is:
  *   Copyright (C) 2009-2013 Canonical Ltd.
  *   Author: Robert Ancell <robert.ancell@canonical.com>
@@ -21,45 +21,44 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDebug>
-#include <QThread>
-
 #include "common.hh"
-#include "ScanThread.hh"
+#include "Scanner.hh"
 
-#ifdef Q_OS_WIN32
+#ifdef G_OS_WIN32
 #include "ScanBackendTwain.hh"
 #else
 #include "ScanBackendSane.hh"
 #endif
 
 
-void ScanThread::setState(State state)
+void Scanner::setState(State state)
 {
 	m_state = state;
-	emit scanStateChanged(m_state);
+	Glib::signal_idle().connect_once([this, state]{ m_signal_scanStateChanged.emit(state); });
 }
 
-void ScanThread::failScan(const QString& errorString)
+void Scanner::failScan(const Glib::ustring& errorString)
 {
 	doClose();
-	qDeleteAll(m_jobQueue);
-	m_jobQueue.clear();
-	emit scanFailed(errorString);
+	while(!m_jobQueue.empty()){
+		delete m_jobQueue.front();
+		m_jobQueue.pop();
+	}
+	Glib::signal_idle().connect_once([this, errorString]{ m_signal_scanFailed.emit(errorString); });
 }
 
-void ScanThread::doRedetect()
+void Scanner::doRedetect()
 {
-	qDebug() << "do_redetect";
-	QList<ScanBackend::Device> devices = m_backend->detectDevices();
-	emit devicesDetected(devices);
+	g_debug("do_redetect");
+	std::vector<ScanBackend::Device> devices = m_backend->detectDevices();
+	Glib::signal_idle().connect_once([this, devices]{ m_signal_devicesDetected.emit(devices); });
 }
 
-void ScanThread::doOpen()
+void Scanner::doOpen()
 {
-	qDebug() << "do_open";
+	g_debug("do_open");
 	ScanBackend::Job* job = m_jobQueue.front();
-	if(job->device.isEmpty()){
+	if(job->device.empty()){
 		failScan(_("No scanner specified"));
 		return;
 	}else if(!m_backend->openDevice(job->device)){
@@ -69,23 +68,23 @@ void ScanThread::doOpen()
 	setState(State::SET_OPTIONS);
 }
 
-void ScanThread::doClose()
+void Scanner::doClose()
 {
-	qDebug() << "do_close";
+	g_debug("do_close");
 	m_backend->closeDevice();
 	setState(State::IDLE);
 }
 
-void ScanThread::doSetOptions()
+void Scanner::doSetOptions()
 {
-	qDebug() << "do_set_options";
+	g_debug("do_set_options");
 	m_backend->setOptions(m_jobQueue.front());
 	setState(State::START);
 }
 
-void ScanThread::doStart()
+void Scanner::doStart()
 {
-	qDebug() << "do_start";
+	g_debug("do_start");
 	ScanBackend::StartStatus status = m_backend->startDevice();
 	if(status == ScanBackend::StartStatus::Success){
 		setState(State::GET_PARAMETERS);
@@ -95,9 +94,9 @@ void ScanThread::doStart()
 	}
 }
 
-void ScanThread::doGetParameters()
+void Scanner::doGetParameters()
 {
-	qDebug() << "do_get_parameters";
+	g_debug("do_get_parameters");
 	if(!m_backend->getParameters()){
 		failScan(_("Error communicating with scanner"));
 	}else{
@@ -105,9 +104,9 @@ void ScanThread::doGetParameters()
 	}
 }
 
-void ScanThread::doRead()
+void Scanner::doRead()
 {
-	qDebug() << "do_read";
+	g_debug("do_read");
 	ScanBackend::ReadStatus status = m_backend->read();
 	if(status == ScanBackend::ReadStatus::Done){
 		doCompletePage();
@@ -118,9 +117,9 @@ void ScanThread::doRead()
 	}
 }
 
-void ScanThread::doCompletePage()
+void Scanner::doCompletePage()
 {
-	qDebug() << "do_complete_page";
+	g_debug("do_complete_page");
 	ScanBackend::Job* job = m_jobQueue.front();
 	ScanBackend::PageStatus status = m_backend->completePage(job);
 	if(status == ScanBackend::PageStatus::AnotherPass){
@@ -129,7 +128,8 @@ void ScanThread::doCompletePage()
 		return;
 	}
 
-	emit pageAvailable(job->filename);
+	const std::string& filename = job->filename;
+	Glib::signal_idle().connect_once([this, filename]{ m_signal_pageAvailable.emit(filename); });
 
 	if(job->type != ScanBackend::ScanType::SINGLE){
 		++job->page_number;
@@ -140,40 +140,46 @@ void ScanThread::doCompletePage()
 	doCompleteDocument();
 }
 
-void ScanThread::doCompleteDocument()
+void Scanner::doCompleteDocument()
 {
-	qDebug() << "do_complete_document";
+	g_debug("do_complete_document");
 	doClose();
-	delete m_jobQueue.dequeue();
+	delete m_jobQueue.front();
+	m_jobQueue.pop();
 }
 
 /*********************** Main scanner thread ***********************/
 
-void ScanThread::run()
+void Scanner::start()
 {
-#ifdef Q_OS_WIN32
+	m_thread = Glib::Threads::Thread::create([this]{ run(); });
+}
+
+void Scanner::run()
+{
+#ifdef G_OS_WIN32
 	m_backend = new ScanBackendTwain();
 #else
 	m_backend = new ScanBackendSane();
 #endif
 
 	if(!m_backend->init()){
-		emit initFailed();
+		Glib::signal_idle().connect_once([this]{ m_signal_initFailed.emit(); });
 		return;
 	}
 
 	/* Scan for devices on first start */
-	redetect();
+	doRedetect();
 
 	bool need_redetect = false;
 	while(true){
 		// Fetch request if requests are pending or wait for request if idle
-		if(!m_requestQueue.isEmpty() || m_state == State::IDLE){
-			Request request = m_requestQueue.dequeue();
+		if(!m_requestQueue.empty() || m_state == State::IDLE){
+			Request request = m_requestQueue.pop();
 			if(request.type == Request::Type::Redetect){
 				need_redetect = true;
 			}else if(request.type == Request::Type::StartScan){
-				m_jobQueue.enqueue(static_cast<ScanBackend::Job*>(request.data));
+				m_jobQueue.push(static_cast<ScanBackend::Job*>(request.data));
 			}else if(request.type == Request::Type::Cancel){
 				failScan(_("Scan canceled"));
 			}else if(request.type == Request::Type::Quit){
@@ -187,7 +193,7 @@ void ScanThread::run()
 				doRedetect();
 				need_redetect = false;
 			}
-			if(!m_jobQueue.isEmpty()){
+			if(!m_jobQueue.empty()){
 				setState(State::OPEN);
 			}
 		}else if(m_state == State::OPEN){
@@ -203,15 +209,17 @@ void ScanThread::run()
 		}
 	}
 	m_backend->close();
+	delete m_backend;
+	m_backend = nullptr;
 }
 
-void ScanThread::redetect(){
-	m_requestQueue.enqueue({Request::Type::Redetect, 0});
+void Scanner::redetect(){
+	m_requestQueue.push({Request::Type::Redetect, 0});
 }
 
-void ScanThread::scan(const QString& device, ScanBackend::Options options)
+void Scanner::scan(const std::string& device, ScanBackend::Options options)
 {
-	Q_ASSERT(options.depth == 8);
+	g_assert(options.depth == 8);
 	ScanBackend::Job* job = new ScanBackend::Job;
 	job->filename = options.filename;
 	job->device = device;
@@ -221,15 +229,17 @@ void ScanThread::scan(const QString& device, ScanBackend::Options options)
 	job->type = options.type;
 	job->page_width = options.paper_width;
 	job->page_height = options.paper_height;
-	m_requestQueue.enqueue({Request::Type::StartScan, job});
+	m_requestQueue.push({Request::Type::StartScan, job});
 }
 
-void ScanThread::cancel()
+void Scanner::cancel()
 {
-	m_requestQueue.enqueue({Request::Type::Cancel, 0});
+	m_requestQueue.push({Request::Type::Cancel, 0});
 }
 
-void ScanThread::stop()
+void Scanner::stop()
 {
-	m_requestQueue.enqueue({Request::Type::Quit, 0});
+	m_requestQueue.push({Request::Type::Quit, 0});
+	m_thread->join();
+	m_thread = nullptr;
 }

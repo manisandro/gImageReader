@@ -21,9 +21,8 @@
 #define ACQUIRER_HH
 
 #include "common.hh"
-#include "ScanThread.hh"
+#include "Scanner.hh"
 
-class Scanner;
 
 class Acquirer {
 public:
@@ -53,8 +52,7 @@ private:
 	DevicesComboColumns m_devComboCols;
 	std::string m_outputPath;
 	sigc::signal<void,std::string> m_signal_scanPageAvailable;
-	Glib::Threads::Thread* m_thread;
-	ScanThread* m_scanThread;
+	Scanner m_scanner;
 
 	void genOutputPath();
 	void cancelScan();
@@ -64,7 +62,7 @@ private:
 	void scanFailed(const Glib::ustring& msg);
 	void selectOutputPath();
 	void setDeviceComboTooltip();
-	void setScanState(ScanThread::State state);
+	void setScanState(Scanner::State state);
 	void startDetectDevices();
 	void startScan();
 };

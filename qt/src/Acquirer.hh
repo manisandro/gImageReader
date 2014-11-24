@@ -20,9 +20,8 @@
 #ifndef ACQUIRER_HH
 #define ACQUIRER_HH
 
-#include "ScanThread.hh"
+#include "Scanner.hh"
 
-class QThread;
 class UI_MainWindow;
 
 class Acquirer : public QObject {
@@ -38,8 +37,7 @@ private:
 	const UI_MainWindow& ui;
 	QString m_outputPath;
 
-	QThread* m_thread;
-	ScanThread* m_scanThread;
+	Scanner m_scanner;
 
 	void genOutputPath();
 
@@ -51,7 +49,7 @@ private slots:
 	void scanFailed(const QString& msg);
 	void selectOutputPath();
 	void setDeviceComboTooltip();
-	void setScanState(ScanThread::State state);
+	void setScanState(Scanner::State state);
 	void startDetectDevices();
 	void startScan();
 };

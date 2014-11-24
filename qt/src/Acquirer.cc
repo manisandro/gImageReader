@@ -35,24 +35,19 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 	ui.comboBoxScanDevice->setCursor(Qt::WaitCursor);
 	// TODO: Elide combobox
 
-	m_thread = new QThread(this);
-	m_scanThread = new ScanThread();
-	m_scanThread->moveToThread(m_thread);
-
 	qRegisterMetaType<QList<ScanBackend::Device>>();
-	qRegisterMetaType<ScanThread::State>();
+	qRegisterMetaType<Scanner::State>();
 
 	connect(ui.toolButtonScanDevicesRefresh, SIGNAL(clicked()), this, SLOT(startDetectDevices()));
 	connect(ui.pushButtonScan, SIGNAL(clicked()), this, SLOT(startScan()));
 	connect(ui.pushButtonScanCancel, SIGNAL(clicked()), this, SLOT(cancelScan()));
 	connect(ui.toolButtonScanOutput, SIGNAL(clicked()), this, SLOT(selectOutputPath()));
 	connect(ui.comboBoxScanDevice, SIGNAL(currentIndexChanged(int)), this, SLOT(setDeviceComboTooltip()));
-	connect(m_scanThread, SIGNAL(initFailed()), this, SLOT(scanInitFailed()));
-	connect(m_scanThread, SIGNAL(devicesDetected(QList<ScanBackend::Device>)), this, SLOT(doneDetectDevices(QList<ScanBackend::Device>)));
-	connect(m_scanThread, SIGNAL(scanFailed(QString)), this, SLOT(scanFailed(QString)));
-	connect(m_scanThread, SIGNAL(scanStateChanged(ScanThread::State)), this, SLOT(setScanState(ScanThread::State)));
-	connect(m_scanThread, SIGNAL(pageAvailable(QString)), this, SIGNAL(scanPageAvailable(QString)));
-	connect(m_thread, SIGNAL(started()), m_scanThread, SLOT(run()));
+	connect(&m_scanner, SIGNAL(initFailed()), this, SLOT(scanInitFailed()));
+	connect(&m_scanner, SIGNAL(devicesDetected(QList<ScanBackend::Device>)), this, SLOT(doneDetectDevices(QList<ScanBackend::Device>)));
+	connect(&m_scanner, SIGNAL(scanFailed(QString)), this, SLOT(scanFailed(QString)));
+	connect(&m_scanner, SIGNAL(scanStateChanged(Scanner::State)), this, SLOT(setScanState(Scanner::State)));
+	connect(&m_scanner, SIGNAL(pageAvailable(QString)), this, SIGNAL(scanPageAvailable(QString)));
 
 	MAIN->getConfig()->addSetting(new ComboSetting("scanres", ui.comboBoxScanResolution, 2));
 	MAIN->getConfig()->addSetting(new ComboSetting("scanmode", ui.comboBoxScanMode, 0));
@@ -61,16 +56,12 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 
 	m_outputPath = MAIN->getConfig()->getSetting<VarSetting<QString>>("scanoutput")->getValue();
 	genOutputPath();
-	m_thread->start();
+	m_scanner.start();
 }
 
 Acquirer::~Acquirer()
 {
-	m_scanThread->stop();
-	m_thread->quit();
-	m_thread->wait();
-	delete m_thread;
-	delete m_scanThread;
+	m_scanner.stop();
 }
 
 void Acquirer::selectOutputPath()
@@ -109,7 +100,7 @@ void Acquirer::startDetectDevices()
 	ui.labelScanMessage->setText("");
 	ui.comboBoxScanDevice->clear();
 	ui.comboBoxScanDevice->setCursor(Qt::WaitCursor);
-	m_scanThread->redetect();
+	m_scanner.redetect();
 }
 
 void Acquirer::doneDetectDevices(QList<ScanBackend::Device> devices)
@@ -140,29 +131,29 @@ void Acquirer::startScan()
 	ScanBackend::Options opts = {m_outputPath, res[ui.comboBoxScanResolution->currentIndex()], modes[ui.comboBoxScanMode->currentIndex()], 8, ScanBackend::ScanType::SINGLE, 0, 0};
 	genOutputPath(); // Prepare for next
 	QString scanner = ui.comboBoxScanDevice->itemData(ui.comboBoxScanDevice->currentIndex()).toString();
-	m_scanThread->scan(scanner, opts);
+	m_scanner.scan(scanner, opts);
 }
 
-void Acquirer::setScanState(ScanThread::State state)
+void Acquirer::setScanState(Scanner::State state)
 {
-	if(state == ScanThread::State::OPEN){
+	if(state == Scanner::State::OPEN){
 		ui.labelScanMessage->setText(_("Opening device..."));
-	}else if(state == ScanThread::State::SET_OPTIONS){
+	}else if(state == Scanner::State::SET_OPTIONS){
 		ui.labelScanMessage->setText(_("Setting options..."));
-	}else if(state == ScanThread::State::START){
+	}else if(state == Scanner::State::START){
 		ui.labelScanMessage->setText(_("Starting scan..."));
-	}else if(state == ScanThread::State::GET_PARAMETERS){
+	}else if(state == Scanner::State::GET_PARAMETERS){
 		ui.labelScanMessage->setText(_("Getting parameters..."));
-	}else if(state == ScanThread::State::READ){
+	}else if(state == Scanner::State::READ){
 		ui.labelScanMessage->setText(_("Transferring data..."));
-	}else if(state == ScanThread::State::IDLE){
+	}else if(state == Scanner::State::IDLE){
 		doneScan();
 	}
 }
 
 void Acquirer::cancelScan()
 {
-	m_scanThread->cancel();
+	m_scanner.cancel();
 	ui.pushButtonScanCancel->setEnabled(false);
 	ui.labelScanMessage->setText(_("Canceling scan..."));
 }

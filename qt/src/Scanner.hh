@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * ScanThread.hh
+ * Scanner.hh
  *   Copyright (C) 2013-2014 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
@@ -17,28 +17,31 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCANTHREAD_HPP
-#define SCANTHREAD_HPP
+#ifndef SCANNER_HPP
+#define SCANNER_HPP
+
+#include <QMetaType>
+#include <QThread>
 
 #include "ScanBackend.hh"
 #include "Utils.hh"
 
-class ScanThread {
+class Scanner : public QThread {
+	Q_OBJECT
 public:
 	enum class State { IDLE = 0, OPEN, SET_OPTIONS, START, GET_PARAMETERS, READ };
 
-	~ScanThread(){ delete m_backend; }
-	void run();
 	void redetect();
-	void scan(const std::string& device, ScanBackend::Options options);
+	void scan(const QString& device, ScanBackend::Options options);
 	void cancel();
 	void stop();
 
-	sigc::signal<void> signal_initFailed() const{ return m_signal_initFailed; }
-	sigc::signal<void,std::vector<ScanBackend::Device>> signal_devicesDetected() const{ return m_signal_devicesDetected; }
-	sigc::signal<void,Glib::ustring> signal_scanFailed() const{ return m_signal_scanFailed; }
-	sigc::signal<void,ScanThread::State> signal_scanStateChanged() const{ return m_signal_scanStateChanged; }
-	sigc::signal<void,std::string> signal_pageAvailable() const{ return m_signal_pageAvailable; }
+signals:
+	void initFailed();
+	void devicesDetected(QList<ScanBackend::Device> devices);
+	void scanFailed(const QString& message);
+	void scanStateChanged(Scanner::State state);
+	void pageAvailable(const QString& filename);
 
 private:
 	struct Request {
@@ -49,8 +52,9 @@ private:
 	ScanBackend* m_backend = nullptr;
 	State m_state = State::IDLE;
 	Utils::AsyncQueue<Request> m_requestQueue;
-	std::queue<ScanBackend::Job*> m_jobQueue;
+	QQueue<ScanBackend::Job*> m_jobQueue;
 
+	void run();
 	void doCompleteDocument();
 	void doCompletePage();
 	void doSetOptions();
@@ -61,13 +65,9 @@ private:
 	void doStart();
 	void doClose();
 	void setState(State state);
-	void failScan(const Glib::ustring& errorString);
-
-	sigc::signal<void> m_signal_initFailed;
-	sigc::signal<void,std::vector<ScanBackend::Device>> m_signal_devicesDetected;
-	sigc::signal<void,Glib::ustring> m_signal_scanFailed;
-	sigc::signal<void,ScanThread::State> m_signal_scanStateChanged;
-	sigc::signal<void,std::string> m_signal_pageAvailable;
+	void failScan(const QString& errorString);
 };
 
-#endif // SCANTHREAD_HPP
+Q_DECLARE_METATYPE(Scanner::State)
+
+#endif // SCANNER_HPP
