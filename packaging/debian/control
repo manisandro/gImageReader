@@ -3,8 +3,7 @@ Section: graphics
 Priority: optional
 Maintainer: Sandro Mani <manisandro@gmail.com>
 Build-Depends: debhelper (>= 9),
- dh-autoreconf,
- intltool (>= 0.35.0),
+ cmake,
  libgtkspellmm-3.0-dev,
  libgtkmm-3.0-dev,
  libcairomm-1.0-dev,
