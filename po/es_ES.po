@@ -1,24 +1,23 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# Sandro Mani <manisandro@gmail.com>, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-22 14:41+0100\n"
-"PO-Revision-Date: 2014-11-10 15:35+0100\n"
-"Last-Translator: Antonio Trujillo  <lunatc@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2014-11-25 09:52+0100\n"
+"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
+"Language-Team: American English <LL@li.org>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:141
-#, fuzzy
 msgid "Redetect Languages"
 msgstr "Volver a detectar idiomas"
 
@@ -285,9 +284,8 @@ msgid "Resolution"
 msgstr "Resolución"
 
 #: ../gtk/data/gimagereader.ui.h:54 ../qt/data/MainWindow.ui.h:5
-#, fuzzy
 msgid "Invert colors"
-msgstr "Insertar en la posición del cursor"
+msgstr "Invertir colores"
 
 #: ../gtk/data/gimagereader.ui.h:55 ../qt/src/Ui_MainWindow.hh:236
 msgid "Select insert mode"
@@ -477,12 +475,10 @@ msgid "Keep line break if..."
 msgstr "Mantener salto de línea si..."
 
 #: ../gtk/data/gimagereader.ui.h:101 ../qt/src/Ui_MainWindow.hh:214
-#, fuzzy
 msgid "Preceded by dot"
 msgstr "Va precedido por un punto"
 
 #: ../gtk/data/gimagereader.ui.h:102 ../qt/src/Ui_MainWindow.hh:216
-#, fuzzy
 msgid "Preceded or succeeded by quote"
 msgstr "Va precedido o le sigue una comilla"
 
@@ -558,7 +554,6 @@ msgid "Transferring data..."
 msgstr "Transfiriendo datos..."
 
 #: ../gtk/src/Acquirer.cc:187 ../qt/src/Acquirer.cc:166
-#, fuzzy
 msgid "Canceling scan..."
 msgstr "Cancelando escaneo..."
 
@@ -584,9 +579,8 @@ msgid "Your work has been saved under <b>%1</b>."
 msgstr "Su trabajo se ha guardado en <b>%1</b>."
 
 #: ../gtk/src/CrashHandler.cc:47 ../qt/src/CrashHandler.cc:32
-#, fuzzy
 msgid "There was no unsaved work."
-msgstr "No hay trabajos sin guardar"
+msgstr "No hay trabajos sin guardar."
 
 #: ../gtk/src/CrashHandler.cc:103 ../qt/src/CrashHandler.cc:64
 msgid "Failed to obtain backtrace. Is gdb installed?"
@@ -679,9 +673,8 @@ msgid "Stripping line breaks..."
 msgstr "Quitando saltos de línea"
 
 #: ../gtk/src/OutputManager.cc:189 ../qt/src/OutputManager.cc:163
-#, fuzzy
 msgid "Replacing..."
-msgstr "Reconociendo..."
+msgstr "Reemplazando..."
 
 #: ../gtk/src/OutputManager.cc:278
 msgid "Check spelling"
@@ -744,9 +737,8 @@ msgid "Error"
 msgstr "Error"
 
 #: ../gtk/src/OutputManager.cc:413 ../qt/src/OutputManager.cc:362
-#, fuzzy
 msgid "Failed to install spelling dictionary: %1"
-msgstr "Fallo al instalar el diccionario"
+msgstr "Fallo al instalar el diccionario: %1"
 
 #: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
 msgid "No languages available"
@@ -806,21 +798,16 @@ msgstr "Reconociendo..."
 
 #: ../gtk/src/Recognizer.cc:296 ../gtk/src/Recognizer.cc:304
 #: ../qt/src/Recognizer.cc:327 ../qt/src/Recognizer.cc:335
-#, fuzzy
 msgid "Recognition errors occurred"
 msgstr "Hubo errores durante el reconocimiento"
 
 #: ../gtk/src/Recognizer.cc:296 ../qt/src/Recognizer.cc:327
-#, fuzzy
 msgid "The following errors occurred:%1"
 msgstr "Ocurrieron los siguientes errores: %1"
 
 #: ../gtk/src/Recognizer.cc:304 ../qt/src/Recognizer.cc:335
-#, fuzzy
 msgid "Failed to initialize tesseract"
-msgstr ""
-"\n"
-"\tFallo al iniciar tesseract"
+msgstr "Fallo al iniciar tesseract"
 
 #: ../gtk/src/ScanThread.cc:62 ../qt/src/ScanThread.cc:62
 msgid "No scanner specified"
@@ -840,7 +827,6 @@ msgid "Error communicating with scanner"
 msgstr "Error al comunicarse con el escáner"
 
 #: ../gtk/src/ScanThread.cc:180 ../qt/src/ScanThread.cc:178
-#, fuzzy
 msgid "Scan canceled"
 msgstr "Escaneo cancelado"
 
@@ -877,7 +863,6 @@ msgid "Screenshot %1"
 msgstr "Captura de pantalla %1"
 
 #: ../gtk/src/SourceManager.cc:161 ../qt/src/SourceManager.cc:175
-#, fuzzy
 msgid "Saving image..."
 msgstr "Dibujando imagen..."
 
@@ -988,7 +973,7 @@ msgid "About gImageReader"
 msgstr "Acerca de gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:4
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%1&lt;/p&gt;&lt;p&gt;A "
 "graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
