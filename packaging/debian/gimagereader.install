@@ -2,8 +2,7 @@ usr/bin/gimagereader-gtk
 usr/share/appdata/gimagereader-gtk.appdata.xml
 usr/share/applications/gimagereader-gtk.desktop
 usr/share/gimagereader/
-usr/share/icons/hicolor/48x48/apps/gimagereader.png
-usr/share/icons/hicolor/128x128/apps/gimagereader.png
-usr/share/icons/hicolor/256x256/apps/gimagereader.png
+usr/share/icons/hicolor/*/apps/gimagereader.png
 usr/share/locale/*/LC_MESSAGES/gimagereader.mo
 usr/share/glib-2.0/schemas/org.gnome.gimagereader.gschema.xml
+usr/share/doc/gimagereader/manual.html
