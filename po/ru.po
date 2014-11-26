@@ -1,15 +1,15 @@
 # Russian translations for gImageReader package
 # Русский перевод для пакета gImageReader
-# Copyright (C) 2010-2011 THE GIMAGEREADER'S COPYRIGHT HOLDER
+# Copyright (C) 2010-2014 THE GIMAGEREADER'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gImageReader package.
-# Sandro Mani <manisandro@gmail.com>, 2010-2011.
+# Sandro Mani <manisandro@gmail.com>, 2010-2011, 2013, 2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimagereader 0.9\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-22 14:41+0100\n"
-"PO-Revision-Date: 2011-09-12 17:00+0300\n"
+"PO-Revision-Date: 2014-11-25 15:36+0300\n"
 "Last-Translator: Oleg Moiseichuk <berroll@mail.ru>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -20,15 +20,13 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:141
-#, fuzzy
 msgid "Redetect Languages"
-msgstr "Языки"
+msgstr "Определить языки заново"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:144
 #: ../qt/src/Ui_MainWindow.hh:158
-#, fuzzy
 msgid "Preferences"
-msgstr "Предпочитаемый язык:"
+msgstr "Предпочтения"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/src/OutputManager.cc:377
 #: ../qt/src/OutputManager.cc:326 ../qt/src/Ui_MainWindow.hh:149
@@ -38,19 +36,19 @@ msgstr "Помощь"
 #: ../gtk/data/appmenu.ui.h:4 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:152
 msgid "About"
-msgstr ""
+msgstr "О программе"
 
 #: ../gtk/data/appmenu.ui.h:5
 msgid "Quit"
-msgstr ""
+msgstr "Выход"
 
 #: ../gtk/data/crashhandler.ui.h:1 ../qt/src/CrashHandler.cc:37
 msgid "Regenerate backtrace"
-msgstr ""
+msgstr "Обновить обратную трассировку"
 
 #: ../gtk/data/crashhandler.ui.h:2
 msgid "<b>The application has crashed</b>"
-msgstr ""
+msgstr "<b>Программа аварийно завершилась</b>"
 
 #: ../gtk/data/crashhandler.ui.h:4
 #, no-c-format
@@ -61,11 +59,16 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
+"Приношу извинения за неудобство. Для улучшения работы программы просьба "
+"сообщить о проблеме по адресу <a href=\"mailto:manisandro@gmail.com?"
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Просьба постараться "
+"описать, какие действия вы выполняли перед сбоем программы. Также приложите "
+"информацию, размещённую ниже. Спасибо."
 
 #: ../gtk/data/gimagereader.ui.h:1 ../qt/data/MainWindow.ui.h:24
 #: ../qt/src/SubstitutionsManager.cc:36
 msgid "Substitutions"
-msgstr ""
+msgstr "Замены"
 
 #: ../gtk/data/gimagereader.ui.h:2 ../qt/src/SubstitutionsManager.cc:42
 #: ../qt/src/SubstitutionsManager.cc:43
@@ -74,14 +77,13 @@ msgstr "Открыть"
 
 #: ../gtk/data/gimagereader.ui.h:3 ../qt/src/SubstitutionsManager.cc:45
 #: ../qt/src/SubstitutionsManager.cc:46
-#, fuzzy
 msgid "Save"
-msgstr "Сохранить как"
+msgstr "Сохранить"
 
 #: ../gtk/data/gimagereader.ui.h:4 ../qt/src/SubstitutionsManager.cc:48
 #: ../qt/src/SubstitutionsManager.cc:49
 msgid "Clear"
-msgstr ""
+msgstr "Очистить"
 
 #: ../gtk/data/gimagereader.ui.h:5 ../qt/data/ConfigDialog.ui.h:19
 #: ../qt/src/SubstitutionsManager.cc:51 ../qt/src/SubstitutionsManager.cc:52
@@ -94,41 +96,38 @@ msgid "Remove"
 msgstr "Удалить"
 
 #: ../gtk/data/gimagereader.ui.h:7
-#, fuzzy
 msgid "<small>Recognize all</small>"
-msgstr "Распознать всё"
+msgstr "<small>Распознать всё</small>"
 
 #. Output insert mode
 #: ../gtk/data/gimagereader.ui.h:8 ../qt/src/Ui_MainWindow.hh:202
 msgid "Append to current text"
-msgstr ""
+msgstr "Добавить к текущему тексту"
 
 #: ../gtk/data/gimagereader.ui.h:9 ../qt/src/Ui_MainWindow.hh:203
-#, fuzzy
 msgid "Insert at cursor"
-msgstr "У курсора"
+msgstr "Вставить в позиции курсора"
 
 #: ../gtk/data/gimagereader.ui.h:10 ../qt/src/Ui_MainWindow.hh:204
 msgid "Replace current text"
-msgstr ""
+msgstr "Заменить текущий текст"
 
 #. Sources toolbar
 #: ../gtk/data/gimagereader.ui.h:11 ../qt/src/Ui_MainWindow.hh:164
-#, fuzzy
 msgid "Recent"
-msgstr "_Недавние файлы"
+msgstr "Предыдущие файлы"
 
 #: ../gtk/data/gimagereader.ui.h:12 ../qt/src/Ui_MainWindow.hh:165
 msgid "Paste"
-msgstr ""
+msgstr "Вставить"
 
 #: ../gtk/data/gimagereader.ui.h:13 ../qt/src/Ui_MainWindow.hh:166
 msgid "Take Screenshot"
-msgstr ""
+msgstr "Сделать снимок экрана"
 
 #: ../gtk/data/gimagereader.ui.h:14 ../qt/data/MainWindow.ui.h:6
 msgid "Sources"
-msgstr ""
+msgstr "Источники"
 
 #: ../gtk/data/gimagereader.ui.h:15 ../qt/data/MainWindow.ui.h:27
 msgid "Zoom in"
@@ -179,76 +178,64 @@ msgid "Rotate Right"
 msgstr "Повернуть вправо"
 
 #: ../gtk/data/gimagereader.ui.h:27 ../qt/data/MainWindow.ui.h:39
-#, fuzzy
 msgid "Image controls"
-msgstr "Показать управление изображением"
+msgstr "Управление изображением"
 
 #: ../gtk/data/gimagereader.ui.h:28 ../qt/data/MainWindow.ui.h:38
-#, fuzzy
 msgid "Image Controls"
-msgstr "Показать Управление изображением"
+msgstr "Управление изображением"
 
 #: ../gtk/data/gimagereader.ui.h:29 ../qt/data/MainWindow.ui.h:41
 msgid "Autodetect layout"
-msgstr ""
+msgstr "Автоопределение расположения"
 
 #: ../gtk/data/gimagereader.ui.h:30 ../qt/data/MainWindow.ui.h:40
 msgid "Autodetect Layout"
-msgstr ""
+msgstr "Автоопределение расположения"
 
 #: ../gtk/data/gimagereader.ui.h:31 ../qt/data/MainWindow.ui.h:43
-#, fuzzy
 msgid "Toggle output pane"
-msgstr "Очистить распознанное"
+msgstr "Показать/скрыть панель распознавания"
 
 #: ../gtk/data/gimagereader.ui.h:32 ../qt/data/MainWindow.ui.h:42
-#, fuzzy
 msgid "Toggle Output Pane"
-msgstr "Выбрать файл изображения..."
+msgstr "Показать/скрыть панель распознавания"
 
 #: ../gtk/data/gimagereader.ui.h:33 ../qt/src/Ui_MainWindow.hh:177
-#, fuzzy
 msgid "Add images"
-msgstr "Добавить изображение"
+msgstr "Добавить изображения"
 
 #: ../gtk/data/gimagereader.ui.h:34 ../qt/src/Ui_MainWindow.hh:176
-#, fuzzy
 msgid "Add Images"
-msgstr "Добавить изображение"
+msgstr "Добавить изображения"
 
 #: ../gtk/data/gimagereader.ui.h:35 ../qt/src/Ui_MainWindow.hh:182
-#, fuzzy
 msgid "Remove image from list"
-msgstr "Удалить изображение"
+msgstr "Убрать изображение из списка"
 
 #: ../gtk/data/gimagereader.ui.h:36 ../qt/src/Ui_MainWindow.hh:181
-#, fuzzy
 msgid "Remove Image"
-msgstr "Удалить изображение"
+msgstr "Убрать изображение"
 
 #: ../gtk/data/gimagereader.ui.h:37 ../qt/src/Ui_MainWindow.hh:185
-#, fuzzy
 msgid "Delete image"
 msgstr "Удалить изображение"
 
 #: ../gtk/data/gimagereader.ui.h:38 ../qt/src/Ui_MainWindow.hh:184
 msgid "Delete Image"
-msgstr ""
+msgstr "Удалить изображение"
 
 #: ../gtk/data/gimagereader.ui.h:39 ../qt/src/Ui_MainWindow.hh:188
-#, fuzzy
 msgid "Clear list"
-msgstr "Очистить распознанное"
+msgstr "Очистить список"
 
 #: ../gtk/data/gimagereader.ui.h:40 ../qt/src/Ui_MainWindow.hh:187
-#, fuzzy
 msgid "Clear List"
-msgstr "Очистить распознанное"
+msgstr "Очистить список"
 
 #: ../gtk/data/gimagereader.ui.h:41 ../qt/data/MainWindow.ui.h:7
-#, fuzzy
 msgid "Files"
-msgstr "_Файл"
+msgstr "Файлы"
 
 #: ../gtk/data/gimagereader.ui.h:42 ../qt/data/MainWindow.ui.h:17
 msgid "Device:"
@@ -268,15 +255,15 @@ msgstr "Обновить"
 
 #: ../gtk/data/gimagereader.ui.h:46 ../qt/data/MainWindow.ui.h:10
 msgid "Mode:"
-msgstr ""
+msgstr "Режим:"
 
 #: ../gtk/data/gimagereader.ui.h:47 ../qt/data/MainWindow.ui.h:12
 msgid "Color"
-msgstr ""
+msgstr "Цветной"
 
 #: ../gtk/data/gimagereader.ui.h:48 ../qt/data/MainWindow.ui.h:11
 msgid "Grayscale"
-msgstr ""
+msgstr "В оттенках серого"
 
 #: ../gtk/data/gimagereader.ui.h:49 ../qt/data/MainWindow.ui.h:14
 msgid "Scan"
@@ -284,7 +271,7 @@ msgstr "Сканировать"
 
 #: ../gtk/data/gimagereader.ui.h:50 ../qt/data/MainWindow.ui.h:8
 msgid "Acquire"
-msgstr "Сканировать"
+msgstr "Получить"
 
 #: ../gtk/data/gimagereader.ui.h:51 ../qt/data/MainWindow.ui.h:2
 msgid "Brightness"
@@ -300,11 +287,11 @@ msgstr "Разрешение"
 
 #: ../gtk/data/gimagereader.ui.h:54 ../qt/data/MainWindow.ui.h:5
 msgid "Invert colors"
-msgstr ""
+msgstr "Инвертировать цвета"
 
 #: ../gtk/data/gimagereader.ui.h:55 ../qt/src/Ui_MainWindow.hh:236
 msgid "Select insert mode"
-msgstr ""
+msgstr "Выбрать режим вставки"
 
 #: ../gtk/data/gimagereader.ui.h:56 ../qt/src/Ui_MainWindow.hh:243
 msgid "Strip line breaks on selected text"
@@ -319,26 +306,24 @@ msgid "Find and replace"
 msgstr "Найти и заменить"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/src/Ui_MainWindow.hh:247
-#, fuzzy
 msgid "Find and Replace"
 msgstr "Найти и заменить"
 
 #: ../gtk/data/gimagereader.ui.h:60 ../qt/src/Ui_MainWindow.hh:250
 #: ../qt/src/Ui_MainWindow.hh:251
 msgid "Undo"
-msgstr ""
+msgstr "Отменить"
 
 #: ../gtk/data/gimagereader.ui.h:61 ../qt/src/Ui_MainWindow.hh:253
 #: ../qt/src/Ui_MainWindow.hh:254
 msgid "Redo"
-msgstr ""
+msgstr "Вернуть"
 
 #: ../gtk/data/gimagereader.ui.h:62 ../qt/src/Ui_MainWindow.hh:257
 msgid "Save output"
 msgstr "Сохранить распознанное"
 
 #: ../gtk/data/gimagereader.ui.h:63 ../qt/src/Ui_MainWindow.hh:256
-#, fuzzy
 msgid "Save Output"
 msgstr "Сохранить распознанное"
 
@@ -359,26 +344,24 @@ msgid "Replace"
 msgstr "Заменить"
 
 #: ../gtk/data/gimagereader.ui.h:68 ../qt/data/MainWindow.ui.h:22
-#, fuzzy
 msgid "Replace all"
-msgstr "Заменить"
+msgstr "Заменить всё"
 
 #: ../gtk/data/gimagereader.ui.h:69 ../qt/data/MainWindow.ui.h:23
 msgid "Find previous"
-msgstr ""
+msgstr "Найти предыдущее"
 
 #: ../gtk/data/gimagereader.ui.h:70 ../qt/data/MainWindow.ui.h:21
-#, fuzzy
 msgid "Find next"
-msgstr "Найти"
+msgstr "Найти следующее"
 
 #: ../gtk/data/gimagereader.ui.h:71 ../qt/data/MainWindow.ui.h:25
 msgid "Match case"
-msgstr ""
+msgstr "Согласовать регистр"
 
 #: ../gtk/data/gimagereader.ui.h:72
 msgid "A graphical frontend to tesseract-ocr"
-msgstr "Графический интерфейс для tesseract"
+msgstr "Графический интерфейс для tesseract-ocr"
 
 #: ../gtk/data/gimagereader.ui.h:73 ../qt/data/ConfigDialog.ui.h:1
 msgid "Configuration"
@@ -386,7 +369,7 @@ msgstr "Настройка"
 
 #: ../gtk/data/gimagereader.ui.h:74
 msgid "Output pane orientation:"
-msgstr "Ориентация панели вывода:"
+msgstr "Ориентация панели распознавания:"
 
 #: ../gtk/data/gimagereader.ui.h:75
 msgid "Horizontal"
@@ -398,7 +381,7 @@ msgstr "Вертикально"
 
 #: ../gtk/data/gimagereader.ui.h:77 ../qt/data/ConfigDialog.ui.h:3
 msgid "Query to install missing spellcheck dictionaries"
-msgstr "Запрос на установку недостающих словарей проверки орфографии"
+msgstr "Запрос на установку недостающих орфографических словарей"
 
 #: ../gtk/data/gimagereader.ui.h:78 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
@@ -415,7 +398,7 @@ msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:81 ../qt/data/ConfigDialog.ui.h:11
 msgid "The prefix of the tesseract language data file"
-msgstr ""
+msgstr "Префикс файла языковых данных tesseract"
 
 #: ../gtk/data/gimagereader.ui.h:82 ../qt/data/ConfigDialog.ui.h:12
 msgid "Prefix"
@@ -423,114 +406,104 @@ msgstr "Префикс"
 
 #: ../gtk/data/gimagereader.ui.h:83 ../qt/data/ConfigDialog.ui.h:13
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr ""
+msgstr "Код языка по стандарту ISO 639-1, сопровождаемый кодом страны"
 
 #: ../gtk/data/gimagereader.ui.h:84 ../qt/data/ConfigDialog.ui.h:14
-#, fuzzy
 msgid "ISO Code"
 msgstr "Код ISO"
 
 #: ../gtk/data/gimagereader.ui.h:85 ../qt/data/ConfigDialog.ui.h:15
 msgid "The name of the language"
-msgstr ""
+msgstr "Название языка"
 
 #: ../gtk/data/gimagereader.ui.h:86 ../qt/data/ConfigDialog.ui.h:16
 msgid "Name"
 msgstr "Название"
 
 #: ../gtk/data/gimagereader.ui.h:87 ../qt/data/ConfigDialog.ui.h:5
-#, fuzzy
 msgid "Output pane font:"
-msgstr "Ориентация панели вывода:"
+msgstr "Шрифт панели распознавания:"
 
 #: ../gtk/data/gimagereader.ui.h:88 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
-msgstr ""
+msgstr "По умолчанию"
 
 #: ../gtk/data/gimagereader.ui.h:89 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
 msgstr "Диапазон страниц"
 
 #: ../gtk/data/gimagereader.ui.h:90 ../qt/data/PageRangeDialog.ui.h:2
-#, fuzzy
 msgid "Page range:"
-msgstr "Диапазон страниц"
+msgstr "Диапазон страниц:"
 
 #: ../gtk/data/gimagereader.ui.h:91
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Пример:</b> 1-10, 13, 14-18</small>"
 
 #: ../gtk/data/gimagereader.ui.h:92 ../qt/data/PageRangeDialog.ui.h:4
-#, fuzzy
 msgid "Recognition area:"
-msgstr "Задать язык распознавания"
+msgstr "Область распознавания:"
 
 #: ../gtk/data/gimagereader.ui.h:93 ../qt/data/PageRangeDialog.ui.h:5
 msgid "Entire page"
-msgstr ""
+msgstr "Страница целиком"
 
 #: ../gtk/data/gimagereader.ui.h:94 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
-msgstr ""
+msgstr "Автоопределение"
 
 #: ../gtk/data/gimagereader.ui.h:95 ../qt/src/DisplaySelection.cc:56
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: ../gtk/data/gimagereader.ui.h:96 ../qt/src/DisplaySelection.cc:42
 msgid "Order:"
-msgstr ""
+msgstr "Порядок:"
 
 #: ../gtk/data/gimagereader.ui.h:97 ../qt/src/DisplaySelection.cc:57
-#, fuzzy
 msgid "Recognize"
-msgstr "Распознать всё"
+msgstr "Распознать"
 
 #: ../gtk/data/gimagereader.ui.h:98 ../qt/src/DisplaySelection.cc:58
-#, fuzzy
 msgid "Recognize to clipboard"
-msgstr "Распознать всё изображение"
+msgstr "Распознать в буфер обмена"
 
 #: ../gtk/data/gimagereader.ui.h:99 ../qt/src/DisplaySelection.cc:59
-#, fuzzy
 msgid "Save as image"
-msgstr "Удалить все изображения"
+msgstr "Сохранить как изображение"
 
 #. Output postprocessing
 #: ../gtk/data/gimagereader.ui.h:100 ../qt/src/Ui_MainWindow.hh:212
-#, fuzzy
 msgid "Keep line break if..."
-msgstr "Сохранять разрыв строки, если перед ним стоит '.'"
+msgstr "Сохранять разрыв строки, если..."
 
 #: ../gtk/data/gimagereader.ui.h:101 ../qt/src/Ui_MainWindow.hh:214
 msgid "Preceded by dot"
-msgstr ""
+msgstr "Перед ним стоит точка"
 
 #: ../gtk/data/gimagereader.ui.h:102 ../qt/src/Ui_MainWindow.hh:216
-#, fuzzy
 msgid "Preceded or succeeded by quote"
-msgstr "Сохранять разрыв строки, если перед ним стоит кавычка"
+msgstr "Перед ним или после него стоит кавычка"
 
 #: ../gtk/data/gimagereader.ui.h:103 ../qt/src/Ui_MainWindow.hh:218
 msgid "Other options"
-msgstr ""
+msgstr "Прочие опции"
 
 #: ../gtk/data/gimagereader.ui.h:104 ../qt/src/Ui_MainWindow.hh:220
 msgid "Join hyphenated words"
-msgstr ""
+msgstr "Удалять переносы слов"
 
 #: ../gtk/data/gimagereader.ui.h:105 ../qt/src/Ui_MainWindow.hh:222
 msgid "Collapse whitespace"
-msgstr ""
+msgstr "Сжимать символы пробелов"
 
 #: ../gtk/data/gimagereader.ui.h:106 ../qt/src/Recognizer.cc:40
 msgid "Current Page"
 msgstr "Текущая страница"
 
 #: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Recognizer.cc:43
-#, fuzzy
 msgid "Multiple Pages..."
-msgstr "Страницы..."
+msgstr "Несколько страниц..."
 
 #: ../gtk/src/Acquirer.cc:39 ../gtk/src/FileDialogs.cc:170
 #: ../qt/data/ConfigDialog.ui.h:18 ../qt/data/MainWindow.ui.h:15
@@ -539,27 +512,24 @@ msgstr "Отмена"
 
 #: ../gtk/src/Acquirer.cc:72 ../qt/src/Acquirer.cc:61
 msgid "scan.png"
-msgstr ""
+msgstr "скан.png"
 
 #: ../gtk/src/Acquirer.cc:89 ../gtk/src/Displayer.cc:494
 #: ../qt/src/Acquirer.cc:78 ../qt/src/Displayer.cc:376
-#, fuzzy
 msgid "PNG Images"
-msgstr "Изображения"
+msgstr "Изображения PNG"
 
 #: ../gtk/src/Acquirer.cc:90 ../qt/src/Acquirer.cc:78
-#, fuzzy
 msgid "Choose Output Filename..."
-msgstr "Выбрать файл изображения..."
+msgstr "Выберите имя файла для записи..."
 
 #: ../gtk/src/Acquirer.cc:107 ../qt/src/Acquirer.cc:95
 msgid "Failed to initialize the scanning backend."
-msgstr ""
+msgstr "Не удалось инициализировать сканер."
 
 #: ../gtk/src/Acquirer.cc:118 ../qt/src/Acquirer.cc:103
-#, fuzzy
 msgid "Scan failed"
-msgstr "Транзакция не удалась..."
+msgstr "Сканирование не удалось"
 
 #: ../gtk/src/Acquirer.cc:138 ../qt/src/Acquirer.cc:119
 msgid "No scanners were detected."
@@ -567,29 +537,28 @@ msgstr "Сканеров не было найдено."
 
 #: ../gtk/src/Acquirer.cc:156 ../gtk/src/Acquirer.cc:173
 #: ../qt/src/Acquirer.cc:134 ../qt/src/Acquirer.cc:152
-#, fuzzy
 msgid "Starting scan..."
-msgstr "Ищу пакет..."
+msgstr "Запуск сканирования..."
 
 #: ../gtk/src/Acquirer.cc:169 ../qt/src/Acquirer.cc:148
 msgid "Opening device..."
-msgstr "Открывается устройство..."
+msgstr "Открытие устройства..."
 
 #: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:150
 msgid "Setting options..."
-msgstr ""
+msgstr "Задание опций..."
 
 #: ../gtk/src/Acquirer.cc:175 ../qt/src/Acquirer.cc:154
 msgid "Getting parameters..."
-msgstr ""
+msgstr "Получение параметров..."
 
 #: ../gtk/src/Acquirer.cc:177 ../qt/src/Acquirer.cc:156
 msgid "Transferring data..."
-msgstr "Передаются данные..."
+msgstr "Передача данных..."
 
 #: ../gtk/src/Acquirer.cc:187 ../qt/src/Acquirer.cc:166
 msgid "Canceling scan..."
-msgstr ""
+msgstr "Отмена сканирования..."
 
 #: ../gtk/src/Config.cc:85 ../qt/data/ConfigDialog.ui.h:6
 msgid "Filename prefix"
@@ -597,7 +566,7 @@ msgstr "Файловый префикс"
 
 #: ../gtk/src/Config.cc:86 ../qt/data/ConfigDialog.ui.h:7
 msgid "Code"
-msgstr ""
+msgstr "Код"
 
 #: ../gtk/src/Config.cc:87 ../qt/data/ConfigDialog.ui.h:8
 msgid "Native name"
@@ -606,39 +575,39 @@ msgstr "Родное название"
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:43
 #: ../qt/src/CrashHandler.cc:35
 msgid "Crash Handler"
-msgstr ""
+msgstr "Обработчик сбоев"
 
 #: ../gtk/src/CrashHandler.cc:45 ../qt/src/CrashHandler.cc:30
 msgid "Your work has been saved under <b>%1</b>."
-msgstr ""
+msgstr "Обработанные данные были сохранены в <b>%1</b>."
 
 #: ../gtk/src/CrashHandler.cc:47 ../qt/src/CrashHandler.cc:32
 msgid "There was no unsaved work."
-msgstr ""
+msgstr "Несохранённых обработанных данных не найдено."
 
 #: ../gtk/src/CrashHandler.cc:103 ../qt/src/CrashHandler.cc:64
 msgid "Failed to obtain backtrace. Is gdb installed?"
-msgstr ""
+msgstr "Не удалось произвести обратную трассировку. Установлен ли gdb?"
 
 #: ../gtk/src/Displayer.cc:92 ../qt/src/Displayer.cc:66
 msgid "selection.png"
-msgstr ""
+msgstr "фрагмент.png"
 
 #: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:146
 msgid "Failed to load image"
 msgstr "Не удалось загрузить изображение"
 
 #: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:146
-#, fuzzy
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
-msgstr "Файл не является изображением или повреждён."
+msgstr ""
+"Файл не является изображением или повреждён:\n"
+"%1"
 
 #: ../gtk/src/Displayer.cc:229
-#, fuzzy
 msgid "Rendering image..."
-msgstr "Ищу пакет..."
+msgstr "Отрисовка изображения..."
 
 #: ../gtk/src/Displayer.cc:495 ../qt/src/Displayer.cc:376
 msgid "Save Selection Image"
@@ -646,14 +615,13 @@ msgstr ""
 
 #: ../gtk/src/Displayer.cc:603 ../qt/src/Displayer.cc:432
 msgid "Performing layout analysis"
-msgstr ""
+msgstr "Выполняется анализ расположения"
 
 #: ../gtk/src/FileDialogs.cc:110 ../gtk/src/FileDialogs.cc:169
 #: ../gtk/src/FileDialogs.cc:189 ../gtk/src/FileDialogs.cc:255
 #: ../qt/src/SourceManager.cc:140
-#, fuzzy
 msgid "Select Files"
-msgstr "Текстовые файлы"
+msgstr "Выберите файлы"
 
 #. Get formats
 #: ../gtk/src/FileDialogs.cc:113 ../gtk/src/FileDialogs.cc:186
@@ -669,55 +637,51 @@ msgstr ""
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr ""
+"Файл с именем \"%1\" уже существует. Вы уверены, что хотите его перезаписать?"
 
 #: ../gtk/src/FileDialogs.cc:282
 msgid "Overwrite File?"
-msgstr ""
+msgstr "Перезаписать файл?"
 
 #: ../gtk/src/MainWindow.cc:119 ../qt/src/MainWindow.cc:124
 msgid "Select an image to begin..."
 msgstr "Выберите изображение для начала работы..."
 
 #: ../gtk/src/MainWindow.cc:204 ../qt/src/MainWindow.cc:204
-#, fuzzy
 msgid "To recognize specific areas, drag rectangles over them."
-msgstr "Чтобы распознать определённую область, обведите её рамкой."
+msgstr "Чтобы распознать определённые области, обведите их рамкой."
 
 #: ../gtk/src/MainWindow.cc:305 ../qt/src/MainWindow.cc:326
 msgid "New version"
 msgstr "Новая версия"
 
 #: ../gtk/src/MainWindow.cc:305 ../qt/src/MainWindow.cc:326
-#, fuzzy
 msgid "gImageReader %1 is available"
-msgstr "gImageReader"
+msgstr "Доступен gImageReader %1"
 
 #: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:327
 msgid "Download"
-msgstr ""
+msgstr "Скачать"
 
 #: ../gtk/src/MainWindow.cc:307 ../qt/src/MainWindow.cc:328
 msgid "Changelog"
-msgstr ""
+msgstr "Список изменений"
 
 #: ../gtk/src/MainWindow.cc:308 ../qt/src/MainWindow.cc:329
-#, fuzzy
 msgid "Don't notify again"
-msgstr "Больше не показывать"
+msgstr "Больше не показывать уведомление"
 
 #: ../gtk/src/OutputManager.cc:173 ../qt/src/OutputManager.cc:139
-#, fuzzy
 msgid "Stripping line breaks..."
-msgstr "Удалить разрывы строк"
+msgstr "Удаление разрывов строк..."
 
 #: ../gtk/src/OutputManager.cc:189 ../qt/src/OutputManager.cc:163
-#, fuzzy
 msgid "Replacing..."
-msgstr "Заменить"
+msgstr "Замена..."
 
 #: ../gtk/src/OutputManager.cc:278
 msgid "Check spelling"
-msgstr ""
+msgstr "Проверить орфографию"
 
 #: ../gtk/src/OutputManager.cc:317 ../qt/src/OutputManager.cc:276
 #, fuzzy
@@ -738,7 +702,7 @@ msgstr "Не удалось сохранить распознанное"
 
 #: ../gtk/src/OutputManager.cc:329 ../qt/src/OutputManager.cc:285
 msgid "Check that you have writing permissions in the selected folder."
-msgstr "Проверьте, есть ли у вас права на запись в выбранную папку."
+msgstr "Убедитесь, что у вас есть право на запись в выбранную папку."
 
 #: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:299
 msgid "Output not saved"
@@ -750,7 +714,7 @@ msgstr "Сохранить распознанное перед продолже�
 
 #: ../gtk/src/OutputManager.cc:368
 msgid "en_US"
-msgstr ""
+msgstr "ru_RU"
 
 #: ../gtk/src/OutputManager.cc:376 ../qt/src/OutputManager.cc:325
 msgid "Don't show again"
@@ -761,41 +725,38 @@ msgid "Install"
 msgstr "Установить"
 
 #: ../gtk/src/OutputManager.cc:389 ../qt/src/OutputManager.cc:338
-#, fuzzy
 msgid "Spelling dictionary missing"
-msgstr "Словарь отсутствует"
+msgstr "Отсутствует орфографический словарь"
 
 #: ../gtk/src/OutputManager.cc:389 ../qt/src/OutputManager.cc:338
-#, fuzzy
 msgid "The spellcheck dictionary for %1 is not installed"
-msgstr "Словарь проверки орфографии для '%(one)s' ('%(two)s') не установлен."
+msgstr "Орфографический словарь для %1 не установлен"
 
 #: ../gtk/src/OutputManager.cc:398 ../qt/src/OutputManager.cc:347
 msgid "Installing spelling dictionary for '%1'"
-msgstr ""
+msgstr "Устанавливается орфографический словарь для '%1'"
 
 #: ../gtk/src/OutputManager.cc:413 ../qt/src/OutputManager.cc:362
 msgid "Error"
-msgstr ""
+msgstr "Ошибка"
 
 #: ../gtk/src/OutputManager.cc:413 ../qt/src/OutputManager.cc:362
-#, fuzzy
 msgid "Failed to install spelling dictionary: %1"
-msgstr "Не удалось установить словарь"
+msgstr "Не удалось установить орфографический словарь: %1"
 
 #: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
-#, fuzzy
 msgid "No languages available"
-msgstr "доступна."
+msgstr "Нет доступных языков"
 
 #: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
+"Отсутствуют доступные языки для tesseract. Распознание не сработает."
 
 #: ../gtk/src/Recognizer.cc:132 ../qt/src/Recognizer.cc:156
 msgid "Multilingual"
-msgstr ""
+msgstr "Многоязычный"
 
 #: ../gtk/src/Recognizer.cc:191 ../qt/src/Recognizer.cc:218
 msgid "Recognize selection"
@@ -807,96 +768,87 @@ msgid "Recognize all"
 msgstr "Распознать всё"
 
 #: ../gtk/src/Recognizer.cc:265 ../qt/src/Recognizer.cc:296
-#, fuzzy
 msgid ""
 "\n"
 "\tFailed to initialize tesseract"
-msgstr "Папка, содержащая tesseract:"
+msgstr ""
+"\n"
+"\tНе удалось инициализировать tesseract"
 
 #: ../gtk/src/Recognizer.cc:273 ../qt/src/Recognizer.cc:304
 msgid "Recognizing page %1 (%2 of %3)"
-msgstr ""
+msgstr "Распознаётся страница %1 (%2 из %3)"
 
 #: ../gtk/src/Recognizer.cc:278 ../qt/src/Recognizer.cc:309
 msgid ""
 "\n"
 "\tPage %1: failed to render page"
 msgstr ""
+"\n"
+"\tСтраница %1: не удалось отрисовать страницу"
 
 #: ../gtk/src/Recognizer.cc:279 ../qt/src/Recognizer.cc:310
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
 msgstr ""
+"\n"
+"[Не удалось распознать страницу %1]\n"
 
 #: ../gtk/src/Recognizer.cc:293 ../gtk/src/Recognizer.cc:314
 #: ../qt/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:345
-#, fuzzy
 msgid "Recognizing..."
-msgstr "Идёт распознавание, подождите..."
+msgstr "Идёт распознавание..."
 
 #: ../gtk/src/Recognizer.cc:296 ../gtk/src/Recognizer.cc:304
 #: ../qt/src/Recognizer.cc:327 ../qt/src/Recognizer.cc:335
-#, fuzzy
 msgid "Recognition errors occurred"
-msgstr ""
-"Произошла следующая ошибка:\n"
-"%s"
+msgstr "Произошли ошибки распознавания"
 
 #: ../gtk/src/Recognizer.cc:296 ../qt/src/Recognizer.cc:327
-#, fuzzy
 msgid "The following errors occurred:%1"
-msgstr ""
-"Произошла следующая ошибка:\n"
-"%s"
+msgstr "Произошли следующие ошибки:%1"
 
 #: ../gtk/src/Recognizer.cc:304 ../qt/src/Recognizer.cc:335
-#, fuzzy
 msgid "Failed to initialize tesseract"
-msgstr "Папка, содержащая tesseract:"
+msgstr "Не удалось инициализировать tesseract"
 
 #: ../gtk/src/ScanThread.cc:62 ../qt/src/ScanThread.cc:62
-#, fuzzy
 msgid "No scanner specified"
-msgstr "Сканеров не было найдено."
+msgstr "Не задан сканер"
 
 #: ../gtk/src/ScanThread.cc:65 ../qt/src/ScanThread.cc:65
 msgid "Unable to connect to scanner"
-msgstr ""
+msgstr "Невозможно подключиться к сканеру"
 
 #: ../gtk/src/ScanThread.cc:93 ../qt/src/ScanThread.cc:93
-#, fuzzy
 msgid "Unable to start scan"
-msgstr "Невозможно открыть файлы"
+msgstr "Невозможно начать сканирование"
 
 #: ../gtk/src/ScanThread.cc:101 ../gtk/src/ScanThread.cc:115
 #: ../qt/src/ScanThread.cc:101 ../qt/src/ScanThread.cc:115
 msgid "Error communicating with scanner"
-msgstr ""
+msgstr "Ошибка связи со сканером"
 
 #: ../gtk/src/ScanThread.cc:180 ../qt/src/ScanThread.cc:178
 msgid "Scan canceled"
-msgstr ""
+msgstr "Сканирование отменено"
 
 #: ../gtk/src/SourceManager.cc:110 ../qt/src/SourceManager.cc:95
 msgid "Unable to open files"
 msgstr "Невозможно открыть файлы"
 
 #: ../gtk/src/SourceManager.cc:110 ../qt/src/SourceManager.cc:95
-#, fuzzy
 msgid "The following files could not be opened:%1"
-msgstr ""
-"Следующие файлы не могут быть открыты:\n"
-"%s"
+msgstr "Невозможно открыть следующие файлы:%1"
 
 #: ../gtk/src/SourceManager.cc:134 ../qt/src/SourceManager.cc:153
 msgid "Clipboard Error"
-msgstr ""
+msgstr "Ошибка буфера обмена"
 
 #: ../gtk/src/SourceManager.cc:134 ../qt/src/SourceManager.cc:153
-#, fuzzy
 msgid "Failed to read the clipboard."
-msgstr "Не удалось получить данные"
+msgstr "Не удалось прочесть содержимое буфера обмена."
 
 #: ../gtk/src/SourceManager.cc:138 ../qt/src/SourceManager.cc:157
 msgid "Pasted %1"
@@ -904,135 +856,125 @@ msgstr ""
 
 #: ../gtk/src/SourceManager.cc:151 ../qt/src/SourceManager.cc:165
 msgid "Screenshot Error"
-msgstr ""
+msgstr "Ошибка получения снимка экрана"
 
 #: ../gtk/src/SourceManager.cc:151 ../qt/src/SourceManager.cc:165
-#, fuzzy
 msgid "Failed to take screenshot."
-msgstr "Не удалось сохранить распознанное"
+msgstr "Не удалось сделать снимок экрана."
 
 #: ../gtk/src/SourceManager.cc:155 ../qt/src/SourceManager.cc:169
 msgid "Screenshot %1"
-msgstr ""
+msgstr "Снимок экрана %1"
 
 #: ../gtk/src/SourceManager.cc:161 ../qt/src/SourceManager.cc:175
-#, fuzzy
 msgid "Saving image..."
-msgstr "Ищу пакет..."
+msgstr "Сохранение изображения..."
 
 #: ../gtk/src/SourceManager.cc:168 ../qt/src/SourceManager.cc:188
 msgid "Cannot Write File"
-msgstr ""
+msgstr "Невозможно записать файл"
 
 #: ../gtk/src/SourceManager.cc:168 ../qt/src/SourceManager.cc:188
 msgid "Could not write to %1."
-msgstr ""
+msgstr "Невозможно записать в %1."
 
 #: ../gtk/src/SourceManager.cc:190 ../qt/src/SourceManager.cc:205
-#, fuzzy
 msgid "Delete File?"
-msgstr "_Недавние файлы"
+msgstr "Удалить файл?"
 
 #: ../gtk/src/SourceManager.cc:190 ../qt/src/SourceManager.cc:205
-#, fuzzy
 msgid ""
 "The following file will be deleted:\n"
 "%1"
 msgstr ""
-"Следующие файлы не могут быть открыты:\n"
-"%s"
+"Следующий файл будет удалён:\n"
+"%1"
 
 #: ../gtk/src/SourceManager.cc:245 ../qt/src/SourceManager.cc:249
 msgid "Missing File"
-msgstr ""
+msgstr "Файл отсутствует"
 
 #: ../gtk/src/SourceManager.cc:245 ../qt/src/SourceManager.cc:249
-#, fuzzy
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
 msgstr ""
-"Произошла следующая ошибка:\n"
-"%s"
+"Следующий файл был удалён или перемещён:\n"
+"%1"
 
 #: ../gtk/src/SubstitutionsManager.cc:39 ../qt/src/SubstitutionsManager.cc:77
-#, fuzzy
 msgid "Search for"
-msgstr "Искать:"
+msgstr "Искать"
 
 #: ../gtk/src/SubstitutionsManager.cc:40 ../qt/src/SubstitutionsManager.cc:77
-#, fuzzy
 msgid "Replace with"
-msgstr "Заменить на:"
+msgstr "Заменить на"
 
 #: ../gtk/src/SubstitutionsManager.cc:62 ../qt/src/SubstitutionsManager.cc:99
 msgid "substitution_list.txt"
-msgstr ""
+msgstr "список_замен.txt"
 
 #: ../gtk/src/SubstitutionsManager.cc:81
 #: ../gtk/src/SubstitutionsManager.cc:114
 #: ../qt/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:144
 msgid "Substitutions List"
-msgstr ""
+msgstr "Список замен"
 
 #: ../gtk/src/SubstitutionsManager.cc:82 ../qt/src/SubstitutionsManager.cc:110
 msgid "Open Substitutions List"
-msgstr ""
+msgstr "Открыть список замен"
 
 #: ../gtk/src/SubstitutionsManager.cc:87 ../qt/src/SubstitutionsManager.cc:115
 msgid "Error Reading File"
-msgstr ""
+msgstr "Ошибка чтения файла"
 
 #: ../gtk/src/SubstitutionsManager.cc:87 ../qt/src/SubstitutionsManager.cc:115
-#, fuzzy
 msgid "Unable to read '%1'."
-msgstr "Невозможно открыть файлы"
+msgstr "Невозможно открыть '%1'."
 
 #: ../gtk/src/SubstitutionsManager.cc:107
 #: ../qt/src/SubstitutionsManager.cc:137
 msgid "Errors Occurred Reading File"
-msgstr ""
+msgstr "Произошли ошибки при чтении файла"
 
 #: ../gtk/src/SubstitutionsManager.cc:107
 #: ../qt/src/SubstitutionsManager.cc:137
 msgid "Some entries of the substitutions list could not be read."
-msgstr ""
+msgstr "Не удалось прочитать некоторые элементы списка замен."
 
 #: ../gtk/src/SubstitutionsManager.cc:115
 #: ../qt/src/SubstitutionsManager.cc:144
 msgid "Save Substitutions List"
-msgstr ""
+msgstr "Сохранить список замен"
 
 #: ../gtk/src/SubstitutionsManager.cc:121
 #: ../qt/src/SubstitutionsManager.cc:150
 msgid "Error Saving File"
-msgstr ""
+msgstr "Ошибка сохранения файла"
 
 #: ../gtk/src/SubstitutionsManager.cc:121
 #: ../qt/src/SubstitutionsManager.cc:150
 msgid "Unable to write to '%1'."
-msgstr ""
+msgstr "Невозможно сохранить в '%1'."
 
 #: ../gtk/src/SubstitutionsManager.cc:140
 #: ../qt/src/SubstitutionsManager.cc:165
-#, fuzzy
 msgid "Save List?"
-msgstr "Сохранить как"
+msgstr "Сохранить список?"
 
 #: ../gtk/src/SubstitutionsManager.cc:140
 #: ../qt/src/SubstitutionsManager.cc:165
 msgid "Do you want to save the current list?"
-msgstr ""
+msgstr "Вы хотите сохранить текущий список?"
 
 #: ../gtk/src/SubstitutionsManager.cc:179
 #: ../qt/src/SubstitutionsManager.cc:202
 msgid "Applying substitutions..."
-msgstr ""
+msgstr "Применение замен..."
 
 #: ../qt/data/AboutDialog.ui.h:1
-#, fuzzy
 msgid "About gImageReader"
-msgstr "gImageReader"
+msgstr "О программе gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:4
 #, no-c-format
@@ -1043,14 +985,19 @@ msgid ""
 "p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © "
 "2009-2014 Sandro Mani&lt;/small&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%1&lt;/p&gt;&lt;p&gt;"
+"Графический интерфейс для tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
+"http://sourceforge.net/projects/gimagereader/&quot;&gt;Website&lt;/a&gt;&lt;/"
+"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © "
+"2009-2014 Sandro Mani&lt;/small&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:5
 msgid "Credits"
-msgstr ""
+msgstr "Благодарность"
 
 #: ../qt/data/AboutDialog.ui.h:6
 msgid "License"
-msgstr ""
+msgstr "Лицензия"
 
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
@@ -1064,6 +1011,14 @@ msgid ""
 "application crashed. Also, include the information below. Thank you.&lt;/"
 "p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;Программа аварийно завершилась&lt;/span&gt;&lt;/p&gt;&lt;"
+"p&gt;Приношу извинения за неудобство. Для улучшения работы программы "
+"просьба сообщить о проблеме по адресу &lt;a href=&quot;mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
+"com&lt;/a&gt;. Просьба постараться описать, какие действия вы выполняли перед "
+"сбоем программы. Также приложите информацию, размещённую ниже. Спасибо.&lt;/"
+"p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1075,9 +1030,8 @@ msgid "Output"
 msgstr "Сканировать в:"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
-#, fuzzy
 msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>Пример:</b> 1-10, 13, 14-18</small>"
+msgstr "&lt;small&gt;&lt;b&gt;Пример:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
 
 #~ msgid "Failed to open the selected device"
 #~ msgstr "Не удалось открыть выбранное устройство"
