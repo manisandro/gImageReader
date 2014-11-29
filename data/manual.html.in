@@ -27,7 +27,8 @@
     </ul></li>
     <li><a href="#InstallTessdata">Installation of tesseract language definitions</a></li>
     <li><a href="#InstallSpelling">Installation of spelling dictionaries</a></li>
-    <li><a href="#Support">Support</a></li>
+    <li><a href="#Contributing">Contributing</a></li>
+    <li><a href="#Support">Debugging and support</a></li>
 </ul>
 
 <h2><a name="About">About</a></h2>
@@ -99,31 +100,31 @@
 <h3><a name="Usage_View">Viewing and adjusting images</a></h3>
 <ul>
     <li>Buttons in the <i>main toolbar</i> to zoom in and out as well as rotate the image by an arbitrary angle. Zooming can also be performed by scrolling on the image with the CTRL key pressed.</li>
-    <li>Scrolling on the image pans the image vertically. If SHIFT is pressed while scrolling, the image is panned horizontally.</li>
     <li>Basic image manipulation tools are provided in the <i>image controls toolbar</i>, which is activated by clicking on the <i>image controls button</i> in the <i>main toolbar</i>. The provided tools currently allow brightness and contrast adjustments as well as adjusting the image resolution (through interpolation).</li>
 </ul>
 <h3><a name="Usage_Recognize">Recognizing text</a></h3>
 <ul>
     <li>Areas to be recognized can be selected by dragging (left click + mouse move) a rectangular area around portions of the image. Multiple selections are possible by pressing the CTRL key while selecting.</li>
     <li>Alternatively, the <i>automatic layout detection button</i>, accessible from the <i>main toolbar</i> will attempt to automatically define appropriate recognition areas, as well as adjust the rotation of the image if necessary.</li>
-    <li>Selections can be deleted and reordered by right-clicking on them. It is also possible to resize existing selections by dragging the corners of the selection rectangle.</li>
+    <li>Selections can be deleted and reordered via the context menu which appears when right-clicking on them. It is also possible to resize existing selections by dragging the corners of the selection rectangle.</li>
     <li>The recognition language can be selected from the drop-down menu of the <i>recognize button</i> in the <i>main toolbar</i>. If a spelling dictionary is installed for a tesseract language definition, it is possible to choose between available regional flavors of the language. This will only affect the language for spell-checking the recognized text. Unrecognized tesseract language definitions will appear by their filename prefix, one can however teach the program to recognize such files by defining appropriate rules in the program configuration (see below). Multiple recognition languages can be specified at once from the <i>Multilingual</i> submenu of the drop-down menu.</li>
-    <li>The selected portions of the image (or the entire image, if no selections are defined) can be recognized by pressing on the <i>recognize button</i> in the <i>main toolbar</i>. Alternatively, individual areas can be recognized by right-clicking a selection. From the selection menu, it is also possible to redirect the recognized text to the clipboard, instead of the output pane.</li>
+    <li>The selected portions of the image (or the entire image, if no selections are defined) can be recognized by pressing on the <i>recognize button</i> in the <i>main toolbar</i>. Alternatively, individual areas can be recognized by right-clicking a selection. From the selection context menu, it is also possible to redirect the recognized text to the clipboard, instead of the output pane.</li>
 </ul>
 <h3><a name="Usage_PostProc">Post-processing the recognized text</a></h3>
 <ul>
     <li>Recognized text will appear in the <i>output pane</i> (unless the text was redirected to the clipboard), which appears as soon as some text was recognized.</li>
     <li>If a spelling dictionary for the recognition language is available, automatic spell-checking will be enabled for the outputted text. The used spelling dictionary can be changed either from the language menu next to the <i>recognize button</i>, or from the menu which appears when right-clicking in the text area.</li>
     <li>When additional text is recognized, it will either get appended, inserted at cursor position, or replace the previous content of the text buffer, depending on the mode selected in the <i>append mode menu</i>, which can be found in the <i>output pane toolbar</i>.</li>
-    <li>Other post-processing tools include stripping line breaks, collapsing spaces and more (available from the second button in the <i>output pane toolbar</i>), as well as searching and replacing text. A list of search and replace rules can be defined by clicking on the <i>Find and replace</i> button in the <i>output pane toolbar</i> and then expanding the <i>Replacement list</i> section.</li>
+    <li>Other post-processing tools include stripping line breaks, collapsing spaces and more (available from the second button in the <i>output pane toolbar</i>), as well as searching and replacing text. A list of search and replace rules can be defined by clicking on the <i>Find and replace</i> button in the <i>output pane toolbar</i> and then clicking on the <i>Substitutions</i> button.</li>
     <li>Changes to the text buffer can be undone and redone by clicking on the appropriate buttons in the <i>output pane toolbar</i>.</li>
     <li>The contents of the text buffer can be saved to a file by clicking on the <i>save button</i> in the <i>output pane toolbar</i>.</li>
     <li>The output pane can be hidden by clicking the right-most button in the <i>output pane toolbar</i>. This will also clear the contents of the text buffer.</li>
 </ul>
 <h3><a name="Usage_Options">Program options</a></h3>
 <ul>
-    <li>The program options can be accessed from the <i>application menu</i>, which opens when clicking the right-most button of the <i>main toolbar</i>.</li>
-    <li>Options allow setting the orientation of the <i>output pane</i> (if vertical, it will occupy the right portion of the application, if horizontal, it will occupy the lower portion), the font of the output pane, as well as determining whether the application will notify about missing spelling dictionaries and new program versions.</li>
+    <li>The program options can be accessed from the <i>application menu</i>, which opens when clicking the right-most button of the <i>main toolbar</i>. When running the application within the Gnome 3 desktop environment, the application menu is part of the top bar of the desktop shell.</li>
+    <li>Options allow setting the font of the output pane, as well as determining whether the application will notify about missing spelling dictionaries and new program versions.</li>
+    <li>When running the Gtk+ interface, the options also allow setting the orientation of the <i>output pane</i> (if vertical, it will occupy the right portion of the application, if horizontal, it will occupy the lower portion). When running the Qt interface, the position of the output pane can be freely moved around by dragging on the title bar of the output pane.</li>
     <li>Additionally, one can define new rules to match tesseract language definitions to a language (unfortunately, the tesseract language definitions do not include this information). The list of predefined rules can be seen in the <i>Predefined language definitions</i> section. Additional definitions can be added clicking on the <i>Add</i> button below. The rules for a language definition, which consists of three fields, are as follows:
     <ul>
         <li><b>Filename prefix</b>: The filename of tesseract language data files is of the format <i>&lt;prefix&gt;.traineddata</i>, i.e. for English, the file is called <i>eng.traineddata</i> and the prefix is <i>eng</i>.</li>
@@ -144,19 +145,28 @@
 </ul>
 <h2><a name="Contributing">Contributing</a></h2>
 <p>
-For suggestions and contributions of any kind, please contact me at <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. I'd especially appreciate translations - here are the main steps for creating a translation:
+For suggestions and contributions of any kind, please file tickets and/or pull-requests on the <a href="https://github.com/manisandro/gImageReader">GitHub project page</a>, or contact me at <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. I'd especially appreciate translations - here are the main steps for creating a translation:
 </p>
 <ol>
-    <li>Download the source archive from the <a href="https://sourceforge.net/projects/gimagereader/files/?source=navbar">project homepage</a>.</li>
+    <li>Download the <a href="https://github.com/manisandro/gImageReader/archive/master.zip">latest source archive</a>.</li>
     <li>Enter the <tt>po</tt> folder.</li>
     <li>To create a new translation, copy the <tt>gimagereader.pot</tt> file to <tt>&lt;language&gt;.po</tt> (i.e. <tt>de.po</tt> for German). To edit an existing translation, simply pick the corresponding file.</li>
     <li>Translate the strings in <tt>&lt;language&gt;.po</tt>.</li>
     <li>Send the <b>po</b> file to <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. Thanks!</li>
 </ol>
-<h2><a name="Support">Support</a></h2>
-If you find an issue or have a suggestion, please file a ticket to the <a href="https://github.com/manisandro/gImageReader/issues">gImageReader issue tracker</a>. Feel free to also contact me directly at <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>.
+<h2><a name="Support">Debugging and support</a></h2>
+<p>
+If you find an issue or have a suggestion, please file a ticket to the <a href="https://github.com/manisandro/gImageReader/issues">gImageReader issue tracker</a>, or contact me directly at <a
+ href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. If you are experiencing crashes or hangs, please also try to include the following information in the ticket/email:
+</p>
+<ul>
+<li>If the crash handler appears, include the backtrace which is shown there. To make sure that the backtrace is complete, if you are running the application under Linux, make sure that the debugging symbols are installed if your distribution provides them. The package containing the debugging symbols is usually called <b>&lt;packagename&gt;-debuginfo</b> or <b>&lt;packagename&gt;-dbg</b>. If you are running the application under Windows, debugging symbols are installed by default.</li>
+<li>If you are running under Windows, include the <tt>%ProgramFiles%\gImageReader\gimagereader.log</tt> and <tt>%ProgramFiles%\gImageReader\twain.log</tt> log files.</li>
+<li>If you are running under Linux, run the application from a terminal and include any output which appears on the terminal.</li>
+<li>Try to describe as best as you can what you were doing and whether the problem is reproducible.</li>
+</ul>
 <hr />
-<p>Copyright &copy;2009-2014 Sandro Mani, revision: Mon, 28 Apr 2014</p>
+<p>Copyright &copy;2009-2014 Sandro Mani, revision: Sat, 29 Nov 2014</p>
 </body>
 
 </html>
