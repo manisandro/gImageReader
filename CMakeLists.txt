@@ -144,7 +144,7 @@ IF(MINGW)
   SET(CMAKE_RC_COMPILER_INIT ${CMAKE_GENERATOR_RC})
   SET(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> -O coff -i <SOURCE> -o <OBJECT>")
   SET(gimagereader_SRCS ${gimagereader_SRCS} packaging/win32/gimagereader-icon.rc)
-  LIST(APPEND gimagereader_LIBS -lintl)
+  LIST(APPEND gimagereader_LIBS -lintl -mwindows)
 ENDIF(MINGW)
 
 
