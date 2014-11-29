@@ -53,10 +53,10 @@ Recognizer::Recognizer()
 
 bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* language) const
 {
-	std::string current = std::setlocale(LC_NUMERIC, NULL);
-	std::setlocale(LC_NUMERIC, "C");
+	std::string current = setlocale(LC_NUMERIC, NULL);
+	setlocale(LC_NUMERIC, "C");
 	int ret = tess.Init(nullptr, language);
-	std::setlocale(LC_NUMERIC, current.c_str());
+	setlocale(LC_NUMERIC, current.c_str());
 	return ret != -1;
 }
 
