@@ -25,7 +25,7 @@ fi
 
 win32dir="$(dirname $(readlink -f $0))"
 srcdir="$win32dir/../../"
-builddir="$win32dir/../../build/mingw$bits"
+builddir="$win32dir/../../build/mingw$bits-$iface"
 installroot="$builddir/root"
 
 # Build
@@ -132,12 +132,13 @@ elif [ "$iface" == "qt4" ]; then
 elif [ "$iface" == "qt5" ]; then
     linkDep lib/qt5/plugins/imageformats/qgif.dll  bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qico.dll  bin/imageformats
-    linkDep lib/qt5/plugins/imageformats/qjpeg.dll  bin/imageformats
+    linkDep lib/qt5/plugins/imageformats/qjpeg.dll bin/imageformats
+    linkDep lib/qt5/plugins/platforms/qwindows.dll bin/platforms
 
     # Install locale files
     mkdir -p $installroot/share/qt5/translations/
     cp -a /usr/share/qt5/translations/qt_*.qm  $installroot/share/qt5/translations
-    cp -a $MINGWROOT/share/qt4/translations/QtSpell_*.qm  $installroot/share/qt4/translations
+    cp -a $MINGWROOT/share/qt4/translations/QtSpell_*.qm  $installroot/share/qt5/translations
 
 fi
 

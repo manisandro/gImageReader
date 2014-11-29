@@ -17,7 +17,7 @@ SetCompressor /SOLID /FINAL lzma
 
 ;********** General **********
 Name "${NAME} ${PROGVERSION}"
-OutFile "${NAME}_${PROGVERSION}_${ARCH}.exe"
+OutFile "${NAME}_${PROGVERSION}_${IFACE}_${ARCH}.exe"
 
 ;********** Functions **********
 Function GetParent
