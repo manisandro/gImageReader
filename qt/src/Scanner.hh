@@ -17,57 +17,51 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCANNER_HPP
-#define SCANNER_HPP
+#ifndef SCANNER_HH
+#define SCANNER_HH
 
+#include "common.hh"
 #include <QMetaType>
-#include <QThread>
 
-#include "ScanBackend.hh"
-#include "Utils.hh"
-
-class Scanner : public QThread {
+class Scanner : public QObject {
 	Q_OBJECT
 public:
 	enum class State { IDLE = 0, OPEN, SET_OPTIONS, START, GET_PARAMETERS, READ };
+	enum class ScanMode { DEFAULT = 0, COLOR, GRAY, LINEART };
+	enum class ScanType { SINGLE = 0, ADF_FRONT, ADF_BACK, ADF_BOTH };
 
-	void redetect();
-	void scan(const QString& device, ScanBackend::Options options);
-	void cancel();
-	void stop();
+	struct Device {
+		QString name;
+		QString label;
+	};
+
+	struct Params {
+		QString device;
+		QString filename;
+		double dpi;
+		ScanMode scan_mode;
+		int depth;
+		ScanType type;
+		int page_width;
+		int page_height;
+	};
+
+	virtual ~Scanner() {}
+
+	virtual void init() = 0;
+	virtual void redetect() = 0;
+	virtual void scan(const Params& params) = 0;
+	virtual void cancel() = 0;
+	virtual void close() = 0;
 
 signals:
 	void initFailed();
-	void devicesDetected(QList<ScanBackend::Device> devices);
+	void devicesDetected(QList<Scanner::Device> devices);
 	void scanFailed(const QString& message);
 	void scanStateChanged(Scanner::State state);
 	void pageAvailable(const QString& filename);
-
-private:
-	struct Request {
-		enum class Type { Redetect, StartScan, Cancel, Quit } type;
-		void* data;
-	};
-
-	ScanBackend* m_backend = nullptr;
-	State m_state = State::IDLE;
-	Utils::AsyncQueue<Request> m_requestQueue;
-	QQueue<ScanBackend::Job*> m_jobQueue;
-
-	void run();
-	void doCompleteDocument();
-	void doCompletePage();
-	void doSetOptions();
-	void doGetParameters();
-	void doOpen();
-	void doRead();
-	void doRedetect();
-	void doStart();
-	void doClose();
-	void setState(State state);
-	void failScan(const QString& errorString);
 };
 
 Q_DECLARE_METATYPE(Scanner::State)
 
-#endif // SCANNER_HPP
+#endif // SCANNER_HH

@@ -82,12 +82,12 @@ namespace Utils {
 			Glib::Mutex::Lock queue_guard(mutex_);
 			return queue_.empty();
 		}
-		void push(const T& item){
+		void enqueue(const T& item){
 			Glib::Mutex::Lock queue_guard(mutex_);
 			queue_.push(item);
 			cond_.signal();
 		}
-		T pop(){
+		T dequeue(){
 			Glib::Mutex::Lock queue_guard(mutex_);
 			if(queue_.empty())
 			{

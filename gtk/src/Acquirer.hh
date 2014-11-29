@@ -52,11 +52,11 @@ private:
 	DevicesComboColumns m_devComboCols;
 	std::string m_outputPath;
 	sigc::signal<void,std::string> m_signal_scanPageAvailable;
-	Scanner m_scanner;
+	Scanner* m_scanner = nullptr;
 
 	void genOutputPath();
 	void cancelScan();
-	void doneDetectDevices(const std::vector<ScanBackend::Device>& devices);
+	void doneDetectDevices(const std::vector<Scanner::Device>& devices);
 	void doneScan();
 	void scanInitFailed();
 	void scanFailed(const Glib::ustring& msg);

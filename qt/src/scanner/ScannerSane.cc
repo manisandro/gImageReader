@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * ScanBackendSane.hh
+ * ScannerSane.cc
  * Based on code from Simple Scan, which is:
  *   Copyright (C) 2009-2013 Canonical Ltd.
  *   Author: Robert Ancell <robert.ancell@canonical.com>
@@ -21,76 +21,114 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCANBACKENDSANE_HH
-#define SCANBACKENDSANE_HH
-
-#include <QMap>
-#include <QImage>
-#include <QStringList>
-#include <QVector>
+#include "ScannerSane.hh"
 #include <cstring>
-#include <sane/sane.h>
+#include <QFileInfo>
+#include <QImage>
+#include <QMap>
+#include <QStringList>
 #include <sane/saneopts.h>
 
-#include "ScanBackend.hh"
-
-class ScanBackendSane : public ScanBackend {
-public:
-	bool init();
-	void close();
-	QList<Device> detectDevices();
-	bool openDevice(const QString& device);
-	void closeDevice();
-	void setOptions(Job* job);
-	StartStatus startDevice();
-	bool getParameters();
-	ReadStatus read();
-	PageStatus completePage(Job* job);
-
-private:
-	SANE_Handle m_handle = nullptr;
-	QVector<uint8_t> m_lineBuffer;			// Buffer for received line
-	int m_nUsed = 0;					// Number of used bytes in the buffer
-	int m_lineCount = 0;				// Number of read lines
-	SANE_Parameters m_parameters;
-
-	int m_height, m_rowstride;
-	QVector<uint8_t> m_imgbuf;
-
-	const SANE_Option_Descriptor* getOptionByName(const QMap<QString, int>& options, SANE_Handle, const QString& name, int& index);
-	bool setDefaultOption(SANE_Handle m_handle, const SANE_Option_Descriptor *option, SANE_Int option_index);
-	void setBoolOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool*result);
-	void setIntOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, int value, int* result);
-	void setFixedOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, double value, double* result);
-	bool setStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const QString& value, QString* result);
-	bool setConstrainedStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const QStringList& values, QString *result);
-	void logOption(SANE_Int index, const SANE_Option_Descriptor* option);
-
-	static QString getFrameModeString(SANE_Frame frame);
-};
-
-/********** ScannerSane Public Methods **********/
-
-bool ScanBackendSane::init()
+void ScannerSane::init()
 {
+	moveToThread(&m_thread);
+	connect(&m_thread, SIGNAL(started()), this, SLOT(run()));
+	m_thread.start();
+}
+
+void ScannerSane::redetect(){
+	m_requestQueue.enqueue({Request::Type::Redetect, 0});
+}
+
+void ScannerSane::scan(const Params& params)
+{
+	Q_ASSERT(params.depth == 8); // only 8 supported
+	m_requestQueue.enqueue({Request::Type::StartScan, new ScanJob(params)});
+}
+
+void ScannerSane::cancel()
+{
+	m_requestQueue.enqueue({Request::Type::Cancel, 0});
+}
+
+void ScannerSane::close()
+{
+	m_requestQueue.enqueue({Request::Type::Quit, 0});
+	m_thread.quit();
+	m_thread.wait();
+}
+
+/***************************** Thread functions ******************************/
+
+void ScannerSane::run()
+{
+	// Initialize sane
 	SANE_Int version_code;
 	SANE_Status status = sane_init(&version_code, nullptr);
 	qDebug("sane_init() -> %s", sane_strstatus(status));
 	if(status != SANE_STATUS_GOOD){
 		qWarning("Unable to initialize SANE backend: %s", sane_strstatus(status));
-		return false;
+		emit initFailed();
+		return;
 	}
 	qDebug("SANE version %d.%d.%d", SANE_VERSION_MAJOR(version_code), SANE_VERSION_MINOR(version_code), SANE_VERSION_BUILD(version_code));
-	return true;
-}
 
-void ScanBackendSane::close()
-{
+	/* Scan for devices on first start */
+	doRedetect();
+
+	bool need_redetect = false;
+	while(true){
+		// Fetch request if requests are pending or wait for request if idle
+		if(!m_requestQueue.empty() || m_state == State::IDLE){
+			Request request = m_requestQueue.dequeue();
+			if(request.type == Request::Type::Redetect){
+				need_redetect = true;
+			}else if(request.type == Request::Type::StartScan){
+				setState(State::OPEN);
+				m_job = request.job;
+			}else if(request.type == Request::Type::Cancel){
+				failScan(_("Scan canceled"));
+			}else if(request.type == Request::Type::Quit){
+				doStop();
+				break;
+			}
+		}
+		// Perform operations according to state
+		if(m_state == State::IDLE){
+			if(need_redetect){
+				doRedetect();
+				need_redetect = false;
+			}
+		}else if(m_state == State::OPEN){
+			doOpen();
+		}else if(m_state == State::SET_OPTIONS){
+			doSetOptions();
+		}else if(m_state == State::START){
+			doStart();
+		}else if(m_state == State::GET_PARAMETERS){
+			doGetParameters();
+		}else if(m_state == State::READ){
+			doRead();
+		}
+	}
+
 	qDebug("sane_exit()");
 	sane_exit();
 }
 
-QList<ScanBackend::Device> ScanBackendSane::detectDevices()
+void ScannerSane::setState(State state)
+{
+	m_state = state;
+	emit scanStateChanged(m_state);
+}
+
+void ScannerSane::failScan(const QString& errorString)
+{
+	doStop();
+	emit scanFailed(errorString);
+}
+
+void ScannerSane::doRedetect()
 {
 	QList<Device> devices;
 
@@ -99,58 +137,57 @@ QList<ScanBackend::Device> ScanBackendSane::detectDevices()
 	qDebug("sane_get_devices() -> %s", sane_strstatus(status));
 	if(status != SANE_STATUS_GOOD){
 		qWarning("Unable to get SANE devices: %s", sane_strstatus(status));
-		return devices;
+	}else{
+		for(int i = 0; device_list[i] != nullptr; ++i){
+			qDebug("Device: name=\"%s\" vendor=\"%s\" model=\"%s\" type=\"%s\"",
+				   device_list[i]->name, device_list[i]->vendor, device_list[i]->model, device_list[i]->type);
+
+			Device scan_device;
+			scan_device.name = device_list[i]->name;
+
+			/* Abbreviate HP as it is a long string and does not match what is on the physical scanner */
+			QString vendor = device_list[i]->vendor;
+			if(vendor == "Hewlett-Packard")
+				vendor = "HP";
+
+			scan_device.label = QString("%1 %2").arg(vendor).arg(device_list[i]->model);
+			scan_device.label.replace('_', " ");
+
+			devices.append(scan_device);
+		}
 	}
 
-	for(int i = 0; device_list[i] != nullptr; ++i){
-		qDebug("Device: name=\"%s\" vendor=\"%s\" model=\"%s\" type=\"%s\"",
-			   device_list[i]->name, device_list[i]->vendor, device_list[i]->model, device_list[i]->type);
-
-		Device scan_device;
-		scan_device.name = device_list[i]->name;
-
-		/* Abbreviate HP as it is a long string and does not match what is on the physical scanner */
-		QString vendor = device_list[i]->vendor;
-		if(vendor == "Hewlett-Packard")
-			vendor = "HP";
-
-		scan_device.label = QString("%1 %2").arg(vendor).arg(device_list[i]->model);
-		scan_device.label.replace('_', " ");
-
-		devices.append(scan_device);
-	}
-	return devices;
+	emit devicesDetected(devices);
 }
 
-bool ScanBackendSane::openDevice(const QString& device)
+void ScannerSane::doOpen()
 {
-	SANE_Status status = sane_open(device.toLocal8Bit().data(), &m_handle);
-	qDebug("sane_open(\"%s\") -> %s", qPrintable(device), sane_strstatus(status));
+	if(m_job->params.device.isEmpty()){
+		failScan(_("No scanner specified"));
+		return;
+	}
 
+	SANE_Status status = sane_open(m_job->params.device.toLocal8Bit().data(), &m_job->handle);
+	qDebug("sane_open(\"%s\") -> %s", qPrintable(m_job->params.device), sane_strstatus(status));
 	if(status != SANE_STATUS_GOOD){
 		qWarning("Unable to get open device: %s", sane_strstatus(status));
-		return false;
+		failScan(_("Unable to connect to scanner"));
+		return;
 	}
-	return true;
+
+	setState(State::SET_OPTIONS);
 }
 
-void ScanBackendSane::closeDevice()
+void ScannerSane::doSetOptions()
 {
-	if(m_handle != nullptr){
-		sane_close(m_handle);
-		qDebug("sane_close()");
-		m_handle = nullptr;
-	}
-}
+	qDebug("set_options");
 
-void ScanBackendSane::setOptions(Job* job)
-{
 	int index = 0;
 	const SANE_Option_Descriptor* option;
 	QMap<QString, int> options;
 
 	/* Build the option table */
-	while((option = sane_get_option_descriptor(m_handle, index)) != nullptr){
+	while((option = sane_get_option_descriptor(m_job->handle, index)) != nullptr){
 		logOption(index, option);
 		if(
 			/* Ignore groups */
@@ -168,7 +205,7 @@ void ScanBackendSane::setOptions(Job* job)
 	/* Apply settings */
 
 	/* Pick source */
-	option = getOptionByName(options, m_handle, SANE_NAME_SCAN_SOURCE, index);
+	option = getOptionByName(options, m_job->handle, SANE_NAME_SCAN_SOURCE, index);
 	if(option != nullptr){
 		QStringList flatbed_sources = {
 			"Auto",
@@ -199,32 +236,32 @@ void ScanBackendSane::setOptions(Job* job)
 			SANE_I18N("ADF Duplex")
 		};
 
-		switch(job->type) {
+		switch(m_job->params.type) {
 		case ScanType::SINGLE:
-			if(!setDefaultOption(m_handle, option, index))
-				if(!setConstrainedStringOption(m_handle, option, index, flatbed_sources, nullptr))
+			if(!setDefaultOption(m_job->handle, option, index))
+				if(!setConstrainedStringOption(m_job->handle, option, index, flatbed_sources, nullptr))
 					qWarning("Unable to set single page source, please file a bug");
 			break;
 		case ScanType::ADF_FRONT:
-			if(!setConstrainedStringOption(m_handle, option, index, adf_front_sources, nullptr))
-				if(!setConstrainedStringOption(m_handle, option, index, adf_sources, nullptr))
+			if(!setConstrainedStringOption(m_job->handle, option, index, adf_front_sources, nullptr))
+				if(!setConstrainedStringOption(m_job->handle, option, index, adf_sources, nullptr))
 					qWarning("Unable to set front ADF source, please file a bug");
 			break;
 		case ScanType::ADF_BACK:
-			if(!setConstrainedStringOption(m_handle, option, index, adf_back_sources, nullptr))
-				if(!setConstrainedStringOption(m_handle, option, index, adf_sources, nullptr))
+			if(!setConstrainedStringOption(m_job->handle, option, index, adf_back_sources, nullptr))
+				if(!setConstrainedStringOption(m_job->handle, option, index, adf_sources, nullptr))
 					qWarning("Unable to set back ADF source, please file a bug");
 			break;
 		case ScanType::ADF_BOTH:
-			if(!setConstrainedStringOption(m_handle, option, index, adf_duplex_sources, nullptr))
-				if(!setConstrainedStringOption(m_handle, option, index, adf_sources, nullptr))
+			if(!setConstrainedStringOption(m_job->handle, option, index, adf_duplex_sources, nullptr))
+				if(!setConstrainedStringOption(m_job->handle, option, index, adf_sources, nullptr))
 					qWarning("Unable to set duplex ADF source, please file a bug");
 			break;
 		}
 	}
 
 	/* Scan mode (before resolution as it tends to affect that */
-	option = getOptionByName(options, m_handle, SANE_NAME_SCAN_MODE, index);
+	option = getOptionByName(options, m_job->handle, SANE_NAME_SCAN_MODE, index);
 	if(option != nullptr){
 		/* The names of scan modes often used in drivers, as taken from the sane-backends source */
 		QStringList color_scan_modes = {
@@ -256,17 +293,17 @@ void ScanBackendSane::setOptions(Job* job)
 			"True Gray" /* Seen in the proprietary brother3 driver */
 		};
 
-		switch(job->scan_mode) {
+		switch(m_job->params.scan_mode) {
 		case ScanMode::COLOR:
-			if(!setConstrainedStringOption(m_handle, option, index, color_scan_modes, nullptr))
+			if(!setConstrainedStringOption(m_job->handle, option, index, color_scan_modes, nullptr))
 				qWarning("Unable to set Color mode, please file a bug");
 			break;
 		case ScanMode::GRAY:
-			if(!setConstrainedStringOption(m_handle, option, index, gray_scan_modes, nullptr))
+			if(!setConstrainedStringOption(m_job->handle, option, index, gray_scan_modes, nullptr))
 				qWarning("Unable to set Gray mode, please file a bug");
 			break;
 		case ScanMode::LINEART:
-			if(!setConstrainedStringOption(m_handle, option, index, lineart_scan_modes, nullptr))
+			if(!setConstrainedStringOption(m_job->handle, option, index, lineart_scan_modes, nullptr))
 				qWarning("Unable to set Lineart mode, please file a bug");
 			break;
 		default:
@@ -275,17 +312,17 @@ void ScanBackendSane::setOptions(Job* job)
 	}
 
 	/* Duplex */
-	option = getOptionByName(options, m_handle, "duplex", index);
+	option = getOptionByName(options, m_job->handle, "duplex", index);
 	if(option != nullptr && option->type == SANE_TYPE_BOOL)
-		setBoolOption(m_handle, option, index, job->type == ScanType::ADF_BOTH, nullptr);
+		setBoolOption(m_job->handle, option, index, m_job->params.type == ScanType::ADF_BOTH, nullptr);
 
 	/* Multi-page options */
-	option = getOptionByName(options, m_handle, "batch-scan", index);
+	option = getOptionByName(options, m_job->handle, "batch-scan", index);
 	if(option != nullptr && option->type == SANE_TYPE_BOOL)
-		setBoolOption(m_handle, option, index, job->type != ScanType::SINGLE, nullptr);
+		setBoolOption(m_job->handle, option, index, m_job->params.type != ScanType::SINGLE, nullptr);
 
 	/* Disable compression, we will compress after scanning */
-	option = getOptionByName(options, m_handle, "compression", index);
+	option = getOptionByName(options, m_job->handle, "compression", index);
 	if(option != nullptr){
 		QStringList disable_compression_names = {
 			SANE_I18N("None"),
@@ -294,186 +331,214 @@ void ScanBackendSane::setOptions(Job* job)
 			"none"
 		};
 
-		if(!setConstrainedStringOption(m_handle, option, index, disable_compression_names, nullptr))
+		if(!setConstrainedStringOption(m_job->handle, option, index, disable_compression_names, nullptr))
 			qWarning("Unable to disable compression, please file a bug");
 	}
 
 	/* Set resolution and bit depth */
-	option = getOptionByName(options, m_handle, SANE_NAME_SCAN_RESOLUTION, index);
+	option = getOptionByName(options, m_job->handle, SANE_NAME_SCAN_RESOLUTION, index);
 	if(option != nullptr){
 		if(option->type == SANE_TYPE_FIXED)
-			setFixedOption(m_handle, option, index, job->dpi, &job->dpi);
+			setFixedOption(m_job->handle, option, index, m_job->params.dpi, &m_job->params.dpi);
 		else{
 			int dpi;
-			setIntOption(m_handle, option, index, job->dpi, &dpi);
-			job->dpi = dpi;
+			setIntOption(m_job->handle, option, index, m_job->params.dpi, &dpi);
+			m_job->params.dpi = dpi;
 		}
-		option = getOptionByName(options, m_handle, SANE_NAME_BIT_DEPTH, index);
-		if(option != nullptr && job->depth > 0)
-			setIntOption(m_handle, option, index, job->depth, nullptr);
+		option = getOptionByName(options, m_job->handle, SANE_NAME_BIT_DEPTH, index);
+		if(option != nullptr && m_job->params.depth > 0)
+			setIntOption(m_job->handle, option, index, m_job->params.depth, nullptr);
 	}
 
 	/* Always use maximum scan area - some scanners default to using partial areas.  This should be patched in sane-backends */
-	option = getOptionByName(options, m_handle, SANE_NAME_SCAN_BR_X, index);
+	option = getOptionByName(options, m_job->handle, SANE_NAME_SCAN_BR_X, index);
 	if(option != nullptr && option->constraint_type == SANE_CONSTRAINT_RANGE){
 		if(option->type == SANE_TYPE_FIXED)
-			setFixedOption(m_handle, option, index, SANE_UNFIX(option->constraint.range->max), nullptr);
+			setFixedOption(m_job->handle, option, index, SANE_UNFIX(option->constraint.range->max), nullptr);
 		else
-			setIntOption(m_handle, option, index, option->constraint.range->max, nullptr);
+			setIntOption(m_job->handle, option, index, option->constraint.range->max, nullptr);
 	}
-	option = getOptionByName(options, m_handle, SANE_NAME_SCAN_BR_Y, index);
+	option = getOptionByName(options, m_job->handle, SANE_NAME_SCAN_BR_Y, index);
 	if(option != nullptr && option->constraint_type == SANE_CONSTRAINT_RANGE){
 		if(option->type == SANE_TYPE_FIXED)
-			setFixedOption(m_handle, option, index, SANE_UNFIX(option->constraint.range->max), nullptr);
+			setFixedOption(m_job->handle, option, index, SANE_UNFIX(option->constraint.range->max), nullptr);
 		else
-			setIntOption(m_handle, option, index, option->constraint.range->max, nullptr);
+			setIntOption(m_job->handle, option, index, option->constraint.range->max, nullptr);
 	}
 
 	/* Set page dimensions */
-	option = getOptionByName(options, m_handle, SANE_NAME_PAGE_WIDTH, index);
-	if(option != nullptr && job->page_width > 0.0){
+	option = getOptionByName(options, m_job->handle, SANE_NAME_PAGE_WIDTH, index);
+	if(option != nullptr && m_job->params.page_width > 0.0){
 		if(option->type == SANE_TYPE_FIXED)
-			setFixedOption(m_handle, option, index, job->page_width / 10.0, nullptr);
+			setFixedOption(m_job->handle, option, index, m_job->params.page_width / 10.0, nullptr);
 		else
-			setIntOption(m_handle, option, index, job->page_width / 10, nullptr);
+			setIntOption(m_job->handle, option, index, m_job->params.page_width / 10, nullptr);
 	}
-	option = getOptionByName(options, m_handle, SANE_NAME_PAGE_HEIGHT, index);
-	if(option != nullptr && job->page_height > 0.0){
+	option = getOptionByName(options, m_job->handle, SANE_NAME_PAGE_HEIGHT, index);
+	if(option != nullptr && m_job->params.page_height > 0.0){
 		if(option->type == SANE_TYPE_FIXED)
-			setFixedOption(m_handle, option, index, job->page_height / 10.0, nullptr);
+			setFixedOption(m_job->handle, option, index, m_job->params.page_height / 10.0, nullptr);
 		else
-			setIntOption(m_handle, option, index, job->page_height / 10, nullptr);
+			setIntOption(m_job->handle, option, index, m_job->params.page_height / 10, nullptr);
 	}
+
+	setState(State::START);
 }
 
-ScanBackend::StartStatus ScanBackendSane::startDevice()
+void ScannerSane::doStart()
 {
-	SANE_Status status = sane_start(m_handle);
+	SANE_Status status = sane_start(m_job->handle);
 	qDebug("sane_start -> %s", sane_strstatus(status));
-	if(status == SANE_STATUS_GOOD)
-		return StartStatus::Success;
-	else if(status == SANE_STATUS_NO_DOCS)
-		return StartStatus::NoDocs;
-	qWarning("Unable to start device: %s", sane_strstatus(status));
-	return StartStatus::Fail;
+	if(status == SANE_STATUS_GOOD){
+		setState(State::GET_PARAMETERS);
+	}else{
+		doStop();
+		failScan(_("Unable to start scan"));
+	}
 }
 
-bool ScanBackendSane::getParameters()
+void ScannerSane::doGetParameters()
 {
-	SANE_Status status = sane_get_parameters(m_handle, &m_parameters);
+	SANE_Status status = sane_get_parameters(m_job->handle, &m_job->parameters);
 	qDebug("sane_get_parameters() -> %s", sane_strstatus(status));
 	if(status != SANE_STATUS_GOOD){
-		qWarning("Unable to get device parameters: %s", sane_strstatus(status));
-		return false;
+		failScan(_("Error communicating with scanner"));
+		return;
 	}
 
 	qDebug("Parameters: format=%s last_frame=%s bytes_per_line=%d pixels_per_line=%d lines=%d depth=%d",
-			getFrameModeString(m_parameters.format).toLocal8Bit().data(),
-			m_parameters.last_frame ? "SANE_TRUE" : "SANE_FALSE",
-			m_parameters.bytes_per_line,
-			m_parameters.pixels_per_line,
-			m_parameters.lines,
-			m_parameters.depth);
+			getFrameModeString(m_job->parameters.format).toLocal8Bit().data(),
+			m_job->parameters.last_frame ? "SANE_TRUE" : "SANE_FALSE",
+			m_job->parameters.bytes_per_line,
+			m_job->parameters.pixels_per_line,
+			m_job->parameters.lines,
+			m_job->parameters.depth);
 
-	m_height = qMax(1, m_parameters.lines);
-	m_rowstride = m_parameters.pixels_per_line * 3; // Buffer is for a 24 bit RGB image
-	m_imgbuf.resize(m_rowstride * m_parameters.lines);
+	m_job->height = qMax(1, m_job->parameters.lines);
+	m_job->rowstride = m_job->parameters.pixels_per_line * 3; // Buffer is for a 24 bit RGB image
+	m_job->imgbuf.resize(m_job->rowstride * m_job->parameters.lines);
 
 	/* Prepare for read */
-	m_lineBuffer.resize(m_parameters.bytes_per_line);
-	m_nUsed = 0;
-	m_lineCount = 0;
-	return true;
+	m_job->lineBuffer.resize(m_job->parameters.bytes_per_line);
+	m_job->nUsed = 0;
+	m_job->lineCount = 0;
+
+	setState(State::READ);
 }
 
-ScanBackendSane::ReadStatus ScanBackendSane::read()
+void ScannerSane::doRead()
 {
 	/* Read as many bytes as we need to complete a line */
-	int n_to_read = m_lineBuffer.size() - m_nUsed;
+	int n_to_read = m_job->lineBuffer.size() - m_job->nUsed;
 
 	SANE_Int n_read;
-	unsigned char* b = &m_lineBuffer[m_nUsed];
-	SANE_Status status = sane_read(m_handle, b, n_to_read, &n_read);
+	unsigned char* b = &m_job->lineBuffer[m_job->nUsed];
+	SANE_Status status = sane_read(m_job->handle, b, n_to_read, &n_read);
 	qDebug("sane_read(%d) -> (%s, %d)", n_to_read, sane_strstatus(status), n_read);
 
 	/* Completed read */
 	if(status == SANE_STATUS_EOF){
-		if(m_parameters.lines > 0 && m_lineCount != m_parameters.lines)
-			qWarning("Scan completed with %d lines, expected %d lines", m_lineCount, m_parameters.lines);
-		if(m_nUsed > 0)
-			qWarning("Scan complete with %d bytes of unused data", m_nUsed);
-		return ReadStatus::Done;
+		if(m_job->parameters.lines > 0 && m_job->lineCount != m_job->parameters.lines)
+			qWarning("Scan completed with %d lines, expected %d lines", m_job->lineCount, m_job->parameters.lines);
+		if(m_job->nUsed > 0)
+			qWarning("Scan complete with %d bytes of unused data", m_job->nUsed);
+		doCompletePage();
+		return;
 	}else if(status != SANE_STATUS_GOOD){
 		qWarning("Unable to read frame from device: %s", sane_strstatus(status));
-		return ReadStatus::Fail;
+		failScan(_("Error communicating with scanner"));
+		return;
 	}
 
-	m_nUsed += n_read;
+	m_job->nUsed += n_read;
 
 	/* If we completed a line, feed it out */
-	if(m_nUsed >= m_lineBuffer.size()){
-		Q_ASSERT(m_nUsed == m_parameters.bytes_per_line);
-		++m_lineCount;
+	if(m_job->nUsed >= m_job->lineBuffer.size()){
+		Q_ASSERT(m_job->nUsed == m_job->parameters.bytes_per_line);
+		++m_job->lineCount;
 
 		// Resize image if necessary
-		if(m_lineCount > m_height){
-			m_height = m_lineCount;
-			m_imgbuf.resize(m_rowstride * m_height);
+		if(m_job->lineCount > m_job->height){
+			m_job->height = m_job->lineCount;
+			m_job->imgbuf.resize(m_job->rowstride * m_job->height);
 		}
 
 		// Write data
-		int offset = (m_lineCount - 1) * m_rowstride;
-		if(m_parameters.format == SANE_FRAME_GRAY){
-			for(int i = 0; i < m_lineBuffer.size(); ++i){
-				std::memset(&m_imgbuf[offset + 3*i], m_lineBuffer[i], 3);
+		int offset = (m_job->lineCount - 1) * m_job->rowstride;
+		if(m_job->parameters.format == SANE_FRAME_GRAY){
+			for(int i = 0; i < m_job->lineBuffer.size(); ++i){
+				std::memset(&m_job->imgbuf[offset + 3*i], m_job->lineBuffer[i], 3);
 			}
-		}else if(m_parameters.format == SANE_FRAME_RGB){
-			std::memcpy(&m_imgbuf[offset], &m_lineBuffer[0], m_lineBuffer.size());
-		}else if(m_parameters.format == SANE_FRAME_RED){
-			for(int i = 0; i < m_lineBuffer.size(); ++i){
-				m_imgbuf[offset + 3*i + 0] = m_lineBuffer[i];
+		}else if(m_job->parameters.format == SANE_FRAME_RGB){
+			std::memcpy(&m_job->imgbuf[offset], &m_job->lineBuffer[0], m_job->lineBuffer.size());
+		}else if(m_job->parameters.format == SANE_FRAME_RED){
+			for(int i = 0; i < m_job->lineBuffer.size(); ++i){
+				m_job->imgbuf[offset + 3*i + 0] = m_job->lineBuffer[i];
 			}
-		}else if(m_parameters.format == SANE_FRAME_GREEN){
-			for(int i = 0; i < m_lineBuffer.size(); ++i){
-				m_imgbuf[offset + 3*i + 1] = m_lineBuffer[i];
+		}else if(m_job->parameters.format == SANE_FRAME_GREEN){
+			for(int i = 0; i < m_job->lineBuffer.size(); ++i){
+				m_job->imgbuf[offset + 3*i + 1] = m_job->lineBuffer[i];
 			}
-		}else if(m_parameters.format == SANE_FRAME_BLUE){
-			for(int i = 0; i < m_lineBuffer.size(); ++i){
-				m_imgbuf[offset + 3*i + 2] = m_lineBuffer[i];
+		}else if(m_job->parameters.format == SANE_FRAME_BLUE){
+			for(int i = 0; i < m_job->lineBuffer.size(); ++i){
+				m_job->imgbuf[offset + 3*i + 2] = m_job->lineBuffer[i];
 			}
 		}
 
 		/* Reset buffer */
-		m_nUsed = 0;
-		m_lineBuffer.resize(m_parameters.bytes_per_line);
+		m_job->nUsed = 0;
+		m_job->lineBuffer.resize(m_job->parameters.bytes_per_line);
 	}
-
-	return ReadStatus::Reading;
 }
 
-ScanBackend::PageStatus ScanBackendSane::completePage(Job* job)
+void ScannerSane::doCompletePage()
 {
-	QImage(m_imgbuf.data(), m_rowstride / 3, m_height, m_rowstride, QImage::Format_RGB888).save(job->filename, "png");
-	m_imgbuf.clear();
-	if(!m_parameters.last_frame){
-		return PageStatus::AnotherPass;
+	if(!m_job->parameters.last_frame){
+		setState(State::GET_PARAMETERS);
+		return;
 	}
-	return PageStatus::Done;
+	QString filename = m_job->params.filename;
+	if(m_job->params.type != ScanType::SINGLE){
+		QFileInfo finfo(filename);
+		filename = QString("%1/%2_%3.%4").arg(finfo.absolutePath()).arg(finfo.completeBaseName()).arg(m_job->pageNumber).arg(finfo.completeSuffix());
+	}
+	QImage(m_job->imgbuf.data(), m_job->rowstride / 3, m_job->height, m_job->rowstride, QImage::Format_RGB888).save(filename, "png");
+	m_job->imgbuf.clear();
+	emit pageAvailable(filename);
+
+	if(m_job->params.type != ScanType::SINGLE){
+		++m_job->pageNumber;
+		setState(State::GET_PARAMETERS);
+		return;
+	}
+
+	doStop();
 }
 
-/*********** ScannerSane Option stuff ***********/
-const SANE_Option_Descriptor* ScanBackendSane::getOptionByName(const QMap<QString, int>& options, SANE_Handle, const QString& name, int &index)
+void ScannerSane::doStop()
+{
+	if(m_job != nullptr){
+		qDebug("sane_close()");
+		sane_close(m_job->handle);
+		delete m_job;
+		m_job = nullptr;
+	}
+	setState(State::IDLE);
+}
+
+/***************************** Sane option stuff *****************************/
+const SANE_Option_Descriptor* ScannerSane::getOptionByName(const QMap<QString, int>& options, SANE_Handle, const QString& name, int &index)
 {
 	QMap<QString, int>::const_iterator it = options.find(name);
 	if(it != options.end()){
 		index = it.value();
-		return sane_get_option_descriptor(m_handle, index);
+		return sane_get_option_descriptor(m_job->handle, index);
 	}
 	index = 0;
 	return nullptr;
 }
 
-bool ScanBackendSane::setDefaultOption(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index)
+bool ScannerSane::setDefaultOption(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index)
 {
 	/* Check if supports automatic option */
 	if((option->cap & SANE_CAP_AUTOMATIC) == 0)
@@ -486,7 +551,7 @@ bool ScanBackendSane::setDefaultOption(SANE_Handle handle, const SANE_Option_Des
 	return status == SANE_STATUS_GOOD;
 }
 
-void ScanBackendSane::setBoolOption(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool* result)
+void ScannerSane::setBoolOption(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool* result)
 {
 	if(option->type != SANE_TYPE_BOOL){
 		return;
@@ -498,7 +563,7 @@ void ScanBackendSane::setBoolOption(SANE_Handle handle, const SANE_Option_Descri
 	qDebug("sane_control_option(%d, SANE_ACTION_SET_VALUE, %s) -> (%s, %s)", option_index, value ? "SANE_TRUE" : "SANE_FALSE", sane_strstatus(status), result ? "SANE_TRUE" : "SANE_FALSE");
 }
 
-void ScanBackendSane::setIntOption(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index, int value, int* result)
+void ScannerSane::setIntOption(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index, int value, int* result)
 {
 	if(option->type != SANE_TYPE_INT){
 		return;
@@ -530,7 +595,7 @@ void ScanBackendSane::setIntOption(SANE_Handle handle, const SANE_Option_Descrip
 	if(result) *result = v;
 }
 
-void ScanBackendSane::setFixedOption(SANE_Handle handle, const SANE_Option_Descriptor *option, SANE_Int option_index, double value, double* result)
+void ScannerSane::setFixedOption(SANE_Handle handle, const SANE_Option_Descriptor *option, SANE_Int option_index, double value, double* result)
 {
 	if(option->type != SANE_TYPE_FIXED){
 		return;
@@ -564,7 +629,7 @@ void ScanBackendSane::setFixedOption(SANE_Handle handle, const SANE_Option_Descr
 	if(result) *result = SANE_UNFIX(v_fixed);
 }
 
-bool ScanBackendSane::setStringOption(SANE_Handle handle, const SANE_Option_Descriptor *option, SANE_Int option_index, const QString& value, QString* result)
+bool ScannerSane::setStringOption(SANE_Handle handle, const SANE_Option_Descriptor *option, SANE_Int option_index, const QString& value, QString* result)
 {
 	if(option->type != SANE_TYPE_STRING){
 		return false;
@@ -580,7 +645,7 @@ bool ScanBackendSane::setStringOption(SANE_Handle handle, const SANE_Option_Desc
 	return status == SANE_STATUS_GOOD;
 }
 
-bool ScanBackendSane::setConstrainedStringOption(SANE_Handle handle, const SANE_Option_Descriptor *option, SANE_Int option_index, const QStringList& values, QString* result)
+bool ScannerSane::setConstrainedStringOption(SANE_Handle handle, const SANE_Option_Descriptor *option, SANE_Int option_index, const QStringList& values, QString* result)
 {
 	if(option->type != SANE_TYPE_STRING){
 		return false;
@@ -600,7 +665,7 @@ bool ScanBackendSane::setConstrainedStringOption(SANE_Handle handle, const SANE_
 	return false;
 }
 
-void ScanBackendSane::logOption(SANE_Int index, const SANE_Option_Descriptor *option)
+void ScannerSane::logOption(SANE_Int index, const SANE_Option_Descriptor *option)
 {
 	QString s = QString("Option %1:").arg(index);
 
@@ -700,10 +765,7 @@ void ScanBackendSane::logOption(SANE_Int index, const SANE_Option_Descriptor *op
 		qDebug("  Description: %s", option->desc);
 }
 
-
-/****************** Enum to string ******************/
-
-QString ScanBackendSane::getFrameModeString(SANE_Frame frame)
+QString ScannerSane::getFrameModeString(SANE_Frame frame)
 {
 	QString framestr[] = {"SANE_FRAME_GRAY", "SANE_FRAME_RGB", "SANE_FRAME_RED", "SANE_FRAME_GREEN", "SANE_FRAME_BLUE"};
 	if(frame <= SANE_FRAME_BLUE){
@@ -712,5 +774,3 @@ QString ScanBackendSane::getFrameModeString(SANE_Frame frame)
 		return QString("SANE_FRAME(%1)").arg(frame);
 	}
 }
-
-#endif // SCANBACKENDSANE_HH

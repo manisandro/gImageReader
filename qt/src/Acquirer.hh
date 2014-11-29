@@ -37,13 +37,13 @@ private:
 	const UI_MainWindow& ui;
 	QString m_outputPath;
 
-	Scanner m_scanner;
+	Scanner* m_scanner;
 
 	void genOutputPath();
 
 private slots:
 	void cancelScan();
-	void doneDetectDevices(QList<ScanBackend::Device> devices);
+	void doneDetectDevices(QList<Scanner::Device> devices);
 	void doneScan();
 	void scanInitFailed();
 	void scanFailed(const QString& msg);
@@ -54,6 +54,6 @@ private slots:
 	void startScan();
 };
 
-Q_DECLARE_METATYPE(QList<ScanBackend::Device>)
+Q_DECLARE_METATYPE(QList<Scanner::Device>)
 
 #endif // ACQUIRER_HH

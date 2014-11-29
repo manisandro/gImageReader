@@ -41,7 +41,7 @@ namespace Utils {
 	template<typename T>
 	class AsyncQueue {
 	public:
-		bool isEmpty(){
+		bool empty(){
 			QMutexLocker locker(&m_mutex);
 			return m_queue.isEmpty();
 		}

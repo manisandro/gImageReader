@@ -34,7 +34,6 @@ ADD_DEFINITIONS(-DGETTEXT_PACKAGE=\"${CMAKE_PROJECT_NAME}\")
 ADD_DEFINITIONS(-DENABLE_VERSIONCHECK=${ENABLE_VERSIONCHECK})
 ADD_DEFINITIONS(-std=c++11)
 
-
 # Dependencies
 FIND_PACKAGE(Gettext REQUIRED)
 FIND_PACKAGE(PkgConfig REQUIRED)
@@ -98,6 +97,14 @@ FILE(GLOB gimagereader_PO po/*.po)
 IF("${srcdir}" STREQUAL "qt")
     FILE(GLOB gimagereader_RESOURCES qt/data/*.qrc)
 ENDIF()
+IF(UNIX)
+    LIST(APPEND gimagereader_SRCS ${srcdir}/src/scanner/ScannerSane.cc)
+    LIST(APPEND gimagereader_HDRS ${srcdir}/src/scanner/ScannerSane.hh)
+ELSE(UNIX)
+    LIST(APPEND gimagereader_SRCS ${srcdir}/src/scanner/ScannerTwain.cc)
+    LIST(APPEND gimagereader_HDRS ${srcdir}/src/scanner/ScannerTwain.hh)
+ENDIF(UNIX)
+
 
 IF("${srcdir}" STREQUAL "gtk")
     ADD_SCHEMA("gtk/data/org.gnome.gimagereader.gschema.xml")

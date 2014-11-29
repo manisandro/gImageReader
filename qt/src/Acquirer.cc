@@ -26,6 +26,12 @@
 #include "MainWindow.hh"
 #include "Utils.hh"
 
+#ifdef Q_OS_WIN32
+#include "scanner/ScannerTwain.hh"
+#else
+#include "scanner/ScannerSane.hh"
+#endif
+
 Acquirer::Acquirer(const UI_MainWindow& _ui)
 	: ui(_ui)
 {
@@ -35,7 +41,9 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 	ui.comboBoxScanDevice->setCursor(Qt::WaitCursor);
 	// TODO: Elide combobox
 
-	qRegisterMetaType<QList<ScanBackend::Device>>();
+	m_scanner = new ScannerImpl;
+
+	qRegisterMetaType<QList<Scanner::Device>>();
 	qRegisterMetaType<Scanner::State>();
 
 	connect(ui.toolButtonScanDevicesRefresh, SIGNAL(clicked()), this, SLOT(startDetectDevices()));
@@ -43,11 +51,11 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 	connect(ui.pushButtonScanCancel, SIGNAL(clicked()), this, SLOT(cancelScan()));
 	connect(ui.toolButtonScanOutput, SIGNAL(clicked()), this, SLOT(selectOutputPath()));
 	connect(ui.comboBoxScanDevice, SIGNAL(currentIndexChanged(int)), this, SLOT(setDeviceComboTooltip()));
-	connect(&m_scanner, SIGNAL(initFailed()), this, SLOT(scanInitFailed()));
-	connect(&m_scanner, SIGNAL(devicesDetected(QList<ScanBackend::Device>)), this, SLOT(doneDetectDevices(QList<ScanBackend::Device>)));
-	connect(&m_scanner, SIGNAL(scanFailed(QString)), this, SLOT(scanFailed(QString)));
-	connect(&m_scanner, SIGNAL(scanStateChanged(Scanner::State)), this, SLOT(setScanState(Scanner::State)));
-	connect(&m_scanner, SIGNAL(pageAvailable(QString)), this, SIGNAL(scanPageAvailable(QString)));
+	connect(m_scanner, SIGNAL(initFailed()), this, SLOT(scanInitFailed()));
+	connect(m_scanner, SIGNAL(devicesDetected(QList<Scanner::Device>)), this, SLOT(doneDetectDevices(QList<Scanner::Device>)));
+	connect(m_scanner, SIGNAL(scanFailed(QString)), this, SLOT(scanFailed(QString)));
+	connect(m_scanner, SIGNAL(scanStateChanged(Scanner::State)), this, SLOT(setScanState(Scanner::State)));
+	connect(m_scanner, SIGNAL(pageAvailable(QString)), this, SIGNAL(scanPageAvailable(QString)));
 
 	MAIN->getConfig()->addSetting(new ComboSetting("scanres", ui.comboBoxScanResolution, 2));
 	MAIN->getConfig()->addSetting(new ComboSetting("scanmode", ui.comboBoxScanMode, 0));
@@ -56,12 +64,13 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 
 	m_outputPath = MAIN->getConfig()->getSetting<VarSetting<QString>>("scanoutput")->getValue();
 	genOutputPath();
-	m_scanner.start();
+	m_scanner->init();
 }
 
 Acquirer::~Acquirer()
 {
-	m_scanner.stop();
+	m_scanner->close();
+	delete m_scanner;
 }
 
 void Acquirer::selectOutputPath()
@@ -100,17 +109,17 @@ void Acquirer::startDetectDevices()
 	ui.labelScanMessage->setText("");
 	ui.comboBoxScanDevice->clear();
 	ui.comboBoxScanDevice->setCursor(Qt::WaitCursor);
-	m_scanner.redetect();
+	m_scanner->redetect();
 }
 
-void Acquirer::doneDetectDevices(QList<ScanBackend::Device> devices)
+void Acquirer::doneDetectDevices(QList<Scanner::Device> devices)
 {
 	ui.comboBoxScanDevice->unsetCursor();
 	ui.toolButtonScanDevicesRefresh->setEnabled(true);
 	if(devices.isEmpty()){
 		ui.labelScanMessage->setText(QString("<span style=\"color:#FF0000;\">%1</span>").arg(_("No scanners were detected.")));
 	}else{
-		for(const ScanBackend::Device& device : devices){
+		for(const Scanner::Device& device : devices){
 			ui.comboBoxScanDevice->addItem(device.label, device.name);
 		}
 		ui.comboBoxScanDevice->setCurrentIndex(0);
@@ -125,13 +134,13 @@ void Acquirer::startScan()
 	ui.pushButtonScanCancel->setVisible(true);
 	ui.labelScanMessage->setText(_("Starting scan..."));
 
-	int res[] = {75, 100, 200, 300, 600, 1200};
-	ScanBackend::ScanMode modes[] = {ScanBackend::ScanMode::GRAY, ScanBackend::ScanMode::COLOR};
+	double dpi[] = {75., 100., 200., 300., 600., 1200.};
+	Scanner::ScanMode modes[] = {Scanner::ScanMode::GRAY, Scanner::ScanMode::COLOR};
 	genOutputPath();
-	ScanBackend::Options opts = {m_outputPath, res[ui.comboBoxScanResolution->currentIndex()], modes[ui.comboBoxScanMode->currentIndex()], 8, ScanBackend::ScanType::SINGLE, 0, 0};
+	QString device = ui.comboBoxScanDevice->itemData(ui.comboBoxScanDevice->currentIndex()).toString();
+	Scanner::Params params = {device, m_outputPath, dpi[ui.comboBoxScanResolution->currentIndex()], modes[ui.comboBoxScanMode->currentIndex()], 8, Scanner::ScanType::SINGLE, 0, 0};
+	m_scanner->scan(params);
 	genOutputPath(); // Prepare for next
-	QString scanner = ui.comboBoxScanDevice->itemData(ui.comboBoxScanDevice->currentIndex()).toString();
-	m_scanner.scan(scanner, opts);
 }
 
 void Acquirer::setScanState(Scanner::State state)
@@ -153,9 +162,9 @@ void Acquirer::setScanState(Scanner::State state)
 
 void Acquirer::cancelScan()
 {
-	m_scanner.cancel();
-	ui.pushButtonScanCancel->setEnabled(false);
 	ui.labelScanMessage->setText(_("Canceling scan..."));
+	m_scanner->cancel();
+	ui.pushButtonScanCancel->setEnabled(false);
 }
 
 void Acquirer::doneScan()
