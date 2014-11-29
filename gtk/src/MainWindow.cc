@@ -135,10 +135,10 @@ MainWindow::MainWindow()
 MainWindow::~MainWindow()
 {
 	delete m_acquirer;
-	delete m_outputManager;
-	delete m_recognizer;
 	delete m_sourceManager;
 	delete m_displayer;
+	delete m_recognizer;
+	delete m_outputManager;
 	delete m_config;
 	s_instance = nullptr;
 }
