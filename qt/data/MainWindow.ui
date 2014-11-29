@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>gImageReader</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="gimagereader.qrc">
+    <normaloff>:/icons/logo_48</normaloff>:/icons/logo_48</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <property name="spacing">
