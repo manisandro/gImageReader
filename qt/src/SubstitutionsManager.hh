@@ -30,7 +30,7 @@ class QTableWidget;
 class SubstitutionsManager : public QDialog {
 	Q_OBJECT
 public:
-	SubstitutionsManager(QPlainTextEdit* textEdit, QCheckBox* csCheckBox);
+	SubstitutionsManager(QPlainTextEdit* textEdit, QCheckBox* csCheckBox, QWidget* parent = nullptr);
 
 private:
 	QAction* m_removeAction;

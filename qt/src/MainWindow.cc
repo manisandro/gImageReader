@@ -81,7 +81,7 @@ MainWindow::MainWindow(const QStringList& files)
 
 	ui.setupUi(this);
 
-	m_config = new Config();
+	m_config = new Config(this);
 	m_acquirer = new Acquirer(ui);
 	m_displayer = new Displayer(ui);
 	m_outputManager = new OutputManager(ui);

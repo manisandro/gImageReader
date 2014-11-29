@@ -31,10 +31,10 @@
 #include "ConfigSettings.hh"
 #include "Utils.hh"
 
-SubstitutionsManager::SubstitutionsManager(QPlainTextEdit* textEdit, QCheckBox* csCheckBox)
+SubstitutionsManager::SubstitutionsManager(QPlainTextEdit* textEdit, QCheckBox* csCheckBox, QWidget* parent)
+	: QDialog(parent)
 {
 	setWindowTitle(_("Substitutions"));
-	setWindowFlags(Qt::WindowStaysOnTopHint);
 
 	m_textEdit = textEdit;
 	m_csCheckBox = csCheckBox;
