@@ -1750,7 +1750,7 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
   <object class="GtkDialog" id="dialog:config">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Configuration</property>
+    <property name="title" translatable="yes">Preferences</property>
     <property name="window_position">center-on-parent</property>
     <property name="default_width">500</property>
     <property name="destroy_with_parent">True</property>

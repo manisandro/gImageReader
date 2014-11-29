@@ -155,7 +155,6 @@ public:
 		// App menu button
 		toolButtonAppMenu = new QToolButton(MainWindow);
 		toolButtonAppMenu->setIcon(QIcon::fromTheme("preferences-system"));
-		toolButtonAppMenu->setToolTip(gettext("Preferences"));
 		toolButtonAppMenu->setPopupMode(QToolButton::InstantPopup);
 		toolButtonAppMenu->setMenu(menuAppMenu);
 		toolBarMain->addWidget(toolButtonAppMenu);
