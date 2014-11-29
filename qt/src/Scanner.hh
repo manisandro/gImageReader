@@ -22,6 +22,7 @@
 
 #include "common.hh"
 #include <QMetaType>
+#include <QObject>
 
 class Scanner : public QObject {
 	Q_OBJECT
