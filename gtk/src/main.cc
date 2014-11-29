@@ -57,7 +57,6 @@ static std::string get_application_dir(char* argv0)
 int main (int argc, char *argv[])
 {
 	pkgDir = get_application_dir(argv[0]);
-	std::cout << "pkgDir: " << pkgDir << std::endl;
 	pkgExePath = argv[0];
 
 #ifdef G_OS_WIN32
