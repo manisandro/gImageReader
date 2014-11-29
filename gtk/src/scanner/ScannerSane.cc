@@ -107,7 +107,8 @@ void ScannerSane::run()
 	}
 
 	g_debug("sane_exit()");
-	sane_exit();
+	// Commented to prevent crash, see https://bugs.launchpad.net/hplip/+bug/1315858
+//	sane_exit();
 }
 
 void ScannerSane::setState(State state)
