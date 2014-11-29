@@ -30,7 +30,7 @@ ListStoreSetting::ListStoreSetting(const Glib::ustring &key, Glib::RefPtr<Gtk::L
 {
 	Glib::ustring str = get_default_settings()->get_string(m_key);
 	m_liststore->clear();
-	int nCols = m_liststore->get_n_columns();
+	std::size_t nCols = m_liststore->get_n_columns();
 
 	for(const Glib::ustring& row : Utils::string_split(str, ';', false)){
 		int colidx = 0;
