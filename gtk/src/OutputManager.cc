@@ -355,7 +355,7 @@ bool OutputManager::clearBuffer()
 
 bool OutputManager::getBufferModified() const
 {
-	m_textBuffer->get_modified();
+	return m_textBuffer->get_modified();
 }
 
 void OutputManager::setLanguage(const Config::Lang& lang, bool force)
