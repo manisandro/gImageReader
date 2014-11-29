@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-22 14:41+0100\n"
-"PO-Revision-Date: 2014-11-25 15:36+0300\n"
+"PO-Revision-Date: 2014-11-28 16:28+0300\n"
 "Last-Translator: Oleg Moiseichuk <berroll@mail.ru>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -21,12 +21,12 @@ msgstr ""
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:141
 msgid "Redetect Languages"
-msgstr "Определить языки заново"
+msgstr "Инициализировать языки"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:144
 #: ../qt/src/Ui_MainWindow.hh:158
 msgid "Preferences"
-msgstr "Предпочтения"
+msgstr "Настройки"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/src/OutputManager.cc:377
 #: ../qt/src/OutputManager.cc:326 ../qt/src/Ui_MainWindow.hh:149
@@ -187,19 +187,19 @@ msgstr "Управление изображением"
 
 #: ../gtk/data/gimagereader.ui.h:29 ../qt/data/MainWindow.ui.h:41
 msgid "Autodetect layout"
-msgstr "Автоопределение расположения"
+msgstr "Автоопределение структуры"
 
 #: ../gtk/data/gimagereader.ui.h:30 ../qt/data/MainWindow.ui.h:40
 msgid "Autodetect Layout"
-msgstr "Автоопределение расположения"
+msgstr "Автоопределение структуры"
 
 #: ../gtk/data/gimagereader.ui.h:31 ../qt/data/MainWindow.ui.h:43
 msgid "Toggle output pane"
-msgstr "Показать/скрыть панель распознавания"
+msgstr "Показать/скрыть панель результатов"
 
 #: ../gtk/data/gimagereader.ui.h:32 ../qt/data/MainWindow.ui.h:42
 msgid "Toggle Output Pane"
-msgstr "Показать/скрыть панель распознавания"
+msgstr "Показать/скрыть панель результатов"
 
 #: ../gtk/data/gimagereader.ui.h:33 ../qt/src/Ui_MainWindow.hh:177
 msgid "Add images"
@@ -267,11 +267,11 @@ msgstr "В оттенках серого"
 
 #: ../gtk/data/gimagereader.ui.h:49 ../qt/data/MainWindow.ui.h:14
 msgid "Scan"
-msgstr "Сканировать"
+msgstr "Отсканировать"
 
 #: ../gtk/data/gimagereader.ui.h:50 ../qt/data/MainWindow.ui.h:8
 msgid "Acquire"
-msgstr "Получить"
+msgstr "Сканировать"
 
 #: ../gtk/data/gimagereader.ui.h:51 ../qt/data/MainWindow.ui.h:2
 msgid "Brightness"
@@ -321,19 +321,19 @@ msgstr "Вернуть"
 
 #: ../gtk/data/gimagereader.ui.h:62 ../qt/src/Ui_MainWindow.hh:257
 msgid "Save output"
-msgstr "Сохранить распознанное"
+msgstr "Сохранить результаты"
 
 #: ../gtk/data/gimagereader.ui.h:63 ../qt/src/Ui_MainWindow.hh:256
 msgid "Save Output"
-msgstr "Сохранить распознанное"
+msgstr "Сохранить результаты"
 
 #: ../gtk/data/gimagereader.ui.h:64 ../qt/src/Ui_MainWindow.hh:259
 msgid "Clear output"
-msgstr "Очистить распознанное"
+msgstr "Очистить результаты"
 
 #: ../gtk/data/gimagereader.ui.h:65 ../qt/src/Ui_MainWindow.hh:258
 msgid "Clear Output"
-msgstr "Очистить распознанное"
+msgstr "Очистить результаты"
 
 #: ../gtk/data/gimagereader.ui.h:66 ../qt/data/MainWindow.ui.h:19
 msgid "Find"
@@ -365,11 +365,11 @@ msgstr "Графический интерфейс для tesseract-ocr"
 
 #: ../gtk/data/gimagereader.ui.h:73 ../qt/data/ConfigDialog.ui.h:1
 msgid "Configuration"
-msgstr "Настройка"
+msgstr "Настройки"
 
 #: ../gtk/data/gimagereader.ui.h:74
 msgid "Output pane orientation:"
-msgstr "Ориентация панели распознавания:"
+msgstr "Расположение панели результатов:"
 
 #: ../gtk/data/gimagereader.ui.h:75
 msgid "Horizontal"
@@ -388,13 +388,12 @@ msgid "Automatically check for new program versions"
 msgstr "Автоматически проверять наличие новых версий"
 
 #: ../gtk/data/gimagereader.ui.h:79 ../qt/data/ConfigDialog.ui.h:9
-#, fuzzy
 msgid "Predefined language definitions:"
-msgstr "Предпочитаемый язык:"
+msgstr "Заданные определения языков:"
 
 #: ../gtk/data/gimagereader.ui.h:80 ../qt/data/ConfigDialog.ui.h:10
 msgid "Additional language definitions:"
-msgstr ""
+msgstr "Дополнительные определения языков:"
 
 #: ../gtk/data/gimagereader.ui.h:81 ../qt/data/ConfigDialog.ui.h:11
 msgid "The prefix of the tesseract language data file"
@@ -406,7 +405,7 @@ msgstr "Префикс"
 
 #: ../gtk/data/gimagereader.ui.h:83 ../qt/data/ConfigDialog.ui.h:13
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr "Код языка по стандарту ISO 639-1, сопровождаемый кодом страны"
+msgstr "Код языка (ISO 639-1) и код страны, соединённые подчёркиванием"
 
 #: ../gtk/data/gimagereader.ui.h:84 ../qt/data/ConfigDialog.ui.h:14
 msgid "ISO Code"
@@ -422,7 +421,7 @@ msgstr "Название"
 
 #: ../gtk/data/gimagereader.ui.h:87 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
-msgstr "Шрифт панели распознавания:"
+msgstr "Шрифт панели результатов:"
 
 #: ../gtk/data/gimagereader.ui.h:88 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
@@ -525,7 +524,7 @@ msgstr "Выберите имя файла для записи..."
 
 #: ../gtk/src/Acquirer.cc:107 ../qt/src/Acquirer.cc:95
 msgid "Failed to initialize the scanning backend."
-msgstr "Не удалось инициализировать сканер."
+msgstr "Не удалось инициализировать программные средства сканирования."
 
 #: ../gtk/src/Acquirer.cc:118 ../qt/src/Acquirer.cc:103
 msgid "Scan failed"
@@ -533,7 +532,7 @@ msgstr "Сканирование не удалось"
 
 #: ../gtk/src/Acquirer.cc:138 ../qt/src/Acquirer.cc:119
 msgid "No scanners were detected."
-msgstr "Сканеров не было найдено."
+msgstr "Сканеры не обнаружены."
 
 #: ../gtk/src/Acquirer.cc:156 ../gtk/src/Acquirer.cc:173
 #: ../qt/src/Acquirer.cc:134 ../qt/src/Acquirer.cc:152
@@ -546,7 +545,7 @@ msgstr "Открытие устройства..."
 
 #: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:150
 msgid "Setting options..."
-msgstr "Задание опций..."
+msgstr "Задание установок..."
 
 #: ../gtk/src/Acquirer.cc:175 ../qt/src/Acquirer.cc:154
 msgid "Getting parameters..."
@@ -579,11 +578,11 @@ msgstr "Обработчик сбоев"
 
 #: ../gtk/src/CrashHandler.cc:45 ../qt/src/CrashHandler.cc:30
 msgid "Your work has been saved under <b>%1</b>."
-msgstr "Обработанные данные были сохранены в <b>%1</b>."
+msgstr "Результаты вашей работы были сохранены в <b>%1</b>."
 
 #: ../gtk/src/CrashHandler.cc:47 ../qt/src/CrashHandler.cc:32
 msgid "There was no unsaved work."
-msgstr "Несохранённых обработанных данных не найдено."
+msgstr "Несохранённых результатов не было найдено."
 
 #: ../gtk/src/CrashHandler.cc:103 ../qt/src/CrashHandler.cc:64
 msgid "Failed to obtain backtrace. Is gdb installed?"
@@ -611,11 +610,11 @@ msgstr "Отрисовка изображения..."
 
 #: ../gtk/src/Displayer.cc:495 ../qt/src/Displayer.cc:376
 msgid "Save Selection Image"
-msgstr ""
+msgstr "Сохранить выделенный фрагмент"
 
 #: ../gtk/src/Displayer.cc:603 ../qt/src/Displayer.cc:432
 msgid "Performing layout analysis"
-msgstr "Выполняется анализ расположения"
+msgstr "Выполняется анализ структуры"
 
 #: ../gtk/src/FileDialogs.cc:110 ../gtk/src/FileDialogs.cc:169
 #: ../gtk/src/FileDialogs.cc:189 ../gtk/src/FileDialogs.cc:255
@@ -684,9 +683,8 @@ msgid "Check spelling"
 msgstr "Проверить орфографию"
 
 #: ../gtk/src/OutputManager.cc:317 ../qt/src/OutputManager.cc:276
-#, fuzzy
 msgid "output"
-msgstr "Сканировать в:"
+msgstr "результаты"
 
 #: ../gtk/src/OutputManager.cc:321 ../qt/src/OutputManager.cc:278
 msgid "Text Files"
@@ -694,11 +692,11 @@ msgstr "Текстовые файлы"
 
 #: ../gtk/src/OutputManager.cc:322 ../qt/src/OutputManager.cc:278
 msgid "Save Output..."
-msgstr "Сохранить распознанное..."
+msgstr "Сохранить результаты..."
 
 #: ../gtk/src/OutputManager.cc:329 ../qt/src/OutputManager.cc:285
 msgid "Failed to save output"
-msgstr "Не удалось сохранить распознанное"
+msgstr "Не удалось сохранить результаты"
 
 #: ../gtk/src/OutputManager.cc:329 ../qt/src/OutputManager.cc:285
 msgid "Check that you have writing permissions in the selected folder."
@@ -706,11 +704,11 @@ msgstr "Убедитесь, что у вас есть право на запис
 
 #: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:299
 msgid "Output not saved"
-msgstr "Распознанное не сохранено"
+msgstr "Результаты не сохранены"
 
 #: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:299
 msgid "Save output before proceeding?"
-msgstr "Сохранить распознанное перед продолжением?"
+msgstr "Сохранить результаты, прежде чем продолжить?"
 
 #: ../gtk/src/OutputManager.cc:368
 msgid "en_US"
@@ -752,11 +750,11 @@ msgstr "Нет доступных языков"
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
-"Отсутствуют доступные языки для tesseract. Распознание не сработает."
+"Отсутствуют доступные языки для tesseract. Распознавание не сработает."
 
 #: ../gtk/src/Recognizer.cc:132 ../qt/src/Recognizer.cc:156
 msgid "Multilingual"
-msgstr "Многоязычный"
+msgstr "Несколько языков"
 
 #: ../gtk/src/Recognizer.cc:191 ../qt/src/Recognizer.cc:218
 msgid "Recognize selection"
@@ -798,7 +796,7 @@ msgstr ""
 #: ../gtk/src/Recognizer.cc:293 ../gtk/src/Recognizer.cc:314
 #: ../qt/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:345
 msgid "Recognizing..."
-msgstr "Идёт распознавание..."
+msgstr "Выполняется распознавание..."
 
 #: ../gtk/src/Recognizer.cc:296 ../gtk/src/Recognizer.cc:304
 #: ../qt/src/Recognizer.cc:327 ../qt/src/Recognizer.cc:335
@@ -852,7 +850,7 @@ msgstr "Не удалось прочесть содержимое буфера �
 
 #: ../gtk/src/SourceManager.cc:138 ../qt/src/SourceManager.cc:157
 msgid "Pasted %1"
-msgstr ""
+msgstr "Буфер обмена %1"
 
 #: ../gtk/src/SourceManager.cc:151 ../qt/src/SourceManager.cc:165
 msgid "Screenshot Error"
@@ -887,7 +885,7 @@ msgid ""
 "The following file will be deleted:\n"
 "%1"
 msgstr ""
-"Следующий файл будет удалён:\n"
+"Будет удалён следующий файл:\n"
 "%1"
 
 #: ../gtk/src/SourceManager.cc:245 ../qt/src/SourceManager.cc:249
@@ -987,7 +985,7 @@ msgid ""
 msgstr ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%1&lt;/p&gt;&lt;p&gt;"
 "Графический интерфейс для tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"http://sourceforge.net/projects/gimagereader/&quot;&gt;Website&lt;/a&gt;&lt;/"
+"http://sourceforge.net/projects/gimagereader/&quot;&gt;Сайт&lt;/a&gt;&lt;/"
 "p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © "
 "2009-2014 Sandro Mani&lt;/small&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
@@ -1025,265 +1023,9 @@ msgid "gImageReader"
 msgstr "gImageReader"
 
 #: ../qt/data/MainWindow.ui.h:18
-#, fuzzy
 msgid "Output"
-msgstr "Сканировать в:"
+msgstr "Результаты"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
 msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
 msgstr "&lt;small&gt;&lt;b&gt;Пример:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-
-#~ msgid "Failed to open the selected device"
-#~ msgstr "Не удалось открыть выбранное устройство"
-
-#~ msgid "Failed to save image"
-#~ msgstr "Не удалось сохранить изображение"
-
-#~ msgid "Failed to set output file"
-#~ msgstr "Не удалось задать выходной файл"
-
-#~ msgid "ISO 639-1 code"
-#~ msgstr "Код ISO 639-1"
-
-#~ msgid "(none)"
-#~ msgstr "(нет)"
-
-#~ msgid "Need valid paths to continue"
-#~ msgstr "Для продолжения требуются правильные пути"
-
-#~ msgid "Correct the configuration? (Pressing 'No' will quit the program.)"
-#~ msgstr "Исправить настройки? (Нажатие 'Нет' завершит программу.)"
-
-#~ msgid "This path is required for the program to work."
-#~ msgstr "Этот путь необходим для работы программы."
-
-#~ msgid "Following features will not work:\n"
-#~ msgstr "Следующие функции не будут работать:\n"
-
-#~ msgid "Choose Image(s)..."
-#~ msgstr "Выбрать изображение(-я)..."
-
-#~ msgid "All Pages"
-#~ msgstr "Все страницы"
-
-#~ msgid "Recognize selected region"
-#~ msgstr "Распознать выделенную область"
-
-#~ msgid "Loading '%s'..."
-#~ msgstr "Загружается '%s'..."
-
-#~ msgid "Failed to perform recognition"
-#~ msgstr "Не удалось произвести распознавание"
-
-#~ msgid "Could not save selection to temporary folder."
-#~ msgstr "Невозможно сохранить выделение во временную папку."
-
-#~ msgid "returned"
-#~ msgstr "возвратил"
-
-#~ msgid ""
-#~ "This probabily is a bug in tesseract, retry using an image at a different "
-#~ "resolution or by varying the selected region."
-#~ msgstr ""
-#~ "Вероятно, это баг в tesseract, попробуйте использовать изображение с "
-#~ "другим разрешением или изменить выделенную область."
-
-#~ msgid "At end"
-#~ msgstr "В конце"
-
-#~ msgid "Don't ask again"
-#~ msgstr "Больше не спрашивать"
-
-#~ msgid "No package providing the requested file found."
-#~ msgstr "Не найден пакет, предоставляющий искомый файл."
-
-#~ msgid "Running transaction..."
-#~ msgstr "Выполнение транзакции..."
-
-#~ msgid ""
-#~ "<b>Custom tesseract languages</b>\n"
-#~ "If a language you need is missing above, add it here:"
-#~ msgstr ""
-#~ "<b>Пользовательские языки tesseract</b>\n"
-#~ "Если необходимый язык отсутствует выше, добавьте его сюда:"
-
-#~ msgid "<b>Insert page range:</b>"
-#~ msgstr "<b>Вставьте диапазон страниц:</b>"
-
-#~ msgid ""
-#~ "<b>Note:</b>\n"
-#~ "If the entry for an installed tesseract language is missing, you may need "
-#~ "to manually add a rule under the 'Languages' tab."
-#~ msgstr ""
-#~ "<b>Примечание:</b>\n"
-#~ "Если запись для установленного языка tesseract отсутствует, возможно, вам "
-#~ "понадобится вручную добавить правило на вкладке 'Языки'."
-
-#~ msgid ""
-#~ "<b>Predefined tesseract languages</b>\n"
-#~ "The following languages are detected automatically:"
-#~ msgstr ""
-#~ "<b>Встроенные языки tesseract</b>\n"
-#~ "Следующие языки определяются автоматически:"
-
-#~ msgid "Acquire image from scanner"
-#~ msgstr "Сканировать изображение"
-
-#~ msgid "Cancel recognition"
-#~ msgstr "Отменить распознавание"
-
-#~ msgid "Directory containing tesseract languages:"
-#~ msgstr "Папка, содержащая языки tesseract:"
-
-#~ msgid "Enable antialiasing for downscaled images"
-#~ msgstr "Включить сглаживание для уменьшенных изображений"
-
-#~ msgid "Folder containing the tesseract executable 'tesseract(.exe)'."
-#~ msgstr "Папка, содержащая исполняемый файл 'tesseract(.exe)'."
-
-#~ msgid ""
-#~ "Folder containing the tesseract languages, contains '*.unicharset' or '*."
-#~ "traineddata' files among others."
-#~ msgstr ""
-#~ "Папка, содержащая языки tesseract; включает файлы '*.unicharset' или '*."
-#~ "traineddata' среди прочих."
-
-#~ msgid "Hide"
-#~ msgstr "Скрыть"
-
-#~ msgid "Insert"
-#~ msgstr "Вставить"
-
-#~ msgid "Keep line break if preceded by '!'"
-#~ msgstr "Сохранять разрыв строки, если перед ним стоит '!'"
-
-#~ msgid "Keep line break if preceded by '?'"
-#~ msgstr "Сохранять разрыв строки, если перед ним стоит '?'"
-
-#~ msgid "Open one or more images"
-#~ msgstr "Открыть одно или несколько изображений"
-
-#~ msgid "Page:"
-#~ msgstr "Страница:"
-
-#~ msgid "Rotate _Left"
-#~ msgstr "Повернуть в_лево"
-
-#~ msgid "Rotate _Right"
-#~ msgstr "Повернуть в_право"
-
-#~ msgid "Toggle Image Controls"
-#~ msgstr "Включить Управление изображением"
-
-#~ msgid ""
-#~ "Whether the user should be prompted to install missing spellcheck "
-#~ "dictionaries."
-#~ msgstr ""
-#~ "Нужно ли запрашивать пользователя об установке отсутствующих словарей "
-#~ "проверки орфографии."
-
-#~ msgid "Whether to enable antialiasing when displaying downscaled images."
-#~ msgstr ""
-#~ "Нужно ли включать сглаживание при отображении уменьшенных изображений."
-
-#~ msgid "_Acquire Image"
-#~ msgstr "Скани_ровать изображение"
-
-#~ msgid "_Configure"
-#~ msgstr "Настрой_ка"
-
-#~ msgid "_Help"
-#~ msgstr "_Справка"
-
-#~ msgid "_Open Image(s)"
-#~ msgstr "_Открыть изображение(-я)"
-
-#~ msgid "_Show Sources Pane"
-#~ msgstr "Показать Панель _источников"
-
-#~ msgid "_View"
-#~ msgstr "_Вид"
-
-#~ msgid "Open Image(s)"
-#~ msgstr "Открыть изображение(-я)"
-
-#~ msgid "Dictionaries"
-#~ msgstr "Словари"
-
-#~ msgid "Directory containing dictionaries:"
-#~ msgstr "Папка, содержащая словари:"
-
-#~ msgid "PDF Import"
-#~ msgstr "Импорт PDF"
-
-#~ msgid "Dependencies missing"
-#~ msgstr "Утеряны зависимости"
-
-#~ msgid ""
-#~ "The following programs required for this feature are not installed or "
-#~ "were not found:\n"
-#~ "%s\n"
-#~ "Open the configuration dialog?"
-#~ msgstr ""
-#~ "Следующие программы, необходимые для данной функции не установлены или не "
-#~ "были найдены:\n"
-#~ "%s\n"
-#~ "Открыть диалог настройки?"
-
-#~ msgid "Choose PDF(s)..."
-#~ msgstr "Выбрать PDF..."
-
-#~ msgid "PDF Documents"
-#~ msgstr "Документы PDF"
-
-#~ msgid "Failed to import the following files"
-#~ msgstr "Не удалось импортировать следующие файлы"
-
-#~ msgid "Importing '%s'..."
-#~ msgstr "Импорт '%s'..."
-
-#~ msgid "The source file '%s' could not be found."
-#~ msgstr "Исходный файл '%s' не найден."
-
-#~ msgid "Directory containing ghostscript:"
-#~ msgstr "Папка, содержащая ghostscript:"
-
-#~ msgid ""
-#~ "Folder containing the convert executable 'convert(.exe)' (part of "
-#~ "ImageMagick)."
-#~ msgstr ""
-#~ "Папка, содержащая исполняемый файл 'convert(.exe)' (составная часть "
-#~ "ImageMagick)."
-
-#~ msgid ""
-#~ "Folder containing the ghostscript executable 'gs' resp. 'gswin32c.exe' or "
-#~ "'gswin64c.exe'."
-#~ msgstr ""
-#~ "Папка, содержащая исполняемый файл ghostscript 'gs', соотв. 'gswin32c."
-#~ "exe' или 'gswin64c.exe'."
-
-#~ msgid "Rasterization resolution (DPI):"
-#~ msgstr "Разрешение растеризации (DPI):"
-
-#~ msgid "_Import PDF(s)"
-#~ msgstr "Импор_т PDF"
-
-#~ msgid "Hide file list"
-#~ msgstr "Скрыть список файлов"
-
-#~ msgid "Strip new lines"
-#~ msgstr "Удалить начала строк"
-
-#~ msgid "No dictionaries found"
-#~ msgstr "Словарей не найдено"
-
-#~ msgid ""
-#~ "Do you want to correct the configuration? (Pressing 'No' will quit the "
-#~ "program.)"
-#~ msgstr "Вы хотите исправить настройки? (Нажатие 'Нет' завершит программу.)"
-
-#~ msgid "Open an image to begin."
-#~ msgstr "Откройте изображение, чтобы начать."
-
-#~ msgid "Initializing..."
-#~ msgstr "Инициализация..."
