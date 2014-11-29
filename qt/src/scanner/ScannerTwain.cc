@@ -22,6 +22,9 @@
 #include <QAbstractEventDispatcher>
 #include <QCoreApplication>
 #include <QDir>
+#if defined(Q_OS_WIN32) && QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+#include <QtWinExtras>
+#endif
 
 #ifdef Q_OS_WIN32
 // http://msdn.microsoft.com/en-us/library/windows/desktop/dd162950%28v=vs.85%29.aspx
@@ -144,7 +147,7 @@ void ScannerTwain::init()
     // State 2 to 3
     TW_MEMREF phwnd = nullptr;
 #ifdef Q_OS_WIN32
-    HWND hwnd = MAIN->winId();
+    HWND hwnd = (HWND)MAIN->winId();
     phwnd = &hwnd;
 #endif
     if(call(nullptr, DG_CONTROL, DAT_PARENT, MSG_OPENDSM, phwnd) != TWRC_SUCCESS){
@@ -262,7 +265,7 @@ void ScannerTwain::scan(const Params &params)
     m_ui.ModalUI = true;
     m_ui.hParent = nullptr;;
 #ifdef Q_OS_WIN32
-    m_ui.hParent = MAIN->winId();
+    m_ui.hParent = (HWND)MAIN->winId();
 #endif
 
     // State 4 to 5
@@ -274,11 +277,19 @@ void ScannerTwain::scan(const Params &params)
 
     m_cancel = false;
 #ifdef Q_OS_WIN32
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
     QAbstractEventDispatcher::instance()->setEventFilter(eventFilter);
+#else
+    QCoreApplication::instance()->installNativeEventFilter(&m_eventFilter);
+#endif
     while(m_dsMsg == 0 && !m_dsQuit && !m_cancel) {
         QCoreApplication::processEvents();
     }
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
     QAbstractEventDispatcher::instance()->setEventFilter(nullptr);
+#else
+    QCoreApplication::instance()->removeNativeEventFilter(&m_eventFilter);
+#endif
 #else
     m_mutex.lock();
     while(m_dsMsg == MSG_NULL){
@@ -305,7 +316,11 @@ void ScannerTwain::scan(const Params &params)
     TW_UINT16 twRC = call(&m_srcID, DG_IMAGE, DAT_IMAGENATIVEXFER, MSG_GET, (TW_MEMREF)&hImg);
     if(twRC == TWRC_XFERDONE){
         HBITMAP bmp = BitmapFromDIB(hImg);
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
         saveOk = QPixmap::fromWinHBITMAP(bmp).save(params.filename);
+#else
+        saveOk = QtWin::fromHBITMAP(bmp).save(params.filename);
+#endif
         DeleteObject(bmp);
         GlobalFree(hImg);
     }
@@ -374,7 +389,11 @@ void ScannerTwain::close()
 }
 
 #ifdef Q_OS_WIN32
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 bool ScannerTwain::eventFilter(void* message)
+#else
+bool ScannerTwain::NativeEventFilter::nativeEventFilter(const QByteArray& /*eventType*/, void* message, long* /*result*/)
+#endif
 {
     LPMSG msg = static_cast<LPMSG>(message);
 
