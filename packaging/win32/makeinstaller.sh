@@ -35,7 +35,7 @@ pushd $builddir > /dev/null
 mingw$bits-cmake -DINTERFACE_TYPE=$iface ../../
 mingw$bits-make -j4 DESTDIR="${installroot}_" install
 mv ${installroot}_$MINGWROOT $installroot
-rm -rf $installroot_
+rm -rf ${installroot}_
 cp $win32dir/gimagereader-icon.rc $builddir
 cp $win32dir/gimagereader.ico $builddir
 cp $win32dir/installer.nsi $builddir

@@ -32,7 +32,7 @@ gImageReader is a simple front-end to tesseract. Features include:
  - Recognized text displayed directly next to the image
  - Editing of output text, including search/replace and removing line breaks
  - Spellchecking for output text (if corresponding dictionary installed)
- 
+
 
 %package gtk
 Summary:       A Gtk+ front-end to tesseract-ocr
