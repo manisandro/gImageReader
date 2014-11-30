@@ -32,7 +32,7 @@
 </ul>
 
 <h2><a name="About">About</a></h2>
-<p>gImageReader is a frontent to <a href="http://code.google.com/p/tesseract-ocr/">tesseract-ocr</a> written in C++ using the gtkmm bindings.</p>
+<p>gImageReader is a frontent to <a href="http://code.google.com/p/tesseract-ocr/">tesseract-ocr</a> written in C++.</p>
 <h3><a name="Features">Features</a></h3>
 <ul>
     <li>Allows the user to select the parts of the image they want to be recognized or directly recognize the entire image.</li>
