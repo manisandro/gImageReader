@@ -22,6 +22,7 @@
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QTextCodec>
+#include <QTranslator>
 #include <libintl.h>
 #include <cstring>
 
@@ -51,8 +52,16 @@ int main (int argc, char *argv[])
 	if(qgetenv("LANG").isEmpty()){
 		qputenv("LANG", QLocale::system().name().toLocal8Bit());
 	}
-	std::freopen(QDir(QString("%1/../").arg(QApplication::applicationDirPath())).absoluteFilePath("gimagereader.log").toLocal8Bit().data(), "w", stderr);
+	std::freopen(packageDir.absoluteFilePath("gimagereader.log").toLocal8Bit().data(), "w", stderr);
 #endif
+
+	QTranslator qtTranslator;
+	QString translationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+#ifdef Q_OS_WIN
+	translationsPath = packageDir.absolutePath() + translationsPath.mid(QLibraryInfo::location(QLibraryInfo::PrefixPath).length());
+#endif
+	qtTranslator.load("qt_" + QLocale::system().name(), translationsPath);
+	QApplication::instance()->installTranslator(&qtTranslator);
 
 	bindtextdomain(GETTEXT_PACKAGE, dataDir.absoluteFilePath("locale").toLocal8Bit().data());
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
