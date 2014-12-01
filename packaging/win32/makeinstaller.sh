@@ -126,8 +126,7 @@ elif [ "$iface" == "qt4" ]; then
     
     # Install locale files
     mkdir -p $installroot/share/qt4/translations/
-    cp -a /usr/share/qt4/translations/qt_*.qm  $installroot/share/qt4/translations
-    cp -a $MINGWROOT/share/qt4/translations/QtSpell_*.qm  $installroot/share/qt4/translations
+    cp -a $MINGWROOT/share/qt4/translations/{qt_*.qm,QtSpell_*.qm}  $installroot/share/qt4/translations
 
 elif [ "$iface" == "qt5" ]; then
     linkDep lib/qt5/plugins/imageformats/qgif.dll  bin/imageformats
@@ -137,8 +136,7 @@ elif [ "$iface" == "qt5" ]; then
 
     # Install locale files
     mkdir -p $installroot/share/qt5/translations/
-    cp -a /usr/share/qt5/translations/qt_*.qm  $installroot/share/qt5/translations
-    cp -a $MINGWROOT/share/qt4/translations/QtSpell_*.qm  $installroot/share/qt5/translations
+    cp -a $MINGWROOT/share/qt5/translations/{qt_*.qm,QtSpell_*.qm}  $installroot/share/qt5/translations
 
 fi
 
