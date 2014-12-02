@@ -166,6 +166,7 @@ void ScannerSane::doOpen()
 	g_debug("sane_open(\"%s\") -> %s", m_job->params.device.c_str(), sane_strstatus(status));
 	if(status != SANE_STATUS_GOOD){
 		g_critical("Unable to get open device: %s", sane_strstatus(status));
+		m_job->handle = nullptr;
 		failScan(_("Unable to connect to scanner"));
 		return;
 	}
@@ -514,8 +515,10 @@ void ScannerSane::doCompletePage()
 void ScannerSane::doStop()
 {
 	if(m_job != nullptr){
-		g_debug("sane_close()");
-		sane_close(m_job->handle);
+		if(m_job->handle != nullptr){
+			g_debug("sane_close()");
+			sane_close(m_job->handle);
+		}
 		delete m_job;
 		m_job = nullptr;
 	}

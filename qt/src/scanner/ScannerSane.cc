@@ -171,6 +171,7 @@ void ScannerSane::doOpen()
 	SANE_Status status = sane_open(m_job->params.device.toLocal8Bit().data(), &m_job->handle);
 	qDebug("sane_open(\"%s\") -> %s", qPrintable(m_job->params.device), sane_strstatus(status));
 	if(status != SANE_STATUS_GOOD){
+		m_job->handle = nullptr;
 		qWarning("Unable to get open device: %s", sane_strstatus(status));
 		failScan(_("Unable to connect to scanner"));
 		return;
@@ -519,8 +520,10 @@ void ScannerSane::doCompletePage()
 void ScannerSane::doStop()
 {
 	if(m_job != nullptr){
-		qDebug("sane_close()");
-		sane_close(m_job->handle);
+		if(m_job->handle != nullptr){
+			qDebug("sane_close()");
+			sane_close(m_job->handle);
+		}
 		delete m_job;
 		m_job = nullptr;
 	}
