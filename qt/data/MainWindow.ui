@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="gimagereader.qrc">
-    <normaloff>:/icons/logo_48</normaloff>:/icons/logo_48</iconset>
+    <normaloff>:/icons/logo_256</normaloff>:/icons/logo_256</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">

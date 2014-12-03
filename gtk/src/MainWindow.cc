@@ -80,6 +80,7 @@ MainWindow::MainWindow()
 	m_window = Builder("applicationwindow:main");
 	m_aboutdialog = Builder("dialog:about");
 	m_statusbar = Builder("statusbar:main");
+	m_window->set_icon_name("gimagereader");
 	m_aboutdialog->set_version(PACKAGE_VERSION);
 
 	m_config = new Config;
