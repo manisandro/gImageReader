@@ -26,7 +26,6 @@
 #include <QNetworkRequest>
 #include <QProcess>
 #include <QStatusBar>
-#include <QtConcurrentRun>
 #include <QUrl>
 #include <csignal>
 
@@ -131,8 +130,8 @@ MainWindow::MainWindow(const QStringList& files)
 
 #if ENABLE_VERSIONCHECK
 	if(m_config->getSetting<SwitchSetting>("updatecheck")->getValue()){
-		connect(&m_versionCheckWatcher, SIGNAL(finished()), this, SLOT(checkVersion()));
-		m_versionCheckWatcher.setFuture(QtConcurrent::run(this, &MainWindow::getNewestVersion));
+		connect(&m_versionCheckThread, SIGNAL(finished()), this, SLOT(checkVersion()));
+		m_versionCheckThread.start();
 	}
 #endif
 
@@ -272,7 +271,7 @@ void MainWindow::hideNotification(Notification handle)
 	}
 }
 
-QString MainWindow::getNewestVersion()
+void MainWindow::VersionCheckThread::run()
 {
 	QNetworkAccessManager networkMgr;
 	QUrl url(CHECKURL);
@@ -309,14 +308,14 @@ QString MainWindow::getNewestVersion()
 	newver.replace(QRegExp("\\s+"), "");
 	QRegExp pat(R"(^[\d+\.]+\d+$)");
 	if(pat.exactMatch(newver)){
-		return newver;
+		m_newestVersion = newver;
 	}
-	return QString();
 }
 
 void MainWindow::checkVersion()
 {
-	QString newver = m_versionCheckWatcher.result();
+	QString newver = m_versionCheckThread.getNewestVersion();
+	qDebug("Newest version is: %s", qPrintable(newver));
 	if(newver.isEmpty()){
 		return;
 	}

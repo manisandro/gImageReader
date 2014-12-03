@@ -22,11 +22,12 @@
 
 #include "Recognizer.hh"
 
+#include <functional>
 #include <QGraphicsView>
 #include <QImage>
-#include <QTimer>
-#include <QFuture>
 #include <QMutex>
+#include <QThread>
+#include <QTimer>
 #include <QQueue>
 #include <QWaitCondition>
 
@@ -94,11 +95,18 @@ private:
 		int contrast;
 		bool invert;
 	};
+	class ScaleThread : public QThread {
+	public:
+		ScaleThread(const std::function<void()> &f) : m_f(f) {}
+	private:
+		std::function<void()> m_f;
+		void run(){ m_f(); }
+	};
 	QMutex m_scaleMutex;
 	QWaitCondition m_scaleCond;
 	QQueue<ScaleRequest> m_scaleRequests;
 	QTimer m_scaleTimer;
-	QFuture<void> m_scaleFuture;
+	ScaleThread m_scaleThread;
 
 	void scaleThread();
 

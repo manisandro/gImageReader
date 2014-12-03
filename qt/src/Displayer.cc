@@ -29,13 +29,12 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QWheelEvent>
-#include <QtConcurrentRun>
 #include <tesseract/baseapi.h>
 #include <cassert>
 
 
 Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
-	: QGraphicsView(parent), ui(_ui)
+	: QGraphicsView(parent), ui(_ui), m_scaleThread(std::bind(&Displayer::scaleThread, this))
 {
 	setScene(&m_scene);
 	setBackgroundBrush(Qt::gray);
@@ -85,9 +84,9 @@ int Displayer::getNPages() const
 bool Displayer::setSource(Source* source)
 {
 	m_scaleTimer.stop();
-	if(m_scaleFuture.isRunning()){
+	if(m_scaleThread.isRunning()){
 		sendScaleRequest(ScaleRequest::Quit);
-		m_scaleFuture.waitForFinished();
+		m_scaleThread.wait();
 	}
 	clearSelections();
 	m_renderTimer.stop();
@@ -140,7 +139,7 @@ bool Displayer::setSource(Source* source)
 	m_imageItem = new QGraphicsPixmapItem();
 	m_imageItem->setTransformationMode(Qt::SmoothTransformation);
 	m_scene.addItem(m_imageItem);
-	m_scaleFuture = QtConcurrent::run(this, &Displayer::scaleThread);
+	m_scaleThread.start();
 	if(!renderImage()){
 		setSource(nullptr);
 		QMessageBox::critical(this, _("Failed to load image"), _("The file might not be an image or be corrupt:\n%1").arg(source->path));

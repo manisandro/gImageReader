@@ -20,11 +20,11 @@
 #ifndef MAINWINDOW_HH
 #define MAINWINDOW_HH
 
-#include <QFutureWatcher>
 #include <QList>
 #include <QMainWindow>
 #include <QStack>
 #include <QStringList>
+#include <QThread>
 
 #include "common.hh"
 #include "Ui_MainWindow.hh"
@@ -87,12 +87,18 @@ private:
 	QActionGroup m_idleActions;
 	QList<QWidget*> m_idleWidgets;
 	QStack<QPair<State, QString>> m_stateStack;
-	QFutureWatcher<QString> m_versionCheckWatcher;
+
+	class VersionCheckThread : public QThread {
+	public:
+		const QString& getNewestVersion() const{ return m_newestVersion; }
+	private:
+		QString m_newestVersion;
+		void run();
+	};
+	VersionCheckThread m_versionCheckThread;
 
 	void closeEvent(QCloseEvent* ev);
 	void setState(State state);
-
-	QString getNewestVersion();
 
 private slots:
 	void checkVersion();

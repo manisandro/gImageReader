@@ -21,8 +21,6 @@
 #include <QDir>
 #include <QEventLoop>
 #include <QFileInfo>
-#include <QFutureWatcher>
-#include <QtConcurrentRun>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 
@@ -58,19 +56,28 @@ QString Utils::makeOutputFilename(const QString& filename)
 	return newfilename;
 }
 
+class BusyTaskThread : public QThread {
+public:
+	BusyTaskThread(const std::function<bool()> &f) : m_f(f), m_result(false) {}
+	bool getResult() const{ return m_result; }
+private:
+	std::function<bool()> m_f;
+	bool m_result;
+
+	void run(){ m_result = m_f(); }
+};
+
 bool Utils::busyTask(const std::function<bool()> &f, const QString& msg)
 {
 	MAIN->pushState(MainWindow::State::Busy, msg);
 	QEventLoop evLoop;
-	QFutureWatcher<bool> watcher;
-
-	QObject::connect(&watcher, SIGNAL(finished()), &evLoop, SLOT(quit()));
-
-	watcher.setFuture(QtConcurrent::run(f));
+	BusyTaskThread thread(f);
+	QObject::connect(&thread, SIGNAL(finished()), &evLoop, SLOT(quit()));
+	thread.start();
 	evLoop.exec(QEventLoop::ExcludeUserInputEvents);
 
 	MAIN->popState();
-	return watcher.future().result();
+	return thread.getResult();
 }
 
 void Utils::setSpinBlocked(QSpinBox *spin, int value)

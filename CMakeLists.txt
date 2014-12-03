@@ -180,7 +180,7 @@ IF("${INTERFACE_TYPE}" STREQUAL "qt4")
     QT4_USE_MODULES(gimagereader Core Gui Network DBus)
     ADD_DEPENDENCIES(gimagereader gettextizeui)
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
-    QT5_USE_MODULES(gimagereader Widgets Network DBus Concurrent)
+    QT5_USE_MODULES(gimagereader Widgets Network DBus)
     ADD_DEPENDENCIES(gimagereader gettextizeui)
 ENDIF()
 
