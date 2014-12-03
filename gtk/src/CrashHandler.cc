@@ -22,7 +22,7 @@
 CrashHandler::CrashHandler(int argc, char* argv[])
 	: Gtk::Application(argc, argv, APPLICATION_ID".crashhandler", Gio::APPLICATION_HANDLES_COMMAND_LINE)
 {
-	Glib::set_application_name(Glib::ustring::compose("%1 %2", PACKAGE_NAME, _("Crash Handler")));
+	Glib::set_application_name(Glib::ustring::compose("%1 - %2", PACKAGE_NAME, _("Crash Handler")));
 
 	if(argc > 2) {
 		m_pid = std::atoi(argv[2]);

@@ -32,7 +32,7 @@ CrashHandler::CrashHandler(int pid, const QString& savefile, QWidget *parent):
 		ui.labelAutosave->setText(_("There was no unsaved work."));
 	}
 
-	setWindowTitle(QString("%1 %2").arg(PACKAGE_NAME).arg( _("Crash Handler")));
+	setWindowTitle(QString("%1 - %2").arg(PACKAGE_NAME).arg( _("Crash Handler")));
 
 	m_refreshButton = new QPushButton(QIcon::fromTheme("view-refresh"), _("Regenerate backtrace"));
 	m_refreshButton->setEnabled(false);
