@@ -148,7 +148,7 @@ bool Displayer::setSource(Source* source)
 {
 	m_scaleTimer.disconnect();
 	if(m_scaleThread){
-		sendScaleRequest(ScaleRequest::Quit);
+		sendScaleRequest({ScaleRequest::Quit});
 		m_scaleThread->join();
 		m_scaleThread = nullptr;
 	}
@@ -214,12 +214,12 @@ bool Displayer::setSource(Source* source)
 
 bool Displayer::renderImage()
 {
-	sendScaleRequest(ScaleRequest::Abort);
+	sendScaleRequest({ScaleRequest::Abort});
 	m_blurImage.clear();
 	m_source->page = m_pagespin->get_value_as_int();
 	m_source->brightness = m_conspin->get_value_as_int();
 	m_source->contrast = m_conspin->get_value_as_int();
-	m_source->resolution = m_resspin->get_value();
+	m_source->resolution = m_resspin->get_value_as_int();
 	m_source->invert = m_invcheck->get_active();
 	Cairo::RefPtr<Cairo::ImageSurface> image;
 	if(!Utils::busyTask([this, &image] {
@@ -233,7 +233,8 @@ bool Displayer::renderImage()
 	setRotation(m_rotspin->get_value());
 	if(m_geo.s < 1.0){
 		m_scaleTimer.disconnect();
-		m_scaleTimer = Glib::signal_timeout().connect([this]{ sendScaleRequest(); return false; }, 100);
+		ScaleRequest request = {ScaleRequest::Scale, m_geo.s, m_source->resolution, m_source->page, m_source->brightness, m_source->contrast, m_source->invert};
+		m_scaleTimer = Glib::signal_timeout().connect([this,request]{ sendScaleRequest(request); return false; }, 100);
 	}
 	return true;
 }
@@ -243,7 +244,7 @@ void Displayer::setZoom(Zoom zoom)
 	if(!m_image){
 		return;
 	}
-	sendScaleRequest(ScaleRequest::Abort);
+	sendScaleRequest({ScaleRequest::Abort});
 	m_connection_zoomfitClicked.block(true);
 	m_connection_zoomoneClicked.block(true);
 
@@ -271,7 +272,8 @@ void Displayer::setZoom(Zoom zoom)
 	m_zoomonebtn->set_active(m_geo.s == 1.);
 	if(m_geo.s < 1.0){
 		m_scaleTimer.disconnect();
-		m_scaleTimer = Glib::signal_timeout().connect([this]{ sendScaleRequest(); return false; }, 100);
+		ScaleRequest request = {ScaleRequest::Scale, m_geo.s, m_source->resolution, m_source->page, m_source->brightness, m_source->contrast, m_source->invert};
+		m_scaleTimer = Glib::signal_timeout().connect([this,request]{ sendScaleRequest(request); return false; }, 100);
 	}else{
 		m_blurImage.clear();
 	}
@@ -628,17 +630,8 @@ void Displayer::autodetectLayout(bool rotated)
 	}
 }
 
-void Displayer::sendScaleRequest(const ScaleRequest::Request& action)
+void Displayer::sendScaleRequest(const ScaleRequest& request)
 {
-	ScaleRequest request = {action};
-	if(request.type == ScaleRequest::Scale){
-		request.scale = m_geo.s;
-		request.resolution = m_resspin->get_value();
-		request.page = m_pagespin->get_value_as_int();
-		request.brightness = m_brispin->get_value_as_int();
-		request.contrast = m_conspin->get_value_as_int();
-		request.invert = m_invcheck->get_active();
-	}
 	m_scaleMutex.lock();
 	m_scaleRequests.push(request);
 	m_scaleCond.signal();

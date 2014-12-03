@@ -117,7 +117,7 @@ private:
 	struct ScaleRequest {
 		enum Request { Scale, Abort, Quit } type;
 		double scale;
-		double resolution;
+		int resolution;
 		int page;
 		int brightness;
 		int contrast;
@@ -131,7 +131,7 @@ private:
 	std::queue<ScaleRequest> m_scaleRequests;
 	sigc::connection m_scaleTimer;
 
-	void sendScaleRequest(const ScaleRequest::Request& action = ScaleRequest::Scale);
+	void sendScaleRequest(const ScaleRequest& request);
 	void scaleThread();
 	void setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image, double scale);
 };

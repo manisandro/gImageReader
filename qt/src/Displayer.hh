@@ -89,8 +89,8 @@ private:
 	struct ScaleRequest {
 		enum Request { Scale, Abort, Quit } type;
 		double scale;
-		int page;
 		int resolution;
+		int page;
 		int brightness;
 		int contrast;
 		bool invert;
@@ -106,13 +106,15 @@ private:
 	QWaitCondition m_scaleCond;
 	QQueue<ScaleRequest> m_scaleRequests;
 	QTimer m_scaleTimer;
+	ScaleRequest m_pendingScaleRequest;
 	ScaleThread m_scaleThread;
 
 	void scaleThread();
 
 private slots:
 	void queueRenderImage();
-	void sendScaleRequest(const ScaleRequest::Request& request = ScaleRequest::Scale);
+	void scaleTimerElapsed(){ sendScaleRequest(m_pendingScaleRequest); }
+	void sendScaleRequest(const ScaleRequest& request);
 	bool renderImage();
 	void rotate90();
 	void setRotation(double angle);

@@ -60,7 +60,7 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	connect(ui.actionBestFit, SIGNAL(triggered()), this, SLOT(zoomFit()));
 	connect(ui.actionOriginalSize, SIGNAL(triggered()), this, SLOT(zoomOriginal()));
 	connect(&m_renderTimer, SIGNAL(timeout()), this, SLOT(renderImage()));
-	connect(&m_scaleTimer, SIGNAL(timeout()), this, SLOT(sendScaleRequest()));
+	connect(&m_scaleTimer, SIGNAL(timeout()), this, SLOT(scaleTimerElapsed()));
 
 	MAIN->getConfig()->addSetting(new VarSetting<QString>("selectionsavefile", QDir(Utils::documentsFolder()).absoluteFilePath(_("selection.png"))));
 }
@@ -85,7 +85,7 @@ bool Displayer::setSource(Source* source)
 {
 	m_scaleTimer.stop();
 	if(m_scaleThread.isRunning()){
-		sendScaleRequest(ScaleRequest::Quit);
+		sendScaleRequest({ScaleRequest::Quit});
 		m_scaleThread.wait();
 	}
 	clearSelections();
@@ -150,7 +150,7 @@ bool Displayer::setSource(Source* source)
 
 bool Displayer::renderImage()
 {
-	sendScaleRequest(ScaleRequest::Abort);
+	sendScaleRequest({ScaleRequest::Abort});
 	if(m_source->resolution != ui.spinBoxResolution->value()){
 		double factor = double(ui.spinBoxResolution->value()) / double(m_source->resolution);
 		for(DisplaySelection* sel : m_selections){
@@ -174,6 +174,7 @@ bool Displayer::renderImage()
 	centerOn(sceneRect().center());
 	setRotation(ui.spinBoxRotation->value());
 	if(m_scale < 1.0){
+		m_pendingScaleRequest = {ScaleRequest::Scale, m_scale, m_source->resolution, m_source->page, m_source->brightness, m_source->contrast, m_source->invert};
 		m_scaleTimer.start(100);
 	}
 	return true;
@@ -184,7 +185,7 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor)
 	if(!m_imageItem){
 		return;
 	}
-	sendScaleRequest(ScaleRequest::Abort);
+	sendScaleRequest({ScaleRequest::Abort});
 
 	QRectF bb = m_imageItem->sceneBoundingRect();
 	double fit = qMin(viewport()->width() / bb.width(), viewport()->height() / bb.height());
@@ -212,6 +213,7 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor)
 	t.scale(m_scale, m_scale);
 	setTransform(t);
 	if(m_scale < 1.0){
+		m_pendingScaleRequest = {ScaleRequest::Scale, m_scale, m_source->resolution, m_source->page, m_source->brightness, m_source->contrast, m_source->invert};
 		m_scaleTimer.start(100);
 	}else{
 		m_imageItem->setPixmap(m_pixmap);
@@ -456,17 +458,8 @@ void Displayer::autodetectLayout(bool rotated)
 	}
 }
 
-void Displayer::sendScaleRequest(const ScaleRequest::Request& action)
+void Displayer::sendScaleRequest(const ScaleRequest& request)
 {
-	ScaleRequest request = {action};
-	if(request.type == ScaleRequest::Scale){
-		request.scale = m_scale;
-		request.resolution = m_source->resolution;
-		request.page = m_source->page;
-		request.brightness = m_source->brightness;
-		request.contrast = m_source->contrast;
-		request.invert = m_source->invert;
-	}
 	m_scaleMutex.lock();
 	m_scaleRequests.append(request);
 	m_scaleCond.wakeOne();
