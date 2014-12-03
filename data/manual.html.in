@@ -160,7 +160,7 @@ If you find an issue or have a suggestion, please file a ticket to the <a href="
  href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. If you are experiencing crashes or hangs, please also try to include the following information in the ticket/email:
 </p>
 <ul>
-<li>If the crash handler appears, include the backtrace which is shown there. To make sure that the backtrace is complete, if you are running the application under Linux, make sure that the debugging symbols are installed if your distribution provides them. The package containing the debugging symbols is usually called <b>&lt;packagename&gt;-debuginfo</b> or <b>&lt;packagename&gt;-dbg</b>. If you are running the application under Windows, debugging symbols are installed by default.</li>
+<li>If the crash handler appears, include the backtrace which is shown there. To make sure that the backtrace is complete, if you are running the application under Linux, make sure that the <tt>gdb</tt> debugger as well as the debugging symbols are installed if your distribution provides them. The package containing the debugging symbols is usually called <b>&lt;packagename&gt;-debuginfo</b> or <b>&lt;packagename&gt;-dbg</b>. If you are running the application under Windows, debugging symbols are installed by default.</li>
 <li>If you are running under Windows, include the <tt>%ProgramFiles%\gImageReader\gimagereader.log</tt> and <tt>%ProgramFiles%\gImageReader\twain.log</tt> log files.</li>
 <li>If you are running under Linux, run the application from a terminal and include any output which appears on the terminal.</li>
 <li>Try to describe as best as you can what you were doing and whether the problem is reproducible.</li>
