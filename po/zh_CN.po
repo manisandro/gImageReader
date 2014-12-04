@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimagereader\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-22 14:41+0100\n"
+"POT-Creation-Date: 2014-12-04 18:46+0100\n"
 "PO-Revision-Date: 2014-05-02 13:00+0800\n"
 "Last-Translator: kaiman <kaigfm@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -22,8 +22,8 @@ msgstr ""
 msgid "Redetect Languages"
 msgstr "重新检测语言(_R)"
 
-#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:144
-#: ../qt/src/Ui_MainWindow.hh:158
+#: ../gtk/data/appmenu.ui.h:2 ../gtk/data/gimagereader.ui.h:73
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:144
 msgid "Preferences"
 msgstr ""
 
@@ -64,7 +64,7 @@ msgstr ""
 "括下面这些信息。谢谢。"
 
 #: ../gtk/data/gimagereader.ui.h:1 ../qt/data/MainWindow.ui.h:24
-#: ../qt/src/SubstitutionsManager.cc:36
+#: ../qt/src/SubstitutionsManager.cc:37
 msgid "Substitutions"
 msgstr ""
 
@@ -98,30 +98,30 @@ msgid "<small>Recognize all</small>"
 msgstr "识别全部"
 
 #. Output insert mode
-#: ../gtk/data/gimagereader.ui.h:8 ../qt/src/Ui_MainWindow.hh:202
+#: ../gtk/data/gimagereader.ui.h:8 ../qt/src/Ui_MainWindow.hh:201
 msgid "Append to current text"
 msgstr "追加到当前文本后面"
 
-#: ../gtk/data/gimagereader.ui.h:9 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/gimagereader.ui.h:9 ../qt/src/Ui_MainWindow.hh:202
 msgid "Insert at cursor"
 msgstr "在光标处插入"
 
-#: ../gtk/data/gimagereader.ui.h:10 ../qt/src/Ui_MainWindow.hh:204
+#: ../gtk/data/gimagereader.ui.h:10 ../qt/src/Ui_MainWindow.hh:203
 msgid "Replace current text"
 msgstr "替换当前文本"
 
 #. Sources toolbar
-#: ../gtk/data/gimagereader.ui.h:11 ../qt/src/Ui_MainWindow.hh:164
+#: ../gtk/data/gimagereader.ui.h:11 ../qt/src/Ui_MainWindow.hh:163
 #, fuzzy
 msgid "Recent"
 msgstr "最近使用的(_R)"
 
-#: ../gtk/data/gimagereader.ui.h:12 ../qt/src/Ui_MainWindow.hh:165
+#: ../gtk/data/gimagereader.ui.h:12 ../qt/src/Ui_MainWindow.hh:164
 #, fuzzy
 msgid "Paste"
 msgstr "粘贴 %1"
 
-#: ../gtk/data/gimagereader.ui.h:13 ../qt/src/Ui_MainWindow.hh:166
+#: ../gtk/data/gimagereader.ui.h:13 ../qt/src/Ui_MainWindow.hh:165
 #, fuzzy
 msgid "Take Screenshot"
 msgstr "截屏(_S)"
@@ -204,36 +204,36 @@ msgstr "显示输出面板"
 msgid "Toggle Output Pane"
 msgstr "显示输出面板"
 
-#: ../gtk/data/gimagereader.ui.h:33 ../qt/src/Ui_MainWindow.hh:177
+#: ../gtk/data/gimagereader.ui.h:33 ../qt/src/Ui_MainWindow.hh:176
 msgid "Add images"
 msgstr "添加图片"
 
-#: ../gtk/data/gimagereader.ui.h:34 ../qt/src/Ui_MainWindow.hh:176
+#: ../gtk/data/gimagereader.ui.h:34 ../qt/src/Ui_MainWindow.hh:175
 msgid "Add Images"
 msgstr "添加图片"
 
-#: ../gtk/data/gimagereader.ui.h:35 ../qt/src/Ui_MainWindow.hh:182
+#: ../gtk/data/gimagereader.ui.h:35 ../qt/src/Ui_MainWindow.hh:181
 msgid "Remove image from list"
 msgstr "从列表中删除图片"
 
-#: ../gtk/data/gimagereader.ui.h:36 ../qt/src/Ui_MainWindow.hh:181
+#: ../gtk/data/gimagereader.ui.h:36 ../qt/src/Ui_MainWindow.hh:180
 msgid "Remove Image"
 msgstr "删除图片"
 
-#: ../gtk/data/gimagereader.ui.h:37 ../qt/src/Ui_MainWindow.hh:185
+#: ../gtk/data/gimagereader.ui.h:37 ../qt/src/Ui_MainWindow.hh:184
 msgid "Delete image"
 msgstr "删除图片"
 
-#: ../gtk/data/gimagereader.ui.h:38 ../qt/src/Ui_MainWindow.hh:184
+#: ../gtk/data/gimagereader.ui.h:38 ../qt/src/Ui_MainWindow.hh:183
 #, fuzzy
 msgid "Delete Image"
 msgstr "删除图片"
 
-#: ../gtk/data/gimagereader.ui.h:39 ../qt/src/Ui_MainWindow.hh:188
+#: ../gtk/data/gimagereader.ui.h:39 ../qt/src/Ui_MainWindow.hh:187
 msgid "Clear list"
 msgstr "清除列表"
 
-#: ../gtk/data/gimagereader.ui.h:40 ../qt/src/Ui_MainWindow.hh:187
+#: ../gtk/data/gimagereader.ui.h:40 ../qt/src/Ui_MainWindow.hh:186
 msgid "Clear List"
 msgstr "清除列表"
 
@@ -295,50 +295,50 @@ msgstr "分辨率"
 msgid "Invert colors"
 msgstr "在光标处插入"
 
-#: ../gtk/data/gimagereader.ui.h:55 ../qt/src/Ui_MainWindow.hh:236
+#: ../gtk/data/gimagereader.ui.h:55 ../qt/src/Ui_MainWindow.hh:235
 #, fuzzy
 msgid "Select insert mode"
 msgstr "选择追加模式"
 
-#: ../gtk/data/gimagereader.ui.h:56 ../qt/src/Ui_MainWindow.hh:243
+#: ../gtk/data/gimagereader.ui.h:56 ../qt/src/Ui_MainWindow.hh:242
 msgid "Strip line breaks on selected text"
 msgstr "带上选择的文本的换行符"
 
-#: ../gtk/data/gimagereader.ui.h:57 ../qt/src/Ui_MainWindow.hh:242
+#: ../gtk/data/gimagereader.ui.h:57 ../qt/src/Ui_MainWindow.hh:241
 msgid "Strip Line Breaks"
 msgstr "带换行符"
 
-#: ../gtk/data/gimagereader.ui.h:58 ../qt/src/Ui_MainWindow.hh:248
+#: ../gtk/data/gimagereader.ui.h:58 ../qt/src/Ui_MainWindow.hh:247
 msgid "Find and replace"
 msgstr "查找并替换"
 
-#: ../gtk/data/gimagereader.ui.h:59 ../qt/src/Ui_MainWindow.hh:247
+#: ../gtk/data/gimagereader.ui.h:59 ../qt/src/Ui_MainWindow.hh:246
 msgid "Find and Replace"
 msgstr "查找并替换"
 
-#: ../gtk/data/gimagereader.ui.h:60 ../qt/src/Ui_MainWindow.hh:250
-#: ../qt/src/Ui_MainWindow.hh:251
+#: ../gtk/data/gimagereader.ui.h:60 ../qt/src/Ui_MainWindow.hh:249
+#: ../qt/src/Ui_MainWindow.hh:250
 msgid "Undo"
 msgstr "撤销"
 
-#: ../gtk/data/gimagereader.ui.h:61 ../qt/src/Ui_MainWindow.hh:253
-#: ../qt/src/Ui_MainWindow.hh:254
+#: ../gtk/data/gimagereader.ui.h:61 ../qt/src/Ui_MainWindow.hh:252
+#: ../qt/src/Ui_MainWindow.hh:253
 msgid "Redo"
 msgstr "重做"
 
-#: ../gtk/data/gimagereader.ui.h:62 ../qt/src/Ui_MainWindow.hh:257
+#: ../gtk/data/gimagereader.ui.h:62 ../qt/src/Ui_MainWindow.hh:256
 msgid "Save output"
 msgstr "保存输出"
 
-#: ../gtk/data/gimagereader.ui.h:63 ../qt/src/Ui_MainWindow.hh:256
+#: ../gtk/data/gimagereader.ui.h:63 ../qt/src/Ui_MainWindow.hh:255
 msgid "Save Output"
 msgstr "保存输出"
 
-#: ../gtk/data/gimagereader.ui.h:64 ../qt/src/Ui_MainWindow.hh:259
+#: ../gtk/data/gimagereader.ui.h:64 ../qt/src/Ui_MainWindow.hh:258
 msgid "Clear output"
 msgstr "清除输出"
 
-#: ../gtk/data/gimagereader.ui.h:65 ../qt/src/Ui_MainWindow.hh:258
+#: ../gtk/data/gimagereader.ui.h:65 ../qt/src/Ui_MainWindow.hh:257
 msgid "Clear Output"
 msgstr "清除输出"
 
@@ -371,10 +371,6 @@ msgstr ""
 #: ../gtk/data/gimagereader.ui.h:72
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "一个 tesseract-ocr 的图形界面前端"
-
-#: ../gtk/data/gimagereader.ui.h:73 ../qt/data/ConfigDialog.ui.h:1
-msgid "Configuration"
-msgstr "配置"
 
 #: ../gtk/data/gimagereader.ui.h:74
 msgid "Output pane orientation:"
@@ -448,7 +444,7 @@ msgstr "页范围"
 msgid "Page range:"
 msgstr "页范围："
 
-#: ../gtk/data/gimagereader.ui.h:91
+#: ../gtk/data/gimagereader.ui.h:91 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>例如:</b> 1-10, 13, 14-18</small>"
 
@@ -489,29 +485,29 @@ msgid "Save as image"
 msgstr "保存为图片(_I)"
 
 #. Output postprocessing
-#: ../gtk/data/gimagereader.ui.h:100 ../qt/src/Ui_MainWindow.hh:212
+#: ../gtk/data/gimagereader.ui.h:100 ../qt/src/Ui_MainWindow.hh:211
 msgid "Keep line break if..."
 msgstr "保留换行，如果..."
 
-#: ../gtk/data/gimagereader.ui.h:101 ../qt/src/Ui_MainWindow.hh:214
+#: ../gtk/data/gimagereader.ui.h:101 ../qt/src/Ui_MainWindow.hh:213
 #, fuzzy
 msgid "Preceded by dot"
 msgstr "句点结束的行"
 
-#: ../gtk/data/gimagereader.ui.h:102 ../qt/src/Ui_MainWindow.hh:216
+#: ../gtk/data/gimagereader.ui.h:102 ../qt/src/Ui_MainWindow.hh:215
 #, fuzzy
 msgid "Preceded or succeeded by quote"
 msgstr "引号为边界的行"
 
-#: ../gtk/data/gimagereader.ui.h:103 ../qt/src/Ui_MainWindow.hh:218
+#: ../gtk/data/gimagereader.ui.h:103 ../qt/src/Ui_MainWindow.hh:217
 msgid "Other options"
 msgstr "其他选项"
 
-#: ../gtk/data/gimagereader.ui.h:104 ../qt/src/Ui_MainWindow.hh:220
+#: ../gtk/data/gimagereader.ui.h:104 ../qt/src/Ui_MainWindow.hh:219
 msgid "Join hyphenated words"
 msgstr "连接断字符连接的词"
 
-#: ../gtk/data/gimagereader.ui.h:105 ../qt/src/Ui_MainWindow.hh:222
+#: ../gtk/data/gimagereader.ui.h:105 ../qt/src/Ui_MainWindow.hh:221
 msgid "Collapse whitespace"
 msgstr "合并连续空白字符"
 
@@ -523,58 +519,58 @@ msgstr "当前页"
 msgid "Multiple Pages..."
 msgstr "多页..."
 
-#: ../gtk/src/Acquirer.cc:39 ../gtk/src/FileDialogs.cc:170
+#: ../gtk/src/Acquirer.cc:43 ../gtk/src/FileDialogs.cc:170
 #: ../qt/data/ConfigDialog.ui.h:18 ../qt/data/MainWindow.ui.h:15
 msgid "Cancel"
 msgstr "取消"
 
-#: ../gtk/src/Acquirer.cc:72 ../qt/src/Acquirer.cc:61
+#: ../gtk/src/Acquirer.cc:76 ../qt/src/Acquirer.cc:63
 msgid "scan.png"
 msgstr ""
 
-#: ../gtk/src/Acquirer.cc:89 ../gtk/src/Displayer.cc:494
-#: ../qt/src/Acquirer.cc:78 ../qt/src/Displayer.cc:376
+#: ../gtk/src/Acquirer.cc:90 ../gtk/src/Displayer.cc:496
+#: ../qt/src/Acquirer.cc:78 ../qt/src/Displayer.cc:377
 msgid "PNG Images"
 msgstr "PNG 图片"
 
-#: ../gtk/src/Acquirer.cc:90 ../qt/src/Acquirer.cc:78
+#: ../gtk/src/Acquirer.cc:91 ../qt/src/Acquirer.cc:78
 msgid "Choose Output Filename..."
 msgstr "选择输出文件名..."
 
-#: ../gtk/src/Acquirer.cc:107 ../qt/src/Acquirer.cc:95
+#: ../gtk/src/Acquirer.cc:108 ../qt/src/Acquirer.cc:95
 msgid "Failed to initialize the scanning backend."
 msgstr "初始化扫描后台失败。"
 
-#: ../gtk/src/Acquirer.cc:118 ../qt/src/Acquirer.cc:103
+#: ../gtk/src/Acquirer.cc:118 ../qt/src/Acquirer.cc:102
 msgid "Scan failed"
 msgstr "扫描失败"
 
-#: ../gtk/src/Acquirer.cc:138 ../qt/src/Acquirer.cc:119
+#: ../gtk/src/Acquirer.cc:138 ../qt/src/Acquirer.cc:120
 msgid "No scanners were detected."
 msgstr "没检测到扫描仪。"
 
-#: ../gtk/src/Acquirer.cc:156 ../gtk/src/Acquirer.cc:173
-#: ../qt/src/Acquirer.cc:134 ../qt/src/Acquirer.cc:152
+#: ../gtk/src/Acquirer.cc:156 ../gtk/src/Acquirer.cc:174
+#: ../qt/src/Acquirer.cc:135 ../qt/src/Acquirer.cc:153
 msgid "Starting scan..."
 msgstr "开始扫描..."
 
-#: ../gtk/src/Acquirer.cc:169 ../qt/src/Acquirer.cc:148
+#: ../gtk/src/Acquirer.cc:170 ../qt/src/Acquirer.cc:149
 msgid "Opening device..."
 msgstr "打开设备..."
 
-#: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:150
+#: ../gtk/src/Acquirer.cc:172 ../qt/src/Acquirer.cc:151
 msgid "Setting options..."
 msgstr "设置选项..."
 
-#: ../gtk/src/Acquirer.cc:175 ../qt/src/Acquirer.cc:154
+#: ../gtk/src/Acquirer.cc:176 ../qt/src/Acquirer.cc:155
 msgid "Getting parameters..."
 msgstr "获取参数..."
 
-#: ../gtk/src/Acquirer.cc:177 ../qt/src/Acquirer.cc:156
+#: ../gtk/src/Acquirer.cc:178 ../qt/src/Acquirer.cc:157
 msgid "Transferring data..."
 msgstr "传输数据..."
 
-#: ../gtk/src/Acquirer.cc:187 ../qt/src/Acquirer.cc:166
+#: ../gtk/src/Acquirer.cc:186 ../qt/src/Acquirer.cc:165
 #, fuzzy
 msgid "Canceling scan..."
 msgstr "取消扫描..."
@@ -608,15 +604,15 @@ msgstr ""
 msgid "Failed to obtain backtrace. Is gdb installed?"
 msgstr ""
 
-#: ../gtk/src/Displayer.cc:92 ../qt/src/Displayer.cc:66
+#: ../gtk/src/Displayer.cc:92 ../qt/src/Displayer.cc:65
 msgid "selection.png"
 msgstr ""
 
-#: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:146
+#: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:145
 msgid "Failed to load image"
 msgstr "加载图片失败"
 
-#: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:146
+#: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:145
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -628,11 +624,11 @@ msgstr ""
 msgid "Rendering image..."
 msgstr "渲染图片..."
 
-#: ../gtk/src/Displayer.cc:495 ../qt/src/Displayer.cc:376
+#: ../gtk/src/Displayer.cc:497 ../qt/src/Displayer.cc:377
 msgid "Save Selection Image"
 msgstr "保存选择图片"
 
-#: ../gtk/src/Displayer.cc:603 ../qt/src/Displayer.cc:432
+#: ../gtk/src/Displayer.cc:605 ../qt/src/Displayer.cc:433
 msgid "Performing layout analysis"
 msgstr "执行布局分析"
 
@@ -662,31 +658,31 @@ msgstr "文件名为 \"%1\"的文件已存在。你确定要覆盖它吗？"
 msgid "Overwrite File?"
 msgstr "覆盖文件吗？"
 
-#: ../gtk/src/MainWindow.cc:119 ../qt/src/MainWindow.cc:124
+#: ../gtk/src/MainWindow.cc:120 ../qt/src/MainWindow.cc:123
 msgid "Select an image to begin..."
 msgstr "选择一个图片开始..."
 
-#: ../gtk/src/MainWindow.cc:204 ../qt/src/MainWindow.cc:204
+#: ../gtk/src/MainWindow.cc:205 ../qt/src/MainWindow.cc:203
 msgid "To recognize specific areas, drag rectangles over them."
 msgstr "在要识别的范围上拖动选择区以识别指定区域。"
 
-#: ../gtk/src/MainWindow.cc:305 ../qt/src/MainWindow.cc:326
+#: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:325
 msgid "New version"
 msgstr "新版本"
 
-#: ../gtk/src/MainWindow.cc:305 ../qt/src/MainWindow.cc:326
+#: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:325
 msgid "gImageReader %1 is available"
 msgstr "gImageReader %1 可用"
 
-#: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:327
+#: ../gtk/src/MainWindow.cc:307 ../qt/src/MainWindow.cc:326
 msgid "Download"
 msgstr "下载"
 
-#: ../gtk/src/MainWindow.cc:307 ../qt/src/MainWindow.cc:328
+#: ../gtk/src/MainWindow.cc:308 ../qt/src/MainWindow.cc:327
 msgid "Changelog"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:308 ../qt/src/MainWindow.cc:329
+#: ../gtk/src/MainWindow.cc:309 ../qt/src/MainWindow.cc:328
 msgid "Don't notify again"
 msgstr "不再提示"
 
@@ -838,28 +834,37 @@ msgstr ""
 "\n"
 "\t初始化tesseract失败"
 
-#: ../gtk/src/ScanThread.cc:62 ../qt/src/ScanThread.cc:62
+#: ../gtk/src/scanner/ScannerSane.cc:84 ../gtk/src/scanner/ScannerTwain.cc:337
+#: ../qt/src/scanner/ScannerSane.cc:90 ../qt/src/scanner/ScannerTwain.cc:301
+#, fuzzy
+msgid "Scan canceled"
+msgstr "取消扫描"
+
+#: ../gtk/src/scanner/ScannerSane.cc:161
+#: ../gtk/src/scanner/ScannerTwain.cc:240 ../qt/src/scanner/ScannerSane.cc:167
+#: ../qt/src/scanner/ScannerTwain.cc:198
 #, fuzzy
 msgid "No scanner specified"
 msgstr "没有指定扫描仪。"
 
-#: ../gtk/src/ScanThread.cc:65 ../qt/src/ScanThread.cc:65
+#: ../gtk/src/scanner/ScannerSane.cc:170
+#: ../gtk/src/scanner/ScannerTwain.cc:249 ../qt/src/scanner/ScannerSane.cc:176
+#: ../qt/src/scanner/ScannerTwain.cc:207
 msgid "Unable to connect to scanner"
 msgstr "无法连接到扫描仪"
 
-#: ../gtk/src/ScanThread.cc:93 ../qt/src/ScanThread.cc:93
+#: ../gtk/src/scanner/ScannerSane.cc:392
+#: ../gtk/src/scanner/ScannerTwain.cc:315
+#: ../gtk/src/scanner/ScannerTwain.cc:341 ../qt/src/scanner/ScannerSane.cc:398
+#: ../qt/src/scanner/ScannerTwain.cc:273 ../qt/src/scanner/ScannerTwain.cc:305
 msgid "Unable to start scan"
 msgstr "无法启动扫描仪"
 
-#: ../gtk/src/ScanThread.cc:101 ../gtk/src/ScanThread.cc:115
-#: ../qt/src/ScanThread.cc:101 ../qt/src/ScanThread.cc:115
+#: ../gtk/src/scanner/ScannerSane.cc:401 ../gtk/src/scanner/ScannerSane.cc:445
+#: ../gtk/src/scanner/ScannerTwain.cc:379 ../qt/src/scanner/ScannerSane.cc:407
+#: ../qt/src/scanner/ScannerSane.cc:451 ../qt/src/scanner/ScannerTwain.cc:338
 msgid "Error communicating with scanner"
 msgstr "于扫描仪通讯错误"
-
-#: ../gtk/src/ScanThread.cc:180 ../qt/src/ScanThread.cc:178
-#, fuzzy
-msgid "Scan canceled"
-msgstr "取消扫描"
 
 #: ../gtk/src/SourceManager.cc:110 ../qt/src/SourceManager.cc:95
 msgid "Unable to open files"
@@ -1017,35 +1022,30 @@ msgstr ""
 msgid "About gImageReader"
 msgstr ""
 
-#: ../qt/data/AboutDialog.ui.h:4
-#, no-c-format
+#: ../qt/data/AboutDialog.ui.h:3
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%1&lt;/p&gt;&lt;p&gt;A "
-"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"http://sourceforge.net/projects/gimagereader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © "
-"2009-2014 Sandro Mani&lt;/small&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"http://sourceforge.net/projects/gimagereader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
 msgstr ""
 
-#: ../qt/data/AboutDialog.ui.h:5
+#: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
 msgstr ""
 
-#: ../qt/data/AboutDialog.ui.h:6
+#: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
 msgstr ""
 
 #: ../qt/data/CrashHandler.ui.h:2
 #, fuzzy, no-c-format
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
-"p&gt;Apologies for the inconvenience. To help improve the application, "
-"please consider reporting the issue to &lt;a href=&quot;mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
-"com&lt;/a&gt;. Please try to describe what you were doing before the "
-"application crashed. Also, include the information below. Thank you.&lt;/"
-"p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
 "为可能给你带来的困扰表示歉意。如果您有意愿帮助改进该应用程序, 请报告问题到 "
 "<a href=\"mailto:manisandro@gmail.com? 主题=gImageReader%20Crash"
@@ -1062,10 +1062,29 @@ msgstr "gImageReader %1 可用"
 msgid "Output"
 msgstr "输出："
 
-#: ../qt/data/PageRangeDialog.ui.h:3
+#~ msgid "Configuration"
+#~ msgstr "配置"
+
 #, fuzzy
-msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>例如:</b> 1-10, 13, 14-18</small>"
+#~ msgid ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
+#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
+#~ "application, please consider reporting the issue to &lt;a href=&quot;"
+#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
+#~ "doing before the application crashed. Also, include the information "
+#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+#~ msgstr ""
+#~ "为可能给你带来的困扰表示歉意。如果您有意愿帮助改进该应用程序, 请报告问题"
+#~ "到 <a href=\"mailto:manisandro@gmail.com? 主题=gImageReader%20Crash"
+#~ "\">manisandro@gmail.com</a>. 请尽可能详细准确的描述应用崩溃时的所做的操"
+#~ "作。包括下面这些信息。谢谢。"
+
+#, fuzzy
+#~ msgid ""
+#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ msgstr "<small><b>例如:</b> 1-10, 13, 14-18</small>"
 
 #~ msgid "Images"
 #~ msgstr "图片"

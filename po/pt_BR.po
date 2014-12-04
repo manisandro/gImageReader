@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-22 14:41+0100\n"
+"POT-Creation-Date: 2014-12-04 18:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,8 +23,8 @@ msgstr ""
 msgid "Redetect Languages"
 msgstr "_Redetectar Linguagens"
 
-#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:144
-#: ../qt/src/Ui_MainWindow.hh:158
+#: ../gtk/data/appmenu.ui.h:2 ../gtk/data/gimagereader.ui.h:73
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:144
 msgid "Preferences"
 msgstr ""
 
@@ -66,7 +66,7 @@ msgstr ""
 "abaixo. Obrigado."
 
 #: ../gtk/data/gimagereader.ui.h:1 ../qt/data/MainWindow.ui.h:24
-#: ../qt/src/SubstitutionsManager.cc:36
+#: ../qt/src/SubstitutionsManager.cc:37
 msgid "Substitutions"
 msgstr ""
 
@@ -100,30 +100,30 @@ msgid "<small>Recognize all</small>"
 msgstr "Reconhecer tudo"
 
 #. Output insert mode
-#: ../gtk/data/gimagereader.ui.h:8 ../qt/src/Ui_MainWindow.hh:202
+#: ../gtk/data/gimagereader.ui.h:8 ../qt/src/Ui_MainWindow.hh:201
 msgid "Append to current text"
 msgstr "Anexar ao texto atual"
 
-#: ../gtk/data/gimagereader.ui.h:9 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/gimagereader.ui.h:9 ../qt/src/Ui_MainWindow.hh:202
 msgid "Insert at cursor"
 msgstr "Insira no cursor"
 
-#: ../gtk/data/gimagereader.ui.h:10 ../qt/src/Ui_MainWindow.hh:204
+#: ../gtk/data/gimagereader.ui.h:10 ../qt/src/Ui_MainWindow.hh:203
 msgid "Replace current text"
 msgstr "Substituir o texto atual"
 
 #. Sources toolbar
-#: ../gtk/data/gimagereader.ui.h:11 ../qt/src/Ui_MainWindow.hh:164
+#: ../gtk/data/gimagereader.ui.h:11 ../qt/src/Ui_MainWindow.hh:163
 #, fuzzy
 msgid "Recent"
 msgstr "_Recente"
 
-#: ../gtk/data/gimagereader.ui.h:12 ../qt/src/Ui_MainWindow.hh:165
+#: ../gtk/data/gimagereader.ui.h:12 ../qt/src/Ui_MainWindow.hh:164
 #, fuzzy
 msgid "Paste"
 msgstr "Colado %1"
 
-#: ../gtk/data/gimagereader.ui.h:13 ../qt/src/Ui_MainWindow.hh:166
+#: ../gtk/data/gimagereader.ui.h:13 ../qt/src/Ui_MainWindow.hh:165
 #, fuzzy
 msgid "Take Screenshot"
 msgstr "Tirar _Screenshot"
@@ -206,36 +206,36 @@ msgstr "Alternar painel de sada"
 msgid "Toggle Output Pane"
 msgstr "Alternar painel de sada"
 
-#: ../gtk/data/gimagereader.ui.h:33 ../qt/src/Ui_MainWindow.hh:177
+#: ../gtk/data/gimagereader.ui.h:33 ../qt/src/Ui_MainWindow.hh:176
 msgid "Add images"
 msgstr "Adicionar imagens"
 
-#: ../gtk/data/gimagereader.ui.h:34 ../qt/src/Ui_MainWindow.hh:176
+#: ../gtk/data/gimagereader.ui.h:34 ../qt/src/Ui_MainWindow.hh:175
 msgid "Add Images"
 msgstr "Adicionar Imagens"
 
-#: ../gtk/data/gimagereader.ui.h:35 ../qt/src/Ui_MainWindow.hh:182
+#: ../gtk/data/gimagereader.ui.h:35 ../qt/src/Ui_MainWindow.hh:181
 msgid "Remove image from list"
 msgstr "Remover imagem da lista"
 
-#: ../gtk/data/gimagereader.ui.h:36 ../qt/src/Ui_MainWindow.hh:181
+#: ../gtk/data/gimagereader.ui.h:36 ../qt/src/Ui_MainWindow.hh:180
 msgid "Remove Image"
 msgstr "Remover imagem"
 
-#: ../gtk/data/gimagereader.ui.h:37 ../qt/src/Ui_MainWindow.hh:185
+#: ../gtk/data/gimagereader.ui.h:37 ../qt/src/Ui_MainWindow.hh:184
 msgid "Delete image"
 msgstr "Deletar imagem"
 
-#: ../gtk/data/gimagereader.ui.h:38 ../qt/src/Ui_MainWindow.hh:184
+#: ../gtk/data/gimagereader.ui.h:38 ../qt/src/Ui_MainWindow.hh:183
 #, fuzzy
 msgid "Delete Image"
 msgstr "Deletar imagem"
 
-#: ../gtk/data/gimagereader.ui.h:39 ../qt/src/Ui_MainWindow.hh:188
+#: ../gtk/data/gimagereader.ui.h:39 ../qt/src/Ui_MainWindow.hh:187
 msgid "Clear list"
 msgstr "Limpar lista"
 
-#: ../gtk/data/gimagereader.ui.h:40 ../qt/src/Ui_MainWindow.hh:187
+#: ../gtk/data/gimagereader.ui.h:40 ../qt/src/Ui_MainWindow.hh:186
 msgid "Clear List"
 msgstr "Limpar lista"
 
@@ -297,50 +297,50 @@ msgstr "Resoluo"
 msgid "Invert colors"
 msgstr "Insira no cursor"
 
-#: ../gtk/data/gimagereader.ui.h:55 ../qt/src/Ui_MainWindow.hh:236
+#: ../gtk/data/gimagereader.ui.h:55 ../qt/src/Ui_MainWindow.hh:235
 #, fuzzy
 msgid "Select insert mode"
 msgstr "Selecione modo de anexao"
 
-#: ../gtk/data/gimagereader.ui.h:56 ../qt/src/Ui_MainWindow.hh:243
+#: ../gtk/data/gimagereader.ui.h:56 ../qt/src/Ui_MainWindow.hh:242
 msgid "Strip line breaks on selected text"
 msgstr "Quebras de linha no texto selecionado"
 
-#: ../gtk/data/gimagereader.ui.h:57 ../qt/src/Ui_MainWindow.hh:242
+#: ../gtk/data/gimagereader.ui.h:57 ../qt/src/Ui_MainWindow.hh:241
 msgid "Strip Line Breaks"
 msgstr "Quebras de linha"
 
-#: ../gtk/data/gimagereader.ui.h:58 ../qt/src/Ui_MainWindow.hh:248
+#: ../gtk/data/gimagereader.ui.h:58 ../qt/src/Ui_MainWindow.hh:247
 msgid "Find and replace"
 msgstr "Localizar e substituir"
 
-#: ../gtk/data/gimagereader.ui.h:59 ../qt/src/Ui_MainWindow.hh:247
+#: ../gtk/data/gimagereader.ui.h:59 ../qt/src/Ui_MainWindow.hh:246
 msgid "Find and Replace"
 msgstr "Localizar e substituir"
 
-#: ../gtk/data/gimagereader.ui.h:60 ../qt/src/Ui_MainWindow.hh:250
-#: ../qt/src/Ui_MainWindow.hh:251
+#: ../gtk/data/gimagereader.ui.h:60 ../qt/src/Ui_MainWindow.hh:249
+#: ../qt/src/Ui_MainWindow.hh:250
 msgid "Undo"
 msgstr "Desfazer"
 
-#: ../gtk/data/gimagereader.ui.h:61 ../qt/src/Ui_MainWindow.hh:253
-#: ../qt/src/Ui_MainWindow.hh:254
+#: ../gtk/data/gimagereader.ui.h:61 ../qt/src/Ui_MainWindow.hh:252
+#: ../qt/src/Ui_MainWindow.hh:253
 msgid "Redo"
 msgstr "Refazer"
 
-#: ../gtk/data/gimagereader.ui.h:62 ../qt/src/Ui_MainWindow.hh:257
+#: ../gtk/data/gimagereader.ui.h:62 ../qt/src/Ui_MainWindow.hh:256
 msgid "Save output"
 msgstr "Salvar sada"
 
-#: ../gtk/data/gimagereader.ui.h:63 ../qt/src/Ui_MainWindow.hh:256
+#: ../gtk/data/gimagereader.ui.h:63 ../qt/src/Ui_MainWindow.hh:255
 msgid "Save Output"
 msgstr "Salvar sada"
 
-#: ../gtk/data/gimagereader.ui.h:64 ../qt/src/Ui_MainWindow.hh:259
+#: ../gtk/data/gimagereader.ui.h:64 ../qt/src/Ui_MainWindow.hh:258
 msgid "Clear output"
 msgstr "Limpar sada"
 
-#: ../gtk/data/gimagereader.ui.h:65 ../qt/src/Ui_MainWindow.hh:258
+#: ../gtk/data/gimagereader.ui.h:65 ../qt/src/Ui_MainWindow.hh:257
 msgid "Clear Output"
 msgstr "Limpar sada"
 
@@ -373,10 +373,6 @@ msgstr ""
 #: ../gtk/data/gimagereader.ui.h:72
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "Um frontend grfico para tesseract-ocr"
-
-#: ../gtk/data/gimagereader.ui.h:73 ../qt/data/ConfigDialog.ui.h:1
-msgid "Configuration"
-msgstr "Configurao"
 
 #: ../gtk/data/gimagereader.ui.h:74
 msgid "Output pane orientation:"
@@ -451,7 +447,7 @@ msgstr "Intervalo de pginas"
 msgid "Page range:"
 msgstr "Intervalo de pginas:"
 
-#: ../gtk/data/gimagereader.ui.h:91
+#: ../gtk/data/gimagereader.ui.h:91 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Exemplo:</b> 1-10, 13, 14-18</small>"
 
@@ -492,29 +488,29 @@ msgid "Save as image"
 msgstr "Salvar como _imagem"
 
 #. Output postprocessing
-#: ../gtk/data/gimagereader.ui.h:100 ../qt/src/Ui_MainWindow.hh:212
+#: ../gtk/data/gimagereader.ui.h:100 ../qt/src/Ui_MainWindow.hh:211
 msgid "Keep line break if..."
 msgstr "Manter quebra de pgina se..."
 
-#: ../gtk/data/gimagereader.ui.h:101 ../qt/src/Ui_MainWindow.hh:214
+#: ../gtk/data/gimagereader.ui.h:101 ../qt/src/Ui_MainWindow.hh:213
 #, fuzzy
 msgid "Preceded by dot"
 msgstr "Precedido por ponto"
 
-#: ../gtk/data/gimagereader.ui.h:102 ../qt/src/Ui_MainWindow.hh:216
+#: ../gtk/data/gimagereader.ui.h:102 ../qt/src/Ui_MainWindow.hh:215
 #, fuzzy
 msgid "Preceded or succeeded by quote"
 msgstr "Precedido ou sucedido por citao"
 
-#: ../gtk/data/gimagereader.ui.h:103 ../qt/src/Ui_MainWindow.hh:218
+#: ../gtk/data/gimagereader.ui.h:103 ../qt/src/Ui_MainWindow.hh:217
 msgid "Other options"
 msgstr "Outras opes"
 
-#: ../gtk/data/gimagereader.ui.h:104 ../qt/src/Ui_MainWindow.hh:220
+#: ../gtk/data/gimagereader.ui.h:104 ../qt/src/Ui_MainWindow.hh:219
 msgid "Join hyphenated words"
 msgstr "Juntar palavras com hfen"
 
-#: ../gtk/data/gimagereader.ui.h:105 ../qt/src/Ui_MainWindow.hh:222
+#: ../gtk/data/gimagereader.ui.h:105 ../qt/src/Ui_MainWindow.hh:221
 msgid "Collapse whitespace"
 msgstr "Fechar espaos em branco"
 
@@ -526,58 +522,58 @@ msgstr "Pgina atual"
 msgid "Multiple Pages..."
 msgstr "Pginas mltiplas"
 
-#: ../gtk/src/Acquirer.cc:39 ../gtk/src/FileDialogs.cc:170
+#: ../gtk/src/Acquirer.cc:43 ../gtk/src/FileDialogs.cc:170
 #: ../qt/data/ConfigDialog.ui.h:18 ../qt/data/MainWindow.ui.h:15
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../gtk/src/Acquirer.cc:72 ../qt/src/Acquirer.cc:61
+#: ../gtk/src/Acquirer.cc:76 ../qt/src/Acquirer.cc:63
 msgid "scan.png"
 msgstr "scan.png"
 
-#: ../gtk/src/Acquirer.cc:89 ../gtk/src/Displayer.cc:494
-#: ../qt/src/Acquirer.cc:78 ../qt/src/Displayer.cc:376
+#: ../gtk/src/Acquirer.cc:90 ../gtk/src/Displayer.cc:496
+#: ../qt/src/Acquirer.cc:78 ../qt/src/Displayer.cc:377
 msgid "PNG Images"
 msgstr "Imagens PNG"
 
-#: ../gtk/src/Acquirer.cc:90 ../qt/src/Acquirer.cc:78
+#: ../gtk/src/Acquirer.cc:91 ../qt/src/Acquirer.cc:78
 msgid "Choose Output Filename..."
 msgstr "Escolha arquivo de sada"
 
-#: ../gtk/src/Acquirer.cc:107 ../qt/src/Acquirer.cc:95
+#: ../gtk/src/Acquirer.cc:108 ../qt/src/Acquirer.cc:95
 msgid "Failed to initialize the scanning backend."
 msgstr "Falha ao inicializar o backend de scan"
 
-#: ../gtk/src/Acquirer.cc:118 ../qt/src/Acquirer.cc:103
+#: ../gtk/src/Acquirer.cc:118 ../qt/src/Acquirer.cc:102
 msgid "Scan failed"
 msgstr "O scan falhou"
 
-#: ../gtk/src/Acquirer.cc:138 ../qt/src/Acquirer.cc:119
+#: ../gtk/src/Acquirer.cc:138 ../qt/src/Acquirer.cc:120
 msgid "No scanners were detected."
 msgstr "Nenhum scanner  foi detectado"
 
-#: ../gtk/src/Acquirer.cc:156 ../gtk/src/Acquirer.cc:173
-#: ../qt/src/Acquirer.cc:134 ../qt/src/Acquirer.cc:152
+#: ../gtk/src/Acquirer.cc:156 ../gtk/src/Acquirer.cc:174
+#: ../qt/src/Acquirer.cc:135 ../qt/src/Acquirer.cc:153
 msgid "Starting scan..."
 msgstr "Iniciando scan..."
 
-#: ../gtk/src/Acquirer.cc:169 ../qt/src/Acquirer.cc:148
+#: ../gtk/src/Acquirer.cc:170 ../qt/src/Acquirer.cc:149
 msgid "Opening device..."
 msgstr "Abrindo dispositivo..."
 
-#: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:150
+#: ../gtk/src/Acquirer.cc:172 ../qt/src/Acquirer.cc:151
 msgid "Setting options..."
 msgstr "Setando opes"
 
-#: ../gtk/src/Acquirer.cc:175 ../qt/src/Acquirer.cc:154
+#: ../gtk/src/Acquirer.cc:176 ../qt/src/Acquirer.cc:155
 msgid "Getting parameters..."
 msgstr "Obtendo parmetros..."
 
-#: ../gtk/src/Acquirer.cc:177 ../qt/src/Acquirer.cc:156
+#: ../gtk/src/Acquirer.cc:178 ../qt/src/Acquirer.cc:157
 msgid "Transferring data..."
 msgstr "Transferindo dados..."
 
-#: ../gtk/src/Acquirer.cc:187 ../qt/src/Acquirer.cc:166
+#: ../gtk/src/Acquirer.cc:186 ../qt/src/Acquirer.cc:165
 #, fuzzy
 msgid "Canceling scan..."
 msgstr "Cancelando o scan..."
@@ -611,15 +607,15 @@ msgstr ""
 msgid "Failed to obtain backtrace. Is gdb installed?"
 msgstr "Falha ao obter backtrace. Gdb est instalado?"
 
-#: ../gtk/src/Displayer.cc:92 ../qt/src/Displayer.cc:66
+#: ../gtk/src/Displayer.cc:92 ../qt/src/Displayer.cc:65
 msgid "selection.png"
 msgstr "selection.png"
 
-#: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:146
+#: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:145
 msgid "Failed to load image"
 msgstr "Falha ao carregar imagem"
 
-#: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:146
+#: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:145
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -631,11 +627,11 @@ msgstr ""
 msgid "Rendering image..."
 msgstr "Renderizando imagem..."
 
-#: ../gtk/src/Displayer.cc:495 ../qt/src/Displayer.cc:376
+#: ../gtk/src/Displayer.cc:497 ../qt/src/Displayer.cc:377
 msgid "Save Selection Image"
 msgstr "Salvar imagem selecionada"
 
-#: ../gtk/src/Displayer.cc:603 ../qt/src/Displayer.cc:432
+#: ../gtk/src/Displayer.cc:605 ../qt/src/Displayer.cc:433
 msgid "Performing layout analysis"
 msgstr "Executando anlise de layout"
 
@@ -665,31 +661,31 @@ msgstr "Um arquivo chamado \"%1\" j existe. Voce deseja sobreescrev-lo?"
 msgid "Overwrite File?"
 msgstr "Sobreescrever arquivo?"
 
-#: ../gtk/src/MainWindow.cc:119 ../qt/src/MainWindow.cc:124
+#: ../gtk/src/MainWindow.cc:120 ../qt/src/MainWindow.cc:123
 msgid "Select an image to begin..."
 msgstr "Selecione uma imagem para comear..."
 
-#: ../gtk/src/MainWindow.cc:204 ../qt/src/MainWindow.cc:204
+#: ../gtk/src/MainWindow.cc:205 ../qt/src/MainWindow.cc:203
 msgid "To recognize specific areas, drag rectangles over them."
 msgstr "Para reconhecer reas especficas, arraste retngulos sobre elas"
 
-#: ../gtk/src/MainWindow.cc:305 ../qt/src/MainWindow.cc:326
+#: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:325
 msgid "New version"
 msgstr "Nova verso"
 
-#: ../gtk/src/MainWindow.cc:305 ../qt/src/MainWindow.cc:326
+#: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:325
 msgid "gImageReader %1 is available"
 msgstr "gImageReader %1 est disponvel"
 
-#: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:327
+#: ../gtk/src/MainWindow.cc:307 ../qt/src/MainWindow.cc:326
 msgid "Download"
 msgstr "Download"
 
-#: ../gtk/src/MainWindow.cc:307 ../qt/src/MainWindow.cc:328
+#: ../gtk/src/MainWindow.cc:308 ../qt/src/MainWindow.cc:327
 msgid "Changelog"
 msgstr "Registro de mudanas"
 
-#: ../gtk/src/MainWindow.cc:308 ../qt/src/MainWindow.cc:329
+#: ../gtk/src/MainWindow.cc:309 ../qt/src/MainWindow.cc:328
 msgid "Don't notify again"
 msgstr "No avisar novamente"
 
@@ -843,28 +839,37 @@ msgstr ""
 "\n"
 "\tFalha ao inicializar a engine do tesseract"
 
-#: ../gtk/src/ScanThread.cc:62 ../qt/src/ScanThread.cc:62
+#: ../gtk/src/scanner/ScannerSane.cc:84 ../gtk/src/scanner/ScannerTwain.cc:337
+#: ../qt/src/scanner/ScannerSane.cc:90 ../qt/src/scanner/ScannerTwain.cc:301
+#, fuzzy
+msgid "Scan canceled"
+msgstr "Scan cancelado"
+
+#: ../gtk/src/scanner/ScannerSane.cc:161
+#: ../gtk/src/scanner/ScannerTwain.cc:240 ../qt/src/scanner/ScannerSane.cc:167
+#: ../qt/src/scanner/ScannerTwain.cc:198
 #, fuzzy
 msgid "No scanner specified"
 msgstr "Scanner no especificado"
 
-#: ../gtk/src/ScanThread.cc:65 ../qt/src/ScanThread.cc:65
+#: ../gtk/src/scanner/ScannerSane.cc:170
+#: ../gtk/src/scanner/ScannerTwain.cc:249 ../qt/src/scanner/ScannerSane.cc:176
+#: ../qt/src/scanner/ScannerTwain.cc:207
 msgid "Unable to connect to scanner"
 msgstr "No foi possvel conectar ao scanner"
 
-#: ../gtk/src/ScanThread.cc:93 ../qt/src/ScanThread.cc:93
+#: ../gtk/src/scanner/ScannerSane.cc:392
+#: ../gtk/src/scanner/ScannerTwain.cc:315
+#: ../gtk/src/scanner/ScannerTwain.cc:341 ../qt/src/scanner/ScannerSane.cc:398
+#: ../qt/src/scanner/ScannerTwain.cc:273 ../qt/src/scanner/ScannerTwain.cc:305
 msgid "Unable to start scan"
 msgstr "No foi possivel iniciar o scan"
 
-#: ../gtk/src/ScanThread.cc:101 ../gtk/src/ScanThread.cc:115
-#: ../qt/src/ScanThread.cc:101 ../qt/src/ScanThread.cc:115
+#: ../gtk/src/scanner/ScannerSane.cc:401 ../gtk/src/scanner/ScannerSane.cc:445
+#: ../gtk/src/scanner/ScannerTwain.cc:379 ../qt/src/scanner/ScannerSane.cc:407
+#: ../qt/src/scanner/ScannerSane.cc:451 ../qt/src/scanner/ScannerTwain.cc:338
 msgid "Error communicating with scanner"
 msgstr "Erro de comunicao com o scanner"
-
-#: ../gtk/src/ScanThread.cc:180 ../qt/src/ScanThread.cc:178
-#, fuzzy
-msgid "Scan canceled"
-msgstr "Scan cancelado"
 
 #: ../gtk/src/SourceManager.cc:110 ../qt/src/SourceManager.cc:95
 msgid "Unable to open files"
@@ -1022,35 +1027,30 @@ msgstr ""
 msgid "About gImageReader"
 msgstr ""
 
-#: ../qt/data/AboutDialog.ui.h:4
-#, no-c-format
+#: ../qt/data/AboutDialog.ui.h:3
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%1&lt;/p&gt;&lt;p&gt;A "
-"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"http://sourceforge.net/projects/gimagereader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;small&gt;Copyright © "
-"2009-2014 Sandro Mani&lt;/small&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"http://sourceforge.net/projects/gimagereader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
 msgstr ""
 
-#: ../qt/data/AboutDialog.ui.h:5
+#: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
 msgstr ""
 
-#: ../qt/data/AboutDialog.ui.h:6
+#: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
 msgstr ""
 
 #: ../qt/data/CrashHandler.ui.h:2
 #, fuzzy, no-c-format
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
-"p&gt;Apologies for the inconvenience. To help improve the application, "
-"please consider reporting the issue to &lt;a href=&quot;mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
-"com&lt;/a&gt;. Please try to describe what you were doing before the "
-"application crashed. Also, include the information below. Thank you.&lt;/"
-"p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
 "Pedimos desculpas pelo inconveniente. Para ajudar a melhorar esta aplicao, "
 "por favor envieum relatrio de erro para <a href=\"mailto:manisandro@gmail."
@@ -1068,10 +1068,30 @@ msgstr "gImageReader %1 est disponvel"
 msgid "Output"
 msgstr "Sada:"
 
-#: ../qt/data/PageRangeDialog.ui.h:3
+#~ msgid "Configuration"
+#~ msgstr "Configurao"
+
 #, fuzzy
-msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>Exemplo:</b> 1-10, 13, 14-18</small>"
+#~ msgid ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
+#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
+#~ "application, please consider reporting the issue to &lt;a href=&quot;"
+#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
+#~ "doing before the application crashed. Also, include the information "
+#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+#~ msgstr ""
+#~ "Pedimos desculpas pelo inconveniente. Para ajudar a melhorar esta "
+#~ "aplicao, por favor envieum relatrio de erro para <a href=\"mailto:"
+#~ "manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+#~ "a>. Tente descrever o que vocestava fazendo antes da aplicao parar. "
+#~ "Inclua tambma informao abaixo. Obrigado."
+
+#, fuzzy
+#~ msgid ""
+#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ msgstr "<small><b>Exemplo:</b> 1-10, 13, 14-18</small>"
 
 #~ msgid "Images"
 #~ msgstr "Imagens"

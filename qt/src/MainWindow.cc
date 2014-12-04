@@ -211,7 +211,7 @@ void MainWindow::showAbout()
 	QDialog d(this);
 	Ui::AboutDialog aboutDialogUi;
 	aboutDialogUi.setupUi(&d);
-	aboutDialogUi.labelAbout->setText(aboutDialogUi.labelAbout->text().arg(PACKAGE_VERSION));
+	aboutDialogUi.labelVersion->setText(PACKAGE_VERSION);
 	d.exec();
 }
 
