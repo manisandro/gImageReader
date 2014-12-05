@@ -18,6 +18,7 @@
  */
 
 #include "CrashHandler.hh"
+#include "Utils.hh"
 
 CrashHandler::CrashHandler(int argc, char* argv[])
 	: Gtk::Application(argc, argv, APPLICATION_ID".crashhandler", Gio::APPLICATION_HANDLES_COMMAND_LINE)
@@ -101,6 +102,17 @@ void CrashHandler::generate_backtrace_end(bool success)
 	m_refreshButton->set_sensitive(true);
 	if(!success) {
 		m_textview->get_buffer()->set_text(_("Failed to obtain backtrace. Is gdb installed?"));
+	}else{
+		std::vector<Glib::ustring> lines = Utils::string_split(m_textview->get_buffer()->get_text(false), '\n');
+		Glib::ustring text = Glib::ustring::compose("%1\n\n", lines[0]);
+		for(int i = 1, n = lines.size(); i < n; ++i){
+			if(lines[i].substr(0, 6) == "Thread"){
+				text += Glib::ustring::compose("\n%1\n", lines[i]);
+			}else if(lines[i].substr(0, 1) == "#"){
+				text += Glib::ustring::compose("%1\n", lines[i]);
+			}
+		}
+		m_textview->get_buffer()->set_text(text);
 	}
 	auto begin = m_textview->get_buffer()->begin();
 	m_textview->scroll_to(begin);
