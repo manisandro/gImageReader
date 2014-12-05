@@ -28,6 +28,9 @@
 #include <QStatusBar>
 #include <QUrl>
 #include <csignal>
+#ifdef Q_OS_LINUX
+#include <sys/prctl.h>
+#endif
 
 #include "MainWindow.hh"
 #include "Acquirer.hh"
@@ -61,6 +64,10 @@ static void signalHandler(int signal)
 
 	QProcess process;
 	process.start(QApplication::applicationFilePath(), QStringList() << "crashhandle" << QString::number(QApplication::applicationPid()) << filename);
+#ifdef Q_OS_LINUX
+	// Allow crash handler spawned debugger to attach to the crashed process
+	prctl(PR_SET_PTRACER, process.pid(), 0, 0, 0);
+#endif
 	process.waitForFinished(-1);
 	std::raise(signal);
 }

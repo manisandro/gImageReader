@@ -36,6 +36,10 @@
 #ifdef G_OS_WIN32
 #include <windows.h>
 #endif
+#ifdef G_OS_UNIX
+#include <sys/prctl.h>
+#include <sys/wait.h>
+#endif
 
 
 #if ENABLE_VERSIONCHECK
@@ -59,13 +63,14 @@ void crash_handler(int sig)
 		}
 		MAIN->getOutputManager()->saveBuffer(filename);
 	}
-#ifdef G_OS_WIN32
-	Glib::spawn_async("", std::vector<std::string>{pkgExePath, "crashhandle", Glib::ustring::compose("%1", getpid()), filename});
-	std::exit(1);
-#else
-	Glib::spawn_sync("", std::vector<std::string>{pkgExePath, "crashhandle", Glib::ustring::compose("%1", getpid()), filename});
-	std::raise(sig);
+	Glib::Pid pid;
+	Glib::spawn_async("", std::vector<std::string>{pkgExePath, "crashhandle", Glib::ustring::compose("%1", getpid()), filename}, Glib::SPAWN_DO_NOT_REAP_CHILD, sigc::slot<void>(), &pid);
+#ifdef G_OS_UNIX
+	// Allow crash handler spawned debugger to attach to the crashed process
+	prctl(PR_SET_PTRACER, pid, 0, 0, 0);
 #endif
+	waitpid(pid, 0, 0);
+	std::raise(sig);
 }
 
 MainWindow* MainWindow::s_instance = nullptr;
