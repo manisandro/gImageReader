@@ -75,6 +75,10 @@ void CrashHandler::handleGdbFinished(int exitCode, QProcess::ExitStatus exitStat
 			}
 		}
 	}
+	QTextCursor c = ui.plainTextEditBacktrace->textCursor();
+	c.movePosition(QTextCursor::Start);
+	ui.plainTextEditBacktrace->setTextCursor(c);
+	ui.plainTextEditBacktrace->ensureCursorVisible();
 }
 
 void CrashHandler::regenerateBacktrace()
