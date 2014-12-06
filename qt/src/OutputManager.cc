@@ -42,11 +42,11 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	ui.actionOutputModeCursor->setData(static_cast<int>(InsertMode::Cursor));
 	ui.actionOutputModeReplace->setData(static_cast<int>(InsertMode::Replace));
 	ui.frameOutputSearch->setVisible(false);
-	ui.plainTextEditOutput->setUndoRedoEnabled(true);
 
 	m_spell.setDecodeLanguageCodes(true);
 	m_spell.setShowCheckSpellingCheckbox(true);
 	m_spell.setTextEdit(ui.plainTextEditOutput);
+	m_spell.setUndoRedoEnabled(true);
 
 	connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), ui.dockWidgetOutput, SLOT(setVisible(bool)));
 	connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), m_substitutionsManager, SLOT(hide()));
@@ -59,8 +59,8 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	connect(ui.actionOutputRedo, SIGNAL(triggered()), &m_spell, SLOT(redo()));
 	connect(ui.actionOutputSave, SIGNAL(triggered()), this, SLOT(saveBuffer()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clearBuffer()));
-	connect(ui.plainTextEditOutput, SIGNAL(undoAvailable(bool)), ui.actionOutputUndo, SLOT(setEnabled(bool)));
-	connect(ui.plainTextEditOutput, SIGNAL(redoAvailable(bool)), ui.actionOutputRedo, SLOT(setEnabled(bool)));
+	connect(&m_spell, SIGNAL(undoAvailable(bool)), ui.actionOutputUndo, SLOT(setEnabled(bool)));
+	connect(&m_spell, SIGNAL(redoAvailable(bool)), ui.actionOutputRedo, SLOT(setEnabled(bool)));
 	connect(ui.checkBoxOutputSearchMatchCase, SIGNAL(toggled(bool)), this, SLOT(clearErrorState()));
 	connect(ui.lineEditOutputSearch, SIGNAL(textChanged(QString)), this, SLOT(clearErrorState()));
 	connect(ui.lineEditOutputSearch, SIGNAL(returnPressed()), this, SLOT(findNext()));
@@ -302,8 +302,7 @@ bool OutputManager::clearBuffer()
 		}
 	}
 	ui.plainTextEditOutput->clear();
-	ui.plainTextEditOutput->undo();
-	ui.plainTextEditOutput->document()->clearUndoRedoStacks();
+	ui.plainTextEditOutput->document()->clearUndoRedo();
 	ui.plainTextEditOutput->document()->setModified(false);
 	ui.actionToggleOutputPane->setChecked(false);
 	return true;
