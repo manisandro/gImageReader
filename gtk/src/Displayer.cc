@@ -289,7 +289,7 @@ void Displayer::setRotation(double angle)
 		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
 		Utils::set_spin_blocked(m_rotspin, angle, m_connection_rotSpinChanged);
 		angle *= 0.0174532925199;
-		double delta = m_source->angle - angle;
+		double delta = angle - m_source->angle;
 		m_source->angle = angle;
 		Geometry::Rotation deltaR(delta);
 		for(DisplaySelection* sel : m_selections){
