@@ -449,7 +449,7 @@ void ScannerSane::doRead()
 	m_job->nUsed += n_read;
 
 	/* If we completed a line, feed it out */
-	if(m_job->nUsed >= m_job->lineBuffer.size()){
+	if(m_job->nUsed >= (int)m_job->lineBuffer.size()){
 		g_assert(m_job->nUsed == m_job->parameters.bytes_per_line);
 		++m_job->lineCount;
 
@@ -462,21 +462,21 @@ void ScannerSane::doRead()
 		// Write data
 		int offset = (m_job->lineCount - 1) * m_job->rowstride;
 		if(m_job->parameters.format == SANE_FRAME_GRAY){
-			for(int i = 0; i < m_job->lineBuffer.size(); ++i){
+			for(std::size_t i = 0; i < m_job->lineBuffer.size(); ++i){
 				std::memset(&m_job->imgbuf[offset + 3*i], m_job->lineBuffer[i], 3);
 			}
 		}else if(m_job->parameters.format == SANE_FRAME_RGB){
 			std::memcpy(&m_job->imgbuf[offset], &m_job->lineBuffer[0], m_job->lineBuffer.size());
 		}else if(m_job->parameters.format == SANE_FRAME_RED){
-			for(int i = 0; i < m_job->lineBuffer.size(); ++i){
+			for(std::size_t i = 0; i < m_job->lineBuffer.size(); ++i){
 				m_job->imgbuf[offset + 3*i + 0] = m_job->lineBuffer[i];
 			}
 		}else if(m_job->parameters.format == SANE_FRAME_GREEN){
-			for(int i = 0; i < m_job->lineBuffer.size(); ++i){
+			for(std::size_t i = 0; i < m_job->lineBuffer.size(); ++i){
 				m_job->imgbuf[offset + 3*i + 1] = m_job->lineBuffer[i];
 			}
 		}else if(m_job->parameters.format == SANE_FRAME_BLUE){
-			for(int i = 0; i < m_job->lineBuffer.size(); ++i){
+			for(std::size_t i = 0; i < m_job->lineBuffer.size(); ++i){
 				m_job->imgbuf[offset + 3*i + 2] = m_job->lineBuffer[i];
 			}
 		}
