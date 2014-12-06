@@ -52,14 +52,18 @@ private:
 		Glib::RefPtr<Gtk::Builder> appMenuBuilder = Gtk::Builder::create_from_resource("/org/gnome/gimagereader/appmenu.ui");
 		Glib::RefPtr<Gio::MenuModel> menuModel = Glib::RefPtr<Gio::MenuModel>::cast_static(appMenuBuilder->get_object("appmenu"));
 
-		if(prefers_app_menu()){
+		bool appMenu = false;
+#if GTK_CHECK_VERSION(3,14,0)
+		appMenu = prefers_app_menu();
+#endif
+		if(appMenu){
 			set_app_menu(menuModel);
 		}
 
 		g_assert(m_mainWindow == nullptr);
 		m_mainWindow = new MainWindow();
 		CONNECT(m_mainWindow->getWindow(), hide, [this]{ on_quit(); });
-		if(!prefers_app_menu()){
+		if(!appMenu){
 			m_mainWindow->setMenuModel(menuModel);
 		}
 		add_window(*m_mainWindow->getWindow());
