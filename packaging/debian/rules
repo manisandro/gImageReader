@@ -6,12 +6,21 @@ export DEB_LDFLAGS_MAINT_APPEND=-Wl,--as-needed
 	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DINTERFACE_TYPE=gtk -DENABLE_VERSIONCHECK=0
+	dh_auto_configure -Bbuild-gtk -- -DINTERFACE_TYPE=gtk -DENABLE_VERSIONCHECK=0
+	dh_auto_configure -Bbuild-qt4 -- -DINTERFACE_TYPE=qt4 -DENABLE_VERSIONCHECK=0
+
+override_dh_auto_build:
+	dh_auto_build -Dbuild-gtk
+	dh_auto_build -Dbuild-qt4
+
+override_dh_auto_install:
+	dh_auto_install -Dbuild-gtk
+	dh_auto_install -Dbuild-qt4
 
 override_dh_install:
-	dh_install --fail-missing
+	dh_install --list-missing
 
 override_dh_strip:
 	dh_strip --dbg-package=gimagereader-dbg
 
-.PHONY: override_dh_strip override_dh_auto_configure override_dh_install
+.PHONY: override_dh_auto_configure override_dh_auto_build override_dh_install override_dh_install override_dh_strip

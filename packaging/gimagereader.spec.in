@@ -1,11 +1,11 @@
 Name:          gimagereader
 Version:       @PACKAGE_VERSION@
 Release:       1%{?dist}
-License:       GPLv3+
-Group:         Applications/Productivity
 Summary:       A front-end to tesseract-ocr
-URL:           http://sourceforge.net/projects/gimagereader/
-Source:        %{name}-%{version}.tar.xz
+
+License:       GPLv3+
+URL:           https://github.com/manisandro/gimagereader
+Source0:       https://github.com/manisandro/gimagereader/releases/download/v%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires: cmake
 BuildRequires: gtkmm30-devel
@@ -18,7 +18,7 @@ BuildRequires: intltool
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
 BuildRequires: qt4-devel
-BuildRequires: qtspell-devel
+BuildRequires: qtspell-qt4-devel
 BuildRequires: poppler-qt-devel
 
 Requires:      hicolor-icon-theme
@@ -37,6 +37,7 @@ gImageReader is a simple front-end to tesseract. Features include:
 %package gtk
 Summary:       A Gtk+ front-end to tesseract-ocr
 Requires:      %{name}-common = %{version}-%{release}
+Obsoletes:     %{name} < 2.94-1
 
 %description gtk
 gImageReader is a simple front-end to tesseract. Features include:
