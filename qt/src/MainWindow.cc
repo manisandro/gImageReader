@@ -219,7 +219,6 @@ void MainWindow::showAbout()
 	Ui::AboutDialog aboutDialogUi;
 	aboutDialogUi.setupUi(&d);
 	aboutDialogUi.labelVersion->setText(PACKAGE_VERSION);
-	d.setFixedSize(sizeHint());
 	d.exec();
 }
 
