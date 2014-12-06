@@ -302,7 +302,7 @@ bool OutputManager::clearBuffer()
 		}
 	}
 	ui.plainTextEditOutput->clear();
-	ui.plainTextEditOutput->document()->clearUndoRedo();
+	m_spell.clearUndoRedo();
 	ui.plainTextEditOutput->document()->setModified(false);
 	ui.actionToggleOutputPane->setChecked(false);
 	return true;
