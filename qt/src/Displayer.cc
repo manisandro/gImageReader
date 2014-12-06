@@ -449,9 +449,11 @@ void Displayer::autodetectLayout(bool rotated)
 				}
 			}
 		}
+		QPointF o = m_imageItem->sceneBoundingRect().topLeft();
 		for(int i = 0, n = rects.size(); i < n; ++i){
-			m_selections.append(new DisplaySelection(this, 1 + i, rects[i].topLeft()));
-			m_selections.back()->setPoint(rects[i].bottomRight());
+			m_selections.append(new DisplaySelection(this, 1 + i, rects[i].topLeft() + o));
+			m_selections.back()->setPoint(rects[i].bottomRight() + o);
+			m_selections.back()->scale(m_scale);
 			m_scene.addItem(m_selections.back());
 		}
 		emit selectionChanged(true);
