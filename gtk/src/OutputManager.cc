@@ -74,8 +74,8 @@ OutputManager::OutputManager()
 	CONNECT(Builder("menuitem:output.insert.replace").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Replace, "ins_replace.png"); });
 	CONNECT(Builder("tbbutton:output.stripcrlf").as<Gtk::ToolButton>(), clicked, [this]{ filterBuffer(); });
 	CONNECTS(Builder("tbbutton:output.findreplace").as<Gtk::ToggleToolButton>(), toggled, [this](Gtk::ToggleToolButton* b){ toggleReplaceBox(b); });
-	CONNECT(m_undoButton, clicked, [this]{ m_textBuffer->undo(); m_textView->grab_focus(); });
-	CONNECT(m_redoButton, clicked, [this]{ m_textBuffer->redo(); m_textView->grab_focus(); });
+	CONNECT(m_undoButton, clicked, [this]{ m_textBuffer->undo(); scrollCursorIntoView(); });
+	CONNECT(m_redoButton, clicked, [this]{ m_textBuffer->redo(); scrollCursorIntoView(); });
 	CONNECT(Builder("tbbutton:output.save").as<Gtk::ToolButton>(), clicked, [this]{ saveBuffer(); });
 	CONNECT(Builder("tbbutton:output.clear").as<Gtk::ToolButton>(), clicked, [this]{ clearBuffer(); });
 	CONNECT(m_textBuffer, history_changed, [this]{ m_undoButton->set_sensitive(m_textBuffer->can_undo()); });
@@ -356,6 +356,12 @@ bool OutputManager::clearBuffer()
 bool OutputManager::getBufferModified() const
 {
 	return m_textBuffer->get_modified();
+}
+
+void OutputManager::scrollCursorIntoView()
+{
+	m_textView->scroll_to(m_textView->get_buffer()->get_insert());
+	m_textView->grab_focus();
 }
 
 void OutputManager::setLanguage(const Config::Lang& lang, bool force)

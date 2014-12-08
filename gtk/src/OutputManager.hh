@@ -69,6 +69,7 @@ private:
 	void filterBuffer();
 	void findReplace(bool backwards, bool replace);
 	void replaceAll();
+	void scrollCursorIntoView();
 	void setFont();
 	void setInsertMode(InsertMode mode, const std::string& iconName);
 	void showInsertMenu();
