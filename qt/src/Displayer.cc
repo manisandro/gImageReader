@@ -170,6 +170,8 @@ bool Displayer::renderImage()
 	m_pixmap = QPixmap::fromImage(image);
 	m_imageItem->setPixmap(m_pixmap);
 	m_imageItem->setScale(1.);
+	m_imageItem->setTransformOriginPoint(m_imageItem->boundingRect().center());
+	m_imageItem->setPos(m_imageItem->pos() - m_imageItem->sceneBoundingRect().center());
 	m_scene.setSceneRect(m_imageItem->sceneBoundingRect());
 	centerOn(sceneRect().center());
 	setRotation(ui.spinBoxRotation->value());
@@ -218,6 +220,8 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor)
 	}else{
 		m_imageItem->setPixmap(m_pixmap);
 		m_imageItem->setScale(1.);
+		m_imageItem->setTransformOriginPoint(m_imageItem->boundingRect().center());
+		m_imageItem->setPos(m_imageItem->pos() - m_imageItem->sceneBoundingRect().center());
 	}
 }
 
@@ -228,12 +232,9 @@ void Displayer::setRotation(double angle)
 		Utils::setSpinBlocked(ui.spinBoxRotation, angle);
 		double delta = angle - m_source->angle;
 		m_source->angle = angle;
+		m_imageItem->setRotation(angle);
 		QTransform t;
-		QPointF c = m_imageItem->sceneBoundingRect().center();
-		t.translate(c.x(), c.y());
 		t.rotate(delta);
-		t.translate(-c.x(), -c.y());
-		m_imageItem->setTransform(t, true);
 		for(DisplaySelection* sel : m_selections){
 			sel->rotate(t);
 		}
@@ -386,11 +387,10 @@ QImage Displayer::getImage(const QRectF& rect)
 	QImage image(rect.width(), rect.height(), QImage::Format_RGB32);
 	image.fill(Qt::black);
 	QPainter painter(&image);
-	QPointF center = m_imageItem->sceneBoundingRect().center();
 	QTransform t;
-	t.translate(center.x() - rect.x(), center.y() - rect.y());
+	t.translate(-rect.x(), -rect.y());
 	t.rotate(ui.spinBoxRotation->value());
-	t.translate(-center.x(), -center.y());
+	t.translate(-0.5 * m_pixmap.width(), -0.5 * m_pixmap.height());
 	painter.setTransform(t);
 	painter.drawPixmap(0, 0, m_pixmap);
 	return image;
@@ -423,8 +423,9 @@ void Displayer::autodetectLayout(bool rotated)
 				it->Orientation(&orient, &wdir, &tlo, &deskew);
 				avgDeskew += deskew;
 				++nDeskew;
-				if(x2-x1 > 10 && y2-y1 > 10){
-					rects.append(QRectF(x1, y1, x2 - x1, y2 - y1));
+				float width = x2 - x1, height = y2 - y1;
+				if(width > 10 && height > 10){
+					rects.append(QRectF(x1 - 0.5 * img.width(), y1 - 0.5 * img.height(), width, height));
 				}
 			}while(it->Next(tesseract::RIL_BLOCK));
 		}
@@ -449,11 +450,9 @@ void Displayer::autodetectLayout(bool rotated)
 				}
 			}
 		}
-		QPointF o = m_imageItem->sceneBoundingRect().topLeft();
 		for(int i = 0, n = rects.size(); i < n; ++i){
-			m_selections.append(new DisplaySelection(this, 1 + i, rects[i].topLeft() + o));
-			m_selections.back()->setPoint(rects[i].bottomRight() + o);
-			m_selections.back()->scale(m_scale);
+			m_selections.append(new DisplaySelection(this, 1 + i, rects[i].topLeft()));
+			m_selections.back()->setPoint(rects[i].bottomRight());
 			m_scene.addItem(m_selections.back());
 		}
 		emit selectionChanged(true);
@@ -513,6 +512,8 @@ void Displayer::setScaledImage(const QImage &image, double scale)
 	}else{
 		m_imageItem->setPixmap(QPixmap::fromImage(image));
 		m_imageItem->setScale(1.f / scale);
+		m_imageItem->setTransformOriginPoint(m_imageItem->boundingRect().center());
+		m_imageItem->setPos(m_imageItem->pos() - m_imageItem->sceneBoundingRect().center());
 	}
 	m_scaleMutex.unlock();
 }
