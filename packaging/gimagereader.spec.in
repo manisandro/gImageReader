@@ -82,13 +82,13 @@ Common files for %{name}.
 mkdir build_gtk
 (
 cd build_gtk
-%cmake -DINTERFACE_TYPE=gtk -DENABLE_VERSIONCHECK=0 ..
+%cmake -DINTERFACE_TYPE=gtk -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%{_defaultdocdir}/%{name}-common" ..
 make %{?_smp_mflags}
 )
 mkdir build_qt
 (
 cd build_qt
-%cmake -DINTERFACE_TYPE=qt4 -DENABLE_VERSIONCHECK=0 ..
+%cmake -DINTERFACE_TYPE=qt4 -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%{_defaultdocdir}/%{name}-common" ..
 make %{?_smp_mflags}
 )
 
@@ -143,7 +143,7 @@ fi
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 %{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 %{_datadir}/icons/hicolor/256x256/apps/%{name}.png
-%doc %{_defaultdocdir}/%{name}/manual.html
+%doc %{_defaultdocdir}/%{name}-common/manual.html
 
 %files gtk
 %{_bindir}/%{name}-gtk

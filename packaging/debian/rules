@@ -6,8 +6,8 @@ export DEB_LDFLAGS_MAINT_APPEND=-Wl,--as-needed
 	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure -Bbuild-gtk -- -DINTERFACE_TYPE=gtk -DENABLE_VERSIONCHECK=0
-	dh_auto_configure -Bbuild-qt4 -- -DINTERFACE_TYPE=qt4 -DENABLE_VERSIONCHECK=0
+	dh_auto_configure -Bbuild-gtk -- -DINTERFACE_TYPE=gtk -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="/usr/share/doc/gimagereader-common"
+	dh_auto_configure -Bbuild-qt4 -- -DINTERFACE_TYPE=qt4 -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="/usr/share/doc/gimagereader-common"
 
 override_dh_auto_build:
 	dh_auto_build -Dbuild-gtk

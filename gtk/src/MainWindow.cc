@@ -221,7 +221,11 @@ void MainWindow::showAbout()
 
 void MainWindow::showHelp(const std::string& chapter)
 {
+#ifdef G_OS_WIN32
 	std::string manualFile = Glib::build_filename(pkgDir, "share", "doc", "gimagereader", "manual.html");
+#else
+	std::string manualFile = Glib::build_filename(MANUAL_DIR, "manual.html");
+#endif
 	std::string manualURI = Glib::filename_to_uri(Utils::make_absolute_path(manualFile)) + chapter;
 #ifdef G_OS_WIN32
 	ShellExecute(nullptr, "open", manualURI.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
