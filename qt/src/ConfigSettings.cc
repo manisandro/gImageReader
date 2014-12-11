@@ -38,7 +38,6 @@ TableSetting::TableSetting(const QString& key, QTableWidget* table)
 			m_table->setItem(rowidx, colidx++, new QTableWidgetItem(col));
 		}
 	}
-	connect(m_table, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(serialize()));
 }
 
 void TableSetting::serialize()

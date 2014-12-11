@@ -136,6 +136,7 @@ void Config::showDialog()
 {
 	toggleAddLanguage(true);
 	exec();
+	getSetting<TableSetting>("customlangs")->serialize();
 }
 
 void Config::disableDictInstall()
