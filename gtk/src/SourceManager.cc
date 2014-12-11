@@ -36,7 +36,6 @@ SourceManager::SourceManager()
 
 	m_listView->set_model(Gtk::ListStore::create(m_listViewCols));
 	m_listView->append_column("", m_listViewCols.filename);
-	m_listView->set_headers_visible(false);
 	Gtk::TreeViewColumn* col = m_listView->get_column(0);
 	col->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
 	Gtk::CellRendererText* cell = static_cast<Gtk::CellRendererText*>(col->get_cells().front());
@@ -101,6 +100,7 @@ void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files
 		it->set_value(m_listViewCols.filename, file->get_basename());
 		Source* source = new Source(file, file->get_basename(), file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false);
 		it->set_value(m_listViewCols.source, source);
+		it->set_value(m_listViewCols.path, file->get_path());
 		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
 	}
 	if(it){
@@ -175,6 +175,7 @@ void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf> &pixbuf, const st
 	Source* source = new Source(file, displayname, file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), true);
 	Gtk::TreeIter it = store->append();
 	it->set_value(m_listViewCols.filename, displayname);
+	it->set_value(m_listViewCols.path, filename);
 	it->set_value(m_listViewCols.source, source);
 	CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
 	m_listView->get_selection()->select(it);
@@ -237,6 +238,7 @@ void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib:
 		source->file = otherFile;
 		source->monitor = otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED);
 		it->set_value(m_listViewCols.filename, otherFile->get_basename());
+		it->set_value(m_listViewCols.path, otherFile->get_path());
 		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
 		if(it == m_listView->get_selection()->get_selected()){
 			m_signal_sourceChanged.emit(getSelectedSource());

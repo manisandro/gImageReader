@@ -52,7 +52,8 @@ private:
 	public:
 		Gtk::TreeModelColumn<std::string> filename;
 		Gtk::TreeModelColumn<Source*> source;
-		ListViewColumns(){ add(filename); add(source); }
+		Gtk::TreeModelColumn<std::string> path;
+		ListViewColumns(){ add(filename); add(source); add(path); }
 	};
 
 	Gtk::Notebook* m_notebook;
