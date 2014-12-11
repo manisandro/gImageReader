@@ -28,6 +28,7 @@
 #include <QGraphicsPixmapItem>
 #include <QMessageBox>
 #include <QMouseEvent>
+#include <QScrollBar>
 #include <QWheelEvent>
 #include <tesseract/baseapi.h>
 #include <cassert>
@@ -307,6 +308,14 @@ void Displayer::wheelEvent(QWheelEvent *event)
 {
 	if(event->modifiers() & Qt::ControlModifier){
 		setZoom(event->delta() > 0 ? Zoom::In : Zoom::Out, QGraphicsView::AnchorUnderMouse);
+		event->accept();
+	}else if(event->modifiers() & Qt::ShiftModifier){
+		QScrollBar* hscroll = horizontalScrollBar();
+		if(event->delta() < 0){
+			hscroll->setValue(hscroll->value() + hscroll->singleStep());
+		}else{
+			hscroll->setValue(hscroll->value() - hscroll->singleStep());
+		}
 		event->accept();
 	}else{
 		QGraphicsView::wheelEvent(event);

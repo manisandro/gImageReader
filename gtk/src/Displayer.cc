@@ -417,9 +417,9 @@ bool Displayer::scrollEvent(GdkEventScroll *ev)
 		}
 		return true;
 	}else if((ev->state & Gdk::SHIFT_MASK) != 0){
-		if(ev->direction == GDK_SCROLL_UP){
+		if(ev->direction == GDK_SCROLL_UP || (ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y < 0)){
 			m_hadj->set_value(m_hadj->get_value() - m_hadj->get_step_increment());
-		}else if(ev->direction == GDK_SCROLL_DOWN){
+		}else if(ev->direction == GDK_SCROLL_DOWN || (ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y > 0)){
 			m_hadj->set_value(m_hadj->get_value() + m_hadj->get_step_increment());
 		}
 		return true;
