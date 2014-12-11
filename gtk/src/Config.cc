@@ -75,6 +75,8 @@ Config::Config()
 	m_addLangName = Builder("entry:config.langs.custom.add.name");
 	m_addLangCode = Builder("entry:config.langs.custom.add.code");
 	m_editLangBox = Builder("buttonbox:config.langs.custom.edit");
+	m_addLangButton = Builder("button:config.langs.custom.edit.add");
+	m_addLangButtonOk = Builder("button:config.langs.custom.add.ok");
 	m_removeLangButton = Builder("button:config.langs.custom.edit.remove");
 	m_predefLangView = Builder("treeview:config.langs.predef");
 	m_customLangView = Builder("treeview:config.langs.custom");
@@ -103,9 +105,9 @@ Config::Config()
 	CONNECTS(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [](Gtk::CheckButton* btn){
 		Builder("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>()->set_sensitive(!btn->get_active());
 	});
-	CONNECT(Builder("button:config.langs.custom.edit.add").as<Gtk::Button>(), clicked, [this]{ toggleAddLanguage(); });
+	CONNECT(m_addLangButton, clicked, [this]{ toggleAddLanguage(); });
 	CONNECT(m_removeLangButton, clicked, [this]{ removeLanguage(); });
-	CONNECT(Builder("button:config.langs.custom.add.ok").as<Gtk::Button>(), clicked, [this]{ addLanguage(); });
+	CONNECT(m_addLangButtonOk, clicked, [this]{ addLanguage(); });
 	CONNECT(Builder("button:config.langs.custom.add.cancel").as<Gtk::Button>(), clicked, [this]{ toggleAddLanguage(); });
 	CONNECT(m_customLangView->get_selection(), changed, [this]{ langTableSelectionChanged(); });
 	CONNECT(Builder("button:config.help").as<Gtk::Button>(), clicked, []{ MAIN->showHelp("#Usage_Options"); });
@@ -154,6 +156,11 @@ void Config::toggleAddLanguage(bool forceHide)
 	bool addVisible = forceHide ? true : m_addLangBox->get_visible();
 	m_addLangBox->set_visible(!addVisible);
 	m_editLangBox->set_visible(addVisible);
+	if(addVisible){
+		m_addLangButton->grab_focus();
+	}else{
+		m_addLangButtonOk->grab_focus();
+	}
 	m_addLangPrefix->set_text("");
 	m_addLangCode->set_text("");
 	m_addLangName->set_text("");

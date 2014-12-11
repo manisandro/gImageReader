@@ -64,6 +64,8 @@ private:
 	Gtk::Entry* m_addLangName;
 	Gtk::Entry* m_addLangCode;
 	Gtk::ButtonBox* m_editLangBox;
+	Gtk::Button* m_addLangButton;
+	Gtk::Button* m_addLangButtonOk;
 	Gtk::Button* m_removeLangButton;
 	Gtk::TreeView* m_predefLangView;
 	Gtk::TreeView* m_customLangView;

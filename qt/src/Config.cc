@@ -154,6 +154,11 @@ void Config::toggleAddLanguage(bool forceHide)
 	bool addVisible = forceHide ? true : ui.widgetAddLang->isVisible();
 	ui.widgetAddLang->setVisible(!addVisible);
 	ui.widgetAddRemoveLang->setVisible(addVisible);
+	if(addVisible){
+		ui.pushButtonAddLang->setFocus();
+	}else{
+		ui.pushButtonAddLangOk->setFocus();
+	}
 	ui.lineEditLangPrefix->setText("");
 	ui.lineEditLangPrefix->setStyleSheet("");
 	ui.lineEditLangCode->setText("");
