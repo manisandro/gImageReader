@@ -84,6 +84,8 @@ private:
 	Recognizer* m_recognizer = nullptr;
 	SourceManager* m_sourceManager = nullptr;
 
+	QVBoxLayout* m_statusLayout;
+	QLabel* m_statusLabel;
 	QActionGroup m_idleActions;
 	QList<QWidget*> m_idleWidgets;
 	QStack<QPair<State, QString>> m_stateStack;
