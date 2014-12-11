@@ -77,7 +77,7 @@ public:
 		QObject::connect(dialog, SIGNAL(fontSelected(QFont)), this, SLOT(serialize()));
 	}
 	QFont getValue() const{
-		return m_dialog->selectedFont();
+		return m_dialog->currentFont();
 	}
 
 public slots:

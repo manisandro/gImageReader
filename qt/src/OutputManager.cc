@@ -81,6 +81,8 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	MAIN->getConfig()->addSetting(new ActionSetting("joinhyphen", ui.actionOutputPostprocJoinHyphen));
 	MAIN->getConfig()->addSetting(new ActionSetting("joinspace", ui.actionOutputPostprocCollapseSpaces));
 	MAIN->getConfig()->addSetting(new SwitchSetting("searchmatchcase", ui.checkBoxOutputSearchMatchCase));
+
+	setFont();
 }
 
 OutputManager::~OutputManager()
