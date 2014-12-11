@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-04 18:46+0100\n"
-"PO-Revision-Date: 2014-11-28 16:28+0300\n"
+"PO-Revision-Date: 2014-12-11 16:00+0300\n"
 "Last-Translator: Oleg Moiseichuk <berroll@mail.ru>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:141
 msgid "Redetect Languages"
-msgstr "Инициализировать языки"
+msgstr "Повторить обнаружение языков"
 
 #: ../gtk/data/appmenu.ui.h:2 ../gtk/data/gimagereader.ui.h:73
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:144
@@ -494,7 +494,7 @@ msgstr "Сжимать символы пробелов"
 
 #: ../gtk/data/gimagereader.ui.h:106 ../qt/src/Recognizer.cc:40
 msgid "Current Page"
-msgstr "Текущая страница"
+msgstr "Текущую страницу"
 
 #: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Recognizer.cc:43
 msgid "Multiple Pages..."
@@ -745,7 +745,8 @@ msgstr "Нет доступных языков"
 #: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
-msgstr "Отсутствуют доступные языки для tesseract. Распознавание не сработает."
+msgstr ""
+"Отсутствуют доступные языки для tesseract. Распознавание не сработает."
 
 #: ../gtk/src/Recognizer.cc:132 ../qt/src/Recognizer.cc:156
 msgid "Multilingual"
