@@ -44,7 +44,7 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	m_renderTimer.setSingleShot(true);
 	m_scaleTimer.setSingleShot(true);
 
-	ui.actionRotateLeft->setData(-90.);
+	ui.actionRotateLeft->setData(270.);
 	ui.actionRotateRight->setData(90.);
 
 	connect(ui.actionRotateLeft, SIGNAL(triggered()), this, SLOT(rotate90()));
@@ -334,7 +334,7 @@ QPointF Displayer::mapToSceneClamped(const QPoint &p) const
 void Displayer::rotate90()
 {
 	double angle = ui.spinBoxRotation->value() + qobject_cast<QAction*>(QObject::sender())->data().toDouble();
-	ui.spinBoxRotation->setValue(angle > 360. ? angle - 360. : angle);
+	ui.spinBoxRotation->setValue(angle >= 360. ? angle - 360. : angle);
 }
 
 void Displayer::clearSelections()
