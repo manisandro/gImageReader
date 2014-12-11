@@ -261,6 +261,11 @@ void MainWindow::addNotification(const QString& title, const QString& message, c
 		QToolButton* btn = new QToolButton(frame);
 		btn->setText(action.text);
 		connect(btn, SIGNAL(clicked()), action.target, action.slot);
+		if(action.close){
+			btn->setProperty("handle", QVariant::fromValue(reinterpret_cast<void*>(handle)));
+			btn->setProperty("frame", QVariant::fromValue(reinterpret_cast<void*>(frame)));
+			connect(btn, SIGNAL(clicked()), this, SLOT(hideNotification()));
+		}
 		layout->addWidget(btn);
 	}
 	QToolButton* closeBtn = new QToolButton();
@@ -270,7 +275,6 @@ void MainWindow::addNotification(const QString& title, const QString& message, c
 	connect(closeBtn, SIGNAL(clicked()), this, SLOT(hideNotification()));
 	layout->addWidget(closeBtn);
 	m_statusLayout->insertWidget(0, frame);
-//	ui.centralwidget->layout()->addWidget(frame);
 	if(handle){
 		*handle = frame;
 	}
