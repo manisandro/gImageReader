@@ -163,7 +163,7 @@ bool SubstitutionsManager::clearList()
 {
 	if(m_tableWidget->rowCount() > 0) {
 		int response = QMessageBox::question(this, _("Save List?"), _("Do you want to save the current list?"), QMessageBox::Yes, QMessageBox::No);
-		if((response == QMessageBox::Yes && !saveList()) || response != QMessageBox::No){
+		if(response == QMessageBox::Yes && !saveList()){
 			return false;
 		}
 		m_tableWidget->setRowCount(0);
