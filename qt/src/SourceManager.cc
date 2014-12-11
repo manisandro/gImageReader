@@ -166,7 +166,7 @@ void SourceManager::takeScreenshot()
 		return;
 	}
 	++m_screenshotCount;
-	QString displayname = _("Screenshot %1").arg(m_pasteCount);
+	QString displayname = _("Screenshot %1").arg(m_screenshotCount);
 	savePixmap(pixmap, displayname);
 }
 
