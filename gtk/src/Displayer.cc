@@ -217,14 +217,14 @@ bool Displayer::renderImage()
 	sendScaleRequest({ScaleRequest::Abort});
 	m_blurImage.clear();
 	m_source->page = m_pagespin->get_value_as_int();
-	m_source->brightness = m_conspin->get_value_as_int();
+	m_source->brightness = m_brispin->get_value_as_int();
 	m_source->contrast = m_conspin->get_value_as_int();
 	m_source->resolution = m_resspin->get_value_as_int();
 	m_source->invert = m_invcheck->get_active();
 	Cairo::RefPtr<Cairo::ImageSurface> image;
 	if(!Utils::busyTask([this, &image] {
 		image = m_renderer->render(m_source->page, m_source->resolution);
-		m_renderer->adjustImage(image, m_source->brightness, m_source->contrast, m_source->contrast);
+		m_renderer->adjustImage(image, m_source->brightness, m_source->contrast, m_source->invert);
 		return bool(image);
 	}, _("Rendering image..."))){
 		return false;
