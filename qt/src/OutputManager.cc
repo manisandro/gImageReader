@@ -81,6 +81,7 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	MAIN->getConfig()->addSetting(new ActionSetting("joinhyphen", ui.actionOutputPostprocJoinHyphen));
 	MAIN->getConfig()->addSetting(new ActionSetting("joinspace", ui.actionOutputPostprocCollapseSpaces));
 	MAIN->getConfig()->addSetting(new SwitchSetting("searchmatchcase", ui.checkBoxOutputSearchMatchCase));
+	MAIN->getConfig()->addSetting(new VarSetting<QString>("outputdir", Utils::documentsFolder()));
 
 	setFont();
 }
@@ -278,11 +279,12 @@ bool OutputManager::saveBuffer(const QString& filename)
 	if(outname.isEmpty()){
 		Source* source = MAIN->getSourceManager()->getSelectedSource();
 		QString base = source ? QFileInfo(source->displayname).baseName() : _("output");
-		outname = QDir(Utils::documentsFolder()).absoluteFilePath(base + ".txt");
+		outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(base + ".txt");
 		outname = QFileDialog::getSaveFileName(MAIN, _("Save Output..."), outname, QString("%1 (*.txt)").arg(_("Text Files")));
 		if(outname.isEmpty()){
 			return false;
 		}
+		MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->setValue(QFileInfo(outname).absolutePath());
 	}
 	QFile file(outname);
 	if(!file.open(QIODevice::WriteOnly)){

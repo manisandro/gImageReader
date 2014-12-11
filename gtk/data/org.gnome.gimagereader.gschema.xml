@@ -111,5 +111,10 @@
             <summary>Match case when searching</summary>
             <description>Match case when searching.</description>
         </key>
+        <key type="s" name="outputdir">
+            <default>""</default>
+            <summary>Output directory for OCR output</summary>
+			<description>Output directory for OCR output.</description>
+        </key>
     </schema>
 </schemalist>
