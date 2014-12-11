@@ -279,7 +279,7 @@ bool OutputManager::saveBuffer(const QString& filename)
 		Source* source = MAIN->getSourceManager()->getSelectedSource();
 		QString base = source ? QFileInfo(source->displayname).baseName() : _("output");
 		outname = QDir(Utils::documentsFolder()).absoluteFilePath(base + ".txt");
-		outname = QFileDialog::getSaveFileName(MAIN, _("Save Output..."), filename, QString("%1 (*.txt)").arg(_("Text Files")));
+		outname = QFileDialog::getSaveFileName(MAIN, _("Save Output..."), outname, QString("%1 (*.txt)").arg(_("Text Files")));
 		if(outname.isEmpty()){
 			return false;
 		}
