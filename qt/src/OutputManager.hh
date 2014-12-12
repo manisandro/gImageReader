@@ -66,9 +66,11 @@ private slots:
 	void scrollCursorIntoView();
 	void setFont();
 	void setInsertMode(QAction* action);
+#ifdef Q_OS_LINUX
 	void dictionaryAutoinstall();
 	void dictionaryAutoinstallDone();
 	void dictionaryAutoinstallError(const QDBusError& error);
+#endif
 };
 
 #endif // OUTPUTMANAGER_HH

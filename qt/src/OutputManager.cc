@@ -356,6 +356,7 @@ void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 	}
 }
 
+#ifdef Q_OS_LINUX
 void OutputManager::dictionaryAutoinstall()
 {
 	const QString& code = MAIN->getRecognizer()->getSelectedLanguage().code;
@@ -377,3 +378,4 @@ void OutputManager::dictionaryAutoinstallError(const QDBusError& error)
 	QMessageBox::critical(MAIN, _("Error"), _("Failed to install spelling dictionary: %1").arg(error.message()));
 	MAIN->popState();
 }
+#endif
