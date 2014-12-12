@@ -48,11 +48,19 @@ Displayer::Displayer()
 	m_selmenu = Builder("window:selectionmenu");
 	m_invcheck = Builder("check:display.invert");
 
+#if GTKMM_CHECK_VERSION(3,12,0)
 	m_rotspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/angle.png"));
 	m_pagespin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/page.png"));
 	m_resspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/resolution.png"));
 	m_brispin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/brightness.png"));
 	m_conspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/contrast.png"));
+#else
+	gtk_entry_set_icon_from_pixbuf(GTK_ENTRY(m_rotspin->gobj()), GTK_ENTRY_ICON_PRIMARY, gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/angle.png", 0));
+	gtk_entry_set_icon_from_pixbuf(GTK_ENTRY(m_pagespin->gobj()), GTK_ENTRY_ICON_PRIMARY, gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/page.png", 0));
+	gtk_entry_set_icon_from_pixbuf(GTK_ENTRY(m_resspin->gobj()), GTK_ENTRY_ICON_PRIMARY, gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/resolution.png", 0));
+	gtk_entry_set_icon_from_pixbuf(GTK_ENTRY(m_brispin->gobj()), GTK_ENTRY_ICON_PRIMARY, gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/brightness.png", 0));
+	gtk_entry_set_icon_from_pixbuf(GTK_ENTRY(m_conspin->gobj()), GTK_ENTRY_ICON_PRIMARY, gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/contrast.png", 0));
+#endif
 
 	m_viewport->override_background_color(Gdk::RGBA("#a0a0a4"));
 
