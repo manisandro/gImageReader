@@ -1,3 +1,13 @@
+gImageReader 3.0 (Dec 12 2014):
+ * gImageReader 3.0 stable
+ * New Qt4/5 interface, as alternative to the Gtk interface
+ * Fixed scanning on Windows
+ * Memorize image settings (brightness, contrast, etc) when switching images
+ * Search forward and backward, replace all, case sensitive search
+ * Many bug fixes
+ * Translation updates
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+ 
 gImageReader 2.93 (Apr 30 2014):
  * gImageReader 3.0 beta 4
  * Add possibility to choose multiple recognition languages
