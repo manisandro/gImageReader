@@ -18,7 +18,7 @@
   </ul>
  </description>
  <screenshots>
-  <screenshot type="default" width="917" height="643">http://a.fsdn.com/con/app/proj/gimagereader/screenshots/v2.90.png</screenshot>
+  <screenshot type="default" width="1504" height="846">http://gimagereader.sourceforge.net/gimagereader-@INTERFACE_TYPE@.jpg</screenshot>
  </screenshots>
  <url type="homepage">http://sourceforge.net/projects/gimagereader/</url>
  <updatecontact>manisandro@gmail.com</updatecontact>
