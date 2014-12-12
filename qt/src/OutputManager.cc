@@ -168,7 +168,11 @@ void OutputManager::replaceAll()
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
 	QTextCursor cursor =  ui.plainTextEditOutput->textCursor();
 	int end = qMax(cursor.anchor(), cursor.position());
-	if(cursor.anchor() == cursor.position()){
+	QString cursel = cursor.selectedText();
+	if(cursor.anchor() == cursor.position() ||
+	   cursel == ui.lineEditOutputSearch->text() ||
+	   cursel == ui.lineEditOutputReplace->text())
+	{
 		cursor.movePosition(QTextCursor::Start);
 		QTextCursor tmp(cursor);
 		tmp.movePosition(QTextCursor::End);

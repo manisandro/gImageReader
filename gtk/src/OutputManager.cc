@@ -195,7 +195,10 @@ void OutputManager::replaceAll()
 {
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
 	Gtk::TextIter start, end;
-	if(!m_textBuffer->get_selection_bounds(start, end)){
+	if(!m_textBuffer->get_selection_bounds(start, end) ||
+		m_textBuffer->get_text(start, end, false) == m_searchEntry->get_text() ||
+		m_textBuffer->get_text(start, end, false) == m_replaceEntry->get_text())
+	{
 		start = m_textBuffer->begin();
 		end = m_textBuffer->end();
 	}
