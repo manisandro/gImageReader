@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 18:46+0100\n"
+"POT-Creation-Date: 2014-12-12 23:51+0100\n"
 "PO-Revision-Date: 2014-11-22 20:33+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -28,8 +28,8 @@ msgstr "Redétecter langues"
 msgid "Preferences"
 msgstr "Préférences"
 
-#: ../gtk/data/appmenu.ui.h:3 ../gtk/src/OutputManager.cc:377
-#: ../qt/src/OutputManager.cc:326 ../qt/src/Ui_MainWindow.hh:149
+#: ../gtk/data/appmenu.ui.h:3 ../gtk/src/OutputManager.cc:398
+#: ../qt/src/OutputManager.cc:341 ../qt/src/Ui_MainWindow.hh:149
 msgid "Help"
 msgstr "Aide"
 
@@ -509,8 +509,8 @@ msgstr "Annuler"
 msgid "scan.png"
 msgstr "scan.png"
 
-#: ../gtk/src/Acquirer.cc:90 ../gtk/src/Displayer.cc:496
-#: ../qt/src/Acquirer.cc:78 ../qt/src/Displayer.cc:377
+#: ../gtk/src/Acquirer.cc:90 ../gtk/src/Displayer.cc:510
+#: ../qt/src/Acquirer.cc:78 ../qt/src/Displayer.cc:387
 msgid "PNG Images"
 msgstr "Images PNG"
 
@@ -555,44 +555,44 @@ msgstr "Transfert de données..."
 msgid "Canceling scan..."
 msgstr "Annulation de scan..."
 
-#: ../gtk/src/Config.cc:85 ../qt/data/ConfigDialog.ui.h:6
+#: ../gtk/src/Config.cc:87 ../qt/data/ConfigDialog.ui.h:6
 msgid "Filename prefix"
 msgstr "Préfixe nom ficher"
 
-#: ../gtk/src/Config.cc:86 ../qt/data/ConfigDialog.ui.h:7
+#: ../gtk/src/Config.cc:88 ../qt/data/ConfigDialog.ui.h:7
 msgid "Code"
 msgstr "Code"
 
-#: ../gtk/src/Config.cc:87 ../qt/data/ConfigDialog.ui.h:8
+#: ../gtk/src/Config.cc:89 ../qt/data/ConfigDialog.ui.h:8
 msgid "Native name"
 msgstr "Nom natif"
 
-#: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:43
+#: ../gtk/src/CrashHandler.cc:26 ../gtk/src/CrashHandler.cc:44
 #: ../qt/src/CrashHandler.cc:35
 msgid "Crash Handler"
 msgstr "Handler de crash"
 
-#: ../gtk/src/CrashHandler.cc:45 ../qt/src/CrashHandler.cc:30
+#: ../gtk/src/CrashHandler.cc:46 ../qt/src/CrashHandler.cc:30
 msgid "Your work has been saved under <b>%1</b>."
 msgstr "Votre travail a été enregistré sous <b>%1</b>."
 
-#: ../gtk/src/CrashHandler.cc:47 ../qt/src/CrashHandler.cc:32
+#: ../gtk/src/CrashHandler.cc:48 ../qt/src/CrashHandler.cc:32
 msgid "There was no unsaved work."
 msgstr "Il n'y avait pas de travail non enregistré."
 
-#: ../gtk/src/CrashHandler.cc:103 ../qt/src/CrashHandler.cc:64
+#: ../gtk/src/CrashHandler.cc:104 ../qt/src/CrashHandler.cc:64
 msgid "Failed to obtain backtrace. Is gdb installed?"
 msgstr "Impossible de obtenir le backtrace. Est gdb installée?"
 
-#: ../gtk/src/Displayer.cc:92 ../qt/src/Displayer.cc:65
+#: ../gtk/src/Displayer.cc:100 ../qt/src/Displayer.cc:66
 msgid "selection.png"
 msgstr "selection.png"
 
-#: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:145
+#: ../gtk/src/Displayer.cc:217 ../qt/src/Displayer.cc:146
 msgid "Failed to load image"
 msgstr "Manqué de ouvrir l'image"
 
-#: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:145
+#: ../gtk/src/Displayer.cc:217 ../qt/src/Displayer.cc:146
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -600,15 +600,15 @@ msgstr ""
 "Le fichier pourrait non entre une image ou être corrompu:\n"
 "%1"
 
-#: ../gtk/src/Displayer.cc:229
+#: ../gtk/src/Displayer.cc:243
 msgid "Rendering image..."
 msgstr "Rendering de l'image..."
 
-#: ../gtk/src/Displayer.cc:497 ../qt/src/Displayer.cc:377
+#: ../gtk/src/Displayer.cc:511 ../qt/src/Displayer.cc:387
 msgid "Save Selection Image"
 msgstr "Enregistrer sélection"
 
-#: ../gtk/src/Displayer.cc:605 ../qt/src/Displayer.cc:433
+#: ../gtk/src/Displayer.cc:619 ../qt/src/Displayer.cc:443
 msgid "Performing layout analysis"
 msgstr "Exécution de analyse de mise en page"
 
@@ -638,106 +638,106 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr "Remplacer fichier?"
 
-#: ../gtk/src/MainWindow.cc:120 ../qt/src/MainWindow.cc:123
+#: ../gtk/src/MainWindow.cc:125 ../qt/src/MainWindow.cc:137
 msgid "Select an image to begin..."
 msgstr "Ouvrir une image pour commencer..."
 
-#: ../gtk/src/MainWindow.cc:205 ../qt/src/MainWindow.cc:203
+#: ../gtk/src/MainWindow.cc:210 ../qt/src/MainWindow.cc:217
 msgid "To recognize specific areas, drag rectangles over them."
 msgstr ""
 "Pour reconnaître des régions spécifiques, traîner des rectangles sur les."
 
-#: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:325
+#: ../gtk/src/MainWindow.cc:315 ../qt/src/MainWindow.cc:348
 msgid "New version"
 msgstr "Nouveau version"
 
-#: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:325
+#: ../gtk/src/MainWindow.cc:315 ../qt/src/MainWindow.cc:348
 msgid "gImageReader %1 is available"
 msgstr "gImageReader %1 est disponible"
 
-#: ../gtk/src/MainWindow.cc:307 ../qt/src/MainWindow.cc:326
+#: ../gtk/src/MainWindow.cc:316 ../qt/src/MainWindow.cc:349
 msgid "Download"
 msgstr "Télécharger"
 
-#: ../gtk/src/MainWindow.cc:308 ../qt/src/MainWindow.cc:327
+#: ../gtk/src/MainWindow.cc:317 ../qt/src/MainWindow.cc:350
 msgid "Changelog"
 msgstr "Nouvelles"
 
-#: ../gtk/src/MainWindow.cc:309 ../qt/src/MainWindow.cc:328
+#: ../gtk/src/MainWindow.cc:318 ../qt/src/MainWindow.cc:351
 msgid "Don't notify again"
 msgstr "Ne plus demander"
 
-#: ../gtk/src/OutputManager.cc:173 ../qt/src/OutputManager.cc:139
+#: ../gtk/src/OutputManager.cc:184 ../qt/src/OutputManager.cc:144
 msgid "Stripping line breaks..."
 msgstr "Supprimer sauts de ligne"
 
-#: ../gtk/src/OutputManager.cc:189 ../qt/src/OutputManager.cc:163
+#: ../gtk/src/OutputManager.cc:200 ../qt/src/OutputManager.cc:168
 msgid "Replacing..."
 msgstr "Remplacement en cours..."
 
-#: ../gtk/src/OutputManager.cc:278
+#: ../gtk/src/OutputManager.cc:292
 msgid "Check spelling"
 msgstr "Vérifier l'orthographie"
 
-#: ../gtk/src/OutputManager.cc:317 ../qt/src/OutputManager.cc:276
+#: ../gtk/src/OutputManager.cc:331 ../qt/src/OutputManager.cc:285
 msgid "output"
 msgstr "restitution"
 
-#: ../gtk/src/OutputManager.cc:321 ../qt/src/OutputManager.cc:278
+#: ../gtk/src/OutputManager.cc:335 ../qt/src/OutputManager.cc:287
 msgid "Text Files"
 msgstr "Fichiers texte"
 
-#: ../gtk/src/OutputManager.cc:322 ../qt/src/OutputManager.cc:278
+#: ../gtk/src/OutputManager.cc:336 ../qt/src/OutputManager.cc:287
 msgid "Save Output..."
 msgstr "Enregistrer de la restitution..."
 
-#: ../gtk/src/OutputManager.cc:329 ../qt/src/OutputManager.cc:285
+#: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:295
 msgid "Failed to save output"
 msgstr "Manque de enregistrer la restitution"
 
-#: ../gtk/src/OutputManager.cc:329 ../qt/src/OutputManager.cc:285
+#: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:295
 msgid "Check that you have writing permissions in the selected folder."
 msgstr ""
 "Vérifier qu'on a autorisations te écriture dans le dossier sélectionné."
 
-#: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:299
+#: ../gtk/src/OutputManager.cc:359 ../qt/src/OutputManager.cc:309
 msgid "Output not saved"
 msgstr "Restitution pas enregistré"
 
-#: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:299
+#: ../gtk/src/OutputManager.cc:359 ../qt/src/OutputManager.cc:309
 msgid "Save output before proceeding?"
 msgstr "Enregistrer la restitution avant précéder?"
 
-#: ../gtk/src/OutputManager.cc:368
+#: ../gtk/src/OutputManager.cc:389
 msgid "en_US"
 msgstr "fr_FR"
 
-#: ../gtk/src/OutputManager.cc:376 ../qt/src/OutputManager.cc:325
+#: ../gtk/src/OutputManager.cc:397 ../qt/src/OutputManager.cc:340
 msgid "Don't show again"
 msgstr "Ne plus demander"
 
-#: ../gtk/src/OutputManager.cc:384 ../qt/src/OutputManager.cc:333
+#: ../gtk/src/OutputManager.cc:405 ../qt/src/OutputManager.cc:348
 msgid "Install"
 msgstr "Installer"
 
-#: ../gtk/src/OutputManager.cc:389 ../qt/src/OutputManager.cc:338
+#: ../gtk/src/OutputManager.cc:410 ../qt/src/OutputManager.cc:353
 msgid "Spelling dictionary missing"
 msgstr "Dictionnaire manquant"
 
-#: ../gtk/src/OutputManager.cc:389 ../qt/src/OutputManager.cc:338
+#: ../gtk/src/OutputManager.cc:410 ../qt/src/OutputManager.cc:353
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr ""
 "Le dictionnaire de vérification orthographique pour '%1' n'est pas installé"
 
-#: ../gtk/src/OutputManager.cc:398 ../qt/src/OutputManager.cc:347
+#: ../gtk/src/OutputManager.cc:419 ../qt/src/OutputManager.cc:362
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Installation de dictionnaire de vérification orthographique pour '%1'"
 
-#: ../gtk/src/OutputManager.cc:413 ../qt/src/OutputManager.cc:362
+#: ../gtk/src/OutputManager.cc:434 ../qt/src/OutputManager.cc:377
 msgid "Error"
 msgstr "Erreur"
 
-#: ../gtk/src/OutputManager.cc:413 ../qt/src/OutputManager.cc:362
+#: ../gtk/src/OutputManager.cc:434 ../qt/src/OutputManager.cc:377
 msgid "Failed to install spelling dictionary: %1"
 msgstr ""
 "Impossible d'installer le dictionnaire de vérification orthographique: %1"
@@ -757,16 +757,16 @@ msgstr ""
 msgid "Multilingual"
 msgstr "Multilingue"
 
-#: ../gtk/src/Recognizer.cc:191 ../qt/src/Recognizer.cc:218
+#: ../gtk/src/Recognizer.cc:192 ../qt/src/Recognizer.cc:218
 msgid "Recognize selection"
 msgstr "Reconnaître sélection"
 
-#: ../gtk/src/Recognizer.cc:193 ../qt/src/Recognizer.cc:56
+#: ../gtk/src/Recognizer.cc:194 ../qt/src/Recognizer.cc:56
 #: ../qt/src/Recognizer.cc:218
 msgid "Recognize all"
 msgstr "Reconnaître toute"
 
-#: ../gtk/src/Recognizer.cc:265 ../qt/src/Recognizer.cc:296
+#: ../gtk/src/Recognizer.cc:266 ../qt/src/Recognizer.cc:296
 msgid ""
 "\n"
 "\tFailed to initialize tesseract"
@@ -774,11 +774,11 @@ msgstr ""
 "\n"
 "\tImpossible de initialiser tesseract"
 
-#: ../gtk/src/Recognizer.cc:273 ../qt/src/Recognizer.cc:304
+#: ../gtk/src/Recognizer.cc:274 ../qt/src/Recognizer.cc:304
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Recognition page %1 (%2 de %3)"
 
-#: ../gtk/src/Recognizer.cc:278 ../qt/src/Recognizer.cc:309
+#: ../gtk/src/Recognizer.cc:279 ../qt/src/Recognizer.cc:309
 msgid ""
 "\n"
 "\tPage %1: failed to render page"
@@ -786,7 +786,7 @@ msgstr ""
 "\n"
 "\tPage %1: erreur de rendering de la page"
 
-#: ../gtk/src/Recognizer.cc:279 ../qt/src/Recognizer.cc:310
+#: ../gtk/src/Recognizer.cc:280 ../qt/src/Recognizer.cc:310
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -794,21 +794,21 @@ msgstr ""
 "\n"
 "[Manqué de reconnaitre la page %1]\n"
 
-#: ../gtk/src/Recognizer.cc:293 ../gtk/src/Recognizer.cc:314
+#: ../gtk/src/Recognizer.cc:294 ../gtk/src/Recognizer.cc:315
 #: ../qt/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:345
 msgid "Recognizing..."
 msgstr "Recognition en cours..."
 
-#: ../gtk/src/Recognizer.cc:296 ../gtk/src/Recognizer.cc:304
+#: ../gtk/src/Recognizer.cc:297 ../gtk/src/Recognizer.cc:305
 #: ../qt/src/Recognizer.cc:327 ../qt/src/Recognizer.cc:335
 msgid "Recognition errors occurred"
 msgstr "Erreurs de recognition sont survenues"
 
-#: ../gtk/src/Recognizer.cc:296 ../qt/src/Recognizer.cc:327
+#: ../gtk/src/Recognizer.cc:297 ../qt/src/Recognizer.cc:327
 msgid "The following errors occurred:%1"
 msgstr "Les erreurs suivantes sont survenues:%1"
 
-#: ../gtk/src/Recognizer.cc:304 ../qt/src/Recognizer.cc:335
+#: ../gtk/src/Recognizer.cc:305 ../qt/src/Recognizer.cc:335
 msgid "Failed to initialize tesseract"
 msgstr "Manqué de initialiser tesseract"
 
@@ -886,11 +886,11 @@ msgstr "Impossible écrire fichier"
 msgid "Could not write to %1."
 msgstr "Impossible écrire à %1."
 
-#: ../gtk/src/SourceManager.cc:190 ../qt/src/SourceManager.cc:205
+#: ../gtk/src/SourceManager.cc:191 ../qt/src/SourceManager.cc:205
 msgid "Delete File?"
 msgstr "Supprimer fichier?"
 
-#: ../gtk/src/SourceManager.cc:190 ../qt/src/SourceManager.cc:205
+#: ../gtk/src/SourceManager.cc:191 ../qt/src/SourceManager.cc:205
 msgid ""
 "The following file will be deleted:\n"
 "%1"
@@ -898,11 +898,11 @@ msgstr ""
 "Le fichier suivant sera supprimé:\n"
 "%1"
 
-#: ../gtk/src/SourceManager.cc:245 ../qt/src/SourceManager.cc:249
+#: ../gtk/src/SourceManager.cc:247 ../qt/src/SourceManager.cc:249
 msgid "Missing File"
 msgstr "Fichier manquante"
 
-#: ../gtk/src/SourceManager.cc:245 ../qt/src/SourceManager.cc:249
+#: ../gtk/src/SourceManager.cc:247 ../qt/src/SourceManager.cc:249
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"

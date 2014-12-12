@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimagereader\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 18:46+0100\n"
+"POT-Creation-Date: 2014-12-12 23:51+0100\n"
 "PO-Revision-Date: 2014-05-02 13:00+0800\n"
 "Last-Translator: kaiman <kaigfm@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -27,8 +27,8 @@ msgstr "重新检测语言(_R)"
 msgid "Preferences"
 msgstr ""
 
-#: ../gtk/data/appmenu.ui.h:3 ../gtk/src/OutputManager.cc:377
-#: ../qt/src/OutputManager.cc:326 ../qt/src/Ui_MainWindow.hh:149
+#: ../gtk/data/appmenu.ui.h:3 ../gtk/src/OutputManager.cc:398
+#: ../qt/src/OutputManager.cc:341 ../qt/src/Ui_MainWindow.hh:149
 msgid "Help"
 msgstr "帮助"
 
@@ -528,8 +528,8 @@ msgstr "取消"
 msgid "scan.png"
 msgstr ""
 
-#: ../gtk/src/Acquirer.cc:90 ../gtk/src/Displayer.cc:496
-#: ../qt/src/Acquirer.cc:78 ../qt/src/Displayer.cc:377
+#: ../gtk/src/Acquirer.cc:90 ../gtk/src/Displayer.cc:510
+#: ../qt/src/Acquirer.cc:78 ../qt/src/Displayer.cc:387
 msgid "PNG Images"
 msgstr "PNG 图片"
 
@@ -575,44 +575,44 @@ msgstr "传输数据..."
 msgid "Canceling scan..."
 msgstr "取消扫描..."
 
-#: ../gtk/src/Config.cc:85 ../qt/data/ConfigDialog.ui.h:6
+#: ../gtk/src/Config.cc:87 ../qt/data/ConfigDialog.ui.h:6
 msgid "Filename prefix"
 msgstr "识别库前缀"
 
-#: ../gtk/src/Config.cc:86 ../qt/data/ConfigDialog.ui.h:7
+#: ../gtk/src/Config.cc:88 ../qt/data/ConfigDialog.ui.h:7
 msgid "Code"
 msgstr "语言代码"
 
-#: ../gtk/src/Config.cc:87 ../qt/data/ConfigDialog.ui.h:8
+#: ../gtk/src/Config.cc:89 ../qt/data/ConfigDialog.ui.h:8
 msgid "Native name"
 msgstr "自然名称"
 
-#: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:43
+#: ../gtk/src/CrashHandler.cc:26 ../gtk/src/CrashHandler.cc:44
 #: ../qt/src/CrashHandler.cc:35
 msgid "Crash Handler"
 msgstr "崩溃处理"
 
-#: ../gtk/src/CrashHandler.cc:45 ../qt/src/CrashHandler.cc:30
+#: ../gtk/src/CrashHandler.cc:46 ../qt/src/CrashHandler.cc:30
 msgid "Your work has been saved under <b>%1</b>."
 msgstr ""
 
-#: ../gtk/src/CrashHandler.cc:47 ../qt/src/CrashHandler.cc:32
+#: ../gtk/src/CrashHandler.cc:48 ../qt/src/CrashHandler.cc:32
 msgid "There was no unsaved work."
 msgstr ""
 
-#: ../gtk/src/CrashHandler.cc:103 ../qt/src/CrashHandler.cc:64
+#: ../gtk/src/CrashHandler.cc:104 ../qt/src/CrashHandler.cc:64
 msgid "Failed to obtain backtrace. Is gdb installed?"
 msgstr ""
 
-#: ../gtk/src/Displayer.cc:92 ../qt/src/Displayer.cc:65
+#: ../gtk/src/Displayer.cc:100 ../qt/src/Displayer.cc:66
 msgid "selection.png"
 msgstr ""
 
-#: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:145
+#: ../gtk/src/Displayer.cc:217 ../qt/src/Displayer.cc:146
 msgid "Failed to load image"
 msgstr "加载图片失败"
 
-#: ../gtk/src/Displayer.cc:209 ../qt/src/Displayer.cc:145
+#: ../gtk/src/Displayer.cc:217 ../qt/src/Displayer.cc:146
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -620,15 +620,15 @@ msgstr ""
 "该文件可能不是一个图片或已损坏了\n"
 "%1"
 
-#: ../gtk/src/Displayer.cc:229
+#: ../gtk/src/Displayer.cc:243
 msgid "Rendering image..."
 msgstr "渲染图片..."
 
-#: ../gtk/src/Displayer.cc:497 ../qt/src/Displayer.cc:377
+#: ../gtk/src/Displayer.cc:511 ../qt/src/Displayer.cc:387
 msgid "Save Selection Image"
 msgstr "保存选择图片"
 
-#: ../gtk/src/Displayer.cc:605 ../qt/src/Displayer.cc:433
+#: ../gtk/src/Displayer.cc:619 ../qt/src/Displayer.cc:443
 msgid "Performing layout analysis"
 msgstr "执行布局分析"
 
@@ -658,105 +658,105 @@ msgstr "文件名为 \"%1\"的文件已存在。你确定要覆盖它吗？"
 msgid "Overwrite File?"
 msgstr "覆盖文件吗？"
 
-#: ../gtk/src/MainWindow.cc:120 ../qt/src/MainWindow.cc:123
+#: ../gtk/src/MainWindow.cc:125 ../qt/src/MainWindow.cc:137
 msgid "Select an image to begin..."
 msgstr "选择一个图片开始..."
 
-#: ../gtk/src/MainWindow.cc:205 ../qt/src/MainWindow.cc:203
+#: ../gtk/src/MainWindow.cc:210 ../qt/src/MainWindow.cc:217
 msgid "To recognize specific areas, drag rectangles over them."
 msgstr "在要识别的范围上拖动选择区以识别指定区域。"
 
-#: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:325
+#: ../gtk/src/MainWindow.cc:315 ../qt/src/MainWindow.cc:348
 msgid "New version"
 msgstr "新版本"
 
-#: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:325
+#: ../gtk/src/MainWindow.cc:315 ../qt/src/MainWindow.cc:348
 msgid "gImageReader %1 is available"
 msgstr "gImageReader %1 可用"
 
-#: ../gtk/src/MainWindow.cc:307 ../qt/src/MainWindow.cc:326
+#: ../gtk/src/MainWindow.cc:316 ../qt/src/MainWindow.cc:349
 msgid "Download"
 msgstr "下载"
 
-#: ../gtk/src/MainWindow.cc:308 ../qt/src/MainWindow.cc:327
+#: ../gtk/src/MainWindow.cc:317 ../qt/src/MainWindow.cc:350
 msgid "Changelog"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:309 ../qt/src/MainWindow.cc:328
+#: ../gtk/src/MainWindow.cc:318 ../qt/src/MainWindow.cc:351
 msgid "Don't notify again"
 msgstr "不再提示"
 
-#: ../gtk/src/OutputManager.cc:173 ../qt/src/OutputManager.cc:139
+#: ../gtk/src/OutputManager.cc:184 ../qt/src/OutputManager.cc:144
 msgid "Stripping line breaks..."
 msgstr ""
 
-#: ../gtk/src/OutputManager.cc:189 ../qt/src/OutputManager.cc:163
+#: ../gtk/src/OutputManager.cc:200 ../qt/src/OutputManager.cc:168
 #, fuzzy
 msgid "Replacing..."
 msgstr "正在识别..."
 
-#: ../gtk/src/OutputManager.cc:278
+#: ../gtk/src/OutputManager.cc:292
 msgid "Check spelling"
 msgstr "拼写检查"
 
-#: ../gtk/src/OutputManager.cc:317 ../qt/src/OutputManager.cc:276
+#: ../gtk/src/OutputManager.cc:331 ../qt/src/OutputManager.cc:285
 #, fuzzy
 msgid "output"
 msgstr "输出："
 
-#: ../gtk/src/OutputManager.cc:321 ../qt/src/OutputManager.cc:278
+#: ../gtk/src/OutputManager.cc:335 ../qt/src/OutputManager.cc:287
 msgid "Text Files"
 msgstr "文本文件"
 
-#: ../gtk/src/OutputManager.cc:322 ../qt/src/OutputManager.cc:278
+#: ../gtk/src/OutputManager.cc:336 ../qt/src/OutputManager.cc:287
 msgid "Save Output..."
 msgstr "保存输出..."
 
-#: ../gtk/src/OutputManager.cc:329 ../qt/src/OutputManager.cc:285
+#: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:295
 msgid "Failed to save output"
 msgstr "保存输出失败"
 
-#: ../gtk/src/OutputManager.cc:329 ../qt/src/OutputManager.cc:285
+#: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:295
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "检查你是否有权限访问选择的文件夹。"
 
-#: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:299
+#: ../gtk/src/OutputManager.cc:359 ../qt/src/OutputManager.cc:309
 msgid "Output not saved"
 msgstr "输出未保存"
 
-#: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:299
+#: ../gtk/src/OutputManager.cc:359 ../qt/src/OutputManager.cc:309
 msgid "Save output before proceeding?"
 msgstr "处理前保存输出"
 
-#: ../gtk/src/OutputManager.cc:368
+#: ../gtk/src/OutputManager.cc:389
 msgid "en_US"
 msgstr ""
 
-#: ../gtk/src/OutputManager.cc:376 ../qt/src/OutputManager.cc:325
+#: ../gtk/src/OutputManager.cc:397 ../qt/src/OutputManager.cc:340
 msgid "Don't show again"
 msgstr "不再显示"
 
-#: ../gtk/src/OutputManager.cc:384 ../qt/src/OutputManager.cc:333
+#: ../gtk/src/OutputManager.cc:405 ../qt/src/OutputManager.cc:348
 msgid "Install"
 msgstr "安装"
 
-#: ../gtk/src/OutputManager.cc:389 ../qt/src/OutputManager.cc:338
+#: ../gtk/src/OutputManager.cc:410 ../qt/src/OutputManager.cc:353
 msgid "Spelling dictionary missing"
 msgstr "缺失拼写检查字典"
 
-#: ../gtk/src/OutputManager.cc:389 ../qt/src/OutputManager.cc:338
+#: ../gtk/src/OutputManager.cc:410 ../qt/src/OutputManager.cc:353
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "拼写检查字典 %1 没安装"
 
-#: ../gtk/src/OutputManager.cc:398 ../qt/src/OutputManager.cc:347
+#: ../gtk/src/OutputManager.cc:419 ../qt/src/OutputManager.cc:362
 msgid "Installing spelling dictionary for '%1'"
 msgstr "安装 '%1' 拼写检查字典"
 
-#: ../gtk/src/OutputManager.cc:413 ../qt/src/OutputManager.cc:362
+#: ../gtk/src/OutputManager.cc:434 ../qt/src/OutputManager.cc:377
 msgid "Error"
 msgstr ""
 
-#: ../gtk/src/OutputManager.cc:413 ../qt/src/OutputManager.cc:362
+#: ../gtk/src/OutputManager.cc:434 ../qt/src/OutputManager.cc:377
 #, fuzzy
 msgid "Failed to install spelling dictionary: %1"
 msgstr "安装拼写检查字典失败"
@@ -774,16 +774,16 @@ msgstr "没有可用 tesseract 语言（识别库）。识别无法进行。"
 msgid "Multilingual"
 msgstr "多语种"
 
-#: ../gtk/src/Recognizer.cc:191 ../qt/src/Recognizer.cc:218
+#: ../gtk/src/Recognizer.cc:192 ../qt/src/Recognizer.cc:218
 msgid "Recognize selection"
 msgstr "识别选择区"
 
-#: ../gtk/src/Recognizer.cc:193 ../qt/src/Recognizer.cc:56
+#: ../gtk/src/Recognizer.cc:194 ../qt/src/Recognizer.cc:56
 #: ../qt/src/Recognizer.cc:218
 msgid "Recognize all"
 msgstr "识别全部"
 
-#: ../gtk/src/Recognizer.cc:265 ../qt/src/Recognizer.cc:296
+#: ../gtk/src/Recognizer.cc:266 ../qt/src/Recognizer.cc:296
 msgid ""
 "\n"
 "\tFailed to initialize tesseract"
@@ -791,11 +791,11 @@ msgstr ""
 "\n"
 "\t初始化tesseract失败"
 
-#: ../gtk/src/Recognizer.cc:273 ../qt/src/Recognizer.cc:304
+#: ../gtk/src/Recognizer.cc:274 ../qt/src/Recognizer.cc:304
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "正在识别第 %1 页 (%2 / %3)"
 
-#: ../gtk/src/Recognizer.cc:278 ../qt/src/Recognizer.cc:309
+#: ../gtk/src/Recognizer.cc:279 ../qt/src/Recognizer.cc:309
 msgid ""
 "\n"
 "\tPage %1: failed to render page"
@@ -803,7 +803,7 @@ msgstr ""
 "\n"
 "\t页 %1: 渲染页失败"
 
-#: ../gtk/src/Recognizer.cc:279 ../qt/src/Recognizer.cc:310
+#: ../gtk/src/Recognizer.cc:280 ../qt/src/Recognizer.cc:310
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -811,23 +811,23 @@ msgstr ""
 "\n"
 "[识别第 %1 页失败]\n"
 
-#: ../gtk/src/Recognizer.cc:293 ../gtk/src/Recognizer.cc:314
+#: ../gtk/src/Recognizer.cc:294 ../gtk/src/Recognizer.cc:315
 #: ../qt/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:345
 msgid "Recognizing..."
 msgstr "正在识别..."
 
-#: ../gtk/src/Recognizer.cc:296 ../gtk/src/Recognizer.cc:304
+#: ../gtk/src/Recognizer.cc:297 ../gtk/src/Recognizer.cc:305
 #: ../qt/src/Recognizer.cc:327 ../qt/src/Recognizer.cc:335
 #, fuzzy
 msgid "Recognition errors occurred"
 msgstr "发生识别错误"
 
-#: ../gtk/src/Recognizer.cc:296 ../qt/src/Recognizer.cc:327
+#: ../gtk/src/Recognizer.cc:297 ../qt/src/Recognizer.cc:327
 #, fuzzy
 msgid "The following errors occurred:%1"
 msgstr "发生下面识别错误:%1"
 
-#: ../gtk/src/Recognizer.cc:304 ../qt/src/Recognizer.cc:335
+#: ../gtk/src/Recognizer.cc:305 ../qt/src/Recognizer.cc:335
 #, fuzzy
 msgid "Failed to initialize tesseract"
 msgstr ""
@@ -915,12 +915,12 @@ msgstr ""
 msgid "Could not write to %1."
 msgstr "不能写入 %1 文件。"
 
-#: ../gtk/src/SourceManager.cc:190 ../qt/src/SourceManager.cc:205
+#: ../gtk/src/SourceManager.cc:191 ../qt/src/SourceManager.cc:205
 #, fuzzy
 msgid "Delete File?"
 msgstr "文件已被删除"
 
-#: ../gtk/src/SourceManager.cc:190 ../qt/src/SourceManager.cc:205
+#: ../gtk/src/SourceManager.cc:191 ../qt/src/SourceManager.cc:205
 msgid ""
 "The following file will be deleted:\n"
 "%1"
@@ -928,11 +928,11 @@ msgstr ""
 "下面的文件将被删除:\n"
 "%1"
 
-#: ../gtk/src/SourceManager.cc:245 ../qt/src/SourceManager.cc:249
+#: ../gtk/src/SourceManager.cc:247 ../qt/src/SourceManager.cc:249
 msgid "Missing File"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:245 ../qt/src/SourceManager.cc:249
+#: ../gtk/src/SourceManager.cc:247 ../qt/src/SourceManager.cc:249
 #, fuzzy
 msgid ""
 "The following file has been deleted or moved:\n"
