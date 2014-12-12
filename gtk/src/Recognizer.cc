@@ -154,6 +154,7 @@ void Recognizer::updateLanguagesMenu()
 	}
 	m_menuLanguages->show_all();
 	activeitem->set_active(true);
+	activeitem->toggled(); // Ensure signal is emitted
 }
 
 void Recognizer::setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang &lang)
