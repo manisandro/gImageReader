@@ -43,6 +43,14 @@ void DisplaySelection::rotate(const Geometry::Rotation &R)
 	m_rect = Geometry::Rectangle(m_points[0], m_points[1]);
 }
 
+void DisplaySelection::scale(double factor)
+{
+	m_points[0].x *= factor;
+	m_points[0].y *= factor;
+	m_points[1].x *= factor;
+	m_points[1].y *= factor;
+}
+
 DisplaySelection::Handle* DisplaySelection::getResizeHandle(const Geometry::Point& p, double scale)
 {
 	double tol = 10.0 / scale;

@@ -38,6 +38,7 @@ public:
 	DisplaySelection(double x, double y, double width = 0., double height = 0.);
 	void setPoint(const Geometry::Point& p, const Handle* handle);
 	void rotate(const Geometry::Rotation& R);
+	void scale(double factor);
 	Handle* getResizeHandle(const Geometry::Point& p, double scale);
 	Gdk::CursorType getResizeCursor(const Geometry::Point& p, double scale) const;
 	void draw(Cairo::RefPtr<Cairo::Context> ctx, double scale, const Glib::ustring& idx) const;

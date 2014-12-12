@@ -215,6 +215,12 @@ bool Displayer::setSource(Source* source)
 bool Displayer::renderImage()
 {
 	sendScaleRequest({ScaleRequest::Abort});
+	if(m_source->resolution != m_resspin->get_value_as_int()){
+		double factor = double(m_resspin->get_value_as_int()) / double(m_source->resolution);
+		for(DisplaySelection* sel : m_selections){
+			sel->scale(factor);
+		}
+	}
 	m_blurImage.clear();
 	m_source->page = m_pagespin->get_value_as_int();
 	m_source->brightness = m_brispin->get_value_as_int();
