@@ -142,7 +142,7 @@ Section "Standard" MainSection
   SetOutPath "$SMPROGRAMS\${NAME}\"
   CopyFiles "$INSTDIR\bin\${NAME}.lnk" "$SMPROGRAMS\${NAME}\"
   Delete "$INSTDIR\bin\${NAME}.lnk"
-  CreateShortCut "$SMPROGRAMS\${NAME}\Manual.lnk" "$INSTDIR\share\gimagereader\manual.html"
+  CreateShortCut "$SMPROGRAMS\${NAME}\Manual.lnk" "$INSTDIR\share\doc\gimagereader\manual.html"
   CreateShortCut "$SMPROGRAMS\${NAME}\Spelling dictionaries.lnk" "$INSTDIR\share\myspell\dicts\"
   CreateShortCut "$SMPROGRAMS\${NAME}\Tesseract language definitions.lnk" "$INSTDIR\share\tessdata\"
   CreateShortCut "$SMPROGRAMS\${NAME}\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
