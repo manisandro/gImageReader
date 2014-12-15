@@ -19,7 +19,7 @@ MINGWROOT=/usr/$arch-w64-mingw32/sys-root/mingw
 # Halt on errors
 set -e
 
-if [ "$2" == "--debug" ]; then
+if [ "$3" == "debug" ]; then
     withdebug=1
 fi
 
@@ -164,9 +164,12 @@ rm -rf $installroot/share/appdata
 # Build the installer
 progName=$(grep -oP 'SET\(PACKAGE_NAME \K(\w+)(?=\))' $srcdir/CMakeLists.txt)
 progVersion=$(grep -oP 'SET\(PACKAGE_VERSION \K([\d\.]+)(?=\))' $srcdir/CMakeLists.txt)
+if [ $withdebug ]; then
+    iface="${iface}_debug"
+fi
 makensis -DNAME=$progName -DARCH=$arch -DPROGVERSION="$progVersion" -DIFACE="$iface" installer.nsi;
 
 # Cleanup
 rm -rf $installroot
 
-echo "Installer written to $PWD/${progName}_${progVersion}_${arch}.exe"
+echo "Installer written to $PWD/${progName}_${progVersion}_${iface}_${arch}.exe"
