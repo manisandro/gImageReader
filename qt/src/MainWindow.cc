@@ -95,13 +95,6 @@ MainWindow::MainWindow(const QStringList& files)
 	m_sourceManager = new SourceManager(ui);
 
 	ui.centralwidget->layout()->addWidget(m_displayer);
-	m_statusLayout = new QVBoxLayout();
-	delete ui.statusbar->layout();
-	ui.statusbar->setLayout(m_statusLayout);
-	m_statusLayout->setContentsMargins(2, 2, 2, 2);
-	m_statusLabel = new QLabel();
-	m_statusLabel->setContentsMargins(2, 2, 2, 2);
-	m_statusLayout->addWidget(m_statusLabel);
 
 	m_idleActions.setExclusive(false);
 	m_idleActions.addAction(ui.actionZoomIn);
@@ -171,7 +164,7 @@ void MainWindow::openFiles(const QStringList& files)
 void MainWindow::pushState(MainWindow::State state, const QString& msg)
 {
 	m_stateStack.push(QPair<State, QString>(state, msg));
-	m_statusLabel->setText(msg);
+	ui.statusbar->showMessage(msg);
 	setState(state);
 	if(state == State::Busy){
 		QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -185,7 +178,7 @@ void MainWindow::popState()
 	}
 	m_stateStack.pop();
 	const QPair<State, QString>& pair = m_stateStack.top();
-	m_statusLabel->setText(pair.second);
+	ui.statusbar->showMessage(pair.second);
 	setState(pair.first);
 }
 
@@ -274,7 +267,7 @@ void MainWindow::addNotification(const QString& title, const QString& message, c
 	closeBtn->setProperty("frame", QVariant::fromValue(reinterpret_cast<void*>(frame)));
 	connect(closeBtn, SIGNAL(clicked()), this, SLOT(hideNotification()));
 	layout->addWidget(closeBtn);
-	m_statusLayout->insertWidget(0, frame);
+	ui.centralwidget->layout()->addWidget(frame);
 	if(handle){
 		*handle = frame;
 	}
