@@ -88,7 +88,7 @@ void DisplaySelection::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 	QGraphicsRectItem::paint(painter, option, widget);
 
 	QRectF r = rect();
-	double w = 20. / m_displayer->m_scale;
+	qreal w = 20. / m_displayer->m_scale;
 	w = qMin(w, qMin(r.width(), r.height()));
 	QRectF box(r.x(), r.y(), w, w);
 
