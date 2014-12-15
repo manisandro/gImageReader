@@ -356,26 +356,30 @@ void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 	}
 }
 
-#ifdef Q_OS_LINUX
 void OutputManager::dictionaryAutoinstall()
 {
+#ifdef Q_OS_LINUX
 	const QString& code = MAIN->getRecognizer()->getSelectedLanguage().code;
 	MAIN->pushState(MainWindow::State::Busy, _("Installing spelling dictionary for '%1'").arg(code));
 	QStringList files = {"/usr/share/myspell/" + code + ".dic", "/usr/share/hunspell/" + code + ".dic"};
 	QList<QVariant> params = {QVariant::fromValue((quint32)MAIN->winId()), QVariant::fromValue(files), QVariant::fromValue(QString("always"))};
 	m_dbusIface->setTimeout(3600000);
 	m_dbusIface->callWithCallback("InstallProvideFiles", params, this, SLOT(dictionaryAutoinstallDone()), SLOT(dictionaryAutoinstallError(QDBusError)));
+#endif
 }
 
 void OutputManager::dictionaryAutoinstallDone()
 {
+#ifdef Q_OS_LINUX
 	MAIN->getRecognizer()->updateLanguagesMenu();
 	MAIN->popState();
+#endif
 }
 
 void OutputManager::dictionaryAutoinstallError(const QDBusError& error)
 {
+#ifdef Q_OS_LINUX
 	QMessageBox::critical(MAIN, _("Error"), _("Failed to install spelling dictionary: %1").arg(error.message()));
 	MAIN->popState();
-}
 #endif
+}
