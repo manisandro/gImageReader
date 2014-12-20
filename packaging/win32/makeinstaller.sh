@@ -129,9 +129,18 @@ elif [ "$iface" == "qt4" ]; then
     cp -a $MINGWROOT/share/qt4/translations/{qt_*.qm,QtSpell_*.qm}  $installroot/share/qt4/translations
 
 elif [ "$iface" == "qt5" ]; then
+
+    linkDep lib/qt5/plugins/imageformats/qdds.dll  bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qgif.dll  bin/imageformats
+    linkDep lib/qt5/plugins/imageformats/qicns.dll bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qico.dll  bin/imageformats
+    linkDep lib/qt5/plugins/imageformats/qjp2.dll  bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qjpeg.dll bin/imageformats
+    linkDep lib/qt5/plugins/imageformats/qmng.dll  bin/imageformats
+    linkDep lib/qt5/plugins/imageformats/qtga.dll  bin/imageformats
+    linkDep lib/qt5/plugins/imageformats/qtiff.dll bin/imageformats
+    linkDep lib/qt5/plugins/imageformats/qwbmp.dll bin/imageformats
+    linkDep lib/qt5/plugins/imageformats/qwebp.dll bin/imageformats
     linkDep lib/qt5/plugins/platforms/qwindows.dll bin/platforms
 
     # Install locale files
