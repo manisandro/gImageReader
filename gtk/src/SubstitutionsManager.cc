@@ -94,6 +94,9 @@ void SubstitutionsManager::openList()
 		bool errors = false;
 		while(std::getline(file, line)) {
 			Glib::ustring text = line.data();
+			if(text.empty()){
+				continue;
+			}
 			std::vector<Glib::ustring> fields = Utils::string_split(text, '\t');
 			if(fields.size() < 2) {
 				errors = true;

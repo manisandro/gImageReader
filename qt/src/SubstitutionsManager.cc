@@ -121,15 +121,20 @@ void SubstitutionsManager::openList()
 		bool errors = false;
 		m_tableWidget->blockSignals(true);
 		while(!file.atEnd()){
-			QList<QByteArray> fields = file.readLine().split('\t');
+			QString line = QString::fromLocal8Bit(file.readLine());
+			line.chop(1);
+			if(line.isEmpty()){
+				continue;
+			}
+			QList<QString> fields = line.split('\t');
 			if(fields.size() < 2) {
 				errors = true;
 				continue;
 			}
 			int row = m_tableWidget->rowCount();
 			m_tableWidget->insertRow(row);
-			m_tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromLocal8Bit(fields[0])));
-			m_tableWidget->setItem(row, 1, new QTableWidgetItem(QString::fromLocal8Bit(fields[1])));
+			m_tableWidget->setItem(row, 0, new QTableWidgetItem(fields[0]));
+			m_tableWidget->setItem(row, 1, new QTableWidgetItem(fields[1]));
 		}
 		m_tableWidget->blockSignals(false);
 		MAIN->getConfig()->getSetting<TableSetting>("substitutionslist")->serialize();
