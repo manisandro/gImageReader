@@ -32,7 +32,18 @@ namespace Utils {
 	void popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gtk::Menu* menu, bool alignRight, bool alignBottom);
 
 	void message_dialog(Gtk::MessageType message, const Glib::ustring& title, const Glib::ustring& text, Gtk::Window* parent = 0);
-	int question_dialog(const Glib::ustring& title, const Glib::ustring& text, Gtk::Window* parent = 0);
+
+	struct Button {
+		enum Type {
+			Ok = 1,
+			Yes = 2,
+			No = 4,
+			Cancel = 8,
+			Save = 16,
+			Discard = 32
+		};
+	};
+	Button::Type question_dialog(const Glib::ustring& title, const Glib::ustring& text, int buttons, Gtk::Window *parent = 0);
 
 	void set_spin_blocked(Gtk::SpinButton* spin, double value, sigc::connection& conn);
 	void set_error_state(Gtk::Entry* entry);

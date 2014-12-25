@@ -306,8 +306,12 @@ bool OutputManager::clearBuffer()
 		return true;
 	}
 	if(ui.plainTextEditOutput->document()->isModified()){
-		int response = QMessageBox::question(MAIN, _("Output not saved"), _("Save output before proceeding?"), QMessageBox::Yes, QMessageBox::No);
-		if((response == QMessageBox::Yes && !saveBuffer()) || response != QMessageBox::No){
+		int response = QMessageBox::question(MAIN, _("Output not saved"), _("Save output before proceeding?"), QMessageBox::Save, QMessageBox::Discard, QMessageBox::Cancel);
+		if(response == QMessageBox::Save){
+			if(!saveBuffer()){
+				return false;
+			}
+		}else if(response != QMessageBox::Discard){
 			return false;
 		}
 	}

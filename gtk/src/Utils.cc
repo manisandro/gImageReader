@@ -46,19 +46,30 @@ void Utils::message_dialog(Gtk::MessageType message, const Glib::ustring &title,
 	dialog.run();
 }
 
-int Utils::question_dialog(const Glib::ustring &title, const Glib::ustring &text, Gtk::Window *parent)
+Utils::Button::Type Utils::question_dialog(const Glib::ustring &title, const Glib::ustring &text, int buttons, Gtk::Window *parent)
 {
 	if(!parent){ parent = MAIN->getWindow(); }
-	Gtk::MessageDialog dialog(*parent, title, false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_YES_NO, true);
-	dialog.set_secondary_text(text);
-	int response = dialog.run();
-	if(response == Gtk::RESPONSE_NO){
-		return 0;
-	}else if(response == Gtk::RESPONSE_YES){
-		return 1;
-	}else{
-		return 2;
+	Gtk::MessageDialog dialog(*parent, title, false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_NONE, true);
+	if((buttons & Button::Ok) != 0){
+		dialog.add_button(_("OK"), Button::Type::Ok);
 	}
+	if((buttons & Button::Yes) != 0){
+		dialog.add_button(_("Yes"), Button::Type::Yes);
+	}
+	if((buttons & Button::No) != 0){
+		dialog.add_button(_("No"), Button::Type::No);
+	}
+	if((buttons & Button::Cancel) != 0){
+		dialog.add_button(_("Cancel"), Button::Type::Cancel);
+	}
+	if((buttons & Button::Save) != 0){
+		dialog.add_button(_("Save"), Button::Type::Save);
+	}
+	if((buttons & Button::Discard) != 0){
+		dialog.add_button(_("Discard"), Button::Type::Discard);
+	}
+	dialog.set_secondary_text(text);
+	return static_cast<Button::Type>(dialog.run());
 }
 
 void Utils::set_spin_blocked(Gtk::SpinButton *spin, double value, sigc::connection &conn)

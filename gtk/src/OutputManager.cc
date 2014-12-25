@@ -356,8 +356,12 @@ bool OutputManager::clearBuffer()
 		return true;
 	}
 	if(m_textBuffer->get_modified()){
-		int response = Utils::question_dialog(_("Output not saved"), _("Save output before proceeding?"));
-		if((response == 1 && !saveBuffer()) || response == 2){
+		int response = Utils::question_dialog(_("Output not saved"), _("Save output before proceeding?"), Utils::Button::Save|Utils::Button::Discard|Utils::Button::Cancel);
+		if(response == Utils::Button::Save){
+			if(!saveBuffer()){
+				return false;
+			}
+		}else if(response != Utils::Button::Discard){
 			return false;
 		}
 	}

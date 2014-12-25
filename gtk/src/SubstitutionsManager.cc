@@ -137,13 +137,13 @@ bool SubstitutionsManager::saveList()
 bool SubstitutionsManager::clearList()
 {
 	if(m_listStore->children().size() > 0) {
-		int ret = Utils::question_dialog(_("Save List?"), _("Do you want to save the current list?"), m_dialog);
-		if(ret == 2) {
-			return false;
-		} else if(ret == 1) {
-			if(!saveList()) {
+		int response = Utils::question_dialog(_("Save List?"), _("Do you want to save the current list?"), Utils::Button::Save|Utils::Button::Discard|Utils::Button::Cancel, m_dialog);
+		if(response == Utils::Button::Save){
+			if(!saveList()){
 				return false;
 			}
+		}else if(response != Utils::Button::Discard){
+			return false;
 		}
 	}
 	m_listStore->clear();

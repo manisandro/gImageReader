@@ -188,7 +188,7 @@ void SourceManager::removeSource(bool deleteFile)
 		return;
 	}
 	Source* source = it->get_value(m_listViewCols.source);
-	if(deleteFile && 1 != Utils::question_dialog(_("Delete File?"), Glib::ustring::compose(_("The following file will be deleted:\n%1"), source->file->get_path()))){
+	if(deleteFile && Utils::Button::Yes != Utils::question_dialog(_("Delete File?"), Glib::ustring::compose(_("The following file will be deleted:\n%1"), source->file->get_path()), Utils::Button::Yes|Utils::Button::No)){
 		return;
 	}
 	if(deleteFile || source->isTemp){
