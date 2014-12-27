@@ -2,7 +2,8 @@
 <!-- Copyright 2014 Sandro Mani <manisandro@gmail.com> -->
 <application>
  <id type="desktop">gimagereader-@INTERFACE_TYPE@.desktop</id>
- <licence>CC0</licence>
+ <metadata_license>CC0-1.0</metadata_license>
+ <project_license>GPL-3.0+</project_license>
  <name>gImageReader</name>
  <summary>A graphical frontend to tesseract-ocr </summary>
  <description>
@@ -18,8 +19,11 @@
   </ul>
  </description>
  <screenshots>
-  <screenshot type="default" width="1504" height="846">http://gimagereader.sourceforge.net/gimagereader-@INTERFACE_TYPE@.jpg</screenshot>
+  <screenshot type="default">
+   <image>http://gimagereader.sourceforge.net/gimagereader-@INTERFACE_TYPE@.jpg</image>
+   <caption>gImageReader-@INTERFACE_TYPE@</caption>
+  </screenshot>
  </screenshots>
- <url type="homepage">http://sourceforge.net/projects/gimagereader/</url>
+ <url type="homepage">https://github.com/manisandro/gImageReader</url>
  <updatecontact>manisandro@gmail.com</updatecontact>
 </application>
