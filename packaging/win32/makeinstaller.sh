@@ -174,7 +174,7 @@ rm -rf $installroot/share/appdata
 progName=$(grep -oP 'SET\(PACKAGE_NAME \K(\w+)(?=\))' $srcdir/CMakeLists.txt)
 progVersion=$(grep -oP 'SET\(PACKAGE_VERSION \K([\d\.]+)(?=\))' $srcdir/CMakeLists.txt)
 if [ $withdebug ]; then
-    iface="${iface}_debug"
+    arch="${arch}_debug"
 fi
 makensis -DNAME=$progName -DARCH=$arch -DPROGVERSION="$progVersion" -DIFACE="$iface" installer.nsi;
 
