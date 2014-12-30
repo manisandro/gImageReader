@@ -50,7 +50,7 @@
 
 static Glib::Quark notificationHandleKey("handle");
 
-void crash_handler(int sig)
+static void signalHandler(int sig)
 {
 	std::signal(sig, nullptr);
 	std::string filename;
@@ -73,14 +73,34 @@ void crash_handler(int sig)
 	std::raise(sig);
 }
 
+
+static void terminateHandler()
+{
+	std::set_terminate(nullptr);
+	std::exception_ptr exptr = std::current_exception();
+	if (exptr != 0){
+		try{
+			std::rethrow_exception(exptr);
+		}catch (std::exception &ex){
+			std::cerr << "Terminated due to exception: " << ex.what() << std::endl;
+		}catch (...){
+			std::cerr << "Terminated due to unknown exception" << std::endl;
+		}
+	}else{
+		std::cerr << "Terminated due to unknown reason:" << std::endl;
+	}
+	signalHandler(SIGABRT);
+}
+
 MainWindow* MainWindow::s_instance = nullptr;
 
 MainWindow::MainWindow()
 {
 	s_instance = this;
 
-	std::signal(SIGSEGV, crash_handler);
-	std::signal(SIGABRT, crash_handler);
+	std::signal(SIGSEGV, signalHandler);
+	std::signal(SIGABRT, signalHandler);
+	std::set_terminate(terminateHandler);
 
 	m_window = Builder("applicationwindow:main");
 	m_aboutdialog = Builder("dialog:about");

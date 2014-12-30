@@ -28,6 +28,7 @@
 #include <QStatusBar>
 #include <QUrl>
 #include <csignal>
+#include <iostream>
 #ifdef Q_OS_LINUX
 #include <sys/prctl.h>
 #endif
@@ -72,6 +73,24 @@ static void signalHandler(int signal)
 	std::raise(signal);
 }
 
+static void terminateHandler()
+{
+	std::set_terminate(nullptr);
+	std::exception_ptr exptr = std::current_exception();
+	if (exptr != 0){
+		try{
+			std::rethrow_exception(exptr);
+		}catch (std::exception &ex){
+			std::cerr << "Terminated due to exception: " << ex.what() << std::endl;
+		}catch (...){
+			std::cerr << "Terminated due to unknown exception" << std::endl;
+		}
+	}else{
+		std::cerr << "Terminated due to unknown reason:" << std::endl;
+	}
+	signalHandler(SIGABRT);
+}
+
 
 MainWindow* MainWindow::s_instance = nullptr;
 
@@ -82,6 +101,7 @@ MainWindow::MainWindow(const QStringList& files)
 
 	std::signal(SIGSEGV, signalHandler);
 	std::signal(SIGABRT, signalHandler);
+	std::set_terminate(terminateHandler);
 
 	qRegisterMetaType<MainWindow::State>();
 
