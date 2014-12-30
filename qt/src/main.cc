@@ -46,13 +46,10 @@ int main (int argc, char *argv[])
 #ifdef Q_OS_WIN
 	QIcon::setThemeSearchPaths({dataDir.absoluteFilePath("icons")});
 	QIcon::setThemeName("hicolor");
-	qputenv("TESSDATA_PREFIX", dataDir.absolutePath().toLocal8Bit());
 	QDir packageDir = QDir(QString("%1/../").arg(QApplication::applicationDirPath()));
-	qputenv("TWAINDSM_LOG", packageDir.absoluteFilePath("twain.log").toLocal8Bit());
 	if(qgetenv("LANG").isEmpty()){
 		qputenv("LANG", QLocale::system().name().toLocal8Bit());
 	}
-	std::freopen(packageDir.absoluteFilePath("gimagereader.log").toLocal8Bit().data(), "w", stderr);
 #endif
 
 	QTranslator qtTranslator;
@@ -73,6 +70,11 @@ int main (int argc, char *argv[])
 		QString savefile = argc >= 4 ? argv[3] : "";
 		window = new CrashHandler(pid, savefile);
 	}else{
+#ifdef Q_OS_WIN
+		qputenv("TESSDATA_PREFIX", dataDir.absolutePath().toLocal8Bit());
+		qputenv("TWAINDSM_LOG", packageDir.absoluteFilePath("twain.log").toLocal8Bit());
+		std::freopen(packageDir.absoluteFilePath("gimagereader.log").toLocal8Bit().data(), "w", stderr);
+#endif
 		QStringList files;
 		for(int i = 1; i < argc; ++i){
 			if(QFile(argv[i]).exists()){
