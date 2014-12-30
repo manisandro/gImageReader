@@ -11,7 +11,7 @@ else
     exit 1
 fi
 
-iface=${2:-qt4}
+iface=${2:-qt5}
 
 # Note: This script is written to be used with the Fedora mingw environment
 MINGWROOT=/usr/$arch-w64-mingw32/sys-root/mingw
