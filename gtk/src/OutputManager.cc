@@ -172,8 +172,11 @@ void OutputManager::filterBuffer()
 			expr = "(.)";
 		}
 		expr += "\n";
+		// Keep if succeeded by quote / line break
 		if(m_filterKeepIfQuote->get_active()){
-			expr += "(?!['\"])";
+			expr += "(?!['\"\\n])";
+		}else{
+			expr += "(?![\\n])";
 		}
 		txt = Glib::Regex::create(expr)->replace(txt, 0, "\\1 ", static_cast<Glib::RegexMatchFlags>(0));
 

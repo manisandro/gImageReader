@@ -132,8 +132,11 @@ void OutputManager::filterBuffer()
 			expr += "'\"";
 		}
 		expr = "([^" + expr + "])\u2029";
+		// Keep if succeeded by quote / line break
 		if(ui.actionOutputPostprocKeepQuote->isChecked()){
-			expr += "(?!['\"])";
+			expr += "(?!['\"\u2029])";
+		}else{
+			expr += "(?![\u2029])";
 		}
 		txt.replace(QRegExp(expr), "\\1 ");
 
