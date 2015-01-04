@@ -1,3 +1,9 @@
+gImageReader 3.0.1 (Jan 4 2015):
+ * Fix a bug in the Qt interface when loading substitutions list from file
+ * Improve behaviour of strip line breaks functionality with multiple line breaks
+ * Small UI improvements
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+ 
 gImageReader 3.0 (Dec 12 2014):
  * gImageReader 3.0 stable
  * New Qt4/5 interface, as alternative to the Gtk interface

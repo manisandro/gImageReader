@@ -46,6 +46,13 @@
 </ul>
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
+<p>gImageReader 3.0.1 (Jan 4 2015):</p>
+<ul>
+    <li>Fix a bug in the Qt interface when loading substitutions list from file</li>
+    <li>Improve behaviour of strip line breaks functionality with multiple line breaks</li>
+    <li>Small UI improvements</li>
+    <li>Full details in commit log: https://github.com/manisandro/gImageReader/commits/master</li>
+</ul>
 <p>gImageReader 3.0 (Dec 12 2014):</p>
 <ul>
     <li>gImageReader 3.0 stable</li>
@@ -177,7 +184,7 @@ If you find an issue or have a suggestion, please file a ticket to the <a href="
 <li>Try to describe as best as you can what you were doing and whether the problem is reproducible.</li>
 </ul>
 <hr />
-<p>Copyright &copy;2009-2014 Sandro Mani, revision: Sat, 12 Dec 2014</p>
+<p>Copyright &copy;2009-2015 Sandro Mani, revision: Sun, Jan 04 2015</p>
 </body>
 
 </html>
