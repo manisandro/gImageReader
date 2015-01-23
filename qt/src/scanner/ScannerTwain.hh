@@ -54,6 +54,7 @@ private:
     TW_UINT16 m_dsMsg = MSG_NULL;
     bool m_dsQuit = false;
     bool m_cancel = false;
+    bool m_useCallback = false;
     int m_state = 0;
 
     static ScannerTwain* s_instance;
@@ -83,6 +84,7 @@ private:
     TW_UINT16 call(TW_IDENTITY* idDS, TW_UINT32 dataGroup, TW_UINT16 dataType, TW_UINT16 msg, TW_MEMREF data);
     void setCapability(TW_UINT16 capCode, const CapOneVal& cap);
 #ifdef Q_OS_WIN32
+    bool saveDIB(TW_MEMREF hImg, const QString& filename);
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
     static bool eventFilter(void* message);
 #else

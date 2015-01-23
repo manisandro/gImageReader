@@ -48,6 +48,7 @@ private:
     TW_UINT16 m_dsMsg = MSG_NULL;
     bool m_dsQuit = false;
     bool m_cancel = false;
+    bool m_useCallback = false;
     int m_state = 0;
 
     static ScannerTwain* s_instance;
@@ -77,6 +78,7 @@ private:
     TW_UINT16 call(TW_IDENTITY* idDS, TW_UINT32 dataGroup, TW_UINT16 dataType, TW_UINT16 msg, TW_MEMREF data);
     void setCapability(TW_UINT16 capCode, const CapOneVal& cap);
 #ifdef G_OS_WIN32
+    bool saveDIB(TW_MEMREF hImg, const std::string& filename);
     static GdkFilterReturn eventFilter(GdkXEvent *xevent, GdkEvent *event, gpointer data);
 #endif
     static PASCAL TW_UINT16 callback(TW_IDENTITY* origin, TW_IDENTITY* dest, TW_UINT32 DG, TW_UINT16 DAT, TW_UINT16 MSG, TW_MEMREF data);

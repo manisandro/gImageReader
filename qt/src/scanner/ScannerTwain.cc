@@ -22,76 +22,60 @@
 #include <QAbstractEventDispatcher>
 #include <QCoreApplication>
 #include <QDir>
-#if defined(Q_OS_WIN32) && QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-#include <QtWinExtras>
-#endif
+
 
 #ifdef Q_OS_WIN32
-// http://msdn.microsoft.com/en-us/library/windows/desktop/dd162950%28v=vs.85%29.aspx
-#define NEW_DIB_FORMAT(lpbih) (lpbih->biSize != sizeof(BITMAPCOREHEADER))
-
-static WORD DIBNumColors (LPVOID lpv)
+bool ScannerTwain::saveDIB(TW_MEMREF hImg, const QString& filename)
 {
-    INT                 bits;
-    LPBITMAPINFOHEADER  lpbih = (LPBITMAPINFOHEADER)lpv;
-    LPBITMAPCOREHEADER  lpbch = (LPBITMAPCOREHEADER)lpv;
+    PBITMAPINFOHEADER pDIB = reinterpret_cast<PBITMAPINFOHEADER>(m_entryPoint.DSM_MemLock(hImg));
+    if(pDIB == nullptr){
+        return false;
+    }
 
-    /*  With the BITMAPINFO format headers, the size of the palette
-     *  is in biClrUsed, whereas in the BITMAPCORE - style headers, it
-     *  is dependent on the bits per pixel ( = 2 raised to the power of
-     *  bits/pixel).
-     */
-    if (NEW_DIB_FORMAT(lpbih)) {
-        if (lpbih->biClrUsed != 0){
-            return (WORD)lpbih->biClrUsed;
+    DWORD paletteSize = 0;
+    if(pDIB->biBitCount == 1){
+        paletteSize = 2;
+    }else if(pDIB->biBitCount == 8){
+        paletteSize = 256;
+    }else if(pDIB->biBitCount == 24){
+        paletteSize = 0;
+    }else{
+        // Unsupported
+        m_entryPoint.DSM_MemUnlock(hImg);
+        m_entryPoint.DSM_MemFree(hImg);
+        return false;
+    }
+
+    // If the driver did not fill in the biSizeImage field, then compute it.
+    // Each scan line of the image is aligned on a DWORD (32bit) boundary.
+    if( pDIB->biSizeImage == 0 ){
+        pDIB->biSizeImage = ((((pDIB->biWidth * pDIB->biBitCount) + 31) & ~31) / 8) * pDIB->biHeight;
+        // If a compression scheme is used the result may be larger: increase size.
+        if (pDIB->biCompression != 0){
+            pDIB->biSizeImage = (pDIB->biSizeImage * 3) / 2;
         }
-        bits = lpbih->biBitCount;
-    } else {
-        bits = lpbch->bcBitCount;
     }
 
-    if (bits > 8) {
-        return 0; /* Since biClrUsed is 0, we dont have a an optimal palette */
-    } else {
-        return (1 << bits);
-    }
-}
+    quint64 imageSize = pDIB->biSizeImage + sizeof(RGBQUAD)*paletteSize + sizeof(BITMAPINFOHEADER);
 
-static WORD ColorTableSize (LPVOID lpv)
-{
-    LPBITMAPINFOHEADER lpbih = (LPBITMAPINFOHEADER)lpv;
+    BITMAPFILEHEADER bmpFIH = {0};
+    bmpFIH.bfType = ( (WORD) ('M' << 8) | 'B');
+    bmpFIH.bfSize = imageSize + sizeof(BITMAPFILEHEADER);
+    bmpFIH.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + (sizeof(RGBQUAD)*paletteSize);
 
-    if (NEW_DIB_FORMAT(lpbih)) {
-        if (((LPBITMAPINFOHEADER)(lpbih))->biCompression == BI_BITFIELDS){
-            /* Remember that 16/32bpp dibs can still have a color table */
-            return (sizeof(DWORD) * 3) + (DIBNumColors (lpbih) * sizeof (RGBQUAD));
-        } else {
-            return (DIBNumColors (lpbih) * sizeof (RGBQUAD));
-        }
-    } else {
-        return (DIBNumColors (lpbih) * sizeof (RGBTRIPLE));
-    }
-}
+    unsigned char* bmpData = new unsigned char[sizeof(BITMAPFILEHEADER) + imageSize];
+    std::memcpy(bmpData, &bmpFIH, sizeof(BITMAPFILEHEADER));
+    std::memcpy(bmpData + sizeof(BITMAPFILEHEADER), pDIB, imageSize);
 
-static HBITMAP BitmapFromDIB (HANDLE hDIB)
-{
-    if (!hDIB)
-        return nullptr;
+    QImage image;
+    image.loadFromData(bmpData, sizeof(BITMAPFILEHEADER) + imageSize, "bmp");
+    bool success = image.save(filename);
 
-    LPBITMAPINFOHEADER lpbih = (LPBITMAPINFOHEADER)hDIB;
+    delete[] bmpData;
+    m_entryPoint.DSM_MemUnlock(hImg);
+    m_entryPoint.DSM_MemFree(hImg);
 
-    if (!lpbih)
-        return nullptr;
-
-    HDC hDC = GetDC(NULL);
-    HBITMAP hBitmap = CreateDIBitmap(hDC,
-                             lpbih,
-                             CBM_INIT,
-                             (LPSTR)lpbih + lpbih->biSize + ColorTableSize(lpbih),
-                             (LPBITMAPINFO)lpbih,
-                             DIB_RGB_COLORS );
-    ReleaseDC(NULL, hDC);
-    return hBitmap;
+    return success;
 }
 #endif
 
@@ -212,7 +196,11 @@ void ScannerTwain::scan(const Params &params)
     // Register callback
     TW_CALLBACK cb = {};
     cb.CallBackProc = reinterpret_cast<TW_MEMREF>(callback);
-    call(&m_srcID, DG_CONTROL, DAT_CALLBACK, MSG_REGISTER_CALLBACK, &cb);
+    if(TWRC_SUCCESS == call(&m_srcID, DG_CONTROL, DAT_CALLBACK, MSG_REGISTER_CALLBACK, &cb)){
+        m_useCallback = true;
+    }else{
+        m_useCallback = false;
+    }
 
     /** Set options **/
     emit scanStateChanged(State::SET_OPTIONS);
@@ -315,14 +303,7 @@ void ScannerTwain::scan(const Params &params)
     TW_MEMREF hImg = nullptr;
     TW_UINT16 twRC = call(&m_srcID, DG_IMAGE, DAT_IMAGENATIVEXFER, MSG_GET, (TW_MEMREF)&hImg);
     if(twRC == TWRC_XFERDONE){
-        HBITMAP bmp = BitmapFromDIB(hImg);
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-        saveOk = QPixmap::fromWinHBITMAP(bmp).save(params.filename);
-#else
-        saveOk = QtWin::fromHBITMAP(bmp).save(params.filename);
-#endif
-        DeleteObject(bmp);
-        GlobalFree(hImg);
+        saveOk = saveDIB(hImg, params.filename);
     }
 #else
     TW_UINT16 twRC = call(&m_srcID, DG_IMAGE, DAT_IMAGEFILEXFER, MSG_GET, nullptr);
@@ -406,7 +387,7 @@ bool ScannerTwain::NativeEventFilter::nativeEventFilter(const QByteArray& /*even
     twEvent.TWMessage = MSG_NULL;
     TW_UINT16 twRC = s_instance->m_dsmEntry(&s_instance->m_appID, &s_instance->m_srcID, DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT, (TW_MEMREF)&twEvent);
 
-    if(twRC == TWRC_DSEVENT) {
+    if(!s_instance->m_useCallback && twRC == TWRC_DSEVENT) {
         if(twEvent.TWMessage == MSG_XFERREADY || twEvent.TWMessage == MSG_CLOSEDSREQ || twEvent.TWMessage == MSG_CLOSEDSOK || twEvent.TWMessage == MSG_NULL){
             s_instance->m_dsMsg = twEvent.TWMessage;
         }

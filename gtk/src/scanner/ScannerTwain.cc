@@ -24,116 +24,66 @@
 #endif
 
 #ifdef G_OS_WIN32
-// http://msdn.microsoft.com/en-us/library/windows/desktop/dd162950%28v=vs.85%29.aspx
-#define NEW_DIB_FORMAT(lpbih) (lpbih->biSize != sizeof(BITMAPCOREHEADER))
-
-static WORD DIBNumColors (LPVOID lpv)
+bool ScannerTwain::saveDIB(TW_MEMREF hImg, const std::string& filename)
 {
-    INT                 bits;
-    LPBITMAPINFOHEADER  lpbih = (LPBITMAPINFOHEADER)lpv;
-    LPBITMAPCOREHEADER  lpbch = (LPBITMAPCOREHEADER)lpv;
-
-    /*  With the BITMAPINFO format headers, the size of the palette
-     *  is in biClrUsed, whereas in the BITMAPCORE - style headers, it
-     *  is dependent on the bits per pixel ( = 2 raised to the power of
-     *  bits/pixel).
-     */
-    if (NEW_DIB_FORMAT(lpbih)) {
-        if (lpbih->biClrUsed != 0){
-            return (WORD)lpbih->biClrUsed;
-        }
-        bits = lpbih->biBitCount;
-    } else {
-        bits = lpbch->bcBitCount;
+    PBITMAPINFOHEADER pDIB = reinterpret_cast<PBITMAPINFOHEADER>(m_entryPoint.DSM_MemLock(hImg));
+    if(pDIB == nullptr){
+        return false;
     }
 
-    if (bits > 8) {
-        return 0; /* Since biClrUsed is 0, we dont have a an optimal palette */
-    } else {
-        return (1 << bits);
-    }
-}
-
-static WORD ColorTableSize (LPVOID lpv)
-{
-    LPBITMAPINFOHEADER lpbih = (LPBITMAPINFOHEADER)lpv;
-
-    if (NEW_DIB_FORMAT(lpbih)) {
-        if (((LPBITMAPINFOHEADER)(lpbih))->biCompression == BI_BITFIELDS){
-            /* Remember that 16/32bpp dibs can still have a color table */
-            return (sizeof(DWORD) * 3) + (DIBNumColors (lpbih) * sizeof (RGBQUAD));
-        } else {
-            return (DIBNumColors (lpbih) * sizeof (RGBQUAD));
-        }
-    } else {
-        return (DIBNumColors (lpbih) * sizeof (RGBTRIPLE));
-    }
-}
-
-static HBITMAP BitmapFromDIB (HANDLE hDIB)
-{
-    if (!hDIB)
-        return nullptr;
-
-    LPBITMAPINFOHEADER lpbih = (LPBITMAPINFOHEADER)hDIB;
-
-    if (!lpbih)
-        return nullptr;
-
-    HDC hDC = GetDC(NULL);
-    HBITMAP hBitmap = CreateDIBitmap(hDC,
-                             lpbih,
-                             CBM_INIT,
-                             (LPSTR)lpbih + lpbih->biSize + ColorTableSize(lpbih),
-                             (LPBITMAPINFO)lpbih,
-                             DIB_RGB_COLORS );
-    ReleaseDC(NULL, hDC);
-    return hBitmap;
-}
-
-// Based on qt_pixmapFromWinHBITMAP
-static Glib::RefPtr<Gdk::Pixbuf> pixbufFromWinHBITMAP(HBITMAP bitmap)
-{
-    Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::RefPtr<Gdk::Pixbuf>(nullptr);;
-
-    // Get size
-    BITMAP bitmap_info = {};
-    if (!GetObject(bitmap, sizeof(BITMAP), &bitmap_info)) {
-        g_critical("pixbufFromWinHBITMAP, failed to get bitmap info");
-        return pixbuf;
-    }
-    int w = bitmap_info.bmWidth;
-    int h = bitmap_info.bmHeight;
-
-    // Bitmap info
-    HDC display_dc = GetDC(0);
-    BITMAPINFO bmi = {};
-    bmi.bmiHeader.biSize        = sizeof(BITMAPINFOHEADER);
-    bmi.bmiHeader.biWidth       = w;
-    bmi.bmiHeader.biHeight      = -h;
-    bmi.bmiHeader.biPlanes      = 1;
-    bmi.bmiHeader.biBitCount    = 32;
-    bmi.bmiHeader.biCompression = BI_RGB;
-    bmi.bmiHeader.biSizeImage   = w * h * 4;
-
-    // Get data
-    guchar* data = new guchar[bmi.bmiHeader.biSizeImage];
-    if (GetDIBits(display_dc, bitmap, 0, h, data, &bmi, DIB_RGB_COLORS)) {
-        // BGRA -> RGBA
-        guchar* pxdata = new guchar[bmi.bmiHeader.biSizeImage];
-        for(int i = 0; i < w * h; ++i){
-            pxdata[4 * i + 0] = data[4 * i + 2];
-            pxdata[4 * i + 1] = data[4 * i + 1];
-            pxdata[4 * i + 2] = data[4 * i + 0];
-            pxdata[4 * i + 3] = 255;
-        }
-        pixbuf = Gdk::Pixbuf::create_from_data(pxdata, Gdk::COLORSPACE_RGB, true, 8, w, h, w * 4., [](const guint8* data){ delete[] data; });
+    DWORD paletteSize = 0;
+    if(pDIB->biBitCount == 1){
+        paletteSize = 2;
+    }else if(pDIB->biBitCount == 8){
+        paletteSize = 256;
+    }else if(pDIB->biBitCount == 24){
+        paletteSize = 0;
     }else{
-        g_critical("%s: GetDIBits() failed to get bitmap bits.", __FUNCTION__);
+        // Unsupported
+        m_entryPoint.DSM_MemUnlock(hImg);
+        m_entryPoint.DSM_MemFree(hImg);
+        return false;
     }
-    delete [] data;
-    ReleaseDC(0, display_dc);
-    return pixbuf;
+
+    // If the driver did not fill in the biSizeImage field, then compute it.
+    // Each scan line of the image is aligned on a DWORD (32bit) boundary.
+    if( pDIB->biSizeImage == 0 ){
+        pDIB->biSizeImage = ((((pDIB->biWidth * pDIB->biBitCount) + 31) & ~31) / 8) * pDIB->biHeight;
+        // If a compression scheme is used the result may be larger: increase size.
+        if (pDIB->biCompression != 0){
+            pDIB->biSizeImage = (pDIB->biSizeImage * 3) / 2;
+        }
+    }
+
+    std::uint64_t imageSize = pDIB->biSizeImage + sizeof(RGBQUAD)*paletteSize + sizeof(BITMAPINFOHEADER);
+
+    BITMAPFILEHEADER bmpFIH = {0};
+    bmpFIH.bfType = ( (WORD) ('M' << 8) | 'B');
+    bmpFIH.bfSize = imageSize + sizeof(BITMAPFILEHEADER);
+    bmpFIH.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + (sizeof(RGBQUAD)*paletteSize);
+
+    unsigned char* bmpData = new unsigned char[sizeof(BITMAPFILEHEADER) + imageSize];
+    std::memcpy(bmpData, &bmpFIH, sizeof(BITMAPFILEHEADER));
+    std::memcpy(bmpData + sizeof(BITMAPFILEHEADER), pDIB, imageSize);
+
+    bool success = false;
+    Glib::RefPtr<Gio::MemoryInputStream> stream = Gio::MemoryInputStream::create();
+    stream->add_data(bmpData, sizeof(BITMAPFILEHEADER) + imageSize);
+    Glib::RefPtr<Gdk::Pixbuf> pixbuf(Gdk::Pixbuf::create_from_stream(stream));
+    if(pixbuf){
+        try{
+            pixbuf->save(filename, "png");
+            success = true;
+        }catch(...){
+            success = false;
+        }
+    }
+
+    delete[] bmpData;
+    m_entryPoint.DSM_MemUnlock(hImg);
+    m_entryPoint.DSM_MemFree(hImg);
+
+    return success;
 }
 #endif
 
@@ -254,7 +204,11 @@ void ScannerTwain::scan(const Params &params)
     // Register callback
     TW_CALLBACK cb = {};
     cb.CallBackProc = reinterpret_cast<TW_MEMREF>(callback);
-    call(&m_srcID, DG_CONTROL, DAT_CALLBACK, MSG_REGISTER_CALLBACK, &cb);
+    if(TWRC_SUCCESS == call(&m_srcID, DG_CONTROL, DAT_CALLBACK, MSG_REGISTER_CALLBACK, &cb)){
+        m_useCallback = true;
+    }else{
+        m_useCallback = false;
+    }
 
     /** Set options **/
     m_signal_scanStateChanged.emit(State::SET_OPTIONS);
@@ -351,19 +305,7 @@ void ScannerTwain::scan(const Params &params)
     TW_MEMREF hImg = nullptr;
     TW_UINT16 twRC = call(&m_srcID, DG_IMAGE, DAT_IMAGENATIVEXFER, MSG_GET, (TW_MEMREF)&hImg);
     if(twRC == TWRC_XFERDONE){
-        HBITMAP bmp = BitmapFromDIB(hImg);
-        Glib::RefPtr<Gdk::Pixbuf> pixbuf = pixbufFromWinHBITMAP(bmp);
-        if(!pixbuf){
-            saveOk = false;
-        }else{
-            try{
-                pixbuf->save(params.filename, "png");
-            }catch(...){
-                saveOk = false;
-            }
-        }
-        DeleteObject(bmp);
-        GlobalFree(hImg);
+        saveOk = saveDIB(hImg, params.filename);
     }
 #else
     TW_UINT16 twRC = call(&m_srcID, DG_IMAGE, DAT_IMAGEFILEXFER, MSG_GET, nullptr);
@@ -444,7 +386,7 @@ GdkFilterReturn ScannerTwain::eventFilter(GdkXEvent *xevent, GdkEvent *event, gp
     twEvent.TWMessage = MSG_NULL;
     TW_UINT16 twRC = s_instance->m_dsmEntry(&s_instance->m_appID, &s_instance->m_srcID, DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT, (TW_MEMREF)&twEvent);
 
-    if(twRC == TWRC_DSEVENT) {
+    if(!s_instance->m_useCallback && twRC == TWRC_DSEVENT) {
         if(twEvent.TWMessage == MSG_XFERREADY || twEvent.TWMessage == MSG_CLOSEDSREQ || twEvent.TWMessage == MSG_CLOSEDSOK || twEvent.TWMessage == MSG_NULL){
             s_instance->m_dsMsg = twEvent.TWMessage;
         }
