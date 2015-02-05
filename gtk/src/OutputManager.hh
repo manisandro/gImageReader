@@ -55,6 +55,7 @@ private:
 	Gtk::CheckMenuItem* m_filterKeepIfQuote;
 	Gtk::CheckMenuItem* m_filterJoinHyphen;
 	Gtk::CheckMenuItem* m_filterJoinSpace;
+	Gtk::ToggleToolButton* m_toggleSearchButton;
 	Gtk::ToolButton* m_undoButton;
 	Gtk::ToolButton* m_redoButton;
 	Gtk::CheckButton* m_csCheckBox;
@@ -73,7 +74,7 @@ private:
 	void setFont();
 	void setInsertMode(InsertMode mode, const std::string& iconName);
 	void showInsertMenu();
-	void toggleReplaceBox(Gtk::ToggleToolButton *button);
+	void toggleReplaceBox();
 #ifdef G_OS_UNIX
 	void dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring& lang);
 	void dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result);

@@ -43,6 +43,9 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	ui.actionOutputModeReplace->setData(static_cast<int>(InsertMode::Replace));
 	ui.frameOutputSearch->setVisible(false);
 
+	ui.actionOutputReplace->setShortcut(Qt::CTRL + Qt::Key_F);
+	ui.actionOutputSave->setShortcut(Qt::CTRL + Qt::Key_S);
+
 	m_spell.setDecodeLanguageCodes(true);
 	m_spell.setShowCheckSpellingCheckbox(true);
 	m_spell.setTextEdit(ui.plainTextEditOutput);
@@ -57,8 +60,6 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.lineEditOutputReplace, SLOT(clear()));
 	connect(ui.actionOutputUndo, SIGNAL(triggered()), &m_spell, SLOT(undo()));
 	connect(ui.actionOutputRedo, SIGNAL(triggered()), &m_spell, SLOT(redo()));
-	connect(ui.actionOutputUndo, SIGNAL(triggered()), this, SLOT(scrollCursorIntoView()));
-	connect(ui.actionOutputRedo, SIGNAL(triggered()), this, SLOT(scrollCursorIntoView()));
 	connect(ui.actionOutputSave, SIGNAL(triggered()), this, SLOT(saveBuffer()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clearBuffer()));
 	connect(&m_spell, SIGNAL(undoAvailable(bool)), ui.actionOutputUndo, SLOT(setEnabled(bool)));
@@ -328,12 +329,6 @@ bool OutputManager::clearBuffer()
 bool OutputManager::getBufferModified() const
 {
 	return ui.plainTextEditOutput->document()->isModified();
-}
-
-void OutputManager::scrollCursorIntoView()
-{
-	ui.plainTextEditOutput->ensureCursorVisible();
-	ui.plainTextEditOutput->setFocus();
 }
 
 void OutputManager::setLanguage(const Config::Lang& lang, bool force)

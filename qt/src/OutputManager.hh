@@ -63,7 +63,6 @@ private slots:
 	void findPrev();
 	void replaceAll();
 	void replaceNext();
-	void scrollCursorIntoView();
 	void setFont();
 	void setInsertMode(QAction* action);
 	void dictionaryAutoinstall();

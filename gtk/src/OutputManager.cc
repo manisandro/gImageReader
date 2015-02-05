@@ -46,16 +46,20 @@ OutputManager::OutputManager()
 	m_filterKeepIfQuote = Builder("menuitem:output.stripcrlf.keepquote");
 	m_filterJoinHyphen = Builder("menuitem:output.stripcrlf.joinhyphen");
 	m_filterJoinSpace = Builder("menuitem:output.stripcrlf.joinspace");
+	m_toggleSearchButton = Builder("tbbutton:output.findreplace");
 	m_undoButton = Builder("tbbutton:output.undo");
 	m_redoButton = Builder("tbbutton:output.redo");
 	m_csCheckBox = Builder("checkbutton:output.matchcase");
 	m_textBuffer = UndoableBuffer::create();
 	m_textView->set_buffer(m_textBuffer);
 	Builder("tbbutton:output.stripcrlf").as<Gtk::MenuToolButton>()->set_menu(*Builder("menu:output.stripcrlf").as<Gtk::Menu>());
+	Gtk::ToolButton* saveButton = Builder("tbbutton:output.save");
 
 	Glib::RefPtr<Gtk::AccelGroup> group = MAIN->getWindow()->get_accel_group();
 	m_undoButton->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 	m_redoButton->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK|Gdk::SHIFT_MASK, Gtk::AccelFlags(0));
+	m_toggleSearchButton->get_child()->add_accelerator("clicked", group, GDK_KEY_F, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
+	saveButton->add_accelerator("clicked", group, GDK_KEY_S, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 
 	m_substitutionsManager = new SubstitutionsManager(m_textBuffer, m_csCheckBox);
 
@@ -73,10 +77,10 @@ OutputManager::OutputManager()
 	CONNECT(Builder("menuitem:output.insert.cursor").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Cursor, "ins_cursor.png"); });
 	CONNECT(Builder("menuitem:output.insert.replace").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Replace, "ins_replace.png"); });
 	CONNECT(Builder("tbbutton:output.stripcrlf").as<Gtk::ToolButton>(), clicked, [this]{ filterBuffer(); });
-	CONNECTS(Builder("tbbutton:output.findreplace").as<Gtk::ToggleToolButton>(), toggled, [this](Gtk::ToggleToolButton* b){ toggleReplaceBox(b); });
+	CONNECT(m_toggleSearchButton, toggled, [this]{ toggleReplaceBox(); });
 	CONNECT(m_undoButton, clicked, [this]{ m_textBuffer->undo(); scrollCursorIntoView(); });
 	CONNECT(m_redoButton, clicked, [this]{ m_textBuffer->redo(); scrollCursorIntoView(); });
-	CONNECT(Builder("tbbutton:output.save").as<Gtk::ToolButton>(), clicked, [this]{ saveBuffer(); });
+	CONNECT(saveButton, clicked, [this]{ saveBuffer(); });
 	CONNECT(Builder("tbbutton:output.clear").as<Gtk::ToolButton>(), clicked, [this]{ clearBuffer(); });
 	CONNECT(m_textBuffer, history_changed, [this]{ m_undoButton->set_sensitive(m_textBuffer->can_undo()); });
 	CONNECT(m_textBuffer, history_changed, [this]{ m_redoButton->set_sensitive(m_textBuffer->can_redo()); });
@@ -191,11 +195,11 @@ void OutputManager::filterBuffer()
 	m_textBuffer->select_range(start, end);
 }
 
-void OutputManager::toggleReplaceBox(Gtk::ToggleToolButton* button)
+void OutputManager::toggleReplaceBox()
 {
 	m_searchEntry->set_text("");
 	m_replaceEntry->set_text("");
-	m_replaceBox->set_visible(button->get_active());
+	m_replaceBox->set_visible(m_toggleSearchButton->get_active());
 }
 
 void OutputManager::replaceAll()
