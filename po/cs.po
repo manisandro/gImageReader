@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-12 23:51+0100\n"
+"POT-Creation-Date: 2015-02-06 14:47+0100\n"
 "PO-Revision-Date: 2014-11-24 12:30+0200\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <>\n"
@@ -18,22 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:141
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:142
 msgid "Redetect Languages"
 msgstr "Znovu zkontrolovat přítomnost jazykových dat"
 
-#: ../gtk/data/appmenu.ui.h:2 ../gtk/data/gimagereader.ui.h:73
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:144
+#: ../gtk/data/appmenu.ui.h:2 ../gtk/data/gimagereader.ui.h:68
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:145
 msgid "Preferences"
 msgstr "Předvolby"
 
-#: ../gtk/data/appmenu.ui.h:3 ../gtk/src/OutputManager.cc:398
-#: ../qt/src/OutputManager.cc:341 ../qt/src/Ui_MainWindow.hh:149
+#: ../gtk/data/appmenu.ui.h:3 ../gtk/src/OutputManager.cc:412
+#: ../qt/src/OutputManager.cc:352 ../qt/src/Ui_MainWindow.hh:150
 msgid "Help"
 msgstr "Nápověda"
 
 #: ../gtk/data/appmenu.ui.h:4 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:152
+#: ../qt/src/Ui_MainWindow.hh:153
 msgid "About"
 msgstr "O aplikaci"
 
@@ -63,387 +63,387 @@ msgstr ""
 "\">manisandro@gmail.com</a>. Zde se pokuste popsat svou činnost před pádem "
 "aplikace. Též přiložte níže uvedené. Díky."
 
-#: ../gtk/data/gimagereader.ui.h:1 ../qt/data/MainWindow.ui.h:24
-#: ../qt/src/SubstitutionsManager.cc:37
-msgid "Substitutions"
-msgstr "Dosazování"
-
-#: ../gtk/data/gimagereader.ui.h:2 ../qt/src/SubstitutionsManager.cc:42
-#: ../qt/src/SubstitutionsManager.cc:43
-msgid "Open"
-msgstr "Otevřít"
-
-#: ../gtk/data/gimagereader.ui.h:3 ../qt/src/SubstitutionsManager.cc:45
-#: ../qt/src/SubstitutionsManager.cc:46
-msgid "Save"
-msgstr "Uložit"
-
-#: ../gtk/data/gimagereader.ui.h:4 ../qt/src/SubstitutionsManager.cc:48
-#: ../qt/src/SubstitutionsManager.cc:49
-msgid "Clear"
-msgstr "Vyčistit"
-
-#: ../gtk/data/gimagereader.ui.h:5 ../qt/data/ConfigDialog.ui.h:19
-#: ../qt/src/SubstitutionsManager.cc:51 ../qt/src/SubstitutionsManager.cc:52
-msgid "Add"
-msgstr "Přidat"
-
-#: ../gtk/data/gimagereader.ui.h:6 ../qt/data/ConfigDialog.ui.h:20
-#: ../qt/src/SubstitutionsManager.cc:54 ../qt/src/SubstitutionsManager.cc:55
-msgid "Remove"
-msgstr "Odebrat"
-
-#: ../gtk/data/gimagereader.ui.h:7
+#: ../gtk/data/gimagereader.ui.h:1
 msgid "<small>Recognize all</small>"
 msgstr "<small>Rozpoznat vše</small>"
 
 #. Output insert mode
-#: ../gtk/data/gimagereader.ui.h:8 ../qt/src/Ui_MainWindow.hh:201
+#: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:202
 msgid "Append to current text"
 msgstr "Připojit k současnému textu"
 
-#: ../gtk/data/gimagereader.ui.h:9 ../qt/src/Ui_MainWindow.hh:202
+#: ../gtk/data/gimagereader.ui.h:3 ../qt/src/Ui_MainWindow.hh:203
 msgid "Insert at cursor"
 msgstr "Vložit na pozici kurzoru"
 
-#: ../gtk/data/gimagereader.ui.h:10 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/gimagereader.ui.h:4 ../qt/src/Ui_MainWindow.hh:204
 msgid "Replace current text"
 msgstr "Nahradit současný text"
 
 #. Sources toolbar
-#: ../gtk/data/gimagereader.ui.h:11 ../qt/src/Ui_MainWindow.hh:163
+#: ../gtk/data/gimagereader.ui.h:5 ../qt/src/Ui_MainWindow.hh:164
 msgid "Recent"
 msgstr "Nedávno použité"
 
-#: ../gtk/data/gimagereader.ui.h:12 ../qt/src/Ui_MainWindow.hh:164
+#: ../gtk/data/gimagereader.ui.h:6 ../qt/src/Ui_MainWindow.hh:165
 msgid "Paste"
 msgstr "Vloženo"
 
-#: ../gtk/data/gimagereader.ui.h:13 ../qt/src/Ui_MainWindow.hh:165
+#: ../gtk/data/gimagereader.ui.h:7 ../qt/src/Ui_MainWindow.hh:166
 msgid "Take Screenshot"
 msgstr "Zachytit snímek obrazovky"
 
-#: ../gtk/data/gimagereader.ui.h:14 ../qt/data/MainWindow.ui.h:6
+#: ../gtk/data/gimagereader.ui.h:8 ../qt/data/MainWindow.ui.h:6
 msgid "Sources"
 msgstr "Zdroje"
 
-#: ../gtk/data/gimagereader.ui.h:15 ../qt/data/MainWindow.ui.h:27
+#: ../gtk/data/gimagereader.ui.h:9 ../qt/data/MainWindow.ui.h:27
 msgid "Zoom in"
 msgstr "Přiblížit"
 
-#: ../gtk/data/gimagereader.ui.h:16 ../qt/data/MainWindow.ui.h:26
+#: ../gtk/data/gimagereader.ui.h:10 ../qt/data/MainWindow.ui.h:26
 msgid "Zoom In"
 msgstr "Přiblížit"
 
-#: ../gtk/data/gimagereader.ui.h:17 ../qt/data/MainWindow.ui.h:29
+#: ../gtk/data/gimagereader.ui.h:11 ../qt/data/MainWindow.ui.h:29
 msgid "Zoom out"
 msgstr "Oddálit"
 
-#: ../gtk/data/gimagereader.ui.h:18 ../qt/data/MainWindow.ui.h:28
+#: ../gtk/data/gimagereader.ui.h:12 ../qt/data/MainWindow.ui.h:28
 msgid "Zoom Out"
 msgstr "Oddálit"
 
-#: ../gtk/data/gimagereader.ui.h:19 ../qt/data/MainWindow.ui.h:31
+#: ../gtk/data/gimagereader.ui.h:13 ../qt/data/MainWindow.ui.h:31
 msgid "Normal size"
 msgstr "Původní velikost"
 
-#: ../gtk/data/gimagereader.ui.h:20 ../qt/data/MainWindow.ui.h:30
+#: ../gtk/data/gimagereader.ui.h:14 ../qt/data/MainWindow.ui.h:30
 msgid "Normal Size"
 msgstr "Původní velikost"
 
-#: ../gtk/data/gimagereader.ui.h:21 ../qt/data/MainWindow.ui.h:33
+#: ../gtk/data/gimagereader.ui.h:15 ../qt/data/MainWindow.ui.h:33
 msgid "Best fit"
 msgstr "Přizpůsobit"
 
-#: ../gtk/data/gimagereader.ui.h:22 ../qt/data/MainWindow.ui.h:32
+#: ../gtk/data/gimagereader.ui.h:16 ../qt/data/MainWindow.ui.h:32
 msgid "Best Fit"
 msgstr "Přizpůsobit"
 
-#: ../gtk/data/gimagereader.ui.h:23 ../qt/data/MainWindow.ui.h:35
+#: ../gtk/data/gimagereader.ui.h:17 ../qt/data/MainWindow.ui.h:35
 msgid "Rotate left"
 msgstr "Otočit vlevo"
 
-#: ../gtk/data/gimagereader.ui.h:24 ../qt/data/MainWindow.ui.h:34
+#: ../gtk/data/gimagereader.ui.h:18 ../qt/data/MainWindow.ui.h:34
 msgid "Rotate Left"
 msgstr "Otočit vlevo"
 
-#: ../gtk/data/gimagereader.ui.h:25 ../qt/data/MainWindow.ui.h:37
+#: ../gtk/data/gimagereader.ui.h:19 ../qt/data/MainWindow.ui.h:37
 msgid "Rotate right"
 msgstr "Otočit vpravo"
 
-#: ../gtk/data/gimagereader.ui.h:26 ../qt/data/MainWindow.ui.h:36
+#: ../gtk/data/gimagereader.ui.h:20 ../qt/data/MainWindow.ui.h:36
 msgid "Rotate Right"
 msgstr "Otočit vpravo"
 
-#: ../gtk/data/gimagereader.ui.h:27 ../qt/data/MainWindow.ui.h:39
+#: ../gtk/data/gimagereader.ui.h:21 ../qt/data/MainWindow.ui.h:39
 msgid "Image controls"
 msgstr "Ovládání parametrů obrázku"
 
-#: ../gtk/data/gimagereader.ui.h:28 ../qt/data/MainWindow.ui.h:38
+#: ../gtk/data/gimagereader.ui.h:22 ../qt/data/MainWindow.ui.h:38
 msgid "Image Controls"
 msgstr "Ovládání parametrů obrázku"
 
-#: ../gtk/data/gimagereader.ui.h:29 ../qt/data/MainWindow.ui.h:41
+#: ../gtk/data/gimagereader.ui.h:23 ../qt/data/MainWindow.ui.h:41
 msgid "Autodetect layout"
 msgstr "Automaticky zjistit rozvržení stránky"
 
-#: ../gtk/data/gimagereader.ui.h:30 ../qt/data/MainWindow.ui.h:40
+#: ../gtk/data/gimagereader.ui.h:24 ../qt/data/MainWindow.ui.h:40
 msgid "Autodetect Layout"
 msgstr "Automaticky zjistit rozvržení stránky"
 
-#: ../gtk/data/gimagereader.ui.h:31 ../qt/data/MainWindow.ui.h:43
+#: ../gtk/data/gimagereader.ui.h:25 ../qt/data/MainWindow.ui.h:43
 msgid "Toggle output pane"
 msgstr "Přepnout podokno výstupu"
 
-#: ../gtk/data/gimagereader.ui.h:32 ../qt/data/MainWindow.ui.h:42
+#: ../gtk/data/gimagereader.ui.h:26 ../qt/data/MainWindow.ui.h:42
 msgid "Toggle Output Pane"
 msgstr "Přepnout podokno výstupu"
 
-#: ../gtk/data/gimagereader.ui.h:33 ../qt/src/Ui_MainWindow.hh:176
+#: ../gtk/data/gimagereader.ui.h:27 ../qt/src/Ui_MainWindow.hh:177
 msgid "Add images"
 msgstr "Přidat obrázky"
 
-#: ../gtk/data/gimagereader.ui.h:34 ../qt/src/Ui_MainWindow.hh:175
+#: ../gtk/data/gimagereader.ui.h:28 ../qt/src/Ui_MainWindow.hh:176
 msgid "Add Images"
 msgstr "Přidat obrázky"
 
-#: ../gtk/data/gimagereader.ui.h:35 ../qt/src/Ui_MainWindow.hh:181
+#: ../gtk/data/gimagereader.ui.h:29 ../qt/src/Ui_MainWindow.hh:182
 msgid "Remove image from list"
 msgstr "Odebrat obrázek ze seznamu"
 
-#: ../gtk/data/gimagereader.ui.h:36 ../qt/src/Ui_MainWindow.hh:180
+#: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:181
 msgid "Remove Image"
 msgstr "Odebrat obrázek"
 
-#: ../gtk/data/gimagereader.ui.h:37 ../qt/src/Ui_MainWindow.hh:184
+#: ../gtk/data/gimagereader.ui.h:31 ../qt/src/Ui_MainWindow.hh:185
 msgid "Delete image"
 msgstr "Smazat obrázek"
 
-#: ../gtk/data/gimagereader.ui.h:38 ../qt/src/Ui_MainWindow.hh:183
+#: ../gtk/data/gimagereader.ui.h:32 ../qt/src/Ui_MainWindow.hh:184
 msgid "Delete Image"
 msgstr "Smazat obrázek"
 
-#: ../gtk/data/gimagereader.ui.h:39 ../qt/src/Ui_MainWindow.hh:187
+#: ../gtk/data/gimagereader.ui.h:33 ../qt/src/Ui_MainWindow.hh:188
 msgid "Clear list"
 msgstr "Vyčistit seznam"
 
-#: ../gtk/data/gimagereader.ui.h:40 ../qt/src/Ui_MainWindow.hh:186
+#: ../gtk/data/gimagereader.ui.h:34 ../qt/src/Ui_MainWindow.hh:187
 msgid "Clear List"
 msgstr "Vyčistit seznam"
 
-#: ../gtk/data/gimagereader.ui.h:41 ../qt/data/MainWindow.ui.h:7
+#: ../gtk/data/gimagereader.ui.h:35 ../qt/data/MainWindow.ui.h:7
 msgid "Files"
 msgstr "soubory"
 
-#: ../gtk/data/gimagereader.ui.h:42 ../qt/data/MainWindow.ui.h:17
+#: ../gtk/data/gimagereader.ui.h:36 ../qt/data/MainWindow.ui.h:17
 msgid "Device:"
 msgstr "Zařízení:"
 
-#: ../gtk/data/gimagereader.ui.h:43 ../qt/data/MainWindow.ui.h:13
+#: ../gtk/data/gimagereader.ui.h:37 ../qt/data/MainWindow.ui.h:13
 msgid "Output:"
 msgstr "Výstup:"
 
-#: ../gtk/data/gimagereader.ui.h:44 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/gimagereader.ui.h:38 ../qt/data/MainWindow.ui.h:9
 msgid "Resolution:"
 msgstr "Rozlišení:"
 
-#: ../gtk/data/gimagereader.ui.h:45 ../qt/data/MainWindow.ui.h:16
+#: ../gtk/data/gimagereader.ui.h:39 ../qt/data/MainWindow.ui.h:16
 msgid "Refresh"
 msgstr "Znovu načíst"
 
-#: ../gtk/data/gimagereader.ui.h:46 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/gimagereader.ui.h:40 ../qt/data/MainWindow.ui.h:10
 msgid "Mode:"
 msgstr "Režim:"
 
-#: ../gtk/data/gimagereader.ui.h:47 ../qt/data/MainWindow.ui.h:12
+#: ../gtk/data/gimagereader.ui.h:41 ../qt/data/MainWindow.ui.h:12
 msgid "Color"
 msgstr "Barva"
 
-#: ../gtk/data/gimagereader.ui.h:48 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/gimagereader.ui.h:42 ../qt/data/MainWindow.ui.h:11
 msgid "Grayscale"
 msgstr "Stupně šedé"
 
-#: ../gtk/data/gimagereader.ui.h:49 ../qt/data/MainWindow.ui.h:14
+#: ../gtk/data/gimagereader.ui.h:43 ../qt/data/MainWindow.ui.h:14
 msgid "Scan"
 msgstr "Skenovat"
 
-#: ../gtk/data/gimagereader.ui.h:50 ../qt/data/MainWindow.ui.h:8
+#: ../gtk/data/gimagereader.ui.h:44 ../qt/data/MainWindow.ui.h:8
 msgid "Acquire"
 msgstr "Získat"
 
-#: ../gtk/data/gimagereader.ui.h:51 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/gimagereader.ui.h:45 ../qt/data/MainWindow.ui.h:2
 msgid "Brightness"
 msgstr "Světlost"
 
-#: ../gtk/data/gimagereader.ui.h:52 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/gimagereader.ui.h:46 ../qt/data/MainWindow.ui.h:3
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../gtk/data/gimagereader.ui.h:53 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/gimagereader.ui.h:47 ../qt/data/MainWindow.ui.h:4
 msgid "Resolution"
 msgstr "Rozlišení"
 
-#: ../gtk/data/gimagereader.ui.h:54 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/gimagereader.ui.h:48 ../qt/data/MainWindow.ui.h:5
 msgid "Invert colors"
 msgstr "Převrátit barvy"
 
-#: ../gtk/data/gimagereader.ui.h:55 ../qt/src/Ui_MainWindow.hh:235
+#: ../gtk/data/gimagereader.ui.h:49 ../qt/src/Ui_MainWindow.hh:239
 msgid "Select insert mode"
 msgstr "Zvolte režim vkládání"
 
-#: ../gtk/data/gimagereader.ui.h:56 ../qt/src/Ui_MainWindow.hh:242
+#: ../gtk/data/gimagereader.ui.h:50 ../qt/src/Ui_MainWindow.hh:246
 msgid "Strip line breaks on selected text"
 msgstr "Z označeného textu odebrat konce řádků"
 
-#: ../gtk/data/gimagereader.ui.h:57 ../qt/src/Ui_MainWindow.hh:241
+#: ../gtk/data/gimagereader.ui.h:51 ../qt/src/Ui_MainWindow.hh:245
 msgid "Strip Line Breaks"
 msgstr "Odebrat konce řádků"
 
-#: ../gtk/data/gimagereader.ui.h:58 ../qt/src/Ui_MainWindow.hh:247
+#: ../gtk/data/gimagereader.ui.h:52 ../qt/src/Ui_MainWindow.hh:251
 msgid "Find and replace"
 msgstr "Najít a nahradit"
 
-#: ../gtk/data/gimagereader.ui.h:59 ../qt/src/Ui_MainWindow.hh:246
+#: ../gtk/data/gimagereader.ui.h:53 ../qt/src/Ui_MainWindow.hh:250
 msgid "Find and Replace"
 msgstr "Najít a nahradit"
 
-#: ../gtk/data/gimagereader.ui.h:60 ../qt/src/Ui_MainWindow.hh:249
-#: ../qt/src/Ui_MainWindow.hh:250
+#: ../gtk/data/gimagereader.ui.h:54 ../qt/src/Ui_MainWindow.hh:253
+#: ../qt/src/Ui_MainWindow.hh:254
 msgid "Undo"
 msgstr "Zpět"
 
-#: ../gtk/data/gimagereader.ui.h:61 ../qt/src/Ui_MainWindow.hh:252
-#: ../qt/src/Ui_MainWindow.hh:253
+#: ../gtk/data/gimagereader.ui.h:55 ../qt/src/Ui_MainWindow.hh:256
+#: ../qt/src/Ui_MainWindow.hh:257
 msgid "Redo"
 msgstr "Znovu"
 
-#: ../gtk/data/gimagereader.ui.h:62 ../qt/src/Ui_MainWindow.hh:256
+#: ../gtk/data/gimagereader.ui.h:56 ../qt/src/Ui_MainWindow.hh:260
 msgid "Save output"
 msgstr "Uložit výstup"
 
-#: ../gtk/data/gimagereader.ui.h:63 ../qt/src/Ui_MainWindow.hh:255
+#: ../gtk/data/gimagereader.ui.h:57 ../qt/src/Ui_MainWindow.hh:259
 msgid "Save Output"
 msgstr "Uložit výstup"
 
-#: ../gtk/data/gimagereader.ui.h:64 ../qt/src/Ui_MainWindow.hh:258
+#: ../gtk/data/gimagereader.ui.h:58 ../qt/src/Ui_MainWindow.hh:262
 msgid "Clear output"
 msgstr "Vyčistit výstup"
 
-#: ../gtk/data/gimagereader.ui.h:65 ../qt/src/Ui_MainWindow.hh:257
+#: ../gtk/data/gimagereader.ui.h:59 ../qt/src/Ui_MainWindow.hh:261
 msgid "Clear Output"
 msgstr "Vyčistit výstup"
 
-#: ../gtk/data/gimagereader.ui.h:66 ../qt/data/MainWindow.ui.h:19
+#: ../gtk/data/gimagereader.ui.h:60 ../qt/data/MainWindow.ui.h:19
 msgid "Find"
 msgstr "Najít"
 
-#: ../gtk/data/gimagereader.ui.h:67 ../qt/data/MainWindow.ui.h:20
+#: ../gtk/data/gimagereader.ui.h:61 ../qt/data/MainWindow.ui.h:20
 msgid "Replace"
 msgstr "Nahradit"
 
-#: ../gtk/data/gimagereader.ui.h:68 ../qt/data/MainWindow.ui.h:22
+#: ../gtk/data/gimagereader.ui.h:62 ../qt/data/MainWindow.ui.h:22
 msgid "Replace all"
 msgstr "Nahradit vše"
 
-#: ../gtk/data/gimagereader.ui.h:69 ../qt/data/MainWindow.ui.h:23
+#: ../gtk/data/gimagereader.ui.h:63 ../qt/data/MainWindow.ui.h:23
 msgid "Find previous"
 msgstr "Najít předchozí"
 
-#: ../gtk/data/gimagereader.ui.h:70 ../qt/data/MainWindow.ui.h:21
+#: ../gtk/data/gimagereader.ui.h:64 ../qt/data/MainWindow.ui.h:21
 msgid "Find next"
 msgstr "Najít následující"
 
-#: ../gtk/data/gimagereader.ui.h:71 ../qt/data/MainWindow.ui.h:25
+#: ../gtk/data/gimagereader.ui.h:65 ../qt/data/MainWindow.ui.h:25
 msgid "Match case"
 msgstr "Rozlišovat malá/velká písmena"
 
-#: ../gtk/data/gimagereader.ui.h:72
+#: ../gtk/data/gimagereader.ui.h:66 ../qt/data/MainWindow.ui.h:24
+#: ../qt/src/SubstitutionsManager.cc:37
+msgid "Substitutions"
+msgstr "Dosazování"
+
+#: ../gtk/data/gimagereader.ui.h:67
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "Grafická nadstavba pro tesseract-ocr"
 
-#: ../gtk/data/gimagereader.ui.h:74
+#: ../gtk/data/gimagereader.ui.h:69
 msgid "Output pane orientation:"
 msgstr "Orientace výstupní stránky:"
 
-#: ../gtk/data/gimagereader.ui.h:75
+#: ../gtk/data/gimagereader.ui.h:70
 msgid "Horizontal"
 msgstr "Vodorovně"
 
-#: ../gtk/data/gimagereader.ui.h:76
+#: ../gtk/data/gimagereader.ui.h:71
 msgid "Vertical"
 msgstr "Svisle"
 
-#: ../gtk/data/gimagereader.ui.h:77 ../qt/data/ConfigDialog.ui.h:3
+#: ../gtk/data/gimagereader.ui.h:72 ../qt/data/ConfigDialog.ui.h:3
 msgid "Query to install missing spellcheck dictionaries"
 msgstr "Dotazovat se na instalaci slovníků pro kontrolu překlepů"
 
-#: ../gtk/data/gimagereader.ui.h:78 ../qt/data/ConfigDialog.ui.h:4
+#: ../gtk/data/gimagereader.ui.h:73 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
 msgstr "Automaticky zjišťovat případnou novější verzi aplikace"
 
-#: ../gtk/data/gimagereader.ui.h:79 ../qt/data/ConfigDialog.ui.h:9
+#: ../gtk/data/gimagereader.ui.h:74 ../qt/data/ConfigDialog.ui.h:9
 msgid "Predefined language definitions:"
 msgstr "Předurčené jazykové definice:"
 
-#: ../gtk/data/gimagereader.ui.h:80 ../qt/data/ConfigDialog.ui.h:10
+#: ../gtk/data/gimagereader.ui.h:75 ../qt/data/ConfigDialog.ui.h:10
 msgid "Additional language definitions:"
 msgstr "Další jazykové definice:"
 
-#: ../gtk/data/gimagereader.ui.h:81 ../qt/data/ConfigDialog.ui.h:11
+#: ../gtk/data/gimagereader.ui.h:76 ../qt/data/ConfigDialog.ui.h:11
 msgid "The prefix of the tesseract language data file"
 msgstr "Předpona souboru s jazykovými daty engine tesseract."
 
-#: ../gtk/data/gimagereader.ui.h:82 ../qt/data/ConfigDialog.ui.h:12
+#: ../gtk/data/gimagereader.ui.h:77 ../qt/data/ConfigDialog.ui.h:12
 msgid "Prefix"
 msgstr "Předpona"
 
-#: ../gtk/data/gimagereader.ui.h:83 ../qt/data/ConfigDialog.ui.h:13
+#: ../gtk/data/gimagereader.ui.h:78 ../qt/data/ConfigDialog.ui.h:13
 msgid "The ISO 639-1 language code followed by the country code"
 msgstr "Kód jazyka dle normy ISO 639-1, následovaný kódem pro zemi."
 
-#: ../gtk/data/gimagereader.ui.h:84 ../qt/data/ConfigDialog.ui.h:14
+#: ../gtk/data/gimagereader.ui.h:79 ../qt/data/ConfigDialog.ui.h:14
 msgid "ISO Code"
 msgstr "Kód normy ISO"
 
-#: ../gtk/data/gimagereader.ui.h:85 ../qt/data/ConfigDialog.ui.h:15
+#: ../gtk/data/gimagereader.ui.h:80 ../qt/data/ConfigDialog.ui.h:15
 msgid "The name of the language"
 msgstr "Název jazyka."
 
-#: ../gtk/data/gimagereader.ui.h:86 ../qt/data/ConfigDialog.ui.h:16
+#: ../gtk/data/gimagereader.ui.h:81 ../qt/data/ConfigDialog.ui.h:16
 msgid "Name"
 msgstr "Název"
 
-#: ../gtk/data/gimagereader.ui.h:87 ../qt/data/ConfigDialog.ui.h:5
+#: ../gtk/data/gimagereader.ui.h:82 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
 msgstr "Písmo podokna výstupu:"
 
-#: ../gtk/data/gimagereader.ui.h:88 ../qt/data/ConfigDialog.ui.h:2
+#: ../gtk/data/gimagereader.ui.h:83 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
 msgstr "Výchozí"
 
-#: ../gtk/data/gimagereader.ui.h:89 ../qt/data/PageRangeDialog.ui.h:1
+#: ../gtk/data/gimagereader.ui.h:84 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
 msgstr "Strany"
 
-#: ../gtk/data/gimagereader.ui.h:90 ../qt/data/PageRangeDialog.ui.h:2
+#: ../gtk/data/gimagereader.ui.h:85 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
 msgstr "Strany:"
 
-#: ../gtk/data/gimagereader.ui.h:91 ../qt/data/PageRangeDialog.ui.h:3
+#: ../gtk/data/gimagereader.ui.h:86 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Příklad:</b> 1-10, 13, 14-18</small>"
 
-#: ../gtk/data/gimagereader.ui.h:92 ../qt/data/PageRangeDialog.ui.h:4
+#: ../gtk/data/gimagereader.ui.h:87 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
 msgstr "Oblast k rozpoznání"
 
-#: ../gtk/data/gimagereader.ui.h:93 ../qt/data/PageRangeDialog.ui.h:5
+#: ../gtk/data/gimagereader.ui.h:88 ../qt/data/PageRangeDialog.ui.h:5
 msgid "Entire page"
 msgstr "Celá strana"
 
-#: ../gtk/data/gimagereader.ui.h:94 ../qt/data/PageRangeDialog.ui.h:6
+#: ../gtk/data/gimagereader.ui.h:89 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
 msgstr "Automaticky"
+
+#: ../gtk/data/gimagereader.ui.h:90 ../qt/src/SubstitutionsManager.cc:42
+#: ../qt/src/SubstitutionsManager.cc:43
+msgid "Open"
+msgstr "Otevřít"
+
+#: ../gtk/data/gimagereader.ui.h:91 ../gtk/src/Utils.cc:66
+#: ../qt/src/SubstitutionsManager.cc:45 ../qt/src/SubstitutionsManager.cc:46
+msgid "Save"
+msgstr "Uložit"
+
+#: ../gtk/data/gimagereader.ui.h:92 ../qt/src/SubstitutionsManager.cc:48
+#: ../qt/src/SubstitutionsManager.cc:49
+msgid "Clear"
+msgstr "Vyčistit"
+
+#: ../gtk/data/gimagereader.ui.h:93 ../qt/data/ConfigDialog.ui.h:19
+#: ../qt/src/SubstitutionsManager.cc:51 ../qt/src/SubstitutionsManager.cc:52
+msgid "Add"
+msgstr "Přidat"
+
+#: ../gtk/data/gimagereader.ui.h:94 ../qt/data/ConfigDialog.ui.h:20
+#: ../qt/src/SubstitutionsManager.cc:54 ../qt/src/SubstitutionsManager.cc:55
+msgid "Remove"
+msgstr "Odebrat"
 
 #: ../gtk/data/gimagereader.ui.h:95 ../qt/src/DisplaySelection.cc:56
 msgid "Delete"
@@ -466,40 +466,45 @@ msgid "Save as image"
 msgstr "Uložit jako obrázek"
 
 #. Output postprocessing
-#: ../gtk/data/gimagereader.ui.h:100 ../qt/src/Ui_MainWindow.hh:211
+#: ../gtk/data/gimagereader.ui.h:100 ../qt/src/Ui_MainWindow.hh:212
 msgid "Keep line break if..."
 msgstr "Ponechat konec řádku pokud..."
 
-#: ../gtk/data/gimagereader.ui.h:101 ../qt/src/Ui_MainWindow.hh:213
+#: ../gtk/data/gimagereader.ui.h:101 ../qt/src/Ui_MainWindow.hh:214
 msgid "Preceded by dot"
 msgstr "Následuje za tečkou"
 
-#: ../gtk/data/gimagereader.ui.h:102 ../qt/src/Ui_MainWindow.hh:215
+#: ../gtk/data/gimagereader.ui.h:102 ../qt/src/Ui_MainWindow.hh:216
 msgid "Preceded or succeeded by quote"
 msgstr "Předchází či následuje za uvozovkami"
 
-#: ../gtk/data/gimagereader.ui.h:103 ../qt/src/Ui_MainWindow.hh:217
+#: ../gtk/data/gimagereader.ui.h:103 ../qt/src/Ui_MainWindow.hh:218
 msgid "Other options"
 msgstr "Další možnosti"
 
-#: ../gtk/data/gimagereader.ui.h:104 ../qt/src/Ui_MainWindow.hh:219
+#: ../gtk/data/gimagereader.ui.h:104 ../qt/src/Ui_MainWindow.hh:220
 msgid "Join hyphenated words"
 msgstr "Spojit rozdělená slova"
 
-#: ../gtk/data/gimagereader.ui.h:105 ../qt/src/Ui_MainWindow.hh:221
+#: ../gtk/data/gimagereader.ui.h:105 ../qt/src/Ui_MainWindow.hh:222
 msgid "Collapse whitespace"
 msgstr "Odstranit prázdná místa"
 
-#: ../gtk/data/gimagereader.ui.h:106 ../qt/src/Recognizer.cc:40
+#: ../gtk/data/gimagereader.ui.h:106 ../qt/src/Ui_MainWindow.hh:224
+msgid "Preserve paragraphs"
+msgstr ""
+
+#: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Recognizer.cc:40
 msgid "Current Page"
 msgstr "Současná strana"
 
-#: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Recognizer.cc:43
+#: ../gtk/data/gimagereader.ui.h:108 ../qt/src/Recognizer.cc:43
 msgid "Multiple Pages..."
 msgstr "Vícero stran..."
 
 #: ../gtk/src/Acquirer.cc:43 ../gtk/src/FileDialogs.cc:170
-#: ../qt/data/ConfigDialog.ui.h:18 ../qt/data/MainWindow.ui.h:15
+#: ../gtk/src/Utils.cc:63 ../qt/data/ConfigDialog.ui.h:18
+#: ../qt/data/MainWindow.ui.h:15
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -622,7 +627,8 @@ msgstr "Vyberte soubory"
 msgid "Images and PDFs"
 msgstr "Obrázky a PDF soubory"
 
-#: ../gtk/src/FileDialogs.cc:171 ../qt/data/ConfigDialog.ui.h:17
+#: ../gtk/src/FileDialogs.cc:171 ../gtk/src/Utils.cc:54
+#: ../qt/data/ConfigDialog.ui.h:17
 msgid "OK"
 msgstr "OK"
 
@@ -635,103 +641,103 @@ msgstr "Soubor s názvem \"%1\" již existuje. Opravdu jej chcete přepsat?"
 msgid "Overwrite File?"
 msgstr "Přepsat soubor?"
 
-#: ../gtk/src/MainWindow.cc:125 ../qt/src/MainWindow.cc:137
+#: ../gtk/src/MainWindow.cc:147 ../qt/src/MainWindow.cc:150
 msgid "Select an image to begin..."
 msgstr "Začněte výběrem obrázku..."
 
-#: ../gtk/src/MainWindow.cc:210 ../qt/src/MainWindow.cc:217
+#: ../gtk/src/MainWindow.cc:232 ../qt/src/MainWindow.cc:230
 msgid "To recognize specific areas, drag rectangles over them."
 msgstr "Nad oblastmi, které mají být rozpoznány, natáhněte obdélníky."
 
-#: ../gtk/src/MainWindow.cc:315 ../qt/src/MainWindow.cc:348
+#: ../gtk/src/MainWindow.cc:337 ../qt/src/MainWindow.cc:361
 msgid "New version"
 msgstr "Nová verze"
 
-#: ../gtk/src/MainWindow.cc:315 ../qt/src/MainWindow.cc:348
+#: ../gtk/src/MainWindow.cc:337 ../qt/src/MainWindow.cc:361
 msgid "gImageReader %1 is available"
 msgstr "je k dispozici gImageReader %1"
 
-#: ../gtk/src/MainWindow.cc:316 ../qt/src/MainWindow.cc:349
+#: ../gtk/src/MainWindow.cc:338 ../qt/src/MainWindow.cc:362
 msgid "Download"
 msgstr "Stáhnout"
 
-#: ../gtk/src/MainWindow.cc:317 ../qt/src/MainWindow.cc:350
+#: ../gtk/src/MainWindow.cc:339 ../qt/src/MainWindow.cc:363
 msgid "Changelog"
 msgstr "Seznam změn"
 
-#: ../gtk/src/MainWindow.cc:318 ../qt/src/MainWindow.cc:351
+#: ../gtk/src/MainWindow.cc:340 ../qt/src/MainWindow.cc:364
 msgid "Don't notify again"
 msgstr "Příště již neupozorňovat"
 
-#: ../gtk/src/OutputManager.cc:184 ../qt/src/OutputManager.cc:144
+#: ../gtk/src/OutputManager.cc:194 ../qt/src/OutputManager.cc:157
 msgid "Stripping line breaks..."
 msgstr "Odebírání konců řádků..."
 
-#: ../gtk/src/OutputManager.cc:200 ../qt/src/OutputManager.cc:168
+#: ../gtk/src/OutputManager.cc:210 ../qt/src/OutputManager.cc:181
 msgid "Replacing..."
 msgstr "Nahrazování..."
 
-#: ../gtk/src/OutputManager.cc:292
+#: ../gtk/src/OutputManager.cc:302
 msgid "Check spelling"
 msgstr "Zkontrolovat na překlepy"
 
-#: ../gtk/src/OutputManager.cc:331 ../qt/src/OutputManager.cc:285
+#: ../gtk/src/OutputManager.cc:341 ../qt/src/OutputManager.cc:298
 msgid "output"
 msgstr "výstup"
 
-#: ../gtk/src/OutputManager.cc:335 ../qt/src/OutputManager.cc:287
+#: ../gtk/src/OutputManager.cc:345 ../qt/src/OutputManager.cc:300
 msgid "Text Files"
 msgstr "Textové soubory"
 
-#: ../gtk/src/OutputManager.cc:336 ../qt/src/OutputManager.cc:287
+#: ../gtk/src/OutputManager.cc:346 ../qt/src/OutputManager.cc:300
 msgid "Save Output..."
 msgstr "Uložit výstup..."
 
-#: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:295
+#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:308
 msgid "Failed to save output"
 msgstr "Uložení výstupu se nezdařilo"
 
-#: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputManager.cc:295
+#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:308
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Zkontrolujte své oprávnění zapisovat do zvolené složky."
 
-#: ../gtk/src/OutputManager.cc:359 ../qt/src/OutputManager.cc:309
+#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:322
 msgid "Output not saved"
 msgstr "Výstup nebyl uložen"
 
-#: ../gtk/src/OutputManager.cc:359 ../qt/src/OutputManager.cc:309
+#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:322
 msgid "Save output before proceeding?"
 msgstr "Uložit před pokračováním výstup?"
 
-#: ../gtk/src/OutputManager.cc:389
+#: ../gtk/src/OutputManager.cc:403
 msgid "en_US"
 msgstr "cs_CZ"
 
-#: ../gtk/src/OutputManager.cc:397 ../qt/src/OutputManager.cc:340
+#: ../gtk/src/OutputManager.cc:411 ../qt/src/OutputManager.cc:351
 msgid "Don't show again"
 msgstr "Příště již nezobrazovat"
 
-#: ../gtk/src/OutputManager.cc:405 ../qt/src/OutputManager.cc:348
+#: ../gtk/src/OutputManager.cc:419 ../qt/src/OutputManager.cc:359
 msgid "Install"
 msgstr "Instalovat"
 
-#: ../gtk/src/OutputManager.cc:410 ../qt/src/OutputManager.cc:353
+#: ../gtk/src/OutputManager.cc:424 ../qt/src/OutputManager.cc:364
 msgid "Spelling dictionary missing"
 msgstr "Chybí slovník pro kontrolu překlepů"
 
-#: ../gtk/src/OutputManager.cc:410 ../qt/src/OutputManager.cc:353
+#: ../gtk/src/OutputManager.cc:424 ../qt/src/OutputManager.cc:364
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Slovník pro kontrolu překlepů pro %1 není nainstalován"
 
-#: ../gtk/src/OutputManager.cc:419 ../qt/src/OutputManager.cc:362
+#: ../gtk/src/OutputManager.cc:433 ../qt/src/OutputManager.cc:374
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Probíhá instalace slovníku pro kontrolu překlepů pro '%1'"
 
-#: ../gtk/src/OutputManager.cc:434 ../qt/src/OutputManager.cc:377
+#: ../gtk/src/OutputManager.cc:448 ../qt/src/OutputManager.cc:393
 msgid "Error"
 msgstr "Chyba"
 
-#: ../gtk/src/OutputManager.cc:434 ../qt/src/OutputManager.cc:377
+#: ../gtk/src/OutputManager.cc:448 ../qt/src/OutputManager.cc:393
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Nezdařila se instalace slovníku pro kontrolu překlepů: %1"
 
@@ -805,33 +811,33 @@ msgstr "Došlo k následujícím chybám:%1"
 msgid "Failed to initialize tesseract"
 msgstr "Nelze inicializovat Tesseract"
 
-#: ../gtk/src/scanner/ScannerSane.cc:84 ../gtk/src/scanner/ScannerTwain.cc:337
-#: ../qt/src/scanner/ScannerSane.cc:90 ../qt/src/scanner/ScannerTwain.cc:301
+#: ../gtk/src/scanner/ScannerSane.cc:84 ../gtk/src/scanner/ScannerTwain.cc:291
+#: ../qt/src/scanner/ScannerSane.cc:90 ../qt/src/scanner/ScannerTwain.cc:289
 msgid "Scan canceled"
 msgstr "Skenování bylo zrušeno"
 
 #: ../gtk/src/scanner/ScannerSane.cc:161
-#: ../gtk/src/scanner/ScannerTwain.cc:240 ../qt/src/scanner/ScannerSane.cc:167
-#: ../qt/src/scanner/ScannerTwain.cc:198
+#: ../gtk/src/scanner/ScannerTwain.cc:190 ../qt/src/scanner/ScannerSane.cc:167
+#: ../qt/src/scanner/ScannerTwain.cc:182
 msgid "No scanner specified"
 msgstr "Nebyl určen žádný skener"
 
 #: ../gtk/src/scanner/ScannerSane.cc:170
-#: ../gtk/src/scanner/ScannerTwain.cc:249 ../qt/src/scanner/ScannerSane.cc:176
-#: ../qt/src/scanner/ScannerTwain.cc:207
+#: ../gtk/src/scanner/ScannerTwain.cc:199 ../qt/src/scanner/ScannerSane.cc:176
+#: ../qt/src/scanner/ScannerTwain.cc:191
 msgid "Unable to connect to scanner"
 msgstr "Nelze komunikovat se skenerem"
 
 #: ../gtk/src/scanner/ScannerSane.cc:392
-#: ../gtk/src/scanner/ScannerTwain.cc:315
-#: ../gtk/src/scanner/ScannerTwain.cc:341 ../qt/src/scanner/ScannerSane.cc:398
-#: ../qt/src/scanner/ScannerTwain.cc:273 ../qt/src/scanner/ScannerTwain.cc:305
+#: ../gtk/src/scanner/ScannerTwain.cc:269
+#: ../gtk/src/scanner/ScannerTwain.cc:295 ../qt/src/scanner/ScannerSane.cc:398
+#: ../qt/src/scanner/ScannerTwain.cc:261 ../qt/src/scanner/ScannerTwain.cc:293
 msgid "Unable to start scan"
 msgstr "Nelze zahájit skenování"
 
 #: ../gtk/src/scanner/ScannerSane.cc:401 ../gtk/src/scanner/ScannerSane.cc:445
-#: ../gtk/src/scanner/ScannerTwain.cc:379 ../qt/src/scanner/ScannerSane.cc:407
-#: ../qt/src/scanner/ScannerSane.cc:451 ../qt/src/scanner/ScannerTwain.cc:338
+#: ../gtk/src/scanner/ScannerTwain.cc:321 ../qt/src/scanner/ScannerSane.cc:407
+#: ../qt/src/scanner/ScannerSane.cc:451 ../qt/src/scanner/ScannerTwain.cc:319
 msgid "Error communicating with scanner"
 msgstr "Chyba komunikace se skenerem"
 
@@ -916,8 +922,8 @@ msgid "substitution_list.txt"
 msgstr "seznam_dosazovani.txt"
 
 #: ../gtk/src/SubstitutionsManager.cc:81
-#: ../gtk/src/SubstitutionsManager.cc:114
-#: ../qt/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:144
+#: ../gtk/src/SubstitutionsManager.cc:117
+#: ../qt/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
 msgid "Substitutions List"
 msgstr "Seznam dosazování"
 
@@ -933,45 +939,57 @@ msgstr "Chyba při načítání souboru"
 msgid "Unable to read '%1'."
 msgstr "Z %1 nelze číst."
 
-#: ../gtk/src/SubstitutionsManager.cc:107
-#: ../qt/src/SubstitutionsManager.cc:137
+#: ../gtk/src/SubstitutionsManager.cc:110
+#: ../qt/src/SubstitutionsManager.cc:142
 msgid "Errors Occurred Reading File"
 msgstr "Při načítání souboru došlo k chybám"
 
-#: ../gtk/src/SubstitutionsManager.cc:107
-#: ../qt/src/SubstitutionsManager.cc:137
+#: ../gtk/src/SubstitutionsManager.cc:110
+#: ../qt/src/SubstitutionsManager.cc:142
 msgid "Some entries of the substitutions list could not be read."
 msgstr "Některé položky seznamu dosazování se nezdařilo načíst."
 
-#: ../gtk/src/SubstitutionsManager.cc:115
-#: ../qt/src/SubstitutionsManager.cc:144
+#: ../gtk/src/SubstitutionsManager.cc:118
+#: ../qt/src/SubstitutionsManager.cc:149
 msgid "Save Substitutions List"
 msgstr "Uložit seznam dosazování"
 
-#: ../gtk/src/SubstitutionsManager.cc:121
-#: ../qt/src/SubstitutionsManager.cc:150
+#: ../gtk/src/SubstitutionsManager.cc:124
+#: ../qt/src/SubstitutionsManager.cc:155
 msgid "Error Saving File"
 msgstr "Chyba při ukládání souboru"
 
-#: ../gtk/src/SubstitutionsManager.cc:121
-#: ../qt/src/SubstitutionsManager.cc:150
+#: ../gtk/src/SubstitutionsManager.cc:124
+#: ../qt/src/SubstitutionsManager.cc:155
 msgid "Unable to write to '%1'."
 msgstr "Do '%1' nelze zapisovat."
 
-#: ../gtk/src/SubstitutionsManager.cc:140
-#: ../qt/src/SubstitutionsManager.cc:165
+#: ../gtk/src/SubstitutionsManager.cc:143
+#: ../qt/src/SubstitutionsManager.cc:170
 msgid "Save List?"
 msgstr "Uložit seznam?"
 
-#: ../gtk/src/SubstitutionsManager.cc:140
-#: ../qt/src/SubstitutionsManager.cc:165
+#: ../gtk/src/SubstitutionsManager.cc:143
+#: ../qt/src/SubstitutionsManager.cc:170
 msgid "Do you want to save the current list?"
 msgstr "Chcete současný seznam uložit?"
 
-#: ../gtk/src/SubstitutionsManager.cc:179
-#: ../qt/src/SubstitutionsManager.cc:202
+#: ../gtk/src/SubstitutionsManager.cc:182
+#: ../qt/src/SubstitutionsManager.cc:211
 msgid "Applying substitutions..."
 msgstr "Použití dosazování..."
+
+#: ../gtk/src/Utils.cc:57
+msgid "Yes"
+msgstr ""
+
+#: ../gtk/src/Utils.cc:60
+msgid "No"
+msgstr ""
+
+#: ../gtk/src/Utils.cc:69
+msgid "Discard"
+msgstr ""
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
