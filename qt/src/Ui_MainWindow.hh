@@ -24,6 +24,7 @@ public:
 	QAction* actionOutputPostprocTitle2;
 	QAction* actionOutputPostprocJoinHyphen;
 	QAction* actionOutputPostprocCollapseSpaces;
+	QAction* actionOutputPostprocKeepParagraphs;
 	QAction* actionOutputUndo;
 	QAction* actionPreferences;
 	QAction* actionRedetectLanguages;
@@ -220,6 +221,8 @@ public:
 		actionOutputPostprocJoinHyphen->setCheckable(true);
 		actionOutputPostprocCollapseSpaces = new QAction(gettext("Collapse whitespace"), MainWindow);
 		actionOutputPostprocCollapseSpaces->setCheckable(true);
+		actionOutputPostprocKeepParagraphs = new QAction(gettext("Preserve paragraphs"), MainWindow);
+		actionOutputPostprocKeepParagraphs->setCheckable(true);
 
 		menuOutputPostproc = new QMenu(MainWindow);
 		menuOutputPostproc->addAction(actionOutputPostprocTitle1);
@@ -228,6 +231,7 @@ public:
 		menuOutputPostproc->addAction(actionOutputPostprocTitle2);
 		menuOutputPostproc->addAction(actionOutputPostprocJoinHyphen);
 		menuOutputPostproc->addAction(actionOutputPostprocCollapseSpaces);
+		menuOutputPostproc->addAction(actionOutputPostprocKeepParagraphs);
 
 		// Output toolbar
 		toolButtonOutputMode = new QToolButton(MainWindow);

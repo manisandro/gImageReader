@@ -2524,6 +2524,14 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
         <property name="use_underline">True</property>
       </object>
     </child>
+    <child>
+      <object class="GtkCheckMenuItem" id="menuitem:output.stripcrlf.keepparagraphs">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Preserve paragraphs</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
   </object>
   <object class="GtkMenu" id="menu:recognize.pages">
     <property name="visible">True</property>

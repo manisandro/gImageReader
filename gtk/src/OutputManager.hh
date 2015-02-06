@@ -55,6 +55,7 @@ private:
 	Gtk::CheckMenuItem* m_filterKeepIfQuote;
 	Gtk::CheckMenuItem* m_filterJoinHyphen;
 	Gtk::CheckMenuItem* m_filterJoinSpace;
+	Gtk::CheckMenuItem* m_filterKeepParagraphs;
 	Gtk::ToggleToolButton* m_toggleSearchButton;
 	Gtk::ToolButton* m_undoButton;
 	Gtk::ToolButton* m_redoButton;

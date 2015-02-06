@@ -46,6 +46,7 @@ OutputManager::OutputManager()
 	m_filterKeepIfQuote = Builder("menuitem:output.stripcrlf.keepquote");
 	m_filterJoinHyphen = Builder("menuitem:output.stripcrlf.joinhyphen");
 	m_filterJoinSpace = Builder("menuitem:output.stripcrlf.joinspace");
+	m_filterKeepParagraphs = Builder("menuitem:output.stripcrlf.keepparagraphs");
 	m_toggleSearchButton = Builder("tbbutton:output.findreplace");
 	m_undoButton = Builder("tbbutton:output.undo");
 	m_redoButton = Builder("tbbutton:output.redo");
@@ -107,6 +108,7 @@ OutputManager::OutputManager()
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepquote", "menuitem:output.stripcrlf.keepquote"));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinhyphen", "menuitem:output.stripcrlf.joinhyphen"));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinspace", "menuitem:output.stripcrlf.joinspace"));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepparagraphs", "menuitem:output.stripcrlf.keepparagraphs"));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("searchmatchcase", "checkbutton:output.matchcase"));
 	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("outputdir"));
 
@@ -162,27 +164,28 @@ void OutputManager::filterBuffer()
 		if(m_filterJoinHyphen->get_active()){
 			txt = Glib::Regex::create("-\\s*\n\\s*")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags>(0));
 		}
-		Glib::ustring expr;
-		expr += "\\n"; // Keep if preceded by line break
+		Glib::ustring preChars, sucChars;
+		if(m_filterKeepParagraphs->get_active()){
+			preChars += "\\n"; // Keep if preceded by line break
+		}
 		if(m_filterKeepIfDot->get_active()){
-			expr += "\\.";
+			preChars += "\\."; // Keep if preceded by dot
 		}
 		if(m_filterKeepIfQuote->get_active()){
-			expr += "'\"";
+			preChars += "'\""; // Keep if preceded by dot
+			sucChars += "'\""; // Keep if succeeded by dot
 		}
-		if(!expr.empty()){
-			expr = "([^" + expr + "])";
-		}else{
-			expr = "(.)";
+		if(m_filterKeepParagraphs->get_active()){
+			sucChars += "\\n"; // Keep if succeeded by line break
 		}
-		expr += "\n";
-		// Keep if succeeded by quote / line break
-		if(m_filterKeepIfQuote->get_active()){
-			expr += "(?!['\"\\n])";
-		}else{
-			expr += "(?![\\n])";
+		if(!preChars.empty()){
+			preChars = "([^" + preChars + "])";
 		}
-		txt = Glib::Regex::create(expr)->replace(txt, 0, "\\1 ", static_cast<Glib::RegexMatchFlags>(0));
+		if(!sucChars.empty()){
+			sucChars = "(?![" + sucChars + "])";
+		}
+		Glib::ustring expr = preChars + "\\n" + sucChars;
+		txt = Glib::Regex::create(expr)->replace(txt, 0, preChars.empty() ? " " : "\\1 ", static_cast<Glib::RegexMatchFlags>(0));
 
 		if(m_filterJoinSpace->get_active()){
 			txt = Glib::Regex::create("[ \t]+")->replace(txt, 0, " ", static_cast<Glib::RegexMatchFlags>(0));

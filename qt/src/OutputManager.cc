@@ -23,6 +23,7 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QTextStream>
 
 #include "OutputManager.hh"
 #include "Recognizer.hh"
@@ -77,10 +78,11 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	connect(ui.pushButtonOutputReplacementList, SIGNAL(clicked()), m_substitutionsManager, SLOT(show()));
 	connect(ui.pushButtonOutputReplacementList, SIGNAL(clicked()), m_substitutionsManager, SLOT(raise()));
 
-	MAIN->getConfig()->addSetting(new ActionSetting("keepdot", ui.actionOutputPostprocKeepDot));
+	MAIN->getConfig()->addSetting(new ActionSetting("keepdot", ui.actionOutputPostprocKeepDot, true));
 	MAIN->getConfig()->addSetting(new ActionSetting("keepquote", ui.actionOutputPostprocKeepQuote));
-	MAIN->getConfig()->addSetting(new ActionSetting("joinhyphen", ui.actionOutputPostprocJoinHyphen));
-	MAIN->getConfig()->addSetting(new ActionSetting("joinspace", ui.actionOutputPostprocCollapseSpaces));
+	MAIN->getConfig()->addSetting(new ActionSetting("joinhyphen", ui.actionOutputPostprocJoinHyphen, true));
+	MAIN->getConfig()->addSetting(new ActionSetting("joinspace", ui.actionOutputPostprocCollapseSpaces, true));
+	MAIN->getConfig()->addSetting(new ActionSetting("keepparagraphs", ui.actionOutputPostprocKeepParagraphs, true));
 	MAIN->getConfig()->addSetting(new SwitchSetting("searchmatchcase", ui.checkBoxOutputSearchMatchCase));
 	MAIN->getConfig()->addSetting(new VarSetting<QString>("outputdir", Utils::documentsFolder()));
 
@@ -125,21 +127,28 @@ void OutputManager::filterBuffer()
 		if(ui.actionOutputPostprocJoinHyphen->isChecked()){
 			txt.replace(QRegExp("-\\s*\u2029\\s*"), "");
 		}
-		QString expr = "\u2029"; // Keep if preceded by line break
+		QString preChars, sucChars;
+		if(ui.actionOutputPostprocKeepParagraphs->isChecked()){
+			preChars += "\u2029"; // Keep if preceded by line break
+		}
 		if(ui.actionOutputPostprocKeepDot->isChecked()){
-			expr += "\\.";
+			preChars += "\\."; // Keep if preceded by dot
 		}
 		if(ui.actionOutputPostprocKeepQuote->isChecked()){
-			expr += "'\"";
+			preChars += "'\""; // Keep if preceded by dot
+			sucChars += "'\""; // Keep if succeeded by dot
 		}
-		expr = "([^" + expr + "])\u2029";
-		// Keep if succeeded by quote / line break
-		if(ui.actionOutputPostprocKeepQuote->isChecked()){
-			expr += "(?!['\"\u2029])";
-		}else{
-			expr += "(?![\u2029])";
+		if(ui.actionOutputPostprocKeepParagraphs->isChecked()){
+			sucChars += "\u2029"; // Keep if succeeded by line break
 		}
-		txt.replace(QRegExp(expr), "\\1 ");
+		if(!preChars.isEmpty()){
+			preChars = "([^" + preChars + "])";
+		}
+		if(!sucChars.isEmpty()){
+			sucChars = "(?![" + sucChars + "])";
+		}
+		QString expr = preChars + "\u2029" + sucChars;
+		txt.replace(QRegExp(expr), preChars.isEmpty() ? " " : "\\1 ");
 
 		if(ui.actionOutputPostprocCollapseSpaces->isChecked()){
 			txt.replace(QRegExp("[ \t]+"), " ");
