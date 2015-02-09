@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-06 14:47+0100\n"
-"PO-Revision-Date: 2014-12-11 16:00+0300\n"
+"PO-Revision-Date: 2015-02-09 17:34+0300\n"
 "Last-Translator: Oleg Moiseichuk <berroll@mail.ru>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -494,7 +494,7 @@ msgstr "Сжимать символы пробелов"
 
 #: ../gtk/data/gimagereader.ui.h:106 ../qt/src/Ui_MainWindow.hh:224
 msgid "Preserve paragraphs"
-msgstr ""
+msgstr "Сохранять абзацы"
 
 #: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Recognizer.cc:40
 msgid "Current Page"
@@ -982,15 +982,15 @@ msgstr "Применение замен..."
 
 #: ../gtk/src/Utils.cc:57
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 #: ../gtk/src/Utils.cc:60
 msgid "No"
-msgstr ""
+msgstr "Нет"
 
 #: ../gtk/src/Utils.cc:69
 msgid "Discard"
-msgstr ""
+msgstr "Сброс"
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
