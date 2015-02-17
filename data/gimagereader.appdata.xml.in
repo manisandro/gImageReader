@@ -6,6 +6,7 @@
  <project_license>GPL-3.0+</project_license>
  <name>gImageReader</name>
  <summary>A graphical frontend to tesseract-ocr </summary>
+ <summary lang="cs_CZ">Grafická nadstavba pro engine tesseract-ocr </summary>
  <description>
   <p>gImageReader is a simple OCR application which acts as a frontend to the tesseract OCR engine. Features include:</p>
   <ul>
@@ -16,6 +17,18 @@
    <li>Recognized text displayed directly next to the image</li>
    <li>Basic editing of output text, including search/replace and removing line breaks</li>
    <li>Spellchecking for output text (if corresponding dictionary installed)</li>
+  </ul>
+ </description>
+ <description lang="cs_CZ">
+  <p>gImageReader je jednoduše použitelná aplikace pro rozpoznávání textu z obrázků, využívající OCR engine tesseract. Mezi funkce patří:</p>
+  <ul>
+   <li>Samočinné rozpoznání rozvržení strany</li>
+   <li>Možnost ručně určit a upravit oblasti pro rozpoznání</li>
+   <li>Import obrázků ze souborů, skenovacích zařízení, schránky a snímků obrazovky</li>
+   <li>Rozpoznávání z vícestránkových PDF dokumentů</li>
+   <li>Rozpoznaný text je zobrazen hned vedle zdrojového obrázku</li>
+   <li>Základní úprava výstupního textu, včetně hledání/nahrazování a odebírání konců řádků</li>
+   <li>Kontrola překlepů ve výstupním textu (pokud jsou nainstalovány příslušné slovníky)</li>
   </ul>
  </description>
  <screenshots>

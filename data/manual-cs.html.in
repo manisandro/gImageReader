@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
+
+<head>
+    <title>Příručka k aplikaci @PACKAGE_NAME@ @PACKAGE_VERSION@</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+
+<body>
+
+<h1>Příručka k aplikaci @PACKAGE_NAME@ @PACKAGE_VERSION@</h1>
+<h2>Obsah</h2>
+<ul>
+    <li><a href="#About">O aplikaci</a>
+    <ul>
+        <li><a href="#Features">Funkce</a></li>
+        <li><a href="#News">Novinky</a></li>
+    </ul>
+    </li>
+    <li><a href="#Usage">Jak s aplikací pracovat</a>
+    <ul>
+        <li><a href="#Usage_Open">Otevírání a import obrázků</a></li>
+        <li><a href="#Usage_View">Prohlížení obrázků a úprava jejich parametrů</a></li>
+        <li><a href="#Usage_Recognize">Rozpoznávání textu</a></li>
+        <li><a href="#Usage_PostProc">Následné zpracování rozpoznaného textu</a></li>
+        <li><a href="#Usage_Options">Nastavení aplikace</a></li>
+    </ul></li>
+    <li><a href="#InstallTessdata">Instalace jazykových definic rozpoznávacího engine tesseract</a></li>
+    <li><a href="#InstallSpelling">Instalace slovníků pro kontrolu překlepů</a></li>
+    <li><a href="#Contributing">Jak se zapojit do vývoje</a></li>
+    <li><a href="#Support">Ladění a podpora</a></li>
+</ul>
+
+<h2><a name="About">O aplikaci</a></h2>
+<p>gImageReader je grafická nadstavba pro engine <a href="http://code.google.com/p/tesseract-ocr/">tesseract-ocr</a>.</p>
+<h3><a name="Features">Funkce</a></h3>
+<ul>
+    <li>Možnost ručně označit části obrázku, které mají být rozpoznány, případně nechat rozpoznat celou plochu obrázku.</li>
+    <li>Samočinné rozpoznání rozvržení strany.</li>
+    <li>Otevírání obrázků a PDF dokumentů, dále import obrázků ze skenovacích zařízení, ze schránky a zachycených snímků obrazovky.</li>
+    <li>Rozpoznaný text je možné nechat zobrazit hned vedle zdrojového obrázku, případně nasměrovat do schránky.</li>
+    <li>Rozpoznání vícejazyčného textu.</li>
+    <li>Základní úpravy výstupního textu, včetně funkce vyhledání/nahrazení a odebrání konců řádků.</li>
+    <li>Kontrola výstupního textu na překlepy ve zvoleném jazyce, pokud je nainstalován příslušný slovník.</li>
+    <li>Upozornění uživatele na chybějící slovníky a navržení jejich instalace.</li>
+</ul>
+<h3><a name="News">Novinky</a></h3>
+<p><i>Podrobný seznam změn je k dispozici v protokolu úprav: https://github.com/manisandro/gImageReader/commits/master</i></p>
+<p>gImageReader 3.0.1 (4. leden 2015):</p>
+<ul>
+    <li>Opravena chyba v Qt variantě uživatelského rozhraní, projevující se při načítání souboru se seznamem pro nahrazování textu</li>
+    <li>Zlepšeno chování funkce odebírání konců řádků v případě vícero po sobě jdoucích konců řádků</li>
+    <li>Provedena drobná vylepšení uživatelského rozhraní</li>
+    <li>Podrobnosti viz protokol úprav: https://github.com/manisandro/gImageReader/commits/master</li>
+</ul>
+<p>gImageReader 3.0 (12. prosinec 2014):</p>
+<ul>
+    <li>gImageReader 3.0 konečné</li>
+    <li>Přidáno nové, alternativní uživatelské rozhraní, založené na jiných softwarových knihovnách – Qt4/5, namísto Gtk</li>
+    <li>Opravaveno skenování při provozování v operačním systému Microsoft Windows</li>
+    <li>Při přepínání mezi obrázky si aplikace již pamatuje nastavení obrazu pro konkrétní obrázek (světlost, kontrast, atd)</li>
+    <li>Vyhledávání textu je nyní možné směrem ke konci i začátku, lze nahrazovat všechny výskyty vyhledaného, při vyhledávání (volitelně) rozlišovat mezi malými a velkými písmeny</li>
+    <li>Opraveno mnoho dalších chyb</li>
+    <li>Zaktualizovány překlady textů rozhraní aplikace do ostatních jazyků</li>
+    <li>Podrobnosti viz protokol úprav: https://github.com/manisandro/gImageReader/commits/master</li>
+</ul>
+<p>gImageReader 2.93 (30. duben 2014):</p>
+<ul>
+    <li>gImageReader 3.0 test 4</li>
+    <li>Přidána možnost rozpoznávání ve vícero jazycích naráz</li>
+    <li>Přidáno tlačítko pro zobrazení/skrytí podokna s výstupním textem</li>
+    <li>Zapínání / vypínání kontroly překlepů je nyní možné z kontextové nabídky</li>
+    <li>Opraven pád při načítání naskenovaného dokumentu</li>
+</ul>
+<p>gImageReader 2.92 (19. březen 2014):</p>
+<ul>
+    <li>gImageReader 3.0 test 3</li>
+    <li>Přidána funkce seznamu nahrazování, umožňující uživatelům vytvářet seznamy nahrazení, která mají být provedena v rozpoznaném textu</li>
+    <li>Opravena chyba v ukládání, mající za následek prázdné soubory</li>
+    <li>Opraveny pády aplikace při vykreslování obsahu PDF souborů</li>
+    <li>Konce řádků, kterým předchází konec řádku, jsou nyní zachovávány</li>
+    <li>Ve verzi pro systém Microsoft Windows opraveno zobrazení textů rozhraní v překladech do ostatních jazyků</li>
+</ul>
+<p>gImageReader 2.91 (20. únor 2014):</p>
+<ul>
+    <li>gImageReader 3.0 test 2</li>
+    <li>Zlepšeno samočinné rozpoznávání rozvržení strany díky spojení překrývajících se oblastí</li>
+    <li>Proveden přechod na standardní dialog pro otevírání souborů z daného desktopového prostředí / operačního systému (Gnome/KDE / Microsoft Windows)</li>
+    <li>Zprovozněno rozpoznávání více stran i se samočinným rozpoznáváním rozvržením strany</li>
+    <li>Opravena funkce vyhledávání/nahrazování, která dříve způsobovala pády aplikace</li>
+    <li>Přidána verze pro 64bit verzi systému Windows</li>
+</ul>
+<p>gImageReader 2.90 (11. únor 2014):</p>
+<ul>
+    <li>gImageReader 3.0 test 1</li>
+    <li>Přidána možnost vytvořit výběry vícero oblastí k rozpoznání (druhý a další výběry přidržením klávesy CTRL). Dále přibyla kontextová nabídka, vyvolávaná kliknutím pravým tlačítkem myši na výběru. Z této nabídky lze:
+    <ul>
+        <li>Mazat a přeuspořádávat jednotlivé výběry</li>
+        <li>Nechat rozpoznat text v označené oblasti – buď do schránky, nebo do podokna s výstupním textem</li>
+    </ul></li>
+    <li>Přidáno základní samočinné rozpoznávání rozvržení strany</li>
+    <li>V podokně s výstupním textem přibyla funkce Zpět a Znovu</li>
+    <li>Nastavení nyní probíhá samočinně</li>
+    <li>Natáčení obrázků o libovolný úhel nyní funguje tak, jak má</li>
+    <li>Přidáno zjišťování (externě) smazaných/přejmenovaných souborů</li>
+    <li>Zpřehledněno uživatelské rozhraní</li>
+    <li>Rozhraní aplikace přeneseno na knihovny Gtk+ verze 3, a její zdrojové kódy přepsány do jazyka C++ s použitím můstků Gtkmm</li>
+</ul>
+<h2><a name="Usage">Jak s aplikací pracovat</a></h2>
+<h3><a name="Usage_Open">Otevírání a import obrázků</a></h3>
+<ul>
+    <li>Obrázky lze otevírat/importovat prostřednictvím <i>podokna Zdroje</i>, na které se dostanete kliknutím na tlačítko vlevo nahoře na <i>hlavní liště</i>.</li>
+    <li>Obrázek či PDF dokument otevřete kliknutím na tlačítko Otevřít na <i>panelu Obrázky</i>.</li>
+    <li>K zachycení snímku obrazovky, vložení obrázku ze schránky, či otevření nedávno používaného souboru, slouží šipka vedle tlačítka otevřít.</li>
+    <li>Seznam otevřených obrázků je možné spravovat pomocí tlačítek, následujících za tím pro otevírání souborů. Dočasné soubory (jako jsou snímky obrazovky a data ze schránky) jsou při ukončení aplikace samočinně smazány.</li>
+    <li>Přímo ze skenovacího zařízení získáte obrázek kliknutím na <i>panel Získat</i> v <i>podokně Zdroje</i>.</li>
+</ul>
+<h3><a name="Usage_View">Prohlížení obrázků a úprava jejich parametrů</a></h3>
+<ul>
+    <li>Tlačítka na <i>hlavní liště</i> slouží k přibližování a oddalování, dále k pootočení obrázku o libovolný úhel. Změny přiblížení je možné dosáhnout též umístěním ukazatele na obrázek, stisknutím klávesy CTRL a otáčením kolečkem myši.</li>
+    <li>Nástroje pro základní úpravy obrázku se nacházejí na <i>liště Úpravy obrázku</i>, která se zapíná klikutím na <i>tlačítko Úpravy obrázku</i>, nacházejícím se na <i>hlavní liště</i>. Mezi nástroje, které jsou zde v současnosti k dispozici, patří úprava jasu a kontrastu a změna rozlišení (pomocí interpolace).</li>
+</ul>
+<h3><a name="Usage_Recognize">Rozpoznávání textu</a></h3>
+<ul>
+    <li>Oblasti, ve kterých má být rozpoznán text, lze označit natažením (kliknutí levým tlačítkem + pohyb myší) obdélníku nad příslušnou částí obrázku. Takových výběrů je možné vytvořit více, jen je třeba při vytváření dalších přidržet klávesu CTRL.</li>
+    <li>Alternativně je možné použít <i>tlačítko Samočinné rozpoznání rozvržení strany</i>, které se nachází na <i>hlavní liště</i>. Aplikace se tak pokusí samočinně určit přislušné oblasti k rozpoznání a případně srovnat řádky pootočením obrázku.</li>
+    <li>Výběry mohou být mazány a přeuspořádávány prostřednictvím kontextové nabídky, která se objeví poté, co na ně kliknete pravým tlačítkem. Je též možné změnit velikost výběru tažením za rohy obdélníku, který jej označuje.</li>
+    <li>Jazyk rozpoznávaného textu se vybírá z rozbalovací nabídky <i>tlačítka Rozpoznat</i>, nacházejícího se na <i>hlavní liště</i>. Je-li nainstalován příslušný slovník pro kontrolu překlepů, je též možné volit mezi dostupnými místními variantami daného jazyka. Toto ovlivňuje pouze kontrolu překlepů v rozpoznaném textu. Nerozpoznané jazykové definice pro tesseract se objeví pod předponou názvu souboru, uživatelsky je ale možné naučit aplikaci tyto soubory rozpoznávat určením příslušných pravidel v nastavení aplikace (viz níže). Rozpoznávání ve vícero jazycích naráz je možné určit v podnabídce <i>Vícejazyčné</i> rozbalovací nabídky.</li>
+    <li>Rozpoznávání označených části obrázku (nebo celého obrázku, pokud nebyl proveden výběr oblastí) zahájíte kliknutím na <i>tlačítko Rozpoznat</i> na <i>hlavní liště</i>. Případně, jednotlivé oblasti mohou být rozpoznány též kliknutím pravého tlačítka myši na požadovaný výběr. Z této kontextové nabídky je též možné rozpoznaný text nasměrovat do schránky, namísto do podokna výstupu.</li>
+</ul>
+<h3><a name="Usage_PostProc">Následné zpracování rozpoznaného textu</a></h3>
+<ul>
+    <li>Jakmile je rozpoznán, text se objeví v <i>podokně výstupního textu</i> (pokud nebyl přesměrován do schránky).</li>
+    <li>Je-li k dispozici slovník pro kontrolu překlepů pro rozpoznávaný jazyk, bude rozpoznaný text takto zkontrolován. Jaký slovník bude ve výsledku použit, je možné změnit buď z nabídky jazyka vedle <i>tlačítka Rozpoznat</i>, nebo z nabídky, která se objeví po kliknutí pravým tlačítkem myši na oblasti textu.</li>
+    <li>Při rozpoznávání dalšího textu, může tento být buď připojen, vložen na pozici kurzoru, nebo může zcela nahradit stávající rozpoznaný text. Záleží dle režimu, zvoleného v <i>nabídce Režim připojování</i>, která se nachází na <i>liště podokna výstupního textu</i>.</li>
+    <li>Mezi další nástroje pro následné zpracování textu patří odebírání konců řádků, rušení prázdného místa a další (dostupné od druhého tlačítka dále na <i>liště podokna výstupního textu</i>). Dále lze v textu vyhledávat a nahrazovat. Seznam pravidel nahrazování lze vytvořit kliknutím na tlačítko <i>Najít a nahradit</i> 
+    na <i>liště podokna výstupního textu</i> a poté kliknutím na tlačtko <i>Dosazování</i>.</li>
+    <li>Změny, provedené na rozpoznaném textu, mohou být brány zpět a též opakovány, pomocí příslušných tlačítek na <i>liště podokna výstupního textu</i>.</li>
+    <li>Rozpoznaný text je možné uložit do souboru kliknutím na <i>tlačítko Uložit</i> na <i>liště podoka výstupního textu</i>.</li>
+    <li>Podokno výstupu lze skrýt klikutím na tlačítko úplně vpravo na <i>liště podokna výstupu</i>. Pozor, tato operace též vymaže dosavadní rozpoznaný text, takže o něj přijdete, pokud jste ho mezitím např. neuložili do souboru.</li>
+</ul>
+<h3><a name="Usage_Options">Nastavení aplikace</a></h3>
+<ul>
+    <li>Nastavení jsou dostupná z <i>nabídky Aplikace</i>, dostupné jako tlačítko úplně vpravo na <i>hlavní liště</i>. Pokud je aplikace provozována v prostředí Gnome 3, nabídka Aplikace je součástí horní lišty tohoto prostředí.</li>
+    <li>Co je možné nastavit: písmo v podokně výstupního textu, zda má aplikace hlásit chybějící slovníky pro kontrolu překlepů, hlášení vydání nových verzí aplikace.</li>
+    <li>V případě Gtk+ varianty uživatelského rozhraní aplikace, je součástí nastavení též orientace <i>podokna výstupního textu</i> (svislá zabere pravou stranu okna aplikace, vodorovná spodní). U Qt varianty rozhraní může být pozice podokna výstupu libovolná, stačí přetáhnout jeho titulní lištu.</li>
+    <li>Dále, je možné vytvořit vlastní pravidla pro párování jazykových definic engine tesseract a jazyka (data pro tesseract tuto informaci žel neobsahují). Seznam předurčených pravidel se nachází v sekci <i>Předurčené jazykové definice</i>. Další definice lze přidat kliknutím na tlačítko <i>Přidat</i>, které se nachází níže. Pravidla pro určení jazyka se sestávají z těchto tří polí:
+    <ul>
+        <li><b>Předpona názvu souboru</b>: Název souboru s jazykovými daty pro tesseract má podobu <i>&lt;predpona&gt;.traineddata</i>, tj. pro češtinu, je soubor nazýván <i>cs.traineddata</i> a předpona je <i>cs</i>.</li>
+        <li><b>Kód dle normy ISO</b>: Jedná se o kombinaci <a href="https://cs.wikipedia.org/wiki/Seznam_k%C3%B3d%C5%AF_ISO_639-1">kódu jazyka dle normy ISO 639-1</a> a <a href="https://cs.wikipedia.org/wiki/ISO_3166-2">kódu země dle normy ISO 3166-2</a>, oddělené podtržítkem (tj. <i>cs_CZ</i>). Tato informace je nezbytná pro určení slovníku pro kontrolu překlepů v daném jazyce. Volba země má význam pro samočinnou instalaci slovníků pro kontrolu překlepů, kde je nutná nalezení příslušného balíčku se slovníky. V případě, že žádná z kombinací v normách nevyhovuje, lze použít kód smyšlený, jen pak nebude možné určit odpovídající slovník pro kontrolu překlepů.</li>
+        <li><b>Obecný název jazyka</b>: Člověkem používaný název jazyka, který slouží jako označení položky pro daný jazyk v <i>nabídce Jazyk</i>.</li>
+    </ul></li>
+</ul>
+<h2><a name="InstallTessdata">Instalace jazykových definic rozpoznávacího engine tesseract</a></h2>
+<ul>
+    <li>V systému <b>GNU/Linux</b> stačí spustit správce balíčků a nainstalovat ty, které obsahují požadované jazykové definice (balíčky nejspíš budou nazvány ve stylu <i>tesseract-langpack-&lt;jazyk&gt;</i>).</li>
+    <li>V systému <b>Microsoft Windows</b> je třeba si stáhnout definice požadovaných jazyků ze <a href="http://code.google.com/p/tesseract-ocr/downloads/list">stránek projektu</a>, jejich soubory (<i>&lt;jazyk&gt;.traineddata</i>) pak umístit tam, kam odkazuje (nabídka) <tt>Start&rarr;Všechny programy&rarr;gImageReader&rarr;Jazykové definice pro Tesseract</tt>.</li>
+    <li>Aby se instalace nových jazykových definic projevila, je třeba buď aplikaci ukončit a spustit znovu, nebo použít v <i>nabídce aplikace</i> kliknout na <i>Znovu zkontrolovat přítomnost jazykových dat</i>.</li>
+</ul>
+<h2><a name="InstallSpelling">Instalace slovníků pro kontrolu překlepů</a></h2>
+<ul>
+    <li>V systému <b>GNU/Linux</b>, pokud daná distribuce podporuje technologii PackageKit, aplikace v případě potřeby nabídne samočinnou instalaci nezbytných slovníků. A pokud snad samočinná instalace z nějakého důvodu nefunguje, můžete slovníky nainstalovat pomocí správce balíčků v systému (balíčky budou nazvané něco jako <i>hunspell-&lt;jazyk&gt;</i> nebo <i>aspell-&lt;jazyk&gt;</i>).</li>
+    <li>V systému <b>Windows</b>, je třeba požadované slovníky stáhnout z <a href="http://cgit.freedesktop.org/libreoffice/dictionaries/tree">http://cgit.freedesktop.org/libreoffice/dictionaries/tree</a>: ze složky, odpovídající požadovanému jazyku (tj. např. <tt>it_IT</tt>), stáhněte soubory s příponami <b>.dic a .aff</b> a umístěte je tam, kam odkazuje (nabídka) <tt>Start&rarr;Všechny programy&rarr;gImageReader&rarr;Slovníky pro kontrolu překlepů</tt>.</li>
+</ul>
+<h2><a name="Contributing">Jak se zapojit do vývoje</a></h2>
+<p>
+Pro své návrhy a příspěvky všeho druhu, vyplňte formulář a nebo požadavek na začlenění na <a href="https://github.com/manisandro/gImageReader">stránce projektu na portálu GitHub</a>, nebo napište na <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. Zvláště ceněny jsou překlady textů uživatelského rozhraní aplikace. Jak takový překlad vytvořit (v bodech):
+</p>
+<ol>
+    <li>Stáhněte si <a href="https://github.com/manisandro/gImageReader/archive/master.zip">nejnovější zdrojové kódy</a>.</li>
+    <li>Přejděte do složky <tt>po</tt>.</li>
+    <li>Pokud překlad do příslušného jazyka ještě nebyl založen, vytvořte kopii souboru <tt>gimagereader.pot</tt> a nazvěte ji <tt>&lt;standardni_zkratka_jazyka&gt;.po</tt> (tj. např. <tt>de.po</tt> pro němčinu). V již existujícím překladu pokračujte upravováním příslušného souboru.</li>
+    <li>Doplňte překlad řetězců v <tt>&lt;jazyk&gt;.po</tt>.</li>
+    <li>Výsledný <b>po</b> soubor pošlete na <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. Díky!</li>
+</ol>
+<h2><a name="Support">Ladění a podpora</a></h2>
+<p>
+Pokud narazíte na problém či máte nějaký nápad na zlešení aplikace, vyplňte prosím formulář v <a href="https://github.com/manisandro/gImageReader/issues">systému správy hlášení chyb pro gImageReader</a>, nebo napište přímo na <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>.
+Pokud se setkáváte s pády aplikace či tím, že přestává reagovat, pokuste se do svého hlášení zahrnout též následující údaje:
+</p>
+<ul>
+<li>Pokud se objeví komponenta pro obsluhu chyby, připojte do své zprávy též ladicí informace, které vypíše. Aby tyto informace byly úplné, je v případě provozování pod systémem GNU/Linux třeba, aby byl nainstalován ladicí nástroj <tt>gdb</tt> a příslušné ladicí symboly. Balíček, obsahující ladicí symboly bývá obvykle nazván <b>&lt;nazevbalicku&gt;-debuginfo</b> nebo <b>&lt;nazevbalicku&gt;-dbg</b>. V případě verze pro systém Microsoft Windows jsou ladicí symboly  přítomny již ve výchozí instalaci.</li>
+<li>Pokud aplikaci provozujete v systému Microsoft Windows, připojte ke zprávě soubory protokolů <tt>%ProgramFiles%\gImageReader\gimagereader.log</tt> a <tt>%ProgramFiles%\gImageReader\twain.log</tt>.</li>
+<li>Pokud aplikaci provozujete v systému GNU/Linux, spusťte ji z emulátoru terminálu a ke zprávě připojte cokoli, co se v terminálu objevilo.</li>
+<li>Pokuste se co možná nejlépe popsat, co jste s aplikací dělali a zda se daří situaci navodit opakovaně.</li>
+</ul>
+<hr />
+<p>Copyright &copy;2009-2015 Sandro Mani, revize: Neděle, 4. ledna 2015</p>
+</body>
+
+</html>
