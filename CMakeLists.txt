@@ -26,9 +26,16 @@ ENDIF()
 # Configure files
 CONFIGURE_FILE(data/gimagereader.appdata.xml.in data/gimagereader-${INTERFACE_TYPE}.appdata.xml @ONLY)
 CONFIGURE_FILE(data/gimagereader.desktop.in data/gimagereader-${INTERFACE_TYPE}.desktop @ONLY)
-CONFIGURE_FILE(data/manual.html.in data/manual.html @ONLY)
 CONFIGURE_FILE(packaging/gimagereader.spec.in packaging/gimagereader.spec @ONLY)
 CONFIGURE_FILE(packaging/debian/changelog.in packaging/debian/changelog @ONLY)
+
+FILE(GLOB gimagereader_HTML data/manual*.html.in)
+SET(manualFiles)
+FOREACH(inFile ${gimagereader_HTML})
+    STRING(REGEX REPLACE ".in\$" "" outFile "${inFile}")
+    CONFIGURE_FILE(${inFile} ${outFile} @ONLY)
+    SET(manualFiles ${manualFiles} "${CMAKE_CURRENT_BINARY_DIR}/${outFile}")
+ENDFOREACH()
 
 
 # Definitions
@@ -191,7 +198,7 @@ INSTALL(FILES data/icons/128x128/gimagereader.png DESTINATION share/icons/hicolo
 INSTALL(FILES data/icons/256x256/gimagereader.png DESTINATION share/icons/hicolor/256x256/apps/)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.appdata.xml DESTINATION share/appdata)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop DESTINATION share/applications)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/manual.html DESTINATION "${MANUAL_DIR}")
+INSTALL(FILES ${manualFiles} DESTINATION "${MANUAL_DIR}")
 
 
 # Dist

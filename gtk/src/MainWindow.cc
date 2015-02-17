@@ -243,12 +243,20 @@ void MainWindow::showAbout()
 
 void MainWindow::showHelp(const std::string& chapter)
 {
-#ifdef G_OS_WIN32
-	std::string manualFile = Glib::build_filename(pkgDir, "share", "doc", "gimagereader", "manual.html");
+#ifdef Q_OS_WIN32
+	std::string manualDir = Glib::build_filename(pkgDir, "share", "doc", "gimagereader");
+	char* locale = g_win32_getlocale();
+	std::string language(locale, 2);
+	g_free(locale);
 #else
-	std::string manualFile = Glib::build_filename(MANUAL_DIR, "manual.html");
+	std::string manualDir = MANUAL_DIR;
+	std::string language(setlocale(LC_ALL, NULL), 2);
 #endif
-	std::string manualURI = Glib::filename_to_uri(Utils::make_absolute_path(manualFile)) + chapter;
+	std::string manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir, Glib::ustring::compose("manual_%1.html", language)));
+	if(!Glib::file_test(manualFile, Glib::FILE_TEST_EXISTS)){
+		manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir,"manual.html"));
+	}
+	std::string manualURI = Glib::filename_to_uri(manualFile) + chapter;
 #ifdef G_OS_WIN32
 	ShellExecute(nullptr, "open", manualURI.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
 #else
