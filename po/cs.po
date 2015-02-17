@@ -60,7 +60,7 @@ msgid ""
 msgstr ""
 "Omlouváme se za nepohodlí. Chcete-li pomoci aplikaci zlepšit, nahlaste "
 "problém na <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>. Zde se pokuste popsat svou činnost před pádem "
+"\">manisandro@gmail.com</a>. Ze zprávě se pokuste popsat svou činnost před pádem "
 "aplikace. Též přiložte níže uvedené. Díky."
 
 #: ../gtk/data/gimagereader.ui.h:1
@@ -70,7 +70,7 @@ msgstr "<small>Rozpoznat vše</small>"
 #. Output insert mode
 #: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:202
 msgid "Append to current text"
-msgstr "Připojit k současnému textu"
+msgstr "Připojit ke stávajícímu textu"
 
 #: ../gtk/data/gimagereader.ui.h:3 ../qt/src/Ui_MainWindow.hh:203
 msgid "Insert at cursor"
@@ -78,7 +78,7 @@ msgstr "Vložit na pozici kurzoru"
 
 #: ../gtk/data/gimagereader.ui.h:4 ../qt/src/Ui_MainWindow.hh:204
 msgid "Replace current text"
-msgstr "Nahradit současný text"
+msgstr "Nahradit stávající text"
 
 #. Sources toolbar
 #: ../gtk/data/gimagereader.ui.h:5 ../qt/src/Ui_MainWindow.hh:164
@@ -87,7 +87,7 @@ msgstr "Nedávno použité"
 
 #: ../gtk/data/gimagereader.ui.h:6 ../qt/src/Ui_MainWindow.hh:165
 msgid "Paste"
-msgstr "Vloženo"
+msgstr "Vložit"
 
 #: ../gtk/data/gimagereader.ui.h:7 ../qt/src/Ui_MainWindow.hh:166
 msgid "Take Screenshot"
@@ -163,11 +163,11 @@ msgstr "Automaticky zjistit rozvržení stránky"
 
 #: ../gtk/data/gimagereader.ui.h:25 ../qt/data/MainWindow.ui.h:43
 msgid "Toggle output pane"
-msgstr "Přepnout podokno výstupu"
+msgstr "Zobrazit či skrýt podokno s výstupním textem"
 
 #: ../gtk/data/gimagereader.ui.h:26 ../qt/data/MainWindow.ui.h:42
 msgid "Toggle Output Pane"
-msgstr "Přepnout podokno výstupu"
+msgstr "Zobrazit či skrýt podokno s výstupním textem"
 
 #: ../gtk/data/gimagereader.ui.h:27 ../qt/src/Ui_MainWindow.hh:177
 msgid "Add images"
@@ -390,7 +390,7 @@ msgstr "Název"
 
 #: ../gtk/data/gimagereader.ui.h:82 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
-msgstr "Písmo podokna výstupu:"
+msgstr "Písmo podokna s výstupním textem:"
 
 #: ../gtk/data/gimagereader.ui.h:83 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
@@ -492,11 +492,11 @@ msgstr "Odstranit prázdná místa"
 
 #: ../gtk/data/gimagereader.ui.h:106 ../qt/src/Ui_MainWindow.hh:224
 msgid "Preserve paragraphs"
-msgstr ""
+msgstr "Zachovat odstavce"
 
 #: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Recognizer.cc:40
 msgid "Current Page"
-msgstr "Současná strana"
+msgstr "Stávající strana"
 
 #: ../gtk/data/gimagereader.ui.h:108 ../qt/src/Recognizer.cc:43
 msgid "Multiple Pages..."
@@ -731,7 +731,7 @@ msgstr "Slovník pro kontrolu překlepů pro %1 není nainstalován"
 
 #: ../gtk/src/OutputManager.cc:433 ../qt/src/OutputManager.cc:374
 msgid "Installing spelling dictionary for '%1'"
-msgstr "Probíhá instalace slovníku pro kontrolu překlepů pro '%1'"
+msgstr "Probíhá instalace slovníku pro kontrolu překlepů pro %1"
 
 #: ../gtk/src/OutputManager.cc:448 ../qt/src/OutputManager.cc:393
 msgid "Error"
@@ -962,7 +962,7 @@ msgstr "Chyba při ukládání souboru"
 #: ../gtk/src/SubstitutionsManager.cc:124
 #: ../qt/src/SubstitutionsManager.cc:155
 msgid "Unable to write to '%1'."
-msgstr "Do '%1' nelze zapisovat."
+msgstr "Do %1 nelze zapisovat."
 
 #: ../gtk/src/SubstitutionsManager.cc:143
 #: ../qt/src/SubstitutionsManager.cc:170
@@ -972,7 +972,7 @@ msgstr "Uložit seznam?"
 #: ../gtk/src/SubstitutionsManager.cc:143
 #: ../qt/src/SubstitutionsManager.cc:170
 msgid "Do you want to save the current list?"
-msgstr "Chcete současný seznam uložit?"
+msgstr "Chcete stávající seznam uložit?"
 
 #: ../gtk/src/SubstitutionsManager.cc:182
 #: ../qt/src/SubstitutionsManager.cc:211
@@ -981,15 +981,15 @@ msgstr "Použití dosazování..."
 
 #: ../gtk/src/Utils.cc:57
 msgid "Yes"
-msgstr ""
+msgstr "Ano"
 
 #: ../gtk/src/Utils.cc:60
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: ../gtk/src/Utils.cc:69
 msgid "Discard"
-msgstr ""
+msgstr "Zahodit"
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
@@ -1002,7 +1002,7 @@ msgid ""
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Grafická nadstavba pro engine tesseract-"
-"ocr</p><p><a href=\"http://sourceforge.net/projects/gimagereader/\">Website</"
+"ocr</p><p><a href=\"http://sourceforge.net/projects/gimagereader/\">Webové stránky</"
 "a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
@@ -1026,7 +1026,7 @@ msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Aplikace "
 "zhavarovala</span></p><p>Omlouváme se za nepohodlí. Chcete-li pomoci "
 "aplikaci zlepšit, nahlaste problém na <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Zde se pokuste "
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Ve zprávě se pokuste "
 "popsat svou činnost před pádem aplikace. Též přiložte níže uvedené. Díky.</"
 "p></body></html>"
 
