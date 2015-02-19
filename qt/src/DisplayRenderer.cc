@@ -79,6 +79,7 @@ QImage ImageRenderer::render(int /*page*/, double resolution) const
 PDFRenderer::PDFRenderer(const QString& filename) : DisplayRenderer(filename)
 {
 	m_document = Poppler::Document::load(filename);
+	m_document->setRenderHint(Poppler::Document::Antialiasing);
 	m_document->setRenderHint(Poppler::Document::TextAntialiasing);
 }
 
