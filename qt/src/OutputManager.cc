@@ -23,7 +23,6 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
-#include <QTextStream>
 
 #include "OutputManager.hh"
 #include "Recognizer.hh"
