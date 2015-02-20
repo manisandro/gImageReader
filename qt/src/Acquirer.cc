@@ -19,6 +19,7 @@
 
 #include <QDir>
 #include <QFileDialog>
+#include <QImageReader>
 #include <QThread>
 
 #include "Acquirer.hh"
@@ -75,7 +76,12 @@ Acquirer::~Acquirer()
 
 void Acquirer::selectOutputPath()
 {
-	QString filename = QFileDialog::getSaveFileName(MAIN, _("Choose Output Filename..."), m_outputPath, QString("%1 (*.png)").arg(_("PNG Images")));
+	QSet<QString> formats;
+	for(const QByteArray& format : QImageReader::supportedImageFormats()){
+		formats.insert(QString("*.%1").arg(QString(format).toLower()));
+	}
+	QString filter = QString("%1 (%2)").arg(_("Images")).arg(QStringList(formats.toList()).join(" "));
+	QString filename = QFileDialog::getSaveFileName(MAIN, _("Choose Output Filename..."), m_outputPath, filter);
 	if(!filename.isEmpty()){
 		m_outputPath = filename;
 		genOutputPath();

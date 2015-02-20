@@ -87,7 +87,8 @@ Acquirer::~Acquirer()
 
 void Acquirer::selectOutputPath()
 {
-	FileDialogs::FileFilter filter = {_("PNG Images"), "image/png", "*.png"};
+	FileDialogs::FileFilter filter = FileDialogs::FileFilter::pixbuf_formats();
+	filter.name = _("Images");
 	std::string filename = FileDialogs::save_dialog(_("Choose Output Filename..."), m_outputPath, filter);
 	if(!filename.empty()){
 		m_outputPath = filename;

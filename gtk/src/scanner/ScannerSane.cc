@@ -499,7 +499,9 @@ void ScannerSane::doCompletePage()
 		Utils::get_filename_parts(filename, base, ext);
 		filename = Glib::ustring::compose("%1/%2_%3.%4", base, m_job->pageNumber, ext);
 	}
-	Gdk::Pixbuf::create_from_data(m_job->imgbuf.data(), Gdk::COLORSPACE_RGB, false, 8, m_job->rowstride/3, m_job->height, m_job->rowstride)->save(filename, "png");
+	std::string base, ext;
+	Utils::get_filename_parts(filename, base, ext);
+	Gdk::Pixbuf::create_from_data(m_job->imgbuf.data(), Gdk::COLORSPACE_RGB, false, 8, m_job->rowstride/3, m_job->height, m_job->rowstride)->save(filename, ext);
 	m_job->imgbuf.clear();
 	Glib::signal_idle().connect_once([this, filename]{ m_signal_pageAvailable.emit(filename); });
 
