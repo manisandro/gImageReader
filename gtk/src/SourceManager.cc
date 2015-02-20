@@ -102,6 +102,8 @@ void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files
 		it->set_value(m_listViewCols.source, source);
 		it->set_value(m_listViewCols.path, file->get_path());
 		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
+
+		Gtk::RecentManager::get_default()->add_item(file->get_uri());
 	}
 	if(it){
 		m_listView->get_selection()->select(it);
@@ -124,7 +126,11 @@ void SourceManager::openSources()
 {
 	Source* curSrc = getSelectedSource();
 	std::string initialFolder = curSrc ? Glib::path_get_dirname(curSrc->file->get_path()) : "";
-	addSources(FileDialogs::open_sources_dialog(initialFolder));
+	FileDialogs::FileFilter filter = FileDialogs::FileFilter::pixbuf_formats();
+	filter.name = _("Images and PDFs");
+	filter.mime_types.push_back("application/pdf");
+	filter.patterns.push_back("*.pdf");
+	addSources(FileDialogs::open_dialog(_("Select Files"), initialFolder, filter, true));
 }
 
 void SourceManager::pasteClipboard()

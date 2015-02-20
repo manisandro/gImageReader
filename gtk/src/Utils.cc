@@ -127,15 +127,6 @@ void Utils::get_filename_parts(const std::string& filename, std::string& base, s
 	}
 }
 
-void Utils::ensure_extension(std::string &filename, const std::string &ext)
-{
-	std::string fext = filename.substr(filename.length() - 4);
-	std::transform(fext.begin(), fext.end(), fext.begin(), ::tolower);
-	if(fext != ext){
-		filename += ext;
-	}
-}
-
 std::string Utils::make_absolute_path(const std::string& path)
 {
 	if(Glib::path_is_absolute(path)){

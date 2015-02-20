@@ -507,7 +507,7 @@ void Displayer::saveSelection(const Geometry::Rectangle& rect)
 {
 	Cairo::RefPtr<Cairo::ImageSurface> img = getImage(rect);
 	std::string filename = Utils::make_output_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->getValue());
-	FileDialogs::FileFilter filter = {_("PNG Images"), "image/png", "*.png"};
+	FileDialogs::FileFilter filter = {_("PNG Images"), {"image/png"}, {"*.png"}};
 	filename = FileDialogs::save_dialog(_("Save Selection Image"), filename, filter);
 	if(!filename.empty()){
 		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->setValue(filename);

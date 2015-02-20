@@ -51,7 +51,6 @@ namespace Utils {
 
 	Glib::ustring get_content_type(const std::string& filename);
 	void get_filename_parts(const std::string& filename, std::string& base, std::string& ext);
-	void ensure_extension(std::string& filename, const std::string& ext);
 	std::string make_absolute_path(const std::string& path);
 	std::string get_documents_dir();
 	std::string make_output_filename(const std::string& filename);

@@ -78,7 +78,7 @@ void SubstitutionsManager::openList()
 		return;
 	}
 	std::string dir = Glib::path_get_dirname(m_currentFile);
-	FileDialogs::FileFilter filter = { _("Substitutions List"), "text/plain", "*.txt"};
+	FileDialogs::FileFilter filter = { _("Substitutions List"), {"text/plain"}, {"*.txt"}};
 	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open Substitutions List"), dir, filter, false, m_dialog);
 
 	if(!files.empty()) {
@@ -114,7 +114,7 @@ void SubstitutionsManager::openList()
 
 bool SubstitutionsManager::saveList()
 {
-	FileDialogs::FileFilter filter = { _("Substitutions List"), "text/plain", "*.txt" };
+	FileDialogs::FileFilter filter = { _("Substitutions List"), {"text/plain"}, {"*.txt"} };
 	std::string filename = FileDialogs::save_dialog(_("Save Substitutions List"), m_currentFile, filter, m_dialog);
 	if(filename.empty()) {
 		return false;

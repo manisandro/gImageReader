@@ -342,7 +342,7 @@ bool OutputManager::saveBuffer(const std::string& filename)
 		Utils::get_filename_parts(name, base, ext);
 		outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), base + ".txt");
 
-		FileDialogs::FileFilter filter = {_("Text Files"), "text/plain", "*.txt"};
+		FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
 		outname = FileDialogs::save_dialog(_("Save Output..."), outname, filter);
 		if(outname.empty()) {
 			return false;
