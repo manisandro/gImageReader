@@ -29,7 +29,7 @@ CONFIGURE_FILE(data/gimagereader.desktop.in data/gimagereader-${INTERFACE_TYPE}.
 CONFIGURE_FILE(packaging/gimagereader.spec.in packaging/gimagereader.spec @ONLY)
 CONFIGURE_FILE(packaging/debian/changelog.in packaging/debian/changelog @ONLY)
 
-FILE(GLOB gimagereader_HTML data/manual*.html.in)
+FILE(GLOB gimagereader_HTML RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} data/manual*.html.in)
 SET(manualFiles)
 FOREACH(inFile ${gimagereader_HTML})
     STRING(REGEX REPLACE ".in\$" "" outFile "${inFile}")
