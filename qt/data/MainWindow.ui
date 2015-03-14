@@ -278,7 +278,7 @@
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="windowTitle">
-    <string>Sources</string>
+    <string>So&amp;urces</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -547,7 +547,7 @@
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="windowTitle">
-    <string>Output</string>
+    <string>&amp;Output</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -678,7 +678,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPlainTextEdit" name="plainTextEditOutput"/>
+      <widget class="OutputTextEdit" name="plainTextEditOutput"/>
      </item>
     </layout>
    </widget>
@@ -827,6 +827,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OutputTextEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>OutputTextEdit.hh</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="gimagereader.qrc"/>
  </resources>

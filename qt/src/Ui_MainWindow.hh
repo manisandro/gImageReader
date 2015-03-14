@@ -25,6 +25,8 @@ public:
 	QAction* actionOutputPostprocJoinHyphen;
 	QAction* actionOutputPostprocCollapseSpaces;
 	QAction* actionOutputPostprocKeepParagraphs;
+	QAction* actionOutputPostprocTitle3;
+	QAction* actionOutputPostprocDrawWhitespace;
 	QAction* actionOutputUndo;
 	QAction* actionPreferences;
 	QAction* actionRedetectLanguages;
@@ -223,6 +225,10 @@ public:
 		actionOutputPostprocCollapseSpaces->setCheckable(true);
 		actionOutputPostprocKeepParagraphs = new QAction(gettext("Preserve paragraphs"), MainWindow);
 		actionOutputPostprocKeepParagraphs->setCheckable(true);
+		actionOutputPostprocTitle3 = new QAction(gettext("Visual aids"), MainWindow);
+		actionOutputPostprocTitle3->setEnabled(false);
+		actionOutputPostprocDrawWhitespace = new QAction(gettext("Draw whitespace"), MainWindow);
+		actionOutputPostprocDrawWhitespace->setCheckable(true);
 
 		menuOutputPostproc = new QMenu(MainWindow);
 		menuOutputPostproc->addAction(actionOutputPostprocTitle1);
@@ -232,6 +238,8 @@ public:
 		menuOutputPostproc->addAction(actionOutputPostprocJoinHyphen);
 		menuOutputPostproc->addAction(actionOutputPostprocCollapseSpaces);
 		menuOutputPostproc->addAction(actionOutputPostprocKeepParagraphs);
+		menuOutputPostproc->addAction(actionOutputPostprocTitle3);
+		menuOutputPostproc->addAction(actionOutputPostprocDrawWhitespace);
 
 		// Output toolbar
 		toolButtonOutputMode = new QToolButton(MainWindow);
