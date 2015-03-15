@@ -10,6 +10,7 @@ Source0:       https://github.com/manisandro/gimagereader/releases/download/v%{v
 BuildRequires: cmake
 BuildRequires: gtkmm30-devel
 BuildRequires: gtkspellmm30-devel
+BuildRequires: gtksourceview3-devel
 BuildRequires: cairomm-devel
 BuildRequires: poppler-glib-devel
 BuildRequires: tesseract-devel

@@ -21,12 +21,12 @@
 #define SUBSTITUTIONS_MANAGER_HH
 
 #include "common.hh"
-#include "UndoableBuffer.hh"
 
+class OutputBuffer;
 
 class SubstitutionsManager {
 public:
-	SubstitutionsManager(const Glib::RefPtr<UndoableBuffer>& buffer, Gtk::CheckButton* csCheckBox);
+	SubstitutionsManager(const Glib::RefPtr<OutputBuffer>& buffer, Gtk::CheckButton* csCheckBox);
 	void set_visible(bool visible);
 
 private:
@@ -42,7 +42,7 @@ private:
 	Gtk::TreeView* m_listView;
 	Gtk::Button* m_removeButton;
 	Glib::RefPtr<Gtk::ListStore> m_listStore;
-	Glib::RefPtr<UndoableBuffer> m_buffer;
+	Glib::RefPtr<OutputBuffer> m_buffer;
 	Gtk::CheckButton* m_csCheckBox;
 
 	void addRow();

@@ -23,10 +23,11 @@
 #include "common.hh"
 #include "Config.hh"
 #include "MainWindow.hh"
-#include "UndoableBuffer.hh"
 
 #include <gtkspellmm.h>
+#include <gtksourceviewmm.h>
 
+class OutputBuffer;
 class SubstitutionsManager;
 
 class OutputManager {
@@ -48,7 +49,7 @@ private:
 	Gtk::Image* m_insImage;
 	Gtk::EventBox* m_replaceBox;
 	Gtk::Box* m_outputBox;
-	Gtk::TextView* m_textView;
+	Gsv::View* m_textView;
 	Gtk::Entry* m_searchEntry;
 	Gtk::Entry* m_replaceEntry;
 	Gtk::CheckMenuItem* m_filterKeepIfDot;
@@ -61,7 +62,8 @@ private:
 	Gtk::ToolButton* m_redoButton;
 	Gtk::CheckButton* m_csCheckBox;
 
-	Glib::RefPtr<UndoableBuffer> m_textBuffer;
+	Glib::RefPtr<OutputBuffer> m_textBuffer;
+
 	InsertMode m_insertMode;
 	GtkSpell::Checker m_spell;
 	MainWindow::Notification m_notifierHandle = nullptr;

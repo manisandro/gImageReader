@@ -2,6 +2,7 @@
 <!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.8"/>
+  <requires lib="gtksourceview" version="3.0"/>
   <object class="GtkAdjustment" id="adjustment:display.angle">
     <property name="lower">-10</property>
     <property name="upper">10</property>
@@ -1467,7 +1468,7 @@
                     <property name="can_focus">True</property>
                     <property name="shadow_type">in</property>
                     <child>
-                      <object class="GtkTextView" id="textview:output">
+                      <object class="GtkSourceView" id="textview:output">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="wrap_mode">word</property>

@@ -22,12 +22,13 @@
 #include "Config.hh"
 #include "ConfigSettings.hh"
 #include "FileDialogs.hh"
+#include "OutputBuffer.hh"
 #include "Utils.hh"
 
 #include <fstream>
 #include <cstring>
 
-SubstitutionsManager::SubstitutionsManager(const Glib::RefPtr<UndoableBuffer>& buffer, Gtk::CheckButton* csCheckBox)
+SubstitutionsManager::SubstitutionsManager(const Glib::RefPtr<OutputBuffer>& buffer, Gtk::CheckButton* csCheckBox)
 	: m_buffer(buffer), m_csCheckBox(csCheckBox)
 {
 	m_dialog = Builder("window:postproc");
@@ -181,10 +182,7 @@ void SubstitutionsManager::applySubstitutions()
 {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
 	Gtk::TextIter start, end;
-	if(!m_buffer->get_selection_bounds(start, end)){
-		start = m_buffer->begin();
-		end = m_buffer->end();
-	}
+	m_buffer->get_region_bounds(start, end);
 	int startpos = start.get_offset();
 	int endpos = end.get_offset();
 	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY|Gtk::TEXT_SEARCH_TEXT_ONLY;
@@ -202,7 +200,7 @@ void SubstitutionsManager::applySubstitutions()
 			if(!it.forward_search(search, flags, matchStart, matchEnd) || matchEnd.get_offset() > endpos){
 				break;
 			}
-			it = m_buffer->replace_range(replace, matchStart, matchEnd);
+			it = m_buffer->insert(m_buffer->erase(matchStart, matchEnd), replace);
 			endpos += diff;
 		}
 		while(Gtk::Main::events_pending()){

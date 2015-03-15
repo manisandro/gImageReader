@@ -18,6 +18,7 @@
  */
 
 #include "FileDialogs.hh"
+#include "OutputBuffer.hh"
 #include "OutputManager.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
@@ -51,8 +52,8 @@ OutputManager::OutputManager()
 	m_undoButton = Builder("tbbutton:output.undo");
 	m_redoButton = Builder("tbbutton:output.redo");
 	m_csCheckBox = Builder("checkbutton:output.matchcase");
-	m_textBuffer = UndoableBuffer::create();
-	m_textView->set_buffer(m_textBuffer);
+	m_textBuffer = OutputBuffer::create();
+	m_textView->set_source_buffer(m_textBuffer);
 	Builder("tbbutton:output.stripcrlf").as<Gtk::MenuToolButton>()->set_menu(*Builder("menu:output.stripcrlf").as<Gtk::Menu>());
 	Gtk::ToolButton* saveButton = Builder("tbbutton:output.save");
 
@@ -83,8 +84,8 @@ OutputManager::OutputManager()
 	CONNECT(m_redoButton, clicked, [this]{ m_textBuffer->redo(); scrollCursorIntoView(); });
 	CONNECT(saveButton, clicked, [this]{ saveBuffer(); });
 	CONNECT(Builder("tbbutton:output.clear").as<Gtk::ToolButton>(), clicked, [this]{ clearBuffer(); });
-	CONNECT(m_textBuffer, history_changed, [this]{ m_undoButton->set_sensitive(m_textBuffer->can_undo()); });
-	CONNECT(m_textBuffer, history_changed, [this]{ m_redoButton->set_sensitive(m_textBuffer->can_redo()); });
+	CONNECTP(m_textBuffer, can_undo, [this]{ m_undoButton->set_sensitive(m_textBuffer->can_undo()); });
+	CONNECTP(m_textBuffer, can_redo, [this]{ m_redoButton->set_sensitive(m_textBuffer->can_redo()); });
 	CONNECT(m_csCheckBox, toggled, [this]{ Utils::clear_error_state(m_searchEntry); });
 	CONNECT(m_searchEntry, changed, [this]{ Utils::clear_error_state(m_searchEntry); });
 	CONNECT(m_searchEntry, activate, [this]{ findReplace(false, false); });
@@ -98,11 +99,9 @@ OutputManager::OutputManager()
 	CONNECT(Builder("button:output.substitutions").as<Gtk::ToolButton>(), clicked, [this]{ m_substitutionsManager->set_visible(true); });
 	CONNECT(m_textView, populate_popup, [this](Gtk::Menu* menu){ completeTextViewMenu(menu); });
 
-	// If the contents changes, always save the selections bounds (since the previous ones are invalid)
-	CONNECT(m_textBuffer, changed, [this]{ m_textBuffer->save_selection_bounds(true); });
 	// If the insert or selection mark change save the bounds either if the view is focused or the selection is non-empty
-	CONNECTP(m_textBuffer, cursor_position, [this]{ m_textBuffer->save_selection_bounds(m_textView->is_focus()); });
-	CONNECTP(m_textBuffer, has_selection, [this]{ m_textBuffer->save_selection_bounds(m_textView->is_focus()); });
+	CONNECTP(m_textBuffer, cursor_position, [this]{ m_textBuffer->save_region_bounds(m_textView->is_focus()); });
+	CONNECTP(m_textBuffer, has_selection, [this]{ m_textBuffer->save_region_bounds(m_textView->is_focus()); });
 
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepdot", "menuitem:output.stripcrlf.keepdot"));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepquote", "menuitem:output.stripcrlf.keepquote"));
@@ -154,10 +153,7 @@ void OutputManager::setInsertMode(InsertMode mode, const std::string& iconName)
 void OutputManager::filterBuffer()
 {
 	Gtk::TextIter start, end;
-	if(!m_textBuffer->get_selection_bounds(start, end)){
-		start = m_textBuffer->begin();
-		end = m_textBuffer->end();
-	}
+	m_textBuffer->get_region_bounds(start, end);
 	Glib::ustring txt = m_textBuffer->get_text(start, end);
 
 	Utils::busyTask([this,&txt]{
@@ -193,7 +189,7 @@ void OutputManager::filterBuffer()
 		return true;
 	}, _("Stripping line breaks..."));
 
-	start = end = m_textBuffer->replace_range(txt, start, end);
+	start = end = m_textBuffer->insert(m_textBuffer->erase(start, end), txt);
 	start.backward_chars(txt.size());
 	m_textBuffer->select_range(start, end);
 }
@@ -209,13 +205,7 @@ void OutputManager::replaceAll()
 {
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
 	Gtk::TextIter start, end;
-	if(!m_textBuffer->get_selection_bounds(start, end) ||
-		m_textBuffer->get_text(start, end, false) == m_searchEntry->get_text() ||
-		m_textBuffer->get_text(start, end, false) == m_replaceEntry->get_text())
-	{
-		start = m_textBuffer->begin();
-		end = m_textBuffer->end();
-	}
+	m_textBuffer->get_region_bounds(start, end);
 	int startpos = start.get_offset();
 	int endpos = end.get_offset();
 	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY|Gtk::TEXT_SEARCH_TEXT_ONLY;
@@ -232,7 +222,7 @@ void OutputManager::replaceAll()
 		if(!it.forward_search(search, flags, matchStart, matchEnd) || matchEnd.get_offset() > endpos){
 			break;
 		}
-		it = m_textBuffer->replace_range(replace, matchStart, matchEnd);
+		it = m_textBuffer->insert(m_textBuffer->erase(matchStart, matchEnd), replace);
 		endpos += diff;
 		++count;
 		while(Gtk::Main::events_pending()){
@@ -242,6 +232,7 @@ void OutputManager::replaceAll()
 	if(count == 0){
 		Utils::set_error_state(m_searchEntry);
 	}
+	m_textBuffer->select_range(m_textBuffer->get_iter_at_offset(startpos), m_textBuffer->get_iter_at_offset(endpos));
 	MAIN->popState();
 }
 
@@ -259,13 +250,15 @@ void OutputManager::findReplace(bool backwards, bool replace)
 		flags |= Gtk::TEXT_SEARCH_CASE_INSENSITIVE;
 	}
 
+	Gtk::TextIter rstart, rend;
+	m_textBuffer->get_region_bounds(rstart, rend);
+
 	Gtk::TextIter start, end;
 	m_textBuffer->get_selection_bounds(start, end);
 	if(comparator(m_textBuffer->get_text(start, end, false), findStr)){
 		if(replace){
 			Glib::ustring replaceStr = m_replaceEntry->get_text();
-			end = m_textBuffer->replace_range(replaceStr, start, end);
-			start = end;
+			start = end = m_textBuffer->insert(m_textBuffer->erase(start, end), replaceStr);
 			start.backward_chars(replaceStr.length());
 			m_textBuffer->select_range(start, end);
 			m_textView->scroll_to(end);
@@ -279,20 +272,22 @@ void OutputManager::findReplace(bool backwards, bool replace)
 	}
 	Gtk::TextIter matchStart, matchEnd;
 	if(backwards){
-		if(!end.backward_search(findStr, flags, matchStart, matchEnd) &&
-		   !m_textBuffer->end().backward_search(findStr, flags, matchStart, matchEnd))
+		if(!end.backward_search(findStr, flags, matchStart, matchEnd, rstart) &&
+		   !rend.backward_search(findStr, flags, matchStart, matchEnd, rstart))
 		{
 			Utils::set_error_state(m_searchEntry);
 			return;
 		}
 	}else{
-		if(!start.forward_search(findStr, flags, matchStart, matchEnd) &&
-		   !m_textBuffer->begin().forward_search(findStr, flags, matchStart, matchEnd))
+		if(!start.forward_search(findStr, flags, matchStart, matchEnd, rend) &&
+		   !rstart.forward_search(findStr, flags, matchStart, matchEnd, rend))
 		{
 			Utils::set_error_state(m_searchEntry);
 			return;
 		}
 	}
+	// FIXME: backward_search appears to be buggy?
+	matchEnd = matchStart; matchEnd.forward_chars(findStr.length());
 	m_textBuffer->select_range(matchStart, matchEnd);
 	m_textView->scroll_to(matchStart);
 }
@@ -322,10 +317,10 @@ void OutputManager::addText(const Glib::ustring& text, bool insert)
 			m_textBuffer->insert(m_textBuffer->end(), text);
 		}else if(m_insertMode == InsertMode::Cursor){
 			Gtk::TextIter start, end;
-			m_textBuffer->get_selection_bounds(start, end);
-			m_textBuffer->replace_range(text, start, end);
+			m_textBuffer->get_region_bounds(start, end);
+			m_textBuffer->insert(m_textBuffer->erase(start, end), text);
 		}else if(m_insertMode == InsertMode::Replace){
-			m_textBuffer->replace_all(text);
+			m_textBuffer->insert(m_textBuffer->erase(m_textBuffer->begin(), m_textBuffer->end()), text);
 		}
 	}
 	m_outputBox->show();
@@ -375,8 +370,9 @@ bool OutputManager::clearBuffer()
 			return false;
 		}
 	}
+	m_textBuffer->begin_not_undoable_action();
 	m_textBuffer->set_text("");
-	m_textBuffer->clear_history();
+	m_textBuffer->end_not_undoable_action();
 	m_textBuffer->set_modified(false);
 	m_togglePaneButton->set_active(false);
 	return true;
