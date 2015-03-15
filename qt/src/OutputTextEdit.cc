@@ -79,6 +79,7 @@ void OutputTextEdit::paintEvent(QPaintEvent *e)
 	QPainter painter(viewport());
 	painter.setPen(Qt::gray);
 	QChar visualArrow((ushort)0x21b5);
+	QChar paragraph((ushort)0x00b6);
 
 	QPointF offset = contentOffset();
 
@@ -93,7 +94,11 @@ void OutputTextEdit::paintEvent(QPaintEvent *e)
 			// Draw hard line breaks (i.e. those not due to word wrapping)
 			QTextLine line = layout->lineAt(layout->lineCount() - 1);
 			QRectF lineRect = line.naturalTextRect().translated(offset.x(), top);
-			painter.drawText(QPointF(lineRect.right(), lineRect.top() + line.ascent()), visualArrow);
+			if(line.textLength() == 0){
+				painter.drawText(QPointF(lineRect.right(), lineRect.top() + line.ascent()), paragraph);
+			}else{
+				painter.drawText(QPointF(lineRect.right(), lineRect.top() + line.ascent()), visualArrow);
+			}
 		}
 		block = block.next();
 		top = bottom;
