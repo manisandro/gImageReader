@@ -2533,6 +2533,29 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
         <property name="use_underline">True</property>
       </object>
     </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="menuitem:output.stripcrlf.sep2">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="menuitem:output.stripcrlf.title3">
+        <property name="visible">True</property>
+        <property name="sensitive">False</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Visual aids</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkCheckMenuItem" id="menuitem:output.stripcrlf.drawwhitespace">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Draw whitespace</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
   </object>
   <object class="GtkMenu" id="menu:recognize.pages">
     <property name="visible">True</property>

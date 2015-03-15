@@ -98,6 +98,9 @@ OutputManager::OutputManager()
 	CONNECT(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
 	CONNECT(Builder("button:output.substitutions").as<Gtk::ToolButton>(), clicked, [this]{ m_substitutionsManager->set_visible(true); });
 	CONNECT(m_textView, populate_popup, [this](Gtk::Menu* menu){ completeTextViewMenu(menu); });
+	CONNECTS(Builder("menuitem:output.stripcrlf.drawwhitespace").as<Gtk::CheckMenuItem>(), toggled, [this](Gtk::CheckMenuItem* item){
+		m_textView->set_draw_spaces(item->get_active() ? (Gsv::DRAW_SPACES_NEWLINE|Gsv::DRAW_SPACES_TAB|Gsv::DRAW_SPACES_SPACE) : Gsv::DrawSpacesFlags(0));
+	});
 
 	// If the insert or selection mark change save the bounds either if the view is focused or the selection is non-empty
 	CONNECTP(m_textBuffer, cursor_position, [this]{ m_textBuffer->save_region_bounds(m_textView->is_focus()); });
@@ -108,6 +111,7 @@ OutputManager::OutputManager()
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinhyphen", "menuitem:output.stripcrlf.joinhyphen"));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinspace", "menuitem:output.stripcrlf.joinspace"));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepparagraphs", "menuitem:output.stripcrlf.keepparagraphs"));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("drawwhitespace", "menuitem:output.stripcrlf.drawwhitespace"));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("searchmatchcase", "checkbutton:output.matchcase"));
 	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("outputdir"));
 
