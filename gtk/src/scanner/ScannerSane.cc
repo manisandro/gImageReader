@@ -48,6 +48,10 @@ void ScannerSane::cancel()
 void ScannerSane::close()
 {
 	m_requestQueue.enqueue({Request::Type::Quit, 0});
+	while(!m_finished){
+		if(Gtk::Main::events_pending())
+			Gtk::Main::iteration();
+	}
 	m_thread->join();
 	m_thread = nullptr;
 }
@@ -62,7 +66,7 @@ void ScannerSane::run()
 	g_debug("sane_init() -> %s", sane_strstatus(status));
 	if(status != SANE_STATUS_GOOD){
 		g_critical("Unable to initialize SANE backend: %s", sane_strstatus(status));
-		Glib::signal_idle().connect_once([this]{ m_signal_initFailed.emit(); });
+		Utils::runInMainThreadBlocking([this]{ m_signal_initFailed.emit(); });
 		return;
 	}
 	g_debug("SANE version %d.%d.%d", SANE_VERSION_MAJOR(version_code), SANE_VERSION_MINOR(version_code), SANE_VERSION_BUILD(version_code));
@@ -109,18 +113,19 @@ void ScannerSane::run()
 	g_debug("sane_exit()");
 	// Commented to prevent crash, see https://bugs.launchpad.net/hplip/+bug/1315858
 //	sane_exit();
+	m_finished = true;
 }
 
 void ScannerSane::setState(State state)
 {
 	m_state = state;
-	Glib::signal_idle().connect_once([this, state]{ m_signal_scanStateChanged.emit(state); });
+	Utils::runInMainThreadBlocking([this, state]{ m_signal_scanStateChanged.emit(state); });
 }
 
 void ScannerSane::failScan(const Glib::ustring& errorString)
 {
 	doStop();
-	Glib::signal_idle().connect_once([this, errorString]{ m_signal_scanFailed.emit(errorString); });
+	Utils::runInMainThreadBlocking([this, errorString]{ m_signal_scanFailed.emit(errorString); });
 }
 
 void ScannerSane::doRedetect()
@@ -152,7 +157,7 @@ void ScannerSane::doRedetect()
 		}
 	}
 
-	Glib::signal_idle().connect_once([this, devices]{ m_signal_devicesDetected.emit(devices); });
+	Utils::runInMainThreadBlocking([this, devices]{ m_signal_devicesDetected.emit(devices); });
 }
 
 void ScannerSane::doOpen()
@@ -503,7 +508,7 @@ void ScannerSane::doCompletePage()
 	Utils::get_filename_parts(filename, base, ext);
 	Gdk::Pixbuf::create_from_data(m_job->imgbuf.data(), Gdk::COLORSPACE_RGB, false, 8, m_job->rowstride/3, m_job->height, m_job->rowstride)->save(filename, ext);
 	m_job->imgbuf.clear();
-	Glib::signal_idle().connect_once([this, filename]{ m_signal_pageAvailable.emit(filename); });
+	Utils::runInMainThreadBlocking([this, filename]{ m_signal_pageAvailable.emit(filename); });
 
 	if(m_job->params.type != ScanType::SINGLE){
 		++m_job->pageNumber;
@@ -523,8 +528,8 @@ void ScannerSane::doStop()
 		}
 		delete m_job;
 		m_job = nullptr;
+		setState(State::IDLE);
 	}
-	setState(State::IDLE);
 }
 
 /***************************** Sane option stuff *****************************/

@@ -61,6 +61,7 @@ private:
 	State m_state = State::IDLE;
 	Utils::AsyncQueue<Request> m_requestQueue;
 	ScanJob* m_job = nullptr;
+	bool m_finished = false;
 
 	void run();
 	void doRedetect();

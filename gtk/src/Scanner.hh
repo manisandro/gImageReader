@@ -44,7 +44,7 @@ public:
 		int page_height;
 	};
 
-	virtual ~Scanner() {}
+	virtual ~Scanner() { }
 
 	virtual void init() = 0;
 	virtual void redetect() = 0;
