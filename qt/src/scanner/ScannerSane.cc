@@ -526,8 +526,8 @@ void ScannerSane::doStop()
 		}
 		delete m_job;
 		m_job = nullptr;
+		setState(State::IDLE);
 	}
-	setState(State::IDLE);
 }
 
 /***************************** Sane option stuff *****************************/
