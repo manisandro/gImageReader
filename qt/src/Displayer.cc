@@ -34,10 +34,30 @@
 #include <cassert>
 
 
+class GraphicsScene : public QGraphicsScene
+{
+public:
+	using QGraphicsScene::QGraphicsScene;
+
+protected:
+	void dragEnterEvent(QGraphicsSceneDragDropEvent *event)
+	{
+		if(Utils::handleSourceDragEvent(event->mimeData())){
+			event->acceptProposedAction();
+		}
+	}
+	void dragMoveEvent(QGraphicsSceneDragDropEvent *event){}
+	void dropEvent(QGraphicsSceneDragDropEvent *event)
+	{
+		Utils::handleSourceDropEvent(event->mimeData());
+	}
+};
+
 Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	: QGraphicsView(parent), ui(_ui), m_scaleThread(std::bind(&Displayer::scaleThread, this))
 {
-	setScene(&m_scene);
+	m_scene = new GraphicsScene();
+	setScene(m_scene);
 	setBackgroundBrush(Qt::gray);
 	setRenderHint(QPainter::Antialiasing);
 
@@ -66,6 +86,12 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	MAIN->getConfig()->addSetting(new VarSetting<QString>("selectionsavefile", QDir(Utils::documentsFolder()).absoluteFilePath(_("selection.png"))));
 }
 
+Displayer::~Displayer()
+{
+	setSource(nullptr);
+	delete m_scene;
+}
+
 bool Displayer::setCurrentPage(int page)
 {
 	Utils::setSpinBlocked(ui.spinBoxPage, page);
@@ -91,7 +117,7 @@ bool Displayer::setSource(Source* source)
 	}
 	clearSelections();
 	m_renderTimer.stop();
-	m_scene.clear();
+	m_scene->clear();
 	delete m_renderer;
 	m_renderer = nullptr;
 	m_pixmap = QPixmap();
@@ -139,7 +165,7 @@ bool Displayer::setSource(Source* source)
 
 	m_imageItem = new QGraphicsPixmapItem();
 	m_imageItem->setTransformationMode(Qt::SmoothTransformation);
-	m_scene.addItem(m_imageItem);
+	m_scene->addItem(m_imageItem);
 	m_scaleThread.start();
 	if(!renderImage()){
 		setSource(nullptr);
@@ -173,7 +199,7 @@ bool Displayer::renderImage()
 	m_imageItem->setScale(1.);
 	m_imageItem->setTransformOriginPoint(m_imageItem->boundingRect().center());
 	m_imageItem->setPos(m_imageItem->pos() - m_imageItem->sceneBoundingRect().center());
-	m_scene.setSceneRect(m_imageItem->sceneBoundingRect());
+	m_scene->setSceneRect(m_imageItem->sceneBoundingRect());
 	centerOn(sceneRect().center());
 	setRotation(ui.spinBoxRotation->value());
 	if(m_scale < 1.0){
@@ -239,7 +265,7 @@ void Displayer::setRotation(double angle)
 		for(DisplaySelection* sel : m_selections){
 			sel->rotate(t);
 		}
-		m_scene.setSceneRect(m_imageItem->sceneBoundingRect());
+		m_scene->setSceneRect(m_imageItem->sceneBoundingRect());
 		if(ui.actionBestFit->isChecked()){
 			setZoom(Zoom::Fit);
 		}
@@ -271,7 +297,7 @@ void Displayer::mousePressEvent(QMouseEvent *event)
 		}
 		m_curSel = new DisplaySelection(this, 1 + m_selections.size(), mapToSceneClamped(event->pos()));
 		m_curSel->setZValue(1 + m_selections.size());
-		m_scene.addItem(m_curSel);
+		m_scene->addItem(m_curSel);
 		event->accept();
 	}
 }
@@ -351,7 +377,7 @@ void Displayer::removeSelection(int num)
 	for(int i = 0, n = m_selections.size(); i < n; ++i){
 		m_selections[i]->setNumber(1 + i);
 		m_selections[i]->setZValue(1 + i);
-		m_scene.invalidate(m_selections[i]->rect());
+		m_scene->invalidate(m_selections[i]->rect());
 	}
 }
 
@@ -363,7 +389,7 @@ void Displayer::reorderSelection(int oldNum, int newNum)
 	for(int i = 0, n = m_selections.size(); i < n; ++i){
 		m_selections[i]->setNumber(1 + i);
 		m_selections[i]->setZValue(1 + i);
-		m_scene.invalidate(m_selections[i]->rect());
+		m_scene->invalidate(m_selections[i]->rect());
 	}
 }
 
@@ -462,7 +488,7 @@ void Displayer::autodetectLayout(bool rotated)
 		for(int i = 0, n = rects.size(); i < n; ++i){
 			m_selections.append(new DisplaySelection(this, 1 + i, rects[i].topLeft()));
 			m_selections.back()->setPoint(rects[i].bottomRight());
-			m_scene.addItem(m_selections.back());
+			m_scene->addItem(m_selections.back());
 		}
 		emit selectionChanged(true);
 	}

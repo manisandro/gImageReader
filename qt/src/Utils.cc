@@ -21,11 +21,15 @@
 #include <QDir>
 #include <QEventLoop>
 #include <QFileInfo>
+#include <QImageReader>
+#include <QMimeData>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
+#include <QTextStream>
 
 #include "Utils.hh"
 #include "MainWindow.hh"
+#include "SourceManager.hh"
 
 QString Utils::documentsFolder()
 {
@@ -92,4 +96,49 @@ void Utils::setSpinBlocked(QDoubleSpinBox *spin, double value)
 	spin->blockSignals(true);
 	spin->setValue(value);
 	spin->blockSignals(false);
+}
+
+bool Utils::handleSourceDragEvent(const QMimeData* mimeData)
+{
+	if(mimeData->hasImage()){
+		QTextStream(stdout) << "hasImage" << endl;
+		return true;
+	}
+	QList<QByteArray> formats = QImageReader::supportedImageFormats();
+	formats.append("pdf");
+	for(const QUrl url : mimeData->urls()){
+		QFile file(url.toLocalFile());
+		if(!file.exists()){
+			continue;
+		}
+		for(const QByteArray& format : formats){
+			if(file.fileName().endsWith(format, Qt::CaseInsensitive)){
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+void Utils::handleSourceDropEvent(const QMimeData* mimeData)
+{
+	if(mimeData->hasImage()){
+		QTextStream(stdout) << "hasImage" << endl;
+		 MAIN->getSourceManager()->addSourceImage(qvariant_cast<QImage>(mimeData->imageData()));
+		 return;
+	}
+	QList<QByteArray> formats = QImageReader::supportedImageFormats();
+	formats.append("pdf");
+	for(const QUrl url : mimeData->urls()){
+		QFile file(url.toLocalFile());
+		if(!file.exists()){
+			continue;
+		}
+		for(const QByteArray& format : formats){
+			if(file.fileName().endsWith(format, Qt::CaseInsensitive)){
+				MAIN->getSourceManager()->addSource(file.fileName());
+				break;
+			}
+		}
+	}
 }

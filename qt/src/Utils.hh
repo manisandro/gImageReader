@@ -26,6 +26,7 @@
 #include <QString>
 #include <QWaitCondition>
 
+class QMimeData;
 class QSpinBox;
 class QDoubleSpinBox;
 
@@ -37,6 +38,9 @@ namespace Utils {
 
 	void setSpinBlocked(QSpinBox* spin, int value);
 	void setSpinBlocked(QDoubleSpinBox* spin, double value);
+
+	bool handleSourceDragEvent(const QMimeData* mimeData);
+	void handleSourceDropEvent(const QMimeData* mimeData);
 
 	template<typename T>
 	class AsyncQueue {

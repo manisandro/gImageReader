@@ -40,6 +40,9 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	m_recentMenu = new QMenu(MAIN);
 	ui.actionSourceRecent->setMenu(m_recentMenu);
 
+	ui.listWidgetSources->setAcceptDrops(true);
+	ui.listWidgetSources->installEventFilter(this);
+
 	connect(ui.actionSources, SIGNAL(toggled(bool)), ui.dockWidgetSources, SLOT(setVisible(bool)));
 	connect(ui.toolButtonSourceAdd, SIGNAL(clicked()), this, SLOT(openSources()));
 	connect(ui.menuAddSource, SIGNAL(aboutToShow()), this, SLOT(prepareSourcesMenu()));
@@ -158,6 +161,13 @@ void SourceManager::pasteClipboard()
 	savePixmap(pixmap, displayname);
 }
 
+void SourceManager::addSourceImage(const QImage& image)
+{
+	++m_pasteCount;
+	QString displayname = _("Pasted %1").arg(m_pasteCount);
+	savePixmap(QPixmap::fromImage(image), displayname);
+}
+
 void SourceManager::takeScreenshot()
 {
 	QPixmap pixmap = QPixmap::grabWindow(QApplication::desktop()->winId());
@@ -254,4 +264,20 @@ void SourceManager::fileChanged(const QString& filename)
 			}
 		}
 	}
+}
+
+bool SourceManager::eventFilter(QObject *object, QEvent *event)
+{
+	if(event->type() == QEvent::DragEnter){
+		QDragEnterEvent* dragEnterEvent = static_cast<QDragEnterEvent*>(event);
+		if(Utils::handleSourceDragEvent(dragEnterEvent->mimeData())){
+			dragEnterEvent->acceptProposedAction();
+		}
+		return true;
+	}else if(event->type() == QEvent::Drop){
+		QDropEvent* dropEvent = static_cast<QDropEvent*>(event);
+		Utils::handleSourceDropEvent(dropEvent->mimeData());
+		return true;
+	}
+	return QObject::eventFilter(object, event);
 }

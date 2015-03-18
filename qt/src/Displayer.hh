@@ -35,13 +35,13 @@ class DisplaySelection;
 class DisplayRenderer;
 class Source;
 class UI_MainWindow;
-class QGraphicsScene;
+class GraphicsScene;
 
 class Displayer : public QGraphicsView {
 	Q_OBJECT
 public:
 	Displayer(const UI_MainWindow& _ui, QWidget* parent = nullptr);
-	~Displayer(){ setSource(nullptr); }
+	~Displayer();
 	bool setCurrentPage(int page);
 	int getCurrentPage() const;
 	int getNPages() const;
@@ -60,7 +60,7 @@ private:
 
 	enum class Zoom { In, Out, Fit, Original };
 	const UI_MainWindow& ui;
-	QGraphicsScene m_scene;
+	GraphicsScene* m_scene;
 	Source* m_source = nullptr;
 	DisplayRenderer* m_renderer = nullptr;
 	QPixmap m_pixmap;

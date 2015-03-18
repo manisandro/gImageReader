@@ -49,6 +49,7 @@ public:
 	SourceManager(const UI_MainWindow& _ui);
 	~SourceManager();
 	Source* getSelectedSource() const;
+	void addSourceImage(const QImage& image);
 
 public slots:
 	void addSources(const QStringList& files);
@@ -68,6 +69,7 @@ private:
 
 	void savePixmap(const QPixmap& pixmap, const QString& displayname);
 	void selectionChanged();
+	bool eventFilter(QObject* object, QEvent* event);
 
 private slots:
 	void clearSources();
