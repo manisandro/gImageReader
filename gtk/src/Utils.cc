@@ -19,6 +19,7 @@
 
 #include "Utils.hh"
 #include "MainWindow.hh"
+#include "SourceManager.hh"
 
 #include <clocale>
 #include <tesseract/baseapi.h>
@@ -181,6 +182,21 @@ std::vector<Glib::ustring> Utils::string_split(const Glib::ustring &text, char d
 		++endPos;
 	}
 	return parts;
+}
+
+void Utils::handle_drag_drop(const Glib::RefPtr<Gdk::DragContext> &context, int /*x*/, int /*y*/, const Gtk::SelectionData &selection_data, guint /*info*/, guint time)
+{
+	if ((selection_data.get_length() >= 0) && (selection_data.get_format() == 8))
+	{
+		std::vector<Glib::RefPtr<Gio::File>> files;
+		for(const Glib::ustring& uri : selection_data.get_uris()){
+			files.push_back(Gio::File::create_for_uri(uri));
+		}
+		if(!files.empty()){
+			MAIN->getSourceManager()->addSources(files);
+		}
+	}
+	context->drag_finish(false, false, time);
 }
 
 bool Utils::busyTask(const std::function<bool()> &f, const Glib::ustring &msg)

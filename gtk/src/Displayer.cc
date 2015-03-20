@@ -62,6 +62,7 @@ Displayer::Displayer()
 	gtk_entry_set_icon_from_pixbuf(GTK_ENTRY(m_conspin->gobj()), GTK_ENTRY_ICON_PRIMARY, gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/contrast.png", 0));
 #endif
 
+	m_scrollwin->drag_dest_set({Gtk::TargetEntry("text/uri-list")}, Gtk::DEST_DEFAULT_MOTION | Gtk::DEST_DEFAULT_DROP, Gdk::ACTION_COPY | Gdk::ACTION_MOVE);
 	m_viewport->override_background_color(Gdk::RGBA("#a0a0a4"));
 
 	m_connection_rotSpinChanged = CONNECT(m_rotspin, value_changed, [this]{ setRotation(m_rotspin->get_value()); });
@@ -100,6 +101,8 @@ Displayer::Displayer()
 		selectionsavefile = Glib::build_filename(Utils::get_documents_dir(), _("selection.png"));
 		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->setValue(selectionsavefile);
 	}
+
+	CONNECT(m_scrollwin, drag_data_received, sigc::ptr_fun(Utils::handle_drag_drop));
 }
 
 void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx)

@@ -41,6 +41,7 @@ SourceManager::SourceManager()
 	Gtk::CellRendererText* cell = static_cast<Gtk::CellRendererText*>(col->get_cells().front());
 	cell->property_ellipsize() = Pango::ELLIPSIZE_END;
 	m_listView->set_fixed_height_mode();
+	m_listView->drag_dest_set({Gtk::TargetEntry("text/uri-list")}, Gtk::DEST_DEFAULT_MOTION | Gtk::DEST_DEFAULT_DROP, Gdk::ACTION_COPY | Gdk::ACTION_MOVE);
 
 	Glib::RefPtr<Gtk::RecentFilter> recentFilter = Gtk::RecentFilter::create();
 	recentFilter->add_pixbuf_formats();
@@ -69,6 +70,7 @@ SourceManager::SourceManager()
 	CONNECT(m_clearButton, clicked, [this]{ clearSources(); });
 	m_connectionSelectionChanged = CONNECT(m_listView->get_selection(), changed, [this]{ selectionChanged(); });
 	CONNECT(recentChooser, item_activated, [this, recentChooser]{ addSources({Gio::File::create_for_uri(recentChooser->get_current_uri())}); });
+	CONNECT(m_listView, drag_data_received, sigc::ptr_fun(Utils::handle_drag_drop));
 }
 
 SourceManager::~SourceManager()
