@@ -26,6 +26,7 @@ OutputBuffer::OutputBuffer()
 	m_regionEndMark = Gtk::TextMark::create(false);
 	add_mark(m_regionBeginMark, begin());
 	add_mark(m_regionEndMark, end());
+	set_highlight_matching_brackets(false);
 
 	m_regionTag = create_tag("selection");
 	Gdk::RGBA selColor = Gtk::Label().get_style_context()->get_background_color(Gtk::STATE_FLAG_SELECTED);
