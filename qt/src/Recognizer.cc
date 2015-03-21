@@ -186,7 +186,11 @@ void Recognizer::setLanguage()
 	QAction* item = qobject_cast<QAction*>(QObject::sender());
 	if(item->isChecked()) {
 		Config::Lang lang = item->data().value<Config::Lang>();
-		m_langLabel = QString("%1 (%2)").arg(lang.name, lang.code);
+		if(!lang.code.isEmpty()){
+			m_langLabel = QString("%1 (%2)").arg(lang.name, lang.code);
+		}else{
+			m_langLabel = QString("%1").arg(lang.name);
+		}
 		ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 		m_curLang = lang;
 		MAIN->getConfig()->getSetting<VarSetting<QString>>("language")->setValue(lang.prefix + ":" + lang.code);

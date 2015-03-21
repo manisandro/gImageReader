@@ -160,7 +160,11 @@ void Recognizer::updateLanguagesMenu()
 void Recognizer::setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang &lang)
 {
 	if(item->get_active()){
-		m_langLabel->set_markup(Glib::ustring::compose("<small> %1 (%2)</small>", lang.name, lang.code));
+		if(!lang.code.empty()){
+			m_langLabel->set_markup(Glib::ustring::compose("<small> %1 (%2)</small>", lang.name, lang.code));
+		}else{
+			m_langLabel->set_markup(Glib::ustring::compose("<small> %1</small>", lang.name));
+		}
 		m_curLang = lang;
 		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("language")->setValue(lang.prefix + ":" + lang.code);
 		m_signal_languageChanged.emit(m_curLang);
