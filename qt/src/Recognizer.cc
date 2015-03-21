@@ -133,6 +133,8 @@ void Recognizer::updateLanguagesMenu()
 				{
 					curlang = itemlang;
 					activeitem = curitem;
+				}else if(curlang.prefix == lang.prefix){
+					activeitem = curitem;
 				}
 				submenu->addAction(curitem);
 			}
