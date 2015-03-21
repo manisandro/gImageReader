@@ -22,10 +22,15 @@
 #include <QEventLoop>
 #include <QFileInfo>
 #include <QImageReader>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QMimeData>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 #include <QTextStream>
+#include <QTimer>
+#include <QUrl>
 
 #include "Utils.hh"
 #include "MainWindow.hh"
@@ -141,4 +146,40 @@ void Utils::handleSourceDropEvent(const QMimeData* mimeData)
 			}
 		}
 	}
+}
+
+QByteArray Utils::download(QUrl url, int timeout)
+{
+	QNetworkAccessManager networkMgr;
+	QNetworkReply* reply = nullptr;
+
+	while(true){
+		QNetworkRequest req(url);
+		req.setRawHeader("User-Agent" , "Wget/1.13.4");
+		reply = networkMgr.get(req);
+		QTimer timer;
+		QEventLoop loop;
+		QObject::connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
+		QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+		timer.setSingleShot(true);
+		timer.start(timeout);
+		loop.exec();
+		if(reply->isRunning()){
+			// Timeout
+			reply->close();
+			return QByteArray();
+		}
+
+		QUrl redirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
+		if(redirectUrl.isValid() && url != redirectUrl){
+			delete reply;
+			url = redirectUrl;
+		}else{
+			break;
+		}
+	}
+
+	QByteArray result = reply->error() == QNetworkReply::NoError ? reply->readAll() : QByteArray();
+	delete reply;
+	return result;
 }

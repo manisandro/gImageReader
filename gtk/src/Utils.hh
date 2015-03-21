@@ -59,6 +59,8 @@ namespace Utils {
 
 	void handle_drag_drop(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, const Gtk::SelectionData& selection_data, guint info, guint time);
 
+	Glib::RefPtr<Glib::ByteArray> download(const std::string& url, int timeout = 5000);
+
 	template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value>::type>
 	T round(T x){
 		return std::floor(x + T(0.5));

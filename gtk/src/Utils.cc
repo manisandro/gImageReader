@@ -199,6 +199,68 @@ void Utils::handle_drag_drop(const Glib::RefPtr<Gdk::DragContext> &context, int 
 	context->drag_finish(false, false, time);
 }
 
+Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string &url, int timeout)
+{
+	enum Status { Waiting, Ready, Failed, Eos } status = Waiting;
+
+	Glib::RefPtr<Glib::ByteArray> result = Glib::ByteArray::create();
+	Glib::RefPtr<Gio::FileInputStream> stream;
+	Glib::RefPtr<Gio::Cancellable> cancellable = Gio::Cancellable::create();
+	sigc::connection timeoutConnection;
+
+	try {
+		Glib::RefPtr<Gio::File> file = Gio::File::create_for_uri(url);
+		file->read_async([&](Glib::RefPtr<Gio::AsyncResult>& asyncResult){
+			try{
+				stream = file->read_finish(asyncResult);
+				status = stream ? Ready : Failed;
+			}catch(Glib::Error&){
+				status = Failed;
+			}
+		}, cancellable);
+		timeoutConnection = Glib::signal_timeout().connect([&]{ cancellable->cancel(); return false; }, timeout);
+
+		while(status == Waiting){
+			Gtk::Main::iteration();
+		}
+		timeoutConnection.disconnect();
+		if(status == Failed){
+			return Glib::RefPtr<Glib::ByteArray>();
+		}
+
+		while(true){
+			status = Waiting;
+			stream->read_bytes_async(4096, [&](Glib::RefPtr<Gio::AsyncResult>& asyncResult){
+				try{
+					Glib::RefPtr<Glib::Bytes> bytes = stream->read_bytes_finish(asyncResult);
+					if(!bytes){
+						status = Eos;
+					}
+					gsize size;
+					result->append(reinterpret_cast<const guint8*>(bytes->get_data(size)), bytes->get_size());
+					status = size == 0 ? Eos : Ready;
+				}catch(Glib::Error&){
+					status = Failed;
+				}
+			}, cancellable);
+			timeoutConnection = Glib::signal_timeout().connect([&]{ cancellable->cancel(); return false; }, timeout);
+
+			while(status == Waiting){
+				Gtk::Main::iteration();
+			}
+			timeoutConnection.disconnect();
+			if(status == Failed){
+				return Glib::RefPtr<Glib::ByteArray>();
+			}else if(status == Eos){
+				break;
+			}
+		}
+	} catch (const Glib::Error&) {
+		return Glib::RefPtr<Glib::ByteArray>();
+	}
+	return result;
+}
+
 bool Utils::busyTask(const std::function<bool()> &f, const Glib::ustring &msg)
 {
 	enum class TaskState { Waiting, Succeeded, Failed };

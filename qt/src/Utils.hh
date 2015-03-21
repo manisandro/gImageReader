@@ -29,6 +29,7 @@
 class QMimeData;
 class QSpinBox;
 class QDoubleSpinBox;
+class QUrl;
 
 namespace Utils {
 	QString documentsFolder();
@@ -41,6 +42,8 @@ namespace Utils {
 
 	bool handleSourceDragEvent(const QMimeData* mimeData);
 	void handleSourceDropEvent(const QMimeData* mimeData);
+
+	QByteArray download(QUrl url, int timeout = 5000);
 
 	template<typename T>
 	class AsyncQueue {
