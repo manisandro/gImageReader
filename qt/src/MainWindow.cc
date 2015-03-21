@@ -20,10 +20,6 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QCloseEvent>
-#include <QEventLoop>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
 #include <QProcess>
 #include <QStatusBar>
 #include <QUrl>
@@ -314,38 +310,7 @@ void MainWindow::hideNotification(Notification handle)
 
 void MainWindow::VersionCheckThread::run()
 {
-	QNetworkAccessManager networkMgr;
-	QUrl url(CHECKURL);
-	QNetworkReply* reply = nullptr;
-
-	while(true){
-		QNetworkRequest req(url);
-		req.setRawHeader("User-Agent" , "Wget/1.13.4");
-		reply = networkMgr.get(req);
-		QTimer timeout;
-		QEventLoop loop;
-		connect(&timeout, SIGNAL(timeout()), &loop, SLOT(quit()));
-		connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
-		timeout.setSingleShot(true);
-		timeout.start(5000);
-		loop.exec();
-		if(reply->isRunning()){
-			reply->close();
-			break;
-		}
-
-		QUrl redirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
-		if(redirectUrl.isValid() && url != redirectUrl){
-			delete reply;
-			url = redirectUrl;
-		}else{
-			break;
-		}
-	}
-
-	QString newver = reply->readAll();
-	delete reply;
-
+	QString newver = Utils::download(QUrl(CHECKURL));
 	newver.replace(QRegExp("\\s+"), "");
 	QRegExp pat(R"(^[\d+\.]+\d+$)");
 	if(pat.exactMatch(newver)){
