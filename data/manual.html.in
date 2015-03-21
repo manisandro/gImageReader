@@ -159,7 +159,7 @@
 <h2><a name="InstallSpelling">Installation of spelling dictionaries</a></h2>
 <ul>
     <li>On <b>Linux</b>, if your distribution supports PackageKit, the program will offer to automatically install missing dictionaries when necessary. If automatic installation does not work for some reason, you can install the spelling dictionaries from the package management application (the packages may be called something like <i>hunspell-&lt;lang&gt;</i>).</li>
-    <li>On <b>Windows</b>, you need to download the desired spelling dictionary from <a href="http://cgit.freedesktop.org/libreoffice/dictionaries/tree">http://cgit.freedesktop.org/libreoffice/dictionaries/tree</a>: from the folder corresponding to the desired language (i.e. <tt>it_IT</tt>), download the <b>*.dic and *.aff</b> files and place them in <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Spelling dictionaries</tt>.</li>
+    <li>On <b>Windows</b>, the program will attempt to automaticallly download the desired spelling dictionary from <a href="http://cgit.freedesktop.org/libreoffice/dictionaries/tree">http://cgit.freedesktop.org/libreoffice/dictionaries/tree</a>. Dictionaries can also be installed manually: for a desired language (i.e. <tt>it_IT</tt>), download the <b>*.dic and *.aff</b> files and place them in <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Spelling dictionaries</tt>.</li>
 </ul>
 <h2><a name="Contributing">Contributing</a></h2>
 <p>

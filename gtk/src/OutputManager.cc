@@ -409,30 +409,33 @@ void OutputManager::setLanguage(const Config::Lang& lang, bool force)
 		}catch(const GtkSpell::Error& /*e*/){
 			if(MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->getValue()){
 				MainWindow::NotificationAction actionDontShowAgain = {_("Don't show again"), []{ MAIN->getConfig()->getSetting<SwitchSetting>("dictinstall")->setValue(false); return true; }};
-				MainWindow::NotificationAction actionInstall = {_("Help"), []{ MAIN->showHelp("#InstallSpelling"); return false; }};
+				MainWindow::NotificationAction actionInstall;
+#if defined(G_OS_UNIX)
 				// Try initiating a DBUS connection for PackageKit
 				Glib::RefPtr<Gio::DBus::Proxy> proxy;
-	#ifdef G_OS_UNIX
 				try{
 					proxy = Gio::DBus::Proxy::create_for_bus_sync(Gio::DBus::BUS_TYPE_SESSION, "org.freedesktop.PackageKit",
 																  "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify");
-					actionInstall = MainWindow::NotificationAction{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); return true; }};
+					actionInstall = MainWindow::NotificationAction{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); return false; }};
 				}catch(const Glib::Error&){
+					actionInstall = {_("Help"), []{ MAIN->showHelp("#InstallSpelling"); return false; }};
 					g_warning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
 				}
-	#endif
+#elif defined(G_OS_WIN32)
+				actionInstall = MainWindow::NotificationAction{_("Install"), [this,lang]{ dictionaryAutoinstall(lang.code); return false; }};
+#endif
 				MAIN->addNotification(_("Spelling dictionary missing"), Glib::ustring::compose(_("The spellcheck dictionary for %1 is not installed"), lang.name), {actionInstall, actionDontShowAgain}, &m_notifierHandle);
 			}
 		}
 	}
 }
 
-#ifdef G_OS_UNIX
-void OutputManager::dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring &lang)
+#if defined(G_OS_UNIX)
+void OutputManager::dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring &code)
 {
-	MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), lang));
+	MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), code));
 	std::uint32_t xid = gdk_x11_window_get_xid(MAIN->getWindow()->get_window()->gobj());
-	std::vector<Glib::ustring> files = {"/usr/share/myspell/" + lang + ".dic", "/usr/share/hunspell/" + lang + ".dic"};
+	std::vector<Glib::ustring> files = {"/usr/share/myspell/" + code + ".dic", "/usr/share/hunspell/" + code + ".dic"};
 	std::vector<Glib::VariantBase> params = { Glib::Variant<std::uint32_t>::create(xid),
 											  Glib::Variant<std::vector<Glib::ustring>>::create(files),
 											  Glib::Variant<Glib::ustring>::create("always") };
@@ -449,5 +452,64 @@ void OutputManager::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> pro
 	}
 	MAIN->getRecognizer()->updateLanguagesMenu();
 	MAIN->popState();
+}
+#elif defined(G_OS_WIN32)
+void OutputManager::dictionaryAutoinstall(const Glib::ustring& code)
+{
+	MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), code));
+	Glib::ustring url= "http://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
+	Glib::ustring plainurl = "http://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
+	Glib::ustring urlcode = code;
+
+	Glib::RefPtr<Glib::ByteArray> html = Utils::download(url);
+	if(!html){
+		MAIN->popState();
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1."), url));
+		return;
+	}
+	Glib::ustring htmls(reinterpret_cast<const char*>(html->get_data()), html->size());
+	if(htmls.find(Glib::ustring::compose(">%1<", code)) != Glib::ustring::npos){
+		// Ok
+	}else if(htmls.find(Glib::ustring::compose(">%1<", code.substr(0, 2))) != Glib::ustring::npos){
+		urlcode = code.substr(0, 2);
+	}else{
+		MAIN->popState();
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
+		return;
+	}
+	html = Utils::download(url + urlcode + "/");
+	if(!html){
+		MAIN->popState();
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1."), url + urlcode + "/"));
+		return;
+	}
+	Glib::RefPtr<Glib::Regex> pat = Glib::Regex::create(Glib::ustring::compose(">(%1[^<]*\\.(dic|aff))<", code.substr(0, 2)));
+	htmls = Glib::ustring(reinterpret_cast<const char*>(html->get_data()), html->size());
+
+	Glib::ustring downloaded;
+	int pos = 0;
+	Glib::MatchInfo matchInfo;
+	while(pat->match(htmls, pos, matchInfo)){
+		MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Downloading '%1'..."), matchInfo.fetch(1)));
+		Glib::RefPtr<Glib::ByteArray> data = Utils::download(plainurl + urlcode + "/" + matchInfo.fetch(1));
+		if(data){
+			std::ofstream file(Glib::build_filename(pkgDir, "share", "myspell", "dicts", matchInfo.fetch(1)), std::ios::binary);
+			if(file.is_open()){
+				file.write(reinterpret_cast<char*>(data->get_data()), data->size());
+				downloaded.append(Glib::ustring::compose("\n%1", matchInfo.fetch(1)));
+			}
+		}
+		MAIN->popState();
+		int start;
+		matchInfo.fetch_pos(0, start, pos);
+	}
+	if(!downloaded.empty()){
+		MAIN->getRecognizer()->updateLanguagesMenu();
+		MAIN->popState();
+		Utils::message_dialog(Gtk::MESSAGE_INFO, _("Dictionaries installed"), Glib::ustring::compose(_("The following dictionaries were installed:%1"), downloaded));
+	}else{
+		MAIN->popState();
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
+	}
 }
 #endif
