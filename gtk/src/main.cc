@@ -19,6 +19,7 @@
 
 #include <gtkmm.h>
 #include <gtkspellmm.h>
+#include <gtksourceviewmm.h>
 #include <iostream>
 #include <cstring>
 
@@ -97,6 +98,7 @@ int main (int argc, char *argv[])
 #endif
 
 		GtkSpell::init();
+		Gsv::init();
 		Application app(argc, argv, APPLICATION_ID, Gio::APPLICATION_HANDLES_OPEN);
 
 		try {
