@@ -330,6 +330,7 @@ void MainWindow::getNewestVersion()
 		return;
 	}
 	std::string newver(buf);
+	g_debug("Newest version is: %s", newver.c_str());
 	newver.erase(std::remove_if(newver.begin(), newver.end(), ::isspace), newver.end());
 	if(Glib::Regex::create(R"(^[\d+\.]+\d+$)")->match(newver, 0, Glib::RegexMatchFlags(0))){
 		Glib::signal_idle().connect_once([this,newver]{ checkVersion(newver); });
