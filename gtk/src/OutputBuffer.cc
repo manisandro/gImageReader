@@ -42,12 +42,14 @@ void OutputBuffer::save_region_bounds(bool viewSelected)
 	Gtk::TextIter stop = get_iter_at_mark(get_selection_bound());
 	if(viewSelected){
 		bool entireRegion = false;
-		if(start.get_offset() == stop.get_offset()){
+		if(start.get_offset() > stop.get_offset()){
+			std::swap(start, stop);
+		}
+		// If nothing or only one word is selected, set region to entire document
+		if(start.get_offset() == stop.get_offset() || !Glib::Regex::create("\\s")->match(get_text(start, stop))){
 			start = begin();
 			stop = end();
 			entireRegion = true;
-		}else if(start.get_offset() > stop.get_offset()){
-			std::swap(start, stop);
 		}
 		remove_tag(m_regionTag, get_iter_at_mark(m_regionBeginMark), get_iter_at_mark(m_regionEndMark));
 		move_mark(m_regionBeginMark, start);
