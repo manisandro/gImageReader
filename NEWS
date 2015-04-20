@@ -1,3 +1,15 @@
+gImageReader 3.1 (Apr XX 2015):
+ * Add option to draw whitespace
+ * Allow searching and replacing only in selected portion of output text
+ * Add "preserve paragraphs" postprocessing option
+ * Allow to open files via drag and drop
+ * Improve rendering of certain PDF files with the Qt interface
+ * Fix scanning broken with certain scanners under Windows
+ * Support automatic spelling dictionary installation under Windows
+ * Allow saving scans in other formats than png
+ * Handful of bugs fixed
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
 gImageReader 3.0.1 (Jan 4 2015):
  * Fix a bug in the Qt interface when loading substitutions list from file
  * Improve behaviour of strip line breaks functionality with multiple line breaks
