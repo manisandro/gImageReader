@@ -25,6 +25,8 @@ gtk/src/Geometry.hh
 gtk/src/main.cc
 gtk/src/MainWindow.cc
 gtk/src/MainWindow.hh
+gtk/src/OutputBuffer.cc
+gtk/src/OutputBuffer.hh
 gtk/src/OutputManager.cc
 gtk/src/OutputManager.hh
 gtk/src/Recognizer.cc
@@ -38,8 +40,6 @@ gtk/src/SourceManager.cc
 gtk/src/SourceManager.hh
 gtk/src/SubstitutionsManager.cc
 gtk/src/SubstitutionsManager.hh
-gtk/src/UndoableBuffer.cc
-gtk/src/UndoableBuffer.hh
 gtk/src/Utils.cc
 gtk/src/Utils.hh
 [type: gettext/qtdesigner]qt/data/AboutDialog.ui
@@ -67,6 +67,8 @@ qt/src/MainWindow.cc
 qt/src/MainWindow.hh
 qt/src/OutputManager.cc
 qt/src/OutputManager.hh
+qt/src/OutputTextEdit.cc
+qt/src/OutputTextEdit.hh
 qt/src/Recognizer.cc
 qt/src/Recognizer.hh
 qt/src/Scanner.cc
