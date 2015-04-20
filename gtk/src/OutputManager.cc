@@ -242,6 +242,7 @@ void OutputManager::replaceAll()
 
 void OutputManager::findReplace(bool backwards, bool replace)
 {
+	Utils::clear_error_state(m_searchEntry);
 	Glib::ustring findStr = m_searchEntry->get_text();
 	if(findStr.empty()){
 		return;
