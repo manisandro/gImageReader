@@ -117,11 +117,7 @@ void OutputManager::setInsertMode(QAction* action)
 
 void OutputManager::filterBuffer()
 {
-	QTextCursor cursor = ui.plainTextEditOutput->textCursor();
-	if(cursor.anchor() == cursor.position()){
-		cursor.movePosition(QTextCursor::Start);
-		cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
-	}
+	QTextCursor cursor = ui.plainTextEditOutput->regionBounds();
 	QString txt = cursor.selectedText();
 
 	Utils::busyTask([this,&txt]{
@@ -180,8 +176,8 @@ void OutputManager::replaceNext()
 void OutputManager::replaceAll()
 {
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
-	QTextCursor cursor =  ui.plainTextEditOutput->textCursor();
-	int end = qMax(cursor.anchor(), cursor.position());
+	QTextCursor cursor =  ui.plainTextEditOutput->regionBounds();
+	int end = cursor.position();
 	QString cursel = cursor.selectedText();
 	if(cursor.anchor() == cursor.position() ||
 	   cursel == ui.lineEditOutputSearch->text() ||
@@ -220,6 +216,8 @@ void OutputManager::replaceAll()
 
 void OutputManager::findReplace(bool backwards, bool replace)
 {
+	ui.plainTextEditOutput->clearFocus();
+	clearErrorState();
 	QString findStr = ui.lineEditOutputSearch->text();
 	if(findStr.isEmpty()){
 		return;
@@ -235,34 +233,33 @@ void OutputManager::findReplace(bool backwards, bool replace)
 		cs = Qt::CaseSensitive;
 	}
 
-	QTextCursor cursor = ui.plainTextEditOutput->textCursor();
-	if(cursor.selectedText().compare(findStr, cs) == 0){
+	QTextCursor regionCursor = ui.plainTextEditOutput->regionBounds();
+
+	QTextCursor selCursor = ui.plainTextEditOutput->textCursor();
+	if(selCursor.selectedText().compare(findStr, cs) == 0){
 		if(replace){
-			cursor.beginEditBlock();
-			cursor.insertText(ui.lineEditOutputReplace->text());
-			cursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor, ui.lineEditOutputReplace->text().length());
-			cursor.endEditBlock();
-			ui.plainTextEditOutput->setTextCursor(cursor);
+			selCursor.insertText(ui.lineEditOutputReplace->text());
+			selCursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor, ui.lineEditOutputReplace->text().length());
+			ui.plainTextEditOutput->setTextCursor(selCursor);
 			ui.plainTextEditOutput->ensureCursorVisible();
 			return;
 		}
 		if(backwards){
-			cursor.setPosition(qMin(cursor.position(), cursor.anchor()));
+			selCursor.setPosition(qMin(selCursor.position(), selCursor.anchor()));
 		}else{
-			cursor.setPosition(qMax(cursor.position(), cursor.anchor()));
+			selCursor.setPosition(qMax(selCursor.position(), selCursor.anchor()));
 		}
 	}
 
-	QTextCursor findcursor = ui.plainTextEditOutput->document()->find(findStr, cursor, flags);
-
-	if(findcursor.isNull()){
+	QTextCursor findcursor = ui.plainTextEditOutput->document()->find(findStr, selCursor, flags);
+	if(findcursor.isNull() || !(findcursor.anchor() >= regionCursor.anchor() && findcursor.position() <= regionCursor.position())){
 		if(backwards){
-			cursor.movePosition(QTextCursor::End);
+			selCursor.setPosition(regionCursor.position());
 		}else{
-			cursor.movePosition(QTextCursor::Start);
+			selCursor.setPosition(regionCursor.anchor());
 		}
-		findcursor = ui.plainTextEditOutput->document()->find(findStr, cursor, flags);
-		if(findcursor.isNull()){
+		findcursor = ui.plainTextEditOutput->document()->find(findStr, selCursor, flags);
+		if(findcursor.isNull() || !(findcursor.anchor() >= regionCursor.anchor() && findcursor.position() <= regionCursor.position())){
 			ui.lineEditOutputSearch->setStyleSheet("background: #FF7777; color: #FFFFFF;");
 			return;
 		}

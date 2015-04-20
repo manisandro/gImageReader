@@ -24,19 +24,19 @@
 
 class QCheckBox;
 class QItemSelection;
-class QPlainTextEdit;
+class OutputTextEdit;
 class QTableWidget;
 
 class SubstitutionsManager : public QDialog {
 	Q_OBJECT
 public:
-	SubstitutionsManager(QPlainTextEdit* textEdit, QCheckBox* csCheckBox, QWidget* parent = nullptr);
+	SubstitutionsManager(OutputTextEdit* textEdit, QCheckBox* csCheckBox, QWidget* parent = nullptr);
 
 private:
 	QAction* m_removeAction;
 	QString m_currentFile;
 	QTableWidget* m_tableWidget;
-	QPlainTextEdit* m_textEdit;
+	OutputTextEdit* m_textEdit;
 	QCheckBox* m_csCheckBox;
 
 private slots:

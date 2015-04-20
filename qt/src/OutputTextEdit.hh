@@ -29,6 +29,8 @@ public:
 	explicit OutputTextEdit(QWidget *parent = 0);
 	~OutputTextEdit();
 
+	QTextCursor regionBounds() const{ return m_regionCursor; }
+
 public slots:
 	void setDrawWhitespace(bool drawWhitespace);
 
@@ -39,6 +41,11 @@ private:
 	class WhitespaceHighlighter;
 	WhitespaceHighlighter* m_wsHighlighter = nullptr;
 	bool m_drawWhitespace = false;
+	QTextCursor m_regionCursor;
+	bool m_entireRegion;
+
+private slots:
+	void saveRegionBounds();
 };
 
 #endif // OUTPUTTEXTEDIT_HH

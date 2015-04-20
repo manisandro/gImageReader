@@ -29,9 +29,10 @@
 #include "MainWindow.hh"
 #include "Config.hh"
 #include "ConfigSettings.hh"
+#include "OutputTextEdit.hh"
 #include "Utils.hh"
 
-SubstitutionsManager::SubstitutionsManager(QPlainTextEdit* textEdit, QCheckBox* csCheckBox, QWidget* parent)
+SubstitutionsManager::SubstitutionsManager(OutputTextEdit* textEdit, QCheckBox* csCheckBox, QWidget* parent)
 	: QDialog(parent)
 {
 	setWindowTitle(_("Substitutions"));
@@ -209,16 +210,9 @@ void SubstitutionsManager::onTableSelectionChanged(const QItemSelection& selecte
 void SubstitutionsManager::applySubstitutions()
 {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
-	QTextCursor cursor =  m_textEdit->textCursor();
-	int end = qMax(cursor.anchor(), cursor.position());
-	if(cursor.anchor() == cursor.position()){
-		cursor.movePosition(QTextCursor::Start);
-		QTextCursor tmp(cursor);
-		tmp.movePosition(QTextCursor::End);
-		end = tmp.position();
-	}else{
-		cursor.setPosition(qMin(cursor.anchor(), cursor.position()));
-	}
+	QTextCursor cursor =  m_textEdit->regionBounds();
+	int end = cursor.position();
+	cursor.setPosition(cursor.anchor());
 	QTextDocument::FindFlags flags = 0;
 	if(m_csCheckBox->isChecked()){
 		flags = QTextDocument::FindCaseSensitively;
