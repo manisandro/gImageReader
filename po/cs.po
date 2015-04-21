@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-20 19:05+0200\n"
-"PO-Revision-Date: 2014-11-24 12:30+0200\n"
+"PO-Revision-Date: 2015-04-21 18:30+0200\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <>\n"
 "Language: cs\n"
@@ -43,11 +43,11 @@ msgstr "Ukončit"
 
 #: ../gtk/data/crashhandler.ui.h:1 ../qt/src/CrashHandler.cc:37
 msgid "Regenerate backtrace"
-msgstr "Obnovit backtrace"
+msgstr "Obnovit backtrace diagnostiku"
 
 #: ../gtk/data/crashhandler.ui.h:2
 msgid "<b>The application has crashed</b>"
-msgstr "<b>Aplikace zhavarovala</b>"
+msgstr "<b>Došlo k pádu aplikace</b>"
 
 #: ../gtk/data/crashhandler.ui.h:4
 #, no-c-format
@@ -58,10 +58,11 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"Omlouváme se za nepohodlí. Chcete-li pomoci aplikaci zlepšit, nahlaste "
-"problém na <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>. Ze zprávě se pokuste popsat svou činnost před "
-"pádem aplikace. Též přiložte níže uvedené. Díky."
+"Velmi se omlouváme za vzniklé potíže. Prosíme pomozte s odstraněním příčiny "
+"tohoto problému nahlášením na e-mail <a href=\"mailto:manisandro@gmail.com?" 
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Ve zprávě se pokuste "
+"popsat svou činnost před pádem aplikace. Též přiložte níže uvedené informace. "
+"Děkujeme."
 
 #: ../gtk/data/gimagereader.ui.h:1
 msgid "<small>Recognize all</small>"
@@ -123,11 +124,11 @@ msgstr "Původní velikost"
 
 #: ../gtk/data/gimagereader.ui.h:15 ../qt/data/MainWindow.ui.h:33
 msgid "Best fit"
-msgstr "Přizpůsobit"
+msgstr "Přizpůsobit oknu"
 
 #: ../gtk/data/gimagereader.ui.h:16 ../qt/data/MainWindow.ui.h:32
 msgid "Best Fit"
-msgstr "Přizpůsobit"
+msgstr "Přizpůsobit oknu"
 
 #: ../gtk/data/gimagereader.ui.h:17 ../qt/data/MainWindow.ui.h:35
 msgid "Rotate left"
@@ -263,11 +264,11 @@ msgstr "Zvolte režim vkládání"
 
 #: ../gtk/data/gimagereader.ui.h:50 ../qt/src/Ui_MainWindow.hh:254
 msgid "Strip line breaks on selected text"
-msgstr "Z označeného textu odebrat konce řádků"
+msgstr "Z označeného textu odebrat zalomení řádků"
 
 #: ../gtk/data/gimagereader.ui.h:51 ../qt/src/Ui_MainWindow.hh:253
 msgid "Strip Line Breaks"
-msgstr "Odebrat konce řádků"
+msgstr "Odebrat zalomení řádků"
 
 #: ../gtk/data/gimagereader.ui.h:52 ../qt/src/Ui_MainWindow.hh:259
 msgid "Find and replace"
@@ -317,11 +318,11 @@ msgstr "Nahradit vše"
 
 #: ../gtk/data/gimagereader.ui.h:63 ../qt/data/MainWindow.ui.h:23
 msgid "Find previous"
-msgstr "Najít předchozí"
+msgstr "Najít předchozí výskyt"
 
 #: ../gtk/data/gimagereader.ui.h:64 ../qt/data/MainWindow.ui.h:21
 msgid "Find next"
-msgstr "Najít následující"
+msgstr "Najít následující výskyt"
 
 #: ../gtk/data/gimagereader.ui.h:65 ../qt/data/MainWindow.ui.h:25
 msgid "Match case"
@@ -354,7 +355,7 @@ msgstr "Dotazovat se na instalaci slovníků pro kontrolu překlepů"
 
 #: ../gtk/data/gimagereader.ui.h:73 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr "Automaticky zjišťovat případnou novější verzi aplikace"
+msgstr "Automaticky zjišťovat případné novější verze aplikace"
 
 #: ../gtk/data/gimagereader.ui.h:74 ../qt/data/ConfigDialog.ui.h:9
 msgid "Predefined language definitions:"
@@ -378,7 +379,7 @@ msgstr "Kód jazyka dle normy ISO 639-1, následovaný kódem pro zemi."
 
 #: ../gtk/data/gimagereader.ui.h:79 ../qt/data/ConfigDialog.ui.h:14
 msgid "ISO Code"
-msgstr "Kód normy ISO"
+msgstr "Kód dle ISO"
 
 #: ../gtk/data/gimagereader.ui.h:80 ../qt/data/ConfigDialog.ui.h:15
 msgid "The name of the language"
@@ -468,7 +469,7 @@ msgstr "Uložit jako obrázek"
 #. Output postprocessing
 #: ../gtk/data/gimagereader.ui.h:100 ../qt/src/Ui_MainWindow.hh:214
 msgid "Keep line break if..."
-msgstr "Ponechat konec řádku pokud..."
+msgstr "Ponechat zalomení řádku pokud…"
 
 #: ../gtk/data/gimagereader.ui.h:101 ../qt/src/Ui_MainWindow.hh:216
 msgid "Preceded by dot"
@@ -488,7 +489,7 @@ msgstr "Spojit rozdělená slova"
 
 #: ../gtk/data/gimagereader.ui.h:105 ../qt/src/Ui_MainWindow.hh:224
 msgid "Collapse whitespace"
-msgstr "Odstranit prázdná místa"
+msgstr "Odstranit prázdné místo"
 
 #: ../gtk/data/gimagereader.ui.h:106 ../qt/src/Ui_MainWindow.hh:226
 msgid "Preserve paragraphs"
@@ -496,12 +497,11 @@ msgstr "Zachovat odstavce"
 
 #: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Ui_MainWindow.hh:228
 msgid "Visual aids"
-msgstr ""
+msgstr "Vizuální pomůcky"
 
 #: ../gtk/data/gimagereader.ui.h:108 ../qt/src/Ui_MainWindow.hh:230
-#, fuzzy
 msgid "Draw whitespace"
-msgstr "Odstranit prázdná místa"
+msgstr "Zvýraznit prázdná místa"
 
 #: ../gtk/data/gimagereader.ui.h:109 ../qt/src/Recognizer.cc:40
 msgid "Current Page"
@@ -509,7 +509,7 @@ msgstr "Stávající strana"
 
 #: ../gtk/data/gimagereader.ui.h:110 ../qt/src/Recognizer.cc:43
 msgid "Multiple Pages..."
-msgstr "Vícero stran..."
+msgstr "Vícero stran…"
 
 #: ../gtk/src/Acquirer.cc:43 ../gtk/src/FileDialogs.cc:157
 #: ../gtk/src/Utils.cc:64 ../qt/data/ConfigDialog.ui.h:18
@@ -527,7 +527,7 @@ msgstr "Obrázky"
 
 #: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:84
 msgid "Choose Output Filename..."
-msgstr "Zvolte název souboru pro výstup..."
+msgstr "Zvolte název souboru pro výstup…"
 
 #: ../gtk/src/Acquirer.cc:109 ../qt/src/Acquirer.cc:101
 msgid "Failed to initialize the scanning backend."
@@ -544,27 +544,27 @@ msgstr "Nebyly nalezeny žádné skenery."
 #: ../gtk/src/Acquirer.cc:157 ../gtk/src/Acquirer.cc:175
 #: ../qt/src/Acquirer.cc:141 ../qt/src/Acquirer.cc:159
 msgid "Starting scan..."
-msgstr "Zahájení skenování..."
+msgstr "Zahájení skenování…"
 
 #: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:155
 msgid "Opening device..."
-msgstr "Navazování komunikace se skenerem..."
+msgstr "Navazování komunikace se skenerem…"
 
 #: ../gtk/src/Acquirer.cc:173 ../qt/src/Acquirer.cc:157
 msgid "Setting options..."
-msgstr "Nastavování předvoleb..."
+msgstr "Nastavování předvoleb…"
 
 #: ../gtk/src/Acquirer.cc:177 ../qt/src/Acquirer.cc:161
 msgid "Getting parameters..."
-msgstr "Získávání parametrů..."
+msgstr "Získávání parametrů…"
 
 #: ../gtk/src/Acquirer.cc:179 ../qt/src/Acquirer.cc:163
 msgid "Transferring data..."
-msgstr "Přenášení dat..."
+msgstr "Přenášení dat…"
 
 #: ../gtk/src/Acquirer.cc:187 ../qt/src/Acquirer.cc:171
 msgid "Canceling scan..."
-msgstr "Skenování se ruší..."
+msgstr "Rušení skenování…"
 
 #: ../gtk/src/Config.cc:87 ../qt/data/ConfigDialog.ui.h:6
 msgid "Filename prefix"
@@ -597,7 +597,7 @@ msgstr "Nezdařilo se získat backtrace. Je nainstalován ladící nástroj gdb?
 
 #: ../gtk/src/Displayer.cc:101 ../qt/src/Displayer.cc:86
 msgid "selection.png"
-msgstr "výběr.png"
+msgstr "vyber.png"
 
 #: ../gtk/src/Displayer.cc:220 ../qt/src/Displayer.cc:172
 msgid "Failed to load image"
@@ -608,12 +608,12 @@ msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
-"Soubor nejspíš neobsahuje obrazová data či je poškozený:\n"
+"Soubor nejspíš neobsahuje obrazová data nebo je poškozený:\n"
 "%1"
 
 #: ../gtk/src/Displayer.cc:246
 msgid "Rendering image..."
-msgstr "Vykreslování obrázku..."
+msgstr "Vykreslování obrázku…"
 
 #: ../gtk/src/Displayer.cc:513 ../qt/src/Displayer.cc:413
 msgid "PNG Images"
@@ -635,12 +635,12 @@ msgstr "Vyberte soubory"
 #: ../gtk/src/FileDialogs.cc:158 ../gtk/src/Utils.cc:55
 #: ../qt/data/ConfigDialog.ui.h:17
 msgid "OK"
-msgstr "OK"
+msgstr ""
 
 #: ../gtk/src/FileDialogs.cc:248
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-msgstr "Soubor s názvem \"%1\" již existuje. Opravdu jej chcete přepsat?"
+msgstr "Soubor s názvem „%1“ již existuje. Opravdu jej chcete přepsat?"
 
 #: ../gtk/src/FileDialogs.cc:250
 msgid "Overwrite File?"
@@ -648,7 +648,7 @@ msgstr "Přepsat soubor?"
 
 #: ../gtk/src/MainWindow.cc:147 ../qt/src/MainWindow.cc:146
 msgid "Select an image to begin..."
-msgstr "Začněte výběrem obrázku..."
+msgstr "Začněte výběrem obrázku…"
 
 #: ../gtk/src/MainWindow.cc:232 ../qt/src/MainWindow.cc:226
 msgid "To recognize specific areas, drag rectangles over them."
@@ -672,15 +672,15 @@ msgstr "Seznam změn"
 
 #: ../gtk/src/MainWindow.cc:349 ../qt/src/MainWindow.cc:334
 msgid "Don't notify again"
-msgstr "Příště již neupozorňovat"
+msgstr "Příště již neoznamovat"
 
 #: ../gtk/src/OutputManager.cc:194 ../qt/src/OutputManager.cc:154
 msgid "Stripping line breaks..."
-msgstr "Odebírání konců řádků..."
+msgstr "Odebírání konců řádků…"
 
 #: ../gtk/src/OutputManager.cc:210 ../qt/src/OutputManager.cc:178
 msgid "Replacing..."
-msgstr "Nahrazování..."
+msgstr "Nahrazování…"
 
 #: ../gtk/src/OutputManager.cc:302
 msgid "Check spelling"
@@ -696,7 +696,7 @@ msgstr "Textové soubory"
 
 #: ../gtk/src/OutputManager.cc:346 ../qt/src/OutputManager.cc:298
 msgid "Save Output..."
-msgstr "Uložit výstup..."
+msgstr "Uložit výstup…"
 
 #: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:306
 msgid "Failed to save output"
@@ -712,7 +712,7 @@ msgstr "Výstup nebyl uložen"
 
 #: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:320
 msgid "Save output before proceeding?"
-msgstr "Uložit před pokračováním výstup?"
+msgstr "Před pokračováním – uložit výstup?"
 
 #: ../gtk/src/OutputManager.cc:404
 msgid "en_US"
@@ -738,7 +738,7 @@ msgstr "Slovník pro kontrolu překlepů pro %1 není nainstalován"
 #: ../gtk/src/OutputManager.cc:437 ../gtk/src/OutputManager.cc:460
 #: ../qt/src/OutputManager.cc:370
 msgid "Installing spelling dictionary for '%1'"
-msgstr "Probíhá instalace slovníku pro kontrolu překlepů pro %1"
+msgstr "Instalace slovníku pro kontrolu překlepů pro %1…"
 
 #: ../gtk/src/OutputManager.cc:452 ../gtk/src/OutputManager.cc:468
 #: ../gtk/src/OutputManager.cc:478 ../gtk/src/OutputManager.cc:484
@@ -750,34 +750,29 @@ msgstr "Chyba"
 
 #: ../gtk/src/OutputManager.cc:452 ../qt/src/OutputManager.cc:445
 msgid "Failed to install spelling dictionary: %1"
-msgstr "Nezdařila se instalace slovníku pro kontrolu překlepů: %1"
+msgstr "Instalace slovníku pro kontrolu překlepů se nezdařila: %1"
 
 #: ../gtk/src/OutputManager.cc:468 ../gtk/src/OutputManager.cc:484
 #: ../qt/src/OutputManager.cc:383 ../qt/src/OutputManager.cc:401
-#, fuzzy
 msgid "Could not read %1."
-msgstr "Do souboru %1 nelze zapisovat."
+msgstr "Soubor %1 nelze číst."
 
 #: ../gtk/src/OutputManager.cc:478 ../gtk/src/OutputManager.cc:513
 #: ../qt/src/OutputManager.cc:393 ../qt/src/OutputManager.cc:429
-#, fuzzy
 msgid "No spelling dictionaries found for '%1'."
-msgstr "Probíhá instalace slovníku pro kontrolu překlepů pro %1"
+msgstr "Pro %1 nebyly nalezeny žádné slovníky pro kontrolu překlepů."
 
 #: ../gtk/src/OutputManager.cc:494 ../qt/src/OutputManager.cc:412
 msgid "Downloading '%1'..."
-msgstr ""
+msgstr "Stahování %1…"
 
 #: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:426
 msgid "Dictionaries installed"
-msgstr ""
+msgstr "Slovníky byly nainstalovány"
 
 #: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:426
-#, fuzzy
 msgid "The following dictionaries were installed:%1"
-msgstr ""
-"Tento soubor bude smazán:\n"
-"%1"
+msgstr "Byly nainstalovány tyto slovníky:%1"
 
 #: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
 msgid "No languages available"
@@ -787,8 +782,8 @@ msgstr "Nejsou k dispozici žádné jazyky"
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
-"Nejsou k dispozici žádné jazyky pro tesseract. Rozpoznávání proto nemůže "
-"fungovat."
+"Nejsou k dispozici žádná jazyková data pro tesseract. Rozpoznávání proto "
+"nebude fungovat."
 
 #: ../gtk/src/Recognizer.cc:134 ../qt/src/Recognizer.cc:158
 msgid "Multilingual"
@@ -809,11 +804,11 @@ msgid ""
 "\tFailed to initialize tesseract"
 msgstr ""
 "\n"
-"\tNepodařilo se inicializovat Tesseract"
+"\tNezdařilo se inicializovat engine Tesseract"
 
 #: ../gtk/src/Recognizer.cc:280 ../qt/src/Recognizer.cc:310
 msgid "Recognizing page %1 (%2 of %3)"
-msgstr "Probíhá rozpoznávání strany %1 (%2 ze %3)"
+msgstr "Rozpoznávání strany %1 (%2 ze %3)…"
 
 #: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:315
 msgid ""
@@ -834,7 +829,7 @@ msgstr ""
 #: ../gtk/src/Recognizer.cc:300 ../gtk/src/Recognizer.cc:321
 #: ../qt/src/Recognizer.cc:330 ../qt/src/Recognizer.cc:351
 msgid "Recognizing..."
-msgstr "Rozpoznávání..."
+msgstr "Rozpoznávání…"
 
 #: ../gtk/src/Recognizer.cc:303 ../gtk/src/Recognizer.cc:311
 #: ../qt/src/Recognizer.cc:333 ../qt/src/Recognizer.cc:341
@@ -847,7 +842,7 @@ msgstr "Došlo k následujícím chybám:%1"
 
 #: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:341
 msgid "Failed to initialize tesseract"
-msgstr "Nelze inicializovat Tesseract"
+msgstr "Nezdařilo se inicializovat engine Tesseract"
 
 #: ../gtk/src/scanner/ScannerSane.cc:88 ../gtk/src/scanner/ScannerTwain.cc:291
 #: ../qt/src/scanner/ScannerSane.cc:90 ../qt/src/scanner/ScannerTwain.cc:289
@@ -910,7 +905,7 @@ msgstr "Chyba při pořizování snímku obrazovku"
 
 #: ../gtk/src/SourceManager.cc:159 ../qt/src/SourceManager.cc:175
 msgid "Failed to take screenshot."
-msgstr "Nelze pořídit snímek obrazkovky"
+msgstr "Nezdarilo se pořídit snímek obrazkovky"
 
 #: ../gtk/src/SourceManager.cc:163 ../qt/src/SourceManager.cc:179
 msgid "Screenshot %1"
@@ -918,11 +913,11 @@ msgstr "Snímek obrazovky %1"
 
 #: ../gtk/src/SourceManager.cc:169 ../qt/src/SourceManager.cc:185
 msgid "Saving image..."
-msgstr "Ukládání obrázku..."
+msgstr "Ukládání obrázku…"
 
 #: ../gtk/src/SourceManager.cc:176 ../qt/src/SourceManager.cc:198
 msgid "Cannot Write File"
-msgstr "Soubor nelze zapsat"
+msgstr "Do souboru nelze zapsat"
 
 #: ../gtk/src/SourceManager.cc:176 ../qt/src/SourceManager.cc:198
 msgid "Could not write to %1."
@@ -1000,7 +995,7 @@ msgstr "Uložit seznam dosazování"
 #: ../gtk/src/SubstitutionsManager.cc:125
 #: ../qt/src/SubstitutionsManager.cc:156
 msgid "Error Saving File"
-msgstr "Chyba při ukládání souboru"
+msgstr "Chyba při ukládání do souboru"
 
 #: ../gtk/src/SubstitutionsManager.cc:125
 #: ../qt/src/SubstitutionsManager.cc:156
@@ -1020,7 +1015,7 @@ msgstr "Chcete stávající seznam uložit?"
 #: ../gtk/src/SubstitutionsManager.cc:183
 #: ../qt/src/SubstitutionsManager.cc:212
 msgid "Applying substitutions..."
-msgstr "Použití dosazování..."
+msgstr "Použití dosazování…"
 
 #: ../gtk/src/Utils.cc:58
 msgid "Yes"
@@ -1039,7 +1034,6 @@ msgid "About gImageReader"
 msgstr "O aplikaci gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"http://sourceforge.net/projects/gimagereader/\">Website</a></"
@@ -1067,21 +1061,21 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Aplikace "
-"zhavarovala</span></p><p>Omlouváme se za nepohodlí. Chcete-li pomoci "
-"aplikaci zlepšit, nahlaste problém na <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Ve zprávě se "
-"pokuste popsat svou činnost před pádem aplikace. Též přiložte níže uvedené. "
-"Díky.</p></body></html>"
+"<html><head/><body><p><span style=\" font-weight:600;\">Došlo k pádu aplikace"
+"</span></p><p>Velmi se omlouváme za vzniklé potíže. Prosíme pomozte "
+"s odstraněním příčiny tohoto problému nahlášením na e-mail "
+"<a href=\"mailto:manisandro@gmail.com?" 
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Ve zprávě se pokuste "
+"popsat svou činnost před pádem aplikace. Též přiložte níže uvedené informace. "
+"Děkujeme.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
-msgstr "gImageReader"
+msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:18
-#, fuzzy
 msgid "Output"
-msgstr "Výstup:"
+msgstr "Výstup"
 
 #, fuzzy
 #~ msgid "So&urces"

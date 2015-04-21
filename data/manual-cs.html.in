@@ -46,6 +46,18 @@
 </ul>
 <h3><a name="News">Novinky</a></h3>
 <p><i>Podrobný seznam změn je k dispozici v protokolu úprav: https://github.com/manisandro/gImageReader/commits/master</i></p>
+<p>gImageReader 3.1 (XX. duben 2015):</p>
+<ul>
+    <li>Přidána volba zvýrazňování prázdných míst</li>
+    <li>Umožňuje omezit oblast nahrazování textu pouze na označenou část výstupního textu</li>
+    <li>Do následného zpracování přidána volba pro zachování odstavců</li>
+    <li>Soubory je nyní možné otevírat i jejich přetažením do okna aplikace</li>
+    <li>Zlepšeno vykreslování některých PDF souborů v Qt variantě uživatelského rozhraní</li>
+    <li>V systému MS Windows opraveno nefunkční skenování s některými modely skenerů</li>
+    <li>V systému MS Windows již podporována automatická instalace slovíků pro kontrolu překlepů</li>
+    <li>Naskenované obrázky je možné ukládat i v jiných datových formátech, než png</li>
+    <li>Opraveno vícero dalších chyb</li>
+</ul>
 <p>gImageReader 3.0.1 (4. leden 2015):</p>
 <ul>
     <li>Opravena chyba v Qt variantě uživatelského rozhraní, projevující se při načítání souboru se seznamem pro nahrazování textu</li>
@@ -160,8 +172,9 @@
 <h2><a name="InstallSpelling">Instalace slovníků pro kontrolu překlepů</a></h2>
 <ul>
     <li>V systému <b>GNU/Linux</b>, pokud daná distribuce podporuje technologii PackageKit, aplikace v případě potřeby nabídne samočinnou instalaci nezbytných slovníků. A pokud snad samočinná instalace z nějakého důvodu nefunguje, můžete slovníky nainstalovat pomocí správce balíčků v systému (balíčky budou nazvané něco jako <i>hunspell-&lt;jazyk&gt;</i> nebo <i>aspell-&lt;jazyk&gt;</i>).</li>
-    <li>V systému <b>Windows</b>, je třeba požadované slovníky stáhnout z <a href="http://cgit.freedesktop.org/libreoffice/dictionaries/tree">http://cgit.freedesktop.org/libreoffice/dictionaries/tree</a>: ze složky, odpovídající požadovanému jazyku (tj. např. <tt>it_IT</tt>), stáhněte soubory s příponami <b>.dic a .aff</b> a umístěte je tam, kam odkazuje (nabídka) <tt>Start&rarr;Všechny programy&rarr;gImageReader&rarr;Slovníky pro kontrolu překlepů</tt>.</li>
+    <li>V systému <b>MS Windows</b>, se aplikace pokusí automaticky stáhnout příslušný slovník pro kontrolu překlepů z <a href="http://cgit.freedesktop.org/libreoffice/dictionaries/tree">http://cgit.freedesktop.org/libreoffice/dictionaries/tree</a>. Slovníky též mohou být nainstalovány ručně: pro příslušný jazyk (tj. např. <tt>cs_CZ</tt>), stáhněte soubory s příponami <b>.dic a .aff</b> a umístěte je tam, kam odkazuje (nabídka) <tt>Start&rarr;Všechny programy&rarr;gImageReader&rarr;Slovníky pro kontrolu překlepů</tt>.</li>
 </ul>
+
 <h2><a name="Contributing">Jak se zapojit do vývoje</a></h2>
 <p>
 Pro své návrhy a příspěvky všeho druhu, vyplňte formulář a nebo požadavek na začlenění na <a href="https://github.com/manisandro/gImageReader">stránce projektu na portálu GitHub</a>, nebo napište na <a href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. Zvláště ceněny jsou překlady textů uživatelského rozhraní aplikace. Jak takový překlad vytvořit (v bodech):
@@ -185,7 +198,7 @@ Pokud se setkáváte s pády aplikace či tím, že přestává reagovat, pokust
 <li>Pokuste se co možná nejlépe popsat, co jste s aplikací dělali a zda se daří situaci navodit opakovaně.</li>
 </ul>
 <hr />
-<p>Copyright &copy;2009-2015 Sandro Mani, revize: Neděle, 4. ledna 2015</p>
+<p>Copyright &copy;2009-2015 Sandro Mani, revize: pondělí, 20. duben 2015</p>
 </body>
 
 </html>
