@@ -219,6 +219,7 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor)
 		return;
 	}
 	sendScaleRequest({ScaleRequest::Abort});
+	setUpdatesEnabled(false);
 
 	QRectF bb = m_imageItem->sceneBoundingRect();
 	double fit = qMin(viewport()->width() / bb.width(), viewport()->height() / bb.height());
@@ -254,6 +255,8 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor)
 		m_imageItem->setTransformOriginPoint(m_imageItem->boundingRect().center());
 		m_imageItem->setPos(m_imageItem->pos() - m_imageItem->sceneBoundingRect().center());
 	}
+	setUpdatesEnabled(true);
+	update();
 }
 
 void Displayer::setRotation(double angle)
@@ -500,6 +503,7 @@ void Displayer::autodetectLayout(bool rotated)
 
 void Displayer::sendScaleRequest(const ScaleRequest& request)
 {
+	m_scaleTimer.stop();
 	m_scaleMutex.lock();
 	m_scaleRequests.append(request);
 	m_scaleCond.wakeOne();

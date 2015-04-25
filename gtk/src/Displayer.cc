@@ -161,7 +161,6 @@ bool Displayer::setCurrentPage(int page)
 
 bool Displayer::setSource(Source* source)
 {
-	m_scaleTimer.disconnect();
 	if(m_scaleThread){
 		sendScaleRequest({ScaleRequest::Quit});
 		m_scaleThread->join();
@@ -253,7 +252,6 @@ bool Displayer::renderImage()
 	m_image = image;
 	setRotation(m_rotspin->get_value());
 	if(m_geo.s < 1.0){
-		m_scaleTimer.disconnect();
 		ScaleRequest request = {ScaleRequest::Scale, m_geo.s, m_source->resolution, m_source->page, m_source->brightness, m_source->contrast, m_source->invert};
 		m_scaleTimer = Glib::signal_timeout().connect([this,request]{ sendScaleRequest(request); return false; }, 100);
 	}
@@ -292,7 +290,6 @@ void Displayer::setZoom(Zoom zoom)
 	m_zoominbtn->set_sensitive(m_geo.s < 10.);
 	m_zoomonebtn->set_active(m_geo.s == 1.);
 	if(m_geo.s < 1.0){
-		m_scaleTimer.disconnect();
 		ScaleRequest request = {ScaleRequest::Scale, m_geo.s, m_source->resolution, m_source->page, m_source->brightness, m_source->contrast, m_source->invert};
 		m_scaleTimer = Glib::signal_timeout().connect([this,request]{ sendScaleRequest(request); return false; }, 100);
 	}else{
@@ -653,6 +650,7 @@ void Displayer::autodetectLayout(bool rotated)
 
 void Displayer::sendScaleRequest(const ScaleRequest& request)
 {
+	m_scaleTimer.disconnect();
 	m_scaleMutex.lock();
 	m_scaleRequests.push(request);
 	m_scaleCond.signal();
