@@ -94,8 +94,12 @@ Displayer::~Displayer()
 
 bool Displayer::setCurrentPage(int page)
 {
-	Utils::setSpinBlocked(ui.spinBoxPage, page);
-	return renderImage();
+	if(page == ui.spinBoxPage->value()){
+		return true;
+	}else{
+		Utils::setSpinBlocked(ui.spinBoxPage, page);
+		return renderImage();
+	}
 }
 
 int Displayer::getCurrentPage() const

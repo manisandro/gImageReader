@@ -151,8 +151,12 @@ void Displayer::positionCanvas()
 
 bool Displayer::setCurrentPage(int page)
 {
-	Utils::set_spin_blocked(m_pagespin, page, m_connection_pageSpinChanged);
-	return renderImage();
+	if(page == m_pagespin->get_value_as_int()){
+		return true;
+	}else{
+		Utils::set_spin_blocked(m_pagespin, page, m_connection_pageSpinChanged);
+		return renderImage();
+	}
 }
 
 bool Displayer::setSource(Source* source)
