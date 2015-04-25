@@ -504,7 +504,10 @@ void ScannerSane::doCompletePage()
 		QFileInfo finfo(filename);
 		filename = QString("%1/%2_%3.%4").arg(finfo.absolutePath()).arg(finfo.completeBaseName()).arg(m_job->pageNumber).arg(finfo.completeSuffix());
 	}
-	QImage(m_job->imgbuf.data(), m_job->rowstride / 3, m_job->height, m_job->rowstride, QImage::Format_RGB888).save(filename);
+	if(!QImage(m_job->imgbuf.data(), m_job->rowstride / 3, m_job->height, m_job->rowstride, QImage::Format_RGB888).save(filename)){
+		failScan(_("Failed to save image"));
+		return;
+	}
 	m_job->imgbuf.clear();
 	emit pageAvailable(filename);
 

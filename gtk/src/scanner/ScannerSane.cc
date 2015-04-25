@@ -506,7 +506,13 @@ void ScannerSane::doCompletePage()
 	}
 	std::string base, ext;
 	Utils::get_filename_parts(filename, base, ext);
-	Gdk::Pixbuf::create_from_data(m_job->imgbuf.data(), Gdk::COLORSPACE_RGB, false, 8, m_job->rowstride/3, m_job->height, m_job->rowstride)->save(filename, ext);
+	try {
+		Gdk::Pixbuf::create_from_data(m_job->imgbuf.data(), Gdk::COLORSPACE_RGB, false, 8, m_job->rowstride/3, m_job->height, m_job->rowstride)->save(filename, ext);
+	} catch(const Glib::Error&) {
+		failScan(_("Failed to save image"));
+		return;
+	}
+
 	m_job->imgbuf.clear();
 	Utils::runInMainThreadBlocking([this, filename]{ m_signal_pageAvailable.emit(filename); });
 
