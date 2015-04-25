@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-20 19:05+0200\n"
+"POT-Creation-Date: 2015-04-25 17:54+0200\n"
 "PO-Revision-Date: 2015-04-20 19:18+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -602,11 +602,11 @@ msgstr "Falha ao obter backtrace. Gdb est instalado?"
 msgid "selection.png"
 msgstr "selection.png"
 
-#: ../gtk/src/Displayer.cc:220 ../qt/src/Displayer.cc:172
+#: ../gtk/src/Displayer.cc:224 ../qt/src/Displayer.cc:176
 msgid "Failed to load image"
 msgstr "Falha ao carregar imagem"
 
-#: ../gtk/src/Displayer.cc:220 ../qt/src/Displayer.cc:172
+#: ../gtk/src/Displayer.cc:224 ../qt/src/Displayer.cc:176
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -614,19 +614,19 @@ msgstr ""
 "O arquivo pode no ser uma imagem ou est corrompido:\n"
 "%1"
 
-#: ../gtk/src/Displayer.cc:246
+#: ../gtk/src/Displayer.cc:250
 msgid "Rendering image..."
 msgstr "Renderizando imagem..."
 
-#: ../gtk/src/Displayer.cc:513 ../qt/src/Displayer.cc:413
+#: ../gtk/src/Displayer.cc:517 ../qt/src/Displayer.cc:417
 msgid "PNG Images"
 msgstr "Imagens PNG"
 
-#: ../gtk/src/Displayer.cc:514 ../qt/src/Displayer.cc:413
+#: ../gtk/src/Displayer.cc:518 ../qt/src/Displayer.cc:417
 msgid "Save Selection Image"
 msgstr "Salvar imagem selecionada"
 
-#: ../gtk/src/Displayer.cc:622 ../qt/src/Displayer.cc:469
+#: ../gtk/src/Displayer.cc:626 ../qt/src/Displayer.cc:473
 msgid "Performing layout analysis"
 msgstr "Executando anlise de layout"
 
@@ -876,6 +876,10 @@ msgstr "No foi possivel iniciar o scan"
 #: ../qt/src/scanner/ScannerSane.cc:451 ../qt/src/scanner/ScannerTwain.cc:319
 msgid "Error communicating with scanner"
 msgstr "Erro de comunicao com o scanner"
+
+#: ../gtk/src/scanner/ScannerSane.cc:512 ../qt/src/scanner/ScannerSane.cc:508
+msgid "Failed to save image"
+msgstr "Falha ao salvar imagem"
 
 #: ../gtk/src/SourceManager.cc:114 ../qt/src/SourceManager.cc:98
 msgid "Unable to open files"

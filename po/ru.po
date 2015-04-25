@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-20 19:05+0200\n"
-"PO-Revision-Date: 2015-02-09 17:34+0300\n"
+"POT-Creation-Date: 2015-04-25 17:54+0200\n"
+"PO-Revision-Date: 2015-04-25 14:47+0300\n"
 "Last-Translator: Oleg Moiseichuk <berroll@mail.ru>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -498,12 +498,11 @@ msgstr "Сохранять абзацы"
 
 #: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Ui_MainWindow.hh:228
 msgid "Visual aids"
-msgstr ""
+msgstr "Вспомогательные средства"
 
 #: ../gtk/data/gimagereader.ui.h:108 ../qt/src/Ui_MainWindow.hh:230
-#, fuzzy
 msgid "Draw whitespace"
-msgstr "Сжимать символы пробелов"
+msgstr "Отображение пробелов"
 
 #: ../gtk/data/gimagereader.ui.h:109 ../qt/src/Recognizer.cc:40
 msgid "Current Page"
@@ -524,9 +523,8 @@ msgid "scan.png"
 msgstr "скан.png"
 
 #: ../gtk/src/Acquirer.cc:91 ../qt/src/Acquirer.cc:83
-#, fuzzy
 msgid "Images"
-msgstr "Добавить изображения"
+msgstr "Изображения"
 
 #: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:84
 msgid "Choose Output Filename..."
@@ -602,11 +600,11 @@ msgstr "Не удалось произвести обратную трассир
 msgid "selection.png"
 msgstr "фрагмент.png"
 
-#: ../gtk/src/Displayer.cc:220 ../qt/src/Displayer.cc:172
+#: ../gtk/src/Displayer.cc:224 ../qt/src/Displayer.cc:176
 msgid "Failed to load image"
 msgstr "Не удалось загрузить изображение"
 
-#: ../gtk/src/Displayer.cc:220 ../qt/src/Displayer.cc:172
+#: ../gtk/src/Displayer.cc:224 ../qt/src/Displayer.cc:176
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -614,19 +612,19 @@ msgstr ""
 "Файл не является изображением или повреждён:\n"
 "%1"
 
-#: ../gtk/src/Displayer.cc:246
+#: ../gtk/src/Displayer.cc:250
 msgid "Rendering image..."
 msgstr "Отрисовка изображения..."
 
-#: ../gtk/src/Displayer.cc:513 ../qt/src/Displayer.cc:413
+#: ../gtk/src/Displayer.cc:517 ../qt/src/Displayer.cc:417
 msgid "PNG Images"
 msgstr "Изображения PNG"
 
-#: ../gtk/src/Displayer.cc:514 ../qt/src/Displayer.cc:413
+#: ../gtk/src/Displayer.cc:518 ../qt/src/Displayer.cc:417
 msgid "Save Selection Image"
 msgstr "Сохранить выделенный фрагмент"
 
-#: ../gtk/src/Displayer.cc:622 ../qt/src/Displayer.cc:469
+#: ../gtk/src/Displayer.cc:626 ../qt/src/Displayer.cc:473
 msgid "Performing layout analysis"
 msgstr "Выполняется анализ структуры"
 
@@ -758,30 +756,25 @@ msgstr "Не удалось установить орфографический 
 
 #: ../gtk/src/OutputManager.cc:468 ../gtk/src/OutputManager.cc:484
 #: ../qt/src/OutputManager.cc:383 ../qt/src/OutputManager.cc:401
-#, fuzzy
 msgid "Could not read %1."
-msgstr "Невозможно записать в %1."
+msgstr "Невозможно прочесть %1."
 
 #: ../gtk/src/OutputManager.cc:478 ../gtk/src/OutputManager.cc:513
 #: ../qt/src/OutputManager.cc:393 ../qt/src/OutputManager.cc:429
-#, fuzzy
 msgid "No spelling dictionaries found for '%1'."
-msgstr "Устанавливается орфографический словарь для '%1'"
+msgstr "Орфографические словари для '%1' не найдены."
 
 #: ../gtk/src/OutputManager.cc:494 ../qt/src/OutputManager.cc:412
 msgid "Downloading '%1'..."
-msgstr ""
+msgstr "Скачивается '%1'..."
 
 #: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:426
 msgid "Dictionaries installed"
-msgstr ""
+msgstr "Словари установлены"
 
 #: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:426
-#, fuzzy
 msgid "The following dictionaries were installed:%1"
-msgstr ""
-"Будет удалён следующий файл:\n"
-"%1"
+msgstr "Были установлены следующие словари:%1"
 
 #: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
 msgid "No languages available"
@@ -880,6 +873,10 @@ msgstr "Невозможно начать сканирование"
 #: ../qt/src/scanner/ScannerSane.cc:451 ../qt/src/scanner/ScannerTwain.cc:319
 msgid "Error communicating with scanner"
 msgstr "Ошибка связи со сканером"
+
+#: ../gtk/src/scanner/ScannerSane.cc:512 ../qt/src/scanner/ScannerSane.cc:508
+msgid "Failed to save image"
+msgstr "Не удалось сохранить изображение"
 
 #: ../gtk/src/SourceManager.cc:114 ../qt/src/SourceManager.cc:98
 msgid "Unable to open files"
@@ -982,7 +979,7 @@ msgstr "Ошибка чтения файла"
 
 #: ../gtk/src/SubstitutionsManager.cc:88 ../qt/src/SubstitutionsManager.cc:116
 msgid "Unable to read '%1'."
-msgstr "Невозможно открыть '%1'."
+msgstr "Невозможно прочесть '%1'."
 
 #: ../gtk/src/SubstitutionsManager.cc:111
 #: ../qt/src/SubstitutionsManager.cc:143
@@ -1041,7 +1038,6 @@ msgid "About gImageReader"
 msgstr "О программе gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"http://sourceforge.net/projects/gimagereader/\">Website</a></"
@@ -1082,9 +1078,8 @@ msgid "gImageReader"
 msgstr "gImageReader"
 
 #: ../qt/data/MainWindow.ui.h:18
-#, fuzzy
 msgid "Output"
-msgstr "Сканировать в:"
+msgstr "Результаты"
 
 #, fuzzy
 #~ msgid "So&urces"

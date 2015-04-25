@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-20 19:05+0200\n"
+"POT-Creation-Date: 2015-04-25 17:54+0200\n"
 "PO-Revision-Date: 2015-04-21 18:30+0200\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <>\n"
@@ -59,10 +59,10 @@ msgid ""
 "the information below. Thank you."
 msgstr ""
 "Velmi se omlouváme za vzniklé potíže. Prosíme pomozte s odstraněním příčiny "
-"tohoto problému nahlášením na e-mail <a href=\"mailto:manisandro@gmail.com?" 
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Ve zprávě se pokuste "
-"popsat svou činnost před pádem aplikace. Též přiložte níže uvedené informace. "
-"Děkujeme."
+"tohoto problému nahlášením na e-mail <a href=\"mailto:manisandro@gmail.com?"
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Ve zprávě se "
+"pokuste popsat svou činnost před pádem aplikace. Též přiložte níže uvedené "
+"informace. Děkujeme."
 
 #: ../gtk/data/gimagereader.ui.h:1
 msgid "<small>Recognize all</small>"
@@ -599,11 +599,11 @@ msgstr "Nezdařilo se získat backtrace. Je nainstalován ladící nástroj gdb?
 msgid "selection.png"
 msgstr "vyber.png"
 
-#: ../gtk/src/Displayer.cc:220 ../qt/src/Displayer.cc:172
+#: ../gtk/src/Displayer.cc:224 ../qt/src/Displayer.cc:176
 msgid "Failed to load image"
 msgstr "Obrázek se nezdařilo načíst"
 
-#: ../gtk/src/Displayer.cc:220 ../qt/src/Displayer.cc:172
+#: ../gtk/src/Displayer.cc:224 ../qt/src/Displayer.cc:176
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -611,19 +611,19 @@ msgstr ""
 "Soubor nejspíš neobsahuje obrazová data nebo je poškozený:\n"
 "%1"
 
-#: ../gtk/src/Displayer.cc:246
+#: ../gtk/src/Displayer.cc:250
 msgid "Rendering image..."
 msgstr "Vykreslování obrázku…"
 
-#: ../gtk/src/Displayer.cc:513 ../qt/src/Displayer.cc:413
+#: ../gtk/src/Displayer.cc:517 ../qt/src/Displayer.cc:417
 msgid "PNG Images"
 msgstr "obrázky PNG"
 
-#: ../gtk/src/Displayer.cc:514 ../qt/src/Displayer.cc:413
+#: ../gtk/src/Displayer.cc:518 ../qt/src/Displayer.cc:417
 msgid "Save Selection Image"
 msgstr "Uložit obrázek výběru"
 
-#: ../gtk/src/Displayer.cc:622 ../qt/src/Displayer.cc:469
+#: ../gtk/src/Displayer.cc:626 ../qt/src/Displayer.cc:473
 msgid "Performing layout analysis"
 msgstr "Analyzovat rozvržení stránky"
 
@@ -635,7 +635,7 @@ msgstr "Vyberte soubory"
 #: ../gtk/src/FileDialogs.cc:158 ../gtk/src/Utils.cc:55
 #: ../qt/data/ConfigDialog.ui.h:17
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../gtk/src/FileDialogs.cc:248
 msgid ""
@@ -874,6 +874,10 @@ msgstr "Nelze zahájit skenování"
 msgid "Error communicating with scanner"
 msgstr "Chyba komunikace se skenerem"
 
+#: ../gtk/src/scanner/ScannerSane.cc:512 ../qt/src/scanner/ScannerSane.cc:508
+msgid "Failed to save image"
+msgstr "Nepodařilo se uložit obrázek"
+
 #: ../gtk/src/SourceManager.cc:114 ../qt/src/SourceManager.cc:98
 msgid "Unable to open files"
 msgstr "Soubory nelze otevřít"
@@ -1061,17 +1065,16 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Došlo k pádu aplikace"
-"</span></p><p>Velmi se omlouváme za vzniklé potíže. Prosíme pomozte "
-"s odstraněním příčiny tohoto problému nahlášením na e-mail "
-"<a href=\"mailto:manisandro@gmail.com?" 
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Ve zprávě se pokuste "
-"popsat svou činnost před pádem aplikace. Též přiložte níže uvedené informace. "
-"Děkujeme.</p></body></html>"
+"<html><head/><body><p><span style=\" font-weight:600;\">Došlo k pádu "
+"aplikace</span></p><p>Velmi se omlouváme za vzniklé potíže. Prosíme pomozte "
+"s odstraněním příčiny tohoto problému nahlášením na e-mail <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Ve zprávě se pokuste popsat svou činnost před pádem aplikace. Též "
+"přiložte níže uvedené informace. Děkujeme.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
-msgstr ""
+msgstr "gImageReader"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Output"

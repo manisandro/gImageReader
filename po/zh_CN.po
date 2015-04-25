@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimagereader\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-20 19:05+0200\n"
+"POT-Creation-Date: 2015-04-25 17:54+0200\n"
 "PO-Revision-Date: 2014-05-02 13:00+0800\n"
 "Last-Translator: kaiman <kaigfm@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -621,11 +621,11 @@ msgstr ""
 msgid "selection.png"
 msgstr ""
 
-#: ../gtk/src/Displayer.cc:220 ../qt/src/Displayer.cc:172
+#: ../gtk/src/Displayer.cc:224 ../qt/src/Displayer.cc:176
 msgid "Failed to load image"
 msgstr "加载图片失败"
 
-#: ../gtk/src/Displayer.cc:220 ../qt/src/Displayer.cc:172
+#: ../gtk/src/Displayer.cc:224 ../qt/src/Displayer.cc:176
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -633,19 +633,19 @@ msgstr ""
 "该文件可能不是一个图片或已损坏了\n"
 "%1"
 
-#: ../gtk/src/Displayer.cc:246
+#: ../gtk/src/Displayer.cc:250
 msgid "Rendering image..."
 msgstr "渲染图片..."
 
-#: ../gtk/src/Displayer.cc:513 ../qt/src/Displayer.cc:413
+#: ../gtk/src/Displayer.cc:517 ../qt/src/Displayer.cc:417
 msgid "PNG Images"
 msgstr "PNG 图片"
 
-#: ../gtk/src/Displayer.cc:514 ../qt/src/Displayer.cc:413
+#: ../gtk/src/Displayer.cc:518 ../qt/src/Displayer.cc:417
 msgid "Save Selection Image"
 msgstr "保存选择图片"
 
-#: ../gtk/src/Displayer.cc:622 ../qt/src/Displayer.cc:469
+#: ../gtk/src/Displayer.cc:626 ../qt/src/Displayer.cc:473
 msgid "Performing layout analysis"
 msgstr "执行布局分析"
 
@@ -909,6 +909,11 @@ msgstr "无法启动扫描仪"
 #: ../qt/src/scanner/ScannerSane.cc:451 ../qt/src/scanner/ScannerTwain.cc:319
 msgid "Error communicating with scanner"
 msgstr "于扫描仪通讯错误"
+
+#: ../gtk/src/scanner/ScannerSane.cc:512 ../qt/src/scanner/ScannerSane.cc:508
+#, fuzzy
+msgid "Failed to save image"
+msgstr "加载图片失败"
 
 #: ../gtk/src/SourceManager.cc:114 ../qt/src/SourceManager.cc:98
 msgid "Unable to open files"
