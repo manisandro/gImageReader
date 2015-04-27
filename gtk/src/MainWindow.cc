@@ -243,7 +243,7 @@ void MainWindow::showAbout()
 
 void MainWindow::showHelp(const std::string& chapter)
 {
-#ifdef Q_OS_WIN32
+#ifdef G_OS_WIN32
 	std::string manualDir = Glib::build_filename(pkgDir, "share", "doc", "gimagereader");
 	char* locale = g_win32_getlocale();
 	std::string language(locale, 2);
