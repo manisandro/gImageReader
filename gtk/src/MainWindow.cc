@@ -36,7 +36,7 @@
 #ifdef G_OS_WIN32
 #include <windows.h>
 #endif
-#ifdef G_OS_UNIX
+#ifdef __linux__
 #include <sys/prctl.h>
 #include <sys/wait.h>
 #endif
@@ -67,7 +67,7 @@ static void signalHandler(int sig)
 	Glib::spawn_async("", std::vector<std::string>{pkgExePath, "crashhandle", Glib::ustring::compose("%1", getpid()), filename}, Glib::SPAWN_DO_NOT_REAP_CHILD, sigc::slot<void>(), &pid);
 #ifdef G_OS_WIN32
 	WaitForSingleObject((HANDLE)pid, 0);
-#else
+#elif __linux__
 	// Allow crash handler spawned debugger to attach to the crashed process
 	prctl(PR_SET_PTRACER, pid, 0, 0, 0);
 	waitpid(pid, 0, 0);
