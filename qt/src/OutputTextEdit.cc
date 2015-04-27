@@ -63,6 +63,17 @@ OutputTextEdit::~OutputTextEdit()
 	delete m_wsHighlighter;
 }
 
+QTextCursor OutputTextEdit::regionBounds() const{
+	QTextCursor c = m_regionCursor;
+	if(c.anchor() > c.position()){
+		int pos = c.anchor();
+		int anchor = c.position();
+		c.setPosition(anchor);
+		c.setPosition(pos, QTextCursor::KeepAnchor);
+	}
+	return c;
+}
+
 void OutputTextEdit::setDrawWhitespace(bool drawWhitespace)
 {
 	m_drawWhitespace = drawWhitespace;
@@ -81,17 +92,18 @@ void OutputTextEdit::paintEvent(QPaintEvent *e)
 
 	if(!m_entireRegion){
 		QPainter painter(viewport());
-		painter.setBrush(QPalette().highlight().color().lighter());
+		painter.setBrush(QPalette().highlight().color().lighter(160));
 		painter.setPen(Qt::NoPen);
+		QTextCursor regionCursor = regionBounds();
 
 		QTextCursor regionStart(document());
-		regionStart.setPosition(m_regionCursor.anchor());
+		regionStart.setPosition(regionCursor.anchor());
 		QTextBlock startBlock = regionStart.block();
 		int startLinePos = regionStart.position() - startBlock.position();
 		QTextLine startLine = startBlock.layout()->lineForTextPosition(startLinePos);
 
 		QTextCursor regionEnd(document());
-		regionEnd.setPosition(m_regionCursor.position());
+		regionEnd.setPosition(regionCursor.position());
 		QTextBlock endBlock = regionEnd.block();
 		int endLinePos = regionEnd.position() - endBlock.position();
 		QTextLine endLine = endBlock.layout()->lineForTextPosition(endLinePos);
@@ -171,15 +183,12 @@ void OutputTextEdit::saveRegionBounds()
 {
 	QTextCursor c = textCursor();
 	if(hasFocus()){
-		// Briefly set the region cursor to repaint the affected area and clear the selection
-		setTextCursor(m_regionCursor);
+		bool dorepaint = m_regionCursor.hasSelection() &&
+				!((m_regionCursor.anchor() == c.anchor() && m_regionCursor.position() == c.position()) ||
+				  (m_regionCursor.anchor() == c.position() && m_regionCursor.position() == c.anchor()));
 		m_regionCursor = c;
-		setTextCursor(m_regionCursor);
-		if(m_regionCursor.anchor() > m_regionCursor.position()){
-			int pos = m_regionCursor.anchor();
-			int anchor = m_regionCursor.position();
-			m_regionCursor.setPosition(anchor);
-			m_regionCursor.setPosition(pos, QTextCursor::KeepAnchor);
+		if(dorepaint){
+			viewport()->repaint();
 		}
 		// If only one word is selected, don't treat it as a region
 		if(!m_regionCursor.selectedText().contains(QRegExp("\\s"))){

@@ -29,7 +29,7 @@ public:
 	explicit OutputTextEdit(QWidget *parent = 0);
 	~OutputTextEdit();
 
-	QTextCursor regionBounds() const{ return m_regionCursor; }
+	QTextCursor regionBounds() const;
 
 public slots:
 	void setDrawWhitespace(bool drawWhitespace);
