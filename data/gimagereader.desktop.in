@@ -11,3 +11,4 @@ Type=Application
 StartupNotify=true
 Categories=Graphics;OCR;
 MimeType=image/bmp;image/jpeg;image/gif;image/png;image/tiff;image/x-bmp;image/x-ico;image/x-png;image/x-pcx;image/x-tga;image/xpm;image/svg+xml;
+Keywords=OCR;optical character recognition;Scanner;tesseract;
