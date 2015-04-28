@@ -15,7 +15,7 @@ Build-Depends: debhelper (>= 9),
  libqtspell-qt4-dev,
  libpoppler-qt4-dev
 Standards-Version: 3.9.4
-Homepage: http://sourceforge.net/projects/gimagereader/
+Homepage: https://github.com/manisandro/gImageReader
 
 Package: gimagereader-gtk
 Architecture: any

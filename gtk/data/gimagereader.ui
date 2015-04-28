@@ -1525,23 +1525,7 @@
     <property name="program_name">gImageReader</property>
     <property name="copyright">Copyright © 2009-2015 Sandro Mani</property>
     <property name="comments" translatable="yes">A graphical frontend to tesseract-ocr</property>
-    <property name="website">http://sourceforge.net/projects/gimagereader/</property>
-    <property name="license">Copyright 2009-2015 Sandro Mani &lt;manisandro@gmail.com&gt;
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-MA 02110-1301, USA.</property>
+    <property name="website">https://github.com/manisandro/gImageReader/</property>
     <property name="authors">Sandro Mani &lt;manisandro@gmail.com&gt;</property>
     <property name="translator_credits">Chinese (simplified): kaiman &lt;kaigfm@gmail.com&gt;
 Czech: Pavel Borecki &lt;pavel.borecki@gmail.com&gt;
@@ -1552,7 +1536,7 @@ Portuguese: André Alencar &lt;andre.tre@gmail.com&gt;
 Russian: Oleg Moiseichuk &lt;berroll@mail.ru&gt;
 Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
     <property name="logo_icon_name">gimagereader</property>
-    <property name="license_type">custom</property>
+    <property name="license_type">gpl-3-0</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="box:about">
         <property name="can_focus">False</property>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-25 17:54+0200\n"
+"POT-Creation-Date: 2015-04-28 19:26+0200\n"
 "PO-Revision-Date: 2015-04-20 19:11+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
@@ -600,11 +600,11 @@ msgstr "Impossible de obtenir le backtrace. Est-ce que gdb est installé ?"
 msgid "selection.png"
 msgstr "selection.png"
 
-#: ../gtk/src/Displayer.cc:224 ../qt/src/Displayer.cc:176
+#: ../gtk/src/Displayer.cc:223 ../qt/src/Displayer.cc:176
 msgid "Failed to load image"
 msgstr "Echec à l'ouverture de l'image"
 
-#: ../gtk/src/Displayer.cc:224 ../qt/src/Displayer.cc:176
+#: ../gtk/src/Displayer.cc:223 ../qt/src/Displayer.cc:176
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -612,19 +612,19 @@ msgstr ""
 "Le fichier pourrait ne pas être une image ou être corrompu:\n"
 "%1"
 
-#: ../gtk/src/Displayer.cc:250
+#: ../gtk/src/Displayer.cc:249
 msgid "Rendering image..."
 msgstr "Restitution de l'image..."
 
-#: ../gtk/src/Displayer.cc:517 ../qt/src/Displayer.cc:417
+#: ../gtk/src/Displayer.cc:514 ../qt/src/Displayer.cc:420
 msgid "PNG Images"
 msgstr "Images PNG"
 
-#: ../gtk/src/Displayer.cc:518 ../qt/src/Displayer.cc:417
+#: ../gtk/src/Displayer.cc:515 ../qt/src/Displayer.cc:420
 msgid "Save Selection Image"
 msgstr "Enregistrer sélection"
 
-#: ../gtk/src/Displayer.cc:626 ../qt/src/Displayer.cc:473
+#: ../gtk/src/Displayer.cc:623 ../qt/src/Displayer.cc:476
 msgid "Performing layout analysis"
 msgstr "Exécution l'analyse de mise en page"
 
@@ -1048,11 +1048,11 @@ msgstr "À propos de gImageReader"
 #: ../qt/data/AboutDialog.ui.h:3
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
-"p><p><a href=\"http://sourceforge.net/projects/gimagereader/\">Website</a></"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Une interface graphique pour tesseract-"
-"ocr</p><p><a href=\"http://sourceforge.net/projects/gimagereader/\">Website</"
+"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</"
 "a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4

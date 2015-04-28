@@ -43,9 +43,9 @@
 
 
 #if ENABLE_VERSIONCHECK
-#define CHECKURL "http://sourceforge.net/projects/gimagereader/files/LATEST/download?use_mirror=autoselect"
-#define DOWNLOADURL "http://sourceforge.net/projects/gimagereader/files"
-#define CHANGELOGURL "http://sourceforge.net/projects/gimagereader/files/changelog.txt/download?use_mirror=autoselect"
+#define CHECKURL "https://raw.githubusercontent.com/manisandro/gImageReader/master/LATEST"
+#define DOWNLOADURL "https://github.com/manisandro/gImageReader/releases"
+#define CHANGELOGURL "https://raw.githubusercontent.com/manisandro/gImageReader/master/NEWS"
 #endif // ENABLE_VERSIONCHECK
 
 static Glib::Quark notificationHandleKey("handle");

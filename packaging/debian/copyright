@@ -1,6 +1,6 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: gimagereader
-Source: http://sourceforge.net/projects/gimagereader/
+Source: https://github.com/manisandro/gImageReader
 
 Files: *
 Copyright: 2009-2015 Sandro Mani <manisandro@gmail.com>
