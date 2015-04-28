@@ -29,10 +29,7 @@ Contributing:
 ---------------
 Contributions are always welcome, ideally in the form of pull-requests.
 
-Especially welcome are translations:
- - To update the existing translations, just run `updateTranslations.sh`
- - To create translations, follow the following steps:
-     1. Run `updateTranslations.sh`
-     2. Rename the generated `po/gimagereader.pot` file to `po/<language>.po` (i.e. `po/de.po`)
-     3. Add the language to `po/LINGUAS`
-     4. Translate the strings in `po/<language>.po`
+Especially welcome are translations. These can be created as follows:
+  1. Copy `po/gimagereader.pot` file to `po/<language>.po` (i.e. `po/de.po`)
+  2. Translate the strings in `po/<language>.po`
+  3. Add the language to `po/LINGUAS`
