@@ -102,6 +102,36 @@
       </packing>
     </child>
   </object>
+  <object class="GtkImage" id="image:config.help">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">help-contents</property>
+  </object>
+  <object class="GtkImage" id="image:config.langs.custom.add.cancel">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">dialog-cancel</property>
+  </object>
+  <object class="GtkImage" id="image:config.langs.custom.add.ok">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">dialog-ok</property>
+  </object>
+  <object class="GtkImage" id="image:config.langs.custom.edit.add">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">list-add</property>
+  </object>
+  <object class="GtkImage" id="image:config.langs.custom.edit.remove">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">list-remove</property>
+  </object>
+  <object class="GtkImage" id="image:config.ok">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">dialog-ok</property>
+  </object>
   <object class="GtkImage" id="image:main.autolayout">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -170,6 +200,26 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="icon_name">accessories-text-editor</property>
+  </object>
+  <object class="GtkImage" id="image:pages:cancel">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">dialog-cancel</property>
+  </object>
+  <object class="GtkImage" id="image:pages:ok">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">dialog-ok</property>
+  </object>
+  <object class="GtkImage" id="image:postproc.apply">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">dialog-ok</property>
+  </object>
+  <object class="GtkImage" id="image:postproc.close">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">dialog-close</property>
   </object>
   <object class="GtkImage" id="image:selectionmenu.clipboard">
     <property name="visible">True</property>
@@ -1581,11 +1631,11 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="button:config.help">
-                <property name="label">gtk-help</property>
+                <property name="label" translatable="yes">Help</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="image">image:config.help</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1595,11 +1645,11 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
             </child>
             <child>
               <object class="GtkButton" id="button:config.ok">
-                <property name="label">gtk-ok</property>
+                <property name="label" translatable="yes">OK</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="image">image:config.ok</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1776,11 +1826,11 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                 <property name="layout_style">start</property>
                 <child>
                   <object class="GtkButton" id="button:config.langs.custom.edit.add">
-                    <property name="label">gtk-add</property>
+                    <property name="label">Add</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_stock">True</property>
+                    <property name="image">image:config.langs.custom.edit.add</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -1790,12 +1840,12 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                 </child>
                 <child>
                   <object class="GtkButton" id="button:config.langs.custom.edit.remove">
-                    <property name="label">gtk-remove</property>
+                    <property name="label">Remove</property>
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_stock">True</property>
+                    <property name="image">image:config.langs.custom.edit.remove</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -1866,11 +1916,11 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                 </child>
                 <child>
                   <object class="GtkButton" id="button:config.langs.custom.add.ok">
-                    <property name="label">gtk-ok</property>
+                    <property name="label" translatable="yes">OK</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_stock">True</property>
+                    <property name="image">image:config.langs.custom.add.ok</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -1880,11 +1930,12 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
                 </child>
                 <child>
                   <object class="GtkButton" id="button:config.langs.custom.add.cancel">
-                    <property name="label">gtk-cancel</property>
+                    <property name="label" translatable="yes">Cancel</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_stock">True</property>
+                    <property name="image">image:config.langs.custom.add.cancel</property>
+                    <property name="xalign">0.56000000238418579</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -1999,11 +2050,11 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="button:pages:cancel">
-                <property name="label">gtk-cancel</property>
+                <property name="label" translatable="yes">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="image">image:pages:cancel</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -2013,11 +2064,11 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
             </child>
             <child>
               <object class="GtkButton" id="button:pages:ok">
-                <property name="label">gtk-ok</property>
+                <property name="label" translatable="yes">OK</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="image">image:pages:ok</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -2278,11 +2329,11 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="button:postproc.apply">
-                <property name="label">gtk-apply</property>
+                <property name="label" translatable="yes">Apply</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="image">image:postproc.apply</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -2292,11 +2343,11 @@ Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
             </child>
             <child>
               <object class="GtkButton" id="button:postproc.close">
-                <property name="label">gtk-close</property>
+                <property name="label" translatable="yes">Close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="image">image:postproc.close</property>
               </object>
               <packing>
                 <property name="expand">True</property>

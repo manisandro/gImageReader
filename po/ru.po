@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-28 19:27+0200\n"
+"POT-Creation-Date: 2015-04-30 23:34+0200\n"
 "PO-Revision-Date: 2015-04-25 14:47+0300\n"
 "Last-Translator: Oleg Moiseichuk <berroll@mail.ru>\n"
 "Language-Team: Russian\n"
@@ -28,8 +28,9 @@ msgstr "Повторить обнаружение языков"
 msgid "Preferences"
 msgstr "Настройки"
 
-#: ../gtk/data/appmenu.ui.h:3 ../gtk/src/OutputManager.cc:422
-#: ../qt/src/OutputManager.cc:357 ../qt/src/Ui_MainWindow.hh:152
+#: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:69
+#: ../gtk/src/OutputManager.cc:422 ../qt/src/OutputManager.cc:357
+#: ../qt/src/Ui_MainWindow.hh:152
 msgid "Help"
 msgstr "Помощь"
 
@@ -338,185 +339,198 @@ msgstr "Замены"
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "Графический интерфейс для tesseract-ocr"
 
-#: ../gtk/data/gimagereader.ui.h:69
+#: ../gtk/data/gimagereader.ui.h:70 ../gtk/src/FileDialogs.cc:158
+#: ../gtk/src/Utils.cc:55 ../qt/data/ConfigDialog.ui.h:17
+msgid "OK"
+msgstr "OK"
+
+#: ../gtk/data/gimagereader.ui.h:71
 msgid "Output pane orientation:"
 msgstr "Расположение панели результатов:"
 
-#: ../gtk/data/gimagereader.ui.h:70
+#: ../gtk/data/gimagereader.ui.h:72
 msgid "Horizontal"
 msgstr "Горизонтально"
 
-#: ../gtk/data/gimagereader.ui.h:71
+#: ../gtk/data/gimagereader.ui.h:73
 msgid "Vertical"
 msgstr "Вертикально"
 
-#: ../gtk/data/gimagereader.ui.h:72 ../qt/data/ConfigDialog.ui.h:3
+#: ../gtk/data/gimagereader.ui.h:74 ../qt/data/ConfigDialog.ui.h:3
 msgid "Query to install missing spellcheck dictionaries"
 msgstr "Запрос на установку недостающих орфографических словарей"
 
-#: ../gtk/data/gimagereader.ui.h:73 ../qt/data/ConfigDialog.ui.h:4
+#: ../gtk/data/gimagereader.ui.h:75 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
 msgstr "Автоматически проверять наличие новых версий"
 
-#: ../gtk/data/gimagereader.ui.h:74 ../qt/data/ConfigDialog.ui.h:9
+#: ../gtk/data/gimagereader.ui.h:76 ../qt/data/ConfigDialog.ui.h:9
 msgid "Predefined language definitions:"
 msgstr "Заданные определения языков:"
 
-#: ../gtk/data/gimagereader.ui.h:75 ../qt/data/ConfigDialog.ui.h:10
+#: ../gtk/data/gimagereader.ui.h:77 ../qt/data/ConfigDialog.ui.h:10
 msgid "Additional language definitions:"
 msgstr "Дополнительные определения языков:"
 
-#: ../gtk/data/gimagereader.ui.h:76 ../qt/data/ConfigDialog.ui.h:11
+#: ../gtk/data/gimagereader.ui.h:78 ../qt/data/ConfigDialog.ui.h:11
 msgid "The prefix of the tesseract language data file"
 msgstr "Префикс файла языковых данных tesseract"
 
-#: ../gtk/data/gimagereader.ui.h:77 ../qt/data/ConfigDialog.ui.h:12
+#: ../gtk/data/gimagereader.ui.h:79 ../qt/data/ConfigDialog.ui.h:12
 msgid "Prefix"
 msgstr "Префикс"
 
-#: ../gtk/data/gimagereader.ui.h:78 ../qt/data/ConfigDialog.ui.h:13
+#: ../gtk/data/gimagereader.ui.h:80 ../qt/data/ConfigDialog.ui.h:13
 msgid "The ISO 639-1 language code followed by the country code"
 msgstr "Код языка (ISO 639-1) и код страны, соединённые подчёркиванием"
 
-#: ../gtk/data/gimagereader.ui.h:79 ../qt/data/ConfigDialog.ui.h:14
+#: ../gtk/data/gimagereader.ui.h:81 ../qt/data/ConfigDialog.ui.h:14
 msgid "ISO Code"
 msgstr "Код ISO"
 
-#: ../gtk/data/gimagereader.ui.h:80 ../qt/data/ConfigDialog.ui.h:15
+#: ../gtk/data/gimagereader.ui.h:82 ../qt/data/ConfigDialog.ui.h:15
 msgid "The name of the language"
 msgstr "Название языка"
 
-#: ../gtk/data/gimagereader.ui.h:81 ../qt/data/ConfigDialog.ui.h:16
+#: ../gtk/data/gimagereader.ui.h:83 ../qt/data/ConfigDialog.ui.h:16
 msgid "Name"
 msgstr "Название"
 
-#: ../gtk/data/gimagereader.ui.h:82 ../qt/data/ConfigDialog.ui.h:5
+#: ../gtk/data/gimagereader.ui.h:84 ../gtk/src/Acquirer.cc:43
+#: ../gtk/src/FileDialogs.cc:157 ../gtk/src/Utils.cc:64
+#: ../qt/data/ConfigDialog.ui.h:18 ../qt/data/MainWindow.ui.h:15
+msgid "Cancel"
+msgstr "Отмена"
+
+#: ../gtk/data/gimagereader.ui.h:85 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
 msgstr "Шрифт панели результатов:"
 
-#: ../gtk/data/gimagereader.ui.h:83 ../qt/data/ConfigDialog.ui.h:2
+#: ../gtk/data/gimagereader.ui.h:86 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
 msgstr "По умолчанию"
 
-#: ../gtk/data/gimagereader.ui.h:84 ../qt/data/PageRangeDialog.ui.h:1
+#: ../gtk/data/gimagereader.ui.h:87 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
 msgstr "Диапазон страниц"
 
-#: ../gtk/data/gimagereader.ui.h:85 ../qt/data/PageRangeDialog.ui.h:2
+#: ../gtk/data/gimagereader.ui.h:88 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
 msgstr "Диапазон страниц:"
 
-#: ../gtk/data/gimagereader.ui.h:86 ../qt/data/PageRangeDialog.ui.h:3
+#: ../gtk/data/gimagereader.ui.h:89 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Пример:</b> 1-10, 13, 14-18</small>"
 
-#: ../gtk/data/gimagereader.ui.h:87 ../qt/data/PageRangeDialog.ui.h:4
+#: ../gtk/data/gimagereader.ui.h:90 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
 msgstr "Область распознавания:"
 
-#: ../gtk/data/gimagereader.ui.h:88 ../qt/data/PageRangeDialog.ui.h:5
+#: ../gtk/data/gimagereader.ui.h:91 ../qt/data/PageRangeDialog.ui.h:5
 msgid "Entire page"
 msgstr "Страница целиком"
 
-#: ../gtk/data/gimagereader.ui.h:89 ../qt/data/PageRangeDialog.ui.h:6
+#: ../gtk/data/gimagereader.ui.h:92 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
 msgstr "Автоопределение"
 
-#: ../gtk/data/gimagereader.ui.h:90 ../qt/src/SubstitutionsManager.cc:43
+#: ../gtk/data/gimagereader.ui.h:93 ../qt/src/SubstitutionsManager.cc:43
 #: ../qt/src/SubstitutionsManager.cc:44
 msgid "Open"
 msgstr "Открыть"
 
-#: ../gtk/data/gimagereader.ui.h:91 ../gtk/src/Utils.cc:67
+#: ../gtk/data/gimagereader.ui.h:94 ../gtk/src/Utils.cc:67
 #: ../qt/src/SubstitutionsManager.cc:46 ../qt/src/SubstitutionsManager.cc:47
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../gtk/data/gimagereader.ui.h:92 ../qt/src/SubstitutionsManager.cc:49
+#: ../gtk/data/gimagereader.ui.h:95 ../qt/src/SubstitutionsManager.cc:49
 #: ../qt/src/SubstitutionsManager.cc:50
 msgid "Clear"
 msgstr "Очистить"
 
-#: ../gtk/data/gimagereader.ui.h:93 ../qt/data/ConfigDialog.ui.h:19
+#: ../gtk/data/gimagereader.ui.h:96 ../qt/data/ConfigDialog.ui.h:19
 #: ../qt/src/SubstitutionsManager.cc:52 ../qt/src/SubstitutionsManager.cc:53
 msgid "Add"
 msgstr "Добавить"
 
-#: ../gtk/data/gimagereader.ui.h:94 ../qt/data/ConfigDialog.ui.h:20
+#: ../gtk/data/gimagereader.ui.h:97 ../qt/data/ConfigDialog.ui.h:20
 #: ../qt/src/SubstitutionsManager.cc:55 ../qt/src/SubstitutionsManager.cc:56
 msgid "Remove"
 msgstr "Удалить"
 
-#: ../gtk/data/gimagereader.ui.h:95 ../qt/src/DisplaySelection.cc:56
+#: ../gtk/data/gimagereader.ui.h:98
+msgid "Apply"
+msgstr "применить"
+
+#: ../gtk/data/gimagereader.ui.h:99
+msgid "Close"
+msgstr "закрыть"
+
+#: ../gtk/data/gimagereader.ui.h:100 ../qt/src/DisplaySelection.cc:56
 msgid "Delete"
 msgstr "Удалить"
 
-#: ../gtk/data/gimagereader.ui.h:96 ../qt/src/DisplaySelection.cc:42
+#: ../gtk/data/gimagereader.ui.h:101 ../qt/src/DisplaySelection.cc:42
 msgid "Order:"
 msgstr "Порядок:"
 
-#: ../gtk/data/gimagereader.ui.h:97 ../qt/src/DisplaySelection.cc:57
+#: ../gtk/data/gimagereader.ui.h:102 ../qt/src/DisplaySelection.cc:57
 msgid "Recognize"
 msgstr "Распознать"
 
-#: ../gtk/data/gimagereader.ui.h:98 ../qt/src/DisplaySelection.cc:58
+#: ../gtk/data/gimagereader.ui.h:103 ../qt/src/DisplaySelection.cc:58
 msgid "Recognize to clipboard"
 msgstr "Распознать в буфер обмена"
 
-#: ../gtk/data/gimagereader.ui.h:99 ../qt/src/DisplaySelection.cc:59
+#: ../gtk/data/gimagereader.ui.h:104 ../qt/src/DisplaySelection.cc:59
 msgid "Save as image"
 msgstr "Сохранить как изображение"
 
 #. Output postprocessing
-#: ../gtk/data/gimagereader.ui.h:100 ../qt/src/Ui_MainWindow.hh:214
+#: ../gtk/data/gimagereader.ui.h:105 ../qt/src/Ui_MainWindow.hh:214
 msgid "Keep line break if..."
 msgstr "Сохранять разрыв строки, если..."
 
-#: ../gtk/data/gimagereader.ui.h:101 ../qt/src/Ui_MainWindow.hh:216
+#: ../gtk/data/gimagereader.ui.h:106 ../qt/src/Ui_MainWindow.hh:216
 msgid "Preceded by dot"
 msgstr "Перед ним стоит точка"
 
-#: ../gtk/data/gimagereader.ui.h:102 ../qt/src/Ui_MainWindow.hh:218
+#: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Ui_MainWindow.hh:218
 msgid "Preceded or succeeded by quote"
 msgstr "Перед ним или после него стоит кавычка"
 
-#: ../gtk/data/gimagereader.ui.h:103 ../qt/src/Ui_MainWindow.hh:220
+#: ../gtk/data/gimagereader.ui.h:108 ../qt/src/Ui_MainWindow.hh:220
 msgid "Other options"
 msgstr "Прочие опции"
 
-#: ../gtk/data/gimagereader.ui.h:104 ../qt/src/Ui_MainWindow.hh:222
+#: ../gtk/data/gimagereader.ui.h:109 ../qt/src/Ui_MainWindow.hh:222
 msgid "Join hyphenated words"
 msgstr "Удалять переносы слов"
 
-#: ../gtk/data/gimagereader.ui.h:105 ../qt/src/Ui_MainWindow.hh:224
+#: ../gtk/data/gimagereader.ui.h:110 ../qt/src/Ui_MainWindow.hh:224
 msgid "Collapse whitespace"
 msgstr "Сжимать символы пробелов"
 
-#: ../gtk/data/gimagereader.ui.h:106 ../qt/src/Ui_MainWindow.hh:226
+#: ../gtk/data/gimagereader.ui.h:111 ../qt/src/Ui_MainWindow.hh:226
 msgid "Preserve paragraphs"
 msgstr "Сохранять абзацы"
 
-#: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Ui_MainWindow.hh:228
+#: ../gtk/data/gimagereader.ui.h:112 ../qt/src/Ui_MainWindow.hh:228
 msgid "Visual aids"
 msgstr "Вспомогательные средства"
 
-#: ../gtk/data/gimagereader.ui.h:108 ../qt/src/Ui_MainWindow.hh:230
+#: ../gtk/data/gimagereader.ui.h:113 ../qt/src/Ui_MainWindow.hh:230
 msgid "Draw whitespace"
 msgstr "Отображение пробелов"
 
-#: ../gtk/data/gimagereader.ui.h:109 ../qt/src/Recognizer.cc:40
+#: ../gtk/data/gimagereader.ui.h:114 ../qt/src/Recognizer.cc:40
 msgid "Current Page"
 msgstr "Текущую страницу"
 
-#: ../gtk/data/gimagereader.ui.h:110 ../qt/src/Recognizer.cc:43
+#: ../gtk/data/gimagereader.ui.h:115 ../qt/src/Recognizer.cc:43
 msgid "Multiple Pages..."
 msgstr "Несколько страниц..."
-
-#: ../gtk/src/Acquirer.cc:43 ../gtk/src/FileDialogs.cc:157
-#: ../gtk/src/Utils.cc:64 ../qt/data/ConfigDialog.ui.h:18
-#: ../qt/data/MainWindow.ui.h:15
-msgid "Cancel"
-msgstr "Отмена"
 
 #: ../gtk/src/Acquirer.cc:76 ../qt/src/Acquirer.cc:64
 msgid "scan.png"
@@ -627,16 +641,6 @@ msgstr "Сохранить выделенный фрагмент"
 #: ../gtk/src/Displayer.cc:623 ../qt/src/Displayer.cc:476
 msgid "Performing layout analysis"
 msgstr "Выполняется анализ структуры"
-
-#: ../gtk/src/FileDialogs.cc:156 ../gtk/src/SourceManager.cc:135
-#: ../qt/src/SourceManager.cc:143
-msgid "Select Files"
-msgstr "Выберите файлы"
-
-#: ../gtk/src/FileDialogs.cc:158 ../gtk/src/Utils.cc:55
-#: ../qt/data/ConfigDialog.ui.h:17
-msgid "OK"
-msgstr "OK"
 
 #: ../gtk/src/FileDialogs.cc:248
 msgid ""
@@ -889,6 +893,10 @@ msgstr "Невозможно открыть следующие файлы:%1"
 #: ../gtk/src/SourceManager.cc:132 ../qt/src/SourceManager.cc:142
 msgid "Images and PDFs"
 msgstr "Изображения и файлы PDF"
+
+#: ../gtk/src/SourceManager.cc:135 ../qt/src/SourceManager.cc:143
+msgid "Select Files"
+msgstr "Выберите файлы"
 
 #: ../gtk/src/SourceManager.cc:142 ../qt/src/SourceManager.cc:156
 msgid "Clipboard Error"
