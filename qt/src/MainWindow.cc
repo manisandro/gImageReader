@@ -246,7 +246,7 @@ void MainWindow::showHelp(const QString& chapter)
 	QDir manualDir(MANUAL_DIR);
 #endif
 	QString language = QLocale::system().name().left(2);
-	QString manualFile = manualDir.absoluteFilePath(QString("manual_%1.html").arg(language));
+	QString manualFile = manualDir.absoluteFilePath(QString("manual-%1.html").arg(language));
 	if(!QFile(manualFile).exists()){
 		manualFile = manualDir.absoluteFilePath("manual.html");
 	}
