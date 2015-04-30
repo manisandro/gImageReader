@@ -47,7 +47,7 @@ void CrashHandler::on_startup()
 	}else{
 		Builder("label:crashhandler.autosave").as<Gtk::Label>()->set_text(_("There was no unsaved work."));
 	}
-	CONNECT(m_dialog, delete_event, [this](GdkEventAny* ev) { quit(); return true; });
+	CONNECT(m_dialog, delete_event, [this](GdkEventAny* /*ev*/) { quit(); return true; });
 	CONNECT(Builder("button:crashhandler.close").as<Gtk::Button>(), clicked, [this]{ quit(); });
 	CONNECT(m_refreshButton, clicked, [this]{ generate_backtrace(); });
 
