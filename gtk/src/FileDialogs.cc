@@ -153,7 +153,7 @@ Glib::RefPtr<Gtk::FileFilter> FileDialogs::FileFilter::to_gnome_filter() const
 
 static std::vector<Glib::RefPtr<Gio::File>> gnome_open_dialog(const std::string& title, const std::string& initialDirectory, Glib::RefPtr<Gtk::FileFilter> filter, bool multiple, Gtk::Window* parent)
 {
-	Gtk::FileChooserDialog dialog(*MAIN->getWindow(), _("Select Files"));
+	Gtk::FileChooserDialog dialog(*parent, title);
 	dialog.add_button(_("Cancel"), Gtk::RESPONSE_CANCEL);
 	dialog.add_button(_("OK"), Gtk::RESPONSE_OK);
 	dialog.set_select_multiple(multiple);
