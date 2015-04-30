@@ -10,7 +10,7 @@ Source0:       https://github.com/manisandro/gImageReader/releases/download/v%{v
 BuildRequires: cmake
 BuildRequires: gtkmm30-devel
 BuildRequires: gtkspellmm30-devel
-BuildRequires: gtksourceview3-devel
+BuildRequires: gtksourceviewmm3-devel
 BuildRequires: cairomm-devel
 BuildRequires: poppler-glib-devel
 BuildRequires: tesseract-devel
@@ -18,9 +18,9 @@ BuildRequires: sane-backends-devel
 BuildRequires: intltool
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
-BuildRequires: qt4-devel
-BuildRequires: qtspell-qt4-devel
-BuildRequires: poppler-qt-devel
+BuildRequires: qt5-devel
+BuildRequires: qtspell-qt5-devel
+BuildRequires: poppler-qt5-devel
 
 Requires:      hicolor-icon-theme
 
@@ -89,7 +89,7 @@ make %{?_smp_mflags}
 mkdir build_qt
 (
 cd build_qt
-%cmake -DINTERFACE_TYPE=qt4 -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%{_defaultdocdir}/%{name}-common" ..
+%cmake -DINTERFACE_TYPE=qt5 -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%{_defaultdocdir}/%{name}-common" ..
 make %{?_smp_mflags}
 )
 
@@ -98,9 +98,9 @@ make %{?_smp_mflags}
 %make_install -C build_gtk
 %make_install -C build_qt
 %{_bindir}/desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-gtk.desktop
-%{_bindir}/desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-qt4.desktop
+%{_bindir}/desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}-qt5.desktop
 %{_bindir}/appstream-util validate %{buildroot}%{_datadir}/appdata/%{name}-gtk.appdata.xml || :
-%{_bindir}/appstream-util validate %{buildroot}%{_datadir}/appdata/%{name}-qt4.appdata.xml || :
+%{_bindir}/appstream-util validate %{buildroot}%{_datadir}/appdata/%{name}-qt5.appdata.xml || :
 
 %find_lang %{name}
 
@@ -153,9 +153,9 @@ fi
 %{_datadir}/glib-2.0/schemas/org.gnome.%{name}.gschema.xml
 
 %files qt
-%{_bindir}/%{name}-qt4
-%{_datadir}/appdata/%{name}-qt4.appdata.xml
-%{_datadir}/applications/%{name}-qt4.desktop
+%{_bindir}/%{name}-qt5
+%{_datadir}/appdata/%{name}-qt5.appdata.xml
+%{_datadir}/applications/%{name}-qt5.desktop
 
 %changelog
 * @PACKAGE_DATE@ Sandro Mani <manisandro@gmail.com> - @PACKAGE_VERSION@-1
