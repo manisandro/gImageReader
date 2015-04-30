@@ -250,7 +250,7 @@ void MainWindow::showHelp(const std::string& chapter)
 	g_free(locale);
 #else
 	std::string manualDir = MANUAL_DIR;
-	std::string language(setlocale(LC_ALL, NULL), 2);
+	std::string language = Glib::getenv("LANG").substr(0, 2);
 #endif
 	std::string manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir, Glib::ustring::compose("manual-%1.html", language)));
 	if(!Glib::file_test(manualFile, Glib::FILE_TEST_EXISTS)){
