@@ -1,4 +1,4 @@
-gImageReader 3.1 (Apr XX 2015):
+gImageReader 3.1 (May 1 2015):
  * Add option to draw whitespace
  * Allow searching and replacing only in selected portion of output text
  * Add "preserve paragraphs" postprocessing option

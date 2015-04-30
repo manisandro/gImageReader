@@ -46,7 +46,7 @@
 </ul>
 <h3><a name="News">Novinky</a></h3>
 <p><i>Podrobný seznam změn je k dispozici v protokolu úprav: https://github.com/manisandro/gImageReader/commits/master</i></p>
-<p>gImageReader 3.1 (XX. duben 2015):</p>
+<p>gImageReader 3.1 (1. smět 2015):</p>
 <ul>
     <li>Přidána volba zvýrazňování prázdných míst</li>
     <li>Umožňuje omezit oblast nahrazování textu pouze na označenou část výstupního textu</li>
