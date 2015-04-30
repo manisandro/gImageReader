@@ -56,6 +56,13 @@ OutputTextEdit::OutputTextEdit(QWidget *parent)
 	m_entireRegion = true;
 
 	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(saveRegionBounds()));
+
+	// Force inactive selection to have same color as active selection
+	QColor highlightColor = palette().color(QPalette::Highlight);
+	QColor highlightedTextColor = palette().color(QPalette::HighlightedText);
+	auto colorToString = [&](const QColor& color){ return QString("rgb(%1, %2, %3)").arg(color.red()).arg(color.green()).arg(color.blue()); };
+	setStyleSheet(QString("QPlainTextEdit { selection-background-color: %1; selection-color: %2; }")
+				  .arg(colorToString(highlightColor), colorToString(highlightedTextColor)));
 }
 
 OutputTextEdit::~OutputTextEdit()
@@ -92,7 +99,7 @@ void OutputTextEdit::paintEvent(QPaintEvent *e)
 
 	if(!m_entireRegion){
 		QPainter painter(viewport());
-		painter.setBrush(QPalette().highlight().color().lighter(160));
+		painter.setBrush(palette().color(QPalette::Highlight).lighter(160));
 		painter.setPen(Qt::NoPen);
 		QTextCursor regionCursor = regionBounds();
 
@@ -108,7 +115,7 @@ void OutputTextEdit::paintEvent(QPaintEvent *e)
 		int endLinePos = regionEnd.position() - endBlock.position();
 		QTextLine endLine = endBlock.layout()->lineForTextPosition(endLinePos);
 
-		// Draw start rectangle
+		// Draw selection
 		qreal top;
 		QRectF rect;
 		if(startBlock.blockNumber() == endBlock.blockNumber() && startLine.lineNumber() == endLine.lineNumber()){
