@@ -27,7 +27,7 @@ const QList<Config::Lang> Config::LANGUAGES = {
 	{"cat", "ca_ES", QString::fromUtf8("Catal\u00e0")},
 	{"ces", "cs_CS", QString::fromUtf8("\u010cesky")},
 	{"chi_sim", "zh_CN", QString::fromUtf8("\u7b80\u4f53\u5b57")},
-	{"chi_tra", "zh_CN", QString::fromUtf8("\u7c21\u9ad4\u5b57")},
+	{"chi_tra", "zh_TW", QString::fromUtf8("\u7e41\u9ad4\u5b57")},
 	{"dan-frak", "da_DK", QString::fromUtf8("Dansk (Frak)")},
 	{"dan", "da_DK", QString::fromUtf8("Dansk")},
 	{"deu-frak", "de_DE", QString::fromUtf8("Deutsch (Frak)")},

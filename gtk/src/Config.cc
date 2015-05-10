@@ -28,7 +28,7 @@ const std::vector<Config::Lang> Config::LANGUAGES = {
 	{"cat", "ca_ES", "Catal\u00e0"},
 	{"ces", "cs_CS", "\u010cesky"},
 	{"chi_sim", "zh_CN", "\u7b80\u4f53\u5b57"},
-	{"chi_tra", "zh_CN", "\u7c21\u9ad4\u5b57"},
+	{"chi_tra", "zh_TW", "\u7e41\u9ad4\u5b57"},
 	{"dan-frak", "da_DK", "Dansk (Frak)"},
 	{"dan", "da_DK", "Dansk"},
 	{"deu-frak", "de_DE", "Deutsch (Frak)"},
