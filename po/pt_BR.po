@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-30 23:34+0200\n"
-"PO-Revision-Date: 2015-05-20 18:50-0200\n"
+"PO-Revision-Date: 2015-05-20 20:09-0200\n"
 "Last-Translator: Felipe Braga <fbobraga@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:144
 msgid "Redetect Languages"
-msgstr "Redetectar Linguagens"
+msgstr "Detectar idiomas novamente"
 
 #: ../gtk/data/appmenu.ui.h:2 ../gtk/data/gimagereader.ui.h:68
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:147
@@ -242,7 +242,7 @@ msgstr "Digitalizar"
 
 #: ../gtk/data/gimagereader.ui.h:44 ../qt/data/MainWindow.ui.h:8
 msgid "Acquire"
-msgstr "Obter de"
+msgstr "Obter"
 
 #: ../gtk/data/gimagereader.ui.h:45 ../qt/data/MainWindow.ui.h:2
 msgid "Brightness"
@@ -703,11 +703,11 @@ msgstr "Arquivos de texto"
 
 #: ../gtk/src/OutputManager.cc:346 ../qt/src/OutputManager.cc:298
 msgid "Save Output..."
-msgstr "Salvar saída..."
+msgstr "Salvando saída..."
 
 #: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:306
 msgid "Failed to save output"
-msgstr "Falha ao salvar saída"
+msgstr "Falha ao salvar a saída"
 
 #: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:306
 msgid "Check that you have writing permissions in the selected folder."
@@ -719,7 +719,7 @@ msgstr "Saída não salva"
 
 #: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:320
 msgid "Save output before proceeding?"
-msgstr "Salvar saída antes de continuar?"
+msgstr "Salvar a saída antes de continuar?"
 
 #: ../gtk/src/OutputManager.cc:404
 msgid "en_US"
