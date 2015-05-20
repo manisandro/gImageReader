@@ -1,4 +1,4 @@
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2014-2015
 # This file is distributed under the same license as the gImageReader package.
 # André Alencar <andre.tre@gmail.com>, 2014, 2015.
 # Sandro Mani <manisandro@gmail.com>, 2015.
