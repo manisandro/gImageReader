@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-30 23:34+0200\n"
-"PO-Revision-Date: 2015-05-20 20:09-0200\n"
+"PO-Revision-Date: 2015-05-20 20:18-0200\n"
 "Last-Translator: Felipe Braga <fbobraga@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -471,7 +471,7 @@ msgstr "Fechar"
 
 #: ../gtk/data/gimagereader.ui.h:100 ../qt/src/DisplaySelection.cc:56
 msgid "Delete"
-msgstr "Deletar"
+msgstr "Excluir"
 
 #: ../gtk/data/gimagereader.ui.h:101 ../qt/src/DisplaySelection.cc:42
 msgid "Order:"
