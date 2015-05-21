@@ -309,7 +309,6 @@
   </object>
   <object class="GtkApplicationWindow" id="applicationwindow:main">
     <property name="can_focus">False</property>
-    <property name="hide_titlebar_when_maximized">True</property>
     <child>
       <object class="GtkBox" id="box:main">
         <property name="visible">True</property>
