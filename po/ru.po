@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-30 23:34+0200\n"
-"PO-Revision-Date: 2015-04-25 14:47+0300\n"
+"PO-Revision-Date: 2015-05-28 17:08+0300\n"
 "Last-Translator: Oleg Moiseichuk <berroll@mail.ru>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -461,11 +461,11 @@ msgstr "Удалить"
 
 #: ../gtk/data/gimagereader.ui.h:98
 msgid "Apply"
-msgstr "применить"
+msgstr "Применить"
 
 #: ../gtk/data/gimagereader.ui.h:99
 msgid "Close"
-msgstr "закрыть"
+msgstr "Закрыть"
 
 #: ../gtk/data/gimagereader.ui.h:100 ../qt/src/DisplaySelection.cc:56
 msgid "Delete"
@@ -782,12 +782,13 @@ msgstr "Были установлены следующие словари:%1"
 
 #: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
 msgid "No languages available"
-msgstr "Нет доступных языков"
+msgstr "Языки недоступны"
 
 #: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
-msgstr "Отсутствуют доступные языки для tesseract. Распознавание не сработает."
+msgstr ""
+"Недоступны языковые файлы для tesseract. Распознавание работать не будет."
 
 #: ../gtk/src/Recognizer.cc:134 ../qt/src/Recognizer.cc:158
 msgid "Multilingual"
