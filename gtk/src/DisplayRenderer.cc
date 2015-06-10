@@ -60,7 +60,7 @@ void DisplayRenderer::adjustImage(const Cairo::RefPtr<Cairo::ImageSurface> &surf
 	}
 }
 
-Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::render(int page, double resolution) const
+Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::render(int /*page*/, double resolution) const
 {
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf;
 	try{
