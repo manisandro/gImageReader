@@ -46,7 +46,7 @@
 </ul>
 <h3><a name="News">Novinky</a></h3>
 <p><i>Podrobný seznam změn je k dispozici v protokolu úprav: https://github.com/manisandro/gImageReader/commits/master</i></p>
-<p>gImageReader 3.1.1 (4. červen 2015):</p>
+<p>gImageReader 3.1.1 (11. červen 2015):</p>
 <ul>
     <li>Opraveno zobrazování titulku maximalizovaného okna aplikace v prostředí Gnome 3</li>
     <li>Přidány nové překlady: čínština – honkongský a taiwanský dialekt</li>

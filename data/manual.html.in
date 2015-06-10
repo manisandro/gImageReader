@@ -46,7 +46,7 @@
 </ul>
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
-<p>gImageReader 3.1.1 (Jun 04 2015):</p>
+<p>gImageReader 3.1.1 (Jun 11 2015):</p>
 <ul>
     <li>Fix titlebar now shown when window maximized in Gnome 3</li>
     <li>New translations: Chinese (Hong Kong), Chinese (Taiwan)</li>
