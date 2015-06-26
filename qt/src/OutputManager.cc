@@ -283,6 +283,7 @@ void OutputManager::addText(const QString& text, bool insert)
 			cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
 		}
 		cursor.insertText(text);
+		ui.plainTextEditOutput->setTextCursor(cursor);
 	}
 	ui.dockWidgetOutput->show();
 	ui.actionToggleOutputPane->setChecked(true);

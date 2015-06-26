@@ -319,13 +319,13 @@ void OutputManager::addText(const Glib::ustring& text, bool insert)
 		m_textBuffer->insert_at_cursor(text);
 	}else{
 		if(m_insertMode == InsertMode::Append){
-			m_textBuffer->insert(m_textBuffer->end(), text);
+			m_textBuffer->place_cursor(m_textBuffer->insert(m_textBuffer->end(), text));
 		}else if(m_insertMode == InsertMode::Cursor){
 			Gtk::TextIter start, end;
 			m_textBuffer->get_region_bounds(start, end);
-			m_textBuffer->insert(m_textBuffer->erase(start, end), text);
+			m_textBuffer->place_cursor(m_textBuffer->insert(m_textBuffer->erase(start, end), text));
 		}else if(m_insertMode == InsertMode::Replace){
-			m_textBuffer->insert(m_textBuffer->erase(m_textBuffer->begin(), m_textBuffer->end()), text);
+			m_textBuffer->place_cursor(m_textBuffer->insert(m_textBuffer->erase(m_textBuffer->begin(), m_textBuffer->end()), text));
 		}
 	}
 	m_outputBox->show();
