@@ -1,3 +1,7 @@
+gImageReader 3.1.2 (Jun 30 2015):
+ * Fix incorrect behavior of "Append to current text" with multiple recognition areas
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
 gImageReader 3.1.1 (Jun 11 2015):
  * Fix titlebar now shown when window maximized in Gnome 3
  * New translations: Chinese (Hong Kong), Chinese (Taiwan)

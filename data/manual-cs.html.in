@@ -46,6 +46,11 @@
 </ul>
 <h3><a name="News">Novinky</a></h3>
 <p><i>Podrobný seznam změn je k dispozici v protokolu úprav: https://github.com/manisandro/gImageReader/commits/master</i></p>
+<p>gImageReader 3.1.2 (30. červen 2015):</p>
+<ul>
+    <li>Opravuje nesprávné chování funkce „Připojit ke stávajícímu textu“ v případech, kdy je rozpoznáváno z vícero oblastí textu</li>
+    <li>Podrobnosti viz protokol úprav: https://github.com/manisandro/gImageReader/commits/master</li>
+</ul>
 <p>gImageReader 3.1.1 (11. červen 2015):</p>
 <ul>
     <li>Opraveno zobrazování titulku maximalizovaného okna aplikace v prostředí Gnome 3</li>

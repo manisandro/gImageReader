@@ -46,6 +46,11 @@
 </ul>
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
+<p>gImageReader 3.1.2 (Jun 30 2015):</p>
+<ul>
+    <li>Fix incorrect behavior of "Append to current text" with multiple recognition areas</li>
+    <li>Full details in commit log: https://github.com/manisandro/gImageReader/commits/master</li>
+</ul>
 <p>gImageReader 3.1.1 (Jun 11 2015):</p>
 <ul>
     <li>Fix titlebar now shown when window maximized in Gnome 3</li>
