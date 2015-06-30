@@ -72,7 +72,13 @@ Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::render(int /*page*/, double re
 	double scale = resolution / 100.;
 	int w = Utils::round(pixbuf->get_width() * scale);
 	int h = Utils::round(pixbuf->get_height() * scale);
-	Cairo::RefPtr<Cairo::ImageSurface> surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, w, h);
+	Cairo::RefPtr<Cairo::ImageSurface> surf;
+	try {
+		surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, w, h);
+	} catch(const std::exception&)
+	{
+		return Cairo::RefPtr<Cairo::ImageSurface>();
+	}
 	Cairo::RefPtr<Cairo::Context> ctx = Cairo::Context::create(surf);
 	if(pixbuf->get_has_alpha()){
 		ctx->set_source_rgba(1., 1., 1., 1.);
@@ -106,7 +112,14 @@ Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::render(int page, double resoluti
 	poppler_page_get_size(poppage, &width, &height);
 	int w = Utils::round(width * scale);
 	int h = Utils::round(height * scale);
-	Cairo::RefPtr<Cairo::ImageSurface> surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, w, h);
+	Cairo::RefPtr<Cairo::ImageSurface> surf;
+	try {
+		surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, w, h);
+	} catch(const std::exception&)
+	{
+		m_mutex.unlock();
+		return Cairo::RefPtr<Cairo::ImageSurface>();
+	}
 	Cairo::RefPtr<Cairo::Context> ctx = Cairo::Context::create(surf);
 	ctx->set_source_rgba(1., 1., 1., 1.);
 	ctx->paint();
