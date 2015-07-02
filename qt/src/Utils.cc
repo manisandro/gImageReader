@@ -167,6 +167,7 @@ QByteArray Utils::download(QUrl url, int timeout)
 		if(reply->isRunning()){
 			// Timeout
 			reply->close();
+			delete reply;
 			return QByteArray();
 		}
 
