@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.19.0 -->
 <interface>
   <requires lib="gtk+" version="3.8"/>
   <requires lib="gtksourceview" version="3.0"/>
@@ -1584,7 +1584,8 @@ German: Sandro Mani &lt;manisandro@gmail.com&gt;
 Italian: Sandro Mani &lt;manisandro@gmail.com&gt;
 Portuguese (BR): André Alencar &lt;andre.tre@gmail.com&gt;, Felipe Braga &lt;fbobraga@gmail.com&gt;
 Russian: Oleg Moiseichuk &lt;berroll@mail.ru&gt;
-Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;</property>
+Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;
+Swedish: Mats Olofsson &lt;mats.olofsson@bokforlaget-alerta.se&gt;</property>
     <property name="logo_icon_name">gimagereader</property>
     <property name="license_type">gpl-3-0</property>
     <child internal-child="vbox">
