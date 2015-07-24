@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-30 23:34+0200\n"
+"POT-Creation-Date: 2015-07-24 13:50+0200\n"
 "PO-Revision-Date: 2015-05-10 17:14+0800\n"
 "Last-Translator: Timothy Lee <timothy.ty.lee@gmail.com>\n"
 "Language-Team: Traditional Chinese (Hong Kong) <zh_HK@li.org>\n"
@@ -26,7 +26,7 @@ msgid "Preferences"
 msgstr "選項"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:69
-#: ../gtk/src/OutputManager.cc:422 ../qt/src/OutputManager.cc:357
+#: ../gtk/src/OutputManager.cc:422 ../qt/src/OutputManager.cc:358
 #: ../qt/src/Ui_MainWindow.hh:152
 msgid "Help"
 msgstr "協助"
@@ -637,8 +637,7 @@ msgstr "進行佈局分析"
 #: ../gtk/src/FileDialogs.cc:248
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-msgstr ""
-"名為 \"%1\" 的檔案已存在。你確定要覆蓋它？"
+msgstr "名為 \"%1\" 的檔案已存在。你確定要覆蓋它？"
 
 #: ../gtk/src/FileDialogs.cc:250
 msgid "Overwrite File?"
@@ -684,31 +683,31 @@ msgstr "取代中……"
 msgid "Check spelling"
 msgstr "檢查拼字"
 
-#: ../gtk/src/OutputManager.cc:341 ../qt/src/OutputManager.cc:296
+#: ../gtk/src/OutputManager.cc:341 ../qt/src/OutputManager.cc:297
 msgid "output"
 msgstr "輸出"
 
-#: ../gtk/src/OutputManager.cc:345 ../qt/src/OutputManager.cc:298
+#: ../gtk/src/OutputManager.cc:345 ../qt/src/OutputManager.cc:299
 msgid "Text Files"
 msgstr "文字檔"
 
-#: ../gtk/src/OutputManager.cc:346 ../qt/src/OutputManager.cc:298
+#: ../gtk/src/OutputManager.cc:346 ../qt/src/OutputManager.cc:299
 msgid "Save Output..."
 msgstr "儲存輸出……"
 
-#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:306
+#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:307
 msgid "Failed to save output"
 msgstr "無法儲存輸出……"
 
-#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:306
+#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:307
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "請檢查你在所選取資料夾擁有寫入權限。"
 
-#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:320
+#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:321
 msgid "Output not saved"
 msgstr "未儲存輸出"
 
-#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:320
+#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:321
 msgid "Save output before proceeding?"
 msgstr "先儲存輸出再繼續？"
 
@@ -716,59 +715,59 @@ msgstr "先儲存輸出再繼續？"
 msgid "en_US"
 msgstr "zh_HK"
 
-#: ../gtk/src/OutputManager.cc:412 ../qt/src/OutputManager.cc:349
+#: ../gtk/src/OutputManager.cc:412 ../qt/src/OutputManager.cc:350
 msgid "Don't show again"
 msgstr "不再顯示"
 
 #: ../gtk/src/OutputManager.cc:420 ../gtk/src/OutputManager.cc:426
-#: ../qt/src/OutputManager.cc:350
+#: ../qt/src/OutputManager.cc:351
 msgid "Install"
 msgstr "安裝"
 
-#: ../gtk/src/OutputManager.cc:428 ../qt/src/OutputManager.cc:361
+#: ../gtk/src/OutputManager.cc:428 ../qt/src/OutputManager.cc:362
 msgid "Spelling dictionary missing"
 msgstr "遺漏拼字詞典"
 
-#: ../gtk/src/OutputManager.cc:428 ../qt/src/OutputManager.cc:361
+#: ../gtk/src/OutputManager.cc:428 ../qt/src/OutputManager.cc:362
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "未安裝 %1 的拼字詞典"
 
 #: ../gtk/src/OutputManager.cc:437 ../gtk/src/OutputManager.cc:460
-#: ../qt/src/OutputManager.cc:370
+#: ../qt/src/OutputManager.cc:371
 msgid "Installing spelling dictionary for '%1'"
 msgstr "正在安裝 '%1' 的拼字詞典"
 
 #: ../gtk/src/OutputManager.cc:452 ../gtk/src/OutputManager.cc:468
 #: ../gtk/src/OutputManager.cc:478 ../gtk/src/OutputManager.cc:484
-#: ../gtk/src/OutputManager.cc:513 ../qt/src/OutputManager.cc:383
-#: ../qt/src/OutputManager.cc:393 ../qt/src/OutputManager.cc:401
-#: ../qt/src/OutputManager.cc:429 ../qt/src/OutputManager.cc:445
+#: ../gtk/src/OutputManager.cc:513 ../qt/src/OutputManager.cc:384
+#: ../qt/src/OutputManager.cc:394 ../qt/src/OutputManager.cc:402
+#: ../qt/src/OutputManager.cc:430 ../qt/src/OutputManager.cc:446
 msgid "Error"
 msgstr "錯誤"
 
-#: ../gtk/src/OutputManager.cc:452 ../qt/src/OutputManager.cc:445
+#: ../gtk/src/OutputManager.cc:452 ../qt/src/OutputManager.cc:446
 msgid "Failed to install spelling dictionary: %1"
 msgstr "無法安裝拼字詞典：%1"
 
 #: ../gtk/src/OutputManager.cc:468 ../gtk/src/OutputManager.cc:484
-#: ../qt/src/OutputManager.cc:383 ../qt/src/OutputManager.cc:401
+#: ../qt/src/OutputManager.cc:384 ../qt/src/OutputManager.cc:402
 msgid "Could not read %1."
 msgstr "無法讀取 %1。"
 
 #: ../gtk/src/OutputManager.cc:478 ../gtk/src/OutputManager.cc:513
-#: ../qt/src/OutputManager.cc:393 ../qt/src/OutputManager.cc:429
+#: ../qt/src/OutputManager.cc:394 ../qt/src/OutputManager.cc:430
 msgid "No spelling dictionaries found for '%1'."
 msgstr "找不到 '%1' 的拼字詞典。"
 
-#: ../gtk/src/OutputManager.cc:494 ../qt/src/OutputManager.cc:412
+#: ../gtk/src/OutputManager.cc:494 ../qt/src/OutputManager.cc:413
 msgid "Downloading '%1'..."
 msgstr "正在下載 '%1'……"
 
-#: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:426
+#: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:427
 msgid "Dictionaries installed"
 msgstr "已安裝詞典"
 
-#: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:426
+#: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:427
 msgid "The following dictionaries were installed:%1"
 msgstr "已安裝下列詞典：%1"
 
@@ -779,8 +778,7 @@ msgstr "沒有可用語言"
 #: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
-msgstr ""
-"沒有可用的 tesseract 語言。辨認將會失敗。"
+msgstr "沒有可用的 tesseract 語言。辨認將會失敗。"
 
 #: ../gtk/src/Recognizer.cc:134 ../qt/src/Recognizer.cc:158
 msgid "Multilingual"
@@ -846,20 +844,17 @@ msgstr "無法初始化 tesseract"
 msgid "Scan canceled"
 msgstr "已取消掃描"
 
-#: ../gtk/src/scanner/ScannerSane.cc:166
-#: ../gtk/src/scanner/ScannerTwain.cc:190 ../qt/src/scanner/ScannerSane.cc:167
-#: ../qt/src/scanner/ScannerTwain.cc:182
+#: ../gtk/src/scanner/ScannerSane.cc:166 ../gtk/src/scanner/ScannerTwain.cc:190
+#: ../qt/src/scanner/ScannerSane.cc:167 ../qt/src/scanner/ScannerTwain.cc:182
 msgid "No scanner specified"
 msgstr "未指定掃描器"
 
-#: ../gtk/src/scanner/ScannerSane.cc:175
-#: ../gtk/src/scanner/ScannerTwain.cc:199 ../qt/src/scanner/ScannerSane.cc:176
-#: ../qt/src/scanner/ScannerTwain.cc:191
+#: ../gtk/src/scanner/ScannerSane.cc:175 ../gtk/src/scanner/ScannerTwain.cc:199
+#: ../qt/src/scanner/ScannerSane.cc:176 ../qt/src/scanner/ScannerTwain.cc:191
 msgid "Unable to connect to scanner"
 msgstr "無法連線至掃描器"
 
-#: ../gtk/src/scanner/ScannerSane.cc:397
-#: ../gtk/src/scanner/ScannerTwain.cc:269
+#: ../gtk/src/scanner/ScannerSane.cc:397 ../gtk/src/scanner/ScannerTwain.cc:269
 #: ../gtk/src/scanner/ScannerTwain.cc:295 ../qt/src/scanner/ScannerSane.cc:398
 #: ../qt/src/scanner/ScannerTwain.cc:261 ../qt/src/scanner/ScannerTwain.cc:293
 msgid "Unable to start scan"
@@ -964,8 +959,7 @@ msgstr "取代"
 msgid "substitution_list.txt"
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:82
-#: ../gtk/src/SubstitutionsManager.cc:118
+#: ../gtk/src/SubstitutionsManager.cc:82 ../gtk/src/SubstitutionsManager.cc:118
 #: ../qt/src/SubstitutionsManager.cc:111 ../qt/src/SubstitutionsManager.cc:150
 msgid "Substitutions List"
 msgstr "替換清單"
@@ -982,43 +976,35 @@ msgstr "讀案錯誤"
 msgid "Unable to read '%1'."
 msgstr "無法讀取 '%1'。"
 
-#: ../gtk/src/SubstitutionsManager.cc:111
-#: ../qt/src/SubstitutionsManager.cc:143
+#: ../gtk/src/SubstitutionsManager.cc:111 ../qt/src/SubstitutionsManager.cc:143
 msgid "Errors Occurred Reading File"
 msgstr "讀取檔案時出現錯誤"
 
-#: ../gtk/src/SubstitutionsManager.cc:111
-#: ../qt/src/SubstitutionsManager.cc:143
+#: ../gtk/src/SubstitutionsManager.cc:111 ../qt/src/SubstitutionsManager.cc:143
 msgid "Some entries of the substitutions list could not be read."
 msgstr "無法讀取替換清單內某些項目。"
 
-#: ../gtk/src/SubstitutionsManager.cc:119
-#: ../qt/src/SubstitutionsManager.cc:150
+#: ../gtk/src/SubstitutionsManager.cc:119 ../qt/src/SubstitutionsManager.cc:150
 msgid "Save Substitutions List"
 msgstr "儲存替換清單"
 
-#: ../gtk/src/SubstitutionsManager.cc:125
-#: ../qt/src/SubstitutionsManager.cc:156
+#: ../gtk/src/SubstitutionsManager.cc:125 ../qt/src/SubstitutionsManager.cc:156
 msgid "Error Saving File"
 msgstr "存檔錯誤"
 
-#: ../gtk/src/SubstitutionsManager.cc:125
-#: ../qt/src/SubstitutionsManager.cc:156
+#: ../gtk/src/SubstitutionsManager.cc:125 ../qt/src/SubstitutionsManager.cc:156
 msgid "Unable to write to '%1'."
 msgstr "無法寫進 '%1'。"
 
-#: ../gtk/src/SubstitutionsManager.cc:144
-#: ../qt/src/SubstitutionsManager.cc:171
+#: ../gtk/src/SubstitutionsManager.cc:144 ../qt/src/SubstitutionsManager.cc:171
 msgid "Save List?"
 msgstr "儲存清單？"
 
-#: ../gtk/src/SubstitutionsManager.cc:144
-#: ../qt/src/SubstitutionsManager.cc:171
+#: ../gtk/src/SubstitutionsManager.cc:144 ../qt/src/SubstitutionsManager.cc:171
 msgid "Do you want to save the current list?"
 msgstr "是否需要儲存現有清單？"
 
-#: ../gtk/src/SubstitutionsManager.cc:183
-#: ../qt/src/SubstitutionsManager.cc:212
+#: ../gtk/src/SubstitutionsManager.cc:183 ../qt/src/SubstitutionsManager.cc:212
 msgid "Applying substitutions..."
 msgstr "應用替換值……"
 
@@ -1044,9 +1030,9 @@ msgid ""
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr 的圖像介面</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">網站</a></"
-"p><p>&nbsp;</p></body></html>"
+"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr 的圖像介面</p><p><a href="
+"\"https://github.com/manisandro/gImageReader/\">網站</a></p><p>&nbsp;</p></"
+"body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -1066,12 +1052,11 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">本應用程式已異常"
-"終止</span></p><p>我們為帶來的不便致歉。為求改善應用程式，請考慮"
-"將問題匯報至 <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>。請嘗試描述你在程式終止前正在做甚麼。"
-"此外，請包含下列資訊。多請。</p></body></html>"
+"<html><head/><body><p><span style=\" font-weight:600;\">本應用程式已異常終止"
+"</span></p><p>我們為帶來的不便致歉。為求改善應用程式，請考慮將問題匯報至 <a "
+"href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+"\">manisandro@gmail.com</a>。請嘗試描述你在程式終止前正在做甚麼。此外，請包含"
+"下列資訊。多請。</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"

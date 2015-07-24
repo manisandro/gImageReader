@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-30 23:34+0200\n"
+"POT-Creation-Date: 2015-07-24 13:50+0200\n"
 "PO-Revision-Date: 2015-05-28 17:08+0300\n"
 "Last-Translator: Oleg Moiseichuk <berroll@mail.ru>\n"
 "Language-Team: Russian\n"
@@ -29,7 +29,7 @@ msgid "Preferences"
 msgstr "Настройки"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:69
-#: ../gtk/src/OutputManager.cc:422 ../qt/src/OutputManager.cc:357
+#: ../gtk/src/OutputManager.cc:422 ../qt/src/OutputManager.cc:358
 #: ../qt/src/Ui_MainWindow.hh:152
 msgid "Help"
 msgstr "Помощь"
@@ -692,31 +692,31 @@ msgstr "Замена..."
 msgid "Check spelling"
 msgstr "Проверить орфографию"
 
-#: ../gtk/src/OutputManager.cc:341 ../qt/src/OutputManager.cc:296
+#: ../gtk/src/OutputManager.cc:341 ../qt/src/OutputManager.cc:297
 msgid "output"
 msgstr "результаты"
 
-#: ../gtk/src/OutputManager.cc:345 ../qt/src/OutputManager.cc:298
+#: ../gtk/src/OutputManager.cc:345 ../qt/src/OutputManager.cc:299
 msgid "Text Files"
 msgstr "Текстовые файлы"
 
-#: ../gtk/src/OutputManager.cc:346 ../qt/src/OutputManager.cc:298
+#: ../gtk/src/OutputManager.cc:346 ../qt/src/OutputManager.cc:299
 msgid "Save Output..."
 msgstr "Сохранить результаты..."
 
-#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:306
+#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:307
 msgid "Failed to save output"
 msgstr "Не удалось сохранить результаты"
 
-#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:306
+#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:307
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Убедитесь, что у вас есть право на запись в выбранную папку."
 
-#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:320
+#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:321
 msgid "Output not saved"
 msgstr "Результаты не сохранены"
 
-#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:320
+#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:321
 msgid "Save output before proceeding?"
 msgstr "Сохранить результаты, прежде чем продолжить?"
 
@@ -724,59 +724,59 @@ msgstr "Сохранить результаты, прежде чем продо�
 msgid "en_US"
 msgstr "ru_RU"
 
-#: ../gtk/src/OutputManager.cc:412 ../qt/src/OutputManager.cc:349
+#: ../gtk/src/OutputManager.cc:412 ../qt/src/OutputManager.cc:350
 msgid "Don't show again"
 msgstr "Больше не показывать"
 
 #: ../gtk/src/OutputManager.cc:420 ../gtk/src/OutputManager.cc:426
-#: ../qt/src/OutputManager.cc:350
+#: ../qt/src/OutputManager.cc:351
 msgid "Install"
 msgstr "Установить"
 
-#: ../gtk/src/OutputManager.cc:428 ../qt/src/OutputManager.cc:361
+#: ../gtk/src/OutputManager.cc:428 ../qt/src/OutputManager.cc:362
 msgid "Spelling dictionary missing"
 msgstr "Отсутствует орфографический словарь"
 
-#: ../gtk/src/OutputManager.cc:428 ../qt/src/OutputManager.cc:361
+#: ../gtk/src/OutputManager.cc:428 ../qt/src/OutputManager.cc:362
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Орфографический словарь для %1 не установлен"
 
 #: ../gtk/src/OutputManager.cc:437 ../gtk/src/OutputManager.cc:460
-#: ../qt/src/OutputManager.cc:370
+#: ../qt/src/OutputManager.cc:371
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Устанавливается орфографический словарь для '%1'"
 
 #: ../gtk/src/OutputManager.cc:452 ../gtk/src/OutputManager.cc:468
 #: ../gtk/src/OutputManager.cc:478 ../gtk/src/OutputManager.cc:484
-#: ../gtk/src/OutputManager.cc:513 ../qt/src/OutputManager.cc:383
-#: ../qt/src/OutputManager.cc:393 ../qt/src/OutputManager.cc:401
-#: ../qt/src/OutputManager.cc:429 ../qt/src/OutputManager.cc:445
+#: ../gtk/src/OutputManager.cc:513 ../qt/src/OutputManager.cc:384
+#: ../qt/src/OutputManager.cc:394 ../qt/src/OutputManager.cc:402
+#: ../qt/src/OutputManager.cc:430 ../qt/src/OutputManager.cc:446
 msgid "Error"
 msgstr "Ошибка"
 
-#: ../gtk/src/OutputManager.cc:452 ../qt/src/OutputManager.cc:445
+#: ../gtk/src/OutputManager.cc:452 ../qt/src/OutputManager.cc:446
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Не удалось установить орфографический словарь: %1"
 
 #: ../gtk/src/OutputManager.cc:468 ../gtk/src/OutputManager.cc:484
-#: ../qt/src/OutputManager.cc:383 ../qt/src/OutputManager.cc:401
+#: ../qt/src/OutputManager.cc:384 ../qt/src/OutputManager.cc:402
 msgid "Could not read %1."
 msgstr "Невозможно прочесть %1."
 
 #: ../gtk/src/OutputManager.cc:478 ../gtk/src/OutputManager.cc:513
-#: ../qt/src/OutputManager.cc:393 ../qt/src/OutputManager.cc:429
+#: ../qt/src/OutputManager.cc:394 ../qt/src/OutputManager.cc:430
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Орфографические словари для '%1' не найдены."
 
-#: ../gtk/src/OutputManager.cc:494 ../qt/src/OutputManager.cc:412
+#: ../gtk/src/OutputManager.cc:494 ../qt/src/OutputManager.cc:413
 msgid "Downloading '%1'..."
 msgstr "Скачивается '%1'..."
 
-#: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:426
+#: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:427
 msgid "Dictionaries installed"
 msgstr "Словари установлены"
 
-#: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:426
+#: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:427
 msgid "The following dictionaries were installed:%1"
 msgstr "Были установлены следующие словари:%1"
 
@@ -854,20 +854,17 @@ msgstr "Не удалось инициализировать tesseract"
 msgid "Scan canceled"
 msgstr "Сканирование отменено"
 
-#: ../gtk/src/scanner/ScannerSane.cc:166
-#: ../gtk/src/scanner/ScannerTwain.cc:190 ../qt/src/scanner/ScannerSane.cc:167
-#: ../qt/src/scanner/ScannerTwain.cc:182
+#: ../gtk/src/scanner/ScannerSane.cc:166 ../gtk/src/scanner/ScannerTwain.cc:190
+#: ../qt/src/scanner/ScannerSane.cc:167 ../qt/src/scanner/ScannerTwain.cc:182
 msgid "No scanner specified"
 msgstr "Не задан сканер"
 
-#: ../gtk/src/scanner/ScannerSane.cc:175
-#: ../gtk/src/scanner/ScannerTwain.cc:199 ../qt/src/scanner/ScannerSane.cc:176
-#: ../qt/src/scanner/ScannerTwain.cc:191
+#: ../gtk/src/scanner/ScannerSane.cc:175 ../gtk/src/scanner/ScannerTwain.cc:199
+#: ../qt/src/scanner/ScannerSane.cc:176 ../qt/src/scanner/ScannerTwain.cc:191
 msgid "Unable to connect to scanner"
 msgstr "Невозможно подключиться к сканеру"
 
-#: ../gtk/src/scanner/ScannerSane.cc:397
-#: ../gtk/src/scanner/ScannerTwain.cc:269
+#: ../gtk/src/scanner/ScannerSane.cc:397 ../gtk/src/scanner/ScannerTwain.cc:269
 #: ../gtk/src/scanner/ScannerTwain.cc:295 ../qt/src/scanner/ScannerSane.cc:398
 #: ../qt/src/scanner/ScannerTwain.cc:261 ../qt/src/scanner/ScannerTwain.cc:293
 msgid "Unable to start scan"
@@ -972,8 +969,7 @@ msgstr "Заменить на"
 msgid "substitution_list.txt"
 msgstr "список_замен.txt"
 
-#: ../gtk/src/SubstitutionsManager.cc:82
-#: ../gtk/src/SubstitutionsManager.cc:118
+#: ../gtk/src/SubstitutionsManager.cc:82 ../gtk/src/SubstitutionsManager.cc:118
 #: ../qt/src/SubstitutionsManager.cc:111 ../qt/src/SubstitutionsManager.cc:150
 msgid "Substitutions List"
 msgstr "Список замен"
@@ -990,43 +986,35 @@ msgstr "Ошибка чтения файла"
 msgid "Unable to read '%1'."
 msgstr "Невозможно прочесть '%1'."
 
-#: ../gtk/src/SubstitutionsManager.cc:111
-#: ../qt/src/SubstitutionsManager.cc:143
+#: ../gtk/src/SubstitutionsManager.cc:111 ../qt/src/SubstitutionsManager.cc:143
 msgid "Errors Occurred Reading File"
 msgstr "Произошли ошибки при чтении файла"
 
-#: ../gtk/src/SubstitutionsManager.cc:111
-#: ../qt/src/SubstitutionsManager.cc:143
+#: ../gtk/src/SubstitutionsManager.cc:111 ../qt/src/SubstitutionsManager.cc:143
 msgid "Some entries of the substitutions list could not be read."
 msgstr "Не удалось прочитать некоторые элементы списка замен."
 
-#: ../gtk/src/SubstitutionsManager.cc:119
-#: ../qt/src/SubstitutionsManager.cc:150
+#: ../gtk/src/SubstitutionsManager.cc:119 ../qt/src/SubstitutionsManager.cc:150
 msgid "Save Substitutions List"
 msgstr "Сохранить список замен"
 
-#: ../gtk/src/SubstitutionsManager.cc:125
-#: ../qt/src/SubstitutionsManager.cc:156
+#: ../gtk/src/SubstitutionsManager.cc:125 ../qt/src/SubstitutionsManager.cc:156
 msgid "Error Saving File"
 msgstr "Ошибка сохранения файла"
 
-#: ../gtk/src/SubstitutionsManager.cc:125
-#: ../qt/src/SubstitutionsManager.cc:156
+#: ../gtk/src/SubstitutionsManager.cc:125 ../qt/src/SubstitutionsManager.cc:156
 msgid "Unable to write to '%1'."
 msgstr "Невозможно сохранить в '%1'."
 
-#: ../gtk/src/SubstitutionsManager.cc:144
-#: ../qt/src/SubstitutionsManager.cc:171
+#: ../gtk/src/SubstitutionsManager.cc:144 ../qt/src/SubstitutionsManager.cc:171
 msgid "Save List?"
 msgstr "Сохранить список?"
 
-#: ../gtk/src/SubstitutionsManager.cc:144
-#: ../qt/src/SubstitutionsManager.cc:171
+#: ../gtk/src/SubstitutionsManager.cc:144 ../qt/src/SubstitutionsManager.cc:171
 msgid "Do you want to save the current list?"
 msgstr "Вы хотите сохранить текущий список?"
 
-#: ../gtk/src/SubstitutionsManager.cc:183
-#: ../qt/src/SubstitutionsManager.cc:212
+#: ../gtk/src/SubstitutionsManager.cc:183 ../qt/src/SubstitutionsManager.cc:212
 msgid "Applying substitutions..."
 msgstr "Применение замен..."
 
