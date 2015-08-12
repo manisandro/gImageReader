@@ -55,7 +55,8 @@ OutputTextEdit::OutputTextEdit(QWidget *parent)
 	m_regionCursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
 	m_entireRegion = true;
 
-	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(saveRegionBounds()));
+//	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(saveRegionBounds()));
+	connect(this, SIGNAL(selectionChanged()), this, SLOT(saveRegionBounds()));
 
 	// Force inactive selection to have same color as active selection
 	QColor highlightColor = palette().color(QPalette::Highlight);
