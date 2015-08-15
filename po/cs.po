@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-24 13:50+0200\n"
+"POT-Creation-Date: 2015-08-16 01:31+0200\n"
 "PO-Revision-Date: 2015-04-21 18:30+0200\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <>\n"
@@ -523,11 +523,11 @@ msgstr "Vizuální pomůcky"
 msgid "Draw whitespace"
 msgstr "Zvýraznit prázdná místa"
 
-#: ../gtk/data/gimagereader.ui.h:114 ../qt/src/Recognizer.cc:40
+#: ../gtk/data/gimagereader.ui.h:114 ../qt/src/Recognizer.cc:41
 msgid "Current Page"
 msgstr "Stávající strana"
 
-#: ../gtk/data/gimagereader.ui.h:115 ../qt/src/Recognizer.cc:43
+#: ../gtk/data/gimagereader.ui.h:115 ../qt/src/Recognizer.cc:44
 msgid "Multiple Pages..."
 msgstr "Vícero stran…"
 
@@ -778,31 +778,36 @@ msgstr "Slovníky byly nainstalovány"
 msgid "The following dictionaries were installed:%1"
 msgstr "Byly nainstalovány tyto slovníky:%1"
 
-#: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
+#: ../gtk/src/Recognizer.cc:87 ../qt/src/Recognizer.cc:105
 msgid "No languages available"
 msgstr "Nejsou k dispozici žádné jazyky"
 
-#: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
+#: ../gtk/src/Recognizer.cc:87 ../qt/src/Recognizer.cc:105
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
 "Nejsou k dispozici žádná jazyková data pro tesseract. Rozpoznávání proto "
 "nebude fungovat."
 
-#: ../gtk/src/Recognizer.cc:134 ../qt/src/Recognizer.cc:158
+#: ../gtk/src/Recognizer.cc:142 ../qt/src/Recognizer.cc:166
 msgid "Multilingual"
 msgstr "Vícejazyčné"
 
-#: ../gtk/src/Recognizer.cc:198 ../qt/src/Recognizer.cc:224
+#: ../gtk/src/Recognizer.cc:169 ../qt/src/Recognizer.cc:196
+#, fuzzy
+msgid "Detect script and orientation"
+msgstr "Orientace výstupní stránky:"
+
+#: ../gtk/src/Recognizer.cc:216 ../qt/src/Recognizer.cc:243
 msgid "Recognize selection"
 msgstr "Rozpoznat výběr"
 
-#: ../gtk/src/Recognizer.cc:200 ../qt/src/Recognizer.cc:56
-#: ../qt/src/Recognizer.cc:224
+#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:57
+#: ../qt/src/Recognizer.cc:243
 msgid "Recognize all"
 msgstr "Rozpoznat vše"
 
-#: ../gtk/src/Recognizer.cc:272 ../qt/src/Recognizer.cc:302
+#: ../gtk/src/Recognizer.cc:290 ../qt/src/Recognizer.cc:326
 msgid ""
 "\n"
 "\tFailed to initialize tesseract"
@@ -810,11 +815,11 @@ msgstr ""
 "\n"
 "\tNezdařilo se inicializovat engine Tesseract"
 
-#: ../gtk/src/Recognizer.cc:280 ../qt/src/Recognizer.cc:310
+#: ../gtk/src/Recognizer.cc:301 ../qt/src/Recognizer.cc:337
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Rozpoznávání strany %1 (%2 ze %3)…"
 
-#: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:315
+#: ../gtk/src/Recognizer.cc:306 ../qt/src/Recognizer.cc:342
 msgid ""
 "\n"
 "\tPage %1: failed to render page"
@@ -822,7 +827,7 @@ msgstr ""
 "\n"
 "\tStrana %1: vykreslování stránky se nezdařilo"
 
-#: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:316
+#: ../gtk/src/Recognizer.cc:307 ../qt/src/Recognizer.cc:343
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -830,21 +835,21 @@ msgstr ""
 "\n"
 "[Stránku %1 se nezdařilo rozpoznat]\n"
 
-#: ../gtk/src/Recognizer.cc:300 ../gtk/src/Recognizer.cc:321
-#: ../qt/src/Recognizer.cc:330 ../qt/src/Recognizer.cc:351
+#: ../gtk/src/Recognizer.cc:321 ../gtk/src/Recognizer.cc:342
+#: ../qt/src/Recognizer.cc:357 ../qt/src/Recognizer.cc:378
 msgid "Recognizing..."
 msgstr "Rozpoznávání…"
 
-#: ../gtk/src/Recognizer.cc:303 ../gtk/src/Recognizer.cc:311
-#: ../qt/src/Recognizer.cc:333 ../qt/src/Recognizer.cc:341
+#: ../gtk/src/Recognizer.cc:324 ../gtk/src/Recognizer.cc:332
+#: ../qt/src/Recognizer.cc:360 ../qt/src/Recognizer.cc:368
 msgid "Recognition errors occurred"
 msgstr "Při rozpoznávání se vyskytly chyby"
 
-#: ../gtk/src/Recognizer.cc:303 ../qt/src/Recognizer.cc:333
+#: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:360
 msgid "The following errors occurred:%1"
 msgstr "Došlo k následujícím chybám:%1"
 
-#: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:341
+#: ../gtk/src/Recognizer.cc:332 ../qt/src/Recognizer.cc:368
 msgid "Failed to initialize tesseract"
 msgstr "Nezdařilo se inicializovat engine Tesseract"
 

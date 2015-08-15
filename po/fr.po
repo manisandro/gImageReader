@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-24 13:50+0200\n"
-"PO-Revision-Date: 2015-04-20 19:11+0100\n"
+"POT-Creation-Date: 2015-08-16 01:31+0200\n"
+"PO-Revision-Date: 2015-08-16 01:42+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
 "Language: fr\n"
@@ -524,11 +524,11 @@ msgstr "Aides visuelles"
 msgid "Draw whitespace"
 msgstr "Dessiner les espaces"
 
-#: ../gtk/data/gimagereader.ui.h:114 ../qt/src/Recognizer.cc:40
+#: ../gtk/data/gimagereader.ui.h:114 ../qt/src/Recognizer.cc:41
 msgid "Current Page"
 msgstr "Page courante"
 
-#: ../gtk/data/gimagereader.ui.h:115 ../qt/src/Recognizer.cc:43
+#: ../gtk/data/gimagereader.ui.h:115 ../qt/src/Recognizer.cc:44
 msgid "Multiple Pages..."
 msgstr "Plusieurs pages..."
 
@@ -785,31 +785,35 @@ msgstr "Dictionnaires orthographiques installés"
 msgid "The following dictionaries were installed:%1"
 msgstr "Les dictionnaires suivants ont été installés:%1"
 
-#: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
+#: ../gtk/src/Recognizer.cc:87 ../qt/src/Recognizer.cc:105
 msgid "No languages available"
 msgstr "Aucun langues disponibles"
 
-#: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
+#: ../gtk/src/Recognizer.cc:87 ../qt/src/Recognizer.cc:105
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
 "Aucun fichier langue n'étant disponible pour Tesseract, la reconnaissance ne "
 "fonctionnera pas."
 
-#: ../gtk/src/Recognizer.cc:134 ../qt/src/Recognizer.cc:158
+#: ../gtk/src/Recognizer.cc:142 ../qt/src/Recognizer.cc:166
 msgid "Multilingual"
 msgstr "Multilingue"
 
-#: ../gtk/src/Recognizer.cc:198 ../qt/src/Recognizer.cc:224
+#: ../gtk/src/Recognizer.cc:169 ../qt/src/Recognizer.cc:196
+msgid "Detect script and orientation"
+msgstr "Détecter script et orientation"
+
+#: ../gtk/src/Recognizer.cc:216 ../qt/src/Recognizer.cc:243
 msgid "Recognize selection"
 msgstr "Reconnaître la sélection"
 
-#: ../gtk/src/Recognizer.cc:200 ../qt/src/Recognizer.cc:56
-#: ../qt/src/Recognizer.cc:224
+#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:57
+#: ../qt/src/Recognizer.cc:243
 msgid "Recognize all"
 msgstr "Reconnaître tout"
 
-#: ../gtk/src/Recognizer.cc:272 ../qt/src/Recognizer.cc:302
+#: ../gtk/src/Recognizer.cc:290 ../qt/src/Recognizer.cc:326
 msgid ""
 "\n"
 "\tFailed to initialize tesseract"
@@ -817,11 +821,11 @@ msgstr ""
 "\n"
 "\tImpossible de initialiser tesseract"
 
-#: ../gtk/src/Recognizer.cc:280 ../qt/src/Recognizer.cc:310
+#: ../gtk/src/Recognizer.cc:301 ../qt/src/Recognizer.cc:337
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Reconnaissance page %1 (%2 de %3)"
 
-#: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:315
+#: ../gtk/src/Recognizer.cc:306 ../qt/src/Recognizer.cc:342
 msgid ""
 "\n"
 "\tPage %1: failed to render page"
@@ -829,7 +833,7 @@ msgstr ""
 "\n"
 "\tPage %1: erreur de reconnaissance de la page"
 
-#: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:316
+#: ../gtk/src/Recognizer.cc:307 ../qt/src/Recognizer.cc:343
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -837,21 +841,21 @@ msgstr ""
 "\n"
 "[Echec de reconnaissance page %1]\n"
 
-#: ../gtk/src/Recognizer.cc:300 ../gtk/src/Recognizer.cc:321
-#: ../qt/src/Recognizer.cc:330 ../qt/src/Recognizer.cc:351
+#: ../gtk/src/Recognizer.cc:321 ../gtk/src/Recognizer.cc:342
+#: ../qt/src/Recognizer.cc:357 ../qt/src/Recognizer.cc:378
 msgid "Recognizing..."
 msgstr "Reconnaissance en cours..."
 
-#: ../gtk/src/Recognizer.cc:303 ../gtk/src/Recognizer.cc:311
-#: ../qt/src/Recognizer.cc:333 ../qt/src/Recognizer.cc:341
+#: ../gtk/src/Recognizer.cc:324 ../gtk/src/Recognizer.cc:332
+#: ../qt/src/Recognizer.cc:360 ../qt/src/Recognizer.cc:368
 msgid "Recognition errors occurred"
 msgstr "Des erreurs de reconnaissances sont apparues"
 
-#: ../gtk/src/Recognizer.cc:303 ../qt/src/Recognizer.cc:333
+#: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:360
 msgid "The following errors occurred:%1"
 msgstr "Les erreurs suivantes sont survenues:%1"
 
-#: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:341
+#: ../gtk/src/Recognizer.cc:332 ../qt/src/Recognizer.cc:368
 msgid "Failed to initialize tesseract"
 msgstr "Echec de démarrage de tesseract"
 

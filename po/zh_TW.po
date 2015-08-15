@@ -3,18 +3,21 @@
 # This file is distributed under the same license as the gImageReader package.
 #
 # Timothy Lee <timothy.ty.lee@gmail.com>, 2015.
+# Sandro Mani <manisandro@gmail.com>, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-24 13:50+0200\n"
-"PO-Revision-Date: 2015-05-10 17:14+0800\n"
-"Last-Translator: Timothy Lee <timothy.ty.lee@gmail.com>\n"
-"Language-Team: Traditional Chinese (Taiwan) <zh_TW@li.org>\n"
+"POT-Creation-Date: 2015-08-16 01:31+0200\n"
+"PO-Revision-Date: 2015-08-16 01:43+0100\n"
+"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:144
 msgid "Redetect Languages"
@@ -516,11 +519,11 @@ msgstr "視覺輔助"
 msgid "Draw whitespace"
 msgstr "繪畫空格"
 
-#: ../gtk/data/gimagereader.ui.h:114 ../qt/src/Recognizer.cc:40
+#: ../gtk/data/gimagereader.ui.h:114 ../qt/src/Recognizer.cc:41
 msgid "Current Page"
 msgstr "現時頁面"
 
-#: ../gtk/data/gimagereader.ui.h:115 ../qt/src/Recognizer.cc:43
+#: ../gtk/data/gimagereader.ui.h:115 ../qt/src/Recognizer.cc:44
 msgid "Multiple Pages..."
 msgstr "多頁……"
 
@@ -771,29 +774,34 @@ msgstr "已安裝詞典"
 msgid "The following dictionaries were installed:%1"
 msgstr "已安裝下列詞典：%1"
 
-#: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
+#: ../gtk/src/Recognizer.cc:87 ../qt/src/Recognizer.cc:105
 msgid "No languages available"
 msgstr "沒有可用語言"
 
-#: ../gtk/src/Recognizer.cc:83 ../qt/src/Recognizer.cc:101
+#: ../gtk/src/Recognizer.cc:87 ../qt/src/Recognizer.cc:105
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr "沒有可用的 tesseract 語言。辨認將會失敗。"
 
-#: ../gtk/src/Recognizer.cc:134 ../qt/src/Recognizer.cc:158
+#: ../gtk/src/Recognizer.cc:142 ../qt/src/Recognizer.cc:166
 msgid "Multilingual"
 msgstr "多語言"
 
-#: ../gtk/src/Recognizer.cc:198 ../qt/src/Recognizer.cc:224
+#: ../gtk/src/Recognizer.cc:169 ../qt/src/Recognizer.cc:196
+#, fuzzy
+msgid "Detect script and orientation"
+msgstr ""
+
+#: ../gtk/src/Recognizer.cc:216 ../qt/src/Recognizer.cc:243
 msgid "Recognize selection"
 msgstr "辨認選取區"
 
-#: ../gtk/src/Recognizer.cc:200 ../qt/src/Recognizer.cc:56
-#: ../qt/src/Recognizer.cc:224
+#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:57
+#: ../qt/src/Recognizer.cc:243
 msgid "Recognize all"
 msgstr "辨認全部"
 
-#: ../gtk/src/Recognizer.cc:272 ../qt/src/Recognizer.cc:302
+#: ../gtk/src/Recognizer.cc:290 ../qt/src/Recognizer.cc:326
 msgid ""
 "\n"
 "\tFailed to initialize tesseract"
@@ -801,11 +809,11 @@ msgstr ""
 "\n"
 "\t無法初始化 tesseract"
 
-#: ../gtk/src/Recognizer.cc:280 ../qt/src/Recognizer.cc:310
+#: ../gtk/src/Recognizer.cc:301 ../qt/src/Recognizer.cc:337
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "辨認第 %1 頁（%3 之 %2）"
 
-#: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:315
+#: ../gtk/src/Recognizer.cc:306 ../qt/src/Recognizer.cc:342
 msgid ""
 "\n"
 "\tPage %1: failed to render page"
@@ -813,7 +821,7 @@ msgstr ""
 "\n"
 "\t第 %1 頁：無法繪畫頁面"
 
-#: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:316
+#: ../gtk/src/Recognizer.cc:307 ../qt/src/Recognizer.cc:343
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -821,21 +829,21 @@ msgstr ""
 "\n"
 "[無法辨認第 %1 頁]\n"
 
-#: ../gtk/src/Recognizer.cc:300 ../gtk/src/Recognizer.cc:321
-#: ../qt/src/Recognizer.cc:330 ../qt/src/Recognizer.cc:351
+#: ../gtk/src/Recognizer.cc:321 ../gtk/src/Recognizer.cc:342
+#: ../qt/src/Recognizer.cc:357 ../qt/src/Recognizer.cc:378
 msgid "Recognizing..."
 msgstr "辨認中……"
 
-#: ../gtk/src/Recognizer.cc:303 ../gtk/src/Recognizer.cc:311
-#: ../qt/src/Recognizer.cc:333 ../qt/src/Recognizer.cc:341
+#: ../gtk/src/Recognizer.cc:324 ../gtk/src/Recognizer.cc:332
+#: ../qt/src/Recognizer.cc:360 ../qt/src/Recognizer.cc:368
 msgid "Recognition errors occurred"
 msgstr "辨認時出現錯誤"
 
-#: ../gtk/src/Recognizer.cc:303 ../qt/src/Recognizer.cc:333
+#: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:360
 msgid "The following errors occurred:%1"
 msgstr "出現下列錯誤：%1"
 
-#: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:341
+#: ../gtk/src/Recognizer.cc:332 ../qt/src/Recognizer.cc:368
 msgid "Failed to initialize tesseract"
 msgstr "無法初始化 tesseract"
 
@@ -1065,3 +1073,5 @@ msgstr ""
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Output"
 msgstr "輸出"
+
+
