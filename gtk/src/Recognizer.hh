@@ -55,6 +55,7 @@ private:
 	Gtk::RadioButtonGroup m_langMenuRadioGroup;
 	std::vector<std::pair<Gtk::CheckMenuItem*,Glib::ustring>> m_langMenuCheckGroup;
 	Gtk::RadioMenuItem* m_multilingualRadio = nullptr;
+	Gtk::CheckMenuItem* m_osdItem = nullptr;
 	Config::Lang m_curLang;
 
 	bool initTesseract(tesseract::TessBaseAPI& tess, const char* language = nullptr) const;

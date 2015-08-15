@@ -23,6 +23,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QtSpell.hpp>
+#include <cstring>
 #include <tesseract/baseapi.h>
 #include <tesseract/strngs.h>
 #include <tesseract/genericvector.h>
@@ -64,6 +65,7 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 
 	MAIN->getConfig()->addSetting(new VarSetting<QString>("language", "eng:en_EN"));
 	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", uiPageRangeDialog.comboBoxRecognitionArea, 0));
+	MAIN->getConfig()->addSetting(new VarSetting<bool>("osd", false));
 }
 
 bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* language) const
@@ -83,9 +85,11 @@ void Recognizer::updateLanguagesMenu()
 	delete m_langMenuCheckGroup;
 	m_langMenuCheckGroup = new QActionGroup(this);
 	m_langMenuCheckGroup->setExclusive(false);
+	m_osdAction = nullptr;
 	m_curLang = Config::Lang();
 	QAction* curitem = nullptr;
 	QAction* activeitem = nullptr;
+	bool haveOsd = false;
 
 	QStringList parts = MAIN->getConfig()->getSetting<VarSetting<QString>>("language")->getValue().split(":");
 	Config::Lang curlang = {parts.empty() ? "eng" : parts[0], parts.size() < 2 ? "" : parts[1], parts.size() < 3 ? "" : parts[2]};
@@ -106,6 +110,10 @@ void Recognizer::updateLanguagesMenu()
 
 	// Add menu items for languages, with spelling submenu if available
 	for(int i = 0; i < availLanguages.size(); ++i){
+		if(std::strcmp(availLanguages[i].string(), "osd") == 0){
+			haveOsd = true;
+			continue;
+		}
 		Config::Lang lang = {availLanguages[i].string(), QString(), QString()};
 		if(!MAIN->getConfig()->searchLangSpec(lang)){
 			lang.name = lang.prefix;
@@ -181,6 +189,16 @@ void Recognizer::updateLanguagesMenu()
 		activeitem = curitem;
 	}
 	activeitem->trigger();
+
+	// Add OSD item
+	if(haveOsd){
+		ui.menuLanguages->addSeparator();
+		m_osdAction = new QAction(_("Detect script and orientation"), ui.menuLanguages);
+		m_osdAction->setCheckable(true);
+		m_osdAction->setChecked(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue());
+		connect(m_osdAction, SIGNAL(toggled(bool)), this, SLOT(osdToggled(bool)));
+		ui.menuLanguages->addAction(m_osdAction);
+	}
 }
 
 void Recognizer::setLanguage()
@@ -228,6 +246,11 @@ void Recognizer::setRecognizeMode(bool haveSelection)
 void Recognizer::clearLineEditPageRangeStyle()
 {
 	qobject_cast<QLineEdit*>(QObject::sender())->setStyleSheet("");
+}
+
+void Recognizer::osdToggled(bool state)
+{
+	MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->setValue(state);
 }
 
 QList<int> Recognizer::selectPages(bool& autodetectLayout)
@@ -301,6 +324,9 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 	if(!initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())){
 		failed.append(_("\n\tFailed to initialize tesseract"));
 	}else{
+		if(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue() == true){
+			tess.SetPageSegMode(tesseract::PSM_AUTO_OSD);
+		}
 		Utils::busyTask([&]{
 			int npages = pages.size();
 			int idx = 0;

@@ -126,5 +126,10 @@
             <summary>Output directory for OCR output</summary>
 			<description>Output directory for OCR output.</description>
         </key>
+        <key type="b" name="osd">
+            <default>false</default>
+            <summary>Perform orientation and script detection</summary>
+            <description>Perform orientation and script detection.</description>
+        </key>
     </schema>
 </schemalist>

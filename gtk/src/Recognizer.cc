@@ -25,6 +25,7 @@
 #include "Utils.hh"
 
 #include <gtkspellmm.h>
+#include <cstring>
 #include <tesseract/baseapi.h>
 #include <tesseract/strngs.h>
 #include <tesseract/genericvector.h>
@@ -49,6 +50,7 @@ Recognizer::Recognizer()
 
 	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("language"));
 	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", "comboboxtext:dialog.regions"));
+	MAIN->getConfig()->addSetting(new VarSetting<bool>("osd"));
 }
 
 bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* language) const
@@ -65,9 +67,11 @@ void Recognizer::updateLanguagesMenu()
 	m_menuLanguages->foreach([this](Gtk::Widget& w){ m_menuLanguages->remove(w); });
 	m_langMenuRadioGroup = Gtk::RadioButtonGroup();
 	m_langMenuCheckGroup = std::vector<std::pair<Gtk::CheckMenuItem*, Glib::ustring>>();
+	m_osdItem = nullptr;
 	m_curLang = Config::Lang();
 	Gtk::RadioMenuItem* curitem = nullptr;
 	Gtk::RadioMenuItem* activeitem = nullptr;
+	bool haveOsd = false;
 
 	std::vector<Glib::ustring> parts = Utils::string_split(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("language")->getValue(), ':');
 	Config::Lang curlang = {parts.empty() ? "eng" : parts[0], parts.size() < 2 ? "" : parts[1]};
@@ -87,6 +91,10 @@ void Recognizer::updateLanguagesMenu()
 
 	// Add menu items for languages, with spelling submenu if available
 	for(int i = 0; i < availLanguages.size(); ++i){
+		if(std::strcmp(availLanguages[i].string(), "osd") == 0){
+			haveOsd = true;
+			continue;
+		}
 		Config::Lang lang = {availLanguages[i].string()};
 		if(!MAIN->getConfig()->searchLangSpec(lang)){
 			lang.name = lang.prefix;
@@ -154,6 +162,16 @@ void Recognizer::updateLanguagesMenu()
 	}else if(activeitem == nullptr){
 		activeitem = curitem;
 	}
+
+	// Add OSD item
+	if(haveOsd){
+		m_menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+		m_osdItem = Gtk::manage(new Gtk::CheckMenuItem(_("Detect script and orientation")));
+		m_osdItem->set_active(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue());
+		CONNECT(m_osdItem, toggled, [this]{ MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->setValue(m_osdItem->get_active()); });
+		m_menuLanguages->append(*m_osdItem);
+	}
+
 	m_menuLanguages->show_all();
 	activeitem->set_active(true);
 	activeitem->toggled(); // Ensure signal is emitted
@@ -271,6 +289,9 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 	if(!initTesseract(tess, m_curLang.prefix.c_str())){
 		failed.append(_("\n\tFailed to initialize tesseract"));
 	}else{
+		if(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue() == true){
+			tess.SetPageSegMode(tesseract::PSM_AUTO_OSD);
+		}
 		Utils::busyTask([&]{
 			int npages = pages.size();
 			int idx = 0;
