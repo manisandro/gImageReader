@@ -230,7 +230,8 @@ void Recognizer::setMultiLanguage()
 	if(langs.isEmpty()) {
 		langs = "eng+";
 	}
-	m_langLabel = langs.left(langs.length() - 1);
+	langs = langs.left(langs.length() - 1);
+	m_langLabel = langs;
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 	m_curLang = {langs, "", "Multilingual"};
 	MAIN->getConfig()->getSetting<VarSetting<QString>>("language")->setValue(langs + ":");
