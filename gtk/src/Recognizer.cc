@@ -30,6 +30,38 @@
 #include <tesseract/strngs.h>
 #include <tesseract/genericvector.h>
 
+class Recognizer::MultilingualMenuItem : public Gtk::RadioMenuItem
+{
+public:
+	MultilingualMenuItem(Group& groupx, const Glib::ustring& label)
+		: Gtk::RadioMenuItem(groupx, label)
+	{
+		CONNECT(this, select, [this]{
+			if(!m_selected){
+				m_ignoreNextActivate = true;
+			}
+			m_selected = true;
+		});
+		CONNECT(this, deselect, [this]{
+			m_selected = false;
+			m_ignoreNextActivate = false;
+		});
+		this->signal_button_press_event().connect([this](GdkEventButton* /*ev*/){ set_active(true); return true; }, false);
+	}
+
+protected:
+	void on_activate() override{
+		if(!m_ignoreNextActivate){
+			Gtk::RadioMenuItem::on_activate();
+		}
+		m_ignoreNextActivate = false;
+	}
+
+private:
+	bool m_selected = false;
+	bool m_ignoreNextActivate = false;
+};
+
 Recognizer::Recognizer()
 {
 	m_menuPages = Builder("menu:recognize.pages");
@@ -139,7 +171,7 @@ void Recognizer::updateLanguagesMenu()
 	}
 	// Add multilanguage menu
 	m_menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
-	m_multilingualRadio = Gtk::manage(new Gtk::RadioMenuItem(m_langMenuRadioGroup, _("Multilingual")));
+	m_multilingualRadio = Gtk::manage(new MultilingualMenuItem(m_langMenuRadioGroup, _("Multilingual")));
 	Gtk::Menu* submenu = Gtk::manage(new Gtk::Menu);
 	bool isMultilingual = curlang.prefix.find('+') != curlang.prefix.npos;
 	std::vector<Glib::ustring> sellangs = Utils::string_split(curlang.prefix, '+');
@@ -158,6 +190,9 @@ void Recognizer::updateLanguagesMenu()
 		m_langMenuCheckGroup.push_back(std::make_pair(item, lang.prefix));
 	}
 	m_multilingualRadio->set_submenu(*submenu);
+	CONNECT(m_multilingualRadio, toggled, [this]{ if(m_multilingualRadio->get_active()) setMultiLanguage(); });
+	CONNECT(submenu, button_press_event, [this](GdkEventButton* ev){ return onMultilingualMenuButtonEvent(ev); }, false);
+	CONNECT(submenu, button_release_event, [this](GdkEventButton* ev){ return onMultilingualMenuButtonEvent(ev); }, false);
 	m_menuLanguages->append(*m_multilingualRadio);
 	if(isMultilingual){
 		activeitem = m_multilingualRadio;
@@ -358,4 +393,22 @@ bool Recognizer::setPage(int page, bool autodetectLayout)
 		MAIN->getDisplayer()->autodetectLayout();
 	}
 	return success;
+}
+
+bool Recognizer::onMultilingualMenuButtonEvent(GdkEventButton* ev)
+{
+	Gtk::Allocation alloc = m_multilingualRadio->get_allocation();
+	int radio_x_root, radio_y_root;
+	m_multilingualRadio->get_window()->get_root_coords(alloc.get_x(), alloc.get_y(), radio_x_root, radio_y_root);
+
+	if(ev->x_root >= radio_x_root && ev->x_root <= radio_x_root + alloc.get_width() &&
+	   ev->y_root >= radio_y_root && ev->y_root <= radio_y_root + alloc.get_height())
+	{
+		if(ev->type == GDK_BUTTON_PRESS)
+		{
+			m_multilingualRadio->set_active(true);
+		}
+		return true;
+	}
+	return false;
 }

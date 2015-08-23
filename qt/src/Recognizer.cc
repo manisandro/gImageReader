@@ -27,6 +27,7 @@
 #include <tesseract/baseapi.h>
 #include <tesseract/strngs.h>
 #include <tesseract/genericvector.h>
+#include <QMouseEvent>
 
 #include "Displayer.hh"
 #include "MainWindow.hh"
@@ -34,6 +35,7 @@
 #include "Recognizer.hh"
 #include "Utils.hh"
 #include "ui_PageRangeDialog.h"
+
 
 Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	ui(_ui)
@@ -57,6 +59,7 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	m_modeLabel = _("Recognize all");
 
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
+	ui.menuLanguages->installEventFilter(this);
 
 	connect(ui.toolButtonRecognize, SIGNAL(clicked()), this, SLOT(recognizeButtonClicked()));
 	connect(currentPageAction, SIGNAL(triggered()), this, SLOT(recognizeCurrentPage()));
@@ -399,4 +402,22 @@ bool Recognizer::setPage(int page, bool autodetectLayout)
 void Recognizer::addText(const QString& text, bool insertText)
 {
 	MAIN->getOutputManager()->addText(text, insertText);
+}
+
+bool Recognizer::eventFilter(QObject* obj, QEvent* ev)
+{
+	if(obj == ui.menuLanguages && ev->type() == QEvent::MouseButtonPress)
+	{
+		QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(ev);
+		if(ui.menuLanguages->actionAt(mouseEvent->pos()) == m_multilingualAction)
+		{
+			m_multilingualAction->toggle();
+			if(m_multilingualAction->isChecked())
+			{
+				setMultiLanguage();
+			}
+			return true;
+		}
+	}
+	return QObject::eventFilter(obj, ev);
 }

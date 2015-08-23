@@ -40,6 +40,8 @@ public:
 	sigc::signal<void,Config::Lang> signal_languageChanged() const{ return m_signal_languageChanged; }
 
 private:
+	class MultilingualMenuItem;
+
 	enum class PageArea { EntirePage, Autodetect };
 	enum class TaskState { Waiting, Succeeded, Failed };
 
@@ -54,7 +56,7 @@ private:
 	sigc::signal<void,Config::Lang> m_signal_languageChanged;
 	Gtk::RadioButtonGroup m_langMenuRadioGroup;
 	std::vector<std::pair<Gtk::CheckMenuItem*,Glib::ustring>> m_langMenuCheckGroup;
-	Gtk::RadioMenuItem* m_multilingualRadio = nullptr;
+	MultilingualMenuItem* m_multilingualRadio = nullptr;
 	Gtk::CheckMenuItem* m_osdItem = nullptr;
 	Config::Lang m_curLang;
 
@@ -67,6 +69,7 @@ private:
 	void setLanguage(const Gtk::RadioMenuItem *item, const Config::Lang& lang);
 	void setMultiLanguage();
 	bool setPage(int page, bool autodetectLayout);
+	bool onMultilingualMenuButtonEvent(GdkEventButton* ev);
 };
 
 #endif // RECOGNIZER_HH
