@@ -79,7 +79,7 @@ OutputManager::OutputManager(const UI_MainWindow& _ui)
 	connect(ui.pushButtonOutputReplacementList, SIGNAL(clicked()), m_substitutionsManager, SLOT(raise()));
 	connect(ui.actionOutputPostprocDrawWhitespace, SIGNAL(toggled(bool)), ui.plainTextEditOutput, SLOT(setDrawWhitespace(bool)));
 
-	MAIN->getConfig()->addSetting(new ActionSetting("keepdot", ui.actionOutputPostprocKeepDot, true));
+	MAIN->getConfig()->addSetting(new ActionSetting("keepdot", ui.actionOutputPostprocKeepEndMark, true));
 	MAIN->getConfig()->addSetting(new ActionSetting("keepquote", ui.actionOutputPostprocKeepQuote));
 	MAIN->getConfig()->addSetting(new ActionSetting("joinhyphen", ui.actionOutputPostprocJoinHyphen, true));
 	MAIN->getConfig()->addSetting(new ActionSetting("joinspace", ui.actionOutputPostprocCollapseSpaces, true));
@@ -132,8 +132,8 @@ void OutputManager::filterBuffer()
 		if(ui.actionOutputPostprocKeepParagraphs->isChecked()){
 			preChars += "\u2029"; // Keep if preceded by line break
 		}
-		if(ui.actionOutputPostprocKeepDot->isChecked()){
-			preChars += "\\."; // Keep if preceded by dot
+		if(ui.actionOutputPostprocKeepEndMark->isChecked()){
+			preChars += "\\.\\?!"; // Keep if preceded by end mark (.?!)
 		}
 		if(ui.actionOutputPostprocKeepQuote->isChecked()){
 			preChars += "'\""; // Keep if preceded by dot

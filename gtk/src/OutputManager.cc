@@ -43,7 +43,7 @@ OutputManager::OutputManager()
 	m_textView = Builder("textview:output");
 	m_searchEntry = Builder("entry:output.search");
 	m_replaceEntry = Builder("entry:output.replace");
-	m_filterKeepIfDot = Builder("menuitem:output.stripcrlf.keepdot");
+	m_filterKeepIfEndMark = Builder("menuitem:output.stripcrlf.keependmark");
 	m_filterKeepIfQuote = Builder("menuitem:output.stripcrlf.keepquote");
 	m_filterJoinHyphen = Builder("menuitem:output.stripcrlf.joinhyphen");
 	m_filterJoinSpace = Builder("menuitem:output.stripcrlf.joinspace");
@@ -106,7 +106,7 @@ OutputManager::OutputManager()
 	CONNECTP(m_textBuffer, cursor_position, [this]{ m_textBuffer->save_region_bounds(m_textView->is_focus()); });
 	CONNECTP(m_textBuffer, has_selection, [this]{ m_textBuffer->save_region_bounds(m_textView->is_focus()); });
 
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepdot", "menuitem:output.stripcrlf.keepdot"));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepdot", "menuitem:output.stripcrlf.keependmark"));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepquote", "menuitem:output.stripcrlf.keepquote"));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinhyphen", "menuitem:output.stripcrlf.joinhyphen"));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinspace", "menuitem:output.stripcrlf.joinspace"));
@@ -171,8 +171,8 @@ void OutputManager::filterBuffer()
 		if(m_filterKeepParagraphs->get_active()){
 			preChars += "\\n"; // Keep if preceded by line break
 		}
-		if(m_filterKeepIfDot->get_active()){
-			preChars += "\\."; // Keep if preceded by dot
+		if(m_filterKeepIfEndMark->get_active()){
+			preChars += "\\.\\?!"; // Keep if preceded by end mark (.?!)
 		}
 		if(m_filterKeepIfQuote->get_active()){
 			preChars += "'\""; // Keep if preceded by dot

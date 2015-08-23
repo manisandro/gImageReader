@@ -19,7 +19,7 @@ public:
 	QAction* actionOutputReplace;
 	QAction* actionOutputSave;
 	QAction* actionOutputPostprocTitle1;
-	QAction* actionOutputPostprocKeepDot;
+	QAction* actionOutputPostprocKeepEndMark;
 	QAction* actionOutputPostprocKeepQuote;
 	QAction* actionOutputPostprocTitle2;
 	QAction* actionOutputPostprocJoinHyphen;
@@ -213,8 +213,8 @@ public:
 		// Output postprocessing
 		actionOutputPostprocTitle1 = new QAction(gettext("Keep line break if..."), MainWindow);
 		actionOutputPostprocTitle1->setEnabled(false);
-		actionOutputPostprocKeepDot = new QAction(gettext("Preceded by dot"), MainWindow);
-		actionOutputPostprocKeepDot->setCheckable(true);
+		actionOutputPostprocKeepEndMark = new QAction(gettext("Preceded by end mark (.?!)"), MainWindow);
+		actionOutputPostprocKeepEndMark->setCheckable(true);
 		actionOutputPostprocKeepQuote = new QAction(gettext("Preceded or succeeded by quote"), MainWindow);
 		actionOutputPostprocKeepQuote->setCheckable(true);
 		actionOutputPostprocTitle2 = new QAction(gettext("Other options"), MainWindow);
@@ -232,7 +232,7 @@ public:
 
 		menuOutputPostproc = new QMenu(MainWindow);
 		menuOutputPostproc->addAction(actionOutputPostprocTitle1);
-		menuOutputPostproc->addAction(actionOutputPostprocKeepDot);
+		menuOutputPostproc->addAction(actionOutputPostprocKeepEndMark);
 		menuOutputPostproc->addAction(actionOutputPostprocKeepQuote);
 		menuOutputPostproc->addAction(actionOutputPostprocTitle2);
 		menuOutputPostproc->addAction(actionOutputPostprocJoinHyphen);

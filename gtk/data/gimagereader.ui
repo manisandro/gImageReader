@@ -2515,10 +2515,10 @@ Swedish: Mats Olofsson &lt;mats.olofsson@bokforlaget-alerta.se&gt;</property>
       </object>
     </child>
     <child>
-      <object class="GtkCheckMenuItem" id="menuitem:output.stripcrlf.keepdot">
+      <object class="GtkCheckMenuItem" id="menuitem:output.stripcrlf.keependmark">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Preceded by dot</property>
+        <property name="label" translatable="yes">Preceded by end mark (.?!)</property>
         <property name="use_underline">True</property>
       </object>
     </child>

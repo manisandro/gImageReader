@@ -52,7 +52,7 @@ private:
 	Gsv::View* m_textView;
 	Gtk::Entry* m_searchEntry;
 	Gtk::Entry* m_replaceEntry;
-	Gtk::CheckMenuItem* m_filterKeepIfDot;
+	Gtk::CheckMenuItem* m_filterKeepIfEndMark;
 	Gtk::CheckMenuItem* m_filterKeepIfQuote;
 	Gtk::CheckMenuItem* m_filterJoinHyphen;
 	Gtk::CheckMenuItem* m_filterJoinSpace;
