@@ -89,6 +89,7 @@ void Recognizer::updateLanguagesMenu()
 	m_langMenuCheckGroup = new QActionGroup(this);
 	m_langMenuCheckGroup->setExclusive(false);
 	m_osdAction = nullptr;
+	m_menuMultilanguage = nullptr;
 	m_curLang = Config::Lang();
 	QAction* curitem = nullptr;
 	QAction* activeitem = nullptr;
@@ -168,7 +169,7 @@ void Recognizer::updateLanguagesMenu()
 	ui.menuLanguages->addSeparator();
 	m_multilingualAction = new QAction(_("Multilingual"), m_langMenuRadioGroup);
 	m_multilingualAction->setCheckable(true);
-	QMenu* submenu = new QMenu();
+	m_menuMultilanguage = new QMenu();
 	bool isMultilingual = curlang.prefix.contains('+');
 	QStringList sellangs = curlang.prefix.split('+', QString::SkipEmptyParts);
 	for(int i = 0; i < availLanguages.size(); ++i){
@@ -184,9 +185,10 @@ void Recognizer::updateLanguagesMenu()
 		item->setData(QVariant::fromValue(lang.prefix));
 		item->setChecked(isMultilingual && sellangs.contains(lang.prefix));
 		connect(item, SIGNAL(triggered()), this, SLOT(setMultiLanguage()));
-		submenu->addAction(item);
+		m_menuMultilanguage->addAction(item);
 	}
-	m_multilingualAction->setMenu(submenu);
+	m_menuMultilanguage->installEventFilter(this);
+	m_multilingualAction->setMenu(m_menuMultilanguage);
 	ui.menuLanguages->addAction(m_multilingualAction);
 	if(isMultilingual){
 		activeitem = m_multilingualAction;
@@ -406,15 +408,21 @@ void Recognizer::addText(const QString& text, bool insertText)
 
 bool Recognizer::eventFilter(QObject* obj, QEvent* ev)
 {
-	if(obj == ui.menuLanguages && ev->type() == QEvent::MouseButtonPress)
-	{
+	if(obj == ui.menuLanguages && ev->type() == QEvent::MouseButtonPress) {
 		QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(ev);
-		if(ui.menuLanguages->actionAt(mouseEvent->pos()) == m_multilingualAction)
-		{
+		if(ui.menuLanguages->actionAt(mouseEvent->pos()) == m_multilingualAction) {
 			m_multilingualAction->toggle();
-			if(m_multilingualAction->isChecked())
-			{
+			if(m_multilingualAction->isChecked()) {
 				setMultiLanguage();
+			}
+			return true;
+		}
+	} else if(obj == m_menuMultilanguage && (ev->type() == QEvent::MouseButtonPress || ev->type() == QEvent::MouseButtonRelease)) {
+		QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(ev);
+		QAction* action = m_menuMultilanguage->actionAt(mouseEvent->pos());
+		if(action) {
+			if(ev->type() == QEvent::MouseButtonRelease) {
+				action->trigger();
 			}
 			return true;
 		}

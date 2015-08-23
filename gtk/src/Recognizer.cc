@@ -185,7 +185,9 @@ void Recognizer::updateLanguagesMenu()
 		}
 		Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(lang.name));
 		item->set_active(isMultilingual && std::find(sellangs.begin(), sellangs.end(), lang.prefix) != sellangs.end());
-		CONNECT(item, toggled, [this]{ setMultiLanguage(); });
+		CONNECT(item, button_press_event, [this,item](GdkEventButton* ev){ return onMultilingualItemButtonEvent(ev, item); }, false);
+		CONNECT(item, button_release_event, [this,item](GdkEventButton* ev){ return onMultilingualItemButtonEvent(ev, item); }, false);
+//		CONNECT(item, toggled, [this]{ setMultiLanguage(); });
 		submenu->append(*item);
 		m_langMenuCheckGroup.push_back(std::make_pair(item, lang.prefix));
 	}
@@ -407,6 +409,25 @@ bool Recognizer::onMultilingualMenuButtonEvent(GdkEventButton* ev)
 		if(ev->type == GDK_BUTTON_PRESS)
 		{
 			m_multilingualRadio->set_active(true);
+		}
+		return true;
+	}
+	return false;
+}
+
+bool Recognizer::onMultilingualItemButtonEvent(GdkEventButton* ev, Gtk::CheckMenuItem* item)
+{
+	Gtk::Allocation alloc = item->get_allocation();
+	int item_x_root, item_y_root;
+	item->get_window()->get_root_coords(alloc.get_x(), alloc.get_y(), item_x_root, item_y_root);
+
+	if(ev->x_root >= item_x_root && ev->x_root <= item_x_root + alloc.get_width() &&
+	   ev->y_root >= item_y_root && ev->y_root <= item_y_root + alloc.get_height())
+	{
+		if(ev->type == GDK_BUTTON_RELEASE)
+		{
+			item->set_active(!item->get_active());
+			setMultiLanguage();
 		}
 		return true;
 	}

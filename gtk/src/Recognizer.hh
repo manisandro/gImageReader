@@ -70,6 +70,7 @@ private:
 	void setMultiLanguage();
 	bool setPage(int page, bool autodetectLayout);
 	bool onMultilingualMenuButtonEvent(GdkEventButton* ev);
+	bool onMultilingualItemButtonEvent(GdkEventButton* ev, Gtk::CheckMenuItem* item);
 };
 
 #endif // RECOGNIZER_HH

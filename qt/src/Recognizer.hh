@@ -49,7 +49,8 @@ private:
 	enum class PageArea { EntirePage, Autodetect };
 
 	const UI_MainWindow& ui;
-	QMenu* m_menuPages;
+	QMenu* m_menuPages = nullptr;
+	QMenu* m_menuMultilanguage = nullptr;
 	QDialog* m_pagesDialog;
 	QLineEdit* m_pagesLineEdit;
 	QComboBox* m_pageAreaComboBox;
