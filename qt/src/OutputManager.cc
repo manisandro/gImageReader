@@ -122,6 +122,9 @@ void OutputManager::filterBuffer()
 	QString txt = cursor.selectedText();
 
 	Utils::busyTask([this,&txt]{
+		// Always remove trailing whitespace
+		txt.replace(QRegExp("\\s+\u2029"), "\u2029");
+
 		if(ui.actionOutputPostprocJoinHyphen->isChecked()){
 			txt.replace(QRegExp("-\\s*\u2029\\s*"), "");
 		}

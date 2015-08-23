@@ -161,6 +161,9 @@ void OutputManager::filterBuffer()
 	Glib::ustring txt = m_textBuffer->get_text(start, end);
 
 	Utils::busyTask([this,&txt]{
+		// Always remove trailing whitespace
+		txt = Glib::Regex::create("\\s+\\n")->replace(txt, 0, "\\n", static_cast<Glib::RegexMatchFlags>(0));
+
 		if(m_filterJoinHyphen->get_active()){
 			txt = Glib::Regex::create("-\\s*\n\\s*")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags>(0));
 		}
