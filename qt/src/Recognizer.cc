@@ -169,6 +169,9 @@ void Recognizer::updateLanguagesMenu()
 	bool isMultilingual = curlang.prefix.contains('+');
 	QStringList sellangs = curlang.prefix.split('+', QString::SkipEmptyParts);
 	for(int i = 0; i < availLanguages.size(); ++i){
+		if(std::strcmp(availLanguages[i].string(), "osd") == 0){
+			continue;
+		}
 		Config::Lang lang = {availLanguages[i].string(), "", ""};
 		if(!MAIN->getConfig()->searchLangSpec(lang)){
 			lang.name = lang.prefix;

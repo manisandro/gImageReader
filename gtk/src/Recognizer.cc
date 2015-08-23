@@ -144,6 +144,9 @@ void Recognizer::updateLanguagesMenu()
 	bool isMultilingual = curlang.prefix.find('+') != curlang.prefix.npos;
 	std::vector<Glib::ustring> sellangs = Utils::string_split(curlang.prefix, '+');
 	for(int i = 0; i < availLanguages.size(); ++i){
+		if(std::strcmp(availLanguages[i].string(), "osd") == 0){
+			continue;
+		}
 		Config::Lang lang = {availLanguages[i].string()};
 		if(!MAIN->getConfig()->searchLangSpec(lang)){
 			lang.name = lang.prefix;
