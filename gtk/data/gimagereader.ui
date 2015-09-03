@@ -1585,7 +1585,8 @@ Italian: Sandro Mani &lt;manisandro@gmail.com&gt;
 Portuguese (BR): André Alencar &lt;andre.tre@gmail.com&gt;, Felipe Braga &lt;fbobraga@gmail.com&gt;
 Russian: Oleg Moiseichuk &lt;berroll@mail.ru&gt;
 Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;
-Swedish: Mats Olofsson &lt;mats.olofsson@bokforlaget-alerta.se&gt;</property>
+Swedish: Mats Olofsson &lt;mats.olofsson@bokforlaget-alerta.se&gt;
+Turkish: Necdet Yucel &lt;necdetyucel@gmail.com&gt;</property>
     <property name="logo_icon_name">gimagereader</property>
     <property name="license_type">gpl-3-0</property>
     <child internal-child="vbox">
