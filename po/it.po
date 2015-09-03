@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-16 01:31+0200\n"
-"PO-Revision-Date: 2015-08-16 01:40+0100\n"
+"POT-Creation-Date: 2015-09-03 23:40+0200\n"
+"PO-Revision-Date: 2015-09-03 23:40+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-doc@kde.org>\n"
 "Language: it\n"
@@ -29,8 +29,8 @@ msgid "Preferences"
 msgstr "Preferenze"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:69
-#: ../gtk/src/OutputManager.cc:422 ../qt/src/OutputManager.cc:358
-#: ../qt/src/Ui_MainWindow.hh:152
+#: ../gtk/src/OutputManager.cc:425 ../qt/src/OutputEditorText.cc:378
+#: ../qt/src/OutputManager.cc:362 ../qt/src/Ui_MainWindow.hh:152
 msgid "Help"
 msgstr "Aiuto"
 
@@ -493,8 +493,8 @@ msgid "Keep line break if..."
 msgstr "Tenere interruzioni di riga se..."
 
 #: ../gtk/data/gimagereader.ui.h:106 ../qt/src/Ui_MainWindow.hh:216
-msgid "Preceded by dot"
-msgstr "Preceduto da un punto"
+msgid "Preceded by end mark (.?!)"
+msgstr "Preceduto da punteggiatura di fine periodo (.?!)"
 
 #: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Ui_MainWindow.hh:218
 msgid "Preceded or succeeded by quote"
@@ -524,11 +524,11 @@ msgstr "Aiuti visuali"
 msgid "Draw whitespace"
 msgstr "Disegnare spazi bianchi"
 
-#: ../gtk/data/gimagereader.ui.h:114 ../qt/src/Recognizer.cc:41
+#: ../gtk/data/gimagereader.ui.h:114 ../qt/src/Recognizer.cc:43
 msgid "Current Page"
 msgstr "Pagina corrente"
 
-#: ../gtk/data/gimagereader.ui.h:115 ../qt/src/Recognizer.cc:44
+#: ../gtk/data/gimagereader.ui.h:115 ../qt/src/Recognizer.cc:46
 msgid "Multiple Pages..."
 msgstr "Più pagine..."
 
@@ -680,137 +680,158 @@ msgstr "Novità"
 msgid "Don't notify again"
 msgstr "Non notificare nuovamente"
 
-#: ../gtk/src/OutputManager.cc:194 ../qt/src/OutputManager.cc:154
+#: ../gtk/src/OutputManager.cc:197 ../qt/src/OutputEditorText.cc:158
+#: ../qt/src/OutputManager.cc:158
 msgid "Stripping line breaks..."
 msgstr "Rimuovendo interruzioni di riga..."
 
-#: ../gtk/src/OutputManager.cc:210 ../qt/src/OutputManager.cc:178
+#: ../gtk/src/OutputManager.cc:213 ../qt/src/OutputEditorText.cc:182
+#: ../qt/src/OutputManager.cc:182
 msgid "Replacing..."
 msgstr "Sostituendo..."
 
-#: ../gtk/src/OutputManager.cc:302
+#: ../gtk/src/OutputManager.cc:305
 msgid "Check spelling"
 msgstr "Controllo ortografico"
 
-#: ../gtk/src/OutputManager.cc:341 ../qt/src/OutputManager.cc:297
+#: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputEditorText.cc:317
+#: ../qt/src/OutputManager.cc:301
 msgid "output"
 msgstr "output"
 
-#: ../gtk/src/OutputManager.cc:345 ../qt/src/OutputManager.cc:299
+#: ../gtk/src/OutputManager.cc:348 ../qt/src/OutputEditorText.cc:319
+#: ../qt/src/OutputManager.cc:303
 msgid "Text Files"
 msgstr "File di testo"
 
-#: ../gtk/src/OutputManager.cc:346 ../qt/src/OutputManager.cc:299
+#: ../gtk/src/OutputManager.cc:349 ../qt/src/OutputEditorText.cc:319
+#: ../qt/src/OutputManager.cc:303
 msgid "Save Output..."
 msgstr "Salvare output..."
 
-#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:307
+#: ../gtk/src/OutputManager.cc:357 ../qt/src/OutputEditorText.cc:327
+#: ../qt/src/OutputManager.cc:311
 msgid "Failed to save output"
 msgstr "Impossibile salvare output"
 
-#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:307
+#: ../gtk/src/OutputManager.cc:357 ../qt/src/OutputEditorText.cc:327
+#: ../qt/src/OutputManager.cc:311
 msgid "Check that you have writing permissions in the selected folder."
 msgstr ""
 "Verificare che l'utente abbia permessi di scrittura nella cartella "
 "selezionata."
 
-#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:321
+#: ../gtk/src/OutputManager.cc:372 ../qt/src/OutputEditorText.cc:341
+#: ../qt/src/OutputManager.cc:325
 msgid "Output not saved"
 msgstr "Output non salvato"
 
-#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:321
+#: ../gtk/src/OutputManager.cc:372 ../qt/src/OutputEditorText.cc:341
+#: ../qt/src/OutputManager.cc:325
 msgid "Save output before proceeding?"
 msgstr "Salvare output prima di continuare?"
 
-#: ../gtk/src/OutputManager.cc:404
+#: ../gtk/src/OutputManager.cc:407
 msgid "en_US"
 msgstr "it_IT"
 
-#: ../gtk/src/OutputManager.cc:412 ../qt/src/OutputManager.cc:350
+#: ../gtk/src/OutputManager.cc:415 ../qt/src/OutputEditorText.cc:370
+#: ../qt/src/OutputManager.cc:354
 msgid "Don't show again"
 msgstr "Non mostrare nuovamente"
 
-#: ../gtk/src/OutputManager.cc:420 ../gtk/src/OutputManager.cc:426
-#: ../qt/src/OutputManager.cc:351
+#: ../gtk/src/OutputManager.cc:423 ../gtk/src/OutputManager.cc:429
+#: ../qt/src/OutputEditorText.cc:371 ../qt/src/OutputManager.cc:355
 msgid "Install"
 msgstr "Installare"
 
-#: ../gtk/src/OutputManager.cc:428 ../qt/src/OutputManager.cc:362
+#: ../gtk/src/OutputManager.cc:431 ../qt/src/OutputEditorText.cc:382
+#: ../qt/src/OutputManager.cc:366
 msgid "Spelling dictionary missing"
 msgstr "Dizionario ortografico mancante"
 
-#: ../gtk/src/OutputManager.cc:428 ../qt/src/OutputManager.cc:362
+#: ../gtk/src/OutputManager.cc:431 ../qt/src/OutputEditorText.cc:382
+#: ../qt/src/OutputManager.cc:366
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Il dizionario ortografico per %1 non è installato"
 
-#: ../gtk/src/OutputManager.cc:437 ../gtk/src/OutputManager.cc:460
-#: ../qt/src/OutputManager.cc:371
+#: ../gtk/src/OutputManager.cc:440 ../gtk/src/OutputManager.cc:463
+#: ../qt/src/OutputEditorText.cc:391 ../qt/src/OutputManager.cc:375
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Installando il dizionario ortografico per '%1'"
 
-#: ../gtk/src/OutputManager.cc:452 ../gtk/src/OutputManager.cc:468
-#: ../gtk/src/OutputManager.cc:478 ../gtk/src/OutputManager.cc:484
-#: ../gtk/src/OutputManager.cc:513 ../qt/src/OutputManager.cc:384
-#: ../qt/src/OutputManager.cc:394 ../qt/src/OutputManager.cc:402
-#: ../qt/src/OutputManager.cc:430 ../qt/src/OutputManager.cc:446
+#: ../gtk/src/OutputManager.cc:455 ../gtk/src/OutputManager.cc:471
+#: ../gtk/src/OutputManager.cc:481 ../gtk/src/OutputManager.cc:487
+#: ../gtk/src/OutputManager.cc:516 ../qt/src/OutputEditorText.cc:404
+#: ../qt/src/OutputEditorText.cc:414 ../qt/src/OutputEditorText.cc:422
+#: ../qt/src/OutputEditorText.cc:450 ../qt/src/OutputEditorText.cc:466
+#: ../qt/src/OutputManager.cc:388 ../qt/src/OutputManager.cc:398
+#: ../qt/src/OutputManager.cc:406 ../qt/src/OutputManager.cc:434
+#: ../qt/src/OutputManager.cc:450
 msgid "Error"
 msgstr "Errore"
 
-#: ../gtk/src/OutputManager.cc:452 ../qt/src/OutputManager.cc:446
+#: ../gtk/src/OutputManager.cc:455 ../qt/src/OutputEditorText.cc:466
+#: ../qt/src/OutputManager.cc:450
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Installazione del dizionario ortografico fallita: %1"
 
-#: ../gtk/src/OutputManager.cc:468 ../gtk/src/OutputManager.cc:484
-#: ../qt/src/OutputManager.cc:384 ../qt/src/OutputManager.cc:402
+#: ../gtk/src/OutputManager.cc:471 ../gtk/src/OutputManager.cc:487
+#: ../qt/src/OutputEditorText.cc:404 ../qt/src/OutputEditorText.cc:422
+#: ../qt/src/OutputManager.cc:388 ../qt/src/OutputManager.cc:406
 msgid "Could not read %1."
 msgstr "Impossibile leggere %1."
 
-#: ../gtk/src/OutputManager.cc:478 ../gtk/src/OutputManager.cc:513
-#: ../qt/src/OutputManager.cc:394 ../qt/src/OutputManager.cc:430
+#: ../gtk/src/OutputManager.cc:481 ../gtk/src/OutputManager.cc:516
+#: ../qt/src/OutputEditorText.cc:414 ../qt/src/OutputEditorText.cc:450
+#: ../qt/src/OutputManager.cc:398 ../qt/src/OutputManager.cc:434
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Nessun dizionario ortografico trovato per '%1'."
 
-#: ../gtk/src/OutputManager.cc:494 ../qt/src/OutputManager.cc:413
+#: ../gtk/src/OutputManager.cc:497 ../qt/src/OutputEditorText.cc:433
+#: ../qt/src/OutputManager.cc:417
 msgid "Downloading '%1'..."
 msgstr "Scaricando '%1'..."
 
-#: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:427
+#: ../gtk/src/OutputManager.cc:513 ../qt/src/OutputEditorText.cc:447
+#: ../qt/src/OutputManager.cc:431
 msgid "Dictionaries installed"
 msgstr "Dizionari ortografici installati"
 
-#: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:427
+#: ../gtk/src/OutputManager.cc:513 ../qt/src/OutputEditorText.cc:447
+#: ../qt/src/OutputManager.cc:431
 msgid "The following dictionaries were installed:%1"
 msgstr "I seguenti dizionari ortografici sono stati installati:%1"
 
-#: ../gtk/src/Recognizer.cc:87 ../qt/src/Recognizer.cc:105
+#: ../gtk/src/Recognizer.cc:119 ../qt/src/Recognizer.cc:109
 msgid "No languages available"
 msgstr "Nessuna lingua disponibile"
 
-#: ../gtk/src/Recognizer.cc:87 ../qt/src/Recognizer.cc:105
+#: ../gtk/src/Recognizer.cc:119 ../qt/src/Recognizer.cc:109
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
 "Nessuna lingua tesseract è disponibile. Ricognizione OCR non sarà "
 "disponibile."
 
-#: ../gtk/src/Recognizer.cc:142 ../qt/src/Recognizer.cc:166
+#: ../gtk/src/Recognizer.cc:174 ../qt/src/Recognizer.cc:170
 msgid "Multilingual"
 msgstr "Più lingue"
 
-#: ../gtk/src/Recognizer.cc:169 ../qt/src/Recognizer.cc:196
+#: ../gtk/src/Recognizer.cc:209 ../qt/src/Recognizer.cc:204
 msgid "Detect script and orientation"
 msgstr "Rilevare script e orientamento"
 
-#: ../gtk/src/Recognizer.cc:216 ../qt/src/Recognizer.cc:243
+#: ../gtk/src/Recognizer.cc:256 ../qt/src/Recognizer.cc:251
 msgid "Recognize selection"
 msgstr "Riconoscere selezione"
 
-#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:57
-#: ../qt/src/Recognizer.cc:243
+#: ../gtk/src/Recognizer.cc:258 ../qt/src/Recognizer.cc:59
+#: ../qt/src/Recognizer.cc:251
 msgid "Recognize all"
 msgstr "Riconoscere tutto"
 
-#: ../gtk/src/Recognizer.cc:290 ../qt/src/Recognizer.cc:326
+#: ../gtk/src/Recognizer.cc:330 ../qt/src/Recognizer.cc:334
 msgid ""
 "\n"
 "\tFailed to initialize tesseract"
@@ -818,11 +839,11 @@ msgstr ""
 "\n"
 "\tInizializzazione di tesseract fallita"
 
-#: ../gtk/src/Recognizer.cc:301 ../qt/src/Recognizer.cc:337
+#: ../gtk/src/Recognizer.cc:341 ../qt/src/Recognizer.cc:345
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Ricognizione della pagina %1 (%2 di %3)"
 
-#: ../gtk/src/Recognizer.cc:306 ../qt/src/Recognizer.cc:342
+#: ../gtk/src/Recognizer.cc:346 ../qt/src/Recognizer.cc:350
 msgid ""
 "\n"
 "\tPage %1: failed to render page"
@@ -830,7 +851,7 @@ msgstr ""
 "\n"
 "\tPagina %1: impossibile renderizzare pagina"
 
-#: ../gtk/src/Recognizer.cc:307 ../qt/src/Recognizer.cc:343
+#: ../gtk/src/Recognizer.cc:347 ../qt/src/Recognizer.cc:351
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -838,21 +859,21 @@ msgstr ""
 "\n"
 "[Ricognizione della pagina %1 fallita]\n"
 
-#: ../gtk/src/Recognizer.cc:321 ../gtk/src/Recognizer.cc:342
-#: ../qt/src/Recognizer.cc:357 ../qt/src/Recognizer.cc:378
+#: ../gtk/src/Recognizer.cc:361 ../gtk/src/Recognizer.cc:382
+#: ../qt/src/Recognizer.cc:365 ../qt/src/Recognizer.cc:386
 msgid "Recognizing..."
 msgstr "Eseguendo ricognizione..."
 
-#: ../gtk/src/Recognizer.cc:324 ../gtk/src/Recognizer.cc:332
-#: ../qt/src/Recognizer.cc:360 ../qt/src/Recognizer.cc:368
+#: ../gtk/src/Recognizer.cc:364 ../gtk/src/Recognizer.cc:372
+#: ../qt/src/Recognizer.cc:368 ../qt/src/Recognizer.cc:376
 msgid "Recognition errors occurred"
 msgstr "Vi sono stati errori di ricognizione"
 
-#: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:360
+#: ../gtk/src/Recognizer.cc:364 ../qt/src/Recognizer.cc:368
 msgid "The following errors occurred:%1"
 msgstr "I seguenti errori sono occorsi:%1"
 
-#: ../gtk/src/Recognizer.cc:332 ../qt/src/Recognizer.cc:368
+#: ../gtk/src/Recognizer.cc:372 ../qt/src/Recognizer.cc:376
 msgid "Failed to initialize tesseract"
 msgstr "Inizializzazione di tesseract fallita"
 

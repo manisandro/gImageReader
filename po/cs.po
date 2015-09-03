@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-16 01:31+0200\n"
+"POT-Creation-Date: 2015-09-03 23:40+0200\n"
 "PO-Revision-Date: 2015-04-21 18:30+0200\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <>\n"
@@ -28,8 +28,8 @@ msgid "Preferences"
 msgstr "Předvolby"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:69
-#: ../gtk/src/OutputManager.cc:422 ../qt/src/OutputManager.cc:358
-#: ../qt/src/Ui_MainWindow.hh:152
+#: ../gtk/src/OutputManager.cc:425 ../qt/src/OutputEditorText.cc:378
+#: ../qt/src/OutputManager.cc:362 ../qt/src/Ui_MainWindow.hh:152
 msgid "Help"
 msgstr "Nápověda"
 
@@ -492,7 +492,8 @@ msgid "Keep line break if..."
 msgstr "Ponechat zalomení řádku pokud…"
 
 #: ../gtk/data/gimagereader.ui.h:106 ../qt/src/Ui_MainWindow.hh:216
-msgid "Preceded by dot"
+#, fuzzy
+msgid "Preceded by end mark (.?!)"
 msgstr "Následuje za tečkou"
 
 #: ../gtk/data/gimagereader.ui.h:107 ../qt/src/Ui_MainWindow.hh:218
@@ -523,11 +524,11 @@ msgstr "Vizuální pomůcky"
 msgid "Draw whitespace"
 msgstr "Zvýraznit prázdná místa"
 
-#: ../gtk/data/gimagereader.ui.h:114 ../qt/src/Recognizer.cc:41
+#: ../gtk/data/gimagereader.ui.h:114 ../qt/src/Recognizer.cc:43
 msgid "Current Page"
 msgstr "Stávající strana"
 
-#: ../gtk/data/gimagereader.ui.h:115 ../qt/src/Recognizer.cc:44
+#: ../gtk/data/gimagereader.ui.h:115 ../qt/src/Recognizer.cc:46
 msgid "Multiple Pages..."
 msgstr "Vícero stran…"
 
@@ -678,136 +679,157 @@ msgstr "Seznam změn"
 msgid "Don't notify again"
 msgstr "Příště již neoznamovat"
 
-#: ../gtk/src/OutputManager.cc:194 ../qt/src/OutputManager.cc:154
+#: ../gtk/src/OutputManager.cc:197 ../qt/src/OutputEditorText.cc:158
+#: ../qt/src/OutputManager.cc:158
 msgid "Stripping line breaks..."
 msgstr "Odebírání konců řádků…"
 
-#: ../gtk/src/OutputManager.cc:210 ../qt/src/OutputManager.cc:178
+#: ../gtk/src/OutputManager.cc:213 ../qt/src/OutputEditorText.cc:182
+#: ../qt/src/OutputManager.cc:182
 msgid "Replacing..."
 msgstr "Nahrazování…"
 
-#: ../gtk/src/OutputManager.cc:302
+#: ../gtk/src/OutputManager.cc:305
 msgid "Check spelling"
 msgstr "Zkontrolovat na překlepy"
 
-#: ../gtk/src/OutputManager.cc:341 ../qt/src/OutputManager.cc:297
+#: ../gtk/src/OutputManager.cc:344 ../qt/src/OutputEditorText.cc:317
+#: ../qt/src/OutputManager.cc:301
 msgid "output"
 msgstr "výstup"
 
-#: ../gtk/src/OutputManager.cc:345 ../qt/src/OutputManager.cc:299
+#: ../gtk/src/OutputManager.cc:348 ../qt/src/OutputEditorText.cc:319
+#: ../qt/src/OutputManager.cc:303
 msgid "Text Files"
 msgstr "Textové soubory"
 
-#: ../gtk/src/OutputManager.cc:346 ../qt/src/OutputManager.cc:299
+#: ../gtk/src/OutputManager.cc:349 ../qt/src/OutputEditorText.cc:319
+#: ../qt/src/OutputManager.cc:303
 msgid "Save Output..."
 msgstr "Uložit výstup…"
 
-#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:307
+#: ../gtk/src/OutputManager.cc:357 ../qt/src/OutputEditorText.cc:327
+#: ../qt/src/OutputManager.cc:311
 msgid "Failed to save output"
 msgstr "Uložení výstupu se nezdařilo"
 
-#: ../gtk/src/OutputManager.cc:354 ../qt/src/OutputManager.cc:307
+#: ../gtk/src/OutputManager.cc:357 ../qt/src/OutputEditorText.cc:327
+#: ../qt/src/OutputManager.cc:311
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Zkontrolujte své oprávnění zapisovat do zvolené složky."
 
-#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:321
+#: ../gtk/src/OutputManager.cc:372 ../qt/src/OutputEditorText.cc:341
+#: ../qt/src/OutputManager.cc:325
 msgid "Output not saved"
 msgstr "Výstup nebyl uložen"
 
-#: ../gtk/src/OutputManager.cc:369 ../qt/src/OutputManager.cc:321
+#: ../gtk/src/OutputManager.cc:372 ../qt/src/OutputEditorText.cc:341
+#: ../qt/src/OutputManager.cc:325
 msgid "Save output before proceeding?"
 msgstr "Před pokračováním – uložit výstup?"
 
-#: ../gtk/src/OutputManager.cc:404
+#: ../gtk/src/OutputManager.cc:407
 msgid "en_US"
 msgstr "cs_CZ"
 
-#: ../gtk/src/OutputManager.cc:412 ../qt/src/OutputManager.cc:350
+#: ../gtk/src/OutputManager.cc:415 ../qt/src/OutputEditorText.cc:370
+#: ../qt/src/OutputManager.cc:354
 msgid "Don't show again"
 msgstr "Příště již nezobrazovat"
 
-#: ../gtk/src/OutputManager.cc:420 ../gtk/src/OutputManager.cc:426
-#: ../qt/src/OutputManager.cc:351
+#: ../gtk/src/OutputManager.cc:423 ../gtk/src/OutputManager.cc:429
+#: ../qt/src/OutputEditorText.cc:371 ../qt/src/OutputManager.cc:355
 msgid "Install"
 msgstr "Instalovat"
 
-#: ../gtk/src/OutputManager.cc:428 ../qt/src/OutputManager.cc:362
+#: ../gtk/src/OutputManager.cc:431 ../qt/src/OutputEditorText.cc:382
+#: ../qt/src/OutputManager.cc:366
 msgid "Spelling dictionary missing"
 msgstr "Chybí slovník pro kontrolu překlepů"
 
-#: ../gtk/src/OutputManager.cc:428 ../qt/src/OutputManager.cc:362
+#: ../gtk/src/OutputManager.cc:431 ../qt/src/OutputEditorText.cc:382
+#: ../qt/src/OutputManager.cc:366
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Slovník pro kontrolu překlepů pro %1 není nainstalován"
 
-#: ../gtk/src/OutputManager.cc:437 ../gtk/src/OutputManager.cc:460
-#: ../qt/src/OutputManager.cc:371
+#: ../gtk/src/OutputManager.cc:440 ../gtk/src/OutputManager.cc:463
+#: ../qt/src/OutputEditorText.cc:391 ../qt/src/OutputManager.cc:375
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Instalace slovníku pro kontrolu překlepů pro %1…"
 
-#: ../gtk/src/OutputManager.cc:452 ../gtk/src/OutputManager.cc:468
-#: ../gtk/src/OutputManager.cc:478 ../gtk/src/OutputManager.cc:484
-#: ../gtk/src/OutputManager.cc:513 ../qt/src/OutputManager.cc:384
-#: ../qt/src/OutputManager.cc:394 ../qt/src/OutputManager.cc:402
-#: ../qt/src/OutputManager.cc:430 ../qt/src/OutputManager.cc:446
+#: ../gtk/src/OutputManager.cc:455 ../gtk/src/OutputManager.cc:471
+#: ../gtk/src/OutputManager.cc:481 ../gtk/src/OutputManager.cc:487
+#: ../gtk/src/OutputManager.cc:516 ../qt/src/OutputEditorText.cc:404
+#: ../qt/src/OutputEditorText.cc:414 ../qt/src/OutputEditorText.cc:422
+#: ../qt/src/OutputEditorText.cc:450 ../qt/src/OutputEditorText.cc:466
+#: ../qt/src/OutputManager.cc:388 ../qt/src/OutputManager.cc:398
+#: ../qt/src/OutputManager.cc:406 ../qt/src/OutputManager.cc:434
+#: ../qt/src/OutputManager.cc:450
 msgid "Error"
 msgstr "Chyba"
 
-#: ../gtk/src/OutputManager.cc:452 ../qt/src/OutputManager.cc:446
+#: ../gtk/src/OutputManager.cc:455 ../qt/src/OutputEditorText.cc:466
+#: ../qt/src/OutputManager.cc:450
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Instalace slovníku pro kontrolu překlepů se nezdařila: %1"
 
-#: ../gtk/src/OutputManager.cc:468 ../gtk/src/OutputManager.cc:484
-#: ../qt/src/OutputManager.cc:384 ../qt/src/OutputManager.cc:402
+#: ../gtk/src/OutputManager.cc:471 ../gtk/src/OutputManager.cc:487
+#: ../qt/src/OutputEditorText.cc:404 ../qt/src/OutputEditorText.cc:422
+#: ../qt/src/OutputManager.cc:388 ../qt/src/OutputManager.cc:406
 msgid "Could not read %1."
 msgstr "Soubor %1 nelze číst."
 
-#: ../gtk/src/OutputManager.cc:478 ../gtk/src/OutputManager.cc:513
-#: ../qt/src/OutputManager.cc:394 ../qt/src/OutputManager.cc:430
+#: ../gtk/src/OutputManager.cc:481 ../gtk/src/OutputManager.cc:516
+#: ../qt/src/OutputEditorText.cc:414 ../qt/src/OutputEditorText.cc:450
+#: ../qt/src/OutputManager.cc:398 ../qt/src/OutputManager.cc:434
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Pro %1 nebyly nalezeny žádné slovníky pro kontrolu překlepů."
 
-#: ../gtk/src/OutputManager.cc:494 ../qt/src/OutputManager.cc:413
+#: ../gtk/src/OutputManager.cc:497 ../qt/src/OutputEditorText.cc:433
+#: ../qt/src/OutputManager.cc:417
 msgid "Downloading '%1'..."
 msgstr "Stahování %1…"
 
-#: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:427
+#: ../gtk/src/OutputManager.cc:513 ../qt/src/OutputEditorText.cc:447
+#: ../qt/src/OutputManager.cc:431
 msgid "Dictionaries installed"
 msgstr "Slovníky byly nainstalovány"
 
-#: ../gtk/src/OutputManager.cc:510 ../qt/src/OutputManager.cc:427
+#: ../gtk/src/OutputManager.cc:513 ../qt/src/OutputEditorText.cc:447
+#: ../qt/src/OutputManager.cc:431
 msgid "The following dictionaries were installed:%1"
 msgstr "Byly nainstalovány tyto slovníky:%1"
 
-#: ../gtk/src/Recognizer.cc:87 ../qt/src/Recognizer.cc:105
+#: ../gtk/src/Recognizer.cc:119 ../qt/src/Recognizer.cc:109
 msgid "No languages available"
 msgstr "Nejsou k dispozici žádné jazyky"
 
-#: ../gtk/src/Recognizer.cc:87 ../qt/src/Recognizer.cc:105
+#: ../gtk/src/Recognizer.cc:119 ../qt/src/Recognizer.cc:109
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
 "Nejsou k dispozici žádná jazyková data pro tesseract. Rozpoznávání proto "
 "nebude fungovat."
 
-#: ../gtk/src/Recognizer.cc:142 ../qt/src/Recognizer.cc:166
+#: ../gtk/src/Recognizer.cc:174 ../qt/src/Recognizer.cc:170
 msgid "Multilingual"
 msgstr "Vícejazyčné"
 
-#: ../gtk/src/Recognizer.cc:169 ../qt/src/Recognizer.cc:196
+#: ../gtk/src/Recognizer.cc:209 ../qt/src/Recognizer.cc:204
 #, fuzzy
 msgid "Detect script and orientation"
 msgstr "Orientace výstupní stránky:"
 
-#: ../gtk/src/Recognizer.cc:216 ../qt/src/Recognizer.cc:243
+#: ../gtk/src/Recognizer.cc:256 ../qt/src/Recognizer.cc:251
 msgid "Recognize selection"
 msgstr "Rozpoznat výběr"
 
-#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:57
-#: ../qt/src/Recognizer.cc:243
+#: ../gtk/src/Recognizer.cc:258 ../qt/src/Recognizer.cc:59
+#: ../qt/src/Recognizer.cc:251
 msgid "Recognize all"
 msgstr "Rozpoznat vše"
 
-#: ../gtk/src/Recognizer.cc:290 ../qt/src/Recognizer.cc:326
+#: ../gtk/src/Recognizer.cc:330 ../qt/src/Recognizer.cc:334
 msgid ""
 "\n"
 "\tFailed to initialize tesseract"
@@ -815,11 +837,11 @@ msgstr ""
 "\n"
 "\tNezdařilo se inicializovat engine Tesseract"
 
-#: ../gtk/src/Recognizer.cc:301 ../qt/src/Recognizer.cc:337
+#: ../gtk/src/Recognizer.cc:341 ../qt/src/Recognizer.cc:345
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Rozpoznávání strany %1 (%2 ze %3)…"
 
-#: ../gtk/src/Recognizer.cc:306 ../qt/src/Recognizer.cc:342
+#: ../gtk/src/Recognizer.cc:346 ../qt/src/Recognizer.cc:350
 msgid ""
 "\n"
 "\tPage %1: failed to render page"
@@ -827,7 +849,7 @@ msgstr ""
 "\n"
 "\tStrana %1: vykreslování stránky se nezdařilo"
 
-#: ../gtk/src/Recognizer.cc:307 ../qt/src/Recognizer.cc:343
+#: ../gtk/src/Recognizer.cc:347 ../qt/src/Recognizer.cc:351
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -835,21 +857,21 @@ msgstr ""
 "\n"
 "[Stránku %1 se nezdařilo rozpoznat]\n"
 
-#: ../gtk/src/Recognizer.cc:321 ../gtk/src/Recognizer.cc:342
-#: ../qt/src/Recognizer.cc:357 ../qt/src/Recognizer.cc:378
+#: ../gtk/src/Recognizer.cc:361 ../gtk/src/Recognizer.cc:382
+#: ../qt/src/Recognizer.cc:365 ../qt/src/Recognizer.cc:386
 msgid "Recognizing..."
 msgstr "Rozpoznávání…"
 
-#: ../gtk/src/Recognizer.cc:324 ../gtk/src/Recognizer.cc:332
-#: ../qt/src/Recognizer.cc:360 ../qt/src/Recognizer.cc:368
+#: ../gtk/src/Recognizer.cc:364 ../gtk/src/Recognizer.cc:372
+#: ../qt/src/Recognizer.cc:368 ../qt/src/Recognizer.cc:376
 msgid "Recognition errors occurred"
 msgstr "Při rozpoznávání se vyskytly chyby"
 
-#: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:360
+#: ../gtk/src/Recognizer.cc:364 ../qt/src/Recognizer.cc:368
 msgid "The following errors occurred:%1"
 msgstr "Došlo k následujícím chybám:%1"
 
-#: ../gtk/src/Recognizer.cc:332 ../qt/src/Recognizer.cc:368
+#: ../gtk/src/Recognizer.cc:372 ../qt/src/Recognizer.cc:376
 msgid "Failed to initialize tesseract"
 msgstr "Nezdařilo se inicializovat engine Tesseract"
 
