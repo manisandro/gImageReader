@@ -48,7 +48,7 @@ class SourceManager : public QObject {
 public:
 	SourceManager(const UI_MainWindow& _ui);
 	~SourceManager();
-	Source* getSelectedSource() const;
+	QList<Source*> getSelectedSources() const;
 	void addSourceImage(const QImage& image);
 
 public slots:
@@ -56,7 +56,7 @@ public slots:
 	void addSource(const QString& file){ addSources(QStringList() << file); }
 
 signals:
-	void sourceChanged(Source* source);
+	void sourceChanged();
 
 private:
 	const UI_MainWindow& ui;

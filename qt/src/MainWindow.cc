@@ -135,7 +135,7 @@ MainWindow::MainWindow(const QStringList& files)
 	connect(m_displayer, SIGNAL(selectionChanged(bool)), m_recognizer, SLOT(setRecognizeMode(bool)));
 	connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), m_outputManager, SLOT(setLanguage(Config::Lang)));
 	connect(m_acquirer, SIGNAL(scanPageAvailable(QString)), m_sourceManager, SLOT(addSource(QString)));
-	connect(m_sourceManager, SIGNAL(sourceChanged(Source*)), this, SLOT(onSourceChanged(Source*)));
+	connect(m_sourceManager, SIGNAL(sourceChanged()), this, SLOT(onSourceChanged()));
 
 	m_config->addSetting(new VarSetting<QByteArray>("wingeom"));
 	m_config->addSetting(new VarSetting<QByteArray>("winstate"));
@@ -216,13 +216,14 @@ void MainWindow::closeEvent(QCloseEvent* ev)
 	}
 }
 
-void MainWindow::onSourceChanged(Source* source)
+void MainWindow::onSourceChanged()
 {
 	if(m_stateStack.top().first == State::Normal){
 		popState();
 	}
-	if(m_displayer->setSource(source)){
-		setWindowTitle(QString("%1 - %2").arg(source->displayname).arg(PACKAGE_NAME));
+	QList<Source*> sources = m_sourceManager->getSelectedSources();
+	if(m_displayer->setSources(sources)){
+		setWindowTitle(QString("%1 - %2").arg(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources")).arg(PACKAGE_NAME));
 		pushState(State::Normal, _("To recognize specific areas, drag rectangles over them."));
 	}else{
 		setWindowTitle(PACKAGE_NAME);

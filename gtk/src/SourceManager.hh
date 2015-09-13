@@ -44,8 +44,8 @@ public:
 	~SourceManager();
 
 	void addSources(const std::vector<Glib::RefPtr<Gio::File>>& files);
-	Source* getSelectedSource() const;
-	sigc::signal<void,Source*> signal_sourceChanged(){ return m_signal_sourceChanged; }
+	std::vector<Source*> getSelectedSources() const;
+	sigc::signal<void> signal_sourceChanged(){ return m_signal_sourceChanged; }
 
 private:
 	class ListViewColumns : public Gtk::TreeModel::ColumnRecord {
@@ -68,7 +68,7 @@ private:
 	ListViewColumns m_listViewCols;
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;
-	sigc::signal<void,Source*> m_signal_sourceChanged;
+	sigc::signal<void> m_signal_sourceChanged;
 	sigc::connection m_connectionSelectionChanged;
 
 	void clearSources();

@@ -35,8 +35,8 @@ class Source;
 class Displayer {
 public:
 	Displayer();
-	~Displayer(){ setSource(nullptr); }
-	bool setSource(Source* source);
+	~Displayer(){ setSources(std::vector<Source*>()); }
+	bool setSources(const std::vector<Source*> sources);
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getSelections() const;
 	bool getHasSelections() const{ return !m_selections.empty(); }
 	bool setCurrentPage(int page);
@@ -69,7 +69,9 @@ private:
 	Gtk::Window* m_selmenu;
 	Gtk::CheckButton* m_invcheck;
 
-	Source* m_source = nullptr;
+	std::vector<Source*> m_sources;
+	std::map<int, std::pair<Source*, int>> m_pageMap;
+	Source* m_currentSource = nullptr;
 	DisplayRenderer* m_renderer = nullptr;
 	Cairo::RefPtr<Cairo::ImageSurface> m_image;
 	int m_scrollspeed[2];

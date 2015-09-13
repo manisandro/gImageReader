@@ -66,7 +66,7 @@ Displayer::Displayer()
 	m_viewport->override_background_color(Gdk::RGBA("#a0a0a4"));
 
 	m_connection_rotSpinChanged = CONNECT(m_rotspin, value_changed, [this]{ setRotation(m_rotspin->get_value()); });
-	m_connection_pageSpinChanged = CONNECT(m_pagespin, value_changed, [this]{ clearSelections(); queueRenderImage(); });
+	m_connection_pageSpinChanged = CONNECT(m_pagespin, value_changed, [this]{ setCurrentPage(m_pagespin->get_value_as_int()); });
 	m_connection_briSpinChanged = CONNECT(m_brispin, value_changed, [this]{ queueRenderImage(); });
 	m_connection_conSpinChanged = CONNECT(m_conspin, value_changed, [this]{ queueRenderImage(); });
 	m_connection_resSpinChanged = CONNECT(m_resspin, value_changed, [this]{ queueRenderImage(); });
@@ -114,7 +114,7 @@ void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx)
 	ctx->save();
 	// Set up transformations
 	ctx->translate(0.5 * alloc.get_width(), 0.5 * alloc.get_height());
-	ctx->rotate(m_source->angle);
+	ctx->rotate(m_currentSource->angle);
 	// Set source and apply all transformations to it
 	if(!m_blurImage){
 		ctx->scale(m_geo.s, m_geo.s);
@@ -151,15 +151,39 @@ void Displayer::positionCanvas()
 
 bool Displayer::setCurrentPage(int page)
 {
-	if(page == m_pagespin->get_value_as_int()){
-		return true;
-	}else{
-		Utils::set_spin_blocked(m_pagespin, page, m_connection_pageSpinChanged);
-		return renderImage();
+	if(m_sources.empty()) {
+		return false;
 	}
+	clearSelections();
+	Source* source = m_pageMap[page].first;
+	if(source != m_currentSource) {
+		delete m_renderer;
+		std::string filename = source->file->get_path();
+#ifdef G_OS_WIN32
+		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf"){
+#else
+		if(Utils::get_content_type(filename) == "application/pdf"){
+#endif
+			m_renderer = new PDFRenderer(filename);
+			if(source->resolution == -1) source->resolution = 300;
+		}else{
+			m_renderer = new ImageRenderer(filename);
+			if(source->resolution == -1) source->resolution = 100;
+		}
+		Utils::set_spin_blocked(m_rotspin, source->angle, m_connection_rotSpinChanged);
+		Utils::set_spin_blocked(m_pagespin, source->page, m_connection_pageSpinChanged);
+		Utils::set_spin_blocked(m_brispin, source->brightness, m_connection_briSpinChanged);
+		Utils::set_spin_blocked(m_conspin, source->contrast, m_connection_conSpinChanged);
+		Utils::set_spin_blocked(m_resspin, source->resolution, m_connection_resSpinChanged);
+		m_connection_invcheckToggled.block(true);
+		m_invcheck->set_active(source->invert);
+		m_connection_invcheckToggled.block(false);
+		m_currentSource = source;
+	}
+	return renderImage();
 }
 
-bool Displayer::setSource(Source* source)
+bool Displayer::setSources(std::vector<Source*> sources)
 {
 	if(m_scaleThread){
 		sendScaleRequest({ScaleRequest::Quit});
@@ -174,6 +198,9 @@ bool Displayer::setSource(Source* source)
 	m_blurImage.clear();
 	delete m_renderer;
 	m_renderer = 0;
+	m_currentSource = nullptr;
+	m_sources.clear();
+	m_pageMap.clear();
 	m_canvas->hide();
 	m_pagespin->set_value(1);
 	m_rotspin->set_value(0);
@@ -187,40 +214,39 @@ bool Displayer::setSource(Source* source)
 	m_zoomoutbtn->set_sensitive(true);
 	if(m_viewport->get_window()) m_viewport->get_window()->set_cursor();
 
-	m_source = source;
-	if(!source){
+	m_sources = sources;
+	if(sources.empty()){
 		return false;
 	}
-	std::string filename = source->file->get_path();
-#ifdef G_OS_WIN32
-	if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf"){
-#else
-	if(Utils::get_content_type(filename) == "application/pdf"){
-#endif
-		m_renderer = new PDFRenderer(filename);
-		if(source->resolution == -1) source->resolution = 300;
-	}else{
-		m_renderer = new ImageRenderer(filename);
-		if(source->resolution == -1) source->resolution = 100;
-	}
-	m_pagespin->get_adjustment()->set_upper(m_renderer->getNPages());
-	m_pagespin->set_visible(m_renderer->getNPages() > 1);
-	Utils::set_spin_blocked(m_rotspin, source->angle, m_connection_rotSpinChanged);
-	Utils::set_spin_blocked(m_pagespin, source->page, m_connection_pageSpinChanged);
-	Utils::set_spin_blocked(m_brispin, source->brightness, m_connection_briSpinChanged);
-	Utils::set_spin_blocked(m_conspin, source->contrast, m_connection_conSpinChanged);
-	Utils::set_spin_blocked(m_resspin, source->resolution, m_connection_resSpinChanged);
-	m_connection_invcheckToggled.block(true);
-	m_invcheck->set_active(source->invert);
-	m_connection_invcheckToggled.block(false);
 
-	if(renderImage()){
-		m_canvas->show();
-		m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
-		m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
-	}else{
-		setSource(nullptr);
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to load image"), Glib::ustring::compose(_("The file might not be an image or be corrupt:\n%1"), source->displayname));
+	int page = 0;
+	for(Source* source : m_sources)
+	{
+		std::string filename = source->file->get_path();
+#ifdef G_OS_WIN32
+		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf"){
+#else
+		if(Utils::get_content_type(filename) == "application/pdf"){
+#endif
+			PDFRenderer r(filename);
+			for(int pdfPage = 1, nPdfPages = r.getNPages(); pdfPage <= nPdfPages; ++pdfPage)
+			{
+				m_pageMap.insert(std::make_pair(++page, std::make_pair(source, pdfPage)));
+			}
+		} else {
+			m_pageMap.insert(std::make_pair(++page, std::make_pair(source, 1)));
+		}
+	}
+
+	m_pagespin->get_adjustment()->set_upper(page);
+	m_pagespin->set_visible(page > 1);
+	m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
+	m_canvas->show();
+	m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
+
+	if(!setCurrentPage(1)) {
+		setSources(std::vector<Source*>());
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to load image"), Glib::ustring::compose(_("The file might not be an image or be corrupt:\n%1"), m_currentSource->displayname));
 		return false;
 	}
 	return true;
@@ -229,30 +255,27 @@ bool Displayer::setSource(Source* source)
 bool Displayer::renderImage()
 {
 	sendScaleRequest({ScaleRequest::Abort});
-	if(m_source->resolution != m_resspin->get_value_as_int()){
-		double factor = double(m_resspin->get_value_as_int()) / double(m_source->resolution);
+	if(m_currentSource->resolution != m_resspin->get_value_as_int()){
+		double factor = double(m_resspin->get_value_as_int()) / double(m_currentSource->resolution);
 		for(DisplaySelection* sel : m_selections){
 			sel->scale(factor);
 		}
 	}
 	m_blurImage.clear();
-	m_source->page = m_pagespin->get_value_as_int();
-	m_source->brightness = m_brispin->get_value_as_int();
-	m_source->contrast = m_conspin->get_value_as_int();
-	m_source->resolution = m_resspin->get_value_as_int();
-	m_source->invert = m_invcheck->get_active();
-	Cairo::RefPtr<Cairo::ImageSurface> image;
-	if(!Utils::busyTask([this, &image] {
-		image = m_renderer->render(m_source->page, m_source->resolution);
-		m_renderer->adjustImage(image, m_source->brightness, m_source->contrast, m_source->invert);
-		return bool(image);
-	}, _("Rendering image..."))){
+	m_currentSource->page = m_pageMap[m_pagespin->get_value_as_int()].second;
+	m_currentSource->brightness = m_brispin->get_value_as_int();
+	m_currentSource->contrast = m_conspin->get_value_as_int();
+	m_currentSource->resolution = m_resspin->get_value_as_int();
+	m_currentSource->invert = m_invcheck->get_active();
+	Cairo::RefPtr<Cairo::ImageSurface> image = m_renderer->render(m_currentSource->page, m_currentSource->resolution);
+	m_renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
+	if(!bool(image)) {
 		return false;
 	}
 	m_image = image;
 	setRotation(m_rotspin->get_value());
 	if(m_geo.s < 1.0){
-		ScaleRequest request = {ScaleRequest::Scale, m_geo.s, m_source->resolution, m_source->page, m_source->brightness, m_source->contrast, m_source->invert};
+		ScaleRequest request = {ScaleRequest::Scale, m_geo.s, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
 		m_scaleTimer = Glib::signal_timeout().connect([this,request]{ sendScaleRequest(request); return false; }, 100);
 	}
 	return true;
@@ -290,7 +313,7 @@ void Displayer::setZoom(Zoom zoom)
 	m_zoominbtn->set_sensitive(m_geo.s < 10.);
 	m_zoomonebtn->set_active(m_geo.s == 1.);
 	if(m_geo.s < 1.0){
-		ScaleRequest request = {ScaleRequest::Scale, m_geo.s, m_source->resolution, m_source->page, m_source->brightness, m_source->contrast, m_source->invert};
+		ScaleRequest request = {ScaleRequest::Scale, m_geo.s, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
 		m_scaleTimer = Glib::signal_timeout().connect([this,request]{ sendScaleRequest(request); return false; }, 100);
 	}else{
 		m_blurImage.clear();
@@ -307,8 +330,8 @@ void Displayer::setRotation(double angle)
 		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
 		Utils::set_spin_blocked(m_rotspin, angle, m_connection_rotSpinChanged);
 		angle *= 0.0174532925199;
-		double delta = angle - m_source->angle;
-		m_source->angle = angle;
+		double delta = angle - m_currentSource->angle;
+		m_currentSource->angle = angle;
 		Geometry::Rotation deltaR(delta);
 		for(DisplaySelection* sel : m_selections){
 			sel->rotate(deltaR);
@@ -458,7 +481,7 @@ Geometry::Size Displayer::getImageBoundingBox() const
 {
 	int w = m_image->get_width();
 	int h = m_image->get_height();
-	Geometry::Rotation R(m_source->angle);
+	Geometry::Rotation R(m_currentSource->angle);
 	return Geometry::Size(
 			std::abs(R(0, 0) * w) + std::abs(R(0, 1) * h),
 			std::abs(R(1, 0) * w) + std::abs(R(1, 1) * h)
@@ -577,7 +600,7 @@ Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle
 		ctx->set_source_rgba(1., 1., 1., 1.);
 		ctx->paint();
 		ctx->translate(-rect.x, -rect.y);
-		ctx->rotate(m_source->angle);
+		ctx->rotate(m_currentSource->angle);
 		ctx->translate(-0.5 * m_image->get_width(), -0.5 * m_image->get_height());
 		ctx->set_source(m_image, 0, 0);
 		ctx->paint();

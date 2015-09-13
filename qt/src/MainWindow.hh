@@ -102,7 +102,7 @@ private:
 
 private slots:
 	void checkVersion();
-	void onSourceChanged(Source* source);
+	void onSourceChanged();
 	void showAbout();
 	void showConfig();
 	void openDownloadUrl();

@@ -339,9 +339,9 @@ bool OutputManager::saveBuffer(const std::string& filename)
 {
 	std::string outname = filename;
 	if(outname.empty()){
-		Source* source = MAIN->getSourceManager()->getSelectedSource();
+		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
 		std::string ext, base;
-		std::string name = source ? source->displayname : _("output");
+		std::string name = !sources.empty() ? sources.front()->displayname : _("output");
 		Utils::get_filename_parts(name, base, ext);
 		outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), base + ".txt");
 

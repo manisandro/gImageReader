@@ -71,7 +71,7 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	connect(ui.actionRotateRight, SIGNAL(triggered()), this, SLOT(rotate90()));
 	connect(ui.actionAutodetectLayout, SIGNAL(triggered()), this, SLOT(autodetectLayout()));
 	connect(ui.spinBoxRotation, SIGNAL(valueChanged(double)), this, SLOT(setRotation(double)));
-	connect(ui.spinBoxPage, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
+	connect(ui.spinBoxPage, SIGNAL(valueChanged(int)), this, SLOT(setCurrentPage(int)));
 	connect(ui.spinBoxBrightness, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
 	connect(ui.spinBoxContrast, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
 	connect(ui.spinBoxResolution, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
@@ -88,18 +88,38 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 
 Displayer::~Displayer()
 {
-	setSource(nullptr);
+	setSources(QList<Source*>());
 	delete m_scene;
 }
 
 bool Displayer::setCurrentPage(int page)
 {
-	if(page == ui.spinBoxPage->value()){
-		return true;
-	}else{
-		Utils::setSpinBlocked(ui.spinBoxPage, page);
-		return renderImage();
+	if(m_sources.isEmpty()) {
+		return false;
 	}
+	clearSelections();
+	Source* source = m_pageMap[page].first;
+	if(source != m_currentSource) {
+		delete m_renderer;
+		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)){
+			m_renderer = new PDFRenderer(source->path);
+			if(source->resolution == -1) source->resolution = 300;
+		}else{
+			m_renderer = new ImageRenderer(source->path);
+			if(source->resolution == -1) source->resolution = 100;
+		}
+
+		Utils::setSpinBlocked(ui.spinBoxRotation, source->angle);
+		Utils::setSpinBlocked(ui.spinBoxBrightness, source->brightness);
+		Utils::setSpinBlocked(ui.spinBoxContrast, source->contrast);
+		Utils::setSpinBlocked(ui.spinBoxResolution, source->resolution);
+		ui.checkBoxInvertColors->blockSignals(true);
+		ui.checkBoxInvertColors->setChecked(source->invert);
+		ui.checkBoxInvertColors->blockSignals(false);
+		m_currentSource = source;
+	}
+
+	return renderImage();
 }
 
 int Displayer::getCurrentPage() const
@@ -112,7 +132,7 @@ int Displayer::getNPages() const
 	return ui.spinBoxPage->maximum();
 }
 
-bool Displayer::setSource(Source* source)
+bool Displayer::setSources(QList<Source*> sources)
 {
 	m_scaleTimer.stop();
 	if(m_scaleThread.isRunning()){
@@ -124,6 +144,9 @@ bool Displayer::setSource(Source* source)
 	m_scene->clear();
 	delete m_renderer;
 	m_renderer = nullptr;
+	m_currentSource = nullptr;
+	m_sources.clear();
+	m_pageMap.clear();
 	m_pixmap = QPixmap();
 	m_imageItem = nullptr;
 	ui.actionBestFit->setChecked(true);
@@ -142,38 +165,36 @@ bool Displayer::setSource(Source* source)
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	unsetCursor();
 
-	m_source = source;
+	m_sources = sources;
 
-	if(!m_source){
+	if(m_sources.isEmpty()){
 		return false;
 	}
 
-	if(source->path.endsWith(".pdf", Qt::CaseInsensitive)){
-		m_renderer = new PDFRenderer(source->path);
-		if(source->resolution == -1) source->resolution = 300;
-	}else{
-		m_renderer = new ImageRenderer(source->path);
-		if(source->resolution == -1) source->resolution = 100;
+	int page = 0;
+	for(Source* source : m_sources)
+	{
+		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
+			PDFRenderer r(source->path);
+			for(int pdfPage = 1, nPdfPages = r.getNPages(); pdfPage <= nPdfPages; ++pdfPage)
+			{
+				m_pageMap.insert(++page, qMakePair(source, pdfPage));
+			}
+		} else {
+			m_pageMap.insert(++page, qMakePair(source, 1));
+		}
 	}
-	ui.spinBoxPage->setMaximum(m_renderer->getNPages());
-	ui.actionPage->setVisible(m_renderer->getNPages() > 1);
-	Utils::setSpinBlocked(ui.spinBoxRotation, source->angle);
-	Utils::setSpinBlocked(ui.spinBoxPage, source->page);
-	Utils::setSpinBlocked(ui.spinBoxBrightness, source->brightness);
-	Utils::setSpinBlocked(ui.spinBoxContrast, source->contrast);
-	Utils::setSpinBlocked(ui.spinBoxResolution, source->resolution);
-	ui.checkBoxInvertColors->blockSignals(true);
-	ui.checkBoxInvertColors->setChecked(source->invert);
-	ui.checkBoxInvertColors->blockSignals(false);
-	setCursor(Qt::CrossCursor);
 
+	ui.spinBoxPage->setMaximum(page);
+	ui.actionPage->setVisible(page > 1);
+	setCursor(Qt::CrossCursor);
 	m_imageItem = new QGraphicsPixmapItem();
 	m_imageItem->setTransformationMode(Qt::SmoothTransformation);
 	m_scene->addItem(m_imageItem);
 	m_scaleThread.start();
-	if(!renderImage()){
-		setSource(nullptr);
-		QMessageBox::critical(this, _("Failed to load image"), _("The file might not be an image or be corrupt:\n%1").arg(source->path));
+	if(!setCurrentPage(1)){
+		setSources(QList<Source*>());
+		QMessageBox::critical(this, _("Failed to load image"), _("The file might not be an image or be corrupt:\n%1").arg(m_currentSource->displayname));
 		return false;
 	}
 	return true;
@@ -182,22 +203,22 @@ bool Displayer::setSource(Source* source)
 bool Displayer::renderImage()
 {
 	sendScaleRequest({ScaleRequest::Abort});
-	if(m_source->resolution != ui.spinBoxResolution->value()){
-		double factor = double(ui.spinBoxResolution->value()) / double(m_source->resolution);
+	if(m_currentSource->resolution != ui.spinBoxResolution->value()){
+		double factor = double(ui.spinBoxResolution->value()) / double(m_currentSource->resolution);
 		for(DisplaySelection* sel : m_selections){
 			sel->scale(factor);
 		}
 	}
-	m_source->page = ui.spinBoxPage->value();
-	m_source->brightness = ui.spinBoxBrightness->value();
-	m_source->contrast = ui.spinBoxContrast->value();
-	m_source->resolution = ui.spinBoxResolution->value();
-	m_source->invert = ui.checkBoxInvertColors->isChecked();
-	QImage image = m_renderer->render(m_source->page, m_source->resolution);
+	m_currentSource->page = m_pageMap[ui.spinBoxPage->value()].second;
+	m_currentSource->brightness = ui.spinBoxBrightness->value();
+	m_currentSource->contrast = ui.spinBoxContrast->value();
+	m_currentSource->resolution = ui.spinBoxResolution->value();
+	m_currentSource->invert = ui.checkBoxInvertColors->isChecked();
+	QImage image = m_renderer->render(m_currentSource->page, m_currentSource->resolution);
 	if(image.isNull()){
 		return false;
 	}
-	m_renderer->adjustImage(image, m_source->brightness, m_source->contrast, m_source->invert);
+	m_renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
 	m_pixmap = QPixmap::fromImage(image);
 	m_imageItem->setPixmap(m_pixmap);
 	m_imageItem->setScale(1.);
@@ -207,7 +228,7 @@ bool Displayer::renderImage()
 	centerOn(sceneRect().center());
 	setRotation(ui.spinBoxRotation->value());
 	if(m_scale < 1.0){
-		m_pendingScaleRequest = {ScaleRequest::Scale, m_scale, m_source->resolution, m_source->page, m_source->brightness, m_source->contrast, m_source->invert};
+		m_pendingScaleRequest = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
 		m_scaleTimer.start(100);
 	}
 	return true;
@@ -247,7 +268,7 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor)
 	t.scale(m_scale, m_scale);
 	setTransform(t);
 	if(m_scale < 1.0){
-		m_pendingScaleRequest = {ScaleRequest::Scale, m_scale, m_source->resolution, m_source->page, m_source->brightness, m_source->contrast, m_source->invert};
+		m_pendingScaleRequest = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
 		m_scaleTimer.start(100);
 	}else{
 		m_imageItem->setPixmap(m_pixmap);
@@ -264,8 +285,8 @@ void Displayer::setRotation(double angle)
 	if(m_imageItem){
 		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
 		Utils::setSpinBlocked(ui.spinBoxRotation, angle);
-		double delta = angle - m_source->angle;
-		m_source->angle = angle;
+		double delta = angle - m_currentSource->angle;
+		m_currentSource->angle = angle;
 		m_imageItem->setRotation(angle);
 		QTransform t;
 		t.rotate(delta);
@@ -298,7 +319,7 @@ void Displayer::mousePressEvent(QMouseEvent *event)
 {
 	event->ignore();
 	QGraphicsView::mousePressEvent(event);
-	if(!event->isAccepted() && event->button() == Qt::LeftButton && m_source && m_curSel == nullptr){
+	if(!event->isAccepted() && event->button() == Qt::LeftButton && m_currentSource && m_curSel == nullptr){
 		if((event->modifiers() & Qt::ControlModifier) == 0){
 			clearSelections();
 		}

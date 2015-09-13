@@ -42,14 +42,14 @@ class Displayer : public QGraphicsView {
 public:
 	Displayer(const UI_MainWindow& _ui, QWidget* parent = nullptr);
 	~Displayer();
-	bool setCurrentPage(int page);
 	int getCurrentPage() const;
 	int getNPages() const;
 	QList<QImage> getSelections();
 	bool getHasSelections() const{ return !m_selections.isEmpty(); }
-	bool setSource(Source* source);
+	bool setSources(QList<Source*> sources);
 
 public slots:
+	bool setCurrentPage(int page);
 	void autodetectLayout(bool rotated = false);
 
 signals:
@@ -61,7 +61,9 @@ private:
 	enum class Zoom { In, Out, Fit, Original };
 	const UI_MainWindow& ui;
 	GraphicsScene* m_scene;
-	Source* m_source = nullptr;
+	QList<Source*> m_sources;
+	QMap<int, QPair<Source*, int>> m_pageMap;
+	Source* m_currentSource = nullptr;
 	DisplayRenderer* m_renderer = nullptr;
 	QPixmap m_pixmap;
 	QGraphicsPixmapItem* m_imageItem = nullptr;

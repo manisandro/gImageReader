@@ -85,7 +85,7 @@ private:
 	std::vector<State> m_stateStack;
 
 	bool closeEvent(GdkEventAny*);
-	void onSourceChanged(Source* source);
+	void onSourceChanged();
 	void setState(State state);
 #if ENABLE_VERSIONCHECK
 	void getNewestVersion();

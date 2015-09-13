@@ -137,7 +137,7 @@ MainWindow::MainWindow()
 	CONNECT(m_displayer, selectionChanged, [this](bool haveSelection){ m_recognizer->setRecognizeMode(haveSelection); });
 	CONNECT(m_recognizer, languageChanged, [this](const Config::Lang& lang){ m_outputManager->setLanguage(lang); });
 	CONNECT(m_acquirer, scanPageAvailable, [this](const std::string& filename){ m_sourceManager->addSources({Gio::File::create_for_path(filename)}); });
-	CONNECT(m_sourceManager, sourceChanged, [this](Source* source){ onSourceChanged(source); });
+	CONNECT(m_sourceManager, sourceChanged, [this]{ onSourceChanged(); });
 
 	m_config->addSetting(new VarSetting<std::vector<int>>("wingeom"));
 	m_config->addSetting(new SwitchSettingT<Gtk::ToggleToolButton>("showcontrols", "tbbutton:main.controls"));
@@ -222,13 +222,14 @@ bool MainWindow::closeEvent(GdkEventAny*)
 	return false;
 }
 
-void MainWindow::onSourceChanged(Source* source)
+void MainWindow::onSourceChanged()
 {
 	if(m_stateStack.back() == State::Normal){
 		popState();
 	}
-	if(m_displayer->setSource(source)){
-		m_window->set_title(Glib::ustring::compose("%1 - %2", source->displayname, PACKAGE_NAME));
+	std::vector<Source*> sources = m_sourceManager->getSelectedSources();
+	if(m_displayer->setSources(sources)){
+		m_window->set_title(Glib::ustring::compose("%1 - %2", sources.size() == 1 ? sources.front()->displayname : _("Multiple sources"), PACKAGE_NAME));
 		pushState(State::Normal, _("To recognize specific areas, drag rectangles over them."));
 	}else{
 		m_window->set_title(PACKAGE_NAME);

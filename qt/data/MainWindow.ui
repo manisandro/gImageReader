@@ -278,7 +278,7 @@
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="windowTitle">
-    <string>Sources</string>
+    <string>So&amp;urces</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -326,7 +326,20 @@
           <number>2</number>
          </property>
          <item>
-          <widget class="QListWidget" name="listWidgetSources"/>
+          <widget class="QListWidget" name="listWidgetSources">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="dragEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="dragDropMode">
+            <enum>QAbstractItemView::InternalMove</enum>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::ExtendedSelection</enum>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -547,7 +560,7 @@
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="windowTitle">
-    <string>Output</string>
+    <string>&amp;Output</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>

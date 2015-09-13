@@ -34,6 +34,11 @@
 
 Q_DECLARE_METATYPE(Source*)
 
+// Only to silence "QVariant::save: unable to save type 'Source*'" warning
+QDataStream& operator<<(QDataStream& ds, const Source*&) { return ds; }
+QDataStream& operator>>(QDataStream& ds, Source*&) {return ds; }
+
+
 SourceManager::SourceManager(const UI_MainWindow& _ui)
 	: ui(_ui)
 {
@@ -55,6 +60,9 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	connect(&m_fsWatcher, SIGNAL(fileChanged(QString)), this, SLOT(fileChanged(QString)));
 
 	MAIN->getConfig()->addSetting(new VarSetting<QStringList>("recentitems"));
+
+	qRegisterMetaType<Source*>("Source*");
+	qRegisterMetaTypeStreamOperators<Source*>("Source*");
 }
 
 SourceManager::~SourceManager()
@@ -92,6 +100,9 @@ void SourceManager::addSources(const QStringList& files)
 	}
 	MAIN->getConfig()->getSetting<VarSetting<QStringList>>("recentitems")->setValue(recentItems);
 	if(item){
+		ui.listWidgetSources->blockSignals(true);
+		ui.listWidgetSources->clearSelection();
+		ui.listWidgetSources->blockSignals(false);
 		ui.listWidgetSources->setCurrentItem(item);
 	}
 	if(!failed.isEmpty()){
@@ -99,12 +110,14 @@ void SourceManager::addSources(const QStringList& files)
 	}
 }
 
-Source* SourceManager::getSelectedSource() const
+QList<Source*> SourceManager::getSelectedSources() const
 {
-	if(ui.listWidgetSources->currentItem()){
-		return ui.listWidgetSources->currentItem()->data(Qt::UserRole).value<Source*>();
+	QList<Source*> selectedSources;
+	for(const QListWidgetItem* item : ui.listWidgetSources->selectedItems())
+	{
+		selectedSources.append(item->data(Qt::UserRole).value<Source*>());
 	}
-	return nullptr;
+	return selectedSources;
 }
 
 void SourceManager::prepareSourcesMenu()
@@ -127,10 +140,10 @@ void SourceManager::prepareSourcesMenu()
 
 void SourceManager::openSources()
 {
-	Source* current = getSelectedSource();
+	QList<Source*> current = getSelectedSources();
 	QString dir;
-	if(current && !current->isTemp){
-		dir = QFileInfo(current->path).absolutePath();
+	if(!current.isEmpty() && !current.front()->isTemp){
+		dir = QFileInfo(current.front()->path).absolutePath();
 	}else{
 		dir = Utils::documentsFolder();
 	}
@@ -202,25 +215,42 @@ void SourceManager::savePixmap(const QPixmap& pixmap, const QString& displayname
 		Source* source = new Source(filename, displayname, true);
 		item->setData(Qt::UserRole, QVariant::fromValue(source));
 		m_fsWatcher.addPath(filename);
+		ui.listWidgetSources->blockSignals(true);
+		ui.listWidgetSources->clearSelection();
+		ui.listWidgetSources->blockSignals(false);
 		ui.listWidgetSources->setCurrentItem(item);
 	}
 }
 
 void SourceManager::removeSource(bool deleteFile)
 {
-	Source* source = getSelectedSource();
-	if(!source){
+	QString paths;
+	for(const QListWidgetItem* item : ui.listWidgetSources->selectedItems()) {
+		paths += QString("\n") + item->data(Qt::UserRole).value<Source*>()->path;
+	}
+	if(paths.isEmpty()) {
 		return;
 	}
-	if(deleteFile && QMessageBox::Yes != QMessageBox::question(MAIN, _("Delete File?"), _("The following file will be deleted:\n%1").arg(source->path), QMessageBox::Yes, QMessageBox::No)){
+	if(deleteFile && QMessageBox::Yes != QMessageBox::question(MAIN, _("Delete File?"), _("The following files will be deleted:%1").arg(paths), QMessageBox::Yes, QMessageBox::No)){
 		return;
 	}
-	m_fsWatcher.removePath(source->path);
-	if(deleteFile || source->isTemp){
-		QFile(source->path).remove();
+	// Avoid multiple sourceChanged emissions when removing items
+	ui.listWidgetSources->blockSignals(true);
+	for(const QListWidgetItem* item : ui.listWidgetSources->selectedItems())
+	{
+		Source* source = item->data(Qt::UserRole).value<Source*>();
+		m_fsWatcher.removePath(source->path);
+		if(deleteFile || source->isTemp){
+			QFile(source->path).remove();
+		}
+		delete source;
+		delete item;
 	}
-	delete source;
-	delete ui.listWidgetSources->currentItem();
+	if(ui.listWidgetSources->selectedItems().isEmpty()) {
+		ui.listWidgetSources->selectionModel()->select(ui.listWidgetSources->currentIndex(), QItemSelectionModel::Select);
+	}
+	ui.listWidgetSources->blockSignals(false);
+	emit sourceChanged();
 }
 
 
@@ -242,11 +272,11 @@ void SourceManager::clearSources()
 
 void SourceManager::currentSourceChanged()
 {
-	bool enabled = getSelectedSource() != nullptr;
+	bool enabled = !ui.listWidgetSources->selectedItems().isEmpty();
 	ui.actionSourceRemove->setEnabled(enabled);
 	ui.actionSourceDelete->setEnabled(enabled);
 	ui.actionSourceClear->setEnabled(enabled);
-	emit sourceChanged(getSelectedSource());
+	emit sourceChanged();
 }
 
 void SourceManager::fileChanged(const QString& filename)
