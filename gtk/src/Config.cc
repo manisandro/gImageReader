@@ -244,7 +244,8 @@ void Config::addLanguage()
 		invalid = true;
 		Utils::set_error_state(m_addLangName);
 	}
-	if(!Glib::Regex::create("^[a-z]{2}_[A-Z]{2}$")->match(m_addLangCode->get_text())){
+	if(!Glib::Regex::create("^[a-z]{2}$")->match(m_addLangCode->get_text()) &&
+	   !Glib::Regex::create("^[a-z]{2}_[A-Z]{2}$")->match(m_addLangCode->get_text())){
 		invalid = true;
 		Utils::set_error_state(m_addLangCode);
 	}

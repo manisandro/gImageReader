@@ -243,7 +243,9 @@ void Config::addLanguage()
 		invalid = true;
 		ui.lineEditLangName->setStyleSheet(errorStyle);
 	}
-	if(QRegExp("^[a-z]{2}_[A-Z]{2}$").indexIn(ui.lineEditLangCode->text()) == -1){
+	if(QRegExp("^[a-z]{2}$").indexIn(ui.lineEditLangCode->text()) == -1 &&
+	   QRegExp("^[a-z]{2}_[A-Z]{2}$").indexIn(ui.lineEditLangCode->text()) == -1)
+	{
 		invalid = true;
 		ui.lineEditLangCode->setStyleSheet(errorStyle);
 	}
