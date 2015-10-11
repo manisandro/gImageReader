@@ -465,8 +465,7 @@
            </property>
            <property name="icon">
             <iconset theme="document-open">
-             <normaloff/>
-            </iconset>
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
@@ -494,8 +493,7 @@
              </property>
              <property name="icon">
               <iconset theme="scanner">
-               <normaloff/>
-              </iconset>
+               <normaloff>.</normaloff>.</iconset>
              </property>
             </widget>
            </item>
@@ -512,8 +510,7 @@
              </property>
              <property name="icon">
               <iconset theme="dialog-cancel">
-               <normaloff/>
-              </iconset>
+               <normaloff>.</normaloff>.</iconset>
              </property>
             </widget>
            </item>
@@ -536,8 +533,7 @@
            </property>
            <property name="icon">
             <iconset theme="view-refresh">
-             <normaloff/>
-            </iconset>
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
@@ -565,136 +561,7 @@
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContentsOutput">
-    <layout class="QVBoxLayout" name="verticalLayout_3">
-     <property name="spacing">
-      <number>2</number>
-     </property>
-     <property name="leftMargin">
-      <number>2</number>
-     </property>
-     <property name="topMargin">
-      <number>2</number>
-     </property>
-     <property name="rightMargin">
-      <number>2</number>
-     </property>
-     <property name="bottomMargin">
-      <number>2</number>
-     </property>
-     <item>
-      <widget class="QFrame" name="frameOutputSearch">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <property name="leftMargin">
-         <number>2</number>
-        </property>
-        <property name="topMargin">
-         <number>2</number>
-        </property>
-        <property name="rightMargin">
-         <number>2</number>
-        </property>
-        <property name="bottomMargin">
-         <number>2</number>
-        </property>
-        <property name="spacing">
-         <number>2</number>
-        </property>
-        <item row="0" column="0">
-         <widget class="QLineEdit" name="lineEditOutputSearch">
-          <property name="placeholderText">
-           <string>Find</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLineEdit" name="lineEditOutputReplace">
-          <property name="placeholderText">
-           <string>Replace</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QToolButton" name="toolButtonOutputFindNext">
-          <property name="toolTip">
-           <string>Find next</string>
-          </property>
-          <property name="icon">
-           <iconset theme="go-down">
-            <normaloff/>
-           </iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QToolButton" name="toolButtonOutputReplace">
-          <property name="toolTip">
-           <string>Replace</string>
-          </property>
-          <property name="icon">
-           <iconset theme="edit-find-replace">
-            <normaloff/>
-           </iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QToolButton" name="toolButtonOutputReplaceAll">
-          <property name="toolTip">
-           <string>Replace all</string>
-          </property>
-          <property name="icon">
-           <iconset theme="edit-find-replace">
-            <normaloff/>
-           </iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QToolButton" name="toolButtonOutputFindPrev">
-          <property name="toolTip">
-           <string>Find previous</string>
-          </property>
-          <property name="icon">
-           <iconset theme="go-up">
-            <normaloff/>
-           </iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="3">
-         <widget class="QPushButton" name="pushButtonOutputReplacementList">
-          <property name="text">
-           <string>Substitutions</string>
-          </property>
-          <property name="icon">
-           <iconset theme="document-edit">
-            <normaloff/>
-           </iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="3">
-         <widget class="QCheckBox" name="checkBoxOutputSearchMatchCase">
-          <property name="text">
-           <string>Match case</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="OutputTextEdit" name="plainTextEditOutput"/>
-     </item>
-    </layout>
-   </widget>
+   <widget class="QWidget" name="dockWidgetContentsOutput"/>
   </widget>
   <action name="actionSources">
    <property name="checkable">
@@ -702,8 +569,7 @@
    </property>
    <property name="icon">
     <iconset theme="insert-image">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Sources</string>
@@ -715,8 +581,7 @@
   <action name="actionZoomIn">
    <property name="icon">
     <iconset theme="zoom-in">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Zoom In</string>
@@ -728,8 +593,7 @@
   <action name="actionZoomOut">
    <property name="icon">
     <iconset theme="zoom-out">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Zoom Out</string>
@@ -744,8 +608,7 @@
    </property>
    <property name="icon">
     <iconset theme="zoom-original">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Normal Size</string>
@@ -760,8 +623,7 @@
    </property>
    <property name="icon">
     <iconset theme="zoom-fit-best">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Best Fit</string>
@@ -773,8 +635,7 @@
   <action name="actionRotateLeft">
    <property name="icon">
     <iconset theme="object-rotate-left">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Rotate Left</string>
@@ -786,8 +647,7 @@
   <action name="actionRotateRight">
    <property name="icon">
     <iconset theme="object-rotate-right">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Rotate Right</string>
@@ -829,8 +689,7 @@
    </property>
    <property name="icon">
     <iconset theme="document-edit">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Toggle Output Pane</string>
@@ -840,13 +699,6 @@
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>OutputTextEdit</class>
-   <extends>QPlainTextEdit</extends>
-   <header>OutputTextEdit.hh</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="gimagereader.qrc"/>
  </resources>

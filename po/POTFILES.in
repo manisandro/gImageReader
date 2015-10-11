@@ -65,8 +65,12 @@ qt/src/DisplaySelection.hh
 qt/src/main.cc
 qt/src/MainWindow.cc
 qt/src/MainWindow.hh
-qt/src/OutputManager.cc
-qt/src/OutputManager.hh
+qt/src/OutputEditor.cc
+qt/src/OutputEditor.hh
+qt/src/OutputEditorText.cc
+qt/src/OutputEditorText.hh
+qt/src/OutputEditorHOCR.cc
+qt/src/OutputEditorHOCR.hh
 qt/src/OutputTextEdit.cc
 qt/src/OutputTextEdit.hh
 qt/src/Recognizer.cc

@@ -11,23 +11,6 @@ class UI_MainWindow : public Ui_MainWindow
 public:
 	QAction* actionAbout;
 	QAction* actionHelp;
-	QAction* actionOutputModeAppend;
-	QAction* actionOutputModeCursor;
-	QAction* actionOutputModeReplace;
-	QAction* actionOutputClear;
-	QAction* actionOutputRedo;
-	QAction* actionOutputReplace;
-	QAction* actionOutputSave;
-	QAction* actionOutputPostprocTitle1;
-	QAction* actionOutputPostprocKeepEndMark;
-	QAction* actionOutputPostprocKeepQuote;
-	QAction* actionOutputPostprocTitle2;
-	QAction* actionOutputPostprocJoinHyphen;
-	QAction* actionOutputPostprocCollapseSpaces;
-	QAction* actionOutputPostprocKeepParagraphs;
-	QAction* actionOutputPostprocTitle3;
-	QAction* actionOutputPostprocDrawWhitespace;
-	QAction* actionOutputUndo;
 	QAction* actionPreferences;
 	QAction* actionRedetectLanguages;
 	QAction* actionSourceClear;
@@ -36,6 +19,7 @@ public:
 	QAction* actionSourceRecent;
 	QAction* actionSourceRemove;
 	QAction* actionSourceScreenshot;
+	QComboBox* comboBoxOutputMode;
 	QDoubleSpinBox* spinBoxRotation;
 	QSpinBox* spinBoxPage;
 	QFrame* frameRotation;
@@ -45,14 +29,9 @@ public:
 	QMenu* menuAppMenu;
 	QMenu* menuAddSource;
 	QMenu* menuLanguages;
-	QMenu* menuOutputMode;
-	QMenu* menuOutputPostproc;
-	QToolBar* toolBarOutput;
 	QToolBar* toolBarSources;
 	QToolButton* toolButtonRecognize;
 	QToolButton* toolButtonAppMenu;
-	QToolButton* toolButtonOutputMode;
-	QToolButton* toolButtonOutputPostproc;
 	QToolButton* toolButtonSourceAdd;
 	QWidgetAction* actionRotate;
 	QWidgetAction* actionPage;
@@ -120,7 +99,7 @@ public:
 		toolBarMain->insertAction(actionImageControls, actionPage);
 		actionPage->setVisible(false);
 
-		// Recognizer button
+		// Recognize button
 		toolButtonRecognize = new QToolButton(MainWindow);
 		toolButtonRecognize->setIcon(QIcon::fromTheme("insert-text"));
 		toolButtonRecognize->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -132,6 +111,21 @@ public:
 
 		menuLanguages = new QMenu(toolButtonRecognize);
 		toolButtonRecognize->setMenu(menuLanguages);
+
+		// Output mode button
+		QWidget* outputModeWidget = new QWidget();
+		outputModeWidget->setLayout(new QVBoxLayout());
+		outputModeWidget->layout()->setContentsMargins(0, 0, 0, 0);
+		outputModeWidget->layout()->setSpacing(0);
+		QLabel* outputModeLabel = new QLabel(gettext("Output:"));
+		outputModeLabel->setFont(font);
+		outputModeWidget->layout()->addWidget(outputModeLabel);
+		comboBoxOutputMode = new QComboBox();
+		comboBoxOutputMode->addItems(QStringList() << gettext("Plain text") << gettext("hOCR"));
+		comboBoxOutputMode->setFont(font);
+		comboBoxOutputMode->setFrame(false);
+		outputModeWidget->layout()->addWidget(comboBoxOutputMode);
+		toolBarMain->insertWidget(actionToggleOutputPane, outputModeWidget);
 
 		// Spacer before app menu button
 		QWidget* toolBarMainSpacer = new QWidget(toolBarMain);
@@ -199,88 +193,6 @@ public:
 		toolBarSources->addAction(actionSourceDelete);
 		toolBarSources->addAction(actionSourceClear);
 		static_cast<QVBoxLayout*>(tabSources->layout())->insertWidget(0, toolBarSources);
-
-		// Output insert mode
-		actionOutputModeAppend = new QAction(QIcon(":/icons/ins_append"), gettext("Append to current text"), MainWindow);
-		actionOutputModeCursor = new QAction(QIcon(":/icons/ins_cursor"), gettext("Insert at cursor"), MainWindow);
-		actionOutputModeReplace = new QAction(QIcon(":/icons/ins_replace"), gettext("Replace current text"), MainWindow);
-
-		menuOutputMode = new QMenu(MainWindow);
-		menuOutputMode->addAction(actionOutputModeAppend);
-		menuOutputMode->addAction(actionOutputModeCursor);
-		menuOutputMode->addAction(actionOutputModeReplace);
-
-		// Output postprocessing
-		actionOutputPostprocTitle1 = new QAction(gettext("Keep line break if..."), MainWindow);
-		actionOutputPostprocTitle1->setEnabled(false);
-		actionOutputPostprocKeepEndMark = new QAction(gettext("Preceded by end mark (.?!)"), MainWindow);
-		actionOutputPostprocKeepEndMark->setCheckable(true);
-		actionOutputPostprocKeepQuote = new QAction(gettext("Preceded or succeeded by quote"), MainWindow);
-		actionOutputPostprocKeepQuote->setCheckable(true);
-		actionOutputPostprocTitle2 = new QAction(gettext("Other options"), MainWindow);
-		actionOutputPostprocTitle2->setEnabled(false);
-		actionOutputPostprocJoinHyphen = new QAction(gettext("Join hyphenated words"), MainWindow);
-		actionOutputPostprocJoinHyphen->setCheckable(true);
-		actionOutputPostprocCollapseSpaces = new QAction(gettext("Collapse whitespace"), MainWindow);
-		actionOutputPostprocCollapseSpaces->setCheckable(true);
-		actionOutputPostprocKeepParagraphs = new QAction(gettext("Preserve paragraphs"), MainWindow);
-		actionOutputPostprocKeepParagraphs->setCheckable(true);
-		actionOutputPostprocTitle3 = new QAction(gettext("Visual aids"), MainWindow);
-		actionOutputPostprocTitle3->setEnabled(false);
-		actionOutputPostprocDrawWhitespace = new QAction(gettext("Draw whitespace"), MainWindow);
-		actionOutputPostprocDrawWhitespace->setCheckable(true);
-
-		menuOutputPostproc = new QMenu(MainWindow);
-		menuOutputPostproc->addAction(actionOutputPostprocTitle1);
-		menuOutputPostproc->addAction(actionOutputPostprocKeepEndMark);
-		menuOutputPostproc->addAction(actionOutputPostprocKeepQuote);
-		menuOutputPostproc->addAction(actionOutputPostprocTitle2);
-		menuOutputPostproc->addAction(actionOutputPostprocJoinHyphen);
-		menuOutputPostproc->addAction(actionOutputPostprocCollapseSpaces);
-		menuOutputPostproc->addAction(actionOutputPostprocKeepParagraphs);
-		menuOutputPostproc->addAction(actionOutputPostprocTitle3);
-		menuOutputPostproc->addAction(actionOutputPostprocDrawWhitespace);
-
-		// Output toolbar
-		toolButtonOutputMode = new QToolButton(MainWindow);
-		toolButtonOutputMode->setIcon(QIcon(":/icons/ins_append"));
-		toolButtonOutputMode->setToolTip(gettext("Select insert mode"));
-		toolButtonOutputMode->setPopupMode(QToolButton::InstantPopup);
-		toolButtonOutputMode->setMenu(menuOutputMode);
-
-		toolButtonOutputPostproc = new QToolButton(MainWindow);
-		toolButtonOutputPostproc->setIcon(QIcon(":/icons/stripcrlf"));
-		toolButtonOutputPostproc->setText(gettext("Strip Line Breaks"));
-		toolButtonOutputPostproc->setToolTip(gettext("Strip line breaks on selected text"));
-		toolButtonOutputPostproc->setPopupMode(QToolButton::MenuButtonPopup);
-		toolButtonOutputPostproc->setMenu(menuOutputPostproc);
-
-		actionOutputReplace = new QAction(QIcon::fromTheme("edit-find-replace"), gettext("Find and Replace"), MainWindow);
-		actionOutputReplace->setToolTip(gettext("Find and replace"));
-		actionOutputReplace->setCheckable(true);
-		actionOutputUndo = new QAction(QIcon::fromTheme("edit-undo"), gettext("Undo"), MainWindow);
-		actionOutputUndo->setToolTip(gettext("Undo"));
-		actionOutputUndo->setEnabled(false);
-		actionOutputRedo = new QAction(QIcon::fromTheme("edit-redo"), gettext("Redo"), MainWindow);
-		actionOutputRedo->setToolTip(gettext("Redo"));
-		actionOutputRedo->setEnabled(false);
-		actionOutputSave = new QAction(QIcon::fromTheme("document-save-as"), gettext("Save Output"), MainWindow);
-		actionOutputSave->setToolTip(gettext("Save output"));
-		actionOutputClear = new QAction(QIcon::fromTheme("edit-clear"), gettext("Clear Output"), MainWindow);
-		actionOutputClear->setToolTip(gettext("Clear output"));
-
-		toolBarOutput = new QToolBar(MainWindow);
-		toolBarOutput->setToolButtonStyle(Qt::ToolButtonIconOnly);
-		toolBarOutput->setIconSize(QSize(1, 1) * toolBarSources->style()->pixelMetric(QStyle::PM_SmallIconSize));
-		toolBarOutput->addWidget(toolButtonOutputMode);
-		toolBarOutput->addWidget(toolButtonOutputPostproc);
-		toolBarOutput->addAction(actionOutputReplace);
-		toolBarOutput->addAction(actionOutputUndo);
-		toolBarOutput->addAction(actionOutputRedo);
-		toolBarOutput->addAction(actionOutputSave);
-		toolBarOutput->addAction(actionOutputClear);
-
-		static_cast<QVBoxLayout*>(dockWidgetContentsOutput->layout()->layout())->insertWidget(0, toolBarOutput);
 	}
 };
 

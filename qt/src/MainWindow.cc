@@ -33,7 +33,8 @@
 #include "Acquirer.hh"
 #include "Config.hh"
 #include "Displayer.hh"
-#include "OutputManager.hh"
+#include "OutputEditorText.hh"
+#include "OutputEditorHOCR.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
@@ -49,14 +50,14 @@ static void signalHandler(int signal)
 	std::signal(signal, nullptr);
 
 	QString filename;
-	if(MAIN->getOutputManager() && MAIN->getOutputManager()->getBufferModified()){
+	if(MAIN->getOutputEditor() && MAIN->getOutputEditor()->getModified()){
 		filename = QDir(Utils::documentsFolder()).absoluteFilePath(QString("%1_crash-save.txt").arg(PACKAGE_NAME));
 		int i = 0;
 		while(QFile(filename).exists()){
 			++i;
 			filename = QDir(Utils::documentsFolder()).absoluteFilePath(QString("%1_crash-save_%2.txt").arg(PACKAGE_NAME).arg(i));
 		}
-		MAIN->getOutputManager()->saveBuffer(filename);
+		MAIN->getOutputEditor()->save(filename);
 	}
 
 	QProcess process;
@@ -106,7 +107,6 @@ MainWindow::MainWindow(const QStringList& files)
 	m_config = new Config(this);
 	m_acquirer = new Acquirer(ui);
 	m_displayer = new Displayer(ui);
-	m_outputManager = new OutputManager(ui);
 	m_recognizer = new Recognizer(ui);
 	m_sourceManager = new SourceManager(ui);
 
@@ -133,18 +133,22 @@ MainWindow::MainWindow(const QStringList& files)
 	connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
 	connect(ui.actionImageControls, SIGNAL(toggled(bool)), ui.widgetImageControls, SLOT(setVisible(bool)));
 	connect(m_displayer, SIGNAL(selectionChanged(bool)), m_recognizer, SLOT(setRecognizeMode(bool)));
-	connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), m_outputManager, SLOT(setLanguage(Config::Lang)));
 	connect(m_acquirer, SIGNAL(scanPageAvailable(QString)), m_sourceManager, SLOT(addSource(QString)));
 	connect(m_sourceManager, SIGNAL(sourceChanged()), this, SLOT(onSourceChanged()));
+	connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), ui.dockWidgetOutput, SLOT(setVisible(bool)));
+	connect(ui.comboBoxOutputMode, SIGNAL(currentIndexChanged(int)), this, SLOT(setOutputEditor(int)));
+
 
 	m_config->addSetting(new VarSetting<QByteArray>("wingeom"));
 	m_config->addSetting(new VarSetting<QByteArray>("winstate"));
 	m_config->addSetting(new ActionSetting("showcontrols", ui.actionImageControls));
+	m_config->addSetting(new ComboSetting("outputeditor", ui.comboBoxOutputMode, 0));
 
 	m_recognizer->updateLanguagesMenu();
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
+	setOutputEditor(ui.comboBoxOutputMode->currentIndex());
 	restoreGeometry(m_config->getSetting<VarSetting<QByteArray>>("wingeom")->getValue());
 	restoreState(m_config->getSetting<VarSetting<QByteArray>>("winstate")->getValue());
 	ui.dockWidgetOutput->setVisible(false);
@@ -164,7 +168,7 @@ MainWindow::MainWindow(const QStringList& files)
 MainWindow::~MainWindow()
 {
 	delete m_acquirer;
-	delete m_outputManager;
+	delete m_outputEditor;
 	delete m_sourceManager;
 	delete m_recognizer;
 	delete m_displayer;
@@ -175,6 +179,11 @@ MainWindow::~MainWindow()
 void MainWindow::openFiles(const QStringList& files)
 {
 	m_sourceManager->addSources(files);
+}
+
+void MainWindow::setOutputPaneVisible(bool visible)
+{
+	ui.actionToggleOutputPane->setChecked(visible);
 }
 
 void MainWindow::pushState(MainWindow::State state, const QString& msg)
@@ -208,7 +217,7 @@ void MainWindow::setState(State state)
 
 void MainWindow::closeEvent(QCloseEvent* ev)
 {
-	if(!m_outputManager->clearBuffer()){
+	if(!m_outputEditor->clear()){
 		ev->ignore();
 	}else if(!isMaximized()){
 		m_config->getSetting<VarSetting<QByteArray>>("wingeom")->setValue(saveGeometry());
@@ -260,6 +269,29 @@ void MainWindow::showConfig()
 {
 	m_config->showDialog();
 	m_recognizer->updateLanguagesMenu();
+}
+
+void MainWindow::setOutputEditor(int idx)
+{
+	if(m_outputEditor && !m_outputEditor->clear()){
+		ui.comboBoxOutputMode->blockSignals(true);
+		if(dynamic_cast<OutputEditorText*>(m_outputEditor)) {
+			ui.comboBoxOutputMode->setCurrentIndex(0);
+		} else /*if(idx == 1)*/ {
+			ui.comboBoxOutputMode->setCurrentIndex(1);
+		}
+		ui.comboBoxOutputMode->blockSignals(false);
+	} else {
+		delete m_outputEditor;
+		if(idx == 0) {
+			m_outputEditor = new OutputEditorText();
+		} else /*if(idx == 1)*/ {
+			m_outputEditor = new OutputEditorHOCR();
+		}
+		connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), m_outputEditor, SLOT(setLanguage(Config::Lang)));
+		connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), m_outputEditor, SLOT(onVisibilityChanged(bool)));
+		ui.dockWidgetOutput->setWidget(m_outputEditor->getUI());
+	}
 }
 
 void MainWindow::addNotification(const QString& title, const QString& message, const QList<NotificationAction> &actions, MainWindow::Notification* handle)

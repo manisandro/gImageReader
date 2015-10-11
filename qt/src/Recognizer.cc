@@ -31,7 +31,7 @@
 
 #include "Displayer.hh"
 #include "MainWindow.hh"
-#include "OutputManager.hh"
+#include "OutputEditor.hh"
 #include "Recognizer.hh"
 #include "Utils.hh"
 #include "ui_PageRangeDialog.h"
@@ -336,11 +336,12 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 		if(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue() == true){
 			tess.SetPageSegMode(tesseract::PSM_AUTO_OSD);
 		}
+		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead();
 		Utils::busyTask([&]{
 			int npages = pages.size();
 			int idx = 0;
-			bool insertText = false;
 			for(int page : pages){
+				readSessionData->currentPage = page;
 				++idx;
 				QMetaObject::invokeMethod(MAIN, "pushState", Qt::QueuedConnection, Q_ARG(MainWindow::State, MainWindow::State::Busy), Q_ARG(QString, _("Recognizing page %1 (%2 of %3)").arg(page).arg(idx).arg(npages)));
 
@@ -348,21 +349,18 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 				QMetaObject::invokeMethod(this, "setPage", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(int, page), Q_ARG(bool, autodetectLayout));
 				if(!success){
 					failed.append(_("\n\tPage %1: failed to render page").arg(page));
-					QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, _("\n[Failed to recognize page %1]\n")), Q_ARG(bool, insertText));
-					insertText = true;
+					MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
 					continue;
 				}
 				for(const QImage& image : MAIN->getDisplayer()->getSelections()){
 					tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
-					char* text = tess.GetUTF8Text();
-					QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(text)), Q_ARG(bool, insertText));
-					delete[] text;
-					insertText = true;
+					MAIN->getOutputEditor()->read(tess, readSessionData);
 				}
 				QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
 			}
 			return true;
 		}, _("Recognizing..."));
+		MAIN->getOutputEditor()->finalizeRead(readSessionData);
 	}
 	if(!failed.isEmpty()){
 		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("The following errors occurred:%1").arg(failed));
@@ -376,17 +374,22 @@ bool Recognizer::recognizeImage(const QImage& img, OutputDestination dest)
 		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 		return false;
 	}
-	QString output;
-	Utils::busyTask([&]{
-		tess.SetImage(img.bits(), img.width(), img.height(), 4, img.bytesPerLine());
-		char* text = tess.GetUTF8Text();
-		output = QString::fromUtf8(text);
-		delete[] text;
-		return true;
-	}, _("Recognizing..."));
+	tess.SetImage(img.bits(), img.width(), img.height(), 4, img.bytesPerLine());
 	if(dest == OutputDestination::Buffer){
-		MAIN->getOutputManager()->addText(output, false);
+		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead();
+		Utils::busyTask([&]{
+			MAIN->getOutputEditor()->read(tess, readSessionData);
+			return true;
+		}, _("Recognizing..."));
+		MAIN->getOutputEditor()->finalizeRead(readSessionData);
 	}else if(dest == OutputDestination::Clipboard){
+		QString output;
+		Utils::busyTask([&]{
+			char* text = tess.GetUTF8Text();
+			output = QString::fromUtf8(text);
+			delete[] text;
+			return true;
+		}, _("Recognizing..."));
 		QApplication::clipboard()->setText(output);
 	}
 	return true;
@@ -399,11 +402,6 @@ bool Recognizer::setPage(int page, bool autodetectLayout)
 		MAIN->getDisplayer()->autodetectLayout();
 	}
 	return success;
-}
-
-void Recognizer::addText(const QString& text, bool insertText)
-{
-	MAIN->getOutputManager()->addText(text, insertText);
 }
 
 bool Recognizer::eventFilter(QObject* obj, QEvent* ev)

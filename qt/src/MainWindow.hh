@@ -34,7 +34,7 @@
 class Config;
 class Acquirer;
 class Displayer;
-class OutputManager;
+class OutputEditor;
 class Recognizer;
 class SourceManager;
 class Source;
@@ -60,11 +60,12 @@ public:
 
 	Config* getConfig(){ return m_config; }
 	Displayer* getDisplayer(){ return m_displayer; }
-	OutputManager* getOutputManager(){ return m_outputManager; }
+	OutputEditor* getOutputEditor(){ return m_outputEditor; }
 	Recognizer* getRecognizer(){ return m_recognizer; }
 	SourceManager* getSourceManager(){ return m_sourceManager; }
 	void addNotification(const QString& title, const QString& message, const QList<NotificationAction>& actions, Notification* handle = nullptr);
 	void openFiles(const QStringList& files);
+	void setOutputPaneVisible(bool visible);
 
 public slots:
 	void popState();
@@ -80,7 +81,7 @@ private:
 	Config* m_config = nullptr;
 	Acquirer* m_acquirer = nullptr;
 	Displayer* m_displayer = nullptr;
-	OutputManager* m_outputManager = nullptr;
+	OutputEditor* m_outputEditor = nullptr;
 	Recognizer* m_recognizer = nullptr;
 	SourceManager* m_sourceManager = nullptr;
 
@@ -107,6 +108,7 @@ private slots:
 	void showConfig();
 	void openDownloadUrl();
 	void openChangeLogUrl();
+	void setOutputEditor(int idx);
 };
 
 Q_DECLARE_METATYPE(MainWindow::State)

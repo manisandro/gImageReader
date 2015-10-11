@@ -19,6 +19,8 @@
 
 #include "OutputTextEdit.hh"
 
+#include <QApplication>
+#include <QEventLoop>
 #include <QPainter>
 #include <QSyntaxHighlighter>
 
@@ -80,6 +82,96 @@ QTextCursor OutputTextEdit::regionBounds() const{
 		c.setPosition(pos, QTextCursor::KeepAnchor);
 	}
 	return c;
+}
+
+bool OutputTextEdit::findReplace(bool backwards, bool replace, bool matchCase, const QString &searchstr, const QString &replacestr)
+{
+	clearFocus();
+	if(searchstr.isEmpty()){
+		return false;
+	}
+
+	QTextDocument::FindFlags flags = 0;
+	Qt::CaseSensitivity cs = Qt::CaseInsensitive;
+	if(backwards){
+		flags |= QTextDocument::FindBackward;
+	}
+	if(matchCase){
+		flags |= QTextDocument::FindCaseSensitively;
+		cs = Qt::CaseSensitive;
+	}
+
+	QTextCursor regionCursor = regionBounds();
+
+	QTextCursor selCursor = textCursor();
+	if(selCursor.selectedText().compare(searchstr, cs) == 0){
+		if(replace){
+			selCursor.insertText(replacestr);
+			selCursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor, replacestr.length());
+			setTextCursor(selCursor);
+			ensureCursorVisible();
+			return true;
+		}
+		if(backwards){
+			selCursor.setPosition(qMin(selCursor.position(), selCursor.anchor()));
+		}else{
+			selCursor.setPosition(qMax(selCursor.position(), selCursor.anchor()));
+		}
+	}
+
+	QTextCursor findcursor = document()->find(searchstr, selCursor, flags);
+	if(findcursor.isNull() || !(findcursor.anchor() >= regionCursor.anchor() && findcursor.position() <= regionCursor.position())){
+		if(backwards){
+			selCursor.setPosition(regionCursor.position());
+		}else{
+			selCursor.setPosition(regionCursor.anchor());
+		}
+		findcursor = document()->find(searchstr, selCursor, flags);
+		if(findcursor.isNull() || !(findcursor.anchor() >= regionCursor.anchor() && findcursor.position() <= regionCursor.position())){
+			return false;
+		}
+	}
+	setTextCursor(findcursor);
+	ensureCursorVisible();
+	return true;
+}
+
+bool OutputTextEdit::replaceAll(const QString &searchstr, const QString &replacestr, bool matchCase)
+{
+	QTextCursor cursor =  regionBounds();
+	int end = cursor.position();
+	QString cursel = cursor.selectedText();
+	if(cursor.anchor() == cursor.position() ||
+	   cursel == searchstr ||
+	   cursel == replacestr)
+	{
+		cursor.movePosition(QTextCursor::Start);
+		QTextCursor tmp(cursor);
+		tmp.movePosition(QTextCursor::End);
+		end = tmp.position();
+	}else{
+		cursor.setPosition(qMin(cursor.anchor(), cursor.position()));
+	}
+	QTextDocument::FindFlags flags = 0;
+	if(matchCase){
+		flags = QTextDocument::FindCaseSensitively;
+	}
+	int diff = replacestr.length() - searchstr.length();
+	int count = 0;
+	while(true){
+		cursor = document()->find(searchstr, cursor, flags);
+		if(cursor.isNull() || cursor.position() > end){
+			break;
+		}
+		cursor.insertText(replacestr);
+		end += diff;
+		++count;
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+	}
+	if(count == 0){
+		return false;
+	}
+	return true;
 }
 
 void OutputTextEdit::setDrawWhitespace(bool drawWhitespace)

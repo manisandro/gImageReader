@@ -68,7 +68,6 @@ private:
 	bool eventFilter(QObject *obj, QEvent *ev);
 
 private slots:
-	void addText(const QString& text, bool insertText);
 	void clearLineEditPageRangeStyle();
 	void osdToggled(bool state);
 	void recognizeButtonClicked();

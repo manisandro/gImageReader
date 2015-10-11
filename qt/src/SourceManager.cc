@@ -20,6 +20,7 @@
 #include <QClipboard>
 #include <QDesktopWidget>
 #include <QDesktopServices>
+#include <QDragEnterEvent>
 #include <QFile>
 #include <QFileDialog>
 #include <QFileInfo>

@@ -30,6 +30,8 @@ public:
 	~OutputTextEdit();
 
 	QTextCursor regionBounds() const;
+	bool findReplace(bool backwards, bool replace, bool matchCase, const QString& searchstr, const QString& replacestr);
+	bool replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase);
 
 public slots:
 	void setDrawWhitespace(bool drawWhitespace);
