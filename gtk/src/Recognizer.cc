@@ -390,7 +390,10 @@ bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, O
 
 bool Recognizer::setPage(int page, bool autodetectLayout)
 {
-	bool success = MAIN->getDisplayer()->setCurrentPage(page);
+	bool success = true;
+	if(page != MAIN->getDisplayer()->getCurrentPage()) {
+		success = MAIN->getDisplayer()->setCurrentPage(page);
+	}
 	if(autodetectLayout) {
 		MAIN->getDisplayer()->autodetectLayout();
 	}

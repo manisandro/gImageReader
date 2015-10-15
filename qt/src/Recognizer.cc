@@ -397,7 +397,10 @@ bool Recognizer::recognizeImage(const QImage& img, OutputDestination dest)
 
 bool Recognizer::setPage(int page, bool autodetectLayout)
 {
-	bool success = MAIN->getDisplayer()->setCurrentPage(page);
+	bool success = true;
+	if(page != MAIN->getDisplayer()->getCurrentPage()) {
+		success = MAIN->getDisplayer()->setCurrentPage(page);
+	}
 	if(success && autodetectLayout) {
 		MAIN->getDisplayer()->autodetectLayout();
 	}
