@@ -40,6 +40,8 @@ public slots:
 	virtual bool save(const QString& filename = "") override;
 
 private:
+	class HTMLHighlighter;
+
 	QWidget* m_widget;
 	UI_OutputEditorHOCR ui;
 

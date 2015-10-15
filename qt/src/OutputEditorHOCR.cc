@@ -21,6 +21,7 @@
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QFileDialog>
+#include <QSyntaxHighlighter>
 #include <tesseract/baseapi.h>
 
 #include "MainWindow.hh"
@@ -30,10 +31,72 @@
 #include "Utils.hh"
 
 
+class OutputEditorHOCR::HTMLHighlighter : public QSyntaxHighlighter
+{
+public:
+	HTMLHighlighter(QTextDocument *document) : QSyntaxHighlighter(document)
+	{
+		mColorMap[NormalState] = QColor(Qt::black);
+		mColorMap[InTag] = QColor(75, 75, 255);
+		mColorMap[InAttrKey] = QColor(75, 200, 75);
+		mColorMap[InAttrValue] = QColor(255, 75, 75);
+		mColorMap[InAttrValueDblQuote] = QColor(255, 75, 75);
+
+		mStateMap[NormalState].append({QRegExp("<"), InTag, false});
+		mStateMap[InTag].append({QRegExp(">"), NormalState, true});
+		mStateMap[InTag].append({QRegExp("\\w+="), InAttrKey, false});
+		mStateMap[InAttrKey].append({QRegExp("'"), InAttrValue, false});
+		mStateMap[InAttrKey].append({QRegExp("\""), InAttrValueDblQuote, false});
+		mStateMap[InAttrKey].append({QRegExp("\\s"), NormalState, false});
+		mStateMap[InAttrValue].append({QRegExp("'[^']*'"), InTag, true});
+		mStateMap[InAttrValueDblQuote].append({QRegExp("\"[^\"]*\""), InTag, true});
+	}
+
+private:
+	enum State { NormalState = -1, InComment, InTag, InAttrKey, InAttrValue, InAttrValueDblQuote };
+	struct Rule {
+		QRegExp pattern;
+		State nextState;
+		bool addMatched; // add matched length to pos
+	};
+
+	QMap<State,QColor> mColorMap;
+	QMap<State,QList<Rule>> mStateMap;
+
+	void highlightBlock(const QString &text)
+	{
+		int pos = 0;
+		int len = text.length();
+		State state = static_cast<State>(previousBlockState());
+		while(pos < len) {
+			State minState = state;
+			int minPos = -1;
+			for(const Rule& rule : mStateMap.value(state)) {
+				int matchPos = rule.pattern.indexIn(text, pos);
+				if(matchPos != -1 && (minPos < 0 || matchPos < minPos)) {
+					minPos = matchPos + (rule.addMatched ? rule.pattern.matchedLength() : 0);
+					minState = rule.nextState;
+				}
+			}
+			if(minPos == -1) {
+				setFormat(pos, len - pos, mColorMap[state]);
+				pos = len;
+			} else {
+				setFormat(pos, minPos - pos, mColorMap[state]);
+				pos = minPos;
+				state = minState;
+			}
+		}
+
+		setCurrentBlockState(state);
+	}
+};
+
 OutputEditorHOCR::OutputEditorHOCR()
 {
 	m_widget = new QWidget;
 	ui.setupUi(m_widget);
+	new HTMLHighlighter(ui.plainTextEditOutput->document());
 	ui.frameOutputSearch->setVisible(false);
 
 	ui.actionOutputReplace->setShortcut(Qt::CTRL + Qt::Key_F);
