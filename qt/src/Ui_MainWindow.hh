@@ -67,6 +67,7 @@ public:
 		spinBoxRotation->setSingleStep(0.1);
 		spinBoxRotation->setWrapping(true);
 		spinBoxRotation->setFrame(false);
+		spinBoxRotation->setKeyboardTracking(false);
 		layoutRotation->addWidget(spinBoxRotation);
 
 		actionRotate = new QWidgetAction(MainWindow);
@@ -91,6 +92,7 @@ public:
 		spinBoxPage = new QSpinBox(MainWindow);
 		spinBoxPage->setRange(1, 1);
 		spinBoxPage->setFrame(false);
+		spinBoxPage->setKeyboardTracking(false);
 		layoutPage->addWidget(spinBoxPage);
 
 		actionPage = new QWidgetAction(MainWindow);
