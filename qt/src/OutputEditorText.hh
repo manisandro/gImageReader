@@ -27,9 +27,6 @@
 #include "OutputEditor.hh"
 #include "Ui_OutputEditorText.hh"
 
-class QDBusInterface;
-template <class T> class QDBusReply;
-class QDBusError;
 class SubstitutionsManager;
 
 class OutputEditorText : public OutputEditor {
@@ -60,10 +57,8 @@ private:
 	QWidget* m_widget;
 	UI_OutputEditorText ui;
 
-	QDBusInterface* m_dbusIface = nullptr;
 	InsertMode m_insertMode;
 	QtSpell::TextEditChecker m_spell;
-	MainWindow::Notification m_notifierHandle = nullptr;
 	SubstitutionsManager* m_substitutionsManager;
 
 	void findReplace(bool backwards, bool replace);
@@ -78,9 +73,6 @@ private slots:
 	void replaceNext();
 	void setFont();
 	void setInsertMode(QAction* action);
-	void dictionaryAutoinstall();
-	void dictionaryAutoinstallDone();
-	void dictionaryAutoinstallError(const QDBusError& error);
 };
 
 #endif // OUTPUTEDITORTEXT_HH
