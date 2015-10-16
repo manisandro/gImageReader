@@ -31,16 +31,23 @@
 #include "Utils.hh"
 
 
+static const int g_noSpellProp = QTextFormat::UserProperty + 1;
+
+
 class OutputEditorHOCR::HTMLHighlighter : public QSyntaxHighlighter
 {
 public:
 	HTMLHighlighter(QTextDocument *document) : QSyntaxHighlighter(document)
 	{
-		mColorMap[NormalState] = QColor(Qt::black);
-		mColorMap[InTag] = QColor(75, 75, 255);
-		mColorMap[InAttrKey] = QColor(75, 200, 75);
-		mColorMap[InAttrValue] = QColor(255, 75, 75);
-		mColorMap[InAttrValueDblQuote] = QColor(255, 75, 75);
+		mFormatMap[NormalState].setForeground(QColor(Qt::black));
+		mFormatMap[InTag].setForeground(QColor(75, 75, 255));
+		mFormatMap[InTag].setProperty(g_noSpellProp, 1);
+		mFormatMap[InAttrKey].setForeground(QColor(75, 200, 75));
+		mFormatMap[InAttrKey].setProperty(g_noSpellProp, 1);
+		mFormatMap[InAttrValue].setForeground(QColor(255, 75, 75));
+		mFormatMap[InAttrValue].setProperty(g_noSpellProp, 1);
+		mFormatMap[InAttrValueDblQuote].setForeground(QColor(255, 75, 75));
+		mFormatMap[InAttrValueDblQuote].setProperty(g_noSpellProp, 1);
 
 		mStateMap[NormalState].append({QRegExp("<"), InTag, false});
 		mStateMap[InTag].append({QRegExp(">"), NormalState, true});
@@ -60,7 +67,7 @@ private:
 		bool addMatched; // add matched length to pos
 	};
 
-	QMap<State,QColor> mColorMap;
+	QMap<State,QTextCharFormat> mFormatMap;
 	QMap<State,QList<Rule>> mStateMap;
 
 	void highlightBlock(const QString &text)
@@ -79,10 +86,10 @@ private:
 				}
 			}
 			if(minPos == -1) {
-				setFormat(pos, len - pos, mColorMap[state]);
+				setFormat(pos, len - pos, mFormatMap[state]);
 				pos = len;
 			} else {
-				setFormat(pos, minPos - pos, mColorMap[state]);
+				setFormat(pos, minPos - pos, mFormatMap[state]);
 				pos = minPos;
 				state = minState;
 			}
@@ -96,8 +103,14 @@ OutputEditorHOCR::OutputEditorHOCR()
 {
 	m_widget = new QWidget;
 	ui.setupUi(m_widget);
-	new HTMLHighlighter(ui.plainTextEditOutput->document());
+	m_highlighter = new HTMLHighlighter(ui.plainTextEditOutput->document());
 	ui.frameOutputSearch->setVisible(false);
+
+	m_spell.setDecodeLanguageCodes(true);
+	m_spell.setShowCheckSpellingCheckbox(true);
+	m_spell.setTextEdit(ui.plainTextEditOutput);
+	m_spell.setUndoRedoEnabled(true);
+	m_spell.setNoSpellingPropertyId(g_noSpellProp);
 
 	ui.actionOutputReplace->setShortcut(Qt::CTRL + Qt::Key_F);
 	ui.actionOutputSave->setShortcut(Qt::CTRL + Qt::Key_S);
@@ -105,8 +118,12 @@ OutputEditorHOCR::OutputEditorHOCR()
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.frameOutputSearch, SLOT(setVisible(bool)));
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.lineEditOutputSearch, SLOT(clear()));
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.lineEditOutputReplace, SLOT(clear()));
+	connect(ui.actionOutputUndo, SIGNAL(triggered()), &m_spell, SLOT(undo()));
+	connect(ui.actionOutputRedo, SIGNAL(triggered()), &m_spell, SLOT(redo()));
 	connect(ui.actionOutputSave, SIGNAL(triggered()), this, SLOT(save()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
+	connect(&m_spell, SIGNAL(undoAvailable(bool)), ui.actionOutputUndo, SLOT(setEnabled(bool)));
+	connect(&m_spell, SIGNAL(redoAvailable(bool)), ui.actionOutputRedo, SLOT(setEnabled(bool)));
 	connect(ui.checkBoxOutputSearchMatchCase, SIGNAL(toggled(bool)), this, SLOT(clearErrorState()));
 	connect(ui.lineEditOutputSearch, SIGNAL(textChanged(QString)), this, SLOT(clearErrorState()));
 	connect(ui.lineEditOutputSearch, SIGNAL(returnPressed()), this, SLOT(findNext()));
@@ -239,6 +256,7 @@ bool OutputEditorHOCR::clear()
 		}
 	}
 	ui.plainTextEditOutput->clear();
+	m_spell.clearUndoRedo();
 	ui.plainTextEditOutput->document()->setModified(false);
 	MAIN->setOutputPaneVisible(false);
 	return true;
@@ -247,4 +265,12 @@ bool OutputEditorHOCR::clear()
 bool OutputEditorHOCR::getModified() const
 {
 	return ui.plainTextEditOutput->document()->isModified();
+}
+
+void OutputEditorHOCR::setLanguage(const Config::Lang& lang, bool force)
+{
+	QString code = lang.code;
+	if(!code.isEmpty() || force){
+		m_spell.setLanguage(code);
+	}
 }

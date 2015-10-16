@@ -23,6 +23,8 @@
 #include "OutputEditor.hh"
 #include "Ui_OutputEditorHOCR.hh"
 
+#include <QtSpell.hpp>
+
 class OutputEditorHOCR : public OutputEditor {
 	Q_OBJECT
 public:
@@ -34,6 +36,7 @@ public:
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
 	bool getModified() const override;
+	void setLanguage(const Config::Lang &lang, bool force = false) override;
 
 public slots:
 	virtual bool clear() override;
@@ -44,6 +47,8 @@ private:
 
 	QWidget* m_widget;
 	UI_OutputEditorHOCR ui;
+	HTMLHighlighter* m_highlighter;
+	QtSpell::TextEditChecker m_spell;
 
 	void findReplace(bool backwards, bool replace);
 
