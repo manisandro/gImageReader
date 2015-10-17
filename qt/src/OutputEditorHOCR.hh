@@ -64,6 +64,7 @@ private slots:
 	void replaceAll();
 	void replaceNext();
 	void setFont();
+	void selectCurrentBox();
 };
 
 #endif // OUTPUTEDITORHOCR_HH

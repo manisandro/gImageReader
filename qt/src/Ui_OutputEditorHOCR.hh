@@ -15,6 +15,7 @@
 class UI_OutputEditorHOCR
 {
 public:
+	QAction* actionSelectBox;
 	QAction* actionOutputClear;
 	QAction* actionOutputRedo;
 	QAction* actionOutputReplace;
@@ -39,6 +40,8 @@ public:
 		widget->layout()->setSpacing(0);
 
 		// Output toolbar
+		actionSelectBox = new QAction(QIcon(":/icons/select"), gettext("Select current box"), widget);
+		actionSelectBox->setToolTip(gettext("Select current box"));
 		actionOutputUndo = new QAction(QIcon::fromTheme("edit-undo"), gettext("Undo"), widget);
 		actionOutputUndo->setToolTip(gettext("Undo"));
 		actionOutputUndo->setEnabled(false);
@@ -56,6 +59,7 @@ public:
 		toolBarOutput = new QToolBar(widget);
 		toolBarOutput->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		toolBarOutput->setIconSize(QSize(1, 1) * toolBarOutput->style()->pixelMetric(QStyle::PM_SmallIconSize));
+		toolBarOutput->addAction(actionSelectBox);
 		toolBarOutput->addAction(actionOutputUndo);
 		toolBarOutput->addAction(actionOutputRedo);
 		toolBarOutput->addAction(actionOutputReplace);

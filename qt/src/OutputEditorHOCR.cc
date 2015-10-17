@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QApplication>
 #include <QDir>
 #include <QDomDocument>
 #include <QMessageBox>
@@ -116,6 +117,7 @@ OutputEditorHOCR::OutputEditorHOCR()
 	ui.actionOutputReplace->setShortcut(Qt::CTRL + Qt::Key_F);
 	ui.actionOutputSave->setShortcut(Qt::CTRL + Qt::Key_S);
 
+	connect(ui.actionSelectBox, SIGNAL(triggered(bool)), this, SLOT(selectCurrentBox()));
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.frameOutputSearch, SLOT(setVisible(bool)));
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.lineEditOutputSearch, SLOT(clear()));
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.lineEditOutputReplace, SLOT(clear()));
@@ -212,7 +214,7 @@ void OutputEditorHOCR::readError(const QString &errorMsg, ReadSessionData */*dat
 void OutputEditorHOCR::adjustBBox(QDomElement element, const QRectF& rect)
 {
 	static QRegExp bboxRx("bbox\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)");
-	static QRegExp idRx("(\\w+)_\\d+_(\\d+)");
+	static QRegExp idRx("([A-Za-z]+)_\\d+_(\\d+)");
 	while(!element.isNull()) {
 		if(bboxRx.indexIn(element.attribute("title")) != -1) {
 			int x1 = bboxRx.cap(1).toInt() + rect.x();
@@ -308,4 +310,60 @@ void OutputEditorHOCR::setLanguage(const Config::Lang& lang, bool force)
 	if(!code.isEmpty() || force){
 		m_spell.setLanguage(code);
 	}
+}
+
+void OutputEditorHOCR::selectCurrentBox()
+{
+	QTextCursor cursor = ui.plainTextEditOutput->textCursor();
+	// Move to beginning of parent ocr tag
+	cursor = ui.plainTextEditOutput->document()->find("class=\"ocr", cursor, QTextDocument::FindBackward);
+	cursor = ui.plainTextEditOutput->document()->find(QRegExp("<\\w+"), cursor, QTextDocument::FindBackward);
+	if(cursor.isNull()) {
+		return;
+	}
+	// Move to end of tag
+	QTextCursor tagEndCursor = ui.plainTextEditOutput->document()->find(">", cursor);
+	if(tagEndCursor.isNull()) {
+		return;
+	}
+	cursor.setPosition(tagEndCursor.position(), QTextCursor::KeepAnchor);
+	QString tagText = cursor.selectedText();
+
+	static QRegExp idRx("id=\"[A-Za-z]+_(\\d+)");
+	static QRegExp bboxRx("bbox\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)");
+	if(idRx.indexIn(tagText) == -1 || bboxRx.indexIn(tagText) == -1) {
+		return;
+	}
+	int pageId = idRx.cap(1).toInt();
+	int x1 = bboxRx.cap(1).toInt();
+	int y1 = bboxRx.cap(2).toInt();
+	int x2 = bboxRx.cap(3).toInt();
+	int y2 = bboxRx.cap(4).toInt();
+
+	// Search div tag of page
+	QTextCursor divCursor = ui.plainTextEditOutput->document()->find(QString("id=\"page_%1\"").arg(pageId), cursor, QTextDocument::FindBackward);
+	divCursor = ui.plainTextEditOutput->document()->find("<div", divCursor, QTextDocument::FindBackward);
+	tagEndCursor = ui.plainTextEditOutput->document()->find(">", divCursor);
+	if(divCursor.isNull() || tagEndCursor.isNull()) {
+		return;
+	}
+	divCursor.setPosition(tagEndCursor.position(), QTextCursor::KeepAnchor);
+	QString divText = divCursor.selectedText();
+	static QRegExp titleRx("title=\"image\\s+'(.+)';\\s+bbox\\s+\\d+\\s+\\d+\\s+\\d+\\s+\\d+;\\s+pageno\\s+(\\d+);\\s+rot\\s+(\\d+\\.?\\d*)\"");
+	if(titleRx.indexIn(divText) == -1) {
+		return;
+	}
+	QString filename = titleRx.cap(1);
+	int page = titleRx.cap(2).toInt();
+	double angle = titleRx.cap(3).toInt();
+
+	MAIN->getSourceManager()->addSource(filename);
+	QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+	int dummy;
+	if(MAIN->getDisplayer()->getCurrentImage(dummy) != filename) {
+		return;
+	}
+	MAIN->getDisplayer()->setCurrentPage(page);
+	MAIN->getDisplayer()->setRotation(angle);
+	MAIN->getDisplayer()->setSelection(QRect(x1, y1, x2 - x1, y2 - y1));
 }

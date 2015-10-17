@@ -433,6 +433,18 @@ void Displayer::reorderSelection(int oldNum, int newNum)
 	}
 }
 
+void Displayer::setSelection(const QRect &rect)
+{
+	QRect imageRect = m_imageItem->sceneBoundingRect().toRect();
+	QRect tRect = rect.translated(imageRect.topLeft());
+	clearSelections();
+	DisplaySelection* sel = new DisplaySelection(this, 1, tRect.topLeft());
+	sel->setPoint(tRect.bottomRight());
+	sel->setZValue(1);
+	m_scene->addItem(sel);
+	m_selections.append(sel);
+}
+
 QList<Displayer::Selection> Displayer::getSelections()
 {
 	QList<Selection> images;

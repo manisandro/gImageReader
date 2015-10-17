@@ -84,6 +84,7 @@ void SourceManager::addSources(const QStringList& files)
 		bool contains = false;
 		for(int row = 0, nRows = ui.listWidgetSources->count(); row < nRows; ++row){
 			if(ui.listWidgetSources->item(row)->toolTip() == filename){
+				item = ui.listWidgetSources->item(row);
 				contains = true;
 				break;
 			}

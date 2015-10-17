@@ -15,5 +15,6 @@
         <file alias="logo_48">../../data/icons/48x48/gimagereader.png</file>
         <file alias="logo_128">../../data/icons/128x128/gimagereader.png</file>
         <file alias="logo_256">../../data/icons/256x256/gimagereader.png</file>
+		<file alias="select">../../data/icons/select.png</file>
     </qresource>
 </RCC>

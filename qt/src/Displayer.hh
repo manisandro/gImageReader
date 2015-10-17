@@ -49,12 +49,14 @@ public:
 	double getCurrentAngle() const;
 	const QString& getCurrentImage(int& page) const;
 	int getNPages() const;
+	void setSelection(const QRect& rect);
 	QList<Selection> getSelections();
 	bool getHasSelections() const{ return !m_selections.isEmpty(); }
 	bool setSources(QList<Source*> sources);
 
 public slots:
 	bool setCurrentPage(int page);
+	void setRotation(double angle);
 	void autodetectLayout(bool rotated = false);
 
 signals:
@@ -124,7 +126,6 @@ private slots:
 	void sendScaleRequest(const ScaleRequest& request);
 	bool renderImage();
 	void rotate90();
-	void setRotation(double angle);
 	void setScaledImage(const QImage& image, double scale);
 	void zoomIn(){ setZoom(Zoom::In); }
 	void zoomOut(){ setZoom(Zoom::Out); }
