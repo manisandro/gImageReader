@@ -18,6 +18,7 @@
  */
 
 #include "MainWindow.hh"
+#include "Config.hh"
 #include "Displayer.hh"
 #include "DisplayRenderer.hh"
 #include "DisplaySelection.hh"
@@ -125,6 +126,17 @@ bool Displayer::setCurrentPage(int page)
 int Displayer::getCurrentPage() const
 {
 	return ui.spinBoxPage->value();
+}
+
+double Displayer::getCurrentAngle() const
+{
+	return ui.spinBoxRotation->value();
+}
+
+const QString& Displayer::getCurrentImage(int& page) const
+{
+	page = m_pageMap[ui.spinBoxPage->value()].second;
+	return m_pageMap[ui.spinBoxPage->value()].first->path;
 }
 
 int Displayer::getNPages() const
@@ -421,14 +433,15 @@ void Displayer::reorderSelection(int oldNum, int newNum)
 	}
 }
 
-QList<QImage> Displayer::getSelections()
+QList<Displayer::Selection> Displayer::getSelections()
 {
-	QList<QImage> images;
+	QList<Selection> images;
+	QRectF imageRect = m_imageItem->sceneBoundingRect();
 	if(m_selections.empty()){
-		images.append(getImage(m_imageItem->sceneBoundingRect()));
+		images.append({getImage(imageRect), imageRect.translated(-imageRect.topLeft()).toRect()});
 	}else{
 		for(const DisplaySelection* sel : m_selections){
-			images.append(getImage(sel->rect()));
+			images.append({getImage(sel->rect()), sel->rect().translated(-imageRect.topLeft()).toRect()});
 		}
 	}
 	return images;

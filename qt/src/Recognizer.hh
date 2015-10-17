@@ -23,6 +23,7 @@
 #include <QToolButton>
 
 #include "Config.hh"
+#include "Displayer.hh"
 
 namespace tesseract { class TessBaseAPI; }
 class UI_MainWindow;
@@ -37,7 +38,7 @@ public:
 	const Config::Lang& getSelectedLanguage() const{ return m_curLang; }
 
 public slots:
-	bool recognizeImage(const QImage& img, OutputDestination dest);
+	bool recognizeImage(const Displayer::Selection& img, OutputDestination dest);
 	void setRecognizeMode(bool haveSelection);
 	void updateLanguagesMenu();
 

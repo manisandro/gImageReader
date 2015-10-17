@@ -25,6 +25,8 @@
 
 #include <QtSpell.hpp>
 
+class QDomElement;
+
 class OutputEditorHOCR : public OutputEditor {
 	Q_OBJECT
 public:
@@ -49,11 +51,13 @@ private:
 	UI_OutputEditorHOCR ui;
 	HTMLHighlighter* m_highlighter;
 	QtSpell::TextEditChecker m_spell;
+	int m_pageCounter = 0;
 
 	void findReplace(bool backwards, bool replace);
+	void adjustBBox(QDomElement element, const QRectF& rect);
 
 private slots:
-	void addText(const QString& text);
+	void addText(const QString& text, ReadSessionData data);
 	void clearErrorState();
 	void findNext();
 	void findPrev();

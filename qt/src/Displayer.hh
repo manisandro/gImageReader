@@ -20,8 +20,6 @@
 #ifndef DISPLAYER_HH
 #define DISPLAYER_HH
 
-#include "Recognizer.hh"
-
 #include <functional>
 #include <QGraphicsView>
 #include <QImage>
@@ -40,11 +38,18 @@ class GraphicsScene;
 class Displayer : public QGraphicsView {
 	Q_OBJECT
 public:
+	struct Selection {
+		QImage image;
+		QRect rect;
+	};
+
 	Displayer(const UI_MainWindow& _ui, QWidget* parent = nullptr);
 	~Displayer();
 	int getCurrentPage() const;
+	double getCurrentAngle() const;
+	const QString& getCurrentImage(int& page) const;
 	int getNPages() const;
-	QList<QImage> getSelections();
+	QList<Selection> getSelections();
 	bool getHasSelections() const{ return !m_selections.isEmpty(); }
 	bool setSources(QList<Source*> sources);
 

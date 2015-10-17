@@ -30,8 +30,13 @@ class OutputEditor : public QObject {
 public:
 	struct ReadSessionData {
 		virtual ~ReadSessionData() = default;
-		int currentPage;
+		int page;
+		QString file;
+		QRect rect;
+		double angle;
 	};
+
+	OutputEditor(QObject* parent = 0);
 
 	virtual QWidget* getUI() = 0;
 	virtual ReadSessionData* initRead() = 0;

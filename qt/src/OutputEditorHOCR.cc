@@ -18,6 +18,7 @@
  */
 
 #include <QDir>
+#include <QDomDocument>
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QFileDialog>
@@ -198,8 +199,8 @@ void OutputEditorHOCR::findReplace(bool backwards, bool replace)
 
 void OutputEditorHOCR::read(tesseract::TessBaseAPI &tess, ReadSessionData *data)
 {
-	char* text = tess.GetHOCRText(data->currentPage);
-	QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(text)));
+	char* text = tess.GetHOCRText(data->page);
+	QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(text)), Q_ARG(ReadSessionData, *data));
 	delete[] text;
 }
 
@@ -208,11 +209,45 @@ void OutputEditorHOCR::readError(const QString &errorMsg, ReadSessionData */*dat
 	QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, errorMsg));
 }
 
-void OutputEditorHOCR::addText(const QString& text)
+void OutputEditorHOCR::adjustBBox(QDomElement element, const QRectF& rect)
 {
+	static QRegExp bboxRx("bbox\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)");
+	static QRegExp idRx("(\\w+)_\\d+_(\\d+)");
+	while(!element.isNull()) {
+		if(bboxRx.indexIn(element.attribute("title")) != -1) {
+			int x1 = bboxRx.cap(1).toInt() + rect.x();
+			int y1 = bboxRx.cap(2).toInt() + rect.y();
+			int x2 = bboxRx.cap(3).toInt() + rect.x();
+			int y2 = bboxRx.cap(4).toInt() + rect.y();
+			QString newBBox = QString("bbox %1 %2 %3 %4").arg(x1).arg(y1).arg(x2).arg(y2);
+			element.setAttribute("title", element.attribute("title").replace(bboxRx, newBBox));
+		}
+		if(idRx.indexIn(element.attribute("id")) != -1) {
+			QString newId = QString("%1_%2_%3").arg(idRx.cap(1)).arg(m_pageCounter).arg(idRx.cap(2));
+			element.setAttribute("id", newId);
+		}
+		adjustBBox(element.firstChildElement(), rect);
+		element = element.nextSiblingElement();
+	}
+}
+
+void OutputEditorHOCR::addText(const QString& text, ReadSessionData data)
+{
+	QDomDocument doc;
+	doc.setContent(text);
+	QDomElement pageDiv = doc.firstChildElement("div");
+	QString pageTitle = QString("image '%1'; bbox %2 %3 %4 %5; pageno %6; rot %7")
+			.arg(data.file)
+			.arg(data.rect.left()).arg(data.rect.top()).arg(data.rect.right()).arg(data.rect.bottom())
+			.arg(data.page)
+			.arg(data.angle);
+	pageDiv.setAttribute("title", pageTitle);
+	pageDiv.setAttribute("id", QString("page_%1").arg(++m_pageCounter));
+	adjustBBox(pageDiv.firstChildElement("div"), data.rect);
+
 	QTextCursor cursor = ui.plainTextEditOutput->textCursor();
 	cursor.movePosition(QTextCursor::End);
-	cursor.insertText(text);
+	cursor.insertText(doc.toString());
 	ui.plainTextEditOutput->setTextCursor(cursor);
 	MAIN->setOutputPaneVisible(true);
 }

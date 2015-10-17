@@ -341,7 +341,6 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 			int npages = pages.size();
 			int idx = 0;
 			for(int page : pages){
-				readSessionData->currentPage = page;
 				++idx;
 				QMetaObject::invokeMethod(MAIN, "pushState", Qt::QueuedConnection, Q_ARG(MainWindow::State, MainWindow::State::Busy), Q_ARG(QString, _("Recognizing page %1 (%2 of %3)").arg(page).arg(idx).arg(npages)));
 
@@ -352,8 +351,11 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 					MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
 					continue;
 				}
-				for(const QImage& image : MAIN->getDisplayer()->getSelections()){
-					tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
+				readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
+				readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
+				for(const Displayer::Selection& sel : MAIN->getDisplayer()->getSelections()){
+					readSessionData->rect = sel.rect;
+					tess.SetImage(sel.image.bits(), sel.image.width(), sel.image.height(), 4, sel.image.bytesPerLine());
 					MAIN->getOutputEditor()->read(tess, readSessionData);
 				}
 				QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
@@ -367,16 +369,19 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 	}
 }
 
-bool Recognizer::recognizeImage(const QImage& img, OutputDestination dest)
+bool Recognizer::recognizeImage(const Displayer::Selection& sel, OutputDestination dest)
 {
 	tesseract::TessBaseAPI tess;
 	if(!initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())){
 		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 		return false;
 	}
-	tess.SetImage(img.bits(), img.width(), img.height(), 4, img.bytesPerLine());
+	tess.SetImage(sel.image.bits(), sel.image.width(), sel.image.height(), 4, sel.image.bytesPerLine());
 	if(dest == OutputDestination::Buffer){
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead();
+		readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
+		readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
+		readSessionData->rect = sel.rect;
 		Utils::busyTask([&]{
 			MAIN->getOutputEditor()->read(tess, readSessionData);
 			return true;

@@ -59,15 +59,16 @@ void DisplaySelection::contextMenuEvent(QGraphicsSceneContextMenuEvent *event){
 	QAction* saveAction = new QAction(QIcon::fromTheme("document-save-as"), _("Save as image"), &menu);
 	menu.addActions(QList<QAction*>() << spinAction << deleteAction << ocrAction << ocrClipboardAction << saveAction);
 	QAction* selected = menu.exec(event->screenPos());
+	QRectF imageRect = m_displayer->m_imageItem->sceneBoundingRect();
 	if(selected == deleteAction){
 		m_displayer->removeSelection(m_number);
-		}else if(selected == ocrAction){
-			MAIN->getRecognizer()->recognizeImage(m_displayer->getImage(rect()), Recognizer::OutputDestination::Buffer);
-		}else if(selected == ocrClipboardAction){
-			MAIN->getRecognizer()->recognizeImage(m_displayer->getImage(rect()), Recognizer::OutputDestination::Clipboard);
-		}else if(selected == saveAction){
-			m_displayer->saveSelection(this);
-		}
+	}else if(selected == ocrAction){
+		MAIN->getRecognizer()->recognizeImage({m_displayer->getImage(rect()), rect().translated(-imageRect.topLeft()).toRect()}, Recognizer::OutputDestination::Buffer);
+	}else if(selected == ocrClipboardAction){
+		MAIN->getRecognizer()->recognizeImage({m_displayer->getImage(rect()), rect().translated(-imageRect.topLeft()).toRect()}, Recognizer::OutputDestination::Clipboard);
+	}else if(selected == saveAction){
+		m_displayer->saveSelection(this);
+	}
 }
 
 void DisplaySelection::reorderSelection(int newNumber)
