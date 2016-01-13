@@ -95,6 +95,7 @@ Displayer::~Displayer()
 
 bool Displayer::setCurrentPage(int page)
 {
+	ui.spinBoxPage->setEnabled(false);
 	if(m_sources.isEmpty()) {
 		return false;
 	}
@@ -120,7 +121,9 @@ bool Displayer::setCurrentPage(int page)
 		m_currentSource = source;
 	}
 
-	return renderImage();
+	bool result = renderImage();
+	ui.spinBoxPage->setEnabled(true);
+	return result;
 }
 
 int Displayer::getCurrentPage() const
