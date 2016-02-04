@@ -36,6 +36,8 @@
 #include "Acquirer.hh"
 #include "Config.hh"
 #include "Displayer.hh"
+#include "DisplayerToolSelect.hh"
+#include "DisplayerToolHOCR.hh"
 #include "OutputEditorText.hh"
 #include "OutputEditorHOCR.hh"
 #include "Recognizer.hh"
@@ -135,24 +137,23 @@ MainWindow::MainWindow(const QStringList& files)
 	connect(ui.actionHelp, SIGNAL(triggered()), this, SLOT(showHelp()));
 	connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
 	connect(ui.actionImageControls, SIGNAL(toggled(bool)), ui.widgetImageControls, SLOT(setVisible(bool)));
-	connect(m_displayer, SIGNAL(selectionChanged(bool)), m_recognizer, SLOT(setRecognizeMode(bool)));
 	connect(m_acquirer, SIGNAL(scanPageAvailable(QString)), m_sourceManager, SLOT(addSource(QString)));
 	connect(m_sourceManager, SIGNAL(sourceChanged()), this, SLOT(onSourceChanged()));
 	connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), ui.dockWidgetOutput, SLOT(setVisible(bool)));
-	connect(ui.comboBoxOutputMode, SIGNAL(currentIndexChanged(int)), this, SLOT(setOutputEditor(int)));
+	connect(ui.comboBoxOCRMode, SIGNAL(currentIndexChanged(int)), this, SLOT(setOCRMode(int)));
 	connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), this, SLOT(languageChanged()));
 
 
 	m_config->addSetting(new VarSetting<QByteArray>("wingeom"));
 	m_config->addSetting(new VarSetting<QByteArray>("winstate"));
 	m_config->addSetting(new ActionSetting("showcontrols", ui.actionImageControls));
-	m_config->addSetting(new ComboSetting("outputeditor", ui.comboBoxOutputMode, 0));
+	m_config->addSetting(new ComboSetting("outputeditor", ui.comboBoxOCRMode, 0));
 
 	m_recognizer->updateLanguagesMenu();
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
-	setOutputEditor(ui.comboBoxOutputMode->currentIndex());
+	setOCRMode(ui.comboBoxOCRMode->currentIndex());
 	restoreGeometry(m_config->getSetting<VarSetting<QByteArray>>("wingeom")->getValue());
 	restoreState(m_config->getSetting<VarSetting<QByteArray>>("winstate")->getValue());
 	ui.dockWidgetOutput->setVisible(false);
@@ -175,6 +176,8 @@ MainWindow::~MainWindow()
 	delete m_outputEditor;
 	delete m_sourceManager;
 	delete m_recognizer;
+	delete m_displayerTool;
+	m_displayer->setTool(nullptr);
 	delete m_displayer;
 	delete m_config;
 	s_instance = nullptr;
@@ -275,23 +278,27 @@ void MainWindow::showConfig()
 	m_recognizer->updateLanguagesMenu();
 }
 
-void MainWindow::setOutputEditor(int idx)
+void MainWindow::setOCRMode(int idx)
 {
 	if(m_outputEditor && !m_outputEditor->clear()){
-		ui.comboBoxOutputMode->blockSignals(true);
+		ui.comboBoxOCRMode->blockSignals(true);
 		if(dynamic_cast<OutputEditorText*>(m_outputEditor)) {
-			ui.comboBoxOutputMode->setCurrentIndex(0);
+			ui.comboBoxOCRMode->setCurrentIndex(0);
 		} else /*if(idx == 1)*/ {
-			ui.comboBoxOutputMode->setCurrentIndex(1);
+			ui.comboBoxOCRMode->setCurrentIndex(1);
 		}
-		ui.comboBoxOutputMode->blockSignals(false);
+		ui.comboBoxOCRMode->blockSignals(false);
 	} else {
+		delete m_displayerTool;
 		delete m_outputEditor;
 		if(idx == 0) {
+			m_displayerTool = new DisplayerToolSelect(ui.actionAutodetectLayout, m_displayer);
 			m_outputEditor = new OutputEditorText();
 		} else /*if(idx == 1)*/ {
-			m_outputEditor = new OutputEditorHOCR();
+			m_displayerTool = new DisplayerToolHOCR(m_displayer);
+			m_outputEditor = new OutputEditorHOCR(static_cast<DisplayerToolHOCR*>(m_displayerTool));
 		}
+		m_displayer->setTool(m_displayerTool);
 		connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), m_outputEditor, SLOT(setLanguage(Config::Lang)));
 		connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), m_outputEditor, SLOT(onVisibilityChanged(bool)));
 		ui.dockWidgetOutput->setWidget(m_outputEditor->getUI());

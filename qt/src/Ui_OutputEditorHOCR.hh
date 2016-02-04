@@ -5,33 +5,31 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDoubleSpinBox>
+#include <QHeaderView>
 #include <QMenu>
 #include <QPushButton>
 #include <QToolBar>
 #include <QToolButton>
+#include <QSplitter>
+#include <QTableWidget>
+#include <QTreeWidget>
 #include <QVBoxLayout>
 #include <QWidgetAction>
 
 class UI_OutputEditorHOCR
 {
 public:
-	QAction* actionSelectBox;
 	QAction* actionOutputClear;
-	QAction* actionOutputRedo;
-	QAction* actionOutputReplace;
-	QAction* actionOutputSave;
-	QAction* actionOutputUndo;
+	QToolButton* toolButtonOutputSave;
+	QAction* actionOutputSaveHOCR;
+	QAction* actionOutputSavePDFTextOverlay;
+	QAction* actionOutputSavePDF;
 	QToolBar* toolBarOutput;
 
-	QLineEdit *lineEditOutputSearch;
-	QLineEdit *lineEditOutputReplace;
-	QToolButton *toolButtonOutputFindNext;
-	QToolButton *toolButtonOutputReplace;
-	QToolButton *toolButtonOutputReplaceAll;
-	QToolButton *toolButtonOutputFindPrev;
-	QCheckBox *checkBoxOutputSearchMatchCase;
+	QSplitter* splitter;
+	QTreeWidget *treeWidgetItems;
+	QTableWidget *tableWidgetProperties;
 	OutputTextEdit *plainTextEditOutput;
-	QFrame *frameOutputSearch;
 
 	void setupUi(QWidget* widget)
 	{
@@ -40,78 +38,49 @@ public:
 		widget->layout()->setSpacing(0);
 
 		// Output toolbar
-		actionSelectBox = new QAction(QIcon(":/icons/select"), gettext("Select current box"), widget);
-		actionSelectBox->setToolTip(gettext("Select current box"));
-		actionOutputUndo = new QAction(QIcon::fromTheme("edit-undo"), gettext("Undo"), widget);
-		actionOutputUndo->setToolTip(gettext("Undo"));
-		actionOutputUndo->setEnabled(false);
-		actionOutputRedo = new QAction(QIcon::fromTheme("edit-redo"), gettext("Redo"), widget);
-		actionOutputRedo->setToolTip(gettext("Redo"));
-		actionOutputRedo->setEnabled(false);
-		actionOutputReplace = new QAction(QIcon::fromTheme("edit-find-replace"), gettext("Find and Replace"), widget);
-		actionOutputReplace->setToolTip(gettext("Find and replace"));
-		actionOutputReplace->setCheckable(true);
-		actionOutputSave = new QAction(QIcon::fromTheme("document-save-as"), gettext("Save Output"), widget);
-		actionOutputSave->setToolTip(gettext("Save output"));
+		toolButtonOutputSave = new QToolButton(widget);
+		toolButtonOutputSave->setIcon(QIcon::fromTheme("document-save-as"));
+		toolButtonOutputSave->setText(gettext("Save Output"));
+		QMenu* saveMenu = new QMenu(widget);
+		toolButtonOutputSave->setToolTip(gettext("Save output"));
+		toolButtonOutputSave->setMenu(saveMenu);
+		toolButtonOutputSave->setPopupMode(QToolButton::InstantPopup);
+		actionOutputSaveHOCR = saveMenu->addAction(gettext("HOCR Text"));
+		actionOutputSavePDF = saveMenu->addAction(gettext("PDF"));
+		actionOutputSavePDFTextOverlay = saveMenu->addAction(gettext("PDF with invisible text overlay"));
 		actionOutputClear = new QAction(QIcon::fromTheme("edit-clear"), gettext("Clear Output"), widget);
 		actionOutputClear->setToolTip(gettext("Clear output"));
 
 		toolBarOutput = new QToolBar(widget);
 		toolBarOutput->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		toolBarOutput->setIconSize(QSize(1, 1) * toolBarOutput->style()->pixelMetric(QStyle::PM_SmallIconSize));
-		toolBarOutput->addAction(actionSelectBox);
-		toolBarOutput->addAction(actionOutputUndo);
-		toolBarOutput->addAction(actionOutputRedo);
-		toolBarOutput->addAction(actionOutputReplace);
-		toolBarOutput->addAction(actionOutputSave);
+		toolBarOutput->addWidget(toolButtonOutputSave);
 		toolBarOutput->addAction(actionOutputClear);
 
 		widget->layout()->addWidget(toolBarOutput);
 
-		// Search/Replace field
-		frameOutputSearch = new QFrame(widget);
-		frameOutputSearch->setFrameShape(QFrame::StyledPanel);
-		frameOutputSearch->setFrameShadow(QFrame::Plain);
-		QGridLayout* frameOutputSearchLayout = new QGridLayout(frameOutputSearch);
-		frameOutputSearchLayout->setSpacing(2);
-		frameOutputSearchLayout->setContentsMargins(2, 2, 2, 2);
+		splitter = new QSplitter(Qt::Vertical, widget);
+		widget->layout()->addWidget(splitter);
 
-		lineEditOutputSearch = new QLineEdit(frameOutputSearch);
-		lineEditOutputSearch->setPlaceholderText(gettext("Find"));
-		frameOutputSearchLayout->addWidget(lineEditOutputSearch, 0, 0, 1, 1);
+		treeWidgetItems = new QTreeWidget(widget);
+		treeWidgetItems->setHeaderHidden(true);
+		splitter->addWidget(treeWidgetItems);
 
-		lineEditOutputReplace = new QLineEdit(frameOutputSearch);
-		lineEditOutputReplace->setPlaceholderText(gettext("Replace"));
-		frameOutputSearchLayout->addWidget(lineEditOutputReplace, 1, 0, 1, 1);
+		QTabWidget* tabWidget = new QTabWidget(widget);
 
-		toolButtonOutputFindNext = new QToolButton(frameOutputSearch);
-		toolButtonOutputFindNext->setIcon(QIcon::fromTheme("go-down"));
-		toolButtonOutputFindNext->setToolTip(gettext("Find next"));
-		frameOutputSearchLayout->addWidget(toolButtonOutputFindNext, 0, 1, 1, 1);
-
-		toolButtonOutputFindPrev = new QToolButton(frameOutputSearch);
-		toolButtonOutputFindPrev->setIcon(QIcon::fromTheme("go-up"));
-		toolButtonOutputFindPrev->setToolTip(gettext("Find previous"));
-		frameOutputSearchLayout->addWidget(toolButtonOutputFindPrev, 0, 2, 1, 1);
-
-		toolButtonOutputReplace = new QToolButton(frameOutputSearch);
-		toolButtonOutputReplace->setIcon(QIcon::fromTheme("edit-find-replace"));
-		toolButtonOutputReplace->setToolTip(gettext("Replace"));
-		frameOutputSearchLayout->addWidget(toolButtonOutputReplace, 1, 1, 1, 1);
-
-		toolButtonOutputReplaceAll = new QToolButton(frameOutputSearch);
-		toolButtonOutputReplaceAll->setIcon(QIcon::fromTheme("edit-find-replace"));
-		toolButtonOutputReplaceAll->setToolTip(gettext("Replace all"));
-		frameOutputSearchLayout->addWidget(toolButtonOutputReplaceAll, 1, 2, 1, 1);
-
-		checkBoxOutputSearchMatchCase = new QCheckBox(frameOutputSearch);
-		checkBoxOutputSearchMatchCase->setText(gettext("Match case"));
-		frameOutputSearchLayout->addWidget(checkBoxOutputSearchMatchCase, 2, 0, 1, 3);
-
-		widget->layout()->addWidget(frameOutputSearch);
+		tableWidgetProperties = new QTableWidget(widget);
+		tableWidgetProperties->setColumnCount(2);
+		tableWidgetProperties->horizontalHeader()->setVisible(false);
+		tableWidgetProperties->verticalHeader()->setVisible(false);
+		tableWidgetProperties->horizontalHeader()->setStretchLastSection(true);
+		tableWidgetProperties->setEditTriggers(QAbstractItemView::NoEditTriggers);
+		tabWidget->addTab(tableWidgetProperties, gettext("Properties"));
 
 		plainTextEditOutput = new OutputTextEdit(widget);
-		widget->layout()->addWidget(plainTextEditOutput);
+		plainTextEditOutput->setReadOnly(true);
+		tabWidget->addTab(plainTextEditOutput, gettext("Source"));
+
+		splitter->addWidget(tabWidget);
 	}
 };
 

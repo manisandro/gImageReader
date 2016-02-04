@@ -19,7 +19,7 @@ public:
 	QAction* actionSourceRecent;
 	QAction* actionSourceRemove;
 	QAction* actionSourceScreenshot;
-	QComboBox* comboBoxOutputMode;
+	QComboBox* comboBoxOCRMode;
 	QDoubleSpinBox* spinBoxRotation;
 	QSpinBox* spinBoxPage;
 	QFrame* frameRotation;
@@ -101,33 +101,36 @@ public:
 		toolBarMain->insertAction(actionImageControls, actionPage);
 		actionPage->setVisible(false);
 
+		QFont smallFont;
+		smallFont.setPointSizeF(smallFont.pointSizeF() * 0.9);
+
+		// OCR mode button
+		QWidget* ocrModeWidget = new QWidget();
+		ocrModeWidget->setLayout(new QVBoxLayout());
+		ocrModeWidget->layout()->setContentsMargins(0, 0, 0, 0);
+		ocrModeWidget->layout()->setSpacing(0);
+		QLabel* outputModeLabel = new QLabel(gettext("OCR mode:"));
+		outputModeLabel->setFont(smallFont);
+		ocrModeWidget->layout()->addWidget(outputModeLabel);
+		comboBoxOCRMode = new QComboBox();
+		comboBoxOCRMode->addItems(QStringList() << gettext("Plain text") << gettext("hOCR"));
+		comboBoxOCRMode->setFont(smallFont);
+		comboBoxOCRMode->setFrame(false);
+		ocrModeWidget->layout()->addWidget(comboBoxOCRMode);
+		toolBarMain->insertWidget(actionAutodetectLayout, ocrModeWidget);
+
+		actionAutodetectLayout->setVisible(false);
+
 		// Recognize button
 		toolButtonRecognize = new QToolButton(MainWindow);
 		toolButtonRecognize->setIcon(QIcon::fromTheme("insert-text"));
 		toolButtonRecognize->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-		QFont font;
-		font.setPointSizeF(font.pointSizeF() * 0.9);
-		toolButtonRecognize->setFont(font);
+		toolButtonRecognize->setFont(smallFont);
 		toolButtonRecognize->setPopupMode(QToolButton::MenuButtonPopup);
 		toolBarMain->insertWidget(actionToggleOutputPane, toolButtonRecognize);
 
 		menuLanguages = new QMenu(toolButtonRecognize);
 		toolButtonRecognize->setMenu(menuLanguages);
-
-		// Output mode button
-		QWidget* outputModeWidget = new QWidget();
-		outputModeWidget->setLayout(new QVBoxLayout());
-		outputModeWidget->layout()->setContentsMargins(0, 0, 0, 0);
-		outputModeWidget->layout()->setSpacing(0);
-		QLabel* outputModeLabel = new QLabel(gettext("Output:"));
-		outputModeLabel->setFont(font);
-		outputModeWidget->layout()->addWidget(outputModeLabel);
-		comboBoxOutputMode = new QComboBox();
-		comboBoxOutputMode->addItems(QStringList() << gettext("Plain text") << gettext("hOCR"));
-		comboBoxOutputMode->setFont(font);
-		comboBoxOutputMode->setFrame(false);
-		outputModeWidget->layout()->addWidget(comboBoxOutputMode);
-		toolBarMain->insertWidget(actionToggleOutputPane, outputModeWidget);
 
 		// Spacer before app menu button
 		QWidget* toolBarMainSpacer = new QWidget(toolBarMain);

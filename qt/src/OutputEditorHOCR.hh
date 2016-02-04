@@ -25,12 +25,14 @@
 
 #include <QtSpell.hpp>
 
+class DisplayerToolHOCR;
+class QDomDocument;
 class QDomElement;
 
 class OutputEditorHOCR : public OutputEditor {
 	Q_OBJECT
 public:
-	OutputEditorHOCR();
+	OutputEditorHOCR(DisplayerToolHOCR* tool);
 	~OutputEditorHOCR();
 
 	QWidget* getUI() override { return m_widget; }
@@ -38,33 +40,49 @@ public:
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
 	bool getModified() const override;
-	void setLanguage(const Config::Lang &lang, bool force = false) override;
 
 public slots:
-	virtual bool clear() override;
-	virtual bool save(const QString& filename = "") override;
+	bool clear() override;
+	bool save(const QString& filename = "") override;
+	void savePDF(bool overlay = false);
+	void savePDFOverlay(){ savePDF(true); }
 
 private:
 	class HTMLHighlighter;
 
+	static const int IdRole = Qt::UserRole + 1;
+	static const int TextRole = Qt::UserRole + 2;
+	static const int BBoxRole = Qt::UserRole + 3;
+	static const int ClassRole = Qt::UserRole + 4;
+	static const int FontSizeRole = Qt::UserRole + 5;
+
+	static const QRegExp s_bboxRx;
+	static const QRegExp s_pageTitleRx;
+	static const QRegExp s_idRx;
+	static const QRegExp s_fontSizeRx;
+
+	int m_idCounter = 0;
+	DisplayerToolHOCR* m_tool;
 	QWidget* m_widget;
 	UI_OutputEditorHOCR ui;
 	HTMLHighlighter* m_highlighter;
 	QtSpell::TextEditChecker m_spell;
-	int m_pageCounter = 0;
 
 	void findReplace(bool backwards, bool replace);
-	void adjustBBox(QDomElement element, const QRectF& rect);
+	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem);
+	QDomElement getHOCRElementForItem(QTreeWidgetItem* item, QDomDocument& doc) const;
+	QDomElement elementById(QDomElement element, const QString& id) const;
+	void expandChildren(QTreeWidgetItem* item) const;
+	void printChildren(QPainter& painter, QTreeWidgetItem* item, bool overlayMode) const;
+	bool setCurrentSource(const QDomElement& pageElement, int* pageDpi = 0) const;
+	void updateItemText(QTreeWidgetItem* item);
 
 private slots:
-	void addText(const QString& text, ReadSessionData data);
-	void clearErrorState();
-	void findNext();
-	void findPrev();
-	void replaceAll();
-	void replaceNext();
+	void addPage(const QString& hocrText, ReadSessionData data);
 	void setFont();
-	void selectCurrentBox();
+	void showItemProperties(QTreeWidgetItem* item);
+	void itemChanged(QTreeWidgetItem* item, int col);
+	void showTreeWidgetContextMenu(const QPoint& point);
 };
 
 #endif // OUTPUTEDITORHOCR_HH

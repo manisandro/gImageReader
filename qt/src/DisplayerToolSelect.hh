@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * DisplaySelection.hh
+ * DisplayerToolSelect.hh
  * Copyright (C) 2013-2015 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
@@ -17,22 +17,55 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DISPLAYSELECTION_HH
-#define DISPLAYSELECTION_HH
+#ifndef DISPLAYERTOOLSELECT_HH
+#define DISPLAYERTOOLSELECT_HH
 
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneContextMenuEvent>
 #include <QSpinBox>
 #include <QWidgetAction>
+#include "Displayer.hh"
 
-class Displayer;
+class DisplaySelection;
+
+class DisplayerToolSelect : public DisplayerTool {
+	Q_OBJECT
+public:
+	DisplayerToolSelect(QAction* actionAutodetectLayout, Displayer* displayer, QObject* parent = 0);
+	~DisplayerToolSelect();
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+	void pageChanged() override;
+	void resolutionChanged(double factor) override;
+	void rotationChanged(double delta) override;
+
+	QList<QImage> getOCRAreas();
+	bool hasMultipleOCRAreas() const{ return !m_selections.isEmpty(); }
+	void autodetectOCRAreas(){ autodetectLayout(); }
+
+private:
+	friend class DisplaySelection;
+	QAction* mActionAutodetectLayout = nullptr;
+	DisplaySelection* m_curSel = nullptr;
+	QList<DisplaySelection*> m_selections;
+
+	void clearSelections();
+	void removeSelection(int num);
+	void reorderSelection(int oldNum, int newNum);
+	void saveSelection(DisplaySelection* selection);
+	void updateRecognitionModeLabel();
+
+private slots:
+	void autodetectLayout(bool noDeskew = false);
+};
 
 class DisplaySelection : public QObject, public QGraphicsRectItem
 {
 	Q_OBJECT
 public:
-	DisplaySelection(Displayer* displayer, int number, const QPointF& anchor)
-		: QGraphicsRectItem(QRectF(anchor, anchor)), m_displayer(displayer), m_number(number), m_anchor(anchor), m_point(anchor)
+	DisplaySelection(DisplayerToolSelect* selectTool, int number, const QPointF& anchor)
+		: QGraphicsRectItem(QRectF(anchor, anchor)), m_selectTool(selectTool), m_number(number), m_anchor(anchor), m_point(anchor)
 	{
 		setAcceptHoverEvents(true);
 	}
@@ -60,7 +93,7 @@ private slots:
 private:
 	typedef void(*ResizeHandler)(const QPointF&, QPointF&, QPointF&);
 
-	Displayer* m_displayer;
+	DisplayerToolSelect* m_selectTool;
 	int m_number;
 	QPointF m_anchor;
 	QPointF m_point;
@@ -79,4 +112,4 @@ private:
 	static void resizePointY(const QPointF& pos, QPointF& /*anchor*/, QPointF& point){ point.ry() = pos.y(); }
 };
 
-#endif // DISPLAYSELECTION_HH
+#endif // DISPLAYERTOOLSELECT_HH

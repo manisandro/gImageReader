@@ -34,6 +34,7 @@
 class Config;
 class Acquirer;
 class Displayer;
+class DisplayerTool;
 class OutputEditor;
 class Recognizer;
 class SourceManager;
@@ -83,6 +84,7 @@ private:
 	Config* m_config = nullptr;
 	Acquirer* m_acquirer = nullptr;
 	Displayer* m_displayer = nullptr;
+	DisplayerTool* m_displayerTool = nullptr;
 	OutputEditor* m_outputEditor = nullptr;
 	Recognizer* m_recognizer = nullptr;
 	SourceManager* m_sourceManager = nullptr;
@@ -113,7 +115,7 @@ private slots:
 	void showConfig();
 	void openDownloadUrl();
 	void openChangeLogUrl();
-	void setOutputEditor(int idx);
+	void setOCRMode(int idx);
 	void languageChanged();
 	void dictionaryAutoinstall();
 	void dictionaryAutoinstallDone();

@@ -38,8 +38,8 @@ public:
 	const Config::Lang& getSelectedLanguage() const{ return m_curLang; }
 
 public slots:
-	bool recognizeImage(const Displayer::Selection& img, OutputDestination dest);
-	void setRecognizeMode(bool haveSelection);
+	bool recognizeImage(const QImage& image, OutputDestination dest);
+	void setRecognizeMode(const QString& mode);
 	void updateLanguagesMenu();
 
 signals:

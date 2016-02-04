@@ -23,13 +23,14 @@
 #include <functional>
 #include <QGraphicsView>
 #include <QImage>
+#include <QMap>
 #include <QMutex>
 #include <QThread>
 #include <QTimer>
 #include <QQueue>
 #include <QWaitCondition>
 
-class DisplaySelection;
+class DisplayerTool;
 class DisplayRenderer;
 class Source;
 class UI_MainWindow;
@@ -38,32 +39,26 @@ class GraphicsScene;
 class Displayer : public QGraphicsView {
 	Q_OBJECT
 public:
-	struct Selection {
-		QImage image;
-		QRect rect;
-	};
-
 	Displayer(const UI_MainWindow& _ui, QWidget* parent = nullptr);
 	~Displayer();
+	void setTool(DisplayerTool* tool) { m_tool = tool; }
 	int getCurrentPage() const;
 	double getCurrentAngle() const;
+	int getCurrentResolution() const;
 	const QString& getCurrentImage(int& page) const;
 	int getNPages() const;
-	void setSelection(const QRect& rect);
-	QList<Selection> getSelections();
-	bool getHasSelections() const{ return !m_selections.isEmpty(); }
 	bool setSources(QList<Source*> sources);
+	bool hasMultipleOCRAreas();
+	QList<QImage> getOCRAreas();
+	void autodetectOCRAreas();
 
 public slots:
 	bool setCurrentPage(int page);
 	void setRotation(double angle);
-	void autodetectLayout(bool rotated = false);
-
-signals:
-	void selectionChanged(bool haveSelection);
+	void setResolution(int resolution);
 
 private:
-	friend class DisplaySelection;
+	friend class DisplayerTool;
 
 	enum class Zoom { In, Out, Fit, Original };
 	const UI_MainWindow& ui;
@@ -76,20 +71,13 @@ private:
 	QGraphicsPixmapItem* m_imageItem = nullptr;
 	double m_scale = 1.0;
 	QTimer m_renderTimer;
-
-	DisplaySelection* m_curSel = nullptr;
-	QList<DisplaySelection*> m_selections;
+	DisplayerTool* m_tool = nullptr;
 
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void wheelEvent(QWheelEvent *event);
-
-	void clearSelections();
-	void removeSelection(int num);
-	void reorderSelection(int oldNum, int newNum);
-	void saveSelection(DisplaySelection* selection);
 
 	QImage getImage(const QRectF& rect);
 	QPointF mapToSceneClamped(const QPoint& p) const;
@@ -131,6 +119,32 @@ private slots:
 	void zoomOut(){ setZoom(Zoom::Out); }
 	void zoomFit(){ setZoom(Zoom::Fit); }
 	void zoomOriginal(){ setZoom(Zoom::Original); }
+};
+
+
+class DisplayerTool : public QObject {
+public:
+	DisplayerTool(Displayer* displayer, QObject* parent = 0) : QObject(parent), m_displayer(displayer) {}
+	virtual ~DisplayerTool(){}
+	virtual void mousePressEvent(QMouseEvent */*event*/){}
+	virtual void mouseMoveEvent(QMouseEvent */*event*/){}
+	virtual void mouseReleaseEvent(QMouseEvent */*event*/){}
+	virtual void pageChanged(){}
+	virtual void resolutionChanged(double /*factor*/){}
+	virtual void rotationChanged(double /*delta*/){}
+	virtual QList<QImage> getOCRAreas() = 0;
+	virtual bool hasMultipleOCRAreas() const{ return false; }
+	virtual void autodetectOCRAreas(){}
+
+protected:
+	Displayer* m_displayer;
+
+	void addItemToScene(QGraphicsItem* item);
+	QRectF getSceneBoundingRect() const;
+	void invalidateRect(const QRectF& rect);
+	QPointF mapToSceneClamped(const QPoint& point);
+	QImage getImage(const QRectF& rect);
+	double getDisplayScale() const;
 };
 
 #endif // IMAGEDISPLAYER_HH

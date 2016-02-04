@@ -56,8 +56,6 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	m_pagesLineEdit = uiPageRangeDialog.lineEditPageRange;
 	m_pageAreaComboBox = uiPageRangeDialog.comboBoxRecognitionArea;
 
-	m_modeLabel = _("Recognize all");
-
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 	ui.menuLanguages->installEventFilter(this);
 
@@ -246,9 +244,9 @@ void Recognizer::setMultiLanguage()
 	emit languageChanged(m_curLang);
 }
 
-void Recognizer::setRecognizeMode(bool haveSelection)
+void Recognizer::setRecognizeMode(const QString &mode)
 {
-	m_modeLabel = haveSelection ? _("Recognize selection") : _("Recognize all");
+	m_modeLabel = mode;
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 }
 
@@ -303,7 +301,7 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout)
 void Recognizer::recognizeButtonClicked()
 {
 	int nPages = MAIN->getDisplayer()->getNPages();
-	if(nPages == 1 || MAIN->getDisplayer()->getHasSelections()){
+	if(nPages == 1 || MAIN->getDisplayer()->hasMultipleOCRAreas()){
 		recognize({MAIN->getDisplayer()->getCurrentPage()});
 	}else{
 		ui.toolButtonRecognize->setCheckable(true);
@@ -353,9 +351,9 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 				}
 				readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
 				readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
-				for(const Displayer::Selection& sel : MAIN->getDisplayer()->getSelections()){
-					readSessionData->rect = sel.rect;
-					tess.SetImage(sel.image.bits(), sel.image.width(), sel.image.height(), 4, sel.image.bytesPerLine());
+				readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
+				for(const QImage& image : MAIN->getDisplayer()->getOCRAreas()){
+					tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 					MAIN->getOutputEditor()->read(tess, readSessionData);
 				}
 				QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
@@ -369,19 +367,19 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 	}
 }
 
-bool Recognizer::recognizeImage(const Displayer::Selection& sel, OutputDestination dest)
+bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest)
 {
 	tesseract::TessBaseAPI tess;
 	if(!initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())){
 		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 		return false;
 	}
-	tess.SetImage(sel.image.bits(), sel.image.width(), sel.image.height(), 4, sel.image.bytesPerLine());
+	tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 	if(dest == OutputDestination::Buffer){
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead();
 		readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
 		readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
-		readSessionData->rect = sel.rect;
+		readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
 		Utils::busyTask([&]{
 			MAIN->getOutputEditor()->read(tess, readSessionData);
 			return true;
@@ -407,7 +405,7 @@ bool Recognizer::setPage(int page, bool autodetectLayout)
 		success = MAIN->getDisplayer()->setCurrentPage(page);
 	}
 	if(success && autodetectLayout) {
-		MAIN->getDisplayer()->autodetectLayout();
+		MAIN->getDisplayer()->autodetectOCRAreas();
 	}
 	return success;
 }

@@ -15,6 +15,12 @@
         <file alias="logo_48">../../data/icons/48x48/gimagereader.png</file>
         <file alias="logo_128">../../data/icons/128x128/gimagereader.png</file>
         <file alias="logo_256">../../data/icons/256x256/gimagereader.png</file>
-		<file alias="select">../../data/icons/select.png</file>
+        <file alias="select">../../data/icons/select.png</file>
+        <file alias="item_block">../../data/icons/item_block.png</file>
+        <file alias="item_line">../../data/icons/item_line.png</file>
+        <file alias="item_page">../../data/icons/item_page.png</file>
+        <file alias="item_par">../../data/icons/item_par.png</file>
+        <file alias="item_word">../../data/icons/item_word.png</file>
+        <file alias="item_halftone">../../data/icons/item_halftone.png</file>
     </qresource>
 </RCC>

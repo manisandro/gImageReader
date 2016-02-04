@@ -32,8 +32,8 @@ public:
 		virtual ~ReadSessionData() = default;
 		int page;
 		QString file;
-		QRect rect;
 		double angle;
+		int resolution;
 	};
 
 	OutputEditor(QObject* parent = 0);

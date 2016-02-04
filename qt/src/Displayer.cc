@@ -21,18 +21,16 @@
 #include "Config.hh"
 #include "Displayer.hh"
 #include "DisplayRenderer.hh"
-#include "DisplaySelection.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
 
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsSceneDragDropEvent>
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QScrollBar>
 #include <QWheelEvent>
-#include <tesseract/baseapi.h>
-#include <cassert>
 
 
 class GraphicsScene : public QGraphicsScene
@@ -70,7 +68,6 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 
 	connect(ui.actionRotateLeft, SIGNAL(triggered()), this, SLOT(rotate90()));
 	connect(ui.actionRotateRight, SIGNAL(triggered()), this, SLOT(rotate90()));
-	connect(ui.actionAutodetectLayout, SIGNAL(triggered()), this, SLOT(autodetectLayout()));
 	connect(ui.spinBoxRotation, SIGNAL(valueChanged(double)), this, SLOT(setRotation(double)));
 	connect(ui.spinBoxPage, SIGNAL(valueChanged(int)), this, SLOT(setCurrentPage(int)));
 	connect(ui.spinBoxBrightness, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
@@ -83,8 +80,6 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	connect(ui.actionOriginalSize, SIGNAL(triggered()), this, SLOT(zoomOriginal()));
 	connect(&m_renderTimer, SIGNAL(timeout()), this, SLOT(renderImage()));
 	connect(&m_scaleTimer, SIGNAL(timeout()), this, SLOT(scaleTimerElapsed()));
-
-	MAIN->getConfig()->addSetting(new VarSetting<QString>("selectionsavefile", QDir(Utils::documentsFolder()).absoluteFilePath(_("selection.png"))));
 }
 
 Displayer::~Displayer()
@@ -99,7 +94,9 @@ bool Displayer::setCurrentPage(int page)
 	if(m_sources.isEmpty()) {
 		return false;
 	}
-	clearSelections();
+	if(m_tool) {
+		m_tool->pageChanged();
+	}
 	Source* source = m_pageMap[page].first;
 	if(source != m_currentSource) {
 		delete m_renderer;
@@ -120,6 +117,9 @@ bool Displayer::setCurrentPage(int page)
 		ui.checkBoxInvertColors->blockSignals(false);
 		m_currentSource = source;
 	}
+	ui.spinBoxPage->blockSignals(true);
+	ui.spinBoxPage->setValue(page);
+	ui.spinBoxPage->blockSignals(false);
 
 	bool result = renderImage();
 	ui.spinBoxPage->setEnabled(true);
@@ -136,6 +136,11 @@ double Displayer::getCurrentAngle() const
 	return ui.spinBoxRotation->value();
 }
 
+int Displayer::getCurrentResolution() const
+{
+	return ui.spinBoxResolution->value();
+}
+
 const QString& Displayer::getCurrentImage(int& page) const
 {
 	page = m_pageMap[ui.spinBoxPage->value()].second;
@@ -149,12 +154,18 @@ int Displayer::getNPages() const
 
 bool Displayer::setSources(QList<Source*> sources)
 {
+	if(sources == m_sources) {
+		return true;
+	}
+
 	m_scaleTimer.stop();
 	if(m_scaleThread.isRunning()){
 		sendScaleRequest({ScaleRequest::Quit});
 		m_scaleThread.wait();
 	}
-	clearSelections();
+	if(m_tool) {
+		m_tool->pageChanged();
+	}
 	m_renderTimer.stop();
 	m_scene->clear();
 	delete m_renderer;
@@ -187,8 +198,7 @@ bool Displayer::setSources(QList<Source*> sources)
 	}
 
 	int page = 0;
-	for(Source* source : m_sources)
-	{
+	for(Source* source : m_sources){
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
 			PDFRenderer r(source->path);
 			for(int pdfPage = 1, nPdfPages = r.getNPages(); pdfPage <= nPdfPages; ++pdfPage)
@@ -215,13 +225,28 @@ bool Displayer::setSources(QList<Source*> sources)
 	return true;
 }
 
+bool Displayer::hasMultipleOCRAreas()
+{
+	return m_tool->hasMultipleOCRAreas();
+}
+
+QList<QImage> Displayer::getOCRAreas()
+{
+	return m_tool->getOCRAreas();
+}
+
+void Displayer::autodetectOCRAreas()
+{
+	m_tool->autodetectOCRAreas();
+}
+
 bool Displayer::renderImage()
 {
 	sendScaleRequest({ScaleRequest::Abort});
 	if(m_currentSource->resolution != ui.spinBoxResolution->value()){
 		double factor = double(ui.spinBoxResolution->value()) / double(m_currentSource->resolution);
-		for(DisplaySelection* sel : m_selections){
-			sel->scale(factor);
+		if(m_tool) {
+			m_tool->resolutionChanged(factor);
 		}
 	}
 	m_currentSource->page = m_pageMap[ui.spinBoxPage->value()].second;
@@ -303,16 +328,22 @@ void Displayer::setRotation(double angle)
 		double delta = angle - m_currentSource->angle;
 		m_currentSource->angle = angle;
 		m_imageItem->setRotation(angle);
-		QTransform t;
-		t.rotate(delta);
-		for(DisplaySelection* sel : m_selections){
-			sel->rotate(t);
+		if(m_tool) {
+			m_tool->rotationChanged(delta);
 		}
 		m_scene->setSceneRect(m_imageItem->sceneBoundingRect());
 		if(ui.actionBestFit->isChecked()){
 			setZoom(Zoom::Fit);
 		}
 	}
+}
+
+void Displayer::setResolution(int resolution)
+{
+	ui.spinBoxResolution->blockSignals(true);
+	ui.spinBoxResolution->setValue(resolution);
+	ui.spinBoxResolution->blockSignals(false);
+	renderImage();
 }
 
 void Displayer::queueRenderImage()
@@ -334,14 +365,8 @@ void Displayer::mousePressEvent(QMouseEvent *event)
 {
 	event->ignore();
 	QGraphicsView::mousePressEvent(event);
-	if(!event->isAccepted() && event->button() == Qt::LeftButton && m_currentSource && m_curSel == nullptr){
-		if((event->modifiers() & Qt::ControlModifier) == 0){
-			clearSelections();
-		}
-		m_curSel = new DisplaySelection(this, 1 + m_selections.size(), mapToSceneClamped(event->pos()));
-		m_curSel->setZValue(1 + m_selections.size());
-		m_scene->addItem(m_curSel);
-		event->accept();
+	if(!event->isAccepted() && m_tool && m_currentSource) {
+		m_tool->mousePressEvent(event);
 	}
 }
 
@@ -349,11 +374,8 @@ void Displayer::mouseMoveEvent(QMouseEvent *event)
 {
 	event->ignore();
 	QGraphicsView::mouseMoveEvent(event);
-	if(!event->isAccepted() && m_curSel){
-		QPointF p = mapToSceneClamped(event->pos());
-		m_curSel->setPoint(p);
-		ensureVisible(QRectF(p, p));
-		event->accept();
+	if(!event->isAccepted() && m_tool && m_currentSource) {
+		m_tool->mouseMoveEvent(event);
 	}
 }
 
@@ -361,15 +383,8 @@ void Displayer::mouseReleaseEvent(QMouseEvent *event)
 {
 	event->ignore();
 	QGraphicsView::mouseReleaseEvent(event);
-	if(!event->isAccepted() && m_curSel){
-		if(m_curSel->rect().width() < 5. || m_curSel->rect().height() < 5.){
-			delete m_curSel;
-		}else{
-			m_selections.append(m_curSel);
-			emit selectionChanged(true);
-		}
-		m_curSel = nullptr;
-		event->accept();
+	if(!event->isAccepted() && m_tool && m_currentSource) {
+		m_tool->mouseReleaseEvent(event);
 	}
 }
 
@@ -406,73 +421,6 @@ void Displayer::rotate90()
 	ui.spinBoxRotation->setValue(angle >= 360. ? angle - 360. : angle);
 }
 
-void Displayer::clearSelections()
-{
-	qDeleteAll(m_selections);
-	m_selections.clear();
-	emit selectionChanged(false);
-}
-
-void Displayer::removeSelection(int num)
-{
-	delete m_selections[num - 1];
-	m_selections.removeAt(num - 1);
-	for(int i = 0, n = m_selections.size(); i < n; ++i){
-		m_selections[i]->setNumber(1 + i);
-		m_selections[i]->setZValue(1 + i);
-		m_scene->invalidate(m_selections[i]->rect());
-	}
-}
-
-void Displayer::reorderSelection(int oldNum, int newNum)
-{
-	DisplaySelection* sel = m_selections[oldNum - 1];
-	m_selections.removeAt(oldNum - 1);
-	m_selections.insert(newNum - 1, sel);
-	for(int i = 0, n = m_selections.size(); i < n; ++i){
-		m_selections[i]->setNumber(1 + i);
-		m_selections[i]->setZValue(1 + i);
-		m_scene->invalidate(m_selections[i]->rect());
-	}
-}
-
-void Displayer::setSelection(const QRect &rect)
-{
-	QRect imageRect = m_imageItem->sceneBoundingRect().toRect();
-	QRect tRect = rect.translated(imageRect.topLeft());
-	clearSelections();
-	DisplaySelection* sel = new DisplaySelection(this, 1, tRect.topLeft());
-	sel->setPoint(tRect.bottomRight());
-	sel->setZValue(1);
-	m_scene->addItem(sel);
-	m_selections.append(sel);
-}
-
-QList<Displayer::Selection> Displayer::getSelections()
-{
-	QList<Selection> images;
-	QRectF imageRect = m_imageItem->sceneBoundingRect();
-	if(m_selections.empty()){
-		images.append({getImage(imageRect), imageRect.translated(-imageRect.topLeft()).toRect()});
-	}else{
-		for(const DisplaySelection* sel : m_selections){
-			images.append({getImage(sel->rect()), sel->rect().translated(-imageRect.topLeft()).toRect()});
-		}
-	}
-	return images;
-}
-
-void Displayer::saveSelection(DisplaySelection *selection)
-{
-	QImage img = getImage(selection->rect());
-	QString filename = Utils::makeOutputFilename(MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->getValue());
-	filename = QFileDialog::getSaveFileName(MAIN, _("Save Selection Image"), filename, QString("%1 (*.png)").arg(_("PNG Images")));
-	if(!filename.isEmpty()){
-		MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->setValue(filename);
-		img.save(filename);
-	}
-}
-
 QImage Displayer::getImage(const QRectF& rect)
 {
 	QImage image(rect.width(), rect.height(), QImage::Format_RGB32);
@@ -485,69 +433,6 @@ QImage Displayer::getImage(const QRectF& rect)
 	painter.setTransform(t);
 	painter.drawPixmap(0, 0, m_pixmap);
 	return image;
-}
-
-void Displayer::autodetectLayout(bool rotated)
-{
-	clearSelections();
-
-	double avgDeskew = 0.;
-	int nDeskew = 0;
-	QList<QRectF> rects;
-	QImage img = getImage(m_imageItem->sceneBoundingRect());
-
-	// Perform layout analysis
-	Utils::busyTask([this,&nDeskew,&avgDeskew,&rects,&img]{
-		tesseract::TessBaseAPI tess;
-		tess.InitForAnalysePage();
-		tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
-		tess.SetImage(img.bits(), img.width(), img.height(), 4, img.bytesPerLine());
-		tesseract::PageIterator* it = tess.AnalyseLayout();
-		if(it && !it->Empty(tesseract::RIL_BLOCK)){
-			do{
-				int x1, y1, x2, y2;
-				tesseract::Orientation orient;
-				tesseract::WritingDirection wdir;
-				tesseract::TextlineOrder tlo;
-				float deskew;
-				it->BoundingBox(tesseract::RIL_BLOCK, &x1, &y1, &x2, &y2);
-				it->Orientation(&orient, &wdir, &tlo, &deskew);
-				avgDeskew += deskew;
-				++nDeskew;
-				float width = x2 - x1, height = y2 - y1;
-				if(width > 10 && height > 10){
-					rects.append(QRectF(x1 - 0.5 * img.width(), y1 - 0.5 * img.height(), width, height));
-				}
-			}while(it->Next(tesseract::RIL_BLOCK));
-		}
-		delete it;
-		return true;
-	}, _("Performing layout analysis"));
-
-	// If a somewhat large deskew angle is detected, automatically rotate image and redetect layout,
-	// unless we already attempted to rotate (to prevent endless loops)
-	avgDeskew = qRound(((avgDeskew/nDeskew)/M_PI * 180.) * 10.) / 10.;
-	if(qAbs(avgDeskew > .1) && !rotated){
-		setRotation(ui.spinBoxRotation->value() - avgDeskew);
-		autodetectLayout(true);
-	}else{
-		// Merge overlapping rectangles
-		for(int i = rects.size(); i-- > 1;) {
-			for(int j = i; j-- > 0;) {
-				if(rects[j].intersects(rects[i])) {
-					rects[j] = rects[j].united(rects[i]);
-					rects.removeAt(i);
-					break;
-				}
-			}
-		}
-		for(int i = 0, n = rects.size(); i < n; ++i){
-			m_selections.append(new DisplaySelection(this, 1 + i, rects[i].topLeft()));
-			m_selections.back()->setPoint(rects[i].bottomRight());
-			m_scene->addItem(m_selections.back());
-		}
-		emit selectionChanged(true);
-	}
 }
 
 void Displayer::sendScaleRequest(const ScaleRequest& request)
@@ -608,4 +493,36 @@ void Displayer::setScaledImage(const QImage &image, double scale)
 		m_imageItem->setPos(m_imageItem->pos() - m_imageItem->sceneBoundingRect().center());
 	}
 	m_scaleMutex.unlock();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+void DisplayerTool::addItemToScene(QGraphicsItem* item)
+{
+	m_displayer->m_scene->addItem(item);
+}
+
+QRectF DisplayerTool::getSceneBoundingRect() const
+{
+	return m_displayer->m_imageItem->sceneBoundingRect();
+}
+
+void DisplayerTool::invalidateRect(const QRectF& rect)
+{
+	m_displayer->m_scene->invalidate(rect);
+}
+
+QPointF DisplayerTool::mapToSceneClamped(const QPoint& point)
+{
+	return m_displayer->mapToSceneClamped(point);
+}
+
+QImage DisplayerTool::getImage(const QRectF& rect)
+{
+	return m_displayer->getImage(rect);
+}
+
+double DisplayerTool::getDisplayScale() const
+{
+	return m_displayer->m_scale;
 }
