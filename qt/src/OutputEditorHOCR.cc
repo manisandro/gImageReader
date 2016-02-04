@@ -411,7 +411,7 @@ void OutputEditorHOCR::updateItemText(QTreeWidgetItem* item)
 
 	QString str;
 	QTextStream stream(&str);
-	element.save(stream, 1);
+	doc.save(stream, 1);
 
 	QTreeWidgetItem* toplevelItem = item;
 	while(toplevelItem->parent()) {
