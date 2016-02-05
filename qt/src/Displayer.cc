@@ -363,19 +363,30 @@ void Displayer::resizeEvent(QResizeEvent *event)
 
 void Displayer::mousePressEvent(QMouseEvent *event)
 {
-	event->ignore();
-	QGraphicsView::mousePressEvent(event);
-	if(!event->isAccepted() && m_tool && m_currentSource) {
-		m_tool->mousePressEvent(event);
+	if(event->button() == Qt::MiddleButton) {
+		m_panPos = event->pos();
+	} else {
+		event->ignore();
+		QGraphicsView::mousePressEvent(event);
+		if(!event->isAccepted() && m_tool && m_currentSource) {
+			m_tool->mousePressEvent(event);
+		}
 	}
 }
 
 void Displayer::mouseMoveEvent(QMouseEvent *event)
 {
-	event->ignore();
-	QGraphicsView::mouseMoveEvent(event);
-	if(!event->isAccepted() && m_tool && m_currentSource) {
-		m_tool->mouseMoveEvent(event);
+	if((event->buttons() & Qt::MiddleButton) == Qt::MiddleButton) {
+		QPoint delta = event->pos() - m_panPos;
+		horizontalScrollBar()->setValue( horizontalScrollBar()->value() - delta.x() );
+		verticalScrollBar()->setValue( verticalScrollBar()->value() - delta.y() );
+		m_panPos = event->pos();
+	} else {
+		event->ignore();
+		QGraphicsView::mouseMoveEvent(event);
+		if(!event->isAccepted() && m_tool && m_currentSource) {
+			m_tool->mouseMoveEvent(event);
+		}
 	}
 }
 

@@ -78,6 +78,7 @@ private:
 	Geo m_geo;
 	DisplaySelection::Handle* m_curSel = nullptr;
 	std::vector<DisplaySelection*> m_selections;
+	double m_panPos[2];
 
 	sigc::signal<void, bool> m_signal_selectionChanged;
 

@@ -354,6 +354,11 @@ void Displayer::queueRenderImage()
 
 bool Displayer::mousePressEvent(GdkEventButton* ev)
 {
+	if(ev->button == 2){
+		m_panPos[0] = ev->x_root;
+		m_panPos[1] = ev->y_root;
+		return true;
+	}
 	if(!m_image || m_curSel){
 		return false;
 	}
@@ -393,6 +398,15 @@ void Displayer::resizeEvent()
 
 bool Displayer::mouseMoveEvent(GdkEventMotion *ev)
 {
+	if(ev->state & Gdk::BUTTON2_MASK) {
+		double dx = m_panPos[0] - ev->x_root;
+		double dy = m_panPos[1] - ev->y_root;
+		m_hadj->set_value(m_hadj->get_value() + dx);
+		m_vadj->set_value(m_vadj->get_value() + dy);
+		m_panPos[0] = ev->x_root;
+		m_panPos[1] = ev->y_root;
+		return true;
+	}
 	if(!m_image){
 		return false;
 	}

@@ -72,6 +72,7 @@ private:
 	double m_scale = 1.0;
 	QTimer m_renderTimer;
 	DisplayerTool* m_tool = nullptr;
+	QPoint m_panPos;
 
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
