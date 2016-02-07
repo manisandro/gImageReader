@@ -289,10 +289,7 @@ void OutputEditorText::onVisibilityChanged(bool /*visibile*/)
 	m_substitutionsManager->hide();
 }
 
-void OutputEditorText::setLanguage(const Config::Lang& lang, bool force)
+void OutputEditorText::setLanguage(const Config::Lang& lang)
 {
-	QString code = lang.code;
-	if(!code.isEmpty() || force){
-		m_spell.setLanguage(code);
-	}
+	m_spell.setLanguage(lang.code);
 }

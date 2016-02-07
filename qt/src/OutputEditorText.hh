@@ -45,7 +45,7 @@ public slots:
 	void onVisibilityChanged(bool visible) override;
 	bool clear() override;
 	bool save(const QString& filename = "") override;
-	void setLanguage(const Config::Lang &lang, bool force = false) override;
+	void setLanguage(const Config::Lang &lang) override;
 
 private:
 	struct TextReadSessionData : ReadSessionData {

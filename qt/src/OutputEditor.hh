@@ -50,7 +50,7 @@ public slots:
 	virtual void onVisibilityChanged(bool /*visible*/){}
 	virtual bool clear() = 0;
 	virtual bool save(const QString& filename = "") = 0;
-	virtual void setLanguage(const Config::Lang &lang, bool force = false){}
+	virtual void setLanguage(const Config::Lang &lang){}
 };
 
 #endif // OUTPUTEDITOR_HH
