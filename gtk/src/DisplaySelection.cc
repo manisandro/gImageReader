@@ -98,8 +98,11 @@ Gdk::CursorType DisplaySelection::getResizeCursor(const Geometry::Point& p, doub
 
 void DisplaySelection::draw(Cairo::RefPtr<Cairo::Context> ctx, double scale, const Glib::ustring &idx) const
 {
-	Gdk::RGBA fgcolor = Gtk::Entry().get_style_context()->get_color(Gtk::STATE_FLAG_SELECTED);
-	Gdk::RGBA bgcolor = Gtk::Entry().get_style_context()->get_background_color(Gtk::STATE_FLAG_SELECTED);
+	Gtk::Label label;
+	Glib::RefPtr<Gtk::StyleContext> styleContext = label.get_style_context();
+	styleContext->set_state(Gtk::STATE_FLAG_SELECTED);
+	Gdk::RGBA fgcolor = styleContext->get_color(styleContext->get_state());
+	Gdk::RGBA bgcolor = styleContext->get_background_color(styleContext->get_state());
 
 	double d = 0.5 / scale;
 	double x1 = Utils::round(m_rect.x * scale) / scale + d;

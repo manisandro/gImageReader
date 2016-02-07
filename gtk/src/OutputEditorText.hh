@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * OutputManager.hh
+ * OutputEditorText.hh
  * Copyright (C) 2013-2015 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
@@ -17,33 +17,42 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OUTPUTMANAGER_HH
-#define OUTPUTMANAGER_HH
+#ifndef OUTPUTEDITORTEXT_HH
+#define OUTPUTEDITORTEXT_HH
 
-#include "common.hh"
+#include <gtksourceviewmm.h>
+#include <gtkspellmm.h>
+
 #include "Config.hh"
 #include "MainWindow.hh"
+#include "OutputBuffer.hh"
+#include "OutputEditor.hh"
 
-#include <gtkspellmm.h>
-#include <gtksourceviewmm.h>
-
-class OutputBuffer;
 class SubstitutionsManager;
 
-class OutputManager {
+class OutputEditorText : public OutputEditor {
 public:
-	OutputManager();
-	~OutputManager();
-	void addText(const Glib::ustring& text, bool insert = false);
-	bool getBufferModified() const;
-	bool clearBuffer();
-	bool saveBuffer(const std::string& filename = "");
-	void setLanguage(const Config::Lang &lang, bool force = false);
+	OutputEditorText();
+	~OutputEditorText();
+
+	Gtk::Box* getUI() override { return m_paneWidget; }
+	ReadSessionData* initRead() override{ return new TextReadSessionData; }
+	bool clear() override;
+	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
+	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
+	bool getModified() const override;
+	void onVisibilityChanged(bool visible) override;
+	bool save(const std::string& filename = "") override;
+	void setLanguage(const Config::Lang &lang) override;
 
 private:
+	struct TextReadSessionData : ReadSessionData {
+		bool insertText = false;
+	};
+
 	enum class InsertMode { Append, Cursor, Replace };
 
-	Gtk::ToggleToolButton* m_togglePaneButton;
+	Gtk::Box* m_paneWidget;
 	Gtk::ToggleButton* m_insButton;
 	Gtk::Menu* m_insMenu;
 	Gtk::Image* m_insImage;
@@ -66,24 +75,21 @@ private:
 
 	InsertMode m_insertMode;
 	GtkSpell::Checker m_spell;
-	MainWindow::Notification m_notifierHandle = nullptr;
 	SubstitutionsManager* m_substitutionsManager;
 
-	void completeTextViewMenu(Gtk::Menu* menu);
+	void addText(const Glib::ustring& text, bool insert);
+	void completeTextViewMenu(Gtk::Menu *menu);
 	void filterBuffer();
+	void findNext();
+	void findPrev();
 	void findReplace(bool backwards, bool replace);
 	void replaceAll();
+	void replaceNext();
 	void scrollCursorIntoView();
 	void setFont();
 	void setInsertMode(InsertMode mode, const std::string& iconName);
 	void showInsertMenu();
 	void toggleReplaceBox();
-#if defined(G_OS_UNIX)
-	void dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring& lang);
-	void dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result);
-#elif defined(G_OS_WIN32)
-	void dictionaryAutoinstall(const Glib::ustring& lang);
-#endif
 };
 
-#endif // OUTPUTMANAGER_HH
+#endif // OUTPUTEDITORTEXT_HH

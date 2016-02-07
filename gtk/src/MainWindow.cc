@@ -22,11 +22,12 @@
 #include "Acquirer.hh"
 #include "Config.hh"
 #include "Displayer.hh"
-#include "OutputManager.hh"
+#include "OutputEditorText.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
 
+#include <gtkspellmm.h>
 #include <algorithm>
 #include <csignal>
 #include <cstdio>
@@ -35,6 +36,9 @@
 #include <unistd.h>
 #ifdef G_OS_WIN32
 #include <windows.h>
+#endif
+#ifdef G_OS_UNIX
+#include <gdk/gdkx.h>
 #endif
 #ifdef __linux__
 #include <sys/prctl.h>
@@ -54,14 +58,14 @@ static void signalHandler(int sig)
 {
 	std::signal(sig, nullptr);
 	std::string filename;
-	if(MAIN->getOutputManager() && MAIN->getOutputManager()->getBufferModified()){
+	if(MAIN->getOutputEditor() && MAIN->getOutputEditor()->getModified()){
 		filename = Glib::build_filename(g_get_home_dir(), Glib::ustring::compose("%1_crash-save.txt", PACKAGE_NAME));
 		int i = 0;
 		while(Glib::file_test(filename, Glib::FILE_TEST_EXISTS)){
 			++i;
 			filename = Glib::build_filename(g_get_home_dir(), Glib::ustring::compose("%1_crash-save_%2.txt", PACKAGE_NAME, i));
 		}
-		MAIN->getOutputManager()->saveBuffer(filename);
+		MAIN->getOutputEditor()->save(filename);
 	}
 	Glib::Pid pid;
 	Glib::spawn_async("", std::vector<std::string>{pkgExePath, "crashhandle", Glib::ustring::compose("%1", getpid()), filename}, Glib::SPAWN_DO_NOT_REAP_CHILD, sigc::slot<void>(), &pid);
@@ -107,13 +111,14 @@ MainWindow::MainWindow()
 	m_window = Builder("applicationwindow:main");
 	m_aboutdialog = Builder("dialog:about");
 	m_statusbar = Builder("statusbar:main");
+	m_ocrModeCombo = Builder("combo:main.ocrmode");
+	m_outputPaneToggleButton = Builder("tbbutton:main.outputpane");
 	m_window->set_icon_name("gimagereader");
 	m_aboutdialog->set_version(PACKAGE_VERSION);
 
 	m_config = new Config;
 	m_acquirer = new Acquirer;
 	m_displayer = new Displayer;
-	m_outputManager = new OutputManager;
 	m_recognizer = new Recognizer;
 	m_sourceManager = new SourceManager;
 
@@ -135,17 +140,24 @@ MainWindow::MainWindow()
 	CONNECTS(Builder("tbbutton:main.controls").as<Gtk::ToggleToolButton>(), toggled,
 			 [this](Gtk::ToggleToolButton* b) { Builder("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
 	CONNECT(m_displayer, selectionChanged, [this](bool haveSelection){ m_recognizer->setRecognizeMode(haveSelection); });
-	CONNECT(m_recognizer, languageChanged, [this](const Config::Lang& lang){ m_outputManager->setLanguage(lang); });
 	CONNECT(m_acquirer, scanPageAvailable, [this](const std::string& filename){ m_sourceManager->addSources({Gio::File::create_for_path(filename)}); });
 	CONNECT(m_sourceManager, sourceChanged, [this]{ onSourceChanged(); });
+	CONNECT(m_outputPaneToggleButton, toggled, [this]{ m_outputEditor->getUI()->set_visible(m_outputPaneToggleButton->get_active()); });
+	m_connection_setOCRMode = CONNECT(m_ocrModeCombo, changed, [this]{ setOCRMode(m_ocrModeCombo->get_active_row_number()); });
+	CONNECT(m_recognizer, languageChanged, [this] (const Config::Lang& /*lang*/ ){ languageChanged(); });
+	CONNECTS(Builder("combo:config.settings.paneorient").as<Gtk::ComboBoxText>(), changed, [this](Gtk::ComboBoxText* combo){
+		Builder("paned:output").as<Gtk::Paned>()->set_orientation(static_cast<Gtk::Orientation>(!combo->get_active_row_number())); });
+
 
 	m_config->addSetting(new VarSetting<std::vector<int>>("wingeom"));
 	m_config->addSetting(new SwitchSettingT<Gtk::ToggleToolButton>("showcontrols", "tbbutton:main.controls"));
+	m_config->addSetting(new ComboSetting("outputeditor", "combo:main.ocrmode"));
 
 	m_recognizer->updateLanguagesMenu();
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
+	setOCRMode(m_ocrModeCombo->get_active_row_number());
 	const std::vector<int>& geom = m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->getValue();
 	if(geom.size() == 4){
 		m_window->resize(geom[2], geom[3]);
@@ -166,7 +178,7 @@ MainWindow::~MainWindow()
 	delete m_sourceManager;
 	delete m_displayer;
 	delete m_recognizer;
-	delete m_outputManager;
+	delete m_outputEditor;
 	delete m_config;
 	s_instance = nullptr;
 }
@@ -180,6 +192,11 @@ void MainWindow::setMenuModel(const Glib::RefPtr<Gio::MenuModel> &menuModel)
 void MainWindow::openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files)
 {
 	m_sourceManager->addSources(files);
+}
+
+void MainWindow::setOutputPaneVisible(bool visible)
+{
+	m_outputPaneToggleButton->set_active(visible);
 }
 
 void MainWindow::pushState(State state, const Glib::ustring &msg)
@@ -209,7 +226,7 @@ void MainWindow::setState(State state)
 
 bool MainWindow::closeEvent(GdkEventAny*)
 {
-	if(!m_outputManager->clearBuffer()){
+	if(!m_outputEditor->clear()){
 		return true;
 	}
 	if((m_window->get_window()->get_state() & Gdk::WINDOW_STATE_MAXIMIZED) == 0){
@@ -269,6 +286,36 @@ void MainWindow::showConfig()
 {
 	m_config->showDialog();
 	m_recognizer->updateLanguagesMenu();
+}
+
+void MainWindow::setOCRMode(int idx)
+{
+	if(m_outputEditor && !m_outputEditor->clear()){
+		m_connection_setOCRMode.block(true);
+		if(dynamic_cast<OutputEditorText*>(m_outputEditor)) {
+			m_ocrModeCombo->set_active(0);
+		} else /*if(dynamic_cast<OutputEditorHOCR*>(m_outputEditor))*/ {
+			m_ocrModeCombo->set_active(1);
+		}
+		m_connection_setOCRMode.block(false);
+	} else {
+		if(m_outputEditor) {
+			m_connection_setOutputEditorLanguage.disconnect();
+			m_connection_setOutputEditorVisibility.disconnect();
+			Builder("paned:output").as<Gtk::Paned>()->remove(*m_outputEditor->getUI());
+			delete m_outputEditor;
+		}
+		if(idx == 0) {
+			m_outputEditor = new OutputEditorText();
+		} else /*if(idx == 1)*/ {
+//			m_outputEditor = new OutputEditorHOCR();
+		}
+		m_connection_setOutputEditorLanguage = CONNECT(m_recognizer, languageChanged, [this](const Config::Lang& lang){ m_outputEditor->setLanguage(lang); });
+		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
+		m_connection_setOutputEditorVisibility = CONNECT(m_outputPaneToggleButton, toggled, [this]{ m_outputEditor->onVisibilityChanged(m_outputPaneToggleButton->get_active()); });
+		Builder("paned:output").as<Gtk::Paned>()->add(*m_outputEditor->getUI());
+		m_outputEditor->getUI()->set_visible(m_outputPaneToggleButton->get_active());
+	}
 }
 
 void MainWindow::redetectLanguages()
@@ -351,3 +398,119 @@ void MainWindow::checkVersion(const Glib::ustring& newver)
 	}
 }
 #endif // ENABLE_VERSIONCHECK
+
+void MainWindow::languageChanged()
+{
+	hideNotification(m_notifierHandle);
+	m_notifierHandle = nullptr;
+	const Config::Lang& lang =  m_recognizer->getSelectedLanguage();
+	std::string code = lang.code;
+	GtkSpell::Checker checker;
+	try {
+		checker.set_language(code);
+	}catch(const GtkSpell::Error& /*e*/){
+		if(getConfig()->getSetting<SwitchSetting>("dictinstall")->getValue()){
+			NotificationAction actionDontShowAgain = {_("Don't show again"), [this]{ m_config->getSetting<SwitchSetting>("dictinstall")->setValue(false); return true; }};
+			NotificationAction actionInstall;
+#if defined(G_OS_UNIX)
+			// Try initiating a DBUS connection for PackageKit
+			Glib::RefPtr<Gio::DBus::Proxy> proxy;
+			try{
+				proxy = Gio::DBus::Proxy::create_for_bus_sync(Gio::DBus::BUS_TYPE_SESSION, "org.freedesktop.PackageKit",
+															  "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify");
+				actionInstall = MainWindow::NotificationAction{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); return false; }};
+			}catch(const Glib::Error&){
+				actionInstall = {_("Help"), [this]{ showHelp("#InstallSpelling"); return false; }};
+				g_warning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
+			}
+#elif defined(G_OS_WIN32)
+			actionInstall = NotificationAction{_("Install"), [this,lang]{ dictionaryAutoinstall(lang.code); return false; }};
+#endif
+			addNotification(_("Spelling dictionary missing"), Glib::ustring::compose(_("The spellcheck dictionary for %1 is not installed"), lang.name), {actionInstall, actionDontShowAgain}, &m_notifierHandle);
+		}
+	}
+}
+
+#if defined(G_OS_UNIX)
+void MainWindow::dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring &code)
+{
+	pushState(State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), code));
+	std::uint32_t xid = gdk_x11_window_get_xid(getWindow()->get_window()->gobj());
+	std::vector<Glib::ustring> files = {"/usr/share/myspell/" + code + ".dic", "/usr/share/hunspell/" + code + ".dic"};
+	std::vector<Glib::VariantBase> params = { Glib::Variant<std::uint32_t>::create(xid),
+											  Glib::Variant<std::vector<Glib::ustring>>::create(files),
+											  Glib::Variant<Glib::ustring>::create("always") };
+	proxy->call("InstallProvideFiles", [proxy,this](Glib::RefPtr<Gio::AsyncResult> r){ dictionaryAutoinstallDone(proxy, r); },
+				Glib::VariantContainerBase::create_tuple(params), 3600000);
+}
+
+void MainWindow::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result)
+{
+	try {
+		proxy->call_finish(result);
+	} catch (const Glib::Error& e) {
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Failed to install spelling dictionary: %1"), e.what()));
+	}
+	getRecognizer()->updateLanguagesMenu();
+	popState();
+}
+#elif defined(G_OS_WIN32)
+void MainWindow::dictionaryAutoinstall(const Glib::ustring& code)
+{
+	pushState(State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), code));
+	Glib::ustring url= "http://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
+	Glib::ustring plainurl = "http://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
+	Glib::ustring urlcode = code;
+
+	Glib::RefPtr<Glib::ByteArray> html = Utils::download(url);
+	if(!html){
+		popState();
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1."), url));
+		return;
+	}
+	Glib::ustring htmls(reinterpret_cast<const char*>(html->get_data()), html->size());
+	if(htmls.find(Glib::ustring::compose(">%1<", code)) != Glib::ustring::npos){
+		// Ok
+	}else if(htmls.find(Glib::ustring::compose(">%1<", code.substr(0, 2))) != Glib::ustring::npos){
+		urlcode = code.substr(0, 2);
+	}else{
+		popState();
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
+		return;
+	}
+	html = Utils::download(url + urlcode + "/");
+	if(!html){
+		popState();
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1."), url + urlcode + "/"));
+		return;
+	}
+	Glib::RefPtr<Glib::Regex> pat = Glib::Regex::create(Glib::ustring::compose(">(%1[^<]*\\.(dic|aff))<", code.substr(0, 2)));
+	htmls = Glib::ustring(reinterpret_cast<const char*>(html->get_data()), html->size());
+
+	Glib::ustring downloaded;
+	int pos = 0;
+	Glib::MatchInfo matchInfo;
+	while(pat->match(htmls, pos, matchInfo)){
+		pushState(State::Busy, Glib::ustring::compose(_("Downloading '%1'..."), matchInfo.fetch(1)));
+		Glib::RefPtr<Glib::ByteArray> data = Utils::download(plainurl + urlcode + "/" + matchInfo.fetch(1));
+		if(data){
+			std::ofstream file(Glib::build_filename(pkgDir, "share", "myspell", "dicts", matchInfo.fetch(1)), std::ios::binary);
+			if(file.is_open()){
+				file.write(reinterpret_cast<char*>(data->get_data()), data->size());
+				downloaded.append(Glib::ustring::compose("\n%1", matchInfo.fetch(1)));
+			}
+		}
+		popState();
+		int start;
+		matchInfo.fetch_pos(0, start, pos);
+	}
+	if(!downloaded.empty()){
+		getRecognizer()->updateLanguagesMenu();
+		popState();
+		Utils::message_dialog(Gtk::MESSAGE_INFO, _("Dictionaries installed"), Glib::ustring::compose(_("The following dictionaries were installed:%1"), downloaded));
+	}else{
+		>popState();
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
+	}
+}
+#endif

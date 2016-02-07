@@ -20,7 +20,7 @@
 #include "MainWindow.hh"
 #include "Config.hh"
 #include "Displayer.hh"
-#include "OutputManager.hh"
+#include "OutputEditor.hh"
 #include "Recognizer.hh"
 #include "Utils.hh"
 
@@ -332,11 +332,12 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 		if(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue() == true){
 			tess.SetPageSegMode(tesseract::PSM_AUTO_OSD);
 		}
+		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead();
 		Utils::busyTask([&]{
 			int npages = pages.size();
 			int idx = 0;
-			bool insertText = false;
 			for(int page : pages){
+				readSessionData->page = page;
 				++idx;
 				Glib::signal_idle().connect_once([=]{ MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
 
@@ -344,21 +345,18 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 				Utils::runInMainThreadBlocking([&]{ success = setPage(page, autodetectLayout); });
 				if(!success){
 					failed.append(Glib::ustring::compose(_("\n\tPage %1: failed to render page"), page));
-					Utils::runInMainThreadBlocking([&]{ MAIN->getOutputManager()->addText(_("\n[Failed to recognize page %1]\n"), insertText); });
-					insertText = true;
+					MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
 					continue;
 				}
 				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : MAIN->getDisplayer()->getSelections()){
 					tess.SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
-					char* text = tess.GetUTF8Text();
-					Utils::runInMainThreadBlocking([&]{ MAIN->getOutputManager()->addText(text, insertText); });
-					delete[] text;
-					insertText = true;
+					MAIN->getOutputEditor()->read(tess, readSessionData);
 				}
 				Glib::signal_idle().connect_once([]{ MAIN->popState(); });
 			}
 			return true;
 		}, _("Recognizing..."));
+		MAIN->getOutputEditor()->finalizeRead(readSessionData);
 	}
 	if(!failed.empty()){
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), Glib::ustring::compose(_("The following errors occurred:%1"), failed));
@@ -372,17 +370,22 @@ bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, O
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 		return false;
 	}
-	Glib::ustring output;
-	Utils::busyTask([&]{
-		tess.SetImage(img->get_data(), img->get_width(), img->get_height(), 4, 4 * img->get_width());
-		char* text = tess.GetUTF8Text();
-		output = text;
-		delete[] text;
-		return true;
-	}, _("Recognizing..."));
-	if(dest == OutputDestination::Buffer){
-		MAIN->getOutputManager()->addText(output, false);
+	tess.SetImage(img->get_data(), img->get_width(), img->get_height(), 4, 4 * img->get_width());
+	if(dest == OutputDestination::Buffer) {
+		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead();
+		Utils::busyTask([&]{
+			MAIN->getOutputEditor()->read(tess, readSessionData);
+			return true;
+		}, _("Recognizing..."));
+		MAIN->getOutputEditor()->finalizeRead(readSessionData);
 	}else if(dest == OutputDestination::Clipboard){
+		Glib::ustring output;
+		Utils::busyTask([&]{
+			char* text = tess.GetUTF8Text();
+			output = text;
+			delete[] text;
+			return true;
+		}, _("Recognizing..."));
 		Gtk::Clipboard::get()->set_text(output);
 	}
 	return true;

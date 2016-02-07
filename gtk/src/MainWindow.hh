@@ -27,7 +27,7 @@
 class Config;
 class Acquirer;
 class Displayer;
-class OutputManager;
+class OutputEditor;
 class Recognizer;
 class Source;
 class SourceManager;
@@ -50,7 +50,7 @@ public:
 
 	Config* getConfig(){ return m_config; }
 	Displayer* getDisplayer(){ return m_displayer; }
-	OutputManager* getOutputManager(){ return m_outputManager; }
+	OutputEditor* getOutputEditor(){ return m_outputEditor; }
 	Recognizer* getRecognizer(){ return m_recognizer; }
 	SourceManager* getSourceManager(){ return m_sourceManager; }
 	Gtk::Window* getWindow() const{ return m_window; }
@@ -62,6 +62,7 @@ public:
 	void addNotification(const Glib::ustring& title, const Glib::ustring& message, const std::vector<NotificationAction>& actions, Notification* handle = nullptr);
 	void hideNotification(Notification handle);
 	void openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files);
+	void setOutputPaneVisible(bool visible);
 	void pushState(State state, const Glib::ustring& msg);
 	void popState();
 
@@ -71,25 +72,40 @@ private:
 	Gtk::ApplicationWindow* m_window;
 	Gtk::AboutDialog* m_aboutdialog;
 	Gtk::Statusbar* m_statusbar;
+	Gtk::ComboBoxText* m_ocrModeCombo;
+	Gtk::ToggleToolButton* m_outputPaneToggleButton;
 
 	Config* m_config = nullptr;
 	Acquirer* m_acquirer = nullptr;
 	Displayer* m_displayer = nullptr;
-	OutputManager* m_outputManager = nullptr;
+	OutputEditor* m_outputEditor = nullptr;
 	Recognizer* m_recognizer = nullptr;
 	SourceManager* m_sourceManager = nullptr;
 
 	Glib::Threads::Thread* m_newVerThread = nullptr;
 
+	MainWindow::Notification m_notifierHandle = nullptr;
+
 	std::vector<Gtk::Widget*> m_idlegroup;
 	std::vector<State> m_stateStack;
+	sigc::connection m_connection_setOCRMode;
+	sigc::connection m_connection_setOutputEditorLanguage;
+	sigc::connection m_connection_setOutputEditorVisibility;
 
 	bool closeEvent(GdkEventAny*);
+	void languageChanged();
 	void onSourceChanged();
+	void setOCRMode(int idx);
 	void setState(State state);
 #if ENABLE_VERSIONCHECK
 	void getNewestVersion();
 	void checkVersion(const Glib::ustring& newver);
+#endif
+#if defined(G_OS_UNIX)
+	void dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring& lang);
+	void dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result);
+#elif defined(G_OS_WIN32)
+	void dictionaryAutoinstall(const Glib::ustring& lang);
 #endif
 };
 

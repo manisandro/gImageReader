@@ -27,8 +27,10 @@ gtk/src/MainWindow.cc
 gtk/src/MainWindow.hh
 gtk/src/OutputBuffer.cc
 gtk/src/OutputBuffer.hh
-gtk/src/OutputManager.cc
-gtk/src/OutputManager.hh
+gtk/src/OutputEditor.cc
+gtk/src/OutputEditor.hh
+gtk/src/OutputEditorText.cc
+gtk/src/OutputEditorText.hh
 gtk/src/Recognizer.cc
 gtk/src/Recognizer.hh
 gtk/src/Scanner.hh
