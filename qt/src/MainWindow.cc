@@ -284,7 +284,7 @@ void MainWindow::setOCRMode(int idx)
 		ui.comboBoxOCRMode->blockSignals(true);
 		if(dynamic_cast<OutputEditorText*>(m_outputEditor)) {
 			ui.comboBoxOCRMode->setCurrentIndex(0);
-		} else /*if(idx == 1)*/ {
+		} else /*if(dynamic_cast<OutputEditorHOCR*>(m_outputEditor))*/ {
 			ui.comboBoxOCRMode->setCurrentIndex(1);
 		}
 		ui.comboBoxOCRMode->blockSignals(false);
@@ -300,6 +300,7 @@ void MainWindow::setOCRMode(int idx)
 		}
 		m_displayer->setTool(m_displayerTool);
 		connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), m_outputEditor, SLOT(setLanguage(Config::Lang)));
+		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
 		connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), m_outputEditor, SLOT(onVisibilityChanged(bool)));
 		ui.dockWidgetOutput->setWidget(m_outputEditor->getUI());
 	}
