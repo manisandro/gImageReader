@@ -53,8 +53,7 @@ private:
 	enum class InsertMode { Append, Cursor, Replace };
 
 	Gtk::Box* m_paneWidget;
-	Gtk::ToggleButton* m_insButton;
-	Gtk::Menu* m_insMenu;
+	Gtk::MenuButton* m_insButton;
 	Gtk::Image* m_insImage;
 	Gtk::EventBox* m_replaceBox;
 	Gtk::Box* m_outputBox;
@@ -66,9 +65,9 @@ private:
 	Gtk::CheckMenuItem* m_filterJoinHyphen;
 	Gtk::CheckMenuItem* m_filterJoinSpace;
 	Gtk::CheckMenuItem* m_filterKeepParagraphs;
-	Gtk::ToggleToolButton* m_toggleSearchButton;
-	Gtk::ToolButton* m_undoButton;
-	Gtk::ToolButton* m_redoButton;
+	Gtk::ToggleButton* m_toggleSearchButton;
+	Gtk::Button* m_undoButton;
+	Gtk::Button* m_redoButton;
 	Gtk::CheckButton* m_csCheckBox;
 
 	Glib::RefPtr<OutputBuffer> m_textBuffer;
@@ -88,7 +87,6 @@ private:
 	void scrollCursorIntoView();
 	void setFont();
 	void setInsertMode(InsertMode mode, const std::string& iconName);
-	void showInsertMenu();
 	void toggleReplaceBox();
 };
 

@@ -71,9 +71,9 @@ Recognizer::Recognizer()
 	m_langLabel = Builder("label:main.recognize.lang");
 	m_modeLabel = Builder("label:main.recognize.mode");
 	m_pageAreaCombo = Builder("comboboxtext:dialog.regions");
-	Gtk::MenuToolButton* recognizeBtn = Builder("tbmenu:main.recognize");
+	Gtk::MenuButton* recognizeBtn = Builder("menubutton:main.languages");
 	recognizeBtn->set_menu(*m_menuLanguages);
-	m_recognizeBtn = static_cast<Gtk::ToolButton*>(((Gtk::Container*)recognizeBtn->get_children()[0])->get_children()[0]);
+	m_recognizeBtn = Builder("button:main.recognize");
 
 	CONNECT(m_recognizeBtn, clicked, [this]{ recognizeButtonClicked(); });
 	CONNECT(Builder("menuitem:recognize.pages.current").as<Gtk::MenuItem>(), activate, [this]{ recognizeCurrentPage(); });

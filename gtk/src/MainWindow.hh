@@ -70,10 +70,11 @@ private:
 	static MainWindow* s_instance;
 
 	Gtk::ApplicationWindow* m_window;
+	Gtk::HeaderBar* m_headerbar;
 	Gtk::AboutDialog* m_aboutdialog;
 	Gtk::Statusbar* m_statusbar;
 	Gtk::ComboBoxText* m_ocrModeCombo;
-	Gtk::ToggleToolButton* m_outputPaneToggleButton;
+	Gtk::ToggleButton* m_outputPaneToggleButton;
 
 	Config* m_config = nullptr;
 	Acquirer* m_acquirer = nullptr;

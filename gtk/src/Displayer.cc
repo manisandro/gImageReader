@@ -36,10 +36,10 @@ Displayer::Displayer()
 	m_scrollwin = Builder("scrollwin:display");
 	m_hadj = m_scrollwin->get_hadjustment();
 	m_vadj = m_scrollwin->get_vadjustment();
-	m_zoominbtn = Builder("tbbutton:main.zoomin");
-	m_zoomoutbtn = Builder("tbbutton:main.zoomout");
-	m_zoomonebtn = Builder("tbbutton:main.normsize");
-	m_zoomfitbtn = Builder("tbbutton:main.bestfit");
+	m_zoominbtn = Builder("button:main.zoomin");
+	m_zoomoutbtn = Builder("button:main.zoomout");
+	m_zoomonebtn = Builder("button:main.zoomnormsize");
+	m_zoomfitbtn = Builder("button:main.zoomfit");
 	m_rotspin = Builder("spin:display.rotate");
 	m_pagespin = Builder("spin:display.page");
 	m_resspin = Builder("spin:display.resolution");
@@ -49,13 +49,11 @@ Displayer::Displayer()
 	m_invcheck = Builder("check:display.invert");
 
 #if GTKMM_CHECK_VERSION(3,12,0)
-	m_rotspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/angle.png"));
 	m_pagespin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/page.png"));
 	m_resspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/resolution.png"));
 	m_brispin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/brightness.png"));
 	m_conspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/contrast.png"));
 #else
-	gtk_entry_set_icon_from_pixbuf(GTK_ENTRY(m_rotspin->gobj()), GTK_ENTRY_ICON_PRIMARY, gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/angle.png", 0));
 	gtk_entry_set_icon_from_pixbuf(GTK_ENTRY(m_pagespin->gobj()), GTK_ENTRY_ICON_PRIMARY, gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/page.png", 0));
 	gtk_entry_set_icon_from_pixbuf(GTK_ENTRY(m_resspin->gobj()), GTK_ENTRY_ICON_PRIMARY, gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/resolution.png", 0));
 	gtk_entry_set_icon_from_pixbuf(GTK_ENTRY(m_brispin->gobj()), GTK_ENTRY_ICON_PRIMARY, gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/brightness.png", 0));
@@ -81,9 +79,10 @@ Displayer::Displayer()
 	CONNECT(m_zoomoutbtn, clicked, [this]{ setZoom(Zoom::Out); });
 	m_connection_zoomfitClicked = CONNECT(m_zoomfitbtn, clicked, [this]{ setZoom(Zoom::Fit); });
 	m_connection_zoomoneClicked = CONNECT(m_zoomonebtn, clicked, [this]{ setZoom(Zoom::One); });
-	CONNECT(Builder("tbbutton:main.rotright").as<Gtk::ToolButton>(), clicked, [this]{ setRotation(m_rotspin->get_value() + 90.); });
-	CONNECT(Builder("tbbutton:main.rotleft").as<Gtk::ToolButton>(), clicked, [this]{ setRotation(m_rotspin->get_value() - 90.); });
-	CONNECT(Builder("tbbutton:main.autolayout").as<Gtk::ToolButton>(), clicked, [this]{ autodetectLayout(); });
+	CONNECT(Builder("spin:display.rotate").as<Gtk::SpinButton>(), icon_press, [this](Gtk::EntryIconPosition pos, const GdkEventButton*) {
+		setRotation(m_rotspin->get_value() + (pos == Gtk::ENTRY_ICON_PRIMARY ? -90 : 90));
+	});
+	CONNECT(Builder("button:main.autolayout").as<Gtk::Button>(), clicked, [this]{ autodetectLayout(); });
 	CONNECT(m_selmenu, button_press_event, [this](GdkEventButton* ev){
 		Gtk::Allocation a = m_selmenu->get_allocation();
 		if(ev->x < a.get_x() || ev->x > a.get_x() + a.get_width() || ev->y < a.get_y() || ev->y > a.get_y() + a.get_height()){

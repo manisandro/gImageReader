@@ -51,7 +51,7 @@ private:
 	Gtk::Entry* m_pagesEntry;
 	Gtk::Label* m_langLabel;
 	Gtk::Label* m_modeLabel;
-	Gtk::ToolButton* m_recognizeBtn;
+	Gtk::Button* m_recognizeBtn;
 	Gtk::ComboBoxText* m_pageAreaCombo;
 	sigc::signal<void,Config::Lang> m_signal_languageChanged;
 	Gtk::RadioButtonGroup m_langMenuRadioGroup;

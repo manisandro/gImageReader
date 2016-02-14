@@ -56,10 +56,10 @@ private:
 	Gtk::Viewport* m_viewport;
 	Glib::RefPtr<Gtk::Adjustment> m_hadj;
 	Glib::RefPtr<Gtk::Adjustment> m_vadj;
-	Gtk::ToolButton* m_zoominbtn;
-	Gtk::ToolButton* m_zoomoutbtn;
-	Gtk::ToggleToolButton* m_zoomfitbtn;
-	Gtk::ToggleToolButton* m_zoomonebtn;
+	Gtk::Button* m_zoominbtn;
+	Gtk::Button* m_zoomoutbtn;
+	Gtk::ToggleButton* m_zoomfitbtn;
+	Gtk::ToggleButton* m_zoomonebtn;
 	Gtk::SpinButton* m_rotspin;
 	Gtk::SpinButton* m_pagespin;
 	Gtk::SpinButton* m_resspin;

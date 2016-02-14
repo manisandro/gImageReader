@@ -58,10 +58,11 @@ private:
 
 	Gtk::Notebook* m_notebook;
 	Gtk::TreeView* m_listView;
-	Gtk::MenuToolButton* m_addButton;
-	Gtk::ToolButton* m_removeButton;
-	Gtk::ToolButton* m_deleteButton;
-	Gtk::ToolButton* m_clearButton;
+	Gtk::Button* m_addButton;
+	Gtk::MenuButton* m_addButtonMenu;
+	Gtk::Button* m_removeButton;
+	Gtk::Button* m_deleteButton;
+	Gtk::Button* m_clearButton;
 	Gtk::MenuItem* m_pasteItem;
 
 	Glib::RefPtr<Gtk::Clipboard> m_clipboard;

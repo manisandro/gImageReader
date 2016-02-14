@@ -28,10 +28,11 @@ SourceManager::SourceManager()
 {
 	m_notebook = Builder("notebook:sources");
 	m_listView = Builder("treeview:input.images");
-	m_addButton = Builder("tbbutton:sources.images.add");
-	m_removeButton = Builder("tbbutton:sources.images.remove");
-	m_deleteButton = Builder("tbbutton:sources.images.delete");
-	m_clearButton = Builder("tbbutton:sources.images.clear");
+	m_addButton = Builder("button:sources.images.add");
+	m_addButtonMenu = Builder("menubutton:sources.images.add");
+	m_removeButton = Builder("button:sources.images.remove");
+	m_deleteButton = Builder("button:sources.images.delete");
+	m_clearButton = Builder("button:sources.images.clear");
 	m_pasteItem = Builder("menuitem:sources.images.paste");
 
 	m_listView->set_model(Gtk::ListStore::create(m_listViewCols));
@@ -54,14 +55,12 @@ SourceManager::SourceManager()
 	recentChooser->set_sort_type(Gtk::RECENT_SORT_MRU);
 	Builder("menuitem:sources.images.recent").as<Gtk::MenuItem>()->set_submenu(*recentChooser);
 
-	m_addButton->set_menu(*Builder("menu:sources.images.add").as<Gtk::Menu>());
-
 	m_clipboard = Gtk::Clipboard::get_for_display(Gdk::Display::get_default());
 
-	Gtk::ToggleToolButton* toggleSourcesBtn = Builder("tbbutton:main.sources");
-	CONNECTS(toggleSourcesBtn, toggled, [this](Gtk::ToggleToolButton* b){ m_notebook->set_visible(b->get_active()); });
+	Gtk::ToggleButton* toggleSourcesBtn = Builder("button:main.sources");
+	CONNECTS(toggleSourcesBtn, toggled, [this](Gtk::ToggleButton* b){ m_notebook->set_visible(b->get_active()); });
 	CONNECT(m_addButton, clicked, [this]{ openSources(); });
-	CONNECT(m_addButton, show_menu, [this]{ m_pasteItem->set_sensitive(m_clipboard->wait_is_image_available()); });
+	CONNECT(m_addButtonMenu, clicked, [this]{ m_pasteItem->set_sensitive(m_clipboard->wait_is_image_available()); });
 	CONNECT(m_pasteItem, activate, [this]{ pasteClipboard(); });
 	CONNECT(Builder("menuitem:sources.images.screenshot").as<Gtk::MenuItem>(), activate, [this]{ takeScreenshot(); });
 	CONNECT(m_removeButton, clicked, [this]{ removeSource(false); });

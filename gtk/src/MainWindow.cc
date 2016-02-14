@@ -109,10 +109,11 @@ MainWindow::MainWindow()
 	std::set_terminate(terminateHandler);
 
 	m_window = Builder("applicationwindow:main");
+	m_headerbar = Builder("headerbar:main");
 	m_aboutdialog = Builder("dialog:about");
 	m_statusbar = Builder("statusbar:main");
 	m_ocrModeCombo = Builder("combo:main.ocrmode");
-	m_outputPaneToggleButton = Builder("tbbutton:main.outputpane");
+	m_outputPaneToggleButton = Builder("button:main.outputpane");
 	m_window->set_icon_name("gimagereader");
 	m_aboutdialog->set_version(PACKAGE_VERSION);
 
@@ -122,23 +123,22 @@ MainWindow::MainWindow()
 	m_recognizer = new Recognizer;
 	m_sourceManager = new SourceManager;
 
-	m_idlegroup.push_back(Builder("tbbutton:main.zoomin"));
-	m_idlegroup.push_back(Builder("tbbutton:main.zoomout"));
-	m_idlegroup.push_back(Builder("tbbutton:main.normsize"));
-	m_idlegroup.push_back(Builder("tbbutton:main.bestfit"));
-	m_idlegroup.push_back(Builder("tbbutton:main.rotleft"));
-	m_idlegroup.push_back(Builder("tbbutton:main.rotright"));
+	m_idlegroup.push_back(Builder("button:main.zoomin"));
+	m_idlegroup.push_back(Builder("button:main.zoomout"));
+	m_idlegroup.push_back(Builder("button:main.zoomnormsize"));
+	m_idlegroup.push_back(Builder("button:main.zoomfit"));
+	m_idlegroup.push_back(Builder("button:main.recognize"));
 	m_idlegroup.push_back(Builder("spin:display.rotate"));
 	m_idlegroup.push_back(Builder("spin:display.page"));
 	m_idlegroup.push_back(Builder("spin:display.brightness"));
 	m_idlegroup.push_back(Builder("spin:display.contrast"));
 	m_idlegroup.push_back(Builder("spin:display.resolution"));
-	m_idlegroup.push_back(Builder("tbbutton:main.autolayout"));
-	m_idlegroup.push_back(Builder("tbmenu:main.recognize"));
+	m_idlegroup.push_back(Builder("button:main.autolayout"));
+	m_idlegroup.push_back(Builder("menubutton:main.languages"));
 
 	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) { return closeEvent(ev); });
-	CONNECTS(Builder("tbbutton:main.controls").as<Gtk::ToggleToolButton>(), toggled,
-			 [this](Gtk::ToggleToolButton* b) { Builder("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
+	CONNECTS(Builder("button:main.controls").as<Gtk::ToggleButton>(), toggled,
+			 [this](Gtk::ToggleButton* b) { Builder("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
 	CONNECT(m_displayer, selectionChanged, [this](bool haveSelection){ m_recognizer->setRecognizeMode(haveSelection); });
 	CONNECT(m_acquirer, scanPageAvailable, [this](const std::string& filename){ m_sourceManager->addSources({Gio::File::create_for_path(filename)}); });
 	CONNECT(m_sourceManager, sourceChanged, [this]{ onSourceChanged(); });
@@ -150,7 +150,7 @@ MainWindow::MainWindow()
 
 
 	m_config->addSetting(new VarSetting<std::vector<int>>("wingeom"));
-	m_config->addSetting(new SwitchSettingT<Gtk::ToggleToolButton>("showcontrols", "tbbutton:main.controls"));
+	m_config->addSetting(new SwitchSettingT<Gtk::ToggleButton>("showcontrols", "button:main.controls"));
 	m_config->addSetting(new ComboSetting("outputeditor", "combo:main.ocrmode"));
 
 	m_recognizer->updateLanguagesMenu();
@@ -185,8 +185,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::setMenuModel(const Glib::RefPtr<Gio::MenuModel> &menuModel)
 {
-	Builder("menubutton:options").as<Gtk::MenuButton>()->set_menu_model(menuModel);
-	Builder("tbbutton:options").as<Gtk::ToolItem>()->set_visible(true);
+	Builder("menubutton:main.options").as<Gtk::MenuButton>()->set_menu_model(menuModel);
+	Builder("menubutton:main.options").as<Gtk::MenuButton>()->set_visible(true);
 }
 
 void MainWindow::openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files)
@@ -246,10 +246,10 @@ void MainWindow::onSourceChanged()
 	}
 	std::vector<Source*> sources = m_sourceManager->getSelectedSources();
 	if(m_displayer->setSources(sources)){
-		m_window->set_title(Glib::ustring::compose("%1 - %2", sources.size() == 1 ? sources.front()->displayname : _("Multiple sources"), PACKAGE_NAME));
+		m_headerbar->set_subtitle(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources"));
 		pushState(State::Normal, _("To recognize specific areas, drag rectangles over them."));
 	}else{
-		m_window->set_title(PACKAGE_NAME);
+		m_headerbar->set_subtitle("");
 	}
 }
 
@@ -313,7 +313,7 @@ void MainWindow::setOCRMode(int idx)
 		m_connection_setOutputEditorLanguage = CONNECT(m_recognizer, languageChanged, [this](const Config::Lang& lang){ m_outputEditor->setLanguage(lang); });
 		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
 		m_connection_setOutputEditorVisibility = CONNECT(m_outputPaneToggleButton, toggled, [this]{ m_outputEditor->onVisibilityChanged(m_outputPaneToggleButton->get_active()); });
-		Builder("paned:output").as<Gtk::Paned>()->add(*m_outputEditor->getUI());
+		Builder("paned:output").as<Gtk::Paned>()->pack2(*m_outputEditor->getUI(), true, false);
 		m_outputEditor->getUI()->set_visible(m_outputPaneToggleButton->get_active());
 	}
 }
