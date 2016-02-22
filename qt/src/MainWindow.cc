@@ -419,7 +419,11 @@ void MainWindow::dictionaryAutoinstall()
 	const QString& code = m_recognizer->getSelectedLanguage().code;
 	pushState(State::Busy, _("Installing spelling dictionary for '%1'").arg(code));
 #ifdef Q_OS_LINUX
-	QStringList files = {"/usr/share/myspell/" + code + ".dic", "/usr/share/hunspell/" + code + ".dic"};
+	QStringList files;
+	for(const QString& langCulture : m_config->searchLangCultures(code)) {
+		files.append("/usr/share/myspell/" + langCulture + ".dic");
+		files.append("/usr/share/hunspell/" + langCulture + ".dic");
+	}
 	QList<QVariant> params = {QVariant::fromValue((quint32)winId()), QVariant::fromValue(files), QVariant::fromValue(QString("always"))};
 	m_dbusIface->setTimeout(3600000);
 	m_dbusIface->callWithCallback("InstallProvideFiles", params, this, SLOT(dictionaryAutoinstallDone()), SLOT(dictionaryAutoinstallError(QDBusError)));

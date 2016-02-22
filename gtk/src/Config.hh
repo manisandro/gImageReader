@@ -46,6 +46,7 @@ public:
 	}
 
 	bool searchLangSpec(Lang& lang) const;
+	std::vector<Glib::ustring> searchLangCultures(const Glib::ustring& code) const;
 	void showDialog();
 
 private:
@@ -57,6 +58,7 @@ private:
 	};
 
 	static const std::vector<Lang> LANGUAGES;
+	static const std::multimap<Glib::ustring,Glib::ustring> LANGUAGE_CULTURES ;
 
 	Gtk::Dialog* m_dialog;
 	Gtk::Box* m_addLangBox;
@@ -73,6 +75,8 @@ private:
 
 	LangViewColumns m_langViewCols;
 	std::map<Glib::ustring,AbstractSetting*> m_settings;
+
+	static std::multimap<Glib::ustring,Glib::ustring> buildLanguageCultureTable();
 
 	void addLanguage();
 	void removeLanguage();

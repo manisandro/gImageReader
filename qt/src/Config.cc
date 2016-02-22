@@ -20,6 +20,8 @@
 #include "Config.hh"
 #include "MainWindow.hh"
 
+#include <QMultiMap>
+
 const QList<Config::Lang> Config::LANGUAGES = {
 	// {ISO 639-2, ISO 639-1, name}
 	{"afr",      "af", QString::fromUtf8("Afrikaans")}, // Afrikaans
@@ -130,6 +132,150 @@ const QList<Config::Lang> Config::LANGUAGES = {
 	{"yid",      "yi", QString::fromUtf8("\u05d9\u05d9\u05b4\u05d3\u05d9\u05e9")}, // Yiddish
 };
 
+QMultiMap<QString, QString> Config::buildLanguageCultureTable() {
+	QMultiMap<QString,QString> map;
+	map.insert("af", "af_ZA");
+	map.insert("ar", "ar_AE");
+	map.insert("ar", "ar_BH");
+	map.insert("ar", "ar_DZ");
+	map.insert("ar", "ar_EG");
+	map.insert("ar", "ar_IQ");
+	map.insert("ar", "ar_JO");
+	map.insert("ar", "ar_KW");
+	map.insert("ar", "ar_LB");
+	map.insert("ar", "ar_LY");
+	map.insert("ar", "ar_MA");
+	map.insert("ar", "ar_OM");
+	map.insert("ar", "ar_QA");
+	map.insert("ar", "ar_SA");
+	map.insert("ar", "ar_SY");
+	map.insert("ar", "ar_TN");
+	map.insert("ar", "ar_YE");
+	map.insert("az", "az_AZ");
+	map.insert("az", "az_AZ");
+	map.insert("be", "be_BY");
+	map.insert("bg", "bg_BG");
+	map.insert("ca", "ca_ES");
+	map.insert("cs", "cs_CZ");
+	map.insert("da", "da_DK");
+	map.insert("de", "de_AT");
+	map.insert("de", "de_CH");
+	map.insert("de", "de_DE");
+	map.insert("de", "de_LI");
+	map.insert("de", "de_LU");
+	map.insert("div", "div_MV");
+	map.insert("el", "el_GR");
+	map.insert("en", "en_AU");
+	map.insert("en", "en_BZ");
+	map.insert("en", "en_CA");
+	map.insert("en", "en_CB");
+	map.insert("en", "en_GB");
+	map.insert("en", "en_IE");
+	map.insert("en", "en_JM");
+	map.insert("en", "en_NZ");
+	map.insert("en", "en_PH");
+	map.insert("en", "en_TT");
+	map.insert("en", "en_US");
+	map.insert("en", "en_ZA");
+	map.insert("en", "en_ZW");
+	map.insert("es", "es_AR");
+	map.insert("es", "es_BO");
+	map.insert("es", "es_CL");
+	map.insert("es", "es_CO");
+	map.insert("es", "es_CR");
+	map.insert("es", "es_DO");
+	map.insert("es", "es_EC");
+	map.insert("es", "es_ES");
+	map.insert("es", "es_GT");
+	map.insert("es", "es_HN");
+	map.insert("es", "es_MX");
+	map.insert("es", "es_NI");
+	map.insert("es", "es_PA");
+	map.insert("es", "es_PE");
+	map.insert("es", "es_PR");
+	map.insert("es", "es_PY");
+	map.insert("es", "es_SV");
+	map.insert("es", "es_UY");
+	map.insert("es", "es_VE");
+	map.insert("et", "et_EE");
+	map.insert("eu", "eu_ES");
+	map.insert("fa", "fa_IR");
+	map.insert("fi", "fi_FI");
+	map.insert("fo", "fo_FO");
+	map.insert("fr", "fr_BE");
+	map.insert("fr", "fr_CA");
+	map.insert("fr", "fr_CH");
+	map.insert("fr", "fr_FR");
+	map.insert("fr", "fr_LU");
+	map.insert("fr", "fr_MC");
+	map.insert("gl", "gl_ES");
+	map.insert("gu", "gu_IN");
+	map.insert("he", "he_IL");
+	map.insert("hi", "hi_IN");
+	map.insert("hr", "hr_HR");
+	map.insert("hu", "hu_HU");
+	map.insert("hy", "hy_AM");
+	map.insert("id", "id_ID");
+	map.insert("is", "is_IS");
+	map.insert("it", "it_CH");
+	map.insert("it", "it_IT");
+	map.insert("ja", "ja_JP");
+	map.insert("ka", "ka_GE");
+	map.insert("kk", "kk_KZ");
+	map.insert("kn", "kn_IN");
+	map.insert("kok", "kok_IN");
+	map.insert("ko", "ko_KR");
+	map.insert("ky", "ky_KZ");
+	map.insert("lt", "lt_LT");
+	map.insert("lv", "lv_LV");
+	map.insert("mk", "mk_MK");
+	map.insert("mn", "mn_MN");
+	map.insert("mr", "mr_IN");
+	map.insert("ms", "ms_BN");
+	map.insert("ms", "ms_MY");
+	map.insert("nb", "nb_NO");
+	map.insert("nl", "nl_BE");
+	map.insert("nl", "nl_NL");
+	map.insert("nn", "nn_NO");
+	map.insert("pa", "pa_IN");
+	map.insert("pl", "pl_PL");
+	map.insert("pt", "pt_BR");
+	map.insert("pt", "pt_PT");
+	map.insert("ro", "ro_RO");
+	map.insert("ru", "ru_RU");
+	map.insert("sa", "sa_IN");
+	map.insert("sk", "sk_SK");
+	map.insert("sl", "sl_SI");
+	map.insert("sq", "sq_AL");
+	map.insert("sr", "sr_SP");
+	map.insert("sr", "sr_SP");
+	map.insert("sv", "sv_FI");
+	map.insert("sv", "sv_SE");
+	map.insert("sw", "sw_KE");
+	map.insert("syr", "syr_SY");
+	map.insert("ta", "ta_IN");
+	map.insert("te", "te_IN");
+	map.insert("th", "th_TH");
+	map.insert("tr", "tr_TR");
+	map.insert("tt", "tt_RU");
+	map.insert("uk", "uk_UA");
+	map.insert("ur", "ur_PK");
+	map.insert("uz", "uz_UZ");
+	map.insert("uz", "uz_UZ");
+	map.insert("vi", "vi_VN");
+	map.insert("zh", "zh_CHS");
+	map.insert("zh", "zh_CHT");
+	map.insert("zh", "zh_CN");
+	map.insert("zh", "zh_HK");
+	map.insert("zh", "zh_MO");
+	map.insert("zh", "zh_SG");
+	map.insert("zh", "zh_TW");
+	return map;
+}
+
+const QMultiMap<QString,QString> Config::LANGUAGE_CULTURES = Config::buildLanguageCultureTable();
+
+
 Config::Config(QWidget* parent)
 	: QDialog(parent)
 {
@@ -194,6 +340,11 @@ bool Config::searchLangSpec(Lang& lang) const
 		}
 	}
 	return false;
+}
+
+QList<QString> Config::searchLangCultures(const QString& code) const
+{
+	return LANGUAGE_CULTURES.values(code);
 }
 
 void Config::showDialog()

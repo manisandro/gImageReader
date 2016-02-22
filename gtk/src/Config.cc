@@ -131,6 +131,149 @@ const std::vector<Config::Lang> Config::LANGUAGES = {
 	{"yid",      "yi", "\u05d9\u05d9\u05b4\u05d3\u05d9\u05e9"}, // Yiddish
 };
 
+std::multimap<Glib::ustring,Glib::ustring> Config::buildLanguageCultureTable() {
+	std::multimap<Glib::ustring,Glib::ustring> map;
+	map.insert(std::make_pair("af", "af_ZA"));
+	map.insert(std::make_pair("ar", "ar_AE"));
+	map.insert(std::make_pair("ar", "ar_BH"));
+	map.insert(std::make_pair("ar", "ar_DZ"));
+	map.insert(std::make_pair("ar", "ar_EG"));
+	map.insert(std::make_pair("ar", "ar_IQ"));
+	map.insert(std::make_pair("ar", "ar_JO"));
+	map.insert(std::make_pair("ar", "ar_KW"));
+	map.insert(std::make_pair("ar", "ar_LB"));
+	map.insert(std::make_pair("ar", "ar_LY"));
+	map.insert(std::make_pair("ar", "ar_MA"));
+	map.insert(std::make_pair("ar", "ar_OM"));
+	map.insert(std::make_pair("ar", "ar_QA"));
+	map.insert(std::make_pair("ar", "ar_SA"));
+	map.insert(std::make_pair("ar", "ar_SY"));
+	map.insert(std::make_pair("ar", "ar_TN"));
+	map.insert(std::make_pair("ar", "ar_YE"));
+	map.insert(std::make_pair("az", "az_AZ"));
+	map.insert(std::make_pair("az", "az_AZ"));
+	map.insert(std::make_pair("be", "be_BY"));
+	map.insert(std::make_pair("bg", "bg_BG"));
+	map.insert(std::make_pair("ca", "ca_ES"));
+	map.insert(std::make_pair("cs", "cs_CZ"));
+	map.insert(std::make_pair("da", "da_DK"));
+	map.insert(std::make_pair("de", "de_AT"));
+	map.insert(std::make_pair("de", "de_CH"));
+	map.insert(std::make_pair("de", "de_DE"));
+	map.insert(std::make_pair("de", "de_LI"));
+	map.insert(std::make_pair("de", "de_LU"));
+	map.insert(std::make_pair("div", "div_MV)"));
+	map.insert(std::make_pair("el", "el_GR"));
+	map.insert(std::make_pair("en", "en_AU"));
+	map.insert(std::make_pair("en", "en_BZ"));
+	map.insert(std::make_pair("en", "en_CA"));
+	map.insert(std::make_pair("en", "en_CB"));
+	map.insert(std::make_pair("en", "en_GB"));
+	map.insert(std::make_pair("en", "en_IE"));
+	map.insert(std::make_pair("en", "en_JM"));
+	map.insert(std::make_pair("en", "en_NZ"));
+	map.insert(std::make_pair("en", "en_PH"));
+	map.insert(std::make_pair("en", "en_TT"));
+	map.insert(std::make_pair("en", "en_US"));
+	map.insert(std::make_pair("en", "en_ZA"));
+	map.insert(std::make_pair("en", "en_ZW"));
+	map.insert(std::make_pair("es", "es_AR"));
+	map.insert(std::make_pair("es", "es_BO"));
+	map.insert(std::make_pair("es", "es_CL"));
+	map.insert(std::make_pair("es", "es_CO"));
+	map.insert(std::make_pair("es", "es_CR"));
+	map.insert(std::make_pair("es", "es_DO"));
+	map.insert(std::make_pair("es", "es_EC"));
+	map.insert(std::make_pair("es", "es_ES"));
+	map.insert(std::make_pair("es", "es_GT"));
+	map.insert(std::make_pair("es", "es_HN"));
+	map.insert(std::make_pair("es", "es_MX"));
+	map.insert(std::make_pair("es", "es_NI"));
+	map.insert(std::make_pair("es", "es_PA"));
+	map.insert(std::make_pair("es", "es_PE"));
+	map.insert(std::make_pair("es", "es_PR"));
+	map.insert(std::make_pair("es", "es_PY"));
+	map.insert(std::make_pair("es", "es_SV"));
+	map.insert(std::make_pair("es", "es_UY"));
+	map.insert(std::make_pair("es", "es_VE"));
+	map.insert(std::make_pair("et", "et_EE"));
+	map.insert(std::make_pair("eu", "eu_ES"));
+	map.insert(std::make_pair("fa", "fa_IR"));
+	map.insert(std::make_pair("fi", "fi_FI"));
+	map.insert(std::make_pair("fo", "fo_FO"));
+	map.insert(std::make_pair("fr", "fr_BE"));
+	map.insert(std::make_pair("fr", "fr_CA"));
+	map.insert(std::make_pair("fr", "fr_CH"));
+	map.insert(std::make_pair("fr", "fr_FR"));
+	map.insert(std::make_pair("fr", "fr_LU"));
+	map.insert(std::make_pair("fr", "fr_MC"));
+	map.insert(std::make_pair("gl", "gl_ES"));
+	map.insert(std::make_pair("gu", "gu_IN"));
+	map.insert(std::make_pair("he", "he_IL"));
+	map.insert(std::make_pair("hi", "hi_IN"));
+	map.insert(std::make_pair("hr", "hr_HR"));
+	map.insert(std::make_pair("hu", "hu_HU"));
+	map.insert(std::make_pair("hy", "hy_AM"));
+	map.insert(std::make_pair("id", "id_ID"));
+	map.insert(std::make_pair("is", "is_IS"));
+	map.insert(std::make_pair("it", "it_CH"));
+	map.insert(std::make_pair("it", "it_IT"));
+	map.insert(std::make_pair("ja", "ja_JP"));
+	map.insert(std::make_pair("ka", "ka_GE"));
+	map.insert(std::make_pair("kk", "kk_KZ"));
+	map.insert(std::make_pair("kn", "kn_IN"));
+	map.insert(std::make_pair("kok", "kok_IN"));
+	map.insert(std::make_pair("ko", "ko_KR"));
+	map.insert(std::make_pair("ky", "ky_KZ"));
+	map.insert(std::make_pair("lt", "lt_LT"));
+	map.insert(std::make_pair("lv", "lv_LV"));
+	map.insert(std::make_pair("mk", "mk_MK"));
+	map.insert(std::make_pair("mn", "mn_MN"));
+	map.insert(std::make_pair("mr", "mr_IN"));
+	map.insert(std::make_pair("ms", "ms_BN"));
+	map.insert(std::make_pair("ms", "ms_MY"));
+	map.insert(std::make_pair("nb", "nb_NO"));
+	map.insert(std::make_pair("nl", "nl_BE"));
+	map.insert(std::make_pair("nl", "nl_NL"));
+	map.insert(std::make_pair("nn", "nn_NO"));
+	map.insert(std::make_pair("pa", "pa_IN"));
+	map.insert(std::make_pair("pl", "pl_PL"));
+	map.insert(std::make_pair("pt", "pt_BR"));
+	map.insert(std::make_pair("pt", "pt_PT"));
+	map.insert(std::make_pair("ro", "ro_RO"));
+	map.insert(std::make_pair("ru", "ru_RU"));
+	map.insert(std::make_pair("sa", "sa_IN"));
+	map.insert(std::make_pair("sk", "sk_SK"));
+	map.insert(std::make_pair("sl", "sl_SI"));
+	map.insert(std::make_pair("sq", "sq_AL"));
+	map.insert(std::make_pair("sr", "sr_SP"));
+	map.insert(std::make_pair("sr", "sr_SP"));
+	map.insert(std::make_pair("sv", "sv_FI"));
+	map.insert(std::make_pair("sv", "sv_SE"));
+	map.insert(std::make_pair("sw", "sw_KE"));
+	map.insert(std::make_pair("syr", "syr_SY"));
+	map.insert(std::make_pair("ta", "ta_IN"));
+	map.insert(std::make_pair("te", "te_IN"));
+	map.insert(std::make_pair("th", "th_TH"));
+	map.insert(std::make_pair("tr", "tr_TR"));
+	map.insert(std::make_pair("tt", "tt_RU"));
+	map.insert(std::make_pair("uk", "uk_UA"));
+	map.insert(std::make_pair("ur", "ur_PK"));
+	map.insert(std::make_pair("uz", "uz_UZ"));
+	map.insert(std::make_pair("uz", "uz_UZ"));
+	map.insert(std::make_pair("vi", "vi_VN"));
+	map.insert(std::make_pair("zh", "zh_CHS"));
+	map.insert(std::make_pair("zh", "zh_CHT"));
+	map.insert(std::make_pair("zh", "zh_CN"));
+	map.insert(std::make_pair("zh", "zh_HK"));
+	map.insert(std::make_pair("zh", "zh_MO"));
+	map.insert(std::make_pair("zh", "zh_SG"));
+	map.insert(std::make_pair("zh", "zh_TW"));
+	return map;
+}
+
+const std::multimap<Glib::ustring,Glib::ustring> Config::LANGUAGE_CULTURES = Config::buildLanguageCultureTable();
+
 Config::Config()
 {
 	m_dialog = Builder("dialog:config");
@@ -205,6 +348,16 @@ bool Config::searchLangSpec(Lang& lang) const
 		}
 	}
 	return false;
+}
+
+std::vector<Glib::ustring> Config::searchLangCultures(const Glib::ustring& code) const
+{
+	std::vector<Glib::ustring> result;
+	auto ii = LANGUAGE_CULTURES.equal_range(code);
+	for(auto it = ii.first; it != ii.second; ++it) {
+		result.push_back(it->second);
+	}
+	return result;
 }
 
 void Config::showDialog()

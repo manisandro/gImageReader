@@ -436,7 +436,11 @@ void MainWindow::dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, con
 {
 	pushState(State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), code));
 	std::uint32_t xid = gdk_x11_window_get_xid(getWindow()->get_window()->gobj());
-	std::vector<Glib::ustring> files = {"/usr/share/myspell/" + code + ".dic", "/usr/share/hunspell/" + code + ".dic"};
+	std::vector<Glib::ustring> files;
+	for(const Glib::ustring& langCulture : m_config->searchLangCultures(code)) {
+		files.push_back("/usr/share/myspell/" + langCulture + ".dic");
+		files.push_back("/usr/share/hunspell/" + langCulture + ".dic");
+	}
 	std::vector<Glib::VariantBase> params = { Glib::Variant<std::uint32_t>::create(xid),
 											  Glib::Variant<std::vector<Glib::ustring>>::create(files),
 											  Glib::Variant<Glib::ustring>::create("always") };
