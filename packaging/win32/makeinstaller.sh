@@ -116,6 +116,8 @@ if [ "$iface" == "gtk" ]; then
 
 elif [ "$iface" == "qt4" ]; then
 
+    linkDep $(ls $MINGWROOT/bin/libssl-*.dll | sed "s|^$MINGWROOT/||")
+    linkDep $(ls $MINGWROOT/bin/libcrypto-*.dll | sed "s|^$MINGWROOT/||")
     linkDep lib/qt4/plugins/imageformats/qgif4.dll  bin/imageformats
     linkDep lib/qt4/plugins/imageformats/qico4.dll  bin/imageformats
     linkDep lib/qt4/plugins/imageformats/qmng4.dll  bin/imageformats
@@ -130,6 +132,8 @@ elif [ "$iface" == "qt4" ]; then
 
 elif [ "$iface" == "qt5" ]; then
 
+    linkDep $(ls $MINGWROOT/bin/libssl-*.dll | sed "s|^$MINGWROOT/||")
+    linkDep $(ls $MINGWROOT/bin/libcrypto-*.dll | sed "s|^$MINGWROOT/||")
     linkDep lib/qt5/plugins/imageformats/qdds.dll  bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qgif.dll  bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qicns.dll bin/imageformats
