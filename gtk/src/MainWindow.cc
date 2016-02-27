@@ -31,6 +31,7 @@
 #include <algorithm>
 #include <csignal>
 #include <cstdio>
+#include <fstream>
 #include <iostream>
 #include <sstream>
 #include <unistd.h>
@@ -514,7 +515,7 @@ void MainWindow::dictionaryAutoinstall(const Glib::ustring& code)
 		popState();
 		Utils::message_dialog(Gtk::MESSAGE_INFO, _("Dictionaries installed"), Glib::ustring::compose(_("The following dictionaries were installed:%1"), downloaded));
 	}else{
-		>popState();
+		popState();
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
 	}
 }

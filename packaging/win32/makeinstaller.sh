@@ -84,21 +84,10 @@ if [ "$iface" == "gtk" ]; then
 
     linkDep bin/gspawn-win$bits-helper-console.exe
     linkDep bin/gspawn-win$bits-helper.exe
-    linkDep lib/pango/1.8.0/modules/pango-arabic-lang.dll
-    linkDep lib/pango/1.8.0/modules/pango-indic-lang.dll
-    linkDep lib/pango/1.8.0/modules/pango-basic-fc.dll
-    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-pcx.dll
-    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-xbm.dll
-    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-ani.dll
-    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-wbmp.dll
-    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-pnm.dll
-    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-icns.dll
-    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-tga.dll
-    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-jasper.dll
-    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-qtif.dll
-    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-xpm.dll
-    linkDep lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-ras.dll
-    
+    for loader in $(ls -1 $MINGWROOT/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-*.dll); do
+      linkDep $(echo $loader | sed "s|^$MINGWROOT/||")
+    done
+
     # Install locale files
     (
         cd $MINGWROOT
