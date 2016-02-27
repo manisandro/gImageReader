@@ -355,7 +355,8 @@ void MainWindow::hideNotification(Notification handle)
 
 void MainWindow::VersionCheckThread::run()
 {
-	QString newver = Utils::download(QUrl(CHECKURL));
+	QString messages;
+	QString newver = Utils::download(QUrl(CHECKURL), messages);
 	newver.replace(QRegExp("\\s+"), "");
 	QRegExp pat(R"(^[\d+\.]+\d+$)");
 	if(pat.exactMatch(newver)){
@@ -431,10 +432,11 @@ void MainWindow::dictionaryAutoinstall()
 	QString url = "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
 	QString plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
 	QString urlcode = code;
-	QByteArray html = Utils::download(url);
+	QString messages;
+	QByteArray html = Utils::download(url, messages);
 	if(html.isNull()){
 		popState();
-		if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1.").arg(url), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
+		if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2.").arg(url).arg(messages), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
 			showHelp("#InstallSpelling");
 		}
 		return;
@@ -449,10 +451,10 @@ void MainWindow::dictionaryAutoinstall()
 		}
 		return;
 	}
-	html = Utils::download(url + urlcode + "/");
+	html = Utils::download(url + urlcode + "/", messages);
 	if(html.isNull()){
 		popState();
-		if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1.").arg(url + urlcode + "/"), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
+		if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2").arg(url + urlcode + "/").arg(messages), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
 			showHelp("#InstallSpelling");
 		}
 		return;
@@ -464,7 +466,7 @@ void MainWindow::dictionaryAutoinstall()
 	int pos = 0;
 	while((pos = htmls.indexOf(pat, pos)) != -1){
 		pushState(State::Busy, _("Downloading '%1'...").arg(pat.cap(1)));
-		QByteArray data = Utils::download(plainurl + urlcode + "/" + pat.cap(1));
+		QByteArray data = Utils::download(plainurl + urlcode + "/" + pat.cap(1), messages);
 		if(!data.isNull()){
 			QFile file(QString("%1/../share/myspell/dicts/%2").arg(QApplication::applicationDirPath()).arg(pat.cap(1)));
 			if(file.open(QIODevice::WriteOnly)){

@@ -148,7 +148,7 @@ void Utils::handleSourceDropEvent(const QMimeData* mimeData)
 	}
 }
 
-QByteArray Utils::download(QUrl url, int timeout)
+QByteArray Utils::download(QUrl url, QString& messages, int timeout)
 {
 	QNetworkAccessManager networkMgr;
 	QNetworkReply* reply = nullptr;
@@ -156,6 +156,9 @@ QByteArray Utils::download(QUrl url, int timeout)
 	while(true){
 		QNetworkRequest req(url);
 		req.setRawHeader("User-Agent" , "Wget/1.13.4");
+		QSslConfiguration conf = req.sslConfiguration();
+		conf.setPeerVerifyMode(QSslSocket::VerifyNone);
+		req.setSslConfiguration(conf);
 		reply = networkMgr.get(req);
 		QTimer timer;
 		QEventLoop loop;
@@ -181,6 +184,7 @@ QByteArray Utils::download(QUrl url, int timeout)
 	}
 
 	QByteArray result = reply->error() == QNetworkReply::NoError ? reply->readAll() : QByteArray();
+	messages = reply->error() == QNetworkReply::NoError ? QString() : reply->errorString();
 	delete reply;
 	return result;
 }

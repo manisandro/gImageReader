@@ -199,7 +199,7 @@ void Utils::handle_drag_drop(const Glib::RefPtr<Gdk::DragContext> &context, int 
 	context->drag_finish(false, false, time);
 }
 
-Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string &url, int timeout)
+Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string &url, Glib::ustring& messages, int timeout)
 {
 	enum Status { Waiting, Ready, Failed, Eos } status = Waiting;
 
@@ -255,7 +255,8 @@ Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string &url, int timeou
 				break;
 			}
 		}
-	} catch (const Glib::Error&) {
+	} catch (const Glib::Error& e) {
+		messages = e.what();
 		return Glib::RefPtr<Glib::ByteArray>();
 	}
 	return result;

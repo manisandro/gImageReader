@@ -466,10 +466,11 @@ void MainWindow::dictionaryAutoinstall(const Glib::ustring& code)
 	Glib::ustring plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
 	Glib::ustring urlcode = code;
 
-	Glib::RefPtr<Glib::ByteArray> html = Utils::download(url);
+	Glib::ustring messages;
+	Glib::RefPtr<Glib::ByteArray> html = Utils::download(url, messages);
 	if(!html){
 		popState();
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1."), url));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1: %2."), url, messages));
 		return;
 	}
 	Glib::ustring htmls(reinterpret_cast<const char*>(html->get_data()), html->size());
@@ -482,10 +483,10 @@ void MainWindow::dictionaryAutoinstall(const Glib::ustring& code)
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
 		return;
 	}
-	html = Utils::download(url + urlcode + "/");
+	html = Utils::download(url + urlcode + "/", messages);
 	if(!html){
 		popState();
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1."), url + urlcode + "/"));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1: %2."), url + urlcode + "/", messages));
 		return;
 	}
 	Glib::RefPtr<Glib::Regex> pat = Glib::Regex::create(Glib::ustring::compose(">(%1[^<]*\\.(dic|aff))<", code.substr(0, 2)));
@@ -496,7 +497,7 @@ void MainWindow::dictionaryAutoinstall(const Glib::ustring& code)
 	Glib::MatchInfo matchInfo;
 	while(pat->match(htmls, pos, matchInfo)){
 		pushState(State::Busy, Glib::ustring::compose(_("Downloading '%1'..."), matchInfo.fetch(1)));
-		Glib::RefPtr<Glib::ByteArray> data = Utils::download(plainurl + urlcode + "/" + matchInfo.fetch(1));
+		Glib::RefPtr<Glib::ByteArray> data = Utils::download(plainurl + urlcode + "/" + matchInfo.fetch(1), messages);
 		if(data){
 			std::ofstream file(Glib::build_filename(pkgDir, "share", "myspell", "dicts", matchInfo.fetch(1)), std::ios::binary);
 			if(file.is_open()){
