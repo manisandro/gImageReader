@@ -32,7 +32,7 @@
 </ul>
 
 <h2><a name="About">O aplikaci</a></h2>
-<p>gImageReader je grafická nadstavba pro engine <a href="http://code.google.com/p/tesseract-ocr/">tesseract-ocr</a>.</p>
+<p>gImageReader je grafická nadstavba pro engine <a href="https://github.com/tesseract-ocr/tesseract">tesseract-ocr</a>.</p>
 <h3><a name="Features">Funkce</a></h3>
 <ul>
     <li>Možnost ručně označit části obrázku, které mají být rozpoznány, případně nechat rozpoznat celou plochu obrázku.</li>
@@ -177,13 +177,13 @@
 <h2><a name="InstallTessdata">Instalace jazykových definic rozpoznávacího engine tesseract</a></h2>
 <ul>
     <li>V systému <b>GNU/Linux</b> stačí spustit správce balíčků a nainstalovat ty, které obsahují požadované jazykové definice (balíčky nejspíš budou nazvány ve stylu <i>tesseract-langpack-&lt;jazyk&gt;</i>).</li>
-    <li>V systému <b>Microsoft Windows</b> je třeba si stáhnout definice požadovaných jazyků ze <a href="http://code.google.com/p/tesseract-ocr/downloads/list">stránek projektu</a>, jejich soubory (<i>&lt;jazyk&gt;.traineddata</i>) pak umístit tam, kam odkazuje (nabídka) <tt>Start&rarr;Všechny programy&rarr;gImageReader&rarr;Jazykové definice pro Tesseract</tt>.</li>
+    <li>V systému <b>Microsoft Windows</b> je třeba si stáhnout definice požadovaných jazyků ze <a href="https://github.com/tesseract-ocr/tessdata">stránek projektu</a>, jejich soubory (<i>&lt;jazyk&gt;.traineddata</i>) pak umístit tam, kam odkazuje (nabídka) <tt>Start&rarr;Všechny programy&rarr;gImageReader&rarr;Jazykové definice pro Tesseract</tt>.</li>
     <li>Aby se instalace nových jazykových definic projevila, je třeba buď aplikaci ukončit a spustit znovu, nebo použít v <i>nabídce aplikace</i> kliknout na <i>Znovu zkontrolovat přítomnost jazykových dat</i>.</li>
 </ul>
 <h2><a name="InstallSpelling">Instalace slovníků pro kontrolu překlepů</a></h2>
 <ul>
     <li>V systému <b>GNU/Linux</b>, pokud daná distribuce podporuje technologii PackageKit, aplikace v případě potřeby nabídne samočinnou instalaci nezbytných slovníků. A pokud snad samočinná instalace z nějakého důvodu nefunguje, můžete slovníky nainstalovat pomocí správce balíčků v systému (balíčky budou nazvané něco jako <i>hunspell-&lt;jazyk&gt;</i> nebo <i>aspell-&lt;jazyk&gt;</i>).</li>
-    <li>V systému <b>MS Windows</b>, se aplikace pokusí automaticky stáhnout příslušný slovník pro kontrolu překlepů z <a href="http://cgit.freedesktop.org/libreoffice/dictionaries/tree">http://cgit.freedesktop.org/libreoffice/dictionaries/tree</a>. Slovníky též mohou být nainstalovány ručně: pro příslušný jazyk (tj. např. <tt>cs_CZ</tt>), stáhněte soubory s příponami <b>.dic a .aff</b> a umístěte je tam, kam odkazuje (nabídka) <tt>Start&rarr;Všechny programy&rarr;gImageReader&rarr;Slovníky pro kontrolu překlepů</tt>.</li>
+    <li>V systému <b>MS Windows</b>, se aplikace pokusí automaticky stáhnout příslušný slovník pro kontrolu překlepů z <a href="https://cgit.freedesktop.org/libreoffice/dictionaries/tree">http://cgit.freedesktop.org/libreoffice/dictionaries/tree</a>. Slovníky též mohou být nainstalovány ručně: pro příslušný jazyk (tj. např. <tt>cs_CZ</tt>), stáhněte soubory s příponami <b>.dic a .aff</b> a umístěte je tam, kam odkazuje (nabídka) <tt>Start&rarr;Všechny programy&rarr;gImageReader&rarr;Slovníky pro kontrolu překlepů</tt>.</li>
 </ul>
 
 <h2><a name="Contributing">Jak se zapojit do vývoje</a></h2>

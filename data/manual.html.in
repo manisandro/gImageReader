@@ -32,7 +32,7 @@
 </ul>
 
 <h2><a name="About">About</a></h2>
-<p>gImageReader is a frontent to <a href="http://code.google.com/p/tesseract-ocr/">tesseract-ocr</a> written in C++.</p>
+<p>gImageReader is a frontent to <a href="https://github.com/tesseract-ocr/tesseract">tesseract-ocr</a> written in C++.</p>
 <h3><a name="Features">Features</a></h3>
 <ul>
     <li>Allows the user to select the parts of the image they want to be recognized or directly recognize the entire image.</li>
@@ -176,13 +176,13 @@
 <h2><a name="InstallTessdata">Installation of tesseract language definitions</a></h2>
 <ul>
     <li>On <b>Linux</b>, it's sufficient to install the package corresponding to the language definition one wants to install via the package management application (the packages may be called something like <i>tesseract-langpack-&lt;lang&gt;</i>).</li>
-    <li>On <b>Windows</b>, one needs to download the desired language definitions from the <a href="http://code.google.com/p/tesseract-ocr/downloads/list">project download page</a>, the copy the <i>&lt;lang&gt;.traineddata</i> files to <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Tesseract language definitions</tt>.</li>
+    <li>On <b>Windows</b>, one needs to download the desired language definitions from the <a href="https://github.com/tesseract-ocr/tessdata">project tessdata page</a>, the copy the <i>&lt;lang&gt;.traineddata</i> files (along with any supplementary files which certain languages need) to <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Tesseract language definitions</tt>.</li>
     <li>To re-detect the available languages, one can restart the program, or select <i>Redetect Languages</i> from the <i>application menu</i>.</li>
 </ul>
 <h2><a name="InstallSpelling">Installation of spelling dictionaries</a></h2>
 <ul>
     <li>On <b>Linux</b>, if your distribution supports PackageKit, the program will offer to automatically install missing dictionaries when necessary. If automatic installation does not work for some reason, you can install the spelling dictionaries from the package management application (the packages may be called something like <i>hunspell-&lt;lang&gt;</i>).</li>
-    <li>On <b>Windows</b>, the program will attempt to automaticallly download the desired spelling dictionary from <a href="http://cgit.freedesktop.org/libreoffice/dictionaries/tree">http://cgit.freedesktop.org/libreoffice/dictionaries/tree</a>. Dictionaries can also be installed manually: for a desired language (i.e. <tt>it_IT</tt>), download the <b>*.dic and *.aff</b> files and place them in <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Spelling dictionaries</tt>.</li>
+    <li>On <b>Windows</b>, the program will attempt to automaticallly download the desired spelling dictionary from <a href="https://cgit.freedesktop.org/libreoffice/dictionaries/tree">http://cgit.freedesktop.org/libreoffice/dictionaries/tree</a>. Dictionaries can also be installed manually: for a desired language (i.e. <tt>it_IT</tt>), download the <b>*.dic and *.aff</b> files and place them in <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Spelling dictionaries</tt>.</li>
 </ul>
 <h2><a name="Contributing">Contributing</a></h2>
 <p>
