@@ -428,8 +428,8 @@ void MainWindow::dictionaryAutoinstall()
 	m_dbusIface->setTimeout(3600000);
 	m_dbusIface->callWithCallback("InstallProvideFiles", params, this, SLOT(dictionaryAutoinstallDone()), SLOT(dictionaryAutoinstallError(QDBusError)));
 #else
-	QString url = "http://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
-	QString plainurl = "http://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
+	QString url = "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
+	QString plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
 	QString urlcode = code;
 	QByteArray html = Utils::download(url);
 	if(html.isNull()){

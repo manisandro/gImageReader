@@ -462,8 +462,8 @@ void MainWindow::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy,
 void MainWindow::dictionaryAutoinstall(const Glib::ustring& code)
 {
 	pushState(State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), code));
-	Glib::ustring url= "http://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
-	Glib::ustring plainurl = "http://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
+	Glib::ustring url= "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
+	Glib::ustring plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
 	Glib::ustring urlcode = code;
 
 	Glib::RefPtr<Glib::ByteArray> html = Utils::download(url);
