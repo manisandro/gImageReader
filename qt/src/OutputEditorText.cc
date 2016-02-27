@@ -252,7 +252,7 @@ bool OutputEditorText::save(const QString& filename)
 		QMessageBox::critical(MAIN, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
-	file.write(ui.plainTextEditOutput->toPlainText().toLocal8Bit());
+	file.write(MAIN->getConfig()->useUtf8() ? ui.plainTextEditOutput->toPlainText().toUtf8() : ui.plainTextEditOutput->toPlainText().toLocal8Bit());
 	ui.plainTextEditOutput->document()->setModified(false);
 	return true;
 }

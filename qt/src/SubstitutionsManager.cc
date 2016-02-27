@@ -122,7 +122,7 @@ void SubstitutionsManager::openList()
 		bool errors = false;
 		m_tableWidget->blockSignals(true);
 		while(!file.atEnd()){
-			QString line = QString::fromLocal8Bit(file.readLine());
+			QString line = MAIN->getConfig()->useUtf8() ? QString::fromUtf8(file.readLine()) : QString::fromLocal8Bit(file.readLine());
 			line.chop(1);
 			if(line.isEmpty()){
 				continue;
@@ -159,8 +159,8 @@ bool SubstitutionsManager::saveList()
 	m_currentFile = filename;
 	MAIN->getConfig()->getSetting<VarSetting<QString>>("substitutionslistfile")->setValue(m_currentFile);
 	for(int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row){
-		QByteArray line = QString("%1\t%2\n").arg(m_tableWidget->item(row, 0)->text()).arg(m_tableWidget->item(row, 1)->text()).toLocal8Bit();
-		file.write(line);
+		QString line = QString("%1\t%2\n").arg(m_tableWidget->item(row, 0)->text()).arg(m_tableWidget->item(row, 1)->text());
+		file.write(MAIN->getConfig()->useUtf8() ? line.toUtf8() : line.toLocal8Bit());
 	}
 	return true;
 }

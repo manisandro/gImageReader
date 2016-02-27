@@ -320,6 +320,7 @@ Config::Config(QWidget* parent)
 	addSetting(new TableSetting("customlangs", ui.tableWidgetAdditionalLang));
 	addSetting(new SwitchSetting("systemoutputfont", ui.checkBoxDefaultOutputFont, true));
 	addSetting(new FontSetting("customoutputfont", &m_fontDialog, QFont().toString()));
+	addSetting(new ComboSetting("textencoding", ui.comboBoxEncoding, 0));
 
 	updateFontButton(m_fontDialog.currentFont());
 }
@@ -352,6 +353,11 @@ void Config::showDialog()
 	toggleAddLanguage(true);
 	exec();
 	getSetting<TableSetting>("customlangs")->serialize();
+}
+
+bool Config::useUtf8() const
+{
+	return ui.comboBoxEncoding->currentIndex() == 1;
 }
 
 void Config::disableDictInstall()

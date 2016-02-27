@@ -49,6 +49,8 @@ public:
 	QList<QString> searchLangCultures(const QString& code) const;
 	void showDialog();
 
+	bool useUtf8() const;
+
 public slots:
 	void disableDictInstall();
 	void disableUpdateCheck();

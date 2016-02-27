@@ -476,9 +476,9 @@ bool OutputEditorHOCR::save(const QString& filename)
 			"    <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
 			"  </head>\n"
 			"<body>\n").arg(TESSERACT_VERSION_STR);
-	file.write(header.toLocal8Bit());
+	file.write(header.toUtf8());
 	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
-		file.write(ui.treeWidgetItems->topLevelItem(i)->data(0, TextRole).toString().toLocal8Bit());
+		file.write(ui.treeWidgetItems->topLevelItem(i)->data(0, TextRole).toString().toUtf8());
 	}
 	file.write("</body>\n</html>\n");
 	return true;
