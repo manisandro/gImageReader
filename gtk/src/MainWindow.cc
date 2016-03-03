@@ -80,7 +80,7 @@ static void signalHandler(int sig)
 	std::raise(sig);
 }
 
-
+#ifndef __ARMEL__
 static void terminateHandler()
 {
 	std::set_terminate(nullptr);
@@ -98,6 +98,7 @@ static void terminateHandler()
 	}
 	signalHandler(SIGABRT);
 }
+#endif
 
 MainWindow* MainWindow::s_instance = nullptr;
 
@@ -107,7 +108,9 @@ MainWindow::MainWindow()
 
 	std::signal(SIGSEGV, signalHandler);
 	std::signal(SIGABRT, signalHandler);
+#ifndef __ARMEL__	
 	std::set_terminate(terminateHandler);
+#endif
 
 	m_window = Builder("applicationwindow:main");
 	m_headerbar = Builder("headerbar:main");
