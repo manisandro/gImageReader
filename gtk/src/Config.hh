@@ -31,6 +31,8 @@ class Config {
 public:
 	struct Lang {
 		Glib::ustring prefix, code, name;
+		Lang(const Glib::ustring& _prefix = Glib::ustring(), const Glib::ustring& _code = Glib::ustring(), const Glib::ustring& _name = Glib::ustring())
+			: prefix(_prefix), code(_code), name(_name) {}
 	};
 
 	Config();

@@ -125,6 +125,9 @@ private:
 		int brightness;
 		int contrast;
 		bool invert;
+
+		ScaleRequest(Request _type, double _scale = 0., int _resolution = 0, int _page = 0, int _brightness = 0, int _contrast = 0, bool _invert = 0)
+			: type(_type), scale(_scale), resolution(_resolution), page(_page), brightness(_brightness), contrast(_contrast), invert(_invert) {}
 	};
 	Cairo::RefPtr<Cairo::ImageSurface> m_blurImage;
 	double m_blurScale;
