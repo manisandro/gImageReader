@@ -337,6 +337,16 @@
       </object>
     </child>
   </object>
+  <object class="GtkImage" id="image:tessdatamanager.apply">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">object-select-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image:tessdatamanager.close">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">edit-delete-symbolic</property>
+  </object>
   <object class="GtkListStore" id="liststore:sources.acquire.device">
     <columns>
       <!-- column-name device -->
@@ -1933,6 +1943,116 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
     <action-widgets>
       <action-widget response="-6">button:pages:cancel</action-widget>
       <action-widget response="-5">button:pages:ok</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkDialog" id="dialog:tessdatamanager">
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Tessdata Manager</property>
+    <property name="window_position">center-on-parent</property>
+    <property name="default_width">320</property>
+    <property name="default_height">320</property>
+    <property name="destroy_with_parent">True</property>
+    <property name="type_hint">dialog</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="skip_pager_hint">True</property>
+    <property name="transient_for">applicationwindow:main</property>
+    <child internal-child="vbox">
+      <object class="GtkBox" id="vbox:tessdatamanager">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="actionarea:tessdatamanager">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="button:tessdatamanager.apply">
+                <property name="label" translatable="yes">Apply</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">image:tessdatamanager.apply</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button:tessdatamanager.close">
+                <property name="label" translatable="yes">Close</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">image:tessdatamanager.close</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="box:tessdatamanager">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel" id="label:tessdatamanager">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Manage installed languages:</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="scrolledwindow:tessdatamanager">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">never</property>
+                <property name="shadow_type">in</property>
+                <child>
+                  <object class="GtkTreeView" id="treeview:tessdatamanager">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="headers_visible">False</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection" id="treeviewselection:tessdatamanager"/>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-10">button:tessdatamanager.apply</action-widget>
+      <action-widget response="-7">button:tessdatamanager.close</action-widget>
     </action-widgets>
   </object>
   <object class="GtkSizeGroup" id="sizegroup:sources.acquire.device">

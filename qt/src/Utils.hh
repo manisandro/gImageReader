@@ -43,7 +43,7 @@ namespace Utils {
 	bool handleSourceDragEvent(const QMimeData* mimeData);
 	void handleSourceDropEvent(const QMimeData* mimeData);
 
-	QByteArray download(QUrl url, QString& messages, int timeout = 5000);
+	QByteArray download(QUrl url, QString& messages, int timeout = 60000);
 
 	template<typename T>
 	class AsyncQueue {

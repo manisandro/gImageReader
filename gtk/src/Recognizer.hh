@@ -33,10 +33,13 @@ public:
 	enum class OutputDestination { Buffer, Clipboard };
 
 	Recognizer();
+	std::vector<Glib::ustring> getAvailableLanguages() const;
+	std::string getTessdataDir() const;
 	const Config::Lang& getSelectedLanguage() const{ return m_curLang; }
-	bool recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
+
 	void setRecognizeMode(bool haveSelection);
 	void updateLanguagesMenu();
+	bool recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
 	sigc::signal<void,Config::Lang> signal_languageChanged() const{ return m_signal_languageChanged; }
 
 private:
@@ -71,6 +74,7 @@ private:
 	bool setPage(int page, bool autodetectLayout);
 	bool onMultilingualMenuButtonEvent(GdkEventButton* ev);
 	bool onMultilingualItemButtonEvent(GdkEventButton* ev, Gtk::CheckMenuItem* item);
+	void manageInstalledLanguages();
 };
 
 #endif // RECOGNIZER_HH

@@ -33,6 +33,7 @@
 #include "MainWindow.hh"
 #include "OutputEditor.hh"
 #include "Recognizer.hh"
+#include "TessdataManager.hh"
 #include "Utils.hh"
 #include "ui_PageRangeDialog.h"
 
@@ -69,6 +70,26 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	MAIN->getConfig()->addSetting(new VarSetting<bool>("osd", false));
 }
 
+QStringList Recognizer::getAvailableLanguages() const
+{
+	tesseract::TessBaseAPI tess;
+	initTesseract(tess);
+	GenericVector<STRING> availLanguages;
+	tess.GetAvailableLanguagesAsVector(&availLanguages);
+	QStringList result;
+	for(int i = 0; i < availLanguages.size(); ++i){
+		result.append(availLanguages[i].string());
+	}
+	return result;
+}
+
+QString Recognizer::getTessdataDir() const
+{
+	tesseract::TessBaseAPI tess;
+	initTesseract(tess);
+	return QString(tess.GetDatapath());
+}
+
 bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* language) const
 {
 	QByteArray current = setlocale(LC_NUMERIC, NULL);
@@ -98,25 +119,21 @@ void Recognizer::updateLanguagesMenu()
 
 	QList<QString> dicts = QtSpell::Checker::getLanguageList();
 
-	tesseract::TessBaseAPI tess;
-	initTesseract(tess);
-	GenericVector<STRING> availLanguages;
-	tess.GetAvailableLanguagesAsVector(&availLanguages);
+	QStringList availLanguages = getAvailableLanguages();
 
 	if(availLanguages.empty()){
 		QMessageBox::warning(MAIN, _("No languages available"), _("No tesseract languages are available for use. Recognition will not work."));
 		m_langLabel = "";
 		ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
-		return;
 	}
 
 	// Add menu items for languages, with spelling submenu if available
-	for(int i = 0; i < availLanguages.size(); ++i){
-		if(std::strcmp(availLanguages[i].string(), "osd") == 0){
+	for(const QString& langprefix : availLanguages){
+		if(langprefix == "osd"){
 			haveOsd = true;
 			continue;
 		}
-		Config::Lang lang = {availLanguages[i].string(), QString(), QString()};
+		Config::Lang lang = {langprefix, QString(), QString()};
 		if(!MAIN->getConfig()->searchLangSpec(lang)){
 			lang.name = lang.prefix;
 		}
@@ -164,37 +181,41 @@ void Recognizer::updateLanguagesMenu()
 	}
 
 	// Add multilanguage menu
-	ui.menuLanguages->addSeparator();
-	m_multilingualAction = new QAction(_("Multilingual"), m_langMenuRadioGroup);
-	m_multilingualAction->setCheckable(true);
-	m_menuMultilanguage = new QMenu();
-	bool isMultilingual = curlang.prefix.contains('+');
-	QStringList sellangs = curlang.prefix.split('+', QString::SkipEmptyParts);
-	for(int i = 0; i < availLanguages.size(); ++i){
-		if(std::strcmp(availLanguages[i].string(), "osd") == 0){
-			continue;
+	bool isMultilingual = false;
+	if(!availLanguages.isEmpty()) {
+		ui.menuLanguages->addSeparator();
+		m_multilingualAction = new QAction(_("Multilingual"), m_langMenuRadioGroup);
+		m_multilingualAction->setCheckable(true);
+		m_menuMultilanguage = new QMenu();
+		isMultilingual = curlang.prefix.contains('+');
+		QStringList sellangs = curlang.prefix.split('+', QString::SkipEmptyParts);
+		for(const QString& langprefix : availLanguages){
+			if(langprefix == "osd"){
+				continue;
+			}
+			Config::Lang lang = {langprefix, "", ""};
+			if(!MAIN->getConfig()->searchLangSpec(lang)){
+				lang.name = lang.prefix;
+			}
+			QAction* item = new QAction(lang.name, m_langMenuCheckGroup);
+			item->setCheckable(true);
+			item->setData(QVariant::fromValue(lang.prefix));
+			item->setChecked(isMultilingual && sellangs.contains(lang.prefix));
+			connect(item, SIGNAL(triggered()), this, SLOT(setMultiLanguage()));
+			m_menuMultilanguage->addAction(item);
 		}
-		Config::Lang lang = {availLanguages[i].string(), "", ""};
-		if(!MAIN->getConfig()->searchLangSpec(lang)){
-			lang.name = lang.prefix;
-		}
-		QAction* item = new QAction(lang.name, m_langMenuCheckGroup);
-		item->setCheckable(true);
-		item->setData(QVariant::fromValue(lang.prefix));
-		item->setChecked(isMultilingual && sellangs.contains(lang.prefix));
-		connect(item, SIGNAL(triggered()), this, SLOT(setMultiLanguage()));
-		m_menuMultilanguage->addAction(item);
+		m_menuMultilanguage->installEventFilter(this);
+		m_multilingualAction->setMenu(m_menuMultilanguage);
+		ui.menuLanguages->addAction(m_multilingualAction);
 	}
-	m_menuMultilanguage->installEventFilter(this);
-	m_multilingualAction->setMenu(m_menuMultilanguage);
-	ui.menuLanguages->addAction(m_multilingualAction);
 	if(isMultilingual){
 		activeitem = m_multilingualAction;
 		setMultiLanguage();
 	}else if(activeitem == nullptr){
 		activeitem = curitem;
 	}
-	activeitem->trigger();
+	if(activeitem)
+		activeitem->trigger();
 
 	// Add OSD item
 	if(haveOsd){
@@ -205,6 +226,10 @@ void Recognizer::updateLanguagesMenu()
 		connect(m_osdAction, SIGNAL(toggled(bool)), this, SLOT(osdToggled(bool)));
 		ui.menuLanguages->addAction(m_osdAction);
 	}
+
+	// Add installer item
+	ui.menuLanguages->addSeparator();
+	ui.menuLanguages->addAction(_("Manage languages..."), this, SLOT(manageInstalledLanguages()));
 }
 
 void Recognizer::setLanguage()
@@ -432,4 +457,12 @@ bool Recognizer::eventFilter(QObject* obj, QEvent* ev)
 		}
 	}
 	return QObject::eventFilter(obj, ev);
+}
+
+void Recognizer::manageInstalledLanguages()
+{
+	TessdataManager manager(MAIN);
+	if(manager.setup()) {
+		manager.exec();
+	}
 }

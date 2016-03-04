@@ -22,6 +22,7 @@
 #include "Displayer.hh"
 #include "OutputEditor.hh"
 #include "Recognizer.hh"
+#include "TessdataManager.hh"
 #include "Utils.hh"
 
 #include <gtkspellmm.h>
@@ -85,6 +86,26 @@ Recognizer::Recognizer()
 	MAIN->getConfig()->addSetting(new VarSetting<bool>("osd"));
 }
 
+std::vector<Glib::ustring> Recognizer::getAvailableLanguages() const
+{
+	tesseract::TessBaseAPI tess;
+	initTesseract(tess);
+	GenericVector<STRING> availLanguages;
+	tess.GetAvailableLanguagesAsVector(&availLanguages);
+	std::vector<Glib::ustring> result;
+	for(int i = 0; i < availLanguages.size(); ++i){
+		result.push_back(availLanguages[i].string());
+	}
+	return result;
+}
+
+std::string Recognizer::getTessdataDir() const
+{
+	tesseract::TessBaseAPI tess;
+	initTesseract(tess);
+	return std::string(tess.GetDatapath());
+}
+
 bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* language) const
 {
 	std::string current = setlocale(LC_NUMERIC, NULL);
@@ -110,24 +131,20 @@ void Recognizer::updateLanguagesMenu()
 
 	std::vector<Glib::ustring> dicts = GtkSpell::Checker::get_language_list();
 
-	tesseract::TessBaseAPI tess;
-	initTesseract(tess);
-	GenericVector<STRING> availLanguages;
-	tess.GetAvailableLanguagesAsVector(&availLanguages);
+	std::vector<Glib::ustring> availLanguages = getAvailableLanguages();
 
 	if(availLanguages.empty()){
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("No languages available"), _("No tesseract languages are available for use. Recognition will not work."));
 		m_langLabel->set_text("");
-		return;
 	}
 
 	// Add menu items for languages, with spelling submenu if available
-	for(int i = 0; i < availLanguages.size(); ++i){
-		if(std::strcmp(availLanguages[i].string(), "osd") == 0){
+	for(const Glib::ustring& langprefix : availLanguages){
+		if(langprefix == "osd"){
 			haveOsd = true;
 			continue;
 		}
-		Config::Lang lang = {availLanguages[i].string()};
+		Config::Lang lang = {langprefix};
 		if(!MAIN->getConfig()->searchLangSpec(lang)){
 			lang.name = lang.prefix;
 		}
@@ -170,32 +187,35 @@ void Recognizer::updateLanguagesMenu()
 		}
 	}
 	// Add multilanguage menu
-	m_menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
-	m_multilingualRadio = Gtk::manage(new MultilingualMenuItem(m_langMenuRadioGroup, _("Multilingual")));
-	Gtk::Menu* submenu = Gtk::manage(new Gtk::Menu);
-	bool isMultilingual = curlang.prefix.find('+') != curlang.prefix.npos;
-	std::vector<Glib::ustring> sellangs = Utils::string_split(curlang.prefix, '+');
-	for(int i = 0; i < availLanguages.size(); ++i){
-		if(std::strcmp(availLanguages[i].string(), "osd") == 0){
-			continue;
+	bool isMultilingual = false;
+	if(!availLanguages.empty()) {
+		m_menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+		m_multilingualRadio = Gtk::manage(new MultilingualMenuItem(m_langMenuRadioGroup, _("Multilingual")));
+		Gtk::Menu* submenu = Gtk::manage(new Gtk::Menu);
+		isMultilingual = curlang.prefix.find('+') != curlang.prefix.npos;
+		std::vector<Glib::ustring> sellangs = Utils::string_split(curlang.prefix, '+');
+		for(const Glib::ustring& langprefix : availLanguages){
+			if(langprefix == "osd"){
+				continue;
+			}
+			Config::Lang lang = {langprefix};
+			if(!MAIN->getConfig()->searchLangSpec(lang)){
+				lang.name = lang.prefix;
+			}
+			Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(lang.name));
+			item->set_active(isMultilingual && std::find(sellangs.begin(), sellangs.end(), lang.prefix) != sellangs.end());
+			CONNECT(item, button_press_event, [this,item](GdkEventButton* ev){ return onMultilingualItemButtonEvent(ev, item); }, false);
+			CONNECT(item, button_release_event, [this,item](GdkEventButton* ev){ return onMultilingualItemButtonEvent(ev, item); }, false);
+	//		CONNECT(item, toggled, [this]{ setMultiLanguage(); });
+			submenu->append(*item);
+			m_langMenuCheckGroup.push_back(std::make_pair(item, lang.prefix));
 		}
-		Config::Lang lang = {availLanguages[i].string()};
-		if(!MAIN->getConfig()->searchLangSpec(lang)){
-			lang.name = lang.prefix;
-		}
-		Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(lang.name));
-		item->set_active(isMultilingual && std::find(sellangs.begin(), sellangs.end(), lang.prefix) != sellangs.end());
-		CONNECT(item, button_press_event, [this,item](GdkEventButton* ev){ return onMultilingualItemButtonEvent(ev, item); }, false);
-		CONNECT(item, button_release_event, [this,item](GdkEventButton* ev){ return onMultilingualItemButtonEvent(ev, item); }, false);
-//		CONNECT(item, toggled, [this]{ setMultiLanguage(); });
-		submenu->append(*item);
-		m_langMenuCheckGroup.push_back(std::make_pair(item, lang.prefix));
+		m_multilingualRadio->set_submenu(*submenu);
+		CONNECT(m_multilingualRadio, toggled, [this]{ if(m_multilingualRadio->get_active()) setMultiLanguage(); });
+		CONNECT(submenu, button_press_event, [this](GdkEventButton* ev){ return onMultilingualMenuButtonEvent(ev); }, false);
+		CONNECT(submenu, button_release_event, [this](GdkEventButton* ev){ return onMultilingualMenuButtonEvent(ev); }, false);
+		m_menuLanguages->append(*m_multilingualRadio);
 	}
-	m_multilingualRadio->set_submenu(*submenu);
-	CONNECT(m_multilingualRadio, toggled, [this]{ if(m_multilingualRadio->get_active()) setMultiLanguage(); });
-	CONNECT(submenu, button_press_event, [this](GdkEventButton* ev){ return onMultilingualMenuButtonEvent(ev); }, false);
-	CONNECT(submenu, button_release_event, [this](GdkEventButton* ev){ return onMultilingualMenuButtonEvent(ev); }, false);
-	m_menuLanguages->append(*m_multilingualRadio);
 	if(isMultilingual){
 		activeitem = m_multilingualRadio;
 		setMultiLanguage();
@@ -212,9 +232,17 @@ void Recognizer::updateLanguagesMenu()
 		m_menuLanguages->append(*m_osdItem);
 	}
 
+	// Add installer item
+	m_menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+	Gtk::MenuItem* manageItem = Gtk::manage(new Gtk::MenuItem(_("Manage languages...")));
+	CONNECT(manageItem, activate, [this]{ manageInstalledLanguages(); });
+	m_menuLanguages->append(*manageItem);
+
 	m_menuLanguages->show_all();
-	activeitem->set_active(true);
-	activeitem->toggled(); // Ensure signal is emitted
+	if(activeitem) {
+		activeitem->set_active(true);
+		activeitem->toggled(); // Ensure signal is emitted
+	}
 }
 
 void Recognizer::setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang &lang)
@@ -438,4 +466,9 @@ bool Recognizer::onMultilingualItemButtonEvent(GdkEventButton* ev, Gtk::CheckMen
 		return true;
 	}
 	return false;
+}
+
+void Recognizer::manageInstalledLanguages()
+{
+	TessdataManager::exec();
 }

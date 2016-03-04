@@ -356,7 +356,7 @@ void MainWindow::hideNotification(Notification handle)
 void MainWindow::VersionCheckThread::run()
 {
 	QString messages;
-	QString newver = Utils::download(QUrl(CHECKURL), messages);
+	QString newver = Utils::download(QUrl(CHECKURL), messages, 5000);
 	newver.replace(QRegExp("\\s+"), "");
 	QRegExp pat(R"(^[\d+\.]+\d+$)");
 	if(pat.exactMatch(newver)){

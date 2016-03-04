@@ -35,6 +35,8 @@ public:
 	enum class OutputDestination { Buffer, Clipboard };
 
 	Recognizer(const UI_MainWindow& _ui);
+	QStringList getAvailableLanguages() const;
+	QString getTessdataDir() const;
 	const Config::Lang& getSelectedLanguage() const{ return m_curLang; }
 
 public slots:
@@ -77,6 +79,7 @@ private slots:
 	void setLanguage();
 	void setMultiLanguage();
 	bool setPage(int page, bool autodetectLayout);
+	void manageInstalledLanguages();
 };
 
 #endif // RECOGNIZER_HPP
