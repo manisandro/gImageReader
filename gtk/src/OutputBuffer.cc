@@ -124,6 +124,7 @@ bool OutputBuffer::findReplace(bool backwards, bool replace, bool matchCase, con
 	matchEnd = matchStart; matchEnd.forward_chars(searchstr.length());
 	select_range(matchStart, matchEnd);
 	view->scroll_to(matchStart);
+	return true;
 }
 
 bool OutputBuffer::replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase)
