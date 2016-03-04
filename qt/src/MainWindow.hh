@@ -39,8 +39,6 @@ class OutputEditor;
 class Recognizer;
 class SourceManager;
 class Source;
-class QDBusInterface;
-class QDBusError;
 
 class MainWindow : public QMainWindow {
 	Q_OBJECT
@@ -93,7 +91,6 @@ private:
 	QList<QWidget*> m_idleWidgets;
 	QStack<QPair<State, QString>> m_stateStack;
 
-	QDBusInterface* m_dbusIface = nullptr;
 	MainWindow::Notification m_notifierHandle = nullptr;
 
 	class VersionCheckThread : public QThread {
@@ -118,8 +115,6 @@ private slots:
 	void setOCRMode(int idx);
 	void languageChanged();
 	void dictionaryAutoinstall();
-	void dictionaryAutoinstallDone();
-	void dictionaryAutoinstallError(const QDBusError& error);
 };
 
 Q_DECLARE_METATYPE(MainWindow::State)

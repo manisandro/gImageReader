@@ -18,7 +18,8 @@
  */
 
 #include <QCloseEvent>
-#include <QDBusInterface>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #include <QDesktopServices>
 #include <QDir>
 #include <QMessageBox>
@@ -401,11 +402,9 @@ void MainWindow::languageChanged()
 		NotificationAction actionDontShowAgain = {_("Don't show again"), m_config, SLOT(disableDictInstall()), true};
 		NotificationAction actionInstall = {_("Install"), this, SLOT(dictionaryAutoinstall()), false};
 #ifdef Q_OS_LINUX
-		// Wake up the daemon?
-		QDBusInterface("org.freedesktop.PackageKit", "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit", QDBusConnection::sessionBus(), this).call(QDBus::BlockWithGui, "VersionMajor");
-		delete m_dbusIface;
-		m_dbusIface = new QDBusInterface("org.freedesktop.PackageKit", "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify", QDBusConnection::sessionBus(), this);
-		if(!m_dbusIface->isValid()){
+		QDBusConnectionInterface* iface = QDBusConnection::sessionBus().interface();
+		iface->startService("org.freedesktop.PackageKit");
+		if(!iface->isServiceRegistered("org.freedesktop.PackageKit").value()){
 			actionInstall = {_("Help"), this, SLOT(showHelp()), false}; // TODO #InstallSpelling
 			qWarning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
 		}
@@ -425,9 +424,17 @@ void MainWindow::dictionaryAutoinstall()
 		files.append("/usr/share/myspell/" + langCulture + ".dic");
 		files.append("/usr/share/hunspell/" + langCulture + ".dic");
 	}
-	QList<QVariant> params = {QVariant::fromValue((quint32)winId()), QVariant::fromValue(files), QVariant::fromValue(QString("always"))};
-	m_dbusIface->setTimeout(3600000);
-	m_dbusIface->callWithCallback("InstallProvideFiles", params, this, SLOT(dictionaryAutoinstallDone()), SLOT(dictionaryAutoinstallError(QDBusError)));
+	QDBusMessage req = QDBusMessage::createMethodCall("org.freedesktop.PackageKit", "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify", "InstallProvideFiles");
+	req.setArguments(QList<QVariant>() << QVariant::fromValue((quint32)winId()) << QVariant::fromValue(files) << QVariant::fromValue(QString("always")));
+	QDBusMessage reply = QDBusConnection::sessionBus().call(req, QDBus::BlockWithGui, 3600000);
+	if(reply.type() == QDBusMessage::ErrorMessage) {
+		if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to install spelling dictionary: %1").arg(reply.errorMessage()), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok))
+		{
+			showHelp("#InstallSpelling");
+		}
+	}
+	m_recognizer->updateLanguagesMenu();
+	popState();
 #else
 	QString url = "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
 	QString plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
@@ -477,29 +484,14 @@ void MainWindow::dictionaryAutoinstall()
 		popState();
 		pos += pat.matchedLength();
 	}
+	popState();
 	if(!downloaded.isEmpty()){
-		dictionaryAutoinstallDone();
-		QMessageBox::information(this, _("Dictionaries installed"), _("The following dictionaries were installed:%1").arg(downloaded));
+		QMessageBox::information(this, _("Dictionaries installed"), _("The following dictionary files were installed:%1").arg(downloaded));
+		m_recognizer->updateLanguagesMenu();
 	}else{
-		popState();
 		if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
 			showHelp("#InstallSpelling");
 		}
 	}
 #endif
-}
-
-void MainWindow::dictionaryAutoinstallDone()
-{
-	m_recognizer->updateLanguagesMenu();
-	popState();
-}
-
-void MainWindow::dictionaryAutoinstallError(const QDBusError& error)
-{
-	if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to install spelling dictionary: %1").arg(error.message()), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok))
-	{
-		showHelp("#InstallSpelling");
-	}
-	popState();
 }
