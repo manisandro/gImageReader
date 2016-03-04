@@ -594,7 +594,7 @@ void Displayer::showSelectionMenu(GdkEventButton *ev, int i)
 	int y = std::min(std::max(int(ev->y_root), rect.get_y()), rect.get_y() + rect.get_height() - h);
 	m_selmenu->move(x, y);
 	GdkWindow* gdkwin = m_selmenu->get_window()->gobj();
-	gdk_device_grab(gtk_get_current_event_device(), gdkwin, GDK_OWNERSHIP_APPLICATION, true, GDK_BUTTON_PRESS_MASK, nullptr, ev->time);
+	gdk_seat_grab(gdk_device_get_seat(gtk_get_current_event_device()), gdkwin, GDK_SEAT_CAPABILITY_ALL, true, nullptr, nullptr, nullptr, nullptr);
 }
 
 void Displayer::hideSelectionMenu()
@@ -603,7 +603,7 @@ void Displayer::hideSelectionMenu()
 	for(sigc::connection& conn : m_selmenuConnections){
 		conn.disconnect();
 	}
-	gdk_device_ungrab(gtk_get_current_event_device(), gtk_get_current_event_time());
+	gdk_seat_ungrab(gdk_device_get_seat(gtk_get_current_event_device()));
 }
 
 Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle &rect) const
