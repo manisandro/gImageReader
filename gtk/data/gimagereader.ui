@@ -427,6 +427,7 @@
                                       <object class="GtkArrow" id="arrow:sources.images.add">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
+                                        <property name="xpad">8</property>
                                         <property name="arrow_type">down</property>
                                       </object>
                                     </child>
@@ -1252,6 +1253,7 @@
                   <object class="GtkArrow" id="arrow:main.languages">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="xpad">8</property>
                     <property name="arrow_type">down</property>
                   </object>
                 </child>
@@ -2557,6 +2559,7 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
                   <object class="GtkArrow" id="arrow:output.stripcrlf">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="xpad">8</property>
                     <property name="arrow_type">down</property>
                   </object>
                 </child>
