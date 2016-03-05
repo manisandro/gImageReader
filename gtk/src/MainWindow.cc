@@ -108,7 +108,7 @@ MainWindow::MainWindow()
 
 	std::signal(SIGSEGV, signalHandler);
 	std::signal(SIGABRT, signalHandler);
-#ifndef __ARMEL__	
+#ifndef __ARMEL__
 	std::set_terminate(terminateHandler);
 #endif
 
