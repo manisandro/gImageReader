@@ -262,6 +262,7 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 							item->setData(0, FontSizeRole, s_fontSizeRx.cap(1).toInt());
 						}
 						item->setFlags(item->flags() | Qt::ItemIsEditable);
+						m_spell.setLanguage(Utils::getSpellingLanguage(element.attribute("lang")));
 						if(!m_spell.checkWord(title)) {
 							item->setForeground(0, Qt::red);
 						}
@@ -404,7 +405,6 @@ void OutputEditorHOCR::itemChanged(QTreeWidgetItem* item, int col)
 void OutputEditorHOCR::updateItemText(QTreeWidgetItem* item)
 {
 	QString newText = item->text(0);
-	item->setForeground(0, m_spell.checkWord(newText) ? item->parent()->foreground(0) : QBrush(Qt::red));
 	QDomDocument doc;
 	QDomElement element = getHOCRElementForItem(item, doc);
 	element.replaceChild(doc.createTextNode(newText), element.firstChild());
@@ -412,6 +412,9 @@ void OutputEditorHOCR::updateItemText(QTreeWidgetItem* item)
 	QString str;
 	QTextStream stream(&str);
 	doc.save(stream, 1);
+
+	m_spell.setLanguage(Utils::getSpellingLanguage(element.attribute("lang")));
+	item->setForeground(0, m_spell.checkWord(newText) ? item->parent()->foreground(0) : QBrush(Qt::red));
 
 	QTreeWidgetItem* toplevelItem = item;
 	while(toplevelItem->parent()) {
@@ -442,6 +445,9 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 		QMenu menu;
 		for(const QString& suggestion : m_spell.getSpellingSuggestions(element.text())) {
 			menu.addAction(suggestion);
+		}
+		if(menu.actions().isEmpty()) {
+			menu.addAction(_("No suggestions"))->setEnabled(false);
 		}
 		QAction* clickedAction = menu.exec(ui.treeWidgetItems->mapToGlobal(point));
 		if(clickedAction) {
