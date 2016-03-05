@@ -397,7 +397,7 @@ void MainWindow::languageChanged()
 	hideNotification(m_notifierHandle);
 	m_notifierHandle = nullptr;
 	const QString& code = m_recognizer->getSelectedLanguage().code;
-	if(!QtSpell::checkLanguageInstalled(code) && m_config->getSetting<SwitchSetting>("dictinstall")->getValue())
+	if(!code.isEmpty() && !QtSpell::checkLanguageInstalled(code) && m_config->getSetting<SwitchSetting>("dictinstall")->getValue())
 	{
 		NotificationAction actionDontShowAgain = {_("Don't show again"), m_config, SLOT(disableDictInstall()), true};
 		NotificationAction actionInstall = {_("Install"), this, SLOT(dictionaryAutoinstall()), false};

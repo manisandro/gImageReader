@@ -409,6 +409,9 @@ void MainWindow::languageChanged()
 	m_notifierHandle = nullptr;
 	const Config::Lang& lang =  m_recognizer->getSelectedLanguage();
 	std::string code = lang.code;
+	if(code.empty()) {
+		return;
+	}
 	GtkSpell::Checker checker;
 	try {
 		checker.set_language(code);
