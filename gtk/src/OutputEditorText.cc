@@ -349,7 +349,7 @@ void OutputEditorText::setLanguage(const Config::Lang& lang)
 {
 	m_spell.detach();
 	try{
-		m_spell.set_language(lang.code.empty() ? "en" : lang.code);
+		m_spell.set_language(lang.code.empty() ? Utils::getSpellingLanguage() : lang.code);
 		m_spell.attach(*m_textView);
 	}catch(const GtkSpell::Error& /*e*/){}
 }

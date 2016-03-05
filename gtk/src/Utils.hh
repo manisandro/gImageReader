@@ -61,6 +61,8 @@ namespace Utils {
 
 	Glib::RefPtr<Glib::ByteArray> download(const std::string& url, Glib::ustring& messages, int timeout = 60000);
 
+	Glib::ustring getSpellingLanguage(const Glib::ustring& lang = Glib::ustring());
+
 	template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value>::type>
 	T round(T x){
 		return std::floor(x + T(0.5));

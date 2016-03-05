@@ -291,5 +291,5 @@ void OutputEditorText::onVisibilityChanged(bool /*visibile*/)
 
 void OutputEditorText::setLanguage(const Config::Lang& lang)
 {
-	m_spell.setLanguage(lang.code.isEmpty() ? "en" : lang.code);
+	m_spell.setLanguage(lang.code.isEmpty() ? Utils::getSpellingLanguage() : lang.code);
 }

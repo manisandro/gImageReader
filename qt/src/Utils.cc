@@ -33,6 +33,7 @@
 #include <QUrl>
 
 #include "Utils.hh"
+#include "Config.hh"
 #include "MainWindow.hh"
 #include "SourceManager.hh"
 
@@ -187,4 +188,22 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout)
 	messages = reply->error() == QNetworkReply::NoError ? QString() : reply->errorString();
 	delete reply;
 	return result;
+}
+
+QString Utils::getSpellingLanguage(const QString& lang)
+{
+	// Look in the lang cultures table if a language is provided
+	Config::Lang langspec = {lang};
+	if(!lang.isEmpty() && MAIN->getConfig()->searchLangSpec(langspec)) {
+		QList<QString> langCultures = MAIN->getConfig()->searchLangCultures(langspec.code);
+		if(!langCultures.isEmpty()) {
+			return langCultures.front();
+		}
+	}
+	// Use the application locale, if specified, otherwise fall back to en
+	QString syslang = QLocale::system().name();
+	if(syslang.toLower() == "c" || syslang.isEmpty()){
+		return "en_US";
+	}
+	return syslang;
 }

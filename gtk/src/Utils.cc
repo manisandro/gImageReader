@@ -18,6 +18,7 @@
  */
 
 #include "Utils.hh"
+#include "Config.hh"
 #include "MainWindow.hh"
 #include "SourceManager.hh"
 
@@ -260,6 +261,25 @@ Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string &url, Glib::ustr
 		return Glib::RefPtr<Glib::ByteArray>();
 	}
 	return result;
+}
+
+
+Glib::ustring Utils::getSpellingLanguage(const Glib::ustring& lang)
+{
+	// Look in the lang cultures table if a language hint is provided
+	Config::Lang langspec = {lang};
+	if(!lang.empty() && MAIN->getConfig()->searchLangSpec(langspec)) {
+		std::vector<Glib::ustring> langCultures = MAIN->getConfig()->searchLangCultures(langspec.code);
+		if(!langCultures.empty()) {
+			return langCultures.front();
+		}
+	}
+	// Use the application locale, if specified, otherwise fall back to en
+	Glib::ustring syslocale = g_getenv ("LANG");
+	if(syslocale == "c" || syslocale == "C" || syslocale.empty()){
+		return "en_US";
+	}
+	return syslocale;
 }
 
 bool Utils::busyTask(const std::function<bool()> &f, const Glib::ustring &msg)
