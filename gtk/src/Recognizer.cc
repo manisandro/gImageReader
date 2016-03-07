@@ -30,6 +30,29 @@
 #include <tesseract/baseapi.h>
 #include <tesseract/strngs.h>
 #include <tesseract/genericvector.h>
+#include <tesseract/ocrclass.h>
+
+
+struct Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor
+{
+	ETEXT_DESC desc;
+	bool canceled = false;
+	int donePages = 0;
+	int nPages;
+
+	ProgressMonitor(int _nPages) {
+		desc.progress = 0;
+		desc.cancel = cancelCallback;
+		desc.cancel_this = this;
+		nPages = _nPages;
+	}
+	int getProgress(){ return 100 * ((donePages + desc.progress / 100.) / nPages); }
+	void cancel(){ canceled = true; }
+	static bool cancelCallback(void* instance, int /*words*/) {
+		return reinterpret_cast<ProgressMonitor*>(instance)->canceled;
+	}
+};
+
 
 class Recognizer::MultilingualMenuItem : public Gtk::RadioMenuItem
 {
@@ -361,10 +384,13 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 			tess.SetPageSegMode(tesseract::PSM_AUTO_OSD);
 		}
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead();
+		ProgressMonitor monitor(pages.size());
+		MAIN->showProgress(&monitor);
 		Utils::busyTask([&]{
 			int npages = pages.size();
 			int idx = 0;
 			for(int page : pages){
+				monitor.desc.progress = 0;
 				readSessionData->page = page;
 				++idx;
 				Glib::signal_idle().connect_once([=]{ MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
@@ -378,12 +404,20 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 				}
 				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : MAIN->getDisplayer()->getSelections()){
 					tess.SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
-					MAIN->getOutputEditor()->read(tess, readSessionData);
+					tess.Recognize(&monitor.desc);
+					if(!monitor.canceled) {
+						MAIN->getOutputEditor()->read(tess, readSessionData);
+					}
 				}
 				Glib::signal_idle().connect_once([]{ MAIN->popState(); });
+				++monitor.donePages;
+				if(monitor.canceled) {
+					break;
+				}
 			}
 			return true;
 		}, _("Recognizing..."));
+		MAIN->hideProgress();
 		MAIN->getOutputEditor()->finalizeRead(readSessionData);
 	}
 	if(!failed.empty()){
@@ -399,23 +433,35 @@ bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, O
 		return false;
 	}
 	tess.SetImage(img->get_data(), img->get_width(), img->get_height(), 4, 4 * img->get_width());
+	ProgressMonitor monitor(1);
+	MAIN->showProgress(&monitor);
 	if(dest == OutputDestination::Buffer) {
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead();
 		Utils::busyTask([&]{
-			MAIN->getOutputEditor()->read(tess, readSessionData);
+			tess.Recognize(&monitor.desc);
+			if(!monitor.canceled) {
+				MAIN->getOutputEditor()->read(tess, readSessionData);
+			}
 			return true;
 		}, _("Recognizing..."));
 		MAIN->getOutputEditor()->finalizeRead(readSessionData);
 	}else if(dest == OutputDestination::Clipboard){
 		Glib::ustring output;
-		Utils::busyTask([&]{
-			char* text = tess.GetUTF8Text();
-			output = text;
-			delete[] text;
-			return true;
-		}, _("Recognizing..."));
-		Gtk::Clipboard::get()->set_text(output);
+		if(Utils::busyTask([&]{
+			tess.Recognize(&monitor.desc);
+			if(!monitor.canceled) {
+				char* text = tess.GetUTF8Text();
+				output = text;
+				delete[] text;
+				return true;
+			}
+			return false;
+		}, _("Recognizing...")))
+		{
+			Gtk::Clipboard::get()->set_text(output);
+		}
 	}
+	MAIN->hideProgress();
 	return true;
 }
 

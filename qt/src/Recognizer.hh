@@ -48,6 +48,7 @@ signals:
 	void languageChanged(const Config::Lang& lang);
 
 private:
+	struct ProgressMonitor;
 	enum class PageSelection { Prompt, Current, Multiple };
 	enum class PageArea { EntirePage, Autodetect };
 

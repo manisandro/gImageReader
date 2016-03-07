@@ -43,6 +43,7 @@ public:
 	sigc::signal<void,Config::Lang> signal_languageChanged() const{ return m_signal_languageChanged; }
 
 private:
+	struct ProgressMonitor;
 	class MultilingualMenuItem;
 
 	enum class PageArea { EntirePage, Autodetect };

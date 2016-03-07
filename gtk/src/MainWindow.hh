@@ -41,6 +41,12 @@ public:
 		std::function<bool()> action;
 	};
 
+	struct ProgressMonitor {
+		virtual ~ProgressMonitor() {}
+		virtual int getProgress() = 0;
+		virtual void cancel() = 0;
+	};
+
 	typedef void* Notification;
 
 	static MainWindow* getInstance(){ return s_instance; }
@@ -65,6 +71,8 @@ public:
 	void setOutputPaneVisible(bool visible);
 	void pushState(State state, const Glib::ustring& msg);
 	void popState();
+	void showProgress(ProgressMonitor* monitor, int updateInterval = 500);
+	void hideProgress();
 
 private:
 	static MainWindow* s_instance;
@@ -87,17 +95,22 @@ private:
 
 	MainWindow::Notification m_notifierHandle = nullptr;
 
+	ProgressMonitor* m_progressMonitor = nullptr;
+
 	std::vector<Gtk::Widget*> m_idlegroup;
 	std::vector<State> m_stateStack;
 	sigc::connection m_connection_setOCRMode;
 	sigc::connection m_connection_setOutputEditorLanguage;
 	sigc::connection m_connection_setOutputEditorVisibility;
+	sigc::connection m_connection_progressUpdate;
 
 	bool closeEvent(GdkEventAny*);
 	void languageChanged();
 	void onSourceChanged();
 	void setOCRMode(int idx);
 	void setState(State state);
+	void progressCancel();
+	void progressUpdate();
 #if ENABLE_VERSIONCHECK
 	void getNewestVersion();
 	void checkVersion(const Glib::ustring& newver);

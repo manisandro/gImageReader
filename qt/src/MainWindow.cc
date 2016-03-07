@@ -24,6 +24,7 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QProcess>
+#include <QProgressBar>
 #include <QStatusBar>
 #include <QUrl>
 #include <csignal>
@@ -151,6 +152,24 @@ MainWindow::MainWindow(const QStringList& files)
 	m_config->addSetting(new ComboSetting("outputeditor", ui.comboBoxOCRMode, 0));
 
 	m_recognizer->updateLanguagesMenu();
+
+	m_progressWidget = new QWidget(this);
+	m_progressWidget->setLayout(new QHBoxLayout());
+	m_progressWidget->layout()->setContentsMargins(0, 0, 0, 0);
+	m_progressWidget->layout()->setSpacing(2);
+	m_progressWidget->layout()->addWidget(new QLabel());
+	m_progressBar = new QProgressBar();
+	m_progressBar->setRange(0, 100);
+	m_progressBar->setMaximumWidth(100);
+	m_progressTimer.setSingleShot(false);
+	connect(&m_progressTimer, SIGNAL(timeout()), this, SLOT(progressUpdate()));
+	m_progressWidget->layout()->addWidget(m_progressBar);
+	m_progressCancelButton = new QToolButton();
+	m_progressCancelButton->setIcon(QIcon::fromTheme("dialog-close"));
+	connect(m_progressCancelButton, SIGNAL(clicked(bool)), this, SLOT(progressCancel()));
+	m_progressWidget->layout()->addWidget(m_progressCancelButton);
+	statusBar()->addPermanentWidget(m_progressWidget);
+	m_progressWidget->setVisible(false);
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
@@ -390,6 +409,37 @@ void MainWindow::openDownloadUrl()
 void MainWindow::openChangeLogUrl()
 {
 	QDesktopServices::openUrl(QUrl(CHANGELOGURL));
+}
+
+void MainWindow::showProgress(ProgressMonitor* monitor, int updateInterval)
+{
+	m_progressMonitor = monitor;
+	m_progressTimer.start(updateInterval);
+	m_progressCancelButton->setEnabled(true);
+	m_progressBar->setValue(0);
+	m_progressWidget->show();
+}
+
+void MainWindow::hideProgress()
+{
+	m_progressWidget->hide();
+	m_progressTimer.stop();
+	m_progressMonitor = nullptr;
+}
+
+void MainWindow::progressCancel()
+{
+	if(m_progressMonitor) {
+		m_progressCancelButton->setEnabled(false);
+		m_progressMonitor->cancel();
+	}
+}
+
+void MainWindow::progressUpdate()
+{
+	if(m_progressMonitor) {
+		m_progressBar->setValue(m_progressMonitor->getProgress());
+	}
 }
 
 void MainWindow::languageChanged()

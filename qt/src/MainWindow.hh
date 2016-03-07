@@ -25,6 +25,7 @@
 #include <QStack>
 #include <QStringList>
 #include <QThread>
+#include <QTimer>
 
 #include "common.hh"
 #include "Ui_MainWindow.hh"
@@ -39,6 +40,7 @@ class OutputEditor;
 class Recognizer;
 class SourceManager;
 class Source;
+class QProgressBar;
 
 class MainWindow : public QMainWindow {
 	Q_OBJECT
@@ -50,6 +52,12 @@ public:
 		QObject* target;
 		QByteArray slot;
 		bool close;
+	};
+
+	struct ProgressMonitor {
+		virtual ~ProgressMonitor() {}
+		virtual int getProgress() = 0;
+		virtual void cancel() = 0;
 	};
 
 	typedef void* Notification;
@@ -67,6 +75,8 @@ public:
 	void addNotification(const QString& title, const QString& message, const QList<NotificationAction>& actions, Notification* handle = nullptr);
 	void openFiles(const QStringList& files);
 	void setOutputPaneVisible(bool visible);
+	void showProgress(ProgressMonitor* monitor, int updateInterval = 500);
+	void hideProgress();
 
 public slots:
 	void popState();
@@ -75,6 +85,8 @@ public slots:
 	void hideNotification(Notification handle = nullptr);
 
 private:
+	friend class BusyEventFilter;
+
 	static MainWindow* s_instance;
 
 	UI_MainWindow ui;
@@ -92,6 +104,13 @@ private:
 	QStack<QPair<State, QString>> m_stateStack;
 
 	MainWindow::Notification m_notifierHandle = nullptr;
+
+	QWidget* m_progressWidget = nullptr;
+	QProgressBar* m_progressBar = nullptr;
+	QToolButton* m_progressCancelButton = nullptr;
+	QTimer m_progressTimer;
+	ProgressMonitor* m_progressMonitor = nullptr;
+
 
 	class VersionCheckThread : public QThread {
 	public:
@@ -112,6 +131,8 @@ private slots:
 	void showConfig();
 	void openDownloadUrl();
 	void openChangeLogUrl();
+	void progressCancel();
+	void progressUpdate();
 	void setOCRMode(int idx);
 	void languageChanged();
 	void dictionaryAutoinstall();

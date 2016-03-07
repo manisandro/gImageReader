@@ -151,6 +151,7 @@ MainWindow::MainWindow()
 	CONNECT(m_recognizer, languageChanged, [this] (const Config::Lang& /*lang*/ ){ languageChanged(); });
 	CONNECTS(Builder("combo:config.settings.paneorient").as<Gtk::ComboBoxText>(), changed, [this](Gtk::ComboBoxText* combo){
 		Builder("paned:output").as<Gtk::Paned>()->set_orientation(static_cast<Gtk::Orientation>(!combo->get_active_row_number())); });
+	CONNECT(Builder("button:main.progress.cancel").as<Gtk::Button>(), clicked, [this]{ progressCancel(); });
 
 
 	m_config->addSetting(new VarSetting<std::vector<int>>("wingeom"));
@@ -222,11 +223,44 @@ void MainWindow::setState(State state)
 	bool isIdle = state == State::Idle;
 	bool isBusy = state == State::Busy;
 	for(Gtk::Widget* w : m_idlegroup){ w->set_sensitive(!isIdle); }
-	m_window->set_sensitive(!isBusy);
+	Builder("paned:output").as<Gtk::Box>()->set_sensitive(!isBusy);
+	m_headerbar->set_sensitive(!isBusy);
 	if(m_window->get_window()){
 		m_window->get_window()->set_cursor(isBusy ? Gdk::Cursor::create(Gdk::WATCH) : Glib::RefPtr<Gdk::Cursor>());
 	}
 }
+
+void MainWindow::showProgress(ProgressMonitor* monitor, int updateInterval)
+{
+	m_progressMonitor = monitor;
+	m_connection_progressUpdate = Glib::signal_timeout().connect([this]{ progressUpdate(); return true; }, updateInterval);
+	Builder("progressbar:main.progress").as<Gtk::ProgressBar>()->set_fraction(0);
+	Builder("button:main.progress.cancel").as<Gtk::Button>()->set_sensitive(true);
+	Builder("box:main.progress").as<Gtk::Box>()->set_visible(true);
+}
+
+void MainWindow::hideProgress()
+{
+	Builder("box:main.progress").as<Gtk::Box>()->set_visible(false);
+	m_connection_progressUpdate.disconnect();
+	m_progressMonitor = nullptr;
+}
+
+void MainWindow::progressCancel()
+{
+	if(m_progressMonitor) {
+		Builder("button:main.progress.cancel").as<Gtk::Button>()->set_sensitive(true);
+		m_progressMonitor->cancel();
+	}
+}
+
+void MainWindow::progressUpdate()
+{
+	if(m_progressMonitor) {
+		Builder("progressbar:main.progress").as<Gtk::ProgressBar>()->set_fraction(m_progressMonitor->getProgress() / 100.);
+	}
+}
+
 
 bool MainWindow::closeEvent(GdkEventAny*)
 {

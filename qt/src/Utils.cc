@@ -22,6 +22,7 @@
 #include <QEventLoop>
 #include <QFileInfo>
 #include <QImageReader>
+#include <QInputEvent>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
@@ -77,6 +78,20 @@ private:
 	void run(){ m_result = m_f(); }
 };
 
+class BusyEventFilter : public QObject {
+public:
+	bool eventFilter(QObject */*obj*/, QEvent *ev) {
+
+		if(dynamic_cast<QMouseEvent*>(ev)) {
+			QMouseEvent* mev = static_cast<QMouseEvent*>(ev);
+			QPoint btnPos = MAIN->m_progressCancelButton->mapToGlobal(MAIN->m_progressCancelButton->pos());
+			QRect btnRect(btnPos, MAIN->m_progressCancelButton->size());
+			return btnRect.contains(mev->globalPos());
+		}
+		return dynamic_cast<QInputEvent*>(ev);
+	}
+};
+
 bool Utils::busyTask(const std::function<bool()> &f, const QString& msg)
 {
 	MAIN->pushState(MainWindow::State::Busy, msg);
@@ -84,7 +99,10 @@ bool Utils::busyTask(const std::function<bool()> &f, const QString& msg)
 	BusyTaskThread thread(f);
 	QObject::connect(&thread, SIGNAL(finished()), &evLoop, SLOT(quit()));
 	thread.start();
-	evLoop.exec(QEventLoop::ExcludeUserInputEvents);
+	BusyEventFilter filter;
+	QApplication::instance()->installEventFilter(&filter);
+	evLoop.exec();
+	QApplication::instance()->removeEventFilter(&filter);
 
 	MAIN->popState();
 	return thread.getResult();
