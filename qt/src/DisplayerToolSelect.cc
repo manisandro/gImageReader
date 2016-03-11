@@ -35,7 +35,6 @@
 
 DisplayerToolSelect::DisplayerToolSelect(QAction* actionAutodetectLayout, Displayer *displayer, QObject *parent)
 	: DisplayerTool(displayer, parent), mActionAutodetectLayout(actionAutodetectLayout)
-
 {
 	connect(mActionAutodetectLayout, SIGNAL(triggered()), this, SLOT(autodetectLayout()));
 
@@ -209,7 +208,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew)
 	// unless we already attempted to rotate (to prevent endless loops)
 	avgDeskew = qRound(((avgDeskew/nDeskew)/M_PI * 180.) * 10.) / 10.;
 	if(qAbs(avgDeskew > .1) && !noDeskew){
-		m_displayer->setRotation(m_displayer->getCurrentAngle() - avgDeskew);
+		m_displayer->setAngle(m_displayer->getCurrentAngle() - avgDeskew);
 		autodetectLayout(true);
 	}else{
 		// Merge overlapping rectangles
@@ -357,7 +356,7 @@ void DisplaySelection::mousePressEvent(QGraphicsSceneMouseEvent *event)
 		m_resizeHandlers.append(resizeAnchorY);
 		m_resizeOffset.setY(event->pos().y() - m_anchor.y());
 	}
-	return m_resizeHandlers.empty() ? event->ignore() : event->accept();
+	event->accept();
 }
 
 void DisplaySelection::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

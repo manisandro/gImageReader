@@ -371,7 +371,7 @@ bool OutputEditorHOCR::setCurrentSource(const QDomElement& pageElement, int* pag
 			MAIN->getDisplayer()->setCurrentPage(page);
 		}
 		if(MAIN->getDisplayer()->getCurrentAngle() != angle) {
-			MAIN->getDisplayer()->setRotation(angle);
+			MAIN->getDisplayer()->setAngle(angle);
 		}
 		if(MAIN->getDisplayer()->getCurrentResolution() != res) {
 			MAIN->getDisplayer()->setResolution(res);

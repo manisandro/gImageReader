@@ -195,8 +195,8 @@ MainWindow::~MainWindow()
 	delete m_acquirer;
 	delete m_outputEditor;
 	delete m_sourceManager;
-	delete m_displayerTool;
 	m_displayer->setTool(nullptr);
+	delete m_displayerTool;
 	delete m_displayer;
 	delete m_recognizer;
 	delete m_config;

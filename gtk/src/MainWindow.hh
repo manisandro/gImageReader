@@ -27,6 +27,7 @@
 class Config;
 class Acquirer;
 class Displayer;
+class DisplayerTool;
 class OutputEditor;
 class Recognizer;
 class Source;
@@ -87,6 +88,7 @@ private:
 	Config* m_config = nullptr;
 	Acquirer* m_acquirer = nullptr;
 	Displayer* m_displayer = nullptr;
+	DisplayerTool* m_displayerTool = nullptr;
 	OutputEditor* m_outputEditor = nullptr;
 	Recognizer* m_recognizer = nullptr;
 	SourceManager* m_sourceManager = nullptr;

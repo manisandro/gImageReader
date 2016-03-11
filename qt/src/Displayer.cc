@@ -68,7 +68,7 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 
 	connect(ui.actionRotateLeft, SIGNAL(triggered()), this, SLOT(rotate90()));
 	connect(ui.actionRotateRight, SIGNAL(triggered()), this, SLOT(rotate90()));
-	connect(ui.spinBoxRotation, SIGNAL(valueChanged(double)), this, SLOT(setRotation(double)));
+	connect(ui.spinBoxRotation, SIGNAL(valueChanged(double)), this, SLOT(setAngle(double)));
 	connect(ui.spinBoxPage, SIGNAL(valueChanged(int)), this, SLOT(setCurrentPage(int)));
 	connect(ui.spinBoxBrightness, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
 	connect(ui.spinBoxContrast, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
@@ -266,7 +266,7 @@ bool Displayer::renderImage()
 	m_imageItem->setPos(m_imageItem->pos() - m_imageItem->sceneBoundingRect().center());
 	m_scene->setSceneRect(m_imageItem->sceneBoundingRect());
 	centerOn(sceneRect().center());
-	setRotation(ui.spinBoxRotation->value());
+	setAngle(ui.spinBoxRotation->value());
 	if(m_scale < 1.0){
 		m_pendingScaleRequest = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
 		m_scaleTimer.start(100);
@@ -320,7 +320,7 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor)
 	update();
 }
 
-void Displayer::setRotation(double angle)
+void Displayer::setAngle(double angle)
 {
 	if(m_imageItem){
 		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,

@@ -22,13 +22,14 @@
 
 #include "common.hh"
 #include "Geometry.hh"
-#include "DisplaySelection.hh"
 
 #include <cairomm/cairomm.h>
 #include <cstdint>
 #include <queue>
 #include <vector>
 
+class DisplayerItem;
+class DisplayerTool;
 class DisplayRenderer;
 class Source;
 
@@ -36,21 +37,26 @@ class Displayer {
 public:
 	Displayer();
 	~Displayer(){ setSources(std::vector<Source*>()); }
+	void setTool(DisplayerTool* tool) { m_tool = tool; }
 	bool setSources(const std::vector<Source*> sources);
-	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getSelections() const;
-	bool getHasSelections() const{ return !m_selections.empty(); }
-	bool setCurrentPage(int page);
 	int getCurrentPage() const{ return m_pagespin->get_value_as_int(); }
+	bool setCurrentPage(int page);
+	double getCurrentAngle() const{ return m_rotspin->get_value(); }
+	void setAngle(double angle);
+	int getCurrentResolution(){ return m_resspin->get_value_as_int(); }
+	void setResolution(int resolution);
+	std::string getCurrentImage(int& page) const;
 	int getNPages(){ double min, max; m_pagespin->get_range(min, max); return int(max); }
-	void autodetectLayout(bool rotated = false);
-	sigc::signal<void, bool> signal_selectionChanged(){ return m_signal_selectionChanged; }
+	bool hasMultipleOCRAreas();
+	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
+	void autodetectOCRAreas();
+	void setCursor(Glib::RefPtr<Gdk::Cursor> cursor);
+	void ensureVisible(double evx, double evy);
 
 private:
+	friend class DisplayerTool;
+
 	enum class Zoom { In, Out, Fit, One };
-	struct Geo {
-		double sx, sy;  // Scroll x, y
-		double s;       // Scale
-	};
 
 	Gtk::DrawingArea* m_canvas;
 	Gtk::Viewport* m_viewport;
@@ -66,7 +72,6 @@ private:
 	Gtk::SpinButton* m_brispin;
 	Gtk::SpinButton* m_conspin;
 	Gtk::ScrolledWindow* m_scrollwin;
-	Gtk::Window* m_selmenu;
 	Gtk::CheckButton* m_invcheck;
 
 	std::vector<Source*> m_sources;
@@ -74,16 +79,14 @@ private:
 	Source* m_currentSource = nullptr;
 	DisplayRenderer* m_renderer = nullptr;
 	Cairo::RefPtr<Cairo::ImageSurface> m_image;
-	int m_scrollspeed[2];
-	Geo m_geo;
-	DisplaySelection::Handle* m_curSel = nullptr;
-	std::vector<DisplaySelection*> m_selections;
-	double m_panPos[2];
-
-	sigc::signal<void, bool> m_signal_selectionChanged;
+	double m_scale = 1.0;
+	double m_scrollPos[2] = {0.5, 0.5};
+	DisplayerTool* m_tool = nullptr;
+	std::vector<DisplayerItem*> m_items;
+	DisplayerItem* m_activeItem = nullptr;
+	double m_panPos[2] = {0., 0.};
 
 	sigc::connection m_renderTimer;
-	sigc::connection m_scrollTimer;
 	sigc::connection m_connection_pageSpinChanged;
 	sigc::connection m_connection_rotSpinChanged;
 	sigc::connection m_connection_resSpinChanged;
@@ -92,18 +95,6 @@ private:
 	sigc::connection m_connection_invcheckToggled;
 	sigc::connection m_connection_zoomfitClicked;
 	sigc::connection m_connection_zoomoneClicked;
-	std::vector<sigc::connection> m_selmenuConnections;
-
-	bool renderImage();
-	void drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx);
-	void positionCanvas();
-	bool panViewport();
-	void setZoom(Zoom zoom);
-	Geometry::Size getImageBoundingBox() const;
-	void setRotation(double angle);
-	void queueRenderImage();
-	Geometry::Point mapToSceneClamped(double evx, double evy) const;
-	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
 
 	void resizeEvent();
 	bool mouseMoveEvent(GdkEventMotion* ev);
@@ -111,11 +102,15 @@ private:
 	bool mouseReleaseEvent(GdkEventButton* ev);
 	bool scrollEvent(GdkEventScroll* ev);
 
-	void clearSelections();
-	void removeSelection(const DisplaySelection* sel);
-	void saveSelection(const Geometry::Rectangle& rect);
-	void showSelectionMenu(GdkEventButton* ev, int i);
-	void hideSelectionMenu();
+	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
+	Geometry::Rectangle getImageBoundingBox() const;
+	Geometry::Point mapToSceneClamped(const Geometry::Point& p) const;
+	void setZoom(Zoom zoom);
+
+	bool renderImage();
+	void drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx);
+	void positionCanvas();
+	void queueRenderImage();
 
 	struct ScaleRequest {
 		enum Request { Scale, Abort, Quit } type;
@@ -140,6 +135,54 @@ private:
 	void sendScaleRequest(const ScaleRequest& request);
 	void scaleThread();
 	void setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image, double scale);
+};
+
+class DisplayerItem {
+public:
+	virtual ~DisplayerItem(){}
+
+	void setZIndex(int zIndex) { m_zIndex = zIndex; }
+	const Geometry::Rectangle& rect() const{ return m_rect; }
+
+	virtual void draw(Cairo::RefPtr<Cairo::Context> ctx) const = 0;
+	virtual bool mousePressEvent(GdkEventButton */*event*/) { return false; }
+	virtual bool mouseMoveEvent(GdkEventMotion */*event*/) { return false; }
+	virtual bool mouseReleaseEvent(GdkEventButton */*event*/) { return false; }
+
+	static bool zIndexCmp(const DisplayerItem* lhs, const DisplayerItem* rhs) {
+		return lhs->m_zIndex < rhs->m_zIndex;
+	}
+
+protected:
+	int m_zIndex = 0;
+	Geometry::Rectangle m_rect;
+};
+
+class DisplayerTool {
+public:
+	DisplayerTool(Displayer* displayer) : m_displayer(displayer) {}
+	virtual ~DisplayerTool(){}
+	virtual bool mousePressEvent(GdkEventButton */*event*/){ return false; }
+	virtual bool mouseMoveEvent(GdkEventMotion */*event*/){ return false; }
+	virtual bool mouseReleaseEvent(GdkEventButton */*event*/){ return false; }
+	virtual void pageChanged(){}
+	virtual void resolutionChanged(double /*factor*/){}
+	virtual void rotationChanged(double /*delta*/){}
+	virtual std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas() = 0;
+	virtual bool hasMultipleOCRAreas() const{ return false; }
+	virtual void autodetectOCRAreas(){}
+
+protected:
+	Displayer* m_displayer;
+
+	void addItemToCanvas(DisplayerItem* item);
+	void removeItemFromCanvas(DisplayerItem* item);
+	void reorderCanvasItems();
+	Geometry::Rectangle getSceneBoundingRect() const;
+	void invalidateRect(const Geometry::Rectangle& rect);
+	Geometry::Point mapToSceneClamped(const Geometry::Point& point);
+	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect);
+	double getDisplayScale() const;
 };
 
 #endif // IMAGEDISPLAYER_HH

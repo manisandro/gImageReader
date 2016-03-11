@@ -35,8 +35,6 @@ public:
 	double& operator[](int i){ return data[i]; }
 };
 
-typedef Point Size;
-
 class Rotation {
 public:
 	Rotation(double angle = 0.) {

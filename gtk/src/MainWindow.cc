@@ -22,6 +22,7 @@
 #include "Acquirer.hh"
 #include "Config.hh"
 #include "Displayer.hh"
+#include "DisplayerToolSelect.hh"
 #include "OutputEditorText.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
@@ -143,7 +144,6 @@ MainWindow::MainWindow()
 	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) { return closeEvent(ev); });
 	CONNECTS(Builder("button:main.controls").as<Gtk::ToggleButton>(), toggled,
 			 [this](Gtk::ToggleButton* b) { Builder("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
-	CONNECT(m_displayer, selectionChanged, [this](bool haveSelection){ m_recognizer->setRecognizeMode(haveSelection); });
 	CONNECT(m_acquirer, scanPageAvailable, [this](const std::string& filename){ m_sourceManager->addSources({Gio::File::create_for_path(filename)}); });
 	CONNECT(m_sourceManager, sourceChanged, [this]{ onSourceChanged(); });
 	CONNECT(m_outputPaneToggleButton, toggled, [this]{ m_outputEditor->getUI()->set_visible(m_outputPaneToggleButton->get_active()); });
@@ -182,6 +182,8 @@ MainWindow::~MainWindow()
 	delete m_acquirer;
 	delete m_outputEditor;
 	delete m_sourceManager;
+	m_displayer->setTool(nullptr);
+	delete m_displayerTool;
 	delete m_displayer;
 	delete m_recognizer;
 	delete m_config;
@@ -344,10 +346,13 @@ void MainWindow::setOCRMode(int idx)
 			delete m_outputEditor;
 		}
 		if(idx == 0) {
+			m_displayerTool = new DisplayerToolSelect(m_displayer);
 			m_outputEditor = new OutputEditorText();
 		} else /*if(idx == 1)*/ {
+//			m_displayerTool = new DisplayerToolHOCR(m_displayer);
 //			m_outputEditor = new OutputEditorHOCR();
 		}
+		m_displayer->setTool(m_displayerTool);
 		m_connection_setOutputEditorLanguage = CONNECT(m_recognizer, languageChanged, [this](const Config::Lang& lang){ m_outputEditor->setLanguage(lang); });
 		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
 		m_connection_setOutputEditorVisibility = CONNECT(m_outputPaneToggleButton, toggled, [this]{ m_outputEditor->onVisibilityChanged(m_outputPaneToggleButton->get_active()); });

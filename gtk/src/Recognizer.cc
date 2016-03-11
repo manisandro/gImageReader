@@ -301,13 +301,9 @@ void Recognizer::setMultiLanguage()
 	m_signal_languageChanged.emit(m_curLang);
 }
 
-void Recognizer::setRecognizeMode(bool haveSelection)
+void Recognizer::setRecognizeMode(const Glib::ustring& mode)
 {
-	if(haveSelection){
-		m_modeLabel->set_markup(Glib::ustring::compose("<small>%1</small>", _("Recognize selection")));
-	}else{
-		m_modeLabel->set_markup(Glib::ustring::compose("<small>%1</small>", _("Recognize all")));
-	}
+	m_modeLabel->set_markup(Glib::ustring::compose("<small>%1</small>", mode));
 }
 
 std::vector<int> Recognizer::selectPages(bool& autodetectLayout)
@@ -353,7 +349,7 @@ std::vector<int> Recognizer::selectPages(bool& autodetectLayout)
 void Recognizer::recognizeButtonClicked()
 {
 	int nPages = MAIN->getDisplayer()->getNPages();
-	if(nPages == 1 || MAIN->getDisplayer()->getHasSelections()){
+	if(nPages == 1 || MAIN->getDisplayer()->hasMultipleOCRAreas()){
 		recognize({MAIN->getDisplayer()->getCurrentPage()});
 	}else{
 		auto positioner = sigc::bind(sigc::ptr_fun(Utils::popup_positioner), m_recognizeBtn, m_menuPages, false, true);
@@ -391,7 +387,6 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 			int idx = 0;
 			for(int page : pages){
 				monitor.desc.progress = 0;
-				readSessionData->page = page;
 				++idx;
 				Glib::signal_idle().connect_once([=]{ MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
 
@@ -402,7 +397,10 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 					MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
 					continue;
 				}
-				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : MAIN->getDisplayer()->getSelections()){
+				readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
+				readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
+				readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
+				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : MAIN->getDisplayer()->getOCRAreas()){
 					tess.SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
 					tess.Recognize(&monitor.desc);
 					if(!monitor.canceled) {
@@ -437,6 +435,9 @@ bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, O
 	MAIN->showProgress(&monitor);
 	if(dest == OutputDestination::Buffer) {
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead();
+		readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
+		readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
+		readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
 		Utils::busyTask([&]{
 			tess.Recognize(&monitor.desc);
 			if(!monitor.canceled) {
@@ -472,7 +473,7 @@ bool Recognizer::setPage(int page, bool autodetectLayout)
 		success = MAIN->getDisplayer()->setCurrentPage(page);
 	}
 	if(autodetectLayout) {
-		MAIN->getDisplayer()->autodetectLayout();
+		MAIN->getDisplayer()->autodetectOCRAreas();
 	}
 	return success;
 }

@@ -37,7 +37,7 @@ public:
 	std::string getTessdataDir() const;
 	const Config::Lang& getSelectedLanguage() const{ return m_curLang; }
 
-	void setRecognizeMode(bool haveSelection);
+	void setRecognizeMode(const Glib::ustring& mode);
 	void updateLanguagesMenu();
 	bool recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
 	sigc::signal<void,Config::Lang> signal_languageChanged() const{ return m_signal_languageChanged; }

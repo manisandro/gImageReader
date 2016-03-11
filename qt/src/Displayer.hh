@@ -42,19 +42,19 @@ public:
 	Displayer(const UI_MainWindow& _ui, QWidget* parent = nullptr);
 	~Displayer();
 	void setTool(DisplayerTool* tool) { m_tool = tool; }
+	bool setSources(QList<Source*> sources);
 	int getCurrentPage() const;
 	double getCurrentAngle() const;
 	int getCurrentResolution() const;
 	const QString& getCurrentImage(int& page) const;
 	int getNPages() const;
-	bool setSources(QList<Source*> sources);
 	bool hasMultipleOCRAreas();
 	QList<QImage> getOCRAreas();
 	void autodetectOCRAreas();
 
 public slots:
 	bool setCurrentPage(int page);
-	void setRotation(double angle);
+	void setAngle(double angle);
 	void setResolution(int resolution);
 
 private:
@@ -70,9 +70,9 @@ private:
 	QPixmap m_pixmap;
 	QGraphicsPixmapItem* m_imageItem = nullptr;
 	double m_scale = 1.0;
-	QTimer m_renderTimer;
 	DisplayerTool* m_tool = nullptr;
 	QPoint m_panPos;
+	QTimer m_renderTimer;
 
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);

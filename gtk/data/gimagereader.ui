@@ -1219,7 +1219,6 @@
             </child>
             <child>
               <object class="GtkButton" id="button:main.autolayout">
-                <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="tooltip_text" translatable="yes">Autodetect layout</property>
