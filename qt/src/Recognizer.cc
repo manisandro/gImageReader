@@ -76,6 +76,7 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	Ui::PageRangeDialog uiPageRangeDialog;
 	uiPageRangeDialog.setupUi(m_pagesDialog);
 	m_pagesLineEdit = uiPageRangeDialog.lineEditPageRange;
+	m_pageAreaLabel = uiPageRangeDialog.labelRecognitionArea;
 	m_pageAreaComboBox = uiPageRangeDialog.comboBoxRecognitionArea;
 
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
@@ -312,6 +313,8 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout)
 
 	m_pagesLineEdit->setText(QString("1-%1").arg(nPages));
 	m_pagesLineEdit->setFocus();
+	m_pageAreaLabel->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	m_pageAreaComboBox->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
 
 	QList<int> pages;
 	if(m_pagesDialog->exec() == QDialog::Accepted){
@@ -340,7 +343,7 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout)
 		}
 	}
 	qSort(pages);
-	autodetectLayout = m_pageAreaComboBox->currentIndex() == 1;
+	autodetectLayout = m_pageAreaComboBox->isVisible() ? m_pageAreaComboBox->currentIndex() == 1 : false;
 	return pages;
 }
 

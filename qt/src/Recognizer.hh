@@ -57,6 +57,7 @@ private:
 	QMenu* m_menuMultilanguage = nullptr;
 	QDialog* m_pagesDialog;
 	QLineEdit* m_pagesLineEdit;
+	QLabel* m_pageAreaLabel;
 	QComboBox* m_pageAreaComboBox;
 	QActionGroup* m_langMenuRadioGroup = nullptr;
 	QActionGroup* m_langMenuCheckGroup = nullptr;

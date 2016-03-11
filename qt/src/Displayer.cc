@@ -235,6 +235,11 @@ QList<QImage> Displayer::getOCRAreas()
 	return m_tool->getOCRAreas();
 }
 
+bool Displayer::allowAutodetectOCRAreas() const
+{
+	return m_tool->allowAutodetectOCRAreas();
+}
+
 void Displayer::autodetectOCRAreas()
 {
 	m_tool->autodetectOCRAreas();

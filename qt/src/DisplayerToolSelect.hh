@@ -42,6 +42,7 @@ public:
 
 	QList<QImage> getOCRAreas();
 	bool hasMultipleOCRAreas() const{ return !m_selections.isEmpty(); }
+	bool allowAutodetectOCRAreas() const override{ return true; }
 	void autodetectOCRAreas(){ autodetectLayout(); }
 
 private:

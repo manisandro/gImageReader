@@ -50,6 +50,7 @@ public:
 	int getNPages() const;
 	bool hasMultipleOCRAreas();
 	QList<QImage> getOCRAreas();
+	bool allowAutodetectOCRAreas() const;
 	void autodetectOCRAreas();
 
 public slots:
@@ -135,6 +136,7 @@ public:
 	virtual void rotationChanged(double /*delta*/){}
 	virtual QList<QImage> getOCRAreas() = 0;
 	virtual bool hasMultipleOCRAreas() const{ return false; }
+	virtual bool allowAutodetectOCRAreas() const{ return false; }
 	virtual void autodetectOCRAreas(){}
 
 protected:
