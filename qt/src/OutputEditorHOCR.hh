@@ -42,7 +42,8 @@ public:
 	bool getModified() const override;
 
 public slots:
-	bool clear() override;
+	bool clear(bool hide = true) override;
+	void open();
 	bool save(const QString& filename = "") override;
 	void savePDF(bool overlay = false);
 	void savePDFOverlay(){ savePDF(true); }
@@ -67,6 +68,7 @@ private:
 	UI_OutputEditorHOCR ui;
 	HTMLHighlighter* m_highlighter;
 	QtSpell::TextEditChecker m_spell;
+	bool m_modified = false;
 
 	void findReplace(bool backwards, bool replace);
 	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem);
@@ -76,6 +78,7 @@ private:
 	void printChildren(QPainter& painter, QTreeWidgetItem* item, bool overlayMode) const;
 	bool setCurrentSource(const QDomElement& pageElement, int* pageDpi = 0) const;
 	void updateItemText(QTreeWidgetItem* item);
+	void addPage(QDomElement pageDiv, const QString& filename, int page);
 
 private slots:
 	void addPage(const QString& hocrText, ReadSessionData data);

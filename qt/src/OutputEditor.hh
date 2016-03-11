@@ -48,7 +48,7 @@ public:
 
 public slots:
 	virtual void onVisibilityChanged(bool /*visible*/){}
-	virtual bool clear() = 0;
+	virtual bool clear(bool hide = true) = 0;
 	virtual bool save(const QString& filename = "") = 0;
 	virtual void setLanguage(const Config::Lang &lang){}
 };

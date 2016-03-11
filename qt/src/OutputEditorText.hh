@@ -43,7 +43,7 @@ public:
 
 public slots:
 	void onVisibilityChanged(bool visible) override;
-	bool clear() override;
+	bool clear(bool hide = true) override;
 	bool save(const QString& filename = "") override;
 	void setLanguage(const Config::Lang &lang) override;
 

@@ -118,10 +118,11 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	ui.setupUi(m_widget);
 	m_highlighter = new HTMLHighlighter(ui.plainTextEditOutput->document());
 
-	ui.toolButtonOutputSave->setShortcut(Qt::CTRL + Qt::Key_S);
+	ui.actionOutputSaveHOCR->setShortcut(Qt::CTRL + Qt::Key_S);
 
 	ui.treeWidgetItems->setContextMenuPolicy(Qt::CustomContextMenu);
 
+	connect(ui.actionOutputOpen, SIGNAL(triggered()), this, SLOT(open()));
 	connect(ui.actionOutputSaveHOCR, SIGNAL(triggered()), this, SLOT(save()));
 	connect(ui.actionOutputSavePDF, SIGNAL(triggered()), this, SLOT(savePDF()));
 	connect(ui.actionOutputSavePDFTextOverlay, SIGNAL(triggered()), this, SLOT(savePDFOverlay()));
@@ -181,9 +182,19 @@ void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data)
 			.arg(data.angle)
 			.arg(data.resolution);
 	pageDiv.setAttribute("title", pageTitle);
-	pageDiv.setAttribute("id", QString("page_%1").arg(++m_idCounter));
+	addPage(pageDiv, QFileInfo(data.file).fileName(), data.page);
+}
 
-	QTreeWidgetItem* pageItem = new QTreeWidgetItem(QStringList() << QString("%1 [%2]").arg(QFileInfo(data.file).fileName()).arg(data.page));
+void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int page)
+{
+	pageDiv.setAttribute("id", QString("page_%1").arg(++m_idCounter));
+	s_bboxRx.indexIn(pageDiv.attribute("title"));
+	int x1 = s_bboxRx.cap(1).toInt();
+	int y1 = s_bboxRx.cap(2).toInt();
+	int x2 = s_bboxRx.cap(3).toInt();
+	int y2 = s_bboxRx.cap(4).toInt();
+
+	QTreeWidgetItem* pageItem = new QTreeWidgetItem(QStringList() << QString("%1 [%2]").arg(filename).arg(page));
 	pageItem->setData(0, IdRole, pageDiv.attribute("id"));
 	pageItem->setData(0, BBoxRole, QRect(x1, y1, x2 - x1, y2 - y1));
 	pageItem->setData(0, ClassRole, "ocr_page");
@@ -209,9 +220,13 @@ void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data)
 		}
 		element = element.nextSiblingElement();
 	}
-	pageItem->setData(0, TextRole, doc.toString());
+	QString str;
+	QTextStream ss(&str);
+	pageDiv.save(ss, 1);
+	pageItem->setData(0, TextRole, str);
 	expandChildren(pageItem);
 	MAIN->setOutputPaneVisible(true);
+	m_modified = true;
 }
 
 void OutputEditorHOCR::expandChildren(QTreeWidgetItem* item) const
@@ -426,6 +441,7 @@ void OutputEditorHOCR::updateItemText(QTreeWidgetItem* item)
 	QTextStream elemstream(&elemstr);
 	element.save(elemstream, 1);
 	ui.plainTextEditOutput->setPlainText(elemstr);
+	m_modified = true;
 }
 
 void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
@@ -456,12 +472,41 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 	}
 }
 
+void OutputEditorHOCR::open()
+{
+	if(!clear(false)) {
+		return;
+	}
+	QString dir = MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue();
+	QString filename = QFileDialog::getOpenFileName(m_widget, _("Open hOCR File"), dir, QString("%1 (*.html)").arg(_("hOCR HTML Files")));
+	if(filename.isEmpty()) {
+		return;
+	}
+	QFile file(filename);
+	if(!file.open(QIODevice::ReadOnly)) {
+		QMessageBox::critical(MAIN, _("Failed to open file"), _("The file could not be opened: %1.").arg(filename));
+		return;
+	}
+	QDomDocument doc;
+	doc.setContent(&file);
+	QDomElement div = doc.firstChildElement("html").firstChildElement("body").firstChildElement("div");
+	if(div.isNull()) {
+		QMessageBox::critical(MAIN, _("Invalid hOCR file"), _("The file does not appear to contain any hOCR content.").arg(filename));
+	}
+	int page = 0;
+	while(!div.isNull()) {
+		++page;
+		addPage(div, QFileInfo(filename).fileName(), page);
+		div = div.nextSiblingElement("div");
+	}
+}
+
 bool OutputEditorHOCR::save(const QString& filename)
 {
 	QString outname = filename;
 	if(outname.isEmpty()){
 		outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(_("output") + ".html");
-		outname = QFileDialog::getSaveFileName(MAIN, _("Save HOCR Output..."), outname, QString("%1 (*.html)").arg(_("HOCR HTML Files")));
+		outname = QFileDialog::getSaveFileName(MAIN, _("Save hOCR Output..."), outname, QString("%1 (*.html)").arg(_("hOCR HTML Files")));
 		if(outname.isEmpty()){
 			return false;
 		}
@@ -487,6 +532,7 @@ bool OutputEditorHOCR::save(const QString& filename)
 		file.write(ui.treeWidgetItems->topLevelItem(i)->data(0, TextRole).toString().toUtf8());
 	}
 	file.write("</body>\n</html>\n");
+	m_modified = false;
 	return true;
 }
 
@@ -584,24 +630,32 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 	}
 }
 
-bool OutputEditorHOCR::clear()
+bool OutputEditorHOCR::clear(bool hide)
 {
 	if(!m_widget->isVisible()){
 		return true;
 	}
-	int response = QMessageBox::question(MAIN, _("Clear output"), _("Clear the output?"), QMessageBox::Ok, QMessageBox::Cancel);
-	if(response != QMessageBox::Ok) {
-		return false;
+	if(getModified()){
+		int response = QMessageBox::question(MAIN, _("Output not saved"), _("Save output before proceeding?"), QMessageBox::Save, QMessageBox::Discard, QMessageBox::Cancel);
+		if(response == QMessageBox::Save){
+			if(!save()){
+				return false;
+			}
+		}else if(response != QMessageBox::Discard){
+			return false;
+		}
 	}
 	m_idCounter = 0;
 	ui.treeWidgetItems->clear();
 	ui.tableWidgetProperties->setRowCount(0);
 	ui.plainTextEditOutput->clear();
-	MAIN->setOutputPaneVisible(false);
+	m_modified = false;
+	if(hide)
+		MAIN->setOutputPaneVisible(false);
 	return true;
 }
 
 bool OutputEditorHOCR::getModified() const
 {
-	return ui.plainTextEditOutput->document()->isModified();
+	return m_modified;
 }

@@ -257,12 +257,12 @@ bool OutputEditorText::save(const QString& filename)
 	return true;
 }
 
-bool OutputEditorText::clear()
+bool OutputEditorText::clear(bool hide)
 {
 	if(!m_widget->isVisible()){
 		return true;
 	}
-	if(ui.plainTextEditOutput->document()->isModified()){
+	if(getModified()){
 		int response = QMessageBox::question(MAIN, _("Output not saved"), _("Save output before proceeding?"), QMessageBox::Save, QMessageBox::Discard, QMessageBox::Cancel);
 		if(response == QMessageBox::Save){
 			if(!save()){
@@ -275,7 +275,8 @@ bool OutputEditorText::clear()
 	ui.plainTextEditOutput->clear();
 	m_spell.clearUndoRedo();
 	ui.plainTextEditOutput->document()->setModified(false);
-	MAIN->setOutputPaneVisible(false);
+	if(hide)
+		MAIN->setOutputPaneVisible(false);
 	return true;
 }
 

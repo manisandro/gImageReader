@@ -19,9 +19,10 @@
 class UI_OutputEditorHOCR
 {
 public:
+	QAction* actionOutputOpen;
 	QAction* actionOutputClear;
-	QToolButton* toolButtonOutputSave;
 	QAction* actionOutputSaveHOCR;
+	QToolButton* toolButtonOutputExport;
 	QAction* actionOutputSavePDFTextOverlay;
 	QAction* actionOutputSavePDF;
 	QToolBar* toolBarOutput;
@@ -38,23 +39,28 @@ public:
 		widget->layout()->setSpacing(0);
 
 		// Output toolbar
-		toolButtonOutputSave = new QToolButton(widget);
-		toolButtonOutputSave->setIcon(QIcon::fromTheme("document-save-as"));
-		toolButtonOutputSave->setText(gettext("Save Output"));
+		actionOutputOpen = new QAction(QIcon::fromTheme("document-open"), gettext("Open hOCR file"), widget);
+		actionOutputOpen->setToolTip(gettext("Open hOCR file"));
+		actionOutputSaveHOCR = new QAction(QIcon::fromTheme("document-save-as"), gettext("Save as hOCR text"), widget);
+		actionOutputSaveHOCR->setToolTip(gettext("Save as hOCR text"));
+		toolButtonOutputExport = new QToolButton(widget);
+		toolButtonOutputExport->setIcon(QIcon::fromTheme("application-pdf"));
+		toolButtonOutputExport->setText(gettext("Export to PDF"));
 		QMenu* saveMenu = new QMenu(widget);
-		toolButtonOutputSave->setToolTip(gettext("Save output"));
-		toolButtonOutputSave->setMenu(saveMenu);
-		toolButtonOutputSave->setPopupMode(QToolButton::InstantPopup);
-		actionOutputSaveHOCR = saveMenu->addAction(gettext("HOCR Text"));
+		toolButtonOutputExport->setToolTip(gettext("Export to PDF"));
+		toolButtonOutputExport->setMenu(saveMenu);
+		toolButtonOutputExport->setPopupMode(QToolButton::InstantPopup);
 		actionOutputSavePDF = saveMenu->addAction(gettext("PDF"));
 		actionOutputSavePDFTextOverlay = saveMenu->addAction(gettext("PDF with invisible text overlay"));
-		actionOutputClear = new QAction(QIcon::fromTheme("edit-clear"), gettext("Clear Output"), widget);
+		actionOutputClear = new QAction(QIcon::fromTheme("edit-clear"), gettext("Clear output"), widget);
 		actionOutputClear->setToolTip(gettext("Clear output"));
 
 		toolBarOutput = new QToolBar(widget);
 		toolBarOutput->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		toolBarOutput->setIconSize(QSize(1, 1) * toolBarOutput->style()->pixelMetric(QStyle::PM_SmallIconSize));
-		toolBarOutput->addWidget(toolButtonOutputSave);
+		toolBarOutput->addAction(actionOutputOpen);
+		toolBarOutput->addAction(actionOutputSaveHOCR);
+		toolBarOutput->addWidget(toolButtonOutputExport);
 		toolBarOutput->addAction(actionOutputClear);
 
 		widget->layout()->addWidget(toolBarOutput);
