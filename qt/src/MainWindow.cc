@@ -77,6 +77,7 @@ static void signalHandler(int signal)
 	std::raise(signal);
 }
 
+#ifndef __ARMEL__
 static void terminateHandler()
 {
 	std::set_terminate(nullptr);
@@ -94,7 +95,7 @@ static void terminateHandler()
 	}
 	signalHandler(SIGABRT);
 }
-
+#endif
 
 MainWindow* MainWindow::s_instance = nullptr;
 
@@ -105,7 +106,9 @@ MainWindow::MainWindow(const QStringList& files)
 
 	std::signal(SIGSEGV, signalHandler);
 	std::signal(SIGABRT, signalHandler);
+#ifndef __ARMEL__
 	std::set_terminate(terminateHandler);
+#endif
 
 	qRegisterMetaType<MainWindow::State>();
 
