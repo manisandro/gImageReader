@@ -28,12 +28,13 @@
 #include <fstream>
 #include <cstring>
 
-SubstitutionsManager::SubstitutionsManager(const Glib::RefPtr<OutputBuffer>& buffer, Gtk::CheckButton* csCheckBox)
-	: m_buffer(buffer), m_csCheckBox(csCheckBox)
+SubstitutionsManager::SubstitutionsManager()
 {
 	m_dialog = Builder("window:postproc");
 	m_listView = Builder("treeview:postproc");
 	m_removeButton = Builder("toolbutton:postproc.remove");
+	m_csCheckBox = Builder("checkbutton:output.matchcase");
+	m_buffer = Glib::RefPtr<OutputBuffer>::cast_static(Builder("textview:output").as<Gtk::TextView>()->get_buffer());
 
 	m_listStore = Gtk::ListStore::create(m_viewCols);
 	m_listView->set_model(m_listStore);
@@ -67,9 +68,10 @@ SubstitutionsManager::SubstitutionsManager(const Glib::RefPtr<OutputBuffer>& buf
 
 void SubstitutionsManager::set_visible(bool visible)
 {
-	m_dialog->set_visible(visible);
-	if(visible && m_dialog->is_visible()){
-		m_dialog->raise();
+	static SubstitutionsManager instance;
+	instance.m_dialog->set_visible(visible);
+	if(visible && instance.m_dialog->is_visible()){
+		instance.m_dialog->raise();
 	}
 }
 

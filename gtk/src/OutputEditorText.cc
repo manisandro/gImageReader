@@ -60,8 +60,6 @@ OutputEditorText::OutputEditorText()
 	m_toggleSearchButton->add_accelerator("clicked", group, GDK_KEY_F, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 	saveButton->add_accelerator("clicked", group, GDK_KEY_S, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 
-	m_substitutionsManager = new SubstitutionsManager(m_textBuffer, m_csCheckBox);
-
 	m_insertMode = InsertMode::Append;
 
 	m_spell.property_decode_language_codes() = true;
@@ -87,7 +85,7 @@ OutputEditorText::OutputEditorText()
 	CONNECT(Builder("button:output.replaceall").as<Gtk::Button>(), clicked, [this]{ replaceAll(); });
 	CONNECTP(Builder("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
 	CONNECT(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
-	CONNECT(Builder("button:output.substitutions").as<Gtk::Button>(), clicked, [this]{ m_substitutionsManager->set_visible(true); });
+	CONNECT(Builder("button:output.substitutions").as<Gtk::Button>(), clicked, [this]{ SubstitutionsManager::set_visible(true); });
 	CONNECT(m_textView, populate_popup, [this](Gtk::Menu* menu){ completeTextViewMenu(menu); });
 	CONNECTS(Builder("menuitem:output.stripcrlf.drawwhitespace").as<Gtk::CheckMenuItem>(), toggled, [this](Gtk::CheckMenuItem* item){
 		m_textView->set_draw_spaces(item->get_active() ? (Gsv::DRAW_SPACES_NEWLINE|Gsv::DRAW_SPACES_TAB|Gsv::DRAW_SPACES_SPACE) : Gsv::DrawSpacesFlags(0));
@@ -111,11 +109,6 @@ OutputEditorText::OutputEditorText()
 	}
 
 	setFont();
-}
-
-OutputEditorText::~OutputEditorText()
-{
-	delete m_substitutionsManager;
 }
 
 void OutputEditorText::setFont()
@@ -338,7 +331,7 @@ bool OutputEditorText::getModified() const
 
 void OutputEditorText::onVisibilityChanged(bool /*visibile*/)
 {
-	m_substitutionsManager->set_visible(false);
+	SubstitutionsManager::set_visible(false);
 }
 
 void OutputEditorText::setLanguage(const Config::Lang& lang)

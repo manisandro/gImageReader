@@ -26,10 +26,10 @@ class OutputBuffer;
 
 class SubstitutionsManager {
 public:
-	SubstitutionsManager(const Glib::RefPtr<OutputBuffer>& buffer, Gtk::CheckButton* csCheckBox);
-	void set_visible(bool visible);
+	static void set_visible(bool visible);
 
 private:
+	SubstitutionsManager();
 	struct ReplaceListColumns : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Glib::ustring> search;
 		Gtk::TreeModelColumn<Glib::ustring> replace;
