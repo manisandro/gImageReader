@@ -28,10 +28,12 @@
 #include "OutputBuffer.hh"
 #include "OutputEditor.hh"
 
+class SubstitutionsManager;
 
 class OutputEditorText : public OutputEditor {
 public:
 	OutputEditorText();
+	~OutputEditorText();
 
 	Gtk::Box* getUI() override { return m_paneWidget; }
 	ReadSessionData* initRead() override{ return new TextReadSessionData; }
@@ -72,6 +74,7 @@ private:
 
 	InsertMode m_insertMode;
 	GtkSpell::Checker m_spell;
+	SubstitutionsManager* m_substitutionsManager;
 
 	void addText(const Glib::ustring& text, bool insert);
 	void completeTextViewMenu(Gtk::Menu *menu);
