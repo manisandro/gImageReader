@@ -531,7 +531,7 @@ bool OutputEditorHOCR::save(const QString& filename)
 		QMessageBox::critical(MAIN, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
-	QString header = QString("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+	QString header = QString(
 			"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
 			"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n"
 			" <head>\n"
