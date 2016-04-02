@@ -310,11 +310,8 @@ void DisplaySelection::reorderSelection(int newNumber)
 
 void DisplaySelection::draw(Cairo::RefPtr<Cairo::Context> ctx) const
 {
-	Gtk::Label label;
-	Glib::RefPtr<Gtk::StyleContext> styleContext = label.get_style_context();
-	styleContext->set_state(Gtk::STATE_FLAG_SELECTED);
-	Gdk::RGBA fgcolor = styleContext->get_color(styleContext->get_state());
-	Gdk::RGBA bgcolor = styleContext->get_background_color(styleContext->get_state());
+	Gdk::RGBA fgcolor("#FFFFFF");
+	Gdk::RGBA bgcolor("#4A90D9");
 
 	double scale = m_selectTool->getDisplayScale();
 	Glib::ustring idx = Glib::ustring::compose("%1", m_number);
