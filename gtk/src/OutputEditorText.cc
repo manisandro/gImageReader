@@ -308,12 +308,12 @@ bool OutputEditorText::save(const std::string& filename)
 	return true;
 }
 
-bool OutputEditorText::clear()
+bool OutputEditorText::clear(bool hide)
 {
 	if(!m_outputBox->get_visible()){
 		return true;
 	}
-	if(m_textBuffer->get_modified()){
+	if(getModified()){
 		int response = Utils::question_dialog(_("Output not saved"), _("Save output before proceeding?"), Utils::Button::Save|Utils::Button::Discard|Utils::Button::Cancel);
 		if(response == Utils::Button::Save){
 			if(!save()){
@@ -327,7 +327,8 @@ bool OutputEditorText::clear()
 	m_textBuffer->set_text("");
 	m_textBuffer->end_not_undoable_action();
 	m_textBuffer->set_modified(false);
-	MAIN->setOutputPaneVisible(false);
+	if(hide)
+		MAIN->setOutputPaneVisible(false);
 	return true;
 }
 
