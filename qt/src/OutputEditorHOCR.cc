@@ -160,9 +160,19 @@ void OutputEditorHOCR::read(tesseract::TessBaseAPI &tess, ReadSessionData *data)
 	delete[] text;
 }
 
-void OutputEditorHOCR::readError(const QString &errorMsg, ReadSessionData *data)
+void OutputEditorHOCR::readError(const QString& errorMsg, ReadSessionData *data)
 {
-	QMetaObject::invokeMethod(this, "addPage", Qt::QueuedConnection, Q_ARG(QString, errorMsg), Q_ARG(ReadSessionData, *data));
+	static_cast<HOCRReadSessionData*>(data)->errors.append(QString("%1[%2]: %3").arg(data->file).arg(data->page).arg(errorMsg));
+}
+
+void OutputEditorHOCR::finalizeRead(ReadSessionData *data)
+{
+	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
+	if(!hdata->errors.isEmpty()) {
+		QString message = QString(tr("The following pages could not be processed:\n%1").arg(hdata->errors.join("\n")));
+		QMessageBox::warning(MAIN, _("Recognition errors"), message);
+	}
+	OutputEditor::finalizeRead(data);
 }
 
 void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data)

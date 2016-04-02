@@ -36,9 +36,10 @@ public:
 	~OutputEditorHOCR();
 
 	QWidget* getUI() override { return m_widget; }
-	ReadSessionData* initRead() override{ return new ReadSessionData; }
+	ReadSessionData* initRead() override{ return new HOCRReadSessionData; }
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
+	void finalizeRead(ReadSessionData *data) override;
 	bool getModified() const override;
 
 public slots:
@@ -50,6 +51,10 @@ public slots:
 
 private:
 	class HTMLHighlighter;
+
+	struct HOCRReadSessionData : ReadSessionData {
+		QStringList errors;
+	};
 
 	static const int IdRole = Qt::UserRole + 1;
 	static const int TextRole = Qt::UserRole + 2;
