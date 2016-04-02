@@ -26,14 +26,14 @@
 
 SourceManager::SourceManager()
 {
-	m_notebook = Builder("notebook:sources");
-	m_listView = Builder("treeview:input.images");
-	m_addButton = Builder("button:sources.images.add");
-	m_addButtonMenu = Builder("menubutton:sources.images.add");
-	m_removeButton = Builder("button:sources.images.remove");
-	m_deleteButton = Builder("button:sources.images.delete");
-	m_clearButton = Builder("button:sources.images.clear");
-	m_pasteItem = Builder("menuitem:sources.images.paste");
+	m_notebook = MAIN->getWidget("notebook:sources");
+	m_listView = MAIN->getWidget("treeview:input.images");
+	m_addButton = MAIN->getWidget("button:sources.images.add");
+	m_addButtonMenu = MAIN->getWidget("menubutton:sources.images.add");
+	m_removeButton = MAIN->getWidget("button:sources.images.remove");
+	m_deleteButton = MAIN->getWidget("button:sources.images.delete");
+	m_clearButton = MAIN->getWidget("button:sources.images.clear");
+	m_pasteItem = MAIN->getWidget("menuitem:sources.images.paste");
 
 	m_listView->set_model(Gtk::ListStore::create(m_listViewCols));
 	m_listView->append_column("", m_listViewCols.filename);
@@ -53,16 +53,16 @@ SourceManager::SourceManager()
 	recentChooser->set_show_not_found(false);
 	recentChooser->set_show_tips(true);
 	recentChooser->set_sort_type(Gtk::RECENT_SORT_MRU);
-	Builder("menuitem:sources.images.recent").as<Gtk::MenuItem>()->set_submenu(*recentChooser);
+	MAIN->getWidget("menuitem:sources.images.recent").as<Gtk::MenuItem>()->set_submenu(*recentChooser);
 
 	m_clipboard = Gtk::Clipboard::get_for_display(Gdk::Display::get_default());
 
-	Gtk::ToggleButton* toggleSourcesBtn = Builder("button:main.sources");
+	Gtk::ToggleButton* toggleSourcesBtn = MAIN->getWidget("button:main.sources");
 	CONNECTS(toggleSourcesBtn, toggled, [this](Gtk::ToggleButton* b){ m_notebook->set_visible(b->get_active()); });
 	CONNECT(m_addButton, clicked, [this]{ openSources(); });
 	CONNECT(m_addButtonMenu, clicked, [this]{ m_pasteItem->set_sensitive(m_clipboard->wait_is_image_available()); });
 	CONNECT(m_pasteItem, activate, [this]{ pasteClipboard(); });
-	CONNECT(Builder("menuitem:sources.images.screenshot").as<Gtk::MenuItem>(), activate, [this]{ takeScreenshot(); });
+	CONNECT(MAIN->getWidget("menuitem:sources.images.screenshot").as<Gtk::MenuItem>(), activate, [this]{ takeScreenshot(); });
 	CONNECT(m_removeButton, clicked, [this]{ removeSource(false); });
 	CONNECT(m_deleteButton, clicked, [this]{ removeSource(true); });
 	CONNECT(m_clearButton, clicked, [this]{ clearSources(); });
@@ -70,7 +70,7 @@ SourceManager::SourceManager()
 	CONNECT(recentChooser, item_activated, [this, recentChooser]{ addSources({Gio::File::create_for_uri(recentChooser->get_current_uri())}); });
 
 	// Handle drops on the scrolled window
-	Gtk::ScrolledWindow* scollWin = Builder("scrollwin:sources.images");
+	Gtk::ScrolledWindow* scollWin = MAIN->getWidget("scrollwin:sources.images");
 	scollWin->drag_dest_set({Gtk::TargetEntry("text/uri-list")}, Gtk::DEST_DEFAULT_MOTION | Gtk::DEST_DEFAULT_DROP, Gdk::ACTION_COPY | Gdk::ACTION_MOVE);
 	CONNECT(scollWin, drag_data_received, sigc::ptr_fun(Utils::handle_drag_drop));
 }

@@ -31,15 +31,15 @@
 
 Acquirer::Acquirer()
 {
-	m_devCombo = Builder("combo:sources.acquire.device");
-	m_refreshButton = Builder("button:inpute.acquire.device.refresh");
-	m_refreshSpinner = Builder("spinner:sources.acquire.device");
-	m_resCombo = Builder("combo:sources.acquire.resolution");
-	m_modeCombo = Builder("combo:sources.acquire.mode");
-	m_msgLabel = Builder("label:sources.acquire.message");
-	m_outputLabel = Builder("label:sources.acquire.outputname");
-	m_buttonBox = Builder("buttonbox:sources.acquire");
-	m_scanButton = Builder("button:sources.acquire.scan");
+	m_devCombo = MAIN->getWidget("combo:sources.acquire.device");
+	m_refreshButton = MAIN->getWidget("button:inpute.acquire.device.refresh");
+	m_refreshSpinner = MAIN->getWidget("spinner:sources.acquire.device");
+	m_resCombo = MAIN->getWidget("combo:sources.acquire.resolution");
+	m_modeCombo = MAIN->getWidget("combo:sources.acquire.mode");
+	m_msgLabel = MAIN->getWidget("label:sources.acquire.message");
+	m_outputLabel = MAIN->getWidget("label:sources.acquire.outputname");
+	m_buttonBox = MAIN->getWidget("buttonbox:sources.acquire");
+	m_scanButton = MAIN->getWidget("button:sources.acquire.scan");
 	m_cancelButton = Gtk::manage(new Gtk::Button(_("Cancel")));
 	m_cancelButton->set_image_from_icon_name("dialog-cancel", Gtk::ICON_SIZE_BUTTON);
 	m_cancelButton->show();
@@ -58,7 +58,7 @@ Acquirer::Acquirer()
 	CONNECT(m_refreshButton, clicked, [this]{ startDetectDevices(); });
 	CONNECT(m_scanButton, clicked, [this]{ startScan(); });
 	CONNECT(m_cancelButton, clicked, [this]{ cancelScan(); });
-	CONNECT(Builder("button:sources.acquire.output").as<Gtk::Button>(), clicked, [this]{ selectOutputPath(); });
+	CONNECT(MAIN->getWidget("button:sources.acquire.output").as<Gtk::Button>(), clicked, [this]{ selectOutputPath(); });
 	CONNECT(m_devCombo, changed, [this]{ setDeviceComboTooltip(); });
 	CONNECT(m_scanner, initFailed, [this]{ scanInitFailed(); });
 	CONNECT(m_scanner, devicesDetected, [this](const std::vector<Scanner::Device>& devices){ doneDetectDevices(devices); });
@@ -66,10 +66,10 @@ Acquirer::Acquirer()
 	CONNECT(m_scanner, scanStateChanged, [this](Scanner::State state){ setScanState(state); });
 	CONNECT(m_scanner, pageAvailable, [this](const std::string& file){ m_signal_scanPageAvailable.emit(file); });
 
-	MAIN->getConfig()->addSetting(new ComboSetting("scanres", "combo:sources.acquire.resolution"));
-	MAIN->getConfig()->addSetting(new ComboSetting("scanmode", "combo:sources.acquire.mode"));
+	MAIN->getConfig()->addSetting(new ComboSetting("scanres", MAIN->getWidget("combo:sources.acquire.resolution")));
+	MAIN->getConfig()->addSetting(new ComboSetting("scanmode", MAIN->getWidget("combo:sources.acquire.mode")));
 	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("scanoutput"));
-	MAIN->getConfig()->addSetting(new ComboSetting("scandev", "combo:sources.acquire.device"));
+	MAIN->getConfig()->addSetting(new ComboSetting("scandev", MAIN->getWidget("combo:sources.acquire.device")));
 
 	m_outputPath = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->getValue();
 	if(m_outputPath.empty()) {

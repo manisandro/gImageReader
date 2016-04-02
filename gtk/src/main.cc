@@ -27,7 +27,6 @@
 #include "Application.hh"
 #include "CrashHandler.hh"
 
-Glib::RefPtr<Gtk::Builder> Builder::builder;
 std::string pkgDir;
 std::string pkgExePath;
 
@@ -76,17 +75,7 @@ int main (int argc, char *argv[])
 
 	if(argc > 2 && std::strcmp("crashhandle", argv[1]) == 0) {
 		// Run the crash handler
-
 		CrashHandler app(argc, argv);
-
-		try {
-			Builder::builder = Gtk::Builder::create_from_resource("/org/gnome/gimagereader/crashhandler.ui");
-			Builder::builder->set_translation_domain(GETTEXT_PACKAGE);
-		} catch (const Glib::Error & ex) {
-			std::cerr << ex.what() << std::endl;
-			return 1;
-		}
-
 		return app.run();
 	} else {
 		// Run the normal application
@@ -100,15 +89,6 @@ int main (int argc, char *argv[])
 		GtkSpell::init();
 		Gsv::init();
 		Application app(argc, argv, APPLICATION_ID, Gio::APPLICATION_HANDLES_OPEN);
-
-		try {
-			Builder::builder = Gtk::Builder::create_from_resource("/org/gnome/gimagereader/gimagereader.ui");
-			Builder::builder->set_translation_domain(GETTEXT_PACKAGE);
-		} catch (const Glib::Error & ex) {
-			std::cerr << ex.what() << std::endl;
-			return 1;
-		}
-
 		return app.run();
 	}
 }

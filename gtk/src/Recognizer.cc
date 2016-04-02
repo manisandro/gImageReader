@@ -88,24 +88,24 @@ private:
 
 Recognizer::Recognizer()
 {
-	m_menuPages = Builder("menu:recognize.pages");
-	m_menuLanguages = Builder("menu:main.languages");
-	m_pagesDialog = Builder("dialog:recognize.pages");
-	m_pagesEntry = Builder("entry:dialog.pages");
-	m_langLabel = Builder("label:main.recognize.lang");
-	m_modeLabel = Builder("label:main.recognize.mode");
-	m_pageAreaCombo = Builder("comboboxtext:dialog.regions");
-	Gtk::MenuButton* recognizeBtn = Builder("menubutton:main.languages");
+	m_menuPages = MAIN->getWidget("menu:recognize.pages");
+	m_menuLanguages = MAIN->getWidget("menu:main.languages");
+	m_pagesDialog = MAIN->getWidget("dialog:recognize.pages");
+	m_pagesEntry = MAIN->getWidget("entry:dialog.pages");
+	m_langLabel = MAIN->getWidget("label:main.recognize.lang");
+	m_modeLabel = MAIN->getWidget("label:main.recognize.mode");
+	m_pageAreaCombo = MAIN->getWidget("comboboxtext:dialog.regions");
+	Gtk::MenuButton* recognizeBtn = MAIN->getWidget("menubutton:main.languages");
 	recognizeBtn->set_menu(*m_menuLanguages);
-	m_recognizeBtn = Builder("button:main.recognize");
+	m_recognizeBtn = MAIN->getWidget("button:main.recognize");
 
 	CONNECT(m_recognizeBtn, clicked, [this]{ recognizeButtonClicked(); });
-	CONNECT(Builder("menuitem:recognize.pages.current").as<Gtk::MenuItem>(), activate, [this]{ recognizeCurrentPage(); });
-	CONNECT(Builder("menuitem:recognize.pages.multiple").as<Gtk::MenuItem>(), activate, [this]{ recognizeMultiplePages();; });
+	CONNECT(MAIN->getWidget("menuitem:recognize.pages.current").as<Gtk::MenuItem>(), activate, [this]{ recognizeCurrentPage(); });
+	CONNECT(MAIN->getWidget("menuitem:recognize.pages.multiple").as<Gtk::MenuItem>(), activate, [this]{ recognizeMultiplePages();; });
 	CONNECTS(m_pagesEntry, focus_in_event, [](GdkEventFocus*, Gtk::Entry* e){ Utils::clear_error_state(e); return false; });
 
 	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("language"));
-	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", "comboboxtext:dialog.regions"));
+	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", MAIN->getWidget("comboboxtext:dialog.regions")));
 	MAIN->getConfig()->addSetting(new VarSetting<bool>("osd"));
 }
 

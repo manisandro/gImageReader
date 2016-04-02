@@ -30,21 +30,21 @@
 
 Displayer::Displayer()
 {
-	m_canvas = Builder("drawingarea:display");
-	m_viewport = Builder("viewport:display");
-	m_scrollwin = Builder("scrollwin:display");
+	m_canvas = MAIN->getWidget("drawingarea:display");
+	m_viewport = MAIN->getWidget("viewport:display");
+	m_scrollwin = MAIN->getWidget("scrollwin:display");
 	m_hadj = m_scrollwin->get_hadjustment();
 	m_vadj = m_scrollwin->get_vadjustment();
-	m_zoominbtn = Builder("button:main.zoomin");
-	m_zoomoutbtn = Builder("button:main.zoomout");
-	m_zoomonebtn = Builder("button:main.zoomnormsize");
-	m_zoomfitbtn = Builder("button:main.zoomfit");
-	m_rotspin = Builder("spin:display.rotate");
-	m_pagespin = Builder("spin:display.page");
-	m_resspin = Builder("spin:display.resolution");
-	m_brispin = Builder("spin:display.brightness");
-	m_conspin = Builder("spin:display.contrast");
-	m_invcheck = Builder("check:display.invert");
+	m_zoominbtn = MAIN->getWidget("button:main.zoomin");
+	m_zoomoutbtn = MAIN->getWidget("button:main.zoomout");
+	m_zoomonebtn = MAIN->getWidget("button:main.zoomnormsize");
+	m_zoomfitbtn = MAIN->getWidget("button:main.zoomfit");
+	m_rotspin = MAIN->getWidget("spin:display.rotate");
+	m_pagespin = MAIN->getWidget("spin:display.page");
+	m_resspin = MAIN->getWidget("spin:display.resolution");
+	m_brispin = MAIN->getWidget("spin:display.brightness");
+	m_conspin = MAIN->getWidget("spin:display.contrast");
+	m_invcheck = MAIN->getWidget("check:display.invert");
 
 	m_pagespin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/page.png"));
 	m_resspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/resolution.png"));
@@ -70,10 +70,10 @@ Displayer::Displayer()
 	CONNECT(m_zoomoutbtn, clicked, [this]{ setZoom(Zoom::Out); });
 	m_connection_zoomfitClicked = CONNECT(m_zoomfitbtn, clicked, [this]{ setZoom(Zoom::Fit); });
 	m_connection_zoomoneClicked = CONNECT(m_zoomonebtn, clicked, [this]{ setZoom(Zoom::One); });
-	CONNECT(Builder("spin:display.rotate").as<Gtk::SpinButton>(), icon_press, [this](Gtk::EntryIconPosition pos, const GdkEventButton*) {
+	CONNECT(MAIN->getWidget("spin:display.rotate").as<Gtk::SpinButton>(), icon_press, [this](Gtk::EntryIconPosition pos, const GdkEventButton*) {
 		setAngle(m_rotspin->get_value() + (pos == Gtk::ENTRY_ICON_PRIMARY ? -90 : 90));
 	});
-	CONNECT(Builder("applicationwindow:main").as<Gtk::Window>()->get_style_context(), changed, [this]{ m_canvas->queue_draw(); });
+	CONNECT(MAIN->getWidget("applicationwindow:main").as<Gtk::Window>()->get_style_context(), changed, [this]{ m_canvas->queue_draw(); });
 
 	CONNECT(m_scrollwin, drag_data_received, sigc::ptr_fun(Utils::handle_drag_drop));
 }

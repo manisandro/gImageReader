@@ -31,7 +31,7 @@
 DisplayerToolSelect::DisplayerToolSelect(Displayer *displayer)
 	: DisplayerTool(displayer)
 {
-	Gtk::Button* autolayoutButton = Builder("button:main.autolayout");
+	Gtk::Button* autolayoutButton = MAIN->getWidget("button:main.autolayout");
 	m_connectionAutolayout = CONNECT(autolayoutButton, clicked, [this]{ autodetectLayout(); });
 
 	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("selectionsavefile"));
@@ -48,7 +48,7 @@ DisplayerToolSelect::DisplayerToolSelect(Displayer *displayer)
 DisplayerToolSelect::~DisplayerToolSelect()
 {
 	clearSelections();
-	Builder("button:main.autolayout").as<Gtk::Button>()->set_visible(false);
+	MAIN->getWidget("button:main.autolayout").as<Gtk::Button>()->set_visible(false);
 	m_connectionAutolayout.disconnect();
 }
 
@@ -248,26 +248,26 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew)
 ///////////////////////////////////////////////////////////////////////////////
 
 void DisplaySelection::showContextMenu(GdkEventButton* event){
-	Gtk::Window* selmenu = Builder("window:selectionmenu");
-	Gtk::SpinButton* spin = Builder("spin:selectionmenu.order");
+	Gtk::Window* selmenu = MAIN->getWidget("window:selectionmenu");
+	Gtk::SpinButton* spin = MAIN->getWidget("spin:selectionmenu.order");
 	spin->get_adjustment()->set_upper(m_selectTool->m_selections.size());
 	spin->get_adjustment()->set_value(m_number);
 	Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
 	std::vector<sigc::connection> selmenuConnections = {
 		CONNECT(spin, value_changed, [&]{ reorderSelection(spin->get_value()); }),
-		CONNECT(Builder("button:selectionmenu.delete").as<Gtk::Button>(), clicked, [&]{
+		CONNECT(MAIN->getWidget("button:selectionmenu.delete").as<Gtk::Button>(), clicked, [&]{
 			loop->quit();
 			m_selectTool->removeSelection(m_number);
 		}),
-		CONNECT(Builder("button:selectionmenu.recognize").as<Gtk::Button>(), clicked, [&]{
+		CONNECT(MAIN->getWidget("button:selectionmenu.recognize").as<Gtk::Button>(), clicked, [&]{
 			loop->quit();
 			MAIN->getRecognizer()->recognizeImage(m_selectTool->getImage(rect()), Recognizer::OutputDestination::Buffer);
 		}),
-		CONNECT(Builder("button:selectionmenu.clipboard").as<Gtk::Button>(), clicked, [&]{
+		CONNECT(MAIN->getWidget("button:selectionmenu.clipboard").as<Gtk::Button>(), clicked, [&]{
 			loop->quit();
 			MAIN->getRecognizer()->recognizeImage(m_selectTool->getImage(rect()), Recognizer::OutputDestination::Clipboard);
 		}),
-		CONNECT(Builder("button:selectionmenu.save").as<Gtk::Button>(), clicked, [&]{
+		CONNECT(MAIN->getWidget("button:selectionmenu.save").as<Gtk::Button>(), clicked, [&]{
 			loop->quit();
 			selmenu->hide(); // Explicitly hide here to avoid conflicts with file dialog which pops up
 			m_selectTool->saveSelection(this);

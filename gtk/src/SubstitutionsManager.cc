@@ -28,12 +28,13 @@
 #include <fstream>
 #include <cstring>
 
-SubstitutionsManager::SubstitutionsManager(const Glib::RefPtr<OutputBuffer>& buffer, Gtk::CheckButton* csCheckBox)
-	: m_buffer(buffer), m_csCheckBox(csCheckBox)
+SubstitutionsManager::SubstitutionsManager(const Builder& builder, const Glib::RefPtr<OutputBuffer>& buffer)
+	: m_buffer(buffer)
 {
-	m_dialog = Builder("window:postproc");
-	m_listView = Builder("treeview:postproc");
-	m_removeButton = Builder("toolbutton:postproc.remove");
+	m_dialog = builder("window:postproc");
+	m_listView = builder("treeview:postproc");
+	m_removeButton = builder("toolbutton:postproc.remove");
+	m_csCheckBox = builder("checkbutton:output.matchcase");
 
 	m_listStore = Gtk::ListStore::create(m_viewCols);
 	m_listView->set_model(m_listStore);
@@ -45,12 +46,12 @@ SubstitutionsManager::SubstitutionsManager(const Glib::RefPtr<OutputBuffer>& buf
 	m_listView->get_column(1)->set_expand(true);
 	m_listView->set_fixed_height_mode();
 
-	CONNECT(Builder("toolbutton:postproc.open").as<Gtk::Button>(), clicked, [this]{ openList(); });
-	CONNECT(Builder("toolbutton:postproc.save").as<Gtk::Button>(), clicked, [this]{ saveList(); });
-	CONNECT(Builder("toolbutton:postproc.clear").as<Gtk::Button>(), clicked, [this]{ clearList(); });
-	CONNECT(Builder("toolbutton:postproc.add").as<Gtk::Button>(), clicked, [this]{ addRow(); });
-	CONNECT(Builder("button:postproc.apply").as<Gtk::Button>(), clicked, [this]{ applySubstitutions(); });
-	CONNECT(Builder("button:postproc.close").as<Gtk::Button>(), clicked, [this]{ m_dialog->hide(); });
+	CONNECT(builder("toolbutton:postproc.open").as<Gtk::Button>(), clicked, [this]{ openList(); });
+	CONNECT(builder("toolbutton:postproc.save").as<Gtk::Button>(), clicked, [this]{ saveList(); });
+	CONNECT(builder("toolbutton:postproc.clear").as<Gtk::Button>(), clicked, [this]{ clearList(); });
+	CONNECT(builder("toolbutton:postproc.add").as<Gtk::Button>(), clicked, [this]{ addRow(); });
+	CONNECT(builder("button:postproc.apply").as<Gtk::Button>(), clicked, [this]{ applySubstitutions(); });
+	CONNECT(builder("button:postproc.close").as<Gtk::Button>(), clicked, [this]{ m_dialog->hide(); });
 	CONNECT(m_removeButton, clicked, [this]{ removeRows(); });
 	CONNECT(m_listView->get_selection(), changed, [this]{ m_removeButton->set_sensitive(m_listView->get_selection()->count_selected_rows() != 0); });
 	CONNECT(m_dialog, hide, [this] { dialogClosed(); });

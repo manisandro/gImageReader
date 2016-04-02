@@ -61,6 +61,7 @@ public:
 	Recognizer* getRecognizer(){ return m_recognizer; }
 	SourceManager* getSourceManager(){ return m_sourceManager; }
 	Gtk::Window* getWindow() const{ return m_window; }
+	Builder::CastProxy getWidget(const Glib::ustring& name) const{ return m_builder(name); }
 	void setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel);
 	void redetectLanguages();
 	void showConfig();
@@ -78,6 +79,7 @@ public:
 private:
 	static MainWindow* s_instance;
 
+	Builder m_builder;
 	Gtk::ApplicationWindow* m_window;
 	Gtk::HeaderBar* m_headerbar;
 	Gtk::AboutDialog* m_aboutdialog;

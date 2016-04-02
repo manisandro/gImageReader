@@ -22,6 +22,7 @@
 
 CrashHandler::CrashHandler(int argc, char* argv[])
 	: Gtk::Application(argc, argv, APPLICATION_ID".crashhandler", Gio::APPLICATION_HANDLES_COMMAND_LINE)
+	, m_builder("/org/gnome/gimagereader/crashhandler.ui")
 {
 	Glib::set_application_name(Glib::ustring::compose("%1 - %2", PACKAGE_NAME, _("Crash Handler")));
 
@@ -36,19 +37,19 @@ CrashHandler::CrashHandler(int argc, char* argv[])
 void CrashHandler::on_startup()
 {
 	Gtk::Application::on_startup();
-	m_dialog = Builder("dialog:crashhandler");
-	m_progressBar = Builder("progressbar:backtrace");
+	m_dialog = m_builder("dialog:crashhandler");
+	m_progressBar = m_builder("progressbar:backtrace");
 	m_progressBar->hide();
-	m_textview = Builder("textview:backtrace");
-	m_refreshButton = Builder("button:backtrace.regenerate");
+	m_textview = m_builder("textview:backtrace");
+	m_refreshButton = m_builder("button:backtrace.regenerate");
 	m_dialog->set_title(Glib::ustring::compose("%1 %2", PACKAGE_NAME, _("Crash Handler")));
 	if(!m_saveFile.empty()) {
-		Builder("label:crashhandler.autosave").as<Gtk::Label>()->set_markup(Glib::ustring::compose(_("Your work has been saved under <b>%1</b>."), m_saveFile));
+		m_builder("label:crashhandler.autosave").as<Gtk::Label>()->set_markup(Glib::ustring::compose(_("Your work has been saved under <b>%1</b>."), m_saveFile));
 	}else{
-		Builder("label:crashhandler.autosave").as<Gtk::Label>()->set_text(_("There was no unsaved work."));
+		m_builder("label:crashhandler.autosave").as<Gtk::Label>()->set_text(_("There was no unsaved work."));
 	}
 	CONNECT(m_dialog, delete_event, [this](GdkEventAny* /*ev*/) { quit(); return true; });
-	CONNECT(Builder("button:crashhandler.close").as<Gtk::Button>(), clicked, [this]{ quit(); });
+	CONNECT(m_builder("button:crashhandler.close").as<Gtk::Button>(), clicked, [this]{ quit(); });
 	CONNECT(m_refreshButton, clicked, [this]{ generate_backtrace(); });
 
 	add_window(*m_dialog);

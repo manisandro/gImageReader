@@ -104,6 +104,7 @@ static void terminateHandler()
 MainWindow* MainWindow::s_instance = nullptr;
 
 MainWindow::MainWindow()
+	: m_builder("/org/gnome/gimagereader/gimagereader.ui")
 {
 	s_instance = this;
 
@@ -113,12 +114,12 @@ MainWindow::MainWindow()
 	std::set_terminate(terminateHandler);
 #endif
 
-	m_window = Builder("applicationwindow:main");
-	m_headerbar = Builder("headerbar:main");
-	m_aboutdialog = Builder("dialog:about");
-	m_statusbar = Builder("statusbar:main");
-	m_ocrModeCombo = Builder("combo:main.ocrmode");
-	m_outputPaneToggleButton = Builder("button:main.outputpane");
+	m_window = getWidget("applicationwindow:main");
+	m_headerbar = getWidget("headerbar:main");
+	m_aboutdialog = getWidget("dialog:about");
+	m_statusbar = getWidget("statusbar:main");
+	m_ocrModeCombo = getWidget("combo:main.ocrmode");
+	m_outputPaneToggleButton = getWidget("button:main.outputpane");
 	m_window->set_icon_name("gimagereader");
 	m_aboutdialog->set_version(PACKAGE_VERSION);
 
@@ -128,35 +129,36 @@ MainWindow::MainWindow()
 	m_recognizer = new Recognizer;
 	m_sourceManager = new SourceManager;
 
-	m_idlegroup.push_back(Builder("button:main.zoomin"));
-	m_idlegroup.push_back(Builder("button:main.zoomout"));
-	m_idlegroup.push_back(Builder("button:main.zoomnormsize"));
-	m_idlegroup.push_back(Builder("button:main.zoomfit"));
-	m_idlegroup.push_back(Builder("button:main.recognize"));
-	m_idlegroup.push_back(Builder("spin:display.rotate"));
-	m_idlegroup.push_back(Builder("spin:display.page"));
-	m_idlegroup.push_back(Builder("spin:display.brightness"));
-	m_idlegroup.push_back(Builder("spin:display.contrast"));
-	m_idlegroup.push_back(Builder("spin:display.resolution"));
-	m_idlegroup.push_back(Builder("button:main.autolayout"));
-	m_idlegroup.push_back(Builder("menubutton:main.languages"));
+	m_idlegroup.push_back(getWidget("button:main.zoomin"));
+	m_idlegroup.push_back(getWidget("button:main.zoomout"));
+	m_idlegroup.push_back(getWidget("button:main.zoomnormsize"));
+	m_idlegroup.push_back(getWidget("button:main.zoomfit"));
+	m_idlegroup.push_back(getWidget("button:main.recognize"));
+	m_idlegroup.push_back(getWidget("spin:display.rotate"));
+	m_idlegroup.push_back(getWidget("spin:display.page"));
+	m_idlegroup.push_back(getWidget("spin:display.brightness"));
+	m_idlegroup.push_back(getWidget("spin:display.contrast"));
+	m_idlegroup.push_back(getWidget("spin:display.resolution"));
+	m_idlegroup.push_back(getWidget("button:main.autolayout"));
+	m_idlegroup.push_back(getWidget("menubutton:main.languages"));
 
 	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) { return closeEvent(ev); });
-	CONNECTS(Builder("button:main.controls").as<Gtk::ToggleButton>(), toggled,
-			 [this](Gtk::ToggleButton* b) { Builder("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
+	CONNECTS(getWidget("button:main.controls").as<Gtk::ToggleButton>(), toggled,
+			 [this](Gtk::ToggleButton* b) { getWidget("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active()); });
 	CONNECT(m_acquirer, scanPageAvailable, [this](const std::string& filename){ m_sourceManager->addSources({Gio::File::create_for_path(filename)}); });
 	CONNECT(m_sourceManager, sourceChanged, [this]{ onSourceChanged(); });
 	CONNECT(m_outputPaneToggleButton, toggled, [this]{ m_outputEditor->getUI()->set_visible(m_outputPaneToggleButton->get_active()); });
 	m_connection_setOCRMode = CONNECT(m_ocrModeCombo, changed, [this]{ setOCRMode(m_ocrModeCombo->get_active_row_number()); });
 	CONNECT(m_recognizer, languageChanged, [this] (const Config::Lang& /*lang*/ ){ languageChanged(); });
-	CONNECTS(Builder("combo:config.settings.paneorient").as<Gtk::ComboBoxText>(), changed, [this](Gtk::ComboBoxText* combo){
-		Builder("paned:output").as<Gtk::Paned>()->set_orientation(static_cast<Gtk::Orientation>(!combo->get_active_row_number())); });
-	CONNECT(Builder("button:main.progress.cancel").as<Gtk::Button>(), clicked, [this]{ progressCancel(); });
+	CONNECTS(getWidget("combo:config.settings.paneorient").as<Gtk::ComboBoxText>(), changed, [this](Gtk::ComboBoxText* combo){
+		getWidget("paned:output").as<Gtk::Paned>()->set_orientation(static_cast<Gtk::Orientation>(!combo->get_active_row_number())); });
+	CONNECT(getWidget("button:main.progress.cancel").as<Gtk::Button>(), clicked, [this]{ progressCancel(); });
 
 
 	m_config->addSetting(new VarSetting<std::vector<int>>("wingeom"));
-	m_config->addSetting(new SwitchSettingT<Gtk::ToggleButton>("showcontrols", "button:main.controls"));
-	m_config->addSetting(new ComboSetting("outputeditor", "combo:main.ocrmode"));
+	m_config->addSetting(new SwitchSettingT<Gtk::ToggleButton>("showcontrols", m_builder("button:main.controls")));
+	m_config->addSetting(new VarSetting<Glib::ustring>("outputdir"));
+	m_config->addSetting(new ComboSetting("outputeditor", m_builder("combo:main.ocrmode")));
 
 	m_recognizer->updateLanguagesMenu();
 
@@ -173,7 +175,7 @@ MainWindow::MainWindow()
 		m_newVerThread = Glib::Threads::Thread::create([this]{ getNewestVersion(); });
 	}
 #else
-	Builder("check:config.settings.update").as<Gtk::Widget>()->hide();
+	getWidget("check:config.settings.update").as<Gtk::Widget>()->hide();
 #endif
 }
 
@@ -192,8 +194,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::setMenuModel(const Glib::RefPtr<Gio::MenuModel> &menuModel)
 {
-	Builder("menubutton:main.options").as<Gtk::MenuButton>()->set_menu_model(menuModel);
-	Builder("menubutton:main.options").as<Gtk::MenuButton>()->set_visible(true);
+	getWidget("menubutton:main.options").as<Gtk::MenuButton>()->set_menu_model(menuModel);
+	getWidget("menubutton:main.options").as<Gtk::MenuButton>()->set_visible(true);
 }
 
 void MainWindow::openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files)
@@ -225,7 +227,7 @@ void MainWindow::setState(State state)
 	bool isIdle = state == State::Idle;
 	bool isBusy = state == State::Busy;
 	for(Gtk::Widget* w : m_idlegroup){ w->set_sensitive(!isIdle); }
-	Builder("paned:output").as<Gtk::Box>()->set_sensitive(!isBusy);
+	getWidget("paned:output").as<Gtk::Box>()->set_sensitive(!isBusy);
 	m_headerbar->set_sensitive(!isBusy);
 	if(m_window->get_window()){
 		m_window->get_window()->set_cursor(isBusy ? Gdk::Cursor::create(Gdk::WATCH) : Glib::RefPtr<Gdk::Cursor>());
@@ -236,14 +238,14 @@ void MainWindow::showProgress(ProgressMonitor* monitor, int updateInterval)
 {
 	m_progressMonitor = monitor;
 	m_connection_progressUpdate = Glib::signal_timeout().connect([this]{ progressUpdate(); return true; }, updateInterval);
-	Builder("progressbar:main.progress").as<Gtk::ProgressBar>()->set_fraction(0);
-	Builder("button:main.progress.cancel").as<Gtk::Button>()->set_sensitive(true);
-	Builder("box:main.progress").as<Gtk::Box>()->set_visible(true);
+	getWidget("progressbar:main.progress").as<Gtk::ProgressBar>()->set_fraction(0);
+	getWidget("button:main.progress.cancel").as<Gtk::Button>()->set_sensitive(true);
+	getWidget("box:main.progress").as<Gtk::Box>()->set_visible(true);
 }
 
 void MainWindow::hideProgress()
 {
-	Builder("box:main.progress").as<Gtk::Box>()->set_visible(false);
+	getWidget("box:main.progress").as<Gtk::Box>()->set_visible(false);
 	m_connection_progressUpdate.disconnect();
 	m_progressMonitor = nullptr;
 }
@@ -251,7 +253,7 @@ void MainWindow::hideProgress()
 void MainWindow::progressCancel()
 {
 	if(m_progressMonitor) {
-		Builder("button:main.progress.cancel").as<Gtk::Button>()->set_sensitive(true);
+		getWidget("button:main.progress.cancel").as<Gtk::Button>()->set_sensitive(true);
 		m_progressMonitor->cancel();
 	}
 }
@@ -259,7 +261,7 @@ void MainWindow::progressCancel()
 void MainWindow::progressUpdate()
 {
 	if(m_progressMonitor) {
-		Builder("progressbar:main.progress").as<Gtk::ProgressBar>()->set_fraction(m_progressMonitor->getProgress() / 100.);
+		getWidget("progressbar:main.progress").as<Gtk::ProgressBar>()->set_fraction(m_progressMonitor->getProgress() / 100.);
 	}
 }
 
@@ -342,7 +344,7 @@ void MainWindow::setOCRMode(int idx)
 		if(m_outputEditor) {
 			m_connection_setOutputEditorLanguage.disconnect();
 			m_connection_setOutputEditorVisibility.disconnect();
-			Builder("paned:output").as<Gtk::Paned>()->remove(*m_outputEditor->getUI());
+			getWidget("paned:output").as<Gtk::Paned>()->remove(*m_outputEditor->getUI());
 			delete m_outputEditor;
 		}
 		if(idx == 0) {
@@ -356,7 +358,7 @@ void MainWindow::setOCRMode(int idx)
 		m_connection_setOutputEditorLanguage = CONNECT(m_recognizer, languageChanged, [this](const Config::Lang& lang){ m_outputEditor->setLanguage(lang); });
 		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
 		m_connection_setOutputEditorVisibility = CONNECT(m_outputPaneToggleButton, toggled, [this]{ m_outputEditor->onVisibilityChanged(m_outputPaneToggleButton->get_active()); });
-		Builder("paned:output").as<Gtk::Paned>()->pack2(*m_outputEditor->getUI(), true, false);
+		getWidget("paned:output").as<Gtk::Paned>()->pack2(*m_outputEditor->getUI(), true, false);
 		m_outputEditor->getUI()->set_visible(m_outputPaneToggleButton->get_active());
 	}
 }
@@ -390,7 +392,7 @@ void MainWindow::addNotification(const Glib::ustring &title, const Glib::ustring
 		btn->get_child()->override_color(Gdk::RGBA("#0000FF"), Gtk::STATE_FLAG_NORMAL);
 	}
 	frame->show_all();
-	Builder("box:main").as<Gtk::Box>()->pack_end(*frame, false, true);
+	getWidget("box:main").as<Gtk::Box>()->pack_end(*frame, false, true);
 	if(handle != nullptr){
 		*handle = frame;
 	}
@@ -404,7 +406,7 @@ void MainWindow::hideNotification(Notification handle)
 		if(h){
 			*h = nullptr;
 		}
-		Builder("box:main").as<Gtk::Box>()->remove(*frame);
+		getWidget("box:main").as<Gtk::Box>()->remove(*frame);
 		delete frame;
 	}
 }

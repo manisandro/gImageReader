@@ -32,27 +32,28 @@
 
 
 OutputEditorText::OutputEditorText()
+	: m_builder("/org/gnome/gimagereader/editor_text.ui")
 {
-	m_paneWidget = Builder("box:output");
-	m_insButton = Builder("menubutton:output.insert");
-	m_insImage = Builder("image:output.insert");
-	m_replaceBox = Builder("box:output.findreplace");
-	m_outputBox = Builder("box:output");
-	m_textView = Builder("textview:output");
-	m_searchEntry = Builder("entry:output.search");
-	m_replaceEntry = Builder("entry:output.replace");
-	m_filterKeepIfEndMark = Builder("menuitem:output.stripcrlf.keependmark");
-	m_filterKeepIfQuote = Builder("menuitem:output.stripcrlf.keepquote");
-	m_filterJoinHyphen = Builder("menuitem:output.stripcrlf.joinhyphen");
-	m_filterJoinSpace = Builder("menuitem:output.stripcrlf.joinspace");
-	m_filterKeepParagraphs = Builder("menuitem:output.stripcrlf.keepparagraphs");
-	m_toggleSearchButton = Builder("button:output.findreplace");
-	m_undoButton = Builder("button:output.undo");
-	m_redoButton = Builder("button:output.redo");
-	m_csCheckBox = Builder("checkbutton:output.matchcase");
+	m_paneWidget = m_builder("box:output");
+	m_insButton = m_builder("menubutton:output.insert");
+	m_insImage = m_builder("image:output.insert");
+	m_replaceBox = m_builder("box:output.findreplace");
+	m_outputBox = m_builder("box:output");
+	m_textView = m_builder("textview:output");
+	m_searchEntry = m_builder("entry:output.search");
+	m_replaceEntry = m_builder("entry:output.replace");
+	m_filterKeepIfEndMark = m_builder("menuitem:output.stripcrlf.keependmark");
+	m_filterKeepIfQuote = m_builder("menuitem:output.stripcrlf.keepquote");
+	m_filterJoinHyphen = m_builder("menuitem:output.stripcrlf.joinhyphen");
+	m_filterJoinSpace = m_builder("menuitem:output.stripcrlf.joinspace");
+	m_filterKeepParagraphs = m_builder("menuitem:output.stripcrlf.keepparagraphs");
+	m_toggleSearchButton = m_builder("button:output.findreplace");
+	m_undoButton = m_builder("button:output.undo");
+	m_redoButton = m_builder("button:output.redo");
+	m_csCheckBox = m_builder("checkbutton:output.matchcase");
 	m_textBuffer = OutputBuffer::create();
 	m_textView->set_source_buffer(m_textBuffer);
-	Gtk::Button* saveButton = Builder("button:output.save");
+	Gtk::Button* saveButton = m_builder("button:output.save");
 
 	Glib::RefPtr<Gtk::AccelGroup> group = MAIN->getWindow()->get_accel_group();
 	m_undoButton->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
@@ -60,36 +61,36 @@ OutputEditorText::OutputEditorText()
 	m_toggleSearchButton->add_accelerator("clicked", group, GDK_KEY_F, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 	saveButton->add_accelerator("clicked", group, GDK_KEY_S, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 
-	m_substitutionsManager = new SubstitutionsManager(m_textBuffer, m_csCheckBox);
+	m_substitutionsManager = new SubstitutionsManager(m_builder, m_textBuffer);
 
 	m_insertMode = InsertMode::Append;
 
 	m_spell.property_decode_language_codes() = true;
 
-	CONNECT(Builder("menuitem:output.insert.append").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Append, "ins_append.png"); });
-	CONNECT(Builder("menuitem:output.insert.cursor").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Cursor, "ins_cursor.png"); });
-	CONNECT(Builder("menuitem:output.insert.replace").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Replace, "ins_replace.png"); });
-	CONNECT(Builder("button:output.stripcrlf").as<Gtk::Button>(), clicked, [this]{ filterBuffer(); });
+	CONNECT(m_builder("menuitem:output.insert.append").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Append, "ins_append.png"); });
+	CONNECT(m_builder("menuitem:output.insert.cursor").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Cursor, "ins_cursor.png"); });
+	CONNECT(m_builder("menuitem:output.insert.replace").as<Gtk::MenuItem>(), activate, [this]{ setInsertMode(InsertMode::Replace, "ins_replace.png"); });
+	CONNECT(m_builder("button:output.stripcrlf").as<Gtk::Button>(), clicked, [this]{ filterBuffer(); });
 	CONNECT(m_toggleSearchButton, toggled, [this]{ toggleReplaceBox(); });
 	CONNECT(m_undoButton, clicked, [this]{ m_textBuffer->undo(); scrollCursorIntoView(); });
 	CONNECT(m_redoButton, clicked, [this]{ m_textBuffer->redo(); scrollCursorIntoView(); });
 	CONNECT(saveButton, clicked, [this]{ save(); });
-	CONNECT(Builder("button:output.clear").as<Gtk::Button>(), clicked, [this]{ clear(); });
+	CONNECT(m_builder("button:output.clear").as<Gtk::Button>(), clicked, [this]{ clear(); });
 	CONNECTP(m_textBuffer, can_undo, [this]{ m_undoButton->set_sensitive(m_textBuffer->can_undo()); });
 	CONNECTP(m_textBuffer, can_redo, [this]{ m_redoButton->set_sensitive(m_textBuffer->can_redo()); });
 	CONNECT(m_csCheckBox, toggled, [this]{ Utils::clear_error_state(m_searchEntry); });
 	CONNECT(m_searchEntry, changed, [this]{ Utils::clear_error_state(m_searchEntry); });
 	CONNECT(m_searchEntry, activate, [this]{ findReplace(false, false); });
 	CONNECT(m_replaceEntry, activate, [this]{ findReplace(false, true); });
-	CONNECT(Builder("button:output.searchnext").as<Gtk::Button>(), clicked, [this]{ findReplace(false, false); });
-	CONNECT(Builder("button:output.searchprev").as<Gtk::Button>(), clicked, [this]{ findReplace(true, false); });
-	CONNECT(Builder("button:output.replace").as<Gtk::Button>(), clicked, [this]{ findReplace(false, true); });
-	CONNECT(Builder("button:output.replaceall").as<Gtk::Button>(), clicked, [this]{ replaceAll(); });
-	CONNECTP(Builder("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
-	CONNECT(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
-	CONNECT(Builder("button:output.substitutions").as<Gtk::Button>(), clicked, [this]{ m_substitutionsManager->set_visible(true); });
+	CONNECT(m_builder("button:output.searchnext").as<Gtk::Button>(), clicked, [this]{ findReplace(false, false); });
+	CONNECT(m_builder("button:output.searchprev").as<Gtk::Button>(), clicked, [this]{ findReplace(true, false); });
+	CONNECT(m_builder("button:output.replace").as<Gtk::Button>(), clicked, [this]{ findReplace(false, true); });
+	CONNECT(m_builder("button:output.replaceall").as<Gtk::Button>(), clicked, [this]{ replaceAll(); });
+	CONNECTP(MAIN->getWidget("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
+	CONNECT(MAIN->getWidget("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
+	CONNECT(m_builder("button:output.substitutions").as<Gtk::Button>(), clicked, [this]{ m_substitutionsManager->set_visible(true); });
 	CONNECT(m_textView, populate_popup, [this](Gtk::Menu* menu){ completeTextViewMenu(menu); });
-	CONNECTS(Builder("menuitem:output.stripcrlf.drawwhitespace").as<Gtk::CheckMenuItem>(), toggled, [this](Gtk::CheckMenuItem* item){
+	CONNECTS(m_builder("menuitem:output.stripcrlf.drawwhitespace").as<Gtk::CheckMenuItem>(), toggled, [this](Gtk::CheckMenuItem* item){
 		m_textView->set_draw_spaces(item->get_active() ? (Gsv::DRAW_SPACES_NEWLINE|Gsv::DRAW_SPACES_TAB|Gsv::DRAW_SPACES_SPACE) : Gsv::DrawSpacesFlags(0));
 	});
 
@@ -97,14 +98,13 @@ OutputEditorText::OutputEditorText()
 	CONNECTP(m_textBuffer, cursor_position, [this]{ m_textBuffer->save_region_bounds(m_textView->is_focus()); });
 	CONNECTP(m_textBuffer, has_selection, [this]{ m_textBuffer->save_region_bounds(m_textView->is_focus()); });
 
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepdot", "menuitem:output.stripcrlf.keependmark"));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepquote", "menuitem:output.stripcrlf.keepquote"));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinhyphen", "menuitem:output.stripcrlf.joinhyphen"));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinspace", "menuitem:output.stripcrlf.joinspace"));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepparagraphs", "menuitem:output.stripcrlf.keepparagraphs"));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("drawwhitespace", "menuitem:output.stripcrlf.drawwhitespace"));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("searchmatchcase", "checkbutton:output.matchcase"));
-	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("outputdir"));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepdot", m_builder("menuitem:output.stripcrlf.keependmark")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepquote", m_builder("menuitem:output.stripcrlf.keepquote")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinhyphen", m_builder("menuitem:output.stripcrlf.joinhyphen")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinspace", m_builder("menuitem:output.stripcrlf.joinspace")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepparagraphs", m_builder("menuitem:output.stripcrlf.keepparagraphs")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("drawwhitespace", m_builder("menuitem:output.stripcrlf.drawwhitespace")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("searchmatchcase", m_builder("checkbutton:output.matchcase")));
 
 	if(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue().empty()){
 		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->setValue(Utils::get_documents_dir());
@@ -120,11 +120,11 @@ OutputEditorText::~OutputEditorText()
 
 void OutputEditorText::setFont()
 {
-	if(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>()->get_active()){
-		Builder("textview:output").as<Gtk::TextView>()->unset_font();
+	if(MAIN->getWidget("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>()->get_active()){
+		m_builder("textview:output").as<Gtk::TextView>()->unset_font();
 	}else{
-		Gtk::FontButton* fontBtn = Builder("fontbutton:config.settings.customoutputfont");
-		Builder("textview:output").as<Gtk::TextView>()->override_font(Pango::FontDescription(fontBtn->get_font_name()));
+		Gtk::FontButton* fontBtn = MAIN->getWidget("fontbutton:config.settings.customoutputfont");
+		m_builder("textview:output").as<Gtk::TextView>()->override_font(Pango::FontDescription(fontBtn->get_font_name()));
 	}
 }
 

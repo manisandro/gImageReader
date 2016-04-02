@@ -276,18 +276,18 @@ const std::multimap<Glib::ustring,Glib::ustring> Config::LANGUAGE_CULTURES = Con
 
 Config::Config()
 {
-	m_dialog = Builder("dialog:config");
-	m_addLangBox = Builder("box:config.langs.custom.add");
-	m_addLangPrefix = Builder("entry:config.langs.custom.add.prefix");
-	m_addLangName = Builder("entry:config.langs.custom.add.name");
-	m_addLangCode = Builder("entry:config.langs.custom.add.code");
-	m_editLangBox = Builder("buttonbox:config.langs.custom.edit");
-	m_addLangButton = Builder("button:config.langs.custom.edit.add");
-	m_addLangButtonOk = Builder("button:config.langs.custom.add.ok");
-	m_removeLangButton = Builder("button:config.langs.custom.edit.remove");
-	m_predefLangView = Builder("treeview:config.langs.predef");
-	m_customLangView = Builder("treeview:config.langs.custom");
-	m_dialogOkButton = Builder("button:config.ok");
+	m_dialog = MAIN->getWidget("dialog:config");
+	m_addLangBox = MAIN->getWidget("box:config.langs.custom.add");
+	m_addLangPrefix = MAIN->getWidget("entry:config.langs.custom.add.prefix");
+	m_addLangName = MAIN->getWidget("entry:config.langs.custom.add.name");
+	m_addLangCode = MAIN->getWidget("entry:config.langs.custom.add.code");
+	m_editLangBox = MAIN->getWidget("buttonbox:config.langs.custom.edit");
+	m_addLangButton = MAIN->getWidget("button:config.langs.custom.edit.add");
+	m_addLangButtonOk = MAIN->getWidget("button:config.langs.custom.add.ok");
+	m_removeLangButton = MAIN->getWidget("button:config.langs.custom.edit.remove");
+	m_predefLangView = MAIN->getWidget("treeview:config.langs.predef");
+	m_customLangView = MAIN->getWidget("treeview:config.langs.custom");
+	m_dialogOkButton = MAIN->getWidget("button:config.ok");
 
 	for(Gtk::TreeView* view : {m_predefLangView, m_customLangView}){
 		view->set_model(Gtk::ListStore::create(m_langViewCols));
@@ -309,25 +309,25 @@ Config::Config()
 		(*it)[m_langViewCols.name] = lang.name;
 	}
 
-	CONNECTS(Builder("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [](Gtk::CheckButton* btn){
-		Builder("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>()->set_sensitive(!btn->get_active());
+	CONNECTS(MAIN->getWidget("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [](Gtk::CheckButton* btn){
+		MAIN->getWidget("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>()->set_sensitive(!btn->get_active());
 	});
 	CONNECT(m_addLangButton, clicked, [this]{ toggleAddLanguage(); });
 	CONNECT(m_removeLangButton, clicked, [this]{ removeLanguage(); });
 	CONNECT(m_addLangButtonOk, clicked, [this]{ addLanguage(); });
-	CONNECT(Builder("button:config.langs.custom.add.cancel").as<Gtk::Button>(), clicked, [this]{ toggleAddLanguage(); });
+	CONNECT(MAIN->getWidget("button:config.langs.custom.add.cancel").as<Gtk::Button>(), clicked, [this]{ toggleAddLanguage(); });
 	CONNECT(m_customLangView->get_selection(), changed, [this]{ langTableSelectionChanged(); });
-	CONNECT(Builder("button:config.help").as<Gtk::Button>(), clicked, []{ MAIN->showHelp("#Usage_Options"); });
+	CONNECT(MAIN->getWidget("button:config.help").as<Gtk::Button>(), clicked, []{ MAIN->showHelp("#Usage_Options"); });
 	CONNECT(m_addLangPrefix, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangPrefix); return false; });
 	CONNECT(m_addLangName, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangName); return false; });
 	CONNECT(m_addLangCode, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangCode); return false; });
 
-	addSetting(new SwitchSettingT<Gtk::CheckButton>("dictinstall", "check:config.settings.dictinstall"));
-	addSetting(new SwitchSettingT<Gtk::CheckButton>("updatecheck", "check:config.settings.update"));
+	addSetting(new SwitchSettingT<Gtk::CheckButton>("dictinstall", MAIN->getWidget("check:config.settings.dictinstall")));
+	addSetting(new SwitchSettingT<Gtk::CheckButton>("updatecheck", MAIN->getWidget("check:config.settings.update")));
 	addSetting(new ListStoreSetting("customlangs", Glib::RefPtr<Gtk::ListStore>::cast_static(m_customLangView->get_model())));
-	addSetting(new SwitchSettingT<Gtk::CheckButton>("systemoutputfont", "checkbutton:config.settings.defaultoutputfont"));
-	addSetting(new FontSetting("customoutputfont", "fontbutton:config.settings.customoutputfont"));
-	addSetting(new ComboSetting("outputorient", "combo:config.settings.paneorient"));
+	addSetting(new SwitchSettingT<Gtk::CheckButton>("systemoutputfont", MAIN->getWidget("checkbutton:config.settings.defaultoutputfont")));
+	addSetting(new FontSetting("customoutputfont", MAIN->getWidget("fontbutton:config.settings.customoutputfont")));
+	addSetting(new ComboSetting("outputorient", MAIN->getWidget("combo:config.settings.paneorient")));
 }
 
 Config::~Config()

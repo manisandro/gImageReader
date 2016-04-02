@@ -28,6 +28,7 @@ public:
 	void on_startup();
 
 private:
+	Builder m_builder;
 	Gtk::Dialog* m_dialog;
 	Gtk::ProgressBar* m_progressBar;
 	Gtk::Button* m_refreshButton;

@@ -147,7 +147,8 @@ IF("${srcdir}" STREQUAL "gtk")
         DEPENDS ${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.gresource.xml
                 ${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.ui
                 ${CMAKE_SOURCE_DIR}/gtk/data/crashhandler.ui
-                ${CMAKE_SOURCE_DIR}/gtk/data/appmenu.ui)
+                ${CMAKE_SOURCE_DIR}/gtk/data/appmenu.ui
+                ${CMAKE_SOURCE_DIR}/gtk/data/editor_text.ui)
     LIST(APPEND gimagereader_SRCS gimagereader.gresource.c)
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt4")
     QT4_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})

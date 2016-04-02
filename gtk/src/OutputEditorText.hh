@@ -52,6 +52,7 @@ private:
 
 	enum class InsertMode { Append, Cursor, Replace };
 
+	Builder m_builder;
 	Gtk::Box* m_paneWidget;
 	Gtk::MenuButton* m_insButton;
 	Gtk::Image* m_insImage;

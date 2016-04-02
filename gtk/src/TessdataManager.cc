@@ -37,8 +37,8 @@ void TessdataManager::exec()
 
 TessdataManager::TessdataManager()
 {
-	m_dialog = Builder("dialog:tessdatamanager");
-	m_languageList = Builder("treeview:tessdatamanager");
+	m_dialog = MAIN->getWidget("dialog:tessdatamanager");
+	m_languageList = MAIN->getWidget("treeview:tessdatamanager");
 	m_languageListStore = Gtk::ListStore::create(m_viewCols);
 	m_languageList->set_model(m_languageListStore);
 	m_languageList->append_column_editable("selected", m_viewCols.selected);

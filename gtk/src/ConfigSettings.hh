@@ -56,8 +56,8 @@ public:
 
 class FontSetting : public AbstractSetting {
 public:
-	FontSetting(const Glib::ustring& key, const Glib::ustring& builderpath)
-		: AbstractSetting(key), m_widget(Builder(builderpath))
+	FontSetting(const Glib::ustring& key, Gtk::FontButton* widget)
+		: AbstractSetting(key), m_widget(widget)
 	{
 		m_widget->set_font_name(get_default_settings()->get_string(m_key));
 		CONNECTP(m_widget, font_name, [this]{ serialize(); });
@@ -83,8 +83,8 @@ public:
 template<class T>
 class SwitchSettingT : public SwitchSetting {
 public:
-	SwitchSettingT(const Glib::ustring& key, const Glib::ustring& builderpath)
-		: SwitchSetting(key), m_widget(Builder(builderpath))
+	SwitchSettingT(const Glib::ustring& key, T* widget)
+		: SwitchSetting(key), m_widget(widget)
 	{
 		m_widget->set_active(get_default_settings()->get_boolean(m_key));
 		CONNECT(m_widget, toggled, [this]{ serialize(); });
@@ -105,8 +105,8 @@ private:
 
 class ComboSetting : public AbstractSetting {
 public:
-	ComboSetting(const Glib::ustring& key, const Glib::ustring& builderpath)
-		: AbstractSetting(key), m_widget(Builder(builderpath))
+	ComboSetting(const Glib::ustring& key, Gtk::ComboBox* widget)
+		: AbstractSetting(key), m_widget(widget)
 	{
 		int idx = get_default_settings()->get_int(m_key);
 		int nrows = m_widget->get_model()->children().size();
