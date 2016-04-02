@@ -260,6 +260,7 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 
 		if(s_bboxRx.indexIn(element.attribute("title")) != -1) {
 			QString type = element.attribute("class");
+			QString icon;
 			QString title;
 			int x1 = s_bboxRx.cap(1).toInt();
 			int y1 = s_bboxRx.cap(2).toInt();
@@ -267,24 +268,27 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 			int y2 = s_bboxRx.cap(4).toInt();
 			if(type == "ocr_par") {
 				title = _("Paragraph");
+				icon = "par";
 			} else if(type == "ocr_line") {
 				title = _("Textline");
+				icon = "line";
 			} else if(type == "ocrx_word") {
 				title = element.text();
+				icon = "word";
 			}
 			if(!title.isEmpty()) {
 				QTreeWidgetItem* item = new QTreeWidgetItem(QStringList() << title);
 				if(type == "ocrx_word" || addChildItems(element.firstChildElement(), item)) {
 					item->setCheckState(0, Qt::Checked);
 					item->setData(0, IdRole, element.attribute("id"));
-					item->setIcon(0, QIcon(QString(":/icons/item_%1").arg(type)));
+					item->setIcon(0, QIcon(QString(":/icons/item_%1").arg(icon)));
 					item->setData(0, BBoxRole, QRect(x1, y1, x2 - x1, y2 - y1));
 					item->setData(0, ClassRole, type);
 					parentItem->addChild(item);
 					haveWord = true;
 					if(type == "ocrx_word") {
 						if(s_fontSizeRx.indexIn(element.attribute("title")) != -1) {
-							item->setData(0, FontSizeRole, s_fontSizeRx.cap(1).toInt());
+							item->setData(0, FontSizeRole, s_fontSizeRx.cap(1).toDouble());
 						}
 						item->setFlags(item->flags() | Qt::ItemIsEditable);
 						m_spell.setLanguage(Utils::getSpellingLanguage(element.attribute("lang")));
