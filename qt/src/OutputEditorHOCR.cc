@@ -363,7 +363,6 @@ void OutputEditorHOCR::showItemProperties(QTreeWidgetItem* item)
 		QTextStream stream(&str);
 		element.save(stream, 1);
 		ui.plainTextEditOutput->setPlainText(str);
-		setCurrentSource(doc.firstChildElement("div"));
 
 		if(setCurrentSource(doc.firstChildElement("div")) && s_bboxRx.indexIn(element.attribute("title")) != -1) {
 			int x1 = s_bboxRx.cap(1).toInt();
@@ -639,7 +638,7 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 		painter.drawText(itemRect.x(), itemRect.bottom(), item->text(0));
 	} else if(itemClass == "ocr_graphic" && !overlayMode) {
 		painter.drawPixmap(itemRect, QPixmap::fromImage(m_tool->getSelection(itemRect)));
-	} else if(item->childCount() > 0) {
+	} else {
 		for(int i = 0, n = item->childCount(); i < n; ++i) {
 			printChildren(painter, item->child(i), overlayMode);
 		}
