@@ -503,8 +503,9 @@ void OutputEditorHOCR::open()
 	QDomDocument doc;
 	doc.setContent(&file);
 	QDomElement div = doc.firstChildElement("html").firstChildElement("body").firstChildElement("div");
-	if(div.isNull()) {
-		QMessageBox::critical(MAIN, _("Invalid hOCR file"), _("The file does not appear to contain any hOCR content.").arg(filename));
+	if(div.isNull() || div.attribute("class") != "ocr_page") {
+		QMessageBox::critical(MAIN, _("Invalid hOCR file"), _("The file does not appear to contain valid hOCR HTML: %1").arg(filename));
+		return;
 	}
 	int page = 0;
 	while(!div.isNull()) {
