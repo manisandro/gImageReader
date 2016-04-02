@@ -665,6 +665,7 @@ bool OutputEditorHOCR::clear(bool hide)
 	ui.treeWidgetItems->clear();
 	ui.tableWidgetProperties->setRowCount(0);
 	ui.plainTextEditOutput->clear();
+	m_tool->clearSelection();
 	m_modified = false;
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
