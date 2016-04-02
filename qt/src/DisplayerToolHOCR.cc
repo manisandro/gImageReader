@@ -42,7 +42,7 @@ private:
 DisplayerToolHOCR::DisplayerToolHOCR(Displayer *displayer, QObject *parent)
 	: DisplayerTool(displayer, parent)
 {
-	MAIN->getRecognizer()->setRecognizeMode(tr("Recognize"));
+	MAIN->getRecognizer()->setRecognizeMode(_("Recognize"));
 }
 
 DisplayerToolHOCR::~DisplayerToolHOCR()

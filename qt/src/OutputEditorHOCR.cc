@@ -206,7 +206,7 @@ void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int
 	while(!element.isNull()) {
 		// Boxes without text are images
 		if(!addChildItems(element.firstChildElement(), pageItem) && s_bboxRx.indexIn(element.attribute("title")) != -1) {
-			QTreeWidgetItem* item = new QTreeWidgetItem(QStringList() << tr("Graphic"));
+			QTreeWidgetItem* item = new QTreeWidgetItem(QStringList() << _("Graphic"));
 			item->setCheckState(0, Qt::Checked);
 			item->setIcon(0, QIcon(":/icons/item_halftone"));
 			item->setData(0, IdRole, element.attribute("id"));
@@ -256,9 +256,9 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 			int x2 = s_bboxRx.cap(3).toInt();
 			int y2 = s_bboxRx.cap(4).toInt();
 			if(type == "ocr_par") {
-				title = tr("Paragraph");
+				title = _("Paragraph");
 			} else if(type == "ocr_line") {
-				title = tr("Textline");
+				title = _("Textline");
 			} else if(type == "ocrx_word") {
 				title = element.text();
 			}
@@ -453,7 +453,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 	}
 	if(element.attribute("class") == "ocr_page") {
 		QMenu menu;
-		QAction* actionRemove = menu.addAction(tr("Remove"));
+		QAction* actionRemove = menu.addAction(_("Remove"));
 		if(menu.exec(ui.treeWidgetItems->mapToGlobal(point)) == actionRemove) {
 			delete item;
 		}
@@ -571,17 +571,19 @@ void OutputEditorHOCR::savePDF(bool overlay)
 			painter.save();
 			painter.scale(outputDpi / double(pageDpi), outputDpi / double(pageDpi));
 			if(overlay) {
-				painter.drawPixmap(bbox, QPixmap::fromImage(m_tool->getSelection(bbox)));
 				painter.setPen(QPen(QColor(0, 0, 0, 0)));
 			}
-			printChildren(painter, item, !overlay);
+			printChildren(painter, item, overlay);
+			if(overlay) {
+				painter.drawPixmap(bbox, QPixmap::fromImage(m_tool->getSelection(bbox)));
+			}
 			painter.restore();
 		} else {
 			failed.append(item->text(0));
 		}
 	}
 	if(!failed.isEmpty()) {
-		QMessageBox::warning(m_widget, tr("Error occurred"), tr("The following pages could not be rendered:\n").arg(failed.join("\n")));
+		QMessageBox::warning(m_widget, _("Error occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
 	}
 }
 
