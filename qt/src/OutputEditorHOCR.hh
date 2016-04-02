@@ -76,7 +76,7 @@ private:
 	bool m_modified = false;
 
 	void findReplace(bool backwards, bool replace);
-	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem);
+	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString, QString>& langCache);
 	QDomElement getHOCRElementForItem(QTreeWidgetItem* item, QDomDocument& doc) const;
 	QDomElement elementById(QDomElement element, const QString& id) const;
 	void expandChildren(QTreeWidgetItem* item) const;

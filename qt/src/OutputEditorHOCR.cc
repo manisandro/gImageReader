@@ -211,11 +211,12 @@ void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int
 	pageItem->setIcon(0, QIcon(":/icons/item_page"));
 	pageItem->setCheckState(0, Qt::Checked);
 	ui.treeWidgetItems->addTopLevelItem(pageItem);
+	QMap<QString,QString> langCache;
 
 	QDomElement element = pageDiv.firstChildElement("div");
 	while(!element.isNull()) {
 		// Boxes without text are images
-		if(!addChildItems(element.firstChildElement(), pageItem) && s_bboxRx.indexIn(element.attribute("title")) != -1) {
+		if(!addChildItems(element.firstChildElement(), pageItem, langCache) && s_bboxRx.indexIn(element.attribute("title")) != -1) {
 			QTreeWidgetItem* item = new QTreeWidgetItem(QStringList() << _("Graphic"));
 			item->setCheckState(0, Qt::Checked);
 			item->setIcon(0, QIcon(":/icons/item_halftone"));
@@ -249,7 +250,7 @@ void OutputEditorHOCR::expandChildren(QTreeWidgetItem* item) const
 	}
 }
 
-bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* parentItem)
+bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString,QString>& langCache)
 {
 	bool haveWord = false;
 	while(!element.isNull()) {
@@ -278,7 +279,7 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 			}
 			if(!title.isEmpty()) {
 				QTreeWidgetItem* item = new QTreeWidgetItem(QStringList() << title);
-				if(type == "ocrx_word" || addChildItems(element.firstChildElement(), item)) {
+				if(type == "ocrx_word" || addChildItems(element.firstChildElement(), item, langCache)) {
 					item->setCheckState(0, Qt::Checked);
 					item->setData(0, IdRole, element.attribute("id"));
 					item->setIcon(0, QIcon(QString(":/icons/item_%1").arg(icon)));
@@ -291,7 +292,15 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 							item->setData(0, FontSizeRole, s_fontSizeRx.cap(1).toDouble());
 						}
 						item->setFlags(item->flags() | Qt::ItemIsEditable);
-						m_spell.setLanguage(Utils::getSpellingLanguage(element.attribute("lang")));
+						QString lang = element.attribute("lang");
+						auto it = langCache.find(lang);
+						if(it == langCache.end()) {
+							it = langCache.insert(lang, Utils::getSpellingLanguage(lang));
+						}
+						QString spellingLang = it.value();
+						if(m_spell.getLanguage() != spellingLang) {
+							m_spell.setLanguage(spellingLang);
+						}
 						if(!m_spell.checkWord(title)) {
 							item->setForeground(0, Qt::red);
 						}
