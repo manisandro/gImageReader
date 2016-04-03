@@ -142,6 +142,7 @@ public:
 	virtual ~DisplayerItem(){}
 
 	void setZIndex(int zIndex) { m_zIndex = zIndex; }
+	void setRect(const Geometry::Rectangle& rect) { m_rect = rect; }
 	const Geometry::Rectangle& rect() const{ return m_rect; }
 
 	virtual void draw(Cairo::RefPtr<Cairo::Context> ctx) const = 0;

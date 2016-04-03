@@ -56,10 +56,12 @@ namespace Utils {
 	std::string make_output_filename(const std::string& filename);
 
 	std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, bool keepEmpty = false);
+	Glib::ustring string_join(const std::vector<Glib::ustring>& strings, const Glib::ustring& joiner);
+	Glib::ustring string_trim(const Glib::ustring& str);
 
 	void handle_drag_drop(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, const Gtk::SelectionData& selection_data, guint info, guint time);
 
-	Glib::RefPtr<Glib::ByteArray> download(const std::string& url, Glib::ustring& messages, int timeout = 60000);
+	Glib::RefPtr<Glib::ByteArray> download(const std::string& url, Glib::ustring& messages, unsigned timeout = 60000);
 
 	Glib::ustring getSpellingLanguage(const Glib::ustring& lang = Glib::ustring());
 

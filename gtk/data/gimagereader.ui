@@ -1109,7 +1109,7 @@
                 <property name="active">0</property>
                 <items>
                   <item translatable="yes">Plain text</item>
-                  <item translatable="yes">hOCR</item>
+                  <item translatable="yes">hOCR, PDF</item>
                 </items>
               </object>
               <packing>

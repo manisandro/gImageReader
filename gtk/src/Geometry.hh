@@ -73,6 +73,9 @@ public:
 		double _h = std::max(y + height, r.y + r.height) - _y;
 		return Rectangle(_x, _y, _w, _h);
 	}
+	Rectangle translate(double dx, double dy) const{
+		return Rectangle(x + dx, y + dy, width, height);
+	}
 };
 
 }

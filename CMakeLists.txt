@@ -69,6 +69,7 @@ IF("${INTERFACE_TYPE}" STREQUAL "gtk")
     PKG_CHECK_MODULES(CAIROMM REQUIRED cairomm-1.0)
     PKG_CHECK_MODULES(POPPLER REQUIRED poppler-glib)
     PKG_CHECK_MODULES(JSONGLIB REQUIRED json-glib-1.0)
+    PKG_CHECK_MODULES(LIBXMLPP REQUIRED libxml++-2.6)
     INCLUDE_DIRECTORIES(
         ${GTKMM_INCLUDE_DIRS}
         ${GTKSOURCEVIEWMM_INCLUDE_DIRS}
@@ -76,6 +77,7 @@ IF("${INTERFACE_TYPE}" STREQUAL "gtk")
         ${CAIROMM_INCLUDE_DIRS}
         ${POPPLER_INCLUDE_DIRS}
         ${JSONGLIB_INCLUDE_DIRS}
+        ${LIBXMLPP_INCLUDE_DIRS}
     )
     SET(gimagereader_LIBS
         ${GTKMM_LDFLAGS}
@@ -84,6 +86,7 @@ IF("${INTERFACE_TYPE}" STREQUAL "gtk")
         ${CAIROMM_LDFLAGS}
         ${POPPLER_LDFLAGS}
         ${JSONGLIB_LDFLAGS}
+        ${LIBXMLPP_LDFLAGS}
     )
     SET(srcdir "gtk")
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt4")
@@ -148,7 +151,8 @@ IF("${srcdir}" STREQUAL "gtk")
                 ${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.ui
                 ${CMAKE_SOURCE_DIR}/gtk/data/crashhandler.ui
                 ${CMAKE_SOURCE_DIR}/gtk/data/appmenu.ui
-                ${CMAKE_SOURCE_DIR}/gtk/data/editor_text.ui)
+                ${CMAKE_SOURCE_DIR}/gtk/data/editor_text.ui
+                ${CMAKE_SOURCE_DIR}/gtk/data/editor_hocr.ui)
     LIST(APPEND gimagereader_SRCS gimagereader.gresource.c)
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt4")
     QT4_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})

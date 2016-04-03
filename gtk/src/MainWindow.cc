@@ -22,7 +22,9 @@
 #include "Acquirer.hh"
 #include "Config.hh"
 #include "Displayer.hh"
+#include "DisplayerToolHOCR.hh"
 #include "DisplayerToolSelect.hh"
+#include "OutputEditorHOCR.hh"
 #include "OutputEditorText.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
@@ -336,7 +338,7 @@ void MainWindow::setOCRMode(int idx)
 		m_connection_setOCRMode.block(true);
 		if(dynamic_cast<OutputEditorText*>(m_outputEditor)) {
 			m_ocrModeCombo->set_active(0);
-		} else /*if(dynamic_cast<OutputEditorHOCR*>(m_outputEditor))*/ {
+		} else if(dynamic_cast<OutputEditorHOCR*>(m_outputEditor)) {
 			m_ocrModeCombo->set_active(1);
 		}
 		m_connection_setOCRMode.block(false);
@@ -350,9 +352,9 @@ void MainWindow::setOCRMode(int idx)
 		if(idx == 0) {
 			m_displayerTool = new DisplayerToolSelect(m_displayer);
 			m_outputEditor = new OutputEditorText();
-		} else /*if(idx == 1)*/ {
-//			m_displayerTool = new DisplayerToolHOCR(m_displayer);
-//			m_outputEditor = new OutputEditorHOCR();
+		} else if(idx == 1) {
+			m_displayerTool = new DisplayerToolHOCR(m_displayer);
+			m_outputEditor = new OutputEditorHOCR(static_cast<DisplayerToolHOCR*>(m_displayerTool));
 		}
 		m_displayer->setTool(m_displayerTool);
 		m_connection_setOutputEditorLanguage = CONNECT(m_recognizer, languageChanged, [this](const Config::Lang& lang){ m_outputEditor->setLanguage(lang); });

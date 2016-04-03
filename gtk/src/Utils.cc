@@ -52,6 +52,7 @@ Utils::Button::Type Utils::question_dialog(const Glib::ustring &title, const Gli
 {
 	if(!parent){ parent = MAIN->getWindow(); }
 	Gtk::MessageDialog dialog(*parent, title, false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_NONE, true);
+	dialog.set_position(Gtk::WIN_POS_CENTER_ON_PARENT);
 	if((buttons & Button::Ok) != 0){
 		dialog.add_button(_("OK"), Button::Type::Ok);
 	}
@@ -185,6 +186,29 @@ std::vector<Glib::ustring> Utils::string_split(const Glib::ustring &text, char d
 	return parts;
 }
 
+Glib::ustring Utils::string_join(const std::vector<Glib::ustring>& strings, const Glib::ustring& joiner )
+{
+	Glib::ustring result;
+	if(!strings.empty()) {
+		result = strings.front();
+		for(std::size_t i = 1, n = strings.size(); i < n; ++i) {
+			result += joiner + strings[i];
+		}
+	}
+	return result;
+}
+
+Glib::ustring Utils::string_trim(const Glib::ustring &str)
+{
+	Glib::ustring ret = str;
+	ret.erase(0, ret.find_first_not_of(' '));
+	std::size_t rpos = ret.find_last_not_of(' ');
+	if(rpos != Glib::ustring::npos) {
+		ret.erase(rpos + 1);
+	}
+	return ret;
+}
+
 void Utils::handle_drag_drop(const Glib::RefPtr<Gdk::DragContext> &context, int /*x*/, int /*y*/, const Gtk::SelectionData &selection_data, guint /*info*/, guint time)
 {
 	if ((selection_data.get_length() >= 0) && (selection_data.get_format() == 8))
@@ -200,7 +224,7 @@ void Utils::handle_drag_drop(const Glib::RefPtr<Gdk::DragContext> &context, int 
 	context->drag_finish(false, false, time);
 }
 
-Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string &url, Glib::ustring& messages, int timeout)
+Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string &url, Glib::ustring& messages, unsigned timeout)
 {
 	enum Status { Waiting, Ready, Failed, Eos } status = Waiting;
 
