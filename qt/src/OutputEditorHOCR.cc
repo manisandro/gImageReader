@@ -624,7 +624,7 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 			QTreeWidgetItem* wordItem = item->child(iWord);
 			if(wordItem->checkState(0) == Qt::Checked) {
 				QRect wordRect = wordItem->data(0, BBoxRole).toRect();
-				int wordSize = wordItem->data(0, FontSizeRole).toInt();
+				double wordSize = wordItem->data(0, FontSizeRole).toDouble();
 				if(wordSize != curSize) {
 					QFont font = painter.font();
 					font.setPointSize(wordSize);
@@ -642,7 +642,7 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 		}
 	} else if(itemClass == "ocrx_word" && overlayMode) {
 		QFont font = painter.font();
-		font.setPointSize(item->data(0, FontSizeRole).toInt());
+		font.setPointSize(item->data(0, FontSizeRole).toDouble());
 		painter.setFont(font);
 		painter.drawText(itemRect.x(), itemRect.bottom(), item->text(0));
 	} else if(itemClass == "ocr_graphic" && !overlayMode) {
