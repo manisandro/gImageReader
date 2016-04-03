@@ -113,7 +113,7 @@ public:
 		outputModeLabel->setFont(smallFont);
 		ocrModeWidget->layout()->addWidget(outputModeLabel);
 		comboBoxOCRMode = new QComboBox();
-		comboBoxOCRMode->addItems(QStringList() << gettext("Plain text") << gettext("hOCR"));
+		comboBoxOCRMode->addItems(QStringList() << gettext("Plain text") << gettext("hOCR, PDF"));
 		comboBoxOCRMode->setFont(smallFont);
 		comboBoxOCRMode->setFrame(false);
 		ocrModeWidget->layout()->addWidget(comboBoxOCRMode);
