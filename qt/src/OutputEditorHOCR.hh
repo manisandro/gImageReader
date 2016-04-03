@@ -57,7 +57,7 @@ private:
 	};
 
 	static const int IdRole = Qt::UserRole + 1;
-	static const int TextRole = Qt::UserRole + 2;
+	static const int SourceRole = Qt::UserRole + 2;
 	static const int BBoxRole = Qt::UserRole + 3;
 	static const int ClassRole = Qt::UserRole + 4;
 	static const int FontSizeRole = Qt::UserRole + 5;

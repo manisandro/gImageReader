@@ -232,7 +232,7 @@ void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int
 	QString str;
 	QTextStream ss(&str);
 	pageDiv.save(ss, 1);
-	pageItem->setData(0, TextRole, str);
+	pageItem->setData(0, SourceRole, str);
 	expandChildren(pageItem);
 	MAIN->setOutputPaneVisible(true);
 	m_modified = true;
@@ -324,7 +324,7 @@ QDomElement OutputEditorHOCR::getHOCRElementForItem(QTreeWidgetItem* item, QDomD
 		toplevelItem = toplevelItem->parent();
 	}
 	QString id = item->data(0, IdRole).toString();
-	doc.setContent(toplevelItem->data(0, TextRole).toString());
+	doc.setContent(toplevelItem->data(0, SourceRole).toString());
 	return elementById(doc.firstChildElement(), id);
 }
 
@@ -447,15 +447,17 @@ void OutputEditorHOCR::updateItemText(QTreeWidgetItem* item)
 	QString str;
 	QTextStream stream(&str);
 	doc.save(stream, 1);
-
-	m_spell.setLanguage(Utils::getSpellingLanguage(element.attribute("lang")));
+	QString spellLang = Utils::getSpellingLanguage(element.attribute("lang"));
+	if(m_spell.getLanguage() != spellLang) {
+		m_spell.setLanguage(spellLang);
+	}
 	item->setForeground(0, m_spell.checkWord(newText) ? item->parent()->foreground(0) : QBrush(Qt::red));
 
 	QTreeWidgetItem* toplevelItem = item;
 	while(toplevelItem->parent()) {
 		toplevelItem = toplevelItem->parent();
 	}
-	toplevelItem->setData(0, TextRole, str);
+	toplevelItem->setData(0, SourceRole, str);
 
 	QString elemstr;
 	QTextStream elemstream(&elemstr);
@@ -466,20 +468,19 @@ void OutputEditorHOCR::updateItemText(QTreeWidgetItem* item)
 
 void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 	QTreeWidgetItem* item = ui.treeWidgetItems->itemAt(point);
-	QDomDocument doc;
-	QDomElement element = getHOCRElementForItem(item, doc);
-	if(element.isNull()) {
+	QString itemClass = item->data(0, ClassRole).toString();
+	if(itemClass.isEmpty()) {
 		return;
 	}
-	if(element.attribute("class") == "ocr_page") {
+	if(itemClass == "ocr_page") {
 		QMenu menu;
 		QAction* actionRemove = menu.addAction(_("Remove"));
 		if(menu.exec(ui.treeWidgetItems->mapToGlobal(point)) == actionRemove) {
 			delete item;
 		}
-	} else if(element.attribute("class") == "ocrx_word") {
+	} else if(itemClass == "ocrx_word") {
 		QMenu menu;
-		for(const QString& suggestion : m_spell.getSpellingSuggestions(element.text())) {
+		for(const QString& suggestion : m_spell.getSpellingSuggestions(item->text(0))) {
 			menu.addAction(suggestion);
 		}
 		if(menu.actions().isEmpty()) {
@@ -550,7 +551,7 @@ bool OutputEditorHOCR::save(const QString& filename)
 			"<body>\n").arg(TESSERACT_VERSION_STR);
 	file.write(header.toUtf8());
 	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
-		file.write(ui.treeWidgetItems->topLevelItem(i)->data(0, TextRole).toString().toUtf8());
+		file.write(ui.treeWidgetItems->topLevelItem(i)->data(0, SourceRole).toString().toUtf8());
 	}
 	file.write("</body>\n</html>\n");
 	m_modified = false;
@@ -581,7 +582,7 @@ void OutputEditorHOCR::savePDF(bool overlay)
 		}
 		QRect bbox = item->data(0, BBoxRole).toRect();
 		QDomDocument doc;
-		doc.setContent(item->data(0, TextRole).toString());
+		doc.setContent(item->data(0, SourceRole).toString());
 		int pageDpi = 0;
 		if(setCurrentSource(doc.firstChildElement("div"), &pageDpi)) {
 			printer.setPageSize(QPageSize(QSizeF(bbox.width() / double(pageDpi), bbox.height() / double(pageDpi)), QPageSize::Inch));
