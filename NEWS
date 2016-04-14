@@ -1,3 +1,16 @@
+gImageReader 3.1.90 (XXX XX 2016):
+ * gImageReader 3.2 beta 1
+ * Add an initial hOCR editor implementation, with possibility to save as hOCR HTML, PDF with invisible text overlay, or a PDF reconstructed from the extracted text and graphics
+ * Allow selecting and working on multiple sources at once
+ * Add a tessdata manager, to conveniently manage tesseract language definitions directly from the application
+ * Show a progress bar when recognizing, add a cancel button
+ * Modernized Gtk UI
+ * Expose script and orientation detection support
+ * Possiblity to pan via middle button drag
+ * Remove the need to specify the culture code in custom language definitions, and use a built-in language-culture mapping instead to search for spelling dictionaries
+ * Various bug fixes
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
 gImageReader 3.1.2 (Jun 30 2015):
  * Fix incorrect behavior of "Append to current text" with multiple recognition areas
  * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master

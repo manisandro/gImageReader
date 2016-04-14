@@ -43,9 +43,23 @@
     <li>Basic editing of output text, including search/replace and removing line breaks on selected text.</li>
     <li>Spellcheck enabled for the selected language in the output textfield if corresponding dictionary installed.</li>
     <li>User is prompted to install missing spellcheck languages.</li>
+    <li>hOCR output mode, with possibilities to export to hOCR HTML, PDF with overlay text, or a PDF reconstructed from the extracted text and graphics</li>
 </ul>
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
+<p>gImageReader 3.1.90 (XXX XX 2016):</p>
+<ul>
+ <li>gImageReader 3.2 beta 1</li>
+ <li>Add an initial hOCR editor implementation, with possibility to save as hOCR HTML, PDF with invisible text overlay, or a PDF reconstructed from the extracted text and graphics</li>
+ <li>Allow selecting and working on multiple sources at once</li>
+ <li>Add a tessdata manager, to conveniently manage tesseract language definitions directly from the application</li>
+ <li>Show a progress bar when recognizing, add a cancel button</li>
+ <li>Modernized Gtk UI</li>
+ <li>Expose script and orientation detection support</li>
+ <li>Possiblity to pan via middle button drag</li>
+ <li>Remove the need to specify the culture code in custom language definitions, and use a built-in language-culture mapping instead to search for spelling dictionaries</li>
+ <li>Various bug fixes</li>
+</ul>
 <p>gImageReader 3.1.2 (Jun 30 2015):</p>
 <ul>
     <li>Fix incorrect behavior of "Append to current text" with multiple recognition areas</li>
