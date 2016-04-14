@@ -632,7 +632,7 @@ void OutputEditorHOCR::savePDF(bool overlay)
 		}
 	}
 	if(!failed.isEmpty()) {
-		QMessageBox::warning(m_widget, _("Error occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
+		QMessageBox::warning(m_widget, _("Errors occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
 	}
 }
 

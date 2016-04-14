@@ -707,7 +707,7 @@ void OutputEditorHOCR::savePDF(bool overlay)
 		}
 	}
 	if(!failed.empty()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error occurred"), Glib::ustring::compose(_("The following pages could not be rendered:\n%1"), Utils::string_join(failed, "\n")));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Errors occurred"), Glib::ustring::compose(_("The following pages could not be rendered:\n%1"), Utils::string_join(failed, "\n")));
 	}
 }
 
