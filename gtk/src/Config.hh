@@ -39,7 +39,13 @@ public:
 	~Config();
 
 	void addSetting(AbstractSetting* setting) {
-		m_settings.insert(std::make_pair(setting->key(), setting));
+		auto it = m_settings.find(setting->key());
+		if(it != m_settings.end()) {
+			delete it->second;
+			it->second = setting;
+		} else {
+			m_settings.insert(std::make_pair(setting->key(), setting));
+		}
 	}
 	template<class T>
 	T* getSetting(const Glib::ustring& key) const{

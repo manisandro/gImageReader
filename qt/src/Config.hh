@@ -37,7 +37,13 @@ public:
 	~Config();
 
 	void addSetting(AbstractSetting* setting) {
-		m_settings.insert(setting->key(), setting);
+		auto it = m_settings.find(setting->key());
+		if(it != m_settings.end()) {
+			delete it.value();
+			it.value() = setting;
+		} else {
+			m_settings.insert(setting->key(), setting);
+		}
 	}
 	template<class T>
 	T* getSetting(const QString& key) const{
