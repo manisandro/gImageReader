@@ -22,6 +22,7 @@
 
 #include "OutputEditor.hh"
 #include "Ui_OutputEditorHOCR.hh"
+#include "ui_PdfExportDialog.h"
 
 #include <QtSpell.hpp>
 
@@ -74,13 +75,16 @@ private:
 	HTMLHighlighter* m_highlighter;
 	QtSpell::TextEditChecker m_spell;
 	bool m_modified = false;
+	QDialog* m_pdfExportDialog;
+	Ui::PdfExportDialog m_pdfExportDialogUi;
+	QFontDialog m_pdfFontDialog;
 
 	void findReplace(bool backwards, bool replace);
 	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString, QString>& langCache);
 	QDomElement getHOCRElementForItem(QTreeWidgetItem* item, QDomDocument& doc) const;
 	QDomElement elementById(QDomElement element, const QString& id) const;
 	void expandChildren(QTreeWidgetItem* item) const;
-	void printChildren(QPainter& painter, QTreeWidgetItem* item, bool overlayMode) const;
+	void printChildren(QPainter& painter, QTreeWidgetItem* item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const;
 	bool setCurrentSource(const QDomElement& pageElement, int* pageDpi = 0) const;
 	void updateItemText(QTreeWidgetItem* item);
 	void addPage(QDomElement pageDiv, const QString& filename, int page);
@@ -91,6 +95,7 @@ private slots:
 	void showItemProperties(QTreeWidgetItem* item);
 	void itemChanged(QTreeWidgetItem* item, int col);
 	void showTreeWidgetContextMenu(const QPoint& point);
+	void updateFontButton(const QFont& font);
 };
 
 #endif // OUTPUTEDITORHOCR_HH

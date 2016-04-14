@@ -36,6 +36,7 @@
 #include "Recognizer.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
+#include "ui_PdfExportDialog.h"
 
 
 const QRegExp OutputEditorHOCR::s_bboxRx = QRegExp("bbox\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)");
@@ -118,6 +119,9 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	ui.setupUi(m_widget);
 	m_highlighter = new HTMLHighlighter(ui.plainTextEditOutput->document());
 
+	m_pdfExportDialog = new QDialog(m_widget);
+	m_pdfExportDialogUi.setupUi(m_pdfExportDialog);
+
 	ui.actionOutputSaveHOCR->setShortcut(Qt::CTRL + Qt::Key_S);
 
 	ui.treeWidgetItems->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -132,8 +136,15 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	connect(ui.treeWidgetItems, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(showItemProperties(QTreeWidgetItem*)));
 	connect(ui.treeWidgetItems, SIGNAL(itemChanged(QTreeWidgetItem*,int)), this, SLOT(itemChanged(QTreeWidgetItem*,int)));
 	connect(ui.treeWidgetItems, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showTreeWidgetContextMenu(QPoint)));
+	connect(m_pdfExportDialogUi.buttonFont, SIGNAL(clicked()), &m_pdfFontDialog, SLOT(exec()));
+	connect(&m_pdfFontDialog, SIGNAL(fontSelected(QFont)), this, SLOT(updateFontButton(QFont)));
+
+	MAIN->getConfig()->addSetting(new FontSetting("hocrfont", &m_pdfFontDialog, QFont().toString()));
+	MAIN->getConfig()->addSetting(new SwitchSetting("hocrusedetectedfontsizes", m_pdfExportDialogUi.checkBoxFontSize, true));
+	MAIN->getConfig()->addSetting(new SwitchSetting("hocruniformizelinespacing", m_pdfExportDialogUi.checkBoxUniformizeSpacing, true));
 
 	setFont();
+	updateFontButton(m_pdfFontDialog.currentFont());
 }
 
 OutputEditorHOCR::~OutputEditorHOCR()
@@ -493,6 +504,11 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 	}
 }
 
+void OutputEditorHOCR::updateFontButton(const QFont& font)
+{
+	m_pdfExportDialogUi.buttonFont->setText(QString("%1 %2").arg(font.family()).arg(font.pointSize()));
+}
+
 void OutputEditorHOCR::open()
 {
 	if(!clear(false)) {
@@ -560,6 +576,11 @@ bool OutputEditorHOCR::save(const QString& filename)
 
 void OutputEditorHOCR::savePDF(bool overlay)
 {
+	if(!overlay) {
+		if(m_pdfExportDialog->exec() == QDialog::Rejected) {
+			return;
+		}
+	}
 	QString	outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(_("output") + ".pdf");
 	outname = QFileDialog::getSaveFileName(MAIN, _("Save PDF Output..."), outname, QString("%1 (*.pdf)").arg(_("PDF Files")));
 	if(outname.isEmpty()){
@@ -570,10 +591,13 @@ void OutputEditorHOCR::savePDF(bool overlay)
 	QPrinter printer;
 	printer.setOutputFileName(outname);
 	printer.setOutputFormat(QPrinter::PdfFormat);
+	printer.setFontEmbeddingEnabled(true);
 	int outputDpi = 300;
 	printer.setFullPage(true);
 	printer.setResolution(outputDpi);
 	QPainter painter;
+	bool useDetectedFontSizes = m_pdfExportDialogUi.checkBoxFontSize->isChecked();
+	bool uniformizeLineSpacing = m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked();
 	QStringList failed;
 	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
 		QTreeWidgetItem* item = ui.treeWidgetItems->topLevelItem(i);
@@ -589,13 +613,16 @@ void OutputEditorHOCR::savePDF(bool overlay)
 			printer.newPage();
 			if(i == 0) {
 				painter.begin(&printer);
+				if(!overlay) {
+					painter.setFont(m_pdfFontDialog.currentFont());
+				}
 			}
 			painter.save();
 			painter.scale(outputDpi / double(pageDpi), outputDpi / double(pageDpi));
 			if(overlay) {
 				painter.setPen(QPen(QColor(0, 0, 0, 0)));
 			}
-			printChildren(painter, item, overlay);
+			printChildren(painter, item, overlay, useDetectedFontSizes, uniformizeLineSpacing);
 			if(overlay) {
 				painter.drawPixmap(bbox, QPixmap::fromImage(m_tool->getSelection(bbox)));
 			}
@@ -609,14 +636,14 @@ void OutputEditorHOCR::savePDF(bool overlay)
 	}
 }
 
-void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, bool overlayMode) const
+void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const
 {
 	if(item->checkState(0) != Qt::Checked) {
 		return;
 	}
 	QString itemClass = item->data(0, ClassRole).toString();
 	QRect itemRect = item->data(0, BBoxRole).toRect();
-	if(itemClass == "ocr_line" && !overlayMode) {
+	if(itemClass == "ocr_line" && uniformizeLineSpacing && !overlayMode) {
 		int curSize = painter.font().pointSize();
 		int x = itemRect.x();
 		int prevWordRight = itemRect.x();
@@ -624,15 +651,17 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 			QTreeWidgetItem* wordItem = item->child(iWord);
 			if(wordItem->checkState(0) == Qt::Checked) {
 				QRect wordRect = wordItem->data(0, BBoxRole).toRect();
-				double wordSize = wordItem->data(0, FontSizeRole).toDouble();
-				if(wordSize != curSize) {
-					QFont font = painter.font();
-					font.setPointSize(wordSize);
-					painter.setFont(font);
-					curSize = wordSize;
+				if(useDetectedFontSizes) {
+					double wordSize = wordItem->data(0, FontSizeRole).toDouble();
+					if(wordSize != curSize) {
+						QFont font = painter.font();
+						font.setPointSize(wordSize);
+						painter.setFont(font);
+						curSize = wordSize;
+					}
 				}
 				// If distance from previous word is large, keep the space
-				if(wordRect.x() - prevWordRight > 2 * painter.fontMetrics().averageCharWidth()) {
+				if(wordRect.x() - prevWordRight > 4 * painter.fontMetrics().averageCharWidth()) {
 					x = wordRect.x();
 				}
 				prevWordRight = wordRect.right();
@@ -640,16 +669,18 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 				x += painter.fontMetrics().width(wordItem->text(0) + " ");
 			}
 		}
-	} else if(itemClass == "ocrx_word" && overlayMode) {
-		QFont font = painter.font();
-		font.setPointSize(item->data(0, FontSizeRole).toDouble());
-		painter.setFont(font);
+	} else if(itemClass == "ocrx_word" && (overlayMode ||!uniformizeLineSpacing)) {
+		if(useDetectedFontSizes) {
+			QFont font = painter.font();
+			font.setPointSize(item->data(0, FontSizeRole).toDouble());
+			painter.setFont(font);
+		}
 		painter.drawText(itemRect.x(), itemRect.bottom(), item->text(0));
 	} else if(itemClass == "ocr_graphic" && !overlayMode) {
 		painter.drawPixmap(itemRect, QPixmap::fromImage(m_tool->getSelection(itemRect)));
 	} else {
 		for(int i = 0, n = item->childCount(); i < n; ++i) {
-			printChildren(painter, item->child(i), overlayMode);
+			printChildren(painter, item->child(i), overlayMode, useDetectedFontSizes, uniformizeLineSpacing);
 		}
 	}
 }

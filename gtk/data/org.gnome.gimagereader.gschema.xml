@@ -136,5 +136,20 @@
             <summary>Default output editor</summary>
             <description>Default output editor.</description>
         </key>
+        <key type="s" name="hocrfont">
+            <default>"Sans 10"</default>
+            <summary>Font to use for PDFs</summary>
+            <description>Font to use for PDFs.</description>
+        </key>
+        <key type="b" name="hocrusedetectedfontsizes">
+            <default>true</default>
+            <summary>Use detected font sizes in PDFs</summary>
+            <description>Whether to use detected font sizes when generating PDFs.</description>
+        </key>
+        <key type="b" name="hocruniformizelinespacing">
+            <default>true</default>
+            <summary>Uniformize line spacing</summary>
+            <description>Whether to uniformize line spacing when generating PDFs.</description>
+        </key>
     </schema>
 </schemalist>

@@ -80,7 +80,7 @@ private:
 	} m_propStoreCols;
 
 	Builder m_builder;
-	Gtk::Box* m_widget = 0;
+	Gtk::Box* m_widget = nullptr;
 	Gtk::TreeView* m_itemView;
 	Glib::RefPtr<Gtk::TreeStore> m_itemStore;
 	Gtk::TreeView* m_propView;
@@ -90,6 +90,7 @@ private:
 	DisplayerToolHOCR* m_tool;
 	GtkSpell::Checker m_spell;
 	bool m_modified = false;
+	Gtk::Dialog* m_pdfExportDialog = nullptr;
 
 	sigc::connection m_connectionSelectionChanged;
 	sigc::connection m_connectionRowEdited;
@@ -97,7 +98,7 @@ private:
 	void findReplace(bool backwards, bool replace);
 	bool addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring, Glib::ustring>& langCache);
 	xmlpp::Element* getHOCRElementForItem(Gtk::TreeIter item, xmlpp::DomParser& parser) const;
-	void printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode) const;
+	void printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const;
 	bool setCurrentSource(xmlpp::Element* pageElement, int* pageDpi = 0) const;
 	void updateItemText(Gtk::TreeIter item);
 	void addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page);

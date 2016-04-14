@@ -20,6 +20,7 @@
 #include <cstring>
 #include <fstream>
 #include <cairomm/cairomm.h>
+#include <pangomm/font.h>
 #include <tesseract/baseapi.h>
 #include <tesseract/ocrclass.h>
 #include <libxml++/libxml++.h>
@@ -164,6 +165,9 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	Glib::RefPtr<Gtk::AccelGroup> group = MAIN->getWindow()->get_accel_group();
 	saveButton->add_accelerator("clicked", group, GDK_KEY_S, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 
+	m_pdfExportDialog = m_builder("dialog:pdfoptions");
+	m_pdfExportDialog->set_transient_for(*MAIN->getWindow());
+
 	CONNECT(openButton, clicked, [this]{ open(); });
 	CONNECT(saveButton, clicked, [this]{ save(); });
 	CONNECT(clearButton, clicked, [this]{ clear(); });
@@ -178,6 +182,10 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	if(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue().empty()){
 		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->setValue(Utils::get_documents_dir());
 	}
+
+	MAIN->getConfig()->addSetting(new FontSetting("hocrfont", m_builder("fontbutton:pdfoptions")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("hocrusedetectedfontsizes", m_builder("checkbox:pdfoptions.usedetectedfontsizes")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("hocruniformizelinespacing", m_builder("checkbox:pdfoptions.uniformlinespacing")));
 
 	setFont();
 }
@@ -640,6 +648,13 @@ bool OutputEditorHOCR::save(const std::string& filename)
 
 void OutputEditorHOCR::savePDF(bool overlay)
 {
+	if(!overlay) {
+		int ret = m_pdfExportDialog->run();
+		m_pdfExportDialog->hide();
+		if(ret != Gtk::RESPONSE_OK) {
+			return;
+		}
+	}
 	std::string outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), Glib::ustring(_("output")) + ".pdf");
 	FileDialogs::FileFilter filter = {_("PDF Files"), {"application/pdf"}, {"*.pdf"}};
 	outname = FileDialogs::save_dialog(_("Save PDF Output..."), outname, filter);
@@ -647,11 +662,22 @@ void OutputEditorHOCR::savePDF(bool overlay)
 		return;
 	}
 	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->setValue(Glib::path_get_dirname(outname));
+	bool useDetectedFontSizes = m_builder("checkbox:pdfoptions.usedetectedfontsizes").as<Gtk::CheckButton>()->get_active();
+	bool uniformizeLineSpacing = m_builder("checkbox:pdfoptions.uniformlinespacing").as<Gtk::CheckButton>()->get_active();
 
 	int outputDpi = 300;
 	Cairo::RefPtr<Cairo::PdfSurface> surface = Cairo::PdfSurface::create(outname, outputDpi, outputDpi);
 	Cairo::RefPtr<Cairo::Context> context = Cairo::Context::create(surface);
 	std::vector<Glib::ustring> failed;
+	if(!overlay) {
+		Glib::ustring fontName = m_builder("fontbutton:pdfoptions").as<Gtk::FontButton>()->get_font_name();
+		Pango::FontDescription fontDesc = Pango::FontDescription(fontName);
+		Cairo::FontSlant fontSlant = fontDesc.get_style() == Pango::STYLE_OBLIQUE ? Cairo::FONT_SLANT_OBLIQUE : fontDesc.get_style() == Pango::STYLE_ITALIC ? Cairo::FONT_SLANT_ITALIC : Cairo::FONT_SLANT_NORMAL;
+		Cairo::FontWeight fontWeight = fontDesc.get_weight() == Pango::WEIGHT_BOLD ? Cairo::FONT_WEIGHT_BOLD : Cairo::FONT_WEIGHT_NORMAL;
+		double fontSize = fontDesc.get_size() / double(PANGO_SCALE);
+		context->select_font_face(fontDesc.get_family(), fontSlant, fontWeight);
+		context->set_font_size(fontSize * 300. / 72.);
+	}
 	for(Gtk::TreeIter item : m_itemStore->children()) {
 		if(!(*item)[m_itemStoreCols.selected]) {
 			continue;
@@ -665,7 +691,7 @@ void OutputEditorHOCR::savePDF(bool overlay)
 			surface->set_size((bbox.width * 72.) / pageDpi, (bbox.height * 72.) / pageDpi);
 			context->save();
 			context->scale(72. / double(pageDpi), 72. / double(pageDpi));
-			printChildren(context, item, overlay);
+			printChildren(context, item, overlay, useDetectedFontSizes, uniformizeLineSpacing);
 			if(overlay) {
 				Cairo::RefPtr<Cairo::ImageSurface> sel = m_tool->getSelection(bbox);
 				context->save();
@@ -685,25 +711,27 @@ void OutputEditorHOCR::savePDF(bool overlay)
 	}
 }
 
-void OutputEditorHOCR::printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode) const
+void OutputEditorHOCR::printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const
 {
 	if(!(*item)[m_itemStoreCols.selected]) {
 		return;
 	}
 	Glib::ustring itemClass = (*item)[m_itemStoreCols.itemClass];
 	Geometry::Rectangle itemRect = (*item)[m_itemStoreCols.bbox];
-	if(itemClass == "ocr_line" && !overlayMode) {
+	if(itemClass == "ocr_line" && uniformizeLineSpacing && !overlayMode) {
 		double x = itemRect.x;
 		double prevWordRight = itemRect.x;
 		for(Gtk::TreeIter wordItem : item->children()) {
 			if((*wordItem)[m_itemStoreCols.selected]) {
 				Geometry::Rectangle wordRect = (*wordItem)[m_itemStoreCols.bbox];
-				context->set_font_size((*wordItem)[m_itemStoreCols.fontSize] * 300. / 72.);
+				if(useDetectedFontSizes) {
+					context->set_font_size((*wordItem)[m_itemStoreCols.fontSize] * 300. / 72.);
+				}
 				// If distance from previous word is large, keep the space
 				Cairo::TextExtents ext;
 				context->get_text_extents(Glib::ustring((*wordItem)[m_itemStoreCols.text]) + " ", ext);
 				int spaceSize = ext.x_advance - ext.width; // spaces are ignored in width but counted in advance
-				if(wordRect.x - prevWordRight > 2 * spaceSize) {
+				if(wordRect.x - prevWordRight > 4 * spaceSize) {
 					x = wordRect.x;
 				}
 				prevWordRight = wordRect.x + wordRect.width;
@@ -713,11 +741,15 @@ void OutputEditorHOCR::printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk:
 				x += ext.x_advance;
 			}
 		}
-	} else if(itemClass == "ocrx_word" && overlayMode) {
+	} else if(itemClass == "ocrx_word" && (overlayMode || !uniformizeLineSpacing)) {
 		Cairo::TextExtents ext;
-		context->set_font_size((*item)[m_itemStoreCols.fontSize] * 300. / 72.);
+		if(useDetectedFontSizes) {
+			context->set_font_size((*item)[m_itemStoreCols.fontSize] * 300. / 72.);
+		}
 		context->get_text_extents(Glib::ustring((*item)[m_itemStoreCols.text]), ext);
-		context->set_source_rgba(255, 255, 255, 0.01);
+		if(overlayMode) {
+			context->set_source_rgba(255, 255, 255, 0.01);
+		}
 		context->move_to(itemRect.x, itemRect.y - ext.y_bearing);
 		context->show_text(Glib::ustring((*item)[m_itemStoreCols.text]));
 	} else if(itemClass == "ocr_graphic" && !overlayMode) {
@@ -729,7 +761,7 @@ void OutputEditorHOCR::printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk:
 		context->restore();
 	} else {
 		for(Gtk::TreeIter child : item->children()) {
-			printChildren(context, child, overlayMode);
+			printChildren(context, child, overlayMode, useDetectedFontSizes, uniformizeLineSpacing);
 		}
 	}
 }
