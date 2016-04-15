@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gImageReader 3.1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-15 00:05+0200\n"
-"PO-Revision-Date: 2016-03-21 13:10+0200\n"
+"PO-Revision-Date: 2016-04-15 20:24+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team:  <gnome-el-list@gnome.org>\n"
 "Language: el\n"
@@ -68,7 +68,7 @@ msgstr ""
 
 #: ../gtk/data/editor_hocr.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
-msgstr ""
+msgstr "Εξαγωγή ως PDF"
 
 #: ../gtk/data/editor_hocr.ui.h:2 ../gtk/data/gimagereader.ui.h:50
 #: ../gtk/src/Acquirer.cc:43 ../gtk/src/FileDialogs.cc:157
@@ -85,23 +85,23 @@ msgstr "Εντάξει"
 
 #: ../gtk/data/editor_hocr.ui.h:4 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Document font:"
-msgstr ""
+msgstr "Γραμματοσειρά εγγράφου:"
 
 #: ../gtk/data/editor_hocr.ui.h:5 ../qt/data/PdfExportDialog.ui.h:2
 msgid "Use detected font sizes"
-msgstr ""
+msgstr "Χρήση των μεγεθών γραμματοσειράς που ανιχνεύτηκαν"
 
 #: ../gtk/data/editor_hocr.ui.h:6 ../qt/data/PdfExportDialog.ui.h:4
 msgid "Uniformize line spacing"
-msgstr ""
+msgstr "Ομογενοποίηση του διάστιχου"
 
 #: ../gtk/data/editor_hocr.ui.h:7 ../qt/src/Ui_OutputEditorHOCR.hh:53
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/src/Ui_OutputEditorHOCR.hh:54
 msgid "PDF with invisible text overlay"
-msgstr ""
+msgstr "PDF με αόρατη επικάλυψη κειμένου"
 
 #: ../gtk/data/editor_hocr.ui.h:9 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
@@ -116,12 +116,11 @@ msgstr "Καθαρισμός εξόδου"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/src/Ui_OutputEditorHOCR.hh:83
 msgid "Properties"
-msgstr ""
+msgstr "Ιδιότητες"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/src/Ui_OutputEditorHOCR.hh:87
-#, fuzzy
 msgid "Source"
-msgstr "Πηγές"
+msgstr "Προέλευση"
 
 #: ../gtk/data/editor_text.ui.h:1 ../qt/src/SubstitutionsManager.cc:38
 #: ../qt/src/Ui_OutputEditorText.hh:177
@@ -213,9 +212,8 @@ msgid "Draw whitespace"
 msgstr "Χάραξη κενού διαστήματος"
 
 #: ../gtk/data/editor_text.ui.h:21 ../gtk/data/gimagereader.ui.h:6
-#, fuzzy
 msgid "Select language"
-msgstr "Επανανίχνευση"
+msgstr "Επιλογή γλώσσας"
 
 #: ../gtk/data/editor_text.ui.h:22 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Select insert mode"
@@ -371,11 +369,11 @@ msgstr "Στοιχεία ελέγχου εικόνας"
 
 #: ../gtk/data/gimagereader.ui.h:29 ../qt/src/Ui_MainWindow.hh:116
 msgid "Plain text"
-msgstr ""
+msgstr "Απλό κείμενο"
 
 #: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:116
 msgid "hOCR, PDF"
-msgstr ""
+msgstr "hOCR, PDF"
 
 #: ../gtk/data/gimagereader.ui.h:31 ../qt/data/MainWindow.ui.h:35
 msgid "Autodetect layout"
@@ -475,11 +473,11 @@ msgstr "Αυτόματη ανίχνευση"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/src/TessdataManager.cc:43
 msgid "Tessdata Manager"
-msgstr ""
+msgstr "Διαχειριστής Tessdata"
 
 #: ../gtk/data/gimagereader.ui.h:62 ../qt/src/TessdataManager.cc:45
 msgid "Manage installed languages:"
-msgstr ""
+msgstr "Διαχείριση εγκατεστημένων γλωσσών:"
 
 #: ../gtk/data/gimagereader.ui.h:63 ../qt/src/DisplayerToolSelect.cc:261
 msgid "Delete"
@@ -640,9 +638,8 @@ msgid "Select an image to begin..."
 msgstr "Επιλογή εικόνας για έναρξη..."
 
 #: ../gtk/src/MainWindow.cc:293 ../qt/src/MainWindow.cc:266
-#, fuzzy
 msgid "Multiple sources"
-msgstr "Πολλαπλές σελίδες..."
+msgstr "Πολλαπλές προελεύσεις"
 
 #: ../gtk/src/MainWindow.cc:294 ../qt/src/MainWindow.cc:267
 msgid "To recognize specific areas, drag rectangles over them."
@@ -707,9 +704,8 @@ msgstr "Αποτυχία εγκατάστασης του ορθογραφικο�
 
 #: ../gtk/src/MainWindow.cc:523 ../gtk/src/MainWindow.cc:539
 #: ../qt/src/MainWindow.cc:500
-#, fuzzy
 msgid "Could not read %1: %2."
-msgstr "Αδυναμία ανάγνωσης του %1."
+msgstr "Αδυναμία ανάγνωσης του %1: %2."
 
 #: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:568
 #: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:546
@@ -729,61 +725,57 @@ msgid "The following dictionaries were installed:%1"
 msgstr "Τα παρακάτω λεξικά εγκαταστάθηκαν: %1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:220
-#, fuzzy
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
-msgstr "Τα παρακάτω αρχεία δεν μπόρεσαν να ανοιχθούν:%1"
+msgstr ""
+"Οι παρακάτω σελίδες δεν μπόρεσαν να επεξεργαστούν:\n"
+"%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:221 ../qt/src/OutputEditorHOCR.cc:182
-#, fuzzy
 msgid "Recognition errors"
-msgstr "Συνέβησαν σφάλματα αναγνώρισης"
+msgstr "Σφάλματα αναγνώρισης"
 
 #: ../gtk/src/OutputEditorHOCR.cc:281 ../qt/src/OutputEditorHOCR.cc:229
 msgid "Graphic"
-msgstr ""
+msgstr "Γραφικό"
 
 #: ../gtk/src/OutputEditorHOCR.cc:323 ../qt/src/OutputEditorHOCR.cc:280
-#, fuzzy
 msgid "Paragraph"
-msgstr "Διατήρηση παραγράφων"
+msgstr "Παράγραφος"
 
 #: ../gtk/src/OutputEditorHOCR.cc:326 ../qt/src/OutputEditorHOCR.cc:283
-#, fuzzy
 msgid "Textline"
-msgstr "Αρχεία κειμένου"
+msgstr "Γραμμή κειμένου"
 
 #: ../gtk/src/OutputEditorHOCR.cc:553 ../qt/src/OutputEditorHOCR.cc:498
 msgid "No suggestions"
-msgstr ""
+msgstr "Χωρίς προτάσεις"
 
 #: ../gtk/src/OutputEditorHOCR.cc:580 ../gtk/src/OutputEditorHOCR.cc:616
 #: ../qt/src/OutputEditorHOCR.cc:518 ../qt/src/OutputEditorHOCR.cc:547
 msgid "hOCR HTML Files"
-msgstr ""
+msgstr "Αρχεία hOCR HTML"
 
 #: ../gtk/src/OutputEditorHOCR.cc:581 ../qt/src/OutputEditorHOCR.cc:518
 msgid "Open hOCR File"
-msgstr ""
+msgstr "Άνοιγμα αρχείου hOCR"
 
 #: ../gtk/src/OutputEditorHOCR.cc:590 ../qt/src/OutputEditorHOCR.cc:524
-#, fuzzy
 msgid "Failed to open file"
-msgstr "Αδυναμία ανοίγματος αρχείων"
+msgstr "Αποτυχία ανοίγματος του αρχείου"
 
 #: ../gtk/src/OutputEditorHOCR.cc:590 ../qt/src/OutputEditorHOCR.cc:524
-#, fuzzy
 msgid "The file could not be opened: %1."
-msgstr "Τα παρακάτω αρχεία δεν μπόρεσαν να ανοιχθούν:%1"
+msgstr "Τα αρχείο δεν μπόρεσε να ανοιχθεί: %1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:599 ../qt/src/OutputEditorHOCR.cc:531
 msgid "Invalid hOCR file"
-msgstr ""
+msgstr "Άκυρο αρχείο hOCR"
 
 #: ../gtk/src/OutputEditorHOCR.cc:599 ../qt/src/OutputEditorHOCR.cc:531
 msgid "The file does not appear to contain valid hOCR HTML: %1"
-msgstr ""
+msgstr "Το αρχείο δεν φαίνεται να περιέχει έγκυρο hOCR HTML: %1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:614 ../gtk/src/OutputEditorHOCR.cc:658
 #: ../gtk/src/OutputEditorText.cc:289 ../qt/src/OutputEditorHOCR.cc:546
@@ -792,9 +784,8 @@ msgid "output"
 msgstr "έξοδος"
 
 #: ../gtk/src/OutputEditorHOCR.cc:617 ../qt/src/OutputEditorHOCR.cc:547
-#, fuzzy
 msgid "Save hOCR Output..."
-msgstr "Αποθήκευση εξόδου..."
+msgstr "Αποθήκευση εξόδου hOCR..."
 
 #: ../gtk/src/OutputEditorHOCR.cc:625 ../gtk/src/OutputEditorText.cc:302
 #: ../qt/src/OutputEditorHOCR.cc:555 ../qt/src/OutputEditorText.cc:251
@@ -807,26 +798,24 @@ msgid "Check that you have writing permissions in the selected folder."
 msgstr "Ελέγξτε ότι έχετε δικαίωμα εγγραφής στον επιλεγμένο φάκελο."
 
 #: ../gtk/src/OutputEditorHOCR.cc:659 ../qt/src/OutputEditorHOCR.cc:585
-#, fuzzy
 msgid "PDF Files"
-msgstr "Αρχεία"
+msgstr "Αρχεία PDF"
 
 #: ../gtk/src/OutputEditorHOCR.cc:660 ../qt/src/OutputEditorHOCR.cc:585
-#, fuzzy
 msgid "Save PDF Output..."
-msgstr "Αποθήκευση εξόδου..."
+msgstr "Αποθήκευση εξόδου PDF..."
 
 #: ../gtk/src/OutputEditorHOCR.cc:710 ../qt/src/OutputEditorHOCR.cc:635
-#, fuzzy
 msgid "Errors occurred"
-msgstr "Συνέβησαν σφάλματα αναγνώρισης"
+msgstr "Συνέβησαν σφάλματα"
 
 #: ../gtk/src/OutputEditorHOCR.cc:710 ../qt/src/OutputEditorHOCR.cc:635
-#, fuzzy
 msgid ""
 "The following pages could not be rendered:\n"
 "%1"
-msgstr "Τα παρακάτω αρχεία δεν μπόρεσαν να ανοιχθούν:%1"
+msgstr ""
+"Οι παρακάτω σελίδες δεν μπόρεσαν να αποδοθούν:\n"
+"%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:775 ../gtk/src/OutputEditorText.cc:317
 #: ../qt/src/OutputEditorHOCR.cc:694 ../qt/src/OutputEditorText.cc:265
@@ -888,7 +877,7 @@ msgstr "Ανίχνευση δέσμης ενεργειών και προσανα
 
 #: ../gtk/src/Recognizer.cc:260 ../qt/src/Recognizer.cc:254
 msgid "Manage languages..."
-msgstr ""
+msgstr "Διαχείριση γλωσσών..."
 
 #: ../gtk/src/Recognizer.cc:377 ../qt/src/Recognizer.cc:381
 msgid ""
@@ -934,17 +923,20 @@ msgstr "Αποτυχία προετοιμασίας του tesseract"
 msgid "Scan canceled"
 msgstr "Ακυρώθηκε η σάρωση"
 
-#: ../gtk/src/scanner/ScannerSane.cc:166 ../gtk/src/scanner/ScannerTwain.cc:190
-#: ../qt/src/scanner/ScannerSane.cc:167 ../qt/src/scanner/ScannerTwain.cc:182
+#: ../gtk/src/scanner/ScannerSane.cc:166
+#: ../gtk/src/scanner/ScannerTwain.cc:190 ../qt/src/scanner/ScannerSane.cc:167
+#: ../qt/src/scanner/ScannerTwain.cc:182
 msgid "No scanner specified"
 msgstr "Δεν ορίστηκε σαρωτής"
 
-#: ../gtk/src/scanner/ScannerSane.cc:175 ../gtk/src/scanner/ScannerTwain.cc:199
-#: ../qt/src/scanner/ScannerSane.cc:176 ../qt/src/scanner/ScannerTwain.cc:191
+#: ../gtk/src/scanner/ScannerSane.cc:175
+#: ../gtk/src/scanner/ScannerTwain.cc:199 ../qt/src/scanner/ScannerSane.cc:176
+#: ../qt/src/scanner/ScannerTwain.cc:191
 msgid "Unable to connect to scanner"
 msgstr "Αδυναμία σύνδεσης με σαρωτή"
 
-#: ../gtk/src/scanner/ScannerSane.cc:397 ../gtk/src/scanner/ScannerTwain.cc:269
+#: ../gtk/src/scanner/ScannerSane.cc:397
+#: ../gtk/src/scanner/ScannerTwain.cc:269
 #: ../gtk/src/scanner/ScannerTwain.cc:295 ../qt/src/scanner/ScannerSane.cc:398
 #: ../qt/src/scanner/ScannerTwain.cc:261 ../qt/src/scanner/ScannerTwain.cc:293
 msgid "Unable to start scan"
@@ -1018,11 +1010,8 @@ msgid "Delete File?"
 msgstr "Να διαγραφεί το αρχείο;"
 
 #: ../gtk/src/SourceManager.cc:209 ../qt/src/SourceManager.cc:236
-#, fuzzy
 msgid "The following files will be deleted:%1"
-msgstr ""
-"Το παρακάτω αρχείο θα διαγραφεί:\n"
-"%1"
+msgstr "Τα παρακάτω αρχεία θα διαγραφούν:%1"
 
 #: ../gtk/src/SourceManager.cc:274 ../qt/src/SourceManager.cc:291
 msgid "Missing File"
@@ -1048,7 +1037,8 @@ msgstr "Αντικατάσταση με"
 msgid "substitution_list.txt"
 msgstr "λίστα_υποκατάστασης.txt"
 
-#: ../gtk/src/SubstitutionsManager.cc:83 ../gtk/src/SubstitutionsManager.cc:119
+#: ../gtk/src/SubstitutionsManager.cc:83
+#: ../gtk/src/SubstitutionsManager.cc:119
 #: ../qt/src/SubstitutionsManager.cc:111 ../qt/src/SubstitutionsManager.cc:150
 msgid "Substitutions List"
 msgstr "Λίστα υποκαταστάσεων"
@@ -1065,36 +1055,44 @@ msgstr "Σφάλμα ανάγνωσης αρχείου"
 msgid "Unable to read '%1'."
 msgstr "Αδυναμία ανάγνωσης του '%1'."
 
-#: ../gtk/src/SubstitutionsManager.cc:112 ../qt/src/SubstitutionsManager.cc:143
+#: ../gtk/src/SubstitutionsManager.cc:112
+#: ../qt/src/SubstitutionsManager.cc:143
 msgid "Errors Occurred Reading File"
 msgstr "Συνέβησαν σφάλματα ανάγνωσης του αρχείου"
 
-#: ../gtk/src/SubstitutionsManager.cc:112 ../qt/src/SubstitutionsManager.cc:143
+#: ../gtk/src/SubstitutionsManager.cc:112
+#: ../qt/src/SubstitutionsManager.cc:143
 msgid "Some entries of the substitutions list could not be read."
 msgstr ""
 "Κάποιες καταχωρίσεις της λίστας υποκατάστασης δεν μπόρεσαν να διαβαστούν."
 
-#: ../gtk/src/SubstitutionsManager.cc:120 ../qt/src/SubstitutionsManager.cc:150
+#: ../gtk/src/SubstitutionsManager.cc:120
+#: ../qt/src/SubstitutionsManager.cc:150
 msgid "Save Substitutions List"
 msgstr "Αποθήκευση λίστας υποκαταστάσεων"
 
-#: ../gtk/src/SubstitutionsManager.cc:126 ../qt/src/SubstitutionsManager.cc:156
+#: ../gtk/src/SubstitutionsManager.cc:126
+#: ../qt/src/SubstitutionsManager.cc:156
 msgid "Error Saving File"
 msgstr "Σφάλμα αποθήκευσης αρχείου"
 
-#: ../gtk/src/SubstitutionsManager.cc:126 ../qt/src/SubstitutionsManager.cc:156
+#: ../gtk/src/SubstitutionsManager.cc:126
+#: ../qt/src/SubstitutionsManager.cc:156
 msgid "Unable to write to '%1'."
 msgstr "Αδύνατη η εγγραφή στο '%1'."
 
-#: ../gtk/src/SubstitutionsManager.cc:145 ../qt/src/SubstitutionsManager.cc:171
+#: ../gtk/src/SubstitutionsManager.cc:145
+#: ../qt/src/SubstitutionsManager.cc:171
 msgid "Save List?"
 msgstr "Να αποθηκευτεί η λίστα;"
 
-#: ../gtk/src/SubstitutionsManager.cc:145 ../qt/src/SubstitutionsManager.cc:171
+#: ../gtk/src/SubstitutionsManager.cc:145
+#: ../qt/src/SubstitutionsManager.cc:171
 msgid "Do you want to save the current list?"
 msgstr "Θέλετε να αποθηκευτεί η τρέχουσα λίστα;"
 
-#: ../gtk/src/SubstitutionsManager.cc:184 ../qt/src/SubstitutionsManager.cc:212
+#: ../gtk/src/SubstitutionsManager.cc:184
+#: ../qt/src/SubstitutionsManager.cc:212
 msgid "Applying substitutions..."
 msgstr "Εφαρμόζονται υποκαταστάσεις..."
 
@@ -1104,29 +1102,31 @@ msgid ""
 "found. Please use the system package management software to manage the "
 "tesseract language packs."
 msgstr ""
+"Το PackageKit απαιτείται για τη διαχείριση των γλωσσικών πακέτων tesseract, "
+"αλλά δεν βρέθηκε. Παρακαλούμε, χρησιμοποιήστε το λογισμικό διαχείρισης "
+"πακέτων του συστήματος για να διαχειριστείτε τα γλωσσικά πακέτα του "
+"tesseract."
 
 #: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:70
 msgid "Fetching available languages"
-msgstr ""
+msgstr "Μεταφέρονται οι διαθέσιμες γλώσσες"
 
 #: ../gtk/src/TessdataManager.cc:65 ../gtk/src/TessdataManager.cc:86
 #: ../qt/src/TessdataManager.cc:76 ../qt/src/TessdataManager.cc:87
 msgid "Failed to fetch list of available languages: %1"
-msgstr ""
+msgstr "Αποτυχία μεταφοράς του καταλόγου των διαθέσιμων γλωσσών: %1"
 
 #: ../gtk/src/TessdataManager.cc:95 ../qt/src/TessdataManager.cc:94
 msgid "Parsing error: %1"
-msgstr ""
+msgstr "Ανάλυση του σφάλματος: %1"
 
 #: ../gtk/src/TessdataManager.cc:157 ../qt/src/TessdataManager.cc:139
-#, fuzzy
 msgid "Applying changes..."
-msgstr "Εφαρμόζονται υποκαταστάσεις..."
+msgstr "Εφαρμογή αλλαγών..."
 
 #: ../gtk/src/TessdataManager.cc:207 ../qt/src/TessdataManager.cc:182
-#, fuzzy
 msgid "Downloading %1..."
-msgstr "Μεταφορτώνεται το '%1'..."
+msgstr "Μεταφορτώνεται το %1..."
 
 #: ../gtk/src/TessdataManager.cc:227 ../qt/src/TessdataManager.cc:203
 msgid ""
@@ -1135,6 +1135,10 @@ msgid ""
 "\n"
 "Check the connectivity and directory permissions."
 msgstr ""
+"Τα παρακάτω αρχεία δεν μπόρεσαν να μεταφορτωθούν ή να αφαιρεθούν:\n"
+"%1\n"
+"\n"
+"Ελέγξτε τη σύνδεση και τα δικαιώματα του καταλόγου."
 
 #: ../gtk/src/Utils.cc:60
 msgid "Yes"
@@ -1172,15 +1176,15 @@ msgstr "Άδεια"
 
 #: ../qt/data/ConfigDialog.ui.h:21
 msgid "Text file encoding:"
-msgstr ""
+msgstr "Κωδικοποίηση αρχείου κειμένου:"
 
 #: ../qt/data/ConfigDialog.ui.h:22
 msgid "System encoding"
-msgstr ""
+msgstr "Κωδικοποίηση συστήματος"
 
 #: ../qt/data/ConfigDialog.ui.h:23
 msgid "UTF-8"
-msgstr ""
+msgstr "UTF-8"
 
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
@@ -1205,14 +1209,12 @@ msgid "gImageReader"
 msgstr "gImageReader"
 
 #: ../qt/data/MainWindow.ui.h:6
-#, fuzzy
 msgid "So&urces"
-msgstr "Πηγές"
+msgstr "Π&ροελεύσεις"
 
 #: ../qt/data/MainWindow.ui.h:18
-#, fuzzy
 msgid "&Output"
-msgstr "Έξοδος"
+msgstr "Έ&ξοδος"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "Sources"
@@ -1263,18 +1265,16 @@ msgid "Toggle Output Pane"
 msgstr "Εναλλαγή παραθύρου εξόδου"
 
 #: ../qt/src/MainWindow.cc:518
-#, fuzzy
 msgid "Could not read %1: %2"
-msgstr "Αδυναμία ανάγνωσης του %1."
+msgstr "Αδυναμία ανάγνωσης του %1: %2"
 
 #: ../qt/src/MainWindow.cc:543
-#, fuzzy
 msgid "The following dictionary files were installed:%1"
-msgstr "Τα παρακάτω λεξικά εγκαταστάθηκαν: %1"
+msgstr "Τα παρακάτω αρχεία λεξικών εγκαταστάθηκαν:%1"
 
 #: ../qt/src/Ui_MainWindow.hh:112
 msgid "OCR mode:"
-msgstr ""
+msgstr "Κατάσταση OCR:"
 
 #: ../qt/src/Ui_MainWindow.hh:177
 msgid "Add Images"
@@ -1295,16 +1295,15 @@ msgstr "Καθαρισμός λίστας"
 #. Output toolbar
 #: ../qt/src/Ui_OutputEditorHOCR.hh:42 ../qt/src/Ui_OutputEditorHOCR.hh:43
 msgid "Open hOCR file"
-msgstr ""
+msgstr "Άνοιγμα αρχείου hOCR"
 
 #: ../qt/src/Ui_OutputEditorHOCR.hh:44 ../qt/src/Ui_OutputEditorHOCR.hh:45
-#, fuzzy
 msgid "Save as hOCR text"
-msgstr "Αποθήκευση ως εικόνα"
+msgstr "Αποθήκευση κειμένου ως hOCR"
 
 #: ../qt/src/Ui_OutputEditorHOCR.hh:48 ../qt/src/Ui_OutputEditorHOCR.hh:50
 msgid "Export to PDF"
-msgstr ""
+msgstr "Εξαγωγή σε PDF"
 
 #: ../qt/src/Ui_OutputEditorText.hh:108
 msgid "Strip Line Breaks"
