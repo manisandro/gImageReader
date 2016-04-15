@@ -62,6 +62,7 @@ private:
 	static const int BBoxRole = Qt::UserRole + 3;
 	static const int ClassRole = Qt::UserRole + 4;
 	static const int FontSizeRole = Qt::UserRole + 5;
+	static const int ParentAttrRole = Qt::UserRole + 1;
 
 	static const QRegExp s_bboxRx;
 	static const QRegExp s_pageTitleRx;
@@ -87,6 +88,8 @@ private:
 	void printChildren(QPainter& painter, QTreeWidgetItem* item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const;
 	bool setCurrentSource(const QDomElement& pageElement, int* pageDpi = 0) const;
 	void updateItemText(QTreeWidgetItem* item);
+	void updateItemAttribute(QTreeWidgetItem* item, const QString& key, const QString& subkey, const QString& newvalue);
+	void updateItem(QTreeWidgetItem* item, const QDomDocument& doc, const QDomElement& element);
 	void addPage(QDomElement pageDiv, const QString& filename, int page);
 
 private slots:
@@ -94,6 +97,7 @@ private slots:
 	void setFont();
 	void showItemProperties(QTreeWidgetItem* item);
 	void itemChanged(QTreeWidgetItem* item, int col);
+	void propertyCellChanged(int row, int col);
 	void showTreeWidgetContextMenu(const QPoint& point);
 	void updateFontButton(const QFont& font);
 };

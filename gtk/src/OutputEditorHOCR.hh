@@ -75,8 +75,9 @@ private:
 
 	struct PropStoreColumns : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Glib::ustring> name;
+		Gtk::TreeModelColumn<Glib::ustring> parentAttr;
 		Gtk::TreeModelColumn<Glib::ustring> value;
-		PropStoreColumns() { add(name); add(value); }
+		PropStoreColumns() { add(name); add(parentAttr); add(value); }
 	} m_propStoreCols;
 
 	Builder m_builder;
@@ -93,7 +94,8 @@ private:
 	Gtk::Dialog* m_pdfExportDialog = nullptr;
 
 	sigc::connection m_connectionSelectionChanged;
-	sigc::connection m_connectionRowEdited;
+	sigc::connection m_connectionItemViewRowEdited;
+	sigc::connection m_connectionPropViewRowEdited;
 
 	void findReplace(bool backwards, bool replace);
 	bool addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring, Glib::ustring>& langCache);
@@ -101,12 +103,15 @@ private:
 	void printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const;
 	bool setCurrentSource(xmlpp::Element* pageElement, int* pageDpi = 0) const;
 	void updateItemText(Gtk::TreeIter item);
+	void updateItemAttribute(Gtk::TreeIter item, const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue);
+	void updateItem(Gtk::TreeIter item, xmlpp::DomParser& parser, const xmlpp::Element* element);
 	void addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page);
 
 	void addPage(const Glib::ustring& hocrText, ReadSessionData data);
 	void setFont();
 	void showItemProperties();
 	void itemChanged(const Gtk::TreeIter& iter);
+	void propertyCellChanged(const Gtk::TreeIter& iter);
 	bool handleButtonEvent(GdkEventButton* ev);
 	void checkCellEditable(const Glib::ustring& path, Gtk::CellRenderer* renderer);
 };

@@ -39,7 +39,7 @@ const Glib::RefPtr<Glib::Regex> OutputEditorHOCR::s_pageTitleRx = Glib::Regex::c
 const Glib::RefPtr<Glib::Regex> OutputEditorHOCR::s_idRx = Glib::Regex::create("(\\w+)_\\d+_(\\d+)");
 const Glib::RefPtr<Glib::Regex> OutputEditorHOCR::s_fontSizeRx = Glib::Regex::create("x_fsize\\s+(\\d+)");
 
-static inline Glib::ustring getAttribute(xmlpp::Element* element, const Glib::ustring& name)
+static inline Glib::ustring getAttribute(const xmlpp::Element* element, const Glib::ustring& name)
 {
 	if(!element)
 		return Glib::ustring();
@@ -47,7 +47,7 @@ static inline Glib::ustring getAttribute(xmlpp::Element* element, const Glib::us
 	return attrib ? attrib->get_value() : Glib::ustring();
 }
 
-static inline Glib::ustring getElementText(xmlpp::Element* element)
+static inline Glib::ustring getElementText(const xmlpp::Element* element)
 {
 	if(!element)
 		return Glib::ustring();
@@ -101,7 +101,7 @@ static inline Glib::ustring getDocumentXML(xmlpp::Document* doc)
 	return xml;
 }
 
-static inline Glib::ustring getElementXML(xmlpp::Element* element)
+static inline Glib::ustring getElementXML(const xmlpp::Element* element)
 {
 	xmlpp::Document doc;
 	doc.create_root_node_by_import(element);
@@ -154,6 +154,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	valueCol->set_renderer(*valueRenderer, m_propStoreCols.value);
 	valueCol->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
 	valueCol->set_expand(true);
+	Gtk::TreeView_Private::_connect_auto_store_editable_signal_handler<Glib::ustring>(m_propView, valueRenderer, m_propStoreCols.value);
 	m_propView->append_column(*valueCol);
 
 	m_sourceView = m_builder("textview:hocr.source");
@@ -176,7 +177,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	CONNECTP(MAIN->getWidget("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
 	CONNECT(MAIN->getWidget("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
 	m_connectionSelectionChanged = CONNECT(m_itemView->get_selection(), changed, [this]{ showItemProperties(); });
-	m_connectionRowEdited = CONNECT(m_itemStore, row_changed, [this](const Gtk::TreeModel::Path&, const Gtk::TreeIter& iter){ itemChanged(iter); });
+	m_connectionItemViewRowEdited = CONNECT(m_itemStore, row_changed, [this](const Gtk::TreeModel::Path&, const Gtk::TreeIter& iter){ itemChanged(iter); });
+	m_connectionPropViewRowEdited = CONNECT(m_propStore, row_changed, [this](const Gtk::TreeModel::Path&, const Gtk::TreeIter& iter){ propertyCellChanged(iter); });
 	m_itemView->signal_button_press_event().connect([this](GdkEventButton* ev){ return handleButtonEvent(ev); }, false);
 
 	if(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue().empty()){
@@ -249,7 +251,7 @@ void OutputEditorHOCR::addPage(const Glib::ustring& hocrText, ReadSessionData da
 
 void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page)
 {
-	m_connectionRowEdited.block(true);
+	m_connectionItemViewRowEdited.block(true);
 	pageDiv->set_attribute("id", Glib::ustring::compose("page_%1", ++m_idCounter));
 
 	Glib::MatchInfo matchInfo;
@@ -297,7 +299,7 @@ void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& fil
 	m_itemView->expand_row(Gtk::TreePath(pageItem), true);
 	MAIN->setOutputPaneVisible(true);
 	m_modified = true;
-	m_connectionRowEdited.block(false);
+	m_connectionItemViewRowEdited.block(false);
 }
 
 bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring,Glib::ustring>& langCache)
@@ -396,6 +398,7 @@ void OutputEditorHOCR::showItemProperties()
 	if(!item) {
 		return;
 	}
+	m_connectionPropViewRowEdited.block(true);
 	m_propStore->clear();
 	xmlpp::DomParser parser;
 	xmlpp::Element* element = getHOCRElementForItem(item, parser);
@@ -406,6 +409,7 @@ void OutputEditorHOCR::showItemProperties()
 					attr = Utils::string_trim(attr);
 					std::size_t splitPos = attr.find(" ");
 					Gtk::TreeIter item = m_propStore->append();
+					item->set_value(m_propStoreCols.parentAttr, Glib::ustring("title"));
 					item->set_value(m_propStoreCols.name, Utils::string_trim(attr.substr(0, splitPos)));
 					item->set_value(m_propStoreCols.value, Utils::string_trim(attr.substr(splitPos + 1)));
 				}
@@ -430,6 +434,7 @@ void OutputEditorHOCR::showItemProperties()
 	} else {
 		m_tool->clearSelection();
 	}
+	m_connectionPropViewRowEdited.block(false);
 }
 
 bool OutputEditorHOCR::setCurrentSource(xmlpp::Element* pageElement, int* pageDpi) const
@@ -470,7 +475,7 @@ bool OutputEditorHOCR::setCurrentSource(xmlpp::Element* pageElement, int* pageDp
 
 void OutputEditorHOCR::itemChanged(const Gtk::TreeIter& iter)
 {
-	m_connectionRowEdited.block(true);
+	m_connectionItemViewRowEdited.block(true);
 	bool isWord = (*iter)[m_itemStoreCols.itemClass] == "ocrx_word";
 	bool selected = (*iter)[m_itemStoreCols.selected];
 	if( isWord && selected) {
@@ -479,7 +484,19 @@ void OutputEditorHOCR::itemChanged(const Gtk::TreeIter& iter)
 	} else if(!selected) {
 		m_itemView->collapse_row(m_itemStore->get_path(iter));
 	}
-	m_connectionRowEdited.block(false);
+	m_connectionItemViewRowEdited.block(false);
+}
+
+void OutputEditorHOCR::propertyCellChanged(const Gtk::TreeIter &iter)
+{
+	Glib::ustring parentAttr = (*iter)[m_propStoreCols.parentAttr];
+	Glib::ustring key = (*iter)[m_propStoreCols.name];
+	Glib::ustring value = (*iter)[m_propStoreCols.value];
+	if(!parentAttr.empty()) {
+		updateItemAttribute(m_itemView->get_selection()->get_selected(), parentAttr, key, value);
+	} else {
+		updateItemAttribute(m_itemView->get_selection()->get_selected(), key, "", value);
+	}
 }
 
 void OutputEditorHOCR::updateItemText(Gtk::TreeIter item)
@@ -489,17 +506,44 @@ void OutputEditorHOCR::updateItemText(Gtk::TreeIter item)
 	xmlpp::Element* element = getHOCRElementForItem(item, parser);
 	element->remove_child(element->get_first_child());
 	element->add_child_text(newText);
+	updateItem(item, parser, element);
+}
 
+void OutputEditorHOCR::updateItemAttribute(Gtk::TreeIter item, const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue)
+{
+	xmlpp::DomParser parser;
+	xmlpp::Element* element = getHOCRElementForItem(item, parser);
+	if(subkey.empty()) {
+		element->set_attribute(key, newvalue);
+	} else {
+		Glib::ustring value = getAttribute(element, key);
+		std::vector<Glib::ustring> subattrs = Utils::string_split(value, ';');
+		for(int i = 0, n = subattrs.size(); i < n; ++i) {
+			Glib::ustring attr = Utils::string_trim(subattrs[i]);
+			std::size_t splitPos = attr.find(" ");
+			if(attr.substr(0, splitPos) == subkey) {
+				subattrs[i] = subkey + " " + newvalue;
+				break;
+			}
+		}
+		element->set_attribute(key, Utils::string_join(subattrs, "; "));
+	}
+	updateItem(item, parser, element);
+}
+
+void OutputEditorHOCR::updateItem(Gtk::TreeIter item, xmlpp::DomParser& parser, const xmlpp::Element* element)
+{
 	Glib::ustring spellLang = Utils::getSpellingLanguage(getAttribute(element, "lang"));
 	if(m_spell.get_language() != spellLang) {
 		m_spell.set_language(spellLang);
 	}
-	// TODO
-	if(m_spell.check_word(newText)) {
+	m_connectionItemViewRowEdited.block(true); // prevent row edited signal
+	if(m_spell.check_word((*item)[m_itemStoreCols.text])) {
 		item->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
 	} else {
 		item->set_value(m_itemStoreCols.textColor, Glib::ustring("#F00"));
 	}
+	m_connectionItemViewRowEdited.block(false);
 
 	Gtk::TreeIter toplevelItem = item;
 	while(toplevelItem->parent()) {
@@ -508,6 +552,18 @@ void OutputEditorHOCR::updateItemText(Gtk::TreeIter item)
 	toplevelItem->set_value(m_itemStoreCols.source, getDocumentXML(parser.get_document()));
 
 	m_sourceView->get_buffer()->set_text(getElementXML(element));
+
+	Glib::MatchInfo matchInfo;
+	xmlpp::Element* pageElement = dynamic_cast<xmlpp::Element*>(parser.get_document()->get_root_node());
+	Glib::ustring titleAttr = getAttribute(element, "title");
+	if(pageElement && pageElement->get_name() == "div" && setCurrentSource(pageElement) && s_bboxRx->match(titleAttr, matchInfo)) {
+		int x1 = std::atoi(matchInfo.fetch(1).c_str());
+		int y1 = std::atoi(matchInfo.fetch(2).c_str());
+		int x2 = std::atoi(matchInfo.fetch(3).c_str());
+		int y2 = std::atoi(matchInfo.fetch(4).c_str());
+		m_tool->setSelection(Geometry::Rectangle(x1, y1, x2-x1, y2-y1));
+	}
+
 	m_modified = true;
 }
 

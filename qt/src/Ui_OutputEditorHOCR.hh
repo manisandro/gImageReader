@@ -79,7 +79,6 @@ public:
 		tableWidgetProperties->horizontalHeader()->setVisible(false);
 		tableWidgetProperties->verticalHeader()->setVisible(false);
 		tableWidgetProperties->horizontalHeader()->setStretchLastSection(true);
-		tableWidgetProperties->setEditTriggers(QAbstractItemView::NoEditTriggers);
 		tabWidget->addTab(tableWidgetProperties, gettext("Properties"));
 
 		plainTextEditOutput = new OutputTextEdit(widget);
