@@ -23,6 +23,7 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QMessageBox>
+#include <QNetworkProxy>
 #include <QProcess>
 #include <QProgressBar>
 #include <QStatusBar>
@@ -109,6 +110,10 @@ MainWindow::MainWindow(const QStringList& files)
 #ifndef __ARMEL__
 	std::set_terminate(terminateHandler);
 #endif
+
+	QList<QNetworkProxy> listOfProxies = QNetworkProxyFactory::systemProxyForQuery(QNetworkProxyQuery(QUrl(CHECKURL)));
+	if (listOfProxies.size())
+		QNetworkProxy::setApplicationProxy(listOfProxies[0]);
 
 	qRegisterMetaType<MainWindow::State>();
 
