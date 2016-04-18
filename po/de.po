@@ -1,6 +1,6 @@
 # German translations for gImageReader package
 # German messages for gImageReader.
-# Copyright (C) 2010-2014 THE GIMAGEREADER'S COPYRIGHT HOLDER
+# Copyright (C) 2010-2016 THE GIMAGEREADER'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gImageReader package.
 #
 #
@@ -94,7 +94,7 @@ msgstr "Schriftart:"
 
 #: ../gtk/data/editor_hocr.ui.h:5 ../qt/data/PdfExportDialog.ui.h:2
 msgid "Use detected font sizes"
-msgstr "Automatisch erkannte Schriftgrösse verwenden"
+msgstr "Automatisch erkannte Schriftgrössen verwenden"
 
 #: ../gtk/data/editor_hocr.ui.h:6 ../qt/data/PdfExportDialog.ui.h:4
 msgid "Uniformize line spacing"
@@ -125,7 +125,7 @@ msgstr "Eigenschaften"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/src/Ui_OutputEditorHOCR.hh:87
 msgid "Source"
-msgstr "Quellen"
+msgstr "Quelle"
 
 #: ../gtk/data/editor_text.ui.h:1 ../qt/src/SubstitutionsManager.cc:38
 #: ../qt/src/Ui_OutputEditorText.hh:177
