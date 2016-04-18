@@ -58,6 +58,7 @@ int main (int argc, char *argv[])
 	translationsPath = packageDir.absolutePath() + translationsPath.mid(QLibraryInfo::location(QLibraryInfo::PrefixPath).length());
 #endif
 	qtTranslator.load("qt_" + QLocale::system().name(), translationsPath);
+	qtTranslator.load("qtbase_" + QLocale::system().name(), translationsPath);
 	QApplication::instance()->installTranslator(&qtTranslator);
 
 	bindtextdomain(GETTEXT_PACKAGE, dataDir.absoluteFilePath("locale").toLocal8Bit().data());

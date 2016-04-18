@@ -137,7 +137,8 @@ elif [ "$iface" == "qt5" ]; then
 
     # Install locale files
     mkdir -p $installroot/share/qt5/translations/
-    cp -a $MINGWROOT/share/qt5/translations/{qt_*.qm,QtSpell_*.qm}  $installroot/share/qt5/translations
+    cp -a $MINGWROOT/share/qt5/translations/{qt_*.qm,qtbase_*.qm,QtSpell_*.qm}  $installroot/share/qt5/translations
+    rm -f $installroot/share/qt5/translations/qt_help_*.qm
 
 fi
 
