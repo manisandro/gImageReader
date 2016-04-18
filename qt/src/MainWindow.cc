@@ -269,7 +269,7 @@ void MainWindow::onSourceChanged()
 	QList<Source*> sources = m_sourceManager->getSelectedSources();
 	if(m_displayer->setSources(sources)){
 		setWindowTitle(QString("%1 - %2").arg(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources")).arg(PACKAGE_NAME));
-		pushState(State::Normal, _("To recognize specific areas, drag rectangles over them."));
+		pushState(State::Normal, _("Ready"));
 	}else{
 		setWindowTitle(PACKAGE_NAME);
 	}

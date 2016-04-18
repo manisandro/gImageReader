@@ -291,7 +291,7 @@ void MainWindow::onSourceChanged()
 	std::vector<Source*> sources = m_sourceManager->getSelectedSources();
 	if(m_displayer->setSources(sources)){
 		m_headerbar->set_subtitle(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources"));
-		pushState(State::Normal, _("To recognize specific areas, drag rectangles over them."));
+		pushState(State::Normal, _("Ready"));
 	}else{
 		m_headerbar->set_subtitle("");
 	}
