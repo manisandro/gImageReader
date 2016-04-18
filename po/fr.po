@@ -1,6 +1,6 @@
 # French translations for gImageReader package
 # Traductions françaises du paquet gImageReader.
-# Copyright (C) 2010-2014 THE GIMAGEREADER'S COPYRIGHT HOLDER
+# Copyright (C) 2010-2016 THE GIMAGEREADER'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gImageReader package.
 #
 # Sandro Mani <manisandro@gmail.com>, 2010-2011, 2013, 2014, 2015, 2016.
