@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-15 00:05+0200\n"
+"POT-Creation-Date: 2016-04-18 19:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Yuriy Bahriy <yhmtargaryen@gmail.com>\n"
 "Language-Team: Ukrainian\n"
@@ -30,7 +30,7 @@ msgid "Preferences"
 msgstr "Налаштування"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:35
-#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:462
+#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:467
 #: ../qt/src/Ui_MainWindow.hh:151
 msgid "Help"
 msgstr "Допомога"
@@ -115,11 +115,11 @@ msgstr "Зберегти результати"
 msgid "Clear output"
 msgstr "Очистити результати"
 
-#: ../gtk/data/editor_hocr.ui.h:11 ../qt/src/Ui_OutputEditorHOCR.hh:83
+#: ../gtk/data/editor_hocr.ui.h:11 ../qt/src/Ui_OutputEditorHOCR.hh:82
 msgid "Properties"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:12 ../qt/src/Ui_OutputEditorHOCR.hh:87
+#: ../gtk/data/editor_hocr.ui.h:12 ../qt/src/Ui_OutputEditorHOCR.hh:86
 #, fuzzy
 msgid "Source"
 msgstr "Джерела"
@@ -149,8 +149,8 @@ msgstr "Очистити"
 msgid "Add"
 msgstr "Додати"
 
-#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/OutputEditorHOCR.cc:534
-#: ../qt/data/ConfigDialog.ui.h:20 ../qt/src/OutputEditorHOCR.cc:488
+#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/OutputEditorHOCR.cc:590
+#: ../qt/data/ConfigDialog.ui.h:20 ../qt/src/OutputEditorHOCR.cc:544
 #: ../qt/src/SubstitutionsManager.cc:55 ../qt/src/SubstitutionsManager.cc:56
 msgid "Remove"
 msgstr "Усунути"
@@ -637,58 +637,58 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr "Перезаписати файл?"
 
-#: ../gtk/src/MainWindow.cc:167 ../qt/src/MainWindow.cc:178
+#: ../gtk/src/MainWindow.cc:167 ../qt/src/MainWindow.cc:183
 msgid "Select an image to begin..."
 msgstr "Щоб розпочати виберіть зображення..."
 
-#: ../gtk/src/MainWindow.cc:293 ../qt/src/MainWindow.cc:266
+#: ../gtk/src/MainWindow.cc:293 ../qt/src/MainWindow.cc:271
 #, fuzzy
 msgid "Multiple sources"
 msgstr "Кілька сторінок..."
 
-#: ../gtk/src/MainWindow.cc:294 ../qt/src/MainWindow.cc:267
-msgid "To recognize specific areas, drag rectangles over them."
-msgstr "Щоб розпізнати певні ділянки, обведіть їх рамкою."
+#: ../gtk/src/MainWindow.cc:294 ../qt/src/MainWindow.cc:272
+msgid "Ready"
+msgstr ""
 
-#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:401
+#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:406
 msgid "New version"
 msgstr "Нова версія"
 
-#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:401
+#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:406
 msgid "gImageReader %1 is available"
 msgstr "Доступний gImageReader %1"
 
-#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:402
+#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:407
 msgid "Download"
 msgstr "Завантажити"
 
-#: ../gtk/src/MainWindow.cc:443 ../qt/src/MainWindow.cc:403
+#: ../gtk/src/MainWindow.cc:443 ../qt/src/MainWindow.cc:408
 msgid "Changelog"
 msgstr "Список змін"
 
-#: ../gtk/src/MainWindow.cc:444 ../qt/src/MainWindow.cc:404
+#: ../gtk/src/MainWindow.cc:444 ../qt/src/MainWindow.cc:409
 msgid "Don't notify again"
 msgstr "Більше не показувати сповіщення"
 
-#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:456
+#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:461
 msgid "Don't show again"
 msgstr "Не показувати знову"
 
 #: ../gtk/src/MainWindow.cc:471 ../gtk/src/MainWindow.cc:477
-#: ../qt/src/MainWindow.cc:457
+#: ../qt/src/MainWindow.cc:462
 msgid "Install"
 msgstr "Встановити"
 
-#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:467
+#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:472
 msgid "Spelling dictionary missing"
 msgstr "Орфографічний словник відсутній"
 
-#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:467
+#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:472
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Орфографічний словник для %1 не встановлено"
 
 #: ../gtk/src/MainWindow.cc:487 ../gtk/src/MainWindow.cc:514
-#: ../qt/src/MainWindow.cc:474
+#: ../qt/src/MainWindow.cc:479
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Встановлюється орфографічний словник для '%1'"
 
@@ -696,33 +696,33 @@ msgstr "Встановлюється орфографічний словник �
 #: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:539
 #: ../gtk/src/MainWindow.cc:568 ../gtk/src/TessdataManager.cc:55
 #: ../gtk/src/TessdataManager.cc:65 ../gtk/src/TessdataManager.cc:241
-#: ../qt/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:500
-#: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:518
-#: ../qt/src/MainWindow.cc:546 ../qt/src/TessdataManager.cc:66
+#: ../qt/src/MainWindow.cc:490 ../qt/src/MainWindow.cc:505
+#: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:523
+#: ../qt/src/MainWindow.cc:551 ../qt/src/TessdataManager.cc:66
 #: ../qt/src/TessdataManager.cc:76 ../qt/src/TessdataManager.cc:217
 msgid "Error"
 msgstr "Помилка"
 
-#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:485
+#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:490
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Не вдалося встановити орфографічний словник: %1"
 
 #: ../gtk/src/MainWindow.cc:523 ../gtk/src/MainWindow.cc:539
-#: ../qt/src/MainWindow.cc:500
+#: ../qt/src/MainWindow.cc:505
 #, fuzzy
 msgid "Could not read %1: %2."
 msgstr "Неможливо прочитати %1."
 
 #: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:568
-#: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:546
+#: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:551
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Орфографічні словники для '%1' не знайдено."
 
-#: ../gtk/src/MainWindow.cc:549 ../qt/src/MainWindow.cc:529
+#: ../gtk/src/MainWindow.cc:549 ../qt/src/MainWindow.cc:534
 msgid "Downloading '%1'..."
 msgstr "Завантажується '%1'..."
 
-#: ../gtk/src/MainWindow.cc:565 ../qt/src/MainWindow.cc:543
+#: ../gtk/src/MainWindow.cc:565 ../qt/src/MainWindow.cc:548
 msgid "Dictionaries installed"
 msgstr "Словники встановлено"
 
@@ -730,113 +730,113 @@ msgstr "Словники встановлено"
 msgid "The following dictionaries were installed:%1"
 msgstr "Було встановлено наступні словники:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:220
+#: ../gtk/src/OutputEditorHOCR.cc:222
 #, fuzzy
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr "Неможливо відкрити наступні файли:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:221 ../qt/src/OutputEditorHOCR.cc:182
+#: ../gtk/src/OutputEditorHOCR.cc:223 ../qt/src/OutputEditorHOCR.cc:183
 #, fuzzy
 msgid "Recognition errors"
 msgstr "Сталися помилки при розпізнаванні"
 
-#: ../gtk/src/OutputEditorHOCR.cc:281 ../qt/src/OutputEditorHOCR.cc:229
+#: ../gtk/src/OutputEditorHOCR.cc:283 ../qt/src/OutputEditorHOCR.cc:230
 msgid "Graphic"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:323 ../qt/src/OutputEditorHOCR.cc:280
+#: ../gtk/src/OutputEditorHOCR.cc:325 ../qt/src/OutputEditorHOCR.cc:281
 #, fuzzy
 msgid "Paragraph"
 msgstr "Зберегти абзаци"
 
-#: ../gtk/src/OutputEditorHOCR.cc:326 ../qt/src/OutputEditorHOCR.cc:283
+#: ../gtk/src/OutputEditorHOCR.cc:328 ../qt/src/OutputEditorHOCR.cc:284
 #, fuzzy
 msgid "Textline"
 msgstr "Текстові файли"
 
-#: ../gtk/src/OutputEditorHOCR.cc:553 ../qt/src/OutputEditorHOCR.cc:498
+#: ../gtk/src/OutputEditorHOCR.cc:609 ../qt/src/OutputEditorHOCR.cc:554
 msgid "No suggestions"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:580 ../gtk/src/OutputEditorHOCR.cc:616
-#: ../qt/src/OutputEditorHOCR.cc:518 ../qt/src/OutputEditorHOCR.cc:547
+#: ../gtk/src/OutputEditorHOCR.cc:636 ../gtk/src/OutputEditorHOCR.cc:672
+#: ../qt/src/OutputEditorHOCR.cc:574 ../qt/src/OutputEditorHOCR.cc:603
 msgid "hOCR HTML Files"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:581 ../qt/src/OutputEditorHOCR.cc:518
+#: ../gtk/src/OutputEditorHOCR.cc:637 ../qt/src/OutputEditorHOCR.cc:574
 msgid "Open hOCR File"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:590 ../qt/src/OutputEditorHOCR.cc:524
+#: ../gtk/src/OutputEditorHOCR.cc:646 ../qt/src/OutputEditorHOCR.cc:580
 #, fuzzy
 msgid "Failed to open file"
 msgstr "Неможливо відкрити файли"
 
-#: ../gtk/src/OutputEditorHOCR.cc:590 ../qt/src/OutputEditorHOCR.cc:524
+#: ../gtk/src/OutputEditorHOCR.cc:646 ../qt/src/OutputEditorHOCR.cc:580
 #, fuzzy
 msgid "The file could not be opened: %1."
 msgstr "Неможливо відкрити наступні файли:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:599 ../qt/src/OutputEditorHOCR.cc:531
+#: ../gtk/src/OutputEditorHOCR.cc:655 ../qt/src/OutputEditorHOCR.cc:587
 msgid "Invalid hOCR file"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:599 ../qt/src/OutputEditorHOCR.cc:531
+#: ../gtk/src/OutputEditorHOCR.cc:655 ../qt/src/OutputEditorHOCR.cc:587
 msgid "The file does not appear to contain valid hOCR HTML: %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:614 ../gtk/src/OutputEditorHOCR.cc:658
-#: ../gtk/src/OutputEditorText.cc:289 ../qt/src/OutputEditorHOCR.cc:546
-#: ../qt/src/OutputEditorHOCR.cc:584 ../qt/src/OutputEditorText.cc:241
+#: ../gtk/src/OutputEditorHOCR.cc:670 ../gtk/src/OutputEditorHOCR.cc:714
+#: ../gtk/src/OutputEditorText.cc:289 ../qt/src/OutputEditorHOCR.cc:602
+#: ../qt/src/OutputEditorHOCR.cc:640 ../qt/src/OutputEditorText.cc:241
 msgid "output"
 msgstr "результати"
 
-#: ../gtk/src/OutputEditorHOCR.cc:617 ../qt/src/OutputEditorHOCR.cc:547
+#: ../gtk/src/OutputEditorHOCR.cc:673 ../qt/src/OutputEditorHOCR.cc:603
 #, fuzzy
 msgid "Save hOCR Output..."
 msgstr "Зберегти результати..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:625 ../gtk/src/OutputEditorText.cc:302
-#: ../qt/src/OutputEditorHOCR.cc:555 ../qt/src/OutputEditorText.cc:251
+#: ../gtk/src/OutputEditorHOCR.cc:681 ../gtk/src/OutputEditorText.cc:302
+#: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
 msgid "Failed to save output"
 msgstr "Зберегти результати не вдалося"
 
-#: ../gtk/src/OutputEditorHOCR.cc:625 ../gtk/src/OutputEditorText.cc:302
-#: ../qt/src/OutputEditorHOCR.cc:555 ../qt/src/OutputEditorText.cc:251
+#: ../gtk/src/OutputEditorHOCR.cc:681 ../gtk/src/OutputEditorText.cc:302
+#: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Переконайтеся, що у вас є дозвіл на запис в обрану теку."
 
-#: ../gtk/src/OutputEditorHOCR.cc:659 ../qt/src/OutputEditorHOCR.cc:585
+#: ../gtk/src/OutputEditorHOCR.cc:715 ../qt/src/OutputEditorHOCR.cc:641
 #, fuzzy
 msgid "PDF Files"
 msgstr "Файли"
 
-#: ../gtk/src/OutputEditorHOCR.cc:660 ../qt/src/OutputEditorHOCR.cc:585
+#: ../gtk/src/OutputEditorHOCR.cc:716 ../qt/src/OutputEditorHOCR.cc:641
 #, fuzzy
 msgid "Save PDF Output..."
 msgstr "Зберегти результати..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:710 ../qt/src/OutputEditorHOCR.cc:635
+#: ../gtk/src/OutputEditorHOCR.cc:766 ../qt/src/OutputEditorHOCR.cc:691
 #, fuzzy
 msgid "Errors occurred"
 msgstr "Сталися помилки при розпізнаванні"
 
-#: ../gtk/src/OutputEditorHOCR.cc:710 ../qt/src/OutputEditorHOCR.cc:635
+#: ../gtk/src/OutputEditorHOCR.cc:766 ../qt/src/OutputEditorHOCR.cc:691
 #, fuzzy
 msgid ""
 "The following pages could not be rendered:\n"
 "%1"
 msgstr "Неможливо відкрити наступні файли:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:775 ../gtk/src/OutputEditorText.cc:317
-#: ../qt/src/OutputEditorHOCR.cc:694 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:831 ../gtk/src/OutputEditorText.cc:317
+#: ../qt/src/OutputEditorHOCR.cc:750 ../qt/src/OutputEditorText.cc:265
 msgid "Output not saved"
 msgstr "Результати не збережено"
 
-#: ../gtk/src/OutputEditorHOCR.cc:775 ../gtk/src/OutputEditorText.cc:317
-#: ../qt/src/OutputEditorHOCR.cc:694 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:831 ../gtk/src/OutputEditorText.cc:317
+#: ../qt/src/OutputEditorHOCR.cc:750 ../qt/src/OutputEditorText.cc:265
 msgid "Save output before proceeding?"
 msgstr "Зберегти результати, перш ніж продовжити?"
 
@@ -1262,12 +1262,12 @@ msgstr "Автовизначення вмісту"
 msgid "Toggle Output Pane"
 msgstr "Показати/приховати панель результатів"
 
-#: ../qt/src/MainWindow.cc:518
+#: ../qt/src/MainWindow.cc:523
 #, fuzzy
 msgid "Could not read %1: %2"
 msgstr "Неможливо прочитати %1."
 
-#: ../qt/src/MainWindow.cc:543
+#: ../qt/src/MainWindow.cc:548
 #, fuzzy
 msgid "The following dictionary files were installed:%1"
 msgstr "Було встановлено наступні словники:%1"
@@ -1325,6 +1325,9 @@ msgstr "Зберегти результати"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "Очистити результати"
+
+#~ msgid "To recognize specific areas, drag rectangles over them."
+#~ msgstr "Щоб розпізнати певні ділянки, обведіть їх рамкою."
 
 #~ msgid "Rendering image..."
 #~ msgstr "Трасування зображення..."

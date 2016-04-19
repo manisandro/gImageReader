@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-15 00:05+0200\n"
+"POT-Creation-Date: 2016-04-18 19:40+0200\n"
 "PO-Revision-Date: 2016-04-18 15:46+0200\n"
 "Last-Translator: Piotr Brol <peterb@inetia.pl>\n"
 "Language-Team: Polish <>\n"
@@ -28,7 +28,7 @@ msgid "Preferences"
 msgstr "Ustawienia"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:35
-#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:462
+#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:467
 #: ../qt/src/Ui_MainWindow.hh:151
 msgid "Help"
 msgstr "Pomoc"
@@ -60,9 +60,9 @@ msgid ""
 "the information below. Thank you."
 msgstr ""
 "Przepraszamy za usterki. Aby poprawić jakość aplikacji, zgłoś problem na "
-"adres <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Opisz działania "
-"wykonywane przed awarią programu i dołącz poniższą informację. Dziękuję."
+"adres <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+"\">manisandro@gmail.com</a>. Opisz działania wykonywane przed awarią "
+"programu i dołącz poniższą informację. Dziękuję."
 
 #: ../gtk/data/editor_hocr.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
@@ -112,11 +112,11 @@ msgstr "Zapisz wynik"
 msgid "Clear output"
 msgstr "Wyczyść wynik"
 
-#: ../gtk/data/editor_hocr.ui.h:11 ../qt/src/Ui_OutputEditorHOCR.hh:83
+#: ../gtk/data/editor_hocr.ui.h:11 ../qt/src/Ui_OutputEditorHOCR.hh:82
 msgid "Properties"
 msgstr "Właściwości"
 
-#: ../gtk/data/editor_hocr.ui.h:12 ../qt/src/Ui_OutputEditorHOCR.hh:87
+#: ../gtk/data/editor_hocr.ui.h:12 ../qt/src/Ui_OutputEditorHOCR.hh:86
 msgid "Source"
 msgstr "Źródło"
 
@@ -145,8 +145,8 @@ msgstr "Wyczyść"
 msgid "Add"
 msgstr "Dodaj"
 
-#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/OutputEditorHOCR.cc:534
-#: ../qt/data/ConfigDialog.ui.h:20 ../qt/src/OutputEditorHOCR.cc:488
+#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/OutputEditorHOCR.cc:590
+#: ../qt/data/ConfigDialog.ui.h:20 ../qt/src/OutputEditorHOCR.cc:544
 #: ../qt/src/SubstitutionsManager.cc:55 ../qt/src/SubstitutionsManager.cc:56
 msgid "Remove"
 msgstr "Usuń"
@@ -592,7 +592,8 @@ msgstr "Błąd wczytywania obrazu"
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
-msgstr "Plik nie jest obrazem lub jest uszkodzony:\n"
+msgstr ""
+"Plik nie jest obrazem lub jest uszkodzony:\n"
 "%1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:40 ../qt/src/DisplayerToolSelect.cc:41
@@ -628,57 +629,57 @@ msgstr "Plik \"%1\" już istnieje. Czy chcesz go zastąpić?"
 msgid "Overwrite File?"
 msgstr "Zastąpić plik?"
 
-#: ../gtk/src/MainWindow.cc:167 ../qt/src/MainWindow.cc:178
+#: ../gtk/src/MainWindow.cc:167 ../qt/src/MainWindow.cc:183
 msgid "Select an image to begin..."
 msgstr "Wybierz pierwszy obraz..."
 
-#: ../gtk/src/MainWindow.cc:293 ../qt/src/MainWindow.cc:266
+#: ../gtk/src/MainWindow.cc:293 ../qt/src/MainWindow.cc:271
 msgid "Multiple sources"
 msgstr "Wiele źródeł"
 
-#: ../gtk/src/MainWindow.cc:294 ../qt/src/MainWindow.cc:267
-msgid "To recognize specific areas, drag rectangles over them."
-msgstr "Aby rozpoznać fragmenty, zaznacz je"
+#: ../gtk/src/MainWindow.cc:294 ../qt/src/MainWindow.cc:272
+msgid "Ready"
+msgstr "Gotowy"
 
-#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:401
+#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:406
 msgid "New version"
 msgstr "Nowa wersja"
 
-#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:401
+#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:406
 msgid "gImageReader %1 is available"
 msgstr "gImageReader %1 jest dostępny"
 
-#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:402
+#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:407
 msgid "Download"
 msgstr "Pobierz"
 
-#: ../gtk/src/MainWindow.cc:443 ../qt/src/MainWindow.cc:403
+#: ../gtk/src/MainWindow.cc:443 ../qt/src/MainWindow.cc:408
 msgid "Changelog"
 msgstr "Lista zmian"
 
-#: ../gtk/src/MainWindow.cc:444 ../qt/src/MainWindow.cc:404
+#: ../gtk/src/MainWindow.cc:444 ../qt/src/MainWindow.cc:409
 msgid "Don't notify again"
 msgstr "Nie powiadamiaj ponownie"
 
-#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:456
+#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:461
 msgid "Don't show again"
 msgstr "Nie pokazuj ponownie"
 
 #: ../gtk/src/MainWindow.cc:471 ../gtk/src/MainWindow.cc:477
-#: ../qt/src/MainWindow.cc:457
+#: ../qt/src/MainWindow.cc:462
 msgid "Install"
 msgstr "Zainstaluj"
 
-#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:467
+#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:472
 msgid "Spelling dictionary missing"
 msgstr "Brak słownika"
 
-#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:467
+#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:472
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Słownik dla %1 nie jest zainstalowany"
 
 #: ../gtk/src/MainWindow.cc:487 ../gtk/src/MainWindow.cc:514
-#: ../qt/src/MainWindow.cc:474
+#: ../qt/src/MainWindow.cc:479
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Instalacja słownika dla '%1'"
 
@@ -686,32 +687,32 @@ msgstr "Instalacja słownika dla '%1'"
 #: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:539
 #: ../gtk/src/MainWindow.cc:568 ../gtk/src/TessdataManager.cc:55
 #: ../gtk/src/TessdataManager.cc:65 ../gtk/src/TessdataManager.cc:241
-#: ../qt/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:500
-#: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:518
-#: ../qt/src/MainWindow.cc:546 ../qt/src/TessdataManager.cc:66
+#: ../qt/src/MainWindow.cc:490 ../qt/src/MainWindow.cc:505
+#: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:523
+#: ../qt/src/MainWindow.cc:551 ../qt/src/TessdataManager.cc:66
 #: ../qt/src/TessdataManager.cc:76 ../qt/src/TessdataManager.cc:217
 msgid "Error"
 msgstr "Błąd"
 
-#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:485
+#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:490
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Błąd instalacji słownika: %1"
 
 #: ../gtk/src/MainWindow.cc:523 ../gtk/src/MainWindow.cc:539
-#: ../qt/src/MainWindow.cc:500
+#: ../qt/src/MainWindow.cc:505
 msgid "Could not read %1: %2."
 msgstr "Nie można odczytać%1: %2."
 
 #: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:568
-#: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:546
+#: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:551
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Nie znaleziono słowników dla '%1'."
 
-#: ../gtk/src/MainWindow.cc:549 ../qt/src/MainWindow.cc:529
+#: ../gtk/src/MainWindow.cc:549 ../qt/src/MainWindow.cc:534
 msgid "Downloading '%1'..."
 msgstr "Pobieranie '%1'..."
 
-#: ../gtk/src/MainWindow.cc:565 ../qt/src/MainWindow.cc:543
+#: ../gtk/src/MainWindow.cc:565 ../qt/src/MainWindow.cc:548
 msgid "Dictionaries installed"
 msgstr "Słowniki zainstalowane"
 
@@ -719,102 +720,106 @@ msgstr "Słowniki zainstalowane"
 msgid "The following dictionaries were installed:%1"
 msgstr "Zostały zainstalowane słowniki:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:220
+#: ../gtk/src/OutputEditorHOCR.cc:222
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
-msgstr "Nie mogły zostać przetworzone strony:\n%1"
+msgstr ""
+"Nie mogły zostać przetworzone strony:\n"
+"%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:221 ../qt/src/OutputEditorHOCR.cc:182
+#: ../gtk/src/OutputEditorHOCR.cc:223 ../qt/src/OutputEditorHOCR.cc:183
 msgid "Recognition errors"
 msgstr "Błędy przetwarzania"
 
-#: ../gtk/src/OutputEditorHOCR.cc:281 ../qt/src/OutputEditorHOCR.cc:229
+#: ../gtk/src/OutputEditorHOCR.cc:283 ../qt/src/OutputEditorHOCR.cc:230
 msgid "Graphic"
 msgstr "Grafika"
 
-#: ../gtk/src/OutputEditorHOCR.cc:323 ../qt/src/OutputEditorHOCR.cc:280
+#: ../gtk/src/OutputEditorHOCR.cc:325 ../qt/src/OutputEditorHOCR.cc:281
 msgid "Paragraph"
 msgstr "Akapit"
 
-#: ../gtk/src/OutputEditorHOCR.cc:326 ../qt/src/OutputEditorHOCR.cc:283
+#: ../gtk/src/OutputEditorHOCR.cc:328 ../qt/src/OutputEditorHOCR.cc:284
 msgid "Textline"
 msgstr "Wiersz tekstu"
 
-#: ../gtk/src/OutputEditorHOCR.cc:553 ../qt/src/OutputEditorHOCR.cc:498
+#: ../gtk/src/OutputEditorHOCR.cc:609 ../qt/src/OutputEditorHOCR.cc:554
 msgid "No suggestions"
 msgstr "Brak sugestii"
 
-#: ../gtk/src/OutputEditorHOCR.cc:580 ../gtk/src/OutputEditorHOCR.cc:616
-#: ../qt/src/OutputEditorHOCR.cc:518 ../qt/src/OutputEditorHOCR.cc:547
+#: ../gtk/src/OutputEditorHOCR.cc:636 ../gtk/src/OutputEditorHOCR.cc:672
+#: ../qt/src/OutputEditorHOCR.cc:574 ../qt/src/OutputEditorHOCR.cc:603
 msgid "hOCR HTML Files"
 msgstr "Pliki hOCR HTML"
 
-#: ../gtk/src/OutputEditorHOCR.cc:581 ../qt/src/OutputEditorHOCR.cc:518
+#: ../gtk/src/OutputEditorHOCR.cc:637 ../qt/src/OutputEditorHOCR.cc:574
 msgid "Open hOCR File"
 msgstr "Otwórz plik hOCR"
 
-#: ../gtk/src/OutputEditorHOCR.cc:590 ../qt/src/OutputEditorHOCR.cc:524
+#: ../gtk/src/OutputEditorHOCR.cc:646 ../qt/src/OutputEditorHOCR.cc:580
 msgid "Failed to open file"
 msgstr "Błąd otwierania pliku"
 
-#: ../gtk/src/OutputEditorHOCR.cc:590 ../qt/src/OutputEditorHOCR.cc:524
+#: ../gtk/src/OutputEditorHOCR.cc:646 ../qt/src/OutputEditorHOCR.cc:580
 msgid "The file could not be opened: %1."
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:599 ../qt/src/OutputEditorHOCR.cc:531
+#: ../gtk/src/OutputEditorHOCR.cc:655 ../qt/src/OutputEditorHOCR.cc:587
 msgid "Invalid hOCR file"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:599 ../qt/src/OutputEditorHOCR.cc:531
+#: ../gtk/src/OutputEditorHOCR.cc:655 ../qt/src/OutputEditorHOCR.cc:587
 msgid "The file does not appear to contain valid hOCR HTML: %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:614 ../gtk/src/OutputEditorHOCR.cc:658
-#: ../gtk/src/OutputEditorText.cc:289 ../qt/src/OutputEditorHOCR.cc:546
-#: ../qt/src/OutputEditorHOCR.cc:584 ../qt/src/OutputEditorText.cc:241
+#: ../gtk/src/OutputEditorHOCR.cc:670 ../gtk/src/OutputEditorHOCR.cc:714
+#: ../gtk/src/OutputEditorText.cc:289 ../qt/src/OutputEditorHOCR.cc:602
+#: ../qt/src/OutputEditorHOCR.cc:640 ../qt/src/OutputEditorText.cc:241
 msgid "output"
 msgstr "wynik"
 
-#: ../gtk/src/OutputEditorHOCR.cc:617 ../qt/src/OutputEditorHOCR.cc:547
+#: ../gtk/src/OutputEditorHOCR.cc:673 ../qt/src/OutputEditorHOCR.cc:603
 msgid "Save hOCR Output..."
 msgstr "Zapisz wynik jako hOCR..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:625 ../gtk/src/OutputEditorText.cc:302
-#: ../qt/src/OutputEditorHOCR.cc:555 ../qt/src/OutputEditorText.cc:251
+#: ../gtk/src/OutputEditorHOCR.cc:681 ../gtk/src/OutputEditorText.cc:302
+#: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
 msgid "Failed to save output"
 msgstr "Błąd zapisu pliku wynikowego"
 
-#: ../gtk/src/OutputEditorHOCR.cc:625 ../gtk/src/OutputEditorText.cc:302
-#: ../qt/src/OutputEditorHOCR.cc:555 ../qt/src/OutputEditorText.cc:251
+#: ../gtk/src/OutputEditorHOCR.cc:681 ../gtk/src/OutputEditorText.cc:302
+#: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Sprawdź uprawnienia do zapisu w wybranym folderze"
 
-#: ../gtk/src/OutputEditorHOCR.cc:659 ../qt/src/OutputEditorHOCR.cc:585
+#: ../gtk/src/OutputEditorHOCR.cc:715 ../qt/src/OutputEditorHOCR.cc:641
 msgid "PDF Files"
 msgstr "Pliki PDF"
 
-#: ../gtk/src/OutputEditorHOCR.cc:660 ../qt/src/OutputEditorHOCR.cc:585
+#: ../gtk/src/OutputEditorHOCR.cc:716 ../qt/src/OutputEditorHOCR.cc:641
 msgid "Save PDF Output..."
 msgstr "Zapisz wynik jako PDF..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:710 ../qt/src/OutputEditorHOCR.cc:635
+#: ../gtk/src/OutputEditorHOCR.cc:766 ../qt/src/OutputEditorHOCR.cc:691
 msgid "Errors occurred"
 msgstr "Wystąpiły błędy"
 
-#: ../gtk/src/OutputEditorHOCR.cc:710 ../qt/src/OutputEditorHOCR.cc:635
+#: ../gtk/src/OutputEditorHOCR.cc:766 ../qt/src/OutputEditorHOCR.cc:691
 msgid ""
 "The following pages could not be rendered:\n"
 "%1"
-msgstr "Następujące strony nie mogą być wyświetlone:\n%1"
+msgstr ""
+"Następujące strony nie mogą być wyświetlone:\n"
+"%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:775 ../gtk/src/OutputEditorText.cc:317
-#: ../qt/src/OutputEditorHOCR.cc:694 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:831 ../gtk/src/OutputEditorText.cc:317
+#: ../qt/src/OutputEditorHOCR.cc:750 ../qt/src/OutputEditorText.cc:265
 msgid "Output not saved"
 msgstr "Wynik nie został zapisany"
 
-#: ../gtk/src/OutputEditorHOCR.cc:775 ../gtk/src/OutputEditorText.cc:317
-#: ../qt/src/OutputEditorHOCR.cc:694 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:831 ../gtk/src/OutputEditorText.cc:317
+#: ../qt/src/OutputEditorHOCR.cc:750 ../qt/src/OutputEditorText.cc:265
 msgid "Save output before proceeding?"
 msgstr "Czy zapisać wynik przed kontynuowaniem?"
 
@@ -835,7 +840,9 @@ msgstr "Zamiana..."
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
-msgstr "\n[Błąd rozpoznawania strony %1]\n"
+msgstr ""
+"\n"
+"[Błąd rozpoznawania strony %1]\n"
 
 #: ../gtk/src/OutputEditorText.cc:293 ../qt/src/OutputEditorText.cc:243
 msgid "Text Files"
@@ -870,7 +877,9 @@ msgstr "Zarządzaj językami..."
 msgid ""
 "\n"
 "\tFailed to initialize tesseract"
-msgstr "\n\tBłąd inicjalizacji tesseract"
+msgstr ""
+"\n"
+"\tBłąd inicjalizacji tesseract"
 
 #: ../gtk/src/Recognizer.cc:391 ../qt/src/Recognizer.cc:395
 msgid "Recognizing page %1 (%2 of %3)"
@@ -880,7 +889,9 @@ msgstr "Rozpoznawanie strony %1 (%2 of %3)"
 msgid ""
 "\n"
 "\tPage %1: failed to render page"
-msgstr "\n\tStona %1: błąd wyświetlania strony"
+msgstr ""
+"\n"
+"\tStona %1: błąd wyświetlania strony"
 
 #: ../gtk/src/Recognizer.cc:417 ../gtk/src/Recognizer.cc:447
 #: ../gtk/src/Recognizer.cc:460 ../qt/src/Recognizer.cc:421
@@ -1001,7 +1012,9 @@ msgstr "Brak pliku"
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
-msgstr "Plik został usunięty albo przeniesiony:\n%1"
+msgstr ""
+"Plik został usunięty albo przeniesiony:\n"
+"%1"
 
 #: ../gtk/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:78
 msgid "Search for"
@@ -1069,8 +1082,9 @@ msgid ""
 "PackageKit is required for managing tesseract language packs, but it was not "
 "found. Please use the system package management software to manage the "
 "tesseract language packs."
-msgstr "Użyj zarządzania pakietami dostępnej w systemie operacyjnym "
-"aby zainstalować pakiety językowe tesseract"
+msgstr ""
+"Użyj zarządzania pakietami dostępnej w systemie operacyjnym aby zainstalować "
+"pakiety językowe tesseract"
 
 #: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:70
 msgid "Fetching available languages"
@@ -1161,12 +1175,11 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">"
-"Przepraszamy za usterki. Aby poprawić jakość aplikacji, zgłoś problem na "
-"adres <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Opisz działania "
-"wykonywane przed awarią programu i dołącz poniższą informację. Dziękuję."
-"</p></body></html>"
+"<html><head/><body><p><span style=\" font-weight:600;\">Przepraszamy za "
+"usterki. Aby poprawić jakość aplikacji, zgłoś problem na adres <a href="
+"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+"\">manisandro@gmail.com</a>. Opisz działania wykonywane przed awarią "
+"programu i dołącz poniższą informację. Dziękuję.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1228,11 +1241,11 @@ msgstr "Wykryj układ"
 msgid "Toggle Output Pane"
 msgstr "Pokaż/ukryj panel wyniku"
 
-#: ../qt/src/MainWindow.cc:518
+#: ../qt/src/MainWindow.cc:523
 msgid "Could not read %1: %2"
 msgstr "Nie można odczytać %1: %2"
 
-#: ../qt/src/MainWindow.cc:543
+#: ../qt/src/MainWindow.cc:548
 msgid "The following dictionary files were installed:%1"
 msgstr "Zainstalowano słowniki:%1"
 
@@ -1288,3 +1301,6 @@ msgstr "Zapisz wynik"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "Wyczyść wynik"
+
+#~ msgid "To recognize specific areas, drag rectangles over them."
+#~ msgstr "Aby rozpoznać fragmenty, zaznacz je"

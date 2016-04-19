@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-15 00:05+0200\n"
+"POT-Creation-Date: 2016-04-18 19:40+0200\n"
 "PO-Revision-Date: 2015-09-03 15:05+0000\n"
 "Last-Translator: Necdet Yucel <necdetyucel@gmail.com>\n"
 "Language-Team: Turkish <>\n"
@@ -24,7 +24,7 @@ msgid "Preferences"
 msgstr "Tercihler"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:35
-#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:462
+#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:467
 #: ../qt/src/Ui_MainWindow.hh:151
 msgid "Help"
 msgstr "Yardım"
@@ -109,11 +109,11 @@ msgstr "Çıktıyı kaydet"
 msgid "Clear output"
 msgstr "Çıktıyı temizle"
 
-#: ../gtk/data/editor_hocr.ui.h:11 ../qt/src/Ui_OutputEditorHOCR.hh:83
+#: ../gtk/data/editor_hocr.ui.h:11 ../qt/src/Ui_OutputEditorHOCR.hh:82
 msgid "Properties"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:12 ../qt/src/Ui_OutputEditorHOCR.hh:87
+#: ../gtk/data/editor_hocr.ui.h:12 ../qt/src/Ui_OutputEditorHOCR.hh:86
 #, fuzzy
 msgid "Source"
 msgstr "Kaynaklar"
@@ -143,8 +143,8 @@ msgstr "Temizle"
 msgid "Add"
 msgstr "Ekle"
 
-#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/OutputEditorHOCR.cc:534
-#: ../qt/data/ConfigDialog.ui.h:20 ../qt/src/OutputEditorHOCR.cc:488
+#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/OutputEditorHOCR.cc:590
+#: ../qt/data/ConfigDialog.ui.h:20 ../qt/src/OutputEditorHOCR.cc:544
 #: ../qt/src/SubstitutionsManager.cc:55 ../qt/src/SubstitutionsManager.cc:56
 msgid "Remove"
 msgstr "Çıkar"
@@ -631,58 +631,58 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr "Dosyanın Üstüne Yazılsın mı?"
 
-#: ../gtk/src/MainWindow.cc:167 ../qt/src/MainWindow.cc:178
+#: ../gtk/src/MainWindow.cc:167 ../qt/src/MainWindow.cc:183
 msgid "Select an image to begin..."
 msgstr "Başlamak için bir resim seçin..."
 
-#: ../gtk/src/MainWindow.cc:293 ../qt/src/MainWindow.cc:266
+#: ../gtk/src/MainWindow.cc:293 ../qt/src/MainWindow.cc:271
 #, fuzzy
 msgid "Multiple sources"
 msgstr "Çoklu Sayfalar..."
 
-#: ../gtk/src/MainWindow.cc:294 ../qt/src/MainWindow.cc:267
-msgid "To recognize specific areas, drag rectangles over them."
-msgstr "Belirli alanları tanımak için dikdörtgenleri üzerlerine sürükleyin."
+#: ../gtk/src/MainWindow.cc:294 ../qt/src/MainWindow.cc:272
+msgid "Ready"
+msgstr ""
 
-#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:401
+#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:406
 msgid "New version"
 msgstr "Yeni sürüm"
 
-#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:401
+#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:406
 msgid "gImageReader %1 is available"
 msgstr "gImageReader %1 kullanılabilir durumda"
 
-#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:402
+#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:407
 msgid "Download"
 msgstr "İndir"
 
-#: ../gtk/src/MainWindow.cc:443 ../qt/src/MainWindow.cc:403
+#: ../gtk/src/MainWindow.cc:443 ../qt/src/MainWindow.cc:408
 msgid "Changelog"
 msgstr "Değişim günlüğü"
 
-#: ../gtk/src/MainWindow.cc:444 ../qt/src/MainWindow.cc:404
+#: ../gtk/src/MainWindow.cc:444 ../qt/src/MainWindow.cc:409
 msgid "Don't notify again"
 msgstr "Tekrar uyarma"
 
-#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:456
+#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:461
 msgid "Don't show again"
 msgstr "Tekrar gösterme"
 
 #: ../gtk/src/MainWindow.cc:471 ../gtk/src/MainWindow.cc:477
-#: ../qt/src/MainWindow.cc:457
+#: ../qt/src/MainWindow.cc:462
 msgid "Install"
 msgstr "Kur"
 
-#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:467
+#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:472
 msgid "Spelling dictionary missing"
 msgstr "Yazım denetimi sözlüğü eksik"
 
-#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:467
+#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:472
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "%1 için yazım denetimi sözlüğü kurulmadı"
 
 #: ../gtk/src/MainWindow.cc:487 ../gtk/src/MainWindow.cc:514
-#: ../qt/src/MainWindow.cc:474
+#: ../qt/src/MainWindow.cc:479
 msgid "Installing spelling dictionary for '%1'"
 msgstr "'%1' için yazım denetimi sözlüğü kuruluyor"
 
@@ -690,33 +690,33 @@ msgstr "'%1' için yazım denetimi sözlüğü kuruluyor"
 #: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:539
 #: ../gtk/src/MainWindow.cc:568 ../gtk/src/TessdataManager.cc:55
 #: ../gtk/src/TessdataManager.cc:65 ../gtk/src/TessdataManager.cc:241
-#: ../qt/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:500
-#: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:518
-#: ../qt/src/MainWindow.cc:546 ../qt/src/TessdataManager.cc:66
+#: ../qt/src/MainWindow.cc:490 ../qt/src/MainWindow.cc:505
+#: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:523
+#: ../qt/src/MainWindow.cc:551 ../qt/src/TessdataManager.cc:66
 #: ../qt/src/TessdataManager.cc:76 ../qt/src/TessdataManager.cc:217
 msgid "Error"
 msgstr "Hata"
 
-#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:485
+#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:490
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Yazım denetimi sözlüğü kurulamadı: %1"
 
 #: ../gtk/src/MainWindow.cc:523 ../gtk/src/MainWindow.cc:539
-#: ../qt/src/MainWindow.cc:500
+#: ../qt/src/MainWindow.cc:505
 #, fuzzy
 msgid "Could not read %1: %2."
 msgstr "%1 okunamadı."
 
 #: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:568
-#: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:546
+#: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:551
 msgid "No spelling dictionaries found for '%1'."
 msgstr "'%1' için yazım denetimi sözlüğü bulunamadı."
 
-#: ../gtk/src/MainWindow.cc:549 ../qt/src/MainWindow.cc:529
+#: ../gtk/src/MainWindow.cc:549 ../qt/src/MainWindow.cc:534
 msgid "Downloading '%1'..."
 msgstr "'%1' indiriliyor..."
 
-#: ../gtk/src/MainWindow.cc:565 ../qt/src/MainWindow.cc:543
+#: ../gtk/src/MainWindow.cc:565 ../qt/src/MainWindow.cc:548
 msgid "Dictionaries installed"
 msgstr "Sözlükler kuruldu"
 
@@ -724,113 +724,113 @@ msgstr "Sözlükler kuruldu"
 msgid "The following dictionaries were installed:%1"
 msgstr "Kurulan sözlükler: %1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:220
+#: ../gtk/src/OutputEditorHOCR.cc:222
 #, fuzzy
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr "Bu dosyalar açılamadı:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:221 ../qt/src/OutputEditorHOCR.cc:182
+#: ../gtk/src/OutputEditorHOCR.cc:223 ../qt/src/OutputEditorHOCR.cc:183
 #, fuzzy
 msgid "Recognition errors"
 msgstr "Tanıma hataları oluştu"
 
-#: ../gtk/src/OutputEditorHOCR.cc:281 ../qt/src/OutputEditorHOCR.cc:229
+#: ../gtk/src/OutputEditorHOCR.cc:283 ../qt/src/OutputEditorHOCR.cc:230
 msgid "Graphic"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:323 ../qt/src/OutputEditorHOCR.cc:280
+#: ../gtk/src/OutputEditorHOCR.cc:325 ../qt/src/OutputEditorHOCR.cc:281
 #, fuzzy
 msgid "Paragraph"
 msgstr "Paragrafları koru"
 
-#: ../gtk/src/OutputEditorHOCR.cc:326 ../qt/src/OutputEditorHOCR.cc:283
+#: ../gtk/src/OutputEditorHOCR.cc:328 ../qt/src/OutputEditorHOCR.cc:284
 #, fuzzy
 msgid "Textline"
 msgstr "Metin Dosyaları"
 
-#: ../gtk/src/OutputEditorHOCR.cc:553 ../qt/src/OutputEditorHOCR.cc:498
+#: ../gtk/src/OutputEditorHOCR.cc:609 ../qt/src/OutputEditorHOCR.cc:554
 msgid "No suggestions"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:580 ../gtk/src/OutputEditorHOCR.cc:616
-#: ../qt/src/OutputEditorHOCR.cc:518 ../qt/src/OutputEditorHOCR.cc:547
+#: ../gtk/src/OutputEditorHOCR.cc:636 ../gtk/src/OutputEditorHOCR.cc:672
+#: ../qt/src/OutputEditorHOCR.cc:574 ../qt/src/OutputEditorHOCR.cc:603
 msgid "hOCR HTML Files"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:581 ../qt/src/OutputEditorHOCR.cc:518
+#: ../gtk/src/OutputEditorHOCR.cc:637 ../qt/src/OutputEditorHOCR.cc:574
 msgid "Open hOCR File"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:590 ../qt/src/OutputEditorHOCR.cc:524
+#: ../gtk/src/OutputEditorHOCR.cc:646 ../qt/src/OutputEditorHOCR.cc:580
 #, fuzzy
 msgid "Failed to open file"
 msgstr "Dosyalar açılamadı"
 
-#: ../gtk/src/OutputEditorHOCR.cc:590 ../qt/src/OutputEditorHOCR.cc:524
+#: ../gtk/src/OutputEditorHOCR.cc:646 ../qt/src/OutputEditorHOCR.cc:580
 #, fuzzy
 msgid "The file could not be opened: %1."
 msgstr "Bu dosyalar açılamadı:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:599 ../qt/src/OutputEditorHOCR.cc:531
+#: ../gtk/src/OutputEditorHOCR.cc:655 ../qt/src/OutputEditorHOCR.cc:587
 msgid "Invalid hOCR file"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:599 ../qt/src/OutputEditorHOCR.cc:531
+#: ../gtk/src/OutputEditorHOCR.cc:655 ../qt/src/OutputEditorHOCR.cc:587
 msgid "The file does not appear to contain valid hOCR HTML: %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:614 ../gtk/src/OutputEditorHOCR.cc:658
-#: ../gtk/src/OutputEditorText.cc:289 ../qt/src/OutputEditorHOCR.cc:546
-#: ../qt/src/OutputEditorHOCR.cc:584 ../qt/src/OutputEditorText.cc:241
+#: ../gtk/src/OutputEditorHOCR.cc:670 ../gtk/src/OutputEditorHOCR.cc:714
+#: ../gtk/src/OutputEditorText.cc:289 ../qt/src/OutputEditorHOCR.cc:602
+#: ../qt/src/OutputEditorHOCR.cc:640 ../qt/src/OutputEditorText.cc:241
 msgid "output"
 msgstr "çıktı"
 
-#: ../gtk/src/OutputEditorHOCR.cc:617 ../qt/src/OutputEditorHOCR.cc:547
+#: ../gtk/src/OutputEditorHOCR.cc:673 ../qt/src/OutputEditorHOCR.cc:603
 #, fuzzy
 msgid "Save hOCR Output..."
 msgstr "Çıktıyı Kaydet..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:625 ../gtk/src/OutputEditorText.cc:302
-#: ../qt/src/OutputEditorHOCR.cc:555 ../qt/src/OutputEditorText.cc:251
+#: ../gtk/src/OutputEditorHOCR.cc:681 ../gtk/src/OutputEditorText.cc:302
+#: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
 msgid "Failed to save output"
 msgstr "Çıktının kaydedilmesi başarısız oldu"
 
-#: ../gtk/src/OutputEditorHOCR.cc:625 ../gtk/src/OutputEditorText.cc:302
-#: ../qt/src/OutputEditorHOCR.cc:555 ../qt/src/OutputEditorText.cc:251
+#: ../gtk/src/OutputEditorHOCR.cc:681 ../gtk/src/OutputEditorText.cc:302
+#: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Seçilen klasöre yazma hakkınız olduğundan emin olun."
 
-#: ../gtk/src/OutputEditorHOCR.cc:659 ../qt/src/OutputEditorHOCR.cc:585
+#: ../gtk/src/OutputEditorHOCR.cc:715 ../qt/src/OutputEditorHOCR.cc:641
 #, fuzzy
 msgid "PDF Files"
 msgstr "Dosyalar"
 
-#: ../gtk/src/OutputEditorHOCR.cc:660 ../qt/src/OutputEditorHOCR.cc:585
+#: ../gtk/src/OutputEditorHOCR.cc:716 ../qt/src/OutputEditorHOCR.cc:641
 #, fuzzy
 msgid "Save PDF Output..."
 msgstr "Çıktıyı Kaydet..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:710 ../qt/src/OutputEditorHOCR.cc:635
+#: ../gtk/src/OutputEditorHOCR.cc:766 ../qt/src/OutputEditorHOCR.cc:691
 #, fuzzy
 msgid "Errors occurred"
 msgstr "Tanıma hataları oluştu"
 
-#: ../gtk/src/OutputEditorHOCR.cc:710 ../qt/src/OutputEditorHOCR.cc:635
+#: ../gtk/src/OutputEditorHOCR.cc:766 ../qt/src/OutputEditorHOCR.cc:691
 #, fuzzy
 msgid ""
 "The following pages could not be rendered:\n"
 "%1"
 msgstr "Bu dosyalar açılamadı:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:775 ../gtk/src/OutputEditorText.cc:317
-#: ../qt/src/OutputEditorHOCR.cc:694 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:831 ../gtk/src/OutputEditorText.cc:317
+#: ../qt/src/OutputEditorHOCR.cc:750 ../qt/src/OutputEditorText.cc:265
 msgid "Output not saved"
 msgstr "Çıktı kaydedilmedi"
 
-#: ../gtk/src/OutputEditorHOCR.cc:775 ../gtk/src/OutputEditorText.cc:317
-#: ../qt/src/OutputEditorHOCR.cc:694 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:831 ../gtk/src/OutputEditorText.cc:317
+#: ../qt/src/OutputEditorHOCR.cc:750 ../qt/src/OutputEditorText.cc:265
 msgid "Save output before proceeding?"
 msgstr "Devam etmeden çıktı kaydedilsin mi?"
 
@@ -1254,12 +1254,12 @@ msgstr "Yerleşimi Otomatik Algıla"
 msgid "Toggle Output Pane"
 msgstr "Çıktı Bölmesini Değiştir"
 
-#: ../qt/src/MainWindow.cc:518
+#: ../qt/src/MainWindow.cc:523
 #, fuzzy
 msgid "Could not read %1: %2"
 msgstr "%1 okunamadı."
 
-#: ../qt/src/MainWindow.cc:543
+#: ../qt/src/MainWindow.cc:548
 #, fuzzy
 msgid "The following dictionary files were installed:%1"
 msgstr "Kurulan sözlükler: %1"
@@ -1317,6 +1317,9 @@ msgstr "Çıktıyı Kaydet"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "Çıktıyı Temizle"
+
+#~ msgid "To recognize specific areas, drag rectangles over them."
+#~ msgstr "Belirli alanları tanımak için dikdörtgenleri üzerlerine sürükleyin."
 
 #~ msgid "Rendering image..."
 #~ msgstr "Resim gerçekleniyor..."
