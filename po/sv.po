@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-18 19:40+0200\n"
-"PO-Revision-Date: 2015-08-16 01:43+0100\n"
+"PO-Revision-Date: 2016-04-21 10:45+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: German <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:143
 msgid "Redetect Languages"
@@ -89,15 +89,15 @@ msgstr "OK"
 
 #: ../gtk/data/editor_hocr.ui.h:4 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Document font:"
-msgstr ""
+msgstr "Dokument-teckensnitt:"
 
 #: ../gtk/data/editor_hocr.ui.h:5 ../qt/data/PdfExportDialog.ui.h:2
 msgid "Use detected font sizes"
-msgstr ""
+msgstr "Använd detekterad teckenstorlek"
 
 #: ../gtk/data/editor_hocr.ui.h:6 ../qt/data/PdfExportDialog.ui.h:4
 msgid "Uniformize line spacing"
-msgstr ""
+msgstr "Gör radavstånden enhetlig"
 
 #: ../gtk/data/editor_hocr.ui.h:7 ../qt/src/Ui_OutputEditorHOCR.hh:53
 msgid "PDF"
@@ -105,7 +105,7 @@ msgstr ""
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/src/Ui_OutputEditorHOCR.hh:54
 msgid "PDF with invisible text overlay"
-msgstr ""
+msgstr "PDF med osynlig text gömd"
 
 #: ../gtk/data/editor_hocr.ui.h:9 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
@@ -120,12 +120,11 @@ msgstr "Radera utdata"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/src/Ui_OutputEditorHOCR.hh:82
 msgid "Properties"
-msgstr ""
+msgstr "Egenskaper"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/src/Ui_OutputEditorHOCR.hh:86
-#, fuzzy
 msgid "Source"
-msgstr "Källor"
+msgstr "Källa"
 
 #: ../gtk/data/editor_text.ui.h:1 ../qt/src/SubstitutionsManager.cc:38
 #: ../qt/src/Ui_OutputEditorText.hh:177
@@ -185,9 +184,8 @@ msgid "Keep line break if..."
 msgstr "Behåll radbrytning om..."
 
 #: ../gtk/data/editor_text.ui.h:13 ../qt/src/Ui_OutputEditorText.hh:71
-#, fuzzy
 msgid "Preceded by end mark (.?!)"
-msgstr "Föregången av en punkt"
+msgstr "Föregås av slut-tecken (.?!)"
 
 #: ../gtk/data/editor_text.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:73
 msgid "Preceded or succeeded by quote"
@@ -218,9 +216,8 @@ msgid "Draw whitespace"
 msgstr "Rita blanktecken"
 
 #: ../gtk/data/editor_text.ui.h:21 ../gtk/data/gimagereader.ui.h:6
-#, fuzzy
 msgid "Select language"
-msgstr "Känn igen språk på nytt"
+msgstr "Välj språk"
 
 #: ../gtk/data/editor_text.ui.h:22 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Select insert mode"
@@ -376,7 +373,7 @@ msgstr "Bildanpassning"
 
 #: ../gtk/data/gimagereader.ui.h:29 ../qt/src/Ui_MainWindow.hh:116
 msgid "Plain text"
-msgstr ""
+msgstr "Oformaterad text"
 
 #: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:116
 msgid "hOCR, PDF"
@@ -484,7 +481,7 @@ msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:62 ../qt/src/TessdataManager.cc:45
 msgid "Manage installed languages:"
-msgstr ""
+msgstr "Hantera installerade språk:"
 
 #: ../gtk/data/gimagereader.ui.h:63 ../qt/src/DisplayerToolSelect.cc:261
 msgid "Delete"
@@ -643,13 +640,12 @@ msgid "Select an image to begin..."
 msgstr "Välj en bild för att börja..."
 
 #: ../gtk/src/MainWindow.cc:293 ../qt/src/MainWindow.cc:271
-#, fuzzy
 msgid "Multiple sources"
-msgstr "Flera sidor ..."
+msgstr "Flera källor"
 
 #: ../gtk/src/MainWindow.cc:294 ../qt/src/MainWindow.cc:272
 msgid "Ready"
-msgstr ""
+msgstr "Klar"
 
 #: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:406
 msgid "New version"
@@ -710,9 +706,8 @@ msgstr "Kunde inte installera rättstavningsordbok: %1"
 
 #: ../gtk/src/MainWindow.cc:523 ../gtk/src/MainWindow.cc:539
 #: ../qt/src/MainWindow.cc:505
-#, fuzzy
 msgid "Could not read %1: %2."
-msgstr "Kunde inte läsa %1 "
+msgstr "Kunde inte läsa %1: %2."
 
 #: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:568
 #: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:551
@@ -732,61 +727,57 @@ msgid "The following dictionaries were installed:%1"
 msgstr "Följande rättstavningsordböcker installerades:%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:222
-#, fuzzy
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
-msgstr "Följande filer kunde inte öppnas:%1"
+msgstr ""
+"Följande sidor kunde inte behandlas:\n"
+"%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:223 ../qt/src/OutputEditorHOCR.cc:183
-#, fuzzy
 msgid "Recognition errors"
-msgstr "Tolkningsfel har inträffat"
+msgstr "Igenkänningsfel"
 
 #: ../gtk/src/OutputEditorHOCR.cc:283 ../qt/src/OutputEditorHOCR.cc:230
 msgid "Graphic"
-msgstr ""
+msgstr "Grafisk"
 
 #: ../gtk/src/OutputEditorHOCR.cc:325 ../qt/src/OutputEditorHOCR.cc:281
-#, fuzzy
 msgid "Paragraph"
-msgstr "Bevara stycken"
+msgstr "Stycke"
 
 #: ../gtk/src/OutputEditorHOCR.cc:328 ../qt/src/OutputEditorHOCR.cc:284
-#, fuzzy
 msgid "Textline"
-msgstr "Textfiler"
+msgstr "Textrad"
 
 #: ../gtk/src/OutputEditorHOCR.cc:609 ../qt/src/OutputEditorHOCR.cc:554
 msgid "No suggestions"
-msgstr ""
+msgstr "Inga förslag"
 
 #: ../gtk/src/OutputEditorHOCR.cc:636 ../gtk/src/OutputEditorHOCR.cc:672
 #: ../qt/src/OutputEditorHOCR.cc:574 ../qt/src/OutputEditorHOCR.cc:603
 msgid "hOCR HTML Files"
-msgstr ""
+msgstr "hOCR HTML-filer"
 
 #: ../gtk/src/OutputEditorHOCR.cc:637 ../qt/src/OutputEditorHOCR.cc:574
 msgid "Open hOCR File"
-msgstr ""
+msgstr "Öppna hOCR-fil"
 
 #: ../gtk/src/OutputEditorHOCR.cc:646 ../qt/src/OutputEditorHOCR.cc:580
-#, fuzzy
 msgid "Failed to open file"
-msgstr "Det går inte att öppna filer"
+msgstr "Det gick inte att öppna filen"
 
 #: ../gtk/src/OutputEditorHOCR.cc:646 ../qt/src/OutputEditorHOCR.cc:580
-#, fuzzy
 msgid "The file could not be opened: %1."
-msgstr "Följande filer kunde inte öppnas:%1"
+msgstr "Filen kunde inte öppnas:%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:655 ../qt/src/OutputEditorHOCR.cc:587
 msgid "Invalid hOCR file"
-msgstr ""
+msgstr "Ogiltig hOCR-fil"
 
 #: ../gtk/src/OutputEditorHOCR.cc:655 ../qt/src/OutputEditorHOCR.cc:587
 msgid "The file does not appear to contain valid hOCR HTML: %1"
-msgstr ""
+msgstr "Filen verkar inte innehålla giltig hOCR HTML: %1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:670 ../gtk/src/OutputEditorHOCR.cc:714
 #: ../gtk/src/OutputEditorText.cc:289 ../qt/src/OutputEditorHOCR.cc:602
@@ -795,9 +786,8 @@ msgid "output"
 msgstr "Utdata"
 
 #: ../gtk/src/OutputEditorHOCR.cc:673 ../qt/src/OutputEditorHOCR.cc:603
-#, fuzzy
 msgid "Save hOCR Output..."
-msgstr "Spara utdata..."
+msgstr "Spara hOCR utdata..."
 
 #: ../gtk/src/OutputEditorHOCR.cc:681 ../gtk/src/OutputEditorText.cc:302
 #: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
@@ -810,26 +800,22 @@ msgid "Check that you have writing permissions in the selected folder."
 msgstr "Kontrollera att du har skrivbehörighet i den markerade mappen."
 
 #: ../gtk/src/OutputEditorHOCR.cc:715 ../qt/src/OutputEditorHOCR.cc:641
-#, fuzzy
 msgid "PDF Files"
-msgstr "Filer"
+msgstr "PDF-filer"
 
 #: ../gtk/src/OutputEditorHOCR.cc:716 ../qt/src/OutputEditorHOCR.cc:641
-#, fuzzy
 msgid "Save PDF Output..."
-msgstr "Spara utdata..."
+msgstr "Spara PDF utdata..."
 
 #: ../gtk/src/OutputEditorHOCR.cc:766 ../qt/src/OutputEditorHOCR.cc:691
-#, fuzzy
 msgid "Errors occurred"
-msgstr "Tolkningsfel har inträffat"
+msgstr "Fel har inträffat"
 
 #: ../gtk/src/OutputEditorHOCR.cc:766 ../qt/src/OutputEditorHOCR.cc:691
-#, fuzzy
 msgid ""
 "The following pages could not be rendered:\n"
 "%1"
-msgstr "Följande filer kunde inte öppnas:%1"
+msgstr "Följande sidor kunde inte återges:%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:831 ../gtk/src/OutputEditorText.cc:317
 #: ../qt/src/OutputEditorHOCR.cc:750 ../qt/src/OutputEditorText.cc:265
@@ -887,11 +873,11 @@ msgstr "Flerspråkig"
 
 #: ../gtk/src/Recognizer.cc:252 ../qt/src/Recognizer.cc:245
 msgid "Detect script and orientation"
-msgstr ""
+msgstr "Identifiera skript och orientering"
 
 #: ../gtk/src/Recognizer.cc:260 ../qt/src/Recognizer.cc:254
 msgid "Manage languages..."
-msgstr ""
+msgstr "Hantera språk..."
 
 #: ../gtk/src/Recognizer.cc:377 ../qt/src/Recognizer.cc:381
 msgid ""
@@ -937,17 +923,20 @@ msgstr "Tesseract kunde inte initieras"
 msgid "Scan canceled"
 msgstr "Skanning avbröts"
 
-#: ../gtk/src/scanner/ScannerSane.cc:166 ../gtk/src/scanner/ScannerTwain.cc:190
-#: ../qt/src/scanner/ScannerSane.cc:167 ../qt/src/scanner/ScannerTwain.cc:182
+#: ../gtk/src/scanner/ScannerSane.cc:166
+#: ../gtk/src/scanner/ScannerTwain.cc:190 ../qt/src/scanner/ScannerSane.cc:167
+#: ../qt/src/scanner/ScannerTwain.cc:182
 msgid "No scanner specified"
 msgstr "Ingen scanner specificerad"
 
-#: ../gtk/src/scanner/ScannerSane.cc:175 ../gtk/src/scanner/ScannerTwain.cc:199
-#: ../qt/src/scanner/ScannerSane.cc:176 ../qt/src/scanner/ScannerTwain.cc:191
+#: ../gtk/src/scanner/ScannerSane.cc:175
+#: ../gtk/src/scanner/ScannerTwain.cc:199 ../qt/src/scanner/ScannerSane.cc:176
+#: ../qt/src/scanner/ScannerTwain.cc:191
 msgid "Unable to connect to scanner"
 msgstr "Det går inte att ansluta till skanner"
 
-#: ../gtk/src/scanner/ScannerSane.cc:397 ../gtk/src/scanner/ScannerTwain.cc:269
+#: ../gtk/src/scanner/ScannerSane.cc:397
+#: ../gtk/src/scanner/ScannerTwain.cc:269
 #: ../gtk/src/scanner/ScannerTwain.cc:295 ../qt/src/scanner/ScannerSane.cc:398
 #: ../qt/src/scanner/ScannerTwain.cc:261 ../qt/src/scanner/ScannerTwain.cc:293
 msgid "Unable to start scan"
@@ -1021,11 +1010,8 @@ msgid "Delete File?"
 msgstr "Radera fil?"
 
 #: ../gtk/src/SourceManager.cc:209 ../qt/src/SourceManager.cc:236
-#, fuzzy
 msgid "The following files will be deleted:%1"
-msgstr ""
-"Följande fil kommer att raderas:\n"
-"%1"
+msgstr "Följande filer kommer att raderas:%1"
 
 #: ../gtk/src/SourceManager.cc:274 ../qt/src/SourceManager.cc:291
 msgid "Missing File"
@@ -1051,7 +1037,8 @@ msgstr "Ersätt med"
 msgid "substitution_list.txt"
 msgstr "ersättningslista.txt"
 
-#: ../gtk/src/SubstitutionsManager.cc:83 ../gtk/src/SubstitutionsManager.cc:119
+#: ../gtk/src/SubstitutionsManager.cc:83
+#: ../gtk/src/SubstitutionsManager.cc:119
 #: ../qt/src/SubstitutionsManager.cc:111 ../qt/src/SubstitutionsManager.cc:150
 msgid "Substitutions List"
 msgstr "Ersättningslista"
@@ -1068,35 +1055,43 @@ msgstr "Fel vid läsning av fil"
 msgid "Unable to read '%1'."
 msgstr "Det går inte att läsa '%1' "
 
-#: ../gtk/src/SubstitutionsManager.cc:112 ../qt/src/SubstitutionsManager.cc:143
+#: ../gtk/src/SubstitutionsManager.cc:112
+#: ../qt/src/SubstitutionsManager.cc:143
 msgid "Errors Occurred Reading File"
 msgstr "Fel vid läsning av fil"
 
-#: ../gtk/src/SubstitutionsManager.cc:112 ../qt/src/SubstitutionsManager.cc:143
+#: ../gtk/src/SubstitutionsManager.cc:112
+#: ../qt/src/SubstitutionsManager.cc:143
 msgid "Some entries of the substitutions list could not be read."
 msgstr "Vissa poster i ersättningslistan  kunde inte läsas."
 
-#: ../gtk/src/SubstitutionsManager.cc:120 ../qt/src/SubstitutionsManager.cc:150
+#: ../gtk/src/SubstitutionsManager.cc:120
+#: ../qt/src/SubstitutionsManager.cc:150
 msgid "Save Substitutions List"
 msgstr "Spara ersättningslistan"
 
-#: ../gtk/src/SubstitutionsManager.cc:126 ../qt/src/SubstitutionsManager.cc:156
+#: ../gtk/src/SubstitutionsManager.cc:126
+#: ../qt/src/SubstitutionsManager.cc:156
 msgid "Error Saving File"
 msgstr "Fel när filen sparades"
 
-#: ../gtk/src/SubstitutionsManager.cc:126 ../qt/src/SubstitutionsManager.cc:156
+#: ../gtk/src/SubstitutionsManager.cc:126
+#: ../qt/src/SubstitutionsManager.cc:156
 msgid "Unable to write to '%1'."
 msgstr "Det går inte att skriva till '%1'."
 
-#: ../gtk/src/SubstitutionsManager.cc:145 ../qt/src/SubstitutionsManager.cc:171
+#: ../gtk/src/SubstitutionsManager.cc:145
+#: ../qt/src/SubstitutionsManager.cc:171
 msgid "Save List?"
 msgstr "Spara listan?"
 
-#: ../gtk/src/SubstitutionsManager.cc:145 ../qt/src/SubstitutionsManager.cc:171
+#: ../gtk/src/SubstitutionsManager.cc:145
+#: ../qt/src/SubstitutionsManager.cc:171
 msgid "Do you want to save the current list?"
 msgstr "Vill du spara den nuvarande listan?"
 
-#: ../gtk/src/SubstitutionsManager.cc:184 ../qt/src/SubstitutionsManager.cc:212
+#: ../gtk/src/SubstitutionsManager.cc:184
+#: ../qt/src/SubstitutionsManager.cc:212
 msgid "Applying substitutions..."
 msgstr "Tillämpa ersättningar..."
 
@@ -1106,29 +1101,30 @@ msgid ""
 "found. Please use the system package management software to manage the "
 "tesseract language packs."
 msgstr ""
+"PackageKit krävs för att hantera Tesseract språkpaket, men det kunde inte "
+"att hittas. Använd system-paketets programvara för att hantera Tesseract "
+"språkpaket."
 
 #: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:70
 msgid "Fetching available languages"
-msgstr ""
+msgstr "Hämtar tillgängliga språk"
 
 #: ../gtk/src/TessdataManager.cc:65 ../gtk/src/TessdataManager.cc:86
 #: ../qt/src/TessdataManager.cc:76 ../qt/src/TessdataManager.cc:87
 msgid "Failed to fetch list of available languages: %1"
-msgstr ""
+msgstr "Det gick inte att hämta listan över tillgängliga språk: %1"
 
 #: ../gtk/src/TessdataManager.cc:95 ../qt/src/TessdataManager.cc:94
 msgid "Parsing error: %1"
-msgstr ""
+msgstr "Tolkningsfel: %1"
 
 #: ../gtk/src/TessdataManager.cc:157 ../qt/src/TessdataManager.cc:139
-#, fuzzy
 msgid "Applying changes..."
-msgstr "Tillämpa ersättningar..."
+msgstr "Tillämpa ändringar..."
 
 #: ../gtk/src/TessdataManager.cc:207 ../qt/src/TessdataManager.cc:182
-#, fuzzy
 msgid "Downloading %1..."
-msgstr "Laddar ner '%1'..."
+msgstr "Laddar ner %1..."
 
 #: ../gtk/src/TessdataManager.cc:227 ../qt/src/TessdataManager.cc:203
 msgid ""
@@ -1137,6 +1133,10 @@ msgid ""
 "\n"
 "Check the connectivity and directory permissions."
 msgstr ""
+"Följande filer kunde inte hämtas eller tas bort:\n"
+"%1\n"
+"\n"
+"Kontrollera anslutningen och katalogbehörigheterna."
 
 #: ../gtk/src/Utils.cc:60
 msgid "Yes"
@@ -1174,11 +1174,11 @@ msgstr "Licens"
 
 #: ../qt/data/ConfigDialog.ui.h:21
 msgid "Text file encoding:"
-msgstr ""
+msgstr "Textfilskodning:"
 
 #: ../qt/data/ConfigDialog.ui.h:22
 msgid "System encoding"
-msgstr ""
+msgstr "System-kodning"
 
 #: ../qt/data/ConfigDialog.ui.h:23
 msgid "UTF-8"
@@ -1207,14 +1207,12 @@ msgid "gImageReader"
 msgstr "gImageReader"
 
 #: ../qt/data/MainWindow.ui.h:6
-#, fuzzy
 msgid "So&urces"
-msgstr "Quellen"
+msgstr "Ko&ällor"
 
 #: ../qt/data/MainWindow.ui.h:18
-#, fuzzy
 msgid "&Output"
-msgstr "Ausgabebild:"
+msgstr "&Utdata:"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "Sources"
@@ -1265,18 +1263,16 @@ msgid "Toggle Output Pane"
 msgstr "Visa/stäng Utgångsfönstret"
 
 #: ../qt/src/MainWindow.cc:523
-#, fuzzy
 msgid "Could not read %1: %2"
-msgstr "Kunde inte läsa %1 "
+msgstr "Kunde inte läsa %1: %2"
 
 #: ../qt/src/MainWindow.cc:548
-#, fuzzy
 msgid "The following dictionary files were installed:%1"
-msgstr "Följande rättstavningsordböcker installerades:%1"
+msgstr "Följande ordboks-filer installerades:%1"
 
 #: ../qt/src/Ui_MainWindow.hh:112
 msgid "OCR mode:"
-msgstr ""
+msgstr "OCR-läge:"
 
 #: ../qt/src/Ui_MainWindow.hh:177
 msgid "Add Images"
@@ -1297,16 +1293,15 @@ msgstr "Töm Lista"
 #. Output toolbar
 #: ../qt/src/Ui_OutputEditorHOCR.hh:42 ../qt/src/Ui_OutputEditorHOCR.hh:43
 msgid "Open hOCR file"
-msgstr ""
+msgstr "Öppen OCR-fil"
 
 #: ../qt/src/Ui_OutputEditorHOCR.hh:44 ../qt/src/Ui_OutputEditorHOCR.hh:45
-#, fuzzy
 msgid "Save as hOCR text"
-msgstr "Spara som bild"
+msgstr "Spara som hOCR-text"
 
 #: ../qt/src/Ui_OutputEditorHOCR.hh:48 ../qt/src/Ui_OutputEditorHOCR.hh:50
 msgid "Export to PDF"
-msgstr ""
+msgstr "Exportera till PDF"
 
 #: ../qt/src/Ui_OutputEditorText.hh:108
 msgid "Strip Line Breaks"
@@ -1318,7 +1313,7 @@ msgstr "Rensa radbrytningar i markerad text"
 
 #: ../qt/src/Ui_OutputEditorText.hh:113
 msgid "Find and Replace"
-msgstr "Sök och Ersätt"
+msgstr "Sök och ersätt"
 
 #: ../qt/src/Ui_OutputEditorText.hh:122
 msgid "Save Output"
