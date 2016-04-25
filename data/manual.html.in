@@ -21,8 +21,9 @@
     <ul>
         <li><a href="#Usage_Open">Opening and importing images</a></li>
         <li><a href="#Usage_View">Viewing and adjusting images</a></li>
-        <li><a href="#Usage_Recognize">Recognizing text</a></li>
-        <li><a href="#Usage_PostProc">Post-processing the recognized text</a></li>
+        <li><a href="#Usage_Recognition">Preparing for recognition</a></li>
+        <li><a href="#Usage_RecognizeText">Recognizing and post-processing in plain text mode</a></li>
+        <li><a href="#Usage_RecognizeHOCR">Recognizing and processing hOCR, PDF</a></li>
         <li><a href="#Usage_Options">Program options</a></li>
     </ul></li>
     <li><a href="#InstallTessdata">Installation of tesseract language definitions</a></li>
@@ -35,19 +36,17 @@
 <p>gImageReader is a frontent to <a href="https://github.com/tesseract-ocr/tesseract">tesseract-ocr</a> written in C++.</p>
 <h3><a name="Features">Features</a></h3>
 <ul>
-    <li>Allows the user to select the parts of the image they want to be recognized or directly recognize the entire image.</li>
-    <li>Supports page layout autodetection.</li>
-    <li>Supports opening images and PDF documents, as well as importing images from scanning devices, from the clipboard and from screenshots.</li>
-    <li>Recognized text displayed directly next to the image, or copied directly to clipboard.</li>
-    <li>Multilingual recognition.</li>
-    <li>Basic editing of output text, including search/replace and removing line breaks on selected text.</li>
-    <li>Spellcheck enabled for the selected language in the output textfield if corresponding dictionary installed.</li>
-    <li>User is prompted to install missing spellcheck languages.</li>
-    <li>hOCR output mode, with possibilities to export to hOCR HTML, PDF with overlay text, or a PDF reconstructed from the extracted text and graphics</li>
+ <li>Import PDF documents and images from disk, scanning devices, clipboard and screenshots</li>
+ <li>Process multiple images and documents in one go</li>
+ <li>Manual or automatic recognition area definition</li>
+ <li>Recognize to plain text or to hOCR documents</li>
+ <li>Recognized text displayed directly next to the image</li>
+ <li>Post-process the recognized text, including spellchecking</li>
+ <li>Generate PDF documents from hOCR documents</li>
 </ul>
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
-<p>gImageReader 3.1.90 (XXX XX 2016):</p>
+<p>gImageReader 3.1.90 (Apr 26 2016):</p>
 <ul>
  <li>gImageReader 3.2 beta 1</li>
  <li>Add an initial hOCR editor implementation, with possibility to save as hOCR HTML, PDF with invisible text overlay, or a PDF reconstructed from the extracted text and graphics</li>
@@ -154,26 +153,56 @@
 </ul>
 <h3><a name="Usage_View">Viewing and adjusting images</a></h3>
 <ul>
-    <li>Buttons in the <i>main toolbar</i> to zoom in and out as well as rotate the image by an arbitrary angle. Zooming can also be performed by scrolling on the image with the CTRL key pressed.</li>
+    <li>Use the buttons in the <i>main toolbar</i> to zoom in and out as well as rotate the image by an arbitrary angle. Zooming can also be performed by scrolling on the image with the CTRL key pressed.</li>
     <li>Basic image manipulation tools are provided in the <i>image controls toolbar</i>, which is activated by clicking on the <i>image controls button</i> in the <i>main toolbar</i>. The provided tools currently allow brightness and contrast adjustments as well as adjusting the image resolution (through interpolation).</li>
+    <li>Multiple images can be selected, which allowes the user to process multiple images in one go (see below).</li>
 </ul>
-<h3><a name="Usage_Recognize">Recognizing text</a></h3>
+<h3><a name="Usage_Recognition">Preparing for recognition</a></h3>
+<ul>
+    <li>To perform OCR on an image, the user needs to specify:
+        <ul>
+            <li>The input images (e.g. images to recognize),</li>
+            <li>The recognition mode (e.g. <i>plain text</i> vs <i>hOCR, PDF</i>,</li>
+            <li>The recognition language(s).</li>
+        </ul>
+    </li>
+    <li>The <b>input images</b> correspond to the selected entries in the <i>images tab</i> in the <i>sources pane</i>. If multiple images are selected, the program will treat the set of images as multipage document and ask the user which pages to process when recognition is started.</li>
+    <li>The <b>recognition mode</b> can be selected in the <i>OCR mode</i> combobox in the <i>main toolbar</i>:
+        <ul>
+            <li>The <i>plain text</i> mode makes the OCR engine extract only the plain text, without formatting and layout information.</li>
+            <li>The <i>hOCR, PDF</i> mode makes the OCR engine return the recognized text as a <i>hOCR</i> html document, which includes formatting and layout information for the recognized page. <i>hOCR</i> is a standard format for storing recognition results and can be used to interoperate with other application supporting this standard. gImageReader can process <i>hOCR</i> documents further to generate a PDF document for the recognition result.</li>
+        </ul>
+    </li>
+    <li>The <b>recognition language</b> can be selected from the drop-down menu of the <i>recognize button</i> in the <i>main toolbar</i>. If a spelling dictionary is installed for a tesseract language definition, it is possible to choose between available regional flavors of the language. This will only affect the language for spell-checking the recognized text. Unrecognized tesseract language definitions will appear by their filename prefix, one can however teach the program to recognize such files by defining appropriate rules in the program configuration (see below). Multiple recognition languages can be specified at once from the <i>Multilingual</i> submenu of the drop-down menu. The installed tesseract language definitions can be managed from the <i>Manage languages...</i> menu entry in the drop-down menu of the <i>recognize button</i>, see also <a href="#InstallTessdata">below</a>.</li>
+</ul>
+<h3><a name="Usage_RecognizeText">Recognizing and post-processing in plain text mode</a></h3>
 <ul>
     <li>Areas to be recognized can be selected by dragging (left click + mouse move) a rectangular area around portions of the image. Multiple selections are possible by pressing the CTRL key while selecting.</li>
     <li>Alternatively, the <i>automatic layout detection button</i>, accessible from the <i>main toolbar</i> will attempt to automatically define appropriate recognition areas, as well as adjust the rotation of the image if necessary.</li>
     <li>Selections can be deleted and reordered via the context menu which appears when right-clicking on them. It is also possible to resize existing selections by dragging the corners of the selection rectangle.</li>
-    <li>The recognition language can be selected from the drop-down menu of the <i>recognize button</i> in the <i>main toolbar</i>. If a spelling dictionary is installed for a tesseract language definition, it is possible to choose between available regional flavors of the language. This will only affect the language for spell-checking the recognized text. Unrecognized tesseract language definitions will appear by their filename prefix, one can however teach the program to recognize such files by defining appropriate rules in the program configuration (see below). Multiple recognition languages can be specified at once from the <i>Multilingual</i> submenu of the drop-down menu.</li>
     <li>The selected portions of the image (or the entire image, if no selections are defined) can be recognized by pressing on the <i>recognize button</i> in the <i>main toolbar</i>. Alternatively, individual areas can be recognized by right-clicking a selection. From the selection context menu, it is also possible to redirect the recognized text to the clipboard, instead of the output pane.</li>
-</ul>
-<h3><a name="Usage_PostProc">Post-processing the recognized text</a></h3>
-<ul>
-    <li>Recognized text will appear in the <i>output pane</i> (unless the text was redirected to the clipboard), which appears as soon as some text was recognized.</li>
+    <li>If multiple pages are selected for recognition, the program allows the user to choose between either recognizing the full area of each individual page, or performing a page-layout analysis on each page to automatically detect appropriate recognition areas.</li>
+    <li>Recognized text will appear in the <i>output pane</i> (unless the text was redirected to the clipboard), which is shown automatically as soon as some text was recognized.</li>
     <li>If a spelling dictionary for the recognition language is available, automatic spell-checking will be enabled for the outputted text. The used spelling dictionary can be changed either from the language menu next to the <i>recognize button</i>, or from the menu which appears when right-clicking in the text area.</li>
     <li>When additional text is recognized, it will either get appended, inserted at cursor position, or replace the previous content of the text buffer, depending on the mode selected in the <i>append mode menu</i>, which can be found in the <i>output pane toolbar</i>.</li>
     <li>Other post-processing tools include stripping line breaks, collapsing spaces and more (available from the second button in the <i>output pane toolbar</i>), as well as searching and replacing text. A list of search and replace rules can be defined by clicking on the <i>Find and replace</i> button in the <i>output pane toolbar</i> and then clicking on the <i>Substitutions</i> button.</li>
     <li>Changes to the text buffer can be undone and redone by clicking on the appropriate buttons in the <i>output pane toolbar</i>.</li>
     <li>The contents of the text buffer can be saved to a file by clicking on the <i>save button</i> in the <i>output pane toolbar</i>.</li>
-    <li>The output pane can be hidden by clicking the right-most button in the <i>output pane toolbar</i>. This will also clear the contents of the text buffer.</li>
+</ul>
+<h3><a name="Usage_RecognizeText">Recognizing and post-processing in hOCR, PDF mode</a></h3>
+<ul>
+    <li>In hOCR mode, the entire page of the selected source(s) is recognized.</li>
+    <li>The recognition result is presented in the <i>output pane</i> as a tree-structure, divided in pages, paragraphs, textlines, words and graphics.</li>
+    <li>When an entry in the tree-structure is selected, the corresponding area is highlighted in the image. Additionally, formatting and layout properties of the entry are shown in the <i>Properties</i> tab below the document tree. The raw hOCR source is visible in the <i>Source</i> tab below the document tree.</li>
+    <li>The word text in the document tree can be edited by double-clicking the respective word entry. If a word is mis-spelled, it will be rendered red. Right-clicking a word in the document tree will show a menu with spelling suggestions.</li>
+    <li>Properties for a selected entry can be modified by double clicking the desired property value in the <i>Properties</i> tab. Interesting actions for text entries are tweaking the bounding area, changing the language and modifying the font size. The language property also definies the spelling language used to check the respective word.</li>
+    <li>The document tree can be saved as a <i>hOCR HTML document</i> via the <i>Save as hOCR text</i> button in the <i>output pane toolbar</i>. Existing documents can be imported via the <i>Open hOCR file</i> button in the <i>output pane toolbar</i>.</li>
+    <li>PDF files can be generated from the <i>PDF export menu</i> in the <i>output pane toolbar</i>. Two modes are available:
+        <ul>
+            <li><i>PDF</i> will generate a reconstructed PDF the same layout and graphics/pictures as the source document. When exporting, the user is prompted for the font family to use, whether to honour the font sizes detected by the OCR engine, and whether to attempt to homogenize the text line spacing.</li>
+            <li><i>PDF with invisible text overlay</i> will generate a PDF with the unmodified source image as background and invisible (but selectable) text overlayed above the respective source text in the image. This export mode is usefull for generating a document which is visually identical to the input, but with searchable and selectable text.</li>
+        </ul>
+    </li>
 </ul>
 <h3><a name="Usage_Options">Program options</a></h3>
 <ul>
@@ -181,16 +210,22 @@
     <li>Options allow setting the font of the output pane, as well as determining whether the application will notify about missing spelling dictionaries and new program versions.</li>
     <li>When running the Gtk+ interface, the options also allow setting the orientation of the <i>output pane</i> (if vertical, it will occupy the right portion of the application, if horizontal, it will occupy the lower portion). When running the Qt interface, the position of the output pane can be freely moved around by dragging on the title bar of the output pane.</li>
     <li>Additionally, one can define new rules to match tesseract language definitions to a language (unfortunately, the tesseract language definitions do not include this information). The list of predefined rules can be seen in the <i>Predefined language definitions</i> section. Additional definitions can be added clicking on the <i>Add</i> button below. The rules for a language definition, which consists of three fields, are as follows:
-    <ul>
-        <li><b>Filename prefix</b>: The filename of tesseract language data files is of the format <i>&lt;prefix&gt;.traineddata</i>, i.e. for English, the file is called <i>eng.traineddata</i> and the prefix is <i>eng</i>.</li>
-        <li><b>ISO code</b>: This is the <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 639-1 language code</a> (i.e. <i>en</i>), optionally combined by an underscore with the <a href="http://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2 country code</a> (i.e. <i>en_US</i>). This information is necessary to match spelling dictionaries to the language. The choice of the actual country code is not strictly relevant, but it is necessary for the automatic installation of spelling dictionaries to find a relevant package of dictionaries. This code can also be made up if no appropriate choices exist, the only result being that no relevant spelling-dictionaries will be matched with the language.</li>
-        <li><b>Native name</b>: The native name of the language simply determines the label of the entry for the language in the <i>language menu</i>.</li>
-    </ul></li>
+        <ul>
+            <li><b>Filename prefix</b>: The filename of tesseract language data files is of the format <i>&lt;prefix&gt;.traineddata</i>, i.e. for English, the file is called <i>eng.traineddata</i> and the prefix is <i>eng</i>.</li>
+            <li><b>ISO code</b>: This is the <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 639-1 language code</a> (i.e. <i>en</i>), optionally combined by an underscore with the <a href="http://en.wikipedia.org/wiki/ISO_3166-2">ISO 3166-2 country code</a> (i.e. <i>en_US</i>). This information is necessary to match spelling dictionaries to the language. The choice of the actual country code is not strictly relevant, but it is necessary for the automatic installation of spelling dictionaries to find a relevant package of dictionaries. This code can also be made up if no appropriate choices exist, the only result being that no relevant spelling-dictionaries will be matched with the language.</li>
+            <li><b>Native name</b>: The native name of the language simply determines the label of the entry for the language in the <i>language menu</i>.</li>
+        </ul>
+    </li>
 </ul>
 <h2><a name="InstallTessdata">Installation of tesseract language definitions</a></h2>
 <ul>
-    <li>On <b>Linux</b>, it's sufficient to install the package corresponding to the language definition one wants to install via the package management application (the packages may be called something like <i>tesseract-langpack-&lt;lang&gt;</i>).</li>
-    <li>On <b>Windows</b>, one needs to download the desired language definitions from the <a href="https://github.com/tesseract-ocr/tessdata">project tessdata page</a>, the copy the <i>&lt;lang&gt;.traineddata</i> files (along with any supplementary files which certain languages need) to <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Tesseract language definitions</tt>.</li>
+    <li>The <i>Tessdata manager</i>, available from the drop-down menu of the <i>recognize button</i> in the <i>main toolbar</i> allows the user to manage the available recognition languages. On Linux, the tessdata manager requires PackageKit to work.</li>
+    <li>To install the languages manually:
+        <ul>
+            <li>On <b>Linux</b>, it's sufficient to install the package corresponding to the language definition one wants to install via the package management application (the packages may be called something like <i>tesseract-langpack-&lt;lang&gt;</i>).</li>
+            <li>On <b>Windows</b>, one needs to download the desired language definitions from the <a href="https://github.com/tesseract-ocr/tessdata">project tessdata page</a>, the copy the <i>&lt;lang&gt;.traineddata</i> files (along with any supplementary files which certain languages need) to <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Tesseract language definitions</tt>.</li>
+        </ul>
+    </li>
     <li>To re-detect the available languages, one can restart the program, or select <i>Redetect Languages</i> from the <i>application menu</i>.</li>
 </ul>
 <h2><a name="InstallSpelling">Installation of spelling dictionaries</a></h2>
@@ -215,13 +250,13 @@ If you find an issue or have a suggestion, please file a ticket to the <a href="
  href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. If you are experiencing crashes or hangs, please also try to include the following information in the ticket/email:
 </p>
 <ul>
-<li>If the crash handler appears, include the backtrace which is shown there. To make sure that the backtrace is complete, if you are running the application under Linux, make sure that the <tt>gdb</tt> debugger as well as the debugging symbols are installed if your distribution provides them. The package containing the debugging symbols is usually called <b>&lt;packagename&gt;-debuginfo</b> or <b>&lt;packagename&gt;-dbg</b>. If you are running the application under Windows, debugging symbols are installed by default.</li>
+<li>If the crash handler appears, include the backtrace which is shown there. To make sure that the backtrace is complete, if you are running the application under Linux, make sure that the <tt>gdb</tt> debugger as well as the debugging symbols are installed if your distribution provides them. The package containing the debugging symbols is usually called <b>&lt;packagename&gt;-debuginfo</b> or <b>&lt;packagename&gt;-dbg</b>. If you are running the application under Windows, some debugging symbols are installed by default.</li>
 <li>If you are running under Windows, include the <tt>%ProgramFiles%\gImageReader\gimagereader.log</tt> and <tt>%ProgramFiles%\gImageReader\twain.log</tt> log files.</li>
 <li>If you are running under Linux, run the application from a terminal and include any output which appears on the terminal.</li>
 <li>Try to describe as best as you can what you were doing and whether the problem is reproducible.</li>
 </ul>
 <hr />
-<p>Copyright &copy;2009-2015 Sandro Mani, revision: Mon, Apr 20 2015</p>
+<p>Copyright &copy;2009-2016 Sandro Mani, revision: Mon, Apr 25 2016</p>
 </body>
 
 </html>
