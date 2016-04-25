@@ -1,4 +1,4 @@
-gImageReader 3.1.90 (XXX XX 2016):
+gImageReader 3.1.90 (Apr 28 2016):
  * gImageReader 3.2 beta 1
  * Add an initial hOCR editor implementation, with possibility to save as hOCR HTML, PDF with invisible text overlay, or a PDF reconstructed from the extracted text and graphics
  * Allow selecting and working on multiple sources at once

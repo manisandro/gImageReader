@@ -46,7 +46,7 @@
 </ul>
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
-<p>gImageReader 3.1.90 (Apr 26 2016):</p>
+<p>gImageReader 3.1.90 (Apr 28 2016):</p>
 <ul>
  <li>gImageReader 3.2 beta 1</li>
  <li>Add an initial hOCR editor implementation, with possibility to save as hOCR HTML, PDF with invisible text overlay, or a PDF reconstructed from the extracted text and graphics</li>
