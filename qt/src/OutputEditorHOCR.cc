@@ -611,6 +611,7 @@ bool OutputEditorHOCR::save(const QString& filename)
 		QMessageBox::critical(MAIN, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
+	tesseract::TessBaseAPI tess;
 	QString header = QString(
 			"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
 			"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n"
@@ -620,7 +621,7 @@ bool OutputEditorHOCR::save(const QString& filename)
 			"    <meta name='ocr-system' content='tesseract %1' />\n"
 			"    <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
 			"  </head>\n"
-			"<body>\n").arg(TESSERACT_VERSION_STR);
+			"<body>\n").arg(tess.Version());
 	file.write(header.toUtf8());
 	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
 		file.write(ui.treeWidgetItems->topLevelItem(i)->data(0, SourceRole).toString().toUtf8());

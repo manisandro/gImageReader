@@ -694,6 +694,7 @@ bool OutputEditorHOCR::save(const std::string& filename)
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
+	tesseract::TessBaseAPI tess;
 	Glib::ustring header = Glib::ustring::compose(
 			"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
 			"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n"
@@ -703,7 +704,7 @@ bool OutputEditorHOCR::save(const std::string& filename)
 			"    <meta name='ocr-system' content='tesseract %1' />\n"
 			"    <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
 			"  </head>\n"
-			"<body>\n", TESSERACT_VERSION_STR);
+			"<body>\n", tess.Version());
 	file.write(header.data(), std::strlen(header.data()));
 	for(Gtk::TreeIter item : m_itemStore->children()) {
 		Glib::ustring itemSource = (*item)[m_itemStoreCols.source];
