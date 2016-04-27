@@ -11,9 +11,13 @@ Build-Depends: debhelper (>= 9),
  libpoppler-glib-dev,
  libtesseract-dev,
  libsane-dev,
- libqt4-dev,
- libqtspell-qt4-dev,
- libpoppler-qt4-dev
+ qtbase5-dev,
+ qttools5-dev,
+ qttools5-dev-tools,
+ libqtspell-qt5-dev,
+ libpoppler-qt5-dev,
+ libjson-glib-dev,
+ libxml++2.6-dev
 Standards-Version: 3.9.4
 Homepage: https://github.com/manisandro/gImageReader
 
@@ -26,13 +30,13 @@ Replaces: gimagereader (<< 2.94-1)
 Conflicts: gimagereader (<< 2.94-1)
 Description: A graphical frontend to tesseract-ocr
  gImageReader is a simple front-end to tesseract. Features include:
-  - Automatic page layout detection
-  - User can manually define and adjust recognition regions
-  - Import images from disk, scanning devices, clipboard and screenshots
-  - Supports multipage PDF documents
+  - Import PDF documents and images from disk, scanning devices, clipboard and screenshots
+  - Process multiple images and documents in one go
+  - Manual or automatic recognition area definition
+  - Recognize to plain text or to hOCR documents
   - Recognized text displayed directly next to the image
-  - Basic editing of output text, including search/replace and removing line breaks
-  - Spellchecking for output text (if corresponding dictionary installed)
+  - Post-process the recognized text, including spellchecking
+  - Generate PDF documents from hOCR documents
  This package contains the Gtk+ front-end.
 
 Package: gimagereader-qt
@@ -42,13 +46,13 @@ Depends: ${shlibs:Depends},
          gimagereader-common (= ${binary:Version})
 Description: A graphical frontend to tesseract-ocr
  gImageReader is a simple front-end to tesseract. Features include:
-  - Automatic page layout detection
-  - User can manually define and adjust recognition regions
-  - Import images from disk, scanning devices, clipboard and screenshots
-  - Supports multipage PDF documents
+  - Import PDF documents and images from disk, scanning devices, clipboard and screenshots
+  - Process multiple images and documents in one go
+  - Manual or automatic recognition area definition
+  - Recognize to plain text or to hOCR documents
   - Recognized text displayed directly next to the image
-  - Basic editing of output text, including search/replace and removing line breaks
-  - Spellchecking for output text (if corresponding dictionary installed)
+  - Post-process the recognized text, including spellchecking
+  - Generate PDF documents from hOCR documents
  This package contains the Qt front-end.
 
 Package: gimagereader-common
