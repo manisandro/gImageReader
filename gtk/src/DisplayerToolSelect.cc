@@ -292,7 +292,11 @@ void DisplaySelection::showContextMenu(GdkEventButton* event){
 	int y = std::min(std::max(int(event->y_root), rect.get_y()), rect.get_y() + rect.get_height() - h);
 	selmenu->move(x, y);
 	GdkWindow* gdkwin = selmenu->get_window()->gobj();
+#if GTK_CHECK_VERSION(3,20,0)
 	gdk_seat_grab(gdk_device_get_seat(gtk_get_current_event_device()), gdkwin, GDK_SEAT_CAPABILITY_ALL, true, nullptr, nullptr, nullptr, nullptr);
+#else
+	gdk_device_grab(gtk_get_current_event_device(), gdkwin, GDK_OWNERSHIP_APPLICATION, true, GDK_BUTTON_PRESS_MASK, nullptr, event->time);
+#endif
 
 	loop->run();
 
@@ -300,7 +304,11 @@ void DisplaySelection::showContextMenu(GdkEventButton* event){
 	for(sigc::connection& conn : selmenuConnections){
 		conn.disconnect();
 	}
+#if GTK_CHECK_VERSION(3,20,0)
 	gdk_seat_ungrab(gdk_device_get_seat(gtk_get_current_event_device()));
+#else
+	gdk_device_ungrab(gtk_get_current_event_device(), gtk_get_current_event_time());
+#endif
 }
 
 void DisplaySelection::reorderSelection(int newNumber)

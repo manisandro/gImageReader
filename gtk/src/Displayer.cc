@@ -46,10 +46,17 @@ Displayer::Displayer()
 	m_conspin = MAIN->getWidget("spin:display.contrast");
 	m_invcheck = MAIN->getWidget("check:display.invert");
 
+#if GTKMM_CHECK_VERSION(3,12,0)
 	m_pagespin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/page.png"));
 	m_resspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/resolution.png"));
 	m_brispin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/brightness.png"));
 	m_conspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/contrast.png"));
+#else
+	m_pagespin->set_icon_from_pixbuf(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/page.png", 0)));
+	m_resspin->set_icon_from_pixbuf(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/resolution.png", 0)));
+	m_brispin->set_icon_from_pixbuf(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/brightness.png", 0)));
+	m_conspin->set_icon_from_pixbuf(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/contrast.png", 0)));
+#endif
 
 	m_scrollwin->drag_dest_set({Gtk::TargetEntry("text/uri-list")}, Gtk::DEST_DEFAULT_MOTION | Gtk::DEST_DEFAULT_DROP, Gdk::ACTION_COPY | Gdk::ACTION_MOVE);
 	m_viewport->override_background_color(Gdk::RGBA("#a0a0a4"));

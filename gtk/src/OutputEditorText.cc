@@ -137,7 +137,11 @@ void OutputEditorText::scrollCursorIntoView()
 void OutputEditorText::setInsertMode(InsertMode mode, const std::string& iconName)
 {
 	m_insertMode = mode;
-	m_insImage->set(Gdk::Pixbuf::create_from_resource(std::string("/org/gnome/gimagereader/") + iconName));
+#if GTKMM_CHECK_VERSION(3,12,0)
+	m_insImage->set(Gdk::Pixbuf::create_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/%1", iconName)));
+#else
+	m_insImage->set(Glib::wrap(gdk_pixbuf_new_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/%1", iconName).c_str(), 0)));
+#endif
 }
 
 void OutputEditorText::filterBuffer()

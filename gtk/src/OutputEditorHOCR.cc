@@ -267,7 +267,11 @@ void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& fil
 	pageItem->set_value(m_itemStoreCols.id, getAttribute(pageDiv, "id"));
 	pageItem->set_value(m_itemStoreCols.bbox, Geometry::Rectangle(x1, y1, x2-x1, y2-y1));
 	pageItem->set_value(m_itemStoreCols.itemClass, Glib::ustring("ocr_page"));
+#if GTKMM_CHECK_VERSION(3,12,0)
 	pageItem->set_value(m_itemStoreCols.icon, Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/item_page.png"));
+#else
+	pageItem->set_value(m_itemStoreCols.icon, Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/item_page.png", 0)));
+#endif
 	pageItem->set_value(m_itemStoreCols.selected, true);
 	pageItem->set_value(m_itemStoreCols.editable, false);
 	pageItem->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
@@ -283,7 +287,11 @@ void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& fil
 			item->set_value(m_itemStoreCols.text, Glib::ustring(_("Graphic")));
 			item->set_value(m_itemStoreCols.selected, true);
 			item->set_value(m_itemStoreCols.editable, false);
+#if GTKMM_CHECK_VERSION(3,12,0)
 			item->set_value(m_itemStoreCols.icon, Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/item_halftone.png"));
+#else
+			item->set_value(m_itemStoreCols.icon, Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/item_halftone.png", 0)));
+#endif
 			item->set_value(m_itemStoreCols.id, getAttribute(element, "id"));
 			item->set_value(m_itemStoreCols.itemClass, Glib::ustring("ocr_graphic"));
 			item->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
@@ -337,8 +345,13 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 				if(type == "ocrx_word" || addChildItems(getFirstChildElement(element), item, langCache)) {
 					item->set_value(m_itemStoreCols.selected, true);
 					item->set_value(m_itemStoreCols.id, getAttribute(element, "id"));
-					if(!icon.empty())
+					if(!icon.empty()) {
+#if GTKMM_CHECK_VERSION(3,12,0)
 						item->set_value(m_itemStoreCols.icon, Gdk::Pixbuf::create_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/item_%1.png", icon)));
+#else
+						item->set_value(m_itemStoreCols.icon, Glib::wrap(gdk_pixbuf_new_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/item_%1.png", icon).c_str(), 0)));
+#endif
+					}
 					item->set_value(m_itemStoreCols.bbox, Geometry::Rectangle(x1, y1, x2 - x1, y2 - y1));
 					item->set_value(m_itemStoreCols.itemClass, type);
 					item->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));

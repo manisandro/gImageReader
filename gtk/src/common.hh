@@ -40,6 +40,12 @@ struct functor_trait<T_functor, false> \
 SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
 }
 
+#define GTKMM_CHECK_VERSION(major,minor,micro)                          \
+	(GTKMM_MAJOR_VERSION > (major) ||                                   \
+	 (GTKMM_MAJOR_VERSION == (major) && GTKMM_MINOR_VERSION > (minor)) || \
+	 (GTKMM_MAJOR_VERSION == (major) && GTKMM_MINOR_VERSION == (minor) && \
+	  GTKMM_MICRO_VERSION >= (micro)))
+
 #define CONNECT(src, signal, ...) (src)->signal_##signal().connect(__VA_ARGS__)
 #define CONNECTS(src, signal, ...) (src)->signal_##signal().connect(sigc::bind(__VA_ARGS__, src))
 #define CONNECTP(src, property, ...) (src)->property_##property().signal_changed().connect(__VA_ARGS__)
