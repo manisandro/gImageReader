@@ -22,9 +22,13 @@
 #include <QDialogButtonBox>
 #include <QDir>
 #include <QFile>
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+#include <qjson/parser.h>
+#else
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#endif
 #include <QLabel>
 #include <QListWidget>
 #include <QMessageBox>
@@ -88,17 +92,31 @@ bool TessdataManager::fetchLanguageList(QString& messages)
 		return false;
 	}
 
+	QList<QPair<QString,QString>> extraFiles;
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+	QJson::Parser parser;
+	bool ok = false;
+	QVariantList json = parser.parse( data, &ok ).toList();
+	if(!ok) {
+		messages = _("Parsing error: %1").arg(parser.errorLine() + ": " + parser.errorString());
+		return false;
+	}
+	for(const QVariant& value : json) {
+		QVariantMap treeObj = value.toMap();
+		QString name = treeObj.value("name").toString();
+		QString url = treeObj.value("download_url").toString();
+#else
 	QJsonParseError err;
 	QJsonDocument json = QJsonDocument::fromJson(data, &err);
 	if(json.isNull()) {
 		messages = _("Parsing error: %1").arg(err.errorString());
 		return false;
 	}
-	QList<QPair<QString,QString>> extraFiles;
 	for(const QJsonValue& value : json.array()) {
 		QJsonObject treeObj = value.toObject();
 		QString name = treeObj.find("name").value().toString();
 		QString url = treeObj.find("download_url").value().toString();
+#endif
 		if(name.endsWith(".traineddata")) {
 			m_languageFiles[name.left(name.indexOf("."))].append({name,url});
 		} else {

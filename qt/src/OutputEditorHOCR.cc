@@ -666,7 +666,11 @@ void OutputEditorHOCR::savePDF(bool overlay)
 		doc.setContent(item->data(0, SourceRole).toString());
 		int pageDpi = 0;
 		if(setCurrentSource(doc.firstChildElement("div"), &pageDpi)) {
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+			printer.setPaperSize(QSizeF(bbox.width() / double(pageDpi), bbox.height() / double(pageDpi)), QPrinter::Inch);
+#else
 			printer.setPageSize(QPageSize(QSizeF(bbox.width() / double(pageDpi), bbox.height() / double(pageDpi)), QPageSize::Inch));
+#endif
 			printer.newPage();
 			if(i == 0) {
 				painter.begin(&printer);

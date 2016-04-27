@@ -29,6 +29,7 @@
 #include <QMimeData>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
+#include <QSslConfiguration>
 #include <QTextStream>
 #include <QTimer>
 #include <QUrl>
