@@ -1,3 +1,11 @@
+gImageReader 3.1.91 (May 03 2016):
+ * gImageReader 3.2 beta 2
+ * Fix crash when editing items in the hOCR editor
+ * Fix build with Ubuntu 14.04
+ * Updated czech translation
+ * Fix some string typos
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
 gImageReader 3.1.90 (Apr 28 2016):
  * gImageReader 3.2 beta 1
  * Add an initial hOCR editor implementation, with possibility to save as hOCR HTML, PDF with invisible text overlay, or a PDF reconstructed from the extracted text and graphics
