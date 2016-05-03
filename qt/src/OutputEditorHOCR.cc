@@ -443,7 +443,7 @@ void OutputEditorHOCR::itemChanged(QTreeWidgetItem* item, int col)
 		// Update text
 		updateItemText(item);
 	}
-	if(item->checkState(col) == Qt::Checked) {
+	else if(item->checkState(col) == Qt::Checked) {
 		item->setFlags(item->flags() | Qt::ItemIsSelectable);
 		if(!isWord) {
 			item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
