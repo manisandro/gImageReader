@@ -94,7 +94,7 @@ const QList<Config::Lang> Config::LANGUAGES = {
 	{"msa",      "ms", QString::fromUtf8("Melayu")}, // Malay
 	{"mya",      "my", QString::fromUtf8("\u1017\u1019\u102c\u1005\u102c")}, // Burmese
 	{"nep",      "ne", QString::fromUtf8("\u0928\u0947\u092a\u093e\u0932\u0940")}, // Nepali
-	{"nld",      "nl", QString::fromUtf8("Nederlandse")}, // Dutch
+	{"nld",      "nl", QString::fromUtf8("Nederlands")}, // Dutch
 	{"nor",      "no", QString::fromUtf8("Norsk")}, // Norwegian
 	{"ori",      "or", QString::fromUtf8("\u0b13\u0b21\u0b3c\u0b3f\u0b06")}, // Oriya
 	{"pan",      "pa", QString::fromUtf8("\u0a2a\u0a70\u0a1c\u0a3e\u0a2c\u0a40")}, // Panjabi

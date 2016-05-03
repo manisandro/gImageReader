@@ -93,7 +93,7 @@ const std::vector<Config::Lang> Config::LANGUAGES = {
 	{"msa",      "ms", "Melayu"}, // Malay
 	{"mya",      "my", "\u1017\u1019\u102c\u1005\u102c"}, // Burmese
 	{"nep",      "ne", "\u0928\u0947\u092a\u093e\u0932\u0940"}, // Nepali
-	{"nld",      "nl", "Nederlandse"}, // Dutch
+	{"nld",      "nl", "Nederlands"}, // Dutch
 	{"nor",      "no", "Norsk"}, // Norwegian
 	{"ori",      "or", "\u0b13\u0b21\u0b3c\u0b3f\u0b06"}, // Oriya
 	{"pan",      "pa", "\u0a2a\u0a70\u0a1c\u0a3e\u0a2c\u0a40"}, // Panjabi
