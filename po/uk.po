@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-18 19:40+0200\n"
+"POT-Creation-Date: 2016-05-03 16:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Yuriy Bahriy <yhmtargaryen@gmail.com>\n"
 "Language-Team: Ukrainian\n"
@@ -20,23 +20,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:143
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:147
 msgid "Redetect Languages"
 msgstr "Перевизначити мови"
 
 #: ../gtk/data/appmenu.ui.h:2 ../gtk/data/gimagereader.ui.h:34
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:146
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:150
 msgid "Preferences"
 msgstr "Налаштування"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:35
 #: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:467
-#: ../qt/src/Ui_MainWindow.hh:151
+#: ../qt/src/Ui_MainWindow.hh:155
 msgid "Help"
 msgstr "Допомога"
 
 #: ../gtk/data/appmenu.ui.h:4 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:154
+#: ../qt/src/Ui_MainWindow.hh:158
 msgid "About"
 msgstr "Про програму"
 
@@ -74,7 +74,7 @@ msgstr ""
 #: ../gtk/data/editor_hocr.ui.h:2 ../gtk/data/gimagereader.ui.h:50
 #: ../gtk/src/Acquirer.cc:43 ../gtk/src/FileDialogs.cc:157
 #: ../gtk/src/Utils.cc:66 ../qt/data/ConfigDialog.ui.h:18
-#: ../qt/data/MainWindow.ui.h:15
+#: ../qt/data/MainWindow.ui.h:14
 msgid "Cancel"
 msgstr "Відміна"
 
@@ -149,7 +149,7 @@ msgstr "Очистити"
 msgid "Add"
 msgstr "Додати"
 
-#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/OutputEditorHOCR.cc:590
+#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/OutputEditorHOCR.cc:603
 #: ../qt/data/ConfigDialog.ui.h:20 ../qt/src/OutputEditorHOCR.cc:544
 #: ../qt/src/SubstitutionsManager.cc:55 ../qt/src/SubstitutionsManager.cc:56
 msgid "Remove"
@@ -262,76 +262,76 @@ msgstr "Знайти наступне"
 msgid "Match case"
 msgstr "Враховувати регістр"
 
-#: ../gtk/data/gimagereader.ui.h:1 ../qt/data/MainWindow.ui.h:37
+#: ../gtk/data/gimagereader.ui.h:1 ../qt/data/MainWindow.ui.h:35
 msgid "Toggle output pane"
 msgstr "Показати/приховати панель результатів"
 
 #. Sources toolbar
-#: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:165
+#: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
 msgid "Recent"
 msgstr "Попередні файли"
 
-#: ../gtk/data/gimagereader.ui.h:3 ../qt/src/Ui_MainWindow.hh:166
+#: ../gtk/data/gimagereader.ui.h:3 ../qt/src/Ui_MainWindow.hh:170
 msgid "Paste"
 msgstr "Вставити"
 
-#: ../gtk/data/gimagereader.ui.h:4 ../qt/src/Ui_MainWindow.hh:167
+#: ../gtk/data/gimagereader.ui.h:4 ../qt/src/Ui_MainWindow.hh:171
 msgid "Take Screenshot"
 msgstr "Зробити знімок екрану"
 
-#: ../gtk/data/gimagereader.ui.h:5 ../qt/src/Ui_MainWindow.hh:178
+#: ../gtk/data/gimagereader.ui.h:5 ../qt/src/Ui_MainWindow.hh:182
 msgid "Add images"
 msgstr "Відкрити зображення"
 
-#: ../gtk/data/gimagereader.ui.h:7 ../qt/src/Ui_MainWindow.hh:183
+#: ../gtk/data/gimagereader.ui.h:7 ../qt/src/Ui_MainWindow.hh:187
 msgid "Remove image from list"
 msgstr "Усунути зображення із списку"
 
-#: ../gtk/data/gimagereader.ui.h:8 ../qt/src/Ui_MainWindow.hh:186
+#: ../gtk/data/gimagereader.ui.h:8 ../qt/src/Ui_MainWindow.hh:190
 msgid "Delete image"
 msgstr "Видалити зображення"
 
-#: ../gtk/data/gimagereader.ui.h:9 ../qt/src/Ui_MainWindow.hh:189
+#: ../gtk/data/gimagereader.ui.h:9 ../qt/src/Ui_MainWindow.hh:193
 msgid "Clear list"
 msgstr "Очистити список"
 
-#: ../gtk/data/gimagereader.ui.h:10 ../qt/data/MainWindow.ui.h:7
+#: ../gtk/data/gimagereader.ui.h:10 ../qt/data/MainWindow.ui.h:6
 msgid "Files"
 msgstr "Файли"
 
-#: ../gtk/data/gimagereader.ui.h:11 ../qt/data/MainWindow.ui.h:17
+#: ../gtk/data/gimagereader.ui.h:11 ../qt/data/MainWindow.ui.h:16
 msgid "Device:"
 msgstr "Пристрій:"
 
-#: ../gtk/data/gimagereader.ui.h:12 ../qt/data/MainWindow.ui.h:16
+#: ../gtk/data/gimagereader.ui.h:12 ../qt/data/MainWindow.ui.h:15
 msgid "Refresh"
 msgstr "Оновити"
 
-#: ../gtk/data/gimagereader.ui.h:13 ../qt/data/MainWindow.ui.h:13
+#: ../gtk/data/gimagereader.ui.h:13 ../qt/data/MainWindow.ui.h:12
 msgid "Output:"
 msgstr "Сканувати до теки:"
 
-#: ../gtk/data/gimagereader.ui.h:14 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/gimagereader.ui.h:14 ../qt/data/MainWindow.ui.h:9
 msgid "Mode:"
 msgstr "Режим:"
 
-#: ../gtk/data/gimagereader.ui.h:15 ../qt/data/MainWindow.ui.h:12
+#: ../gtk/data/gimagereader.ui.h:15 ../qt/data/MainWindow.ui.h:11
 msgid "Color"
 msgstr "Кольоровий"
 
-#: ../gtk/data/gimagereader.ui.h:16 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/gimagereader.ui.h:16 ../qt/data/MainWindow.ui.h:10
 msgid "Grayscale"
 msgstr "Відтінки сірого"
 
-#: ../gtk/data/gimagereader.ui.h:17 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/gimagereader.ui.h:17 ../qt/data/MainWindow.ui.h:8
 msgid "Resolution:"
 msgstr "Роздільна здатність:"
 
-#: ../gtk/data/gimagereader.ui.h:18 ../qt/data/MainWindow.ui.h:14
+#: ../gtk/data/gimagereader.ui.h:18 ../qt/data/MainWindow.ui.h:13
 msgid "Scan"
 msgstr "Сканувати"
 
-#: ../gtk/data/gimagereader.ui.h:19 ../qt/data/MainWindow.ui.h:8
+#: ../gtk/data/gimagereader.ui.h:19 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
 msgstr "Сканування"
 
@@ -351,35 +351,35 @@ msgstr "Роздільна здатність"
 msgid "Invert colors"
 msgstr "Інверсія кольору"
 
-#: ../gtk/data/gimagereader.ui.h:24 ../qt/data/MainWindow.ui.h:21
+#: ../gtk/data/gimagereader.ui.h:24 ../qt/data/MainWindow.ui.h:19
 msgid "Zoom in"
 msgstr "Збільшити"
 
-#: ../gtk/data/gimagereader.ui.h:25 ../qt/data/MainWindow.ui.h:23
+#: ../gtk/data/gimagereader.ui.h:25 ../qt/data/MainWindow.ui.h:21
 msgid "Zoom out"
 msgstr "Зменшити"
 
-#: ../gtk/data/gimagereader.ui.h:26 ../qt/data/MainWindow.ui.h:25
+#: ../gtk/data/gimagereader.ui.h:26 ../qt/data/MainWindow.ui.h:23
 msgid "Normal size"
 msgstr "Справжній розмір"
 
-#: ../gtk/data/gimagereader.ui.h:27 ../qt/data/MainWindow.ui.h:27
+#: ../gtk/data/gimagereader.ui.h:27 ../qt/data/MainWindow.ui.h:25
 msgid "Best fit"
 msgstr "Оптимальне заповнення"
 
-#: ../gtk/data/gimagereader.ui.h:28 ../qt/data/MainWindow.ui.h:33
+#: ../gtk/data/gimagereader.ui.h:28 ../qt/data/MainWindow.ui.h:31
 msgid "Image controls"
 msgstr "Керування зображенням"
 
-#: ../gtk/data/gimagereader.ui.h:29 ../qt/src/Ui_MainWindow.hh:116
+#: ../gtk/data/gimagereader.ui.h:29 ../qt/src/Ui_MainWindow.hh:120
 msgid "Plain text"
 msgstr ""
 
-#: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:116
+#: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:120
 msgid "hOCR, PDF"
 msgstr ""
 
-#: ../gtk/data/gimagereader.ui.h:31 ../qt/data/MainWindow.ui.h:35
+#: ../gtk/data/gimagereader.ui.h:31 ../qt/data/MainWindow.ui.h:33
 msgid "Autodetect layout"
 msgstr "Автовизначення вмісту"
 
@@ -476,11 +476,11 @@ msgstr "Вся сторінка"
 msgid "Autodetect"
 msgstr "Автовизначення"
 
-#: ../gtk/data/gimagereader.ui.h:59 ../qt/src/TessdataManager.cc:43
+#: ../gtk/data/gimagereader.ui.h:59 ../qt/src/TessdataManager.cc:47
 msgid "Tessdata Manager"
 msgstr ""
 
-#: ../gtk/data/gimagereader.ui.h:62 ../qt/src/TessdataManager.cc:45
+#: ../gtk/data/gimagereader.ui.h:62 ../qt/src/TessdataManager.cc:49
 msgid "Manage installed languages:"
 msgstr ""
 
@@ -591,11 +591,11 @@ msgstr "Незбережена праця відсутня."
 msgid "Failed to obtain backtrace. Is gdb installed?"
 msgstr "Зворотнє трасування не вдалося. Встановлено gdb?"
 
-#: ../gtk/src/Displayer.cc:236 ../qt/src/Displayer.cc:222
+#: ../gtk/src/Displayer.cc:243 ../qt/src/Displayer.cc:222
 msgid "Failed to load image"
 msgstr "Не вдалось завантажити зображення"
 
-#: ../gtk/src/Displayer.cc:236 ../qt/src/Displayer.cc:222
+#: ../gtk/src/Displayer.cc:243 ../qt/src/Displayer.cc:222
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -698,8 +698,8 @@ msgstr "Встановлюється орфографічний словник �
 #: ../gtk/src/TessdataManager.cc:65 ../gtk/src/TessdataManager.cc:241
 #: ../qt/src/MainWindow.cc:490 ../qt/src/MainWindow.cc:505
 #: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:523
-#: ../qt/src/MainWindow.cc:551 ../qt/src/TessdataManager.cc:66
-#: ../qt/src/TessdataManager.cc:76 ../qt/src/TessdataManager.cc:217
+#: ../qt/src/MainWindow.cc:551 ../qt/src/TessdataManager.cc:70
+#: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:235
 msgid "Error"
 msgstr "Помилка"
 
@@ -742,117 +742,117 @@ msgstr "Неможливо відкрити наступні файли:%1"
 msgid "Recognition errors"
 msgstr "Сталися помилки при розпізнаванні"
 
-#: ../gtk/src/OutputEditorHOCR.cc:283 ../qt/src/OutputEditorHOCR.cc:230
+#: ../gtk/src/OutputEditorHOCR.cc:287 ../qt/src/OutputEditorHOCR.cc:230
 msgid "Graphic"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:325 ../qt/src/OutputEditorHOCR.cc:281
+#: ../gtk/src/OutputEditorHOCR.cc:333 ../qt/src/OutputEditorHOCR.cc:281
 #, fuzzy
 msgid "Paragraph"
 msgstr "Зберегти абзаци"
 
-#: ../gtk/src/OutputEditorHOCR.cc:328 ../qt/src/OutputEditorHOCR.cc:284
+#: ../gtk/src/OutputEditorHOCR.cc:336 ../qt/src/OutputEditorHOCR.cc:284
 #, fuzzy
 msgid "Textline"
 msgstr "Текстові файли"
 
-#: ../gtk/src/OutputEditorHOCR.cc:609 ../qt/src/OutputEditorHOCR.cc:554
+#: ../gtk/src/OutputEditorHOCR.cc:622 ../qt/src/OutputEditorHOCR.cc:554
 msgid "No suggestions"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:636 ../gtk/src/OutputEditorHOCR.cc:672
+#: ../gtk/src/OutputEditorHOCR.cc:649 ../gtk/src/OutputEditorHOCR.cc:685
 #: ../qt/src/OutputEditorHOCR.cc:574 ../qt/src/OutputEditorHOCR.cc:603
 msgid "hOCR HTML Files"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:637 ../qt/src/OutputEditorHOCR.cc:574
+#: ../gtk/src/OutputEditorHOCR.cc:650 ../qt/src/OutputEditorHOCR.cc:574
 msgid "Open hOCR File"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:646 ../qt/src/OutputEditorHOCR.cc:580
+#: ../gtk/src/OutputEditorHOCR.cc:659 ../qt/src/OutputEditorHOCR.cc:580
 #, fuzzy
 msgid "Failed to open file"
 msgstr "Неможливо відкрити файли"
 
-#: ../gtk/src/OutputEditorHOCR.cc:646 ../qt/src/OutputEditorHOCR.cc:580
+#: ../gtk/src/OutputEditorHOCR.cc:659 ../qt/src/OutputEditorHOCR.cc:580
 #, fuzzy
 msgid "The file could not be opened: %1."
 msgstr "Неможливо відкрити наступні файли:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:655 ../qt/src/OutputEditorHOCR.cc:587
+#: ../gtk/src/OutputEditorHOCR.cc:668 ../qt/src/OutputEditorHOCR.cc:587
 msgid "Invalid hOCR file"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:655 ../qt/src/OutputEditorHOCR.cc:587
+#: ../gtk/src/OutputEditorHOCR.cc:668 ../qt/src/OutputEditorHOCR.cc:587
 msgid "The file does not appear to contain valid hOCR HTML: %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:670 ../gtk/src/OutputEditorHOCR.cc:714
-#: ../gtk/src/OutputEditorText.cc:289 ../qt/src/OutputEditorHOCR.cc:602
-#: ../qt/src/OutputEditorHOCR.cc:640 ../qt/src/OutputEditorText.cc:241
+#: ../gtk/src/OutputEditorHOCR.cc:683 ../gtk/src/OutputEditorHOCR.cc:728
+#: ../gtk/src/OutputEditorText.cc:293 ../qt/src/OutputEditorHOCR.cc:602
+#: ../qt/src/OutputEditorHOCR.cc:641 ../qt/src/OutputEditorText.cc:241
 msgid "output"
 msgstr "результати"
 
-#: ../gtk/src/OutputEditorHOCR.cc:673 ../qt/src/OutputEditorHOCR.cc:603
+#: ../gtk/src/OutputEditorHOCR.cc:686 ../qt/src/OutputEditorHOCR.cc:603
 #, fuzzy
 msgid "Save hOCR Output..."
 msgstr "Зберегти результати..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:681 ../gtk/src/OutputEditorText.cc:302
+#: ../gtk/src/OutputEditorHOCR.cc:694 ../gtk/src/OutputEditorText.cc:306
 #: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
 msgid "Failed to save output"
 msgstr "Зберегти результати не вдалося"
 
-#: ../gtk/src/OutputEditorHOCR.cc:681 ../gtk/src/OutputEditorText.cc:302
+#: ../gtk/src/OutputEditorHOCR.cc:694 ../gtk/src/OutputEditorText.cc:306
 #: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Переконайтеся, що у вас є дозвіл на запис в обрану теку."
 
-#: ../gtk/src/OutputEditorHOCR.cc:715 ../qt/src/OutputEditorHOCR.cc:641
+#: ../gtk/src/OutputEditorHOCR.cc:729 ../qt/src/OutputEditorHOCR.cc:642
 #, fuzzy
 msgid "PDF Files"
 msgstr "Файли"
 
-#: ../gtk/src/OutputEditorHOCR.cc:716 ../qt/src/OutputEditorHOCR.cc:641
+#: ../gtk/src/OutputEditorHOCR.cc:730 ../qt/src/OutputEditorHOCR.cc:642
 #, fuzzy
 msgid "Save PDF Output..."
 msgstr "Зберегти результати..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:766 ../qt/src/OutputEditorHOCR.cc:691
+#: ../gtk/src/OutputEditorHOCR.cc:780 ../qt/src/OutputEditorHOCR.cc:696
 #, fuzzy
 msgid "Errors occurred"
 msgstr "Сталися помилки при розпізнаванні"
 
-#: ../gtk/src/OutputEditorHOCR.cc:766 ../qt/src/OutputEditorHOCR.cc:691
+#: ../gtk/src/OutputEditorHOCR.cc:780 ../qt/src/OutputEditorHOCR.cc:696
 #, fuzzy
 msgid ""
 "The following pages could not be rendered:\n"
 "%1"
 msgstr "Неможливо відкрити наступні файли:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:831 ../gtk/src/OutputEditorText.cc:317
-#: ../qt/src/OutputEditorHOCR.cc:750 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:845 ../gtk/src/OutputEditorText.cc:321
+#: ../qt/src/OutputEditorHOCR.cc:755 ../qt/src/OutputEditorText.cc:265
 msgid "Output not saved"
 msgstr "Результати не збережено"
 
-#: ../gtk/src/OutputEditorHOCR.cc:831 ../gtk/src/OutputEditorText.cc:317
-#: ../qt/src/OutputEditorHOCR.cc:750 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:845 ../gtk/src/OutputEditorText.cc:321
+#: ../qt/src/OutputEditorHOCR.cc:755 ../qt/src/OutputEditorText.cc:265
 msgid "Save output before proceeding?"
 msgstr "Зберегти результати, перш ніж продовжити?"
 
-#: ../gtk/src/OutputEditorText.cc:183 ../qt/src/OutputEditorText.cc:157
+#: ../gtk/src/OutputEditorText.cc:187 ../qt/src/OutputEditorText.cc:157
 msgid "Stripping line breaks..."
 msgstr "Видалення розривів рядків..."
 
-#: ../gtk/src/OutputEditorText.cc:199
+#: ../gtk/src/OutputEditorText.cc:203
 msgid "Check spelling"
 msgstr "Перевірити орфографію"
 
-#: ../gtk/src/OutputEditorText.cc:230 ../qt/src/OutputEditorText.cc:181
+#: ../gtk/src/OutputEditorText.cc:234 ../qt/src/OutputEditorText.cc:181
 msgid "Replacing..."
 msgstr "Заміна..."
 
-#: ../gtk/src/OutputEditorText.cc:261 ../gtk/src/Recognizer.cc:397
+#: ../gtk/src/OutputEditorText.cc:265 ../gtk/src/Recognizer.cc:397
 #: ../qt/src/Recognizer.cc:401
 msgid ""
 "\n"
@@ -861,11 +861,11 @@ msgstr ""
 "\n"
 "[Не вдалося розпізнати сторінку %1]\n"
 
-#: ../gtk/src/OutputEditorText.cc:293 ../qt/src/OutputEditorText.cc:243
+#: ../gtk/src/OutputEditorText.cc:297 ../qt/src/OutputEditorText.cc:243
 msgid "Text Files"
 msgstr "Текстові файли"
 
-#: ../gtk/src/OutputEditorText.cc:294 ../qt/src/OutputEditorText.cc:243
+#: ../gtk/src/OutputEditorText.cc:298 ../qt/src/OutputEditorText.cc:243
 msgid "Save Output..."
 msgstr "Зберегти результати..."
 
@@ -1098,37 +1098,38 @@ msgstr "Ви хочете зберегти поточний список?"
 msgid "Applying substitutions..."
 msgstr "Застосування замін..."
 
-#: ../gtk/src/TessdataManager.cc:55 ../qt/src/TessdataManager.cc:66
+#: ../gtk/src/TessdataManager.cc:55 ../qt/src/TessdataManager.cc:70
 msgid ""
 "PackageKit is required for managing tesseract language packs, but it was not "
 "found. Please use the system package management software to manage the "
 "tesseract language packs."
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:70
+#: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:74
 msgid "Fetching available languages"
 msgstr ""
 
 #: ../gtk/src/TessdataManager.cc:65 ../gtk/src/TessdataManager.cc:86
-#: ../qt/src/TessdataManager.cc:76 ../qt/src/TessdataManager.cc:87
+#: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:91
 msgid "Failed to fetch list of available languages: %1"
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:95 ../qt/src/TessdataManager.cc:94
+#: ../gtk/src/TessdataManager.cc:95 ../qt/src/TessdataManager.cc:101
+#: ../qt/src/TessdataManager.cc:112
 msgid "Parsing error: %1"
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:157 ../qt/src/TessdataManager.cc:139
+#: ../gtk/src/TessdataManager.cc:157 ../qt/src/TessdataManager.cc:157
 #, fuzzy
 msgid "Applying changes..."
 msgstr "Застосування замін..."
 
-#: ../gtk/src/TessdataManager.cc:207 ../qt/src/TessdataManager.cc:182
+#: ../gtk/src/TessdataManager.cc:207 ../qt/src/TessdataManager.cc:200
 #, fuzzy
 msgid "Downloading %1..."
 msgstr "Завантажується '%1'..."
 
-#: ../gtk/src/TessdataManager.cc:227 ../qt/src/TessdataManager.cc:203
+#: ../gtk/src/TessdataManager.cc:227 ../qt/src/TessdataManager.cc:221
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1204,61 +1205,52 @@ msgstr ""
 msgid "gImageReader"
 msgstr "gImageReader"
 
-#: ../qt/data/MainWindow.ui.h:6
-#, fuzzy
-msgid "So&urces"
-msgstr "Джерела"
-
-#: ../qt/data/MainWindow.ui.h:18
-#, fuzzy
-msgid "&Output"
-msgstr "Сканувати"
-
-#: ../qt/data/MainWindow.ui.h:19
+#. Remove & from some labels which designer insists in adding
+#: ../qt/data/MainWindow.ui.h:17 ../qt/src/Ui_MainWindow.hh:48
 msgid "Sources"
 msgstr "Джерела"
 
-#: ../qt/data/MainWindow.ui.h:20
+#: ../qt/data/MainWindow.ui.h:18
 msgid "Zoom In"
 msgstr "Збільшити"
 
-#: ../qt/data/MainWindow.ui.h:22
+#: ../qt/data/MainWindow.ui.h:20
 msgid "Zoom Out"
 msgstr "Зменшити"
 
-#: ../qt/data/MainWindow.ui.h:24
+#: ../qt/data/MainWindow.ui.h:22
 msgid "Normal Size"
 msgstr "Справжній розмір"
 
-#: ../qt/data/MainWindow.ui.h:26
+#: ../qt/data/MainWindow.ui.h:24
 msgid "Best Fit"
 msgstr "Оптимальне заповнення"
 
-#: ../qt/data/MainWindow.ui.h:28
+#: ../qt/data/MainWindow.ui.h:26
 msgid "Rotate Left"
 msgstr "Повернути вліво"
 
-#: ../qt/data/MainWindow.ui.h:29
+#: ../qt/data/MainWindow.ui.h:27
 msgid "Rotate left"
 msgstr "Повернути вліво"
 
-#: ../qt/data/MainWindow.ui.h:30
+#: ../qt/data/MainWindow.ui.h:28
 msgid "Rotate Right"
 msgstr "Повернути вправо"
 
-#: ../qt/data/MainWindow.ui.h:31
+#: ../qt/data/MainWindow.ui.h:29
 msgid "Rotate right"
 msgstr "Повернути вправо"
 
-#: ../qt/data/MainWindow.ui.h:32
+#: ../qt/data/MainWindow.ui.h:30
 msgid "Image Controls"
 msgstr "Керування зображенням"
 
-#: ../qt/data/MainWindow.ui.h:34
+#: ../qt/data/MainWindow.ui.h:32
 msgid "Autodetect Layout"
 msgstr "Автовизначення вмісту"
 
-#: ../qt/data/MainWindow.ui.h:36
+#: ../qt/data/MainWindow.ui.h:34
 msgid "Toggle Output Pane"
 msgstr "Показати/приховати панель результатів"
 
@@ -1272,23 +1264,27 @@ msgstr "Неможливо прочитати %1."
 msgid "The following dictionary files were installed:%1"
 msgstr "Було встановлено наступні словники:%1"
 
-#: ../qt/src/Ui_MainWindow.hh:112
+#: ../qt/src/Ui_MainWindow.hh:49
+msgid "Output"
+msgstr "Результати"
+
+#: ../qt/src/Ui_MainWindow.hh:116
 msgid "OCR mode:"
 msgstr ""
 
-#: ../qt/src/Ui_MainWindow.hh:177
+#: ../qt/src/Ui_MainWindow.hh:181
 msgid "Add Images"
 msgstr "Відкрити зображення"
 
-#: ../qt/src/Ui_MainWindow.hh:182
+#: ../qt/src/Ui_MainWindow.hh:186
 msgid "Remove Image"
 msgstr "Усунути зображення"
 
-#: ../qt/src/Ui_MainWindow.hh:185
+#: ../qt/src/Ui_MainWindow.hh:189
 msgid "Delete Image"
 msgstr "Видалити зображення"
 
-#: ../qt/src/Ui_MainWindow.hh:188
+#: ../qt/src/Ui_MainWindow.hh:192
 msgid "Clear List"
 msgstr "Очистити список"
 
@@ -1326,6 +1322,14 @@ msgstr "Зберегти результати"
 msgid "Clear Output"
 msgstr "Очистити результати"
 
+#, fuzzy
+#~ msgid "So&urces"
+#~ msgstr "Джерела"
+
+#, fuzzy
+#~ msgid "&Output"
+#~ msgstr "Сканувати"
+
 #~ msgid "To recognize specific areas, drag rectangles over them."
 #~ msgstr "Щоб розпізнати певні ділянки, обведіть їх рамкою."
 
@@ -1334,9 +1338,6 @@ msgstr "Очистити результати"
 
 #~ msgid "en_US"
 #~ msgstr "uk_UA"
-
-#~ msgid "Output"
-#~ msgstr "Результати"
 
 #~ msgid ""
 #~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"

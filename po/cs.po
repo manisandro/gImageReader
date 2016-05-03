@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-15 00:05+0200\n"
+"POT-Creation-Date: 2016-05-03 16:18+0200\n"
 "PO-Revision-Date: 2016-04-18 18:30+0200\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <>\n"
@@ -18,23 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:143
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:147
 msgid "Redetect Languages"
 msgstr "Znovu zjistit přítomnost jazykových dat"
 
 #: ../gtk/data/appmenu.ui.h:2 ../gtk/data/gimagereader.ui.h:34
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:146
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:150
 msgid "Preferences"
 msgstr "Předvolby"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:35
-#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:462
-#: ../qt/src/Ui_MainWindow.hh:151
+#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:467
+#: ../qt/src/Ui_MainWindow.hh:155
 msgid "Help"
 msgstr "Nápověda"
 
 #: ../gtk/data/appmenu.ui.h:4 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:154
+#: ../qt/src/Ui_MainWindow.hh:158
 msgid "About"
 msgstr "O aplikaci"
 
@@ -72,7 +72,7 @@ msgstr "Export do PDF"
 #: ../gtk/data/editor_hocr.ui.h:2 ../gtk/data/gimagereader.ui.h:50
 #: ../gtk/src/Acquirer.cc:43 ../gtk/src/FileDialogs.cc:157
 #: ../gtk/src/Utils.cc:66 ../qt/data/ConfigDialog.ui.h:18
-#: ../qt/data/MainWindow.ui.h:15
+#: ../qt/data/MainWindow.ui.h:14
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -113,11 +113,11 @@ msgstr "Uložit výstup"
 msgid "Clear output"
 msgstr "Vyčistit výstup"
 
-#: ../gtk/data/editor_hocr.ui.h:11 ../qt/src/Ui_OutputEditorHOCR.hh:83
+#: ../gtk/data/editor_hocr.ui.h:11 ../qt/src/Ui_OutputEditorHOCR.hh:82
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: ../gtk/data/editor_hocr.ui.h:12 ../qt/src/Ui_OutputEditorHOCR.hh:87
+#: ../gtk/data/editor_hocr.ui.h:12 ../qt/src/Ui_OutputEditorHOCR.hh:86
 msgid "Source"
 msgstr "Zdroj"
 
@@ -146,8 +146,8 @@ msgstr "Vyčistit"
 msgid "Add"
 msgstr "Přidat"
 
-#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/OutputEditorHOCR.cc:534
-#: ../qt/data/ConfigDialog.ui.h:20 ../qt/src/OutputEditorHOCR.cc:488
+#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/OutputEditorHOCR.cc:603
+#: ../qt/data/ConfigDialog.ui.h:20 ../qt/src/OutputEditorHOCR.cc:544
 #: ../qt/src/SubstitutionsManager.cc:55 ../qt/src/SubstitutionsManager.cc:56
 msgid "Remove"
 msgstr "Odebrat"
@@ -257,76 +257,76 @@ msgstr "Najít následující výskyt"
 msgid "Match case"
 msgstr "Rozlišovat malá/velká písmena"
 
-#: ../gtk/data/gimagereader.ui.h:1 ../qt/data/MainWindow.ui.h:37
+#: ../gtk/data/gimagereader.ui.h:1 ../qt/data/MainWindow.ui.h:35
 msgid "Toggle output pane"
 msgstr "Zobrazit či skrýt podokno s výstupním textem"
 
 #. Sources toolbar
-#: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:165
+#: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
 msgid "Recent"
 msgstr "Nedávno použité"
 
-#: ../gtk/data/gimagereader.ui.h:3 ../qt/src/Ui_MainWindow.hh:166
+#: ../gtk/data/gimagereader.ui.h:3 ../qt/src/Ui_MainWindow.hh:170
 msgid "Paste"
 msgstr "Vložit"
 
-#: ../gtk/data/gimagereader.ui.h:4 ../qt/src/Ui_MainWindow.hh:167
+#: ../gtk/data/gimagereader.ui.h:4 ../qt/src/Ui_MainWindow.hh:171
 msgid "Take Screenshot"
 msgstr "Zachytit snímek obrazovky"
 
-#: ../gtk/data/gimagereader.ui.h:5 ../qt/src/Ui_MainWindow.hh:178
+#: ../gtk/data/gimagereader.ui.h:5 ../qt/src/Ui_MainWindow.hh:182
 msgid "Add images"
 msgstr "Přidat obrázky"
 
-#: ../gtk/data/gimagereader.ui.h:7 ../qt/src/Ui_MainWindow.hh:183
+#: ../gtk/data/gimagereader.ui.h:7 ../qt/src/Ui_MainWindow.hh:187
 msgid "Remove image from list"
 msgstr "Odebrat obrázek ze seznamu"
 
-#: ../gtk/data/gimagereader.ui.h:8 ../qt/src/Ui_MainWindow.hh:186
+#: ../gtk/data/gimagereader.ui.h:8 ../qt/src/Ui_MainWindow.hh:190
 msgid "Delete image"
 msgstr "Smazat obrázek"
 
-#: ../gtk/data/gimagereader.ui.h:9 ../qt/src/Ui_MainWindow.hh:189
+#: ../gtk/data/gimagereader.ui.h:9 ../qt/src/Ui_MainWindow.hh:193
 msgid "Clear list"
 msgstr "Vyčistit seznam"
 
-#: ../gtk/data/gimagereader.ui.h:10 ../qt/data/MainWindow.ui.h:7
+#: ../gtk/data/gimagereader.ui.h:10 ../qt/data/MainWindow.ui.h:6
 msgid "Files"
 msgstr "soubory"
 
-#: ../gtk/data/gimagereader.ui.h:11 ../qt/data/MainWindow.ui.h:17
+#: ../gtk/data/gimagereader.ui.h:11 ../qt/data/MainWindow.ui.h:16
 msgid "Device:"
 msgstr "Zařízení:"
 
-#: ../gtk/data/gimagereader.ui.h:12 ../qt/data/MainWindow.ui.h:16
+#: ../gtk/data/gimagereader.ui.h:12 ../qt/data/MainWindow.ui.h:15
 msgid "Refresh"
 msgstr "Znovu načíst"
 
-#: ../gtk/data/gimagereader.ui.h:13 ../qt/data/MainWindow.ui.h:13
+#: ../gtk/data/gimagereader.ui.h:13 ../qt/data/MainWindow.ui.h:12
 msgid "Output:"
 msgstr "Výstup:"
 
-#: ../gtk/data/gimagereader.ui.h:14 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/gimagereader.ui.h:14 ../qt/data/MainWindow.ui.h:9
 msgid "Mode:"
 msgstr "Režim:"
 
-#: ../gtk/data/gimagereader.ui.h:15 ../qt/data/MainWindow.ui.h:12
+#: ../gtk/data/gimagereader.ui.h:15 ../qt/data/MainWindow.ui.h:11
 msgid "Color"
 msgstr "Barevný"
 
-#: ../gtk/data/gimagereader.ui.h:16 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/gimagereader.ui.h:16 ../qt/data/MainWindow.ui.h:10
 msgid "Grayscale"
 msgstr "Stupně šedé"
 
-#: ../gtk/data/gimagereader.ui.h:17 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/gimagereader.ui.h:17 ../qt/data/MainWindow.ui.h:8
 msgid "Resolution:"
 msgstr "Rozlišení:"
 
-#: ../gtk/data/gimagereader.ui.h:18 ../qt/data/MainWindow.ui.h:14
+#: ../gtk/data/gimagereader.ui.h:18 ../qt/data/MainWindow.ui.h:13
 msgid "Scan"
 msgstr "Skenovat"
 
-#: ../gtk/data/gimagereader.ui.h:19 ../qt/data/MainWindow.ui.h:8
+#: ../gtk/data/gimagereader.ui.h:19 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
 msgstr "Získat"
 
@@ -346,35 +346,35 @@ msgstr "Rozlišení"
 msgid "Invert colors"
 msgstr "Převrátit barvy"
 
-#: ../gtk/data/gimagereader.ui.h:24 ../qt/data/MainWindow.ui.h:21
+#: ../gtk/data/gimagereader.ui.h:24 ../qt/data/MainWindow.ui.h:19
 msgid "Zoom in"
 msgstr "Přiblížit"
 
-#: ../gtk/data/gimagereader.ui.h:25 ../qt/data/MainWindow.ui.h:23
+#: ../gtk/data/gimagereader.ui.h:25 ../qt/data/MainWindow.ui.h:21
 msgid "Zoom out"
 msgstr "Oddálit"
 
-#: ../gtk/data/gimagereader.ui.h:26 ../qt/data/MainWindow.ui.h:25
+#: ../gtk/data/gimagereader.ui.h:26 ../qt/data/MainWindow.ui.h:23
 msgid "Normal size"
 msgstr "Původní velikost"
 
-#: ../gtk/data/gimagereader.ui.h:27 ../qt/data/MainWindow.ui.h:27
+#: ../gtk/data/gimagereader.ui.h:27 ../qt/data/MainWindow.ui.h:25
 msgid "Best fit"
 msgstr "Přizpůsobit oknu"
 
-#: ../gtk/data/gimagereader.ui.h:28 ../qt/data/MainWindow.ui.h:33
+#: ../gtk/data/gimagereader.ui.h:28 ../qt/data/MainWindow.ui.h:31
 msgid "Image controls"
 msgstr "Ovládání parametrů obrázku"
 
-#: ../gtk/data/gimagereader.ui.h:29 ../qt/src/Ui_MainWindow.hh:116
+#: ../gtk/data/gimagereader.ui.h:29 ../qt/src/Ui_MainWindow.hh:120
 msgid "Plain text"
 msgstr "Čistý text"
 
-#: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:116
+#: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:120
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
-#: ../gtk/data/gimagereader.ui.h:31 ../qt/data/MainWindow.ui.h:35
+#: ../gtk/data/gimagereader.ui.h:31 ../qt/data/MainWindow.ui.h:33
 msgid "Autodetect layout"
 msgstr "Automaticky zjistit rozvržení stránky"
 
@@ -470,11 +470,11 @@ msgstr "Celá strana"
 msgid "Autodetect"
 msgstr "Automaticky"
 
-#: ../gtk/data/gimagereader.ui.h:59 ../qt/src/TessdataManager.cc:43
+#: ../gtk/data/gimagereader.ui.h:59 ../qt/src/TessdataManager.cc:47
 msgid "Tessdata Manager"
 msgstr "Správce dat engine Tesseract"
 
-#: ../gtk/data/gimagereader.ui.h:62 ../qt/src/TessdataManager.cc:45
+#: ../gtk/data/gimagereader.ui.h:62 ../qt/src/TessdataManager.cc:49
 msgid "Manage installed languages:"
 msgstr "Spravovat nainstalovaná jazyková data"
 
@@ -585,11 +585,11 @@ msgstr "Od posledního uložení nepřibylo nic nového."
 msgid "Failed to obtain backtrace. Is gdb installed?"
 msgstr "Nezdařilo se získat backtrace. Je nainstalován ladící nástroj gdb?"
 
-#: ../gtk/src/Displayer.cc:236 ../qt/src/Displayer.cc:222
+#: ../gtk/src/Displayer.cc:243 ../qt/src/Displayer.cc:222
 msgid "Failed to load image"
 msgstr "Obrázek se nepodařilo načíst"
 
-#: ../gtk/src/Displayer.cc:236 ../qt/src/Displayer.cc:222
+#: ../gtk/src/Displayer.cc:243 ../qt/src/Displayer.cc:222
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -630,57 +630,57 @@ msgstr "Soubor s názvem „%1“ už existuje. Opravdu má být přepsán?"
 msgid "Overwrite File?"
 msgstr "Přepsat soubor?"
 
-#: ../gtk/src/MainWindow.cc:167 ../qt/src/MainWindow.cc:178
+#: ../gtk/src/MainWindow.cc:167 ../qt/src/MainWindow.cc:183
 msgid "Select an image to begin..."
 msgstr "Začněte výběrem obrázku…"
 
-#: ../gtk/src/MainWindow.cc:293 ../qt/src/MainWindow.cc:266
+#: ../gtk/src/MainWindow.cc:293 ../qt/src/MainWindow.cc:271
 msgid "Multiple sources"
 msgstr "Vícero zdrojů…"
 
-#: ../gtk/src/MainWindow.cc:294 ../qt/src/MainWindow.cc:267
-msgid "To recognize specific areas, drag rectangles over them."
-msgstr "Nad oblastmi, které mají být rozpoznány, natáhněte obdélníky."
+#: ../gtk/src/MainWindow.cc:294 ../qt/src/MainWindow.cc:272
+msgid "Ready"
+msgstr "Připraven"
 
-#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:401
+#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:406
 msgid "New version"
 msgstr "Nová verze"
 
-#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:401
+#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:406
 msgid "gImageReader %1 is available"
 msgstr "je k dispozici gImageReader %1"
 
-#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:402
+#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:407
 msgid "Download"
 msgstr "Stáhnout"
 
-#: ../gtk/src/MainWindow.cc:443 ../qt/src/MainWindow.cc:403
+#: ../gtk/src/MainWindow.cc:443 ../qt/src/MainWindow.cc:408
 msgid "Changelog"
 msgstr "Seznam změn"
 
-#: ../gtk/src/MainWindow.cc:444 ../qt/src/MainWindow.cc:404
+#: ../gtk/src/MainWindow.cc:444 ../qt/src/MainWindow.cc:409
 msgid "Don't notify again"
 msgstr "Příště už neoznamovat"
 
-#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:456
+#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:461
 msgid "Don't show again"
 msgstr "Příště už nezobrazovat"
 
 #: ../gtk/src/MainWindow.cc:471 ../gtk/src/MainWindow.cc:477
-#: ../qt/src/MainWindow.cc:457
+#: ../qt/src/MainWindow.cc:462
 msgid "Install"
 msgstr "Instalovat"
 
-#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:467
+#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:472
 msgid "Spelling dictionary missing"
 msgstr "Chybí slovník pro kontrolu překlepů"
 
-#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:467
+#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:472
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Není nainstalovaný slovník pro kontrolu překlepů pro %1"
 
 #: ../gtk/src/MainWindow.cc:487 ../gtk/src/MainWindow.cc:514
-#: ../qt/src/MainWindow.cc:474
+#: ../qt/src/MainWindow.cc:479
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Instalace slovníku pro kontrolu překlepů pro %1…"
 
@@ -688,32 +688,32 @@ msgstr "Instalace slovníku pro kontrolu překlepů pro %1…"
 #: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:539
 #: ../gtk/src/MainWindow.cc:568 ../gtk/src/TessdataManager.cc:55
 #: ../gtk/src/TessdataManager.cc:65 ../gtk/src/TessdataManager.cc:241
-#: ../qt/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:500
-#: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:518
-#: ../qt/src/MainWindow.cc:546 ../qt/src/TessdataManager.cc:66
-#: ../qt/src/TessdataManager.cc:76 ../qt/src/TessdataManager.cc:217
+#: ../qt/src/MainWindow.cc:490 ../qt/src/MainWindow.cc:505
+#: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:523
+#: ../qt/src/MainWindow.cc:551 ../qt/src/TessdataManager.cc:70
+#: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:235
 msgid "Error"
 msgstr "Chyba"
 
-#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:485
+#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:490
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Instalace slovníku pro kontrolu překlepů se nezdařila: %1"
 
 #: ../gtk/src/MainWindow.cc:523 ../gtk/src/MainWindow.cc:539
-#: ../qt/src/MainWindow.cc:500
+#: ../qt/src/MainWindow.cc:505
 msgid "Could not read %1: %2."
 msgstr "Nedaří se číst %1: %2."
 
 #: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:568
-#: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:546
+#: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:551
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Pro %1 nebyly nalezeny žádné slovníky pro kontrolu překlepů."
 
-#: ../gtk/src/MainWindow.cc:549 ../qt/src/MainWindow.cc:529
+#: ../gtk/src/MainWindow.cc:549 ../qt/src/MainWindow.cc:534
 msgid "Downloading '%1'..."
 msgstr "Stahování %1…"
 
-#: ../gtk/src/MainWindow.cc:565 ../qt/src/MainWindow.cc:543
+#: ../gtk/src/MainWindow.cc:565 ../qt/src/MainWindow.cc:548
 msgid "Dictionaries installed"
 msgstr "Slovníky byly nainstalovány"
 
@@ -721,7 +721,7 @@ msgstr "Slovníky byly nainstalovány"
 msgid "The following dictionaries were installed:%1"
 msgstr "Byly nainstalovány tyto slovníky:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:220
+#: ../gtk/src/OutputEditorHOCR.cc:222
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -729,114 +729,114 @@ msgstr ""
 "Tyto stránky nebylo možné zpracovat:\n"
 "%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:221 ../qt/src/OutputEditorHOCR.cc:182
+#: ../gtk/src/OutputEditorHOCR.cc:223 ../qt/src/OutputEditorHOCR.cc:183
 msgid "Recognition errors"
 msgstr "Chyby rozpoznávání"
 
-#: ../gtk/src/OutputEditorHOCR.cc:281 ../qt/src/OutputEditorHOCR.cc:229
+#: ../gtk/src/OutputEditorHOCR.cc:287 ../qt/src/OutputEditorHOCR.cc:230
 msgid "Graphic"
 msgstr "Grafika"
 
-#: ../gtk/src/OutputEditorHOCR.cc:323 ../qt/src/OutputEditorHOCR.cc:280
+#: ../gtk/src/OutputEditorHOCR.cc:333 ../qt/src/OutputEditorHOCR.cc:281
 msgid "Paragraph"
 msgstr "Odstavec"
 
-#: ../gtk/src/OutputEditorHOCR.cc:326 ../qt/src/OutputEditorHOCR.cc:283
+#: ../gtk/src/OutputEditorHOCR.cc:336 ../qt/src/OutputEditorHOCR.cc:284
 msgid "Textline"
 msgstr "Textový řádek"
 
-#: ../gtk/src/OutputEditorHOCR.cc:553 ../qt/src/OutputEditorHOCR.cc:498
+#: ../gtk/src/OutputEditorHOCR.cc:622 ../qt/src/OutputEditorHOCR.cc:554
 msgid "No suggestions"
 msgstr "Žádná doporučení"
 
-#: ../gtk/src/OutputEditorHOCR.cc:580 ../gtk/src/OutputEditorHOCR.cc:616
-#: ../qt/src/OutputEditorHOCR.cc:518 ../qt/src/OutputEditorHOCR.cc:547
+#: ../gtk/src/OutputEditorHOCR.cc:649 ../gtk/src/OutputEditorHOCR.cc:685
+#: ../qt/src/OutputEditorHOCR.cc:574 ../qt/src/OutputEditorHOCR.cc:603
 msgid "hOCR HTML Files"
 msgstr "HTML soubory ve formátu hOCR"
 
-#: ../gtk/src/OutputEditorHOCR.cc:581 ../qt/src/OutputEditorHOCR.cc:518
+#: ../gtk/src/OutputEditorHOCR.cc:650 ../qt/src/OutputEditorHOCR.cc:574
 msgid "Open hOCR File"
 msgstr "Otevřít soubor ve formátu hOCR"
 
-#: ../gtk/src/OutputEditorHOCR.cc:590 ../qt/src/OutputEditorHOCR.cc:524
+#: ../gtk/src/OutputEditorHOCR.cc:659 ../qt/src/OutputEditorHOCR.cc:580
 msgid "Failed to open file"
 msgstr "Nepodařilo se otevřít soubor"
 
-#: ../gtk/src/OutputEditorHOCR.cc:590 ../qt/src/OutputEditorHOCR.cc:524
+#: ../gtk/src/OutputEditorHOCR.cc:659 ../qt/src/OutputEditorHOCR.cc:580
 msgid "The file could not be opened: %1."
 msgstr "Soubor se nepodařilo otevřít: %1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:599 ../qt/src/OutputEditorHOCR.cc:531
+#: ../gtk/src/OutputEditorHOCR.cc:668 ../qt/src/OutputEditorHOCR.cc:587
 msgid "Invalid hOCR file"
 msgstr "Neplatný soubor pro formát hOCR"
 
-#: ../gtk/src/OutputEditorHOCR.cc:599 ../qt/src/OutputEditorHOCR.cc:531
+#: ../gtk/src/OutputEditorHOCR.cc:668 ../qt/src/OutputEditorHOCR.cc:587
 msgid "The file does not appear to contain valid hOCR HTML: %1"
 msgstr "Soubor neobsahuje platnou HTML podobu formátu HOCR: %1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:614 ../gtk/src/OutputEditorHOCR.cc:658
-#: ../gtk/src/OutputEditorText.cc:289 ../qt/src/OutputEditorHOCR.cc:546
-#: ../qt/src/OutputEditorHOCR.cc:584 ../qt/src/OutputEditorText.cc:241
+#: ../gtk/src/OutputEditorHOCR.cc:683 ../gtk/src/OutputEditorHOCR.cc:728
+#: ../gtk/src/OutputEditorText.cc:293 ../qt/src/OutputEditorHOCR.cc:602
+#: ../qt/src/OutputEditorHOCR.cc:641 ../qt/src/OutputEditorText.cc:241
 msgid "output"
 msgstr "výstup"
 
-#: ../gtk/src/OutputEditorHOCR.cc:617 ../qt/src/OutputEditorHOCR.cc:547
+#: ../gtk/src/OutputEditorHOCR.cc:686 ../qt/src/OutputEditorHOCR.cc:603
 msgid "Save hOCR Output..."
 msgstr "Uložit výstup do formátu hOCR…"
 
-#: ../gtk/src/OutputEditorHOCR.cc:625 ../gtk/src/OutputEditorText.cc:302
-#: ../qt/src/OutputEditorHOCR.cc:555 ../qt/src/OutputEditorText.cc:251
+#: ../gtk/src/OutputEditorHOCR.cc:694 ../gtk/src/OutputEditorText.cc:306
+#: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
 msgid "Failed to save output"
 msgstr "Uložení výstupu se nezdařilo"
 
-#: ../gtk/src/OutputEditorHOCR.cc:625 ../gtk/src/OutputEditorText.cc:302
-#: ../qt/src/OutputEditorHOCR.cc:555 ../qt/src/OutputEditorText.cc:251
+#: ../gtk/src/OutputEditorHOCR.cc:694 ../gtk/src/OutputEditorText.cc:306
+#: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Zkontrolujte své oprávnění zapisovat do zvolené složky."
 
-#: ../gtk/src/OutputEditorHOCR.cc:659 ../qt/src/OutputEditorHOCR.cc:585
+#: ../gtk/src/OutputEditorHOCR.cc:729 ../qt/src/OutputEditorHOCR.cc:642
 msgid "PDF Files"
 msgstr "PDF soubory"
 
-#: ../gtk/src/OutputEditorHOCR.cc:660 ../qt/src/OutputEditorHOCR.cc:585
+#: ../gtk/src/OutputEditorHOCR.cc:730 ../qt/src/OutputEditorHOCR.cc:642
 msgid "Save PDF Output..."
 msgstr "Uložit výstup do formátu PDF…"
 
-#: ../gtk/src/OutputEditorHOCR.cc:710 ../qt/src/OutputEditorHOCR.cc:635
+#: ../gtk/src/OutputEditorHOCR.cc:780 ../qt/src/OutputEditorHOCR.cc:696
 msgid "Errors occurred"
 msgstr "Vyskytly se chyby"
 
-#: ../gtk/src/OutputEditorHOCR.cc:710 ../qt/src/OutputEditorHOCR.cc:635
+#: ../gtk/src/OutputEditorHOCR.cc:780 ../qt/src/OutputEditorHOCR.cc:696
 msgid ""
 "The following pages could not be rendered:\n"
 "%1"
-msgstr
+msgstr ""
 "Tyto stránky se nepodařilo vykreslit:\n"
 "%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:775 ../gtk/src/OutputEditorText.cc:317
-#: ../qt/src/OutputEditorHOCR.cc:694 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:845 ../gtk/src/OutputEditorText.cc:321
+#: ../qt/src/OutputEditorHOCR.cc:755 ../qt/src/OutputEditorText.cc:265
 msgid "Output not saved"
 msgstr "Výstup nebyl uložen"
 
-#: ../gtk/src/OutputEditorHOCR.cc:775 ../gtk/src/OutputEditorText.cc:317
-#: ../qt/src/OutputEditorHOCR.cc:694 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:845 ../gtk/src/OutputEditorText.cc:321
+#: ../qt/src/OutputEditorHOCR.cc:755 ../qt/src/OutputEditorText.cc:265
 msgid "Save output before proceeding?"
 msgstr "Před pokračováním – uložit výstup?"
 
-#: ../gtk/src/OutputEditorText.cc:183 ../qt/src/OutputEditorText.cc:157
+#: ../gtk/src/OutputEditorText.cc:187 ../qt/src/OutputEditorText.cc:157
 msgid "Stripping line breaks..."
 msgstr "Odebírání konců řádků…"
 
-#: ../gtk/src/OutputEditorText.cc:199
+#: ../gtk/src/OutputEditorText.cc:203
 msgid "Check spelling"
 msgstr "Zkontrolovat text na překlepy"
 
-#: ../gtk/src/OutputEditorText.cc:230 ../qt/src/OutputEditorText.cc:181
+#: ../gtk/src/OutputEditorText.cc:234 ../qt/src/OutputEditorText.cc:181
 msgid "Replacing..."
 msgstr "Nahrazování…"
 
-#: ../gtk/src/OutputEditorText.cc:261 ../gtk/src/Recognizer.cc:397
+#: ../gtk/src/OutputEditorText.cc:265 ../gtk/src/Recognizer.cc:397
 #: ../qt/src/Recognizer.cc:401
 msgid ""
 "\n"
@@ -845,11 +845,11 @@ msgstr ""
 "\n"
 "[Rozpoznávání na stránce %1 se nezdařilo]\n"
 
-#: ../gtk/src/OutputEditorText.cc:293 ../qt/src/OutputEditorText.cc:243
+#: ../gtk/src/OutputEditorText.cc:297 ../qt/src/OutputEditorText.cc:243
 msgid "Text Files"
 msgstr "Textové soubory"
 
-#: ../gtk/src/OutputEditorText.cc:294 ../qt/src/OutputEditorText.cc:243
+#: ../gtk/src/OutputEditorText.cc:298 ../qt/src/OutputEditorText.cc:243
 msgid "Save Output..."
 msgstr "Uložit výstup…"
 
@@ -861,8 +861,8 @@ msgstr "Nejsou k dispozici žádná jazyková data"
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
-"Nejsou k dispozici žádná jazyková data pro engine tesseract. "
-"Rozpoznávání proto nebude fungovat."
+"Nejsou k dispozici žádná jazyková data pro engine tesseract. Rozpoznávání "
+"proto nebude fungovat."
 
 #: ../gtk/src/Recognizer.cc:216 ../qt/src/Recognizer.cc:209
 msgid "Multilingual"
@@ -1080,7 +1080,7 @@ msgstr "Chcete stávající seznam uložit?"
 msgid "Applying substitutions..."
 msgstr "Provádění dosazení…"
 
-#: ../gtk/src/TessdataManager.cc:55 ../qt/src/TessdataManager.cc:66
+#: ../gtk/src/TessdataManager.cc:55 ../qt/src/TessdataManager.cc:70
 msgid ""
 "PackageKit is required for managing tesseract language packs, but it was not "
 "found. Please use the system package management software to manage the "
@@ -1091,28 +1091,29 @@ msgstr ""
 "nenachází. Náhradně proto použijte nástroj pro správu balíčků vašeho systému "
 "a jeho prostřednictvím spravujte jazykové balíčky engine tesseract."
 
-#: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:70
+#: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:74
 msgid "Fetching available languages"
 msgstr "Zjišťování dostupných jazykových dat"
 
 #: ../gtk/src/TessdataManager.cc:65 ../gtk/src/TessdataManager.cc:86
-#: ../qt/src/TessdataManager.cc:76 ../qt/src/TessdataManager.cc:87
+#: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:91
 msgid "Failed to fetch list of available languages: %1"
 msgstr "Nepodařilo se získat seznam dostupných jazykových dat: %1"
 
-#: ../gtk/src/TessdataManager.cc:95 ../qt/src/TessdataManager.cc:94
+#: ../gtk/src/TessdataManager.cc:95 ../qt/src/TessdataManager.cc:101
+#: ../qt/src/TessdataManager.cc:112
 msgid "Parsing error: %1"
 msgstr "Chyba zpracování: %1"
 
-#: ../gtk/src/TessdataManager.cc:157 ../qt/src/TessdataManager.cc:139
+#: ../gtk/src/TessdataManager.cc:157 ../qt/src/TessdataManager.cc:157
 msgid "Applying changes..."
 msgstr "Promítnutí změn…"
 
-#: ../gtk/src/TessdataManager.cc:207 ../qt/src/TessdataManager.cc:182
+#: ../gtk/src/TessdataManager.cc:207 ../qt/src/TessdataManager.cc:200
 msgid "Downloading %1..."
 msgstr "Stahování %1…"
 
-#: ../gtk/src/TessdataManager.cc:227 ../qt/src/TessdataManager.cc:203
+#: ../gtk/src/TessdataManager.cc:227 ../qt/src/TessdataManager.cc:221
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1122,7 +1123,8 @@ msgstr ""
 "Tyto soubory se nepodařilo stáhnout na či odebrat z počítače:\n"
 "%1\n"
 "\n"
-"Zkontrolujte své připojení k Internetu a přístupová práva na příslušené složce."
+"Zkontrolujte své připojení k Internetu a přístupová práva na příslušené "
+"složce."
 
 #: ../gtk/src/Utils.cc:60
 msgid "Yes"
@@ -1191,87 +1193,84 @@ msgstr ""
 msgid "gImageReader"
 msgstr "gImageReader"
 
-#: ../qt/data/MainWindow.ui.h:6
-msgid "So&urces"
-msgstr "&Zdroje"
-
-#: ../qt/data/MainWindow.ui.h:18
-msgid "&Output"
-msgstr "&Výstup:"
-
-#: ../qt/data/MainWindow.ui.h:19
+#. Remove & from some labels which designer insists in adding
+#: ../qt/data/MainWindow.ui.h:17 ../qt/src/Ui_MainWindow.hh:48
 msgid "Sources"
 msgstr "Zdroje"
 
-#: ../qt/data/MainWindow.ui.h:20
+#: ../qt/data/MainWindow.ui.h:18
 msgid "Zoom In"
 msgstr "Přiblížit"
 
-#: ../qt/data/MainWindow.ui.h:22
+#: ../qt/data/MainWindow.ui.h:20
 msgid "Zoom Out"
 msgstr "Oddálit"
 
-#: ../qt/data/MainWindow.ui.h:24
+#: ../qt/data/MainWindow.ui.h:22
 msgid "Normal Size"
 msgstr "Původní velikost"
 
-#: ../qt/data/MainWindow.ui.h:26
+#: ../qt/data/MainWindow.ui.h:24
 msgid "Best Fit"
 msgstr "Přizpůsobit oknu"
 
-#: ../qt/data/MainWindow.ui.h:28
+#: ../qt/data/MainWindow.ui.h:26
 msgid "Rotate Left"
 msgstr "Otočit vlevo"
 
-#: ../qt/data/MainWindow.ui.h:29
+#: ../qt/data/MainWindow.ui.h:27
 msgid "Rotate left"
 msgstr "Otočit vlevo"
 
-#: ../qt/data/MainWindow.ui.h:30
+#: ../qt/data/MainWindow.ui.h:28
 msgid "Rotate Right"
 msgstr "Otočit vpravo"
 
-#: ../qt/data/MainWindow.ui.h:31
+#: ../qt/data/MainWindow.ui.h:29
 msgid "Rotate right"
 msgstr "Otočit vpravo"
 
-#: ../qt/data/MainWindow.ui.h:32
+#: ../qt/data/MainWindow.ui.h:30
 msgid "Image Controls"
 msgstr "Ovládání parametrů obrázku"
 
-#: ../qt/data/MainWindow.ui.h:34
+#: ../qt/data/MainWindow.ui.h:32
 msgid "Autodetect Layout"
 msgstr "Automaticky zjistit rozvržení stránky"
 
-#: ../qt/data/MainWindow.ui.h:36
+#: ../qt/data/MainWindow.ui.h:34
 msgid "Toggle Output Pane"
 msgstr "Zobrazit či skrýt podokno s výstupem"
 
-#: ../qt/src/MainWindow.cc:518
+#: ../qt/src/MainWindow.cc:523
 msgid "Could not read %1: %2"
 msgstr "%1 se nedaří načíst: %2"
 
-#: ../qt/src/MainWindow.cc:543
+#: ../qt/src/MainWindow.cc:548
 msgid "The following dictionary files were installed:%1"
 msgstr "Byly nainstalovány tyto slovníkové soubory:%1"
 
-#: ../qt/src/Ui_MainWindow.hh:112
+#: ../qt/src/Ui_MainWindow.hh:49
+msgid "Output"
+msgstr "Výstup"
+
+#: ../qt/src/Ui_MainWindow.hh:116
 msgid "OCR mode:"
 msgstr "Režim OCR:"
 
-#: ../qt/src/Ui_MainWindow.hh:177
+#: ../qt/src/Ui_MainWindow.hh:181
 msgid "Add Images"
 msgstr "Přidat obrázky"
 
-#: ../qt/src/Ui_MainWindow.hh:182
+#: ../qt/src/Ui_MainWindow.hh:186
 msgid "Remove Image"
 msgstr "Odebrat obrázek"
 
-#: ../qt/src/Ui_MainWindow.hh:185
+#: ../qt/src/Ui_MainWindow.hh:189
 msgid "Delete Image"
 msgstr "Smazat obrázek"
 
-#: ../qt/src/Ui_MainWindow.hh:188
+#: ../qt/src/Ui_MainWindow.hh:192
 msgid "Clear List"
 msgstr "Vyčistit seznam"
 
@@ -1308,14 +1307,20 @@ msgstr "Uložit výstup"
 msgid "Clear Output"
 msgstr "Vyčistit výstup"
 
+#~ msgid "To recognize specific areas, drag rectangles over them."
+#~ msgstr "Nad oblastmi, které mají být rozpoznány, natáhněte obdélníky."
+
+#~ msgid "So&urces"
+#~ msgstr "&Zdroje"
+
+#~ msgid "&Output"
+#~ msgstr "&Výstup:"
+
 #~ msgid "Rendering image..."
 #~ msgstr "Vykreslování obrázku…"
 
 #~ msgid "en_US"
 #~ msgstr "cs_CZ"
-
-#~ msgid "Output"
-#~ msgstr "Výstup"
 
 #~ msgid ""
 #~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
