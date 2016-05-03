@@ -44,6 +44,10 @@ public:
 		// Do remaining things which are not possible in designer
 		toolBarMain->setContextMenuPolicy(Qt::PreventContextMenu);
 
+		// Remove & from some labels which designer insists in adding
+		dockWidgetSources->setWindowTitle(gettext("Sources"));
+		dockWidgetOutput->setWindowTitle(gettext("Output"));
+
 		// Hide image controls widget
 		widgetImageControls->setVisible(false);
 

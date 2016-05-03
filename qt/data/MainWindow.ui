@@ -278,7 +278,7 @@
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="windowTitle">
-    <string>So&amp;urces</string>
+    <string notr="true">So&amp;urces</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -556,7 +556,7 @@
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="windowTitle">
-    <string>&amp;Output</string>
+    <string notr="true">&amp;Output</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
