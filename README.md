@@ -1,7 +1,7 @@
 gImageReader
 ============
 
-gImageReader is a simple Gtk/Qt front-end to [tesseract-ocr](https://code.google.com/p/tesseract-ocr/).
+gImageReader is a simple Gtk/Qt front-end to [tesseract-ocr](https://github.com/tesseract-ocr/tesseract).
 
 ![Logo](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/gimagereader.jpg)
 
