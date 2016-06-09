@@ -53,7 +53,7 @@
 #define DOWNLOADURL "https://github.com/manisandro/gImageReader/releases"
 #define CHANGELOGURL "https://raw.githubusercontent.com/manisandro/gImageReader/master/NEWS"
 
-static void signalHandler(int signal)
+void MainWindow::signalHandler(int signal)
 {
 	std::signal(signal, nullptr);
 
@@ -94,7 +94,7 @@ static void terminateHandler()
 	}else{
 		std::cerr << "Terminated due to unknown reason:" << std::endl;
 	}
-	signalHandler(SIGABRT);
+	MainWindow::signalHandler(SIGABRT);
 }
 #endif
 

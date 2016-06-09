@@ -58,7 +58,7 @@
 
 static Glib::Quark notificationHandleKey("handle");
 
-static void signalHandler(int sig)
+void MainWindow::signalHandler(int sig)
 {
 	std::signal(sig, nullptr);
 	std::string filename;
@@ -99,7 +99,7 @@ static void terminateHandler()
 	}else{
 		std::cerr << "Terminated due to unknown reason:" << std::endl;
 	}
-	signalHandler(SIGABRT);
+	MainWindow::signalHandler(SIGABRT);
 }
 #endif
 

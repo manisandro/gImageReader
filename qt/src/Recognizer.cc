@@ -23,12 +23,22 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QtSpell.hpp>
+#include <csignal>
 #include <cstring>
+#include <iostream>
+#include <sstream>
 #include <tesseract/baseapi.h>
 #include <tesseract/ocrclass.h>
 #include <tesseract/strngs.h>
 #include <tesseract/genericvector.h>
 #include <QMouseEvent>
+#include <unistd.h>
+#include <setjmp.h>
+
+#ifdef Q_OS_WIN
+#include <fcntl.h>
+#define pipe(fds) _pipe(fds, 5000, _O_BINARY)
+#endif
 
 #include "Displayer.hh"
 #include "MainWindow.hh"
@@ -112,12 +122,56 @@ QString Recognizer::getTessdataDir() const
 	return QString(tess.GetDatapath());
 }
 
+static int g_pipe[2];
+static jmp_buf g_restore_point;
+
+static void tessCrashHandler(int /*signal*/)
+{
+	fflush(stderr);
+	char buf[1025];
+	int bytesRead = 0;
+	QString captured;
+	do {
+		if((bytesRead = read(g_pipe[0], buf, sizeof(buf)-1)) > 0) {
+			buf[bytesRead] = 0;
+			captured += buf;
+		}
+	} while(bytesRead == sizeof(buf)-1);
+	tesseract::TessBaseAPI tess;
+	QString errMsg = QString(_("Tesseract crashed with the following message:\n\n"
+							 "%1\n\n"
+							 "This typically happens for one of the following reasons:\n"
+							 "- Outdated traineddata files are used.\n"
+							 "- Auxiliary language data files are missing.\n"
+							 "- Corrupt language data files.\n\n"
+							 "Make sure your language data files are valid and compatible with tesseract %2.")).arg(captured).arg(tess.Version());
+	QMessageBox::critical(MAIN, _("Error"), errMsg);
+	longjmp(g_restore_point, SIGSEGV);
+}
+
 bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* language) const
 {
 	QByteArray current = setlocale(LC_NUMERIC, NULL);
 	setlocale(LC_NUMERIC, "C");
-	int ret = tess.Init(nullptr, language);
+	// unfortunately tesseract creates deliberate segfaults when an error occurs
+	std::signal(SIGSEGV, tessCrashHandler);
+	pipe(g_pipe);
+	fflush(stderr);
+	int oldstderr = dup(fileno(stderr));
+	dup2(g_pipe[1], fileno(stderr));
+	int ret = -1;
+	int fault_code = setjmp(g_restore_point);
+	if(fault_code == 0){
+		ret = tess.Init(nullptr, language);
+	} else {
+		ret = -1;
+	}
+	dup2(oldstderr, fileno(stderr));
+	std::signal(SIGSEGV, MainWindow::signalHandler);
 	setlocale(LC_NUMERIC, current.constData());
+
+	close(g_pipe[0]);
+	close(g_pipe[1]);
 	return ret != -1;
 }
 
@@ -375,11 +429,9 @@ void Recognizer::recognizeMultiplePages()
 
 void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 {
-	QString failed;
 	tesseract::TessBaseAPI tess;
-	if(!initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())){
-		failed.append(_("\n\tFailed to initialize tesseract"));
-	}else{
+	if(initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())){
+		QString failed;
 		if(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue() == true){
 			tess.SetPageSegMode(tesseract::PSM_AUTO_OSD);
 		}
@@ -397,7 +449,7 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 				bool success = false;
 				QMetaObject::invokeMethod(this, "setPage", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(int, page), Q_ARG(bool, autodetectLayout));
 				if(!success){
-					failed.append(_("\n\tPage %1: failed to render page").arg(page));
+					failed.append(_("\n- Page %1: failed to render page").arg(page));
 					MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
 					continue;
 				}
@@ -421,9 +473,9 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 		}, _("Recognizing..."));
 		MAIN->hideProgress();
 		MAIN->getOutputEditor()->finalizeRead(readSessionData);
-	}
-	if(!failed.isEmpty()){
-		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("The following errors occurred:%1").arg(failed));
+		if(!failed.isEmpty()){
+			QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("The following errors occurred:%1").arg(failed));
+		}
 	}
 }
 

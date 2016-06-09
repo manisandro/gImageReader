@@ -63,6 +63,7 @@ public:
 	typedef void* Notification;
 
 	static MainWindow* getInstance(){ return s_instance; }
+	static void signalHandler(int signal);
 
 	MainWindow(const QStringList& files);
 	~MainWindow();

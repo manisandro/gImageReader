@@ -26,11 +26,19 @@
 #include "Utils.hh"
 
 #include <gtkspellmm.h>
+#include <csignal>
 #include <cstring>
 #include <tesseract/baseapi.h>
 #include <tesseract/strngs.h>
 #include <tesseract/genericvector.h>
 #include <tesseract/ocrclass.h>
+#include <unistd.h>
+#include <setjmp.h>
+
+#ifdef G_OS_WIN32
+#include <fcntl.h>
+#define pipe(fds) _pipe(fds, 5000, _O_BINARY)
+#endif
 
 
 struct Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor
@@ -129,12 +137,56 @@ std::string Recognizer::getTessdataDir() const
 	return std::string(tess.GetDatapath());
 }
 
+static int g_pipe[2];
+static jmp_buf g_restore_point;
+
+static void tessCrashHandler(int /*signal*/)
+{
+	fflush(stderr);
+	char buf[1025];
+	int bytesRead = 0;
+	Glib::ustring captured;
+	do {
+		if((bytesRead = read(g_pipe[0], buf, sizeof(buf)-1)) > 0) {
+			buf[bytesRead] = 0;
+			captured += buf;
+		}
+	} while(bytesRead == sizeof(buf)-1);
+	tesseract::TessBaseAPI tess;
+	Glib::ustring errMsg = Glib::ustring::compose(_("Tesseract crashed with the following message:\n\n"
+							 "%1\n\n"
+							 "This typically happens for one of the following reasons:\n"
+							 "- Outdated traineddata files are used.\n"
+							 "- Auxiliary language data files are missing.\n"
+							 "- Corrupt language data files.\n\n"
+							 "Make sure your language data files are valid and compatible with tesseract %2."), captured, tess.Version());
+	Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), errMsg);
+	longjmp(g_restore_point, SIGSEGV);
+}
+
 bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* language) const
 {
 	std::string current = setlocale(LC_NUMERIC, NULL);
 	setlocale(LC_NUMERIC, "C");
-	int ret = tess.Init(nullptr, language);
+	// unfortunately tesseract creates deliberate segfaults when an error occurs
+	std::signal(SIGSEGV, tessCrashHandler);
+	pipe(g_pipe);
+	fflush(stderr);
+	int oldstderr = dup(fileno(stderr));
+	dup2(g_pipe[1], fileno(stderr));
+	int ret = -1;
+	int fault_code = setjmp(g_restore_point);
+	if(fault_code == 0){
+		ret = tess.Init(nullptr, language);
+	} else {
+		ret = -1;
+	}
+	dup2(oldstderr, fileno(stderr));
+	std::signal(SIGSEGV, MainWindow::signalHandler);
 	setlocale(LC_NUMERIC, current.c_str());
+
+	close(g_pipe[0]);
+	close(g_pipe[1]);
 	return ret != -1;
 }
 
@@ -371,11 +423,9 @@ void Recognizer::recognizeMultiplePages()
 
 void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 {
-	Glib::ustring failed;
 	tesseract::TessBaseAPI tess;
-	if(!initTesseract(tess, m_curLang.prefix.c_str())){
-		failed.append(_("\n\tFailed to initialize tesseract"));
-	}else{
+	if(initTesseract(tess, m_curLang.prefix.c_str())){
+		Glib::ustring failed;
 		if(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue() == true){
 			tess.SetPageSegMode(tesseract::PSM_AUTO_OSD);
 		}
@@ -393,7 +443,7 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 				bool success = false;
 				Utils::runInMainThreadBlocking([&]{ success = setPage(page, autodetectLayout); });
 				if(!success){
-					failed.append(Glib::ustring::compose(_("\n\tPage %1: failed to render page"), page));
+					failed.append(Glib::ustring::compose(_("\n- Page %1: failed to render page"), page));
 					MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
 					continue;
 				}
@@ -417,9 +467,9 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 		}, _("Recognizing..."));
 		MAIN->hideProgress();
 		MAIN->getOutputEditor()->finalizeRead(readSessionData);
-	}
-	if(!failed.empty()){
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), Glib::ustring::compose(_("The following errors occurred:%1"), failed));
+		if(!failed.empty()){
+			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), Glib::ustring::compose(_("The following errors occurred:%1"), failed));
+		}
 	}
 }
 
