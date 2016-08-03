@@ -1,0 +1,1309 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Bernard Banko <beernarrd (at) gmail.com>, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-03 16:18+0200\n"
+"PO-Revision-Date: 2016-08-03 02:03+0200\n"
+"Last-Translator: Bernard Banko <beernarrd (at) gmail.com>\n"
+"Language-Team: lugos\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
+"X-Generator: Virtaal 0.7.1\n"
+
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:147
+msgid "Redetect Languages"
+msgstr "Ponovno zaznaj jezike"
+
+#: ../gtk/data/appmenu.ui.h:2 ../gtk/data/gimagereader.ui.h:34
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:150
+msgid "Preferences"
+msgstr "Možnosti"
+
+#: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:35
+#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:467
+#: ../qt/src/Ui_MainWindow.hh:155
+msgid "Help"
+msgstr "Pomoč"
+
+#: ../gtk/data/appmenu.ui.h:4 ../qt/data/AboutDialog.ui.h:2
+#: ../qt/src/Ui_MainWindow.hh:158
+msgid "About"
+msgstr "O programu"
+
+#: ../gtk/data/appmenu.ui.h:5
+msgid "Quit"
+msgstr "Končaj"
+
+#: ../gtk/data/crashhandler.ui.h:1 ../qt/src/CrashHandler.cc:37
+msgid "Regenerate backtrace"
+msgstr "Ponovi povratno sledenje"
+
+#: ../gtk/data/crashhandler.ui.h:2
+msgid "<b>The application has crashed</b>"
+msgstr "<b>Program se je sesul</b>"
+
+#: ../gtk/data/crashhandler.ui.h:4
+#, no-c-format
+msgid ""
+"Apologies for the inconvenience. To help improve the application, please "
+"consider reporting the issue to <a href=\"mailto:manisandro@gmail.com?"
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Please try to "
+"describe what you were doing before the application crashed. Also, include "
+"the information below. Thank you."
+msgstr ""
+"Opravičujemo se za nevšečnosti. Če želite pomagati pri izpopolnjevanju "
+"programa, lahko javite napako na <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Pri tem poizkusite opisati, kaj ste delali, "
+"preden se je program sesul. Vključite tudi spodnje podatke. Hvala."
+
+#: ../gtk/data/editor_hocr.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
+msgid "PDF Export"
+msgstr "Izvoz v PDF"
+
+#: ../gtk/data/editor_hocr.ui.h:2 ../gtk/data/gimagereader.ui.h:50
+#: ../gtk/src/Acquirer.cc:43 ../gtk/src/FileDialogs.cc:157
+#: ../gtk/src/Utils.cc:66 ../qt/data/ConfigDialog.ui.h:18
+#: ../qt/data/MainWindow.ui.h:14
+msgid "Cancel"
+msgstr "Prekliči"
+
+#: ../gtk/data/editor_hocr.ui.h:3 ../gtk/data/gimagereader.ui.h:36
+#: ../gtk/src/FileDialogs.cc:158 ../gtk/src/Utils.cc:57
+#: ../qt/data/ConfigDialog.ui.h:17
+msgid "OK"
+msgstr "V redu"
+
+#: ../gtk/data/editor_hocr.ui.h:4 ../qt/data/PdfExportDialog.ui.h:3
+msgid "Document font:"
+msgstr "Pisava dokumenta:"
+
+#: ../gtk/data/editor_hocr.ui.h:5 ../qt/data/PdfExportDialog.ui.h:2
+msgid "Use detected font sizes"
+msgstr "Uporabi zaznane velikosti pisave"
+
+#: ../gtk/data/editor_hocr.ui.h:6 ../qt/data/PdfExportDialog.ui.h:4
+msgid "Uniformize line spacing"
+msgstr "Poenoti razdalje med vrsticami"
+
+#: ../gtk/data/editor_hocr.ui.h:7 ../qt/src/Ui_OutputEditorHOCR.hh:53
+msgid "PDF"
+msgstr "PDF"
+
+#: ../gtk/data/editor_hocr.ui.h:8 ../qt/src/Ui_OutputEditorHOCR.hh:54
+msgid "PDF with invisible text overlay"
+msgstr "PDF z nevidno plastjo besedila"
+
+#: ../gtk/data/editor_hocr.ui.h:9 ../gtk/data/editor_text.ui.h:26
+#: ../qt/src/Ui_OutputEditorText.hh:123
+msgid "Save output"
+msgstr "Shrani rezultat"
+
+#: ../gtk/data/editor_hocr.ui.h:10 ../gtk/data/editor_text.ui.h:27
+#: ../qt/src/Ui_OutputEditorHOCR.hh:55 ../qt/src/Ui_OutputEditorHOCR.hh:56
+#: ../qt/src/Ui_OutputEditorText.hh:125
+msgid "Clear output"
+msgstr "Počisti rezultat"
+
+#: ../gtk/data/editor_hocr.ui.h:11 ../qt/src/Ui_OutputEditorHOCR.hh:82
+msgid "Properties"
+msgstr "Lastnosti"
+
+#: ../gtk/data/editor_hocr.ui.h:12 ../qt/src/Ui_OutputEditorHOCR.hh:86
+msgid "Source"
+msgstr "Vir"
+
+#: ../gtk/data/editor_text.ui.h:1 ../qt/src/SubstitutionsManager.cc:38
+#: ../qt/src/Ui_OutputEditorText.hh:177
+msgid "Substitutions"
+msgstr "Zamenjave"
+
+#: ../gtk/data/editor_text.ui.h:2 ../qt/src/SubstitutionsManager.cc:43
+#: ../qt/src/SubstitutionsManager.cc:44
+msgid "Open"
+msgstr "Odpri"
+
+#: ../gtk/data/editor_text.ui.h:3 ../gtk/src/Utils.cc:69
+#: ../qt/src/SubstitutionsManager.cc:46 ../qt/src/SubstitutionsManager.cc:47
+msgid "Save"
+msgstr "Shrani"
+
+#: ../gtk/data/editor_text.ui.h:4 ../qt/src/SubstitutionsManager.cc:49
+#: ../qt/src/SubstitutionsManager.cc:50
+msgid "Clear"
+msgstr "Počisti"
+
+#: ../gtk/data/editor_text.ui.h:5 ../qt/data/ConfigDialog.ui.h:19
+#: ../qt/src/SubstitutionsManager.cc:52 ../qt/src/SubstitutionsManager.cc:53
+msgid "Add"
+msgstr "Dodaj"
+
+#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/OutputEditorHOCR.cc:603
+#: ../qt/data/ConfigDialog.ui.h:20 ../qt/src/OutputEditorHOCR.cc:544
+#: ../qt/src/SubstitutionsManager.cc:55 ../qt/src/SubstitutionsManager.cc:56
+msgid "Remove"
+msgstr "Odstrani"
+
+#: ../gtk/data/editor_text.ui.h:7 ../gtk/data/gimagereader.ui.h:60
+msgid "Apply"
+msgstr "Uporabi"
+
+#: ../gtk/data/editor_text.ui.h:8 ../gtk/data/gimagereader.ui.h:61
+msgid "Close"
+msgstr "Zapri"
+
+#. Output insert mode
+#: ../gtk/data/editor_text.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:59
+msgid "Append to current text"
+msgstr "Pripni pod trenutno besedilo"
+
+#: ../gtk/data/editor_text.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:60
+msgid "Insert at cursor"
+msgstr "Dodaj pri kazalki"
+
+#: ../gtk/data/editor_text.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:61
+msgid "Replace current text"
+msgstr "Zamenjaj trenutno besedilo"
+
+#. Output postprocessing
+#: ../gtk/data/editor_text.ui.h:12 ../qt/src/Ui_OutputEditorText.hh:69
+msgid "Keep line break if..."
+msgstr "Ohrani prelom vrstice, če ..."
+
+#: ../gtk/data/editor_text.ui.h:13 ../qt/src/Ui_OutputEditorText.hh:71
+msgid "Preceded by end mark (.?!)"
+msgstr "sledi ločilu (.?!)"
+
+#: ../gtk/data/editor_text.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:73
+msgid "Preceded or succeeded by quote"
+msgstr "je pred narekovajem ali za njim"
+
+#: ../gtk/data/editor_text.ui.h:15 ../qt/src/Ui_OutputEditorText.hh:75
+msgid "Other options"
+msgstr "Druge možnosti"
+
+#: ../gtk/data/editor_text.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:77
+msgid "Join hyphenated words"
+msgstr "Združi deljene besede"
+
+#: ../gtk/data/editor_text.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:79
+msgid "Collapse whitespace"
+msgstr "Strni presledke"
+
+#: ../gtk/data/editor_text.ui.h:18 ../qt/src/Ui_OutputEditorText.hh:81
+msgid "Preserve paragraphs"
+msgstr "Ohrani odstavke"
+
+#: ../gtk/data/editor_text.ui.h:19 ../qt/src/Ui_OutputEditorText.hh:83
+msgid "Visual aids"
+msgstr "Vidni pripomočki"
+
+#: ../gtk/data/editor_text.ui.h:20 ../qt/src/Ui_OutputEditorText.hh:85
+msgid "Draw whitespace"
+msgstr "Pokaži presledke"
+
+#: ../gtk/data/editor_text.ui.h:21 ../gtk/data/gimagereader.ui.h:6
+msgid "Select language"
+msgstr "Izberi jezik"
+
+#: ../gtk/data/editor_text.ui.h:22 ../qt/src/Ui_OutputEditorText.hh:102
+msgid "Select insert mode"
+msgstr "Izberi način vstavljanja"
+
+#: ../gtk/data/editor_text.ui.h:23 ../qt/src/Ui_OutputEditorText.hh:114
+msgid "Find and replace"
+msgstr "Najdi in zamenjaj"
+
+#: ../gtk/data/editor_text.ui.h:24 ../qt/src/Ui_OutputEditorText.hh:116
+#: ../qt/src/Ui_OutputEditorText.hh:117
+msgid "Undo"
+msgstr "Razveljavi"
+
+#: ../gtk/data/editor_text.ui.h:25 ../qt/src/Ui_OutputEditorText.hh:119
+#: ../qt/src/Ui_OutputEditorText.hh:120
+msgid "Redo"
+msgstr "Obnovi"
+
+#: ../gtk/data/editor_text.ui.h:28 ../qt/src/Ui_OutputEditorText.hh:149
+msgid "Find"
+msgstr "Najdi"
+
+#: ../gtk/data/editor_text.ui.h:29 ../qt/src/Ui_OutputEditorText.hh:153
+#: ../qt/src/Ui_OutputEditorText.hh:168
+msgid "Replace"
+msgstr "Zamenjaj"
+
+#: ../gtk/data/editor_text.ui.h:30 ../qt/src/Ui_OutputEditorText.hh:173
+msgid "Replace all"
+msgstr "Zamenjaj vse"
+
+#: ../gtk/data/editor_text.ui.h:31 ../qt/src/Ui_OutputEditorText.hh:163
+msgid "Find previous"
+msgstr "Najdi predhodno"
+
+#: ../gtk/data/editor_text.ui.h:32 ../qt/src/Ui_OutputEditorText.hh:158
+msgid "Find next"
+msgstr "Najdi naslednje"
+
+#: ../gtk/data/editor_text.ui.h:33 ../qt/src/Ui_OutputEditorText.hh:182
+msgid "Match case"
+msgstr "Upoštevaj velikost"
+
+#: ../gtk/data/gimagereader.ui.h:1 ../qt/data/MainWindow.ui.h:35
+msgid "Toggle output pane"
+msgstr "Preklopi prikaz rezultata"
+
+#. Sources toolbar
+#: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
+msgid "Recent"
+msgstr "Nedavno"
+
+#: ../gtk/data/gimagereader.ui.h:3 ../qt/src/Ui_MainWindow.hh:170
+msgid "Paste"
+msgstr "Prilepi"
+
+#: ../gtk/data/gimagereader.ui.h:4 ../qt/src/Ui_MainWindow.hh:171
+msgid "Take Screenshot"
+msgstr "Posnemi zaslon"
+
+#: ../gtk/data/gimagereader.ui.h:5 ../qt/src/Ui_MainWindow.hh:182
+msgid "Add images"
+msgstr "Dodaj slike"
+
+#: ../gtk/data/gimagereader.ui.h:7 ../qt/src/Ui_MainWindow.hh:187
+msgid "Remove image from list"
+msgstr "Odstrani slike s spiska"
+
+#: ../gtk/data/gimagereader.ui.h:8 ../qt/src/Ui_MainWindow.hh:190
+msgid "Delete image"
+msgstr "Zbriši sliko"
+
+#: ../gtk/data/gimagereader.ui.h:9 ../qt/src/Ui_MainWindow.hh:193
+msgid "Clear list"
+msgstr "Počisti spisek"
+
+#: ../gtk/data/gimagereader.ui.h:10 ../qt/data/MainWindow.ui.h:6
+msgid "Files"
+msgstr "Datoteke"
+
+#: ../gtk/data/gimagereader.ui.h:11 ../qt/data/MainWindow.ui.h:16
+msgid "Device:"
+msgstr "Naprava:"
+
+#: ../gtk/data/gimagereader.ui.h:12 ../qt/data/MainWindow.ui.h:15
+msgid "Refresh"
+msgstr "Osveži"
+
+#: ../gtk/data/gimagereader.ui.h:13 ../qt/data/MainWindow.ui.h:12
+msgid "Output:"
+msgstr "Izhod:"
+
+#: ../gtk/data/gimagereader.ui.h:14 ../qt/data/MainWindow.ui.h:9
+msgid "Mode:"
+msgstr "Način:"
+
+#: ../gtk/data/gimagereader.ui.h:15 ../qt/data/MainWindow.ui.h:11
+msgid "Color"
+msgstr "Barvno"
+
+#: ../gtk/data/gimagereader.ui.h:16 ../qt/data/MainWindow.ui.h:10
+msgid "Grayscale"
+msgstr "Sivinsko"
+
+#: ../gtk/data/gimagereader.ui.h:17 ../qt/data/MainWindow.ui.h:8
+msgid "Resolution:"
+msgstr "Ločljivost:"
+
+#: ../gtk/data/gimagereader.ui.h:18 ../qt/data/MainWindow.ui.h:13
+msgid "Scan"
+msgstr "Zaznaj"
+
+#: ../gtk/data/gimagereader.ui.h:19 ../qt/data/MainWindow.ui.h:7
+msgid "Acquire"
+msgstr "Pridobi"
+
+#: ../gtk/data/gimagereader.ui.h:20 ../qt/data/MainWindow.ui.h:2
+msgid "Brightness"
+msgstr "Svetlost"
+
+#: ../gtk/data/gimagereader.ui.h:21 ../qt/data/MainWindow.ui.h:3
+msgid "Contrast"
+msgstr "Kontrast"
+
+#: ../gtk/data/gimagereader.ui.h:22 ../qt/data/MainWindow.ui.h:4
+msgid "Resolution"
+msgstr "Ločljivost"
+
+#: ../gtk/data/gimagereader.ui.h:23 ../qt/data/MainWindow.ui.h:5
+msgid "Invert colors"
+msgstr "Obrni barve"
+
+#: ../gtk/data/gimagereader.ui.h:24 ../qt/data/MainWindow.ui.h:19
+msgid "Zoom in"
+msgstr "Približaj"
+
+#: ../gtk/data/gimagereader.ui.h:25 ../qt/data/MainWindow.ui.h:21
+msgid "Zoom out"
+msgstr "Oddalji"
+
+#: ../gtk/data/gimagereader.ui.h:26 ../qt/data/MainWindow.ui.h:23
+msgid "Normal size"
+msgstr "Normalna velikost"
+
+#: ../gtk/data/gimagereader.ui.h:27 ../qt/data/MainWindow.ui.h:25
+msgid "Best fit"
+msgstr "Najboljše ujemanje"
+
+#: ../gtk/data/gimagereader.ui.h:28 ../qt/data/MainWindow.ui.h:31
+msgid "Image controls"
+msgstr "Kontrolniki slike"
+
+#: ../gtk/data/gimagereader.ui.h:29 ../qt/src/Ui_MainWindow.hh:120
+msgid "Plain text"
+msgstr "Neoblikovano besedilo"
+
+#: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:120
+msgid "hOCR, PDF"
+msgstr "hOCR, PDF"
+
+#: ../gtk/data/gimagereader.ui.h:31 ../qt/data/MainWindow.ui.h:33
+msgid "Autodetect layout"
+msgstr "Samodejno zaznaj razporeditev"
+
+#: ../gtk/data/gimagereader.ui.h:32
+msgid "<small>Recognize all</small>"
+msgstr "<small>Prepoznaj vse</small>"
+
+#: ../gtk/data/gimagereader.ui.h:33
+msgid "A graphical frontend to tesseract-ocr"
+msgstr "Grafični vmesnik za tesseract-ocr"
+
+#: ../gtk/data/gimagereader.ui.h:37
+msgid "Output pane orientation:"
+msgstr "Postavitev rezultata:"
+
+#: ../gtk/data/gimagereader.ui.h:38
+msgid "Horizontal"
+msgstr "Vodoravno"
+
+#: ../gtk/data/gimagereader.ui.h:39
+msgid "Vertical"
+msgstr "Navpično"
+
+#: ../gtk/data/gimagereader.ui.h:40 ../qt/data/ConfigDialog.ui.h:3
+msgid "Query to install missing spellcheck dictionaries"
+msgstr "Poizvej za namestitev manjkajočih črkovalnikov"
+
+#: ../gtk/data/gimagereader.ui.h:41 ../qt/data/ConfigDialog.ui.h:4
+msgid "Automatically check for new program versions"
+msgstr "Samodejno preveri morebitne posodobitve programa"
+
+#: ../gtk/data/gimagereader.ui.h:42 ../qt/data/ConfigDialog.ui.h:9
+msgid "Predefined language definitions:"
+msgstr "Preddoločene nastavitve jezika:"
+
+#: ../gtk/data/gimagereader.ui.h:43 ../qt/data/ConfigDialog.ui.h:10
+msgid "Additional language definitions:"
+msgstr "Dodatne nastavitve jezika:"
+
+#: ../gtk/data/gimagereader.ui.h:44 ../qt/data/ConfigDialog.ui.h:11
+msgid "The prefix of the tesseract language data file"
+msgstr "Predpona datoteke z jezikovnimi podatki tesseract"
+
+#: ../gtk/data/gimagereader.ui.h:45 ../qt/data/ConfigDialog.ui.h:12
+msgid "Prefix"
+msgstr "Predpona"
+
+#: ../gtk/data/gimagereader.ui.h:46 ../qt/data/ConfigDialog.ui.h:13
+msgid "The ISO 639-1 language code followed by the country code"
+msgstr "Jezikovna koda ISO 639-1 s kodo države"
+
+#: ../gtk/data/gimagereader.ui.h:47 ../qt/data/ConfigDialog.ui.h:14
+msgid "ISO Code"
+msgstr "Koda ISO"
+
+#: ../gtk/data/gimagereader.ui.h:48 ../qt/data/ConfigDialog.ui.h:15
+msgid "The name of the language"
+msgstr "Ime jezika"
+
+#: ../gtk/data/gimagereader.ui.h:49 ../qt/data/ConfigDialog.ui.h:16
+msgid "Name"
+msgstr "Ime"
+
+#: ../gtk/data/gimagereader.ui.h:51 ../qt/data/ConfigDialog.ui.h:5
+msgid "Output pane font:"
+msgstr "Pisava za rezultat:"
+
+#: ../gtk/data/gimagereader.ui.h:52 ../qt/data/ConfigDialog.ui.h:2
+msgid "Default"
+msgstr "Privzeto"
+
+#: ../gtk/data/gimagereader.ui.h:53 ../qt/data/PageRangeDialog.ui.h:1
+msgid "Page Range"
+msgstr "Obseg strani"
+
+#: ../gtk/data/gimagereader.ui.h:54 ../qt/data/PageRangeDialog.ui.h:2
+msgid "Page range:"
+msgstr "Obseg strani:"
+
+#: ../gtk/data/gimagereader.ui.h:55 ../qt/data/PageRangeDialog.ui.h:3
+msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
+msgstr "<small><b>Primer:</b>1-10, 13, 14-18</small>"
+
+#: ../gtk/data/gimagereader.ui.h:56 ../qt/data/PageRangeDialog.ui.h:4
+msgid "Recognition area:"
+msgstr "Področje prepoznavanja:"
+
+#: ../gtk/data/gimagereader.ui.h:57 ../qt/data/PageRangeDialog.ui.h:5
+msgid "Entire page"
+msgstr "Celotna stran"
+
+#: ../gtk/data/gimagereader.ui.h:58 ../qt/data/PageRangeDialog.ui.h:6
+msgid "Autodetect"
+msgstr "Samodejno zaznaj"
+
+#: ../gtk/data/gimagereader.ui.h:59 ../qt/src/TessdataManager.cc:47
+msgid "Tessdata Manager"
+msgstr "Upravljalnik Tessdata"
+
+#: ../gtk/data/gimagereader.ui.h:62 ../qt/src/TessdataManager.cc:49
+msgid "Manage installed languages:"
+msgstr "Upravljaj nameščene jezike:"
+
+#: ../gtk/data/gimagereader.ui.h:63 ../qt/src/DisplayerToolSelect.cc:261
+msgid "Delete"
+msgstr "Zbriši"
+
+#: ../gtk/data/gimagereader.ui.h:64 ../qt/src/DisplayerToolSelect.cc:247
+msgid "Order:"
+msgstr "Vrstni red:"
+
+#: ../gtk/data/gimagereader.ui.h:65 ../gtk/src/DisplayerToolHOCR.cc:57
+#: ../qt/src/DisplayerToolHOCR.cc:45 ../qt/src/DisplayerToolSelect.cc:262
+msgid "Recognize"
+msgstr "Prepoznaj"
+
+#: ../gtk/data/gimagereader.ui.h:66 ../qt/src/DisplayerToolSelect.cc:263
+msgid "Recognize to clipboard"
+msgstr "Prepoznaj na odložišče"
+
+#: ../gtk/data/gimagereader.ui.h:67 ../qt/src/DisplayerToolSelect.cc:264
+msgid "Save as image"
+msgstr "Shrani kot sliko"
+
+#: ../gtk/data/gimagereader.ui.h:68 ../qt/src/Recognizer.cc:65
+msgid "Current Page"
+msgstr "Trenutno stran"
+
+#: ../gtk/data/gimagereader.ui.h:69 ../qt/src/Recognizer.cc:68
+msgid "Multiple Pages..."
+msgstr "Več strani ..."
+
+#: ../gtk/src/Acquirer.cc:76 ../qt/src/Acquirer.cc:64
+msgid "scan.png"
+msgstr "scan.png"
+
+#: ../gtk/src/Acquirer.cc:91 ../qt/src/Acquirer.cc:83
+msgid "Images"
+msgstr "Slike"
+
+#: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:84
+msgid "Choose Output Filename..."
+msgstr "Izberite ime datoteke za rezultat ..."
+
+#: ../gtk/src/Acquirer.cc:109 ../qt/src/Acquirer.cc:101
+msgid "Failed to initialize the scanning backend."
+msgstr "Prednastavljanje zaledja obtičnega branja spodletelo."
+
+#: ../gtk/src/Acquirer.cc:119 ../qt/src/Acquirer.cc:108
+msgid "Scan failed"
+msgstr "Optično branje spodletelo"
+
+#: ../gtk/src/Acquirer.cc:139 ../qt/src/Acquirer.cc:126
+msgid "No scanners were detected."
+msgstr "Ni zaznanega obtičnega bralnika."
+
+#: ../gtk/src/Acquirer.cc:157 ../gtk/src/Acquirer.cc:175
+#: ../qt/src/Acquirer.cc:141 ../qt/src/Acquirer.cc:159
+msgid "Starting scan..."
+msgstr "Začenjanje branja ..."
+
+#: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:155
+msgid "Opening device..."
+msgstr "Odpiranje naprave ..."
+
+#: ../gtk/src/Acquirer.cc:173 ../qt/src/Acquirer.cc:157
+msgid "Setting options..."
+msgstr "Nastavljanje možnosti ..."
+
+#: ../gtk/src/Acquirer.cc:177 ../qt/src/Acquirer.cc:161
+msgid "Getting parameters..."
+msgstr "Pridobivanje nastavitev ..."
+
+#: ../gtk/src/Acquirer.cc:179 ../qt/src/Acquirer.cc:163
+msgid "Transferring data..."
+msgstr "Prenašanje podatkov ..."
+
+#: ../gtk/src/Acquirer.cc:187 ../qt/src/Acquirer.cc:171
+msgid "Canceling scan..."
+msgstr "Preklicevanje branja ..."
+
+#: ../gtk/src/Config.cc:294 ../qt/data/ConfigDialog.ui.h:6
+msgid "Filename prefix"
+msgstr "Predpona imena datoteke"
+
+#: ../gtk/src/Config.cc:295 ../qt/data/ConfigDialog.ui.h:7
+msgid "Code"
+msgstr "Koda"
+
+#: ../gtk/src/Config.cc:296 ../qt/data/ConfigDialog.ui.h:8
+msgid "Native name"
+msgstr "Izvorno ime"
+
+#: ../gtk/src/CrashHandler.cc:27 ../gtk/src/CrashHandler.cc:45
+#: ../qt/src/CrashHandler.cc:35
+msgid "Crash Handler"
+msgstr "Upravljalnik sesutij"
+
+#: ../gtk/src/CrashHandler.cc:47 ../qt/src/CrashHandler.cc:30
+msgid "Your work has been saved under <b>%1</b>."
+msgstr "Vaše delo je bilo shranjeno pod <b>%1</b>."
+
+#: ../gtk/src/CrashHandler.cc:49 ../qt/src/CrashHandler.cc:32
+msgid "There was no unsaved work."
+msgstr "Neshranjenega dela ni."
+
+#: ../gtk/src/CrashHandler.cc:105 ../qt/src/CrashHandler.cc:64
+msgid "Failed to obtain backtrace. Is gdb installed?"
+msgstr "Pridobivanje povratnega sledenja spodletelo. Je gdb nameščen?"
+
+#: ../gtk/src/Displayer.cc:243 ../qt/src/Displayer.cc:222
+msgid "Failed to load image"
+msgstr "Nalaganje slike spodletelo"
+
+#: ../gtk/src/Displayer.cc:243 ../qt/src/Displayer.cc:222
+msgid ""
+"The file might not be an image or be corrupt:\n"
+"%1"
+msgstr ""
+"Datoteka morda ni slika ali pa je poškodovana:\n"
+"%1"
+
+#: ../gtk/src/DisplayerToolSelect.cc:40 ../qt/src/DisplayerToolSelect.cc:41
+msgid "selection.png"
+msgstr "izbor.png"
+
+#: ../gtk/src/DisplayerToolSelect.cc:172 ../qt/src/DisplayerToolSelect.cc:158
+msgid "PNG Images"
+msgstr "Slike PNG"
+
+#: ../gtk/src/DisplayerToolSelect.cc:173 ../qt/src/DisplayerToolSelect.cc:158
+msgid "Save Selection Image"
+msgstr "Shrani sliko izbora"
+
+#: ../gtk/src/DisplayerToolSelect.cc:182 ../qt/src/DisplayerToolSelect.cc:167
+msgid "Recognize all"
+msgstr "Prepoznaj vse"
+
+#: ../gtk/src/DisplayerToolSelect.cc:182 ../qt/src/DisplayerToolSelect.cc:167
+msgid "Recognize selection"
+msgstr "Prepoznaj izbor"
+
+#: ../gtk/src/DisplayerToolSelect.cc:220 ../qt/src/DisplayerToolSelect.cc:205
+msgid "Performing layout analysis"
+msgstr "Analiziranje razporeditve"
+
+#: ../gtk/src/FileDialogs.cc:248
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr ""
+"Datoteka z imenom \"%1\" že obstaja. Ali ste prepričani, da jo želite "
+"prepisati?"
+
+#: ../gtk/src/FileDialogs.cc:250
+msgid "Overwrite File?"
+msgstr "Naj bo datoteka prepisana?"
+
+#: ../gtk/src/MainWindow.cc:167 ../qt/src/MainWindow.cc:183
+msgid "Select an image to begin..."
+msgstr "Izberite sliko za začetek ..."
+
+#: ../gtk/src/MainWindow.cc:293 ../qt/src/MainWindow.cc:271
+msgid "Multiple sources"
+msgstr "Več virov"
+
+#: ../gtk/src/MainWindow.cc:294 ../qt/src/MainWindow.cc:272
+msgid "Ready"
+msgstr "Pripravljeno"
+
+#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:406
+msgid "New version"
+msgstr "Nova različica"
+
+#: ../gtk/src/MainWindow.cc:441 ../qt/src/MainWindow.cc:406
+msgid "gImageReader %1 is available"
+msgstr "gImageReader %1 je na voljo"
+
+#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:407
+msgid "Download"
+msgstr "Prejmi"
+
+#: ../gtk/src/MainWindow.cc:443 ../qt/src/MainWindow.cc:408
+msgid "Changelog"
+msgstr "Spremembe"
+
+#: ../gtk/src/MainWindow.cc:444 ../qt/src/MainWindow.cc:409
+msgid "Don't notify again"
+msgstr "Ne obveščaj več"
+
+#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:461
+msgid "Don't show again"
+msgstr "Ne kaži več"
+
+#: ../gtk/src/MainWindow.cc:471 ../gtk/src/MainWindow.cc:477
+#: ../qt/src/MainWindow.cc:462
+msgid "Install"
+msgstr "Namesti"
+
+#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:472
+msgid "Spelling dictionary missing"
+msgstr "Slovar za črkovanje manjka"
+
+#: ../gtk/src/MainWindow.cc:479 ../qt/src/MainWindow.cc:472
+msgid "The spellcheck dictionary for %1 is not installed"
+msgstr "Slovar črkovalnika za %1 ni nameščen"
+
+#: ../gtk/src/MainWindow.cc:487 ../gtk/src/MainWindow.cc:514
+#: ../qt/src/MainWindow.cc:479
+msgid "Installing spelling dictionary for '%1'"
+msgstr "Nameščanje slovarja črkovalnika za '%1'"
+
+#: ../gtk/src/MainWindow.cc:506 ../gtk/src/MainWindow.cc:523
+#: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:539
+#: ../gtk/src/MainWindow.cc:568 ../gtk/src/TessdataManager.cc:55
+#: ../gtk/src/TessdataManager.cc:65 ../gtk/src/TessdataManager.cc:241
+#: ../qt/src/MainWindow.cc:490 ../qt/src/MainWindow.cc:505
+#: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:523
+#: ../qt/src/MainWindow.cc:551 ../qt/src/TessdataManager.cc:70
+#: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:235
+msgid "Error"
+msgstr "Napaka"
+
+#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:490
+msgid "Failed to install spelling dictionary: %1"
+msgstr "Nameščanje slovarja črkovalnika spodletelo: %1"
+
+#: ../gtk/src/MainWindow.cc:523 ../gtk/src/MainWindow.cc:539
+#: ../qt/src/MainWindow.cc:505
+msgid "Could not read %1: %2."
+msgstr "Branje %1 ni bilo možno: %2."
+
+#: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:568
+#: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:551
+msgid "No spelling dictionaries found for '%1'."
+msgstr "Za '%1' ni bilo možno najti slovarjev."
+
+#: ../gtk/src/MainWindow.cc:549 ../qt/src/MainWindow.cc:534
+msgid "Downloading '%1'..."
+msgstr "Prejemanje '%1' ..."
+
+#: ../gtk/src/MainWindow.cc:565 ../qt/src/MainWindow.cc:548
+msgid "Dictionaries installed"
+msgstr "Slovarji nameščeni"
+
+#: ../gtk/src/MainWindow.cc:565
+msgid "The following dictionaries were installed:%1"
+msgstr "Naslednji slovarji so bili nameščeni: %1"
+
+#: ../gtk/src/OutputEditorHOCR.cc:222
+msgid ""
+"The following pages could not be processed:\n"
+"%1"
+msgstr ""
+"Naslednjih strani ni bilo mogoče obdelati:\n"
+"%1"
+
+#: ../gtk/src/OutputEditorHOCR.cc:223 ../qt/src/OutputEditorHOCR.cc:183
+msgid "Recognition errors"
+msgstr "Napake pri prepoznavanju"
+
+#: ../gtk/src/OutputEditorHOCR.cc:287 ../qt/src/OutputEditorHOCR.cc:230
+msgid "Graphic"
+msgstr "Grafika"
+
+#: ../gtk/src/OutputEditorHOCR.cc:333 ../qt/src/OutputEditorHOCR.cc:281
+msgid "Paragraph"
+msgstr "Odstavek"
+
+#: ../gtk/src/OutputEditorHOCR.cc:336 ../qt/src/OutputEditorHOCR.cc:284
+msgid "Textline"
+msgstr "Vrstica"
+
+#: ../gtk/src/OutputEditorHOCR.cc:622 ../qt/src/OutputEditorHOCR.cc:554
+msgid "No suggestions"
+msgstr "Ni predlogov"
+
+#: ../gtk/src/OutputEditorHOCR.cc:649 ../gtk/src/OutputEditorHOCR.cc:685
+#: ../qt/src/OutputEditorHOCR.cc:574 ../qt/src/OutputEditorHOCR.cc:603
+msgid "hOCR HTML Files"
+msgstr "Datoteke hOCR HTML"
+
+#: ../gtk/src/OutputEditorHOCR.cc:650 ../qt/src/OutputEditorHOCR.cc:574
+msgid "Open hOCR File"
+msgstr "Odpri datoteko hOCR"
+
+#: ../gtk/src/OutputEditorHOCR.cc:659 ../qt/src/OutputEditorHOCR.cc:580
+msgid "Failed to open file"
+msgstr "Odpiranje datoteke spodletelo"
+
+#: ../gtk/src/OutputEditorHOCR.cc:659 ../qt/src/OutputEditorHOCR.cc:580
+msgid "The file could not be opened: %1."
+msgstr "Datoteke ni bilo mogoče odpreti: %1."
+
+#: ../gtk/src/OutputEditorHOCR.cc:668 ../qt/src/OutputEditorHOCR.cc:587
+msgid "Invalid hOCR file"
+msgstr "Neveljavna datoteka hOCR"
+
+#: ../gtk/src/OutputEditorHOCR.cc:668 ../qt/src/OutputEditorHOCR.cc:587
+msgid "The file does not appear to contain valid hOCR HTML: %1"
+msgstr "Ni videti, da bi imela datoteka veljaven zapis hOCR HTML: %1"
+
+#: ../gtk/src/OutputEditorHOCR.cc:683 ../gtk/src/OutputEditorHOCR.cc:728
+#: ../gtk/src/OutputEditorText.cc:293 ../qt/src/OutputEditorHOCR.cc:602
+#: ../qt/src/OutputEditorHOCR.cc:641 ../qt/src/OutputEditorText.cc:241
+msgid "output"
+msgstr "rezultat"
+
+#: ../gtk/src/OutputEditorHOCR.cc:686 ../qt/src/OutputEditorHOCR.cc:603
+msgid "Save hOCR Output..."
+msgstr "Shrani rezultat hOCR ..."
+
+#: ../gtk/src/OutputEditorHOCR.cc:694 ../gtk/src/OutputEditorText.cc:306
+#: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
+msgid "Failed to save output"
+msgstr "Shranjevanje rezultata spodletelo"
+
+#: ../gtk/src/OutputEditorHOCR.cc:694 ../gtk/src/OutputEditorText.cc:306
+#: ../qt/src/OutputEditorHOCR.cc:611 ../qt/src/OutputEditorText.cc:251
+msgid "Check that you have writing permissions in the selected folder."
+msgstr "Preverite, če imate v izbrani mapi pravico pisanja."
+
+#: ../gtk/src/OutputEditorHOCR.cc:729 ../qt/src/OutputEditorHOCR.cc:642
+msgid "PDF Files"
+msgstr "Datoteke PDF"
+
+#: ../gtk/src/OutputEditorHOCR.cc:730 ../qt/src/OutputEditorHOCR.cc:642
+msgid "Save PDF Output..."
+msgstr "Shrani rezultat PDF ..."
+
+#: ../gtk/src/OutputEditorHOCR.cc:780 ../qt/src/OutputEditorHOCR.cc:696
+msgid "Errors occurred"
+msgstr "Pojavile so se napake"
+
+#: ../gtk/src/OutputEditorHOCR.cc:780 ../qt/src/OutputEditorHOCR.cc:696
+msgid ""
+"The following pages could not be rendered:\n"
+"%1"
+msgstr ""
+"Naslednjih strani ni bilo mogoče prikazati:\n"
+"%1"
+
+#: ../gtk/src/OutputEditorHOCR.cc:845 ../gtk/src/OutputEditorText.cc:321
+#: ../qt/src/OutputEditorHOCR.cc:755 ../qt/src/OutputEditorText.cc:265
+msgid "Output not saved"
+msgstr "Rezultat ni bil shranjen"
+
+#: ../gtk/src/OutputEditorHOCR.cc:845 ../gtk/src/OutputEditorText.cc:321
+#: ../qt/src/OutputEditorHOCR.cc:755 ../qt/src/OutputEditorText.cc:265
+msgid "Save output before proceeding?"
+msgstr "Ali naj se pred nadaljevanjem shrani rezultat?"
+
+#: ../gtk/src/OutputEditorText.cc:187 ../qt/src/OutputEditorText.cc:157
+msgid "Stripping line breaks..."
+msgstr "Odstranjevanje prelomov vrstic ..."
+
+#: ../gtk/src/OutputEditorText.cc:203
+msgid "Check spelling"
+msgstr "Preveri črkovanje"
+
+#: ../gtk/src/OutputEditorText.cc:234 ../qt/src/OutputEditorText.cc:181
+msgid "Replacing..."
+msgstr "Zamenjevanje ..."
+
+#: ../gtk/src/OutputEditorText.cc:265 ../gtk/src/Recognizer.cc:397
+#: ../qt/src/Recognizer.cc:401
+msgid ""
+"\n"
+"[Failed to recognize page %1]\n"
+msgstr ""
+"\n"
+"[Prepoznavanje strani %1 spodletelo]\n"
+
+#: ../gtk/src/OutputEditorText.cc:297 ../qt/src/OutputEditorText.cc:243
+msgid "Text Files"
+msgstr "Besedilne datoteke"
+
+#: ../gtk/src/OutputEditorText.cc:298 ../qt/src/OutputEditorText.cc:243
+msgid "Save Output..."
+msgstr "Shrani rezultat ..."
+
+#: ../gtk/src/Recognizer.cc:160 ../qt/src/Recognizer.cc:147
+msgid "No languages available"
+msgstr "Nobenega jezika ni na voljo"
+
+#: ../gtk/src/Recognizer.cc:160 ../qt/src/Recognizer.cc:147
+msgid ""
+"No tesseract languages are available for use. Recognition will not work."
+msgstr ""
+"Zaledje tesseract ne more uporabiti nobenega jezika. Prepoznavanje ne bo "
+"delovalo."
+
+#: ../gtk/src/Recognizer.cc:216 ../qt/src/Recognizer.cc:209
+msgid "Multilingual"
+msgstr "Večjezično"
+
+#: ../gtk/src/Recognizer.cc:252 ../qt/src/Recognizer.cc:245
+msgid "Detect script and orientation"
+msgstr "Zaznaj besedilo in postavitev"
+
+#: ../gtk/src/Recognizer.cc:260 ../qt/src/Recognizer.cc:254
+msgid "Manage languages..."
+msgstr "Upravljaj z jeziki ..."
+
+#: ../gtk/src/Recognizer.cc:377 ../qt/src/Recognizer.cc:381
+msgid ""
+"\n"
+"\tFailed to initialize tesseract"
+msgstr ""
+"\n"
+"\tPrednastavljanje začelja tesseract spodletelo"
+
+#: ../gtk/src/Recognizer.cc:391 ../qt/src/Recognizer.cc:395
+msgid "Recognizing page %1 (%2 of %3)"
+msgstr "Prepoznavanje strani %1 (%2 od %3)"
+
+#: ../gtk/src/Recognizer.cc:396 ../qt/src/Recognizer.cc:400
+msgid ""
+"\n"
+"\tPage %1: failed to render page"
+msgstr ""
+"\n"
+"\tStran %1: prikaz strani spodletel"
+
+#: ../gtk/src/Recognizer.cc:417 ../gtk/src/Recognizer.cc:447
+#: ../gtk/src/Recognizer.cc:460 ../qt/src/Recognizer.cc:421
+#: ../qt/src/Recognizer.cc:451 ../qt/src/Recognizer.cc:464
+msgid "Recognizing..."
+msgstr "Prepoznavanje ..."
+
+#: ../gtk/src/Recognizer.cc:422 ../gtk/src/Recognizer.cc:430
+#: ../qt/src/Recognizer.cc:426 ../qt/src/Recognizer.cc:434
+msgid "Recognition errors occurred"
+msgstr "Pri prepoznavanju je prišlo do napak"
+
+#: ../gtk/src/Recognizer.cc:422 ../qt/src/Recognizer.cc:426
+msgid "The following errors occurred:%1"
+msgstr "Prišlo je do naslednjih napak: %1"
+
+#: ../gtk/src/Recognizer.cc:430 ../qt/src/Recognizer.cc:434
+msgid "Failed to initialize tesseract"
+msgstr "Prednastavljanje začelja tesseract spodletelo"
+
+#: ../gtk/src/scanner/ScannerSane.cc:88 ../gtk/src/scanner/ScannerTwain.cc:291
+#: ../qt/src/scanner/ScannerSane.cc:90 ../qt/src/scanner/ScannerTwain.cc:289
+msgid "Scan canceled"
+msgstr "Optično branje preklicano"
+
+#: ../gtk/src/scanner/ScannerSane.cc:166 ../gtk/src/scanner/ScannerTwain.cc:190
+#: ../qt/src/scanner/ScannerSane.cc:167 ../qt/src/scanner/ScannerTwain.cc:182
+msgid "No scanner specified"
+msgstr "Ni navedenih optičnih bralnikov"
+
+#: ../gtk/src/scanner/ScannerSane.cc:175 ../gtk/src/scanner/ScannerTwain.cc:199
+#: ../qt/src/scanner/ScannerSane.cc:176 ../qt/src/scanner/ScannerTwain.cc:191
+msgid "Unable to connect to scanner"
+msgstr "Ni povezave z optičnim bralnikom"
+
+#: ../gtk/src/scanner/ScannerSane.cc:397 ../gtk/src/scanner/ScannerTwain.cc:269
+#: ../gtk/src/scanner/ScannerTwain.cc:295 ../qt/src/scanner/ScannerSane.cc:398
+#: ../qt/src/scanner/ScannerTwain.cc:261 ../qt/src/scanner/ScannerTwain.cc:293
+msgid "Unable to start scan"
+msgstr "Ni mogoče začeti optičnega branja"
+
+#: ../gtk/src/scanner/ScannerSane.cc:406 ../gtk/src/scanner/ScannerSane.cc:450
+#: ../gtk/src/scanner/ScannerTwain.cc:321 ../qt/src/scanner/ScannerSane.cc:407
+#: ../qt/src/scanner/ScannerSane.cc:451 ../qt/src/scanner/ScannerTwain.cc:319
+msgid "Error communicating with scanner"
+msgstr "Napaka pri komunikaciji z optičnim bralnikom"
+
+#: ../gtk/src/scanner/ScannerSane.cc:512 ../qt/src/scanner/ScannerSane.cc:508
+msgid "Failed to save image"
+msgstr "Shranjevanje slike spodletelo"
+
+#: ../gtk/src/SourceManager.cc:119 ../qt/src/SourceManager.cc:111
+msgid "Unable to open files"
+msgstr "Datotek ni mogoče odpreti"
+
+#: ../gtk/src/SourceManager.cc:119 ../qt/src/SourceManager.cc:111
+msgid "The following files could not be opened:%1"
+msgstr "Naslednjih datotek ni bilo mogoče odpreti: %1"
+
+#: ../gtk/src/SourceManager.cc:137 ../qt/src/SourceManager.cc:157
+msgid "Images and PDFs"
+msgstr "Slike in PDFji"
+
+#: ../gtk/src/SourceManager.cc:140 ../qt/src/SourceManager.cc:158
+msgid "Select Files"
+msgstr "Izberi datoteke"
+
+#: ../gtk/src/SourceManager.cc:147 ../qt/src/SourceManager.cc:171
+msgid "Clipboard Error"
+msgstr "Napaka odlagališča"
+
+#: ../gtk/src/SourceManager.cc:147 ../qt/src/SourceManager.cc:171
+msgid "Failed to read the clipboard."
+msgstr "Odlagališča ni bilo mogoče prebrati."
+
+#: ../gtk/src/SourceManager.cc:151 ../qt/src/SourceManager.cc:175
+#: ../qt/src/SourceManager.cc:182
+msgid "Pasted %1"
+msgstr "Prilepljeno %1"
+
+#: ../gtk/src/SourceManager.cc:164 ../qt/src/SourceManager.cc:190
+msgid "Screenshot Error"
+msgstr "Napaka pri posnetku zaslona"
+
+#: ../gtk/src/SourceManager.cc:164 ../qt/src/SourceManager.cc:190
+msgid "Failed to take screenshot."
+msgstr "Zaslona ni bilo mogoče posneti."
+
+#: ../gtk/src/SourceManager.cc:168 ../qt/src/SourceManager.cc:194
+msgid "Screenshot %1"
+msgstr "Posnetek %1"
+
+#: ../gtk/src/SourceManager.cc:174 ../qt/src/SourceManager.cc:200
+msgid "Saving image..."
+msgstr "Shranjevanje slike ..."
+
+#: ../gtk/src/SourceManager.cc:181 ../qt/src/SourceManager.cc:213
+msgid "Cannot Write File"
+msgstr "Ni mogoče pisati v datoteko"
+
+#: ../gtk/src/SourceManager.cc:181 ../qt/src/SourceManager.cc:213
+msgid "Could not write to %1."
+msgstr "V datoteko %1 ni bilo mogoče pisati."
+
+#: ../gtk/src/SourceManager.cc:209 ../qt/src/SourceManager.cc:236
+msgid "Delete File?"
+msgstr "Ali naj se datoteka izbriše?"
+
+#: ../gtk/src/SourceManager.cc:209 ../qt/src/SourceManager.cc:236
+msgid "The following files will be deleted:%1"
+msgstr "Naslednje datoteke bodo izbrisane: %1"
+
+#: ../gtk/src/SourceManager.cc:274 ../qt/src/SourceManager.cc:291
+msgid "Missing File"
+msgstr "Manjkajoča datoteka"
+
+#: ../gtk/src/SourceManager.cc:274 ../qt/src/SourceManager.cc:291
+msgid ""
+"The following file has been deleted or moved:\n"
+"%1"
+msgstr ""
+"Naslednja datoteka je bila izbrisana ali premaknjena:\n"
+"%1"
+
+#: ../gtk/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:78
+msgid "Search for"
+msgstr "Poišči"
+
+#: ../gtk/src/SubstitutionsManager.cc:42 ../qt/src/SubstitutionsManager.cc:78
+msgid "Replace with"
+msgstr "Zamenjaj z"
+
+#: ../gtk/src/SubstitutionsManager.cc:64 ../qt/src/SubstitutionsManager.cc:100
+msgid "substitution_list.txt"
+msgstr "spisek_zamenjav.txt"
+
+#: ../gtk/src/SubstitutionsManager.cc:83 ../gtk/src/SubstitutionsManager.cc:119
+#: ../qt/src/SubstitutionsManager.cc:111 ../qt/src/SubstitutionsManager.cc:150
+msgid "Substitutions List"
+msgstr "Spisek zamenjav"
+
+#: ../gtk/src/SubstitutionsManager.cc:84 ../qt/src/SubstitutionsManager.cc:111
+msgid "Open Substitutions List"
+msgstr "Odpri spisek zamenjav"
+
+#: ../gtk/src/SubstitutionsManager.cc:89 ../qt/src/SubstitutionsManager.cc:116
+msgid "Error Reading File"
+msgstr "Napaka pri branju datoteke"
+
+#: ../gtk/src/SubstitutionsManager.cc:89 ../qt/src/SubstitutionsManager.cc:116
+msgid "Unable to read '%1'."
+msgstr "Datoteke '%1' ni bilo mogoče prebrati."
+
+#: ../gtk/src/SubstitutionsManager.cc:112 ../qt/src/SubstitutionsManager.cc:143
+msgid "Errors Occurred Reading File"
+msgstr "Pri branju datoteke je prišlo do napak"
+
+#: ../gtk/src/SubstitutionsManager.cc:112 ../qt/src/SubstitutionsManager.cc:143
+msgid "Some entries of the substitutions list could not be read."
+msgstr "Nekaj vnosov v spisku zamenjav ni bilo mogoče prebrati."
+
+#: ../gtk/src/SubstitutionsManager.cc:120 ../qt/src/SubstitutionsManager.cc:150
+msgid "Save Substitutions List"
+msgstr "Shrani spisek zamenjav"
+
+#: ../gtk/src/SubstitutionsManager.cc:126 ../qt/src/SubstitutionsManager.cc:156
+msgid "Error Saving File"
+msgstr "Napaka pri shranjevanju datoteke"
+
+#: ../gtk/src/SubstitutionsManager.cc:126 ../qt/src/SubstitutionsManager.cc:156
+msgid "Unable to write to '%1'."
+msgstr "Datoteke '%1' ni bilo mogoče zapisati."
+
+#: ../gtk/src/SubstitutionsManager.cc:145 ../qt/src/SubstitutionsManager.cc:171
+msgid "Save List?"
+msgstr "Ali naj bo spisek shranjen?"
+
+#: ../gtk/src/SubstitutionsManager.cc:145 ../qt/src/SubstitutionsManager.cc:171
+msgid "Do you want to save the current list?"
+msgstr "Ali želite shraniti trenutni spisek?"
+
+#: ../gtk/src/SubstitutionsManager.cc:184 ../qt/src/SubstitutionsManager.cc:212
+msgid "Applying substitutions..."
+msgstr "Uveljavljanje zamenjav ..."
+
+#: ../gtk/src/TessdataManager.cc:55 ../qt/src/TessdataManager.cc:70
+msgid ""
+"PackageKit is required for managing tesseract language packs, but it was not "
+"found. Please use the system package management software to manage the "
+"tesseract language packs."
+msgstr ""
+"Za upravljanje jezikovnih paketov tesseract je potreben PackageKit, ki pa ga "
+"ni bilo mogoče najti. Uporabite upravljalnik paketov vašega operacijskega "
+"sistema in namestite jezikovne pakete."
+
+#: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:74
+msgid "Fetching available languages"
+msgstr "Pridobivanje jezikov na voljo"
+
+#: ../gtk/src/TessdataManager.cc:65 ../gtk/src/TessdataManager.cc:86
+#: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:91
+msgid "Failed to fetch list of available languages: %1"
+msgstr "Spiska jezikov na voljo ni bilo mogoče pridobiti: %1"
+
+#: ../gtk/src/TessdataManager.cc:95 ../qt/src/TessdataManager.cc:101
+#: ../qt/src/TessdataManager.cc:112
+msgid "Parsing error: %1"
+msgstr "Napaka sejanja: %1"
+
+#: ../gtk/src/TessdataManager.cc:157 ../qt/src/TessdataManager.cc:157
+msgid "Applying changes..."
+msgstr "Uveljavljanje sprememb ..."
+
+#: ../gtk/src/TessdataManager.cc:207 ../qt/src/TessdataManager.cc:200
+msgid "Downloading %1..."
+msgstr "Prejemanje %1 ..."
+
+#: ../gtk/src/TessdataManager.cc:227 ../qt/src/TessdataManager.cc:221
+msgid ""
+"The following files could not be downloaded or removed:\n"
+"%1\n"
+"\n"
+"Check the connectivity and directory permissions."
+msgstr ""
+"Navedenih datotek ni bilo mogoče prejeti ali odstraniti:\n"
+"%1\n"
+"\n"
+"Preverite internetno povezavo in dovoljenja mape."
+
+#: ../gtk/src/Utils.cc:60
+msgid "Yes"
+msgstr "Da"
+
+#: ../gtk/src/Utils.cc:63
+msgid "No"
+msgstr "Ne"
+
+#: ../gtk/src/Utils.cc:72
+msgid "Discard"
+msgstr "Zavrzi"
+
+#: ../qt/data/AboutDialog.ui.h:1
+msgid "About gImageReader"
+msgstr "O programu gImageReader"
+
+#: ../qt/data/AboutDialog.ui.h:3
+msgid ""
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
+msgstr ""
+"<html><head/><body><p>&nbsp;</p><p>Grafični vmesnik za tesseract-ocr</p><p><"
+"a href=\"https://github.com/manisandro/gImageReader/\">Spletna "
+"stran</a></p><p>&nbsp;</p></body></html>"
+
+#: ../qt/data/AboutDialog.ui.h:4
+msgid "Credits"
+msgstr "Zasluge"
+
+#: ../qt/data/AboutDialog.ui.h:5
+msgid "License"
+msgstr "Licenca"
+
+#: ../qt/data/ConfigDialog.ui.h:21
+msgid "Text file encoding:"
+msgstr "Kodiranje besedilne datoteke:"
+
+#: ../qt/data/ConfigDialog.ui.h:22
+msgid "System encoding"
+msgstr "Sistemsko"
+
+#: ../qt/data/ConfigDialog.ui.h:23
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: ../qt/data/CrashHandler.ui.h:2
+#, no-c-format
+msgid ""
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
+msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Program se je "
+"sesul</span></p><p>Opravičujemo se za nevšečnosti. Če želite pomagati pri "
+"izpopolnjevanju programa, lahko javite napako na <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Pri tem poizkusite opisati, kaj ste delali, "
+"preden se je program sesul. Vključite tudi spodnje podatke. "
+"Hvala.</p></body></html>"
+
+#: ../qt/data/MainWindow.ui.h:1
+msgid "gImageReader"
+msgstr "gImageReader"
+
+#. Remove & from some labels which designer insists in adding
+#: ../qt/data/MainWindow.ui.h:17 ../qt/src/Ui_MainWindow.hh:48
+msgid "Sources"
+msgstr "Viri"
+
+#: ../qt/data/MainWindow.ui.h:18
+msgid "Zoom In"
+msgstr "Približaj"
+
+#: ../qt/data/MainWindow.ui.h:20
+msgid "Zoom Out"
+msgstr "Oddalji"
+
+#: ../qt/data/MainWindow.ui.h:22
+msgid "Normal Size"
+msgstr "Normalna velikost"
+
+#: ../qt/data/MainWindow.ui.h:24
+msgid "Best Fit"
+msgstr "Najboljše ujemanje"
+
+#: ../qt/data/MainWindow.ui.h:26
+msgid "Rotate Left"
+msgstr "Zasukaj levo"
+
+#: ../qt/data/MainWindow.ui.h:27
+msgid "Rotate left"
+msgstr "Zasukaj levo"
+
+#: ../qt/data/MainWindow.ui.h:28
+msgid "Rotate Right"
+msgstr "Zasukaj desno"
+
+#: ../qt/data/MainWindow.ui.h:29
+msgid "Rotate right"
+msgstr "Zasukaj desno"
+
+#: ../qt/data/MainWindow.ui.h:30
+msgid "Image Controls"
+msgstr "Kontrolniki slike"
+
+#: ../qt/data/MainWindow.ui.h:32
+msgid "Autodetect Layout"
+msgstr "Samodejno zaznaj razporeditev"
+
+#: ../qt/data/MainWindow.ui.h:34
+msgid "Toggle Output Pane"
+msgstr "Preklopi prikaz rezultata"
+
+#: ../qt/src/MainWindow.cc:523
+msgid "Could not read %1: %2"
+msgstr "Branje %1 ni bilo možno: %2"
+
+#: ../qt/src/MainWindow.cc:548
+msgid "The following dictionary files were installed:%1"
+msgstr "Naslednje datoteke s slovarji so bile nameščene: %1"
+
+#: ../qt/src/Ui_MainWindow.hh:49
+msgid "Output"
+msgstr "Rezultat"
+
+#: ../qt/src/Ui_MainWindow.hh:116
+msgid "OCR mode:"
+msgstr "Način OCR:"
+
+#: ../qt/src/Ui_MainWindow.hh:181
+msgid "Add Images"
+msgstr "Dodaj slike"
+
+#: ../qt/src/Ui_MainWindow.hh:186
+msgid "Remove Image"
+msgstr "Odstrani sliko"
+
+#: ../qt/src/Ui_MainWindow.hh:189
+msgid "Delete Image"
+msgstr "Zbriši sliko"
+
+#: ../qt/src/Ui_MainWindow.hh:192
+msgid "Clear List"
+msgstr "Počisti spisek"
+
+#. Output toolbar
+#: ../qt/src/Ui_OutputEditorHOCR.hh:42 ../qt/src/Ui_OutputEditorHOCR.hh:43
+msgid "Open hOCR file"
+msgstr "Odpri datoteko hOCR"
+
+#: ../qt/src/Ui_OutputEditorHOCR.hh:44 ../qt/src/Ui_OutputEditorHOCR.hh:45
+msgid "Save as hOCR text"
+msgstr "Shrani kot besedilo hOCR"
+
+#: ../qt/src/Ui_OutputEditorHOCR.hh:48 ../qt/src/Ui_OutputEditorHOCR.hh:50
+msgid "Export to PDF"
+msgstr "Izvozi v PDF"
+
+#: ../qt/src/Ui_OutputEditorText.hh:108
+msgid "Strip Line Breaks"
+msgstr "Odstrani prelome vrstic"
+
+#: ../qt/src/Ui_OutputEditorText.hh:109
+msgid "Strip line breaks on selected text"
+msgstr "Odstrani prelome vrstic v izbranem besedilu"
+
+#: ../qt/src/Ui_OutputEditorText.hh:113
+msgid "Find and Replace"
+msgstr "Poišči in zamenjaj"
+
+#: ../qt/src/Ui_OutputEditorText.hh:122
+msgid "Save Output"
+msgstr "Shrani rezultat"
+
+#: ../qt/src/Ui_OutputEditorText.hh:124
+msgid "Clear Output"
+msgstr "Počisti rezultat"
