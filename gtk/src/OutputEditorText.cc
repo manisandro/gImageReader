@@ -201,7 +201,7 @@ void OutputEditorText::toggleReplaceBox()
 void OutputEditorText::completeTextViewMenu(Gtk::Menu *menu)
 {
 	Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(_("Check spelling")));
-	item->set_active(GtkSpell::Checker::get_from_text_view(*m_textView));
+	item->set_active(bool(GtkSpell::Checker::get_from_text_view(*m_textView)));
 	CONNECT(item, toggled, [this, item]{
 		if(item->get_active()) {
 			setLanguage(MAIN->getRecognizer()->getSelectedLanguage());
