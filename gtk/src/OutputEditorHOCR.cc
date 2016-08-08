@@ -623,6 +623,21 @@ bool OutputEditorHOCR::handleButtonEvent(GdkEventButton* ev)
 			item->set_sensitive(false);
 			menu.append(*item);
 		}
+		if(!m_spell.check_word((*it)[m_itemStoreCols.text])) {
+			menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
+			Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
+			CONNECT(additem, activate, [this, it]{
+				m_spell.add_to_dictionary((*it)[m_itemStoreCols.text]);
+				it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
+			});
+			menu.append(*additem);
+			Gtk::MenuItem* ignoreitem = Gtk::manage(new Gtk::MenuItem(_("Ignore word")));
+			CONNECT(ignoreitem, activate, [this, it]{
+				m_spell.ignore_word((*it)[m_itemStoreCols.text]);
+				it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
+			});
+			menu.append(*ignoreitem);
+		}
 		CONNECT(&menu, hide, [&]{ loop->quit(); });
 		menu.show_all();
 		menu.popup(ev->button, ev->time);
