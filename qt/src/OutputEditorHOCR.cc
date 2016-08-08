@@ -553,9 +553,24 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 		if(menu.actions().isEmpty()) {
 			menu.addAction(_("No suggestions"))->setEnabled(false);
 		}
+		QAction* addAction = nullptr;
+		QAction* ignoreAction = nullptr;
+		if(!m_spell.checkWord(item->text(0))) {
+			menu.addSeparator();
+			addAction = menu.addAction(_("Add to dictionary"));
+			ignoreAction = menu.addAction(_("Ignore word"));
+		}
 		QAction* clickedAction = menu.exec(ui.treeWidgetItems->mapToGlobal(point));
 		if(clickedAction) {
-			item->setText(0, clickedAction->text());
+			if(clickedAction == addAction) {
+				m_spell.addWordToDictionary(item->text(0));
+				item->setForeground(0, item->parent()->foreground(0));
+			} else if(clickedAction == ignoreAction) {
+				m_spell.ignoreWord(item->text(0));
+				item->setForeground(0, item->parent()->foreground(0));
+			} else {
+				item->setText(0, clickedAction->text());
+			}
 		}
 	}
 }
