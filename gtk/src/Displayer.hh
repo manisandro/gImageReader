@@ -29,6 +29,7 @@
 #include <vector>
 
 class DisplayerItem;
+class DisplayerImageItem;
 class DisplayerTool;
 class DisplayRenderer;
 class Source;
@@ -82,6 +83,7 @@ private:
 	double m_scale = 1.0;
 	double m_scrollPos[2] = {0.5, 0.5};
 	DisplayerTool* m_tool = nullptr;
+	DisplayerImageItem* m_imageItem = nullptr;
 	std::vector<DisplayerItem*> m_items;
 	DisplayerItem* m_activeItem = nullptr;
 	double m_panPos[2] = {0., 0.};
@@ -124,8 +126,6 @@ private:
 		ScaleRequest(Request _type, double _scale = 0., int _resolution = 0, int _page = 0, int _brightness = 0, int _contrast = 0, bool _invert = 0)
 			: type(_type), scale(_scale), resolution(_resolution), page(_page), brightness(_brightness), contrast(_contrast), invert(_invert) {}
 	};
-	Cairo::RefPtr<Cairo::ImageSurface> m_blurImage;
-	double m_blurScale;
 	Glib::Threads::Thread* m_scaleThread = nullptr;
 	Glib::Threads::Mutex m_scaleMutex;
 	Glib::Threads::Cond m_scaleCond;
@@ -157,6 +157,19 @@ public:
 protected:
 	int m_zIndex = 0;
 	Geometry::Rectangle m_rect;
+};
+
+class DisplayerImageItem : public DisplayerItem
+{
+public:
+	using DisplayerItem::DisplayerItem;
+	void draw(Cairo::RefPtr<Cairo::Context> ctx) const override;
+	void setImage(Cairo::RefPtr<Cairo::ImageSurface> image) { m_image = image; }
+	void setRotation(double rotation) { m_rotation = rotation; }
+
+protected:
+	Cairo::RefPtr<Cairo::ImageSurface> m_image;
+	double m_rotation = 0.;
 };
 
 class DisplayerTool {
