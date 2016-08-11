@@ -509,8 +509,11 @@ void MainWindow::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy,
 	popState();
 }
 #elif defined(G_OS_WIN32)
-void MainWindow::dictionaryAutoinstall(const Glib::ustring& code)
+void MainWindow::dictionaryAutoinstall(Glib::ustring code)
 {
+	std::vector<Glib::ustring> codes = m_config->searchLangCultures(code);
+	code = codes.empty() ? code : codes.front();
+
 	pushState(State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), code));
 	Glib::ustring url= "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
 	Glib::ustring plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";

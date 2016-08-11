@@ -475,7 +475,8 @@ void MainWindow::languageChanged()
 
 void MainWindow::dictionaryAutoinstall()
 {
-	const QString& code = m_recognizer->getSelectedLanguage().code;
+	QList<QString> codes = m_config->searchLangCultures(m_recognizer->getSelectedLanguage().code);
+	QString code = codes.isEmpty() ? m_recognizer->getSelectedLanguage().code : codes.front();
 	pushState(State::Busy, _("Installing spelling dictionary for '%1'").arg(code));
 #ifdef Q_OS_LINUX
 	QStringList files;
