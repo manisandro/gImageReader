@@ -29,7 +29,7 @@ public:
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override {
 		QPen curPen = pen();
-		curPen.setWidth(1 / m_tool->getDisplayScale());
+		curPen.setWidth(1 / m_tool->m_displayer->getCurrentScale());
 		setPen(curPen);
 		painter->setRenderHint(QPainter::Antialiasing, false);
 		QGraphicsRectItem::paint(painter, option, widget);
@@ -52,7 +52,7 @@ DisplayerToolHOCR::~DisplayerToolHOCR()
 
 QList<QImage> DisplayerToolHOCR::getOCRAreas()
 {
-	return QList<QImage>() << getImage(getSceneBoundingRect());
+	return QList<QImage>() << m_displayer->getImage(m_displayer->getSceneBoundingRect());
 }
 
 void DisplayerToolHOCR::setSelection(const QRect& rect)
@@ -65,15 +65,14 @@ void DisplayerToolHOCR::setSelection(const QRect& rect)
 		QPen pen;
 		pen.setColor(c);
 		m_selection->setPen(pen);
-		addItemToScene(m_selection);
+		m_displayer->scene()->addItem(m_selection);
 	}
-	m_selection->setRect(rect.translated(getSceneBoundingRect().toRect().topLeft()));
-	invalidateRect(m_selection->rect());
+	m_selection->setRect(rect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft()));
 }
 
 QImage DisplayerToolHOCR::getSelection(const QRect& rect)
 {
-	return getImage(rect.translated(getSceneBoundingRect().toRect().topLeft()));
+	return m_displayer->getImage(rect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft()));
 }
 
 void DisplayerToolHOCR::clearSelection()
