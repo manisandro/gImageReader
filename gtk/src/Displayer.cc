@@ -87,29 +87,13 @@ Displayer::Displayer()
 
 void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx)
 {
-	if(!m_image){
+	if(!m_imageItem){
 		return;
 	}
 	Gtk::Allocation alloc = m_canvas->get_allocation();
-	ctx->save();
-	// Set up transformations
-	ctx->translate(0.5 * alloc.get_width(), 0.5 * alloc.get_height());
-	ctx->rotate(m_currentSource->angle);
-	// Set source and apply all transformations to it
-	if(!m_blurImage){
-		ctx->scale(m_scale, m_scale);
-		ctx->translate(-0.5 * m_image->get_width(), -0.5 * m_image->get_height());
-		ctx->set_source(m_image, 0, 0);
-	}else{
-		ctx->scale(m_scale / m_blurScale, m_scale / m_blurScale);
-		ctx->translate(-0.5 * m_blurImage->get_width(), -0.5 * m_blurImage->get_height());
-		ctx->set_source(m_blurImage, 0, 0);
-	}
-	ctx->paint();
-	// Draw selections
-	ctx->restore();
 	ctx->translate(Utils::round(0.5 * alloc.get_width()), Utils::round(0.5 * alloc.get_height()));
 	ctx->scale(m_scale, m_scale);
+	m_imageItem->draw(ctx);
 	for(const DisplayerItem* item : m_items){
 		item->draw(ctx);
 	}
@@ -189,8 +173,9 @@ bool Displayer::setSources(std::vector<Source*> sources)
 		m_tool->pageChanged();
 	}
 	m_renderTimer.disconnect();
+	delete m_imageItem;
+	m_imageItem = nullptr;
 	m_image.clear();
-	m_blurImage.clear();
 	delete m_renderer;
 	m_renderer = 0;
 	m_currentSource = nullptr;
@@ -237,6 +222,7 @@ bool Displayer::setSources(std::vector<Source*> sources)
 	m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
 	m_canvas->show();
 	m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
+	m_imageItem = new DisplayerImageItem;
 
 	if(!setCurrentPage(1)) {
 		setSources(std::vector<Source*>());
@@ -270,7 +256,6 @@ bool Displayer::renderImage()
 			m_tool->resolutionChanged(factor);
 		}
 	}
-	m_blurImage.clear();
 	m_currentSource->page = m_pageMap[m_pagespin->get_value_as_int()].second;
 	m_currentSource->brightness = m_brispin->get_value_as_int();
 	m_currentSource->contrast = m_conspin->get_value_as_int();
@@ -282,6 +267,8 @@ bool Displayer::renderImage()
 		return false;
 	}
 	m_image = image;
+	m_imageItem->setImage(m_image);
+	m_imageItem->setRect(Geometry::Rectangle(-0.5 * m_image->get_width(), -0.5 * m_image->get_height(), m_image->get_width(), m_image->get_height()));
 	setAngle(m_rotspin->get_value());
 	if(m_scale < 1.0){
 		ScaleRequest request = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
@@ -325,7 +312,7 @@ void Displayer::setZoom(Zoom zoom)
 		ScaleRequest request = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
 		m_scaleTimer = Glib::signal_timeout().connect([this,request]{ sendScaleRequest(request); return false; }, 100);
 	}else{
-		m_blurImage.clear();
+		m_imageItem->setImage(m_image);
 	}
 	positionCanvas();
 
@@ -338,9 +325,10 @@ void Displayer::setAngle(double angle)
 	if(m_image){
 		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
 		Utils::set_spin_blocked(m_rotspin, angle, m_connection_rotSpinChanged);
-		angle *= 0.0174532925199;
+		angle *= M_PI / 180.;
 		double delta = angle - m_currentSource->angle;
 		m_currentSource->angle = angle;
+		m_imageItem->setRotation(angle);
 		if(m_tool) {
 			m_tool->rotationChanged(delta);
 		}
@@ -578,11 +566,27 @@ void Displayer::setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image, double 
 	if(!m_scaleRequests.empty() && m_scaleRequests.front().type == ScaleRequest::Abort){
 		m_scaleRequests.pop();
 	}else{
-		m_blurImage = image;
-		m_blurScale = scale;
+		m_imageItem->setImage(image);
 		m_canvas->queue_draw();
 	}
 	m_scaleMutex.unlock();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+void DisplayerImageItem::draw(Cairo::RefPtr<Cairo::Context> ctx) const
+{
+	if(m_image) {
+		double sx = m_rect.width / m_image->get_width();
+		double sy = m_rect.height / m_image->get_height();
+		ctx->save();
+		ctx->rotate(m_rotation);
+		ctx->scale(sx, sy);
+		ctx->translate(m_rect.x / sx, m_rect.y / sy);
+		ctx->set_source(m_image, 0, 0);
+		ctx->paint();
+		ctx->restore();
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
