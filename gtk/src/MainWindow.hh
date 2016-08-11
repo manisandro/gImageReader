@@ -124,7 +124,7 @@ private:
 	void dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring& lang);
 	void dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result);
 #elif defined(G_OS_WIN32)
-	void dictionaryAutoinstall(const Glib::ustring& lang);
+	void dictionaryAutoinstall(Glib::ustring lang);
 #endif
 };
 
