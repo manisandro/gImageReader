@@ -451,6 +451,11 @@ QImage Displayer::getImage(const QRectF& rect)
 	return image;
 }
 
+QRectF Displayer::getSceneBoundingRect() const
+{
+	return m_imageItem->sceneBoundingRect();
+}
+
 void Displayer::sendScaleRequest(const ScaleRequest& request)
 {
 	m_scaleTimer.stop();
@@ -509,36 +514,4 @@ void Displayer::setScaledImage(const QImage &image, double scale)
 		m_imageItem->setPos(m_imageItem->pos() - m_imageItem->sceneBoundingRect().center());
 	}
 	m_scaleMutex.unlock();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-
-void DisplayerTool::addItemToScene(QGraphicsItem* item)
-{
-	m_displayer->m_scene->addItem(item);
-}
-
-QRectF DisplayerTool::getSceneBoundingRect() const
-{
-	return m_displayer->m_imageItem->sceneBoundingRect();
-}
-
-void DisplayerTool::invalidateRect(const QRectF& rect)
-{
-	m_displayer->m_scene->invalidate(rect);
-}
-
-QPointF DisplayerTool::mapToSceneClamped(const QPoint& point)
-{
-	return m_displayer->mapToSceneClamped(point);
-}
-
-QImage DisplayerTool::getImage(const QRectF& rect)
-{
-	return m_displayer->getImage(rect);
-}
-
-double DisplayerTool::getDisplayScale() const
-{
-	return m_displayer->m_scale;
 }

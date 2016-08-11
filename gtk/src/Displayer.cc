@@ -101,7 +101,7 @@ void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx)
 
 void Displayer::positionCanvas()
 {
-	Geometry::Rectangle bb = getImageBoundingBox();
+	Geometry::Rectangle bb = getSceneBoundingRect();
 	m_canvas->set_size_request(Utils::round(bb.width * m_scale), Utils::round(bb.height * m_scale));
 	// Immediately resize viewport, so that adjustment values are correct below
 	m_viewport->size_allocate(m_viewport->get_allocation());
@@ -287,7 +287,7 @@ void Displayer::setZoom(Zoom zoom)
 	m_connection_zoomoneClicked.block(true);
 
 	Gtk::Allocation alloc = m_viewport->get_allocation();
-	Geometry::Rectangle bb = getImageBoundingBox();
+	Geometry::Rectangle bb = getSceneBoundingRect();
 	double fit = std::min(alloc.get_width() / bb.width, alloc.get_height() / bb.height);
 
 	if(zoom == Zoom::In){
@@ -479,7 +479,42 @@ void Displayer::ensureVisible(double evx, double evy)
 	}
 }
 
-Geometry::Rectangle Displayer::getImageBoundingBox() const
+void Displayer::addItem(DisplayerItem* item)
+{
+	if(!m_items.empty())
+		item->setZIndex(m_items.back()->zIndex() + 1);
+	m_items.push_back(item);
+	item->m_displayer = this;
+	invalidateRect(item->rect());
+}
+
+void Displayer::removeItem(DisplayerItem* item)
+{
+	if(item == m_activeItem) {
+		m_activeItem = nullptr;
+	}
+	m_items.erase(std::remove(m_items.begin(), m_items.end(), item), m_items.end());
+	item->m_displayer = nullptr;
+	invalidateRect(item->rect());
+}
+
+void Displayer::invalidateRect(const Geometry::Rectangle &rect)
+{
+	Gtk::Allocation alloc = m_canvas->get_allocation();
+	Geometry::Rectangle canvasRect = rect;
+	canvasRect.x = (canvasRect.x * m_scale + 0.5 * alloc.get_width()) - 2;
+	canvasRect.y = (canvasRect.y * m_scale + 0.5 * alloc.get_height()) - 2;
+	canvasRect.width = canvasRect.width * m_scale + 4;
+	canvasRect.height = canvasRect.height * m_scale + 4;
+	m_canvas->queue_draw_area(canvasRect.x, canvasRect.y, canvasRect.width, canvasRect.height);
+}
+
+void Displayer::resortItems()
+{
+	std::sort(m_items.begin(), m_items.end(), DisplayerItem::zIndexCmp);
+}
+
+Geometry::Rectangle Displayer::getSceneBoundingRect() const
 {
 	int w = m_image->get_width();
 	int h = m_image->get_height();
@@ -574,70 +609,40 @@ void Displayer::setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image, double 
 
 ///////////////////////////////////////////////////////////////////////////////
 
+void DisplayerItem::setZIndex(int zIndex)
+{
+	m_zIndex = zIndex;
+	if(m_displayer) {
+		m_displayer->invalidateRect(m_rect);
+		m_displayer->resortItems();
+	}
+}
+
+void DisplayerItem::setRect(const Geometry::Rectangle &rect)
+{
+	Geometry::Rectangle invalidateArea = m_rect.unite(rect);
+	m_rect = rect;
+	if(m_displayer)
+		m_displayer->invalidateRect(invalidateArea);
+}
+
+void DisplayerItem::update()
+{
+	if(m_displayer)
+		m_displayer->invalidateRect(m_rect);
+}
+
 void DisplayerImageItem::draw(Cairo::RefPtr<Cairo::Context> ctx) const
 {
 	if(m_image) {
-		double sx = m_rect.width / m_image->get_width();
-		double sy = m_rect.height / m_image->get_height();
+		double sx = rect().width / m_image->get_width();
+		double sy = rect().height / m_image->get_height();
 		ctx->save();
 		ctx->rotate(m_rotation);
 		ctx->scale(sx, sy);
-		ctx->translate(m_rect.x / sx, m_rect.y / sy);
+		ctx->translate(rect().x / sx, rect().y / sy);
 		ctx->set_source(m_image, 0, 0);
 		ctx->paint();
 		ctx->restore();
 	}
-}
-
-///////////////////////////////////////////////////////////////////////////////
-
-void DisplayerTool::addItemToCanvas(DisplayerItem* item)
-{
-	m_displayer->m_items.push_back(item);
-	invalidateRect(item->rect());
-}
-
-void DisplayerTool::removeItemFromCanvas(DisplayerItem* item)
-{
-	if(item == m_displayer->m_activeItem) {
-		m_displayer->m_activeItem = nullptr;
-	}
-	m_displayer->m_items.erase(std::remove(m_displayer->m_items.begin(), m_displayer->m_items.end(), item), m_displayer->m_items.end());
-	invalidateRect(item->rect());
-}
-
-void DisplayerTool::reorderCanvasItems()
-{
-	std::sort(m_displayer->m_items.begin(), m_displayer->m_items.end(), DisplayerItem::zIndexCmp);
-}
-
-Geometry::Rectangle DisplayerTool::getSceneBoundingRect() const
-{
-	return m_displayer->getImageBoundingBox();
-}
-
-void DisplayerTool::invalidateRect(const Geometry::Rectangle& rect)
-{
-	Gtk::Allocation alloc = m_displayer->m_canvas->get_allocation();
-	Geometry::Rectangle canvasRect = rect;
-	canvasRect.x = (canvasRect.x * m_displayer->m_scale + 0.5 * alloc.get_width()) - 2;
-	canvasRect.y = (canvasRect.y * m_displayer->m_scale + 0.5 * alloc.get_height()) - 2;
-	canvasRect.width = canvasRect.width * m_displayer->m_scale + 4;
-	canvasRect.height = canvasRect.height * m_displayer->m_scale + 4;
-	m_displayer->m_canvas->queue_draw_area(canvasRect.x, canvasRect.y, canvasRect.width, canvasRect.height);
-}
-
-Geometry::Point DisplayerTool::mapToSceneClamped(const Geometry::Point& point)
-{
-	return m_displayer->mapToSceneClamped(point);
-}
-
-Cairo::RefPtr<Cairo::ImageSurface> DisplayerTool::getImage(const Geometry::Rectangle& rect)
-{
-	return m_displayer->getImage(rect);
-}
-
-double DisplayerTool::getDisplayScale() const
-{
-	return m_displayer->m_scale;
 }

@@ -56,9 +56,9 @@ void DisplayerToolSelect::mousePressEvent(QMouseEvent *event)
 		if((event->modifiers() & Qt::ControlModifier) == 0){
 			clearSelections();
 		}
-		m_curSel = new DisplaySelection(this, 1 + m_selections.size(), mapToSceneClamped(event->pos()));
+		m_curSel = new DisplaySelection(this, 1 + m_selections.size(), m_displayer->mapToSceneClamped(event->pos()));
 		m_curSel->setZValue(1 + m_selections.size());
-		addItemToScene(m_curSel);
+		m_displayer->scene()->addItem(m_curSel);
 		event->accept();
 	}
 }
@@ -66,7 +66,7 @@ void DisplayerToolSelect::mousePressEvent(QMouseEvent *event)
 void DisplayerToolSelect::mouseMoveEvent(QMouseEvent *event)
 {
 	if(m_curSel){
-		QPointF p = mapToSceneClamped(event->pos());
+		QPointF p = m_displayer->mapToSceneClamped(event->pos());
 		m_curSel->setPoint(p);
 		m_displayer->ensureVisible(QRectF(p, p));
 		event->accept();
@@ -112,10 +112,10 @@ QList<QImage> DisplayerToolSelect::getOCRAreas()
 {
 	QList<QImage> images;
 	if(m_selections.empty()){
-		images.append(getImage(getSceneBoundingRect()));
+		images.append(m_displayer->getImage(m_displayer->getSceneBoundingRect()));
 	}else{
 		for(const DisplaySelection* sel : m_selections){
-			images.append(getImage(sel->rect()));
+			images.append(m_displayer->getImage(sel->rect()));
 		}
 	}
 	return images;
@@ -135,7 +135,6 @@ void DisplayerToolSelect::removeSelection(int num)
 	for(int i = 0, n = m_selections.size(); i < n; ++i){
 		m_selections[i]->setNumber(1 + i);
 		m_selections[i]->setZValue(1 + i);
-		invalidateRect(m_selections[i]->rect());
 	}
 }
 
@@ -147,13 +146,12 @@ void DisplayerToolSelect::reorderSelection(int oldNum, int newNum)
 	for(int i = 0, n = m_selections.size(); i < n; ++i){
 		m_selections[i]->setNumber(1 + i);
 		m_selections[i]->setZValue(1 + i);
-		invalidateRect(m_selections[i]->rect());
 	}
 }
 
 void DisplayerToolSelect::saveSelection(DisplaySelection* selection)
 {
-	QImage img = getImage(selection->rect());
+	QImage img = m_displayer->getImage(selection->rect());
 	QString filename = Utils::makeOutputFilename(MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->getValue());
 	filename = QFileDialog::getSaveFileName(MAIN, _("Save Selection Image"), filename, QString("%1 (*.png)").arg(_("PNG Images")));
 	if(!filename.isEmpty()){
@@ -174,7 +172,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew)
 	double avgDeskew = 0.;
 	int nDeskew = 0;
 	QList<QRectF> rects;
-	QImage img = getImage(getSceneBoundingRect());
+	QImage img = m_displayer->getImage(m_displayer->getSceneBoundingRect());
 
 	// Perform layout analysis
 	Utils::busyTask([this,&nDeskew,&avgDeskew,&rects,&img]{
@@ -224,7 +222,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew)
 		for(int i = 0, n = rects.size(); i < n; ++i){
 			m_selections.append(new DisplaySelection(this, 1 + i, rects[i].topLeft()));
 			m_selections.back()->setPoint(rects[i].bottomRight());
-			addItemToScene(m_selections.back());
+			m_displayer->scene()->addItem(m_selections.back());
 		}
 		updateRecognitionModeLabel();
 	}
@@ -267,9 +265,9 @@ void DisplaySelection::contextMenuEvent(QGraphicsSceneContextMenuEvent *event){
 	if(selected == deleteAction){
 		m_selectTool->removeSelection(m_number);
 	}else if(selected == ocrAction){
-		MAIN->getRecognizer()->recognizeImage(m_selectTool->getImage(rect()), Recognizer::OutputDestination::Buffer);
+		MAIN->getRecognizer()->recognizeImage(m_selectTool->m_displayer->getImage(rect()), Recognizer::OutputDestination::Buffer);
 	}else if(selected == ocrClipboardAction){
-		MAIN->getRecognizer()->recognizeImage(m_selectTool->getImage(rect()), Recognizer::OutputDestination::Clipboard);
+		MAIN->getRecognizer()->recognizeImage(m_selectTool->m_displayer->getImage(rect()), Recognizer::OutputDestination::Clipboard);
 	}else if(selected == saveAction){
 		m_selectTool->saveSelection(this);
 	}
@@ -286,14 +284,14 @@ void DisplaySelection::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 	setBrush(QColor(c.red(), c.green(), c.blue(), 63));
 	QPen pen;
 	pen.setColor(c);
-	pen.setWidth(1 / m_selectTool->getDisplayScale());
+	pen.setWidth(1 / m_selectTool->m_displayer->getCurrentScale());
 	setPen(pen);
 
 	painter->setRenderHint(QPainter::Antialiasing, false);
 	QGraphicsRectItem::paint(painter, option, widget);
 
 	QRectF r = rect();
-	qreal w = 20. / m_selectTool->getDisplayScale();
+	qreal w = 20. / m_selectTool->m_displayer->getCurrentScale();
 	w = qMin(w, qMin(r.width(), r.height()));
 	QRectF box(r.x(), r.y(), w, w);
 
@@ -316,7 +314,7 @@ void DisplaySelection::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
 	QPointF p = event->pos();
 	QRectF r = rect();
-	double tol = 10.0 / m_selectTool->getDisplayScale();
+	double tol = 10.0 / m_selectTool->m_displayer->getCurrentScale();
 
 	bool left = qAbs(r.x() - p.x()) < tol;
 	bool right = qAbs(r.x() + r.width() - p.x()) < tol;
@@ -339,7 +337,7 @@ void DisplaySelection::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 void DisplaySelection::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	QPointF p = event->pos();
-	double tol = 10.0 / m_selectTool->getDisplayScale();
+	double tol = 10.0 / m_selectTool->m_displayer->getCurrentScale();
 	m_resizeHandlers.clear();
 	m_resizeOffset = QPointF(0., 0.);
 	if(qAbs(m_point.x() - p.x()) < tol){ // pointx
@@ -362,7 +360,7 @@ void DisplaySelection::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void DisplaySelection::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
 	QPointF p = event->pos() - m_resizeOffset;
-	QRectF bb = m_selectTool->getSceneBoundingRect();
+	QRectF bb = m_selectTool->m_displayer->getSceneBoundingRect();
 	p.rx() = qMin(qMax(bb.x(), p.x()), bb.x() + bb.width());
 	p.ry() = qMin(qMax(bb.y(), p.y()), bb.y() + bb.height());
 	if(!m_resizeHandlers.isEmpty()){

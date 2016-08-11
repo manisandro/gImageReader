@@ -43,10 +43,14 @@ public:
 	int getCurrentPage() const{ return m_pagespin->get_value_as_int(); }
 	bool setCurrentPage(int page);
 	double getCurrentAngle() const{ return m_rotspin->get_value(); }
+	double getCurrentScale() const{ return m_scale; }
 	void setAngle(double angle);
 	int getCurrentResolution(){ return m_resspin->get_value_as_int(); }
 	void setResolution(int resolution);
 	std::string getCurrentImage(int& page) const;
+	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
+	Geometry::Rectangle getSceneBoundingRect() const;
+	Geometry::Point mapToSceneClamped(const Geometry::Point& p) const;
 	int getNPages(){ double min, max; m_pagespin->get_range(min, max); return int(max); }
 	bool hasMultipleOCRAreas();
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
@@ -54,9 +58,13 @@ public:
 	void setCursor(Glib::RefPtr<Gdk::Cursor> cursor);
 	void ensureVisible(double evx, double evy);
 
-private:
-	friend class DisplayerTool;
+	void addItem(DisplayerItem* item);
+	void removeItem(DisplayerItem* item);
+	void invalidateRect(const Geometry::Rectangle& rect);
+	void resortItems();
 
+
+private:
 	enum class Zoom { In, Out, Fit, One };
 
 	Gtk::DrawingArea* m_canvas;
@@ -104,9 +112,6 @@ private:
 	bool mouseReleaseEvent(GdkEventButton* ev);
 	bool scrollEvent(GdkEventScroll* ev);
 
-	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
-	Geometry::Rectangle getImageBoundingBox() const;
-	Geometry::Point mapToSceneClamped(const Geometry::Point& p) const;
 	void setZoom(Zoom zoom);
 
 	bool renderImage();
@@ -139,11 +144,16 @@ private:
 
 class DisplayerItem {
 public:
+	friend class Displayer;
 	virtual ~DisplayerItem(){}
 
-	void setZIndex(int zIndex) { m_zIndex = zIndex; }
-	void setRect(const Geometry::Rectangle& rect) { m_rect = rect; }
+	Displayer* displayer() const{ return m_displayer; }
+
+	void setZIndex(int zIndex);
+	double zIndex() const{ return m_zIndex; }
+	void setRect(const Geometry::Rectangle& rect);
 	const Geometry::Rectangle& rect() const{ return m_rect; }
+	void update();
 
 	virtual void draw(Cairo::RefPtr<Cairo::Context> ctx) const = 0;
 	virtual bool mousePressEvent(GdkEventButton */*event*/) { return false; }
@@ -154,9 +164,10 @@ public:
 		return lhs->m_zIndex < rhs->m_zIndex;
 	}
 
-protected:
-	int m_zIndex = 0;
+private:
+	Displayer* m_displayer = nullptr;
 	Geometry::Rectangle m_rect;
+	int m_zIndex = 0;
 };
 
 class DisplayerImageItem : public DisplayerItem
@@ -188,15 +199,6 @@ public:
 
 protected:
 	Displayer* m_displayer;
-
-	void addItemToCanvas(DisplayerItem* item);
-	void removeItemFromCanvas(DisplayerItem* item);
-	void reorderCanvasItems();
-	Geometry::Rectangle getSceneBoundingRect() const;
-	void invalidateRect(const Geometry::Rectangle& rect);
-	Geometry::Point mapToSceneClamped(const Geometry::Point& point);
-	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect);
-	double getDisplayScale() const;
 };
 
 #endif // IMAGEDISPLAYER_HH

@@ -59,16 +59,16 @@ public:
 	DisplaySelection(DisplayerToolSelect* selectTool, int number, const Geometry::Point& anchor)
 		: m_selectTool(selectTool), m_number(number), m_anchor(anchor), m_point(anchor)
 	{
-		m_rect = Geometry::Rectangle(anchor, anchor);
+		setRect(Geometry::Rectangle(anchor, anchor));
 	}
 	void setPoint(const Geometry::Point& point){
 		m_point = point;
-		m_rect = Geometry::Rectangle(m_anchor, m_point);
+		setRect(Geometry::Rectangle(m_anchor, m_point));
 	}
 	void rotate(const Geometry::Rotation &R){
 		m_anchor = R.rotate(m_anchor);
 		m_point = R.rotate(m_point);
-		m_rect = Geometry::Rectangle(m_anchor, m_point);
+		setRect(Geometry::Rectangle(m_anchor, m_point));
 	}
 	void scale(double factor){
 		m_anchor = Geometry::Point(m_anchor.x * factor, m_anchor.y * factor);

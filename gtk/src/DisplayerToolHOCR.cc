@@ -24,18 +24,18 @@
 
 class DisplayerToolHOCR::SelectionRect : public DisplayerItem {
 public:
-	SelectionRect(DisplayerToolHOCR* tool) : m_tool(tool) {}
+	using DisplayerItem::DisplayerItem;
 
 	void draw(Cairo::RefPtr<Cairo::Context> ctx) const override {
 		Gdk::RGBA bgcolor("#4A90D9");
 
-		double scale = m_tool->getDisplayScale();
+		double scale = displayer()->getCurrentScale();
 
 		double d = 0.5 / scale;
-		double x1 = Utils::round(m_rect.x * scale) / scale + d;
-		double y1 = Utils::round(m_rect.y * scale) / scale + d;
-		double x2 = Utils::round((m_rect.x + m_rect.width) * scale) / scale - d;
-		double y2 = Utils::round((m_rect.y + m_rect.height) * scale) / scale - d;
+		double x1 = Utils::round(rect().x * scale) / scale + d;
+		double y1 = Utils::round(rect().y * scale) / scale + d;
+		double x2 = Utils::round((rect().x + rect().width) * scale) / scale - d;
+		double y2 = Utils::round((rect().y + rect().height) * scale) / scale - d;
 		Geometry::Rectangle rect(x1, y1, x2 - x1, y2 - y1);
 		ctx->save();
 		// Semitransparent rectangle with frame
@@ -47,8 +47,6 @@ public:
 		ctx->stroke();
 		ctx->restore();
 	}
-private:
-	DisplayerToolHOCR* m_tool;
 };
 
 DisplayerToolHOCR::DisplayerToolHOCR(Displayer *displayer)
@@ -65,32 +63,30 @@ DisplayerToolHOCR::~DisplayerToolHOCR()
 std::vector<Cairo::RefPtr<Cairo::ImageSurface>> DisplayerToolHOCR::getOCRAreas()
 {
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> surfaces;
-	surfaces.push_back(getImage(getSceneBoundingRect()));
+	surfaces.push_back(m_displayer->getImage(m_displayer->getSceneBoundingRect()));
 	return surfaces;
 }
 
 void DisplayerToolHOCR::setSelection(const Geometry::Rectangle& rect)
 {
 	if(!m_selection) {
-		m_selection = new SelectionRect(this);
-		addItemToCanvas(m_selection);
+		m_selection = new SelectionRect();
+		m_displayer->addItem(m_selection);
 	}
-	Geometry::Rectangle sceneRect = getSceneBoundingRect();
-	invalidateRect(m_selection->rect());
+	Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
 	m_selection->setRect(rect.translate(sceneRect.x, sceneRect.y));
-	invalidateRect(m_selection->rect());
 }
 
 Cairo::RefPtr<Cairo::ImageSurface> DisplayerToolHOCR::getSelection(const Geometry::Rectangle& rect)
 {
-	Geometry::Rectangle sceneRect = getSceneBoundingRect();
-	return getImage(rect.translate(sceneRect.x, sceneRect.y));
+	Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
+	return m_displayer->getImage(rect.translate(sceneRect.x, sceneRect.y));
 }
 
 void DisplayerToolHOCR::clearSelection()
 {
 	if(m_selection) {
-		removeItemFromCanvas(m_selection);
+		m_displayer->removeItem(m_selection);
 		delete m_selection;
 		m_selection = nullptr;
 	}

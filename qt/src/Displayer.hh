@@ -45,8 +45,12 @@ public:
 	bool setSources(QList<Source*> sources);
 	int getCurrentPage() const;
 	double getCurrentAngle() const;
+	double getCurrentScale() const{ return m_scale; }
 	int getCurrentResolution() const;
 	const QString& getCurrentImage(int& page) const;
+	QImage getImage(const QRectF& rect);
+	QRectF getSceneBoundingRect() const;
+	QPointF mapToSceneClamped(const QPoint& p) const;
 	int getNPages() const;
 	bool hasMultipleOCRAreas();
 	QList<QImage> getOCRAreas();
@@ -59,8 +63,6 @@ public slots:
 	void setResolution(int resolution);
 
 private:
-	friend class DisplayerTool;
-
 	enum class Zoom { In, Out, Fit, Original };
 	const UI_MainWindow& ui;
 	GraphicsScene* m_scene;
@@ -81,8 +83,6 @@ private:
 	void resizeEvent(QResizeEvent *event);
 	void wheelEvent(QWheelEvent *event);
 
-	QImage getImage(const QRectF& rect);
-	QPointF mapToSceneClamped(const QPoint& p) const;
 	void setZoom(Zoom action, QGraphicsView::ViewportAnchor anchor = QGraphicsView::AnchorViewCenter);
 
 	struct ScaleRequest {
@@ -141,13 +141,6 @@ public:
 
 protected:
 	Displayer* m_displayer;
-
-	void addItemToScene(QGraphicsItem* item);
-	QRectF getSceneBoundingRect() const;
-	void invalidateRect(const QRectF& rect);
-	QPointF mapToSceneClamped(const QPoint& point);
-	QImage getImage(const QRectF& rect);
-	double getDisplayScale() const;
 };
 
 #endif // IMAGEDISPLAYER_HH
