@@ -160,7 +160,7 @@ bool Displayer::setCurrentPage(int page)
 			m_renderer = new ImageRenderer(filename);
 			if(source->resolution == -1) source->resolution = 100;
 		}
-		Utils::set_spin_blocked(m_rotspin, source->angle, m_connection_rotSpinChanged);
+		Utils::set_spin_blocked(m_rotspin, source->angle / M_PI * 180., m_connection_rotSpinChanged);
 		Utils::set_spin_blocked(m_brispin, source->brightness, m_connection_briSpinChanged);
 		Utils::set_spin_blocked(m_conspin, source->contrast, m_connection_conSpinChanged);
 		Utils::set_spin_blocked(m_resspin, source->resolution, m_connection_resSpinChanged);
