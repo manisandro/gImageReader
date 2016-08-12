@@ -125,7 +125,7 @@ void OutputEditorText::filterBuffer()
 		txt.replace(QRegExp("\\s+\u2029"), "\u2029");
 
 		if(ui.actionOutputPostprocJoinHyphen->isChecked()){
-			txt.replace(QRegExp("-\\s*\u2029\\s*"), "");
+			txt.replace(QRegExp("[-\u2014]\\s*\u2029\\s*"), "");
 		}
 		QString preChars, sucChars;
 		if(ui.actionOutputPostprocKeepParagraphs->isChecked()){
