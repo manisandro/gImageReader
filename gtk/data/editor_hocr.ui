@@ -73,7 +73,7 @@
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">0</property>
+                <property name="top_attach">1</property>
               </packing>
             </child>
             <child>
@@ -87,7 +87,7 @@
               </object>
               <packing>
                 <property name="left_attach">1</property>
-                <property name="top_attach">0</property>
+                <property name="top_attach">1</property>
               </packing>
             </child>
             <child>
@@ -97,11 +97,12 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="hexpand">True</property>
+                <property name="xalign">0</property>
                 <property name="draw_indicator">True</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">1</property>
+                <property name="top_attach">2</property>
                 <property name="width">2</property>
               </packing>
             </child>
@@ -112,11 +113,65 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="hexpand">True</property>
+                <property name="xalign">0</property>
                 <property name="draw_indicator">True</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">2</property>
+                <property name="top_attach">3</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label:pdfoptions.mode">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Output mode:</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="combo:pdfoptions.mode">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="active">0</property>
+                <items>
+                  <item translatable="yes">PDF</item>
+                  <item translatable="yes">PDF with invisible text overlay</item>
+                </items>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparator" id="separator">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">4</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="checkbox:pdfoptions.preview">
+                <property name="label" translatable="yes">Show preview</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="xalign">0</property>
+                <property name="draw_indicator">True</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">5</property>
                 <property name="width">2</property>
               </packing>
             </child>
@@ -139,6 +194,11 @@
     <property name="can_focus">False</property>
     <property name="icon_name">edit-clear-symbolic</property>
   </object>
+  <object class="GtkImage" id="image:hocr.export">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">application-pdf</property>
+  </object>
   <object class="GtkImage" id="image:hocr.open">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -148,24 +208,6 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="icon_name">document-save-as-symbolic</property>
-  </object>
-  <object class="GtkMenu" id="menu:hocr.export">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkMenuItem" id="menuitem:hocr.export.pdf">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">PDF</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="menuitem:hocr.export.pdfoverlay">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">PDF with invisible text overlay</property>
-      </object>
-    </child>
   </object>
   <object class="GtkBox" id="box:hocr">
     <property name="visible">True</property>
@@ -205,20 +247,13 @@
           </packing>
         </child>
         <child>
-          <object class="GtkMenuButton" id="menubutton:hocr.export">
+          <object class="GtkButton" id="button:hocr.export">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="tooltip_text" translatable="yes">Export to PDF</property>
+            <property name="image">image:hocr.export</property>
             <property name="relief">none</property>
-            <property name="popup">menu:hocr.export</property>
-            <property name="use_popover">False</property>
-            <child>
-              <object class="GtkImage" id="image:hocr.export">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="icon_name">application-pdf</property>
-              </object>
-            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -346,6 +381,24 @@
         <property name="fill">True</property>
         <property name="position">2</property>
       </packing>
+    </child>
+  </object>
+  <object class="GtkMenu" id="menu:hocr.export">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkMenuItem" id="menuitem:hocr.export.pdf">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">PDF</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="menuitem:hocr.export.pdfoverlay">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">PDF with invisible text overlay</property>
+      </object>
     </child>
   </object>
 </interface>

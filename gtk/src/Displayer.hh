@@ -153,6 +153,8 @@ public:
 	double zIndex() const{ return m_zIndex; }
 	void setRect(const Geometry::Rectangle& rect);
 	const Geometry::Rectangle& rect() const{ return m_rect; }
+	void setVisible(bool visible);
+	bool visible() const{ return m_visible; }
 	void update();
 
 	virtual void draw(Cairo::RefPtr<Cairo::Context> ctx) const = 0;
@@ -168,6 +170,7 @@ private:
 	Displayer* m_displayer = nullptr;
 	Geometry::Rectangle m_rect;
 	int m_zIndex = 0;
+	bool m_visible = true;
 };
 
 class DisplayerImageItem : public DisplayerItem

@@ -136,6 +136,11 @@
             <summary>Default output editor</summary>
             <description>Default output editor.</description>
         </key>
+        <key type="i" name="pdfexportmode">
+            <default>0</default>
+            <summary>PDF export mode</summary>
+            <description>PDF export mode.</description>
+        </key>
         <key type="s" name="hocrfont">
             <default>"Sans 10"</default>
             <summary>Font to use for PDFs</summary>

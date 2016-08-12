@@ -29,6 +29,7 @@
 class DisplayerToolHOCR;
 class QDomDocument;
 class QDomElement;
+class QGraphicsPixmapItem;
 
 class OutputEditorHOCR : public OutputEditor {
 	Q_OBJECT
@@ -47,8 +48,7 @@ public slots:
 	bool clear(bool hide = true) override;
 	void open();
 	bool save(const QString& filename = "") override;
-	void savePDF(bool overlay = false);
-	void savePDFOverlay(){ savePDF(true); }
+	void savePDF();
 
 private:
 	class HTMLHighlighter;
@@ -80,6 +80,8 @@ private:
 	Ui::PdfExportDialog m_pdfExportDialogUi;
 	QFontDialog m_pdfFontDialog;
 
+	QGraphicsPixmapItem* m_preview = nullptr;
+
 	void findReplace(bool backwards, bool replace);
 	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString, QString>& langCache);
 	QDomElement getHOCRElementForItem(QTreeWidgetItem* item, QDomDocument& doc) const;
@@ -100,6 +102,7 @@ private slots:
 	void propertyCellChanged(int row, int col);
 	void showTreeWidgetContextMenu(const QPoint& point);
 	void updateFontButton(const QFont& font);
+	void updatePreview();
 };
 
 #endif // OUTPUTEDITORHOCR_HH

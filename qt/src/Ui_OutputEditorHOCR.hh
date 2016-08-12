@@ -22,9 +22,7 @@ public:
 	QAction* actionOutputOpen;
 	QAction* actionOutputClear;
 	QAction* actionOutputSaveHOCR;
-	QToolButton* toolButtonOutputExport;
-	QAction* actionOutputSavePDFTextOverlay;
-	QAction* actionOutputSavePDF;
+	QAction* actionOutputExportPDF;
 	QToolBar* toolBarOutput;
 
 	QSplitter* splitter;
@@ -43,15 +41,8 @@ public:
 		actionOutputOpen->setToolTip(gettext("Open hOCR file"));
 		actionOutputSaveHOCR = new QAction(QIcon::fromTheme("document-save-as"), gettext("Save as hOCR text"), widget);
 		actionOutputSaveHOCR->setToolTip(gettext("Save as hOCR text"));
-		toolButtonOutputExport = new QToolButton(widget);
-		toolButtonOutputExport->setIcon(QIcon::fromTheme("application-pdf"));
-		toolButtonOutputExport->setText(gettext("Export to PDF"));
-		QMenu* saveMenu = new QMenu(widget);
-		toolButtonOutputExport->setToolTip(gettext("Export to PDF"));
-		toolButtonOutputExport->setMenu(saveMenu);
-		toolButtonOutputExport->setPopupMode(QToolButton::InstantPopup);
-		actionOutputSavePDF = saveMenu->addAction(gettext("PDF"));
-		actionOutputSavePDFTextOverlay = saveMenu->addAction(gettext("PDF with invisible text overlay"));
+		actionOutputExportPDF = new QAction(QIcon::fromTheme("application-pdf"), gettext("Export to PDF"), widget);
+		actionOutputExportPDF->setToolTip(gettext("Export to PDF"));
 		actionOutputClear = new QAction(QIcon::fromTheme("edit-clear"), gettext("Clear output"), widget);
 		actionOutputClear->setToolTip(gettext("Clear output"));
 
@@ -60,7 +51,7 @@ public:
 		toolBarOutput->setIconSize(QSize(1, 1) * toolBarOutput->style()->pixelMetric(QStyle::PM_SmallIconSize));
 		toolBarOutput->addAction(actionOutputOpen);
 		toolBarOutput->addAction(actionOutputSaveHOCR);
-		toolBarOutput->addWidget(toolButtonOutputExport);
+		toolBarOutput->addAction(actionOutputExportPDF);
 		toolBarOutput->addAction(actionOutputClear);
 
 		widget->layout()->addWidget(toolBarOutput);
