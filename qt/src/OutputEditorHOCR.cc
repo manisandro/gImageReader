@@ -735,30 +735,35 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 	}
 	QString itemClass = item->data(0, ClassRole).toString();
 	QRect itemRect = item->data(0, BBoxRole).toRect();
-	if(itemClass == "ocr_line" && uniformizeLineSpacing) {
+	if(itemClass == "ocr_par" && uniformizeLineSpacing) {
+		double yInc = double(itemRect.height()) / item->childCount();
+		double y = itemRect.top() + yInc;
 		int curSize = painter.font().pointSize();
-		int x = itemRect.x();
-		int prevWordRight = itemRect.x();
-		for(int iWord = 0, nWords = item->childCount(); iWord < nWords; ++iWord) {
-			QTreeWidgetItem* wordItem = item->child(iWord);
-			if(wordItem->checkState(0) == Qt::Checked) {
-				QRect wordRect = wordItem->data(0, BBoxRole).toRect();
-				if(useDetectedFontSizes) {
-					double wordSize = wordItem->data(0, FontSizeRole).toDouble();
-					if(wordSize != curSize) {
-						QFont font = painter.font();
-						font.setPointSize(wordSize);
-						painter.setFont(font);
-						curSize = wordSize;
+		for(int iLine = 0, nLines = item->childCount(); iLine < nLines; ++iLine, y += yInc) {
+			QTreeWidgetItem* lineItem = item->child(iLine);
+			int x = itemRect.x();
+			int prevWordRight = itemRect.x();
+			for(int iWord = 0, nWords = lineItem->childCount(); iWord < nWords; ++iWord) {
+				QTreeWidgetItem* wordItem = lineItem->child(iWord);
+				if(wordItem->checkState(0) == Qt::Checked) {
+					QRect wordRect = wordItem->data(0, BBoxRole).toRect();
+					if(useDetectedFontSizes) {
+						double wordSize = wordItem->data(0, FontSizeRole).toDouble();
+						if(wordSize != curSize) {
+							QFont font = painter.font();
+							font.setPointSize(wordSize);
+							painter.setFont(font);
+							curSize = wordSize;
+						}
 					}
+					// If distance from previous word is large, keep the space
+					if(wordRect.x() - prevWordRight > 4 * painter.fontMetrics().averageCharWidth()) {
+						x = wordRect.x();
+					}
+					prevWordRight = wordRect.right();
+					painter.drawText(x, y, wordItem->text(0));
+					x += painter.fontMetrics().width(wordItem->text(0) + " ");
 				}
-				// If distance from previous word is large, keep the space
-				if(wordRect.x() - prevWordRight > 4 * painter.fontMetrics().averageCharWidth()) {
-					x = wordRect.x();
-				}
-				prevWordRight = wordRect.right();
-				painter.drawText(x, itemRect.bottom(), wordItem->text(0));
-				x += painter.fontMetrics().width(wordItem->text(0) + " ");
 			}
 		}
 	} else if(itemClass == "ocrx_word" && !uniformizeLineSpacing) {
