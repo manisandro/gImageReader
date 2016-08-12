@@ -239,12 +239,11 @@ void Recognizer::updateLanguagesMenu()
 				Config::Lang itemlang = {lang.prefix, dict, lang.name};
 				curitem = Gtk::manage(new Gtk::RadioMenuItem(m_langMenuRadioGroup, GtkSpell::Checker::decode_language_code(dict)));
 				CONNECT(curitem, toggled, [this, curitem, itemlang]{ setLanguage(curitem, itemlang); });
-				if((curlang.prefix == lang.prefix) &&
-				   (curlang.code.empty() || curlang.code == dict.substr(0, 2) || curlang.code == dict))
+				if(curlang.prefix == lang.prefix && (
+					curlang.code == dict ||
+					(!activeitem && (curlang.code == dict.substr(0, 2) || curlang.code.empty()))))
 				{
 					curlang = itemlang;
-					activeitem = curitem;
-				}else if(curlang.prefix == lang.prefix){
 					activeitem = curitem;
 				}
 				submenu->append(*curitem);

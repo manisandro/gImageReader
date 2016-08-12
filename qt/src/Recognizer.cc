@@ -231,12 +231,11 @@ void Recognizer::updateLanguagesMenu()
 				curitem->setCheckable(true);
 				curitem->setData(QVariant::fromValue(itemlang));
 				connect(curitem, SIGNAL(triggered()), this, SLOT(setLanguage()));
-				if((curlang.prefix == lang.prefix) &&
-				   (curlang.code.isEmpty() || curlang.code == dict.left(2) || curlang.code == dict))
+				if(curlang.prefix == lang.prefix && (
+					curlang.code == dict ||
+					(!activeitem && (curlang.code == dict.left(2) || curlang.code.isEmpty()))))
 				{
 					curlang = itemlang;
-					activeitem = curitem;
-				}else if(curlang.prefix == lang.prefix){
 					activeitem = curitem;
 				}
 				submenu->addAction(curitem);
