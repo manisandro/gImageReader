@@ -152,10 +152,9 @@ void OutputEditorText::filterBuffer()
 
 	Utils::busyTask([this,&txt]{
 		// Always remove trailing whitespace
-		txt = Glib::Regex::create("\\s+\\n")->replace(txt, 0, "\\n", static_cast<Glib::RegexMatchFlags>(0));
-
+		txt = Glib::Regex::create("\\s+$")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags>(0));
 		if(m_filterJoinHyphen->get_active()){
-			txt = Glib::Regex::create("[-\u2014]\\s*\n\\s*")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags>(0));
+			txt = Glib::Regex::create("[-\u2014]\\s*\\n\\s*")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags>(0));
 		}
 		Glib::ustring preChars, sucChars;
 		if(m_filterKeepParagraphs->get_active()){
