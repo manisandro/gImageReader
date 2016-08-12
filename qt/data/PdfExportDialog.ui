@@ -48,7 +48,7 @@
    <item row="3" column="0" colspan="2">
     <widget class="QCheckBox" name="checkBoxUniformizeSpacing">
      <property name="text">
-      <string>Uniformize line spacing</string>
+      <string>Uniformize line and word spacing</string>
      </property>
     </widget>
    </item>

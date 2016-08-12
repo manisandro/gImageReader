@@ -819,27 +819,32 @@ void OutputEditorHOCR::printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk:
 	}
 	Glib::ustring itemClass = (*item)[m_itemStoreCols.itemClass];
 	Geometry::Rectangle itemRect = (*item)[m_itemStoreCols.bbox];
-	if(itemClass == "ocr_line" && uniformizeLineSpacing) {
-		double x = itemRect.x;
-		double prevWordRight = itemRect.x;
-		for(Gtk::TreeIter wordItem : item->children()) {
-			if((*wordItem)[m_itemStoreCols.selected]) {
-				Geometry::Rectangle wordRect = (*wordItem)[m_itemStoreCols.bbox];
-				if(useDetectedFontSizes) {
-					context->set_font_size((*wordItem)[m_itemStoreCols.fontSize] * 300. / 72.);
+	if(itemClass == "ocr_par" && uniformizeLineSpacing) {
+		double yInc = double(itemRect.height) / item->children().size();
+		double y = itemRect.y + yInc;
+		for(Gtk::TreeIter lineItem : item->children()) {
+			double x = itemRect.x;
+			double prevWordRight = itemRect.x;
+			for(Gtk::TreeIter wordItem : lineItem->children()) {
+				if((*wordItem)[m_itemStoreCols.selected]) {
+					Geometry::Rectangle wordRect = (*wordItem)[m_itemStoreCols.bbox];
+					if(useDetectedFontSizes) {
+						context->set_font_size((*wordItem)[m_itemStoreCols.fontSize] * 300. / 72.);
+					}
+					// If distance from previous word is large, keep the space
+					Cairo::TextExtents ext;
+					context->get_text_extents(Glib::ustring((*wordItem)[m_itemStoreCols.text]) + " ", ext);
+					int spaceSize = ext.x_advance - ext.width; // spaces are ignored in width but counted in advance
+					if(wordRect.x - prevWordRight > 4 * spaceSize) {
+						x = wordRect.x;
+					}
+					prevWordRight = wordRect.x + wordRect.width;
+					context->move_to(x, y);
+					context->show_text(Glib::ustring((*wordItem)[m_itemStoreCols.text]));
+					x += ext.x_advance;
 				}
-				// If distance from previous word is large, keep the space
-				Cairo::TextExtents ext;
-				context->get_text_extents(Glib::ustring((*wordItem)[m_itemStoreCols.text]) + " ", ext);
-				int spaceSize = ext.x_advance - ext.width; // spaces are ignored in width but counted in advance
-				if(wordRect.x - prevWordRight > 4 * spaceSize) {
-					x = wordRect.x;
-				}
-				prevWordRight = wordRect.x + wordRect.width;
-				context->move_to(x, itemRect.y + itemRect.height/*wordRect.y - ext.y_bearing*/);
-				context->show_text(Glib::ustring((*wordItem)[m_itemStoreCols.text]));
-				x += ext.x_advance;
 			}
+			y += yInc;
 		}
 	} else if(itemClass == "ocrx_word" && !uniformizeLineSpacing) {
 		Cairo::TextExtents ext;
