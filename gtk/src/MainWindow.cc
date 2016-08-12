@@ -349,10 +349,11 @@ void MainWindow::setOCRMode(int idx)
 			getWidget("paned:output").as<Gtk::Paned>()->remove(*m_outputEditor->getUI());
 			delete m_outputEditor;
 		}
+		delete m_displayerTool;
 		if(idx == 0) {
 			m_displayerTool = new DisplayerToolSelect(m_displayer);
 			m_outputEditor = new OutputEditorText();
-		} else if(idx == 1) {
+		} else /*if(idx == 1)*/ {
 			m_displayerTool = new DisplayerToolHOCR(m_displayer);
 			m_outputEditor = new OutputEditorHOCR(static_cast<DisplayerToolHOCR*>(m_displayerTool));
 		}
