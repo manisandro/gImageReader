@@ -20,6 +20,8 @@
 #include <QApplication>
 #include <QDir>
 #include <QDomDocument>
+#include <QGraphicsPixmapItem>
+#include <QImage>
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QFileDialog>
@@ -128,8 +130,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 
 	connect(ui.actionOutputOpen, SIGNAL(triggered()), this, SLOT(open()));
 	connect(ui.actionOutputSaveHOCR, SIGNAL(triggered()), this, SLOT(save()));
-	connect(ui.actionOutputSavePDF, SIGNAL(triggered()), this, SLOT(savePDF()));
-	connect(ui.actionOutputSavePDFTextOverlay, SIGNAL(triggered()), this, SLOT(savePDFOverlay()));
+	connect(ui.actionOutputExportPDF, SIGNAL(triggered()), this, SLOT(savePDF()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
 	connect(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
@@ -139,7 +140,12 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	connect(ui.tableWidgetProperties, SIGNAL(cellChanged(int,int)), this, SLOT(propertyCellChanged(int,int)));
 	connect(m_pdfExportDialogUi.buttonFont, SIGNAL(clicked()), &m_pdfFontDialog, SLOT(exec()));
 	connect(&m_pdfFontDialog, SIGNAL(fontSelected(QFont)), this, SLOT(updateFontButton(QFont)));
+	connect(m_pdfExportDialogUi.comboBoxOutputMode, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
+	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
+	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
+	connect(m_pdfExportDialogUi.checkBoxPreview, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 
+	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", m_pdfExportDialogUi.comboBoxOutputMode));
 	MAIN->getConfig()->addSetting(new FontSetting("hocrfont", &m_pdfFontDialog, QFont().toString()));
 	MAIN->getConfig()->addSetting(new SwitchSetting("hocrusedetectedfontsizes", m_pdfExportDialogUi.checkBoxFontSize, true));
 	MAIN->getConfig()->addSetting(new SwitchSetting("hocruniformizelinespacing", m_pdfExportDialogUi.checkBoxUniformizeSpacing, true));
@@ -578,6 +584,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 void OutputEditorHOCR::updateFontButton(const QFont& font)
 {
 	m_pdfExportDialogUi.buttonFont->setText(QString("%1 %2").arg(font.family()).arg(font.pointSize()));
+	updatePreview();
 }
 
 void OutputEditorHOCR::open()
@@ -646,13 +653,23 @@ bool OutputEditorHOCR::save(const QString& filename)
 	return true;
 }
 
-void OutputEditorHOCR::savePDF(bool overlay)
+void OutputEditorHOCR::savePDF()
 {
-	if(!overlay) {
-		if(m_pdfExportDialog->exec() == QDialog::Rejected) {
-			return;
-		}
+	m_preview = new QGraphicsPixmapItem();
+	m_preview->setTransformationMode(Qt::SmoothTransformation);
+	updatePreview();
+	MAIN->getDisplayer()->scene()->addItem(m_preview);
+
+	bool accepted = (m_pdfExportDialog->exec() == QDialog::Accepted);
+
+	MAIN->getDisplayer()->scene()->removeItem(m_preview);
+	delete m_preview;
+	m_preview = nullptr;
+
+	if(!accepted) {
+		return;
 	}
+
 	QString	outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(_("output") + ".pdf");
 	outname = QFileDialog::getSaveFileName(MAIN, _("Save PDF Output..."), outname, QString("%1 (*.pdf)").arg(_("PDF Files")));
 	if(outname.isEmpty()){
@@ -670,6 +687,7 @@ void OutputEditorHOCR::savePDF(bool overlay)
 	QPainter painter;
 	bool useDetectedFontSizes = m_pdfExportDialogUi.checkBoxFontSize->isChecked();
 	bool uniformizeLineSpacing = m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked();
+	bool overlay = m_pdfExportDialogUi.comboBoxOutputMode->currentIndex() == 1;
 	QStringList failed;
 	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
 		QTreeWidgetItem* item = ui.treeWidgetItems->topLevelItem(i);
@@ -689,9 +707,7 @@ void OutputEditorHOCR::savePDF(bool overlay)
 			printer.newPage();
 			if(i == 0) {
 				painter.begin(&printer);
-				if(!overlay) {
-					painter.setFont(m_pdfFontDialog.currentFont());
-				}
+				painter.setFont(m_pdfFontDialog.currentFont());
 			}
 			painter.save();
 			painter.scale(outputDpi / double(pageDpi), outputDpi / double(pageDpi));
@@ -719,7 +735,7 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 	}
 	QString itemClass = item->data(0, ClassRole).toString();
 	QRect itemRect = item->data(0, BBoxRole).toRect();
-	if(itemClass == "ocr_line" && uniformizeLineSpacing && !overlayMode) {
+	if(itemClass == "ocr_line" && uniformizeLineSpacing) {
 		int curSize = painter.font().pointSize();
 		int x = itemRect.x();
 		int prevWordRight = itemRect.x();
@@ -745,7 +761,7 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 				x += painter.fontMetrics().width(wordItem->text(0) + " ");
 			}
 		}
-	} else if(itemClass == "ocrx_word" && (overlayMode ||!uniformizeLineSpacing)) {
+	} else if(itemClass == "ocrx_word" && !uniformizeLineSpacing) {
 		if(useDetectedFontSizes) {
 			QFont font = painter.font();
 			font.setPointSize(item->data(0, FontSizeRole).toDouble());
@@ -759,6 +775,39 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 			printChildren(painter, item->child(i), overlayMode, useDetectedFontSizes, uniformizeLineSpacing);
 		}
 	}
+}
+
+void OutputEditorHOCR::updatePreview()
+{
+	if(!m_preview) {
+		return;
+	}
+	m_preview->setVisible(m_pdfExportDialogUi.checkBoxPreview->isChecked());
+	if(ui.treeWidgetItems->topLevelItemCount() == 0 || !m_pdfExportDialogUi.checkBoxPreview->isChecked()) {
+		return;
+	}
+	QTreeWidgetItem* item = ui.treeWidgetItems->topLevelItem(0);
+	QRect bbox = item->data(0, BBoxRole).toRect();
+	QDomDocument doc;
+	doc.setContent(item->data(0, SourceRole).toString());
+	setCurrentSource(doc.firstChildElement("div"));
+
+	QImage image(bbox.size(), QImage::Format_ARGB32);
+	image.setDotsPerMeterX(300 / 0.0254);
+	image.setDotsPerMeterY(300 / 0.0254);
+	QPainter painter(&image);
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.setFont(m_pdfFontDialog.currentFont());
+	bool overlay = m_pdfExportDialogUi.comboBoxOutputMode->currentIndex() == 1;
+	if(overlay) {
+		painter.drawPixmap(bbox, QPixmap::fromImage(m_tool->getSelection(bbox)));
+		image.fill(QColor(255, 255, 255, 127));
+	} else {
+		image.fill(Qt::white);
+	}
+	printChildren(painter, item, overlay, m_pdfExportDialogUi.checkBoxFontSize->isChecked(), m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked());
+	m_preview->setPixmap(QPixmap::fromImage(image));
+	m_preview->setPos(-0.5 * bbox.width(), -0.5 * bbox.height());
 }
 
 bool OutputEditorHOCR::clear(bool hide)

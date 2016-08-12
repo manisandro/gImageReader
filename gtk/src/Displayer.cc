@@ -95,7 +95,9 @@ void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx)
 	ctx->scale(m_scale, m_scale);
 	m_imageItem->draw(ctx);
 	for(const DisplayerItem* item : m_items){
-		item->draw(ctx);
+		if(item->visible()) {
+			item->draw(ctx);
+		}
 	}
 }
 
@@ -624,6 +626,12 @@ void DisplayerItem::setRect(const Geometry::Rectangle &rect)
 	m_rect = rect;
 	if(m_displayer)
 		m_displayer->invalidateRect(invalidateArea);
+}
+
+void DisplayerItem::setVisible(bool visible)
+{
+	m_visible = visible;
+	update();
 }
 
 void DisplayerItem::update()

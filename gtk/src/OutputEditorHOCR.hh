@@ -26,6 +26,7 @@
 #include <gtksourceviewmm.h>
 #include <gtkspellmm.h>
 
+class DisplayerImageItem;
 class DisplayerToolHOCR;
 namespace xmlpp {
 	class Document;
@@ -47,7 +48,7 @@ public:
 	bool clear(bool hide = true) override;
 	void open();
 	bool save(const std::string& filename = "") override;
-	void savePDF(bool overlay = false);
+	void savePDF();
 
 private:
 	static const Glib::RefPtr<Glib::Regex> s_bboxRx;
@@ -92,6 +93,7 @@ private:
 	GtkSpell::Checker m_spell;
 	bool m_modified = false;
 	Gtk::Dialog* m_pdfExportDialog = nullptr;
+	DisplayerImageItem* m_preview = nullptr;
 
 	sigc::connection m_connectionSelectionChanged;
 	sigc::connection m_connectionItemViewRowEdited;
@@ -114,6 +116,7 @@ private:
 	void propertyCellChanged(const Gtk::TreeIter& iter);
 	bool handleButtonEvent(GdkEventButton* ev);
 	void checkCellEditable(const Glib::ustring& path, Gtk::CellRenderer* renderer);
+	void updatePreview();
 };
 
 #endif // OUTPUTEDITORHOCR_HH
