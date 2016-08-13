@@ -313,6 +313,8 @@ void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& fil
 	MAIN->setOutputPaneVisible(true);
 	m_modified = true;
 	m_connectionItemViewRowEdited.block(false);
+	m_builder("button:hocr.save")->set_sensitive(true);
+	m_builder("button:hocr.export")->set_sensitive(true);
 }
 
 bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring,Glib::ustring>& langCache)
@@ -607,7 +609,14 @@ bool OutputEditorHOCR::handleButtonEvent(GdkEventButton* ev)
 		Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
 		Gtk::MenuItem* removeItem = Gtk::manage(new Gtk::MenuItem(_("Remove")));
 		menu.append(*removeItem);
-		CONNECT(removeItem, activate, [&]{ m_itemStore->erase(it); });
+		CONNECT(removeItem, activate, [&]{
+			m_itemStore->erase(it);
+			m_connectionPropViewRowEdited.block(true);
+			m_propStore->clear();
+			m_connectionPropViewRowEdited.block(false);
+			m_builder("button:hocr.save")->set_sensitive(!m_itemStore->children().empty());
+			m_builder("button:hocr.export")->set_sensitive(!m_itemStore->children().empty());
+		});
 		CONNECT(&menu, hide, [&]{ loop->quit(); });
 		menu.show_all();
 		menu.popup(ev->button, ev->time);

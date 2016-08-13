@@ -234,6 +234,7 @@
         <child>
           <object class="GtkButton" id="button:hocr.save">
             <property name="visible">True</property>
+            <property name="sensitive">False</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="tooltip_text" translatable="yes">Save output</property>
@@ -249,6 +250,7 @@
         <child>
           <object class="GtkButton" id="button:hocr.export">
             <property name="visible">True</property>
+            <property name="sensitive">False</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="tooltip_text" translatable="yes">Export to PDF</property>
