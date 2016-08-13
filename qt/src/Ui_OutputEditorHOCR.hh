@@ -41,8 +41,10 @@ public:
 		actionOutputOpen->setToolTip(gettext("Open hOCR file"));
 		actionOutputSaveHOCR = new QAction(QIcon::fromTheme("document-save-as"), gettext("Save as hOCR text"), widget);
 		actionOutputSaveHOCR->setToolTip(gettext("Save as hOCR text"));
+		actionOutputSaveHOCR->setEnabled(false);
 		actionOutputExportPDF = new QAction(QIcon::fromTheme("application-pdf"), gettext("Export to PDF"), widget);
 		actionOutputExportPDF->setToolTip(gettext("Export to PDF"));
+		actionOutputExportPDF->setEnabled(false);
 		actionOutputClear = new QAction(QIcon::fromTheme("edit-clear"), gettext("Clear output"), widget);
 		actionOutputClear->setToolTip(gettext("Clear output"));
 

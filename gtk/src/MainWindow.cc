@@ -177,7 +177,7 @@ MainWindow::MainWindow()
 		m_newVerThread = Glib::Threads::Thread::create([this]{ getNewestVersion(); });
 	}
 #else
-	getWidget("check:config.settings.update").as<Gtk::Widget>()->hide();
+	getWidget("check:config.settings.update")->hide();
 #endif
 }
 

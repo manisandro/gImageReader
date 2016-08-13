@@ -63,6 +63,7 @@ public:
 		CastProxy(Gtk::Widget* widget) : m_widget(widget) {}
 		template <class T> operator T*(){ return static_cast<T*>(m_widget); }
 		template <class T> T* as(){ return static_cast<T*>(m_widget); }
+		Gtk::Widget* operator->(){ return m_widget; }
 
 		Gtk::Widget* m_widget;
 	};

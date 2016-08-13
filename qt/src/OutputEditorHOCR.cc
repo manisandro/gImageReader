@@ -254,6 +254,8 @@ void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int
 	expandChildren(pageItem);
 	MAIN->setOutputPaneVisible(true);
 	m_modified = true;
+	ui.actionOutputSaveHOCR->setEnabled(true);
+	ui.actionOutputExportPDF->setEnabled(true);
 }
 
 void OutputEditorHOCR::expandChildren(QTreeWidgetItem* item) const
@@ -550,6 +552,8 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 		QAction* actionRemove = menu.addAction(_("Remove"));
 		if(menu.exec(ui.treeWidgetItems->mapToGlobal(point)) == actionRemove) {
 			delete item;
+			ui.actionOutputSaveHOCR->setEnabled(ui.treeWidgetItems->topLevelItemCount() > 0);
+			ui.actionOutputExportPDF->setEnabled(ui.treeWidgetItems->topLevelItemCount() > 0);
 		}
 	} else if(itemClass == "ocrx_word") {
 		QMenu menu;
