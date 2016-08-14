@@ -720,7 +720,7 @@ void OutputEditorHOCR::savePDF()
 			}
 			printChildren(painter, item, overlay, useDetectedFontSizes, uniformizeLineSpacing);
 			if(overlay) {
-				painter.drawPixmap(bbox, QPixmap::fromImage(m_tool->getSelection(bbox)));
+				painter.drawImage(bbox, m_tool->getSelection(bbox));
 			}
 			painter.restore();
 		} else {
@@ -778,7 +778,7 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 		}
 		painter.drawText(itemRect.x(), itemRect.bottom(), item->text(0));
 	} else if(itemClass == "ocr_graphic" && !overlayMode) {
-		painter.drawPixmap(itemRect, QPixmap::fromImage(m_tool->getSelection(itemRect)));
+		painter.drawImage(itemRect, m_tool->getSelection(itemRect));
 	} else {
 		for(int i = 0, n = item->childCount(); i < n; ++i) {
 			printChildren(painter, item->child(i), overlayMode, useDetectedFontSizes, uniformizeLineSpacing);
