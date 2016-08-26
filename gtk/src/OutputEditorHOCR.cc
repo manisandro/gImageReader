@@ -709,7 +709,11 @@ bool OutputEditorHOCR::save(const std::string& filename)
 {
 	std::string outname = filename;
 	if(outname.empty()){
-		outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), Glib::ustring(_("output")) + ".html");
+		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+		std::string ext, base;
+		std::string name = !sources.empty() ? sources.front()->displayname : _("output");
+		Utils::get_filename_parts(name, base, ext);
+		outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), base + ".html");
 
 		FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html"}, {"*.html"}};
 		outname = FileDialogs::save_dialog(_("Save hOCR Output..."), outname, filter);
@@ -759,7 +763,11 @@ void OutputEditorHOCR::savePDF()
 		return;
 	}
 
-	std::string outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), Glib::ustring(_("output")) + ".pdf");
+	std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+	std::string ext, base;
+	std::string name = !sources.empty() ? sources.front()->displayname : _("output");
+	Utils::get_filename_parts(name, base, ext);
+	std::string outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), base + ".txt");
 	FileDialogs::FileFilter filter = {_("PDF Files"), {"application/pdf"}, {"*.pdf"}};
 	outname = FileDialogs::save_dialog(_("Save PDF Output..."), outname, filter);
 	if(outname.empty()){
