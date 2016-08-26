@@ -625,7 +625,9 @@ bool OutputEditorHOCR::save(const QString& filename)
 {
 	QString outname = filename;
 	if(outname.isEmpty()){
-		outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(_("output") + ".html");
+		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+		QString base = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
+		outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(base + ".html");
 		outname = QFileDialog::getSaveFileName(MAIN, _("Save hOCR Output..."), outname, QString("%1 (*.html)").arg(_("hOCR HTML Files")));
 		if(outname.isEmpty()){
 			return false;
@@ -674,7 +676,9 @@ void OutputEditorHOCR::savePDF()
 		return;
 	}
 
-	QString	outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(_("output") + ".pdf");
+	QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+	QString base = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
+	QString outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(base + ".pdf");
 	outname = QFileDialog::getSaveFileName(MAIN, _("Save PDF Output..."), outname, QString("%1 (*.pdf)").arg(_("PDF Files")));
 	if(outname.isEmpty()){
 		return;
