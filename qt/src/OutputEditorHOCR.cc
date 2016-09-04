@@ -319,7 +319,7 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 						if(m_spell.getLanguage() != spellingLang) {
 							m_spell.setLanguage(spellingLang);
 						}
-						if(!m_spell.checkWord(title)) {
+						if(!m_spell.checkWord(trimWord(title))) {
 							item->setForeground(0, Qt::red);
 						}
 					}
@@ -516,7 +516,7 @@ void OutputEditorHOCR::updateItem(QTreeWidgetItem* item, const QDomDocument& doc
 		m_spell.setLanguage(spellLang);
 	}
 	ui.treeWidgetItems->blockSignals(true); // prevent item changed signal
-	item->setForeground(0, m_spell.checkWord(item->text(0)) ? item->parent()->foreground(0) : QBrush(Qt::red));
+	item->setForeground(0, m_spell.checkWord(trimWord(item->text(0))) ? item->parent()->foreground(0) : QBrush(Qt::red));
 	ui.treeWidgetItems->blockSignals(false);
 
 	QTreeWidgetItem* toplevelItem = item;
@@ -541,6 +541,19 @@ void OutputEditorHOCR::updateItem(QTreeWidgetItem* item, const QDomDocument& doc
 	m_modified = true;
 }
 
+QString OutputEditorHOCR::trimWord(const QString& word, QString* rest)
+{
+	int pos = word.lastIndexOf(QRegExp("\\w")) + 1;
+	if(pos == 0) {
+		return word;
+	} else {
+		if(rest) {
+			*rest = word.mid(pos);
+		}
+		return word.left(pos);
+	}
+}
+
 void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 	QTreeWidgetItem* item = ui.treeWidgetItems->itemAt(point);
 	QString itemClass = item->data(0, ClassRole).toString();
@@ -557,15 +570,16 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 		}
 	} else if(itemClass == "ocrx_word") {
 		QMenu menu;
-		for(const QString& suggestion : m_spell.getSpellingSuggestions(item->text(0))) {
-			menu.addAction(suggestion);
+		QString rest, trimmedWord = trimWord(item->text(0), &rest);
+		for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
+			menu.addAction(suggestion + rest);
 		}
 		if(menu.actions().isEmpty()) {
 			menu.addAction(_("No suggestions"))->setEnabled(false);
 		}
 		QAction* addAction = nullptr;
 		QAction* ignoreAction = nullptr;
-		if(!m_spell.checkWord(item->text(0))) {
+		if(!m_spell.checkWord(trimWord(item->text(0)))) {
 			menu.addSeparator();
 			addAction = menu.addAction(_("Add to dictionary"));
 			ignoreAction = menu.addAction(_("Ignore word"));
