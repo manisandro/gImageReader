@@ -108,6 +108,7 @@ private:
 	void updateItemAttribute(Gtk::TreeIter item, const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue);
 	void updateItem(Gtk::TreeIter item, xmlpp::DomParser& parser, const xmlpp::Element* element);
 	void addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page);
+	Glib::ustring trimWord(const Glib::ustring& word, Glib::ustring* rest = nullptr);
 
 	void addPage(const Glib::ustring& hocrText, ReadSessionData data);
 	void setFont();

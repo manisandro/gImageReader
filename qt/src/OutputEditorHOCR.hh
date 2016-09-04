@@ -93,6 +93,7 @@ private:
 	void updateItemAttribute(QTreeWidgetItem* item, const QString& key, const QString& subkey, const QString& newvalue);
 	void updateItem(QTreeWidgetItem* item, const QDomDocument& doc, const QDomElement& element);
 	void addPage(QDomElement pageDiv, const QString& filename, int page);
+	QString trimWord(const QString& word, QString* rest = nullptr);
 
 private slots:
 	void addPage(const QString& hocrText, ReadSessionData data);

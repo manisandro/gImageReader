@@ -377,7 +377,7 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 						if(m_spell.get_language() != spellingLang) {
 							m_spell.set_language(spellingLang);
 						}
-						if(!m_spell.check_word(title)) {
+						if(!m_spell.check_word(trimWord(title))) {
 							item->set_value(m_itemStoreCols.textColor, Glib::ustring("#F00"));
 						}
 					}
@@ -558,7 +558,7 @@ void OutputEditorHOCR::updateItem(Gtk::TreeIter item, xmlpp::DomParser& parser, 
 		m_spell.set_language(spellLang);
 	}
 	m_connectionItemViewRowEdited.block(true); // prevent row edited signal
-	if(m_spell.check_word((*item)[m_itemStoreCols.text])) {
+	if(m_spell.check_word(trimWord((*item)[m_itemStoreCols.text]))) {
 		item->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
 	} else {
 		item->set_value(m_itemStoreCols.textColor, Glib::ustring("#F00"));
@@ -585,6 +585,22 @@ void OutputEditorHOCR::updateItem(Gtk::TreeIter item, xmlpp::DomParser& parser, 
 	}
 
 	m_modified = true;
+}
+
+Glib::ustring OutputEditorHOCR::trimWord(const Glib::ustring& word, Glib::ustring* rest)
+{
+	Glib::RefPtr<Glib::Regex> re = Glib::Regex::create("\\w\\W*$");
+	Glib::MatchInfo match_info;
+	if(re->match(word, -1, 0, match_info, static_cast<Glib::RegexMatchFlags>(0))) {
+		int start, end;
+		match_info.fetch_pos(0, start, end);
+		if(rest) {
+			*rest = word.substr(start+1);
+		}
+		return word.substr(0, start + 1);
+	} else {
+		return word;
+	}
 }
 
 bool OutputEditorHOCR::handleButtonEvent(GdkEventButton* ev)
@@ -627,9 +643,11 @@ bool OutputEditorHOCR::handleButtonEvent(GdkEventButton* ev)
 		m_itemView->get_selection()->select(path);
 		Gtk::Menu menu;
 		Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
-		for(const Glib::ustring& suggestion : m_spell.get_suggestions((*it)[m_itemStoreCols.text])) {
-			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(suggestion));
-			CONNECT(item, activate, [this, suggestion, it] { (*it)[m_itemStoreCols.text] = suggestion; });
+		Glib::ustring rest, trimmed = trimWord((*it)[m_itemStoreCols.text], &rest);
+		for(const Glib::ustring& suggestion : m_spell.get_suggestions(trimmed)) {
+			Glib::ustring replacement = suggestion + rest;
+			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
+			CONNECT(item, activate, [this, replacement, it] { (*it)[m_itemStoreCols.text] = replacement; });
 			menu.append(*item);
 		}
 		if(menu.get_children().empty()) {
@@ -637,7 +655,7 @@ bool OutputEditorHOCR::handleButtonEvent(GdkEventButton* ev)
 			item->set_sensitive(false);
 			menu.append(*item);
 		}
-		if(!m_spell.check_word((*it)[m_itemStoreCols.text])) {
+		if(!m_spell.check_word(trimWord((*it)[m_itemStoreCols.text]))) {
 			menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
 			Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
 			CONNECT(additem, activate, [this, it]{
