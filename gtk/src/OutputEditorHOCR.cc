@@ -190,9 +190,9 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	}
 
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", m_builder("combo:pdfoptions.mode")));
-	MAIN->getConfig()->addSetting(new FontSetting("hocrfont", m_builder("fontbutton:pdfoptions")));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("hocrusedetectedfontsizes", m_builder("checkbox:pdfoptions.usedetectedfontsizes")));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("hocruniformizelinespacing", m_builder("checkbox:pdfoptions.uniformlinespacing")));
+	MAIN->getConfig()->addSetting(new FontSetting("pdffont", m_builder("fontbutton:pdfoptions")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfusedetectedfontsizes", m_builder("checkbox:pdfoptions.usedetectedfontsizes")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfuniformizelinespacing", m_builder("checkbox:pdfoptions.uniformlinespacing")));
 
 	setFont();
 }
