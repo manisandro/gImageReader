@@ -123,6 +123,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 
 	m_pdfExportDialog = new QDialog(m_widget);
 	m_pdfExportDialogUi.setupUi(m_pdfExportDialog);
+	m_pdfExportDialogUi.comboBoxImageFormat->addItem(tr("Color"), QPrinter::Color);
+	m_pdfExportDialogUi.comboBoxImageFormat->addItem(tr("Grayscale"), QPrinter::GrayScale);
 
 	ui.actionOutputSaveHOCR->setShortcut(Qt::CTRL + Qt::Key_S);
 
@@ -141,14 +143,16 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	connect(m_pdfExportDialogUi.buttonFont, SIGNAL(clicked()), &m_pdfFontDialog, SLOT(exec()));
 	connect(&m_pdfFontDialog, SIGNAL(fontSelected(QFont)), this, SLOT(updateFontButton(QFont)));
 	connect(m_pdfExportDialogUi.comboBoxOutputMode, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
+	connect(m_pdfExportDialogUi.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxPreview, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", m_pdfExportDialogUi.comboBoxOutputMode));
-	MAIN->getConfig()->addSetting(new FontSetting("hocrfont", &m_pdfFontDialog, QFont().toString()));
-	MAIN->getConfig()->addSetting(new SwitchSetting("hocrusedetectedfontsizes", m_pdfExportDialogUi.checkBoxFontSize, true));
-	MAIN->getConfig()->addSetting(new SwitchSetting("hocruniformizelinespacing", m_pdfExportDialogUi.checkBoxUniformizeSpacing, true));
+	MAIN->getConfig()->addSetting(new FontSetting("pdffont", &m_pdfFontDialog, QFont().toString()));
+	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageformat", m_pdfExportDialogUi.comboBoxImageFormat));
+	MAIN->getConfig()->addSetting(new SwitchSetting("pdfusedetectedfontsizes", m_pdfExportDialogUi.checkBoxFontSize, true));
+	MAIN->getConfig()->addSetting(new SwitchSetting("pdfuniformizelinespacing", m_pdfExportDialogUi.checkBoxUniformizeSpacing, true));
 
 	setFont();
 	updateFontButton(m_pdfFontDialog.currentFont());
@@ -706,6 +710,7 @@ void OutputEditorHOCR::savePDF()
 	int outputDpi = 300;
 	printer.setFullPage(true);
 	printer.setResolution(outputDpi);
+	printer.setColorMode(static_cast<QPrinter::ColorMode>(m_pdfExportDialogUi.comboBoxImageFormat->itemData(m_pdfExportDialogUi.comboBoxImageFormat->currentIndex()).toInt()));
 	QPainter painter;
 	bool useDetectedFontSizes = m_pdfExportDialogUi.checkBoxFontSize->isChecked();
 	bool uniformizeLineSpacing = m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked();
@@ -823,7 +828,8 @@ void OutputEditorHOCR::updatePreview()
 	doc.setContent(item->data(0, SourceRole).toString());
 	setCurrentSource(doc.firstChildElement("div"));
 
-	QImage image(bbox.size(), QImage::Format_ARGB32);
+	QPrinter::ColorMode colorMode = static_cast<QPrinter::ColorMode>(m_pdfExportDialogUi.comboBoxImageFormat->itemData(m_pdfExportDialogUi.comboBoxImageFormat->currentIndex()).toInt());
+	QImage image(bbox.size(), colorMode == QPrinter::Color ? QImage::Format_ARGB32 : QImage::Format_Grayscale8);
 	image.setDotsPerMeterX(300 / 0.0254);
 	image.setDotsPerMeterY(300 / 0.0254);
 	QPainter painter(&image);
@@ -834,7 +840,11 @@ void OutputEditorHOCR::updatePreview()
 		painter.drawPixmap(bbox, QPixmap::fromImage(m_tool->getSelection(bbox)));
 		image.fill(QColor(255, 255, 255, 127));
 	} else {
-		image.fill(Qt::white);
+		if(colorMode == QPrinter::Color) {
+			image.fill(Qt::white);
+		} else {
+			image.fill(255);
+		}
 	}
 	printChildren(painter, item, overlay, m_pdfExportDialogUi.checkBoxFontSize->isChecked(), m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked());
 	m_preview->setPixmap(QPixmap::fromImage(image));
