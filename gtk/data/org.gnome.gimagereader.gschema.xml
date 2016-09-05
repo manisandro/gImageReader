@@ -141,17 +141,17 @@
             <summary>PDF export mode</summary>
             <description>PDF export mode.</description>
         </key>
-        <key type="s" name="hocrfont">
+        <key type="s" name="pdffont">
             <default>"Sans 10"</default>
             <summary>Font to use for PDFs</summary>
             <description>Font to use for PDFs.</description>
         </key>
-        <key type="b" name="hocrusedetectedfontsizes">
+        <key type="b" name="pdfusedetectedfontsizes">
             <default>true</default>
             <summary>Use detected font sizes in PDFs</summary>
             <description>Whether to use detected font sizes when generating PDFs.</description>
         </key>
-        <key type="b" name="hocruniformizelinespacing">
+        <key type="b" name="pdfuniformizelinespacing">
             <default>true</default>
             <summary>Uniformize line spacing</summary>
             <description>Whether to uniformize line spacing when generating PDFs.</description>
