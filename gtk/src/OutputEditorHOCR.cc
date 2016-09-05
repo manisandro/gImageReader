@@ -797,7 +797,13 @@ void OutputEditorHOCR::savePDF()
 	bool uniformizeLineSpacing = m_builder("checkbox:pdfoptions.uniformlinespacing").as<Gtk::CheckButton>()->get_active();
 
 	int outputDpi = 300;
-	Cairo::RefPtr<Cairo::PdfSurface> surface = Cairo::PdfSurface::create(outname, outputDpi, outputDpi);
+	Cairo::RefPtr<Cairo::PdfSurface> surface;
+	try {
+		surface = Cairo::PdfSurface::create(outname, outputDpi, outputDpi);
+	} catch(const std::exception&) {
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
+		return;
+	}
 	Cairo::RefPtr<Cairo::Context> context = Cairo::Context::create(surface);
 	std::vector<Glib::ustring> failed;
 

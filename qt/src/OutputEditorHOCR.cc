@@ -726,10 +726,14 @@ void OutputEditorHOCR::savePDF()
 #else
 			printer.setPageSize(QPageSize(QSizeF(bbox.width() / double(pageDpi), bbox.height() / double(pageDpi)), QPageSize::Inch));
 #endif
-			printer.newPage();
 			if(i == 0) {
-				painter.begin(&printer);
+				if(!painter.begin(&printer)) {
+					QMessageBox::critical(MAIN, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
+					return;
+				}
 				painter.setFont(m_pdfFontDialog.currentFont());
+			} else {
+				printer.newPage();
 			}
 			painter.save();
 			painter.scale(outputDpi / double(pageDpi), outputDpi / double(pageDpi));
