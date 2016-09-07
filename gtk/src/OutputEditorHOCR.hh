@@ -51,6 +51,8 @@ public:
 	void savePDF();
 
 private:
+	class TreeView;
+
 	static const Glib::RefPtr<Glib::Regex> s_bboxRx;
 	static const Glib::RefPtr<Glib::Regex> s_pageTitleRx;
 	static const Glib::RefPtr<Glib::Regex> s_idRx;
@@ -83,7 +85,7 @@ private:
 
 	Builder m_builder;
 	Gtk::Box* m_widget = nullptr;
-	Gtk::TreeView* m_itemView;
+	TreeView* m_itemView;
 	Glib::RefPtr<Gtk::TreeStore> m_itemStore;
 	Gtk::TreeView* m_propView;
 	Glib::RefPtr<Gtk::TreeStore> m_propStore;
@@ -99,7 +101,7 @@ private:
 	sigc::connection m_connectionItemViewRowEdited;
 	sigc::connection m_connectionPropViewRowEdited;
 
-	void findReplace(bool backwards, bool replace);
+	Gtk::TreeIter currentItem();
 	bool addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring, Glib::ustring>& langCache);
 	xmlpp::Element* getHOCRElementForItem(Gtk::TreeIter item, xmlpp::DomParser& parser) const;
 	void printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const;
@@ -109,13 +111,14 @@ private:
 	void updateItem(Gtk::TreeIter item, xmlpp::DomParser& parser, const xmlpp::Element* element);
 	void addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page);
 	Glib::ustring trimWord(const Glib::ustring& word, Glib::ustring* rest = nullptr);
+	void mergeItems(const std::vector<Gtk::TreePath>& items);
 
 	void addPage(const Glib::ustring& hocrText, ReadSessionData data);
 	void setFont();
-	void showItemProperties();
+	void showItemProperties(Gtk::TreeIter item);
 	void itemChanged(const Gtk::TreeIter& iter);
 	void propertyCellChanged(const Gtk::TreeIter& iter);
-	bool handleButtonEvent(GdkEventButton* ev);
+	void showContextMenu(GdkEventButton* ev);
 	void checkCellEditable(const Glib::ustring& path, Gtk::CellRenderer* renderer);
 	void updatePreview();
 };
