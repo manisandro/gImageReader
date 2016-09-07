@@ -108,6 +108,43 @@ static inline Glib::ustring getElementXML(const xmlpp::Element* element)
 	return getDocumentXML(&doc);
 }
 
+
+class OutputEditorHOCR::TreeView : public Gtk::TreeView
+{
+public:
+	TreeView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& /*builder*/)
+		: Gtk::TreeView(cobject) {}
+
+	sigc::signal<void, GdkEventButton*> signal_context_menu_requested(){ return m_signal_context_menu; }
+
+protected:
+	bool on_button_press_event(GdkEventButton *button_event) {
+		bool rightclick = (button_event->type == GDK_BUTTON_PRESS && button_event->button == 3);
+
+		Gtk::TreePath path;
+		Gtk::TreeViewColumn* col;
+		int cell_x, cell_y;
+		get_path_at_pos(int(button_event->x), int(button_event->y), path, col, cell_x, cell_y);
+		if(!path) {
+			return false;
+		}
+		std::vector<Gtk::TreePath> selection = get_selection()->get_selected_rows();
+		bool selected = std::find(selection.begin(), selection.end(), path) != selection.end();
+
+		if(!rightclick || (rightclick && !selected)) {
+			Gtk::TreeView::on_button_press_event(button_event);
+		}
+		if(rightclick) {
+			m_signal_context_menu.emit(button_event);
+		}
+		return true;
+	}
+
+private:
+	sigc::signal<void, GdkEventButton*> m_signal_context_menu;
+};
+
+
 OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	: m_builder("/org/gnome/gimagereader/editor_hocr.ui")
 {
@@ -118,7 +155,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	Gtk::Button* saveButton = m_builder("button:hocr.save");
 	Gtk::Button* clearButton = m_builder("button:hocr.clear");
 	Gtk::Button* exportButton = m_builder("button:hocr.export");
-	m_itemView = m_builder("treeview:hocr.items");
+	m_itemView = nullptr;
+	m_builder.get_derived("treeview:hocr.items", m_itemView);
 	m_itemStore = Gtk::TreeStore::create(m_itemStoreCols);
 	m_itemView->set_model(m_itemStore);
 	Gtk::TreeViewColumn *itemViewCol = Gtk::manage(new Gtk::TreeViewColumn(""));
@@ -174,10 +212,10 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	CONNECT(exportButton, clicked, [this]{ savePDF(); });
 	CONNECTP(MAIN->getWidget("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
 	CONNECT(MAIN->getWidget("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
-	m_connectionSelectionChanged = CONNECT(m_itemView->get_selection(), changed, [this]{ showItemProperties(); });
+	m_connectionSelectionChanged = CONNECT(m_itemView->get_selection(), changed, [this]{ showItemProperties(currentItem()); });
 	m_connectionItemViewRowEdited = CONNECT(m_itemStore, row_changed, [this](const Gtk::TreeModel::Path&, const Gtk::TreeIter& iter){ itemChanged(iter); });
 	m_connectionPropViewRowEdited = CONNECT(m_propStore, row_changed, [this](const Gtk::TreeModel::Path&, const Gtk::TreeIter& iter){ propertyCellChanged(iter); });
-	m_itemView->signal_button_press_event().connect([this](GdkEventButton* ev){ return handleButtonEvent(ev); }, false);
+	CONNECT(m_itemView, context_menu_requested, [this](GdkEventButton* ev){ showContextMenu(ev); });
 
 	CONNECT(m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>(), changed, [this]{ updatePreview(); });
 	CONNECT(m_builder("fontbutton:pdfoptions").as<Gtk::FontButton>(), font_set, [this]{ updatePreview(); });
@@ -317,6 +355,15 @@ void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& fil
 	m_builder("button:hocr.export")->set_sensitive(true);
 }
 
+Gtk::TreeIter OutputEditorHOCR::currentItem()
+{
+	std::vector<Gtk::TreePath> items = m_itemView->get_selection()->get_selected_rows();
+	if(!items.empty()) {
+		return m_itemStore->get_iter(items[0]);
+	}
+	return Gtk::TreeIter();
+}
+
 bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring,Glib::ustring>& langCache)
 {
 	bool haveWord = false;
@@ -412,9 +459,8 @@ xmlpp::Element* OutputEditorHOCR::getHOCRElementForItem(Gtk::TreeIter item, xmlp
 	}
 }
 
-void OutputEditorHOCR::showItemProperties()
+void OutputEditorHOCR::showItemProperties(Gtk::TreeIter item)
 {
-	Gtk::TreeIter item = m_itemView->get_selection()->get_selected();
 	if(!item) {
 		return;
 	}
@@ -513,9 +559,9 @@ void OutputEditorHOCR::propertyCellChanged(const Gtk::TreeIter &iter)
 	Glib::ustring key = (*iter)[m_propStoreCols.name];
 	Glib::ustring value = (*iter)[m_propStoreCols.value];
 	if(!parentAttr.empty()) {
-		updateItemAttribute(m_itemView->get_selection()->get_selected(), parentAttr, key, value);
+		updateItemAttribute(currentItem(), parentAttr, key, value);
 	} else {
-		updateItemAttribute(m_itemView->get_selection()->get_selected(), key, "", value);
+		updateItemAttribute(currentItem(), key, "", value);
 	}
 }
 
@@ -603,22 +649,97 @@ Glib::ustring OutputEditorHOCR::trimWord(const Glib::ustring& word, Glib::ustrin
 	}
 }
 
-bool OutputEditorHOCR::handleButtonEvent(GdkEventButton* ev)
+void OutputEditorHOCR::mergeItems(const std::vector<Gtk::TreePath>& items)
 {
+	Gtk::TreeIter it = m_itemStore->get_iter(items.front());
+	if(!it) {
+		return;
+	}
+	Geometry::Rectangle bbox = (*it)[m_itemStoreCols.bbox];
+	Glib::ustring text = (*it)[m_itemStoreCols.text];
+
+	Gtk::TreeIter toplevelItem = it;
+	while(toplevelItem->parent()) {
+		toplevelItem = toplevelItem->parent();
+	}
+	xmlpp::DomParser parser;
+	parser.parse_memory((*toplevelItem)[m_itemStoreCols.source]);
+	xmlpp::Document* doc = parser.get_document();
+
+	for(int i = 1, n = items.size(); i < n; ++i) {
+		it = m_itemStore->get_iter(items[i]);
+		if(it) {
+			bbox = bbox.unite((*it)[m_itemStoreCols.bbox]);
+			text += (*it)[m_itemStoreCols.text];
+			Glib::ustring id = (*it)[m_itemStoreCols.id];
+			xmlpp::NodeSet nodes = doc->get_root_node()->find(Glib::ustring::compose("//*[@id='%1']", id));
+			xmlpp::Element* element = nodes.empty() ? nullptr : dynamic_cast<xmlpp::Element*>(nodes.front());
+			element->get_parent()->remove_child(element);
+			m_itemStore->erase(it);
+		}
+	}
+	toplevelItem->set_value(m_itemStoreCols.source, getDocumentXML(doc));
+
+	it = m_itemStore->get_iter(items.front());
+	(*it)[m_itemStoreCols.text] = text;
+	(*it)[m_itemStoreCols.bbox] = bbox;
+	updateItemText(it);
+	updateItemAttribute(it, "title", "bbox", Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height));
+	showItemProperties(it);
+}
+
+void OutputEditorHOCR::showContextMenu(GdkEventButton* ev)
+{
+	std::vector<Gtk::TreePath> items = m_itemView->get_selection()->get_selected_rows();
+	bool wordsSelected = true;
+	for(const Gtk::TreePath& path : items)
+	{
+		Gtk::TreeIter it = m_itemStore->get_iter(path);
+		if(it) {
+			Glib::ustring itemClass = (*it)[m_itemStoreCols.itemClass];
+			if(itemClass != "ocrx_word") {
+				wordsSelected = false;
+				break;
+			}
+		}
+	}
+	bool consecutive = true;
+	for(int i = 1, n = items.size(); i < n; ++i) {
+		Gtk::TreePath path = items[i];
+		path.prev();
+		if(path != items[i - 1]) {
+			consecutive = false;
+			break;
+		}
+	}
+	if(items.size() > 1 && consecutive && wordsSelected) {
+		Gtk::Menu menu;
+		Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
+		Gtk::MenuItem* mergeItem = Gtk::manage(new Gtk::MenuItem(_("Merge")));
+		menu.append(*mergeItem);
+		CONNECT(mergeItem, activate, [&]{ mergeItems(items); });
+		CONNECT(&menu, hide, [&]{ loop->quit(); });
+		menu.show_all();
+		menu.popup(ev->button, ev->time);
+		loop->run();
+		return;
+	} else if(items.size() > 1) {
+		return;
+	}
 	Gtk::TreePath path;
 	Gtk::TreeViewColumn* col;
 	int cell_x, cell_y;
 	m_itemView->get_path_at_pos(int(ev->x), int(ev->y), path, col, cell_x, cell_y);
 	if(!path) {
-		return false;
+		return;
 	}
 	Gtk::TreeIter it = m_itemStore->get_iter(path);
 	if(!it) {
-		return false;
+		return;
 	}
 	Glib::ustring itemClass = (*it)[m_itemStoreCols.itemClass];
 
-	if(itemClass == "ocr_page" && ev->type == GDK_BUTTON_PRESS && ev->button == 3) {
+	if(itemClass == "ocr_page") {
 		// Context menu on page items with Remove option
 		m_itemView->get_selection()->select(path);
 		Gtk::Menu menu;
@@ -637,7 +758,7 @@ bool OutputEditorHOCR::handleButtonEvent(GdkEventButton* ev)
 		menu.show_all();
 		menu.popup(ev->button, ev->time);
 		loop->run();
-		return true;
+		return;
 	} else if(itemClass == "ocrx_word" && ev->type == GDK_BUTTON_PRESS && ev->button == 3) {
 		// Context menu on word items with spelling suggestions, if any
 		m_itemView->get_selection()->select(path);
@@ -674,9 +795,9 @@ bool OutputEditorHOCR::handleButtonEvent(GdkEventButton* ev)
 		menu.show_all();
 		menu.popup(ev->button, ev->time);
 		loop->run();
-		return true;
+		return;
 	}
-	return false;
+	return;
 }
 
 void OutputEditorHOCR::checkCellEditable(const Glib::ustring& path, Gtk::CellRenderer* renderer)

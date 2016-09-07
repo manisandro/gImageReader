@@ -558,7 +558,58 @@ QString OutputEditorHOCR::trimWord(const QString& word, QString* rest)
 	}
 }
 
+void OutputEditorHOCR::mergeItems(const QList<QTreeWidgetItem*>& items)
+{
+	QRect bbox = items.front()->data(0, BBoxRole).toRect();
+	QString text = items.front()->text(0);
+
+	QTreeWidgetItem* toplevelItem = items.front();
+	while(toplevelItem->parent()) {
+		toplevelItem = toplevelItem->parent();
+	}
+	QDomDocument doc;
+	doc.setContent(toplevelItem->data(0, SourceRole).toString());
+
+	for(int i = 1, n = items.size(); i < n; ++i) {
+		bbox = bbox.united(items[i]->data(0, BBoxRole).toRect());
+		text += items[i]->text(0);
+		QDomElement element = elementById(doc.firstChildElement(), items[i]->data(0, IdRole).toString());
+		element.parentNode().removeChild(element);
+		delete items[i];
+	}
+	QString str;
+	QTextStream stream(&str);
+	doc.save(stream, 1);
+	toplevelItem->setData(0, SourceRole, str);
+
+	items.front()->setText(0, text);
+	items.front()->setData(0, BBoxRole, bbox);
+	updateItemText(items.front());
+	updateItemAttribute(items.front(), "title", "bbox", QString("%1 %2 %3 %4").arg(bbox.x()).arg(bbox.y()).arg(bbox.x() + bbox.width()).arg(bbox.y() + bbox.height()));
+	showItemProperties(items.front());
+}
+
 void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
+	QList<QTreeWidgetItem*> items = ui.treeWidgetItems->selectedItems();
+	bool wordsSelected = true;
+	for(QTreeWidgetItem* item : items) {
+		QString itemClass = item->data(0, ClassRole).toString();
+		if(itemClass != "ocrx_word") {
+			wordsSelected = false;
+			break;
+		}
+	}
+	if(items.size() > 1 && wordsSelected) {
+		QMenu menu;
+		QAction* actionMerge = menu.addAction(_("Merge"));
+		if(menu.exec(ui.treeWidgetItems->mapToGlobal(point)) == actionMerge) {
+			mergeItems(items);
+		}
+		return;
+	} else if(items.size() > 1) {
+		return;
+	}
+
 	QTreeWidgetItem* item = ui.treeWidgetItems->itemAt(point);
 	QString itemClass = item->data(0, ClassRole).toString();
 	if(itemClass.isEmpty()) {

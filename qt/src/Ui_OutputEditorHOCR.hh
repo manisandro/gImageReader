@@ -63,6 +63,7 @@ public:
 
 		treeWidgetItems = new QTreeWidget(widget);
 		treeWidgetItems->setHeaderHidden(true);
+		treeWidgetItems->setSelectionMode(QTreeWidget::ContiguousSelection);
 		splitter->addWidget(treeWidgetItems);
 
 		QTabWidget* tabWidget = new QTabWidget(widget);

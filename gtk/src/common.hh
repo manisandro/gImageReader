@@ -77,6 +77,11 @@ public:
 		m_builder->get_widget(name, widget);
 		return CastProxy(widget);
 	}
+	template<class T>
+	void get_derived(const Glib::ustring& name, T*& p) {
+		m_builder->get_widget_derived(name, p);
+	}
+
 private:
 	Glib::RefPtr<Gtk::Builder> m_builder;
 };
