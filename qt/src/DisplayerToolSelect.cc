@@ -87,11 +87,6 @@ void DisplayerToolSelect::mouseReleaseEvent(QMouseEvent *event)
 	}
 }
 
-void DisplayerToolSelect::pageChanged()
-{
-	clearSelections();
-}
-
 void DisplayerToolSelect::resolutionChanged(double factor)
 {
 	for(DisplaySelection* sel : m_selections){

@@ -31,13 +31,14 @@ public:
 	bool mousePressEvent(GdkEventButton *event) override;
 	bool mouseMoveEvent(GdkEventMotion *event) override;
 	bool mouseReleaseEvent(GdkEventButton *event) override;
-	void pageChanged() override;
 	void resolutionChanged(double factor) override;
 	void rotationChanged(double delta) override;
 
-	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
-	bool hasMultipleOCRAreas() const{ return !m_selections.empty(); }
-	void autodetectOCRAreas(){ autodetectLayout(); }
+	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas() override;
+	bool hasMultipleOCRAreas() const override{ return !m_selections.empty(); }
+	bool allowAutodetectOCRAreas() const override{ return true; }
+	void autodetectOCRAreas() override{ autodetectLayout(); }
+	void reset() override{ clearSelections(); }
 
 private:
 	friend class DisplaySelection;

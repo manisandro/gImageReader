@@ -29,9 +29,10 @@ public:
 	~DisplayerToolHOCR();
 
 	QList<QImage> getOCRAreas();
-	virtual void pageChanged(){ clearSelection(); }
-	virtual void resolutionChanged(double /*factor*/){ clearSelection(); }
-	virtual void rotationChanged(double /*delta*/){ clearSelection(); }
+	void pageChanged(){ clearSelection(); }
+	void resolutionChanged(double /*factor*/) override{ clearSelection(); }
+	void rotationChanged(double /*delta*/) override{ clearSelection(); }
+	void reset() override{ clearSelection(); }
 
 	void setSelection(const QRect& rect);
 	QImage getSelection(const QRect& rect);

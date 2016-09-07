@@ -36,14 +36,14 @@ public:
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
-	void pageChanged() override;
 	void resolutionChanged(double factor) override;
 	void rotationChanged(double delta) override;
 
 	QList<QImage> getOCRAreas();
-	bool hasMultipleOCRAreas() const{ return !m_selections.isEmpty(); }
+	bool hasMultipleOCRAreas() const override{ return !m_selections.isEmpty(); }
 	bool allowAutodetectOCRAreas() const override{ return true; }
-	void autodetectOCRAreas(){ autodetectLayout(); }
+	void autodetectOCRAreas() override{ autodetectLayout(); }
+	void reset() override{ clearSelections(); }
 
 private:
 	friend class DisplaySelection;

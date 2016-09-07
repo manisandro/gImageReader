@@ -30,10 +30,11 @@ public:
 	DisplayerToolHOCR(Displayer* displayer);
 	~DisplayerToolHOCR();
 
-	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
-	virtual void pageChanged(){ clearSelection(); }
-	virtual void resolutionChanged(double /*factor*/){ clearSelection(); }
-	virtual void rotationChanged(double /*delta*/){ clearSelection(); }
+	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas() override;
+	void pageChanged() override{ clearSelection(); }
+	void resolutionChanged(double /*factor*/) override{ clearSelection(); }
+	void rotationChanged(double /*delta*/) override{ clearSelection(); }
+	void reset() override{ clearSelection(); }
 
 	void setSelection(const Geometry::Rectangle& rect);
 	Cairo::RefPtr<Cairo::ImageSurface> getSelection(const Geometry::Rectangle& rect);

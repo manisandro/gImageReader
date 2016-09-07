@@ -164,7 +164,7 @@ bool Displayer::setSources(QList<Source*> sources)
 		m_scaleThread.wait();
 	}
 	if(m_tool) {
-		m_tool->pageChanged();
+		m_tool->reset();
 	}
 	m_renderTimer.stop();
 	m_scene->clear();

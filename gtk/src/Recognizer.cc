@@ -102,6 +102,7 @@ Recognizer::Recognizer()
 	m_pagesEntry = MAIN->getWidget("entry:dialog.pages");
 	m_langLabel = MAIN->getWidget("label:main.recognize.lang");
 	m_modeLabel = MAIN->getWidget("label:main.recognize.mode");
+	m_pageAreaLabel = MAIN->getWidget("label:dialog.regions");
 	m_pageAreaCombo = MAIN->getWidget("comboboxtext:dialog.regions");
 	Gtk::MenuButton* recognizeBtn = MAIN->getWidget("menubutton:main.languages");
 	recognizeBtn->set_menu(*m_menuLanguages);
@@ -363,6 +364,11 @@ std::vector<int> Recognizer::selectPages(bool& autodetectLayout)
 
 	m_pagesEntry->set_text(Glib::ustring::compose("1-%1", nPages));
 	m_pagesEntry->grab_focus();
+	m_pageAreaLabel->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	m_pageAreaCombo->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_pageAreaCombo->get_model());
+	int col = m_pageAreaCombo->get_entry_text_column();
+	store->children()[0]->set_value<Glib::ustring>(col, MAIN->getDisplayer()->hasMultipleOCRAreas() ? _("Current selection") : _("Entire page"));
 
 	std::vector<int> pages;
 	if(m_pagesDialog->run() == Gtk::RESPONSE_OK){
@@ -391,7 +397,7 @@ std::vector<int> Recognizer::selectPages(bool& autodetectLayout)
 			Utils::set_error_state(m_pagesEntry);
 		}
 	}
-	autodetectLayout = m_pageAreaCombo->get_active_row_number() == 1;
+	autodetectLayout = m_pageAreaCombo->get_visible() ? m_pageAreaCombo->get_active_row_number() == 1 : false;
 	m_pagesDialog->hide();
 	std::sort(pages.begin(), pages.end());
 	return pages;
@@ -400,7 +406,7 @@ std::vector<int> Recognizer::selectPages(bool& autodetectLayout)
 void Recognizer::recognizeButtonClicked()
 {
 	int nPages = MAIN->getDisplayer()->getNPages();
-	if(nPages == 1 || MAIN->getDisplayer()->hasMultipleOCRAreas()){
+	if(nPages == 1){
 		recognize({MAIN->getDisplayer()->getCurrentPage()});
 	}else{
 		auto positioner = sigc::bind(sigc::ptr_fun(Utils::popup_positioner), m_recognizeBtn, m_menuPages, false, true);

@@ -138,6 +138,7 @@ public:
 	virtual bool hasMultipleOCRAreas() const{ return false; }
 	virtual bool allowAutodetectOCRAreas() const{ return false; }
 	virtual void autodetectOCRAreas(){}
+	virtual void reset(){}
 
 protected:
 	Displayer* m_displayer;
