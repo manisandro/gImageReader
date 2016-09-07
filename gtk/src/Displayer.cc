@@ -172,7 +172,7 @@ bool Displayer::setSources(std::vector<Source*> sources)
 	m_scale = 1.0;
 	m_scrollPos[0] = m_scrollPos[1] = 0.5;
 	if(m_tool) {
-		m_tool->pageChanged();
+		m_tool->reset();
 	}
 	m_renderTimer.disconnect();
 	delete m_imageItem;
@@ -242,6 +242,11 @@ bool Displayer::hasMultipleOCRAreas()
 std::vector<Cairo::RefPtr<Cairo::ImageSurface>> Displayer::getOCRAreas()
 {
 	return m_tool->getOCRAreas();
+}
+
+bool Displayer::allowAutodetectOCRAreas() const
+{
+	return m_tool->allowAutodetectOCRAreas();
 }
 
 void Displayer::autodetectOCRAreas()

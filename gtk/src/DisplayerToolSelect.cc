@@ -93,11 +93,6 @@ bool DisplayerToolSelect::mouseReleaseEvent(GdkEventButton* /*event*/)
 	return false;
 }
 
-void DisplayerToolSelect::pageChanged()
-{
-	clearSelections();
-}
-
 void DisplayerToolSelect::resolutionChanged(double factor)
 {
 	for(DisplaySelection* sel : m_selections){

@@ -368,6 +368,7 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout)
 	m_pagesLineEdit->setFocus();
 	m_pageAreaLabel->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
 	m_pageAreaComboBox->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	m_pageAreaComboBox->setItemText(0, MAIN->getDisplayer()->hasMultipleOCRAreas() ? _("Current selection") : _("Entire page"));
 
 	QList<int> pages;
 	if(m_pagesDialog->exec() == QDialog::Accepted){
@@ -403,7 +404,7 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout)
 void Recognizer::recognizeButtonClicked()
 {
 	int nPages = MAIN->getDisplayer()->getNPages();
-	if(nPages == 1 || MAIN->getDisplayer()->hasMultipleOCRAreas()){
+	if(nPages == 1){
 		recognize({MAIN->getDisplayer()->getCurrentPage()});
 	}else{
 		ui.toolButtonRecognize->setCheckable(true);

@@ -54,6 +54,7 @@ public:
 	int getNPages(){ double min, max; m_pagespin->get_range(min, max); return int(max); }
 	bool hasMultipleOCRAreas();
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
+	bool allowAutodetectOCRAreas() const;
 	void autodetectOCRAreas();
 	void setCursor(Glib::RefPtr<Gdk::Cursor> cursor);
 	void ensureVisible(double evx, double evy);
@@ -198,7 +199,9 @@ public:
 	virtual void rotationChanged(double /*delta*/){}
 	virtual std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas() = 0;
 	virtual bool hasMultipleOCRAreas() const{ return false; }
+	virtual bool allowAutodetectOCRAreas() const{ return false; }
 	virtual void autodetectOCRAreas(){}
+	virtual void reset(){}
 
 protected:
 	Displayer* m_displayer;
