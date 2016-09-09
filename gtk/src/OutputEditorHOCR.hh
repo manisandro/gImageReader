@@ -29,7 +29,6 @@
 class DisplayerImageItem;
 class DisplayerToolHOCR;
 namespace xmlpp {
-	class Document;
 	class DomParser;
 	class Element;
 }
@@ -37,6 +36,7 @@ namespace xmlpp {
 class OutputEditorHOCR : public OutputEditor {
 public:
 	OutputEditorHOCR(DisplayerToolHOCR* tool);
+	~OutputEditorHOCR();
 
 	Gtk::Box* getUI() override { return m_widget; }
 	ReadSessionData* initRead() override{ return new HOCRReadSessionData; }
@@ -97,18 +97,22 @@ private:
 	Gtk::Dialog* m_pdfExportDialog = nullptr;
 	DisplayerImageItem* m_preview = nullptr;
 
+	Gtk::TreePath m_currentItem;
+	Gtk::TreePath m_currentPageItem;
+	xmlpp::DomParser* m_currentParser = nullptr;
+	xmlpp::Element* m_currentElement = nullptr;
+
 	sigc::connection m_connectionSelectionChanged;
 	sigc::connection m_connectionItemViewRowEdited;
 	sigc::connection m_connectionPropViewRowEdited;
 
 	Gtk::TreeIter currentItem();
 	bool addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring, Glib::ustring>& langCache);
-	xmlpp::Element* getHOCRElementForItem(Gtk::TreeIter item, xmlpp::DomParser& parser) const;
 	void printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const;
 	bool setCurrentSource(xmlpp::Element* pageElement, int* pageDpi = 0) const;
-	void updateItemText(Gtk::TreeIter item);
-	void updateItemAttribute(Gtk::TreeIter item, const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue);
-	void updateItem(Gtk::TreeIter item, xmlpp::DomParser& parser, const xmlpp::Element* element);
+	void updateCurrentItemText();
+	void updateCurrentItemAttribute(const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue, bool update=true);
+	void updateCurrentItem();
 	void addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page);
 	Glib::ustring trimWord(const Glib::ustring& word, Glib::ustring* rest = nullptr);
 	void mergeItems(const std::vector<Gtk::TreePath>& items);
@@ -121,6 +125,7 @@ private:
 	void showContextMenu(GdkEventButton* ev);
 	void checkCellEditable(const Glib::ustring& path, Gtk::CellRenderer* renderer);
 	void updatePreview();
+	void updateCurrentItemBBox(const Geometry::Rectangle& rect);
 };
 
 #endif // OUTPUTEDITORHOCR_HH

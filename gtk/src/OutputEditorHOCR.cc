@@ -216,6 +216,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	m_connectionItemViewRowEdited = CONNECT(m_itemStore, row_changed, [this](const Gtk::TreeModel::Path&, const Gtk::TreeIter& iter){ itemChanged(iter); });
 	m_connectionPropViewRowEdited = CONNECT(m_propStore, row_changed, [this](const Gtk::TreeModel::Path&, const Gtk::TreeIter& iter){ propertyCellChanged(iter); });
 	CONNECT(m_itemView, context_menu_requested, [this](GdkEventButton* ev){ showContextMenu(ev); });
+	CONNECT(m_tool, selection_geometry_changed, [this](const Geometry::Rectangle& rect){ updateCurrentItemBBox(rect); });
 
 	CONNECT(m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>(), changed, [this]{ updatePreview(); });
 	CONNECT(m_builder("fontbutton:pdfoptions").as<Gtk::FontButton>(), font_set, [this]{ updatePreview(); });
@@ -233,6 +234,11 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfuniformizelinespacing", m_builder("checkbox:pdfoptions.uniformlinespacing")));
 
 	setFont();
+}
+
+OutputEditorHOCR::~OutputEditorHOCR()
+{
+	delete m_currentParser;
 }
 
 void OutputEditorHOCR::setFont()
@@ -438,69 +444,71 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 	return haveWord;
 }
 
-xmlpp::Element* OutputEditorHOCR::getHOCRElementForItem(Gtk::TreeIter item, xmlpp::DomParser& parser) const
-{
-	if(!item) {
-		return 0;
-	}
-
-	Glib::ustring id = (*item)[m_itemStoreCols.id];
-	while(item->parent()) {
-		item = item->parent();
-	}
-	Glib::ustring text = (*item)[m_itemStoreCols.source];
-	parser.parse_memory(text);
-	xmlpp::Document* doc = parser.get_document();
-	if(doc->get_root_node()) {
-		xmlpp::NodeSet nodes = doc->get_root_node()->find(Glib::ustring::compose("//*[@id='%1']", id));
-		return nodes.empty() ? nullptr : dynamic_cast<xmlpp::Element*>(nodes.front());
-	} else {
-		return nullptr;
-	}
-}
-
 void OutputEditorHOCR::showItemProperties(Gtk::TreeIter item)
 {
+	m_connectionPropViewRowEdited.block(true);
+	m_propStore->clear();
+	m_connectionPropViewRowEdited.block(false);
+	m_tool->clearSelection();
+	m_currentPageItem = Gtk::TreePath();
+	m_currentItem = Gtk::TreePath();
+	m_currentElement = nullptr;
+	delete m_currentParser;
+	m_currentParser = nullptr;
 	if(!item) {
 		return;
 	}
-	m_connectionPropViewRowEdited.block(true);
-	m_propStore->clear();
-	xmlpp::DomParser parser;
-	xmlpp::Element* element = getHOCRElementForItem(item, parser);
-	if(element) {
-		for(xmlpp::Attribute* attrib : element->get_attributes()) {
-			if(attrib->get_name() == "title") {
-				for(Glib::ustring attr : Utils::string_split(attrib->get_value(), ';')) {
-					attr = Utils::string_trim(attr);
-					std::size_t splitPos = attr.find(" ");
-					Gtk::TreeIter item = m_propStore->append();
-					item->set_value(m_propStoreCols.parentAttr, Glib::ustring("title"));
-					item->set_value(m_propStoreCols.name, Utils::string_trim(attr.substr(0, splitPos)));
-					item->set_value(m_propStoreCols.value, Utils::string_trim(attr.substr(splitPos + 1)));
-				}
-			} else {
-				Gtk::TreeIter item = m_propStore->append();
-				item->set_value(m_propStoreCols.name, attrib->get_name());
-				item->set_value(m_propStoreCols.value, attrib->get_value());
-			}
-		}
-		m_sourceView->get_buffer()->set_text(getElementXML(element));
+	m_currentItem = m_itemStore->get_path(item);
+	Gtk::TreeIter parentItem = item;
+	while(parentItem->parent()) {
+		parentItem = parentItem->parent();
+	}
+	m_currentPageItem = m_itemStore->get_path(parentItem);
+	Glib::ustring id = (*item)[m_itemStoreCols.id];
+	m_currentParser = new xmlpp::DomParser();
+	m_currentParser->parse_memory((*parentItem)[m_itemStoreCols.source]);
+	xmlpp::Document* doc = m_currentParser->get_document();
+	if(doc->get_root_node()) {
+		xmlpp::NodeSet nodes = doc->get_root_node()->find(Glib::ustring::compose("//*[@id='%1']", id));
+		m_currentElement = nodes.empty() ? nullptr : dynamic_cast<xmlpp::Element*>(nodes.front());
+	}
+	if(!m_currentElement) {
+		delete m_currentParser;
+		m_currentParser = nullptr;
+		m_currentPageItem = Gtk::TreePath();
+		m_currentItem = Gtk::TreePath();
+	}
 
-		Glib::MatchInfo matchInfo;
-		xmlpp::Element* pageElement = dynamic_cast<xmlpp::Element*>(parser.get_document()->get_root_node());
-		Glib::ustring titleAttr = getAttribute(element, "title");
-		if(pageElement && pageElement->get_name() == "div" && setCurrentSource(pageElement) && s_bboxRx->match(titleAttr, matchInfo)) {
-			int x1 = std::atoi(matchInfo.fetch(1).c_str());
-			int y1 = std::atoi(matchInfo.fetch(2).c_str());
-			int x2 = std::atoi(matchInfo.fetch(3).c_str());
-			int y2 = std::atoi(matchInfo.fetch(4).c_str());
-			m_tool->setSelection(Geometry::Rectangle(x1, y1, x2-x1, y2-y1));
+	m_connectionPropViewRowEdited.block(true);
+	for(xmlpp::Attribute* attrib : m_currentElement->get_attributes()) {
+		if(attrib->get_name() == "title") {
+			for(Glib::ustring attr : Utils::string_split(attrib->get_value(), ';')) {
+				attr = Utils::string_trim(attr);
+				std::size_t splitPos = attr.find(" ");
+				Gtk::TreeIter item = m_propStore->append();
+				item->set_value(m_propStoreCols.parentAttr, Glib::ustring("title"));
+				item->set_value(m_propStoreCols.name, Utils::string_trim(attr.substr(0, splitPos)));
+				item->set_value(m_propStoreCols.value, Utils::string_trim(attr.substr(splitPos + 1)));
+			}
+		} else {
+			Gtk::TreeIter item = m_propStore->append();
+			item->set_value(m_propStoreCols.name, attrib->get_name());
+			item->set_value(m_propStoreCols.value, attrib->get_value());
 		}
-	} else {
-		m_tool->clearSelection();
 	}
 	m_connectionPropViewRowEdited.block(false);
+	m_sourceView->get_buffer()->set_text(getElementXML(m_currentElement));
+
+	Glib::MatchInfo matchInfo;
+	xmlpp::Element* pageElement = dynamic_cast<xmlpp::Element*>(m_currentParser->get_document()->get_root_node());
+	Glib::ustring titleAttr = getAttribute(m_currentElement, "title");
+	if(pageElement && pageElement->get_name() == "div" && setCurrentSource(pageElement) && s_bboxRx->match(titleAttr, matchInfo)) {
+		int x1 = std::atoi(matchInfo.fetch(1).c_str());
+		int y1 = std::atoi(matchInfo.fetch(2).c_str());
+		int x2 = std::atoi(matchInfo.fetch(3).c_str());
+		int y2 = std::atoi(matchInfo.fetch(4).c_str());
+		m_tool->setSelection(Geometry::Rectangle(x1, y1, x2-x1, y2-y1));
+	}
 }
 
 bool OutputEditorHOCR::setCurrentSource(xmlpp::Element* pageElement, int* pageDpi) const
@@ -541,12 +549,15 @@ bool OutputEditorHOCR::setCurrentSource(xmlpp::Element* pageElement, int* pageDp
 
 void OutputEditorHOCR::itemChanged(const Gtk::TreeIter& iter)
 {
+	if(m_itemStore->get_path(iter) != m_currentItem) {
+		return;
+	}
 	m_connectionItemViewRowEdited.block(true);
 	bool isWord = (*iter)[m_itemStoreCols.itemClass] == "ocrx_word";
 	bool selected = (*iter)[m_itemStoreCols.selected];
 	if( isWord && selected) {
 		// Update text
-		updateItemText(iter);
+		updateCurrentItemText();
 	} else if(!selected) {
 		m_itemView->collapse_row(m_itemStore->get_path(iter));
 	}
@@ -559,47 +570,74 @@ void OutputEditorHOCR::propertyCellChanged(const Gtk::TreeIter &iter)
 	Glib::ustring key = (*iter)[m_propStoreCols.name];
 	Glib::ustring value = (*iter)[m_propStoreCols.value];
 	if(!parentAttr.empty()) {
-		updateItemAttribute(currentItem(), parentAttr, key, value);
+		updateCurrentItemAttribute(parentAttr, key, value);
 	} else {
-		updateItemAttribute(currentItem(), key, "", value);
+		updateCurrentItemAttribute(key, "", value);
 	}
 }
 
-void OutputEditorHOCR::updateItemText(Gtk::TreeIter item)
+void OutputEditorHOCR::updateCurrentItemText()
 {
-	Glib::ustring newText = (*item)[m_itemStoreCols.text];
-	xmlpp::DomParser parser;
-	xmlpp::Element* element = getHOCRElementForItem(item, parser);
-	element->remove_child(element->get_first_child());
-	element->add_child_text(newText);
-	updateItem(item, parser, element);
+	if(m_currentItem) {
+		Gtk::TreeIter item = m_itemStore->get_iter(m_currentItem);
+		Glib::ustring newText = (*item)[m_itemStoreCols.text];
+		m_currentElement->remove_child(m_currentElement->get_first_child());
+		m_currentElement->add_child_text(newText);
+		updateCurrentItem();
+	}
 }
 
-void OutputEditorHOCR::updateItemAttribute(Gtk::TreeIter item, const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue)
+void OutputEditorHOCR::updateCurrentItemAttribute(const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue, bool update)
 {
-	xmlpp::DomParser parser;
-	xmlpp::Element* element = getHOCRElementForItem(item, parser);
-	if(subkey.empty()) {
-		element->set_attribute(key, newvalue);
-	} else {
-		Glib::ustring value = getAttribute(element, key);
-		std::vector<Glib::ustring> subattrs = Utils::string_split(value, ';');
-		for(int i = 0, n = subattrs.size(); i < n; ++i) {
-			Glib::ustring attr = Utils::string_trim(subattrs[i]);
-			std::size_t splitPos = attr.find(" ");
-			if(attr.substr(0, splitPos) == subkey) {
-				subattrs[i] = subkey + " " + newvalue;
+	if(m_currentItem) {
+		if(subkey.empty()) {
+			m_currentElement->set_attribute(key, newvalue);
+		} else {
+			Glib::ustring value = getAttribute(m_currentElement, key);
+			std::vector<Glib::ustring> subattrs = Utils::string_split(value, ';');
+			for(int i = 0, n = subattrs.size(); i < n; ++i) {
+				Glib::ustring attr = Utils::string_trim(subattrs[i]);
+				std::size_t splitPos = attr.find(" ");
+				if(attr.substr(0, splitPos) == subkey) {
+					subattrs[i] = subkey + " " + newvalue;
+					break;
+				}
+			}
+			m_currentElement->set_attribute(key, Utils::string_join(subattrs, "; "));
+		}
+		if(update) {
+			updateCurrentItem();
+		}
+	}
+}
+
+void OutputEditorHOCR::updateCurrentItemBBox(const Geometry::Rectangle &rect)
+{
+	if(m_currentItem) {
+		Gtk::TreeIter item = m_itemStore->get_iter(m_currentItem);
+		m_connectionItemViewRowEdited.block(true);
+		item->set_value(m_itemStoreCols.bbox, rect);
+		m_connectionItemViewRowEdited.block(false);
+		Glib::ustring bboxstr = Glib::ustring::compose("%1 %2 %3 %4", rect.x, rect.y, rect.x + rect.width, rect.y + rect.height);
+		for(Gtk::TreeIter it : m_propStore->children()) {
+			if((*it)[m_propStoreCols.name] == "bbox" and (*it)[m_propStoreCols.parentAttr] == "title") {
+				m_connectionPropViewRowEdited.block(true);
+				(*it)[m_propStoreCols.value] = bboxstr;
+				m_connectionPropViewRowEdited.block(false);
 				break;
 			}
 		}
-		element->set_attribute(key, Utils::string_join(subattrs, "; "));
+		Gtk::TreeIter toplevelItem = m_itemStore->get_iter(m_currentPageItem);
+		toplevelItem->set_value(m_itemStoreCols.source, getDocumentXML(m_currentParser->get_document()));
+
+		m_sourceView->get_buffer()->set_text(getElementXML(m_currentElement));
 	}
-	updateItem(item, parser, element);
 }
 
-void OutputEditorHOCR::updateItem(Gtk::TreeIter item, xmlpp::DomParser& parser, const xmlpp::Element* element)
+void OutputEditorHOCR::updateCurrentItem()
 {
-	Glib::ustring spellLang = Utils::getSpellingLanguage(getAttribute(element, "lang"));
+	Gtk::TreeIter item = m_itemStore->get_iter(m_currentItem);
+	Glib::ustring spellLang = Utils::getSpellingLanguage(getAttribute(m_currentElement, "lang"));
 	if(m_spell.get_language() != spellLang) {
 		m_spell.set_language(spellLang);
 	}
@@ -611,17 +649,14 @@ void OutputEditorHOCR::updateItem(Gtk::TreeIter item, xmlpp::DomParser& parser, 
 	}
 	m_connectionItemViewRowEdited.block(false);
 
-	Gtk::TreeIter toplevelItem = item;
-	while(toplevelItem->parent()) {
-		toplevelItem = toplevelItem->parent();
-	}
-	toplevelItem->set_value(m_itemStoreCols.source, getDocumentXML(parser.get_document()));
+	Gtk::TreeIter toplevelItem = m_itemStore->get_iter(m_currentPageItem);
+	toplevelItem->set_value(m_itemStoreCols.source, getDocumentXML(m_currentParser->get_document()));
 
-	m_sourceView->get_buffer()->set_text(getElementXML(element));
+	m_sourceView->get_buffer()->set_text(getElementXML(m_currentElement));
 
 	Glib::MatchInfo matchInfo;
-	xmlpp::Element* pageElement = dynamic_cast<xmlpp::Element*>(parser.get_document()->get_root_node());
-	Glib::ustring titleAttr = getAttribute(element, "title");
+	xmlpp::Element* pageElement = dynamic_cast<xmlpp::Element*>(m_currentParser->get_document()->get_root_node());
+	Glib::ustring titleAttr = getAttribute(m_currentElement, "title");
 	if(pageElement && pageElement->get_name() == "div" && setCurrentSource(pageElement) && s_bboxRx->match(titleAttr, matchInfo)) {
 		int x1 = std::atoi(matchInfo.fetch(1).c_str());
 		int y1 = std::atoi(matchInfo.fetch(2).c_str());
@@ -655,16 +690,11 @@ void OutputEditorHOCR::mergeItems(const std::vector<Gtk::TreePath>& items)
 	if(!it) {
 		return;
 	}
+
 	Geometry::Rectangle bbox = (*it)[m_itemStoreCols.bbox];
 	Glib::ustring text = (*it)[m_itemStoreCols.text];
 
-	Gtk::TreeIter toplevelItem = it;
-	while(toplevelItem->parent()) {
-		toplevelItem = toplevelItem->parent();
-	}
-	xmlpp::DomParser parser;
-	parser.parse_memory((*toplevelItem)[m_itemStoreCols.source]);
-	xmlpp::Document* doc = parser.get_document();
+	xmlpp::Document* doc = m_currentParser->get_document();
 
 	for(int i = 1, n = items.size(); i < n; ++i) {
 		it = m_itemStore->get_iter(items[i]);
@@ -678,14 +708,15 @@ void OutputEditorHOCR::mergeItems(const std::vector<Gtk::TreePath>& items)
 			m_itemStore->erase(it);
 		}
 	}
-	toplevelItem->set_value(m_itemStoreCols.source, getDocumentXML(doc));
+	m_itemView->get_selection()->unselect_all();
+	m_itemView->get_selection()->select(items.front());
 
 	it = m_itemStore->get_iter(items.front());
 	(*it)[m_itemStoreCols.text] = text;
 	(*it)[m_itemStoreCols.bbox] = bbox;
-	updateItemText(it);
-	updateItemAttribute(it, "title", "bbox", Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height));
-	showItemProperties(it);
+	updateCurrentItemText();
+	updateCurrentItemAttribute("title", "bbox", Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height));
+	showItemProperties(m_itemStore->get_iter(m_currentItem));
 }
 
 void OutputEditorHOCR::showContextMenu(GdkEventButton* ev)

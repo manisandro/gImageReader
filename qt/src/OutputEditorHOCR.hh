@@ -24,11 +24,11 @@
 #include "Ui_OutputEditorHOCR.hh"
 #include "ui_PdfExportDialog.h"
 
+#include <QDomDocument>
+#include <QDomElement>
 #include <QtSpell.hpp>
 
 class DisplayerToolHOCR;
-class QDomDocument;
-class QDomElement;
 class QGraphicsPixmapItem;
 
 class OutputEditorHOCR : public OutputEditor {
@@ -80,18 +80,22 @@ private:
 	Ui::PdfExportDialog m_pdfExportDialogUi;
 	QFontDialog m_pdfFontDialog;
 
+	QTreeWidgetItem* m_currentItem = nullptr;
+	QTreeWidgetItem* m_currentPageItem = nullptr;
+	QDomDocument m_currentDocument;
+	QDomElement m_currentElement;
+
 	QGraphicsPixmapItem* m_preview = nullptr;
 
 	void findReplace(bool backwards, bool replace);
 	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString, QString>& langCache);
-	QDomElement getHOCRElementForItem(QTreeWidgetItem* item, QDomDocument& doc) const;
 	QDomElement elementById(QDomElement element, const QString& id) const;
 	void expandChildren(QTreeWidgetItem* item) const;
 	void printChildren(QPainter& painter, QTreeWidgetItem* item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const;
 	bool setCurrentSource(const QDomElement& pageElement, int* pageDpi = 0) const;
-	void updateItemText(QTreeWidgetItem* item);
-	void updateItemAttribute(QTreeWidgetItem* item, const QString& key, const QString& subkey, const QString& newvalue);
-	void updateItem(QTreeWidgetItem* item, const QDomDocument& doc, const QDomElement& element);
+	void updateCurrentItemText();
+	void updateCurrentItemAttribute(const QString& key, const QString& subkey, const QString& newvalue, bool update=true);
+	void updateCurrentItem();
 	void addPage(QDomElement pageDiv, const QString& filename, int page);
 	QString trimWord(const QString& word, QString* rest = nullptr);
 	void mergeItems(const QList<QTreeWidgetItem*>& items);
@@ -105,6 +109,7 @@ private slots:
 	void showTreeWidgetContextMenu(const QPoint& point);
 	void updateFontButton(const QFont& font);
 	void updatePreview();
+	void updateCurrentItemBBox(QRect rect);
 };
 
 #endif // OUTPUTEDITORHOCR_HH
