@@ -28,6 +28,40 @@
     <property name="can_focus">False</property>
     <property name="resource">/org/gnome/gimagereader/ins_replace.png</property>
   </object>
+  <object class="GtkMenu" id="menu:output.insert">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkImageMenuItem" id="menuitem:output.insert.append">
+        <property name="label" translatable="yes">Append to current text</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="image">image:output.insert.append</property>
+        <property name="use_stock">False</property>
+        <property name="always_show_image">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkImageMenuItem" id="menuitem:output.insert.cursor">
+        <property name="label" translatable="yes">Insert at cursor</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="image">image:output.insert.cursor</property>
+        <property name="use_stock">False</property>
+        <property name="always_show_image">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkImageMenuItem" id="menuitem:output.insert.replace">
+        <property name="label" translatable="yes">Replace current text</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="image">image:output.insert.replace</property>
+        <property name="use_stock">False</property>
+        <property name="always_show_image">True</property>
+      </object>
+    </child>
+  </object>
   <object class="GtkImage" id="image:output.redo">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -239,40 +273,6 @@
       </object>
     </child>
   </object>
-  <object class="GtkMenu" id="menu:output.insert">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkImageMenuItem" id="menuitem:output.insert.append">
-        <property name="label" translatable="yes">Append to current text</property>
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="image">image:output.insert.append</property>
-        <property name="use_stock">False</property>
-        <property name="always_show_image">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkImageMenuItem" id="menuitem:output.insert.cursor">
-        <property name="label" translatable="yes">Insert at cursor</property>
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="image">image:output.insert.cursor</property>
-        <property name="use_stock">False</property>
-        <property name="always_show_image">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkImageMenuItem" id="menuitem:output.insert.replace">
-        <property name="label" translatable="yes">Replace current text</property>
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="image">image:output.insert.replace</property>
-        <property name="use_stock">False</property>
-        <property name="always_show_image">True</property>
-      </object>
-    </child>
-  </object>
   <object class="GtkMenu" id="menu:output.stripcrlf">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -371,7 +371,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>
-            <property name="tooltip_text" translatable="yes">Select language</property>
+            <property name="tooltip_text" translatable="yes">Select insert mode</property>
             <property name="relief">none</property>
             <property name="popup">menu:output.insert</property>
             <property name="use_popover">False</property>
@@ -426,6 +426,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Strip line breaks on selected text</property>
                 <property name="image">image:output.stripcrlf</property>
                 <property name="relief">none</property>
               </object>
@@ -440,7 +441,6 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
-                <property name="tooltip_text" translatable="yes">Select language</property>
                 <property name="relief">none</property>
                 <property name="popup">menu:output.stripcrlf</property>
                 <property name="use_popover">False</property>
