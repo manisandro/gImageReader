@@ -147,6 +147,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxPreview, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
+	connect(m_tool, SIGNAL(selectionGeometryChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
 
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", m_pdfExportDialogUi.comboBoxOutputMode));
 	MAIN->getConfig()->addSetting(new FontSetting("pdffont", &m_pdfFontDialog, QFont().toString()));
@@ -337,21 +338,6 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 	return haveWord;
 }
 
-QDomElement OutputEditorHOCR::getHOCRElementForItem(QTreeWidgetItem* item, QDomDocument& doc) const
-{
-	if(!item) {
-		return QDomElement();
-	}
-
-	QTreeWidgetItem* toplevelItem = item;
-	while(toplevelItem->parent()) {
-		toplevelItem = toplevelItem->parent();
-	}
-	QString id = item->data(0, IdRole).toString();
-	doc.setContent(toplevelItem->data(0, SourceRole).toString());
-	return elementById(doc.firstChildElement(), id);
-}
-
 QDomElement OutputEditorHOCR::elementById(QDomElement element, const QString& id) const
 {
 	QDomElement child;
@@ -371,47 +357,64 @@ void OutputEditorHOCR::showItemProperties(QTreeWidgetItem* item)
 {
 	ui.tableWidgetProperties->blockSignals(true);
 	ui.tableWidgetProperties->setRowCount(0);
-	QDomDocument doc;
-	QDomElement element = getHOCRElementForItem(item, doc);
-	if(!element.isNull()) {
-		QDomNamedNodeMap attributes = element.attributes();
-		int row = -1;
-		for(int i = 0, n = attributes.count(); i < n; ++i) {
-			QDomNode attribNode = attributes.item(i);
-			if(attribNode.nodeName() == "title") {
-				for(const QString& attrib : attribNode.nodeValue().split(QRegExp("\\s*;\\s*"))) {
-					int splitPos = attrib.indexOf(QRegExp("\\s+"));
-					ui.tableWidgetProperties->insertRow(++row);
-					QTableWidgetItem* attrNameItem = new QTableWidgetItem(attrib.left(splitPos));
-					attrNameItem->setFlags(attrNameItem->flags() &  ~Qt::ItemIsEditable);
-					attrNameItem->setData(ParentAttrRole, "title");
-					ui.tableWidgetProperties->setItem(row, 0, attrNameItem);
-					ui.tableWidgetProperties->setItem(row, 1, new QTableWidgetItem(attrib.mid(splitPos + 1)));
-				}
-			} else {
+	ui.tableWidgetProperties->blockSignals(false);
+	m_tool->clearSelection();
+	m_currentPageItem = nullptr;
+	m_currentItem = item;
+	if(!item) {
+		m_currentDocument = QDomDocument();
+		m_currentElement = QDomElement();
+		return;
+	}
+	m_currentPageItem = item;
+	while(m_currentPageItem->parent()) {
+		m_currentPageItem = m_currentPageItem->parent();
+	}
+	QString id = item->data(0, IdRole).toString();
+	m_currentDocument.setContent(m_currentPageItem->data(0, SourceRole).toString());
+	m_currentElement = elementById(m_currentDocument.firstChildElement(), id);
+	if(m_currentElement.isNull()) {
+		m_currentDocument = QDomDocument();
+		m_currentPageItem = nullptr;
+		m_currentItem = nullptr;
+		return;
+	}
+	QDomNamedNodeMap attributes = m_currentElement.attributes();
+	int row = -1;
+	ui.tableWidgetProperties->blockSignals(true);
+	for(int i = 0, n = attributes.count(); i < n; ++i) {
+		QDomNode attribNode = attributes.item(i);
+		if(attribNode.nodeName() == "title") {
+			for(const QString& attrib : attribNode.nodeValue().split(QRegExp("\\s*;\\s*"))) {
+				int splitPos = attrib.indexOf(QRegExp("\\s+"));
 				ui.tableWidgetProperties->insertRow(++row);
-				QTableWidgetItem* attrNameItem = new QTableWidgetItem(attribNode.nodeName());
+				QTableWidgetItem* attrNameItem = new QTableWidgetItem(attrib.left(splitPos));
 				attrNameItem->setFlags(attrNameItem->flags() &  ~Qt::ItemIsEditable);
+				attrNameItem->setData(ParentAttrRole, "title");
 				ui.tableWidgetProperties->setItem(row, 0, attrNameItem);
-				ui.tableWidgetProperties->setItem(row, 1, new QTableWidgetItem(attribNode.nodeValue()));
+				ui.tableWidgetProperties->setItem(row, 1, new QTableWidgetItem(attrib.mid(splitPos + 1)));
 			}
+		} else {
+			ui.tableWidgetProperties->insertRow(++row);
+			QTableWidgetItem* attrNameItem = new QTableWidgetItem(attribNode.nodeName());
+			attrNameItem->setFlags(attrNameItem->flags() &  ~Qt::ItemIsEditable);
+			ui.tableWidgetProperties->setItem(row, 0, attrNameItem);
+			ui.tableWidgetProperties->setItem(row, 1, new QTableWidgetItem(attribNode.nodeValue()));
 		}
-		QString str;
-		QTextStream stream(&str);
-		element.save(stream, 1);
-		ui.plainTextEditOutput->setPlainText(str);
-
-		if(setCurrentSource(doc.firstChildElement("div")) && s_bboxRx.indexIn(element.attribute("title")) != -1) {
-			int x1 = s_bboxRx.cap(1).toInt();
-			int y1 = s_bboxRx.cap(2).toInt();
-			int x2 = s_bboxRx.cap(3).toInt();
-			int y2 = s_bboxRx.cap(4).toInt();
-			m_tool->setSelection(QRect(x1, y1, x2-x1, y2-y1));
-		}
-	} else {
-		m_tool->clearSelection();
 	}
 	ui.tableWidgetProperties->blockSignals(false);
+	QString str;
+	QTextStream stream(&str);
+	m_currentElement.save(stream, 1);
+	ui.plainTextEditOutput->setPlainText(str);
+
+	if(setCurrentSource(m_currentDocument.firstChildElement("div")) && s_bboxRx.indexIn(m_currentElement.attribute("title")) != -1) {
+		int x1 = s_bboxRx.cap(1).toInt();
+		int y1 = s_bboxRx.cap(2).toInt();
+		int x2 = s_bboxRx.cap(3).toInt();
+		int y2 = s_bboxRx.cap(4).toInt();
+		m_tool->setSelection(QRect(x1, y1, x2-x1, y2-y1));
+	}
 }
 
 bool OutputEditorHOCR::setCurrentSource(const QDomElement& pageElement, int* pageDpi) const
@@ -449,11 +452,14 @@ bool OutputEditorHOCR::setCurrentSource(const QDomElement& pageElement, int* pag
 
 void OutputEditorHOCR::itemChanged(QTreeWidgetItem* item, int col)
 {
+	if(item != m_currentItem) {
+		return;
+	}
 	ui.treeWidgetItems->blockSignals(true);
 	bool isWord = item->data(0, ClassRole).toString() == "ocrx_word";
 	if( isWord && item->checkState(col) == Qt::Checked) {
 		// Update text
-		updateItemText(item);
+		updateCurrentItemText();
 	}
 	else if(item->checkState(col) == Qt::Checked) {
 		item->setFlags(item->flags() | Qt::ItemIsSelectable);
@@ -474,67 +480,93 @@ void OutputEditorHOCR::propertyCellChanged(int row, int /*col*/)
 	QTableWidgetItem* valueItem = ui.tableWidgetProperties->item(row, 1);
 	QString parentAttr = keyItem->data(ParentAttrRole).toString();
 	if(!parentAttr.isEmpty()) {
-		updateItemAttribute(ui.treeWidgetItems->currentItem(), parentAttr, keyItem->text(), valueItem->text());
+		updateCurrentItemAttribute(parentAttr, keyItem->text(), valueItem->text());
 	} else {
-		updateItemAttribute(ui.treeWidgetItems->currentItem(), keyItem->text(), "", valueItem->text());
+		updateCurrentItemAttribute(keyItem->text(), "", valueItem->text());
 	}
 }
 
-void OutputEditorHOCR::updateItemText(QTreeWidgetItem* item)
+void OutputEditorHOCR::updateCurrentItemText()
 {
-	QString newText = item->text(0);
-	QDomDocument doc;
-	QDomElement element = getHOCRElementForItem(item, doc);
-	element.replaceChild(doc.createTextNode(newText), element.firstChild());
-	updateItem(item, doc, element);
+	if(m_currentItem) {
+		QString newText = m_currentItem->text(0);
+		m_currentElement.replaceChild(m_currentDocument.createTextNode(newText), m_currentElement.firstChild());
+		updateCurrentItem();
+	}
 }
 
-void OutputEditorHOCR::updateItemAttribute(QTreeWidgetItem* item, const QString& key, const QString& subkey, const QString& newvalue)
+void OutputEditorHOCR::updateCurrentItemAttribute(const QString& key, const QString& subkey, const QString& newvalue, bool update)
 {
-	QDomDocument doc;
-	QDomElement element = getHOCRElementForItem(item, doc);
-	if(subkey.isEmpty()) {
-		element.setAttribute(key, newvalue);
-	} else {
-		QString value = element.attribute(key);
-		QStringList subattrs = value.split(QRegExp("\\s*;\\s*"));
-		for(int i = 0, n = subattrs.size(); i < n; ++i) {
-			int splitPos = subattrs[i].indexOf(QRegExp("\\s+"));
-			if(subattrs[i].left(splitPos) == subkey) {
-				subattrs[i] = subkey + " " + newvalue;
+	if(m_currentItem) {
+		if(subkey.isEmpty()) {
+			m_currentElement.setAttribute(key, newvalue);
+		} else {
+			QString value = m_currentElement.attribute(key);
+			QStringList subattrs = value.split(QRegExp("\\s*;\\s*"));
+			for(int i = 0, n = subattrs.size(); i < n; ++i) {
+				int splitPos = subattrs[i].indexOf(QRegExp("\\s+"));
+				if(subattrs[i].left(splitPos) == subkey) {
+					subattrs[i] = subkey + " " + newvalue;
+					break;
+				}
+			}
+			m_currentElement.setAttribute(key, subattrs.join("; "));
+		}
+		if(update)
+			updateCurrentItem();
+	}
+}
+
+void OutputEditorHOCR::updateCurrentItemBBox(QRect rect)
+{
+	if(m_currentItem) {
+		ui.treeWidgetItems->blockSignals(true);
+		m_currentItem->setData(0, BBoxRole, rect);
+		ui.treeWidgetItems->blockSignals(false);
+		QString bboxstr = QString("%1 %2 %3 %4").arg(rect.x()).arg(rect.y()).arg(rect.x() + rect.width()).arg(rect.y() + rect.height());
+		for(int row = 0, n = ui.tableWidgetProperties->rowCount(); row < n; ++row) {
+			QTableWidgetItem* cell = ui.tableWidgetProperties->item(row, 0);
+			if(cell->text() == "bbox" && cell->data(ParentAttrRole).toString() == "title") {
+				ui.tableWidgetProperties->blockSignals(true);
+				ui.tableWidgetProperties->item(row, 1)->setText(bboxstr);
+				ui.tableWidgetProperties->blockSignals(false);
 				break;
 			}
 		}
-		element.setAttribute(key, subattrs.join("; "));
+		updateCurrentItemAttribute("title", "bbox", bboxstr, false);
+		QString str;
+		QTextStream stream(&str);
+		m_currentDocument.save(stream, 1);
+		m_currentPageItem->setData(0, SourceRole, str);
+
+		QString elemstr;
+		QTextStream elemstream(&elemstr);
+		m_currentElement.save(elemstream, 1);
+		ui.plainTextEditOutput->setPlainText(elemstr);
 	}
-	updateItem(item, doc, element);
 }
 
-void OutputEditorHOCR::updateItem(QTreeWidgetItem* item, const QDomDocument& doc, const QDomElement& element)
+void OutputEditorHOCR::updateCurrentItem()
 {
-	QString str;
-	QTextStream stream(&str);
-	doc.save(stream, 1);
-	QString spellLang = Utils::getSpellingLanguage(element.attribute("lang"));
+	QString spellLang = Utils::getSpellingLanguage(m_currentElement.attribute("lang"));
 	if(m_spell.getLanguage() != spellLang) {
 		m_spell.setLanguage(spellLang);
 	}
 	ui.treeWidgetItems->blockSignals(true); // prevent item changed signal
-	item->setForeground(0, m_spell.checkWord(trimWord(item->text(0))) ? item->parent()->foreground(0) : QBrush(Qt::red));
+	m_currentItem->setForeground(0, m_spell.checkWord(trimWord(m_currentItem->text(0))) ? m_currentItem->parent()->foreground(0) : QBrush(Qt::red));
 	ui.treeWidgetItems->blockSignals(false);
 
-	QTreeWidgetItem* toplevelItem = item;
-	while(toplevelItem->parent()) {
-		toplevelItem = toplevelItem->parent();
-	}
-	toplevelItem->setData(0, SourceRole, str);
+	QString str;
+	QTextStream stream(&str);
+	m_currentDocument.save(stream, 1);
+	m_currentPageItem->setData(0, SourceRole, str);
 
 	QString elemstr;
 	QTextStream elemstream(&elemstr);
-	element.save(elemstream, 1);
+	m_currentElement.save(elemstream, 1);
 	ui.plainTextEditOutput->setPlainText(elemstr);
 
-	if(setCurrentSource(doc.firstChildElement("div")) && s_bboxRx.indexIn(element.attribute("title")) != -1) {
+	if(setCurrentSource(m_currentDocument.firstChildElement("div")) && s_bboxRx.indexIn(m_currentElement.attribute("title")) != -1) {
 		int x1 = s_bboxRx.cap(1).toInt();
 		int y1 = s_bboxRx.cap(2).toInt();
 		int x2 = s_bboxRx.cap(3).toInt();
@@ -560,33 +592,24 @@ QString OutputEditorHOCR::trimWord(const QString& word, QString* rest)
 
 void OutputEditorHOCR::mergeItems(const QList<QTreeWidgetItem*>& items)
 {
+	ui.treeWidgetItems->setCurrentItem(items.front());
+
 	QRect bbox = items.front()->data(0, BBoxRole).toRect();
 	QString text = items.front()->text(0);
-
-	QTreeWidgetItem* toplevelItem = items.front();
-	while(toplevelItem->parent()) {
-		toplevelItem = toplevelItem->parent();
-	}
-	QDomDocument doc;
-	doc.setContent(toplevelItem->data(0, SourceRole).toString());
 
 	for(int i = 1, n = items.size(); i < n; ++i) {
 		bbox = bbox.united(items[i]->data(0, BBoxRole).toRect());
 		text += items[i]->text(0);
-		QDomElement element = elementById(doc.firstChildElement(), items[i]->data(0, IdRole).toString());
+		QDomElement element = elementById(m_currentDocument.firstChildElement(), items[i]->data(0, IdRole).toString());
 		element.parentNode().removeChild(element);
 		delete items[i];
 	}
-	QString str;
-	QTextStream stream(&str);
-	doc.save(stream, 1);
-	toplevelItem->setData(0, SourceRole, str);
 
 	items.front()->setText(0, text);
 	items.front()->setData(0, BBoxRole, bbox);
-	updateItemText(items.front());
-	updateItemAttribute(items.front(), "title", "bbox", QString("%1 %2 %3 %4").arg(bbox.x()).arg(bbox.y()).arg(bbox.x() + bbox.width()).arg(bbox.y() + bbox.height()));
-	showItemProperties(items.front());
+	updateCurrentItemText();
+	updateCurrentItemAttribute("title", "bbox", QString("%1 %2 %3 %4").arg(bbox.x()).arg(bbox.y()).arg(bbox.x() + bbox.width()).arg(bbox.y() + bbox.height()));
+	showItemProperties(m_currentItem);
 }
 
 void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
