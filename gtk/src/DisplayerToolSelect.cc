@@ -58,7 +58,7 @@ bool DisplayerToolSelect::mousePressEvent(GdkEventButton* event)
 		if((event->state & Gdk::CONTROL_MASK) == 0){
 			clearSelections();
 		}
-		m_curSel = new DisplaySelection(this, 1 + m_selections.size(), m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y)));
+		m_curSel = new NumberedDisplayerSelection(this, 1 + m_selections.size(), m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y)));
 		m_curSel->setZIndex(1 + m_selections.size());
 		m_displayer->addItem(m_curSel);
 		return true;
@@ -95,7 +95,7 @@ bool DisplayerToolSelect::mouseReleaseEvent(GdkEventButton* /*event*/)
 
 void DisplayerToolSelect::resolutionChanged(double factor)
 {
-	for(DisplaySelection* sel : m_selections){
+	for(NumberedDisplayerSelection* sel : m_selections){
 		sel->scale(factor);
 	}
 }
@@ -103,7 +103,7 @@ void DisplayerToolSelect::resolutionChanged(double factor)
 void DisplayerToolSelect::rotationChanged(double delta)
 {
 	Geometry::Rotation R(delta);
-	for(DisplaySelection* sel : m_selections){
+	for(NumberedDisplayerSelection* sel : m_selections){
 		sel->rotate(R);
 	}
 }
@@ -114,7 +114,7 @@ std::vector<Cairo::RefPtr<Cairo::ImageSurface>> DisplayerToolSelect::getOCRAreas
 	if(m_selections.empty()){
 		images.push_back(m_displayer->getImage(m_displayer->getSceneBoundingRect()));
 	}else{
-		for(const DisplaySelection* sel : m_selections){
+		for(const NumberedDisplayerSelection* sel : m_selections){
 			images.push_back(m_displayer->getImage(sel->rect()));
 		}
 	}
@@ -123,7 +123,7 @@ std::vector<Cairo::RefPtr<Cairo::ImageSurface>> DisplayerToolSelect::getOCRAreas
 
 void DisplayerToolSelect::clearSelections()
 {
-	for(DisplaySelection* sel : m_selections) {
+	for(NumberedDisplayerSelection* sel : m_selections) {
 		m_displayer->removeItem(sel);
 		delete sel;
 	}
@@ -144,7 +144,7 @@ void DisplayerToolSelect::removeSelection(int num)
 
 void DisplayerToolSelect::reorderSelection(int oldNum, int newNum)
 {
-	DisplaySelection* sel = m_selections[oldNum - 1];
+	NumberedDisplayerSelection* sel = m_selections[oldNum - 1];
 	m_selections.erase(m_selections.begin() + oldNum - 1);
 	m_selections.insert(m_selections.begin() + newNum - 1, sel);
 	for(int i = 0, n = m_selections.size(); i < n; ++i){
@@ -153,7 +153,7 @@ void DisplayerToolSelect::reorderSelection(int oldNum, int newNum)
 	}
 }
 
-void DisplayerToolSelect::saveSelection(DisplaySelection* selection)
+void DisplayerToolSelect::saveSelection(NumberedDisplayerSelection* selection)
 {
 	Cairo::RefPtr<Cairo::ImageSurface> img = m_displayer->getImage(selection->rect());
 	std::string filename = Utils::make_output_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->getValue());
@@ -225,7 +225,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew)
 			}
 		}
 		for(int i = 0, n = rects.size(); i < n; ++i){
-			m_selections.push_back(new DisplaySelection(this, 1 + i, Geometry::Point(rects[i].x, rects[i].y)));
+			m_selections.push_back(new NumberedDisplayerSelection(this, 1 + i, Geometry::Point(rects[i].x, rects[i].y)));
 			m_selections.back()->setPoint(Geometry::Point(rects[i].x + rects[i].width, rects[i].y + rects[i].height));
 			m_displayer->addItem(m_selections.back());
 		}
@@ -235,17 +235,17 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void DisplaySelection::showContextMenu(GdkEventButton* event){
+void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event){
 	Gtk::Window* selmenu = MAIN->getWidget("window:selectionmenu");
 	Gtk::SpinButton* spin = MAIN->getWidget("spin:selectionmenu.order");
-	spin->get_adjustment()->set_upper(m_selectTool->m_selections.size());
+	spin->get_adjustment()->set_upper(static_cast<DisplayerToolSelect*>(m_tool)->m_selections.size());
 	spin->get_adjustment()->set_value(m_number);
 	Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
 	std::vector<sigc::connection> selmenuConnections = {
 		CONNECT(spin, value_changed, [&]{ reorderSelection(spin->get_value()); }),
 		CONNECT(MAIN->getWidget("button:selectionmenu.delete").as<Gtk::Button>(), clicked, [&]{
 			loop->quit();
-			m_selectTool->removeSelection(m_number);
+			static_cast<DisplayerToolSelect*>(m_tool)->removeSelection(m_number);
 		}),
 		CONNECT(MAIN->getWidget("button:selectionmenu.recognize").as<Gtk::Button>(), clicked, [&]{
 			loop->quit();
@@ -258,7 +258,7 @@ void DisplaySelection::showContextMenu(GdkEventButton* event){
 		CONNECT(MAIN->getWidget("button:selectionmenu.save").as<Gtk::Button>(), clicked, [&]{
 			loop->quit();
 			selmenu->hide(); // Explicitly hide here to avoid conflicts with file dialog which pops up
-			m_selectTool->saveSelection(this);
+			static_cast<DisplayerToolSelect*>(m_tool)->saveSelection(this);
 		}),
 		CONNECT(selmenu, button_press_event, [&](GdkEventButton* ev){
 			Gtk::Allocation a = selmenu->get_allocation();
@@ -299,13 +299,15 @@ void DisplaySelection::showContextMenu(GdkEventButton* event){
 #endif
 }
 
-void DisplaySelection::reorderSelection(int newNumber)
+void NumberedDisplayerSelection::reorderSelection(int newNumber)
 {
-	m_selectTool->reorderSelection(m_number, newNumber);
+	static_cast<DisplayerToolSelect*>(m_tool)->reorderSelection(m_number, newNumber);
 }
 
-void DisplaySelection::draw(Cairo::RefPtr<Cairo::Context> ctx) const
+void NumberedDisplayerSelection::draw(Cairo::RefPtr<Cairo::Context> ctx) const
 {
+	DisplayerSelection::draw(ctx);
+
 	Gdk::RGBA fgcolor("#FFFFFF");
 	Gdk::RGBA bgcolor("#4A90D9");
 
@@ -319,13 +321,6 @@ void DisplaySelection::draw(Cairo::RefPtr<Cairo::Context> ctx) const
 	double y2 = Utils::round((rect().y + rect().height) * scale) / scale - d;
 	Geometry::Rectangle paintrect(x1, y1, x2 - x1, y2 - y1);
 	ctx->save();
-	// Semitransparent rectangle with frame
-	ctx->set_line_width(2. * d);
-	ctx->rectangle(paintrect.x, paintrect.y, paintrect.width, paintrect.height);
-	ctx->set_source_rgba(bgcolor.get_red(), bgcolor.get_green(), bgcolor.get_blue(), 0.25);
-	ctx->fill_preserve();
-	ctx->set_source_rgba(bgcolor.get_red(), bgcolor.get_green(), bgcolor.get_blue(), 1.0);
-	ctx->stroke();
 	// Text box
 	double w = std::min(std::min(40. * d, paintrect.width), paintrect.height);
 	ctx->rectangle(paintrect.x, paintrect.y, w - d, w - d);
@@ -340,75 +335,4 @@ void DisplaySelection::draw(Cairo::RefPtr<Cairo::Context> ctx) const
 	ctx->set_source_rgba(fgcolor.get_red(), fgcolor.get_green(), bgcolor.get_blue(), 1.0);
 	ctx->show_text(idx);
 	ctx->restore();
-}
-
-bool DisplaySelection::mousePressEvent(GdkEventButton *event)
-{
-	if(event->button == 1) {
-		Geometry::Point p = displayer()->mapToSceneClamped(Geometry::Point(event->x, event->y));
-		double tol = 10.0 / displayer()->getCurrentScale();
-		m_resizeOffset = Geometry::Point(0., 0.);
-		if(std::abs(m_point.x - p.x) < tol){ // pointx
-			m_resizeHandlers.push_back(resizePointX);
-			m_resizeOffset.x = p.x - m_point.x;
-		}else if(std::abs(m_anchor.x - p.x) < tol){ // anchorx
-			m_resizeHandlers.push_back(resizeAnchorX);
-			m_resizeOffset.x = p.x - m_anchor.x;
-		}
-		if(std::abs(m_point.y - p.y) < tol){ // pointy
-			m_resizeHandlers.push_back(resizePointY);
-			m_resizeOffset.y = p.y - m_point.y;
-		}else if(std::abs(m_anchor.y - p.y) < tol){ // anchory
-			m_resizeHandlers.push_back(resizeAnchorY);
-			m_resizeOffset.y = p.y - m_anchor.y;
-		}
-		return true;
-	} else if(event->button == 3) {
-		showContextMenu(event);
-	}
-	return false;
-}
-
-bool DisplaySelection::mouseReleaseEvent(GdkEventButton */*event*/)
-{
-	m_resizeHandlers.clear();
-	return false;
-}
-
-bool DisplaySelection::mouseMoveEvent(GdkEventMotion *event)
-{
-	Geometry::Point p = displayer()->mapToSceneClamped(Geometry::Point(event->x, event->y));
-	if(m_resizeHandlers.empty()) {
-		double tol = 10.0 / displayer()->getCurrentScale();
-
-		bool left = std::abs(rect().x - p.x) < tol;
-		bool right = std::abs(rect().x + rect().width - p.x) < tol;
-		bool top = std::abs(rect().y - p.y) < tol;
-		bool bottom = std::abs(rect().y + rect().height - p.y) < tol;
-
-		if((top && left) || (bottom && right)){
-			displayer()->setCursor(Gdk::Cursor::create(MAIN->getWindow()->get_display(), "nwse-resize"));
-		}else if((top && right) || (bottom && left)){
-			displayer()->setCursor(Gdk::Cursor::create(MAIN->getWindow()->get_display(), "nesw-resize"));
-		}else if(top || bottom){
-			displayer()->setCursor(Gdk::Cursor::create(MAIN->getWindow()->get_display(), "ns-resize"));
-		}else if(left || right){
-			displayer()->setCursor(Gdk::Cursor::create(MAIN->getWindow()->get_display(), "ew-resize"));
-		}else{
-			displayer()->setCursor(Glib::RefPtr<Gdk::Cursor>(0));
-		}
-	}
-	Geometry::Point movePos(p.x - m_resizeOffset.x, p.y - m_resizeOffset.y);
-	Geometry::Rectangle bb = displayer()->getSceneBoundingRect();
-	movePos.x = std::min(std::max(bb.x, movePos.x), bb.x + bb.width);
-	movePos.y = std::min(std::max(bb.y, movePos.y), bb.y + bb.height);
-	if(!m_resizeHandlers.empty()){
-		for(const ResizeHandler& handler : m_resizeHandlers){
-			handler(movePos, m_anchor, m_point);
-		}
-		setRect(Geometry::Rectangle(m_anchor, m_point));
-		displayer()->ensureVisible(event->x, event->y);
-		return true;
-	}
-	return false;
 }
