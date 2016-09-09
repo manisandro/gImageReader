@@ -22,32 +22,6 @@
 #include "Recognizer.hh"
 #include "Utils.hh"
 
-class DisplayerToolHOCR::SelectionRect : public DisplayerItem {
-public:
-	using DisplayerItem::DisplayerItem;
-
-	void draw(Cairo::RefPtr<Cairo::Context> ctx) const override {
-		Gdk::RGBA bgcolor("#4A90D9");
-
-		double scale = displayer()->getCurrentScale();
-
-		double d = 0.5 / scale;
-		double x1 = Utils::round(rect().x * scale) / scale + d;
-		double y1 = Utils::round(rect().y * scale) / scale + d;
-		double x2 = Utils::round((rect().x + rect().width) * scale) / scale - d;
-		double y2 = Utils::round((rect().y + rect().height) * scale) / scale - d;
-		Geometry::Rectangle rect(x1, y1, x2 - x1, y2 - y1);
-		ctx->save();
-		// Semitransparent rectangle with frame
-		ctx->set_line_width(2. * d);
-		ctx->rectangle(rect.x, rect.y, rect.width, rect.height);
-		ctx->set_source_rgba(bgcolor.get_red(), bgcolor.get_green(), bgcolor.get_blue(), 0.25);
-		ctx->fill_preserve();
-		ctx->set_source_rgba(bgcolor.get_red(), bgcolor.get_green(), bgcolor.get_blue(), 1.0);
-		ctx->stroke();
-		ctx->restore();
-	}
-};
 
 DisplayerToolHOCR::DisplayerToolHOCR(Displayer *displayer)
 	: DisplayerTool(displayer)
@@ -69,12 +43,14 @@ std::vector<Cairo::RefPtr<Cairo::ImageSurface>> DisplayerToolHOCR::getOCRAreas()
 
 void DisplayerToolHOCR::setSelection(const Geometry::Rectangle& rect)
 {
+	Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
+	Geometry::Rectangle r = rect.translate(sceneRect.x, sceneRect.y);
 	if(!m_selection) {
-		m_selection = new SelectionRect();
+		m_selection = new DisplayerSelection(this, Geometry::Point(r.x, r.y));
+		CONNECT(m_selection, geometry_changed, [this](const Geometry::Rectangle& rect){ selectionChanged(rect); });
 		m_displayer->addItem(m_selection);
 	}
-	Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
-	m_selection->setRect(rect.translate(sceneRect.x, sceneRect.y));
+	m_selection->setAnchorAndPoint(Geometry::Point(r.x, r.y), Geometry::Point(r.x + r.width, r.y + r.height));
 }
 
 Cairo::RefPtr<Cairo::ImageSurface> DisplayerToolHOCR::getSelection(const Geometry::Rectangle& rect)
@@ -90,4 +66,11 @@ void DisplayerToolHOCR::clearSelection()
 		delete m_selection;
 		m_selection = nullptr;
 	}
+}
+
+void DisplayerToolHOCR::selectionChanged(const Geometry::Rectangle& rect)
+{
+	Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
+	Geometry::Rectangle r = rect.translate(-sceneRect.x, -sceneRect.y);
+	m_signalSelectionGeometryChanged.emit(Geometry::Rectangle(int(r.x), int(r.y), int(r.width), int(r.height)));
 }

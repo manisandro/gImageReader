@@ -24,6 +24,7 @@
 
 class DisplayerToolHOCR : public DisplayerTool
 {
+	Q_OBJECT
 public:
 	DisplayerToolHOCR(Displayer* displayer, QObject* parent = 0);
 	~DisplayerToolHOCR();
@@ -38,9 +39,14 @@ public:
 	QImage getSelection(const QRect& rect);
 	void clearSelection();
 
+signals:
+	void selectionGeometryChanged(QRect rect);
+
 private:
-	class GraphicsRectItem;
-	GraphicsRectItem* m_selection = nullptr;
+	DisplayerSelection* m_selection = nullptr;
+
+private slots:
+	void selectionChanged(QRectF rect);
 };
 
 #endif // DISPLAYERTOOLHOCR_HH

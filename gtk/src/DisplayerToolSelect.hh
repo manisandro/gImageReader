@@ -22,7 +22,7 @@
 
 #include "Displayer.hh"
 
-class DisplaySelection;
+class NumberedDisplayerSelection;
 
 class DisplayerToolSelect : public DisplayerTool {
 public:
@@ -41,39 +41,25 @@ public:
 	void reset() override{ clearSelections(); }
 
 private:
-	friend class DisplaySelection;
-	DisplaySelection* m_curSel = nullptr;
-	std::vector<DisplaySelection*> m_selections;
+	friend class NumberedDisplayerSelection;
+	NumberedDisplayerSelection* m_curSel = nullptr;
+	std::vector<NumberedDisplayerSelection*> m_selections;
 	sigc::connection m_connectionAutolayout;
 
 	void clearSelections();
 	void removeSelection(int num);
 	void reorderSelection(int oldNum, int newNum);
-	void saveSelection(DisplaySelection* selection);
+	void saveSelection(NumberedDisplayerSelection* selection);
 	void updateRecognitionModeLabel();
 	void autodetectLayout(bool noDeskew = false);
 };
 
-class DisplaySelection : public DisplayerItem
+class NumberedDisplayerSelection : public DisplayerSelection
 {
 public:
-	DisplaySelection(DisplayerToolSelect* selectTool, int number, const Geometry::Point& anchor)
-		: m_selectTool(selectTool), m_number(number), m_anchor(anchor), m_point(anchor)
+	NumberedDisplayerSelection(DisplayerToolSelect* selectTool, int number, const Geometry::Point& anchor)
+		: DisplayerSelection(selectTool, anchor), m_number(number)
 	{
-		setRect(Geometry::Rectangle(anchor, anchor));
-	}
-	void setPoint(const Geometry::Point& point){
-		m_point = point;
-		setRect(Geometry::Rectangle(m_anchor, m_point));
-	}
-	void rotate(const Geometry::Rotation &R){
-		m_anchor = R.rotate(m_anchor);
-		m_point = R.rotate(m_point);
-		setRect(Geometry::Rectangle(m_anchor, m_point));
-	}
-	void scale(double factor){
-		m_anchor = Geometry::Point(m_anchor.x * factor, m_anchor.y * factor);
-		m_point = Geometry::Point(m_point.x * factor, m_point.y * factor);
 	}
 	void setNumber(int number){
 		m_number = number;
@@ -82,26 +68,11 @@ public:
 	void reorderSelection(int newNumber);
 
 	void draw(Cairo::RefPtr<Cairo::Context> ctx) const override;
-	bool mousePressEvent(GdkEventButton *event) override;
-	bool mouseReleaseEvent(GdkEventButton *event) override;
-	bool mouseMoveEvent(GdkEventMotion *event) override;
 
 private:
-	typedef void(*ResizeHandler)(const Geometry::Point&, Geometry::Point&, Geometry::Point&);
-
-	DisplayerToolSelect* m_selectTool;
 	int m_number;
-	Geometry::Point m_anchor;
-	Geometry::Point m_point;
-	std::vector<ResizeHandler> m_resizeHandlers;
-	Geometry::Point m_resizeOffset;
 
-	void showContextMenu(GdkEventButton *event);
-
-	static void resizeAnchorX(const Geometry::Point& pos, Geometry::Point& anchor, Geometry::Point& /*point*/){ anchor.x = pos.x; }
-	static void resizeAnchorY(const Geometry::Point& pos, Geometry::Point& anchor, Geometry::Point& /*point*/){ anchor.y = pos.y; }
-	static void resizePointX(const Geometry::Point& pos, Geometry::Point& /*anchor*/, Geometry::Point& point){ point.x = pos.x; }
-	static void resizePointY(const Geometry::Point& pos, Geometry::Point& /*anchor*/, Geometry::Point& point){ point.y = pos.y; }
+	void showContextMenu(GdkEventButton *event) override;
 };
 
 #endif // DISPLAYERTOOLSELECT_HH

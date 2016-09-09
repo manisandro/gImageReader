@@ -22,22 +22,8 @@
 #include "Recognizer.hh"
 
 #include <QGraphicsRectItem>
+#include <QMouseEvent>
 
-class DisplayerToolHOCR::GraphicsRectItem : public QGraphicsRectItem {
-public:
-	GraphicsRectItem(DisplayerToolHOCR* tool) : m_tool(tool) {}
-
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) override {
-		QPen curPen = pen();
-		curPen.setWidth(1 / m_tool->m_displayer->getCurrentScale());
-		setPen(curPen);
-		painter->setRenderHint(QPainter::Antialiasing, false);
-		QGraphicsRectItem::paint(painter, option, widget);
-		painter->setRenderHint(QPainter::Antialiasing, true);
-	}
-private:
-	DisplayerToolHOCR* m_tool;
-};
 
 DisplayerToolHOCR::DisplayerToolHOCR(Displayer *displayer, QObject *parent)
 	: DisplayerTool(displayer, parent)
@@ -57,17 +43,13 @@ QList<QImage> DisplayerToolHOCR::getOCRAreas()
 
 void DisplayerToolHOCR::setSelection(const QRect& rect)
 {
+	QRect r = rect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft());
 	if(!m_selection) {
-		m_selection = new GraphicsRectItem(this);
-
-		QColor c = QPalette().highlight().color();
-		m_selection->setBrush(QColor(c.red(), c.green(), c.blue(), 63));
-		QPen pen;
-		pen.setColor(c);
-		m_selection->setPen(pen);
+		m_selection = new DisplayerSelection(this, r.topLeft());
+		connect(m_selection, SIGNAL(geometryChanged(QRectF)), this, SLOT(selectionChanged(QRectF)));
 		m_displayer->scene()->addItem(m_selection);
 	}
-	m_selection->setRect(rect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft()));
+	m_selection->setAnchorAndPoint(r.topLeft(), r.bottomRight());
 }
 
 QImage DisplayerToolHOCR::getSelection(const QRect& rect)
@@ -79,4 +61,10 @@ void DisplayerToolHOCR::clearSelection()
 {
 	delete m_selection;
 	m_selection = nullptr;
+}
+
+void DisplayerToolHOCR::selectionChanged(QRectF rect)
+{
+	QRect r = rect.translated(-m_displayer->getSceneBoundingRect().toRect().topLeft()).toRect();
+	emit selectionGeometryChanged(r);
 }

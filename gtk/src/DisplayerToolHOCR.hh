@@ -39,10 +39,13 @@ public:
 	void setSelection(const Geometry::Rectangle& rect);
 	Cairo::RefPtr<Cairo::ImageSurface> getSelection(const Geometry::Rectangle& rect);
 	void clearSelection();
+	sigc::signal<void, Geometry::Rectangle> signal_selection_geometry_changed(){ return m_signalSelectionGeometryChanged; }
 
 private:
-	class SelectionRect;
-	SelectionRect* m_selection = nullptr;
+	DisplayerSelection* m_selection = nullptr;
+	sigc::signal<void, Geometry::Rectangle> m_signalSelectionGeometryChanged;
+
+	void selectionChanged(const Geometry::Rectangle& rect);
 };
 
 #endif // DISPLAYERTOOLHOCR_HH

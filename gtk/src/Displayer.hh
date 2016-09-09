@@ -187,6 +187,62 @@ protected:
 	double m_rotation = 0.;
 };
 
+class DisplayerSelection : public DisplayerItem
+{
+public:
+	DisplayerSelection(DisplayerTool* tool, const Geometry::Point& anchor)
+		: m_tool(tool), m_anchor(anchor), m_point(anchor)
+	{
+		setRect(Geometry::Rectangle(anchor, anchor));
+	}
+	void setPoint(const Geometry::Point& point){
+		m_point = point;
+		setRect(Geometry::Rectangle(m_anchor, m_point));
+	}
+	void setAnchorAndPoint(const Geometry::Point& anchor, const Geometry::Point& point) {
+		m_anchor = anchor;
+		m_point = point;
+		setRect(Geometry::Rectangle(m_anchor, m_point));
+	}
+	void rotate(const Geometry::Rotation &R){
+		m_anchor = R.rotate(m_anchor);
+		m_point = R.rotate(m_point);
+		setRect(Geometry::Rectangle(m_anchor, m_point));
+	}
+	void scale(double factor){
+		m_anchor = Geometry::Point(m_anchor.x * factor, m_anchor.y * factor);
+		m_point = Geometry::Point(m_point.x * factor, m_point.y * factor);
+	}
+	sigc::signal<void, Geometry::Rectangle> signal_geometry_changed(){
+		return m_signalGeometryChanged;
+	}
+
+	void draw(Cairo::RefPtr<Cairo::Context> ctx) const override;
+	bool mousePressEvent(GdkEventButton *event) override;
+	bool mouseReleaseEvent(GdkEventButton *event) override;
+	bool mouseMoveEvent(GdkEventMotion *event) override;
+
+protected:
+	DisplayerTool* m_tool;
+
+	virtual void showContextMenu(GdkEventButton* /*event*/) {}
+
+private:
+	typedef void(*ResizeHandler)(const Geometry::Point&, Geometry::Point&, Geometry::Point&);
+
+	Geometry::Point m_anchor;
+	Geometry::Point m_point;
+	std::vector<ResizeHandler> m_resizeHandlers;
+	Geometry::Point m_resizeOffset;
+	sigc::signal<void, Geometry::Rectangle> m_signalGeometryChanged;
+
+	static void resizeAnchorX(const Geometry::Point& pos, Geometry::Point& anchor, Geometry::Point& /*point*/){ anchor.x = pos.x; }
+	static void resizeAnchorY(const Geometry::Point& pos, Geometry::Point& anchor, Geometry::Point& /*point*/){ anchor.y = pos.y; }
+	static void resizePointX(const Geometry::Point& pos, Geometry::Point& /*anchor*/, Geometry::Point& point){ point.x = pos.x; }
+	static void resizePointY(const Geometry::Point& pos, Geometry::Point& /*anchor*/, Geometry::Point& point){ point.y = pos.y; }
+};
+
+
 class DisplayerTool {
 public:
 	DisplayerTool(Displayer* displayer) : m_displayer(displayer) {}

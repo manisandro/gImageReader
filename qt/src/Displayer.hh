@@ -21,6 +21,7 @@
 #define DISPLAYER_HH
 
 #include <functional>
+#include <QGraphicsRectItem>
 #include <QGraphicsView>
 #include <QImage>
 #include <QMap>
@@ -140,8 +141,64 @@ public:
 	virtual void autodetectOCRAreas(){}
 	virtual void reset(){}
 
+	Displayer* getDisplayer() const{ return m_displayer; }
+
 protected:
 	Displayer* m_displayer;
+};
+
+class DisplayerSelection : public QObject, public QGraphicsRectItem
+{
+	Q_OBJECT
+public:
+	DisplayerSelection(DisplayerTool* tool, const QPointF& anchor)
+		: QGraphicsRectItem(QRectF(anchor, anchor)), m_tool(tool), m_anchor(anchor), m_point(anchor)
+	{
+		setAcceptHoverEvents(true);
+	}
+	void setAnchorAndPoint(const QPointF& anchor, const QPointF& point) {
+		m_anchor = anchor;
+		m_point = point;
+		setRect(QRectF(m_anchor, m_point).normalized());
+	}
+	void setPoint(const QPointF& point){
+		m_point = point;
+		setRect(QRectF(m_anchor, m_point).normalized());
+	}
+	void rotate(const QTransform& transform){
+		m_anchor = transform.map(m_anchor);
+		m_point = transform.map(m_point);
+		setRect(QRectF(m_anchor, m_point).normalized());
+	}
+	void scale(double factor){
+		m_anchor *= factor;
+		m_point *= factor;
+	}
+
+protected:
+	DisplayerTool* m_tool;
+
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget* widget);
+
+signals:
+	void geometryChanged(QRectF rect);
+
+private:
+	typedef void(*ResizeHandler)(const QPointF&, QPointF&, QPointF&);
+
+	QPointF m_anchor;
+	QPointF m_point;
+	QVector<ResizeHandler> m_resizeHandlers;
+	QPointF m_resizeOffset;
+
+	void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+
+	static void resizeAnchorX(const QPointF& pos, QPointF& anchor, QPointF& /*point*/){ anchor.rx() = pos.x(); }
+	static void resizeAnchorY(const QPointF& pos, QPointF& anchor, QPointF& /*point*/){ anchor.ry() = pos.y(); }
+	static void resizePointX(const QPointF& pos, QPointF& /*anchor*/, QPointF& point){ point.rx() = pos.x(); }
+	static void resizePointY(const QPointF& pos, QPointF& /*anchor*/, QPointF& point){ point.ry() = pos.y(); }
 };
 
 #endif // IMAGEDISPLAYER_HH

@@ -659,3 +659,100 @@ void DisplayerImageItem::draw(Cairo::RefPtr<Cairo::Context> ctx) const
 		ctx->restore();
 	}
 }
+
+
+void DisplayerSelection::draw(Cairo::RefPtr<Cairo::Context> ctx) const
+{
+	Gdk::RGBA bgcolor("#4A90D9");
+
+	double scale = displayer()->getCurrentScale();
+
+	double d = 0.5 / scale;
+	double x1 = Utils::round(rect().x * scale) / scale + d;
+	double y1 = Utils::round(rect().y * scale) / scale + d;
+	double x2 = Utils::round((rect().x + rect().width) * scale) / scale - d;
+	double y2 = Utils::round((rect().y + rect().height) * scale) / scale - d;
+	Geometry::Rectangle paintrect(x1, y1, x2 - x1, y2 - y1);
+	ctx->save();
+	// Semitransparent rectangle with frame
+	ctx->set_line_width(2. * d);
+	ctx->rectangle(paintrect.x, paintrect.y, paintrect.width, paintrect.height);
+	ctx->set_source_rgba(bgcolor.get_red(), bgcolor.get_green(), bgcolor.get_blue(), 0.25);
+	ctx->fill_preserve();
+	ctx->set_source_rgba(bgcolor.get_red(), bgcolor.get_green(), bgcolor.get_blue(), 1.0);
+	ctx->stroke();
+	ctx->restore();
+}
+
+bool DisplayerSelection::mousePressEvent(GdkEventButton *event)
+{
+	if(event->button == 1) {
+		Geometry::Point p = displayer()->mapToSceneClamped(Geometry::Point(event->x, event->y));
+		double tol = 10.0 / displayer()->getCurrentScale();
+		m_resizeOffset = Geometry::Point(0., 0.);
+		if(std::abs(m_point.x - p.x) < tol){ // pointx
+			m_resizeHandlers.push_back(resizePointX);
+			m_resizeOffset.x = p.x - m_point.x;
+		}else if(std::abs(m_anchor.x - p.x) < tol){ // anchorx
+			m_resizeHandlers.push_back(resizeAnchorX);
+			m_resizeOffset.x = p.x - m_anchor.x;
+		}
+		if(std::abs(m_point.y - p.y) < tol){ // pointy
+			m_resizeHandlers.push_back(resizePointY);
+			m_resizeOffset.y = p.y - m_point.y;
+		}else if(std::abs(m_anchor.y - p.y) < tol){ // anchory
+			m_resizeHandlers.push_back(resizeAnchorY);
+			m_resizeOffset.y = p.y - m_anchor.y;
+		}
+		return true;
+	} else if(event->button == 3) {
+		showContextMenu(event);
+	}
+	return false;
+}
+
+bool DisplayerSelection::mouseReleaseEvent(GdkEventButton */*event*/)
+{
+	m_resizeHandlers.clear();
+	return false;
+}
+
+bool DisplayerSelection::mouseMoveEvent(GdkEventMotion *event)
+{
+	Geometry::Point p = displayer()->mapToSceneClamped(Geometry::Point(event->x, event->y));
+	if(m_resizeHandlers.empty()) {
+		double tol = 10.0 / displayer()->getCurrentScale();
+
+		bool left = std::abs(rect().x - p.x) < tol;
+		bool right = std::abs(rect().x + rect().width - p.x) < tol;
+		bool top = std::abs(rect().y - p.y) < tol;
+		bool bottom = std::abs(rect().y + rect().height - p.y) < tol;
+
+		if((top && left) || (bottom && right)){
+			displayer()->setCursor(Gdk::Cursor::create(MAIN->getWindow()->get_display(), "nwse-resize"));
+		}else if((top && right) || (bottom && left)){
+			displayer()->setCursor(Gdk::Cursor::create(MAIN->getWindow()->get_display(), "nesw-resize"));
+		}else if(top || bottom){
+			displayer()->setCursor(Gdk::Cursor::create(MAIN->getWindow()->get_display(), "ns-resize"));
+		}else if(left || right){
+			displayer()->setCursor(Gdk::Cursor::create(MAIN->getWindow()->get_display(), "ew-resize"));
+		}else{
+			displayer()->setCursor(Glib::RefPtr<Gdk::Cursor>(0));
+		}
+	}
+	Geometry::Point movePos(p.x - m_resizeOffset.x, p.y - m_resizeOffset.y);
+	Geometry::Rectangle bb = displayer()->getSceneBoundingRect();
+	movePos.x = std::min(std::max(bb.x, movePos.x), bb.x + bb.width);
+	movePos.y = std::min(std::max(bb.y, movePos.y), bb.y + bb.height);
+	if(!m_resizeHandlers.empty()){
+		for(const ResizeHandler& handler : m_resizeHandlers){
+			handler(movePos, m_anchor, m_point);
+		}
+		setRect(Geometry::Rectangle(m_anchor, m_point));
+		m_signalGeometryChanged.emit(rect());
+		displayer()->ensureVisible(event->x, event->y);
+		return true;
+	}
+	return false;
+}
+

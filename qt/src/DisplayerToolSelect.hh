@@ -26,7 +26,7 @@
 #include <QWidgetAction>
 #include "Displayer.hh"
 
-class DisplaySelection;
+class NumberedDisplayerSelection;
 
 class DisplayerToolSelect : public DisplayerTool {
 	Q_OBJECT
@@ -46,44 +46,29 @@ public:
 	void reset() override{ clearSelections(); }
 
 private:
-	friend class DisplaySelection;
+	friend class NumberedDisplayerSelection;
 	QAction* mActionAutodetectLayout = nullptr;
-	DisplaySelection* m_curSel = nullptr;
-	QList<DisplaySelection*> m_selections;
+	NumberedDisplayerSelection* m_curSel = nullptr;
+	QList<NumberedDisplayerSelection*> m_selections;
 
 	void clearSelections();
 	void removeSelection(int num);
 	void reorderSelection(int oldNum, int newNum);
-	void saveSelection(DisplaySelection* selection);
+	void saveSelection(NumberedDisplayerSelection* selection);
 	void updateRecognitionModeLabel();
 
 private slots:
 	void autodetectLayout(bool noDeskew = false);
 };
 
-class DisplaySelection : public QObject, public QGraphicsRectItem
+class NumberedDisplayerSelection : public DisplayerSelection
 {
 	Q_OBJECT
 public:
-	DisplaySelection(DisplayerToolSelect* selectTool, int number, const QPointF& anchor)
-		: QGraphicsRectItem(QRectF(anchor, anchor)), m_selectTool(selectTool), m_number(number), m_anchor(anchor), m_point(anchor)
+	NumberedDisplayerSelection(DisplayerToolSelect* selectTool, int number, const QPointF& anchor)
+		: DisplayerSelection(selectTool, anchor), m_number(number)
 	{
-		setAcceptHoverEvents(true);
 	}
-	void setPoint(const QPointF& point){
-		m_point = point;
-		setRect(QRectF(m_anchor, m_point).normalized());
-	}
-	void rotate(const QTransform& transform){
-		m_anchor = transform.map(m_anchor);
-		m_point = transform.map(m_point);
-		setRect(QRectF(m_anchor, m_point).normalized());
-	}
-	void scale(double factor){
-		m_anchor *= factor;
-		m_point *= factor;
-	}
-
 	void setNumber(int number){
 		m_number = number;
 	}
@@ -92,25 +77,9 @@ private slots:
 	void reorderSelection(int newNumber);
 
 private:
-	typedef void(*ResizeHandler)(const QPointF&, QPointF&, QPointF&);
-
-	DisplayerToolSelect* m_selectTool;
 	int m_number;
-	QPointF m_anchor;
-	QPointF m_point;
-	QVector<ResizeHandler> m_resizeHandlers;
-	QPointF m_resizeOffset;
-
-	void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
-	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-	static void resizeAnchorX(const QPointF& pos, QPointF& anchor, QPointF& /*point*/){ anchor.rx() = pos.x(); }
-	static void resizeAnchorY(const QPointF& pos, QPointF& anchor, QPointF& /*point*/){ anchor.ry() = pos.y(); }
-	static void resizePointX(const QPointF& pos, QPointF& /*anchor*/, QPointF& point){ point.rx() = pos.x(); }
-	static void resizePointY(const QPointF& pos, QPointF& /*anchor*/, QPointF& point){ point.ry() = pos.y(); }
 };
 
 #endif // DISPLAYERTOOLSELECT_HH
