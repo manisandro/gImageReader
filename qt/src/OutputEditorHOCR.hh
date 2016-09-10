@@ -101,6 +101,7 @@ private:
 	void mergeItems(const QList<QTreeWidgetItem*>& items);
 
 private slots:
+	void addGraphicRegion(QRect rect);
 	void addPage(const QString& hocrText, ReadSessionData data);
 	void setFont();
 	void showItemProperties(QTreeWidgetItem* item);

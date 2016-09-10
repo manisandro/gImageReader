@@ -36,13 +36,21 @@ public:
 	void rotationChanged(double /*delta*/) override{ clearSelection(); }
 	void reset() override{ clearSelection(); }
 
+	bool mousePressEvent(GdkEventButton *event) override;
+	bool mouseMoveEvent(GdkEventMotion *event) override;
+	bool mouseReleaseEvent(GdkEventButton *event) override;
+
+	void activateDrawSelection(){ m_drawingSelection = true; }
 	void setSelection(const Geometry::Rectangle& rect);
 	Cairo::RefPtr<Cairo::ImageSurface> getSelection(const Geometry::Rectangle& rect);
 	void clearSelection();
+	sigc::signal<void, Geometry::Rectangle> signal_selection_drawn(){ return m_signalSelectionDrawn; }
 	sigc::signal<void, Geometry::Rectangle> signal_selection_geometry_changed(){ return m_signalSelectionGeometryChanged; }
 
 private:
 	DisplayerSelection* m_selection = nullptr;
+	bool m_drawingSelection = false;
+	sigc::signal<void, Geometry::Rectangle> m_signalSelectionDrawn;
 	sigc::signal<void, Geometry::Rectangle> m_signalSelectionGeometryChanged;
 
 	void selectionChanged(const Geometry::Rectangle& rect);

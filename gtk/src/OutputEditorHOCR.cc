@@ -217,6 +217,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	m_connectionPropViewRowEdited = CONNECT(m_propStore, row_changed, [this](const Gtk::TreeModel::Path&, const Gtk::TreeIter& iter){ propertyCellChanged(iter); });
 	CONNECT(m_itemView, context_menu_requested, [this](GdkEventButton* ev){ showContextMenu(ev); });
 	CONNECT(m_tool, selection_geometry_changed, [this](const Geometry::Rectangle& rect){ updateCurrentItemBBox(rect); });
+	CONNECT(m_tool, selection_drawn, [this](const Geometry::Rectangle& rect) { addGraphicRection(rect); });
 
 	CONNECT(m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>(), changed, [this]{ updatePreview(); });
 	CONNECT(m_builder("fontbutton:pdfoptions").as<Gtk::FontButton>(), font_set, [this]{ updatePreview(); });
@@ -681,6 +682,58 @@ void OutputEditorHOCR::updateCurrentItem()
 	m_modified = true;
 }
 
+void OutputEditorHOCR::addGraphicRection(const Geometry::Rectangle &rect)
+{
+	if(!m_currentParser) {
+		return;
+	}
+	xmlpp::Document* doc = m_currentParser->get_document();
+	xmlpp::Element* pageDiv = dynamic_cast<xmlpp::Element*>(doc ? doc->get_root_node() : nullptr);
+	if(!pageDiv || pageDiv->get_name() != "div")
+		return;
+
+	// Determine a free block id
+	int pageId = 0;
+	int blockId = 0;
+	xmlpp::Element* blockEl = getFirstChildElement(pageDiv, "div");
+	while(blockEl) {
+		Glib::MatchInfo matchInfo;
+		Glib::ustring idAttr = getAttribute(blockEl, "id");
+		if(s_idRx->match(idAttr, matchInfo)) {
+			pageId = std::max(pageId, std::atoi(matchInfo.fetch(1).c_str()) + 1);
+			blockId = std::max(blockId, std::atoi(matchInfo.fetch(2).c_str()) + 1);
+		}
+		blockEl = getNextSiblingElement(blockEl);
+	}
+
+	// Add html element
+	xmlpp::Element* graphicElement = pageDiv->add_child("div");
+	graphicElement->set_attribute("title", Glib::ustring::compose("bbox %1 %2 %3 %4", rect.x, rect.y, rect.x + rect.width, rect.y + rect.height));
+	graphicElement->set_attribute("class", "ocr_carea");
+	graphicElement->set_attribute("id", Glib::ustring::compose("block_%1_%2", pageId, blockId));
+	Gtk::TreeIter toplevelItem = m_itemStore->get_iter(m_currentPageItem);
+	toplevelItem->set_value(m_itemStoreCols.source, getDocumentXML(m_currentParser->get_document()));
+
+	// Add tree item
+	Gtk::TreeIter item = m_itemStore->append(toplevelItem->children());
+	item->set_value(m_itemStoreCols.text, Glib::ustring(_("Graphic")));
+	item->set_value(m_itemStoreCols.selected, true);
+	item->set_value(m_itemStoreCols.editable, false);
+#if GTKMM_CHECK_VERSION(3,12,0)
+	item->set_value(m_itemStoreCols.icon, Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/item_halftone.png"));
+#else
+	item->set_value(m_itemStoreCols.icon, Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/item_halftone.png", 0)));
+#endif
+	item->set_value(m_itemStoreCols.id, getAttribute(graphicElement, "id"));
+	item->set_value(m_itemStoreCols.itemClass, Glib::ustring("ocr_graphic"));
+	item->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
+	item->set_value(m_itemStoreCols.bbox, rect);
+
+	m_itemView->get_selection()->unselect_all();
+	m_itemView->get_selection()->select(item);
+	m_itemView->scroll_to_row(m_itemStore->get_path(item));
+}
+
 Glib::ustring OutputEditorHOCR::trimWord(const Glib::ustring& word, Glib::ustring* rest)
 {
 	Glib::RefPtr<Glib::Regex> re = Glib::Regex::create("\\w\\W*$");
@@ -790,6 +843,8 @@ void OutputEditorHOCR::showContextMenu(GdkEventButton* ev)
 		Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
 		Gtk::MenuItem* removeItem = Gtk::manage(new Gtk::MenuItem(_("Remove")));
 		menu.append(*removeItem);
+		Gtk::MenuItem* addGraphicItem = Gtk::manage(new Gtk::MenuItem(_("Add graphic region")));
+		menu.append(*addGraphicItem);
 		CONNECT(removeItem, activate, [&]{
 			m_itemStore->erase(it);
 			m_connectionPropViewRowEdited.block(true);
@@ -797,6 +852,10 @@ void OutputEditorHOCR::showContextMenu(GdkEventButton* ev)
 			m_connectionPropViewRowEdited.block(false);
 			m_builder("button:hocr.save")->set_sensitive(!m_itemStore->children().empty());
 			m_builder("button:hocr.export")->set_sensitive(!m_itemStore->children().empty());
+		});
+		CONNECT(addGraphicItem, activate, [this]{
+			m_tool->clearSelection();
+			m_tool->activateDrawSelection();
 		});
 		CONNECT(&menu, hide, [&]{ loop->quit(); });
 		menu.show_all();

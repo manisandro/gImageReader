@@ -41,8 +41,48 @@ std::vector<Cairo::RefPtr<Cairo::ImageSurface>> DisplayerToolHOCR::getOCRAreas()
 	return surfaces;
 }
 
+bool DisplayerToolHOCR::mousePressEvent(GdkEventButton* event)
+{
+	if(event->button == 1 && m_drawingSelection){
+		clearSelection();
+		m_selection = new DisplayerSelection(this, m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y)));
+		m_displayer->addItem(m_selection);
+		return true;
+	}
+	return false;
+}
+
+bool DisplayerToolHOCR::mouseMoveEvent(GdkEventMotion* event)
+{
+	if(m_selection && m_drawingSelection){
+		Geometry::Point p = m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y));
+		m_selection->setPoint(p);
+		m_displayer->ensureVisible(event->x, event->y);
+		return true;
+	}
+	return false;
+}
+
+bool DisplayerToolHOCR::mouseReleaseEvent(GdkEventButton* /*event*/)
+{
+	if(m_selection && m_drawingSelection){
+		if(m_selection->rect().width < 5. || m_selection->rect().height < 5.){
+			clearSelection();
+		}else{
+			Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
+			Geometry::Rectangle r = m_selection->rect().translate(-sceneRect.x, -sceneRect.y);
+			m_signalSelectionDrawn.emit(Geometry::Rectangle(int(r.x), int(r.y), int(r.width), int(r.height)));
+		}
+		m_drawingSelection = false;
+		return true;
+	}
+	m_drawingSelection = false;
+	return false;
+}
+
 void DisplayerToolHOCR::setSelection(const Geometry::Rectangle& rect)
 {
+	m_drawingSelection = false;
 	Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
 	Geometry::Rectangle r = rect.translate(sceneRect.x, sceneRect.y);
 	if(!m_selection) {
