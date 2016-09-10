@@ -108,7 +108,7 @@ private:
 
 	Gtk::TreeIter currentItem();
 	bool addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring, Glib::ustring>& langCache);
-	void printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const;
+	void printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing, int preserveSpaceWidth) const;
 	bool setCurrentSource(xmlpp::Element* pageElement, int* pageDpi = 0) const;
 	void updateCurrentItemText();
 	void updateCurrentItemAttribute(const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue, bool update=true);

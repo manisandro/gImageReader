@@ -156,5 +156,10 @@
             <summary>Uniformize line spacing</summary>
             <description>Whether to uniformize line spacing when generating PDFs.</description>
         </key>
+        <key type="i" name="pdfpreservespaces">
+            <default>4</default>
+            <summary>Preserve spaces wider than</summary>
+            <description>Preserve spaces wider than the specified number of characters when generating PDFs with uniformized spacing.</description>
+        </key>
     </schema>
 </schemalist>

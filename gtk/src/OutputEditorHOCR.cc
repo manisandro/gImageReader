@@ -221,7 +221,11 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	CONNECT(m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>(), changed, [this]{ updatePreview(); });
 	CONNECT(m_builder("fontbutton:pdfoptions").as<Gtk::FontButton>(), font_set, [this]{ updatePreview(); });
 	CONNECT(m_builder("checkbox:pdfoptions.usedetectedfontsizes").as<Gtk::CheckButton>(), toggled, [this]{ updatePreview(); });
-	CONNECT(m_builder("checkbox:pdfoptions.uniformlinespacing").as<Gtk::CheckButton>(), toggled, [this]{ updatePreview(); });
+	CONNECTS(m_builder("checkbox:pdfoptions.uniformlinespacing").as<Gtk::CheckButton>(), toggled, [this](Gtk::CheckButton* button){
+		updatePreview();
+		m_builder("box:pdfoptions.preserve")->set_sensitive(button->get_active());
+	});
+	CONNECT(m_builder("spin:pdfoptions.preserve").as<Gtk::SpinButton>(), value_changed, [this]{ updatePreview(); });
 	CONNECT(m_builder("checkbox:pdfoptions.preview").as<Gtk::CheckButton>(), toggled, [this]{ updatePreview(); });
 
 	if(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue().empty()){
@@ -232,6 +236,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	MAIN->getConfig()->addSetting(new FontSetting("pdffont", m_builder("fontbutton:pdfoptions")));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfusedetectedfontsizes", m_builder("checkbox:pdfoptions.usedetectedfontsizes")));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfuniformizelinespacing", m_builder("checkbox:pdfoptions.uniformlinespacing")));
+	MAIN->getConfig()->addSetting(new SpinSetting("pdfpreservespaces", m_builder("spin:pdfoptions.preserve")));
 
 	setFont();
 }
@@ -947,6 +952,7 @@ void OutputEditorHOCR::savePDF()
 	bool overlay = m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>()->get_active_row_number() == 1;
 	bool useDetectedFontSizes = m_builder("checkbox:pdfoptions.usedetectedfontsizes").as<Gtk::CheckButton>()->get_active();
 	bool uniformizeLineSpacing = m_builder("checkbox:pdfoptions.uniformlinespacing").as<Gtk::CheckButton>()->get_active();
+	int preserveSpaceWidth = m_builder("spin:pdfoptions.preserve").as<Gtk::SpinButton>()->get_value();
 
 	int outputDpi = 300;
 	Cairo::RefPtr<Cairo::PdfSurface> surface;
@@ -985,7 +991,7 @@ void OutputEditorHOCR::savePDF()
 			} else {
 				context->set_source_rgb(0., 0., 0.);
 			}
-			printChildren(context, item, overlay, useDetectedFontSizes, uniformizeLineSpacing);
+			printChildren(context, item, overlay, useDetectedFontSizes, uniformizeLineSpacing, preserveSpaceWidth);
 			if(overlay) {
 				Cairo::RefPtr<Cairo::ImageSurface> sel = m_tool->getSelection(bbox);
 				context->save();
@@ -1005,7 +1011,7 @@ void OutputEditorHOCR::savePDF()
 	}
 }
 
-void OutputEditorHOCR::printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const
+void OutputEditorHOCR::printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing, int preserveSpaceWidth) const
 {
 	if(!(*item)[m_itemStoreCols.selected]) {
 		return;
@@ -1028,7 +1034,7 @@ void OutputEditorHOCR::printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk:
 					Cairo::TextExtents ext;
 					context->get_text_extents(Glib::ustring((*wordItem)[m_itemStoreCols.text]) + " ", ext);
 					int spaceSize = ext.x_advance - ext.width; // spaces are ignored in width but counted in advance
-					if(wordRect.x - prevWordRight > 4 * spaceSize) {
+					if(wordRect.x - prevWordRight > preserveSpaceWidth * spaceSize) {
 						x = wordRect.x;
 					}
 					prevWordRight = wordRect.x + wordRect.width;
@@ -1056,7 +1062,7 @@ void OutputEditorHOCR::printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk:
 		context->restore();
 	} else {
 		for(Gtk::TreeIter child : item->children()) {
-			printChildren(context, child, overlayMode, useDetectedFontSizes, uniformizeLineSpacing);
+			printChildren(context, child, overlayMode, useDetectedFontSizes, uniformizeLineSpacing, preserveSpaceWidth);
 		}
 	}
 }
@@ -1092,6 +1098,7 @@ void OutputEditorHOCR::updatePreview()
 	bool overlay = m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>()->get_active_row_number() == 1;
 	bool useDetectedFontSizes = m_builder("checkbox:pdfoptions.usedetectedfontsizes").as<Gtk::CheckButton>()->get_active();
 	bool uniformizeLineSpacing = m_builder("checkbox:pdfoptions.uniformlinespacing").as<Gtk::CheckButton>()->get_active();
+	int preserveSpaceWidth = m_builder("spin:pdfoptions.preserve").as<Gtk::SpinButton>()->get_value();
 	if(overlay) {
 		Cairo::RefPtr<Cairo::ImageSurface> sel = m_tool->getSelection(bbox);
 		context->save();
@@ -1109,7 +1116,7 @@ void OutputEditorHOCR::updatePreview()
 		context->restore();
 	}
 	context->set_source_rgb(0., 0., 0.);
-	printChildren(context, item, overlay, useDetectedFontSizes, uniformizeLineSpacing);
+	printChildren(context, item, overlay, useDetectedFontSizes, uniformizeLineSpacing, preserveSpaceWidth);
 	m_preview->setImage(image);
 	m_preview->setRect(Geometry::Rectangle(-0.5 * image->get_width(), -0.5 * image->get_height(), image->get_width(), image->get_height()));
 }

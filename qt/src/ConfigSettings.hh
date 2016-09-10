@@ -25,6 +25,7 @@
 #include <QComboBox>
 #include <QFontDialog>
 #include <QSettings>
+#include <QSpinBox>
 #include <QString>
 #include <QTableWidget>
 
@@ -160,6 +161,26 @@ public slots:
 
 private:
 	QComboBox* m_combo;
+};
+
+class SpinSetting : public AbstractSetting {
+	Q_OBJECT
+public:
+	SpinSetting(const QString& key, QSpinBox* spin, int defaultValue = 0)
+		: AbstractSetting(key), m_spin(spin)
+	{
+		spin->setValue(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toInt());
+		connect(spin, SIGNAL(valueChanged(int)), this, SLOT(serialize()));
+	}
+
+public slots:
+	void serialize(){
+		QSettings().setValue(m_key, QVariant::fromValue(m_spin->value()));
+		emit changed();
+	}
+
+private:
+	QSpinBox* m_spin;
 };
 
 class TableSetting : public AbstractSetting {
