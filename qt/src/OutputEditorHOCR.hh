@@ -91,7 +91,7 @@ private:
 	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString, QString>& langCache);
 	QDomElement elementById(QDomElement element, const QString& id) const;
 	void expandChildren(QTreeWidgetItem* item) const;
-	void printChildren(QPainter& painter, QTreeWidgetItem* item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const;
+	void printChildren(QPainter& painter, QTreeWidgetItem* item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing, int preseveSpaceWidth) const;
 	bool setCurrentSource(const QDomElement& pageElement, int* pageDpi = 0) const;
 	void updateCurrentItemText();
 	void updateCurrentItemAttribute(const QString& key, const QString& subkey, const QString& newvalue, bool update=true);

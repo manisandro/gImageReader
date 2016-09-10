@@ -146,6 +146,9 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	connect(m_pdfExportDialogUi.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
+	connect(m_pdfExportDialogUi.spinBoxPreserve, SIGNAL(valueChanged(int)), this, SLOT(updatePreview()));
+	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), m_pdfExportDialogUi.labelPreserve, SLOT(setEnabled(bool)));
+	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), m_pdfExportDialogUi.spinBoxPreserve, SLOT(setEnabled(bool)));
 	connect(m_pdfExportDialogUi.checkBoxPreview, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_tool, SIGNAL(selectionGeometryChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
 
@@ -154,6 +157,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageformat", m_pdfExportDialogUi.comboBoxImageFormat));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfusedetectedfontsizes", m_pdfExportDialogUi.checkBoxFontSize, true));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfuniformizelinespacing", m_pdfExportDialogUi.checkBoxUniformizeSpacing, true));
+	MAIN->getConfig()->addSetting(new SpinSetting("pdfpreservespaces", m_pdfExportDialogUi.spinBoxPreserve, 4));
 
 	setFont();
 	updateFontButton(m_pdfFontDialog.currentFont());
@@ -788,6 +792,7 @@ void OutputEditorHOCR::savePDF()
 	QPainter painter;
 	bool useDetectedFontSizes = m_pdfExportDialogUi.checkBoxFontSize->isChecked();
 	bool uniformizeLineSpacing = m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked();
+	int preserveSpaceWidth = m_pdfExportDialogUi.spinBoxPreserve->value();
 	bool overlay = m_pdfExportDialogUi.comboBoxOutputMode->currentIndex() == 1;
 	QStringList failed;
 	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
@@ -819,7 +824,7 @@ void OutputEditorHOCR::savePDF()
 			if(overlay) {
 				painter.setPen(QPen(QColor(0, 0, 0, 0)));
 			}
-			printChildren(painter, item, overlay, useDetectedFontSizes, uniformizeLineSpacing);
+			printChildren(painter, item, overlay, useDetectedFontSizes, uniformizeLineSpacing, preserveSpaceWidth);
 			if(overlay) {
 				painter.drawImage(bbox, m_tool->getSelection(bbox));
 			}
@@ -833,7 +838,7 @@ void OutputEditorHOCR::savePDF()
 	}
 }
 
-void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing) const
+void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing, int preseveSpaceWidth) const
 {
 	if(item->checkState(0) != Qt::Checked) {
 		return;
@@ -862,7 +867,7 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 						}
 					}
 					// If distance from previous word is large, keep the space
-					if(wordRect.x() - prevWordRight > 4 * painter.fontMetrics().averageCharWidth()) {
+					if(wordRect.x() - prevWordRight > preseveSpaceWidth * painter.fontMetrics().averageCharWidth()) {
 						x = wordRect.x();
 					}
 					prevWordRight = wordRect.right();
@@ -882,7 +887,7 @@ void OutputEditorHOCR::printChildren(QPainter& painter, QTreeWidgetItem *item, b
 		painter.drawImage(itemRect, m_tool->getSelection(itemRect));
 	} else {
 		for(int i = 0, n = item->childCount(); i < n; ++i) {
-			printChildren(painter, item->child(i), overlayMode, useDetectedFontSizes, uniformizeLineSpacing);
+			printChildren(painter, item->child(i), overlayMode, useDetectedFontSizes, uniformizeLineSpacing, preseveSpaceWidth);
 		}
 	}
 }
@@ -920,7 +925,7 @@ void OutputEditorHOCR::updatePreview()
 			image.fill(255);
 		}
 	}
-	printChildren(painter, item, overlay, m_pdfExportDialogUi.checkBoxFontSize->isChecked(), m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked());
+	printChildren(painter, item, overlay, m_pdfExportDialogUi.checkBoxFontSize->isChecked(), m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked(), m_pdfExportDialogUi.spinBoxPreserve->value());
 	m_preview->setPixmap(QPixmap::fromImage(image));
 	m_preview->setPos(-0.5 * bbox.width(), -0.5 * bbox.height());
 }

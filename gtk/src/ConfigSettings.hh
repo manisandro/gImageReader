@@ -121,6 +121,23 @@ private:
 	Gtk::ComboBox* m_widget;
 };
 
+class SpinSetting : public AbstractSetting {
+public:
+	SpinSetting(const Glib::ustring& key, Gtk::SpinButton* widget)
+		: AbstractSetting(key), m_widget(widget)
+	{
+		int value = get_default_settings()->get_int(m_key);
+		m_widget->set_value(value);
+		CONNECT(m_widget, value_changed, [this]{ serialize(); });
+	}
+	void serialize(){
+		get_default_settings()->set_int(m_key, m_widget->get_value());
+	}
+
+private:
+	Gtk::SpinButton* m_widget;
+};
+
 class ListStoreSetting : public AbstractSetting {
 public:
 	ListStoreSetting(const Glib::ustring& key, Glib::RefPtr<Gtk::ListStore> liststore);
