@@ -35,15 +35,22 @@ public:
 	void rotationChanged(double /*delta*/) override{ clearSelection(); }
 	void reset() override{ clearSelection(); }
 
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+
+	void activateDrawSelection(){ m_drawingSelection = true; }
 	void setSelection(const QRect& rect);
 	QImage getSelection(const QRect& rect);
 	void clearSelection();
 
 signals:
+	void selectionDrawn(QRect rect);
 	void selectionGeometryChanged(QRect rect);
 
 private:
 	DisplayerSelection* m_selection = nullptr;
+	bool m_drawingSelection = false;
 
 private slots:
 	void selectionChanged(QRectF rect);

@@ -117,6 +117,7 @@ private:
 	Glib::ustring trimWord(const Glib::ustring& word, Glib::ustring* rest = nullptr);
 	void mergeItems(const std::vector<Gtk::TreePath>& items);
 
+	void addGraphicRection(const Geometry::Rectangle& rect);
 	void addPage(const Glib::ustring& hocrText, ReadSessionData data);
 	void setFont();
 	void showItemProperties(Gtk::TreeIter item);

@@ -151,6 +151,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), m_pdfExportDialogUi.spinBoxPreserve, SLOT(setEnabled(bool)));
 	connect(m_pdfExportDialogUi.checkBoxPreview, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_tool, SIGNAL(selectionGeometryChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
+	connect(m_tool, SIGNAL(selectionDrawn(QRect)), this, SLOT(addGraphicRegion(QRect)));
 
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", m_pdfExportDialogUi.comboBoxOutputMode));
 	MAIN->getConfig()->addSetting(new FontSetting("pdffont", &m_pdfFontDialog, QFont().toString()));
@@ -588,6 +589,47 @@ void OutputEditorHOCR::updateCurrentItem()
 	m_modified = true;
 }
 
+void OutputEditorHOCR::addGraphicRegion(QRect rect)
+{
+	QDomElement pageDiv = m_currentDocument.firstChildElement("div");
+	if(pageDiv.isNull()) {
+		return;
+	}
+	// Determine a free block id
+	int pageId = 0;
+	int blockId = 0;
+	QDomElement blockEl = pageDiv.firstChildElement("div");
+	while(!blockEl.isNull()) {
+		if(s_idRx.indexIn(blockEl.attribute("id")) != -1) {
+			pageId = qMax(pageId, s_idRx.cap(1).toInt() + 1);
+			blockId = qMax(blockId, s_idRx.cap(2).toInt() + 1);
+		}
+		blockEl = blockEl.nextSiblingElement();
+	}
+
+	// Add html element
+	QDomElement graphicElement = m_currentDocument.createElement("div");
+	graphicElement.setAttribute("title", QString("bbox %1 %2 %3 %4").arg(rect.x()).arg(rect.y()).arg(rect.x() + rect.width()).arg(rect.y() + rect.height()));
+	graphicElement.setAttribute("class", "ocr_carea");
+	graphicElement.setAttribute("id", QString("block_%1_%2").arg(pageId).arg(blockId));
+	pageDiv.appendChild(graphicElement);
+	QString str;
+	QTextStream stream(&str);
+	m_currentDocument.save(stream, 1);
+	m_currentPageItem->setData(0, SourceRole, str);
+
+	// Add tree item
+	QTreeWidgetItem* item = new QTreeWidgetItem(QStringList() << _("Graphic"));
+	item->setCheckState(0, Qt::Checked);
+	item->setIcon(0, QIcon(":/icons/item_halftone"));
+	item->setData(0, IdRole, graphicElement.attribute("id"));
+	item->setData(0, ClassRole, "ocr_graphic");
+	item->setData(0, BBoxRole, rect);
+	m_currentPageItem->addChild(item);
+
+	ui.treeWidgetItems->setCurrentItem(item);
+}
+
 QString OutputEditorHOCR::trimWord(const QString& word, QString* rest)
 {
 	int pos = word.lastIndexOf(QRegExp("\\w")) + 1;
@@ -652,10 +694,15 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 	if(itemClass == "ocr_page") {
 		QMenu menu;
 		QAction* actionRemove = menu.addAction(_("Remove"));
-		if(menu.exec(ui.treeWidgetItems->mapToGlobal(point)) == actionRemove) {
+		QAction* actionAddGraphic = menu.addAction(_("Add graphic region"));
+		QAction* clickedAction = menu.exec(ui.treeWidgetItems->mapToGlobal(point));
+		if(clickedAction == actionRemove) {
 			delete item;
 			ui.actionOutputSaveHOCR->setEnabled(ui.treeWidgetItems->topLevelItemCount() > 0);
 			ui.actionOutputExportPDF->setEnabled(ui.treeWidgetItems->topLevelItemCount() > 0);
+		} else if(clickedAction == actionAddGraphic) {
+			m_tool->clearSelection();
+			m_tool->activateDrawSelection();
 		}
 	} else if(itemClass == "ocrx_word") {
 		QMenu menu;
