@@ -141,10 +141,10 @@ int Displayer::getCurrentResolution() const
 	return ui.spinBoxResolution->value();
 }
 
-const QString& Displayer::getCurrentImage(int& page) const
+QString Displayer::getCurrentImage(int& page) const
 {
 	page = m_pageMap[ui.spinBoxPage->value()].second;
-	return m_pageMap[ui.spinBoxPage->value()].first->path;
+	return m_pageMap[ui.spinBoxPage->value()].first ? m_pageMap[ui.spinBoxPage->value()].first->path : "";
 }
 
 int Displayer::getNPages() const

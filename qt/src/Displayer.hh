@@ -48,7 +48,7 @@ public:
 	double getCurrentAngle() const;
 	double getCurrentScale() const{ return m_scale; }
 	int getCurrentResolution() const;
-	const QString& getCurrentImage(int& page) const;
+	QString getCurrentImage(int& page) const;
 	QImage getImage(const QRectF& rect);
 	QRectF getSceneBoundingRect() const;
 	QPointF mapToSceneClamped(const QPoint& p) const;
