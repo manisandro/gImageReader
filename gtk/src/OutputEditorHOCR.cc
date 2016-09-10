@@ -379,6 +379,7 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 {
 	bool haveWord = false;
 	while(element) {
+		xmlpp::Element* nextElement = getNextSiblingElement(element);
 		Glib::MatchInfo matchInfo;
 		Glib::ustring idAttr = getAttribute(element, "id");
 		if(s_idRx->match(idAttr, matchInfo)) {
@@ -406,7 +407,6 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 			}
 			if(title != "") {
 				Gtk::TreeIter item = m_itemStore->append(parentItem->children());
-				item->set_value(m_itemStoreCols.text, title);
 				if(type == "ocrx_word" || addChildItems(getFirstChildElement(element), item, langCache)) {
 					item->set_value(m_itemStoreCols.selected, true);
 					item->set_value(m_itemStoreCols.id, getAttribute(element, "id"));
@@ -423,6 +423,13 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 					item->set_value(m_itemStoreCols.editable, type == "ocrx_word");
 					haveWord = true;
 					if(type == "ocrx_word") {
+						// Ensure correct hyphen char is used on last word of line
+						if(!nextElement) {
+							title = Glib::Regex::create("[-\u2014]\\s*$")->replace(title, 0, "-", static_cast<Glib::RegexMatchFlags>(0));
+							element->remove_child(element->get_first_child());
+							element->add_child_text(title);
+						}
+
 						if(s_fontSizeRx->match(titleAttr, matchInfo)) {
 							item->set_value(m_itemStoreCols.fontSize, std::atof(matchInfo.fetch(1).c_str()));
 						}
@@ -439,12 +446,13 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 							item->set_value(m_itemStoreCols.textColor, Glib::ustring("#F00"));
 						}
 					}
+					item->set_value(m_itemStoreCols.text, title);
 				} else {
 					m_itemStore->erase(item);
 				}
 			}
 		}
-		element = getNextSiblingElement(element);
+		element = nextElement;
 	}
 	return haveWord;
 }

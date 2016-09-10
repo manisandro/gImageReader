@@ -281,6 +281,7 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 {
 	bool haveWord = false;
 	while(!element.isNull()) {
+		QDomElement nextElement = element.nextSiblingElement();
 		if(s_idRx.indexIn(element.attribute("id")) != -1) {
 			QString newId = QString("%1_%2_%3").arg(s_idRx.cap(1)).arg(m_idCounter).arg(s_idRx.cap(2));
 			element.setAttribute("id", newId);
@@ -315,6 +316,12 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 					parentItem->addChild(item);
 					haveWord = true;
 					if(type == "ocrx_word") {
+						// Ensure correct hyphen char is used on last word of line
+						if(nextElement.isNull()) {
+							title.replace(QRegExp("[-\u2014]\\s*$"), "-");
+							element.replaceChild(element.ownerDocument().createTextNode(title), element.firstChild());
+						}
+
 						if(s_fontSizeRx.indexIn(element.attribute("title")) != -1) {
 							item->setData(0, FontSizeRole, s_fontSizeRx.cap(1).toDouble());
 						}
@@ -337,7 +344,7 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 				}
 			}
 		}
-		element = element.nextSiblingElement();
+		element = nextElement;
 	}
 	return haveWord;
 }
