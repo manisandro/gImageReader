@@ -812,14 +812,14 @@ bool OutputEditorHOCR::save(const QString& filename)
 	}
 	tesseract::TessBaseAPI tess;
 	QString header = QString(
-			"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
-			"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n"
+			"<!DOCTYPE html>\n"
+			"<html>\n"
 			" <head>\n"
 			"  <title></title>\n"
-			"  <meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" />\n"
-			"    <meta name='ocr-system' content='tesseract %1' />\n"
-			"    <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
-			"  </head>\n"
+			"  <meta charset=\"UTF-8\">\n"
+			"  <meta name='ocr-system' content='tesseract %1' />\n"
+			"  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
+			" </head>\n"
 			"<body>\n").arg(tess.Version());
 	file.write(header.toUtf8());
 	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
