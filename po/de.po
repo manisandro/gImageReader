@@ -4,7 +4,7 @@
 # This file is distributed under the same license as the gImageReader package.
 #
 #
-# 2014-12-02: Translation corrected :John Kehl <sirjohn@rocketmail.com>
+# 2016-11-09: Translation corrected :Heinrich Schwietering <hankschwie@web.de>
 #
 #
 # Sandro Mani <manisandro@gmail.com>, 2010-2011, 2013, 2014, 2015, 2016.
@@ -53,7 +53,7 @@ msgstr "Backtrace nochmals durchführen"
 
 #: ../gtk/data/crashhandler.ui.h:2
 msgid "<b>The application has crashed</b>"
-msgstr "<b>Die Applikation ist abgestürzt</b>"
+msgstr "<b>Die Anwendung ist abgestürzt</b>"
 
 #: ../gtk/data/crashhandler.ui.h:4
 #, no-c-format
@@ -65,10 +65,10 @@ msgid ""
 "the information below. Thank you."
 msgstr ""
 "Bitte entschuldigen Sie die Unannehmlichkeiten. Wenn Sie helfen möchten, die "
-"Applikation zu verbessern, melden Sie das aufgetretene Problem bitte an <a "
+"Anwendung zu verbessern, melden Sie das aufgetretene Problem bitte an <a "
 "href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
 "\">manisandro@gmail.com</a>. Bitte beschreiben Sie auch, was Sie machten, "
-"bevor die Applikation abgestürzte. Senden Sie zudem bitte auch die "
+"bevor die Anwenung abgestürzte. Senden Sie zudem bitte auch die "
 "untenstehenden Informationen. Danke."
 
 #: ../gtk/data/editor_hocr.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
@@ -409,7 +409,7 @@ msgstr "Eine graphische Oberfläche für Tesseract-OCR"
 
 #: ../gtk/data/gimagereader.ui.h:37
 msgid "Output pane orientation:"
-msgstr "Orientierung des Ausgabebereichs:"
+msgstr "Ausrichtung des Ausgabebereichs:"
 
 #: ../gtk/data/gimagereader.ui.h:38
 msgid "Horizontal"
@@ -615,7 +615,7 @@ msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
-"Die Datei ist möglicherweise kein Bild oder beschädigt:\n"
+"Die Datei ist möglicherweise kein Bild oder ist beschädigt:\n"
 "%1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:40 ../qt/src/DisplayerToolSelect.cc:41
@@ -901,12 +901,12 @@ msgstr ""
 "\n"
 "%1\n"
 "\n"
-"DAs ist typisch für einen der folgenden Gründe:\n"
+"Das ist typisch für einen der folgenden Gründe:\n"
 "- Es werden veraltete traineddata-Dateien verwendet.\n"
 "- Zusätzliche Sprachdaten-Dateien fehlen.\n"
 "- Beschädigte Sprachdaten-Dateien.\n"
 "\n"
-"Stelen SIe sicher, dass die Sprachdaten-Dateien gültig und zu Tessaract kompatibel sind "
+"Stellen SIe sicher, dass die Sprachdaten-Dateien gültig und zu Tessaract kompatibel sind "
 "%2."
 #: ../gtk/src/Recognizer.cc:212 ../qt/src/Recognizer.cc:201
 msgid "No languages available"
@@ -915,7 +915,7 @@ msgstr "Keine Sprachen verfügbar"
 #: ../gtk/src/Recognizer.cc:212 ../qt/src/Recognizer.cc:201
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
-msgstr "Keine Tesseract-Sprachen verfügbar. OCR-Erkennung ist nicht möglich."
+msgstr "Keine Tesseract-Sprachen verfügbar. Texterkennung nicht möglich."
 
 #: ../gtk/src/Recognizer.cc:267 ../qt/src/Recognizer.cc:262
 msgid "Multilingual"
@@ -923,7 +923,7 @@ msgstr "Mehrsprachig"
 
 #: ../gtk/src/Recognizer.cc:303 ../qt/src/Recognizer.cc:298
 msgid "Detect script and orientation"
-msgstr "Skript und Ausrichtungerkennen"
+msgstr "Skript und Ausrichtung erkennen"
 
 #: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:307
 msgid "Manage languages..."
@@ -1051,7 +1051,7 @@ msgstr "Datei löschen?"
 
 #: ../gtk/src/SourceManager.cc:209 ../qt/src/SourceManager.cc:236
 msgid "The following files will be deleted:%1"
-msgstr "Folgende Dateien werden gelöscht werden:%1"
+msgstr "Folgende Dateien werden gelöscht:%1"
 
 #: ../gtk/src/SourceManager.cc:274 ../qt/src/SourceManager.cc:291
 msgid "Missing File"
@@ -1104,7 +1104,7 @@ msgstr "Einige Einträge der Ersetzungsliste konnten nicht gelesen werden."
 
 #: ../gtk/src/SubstitutionsManager.cc:120 ../qt/src/SubstitutionsManager.cc:150
 msgid "Save Substitutions List"
-msgstr "Ersetzungen speichern"
+msgstr "Ersetzungsliste speichern"
 
 #: ../gtk/src/SubstitutionsManager.cc:126 ../qt/src/SubstitutionsManager.cc:156
 msgid "Error Saving File"
@@ -1208,7 +1208,7 @@ msgstr "Lizenz"
 
 #: ../qt/data/ConfigDialog.ui.h:21
 msgid "Text file encoding:"
-msgstr "Kodierung von Textdateien:"
+msgstr "Kodierung der Textdateien:"
 
 #: ../qt/data/ConfigDialog.ui.h:22
 msgid "System encoding"
@@ -1236,7 +1236,7 @@ msgstr ""
 "Anwendung zu verbessern, melden Sie das aufgetretene Problem bitte an <a "
 "href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
 "\">manisandro@gmail.com</a>. Bitte beschreiben Sie auch, was Sie machten, "
-"bevor die Applikation abgestürzte. Senden Sie zudem bitte auch die "
+"bevor die Anwendung abgestürzte. Senden Sie zudem bitte auch die "
 "untenstehenden Informationen. Danke."
 
 #: ../qt/data/MainWindow.ui.h:1
@@ -1266,7 +1266,7 @@ msgstr "Anpassen"
 
 #: ../qt/data/MainWindow.ui.h:26
 msgid "Rotate Left"
-msgstr "gegen den Uhrzeigersinn drehen"
+msgstr "Gegen den Uhrzeigersinn drehen"
 
 #: ../qt/data/MainWindow.ui.h:27
 msgid "Rotate left"
@@ -1372,12 +1372,12 @@ msgstr "Ausgabe löschen"
 #~ "a>. Please try to describe what you were doing before the application "
 #~ "crashed. Also, include the information below. Thank you.</p></body></html>"
 #~ msgstr ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">Die Applikation "
+#~ "<html><head/><body><p><span style=\" font-weight:600;\">Die Anwendung "
 #~ "ist abgestürzt</span></p><p>Bitte entschuldigen Sie die "
-#~ "Unannehmlichkeiten. Wenn Sie helfen möchten, die Applikation zu "
+#~ "Unannehmlichkeiten. Wenn Sie helfen möchten, die Anwendung zu "
 #~ "verbessern, melden Sie das aufgetretene Problem bitte an <a href=\"mailto:"
 #~ "manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-#~ "a>. Bitte beschreiben Sie auch, was Sie machten, bevor die Applikation "
+#~ "a>. Bitte beschreiben Sie auch, was Sie machten, bevor die Anwendung "
 #~ "abgestürzte. Senden Sie zudem bitte auch die untenstehenden "
 #~ "Informationen. Danke.</p></body></html>"
 
