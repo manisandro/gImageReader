@@ -88,6 +88,7 @@ private:
 	QGraphicsPixmapItem* m_preview = nullptr;
 
 	void findReplace(bool backwards, bool replace);
+	void addPage(QDomElement pageDiv, const QString& filename, int page);
 	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString, QString>& langCache);
 	QDomElement elementById(QDomElement element, const QString& id) const;
 	void expandChildren(QTreeWidgetItem* item) const;
@@ -96,7 +97,7 @@ private:
 	void updateCurrentItemText();
 	void updateCurrentItemAttribute(const QString& key, const QString& subkey, const QString& newvalue, bool update=true);
 	void updateCurrentItem();
-	void addPage(QDomElement pageDiv, const QString& filename, int page);
+	void removeCurrentItem();
 	QString trimWord(const QString& word, QString* rest = nullptr);
 	void mergeItems(const QList<QTreeWidgetItem*>& items);
 

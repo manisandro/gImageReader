@@ -463,6 +463,7 @@ void OutputEditorHOCR::showItemProperties(Gtk::TreeIter item)
 	m_connectionPropViewRowEdited.block(true);
 	m_propStore->clear();
 	m_connectionPropViewRowEdited.block(false);
+	m_sourceView->get_buffer()->set_text("");
 	m_tool->clearSelection();
 	m_currentPageItem = Gtk::TreePath();
 	m_currentItem = Gtk::TreePath();
@@ -682,6 +683,18 @@ void OutputEditorHOCR::updateCurrentItem()
 	m_modified = true;
 }
 
+void OutputEditorHOCR::removeCurrentItem()
+{
+	if(m_currentElement) {
+		m_currentElement->get_parent()->remove_child(m_currentElement);
+		Gtk::TreeIter toplevelItem = m_itemStore->get_iter(m_currentPageItem);
+		toplevelItem->set_value(m_itemStoreCols.source, getDocumentXML(m_currentParser->get_document()));
+
+		m_itemStore->erase(m_itemStore->get_iter(m_currentItem));
+		m_currentItem = Gtk::TreePath();
+	}
+}
+
 void OutputEditorHOCR::addGraphicRection(const Geometry::Rectangle &rect)
 {
 	if(!m_currentParser) {
@@ -838,13 +851,13 @@ void OutputEditorHOCR::showContextMenu(GdkEventButton* ev)
 
 	if(itemClass == "ocr_page") {
 		// Context menu on page items with Remove option
-		m_itemView->get_selection()->select(path);
 		Gtk::Menu menu;
 		Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
-		Gtk::MenuItem* removeItem = Gtk::manage(new Gtk::MenuItem(_("Remove")));
-		menu.append(*removeItem);
 		Gtk::MenuItem* addGraphicItem = Gtk::manage(new Gtk::MenuItem(_("Add graphic region")));
 		menu.append(*addGraphicItem);
+		menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
+		Gtk::MenuItem* removeItem = Gtk::manage(new Gtk::MenuItem(_("Remove")));
+		menu.append(*removeItem);
 		CONNECT(removeItem, activate, [&]{
 			m_itemStore->erase(it);
 			m_connectionPropViewRowEdited.block(true);
@@ -862,38 +875,44 @@ void OutputEditorHOCR::showContextMenu(GdkEventButton* ev)
 		menu.popup(ev->button, ev->time);
 		loop->run();
 		return;
-	} else if(itemClass == "ocrx_word" && ev->type == GDK_BUTTON_PRESS && ev->button == 3) {
+	} else {
 		// Context menu on word items with spelling suggestions, if any
-		m_itemView->get_selection()->select(path);
 		Gtk::Menu menu;
 		Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
-		Glib::ustring rest, trimmed = trimWord((*it)[m_itemStoreCols.text], &rest);
-		for(const Glib::ustring& suggestion : m_spell.get_suggestions(trimmed)) {
-			Glib::ustring replacement = suggestion + rest;
-			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
-			CONNECT(item, activate, [this, replacement, it] { (*it)[m_itemStoreCols.text] = replacement; });
-			menu.append(*item);
-		}
-		if(menu.get_children().empty()) {
-			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("No suggestions")));
-			item->set_sensitive(false);
-			menu.append(*item);
-		}
-		if(!m_spell.check_word(trimWord((*it)[m_itemStoreCols.text]))) {
+		if(itemClass == "ocrx_word") {
+			Glib::ustring rest, trimmed = trimWord((*it)[m_itemStoreCols.text], &rest);
+			for(const Glib::ustring& suggestion : m_spell.get_suggestions(trimmed)) {
+				Glib::ustring replacement = suggestion + rest;
+				Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
+				CONNECT(item, activate, [this, replacement, it] { (*it)[m_itemStoreCols.text] = replacement; });
+				menu.append(*item);
+			}
+			if(menu.get_children().empty()) {
+				Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("No suggestions")));
+				item->set_sensitive(false);
+				menu.append(*item);
+			}
+			if(!m_spell.check_word(trimWord((*it)[m_itemStoreCols.text]))) {
+				menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
+				Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
+				CONNECT(additem, activate, [this, it]{
+					m_spell.add_to_dictionary((*it)[m_itemStoreCols.text]);
+					it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
+				});
+				menu.append(*additem);
+				Gtk::MenuItem* ignoreitem = Gtk::manage(new Gtk::MenuItem(_("Ignore word")));
+				CONNECT(ignoreitem, activate, [this, it]{
+					m_spell.ignore_word((*it)[m_itemStoreCols.text]);
+					it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
+				});
+				menu.append(*ignoreitem);
+			}
 			menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
-			Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
-			CONNECT(additem, activate, [this, it]{
-				m_spell.add_to_dictionary((*it)[m_itemStoreCols.text]);
-				it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
-			});
-			menu.append(*additem);
-			Gtk::MenuItem* ignoreitem = Gtk::manage(new Gtk::MenuItem(_("Ignore word")));
-			CONNECT(ignoreitem, activate, [this, it]{
-				m_spell.ignore_word((*it)[m_itemStoreCols.text]);
-				it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
-			});
-			menu.append(*ignoreitem);
 		}
+		Gtk::MenuItem* removeItem = Gtk::manage(new Gtk::MenuItem(_("Remove")));
+		menu.append(*removeItem);
+		CONNECT(removeItem, activate, [this]{ removeCurrentItem(); });
+
 		CONNECT(&menu, hide, [&]{ loop->quit(); });
 		menu.show_all();
 		menu.popup(ev->button, ev->time);

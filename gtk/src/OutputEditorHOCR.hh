@@ -107,13 +107,14 @@ private:
 	sigc::connection m_connectionPropViewRowEdited;
 
 	Gtk::TreeIter currentItem();
+	void addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page);
 	bool addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring, Glib::ustring>& langCache);
 	void printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing, int preserveSpaceWidth) const;
 	bool setCurrentSource(xmlpp::Element* pageElement, int* pageDpi = 0) const;
 	void updateCurrentItemText();
 	void updateCurrentItemAttribute(const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue, bool update=true);
 	void updateCurrentItem();
-	void addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page);
+	void removeCurrentItem();
 	Glib::ustring trimWord(const Glib::ustring& word, Glib::ustring* rest = nullptr);
 	void mergeItems(const std::vector<Gtk::TreePath>& items);
 
