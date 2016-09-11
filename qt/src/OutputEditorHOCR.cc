@@ -321,6 +321,7 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 						if(nextElement.isNull()) {
 							title.replace(QRegExp("[-\u2014]\\s*$"), "-");
 							element.replaceChild(element.ownerDocument().createTextNode(title), element.firstChild());
+							item->setText(0, title);
 						}
 
 						if(s_fontSizeRx.indexIn(element.attribute("title")) != -1) {
