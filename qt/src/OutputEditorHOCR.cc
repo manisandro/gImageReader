@@ -370,6 +370,7 @@ void OutputEditorHOCR::showItemProperties(QTreeWidgetItem* item)
 	ui.tableWidgetProperties->blockSignals(true);
 	ui.tableWidgetProperties->setRowCount(0);
 	ui.tableWidgetProperties->blockSignals(false);
+	ui.plainTextEditOutput->setPlainText("");
 	m_tool->clearSelection();
 	m_currentPageItem = nullptr;
 	m_currentItem = item;
@@ -589,6 +590,19 @@ void OutputEditorHOCR::updateCurrentItem()
 	m_modified = true;
 }
 
+void OutputEditorHOCR::removeCurrentItem()
+{
+	m_currentElement.parentNode().removeChild(m_currentElement);
+
+	QString str;
+	QTextStream stream(&str);
+	m_currentDocument.save(stream, 1);
+	m_currentPageItem->setData(0, SourceRole, str);
+
+	delete m_currentItem;
+	m_currentItem = nullptr;
+}
+
 void OutputEditorHOCR::addGraphicRegion(QRect rect)
 {
 	QDomElement pageDiv = m_currentDocument.firstChildElement("div");
@@ -693,8 +707,9 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 	}
 	if(itemClass == "ocr_page") {
 		QMenu menu;
-		QAction* actionRemove = menu.addAction(_("Remove"));
 		QAction* actionAddGraphic = menu.addAction(_("Add graphic region"));
+		menu.addSeparator();
+		QAction* actionRemove = menu.addAction(_("Remove"));
 		QAction* clickedAction = menu.exec(ui.treeWidgetItems->mapToGlobal(point));
 		if(clickedAction == actionRemove) {
 			delete item;
@@ -704,22 +719,26 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 			m_tool->clearSelection();
 			m_tool->activateDrawSelection();
 		}
-	} else if(itemClass == "ocrx_word") {
+	} else {
 		QMenu menu;
-		QString rest, trimmedWord = trimWord(item->text(0), &rest);
-		for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
-			menu.addAction(suggestion + rest);
-		}
-		if(menu.actions().isEmpty()) {
-			menu.addAction(_("No suggestions"))->setEnabled(false);
-		}
 		QAction* addAction = nullptr;
 		QAction* ignoreAction = nullptr;
-		if(!m_spell.checkWord(trimWord(item->text(0)))) {
+		 if(itemClass == "ocrx_word") {
+			QString rest, trimmedWord = trimWord(item->text(0), &rest);
+			for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
+				menu.addAction(suggestion + rest);
+			}
+			if(menu.actions().isEmpty()) {
+				menu.addAction(_("No suggestions"))->setEnabled(false);
+			}
+			if(!m_spell.checkWord(trimWord(item->text(0)))) {
+				menu.addSeparator();
+				addAction = menu.addAction(_("Add to dictionary"));
+				ignoreAction = menu.addAction(_("Ignore word"));
+			}
 			menu.addSeparator();
-			addAction = menu.addAction(_("Add to dictionary"));
-			ignoreAction = menu.addAction(_("Ignore word"));
 		}
+		QAction* removeAction = menu.addAction(_("Remove"));
 		QAction* clickedAction = menu.exec(ui.treeWidgetItems->mapToGlobal(point));
 		if(clickedAction) {
 			if(clickedAction == addAction) {
@@ -728,6 +747,8 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 			} else if(clickedAction == ignoreAction) {
 				m_spell.ignoreWord(item->text(0));
 				item->setForeground(0, item->parent()->foreground(0));
+			} else if(clickedAction == removeAction) {
+				removeCurrentItem();
 			} else {
 				item->setText(0, clickedAction->text());
 			}
