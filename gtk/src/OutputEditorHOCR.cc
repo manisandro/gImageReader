@@ -936,7 +936,7 @@ void OutputEditorHOCR::open()
 		return;
 	}
 	Glib::ustring dir = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue();
-	FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html"}, {"*.html"}};
+	FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html","text/xml", "text/plain"}, {"*.html"}};
 	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open hOCR File"), dir, filter, false);
 	if(files.empty()) {
 		return;
