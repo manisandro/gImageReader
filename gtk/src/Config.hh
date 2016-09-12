@@ -57,6 +57,10 @@ public:
 	std::vector<Glib::ustring> searchLangCultures(const Glib::ustring& code) const;
 	void showDialog();
 
+	bool useSystemDataLocations() const;
+	std::string tessdataLocation() const;
+	std::string spellingLocation() const;
+
 private:
 	struct LangViewColumns : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Glib::ustring> prefix;
@@ -89,6 +93,7 @@ private:
 	void addLanguage();
 	void removeLanguage();
 	void langTableSelectionChanged();
+	void setDataLocations(int idx);
 	void toggleAddLanguage(bool forceHide = false);
 };
 

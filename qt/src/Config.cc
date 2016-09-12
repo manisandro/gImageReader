@@ -20,7 +20,12 @@
 #include "Config.hh"
 #include "MainWindow.hh"
 
+#include <QDir>
 #include <QMultiMap>
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+#include <QStandardPaths>
+#endif
+#include <tesseract/baseapi.h>
 
 const QList<Config::Lang> Config::LANGUAGES = {
 	// {ISO 639-2, ISO 639-1, name}
@@ -314,6 +319,7 @@ Config::Config(QWidget* parent)
 	connect(ui.lineEditLangPrefix, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditErrorState()));
 	connect(ui.lineEditLangName, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditErrorState()));
 	connect(ui.lineEditLangCode, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditErrorState()));
+	connect(ui.comboBoxDataLocation, SIGNAL(currentIndexChanged(int)), this, SLOT(setDataLocations(int)));
 
 	addSetting(new SwitchSetting("dictinstall", ui.checkBoxDictInstall, true));
 	addSetting(new SwitchSetting("updatecheck", ui.checkBoxUpdateCheck, true));
@@ -321,6 +327,7 @@ Config::Config(QWidget* parent)
 	addSetting(new SwitchSetting("systemoutputfont", ui.checkBoxDefaultOutputFont, true));
 	addSetting(new FontSetting("customoutputfont", &m_fontDialog, QFont().toString()));
 	addSetting(new ComboSetting("textencoding", ui.comboBoxEncoding, 0));
+	addSetting(new ComboSetting("datadirs", ui.comboBoxDataLocation, 0));
 
 	updateFontButton(m_fontDialog.currentFont());
 }
@@ -360,6 +367,21 @@ bool Config::useUtf8() const
 	return ui.comboBoxEncoding->currentIndex() == 1;
 }
 
+bool Config::useSystemDataLocations() const
+{
+	return ui.comboBoxDataLocation->currentIndex() == 0;
+}
+
+QString Config::tessdataLocation() const
+{
+	return ui.lineEditTessdataLocation->text();
+}
+
+QString Config::spellingLocation() const
+{
+	return ui.lineEditSpellLocation->text();
+}
+
 void Config::disableDictInstall()
 {
 	getSetting<SwitchSetting>("dictinstall")->setValue(false);
@@ -368,6 +390,35 @@ void Config::disableDictInstall()
 void Config::disableUpdateCheck()
 {
 	getSetting<SwitchSetting>("updatecheck")->setValue(false);
+}
+
+void Config::setDataLocations(int idx)
+{
+	if(idx == 0) {
+#ifdef Q_OS_WIN
+		QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
+		qputenv("TESSDATA_PREFIX", dataDir.absolutePath().toLocal8Bit());
+#else
+		QDir dataDir("/usr/share");
+		qunsetenv("TESSDATA_PREFIX");
+#endif
+		ui.lineEditSpellLocation->setText(dataDir.absoluteFilePath("myspell/dicts"));
+	} else {
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+# ifdef Q_OS_WIN
+		QDir configDir = QDir(QDir::home().absoluteFilePath("Local Settings/Application Data"));
+# else
+		QDir configDir = QDir(QDir::home().absoluteFilePath(".config"));
+# endif
+#else
+		QDir configDir = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation));
+#endif
+		qputenv("TESSDATA_PREFIX", configDir.absoluteFilePath("tessdata").toLocal8Bit());
+		ui.lineEditSpellLocation->setText(configDir.absoluteFilePath("enchant/myspell"));
+	}
+	tesseract::TessBaseAPI tess;
+	tess.Init(nullptr, nullptr);
+	ui.lineEditTessdataLocation->setText(QString(tess.GetDatapath()));
 }
 
 void Config::toggleAddLanguage(bool forceHide)

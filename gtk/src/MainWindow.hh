@@ -120,12 +120,11 @@ private:
 	void getNewestVersion();
 	void checkVersion(const Glib::ustring& newver);
 #endif
-#if defined(G_OS_UNIX)
+#ifdef G_OS_UNIX
 	void dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring& lang);
 	void dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result);
-#elif defined(G_OS_WIN32)
-	void dictionaryAutoinstall(Glib::ustring lang);
 #endif
+	void dictionaryAutoinstall(Glib::ustring lang);
 };
 
 #endif
