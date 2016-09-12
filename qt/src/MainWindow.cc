@@ -461,11 +461,13 @@ void MainWindow::languageChanged()
 		NotificationAction actionDontShowAgain = {_("Don't show again"), m_config, SLOT(disableDictInstall()), true};
 		NotificationAction actionInstall = {_("Install"), this, SLOT(dictionaryAutoinstall()), false};
 #ifdef Q_OS_LINUX
-		QDBusConnectionInterface* iface = QDBusConnection::sessionBus().interface();
-		iface->startService("org.freedesktop.PackageKit");
-		if(!iface->isServiceRegistered("org.freedesktop.PackageKit").value()){
-			actionInstall = {_("Help"), this, SLOT(showHelp()), false}; // TODO #InstallSpelling
-			qWarning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
+		if(getConfig()->useSystemDataLocations()) {
+			QDBusConnectionInterface* iface = QDBusConnection::sessionBus().interface();
+			iface->startService("org.freedesktop.PackageKit");
+			if(!iface->isServiceRegistered("org.freedesktop.PackageKit").value()){
+				actionInstall = {_("Help"), this, SLOT(showHelp()), false}; // TODO #InstallSpelling
+				qWarning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
+			}
 		}
 #endif
 		const QString& name = m_recognizer->getSelectedLanguage().name;
@@ -478,80 +480,97 @@ void MainWindow::dictionaryAutoinstall()
 	QList<QString> codes = m_config->searchLangCultures(m_recognizer->getSelectedLanguage().code);
 	QString code = codes.isEmpty() ? m_recognizer->getSelectedLanguage().code : codes.front();
 	pushState(State::Busy, _("Installing spelling dictionary for '%1'").arg(code));
-#ifdef Q_OS_LINUX
-	QStringList files;
-	for(const QString& langCulture : m_config->searchLangCultures(code)) {
-		files.append("/usr/share/myspell/" + langCulture + ".dic");
-		files.append("/usr/share/hunspell/" + langCulture + ".dic");
-	}
-	QDBusMessage req = QDBusMessage::createMethodCall("org.freedesktop.PackageKit", "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify", "InstallProvideFiles");
-	req.setArguments(QList<QVariant>() << QVariant::fromValue((quint32)winId()) << QVariant::fromValue(files) << QVariant::fromValue(QString("always")));
-	QDBusMessage reply = QDBusConnection::sessionBus().call(req, QDBus::BlockWithGui, 3600000);
-	if(reply.type() == QDBusMessage::ErrorMessage) {
-		if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to install spelling dictionary: %1").arg(reply.errorMessage()), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok))
-		{
-			showHelp("#InstallSpelling");
-		}
-	}
-	m_recognizer->updateLanguagesMenu();
-	popState();
+#ifdef Q_OS_WIN
+	bool isWindows = true;
 #else
-	QString url = "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
-	QString plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
-	QString urlcode = code;
-	QString messages;
-	QByteArray html = Utils::download(url, messages);
-	if(html.isNull()){
-		popState();
-		if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2.").arg(url).arg(messages), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
-			showHelp("#InstallSpelling");
-		}
-		return;
-	}else if(html.indexOf(QString(">%1<").arg(code)) != -1){
-		// Ok
-	}else if(html.indexOf(QString(">%1<").arg(code.left(2))) != -1){
-		urlcode = code.left(2);
-	}else{
-		popState();
-		if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
-			showHelp("#InstallSpelling");
-		}
-		return;
-	}
-	html = Utils::download(url + urlcode + "/", messages);
-	if(html.isNull()){
-		popState();
-		if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2").arg(url + urlcode + "/").arg(messages), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
-			showHelp("#InstallSpelling");
-		}
-		return;
-	}
-	QRegExp pat(QString(">(%1[^<]*\\.(dic|aff))<").arg(code.left(2)));
-	QString htmls = html;
+	bool isWindows = false;
+#endif
 
-	QString downloaded;
-	int pos = 0;
-	while((pos = htmls.indexOf(pat, pos)) != -1){
-		pushState(State::Busy, _("Downloading '%1'...").arg(pat.cap(1)));
-		QByteArray data = Utils::download(plainurl + urlcode + "/" + pat.cap(1), messages);
-		if(!data.isNull()){
-			QFile file(QString("%1/../share/myspell/dicts/%2").arg(QApplication::applicationDirPath()).arg(pat.cap(1)));
-			if(file.open(QIODevice::WriteOnly)){
-				file.write(data);
-				downloaded.append(QString("\n%1").arg(pat.cap(1)));
+	if(!isWindows && MAIN->getConfig()->useSystemDataLocations()) {
+		// Place this in a ifdef since DBus stuff cannot be compiled on Windows
+#ifdef Q_OS_LINUX
+		QStringList files;
+		for(const QString& langCulture : m_config->searchLangCultures(code)) {
+			files.append("/usr/share/myspell/" + langCulture + ".dic");
+			files.append("/usr/share/hunspell/" + langCulture + ".dic");
+		}
+		QDBusMessage req = QDBusMessage::createMethodCall("org.freedesktop.PackageKit", "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify", "InstallProvideFiles");
+		req.setArguments(QList<QVariant>() << QVariant::fromValue((quint32)winId()) << QVariant::fromValue(files) << QVariant::fromValue(QString("always")));
+		QDBusMessage reply = QDBusConnection::sessionBus().call(req, QDBus::BlockWithGui, 3600000);
+		if(reply.type() == QDBusMessage::ErrorMessage) {
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to install spelling dictionary: %1").arg(reply.errorMessage()), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok))
+			{
+				showHelp("#InstallSpelling");
 			}
 		}
-		popState();
-		pos += pat.matchedLength();
-	}
-	popState();
-	if(!downloaded.isEmpty()){
-		QMessageBox::information(this, _("Dictionaries installed"), _("The following dictionary files were installed:%1").arg(downloaded));
 		m_recognizer->updateLanguagesMenu();
-	}else{
-		if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
-			showHelp("#InstallSpelling");
+		popState();
+#endif
+	} else {
+		QString url = "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
+		QString plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
+		QDir spellingDir(getConfig()->spellingLocation());
+		if(!QDir().mkpath(spellingDir.absolutePath())) {
+			popState();
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to create directory for spelling dictionaries."), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
+				showHelp("#InstallSpelling");
+			}
+			return;
+		}
+		QString urlcode = code;
+		QString messages;
+		QByteArray html = Utils::download(url, messages);
+		if(html.isNull()){
+			popState();
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2.").arg(url).arg(messages), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
+				showHelp("#InstallSpelling");
+			}
+			return;
+		}else if(html.indexOf(QString(">%1<").arg(code)) != -1){
+			// Ok
+		}else if(html.indexOf(QString(">%1<").arg(code.left(2))) != -1){
+			urlcode = code.left(2);
+		}else{
+			popState();
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
+				showHelp("#InstallSpelling");
+			}
+			return;
+		}
+		html = Utils::download(url + urlcode + "/", messages);
+		if(html.isNull()){
+			popState();
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2").arg(url + urlcode + "/").arg(messages), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
+				showHelp("#InstallSpelling");
+			}
+			return;
+		}
+		QRegExp pat(QString(">(%1[^<]*\\.(dic|aff))<").arg(code.left(2)));
+		QString htmls = html;
+
+		QString downloaded;
+		int pos = 0;
+		while((pos = htmls.indexOf(pat, pos)) != -1){
+			pushState(State::Busy, _("Downloading '%1'...").arg(pat.cap(1)));
+			QByteArray data = Utils::download(plainurl + urlcode + "/" + pat.cap(1), messages);
+			if(!data.isNull()){
+				QFile file(spellingDir.absoluteFilePath(pat.cap(1)));
+				if(file.open(QIODevice::WriteOnly)){
+					file.write(data);
+					downloaded.append(QString("\n%1").arg(pat.cap(1)));
+				}
+			}
+			popState();
+			pos += pat.matchedLength();
+		}
+		popState();
+		if(!downloaded.isEmpty()){
+			QMessageBox::information(this, _("Dictionaries installed"), _("The following dictionary files were installed:%1").arg(downloaded));
+			m_recognizer->updateLanguagesMenu();
+		}else{
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
+				showHelp("#InstallSpelling");
+			}
 		}
 	}
-#endif
 }

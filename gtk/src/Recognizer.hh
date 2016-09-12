@@ -34,7 +34,6 @@ public:
 
 	Recognizer();
 	std::vector<Glib::ustring> getAvailableLanguages() const;
-	std::string getTessdataDir() const;
 	const Config::Lang& getSelectedLanguage() const{ return m_curLang; }
 
 	void setRecognizeMode(const Glib::ustring& mode);

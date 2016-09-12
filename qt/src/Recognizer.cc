@@ -115,13 +115,6 @@ QStringList Recognizer::getAvailableLanguages() const
 	return result;
 }
 
-QString Recognizer::getTessdataDir() const
-{
-	tesseract::TessBaseAPI tess;
-	initTesseract(tess);
-	return QString(tess.GetDatapath());
-}
-
 static int g_pipe[2];
 static jmp_buf g_restore_point;
 

@@ -56,6 +56,9 @@ public:
 	void showDialog();
 
 	bool useUtf8() const;
+	bool useSystemDataLocations() const;
+	QString tessdataLocation() const;
+	QString spellingLocation() const;
 
 public slots:
 	void disableDictInstall();
@@ -78,6 +81,7 @@ private slots:
 	void updateFontButton(const QFont& font);
 	void langTableSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 	void clearLineEditErrorState();
+	void setDataLocations(int idx);
 	void toggleAddLanguage(bool forceHide = false);
 };
 

@@ -64,11 +64,13 @@ TessdataManager::TessdataManager(QWidget *parent)
 bool TessdataManager::setup()
 {
 #ifdef Q_OS_LINUX
-	QDBusConnectionInterface* iface = QDBusConnection::sessionBus().interface();
-	iface->startService("org.freedesktop.PackageKit");
-	if(!iface->isServiceRegistered("org.freedesktop.PackageKit").value()){
-		QMessageBox::critical(MAIN, _("Error"), _("PackageKit is required for managing tesseract language packs, but it was not found. Please use the system package management software to manage the tesseract language packs."));
-		return false;
+	if(MAIN->getConfig()->useSystemDataLocations()) {
+		QDBusConnectionInterface* iface = QDBusConnection::sessionBus().interface();
+		iface->startService("org.freedesktop.PackageKit");
+		if(!iface->isServiceRegistered("org.freedesktop.PackageKit").value()){
+			QMessageBox::critical(MAIN, _("Error"), _("PackageKit is required for managing system-wide tesseract language packs, but it was not found. Please use the system package management software to manage the tesseract language packs, or switch to use the user tessdata path in the configuration dialog."));
+			return false;
+		}
 	}
 #endif
 	MAIN->pushState(MainWindow::State::Busy, _("Fetching available languages"));
@@ -159,68 +161,80 @@ void TessdataManager::applyChanges()
 	setCursor(Qt::WaitCursor);
 	QString errorMsg;
 	QStringList availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
-	QDir tessDataDir(MAIN->getRecognizer()->getTessdataDir());
-#ifdef Q_OS_LINUX
-	QStringList installFiles;
-	QStringList removeFiles;
-	for(int row = 0, nRows = m_languageList->count(); row < nRows; ++row) {
-		QListWidgetItem* item = m_languageList->item(row);
-		QString prefix = item->data(Qt::UserRole).toString();
-		if(item->checkState() == Qt::Checked && !availableLanguages.contains(prefix)) {
-			installFiles.append(tessDataDir.absoluteFilePath(QString("%1.traineddata").arg(prefix)));
-		} else if(item->checkState() != Qt::Checked && availableLanguages.contains(prefix)) {
-			removeFiles.append(tessDataDir.absoluteFilePath(QString("%1.traineddata").arg(prefix)));
-		}
-	}
-
-	if(!installFiles.isEmpty()) {
-		QDBusMessage req = QDBusMessage::createMethodCall("org.freedesktop.PackageKit", "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify", "InstallProvideFiles");
-		req.setArguments(QList<QVariant>() << QVariant::fromValue((quint32)winId()) << QVariant::fromValue(installFiles) << QVariant::fromValue(QString("always")));
-		QDBusMessage reply = QDBusConnection::sessionBus().call(req, QDBus::BlockWithGui, 3600000);
-		if(reply.type() == QDBusMessage::ErrorMessage) {
-			errorMsg = reply.errorMessage();
-		}
-	}
-	if(errorMsg.isEmpty() && !removeFiles.isEmpty()) {
-		QDBusMessage req = QDBusMessage::createMethodCall("org.freedesktop.PackageKit", "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify", "RemovePackageByFiles");
-		req.setArguments(QList<QVariant>() << QVariant::fromValue((quint32)winId()) << QVariant::fromValue(removeFiles) << QVariant::fromValue(QString("always")));
-		QDBusMessage reply = QDBusConnection::sessionBus().call(req, QDBus::BlockWithGui, 3600000);
-		if(reply.type() == QDBusMessage::ErrorMessage) {
-			errorMsg = reply.errorMessage();
-		}
-	}
+	QDir tessDataDir(MAIN->getConfig()->tessdataLocation());
+#ifdef Q_OS_WIN
+	bool isWindows = true;
 #else
-	QStringList errors;
-	for(int row = 0, nRows = m_languageList->count(); row < nRows; ++row) {
-		QListWidgetItem* item = m_languageList->item(row);
-		QString prefix = item->data(Qt::UserRole).toString();
-		if(item->checkState() == Qt::Checked && !availableLanguages.contains(prefix)) {
-			for(const LangFile& langFile : m_languageFiles.value(prefix)) {
-				if(!QFile(tessDataDir.absoluteFilePath(langFile.name)).exists()) {
-					MAIN->pushState(MainWindow::State::Busy, _("Downloading %1...").arg(langFile.name));
-					QString messages;
-					QByteArray data = Utils::download(QUrl(langFile.url), messages);
-					QFile file(tessDataDir.absoluteFilePath(langFile.name));
-					if(data.isEmpty() || !file.open(QIODevice::WriteOnly)) {
-						errors.append(langFile.name);
-					} else {
-						file.write(data);
-					}
-					MAIN->popState();
-				}
+	bool isWindows = false;
+#endif
+	if(!isWindows && MAIN->getConfig()->useSystemDataLocations()) {
+		// Place this in a ifdef since DBus stuff cannot be compiled on Windows
+#ifdef Q_OS_LINUX
+		QStringList installFiles;
+		QStringList removeFiles;
+		for(int row = 0, nRows = m_languageList->count(); row < nRows; ++row) {
+			QListWidgetItem* item = m_languageList->item(row);
+			QString prefix = item->data(Qt::UserRole).toString();
+			if(item->checkState() == Qt::Checked && !availableLanguages.contains(prefix)) {
+				installFiles.append(tessDataDir.absoluteFilePath(QString("%1.traineddata").arg(prefix)));
+			} else if(item->checkState() != Qt::Checked && availableLanguages.contains(prefix)) {
+				removeFiles.append(tessDataDir.absoluteFilePath(QString("%1.traineddata").arg(prefix)));
 			}
-		} else if(item->checkState() != Qt::Checked && availableLanguages.contains(prefix)) {
-			foreach(const QString& file, tessDataDir.entryList(QStringList() << prefix + ".*")) {
-				if(!QFile(tessDataDir.absoluteFilePath(file)).remove()) {
-					errors.append(file);
+		}
+
+		if(!installFiles.isEmpty()) {
+			QDBusMessage req = QDBusMessage::createMethodCall("org.freedesktop.PackageKit", "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify", "InstallProvideFiles");
+			req.setArguments(QList<QVariant>() << QVariant::fromValue((quint32)winId()) << QVariant::fromValue(installFiles) << QVariant::fromValue(QString("always")));
+			QDBusMessage reply = QDBusConnection::sessionBus().call(req, QDBus::BlockWithGui, 3600000);
+			if(reply.type() == QDBusMessage::ErrorMessage) {
+				errorMsg = reply.errorMessage();
+			}
+		}
+		if(errorMsg.isEmpty() && !removeFiles.isEmpty()) {
+			QDBusMessage req = QDBusMessage::createMethodCall("org.freedesktop.PackageKit", "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify", "RemovePackageByFiles");
+			req.setArguments(QList<QVariant>() << QVariant::fromValue((quint32)winId()) << QVariant::fromValue(removeFiles) << QVariant::fromValue(QString("always")));
+			QDBusMessage reply = QDBusConnection::sessionBus().call(req, QDBus::BlockWithGui, 3600000);
+			if(reply.type() == QDBusMessage::ErrorMessage) {
+				errorMsg = reply.errorMessage();
+			}
+		}
+#endif
+	} else {
+		QStringList errors;
+		if(!QDir().mkpath(tessDataDir.absolutePath())) {
+			errors.append(_("Failed to create directory for tessdata files."));
+		} else {
+			for(int row = 0, nRows = m_languageList->count(); row < nRows; ++row) {
+				QListWidgetItem* item = m_languageList->item(row);
+				QString prefix = item->data(Qt::UserRole).toString();
+				if(item->checkState() == Qt::Checked && !availableLanguages.contains(prefix)) {
+					for(const LangFile& langFile : m_languageFiles.value(prefix)) {
+						if(!QFile(tessDataDir.absoluteFilePath(langFile.name)).exists()) {
+							MAIN->pushState(MainWindow::State::Busy, _("Downloading %1...").arg(langFile.name));
+							QString messages;
+							QByteArray data = Utils::download(QUrl(langFile.url), messages);
+							QFile file(tessDataDir.absoluteFilePath(langFile.name));
+							if(data.isEmpty() || !file.open(QIODevice::WriteOnly)) {
+								errors.append(langFile.name);
+							} else {
+								file.write(data);
+							}
+							MAIN->popState();
+						}
+					}
+				} else if(item->checkState() != Qt::Checked && availableLanguages.contains(prefix)) {
+					foreach(const QString& file, tessDataDir.entryList(QStringList() << prefix + ".*")) {
+						if(!QFile(tessDataDir.absoluteFilePath(file)).remove()) {
+							errors.append(file);
+						}
+					}
 				}
 			}
 		}
+		if(!errors.isEmpty()) {
+			errorMsg = _("The following files could not be downloaded or removed:\n%1\n\nCheck the connectivity and directory permissions.").arg(errors.join("\n"));
+		}
 	}
-	if(!errors.isEmpty()) {
-		errorMsg = _("The following files could not be downloaded or removed:\n%1\n\nCheck the connectivity and directory permissions.").arg(errors.join("\n"));
-	}
-#endif
 	unsetCursor();
 	setEnabled(true);
 	MAIN->popState();

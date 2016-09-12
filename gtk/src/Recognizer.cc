@@ -131,13 +131,6 @@ std::vector<Glib::ustring> Recognizer::getAvailableLanguages() const
 	return result;
 }
 
-std::string Recognizer::getTessdataDir() const
-{
-	tesseract::TessBaseAPI tess;
-	initTesseract(tess);
-	return std::string(tess.GetDatapath());
-}
-
 static int g_pipe[2];
 static jmp_buf g_restore_point;
 

@@ -47,13 +47,16 @@ TessdataManager::TessdataManager()
 
 void TessdataManager::run()
 {
-#ifndef G_OS_WIN32
-	try{
-		m_dbusProxy = Gio::DBus::Proxy::create_for_bus_sync(Gio::DBus::BUS_TYPE_SESSION, "org.freedesktop.PackageKit",
-														"/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify");
-	}catch(const Glib::Error&){
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), _("PackageKit is required for managing tesseract language packs, but it was not found. Please use the system package management software to manage the tesseract language packs."));
-		return;
+#ifdef G_OS_UNIX
+	if(MAIN->getConfig()->useSystemDataLocations())
+	{
+		try{
+			m_dbusProxy = Gio::DBus::Proxy::create_for_bus_sync(Gio::DBus::BUS_TYPE_SESSION, "org.freedesktop.PackageKit",
+															"/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify");
+		}catch(const Glib::Error&){
+			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), _("PackageKit is required for managing tesseract language packs, but it was not found. Please use the system package management software to manage the tesseract language packs."));
+			return;
+		}
 	}
 #endif
 	MAIN->pushState(MainWindow::State::Busy, _("Fetching available languages"));
@@ -159,74 +162,92 @@ void TessdataManager::applyChanges()
 	m_dialog->get_window()->set_cursor(Gdk::Cursor::create(Gdk::WATCH));
 	Glib::ustring errorMsg;
 	std::vector<Glib::ustring> availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
-	std::string tessDataDir = MAIN->getRecognizer()->getTessdataDir();
-#ifdef G_OS_UNIX
-	std::vector<Glib::ustring> installFiles;
-	std::vector<Glib::ustring> removeFiles;
-	for(const Gtk::TreeModel::Row& row : m_languageListStore->children()) {
-		Glib::ustring prefix = row.get_value(m_viewCols.prefix);
-		bool selected = row.get_value(m_viewCols.selected);
-		bool installed = std::find(availableLanguages.begin(), availableLanguages.end(), prefix) != availableLanguages.end();
-		if(selected && !installed) {
-			installFiles.push_back(Glib::build_filename(tessDataDir, prefix + ".traineddata"));
-		} else if(!selected && installed) {
-			removeFiles.push_back(Glib::build_filename(tessDataDir, prefix + ".traineddata"));
-		}
-	}
-	std::uint32_t xid = gdk_x11_window_get_xid(m_dialog->get_window()->gobj());
-
-	if(!installFiles.empty()) {
-		std::vector<Glib::VariantBase> params = { Glib::Variant<std::uint32_t>::create(xid),
-												  Glib::Variant<std::vector<Glib::ustring>>::create(installFiles),
-												  Glib::Variant<Glib::ustring>::create("always") };
-		try {
-			m_dbusProxy->call_sync("InstallProvideFiles", Glib::VariantContainerBase::create_tuple(params), 3600000);
-		} catch(const Glib::Error& e) {
-			errorMsg = e.what();
-		}
-	}
-	if(errorMsg.empty() && !removeFiles.empty()) {
-		std::vector<Glib::VariantBase> params = { Glib::Variant<std::uint32_t>::create(xid),
-												  Glib::Variant<std::vector<Glib::ustring>>::create(removeFiles),
-												  Glib::Variant<Glib::ustring>::create("always") };
-		try {
-			m_dbusProxy->call_sync("RemovePackageByFiles", Glib::VariantContainerBase::create_tuple(params), 3600000);
-		} catch(const Glib::Error& e) {
-			errorMsg = e.what();
-		}
-	}
+	std::string tessDataPath = MAIN->getConfig()->tessdataLocation();
+#ifdef G_OS_WIN32
+	bool isWindows = true;
 #else
-	Glib::ustring errors;
-	for(const Gtk::TreeModel::Row& row : m_languageListStore->children()) {
-		Glib::ustring prefix = row.get_value(m_viewCols.prefix);
-		bool selected = row.get_value(m_viewCols.selected);
-		auto it = m_languageFiles.find(prefix);
-		bool installed = std::find(availableLanguages.begin(), availableLanguages.end(), prefix) != availableLanguages.end();
-		if(selected && !installed) {
-			for(const LangFile& langFile : it->second) {
-				MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Downloading %1..."), langFile.name));
-				Glib::ustring messages;
-				Glib::RefPtr<Glib::ByteArray> data = Utils::download(langFile.url, messages);
-				std::ofstream file(Glib::build_filename(tessDataDir, langFile.name));
-				if(!data || !file.is_open()) {
-					errors.append(langFile.name + "\n");
-				} else {
-					file.write(reinterpret_cast<char*>(data->get_data()), data->size());
-				}
-				MAIN->popState();
+	bool isWindows = false;
+#endif
+	if(!isWindows && MAIN->getConfig()->useSystemDataLocations()) {
+		// Place this in a ifdef since DBus stuff cannot be compiled on Windows
+#ifdef G_OS_UNIX
+		std::vector<Glib::ustring> installFiles;
+		std::vector<Glib::ustring> removeFiles;
+		for(const Gtk::TreeModel::Row& row : m_languageListStore->children()) {
+			Glib::ustring prefix = row.get_value(m_viewCols.prefix);
+			bool selected = row.get_value(m_viewCols.selected);
+			bool installed = std::find(availableLanguages.begin(), availableLanguages.end(), prefix) != availableLanguages.end();
+			if(selected && !installed) {
+				installFiles.push_back(Glib::build_filename(tessDataPath, prefix + ".traineddata"));
+			} else if(!selected && installed) {
+				removeFiles.push_back(Glib::build_filename(tessDataPath, prefix + ".traineddata"));
 			}
-		} else if(!selected && installed) {
-			for(const std::string& file : Glib::Dir(tessDataDir)) {
-				if(file.size() > 4 && file.compare(0, 4, prefix + ".") == 0) {
-					Gio::File::create_for_path(Glib::build_filename(tessDataDir, file))->remove();
+		}
+		std::uint32_t xid = gdk_x11_window_get_xid(m_dialog->get_window()->gobj());
+
+		if(!installFiles.empty()) {
+			std::vector<Glib::VariantBase> params = { Glib::Variant<std::uint32_t>::create(xid),
+													  Glib::Variant<std::vector<Glib::ustring>>::create(installFiles),
+													  Glib::Variant<Glib::ustring>::create("always") };
+			try {
+				m_dbusProxy->call_sync("InstallProvideFiles", Glib::VariantContainerBase::create_tuple(params), 3600000);
+			} catch(const Glib::Error& e) {
+				errorMsg = e.what();
+			}
+		}
+		if(errorMsg.empty() && !removeFiles.empty()) {
+			std::vector<Glib::VariantBase> params = { Glib::Variant<std::uint32_t>::create(xid),
+													  Glib::Variant<std::vector<Glib::ustring>>::create(removeFiles),
+													  Glib::Variant<Glib::ustring>::create("always") };
+			try {
+				m_dbusProxy->call_sync("RemovePackageByFiles", Glib::VariantContainerBase::create_tuple(params), 3600000);
+			} catch(const Glib::Error& e) {
+				errorMsg = e.what();
+			}
+		}
+#endif
+	}
+	Glib::ustring errors;
+	Glib::RefPtr<Gio::File> tessDataDir = Gio::File::create_for_path(tessDataPath);
+	bool dirExists = false;
+	try {
+		dirExists = tessDataDir->make_directory_with_parents();
+	} catch(...) {
+		dirExists = tessDataDir->query_exists();
+	}
+	if(!dirExists) {
+		errors.append(Glib::ustring(_("Failed to create directory for tessdata files.")) + "\n");
+	} else {
+		for(const Gtk::TreeModel::Row& row : m_languageListStore->children()) {
+			Glib::ustring prefix = row.get_value(m_viewCols.prefix);
+			bool selected = row.get_value(m_viewCols.selected);
+			auto it = m_languageFiles.find(prefix);
+			bool installed = std::find(availableLanguages.begin(), availableLanguages.end(), prefix) != availableLanguages.end();
+			if(selected && !installed) {
+				for(const LangFile& langFile : it->second) {
+					MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Downloading %1..."), langFile.name));
+					Glib::ustring messages;
+					Glib::RefPtr<Glib::ByteArray> data = Utils::download(langFile.url, messages);
+					std::ofstream file(Glib::build_filename(tessDataPath, langFile.name));
+					if(!data || !file.is_open()) {
+						errors.append(langFile.name + "\n");
+					} else {
+						file.write(reinterpret_cast<char*>(data->get_data()), data->size());
+					}
+					MAIN->popState();
+				}
+			} else if(!selected && installed) {
+				for(const std::string& file : Glib::Dir(tessDataPath)) {
+					if(file.size() > 4 && file.compare(0, 4, prefix + ".") == 0) {
+						Gio::File::create_for_path(Glib::build_filename(tessDataPath, file))->remove();
+					}
 				}
 			}
 		}
+		if(!errors.empty()) {
+			errorMsg = Glib::ustring::compose(_("The following files could not be downloaded or removed:\n%1\n\nCheck the connectivity and directory permissions."), errors);
+		}
 	}
-	if(!errors.empty()) {
-		errorMsg = Glib::ustring::compose(_("The following files could not be downloaded or removed:\n%1\n\nCheck the connectivity and directory permissions."), errors);
-	}
-#endif
 	m_dialog->get_window()->set_cursor(Glib::RefPtr<Gdk::Cursor>());
 	m_dialog->set_sensitive(true);
 	MAIN->popState();

@@ -72,7 +72,6 @@ int main (int argc, char *argv[])
 		window = new CrashHandler(pid, savefile);
 	}else{
 #ifdef Q_OS_WIN
-		qputenv("TESSDATA_PREFIX", dataDir.absolutePath().toLocal8Bit());
 		qputenv("TWAINDSM_LOG", packageDir.absoluteFilePath("twain.log").toLocal8Bit());
 		std::freopen(packageDir.absoluteFilePath("gimagereader.log").toLocal8Bit().data(), "w", stderr);
 #endif

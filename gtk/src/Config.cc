@@ -21,6 +21,8 @@
 #include "MainWindow.hh"
 #include "Utils.hh"
 
+#include <tesseract/baseapi.h>
+
 const std::vector<Config::Lang> Config::LANGUAGES = {
 	// {ISO 639-2, ISO 639-1, name}
 	{"afr",      "af", "Afrikaans"}, // Afrikaans
@@ -321,6 +323,7 @@ Config::Config()
 	CONNECT(m_addLangPrefix, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangPrefix); return false; });
 	CONNECT(m_addLangName, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangName); return false; });
 	CONNECT(m_addLangCode, focus_in_event, [this](GdkEventFocus*){ Utils::clear_error_state(m_addLangCode); return false; });
+	CONNECTS(MAIN->getWidget("combo:config.datadirs").as<Gtk::ComboBox>(), changed, [this](Gtk::ComboBox* combo){ setDataLocations(combo->get_active_row_number()); });
 
 	addSetting(new SwitchSettingT<Gtk::CheckButton>("dictinstall", MAIN->getWidget("check:config.settings.dictinstall")));
 	addSetting(new SwitchSettingT<Gtk::CheckButton>("updatecheck", MAIN->getWidget("check:config.settings.update")));
@@ -328,6 +331,7 @@ Config::Config()
 	addSetting(new SwitchSettingT<Gtk::CheckButton>("systemoutputfont", MAIN->getWidget("checkbutton:config.settings.defaultoutputfont")));
 	addSetting(new FontSetting("customoutputfont", MAIN->getWidget("fontbutton:config.settings.customoutputfont")));
 	addSetting(new ComboSetting("outputorient", MAIN->getWidget("combo:config.settings.paneorient")));
+	addSetting(new ComboSetting("datadirs", MAIN->getWidget("combo:config.datadirs")));
 }
 
 Config::~Config()
@@ -360,12 +364,48 @@ std::vector<Glib::ustring> Config::searchLangCultures(const Glib::ustring& code)
 	return result;
 }
 
+bool Config::useSystemDataLocations() const
+{
+	return MAIN->getWidget("combo:config.datadirs").as<Gtk::ComboBox>()->get_active_row_number() == 0;
+}
+
+std::string Config::tessdataLocation() const
+{
+	return MAIN->getWidget("entry:config.tessdatadir").as<Gtk::Entry>()->get_text();
+}
+
+std::string Config::spellingLocation() const
+{
+	return MAIN->getWidget("entry:config.spelldir").as<Gtk::Entry>()->get_text();
+}
+
 void Config::showDialog()
 {
 	toggleAddLanguage(true);
 	while(m_dialog->run() == Gtk::RESPONSE_HELP);
 	getSetting<ListStoreSetting>("customlangs")->serialize();
 	m_dialog->hide();
+}
+
+void Config::setDataLocations(int idx)
+{
+	if(idx == 0) {
+#ifdef G_OS_WIN32
+		std::string dataDir = Glib::build_filename(pkgDir, "share");
+		Glib::setenv("TESSDATA_PREFIX", dataDir);
+#else
+		std::string dataDir("/usr/share");
+		Glib::unsetenv("TESSDATA_PREFIX");
+#endif
+		MAIN->getWidget("entry:config.spelldir").as<Gtk::Entry>()->set_text(Glib::build_filename(dataDir, "myspell", "dicts"));
+	} else {
+		std::string configDir = Glib::get_user_config_dir();
+		Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(configDir, "tessdata"));
+		MAIN->getWidget("entry:config.spelldir").as<Gtk::Entry>()->set_text(Glib::build_filename(configDir, "enchant", "myspell"));
+	}
+	tesseract::TessBaseAPI tess;
+	tess.Init(nullptr, nullptr);
+	MAIN->getWidget("entry:config.tessdatadir").as<Gtk::Entry>()->set_text(tess.GetDatapath());
 }
 
 void Config::toggleAddLanguage(bool forceHide)

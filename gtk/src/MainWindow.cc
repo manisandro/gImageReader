@@ -462,27 +462,27 @@ void MainWindow::languageChanged()
 	}catch(const GtkSpell::Error& /*e*/){
 		if(getConfig()->getSetting<SwitchSetting>("dictinstall")->getValue()){
 			NotificationAction actionDontShowAgain = {_("Don't show again"), [this]{ m_config->getSetting<SwitchSetting>("dictinstall")->setValue(false); return true; }};
-			NotificationAction actionInstall;
-#if defined(G_OS_UNIX)
-			// Try initiating a DBUS connection for PackageKit
-			Glib::RefPtr<Gio::DBus::Proxy> proxy;
-			try{
-				proxy = Gio::DBus::Proxy::create_for_bus_sync(Gio::DBus::BUS_TYPE_SESSION, "org.freedesktop.PackageKit",
-															  "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify");
-				actionInstall = MainWindow::NotificationAction{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); return false; }};
-			}catch(const Glib::Error&){
-				actionInstall = {_("Help"), [this]{ showHelp("#InstallSpelling"); return false; }};
-				g_warning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
+			NotificationAction actionInstall = NotificationAction{_("Install"), [this,lang]{ dictionaryAutoinstall(lang.code); return false; }};
+#ifdef G_OS_UNIX
+			if(getConfig()->useSystemDataLocations()) {
+				// Try initiating a DBUS connection for PackageKit
+				Glib::RefPtr<Gio::DBus::Proxy> proxy;
+				try{
+					proxy = Gio::DBus::Proxy::create_for_bus_sync(Gio::DBus::BUS_TYPE_SESSION, "org.freedesktop.PackageKit",
+																  "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify");
+					actionInstall = MainWindow::NotificationAction{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); return false; }};
+				}catch(const Glib::Error&){
+					actionInstall = {_("Help"), [this]{ showHelp("#InstallSpelling"); return false; }};
+					g_warning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
+				}
 			}
-#elif defined(G_OS_WIN32)
-			actionInstall = NotificationAction{_("Install"), [this,lang]{ dictionaryAutoinstall(lang.code); return false; }};
 #endif
 			addNotification(_("Spelling dictionary missing"), Glib::ustring::compose(_("The spellcheck dictionary for %1 is not installed"), lang.name), {actionInstall, actionDontShowAgain}, &m_notifierHandle);
 		}
 	}
 }
 
-#if defined(G_OS_UNIX)
+#ifdef G_OS_UNIX
 void MainWindow::dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring &code)
 {
 	pushState(State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), code));
@@ -509,7 +509,8 @@ void MainWindow::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy,
 	getRecognizer()->updateLanguagesMenu();
 	popState();
 }
-#elif defined(G_OS_WIN32)
+#endif
+
 void MainWindow::dictionaryAutoinstall(Glib::ustring code)
 {
 	std::vector<Glib::ustring> codes = m_config->searchLangCultures(code);
@@ -519,6 +520,19 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code)
 	Glib::ustring url= "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
 	Glib::ustring plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
 	Glib::ustring urlcode = code;
+	std::string dictPath = getConfig()->spellingLocation();
+	Glib::RefPtr<Gio::File> dictDir = Gio::File::create_for_path(dictPath);
+	bool dirExists = false;
+	try {
+		dirExists = dictDir->make_directory_with_parents();
+	} catch(...) {
+		dirExists = dictDir->query_exists();
+	}
+	if(!dirExists) {
+		popState();
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), _("Failed to create directory for spelling dictionaries."));
+		return;
+	}
 
 	Glib::ustring messages;
 	Glib::RefPtr<Glib::ByteArray> html = Utils::download(url, messages);
@@ -553,7 +567,7 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code)
 		pushState(State::Busy, Glib::ustring::compose(_("Downloading '%1'..."), matchInfo.fetch(1)));
 		Glib::RefPtr<Glib::ByteArray> data = Utils::download(plainurl + urlcode + "/" + matchInfo.fetch(1), messages);
 		if(data){
-			std::ofstream file(Glib::build_filename(pkgDir, "share", "myspell", "dicts", matchInfo.fetch(1)), std::ios::binary);
+			std::ofstream file(Glib::build_filename(dictPath, matchInfo.fetch(1)), std::ios::binary);
 			if(file.is_open()){
 				file.write(reinterpret_cast<char*>(data->get_data()), data->size());
 				downloaded.append(Glib::ustring::compose("\n%1", matchInfo.fetch(1)));
@@ -572,4 +586,3 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code)
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
 	}
 }
-#endif

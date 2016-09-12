@@ -161,5 +161,10 @@
             <summary>Preserve spaces wider than</summary>
             <description>Preserve spaces wider than the specified number of characters when generating PDFs with uniformized spacing.</description>
         </key>
+        <key type="i" name="datadirs">
+            <default>0</default>
+            <summary>Where to look for tessdata and spelling files</summary>
+            <description>Whether to look in system-wide (0) or user paths (1) for tessdata and spelling files.</description>
+        </key>
     </schema>
 </schemalist>
