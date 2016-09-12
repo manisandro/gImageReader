@@ -645,17 +645,17 @@ void OutputEditorHOCR::addGraphicRegion(QRect rect)
 	ui.treeWidgetItems->setCurrentItem(item);
 }
 
-QString OutputEditorHOCR::trimWord(const QString& word, QString* rest)
+QString OutputEditorHOCR::trimWord(const QString& word, QString* prefix, QString* suffix)
 {
-	int pos = word.lastIndexOf(QRegExp("\\w")) + 1;
-	if(pos == 0) {
-		return word;
-	} else {
-		if(rest) {
-			*rest = word.mid(pos);
-		}
-		return word.left(pos);
+	QRegExp wordRe("^(\\W*)(.*\\w)(\\W*)$");
+	if(wordRe.indexIn(word) != -1) {
+		if(prefix)
+			*prefix = wordRe.cap(1);
+		if(suffix)
+			*suffix = wordRe.cap(3);
+		return wordRe.cap(2);
 	}
+	return word;
 }
 
 void OutputEditorHOCR::mergeItems(const QList<QTreeWidgetItem*>& items)
@@ -725,9 +725,9 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 		QAction* addAction = nullptr;
 		QAction* ignoreAction = nullptr;
 		 if(itemClass == "ocrx_word") {
-			QString rest, trimmedWord = trimWord(item->text(0), &rest);
+			QString prefix, suffix, trimmedWord = trimWord(item->text(0), &prefix, &suffix);
 			for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
-				menu.addAction(suggestion + rest);
+				menu.addAction(prefix + suggestion + suffix);
 			}
 			if(menu.actions().isEmpty()) {
 				menu.addAction(_("No suggestions"))->setEnabled(false);
