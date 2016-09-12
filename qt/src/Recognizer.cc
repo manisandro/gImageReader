@@ -538,7 +538,8 @@ bool Recognizer::eventFilter(QObject* obj, QEvent* ev)
 {
 	if(obj == ui.menuLanguages && ev->type() == QEvent::MouseButtonPress) {
 		QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(ev);
-		if(ui.menuLanguages->actionAt(mouseEvent->pos()) == m_multilingualAction) {
+		QAction* actionAtPos = ui.menuLanguages->actionAt(mouseEvent->pos());
+		if(actionAtPos && actionAtPos == m_multilingualAction) {
 			m_multilingualAction->toggle();
 			if(m_multilingualAction->isChecked()) {
 				setMultiLanguage();
