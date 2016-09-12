@@ -98,7 +98,7 @@ private:
 	void updateCurrentItemAttribute(const QString& key, const QString& subkey, const QString& newvalue, bool update=true);
 	void updateCurrentItem();
 	void removeCurrentItem();
-	QString trimWord(const QString& word, QString* rest = nullptr);
+	QString trimWord(const QString& word, QString* prefix = nullptr, QString* suffix = nullptr);
 	void mergeItems(const QList<QTreeWidgetItem*>& items);
 
 private slots:

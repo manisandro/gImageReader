@@ -747,20 +747,18 @@ void OutputEditorHOCR::addGraphicRection(const Geometry::Rectangle &rect)
 	m_itemView->scroll_to_row(m_itemStore->get_path(item));
 }
 
-Glib::ustring OutputEditorHOCR::trimWord(const Glib::ustring& word, Glib::ustring* rest)
+Glib::ustring OutputEditorHOCR::trimWord(const Glib::ustring& word, Glib::ustring* prefix, Glib::ustring* suffix)
 {
-	Glib::RefPtr<Glib::Regex> re = Glib::Regex::create("\\w\\W*$");
+	Glib::RefPtr<Glib::Regex> re = Glib::Regex::create("^(\\W*)(.*\\w)(\\W*)$");
 	Glib::MatchInfo match_info;
 	if(re->match(word, -1, 0, match_info, static_cast<Glib::RegexMatchFlags>(0))) {
-		int start, end;
-		match_info.fetch_pos(0, start, end);
-		if(rest) {
-			*rest = word.substr(start+1);
-		}
-		return word.substr(0, start + 1);
-	} else {
-		return word;
+		if(prefix)
+			*prefix = match_info.fetch(1);
+		if(suffix)
+			*suffix = match_info.fetch(3);
+		return match_info.fetch(2);
 	}
+	return word;
 }
 
 void OutputEditorHOCR::mergeItems(const std::vector<Gtk::TreePath>& items)
@@ -880,9 +878,9 @@ void OutputEditorHOCR::showContextMenu(GdkEventButton* ev)
 		Gtk::Menu menu;
 		Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
 		if(itemClass == "ocrx_word") {
-			Glib::ustring rest, trimmed = trimWord((*it)[m_itemStoreCols.text], &rest);
+			Glib::ustring prefix, suffix, trimmed = trimWord((*it)[m_itemStoreCols.text], &prefix, &suffix);
 			for(const Glib::ustring& suggestion : m_spell.get_suggestions(trimmed)) {
-				Glib::ustring replacement = suggestion + rest;
+				Glib::ustring replacement = prefix + suggestion + suffix;
 				Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
 				CONNECT(item, activate, [this, replacement, it] { (*it)[m_itemStoreCols.text] = replacement; });
 				menu.append(*item);

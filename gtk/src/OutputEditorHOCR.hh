@@ -115,7 +115,7 @@ private:
 	void updateCurrentItemAttribute(const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue, bool update=true);
 	void updateCurrentItem();
 	void removeCurrentItem();
-	Glib::ustring trimWord(const Glib::ustring& word, Glib::ustring* rest = nullptr);
+	Glib::ustring trimWord(const Glib::ustring& word, Glib::ustring* prefix = nullptr, Glib::ustring* suffix = nullptr);
 	void mergeItems(const std::vector<Gtk::TreePath>& items);
 
 	void addGraphicRection(const Geometry::Rectangle& rect);
