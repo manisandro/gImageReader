@@ -69,6 +69,29 @@ private:
 	static const QRegExp s_idRx;
 	static const QRegExp s_fontSizeRx;
 
+	struct PDFSettings {
+		QImage::Format colorFormat;
+		bool useDetectedFontSizes;
+		bool uniformizeLineSpacing;
+		int preserveSpaceWidth;
+		bool overlay;
+	};
+
+	class PDFPainter {
+	public:
+		virtual void setFontSize(double pointSize) = 0;
+		virtual void drawText(double x, double y, const QString& text) = 0;
+		virtual void drawImage(const QRect& bbox, const QImage& image, QImage::Format targetFormat) = 0;
+		virtual double getAverageCharWidth() const = 0;
+		virtual double getTextWidth(const QString& text) const = 0;
+	protected:
+		QImage convertedImage(const QImage& image, QImage::Format targetFormat) const{
+			return image.format() == targetFormat ? image : image.convertToFormat(targetFormat);
+		}
+	};
+	class PoDoFoPDFPainter;
+	class QPainterPDFPainter;
+
 	int m_idCounter = 0;
 	DisplayerToolHOCR* m_tool;
 	QWidget* m_widget;
@@ -92,7 +115,7 @@ private:
 	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString, QString>& langCache);
 	QDomElement elementById(QDomElement element, const QString& id) const;
 	void expandChildren(QTreeWidgetItem* item) const;
-	void printChildren(QPainter& painter, QTreeWidgetItem* item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing, int preseveSpaceWidth) const;
+	void printChildren(PDFPainter& painter, QTreeWidgetItem* item, const PDFSettings& pdfSettings) const;
 	bool setCurrentSource(const QDomElement& pageElement, int* pageDpi = 0) const;
 	void updateCurrentItemText();
 	void updateCurrentItemAttribute(const QString& key, const QString& subkey, const QString& newvalue, bool update=true);
