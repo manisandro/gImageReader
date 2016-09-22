@@ -16,6 +16,11 @@ iface=${2:-qt5}
 # Note: This script is written to be used with the Fedora mingw environment
 MINGWROOT=/usr/$arch-w64-mingw32/sys-root/mingw
 
+export MINGW32_CFLAGS="-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4"
+export MINGW32_CXXFLAGS="-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4"
+export MINGW64_CFLAGS="-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4"
+export MINGW64_CXXFLAGS="-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4"
+
 # Halt on errors
 set -e
 
@@ -33,7 +38,7 @@ rm -rf $builddir
 mkdir -p $builddir
 pushd $builddir > /dev/null
 mingw$bits-cmake -DINTERFACE_TYPE=$iface ../../
-mingw$bits-make -j4 DESTDIR="${installroot}_" install
+mingw$bits-make -j4 DESTDIR="${installroot}_" install VERBOSE=1
 mv ${installroot}_$MINGWROOT $installroot
 rm -rf ${installroot}_
 cp $win32dir/gimagereader-icon.rc $builddir
