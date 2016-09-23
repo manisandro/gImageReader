@@ -171,7 +171,7 @@ public:
 		pdfImage.SetImageColorSpace(img.format() == QImage::Format_RGB888 ? PoDoFo::ePdfColorSpace_DeviceRGB : PoDoFo::ePdfColorSpace_DeviceGray);
 		PoDoFo::PdfMemoryInputStream is(reinterpret_cast<const char*>(img.bits()), img.bytesPerLine() * img.height());
 		pdfImage.SetImageData(img.width(), img.height(), sampleSize, &is);
-		m_painter->DrawImage(bbox.x(), bbox.y(), &pdfImage, bbox.width() / double(img.width()), bbox.height() / double(img.height()));
+		m_painter->DrawImage(bbox.x(), m_pageHeight - (bbox.y() + bbox.height()), &pdfImage, bbox.width() / double(img.width()), bbox.height() / double(img.height()));
 	}
 	double getAverageCharWidth() const override {
 		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x'));
