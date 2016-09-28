@@ -29,7 +29,7 @@
 #include <QPrinter>
 #include <QSyntaxHighlighter>
 #include <QTextStream>
-#include <podofo/doc/PdfExtGState.h>
+#include <cstring>
 #include <podofo/doc/PdfFont.h>
 #include <podofo/doc/PdfImage.h>
 #include <podofo/doc/PdfPage.h>
@@ -166,12 +166,21 @@ public:
 		if(targetFormat == QImage::Format_Mono) {
 			img.invertPixels();
 		}
+		// QImage has 32-bit aligned scanLines, but we need a continuous buffer
+		int width = img.width();
+		int height = img.height();
 		int sampleSize = targetFormat == QImage::Format_Mono ? 1 : 8;
+		int numComponents = targetFormat == QImage::Format_RGB888 ? 3 : 1;
+		int bytesPerLine = numComponents * ((width * sampleSize) / 8 + ((width * sampleSize) % 8 != 0));
+		QVector<char> buf(bytesPerLine * height);
+		for(int y = 0; y < height; ++y) {
+			std::memcpy(buf.data() + y * bytesPerLine, img.scanLine(y), bytesPerLine);
+		}
 		PoDoFo::PdfImage pdfImage(m_document);
 		pdfImage.SetImageColorSpace(img.format() == QImage::Format_RGB888 ? PoDoFo::ePdfColorSpace_DeviceRGB : PoDoFo::ePdfColorSpace_DeviceGray);
-		PoDoFo::PdfMemoryInputStream is(reinterpret_cast<const char*>(img.bits()), img.bytesPerLine() * img.height());
-		pdfImage.SetImageData(img.width(), img.height(), sampleSize, &is);
-		m_painter->DrawImage(bbox.x(), m_pageHeight - (bbox.y() + bbox.height()), &pdfImage, bbox.width() / double(img.width()), bbox.height() / double(img.height()));
+		PoDoFo::PdfMemoryInputStream is(buf.data(), bytesPerLine * height);
+		pdfImage.SetImageData(width, height, sampleSize, &is);
+		m_painter->DrawImage(bbox.x(), m_pageHeight - (bbox.y() + bbox.height()), &pdfImage, bbox.width() / double(width), bbox.height() / double(height));
 	}
 	double getAverageCharWidth() const override {
 		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x'));
