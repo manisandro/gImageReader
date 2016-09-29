@@ -53,6 +53,7 @@ const QRegExp OutputEditorHOCR::s_bboxRx = QRegExp("bbox\\s+(\\d+)\\s+(\\d+)\\s+
 const QRegExp OutputEditorHOCR::s_pageTitleRx = QRegExp("image\\s+'(.+)';\\s+bbox\\s+\\d+\\s+\\d+\\s+\\d+\\s+\\d+;\\s+pageno\\s+(\\d+);\\s+rot\\s+(\\d+\\.?\\d*);\\s+res\\s+(\\d+\\.?\\d*)");
 const QRegExp OutputEditorHOCR::s_idRx = QRegExp("(\\w+)_\\d+_(\\d+)");
 const QRegExp OutputEditorHOCR::s_fontSizeRx = QRegExp("x_fsize\\s+(\\d+)");
+const QRegExp OutputEditorHOCR::s_baseLineRx = QRegExp("baseline\\s+(-?\\d+\\.?\\d*)\\s+(-?\\d+)");
 
 
 class OutputEditorHOCR::HTMLHighlighter : public QSyntaxHighlighter
@@ -447,7 +448,11 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 					item->setData(0, ClassRole, type);
 					parentItem->addChild(item);
 					haveWord = true;
-					if(type == "ocrx_word") {
+					if(type == "ocr_line") {
+						if(s_baseLineRx.indexIn(element.attribute("title")) != -1) {
+							item->setData(0, BaselineRole, s_baseLineRx.cap(2).toInt());
+						}
+					} else if(type == "ocrx_word") {
 						// Ensure correct hyphen char is used on last word of line
 						if(nextElement.isNull()) {
 							title.replace(QRegExp("[-\u2014]\\s*$"), "-");
@@ -1071,6 +1076,7 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, QTreeWidgetItem* item,
 		double y = itemRect.top() + yInc;
 		for(int iLine = 0, nLines = item->childCount(); iLine < nLines; ++iLine, y += yInc) {
 			QTreeWidgetItem* lineItem = item->child(iLine);
+			int baseline = lineItem->data(0, BaselineRole).toInt();
 			int x = itemRect.x();
 			int prevWordRight = itemRect.x();
 			for(int iWord = 0, nWords = lineItem->childCount(); iWord < nWords; ++iWord) {
@@ -1085,16 +1091,22 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, QTreeWidgetItem* item,
 						x = wordRect.x();
 					}
 					prevWordRight = wordRect.right();
-					painter.drawText(x, y, wordItem->text(0));
+					painter.drawText(x, y + baseline, wordItem->text(0));
 					x += painter.getTextWidth(wordItem->text(0) + " ");
 				}
 			}
 		}
-	} else if(itemClass == "ocrx_word" && !pdfSettings.uniformizeLineSpacing) {
-		if(pdfSettings.useDetectedFontSizes) {
-			painter.setFontSize(item->data(0, FontSizeRole).toDouble());
+	} else if(itemClass == "ocr_line" && !pdfSettings.uniformizeLineSpacing) {
+		int baseline = item->data(0, BaselineRole).toInt();
+		double y = itemRect.bottom() + baseline;
+		for(int iWord = 0, nWords = item->childCount(); iWord < nWords; ++iWord) {
+			QTreeWidgetItem* wordItem = item->child(iWord);
+			QRect wordRect = wordItem->data(0, BBoxRole).toRect();
+			if(pdfSettings.useDetectedFontSizes) {
+				painter.setFontSize(wordItem->data(0, FontSizeRole).toDouble());
+			}
+			painter.drawText(wordRect.x(), y, wordItem->text(0));
 		}
-		painter.drawText(itemRect.x(), itemRect.bottom(), item->text(0));
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {
 		painter.drawImage(itemRect, m_tool->getSelection(itemRect), pdfSettings);
 	} else {
