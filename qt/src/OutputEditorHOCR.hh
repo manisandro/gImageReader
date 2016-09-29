@@ -71,6 +71,8 @@ private:
 
 	struct PDFSettings {
 		QImage::Format colorFormat;
+		enum Compression { CompressZip, CompressJpeg } compression;
+		int compressionQuality;
 		bool useDetectedFontSizes;
 		bool uniformizeLineSpacing;
 		int preserveSpaceWidth;
@@ -81,7 +83,7 @@ private:
 	public:
 		virtual void setFontSize(double pointSize) = 0;
 		virtual void drawText(double x, double y, const QString& text) = 0;
-		virtual void drawImage(const QRect& bbox, const QImage& image, QImage::Format targetFormat) = 0;
+		virtual void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) = 0;
 		virtual double getAverageCharWidth() const = 0;
 		virtual double getTextWidth(const QString& text) const = 0;
 	protected:
@@ -130,6 +132,8 @@ private slots:
 	void setFont();
 	void showItemProperties(QTreeWidgetItem* item);
 	void itemChanged(QTreeWidgetItem* item, int col);
+	void imageFormatChanged();
+	void imageCompressionChanged();
 	void propertyCellChanged(int row, int col);
 	void showTreeWidgetContextMenu(const QPoint& point);
 	void updateFontButton(const QFont& font);
