@@ -576,7 +576,7 @@ void Displayer::scaleThread()
 			break;
 		}else if(req.type == ScaleRequest::Scale){
 			m_scaleMutex.unlock();
-			Cairo::RefPtr<Cairo::ImageSurface> image = m_renderer->render(req.page, req.scale * req.resolution);
+			Cairo::RefPtr<Cairo::ImageSurface> image = m_renderer->render(req.page, 2 * req.scale * req.resolution);
 
 			m_scaleMutex.lock();
 			if(!m_scaleRequests.empty() && m_scaleRequests.front().type == ScaleRequest::Abort){
