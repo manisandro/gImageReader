@@ -18,6 +18,7 @@
  */
 
 #include <QApplication>
+#include <QBuffer>
 #include <QDir>
 #include <QDomDocument>
 #include <QGraphicsPixmapItem>
@@ -26,10 +27,11 @@
 #include <QFileInfo>
 #include <QFileDialog>
 #include <QPainter>
-#include <QPrinter>
 #include <QSyntaxHighlighter>
 #include <QTextStream>
 #include <cstring>
+#include <podofo/base/PdfDictionary.h>
+#include <podofo/base/PdfFilter.h>
 #include <podofo/doc/PdfFont.h>
 #include <podofo/doc/PdfImage.h>
 #include <podofo/doc/PdfPage.h>
@@ -132,8 +134,8 @@ public:
 	void drawText(double x, double y, const QString& text) override {
 		m_painter->drawText(x, y, text);
 	}
-	void drawImage(const QRect& bbox, const QImage& image, QImage::Format targetFormat) override {
-		m_painter->drawImage(bbox, convertedImage(image, targetFormat));
+	void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) override {
+		m_painter->drawImage(bbox, convertedImage(image, settings.colorFormat));
 	}
 	double getAverageCharWidth() const override {
 		return m_painter->fontMetrics().averageCharWidth();
@@ -161,25 +163,35 @@ public:
 		PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.toUtf8().data()));
 		m_painter->DrawText(x, m_pageHeight - y, pdfString);
 	}
-	void drawImage(const QRect& bbox, const QImage& image, QImage::Format targetFormat) override {
-		QImage img = convertedImage(image, targetFormat);
-		if(targetFormat == QImage::Format_Mono) {
+	void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) override {
+		QImage img = convertedImage(image, settings.colorFormat);
+		if(settings.colorFormat == QImage::Format_Mono) {
 			img.invertPixels();
-		}
-		// QImage has 32-bit aligned scanLines, but we need a continuous buffer
-		int width = img.width();
-		int height = img.height();
-		int sampleSize = targetFormat == QImage::Format_Mono ? 1 : 8;
-		int numComponents = targetFormat == QImage::Format_RGB888 ? 3 : 1;
-		int bytesPerLine = numComponents * ((width * sampleSize) / 8 + ((width * sampleSize) % 8 != 0));
-		QVector<char> buf(bytesPerLine * height);
-		for(int y = 0; y < height; ++y) {
-			std::memcpy(buf.data() + y * bytesPerLine, img.scanLine(y), bytesPerLine);
 		}
 		PoDoFo::PdfImage pdfImage(m_document);
 		pdfImage.SetImageColorSpace(img.format() == QImage::Format_RGB888 ? PoDoFo::ePdfColorSpace_DeviceRGB : PoDoFo::ePdfColorSpace_DeviceGray);
-		PoDoFo::PdfMemoryInputStream is(buf.data(), bytesPerLine * height);
-		pdfImage.SetImageData(width, height, sampleSize, &is);
+		int width = img.width();
+		int height = img.height();
+		int sampleSize = settings.colorFormat == QImage::Format_Mono ? 1 : 8;
+		if(settings.compression == PDFSettings::CompressZip) {
+			// QImage has 32-bit aligned scanLines, but we need a continuous buffer
+			int numComponents = settings.colorFormat == QImage::Format_RGB888 ? 3 : 1;
+			int bytesPerLine = numComponents * ((width * sampleSize) / 8 + ((width * sampleSize) % 8 != 0));
+			QVector<char> buf(bytesPerLine * height);
+			for(int y = 0; y < height; ++y) {
+				std::memcpy(buf.data() + y * bytesPerLine, img.scanLine(y), bytesPerLine);
+			}
+			PoDoFo::PdfMemoryInputStream is(buf.data(), bytesPerLine * height);
+			pdfImage.SetImageData(width, height, sampleSize, &is, {PoDoFo::ePdfFilter_FlateDecode});
+		} else {
+			PoDoFo::PdfName dctFilterName(PoDoFo::PdfFilterFactory::FilterTypeToName(PoDoFo::ePdfFilter_DCTDecode));
+			pdfImage.GetObject()->GetDictionary().AddKey(PoDoFo::PdfName::KeyFilter, dctFilterName);
+			QByteArray data;
+			QBuffer buffer(&data);
+			img.save(&buffer, "jpg", settings.compressionQuality);
+			PoDoFo::PdfMemoryInputStream is(data.data(), data.size());
+			pdfImage.SetImageDataRaw(width, height, sampleSize, &is);
+		}
 		m_painter->DrawImage(bbox.x(), m_pageHeight - (bbox.y() + bbox.height()), &pdfImage, bbox.width() / double(width), bbox.height() / double(height));
 	}
 	double getAverageCharWidth() const override {
@@ -210,9 +222,13 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 
 	m_pdfExportDialog = new QDialog(m_widget);
 	m_pdfExportDialogUi.setupUi(m_pdfExportDialog);
-	m_pdfExportDialogUi.comboBoxImageFormat->addItem(tr("Color"), QImage::Format_RGB888);
-	m_pdfExportDialogUi.comboBoxImageFormat->addItem(tr("Grayscale"), QImage::Format_Grayscale8);
-	m_pdfExportDialogUi.comboBoxImageFormat->addItem(tr("Monochrome"), QImage::Format_Mono);
+	m_pdfExportDialogUi.comboBoxImageFormat->addItem(_("Color"), QImage::Format_RGB888);
+	m_pdfExportDialogUi.comboBoxImageFormat->addItem(_("Grayscale"), QImage::Format_Grayscale8);
+	m_pdfExportDialogUi.comboBoxImageFormat->addItem(_("Monochrome"), QImage::Format_Mono);
+	m_pdfExportDialogUi.comboBoxImageFormat->setCurrentIndex(-1);
+	m_pdfExportDialogUi.comboBoxImageCompression->addItem(_("Zip (lossless)"), PDFSettings::CompressZip);
+	m_pdfExportDialogUi.comboBoxImageCompression->addItem(_("Jpeg (lossy)"), PDFSettings::CompressJpeg);
+	m_pdfExportDialogUi.comboBoxImageCompression->setCurrentIndex(-1);
 
 	ui.actionOutputSaveHOCR->setShortcut(Qt::CTRL + Qt::Key_S);
 
@@ -232,6 +248,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	connect(&m_pdfFontDialog, SIGNAL(fontSelected(QFont)), this, SLOT(updateFontButton(QFont)));
 	connect(m_pdfExportDialogUi.comboBoxOutputMode, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
+	connect(m_pdfExportDialogUi.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(imageFormatChanged()));
+	connect(m_pdfExportDialogUi.comboBoxImageCompression, SIGNAL(currentIndexChanged(int)), this, SLOT(imageCompressionChanged()));
 	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.spinBoxPreserve, SIGNAL(valueChanged(int)), this, SLOT(updatePreview()));
@@ -243,6 +261,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", m_pdfExportDialogUi.comboBoxOutputMode));
 	MAIN->getConfig()->addSetting(new FontSetting("pdffont", &m_pdfFontDialog, QFont().toString()));
+	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagecompressionquality", m_pdfExportDialogUi.spinBoxCompressionQuality, 90));
+	MAIN->getConfig()->addSetting(new ComboSetting("pdfimagecompression", m_pdfExportDialogUi.comboBoxImageCompression));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageformat", m_pdfExportDialogUi.comboBoxImageFormat));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfusedetectedfontsizes", m_pdfExportDialogUi.checkBoxFontSize, true));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfuniformizelinespacing", m_pdfExportDialogUi.checkBoxUniformizeSpacing, true));
@@ -266,6 +286,29 @@ void OutputEditorHOCR::setFont()
 	}
 }
 
+void OutputEditorHOCR::imageFormatChanged()
+{
+	QImage::Format format = static_cast<QImage::Format>(m_pdfExportDialogUi.comboBoxImageFormat->itemData(m_pdfExportDialogUi.comboBoxImageFormat->currentIndex()).toInt());
+	if(format == QImage::Format_Mono) {
+		m_pdfExportDialogUi.comboBoxImageCompression->setCurrentIndex(m_pdfExportDialogUi.comboBoxImageCompression->findData(PDFSettings::CompressZip));
+		m_pdfExportDialogUi.comboBoxImageCompression->setEnabled(false);
+		m_pdfExportDialogUi.labelImageCompression->setEnabled(false);
+	} else {
+		m_pdfExportDialogUi.comboBoxImageCompression->setEnabled(true);
+		m_pdfExportDialogUi.labelImageCompression->setEnabled(true);
+	}
+}
+
+void OutputEditorHOCR::imageCompressionChanged()
+{
+	PDFSettings::Compression compression = static_cast<PDFSettings::Compression>(m_pdfExportDialogUi.comboBoxImageCompression->itemData(m_pdfExportDialogUi.comboBoxImageCompression->currentIndex()).toInt());
+	bool zipCompression = compression == PDFSettings::CompressZip;
+	m_pdfExportDialogUi.spinBoxCompressionQuality->setEnabled(!zipCompression);
+	m_pdfExportDialogUi.labelCompressionQuality->setEnabled(!zipCompression);
+}
+
+void OutputEditorHOCR::imageCompressionChanged();
+
 void OutputEditorHOCR::read(tesseract::TessBaseAPI &tess, ReadSessionData *data)
 {
 	tess.SetVariable("hocr_font_info", "true");
@@ -283,7 +326,7 @@ void OutputEditorHOCR::finalizeRead(ReadSessionData *data)
 {
 	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
 	if(!hdata->errors.isEmpty()) {
-		QString message = QString(tr("The following pages could not be processed:\n%1").arg(hdata->errors.join("\n")));
+		QString message = QString(_("The following pages could not be processed:\n%1").arg(hdata->errors.join("\n")));
 		QMessageBox::warning(MAIN, _("Recognition errors"), message);
 	}
 	OutputEditor::finalizeRead(data);
@@ -977,6 +1020,8 @@ void OutputEditorHOCR::savePDF()
 
 	PDFSettings pdfSettings;
 	pdfSettings.colorFormat = static_cast<QImage::Format>(m_pdfExportDialogUi.comboBoxImageFormat->itemData(m_pdfExportDialogUi.comboBoxImageFormat->currentIndex()).toInt());
+	pdfSettings.compression = static_cast<PDFSettings::Compression>(m_pdfExportDialogUi.comboBoxImageCompression->itemData(m_pdfExportDialogUi.comboBoxImageCompression->currentIndex()).toInt());
+	pdfSettings.compressionQuality = m_pdfExportDialogUi.spinBoxCompressionQuality->value();
 	pdfSettings.useDetectedFontSizes = m_pdfExportDialogUi.checkBoxFontSize->isChecked();
 	pdfSettings.uniformizeLineSpacing = m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked();
 	pdfSettings.preserveSpaceWidth = m_pdfExportDialogUi.spinBoxPreserve->value();
@@ -1000,7 +1045,7 @@ void OutputEditorHOCR::savePDF()
 			pdfprinter.setFontSize(m_pdfFontDialog.currentFont().pointSize());
 			printChildren(pdfprinter, item, pdfSettings);
 			if(pdfSettings.overlay) {
-				pdfprinter.drawImage(bbox, m_tool->getSelection(bbox), pdfSettings.colorFormat);
+				pdfprinter.drawImage(bbox, m_tool->getSelection(bbox), pdfSettings);
 			}
 			painter.FinishPage();
 		} else {
@@ -1051,7 +1096,7 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, QTreeWidgetItem* item,
 		}
 		painter.drawText(itemRect.x(), itemRect.bottom(), item->text(0));
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {
-		painter.drawImage(itemRect, m_tool->getSelection(itemRect), pdfSettings.colorFormat);
+		painter.drawImage(itemRect, m_tool->getSelection(itemRect), pdfSettings);
 	} else {
 		for(int i = 0, n = item->childCount(); i < n; ++i) {
 			printChildren(painter, item->child(i), pdfSettings);
@@ -1076,6 +1121,8 @@ void OutputEditorHOCR::updatePreview()
 
 	PDFSettings pdfSettings;
 	pdfSettings.colorFormat = static_cast<QImage::Format>(m_pdfExportDialogUi.comboBoxImageFormat->itemData(m_pdfExportDialogUi.comboBoxImageFormat->currentIndex()).toInt());
+	pdfSettings.compression = static_cast<PDFSettings::Compression>(m_pdfExportDialogUi.comboBoxImageCompression->itemData(m_pdfExportDialogUi.comboBoxImageCompression->currentIndex()).toInt());
+	pdfSettings.compressionQuality = m_pdfExportDialogUi.spinBoxCompressionQuality->value();
 	pdfSettings.useDetectedFontSizes = m_pdfExportDialogUi.checkBoxFontSize->isChecked();
 	pdfSettings.uniformizeLineSpacing = m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked();
 	pdfSettings.preserveSpaceWidth = m_pdfExportDialogUi.spinBoxPreserve->value();
@@ -1090,7 +1137,7 @@ void OutputEditorHOCR::updatePreview()
 	QPainterPDFPainter pdfPrinter(&painter);
 
 	if(pdfSettings.overlay) {
-		pdfPrinter.drawImage(bbox, m_tool->getSelection(bbox), pdfSettings.colorFormat);
+		pdfPrinter.drawImage(bbox, m_tool->getSelection(bbox), pdfSettings);
 		image.fill(QColor(255, 255, 255, 127));
 	} else {
 		image.fill(Qt::white);
