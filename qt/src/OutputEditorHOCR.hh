@@ -62,12 +62,14 @@ private:
 	static const int BBoxRole = Qt::UserRole + 3;
 	static const int ClassRole = Qt::UserRole + 4;
 	static const int FontSizeRole = Qt::UserRole + 5;
+	static const int BaselineRole = Qt::UserRole + 6;
 	static const int ParentAttrRole = Qt::UserRole + 1;
 
 	static const QRegExp s_bboxRx;
 	static const QRegExp s_pageTitleRx;
 	static const QRegExp s_idRx;
 	static const QRegExp s_fontSizeRx;
+	static const QRegExp s_baseLineRx;
 
 	struct PDFSettings {
 		QImage::Format colorFormat;
