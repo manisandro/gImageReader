@@ -83,9 +83,8 @@ msgid "OK"
 msgstr "確定"
 
 #: ../gtk/data/editor_hocr.ui.h:4 ../qt/data/PdfExportDialog.ui.h:2
-#, fuzzy
 msgid "Output mode:"
-msgstr "輸出："
+msgstr "輸出模式："
 
 #: ../gtk/data/editor_hocr.ui.h:5 ../qt/data/PdfExportDialog.ui.h:3
 msgid "PDF"
@@ -97,28 +96,27 @@ msgstr "包含隱形文字層的 PDF"
 
 #: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Format:"
-msgstr ""
+msgstr "格式："
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression:"
-msgstr ""
+msgstr "壓縮："
 
 #: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:15
 msgid "Compression quality:"
-msgstr ""
+msgstr "壓縮品質："
 
 #: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Image settings:"
-msgstr ""
+msgstr "圖像設定："
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:9
 msgid "Document font:"
 msgstr "文件字型："
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:8
-#, fuzzy
 msgid "Uniformize line and word spacing"
-msgstr "統一行距"
+msgstr "統一行距及字距"
 
 #: ../gtk/data/editor_hocr.ui.h:13 ../qt/data/PdfExportDialog.ui.h:7
 msgid "Use detected font sizes"
@@ -126,20 +124,19 @@ msgstr "採用偵測到的字型大小"
 
 #: ../gtk/data/editor_hocr.ui.h:14 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "保留空格大於："
 
 #: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:11
 msgid "characters"
-msgstr ""
+msgstr "字元"
 
 #: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:6
-#, fuzzy
 msgid "Text settings:"
-msgstr "文字檔編碼："
+msgstr "文字檔設定："
 
 #: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
-msgstr ""
+msgstr "顯示預覽"
 
 #: ../gtk/data/editor_hocr.ui.h:18 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
@@ -503,25 +500,23 @@ msgstr "預設值"
 
 #: ../gtk/data/gimagereader.ui.h:54 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "語言資料位置："
 
 #: ../gtk/data/gimagereader.ui.h:55 ../qt/data/ConfigDialog.ui.h:13
-#, fuzzy
 msgid "Language definitions path:"
-msgstr "預設語言定義："
+msgstr "語言定義路徑："
 
 #: ../gtk/data/gimagereader.ui.h:56 ../qt/data/ConfigDialog.ui.h:28
-#, fuzzy
 msgid "Spelling dictionaries path:"
-msgstr "遺漏拼字詞典"
+msgstr "拼字詞典路徑："
 
 #: ../gtk/data/gimagereader.ui.h:57 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "系統路徑"
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "用戶路徑"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -702,7 +697,8 @@ msgstr "進行佈局分析"
 #: ../gtk/src/FileDialogs.cc:248
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-msgstr "名為 \"%1\" 的檔案已存在。你確定要覆寫它？"
+msgstr ""
+"名為 \"%1\" 的檔案已存在。你確定要覆寫它？"
 
 #: ../gtk/src/FileDialogs.cc:250
 msgid "Overwrite File?"
@@ -718,7 +714,7 @@ msgstr "多個來源"
 
 #: ../gtk/src/MainWindow.cc:294 ../qt/src/MainWindow.cc:272
 msgid "Ready"
-msgstr ""
+msgstr "就緒"
 
 #: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:406
 msgid "New version"
@@ -781,9 +777,8 @@ msgid "Failed to install spelling dictionary: %1"
 msgstr "無法安裝拼字詞典：%1"
 
 #: ../gtk/src/MainWindow.cc:533 ../qt/src/MainWindow.cc:515
-#, fuzzy
 msgid "Failed to create directory for spelling dictionaries."
-msgstr "無法安裝拼字詞典：%1"
+msgstr "無法建立拼字詞典目錄。"
 
 #: ../gtk/src/MainWindow.cc:541 ../gtk/src/MainWindow.cc:557
 #: ../qt/src/MainWindow.cc:525
@@ -809,15 +804,15 @@ msgstr "已安裝下列詞典：%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:311 ../qt/src/OutputEditorHOCR.cc:228
 msgid "Monochrome"
-msgstr ""
+msgstr "黑白"
 
 #: ../gtk/src/OutputEditorHOCR.cc:320 ../qt/src/OutputEditorHOCR.cc:230
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Zip（無損）"
 
 #: ../gtk/src/OutputEditorHOCR.cc:323 ../qt/src/OutputEditorHOCR.cc:231
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "Jpeg（失真）"
 
 #: ../gtk/src/OutputEditorHOCR.cc:421 ../qt/src/OutputEditorHOCR.cc:330
 msgid ""
@@ -847,11 +842,11 @@ msgstr "文字"
 
 #: ../gtk/src/OutputEditorHOCR.cc:974 ../qt/src/OutputEditorHOCR.cc:831
 msgid "Merge"
-msgstr ""
+msgstr "合併"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1002 ../qt/src/OutputEditorHOCR.cc:847
 msgid "Add graphic region"
-msgstr ""
+msgstr "新增圖像區域"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1037 ../qt/src/OutputEditorHOCR.cc:869
 msgid "No suggestions"
@@ -859,11 +854,11 @@ msgstr "沒有建議"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1043 ../qt/src/OutputEditorHOCR.cc:873
 msgid "Add to dictionary"
-msgstr ""
+msgstr "新增詞典"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1049 ../qt/src/OutputEditorHOCR.cc:874
 msgid "Ignore word"
-msgstr ""
+msgstr "忽略字詞"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1085 ../gtk/src/OutputEditorHOCR.cc:1125
 #: ../qt/src/OutputEditorHOCR.cc:908 ../qt/src/OutputEditorHOCR.cc:939
@@ -922,7 +917,7 @@ msgstr "儲存 PDF 輸出……"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1205 ../qt/src/OutputEditorHOCR.cc:1009
 msgid "The PDF library does not support the selected font."
-msgstr ""
+msgstr "PDF 程式庫不支援所選取字型。"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1257 ../qt/src/OutputEditorHOCR.cc:1061
 msgid "Errors occurred"
@@ -989,6 +984,16 @@ msgid ""
 "Make sure your language data files are valid and compatible with tesseract "
 "%2."
 msgstr ""
+"Tesseract 已異常終止及發出以下訊息：\n"
+"\n"
+"%1\n"
+"\n"
+"出現這個情況一般有下列原因：\n"
+"- 採用舊版的 traineddata 檔。\n"
+"- 遺漏輔助語言資料檔。\n"
+"- 語言資料檔已損毀。\n"
+"\n"
+"請確保你的語言資料檔是正確的及兼容 tesseract %2 。"
 
 #: ../gtk/src/Recognizer.cc:206 ../qt/src/Recognizer.cc:194
 msgid "No languages available"
@@ -1012,22 +1017,20 @@ msgid "Manage languages..."
 msgstr "管理語言……"
 
 #: ../gtk/src/Recognizer.cc:364 ../qt/src/Recognizer.cc:364
-#, fuzzy
 msgid "Current selection"
-msgstr "辨認選取區"
+msgstr "現有選取區"
 
 #: ../gtk/src/Recognizer.cc:439 ../qt/src/Recognizer.cc:440
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "辨認第 %1 頁（%3 之 %2）"
 
 #: ../gtk/src/Recognizer.cc:444 ../qt/src/Recognizer.cc:445
-#, fuzzy
 msgid ""
 "\n"
 "- Page %1: failed to render page"
 msgstr ""
 "\n"
-"\t第 %1 頁：無法繪畫頁面"
+"- 第 %1 頁：無法繪畫頁面"
 
 #: ../gtk/src/Recognizer.cc:465 ../gtk/src/Recognizer.cc:495
 #: ../gtk/src/Recognizer.cc:508 ../qt/src/Recognizer.cc:466
@@ -1242,7 +1245,7 @@ msgstr "正在套用改動……"
 
 #: ../gtk/src/TessdataManager.cc:219 ../qt/src/TessdataManager.cc:205
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "無法為 tessdata 檔建立目錄"
 
 #: ../gtk/src/TessdataManager.cc:228 ../qt/src/TessdataManager.cc:213
 msgid "Downloading %1..."
@@ -1277,7 +1280,6 @@ msgid "About gImageReader"
 msgstr "有關 gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
@@ -1308,7 +1310,6 @@ msgid "Text file encoding:"
 msgstr "文字檔編碼："
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
@@ -1317,10 +1318,11 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給<a href="
-"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+"<html><head/><body><p><span style=\" font-weight:600;\">此應用程式已異常終止"
+"</span><p><p>我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給"
+"<a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
 "\">manisandro@gmail.com</a>。請嘗試描述你在程式終止前所做的事情。另外，請一併"
-"附上下列資料。謝謝。"
+"附上下列資料。謝謝。</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1384,15 +1386,14 @@ msgid "The following dictionary files were installed:%1"
 msgstr "已安裝下列詞典檔：%1"
 
 #: ../qt/src/TessdataManager.cc:71
-#, fuzzy
 msgid ""
 "PackageKit is required for managing system-wide tesseract language packs, "
 "but it was not found. Please use the system package management software to "
 "manage the tesseract language packs, or switch to use the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"管理 tesseract 語言包須要 PackageKit，但它並不存在。請利用系統的套件管理軟件"
-"來管理 tesseract 的語言包。"
+"管理 tesseract 的系統語言包須要 PackageKit，但它並不存在。請利用系統的套件"
+"管理軟件來管理 tesseract 的語言包，或改用設置頁面內的 tessdata 用戶路徑。"
 
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"
@@ -1438,41 +1439,3 @@ msgstr "儲存輸出"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "清除輸出"
-
-#, fuzzy
-#~ msgid ""
-#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
-#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
-#~ "application, please consider reporting the issue to &lt;a href=&quot;"
-#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
-#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
-#~ "doing before the application crashed. Also, include the information "
-#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
-#~ msgstr ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">本應用程式已異常終"
-#~ "止</span></p><p>我們為帶來的不便致歉。為求改善應用程式，請考慮將問題匯報"
-#~ "至 <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-#~ "\">manisandro@gmail.com</a>。請嘗試描述你在程式終止前正在做甚麼。此外，請"
-#~ "包含下列資訊。多請。</p></body></html>"
-
-#, fuzzy
-#~ msgid ""
-#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-#~ msgstr "<small><b>例如：</b> 1-10, 13, 14-18</small>"
-
-#~ msgid ""
-#~ "\n"
-#~ "\tFailed to initialize tesseract"
-#~ msgstr ""
-#~ "\n"
-#~ "\t無法初始化 tesseract"
-
-#~ msgid "So&urces"
-#~ msgstr "來源(&U)"
-
-#~ msgid "&Output"
-#~ msgstr "輸出(&O)"
-
-#~ msgid "To recognize specific areas, drag rectangles over them."
-#~ msgstr "若要辨識特定區域，請拖曳出它們的範圍"
