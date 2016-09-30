@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-30 03:00+0200\n"
-"PO-Revision-Date: 2016-04-15 00:13+0100\n"
+"POT-Creation-Date: 2016-09-30 13:31+0200\n"
+"PO-Revision-Date: 2016-09-30 13:43+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: German <kde-i18n-doc@kde.org>\n"
 "Language: de\n"
@@ -89,9 +89,8 @@ msgid "OK"
 msgstr "OK"
 
 #: ../gtk/data/editor_hocr.ui.h:4 ../qt/data/PdfExportDialog.ui.h:2
-#, fuzzy
 msgid "Output mode:"
-msgstr "Ausgabebild:"
+msgstr "Ausgabemodus:"
 
 #: ../gtk/data/editor_hocr.ui.h:5 ../qt/data/PdfExportDialog.ui.h:3
 msgid "PDF"
@@ -101,28 +100,27 @@ msgstr "PDF"
 msgid "PDF with invisible text overlay"
 msgstr "PDF mit unsichtbarer Textlage"
 
-#: ../gtk/data/editor_hocr.ui.h:7
-msgid "Image format:"
-msgstr ""
+#: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:13
+msgid "Format:"
+msgstr "Format:"
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression:"
-msgstr ""
+msgstr "Komprimierung:"
 
 #: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:15
 msgid "Compression quality:"
-msgstr ""
+msgstr "Komprimierungsqualität:"
 
 #: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Image settings:"
-msgstr ""
+msgstr "Bildeinstellungen:"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:9
 msgid "Document font:"
 msgstr "Schriftart:"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:8
-#, fuzzy
 msgid "Uniformize line and word spacing"
 msgstr "Zeilen- und Wortabstände vereinheitlichen"
 
@@ -132,46 +130,41 @@ msgstr "Automatisch erkannte Schriftgrößen verwenden"
 
 #: ../gtk/data/editor_hocr.ui.h:14 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "Bewahre Abstände breiter als:"
 
-#: ../gtk/data/editor_hocr.ui.h:15
-msgid "4"
-msgstr ""
-
-#: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:11
+#: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:11
 msgid "characters"
-msgstr ""
+msgstr "Zeichen"
 
-#: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:6
-#, fuzzy
+#: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:6
 msgid "Text settings:"
-msgstr "Kodierung der Textdateien:"
+msgstr "Texteinstellungen:"
 
-#: ../gtk/data/editor_hocr.ui.h:18 ../qt/data/PdfExportDialog.ui.h:5
+#: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
 msgstr "Vorschau anzeigen"
 
-#: ../gtk/data/editor_hocr.ui.h:19 ../gtk/data/editor_text.ui.h:26
+#: ../gtk/data/editor_hocr.ui.h:18 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
 msgid "Save output"
 msgstr "Ausgabe speichern"
 
-#: ../gtk/data/editor_hocr.ui.h:20 ../qt/src/Ui_OutputEditorHOCR.hh:45
+#: ../gtk/data/editor_hocr.ui.h:19 ../qt/src/Ui_OutputEditorHOCR.hh:45
 #: ../qt/src/Ui_OutputEditorHOCR.hh:46
 msgid "Export to PDF"
 msgstr "Als PDF exportieren"
 
-#: ../gtk/data/editor_hocr.ui.h:21 ../gtk/data/editor_text.ui.h:27
+#: ../gtk/data/editor_hocr.ui.h:20 ../gtk/data/editor_text.ui.h:27
 #: ../qt/src/Ui_OutputEditorHOCR.hh:48 ../qt/src/Ui_OutputEditorHOCR.hh:49
 #: ../qt/src/Ui_OutputEditorText.hh:125
 msgid "Clear output"
 msgstr "Ausgabe löschen"
 
-#: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:76
+#: ../gtk/data/editor_hocr.ui.h:21 ../qt/src/Ui_OutputEditorHOCR.hh:76
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: ../gtk/data/editor_hocr.ui.h:23 ../qt/src/Ui_OutputEditorHOCR.hh:80
+#: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:80
 msgid "Source"
 msgstr "Quelle"
 
@@ -513,25 +506,23 @@ msgstr "Standard"
 
 #: ../gtk/data/gimagereader.ui.h:54 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "Speicherort für Sprachdaten:"
 
 #: ../gtk/data/gimagereader.ui.h:55 ../qt/data/ConfigDialog.ui.h:13
-#, fuzzy
 msgid "Language definitions path:"
-msgstr "Voreingestellte Sprachdefinitionen:"
+msgstr "Speicherort für Sprachdefinitionen:"
 
 #: ../gtk/data/gimagereader.ui.h:56 ../qt/data/ConfigDialog.ui.h:28
-#, fuzzy
 msgid "Spelling dictionaries path:"
-msgstr "Rechtschreibwörterbuch fehlt"
+msgstr "Speicherort für Rechtschreibwörterbücher"
 
-#: ../gtk/data/gimagereader.ui.h:57
-msgid "System-wide"
-msgstr ""
+#: ../gtk/data/gimagereader.ui.h:57 ../qt/data/ConfigDialog.ui.h:10
+msgid "System-wide paths"
+msgstr "Systemweite Ordner"
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Benutzerordner"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -541,7 +532,7 @@ msgstr "Seiten"
 msgid "Page range:"
 msgstr "Seiten:"
 
-#: ../gtk/data/gimagereader.ui.h:61
+#: ../gtk/data/gimagereader.ui.h:61 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Beispiel:</b> 1-10, 13, 14-18</small>"
 
@@ -791,9 +782,8 @@ msgid "Failed to install spelling dictionary: %1"
 msgstr "Rechtschreibwörterbuch konnte nicht installiert werden: %1"
 
 #: ../gtk/src/MainWindow.cc:533 ../qt/src/MainWindow.cc:515
-#, fuzzy
 msgid "Failed to create directory for spelling dictionaries."
-msgstr "Rechtschreibwörterbuch konnte nicht installiert werden: %1"
+msgstr "Ordner für Rechtschreibwörterbücher konnte nicht erstellt werden."
 
 #: ../gtk/src/MainWindow.cc:541 ../gtk/src/MainWindow.cc:557
 #: ../qt/src/MainWindow.cc:525
@@ -819,15 +809,15 @@ msgstr "Folgende Rechtschreibwörterbücher wurden installiert:%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:311 ../qt/src/OutputEditorHOCR.cc:228
 msgid "Monochrome"
-msgstr ""
+msgstr "Einfarbig"
 
 #: ../gtk/src/OutputEditorHOCR.cc:320 ../qt/src/OutputEditorHOCR.cc:230
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Zip (verlustlos)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:323 ../qt/src/OutputEditorHOCR.cc:231
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "Jpeg (verlustbehaftet)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:421 ../qt/src/OutputEditorHOCR.cc:330
 msgid ""
@@ -857,11 +847,11 @@ msgstr "Textzeile"
 
 #: ../gtk/src/OutputEditorHOCR.cc:974 ../qt/src/OutputEditorHOCR.cc:831
 msgid "Merge"
-msgstr ""
+msgstr "Verschmelzen"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1002 ../qt/src/OutputEditorHOCR.cc:847
 msgid "Add graphic region"
-msgstr ""
+msgstr "Graphikregion hinzufügen"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1037 ../qt/src/OutputEditorHOCR.cc:869
 msgid "No suggestions"
@@ -932,7 +922,7 @@ msgstr "PDF-Ausgabe speichern..."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1205 ../qt/src/OutputEditorHOCR.cc:1009
 msgid "The PDF library does not support the selected font."
-msgstr ""
+msgstr "Die PDF-Bibliothek unterstützt die ausgewählte Schriftart nicht."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1257 ../qt/src/OutputEditorHOCR.cc:1061
 msgid "Errors occurred"
@@ -1033,22 +1023,20 @@ msgid "Manage languages..."
 msgstr "Sprachen verwalten..."
 
 #: ../gtk/src/Recognizer.cc:364 ../qt/src/Recognizer.cc:364
-#, fuzzy
 msgid "Current selection"
-msgstr "Auswahl erkennen"
+msgstr "Aktuelle Selektion"
 
 #: ../gtk/src/Recognizer.cc:439 ../qt/src/Recognizer.cc:440
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Erkennung von Seite %1 (%2 von %3) wird durchgeführt"
 
 #: ../gtk/src/Recognizer.cc:444 ../qt/src/Recognizer.cc:445
-#, fuzzy
 msgid ""
 "\n"
 "- Page %1: failed to render page"
 msgstr ""
 "\n"
-"\tSeite %1: Seite konnte nicht gerendert werden"
+"- Seite %1: Seite konnte nicht gerendert werden"
 
 #: ../gtk/src/Recognizer.cc:465 ../gtk/src/Recognizer.cc:495
 #: ../gtk/src/Recognizer.cc:508 ../qt/src/Recognizer.cc:466
@@ -1264,7 +1252,7 @@ msgstr "Änderung werden übernommen..."
 
 #: ../gtk/src/TessdataManager.cc:219 ../qt/src/TessdataManager.cc:205
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Ordner für tessdata Sprachdefinitionen konnte nicht erstellt werden."
 
 #: ../gtk/src/TessdataManager.cc:228 ../qt/src/TessdataManager.cc:213
 msgid "Downloading %1..."
@@ -1299,12 +1287,10 @@ msgid "About gImageReader"
 msgstr "Über gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
-"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Eine graphische Oberfläche für Tesseract-"
 "OCR</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</"
@@ -1317,10 +1303,6 @@ msgstr "Mitwirkende"
 #: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
 msgstr "Lizenz"
-
-#: ../qt/data/ConfigDialog.ui.h:10
-msgid "System-wide paths"
-msgstr ""
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -1337,23 +1319,20 @@ msgstr "Kodierung der Textdateien:"
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
-"p&gt;Apologies for the inconvenience. To help improve the application, "
-"please consider reporting the issue to &lt;a href=&quot;mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
-"com&lt;/a&gt;. Please try to describe what you were doing before the "
-"application crashed. Also, include the information below. Thank you.&lt;/"
-"p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;Die Anwendung ist abgestürzt&lt;/span&gt;&lt;/p&gt;&lt;"
-"Bitte entschuldigen Sie die Unannehmlichkeiten. Wenn Sie helfen möchten, die "
-"Anwendung zu verbessern, melden Sie das aufgetretene Problem bitte an <a "
-"href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>. Bitte beschreiben Sie auch, was Sie machten, "
-"bevor die Anwendung abgestürzte. Senden Sie zudem bitte auch die "
-"untenstehenden Informationen. Danke."
+"<html><head/><body><p><span style=\" font-weight:600;\">Die Anwendung ist "
+"abgestürzt</span></p><p>Bitte entschuldigen Sie die Unannehmlichkeiten. Wenn "
+"Sie helfen möchten, die Anwendung zu verbessern, melden Sie das aufgetretene "
+"Problem bitte an <a href=\"mailto:manisandro@gmail.com?subject=gImageReader"
+"%20Crash\">manisandro@gmail.com</a>. Bitte beschreiben Sie auch, was Sie "
+"machten, bevor die Anwendung abgestürzte. Senden Sie zudem bitte auch die "
+"untenstehenden Informationen. Danke.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1408,14 +1387,6 @@ msgstr "Layout automatisch erkennen"
 msgid "Toggle Output Pane"
 msgstr "Ausgabebereich ein-/ausblenden"
 
-#: ../qt/data/PageRangeDialog.ui.h:3
-msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>Beispiel:</b> 1-10, 13, 14-18</small>"
-
-#: ../qt/data/PdfExportDialog.ui.h:13
-msgid "Format:"
-msgstr ""
-
 #: ../qt/src/MainWindow.cc:543
 msgid "Could not read %1: %2"
 msgstr "%1 konnte nicht gelesen werden: %2"
@@ -1425,7 +1396,6 @@ msgid "The following dictionary files were installed:%1"
 msgstr "Folgende Rechtschreibwörterbücher wurden installiert:%1"
 
 #: ../qt/src/TessdataManager.cc:71
-#, fuzzy
 msgid ""
 "PackageKit is required for managing system-wide tesseract language packs, "
 "but it was not found. Please use the system package management software to "
@@ -1434,7 +1404,8 @@ msgid ""
 msgstr ""
 "PackageKit ist erforderlich um tesseract-Sprachpakete zu verwalten, wurde "
 "aber nicht gefunden. Bitte stattdessen die System-Paketverwaltung benutzen, "
-"um die tesseract-Sprachpakete zu verwalten."
+"um die tesseract-Sprachpakete zu verwalten, oder in den Programmeinstellugen "
+"auf benutzerlokale Speicherorte umstellen."
 
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"
@@ -1482,28 +1453,34 @@ msgid "Clear Output"
 msgstr "Ausgabe löschen"
 
 #~ msgid ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
+#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
+#~ "application, please consider reporting the issue to &lt;a href=&quot;"
+#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
+#~ "doing before the application crashed. Also, include the information "
+#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+#~ msgstr ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;Die Anwendung ist abgestürzt&lt;/span&gt;&lt;/p&gt;"
+#~ "&lt;Bitte entschuldigen Sie die Unannehmlichkeiten. Wenn Sie helfen "
+#~ "möchten, die Anwendung zu verbessern, melden Sie das aufgetretene Problem "
+#~ "bitte an <a href=\"mailto:manisandro@gmail.com?subject=gImageReader"
+#~ "%20Crash\">manisandro@gmail.com</a>. Bitte beschreiben Sie auch, was Sie "
+#~ "machten, bevor die Anwendung abgestürzte. Senden Sie zudem bitte auch die "
+#~ "untenstehenden Informationen. Danke."
+
+#~ msgid ""
+#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ msgstr "<small><b>Beispiel:</b> 1-10, 13, 14-18</small>"
+
+#~ msgid ""
 #~ "\n"
 #~ "\tFailed to initialize tesseract"
 #~ msgstr ""
 #~ "\n"
 #~ "\tTesseract konnte nicht initialisiert werden"
-
-#~ msgid ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">The application "
-#~ "has crashed</span></p><p>Apologies for the inconvenience. To help improve "
-#~ "the application, please consider reporting the issue to <a href=\"mailto:"
-#~ "manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-#~ "a>. Please try to describe what you were doing before the application "
-#~ "crashed. Also, include the information below. Thank you.</p></body></html>"
-#~ msgstr ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">Die Anwendung ist "
-#~ "abgestürzt</span></p><p>Bitte entschuldigen Sie die Unannehmlichkeiten. "
-#~ "Wenn Sie helfen möchten, die Anwendung zu verbessern, melden Sie das "
-#~ "aufgetretene Problem bitte an <a href=\"mailto:manisandro@gmail.com?"
-#~ "subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Bitte "
-#~ "beschreiben Sie auch, was Sie machten, bevor die Anwendung abgestürzte. "
-#~ "Senden Sie zudem bitte auch die untenstehenden Informationen. Danke.</p></"
-#~ "body></html>"
 
 #~ msgid "So&urces"
 #~ msgstr "Quellen"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gImageReader 3.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-30 03:00+0200\n"
+"POT-Creation-Date: 2016-09-30 13:31+0200\n"
 "PO-Revision-Date: 2016-04-15 20:24+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team:  <gnome-el-list@gnome.org>\n"
@@ -96,8 +96,8 @@ msgstr "PDF"
 msgid "PDF with invisible text overlay"
 msgstr "PDF με αόρατη επικάλυψη κειμένου"
 
-#: ../gtk/data/editor_hocr.ui.h:7
-msgid "Image format:"
+#: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:13
+msgid "Format:"
 msgstr ""
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:14
@@ -129,44 +129,40 @@ msgstr "Χρήση των μεγεθών γραμματοσειράς που α�
 msgid "Preserve spaces wider than:"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:15
-msgid "4"
-msgstr ""
-
-#: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:11
+#: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:11
 msgid "characters"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:6
+#: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:6
 #, fuzzy
 msgid "Text settings:"
 msgstr "Κωδικοποίηση αρχείου κειμένου:"
 
-#: ../gtk/data/editor_hocr.ui.h:18 ../qt/data/PdfExportDialog.ui.h:5
+#: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:19 ../gtk/data/editor_text.ui.h:26
+#: ../gtk/data/editor_hocr.ui.h:18 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
 msgid "Save output"
 msgstr "Αποθήκευση εξόδου"
 
-#: ../gtk/data/editor_hocr.ui.h:20 ../qt/src/Ui_OutputEditorHOCR.hh:45
+#: ../gtk/data/editor_hocr.ui.h:19 ../qt/src/Ui_OutputEditorHOCR.hh:45
 #: ../qt/src/Ui_OutputEditorHOCR.hh:46
 msgid "Export to PDF"
 msgstr "Εξαγωγή σε PDF"
 
-#: ../gtk/data/editor_hocr.ui.h:21 ../gtk/data/editor_text.ui.h:27
+#: ../gtk/data/editor_hocr.ui.h:20 ../gtk/data/editor_text.ui.h:27
 #: ../qt/src/Ui_OutputEditorHOCR.hh:48 ../qt/src/Ui_OutputEditorHOCR.hh:49
 #: ../qt/src/Ui_OutputEditorText.hh:125
 msgid "Clear output"
 msgstr "Καθαρισμός εξόδου"
 
-#: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:76
+#: ../gtk/data/editor_hocr.ui.h:21 ../qt/src/Ui_OutputEditorHOCR.hh:76
 msgid "Properties"
 msgstr "Ιδιότητες"
 
-#: ../gtk/data/editor_hocr.ui.h:23 ../qt/src/Ui_OutputEditorHOCR.hh:80
+#: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:80
 msgid "Source"
 msgstr "Προέλευση"
 
@@ -520,8 +516,8 @@ msgstr "Προκαθορισμένοι ορισμοί γλωσσών:"
 msgid "Spelling dictionaries path:"
 msgstr "Λείπει το ορθογραφικό λεξικό"
 
-#: ../gtk/data/gimagereader.ui.h:57
-msgid "System-wide"
+#: ../gtk/data/gimagereader.ui.h:57 ../qt/data/ConfigDialog.ui.h:10
+msgid "System-wide paths"
 msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/data/ConfigDialog.ui.h:11
@@ -536,7 +532,7 @@ msgstr "Περιοχή σελίδων"
 msgid "Page range:"
 msgstr "Περιοχή σελίδων:"
 
-#: ../gtk/data/gimagereader.ui.h:61
+#: ../gtk/data/gimagereader.ui.h:61 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Παράδειγμα:</b> 1-10, 13, 14-18</small>"
 
@@ -1291,10 +1287,9 @@ msgstr "Περί του gImageReader"
 #: ../qt/data/AboutDialog.ui.h:3
 #, fuzzy
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
-"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Μια γραφική διεπαφή χρήστη στο tesseract-"
 "ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Ιστότοπος</"
@@ -1307,10 +1302,6 @@ msgstr "Μνείες"
 #: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
 msgstr "Άδεια"
-
-#: ../qt/data/ConfigDialog.ui.h:10
-msgid "System-wide paths"
-msgstr ""
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -1327,22 +1318,18 @@ msgstr "Κωδικοποίηση αρχείου κειμένου:"
 #: ../qt/data/CrashHandler.ui.h:2
 #, fuzzy, no-c-format
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
-"p&gt;Apologies for the inconvenience. To help improve the application, "
-"please consider reporting the issue to &lt;a href=&quot;mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
-"com&lt;/a&gt;. Please try to describe what you were doing before the "
-"application crashed. Also, include the information below. Thank you.&lt;/"
-"p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Η εφαρμογή "
-"κατέρρευσε</span></p><p>Συγνώμη για το πρόβλημα. Για να βοηθήσετε στη "
-"βελτίωση της εφαρμογής, παρακαλούμε να εξετάσετε την αναφορά του προβλήματος "
-"στο <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>. Παρακαλούμε, προσπαθήστε να περιγράψετε τι "
-"κάνατε πριν την κατάρρευση της εφαρμογής. Επίσης, συμπεριλάβετε τις παρακάτω "
-"πληροφορίες. Σας ευχαριστούμε.</p></body></html>"
+"Συγνώμη για το πρόβλημα. Για να βοηθήσετε στην βελτίωση της εφαρμογής, "
+"παρακαλούμε να στείλετε μια αναφορά του προβλήματος στο <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Παρακαλούμε, προσπαθήστε να περιγράψετε τι κάνατε πριν να καταρρεύσει η "
+"εφαρμογή. Επίσης, να συμπεριλάβετε την παρακάτω πληροφορία. Σας ευχαριστούμε."
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1396,15 +1383,6 @@ msgstr "Αυτόματη ανίχνευση διάταξης"
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Toggle Output Pane"
 msgstr "Εναλλαγή παραθύρου εξόδου"
-
-#: ../qt/data/PageRangeDialog.ui.h:3
-#, fuzzy
-msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>Παράδειγμα:</b> 1-10, 13, 14-18</small>"
-
-#: ../qt/data/PdfExportDialog.ui.h:13
-msgid "Format:"
-msgstr ""
 
 #: ../qt/src/MainWindow.cc:543
 msgid "Could not read %1: %2"
@@ -1471,6 +1449,31 @@ msgstr "Αποθήκευση εξόδου"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "Καθαρισμός εξόδου"
+
+#, fuzzy
+#~ msgid ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
+#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
+#~ "application, please consider reporting the issue to &lt;a href=&quot;"
+#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
+#~ "doing before the application crashed. Also, include the information "
+#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+#~ msgstr ""
+#~ "<html><head/><body><p><span style=\" font-weight:600;\">Η εφαρμογή "
+#~ "κατέρρευσε</span></p><p>Συγνώμη για το πρόβλημα. Για να βοηθήσετε στη "
+#~ "βελτίωση της εφαρμογής, παρακαλούμε να εξετάσετε την αναφορά του "
+#~ "προβλήματος στο <a href=\"mailto:manisandro@gmail.com?subject=gImageReader"
+#~ "%20Crash\">manisandro@gmail.com</a>. Παρακαλούμε, προσπαθήστε να "
+#~ "περιγράψετε τι κάνατε πριν την κατάρρευση της εφαρμογής. Επίσης, "
+#~ "συμπεριλάβετε τις παρακάτω πληροφορίες. Σας ευχαριστούμε.</p></body></"
+#~ "html>"
+
+#, fuzzy
+#~ msgid ""
+#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ msgstr "<small><b>Παράδειγμα:</b> 1-10, 13, 14-18</small>"
 
 #~ msgid ""
 #~ "\n"
