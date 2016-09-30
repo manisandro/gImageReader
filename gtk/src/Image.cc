@@ -44,6 +44,7 @@ Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat)
 		sampleSize = 8;
 		bytesPerLine = 3 * width;
 		data = new uint8_t[width * height * 3];
+		#pragma omp parallel for schedule(static)
 		for(int y = 0; y < height; ++y) {
 			for(int x = 0; x < width; ++x) {
 				uint8_t* srcpx = &src->get_data()[y * stride + 4 * x];
@@ -57,6 +58,7 @@ Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat)
 		sampleSize = 8;
 		bytesPerLine = width;
 		data = new uint8_t[width * height];
+		#pragma omp parallel for schedule(static)
 		for(int y = 0; y < height; ++y) {
 			for(int x = 0; x < width; ++x) {
 				uint8_t* srcpx = &src->get_data()[y * stride + 4 * x];
@@ -69,6 +71,7 @@ Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat)
 		bytesPerLine = width / 8 + (width % 8 != 0);
 		data = new uint8_t[height * bytesPerLine];
 		std::memset(data, 0, height * bytesPerLine);
+		#pragma omp parallel for schedule(static)
 		for(int y = 0; y < height; ++y) {
 			for(int x = 0; x < width; ++x) {
 				uint8_t* srcpx = &src->get_data()[y * stride + 4 * x];
@@ -120,6 +123,7 @@ Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::Im
 	if(format == Format_Gray8) {
 		Cairo::RefPtr<Cairo::ImageSurface> dst = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, imgw, imgh);
 		dst->flush();
+		#pragma omp parallel for schedule(static)
 		for(int y = 0; y < imgh; ++y) {
 			for(int x = 0; x < imgw; ++x) {
 				int offset = y * stride + 4 * x;
@@ -138,6 +142,7 @@ Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::Im
 		// TODO: Dithering
 		Cairo::RefPtr<Cairo::ImageSurface> dst = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, imgw, imgh);
 		dst->flush();
+		#pragma omp parallel for schedule(static)
 		for(int y = 0; y < imgh; ++y) {
 			for(int x = 0; x < imgw; ++x) {
 				int offset = y * stride + 4 * x;
