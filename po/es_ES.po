@@ -58,7 +58,7 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"Disculpas por las molestias. Para ayudar a mejorar la aplicación, por favor "
+"Disculpe las molestias. Para ayudar a mejorar la aplicación, por favor "
 "considere informar sobre el problema en <a href=\"mailto:manisandro@gmail."
 "com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Trate de "
 "describir lo que estaba haciendo antes del fallo de la aplicación. Incluya "
@@ -82,9 +82,8 @@ msgid "OK"
 msgstr "OK"
 
 #: ../gtk/data/editor_hocr.ui.h:4 ../qt/data/PdfExportDialog.ui.h:2
-#, fuzzy
 msgid "Output mode:"
-msgstr "Salida:"
+msgstr "Modo de salida:"
 
 #: ../gtk/data/editor_hocr.ui.h:5 ../qt/data/PdfExportDialog.ui.h:3
 msgid "PDF"
@@ -96,28 +95,27 @@ msgstr "PDF con capa de texto oculta"
 
 #: ../gtk/data/editor_hocr.ui.h:7
 msgid "Image format:"
-msgstr ""
+msgstr "Tipo de imagen"
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression:"
-msgstr ""
+msgstr "Compresión:"
 
 #: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:15
 msgid "Compression quality:"
-msgstr ""
+msgstr "Calidad en la compresión:"
 
 #: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Image settings:"
-msgstr ""
+msgstr "Ajustes de imagen:"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:9
 msgid "Document font:"
-msgstr "Tipografía del documento"
+msgstr "Tipografía del documento:"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:8
-#, fuzzy
 msgid "Uniformize line and word spacing"
-msgstr "Igualar espaciado de línea"
+msgstr "Igualar espaciado de línea y palabra"
 
 #: ../gtk/data/editor_hocr.ui.h:13 ../qt/data/PdfExportDialog.ui.h:7
 msgid "Use detected font sizes"
@@ -125,24 +123,23 @@ msgstr "Usar tamaño de tipografía detectado"
 
 #: ../gtk/data/editor_hocr.ui.h:14 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "Conservar espacios mayores que:"
 
 #: ../gtk/data/editor_hocr.ui.h:15
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:11
 msgid "characters"
-msgstr ""
+msgstr "caracteres"
 
 #: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:6
-#, fuzzy
 msgid "Text settings:"
-msgstr "Codificación de texto"
+msgstr "Ajustes de texto:"
 
 #: ../gtk/data/editor_hocr.ui.h:18 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
-msgstr ""
+msgstr "Mostrar vista previa"
 
 #: ../gtk/data/editor_hocr.ui.h:19 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
@@ -228,7 +225,7 @@ msgstr "Mantener salto de línea si..."
 
 #: ../gtk/data/editor_text.ui.h:13 ../qt/src/Ui_OutputEditorText.hh:71
 msgid "Preceded by end mark (.?!)"
-msgstr "Va precedido por una marca de fin frase (.?!)"
+msgstr "Va precedido por una marca de final de frase (.?!)"
 
 #: ../gtk/data/editor_text.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:73
 msgid "Preceded or succeeded by quote"
@@ -458,7 +455,7 @@ msgstr "Vertical"
 
 #: ../gtk/data/gimagereader.ui.h:41 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr "Pedir instalación de los diccionarios para autocorrección que falten"
+msgstr "Solicitar la instalación de los diccionarios para autocorrección que falten"
 
 #: ../gtk/data/gimagereader.ui.h:42 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
@@ -506,25 +503,23 @@ msgstr "Por omisión"
 
 #: ../gtk/data/gimagereader.ui.h:54 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "Ubicación de datos de idioma"
 
 #: ../gtk/data/gimagereader.ui.h:55 ../qt/data/ConfigDialog.ui.h:13
-#, fuzzy
 msgid "Language definitions path:"
-msgstr "Definiciones de idioma preconfigurados"
+msgstr "Ruta para definiciones de idioma:"
 
 #: ../gtk/data/gimagereader.ui.h:56 ../qt/data/ConfigDialog.ui.h:28
-#, fuzzy
 msgid "Spelling dictionaries path:"
-msgstr "Falta diccionario"
+msgstr "Ruta para diccionarios:"
 
 #: ../gtk/data/gimagereader.ui.h:57
-msgid "System-wide"
-msgstr ""
+msgid "Sistema"
+msgstr "Todo el sistema"
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Rutas de usuario"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -785,9 +780,8 @@ msgid "Failed to install spelling dictionary: %1"
 msgstr "Fallo al instalar el diccionario: %1"
 
 #: ../gtk/src/MainWindow.cc:533 ../qt/src/MainWindow.cc:515
-#, fuzzy
 msgid "Failed to create directory for spelling dictionaries."
-msgstr "Fallo al instalar el diccionario: %1"
+msgstr "Fallo al crear el directorio para los diccionarios"
 
 #: ../gtk/src/MainWindow.cc:541 ../gtk/src/MainWindow.cc:557
 #: ../qt/src/MainWindow.cc:525
@@ -813,15 +807,15 @@ msgstr "Instalado los siguientes diccionarios:%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:311 ../qt/src/OutputEditorHOCR.cc:228
 msgid "Monochrome"
-msgstr ""
+msgstr "Monocromo"
 
 #: ../gtk/src/OutputEditorHOCR.cc:320 ../qt/src/OutputEditorHOCR.cc:230
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Zip (sin pérdida)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:323 ../qt/src/OutputEditorHOCR.cc:231
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "Jpeg (con pérdida)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:421 ../qt/src/OutputEditorHOCR.cc:330
 msgid ""
@@ -851,11 +845,11 @@ msgstr "Línea de texto"
 
 #: ../gtk/src/OutputEditorHOCR.cc:974 ../qt/src/OutputEditorHOCR.cc:831
 msgid "Merge"
-msgstr ""
+msgstr "Fusionar"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1002 ../qt/src/OutputEditorHOCR.cc:847
 msgid "Add graphic region"
-msgstr ""
+msgstr "Añadir zona gráfica"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1037 ../qt/src/OutputEditorHOCR.cc:869
 msgid "No suggestions"
@@ -863,11 +857,11 @@ msgstr "Sin sugerencias"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1043 ../qt/src/OutputEditorHOCR.cc:873
 msgid "Add to dictionary"
-msgstr ""
+msgstr "Añadir a diccionario"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1049 ../qt/src/OutputEditorHOCR.cc:874
 msgid "Ignore word"
-msgstr ""
+msgstr "Ignorar palabra"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1085 ../gtk/src/OutputEditorHOCR.cc:1125
 #: ../qt/src/OutputEditorHOCR.cc:908 ../qt/src/OutputEditorHOCR.cc:939
@@ -926,7 +920,7 @@ msgstr "Guardar salida PDF..."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1205 ../qt/src/OutputEditorHOCR.cc:1009
 msgid "The PDF library does not support the selected font."
-msgstr ""
+msgstr "La biblioteca PDF no da soporte a la tipografía seleccionada"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1257 ../qt/src/OutputEditorHOCR.cc:1061
 msgid "Errors occurred"
@@ -993,6 +987,17 @@ msgid ""
 "Make sure your language data files are valid and compatible with tesseract "
 "%2."
 msgstr ""
+"Tesseract falló con el siguiente mensaje:\n"
+"\n"
+"%1\n"
+"\n"
+"Esto normalmente ocurre por uno de los siguientes motivos:\n"
+"- Se han usado ficheros traineddata desactualizados.\n"
+"- No se encontraron ficheros auxiliares de idioma.\n"
+"- Ficheros de idioma dañados.\n"
+"\n"
+"Asegúrese de que los ficheros de idioma son válidos y compatibles con tesseract "
+"%2."
 
 #: ../gtk/src/Recognizer.cc:206 ../qt/src/Recognizer.cc:194
 msgid "No languages available"
@@ -1017,16 +1022,14 @@ msgid "Manage languages..."
 msgstr "Gestionar idiomas..."
 
 #: ../gtk/src/Recognizer.cc:364 ../qt/src/Recognizer.cc:364
-#, fuzzy
 msgid "Current selection"
-msgstr "Reconocer selección"
+msgstr "Selección actual"
 
 #: ../gtk/src/Recognizer.cc:439 ../qt/src/Recognizer.cc:440
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Reconociendo página %1 (%2 de %3)"
 
 #: ../gtk/src/Recognizer.cc:444 ../qt/src/Recognizer.cc:445
-#, fuzzy
 msgid ""
 "\n"
 "- Page %1: failed to render page"
@@ -1248,7 +1251,7 @@ msgstr "Aplicando cambios..."
 
 #: ../gtk/src/TessdataManager.cc:219 ../qt/src/TessdataManager.cc:205
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Fallo al crear directorio para los ficheros tessdata"
 
 #: ../gtk/src/TessdataManager.cc:228 ../qt/src/TessdataManager.cc:213
 msgid "Downloading %1..."
@@ -1283,16 +1286,16 @@ msgid "About gImageReader"
 msgstr "Acerca de gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
 "graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
 "https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
 "p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Interfaz gráfico para tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
-"p><p>&nbsp;</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;"
+"Interfaz gráfica para tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
+"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
+"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -1304,7 +1307,7 @@ msgstr "Licencia"
 
 #: ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "Rutas del sistema"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -1398,7 +1401,7 @@ msgstr "&lt;small&gt;&lt;b&gt;Ejemplo:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
 
 #: ../qt/data/PdfExportDialog.ui.h:13
 msgid "Format:"
-msgstr ""
+msgstr "Formato:"
 
 #: ../qt/src/MainWindow.cc:543
 msgid "Could not read %1: %2"
@@ -1409,16 +1412,16 @@ msgid "The following dictionary files were installed:%1"
 msgstr "Se han instalado los siguientes diccionarios:%1"
 
 #: ../qt/src/TessdataManager.cc:71
-#, fuzzy
 msgid ""
 "PackageKit is required for managing system-wide tesseract language packs, "
 "but it was not found. Please use the system package management software to "
 "manage the tesseract language packs, or switch to use the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"Se requiere PackageKit para gestionar los paquetes de idioma de tesseract, "
+"Se requiere PackageKit para gestionar los paquetes de idioma de tesseract del sistema, "
 "pero no se encontró. Por favor, use el gestor de paquetes de su sistema para "
-"gestionar los paquetes de idioma de tesseract"
+"gestionar los paquetes de idioma de tesseract, o cambie la configuración para "
+"usar las rutas de usuario para localizar los ficheros tessdata"
 
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"
@@ -1504,11 +1507,9 @@ msgstr "Limpiar Salida"
 #~ msgid "en_US"
 #~ msgstr "es_ES"
 
-#, fuzzy
 #~ msgid "So&amp;urces"
 #~ msgstr "Orígenes"
 
-#, fuzzy
 #~ msgid "&amp;Output"
 #~ msgstr "Salida"
 
@@ -1518,14 +1519,12 @@ msgstr "Limpiar Salida"
 #~ msgid "Substitutions list"
 #~ msgstr "Lista de sustituciones"
 
-#, fuzzy
 #~ msgid "Preceeded or succeeded by quote"
 #~ msgstr "Va precedido o le sigue una comilla"
 
 #~ msgid "Select sources"
 #~ msgstr "Seleccionar origen"
 
-#, fuzzy
 #~ msgid "Preceeded by dot"
 #~ msgstr "Va precedido por un punto"
 
