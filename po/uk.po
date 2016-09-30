@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-30 03:00+0200\n"
+"POT-Creation-Date: 2016-09-30 13:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Yuriy Bahriy <yhmtargaryen@gmail.com>\n"
 "Language-Team: Ukrainian\n"
@@ -97,8 +97,8 @@ msgstr "PDF"
 msgid "PDF with invisible text overlay"
 msgstr "PDF з невидимим текстовим шаром"
 
-#: ../gtk/data/editor_hocr.ui.h:7
-msgid "Image format:"
+#: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:13
+msgid "Format:"
 msgstr ""
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:14
@@ -129,44 +129,40 @@ msgstr "Використовувати автоматично визначени
 msgid "Preserve spaces wider than:"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:15
-msgid "4"
-msgstr ""
-
-#: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:11
+#: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:11
 msgid "characters"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:6
+#: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:6
 #, fuzzy
 msgid "Text settings:"
 msgstr "Кодування текстового файлу:"
 
-#: ../gtk/data/editor_hocr.ui.h:18 ../qt/data/PdfExportDialog.ui.h:5
+#: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:19 ../gtk/data/editor_text.ui.h:26
+#: ../gtk/data/editor_hocr.ui.h:18 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
 msgid "Save output"
 msgstr "Зберегти результати"
 
-#: ../gtk/data/editor_hocr.ui.h:20 ../qt/src/Ui_OutputEditorHOCR.hh:45
+#: ../gtk/data/editor_hocr.ui.h:19 ../qt/src/Ui_OutputEditorHOCR.hh:45
 #: ../qt/src/Ui_OutputEditorHOCR.hh:46
 msgid "Export to PDF"
 msgstr "Експорт у PDF"
 
-#: ../gtk/data/editor_hocr.ui.h:21 ../gtk/data/editor_text.ui.h:27
+#: ../gtk/data/editor_hocr.ui.h:20 ../gtk/data/editor_text.ui.h:27
 #: ../qt/src/Ui_OutputEditorHOCR.hh:48 ../qt/src/Ui_OutputEditorHOCR.hh:49
 #: ../qt/src/Ui_OutputEditorText.hh:125
 msgid "Clear output"
 msgstr "Очистити результати"
 
-#: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:76
+#: ../gtk/data/editor_hocr.ui.h:21 ../qt/src/Ui_OutputEditorHOCR.hh:76
 msgid "Properties"
 msgstr "Властивості"
 
-#: ../gtk/data/editor_hocr.ui.h:23 ../qt/src/Ui_OutputEditorHOCR.hh:80
+#: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:80
 #, fuzzy
 msgid "Source"
 msgstr "Джерела"
@@ -524,8 +520,8 @@ msgstr "Задані мови визначення:"
 msgid "Spelling dictionaries path:"
 msgstr "Орфографічний словник відсутній"
 
-#: ../gtk/data/gimagereader.ui.h:57
-msgid "System-wide"
+#: ../gtk/data/gimagereader.ui.h:57 ../qt/data/ConfigDialog.ui.h:10
+msgid "System-wide paths"
 msgstr ""
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/data/ConfigDialog.ui.h:11
@@ -540,7 +536,7 @@ msgstr "Діапазон сторінок"
 msgid "Page range:"
 msgstr "Діапазон сторінок:"
 
-#: ../gtk/data/gimagereader.ui.h:61
+#: ../gtk/data/gimagereader.ui.h:61 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Приклад:</b> 1-10, 13, 14-18</small>"
 
@@ -1307,10 +1303,9 @@ msgstr "Про програму gImageReader"
 #: ../qt/data/AboutDialog.ui.h:3
 #, fuzzy
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
-"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Графічний інтерфейс для tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Сайт</a></"
@@ -1323,10 +1318,6 @@ msgstr "Подяки"
 #: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
 msgstr "Ліцензія"
-
-#: ../qt/data/ConfigDialog.ui.h:10
-msgid "System-wide paths"
-msgstr ""
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -1343,23 +1334,20 @@ msgstr "Кодування текстового файлу:"
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
-"p&gt;Apologies for the inconvenience. To help improve the application, "
-"please consider reporting the issue to &lt;a href=&quot;mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
-"com&lt;/a&gt;. Please try to describe what you were doing before the "
-"application crashed. Also, include the information below. Thank you.&lt;/"
-"p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;Програма зазнала аварії&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
-"Прошу вибачення за незручності. Для оптимізації роботи програми будь ласка "
-"напишіть про проблему на електронну пошту &lt;a href=&quot;mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
-"com&lt;/a&gt;. Намагайтеся описати, які дії ви виконували перед тим як "
-"програма зазнала аварії. Також додайте інформацію, розміщену нижче. Дякую."
-"&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">Програма зазнала "
+"аварії</span></p><p>Прошу вибачення за незручності. Для оптимізації роботи "
+"програми, будь ласка напишіть про проблему на електронну пошту <a href="
+"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+"\">manisandro@gmail.com</a>. Намагайтеся описати, які дії ви виконували "
+"перед тим як програма зазнала аварії. Також додайте інформацію, розміщену "
+"нижче. Дякую.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1413,14 +1401,6 @@ msgstr "Автовизначення вмісту"
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Toggle Output Pane"
 msgstr "Показати/приховати панель результатів"
-
-#: ../qt/data/PageRangeDialog.ui.h:3
-msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "&lt;small&gt;&lt;b&gt;Пример:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-
-#: ../qt/data/PdfExportDialog.ui.h:13
-msgid "Format:"
-msgstr ""
 
 #: ../qt/src/MainWindow.cc:543
 #, fuzzy
@@ -1491,27 +1471,35 @@ msgid "Clear Output"
 msgstr "Очистити результати"
 
 #~ msgid ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
+#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
+#~ "application, please consider reporting the issue to &lt;a href=&quot;"
+#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
+#~ "doing before the application crashed. Also, include the information "
+#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+#~ msgstr ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;Програма зазнала аварії&lt;/span&gt;&lt;/p&gt;&lt;"
+#~ "p&gt;Прошу вибачення за незручності. Для оптимізації роботи програми будь "
+#~ "ласка напишіть про проблему на електронну пошту &lt;a href=&quot;mailto:"
+#~ "manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Намагайтеся описати, які дії ви "
+#~ "виконували перед тим як програма зазнала аварії. Також додайте "
+#~ "інформацію, розміщену нижче. Дякую.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+
+#~ msgid ""
+#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ msgstr ""
+#~ "&lt;small&gt;&lt;b&gt;Пример:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+
+#~ msgid ""
 #~ "\n"
 #~ "\tFailed to initialize tesseract"
 #~ msgstr ""
 #~ "\n"
 #~ "\tПомилка ініціалізації tesseract"
-
-#~ msgid ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">The application "
-#~ "has crashed</span></p><p>Apologies for the inconvenience. To help improve "
-#~ "the application, please consider reporting the issue to <a href=\"mailto:"
-#~ "manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-#~ "a>. Please try to describe what you were doing before the application "
-#~ "crashed. Also, include the information below. Thank you.</p></body></html>"
-#~ msgstr ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">Програма зазнала "
-#~ "аварії</span></p><p>Прошу вибачення за незручності. Для оптимізації "
-#~ "роботи програми, будь ласка напишіть про проблему на електронну пошту <a "
-#~ "href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-#~ "\">manisandro@gmail.com</a>. Намагайтеся описати, які дії ви виконували "
-#~ "перед тим як програма зазнала аварії. Також додайте інформацію, розміщену "
-#~ "нижче. Дякую.</p></body></html>"
 
 #, fuzzy
 #~ msgid "So&urces"

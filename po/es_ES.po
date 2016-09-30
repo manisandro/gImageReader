@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-30 03:00+0200\n"
-"PO-Revision-Date: 2016-04-19 13:30+0100\n"
+"POT-Creation-Date: 2016-09-30 13:31+0200\n"
+"PO-Revision-Date: 2016-09-30 12:53+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: es_ES\n"
@@ -93,9 +93,9 @@ msgstr "PDF"
 msgid "PDF with invisible text overlay"
 msgstr "PDF con capa de texto oculta"
 
-#: ../gtk/data/editor_hocr.ui.h:7
-msgid "Image format:"
-msgstr "Tipo de imagen"
+#: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:13
+msgid "Format:"
+msgstr "Formato:"
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression:"
@@ -125,43 +125,39 @@ msgstr "Usar tamaño de tipografía detectado"
 msgid "Preserve spaces wider than:"
 msgstr "Conservar espacios mayores que:"
 
-#: ../gtk/data/editor_hocr.ui.h:15
-msgid "4"
-msgstr "4"
-
-#: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:11
+#: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:11
 msgid "characters"
 msgstr "caracteres"
 
-#: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:6
+#: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:6
 msgid "Text settings:"
 msgstr "Ajustes de texto:"
 
-#: ../gtk/data/editor_hocr.ui.h:18 ../qt/data/PdfExportDialog.ui.h:5
+#: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
 msgstr "Mostrar vista previa"
 
-#: ../gtk/data/editor_hocr.ui.h:19 ../gtk/data/editor_text.ui.h:26
+#: ../gtk/data/editor_hocr.ui.h:18 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
 msgid "Save output"
 msgstr "Guardar salida"
 
-#: ../gtk/data/editor_hocr.ui.h:20 ../qt/src/Ui_OutputEditorHOCR.hh:45
+#: ../gtk/data/editor_hocr.ui.h:19 ../qt/src/Ui_OutputEditorHOCR.hh:45
 #: ../qt/src/Ui_OutputEditorHOCR.hh:46
 msgid "Export to PDF"
 msgstr "Exportar a PDF"
 
-#: ../gtk/data/editor_hocr.ui.h:21 ../gtk/data/editor_text.ui.h:27
+#: ../gtk/data/editor_hocr.ui.h:20 ../gtk/data/editor_text.ui.h:27
 #: ../qt/src/Ui_OutputEditorHOCR.hh:48 ../qt/src/Ui_OutputEditorHOCR.hh:49
 #: ../qt/src/Ui_OutputEditorText.hh:125
 msgid "Clear output"
 msgstr "Limpiar salida"
 
-#: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:76
+#: ../gtk/data/editor_hocr.ui.h:21 ../qt/src/Ui_OutputEditorHOCR.hh:76
 msgid "Properties"
 msgstr "Propiedades"
 
-#: ../gtk/data/editor_hocr.ui.h:23 ../qt/src/Ui_OutputEditorHOCR.hh:80
+#: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:80
 msgid "Source"
 msgstr "Origen"
 
@@ -455,7 +451,8 @@ msgstr "Vertical"
 
 #: ../gtk/data/gimagereader.ui.h:41 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr "Solicitar la instalación de los diccionarios para autocorrección que falten"
+msgstr ""
+"Solicitar la instalación de los diccionarios para autocorrección que falten"
 
 #: ../gtk/data/gimagereader.ui.h:42 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
@@ -513,9 +510,9 @@ msgstr "Ruta para definiciones de idioma:"
 msgid "Spelling dictionaries path:"
 msgstr "Ruta para diccionarios:"
 
-#: ../gtk/data/gimagereader.ui.h:57
-msgid "Sistema"
-msgstr "Todo el sistema"
+#: ../gtk/data/gimagereader.ui.h:57 ../qt/data/ConfigDialog.ui.h:10
+msgid "System-wide paths"
+msgstr "Rutas del sistema"
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
@@ -529,7 +526,7 @@ msgstr "Rango de Páginas"
 msgid "Page range:"
 msgstr "Rango de páginas"
 
-#: ../gtk/data/gimagereader.ui.h:61
+#: ../gtk/data/gimagereader.ui.h:61 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Ejemplo:</b> 1-10m 13m 14-18</small>"
 
@@ -996,8 +993,8 @@ msgstr ""
 "- No se encontraron ficheros auxiliares de idioma.\n"
 "- Ficheros de idioma dañados.\n"
 "\n"
-"Asegúrese de que los ficheros de idioma son válidos y compatibles con tesseract "
-"%2."
+"Asegúrese de que los ficheros de idioma son válidos y compatibles con "
+"tesseract %2."
 
 #: ../gtk/src/Recognizer.cc:206 ../qt/src/Recognizer.cc:194
 msgid "No languages available"
@@ -1286,11 +1283,11 @@ msgid "About gImageReader"
 msgstr "Acerca de gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
+#, fuzzy
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
-"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
 msgstr ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;"
 "Interfaz gráfica para tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
@@ -1304,10 +1301,6 @@ msgstr "Agradecimientos"
 #: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
 msgstr "Licencia"
-
-#: ../qt/data/ConfigDialog.ui.h:10
-msgid "System-wide paths"
-msgstr "Rutas del sistema"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -1324,23 +1317,19 @@ msgstr "Codificación de texto"
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
-"p&gt;Apologies for the inconvenience. To help improve the application, "
-"please consider reporting the issue to &lt;a href=&quot;mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
-"com&lt;/a&gt;. Please try to describe what you were doing before the "
-"application crashed. Also, include the information below. Thank you.&lt;/"
-"p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;La aplicación ha fallado&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
-"Disculpas por las molestias. Para ayudar a mejorar la aplicación, por favor, "
-"considere informar sobre el fallo a &lt;a href=&quot;mailto:manisandro@gmail."
-"com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail.com&lt;/a&gt;. "
-"Trate de describir lo que estaba haciendo antes de que la aplicación "
-"fallara. También incluya la información de debajo. Gracias.&lt;/p&gt;&lt;/"
-"body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">Disculpas por las "
+"molestias. Para ayudar a mejorar la aplicación, por favor considere informar "
+"sobre el problema en <a href=\"mailto:manisandro@gmail.com?"
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Trate de describir "
+"lo que estaba haciendo antes del fallo de la aplicación. Incluya también la "
+"información que aparece debajo. Gracias.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1395,14 +1384,6 @@ msgstr "Autodetectar disposición"
 msgid "Toggle Output Pane"
 msgstr "Mostrar/ocultar Panel de Salida"
 
-#: ../qt/data/PageRangeDialog.ui.h:3
-msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "&lt;small&gt;&lt;b&gt;Ejemplo:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-
-#: ../qt/data/PdfExportDialog.ui.h:13
-msgid "Format:"
-msgstr "Formato:"
-
 #: ../qt/src/MainWindow.cc:543
 msgid "Could not read %1: %2"
 msgstr "No se pudo leer %1: %2"
@@ -1418,10 +1399,11 @@ msgid ""
 "manage the tesseract language packs, or switch to use the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"Se requiere PackageKit para gestionar los paquetes de idioma de tesseract del sistema, "
-"pero no se encontró. Por favor, use el gestor de paquetes de su sistema para "
-"gestionar los paquetes de idioma de tesseract, o cambie la configuración para "
-"usar las rutas de usuario para localizar los ficheros tessdata"
+"Se requiere PackageKit para gestionar los paquetes de idioma de tesseract "
+"del sistema, pero no se encontró. Por favor, use el gestor de paquetes de su "
+"sistema para gestionar los paquetes de idioma de tesseract, o cambie la "
+"configuración para usar las rutas de usuario para localizar los ficheros "
+"tessdata"
 
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"
@@ -1468,28 +1450,48 @@ msgstr "Guardar Salida"
 msgid "Clear Output"
 msgstr "Limpiar Salida"
 
+#~ msgid "System-wide"
+#~ msgstr "Rutas del sistema"
+
+#~ msgid ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
+#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
+#~ "application, please consider reporting the issue to &lt;a href=&quot;"
+#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
+#~ "doing before the application crashed. Also, include the information "
+#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+#~ msgstr ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;La aplicación ha fallado&lt;/span&gt;&lt;/p&gt;&lt;"
+#~ "p&gt;Disculpas por las molestias. Para ayudar a mejorar la aplicación, "
+#~ "por favor, considere informar sobre el fallo a &lt;a href=&quot;mailto:"
+#~ "manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Trate de describir lo que estaba haciendo "
+#~ "antes de que la aplicación fallara. También incluya la información de "
+#~ "debajo. Gracias.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+
+#~ msgid ""
+#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ msgstr ""
+#~ "&lt;small&gt;&lt;b&gt;Ejemplo:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+
+#~ msgid "4"
+#~ msgstr "4"
+
+#~ msgid "Image format:"
+#~ msgstr "Tipo de imagen"
+
+#~ msgid "Sistema"
+#~ msgstr "Todo el sistema"
+
 #~ msgid ""
 #~ "\n"
 #~ "\tFailed to initialize tesseract"
 #~ msgstr ""
 #~ "\n"
 #~ "\tFallo al iniciar tesseract"
-
-#~ msgid ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">The application "
-#~ "has crashed</span></p><p>Apologies for the inconvenience. To help improve "
-#~ "the application, please consider reporting the issue to <a href=\"mailto:"
-#~ "manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-#~ "a>. Please try to describe what you were doing before the application "
-#~ "crashed. Also, include the information below. Thank you.</p></body></html>"
-#~ msgstr ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">Disculpas por las "
-#~ "molestias. Para ayudar a mejorar la aplicación, por favor considere "
-#~ "informar sobre el problema en <a href=\"mailto:manisandro@gmail.com?"
-#~ "subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Trate de "
-#~ "describir lo que estaba haciendo antes del fallo de la aplicación. "
-#~ "Incluya también la información que aparece debajo. Gracias.</p></body></"
-#~ "html>"
 
 #~ msgid "So&urces"
 #~ msgstr "&Orígenes"
