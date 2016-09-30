@@ -1150,7 +1150,7 @@ void OutputEditorHOCR::updatePreview()
 
 	if(pdfSettings.overlay) {
 		pdfPrinter.drawImage(bbox, m_tool->getSelection(bbox), pdfSettings);
-		image.fill(QColor(255, 255, 255, 127));
+		painter.fillRect(0, 0, bbox.width(), bbox.height(), QColor(255, 255, 255, 127));
 	} else {
 		image.fill(Qt::white);
 	}
