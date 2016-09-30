@@ -451,6 +451,7 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout)
 				readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
 				for(const QImage& image : MAIN->getDisplayer()->getOCRAreas()){
 					tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
+					tess.SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 					tess.Recognize(&monitor.desc);
 					if(!monitor.canceled) {
 						MAIN->getOutputEditor()->read(tess, readSessionData);

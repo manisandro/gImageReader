@@ -152,17 +152,17 @@ private:
 
 class OutputEditorHOCR::PoDoFoPDFPainter : public OutputEditorHOCR::PDFPainter {
 public:
-	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter)
-		: m_document(document), m_painter(painter)
+	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor)
+		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor)
 	{
 		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
 	}
 	void setFontSize(double pointSize) override {
-		m_painter->GetFont()->SetFontSize(pointSize * 300. / 72.);
+		m_painter->GetFont()->SetFontSize(pointSize);
 	}
 	void drawText(double x, double y, const QString& text) override {
 		PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.toUtf8().data()));
-		m_painter->DrawText(x, m_pageHeight - y, pdfString);
+		m_painter->DrawText(x * m_scaleFactor, m_pageHeight - y * m_scaleFactor, pdfString);
 	}
 	void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) override {
 		QImage img = convertedImage(image, settings.colorFormat);
@@ -193,19 +193,20 @@ public:
 			PoDoFo::PdfMemoryInputStream is(data.data(), data.size());
 			pdfImage.SetImageDataRaw(width, height, sampleSize, &is);
 		}
-		m_painter->DrawImage(bbox.x(), m_pageHeight - (bbox.y() + bbox.height()), &pdfImage, bbox.width() / double(width), bbox.height() / double(height));
+		m_painter->DrawImage(bbox.x() * m_scaleFactor, m_pageHeight - (bbox.y() + bbox.height()) * m_scaleFactor, &pdfImage, m_scaleFactor, m_scaleFactor);
 	}
 	double getAverageCharWidth() const override {
-		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x'));
+		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x')) / m_scaleFactor;
 	}
 	double getTextWidth(const QString& text) const override {
 		PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.toUtf8().data()));
-		return m_painter->GetFont()->GetFontMetrics()->StringWidth(pdfString);
+		return m_painter->GetFont()->GetFontMetrics()->StringWidth(pdfString) / m_scaleFactor;
 	}
 
 private:
 	PoDoFo::PdfDocument* m_document;
 	PoDoFo::PdfPainter* m_painter;
+	double m_scaleFactor;
 	double m_pageHeight;
 };
 
@@ -1031,6 +1032,7 @@ void OutputEditorHOCR::savePDF()
 	pdfSettings.uniformizeLineSpacing = m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked();
 	pdfSettings.preserveSpaceWidth = m_pdfExportDialogUi.spinBoxPreserve->value();
 	pdfSettings.overlay = m_pdfExportDialogUi.comboBoxOutputMode->currentIndex() == 1;
+	pdfSettings.detectedFontScaling = 1.;
 	QStringList failed;
 	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
 		QTreeWidgetItem* item = ui.treeWidgetItems->topLevelItem(i);
@@ -1040,13 +1042,14 @@ void OutputEditorHOCR::savePDF()
 		QRect bbox = item->data(0, BBoxRole).toRect();
 		QDomDocument doc;
 		doc.setContent(item->data(0, SourceRole).toString());
-		int pageDpi = 0;
+		int pageDpi = 72;
 		if(setCurrentSource(doc.firstChildElement("div"), &pageDpi)) {
-			PoDoFo::PdfPage* page = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width(), bbox.height()));
+			double dpiScale = 72. / pageDpi;
+			PoDoFo::PdfPage* page = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width() * dpiScale, bbox.height() * dpiScale));
 			painter.SetPage(page);
 			painter.SetFont(font);
 
-			PoDoFoPDFPainter pdfprinter(document, &painter);
+			PoDoFoPDFPainter pdfprinter(document, &painter, dpiScale);
 			pdfprinter.setFontSize(m_pdfFontDialog.currentFont().pointSize());
 			printChildren(pdfprinter, item, pdfSettings);
 			if(pdfSettings.overlay) {
@@ -1084,7 +1087,7 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, QTreeWidgetItem* item,
 				if(wordItem->checkState(0) == Qt::Checked) {
 					QRect wordRect = wordItem->data(0, BBoxRole).toRect();
 					if(pdfSettings.useDetectedFontSizes) {
-						painter.setFontSize(wordItem->data(0, FontSizeRole).toDouble());
+						painter.setFontSize(wordItem->data(0, FontSizeRole).toDouble() * pdfSettings.detectedFontScaling);
 					}
 					// If distance from previous word is large, keep the space
 					if(wordRect.x() - prevWordRight > pdfSettings.preserveSpaceWidth * painter.getAverageCharWidth()) {
@@ -1103,7 +1106,7 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, QTreeWidgetItem* item,
 			QTreeWidgetItem* wordItem = item->child(iWord);
 			QRect wordRect = wordItem->data(0, BBoxRole).toRect();
 			if(pdfSettings.useDetectedFontSizes) {
-				painter.setFontSize(wordItem->data(0, FontSizeRole).toDouble());
+				painter.setFontSize(wordItem->data(0, FontSizeRole).toDouble() * pdfSettings.detectedFontScaling);
 			}
 			painter.drawText(wordRect.x(), y, wordItem->text(0));
 		}
@@ -1128,8 +1131,9 @@ void OutputEditorHOCR::updatePreview()
 	QTreeWidgetItem* item = ui.treeWidgetItems->topLevelItem(0);
 	QRect bbox = item->data(0, BBoxRole).toRect();
 	QDomDocument doc;
+	int pageDpi = 72;
 	doc.setContent(item->data(0, SourceRole).toString());
-	setCurrentSource(doc.firstChildElement("div"));
+	setCurrentSource(doc.firstChildElement("div"), &pageDpi);
 
 	PDFSettings pdfSettings;
 	pdfSettings.colorFormat = static_cast<QImage::Format>(m_pdfExportDialogUi.comboBoxImageFormat->itemData(m_pdfExportDialogUi.comboBoxImageFormat->currentIndex()).toInt());
@@ -1139,10 +1143,11 @@ void OutputEditorHOCR::updatePreview()
 	pdfSettings.uniformizeLineSpacing = m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked();
 	pdfSettings.preserveSpaceWidth = m_pdfExportDialogUi.spinBoxPreserve->value();
 	pdfSettings.overlay = m_pdfExportDialogUi.comboBoxOutputMode->currentIndex() == 1;
+	pdfSettings.detectedFontScaling = 1.;
 
 	QImage image(bbox.size(), QImage::Format_ARGB32);
-	image.setDotsPerMeterX(300 / 0.0254);
-	image.setDotsPerMeterY(300 / 0.0254);
+	image.setDotsPerMeterX(pageDpi / 0.0254);
+	image.setDotsPerMeterY(pageDpi / 0.0254);
 	QPainter painter(&image);
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.setFont(m_pdfFontDialog.currentFont());
