@@ -33,6 +33,10 @@
 # define PIXEL_B(x) x[0]
 #endif
 
+static inline uint8_t clamp(int val) {
+	return val > 255 ? 255 : val < 0 ? 0 : val;
+}
+
 Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat)
 {
 	width = src->get_width();
@@ -54,7 +58,7 @@ Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat)
 				dstpx[2] = PIXEL_B(srcpx);
 			}
 		}
-	} else if(format == Format_Gray8) {
+	} else if(format == Format_Gray8 || format == Format_Mono) {
 		sampleSize = 8;
 		bytesPerLine = width;
 		data = new uint8_t[width * height];
@@ -65,21 +69,41 @@ Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat)
 				data[y * bytesPerLine + x] = 0.21 * PIXEL_R(srcpx) + 0.72 * PIXEL_G(srcpx) + 0.07 * PIXEL_B(srcpx);
 			}
 		}
-	} else if(format == Format_Mono) {
-		// TODO: Dithering
-		sampleSize = 1;
-		bytesPerLine = width / 8 + (width % 8 != 0);
-		data = new uint8_t[height * bytesPerLine];
-		std::memset(data, 0, height * bytesPerLine);
-		#pragma omp parallel for schedule(static)
-		for(int y = 0; y < height; ++y) {
-			for(int x = 0; x < width; ++x) {
-				uint8_t* srcpx = &src->get_data()[y * stride + 4 * x];
-				uint8_t gray = 0.21 * PIXEL_R(srcpx) + 0.72 * PIXEL_G(srcpx) + 0.07 * PIXEL_B(srcpx);
-				if(gray > 127) {
-					data[y * bytesPerLine + x/8] |= 1 << x%8;
+		if(format == Format_Mono) {
+			sampleSize = 1;
+			bytesPerLine = width / 8 + (width % 8 != 0);
+			uint8_t* newdata = new uint8_t[height * bytesPerLine];
+			std::memset(newdata, 0, height * bytesPerLine);
+			// Dithering: https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering
+			for(int y = 0; y < height; ++y) {
+				for(int x = 0; x < width; ++x) {
+					uint8_t oldpixel = data[y * width + x];
+					uint8_t newpixel = oldpixel > 127 ? 255 : 0;
+					int err = int(oldpixel) - int(newpixel);
+					if(newpixel == 255) {
+						newdata[y * bytesPerLine + x/8] |= 0x80 >> x%8;
+					}
+					if(x + 1 < width) { // right neighbor
+						uint8_t& pxr = data[y * width + (x + 1)];
+						pxr = clamp(pxr + ((err * 7) >> 4));
+					}
+					if(y + 1 == height) {
+						continue; // last line
+					}
+					if(x > 0) { // bottom left and bottom neighbor
+						uint8_t& pxbl = data[(y + 1) * width + (x - 1)];
+						pxbl = clamp(pxbl + ((err * 3) >> 4));
+						uint8_t& pxb = data[(y + 1) * width + x];
+						pxb = clamp(pxb + ((err * 5) >> 4));
+					}
+					if(x + 1 < width) { // bottom right neighbor
+						uint8_t& pxbr = data[(y + 1) * width + (x + 1)];
+						pxbr = clamp(pxbr + ((err * 1) >> 4));
+					}
 				}
 			}
+			delete[] data;
+			data = newdata;
 		}
 	}
 }
@@ -120,7 +144,7 @@ Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::Im
 	int imgh = src->get_height();
 	int stride = src->get_stride();
 
-	if(format == Format_Gray8) {
+	if(format == Format_Gray8 || format == Format_Mono) {
 		Cairo::RefPtr<Cairo::ImageSurface> dst = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, imgw, imgh);
 		dst->flush();
 		#pragma omp parallel for schedule(static)
@@ -136,23 +160,32 @@ Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::Im
 				PIXEL_B(dstpx) = gray;
 			}
 		}
-		dst->mark_dirty();
-		return dst;
-	} else if(format == Format_Mono) {
-		// TODO: Dithering
-		Cairo::RefPtr<Cairo::ImageSurface> dst = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, imgw, imgh);
-		dst->flush();
-		#pragma omp parallel for schedule(static)
-		for(int y = 0; y < imgh; ++y) {
-			for(int x = 0; x < imgw; ++x) {
-				int offset = y * stride + 4 * x;
-				uint8_t* srcpx = &src->get_data()[offset];
-				uint8_t* dstpx = &dst->get_data()[offset];
-				uint8_t bw = 0.21 * PIXEL_R(srcpx) + 0.72 * PIXEL_G(srcpx) + 0.07 * PIXEL_B(srcpx) > 127 ? 255 : 0;
-				PIXEL_A(dstpx) = 255;
-				PIXEL_R(dstpx) = bw;
-				PIXEL_G(dstpx) = bw;
-				PIXEL_B(dstpx) = bw;
+		if(format == Format_Mono) {
+			// Dithering: https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering
+			for(int y = 0; y < imgh; ++y) {
+				for(int x = 0; x < imgw; ++x) {
+					uint8_t* px = &dst->get_data()[y * stride + 4 * x];
+					uint8_t newpixel = PIXEL_R(px) > 127 ? 255 : 0;
+					int err = int(PIXEL_R(px)) - int(newpixel);
+					PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = newpixel;
+					if(x + 1 < imgw) { // right neighbor
+						px = &dst->get_data()[y * stride + 4 * (x + 1)];
+						PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 7) >> 4));
+					}
+					if(y + 1 == imgh) {
+						continue; // last line
+					}
+					if(x > 0) { // bottom left and bottom neighbor
+						px = &dst->get_data()[(y + 1) * stride + 4 * (x - 1)];
+						PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 3) >> 4));
+						px = &dst->get_data()[(y + 1) * stride + 4 * x];
+						PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 5) >> 4));
+					}
+					if(x + 1 < imgw) { // bottom right neighbor
+						px = &dst->get_data()[(y + 1) * stride + 4 * (x + 1)];
+						PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 1) >> 4));
+					}
+				}
 			}
 		}
 		dst->mark_dirty();
