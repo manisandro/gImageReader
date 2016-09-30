@@ -450,6 +450,7 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 				readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
 				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : MAIN->getDisplayer()->getOCRAreas()){
 					tess.SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
+					tess.SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 					tess.Recognize(&monitor.desc);
 					if(!monitor.canceled) {
 						MAIN->getOutputEditor()->read(tess, readSessionData);

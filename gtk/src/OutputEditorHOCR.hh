@@ -72,6 +72,7 @@ private:
 		bool uniformizeLineSpacing;
 		int preserveSpaceWidth;
 		bool overlay;
+		double detectedFontScaling;
 	};
 
 	class PDFPainter {

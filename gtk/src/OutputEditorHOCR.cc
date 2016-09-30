@@ -159,7 +159,7 @@ public:
 	CairoPDFPainter(Cairo::RefPtr<Cairo::Context> context) : m_context(context) {
 	}
 	void setFontSize(double pointSize) override {
-		m_context->set_font_size(pointSize * 300. / 72.);
+		m_context->set_font_size(pointSize);
 	}
 	void drawText(double x, double y, const Glib::ustring& text) override {
 		m_context->move_to(x, y/* - ext.y_bearing*/);
@@ -190,17 +190,17 @@ private:
 
 class OutputEditorHOCR::PoDoFoPDFPainter : public OutputEditorHOCR::PDFPainter {
 public:
-	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter)
-		: m_document(document), m_painter(painter)
+	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor)
+		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor)
 	{
 		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
 	}
 	void setFontSize(double pointSize) override {
-		m_painter->GetFont()->SetFontSize(pointSize * 300. / 72.);
+		m_painter->GetFont()->SetFontSize(pointSize);
 	}
 	void drawText(double x, double y, const Glib::ustring& text) override {
 		PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.c_str()));
-		m_painter->DrawText(x, m_pageHeight - y, pdfString);
+		m_painter->DrawText(x * m_scaleFactor, m_pageHeight - y * m_scaleFactor, pdfString);
 	}
 	void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) override {
 		PoDoFo::PdfImage pdfImage(m_document);
@@ -219,19 +219,20 @@ public:
 			pdfImage.SetImageDataRaw(img.width, img.height, img.sampleSize, &is);
 			std::free(buf);
 		}
-		m_painter->DrawImage(bbox.x, m_pageHeight - (bbox.y + bbox.height), &pdfImage, bbox.width / double(img.width), bbox.height / double(img.height));
+		m_painter->DrawImage(bbox.x * m_scaleFactor, m_pageHeight - (bbox.y + bbox.height) * m_scaleFactor, &pdfImage, m_scaleFactor, m_scaleFactor);
 	}
 	double getAverageCharWidth() const override {
-		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x'));
+		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x')) / m_scaleFactor;
 	}
 	double getTextWidth(const Glib::ustring& text) const override {
 		PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.c_str()));
-		return m_painter->GetFont()->GetFontMetrics()->StringWidth(pdfString);
+		return m_painter->GetFont()->GetFontMetrics()->StringWidth(pdfString) / m_scaleFactor;
 	}
 
 private:
 	PoDoFo::PdfDocument* m_document;
 	PoDoFo::PdfPainter* m_painter;
+	double m_scaleFactor;
 	double m_pageHeight;
 };
 
@@ -1228,6 +1229,7 @@ void OutputEditorHOCR::savePDF()
 	pdfSettings.uniformizeLineSpacing = m_builder("checkbox:pdfoptions.uniformlinespacing").as<Gtk::CheckButton>()->get_active();
 	pdfSettings.preserveSpaceWidth = m_builder("spin:pdfoptions.preserve").as<Gtk::SpinButton>()->get_value();
 	pdfSettings.overlay = m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>()->get_active_row_number() == 1;
+	pdfSettings.detectedFontScaling = 1.;
 	std::vector<Glib::ustring> failed;
 	for(Gtk::TreeIter item : m_itemStore->children()) {
 		if(!(*item)[m_itemStoreCols.selected]) {
@@ -1237,12 +1239,14 @@ void OutputEditorHOCR::savePDF()
 		xmlpp::DomParser parser;
 		parser.parse_memory((*item)[m_itemStoreCols.source]);
 		xmlpp::Document* doc = parser.get_document();
-		if(doc->get_root_node() && doc->get_root_node()->get_name() == "div" && setCurrentSource(doc->get_root_node())) {
-			PoDoFo::PdfPage* page = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width, bbox.height));
+		int pageDpi = 72;
+		if(doc->get_root_node() && doc->get_root_node()->get_name() == "div" && setCurrentSource(doc->get_root_node(), &pageDpi)) {
+			double dpiScale = 72. / pageDpi;
+			PoDoFo::PdfPage* page = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width * dpiScale, bbox.height * dpiScale));
 			painter.SetPage(page);
 			painter.SetFont(font);
 
-			PoDoFoPDFPainter pdfprinter(document, &painter);
+			PoDoFoPDFPainter pdfprinter(document, &painter, dpiScale);
 			pdfprinter.setFontSize(fontSize);
 			printChildren(pdfprinter, item, pdfSettings);
 			if(pdfSettings.overlay) {
@@ -1278,7 +1282,7 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, Gtk::TreeIter item, co
 				if((*wordItem)[m_itemStoreCols.selected]) {
 					Geometry::Rectangle wordRect = (*wordItem)[m_itemStoreCols.bbox];
 					if(pdfSettings.useDetectedFontSizes) {
-						painter.setFontSize((*wordItem)[m_itemStoreCols.fontSize]);
+						painter.setFontSize((*wordItem)[m_itemStoreCols.fontSize] * pdfSettings.detectedFontScaling);
 					}
 					// If distance from previous word is large, keep the space
 					if(wordRect.x - prevWordRight > pdfSettings.preserveSpaceWidth * painter.getAverageCharWidth()) {
@@ -1297,7 +1301,7 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, Gtk::TreeIter item, co
 		for(Gtk::TreeIter wordItem : item->children()) {
 			Geometry::Rectangle wordRect = (*wordItem)[m_itemStoreCols.bbox];
 			if(pdfSettings.useDetectedFontSizes) {
-				painter.setFontSize((*wordItem)[m_itemStoreCols.fontSize]);
+				painter.setFontSize((*wordItem)[m_itemStoreCols.fontSize] * pdfSettings.detectedFontScaling);
 			}
 			painter.drawText(wordRect.x, y, Glib::ustring((*wordItem)[m_itemStoreCols.text]));
 		}
@@ -1326,7 +1330,8 @@ void OutputEditorHOCR::updatePreview()
 	xmlpp::DomParser parser;
 	parser.parse_memory((*item)[m_itemStoreCols.source]);
 	xmlpp::Document* doc = parser.get_document();
-	setCurrentSource(doc->get_root_node());
+	int pageDpi = 72;
+	setCurrentSource(doc->get_root_node(), &pageDpi);
 
 	Cairo::RefPtr<Cairo::ImageSurface> image = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, bbox.width, bbox.height);
 
@@ -1337,7 +1342,7 @@ void OutputEditorHOCR::updatePreview()
 	Cairo::FontWeight fontWeight = fontDesc.get_weight() == Pango::WEIGHT_BOLD ? Cairo::FONT_WEIGHT_BOLD : Cairo::FONT_WEIGHT_NORMAL;
 	double fontSize = fontDesc.get_size() / double(PANGO_SCALE);
 	context->select_font_face(fontDesc.get_family(), fontSlant, fontWeight);
-	context->set_font_size(fontSize * 300. / 72.);
+	context->set_font_size(fontSize * pageDpi / 72.);
 
 	PDFSettings pdfSettings;
 	pdfSettings.colorFormat = (*m_builder("combo:pdfoptions.imageformat").as<Gtk::ComboBox>()->get_active())[m_formatComboCols.format];
@@ -1347,6 +1352,7 @@ void OutputEditorHOCR::updatePreview()
 	pdfSettings.uniformizeLineSpacing = m_builder("checkbox:pdfoptions.uniformlinespacing").as<Gtk::CheckButton>()->get_active();
 	pdfSettings.preserveSpaceWidth = m_builder("spin:pdfoptions.preserve").as<Gtk::SpinButton>()->get_value();
 	pdfSettings.overlay = m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>()->get_active_row_number() == 1;
+	pdfSettings.detectedFontScaling = pageDpi / 72.;
 	CairoPDFPainter painter(context);
 	if(pdfSettings.overlay) {
 		painter.drawImage(bbox, m_tool->getSelection(bbox), pdfSettings);
