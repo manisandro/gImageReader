@@ -1077,9 +1077,9 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, QTreeWidgetItem* item,
 	if(itemClass == "ocr_par" && pdfSettings.uniformizeLineSpacing) {
 		double yInc = double(itemRect.height()) / item->childCount();
 		double y = itemRect.top() + yInc;
+		int baseline = item->childCount() > 0 ? item->child(0)->data(0, BaselineRole).toInt() : 0;
 		for(int iLine = 0, nLines = item->childCount(); iLine < nLines; ++iLine, y += yInc) {
 			QTreeWidgetItem* lineItem = item->child(iLine);
-			int baseline = lineItem->data(0, BaselineRole).toInt();
 			int x = itemRect.x();
 			int prevWordRight = itemRect.x();
 			for(int iWord = 0, nWords = lineItem->childCount(); iWord < nWords; ++iWord) {

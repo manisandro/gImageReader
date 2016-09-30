@@ -1274,8 +1274,8 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, Gtk::TreeIter item, co
 	if(itemClass == "ocr_par" && pdfSettings.uniformizeLineSpacing) {
 		double yInc = double(itemRect.height) / item->children().size();
 		double y = itemRect.y + yInc;
+		int baseLine = item->children().empty() ? 0 : (*(*item->children().begin()))[m_itemStoreCols.baseLine];
 		for(Gtk::TreeIter lineItem : item->children()) {
-			int baseLine = (*lineItem)[m_itemStoreCols.baseLine];
 			double x = itemRect.x;
 			double prevWordRight = itemRect.x;
 			for(Gtk::TreeIter wordItem : lineItem->children()) {
