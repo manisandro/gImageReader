@@ -38,7 +38,7 @@ void DisplayRenderer::adjustImage(const Cairo::RefPtr<Cairo::ImageSurface> &surf
 
 	int n = surf->get_height() * surf->get_width();
 	uint8_t* data = surf->get_data();
-#pragma omp parallel for
+#pragma omp parallel for schedule(static)
 	for(int i = 0; i < n; ++i){
 		uint8_t& r = data[4*i + 2];
 		uint8_t& g = data[4*i + 1];
