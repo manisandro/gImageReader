@@ -1775,7 +1775,7 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <items>
-                  <item translatable="yes">System-wide</item>
+                  <item translatable="yes">System-wide paths</item>
                   <item translatable="yes">User paths</item>
                 </items>
               </object>
