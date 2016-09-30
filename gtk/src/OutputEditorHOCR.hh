@@ -22,6 +22,7 @@
 
 #include "OutputEditor.hh"
 #include "Geometry.hh"
+#include "Image.hh"
 
 #include <gtksourceviewmm.h>
 #include <gtkspellmm.h>
@@ -57,10 +58,33 @@ private:
 	static const Glib::RefPtr<Glib::Regex> s_pageTitleRx;
 	static const Glib::RefPtr<Glib::Regex> s_idRx;
 	static const Glib::RefPtr<Glib::Regex> s_fontSizeRx;
+	static const Glib::RefPtr<Glib::Regex> s_baseLineRx;
 
 	struct HOCRReadSessionData : ReadSessionData {
 		std::vector<Glib::ustring> errors;
 	};
+
+	struct PDFSettings {
+		Image::Format colorFormat;
+		enum Compression { CompressZip, CompressJpeg } compression;
+		int compressionQuality;
+		bool useDetectedFontSizes;
+		bool uniformizeLineSpacing;
+		int preserveSpaceWidth;
+		bool overlay;
+	};
+
+	class PDFPainter {
+	public:
+		virtual void setFontSize(double pointSize) = 0;
+		virtual void drawText(double x, double y, const Glib::ustring& text) = 0;
+		virtual void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) = 0;
+		virtual double getAverageCharWidth() const = 0;
+		virtual double getTextWidth(const Glib::ustring& text) const = 0;
+	};
+	class PoDoFoPDFPainter;
+	class CairoPDFPainter;
+
 
 	struct ItemStoreColumns : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<bool> selected;
@@ -72,8 +96,9 @@ private:
 		Gtk::TreeModelColumn<Geometry::Rectangle> bbox;
 		Gtk::TreeModelColumn<Glib::ustring> itemClass;
 		Gtk::TreeModelColumn<double> fontSize;
+		Gtk::TreeModelColumn<int> baseLine;
 		Gtk::TreeModelColumn<Glib::ustring> textColor;
-		ItemStoreColumns() { add(selected); add(editable); add(icon); add(text); add(id); add(source); add(bbox); add(itemClass); add(fontSize); add(textColor); }
+		ItemStoreColumns() { add(selected); add(editable); add(icon); add(text); add(id); add(source); add(bbox); add(itemClass); add(fontSize); add(baseLine), add(textColor); }
 	} m_itemStoreCols;
 
 	struct PropStoreColumns : public Gtk::TreeModel::ColumnRecord {
@@ -82,6 +107,18 @@ private:
 		Gtk::TreeModelColumn<Glib::ustring> value;
 		PropStoreColumns() { add(name); add(parentAttr); add(value); }
 	} m_propStoreCols;
+
+	struct FormatComboColums : public Gtk::TreeModel::ColumnRecord {
+		Gtk::TreeModelColumn<Image::Format> format;
+		Gtk::TreeModelColumn<Glib::ustring> label;
+		FormatComboColums() { add(format); add(label); }
+	} m_formatComboCols;
+
+	struct CompressionComboColums : public Gtk::TreeModel::ColumnRecord {
+		Gtk::TreeModelColumn<PDFSettings::Compression> mode;
+		Gtk::TreeModelColumn<Glib::ustring> label;
+		CompressionComboColums() { add(mode); add(label); }
+	} m_compressionComboCols;
 
 	Builder m_builder;
 	Gtk::Box* m_widget = nullptr;
@@ -109,7 +146,7 @@ private:
 	Gtk::TreeIter currentItem();
 	void addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page);
 	bool addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring, Glib::ustring>& langCache);
-	void printChildren(Cairo::RefPtr<Cairo::Context> context, Gtk::TreeIter item, bool overlayMode, bool useDetectedFontSizes, bool uniformizeLineSpacing, int preserveSpaceWidth) const;
+	void printChildren(PDFPainter& painter, Gtk::TreeIter item, const PDFSettings& pdfSettings) const;
 	bool setCurrentSource(xmlpp::Element* pageElement, int* pageDpi = 0) const;
 	void updateCurrentItemText();
 	void updateCurrentItemAttribute(const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue, bool update=true);
@@ -121,6 +158,8 @@ private:
 	void addGraphicRection(const Geometry::Rectangle& rect);
 	void addPage(const Glib::ustring& hocrText, ReadSessionData data);
 	void setFont();
+	void imageFormatChanged();
+	void imageCompressionChanged();
 	void showItemProperties(Gtk::TreeIter item);
 	void itemChanged(const Gtk::TreeIter& iter);
 	void propertyCellChanged(const Gtk::TreeIter& iter);
