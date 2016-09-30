@@ -6,7 +6,7 @@
   <object class="GtkAdjustment" id="adjustment:pdfoptions.preserve">
     <property name="lower">1</property>
     <property name="upper">99</property>
-    <property name="value">4</property>
+    <property name="value">4.0000000002235172</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -135,7 +135,7 @@
                           <object class="GtkLabel" id="label:pdfoptions.imageformat">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Image format:</property>
+                            <property name="label" translatable="yes">Format:</property>
                             <property name="xalign">0</property>
                           </object>
                           <packing>
@@ -309,11 +309,9 @@
                                 <property name="hexpand">True</property>
                                 <property name="width_chars">2</property>
                                 <property name="max_width_chars">2</property>
-                                <property name="text" translatable="yes">4</property>
                                 <property name="adjustment">adjustment:pdfoptions.preserve</property>
                                 <property name="snap_to_ticks">True</property>
                                 <property name="numeric">True</property>
-                                <property name="value">4</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
