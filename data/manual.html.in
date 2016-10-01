@@ -46,6 +46,46 @@
 </ul>
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
+<p>gImageReader 3.2.0 (Oct XX 2016):</p>
+<ul>
+<li>General improvements:</li>
+<ul>
+    <li>Catch critical tesseract errors which otherwise result in the application crashing</li>
+    <li>Improve spelling dictionary auto-installation logic</li>
+    <li>Allow choosing whether to store language files (language definitions, spelling dictionaries) in system-wide or user-local directories</li>
+</ul>
+</li>
+<li>Plain text mode improvements:
+<ul>
+    <li>Allow recognizing user-defined regions on multiple pages</li>
+    <li>Also tread \u2014 character as a hyphen</li>
+    <li>Make preserve paragraphs option correctly deal with trailing whitespace</li>
+</ul>
+</li>
+<li>hOCR editor improvements:
+<ul>
+    <li>Add "Add to dictionary" and "Ignore word" actions to spell-checking menu in hOCR editor</li>
+    <li>Exclude non-word characters from spell-checking</li>
+    <li>Allow merging adjacent word items</li>
+    <li>Allow adjusting bounding boxes of document elements by resizing the selection in the canvas</li>
+    <li>Allow removing arbitrary items from the document tree</li>
+    <li>Allow defining custom graphic regions from context-menu of the respective page item</li>
+</ul>
+</li>
+<li>PDF export improvements:
+<ul>
+    <li>Add previewing capability</li>
+    <li>Take into account baseline information to better position the words in the generated PDF</li>
+    <li>Add options to choose color format and compression of images written to PDF, allowing to greatly reduce the size of PDF</li>
+    <li>Correctly handle paper size and DPI</li>
+    <li>Improve logic for uniformizing word and line spacing</li>
+    <li>Make sure correct hypen character is used, allowing PDF applications to correctly find hyphenated words</li>
+</ul>
+</li>
+<li>New and updated translations</li>
+<li>Various bug fixes</li>
+<li>Full details in commit log: https://github.com/manisandro/gImageReader/commits/master</li>
+</ul>
 <p>gImageReader 3.1.91 (May 03 2016):</p>
 <ul>
  <li>gImageReader 3.2 beta 2</li>
@@ -170,7 +210,7 @@
     <li>To perform OCR on an image, the user needs to specify:
         <ul>
             <li>The input images (e.g. images to recognize),</li>
-            <li>The recognition mode (e.g. <i>plain text</i> vs <i>hOCR, PDF</i>,</li>
+            <li>The recognition mode (e.g. <i>plain text</i> vs <i>hOCR, PDF</i>)</li>
             <li>The recognition language(s).</li>
         </ul>
     </li>
@@ -189,7 +229,7 @@
     <li>Alternatively, the <i>automatic layout detection button</i>, accessible from the <i>main toolbar</i> will attempt to automatically define appropriate recognition areas, as well as adjust the rotation of the image if necessary.</li>
     <li>Selections can be deleted and reordered via the context menu which appears when right-clicking on them. It is also possible to resize existing selections by dragging the corners of the selection rectangle.</li>
     <li>The selected portions of the image (or the entire image, if no selections are defined) can be recognized by pressing on the <i>recognize button</i> in the <i>main toolbar</i>. Alternatively, individual areas can be recognized by right-clicking a selection. From the selection context menu, it is also possible to redirect the recognized text to the clipboard, instead of the output pane.</li>
-    <li>If multiple pages are selected for recognition, the program allows the user to choose between either recognizing the full area of each individual page, or performing a page-layout analysis on each page to automatically detect appropriate recognition areas.</li>
+    <li>If multiple pages are selected for recognition, the program allows the user to choose between either recognizing the full resp. manually selected area for each individual page, or performing a page-layout analysis on each page to automatically detect appropriate recognition areas.</li>
     <li>Recognized text will appear in the <i>output pane</i> (unless the text was redirected to the clipboard), which is shown automatically as soon as some text was recognized.</li>
     <li>If a spelling dictionary for the recognition language is available, automatic spell-checking will be enabled for the outputted text. The used spelling dictionary can be changed either from the language menu next to the <i>recognize button</i>, or from the menu which appears when right-clicking in the text area.</li>
     <li>When additional text is recognized, it will either get appended, inserted at cursor position, or replace the previous content of the text buffer, depending on the mode selected in the <i>append mode menu</i>, which can be found in the <i>output pane toolbar</i>.</li>
@@ -199,24 +239,29 @@
 </ul>
 <h3><a name="Usage_RecognizeText">Recognizing and post-processing in hOCR, PDF mode</a></h3>
 <ul>
-    <li>In hOCR mode, the entire page of the selected source(s) is recognized.</li>
+    <li>In hOCR mode, always the entire page of the selected source(s) is recognized.</li>
     <li>The recognition result is presented in the <i>output pane</i> as a tree-structure, divided in pages, paragraphs, textlines, words and graphics.</li>
     <li>When an entry in the tree-structure is selected, the corresponding area is highlighted in the image. Additionally, formatting and layout properties of the entry are shown in the <i>Properties</i> tab below the document tree. The raw hOCR source is visible in the <i>Source</i> tab below the document tree.</li>
     <li>The word text in the document tree can be edited by double-clicking the respective word entry. If a word is mis-spelled, it will be rendered red. Right-clicking a word in the document tree will show a menu with spelling suggestions.</li>
-    <li>Properties for a selected entry can be modified by double clicking the desired property value in the <i>Properties</i> tab. Interesting actions for text entries are tweaking the bounding area, changing the language and modifying the font size. The language property also definies the spelling language used to check the respective word.</li>
+    <li>Properties for a selected entry can be modified by double clicking the desired property value in the <i>Properties</i> tab. Interesting actions for text entries are tweaking the bounding area, changing the language and modifying the font size. The language property also definies the spelling language used to check the respective word. The bounding area can also be edited by resizing the selection rectangle in the canvas.</li>
+    <li>Adjacent word items can be merged by rightclicking the respective selected items.</li>
+    <li>Arbitrary items can be removed from the document via right-click on the respective item.</li>
+    <li>New graphic areas can be defined by selecting the <i>Add graphic region</i> entry of the context menu of the respective page item and drawing a rectangle on the canvas.</li>
     <li>The document tree can be saved as a <i>hOCR HTML document</i> via the <i>Save as hOCR text</i> button in the <i>output pane toolbar</i>. Existing documents can be imported via the <i>Open hOCR file</i> button in the <i>output pane toolbar</i>.</li>
     <li>PDF files can be generated from the <i>PDF export menu</i> in the <i>output pane toolbar</i>. Two modes are available:
         <ul>
-            <li><i>PDF</i> will generate a reconstructed PDF the same layout and graphics/pictures as the source document. When exporting, the user is prompted for the font family to use, whether to honour the font sizes detected by the OCR engine, and whether to attempt to homogenize the text line spacing.</li>
+            <li><i>PDF</i> will generate a reconstructed PDF the same layout and graphics/pictures as the source document.</li>
             <li><i>PDF with invisible text overlay</i> will generate a PDF with the unmodified source image as background and invisible (but selectable) text overlayed above the respective source text in the image. This export mode is usefull for generating a document which is visually identical to the input, but with searchable and selectable text.</li>
         </ul>
     </li>
+    <li>When exporting to PDF, the user is prompted for the font family to use, whether to honour the font sizes detected by the OCR engine, and whether to attempt to homogenize the text line spacing. Also, the user can select the color format and compression method to use for images in the PDF document to control the size of the generated output.</li>
 </ul>
 <h3><a name="Usage_Options">Program options</a></h3>
 <ul>
     <li>The program options can be accessed from the <i>application menu</i>, which opens when clicking the right-most button of the <i>main toolbar</i>. When running the application within the Gnome 3 desktop environment, the application menu is part of the top bar of the desktop shell.</li>
     <li>Options allow setting the font of the output pane, as well as determining whether the application will notify about missing spelling dictionaries and new program versions.</li>
     <li>When running the Gtk+ interface, the options also allow setting the orientation of the <i>output pane</i> (if vertical, it will occupy the right portion of the application, if horizontal, it will occupy the lower portion). When running the Qt interface, the position of the output pane can be freely moved around by dragging on the title bar of the output pane.</li>
+    <li>The <i>language data location</i> setting allows to control whether tesseract language definitions and spelling dictionaries are saved in system-wide (i.e. <tt>%ProgramFiles%</tt> under Windows or typically below <tt>/usr</tt> on Linux) or user-local (i.e. below the current user's home directory) directories. This is usefull if the user does not have writing privileges in system-wide locations.</li>
     <li>Additionally, one can define new rules to match tesseract language definitions to a language (unfortunately, the tesseract language definitions do not include this information). The list of predefined rules can be seen in the <i>Predefined language definitions</i> section. Additional definitions can be added clicking on the <i>Add</i> button below. The rules for a language definition, which consists of three fields, are as follows:
         <ul>
             <li><b>Filename prefix</b>: The filename of tesseract language data files is of the format <i>&lt;prefix&gt;.traineddata</i>, i.e. for English, the file is called <i>eng.traineddata</i> and the prefix is <i>eng</i>.</li>
