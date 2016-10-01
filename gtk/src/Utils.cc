@@ -23,6 +23,7 @@
 #include "SourceManager.hh"
 
 #include <clocale>
+#include <fontconfig/fontconfig.h>
 #include <tesseract/baseapi.h>
 
 void Utils::popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gtk::Menu* menu, bool alignRight, bool alignBottom)
@@ -304,6 +305,35 @@ Glib::ustring Utils::getSpellingLanguage(const Glib::ustring& lang)
 		return "en_US";
 	}
 	return syslocale;
+}
+
+Glib::ustring Utils::resolveFontName(const Glib::ustring& family)
+{
+	Glib::ustring resolvedName = family;
+
+	FcPattern *pat = FcNameParse(reinterpret_cast<const FcChar8*>(family.c_str()));
+	FcConfigSubstitute (0, pat, FcMatchPattern);
+	FcFontSet *fs = FcFontSetCreate();
+
+	FcResult result;
+	FcPattern *match = FcFontMatch (0, pat, &result);
+	if (match)
+		FcFontSetAdd (fs, match);
+	FcPatternDestroy (pat);
+
+	FcObjectSet *os = 0;
+	if(fs->nfont > 0) {
+		FcPattern *font = FcPatternFilter (fs->fonts[0], os);
+		FcChar8 *s = FcPatternFormat (font, reinterpret_cast<const FcChar8*>("%{family}"));
+		resolvedName = Glib::ustring(reinterpret_cast<const char*>(s));
+		FcStrFree (s);
+		FcPatternDestroy (font);
+	}
+	FcFontSetDestroy (fs);
+
+	if (os)
+		FcObjectSetDestroy (os);
+	return resolvedName;
 }
 
 bool Utils::busyTask(const std::function<bool()> &f, const Glib::ustring &msg)

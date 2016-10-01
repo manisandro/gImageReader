@@ -65,6 +65,8 @@ namespace Utils {
 
 	Glib::ustring getSpellingLanguage(const Glib::ustring& lang = Glib::ustring());
 
+	Glib::ustring resolveFontName(const Glib::ustring& family);
+
 	template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value>::type>
 	T round(T x){
 		return std::floor(x + T(0.5));
