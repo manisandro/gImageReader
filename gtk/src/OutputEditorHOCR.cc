@@ -1198,7 +1198,7 @@ void OutputEditorHOCR::savePDF()
 			bool italic = fontDesc.get_style() == Pango::STYLE_OBLIQUE;
 			bool bold = fontDesc.get_weight() == Pango::WEIGHT_BOLD;
 			fontSize = fontDesc.get_size() / double(PANGO_SCALE);
-			font = document->CreateFontSubset(fontDesc.get_family().c_str(), bold, italic, false, PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance());
+			font = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), bold, italic, false, PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance());
 		} catch(...) {
 			font = nullptr;
 		}
