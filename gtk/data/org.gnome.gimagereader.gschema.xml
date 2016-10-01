@@ -186,5 +186,10 @@
             <summary>Where to look for tessdata and spelling files</summary>
             <description>Whether to look in system-wide (0) or user paths (1) for tessdata and spelling files.</description>
         </key>
+        <key type="i" name="pdffontscale">
+            <default>100</default>
+            <summary>Scaling factor for detected font sizes</summary>
+            <description>Scaling factor for detected font sizes.</description>
+        </key>
     </schema>
 </schemalist>

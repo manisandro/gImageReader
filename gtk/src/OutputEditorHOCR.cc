@@ -343,6 +343,11 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	CONNECT(compressionCombo, changed, [this]{ imageCompressionChanged(); });
 	CONNECT(m_builder("fontbutton:pdfoptions").as<Gtk::FontButton>(), font_set, [this]{ updatePreview(); });
 	CONNECT(m_builder("checkbox:pdfoptions.usedetectedfontsizes").as<Gtk::CheckButton>(), toggled, [this]{ updatePreview(); });
+	CONNECTS(m_builder("checkbox:pdfoptions.usedetectedfontsizes").as<Gtk::CheckButton>(), toggled, [this](Gtk::CheckButton* button){
+		updatePreview();
+		m_builder("box:pdfoptions.fontscale")->set_sensitive(button->get_active());
+	});
+	CONNECT(m_builder("spin:pdfoptions.fontscale").as<Gtk::SpinButton>(), value_changed, [this]{ updatePreview(); });
 	CONNECTS(m_builder("checkbox:pdfoptions.uniformlinespacing").as<Gtk::CheckButton>(), toggled, [this](Gtk::CheckButton* button){
 		updatePreview();
 		m_builder("box:pdfoptions.preserve")->set_sensitive(button->get_active());
@@ -362,6 +367,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfusedetectedfontsizes", m_builder("checkbox:pdfoptions.usedetectedfontsizes")));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfuniformizelinespacing", m_builder("checkbox:pdfoptions.uniformlinespacing")));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfpreservespaces", m_builder("spin:pdfoptions.preserve")));
+	MAIN->getConfig()->addSetting(new SpinSetting("pdffontscale", m_builder("checkbox:pdfoptions.usedetectedfontsizes")));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfpreview", m_builder("checkbox:pdfoptions.preview")));
 
 	setFont();
@@ -1230,7 +1236,7 @@ void OutputEditorHOCR::savePDF()
 	pdfSettings.uniformizeLineSpacing = m_builder("checkbox:pdfoptions.uniformlinespacing").as<Gtk::CheckButton>()->get_active();
 	pdfSettings.preserveSpaceWidth = m_builder("spin:pdfoptions.preserve").as<Gtk::SpinButton>()->get_value();
 	pdfSettings.overlay = m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>()->get_active_row_number() == 1;
-	pdfSettings.detectedFontScaling = 1.;
+	pdfSettings.detectedFontScaling = m_builder("spin:pdfoptions.fontscale").as<Gtk::SpinButton>()->get_value() / 100.;
 	std::vector<Glib::ustring> failed;
 	for(Gtk::TreeIter item : m_itemStore->children()) {
 		if(!(*item)[m_itemStoreCols.selected]) {
@@ -1357,7 +1363,7 @@ void OutputEditorHOCR::updatePreview()
 	pdfSettings.uniformizeLineSpacing = m_builder("checkbox:pdfoptions.uniformlinespacing").as<Gtk::CheckButton>()->get_active();
 	pdfSettings.preserveSpaceWidth = m_builder("spin:pdfoptions.preserve").as<Gtk::SpinButton>()->get_value();
 	pdfSettings.overlay = m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>()->get_active_row_number() == 1;
-	pdfSettings.detectedFontScaling = pageDpi / 72.;
+	pdfSettings.detectedFontScaling = (pageDpi / 72.) * m_builder("spin:pdfoptions.fontscale").as<Gtk::SpinButton>()->get_value() / 100.;
 	CairoPDFPainter painter(context);
 	if(pdfSettings.overlay) {
 		painter.drawImage(bbox, m_tool->getSelection(bbox), pdfSettings);

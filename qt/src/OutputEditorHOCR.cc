@@ -253,6 +253,9 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	connect(m_pdfExportDialogUi.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(imageFormatChanged()));
 	connect(m_pdfExportDialogUi.comboBoxImageCompression, SIGNAL(currentIndexChanged(int)), this, SLOT(imageCompressionChanged()));
 	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
+	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), m_pdfExportDialogUi.labelFontScaling, SLOT(setEnabled(bool)));
+	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), m_pdfExportDialogUi.spinFontScaling, SLOT(setEnabled(bool)));
+	connect(m_pdfExportDialogUi.spinFontScaling, SIGNAL(valueChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.spinBoxPreserve, SIGNAL(valueChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), m_pdfExportDialogUi.labelPreserve, SLOT(setEnabled(bool)));
@@ -267,6 +270,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimagecompression", m_pdfExportDialogUi.comboBoxImageCompression));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageformat", m_pdfExportDialogUi.comboBoxImageFormat));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfusedetectedfontsizes", m_pdfExportDialogUi.checkBoxFontSize, true));
+	MAIN->getConfig()->addSetting(new SpinSetting("pdffontscale", m_pdfExportDialogUi.spinFontScaling, 100));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfuniformizelinespacing", m_pdfExportDialogUi.checkBoxUniformizeSpacing, true));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfpreservespaces", m_pdfExportDialogUi.spinBoxPreserve, 4));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfpreview", m_pdfExportDialogUi.checkBoxPreview, false));
@@ -1033,7 +1037,7 @@ void OutputEditorHOCR::savePDF()
 	pdfSettings.uniformizeLineSpacing = m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked();
 	pdfSettings.preserveSpaceWidth = m_pdfExportDialogUi.spinBoxPreserve->value();
 	pdfSettings.overlay = m_pdfExportDialogUi.comboBoxOutputMode->currentIndex() == 1;
-	pdfSettings.detectedFontScaling = 1.;
+	pdfSettings.detectedFontScaling = m_pdfExportDialogUi.spinFontScaling->value() / 100.;
 	QStringList failed;
 	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
 		QTreeWidgetItem* item = ui.treeWidgetItems->topLevelItem(i);
@@ -1147,7 +1151,7 @@ void OutputEditorHOCR::updatePreview()
 	pdfSettings.uniformizeLineSpacing = m_pdfExportDialogUi.checkBoxUniformizeSpacing->isChecked();
 	pdfSettings.preserveSpaceWidth = m_pdfExportDialogUi.spinBoxPreserve->value();
 	pdfSettings.overlay = m_pdfExportDialogUi.comboBoxOutputMode->currentIndex() == 1;
-	pdfSettings.detectedFontScaling = 1.;
+	pdfSettings.detectedFontScaling = m_pdfExportDialogUi.spinFontScaling->value() / 100.;
 
 	QImage image(bbox.size(), QImage::Format_ARGB32);
 	image.setDotsPerMeterX(pageDpi / 0.0254);
