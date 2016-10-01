@@ -1129,7 +1129,10 @@ void OutputEditorHOCR::updatePreview()
 	if(ui.treeWidgetItems->topLevelItemCount() == 0 || !m_pdfExportDialogUi.checkBoxPreview->isChecked()) {
 		return;
 	}
-	QTreeWidgetItem* item = ui.treeWidgetItems->topLevelItem(0);
+	QTreeWidgetItem* item = ui.treeWidgetItems->currentItem();
+	if(!item) {
+		item = ui.treeWidgetItems->topLevelItem(0);
+	}
 	QRect bbox = item->data(0, BBoxRole).toRect();
 	QDomDocument doc;
 	int pageDpi = 72;

@@ -1326,7 +1326,11 @@ void OutputEditorHOCR::updatePreview()
 	if(m_itemStore->children().empty()|| !visible) {
 		return;
 	}
-	Gtk::TreeIter item = *m_itemStore->children().begin();
+	Gtk::TreeIter item = currentItem();
+	if(!item) {
+		item = *m_itemStore->children().begin();
+	}
+
 	Geometry::Rectangle bbox = (*item)[m_itemStoreCols.bbox];
 	xmlpp::DomParser parser;
 	parser.parse_memory((*item)[m_itemStoreCols.source]);
