@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-30 13:31+0200\n"
-"PO-Revision-Date: 2016-04-18 18:30+0200\n"
+"POT-Creation-Date: 2016-09-30 03:00+0200\n"
+"PO-Revision-Date: 2016-10-01 12:32+0200\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <>\n"
 "Language: cs\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:147
 msgid "Redetect Languages"
@@ -52,18 +53,8 @@ msgstr "<b>Došlo k pádu aplikace</b>"
 
 #: ../gtk/data/crashhandler.ui.h:4
 #, no-c-format
-msgid ""
-"Apologies for the inconvenience. To help improve the application, please "
-"consider reporting the issue to <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Please try to "
-"describe what you were doing before the application crashed. Also, include "
-"the information below. Thank you."
-msgstr ""
-"Velmi se omlouváme za vzniklé potíže. Prosíme pomozte s odstraněním příčiny "
-"tohoto problému nahlášením na e-mail <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Ve zprávě se "
-"pokuste popsat svou činnost před pádem aplikace. Též přiložte níže uvedené "
-"informace. Děkujeme."
+msgid "Apologies for the inconvenience. To help improve the application, please consider reporting the issue to <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Please try to describe what you were doing before the application crashed. Also, include the information below. Thank you."
+msgstr "Velmi se omlouváme za vzniklé potíže. Prosíme pomozte s odstraněním příčiny tohoto problému nahlášením na e-mail <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Ve zprávě se pokuste popsat svou činnost před pádem aplikace. Též přiložte níže uvedené informace. Děkujeme."
 
 #: ../gtk/data/editor_hocr.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
@@ -83,9 +74,8 @@ msgid "OK"
 msgstr "OK"
 
 #: ../gtk/data/editor_hocr.ui.h:4 ../qt/data/PdfExportDialog.ui.h:2
-#, fuzzy
 msgid "Output mode:"
-msgstr "Výstup:"
+msgstr "Výstupní režim:"
 
 #: ../gtk/data/editor_hocr.ui.h:5 ../qt/data/PdfExportDialog.ui.h:3
 msgid "PDF"
@@ -95,30 +85,29 @@ msgstr "PDF"
 msgid "PDF with invisible text overlay"
 msgstr "PDF s neviditelnou textovou vrstvou"
 
-#: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:13
-msgid "Format:"
-msgstr ""
+#: ../gtk/data/editor_hocr.ui.h:7
+msgid "Image format:"
+msgstr "Formát obrázku"
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression:"
-msgstr ""
+msgstr "Komprese"
 
 #: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:15
 msgid "Compression quality:"
-msgstr ""
+msgstr "Stupeň komprese"
 
 #: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Image settings:"
-msgstr ""
+msgstr "Nastavení obrázku"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:9
 msgid "Document font:"
 msgstr "Písmo dokumentu:"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:8
-#, fuzzy
 msgid "Uniformize line and word spacing"
-msgstr "Sjednotit velikost rozestupů řádků"
+msgstr "Sjednotit velikost rozestupů řádků a slov"
 
 #: ../gtk/data/editor_hocr.ui.h:13 ../qt/data/PdfExportDialog.ui.h:7
 msgid "Use detected font sizes"
@@ -126,42 +115,45 @@ msgstr "Použít zjištěné velikosti písma"
 
 #: ../gtk/data/editor_hocr.ui.h:14 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "Zachovat mezery větší než:"
 
-#: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:11
+#: ../gtk/data/editor_hocr.ui.h:15
+msgid "4"
+msgstr "4"
+
+#: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:11
 msgid "characters"
-msgstr ""
+msgstr "znaky"
 
-#: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:6
-#, fuzzy
+#: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:6
 msgid "Text settings:"
-msgstr "Znaková sada textového souboru:"
+msgstr "Nastavení textu:"
 
-#: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:5
+#: ../gtk/data/editor_hocr.ui.h:18 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
-msgstr ""
+msgstr "Zobrazit náhled"
 
-#: ../gtk/data/editor_hocr.ui.h:18 ../gtk/data/editor_text.ui.h:26
+#: ../gtk/data/editor_hocr.ui.h:19 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
 msgid "Save output"
 msgstr "Uložit výstup"
 
-#: ../gtk/data/editor_hocr.ui.h:19 ../qt/src/Ui_OutputEditorHOCR.hh:45
+#: ../gtk/data/editor_hocr.ui.h:20 ../qt/src/Ui_OutputEditorHOCR.hh:45
 #: ../qt/src/Ui_OutputEditorHOCR.hh:46
 msgid "Export to PDF"
 msgstr "Exportovat do PDF"
 
-#: ../gtk/data/editor_hocr.ui.h:20 ../gtk/data/editor_text.ui.h:27
+#: ../gtk/data/editor_hocr.ui.h:21 ../gtk/data/editor_text.ui.h:27
 #: ../qt/src/Ui_OutputEditorHOCR.hh:48 ../qt/src/Ui_OutputEditorHOCR.hh:49
 #: ../qt/src/Ui_OutputEditorText.hh:125
 msgid "Clear output"
 msgstr "Vyčistit výstup"
 
-#: ../gtk/data/editor_hocr.ui.h:21 ../qt/src/Ui_OutputEditorHOCR.hh:76
+#: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:76
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:80
+#: ../gtk/data/editor_hocr.ui.h:23 ../qt/src/Ui_OutputEditorHOCR.hh:80
 msgid "Source"
 msgstr "Zdroj"
 
@@ -503,25 +495,23 @@ msgstr "Výchozí"
 
 #: ../gtk/data/gimagereader.ui.h:54 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "Umístění jazykových dat:"
 
 #: ../gtk/data/gimagereader.ui.h:55 ../qt/data/ConfigDialog.ui.h:13
-#, fuzzy
 msgid "Language definitions path:"
-msgstr "Předpřipravené jazykové definice:"
+msgstr "Popisy umístění jazykových definic:"
 
 #: ../gtk/data/gimagereader.ui.h:56 ../qt/data/ConfigDialog.ui.h:28
-#, fuzzy
 msgid "Spelling dictionaries path:"
-msgstr "Chybí slovník pro kontrolu překlepů"
+msgstr "Popisy umístění slovníků pro kontrolu překlepů"
 
-#: ../gtk/data/gimagereader.ui.h:57 ../qt/data/ConfigDialog.ui.h:10
-msgid "System-wide paths"
-msgstr ""
+#: ../gtk/data/gimagereader.ui.h:57
+msgid "System-wide"
+msgstr "Pro všechny uživatele"
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Pro jednotlivého uživatele"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -531,7 +521,7 @@ msgstr "Strany"
 msgid "Page range:"
 msgstr "Strany:"
 
-#: ../gtk/data/gimagereader.ui.h:61 ../qt/data/PageRangeDialog.ui.h:3
+#: ../gtk/data/gimagereader.ui.h:61
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Příklad:</b> 1-10, 13, 14-18</small>"
 
@@ -668,11 +658,9 @@ msgid "Failed to load image"
 msgstr "Obrázek se nepodařilo načíst"
 
 #: ../gtk/src/Displayer.cc:231 ../qt/src/Displayer.cc:222
-msgid ""
-"The file might not be an image or be corrupt:\n"
+msgid "The file might not be an image or be corrupt:\n"
 "%1"
-msgstr ""
-"Soubor nejspíš neobsahuje obrazová data nebo je poškozený:\n"
+msgstr "Soubor nejspíš neobsahuje obrazová data nebo je poškozený:\n"
 "%1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:40 ../qt/src/DisplayerToolSelect.cc:41
@@ -700,8 +688,7 @@ msgid "Performing layout analysis"
 msgstr "Provádění analýzy rozvržení stránky…"
 
 #: ../gtk/src/FileDialogs.cc:248
-msgid ""
-"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgid "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr "Soubor s názvem „%1“ už existuje. Opravdu má být přepsán?"
 
 #: ../gtk/src/FileDialogs.cc:250
@@ -781,9 +768,8 @@ msgid "Failed to install spelling dictionary: %1"
 msgstr "Instalace slovníku pro kontrolu překlepů se nezdařila: %1"
 
 #: ../gtk/src/MainWindow.cc:533 ../qt/src/MainWindow.cc:515
-#, fuzzy
 msgid "Failed to create directory for spelling dictionaries."
-msgstr "Instalace slovníku pro kontrolu překlepů se nezdařila: %1"
+msgstr "Vytvoření složky pro slovníky pro kontrolu překlepů se nezdařila: %1"
 
 #: ../gtk/src/MainWindow.cc:541 ../gtk/src/MainWindow.cc:557
 #: ../qt/src/MainWindow.cc:525
@@ -809,22 +795,20 @@ msgstr "Byly nainstalovány tyto slovníky:%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:311 ../qt/src/OutputEditorHOCR.cc:228
 msgid "Monochrome"
-msgstr ""
+msgstr "Monochromatické"
 
 #: ../gtk/src/OutputEditorHOCR.cc:320 ../qt/src/OutputEditorHOCR.cc:230
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Zip (bezztrátové)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:323 ../qt/src/OutputEditorHOCR.cc:231
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "Jpeg (ztrátové)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:421 ../qt/src/OutputEditorHOCR.cc:330
-msgid ""
-"The following pages could not be processed:\n"
+msgid "The following pages could not be processed:\n"
 "%1"
-msgstr ""
-"Tyto stránky nebylo možné zpracovat:\n"
+msgstr "Tyto stránky nebylo možné zpracovat:\n"
 "%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:422 ../qt/src/OutputEditorHOCR.cc:331
@@ -847,11 +831,11 @@ msgstr "Textový řádek"
 
 #: ../gtk/src/OutputEditorHOCR.cc:974 ../qt/src/OutputEditorHOCR.cc:831
 msgid "Merge"
-msgstr ""
+msgstr "Sloučit"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1002 ../qt/src/OutputEditorHOCR.cc:847
 msgid "Add graphic region"
-msgstr ""
+msgstr "Přidat oblast s grafikou"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1037 ../qt/src/OutputEditorHOCR.cc:869
 msgid "No suggestions"
@@ -859,11 +843,11 @@ msgstr "Žádná doporučení"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1043 ../qt/src/OutputEditorHOCR.cc:873
 msgid "Add to dictionary"
-msgstr ""
+msgstr "Přidat do slovníku"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1049 ../qt/src/OutputEditorHOCR.cc:874
 msgid "Ignore word"
-msgstr ""
+msgstr "Ignorovat slovo"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1085 ../gtk/src/OutputEditorHOCR.cc:1125
 #: ../qt/src/OutputEditorHOCR.cc:908 ../qt/src/OutputEditorHOCR.cc:939
@@ -922,18 +906,16 @@ msgstr "Uložit výstup do formátu PDF…"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1205 ../qt/src/OutputEditorHOCR.cc:1009
 msgid "The PDF library does not support the selected font."
-msgstr ""
+msgstr "(softwarová) knihovna funkcí pro PDF nepodporuje zvolené písmo."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1257 ../qt/src/OutputEditorHOCR.cc:1061
 msgid "Errors occurred"
 msgstr "Vyskytly se chyby"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1257 ../qt/src/OutputEditorHOCR.cc:1061
-msgid ""
-"The following pages could not be rendered:\n"
+msgid "The following pages could not be rendered:\n"
 "%1"
-msgstr ""
-"Tyto stránky se nepodařilo vykreslit:\n"
+msgstr "Tyto stránky se nepodařilo vykreslit:\n"
 "%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1376 ../gtk/src/OutputEditorText.cc:320
@@ -960,12 +942,12 @@ msgstr "Nahrazování…"
 
 #: ../gtk/src/OutputEditorText.cc:264 ../gtk/src/Recognizer.cc:445
 #: ../qt/src/Recognizer.cc:446
-msgid ""
-"\n"
+msgid "\n"
 "[Failed to recognize page %1]\n"
-msgstr ""
-"\n"
+""
+msgstr "\n"
 "[Rozpoznávání na stránce %1 se nezdařilo]\n"
+""
 
 #: ../gtk/src/OutputEditorText.cc:296 ../qt/src/OutputEditorText.cc:243
 msgid "Text Files"
@@ -976,8 +958,7 @@ msgid "Save Output..."
 msgstr "Uložit výstup…"
 
 #: ../gtk/src/Recognizer.cc:150 ../qt/src/Recognizer.cc:134
-msgid ""
-"Tesseract crashed with the following message:\n"
+msgid "Tesseract crashed with the following message:\n"
 "\n"
 "%1\n"
 "\n"
@@ -986,20 +967,25 @@ msgid ""
 "- Auxiliary language data files are missing.\n"
 "- Corrupt language data files.\n"
 "\n"
-"Make sure your language data files are valid and compatible with tesseract "
-"%2."
-msgstr ""
+"Make sure your language data files are valid and compatible with tesseract %2."
+msgstr "Aplikace Tesseract byla neočekávaně ukončena s následujícím hlášením:\n"
+"\n"
+"%1\n"
+"\n"
+"Toto se typicky děje z jednoho z těchto důvodů:\n"
+"- Použití zastaralých dat uživatelských slovníků.\n"
+"- Chybějící pomocná jazyková data.\n"
+"- Poškozené soubory s jazykovými daty.\n"
+"\n"
+"Ověřte, že soubory s jazykovými daty jsou platné a kompatibilní s tesseract %2."
 
 #: ../gtk/src/Recognizer.cc:206 ../qt/src/Recognizer.cc:194
 msgid "No languages available"
 msgstr "Nejsou k dispozici žádná jazyková data"
 
 #: ../gtk/src/Recognizer.cc:206 ../qt/src/Recognizer.cc:194
-msgid ""
-"No tesseract languages are available for use. Recognition will not work."
-msgstr ""
-"Nejsou k dispozici žádná jazyková data pro engine tesseract. Rozpoznávání "
-"proto nebude fungovat."
+msgid "No tesseract languages are available for use. Recognition will not work."
+msgstr "Nejsou k dispozici žádná jazyková data pro engine tesseract. Rozpoznávání proto nebude fungovat."
 
 #: ../gtk/src/Recognizer.cc:261 ../qt/src/Recognizer.cc:255
 msgid "Multilingual"
@@ -1014,22 +1000,18 @@ msgid "Manage languages..."
 msgstr "Spravovat jazyková data…"
 
 #: ../gtk/src/Recognizer.cc:364 ../qt/src/Recognizer.cc:364
-#, fuzzy
 msgid "Current selection"
-msgstr "Rozpoznat výběr"
+msgstr "Stávající výběr"
 
 #: ../gtk/src/Recognizer.cc:439 ../qt/src/Recognizer.cc:440
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Rozpoznávání strany %1 (%2 ze %3)…"
 
 #: ../gtk/src/Recognizer.cc:444 ../qt/src/Recognizer.cc:445
-#, fuzzy
-msgid ""
-"\n"
+msgid "\n"
 "- Page %1: failed to render page"
-msgstr ""
-"\n"
-"\tStrana %1: vykreslení stránky se nezdařilo"
+msgstr "\n"
+"- Strana %1: vykreslení stránky se nezdařilo"
 
 #: ../gtk/src/Recognizer.cc:465 ../gtk/src/Recognizer.cc:495
 #: ../gtk/src/Recognizer.cc:508 ../qt/src/Recognizer.cc:466
@@ -1147,11 +1129,9 @@ msgid "Missing File"
 msgstr "Chybějící soubor"
 
 #: ../gtk/src/SourceManager.cc:274 ../qt/src/SourceManager.cc:291
-msgid ""
-"The following file has been deleted or moved:\n"
+msgid "The following file has been deleted or moved:\n"
 "%1"
-msgstr ""
-"Tento soubor byl smazán či přesunut:\n"
+msgstr "Tento soubor byl smazán či přesunut:\n"
 "%1"
 
 #: ../gtk/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:78
@@ -1216,15 +1196,8 @@ msgid "Applying substitutions..."
 msgstr "Provádění dosazení…"
 
 #: ../gtk/src/TessdataManager.cc:57
-msgid ""
-"PackageKit is required for managing tesseract language packs, but it was not "
-"found. Please use the system package management software to manage the "
-"tesseract language packs."
-msgstr ""
-"Pro správu balíčků jazykových dat pro engine tesseract, prováděnou přímo z "
-"gImageReader, je třeba nástroje PackageKit, který se ale na tomto systému "
-"nenachází. Náhradně proto použijte nástroj pro správu balíčků vašeho systému "
-"a jeho prostřednictvím spravujte jazykové balíčky engine tesseract."
+msgid "PackageKit is required for managing tesseract language packs, but it was not found. Please use the system package management software to manage the tesseract language packs."
+msgstr "Pro správu balíčků jazykových dat pro engine tesseract, prováděnou přímo z gImageReader, je třeba nástroje PackageKit, který se ale na tomto systému nenachází. Náhradně proto použijte nástroj pro správu balíčků vašeho systému a jeho prostřednictvím spravujte jazykové balíčky engine tesseract."
 
 #: ../gtk/src/TessdataManager.cc:62 ../qt/src/TessdataManager.cc:76
 msgid "Fetching available languages"
@@ -1246,24 +1219,21 @@ msgstr "Promítnutí změn…"
 
 #: ../gtk/src/TessdataManager.cc:219 ../qt/src/TessdataManager.cc:205
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Nepodařilo se vytvořit složku pro datové soubory tesseract"
 
 #: ../gtk/src/TessdataManager.cc:228 ../qt/src/TessdataManager.cc:213
 msgid "Downloading %1..."
 msgstr "Stahování %1…"
 
 #: ../gtk/src/TessdataManager.cc:248 ../qt/src/TessdataManager.cc:235
-msgid ""
-"The following files could not be downloaded or removed:\n"
+msgid "The following files could not be downloaded or removed:\n"
 "%1\n"
 "\n"
 "Check the connectivity and directory permissions."
-msgstr ""
-"Tyto soubory se nepodařilo stáhnout na či odebrat z počítače:\n"
+msgstr "Tyto soubory se nepodařilo stáhnout na či odebrat z počítače:\n"
 "%1\n"
 "\n"
-"Zkontrolujte své připojení k Internetu a přístupová práva na příslušené "
-"složce."
+"Zkontrolujte své připojení k Internetu a přístupová práva na příslušené složce."
 
 #: ../gtk/src/Utils.cc:60
 msgid "Yes"
@@ -1282,15 +1252,8 @@ msgid "About gImageReader"
 msgstr "O aplikaci gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
-msgid ""
-"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
-"p><p>&nbsp;</p></body></html>"
-msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Grafická nadstavba pro engine tesseract-"
-"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Webové "
-"stránky projektu</a></p><p>&nbsp;</p></body></html>"
+msgid "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+msgstr "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Grafická nadstavba pro engine tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Webové stránky projektu&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -1299,6 +1262,10 @@ msgstr "Zásluhy"
 #: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
 msgstr "Licence"
+
+#: ../qt/data/ConfigDialog.ui.h:10
+msgid "System-wide paths"
+msgstr "Popisy umístění, společných pro všechny uživatele"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -1314,20 +1281,8 @@ msgstr "Znaková sada textového souboru:"
 
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
-msgid ""
-"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
-"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
-"application, please consider reporting the issue to <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Please try to describe what you were doing before the application "
-"crashed. Also, include the information below. Thank you.</p></body></html>"
-msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Došlo k pádu "
-"aplikace</span></p><p>Velmi se omlouváme za vzniklé potíže. Prosíme pomozte "
-"s odstraněním příčiny tohoto problému nahlášením na e-mail <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Ve zprávě se pokuste popsat svou činnost před pádem aplikace. Též "
-"přiložte níže uvedené informace. Děkujeme.</p></body></html>"
+msgid "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Apologies for the inconvenience. To help improve the application, please consider reporting the issue to &lt;a href=&quot;mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were doing before the application crashed. Also, include the information below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+msgstr "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Aplikace byla neočekávaně ukončena&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Omlouváme se za vzniklé nepohodlí. Chcete-li pomoci aplikaci zlepšit nahlaste problém na &lt;a href=&quot;mailto:manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com&lt;/a&gt;. Zde se pokuste popsat svou činnost před pádem aplikace. Též přiložte níže uvedené informace.Díky.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1382,6 +1337,14 @@ msgstr "Automaticky zjistit rozvržení stránky"
 msgid "Toggle Output Pane"
 msgstr "Zobrazit či skrýt podokno s výstupem"
 
+#: ../qt/data/PageRangeDialog.ui.h:3
+msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+msgstr "&lt;small&gt;&lt;b&gt;Příklad:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+
+#: ../qt/data/PdfExportDialog.ui.h:13
+msgid "Format:"
+msgstr "Formát"
+
 #: ../qt/src/MainWindow.cc:543
 msgid "Could not read %1: %2"
 msgstr "%1 se nedaří načíst: %2"
@@ -1391,17 +1354,8 @@ msgid "The following dictionary files were installed:%1"
 msgstr "Byly nainstalovány tyto slovníkové soubory:%1"
 
 #: ../qt/src/TessdataManager.cc:71
-#, fuzzy
-msgid ""
-"PackageKit is required for managing system-wide tesseract language packs, "
-"but it was not found. Please use the system package management software to "
-"manage the tesseract language packs, or switch to use the user tessdata path "
-"in the configuration dialog."
-msgstr ""
-"Pro správu balíčků jazykových dat pro engine tesseract, prováděnou přímo z "
-"gImageReader, je třeba nástroje PackageKit, který se ale na tomto systému "
-"nenachází. Náhradně proto použijte nástroj pro správu balíčků vašeho systému "
-"a jeho prostřednictvím spravujte jazykové balíčky engine tesseract."
+msgid "PackageKit is required for managing system-wide tesseract language packs, but it was not found. Please use the system package management software to manage the tesseract language packs, or switch to use the user tessdata path in the configuration dialog."
+msgstr "Pro správu balíčků jazykových dat pro engine tesseract, společných pro všchny uživatele, je třeba nástroje PackageKit, který se ale na tomto systému nenachází. Namísto toho proto použijte nástroj pro správu balíčků vašeho systému a jeho prostřednictvím spravujte jazykové balíčky engine tesseract. Případně náhradně v nastavovacím dialogu přepněte na používání umístění pro jednotlivého uživatele."
 
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"
@@ -1449,34 +1403,27 @@ msgid "Clear Output"
 msgstr "Vyčistit výstup"
 
 #~ msgid ""
-#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
-#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
-#~ "application, please consider reporting the issue to &lt;a href=&quot;"
-#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
-#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
-#~ "doing before the application crashed. Also, include the information "
-#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
-#~ msgstr ""
-#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-#~ "weight:600;&quot;&gt;Aplikace zhavarovala&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
-#~ "Omlouváme se za nepohodlí. Chcete-li pomoci aplikaci zlepšit nahlaste "
-#~ "problém na &lt;a href=&quot;mailto:manisandro@gmail.com?"
-#~ "subject=gImageReader%20Crash\">manisandro@gmail.com&lt;/a&gt;. Zde se "
-#~ "pokuste popsat svou činnost před pádem aplikace. Též přiložte níže "
-#~ "uvedené.Díky.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
-
-#~ msgid ""
-#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-#~ msgstr ""
-#~ "&lt;small&gt;&lt;b&gt;Příklad:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-
-#~ msgid ""
 #~ "\n"
 #~ "\tFailed to initialize tesseract"
 #~ msgstr ""
 #~ "\n"
 #~ "\tNepodařilo se inicializovat engine tesseract"
+
+#~ msgid ""
+#~ "<html><head/><body><p><span style=\" font-weight:600;\">The application "
+#~ "has crashed</span></p><p>Apologies for the inconvenience. To help improve "
+#~ "the application, please consider reporting the issue to <a href=\"mailto:"
+#~ "manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+#~ "a>. Please try to describe what you were doing before the application "
+#~ "crashed. Also, include the information below. Thank you.</p></body></html>"
+#~ msgstr ""
+#~ "<html><head/><body><p><span style=\" font-weight:600;\">Došlo k pádu "
+#~ "aplikace</span></p><p>Velmi se omlouváme za vzniklé potíže. Prosíme "
+#~ "pomozte s odstraněním příčiny tohoto problému nahlášením na e-mail <a "
+#~ "href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+#~ "\">manisandro@gmail.com</a>. Ve zprávě se pokuste popsat svou činnost "
+#~ "před pádem aplikace. Též přiložte níže uvedené informace. Děkujeme.</p></"
+#~ "body></html>"
 
 #~ msgid "To recognize specific areas, drag rectangles over them."
 #~ msgstr "Nad oblastmi, které mají být rozpoznány, natáhněte obdélníky."
@@ -1493,13 +1440,11 @@ msgstr "Vyčistit výstup"
 #~ msgid "en_US"
 #~ msgstr "cs_CZ"
 
-#, fuzzy
 #~ msgid "So&amp;urces"
-#~ msgstr "Zdroje"
+#~ msgstr "Zdr&amp;oje"
 
-#, fuzzy
 #~ msgid "&amp;Output"
-#~ msgstr "Výstup"
+#~ msgstr "&amp;Výstup"
 
 #~ msgid "Configuration"
 #~ msgstr "Nastavení"
@@ -1548,6 +1493,3 @@ msgstr "Vyčistit výstup"
 
 #~ msgid "Save the current list?"
 #~ msgstr "Uložit současný seznam?"
-
-#~ msgid "Delete the file?"
-#~ msgstr "Opravdu smazat tento soubor?"
