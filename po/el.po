@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gImageReader 3.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-30 13:31+0200\n"
+"POT-Creation-Date: 2016-10-01 22:47+0200\n"
 "PO-Revision-Date: 2016-04-15 20:24+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team:  <gnome-el-list@gnome.org>\n"
@@ -72,13 +72,13 @@ msgstr "Εξαγωγή ως PDF"
 
 #: ../gtk/data/editor_hocr.ui.h:2 ../gtk/data/gimagereader.ui.h:51
 #: ../gtk/src/Acquirer.cc:43 ../gtk/src/FileDialogs.cc:157
-#: ../gtk/src/Utils.cc:66 ../qt/data/ConfigDialog.ui.h:27
+#: ../gtk/src/Utils.cc:67 ../qt/data/ConfigDialog.ui.h:27
 #: ../qt/data/MainWindow.ui.h:14
 msgid "Cancel"
 msgstr "Ακύρωση"
 
 #: ../gtk/data/editor_hocr.ui.h:3 ../gtk/data/gimagereader.ui.h:37
-#: ../gtk/src/FileDialogs.cc:158 ../gtk/src/Utils.cc:57
+#: ../gtk/src/FileDialogs.cc:158 ../gtk/src/Utils.cc:58
 #: ../qt/data/ConfigDialog.ui.h:26
 msgid "OK"
 msgstr "Εντάξει"
@@ -96,27 +96,27 @@ msgstr "PDF"
 msgid "PDF with invisible text overlay"
 msgstr "PDF με αόρατη επικάλυψη κειμένου"
 
-#: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:13
+#: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Format:"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:14
+#: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
 msgid "Compression:"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:15
+#: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Compression quality:"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:12
+#: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
 msgid "Image settings:"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:9
+#: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Document font:"
 msgstr "Γραμματοσειρά εγγράφου:"
 
-#: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:8
+#: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:10
 #, fuzzy
 msgid "Uniformize line and word spacing"
 msgstr "Ομογενοποίηση του διάστιχου"
@@ -125,44 +125,48 @@ msgstr "Ομογενοποίηση του διάστιχου"
 msgid "Use detected font sizes"
 msgstr "Χρήση των μεγεθών γραμματοσειράς που ανιχνεύτηκαν"
 
-#: ../gtk/data/editor_hocr.ui.h:14 ../qt/data/PdfExportDialog.ui.h:10
+#: ../gtk/data/editor_hocr.ui.h:14 ../qt/data/PdfExportDialog.ui.h:9
 msgid "Preserve spaces wider than:"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:11
+#: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:8
 msgid "characters"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:6
+#: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:12
+msgid "Scale:"
+msgstr ""
+
+#: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:6
 #, fuzzy
 msgid "Text settings:"
 msgstr "Κωδικοποίηση αρχείου κειμένου:"
 
-#: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:5
+#: ../gtk/data/editor_hocr.ui.h:18 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:18 ../gtk/data/editor_text.ui.h:26
+#: ../gtk/data/editor_hocr.ui.h:19 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
 msgid "Save output"
 msgstr "Αποθήκευση εξόδου"
 
-#: ../gtk/data/editor_hocr.ui.h:19 ../qt/src/Ui_OutputEditorHOCR.hh:45
+#: ../gtk/data/editor_hocr.ui.h:20 ../qt/src/Ui_OutputEditorHOCR.hh:45
 #: ../qt/src/Ui_OutputEditorHOCR.hh:46
 msgid "Export to PDF"
 msgstr "Εξαγωγή σε PDF"
 
-#: ../gtk/data/editor_hocr.ui.h:20 ../gtk/data/editor_text.ui.h:27
+#: ../gtk/data/editor_hocr.ui.h:21 ../gtk/data/editor_text.ui.h:27
 #: ../qt/src/Ui_OutputEditorHOCR.hh:48 ../qt/src/Ui_OutputEditorHOCR.hh:49
 #: ../qt/src/Ui_OutputEditorText.hh:125
 msgid "Clear output"
 msgstr "Καθαρισμός εξόδου"
 
-#: ../gtk/data/editor_hocr.ui.h:21 ../qt/src/Ui_OutputEditorHOCR.hh:76
+#: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:76
 msgid "Properties"
 msgstr "Ιδιότητες"
 
-#: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:80
+#: ../gtk/data/editor_hocr.ui.h:23 ../qt/src/Ui_OutputEditorHOCR.hh:80
 msgid "Source"
 msgstr "Προέλευση"
 
@@ -189,7 +193,7 @@ msgstr "Υποκαταστάσεις"
 msgid "Open"
 msgstr "Άνοιγμα"
 
-#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/Utils.cc:69
+#: ../gtk/data/editor_text.ui.h:6 ../gtk/src/Utils.cc:70
 #: ../qt/src/SubstitutionsManager.cc:46 ../qt/src/SubstitutionsManager.cc:47
 msgid "Save"
 msgstr "Αποθήκευση"
@@ -204,9 +208,9 @@ msgstr "Καθαρισμός"
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: ../gtk/data/editor_text.ui.h:9 ../gtk/src/OutputEditorHOCR.cc:1005
-#: ../gtk/src/OutputEditorHOCR.cc:1058 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/OutputEditorHOCR.cc:849 ../qt/src/OutputEditorHOCR.cc:878
+#: ../gtk/data/editor_text.ui.h:9 ../gtk/src/OutputEditorHOCR.cc:1013
+#: ../gtk/src/OutputEditorHOCR.cc:1066 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/OutputEditorHOCR.cc:855 ../qt/src/OutputEditorHOCR.cc:884
 #: ../qt/src/SubstitutionsManager.cc:55 ../qt/src/SubstitutionsManager.cc:56
 msgid "Remove"
 msgstr "Αφαίρεση"
@@ -360,13 +364,13 @@ msgstr "Έξοδος:"
 msgid "Mode:"
 msgstr "Κατάσταση:"
 
-#: ../gtk/data/gimagereader.ui.h:15 ../gtk/src/OutputEditorHOCR.cc:305
-#: ../qt/data/MainWindow.ui.h:11 ../qt/src/OutputEditorHOCR.cc:226
+#: ../gtk/data/gimagereader.ui.h:15 ../gtk/src/OutputEditorHOCR.cc:306
+#: ../qt/data/MainWindow.ui.h:11 ../qt/src/OutputEditorHOCR.cc:227
 msgid "Color"
 msgstr "Χρώμα"
 
-#: ../gtk/data/gimagereader.ui.h:16 ../gtk/src/OutputEditorHOCR.cc:308
-#: ../qt/data/MainWindow.ui.h:10 ../qt/src/OutputEditorHOCR.cc:227
+#: ../gtk/data/gimagereader.ui.h:16 ../gtk/src/OutputEditorHOCR.cc:309
+#: ../qt/data/MainWindow.ui.h:10 ../qt/src/OutputEditorHOCR.cc:228
 msgid "Grayscale"
 msgstr "Κλίμακα του γκρίζου"
 
@@ -768,12 +772,12 @@ msgstr "Εγκατάσταση του ορθογραφικού λεξικού γ
 #: ../gtk/src/MainWindow.cc:507 ../gtk/src/MainWindow.cc:533
 #: ../gtk/src/MainWindow.cc:541 ../gtk/src/MainWindow.cc:551
 #: ../gtk/src/MainWindow.cc:557 ../gtk/src/MainWindow.cc:586
-#: ../gtk/src/OutputEditorHOCR.cc:1205 ../gtk/src/Recognizer.cc:157
+#: ../gtk/src/OutputEditorHOCR.cc:1213 ../gtk/src/Recognizer.cc:157
 #: ../gtk/src/TessdataManager.cc:57 ../gtk/src/TessdataManager.cc:68
 #: ../gtk/src/TessdataManager.cc:262 ../qt/src/MainWindow.cc:501
 #: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:525
 #: ../qt/src/MainWindow.cc:535 ../qt/src/MainWindow.cc:543
-#: ../qt/src/MainWindow.cc:571 ../qt/src/OutputEditorHOCR.cc:1009
+#: ../qt/src/MainWindow.cc:571 ../qt/src/OutputEditorHOCR.cc:1015
 #: ../qt/src/Recognizer.cc:141 ../qt/src/TessdataManager.cc:71
 #: ../qt/src/TessdataManager.cc:82 ../qt/src/TessdataManager.cc:249
 msgid "Error"
@@ -810,19 +814,19 @@ msgstr "Εγκατεστημένα λεξικά"
 msgid "The following dictionaries were installed:%1"
 msgstr "Τα παρακάτω λεξικά εγκαταστάθηκαν: %1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:311 ../qt/src/OutputEditorHOCR.cc:228
+#: ../gtk/src/OutputEditorHOCR.cc:312 ../qt/src/OutputEditorHOCR.cc:229
 msgid "Monochrome"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:320 ../qt/src/OutputEditorHOCR.cc:230
+#: ../gtk/src/OutputEditorHOCR.cc:321 ../qt/src/OutputEditorHOCR.cc:231
 msgid "Zip (lossless)"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:323 ../qt/src/OutputEditorHOCR.cc:231
+#: ../gtk/src/OutputEditorHOCR.cc:324 ../qt/src/OutputEditorHOCR.cc:232
 msgid "Jpeg (lossy)"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:421 ../qt/src/OutputEditorHOCR.cc:330
+#: ../gtk/src/OutputEditorHOCR.cc:429 ../qt/src/OutputEditorHOCR.cc:336
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -830,108 +834,108 @@ msgstr ""
 "Οι παρακάτω σελίδες δεν μπόρεσαν να επεξεργαστούν:\n"
 "%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:422 ../qt/src/OutputEditorHOCR.cc:331
+#: ../gtk/src/OutputEditorHOCR.cc:430 ../qt/src/OutputEditorHOCR.cc:337
 msgid "Recognition errors"
 msgstr "Σφάλματα αναγνώρισης"
 
 #. Add tree item
-#: ../gtk/src/OutputEditorHOCR.cc:486 ../gtk/src/OutputEditorHOCR.cc:880
-#: ../qt/src/OutputEditorHOCR.cc:378 ../qt/src/OutputEditorHOCR.cc:773
+#: ../gtk/src/OutputEditorHOCR.cc:494 ../gtk/src/OutputEditorHOCR.cc:888
+#: ../qt/src/OutputEditorHOCR.cc:384 ../qt/src/OutputEditorHOCR.cc:779
 msgid "Graphic"
 msgstr "Γραφικό"
 
-#: ../gtk/src/OutputEditorHOCR.cc:544 ../qt/src/OutputEditorHOCR.cc:432
+#: ../gtk/src/OutputEditorHOCR.cc:552 ../qt/src/OutputEditorHOCR.cc:438
 msgid "Paragraph"
 msgstr "Παράγραφος"
 
-#: ../gtk/src/OutputEditorHOCR.cc:547 ../qt/src/OutputEditorHOCR.cc:435
+#: ../gtk/src/OutputEditorHOCR.cc:555 ../qt/src/OutputEditorHOCR.cc:441
 msgid "Textline"
 msgstr "Γραμμή κειμένου"
 
-#: ../gtk/src/OutputEditorHOCR.cc:974 ../qt/src/OutputEditorHOCR.cc:831
+#: ../gtk/src/OutputEditorHOCR.cc:982 ../qt/src/OutputEditorHOCR.cc:837
 msgid "Merge"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1002 ../qt/src/OutputEditorHOCR.cc:847
+#: ../gtk/src/OutputEditorHOCR.cc:1010 ../qt/src/OutputEditorHOCR.cc:853
 msgid "Add graphic region"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1037 ../qt/src/OutputEditorHOCR.cc:869
+#: ../gtk/src/OutputEditorHOCR.cc:1045 ../qt/src/OutputEditorHOCR.cc:875
 msgid "No suggestions"
 msgstr "Χωρίς προτάσεις"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1043 ../qt/src/OutputEditorHOCR.cc:873
+#: ../gtk/src/OutputEditorHOCR.cc:1051 ../qt/src/OutputEditorHOCR.cc:879
 msgid "Add to dictionary"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1049 ../qt/src/OutputEditorHOCR.cc:874
+#: ../gtk/src/OutputEditorHOCR.cc:1057 ../qt/src/OutputEditorHOCR.cc:880
 msgid "Ignore word"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1085 ../gtk/src/OutputEditorHOCR.cc:1125
-#: ../qt/src/OutputEditorHOCR.cc:908 ../qt/src/OutputEditorHOCR.cc:939
+#: ../gtk/src/OutputEditorHOCR.cc:1093 ../gtk/src/OutputEditorHOCR.cc:1133
+#: ../qt/src/OutputEditorHOCR.cc:914 ../qt/src/OutputEditorHOCR.cc:945
 msgid "hOCR HTML Files"
 msgstr "Αρχεία hOCR HTML"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1086 ../qt/src/OutputEditorHOCR.cc:908
+#: ../gtk/src/OutputEditorHOCR.cc:1094 ../qt/src/OutputEditorHOCR.cc:914
 msgid "Open hOCR File"
 msgstr "Άνοιγμα αρχείου hOCR"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1095 ../qt/src/OutputEditorHOCR.cc:914
+#: ../gtk/src/OutputEditorHOCR.cc:1103 ../qt/src/OutputEditorHOCR.cc:920
 msgid "Failed to open file"
 msgstr "Αποτυχία ανοίγματος του αρχείου"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1095 ../qt/src/OutputEditorHOCR.cc:914
+#: ../gtk/src/OutputEditorHOCR.cc:1103 ../qt/src/OutputEditorHOCR.cc:920
 msgid "The file could not be opened: %1."
 msgstr "Τα αρχείο δεν μπόρεσε να ανοιχθεί: %1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1104 ../qt/src/OutputEditorHOCR.cc:921
+#: ../gtk/src/OutputEditorHOCR.cc:1112 ../qt/src/OutputEditorHOCR.cc:927
 msgid "Invalid hOCR file"
 msgstr "Άκυρο αρχείο hOCR"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1104 ../qt/src/OutputEditorHOCR.cc:921
+#: ../gtk/src/OutputEditorHOCR.cc:1112 ../qt/src/OutputEditorHOCR.cc:927
 msgid "The file does not appear to contain valid hOCR HTML: %1"
 msgstr "Το αρχείο δεν φαίνεται να περιέχει έγκυρο hOCR HTML: %1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1121 ../gtk/src/OutputEditorHOCR.cc:1177
-#: ../gtk/src/OutputEditorText.cc:292 ../qt/src/OutputEditorHOCR.cc:937
-#: ../qt/src/OutputEditorHOCR.cc:987 ../qt/src/OutputEditorText.cc:241
+#: ../gtk/src/OutputEditorHOCR.cc:1129 ../gtk/src/OutputEditorHOCR.cc:1185
+#: ../gtk/src/OutputEditorText.cc:292 ../qt/src/OutputEditorHOCR.cc:943
+#: ../qt/src/OutputEditorHOCR.cc:993 ../qt/src/OutputEditorText.cc:241
 msgid "output"
 msgstr "έξοδος"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1126 ../qt/src/OutputEditorHOCR.cc:939
+#: ../gtk/src/OutputEditorHOCR.cc:1134 ../qt/src/OutputEditorHOCR.cc:945
 msgid "Save hOCR Output..."
 msgstr "Αποθήκευση εξόδου hOCR..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:1134 ../gtk/src/OutputEditorHOCR.cc:1191
-#: ../gtk/src/OutputEditorText.cc:305 ../qt/src/OutputEditorHOCR.cc:947
-#: ../qt/src/OutputEditorHOCR.cc:999 ../qt/src/OutputEditorText.cc:251
+#: ../gtk/src/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorHOCR.cc:1199
+#: ../gtk/src/OutputEditorText.cc:305 ../qt/src/OutputEditorHOCR.cc:953
+#: ../qt/src/OutputEditorHOCR.cc:1005 ../qt/src/OutputEditorText.cc:251
 msgid "Failed to save output"
 msgstr "Αποτυχία αποθήκευσης εξόδου"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1134 ../gtk/src/OutputEditorHOCR.cc:1191
-#: ../gtk/src/OutputEditorText.cc:305 ../qt/src/OutputEditorHOCR.cc:947
-#: ../qt/src/OutputEditorHOCR.cc:999 ../qt/src/OutputEditorText.cc:251
+#: ../gtk/src/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorHOCR.cc:1199
+#: ../gtk/src/OutputEditorText.cc:305 ../qt/src/OutputEditorHOCR.cc:953
+#: ../qt/src/OutputEditorHOCR.cc:1005 ../qt/src/OutputEditorText.cc:251
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Ελέγξτε ότι έχετε δικαίωμα εγγραφής στον επιλεγμένο φάκελο."
 
-#: ../gtk/src/OutputEditorHOCR.cc:1180 ../qt/src/OutputEditorHOCR.cc:989
+#: ../gtk/src/OutputEditorHOCR.cc:1188 ../qt/src/OutputEditorHOCR.cc:995
 msgid "PDF Files"
 msgstr "Αρχεία PDF"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1181 ../qt/src/OutputEditorHOCR.cc:989
+#: ../gtk/src/OutputEditorHOCR.cc:1189 ../qt/src/OutputEditorHOCR.cc:995
 msgid "Save PDF Output..."
 msgstr "Αποθήκευση εξόδου PDF..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:1205 ../qt/src/OutputEditorHOCR.cc:1009
+#: ../gtk/src/OutputEditorHOCR.cc:1213 ../qt/src/OutputEditorHOCR.cc:1015
 msgid "The PDF library does not support the selected font."
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1257 ../qt/src/OutputEditorHOCR.cc:1061
+#: ../gtk/src/OutputEditorHOCR.cc:1268 ../qt/src/OutputEditorHOCR.cc:1069
 msgid "Errors occurred"
 msgstr "Συνέβησαν σφάλματα"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1257 ../qt/src/OutputEditorHOCR.cc:1061
+#: ../gtk/src/OutputEditorHOCR.cc:1268 ../qt/src/OutputEditorHOCR.cc:1069
 msgid ""
 "The following pages could not be rendered:\n"
 "%1"
@@ -939,13 +943,13 @@ msgstr ""
 "Οι παρακάτω σελίδες δεν μπόρεσαν να αποδοθούν:\n"
 "%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1376 ../gtk/src/OutputEditorText.cc:320
-#: ../qt/src/OutputEditorHOCR.cc:1168 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:1393 ../gtk/src/OutputEditorText.cc:320
+#: ../qt/src/OutputEditorHOCR.cc:1181 ../qt/src/OutputEditorText.cc:265
 msgid "Output not saved"
 msgstr "Η έξοδος δεν αποθηκεύτηκε"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1376 ../gtk/src/OutputEditorText.cc:320
-#: ../qt/src/OutputEditorHOCR.cc:1168 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:1393 ../gtk/src/OutputEditorText.cc:320
+#: ../qt/src/OutputEditorHOCR.cc:1181 ../qt/src/OutputEditorText.cc:265
 msgid "Save output before proceeding?"
 msgstr "Αποθήκευση της εξόδου πριν την συνέχεια;"
 
@@ -1034,22 +1038,22 @@ msgstr ""
 "\n"
 "\tΣελίδα %1: αποτυχία απόδοσης της σελίδας"
 
-#: ../gtk/src/Recognizer.cc:465 ../gtk/src/Recognizer.cc:495
-#: ../gtk/src/Recognizer.cc:508 ../qt/src/Recognizer.cc:466
-#: ../qt/src/Recognizer.cc:496 ../qt/src/Recognizer.cc:509
+#: ../gtk/src/Recognizer.cc:466 ../gtk/src/Recognizer.cc:496
+#: ../gtk/src/Recognizer.cc:509 ../qt/src/Recognizer.cc:467
+#: ../qt/src/Recognizer.cc:497 ../qt/src/Recognizer.cc:510
 msgid "Recognizing..."
 msgstr "Γίνεται αναγνώριση..."
 
-#: ../gtk/src/Recognizer.cc:469 ../gtk/src/Recognizer.cc:478
-#: ../qt/src/Recognizer.cc:470 ../qt/src/Recognizer.cc:479
+#: ../gtk/src/Recognizer.cc:470 ../gtk/src/Recognizer.cc:479
+#: ../qt/src/Recognizer.cc:471 ../qt/src/Recognizer.cc:480
 msgid "Recognition errors occurred"
 msgstr "Συνέβησαν σφάλματα αναγνώρισης"
 
-#: ../gtk/src/Recognizer.cc:469 ../qt/src/Recognizer.cc:470
+#: ../gtk/src/Recognizer.cc:470 ../qt/src/Recognizer.cc:471
 msgid "The following errors occurred:%1"
 msgstr "Τα παρακάτω σφάλματα συνέβησαν:%1"
 
-#: ../gtk/src/Recognizer.cc:478 ../qt/src/Recognizer.cc:479
+#: ../gtk/src/Recognizer.cc:479 ../qt/src/Recognizer.cc:480
 msgid "Failed to initialize tesseract"
 msgstr "Αποτυχία προετοιμασίας του tesseract"
 
@@ -1268,15 +1272,15 @@ msgstr ""
 "\n"
 "Ελέγξτε τη σύνδεση και τα δικαιώματα του καταλόγου."
 
-#: ../gtk/src/Utils.cc:60
+#: ../gtk/src/Utils.cc:61
 msgid "Yes"
 msgstr "Ναι"
 
-#: ../gtk/src/Utils.cc:63
+#: ../gtk/src/Utils.cc:64
 msgid "No"
 msgstr "Όχι"
 
-#: ../gtk/src/Utils.cc:72
+#: ../gtk/src/Utils.cc:73
 msgid "Discard"
 msgstr "Απόρριψη"
 
@@ -1383,6 +1387,11 @@ msgstr "Αυτόματη ανίχνευση διάταξης"
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Toggle Output Pane"
 msgstr "Εναλλαγή παραθύρου εξόδου"
+
+#: ../qt/data/PdfExportDialog.ui.h:14
+#, no-c-format
+msgid "%"
+msgstr ""
 
 #: ../qt/src/MainWindow.cc:543
 msgid "Could not read %1: %2"
