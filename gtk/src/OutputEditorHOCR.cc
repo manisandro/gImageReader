@@ -362,6 +362,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfusedetectedfontsizes", m_builder("checkbox:pdfoptions.usedetectedfontsizes")));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfuniformizelinespacing", m_builder("checkbox:pdfoptions.uniformlinespacing")));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfpreservespaces", m_builder("spin:pdfoptions.preserve")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfpreview", m_builder("checkbox:pdfoptions.preview")));
 
 	setFont();
 }

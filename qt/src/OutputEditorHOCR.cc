@@ -269,6 +269,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfusedetectedfontsizes", m_pdfExportDialogUi.checkBoxFontSize, true));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfuniformizelinespacing", m_pdfExportDialogUi.checkBoxUniformizeSpacing, true));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfpreservespaces", m_pdfExportDialogUi.spinBoxPreserve, 4));
+	MAIN->getConfig()->addSetting(new SwitchSetting("pdfpreview", m_pdfExportDialogUi.checkBoxPreview, false));
 
 	setFont();
 	updateFontButton(m_pdfFontDialog.currentFont());
