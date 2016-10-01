@@ -1280,7 +1280,8 @@
     <property name="comments" translatable="yes">A graphical frontend to tesseract-ocr</property>
     <property name="website">https://github.com/manisandro/gImageReader/</property>
     <property name="authors">Sandro Mani &lt;manisandro@gmail.com&gt;</property>
-    <property name="translator_credits">Chinese (HK): Timothy Lee &lt;timothy.ty.lee@gmail.com&gt;
+    <property name="translator_credits">Chinese (CN): Timothy Lee &lt;timothy.ty.lee@gmail.com&gt;
+Chinese (HK): Timothy Lee &lt;timothy.ty.lee@gmail.com&gt;
 Chinese (TW): Timothy Lee &lt;timothy.ty.lee@gmail.com&gt;
 Czech: Pavel Borecki &lt;pavel.borecki@gmail.com&gt;
 French: Sandro Mani &lt;manisandro@gmail.com&gt;
