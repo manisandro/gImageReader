@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-01 22:47+0200\n"
-"PO-Revision-Date: 2015-08-16 01:43+0100\n"
-"Last-Translator: Timothy Lee <timothy.ty.lee@gmail.com>\n"
+"POT-Creation-Date: 2016-10-02 12:37+0200\n"
+"PO-Revision-Date: 2016-10-02 12:08+0100\n"
+"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -94,19 +94,19 @@ msgstr "PDF"
 msgid "PDF with invisible text overlay"
 msgstr "包含隐形文字层的 PDF"
 
-#: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
+#: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Format:"
 msgstr "格式："
 
-#: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
+#: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:15
 msgid "Compression:"
 msgstr "压缩："
 
-#: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:18
+#: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Compression quality:"
 msgstr "压缩质量："
 
-#: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
+#: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
 msgstr "图像设置："
 
@@ -132,7 +132,7 @@ msgstr "字符"
 
 #: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Scale:"
-msgstr ""
+msgstr "缩放:"
 
 #: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:6
 msgid "Text settings:"
@@ -1380,11 +1380,6 @@ msgstr "自动检测布局"
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Toggle Output Pane"
 msgstr "切换输出面板"
-
-#: ../qt/data/PdfExportDialog.ui.h:14
-#, no-c-format
-msgid "%"
-msgstr ""
 
 #: ../qt/src/MainWindow.cc:543
 msgid "Could not read %1: %2"
