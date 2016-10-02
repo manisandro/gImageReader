@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-01 22:47+0200\n"
+"POT-Creation-Date: 2016-10-02 12:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Yuriy Bahriy <yhmtargaryen@gmail.com>\n"
 "Language-Team: Ukrainian\n"
@@ -97,19 +97,19 @@ msgstr "PDF"
 msgid "PDF with invisible text overlay"
 msgstr "PDF з невидимим текстовим шаром"
 
-#: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
+#: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Format:"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
+#: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:15
 msgid "Compression:"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:18
+#: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Compression quality:"
 msgstr ""
 
-#: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
+#: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
 msgstr ""
 
@@ -1405,11 +1405,6 @@ msgstr "Автовизначення вмісту"
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Toggle Output Pane"
 msgstr "Показати/приховати панель результатів"
-
-#: ../qt/data/PdfExportDialog.ui.h:14
-#, no-c-format
-msgid "%"
-msgstr ""
 
 #: ../qt/src/MainWindow.cc:543
 #, fuzzy
