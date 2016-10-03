@@ -54,7 +54,7 @@ void TessdataManager::run()
 			m_dbusProxy = Gio::DBus::Proxy::create_for_bus_sync(Gio::DBus::BUS_TYPE_SESSION, "org.freedesktop.PackageKit",
 															"/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify");
 		}catch(const Glib::Error&){
-			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), _("PackageKit is required for managing tesseract language packs, but it was not found. Please use the system package management software to manage the tesseract language packs."));
+			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), _("PackageKit is required for managing system-wide tesseract language packs, but it was not found. Please use the system package management software to manage the tesseract language packs, or switch to use the user tessdata path in the configuration dialog."));
 			return;
 		}
 	}
