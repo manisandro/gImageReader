@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gImageReader-3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-30 13:31+0200\n"
+"POT-Creation-Date: 2016-10-03 17:51+0200\n"
 "PO-Revision-Date: 2016-10-03 12:08+0100\n"
 "Last-Translator: Mats Olofsson <mats.olofsson@mbox321.swipnet.se>\n"
 "Language-Team: German <kde-i18n-doc@kde.org>\n"
@@ -1066,20 +1066,17 @@ msgstr "Tesseract kunde inte initieras"
 msgid "Scan canceled"
 msgstr "Skanning avbröts"
 
-#: ../gtk/src/scanner/ScannerSane.cc:166
-#: ../gtk/src/scanner/ScannerTwain.cc:190 ../qt/src/scanner/ScannerSane.cc:167
-#: ../qt/src/scanner/ScannerTwain.cc:182
+#: ../gtk/src/scanner/ScannerSane.cc:166 ../gtk/src/scanner/ScannerTwain.cc:190
+#: ../qt/src/scanner/ScannerSane.cc:167 ../qt/src/scanner/ScannerTwain.cc:182
 msgid "No scanner specified"
 msgstr "Ingen skanner specificerad"
 
-#: ../gtk/src/scanner/ScannerSane.cc:175
-#: ../gtk/src/scanner/ScannerTwain.cc:199 ../qt/src/scanner/ScannerSane.cc:176
-#: ../qt/src/scanner/ScannerTwain.cc:191
+#: ../gtk/src/scanner/ScannerSane.cc:175 ../gtk/src/scanner/ScannerTwain.cc:199
+#: ../qt/src/scanner/ScannerSane.cc:176 ../qt/src/scanner/ScannerTwain.cc:191
 msgid "Unable to connect to scanner"
 msgstr "Det går inte att ansluta till skanner"
 
-#: ../gtk/src/scanner/ScannerSane.cc:397
-#: ../gtk/src/scanner/ScannerTwain.cc:269
+#: ../gtk/src/scanner/ScannerSane.cc:397 ../gtk/src/scanner/ScannerTwain.cc:269
 #: ../gtk/src/scanner/ScannerTwain.cc:295 ../qt/src/scanner/ScannerSane.cc:398
 #: ../qt/src/scanner/ScannerTwain.cc:261 ../qt/src/scanner/ScannerTwain.cc:293
 msgid "Unable to start scan"
@@ -1180,8 +1177,7 @@ msgstr "Ersätt med"
 msgid "substitution_list.txt"
 msgstr "ersättnings_lista.txt"
 
-#: ../gtk/src/SubstitutionsManager.cc:83
-#: ../gtk/src/SubstitutionsManager.cc:119
+#: ../gtk/src/SubstitutionsManager.cc:83 ../gtk/src/SubstitutionsManager.cc:119
 #: ../qt/src/SubstitutionsManager.cc:111 ../qt/src/SubstitutionsManager.cc:150
 msgid "Substitutions List"
 msgstr "Ersättningslista"
@@ -1198,55 +1194,49 @@ msgstr "Fel vid läsning av fil"
 msgid "Unable to read '%1'."
 msgstr "Det går inte att läsa '%1'."
 
-#: ../gtk/src/SubstitutionsManager.cc:112
-#: ../qt/src/SubstitutionsManager.cc:143
+#: ../gtk/src/SubstitutionsManager.cc:112 ../qt/src/SubstitutionsManager.cc:143
 msgid "Errors Occurred Reading File"
 msgstr "Fel vid läsning av fil"
 
-#: ../gtk/src/SubstitutionsManager.cc:112
-#: ../qt/src/SubstitutionsManager.cc:143
+#: ../gtk/src/SubstitutionsManager.cc:112 ../qt/src/SubstitutionsManager.cc:143
 msgid "Some entries of the substitutions list could not be read."
 msgstr "Vissa poster i ersättningslistan  kunde inte läsas."
 
-#: ../gtk/src/SubstitutionsManager.cc:120
-#: ../qt/src/SubstitutionsManager.cc:150
+#: ../gtk/src/SubstitutionsManager.cc:120 ../qt/src/SubstitutionsManager.cc:150
 msgid "Save Substitutions List"
 msgstr "Spara ersättningslistan"
 
-#: ../gtk/src/SubstitutionsManager.cc:126
-#: ../qt/src/SubstitutionsManager.cc:156
+#: ../gtk/src/SubstitutionsManager.cc:126 ../qt/src/SubstitutionsManager.cc:156
 msgid "Error Saving File"
 msgstr "Fel när filen sparades"
 
-#: ../gtk/src/SubstitutionsManager.cc:126
-#: ../qt/src/SubstitutionsManager.cc:156
+#: ../gtk/src/SubstitutionsManager.cc:126 ../qt/src/SubstitutionsManager.cc:156
 msgid "Unable to write to '%1'."
 msgstr "Det går inte att skriva till '%1'."
 
-#: ../gtk/src/SubstitutionsManager.cc:145
-#: ../qt/src/SubstitutionsManager.cc:171
+#: ../gtk/src/SubstitutionsManager.cc:145 ../qt/src/SubstitutionsManager.cc:171
 msgid "Save List?"
 msgstr "Spara listan?"
 
-#: ../gtk/src/SubstitutionsManager.cc:145
-#: ../qt/src/SubstitutionsManager.cc:171
+#: ../gtk/src/SubstitutionsManager.cc:145 ../qt/src/SubstitutionsManager.cc:171
 msgid "Do you want to save the current list?"
 msgstr "Vill du spara den nuvarande listan?"
 
-#: ../gtk/src/SubstitutionsManager.cc:184
-#: ../qt/src/SubstitutionsManager.cc:212
+#: ../gtk/src/SubstitutionsManager.cc:184 ../qt/src/SubstitutionsManager.cc:212
 msgid "Applying substitutions..."
 msgstr "Tillämpa ersättningar..."
 
-#: ../gtk/src/TessdataManager.cc:57
+#: ../gtk/src/TessdataManager.cc:57 ../qt/src/TessdataManager.cc:71
 msgid ""
-"PackageKit is required for managing tesseract language packs, but it was not "
-"found. Please use the system package management software to manage the "
-"tesseract language packs."
+"PackageKit is required for managing system-wide tesseract language packs, "
+"but it was not found. Please use the system package management software to "
+"manage the tesseract language packs, or switch to use the user tessdata path "
+"in the configuration dialog."
 msgstr ""
-"PackageKit krävs för att hantera Tesseract språkpaket, men det kunde inte "
-"hittas. Använd system-paketets programvara för att hantera Tesseract's "
-"språkpaket."
+"PackageKit krävs för att hantera systemomfattande tesseract språkpaket, men "
+"det kunde inte hittas. Använd systempaketets programvara för att hantera "
+"tesseract språkpaket eller byt till användarens tessdatasökväg i "
+"inställningsdialogrutan."
 
 #: ../gtk/src/TessdataManager.cc:62 ../qt/src/TessdataManager.cc:76
 msgid "Fetching available languages"
@@ -1411,18 +1401,6 @@ msgstr "Kunde inte läsa %1: %2"
 msgid "The following dictionary files were installed:%1"
 msgstr "Följande ordboks-filer installerades:%1"
 
-#: ../qt/src/TessdataManager.cc:71
-msgid ""
-"PackageKit is required for managing system-wide tesseract language packs, "
-"but it was not found. Please use the system package management software to "
-"manage the tesseract language packs, or switch to use the user tessdata path "
-"in the configuration dialog."
-msgstr ""
-"PackageKit krävs för att hantera systemomfattande tesseract språkpaket, men "
-"det kunde inte hittas. Använd systempaketets programvara för att hantera "
-"tesseract språkpaket eller byt till användarens tessdatasökväg i "
-"inställningsdialogrutan."
-
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"
 msgstr "Utdata"
@@ -1467,3 +1445,12 @@ msgstr "Spara utdata"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "Radera utdata"
+
+#~ msgid ""
+#~ "PackageKit is required for managing tesseract language packs, but it was "
+#~ "not found. Please use the system package management software to manage "
+#~ "the tesseract language packs."
+#~ msgstr ""
+#~ "PackageKit krävs för att hantera Tesseract språkpaket, men det kunde inte "
+#~ "hittas. Använd system-paketets programvara för att hantera Tesseract's "
+#~ "språkpaket."

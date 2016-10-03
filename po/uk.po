@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-02 12:37+0200\n"
+"POT-Creation-Date: 2016-10-03 17:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Yuriy Bahriy <yhmtargaryen@gmail.com>\n"
 "Language-Team: Ukrainian\n"
@@ -1238,11 +1238,13 @@ msgstr "Ви хочете зберегти поточний список?"
 msgid "Applying substitutions..."
 msgstr "Застосування замін..."
 
-#: ../gtk/src/TessdataManager.cc:57
+#: ../gtk/src/TessdataManager.cc:57 ../qt/src/TessdataManager.cc:71
+#, fuzzy
 msgid ""
-"PackageKit is required for managing tesseract language packs, but it was not "
-"found. Please use the system package management software to manage the "
-"tesseract language packs."
+"PackageKit is required for managing system-wide tesseract language packs, "
+"but it was not found. Please use the system package management software to "
+"manage the tesseract language packs, or switch to use the user tessdata path "
+"in the configuration dialog."
 msgstr ""
 "Для керування встановленими мовними пакунками tesseract потрібен PackageKit, "
 "але його не знайдено. Будь ласка, скористайтеся системним менеджером "
@@ -1416,18 +1418,6 @@ msgstr "Неможливо прочитати %1."
 msgid "The following dictionary files were installed:%1"
 msgstr "Було встановлено такі словники:%1"
 
-#: ../qt/src/TessdataManager.cc:71
-#, fuzzy
-msgid ""
-"PackageKit is required for managing system-wide tesseract language packs, "
-"but it was not found. Please use the system package management software to "
-"manage the tesseract language packs, or switch to use the user tessdata path "
-"in the configuration dialog."
-msgstr ""
-"Для керування встановленими мовними пакунками tesseract потрібен PackageKit, "
-"але його не знайдено. Будь ласка, скористайтеся системним менеджером "
-"програм, щоб встановити потрібні мовні пакунки."
-
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"
 msgstr "Результати"
@@ -1473,6 +1463,15 @@ msgstr "Зберегти результати"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "Очистити результати"
+
+#~ msgid ""
+#~ "PackageKit is required for managing tesseract language packs, but it was "
+#~ "not found. Please use the system package management software to manage "
+#~ "the tesseract language packs."
+#~ msgstr ""
+#~ "Для керування встановленими мовними пакунками tesseract потрібен "
+#~ "PackageKit, але його не знайдено. Будь ласка, скористайтеся системним "
+#~ "менеджером програм, щоб встановити потрібні мовні пакунки."
 
 #~ msgid ""
 #~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-02 12:37+0200\n"
+"POT-Creation-Date: 2016-10-03 17:51+0200\n"
 "PO-Revision-Date: 2016-08-03 02:03+0200\n"
 "Last-Translator: Bernard Banko <beernarrd (at) gmail.com>\n"
 "Language-Team: lugos\n"
@@ -1221,11 +1221,13 @@ msgstr "Ali želite shraniti trenutni spisek?"
 msgid "Applying substitutions..."
 msgstr "Uveljavljanje zamenjav ..."
 
-#: ../gtk/src/TessdataManager.cc:57
+#: ../gtk/src/TessdataManager.cc:57 ../qt/src/TessdataManager.cc:71
+#, fuzzy
 msgid ""
-"PackageKit is required for managing tesseract language packs, but it was not "
-"found. Please use the system package management software to manage the "
-"tesseract language packs."
+"PackageKit is required for managing system-wide tesseract language packs, "
+"but it was not found. Please use the system package management software to "
+"manage the tesseract language packs, or switch to use the user tessdata path "
+"in the configuration dialog."
 msgstr ""
 "Za upravljanje jezikovnih paketov tesseract je potreben PackageKit, ki pa ga "
 "ni bilo mogoče najti. Uporabite upravljalnik paketov vašega operacijskega "
@@ -1393,18 +1395,6 @@ msgstr "Branje %1 ni bilo možno: %2"
 msgid "The following dictionary files were installed:%1"
 msgstr "Naslednje datoteke s slovarji so bile nameščene: %1"
 
-#: ../qt/src/TessdataManager.cc:71
-#, fuzzy
-msgid ""
-"PackageKit is required for managing system-wide tesseract language packs, "
-"but it was not found. Please use the system package management software to "
-"manage the tesseract language packs, or switch to use the user tessdata path "
-"in the configuration dialog."
-msgstr ""
-"Za upravljanje jezikovnih paketov tesseract je potreben PackageKit, ki pa ga "
-"ni bilo mogoče najti. Uporabite upravljalnik paketov vašega operacijskega "
-"sistema in namestite jezikovne pakete."
-
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"
 msgstr "Rezultat"
@@ -1449,6 +1439,15 @@ msgstr "Shrani rezultat"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "Počisti rezultat"
+
+#~ msgid ""
+#~ "PackageKit is required for managing tesseract language packs, but it was "
+#~ "not found. Please use the system package management software to manage "
+#~ "the tesseract language packs."
+#~ msgstr ""
+#~ "Za upravljanje jezikovnih paketov tesseract je potreben PackageKit, ki pa "
+#~ "ga ni bilo mogoče najti. Uporabite upravljalnik paketov vašega "
+#~ "operacijskega sistema in namestite jezikovne pakete."
 
 #, fuzzy
 #~ msgid ""
