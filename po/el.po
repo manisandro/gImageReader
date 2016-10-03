@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gImageReader 3.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-02 12:37+0200\n"
+"POT-Creation-Date: 2016-10-03 17:51+0200\n"
 "PO-Revision-Date: 2016-04-15 20:24+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team:  <gnome-el-list@gnome.org>\n"
@@ -1223,11 +1223,13 @@ msgstr "Θέλετε να αποθηκευτεί η τρέχουσα λίστα;
 msgid "Applying substitutions..."
 msgstr "Εφαρμόζονται υποκαταστάσεις..."
 
-#: ../gtk/src/TessdataManager.cc:57
+#: ../gtk/src/TessdataManager.cc:57 ../qt/src/TessdataManager.cc:71
+#, fuzzy
 msgid ""
-"PackageKit is required for managing tesseract language packs, but it was not "
-"found. Please use the system package management software to manage the "
-"tesseract language packs."
+"PackageKit is required for managing system-wide tesseract language packs, "
+"but it was not found. Please use the system package management software to "
+"manage the tesseract language packs, or switch to use the user tessdata path "
+"in the configuration dialog."
 msgstr ""
 "Το PackageKit απαιτείται για τη διαχείριση των γλωσσικών πακέτων tesseract, "
 "αλλά δεν βρέθηκε. Παρακαλούμε, χρησιμοποιήστε το λογισμικό διαχείρισης "
@@ -1396,19 +1398,6 @@ msgstr "Αδυναμία ανάγνωσης του %1: %2"
 msgid "The following dictionary files were installed:%1"
 msgstr "Τα παρακάτω αρχεία λεξικών εγκαταστάθηκαν:%1"
 
-#: ../qt/src/TessdataManager.cc:71
-#, fuzzy
-msgid ""
-"PackageKit is required for managing system-wide tesseract language packs, "
-"but it was not found. Please use the system package management software to "
-"manage the tesseract language packs, or switch to use the user tessdata path "
-"in the configuration dialog."
-msgstr ""
-"Το PackageKit απαιτείται για τη διαχείριση των γλωσσικών πακέτων tesseract, "
-"αλλά δεν βρέθηκε. Παρακαλούμε, χρησιμοποιήστε το λογισμικό διαχείρισης "
-"πακέτων του συστήματος για να διαχειριστείτε τα γλωσσικά πακέτα του "
-"tesseract."
-
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"
 msgstr "Έξοδος:"
@@ -1453,6 +1442,16 @@ msgstr "Αποθήκευση εξόδου"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "Καθαρισμός εξόδου"
+
+#~ msgid ""
+#~ "PackageKit is required for managing tesseract language packs, but it was "
+#~ "not found. Please use the system package management software to manage "
+#~ "the tesseract language packs."
+#~ msgstr ""
+#~ "Το PackageKit απαιτείται για τη διαχείριση των γλωσσικών πακέτων "
+#~ "tesseract, αλλά δεν βρέθηκε. Παρακαλούμε, χρησιμοποιήστε το λογισμικό "
+#~ "διαχείρισης πακέτων του συστήματος για να διαχειριστείτε τα γλωσσικά "
+#~ "πακέτα του tesseract."
 
 #, fuzzy
 #~ msgid ""

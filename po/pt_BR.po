@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-02 12:37+0200\n"
+"POT-Creation-Date: 2016-10-03 17:51+0200\n"
 "PO-Revision-Date: 2015-08-16 01:44+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -1236,11 +1236,12 @@ msgstr "Você deseja salvar a lista atual?"
 msgid "Applying substitutions..."
 msgstr "Aplicando substituições..."
 
-#: ../gtk/src/TessdataManager.cc:57
+#: ../gtk/src/TessdataManager.cc:57 ../qt/src/TessdataManager.cc:71
 msgid ""
-"PackageKit is required for managing tesseract language packs, but it was not "
-"found. Please use the system package management software to manage the "
-"tesseract language packs."
+"PackageKit is required for managing system-wide tesseract language packs, "
+"but it was not found. Please use the system package management software to "
+"manage the tesseract language packs, or switch to use the user tessdata path "
+"in the configuration dialog."
 msgstr ""
 
 #: ../gtk/src/TessdataManager.cc:62 ../qt/src/TessdataManager.cc:76
@@ -1406,14 +1407,6 @@ msgstr "Não foi possível ler %1."
 #, fuzzy
 msgid "The following dictionary files were installed:%1"
 msgstr "Os seguintes dicionários foram instalados:%1"
-
-#: ../qt/src/TessdataManager.cc:71
-msgid ""
-"PackageKit is required for managing system-wide tesseract language packs, "
-"but it was not found. Please use the system package management software to "
-"manage the tesseract language packs, or switch to use the user tessdata path "
-"in the configuration dialog."
-msgstr ""
 
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"

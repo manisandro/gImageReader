@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-02 12:37+0200\n"
+"POT-Creation-Date: 2016-10-03 17:51+0200\n"
 "PO-Revision-Date: 2016-04-18 15:46+0200\n"
 "Last-Translator: Piotr Brol <peterb@inetia.pl>\n"
 "Language-Team: Polish <>\n"
@@ -1216,11 +1216,13 @@ msgstr "Czy zapisać bieżącą listę?"
 msgid "Applying substitutions..."
 msgstr "Zamiana wyrazów..."
 
-#: ../gtk/src/TessdataManager.cc:57
+#: ../gtk/src/TessdataManager.cc:57 ../qt/src/TessdataManager.cc:71
+#, fuzzy
 msgid ""
-"PackageKit is required for managing tesseract language packs, but it was not "
-"found. Please use the system package management software to manage the "
-"tesseract language packs."
+"PackageKit is required for managing system-wide tesseract language packs, "
+"but it was not found. Please use the system package management software to "
+"manage the tesseract language packs, or switch to use the user tessdata path "
+"in the configuration dialog."
 msgstr ""
 "Użyj zarządzania pakietami dostępnej w systemie operacyjnym aby zainstalować "
 "pakiety językowe tesseract"
@@ -1386,17 +1388,6 @@ msgstr "Nie można odczytać %1: %2"
 msgid "The following dictionary files were installed:%1"
 msgstr "Zainstalowano słowniki:%1"
 
-#: ../qt/src/TessdataManager.cc:71
-#, fuzzy
-msgid ""
-"PackageKit is required for managing system-wide tesseract language packs, "
-"but it was not found. Please use the system package management software to "
-"manage the tesseract language packs, or switch to use the user tessdata path "
-"in the configuration dialog."
-msgstr ""
-"Użyj zarządzania pakietami dostępnej w systemie operacyjnym aby zainstalować "
-"pakiety językowe tesseract"
-
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"
 msgstr "Zapisz"
@@ -1441,6 +1432,14 @@ msgstr "Zapisz wynik"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "Wyczyść wynik"
+
+#~ msgid ""
+#~ "PackageKit is required for managing tesseract language packs, but it was "
+#~ "not found. Please use the system package management software to manage "
+#~ "the tesseract language packs."
+#~ msgstr ""
+#~ "Użyj zarządzania pakietami dostępnej w systemie operacyjnym aby "
+#~ "zainstalować pakiety językowe tesseract"
 
 #, fuzzy
 #~ msgid ""
