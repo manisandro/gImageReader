@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-02 12:37+0200\n"
-"PO-Revision-Date: 2016-04-18 16:17+0300\n"
+"POT-Creation-Date: 2016-10-03 17:51+0200\n"
+"PO-Revision-Date: 2016-10-03 18:41+0300\n"
 "Last-Translator: Oleg Moiseichuk <berroll@mail.ru>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -85,9 +85,8 @@ msgid "OK"
 msgstr "OK"
 
 #: ../gtk/data/editor_hocr.ui.h:4 ../qt/data/PdfExportDialog.ui.h:2
-#, fuzzy
 msgid "Output mode:"
-msgstr "Сканировать в:"
+msgstr "Режим вывода:"
 
 #: ../gtk/data/editor_hocr.ui.h:5 ../qt/data/PdfExportDialog.ui.h:3
 msgid "PDF"
@@ -99,28 +98,27 @@ msgstr "PDF с невидимым наложенным текстом"
 
 #: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Format:"
-msgstr ""
+msgstr "Формат:"
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:15
 msgid "Compression:"
-msgstr ""
+msgstr "Сжатие:"
 
 #: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Compression quality:"
-msgstr ""
+msgstr "Качество сжатия:"
 
 #: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
-msgstr ""
+msgstr "Параметры изображения:"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Document font:"
 msgstr "Шрифт документа:"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:10
-#, fuzzy
 msgid "Uniformize line and word spacing"
-msgstr "Уравнять межстрочные интервалы"
+msgstr "Уравнять интервалы между строками и словами"
 
 #: ../gtk/data/editor_hocr.ui.h:13 ../qt/data/PdfExportDialog.ui.h:7
 msgid "Use detected font sizes"
@@ -128,24 +126,23 @@ msgstr "Использовать размеры шрифта оригинала"
 
 #: ../gtk/data/editor_hocr.ui.h:14 ../qt/data/PdfExportDialog.ui.h:9
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "Сохранить пробелы шире чем:"
 
 #: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:8
 msgid "characters"
-msgstr ""
+msgstr "символов"
 
 #: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Scale:"
-msgstr ""
+msgstr "Масштаб:"
 
 #: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:6
-#, fuzzy
 msgid "Text settings:"
-msgstr "Кодировка текстового файла:"
+msgstr "Параметры текста:"
 
 #: ../gtk/data/editor_hocr.ui.h:18 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
-msgstr ""
+msgstr "Показать предпросмотр"
 
 #: ../gtk/data/editor_hocr.ui.h:19 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
@@ -509,25 +506,23 @@ msgstr "По умолчанию"
 
 #: ../gtk/data/gimagereader.ui.h:54 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "Местоположение языковых данных:"
 
 #: ../gtk/data/gimagereader.ui.h:55 ../qt/data/ConfigDialog.ui.h:13
-#, fuzzy
 msgid "Language definitions path:"
-msgstr "Заданные определения языков:"
+msgstr "Размещение определений языков:"
 
 #: ../gtk/data/gimagereader.ui.h:56 ../qt/data/ConfigDialog.ui.h:28
-#, fuzzy
 msgid "Spelling dictionaries path:"
-msgstr "Отсутствует орфографический словарь"
+msgstr "Размещение орфографических словарей:"
 
 #: ../gtk/data/gimagereader.ui.h:57 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "Общесистемные пути"
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Пользовательские пути"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -788,9 +783,8 @@ msgid "Failed to install spelling dictionary: %1"
 msgstr "Не удалось установить орфографический словарь: %1"
 
 #: ../gtk/src/MainWindow.cc:533 ../qt/src/MainWindow.cc:515
-#, fuzzy
 msgid "Failed to create directory for spelling dictionaries."
-msgstr "Не удалось установить орфографический словарь: %1"
+msgstr "Не удалось создать папку для орфографических словарей."
 
 #: ../gtk/src/MainWindow.cc:541 ../gtk/src/MainWindow.cc:557
 #: ../qt/src/MainWindow.cc:525
@@ -816,15 +810,15 @@ msgstr "Были установлены следующие словари:%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:312 ../qt/src/OutputEditorHOCR.cc:229
 msgid "Monochrome"
-msgstr ""
+msgstr "Монохромный"
 
 #: ../gtk/src/OutputEditorHOCR.cc:321 ../qt/src/OutputEditorHOCR.cc:231
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Zip (без потерь)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:324 ../qt/src/OutputEditorHOCR.cc:232
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "Jpeg (с потерями)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:429 ../qt/src/OutputEditorHOCR.cc:336
 msgid ""
@@ -854,11 +848,11 @@ msgstr "Строка"
 
 #: ../gtk/src/OutputEditorHOCR.cc:982 ../qt/src/OutputEditorHOCR.cc:837
 msgid "Merge"
-msgstr ""
+msgstr "Объединить"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1010 ../qt/src/OutputEditorHOCR.cc:853
 msgid "Add graphic region"
-msgstr ""
+msgstr "Добавить графическую область"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1045 ../qt/src/OutputEditorHOCR.cc:875
 msgid "No suggestions"
@@ -866,11 +860,11 @@ msgstr "Нет вариантов"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1051 ../qt/src/OutputEditorHOCR.cc:879
 msgid "Add to dictionary"
-msgstr ""
+msgstr "Добавить в словарь"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1057 ../qt/src/OutputEditorHOCR.cc:880
 msgid "Ignore word"
-msgstr ""
+msgstr "Игнорировать слово"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1093 ../gtk/src/OutputEditorHOCR.cc:1133
 #: ../qt/src/OutputEditorHOCR.cc:914 ../qt/src/OutputEditorHOCR.cc:945
@@ -929,7 +923,7 @@ msgstr "Сохранить результаты в PDF..."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1213 ../qt/src/OutputEditorHOCR.cc:1015
 msgid "The PDF library does not support the selected font."
-msgstr ""
+msgstr "Библиотека PDF не поддерживает выбранный шрифт."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1268 ../qt/src/OutputEditorHOCR.cc:1069
 msgid "Errors occurred"
@@ -996,6 +990,17 @@ msgid ""
 "Make sure your language data files are valid and compatible with tesseract "
 "%2."
 msgstr ""
+"Tesseract аварийно завершился со следующей ошибкой:\n"
+"\n"
+"%1\n"
+"\n"
+"Это обычно происходит по одной из причин:\n"
+"- Используются устаревшие файлы traineddata.\n"
+"- Отсутствуют вспомогательные файлы языковых данных.\n"
+"- Повреждены файлы языковых данных.\n"
+"\n"
+"Убедитесь, что ваши файлы языковых данных в порядке и совместимы с tesseract "
+"%2."
 
 #: ../gtk/src/Recognizer.cc:206 ../qt/src/Recognizer.cc:194
 msgid "No languages available"
@@ -1020,22 +1025,20 @@ msgid "Manage languages..."
 msgstr "Управление языками..."
 
 #: ../gtk/src/Recognizer.cc:364 ../qt/src/Recognizer.cc:364
-#, fuzzy
 msgid "Current selection"
-msgstr "Распознать выделенное"
+msgstr "Выделенный объект"
 
 #: ../gtk/src/Recognizer.cc:439 ../qt/src/Recognizer.cc:440
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Распознаётся страница %1 (%2 из %3)"
 
 #: ../gtk/src/Recognizer.cc:444 ../qt/src/Recognizer.cc:445
-#, fuzzy
 msgid ""
 "\n"
 "- Page %1: failed to render page"
 msgstr ""
 "\n"
-"\tСтраница %1: не удалось отрисовать страницу"
+"- Страница %1: не удалось отрисовать страницу"
 
 #: ../gtk/src/Recognizer.cc:466 ../gtk/src/Recognizer.cc:496
 #: ../gtk/src/Recognizer.cc:509 ../qt/src/Recognizer.cc:467
@@ -1221,15 +1224,17 @@ msgstr "Вы хотите сохранить текущий список?"
 msgid "Applying substitutions..."
 msgstr "Применение замен..."
 
-#: ../gtk/src/TessdataManager.cc:57
+#: ../gtk/src/TessdataManager.cc:57 ../qt/src/TessdataManager.cc:71
 msgid ""
-"PackageKit is required for managing tesseract language packs, but it was not "
-"found. Please use the system package management software to manage the "
-"tesseract language packs."
+"PackageKit is required for managing system-wide tesseract language packs, "
+"but it was not found. Please use the system package management software to "
+"manage the tesseract language packs, or switch to use the user tessdata path "
+"in the configuration dialog."
 msgstr ""
-"Для управления языковыми пакетами tesseract требуется PackageKit, однако он "
-"не был найден. Просьба использовать системный пакетный менеджер для "
-"управления языковыми пакетами tesseract."
+"Для управления общесистемными языковыми пакетами tesseract требуется "
+"PackageKit, однако он не был найден. Просьба использовать системный пакетный "
+"менеджер для управления языковыми пакетами tesseract, либо переключиться на "
+"пользовательский путь к tessdata в диалоге конфигурации."
 
 #: ../gtk/src/TessdataManager.cc:62 ../qt/src/TessdataManager.cc:76
 msgid "Fetching available languages"
@@ -1251,7 +1256,7 @@ msgstr "Применение изменений..."
 
 #: ../gtk/src/TessdataManager.cc:219 ../qt/src/TessdataManager.cc:205
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Не удалось создать папку для файлов tessdata."
 
 #: ../gtk/src/TessdataManager.cc:228 ../qt/src/TessdataManager.cc:213
 msgid "Downloading %1..."
@@ -1286,7 +1291,6 @@ msgid "About gImageReader"
 msgstr "О программе gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
@@ -1395,18 +1399,6 @@ msgstr "Невозможно прочесть %1: %2"
 msgid "The following dictionary files were installed:%1"
 msgstr "Были установлены следующие файлы словарей:%1"
 
-#: ../qt/src/TessdataManager.cc:71
-#, fuzzy
-msgid ""
-"PackageKit is required for managing system-wide tesseract language packs, "
-"but it was not found. Please use the system package management software to "
-"manage the tesseract language packs, or switch to use the user tessdata path "
-"in the configuration dialog."
-msgstr ""
-"Для управления языковыми пакетами tesseract требуется PackageKit, однако он "
-"не был найден. Просьба использовать системный пакетный менеджер для "
-"управления языковыми пакетами tesseract."
-
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"
 msgstr "Результаты"
@@ -1451,6 +1443,15 @@ msgstr "Сохранить результаты"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "Очистить результаты"
+
+#~ msgid ""
+#~ "PackageKit is required for managing tesseract language packs, but it was "
+#~ "not found. Please use the system package management software to manage "
+#~ "the tesseract language packs."
+#~ msgstr ""
+#~ "Для управления языковыми пакетами tesseract требуется PackageKit, однако "
+#~ "он не был найден. Просьба использовать системный пакетный менеджер для "
+#~ "управления языковыми пакетами tesseract."
 
 #~ msgid ""
 #~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
