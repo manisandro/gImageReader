@@ -14,6 +14,7 @@ SetCompressor /SOLID /FINAL lzma
 
 !include "MUI2.nsh"
 !include "MultiUser.nsh"
+!include "x64.nsh"
 
 ;********** General **********
 Name "${NAME} ${PROGVERSION}"
@@ -49,6 +50,24 @@ Function .onInit
   !insertmacro MULTIUSER_INIT
   
   InitPluginsDir
+
+  Var /GLOBAL archMismatch
+  StrCpy $archMismatch "false"
+  ${If} ${RunningX64}
+    ${If} ${ARCH} != "x86_64"
+      StrCpy $archMismatch "true"
+    ${EndIf}
+  ${Else}
+    ${If} ${ARCH} != "i686"
+      StrCpy $archMismatch "true"
+    ${EndIf}
+  ${EndIf}
+
+  ${If} $archMismatch == "true"
+    MessageBox MB_OK "The installer does not match your system architecture."
+    Abort
+  ${Endif}
+
 
   ; Remove previous versions before installing new one
   ReadRegStr $0 SHCTX "${REG_UNINSTALL}" "UninstallString"
