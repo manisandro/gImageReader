@@ -1,15 +1,16 @@
-# Russian translations for gImageReader package
+# Russian translation for gImageReader package
 # Русский перевод для пакета gImageReader
-# Copyright (C) 2010-2014 THE GIMAGEREADER'S COPYRIGHT HOLDER
+# Copyright (C) 2010-2016 THE GIMAGEREADER'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gImageReader package.
 #
-# Sandro Mani <manisandro@gmail.com>, 2010-2011, 2013, 2014, 2015.
+# Oleg Moiseichuk <berroll@mail.ru>, 2014-2016.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-03 17:51+0200\n"
-"PO-Revision-Date: 2016-10-03 18:41+0300\n"
+"POT-Creation-Date: 2016-10-02 12:37+0200\n"
+"PO-Revision-Date: 2016-10-04 13:53+0300\n"
 "Last-Translator: Oleg Moiseichuk <berroll@mail.ru>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -1224,17 +1225,15 @@ msgstr "Вы хотите сохранить текущий список?"
 msgid "Applying substitutions..."
 msgstr "Применение замен..."
 
-#: ../gtk/src/TessdataManager.cc:57 ../qt/src/TessdataManager.cc:71
+#: ../gtk/src/TessdataManager.cc:57
 msgid ""
-"PackageKit is required for managing system-wide tesseract language packs, "
-"but it was not found. Please use the system package management software to "
-"manage the tesseract language packs, or switch to use the user tessdata path "
-"in the configuration dialog."
+"PackageKit is required for managing tesseract language packs, but it was not "
+"found. Please use the system package management software to manage the "
+"tesseract language packs."
 msgstr ""
-"Для управления общесистемными языковыми пакетами tesseract требуется "
-"PackageKit, однако он не был найден. Просьба использовать системный пакетный "
-"менеджер для управления языковыми пакетами tesseract, либо переключиться на "
-"пользовательский путь к tessdata в диалоге конфигурации."
+"Для управления языковыми пакетами tesseract требуется PackageKit, однако он "
+"не был найден. Просьба использовать системный пакетный менеджер для "
+"управления языковыми пакетами tesseract."
 
 #: ../gtk/src/TessdataManager.cc:62 ../qt/src/TessdataManager.cc:76
 msgid "Fetching available languages"
@@ -1399,6 +1398,18 @@ msgstr "Невозможно прочесть %1: %2"
 msgid "The following dictionary files were installed:%1"
 msgstr "Были установлены следующие файлы словарей:%1"
 
+#: ../qt/src/TessdataManager.cc:71
+msgid ""
+"PackageKit is required for managing system-wide tesseract language packs, "
+"but it was not found. Please use the system package management software to "
+"manage the tesseract language packs, or switch to use the user tessdata path "
+"in the configuration dialog."
+msgstr ""
+"Для управления общесистемными языковыми пакетами tesseract требуется "
+"PackageKit, однако он не был найден. Просьба использовать системный пакетный "
+"менеджер для управления языковыми пакетами tesseract, либо переключиться на "
+"пользовательский путь к tessdata в диалоге конфигурации."
+
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Output"
 msgstr "Результаты"
@@ -1443,15 +1454,6 @@ msgstr "Сохранить результаты"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "Очистить результаты"
-
-#~ msgid ""
-#~ "PackageKit is required for managing tesseract language packs, but it was "
-#~ "not found. Please use the system package management software to manage "
-#~ "the tesseract language packs."
-#~ msgstr ""
-#~ "Для управления языковыми пакетами tesseract требуется PackageKit, однако "
-#~ "он не был найден. Просьба использовать системный пакетный менеджер для "
-#~ "управления языковыми пакетами tesseract."
 
 #~ msgid ""
 #~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
