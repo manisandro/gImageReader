@@ -152,8 +152,8 @@ private:
 
 class OutputEditorHOCR::PoDoFoPDFPainter : public OutputEditorHOCR::PDFPainter {
 public:
-	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor)
-		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor)
+	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor, double imageScale)
+		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor), m_imageScale(imageScale)
 	{
 		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
 	}
@@ -165,7 +165,8 @@ public:
 		m_painter->DrawText(x * m_scaleFactor, m_pageHeight - y * m_scaleFactor, pdfString);
 	}
 	void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) override {
-		QImage img = convertedImage(image, settings.colorFormat);
+		QImage scaledImage = image.scaled(image.width() * m_imageScale, image.height() * m_imageScale, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		QImage img = convertedImage(scaledImage, settings.colorFormat);
 		if(settings.colorFormat == QImage::Format_Mono) {
 			img.invertPixels();
 		}
@@ -193,7 +194,7 @@ public:
 			PoDoFo::PdfMemoryInputStream is(data.data(), data.size());
 			pdfImage.SetImageDataRaw(width, height, sampleSize, &is);
 		}
-		m_painter->DrawImage(bbox.x() * m_scaleFactor, m_pageHeight - (bbox.y() + bbox.height()) * m_scaleFactor, &pdfImage, m_scaleFactor, m_scaleFactor);
+		m_painter->DrawImage(bbox.x() * m_scaleFactor, m_pageHeight - (bbox.y() + bbox.height()) * m_scaleFactor, &pdfImage, m_scaleFactor / m_imageScale, m_scaleFactor / m_imageScale);
 	}
 	double getAverageCharWidth() const override {
 		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x')) / m_scaleFactor;
@@ -207,6 +208,7 @@ private:
 	PoDoFo::PdfDocument* m_document;
 	PoDoFo::PdfPainter* m_painter;
 	double m_scaleFactor;
+	double m_imageScale;
 	double m_pageHeight;
 };
 
@@ -269,6 +271,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagecompressionquality", m_pdfExportDialogUi.spinBoxCompressionQuality, 90));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimagecompression", m_pdfExportDialogUi.comboBoxImageCompression));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageformat", m_pdfExportDialogUi.comboBoxImageFormat));
+	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagedpi", m_pdfExportDialogUi.spinBoxDpi, 300));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfusedetectedfontsizes", m_pdfExportDialogUi.checkBoxFontSize, true));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdffontscale", m_pdfExportDialogUi.spinFontScaling, 100));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfuniformizelinespacing", m_pdfExportDialogUi.checkBoxUniformizeSpacing, true));
@@ -1050,11 +1053,12 @@ void OutputEditorHOCR::savePDF()
 		int pageDpi = 72;
 		if(setCurrentSource(doc.firstChildElement("div"), &pageDpi)) {
 			double dpiScale = 72. / pageDpi;
+			double imageScale = m_pdfExportDialogUi.spinBoxDpi->value() / double(pageDpi);
 			PoDoFo::PdfPage* page = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width() * dpiScale, bbox.height() * dpiScale));
 			painter.SetPage(page);
 			painter.SetFont(font);
 
-			PoDoFoPDFPainter pdfprinter(document, &painter, dpiScale);
+			PoDoFoPDFPainter pdfprinter(document, &painter, dpiScale, imageScale);
 			pdfprinter.setFontSize(m_pdfFontDialog.currentFont().pointSize());
 			printChildren(pdfprinter, item, pdfSettings);
 			if(pdfSettings.overlay) {
