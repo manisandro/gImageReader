@@ -193,3 +193,18 @@ Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::Im
 	}
 	return src;
 }
+
+Cairo::RefPtr<Cairo::ImageSurface> Image::scale(Cairo::RefPtr<Cairo::ImageSurface> src, double scaleFactor)
+{
+	if(scaleFactor == 1.0) {
+		return src;
+	}
+	Cairo::RefPtr<Cairo::ImageSurface> dst = Cairo::ImageSurface::create(src->get_format(), std::ceil(src->get_width() * scaleFactor), std::ceil(src->get_height() * scaleFactor));
+	Cairo::RefPtr<Cairo::Context> ctx = Cairo::Context::create(dst);
+	ctx->scale(scaleFactor, scaleFactor);
+	ctx->set_source(src, 0, 0);
+	Cairo::RefPtr<Cairo::SurfacePattern>::cast_static(ctx->get_source())->set_filter(Cairo::FILTER_BEST);
+	ctx->paint();
+	dst->flush();
+	return dst;
+}

@@ -191,5 +191,10 @@
             <summary>Scaling factor for detected font sizes</summary>
             <description>Scaling factor for detected font sizes.</description>
         </key>
+        <key type="i" name="pdfimagedpi">
+            <default>300</default>
+            <summary>Resolution at which to export images in the PDF</summary>
+            <description>Resolution at which to export images in the PDF.</description>
+        </key>
     </schema>
 </schemalist>
