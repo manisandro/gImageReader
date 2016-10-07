@@ -467,11 +467,16 @@ void MainWindow::languageChanged()
 			if(getConfig()->useSystemDataLocations()) {
 				// Try initiating a DBUS connection for PackageKit
 				Glib::RefPtr<Gio::DBus::Proxy> proxy;
+				Glib::ustring service_owner;
 				try{
 					proxy = Gio::DBus::Proxy::create_for_bus_sync(Gio::DBus::BUS_TYPE_SESSION, "org.freedesktop.PackageKit",
 																  "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify");
+					service_owner = proxy->get_name_owner();
+				}catch(...){
+				}
+				if(!service_owner.empty()) {
 					actionInstall = MainWindow::NotificationAction{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); return false; }};
-				}catch(const Glib::Error&){
+				} else {
 					actionInstall = {_("Help"), [this]{ showHelp("#InstallSpelling"); return false; }};
 					g_warning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
 				}
