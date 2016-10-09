@@ -25,6 +25,7 @@
 
 #include "common.hh"
 #include "Application.hh"
+#include "Config.hh"
 #include "CrashHandler.hh"
 
 std::string pkgDir;
@@ -77,6 +78,12 @@ int main (int argc, char *argv[])
 		// Run the crash handler
 		CrashHandler app(argc, argv);
 		return app.run();
+	} else if(argc >= 2 && std::strcmp("tessdatadir", argv[1]) == 0) {
+		Config::openTessdataDir();
+		return 0;
+	} else if(argc >= 2 && std::strcmp("spellingdir", argv[1]) == 0) {
+		Config::openSpellingDir();
+		return 0;
 	} else {
 		// Run the normal application
 

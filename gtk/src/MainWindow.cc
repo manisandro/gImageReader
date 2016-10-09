@@ -318,12 +318,7 @@ void MainWindow::showHelp(const std::string& chapter)
 	if(!Glib::file_test(manualFile, Glib::FILE_TEST_EXISTS)){
 		manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir,"manual.html"));
 	}
-	std::string manualURI = Glib::filename_to_uri(manualFile) + chapter;
-#ifdef G_OS_WIN32
-	ShellExecute(nullptr, "open", manualURI.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
-#else
-	gtk_show_uri(nullptr, manualURI.c_str(), GDK_CURRENT_TIME, 0);
-#endif
+	Utils::openUri(Glib::filename_to_uri(manualFile) + chapter);
 }
 
 void MainWindow::showConfig()
