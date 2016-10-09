@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-06 23:30+0200\n"
-"PO-Revision-Date: 2016-10-06 23:33+0100\n"
-"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
+"PO-Revision-Date: 2016-10-09 17:58+0100\n"
+"Last-Translator: Piotr Brol <peterb@inetia.pl>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -99,15 +99,15 @@ msgstr "PDF z niewidoczną warstwą tekstową"
 
 #: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:15
 msgid "Format:"
-msgstr ""
+msgstr "Format:"
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression:"
-msgstr ""
+msgstr "Kompresja:"
 
 #: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Compression quality:"
-msgstr ""
+msgstr "Jakość kompresji:"
 
 #: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:17
 msgid "DPI:"
@@ -115,7 +115,7 @@ msgstr "DPI:"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
-msgstr ""
+msgstr "Ustawienia obrazu:"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Document font:"
@@ -132,15 +132,15 @@ msgstr "Użyj wykrytych wielkości czcionek"
 
 #: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:9
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "Zachowaj odstępy szersze niż:"
 
 #: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:8
 msgid "characters"
-msgstr ""
+msgstr "znaki"
 
 #: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Scale:"
-msgstr ""
+msgstr "Skala:"
 
 #: ../gtk/data/editor_hocr.ui.h:18 ../qt/data/PdfExportDialog.ui.h:6
 #, fuzzy
@@ -149,7 +149,7 @@ msgstr "Kodowanie znaków:"
 
 #: ../gtk/data/editor_hocr.ui.h:19 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
-msgstr ""
+msgstr "Podgląd"
 
 #: ../gtk/data/editor_hocr.ui.h:20 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
@@ -513,7 +513,7 @@ msgstr "Domyślne"
 
 #: ../gtk/data/gimagereader.ui.h:54 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "Lokalizacja danych języków:"
 
 #: ../gtk/data/gimagereader.ui.h:55 ../qt/data/ConfigDialog.ui.h:13
 #, fuzzy
@@ -527,11 +527,11 @@ msgstr "Brak słownika"
 
 #: ../gtk/data/gimagereader.ui.h:57 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "Ścieżki systemowe"
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Ścieżki użytkownika"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -819,15 +819,15 @@ msgstr "Zostały zainstalowane słowniki:%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:314 ../qt/src/OutputEditorHOCR.cc:231
 msgid "Monochrome"
-msgstr ""
+msgstr "Monochromatyczny"
 
 #: ../gtk/src/OutputEditorHOCR.cc:323 ../qt/src/OutputEditorHOCR.cc:233
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Zip (bezstratny)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:326 ../qt/src/OutputEditorHOCR.cc:234
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "JPEG (stratny)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:432 ../qt/src/OutputEditorHOCR.cc:339
 msgid ""
@@ -857,11 +857,11 @@ msgstr "Wiersz tekstu"
 
 #: ../gtk/src/OutputEditorHOCR.cc:985 ../qt/src/OutputEditorHOCR.cc:840
 msgid "Merge"
-msgstr ""
+msgstr "Połącz"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1013 ../qt/src/OutputEditorHOCR.cc:856
 msgid "Add graphic region"
-msgstr ""
+msgstr "Dodaj region graficzny"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1048 ../qt/src/OutputEditorHOCR.cc:878
 msgid "No suggestions"
@@ -869,11 +869,11 @@ msgstr "Brak sugestii"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1054 ../qt/src/OutputEditorHOCR.cc:882
 msgid "Add to dictionary"
-msgstr ""
+msgstr "Dodaj do słownika"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1060 ../qt/src/OutputEditorHOCR.cc:883
 msgid "Ignore word"
-msgstr ""
+msgstr "Ignoruj wyraz"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1096 ../gtk/src/OutputEditorHOCR.cc:1136
 #: ../qt/src/OutputEditorHOCR.cc:917 ../qt/src/OutputEditorHOCR.cc:948
@@ -890,15 +890,15 @@ msgstr "Błąd otwierania pliku"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorHOCR.cc:923
 msgid "The file could not be opened: %1."
-msgstr ""
+msgstr "Nie można otworzyć pliku: %1."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1115 ../qt/src/OutputEditorHOCR.cc:930
 msgid "Invalid hOCR file"
-msgstr ""
+msgstr "Nieprawidłowy plik hOCR"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1115 ../qt/src/OutputEditorHOCR.cc:930
 msgid "The file does not appear to contain valid hOCR HTML: %1"
-msgstr ""
+msgstr "Plik nie wygląda na prawidłowy hOCR HTML: %1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1132 ../gtk/src/OutputEditorHOCR.cc:1188
 #: ../gtk/src/OutputEditorText.cc:292 ../qt/src/OutputEditorHOCR.cc:946
@@ -932,7 +932,7 @@ msgstr "Zapisz wynik jako PDF..."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1216 ../qt/src/OutputEditorHOCR.cc:1018
 msgid "The PDF library does not support the selected font."
-msgstr ""
+msgstr "Biblioteka PDF nie obsługuje wybranej czcionki."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1272 ../qt/src/OutputEditorHOCR.cc:1073
 msgid "Errors occurred"
@@ -998,7 +998,17 @@ msgid ""
 "\n"
 "Make sure your language data files are valid and compatible with tesseract "
 "%2."
-msgstr ""
+msgstr "Tesseract uległ awarii z następującym komunikatem:\n"
+"\n"
+"%1\n"
+"\n"
+"Najczęstsze przyczyny:\n"
+"- Nieaktualne pliki traineddata.\n"
+"- Brak pomocniczych plików języka.\n"
+"- Uszkodzenie plików języka.\n"
+"\n"
+"Upewnij się, że pliki języka są w porządku "
+"%2."
 
 #: ../gtk/src/Recognizer.cc:206 ../qt/src/Recognizer.cc:194
 msgid "No languages available"
@@ -1254,7 +1264,7 @@ msgstr "Wprowadzanie zmian..."
 
 #: ../gtk/src/TessdataManager.cc:219 ../qt/src/TessdataManager.cc:205
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Błąd przy tworzeniu katalogu dla plików tessdata."
 
 #: ../gtk/src/TessdataManager.cc:228 ../qt/src/TessdataManager.cc:213
 msgid "Downloading %1..."
