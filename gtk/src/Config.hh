@@ -61,6 +61,9 @@ public:
 	std::string tessdataLocation() const;
 	std::string spellingLocation() const;
 
+	static void openTessdataDir();
+	static void openSpellingDir();
+
 private:
 	struct LangViewColumns : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Glib::ustring> prefix;

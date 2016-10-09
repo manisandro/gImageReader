@@ -27,6 +27,7 @@
 #include <cstring>
 
 #include "MainWindow.hh"
+#include "Config.hh"
 #include "CrashHandler.hh"
 
 int main (int argc, char *argv[])
@@ -70,7 +71,13 @@ int main (int argc, char *argv[])
 		int pid = std::atoi(argv[2]);
 		QString savefile = argc >= 4 ? argv[3] : "";
 		window = new CrashHandler(pid, savefile);
-	}else{
+	} else if(argc >= 2 && std::strcmp("tessdatadir", argv[1]) == 0) {
+		Config::openTessdataDir();
+		return 0;
+	} else if(argc >= 2 && std::strcmp("spellingdir", argv[1]) == 0) {
+		Config::openSpellingDir();
+		return 0;
+	} else {
 #ifdef Q_OS_WIN
 		qputenv("TWAINDSM_LOG", packageDir.absoluteFilePath("twain.log").toLocal8Bit());
 		std::freopen(packageDir.absoluteFilePath("gimagereader.log").toLocal8Bit().data(), "w", stderr);

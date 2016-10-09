@@ -67,6 +67,8 @@ namespace Utils {
 
 	Glib::ustring resolveFontName(const Glib::ustring& family);
 
+	void openUri(const std::string& uri);
+
 	template<typename T, typename = typename std::enable_if<std::is_floating_point<T>::value>::type>
 	T round(T x){
 		return std::floor(x + T(0.5));

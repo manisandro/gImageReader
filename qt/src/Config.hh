@@ -60,6 +60,9 @@ public:
 	QString tessdataLocation() const;
 	QString spellingLocation() const;
 
+	static void openTessdataDir();
+	static void openSpellingDir();
+
 public slots:
 	void disableDictInstall();
 	void disableUpdateCheck();
