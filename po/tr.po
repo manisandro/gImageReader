@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-06 23:30+0200\n"
+"POT-Creation-Date: 2016-10-13 01:18+0200\n"
 "PO-Revision-Date: 2016-10-06 23:33+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -207,9 +207,9 @@ msgstr "Temizle"
 msgid "Add"
 msgstr "Ekle"
 
-#: ../gtk/data/editor_text.ui.h:9 ../gtk/src/OutputEditorHOCR.cc:1016
-#: ../gtk/src/OutputEditorHOCR.cc:1069 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/OutputEditorHOCR.cc:858 ../qt/src/OutputEditorHOCR.cc:887
+#: ../gtk/data/editor_text.ui.h:9 ../gtk/src/OutputEditorHOCR.cc:1053
+#: ../gtk/src/OutputEditorHOCR.cc:1106 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/OutputEditorHOCR.cc:893 ../qt/src/OutputEditorHOCR.cc:922
 #: ../qt/src/SubstitutionsManager.cc:55 ../qt/src/SubstitutionsManager.cc:56
 msgid "Remove"
 msgstr "Çıkar"
@@ -353,6 +353,7 @@ msgid "Device:"
 msgstr "Aygıt:"
 
 #: ../gtk/data/gimagereader.ui.h:12 ../qt/data/MainWindow.ui.h:15
+#: ../qt/src/TessdataManager.cc:57
 msgid "Refresh"
 msgstr "Tazele"
 
@@ -364,13 +365,13 @@ msgstr "Çıktı:"
 msgid "Mode:"
 msgstr "Kip:"
 
-#: ../gtk/data/gimagereader.ui.h:15 ../gtk/src/OutputEditorHOCR.cc:308
-#: ../qt/data/MainWindow.ui.h:11 ../qt/src/OutputEditorHOCR.cc:229
+#: ../gtk/data/gimagereader.ui.h:15 ../gtk/src/OutputEditorHOCR.cc:339
+#: ../qt/data/MainWindow.ui.h:11 ../qt/src/OutputEditorHOCR.cc:260
 msgid "Color"
 msgstr "Renk"
 
-#: ../gtk/data/gimagereader.ui.h:16 ../gtk/src/OutputEditorHOCR.cc:311
-#: ../qt/data/MainWindow.ui.h:10 ../qt/src/OutputEditorHOCR.cc:230
+#: ../gtk/data/gimagereader.ui.h:16 ../gtk/src/OutputEditorHOCR.cc:342
+#: ../qt/data/MainWindow.ui.h:10 ../qt/src/OutputEditorHOCR.cc:261
 msgid "Grayscale"
 msgstr "Gri tonlama"
 
@@ -729,31 +730,31 @@ msgstr "Çoklu Sayfalar..."
 msgid "Ready"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:406
+#: ../gtk/src/MainWindow.cc:437 ../qt/src/MainWindow.cc:406
 msgid "New version"
 msgstr "Yeni sürüm"
 
-#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:406
+#: ../gtk/src/MainWindow.cc:437 ../qt/src/MainWindow.cc:406
 msgid "gImageReader %1 is available"
 msgstr "gImageReader %1 kullanılabilir durumda"
 
-#: ../gtk/src/MainWindow.cc:443 ../qt/src/MainWindow.cc:407
+#: ../gtk/src/MainWindow.cc:438 ../qt/src/MainWindow.cc:407
 msgid "Download"
 msgstr "İndir"
 
-#: ../gtk/src/MainWindow.cc:444 ../qt/src/MainWindow.cc:408
+#: ../gtk/src/MainWindow.cc:439 ../qt/src/MainWindow.cc:408
 msgid "Changelog"
 msgstr "Değişim günlüğü"
 
-#: ../gtk/src/MainWindow.cc:445 ../qt/src/MainWindow.cc:409
+#: ../gtk/src/MainWindow.cc:440 ../qt/src/MainWindow.cc:409
 msgid "Don't notify again"
 msgstr "Tekrar uyarma"
 
-#: ../gtk/src/MainWindow.cc:464 ../qt/src/MainWindow.cc:461
+#: ../gtk/src/MainWindow.cc:459 ../qt/src/MainWindow.cc:461
 msgid "Don't show again"
 msgstr "Tekrar gösterme"
 
-#: ../gtk/src/MainWindow.cc:465 ../gtk/src/MainWindow.cc:473
+#: ../gtk/src/MainWindow.cc:460 ../gtk/src/MainWindow.cc:473
 #: ../qt/src/MainWindow.cc:462
 msgid "Install"
 msgstr "Kur"
@@ -774,14 +775,14 @@ msgstr "'%1' için yazım denetimi sözlüğü kuruluyor"
 #: ../gtk/src/MainWindow.cc:507 ../gtk/src/MainWindow.cc:533
 #: ../gtk/src/MainWindow.cc:541 ../gtk/src/MainWindow.cc:551
 #: ../gtk/src/MainWindow.cc:557 ../gtk/src/MainWindow.cc:586
-#: ../gtk/src/OutputEditorHOCR.cc:1216 ../gtk/src/Recognizer.cc:157
-#: ../gtk/src/TessdataManager.cc:57 ../gtk/src/TessdataManager.cc:68
-#: ../gtk/src/TessdataManager.cc:262 ../qt/src/MainWindow.cc:501
+#: ../gtk/src/OutputEditorHOCR.cc:1262 ../gtk/src/Recognizer.cc:157
+#: ../gtk/src/TessdataManager.cc:61 ../gtk/src/TessdataManager.cc:72
+#: ../gtk/src/TessdataManager.cc:263 ../qt/src/MainWindow.cc:501
 #: ../qt/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:525
 #: ../qt/src/MainWindow.cc:535 ../qt/src/MainWindow.cc:543
-#: ../qt/src/MainWindow.cc:571 ../qt/src/OutputEditorHOCR.cc:1018
-#: ../qt/src/Recognizer.cc:141 ../qt/src/TessdataManager.cc:71
-#: ../qt/src/TessdataManager.cc:82 ../qt/src/TessdataManager.cc:249
+#: ../qt/src/MainWindow.cc:571 ../qt/src/OutputEditorHOCR.cc:1062
+#: ../qt/src/Recognizer.cc:141 ../qt/src/TessdataManager.cc:73
+#: ../qt/src/TessdataManager.cc:84 ../qt/src/TessdataManager.cc:245
 msgid "Error"
 msgstr "Hata"
 
@@ -817,149 +818,149 @@ msgstr "Sözlükler kuruldu"
 msgid "The following dictionaries were installed:%1"
 msgstr "Kurulan sözlükler: %1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:314 ../qt/src/OutputEditorHOCR.cc:231
+#: ../gtk/src/OutputEditorHOCR.cc:345 ../qt/src/OutputEditorHOCR.cc:262
 msgid "Monochrome"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:323 ../qt/src/OutputEditorHOCR.cc:233
+#: ../gtk/src/OutputEditorHOCR.cc:354 ../qt/src/OutputEditorHOCR.cc:264
 msgid "Zip (lossless)"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:326 ../qt/src/OutputEditorHOCR.cc:234
+#: ../gtk/src/OutputEditorHOCR.cc:357 ../qt/src/OutputEditorHOCR.cc:265
 msgid "Jpeg (lossy)"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:432 ../qt/src/OutputEditorHOCR.cc:339
+#: ../gtk/src/OutputEditorHOCR.cc:469 ../qt/src/OutputEditorHOCR.cc:374
 #, fuzzy
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr "Bu dosyalar açılamadı:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:433 ../qt/src/OutputEditorHOCR.cc:340
+#: ../gtk/src/OutputEditorHOCR.cc:470 ../qt/src/OutputEditorHOCR.cc:375
 #, fuzzy
 msgid "Recognition errors"
 msgstr "Tanıma hataları oluştu"
 
 #. Add tree item
-#: ../gtk/src/OutputEditorHOCR.cc:497 ../gtk/src/OutputEditorHOCR.cc:891
-#: ../qt/src/OutputEditorHOCR.cc:387 ../qt/src/OutputEditorHOCR.cc:782
+#: ../gtk/src/OutputEditorHOCR.cc:534 ../gtk/src/OutputEditorHOCR.cc:928
+#: ../qt/src/OutputEditorHOCR.cc:422 ../qt/src/OutputEditorHOCR.cc:817
 msgid "Graphic"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:555 ../qt/src/OutputEditorHOCR.cc:441
+#: ../gtk/src/OutputEditorHOCR.cc:592 ../qt/src/OutputEditorHOCR.cc:476
 #, fuzzy
 msgid "Paragraph"
 msgstr "Paragrafları koru"
 
-#: ../gtk/src/OutputEditorHOCR.cc:558 ../qt/src/OutputEditorHOCR.cc:444
+#: ../gtk/src/OutputEditorHOCR.cc:595 ../qt/src/OutputEditorHOCR.cc:479
 #, fuzzy
 msgid "Textline"
 msgstr "Metin Dosyaları"
 
-#: ../gtk/src/OutputEditorHOCR.cc:985 ../qt/src/OutputEditorHOCR.cc:840
+#: ../gtk/src/OutputEditorHOCR.cc:1022 ../qt/src/OutputEditorHOCR.cc:875
 msgid "Merge"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1013 ../qt/src/OutputEditorHOCR.cc:856
+#: ../gtk/src/OutputEditorHOCR.cc:1050 ../qt/src/OutputEditorHOCR.cc:891
 msgid "Add graphic region"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1048 ../qt/src/OutputEditorHOCR.cc:878
+#: ../gtk/src/OutputEditorHOCR.cc:1085 ../qt/src/OutputEditorHOCR.cc:913
 msgid "No suggestions"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1054 ../qt/src/OutputEditorHOCR.cc:882
+#: ../gtk/src/OutputEditorHOCR.cc:1091 ../qt/src/OutputEditorHOCR.cc:917
 msgid "Add to dictionary"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1060 ../qt/src/OutputEditorHOCR.cc:883
+#: ../gtk/src/OutputEditorHOCR.cc:1097 ../qt/src/OutputEditorHOCR.cc:918
 msgid "Ignore word"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1096 ../gtk/src/OutputEditorHOCR.cc:1136
-#: ../qt/src/OutputEditorHOCR.cc:917 ../qt/src/OutputEditorHOCR.cc:948
+#: ../gtk/src/OutputEditorHOCR.cc:1133 ../gtk/src/OutputEditorHOCR.cc:1173
+#: ../qt/src/OutputEditorHOCR.cc:952 ../qt/src/OutputEditorHOCR.cc:983
 msgid "hOCR HTML Files"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1097 ../qt/src/OutputEditorHOCR.cc:917
+#: ../gtk/src/OutputEditorHOCR.cc:1134 ../qt/src/OutputEditorHOCR.cc:952
 msgid "Open hOCR File"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorHOCR.cc:923
+#: ../gtk/src/OutputEditorHOCR.cc:1143 ../qt/src/OutputEditorHOCR.cc:958
 #, fuzzy
 msgid "Failed to open file"
 msgstr "Dosyalar açılamadı"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorHOCR.cc:923
+#: ../gtk/src/OutputEditorHOCR.cc:1143 ../qt/src/OutputEditorHOCR.cc:958
 #, fuzzy
 msgid "The file could not be opened: %1."
 msgstr "Bu dosyalar açılamadı:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1115 ../qt/src/OutputEditorHOCR.cc:930
+#: ../gtk/src/OutputEditorHOCR.cc:1152 ../qt/src/OutputEditorHOCR.cc:965
 msgid "Invalid hOCR file"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1115 ../qt/src/OutputEditorHOCR.cc:930
+#: ../gtk/src/OutputEditorHOCR.cc:1152 ../qt/src/OutputEditorHOCR.cc:965
 msgid "The file does not appear to contain valid hOCR HTML: %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1132 ../gtk/src/OutputEditorHOCR.cc:1188
-#: ../gtk/src/OutputEditorText.cc:292 ../qt/src/OutputEditorHOCR.cc:946
-#: ../qt/src/OutputEditorHOCR.cc:996 ../qt/src/OutputEditorText.cc:241
+#: ../gtk/src/OutputEditorHOCR.cc:1169 ../gtk/src/OutputEditorHOCR.cc:1230
+#: ../gtk/src/OutputEditorText.cc:292 ../qt/src/OutputEditorHOCR.cc:981
+#: ../qt/src/OutputEditorHOCR.cc:1036 ../qt/src/OutputEditorText.cc:241
 msgid "output"
 msgstr "çıktı"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1137 ../qt/src/OutputEditorHOCR.cc:948
+#: ../gtk/src/OutputEditorHOCR.cc:1174 ../qt/src/OutputEditorHOCR.cc:983
 #, fuzzy
 msgid "Save hOCR Output..."
 msgstr "Çıktıyı Kaydet..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:1145 ../gtk/src/OutputEditorHOCR.cc:1202
-#: ../gtk/src/OutputEditorText.cc:305 ../qt/src/OutputEditorHOCR.cc:956
-#: ../qt/src/OutputEditorHOCR.cc:1008 ../qt/src/OutputEditorText.cc:251
+#: ../gtk/src/OutputEditorHOCR.cc:1182 ../gtk/src/OutputEditorHOCR.cc:1244
+#: ../gtk/src/OutputEditorText.cc:305 ../qt/src/OutputEditorHOCR.cc:991
+#: ../qt/src/OutputEditorHOCR.cc:1048 ../qt/src/OutputEditorText.cc:251
 msgid "Failed to save output"
 msgstr "Çıktının kaydedilmesi başarısız oldu"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1145 ../gtk/src/OutputEditorHOCR.cc:1202
-#: ../gtk/src/OutputEditorText.cc:305 ../qt/src/OutputEditorHOCR.cc:956
-#: ../qt/src/OutputEditorHOCR.cc:1008 ../qt/src/OutputEditorText.cc:251
+#: ../gtk/src/OutputEditorHOCR.cc:1182 ../gtk/src/OutputEditorHOCR.cc:1244
+#: ../gtk/src/OutputEditorText.cc:305 ../qt/src/OutputEditorHOCR.cc:991
+#: ../qt/src/OutputEditorHOCR.cc:1048 ../qt/src/OutputEditorText.cc:251
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Seçilen klasöre yazma hakkınız olduğundan emin olun."
 
-#: ../gtk/src/OutputEditorHOCR.cc:1191 ../qt/src/OutputEditorHOCR.cc:998
+#: ../gtk/src/OutputEditorHOCR.cc:1233 ../qt/src/OutputEditorHOCR.cc:1038
 #, fuzzy
 msgid "PDF Files"
 msgstr "Dosyalar"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1192 ../qt/src/OutputEditorHOCR.cc:998
+#: ../gtk/src/OutputEditorHOCR.cc:1234 ../qt/src/OutputEditorHOCR.cc:1038
 #, fuzzy
 msgid "Save PDF Output..."
 msgstr "Çıktıyı Kaydet..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:1216 ../qt/src/OutputEditorHOCR.cc:1018
+#: ../gtk/src/OutputEditorHOCR.cc:1262 ../qt/src/OutputEditorHOCR.cc:1062
 msgid "The PDF library does not support the selected font."
 msgstr ""
 
-#: ../gtk/src/OutputEditorHOCR.cc:1272 ../qt/src/OutputEditorHOCR.cc:1073
+#: ../gtk/src/OutputEditorHOCR.cc:1318 ../qt/src/OutputEditorHOCR.cc:1117
 #, fuzzy
 msgid "Errors occurred"
 msgstr "Tanıma hataları oluştu"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1272 ../qt/src/OutputEditorHOCR.cc:1073
+#: ../gtk/src/OutputEditorHOCR.cc:1318 ../qt/src/OutputEditorHOCR.cc:1117
 #, fuzzy
 msgid ""
 "The following pages could not be rendered:\n"
 "%1"
 msgstr "Bu dosyalar açılamadı:%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1397 ../gtk/src/OutputEditorText.cc:320
-#: ../qt/src/OutputEditorHOCR.cc:1185 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:1443 ../gtk/src/OutputEditorText.cc:320
+#: ../qt/src/OutputEditorHOCR.cc:1229 ../qt/src/OutputEditorText.cc:265
 msgid "Output not saved"
 msgstr "Çıktı kaydedilmedi"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1397 ../gtk/src/OutputEditorText.cc:320
-#: ../qt/src/OutputEditorHOCR.cc:1185 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/OutputEditorHOCR.cc:1443 ../gtk/src/OutputEditorText.cc:320
+#: ../qt/src/OutputEditorHOCR.cc:1229 ../qt/src/OutputEditorText.cc:265
 msgid "Save output before proceeding?"
 msgstr "Devam etmeden çıktı kaydedilsin mi?"
 
@@ -1233,7 +1234,7 @@ msgstr "Mevcut listeyi kaydetmek istiyor musunuz?"
 msgid "Applying substitutions..."
 msgstr "Değişiklikler uygulanıyor..."
 
-#: ../gtk/src/TessdataManager.cc:57 ../qt/src/TessdataManager.cc:71
+#: ../gtk/src/TessdataManager.cc:61 ../qt/src/TessdataManager.cc:73
 msgid ""
 "PackageKit is required for managing system-wide tesseract language packs, "
 "but it was not found. Please use the system package management software to "
@@ -1241,35 +1242,35 @@ msgid ""
 "in the configuration dialog."
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:62 ../qt/src/TessdataManager.cc:76
+#: ../gtk/src/TessdataManager.cc:66 ../qt/src/TessdataManager.cc:78
 msgid "Fetching available languages"
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:68 ../gtk/src/TessdataManager.cc:89
-#: ../qt/src/TessdataManager.cc:82 ../qt/src/TessdataManager.cc:93
+#: ../gtk/src/TessdataManager.cc:72 ../gtk/src/TessdataManager.cc:95
+#: ../qt/src/TessdataManager.cc:84 ../qt/src/TessdataManager.cc:95
 msgid "Failed to fetch list of available languages: %1"
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:98 ../qt/src/TessdataManager.cc:103
-#: ../qt/src/TessdataManager.cc:114
+#: ../gtk/src/TessdataManager.cc:104 ../qt/src/TessdataManager.cc:105
+#: ../qt/src/TessdataManager.cc:116
 msgid "Parsing error: %1"
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:160 ../qt/src/TessdataManager.cc:159
+#: ../gtk/src/TessdataManager.cc:166 ../qt/src/TessdataManager.cc:161
 #, fuzzy
 msgid "Applying changes..."
 msgstr "Değişiklikler uygulanıyor..."
 
-#: ../gtk/src/TessdataManager.cc:219 ../qt/src/TessdataManager.cc:205
+#: ../gtk/src/TessdataManager.cc:225 ../qt/src/TessdataManager.cc:207
 msgid "Failed to create directory for tessdata files."
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:228 ../qt/src/TessdataManager.cc:213
+#: ../gtk/src/TessdataManager.cc:234 ../qt/src/TessdataManager.cc:215
 #, fuzzy
 msgid "Downloading %1..."
 msgstr "'%1' indiriliyor..."
 
-#: ../gtk/src/TessdataManager.cc:248 ../qt/src/TessdataManager.cc:235
+#: ../gtk/src/TessdataManager.cc:254 ../qt/src/TessdataManager.cc:237
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
