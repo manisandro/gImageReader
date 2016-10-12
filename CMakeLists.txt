@@ -7,7 +7,7 @@ SET(ENV{LC_ALL} "C")
 # Project properties
 PROJECT(gimagereader)
 SET(PACKAGE_NAME gImageReader)
-SET(PACKAGE_VERSION 3.1.91)
+SET(PACKAGE_VERSION 3.1.99)
 SET(PACKAGE_LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/share/locale")
 
 
