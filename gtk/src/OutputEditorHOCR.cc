@@ -1223,7 +1223,7 @@ void OutputEditorHOCR::savePDF()
 		std::string ext, base;
 		std::string name = !sources.empty() ? sources.front()->displayname : _("output");
 		Utils::get_filename_parts(name, base, ext);
-		std::string outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), base + ".txt");
+		std::string outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), base + ".pdf");
 		FileDialogs::FileFilter filter = {_("PDF Files"), {"application/pdf"}, {"*.pdf"}};
 		outname = FileDialogs::save_dialog(_("Save PDF Output..."), outname, filter);
 		if(outname.empty()){
