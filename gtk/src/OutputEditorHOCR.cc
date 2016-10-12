@@ -26,7 +26,9 @@
 #include <libxml++/libxml++.h>
 #include <podofo/base/PdfDictionary.h>
 #include <podofo/base/PdfFilter.h>
+#include <podofo/base/PdfStream.h>
 #include <podofo/doc/PdfFont.h>
+#include <podofo/doc/PdfIdentityEncoding.h>
 #include <podofo/doc/PdfImage.h>
 #include <podofo/doc/PdfPage.h>
 #include <podofo/doc/PdfPainter.h>
@@ -188,6 +190,31 @@ private:
 	Cairo::RefPtr<Cairo::Context> m_context;
 };
 
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
+namespace PoDoFo {
+class PdfImageCompat : public PoDoFo::PdfImage {
+	using PdfImage::PdfImage;
+public:
+	void SetImageDataRaw( unsigned int nWidth, unsigned int nHeight,
+							  unsigned int nBitsPerComponent, PdfInputStream* pStream )
+	{
+		m_rRect.SetWidth( nWidth );
+		m_rRect.SetHeight( nHeight );
+
+		this->GetObject()->GetDictionary().AddKey( "Width",  PdfVariant( static_cast<pdf_int64>(nWidth) ) );
+		this->GetObject()->GetDictionary().AddKey( "Height", PdfVariant( static_cast<pdf_int64>(nHeight) ) );
+		this->GetObject()->GetDictionary().AddKey( "BitsPerComponent", PdfVariant( static_cast<pdf_int64>(nBitsPerComponent) ) );
+
+		PdfVariant var;
+		m_rRect.ToVariant( var );
+		this->GetObject()->GetDictionary().AddKey( "BBox", var );
+
+		this->GetObject()->GetStream()->SetRawData( pStream, -1 );
+	}
+};
+}
+#endif
+
 class OutputEditorHOCR::PoDoFoPDFPainter : public OutputEditorHOCR::PDFPainter {
 public:
 	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor, double imageScale)
@@ -203,7 +230,11 @@ public:
 		m_painter->DrawText(x * m_scaleFactor, m_pageHeight - y * m_scaleFactor, pdfString);
 	}
 	void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) override {
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 		PoDoFo::PdfImage pdfImage(m_document);
+#else
+		PoDoFo::PdfImageCompat pdfImage(m_document);
+#endif
 		Cairo::RefPtr<Cairo::ImageSurface> scaledImage = Image::scale(image, m_imageScale);
 		pdfImage.SetImageColorSpace(settings.colorFormat == Image::Format_RGB24 ? PoDoFo::ePdfColorSpace_DeviceRGB : PoDoFo::ePdfColorSpace_DeviceGray);
 		Image img(scaledImage, settings.colorFormat);
@@ -1175,6 +1206,11 @@ void OutputEditorHOCR::savePDF()
 	bool accepted = false;
 	PoDoFo::PdfStreamedDocument* document = nullptr;
 	PoDoFo::PdfFont* font = nullptr;
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+	const PoDoFo::PdfEncoding* pdfEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
+#else
+	const PoDoFo::PdfEncoding* pdfEncoding = new PoDoFo::PdfIdentityEncoding;
+#endif
 	double fontSize = 0;
 	while(true) {
 		accepted = m_pdfExportDialog->run() ==  Gtk::RESPONSE_OK;
@@ -1208,7 +1244,11 @@ void OutputEditorHOCR::savePDF()
 			bool italic = fontDesc.get_style() == Pango::STYLE_OBLIQUE;
 			bool bold = fontDesc.get_weight() == Pango::WEIGHT_BOLD;
 			fontSize = fontDesc.get_size() / double(PANGO_SCALE);
-			font = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), bold, italic, false, PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance());
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+			font = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), bold, italic, false, pdfEncoding);
+#else
+			font = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), bold, italic, pdfEncoding);
+#endif
 		} catch(...) {
 			font = nullptr;
 		}

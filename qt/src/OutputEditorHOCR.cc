@@ -32,7 +32,9 @@
 #include <cstring>
 #include <podofo/base/PdfDictionary.h>
 #include <podofo/base/PdfFilter.h>
+#include <podofo/base/PdfStream.h>
 #include <podofo/doc/PdfFont.h>
+#include <podofo/doc/PdfIdentityEncoding.h>
 #include <podofo/doc/PdfImage.h>
 #include <podofo/doc/PdfPage.h>
 #include <podofo/doc/PdfPainter.h>
@@ -150,6 +152,31 @@ private:
 	int m_curFontSize;
 };
 
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
+namespace PoDoFo {
+class PdfImageCompat : public PoDoFo::PdfImage {
+	using PdfImage::PdfImage;
+public:
+	void SetImageDataRaw( unsigned int nWidth, unsigned int nHeight,
+							  unsigned int nBitsPerComponent, PdfInputStream* pStream )
+	{
+		m_rRect.SetWidth( nWidth );
+		m_rRect.SetHeight( nHeight );
+
+		this->GetObject()->GetDictionary().AddKey( "Width",  PdfVariant( static_cast<pdf_int64>(nWidth) ) );
+		this->GetObject()->GetDictionary().AddKey( "Height", PdfVariant( static_cast<pdf_int64>(nHeight) ) );
+		this->GetObject()->GetDictionary().AddKey( "BitsPerComponent", PdfVariant( static_cast<pdf_int64>(nBitsPerComponent) ) );
+
+		PdfVariant var;
+		m_rRect.ToVariant( var );
+		this->GetObject()->GetDictionary().AddKey( "BBox", var );
+
+		this->GetObject()->GetStream()->SetRawData( pStream, -1 );
+	}
+};
+}
+#endif
+
 class OutputEditorHOCR::PoDoFoPDFPainter : public OutputEditorHOCR::PDFPainter {
 public:
 	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor, double imageScale)
@@ -170,7 +197,11 @@ public:
 		if(settings.colorFormat == QImage::Format_Mono) {
 			img.invertPixels();
 		}
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 		PoDoFo::PdfImage pdfImage(m_document);
+#else
+		PoDoFo::PdfImageCompat pdfImage(m_document);
+#endif
 		pdfImage.SetImageColorSpace(img.format() == QImage::Format_RGB888 ? PoDoFo::ePdfColorSpace_DeviceRGB : PoDoFo::ePdfColorSpace_DeviceGray);
 		int width = img.width();
 		int height = img.height();
@@ -986,6 +1017,11 @@ void OutputEditorHOCR::savePDF()
 	bool accepted = false;
 	PoDoFo::PdfStreamedDocument* document = nullptr;
 	PoDoFo::PdfFont* font = nullptr;
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+	const PoDoFo::PdfEncoding* pdfEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
+#else
+	const PoDoFo::PdfEncoding* pdfEncoding = new PoDoFo::PdfIdentityEncoding;
+#endif
 	while(true) {
 		accepted = (m_pdfExportDialog->exec() == QDialog::Accepted);
 		if(!accepted) {
@@ -1010,7 +1046,11 @@ void OutputEditorHOCR::savePDF()
 		}
 		try {
 			QFontInfo info(m_pdfFontDialog.currentFont());
-			font = document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), false, PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance());
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+			font = document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), false, pdfEncoding);
+#else
+			font = document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), pdfEncoding);
+#endif
 		} catch(...) {
 			font = nullptr;
 		}
