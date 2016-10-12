@@ -471,7 +471,7 @@
   <object class="GtkImage" id="image:hocr.export">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">application-pdf</property>
+    <property name="icon_name">x-office-document-symbolic</property>
   </object>
   <object class="GtkImage" id="image:hocr.open">
     <property name="visible">True</property>
