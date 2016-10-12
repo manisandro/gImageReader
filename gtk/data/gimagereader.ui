@@ -252,6 +252,11 @@
     <property name="can_focus">False</property>
     <property name="icon_name">edit-delete-symbolic</property>
   </object>
+  <object class="GtkImage" id="image:tessdatamanager.refresh">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">view-refresh-symbolic</property>
+  </object>
   <object class="GtkListStore" id="liststore:sources.acquire.device">
     <columns>
       <!-- column-name device -->
@@ -2035,6 +2040,20 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
                 <property name="position">1</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkButton" id="button:tessdatamanager.refresh">
+                <property name="label" translatable="yes">Refresh</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">image:tessdatamanager.refresh</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -2097,6 +2116,7 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
     <action-widgets>
       <action-widget response="-10">button:tessdatamanager.apply</action-widget>
       <action-widget response="-7">button:tessdatamanager.close</action-widget>
+      <action-widget response="1">button:tessdatamanager.refresh</action-widget>
     </action-widgets>
   </object>
   <object class="GtkSizeGroup" id="sizegroup:sources.acquire.device">

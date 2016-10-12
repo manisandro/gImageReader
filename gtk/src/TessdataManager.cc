@@ -76,6 +76,8 @@ void TessdataManager::run()
 		int response = m_dialog->run();
 		if(response == Gtk::RESPONSE_APPLY) {
 			applyChanges();
+		} else if(response == 1) {
+			refresh();
 		} else {
 			break;
 		}
@@ -256,14 +258,19 @@ void TessdataManager::applyChanges()
 	m_dialog->get_window()->set_cursor(Glib::RefPtr<Gdk::Cursor>());
 	m_dialog->set_sensitive(true);
 	MAIN->popState();
+	refresh();
+	if(!errorMsg.empty()) {
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), errorMsg, m_dialog);
+	}
+}
+
+void TessdataManager::refresh()
+{
 	MAIN->getRecognizer()->updateLanguagesMenu();
-	availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
+	std::vector<Glib::ustring> availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
 	for(const Gtk::TreeModel::Row& row : m_languageListStore->children()) {
 		Glib::ustring prefix = row.get_value(m_viewCols.prefix);
 		bool installed = std::find(availableLanguages.begin(), availableLanguages.end(), prefix) != availableLanguages.end();
 		row.set_value(m_viewCols.selected, installed);
-	}
-	if(!errorMsg.empty()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), errorMsg, m_dialog);
 	}
 }
