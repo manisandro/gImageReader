@@ -54,9 +54,11 @@ TessdataManager::TessdataManager(QWidget *parent)
 	QDialogButtonBox* bbox = new QDialogButtonBox();
 	bbox->addButton(QDialogButtonBox::Close);
 	bbox->addButton(QDialogButtonBox::Apply);
+	QPushButton* refreshButton = bbox->addButton(_("Refresh"), QDialogButtonBox::ActionRole);
 	connect(bbox->button(QDialogButtonBox::Apply), SIGNAL(clicked(bool)), this, SLOT(applyChanges()));
 	connect(bbox, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(bbox, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(refreshButton, SIGNAL(clicked(bool)), this, SLOT(refresh()));
 	layout()->addWidget(bbox);
 	setFixedWidth(320);
 }
@@ -238,14 +240,19 @@ void TessdataManager::applyChanges()
 	unsetCursor();
 	setEnabled(true);
 	MAIN->popState();
+	refresh();
+	if(!errorMsg.isEmpty()) {
+		QMessageBox::critical(this, _("Error"), errorMsg);
+	}
+}
+
+void TessdataManager::refresh()
+{
 	MAIN->getRecognizer()->updateLanguagesMenu();
-	availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
+	QStringList availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
 	for(int row = 0, nRows = m_languageList->count(); row < nRows; ++row) {
 		QListWidgetItem* item = m_languageList->item(row);
 		QString prefix = item->data(Qt::UserRole).toString();
 		item->setCheckState(availableLanguages.contains(prefix) ? Qt::Checked : Qt::Unchecked);
-	}
-	if(!errorMsg.isEmpty()) {
-		QMessageBox::critical(this, _("Error"), errorMsg);
 	}
 }

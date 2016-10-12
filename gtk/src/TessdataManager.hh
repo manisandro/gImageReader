@@ -50,6 +50,7 @@ private:
 
 	bool fetchLanguageList(Glib::ustring& messages);
 	void applyChanges();
+	void refresh();
 };
 
 #endif // TESSDATAMANAGER_HH

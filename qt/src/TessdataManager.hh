@@ -44,6 +44,7 @@ private:
 
 private slots:
 	void applyChanges();
+	void refresh();
 };
 
 #endif // TESSDATAMANAGER_HH
