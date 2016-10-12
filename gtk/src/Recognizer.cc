@@ -427,7 +427,7 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 		if(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue() == true){
 			tess.SetPageSegMode(tesseract::PSM_AUTO_OSD);
 		}
-		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead();
+		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(tess);
 		ProgressMonitor monitor(pages.size());
 		MAIN->showProgress(&monitor);
 		Utils::busyTask([&]{
@@ -483,7 +483,7 @@ bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, O
 	ProgressMonitor monitor(1);
 	MAIN->showProgress(&monitor);
 	if(dest == OutputDestination::Buffer) {
-		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead();
+		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(tess);
 		readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
 		readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
 		readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
