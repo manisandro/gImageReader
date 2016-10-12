@@ -39,7 +39,7 @@ public:
 	OutputEditor(QObject* parent = 0);
 
 	virtual QWidget* getUI() = 0;
-	virtual ReadSessionData* initRead() = 0;
+	virtual ReadSessionData* initRead(tesseract::TessBaseAPI &tess) = 0;
 	virtual void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) = 0;
 	virtual void readError(const QString& errorMsg, ReadSessionData* data) = 0;
 	virtual void finalizeRead(ReadSessionData* data) { delete data; }

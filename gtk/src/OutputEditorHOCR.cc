@@ -443,6 +443,12 @@ void OutputEditorHOCR::imageCompressionChanged()
 	m_builder("label:pdfoptions.quality").as<Gtk::Widget>()->set_sensitive(!zipCompression);
 }
 
+OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI &tess)
+{
+	tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
+	return new HOCRReadSessionData;
+}
+
 void OutputEditorHOCR::read(tesseract::TessBaseAPI &tess, ReadSessionData *data)
 {
 	tess.SetVariable("hocr_font_info", "true");

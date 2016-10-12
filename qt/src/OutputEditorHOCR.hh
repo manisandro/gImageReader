@@ -38,7 +38,7 @@ public:
 	~OutputEditorHOCR();
 
 	QWidget* getUI() override { return m_widget; }
-	ReadSessionData* initRead() override{ return new HOCRReadSessionData; }
+	ReadSessionData* initRead(tesseract::TessBaseAPI &tess) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
 	void finalizeRead(ReadSessionData *data) override;

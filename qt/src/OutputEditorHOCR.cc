@@ -348,7 +348,11 @@ void OutputEditorHOCR::imageCompressionChanged()
 	m_pdfExportDialogUi.labelCompressionQuality->setEnabled(!zipCompression);
 }
 
-void OutputEditorHOCR::imageCompressionChanged();
+OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI &tess)
+{
+	tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
+	return new HOCRReadSessionData;
+}
 
 void OutputEditorHOCR::read(tesseract::TessBaseAPI &tess, ReadSessionData *data)
 {
