@@ -254,7 +254,7 @@
             <li><i>PDF with invisible text overlay</i> will generate a PDF with the unmodified source image as background and invisible (but selectable) text overlayed above the respective source text in the image. This export mode is usefull for generating a document which is visually identical to the input, but with searchable and selectable text.</li>
         </ul>
     </li>
-    <li>When exporting to PDF, the user is prompted for the font family to use, whether to honour the font sizes detected by the OCR engine, and whether to attempt to homogenize the text line spacing. Also, the user can select the color format and compression method to use for images in the PDF document to control the size of the generated output.</li>
+    <li>When exporting to PDF, the user is prompted for the font family to use, whether to honour the font sizes detected by the OCR engine, and whether to attempt to homogenize the text line spacing. Also, the user can select the color format, resolution and compression method to use for images in the PDF document to control the size of the generated output.</li>
 </ul>
 <h3><a name="Usage_Options">Program options</a></h3>
 <ul>
@@ -272,7 +272,7 @@
 </ul>
 <h2><a name="InstallTessdata">Installation of tesseract language definitions</a></h2>
 <ul>
-    <li>The <i>Tessdata manager</i>, available from the drop-down menu of the <i>recognize button</i> in the <i>main toolbar</i> allows the user to manage the available recognition languages. On Linux, the tessdata manager requires PackageKit to work.</li>
+    <li>The <i>Tessdata manager</i>, available from the drop-down menu of the <i>recognize button</i> in the <i>main toolbar</i> allows the user to manage the available recognition languages.</li>
     <li>To install the languages manually:
         <ul>
             <li>On <b>Linux</b>, it's sufficient to install the package corresponding to the language definition one wants to install via the package management application (the packages may be called something like <i>tesseract-langpack-&lt;lang&gt;</i>).</li>
