@@ -152,7 +152,7 @@
             <description>Whether to use detected font sizes when generating PDFs.</description>
         </key>
         <key type="b" name="pdfuniformizelinespacing">
-            <default>true</default>
+            <default>false</default>
             <summary>Uniformize line spacing</summary>
             <description>Whether to uniformize line spacing when generating PDFs.</description>
         </key>
