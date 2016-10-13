@@ -59,7 +59,7 @@
 <li>Plain text mode improvements:
 <ul>
     <li>Allow recognizing user-defined regions on multiple pages</li>
-    <li>Also tread \u2014 character as a hyphen</li>
+    <li>Also treat \u2014 character as a hyphen</li>
     <li>Make preserve paragraphs option correctly deal with trailing whitespace</li>
 </ul>
 </li>
