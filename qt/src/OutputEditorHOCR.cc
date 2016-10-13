@@ -394,10 +394,10 @@ void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data)
 			.arg(data.angle)
 			.arg(data.resolution);
 	pageDiv.setAttribute("title", pageTitle);
-	addPage(pageDiv, QFileInfo(data.file).fileName(), data.page);
+	addPage(pageDiv, QFileInfo(data.file).fileName(), data.page, true);
 }
 
-void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int page)
+void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int page, bool cleanGraphics)
 {
 	pageDiv.setAttribute("id", QString("page_%1").arg(++m_idCounter));
 	s_bboxRx.indexIn(pageDiv.attribute("title"));
@@ -415,24 +415,51 @@ void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int
 	ui.treeWidgetItems->addTopLevelItem(pageItem);
 	QMap<QString,QString> langCache;
 
+	QList<QPair<QDomElement,QRect>> graphicElements;
 	QDomElement element = pageDiv.firstChildElement("div");
 	while(!element.isNull()) {
 		// Boxes without text are images
 		if(!addChildItems(element.firstChildElement(), pageItem, langCache) && s_bboxRx.indexIn(element.attribute("title")) != -1) {
+			x1 = s_bboxRx.cap(1).toInt();
+			y1 = s_bboxRx.cap(2).toInt();
+			x2 = s_bboxRx.cap(3).toInt();
+			y2 = s_bboxRx.cap(4).toInt();
+			graphicElements.append(qMakePair(element, QRect(x1, y1, x2 - x1, y2 - y1)));
+		}
+		element = element.nextSiblingElement();
+	}
+
+	// Discard graphic elements which intersect with text block or which are too small
+	int numTextBlocks = pageItem->childCount();
+	for(const QPair<QDomElement,QRect>& pair: graphicElements) {
+		const QDomElement& element = pair.first;
+		const QRect& bbox = pair.second;
+		bool deleteGraphic = false;
+		if(cleanGraphics) {
+			if(bbox.width() < 10 || bbox.height() < 10) {
+				deleteGraphic = true;
+			} else {
+				for(int i = 0; i < numTextBlocks; ++i) {
+					if(bbox.intersects(pageItem->child(i)->data(0, BBoxRole).toRect())) {
+						deleteGraphic = true;
+						break;
+					}
+				}
+			}
+		}
+		if(!deleteGraphic) {
 			QTreeWidgetItem* item = new QTreeWidgetItem(QStringList() << _("Graphic"));
 			item->setCheckState(0, Qt::Checked);
 			item->setIcon(0, QIcon(":/icons/item_halftone"));
 			item->setData(0, IdRole, element.attribute("id"));
 			item->setData(0, ClassRole, "ocr_graphic");
-			x1 = s_bboxRx.cap(1).toInt();
-			y1 = s_bboxRx.cap(2).toInt();
-			x2 = s_bboxRx.cap(3).toInt();
-			y2 = s_bboxRx.cap(4).toInt();
-			item->setData(0, BBoxRole, QRect(x1, y1, x2 - x1, y2 - y1));
+			item->setData(0, BBoxRole, bbox);
 			pageItem->addChild(item);
+		} else {
+			element.parentNode().removeChild(element);
 		}
-		element = element.nextSiblingElement();
 	}
+
 	QString str;
 	QTextStream ss(&str);
 	pageDiv.save(ss, 1);
@@ -968,7 +995,7 @@ void OutputEditorHOCR::open()
 	int page = 0;
 	while(!div.isNull()) {
 		++page;
-		addPage(div, QFileInfo(filename).fileName(), page);
+		addPage(div, QFileInfo(filename).fileName(), page, false);
 		div = div.nextSiblingElement("div");
 	}
 }

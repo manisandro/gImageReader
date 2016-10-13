@@ -493,10 +493,10 @@ void OutputEditorHOCR::addPage(const Glib::ustring& hocrText, ReadSessionData da
 	Glib::ustring pageTitle = Glib::ustring::compose("image '%1'; bbox %2 %3 %4 %5; pageno %6; rot %7; res %8",
 			data.file, x1, y1, x2, y2, data.page, data.angle, data.resolution);
 	pageDiv->set_attribute("title", pageTitle);
-	addPage(pageDiv, Gio::File::create_for_path(data.file)->get_basename(), data.page);
+	addPage(pageDiv, Gio::File::create_for_path(data.file)->get_basename(), data.page, true);
 }
 
-void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page)
+void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page, bool cleanGraphics)
 {
 	m_connectionItemViewRowEdited.block(true);
 	pageDiv->set_attribute("id", Glib::ustring::compose("page_%1", ++m_idCounter));
@@ -525,11 +525,40 @@ void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& fil
 
 	std::map<Glib::ustring,Glib::ustring> langCache;
 
+	std::vector<std::pair<xmlpp::Element*,Geometry::Rectangle>> graphicElements;
 	xmlpp::Element* element = getFirstChildElement(pageDiv, "div");
 	while(element) {
 		// Boxes without text are images
 		titleAttr = getAttribute(element, "title");
 		if(!addChildItems(getFirstChildElement(element), pageItem, langCache) && s_bboxRx->match(titleAttr, matchInfo)) {
+			x1 = std::atoi(matchInfo.fetch(1).c_str());
+			y1 = std::atoi(matchInfo.fetch(2).c_str());
+			x2 = std::atoi(matchInfo.fetch(3).c_str());
+			y2 = std::atoi(matchInfo.fetch(4).c_str());
+			graphicElements.push_back(std::make_pair(element, Geometry::Rectangle(x1, y1, x2-x1, y2-y1)));
+		}
+		element = getNextSiblingElement(element);
+	}
+
+	// Discard graphic elements which intersect with text block or which are too small
+	int numTextBlocks = pageItem->children().size();
+	for(const std::pair<xmlpp::Element*,Geometry::Rectangle>& pair : graphicElements) {
+		xmlpp::Element* element = pair.first;
+		const Geometry::Rectangle& bbox = pair.second;
+		bool deleteGraphic = false;
+		if(cleanGraphics) {
+			if(bbox.width < 10 || bbox.height < 10) {
+				deleteGraphic = true;
+			} else {
+				for(int i = 0; i < numTextBlocks; ++i) {
+					if(bbox.overlaps((*pageItem->children()[i])[m_itemStoreCols.bbox])){
+						deleteGraphic = true;
+						break;
+					}
+				}
+			}
+		}
+		if(!deleteGraphic) {
 			Gtk::TreeIter item = m_itemStore->append(pageItem->children());
 			item->set_value(m_itemStoreCols.text, Glib::ustring(_("Graphic")));
 			item->set_value(m_itemStoreCols.selected, true);
@@ -542,13 +571,10 @@ void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& fil
 			item->set_value(m_itemStoreCols.id, getAttribute(element, "id"));
 			item->set_value(m_itemStoreCols.itemClass, Glib::ustring("ocr_graphic"));
 			item->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
-			x1 = std::atoi(matchInfo.fetch(1).c_str());
-			y1 = std::atoi(matchInfo.fetch(2).c_str());
-			x2 = std::atoi(matchInfo.fetch(3).c_str());
-			y2 = std::atoi(matchInfo.fetch(4).c_str());
 			item->set_value(m_itemStoreCols.bbox, Geometry::Rectangle(x1, y1, x2-x1, y2-y1));
+		} else {
+			element->get_parent()->remove_child(element);
 		}
-		element = getNextSiblingElement(element);
 	}
 	pageItem->set_value(m_itemStoreCols.source, getElementXML(pageDiv));
 	m_itemView->expand_row(Gtk::TreePath(pageItem), true);
@@ -1155,7 +1181,7 @@ void OutputEditorHOCR::open()
 	int page = 0;
 	while(div) {
 		++page;
-		addPage(div, files.front()->get_basename(), page);
+		addPage(div, files.front()->get_basename(), page, false);
 		div = getNextSiblingElement(div, "div");
 	}
 }
