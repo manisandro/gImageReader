@@ -1184,6 +1184,10 @@ void OutputEditorHOCR::updatePreview()
 	QTreeWidgetItem* item = ui.treeWidgetItems->currentItem();
 	if(!item) {
 		item = ui.treeWidgetItems->topLevelItem(0);
+	} else {
+		while(item->parent()) {
+			item = item->parent();
+		}
 	}
 	QRect bbox = item->data(0, BBoxRole).toRect();
 	QDomDocument doc;

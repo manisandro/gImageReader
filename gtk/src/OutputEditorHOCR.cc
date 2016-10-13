@@ -1385,6 +1385,10 @@ void OutputEditorHOCR::updatePreview()
 	Gtk::TreeIter item = currentItem();
 	if(!item) {
 		item = *m_itemStore->children().begin();
+	} else {
+		while(item->parent()) {
+			item = item->parent();
+		}
 	}
 
 	Geometry::Rectangle bbox = (*item)[m_itemStoreCols.bbox];
