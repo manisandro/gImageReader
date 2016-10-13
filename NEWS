@@ -6,7 +6,7 @@ gImageReader 3.1.99 (Oct 13 2016):
    - Allow choosing whether to store language files (language definitions, spelling dictionaries) in system-wide or user-local directories
  * Plain text mode improvements:
    - Allow recognizing user-defined regions on multiple pages
-   - Also tread \u2014 character as a hyphen
+   - Also treat \u2014 character as a hyphen
    - Make preserve paragraphs option correctly deal with trailing whitespace
  * hOCR editor improvements:
    - Add "Add to dictionary" and "Ignore word" actions to spell-checking menu in hOCR editor
