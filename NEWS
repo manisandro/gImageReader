@@ -1,3 +1,31 @@
+gImageReader 3.1.99 (Oct 13 2016):
+ * gImageReader 3.2 release candidate
+ * General improvements:
+   - Catch critical tesseract errors which otherwise result in the application crashing
+   - Improve spelling dictionary auto-installation logic
+   - Allow choosing whether to store language files (language definitions, spelling dictionaries) in system-wide or user-local directories
+ * Plain text mode improvements:
+   - Allow recognizing user-defined regions on multiple pages
+   - Also tread \u2014 character as a hyphen
+   - Make preserve paragraphs option correctly deal with trailing whitespace
+ * hOCR editor improvements:
+   - Add "Add to dictionary" and "Ignore word" actions to spell-checking menu in hOCR editor
+   - Exclude non-word characters from spell-checking
+   - Allow merging adjacent word items
+   - Allow adjusting bounding boxes of document elements by resizing the selection in the canvas
+   - Allow removing arbitrary items from the document tree
+   - Allow defining custom graphic regions from context-menu of the respective page item
+ * PDF export improvements:
+   - Add previewing capability
+   - Take into account baseline information to better position the words in the generated PDF
+   - Add options to choose color format and compression of images written to PDF, allowing to greatly reduce the size of PDF
+   - Correctly handle paper size and DPI
+   - Improve logic for uniformizing word and line spacing
+   - Make sure correct hypen character is used, allowing PDF applications to correctly find hyphenated words
+ * New and updated translations
+ * Various bug fixes
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
 gImageReader 3.1.91 (May 03 2016):
  * gImageReader 3.2 beta 2
  * Fix crash when editing items in the hOCR editor
