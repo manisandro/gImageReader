@@ -116,7 +116,7 @@ private:
 	QGraphicsPixmapItem* m_preview = nullptr;
 
 	void findReplace(bool backwards, bool replace);
-	void addPage(QDomElement pageDiv, const QString& filename, int page);
+	void addPage(QDomElement pageDiv, const QString& filename, int page, bool cleanGraphics);
 	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString, QString>& langCache);
 	QDomElement elementById(QDomElement element, const QString& id) const;
 	void expandChildren(QTreeWidgetItem* item) const;

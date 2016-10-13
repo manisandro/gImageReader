@@ -63,7 +63,7 @@ public:
 	bool contains(const Point& p) const{
 		return p.x >= x && p.x <= x + width && p.y >= y && p.y <= y + height;
 	}
-	bool overlaps(const Rectangle& r) {
+	bool overlaps(const Rectangle& r) const {
 		return x < r.x + r.width && x + width > r.x && y < r.y + r.height && y + height > r.y;
 	}
 	Rectangle unite(const Rectangle& r) const{
