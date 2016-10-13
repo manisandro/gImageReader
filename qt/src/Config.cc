@@ -403,7 +403,11 @@ void Config::setDataLocations(int idx)
 		ui.lineEditSpellLocation->setText(dataDir.absoluteFilePath("myspell/dicts"));
 #else
 		QDir dataDir("/usr/share");
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+		unsetenv("TESSDATA_PREFIX");
+#else
 		qunsetenv("TESSDATA_PREFIX");
+#endif
 		if(QDir(dataDir.absoluteFilePath("myspell/dicts")).exists()) {
 			ui.lineEditSpellLocation->setText(dataDir.absoluteFilePath("myspell/dicts"));
 		} else {
@@ -436,7 +440,11 @@ void Config::openTessdataDir()
 		QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
 		qputenv("TESSDATA_PREFIX", dataDir.absolutePath().toLocal8Bit());
 #else
+# if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+		unsetenv("TESSDATA_PREFIX");
+# else
 		qunsetenv("TESSDATA_PREFIX");
+# endif
 #endif
 	} else {
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)

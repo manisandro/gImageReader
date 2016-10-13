@@ -258,7 +258,11 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	m_pdfExportDialog = new QDialog(m_widget);
 	m_pdfExportDialogUi.setupUi(m_pdfExportDialog);
 	m_pdfExportDialogUi.comboBoxImageFormat->addItem(_("Color"), QImage::Format_RGB888);
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+	m_pdfExportDialogUi.comboBoxImageFormat->addItem(_("Grayscale"), QImage::Format_Indexed8);
+#else
 	m_pdfExportDialogUi.comboBoxImageFormat->addItem(_("Grayscale"), QImage::Format_Grayscale8);
+#endif
 	m_pdfExportDialogUi.comboBoxImageFormat->addItem(_("Monochrome"), QImage::Format_Mono);
 	m_pdfExportDialogUi.comboBoxImageFormat->setCurrentIndex(-1);
 	m_pdfExportDialogUi.comboBoxImageCompression->addItem(_("Zip (lossless)"), PDFSettings::CompressZip);
