@@ -182,7 +182,6 @@ MainWindow::MainWindow(const QStringList& files)
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
-	setOCRMode(ui.comboBoxOCRMode->currentIndex());
 	restoreGeometry(m_config->getSetting<VarSetting<QByteArray>>("wingeom")->getValue());
 	restoreState(m_config->getSetting<VarSetting<QByteArray>>("winstate")->getValue());
 	ui.dockWidgetOutput->setVisible(false);

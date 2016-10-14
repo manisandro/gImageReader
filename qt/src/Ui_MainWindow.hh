@@ -120,6 +120,7 @@ public:
 		comboBoxOCRMode->addItems(QStringList() << gettext("Plain text") << gettext("hOCR, PDF"));
 		comboBoxOCRMode->setFont(smallFont);
 		comboBoxOCRMode->setFrame(false);
+		comboBoxOCRMode->setCurrentIndex(-1);
 		ocrModeWidget->layout()->addWidget(comboBoxOCRMode);
 		toolBarMain->insertWidget(actionAutodetectLayout, ocrModeWidget);
 

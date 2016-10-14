@@ -166,7 +166,6 @@ MainWindow::MainWindow()
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
-	setOCRMode(m_ocrModeCombo->get_active_row_number());
 	const std::vector<int>& geom = m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->getValue();
 	if(geom.size() == 4){
 		m_window->resize(geom[2], geom[3]);

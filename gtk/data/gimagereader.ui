@@ -1111,7 +1111,6 @@
               <object class="GtkComboBoxText" id="combo:main.ocrmode">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="active">0</property>
                 <items>
                   <item translatable="yes">Plain text</item>
                   <item translatable="yes">hOCR, PDF</item>
