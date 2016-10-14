@@ -197,7 +197,7 @@
   <object class="GtkImage" id="image:sources.images.remove">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">edit-delete-symbolic</property>
+    <property name="icon_name">list-remove-symbolic</property>
   </object>
   <object class="GtkImage" id="image:sources.images.screenshot">
     <property name="visible">True</property>
