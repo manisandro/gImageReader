@@ -404,7 +404,10 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	MAIN->getConfig()->addSetting(new SpinSetting("pdffontscale", m_builder("spin:pdfoptions.fontscale")));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfpreview", m_builder("checkbox:pdfoptions.preview")));
 
-#if TESSERACT_VERSION < MAKE_VERSION(3,04,00)
+#ifndef MAKE_VERSION
+#define MAKE_VERSION(...) 0
+#endif
+#if !defined(TESSERACT_VERSION) || TESSERACT_VERSION < MAKE_VERSION(3,04,00)
 	m_builder("checkbox:pdfoptions.usedetectedfontsizes").as<Gtk::CheckButton>()->set_active(false);
 	m_builder("checkbox:pdfoptions.usedetectedfontsizes")->set_visible(false);
 	m_builder("box:pdfoptions.fontscale")->set_visible(false);
