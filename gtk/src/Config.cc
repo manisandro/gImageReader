@@ -408,7 +408,10 @@ void Config::setDataLocations(int idx)
 		MAIN->getWidget("entry:config.spelldir").as<Gtk::Entry>()->set_text(Glib::build_filename(configDir, "enchant", "myspell"));
 	}
 	tesseract::TessBaseAPI tess;
+	std::string current = setlocale(LC_NUMERIC, NULL);
+	setlocale(LC_NUMERIC, "C");
 	tess.Init(nullptr, nullptr);
+	setlocale(LC_NUMERIC, current.c_str());
 	MAIN->getWidget("entry:config.tessdatadir").as<Gtk::Entry>()->set_text(tess.GetDatapath());
 }
 
@@ -427,7 +430,10 @@ void Config::openTessdataDir()
 		Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(configDir, "tessdata"));
 	}
 	tesseract::TessBaseAPI tess;
+	std::string current = setlocale(LC_NUMERIC, NULL);
+	setlocale(LC_NUMERIC, "C");
 	tess.Init(nullptr, nullptr);
+	setlocale(LC_NUMERIC, current.c_str());
 	Utils::openUri(Glib::filename_to_uri(tess.GetDatapath()));
 }
 

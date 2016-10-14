@@ -428,7 +428,10 @@ void Config::setDataLocations(int idx)
 		ui.lineEditSpellLocation->setText(configDir.absoluteFilePath("enchant/myspell"));
 	}
 	tesseract::TessBaseAPI tess;
+	QByteArray current = setlocale(LC_NUMERIC, NULL);
+	setlocale(LC_NUMERIC, "C");
 	tess.Init(nullptr, nullptr);
+	setlocale(LC_NUMERIC, current.constData());
 	ui.lineEditTessdataLocation->setText(QString(tess.GetDatapath()));
 }
 
@@ -459,7 +462,10 @@ void Config::openTessdataDir()
 		qputenv("TESSDATA_PREFIX", configDir.absoluteFilePath("tessdata").toLocal8Bit());
 	}
 	tesseract::TessBaseAPI tess;
+	QByteArray current = setlocale(LC_NUMERIC, NULL);
+	setlocale(LC_NUMERIC, "C");
 	tess.Init(nullptr, nullptr);
+	setlocale(LC_NUMERIC, current.constData());
 	QDir().mkpath(QString(tess.GetDatapath()));
 	QDesktopServices::openUrl(QUrl::fromLocalFile(QString(tess.GetDatapath())));
 }
