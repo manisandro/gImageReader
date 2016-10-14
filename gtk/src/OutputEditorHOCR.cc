@@ -362,8 +362,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	CONNECT(saveButton, clicked, [this]{ save(); });
 	CONNECT(clearButton, clicked, [this]{ clear(); });
 	CONNECT(exportButton, clicked, [this]{ savePDF(); });
-	CONNECTP(MAIN->getWidget("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
-	CONNECT(MAIN->getWidget("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
+	m_connectionCustomFont = CONNECTP(MAIN->getWidget("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
+	m_connectionDefaultFont = CONNECT(MAIN->getWidget("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
 	m_connectionSelectionChanged = CONNECT(m_itemView->get_selection(), changed, [this]{ showItemProperties(currentItem()); });
 	m_connectionItemViewRowEdited = CONNECT(m_itemStore, row_changed, [this](const Gtk::TreeModel::Path&, const Gtk::TreeIter& iter){ itemChanged(iter); });
 	m_connectionPropViewRowEdited = CONNECT(m_propStore, row_changed, [this](const Gtk::TreeModel::Path&, const Gtk::TreeIter& iter){ propertyCellChanged(iter); });
@@ -419,6 +419,19 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 OutputEditorHOCR::~OutputEditorHOCR()
 {
 	delete m_currentParser;
+	m_connectionCustomFont.disconnect();
+	m_connectionDefaultFont.disconnect();
+	MAIN->getConfig()->removeSetting("pdfexportmode");
+	MAIN->getConfig()->removeSetting("pdfimagecompressionquality");
+	MAIN->getConfig()->removeSetting("pdfimagecompression");
+	MAIN->getConfig()->removeSetting("pdfimageformat");
+	MAIN->getConfig()->removeSetting("pdfimagedpi");
+	MAIN->getConfig()->removeSetting("pdffont");
+	MAIN->getConfig()->removeSetting("pdfusedetectedfontsizes");
+	MAIN->getConfig()->removeSetting("pdfuniformizelinespacing");
+	MAIN->getConfig()->removeSetting("pdfpreservespaces");
+	MAIN->getConfig()->removeSetting("pdffontscale");
+	MAIN->getConfig()->removeSetting("pdfpreview");
 }
 
 void OutputEditorHOCR::setFont()

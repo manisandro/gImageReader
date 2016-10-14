@@ -93,6 +93,13 @@ OutputEditorText::OutputEditorText()
 OutputEditorText::~OutputEditorText()
 {
 	delete m_widget;
+	MAIN->getConfig()->removeSetting("keepdot");
+	MAIN->getConfig()->removeSetting("keepquote");
+	MAIN->getConfig()->removeSetting("joinhyphen");
+	MAIN->getConfig()->removeSetting("joinspace");
+	MAIN->getConfig()->removeSetting("keepparagraphs");
+	MAIN->getConfig()->removeSetting("drawwhitespace");
+	MAIN->getConfig()->removeSetting("searchmatchcase");
 }
 
 void OutputEditorText::clearErrorState()

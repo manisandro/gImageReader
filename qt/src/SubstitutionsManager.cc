@@ -102,6 +102,12 @@ SubstitutionsManager::SubstitutionsManager(OutputTextEdit* textEdit, QCheckBox* 
 	m_currentFile = MAIN->getConfig()->getSetting<VarSetting<QString>>("substitutionslistfile")->getValue();
 }
 
+SubstitutionsManager::~SubstitutionsManager()
+{
+	MAIN->getConfig()->removeSetting("replacelist");
+	MAIN->getConfig()->removeSetting("replacelistfile");
+}
+
 void SubstitutionsManager::openList()
 {
 	if(!clearList()) {

@@ -52,6 +52,12 @@ public:
 		auto it = m_settings.find(key);
 		return it == m_settings.end() ? nullptr : static_cast<T*>(it->second);
 	}
+	void removeSetting(const Glib::ustring& key) {
+		auto it = m_settings.find(key);
+		if(it != m_settings.end()) {
+			m_settings.erase(it);
+		}
+	}
 
 	bool searchLangSpec(Lang& lang) const;
 	std::vector<Glib::ustring> searchLangCultures(const Glib::ustring& code) const;

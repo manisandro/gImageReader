@@ -86,8 +86,8 @@ OutputEditorText::OutputEditorText()
 	CONNECT(m_builder("button:output.searchprev").as<Gtk::Button>(), clicked, [this]{ findReplace(true, false); });
 	CONNECT(m_builder("button:output.replace").as<Gtk::Button>(), clicked, [this]{ findReplace(false, true); });
 	CONNECT(m_builder("button:output.replaceall").as<Gtk::Button>(), clicked, [this]{ replaceAll(); });
-	CONNECTP(MAIN->getWidget("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
-	CONNECT(MAIN->getWidget("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
+	m_connectionCustomFont = CONNECTP(MAIN->getWidget("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this]{ setFont(); });
+	m_connectionDefaultFont = CONNECT(MAIN->getWidget("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this]{ setFont(); });
 	CONNECT(m_builder("button:output.substitutions").as<Gtk::Button>(), clicked, [this]{ m_substitutionsManager->set_visible(true); });
 	CONNECT(m_textView, populate_popup, [this](Gtk::Menu* menu){ completeTextViewMenu(menu); });
 	CONNECTS(m_builder("menuitem:output.stripcrlf.drawwhitespace").as<Gtk::CheckMenuItem>(), toggled, [this](Gtk::CheckMenuItem* item){
@@ -116,6 +116,15 @@ OutputEditorText::OutputEditorText()
 OutputEditorText::~OutputEditorText()
 {
 	delete m_substitutionsManager;
+	m_connectionCustomFont.disconnect();
+	m_connectionDefaultFont.disconnect();
+	MAIN->getConfig()->removeSetting("keepdot");
+	MAIN->getConfig()->removeSetting("keepquote");
+	MAIN->getConfig()->removeSetting("joinhyphen");
+	MAIN->getConfig()->removeSetting("joinspace");
+	MAIN->getConfig()->removeSetting("keepparagraphs");
+	MAIN->getConfig()->removeSetting("drawwhitespace");
+	MAIN->getConfig()->removeSetting("searchmatchcase");
 }
 
 void OutputEditorText::setFont()

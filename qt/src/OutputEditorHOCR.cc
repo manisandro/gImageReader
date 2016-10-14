@@ -330,6 +330,17 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 OutputEditorHOCR::~OutputEditorHOCR()
 {
 	delete m_widget;
+	MAIN->getConfig()->removeSetting("pdfexportmode");
+	MAIN->getConfig()->removeSetting("pdffont");
+	MAIN->getConfig()->removeSetting("pdfimagecompressionquality");
+	MAIN->getConfig()->removeSetting("pdfimagecompression");
+	MAIN->getConfig()->removeSetting("pdfimageformat");
+	MAIN->getConfig()->removeSetting("pdfimagedpi");
+	MAIN->getConfig()->removeSetting("pdfusedetectedfontsizes");
+	MAIN->getConfig()->removeSetting("pdffontscale");
+	MAIN->getConfig()->removeSetting("pdfuniformizelinespacing");
+	MAIN->getConfig()->removeSetting("pdfpreservespaces");
+	MAIN->getConfig()->removeSetting("pdfpreview");
 }
 
 void OutputEditorHOCR::setFont()

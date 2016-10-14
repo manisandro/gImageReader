@@ -66,6 +66,12 @@ SubstitutionsManager::SubstitutionsManager(const Builder& builder, const Glib::R
 	}
 }
 
+SubstitutionsManager::~SubstitutionsManager()
+{
+	MAIN->getConfig()->removeSetting("replacelist");
+	MAIN->getConfig()->removeSetting("replacelistfile");
+}
+
 void SubstitutionsManager::set_visible(bool visible)
 {
 	m_dialog->set_visible(visible);

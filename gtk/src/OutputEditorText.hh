@@ -71,6 +71,9 @@ private:
 	Gtk::Button* m_redoButton;
 	Gtk::CheckButton* m_csCheckBox;
 
+	sigc::connection m_connectionCustomFont;
+	sigc::connection m_connectionDefaultFont;
+
 	Glib::RefPtr<OutputBuffer> m_textBuffer;
 
 	InsertMode m_insertMode;
