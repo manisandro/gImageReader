@@ -27,6 +27,7 @@ class OutputBuffer;
 class SubstitutionsManager {
 public:
 	SubstitutionsManager(const Builder& builder, const Glib::RefPtr<OutputBuffer>& buffer);
+	~SubstitutionsManager();
 	void set_visible(bool visible);
 
 private:

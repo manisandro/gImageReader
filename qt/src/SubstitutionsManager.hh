@@ -31,6 +31,7 @@ class SubstitutionsManager : public QDialog {
 	Q_OBJECT
 public:
 	SubstitutionsManager(OutputTextEdit* textEdit, QCheckBox* csCheckBox, QWidget* parent = nullptr);
+	~SubstitutionsManager();
 
 private:
 	QAction* m_removeAction;

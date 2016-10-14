@@ -50,6 +50,12 @@ public:
 		auto it = m_settings.find(key);
 		return it == m_settings.end() ? nullptr : static_cast<T*>(it.value());
 	}
+	void removeSetting(const QString& key) {
+		auto it = m_settings.find(key);
+		if(it != m_settings.end()) {
+			m_settings.erase(it);
+		}
+	}
 
 	bool searchLangSpec(Lang& lang) const;
 	QList<QString> searchLangCultures(const QString& code) const;

@@ -140,6 +140,8 @@ private:
 	xmlpp::DomParser* m_currentParser = nullptr;
 	xmlpp::Element* m_currentElement = nullptr;
 
+	sigc::connection m_connectionCustomFont;
+	sigc::connection m_connectionDefaultFont;
 	sigc::connection m_connectionSelectionChanged;
 	sigc::connection m_connectionItemViewRowEdited;
 	sigc::connection m_connectionPropViewRowEdited;
