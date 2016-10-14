@@ -313,6 +313,13 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfpreservespaces", m_pdfExportDialogUi.spinBoxPreserve, 4));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfpreview", m_pdfExportDialogUi.checkBoxPreview, false));
 
+#if TESSERACT_VERSION < MAKE_VERSION(3,04,00)
+	m_pdfExportDialogUi.checkBoxFontSize->setChecked(false);
+	m_pdfExportDialogUi.checkBoxFontSize->setVisible(false);
+	m_pdfExportDialogUi.spinFontScaling->setVisible(false);
+	m_pdfExportDialogUi.labelFontScaling->setVisible(false);
+#endif
+
 	setFont();
 	updateFontButton(m_pdfFontDialog.currentFont());
 }
