@@ -2,13 +2,11 @@
 Name=gImageReader
 GenericName=OCR application
 GenericName[cs]=optické rozpoznávání znaků (OCR)
-Comment=OCR application
-Comment[cs]=aplikace pro optické rozpoznávání znaků (OCR)
 Exec=gimagereader-@INTERFACE_TYPE@ %U
 Icon=gimagereader
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=Graphics;OCR;
+Categories=Graphics;OCR;Scanning;
 MimeType=image/bmp;image/jpeg;image/gif;image/png;image/tiff;image/x-bmp;image/x-ico;image/x-png;image/x-pcx;image/x-tga;image/xpm;image/svg+xml;
 Keywords=OCR;optical character recognition;Scanner;tesseract;
