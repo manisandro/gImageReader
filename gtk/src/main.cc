@@ -23,6 +23,10 @@
 #include <iostream>
 #include <cstring>
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #include "common.hh"
 #include "Application.hh"
 #include "Config.hh"
@@ -55,10 +59,35 @@ static std::string get_application_dir(char* argv0)
 	return pathstr;
 }
 
+static std::string get_application_exec_path(char* argv0)
+{
+#ifdef G_OS_WIN32
+	char buf[MAX_PATH];
+	bool success = GetModuleFileName(0, buf, MAX_PATH) > 0;
+	std::string pathstr = buf;
+#else
+	pid_t pid = getpid();
+	std::string exe = Glib::ustring::compose("/proc/%1/exe", pid);
+	GError* err = nullptr;
+	char* path = g_file_read_link(exe.c_str(), &err);
+	std::string pathstr = path;
+	g_free(path);
+	bool success = err == nullptr;
+#endif
+	if(!success){
+		if(Glib::path_is_absolute(argv0)){
+			pathstr = Glib::path_get_dirname(argv0);
+		}else{
+			pathstr = Glib::build_filename(Glib::get_current_dir(), argv0);
+		}
+	}
+	return pathstr;
+}
+
 int main (int argc, char *argv[])
 {
 	pkgDir = get_application_dir(argv[0]);
-	pkgExePath = argv[0];
+	pkgExePath = get_application_exec_path(argv[0]);
 
 #ifdef G_OS_WIN32
 	if(Glib::getenv("LANG").empty()) {
