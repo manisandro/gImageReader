@@ -934,6 +934,9 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 	}
 
 	QTreeWidgetItem* item = ui.treeWidgetItems->itemAt(point);
+	if(!item) {
+		return;
+	}
 	QString itemClass = item->data(0, ClassRole).toString();
 	if(itemClass.isEmpty()) {
 		return;
