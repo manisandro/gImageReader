@@ -929,13 +929,14 @@ void OutputEditorHOCR::updateCurrentItem()
 
 void OutputEditorHOCR::removeCurrentItem()
 {
-	if(m_currentElement) {
+	if(m_currentItem) {
+		g_assert_nonnull(m_currentElement);
 		m_currentElement->get_parent()->remove_child(m_currentElement);
 		Gtk::TreeIter toplevelItem = m_itemStore->get_iter(m_currentPageItem);
 		toplevelItem->set_value(m_itemStoreCols.source, getDocumentXML(m_currentParser->get_document()));
 
 		m_itemStore->erase(m_itemStore->get_iter(m_currentItem));
-		m_currentItem = Gtk::TreePath();
+		// m_currentItem updated by m_itemView->get_selection()->signal_changed()
 	}
 }
 
