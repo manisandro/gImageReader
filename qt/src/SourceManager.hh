@@ -53,7 +53,9 @@ public:
 
 public slots:
 	void addSources(const QStringList& files);
-	void addSource(const QString& file){ addSources(QStringList() << file); }
+	void addSource(const QString& file) {
+		addSources(QStringList() << file);
+	}
 
 signals:
 	void sourceChanged();
@@ -74,7 +76,9 @@ private:
 private slots:
 	void clearSources();
 	void currentSourceChanged();
-	void deleteSource(){ removeSource(true); }
+	void deleteSource() {
+		removeSource(true);
+	}
 	void fileChanged(const QString& filename);
 	void openRecentItem();
 	void openSources();

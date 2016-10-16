@@ -33,8 +33,7 @@
 #include "Utils.hh"
 
 SubstitutionsManager::SubstitutionsManager(OutputTextEdit* textEdit, QCheckBox* csCheckBox, QWidget* parent)
-	: QDialog(parent)
-{
+	: QDialog(parent) {
 	setWindowTitle(_("Substitutions"));
 
 	m_textEdit = textEdit;
@@ -102,14 +101,12 @@ SubstitutionsManager::SubstitutionsManager(OutputTextEdit* textEdit, QCheckBox* 
 	m_currentFile = MAIN->getConfig()->getSetting<VarSetting<QString>>("substitutionslistfile")->getValue();
 }
 
-SubstitutionsManager::~SubstitutionsManager()
-{
+SubstitutionsManager::~SubstitutionsManager() {
 	MAIN->getConfig()->removeSetting("replacelist");
 	MAIN->getConfig()->removeSetting("replacelistfile");
 }
 
-void SubstitutionsManager::openList()
-{
+void SubstitutionsManager::openList() {
 	if(!clearList()) {
 		return;
 	}
@@ -118,7 +115,7 @@ void SubstitutionsManager::openList()
 
 	if(!filename.isEmpty()) {
 		QFile file(filename);
-		if(!file.open(QIODevice::ReadOnly)){
+		if(!file.open(QIODevice::ReadOnly)) {
 			QMessageBox::critical(this, _("Error Reading File"), _("Unable to read '%1'.").arg(filename));
 			return;
 		}
@@ -127,10 +124,10 @@ void SubstitutionsManager::openList()
 
 		bool errors = false;
 		m_tableWidget->blockSignals(true);
-		while(!file.atEnd()){
+		while(!file.atEnd()) {
 			QString line = MAIN->getConfig()->useUtf8() ? QString::fromUtf8(file.readLine()) : QString::fromLocal8Bit(file.readLine());
 			line.chop(1);
-			if(line.isEmpty()){
+			if(line.isEmpty()) {
 				continue;
 			}
 			QList<QString> fields = line.split('\t');
@@ -145,41 +142,39 @@ void SubstitutionsManager::openList()
 		}
 		m_tableWidget->blockSignals(false);
 		MAIN->getConfig()->getSetting<TableSetting>("substitutionslist")->serialize();
-		if(errors){
+		if(errors) {
 			QMessageBox::warning(this, _("Errors Occurred Reading File"), _("Some entries of the substitutions list could not be read."));
 		}
 	}
 }
 
-bool SubstitutionsManager::saveList()
-{
+bool SubstitutionsManager::saveList() {
 	QString filename = QFileDialog::getSaveFileName(this, _("Save Substitutions List"), m_currentFile, QString("%1 (*.txt)").arg(_("Substitutions List")));
-	if(filename.isEmpty()){
+	if(filename.isEmpty()) {
 		return false;
 	}
 	QFile file(filename);
-	if(!file.open(QIODevice::WriteOnly)){
+	if(!file.open(QIODevice::WriteOnly)) {
 		QMessageBox::critical(this, _("Error Saving File"), _("Unable to write to '%1'.").arg(filename));
 		return false;
 	}
 	m_currentFile = filename;
 	MAIN->getConfig()->getSetting<VarSetting<QString>>("substitutionslistfile")->setValue(m_currentFile);
-	for(int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row){
+	for(int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row) {
 		QString line = QString("%1\t%2\n").arg(m_tableWidget->item(row, 0)->text()).arg(m_tableWidget->item(row, 1)->text());
 		file.write(MAIN->getConfig()->useUtf8() ? line.toUtf8() : line.toLocal8Bit());
 	}
 	return true;
 }
 
-bool SubstitutionsManager::clearList()
-{
+bool SubstitutionsManager::clearList() {
 	if(m_tableWidget->rowCount() > 0) {
 		int response = QMessageBox::question(this, _("Save List?"), _("Do you want to save the current list?"), QMessageBox::Save, QMessageBox::Discard, QMessageBox::Cancel);
-		if(response == QMessageBox::Save){
-			if(!saveList()){
+		if(response == QMessageBox::Save) {
+			if(!saveList()) {
 				return false;
 			}
-		}else if(response != QMessageBox::Discard){
+		} else if(response != QMessageBox::Discard) {
 			return false;
 		}
 		m_tableWidget->setRowCount(0);
@@ -188,8 +183,7 @@ bool SubstitutionsManager::clearList()
 	return true;
 }
 
-void SubstitutionsManager::addRow()
-{
+void SubstitutionsManager::addRow() {
 	int row = m_tableWidget->rowCount();
 	m_tableWidget->insertRow(row);
 	m_tableWidget->setItem(row, 0, new QTableWidgetItem());
@@ -197,41 +191,37 @@ void SubstitutionsManager::addRow()
 	m_tableWidget->editItem(m_tableWidget->item(row, 0));
 }
 
-void SubstitutionsManager::removeRows()
-{
+void SubstitutionsManager::removeRows() {
 	m_tableWidget->blockSignals(true);
-	for(const QModelIndex& index : m_tableWidget->selectionModel()->selectedRows())
-	{
+	for(const QModelIndex& index : m_tableWidget->selectionModel()->selectedRows()) {
 		m_tableWidget->removeRow(index.row());
 	}
 	m_tableWidget->blockSignals(false);
 	MAIN->getConfig()->getSetting<TableSetting>("substitutionslist")->serialize();
 }
 
-void SubstitutionsManager::onTableSelectionChanged(const QItemSelection& selected, const QItemSelection& /*deselected*/)
-{
+void SubstitutionsManager::onTableSelectionChanged(const QItemSelection& selected, const QItemSelection& /*deselected*/) {
 	m_removeAction->setEnabled(!selected.isEmpty());
 }
 
-void SubstitutionsManager::applySubstitutions()
-{
+void SubstitutionsManager::applySubstitutions() {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
 	QTextCursor cursor =  m_textEdit->regionBounds();
 	int end = cursor.position();
 	cursor.setPosition(cursor.anchor());
 	QTextDocument::FindFlags flags = 0;
-	if(m_csCheckBox->isChecked()){
+	if(m_csCheckBox->isChecked()) {
 		flags = QTextDocument::FindCaseSensitively;
 	}
 	int start = cursor.position();
-	for(int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row){
+	for(int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row) {
 		QString search = m_tableWidget->item(row, 0)->text();
 		QString replace = m_tableWidget->item(row, 1)->text();
 		int diff = replace.length() - search.length();
 		cursor.setPosition(start);
-		while(true){
+		while(true) {
 			cursor = m_textEdit->document()->find(search, cursor, flags);
-			if(cursor.isNull() || qMax(cursor.anchor(), cursor.position()) > end){
+			if(cursor.isNull() || qMax(cursor.anchor(), cursor.position()) > end) {
 				break;
 			}
 			cursor.insertText(replace);

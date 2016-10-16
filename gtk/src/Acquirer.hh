@@ -29,14 +29,19 @@ public:
 	Acquirer();
 	~Acquirer();
 
-	sigc::signal<void,std::string> signal_scanPageAvailable() const{ return m_signal_scanPageAvailable; }
+	sigc::signal<void,std::string> signal_scanPageAvailable() const {
+		return m_signal_scanPageAvailable;
+	}
 
 private:
 	class DevicesComboColumns : public Gtk::TreeModel::ColumnRecord {
 	public:
 		Gtk::TreeModelColumn<std::string> label;
 		Gtk::TreeModelColumn<std::string> name;
-		DevicesComboColumns() { add(label); add(name); }
+		DevicesComboColumns() {
+			add(label);
+			add(name);
+		}
 	};
 
 	Gtk::Button* m_refreshButton;

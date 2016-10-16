@@ -31,7 +31,7 @@ public:
 	bool findReplace(bool backwards, bool replace, bool matchCase, const Glib::ustring& searchstr, const Glib::ustring& replacestr, Gtk::TextView* view);
 	bool replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
 
-	static Glib::RefPtr<OutputBuffer> create(){
+	static Glib::RefPtr<OutputBuffer> create() {
 		return Glib::RefPtr<OutputBuffer>(new OutputBuffer());
 	}
 

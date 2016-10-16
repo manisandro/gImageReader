@@ -34,7 +34,10 @@ private:
 	struct ReplaceListColumns : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Glib::ustring> search;
 		Gtk::TreeModelColumn<Glib::ustring> replace;
-		ReplaceListColumns() { add(search); add(replace); }
+		ReplaceListColumns() {
+			add(search);
+			add(replace);
+		}
 	};
 
 	std::string m_currentFile;

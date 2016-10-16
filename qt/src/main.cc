@@ -30,8 +30,7 @@
 #include "Config.hh"
 #include "CrashHandler.hh"
 
-int main (int argc, char *argv[])
-{
+int main (int argc, char *argv[]) {
 	QApplication app(argc, argv);
 
 	QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
@@ -48,7 +47,7 @@ int main (int argc, char *argv[])
 	QIcon::setThemeSearchPaths({dataDir.absoluteFilePath("icons")});
 	QIcon::setThemeName("hicolor");
 	QDir packageDir = QDir(QString("%1/../").arg(QApplication::applicationDirPath()));
-	if(qgetenv("LANG").isEmpty()){
+	if(qgetenv("LANG").isEmpty()) {
 		qputenv("LANG", QLocale::system().name().toLocal8Bit());
 	}
 #endif
@@ -83,8 +82,8 @@ int main (int argc, char *argv[])
 		std::freopen(packageDir.absoluteFilePath("gimagereader.log").toLocal8Bit().data(), "w", stderr);
 #endif
 		QStringList files;
-		for(int i = 1; i < argc; ++i){
-			if(QFile(argv[i]).exists()){
+		for(int i = 1; i < argc; ++i) {
+			if(QFile(argv[i]).exists()) {
 				files.append(argv[i]);
 			}
 		}

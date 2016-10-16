@@ -46,7 +46,7 @@ public:
 		}
 	}
 	template<class T>
-	T* getSetting(const QString& key) const{
+	T* getSetting(const QString& key) const {
 		auto it = m_settings.find(key);
 		return it == m_settings.end() ? nullptr : static_cast<T*>(it.value());
 	}

@@ -26,28 +26,25 @@
 class Application : public Gtk::Application {
 public:
 	Application(int &argc, char **&argv, const Glib::ustring &application_id, Gio::ApplicationFlags flags)
-		: Gtk::Application(argc, argv, application_id, flags)
-	{
+		: Gtk::Application(argc, argv, application_id, flags) {
 		Glib::set_application_name(PACKAGE_NAME);
 	}
 
 private:
-	void on_activate()
-	{
-		if(m_mainWindow){
+	void on_activate() {
+		if(m_mainWindow) {
 			m_mainWindow->getWindow()->present();
 		}
 	}
 
-	void on_startup()
-	{
+	void on_startup() {
 		Gtk::Application::on_startup();
 
-		add_action("redetectLangs", [this]{ m_mainWindow->redetectLanguages(); });
-		add_action("preferences", [this]{ m_mainWindow->showConfig(); });
-		add_action("help", [this]{ m_mainWindow->showHelp(); });
-		add_action("about", [this]{ m_mainWindow->showAbout(); });
-		add_action("quit", [this]{ on_quit(); });
+		add_action("redetectLangs", [this] { m_mainWindow->redetectLanguages(); });
+		add_action("preferences", [this] { m_mainWindow->showConfig(); });
+		add_action("help", [this] { m_mainWindow->showHelp(); });
+		add_action("about", [this] { m_mainWindow->showAbout(); });
+		add_action("quit", [this] { on_quit(); });
 
 		Glib::RefPtr<Gtk::Builder> appMenuBuilder = Gtk::Builder::create_from_resource("/org/gnome/gimagereader/appmenu.ui");
 		Glib::RefPtr<Gio::MenuModel> menuModel = Glib::RefPtr<Gio::MenuModel>::cast_static(appMenuBuilder->get_object("appmenu"));
@@ -56,28 +53,27 @@ private:
 #if GTK_CHECK_VERSION(3,14,0)
 		appMenu = prefers_app_menu();
 #endif
-		if(appMenu){
+		if(appMenu) {
 			set_app_menu(menuModel);
 		}
 
 		g_assert(m_mainWindow == nullptr);
 		m_mainWindow = new MainWindow();
-		CONNECT(m_mainWindow->getWindow(), hide, [this]{ on_quit(); });
-		if(!appMenu){
+		CONNECT(m_mainWindow->getWindow(), hide, [this] { on_quit(); });
+		if(!appMenu) {
 			m_mainWindow->setMenuModel(menuModel);
 		}
 		add_window(*m_mainWindow->getWindow());
 		m_mainWindow->getWindow()->show();
 	}
 
-	void on_open(const type_vec_files& files, const Glib::ustring& /*hint*/)
-	{
+	void on_open(const type_vec_files& files, const Glib::ustring& /*hint*/) {
 		m_mainWindow->openFiles(files);
 		m_mainWindow->getWindow()->present();
 	}
 
-	void on_quit(){
-		if(m_mainWindow){
+	void on_quit() {
+		if(m_mainWindow) {
 			remove_window(*m_mainWindow->getWindow());
 			delete m_mainWindow;
 			m_mainWindow = nullptr;

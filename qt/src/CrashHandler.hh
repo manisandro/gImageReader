@@ -23,8 +23,7 @@
 #include "ui_CrashHandler.h"
 #include <QProcess>
 
-class CrashHandler : public QDialog
-{
+class CrashHandler : public QDialog {
 	Q_OBJECT
 
 public:

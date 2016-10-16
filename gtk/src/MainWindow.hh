@@ -50,19 +50,35 @@ public:
 
 	typedef void* Notification;
 
-	static MainWindow* getInstance(){ return s_instance; }
+	static MainWindow* getInstance() {
+		return s_instance;
+	}
 	static void signalHandler(int signal);
 
 	MainWindow();
 	~MainWindow();
 
-	Config* getConfig(){ return m_config; }
-	Displayer* getDisplayer(){ return m_displayer; }
-	OutputEditor* getOutputEditor(){ return m_outputEditor; }
-	Recognizer* getRecognizer(){ return m_recognizer; }
-	SourceManager* getSourceManager(){ return m_sourceManager; }
-	Gtk::Window* getWindow() const{ return m_window; }
-	Builder::CastProxy getWidget(const Glib::ustring& name) const{ return m_builder(name); }
+	Config* getConfig() {
+		return m_config;
+	}
+	Displayer* getDisplayer() {
+		return m_displayer;
+	}
+	OutputEditor* getOutputEditor() {
+		return m_outputEditor;
+	}
+	Recognizer* getRecognizer() {
+		return m_recognizer;
+	}
+	SourceManager* getSourceManager() {
+		return m_sourceManager;
+	}
+	Gtk::Window* getWindow() const {
+		return m_window;
+	}
+	Builder::CastProxy getWidget(const Glib::ustring& name) const {
+		return m_builder(name);
+	}
 	void setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel);
 	void redetectLanguages();
 	void showConfig();

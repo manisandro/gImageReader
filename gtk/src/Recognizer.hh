@@ -25,21 +25,26 @@
 
 #include <cairomm/cairomm.h>
 
-namespace tesseract { class TessBaseAPI; }
+namespace tesseract {
+class TessBaseAPI;
+}
 
-class Recognizer
-{
+class Recognizer {
 public:
 	enum class OutputDestination { Buffer, Clipboard };
 
 	Recognizer();
 	std::vector<Glib::ustring> getAvailableLanguages() const;
-	const Config::Lang& getSelectedLanguage() const{ return m_curLang; }
+	const Config::Lang& getSelectedLanguage() const {
+		return m_curLang;
+	}
 
 	void setRecognizeMode(const Glib::ustring& mode);
 	void updateLanguagesMenu();
 	bool recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
-	sigc::signal<void,Config::Lang> signal_languageChanged() const{ return m_signal_languageChanged; }
+	sigc::signal<void,Config::Lang> signal_languageChanged() const {
+		return m_signal_languageChanged;
+	}
 
 private:
 	struct ProgressMonitor;

@@ -22,8 +22,7 @@
 
 #include <gtkmm.h>
 
-class TessdataManager
-{
+class TessdataManager {
 public:
 	static void exec();
 
@@ -39,7 +38,11 @@ private:
 		Gtk::TreeModelColumn<bool> selected;
 		Gtk::TreeModelColumn<Glib::ustring> label;
 		Gtk::TreeModelColumn<Glib::ustring> prefix;
-		ViewColumns() { add(selected); add(label); add(prefix); }
+		ViewColumns() {
+			add(selected);
+			add(label);
+			add(prefix);
+		}
 	} m_viewCols;
 
 	Gtk::Dialog* m_dialog;

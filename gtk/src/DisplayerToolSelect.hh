@@ -35,10 +35,18 @@ public:
 	void rotationChanged(double delta) override;
 
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas() override;
-	bool hasMultipleOCRAreas() const override{ return !m_selections.empty(); }
-	bool allowAutodetectOCRAreas() const override{ return true; }
-	void autodetectOCRAreas() override{ autodetectLayout(); }
-	void reset() override{ clearSelections(); }
+	bool hasMultipleOCRAreas() const override {
+		return !m_selections.empty();
+	}
+	bool allowAutodetectOCRAreas() const override {
+		return true;
+	}
+	void autodetectOCRAreas() override {
+		autodetectLayout();
+	}
+	void reset() override {
+		clearSelections();
+	}
 
 private:
 	friend class NumberedDisplayerSelection;
@@ -54,14 +62,12 @@ private:
 	void autodetectLayout(bool noDeskew = false);
 };
 
-class NumberedDisplayerSelection : public DisplayerSelection
-{
+class NumberedDisplayerSelection : public DisplayerSelection {
 public:
 	NumberedDisplayerSelection(DisplayerToolSelect* selectTool, int number, const Geometry::Point& anchor)
-		: DisplayerSelection(selectTool, anchor), m_number(number)
-	{
+		: DisplayerSelection(selectTool, anchor), m_number(number) {
 	}
-	void setNumber(int number){
+	void setNumber(int number) {
 		m_number = number;
 	}
 

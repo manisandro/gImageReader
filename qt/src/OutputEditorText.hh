@@ -35,8 +35,12 @@ public:
 	OutputEditorText();
 	~OutputEditorText();
 
-	QWidget* getUI() override { return m_widget; }
-	ReadSessionData* initRead(tesseract::TessBaseAPI &/*tess*/) override{ return new TextReadSessionData; }
+	QWidget* getUI() override {
+		return m_widget;
+	}
+	ReadSessionData* initRead(tesseract::TessBaseAPI &/*tess*/) override {
+		return new TextReadSessionData;
+	}
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
 	bool getModified() const override;

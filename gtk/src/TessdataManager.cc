@@ -29,14 +29,12 @@
 #include <gdk/gdkx.h>
 #endif
 
-void TessdataManager::exec()
-{
+void TessdataManager::exec() {
 	static TessdataManager instance;
 	instance.run();
 }
 
-TessdataManager::TessdataManager()
-{
+TessdataManager::TessdataManager() {
 	m_dialog = MAIN->getWidget("dialog:tessdatamanager");
 	m_languageList = MAIN->getWidget("treeview:tessdatamanager");
 	m_languageListStore = Gtk::ListStore::create(m_viewCols);
@@ -45,17 +43,15 @@ TessdataManager::TessdataManager()
 	m_languageList->append_column("label", m_viewCols.label);
 }
 
-void TessdataManager::run()
-{
+void TessdataManager::run() {
 #ifdef G_OS_UNIX
-	if(MAIN->getConfig()->useSystemDataLocations())
-	{
+	if(MAIN->getConfig()->useSystemDataLocations()) {
 		Glib::ustring service_owner;
-		try{
+		try {
 			m_dbusProxy = Gio::DBus::Proxy::create_for_bus_sync(Gio::DBus::BUS_TYPE_SESSION, "org.freedesktop.PackageKit",
-															"/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify");
+			              "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify");
 			service_owner = m_dbusProxy->get_name_owner();
-		}catch(...){
+		} catch(...) {
 		}
 		if(service_owner.empty()) {
 			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), _("PackageKit is required for managing system-wide tesseract language packs, but it was not found. Please use the system package management software to manage the tesseract language packs, or switch to use the user tessdata path in the configuration dialog."));
@@ -67,8 +63,7 @@ void TessdataManager::run()
 	Glib::ustring messages;
 	bool success = fetchLanguageList(messages);
 	MAIN->popState();
-	if(!success)
-	{
+	if(!success) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR,_("Error"), Glib::ustring::compose(_("Failed to fetch list of available languages: %1"), messages));
 		return;
 	}
@@ -85,8 +80,7 @@ void TessdataManager::run()
 	m_dialog->hide();
 }
 
-bool TessdataManager::fetchLanguageList(Glib::ustring& messages)
-{
+bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 	m_languageListStore->clear();
 
 	Glib::RefPtr<Glib::ByteArray> data = Utils::download("https://api.github.com/repos/tesseract-ocr/tessdata/contents", messages);
@@ -161,8 +155,7 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages)
 	return true;
 }
 
-void TessdataManager::applyChanges()
-{
+void TessdataManager::applyChanges() {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying changes..."));
 	m_dialog->set_sensitive(false);
 	m_dialog->get_window()->set_cursor(Gdk::Cursor::create(Gdk::WATCH));
@@ -193,8 +186,9 @@ void TessdataManager::applyChanges()
 
 		if(!installFiles.empty()) {
 			std::vector<Glib::VariantBase> params = { Glib::Variant<std::uint32_t>::create(xid),
-													  Glib::Variant<std::vector<Glib::ustring>>::create(installFiles),
-													  Glib::Variant<Glib::ustring>::create("always") };
+			                                          Glib::Variant<std::vector<Glib::ustring>>::create(installFiles),
+			                                          Glib::Variant<Glib::ustring>::create("always")
+			                                        };
 			try {
 				m_dbusProxy->call_sync("InstallProvideFiles", Glib::VariantContainerBase::create_tuple(params), 3600000);
 			} catch(const Glib::Error& e) {
@@ -203,8 +197,9 @@ void TessdataManager::applyChanges()
 		}
 		if(errorMsg.empty() && !removeFiles.empty()) {
 			std::vector<Glib::VariantBase> params = { Glib::Variant<std::uint32_t>::create(xid),
-													  Glib::Variant<std::vector<Glib::ustring>>::create(removeFiles),
-													  Glib::Variant<Glib::ustring>::create("always") };
+			                                          Glib::Variant<std::vector<Glib::ustring>>::create(removeFiles),
+			                                          Glib::Variant<Glib::ustring>::create("always")
+			                                        };
 			try {
 				m_dbusProxy->call_sync("RemovePackageByFiles", Glib::VariantContainerBase::create_tuple(params), 3600000);
 			} catch(const Glib::Error& e) {
@@ -264,8 +259,7 @@ void TessdataManager::applyChanges()
 	}
 }
 
-void TessdataManager::refresh()
-{
+void TessdataManager::refresh() {
 	MAIN->getRecognizer()->updateLanguagesMenu();
 	std::vector<Glib::ustring> availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
 	for(const Gtk::TreeModel::Row& row : m_languageListStore->children()) {

@@ -48,7 +48,7 @@ public:
 		}
 	}
 	template<class T>
-	T* getSetting(const Glib::ustring& key) const{
+	T* getSetting(const Glib::ustring& key) const {
 		auto it = m_settings.find(key);
 		return it == m_settings.end() ? nullptr : static_cast<T*>(it->second);
 	}
@@ -75,7 +75,11 @@ private:
 		Gtk::TreeModelColumn<Glib::ustring> prefix;
 		Gtk::TreeModelColumn<Glib::ustring> code;
 		Gtk::TreeModelColumn<Glib::ustring> name;
-		LangViewColumns() { add(prefix); add(code); add(name); }
+		LangViewColumns() {
+			add(prefix);
+			add(code);
+			add(name);
+		}
 	};
 
 	static const std::vector<Lang> LANGUAGES;

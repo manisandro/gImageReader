@@ -40,10 +40,18 @@ public:
 	void rotationChanged(double delta) override;
 
 	QList<QImage> getOCRAreas();
-	bool hasMultipleOCRAreas() const override{ return !m_selections.isEmpty(); }
-	bool allowAutodetectOCRAreas() const override{ return true; }
-	void autodetectOCRAreas() override{ autodetectLayout(); }
-	void reset() override{ clearSelections(); }
+	bool hasMultipleOCRAreas() const override {
+		return !m_selections.isEmpty();
+	}
+	bool allowAutodetectOCRAreas() const override {
+		return true;
+	}
+	void autodetectOCRAreas() override {
+		autodetectLayout();
+	}
+	void reset() override {
+		clearSelections();
+	}
 
 private:
 	friend class NumberedDisplayerSelection;
@@ -61,15 +69,13 @@ private slots:
 	void autodetectLayout(bool noDeskew = false);
 };
 
-class NumberedDisplayerSelection : public DisplayerSelection
-{
+class NumberedDisplayerSelection : public DisplayerSelection {
 	Q_OBJECT
 public:
 	NumberedDisplayerSelection(DisplayerToolSelect* selectTool, int number, const QPointF& anchor)
-		: DisplayerSelection(selectTool, anchor), m_number(number)
-	{
+		: DisplayerSelection(selectTool, anchor), m_number(number) {
 	}
-	void setNumber(int number){
+	void setNumber(int number) {
 		m_number = number;
 	}
 

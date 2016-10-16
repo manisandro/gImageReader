@@ -22,30 +22,45 @@
 
 #include "Displayer.hh"
 
-namespace Geometry { class Rectangle; }
+namespace Geometry {
+class Rectangle;
+}
 
-class DisplayerToolHOCR : public DisplayerTool
-{
+class DisplayerToolHOCR : public DisplayerTool {
 public:
 	DisplayerToolHOCR(Displayer* displayer);
 	~DisplayerToolHOCR();
 
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas() override;
-	void pageChanged() override{ clearSelection(); }
-	void resolutionChanged(double /*factor*/) override{ clearSelection(); }
-	void rotationChanged(double /*delta*/) override{ clearSelection(); }
-	void reset() override{ clearSelection(); }
+	void pageChanged() override {
+		clearSelection();
+	}
+	void resolutionChanged(double /*factor*/) override {
+		clearSelection();
+	}
+	void rotationChanged(double /*delta*/) override {
+		clearSelection();
+	}
+	void reset() override {
+		clearSelection();
+	}
 
 	bool mousePressEvent(GdkEventButton *event) override;
 	bool mouseMoveEvent(GdkEventMotion *event) override;
 	bool mouseReleaseEvent(GdkEventButton *event) override;
 
-	void activateDrawSelection(){ m_drawingSelection = true; }
+	void activateDrawSelection() {
+		m_drawingSelection = true;
+	}
 	void setSelection(const Geometry::Rectangle& rect);
 	Cairo::RefPtr<Cairo::ImageSurface> getSelection(const Geometry::Rectangle& rect);
 	void clearSelection();
-	sigc::signal<void, Geometry::Rectangle> signal_selection_drawn(){ return m_signalSelectionDrawn; }
-	sigc::signal<void, Geometry::Rectangle> signal_selection_geometry_changed(){ return m_signalSelectionGeometryChanged; }
+	sigc::signal<void, Geometry::Rectangle> signal_selection_drawn() {
+		return m_signalSelectionDrawn;
+	}
+	sigc::signal<void, Geometry::Rectangle> signal_selection_geometry_changed() {
+		return m_signalSelectionGeometryChanged;
+	}
 
 private:
 	DisplayerSelection* m_selection = nullptr;

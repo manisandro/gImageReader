@@ -22,7 +22,9 @@
 
 #include "Config.hh"
 
-namespace tesseract { class TessBaseAPI; }
+namespace tesseract {
+class TessBaseAPI;
+}
 
 class OutputEditor {
 public:
@@ -41,14 +43,16 @@ public:
 	virtual ReadSessionData* initRead(tesseract::TessBaseAPI& tess) = 0;
 	virtual void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) = 0;
 	virtual void readError(const Glib::ustring& errorMsg, ReadSessionData* data) = 0;
-	virtual void finalizeRead(ReadSessionData* data) { delete data; }
+	virtual void finalizeRead(ReadSessionData* data) {
+		delete data;
+	}
 
 	virtual bool getModified() const = 0;
 
-	virtual void onVisibilityChanged(bool /*visible*/){}
+	virtual void onVisibilityChanged(bool /*visible*/) {}
 	virtual bool clear(bool hide = true) = 0;
 	virtual bool save(const std::string& filename = "") = 0;
-	virtual void setLanguage(const Config::Lang &/*lang*/){}
+	virtual void setLanguage(const Config::Lang &/*lang*/) {}
 };
 
 #endif // OUTPUTEDITOR_HH

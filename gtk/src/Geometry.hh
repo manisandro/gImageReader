@@ -28,24 +28,34 @@ class Point {
 public:
 	union {
 		double data[2];
-		struct { double x, y; };
+		struct {
+			double x, y;
+		};
 	};
 	Point(double _x = 0., double _y = 0.) : x(_x), y(_y) {}
-	double operator[](int i) const{ return data[i]; }
-	double& operator[](int i){ return data[i]; }
+	double operator[](int i) const {
+		return data[i];
+	}
+	double& operator[](int i) {
+		return data[i];
+	}
 };
 
 class Rotation {
 public:
 	Rotation(double angle = 0.) {
 		double cosa = std::cos(angle), sina = std::sin(angle);
-		m_data[0] = cosa; m_data[1] = -sina;
-		m_data[2] = sina; m_data[3] = cosa;
+		m_data[0] = cosa;
+		m_data[1] = -sina;
+		m_data[2] = sina;
+		m_data[3] = cosa;
 	}
-	Point rotate(const Point& p) const{
+	Point rotate(const Point& p) const {
 		return Point(m_data[0] * p.x + m_data[1] * p.y, m_data[2] * p.x + m_data[3] * p.y);
 	}
-	double operator()(int i, int j) const{ return m_data[2*i + j]; }
+	double operator()(int i, int j) const {
+		return m_data[2*i + j];
+	}
 private:
 	double m_data[4];
 };
@@ -60,20 +70,20 @@ public:
 	Rectangle(const Point& p1, const Point& p2)
 		: x(std::min(p1.x, p2.x)), y(std::min(p1.y, p2.y)),
 		  width(std::abs(p2.x - p1.x)), height(std::abs(p2.y - p1.y)) {}
-	bool contains(const Point& p) const{
+	bool contains(const Point& p) const {
 		return p.x >= x && p.x <= x + width && p.y >= y && p.y <= y + height;
 	}
 	bool overlaps(const Rectangle& r) const {
 		return x < r.x + r.width && x + width > r.x && y < r.y + r.height && y + height > r.y;
 	}
-	Rectangle unite(const Rectangle& r) const{
+	Rectangle unite(const Rectangle& r) const {
 		double _x = std::min(x, r.x);
 		double _y = std::min(y, r.y);
 		double _w = std::max(x + width, r.x + r.width) - _x;
 		double _h = std::max(y + height, r.y + r.height) - _y;
 		return Rectangle(_x, _y, _w, _h);
 	}
-	Rectangle translate(double dx, double dy) const{
+	Rectangle translate(double dx, double dy) const {
 		return Rectangle(x + dx, y + dy, width, height);
 	}
 };

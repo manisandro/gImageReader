@@ -37,8 +37,7 @@ static inline uint8_t clamp(int val) {
 	return val > 255 ? 255 : val < 0 ? 0 : val;
 }
 
-Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat)
-{
+Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat) {
 	width = src->get_width();
 	height = src->get_height();
 	format = targetFormat;
@@ -108,8 +107,7 @@ Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat)
 	}
 }
 
-void Image::writeJpeg(int quality, uint8_t*& buf, unsigned long& bufLen)
-{
+void Image::writeJpeg(int quality, uint8_t*& buf, unsigned long& bufLen) {
 	buf = nullptr;
 	bufLen = 0;
 	if(format == Format_Mono) {
@@ -138,8 +136,7 @@ void Image::writeJpeg(int quality, uint8_t*& buf, unsigned long& bufLen)
 	jpeg_destroy_compress(&cinfo);
 }
 
-Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::ImageSurface> src, Format format)
-{
+Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::ImageSurface> src, Format format) {
 	int imgw = src->get_width();
 	int imgh = src->get_height();
 	int stride = src->get_stride();
@@ -194,8 +191,7 @@ Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::Im
 	return src;
 }
 
-Cairo::RefPtr<Cairo::ImageSurface> Image::scale(Cairo::RefPtr<Cairo::ImageSurface> src, double scaleFactor)
-{
+Cairo::RefPtr<Cairo::ImageSurface> Image::scale(Cairo::RefPtr<Cairo::ImageSurface> src, double scaleFactor) {
 	if(scaleFactor == 1.0) {
 		return src;
 	}
