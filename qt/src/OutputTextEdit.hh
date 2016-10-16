@@ -22,8 +22,7 @@
 
 #include <QPlainTextEdit>
 
-class OutputTextEdit : public QPlainTextEdit
-{
+class OutputTextEdit : public QPlainTextEdit {
 	Q_OBJECT
 public:
 	explicit OutputTextEdit(QWidget *parent = 0);

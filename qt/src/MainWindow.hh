@@ -62,17 +62,29 @@ public:
 
 	typedef void* Notification;
 
-	static MainWindow* getInstance(){ return s_instance; }
+	static MainWindow* getInstance() {
+		return s_instance;
+	}
 	static void signalHandler(int signal);
 
 	MainWindow(const QStringList& files);
 	~MainWindow();
 
-	Config* getConfig(){ return m_config; }
-	Displayer* getDisplayer(){ return m_displayer; }
-	OutputEditor* getOutputEditor(){ return m_outputEditor; }
-	Recognizer* getRecognizer(){ return m_recognizer; }
-	SourceManager* getSourceManager(){ return m_sourceManager; }
+	Config* getConfig() {
+		return m_config;
+	}
+	Displayer* getDisplayer() {
+		return m_displayer;
+	}
+	OutputEditor* getOutputEditor() {
+		return m_outputEditor;
+	}
+	Recognizer* getRecognizer() {
+		return m_recognizer;
+	}
+	SourceManager* getSourceManager() {
+		return m_sourceManager;
+	}
 	void addNotification(const QString& title, const QString& message, const QList<NotificationAction>& actions, Notification* handle = nullptr);
 	void openFiles(const QStringList& files);
 	void setOutputPaneVisible(bool visible);
@@ -115,7 +127,9 @@ private:
 
 	class VersionCheckThread : public QThread {
 	public:
-		const QString& getNewestVersion() const{ return m_newestVersion; }
+		const QString& getNewestVersion() const {
+			return m_newestVersion;
+		}
 	private:
 		QString m_newestVersion;
 		void run();

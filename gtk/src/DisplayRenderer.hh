@@ -27,7 +27,7 @@ typedef struct _PopplerDocument PopplerDocument;
 class DisplayRenderer {
 public:
 	DisplayRenderer(const std::string& filename) : m_filename(filename) {}
-	virtual ~DisplayRenderer(){}
+	virtual ~DisplayRenderer() {}
 	virtual Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const = 0;
 	virtual int getNPages() const = 0;
 
@@ -41,7 +41,9 @@ class ImageRenderer : public DisplayRenderer {
 public:
 	ImageRenderer(const std::string& filename) : DisplayRenderer(filename) {}
 	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const;
-	int getNPages() const{ return 1; }
+	int getNPages() const {
+		return 1;
+	}
 };
 
 class PDFRenderer : public DisplayRenderer {

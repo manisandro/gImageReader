@@ -32,7 +32,9 @@ public:
 	unsigned char* data = nullptr;
 
 	Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat);
-	~Image(){ delete[] data; }
+	~Image() {
+		delete[] data;
+	}
 	void writeJpeg(int quality, uint8_t*& buf, unsigned long& bufLen);
 
 	static Cairo::RefPtr<Cairo::ImageSurface> simulateFormat(Cairo::RefPtr<Cairo::ImageSurface> src, Format format);

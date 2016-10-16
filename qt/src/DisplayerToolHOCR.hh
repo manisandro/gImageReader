@@ -22,24 +22,33 @@
 
 #include "Displayer.hh"
 
-class DisplayerToolHOCR : public DisplayerTool
-{
+class DisplayerToolHOCR : public DisplayerTool {
 	Q_OBJECT
 public:
 	DisplayerToolHOCR(Displayer* displayer, QObject* parent = 0);
 	~DisplayerToolHOCR();
 
 	QList<QImage> getOCRAreas();
-	void pageChanged(){ clearSelection(); }
-	void resolutionChanged(double /*factor*/) override{ clearSelection(); }
-	void rotationChanged(double /*delta*/) override{ clearSelection(); }
-	void reset() override{ clearSelection(); }
+	void pageChanged() {
+		clearSelection();
+	}
+	void resolutionChanged(double /*factor*/) override {
+		clearSelection();
+	}
+	void rotationChanged(double /*delta*/) override {
+		clearSelection();
+	}
+	void reset() override {
+		clearSelection();
+	}
 
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 
-	void activateDrawSelection(){ m_drawingSelection = true; }
+	void activateDrawSelection() {
+		m_drawingSelection = true;
+	}
 	void setSelection(const QRect& rect);
 	QImage getSelection(const QRect& rect);
 	void clearSelection();

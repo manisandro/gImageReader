@@ -45,7 +45,9 @@ public:
 
 	void addSources(const std::vector<Glib::RefPtr<Gio::File>>& files);
 	std::vector<Source*> getSelectedSources() const;
-	sigc::signal<void> signal_sourceChanged(){ return m_signal_sourceChanged; }
+	sigc::signal<void> signal_sourceChanged() {
+		return m_signal_sourceChanged;
+	}
 
 private:
 	class ListViewColumns : public Gtk::TreeModel::ColumnRecord {
@@ -53,7 +55,11 @@ private:
 		Gtk::TreeModelColumn<std::string> filename;
 		Gtk::TreeModelColumn<Source*> source;
 		Gtk::TreeModelColumn<std::string> path;
-		ListViewColumns(){ add(filename); add(source); add(path); }
+		ListViewColumns() {
+			add(filename);
+			add(source);
+			add(path);
+		}
 	};
 
 	Gtk::Notebook* m_notebook;

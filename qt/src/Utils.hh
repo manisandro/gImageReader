@@ -32,48 +32,48 @@ class QDoubleSpinBox;
 class QUrl;
 
 namespace Utils {
-	QString documentsFolder();
-	QString makeOutputFilename(const QString& filename);
+QString documentsFolder();
+QString makeOutputFilename(const QString& filename);
 
-	bool busyTask(const std::function<bool()>& f, const QString& msg);
+bool busyTask(const std::function<bool()>& f, const QString& msg);
 
-	void setSpinBlocked(QSpinBox* spin, int value);
-	void setSpinBlocked(QDoubleSpinBox* spin, double value);
+void setSpinBlocked(QSpinBox* spin, int value);
+void setSpinBlocked(QDoubleSpinBox* spin, double value);
 
-	bool handleSourceDragEvent(const QMimeData* mimeData);
-	void handleSourceDropEvent(const QMimeData* mimeData);
+bool handleSourceDragEvent(const QMimeData* mimeData);
+void handleSourceDropEvent(const QMimeData* mimeData);
 
-	QByteArray download(QUrl url, QString& messages, int timeout = 60000);
+QByteArray download(QUrl url, QString& messages, int timeout = 60000);
 
-	QString getSpellingLanguage(const QString& lang = QString());
+QString getSpellingLanguage(const QString& lang = QString());
 
-	template<typename T>
-	class AsyncQueue {
-	public:
-		bool empty(){
-			QMutexLocker locker(&m_mutex);
-			return m_queue.isEmpty();
-		}
-		void enqueue(const T& item){
-			QMutexLocker locker(&m_mutex);
-			m_queue.enqueue(item);
-			m_cond.wakeOne();
-		}
-		T dequeue(){
-			QMutexLocker locker(&m_mutex);
-			if(m_queue.isEmpty()){
-				while(m_queue.isEmpty()){
-					m_cond.wait(&m_mutex);
-				}
+template<typename T>
+class AsyncQueue {
+public:
+	bool empty() {
+		QMutexLocker locker(&m_mutex);
+		return m_queue.isEmpty();
+	}
+	void enqueue(const T& item) {
+		QMutexLocker locker(&m_mutex);
+		m_queue.enqueue(item);
+		m_cond.wakeOne();
+	}
+	T dequeue() {
+		QMutexLocker locker(&m_mutex);
+		if(m_queue.isEmpty()) {
+			while(m_queue.isEmpty()) {
+				m_cond.wait(&m_mutex);
 			}
-			return m_queue.dequeue();
 		}
+		return m_queue.dequeue();
+	}
 
-	private:
-		QQueue<T> m_queue;
-		QMutex m_mutex;
-		QWaitCondition m_cond;
-	};
+private:
+	QQueue<T> m_queue;
+	QMutex m_mutex;
+	QWaitCondition m_cond;
+};
 }
 
 #endif

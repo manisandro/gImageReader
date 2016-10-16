@@ -30,8 +30,8 @@
 class DisplayerImageItem;
 class DisplayerToolHOCR;
 namespace xmlpp {
-	class DomParser;
-	class Element;
+class DomParser;
+class Element;
 }
 
 class OutputEditorHOCR : public OutputEditor {
@@ -39,7 +39,9 @@ public:
 	OutputEditorHOCR(DisplayerToolHOCR* tool);
 	~OutputEditorHOCR();
 
-	Gtk::Box* getUI() override { return m_widget; }
+	Gtk::Box* getUI() override {
+		return m_widget;
+	}
 	ReadSessionData* initRead(tesseract::TessBaseAPI& tess) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
@@ -99,26 +101,47 @@ private:
 		Gtk::TreeModelColumn<double> fontSize;
 		Gtk::TreeModelColumn<int> baseLine;
 		Gtk::TreeModelColumn<Glib::ustring> textColor;
-		ItemStoreColumns() { add(selected); add(editable); add(icon); add(text); add(id); add(source); add(bbox); add(itemClass); add(fontSize); add(baseLine), add(textColor); }
+		ItemStoreColumns() {
+			add(selected);
+			add(editable);
+			add(icon);
+			add(text);
+			add(id);
+			add(source);
+			add(bbox);
+			add(itemClass);
+			add(fontSize);
+			add(baseLine), add(textColor);
+		}
 	} m_itemStoreCols;
 
 	struct PropStoreColumns : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Glib::ustring> name;
 		Gtk::TreeModelColumn<Glib::ustring> parentAttr;
 		Gtk::TreeModelColumn<Glib::ustring> value;
-		PropStoreColumns() { add(name); add(parentAttr); add(value); }
+		PropStoreColumns() {
+			add(name);
+			add(parentAttr);
+			add(value);
+		}
 	} m_propStoreCols;
 
 	struct FormatComboColums : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Image::Format> format;
 		Gtk::TreeModelColumn<Glib::ustring> label;
-		FormatComboColums() { add(format); add(label); }
+		FormatComboColums() {
+			add(format);
+			add(label);
+		}
 	} m_formatComboCols;
 
 	struct CompressionComboColums : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<PDFSettings::Compression> mode;
 		Gtk::TreeModelColumn<Glib::ustring> label;
-		CompressionComboColums() { add(mode); add(label); }
+		CompressionComboColums() {
+			add(mode);
+			add(label);
+		}
 	} m_compressionComboCols;
 
 	Builder m_builder;

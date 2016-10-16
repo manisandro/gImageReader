@@ -22,8 +22,7 @@
 
 Q_DECLARE_METATYPE(OutputEditor::ReadSessionData)
 
-OutputEditor::OutputEditor(QObject* parent) : QObject(parent)
-{
+OutputEditor::OutputEditor(QObject* parent) : QObject(parent) {
 	static int reg = qRegisterMetaType<ReadSessionData>("ReadSessionData");
 	Q_UNUSED(reg);
 }

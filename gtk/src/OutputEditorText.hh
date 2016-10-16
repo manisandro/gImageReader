@@ -35,8 +35,12 @@ public:
 	OutputEditorText();
 	~OutputEditorText();
 
-	Gtk::Box* getUI() override { return m_paneWidget; }
-	ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override{ return new TextReadSessionData; }
+	Gtk::Box* getUI() override {
+		return m_paneWidget;
+	}
+	ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
+		return new TextReadSessionData;
+	}
 	bool clear(bool hide = true) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;

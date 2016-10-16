@@ -25,18 +25,21 @@
 #include "Config.hh"
 #include "Displayer.hh"
 
-namespace tesseract { class TessBaseAPI; }
+namespace tesseract {
+class TessBaseAPI;
+}
 class UI_MainWindow;
 
-class Recognizer : public QObject
-{
+class Recognizer : public QObject {
 	Q_OBJECT
 public:
 	enum class OutputDestination { Buffer, Clipboard };
 
 	Recognizer(const UI_MainWindow& _ui);
 	QStringList getAvailableLanguages() const;
-	const Config::Lang& getSelectedLanguage() const{ return m_curLang; }
+	const Config::Lang& getSelectedLanguage() const {
+		return m_curLang;
+	}
 
 public slots:
 	bool recognizeImage(const QImage& image, OutputDestination dest);

@@ -24,8 +24,7 @@
 
 class QListWidget;
 
-class TessdataManager : public QDialog
-{
+class TessdataManager : public QDialog {
 	Q_OBJECT
 public:
 	TessdataManager(QWidget* parent = 0);

@@ -22,13 +22,12 @@
 #include <QPushButton>
 
 CrashHandler::CrashHandler(int pid, const QString& savefile, QWidget *parent):
-	QDialog(parent), m_pid(pid)
-{
+	QDialog(parent), m_pid(pid) {
 	ui.setupUi(this);
 
 	if(!savefile.isEmpty()) {
 		ui.labelAutosave->setText(_("Your work has been saved under <b>%1</b>.").arg(savefile));
-	}else{
+	} else {
 		ui.labelAutosave->setText(_("There was no unsaved work."));
 	}
 
@@ -46,31 +45,28 @@ CrashHandler::CrashHandler(int pid, const QString& savefile, QWidget *parent):
 	regenerateBacktrace();
 }
 
-void CrashHandler::closeEvent(QCloseEvent *)
-{
+void CrashHandler::closeEvent(QCloseEvent *) {
 	m_gdbProcess.kill();
 }
 
-void CrashHandler::appendGdbOutput()
-{
+void CrashHandler::appendGdbOutput() {
 	ui.plainTextEditBacktrace->appendPlainText(m_gdbProcess.readAllStandardOutput());
 }
 
-void CrashHandler::handleGdbFinished(int exitCode, QProcess::ExitStatus exitStatus)
-{
+void CrashHandler::handleGdbFinished(int exitCode, QProcess::ExitStatus exitStatus) {
 	ui.progressBarBacktrace->setVisible(false);
 	m_refreshButton->setEnabled(true);
 	if(exitCode != 0 || exitStatus != QProcess::NormalExit) {
 		ui.plainTextEditBacktrace->appendPlainText(_("Failed to obtain backtrace. Is gdb installed?"));
-	}else{
+	} else {
 		QStringList lines = ui.plainTextEditBacktrace->toPlainText().split("\n");
 		ui.plainTextEditBacktrace->setPlainText(lines[0]);
 		ui.plainTextEditBacktrace->appendPlainText("\n");
-		for(int i = 1, n = lines.length(); i < n; ++i){
-			if(lines[i].startsWith("Thread")){
+		for(int i = 1, n = lines.length(); i < n; ++i) {
+			if(lines[i].startsWith("Thread")) {
 				ui.plainTextEditBacktrace->appendPlainText("\n");
 				ui.plainTextEditBacktrace->appendPlainText(lines[i]);
-			}else if(lines[i].startsWith('#')){
+			} else if(lines[i].startsWith('#')) {
 				ui.plainTextEditBacktrace->appendPlainText(lines[i]);
 			}
 		}
@@ -81,8 +77,7 @@ void CrashHandler::handleGdbFinished(int exitCode, QProcess::ExitStatus exitStat
 	ui.plainTextEditBacktrace->ensureCursorVisible();
 }
 
-void CrashHandler::regenerateBacktrace()
-{
+void CrashHandler::regenerateBacktrace() {
 	ui.plainTextEditBacktrace->setPlainText(QString("%1 %2 (%3)\n\n").arg(PACKAGE_NAME).arg(PACKAGE_VERSION).arg(PACKAGE_REVISION));
 	m_refreshButton->setEnabled(false);
 	ui.progressBarBacktrace->setVisible(true);

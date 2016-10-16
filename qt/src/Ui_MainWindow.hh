@@ -6,8 +6,7 @@
 #include <QMenu>
 #include <QWidgetAction>
 
-class UI_MainWindow : public Ui_MainWindow
-{
+class UI_MainWindow : public Ui_MainWindow {
 public:
 	QAction* actionAbout;
 	QAction* actionHelp;
@@ -37,8 +36,7 @@ public:
 	QWidgetAction* actionPage;
 
 
-	void setupUi(QMainWindow* MainWindow)
-	{
+	void setupUi(QMainWindow* MainWindow) {
 		Ui_MainWindow::setupUi(MainWindow);
 
 		// Do remaining things which are not possible in designer

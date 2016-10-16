@@ -37,21 +37,37 @@ class Source;
 class Displayer {
 public:
 	Displayer();
-	~Displayer(){ setSources(std::vector<Source*>()); }
-	void setTool(DisplayerTool* tool) { m_tool = tool; }
+	~Displayer() {
+		setSources(std::vector<Source*>());
+	}
+	void setTool(DisplayerTool* tool) {
+		m_tool = tool;
+	}
 	bool setSources(const std::vector<Source*> sources);
-	int getCurrentPage() const{ return m_pagespin->get_value_as_int(); }
+	int getCurrentPage() const {
+		return m_pagespin->get_value_as_int();
+	}
 	bool setCurrentPage(int page);
-	double getCurrentAngle() const{ return m_rotspin->get_value(); }
-	double getCurrentScale() const{ return m_scale; }
+	double getCurrentAngle() const {
+		return m_rotspin->get_value();
+	}
+	double getCurrentScale() const {
+		return m_scale;
+	}
 	void setAngle(double angle);
-	int getCurrentResolution(){ return m_resspin->get_value_as_int(); }
+	int getCurrentResolution() {
+		return m_resspin->get_value_as_int();
+	}
 	void setResolution(int resolution);
 	std::string getCurrentImage(int& page) const;
 	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
 	Geometry::Rectangle getSceneBoundingRect() const;
 	Geometry::Point mapToSceneClamped(const Geometry::Point& p) const;
-	int getNPages(){ double min, max; m_pagespin->get_range(min, max); return int(max); }
+	int getNPages() {
+		double min, max;
+		m_pagespin->get_range(min, max);
+		return int(max);
+	}
 	bool hasMultipleOCRAreas();
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
 	bool allowAutodetectOCRAreas() const;
@@ -146,22 +162,36 @@ private:
 class DisplayerItem {
 public:
 	friend class Displayer;
-	virtual ~DisplayerItem(){}
+	virtual ~DisplayerItem() {}
 
-	Displayer* displayer() const{ return m_displayer; }
+	Displayer* displayer() const {
+		return m_displayer;
+	}
 
 	void setZIndex(int zIndex);
-	double zIndex() const{ return m_zIndex; }
+	double zIndex() const {
+		return m_zIndex;
+	}
 	void setRect(const Geometry::Rectangle& rect);
-	const Geometry::Rectangle& rect() const{ return m_rect; }
+	const Geometry::Rectangle& rect() const {
+		return m_rect;
+	}
 	void setVisible(bool visible);
-	bool visible() const{ return m_visible; }
+	bool visible() const {
+		return m_visible;
+	}
 	void update();
 
 	virtual void draw(Cairo::RefPtr<Cairo::Context> ctx) const = 0;
-	virtual bool mousePressEvent(GdkEventButton */*event*/) { return false; }
-	virtual bool mouseMoveEvent(GdkEventMotion */*event*/) { return false; }
-	virtual bool mouseReleaseEvent(GdkEventButton */*event*/) { return false; }
+	virtual bool mousePressEvent(GdkEventButton */*event*/) {
+		return false;
+	}
+	virtual bool mouseMoveEvent(GdkEventMotion */*event*/) {
+		return false;
+	}
+	virtual bool mouseReleaseEvent(GdkEventButton */*event*/) {
+		return false;
+	}
 
 	static bool zIndexCmp(const DisplayerItem* lhs, const DisplayerItem* rhs) {
 		return lhs->m_zIndex < rhs->m_zIndex;
@@ -174,28 +204,29 @@ private:
 	bool m_visible = true;
 };
 
-class DisplayerImageItem : public DisplayerItem
-{
+class DisplayerImageItem : public DisplayerItem {
 public:
 	using DisplayerItem::DisplayerItem;
 	void draw(Cairo::RefPtr<Cairo::Context> ctx) const override;
-	void setImage(Cairo::RefPtr<Cairo::ImageSurface> image) { m_image = image; }
-	void setRotation(double rotation) { m_rotation = rotation; }
+	void setImage(Cairo::RefPtr<Cairo::ImageSurface> image) {
+		m_image = image;
+	}
+	void setRotation(double rotation) {
+		m_rotation = rotation;
+	}
 
 protected:
 	Cairo::RefPtr<Cairo::ImageSurface> m_image;
 	double m_rotation = 0.;
 };
 
-class DisplayerSelection : public DisplayerItem
-{
+class DisplayerSelection : public DisplayerItem {
 public:
 	DisplayerSelection(DisplayerTool* tool, const Geometry::Point& anchor)
-		: m_tool(tool), m_anchor(anchor), m_point(anchor)
-	{
+		: m_tool(tool), m_anchor(anchor), m_point(anchor) {
 		setRect(Geometry::Rectangle(anchor, anchor));
 	}
-	void setPoint(const Geometry::Point& point){
+	void setPoint(const Geometry::Point& point) {
 		m_point = point;
 		setRect(Geometry::Rectangle(m_anchor, m_point));
 	}
@@ -204,16 +235,16 @@ public:
 		m_point = point;
 		setRect(Geometry::Rectangle(m_anchor, m_point));
 	}
-	void rotate(const Geometry::Rotation &R){
+	void rotate(const Geometry::Rotation &R) {
 		m_anchor = R.rotate(m_anchor);
 		m_point = R.rotate(m_point);
 		setRect(Geometry::Rectangle(m_anchor, m_point));
 	}
-	void scale(double factor){
+	void scale(double factor) {
 		m_anchor = Geometry::Point(m_anchor.x * factor, m_anchor.y * factor);
 		m_point = Geometry::Point(m_point.x * factor, m_point.y * factor);
 	}
-	sigc::signal<void, Geometry::Rectangle> signal_geometry_changed(){
+	sigc::signal<void, Geometry::Rectangle> signal_geometry_changed() {
 		return m_signalGeometryChanged;
 	}
 
@@ -236,28 +267,46 @@ private:
 	Geometry::Point m_resizeOffset;
 	sigc::signal<void, Geometry::Rectangle> m_signalGeometryChanged;
 
-	static void resizeAnchorX(const Geometry::Point& pos, Geometry::Point& anchor, Geometry::Point& /*point*/){ anchor.x = pos.x; }
-	static void resizeAnchorY(const Geometry::Point& pos, Geometry::Point& anchor, Geometry::Point& /*point*/){ anchor.y = pos.y; }
-	static void resizePointX(const Geometry::Point& pos, Geometry::Point& /*anchor*/, Geometry::Point& point){ point.x = pos.x; }
-	static void resizePointY(const Geometry::Point& pos, Geometry::Point& /*anchor*/, Geometry::Point& point){ point.y = pos.y; }
+	static void resizeAnchorX(const Geometry::Point& pos, Geometry::Point& anchor, Geometry::Point& /*point*/) {
+		anchor.x = pos.x;
+	}
+	static void resizeAnchorY(const Geometry::Point& pos, Geometry::Point& anchor, Geometry::Point& /*point*/) {
+		anchor.y = pos.y;
+	}
+	static void resizePointX(const Geometry::Point& pos, Geometry::Point& /*anchor*/, Geometry::Point& point) {
+		point.x = pos.x;
+	}
+	static void resizePointY(const Geometry::Point& pos, Geometry::Point& /*anchor*/, Geometry::Point& point) {
+		point.y = pos.y;
+	}
 };
 
 
 class DisplayerTool {
 public:
 	DisplayerTool(Displayer* displayer) : m_displayer(displayer) {}
-	virtual ~DisplayerTool(){}
-	virtual bool mousePressEvent(GdkEventButton */*event*/){ return false; }
-	virtual bool mouseMoveEvent(GdkEventMotion */*event*/){ return false; }
-	virtual bool mouseReleaseEvent(GdkEventButton */*event*/){ return false; }
-	virtual void pageChanged(){}
-	virtual void resolutionChanged(double /*factor*/){}
-	virtual void rotationChanged(double /*delta*/){}
+	virtual ~DisplayerTool() {}
+	virtual bool mousePressEvent(GdkEventButton */*event*/) {
+		return false;
+	}
+	virtual bool mouseMoveEvent(GdkEventMotion */*event*/) {
+		return false;
+	}
+	virtual bool mouseReleaseEvent(GdkEventButton */*event*/) {
+		return false;
+	}
+	virtual void pageChanged() {}
+	virtual void resolutionChanged(double /*factor*/) {}
+	virtual void rotationChanged(double /*delta*/) {}
 	virtual std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas() = 0;
-	virtual bool hasMultipleOCRAreas() const{ return false; }
-	virtual bool allowAutodetectOCRAreas() const{ return false; }
-	virtual void autodetectOCRAreas(){}
-	virtual void reset(){}
+	virtual bool hasMultipleOCRAreas() const {
+		return false;
+	}
+	virtual bool allowAutodetectOCRAreas() const {
+		return false;
+	}
+	virtual void autodetectOCRAreas() {}
+	virtual void reset() {}
 
 protected:
 	Displayer* m_displayer;

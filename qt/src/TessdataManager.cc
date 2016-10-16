@@ -42,8 +42,7 @@
 #include "Utils.hh"
 
 TessdataManager::TessdataManager(QWidget *parent)
-	: QDialog(parent)
-{
+	: QDialog(parent) {
 	setWindowTitle(_("Tessdata Manager"));
 	setLayout(new QVBoxLayout());
 	layout()->addWidget(new QLabel(_("Manage installed languages:")));
@@ -63,13 +62,12 @@ TessdataManager::TessdataManager(QWidget *parent)
 	setFixedWidth(320);
 }
 
-bool TessdataManager::setup()
-{
+bool TessdataManager::setup() {
 #ifdef Q_OS_LINUX
 	if(MAIN->getConfig()->useSystemDataLocations()) {
 		QDBusConnectionInterface* iface = QDBusConnection::sessionBus().interface();
 		iface->startService("org.freedesktop.PackageKit");
-		if(!iface->isServiceRegistered("org.freedesktop.PackageKit").value()){
+		if(!iface->isServiceRegistered("org.freedesktop.PackageKit").value()) {
 			QMessageBox::critical(MAIN, _("Error"), _("PackageKit is required for managing system-wide tesseract language packs, but it was not found. Please use the system package management software to manage the tesseract language packs, or switch to use the user tessdata path in the configuration dialog."));
 			return false;
 		}
@@ -79,16 +77,14 @@ bool TessdataManager::setup()
 	QString messages;
 	bool success = fetchLanguageList(messages);
 	MAIN->popState();
-	if(!success)
-	{
+	if(!success) {
 		QMessageBox::critical(MAIN, _("Error"), _("Failed to fetch list of available languages: %1").arg(messages));
 		return false;
 	}
 	return true;
 }
 
-bool TessdataManager::fetchLanguageList(QString& messages)
-{
+bool TessdataManager::fetchLanguageList(QString& messages) {
 	QByteArray data = Utils::download(QUrl("https://api.github.com/repos/tesseract-ocr/tessdata/contents"), messages);
 
 	if(data.isEmpty()) {
@@ -156,8 +152,7 @@ bool TessdataManager::fetchLanguageList(QString& messages)
 	return true;
 }
 
-void TessdataManager::applyChanges()
-{
+void TessdataManager::applyChanges() {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying changes..."));
 	setEnabled(false);
 	setCursor(Qt::WaitCursor);
@@ -246,8 +241,7 @@ void TessdataManager::applyChanges()
 	}
 }
 
-void TessdataManager::refresh()
-{
+void TessdataManager::refresh() {
 	MAIN->getRecognizer()->updateLanguagesMenu();
 	QStringList availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
 	for(int row = 0, nRows = m_languageList->count(); row < nRows; ++row) {

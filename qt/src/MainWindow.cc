@@ -53,15 +53,14 @@
 #define DOWNLOADURL "https://github.com/manisandro/gImageReader/releases"
 #define CHANGELOGURL "https://raw.githubusercontent.com/manisandro/gImageReader/master/NEWS"
 
-void MainWindow::signalHandler(int signal)
-{
+void MainWindow::signalHandler(int signal) {
 	std::signal(signal, nullptr);
 
 	QString filename;
-	if(MAIN->getOutputEditor() && MAIN->getOutputEditor()->getModified()){
+	if(MAIN->getOutputEditor() && MAIN->getOutputEditor()->getModified()) {
 		filename = QDir(Utils::documentsFolder()).absoluteFilePath(QString("%1_crash-save.txt").arg(PACKAGE_NAME));
 		int i = 0;
-		while(QFile(filename).exists()){
+		while(QFile(filename).exists()) {
 			++i;
 			filename = QDir(Utils::documentsFolder()).absoluteFilePath(QString("%1_crash-save_%2.txt").arg(PACKAGE_NAME).arg(i));
 		}
@@ -79,19 +78,18 @@ void MainWindow::signalHandler(int signal)
 }
 
 #ifndef __ARMEL__
-static void terminateHandler()
-{
+static void terminateHandler() {
 	std::set_terminate(nullptr);
 	std::exception_ptr exptr = std::current_exception();
-	if (exptr != 0){
-		try{
+	if (exptr != 0) {
+		try {
 			std::rethrow_exception(exptr);
-		}catch (std::exception &ex){
+		} catch (std::exception &ex) {
 			std::cerr << "Terminated due to exception: " << ex.what() << std::endl;
-		}catch (...){
+		} catch (...) {
 			std::cerr << "Terminated due to unknown exception" << std::endl;
 		}
-	}else{
+	} else {
 		std::cerr << "Terminated due to unknown reason:" << std::endl;
 	}
 	MainWindow::signalHandler(SIGABRT);
@@ -101,8 +99,7 @@ static void terminateHandler()
 MainWindow* MainWindow::s_instance = nullptr;
 
 MainWindow::MainWindow(const QStringList& files)
-	: m_idleActions(0)
-{
+	: m_idleActions(0) {
 	s_instance = this;
 
 	std::signal(SIGSEGV, signalHandler);
@@ -189,7 +186,7 @@ MainWindow::MainWindow(const QStringList& files)
 	ui.actionSources->trigger();
 
 #if ENABLE_VERSIONCHECK
-	if(m_config->getSetting<SwitchSetting>("updatecheck")->getValue()){
+	if(m_config->getSetting<SwitchSetting>("updatecheck")->getValue()) {
 		connect(&m_versionCheckThread, SIGNAL(finished()), this, SLOT(checkVersion()));
 		m_versionCheckThread.start();
 	}
@@ -198,8 +195,7 @@ MainWindow::MainWindow(const QStringList& files)
 	m_sourceManager->addSources(files);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
 	delete m_acquirer;
 	delete m_outputEditor;
 	delete m_sourceManager;
@@ -211,29 +207,25 @@ MainWindow::~MainWindow()
 	s_instance = nullptr;
 }
 
-void MainWindow::openFiles(const QStringList& files)
-{
+void MainWindow::openFiles(const QStringList& files) {
 	m_sourceManager->addSources(files);
 }
 
-void MainWindow::setOutputPaneVisible(bool visible)
-{
+void MainWindow::setOutputPaneVisible(bool visible) {
 	ui.actionToggleOutputPane->setChecked(visible);
 }
 
-void MainWindow::pushState(MainWindow::State state, const QString& msg)
-{
+void MainWindow::pushState(MainWindow::State state, const QString& msg) {
 	m_stateStack.push(QPair<State, QString>(state, msg));
 	ui.statusbar->showMessage(msg);
 	setState(state);
-	if(state == State::Busy){
+	if(state == State::Busy) {
 		QApplication::setOverrideCursor(Qt::WaitCursor);
 	}
 }
 
-void MainWindow::popState()
-{
-	if(m_stateStack.top().first == State::Busy){
+void MainWindow::popState() {
+	if(m_stateStack.top().first == State::Busy) {
 		QApplication::restoreOverrideCursor();
 	}
 	m_stateStack.pop();
@@ -242,40 +234,36 @@ void MainWindow::popState()
 	setState(pair.first);
 }
 
-void MainWindow::setState(State state)
-{
+void MainWindow::setState(State state) {
 	bool isIdle = state == State::Idle;
 	m_idleActions.setEnabled(!isIdle);
 	for(QWidget* widget : m_idleWidgets)
 		widget->setEnabled(!isIdle);
 }
 
-void MainWindow::closeEvent(QCloseEvent* ev)
-{
-	if(!m_outputEditor->clear()){
+void MainWindow::closeEvent(QCloseEvent* ev) {
+	if(!m_outputEditor->clear()) {
 		ev->ignore();
-	}else if(!isMaximized()){
+	} else if(!isMaximized()) {
 		m_config->getSetting<VarSetting<QByteArray>>("wingeom")->setValue(saveGeometry());
 		m_config->getSetting<VarSetting<QByteArray>>("winstate")->setValue(saveState());
 	}
 }
 
-void MainWindow::onSourceChanged()
-{
-	if(m_stateStack.top().first == State::Normal){
+void MainWindow::onSourceChanged() {
+	if(m_stateStack.top().first == State::Normal) {
 		popState();
 	}
 	QList<Source*> sources = m_sourceManager->getSelectedSources();
-	if(m_displayer->setSources(sources)){
+	if(m_displayer->setSources(sources)) {
 		setWindowTitle(QString("%1 - %2").arg(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources")).arg(PACKAGE_NAME));
 		pushState(State::Normal, _("Ready"));
-	}else{
+	} else {
 		setWindowTitle(PACKAGE_NAME);
 	}
 }
 
-void MainWindow::showAbout()
-{
+void MainWindow::showAbout() {
 	QDialog d(this);
 	Ui::AboutDialog aboutDialogUi;
 	aboutDialogUi.setupUi(&d);
@@ -283,8 +271,7 @@ void MainWindow::showAbout()
 	d.exec();
 }
 
-void MainWindow::showHelp(const QString& chapter)
-{
+void MainWindow::showHelp(const QString& chapter) {
 #ifdef Q_OS_WIN32
 	QDir manualDir(QString("%1/../share/doc/gimagereader").arg(QApplication::applicationDirPath()));
 #else
@@ -292,7 +279,7 @@ void MainWindow::showHelp(const QString& chapter)
 #endif
 	QString language = QLocale::system().name().left(2);
 	QString manualFile = manualDir.absoluteFilePath(QString("manual-%1.html").arg(language));
-	if(!QFile(manualFile).exists()){
+	if(!QFile(manualFile).exists()) {
 		manualFile = manualDir.absoluteFilePath("manual.html");
 	}
 	QUrl manualUrl = QUrl::fromLocalFile(manualFile);
@@ -300,19 +287,17 @@ void MainWindow::showHelp(const QString& chapter)
 	QDesktopServices::openUrl(manualUrl);
 }
 
-void MainWindow::showConfig()
-{
+void MainWindow::showConfig() {
 	m_config->showDialog();
 	m_recognizer->updateLanguagesMenu();
 }
 
-void MainWindow::setOCRMode(int idx)
-{
-	if(m_outputEditor && !m_outputEditor->clear()){
+void MainWindow::setOCRMode(int idx) {
+	if(m_outputEditor && !m_outputEditor->clear()) {
 		ui.comboBoxOCRMode->blockSignals(true);
 		if(dynamic_cast<OutputEditorText*>(m_outputEditor)) {
 			ui.comboBoxOCRMode->setCurrentIndex(0);
-		} else /*if(dynamic_cast<OutputEditorHOCR*>(m_outputEditor))*/ {
+		} else { /*if(dynamic_cast<OutputEditorHOCR*>(m_outputEditor))*/
 			ui.comboBoxOCRMode->setCurrentIndex(1);
 		}
 		ui.comboBoxOCRMode->blockSignals(false);
@@ -322,7 +307,7 @@ void MainWindow::setOCRMode(int idx)
 		if(idx == 0) {
 			m_displayerTool = new DisplayerToolSelect(ui.actionAutodetectLayout, m_displayer);
 			m_outputEditor = new OutputEditorText();
-		} else /*if(idx == 1)*/ {
+		} else { /*if(idx == 1)*/
 			m_displayerTool = new DisplayerToolHOCR(m_displayer);
 			m_outputEditor = new OutputEditorHOCR(static_cast<DisplayerToolHOCR*>(m_displayerTool));
 		}
@@ -334,8 +319,7 @@ void MainWindow::setOCRMode(int idx)
 	}
 }
 
-void MainWindow::addNotification(const QString& title, const QString& message, const QList<NotificationAction> &actions, MainWindow::Notification* handle)
-{
+void MainWindow::addNotification(const QString& title, const QString& message, const QList<NotificationAction> &actions, MainWindow::Notification* handle) {
 	QFrame* frame = new QFrame();
 	frame->setFrameStyle(QFrame::StyledPanel|QFrame::Raised);
 	frame->setStyleSheet("background: #FFD000;");
@@ -344,11 +328,11 @@ void MainWindow::addNotification(const QString& title, const QString& message, c
 	QLabel* msgLabel = new QLabel(message, frame);
 	msgLabel->setWordWrap(true);
 	layout->addWidget(msgLabel, 1);
-	for(const NotificationAction& action : actions){
+	for(const NotificationAction& action : actions) {
 		QToolButton* btn = new QToolButton(frame);
 		btn->setText(action.text);
 		connect(btn, SIGNAL(clicked()), action.target, action.slot);
-		if(action.close){
+		if(action.close) {
 			btn->setProperty("handle", QVariant::fromValue(reinterpret_cast<void*>(handle)));
 			btn->setProperty("frame", QVariant::fromValue(reinterpret_cast<void*>(frame)));
 			connect(btn, SIGNAL(clicked()), this, SLOT(hideNotification()));
@@ -362,65 +346,60 @@ void MainWindow::addNotification(const QString& title, const QString& message, c
 	connect(closeBtn, SIGNAL(clicked()), this, SLOT(hideNotification()));
 	layout->addWidget(closeBtn);
 	ui.centralwidget->layout()->addWidget(frame);
-	if(handle){
+	if(handle) {
 		*handle = frame;
 	}
 }
 
-void MainWindow::hideNotification(Notification handle)
-{
-	if(!handle && QObject::sender()){
+void MainWindow::hideNotification(Notification handle) {
+	if(!handle && QObject::sender()) {
 		handle = static_cast<QFrame*>(static_cast<QToolButton*>(QObject::sender())->property("frame").value<void*>());
 		Notification* h = reinterpret_cast<void**>(static_cast<QToolButton*>(QObject::sender())->property("handle").value<void*>());
-		if(h){
+		if(h) {
 			*h = nullptr;
 		}
 	}
-	if(handle){
+	if(handle) {
 		static_cast<QFrame*>(handle)->deleteLater();
 	}
 }
 
-void MainWindow::VersionCheckThread::run()
-{
+void MainWindow::VersionCheckThread::run() {
 	QString messages;
 	QString newver = Utils::download(QUrl(CHECKURL), messages, 5000);
 	newver.replace(QRegExp("\\s+"), "");
 	QRegExp pat(R"(^[\d+\.]+\d+$)");
-	if(pat.exactMatch(newver)){
+	if(pat.exactMatch(newver)) {
 		m_newestVersion = newver;
 	}
 }
 
-void MainWindow::checkVersion()
-{
+void MainWindow::checkVersion() {
 	QString newver = m_versionCheckThread.getNewestVersion();
 	qDebug("Newest version is: %s", qPrintable(newver));
-	if(newver.isEmpty()){
+	if(newver.isEmpty()) {
 		return;
 	}
 	QString curver = PACKAGE_VERSION;
 
-	if(newver.compare(curver) > 0){
-		addNotification(_("New version"), _("gImageReader %1 is available").arg(newver),
-			{{_("Download"), this, SLOT(openDownloadUrl()), false},
-			 {_("Changelog"), this, SLOT(openChangeLogUrl()), false},
-			 {_("Don't notify again"), m_config, SLOT(disableUpdateCheck()), true}});
+	if(newver.compare(curver) > 0) {
+		addNotification(_("New version"), _("gImageReader %1 is available").arg(newver), {
+			{_("Download"), this, SLOT(openDownloadUrl()), false},
+			{_("Changelog"), this, SLOT(openChangeLogUrl()), false},
+			{_("Don't notify again"), m_config, SLOT(disableUpdateCheck()), true}
+		});
 	}
 }
 
-void MainWindow::openDownloadUrl()
-{
+void MainWindow::openDownloadUrl() {
 	QDesktopServices::openUrl(QUrl(DOWNLOADURL));
 }
 
-void MainWindow::openChangeLogUrl()
-{
+void MainWindow::openChangeLogUrl() {
 	QDesktopServices::openUrl(QUrl(CHANGELOGURL));
 }
 
-void MainWindow::showProgress(ProgressMonitor* monitor, int updateInterval)
-{
+void MainWindow::showProgress(ProgressMonitor* monitor, int updateInterval) {
 	m_progressMonitor = monitor;
 	m_progressTimer.start(updateInterval);
 	m_progressCancelButton->setEnabled(true);
@@ -428,42 +407,37 @@ void MainWindow::showProgress(ProgressMonitor* monitor, int updateInterval)
 	m_progressWidget->show();
 }
 
-void MainWindow::hideProgress()
-{
+void MainWindow::hideProgress() {
 	m_progressWidget->hide();
 	m_progressTimer.stop();
 	m_progressMonitor = nullptr;
 }
 
-void MainWindow::progressCancel()
-{
+void MainWindow::progressCancel() {
 	if(m_progressMonitor) {
 		m_progressCancelButton->setEnabled(false);
 		m_progressMonitor->cancel();
 	}
 }
 
-void MainWindow::progressUpdate()
-{
+void MainWindow::progressUpdate() {
 	if(m_progressMonitor) {
 		m_progressBar->setValue(m_progressMonitor->getProgress());
 	}
 }
 
-void MainWindow::languageChanged()
-{
+void MainWindow::languageChanged() {
 	hideNotification(m_notifierHandle);
 	m_notifierHandle = nullptr;
 	const QString& code = m_recognizer->getSelectedLanguage().code;
-	if(!code.isEmpty() && !QtSpell::checkLanguageInstalled(code) && m_config->getSetting<SwitchSetting>("dictinstall")->getValue())
-	{
+	if(!code.isEmpty() && !QtSpell::checkLanguageInstalled(code) && m_config->getSetting<SwitchSetting>("dictinstall")->getValue()) {
 		NotificationAction actionDontShowAgain = {_("Don't show again"), m_config, SLOT(disableDictInstall()), true};
 		NotificationAction actionInstall = {_("Install"), this, SLOT(dictionaryAutoinstall()), false};
 #ifdef Q_OS_LINUX
 		if(getConfig()->useSystemDataLocations()) {
 			QDBusConnectionInterface* iface = QDBusConnection::sessionBus().interface();
 			iface->startService("org.freedesktop.PackageKit");
-			if(!iface->isServiceRegistered("org.freedesktop.PackageKit").value()){
+			if(!iface->isServiceRegistered("org.freedesktop.PackageKit").value()) {
 				actionInstall = {_("Help"), this, SLOT(showHelp()), false}; // TODO #InstallSpelling
 				qWarning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
 			}
@@ -474,8 +448,7 @@ void MainWindow::languageChanged()
 	}
 }
 
-void MainWindow::dictionaryAutoinstall()
-{
+void MainWindow::dictionaryAutoinstall() {
 	QList<QString> codes = m_config->searchLangCultures(m_recognizer->getSelectedLanguage().code);
 	QString code = codes.isEmpty() ? m_recognizer->getSelectedLanguage().code : codes.front();
 	pushState(State::Busy, _("Installing spelling dictionary for '%1'").arg(code));
@@ -497,8 +470,7 @@ void MainWindow::dictionaryAutoinstall()
 		req.setArguments(QList<QVariant>() << QVariant::fromValue((quint32)winId()) << QVariant::fromValue(files) << QVariant::fromValue(QString("always")));
 		QDBusMessage reply = QDBusConnection::sessionBus().call(req, QDBus::BlockWithGui, 3600000);
 		if(reply.type() == QDBusMessage::ErrorMessage) {
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to install spelling dictionary: %1").arg(reply.errorMessage()), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok))
-			{
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to install spelling dictionary: %1").arg(reply.errorMessage()), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 		}
@@ -511,7 +483,7 @@ void MainWindow::dictionaryAutoinstall()
 		QDir spellingDir(getConfig()->spellingLocation());
 		if(!QDir().mkpath(spellingDir.absolutePath())) {
 			popState();
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to create directory for spelling dictionaries."), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to create directory for spelling dictionaries."), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 			return;
@@ -519,27 +491,27 @@ void MainWindow::dictionaryAutoinstall()
 		QString urlcode = code;
 		QString messages;
 		QByteArray html = Utils::download(url, messages);
-		if(html.isNull()){
+		if(html.isNull()) {
 			popState();
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2.").arg(url).arg(messages), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2.").arg(url).arg(messages), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 			return;
-		}else if(html.indexOf(QString(">%1<").arg(code)) != -1){
+		} else if(html.indexOf(QString(">%1<").arg(code)) != -1) {
 			// Ok
-		}else if(html.indexOf(QString(">%1<").arg(code.left(2))) != -1){
+		} else if(html.indexOf(QString(">%1<").arg(code.left(2))) != -1) {
 			urlcode = code.left(2);
-		}else{
+		} else {
 			popState();
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 			return;
 		}
 		html = Utils::download(url + urlcode + "/", messages);
-		if(html.isNull()){
+		if(html.isNull()) {
 			popState();
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2").arg(url + urlcode + "/").arg(messages), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2").arg(url + urlcode + "/").arg(messages), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 			return;
@@ -549,12 +521,12 @@ void MainWindow::dictionaryAutoinstall()
 
 		QString downloaded;
 		int pos = 0;
-		while((pos = htmls.indexOf(pat, pos)) != -1){
+		while((pos = htmls.indexOf(pat, pos)) != -1) {
 			pushState(State::Busy, _("Downloading '%1'...").arg(pat.cap(1)));
 			QByteArray data = Utils::download(plainurl + urlcode + "/" + pat.cap(1), messages);
-			if(!data.isNull()){
+			if(!data.isNull()) {
 				QFile file(spellingDir.absoluteFilePath(pat.cap(1)));
-				if(file.open(QIODevice::WriteOnly)){
+				if(file.open(QIODevice::WriteOnly)) {
 					file.write(data);
 					downloaded.append(QString("\n%1").arg(pat.cap(1)));
 				}
@@ -563,11 +535,11 @@ void MainWindow::dictionaryAutoinstall()
 			pos += pat.matchedLength();
 		}
 		popState();
-		if(!downloaded.isEmpty()){
+		if(!downloaded.isEmpty()) {
 			QMessageBox::information(this, _("Dictionaries installed"), _("The following dictionary files were installed:%1").arg(downloaded));
 			m_recognizer->updateLanguagesMenu();
-		}else{
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)){
+		} else {
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 		}

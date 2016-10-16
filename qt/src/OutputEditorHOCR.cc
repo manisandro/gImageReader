@@ -58,11 +58,9 @@ const QRegExp OutputEditorHOCR::s_fontSizeRx = QRegExp("x_fsize\\s+(\\d+)");
 const QRegExp OutputEditorHOCR::s_baseLineRx = QRegExp("baseline\\s+(-?\\d+\\.?\\d*)\\s+(-?\\d+)");
 
 
-class OutputEditorHOCR::HTMLHighlighter : public QSyntaxHighlighter
-{
+class OutputEditorHOCR::HTMLHighlighter : public QSyntaxHighlighter {
 public:
-	HTMLHighlighter(QTextDocument *document) : QSyntaxHighlighter(document)
-	{
+	HTMLHighlighter(QTextDocument *document) : QSyntaxHighlighter(document) {
 		mFormatMap[NormalState].setForeground(QColor(Qt::black));
 		mFormatMap[InTag].setForeground(QColor(75, 75, 255));
 		mFormatMap[InAttrKey].setForeground(QColor(75, 200, 75));
@@ -90,8 +88,7 @@ private:
 	QMap<State,QTextCharFormat> mFormatMap;
 	QMap<State,QList<Rule>> mStateMap;
 
-	void highlightBlock(const QString &text)
-	{
+	void highlightBlock(const QString &text) {
 		int pos = 0;
 		int len = text.length();
 		State state = static_cast<State>(previousBlockState());
@@ -120,8 +117,7 @@ private:
 };
 
 
-class OutputEditorHOCR::QPainterPDFPainter : public OutputEditorHOCR::PDFPainter
-{
+class OutputEditorHOCR::QPainterPDFPainter : public OutputEditorHOCR::PDFPainter {
 public:
 	QPainterPDFPainter(QPainter* painter) : m_painter(painter) {
 		m_curFontSize = m_painter->font().pointSize();
@@ -158,8 +154,7 @@ class PdfImageCompat : public PoDoFo::PdfImage {
 	using PdfImage::PdfImage;
 public:
 	void SetImageDataRaw( unsigned int nWidth, unsigned int nHeight,
-							  unsigned int nBitsPerComponent, PdfInputStream* pStream )
-	{
+	                      unsigned int nBitsPerComponent, PdfInputStream* pStream ) {
 		m_rRect.SetWidth( nWidth );
 		m_rRect.SetHeight( nHeight );
 
@@ -180,8 +175,7 @@ public:
 class OutputEditorHOCR::PoDoFoPDFPainter : public OutputEditorHOCR::PDFPainter {
 public:
 	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor, double imageScale)
-		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor), m_imageScale(imageScale)
-	{
+		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor), m_imageScale(imageScale) {
 		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
 	}
 	void setFontSize(double pointSize) override {
@@ -245,8 +239,7 @@ private:
 
 Q_DECLARE_METATYPE(QList<QRect>)
 
-OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
-{
+OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	static int reg = qRegisterMetaType<QList<QRect>>("QList<QRect>");
 	Q_UNUSED(reg);
 
@@ -327,8 +320,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	updateFontButton(m_pdfFontDialog.currentFont());
 }
 
-OutputEditorHOCR::~OutputEditorHOCR()
-{
+OutputEditorHOCR::~OutputEditorHOCR() {
 	delete m_widget;
 	MAIN->getConfig()->removeSetting("pdfexportmode");
 	MAIN->getConfig()->removeSetting("pdffont");
@@ -343,17 +335,15 @@ OutputEditorHOCR::~OutputEditorHOCR()
 	MAIN->getConfig()->removeSetting("pdfpreview");
 }
 
-void OutputEditorHOCR::setFont()
-{
-	if(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont")->getValue()){
+void OutputEditorHOCR::setFont() {
+	if(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont")->getValue()) {
 		ui.plainTextEditOutput->setFont(QFont());
-	}else{
+	} else {
 		ui.plainTextEditOutput->setFont(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont")->getValue());
 	}
 }
 
-void OutputEditorHOCR::imageFormatChanged()
-{
+void OutputEditorHOCR::imageFormatChanged() {
 	QImage::Format format = static_cast<QImage::Format>(m_pdfExportDialogUi.comboBoxImageFormat->itemData(m_pdfExportDialogUi.comboBoxImageFormat->currentIndex()).toInt());
 	if(format == QImage::Format_Mono) {
 		m_pdfExportDialogUi.comboBoxImageCompression->setCurrentIndex(m_pdfExportDialogUi.comboBoxImageCompression->findData(PDFSettings::CompressZip));
@@ -365,35 +355,30 @@ void OutputEditorHOCR::imageFormatChanged()
 	}
 }
 
-void OutputEditorHOCR::imageCompressionChanged()
-{
+void OutputEditorHOCR::imageCompressionChanged() {
 	PDFSettings::Compression compression = static_cast<PDFSettings::Compression>(m_pdfExportDialogUi.comboBoxImageCompression->itemData(m_pdfExportDialogUi.comboBoxImageCompression->currentIndex()).toInt());
 	bool zipCompression = compression == PDFSettings::CompressZip;
 	m_pdfExportDialogUi.spinBoxCompressionQuality->setEnabled(!zipCompression);
 	m_pdfExportDialogUi.labelCompressionQuality->setEnabled(!zipCompression);
 }
 
-OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI &tess)
-{
+OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI &tess) {
 	tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
 	return new HOCRReadSessionData;
 }
 
-void OutputEditorHOCR::read(tesseract::TessBaseAPI &tess, ReadSessionData *data)
-{
+void OutputEditorHOCR::read(tesseract::TessBaseAPI &tess, ReadSessionData *data) {
 	tess.SetVariable("hocr_font_info", "true");
 	char* text = tess.GetHOCRText(data->page);
 	QMetaObject::invokeMethod(this, "addPage", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(text)), Q_ARG(ReadSessionData, *data));
 	delete[] text;
 }
 
-void OutputEditorHOCR::readError(const QString& errorMsg, ReadSessionData *data)
-{
+void OutputEditorHOCR::readError(const QString& errorMsg, ReadSessionData *data) {
 	static_cast<HOCRReadSessionData*>(data)->errors.append(QString("%1[%2]: %3").arg(data->file).arg(data->page).arg(errorMsg));
 }
 
-void OutputEditorHOCR::finalizeRead(ReadSessionData *data)
-{
+void OutputEditorHOCR::finalizeRead(ReadSessionData *data) {
 	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
 	if(!hdata->errors.isEmpty()) {
 		QString message = QString(_("The following pages could not be processed:\n%1").arg(hdata->errors.join("\n")));
@@ -402,8 +387,7 @@ void OutputEditorHOCR::finalizeRead(ReadSessionData *data)
 	OutputEditor::finalizeRead(data);
 }
 
-void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data)
-{
+void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data) {
 	QDomDocument doc;
 	doc.setContent(hocrText);
 	QDomElement pageDiv = doc.firstChildElement("div");
@@ -413,17 +397,16 @@ void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data)
 	int x2 = s_bboxRx.cap(3).toInt();
 	int y2 = s_bboxRx.cap(4).toInt();
 	QString pageTitle = QString("image '%1'; bbox %2 %3 %4 %5; pageno %6; rot %7; res %8")
-			.arg(data.file)
-			.arg(x1).arg(y1).arg(x2).arg(y2)
-			.arg(data.page)
-			.arg(data.angle)
-			.arg(data.resolution);
+	                    .arg(data.file)
+	                    .arg(x1).arg(y1).arg(x2).arg(y2)
+	                    .arg(data.page)
+	                    .arg(data.angle)
+	                    .arg(data.resolution);
 	pageDiv.setAttribute("title", pageTitle);
 	addPage(pageDiv, QFileInfo(data.file).fileName(), data.page, true);
 }
 
-void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int page, bool cleanGraphics)
-{
+void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int page, bool cleanGraphics) {
 	pageDiv.setAttribute("id", QString("page_%1").arg(++m_idCounter));
 	s_bboxRx.indexIn(pageDiv.attribute("title"));
 	int x1 = s_bboxRx.cap(1).toInt();
@@ -496,8 +479,7 @@ void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int
 	ui.actionOutputExportPDF->setEnabled(true);
 }
 
-void OutputEditorHOCR::expandChildren(QTreeWidgetItem* item) const
-{
+void OutputEditorHOCR::expandChildren(QTreeWidgetItem* item) const {
 	if(item->childCount() > 0) {
 		item->setExpanded(true);
 		for(int i = 0, n = item->childCount(); i < n; ++i) {
@@ -506,8 +488,7 @@ void OutputEditorHOCR::expandChildren(QTreeWidgetItem* item) const
 	}
 }
 
-bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString,QString>& langCache)
-{
+bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString,QString>& langCache) {
 	bool haveWord = false;
 	while(!element.isNull()) {
 		QDomElement nextElement = element.nextSiblingElement();
@@ -583,8 +564,7 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 	return haveWord;
 }
 
-QDomElement OutputEditorHOCR::elementById(QDomElement element, const QString& id) const
-{
+QDomElement OutputEditorHOCR::elementById(QDomElement element, const QString& id) const {
 	QDomElement child;
 	while(!element.isNull()) {
 		if(element.attribute("id") == id) {
@@ -598,8 +578,7 @@ QDomElement OutputEditorHOCR::elementById(QDomElement element, const QString& id
 	return QDomElement();
 }
 
-void OutputEditorHOCR::showItemProperties(QTreeWidgetItem* item)
-{
+void OutputEditorHOCR::showItemProperties(QTreeWidgetItem* item) {
 	ui.tableWidgetProperties->blockSignals(true);
 	ui.tableWidgetProperties->setRowCount(0);
 	ui.tableWidgetProperties->blockSignals(false);
@@ -663,10 +642,8 @@ void OutputEditorHOCR::showItemProperties(QTreeWidgetItem* item)
 	}
 }
 
-bool OutputEditorHOCR::setCurrentSource(const QDomElement& pageElement, int* pageDpi) const
-{
-	if(s_pageTitleRx.indexIn(pageElement.attribute("title")) != -1)
-	{
+bool OutputEditorHOCR::setCurrentSource(const QDomElement& pageElement, int* pageDpi) const {
+	if(s_pageTitleRx.indexIn(pageElement.attribute("title")) != -1) {
 		QString filename = s_pageTitleRx.cap(1);
 		int page = s_pageTitleRx.cap(2).toInt();
 		double angle = s_pageTitleRx.cap(3).toDouble();
@@ -696,8 +673,7 @@ bool OutputEditorHOCR::setCurrentSource(const QDomElement& pageElement, int* pag
 	return false;
 }
 
-void OutputEditorHOCR::itemChanged(QTreeWidgetItem* item, int col)
-{
+void OutputEditorHOCR::itemChanged(QTreeWidgetItem* item, int col) {
 	if(item != m_currentItem) {
 		return;
 	}
@@ -706,8 +682,7 @@ void OutputEditorHOCR::itemChanged(QTreeWidgetItem* item, int col)
 	if( isWord && item->checkState(col) == Qt::Checked) {
 		// Update text
 		updateCurrentItemText();
-	}
-	else if(item->checkState(col) == Qt::Checked) {
+	} else if(item->checkState(col) == Qt::Checked) {
 		item->setFlags(item->flags() | Qt::ItemIsSelectable);
 		if(!isWord) {
 			item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
@@ -720,8 +695,7 @@ void OutputEditorHOCR::itemChanged(QTreeWidgetItem* item, int col)
 	ui.treeWidgetItems->blockSignals(false);
 }
 
-void OutputEditorHOCR::propertyCellChanged(int row, int /*col*/)
-{
+void OutputEditorHOCR::propertyCellChanged(int row, int /*col*/) {
 	QTableWidgetItem* keyItem = ui.tableWidgetProperties->item(row, 0);
 	QTableWidgetItem* valueItem = ui.tableWidgetProperties->item(row, 1);
 	QString parentAttr = keyItem->data(ParentAttrRole).toString();
@@ -732,8 +706,7 @@ void OutputEditorHOCR::propertyCellChanged(int row, int /*col*/)
 	}
 }
 
-void OutputEditorHOCR::updateCurrentItemText()
-{
+void OutputEditorHOCR::updateCurrentItemText() {
 	if(m_currentItem) {
 		QString newText = m_currentItem->text(0);
 		m_currentElement.replaceChild(m_currentDocument.createTextNode(newText), m_currentElement.firstChild());
@@ -741,8 +714,7 @@ void OutputEditorHOCR::updateCurrentItemText()
 	}
 }
 
-void OutputEditorHOCR::updateCurrentItemAttribute(const QString& key, const QString& subkey, const QString& newvalue, bool update)
-{
+void OutputEditorHOCR::updateCurrentItemAttribute(const QString& key, const QString& subkey, const QString& newvalue, bool update) {
 	if(m_currentItem) {
 		if(subkey.isEmpty()) {
 			m_currentElement.setAttribute(key, newvalue);
@@ -763,8 +735,7 @@ void OutputEditorHOCR::updateCurrentItemAttribute(const QString& key, const QStr
 	}
 }
 
-void OutputEditorHOCR::updateCurrentItemBBox(QRect rect)
-{
+void OutputEditorHOCR::updateCurrentItemBBox(QRect rect) {
 	if(m_currentItem) {
 		ui.treeWidgetItems->blockSignals(true);
 		m_currentItem->setData(0, BBoxRole, rect);
@@ -792,8 +763,7 @@ void OutputEditorHOCR::updateCurrentItemBBox(QRect rect)
 	}
 }
 
-void OutputEditorHOCR::updateCurrentItem()
-{
+void OutputEditorHOCR::updateCurrentItem() {
 	QString spellLang = Utils::getSpellingLanguage(m_currentElement.attribute("lang"));
 	if(m_spell.getLanguage() != spellLang) {
 		m_spell.setLanguage(spellLang);
@@ -823,8 +793,7 @@ void OutputEditorHOCR::updateCurrentItem()
 	m_modified = true;
 }
 
-void OutputEditorHOCR::removeCurrentItem()
-{
+void OutputEditorHOCR::removeCurrentItem() {
 	m_currentElement.parentNode().removeChild(m_currentElement);
 
 	QString str;
@@ -836,8 +805,7 @@ void OutputEditorHOCR::removeCurrentItem()
 	m_currentItem = nullptr;
 }
 
-void OutputEditorHOCR::addGraphicRegion(QRect rect)
-{
+void OutputEditorHOCR::addGraphicRegion(QRect rect) {
 	QDomElement pageDiv = m_currentDocument.firstChildElement("div");
 	if(pageDiv.isNull()) {
 		return;
@@ -877,8 +845,7 @@ void OutputEditorHOCR::addGraphicRegion(QRect rect)
 	ui.treeWidgetItems->setCurrentItem(item);
 }
 
-QString OutputEditorHOCR::trimWord(const QString& word, QString* prefix, QString* suffix)
-{
+QString OutputEditorHOCR::trimWord(const QString& word, QString* prefix, QString* suffix) {
 	QRegExp wordRe("^(\\W*)(.*\\w)(\\W*)$");
 	if(wordRe.indexIn(word) != -1) {
 		if(prefix)
@@ -890,8 +857,7 @@ QString OutputEditorHOCR::trimWord(const QString& word, QString* prefix, QString
 	return word;
 }
 
-void OutputEditorHOCR::mergeItems(const QList<QTreeWidgetItem*>& items)
-{
+void OutputEditorHOCR::mergeItems(const QList<QTreeWidgetItem*>& items) {
 	ui.treeWidgetItems->setCurrentItem(items.front());
 
 	QRect bbox = items.front()->data(0, BBoxRole).toRect();
@@ -912,7 +878,7 @@ void OutputEditorHOCR::mergeItems(const QList<QTreeWidgetItem*>& items)
 	showItemProperties(m_currentItem);
 }
 
-void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
+void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	QList<QTreeWidgetItem*> items = ui.treeWidgetItems->selectedItems();
 	bool wordsSelected = true;
 	for(QTreeWidgetItem* item : items) {
@@ -959,7 +925,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 		QMenu menu;
 		QAction* addAction = nullptr;
 		QAction* ignoreAction = nullptr;
-		 if(itemClass == "ocrx_word") {
+		if(itemClass == "ocrx_word") {
 			QString prefix, suffix, trimmedWord = trimWord(item->text(0), &prefix, &suffix);
 			for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
 				menu.addAction(prefix + suggestion + suffix);
@@ -992,14 +958,12 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point){
 	}
 }
 
-void OutputEditorHOCR::updateFontButton(const QFont& font)
-{
+void OutputEditorHOCR::updateFontButton(const QFont& font) {
 	m_pdfExportDialogUi.buttonFont->setText(QString("%1 %2").arg(font.family()).arg(font.pointSize()));
 	updatePreview();
 }
 
-void OutputEditorHOCR::open()
-{
+void OutputEditorHOCR::open() {
 	if(!clear(false)) {
 		return;
 	}
@@ -1028,35 +992,34 @@ void OutputEditorHOCR::open()
 	}
 }
 
-bool OutputEditorHOCR::save(const QString& filename)
-{
+bool OutputEditorHOCR::save(const QString& filename) {
 	QString outname = filename;
-	if(outname.isEmpty()){
+	if(outname.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
 		QString base = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
 		outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(base + ".html");
 		outname = QFileDialog::getSaveFileName(MAIN, _("Save hOCR Output..."), outname, QString("%1 (*.html)").arg(_("hOCR HTML Files")));
-		if(outname.isEmpty()){
+		if(outname.isEmpty()) {
 			return false;
 		}
 		MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->setValue(QFileInfo(outname).absolutePath());
 	}
 	QFile file(outname);
-	if(!file.open(QIODevice::WriteOnly)){
+	if(!file.open(QIODevice::WriteOnly)) {
 		QMessageBox::critical(MAIN, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
 	tesseract::TessBaseAPI tess;
 	QString header = QString(
-			"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
-			"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n"
-			" <head>\n"
-			"  <title></title>\n"
-			"  <meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" />\n"
-			"    <meta name='ocr-system' content='tesseract %1' />\n"
-			"    <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
-			"  </head>\n"
-			"<body>\n").arg(tess.Version());
+	                     "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
+	                     "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n"
+	                     " <head>\n"
+	                     "  <title></title>\n"
+	                     "  <meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" />\n"
+	                     "    <meta name='ocr-system' content='tesseract %1' />\n"
+	                     "    <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
+	                     "  </head>\n"
+	                     "<body>\n").arg(tess.Version());
 	file.write(header.toUtf8());
 	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
 		file.write(ui.treeWidgetItems->topLevelItem(i)->data(0, SourceRole).toString().toUtf8());
@@ -1066,8 +1029,7 @@ bool OutputEditorHOCR::save(const QString& filename)
 	return true;
 }
 
-void OutputEditorHOCR::savePDF()
-{
+void OutputEditorHOCR::savePDF() {
 	m_preview = new QGraphicsPixmapItem();
 	m_preview->setTransformationMode(Qt::SmoothTransformation);
 	updatePreview();
@@ -1091,7 +1053,7 @@ void OutputEditorHOCR::savePDF()
 		QString base = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
 		QString outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(base + ".pdf");
 		outname = QFileDialog::getSaveFileName(MAIN, _("Save PDF Output..."), outname, QString("%1 (*.pdf)").arg(_("PDF Files")));
-		if(outname.isEmpty()){
+		if(outname.isEmpty()) {
 			accepted = false;
 			break;
 		}
@@ -1175,8 +1137,7 @@ void OutputEditorHOCR::savePDF()
 	delete document;
 }
 
-void OutputEditorHOCR::printChildren(PDFPainter& painter, QTreeWidgetItem* item, const PDFSettings& pdfSettings) const
-{
+void OutputEditorHOCR::printChildren(PDFPainter& painter, QTreeWidgetItem* item, const PDFSettings& pdfSettings) const {
 	if(item->checkState(0) != Qt::Checked) {
 		return;
 	}
@@ -1227,8 +1188,7 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, QTreeWidgetItem* item,
 	}
 }
 
-void OutputEditorHOCR::updatePreview()
-{
+void OutputEditorHOCR::updatePreview() {
 	if(!m_preview) {
 		return;
 	}
@@ -1279,18 +1239,17 @@ void OutputEditorHOCR::updatePreview()
 	m_preview->setPos(-0.5 * bbox.width(), -0.5 * bbox.height());
 }
 
-bool OutputEditorHOCR::clear(bool hide)
-{
-	if(!m_widget->isVisible()){
+bool OutputEditorHOCR::clear(bool hide) {
+	if(!m_widget->isVisible()) {
 		return true;
 	}
-	if(getModified()){
+	if(getModified()) {
 		int response = QMessageBox::question(MAIN, _("Output not saved"), _("Save output before proceeding?"), QMessageBox::Save, QMessageBox::Discard, QMessageBox::Cancel);
-		if(response == QMessageBox::Save){
-			if(!save()){
+		if(response == QMessageBox::Save) {
+			if(!save()) {
 				return false;
 			}
-		}else if(response != QMessageBox::Discard){
+		} else if(response != QMessageBox::Discard) {
 			return false;
 		}
 	}
@@ -1305,7 +1264,6 @@ bool OutputEditorHOCR::clear(bool hide)
 	return true;
 }
 
-bool OutputEditorHOCR::getModified() const
-{
+bool OutputEditorHOCR::getModified() const {
 	return m_modified;
 }

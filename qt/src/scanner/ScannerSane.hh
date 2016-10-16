@@ -30,8 +30,7 @@
 #include <QVector>
 #include <sane/sane.h>
 
-class ScannerSane : public Scanner
-{
+class ScannerSane : public Scanner {
 	Q_OBJECT
 public:
 	void init();

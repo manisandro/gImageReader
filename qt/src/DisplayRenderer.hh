@@ -24,12 +24,14 @@
 #include <QMutex>
 
 class QImage;
-namespace Poppler { class Document; }
+namespace Poppler {
+class Document;
+}
 
 class DisplayRenderer {
 public:
 	DisplayRenderer(const QString& filename) : m_filename(filename) {}
-	virtual ~DisplayRenderer(){}
+	virtual ~DisplayRenderer() {}
 	virtual QImage render(int page, double resolution) const = 0;
 	virtual int getNPages() const = 0;
 
@@ -43,7 +45,9 @@ class ImageRenderer : public DisplayRenderer {
 public:
 	ImageRenderer(const QString& filename) : DisplayRenderer(filename) {}
 	QImage render(int page, double resolution) const;
-	int getNPages() const{ return 1; }
+	int getNPages() const {
+		return 1;
+	}
 };
 
 class PDFRenderer : public DisplayRenderer {

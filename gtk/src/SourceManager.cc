@@ -24,8 +24,7 @@
 
 #include <pangomm.h>
 
-SourceManager::SourceManager()
-{
+SourceManager::SourceManager() {
 	m_notebook = MAIN->getWidget("notebook:sources");
 	m_listView = MAIN->getWidget("treeview:input.images");
 	m_addButton = MAIN->getWidget("button:sources.images.add");
@@ -58,16 +57,18 @@ SourceManager::SourceManager()
 	m_clipboard = Gtk::Clipboard::get_for_display(Gdk::Display::get_default());
 
 	Gtk::ToggleButton* toggleSourcesBtn = MAIN->getWidget("button:main.sources");
-	CONNECTS(toggleSourcesBtn, toggled, [this](Gtk::ToggleButton* b){ m_notebook->set_visible(b->get_active()); });
-	CONNECT(m_addButton, clicked, [this]{ openSources(); });
-	CONNECT(m_addButtonMenu, clicked, [this]{ m_pasteItem->set_sensitive(m_clipboard->wait_is_image_available()); });
-	CONNECT(m_pasteItem, activate, [this]{ pasteClipboard(); });
-	CONNECT(MAIN->getWidget("menuitem:sources.images.screenshot").as<Gtk::MenuItem>(), activate, [this]{ takeScreenshot(); });
-	CONNECT(m_removeButton, clicked, [this]{ removeSource(false); });
-	CONNECT(m_deleteButton, clicked, [this]{ removeSource(true); });
-	CONNECT(m_clearButton, clicked, [this]{ clearSources(); });
-	m_connectionSelectionChanged = CONNECT(m_listView->get_selection(), changed, [this]{ selectionChanged(); });
-	CONNECT(recentChooser, item_activated, [this, recentChooser]{ addSources({Gio::File::create_for_uri(recentChooser->get_current_uri())}); });
+	CONNECTS(toggleSourcesBtn, toggled, [this](Gtk::ToggleButton* b) {
+		m_notebook->set_visible(b->get_active());
+	});
+	CONNECT(m_addButton, clicked, [this] { openSources(); });
+	CONNECT(m_addButtonMenu, clicked, [this] { m_pasteItem->set_sensitive(m_clipboard->wait_is_image_available()); });
+	CONNECT(m_pasteItem, activate, [this] { pasteClipboard(); });
+	CONNECT(MAIN->getWidget("menuitem:sources.images.screenshot").as<Gtk::MenuItem>(), activate, [this] { takeScreenshot(); });
+	CONNECT(m_removeButton, clicked, [this] { removeSource(false); });
+	CONNECT(m_deleteButton, clicked, [this] { removeSource(true); });
+	CONNECT(m_clearButton, clicked, [this] { clearSources(); });
+	m_connectionSelectionChanged = CONNECT(m_listView->get_selection(), changed, [this] { selectionChanged(); });
+	CONNECT(recentChooser, item_activated, [this, recentChooser] { addSources({Gio::File::create_for_uri(recentChooser->get_current_uri())}); });
 
 	// Handle drops on the scrolled window
 	Gtk::ScrolledWindow* scollWin = MAIN->getWidget("scrollwin:sources.images");
@@ -75,29 +76,27 @@ SourceManager::SourceManager()
 	CONNECT(scollWin, drag_data_received, sigc::ptr_fun(Utils::handle_drag_drop));
 }
 
-SourceManager::~SourceManager()
-{
+SourceManager::~SourceManager() {
 	clearSources();
 }
 
-void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files)
-{
+void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files) {
 	Glib::ustring failed;
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model());
 	Gtk::TreeIter it = store->children().end();
-	for(Glib::RefPtr<Gio::File> file : files){
-		if(!file->query_exists()){
+	for(Glib::RefPtr<Gio::File> file : files) {
+		if(!file->query_exists()) {
 			failed += "\n\t" + file->get_path();
 			continue;
 		}
 		bool contains = false;
-		for(const Gtk::TreeModel::Row& row : store->children()){
-			if(row.get_value(m_listViewCols.source)->file->get_uri() == file->get_uri()){
+		for(const Gtk::TreeModel::Row& row : store->children()) {
+			if(row.get_value(m_listViewCols.source)->file->get_uri() == file->get_uri()) {
 				contains = true;
 				break;
 			}
 		}
-		if(contains){
+		if(contains) {
 			continue;
 		}
 		it = store->append();
@@ -109,19 +108,18 @@ void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files
 
 		Gtk::RecentManager::get_default()->add_item(file->get_uri());
 	}
-	if(it){
+	if(it) {
 		m_connectionSelectionChanged.block(true);
 		m_listView->get_selection()->unselect_all();
 		m_connectionSelectionChanged.block(false);
 		m_listView->get_selection()->select(it);
 	}
-	if(!failed.empty()){
+	if(!failed.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Unable to open files"), Glib::ustring::compose(_("The following files could not be opened:%1"), failed));
 	}
 }
 
-std::vector<Source*> SourceManager::getSelectedSources() const
-{
+std::vector<Source*> SourceManager::getSelectedSources() const {
 	std::vector<Source*> selectedSources;
 	for(const Gtk::TreeModel::Path& path : m_listView->get_selection()->get_selected_rows()) {
 		selectedSources.push_back(m_listView->get_model()->get_iter(path)->get_value(m_listViewCols.source));
@@ -129,8 +127,7 @@ std::vector<Source*> SourceManager::getSelectedSources() const
 	return selectedSources;
 }
 
-void SourceManager::openSources()
-{
+void SourceManager::openSources() {
 	std::vector<Source*> curSrc = getSelectedSources();
 	std::string initialFolder = !curSrc.empty() ? Glib::path_get_dirname(curSrc.front()->file->get_path()) : "";
 	FileDialogs::FileFilter filter = FileDialogs::FileFilter::pixbuf_formats();
@@ -140,10 +137,9 @@ void SourceManager::openSources()
 	addSources(FileDialogs::open_dialog(_("Select Files"), initialFolder, filter, true));
 }
 
-void SourceManager::pasteClipboard()
-{
+void SourceManager::pasteClipboard() {
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf = m_clipboard->wait_for_image();
-	if(!pixbuf){
+	if(!pixbuf) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Clipboard Error"),  _("Failed to read the clipboard."));
 		return;
 	}
@@ -152,15 +148,14 @@ void SourceManager::pasteClipboard()
 	savePixbuf(pixbuf, displayname);
 }
 
-void SourceManager::takeScreenshot()
-{
+void SourceManager::takeScreenshot() {
 	Glib::RefPtr<Gdk::Window> root = Gdk::Window::get_default_root_window();
 	int x, y, w, h;
 	root->get_origin(x, y);
 	w = root->get_width();
 	h = root->get_height();
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(root, x, y, w, h);
-	if(!pixbuf){
+	if(!pixbuf) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Screenshot Error"),  _("Failed to take screenshot."));
 		return;
 	}
@@ -169,15 +164,14 @@ void SourceManager::takeScreenshot()
 	savePixbuf(pixbuf, displayname);
 }
 
-void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf> &pixbuf, const std::string &displayname)
-{
+void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf> &pixbuf, const std::string &displayname) {
 	MAIN->pushState(MainWindow::State::Busy, _("Saving image..."));
 	std::string filename;
-	try{
+	try {
 		int fd = Glib::file_open_tmp(filename, PACKAGE_NAME);
 		close(fd);
 		pixbuf->save(filename, "png");
-	}catch(Glib::FileError&){
+	} catch(Glib::FileError&) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Cannot Write File"),  Glib::ustring::compose(_("Could not write to %1."), filename));
 		MAIN->popState();
 		return;
@@ -197,8 +191,7 @@ void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf> &pixbuf, const st
 	m_listView->get_selection()->select(it);
 }
 
-void SourceManager::removeSource(bool deleteFile)
-{
+void SourceManager::removeSource(bool deleteFile) {
 	std::string paths;
 	for(const Gtk::TreeModel::Path& path : m_listView->get_selection()->get_selected_rows()) {
 		paths += std::string("\n") + m_listView->get_model()->get_iter(path)->get_value(m_listViewCols.source)->file->get_path();
@@ -206,7 +199,7 @@ void SourceManager::removeSource(bool deleteFile)
 	if(paths.empty()) {
 		return;
 	}
-	if(deleteFile && Utils::Button::Yes != Utils::question_dialog(_("Delete File?"), Glib::ustring::compose(_("The following files will be deleted:%1"), paths), Utils::Button::Yes|Utils::Button::No)){
+	if(deleteFile && Utils::Button::Yes != Utils::question_dialog(_("Delete File?"), Glib::ustring::compose(_("The following files will be deleted:%1"), paths), Utils::Button::Yes|Utils::Button::No)) {
 		return;
 	}
 	// Avoid multiple sourceChanged emissions when removing items
@@ -216,28 +209,27 @@ void SourceManager::removeSource(bool deleteFile)
 	for(const Gtk::TreeModel::Path& path : m_listView->get_selection()->get_selected_rows()) {
 		it = m_listView->get_model()->get_iter(path);
 		Source* source = it->get_value(m_listViewCols.source);
-		if(deleteFile || source->isTemp){
+		if(deleteFile || source->isTemp) {
 			source->file->remove();
 		}
 		delete source;
 		it = store->erase(it);
 	}
-	if(!it && store->children().size() > 0){
+	if(!it && store->children().size() > 0) {
 		it = --store->children().end();
 	}
-	if(it){
+	if(it) {
 		m_listView->get_selection()->select(it);
 	}
 	m_connectionSelectionChanged.block(false);
 	m_signal_sourceChanged.emit();
 }
 
-void SourceManager::clearSources()
-{
+void SourceManager::clearSources() {
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model());
-	for(const Gtk::TreeModel::Row& row : store->children()){
+	for(const Gtk::TreeModel::Row& row : store->children()) {
 		Source* source = row.get_value(m_listViewCols.source);
-		if(source->isTemp){
+		if(source->isTemp) {
 			source->file->remove();
 		}
 		delete source;
@@ -248,8 +240,7 @@ void SourceManager::clearSources()
 	m_signal_sourceChanged.emit();
 }
 
-void SourceManager::selectionChanged()
-{
+void SourceManager::selectionChanged() {
 	bool enabled = !m_listView->get_selection()->get_selected_rows().empty();
 	m_removeButton->set_sensitive(enabled);
 	m_deleteButton->set_sensitive(enabled);
@@ -257,27 +248,26 @@ void SourceManager::selectionChanged()
 	m_signal_sourceChanged.emit();
 }
 
-void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event, Gtk::TreeIter it)
-{
+void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event, Gtk::TreeIter it) {
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model());
 	Source* source = it->get_value(m_listViewCols.source);
-	if(event == Gio::FILE_MONITOR_EVENT_MOVED){
+	if(event == Gio::FILE_MONITOR_EVENT_MOVED) {
 		source->file = otherFile;
 		source->monitor = otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED);
 		it->set_value(m_listViewCols.filename, otherFile->get_basename());
 		it->set_value(m_listViewCols.path, otherFile->get_path());
 		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
-		if(it == m_listView->get_selection()->get_selected()){
+		if(it == m_listView->get_selection()->get_selected()) {
 			m_signal_sourceChanged.emit();
 		}
-	}else if(event == Gio::FILE_MONITOR_EVENT_DELETED){
+	} else if(event == Gio::FILE_MONITOR_EVENT_DELETED) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Missing File"), Glib::ustring::compose(_("The following file has been deleted or moved:\n%1"), file->get_path()));
 		delete source;
 		it = store->erase(it);
-		if(!it){
+		if(!it) {
 			it = store->children().begin();
 		}
-		if(it){
+		if(it) {
 			m_listView->get_selection()->select(it);
 		}
 	}

@@ -16,8 +16,7 @@
 #include <QVBoxLayout>
 #include <QWidgetAction>
 
-class UI_OutputEditorHOCR
-{
+class UI_OutputEditorHOCR {
 public:
 	QAction* actionOutputOpen;
 	QAction* actionOutputClear;
@@ -30,8 +29,7 @@ public:
 	QTableWidget *tableWidgetProperties;
 	OutputTextEdit *plainTextEditOutput;
 
-	void setupUi(QWidget* widget)
-	{
+	void setupUi(QWidget* widget) {
 		widget->setLayout(new QVBoxLayout());
 		widget->layout()->setContentsMargins(0, 0, 0, 0);
 		widget->layout()->setSpacing(0);

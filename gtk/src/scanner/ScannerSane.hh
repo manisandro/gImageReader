@@ -28,8 +28,7 @@
 #include "../Utils.hh"
 #include <sane/sane.h>
 
-class ScannerSane : public Scanner
-{
+class ScannerSane : public Scanner {
 public:
 	void init();
 	void redetect();

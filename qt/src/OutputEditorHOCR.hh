@@ -37,7 +37,9 @@ public:
 	OutputEditorHOCR(DisplayerToolHOCR* tool);
 	~OutputEditorHOCR();
 
-	QWidget* getUI() override { return m_widget; }
+	QWidget* getUI() override {
+		return m_widget;
+	}
 	ReadSessionData* initRead(tesseract::TessBaseAPI &tess) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
@@ -91,7 +93,7 @@ private:
 		virtual double getTextWidth(const QString& text) const = 0;
 	protected:
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-		QVector<QRgb> createGray8Table() const{
+		QVector<QRgb> createGray8Table() const {
 			QVector<QRgb> colorTable(255);
 			for(int i = 0; i < 255; ++i) {
 				colorTable[i] = qRgb(i, i, i);
@@ -99,7 +101,7 @@ private:
 			return colorTable;
 		}
 #endif
-		QImage convertedImage(const QImage& image, QImage::Format targetFormat) const{
+		QImage convertedImage(const QImage& image, QImage::Format targetFormat) const {
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 			if(image.format() == targetFormat) {
 				return image;

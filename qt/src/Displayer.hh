@@ -42,11 +42,15 @@ class Displayer : public QGraphicsView {
 public:
 	Displayer(const UI_MainWindow& _ui, QWidget* parent = nullptr);
 	~Displayer();
-	void setTool(DisplayerTool* tool) { m_tool = tool; }
+	void setTool(DisplayerTool* tool) {
+		m_tool = tool;
+	}
 	bool setSources(QList<Source*> sources);
 	int getCurrentPage() const;
 	double getCurrentAngle() const;
-	double getCurrentScale() const{ return m_scale; }
+	double getCurrentScale() const {
+		return m_scale;
+	}
 	int getCurrentResolution() const;
 	QString getCurrentImage(int& page) const;
 	QImage getImage(const QRectF& rect);
@@ -100,7 +104,9 @@ private:
 		ScaleThread(const std::function<void()> &f) : m_f(f) {}
 	private:
 		std::function<void()> m_f;
-		void run(){ m_f(); }
+		void run() {
+			m_f();
+		}
 	};
 	QMutex m_scaleMutex;
 	QWaitCondition m_scaleCond;
@@ -113,47 +119,61 @@ private:
 
 private slots:
 	void queueRenderImage();
-	void scaleTimerElapsed(){ sendScaleRequest(m_pendingScaleRequest); }
+	void scaleTimerElapsed() {
+		sendScaleRequest(m_pendingScaleRequest);
+	}
 	void sendScaleRequest(const ScaleRequest& request);
 	bool renderImage();
 	void rotate90();
 	void setScaledImage(const QImage& image, double scale);
-	void zoomIn(){ setZoom(Zoom::In); }
-	void zoomOut(){ setZoom(Zoom::Out); }
-	void zoomFit(){ setZoom(Zoom::Fit); }
-	void zoomOriginal(){ setZoom(Zoom::Original); }
+	void zoomIn() {
+		setZoom(Zoom::In);
+	}
+	void zoomOut() {
+		setZoom(Zoom::Out);
+	}
+	void zoomFit() {
+		setZoom(Zoom::Fit);
+	}
+	void zoomOriginal() {
+		setZoom(Zoom::Original);
+	}
 };
 
 
 class DisplayerTool : public QObject {
 public:
 	DisplayerTool(Displayer* displayer, QObject* parent = 0) : QObject(parent), m_displayer(displayer) {}
-	virtual ~DisplayerTool(){}
-	virtual void mousePressEvent(QMouseEvent */*event*/){}
-	virtual void mouseMoveEvent(QMouseEvent */*event*/){}
-	virtual void mouseReleaseEvent(QMouseEvent */*event*/){}
-	virtual void pageChanged(){}
-	virtual void resolutionChanged(double /*factor*/){}
-	virtual void rotationChanged(double /*delta*/){}
+	virtual ~DisplayerTool() {}
+	virtual void mousePressEvent(QMouseEvent */*event*/) {}
+	virtual void mouseMoveEvent(QMouseEvent */*event*/) {}
+	virtual void mouseReleaseEvent(QMouseEvent */*event*/) {}
+	virtual void pageChanged() {}
+	virtual void resolutionChanged(double /*factor*/) {}
+	virtual void rotationChanged(double /*delta*/) {}
 	virtual QList<QImage> getOCRAreas() = 0;
-	virtual bool hasMultipleOCRAreas() const{ return false; }
-	virtual bool allowAutodetectOCRAreas() const{ return false; }
-	virtual void autodetectOCRAreas(){}
-	virtual void reset(){}
+	virtual bool hasMultipleOCRAreas() const {
+		return false;
+	}
+	virtual bool allowAutodetectOCRAreas() const {
+		return false;
+	}
+	virtual void autodetectOCRAreas() {}
+	virtual void reset() {}
 
-	Displayer* getDisplayer() const{ return m_displayer; }
+	Displayer* getDisplayer() const {
+		return m_displayer;
+	}
 
 protected:
 	Displayer* m_displayer;
 };
 
-class DisplayerSelection : public QObject, public QGraphicsRectItem
-{
+class DisplayerSelection : public QObject, public QGraphicsRectItem {
 	Q_OBJECT
 public:
 	DisplayerSelection(DisplayerTool* tool, const QPointF& anchor)
-		: QGraphicsRectItem(QRectF(anchor, anchor)), m_tool(tool), m_anchor(anchor), m_point(anchor)
-	{
+		: QGraphicsRectItem(QRectF(anchor, anchor)), m_tool(tool), m_anchor(anchor), m_point(anchor) {
 		setAcceptHoverEvents(true);
 	}
 	void setAnchorAndPoint(const QPointF& anchor, const QPointF& point) {
@@ -161,16 +181,16 @@ public:
 		m_point = point;
 		setRect(QRectF(m_anchor, m_point).normalized());
 	}
-	void setPoint(const QPointF& point){
+	void setPoint(const QPointF& point) {
 		m_point = point;
 		setRect(QRectF(m_anchor, m_point).normalized());
 	}
-	void rotate(const QTransform& transform){
+	void rotate(const QTransform& transform) {
 		m_anchor = transform.map(m_anchor);
 		m_point = transform.map(m_point);
 		setRect(QRectF(m_anchor, m_point).normalized());
 	}
-	void scale(double factor){
+	void scale(double factor) {
 		m_anchor *= factor;
 		m_point *= factor;
 	}
@@ -195,10 +215,18 @@ private:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
-	static void resizeAnchorX(const QPointF& pos, QPointF& anchor, QPointF& /*point*/){ anchor.rx() = pos.x(); }
-	static void resizeAnchorY(const QPointF& pos, QPointF& anchor, QPointF& /*point*/){ anchor.ry() = pos.y(); }
-	static void resizePointX(const QPointF& pos, QPointF& /*anchor*/, QPointF& point){ point.rx() = pos.x(); }
-	static void resizePointY(const QPointF& pos, QPointF& /*anchor*/, QPointF& point){ point.ry() = pos.y(); }
+	static void resizeAnchorX(const QPointF& pos, QPointF& anchor, QPointF& /*point*/) {
+		anchor.rx() = pos.x();
+	}
+	static void resizeAnchorY(const QPointF& pos, QPointF& anchor, QPointF& /*point*/) {
+		anchor.ry() = pos.y();
+	}
+	static void resizePointX(const QPointF& pos, QPointF& /*anchor*/, QPointF& point) {
+		point.rx() = pos.x();
+	}
+	static void resizePointY(const QPointF& pos, QPointF& /*anchor*/, QPointF& point) {
+		point.ry() = pos.y();
+	}
 };
 
 #endif // IMAGEDISPLAYER_HH

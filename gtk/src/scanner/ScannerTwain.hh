@@ -31,59 +31,69 @@
 
 class ScannerTwain : public Scanner {
 public:
-    void init();
-    void redetect();
-    void scan(const Params& params);
-    void cancel(){ m_cancel = true; }
-    void close();
+	void init();
+	void redetect();
+	void scan(const Params& params);
+	void cancel() {
+		m_cancel = true;
+	}
+	void close();
 
 private:
-    void* m_dsmLib = nullptr;
-    DSMENTRYPROC m_dsmEntry = nullptr;
-    TW_IDENTITY m_appID = {};
-    TW_ENTRYPOINT m_entryPoint = {};
+	void* m_dsmLib = nullptr;
+	DSMENTRYPROC m_dsmEntry = nullptr;
+	TW_IDENTITY m_appID = {};
+	TW_ENTRYPOINT m_entryPoint = {};
 
-    TW_IDENTITY  m_srcID = {};
-    TW_USERINTERFACE m_ui = {};
-    TW_UINT16 m_dsMsg = MSG_NULL;
-    bool m_dsQuit = false;
-    bool m_cancel = false;
-    bool m_useCallback = false;
-    int m_state = 0;
+	TW_IDENTITY  m_srcID = {};
+	TW_USERINTERFACE m_ui = {};
+	TW_UINT16 m_dsMsg = MSG_NULL;
+	bool m_dsQuit = false;
+	bool m_cancel = false;
+	bool m_useCallback = false;
+	int m_state = 0;
 
-    static ScannerTwain* s_instance;
+	static ScannerTwain* s_instance;
 
 #ifndef G_OS_WIN32
-    Glib::Threads::Mutex m_mutex;
-    Glib::Threads::Cond  m_cond;
+	Glib::Threads::Mutex m_mutex;
+	Glib::Threads::Cond  m_cond;
 #endif
 
-    struct CapOneVal {
-        CapOneVal() = default;
-        CapOneVal(TW_UINT16 _type, std::int32_t _integer) : type(_type) { data.integer = _integer; }
-        CapOneVal(TW_UINT16 _type, TW_FIX32 _fix32) : type(_type) { data.fix32 = _fix32; }
-        CapOneVal(TW_UINT16 _type, TW_FIX32(&_frame)[4]) : type(_type) { std::memcpy(&data.frame[0], &_frame[0], sizeof(data.frame)); }
-        CapOneVal(TW_UINT16 _type, const char* _string) : type(_type) { std::strncpy(&data.string[0], &_string[0], sizeof(data.string)); }
-        TW_UINT16 type;
-        union {
-            std::uint32_t integer;
-            TW_FIX32 fix32;
-            TW_FIX32 frame[4];
-            char string[256];
-        } data;
-    };
+	struct CapOneVal {
+		CapOneVal() = default;
+		CapOneVal(TW_UINT16 _type, std::int32_t _integer) : type(_type) {
+			data.integer = _integer;
+		}
+		CapOneVal(TW_UINT16 _type, TW_FIX32 _fix32) : type(_type) {
+			data.fix32 = _fix32;
+		}
+		CapOneVal(TW_UINT16 _type, TW_FIX32(&_frame)[4]) : type(_type) {
+			std::memcpy(&data.frame[0], &_frame[0], sizeof(data.frame));
+		}
+		CapOneVal(TW_UINT16 _type, const char* _string) : type(_type) {
+			std::strncpy(&data.string[0], &_string[0], sizeof(data.string));
+		}
+		TW_UINT16 type;
+		union {
+			std::uint32_t integer;
+			TW_FIX32 fix32;
+			TW_FIX32 frame[4];
+			char string[256];
+		} data;
+	};
 
-    void doStop();
-    void failScan(const Glib::ustring& errorString);
-    TW_UINT16 call(TW_IDENTITY* idDS, TW_UINT32 dataGroup, TW_UINT16 dataType, TW_UINT16 msg, TW_MEMREF data);
-    void setCapability(TW_UINT16 capCode, const CapOneVal& cap);
+	void doStop();
+	void failScan(const Glib::ustring& errorString);
+	TW_UINT16 call(TW_IDENTITY* idDS, TW_UINT32 dataGroup, TW_UINT16 dataType, TW_UINT16 msg, TW_MEMREF data);
+	void setCapability(TW_UINT16 capCode, const CapOneVal& cap);
 #ifdef G_OS_WIN32
-    bool saveDIB(TW_MEMREF hImg, const std::string& filename);
-    static GdkFilterReturn eventFilter(GdkXEvent *xevent, GdkEvent *event, gpointer data);
+	bool saveDIB(TW_MEMREF hImg, const std::string& filename);
+	static GdkFilterReturn eventFilter(GdkXEvent *xevent, GdkEvent *event, gpointer data);
 #endif
-    static PASCAL TW_UINT16 callback(TW_IDENTITY* origin, TW_IDENTITY* dest, TW_UINT32 DG, TW_UINT16 DAT, TW_UINT16 MSG, TW_MEMREF data);
-    static inline float fix32ToFloat(TW_FIX32 fix32);
-    static inline TW_FIX32 floatToFix32(float float32);
+	static PASCAL TW_UINT16 callback(TW_IDENTITY* origin, TW_IDENTITY* dest, TW_UINT32 DG, TW_UINT16 DAT, TW_UINT16 MSG, TW_MEMREF data);
+	static inline float fix32ToFloat(TW_FIX32 fix32);
+	static inline TW_FIX32 floatToFix32(float float32);
 };
 
 typedef ScannerTwain ScannerImpl;
