@@ -205,8 +205,9 @@ bool Displayer::setSources(QList<Source*> sources) {
 	m_scene->addItem(m_imageItem);
 	m_scaleThread.start();
 	if(!setCurrentPage(1)) {
-		setSources(QList<Source*>());
+		Q_ASSERT(m_currentSource);
 		QMessageBox::critical(this, _("Failed to load image"), _("The file might not be an image or be corrupt:\n%1").arg(m_currentSource->displayname));
+		setSources(QList<Source*>());
 		return false;
 	}
 	return true;
