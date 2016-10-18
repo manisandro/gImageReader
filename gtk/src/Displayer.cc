@@ -233,8 +233,9 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	m_imageItem = new DisplayerImageItem;
 
 	if(!setCurrentPage(1)) {
-		setSources(std::vector<Source*>());
+		g_assert_nonnull(m_currentSource);
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to load image"), Glib::ustring::compose(_("The file might not be an image or be corrupt:\n%1"), m_currentSource->displayname));
+		setSources(std::vector<Source*>());
 		return false;
 	}
 	return true;
