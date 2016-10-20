@@ -242,7 +242,9 @@ void MainWindow::setState(State state) {
 }
 
 void MainWindow::closeEvent(QCloseEvent* ev) {
-	if(!m_outputEditor->clear()) {
+	if(m_stateStack.top().first == State::Busy) {
+		ev->ignore();
+	} else if(!m_outputEditor->clear()) {
 		ev->ignore();
 	} else if(!isMaximized()) {
 		m_config->getSetting<VarSetting<QByteArray>>("wingeom")->setValue(saveGeometry());
