@@ -53,6 +53,7 @@ public:
 	void removeSetting(const QString& key) {
 		auto it = m_settings.find(key);
 		if(it != m_settings.end()) {
+			delete it.value();
 			m_settings.erase(it);
 		}
 	}
