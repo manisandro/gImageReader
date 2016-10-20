@@ -84,12 +84,10 @@ private:
 class BusyEventFilter : public QObject {
 public:
 	bool eventFilter(QObject */*obj*/, QEvent *ev) {
-
 		if(dynamic_cast<QMouseEvent*>(ev)) {
 			QMouseEvent* mev = static_cast<QMouseEvent*>(ev);
-			QPoint btnPos = MAIN->m_progressCancelButton->mapToGlobal(MAIN->m_progressCancelButton->pos());
-			QRect btnRect(btnPos, MAIN->m_progressCancelButton->size());
-			return btnRect.contains(mev->globalPos());
+			QPoint evp = MAIN->m_progressCancelButton->mapFromGlobal(mev->globalPos());
+			return !QRect(QPoint(0, 0), MAIN->m_progressCancelButton->size()).contains(evp);
 		}
 		return dynamic_cast<QInputEvent*>(ev);
 	}
