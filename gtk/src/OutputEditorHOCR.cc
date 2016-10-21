@@ -275,6 +275,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	m_builder.get_derived("treeview:hocr.items", m_itemView);
 	m_itemStore = Gtk::TreeStore::create(m_itemStoreCols);
 	m_itemView->set_model(m_itemStore);
+	m_itemView->get_selection()->set_mode(Gtk::SELECTION_MULTIPLE);
 	Gtk::TreeViewColumn *itemViewCol = Gtk::manage(new Gtk::TreeViewColumn(""));
 	itemViewCol->pack_start(m_itemStoreCols.selected, false);
 	Gtk::TreeView_Private::_connect_auto_store_editable_signal_handler<bool>(m_itemView, itemViewCol->get_cells()[0], m_itemStoreCols.selected);
@@ -1004,9 +1005,16 @@ void OutputEditorHOCR::mergeItems(const std::vector<Gtk::TreePath>& items) {
 			xmlpp::NodeSet nodes = doc->get_root_node()->find(Glib::ustring::compose("//*[@id='%1']", id));
 			xmlpp::Element* element = nodes.empty() ? nullptr : dynamic_cast<xmlpp::Element*>(nodes.front());
 			element->get_parent()->remove_child(element);
+		}
+	}
+
+	for(int i = 1, n = items.size(); i < n; ++i) {
+		it = m_itemStore->get_iter(items[n - i]);
+		if(it) {
 			m_itemStore->erase(it);
 		}
 	}
+
 	m_itemView->get_selection()->unselect_all();
 	m_itemView->get_selection()->select(items.front());
 
