@@ -869,6 +869,7 @@ void OutputEditorHOCR::updateCurrentItemBBox(const Geometry::Rectangle &rect) {
 				break;
 			}
 		}
+		updateCurrentItemAttribute("title", "bbox", bboxstr, false);
 		Gtk::TreeIter toplevelItem = m_itemStore->get_iter(m_currentPageItem);
 		toplevelItem->set_value(m_itemStoreCols.source, getDocumentXML(m_currentParser->get_document()));
 
