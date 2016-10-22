@@ -846,7 +846,7 @@ void OutputEditorHOCR::updateCurrentItemAttribute(const Glib::ustring& key, cons
 					break;
 				}
 			}
-			m_currentElement->set_attribute(key, Utils::string_join(subattrs, "; "));
+			m_currentElement->set_attribute(key, Utils::string_join(subattrs, ";"));
 		}
 		if(update) {
 			updateCurrentItem();
