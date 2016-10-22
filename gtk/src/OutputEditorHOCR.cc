@@ -846,7 +846,7 @@ void OutputEditorHOCR::updateCurrentItemAttribute(const Glib::ustring& key, cons
 					break;
 				}
 			}
-			m_currentElement->set_attribute(key, Utils::string_join(subattrs, "; "));
+			m_currentElement->set_attribute(key, Utils::string_join(subattrs, ";"));
 		}
 		if(update) {
 			updateCurrentItem();
@@ -869,6 +869,7 @@ void OutputEditorHOCR::updateCurrentItemBBox(const Geometry::Rectangle &rect) {
 				break;
 			}
 		}
+		updateCurrentItemAttribute("title", "bbox", bboxstr, false);
 		Gtk::TreeIter toplevelItem = m_itemStore->get_iter(m_currentPageItem);
 		toplevelItem->set_value(m_itemStoreCols.source, getDocumentXML(m_currentParser->get_document()));
 
