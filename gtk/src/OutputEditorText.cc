@@ -64,6 +64,7 @@ OutputEditorText::OutputEditorText()
 
 	m_insertMode = InsertMode::Append;
 
+	m_spell.attach(*m_textView);
 	m_spell.property_decode_language_codes() = true;
 
 	CONNECT(m_builder("menuitem:output.insert.append").as<Gtk::MenuItem>(), activate, [this] { setInsertMode(InsertMode::Append, "ins_append.png"); });
@@ -206,9 +207,9 @@ void OutputEditorText::completeTextViewMenu(Gtk::Menu *menu) {
 	item->set_active(bool(GtkSpell::Checker::get_from_text_view(*m_textView)));
 	CONNECT(item, toggled, [this, item] {
 		if(item->get_active()) {
-			setLanguage(MAIN->getRecognizer()->getSelectedLanguage());
+			m_spell.attach(*m_textView);
 		} else {
-			setLanguage(Config::Lang());
+			m_spell.detach();
 		}
 	});
 	menu->prepend(*Gtk::manage(new Gtk::SeparatorMenuItem()));
@@ -337,9 +338,7 @@ void OutputEditorText::onVisibilityChanged(bool /*visibile*/) {
 }
 
 void OutputEditorText::setLanguage(const Config::Lang& lang) {
-	m_spell.detach();
 	try {
 		m_spell.set_language(lang.code.empty() ? Utils::getSpellingLanguage() : lang.code);
-		m_spell.attach(*m_textView);
 	} catch(const GtkSpell::Error& /*e*/) {}
 }
