@@ -26,7 +26,6 @@
 #include "Utils.hh"
 
 #include <fstream>
-#include <cstring>
 
 SubstitutionsManager::SubstitutionsManager(const Builder& builder, const Glib::RefPtr<OutputBuffer>& buffer)
 	: m_buffer(buffer) {
@@ -136,7 +135,7 @@ bool SubstitutionsManager::saveList() {
 		row.get_value(1, replace);
 		str += Glib::ustring::compose("%1\t%2\n", search, replace);
 	}
-	file.write(str.data(), std::strlen(str.data()));
+	file.write(str.data(), str.bytes());
 	return true;
 }
 
