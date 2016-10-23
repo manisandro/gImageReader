@@ -27,7 +27,6 @@
 #include "SubstitutionsManager.hh"
 #include "Utils.hh"
 
-#include <cstring>
 #include <fstream>
 
 
@@ -301,7 +300,7 @@ bool OutputEditorText::save(const std::string& filename) {
 		return false;
 	}
 	Glib::ustring txt = m_textBuffer->get_text(false);
-	file.write(txt.data(), std::strlen(txt.data()));
+	file.write(txt.data(), txt.bytes());
 	m_textBuffer->set_modified(false);
 	return true;
 }

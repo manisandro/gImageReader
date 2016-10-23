@@ -17,7 +17,6 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cstring>
 #include <fstream>
 #include <cairomm/cairomm.h>
 #include <pangomm/font.h>
@@ -1223,13 +1222,13 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 	                           "    <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
 	                           "  </head>\n"
 	                           "<body>\n", tess.Version());
-	file.write(header.data(), std::strlen(header.data()));
+	file.write(header.data(), header.bytes());
 	for(Gtk::TreeIter item : m_itemStore->children()) {
 		Glib::ustring itemSource = (*item)[m_itemStoreCols.source];
-		file.write(itemSource.data(), std::strlen(itemSource.data()));
+		file.write(itemSource.data(), itemSource.bytes());
 	}
 	Glib::ustring footer = "</body>\n</html>\n";
-	file.write(footer.data(), std::strlen(footer.data()));
+	file.write(footer.data(), footer.bytes());
 	m_modified = false;
 	return true;
 }
