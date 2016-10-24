@@ -76,8 +76,10 @@ QImage ImageRenderer::render(int /*page*/, double resolution) const {
 
 PDFRenderer::PDFRenderer(const QString& filename) : DisplayRenderer(filename) {
 	m_document = Poppler::Document::load(filename);
-	m_document->setRenderHint(Poppler::Document::Antialiasing);
-	m_document->setRenderHint(Poppler::Document::TextAntialiasing);
+	if(m_document) {
+		m_document->setRenderHint(Poppler::Document::Antialiasing);
+		m_document->setRenderHint(Poppler::Document::TextAntialiasing);
+	}
 }
 
 PDFRenderer::~PDFRenderer() {
@@ -97,5 +99,5 @@ QImage PDFRenderer::render(int page, double resolution) const {
 }
 
 int PDFRenderer::getNPages() const {
-	return m_document->numPages();
+	return m_document ? m_document->numPages() : 1;
 }

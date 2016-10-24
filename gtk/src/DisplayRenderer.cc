@@ -92,7 +92,8 @@ PDFRenderer::PDFRenderer(const std::string& filename) : DisplayRenderer(filename
 }
 
 PDFRenderer::~PDFRenderer() {
-	g_object_unref(m_document);
+	if(m_document)
+		g_object_unref(m_document);
 }
 
 Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::render(int page, double resolution) const {
@@ -124,5 +125,5 @@ Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::render(int page, double resoluti
 }
 
 int PDFRenderer::getNPages() const {
-	return poppler_document_get_n_pages(m_document);
+	return m_document ? poppler_document_get_n_pages(m_document) : 1;
 }
