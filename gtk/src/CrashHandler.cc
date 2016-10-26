@@ -105,7 +105,7 @@ void CrashHandler::generate_backtrace_end(bool success) {
 	if(!success) {
 		m_textview->get_buffer()->set_text(_("Failed to obtain backtrace. Is gdb installed?"));
 	} else {
-		std::vector<Glib::ustring> lines = Utils::string_split(m_textview->get_buffer()->get_text(false), '\n');
+		std::vector<Glib::ustring> lines = Utils::string_split(m_textview->get_buffer()->get_text(false), '\n', false);
 		Glib::ustring text = Glib::ustring::compose("%1\n\n", lines[0]);
 		for(int i = 1, n = lines.size(); i < n; ++i) {
 			if(lines[i].substr(0, 6) == "Thread") {

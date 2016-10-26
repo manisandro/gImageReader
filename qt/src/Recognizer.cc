@@ -358,8 +358,8 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout) {
 	if(m_pagesDialog->exec() == QDialog::Accepted) {
 		QString text = m_pagesLineEdit->text();
 		text.replace(QRegExp("\\s+"), "");
-		for(const QString& block : text.split(',')) {
-			QStringList ranges = block.split('-');
+		for(const QString& block : text.split(',', QString::SkipEmptyParts)) {
+			QStringList ranges = block.split('-', QString::SkipEmptyParts);
 			if(ranges.size() == 1) {
 				int page = ranges[0].toInt();
 				if(page > 0 && page <= nPages) {
