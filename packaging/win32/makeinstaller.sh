@@ -16,17 +16,22 @@ iface=${2:-qt5}
 # Note: This script is written to be used with the Fedora mingw environment
 MINGWROOT=/usr/$arch-w64-mingw32/sys-root/mingw
 
-export MINGW32_CFLAGS="-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4"
-export MINGW32_CXXFLAGS="-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4"
-export MINGW64_CFLAGS="-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4"
-export MINGW64_CXXFLAGS="-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4"
+optflags="-g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4"
 
 # Halt on errors
 set -e
 
 if [ "$3" == "debug" ]; then
     withdebug=1
+    optflags+=" -O0"
+else
+    optflags+=" -O2"
 fi
+
+export MINGW32_CFLAGS="$optflags"
+export MINGW32_CXXFLAGS="$optflags"
+export MINGW64_CFLAGS="$optflags"
+export MINGW64_CXXFLAGS="$optflags"
 
 win32dir="$(dirname $(readlink -f $0))"
 srcdir="$win32dir/../../"
