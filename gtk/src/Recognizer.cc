@@ -264,7 +264,7 @@ void Recognizer::updateLanguagesMenu() {
 		m_multilingualRadio = Gtk::manage(new MultilingualMenuItem(m_langMenuRadioGroup, _("Multilingual")));
 		Gtk::Menu* submenu = Gtk::manage(new Gtk::Menu);
 		isMultilingual = curlang.prefix.find('+') != curlang.prefix.npos;
-		std::vector<Glib::ustring> sellangs = Utils::string_split(curlang.prefix, '+');
+		std::vector<Glib::ustring> sellangs = Utils::string_split(curlang.prefix, '+', false);
 		for(const Glib::ustring& langprefix : availLanguages) {
 			if(langprefix == "osd") {
 				continue;
@@ -374,9 +374,9 @@ std::vector<int> Recognizer::selectPages(bool& autodetectLayout) {
 	if(m_pagesDialog->run() == Gtk::RESPONSE_OK) {
 		Glib::ustring text = m_pagesEntry->get_text();
 		text = Glib::Regex::create("\\s+")->replace(text, 0, "", static_cast<Glib::RegexMatchFlags>(0));
-		std::vector<Glib::ustring>&& blocks = Utils::string_split(text, ',');
+		std::vector<Glib::ustring>&& blocks = Utils::string_split(text, ',', false);
 		for(const Glib::ustring& block : blocks) {
-			std::vector<Glib::ustring>&& ranges = Utils::string_split(block, '-');
+			std::vector<Glib::ustring>&& ranges = Utils::string_split(block, '-', false);
 			if(ranges.size() == 1) {
 				int page = atoi(ranges[0].c_str());
 				if(page > 0 && page <= nPages) {

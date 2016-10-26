@@ -57,7 +57,7 @@ std::string make_absolute_path(const std::string& path);
 std::string get_documents_dir();
 std::string make_output_filename(const std::string& filename);
 
-std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, bool keepEmpty = false);
+std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, bool keepEmpty = true);
 Glib::ustring string_join(const std::vector<Glib::ustring>& strings, const Glib::ustring& joiner);
 Glib::ustring string_trim(const Glib::ustring& str);
 
