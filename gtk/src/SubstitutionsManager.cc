@@ -100,7 +100,7 @@ void SubstitutionsManager::openList() {
 			if(text.empty()) {
 				continue;
 			}
-			std::vector<Glib::ustring> fields = Utils::string_split(text, '\t');
+			std::vector<Glib::ustring> fields = Utils::string_split(text, '\t', true);
 			if(fields.size() < 2) {
 				errors = true;
 				continue;
