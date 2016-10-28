@@ -55,10 +55,12 @@ Function .onInit
   StrCpy $archMismatch "false"
   ${If} ${RunningX64}
     ${If} ${ARCH} != "x86_64"
+    ${AndIf} ${ARCH} != "x86_64_debug"
       StrCpy $archMismatch "true"
     ${EndIf}
   ${Else}
     ${If} ${ARCH} != "i686"
+    ${AndIf} ${ARCH} != "i686_debug"
       StrCpy $archMismatch "true"
     ${EndIf}
   ${EndIf}
@@ -66,7 +68,7 @@ Function .onInit
   ${If} $archMismatch == "true"
     MessageBox MB_OK "The installer does not match your system architecture."
     Abort
-  ${Endif}
+  ${EndIf}
 
 
   ; Remove previous versions before installing new one
