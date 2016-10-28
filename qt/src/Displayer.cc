@@ -423,7 +423,15 @@ QImage Displayer::getImage(const QRectF& rect) {
 }
 
 QRectF Displayer::getSceneBoundingRect() const {
-	return m_imageItem->sceneBoundingRect();
+	// We cannot use m_imageItem->sceneBoundingRect() since its pixmap
+	// can currently be downscaled and therefore have slightly different
+	// proportions.
+	int width = m_pixmap.width();
+	int height = m_pixmap.height();
+	QRectF rect(width * -0.5, height * -0.5, width, height);
+	QTransform transform;
+	transform.rotate(ui.spinBoxRotation->value());
+	return transform.mapRect(rect);
 }
 
 void Displayer::sendScaleRequest(const ScaleRequest& request) {
