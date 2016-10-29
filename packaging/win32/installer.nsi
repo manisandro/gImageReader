@@ -53,12 +53,7 @@ Function .onInit
 
   Var /GLOBAL archMismatch
   StrCpy $archMismatch "false"
-  ${If} ${RunningX64}
-    ${If} ${ARCH} != "x86_64"
-    ${AndIf} ${ARCH} != "x86_64_debug"
-      StrCpy $archMismatch "true"
-    ${EndIf}
-  ${Else}
+  ${IfNot} ${RunningX64}
     ${If} ${ARCH} != "i686"
     ${AndIf} ${ARCH} != "i686_debug"
       StrCpy $archMismatch "true"
@@ -66,7 +61,7 @@ Function .onInit
   ${EndIf}
 
   ${If} $archMismatch == "true"
-    MessageBox MB_OK "The installer does not match your system architecture."
+    MessageBox MB_OK "The installer is not compatible with your system architecture."
     Abort
   ${EndIf}
 
