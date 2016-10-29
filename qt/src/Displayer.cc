@@ -413,6 +413,7 @@ QImage Displayer::getImage(const QRectF& rect) {
 	QImage image(rect.width(), rect.height(), QImage::Format_RGB32);
 	image.fill(Qt::black);
 	QPainter painter(&image);
+	painter.setRenderHint(QPainter::SmoothPixmapTransform);
 	QTransform t;
 	t.translate(-rect.x(), -rect.y());
 	t.rotate(ui.spinBoxRotation->value());
