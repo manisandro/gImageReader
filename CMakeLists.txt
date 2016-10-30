@@ -140,7 +140,6 @@ ENDIF()
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${srcdir}/src/ )
 
-
 # Files
 FILE(GLOB gimagereader_SRCS ${srcdir}/src/*.cc)
 # sort lists to avoid dependency on readdir() order and make build reproducible
@@ -198,7 +197,7 @@ ENDIF()
 
 FILE(READ po/LINGUAS langs_string)
 STRING(REGEX MATCHALL "[a-zA-Z_]+" langs "${langs_string}")
-FILE(COPY ${gimagereader_PO} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+ADD_CUSTOM_TARGET(CopyPo ALL COMMAND ${CMAKE_COMMAND} -E copy ${gimagereader_PO} ${CMAKE_CURRENT_BINARY_DIR})
 GETTEXT_PROCESS_POT_FILE(po/gimagereader.pot ALL INSTALL_DESTINATION ${PACKAGE_LOCALE_DIR} LANGUAGES ${langs})
 
 IF(MINGW)
