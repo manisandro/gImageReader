@@ -165,7 +165,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 	m_imageItem = nullptr;
 	ui.actionBestFit->setChecked(true);
 	ui.spinBoxPage->setEnabled(false);
-	ui.spinBoxPage->setValue(1);
+	ui.spinBoxPage->setRange(1, 1);
 	ui.spinBoxRotation->setValue(0.);
 	ui.spinBoxBrightness->setValue(0);
 	ui.spinBoxContrast->setValue(0);
@@ -341,6 +341,19 @@ void Displayer::resizeEvent(QResizeEvent *event) {
 	QGraphicsView::resizeEvent(event);
 	if(ui.actionBestFit->isChecked()) {
 		setZoom(Zoom::Fit);
+	}
+}
+
+void Displayer::keyPressEvent(QKeyEvent *event)
+{
+	if(event->key() == Qt::Key_PageUp) {
+		ui.spinBoxPage->setValue(ui.spinBoxPage->value() - 1);
+		event->accept();
+	} else if(event->key() == Qt::Key_PageDown) {
+		ui.spinBoxPage->setValue(ui.spinBoxPage->value() + 1);
+		event->accept();
+	} else {
+		QGraphicsView::keyPressEvent(event);
 	}
 }
 
