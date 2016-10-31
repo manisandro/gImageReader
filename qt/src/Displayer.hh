@@ -82,6 +82,7 @@ private:
 	QPoint m_panPos;
 	QTimer m_renderTimer;
 
+	void keyPressEvent(QKeyEvent* event);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);

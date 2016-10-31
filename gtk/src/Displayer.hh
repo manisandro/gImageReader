@@ -124,6 +124,7 @@ private:
 	sigc::connection m_connection_zoomoneClicked;
 
 	void resizeEvent();
+	bool keyPressEvent(GdkEventKey* ev);
 	bool mouseMoveEvent(GdkEventMotion* ev);
 	bool mousePressEvent(GdkEventButton* ev);
 	bool mouseReleaseEvent(GdkEventButton* ev);

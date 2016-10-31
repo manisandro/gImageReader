@@ -69,6 +69,9 @@ Displayer::Displayer() {
 	CONNECT(m_viewport, size_allocate, [this](Gdk::Rectangle&) {
 		resizeEvent();
 	});
+	CONNECT(m_viewport, key_press_event, [this](GdkEventKey* ev) {
+		return keyPressEvent(ev);
+	});
 	CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev) {
 		return mouseMoveEvent(ev);
 	});
@@ -191,7 +194,7 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	m_sources.clear();
 	m_pageMap.clear();
 	m_canvas->hide();
-	m_pagespin->set_value(1);
+	m_pagespin->set_range(1, 1);
 	m_rotspin->set_value(0);
 	m_brispin->set_value(0);
 	m_conspin->set_value(0);
@@ -374,6 +377,7 @@ void Displayer::resizeEvent() {
 }
 
 bool Displayer::mousePressEvent(GdkEventButton* ev) {
+	m_viewport->grab_focus();
 	if(ev->button == 2) {
 		m_panPos[0] = ev->x_root;
 		m_panPos[1] = ev->y_root;
@@ -393,6 +397,18 @@ bool Displayer::mousePressEvent(GdkEventButton* ev) {
 		return m_tool->mousePressEvent(ev);
 	}
 	return false;
+}
+
+bool Displayer::keyPressEvent(GdkEventKey* ev) {
+	if(ev->keyval == GDK_KEY_Page_Up) {
+		m_pagespin->set_value(m_pagespin->get_value_as_int() - 1);
+		return true;
+	} else if(ev->keyval == GDK_KEY_Page_Down) {
+		m_pagespin->set_value(m_pagespin->get_value_as_int() + 1);
+		return true;
+	} else {
+		return false;
+	}
 }
 
 bool Displayer::mouseMoveEvent(GdkEventMotion *ev) {
