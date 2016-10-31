@@ -1,6 +1,7 @@
 #ifndef UI_MAINWINDOW_HH
 #define UI_MAINWINDOW_HH
 
+#include "common.hh"
 #include "ui_MainWindow.h"
 #include <QDoubleSpinBox>
 #include <QMenu>

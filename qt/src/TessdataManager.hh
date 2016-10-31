@@ -21,6 +21,7 @@
 #define TESSDATAMANAGER_HH
 
 #include <QDialog>
+#include <QMap>
 
 class QListWidget;
 

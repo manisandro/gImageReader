@@ -44,8 +44,8 @@ protected:
 class ImageRenderer : public DisplayRenderer {
 public:
 	ImageRenderer(const QString& filename) : DisplayRenderer(filename) {}
-	QImage render(int page, double resolution) const;
-	int getNPages() const {
+	QImage render(int page, double resolution) const override;
+	int getNPages() const override {
 		return 1;
 	}
 };
@@ -54,8 +54,8 @@ class PDFRenderer : public DisplayRenderer {
 public:
 	PDFRenderer(const QString& filename);
 	~PDFRenderer();
-	QImage render(int page, double resolution) const;
-	int getNPages() const;
+	QImage render(int page, double resolution) const override;
+	int getNPages() const override;
 
 private:
 	Poppler::Document* m_document;

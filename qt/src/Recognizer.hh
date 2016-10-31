@@ -72,7 +72,7 @@ private:
 	bool initTesseract(tesseract::TessBaseAPI& tess, const char* language = nullptr) const;
 	QList<int> selectPages(bool& autodetectLayout);
 	void recognize(const QList<int>& pages, bool autodetectLayout = false);
-	bool eventFilter(QObject *obj, QEvent *ev);
+	bool eventFilter(QObject *obj, QEvent *ev) override;
 
 private slots:
 	void clearLineEditPageRangeStyle();

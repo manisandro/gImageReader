@@ -56,7 +56,7 @@ public:
 		: AbstractSetting(key), m_defaultValue(QVariant::fromValue(defaultValue)) {}
 
 	T getValue() const {
-		return QSettings().value(m_key, m_defaultValue).value<T>();
+		return QSettings().value(m_key, m_defaultValue).template value<T>();
 	}
 	void setValue(const T& value) {
 		QSettings().setValue(m_key, QVariant::fromValue(value));
@@ -83,7 +83,7 @@ public:
 	}
 
 public slots:
-	void serialize() {
+	void serialize() override {
 		QSettings().setValue(m_key, QVariant::fromValue(m_dialog->selectedFont().toString()));
 		emit changed();
 	}
@@ -108,7 +108,7 @@ public:
 	}
 
 public slots:
-	void serialize() {
+	void serialize() override {
 		QSettings().setValue(m_key, QVariant::fromValue(m_button->isChecked()));
 		emit changed();
 	}
@@ -133,7 +133,7 @@ public:
 	}
 
 public slots:
-	void serialize() {
+	void serialize() override {
 		QSettings().setValue(m_key, QVariant::fromValue(m_button->isChecked()));
 		emit changed();
 	}
@@ -152,7 +152,7 @@ public:
 	}
 
 public slots:
-	void serialize() {
+	void serialize() override {
 		QSettings().setValue(m_key, QVariant::fromValue(m_combo->currentIndex()));
 		emit changed();
 	}
@@ -171,7 +171,7 @@ public:
 	}
 
 public slots:
-	void serialize() {
+	void serialize() override {
 		QSettings().setValue(m_key, QVariant::fromValue(m_spin->value()));
 		emit changed();
 	}
@@ -186,7 +186,7 @@ public:
 	TableSetting(const QString& key, QTableWidget* table);
 
 public slots:
-	void serialize();
+	void serialize() override;
 
 private:
 	QTableWidget* m_table;

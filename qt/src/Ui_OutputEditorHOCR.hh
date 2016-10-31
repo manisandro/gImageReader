@@ -1,6 +1,7 @@
 #ifndef UI_OUTPUTEDITORHOCR_HH
 #define UI_OUTPUTEDITORHOCR_HH
 
+#include "common.hh"
 #include "OutputTextEdit.hh"
 #include <QCheckBox>
 #include <QComboBox>

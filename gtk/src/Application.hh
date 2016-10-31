@@ -31,13 +31,13 @@ public:
 	}
 
 private:
-	void on_activate() {
+	void on_activate() override {
 		if(m_mainWindow) {
 			m_mainWindow->getWindow()->present();
 		}
 	}
 
-	void on_startup() {
+	void on_startup() override {
 		Gtk::Application::on_startup();
 
 		add_action("redetectLangs", [this] { m_mainWindow->redetectLanguages(); });
@@ -67,7 +67,7 @@ private:
 		m_mainWindow->getWindow()->show();
 	}
 
-	void on_open(const type_vec_files& files, const Glib::ustring& /*hint*/) {
+	void on_open(const type_vec_files& files, const Glib::ustring& /*hint*/) override {
 		m_mainWindow->openFiles(files);
 		m_mainWindow->getWindow()->present();
 	}

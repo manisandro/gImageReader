@@ -1,10 +1,12 @@
 #ifndef UI_OUTPUTEDITORTEXT_HH
 #define UI_OUTPUTEDITORTEXT_HH
 
+#include "common.hh"
 #include "OutputTextEdit.hh"
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDoubleSpinBox>
+#include <QLineEdit>
 #include <QMenu>
 #include <QPushButton>
 #include <QToolBar>

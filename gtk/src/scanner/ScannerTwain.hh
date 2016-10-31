@@ -31,13 +31,13 @@
 
 class ScannerTwain : public Scanner {
 public:
-	void init();
-	void redetect();
-	void scan(const Params& params);
-	void cancel() {
+	void init() override;
+	void redetect() override;
+	void scan(const Params& params) override;
+	void cancel() override {
 		m_cancel = true;
 	}
-	void close();
+	void close() override;
 
 private:
 	void* m_dsmLib = nullptr;

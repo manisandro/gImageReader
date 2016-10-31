@@ -63,7 +63,7 @@ public:
 		m_widget->set_font_name(get_default_settings()->get_string(m_key));
 		CONNECTP(m_widget, font_name, [this] { serialize(); });
 	}
-	void serialize() {
+	void serialize() override {
 		get_default_settings()->set_string(m_key, m_widget->get_font_name());
 	}
 	Glib::ustring getValue() const {
@@ -89,13 +89,13 @@ public:
 		m_widget->set_active(get_default_settings()->get_boolean(m_key));
 		CONNECT(m_widget, toggled, [this] { serialize(); });
 	}
-	void serialize() {
+	void serialize() override {
 		get_default_settings()->set_boolean(m_key, m_widget->get_active());
 	}
-	void setValue(bool value) {
+	void setValue(bool value) override {
 		m_widget->set_active(value);
 	}
-	bool getValue() const {
+	bool getValue() const override {
 		return m_widget->get_active();
 	}
 
@@ -112,7 +112,7 @@ public:
 		m_widget->set_active(std::min(std::max(0, idx), nrows - 1));
 		CONNECT(m_widget, changed, [this] { serialize(); });
 	}
-	void serialize() {
+	void serialize() override {
 		get_default_settings()->set_int(m_key, m_widget->get_active_row_number());
 	}
 
@@ -128,7 +128,7 @@ public:
 		m_widget->set_value(value);
 		CONNECT(m_widget, value_changed, [this] { serialize(); });
 	}
-	void serialize() {
+	void serialize() override {
 		get_default_settings()->set_int(m_key, m_widget->get_value());
 	}
 
@@ -139,7 +139,7 @@ private:
 class ListStoreSetting : public AbstractSetting {
 public:
 	ListStoreSetting(const Glib::ustring& key, Glib::RefPtr<Gtk::ListStore> liststore);
-	void serialize();
+	void serialize() override;
 
 private:
 	Glib::RefPtr<Gtk::ListStore> m_liststore;
