@@ -103,8 +103,8 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 	JsonArray* array = json_node_get_array(root);
 	GList* elementArray = json_array_get_elements(array);
 	std::vector<std::pair<Glib::ustring,Glib::ustring>> extraFiles;
-	while(elementArray != 0) {
-		JsonNode* value = static_cast<JsonNode*>(elementArray->data);
+	for(GList* l = elementArray; l; l = l->next) {
+		JsonNode* value = static_cast<JsonNode*>(l->data);
 		JsonObject* treeObj = json_node_get_object(value);
 		Glib::ustring name = json_object_get_string_member(treeObj, "name");
 		Glib::ustring url = json_object_get_string_member(treeObj, "download_url");
@@ -119,7 +119,6 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 			// Delay decision to determine whether file is a supplementary language file
 			extraFiles.push_back(std::make_pair(name, url));
 		}
-		elementArray = elementArray->next;
 	}
 	g_list_free(elementArray);
 	for(const std::pair<Glib::ustring,Glib::ustring>& extraFile : extraFiles) {
