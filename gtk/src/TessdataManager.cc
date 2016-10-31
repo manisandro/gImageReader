@@ -121,6 +121,8 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 		}
 	}
 	g_list_free(elementArray);
+	g_object_unref(parser);
+
 	for(const std::pair<Glib::ustring,Glib::ustring>& extraFile : extraFiles) {
 		Glib::ustring lang = extraFile.first.substr(0, extraFile.first.find("."));
 		auto it = m_languageFiles.find(lang);
