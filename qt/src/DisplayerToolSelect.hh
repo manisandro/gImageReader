@@ -39,7 +39,7 @@ public:
 	void resolutionChanged(double factor) override;
 	void rotationChanged(double delta) override;
 
-	QList<QImage> getOCRAreas();
+	QList<QImage> getOCRAreas() override;
 	bool hasMultipleOCRAreas() const override {
 		return !m_selections.isEmpty();
 	}
@@ -84,8 +84,8 @@ private slots:
 
 private:
 	int m_number;
-	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event) override;
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 };
 
 #endif // DISPLAYERTOOLSELECT_HH

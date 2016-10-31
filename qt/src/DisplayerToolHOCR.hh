@@ -28,8 +28,8 @@ public:
 	DisplayerToolHOCR(Displayer* displayer, QObject* parent = 0);
 	~DisplayerToolHOCR();
 
-	QList<QImage> getOCRAreas();
-	void pageChanged() {
+	QList<QImage> getOCRAreas() override;
+	void pageChanged() override {
 		clearSelection();
 	}
 	void resolutionChanged(double /*factor*/) override {

@@ -35,7 +35,7 @@ private:
 	QProcess m_gdbProcess;
 	QPushButton* m_refreshButton = nullptr;
 
-	void closeEvent(QCloseEvent *);
+	void closeEvent(QCloseEvent *) override;
 
 private slots:
 	void appendGdbOutput();

@@ -88,7 +88,7 @@ private:
 	QMap<State,QTextCharFormat> mFormatMap;
 	QMap<State,QList<Rule>> mStateMap;
 
-	void highlightBlock(const QString &text) {
+	void highlightBlock(const QString &text) override {
 		int pos = 0;
 		int len = text.length();
 		State state = static_cast<State>(previousBlockState());

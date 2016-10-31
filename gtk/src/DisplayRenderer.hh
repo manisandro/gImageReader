@@ -40,8 +40,8 @@ protected:
 class ImageRenderer : public DisplayRenderer {
 public:
 	ImageRenderer(const std::string& filename) : DisplayRenderer(filename) {}
-	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const;
-	int getNPages() const {
+	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
+	int getNPages() const override {
 		return 1;
 	}
 };
@@ -50,8 +50,8 @@ class PDFRenderer : public DisplayRenderer {
 public:
 	PDFRenderer(const std::string& filename);
 	~PDFRenderer();
-	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const;
-	int getNPages() const;
+	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
+	int getNPages() const override;
 
 private:
 	PopplerDocument* m_document;

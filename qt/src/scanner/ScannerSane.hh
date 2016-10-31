@@ -33,11 +33,11 @@
 class ScannerSane : public Scanner {
 	Q_OBJECT
 public:
-	void init();
-	void redetect();
-	void scan(const Params& params);
-	void cancel();
-	void close();
+	void init() override;
+	void redetect() override;
+	void scan(const Params& params) override;
+	void cancel() override;
+	void close() override;
 
 private:
 	struct ScanJob {

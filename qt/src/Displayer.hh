@@ -82,12 +82,12 @@ private:
 	QPoint m_panPos;
 	QTimer m_renderTimer;
 
-	void keyPressEvent(QKeyEvent* event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	void resizeEvent(QResizeEvent *event);
-	void wheelEvent(QWheelEvent *event);
+	void keyPressEvent(QKeyEvent* event) override;
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
+	void wheelEvent(QWheelEvent *event) override;
 
 	void setZoom(Zoom action, QGraphicsView::ViewportAnchor anchor = QGraphicsView::AnchorViewCenter);
 
@@ -199,7 +199,7 @@ public:
 protected:
 	DisplayerTool* m_tool;
 
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget* widget);
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget* widget) override;
 
 signals:
 	void geometryChanged(QRectF rect);
@@ -212,9 +212,9 @@ private:
 	QVector<ResizeHandler> m_resizeHandlers;
 	QPointF m_resizeOffset;
 
-	void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
-	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void hoverMoveEvent(QGraphicsSceneHoverEvent *event) override;
+	void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 
 	static void resizeAnchorX(const QPointF& pos, QPointF& anchor, QPointF& /*point*/) {
 		anchor.rx() = pos.x();

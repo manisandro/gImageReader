@@ -36,7 +36,7 @@ public slots:
 	void setDrawWhitespace(bool drawWhitespace);
 
 protected:
-	void paintEvent(QPaintEvent *e);
+	void paintEvent(QPaintEvent *e) override;
 
 private:
 	class WhitespaceHighlighter;

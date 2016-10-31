@@ -71,7 +71,7 @@ private:
 
 	void savePixmap(const QPixmap& pixmap, const QString& displayname);
 	void selectionChanged();
-	bool eventFilter(QObject* object, QEvent* event);
+	bool eventFilter(QObject* object, QEvent* event) override;
 
 private slots:
 	void clearSources();
