@@ -328,11 +328,7 @@ Config::Config(QWidget* parent)
 	addSetting(new SwitchSetting("systemoutputfont", ui.checkBoxDefaultOutputFont, true));
 	addSetting(new FontSetting("customoutputfont", &m_fontDialog, QFont().toString()));
 	addSetting(new ComboSetting("textencoding", ui.comboBoxEncoding, 0));
-#ifdef Q_OS_WIN
-	addSetting(new ComboSetting("datadirs", ui.comboBoxDataLocation, 1));
-#else
 	addSetting(new ComboSetting("datadirs", ui.comboBoxDataLocation, 0));
-#endif
 
 	updateFontButton(m_fontDialog.currentFont());
 }
