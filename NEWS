@@ -1,3 +1,10 @@
+gImageReader 3.2.0 (Nov 23 2016):
+ * gImageReader 3.2.0 stable
+ * Add PageUp / PageDown keyboard accelerators for browsing multipage documents
+ * See 3.1.9x changelogs for all other feature changes since previous stable
+ * Many bug fixes since 3.1.99 - special thanks to Daniel Plakhotich
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
 gImageReader 3.1.99 (Oct 13 2016):
  * gImageReader 3.2 release candidate
  * General improvements:
