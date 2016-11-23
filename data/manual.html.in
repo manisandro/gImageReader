@@ -46,6 +46,14 @@
 </ul>
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
+<p>gImageReader 3.2.0 (Nov 23 2016):</p>
+<ul>
+    <li>gImageReader 3.2.0 stable</li>
+    <li>Add PageUp / PageDown keyboard accelerators for browsing multipage documents</li>
+    <li>See 3.1.9x changelogs for all other feature changes since previous stable</li>
+    <li>Many bug fixes since 3.1.99 - special thanks to Daniel Plakhotich</li>
+    <li>Full details in commit log: https://github.com/manisandro/gImageReader/commits/master</li>
+</ul>
 <p>gImageReader 3.1.99 (Oct 13 2016):</p>
 <ul>
 <li>gImageReader 3.2 release candidate</li>
@@ -301,7 +309,7 @@ For suggestions and contributions of any kind, please file tickets and/or pull-r
 <h2><a name="Support">Debugging and support</a></h2>
 <p>
 If you find an issue or have a suggestion, please file a ticket to the <a href="https://github.com/manisandro/gImageReader/issues">gImageReader issue tracker</a>, or contact me directly at <a
- href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. If you are experiencing crashes or hangs, please also try to include the following information in the ticket/email:
+ href="mailto:manisandro@gmail.com">manisandro@gmail.com</a>. Be sure to also consult the <a href="https://github.com/manisandro/gImageReader/wiki/FAQ">FAQ</a>. If you are experiencing crashes or hangs, please also try to include the following information in the ticket/email:
 </p>
 <ul>
 <li>If the crash handler appears, include the backtrace which is shown there. To make sure that the backtrace is complete, if you are running the application under Linux, make sure that the <tt>gdb</tt> debugger as well as the debugging symbols are installed if your distribution provides them. The package containing the debugging symbols is usually called <b>&lt;packagename&gt;-debuginfo</b> or <b>&lt;packagename&gt;-dbg</b>. If you are running the application under Windows, some debugging symbols are installed by default.</li>
