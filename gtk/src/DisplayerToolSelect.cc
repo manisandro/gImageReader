@@ -243,7 +243,11 @@ void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
 		}),
 		CONNECT(MAIN->getWidget("button:selectionmenu.save").as<Gtk::Button>(), clicked, [&]{
 			loop->quit();
-			selmenu->hide(); // Explicitly hide here to avoid conflicts with file dialog which pops up
+			// Explicitly hide (and wait for hide event to be processed) to avoid key/mouse-grab conflicts with file dialog which pops up
+			selmenu->hide();
+			while(Gtk::Main::events_pending()) {
+				Gtk::Main::iteration(false);
+			}
 			static_cast<DisplayerToolSelect*>(m_tool)->saveSelection(this);
 		}),
 		CONNECT(selmenu, button_press_event, [&](GdkEventButton* ev) {
