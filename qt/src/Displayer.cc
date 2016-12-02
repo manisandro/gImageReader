@@ -56,12 +56,17 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	setBackgroundBrush(Qt::gray);
 	setRenderHint(QPainter::Antialiasing);
 
+	m_rotateMode = RotateMode::AllPages;
+	ui.actionRotateCurrentPage->setData(static_cast<int>(RotateMode::CurrentPage));
+	ui.actionRotateAllPages->setData(static_cast<int>(RotateMode::AllPages));
+
 	m_renderTimer.setSingleShot(true);
 	m_scaleTimer.setSingleShot(true);
 
 	ui.actionRotateLeft->setData(270.);
 	ui.actionRotateRight->setData(90.);
 
+	connect(ui.menuRotation, SIGNAL(triggered(QAction*)), this, SLOT(setRotateMode(QAction*)));
 	connect(ui.actionRotateLeft, SIGNAL(triggered()), this, SLOT(rotate90()));
 	connect(ui.actionRotateRight, SIGNAL(triggered()), this, SLOT(rotate90()));
 	connect(ui.spinBoxRotation, SIGNAL(valueChanged(double)), this, SLOT(setAngle(double)));
@@ -102,7 +107,6 @@ bool Displayer::setCurrentPage(int page) {
 			if(source->resolution == -1) source->resolution = 100;
 		}
 
-		Utils::setSpinBlocked(ui.spinBoxRotation, source->angle);
 		Utils::setSpinBlocked(ui.spinBoxBrightness, source->brightness);
 		Utils::setSpinBlocked(ui.spinBoxContrast, source->contrast);
 		Utils::setSpinBlocked(ui.spinBoxResolution, source->resolution);
@@ -111,9 +115,8 @@ bool Displayer::setCurrentPage(int page) {
 		ui.checkBoxInvertColors->blockSignals(false);
 		m_currentSource = source;
 	}
-	ui.spinBoxPage->blockSignals(true);
-	ui.spinBoxPage->setValue(page);
-	ui.spinBoxPage->blockSignals(false);
+	Utils::setSpinBlocked(ui.spinBoxRotation, source->angle[m_pageMap[page].second]);
+	Utils::setSpinBlocked(ui.spinBoxPage, page);
 
 	bool result = renderImage();
 	ui.spinBoxPage->setEnabled(true);
@@ -189,11 +192,13 @@ bool Displayer::setSources(QList<Source*> sources) {
 	for(Source* source : m_sources) {
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
 			PDFRenderer r(source->path);
+			source->angle.resize(r.getNPages());
 			for(int pdfPage = 1, nPdfPages = r.getNPages(); pdfPage <= nPdfPages; ++pdfPage) {
 				m_pageMap.insert(++page, qMakePair(source, pdfPage));
 			}
 		} else {
 			m_pageMap.insert(++page, qMakePair(source, 1));
+			source->angle.resize(1);
 		}
 	}
 
@@ -311,8 +316,16 @@ void Displayer::setAngle(double angle) {
 	if(m_imageItem) {
 		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
 		Utils::setSpinBlocked(ui.spinBoxRotation, angle);
-		double delta = angle - m_currentSource->angle;
-		m_currentSource->angle = angle;
+		int sourcePage = m_pageMap[getCurrentPage()].second;
+		double delta = angle - m_currentSource->angle[sourcePage];
+		if(m_rotateMode == RotateMode::CurrentPage) {
+			m_currentSource->angle[sourcePage] = angle;
+		} else if(delta != 0) {
+			for(int page : m_pageMap.keys()) {
+				auto pair = m_pageMap[page];
+				pair.first->angle[pair.second] += delta;
+			}
+		}
 		m_imageItem->setRotation(angle);
 		if(m_tool) {
 			m_tool->rotationChanged(delta);
@@ -415,6 +428,11 @@ QPointF Displayer::mapToSceneClamped(const QPoint &p) const {
 	q.rx() = qMin(qMax(bb.x(), q.x()), bb.x() + bb.width());
 	q.ry() = qMin(qMax(bb.y(), q.y()), bb.y() + bb.height());
 	return q;
+}
+
+void Displayer::setRotateMode(QAction *action) {
+	m_rotateMode = static_cast<RotateMode>(action->data().value<int>());
+	ui.toolButtonRotation->setIcon(action->icon());
 }
 
 void Displayer::rotate90() {

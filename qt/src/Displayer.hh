@@ -68,6 +68,7 @@ public slots:
 	void setResolution(int resolution);
 
 private:
+	enum class RotateMode { CurrentPage, AllPages } m_rotateMode;
 	enum class Zoom { In, Out, Fit, Original };
 	const UI_MainWindow& ui;
 	GraphicsScene* m_scene;
@@ -125,6 +126,7 @@ private slots:
 	}
 	void sendScaleRequest(const ScaleRequest& request);
 	bool renderImage();
+	void setRotateMode(QAction* action);
 	void rotate90();
 	void setScaledImage(const QImage& image, double scale);
 	void zoomIn() {

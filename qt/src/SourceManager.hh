@@ -39,7 +39,7 @@ struct Source {
 	int contrast = 0;
 	int resolution = -1;
 	int page = 1;
-	double angle = 0.;
+	QVector<double> angle;
 	bool invert = false;
 };
 
