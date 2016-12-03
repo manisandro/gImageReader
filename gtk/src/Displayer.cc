@@ -38,12 +38,15 @@ Displayer::Displayer() {
 	m_zoomoutbtn = MAIN->getWidget("button:main.zoomout");
 	m_zoomonebtn = MAIN->getWidget("button:main.zoomnormsize");
 	m_zoomfitbtn = MAIN->getWidget("button:main.zoomfit");
+	m_rotimage = MAIN->getWidget("image:display.rotate.mode");
 	m_rotspin = MAIN->getWidget("spin:display.rotate");
 	m_pagespin = MAIN->getWidget("spin:display.page");
 	m_resspin = MAIN->getWidget("spin:display.resolution");
 	m_brispin = MAIN->getWidget("spin:display.brightness");
 	m_conspin = MAIN->getWidget("spin:display.contrast");
 	m_invcheck = MAIN->getWidget("check:display.invert");
+
+	m_rotateMode = RotateMode::AllPages;
 
 #if GTKMM_CHECK_VERSION(3,12,0)
 	m_pagespin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/page.png"));
@@ -60,6 +63,8 @@ Displayer::Displayer() {
 	m_scrollwin->drag_dest_set({Gtk::TargetEntry("text/uri-list")}, Gtk::DEST_DEFAULT_MOTION | Gtk::DEST_DEFAULT_DROP, Gdk::ACTION_COPY | Gdk::ACTION_MOVE);
 	m_viewport->override_background_color(Gdk::RGBA("#a0a0a4"));
 
+	CONNECT(MAIN->getWidget("menuitem:display.rotate.current").as<Gtk::MenuItem>(), activate, [this] { setRotateMode(RotateMode::CurrentPage, "rotate_page.png"); });
+	CONNECT(MAIN->getWidget("menuitem:display.rotate.all").as<Gtk::MenuItem>(), activate, [this] { setRotateMode(RotateMode::AllPages, "rotate_pages.png"); });
 	m_connection_rotSpinChanged = CONNECT(m_rotspin, value_changed, [this] { setAngle(m_rotspin->get_value()); });
 	m_connection_pageSpinChanged = CONNECT(m_pagespin, value_changed, [this] { setCurrentPage(m_pagespin->get_value_as_int()); });
 	m_connection_briSpinChanged = CONNECT(m_brispin, value_changed, [this] { queueRenderImage(); });
@@ -157,7 +162,6 @@ bool Displayer::setCurrentPage(int page) {
 			m_renderer = new ImageRenderer(filename);
 			if(source->resolution == -1) source->resolution = 100;
 		}
-		Utils::set_spin_blocked(m_rotspin, source->angle / M_PI * 180., m_connection_rotSpinChanged);
 		Utils::set_spin_blocked(m_brispin, source->brightness, m_connection_briSpinChanged);
 		Utils::set_spin_blocked(m_conspin, source->contrast, m_connection_conSpinChanged);
 		Utils::set_spin_blocked(m_resspin, source->resolution, m_connection_resSpinChanged);
@@ -166,6 +170,7 @@ bool Displayer::setCurrentPage(int page) {
 		m_connection_invcheckToggled.block(false);
 		m_currentSource = source;
 	}
+	Utils::set_spin_blocked(m_rotspin, source->angle[m_pageMap[page].second] / M_PI * 180., m_connection_rotSpinChanged);
 	Utils::set_spin_blocked(m_pagespin, page, m_connection_pageSpinChanged);
 	return renderImage();
 }
@@ -220,10 +225,12 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 		if(Utils::get_content_type(filename) == "application/pdf") {
 #endif
 			PDFRenderer r(filename);
+			source->angle.resize(r.getNPages(), 0.);
 			for(int pdfPage = 1, nPdfPages = r.getNPages(); pdfPage <= nPdfPages; ++pdfPage) {
 				m_pageMap.insert(std::make_pair(++page, std::make_pair(source, pdfPage)));
 			}
 		} else {
+			source->angle.resize(1, 0.);
 			m_pageMap.insert(std::make_pair(++page, std::make_pair(source, 1)));
 		}
 	}
@@ -331,13 +338,30 @@ void Displayer::setZoom(Zoom zoom) {
 	m_connection_zoomoneClicked.block(false);
 }
 
+void Displayer::setRotateMode(RotateMode mode, const std::string& iconName) {
+	m_rotateMode = mode;
+#if GTKMM_CHECK_VERSION(3,12,0)
+	m_rotimage->set(Gdk::Pixbuf::create_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/%1", iconName)));
+#else
+	m_rotimage->set(Glib::wrap(gdk_pixbuf_new_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/%1", iconName).c_str(), 0)));
+#endif
+}
+
 void Displayer::setAngle(double angle) {
 	if(m_image) {
 		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
 		Utils::set_spin_blocked(m_rotspin, angle, m_connection_rotSpinChanged);
 		angle *= M_PI / 180.;
-		double delta = angle - m_currentSource->angle;
-		m_currentSource->angle = angle;
+		int sourcePage = m_pageMap[getCurrentPage()].second;
+		double delta = angle - m_currentSource->angle[sourcePage];
+		if(m_rotateMode == RotateMode::CurrentPage) {
+			m_currentSource->angle[sourcePage] = angle;
+		} else if(delta != 0) {
+			for(const auto& keyval  : m_pageMap) {
+				auto pair = keyval.second;
+				pair.first->angle[pair.second] += delta;
+			}
+		}
 		m_imageItem->setRotation(angle);
 		if(m_tool) {
 			m_tool->rotationChanged(delta);
@@ -527,7 +551,7 @@ void Displayer::resortItems() {
 Geometry::Rectangle Displayer::getSceneBoundingRect() const {
 	int w = m_image->get_width();
 	int h = m_image->get_height();
-	Geometry::Rotation R(m_currentSource->angle);
+	Geometry::Rotation R(m_rotspin->get_value() / 180. * M_PI);
 	int width = std::abs(R(0, 0) * w) + std::abs(R(0, 1) * h);
 	int height = std::abs(R(1, 0) * w) + std::abs(R(1, 1) * h);
 	return Geometry::Rectangle(-0.5 * width, -0.5 * height, width, height);
@@ -547,7 +571,7 @@ Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle
 	ctx->set_source_rgba(1., 1., 1., 1.);
 	ctx->paint();
 	ctx->translate(-rect.x, -rect.y);
-	ctx->rotate(m_currentSource->angle);
+	ctx->rotate(m_rotspin->get_value() / 180. * M_PI);
 	ctx->translate(-0.5 * m_image->get_width(), -0.5 * m_image->get_height());
 	ctx->set_source(m_image, 0, 0);
 	ctx->paint();
