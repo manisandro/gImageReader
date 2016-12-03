@@ -24,5 +24,7 @@
 		<file preprocess="to-pixdata" alias="item_page.png">../../data/icons/item_page.png</file>
 		<file preprocess="to-pixdata" alias="item_par.png">../../data/icons/item_par.png</file>
 		<file preprocess="to-pixdata" alias="item_word.png">../../data/icons/item_word.png</file>
+    <file preprocess="to-pixdata" alias="rotate_page.png">../../data/icons/rotate_page.png</file>
+    <file preprocess="to-pixdata" alias="rotate_pages.png">../../data/icons/rotate_pages.png</file>
 	</gresource>
 </gresources> 

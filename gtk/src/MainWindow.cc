@@ -133,6 +133,7 @@ MainWindow::MainWindow()
 	m_idlegroup.push_back(getWidget("button:main.zoomnormsize"));
 	m_idlegroup.push_back(getWidget("button:main.zoomfit"));
 	m_idlegroup.push_back(getWidget("button:main.recognize"));
+	m_idlegroup.push_back(getWidget("menubutton:display.rotate.mode"));
 	m_idlegroup.push_back(getWidget("spin:display.rotate"));
 	m_idlegroup.push_back(getWidget("spin:display.page"));
 	m_idlegroup.push_back(getWidget("spin:display.brightness"));

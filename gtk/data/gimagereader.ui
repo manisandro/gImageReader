@@ -83,6 +83,40 @@
     <property name="can_focus">False</property>
     <property name="icon_name">object-select-symbolic</property>
   </object>
+  <object class="GtkImage" id="image:display.rotate.all">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="resource">/org/gnome/gimagereader/rotate_pages.png</property>
+  </object>
+  <object class="GtkImage" id="image:display.rotate.current">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="resource">/org/gnome/gimagereader/rotate_page.png</property>
+  </object>
+  <object class="GtkMenu" id="menu:display.rotate.mode">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkImageMenuItem" id="menuitem:display.rotate.current">
+        <property name="label" translatable="yes">Rotate current page</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="image">image:display.rotate.current</property>
+        <property name="use_stock">False</property>
+        <property name="always_show_image">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkImageMenuItem" id="menuitem:display.rotate.all">
+        <property name="label" translatable="yes">Rotate all pages</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="image">image:display.rotate.all</property>
+        <property name="use_stock">False</property>
+        <property name="always_show_image">True</property>
+      </object>
+    </child>
+  </object>
   <object class="GtkImage" id="image:main.autolayout">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -1048,24 +1082,89 @@
           </packing>
         </child>
         <child>
-          <object class="GtkSpinButton" id="spin:display.rotate">
+          <object class="GtkBox" id="box:display.rotate">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="max_length">5</property>
-            <property name="invisible_char">•</property>
-            <property name="width_chars">10</property>
-            <property name="max_width_chars">5</property>
-            <property name="text">0.0</property>
-            <property name="xalign">0.5</property>
-            <property name="truncate_multiline">True</property>
-            <property name="primary_icon_name">object-rotate-left-symbolic</property>
-            <property name="secondary_icon_name">object-rotate-right-symbolic</property>
-            <property name="adjustment">adjustment:display.rotate</property>
-            <property name="climb_rate">1</property>
-            <property name="digits">1</property>
-            <property name="snap_to_ticks">True</property>
-            <property name="numeric">True</property>
-            <property name="wrap">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkMenuButton" id="menubutton:display.rotate.mode">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="tooltip_text" translatable="yes">Select rotation mode</property>
+                <property name="popup">menu:display.rotate.mode</property>
+                <property name="use_popover">False</property>
+                <child>
+                  <object class="GtkBox" id="box:display.rotate.mode">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkImage" id="image:display.rotate.mode">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="tooltip_text" translatable="yes">Select insert mode</property>
+                        <property name="resource">/org/gnome/gimagereader/rotate_pages.png</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkArrow" id="arrow:display.rotate.mode">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="arrow_type">down</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+                <style>
+                  <class name="image-button"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spin:display.rotate">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="max_length">5</property>
+                <property name="invisible_char">•</property>
+                <property name="width_chars">10</property>
+                <property name="max_width_chars">5</property>
+                <property name="text">0.0</property>
+                <property name="xalign">0.5</property>
+                <property name="truncate_multiline">True</property>
+                <property name="primary_icon_name">object-rotate-left-symbolic</property>
+                <property name="secondary_icon_name">object-rotate-right-symbolic</property>
+                <property name="adjustment">adjustment:display.rotate</property>
+                <property name="climb_rate">1</property>
+                <property name="digits">1</property>
+                <property name="snap_to_ticks">True</property>
+                <property name="numeric">True</property>
+                <property name="wrap">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <style>
+              <class name="raised"/>
+              <class name="linked"/>
+            </style>
           </object>
           <packing>
             <property name="position">2</property>

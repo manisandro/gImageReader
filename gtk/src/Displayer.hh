@@ -83,6 +83,7 @@ public:
 
 private:
 	enum class Zoom { In, Out, Fit, One };
+	enum class RotateMode { CurrentPage, AllPages } m_rotateMode;
 
 	Gtk::DrawingArea* m_canvas;
 	Gtk::Viewport* m_viewport;
@@ -92,6 +93,7 @@ private:
 	Gtk::Button* m_zoomoutbtn;
 	Gtk::ToggleButton* m_zoomfitbtn;
 	Gtk::ToggleButton* m_zoomonebtn;
+	Gtk::Image* m_rotimage;
 	Gtk::SpinButton* m_rotspin;
 	Gtk::SpinButton* m_pagespin;
 	Gtk::SpinButton* m_resspin;
@@ -136,6 +138,7 @@ private:
 	void drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx);
 	void positionCanvas();
 	void queueRenderImage();
+	void setRotateMode(RotateMode mode, const std::string& iconName);
 
 	struct ScaleRequest {
 		enum Request { Scale, Abort, Quit } type;
