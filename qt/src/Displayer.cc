@@ -115,7 +115,7 @@ bool Displayer::setCurrentPage(int page) {
 		ui.checkBoxInvertColors->blockSignals(false);
 		m_currentSource = source;
 	}
-	Utils::setSpinBlocked(ui.spinBoxRotation, source->angle[m_pageMap[page].second]);
+	Utils::setSpinBlocked(ui.spinBoxRotation, source->angle[m_pageMap[page].second - 1]);
 	Utils::setSpinBlocked(ui.spinBoxPage, page);
 
 	bool result = renderImage();
@@ -317,13 +317,13 @@ void Displayer::setAngle(double angle) {
 		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
 		Utils::setSpinBlocked(ui.spinBoxRotation, angle);
 		int sourcePage = m_pageMap[getCurrentPage()].second;
-		double delta = angle - m_currentSource->angle[sourcePage];
+		double delta = angle - m_currentSource->angle[sourcePage - 1];
 		if(m_rotateMode == RotateMode::CurrentPage) {
-			m_currentSource->angle[sourcePage] = angle;
+			m_currentSource->angle[sourcePage - 1] = angle;
 		} else if(delta != 0) {
 			for(int page : m_pageMap.keys()) {
 				auto pair = m_pageMap[page];
-				pair.first->angle[pair.second] += delta;
+				pair.first->angle[pair.second - 1] += delta;
 			}
 		}
 		m_imageItem->setRotation(angle);

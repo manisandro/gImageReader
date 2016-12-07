@@ -170,7 +170,7 @@ bool Displayer::setCurrentPage(int page) {
 		m_connection_invcheckToggled.block(false);
 		m_currentSource = source;
 	}
-	Utils::set_spin_blocked(m_rotspin, source->angle[m_pageMap[page].second] / M_PI * 180., m_connection_rotSpinChanged);
+	Utils::set_spin_blocked(m_rotspin, source->angle[m_pageMap[page].second - 1] / M_PI * 180., m_connection_rotSpinChanged);
 	Utils::set_spin_blocked(m_pagespin, page, m_connection_pageSpinChanged);
 	return renderImage();
 }
@@ -353,13 +353,13 @@ void Displayer::setAngle(double angle) {
 		Utils::set_spin_blocked(m_rotspin, angle, m_connection_rotSpinChanged);
 		angle *= M_PI / 180.;
 		int sourcePage = m_pageMap[getCurrentPage()].second;
-		double delta = angle - m_currentSource->angle[sourcePage];
+		double delta = angle - m_currentSource->angle[sourcePage - 1];
 		if(m_rotateMode == RotateMode::CurrentPage) {
-			m_currentSource->angle[sourcePage] = angle;
+			m_currentSource->angle[sourcePage - 1] = angle;
 		} else if(delta != 0) {
 			for(const auto& keyval  : m_pageMap) {
 				auto pair = keyval.second;
-				pair.first->angle[pair.second] += delta;
+				pair.first->angle[pair.second - 1] += delta;
 			}
 		}
 		m_imageItem->setRotation(angle);
