@@ -28,6 +28,7 @@
 #ifdef G_OS_UNIX
 #include <gdk/gdkx.h>
 #endif
+#include <tesseract/baseapi.h>
 
 void TessdataManager::exec() {
 	static TessdataManager instance;
@@ -83,17 +84,18 @@ void TessdataManager::run() {
 bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 	m_languageListStore->clear();
 
-	Glib::RefPtr<Glib::ByteArray> data = Utils::download("https://api.github.com/repos/tesseract-ocr/tessdata/contents", messages);
-
+	Glib::RefPtr<Glib::ByteArray> data = Utils::download("https://api.github.com/repos/tesseract-ocr/tessdata/tags", messages);
 	if(!data) {
 		messages = Glib::ustring::compose(_("Failed to fetch list of available languages: %1"), messages);
 		return false;
 	}
 
+	Glib::ustring tessdataVer;
+	Glib::ustring tessVer(TESSERACT_VERSION_STR);
+
 	JsonParser* parser = json_parser_new();
 	GError* parserError = nullptr;
 	json_parser_load_from_data(parser, reinterpret_cast<gchar*>(data->get_data()), data->size(), &parserError);
-
 	if(parserError) {
 		messages = Glib::ustring::compose(_("Parsing error: %1"), parserError->message);
 		g_object_unref(parser);
@@ -102,7 +104,36 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 	JsonNode* root = json_parser_get_root(parser);
 	JsonArray* array = json_node_get_array(root);
 	GList* elementArray = json_array_get_elements(array);
+	for(GList* l = elementArray; l; l = l->next) {
+		JsonNode* value = static_cast<JsonNode*>(l->data);
+		JsonObject* tagObj = json_node_get_object(value);
+		Glib::ustring tag = json_object_get_string_member(tagObj, "name");
+		if(tag <= tessVer && tag > tessdataVer) {
+			tessdataVer = tag;
+		}
+	}
+	g_list_free(elementArray);
+	g_object_unref(parser);
+
+	data = Utils::download("https://api.github.com/repos/tesseract-ocr/tessdata/contents?ref=" + tessdataVer, messages);
+
+	if(!data) {
+		messages = Glib::ustring::compose(_("Failed to fetch list of available languages: %1"), messages);
+		return false;
+	}
+
+	parser = json_parser_new();
+	parserError = nullptr;
+	json_parser_load_from_data(parser, reinterpret_cast<gchar*>(data->get_data()), data->size(), &parserError);
+	if(parserError) {
+		messages = Glib::ustring::compose(_("Parsing error: %1"), parserError->message);
+		g_object_unref(parser);
+		return false;
+	}
 	std::vector<std::pair<Glib::ustring,Glib::ustring>> extraFiles;
+	root = json_parser_get_root(parser);
+	array = json_node_get_array(root);
+	elementArray = json_array_get_elements(array);
 	for(GList* l = elementArray; l; l = l->next) {
 		JsonNode* value = static_cast<JsonNode*>(l->data);
 		JsonObject* treeObj = json_node_get_object(value);

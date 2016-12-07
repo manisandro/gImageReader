@@ -34,6 +34,7 @@
 #include <QMessageBox>
 #include <QUrl>
 #include <QVBoxLayout>
+#include <tesseract/baseapi.h>
 
 #include "Config.hh"
 #include "MainWindow.hh"
@@ -85,14 +86,17 @@ bool TessdataManager::setup() {
 }
 
 bool TessdataManager::fetchLanguageList(QString& messages) {
-	QByteArray data = Utils::download(QUrl("https://api.github.com/repos/tesseract-ocr/tessdata/contents"), messages);
+	m_languageList->clear();
 
+	// Get newest tag older or equal to used tesseract version
+	QByteArray data = Utils::download(QUrl("https://api.github.com/repos/tesseract-ocr/tessdata/tags"), messages);
 	if(data.isEmpty()) {
 		messages = _("Failed to fetch list of available languages: %1").arg(messages);
 		return false;
 	}
 
-	QList<QPair<QString,QString>> extraFiles;
+	QString tessdataVer;
+	QString tessVer(TESSERACT_VERSION_STR);
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 	QJson::Parser parser;
 	bool ok = false;
@@ -102,9 +106,7 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 		return false;
 	}
 	for(const QVariant& value : json) {
-		QVariantMap treeObj = value.toMap();
-		QString name = treeObj.value("name").toString();
-		QString url = treeObj.value("download_url").toString();
+		QString tag = value.toMap().value("name").toString();
 #else
 	QJsonParseError err;
 	QJsonDocument json = QJsonDocument::fromJson(data, &err);
@@ -113,9 +115,42 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 		return false;
 	}
 	for(const QJsonValue& value : json.array()) {
+		QString tag = value.toObject().value("name").toString();
+#endif
+		if(tag <= tessVer && tag > tessdataVer) {
+			tessdataVer = tag;
+		}
+	}
+	data = Utils::download(QUrl("https://api.github.com/repos/tesseract-ocr/tessdata/contents?ref=" + tessdataVer), messages);
+
+	if(data.isEmpty()) {
+		messages = _("Failed to fetch list of available languages: %1").arg(messages);
+		return false;
+	}
+
+	QList<QPair<QString,QString>> extraFiles;
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+	ok = false;
+	json = parser.parse( data, &ok ).toList();
+	if(!ok) {
+		messages = _("Parsing error: %1").arg(parser.errorLine() + ": " + parser.errorString());
+		return false;
+	}
+	for(const QVariant& value : json) {
+		QVariantMap treeObj = value.toMap();
+		QString name = treeObj.value("name").toString();
+		QString url = treeObj.value("download_url").toString();
+#else
+	err = QJsonParseError();
+	json = QJsonDocument::fromJson(data, &err);
+	if(json.isNull()) {
+		messages = _("Parsing error: %1").arg(err.errorString());
+		return false;
+	}
+	for(const QJsonValue& value : json.array()) {
 		QJsonObject treeObj = value.toObject();
-		QString name = treeObj.find("name").value().toString();
-		QString url = treeObj.find("download_url").value().toString();
+		QString name = treeObj.value("name").toString();
+		QString url = treeObj.value("download_url").toString();
 #endif
 		if(name.endsWith(".traineddata")) {
 			m_languageFiles[name.left(name.indexOf("."))].append({name,url});
