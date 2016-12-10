@@ -206,8 +206,10 @@ void SourceManager::removeSource(bool deleteFile) {
 	m_connectionSelectionChanged.block(true);
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model());
 	Gtk::TreeIter it;
-	for(const Gtk::TreeModel::Path& path : m_listView->get_selection()->get_selected_rows()) {
-		it = m_listView->get_model()->get_iter(path);
+	std::vector<Gtk::TreeModel::Path> selected = m_listView->get_selection()->get_selected_rows();
+	while(!selected.empty()) {
+		it = m_listView->get_model()->get_iter(selected.back());
+		selected.pop_back();
 		Source* source = it->get_value(m_listViewCols.source);
 		if(deleteFile || source->isTemp) {
 			source->file->remove();
