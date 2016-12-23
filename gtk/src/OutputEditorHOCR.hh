@@ -68,7 +68,7 @@ private:
 
 	struct PDFSettings {
 		Image::Format colorFormat;
-		enum Compression { CompressZip, CompressJpeg } compression;
+		enum Compression { CompressZip=0, CompressFax4=1, CompressJpeg=2 } compression;
 		int compressionQuality;
 		bool useDetectedFontSizes;
 		bool uniformizeLineSpacing;
@@ -138,9 +138,11 @@ private:
 	struct CompressionComboColums : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<PDFSettings::Compression> mode;
 		Gtk::TreeModelColumn<Glib::ustring> label;
+		Gtk::TreeModelColumn<bool> sensitive;
 		CompressionComboColums() {
 			add(mode);
 			add(label);
+			add(sensitive);
 		}
 	} m_compressionComboCols;
 

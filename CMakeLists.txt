@@ -64,7 +64,7 @@ IF(UNIX)
 ENDIF(UNIX)
 SET(PODOFO_LDFLAGS -lpodofo)
 
-INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} ${TESSERACT_INCLUDE_DIRS} ${SANE_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/common ${CMAKE_BINARY_DIR} ${TESSERACT_INCLUDE_DIRS} ${SANE_INCLUDE_DIRS})
 
 IF("${INTERFACE_TYPE}" STREQUAL "gtk")
     PKG_CHECK_MODULES(GTKMM REQUIRED gtkmm-3.0)
@@ -141,10 +141,10 @@ ENDIF()
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${srcdir}/src/ )
 
 # Files
-FILE(GLOB gimagereader_SRCS ${srcdir}/src/*.cc)
+FILE(GLOB gimagereader_SRCS ${srcdir}/src/*.cc common/*.cc)
 # sort lists to avoid dependency on readdir() order and make build reproducible
 LIST(SORT gimagereader_SRCS)
-FILE(GLOB gimagereader_HDRS ${srcdir}/src/*.hh)
+FILE(GLOB gimagereader_HDRS ${srcdir}/src/*.hh common/*.hh)
 LIST(SORT gimagereader_HDRS)
 FILE(GLOB gimagereader_FORMS ${srcdir}/data/*.ui)
 LIST(SORT gimagereader_FORMS)

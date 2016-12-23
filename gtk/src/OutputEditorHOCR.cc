@@ -33,6 +33,7 @@
 #include <podofo/doc/PdfPainter.h>
 #include <podofo/doc/PdfStreamedDocument.h>
 
+#include "CCITTFax4Encoder.hh"
 #include "DisplayerToolHOCR.hh"
 #include "FileDialogs.hh"
 #include "MainWindow.hh"
@@ -232,7 +233,7 @@ public:
 		if(settings.compression == PDFSettings::CompressZip) {
 			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<const char*>(img.data), img.bytesPerLine * img.height);
 			pdfImage.SetImageData(img.width, img.height, img.sampleSize, &is, {PoDoFo::ePdfFilter_FlateDecode});
-		} else {
+		} else if(settings.compression == PDFSettings::CompressJpeg) {
 			PoDoFo::PdfName dctFilterName(PoDoFo::PdfFilterFactory::FilterTypeToName(PoDoFo::ePdfFilter_DCTDecode));
 			pdfImage.GetObject()->GetDictionary().AddKey(PoDoFo::PdfName::KeyFilter, dctFilterName);
 			uint8_t* buf = nullptr;
@@ -241,6 +242,19 @@ public:
 			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<const char*>(buf), bufLen);
 			pdfImage.SetImageDataRaw(img.width, img.height, img.sampleSize, &is);
 			std::free(buf);
+		} else if(settings.compression == PDFSettings::CompressFax4) {
+			PoDoFo::PdfName faxFilterName(PoDoFo::PdfFilterFactory::FilterTypeToName(PoDoFo::ePdfFilter_CCITTFaxDecode));
+			pdfImage.GetObject()->GetDictionary().AddKey(PoDoFo::PdfName::KeyFilter, faxFilterName);
+			PoDoFo::PdfDictionary decodeParams;
+			decodeParams.AddKey("Columns", PoDoFo::PdfObject(PoDoFo::pdf_int64(img.width)));
+			decodeParams.AddKey("Rows", PoDoFo::PdfObject(PoDoFo::pdf_int64(img.height)));
+			decodeParams.AddKey("K", PoDoFo::PdfObject(PoDoFo::pdf_int64(-1))); // K < 0 --- Pure two-dimensional encoding (Group 4)
+			pdfImage.GetObject()->GetDictionary().AddKey("DecodeParms", PoDoFo::PdfObject(decodeParams));
+			CCITTFax4Encoder encoder;
+			uint32_t encodedLen = 0;
+			uint8_t* encoded = encoder.encode(img.data, img.width, img.height, img.bytesPerLine, encodedLen);
+			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<char*>(encoded), encodedLen);
+			pdfImage.SetImageDataRaw(img.width, img.height, img.sampleSize, &is);
 		}
 		m_painter->DrawImage(bbox.x * m_scaleFactor, m_pageHeight - (bbox.y + bbox.height) * m_scaleFactor, &pdfImage, m_scaleFactor / m_imageScale, m_scaleFactor / m_imageScale);
 	}
@@ -343,11 +357,21 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	row = *(compressionModel->append());
 	row[m_compressionComboCols.mode] = PDFSettings::CompressZip;
 	row[m_compressionComboCols.label] = _("Zip (lossless)");
+	row[m_compressionComboCols.sensitive] = true;
+	row = *(compressionModel->append());
+	row[m_compressionComboCols.mode] = PDFSettings::CompressFax4;
+	row[m_compressionComboCols.label] = _("CCITT Group 4 (lossless)");
+	row[m_compressionComboCols.sensitive] = true;
 	row = *(compressionModel->append());
 	row[m_compressionComboCols.mode] = PDFSettings::CompressJpeg;
 	row[m_compressionComboCols.label] = _("Jpeg (lossy)");
+	row[m_compressionComboCols.sensitive] = true;
 	compressionCombo->pack_start(m_compressionComboCols.label);
 	compressionCombo->set_active(-1);
+	Gtk::CellRendererText* compressionTextRenderer = dynamic_cast<Gtk::CellRendererText*>(compressionCombo->get_cells()[0]);
+	if(compressionTextRenderer) {
+		compressionCombo->add_attribute(compressionTextRenderer->property_sensitive(), m_compressionComboCols.sensitive);
+	}
 
 	CONNECT(openButton, clicked, [this] { open(); });
 	CONNECT(saveButton, clicked, [this] { save(); });
@@ -444,22 +468,30 @@ void OutputEditorHOCR::setFont() {
 }
 
 void OutputEditorHOCR::imageFormatChanged() {
-	Image::Format format = (*m_builder("combo:pdfoptions.imageformat").as<Gtk::ComboBox>()->get_active())[m_formatComboCols.format];
+	Gtk::ComboBox* formatCombo = m_builder("combo:pdfoptions.imageformat");
+	Gtk::ComboBox* compressionCombo = m_builder("combo:pdfoptions.compression");
+	Glib::RefPtr<Gtk::ListStore> compressionStore = Glib::RefPtr<Gtk::ListStore>::cast_static<Gtk::TreeModel>(compressionCombo->get_model());
+	Image::Format format = (*formatCombo->get_active())[m_formatComboCols.format];
 	if(format == Image::Format_Mono) {
-		m_builder("combo:pdfoptions.compression").as<Gtk::ComboBox>()->set_active(0);
-		m_builder("combo:pdfoptions.compression").as<Gtk::Widget>()->set_sensitive(false);
-		m_builder("label:pdfoptions.compression").as<Gtk::Widget>()->set_sensitive(false);
+		if((*compressionCombo->get_active())[m_compressionComboCols.mode] == PDFSettings::CompressJpeg) {
+			compressionCombo->set_active(PDFSettings::CompressZip);
+		}
+		(*compressionStore->children()[PDFSettings::CompressFax4])[m_compressionComboCols.sensitive] = true;
+		(*compressionStore->children()[PDFSettings::CompressJpeg])[m_compressionComboCols.sensitive] = false;
 	} else {
-		m_builder("combo:pdfoptions.compression").as<Gtk::Widget>()->set_sensitive(true);
-		m_builder("label:pdfoptions.compression").as<Gtk::Widget>()->set_sensitive(true);
+		if((*compressionCombo->get_active())[m_compressionComboCols.mode] == PDFSettings::CompressFax4) {
+			compressionCombo->set_active(PDFSettings::CompressZip);
+		}
+		(*compressionStore->children()[PDFSettings::CompressFax4])[m_compressionComboCols.sensitive] = false;
+		(*compressionStore->children()[PDFSettings::CompressJpeg])[m_compressionComboCols.sensitive] = true;
 	}
 }
 
 void OutputEditorHOCR::imageCompressionChanged() {
 	PDFSettings::Compression compression = (*m_builder("combo:pdfoptions.compression").as<Gtk::ComboBox>()->get_active())[m_compressionComboCols.mode];
-	bool zipCompression = compression == PDFSettings::CompressZip;
-	m_builder("spin:pdfoptions.quality").as<Gtk::Widget>()->set_sensitive(!zipCompression);
-	m_builder("label:pdfoptions.quality").as<Gtk::Widget>()->set_sensitive(!zipCompression);
+	bool jpegCompression = compression == PDFSettings::CompressZip;
+	m_builder("spin:pdfoptions.quality").as<Gtk::Widget>()->set_sensitive(jpegCompression);
+	m_builder("label:pdfoptions.quality").as<Gtk::Widget>()->set_sensitive(jpegCompression);
 }
 
 OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI &tess) {

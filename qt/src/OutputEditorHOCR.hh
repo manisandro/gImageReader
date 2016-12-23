@@ -75,7 +75,7 @@ private:
 
 	struct PDFSettings {
 		QImage::Format colorFormat;
-		enum Compression { CompressZip, CompressJpeg } compression;
+		enum Compression { CompressZip, CompressFax4, CompressJpeg } compression;
 		int compressionQuality;
 		bool useDetectedFontSizes;
 		bool uniformizeLineSpacing;

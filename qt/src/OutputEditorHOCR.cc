@@ -27,6 +27,7 @@
 #include <QFileInfo>
 #include <QFileDialog>
 #include <QPainter>
+#include <QStandardItemModel>
 #include <QSyntaxHighlighter>
 #include <QTextStream>
 #include <cstring>
@@ -42,6 +43,7 @@
 #include <tesseract/baseapi.h>
 #include <tesseract/ocrclass.h>
 
+#include "CCITTFax4Encoder.hh"
 #include "DisplayerToolHOCR.hh"
 #include "MainWindow.hh"
 #include "OutputEditorHOCR.hh"
@@ -210,7 +212,7 @@ public:
 			}
 			PoDoFo::PdfMemoryInputStream is(buf.data(), bytesPerLine * height);
 			pdfImage.SetImageData(width, height, sampleSize, &is, {PoDoFo::ePdfFilter_FlateDecode});
-		} else {
+		} else if(settings.compression == PDFSettings::CompressJpeg) {
 			PoDoFo::PdfName dctFilterName(PoDoFo::PdfFilterFactory::FilterTypeToName(PoDoFo::ePdfFilter_DCTDecode));
 			pdfImage.GetObject()->GetDictionary().AddKey(PoDoFo::PdfName::KeyFilter, dctFilterName);
 			QByteArray data;
@@ -218,6 +220,19 @@ public:
 			img.save(&buffer, "jpg", settings.compressionQuality);
 			PoDoFo::PdfMemoryInputStream is(data.data(), data.size());
 			pdfImage.SetImageDataRaw(width, height, sampleSize, &is);
+		} else if(settings.compression == PDFSettings::CompressFax4) {
+			PoDoFo::PdfName faxFilterName(PoDoFo::PdfFilterFactory::FilterTypeToName(PoDoFo::ePdfFilter_CCITTFaxDecode));
+			pdfImage.GetObject()->GetDictionary().AddKey(PoDoFo::PdfName::KeyFilter, faxFilterName);
+			PoDoFo::PdfDictionary decodeParams;
+			decodeParams.AddKey("Columns", PoDoFo::PdfObject(PoDoFo::pdf_int64(img.width())));
+			decodeParams.AddKey("Rows", PoDoFo::PdfObject(PoDoFo::pdf_int64(img.height())));
+			decodeParams.AddKey("K", PoDoFo::PdfObject(PoDoFo::pdf_int64(-1))); // K < 0 --- Pure two-dimensional encoding (Group 4)
+			pdfImage.GetObject()->GetDictionary().AddKey("DecodeParms", PoDoFo::PdfObject(decodeParams));
+			CCITTFax4Encoder encoder;
+			uint32_t encodedLen = 0;
+			uint8_t* encoded = encoder.encode(img.constBits(), img.width(), img.height(), img.bytesPerLine(), encodedLen);
+			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<char*>(encoded), encodedLen);
+			pdfImage.SetImageDataRaw(img.width(), img.height(), sampleSize, &is);
 		}
 		m_painter->DrawImage(bbox.x() * m_scaleFactor, m_pageHeight - (bbox.y() + bbox.height()) * m_scaleFactor, &pdfImage, m_scaleFactor / m_imageScale, m_scaleFactor / m_imageScale);
 	}
@@ -259,6 +274,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	m_pdfExportDialogUi.comboBoxImageFormat->addItem(_("Monochrome"), QImage::Format_Mono);
 	m_pdfExportDialogUi.comboBoxImageFormat->setCurrentIndex(-1);
 	m_pdfExportDialogUi.comboBoxImageCompression->addItem(_("Zip (lossless)"), PDFSettings::CompressZip);
+	m_pdfExportDialogUi.comboBoxImageCompression->addItem(_("CCITT Group 4 (lossless)"), PDFSettings::CompressFax4);
 	m_pdfExportDialogUi.comboBoxImageCompression->addItem(_("Jpeg (lossy)"), PDFSettings::CompressJpeg);
 	m_pdfExportDialogUi.comboBoxImageCompression->setCurrentIndex(-1);
 
@@ -346,21 +362,32 @@ void OutputEditorHOCR::setFont() {
 
 void OutputEditorHOCR::imageFormatChanged() {
 	QImage::Format format = static_cast<QImage::Format>(m_pdfExportDialogUi.comboBoxImageFormat->itemData(m_pdfExportDialogUi.comboBoxImageFormat->currentIndex()).toInt());
+	QStandardItemModel* model = static_cast<QStandardItemModel*>(m_pdfExportDialogUi.comboBoxImageCompression->model());
+	int zipIdx = m_pdfExportDialogUi.comboBoxImageCompression->findData(PDFSettings::CompressZip);
+	int ccittIdx = m_pdfExportDialogUi.comboBoxImageCompression->findData(PDFSettings::CompressFax4);
+	int jpegIdx = m_pdfExportDialogUi.comboBoxImageCompression->findData(PDFSettings::CompressJpeg);
+	QStandardItem* ccittItem = model->item(ccittIdx);
+	QStandardItem* jpegItem = model->item(jpegIdx);
 	if(format == QImage::Format_Mono) {
-		m_pdfExportDialogUi.comboBoxImageCompression->setCurrentIndex(m_pdfExportDialogUi.comboBoxImageCompression->findData(PDFSettings::CompressZip));
-		m_pdfExportDialogUi.comboBoxImageCompression->setEnabled(false);
-		m_pdfExportDialogUi.labelImageCompression->setEnabled(false);
+		if(m_pdfExportDialogUi.comboBoxImageCompression->currentIndex() == jpegIdx) {
+			m_pdfExportDialogUi.comboBoxImageCompression->setCurrentIndex(zipIdx);
+		}
+		ccittItem->setFlags(ccittItem->flags()|Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+		jpegItem->setFlags(jpegItem->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled));
 	} else {
-		m_pdfExportDialogUi.comboBoxImageCompression->setEnabled(true);
-		m_pdfExportDialogUi.labelImageCompression->setEnabled(true);
+		if(m_pdfExportDialogUi.comboBoxImageCompression->currentIndex() == ccittIdx) {
+			m_pdfExportDialogUi.comboBoxImageCompression->setCurrentIndex(zipIdx);
+		}
+		ccittItem->setFlags(ccittItem->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled));
+		jpegItem->setFlags(jpegItem->flags()|Qt::ItemIsSelectable|Qt::ItemIsEnabled);
 	}
 }
 
 void OutputEditorHOCR::imageCompressionChanged() {
 	PDFSettings::Compression compression = static_cast<PDFSettings::Compression>(m_pdfExportDialogUi.comboBoxImageCompression->itemData(m_pdfExportDialogUi.comboBoxImageCompression->currentIndex()).toInt());
-	bool zipCompression = compression == PDFSettings::CompressZip;
-	m_pdfExportDialogUi.spinBoxCompressionQuality->setEnabled(!zipCompression);
-	m_pdfExportDialogUi.labelCompressionQuality->setEnabled(!zipCompression);
+	bool jpegCompression = compression == PDFSettings::CompressJpeg;
+	m_pdfExportDialogUi.spinBoxCompressionQuality->setEnabled(jpegCompression);
+	m_pdfExportDialogUi.labelCompressionQuality->setEnabled(jpegCompression);
 }
 
 OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI &tess) {
