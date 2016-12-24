@@ -34,6 +34,7 @@
 #include <sys/prctl.h>
 #endif
 #include <QtSpell.hpp>
+#include <tesseract/baseapi.h>
 
 #include "MainWindow.hh"
 #include "Acquirer.hh"
@@ -270,6 +271,7 @@ void MainWindow::showAbout() {
 	Ui::AboutDialog aboutDialogUi;
 	aboutDialogUi.setupUi(&d);
 	aboutDialogUi.labelVersion->setText(PACKAGE_VERSION);
+	aboutDialogUi.labelTesseractVer->setText(QString("<html><head/><body><p style=\"font-size:small;\">%1 %2</p></body></html>").arg(_("Using tesseract")).arg(TESSERACT_VERSION_STR));
 	d.exec();
 }
 

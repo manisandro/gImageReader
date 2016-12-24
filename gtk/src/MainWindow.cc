@@ -48,6 +48,7 @@
 #include <sys/prctl.h>
 #include <sys/wait.h>
 #endif
+#include <tesseract/baseapi.h>
 
 
 #if ENABLE_VERSIONCHECK
@@ -121,6 +122,7 @@ MainWindow::MainWindow()
 	m_outputPaneToggleButton = getWidget("button:main.outputpane");
 	m_window->set_icon_name("gimagereader");
 	m_aboutdialog->set_version(PACKAGE_VERSION);
+	getWidget("label:about.tesseractver").as<Gtk::Label>()->set_markup(Glib::ustring::compose("<small>%1 %2</small>", _("Using tesseract"), TESSERACT_VERSION_STR));
 
 	m_config = new Config;
 	m_acquirer = new Acquirer;
