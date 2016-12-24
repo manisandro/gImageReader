@@ -136,7 +136,14 @@ public:
 		m_painter->drawText(x, y, text);
 	}
 	void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) override {
-		m_painter->drawImage(bbox, convertedImage(image, settings.colorFormat, settings.conversionFlags));
+		QImage img = convertedImage(image, settings.colorFormat, settings.conversionFlags);
+		if(settings.compression == PDFSettings::CompressJpeg) {
+			QByteArray data;
+			QBuffer buffer(&data);
+			img.save(&buffer, "jpg", settings.compressionQuality);
+			img = QImage::fromData(data);
+		}
+		m_painter->drawImage(bbox, img);
 	}
 	double getAverageCharWidth() const override {
 		return m_painter->fontMetrics().averageCharWidth();
@@ -301,6 +308,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(m_pdfExportDialogUi.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(imageFormatChanged()));
 	connect(m_pdfExportDialogUi.comboBoxDithering, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.comboBoxImageCompression, SIGNAL(currentIndexChanged(int)), this, SLOT(imageCompressionChanged()));
+	connect(m_pdfExportDialogUi.spinBoxCompressionQuality, SIGNAL(valueChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), m_pdfExportDialogUi.labelFontScaling, SLOT(setEnabled(bool)));
 	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), m_pdfExportDialogUi.spinFontScaling, SLOT(setEnabled(bool)));
