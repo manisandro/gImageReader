@@ -507,7 +507,7 @@ void OutputEditorHOCR::imageFormatChanged() {
 
 void OutputEditorHOCR::imageCompressionChanged() {
 	PDFSettings::Compression compression = (*m_builder("combo:pdfoptions.compression").as<Gtk::ComboBox>()->get_active())[m_compressionComboCols.mode];
-	bool jpegCompression = compression == PDFSettings::CompressZip;
+	bool jpegCompression = compression == PDFSettings::CompressJpeg;
 	m_builder("spin:pdfoptions.quality").as<Gtk::Widget>()->set_sensitive(jpegCompression);
 	m_builder("label:pdfoptions.quality").as<Gtk::Widget>()->set_sensitive(jpegCompression);
 }
