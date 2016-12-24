@@ -75,6 +75,7 @@ private:
 
 	struct PDFSettings {
 		QImage::Format colorFormat;
+		Qt::ImageConversionFlags conversionFlags;
 		enum Compression { CompressZip, CompressFax4, CompressJpeg } compression;
 		int compressionQuality;
 		bool useDetectedFontSizes;
@@ -101,7 +102,7 @@ private:
 			return colorTable;
 		}
 #endif
-		QImage convertedImage(const QImage& image, QImage::Format targetFormat) const {
+		QImage convertedImage(const QImage& image, QImage::Format targetFormat, Qt::ImageConversionFlags flags) const {
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 			if(image.format() == targetFormat) {
 				return image;
@@ -112,7 +113,7 @@ private:
 				return image.convertToFormat(targetFormat);
 			}
 #else
-			return image.format() == targetFormat ? image : image.convertToFormat(targetFormat);
+			return image.format() == targetFormat ? image : image.convertToFormat(targetFormat, flags);
 #endif
 		}
 	};

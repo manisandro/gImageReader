@@ -136,7 +136,7 @@ public:
 		m_painter->drawText(x, y, text);
 	}
 	void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) override {
-		m_painter->drawImage(bbox, convertedImage(image, settings.colorFormat));
+		m_painter->drawImage(bbox, convertedImage(image, settings.colorFormat, settings.conversionFlags));
 	}
 	double getAverageCharWidth() const override {
 		return m_painter->fontMetrics().averageCharWidth();
@@ -189,7 +189,7 @@ public:
 	}
 	void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) override {
 		QImage scaledImage = image.scaled(image.width() * m_imageScale, image.height() * m_imageScale, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-		QImage img = convertedImage(scaledImage, settings.colorFormat);
+		QImage img = convertedImage(scaledImage, settings.colorFormat, settings.conversionFlags);
 		if(settings.colorFormat == QImage::Format_Mono) {
 			img.invertPixels();
 		}
@@ -273,6 +273,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 #endif
 	m_pdfExportDialogUi.comboBoxImageFormat->addItem(_("Monochrome"), QImage::Format_Mono);
 	m_pdfExportDialogUi.comboBoxImageFormat->setCurrentIndex(-1);
+	m_pdfExportDialogUi.comboBoxDithering->addItem(_("Threshold (closest color)"), Qt::ThresholdDither);
+	m_pdfExportDialogUi.comboBoxDithering->addItem(_("Diffuse"), Qt::DiffuseDither);
 	m_pdfExportDialogUi.comboBoxImageCompression->addItem(_("Zip (lossless)"), PDFSettings::CompressZip);
 	m_pdfExportDialogUi.comboBoxImageCompression->addItem(_("CCITT Group 4 (lossless)"), PDFSettings::CompressFax4);
 	m_pdfExportDialogUi.comboBoxImageCompression->addItem(_("Jpeg (lossy)"), PDFSettings::CompressJpeg);
@@ -297,6 +299,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(m_pdfExportDialogUi.comboBoxOutputMode, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(imageFormatChanged()));
+	connect(m_pdfExportDialogUi.comboBoxDithering, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.comboBoxImageCompression, SIGNAL(currentIndexChanged(int)), this, SLOT(imageCompressionChanged()));
 	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.checkBoxFontSize, SIGNAL(toggled(bool)), m_pdfExportDialogUi.labelFontScaling, SLOT(setEnabled(bool)));
@@ -316,6 +319,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagecompressionquality", m_pdfExportDialogUi.spinBoxCompressionQuality, 90));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimagecompression", m_pdfExportDialogUi.comboBoxImageCompression));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageformat", m_pdfExportDialogUi.comboBoxImageFormat));
+	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageconversionflags", m_pdfExportDialogUi.comboBoxDithering));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagedpi", m_pdfExportDialogUi.spinBoxDpi, 300));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfusedetectedfontsizes", m_pdfExportDialogUi.checkBoxFontSize, true));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdffontscale", m_pdfExportDialogUi.spinFontScaling, 100));
@@ -374,12 +378,16 @@ void OutputEditorHOCR::imageFormatChanged() {
 		}
 		ccittItem->setFlags(ccittItem->flags()|Qt::ItemIsSelectable|Qt::ItemIsEnabled);
 		jpegItem->setFlags(jpegItem->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled));
+		m_pdfExportDialogUi.labelDithering->setEnabled(true);
+		m_pdfExportDialogUi.comboBoxDithering->setEnabled(true);
 	} else {
 		if(m_pdfExportDialogUi.comboBoxImageCompression->currentIndex() == ccittIdx) {
 			m_pdfExportDialogUi.comboBoxImageCompression->setCurrentIndex(zipIdx);
 		}
 		ccittItem->setFlags(ccittItem->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled));
 		jpegItem->setFlags(jpegItem->flags()|Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+		m_pdfExportDialogUi.labelDithering->setEnabled(false);
+		m_pdfExportDialogUi.comboBoxDithering->setEnabled(false);
 	}
 }
 
@@ -1123,6 +1131,7 @@ void OutputEditorHOCR::savePDF() {
 
 	PDFSettings pdfSettings;
 	pdfSettings.colorFormat = static_cast<QImage::Format>(m_pdfExportDialogUi.comboBoxImageFormat->itemData(m_pdfExportDialogUi.comboBoxImageFormat->currentIndex()).toInt());
+	pdfSettings.conversionFlags = pdfSettings.colorFormat == QImage::Format_Mono ? static_cast<Qt::ImageConversionFlags>(m_pdfExportDialogUi.comboBoxDithering->itemData(m_pdfExportDialogUi.comboBoxDithering->currentIndex()).toInt()) : Qt::AutoColor;
 	pdfSettings.compression = static_cast<PDFSettings::Compression>(m_pdfExportDialogUi.comboBoxImageCompression->itemData(m_pdfExportDialogUi.comboBoxImageCompression->currentIndex()).toInt());
 	pdfSettings.compressionQuality = m_pdfExportDialogUi.spinBoxCompressionQuality->value();
 	pdfSettings.useDetectedFontSizes = m_pdfExportDialogUi.checkBoxFontSize->isChecked();
@@ -1240,6 +1249,7 @@ void OutputEditorHOCR::updatePreview() {
 
 	PDFSettings pdfSettings;
 	pdfSettings.colorFormat = static_cast<QImage::Format>(m_pdfExportDialogUi.comboBoxImageFormat->itemData(m_pdfExportDialogUi.comboBoxImageFormat->currentIndex()).toInt());
+	pdfSettings.conversionFlags = pdfSettings.colorFormat == QImage::Format_Mono ? static_cast<Qt::ImageConversionFlags>(m_pdfExportDialogUi.comboBoxDithering->itemData(m_pdfExportDialogUi.comboBoxDithering->currentIndex()).toInt()) : Qt::AutoColor;
 	pdfSettings.compression = static_cast<PDFSettings::Compression>(m_pdfExportDialogUi.comboBoxImageCompression->itemData(m_pdfExportDialogUi.comboBoxImageCompression->currentIndex()).toInt());
 	pdfSettings.compressionQuality = m_pdfExportDialogUi.spinBoxCompressionQuality->value();
 	pdfSettings.useDetectedFontSizes = m_pdfExportDialogUi.checkBoxFontSize->isChecked();

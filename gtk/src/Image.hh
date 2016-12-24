@@ -25,19 +25,20 @@
 class Image {
 public:
 	enum Format {Format_RGB24 = 0, Format_Gray8 = 1, Format_Mono = 2} format; // This order needs to be the same as combo:pdfoptions.imageformat
+	enum ConversionFlags { AutoColor = 0, ThresholdDithering = 1, DiffuseDithering = 2} conversionFlags;
 	int width;
 	int height;
 	int sampleSize;
 	int bytesPerLine;
 	unsigned char* data = nullptr;
 
-	Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat);
+	Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat, ConversionFlags flags);
 	~Image() {
 		delete[] data;
 	}
 	void writeJpeg(int quality, uint8_t*& buf, unsigned long& bufLen);
 
-	static Cairo::RefPtr<Cairo::ImageSurface> simulateFormat(Cairo::RefPtr<Cairo::ImageSurface> src, Format format);
+	static Cairo::RefPtr<Cairo::ImageSurface> simulateFormat(Cairo::RefPtr<Cairo::ImageSurface> src, Format format, ConversionFlags flags);
 	static Cairo::RefPtr<Cairo::ImageSurface> scale(Cairo::RefPtr<Cairo::ImageSurface> src, double scaleFactor);
 };
 
