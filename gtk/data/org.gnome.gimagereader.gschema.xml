@@ -126,10 +126,10 @@
             <summary>Output directory for OCR output</summary>
             <description>Output directory for OCR output.</description>
         </key>
-        <key type="b" name="osd">
-            <default>false</default>
-            <summary>Perform orientation and script detection</summary>
-            <description>Perform orientation and script detection.</description>
+        <key type="i" name="psm">
+            <default>6</default>
+            <summary>Page segmentation mode</summary>
+            <description>Page segmentation mode.</description>
         </key>
         <key type="i" name="outputeditor">
             <default>0</default>

@@ -121,7 +121,7 @@ Recognizer::Recognizer() {
 
 	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("language"));
 	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", MAIN->getWidget("comboboxtext:dialog.regions")));
-	MAIN->getConfig()->addSetting(new VarSetting<bool>("osd"));
+	MAIN->getConfig()->addSetting(new VarSetting<int>("psm"));
 }
 
 std::vector<Glib::ustring> Recognizer::getAvailableLanguages() const {
@@ -193,7 +193,7 @@ void Recognizer::updateLanguagesMenu() {
 	});
 	m_langMenuRadioGroup = Gtk::RadioButtonGroup();
 	m_langMenuCheckGroup = std::vector<std::pair<Gtk::CheckMenuItem*, Glib::ustring>>();
-	m_osdItem = nullptr;
+	m_psmRadioGroup = Gtk::RadioButtonGroup();
 	m_curLang = Config::Lang();
 	Gtk::RadioMenuItem* curitem = nullptr;
 	Gtk::RadioMenuItem* activeitem = nullptr;
@@ -302,14 +302,43 @@ void Recognizer::updateLanguagesMenu() {
 		activeitem = curitem;
 	}
 
-	// Add OSD item
-	if(haveOsd) {
-		m_menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
-		m_osdItem = Gtk::manage(new Gtk::CheckMenuItem(_("Detect script and orientation")));
-		m_osdItem->set_active(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue());
-		CONNECT(m_osdItem, toggled, [this] { MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->setValue(m_osdItem->get_active()); });
-		m_menuLanguages->append(*m_osdItem);
+	// Add PSM items
+	m_menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+	Gtk::Menu* psmMenu = Gtk::manage(new Gtk::Menu);
+	m_currentPsmMode = MAIN->getConfig()->getSetting<VarSetting<int>>("psm")->getValue();
+
+	struct PsmEntry {
+		Glib::ustring label;
+		tesseract::PageSegMode psmMode;
+		bool requireOsd;
+	};
+	std::vector<PsmEntry> psmModes = {
+		PsmEntry{_("Automatic page segmentation"), tesseract::PSM_AUTO, false},
+		PsmEntry{_("Page segmentation with orientation and script detection"), tesseract::PSM_AUTO_OSD, true},
+		PsmEntry{_("Assume single column of text"), tesseract::PSM_SINGLE_COLUMN, false},
+		PsmEntry{_("Assume single block of vertically aligned text"), tesseract::PSM_SINGLE_BLOCK_VERT_TEXT, false},
+		PsmEntry{_("Assume a single uniform block of text"), tesseract::PSM_SINGLE_BLOCK, false},
+		PsmEntry{_("Assume a line of text"), tesseract::PSM_SINGLE_LINE, false},
+		PsmEntry{_("Assume a single word"), tesseract::PSM_SINGLE_WORD, false},
+		PsmEntry{_("Assume a single word in a circle"), tesseract::PSM_CIRCLE_WORD, false},
+		PsmEntry{_("Sparse text in no particular order"), tesseract::PSM_SPARSE_TEXT, false},
+		PsmEntry{_("Sparse text with orientation and script detection"), tesseract::PSM_SPARSE_TEXT_OSD, true}};
+	for(const auto& entry : psmModes) {
+		Gtk::RadioMenuItem* item = Gtk::manage(new Gtk::RadioMenuItem(m_psmRadioGroup, entry.label));
+		item->set_sensitive(!entry.requireOsd || haveOsd);
+		item->set_active(entry.psmMode == m_currentPsmMode);
+		CONNECT(item, toggled, [this, entry, item] {
+			if(item->get_active()) {
+				m_currentPsmMode = entry.psmMode;
+				MAIN->getConfig()->getSetting<VarSetting<int>>("psm")->setValue(entry.psmMode);
+			}
+		});
+		psmMenu->append(*item);
 	}
+
+	Gtk::MenuItem* psmItem = Gtk::manage(new Gtk::MenuItem(_("Page segmentation mode")));
+	psmItem->set_submenu(*psmMenu);
+	m_menuLanguages->append(*psmItem);
 
 	// Add installer item
 	m_menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
@@ -427,9 +456,7 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 	tesseract::TessBaseAPI tess;
 	if(initTesseract(tess, m_curLang.prefix.c_str())) {
 		Glib::ustring failed;
-		if(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue() == true) {
-			tess.SetPageSegMode(tesseract::PSM_AUTO_OSD);
-		}
+		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_currentPsmMode));
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(tess);
 		ProgressMonitor monitor(pages.size());
 		MAIN->showProgress(&monitor);
