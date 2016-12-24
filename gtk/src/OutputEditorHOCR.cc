@@ -169,11 +169,11 @@ public:
 			uint8_t* buf = nullptr;
 			unsigned long bufLen = 0;
 			img.writeJpeg(settings.compressionQuality, buf, bufLen);
-			Glib::RefPtr<Gio::MemoryInputStream> is = Gio::MemoryInputStream::create();
-			is->add_data(buf, bufLen, nullptr);
-			Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create_from_stream(is);
-			Gdk::Cairo::set_source_pixbuf(m_context, pixbuf, bbox.x, bbox.y);
+			Glib::RefPtr<Gdk::PixbufLoader> loader = Gdk::PixbufLoader::create("jpeg");
+			loader->write(buf, bufLen);
+			loader->close();
 			std::free(buf);
+			Gdk::Cairo::set_source_pixbuf(m_context, loader->get_pixbuf(), bbox.x, bbox.y);
 		} else {
 			Cairo::RefPtr<Cairo::ImageSurface> img = Image::simulateFormat(image, settings.colorFormat, settings.conversionFlags);
 			m_context->set_source(img, bbox.x, bbox.y);
