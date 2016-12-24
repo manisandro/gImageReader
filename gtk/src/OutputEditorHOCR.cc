@@ -164,8 +164,19 @@ public:
 	void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) override {
 		m_context->save();
 		m_context->move_to(bbox.x, bbox.y);
-		Cairo::RefPtr<Cairo::ImageSurface> img = Image::simulateFormat(image, settings.colorFormat, settings.conversionFlags);
-		m_context->set_source(img, bbox.x, bbox.y);
+		if(settings.compression == PDFSettings::CompressJpeg) {
+			Image img(image, settings.colorFormat, settings.conversionFlags);
+			uint8_t* buf = nullptr;
+			unsigned long bufLen = 0;
+			img.writeJpeg(settings.compressionQuality, buf, bufLen);
+			Glib::RefPtr<Gio::MemoryInputStream> is = Gio::MemoryInputStream::create();
+			is->add_data(buf, bufLen, nullptr);
+			Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create_from_stream(is);
+			Gdk::Cairo::set_source_pixbuf(m_context, pixbuf, bbox.x, bbox.y);
+		} else {
+			Cairo::RefPtr<Cairo::ImageSurface> img = Image::simulateFormat(image, settings.colorFormat, settings.conversionFlags);
+			m_context->set_source(img, bbox.x, bbox.y);
+		}
 		m_context->paint();
 		m_context->restore();
 	}
@@ -412,6 +423,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	CONNECT(imageFormatCombo, changed, [this] { imageFormatChanged(); updatePreview(); });
 	CONNECT(ditheringCombo, changed, [this] { updatePreview(); });
 	CONNECT(compressionCombo, changed, [this] { imageCompressionChanged(); });
+	CONNECT(m_builder("spin:pdfoptions.quality").as<Gtk::SpinButton>(), value_changed, [this] { updatePreview(); });
 	CONNECT(m_builder("fontbutton:pdfoptions").as<Gtk::FontButton>(), font_set, [this] { updatePreview(); });
 	CONNECT(m_builder("checkbox:pdfoptions.usedetectedfontsizes").as<Gtk::CheckButton>(), toggled, [this] { updatePreview(); });
 	CONNECTS(m_builder("checkbox:pdfoptions.usedetectedfontsizes").as<Gtk::CheckButton>(), toggled, [this](Gtk::CheckButton* button) {
