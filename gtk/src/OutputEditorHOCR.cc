@@ -173,6 +173,7 @@ public:
 			is->add_data(buf, bufLen, nullptr);
 			Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create_from_stream(is);
 			Gdk::Cairo::set_source_pixbuf(m_context, pixbuf, bbox.x, bbox.y);
+			std::free(buf);
 		} else {
 			Cairo::RefPtr<Cairo::ImageSurface> img = Image::simulateFormat(image, settings.colorFormat, settings.conversionFlags);
 			m_context->set_source(img, bbox.x, bbox.y);
