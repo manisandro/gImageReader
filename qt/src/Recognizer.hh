@@ -63,8 +63,8 @@ private:
 	QComboBox* m_pageAreaComboBox;
 	QActionGroup* m_langMenuRadioGroup = nullptr;
 	QActionGroup* m_langMenuCheckGroup = nullptr;
+	QActionGroup* m_psmCheckGroup = nullptr;
 	QAction* m_multilingualAction = nullptr;
-	QAction* m_osdAction = nullptr;
 	QString m_modeLabel;
 	QString m_langLabel;
 	Config::Lang m_curLang;
@@ -76,7 +76,7 @@ private:
 
 private slots:
 	void clearLineEditPageRangeStyle();
-	void osdToggled(bool state);
+	void psmSelected(QAction* action);
 	void recognizeButtonClicked();
 	void recognizeCurrentPage();
 	void recognizeMultiplePages();

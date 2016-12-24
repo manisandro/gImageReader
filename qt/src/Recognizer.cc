@@ -101,7 +101,7 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 
 	MAIN->getConfig()->addSetting(new VarSetting<QString>("language", "eng:en_EN"));
 	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", uiPageRangeDialog.comboBoxRecognitionArea, 0));
-	MAIN->getConfig()->addSetting(new VarSetting<bool>("osd", false));
+	MAIN->getConfig()->addSetting(new VarSetting<int>("psm", 6));
 }
 
 QStringList Recognizer::getAvailableLanguages() const {
@@ -174,7 +174,9 @@ void Recognizer::updateLanguagesMenu() {
 	delete m_langMenuCheckGroup;
 	m_langMenuCheckGroup = new QActionGroup(this);
 	m_langMenuCheckGroup->setExclusive(false);
-	m_osdAction = nullptr;
+	delete m_psmCheckGroup;
+	m_psmCheckGroup = new QActionGroup(this);
+	connect(m_psmCheckGroup, SIGNAL(triggered(QAction*)), this, SLOT(psmSelected(QAction*)));
 	m_menuMultilanguage = nullptr;
 	m_curLang = Config::Lang();
 	QAction* curitem = nullptr;
@@ -282,15 +284,40 @@ void Recognizer::updateLanguagesMenu() {
 	if(activeitem)
 		activeitem->trigger();
 
-	// Add OSD item
-	if(haveOsd) {
-		ui.menuLanguages->addSeparator();
-		m_osdAction = new QAction(_("Detect script and orientation"), ui.menuLanguages);
-		m_osdAction->setCheckable(true);
-		m_osdAction->setChecked(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue());
-		connect(m_osdAction, SIGNAL(toggled(bool)), this, SLOT(osdToggled(bool)));
-		ui.menuLanguages->addAction(m_osdAction);
+	// Add PSM items
+	ui.menuLanguages->addSeparator();
+	QMenu* psmMenu = new QMenu();
+	int activePsm = MAIN->getConfig()->getSetting<VarSetting<int>>("psm")->getValue();
+
+	struct PsmEntry {
+		QString label;
+		tesseract::PageSegMode psmMode;
+		bool requireOsd;
+	};
+	QVector<PsmEntry> psmModes = {
+			PsmEntry{_("Automatic page segmentation"), tesseract::PSM_AUTO, false},
+			PsmEntry{_("Page segmentation with orientation and script detection"), tesseract::PSM_AUTO_OSD, true},
+			PsmEntry{_("Assume single column of text"), tesseract::PSM_SINGLE_COLUMN, false},
+			PsmEntry{_("Assume single block of vertically aligned text"), tesseract::PSM_SINGLE_BLOCK_VERT_TEXT, false},
+			PsmEntry{_("Assume a single uniform block of text"), tesseract::PSM_SINGLE_BLOCK, false},
+			PsmEntry{_("Assume a line of text"), tesseract::PSM_SINGLE_LINE, false},
+			PsmEntry{_("Assume a single word"), tesseract::PSM_SINGLE_WORD, false},
+			PsmEntry{_("Assume a single word in a circle"), tesseract::PSM_CIRCLE_WORD, false},
+			PsmEntry{_("Sparse text in no particular order"), tesseract::PSM_SPARSE_TEXT, false},
+			PsmEntry{_("Sparse text with orientation and script detection"), tesseract::PSM_SPARSE_TEXT_OSD, true}};
+	for(const auto& entry : psmModes) {
+		QAction* item = psmMenu->addAction(entry.label);
+		item->setData(entry.psmMode);
+		item->setEnabled(!entry.requireOsd || haveOsd);
+		item->setCheckable(true);
+		item->setChecked(activePsm == entry.psmMode);
+		m_psmCheckGroup->addAction(item);
 	}
+
+	QAction* psmAction = new QAction(_("Page segmentation mode"), ui.menuLanguages);
+	psmAction->setMenu(psmMenu);
+	ui.menuLanguages->addAction(psmAction);
+
 
 	// Add installer item
 	ui.menuLanguages->addSeparator();
@@ -341,8 +368,8 @@ void Recognizer::clearLineEditPageRangeStyle() {
 	qobject_cast<QLineEdit*>(QObject::sender())->setStyleSheet("");
 }
 
-void Recognizer::osdToggled(bool state) {
-	MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->setValue(state);
+void Recognizer::psmSelected(QAction *action) {
+	MAIN->getConfig()->getSetting<VarSetting<int>>("psm")->setValue(action->data().toInt());
 }
 
 QList<int> Recognizer::selectPages(bool& autodetectLayout) {
@@ -412,9 +439,7 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 	tesseract::TessBaseAPI tess;
 	if(initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())) {
 		QString failed;
-		if(MAIN->getConfig()->getSetting<VarSetting<bool>>("osd")->getValue() == true) {
-			tess.SetPageSegMode(tesseract::PSM_AUTO_OSD);
-		}
+		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_psmCheckGroup->checkedAction()->data().toInt()));
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(tess);
 		ProgressMonitor monitor(pages.size());
 		MAIN->showProgress(&monitor);

@@ -64,9 +64,10 @@ private:
 	Gtk::ComboBoxText* m_pageAreaCombo;
 	sigc::signal<void,Config::Lang> m_signal_languageChanged;
 	Gtk::RadioButtonGroup m_langMenuRadioGroup;
+	Gtk::RadioButtonGroup m_psmRadioGroup;
+	int m_currentPsmMode;
 	std::vector<std::pair<Gtk::CheckMenuItem*,Glib::ustring>> m_langMenuCheckGroup;
 	MultilingualMenuItem* m_multilingualRadio = nullptr;
-	Gtk::CheckMenuItem* m_osdItem = nullptr;
 	Config::Lang m_curLang;
 
 	bool initTesseract(tesseract::TessBaseAPI& tess, const char* language = nullptr) const;
