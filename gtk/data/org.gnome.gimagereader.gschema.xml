@@ -196,5 +196,10 @@
             <summary>Resolution at which to export images in the PDF</summary>
             <description>Resolution at which to export images in the PDF.</description>
         </key>
+        <key type="i" name="pdfimageconversionflags">
+            <default>0</default>
+            <summary>Image conversion flags</summary>
+            <description>Image conversion flags.</description>
+        </key>
     </schema>
 </schemalist>

@@ -68,7 +68,8 @@ private:
 
 	struct PDFSettings {
 		Image::Format colorFormat;
-		enum Compression { CompressZip=0, CompressFax4=1, CompressJpeg=2 } compression;
+		Image::ConversionFlags conversionFlags;
+		enum Compression { CompressZip=0, CompressFax4=1, CompressJpeg=2 } compression; // This order needs to be the same as combo:pdfoptions.compression
 		int compressionQuality;
 		bool useDetectedFontSizes;
 		bool uniformizeLineSpacing;
@@ -134,6 +135,15 @@ private:
 			add(label);
 		}
 	} m_formatComboCols;
+
+	struct DitheringComboColums : public Gtk::TreeModel::ColumnRecord {
+		Gtk::TreeModelColumn<Image::ConversionFlags> conversionFlags;
+		Gtk::TreeModelColumn<Glib::ustring> label;
+		DitheringComboColums() {
+			add(conversionFlags);
+			add(label);
+		}
+	} m_ditheringComboCols;
 
 	struct CompressionComboColums : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<PDFSettings::Compression> mode;

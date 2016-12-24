@@ -164,7 +164,7 @@ public:
 	void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) override {
 		m_context->save();
 		m_context->move_to(bbox.x, bbox.y);
-		Cairo::RefPtr<Cairo::ImageSurface> img = Image::simulateFormat(image, settings.colorFormat);
+		Cairo::RefPtr<Cairo::ImageSurface> img = Image::simulateFormat(image, settings.colorFormat, settings.conversionFlags);
 		m_context->set_source(img, bbox.x, bbox.y);
 		m_context->paint();
 		m_context->restore();
@@ -229,7 +229,7 @@ public:
 #endif
 		Cairo::RefPtr<Cairo::ImageSurface> scaledImage = Image::scale(image, m_imageScale);
 		pdfImage.SetImageColorSpace(settings.colorFormat == Image::Format_RGB24 ? PoDoFo::ePdfColorSpace_DeviceRGB : PoDoFo::ePdfColorSpace_DeviceGray);
-		Image img(scaledImage, settings.colorFormat);
+		Image img(scaledImage, settings.colorFormat, settings.conversionFlags);
 		if(settings.compression == PDFSettings::CompressZip) {
 			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<const char*>(img.data), img.bytesPerLine * img.height);
 			pdfImage.SetImageData(img.width, img.height, img.sampleSize, &is, {PoDoFo::ePdfFilter_FlateDecode});
@@ -351,6 +351,18 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	imageFormatCombo->pack_start(m_formatComboCols.label);
 	imageFormatCombo->set_active(-1);
 
+	Gtk::ComboBox* ditheringCombo = m_builder("combo:pdfoptions.dithering");
+	Glib::RefPtr<Gtk::ListStore> ditheringComboModel = Gtk::ListStore::create(m_ditheringComboCols);
+	ditheringCombo->set_model(ditheringComboModel);
+	row = *(ditheringComboModel->append());
+	row[m_ditheringComboCols.conversionFlags] = Image::ThresholdDithering;
+	row[m_ditheringComboCols.label] = _("Threshold (closest color)");
+	row = *(ditheringComboModel->append());
+	row[m_ditheringComboCols.conversionFlags] = Image::DiffuseDithering;
+	row[m_ditheringComboCols.label] = _("Diffuse");
+	ditheringCombo->pack_start(m_ditheringComboCols.label);
+	ditheringCombo->set_active(-1);
+
 	Gtk::ComboBox* compressionCombo = m_builder("combo:pdfoptions.compression");
 	Glib::RefPtr<Gtk::ListStore> compressionModel = Gtk::ListStore::create(m_compressionComboCols);
 	compressionCombo->set_model(compressionModel);
@@ -398,6 +410,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 
 	CONNECT(m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>(), changed, [this] { updatePreview(); });
 	CONNECT(imageFormatCombo, changed, [this] { imageFormatChanged(); updatePreview(); });
+	CONNECT(ditheringCombo, changed, [this] { updatePreview(); });
 	CONNECT(compressionCombo, changed, [this] { imageCompressionChanged(); });
 	CONNECT(m_builder("fontbutton:pdfoptions").as<Gtk::FontButton>(), font_set, [this] { updatePreview(); });
 	CONNECT(m_builder("checkbox:pdfoptions.usedetectedfontsizes").as<Gtk::CheckButton>(), toggled, [this] { updatePreview(); });
@@ -421,6 +434,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagecompressionquality", m_builder("spin:pdfoptions.quality")));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimagecompression", m_builder("combo:pdfoptions.compression")));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageformat", m_builder("combo:pdfoptions.imageformat")));
+	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageconversionflags", m_builder("combo:pdfoptions.dithering")));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagedpi", m_builder("spin:pdfoptions.dpi")));
 	MAIN->getConfig()->addSetting(new FontSetting("pdffont", m_builder("fontbutton:pdfoptions")));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfusedetectedfontsizes", m_builder("checkbox:pdfoptions.usedetectedfontsizes")));
@@ -478,12 +492,16 @@ void OutputEditorHOCR::imageFormatChanged() {
 		}
 		(*compressionStore->children()[PDFSettings::CompressFax4])[m_compressionComboCols.sensitive] = true;
 		(*compressionStore->children()[PDFSettings::CompressJpeg])[m_compressionComboCols.sensitive] = false;
+		m_builder("label:pdfoptions.dithering")->set_sensitive(true);
+		m_builder("combo:pdfoptions.dithering")->set_sensitive(true);
 	} else {
 		if((*compressionCombo->get_active())[m_compressionComboCols.mode] == PDFSettings::CompressFax4) {
 			compressionCombo->set_active(PDFSettings::CompressZip);
 		}
 		(*compressionStore->children()[PDFSettings::CompressFax4])[m_compressionComboCols.sensitive] = false;
 		(*compressionStore->children()[PDFSettings::CompressJpeg])[m_compressionComboCols.sensitive] = true;
+		m_builder("label:pdfoptions.dithering")->set_sensitive(false);
+		m_builder("combo:pdfoptions.dithering")->set_sensitive(false);
 	}
 }
 
@@ -1339,6 +1357,7 @@ void OutputEditorHOCR::savePDF() {
 
 	PDFSettings pdfSettings;
 	pdfSettings.colorFormat = (*m_builder("combo:pdfoptions.imageformat").as<Gtk::ComboBox>()->get_active())[m_formatComboCols.format];
+	pdfSettings.conversionFlags = pdfSettings.colorFormat == Image::Format_Mono ? (*m_builder("combo:pdfoptions.dithering").as<Gtk::ComboBox>()->get_active())[m_ditheringComboCols.conversionFlags] : Image::AutoColor;
 	pdfSettings.compression = (*m_builder("combo:pdfoptions.compression").as<Gtk::ComboBox>()->get_active())[m_compressionComboCols.mode];
 	pdfSettings.compressionQuality = m_builder("spin:pdfoptions.quality").as<Gtk::SpinButton>()->get_value();
 	pdfSettings.useDetectedFontSizes = m_builder("checkbox:pdfoptions.usedetectedfontsizes").as<Gtk::CheckButton>()->get_active();
@@ -1469,6 +1488,7 @@ void OutputEditorHOCR::updatePreview() {
 
 	PDFSettings pdfSettings;
 	pdfSettings.colorFormat = (*m_builder("combo:pdfoptions.imageformat").as<Gtk::ComboBox>()->get_active())[m_formatComboCols.format];
+	pdfSettings.conversionFlags = pdfSettings.colorFormat == Image::Format_Mono ? (*m_builder("combo:pdfoptions.dithering").as<Gtk::ComboBox>()->get_active())[m_ditheringComboCols.conversionFlags] : Image::AutoColor;
 	pdfSettings.compression = (*m_builder("combo:pdfoptions.compression").as<Gtk::ComboBox>()->get_active())[m_compressionComboCols.mode];
 	pdfSettings.compressionQuality = m_builder("spin:pdfoptions.quality").as<Gtk::SpinButton>()->get_value();
 	pdfSettings.useDetectedFontSizes = m_builder("checkbox:pdfoptions.usedetectedfontsizes").as<Gtk::CheckButton>()->get_active();

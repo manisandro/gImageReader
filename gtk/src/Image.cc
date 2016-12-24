@@ -37,7 +37,7 @@ static inline uint8_t clamp(int val) {
 	return val > 255 ? 255 : val < 0 ? 0 : val;
 }
 
-Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat) {
+Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat, ConversionFlags flags) {
 	width = src->get_width();
 	height = src->get_height();
 	format = targetFormat;
@@ -82,22 +82,24 @@ Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat) {
 					if(newpixel == 255) {
 						newdata[y * bytesPerLine + x/8] |= 0x80 >> x%8;
 					}
-					if(x + 1 < width) { // right neighbor
-						uint8_t& pxr = data[y * width + (x + 1)];
-						pxr = clamp(pxr + ((err * 7) >> 4));
-					}
-					if(y + 1 == height) {
-						continue; // last line
-					}
-					if(x > 0) { // bottom left and bottom neighbor
-						uint8_t& pxbl = data[(y + 1) * width + (x - 1)];
-						pxbl = clamp(pxbl + ((err * 3) >> 4));
-						uint8_t& pxb = data[(y + 1) * width + x];
-						pxb = clamp(pxb + ((err * 5) >> 4));
-					}
-					if(x + 1 < width) { // bottom right neighbor
-						uint8_t& pxbr = data[(y + 1) * width + (x + 1)];
-						pxbr = clamp(pxbr + ((err * 1) >> 4));
+					if(flags == DiffuseDithering) {
+						if(x + 1 < width) { // right neighbor
+							uint8_t& pxr = data[y * width + (x + 1)];
+							pxr = clamp(pxr + ((err * 7) >> 4));
+						}
+						if(y + 1 == height) {
+							continue; // last line
+						}
+						if(x > 0) { // bottom left and bottom neighbor
+							uint8_t& pxbl = data[(y + 1) * width + (x - 1)];
+							pxbl = clamp(pxbl + ((err * 3) >> 4));
+							uint8_t& pxb = data[(y + 1) * width + x];
+							pxb = clamp(pxb + ((err * 5) >> 4));
+						}
+						if(x + 1 < width) { // bottom right neighbor
+							uint8_t& pxbr = data[(y + 1) * width + (x + 1)];
+							pxbr = clamp(pxbr + ((err * 1) >> 4));
+						}
 					}
 				}
 			}
@@ -136,7 +138,7 @@ void Image::writeJpeg(int quality, uint8_t*& buf, unsigned long& bufLen) {
 	jpeg_destroy_compress(&cinfo);
 }
 
-Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::ImageSurface> src, Format format) {
+Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::ImageSurface> src, Format format, ConversionFlags flags) {
 	int imgw = src->get_width();
 	int imgh = src->get_height();
 	int stride = src->get_stride();
@@ -165,22 +167,24 @@ Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::Im
 					uint8_t newpixel = PIXEL_R(px) > 127 ? 255 : 0;
 					int err = int(PIXEL_R(px)) - int(newpixel);
 					PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = newpixel;
-					if(x + 1 < imgw) { // right neighbor
-						px = &dst->get_data()[y * stride + 4 * (x + 1)];
-						PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 7) >> 4));
-					}
-					if(y + 1 == imgh) {
-						continue; // last line
-					}
-					if(x > 0) { // bottom left and bottom neighbor
-						px = &dst->get_data()[(y + 1) * stride + 4 * (x - 1)];
-						PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 3) >> 4));
-						px = &dst->get_data()[(y + 1) * stride + 4 * x];
-						PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 5) >> 4));
-					}
-					if(x + 1 < imgw) { // bottom right neighbor
-						px = &dst->get_data()[(y + 1) * stride + 4 * (x + 1)];
-						PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 1) >> 4));
+					if(flags == DiffuseDithering) {
+						if(x + 1 < imgw) { // right neighbor
+							px = &dst->get_data()[y * stride + 4 * (x + 1)];
+							PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 7) >> 4));
+						}
+						if(y + 1 == imgh) {
+							continue; // last line
+						}
+						if(x > 0) { // bottom left and bottom neighbor
+							px = &dst->get_data()[(y + 1) * stride + 4 * (x - 1)];
+							PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 3) >> 4));
+							px = &dst->get_data()[(y + 1) * stride + 4 * x];
+							PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 5) >> 4));
+						}
+						if(x + 1 < imgw) { // bottom right neighbor
+							px = &dst->get_data()[(y + 1) * stride + 4 * (x + 1)];
+							PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 1) >> 4));
+						}
 					}
 				}
 			}

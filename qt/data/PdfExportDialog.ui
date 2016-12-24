@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>411</width>
-    <height>408</height>
+    <height>436</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -191,53 +191,6 @@
        <number>4</number>
       </property>
       <item row="2" column="1">
-       <widget class="QComboBox" name="comboBoxImageCompression"/>
-      </item>
-      <item row="3" column="1">
-       <widget class="QSpinBox" name="spinBoxCompressionQuality">
-        <property name="maximum">
-         <number>100</number>
-        </property>
-        <property name="value">
-         <number>90</number>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="comboBoxImageFormat"/>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="labelImageCompression">
-        <property name="text">
-         <string>Compression:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelImageFormat">
-        <property name="text">
-         <string>Format:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="labelCompressionQuality">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Compression quality:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelDpi">
-        <property name="text">
-         <string>DPI:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
        <widget class="QSpinBox" name="spinBoxDpi">
         <property name="minimum">
          <number>50</number>
@@ -250,6 +203,70 @@
         </property>
         <property name="value">
          <number>300</number>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelCompressionQuality">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Compression quality:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelDpi">
+        <property name="text">
+         <string>DPI:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="comboBoxImageFormat"/>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="spinBoxCompressionQuality">
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>90</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="comboBoxImageCompression"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelImageFormat">
+        <property name="text">
+         <string>Format:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelImageCompression">
+        <property name="text">
+         <string>Compression:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelDithering">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Dithering algorithm:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="comboBoxDithering">
+        <property name="enabled">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
