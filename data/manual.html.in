@@ -285,7 +285,7 @@
     <li>To install the languages manually:
         <ul>
             <li>On <b>Linux</b>, it's sufficient to install the package corresponding to the language definition one wants to install via the package management application (the packages may be called something like <i>tesseract-langpack-&lt;lang&gt;</i>).</li>
-            <li>On <b>Windows</b>, one needs to download the desired language definitions from the <a href="https://github.com/tesseract-ocr/tessdata">project tessdata page</a>, the copy the <i>&lt;lang&gt;.traineddata</i> files (along with any supplementary files which certain languages need) to <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Tesseract language definitions</tt>.</li>
+            <li>On <b>Windows</b>, first, in the gImageReader about dialog, check which version of tesseract is used. Then go to the <a href="https://github.com/tesseract-ocr/tessdata">project tessdata page</a>, and in the branch selection button, under tags, select the version which is <b>less or equal</b> the tesseract version in use. Then download the desired language definitions (*.traineddata along with any supplementary files which certain languages need) and save them to <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Tesseract language definitions</tt>.</li>
         </ul>
     </li>
     <li>To re-detect the available languages, one can restart the program, or select <i>Redetect Languages</i> from the <i>application menu</i>.</li>
