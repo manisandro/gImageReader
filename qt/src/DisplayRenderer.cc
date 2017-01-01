@@ -67,8 +67,13 @@ void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, b
 	}
 }
 
-QImage ImageRenderer::render(int /*page*/, double resolution) const {
+ImageRenderer::ImageRenderer(const QString &filename) : DisplayRenderer(filename) {
+	m_pageCount = QImageReader(m_filename).imageCount();
+}
+
+QImage ImageRenderer::render(int page, double resolution) const {
 	QImageReader reader(m_filename);
+	reader.jumpToImage(page - 1);
 	reader.setBackgroundColor(Qt::white);
 	reader.setScaledSize(reader.size() * resolution / 100.);
 	return reader.read().convertToFormat(QImage::Format_RGB32);
