@@ -13,7 +13,7 @@
  *   permission of Sam Leffler and Silicon Graphics.
  *
  * Modifications are:
- *   Copyright (C) 2016 Sandro Mani <manisandro@gmail.com>
+ *   Copyright (C) 2016-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
