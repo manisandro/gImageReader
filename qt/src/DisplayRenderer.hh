@@ -43,11 +43,11 @@ protected:
 
 class ImageRenderer : public DisplayRenderer {
 public:
-	ImageRenderer(const QString& filename) : DisplayRenderer(filename) {}
+	ImageRenderer(const QString& filename) ;
 	QImage render(int page, double resolution) const override;
-	int getNPages() const override {
-		return 1;
-	}
+	int getNPages() const override{ return m_pageCount; }
+private:
+	int m_pageCount;
 };
 
 class PDFRenderer : public DisplayRenderer {

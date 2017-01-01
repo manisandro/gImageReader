@@ -190,16 +190,17 @@ bool Displayer::setSources(QList<Source*> sources) {
 
 	int page = 0;
 	for(Source* source : m_sources) {
+		DisplayRenderer* renderer;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
-			PDFRenderer r(source->path);
-			source->angle.resize(r.getNPages());
-			for(int pdfPage = 1, nPdfPages = r.getNPages(); pdfPage <= nPdfPages; ++pdfPage) {
-				m_pageMap.insert(++page, qMakePair(source, pdfPage));
-			}
+			renderer = new PDFRenderer(source->path);
 		} else {
-			m_pageMap.insert(++page, qMakePair(source, 1));
-			source->angle.resize(1);
+			renderer = new ImageRenderer(source->path);
 		}
+		source->angle.resize(renderer->getNPages());
+		for(int iPage = 1, nPages = renderer->getNPages(); iPage <= nPages; ++iPage) {
+			m_pageMap.insert(++page, qMakePair(source, iPage));
+		}
+		delete renderer;
 	}
 
 	ui.spinBoxPage->setMaximum(page);
