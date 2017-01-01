@@ -218,21 +218,22 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 
 	int page = 0;
 	for(Source* source : m_sources) {
+		DisplayRenderer* renderer;
 		std::string filename = source->file->get_path();
 #ifdef G_OS_WIN32
 		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf") {
 #else
 		if(Utils::get_content_type(filename) == "application/pdf") {
 #endif
-			PDFRenderer r(filename);
-			source->angle.resize(r.getNPages(), 0.);
-			for(int pdfPage = 1, nPdfPages = r.getNPages(); pdfPage <= nPdfPages; ++pdfPage) {
-				m_pageMap.insert(std::make_pair(++page, std::make_pair(source, pdfPage)));
-			}
+			renderer = new PDFRenderer(filename);
 		} else {
-			source->angle.resize(1, 0.);
-			m_pageMap.insert(std::make_pair(++page, std::make_pair(source, 1)));
+			renderer = new ImageRenderer(filename);
 		}
+		source->angle.resize(renderer->getNPages(), 0.);
+		for(int iPage = 1, nPages = renderer->getNPages(); iPage <= nPages; ++iPage) {
+			m_pageMap.insert(std::make_pair(++page, std::make_pair(source, iPage)));
+		}
+		delete renderer;
 	}
 
 	m_pagespin->get_adjustment()->set_upper(page);
