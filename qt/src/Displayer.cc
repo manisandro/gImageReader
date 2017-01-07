@@ -152,7 +152,9 @@ bool Displayer::setSources(QList<Source*> sources) {
 	m_scaleTimer.stop();
 	if(m_scaleThread.isRunning()) {
 		sendScaleRequest({ScaleRequest::Quit});
-		m_scaleThread.wait();
+		while(m_scaleThread.isRunning()) {
+			QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+		}
 	}
 	if(m_tool) {
 		m_tool->reset();
