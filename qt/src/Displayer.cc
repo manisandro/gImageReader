@@ -71,10 +71,10 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	connect(ui.actionRotateRight, SIGNAL(triggered()), this, SLOT(rotate90()));
 	connect(ui.spinBoxRotation, SIGNAL(valueChanged(double)), this, SLOT(setAngle(double)));
 	connect(ui.spinBoxPage, SIGNAL(valueChanged(int)), this, SLOT(setCurrentPage(int)));
-	connect(ui.spinBoxBrightness, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
-	connect(ui.spinBoxContrast, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
-	connect(ui.spinBoxResolution, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
-	connect(ui.checkBoxInvertColors, SIGNAL(toggled(bool)), this, SLOT(queueRenderImage()));
+	connect(ui.spinBoxBrightness, SIGNAL(valueChanged(int)), this, SLOT(brightnessChanged()));
+	connect(ui.spinBoxContrast, SIGNAL(valueChanged(int)), this, SLOT(contrastChanged()));
+	connect(ui.spinBoxResolution, SIGNAL(valueChanged(int)), this, SLOT(resolutionChanged()));
+	connect(ui.checkBoxInvertColors, SIGNAL(toggled(bool)), this, SLOT(invertColorsChanged()));
 	connect(ui.actionZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
 	connect(ui.actionZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
 	connect(ui.actionBestFit, SIGNAL(triggered()), this, SLOT(zoomFit()));
@@ -340,10 +340,41 @@ void Displayer::setAngle(double angle) {
 	}
 }
 
+
+void Displayer::brightnessChanged() {
+	int brightness = ui.spinBoxBrightness->value();
+	for(int page : m_pageMap.keys()) {
+		m_pageMap[page].first->brightness = brightness;
+	}
+	queueRenderImage();
+}
+
+void Displayer::contrastChanged() {
+	int contrast = ui.spinBoxBrightness->value();
+	for(int page : m_pageMap.keys()) {
+		m_pageMap[page].first->contrast = contrast;
+	}
+	queueRenderImage();
+}
+
+void Displayer::resolutionChanged() {
+	int resolution = ui.spinBoxResolution->value();
+	for(int page : m_pageMap.keys()) {
+		m_pageMap[page].first->resolution = resolution;
+	}
+	queueRenderImage();
+}
+
+void Displayer::invertColorsChanged() {
+	bool invert = ui.checkBoxInvertColors->isChecked();
+	for(int page : m_pageMap.keys()) {
+		m_pageMap[page].first->invert = invert;
+	}
+	queueRenderImage();
+}
+
 void Displayer::setResolution(int resolution) {
-	ui.spinBoxResolution->blockSignals(true);
-	ui.spinBoxResolution->setValue(resolution);
-	ui.spinBoxResolution->blockSignals(false);
+	Utils::setSpinBlocked(ui.spinBoxResolution, resolution);
 	renderImage();
 }
 

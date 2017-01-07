@@ -67,10 +67,10 @@ Displayer::Displayer() {
 	CONNECT(MAIN->getWidget("menuitem:display.rotate.all").as<Gtk::MenuItem>(), activate, [this] { setRotateMode(RotateMode::AllPages, "rotate_pages.png"); });
 	m_connection_rotSpinChanged = CONNECT(m_rotspin, value_changed, [this] { setAngle(m_rotspin->get_value()); });
 	m_connection_pageSpinChanged = CONNECT(m_pagespin, value_changed, [this] { setCurrentPage(m_pagespin->get_value_as_int()); });
-	m_connection_briSpinChanged = CONNECT(m_brispin, value_changed, [this] { queueRenderImage(); });
-	m_connection_conSpinChanged = CONNECT(m_conspin, value_changed, [this] { queueRenderImage(); });
-	m_connection_resSpinChanged = CONNECT(m_resspin, value_changed, [this] { queueRenderImage(); });
-	m_connection_invcheckToggled = CONNECT(m_invcheck, toggled, [this] { queueRenderImage(); });
+	m_connection_briSpinChanged = CONNECT(m_brispin, value_changed, [this] { brightnessChanged(); });
+	m_connection_conSpinChanged = CONNECT(m_conspin, value_changed, [this] { contrastChanged(); });
+	m_connection_resSpinChanged = CONNECT(m_resspin, value_changed, [this] { resolutionChanged(); });
+	m_connection_invcheckToggled = CONNECT(m_invcheck, toggled, [this] { invertColorsChanged(); });
 	CONNECT(m_viewport, size_allocate, [this](Gdk::Rectangle&) {
 		resizeEvent();
 	});
@@ -373,6 +373,38 @@ void Displayer::setAngle(double angle) {
 			positionCanvas();
 		}
 	}
+}
+
+void Displayer::brightnessChanged() {
+	int brightness = m_brispin->get_value_as_int();
+	for(const auto& keyval  : m_pageMap) {
+		keyval.second.first->brightness = brightness;
+	}
+	queueRenderImage();
+}
+
+void Displayer::contrastChanged() {
+	int contrast = m_conspin->get_value_as_int();
+	for(const auto& keyval  : m_pageMap) {
+		keyval.second.first->contrast = contrast;
+	}
+	queueRenderImage();
+}
+
+void Displayer::resolutionChanged() {
+	int resolution = m_resspin->get_value_as_int();
+	for(const auto& keyval  : m_pageMap) {
+		keyval.second.first->resolution = resolution;
+	}
+	queueRenderImage();
+}
+
+void Displayer::invertColorsChanged() {
+	bool invert = m_invcheck->get_active();
+	for(const auto& keyval  : m_pageMap) {
+		keyval.second.first->invert = invert;
+	}
+	queueRenderImage();
 }
 
 void Displayer::setResolution(int resolution) {
