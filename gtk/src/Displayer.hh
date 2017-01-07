@@ -135,6 +135,10 @@ private:
 	void setZoom(Zoom zoom);
 
 	bool renderImage();
+	void brightnessChanged();
+	void contrastChanged();
+	void resolutionChanged();
+	void invertColorsChanged();
 	void drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx);
 	void positionCanvas();
 	void queueRenderImage();

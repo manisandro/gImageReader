@@ -126,6 +126,10 @@ private slots:
 	}
 	void sendScaleRequest(const ScaleRequest& request);
 	bool renderImage();
+	void brightnessChanged();
+	void contrastChanged();
+	void resolutionChanged();
+	void invertColorsChanged();
 	void setRotateMode(QAction* action);
 	void rotate90();
 	void setScaledImage(const QImage& image, double scale);
