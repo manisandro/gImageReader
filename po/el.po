@@ -1,21 +1,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
 # Sandro Mani <manisandro@gmail.com>, 2016.
+# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: gImageReader 3.1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-24 17:29+0100\n"
-"PO-Revision-Date: 2016-10-06 23:32+0100\n"
-"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
-"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2017-01-12 17:54+0300\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
+"Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 2.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:165
@@ -83,9 +83,8 @@ msgid "OK"
 msgstr "Εντάξει"
 
 #: ../gtk/data/editor_hocr.ui.h:4 ../qt/data/PdfExportDialog.ui.h:2
-#, fuzzy
 msgid "Output mode:"
-msgstr "Έξοδος:"
+msgstr "Κατάσταση εξόδου:"
 
 #: ../gtk/data/editor_hocr.ui.h:5 ../qt/data/PdfExportDialog.ui.h:3
 msgid "PDF"
@@ -97,15 +96,15 @@ msgstr "PDF με αόρατη επικάλυψη κειμένου"
 
 #: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Format:"
-msgstr ""
+msgstr "Μορφή:"
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
 msgid "Compression:"
-msgstr ""
+msgstr "Συμπίεση:"
 
 #: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression quality:"
-msgstr ""
+msgstr "Ποιότητα συμπίεσης:"
 
 #: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
 msgid "DPI:"
@@ -113,20 +112,19 @@ msgstr "DPI:"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "Αλγόριθμος πρόσμειξης:"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
-msgstr ""
+msgstr "Ρυθμίσεις εικόνας:"
 
 #: ../gtk/data/editor_hocr.ui.h:13 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Document font:"
 msgstr "Γραμματοσειρά εγγράφου:"
 
 #: ../gtk/data/editor_hocr.ui.h:14 ../qt/data/PdfExportDialog.ui.h:7
-#, fuzzy
 msgid "Uniformize line and word spacing"
-msgstr "Ομογενοποίηση του διάστιχου"
+msgstr "Ομογενοποίηση γραμμής και απόστασης λέξης"
 
 #: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Use detected font sizes"
@@ -134,24 +132,23 @@ msgstr "Χρήση των μεγεθών γραμματοσειράς που α�
 
 #: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:8
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "Διατήρηση διαστημάτων μεγαλύτερων από:"
 
 #: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:12
 msgid "characters"
-msgstr ""
+msgstr "χαρακτήρες"
 
 #: ../gtk/data/editor_hocr.ui.h:18 ../qt/data/PdfExportDialog.ui.h:9
 msgid "Scale:"
-msgstr ""
+msgstr "Κλίμακα:"
 
 #: ../gtk/data/editor_hocr.ui.h:19 ../qt/data/PdfExportDialog.ui.h:6
-#, fuzzy
 msgid "Text settings:"
-msgstr "Κωδικοποίηση αρχείου κειμένου:"
+msgstr "Ρυθμίσεις κειμένου:"
 
 #: ../gtk/data/editor_hocr.ui.h:20 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
-msgstr ""
+msgstr "Εμφάνιση προεπισκόπησης"
 
 #: ../gtk/data/editor_hocr.ui.h:21 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
@@ -316,14 +313,12 @@ msgid "Match case"
 msgstr "Ταίριασμα πεζών-κεφαλαίων"
 
 #: ../gtk/data/gimagereader.ui.h:1 ../qt/src/Ui_MainWindow.hh:65
-#, fuzzy
 msgid "Rotate current page"
-msgstr "Αντικατάσταση του υφιστάμενου κειμένου"
+msgstr "Περιστροφή τρέχουσας σελίδας"
 
 #: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
-#, fuzzy
 msgid "Rotate all pages"
-msgstr "Αριστερή περιστροφή"
+msgstr "Περιστροφή όλων των σελίδων"
 
 #: ../gtk/data/gimagereader.ui.h:3 ../qt/data/MainWindow.ui.h:35
 msgid "Toggle output pane"
@@ -439,9 +434,8 @@ msgid "Best fit"
 msgstr "Άριστη προσαρμογή"
 
 #: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:74
-#, fuzzy
 msgid "Select rotation mode"
-msgstr "Επιλογή κατάστασης εισαγωγής"
+msgstr "Επιλογή κατάστασης περιστροφής"
 
 #: ../gtk/data/gimagereader.ui.h:32 ../qt/data/MainWindow.ui.h:31
 msgid "Image controls"
@@ -533,25 +527,23 @@ msgstr "Προεπιλογή"
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "Τοποθεσίες δεδομένων γλώσσας:"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/data/ConfigDialog.ui.h:13
-#, fuzzy
 msgid "Language definitions path:"
-msgstr "Προκαθορισμένοι ορισμοί γλωσσών:"
+msgstr "Διαδρομή ορισμών γλώσσας:"
 
 #: ../gtk/data/gimagereader.ui.h:60 ../qt/data/ConfigDialog.ui.h:28
-#, fuzzy
 msgid "Spelling dictionaries path:"
-msgstr "Λείπει το ορθογραφικό λεξικό"
+msgstr "Διαδρομή ορθογραφικών λεξικών:"
 
 #: ../gtk/data/gimagereader.ui.h:61 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "Διαδρομές ολόκληρου του συστήματος"
 
 #: ../gtk/data/gimagereader.ui.h:62 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Διαδρομές χρήστη"
 
 #: ../gtk/data/gimagereader.ui.h:63 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -742,7 +734,7 @@ msgstr "Να αντικατασταθεί το αρχείο;"
 
 #: ../gtk/src/MainWindow.cc:125 ../qt/src/MainWindow.cc:274
 msgid "Using tesseract"
-msgstr ""
+msgstr "Χρήση του tesseract"
 
 #: ../gtk/src/MainWindow.cc:176 ../qt/src/MainWindow.cc:181
 msgid "Select an image to begin..."
@@ -817,9 +809,8 @@ msgid "Failed to install spelling dictionary: %1"
 msgstr "Αποτυχία εγκατάστασης του ορθογραφικού λεξικού: %1"
 
 #: ../gtk/src/MainWindow.cc:526 ../qt/src/MainWindow.cc:490
-#, fuzzy
 msgid "Failed to create directory for spelling dictionaries."
-msgstr "Αποτυχία εγκατάστασης του ορθογραφικού λεξικού: %1"
+msgstr "Αποτυχία δημιουργίας καταλόγου για ορθογραφικά λεξικά."
 
 #: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:550
 #: ../qt/src/MainWindow.cc:500
@@ -845,27 +836,27 @@ msgstr "Τα παρακάτω λεξικά εγκαταστάθηκαν: %1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:362 ../qt/src/OutputEditorHOCR.cc:281
 msgid "Monochrome"
-msgstr ""
+msgstr "Μονόχρωμο"
 
 #: ../gtk/src/OutputEditorHOCR.cc:371 ../qt/src/OutputEditorHOCR.cc:283
 msgid "Threshold (closest color)"
-msgstr ""
+msgstr "Κατώφλι (το πιο κοντινό χρώμα)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:374 ../qt/src/OutputEditorHOCR.cc:284
 msgid "Diffuse"
-msgstr ""
+msgstr "Διάχυση"
 
 #: ../gtk/src/OutputEditorHOCR.cc:383 ../qt/src/OutputEditorHOCR.cc:285
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Συμπίεση (χωρίς απώλειες)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:387 ../qt/src/OutputEditorHOCR.cc:286
 msgid "CCITT Group 4 (lossless)"
-msgstr ""
+msgstr "CCITT Ομάδα 4 (χωρίς απώλειες)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:391 ../qt/src/OutputEditorHOCR.cc:287
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "Jpeg (με απώλειες)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:547 ../qt/src/OutputEditorHOCR.cc:428
 msgid ""
@@ -895,11 +886,11 @@ msgstr "Γραμμή κειμένου"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1117 ../qt/src/OutputEditorHOCR.cc:937
 msgid "Merge"
-msgstr ""
+msgstr "Συγχώνευση"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1145 ../qt/src/OutputEditorHOCR.cc:956
 msgid "Add graphic region"
-msgstr ""
+msgstr "Προσθήκη περιοχής γραφικών"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1180 ../qt/src/OutputEditorHOCR.cc:978
 msgid "No suggestions"
@@ -907,11 +898,11 @@ msgstr "Χωρίς προτάσεις"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1186 ../qt/src/OutputEditorHOCR.cc:982
 msgid "Add to dictionary"
-msgstr ""
+msgstr "Προσθήκη στο λεξικό"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1192 ../qt/src/OutputEditorHOCR.cc:983
 msgid "Ignore word"
-msgstr ""
+msgstr "Παράβλεψη λέξης"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1226 ../gtk/src/OutputEditorHOCR.cc:1265
 #: ../qt/src/OutputEditorHOCR.cc:1015 ../qt/src/OutputEditorHOCR.cc:1045
@@ -970,7 +961,7 @@ msgstr "Αποθήκευση εξόδου PDF..."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1353 ../qt/src/OutputEditorHOCR.cc:1123
 msgid "The PDF library does not support the selected font."
-msgstr ""
+msgstr "Η βιβλιοθήκη PDF δεν υποστηρίζει την επιλεγμένη γραμματοσειρά."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1410 ../qt/src/OutputEditorHOCR.cc:1179
 msgid "Errors occurred"
@@ -1037,6 +1028,17 @@ msgid ""
 "Make sure your language data files are valid and compatible with tesseract "
 "%2."
 msgstr ""
+"Το Tesseract κατέρρευσε με το παρακάτω μήνυμα:\n"
+"\n"
+"%1\n"
+"\n"
+"Αυτό συμβαίνει συνήθως για έναν από τους παρακάτω λόγους:\n"
+"- Χρησιμοποιούνται παρωχημένα αρχεία δεδομένων εκπαίδεθυσης.\n"
+"- Λείπουν βοηθητικά αρχεία δεδομένων γλώσσας.\n"
+"- Κατεστραμμένα αρχεία δεδομένων γλώσσας.\n"
+"\n"
+"Εξασφαλίστε ότι τα αρχεία δεδομένων γλώσσας είναι έγκυρα και συμβατά με το "
+"tesseract %2."
 
 #: ../gtk/src/Recognizer.cc:210 ../qt/src/Recognizer.cc:194
 msgid "No languages available"
@@ -1054,71 +1056,68 @@ msgid "Multilingual"
 msgstr "Πολυγλωσσικός"
 
 #: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:298
-#, fuzzy
 msgid "Automatic page segmentation"
-msgstr "Προσανατολισμός παραθύρου εξόδου:"
+msgstr "Αυτόματος τεμαχισμός σελίδας"
 
 #: ../gtk/src/Recognizer.cc:317 ../qt/src/Recognizer.cc:299
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "Τεμαχισμός σελίδας με προσανατολισμό και αναγνώριση γραφής"
 
 #: ../gtk/src/Recognizer.cc:318 ../qt/src/Recognizer.cc:300
 msgid "Assume single column of text"
-msgstr ""
+msgstr "Θεωρείται μονή στήλη κειμένου"
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:301
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "Θεωρείται μονό μπλοκ κάθετα στοιχισμένου κειμένου"
 
 #: ../gtk/src/Recognizer.cc:320 ../qt/src/Recognizer.cc:302
 msgid "Assume a single uniform block of text"
-msgstr ""
+msgstr "Θεωρείται μονό ομοιόμορφο μπλοκ κειμένου"
 
 #: ../gtk/src/Recognizer.cc:321 ../qt/src/Recognizer.cc:303
 msgid "Assume a line of text"
-msgstr ""
+msgstr "Θεωρείται γραμμή κειμένου"
 
 #: ../gtk/src/Recognizer.cc:322 ../qt/src/Recognizer.cc:304
 msgid "Assume a single word"
-msgstr ""
+msgstr "Θεωρείται απλή λέξη"
 
 #: ../gtk/src/Recognizer.cc:323 ../qt/src/Recognizer.cc:305
 msgid "Assume a single word in a circle"
-msgstr ""
+msgstr "Θεωρείται απλή λέξη σε κύκλο"
 
 #: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:306
 msgid "Sparse text in no particular order"
-msgstr ""
+msgstr "Αραιό κείμενο χωρίς καμιά συγκεκριμένη τάξη"
 
 #: ../gtk/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:307
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "Αραιό κείμενο με προσανατολισμό και αναγνώριση γραφής"
 
 #: ../gtk/src/Recognizer.cc:339 ../qt/src/Recognizer.cc:317
 msgid "Page segmentation mode"
-msgstr ""
+msgstr "Κατάσταση τεμαχισμού σελίδας"
 
 #: ../gtk/src/Recognizer.cc:345 ../qt/src/Recognizer.cc:324
 msgid "Manage languages..."
 msgstr "Διαχείριση γλωσσών..."
 
 #: ../gtk/src/Recognizer.cc:400 ../qt/src/Recognizer.cc:382
-#, fuzzy
 msgid "Current selection"
-msgstr "Αναγνώριση επιλογής"
+msgstr "Τρέχουσα επιλογή"
 
 #: ../gtk/src/Recognizer.cc:469 ../qt/src/Recognizer.cc:452
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Αναγνώριση της σελίδας %1 (%2 από %3)"
 
 #: ../gtk/src/Recognizer.cc:474 ../qt/src/Recognizer.cc:457
-#, fuzzy
 msgid ""
 "\n"
 "- Page %1: failed to render page"
 msgstr ""
 "\n"
-"\tΣελίδα %1: αποτυχία απόδοσης της σελίδας"
+"- Σελίδα %1: αποτυχία απόδοσης της σελίδας"
 
 #: ../gtk/src/Recognizer.cc:496 ../gtk/src/Recognizer.cc:525
 #: ../gtk/src/Recognizer.cc:538 ../qt/src/Recognizer.cc:479
@@ -1306,17 +1305,17 @@ msgid "Applying substitutions..."
 msgstr "Εφαρμόζονται υποκαταστάσεις..."
 
 #: ../gtk/src/TessdataManager.cc:58 ../qt/src/TessdataManager.cc:72
-#, fuzzy
 msgid ""
 "PackageKit is required for managing system-wide tesseract language packs, "
 "but it was not found. Please use the system package management software to "
 "manage the tesseract language packs, or switch to use the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"Το PackageKit απαιτείται για τη διαχείριση των γλωσσικών πακέτων tesseract, "
-"αλλά δεν βρέθηκε. Παρακαλούμε, χρησιμοποιήστε το λογισμικό διαχείρισης "
-"πακέτων του συστήματος για να διαχειριστείτε τα γλωσσικά πακέτα του "
-"tesseract."
+"Το PackageKit απαιτείται για τη διαχείριση των γλωσσικών πακέτων tesseract "
+"για ολόκληρο το σύστημα, αλλά δεν βρέθηκε. Παρακαλούμε, χρησιμοποιήστε το "
+"λογισμικό διαχείρισης πακέτων του συστήματος για να διαχειριστείτε τα "
+"γλωσσικά πακέτα του tesseract ή αλλάξτε για να χρησιμοποιήσετε τη διαδρομή "
+"tessdata του χρήστη στον διάλογο ρύθμισης."
 
 #: ../gtk/src/TessdataManager.cc:63 ../qt/src/TessdataManager.cc:77
 msgid "Fetching available languages"
@@ -1340,7 +1339,7 @@ msgstr "Εφαρμογή αλλαγών..."
 
 #: ../gtk/src/TessdataManager.cc:252 ../qt/src/TessdataManager.cc:237
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Αποτυχία δημιουργίας καταλόγου για τα αρχεία tessdata."
 
 #: ../gtk/src/TessdataManager.cc:261 ../qt/src/TessdataManager.cc:245
 msgid "Downloading %1..."
@@ -1375,15 +1374,14 @@ msgid "About gImageReader"
 msgstr "Περί του gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Μια γραφική διεπαφή χρήστη στο tesseract-"
-"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Ιστότοπος</"
-"a></p><p>&nbsp;</p></body></html>"
+"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Ιστότοπος</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -1406,7 +1404,7 @@ msgid "Text file encoding:"
 msgstr "Κωδικοποίηση αρχείου κειμένου:"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
@@ -1415,11 +1413,13 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"Συγνώμη για το πρόβλημα. Για να βοηθήσετε στην βελτίωση της εφαρμογής, "
-"παρακαλούμε να στείλετε μια αναφορά του προβλήματος στο <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Παρακαλούμε, προσπαθήστε να περιγράψετε τι κάνατε πριν να καταρρεύσει η "
-"εφαρμογή. Επίσης, να συμπεριλάβετε την παρακάτω πληροφορία. Σας ευχαριστούμε."
+"<html><head/><body><p><span style=\" font-weight:600;\">Η εφαρμογή "
+"κατέρρευσε</span></p><p>Συγνώμη για το πρόβλημα. Για να βοηθήσετε στην "
+"βελτίωση της εφαρμογής, παρακαλούμε αναφέρτε το πρόβλημα στο <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Παρακαλούμε, προσπαθήστε να περιγράψετε τι κάνατε "
+"πριν να καταρρεύσει η εφαρμογή. Επίσης, να συμπεριλάβετε την παρακάτω "
+"πληροφορία. Σας ευχαριστούμε.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
