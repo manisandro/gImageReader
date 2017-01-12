@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-24 17:29+0100\n"
-"PO-Revision-Date: 2016-10-06 23:32+0100\n"
-"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
-"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2017-01-12 16:21+0100\n"
+"Last-Translator: Antonio Trujillo Coronado<lunatc@gmail.com>\n"
+"Language-Team: "
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 2.0\n"
+
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:165
 msgid "Redetect Languages"
@@ -66,7 +66,7 @@ msgstr ""
 
 #: ../gtk/data/editor_hocr.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
-msgstr "Exportación PDF"
+msgstr "Exportar a PDF"
 
 #: ../gtk/data/editor_hocr.ui.h:2 ../gtk/data/gimagereader.ui.h:55
 #: ../gtk/src/Acquirer.cc:42 ../gtk/src/FileDialogs.cc:150
@@ -111,7 +111,7 @@ msgstr "DPI:"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "Algoritmo de tramado"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
@@ -184,7 +184,7 @@ msgstr "Insertar en la posición del cursor"
 
 #: ../gtk/data/editor_text.ui.h:3 ../qt/src/Ui_OutputEditorText.hh:61
 msgid "Replace current text"
-msgstr "Reemplazar texto actual"
+msgstr "Reemplazar el texto actual"
 
 #: ../gtk/data/editor_text.ui.h:4 ../qt/src/SubstitutionsManager.cc:37
 #: ../qt/src/Ui_OutputEditorText.hh:177
@@ -312,14 +312,12 @@ msgid "Match case"
 msgstr "Distinguir mayúsculas/minúsculas"
 
 #: ../gtk/data/gimagereader.ui.h:1 ../qt/src/Ui_MainWindow.hh:65
-#, fuzzy
 msgid "Rotate current page"
-msgstr "Reemplazar texto actual"
+msgstr "Rotar página actual"
 
 #: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
-#, fuzzy
 msgid "Rotate all pages"
-msgstr "Rotar a la izquierda"
+msgstr "Rotar todas las páginas"
 
 #: ../gtk/data/gimagereader.ui.h:3 ../qt/data/MainWindow.ui.h:35
 msgid "Toggle output pane"
@@ -435,9 +433,8 @@ msgid "Best fit"
 msgstr "Ajustar"
 
 #: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:74
-#, fuzzy
 msgid "Select rotation mode"
-msgstr "Seleccionar modo de inserción"
+msgstr "Seleccionar modo de rotación"
 
 #: ../gtk/data/gimagereader.ui.h:32 ../qt/data/MainWindow.ui.h:31
 msgid "Image controls"
@@ -506,7 +503,7 @@ msgstr "Prefijo"
 
 #: ../gtk/data/gimagereader.ui.h:51 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr "Codigo de idioma ISO-639-1 seguido por el código de país"
+msgstr "Codigo de idioma ISO-639-1 seguido del código de país"
 
 #: ../gtk/data/gimagereader.ui.h:52 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
@@ -567,7 +564,7 @@ msgstr "Área para el reconocimiento"
 #: ../gtk/data/gimagereader.ui.h:67 ../gtk/src/Recognizer.cc:400
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:382
 msgid "Entire page"
-msgstr "Página entera"
+msgstr "Página completa"
 
 #: ../gtk/data/gimagereader.ui.h:68 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
@@ -768,7 +765,7 @@ msgstr "Registro de cambios"
 
 #: ../gtk/src/MainWindow.cc:433 ../qt/src/MainWindow.cc:393
 msgid "Don't notify again"
-msgstr "No mostrar más"
+msgstr "No mostrar más avisos"
 
 #: ../gtk/src/MainWindow.cc:452 ../qt/src/MainWindow.cc:438
 msgid "Don't show again"
@@ -842,20 +839,19 @@ msgstr "Monocromo"
 
 #: ../gtk/src/OutputEditorHOCR.cc:371 ../qt/src/OutputEditorHOCR.cc:283
 msgid "Threshold (closest color)"
-msgstr ""
+msgstr "Umbral (color más parecido)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:374 ../qt/src/OutputEditorHOCR.cc:284
 msgid "Diffuse"
-msgstr ""
+msgstr "Difuso"
 
 #: ../gtk/src/OutputEditorHOCR.cc:383 ../qt/src/OutputEditorHOCR.cc:285
 msgid "Zip (lossless)"
 msgstr "Zip (sin pérdida)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:387 ../qt/src/OutputEditorHOCR.cc:286
-#, fuzzy
 msgid "CCITT Group 4 (lossless)"
-msgstr "Zip (sin pérdida)"
+msgstr "CCITT Grupo 4 (sin pérdida)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:391 ../qt/src/OutputEditorHOCR.cc:287
 msgid "Jpeg (lossy)"
@@ -1058,49 +1054,48 @@ msgid "Multilingual"
 msgstr "Multilenguaje"
 
 #: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:298
-#, fuzzy
 msgid "Automatic page segmentation"
-msgstr "Orientación del panel de salida:"
+msgstr "Segmentado de página automático"
 
 #: ../gtk/src/Recognizer.cc:317 ../qt/src/Recognizer.cc:299
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "Segmentado de página con detección de tipo de escritura y orientación"
 
 #: ../gtk/src/Recognizer.cc:318 ../qt/src/Recognizer.cc:300
 msgid "Assume single column of text"
-msgstr ""
+msgstr "Suponer una sola columna de texto"
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:301
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "Suponer un solo bloque de texto alineado verticalmente"
 
 #: ../gtk/src/Recognizer.cc:320 ../qt/src/Recognizer.cc:302
 msgid "Assume a single uniform block of text"
-msgstr ""
+msgstr "Suponer un solo bloque de texto uniforme"
 
 #: ../gtk/src/Recognizer.cc:321 ../qt/src/Recognizer.cc:303
 msgid "Assume a line of text"
-msgstr ""
+msgstr "Suponer una línea de texto"
 
 #: ../gtk/src/Recognizer.cc:322 ../qt/src/Recognizer.cc:304
 msgid "Assume a single word"
-msgstr ""
+msgstr "Suponer una sola palabra"
 
 #: ../gtk/src/Recognizer.cc:323 ../qt/src/Recognizer.cc:305
 msgid "Assume a single word in a circle"
-msgstr ""
+msgstr "Suponer una sola palabra en un círculo"
 
 #: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:306
 msgid "Sparse text in no particular order"
-msgstr ""
+msgstr "Texto disperso sin un orden en particular"
 
 #: ../gtk/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:307
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "Texto disperso con detección de tipo de escritura y orientación"
 
 #: ../gtk/src/Recognizer.cc:339 ../qt/src/Recognizer.cc:317
 msgid "Page segmentation mode"
-msgstr ""
+msgstr "Modo de segmentado de página"
 
 #: ../gtk/src/Recognizer.cc:345 ../qt/src/Recognizer.cc:324
 msgid "Manage languages..."
@@ -1333,7 +1328,7 @@ msgstr "Fallo al obtener la lista de idiomas disponibles: %1"
 #: ../qt/src/TessdataManager.cc:105 ../qt/src/TessdataManager.cc:114
 #: ../qt/src/TessdataManager.cc:136 ../qt/src/TessdataManager.cc:147
 msgid "Parsing error: %1"
-msgstr "Inspeccionando error: %1"
+msgstr "Analizando error: %1"
 
 #: ../gtk/src/TessdataManager.cc:191 ../qt/src/TessdataManager.cc:191
 msgid "Applying changes..."
