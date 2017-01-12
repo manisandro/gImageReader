@@ -2,16 +2,16 @@
 # Copyright (C) 2016 THE GIMAGEREADER'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gImageReader package.
 #
-# Timothy Lee <timothy.ty.lee@gmail.com>, 2016.
+# Timothy Lee <timothy.ty.lee@gmail.com>, 2017.
 # Sandro Mani <manisandro@gmail.com>, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-24 17:29+0100\n"
-"PO-Revision-Date: 2016-10-06 23:34+0100\n"
-"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
-"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2017-01-12 22:39+0800\n"
+"Last-Translator: Timothy Lee <timothy.ty.lee@gmail.com>\n"
+"Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
 "Language: zh_HK\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -112,7 +112,7 @@ msgstr "DPI:"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "遞色演算法："
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
@@ -313,14 +313,12 @@ msgid "Match case"
 msgstr "大小寫吻合"
 
 #: ../gtk/data/gimagereader.ui.h:1 ../qt/src/Ui_MainWindow.hh:65
-#, fuzzy
 msgid "Rotate current page"
-msgstr "取代現有文字"
+msgstr "旋轉現有文字"
 
 #: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
-#, fuzzy
 msgid "Rotate all pages"
-msgstr "向左旋轉"
+msgstr "旋轉所有頁面"
 
 #: ../gtk/data/gimagereader.ui.h:3 ../qt/data/MainWindow.ui.h:35
 msgid "Toggle output pane"
@@ -436,9 +434,8 @@ msgid "Best fit"
 msgstr "最佳大小"
 
 #: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:74
-#, fuzzy
 msgid "Select rotation mode"
-msgstr "選用插入模式"
+msgstr "選取旋轉模式"
 
 #: ../gtk/data/gimagereader.ui.h:32 ../qt/data/MainWindow.ui.h:31
 msgid "Image controls"
@@ -735,7 +732,7 @@ msgstr "覆寫檔案？"
 
 #: ../gtk/src/MainWindow.cc:125 ../qt/src/MainWindow.cc:274
 msgid "Using tesseract"
-msgstr ""
+msgstr "採用 tesseract"
 
 #: ../gtk/src/MainWindow.cc:176 ../qt/src/MainWindow.cc:181
 msgid "Select an image to begin..."
@@ -841,20 +838,19 @@ msgstr "黑白"
 
 #: ../gtk/src/OutputEditorHOCR.cc:371 ../qt/src/OutputEditorHOCR.cc:283
 msgid "Threshold (closest color)"
-msgstr ""
+msgstr "定限（最接近顏色）"
 
 #: ../gtk/src/OutputEditorHOCR.cc:374 ../qt/src/OutputEditorHOCR.cc:284
 msgid "Diffuse"
-msgstr ""
+msgstr "擴散"
 
 #: ../gtk/src/OutputEditorHOCR.cc:383 ../qt/src/OutputEditorHOCR.cc:285
 msgid "Zip (lossless)"
 msgstr "Zip（無損）"
 
 #: ../gtk/src/OutputEditorHOCR.cc:387 ../qt/src/OutputEditorHOCR.cc:286
-#, fuzzy
 msgid "CCITT Group 4 (lossless)"
-msgstr "Zip（無損）"
+msgstr "CCITT 第 4 組（無損）"
 
 #: ../gtk/src/OutputEditorHOCR.cc:391 ../qt/src/OutputEditorHOCR.cc:287
 msgid "Jpeg (lossy)"
@@ -1055,49 +1051,48 @@ msgid "Multilingual"
 msgstr "多語言"
 
 #: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:298
-#, fuzzy
 msgid "Automatic page segmentation"
-msgstr "輸出面板的方向："
+msgstr "自動分割頁面"
 
 #: ../gtk/src/Recognizer.cc:317 ../qt/src/Recognizer.cc:299
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "分割頁面並偵測方向及文字"
 
 #: ../gtk/src/Recognizer.cc:318 ../qt/src/Recognizer.cc:300
 msgid "Assume single column of text"
-msgstr ""
+msgstr "假設只有一欄文字"
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:301
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "假設只有一段垂直對整的文字"
 
 #: ../gtk/src/Recognizer.cc:320 ../qt/src/Recognizer.cc:302
 msgid "Assume a single uniform block of text"
-msgstr ""
+msgstr "假設只有一段均勻的文字"
 
 #: ../gtk/src/Recognizer.cc:321 ../qt/src/Recognizer.cc:303
 msgid "Assume a line of text"
-msgstr ""
+msgstr "假設只有一行文字"
 
 #: ../gtk/src/Recognizer.cc:322 ../qt/src/Recognizer.cc:304
 msgid "Assume a single word"
-msgstr ""
+msgstr "假設只有一個字"
 
 #: ../gtk/src/Recognizer.cc:323 ../qt/src/Recognizer.cc:305
 msgid "Assume a single word in a circle"
-msgstr ""
+msgstr "假設是圓圈內的一個字"
 
 #: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:306
 msgid "Sparse text in no particular order"
-msgstr ""
+msgstr "沒有特定次序的稀疏文字"
 
 #: ../gtk/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:307
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "偵測稀疏文字的方向及文字"
 
 #: ../gtk/src/Recognizer.cc:339 ../qt/src/Recognizer.cc:317
 msgid "Page segmentation mode"
-msgstr ""
+msgstr "分割頁面模式"
 
 #: ../gtk/src/Recognizer.cc:345 ../qt/src/Recognizer.cc:324
 msgid "Manage languages..."
@@ -1520,14 +1515,3 @@ msgstr "儲存輸出"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "清除輸出"
-
-#~ msgid "Detect script and orientation"
-#~ msgstr "偵測文字及方向"
-
-#~ msgid ""
-#~ "PackageKit is required for managing tesseract language packs, but it was "
-#~ "not found. Please use the system package management software to manage "
-#~ "the tesseract language packs."
-#~ msgstr ""
-#~ "管理 tesseract 語言包須要 PackageKit，但它並不存在。請利用系統的套件管理軟"
-#~ "件來管理 tesseract 的語言包。"
