@@ -3,14 +3,14 @@
 # Copyright (C) 2010-2013 THE GIMAGEREADER'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gImageReader package.
 #
-# Pavel Borecki <pavel.borecki@gmail.com>, 2014-2016.
-# Sandro Mani <manisandro@gmail.com>, 2016.
+# Pavel Borecki <pavel.borecki@gmail.com>, 2014-2017.
+# Sandro Mani <manisandro@gmail.com>, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-24 17:29+0100\n"
-"PO-Revision-Date: 2016-10-06 23:31+0100\n"
+"PO-Revision-Date: 2017-01-12 23:31+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -106,7 +106,7 @@ msgstr "Komprese"
 
 #: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression quality:"
-msgstr "Stupeň komprese"
+msgstr "Stupeň komprese:"
 
 #: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
 msgid "DPI:"
@@ -114,11 +114,11 @@ msgstr "DPI:"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "Rozmývací algoritmus:"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
-msgstr "Nastavení obrázku"
+msgstr "Nastavení obrázku:"
 
 #: ../gtk/data/editor_hocr.ui.h:13 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Document font:"
@@ -134,7 +134,7 @@ msgstr "Použít zjištěné velikosti písma"
 
 #: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:8
 msgid "Preserve spaces wider than:"
-msgstr "Zachovat mezery větší než:"
+msgstr "Zachovat mezery širší než:"
 
 #: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:12
 msgid "characters"
@@ -315,14 +315,12 @@ msgid "Match case"
 msgstr "Rozlišovat malá/velká písmena"
 
 #: ../gtk/data/gimagereader.ui.h:1 ../qt/src/Ui_MainWindow.hh:65
-#, fuzzy
 msgid "Rotate current page"
-msgstr "Nahradit stávající text"
+msgstr "Otočit stávající stránku"
 
 #: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
-#, fuzzy
 msgid "Rotate all pages"
-msgstr "Otočit vlevo"
+msgstr "Otočit všechny stránky"
 
 #: ../gtk/data/gimagereader.ui.h:3 ../qt/data/MainWindow.ui.h:35
 msgid "Toggle output pane"
@@ -438,9 +436,8 @@ msgid "Best fit"
 msgstr "Přizpůsobit oknu"
 
 #: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:74
-#, fuzzy
 msgid "Select rotation mode"
-msgstr "Vyberte režim vkládání"
+msgstr "Vyberte režim otáčení"
 
 #: ../gtk/data/gimagereader.ui.h:32 ../qt/data/MainWindow.ui.h:31
 msgid "Image controls"
@@ -448,7 +445,7 @@ msgstr "Ovládání parametrů obrázku"
 
 #: ../gtk/data/gimagereader.ui.h:33 ../qt/src/Ui_MainWindow.hh:137
 msgid "Plain text"
-msgstr "Čistý text"
+msgstr "Holý text"
 
 #: ../gtk/data/gimagereader.ui.h:34 ../qt/src/Ui_MainWindow.hh:137
 msgid "hOCR, PDF"
@@ -500,7 +497,7 @@ msgstr "Další jazykové definice:"
 
 #: ../gtk/data/gimagereader.ui.h:49 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr "Předpona souboru s jazykovými daty engine tesseract."
+msgstr "Předpona souboru s jazykovými daty engine tesseract"
 
 #: ../gtk/data/gimagereader.ui.h:50 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
@@ -508,7 +505,7 @@ msgstr "Předpona"
 
 #: ../gtk/data/gimagereader.ui.h:51 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr "Kód jazyka dle normy ISO 639-1, následovaný kódem pro zemi."
+msgstr "Kód jazyka dle normy ISO 639-1, následovaný kódem pro zemi"
 
 #: ../gtk/data/gimagereader.ui.h:52 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
@@ -540,7 +537,7 @@ msgstr "Popisy umístění jazykových definic:"
 
 #: ../gtk/data/gimagereader.ui.h:60 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
-msgstr "Popisy umístění slovníků pro kontrolu překlepů"
+msgstr "Popisy umístění slovníků pro kontrolu překlepů:"
 
 #: ../gtk/data/gimagereader.ui.h:61 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
@@ -548,7 +545,7 @@ msgstr "Popisy umístění, společných pro všechny uživatele"
 
 #: ../gtk/data/gimagereader.ui.h:62 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr "Pro jednotlivého uživatele"
+msgstr "Pro jednotlivé uživatele"
 
 #: ../gtk/data/gimagereader.ui.h:63 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -581,7 +578,7 @@ msgstr "Správce dat engine Tesseract"
 
 #: ../gtk/data/gimagereader.ui.h:72 ../qt/src/TessdataManager.cc:49
 msgid "Manage installed languages:"
-msgstr "Spravovat nainstalovaná jazyková data"
+msgstr "Spravovat nainstalovaná jazyková data:"
 
 #: ../gtk/data/gimagereader.ui.h:73 ../qt/src/DisplayerToolSelect.cc:240
 msgid "Delete"
@@ -688,7 +685,7 @@ msgstr "Od posledního uložení nepřibylo nic nového."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:60
 msgid "Failed to obtain backtrace. Is gdb installed?"
-msgstr "Nezdařilo se získat backtrace. Je nainstalován ladící nástroj gdb?"
+msgstr "Nezdařilo se získat backtrace diagnostiku. Je nainstalován ladící nástroj gdb?"
 
 #: ../gtk/src/Displayer.cc:247 ../qt/src/Displayer.cc:214
 msgid "Failed to load image"
@@ -737,7 +734,7 @@ msgstr "Přepsat soubor?"
 
 #: ../gtk/src/MainWindow.cc:125 ../qt/src/MainWindow.cc:274
 msgid "Using tesseract"
-msgstr ""
+msgstr "S použitím engine tesseract"
 
 #: ../gtk/src/MainWindow.cc:176 ../qt/src/MainWindow.cc:181
 msgid "Select an image to begin..."
@@ -791,7 +788,7 @@ msgstr "Není nainstalovaný slovník pro kontrolu překlepů pro %1"
 #: ../gtk/src/MainWindow.cc:480 ../gtk/src/MainWindow.cc:512
 #: ../qt/src/MainWindow.cc:458
 msgid "Installing spelling dictionary for '%1'"
-msgstr "Instalace slovníku pro kontrolu překlepů pro %1…"
+msgstr "Instalace slovníku pro kontrolu překlepů pro „%1“…"
 
 #: ../gtk/src/MainWindow.cc:501 ../gtk/src/MainWindow.cc:526
 #: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:544
@@ -813,7 +810,7 @@ msgstr "Instalace slovníku pro kontrolu překlepů se nezdařila: %1"
 
 #: ../gtk/src/MainWindow.cc:526 ../qt/src/MainWindow.cc:490
 msgid "Failed to create directory for spelling dictionaries."
-msgstr "Vytvoření složky pro slovníky pro kontrolu překlepů se nezdařila: %1"
+msgstr "Vytvoření složky pro slovníky pro kontrolu překlepů se nezdařilo."
 
 #: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:550
 #: ../qt/src/MainWindow.cc:500
@@ -823,11 +820,11 @@ msgstr "Nedaří se číst %1: %2."
 #: ../gtk/src/MainWindow.cc:544 ../gtk/src/MainWindow.cc:579
 #: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:546
 msgid "No spelling dictionaries found for '%1'."
-msgstr "Pro %1 nebyly nalezeny žádné slovníky pro kontrolu překlepů."
+msgstr "Pro „%1“ nebyly nalezeny žádné slovníky pro kontrolu překlepů."
 
 #: ../gtk/src/MainWindow.cc:560 ../qt/src/MainWindow.cc:529
 msgid "Downloading '%1'..."
-msgstr "Stahování %1…"
+msgstr "Stahování „%1“…"
 
 #: ../gtk/src/MainWindow.cc:576 ../qt/src/MainWindow.cc:543
 msgid "Dictionaries installed"
@@ -843,20 +840,19 @@ msgstr "Monochromatické"
 
 #: ../gtk/src/OutputEditorHOCR.cc:371 ../qt/src/OutputEditorHOCR.cc:283
 msgid "Threshold (closest color)"
-msgstr ""
+msgstr "Práh (nejbližší barva)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:374 ../qt/src/OutputEditorHOCR.cc:284
 msgid "Diffuse"
-msgstr ""
+msgstr "Rozptýlit"
 
 #: ../gtk/src/OutputEditorHOCR.cc:383 ../qt/src/OutputEditorHOCR.cc:285
 msgid "Zip (lossless)"
 msgstr "Zip (bezztrátové)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:387 ../qt/src/OutputEditorHOCR.cc:286
-#, fuzzy
 msgid "CCITT Group 4 (lossless)"
-msgstr "Zip (bezztrátové)"
+msgstr "CCITT Group 4 (bezztrátové)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:391 ../qt/src/OutputEditorHOCR.cc:287
 msgid "Jpeg (lossy)"
@@ -867,7 +863,7 @@ msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr ""
-"Tyto stránky nebylo možné zpracovat:\n"
+"Uvedené stránky nebylo možné zpracovat:\n"
 "%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:548 ../qt/src/OutputEditorHOCR.cc:429
@@ -1060,49 +1056,48 @@ msgid "Multilingual"
 msgstr "Vícejazyčné"
 
 #: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:298
-#, fuzzy
 msgid "Automatic page segmentation"
-msgstr "Orientace podokna s výstupním textem:"
+msgstr "Automatické rozdělení stránky na prvky"
 
 #: ../gtk/src/Recognizer.cc:317 ../qt/src/Recognizer.cc:299
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "Rozdělení stránky se zjištěním orientace a písma"
 
 #: ../gtk/src/Recognizer.cc:318 ../qt/src/Recognizer.cc:300
 msgid "Assume single column of text"
-msgstr ""
+msgstr "Předpokládat jeden sloupec textu"
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:301
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "Předpokládat jediný blok svisle zarovnaného textu"
 
 #: ../gtk/src/Recognizer.cc:320 ../qt/src/Recognizer.cc:302
 msgid "Assume a single uniform block of text"
-msgstr ""
+msgstr "Předpokládat jediný jednolitý blok textu"
 
 #: ../gtk/src/Recognizer.cc:321 ../qt/src/Recognizer.cc:303
 msgid "Assume a line of text"
-msgstr ""
+msgstr "Předpokládat řádek textu"
 
 #: ../gtk/src/Recognizer.cc:322 ../qt/src/Recognizer.cc:304
 msgid "Assume a single word"
-msgstr ""
+msgstr "Předpokládat jediné slovo"
 
 #: ../gtk/src/Recognizer.cc:323 ../qt/src/Recognizer.cc:305
 msgid "Assume a single word in a circle"
-msgstr ""
+msgstr "Předpokládat jediné slovo v kruhu"
 
 #: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:306
 msgid "Sparse text in no particular order"
-msgstr ""
+msgstr "Rozptýlený text bez konkrétního zarovnání"
 
 #: ../gtk/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:307
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "Rozptýlený text se zjišťováním orientace a písma"
 
 #: ../gtk/src/Recognizer.cc:339 ../qt/src/Recognizer.cc:317
 msgid "Page segmentation mode"
-msgstr ""
+msgstr "Režim rozdělování stránky na prvky"
 
 #: ../gtk/src/Recognizer.cc:345 ../qt/src/Recognizer.cc:324
 msgid "Manage languages..."
@@ -1274,7 +1269,7 @@ msgstr "Chyba při načítání souboru"
 
 #: ../gtk/src/SubstitutionsManager.cc:90 ../qt/src/SubstitutionsManager.cc:119
 msgid "Unable to read '%1'."
-msgstr "Z %1 se nedaří číst."
+msgstr "Z „%1“ se nedaří číst."
 
 #: ../gtk/src/SubstitutionsManager.cc:113 ../qt/src/SubstitutionsManager.cc:146
 msgid "Errors Occurred Reading File"
@@ -1294,7 +1289,7 @@ msgstr "Chyba při ukládání do souboru"
 
 #: ../gtk/src/SubstitutionsManager.cc:126 ../qt/src/SubstitutionsManager.cc:158
 msgid "Unable to write to '%1'."
-msgstr "Do %1 se nedaří zapisovat."
+msgstr "Do „%1“ se nedaří zapisovat."
 
 #: ../gtk/src/SubstitutionsManager.cc:144 ../qt/src/SubstitutionsManager.cc:172
 msgid "Save List?"
