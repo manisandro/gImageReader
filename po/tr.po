@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-24 17:29+0100\n"
-"PO-Revision-Date: 2016-10-06 23:33+0100\n"
+"PO-Revision-Date: 2017-01-15 02:00+0300\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
 "Language: tr\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-POOTLE-MTIME: 1441292742.000000\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:165
@@ -64,7 +64,7 @@ msgstr ""
 
 #: ../gtk/data/editor_hocr.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
-msgstr ""
+msgstr "PDF Olarak Dışa Aktar"
 
 #: ../gtk/data/editor_hocr.ui.h:2 ../gtk/data/gimagereader.ui.h:55
 #: ../gtk/src/Acquirer.cc:42 ../gtk/src/FileDialogs.cc:150
@@ -80,29 +80,28 @@ msgid "OK"
 msgstr "Tamam"
 
 #: ../gtk/data/editor_hocr.ui.h:4 ../qt/data/PdfExportDialog.ui.h:2
-#, fuzzy
 msgid "Output mode:"
-msgstr "Çıktı:"
+msgstr "Çıktı kipi:"
 
 #: ../gtk/data/editor_hocr.ui.h:5 ../qt/data/PdfExportDialog.ui.h:3
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: ../gtk/data/editor_hocr.ui.h:6 ../qt/data/PdfExportDialog.ui.h:4
 msgid "PDF with invisible text overlay"
-msgstr ""
+msgstr "Görünmeyen metinlerle birlikte PDF"
 
 #: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Format:"
-msgstr ""
+msgstr "Biçim:"
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
 msgid "Compression:"
-msgstr ""
+msgstr "Sıkıştırma:"
 
 #: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression quality:"
-msgstr ""
+msgstr "Sıkıştırma kalitesi:"
 
 #: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
 msgid "DPI:"
@@ -110,43 +109,43 @@ msgstr "DPI:"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "Dithering algoritması:"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
-msgstr ""
+msgstr "Resim ayarları:"
 
 #: ../gtk/data/editor_hocr.ui.h:13 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Document font:"
-msgstr ""
+msgstr "Belge yazı tipi:"
 
 #: ../gtk/data/editor_hocr.ui.h:14 ../qt/data/PdfExportDialog.ui.h:7
 msgid "Uniformize line and word spacing"
-msgstr ""
+msgstr "Satır ve kelime aralıklarını düzleştir"
 
 #: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Use detected font sizes"
-msgstr ""
+msgstr "Algılanan yazı tipi boyutunu kullan"
 
 #: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:8
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "BUndan geniş aralıkları koru:"
 
 #: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:12
 msgid "characters"
-msgstr ""
+msgstr "Karakterler"
 
 #: ../gtk/data/editor_hocr.ui.h:18 ../qt/data/PdfExportDialog.ui.h:9
 msgid "Scale:"
-msgstr ""
+msgstr "Ölçek:"
 
 #: ../gtk/data/editor_hocr.ui.h:19 ../qt/data/PdfExportDialog.ui.h:6
 msgid "Text settings:"
-msgstr ""
+msgstr "Metin ayarları:"
 
 #: ../gtk/data/editor_hocr.ui.h:20 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
-msgstr ""
+msgstr "Ön izlemeyi göster"
 
 #: ../gtk/data/editor_hocr.ui.h:21 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
@@ -156,7 +155,7 @@ msgstr "Çıktıyı kaydet"
 #: ../gtk/data/editor_hocr.ui.h:22 ../qt/src/Ui_OutputEditorHOCR.hh:44
 #: ../qt/src/Ui_OutputEditorHOCR.hh:45
 msgid "Export to PDF"
-msgstr ""
+msgstr "PDF olarak dışa aktar"
 
 #: ../gtk/data/editor_hocr.ui.h:23 ../gtk/data/editor_text.ui.h:27
 #: ../qt/src/Ui_OutputEditorHOCR.hh:47 ../qt/src/Ui_OutputEditorHOCR.hh:48
@@ -166,12 +165,11 @@ msgstr "Çıktıyı temizle"
 
 #: ../gtk/data/editor_hocr.ui.h:24 ../qt/src/Ui_OutputEditorHOCR.hh:75
 msgid "Properties"
-msgstr ""
+msgstr "Özellikler"
 
 #: ../gtk/data/editor_hocr.ui.h:25 ../qt/src/Ui_OutputEditorHOCR.hh:79
-#, fuzzy
 msgid "Source"
-msgstr "Kaynaklar"
+msgstr "Kaynak"
 
 #. Output insert mode
 #: ../gtk/data/editor_text.ui.h:1 ../qt/src/Ui_OutputEditorText.hh:59
@@ -232,9 +230,8 @@ msgid "Keep line break if..."
 msgstr "Satır sonlarını koru..."
 
 #: ../gtk/data/editor_text.ui.h:13 ../qt/src/Ui_OutputEditorText.hh:71
-#, fuzzy
 msgid "Preceded by end mark (.?!)"
-msgstr "Nokta öncesinde gelen"
+msgstr "Nokta öncesinde gelen (.?!)"
 
 #: ../gtk/data/editor_text.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:73
 msgid "Preceded or succeeded by quote"
@@ -313,14 +310,12 @@ msgid "Match case"
 msgstr "Büyük Küçük Harf eşleştir"
 
 #: ../gtk/data/gimagereader.ui.h:1 ../qt/src/Ui_MainWindow.hh:65
-#, fuzzy
 msgid "Rotate current page"
-msgstr "Mevcut metni değiştir"
+msgstr "Mevcut sayfayı döndür"
 
 #: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
-#, fuzzy
 msgid "Rotate all pages"
-msgstr "Sola döndür"
+msgstr "Tüm sayfaları döndür"
 
 #: ../gtk/data/gimagereader.ui.h:3 ../qt/data/MainWindow.ui.h:35
 msgid "Toggle output pane"
@@ -436,9 +431,8 @@ msgid "Best fit"
 msgstr "En uygun"
 
 #: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:74
-#, fuzzy
 msgid "Select rotation mode"
-msgstr "Ekleme kipini seç"
+msgstr "Döndürme kipini seç"
 
 #: ../gtk/data/gimagereader.ui.h:32 ../qt/data/MainWindow.ui.h:31
 msgid "Image controls"
@@ -446,11 +440,11 @@ msgstr "Resim denetimleri"
 
 #: ../gtk/data/gimagereader.ui.h:33 ../qt/src/Ui_MainWindow.hh:137
 msgid "Plain text"
-msgstr ""
+msgstr "Düz metin"
 
 #: ../gtk/data/gimagereader.ui.h:34 ../qt/src/Ui_MainWindow.hh:137
 msgid "hOCR, PDF"
-msgstr ""
+msgstr "hOCR, PDF"
 
 #: ../gtk/data/gimagereader.ui.h:35 ../qt/data/MainWindow.ui.h:33
 msgid "Autodetect layout"
@@ -461,9 +455,8 @@ msgid "<small>Recognize all</small>"
 msgstr "<small>Tümünü tanı</small>"
 
 #: ../gtk/data/gimagereader.ui.h:37
-#, fuzzy
 msgid "Select language"
-msgstr "Dilleri Yeniden Algıla"
+msgstr "Dili seç"
 
 #: ../gtk/data/gimagereader.ui.h:38
 msgid "A graphical frontend to tesseract-ocr"
@@ -531,25 +524,23 @@ msgstr "Varsayılan"
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "Dil veri konumları:"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/data/ConfigDialog.ui.h:13
-#, fuzzy
 msgid "Language definitions path:"
-msgstr "Öntanımlı dil tanımlamaları:"
+msgstr "Dil tanımlama yolu:"
 
 #: ../gtk/data/gimagereader.ui.h:60 ../qt/data/ConfigDialog.ui.h:28
-#, fuzzy
 msgid "Spelling dictionaries path:"
-msgstr "Yazım denetimi sözlüğü eksik"
+msgstr "Yazım denetimi sözlüğü yolu"
 
 #: ../gtk/data/gimagereader.ui.h:61 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "Sistem geneli yolları"
 
 #: ../gtk/data/gimagereader.ui.h:62 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Kullanıcı yolları"
 
 #: ../gtk/data/gimagereader.ui.h:63 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -578,11 +569,11 @@ msgstr "Otomatik Algıla"
 
 #: ../gtk/data/gimagereader.ui.h:69 ../qt/src/TessdataManager.cc:47
 msgid "Tessdata Manager"
-msgstr ""
+msgstr "Tessdata Yöneticisi"
 
 #: ../gtk/data/gimagereader.ui.h:72 ../qt/src/TessdataManager.cc:49
 msgid "Manage installed languages:"
-msgstr ""
+msgstr "Kurulan Dilleri Yönet"
 
 #: ../gtk/data/gimagereader.ui.h:73 ../qt/src/DisplayerToolSelect.cc:240
 msgid "Delete"
@@ -740,20 +731,19 @@ msgstr "Dosyanın Üstüne Yazılsın mı?"
 
 #: ../gtk/src/MainWindow.cc:125 ../qt/src/MainWindow.cc:274
 msgid "Using tesseract"
-msgstr ""
+msgstr "Tesseract'i kullanmak"
 
 #: ../gtk/src/MainWindow.cc:176 ../qt/src/MainWindow.cc:181
 msgid "Select an image to begin..."
 msgstr "Başlamak için bir resim seçin..."
 
 #: ../gtk/src/MainWindow.cc:290 ../qt/src/MainWindow.cc:262
-#, fuzzy
 msgid "Multiple sources"
-msgstr "Çoklu Sayfalar..."
+msgstr "Çoklu kaynak"
 
 #: ../gtk/src/MainWindow.cc:291 ../qt/src/MainWindow.cc:263
 msgid "Ready"
-msgstr ""
+msgstr "Hazır"
 
 #: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:390
 msgid "New version"
@@ -816,15 +806,13 @@ msgid "Failed to install spelling dictionary: %1"
 msgstr "Yazım denetimi sözlüğü kurulamadı: %1"
 
 #: ../gtk/src/MainWindow.cc:526 ../qt/src/MainWindow.cc:490
-#, fuzzy
 msgid "Failed to create directory for spelling dictionaries."
-msgstr "Yazım denetimi sözlüğü kurulamadı: %1"
+msgstr "Yazım denetimi sözlüğü kurulamadı."
 
 #: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:550
 #: ../qt/src/MainWindow.cc:500
-#, fuzzy
 msgid "Could not read %1: %2."
-msgstr "%1 okunamadı."
+msgstr "%1 okunamadı: %2"
 
 #: ../gtk/src/MainWindow.cc:544 ../gtk/src/MainWindow.cc:579
 #: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:546
@@ -845,102 +833,98 @@ msgstr "Kurulan sözlükler: %1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:362 ../qt/src/OutputEditorHOCR.cc:281
 msgid "Monochrome"
-msgstr ""
+msgstr "Siyah beyaz"
 
 #: ../gtk/src/OutputEditorHOCR.cc:371 ../qt/src/OutputEditorHOCR.cc:283
 msgid "Threshold (closest color)"
-msgstr ""
+msgstr "Eşik (en yakın renk)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:374 ../qt/src/OutputEditorHOCR.cc:284
 msgid "Diffuse"
-msgstr ""
+msgstr "Yayılmış"
 
 #: ../gtk/src/OutputEditorHOCR.cc:383 ../qt/src/OutputEditorHOCR.cc:285
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Zip (kayıpsız)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:387 ../qt/src/OutputEditorHOCR.cc:286
 msgid "CCITT Group 4 (lossless)"
-msgstr ""
+msgstr "CCITT Grup 4 (kayıpsız)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:391 ../qt/src/OutputEditorHOCR.cc:287
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "Jpeg (kayıplı)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:547 ../qt/src/OutputEditorHOCR.cc:428
-#, fuzzy
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
-msgstr "Bu dosyalar açılamadı:%1"
+msgstr ""
+"Aşağıdaki sayfalar işlenemedi:\n"
+"%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:548 ../qt/src/OutputEditorHOCR.cc:429
-#, fuzzy
 msgid "Recognition errors"
-msgstr "Tanıma hataları oluştu"
+msgstr "Tanıma hataları"
 
 #. Add tree item
 #: ../gtk/src/OutputEditorHOCR.cc:639 ../gtk/src/OutputEditorHOCR.cc:1020
 #: ../qt/src/OutputEditorHOCR.cc:503 ../qt/src/OutputEditorHOCR.cc:881
 msgid "Graphic"
-msgstr ""
+msgstr "Grafik"
 
 #: ../gtk/src/OutputEditorHOCR.cc:692 ../qt/src/OutputEditorHOCR.cc:553
-#, fuzzy
 msgid "Paragraph"
-msgstr "Paragrafları koru"
+msgstr "Paragraf"
 
 #: ../gtk/src/OutputEditorHOCR.cc:695 ../qt/src/OutputEditorHOCR.cc:556
-#, fuzzy
 msgid "Textline"
-msgstr "Metin Dosyaları"
+msgstr "Metin"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1117 ../qt/src/OutputEditorHOCR.cc:937
 msgid "Merge"
-msgstr ""
+msgstr "Birleştir"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1145 ../qt/src/OutputEditorHOCR.cc:956
 msgid "Add graphic region"
-msgstr ""
+msgstr "Grafik alanı ekle"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1180 ../qt/src/OutputEditorHOCR.cc:978
 msgid "No suggestions"
-msgstr ""
+msgstr "Öneri yok"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1186 ../qt/src/OutputEditorHOCR.cc:982
 msgid "Add to dictionary"
-msgstr ""
+msgstr "Sözlük ekle"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1192 ../qt/src/OutputEditorHOCR.cc:983
 msgid "Ignore word"
-msgstr ""
+msgstr "Kelimeyi yoksay"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1226 ../gtk/src/OutputEditorHOCR.cc:1265
 #: ../qt/src/OutputEditorHOCR.cc:1015 ../qt/src/OutputEditorHOCR.cc:1045
 msgid "hOCR HTML Files"
-msgstr ""
+msgstr "hOCR HTML Dosyaları"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1227 ../qt/src/OutputEditorHOCR.cc:1015
 msgid "Open hOCR File"
-msgstr ""
+msgstr "hOCR Dosyasını Aç"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1236 ../qt/src/OutputEditorHOCR.cc:1021
-#, fuzzy
 msgid "Failed to open file"
-msgstr "Dosyalar açılamadı"
+msgstr "Dosya açılamadı"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1236 ../qt/src/OutputEditorHOCR.cc:1021
-#, fuzzy
 msgid "The file could not be opened: %1."
-msgstr "Bu dosyalar açılamadı:%1"
+msgstr "Bu dosya açılamadı:%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1245 ../qt/src/OutputEditorHOCR.cc:1028
 msgid "Invalid hOCR file"
-msgstr ""
+msgstr "Geçersiz hOCR dosyası"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1245 ../qt/src/OutputEditorHOCR.cc:1028
 msgid "The file does not appear to contain valid hOCR HTML: %1"
-msgstr ""
+msgstr "Dosya geçerli hOCR HTML içermiyor gibi görünüyor: %1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1261 ../gtk/src/OutputEditorHOCR.cc:1321
 #: ../gtk/src/OutputEditorText.cc:286 ../qt/src/OutputEditorHOCR.cc:1043
@@ -949,9 +933,8 @@ msgid "output"
 msgstr "çıktı"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1266 ../qt/src/OutputEditorHOCR.cc:1045
-#, fuzzy
 msgid "Save hOCR Output..."
-msgstr "Çıktıyı Kaydet..."
+msgstr "oOCR Çıktısını Kaydet..."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1274 ../gtk/src/OutputEditorHOCR.cc:1335
 #: ../gtk/src/OutputEditorText.cc:299 ../qt/src/OutputEditorHOCR.cc:1053
@@ -966,30 +949,28 @@ msgid "Check that you have writing permissions in the selected folder."
 msgstr "Seçilen klasöre yazma hakkınız olduğundan emin olun."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1324 ../qt/src/OutputEditorHOCR.cc:1099
-#, fuzzy
 msgid "PDF Files"
-msgstr "Dosyalar"
+msgstr "PDF Dosyaları"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1325 ../qt/src/OutputEditorHOCR.cc:1099
-#, fuzzy
 msgid "Save PDF Output..."
-msgstr "Çıktıyı Kaydet..."
+msgstr "PDF Çıktısını Kaydet..."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1353 ../qt/src/OutputEditorHOCR.cc:1123
 msgid "The PDF library does not support the selected font."
-msgstr ""
+msgstr "PDF kitaplığı seçilen yazı tipini desteklemiyor."
 
 #: ../gtk/src/OutputEditorHOCR.cc:1410 ../qt/src/OutputEditorHOCR.cc:1179
-#, fuzzy
 msgid "Errors occurred"
-msgstr "Tanıma hataları oluştu"
+msgstr "Hatalar oluştu"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1410 ../qt/src/OutputEditorHOCR.cc:1179
-#, fuzzy
 msgid ""
 "The following pages could not be rendered:\n"
 "%1"
-msgstr "Bu dosyalar açılamadı:%1"
+msgstr ""
+"Aşağıdaki dosyalar işlenemedi:\n"
+"%1"
 
 #: ../gtk/src/OutputEditorHOCR.cc:1537 ../gtk/src/OutputEditorText.cc:313
 #: ../qt/src/OutputEditorHOCR.cc:1293 ../qt/src/OutputEditorText.cc:256
@@ -1044,6 +1025,17 @@ msgid ""
 "Make sure your language data files are valid and compatible with tesseract "
 "%2."
 msgstr ""
+"Tesseract, aşağıdaki ileti ile çöktü:\n"
+"\n"
+"%1\n"
+"\n"
+"Bu genellikle aşağıdaki nedenlerden biriyle olur:\n"
+"- Eski eğitimli veri dosyaları kullanılır.\n"
+"- Yardımcı dil veri dosyaları eksik.\n"
+"- Bozuk dil verileri dosyaları.\n"
+"\n"
+"Dil verilerinizin geçerli olduğundan ve %2 tesseract ile uyumlu olduğundan "
+"emin olun."
 
 #: ../gtk/src/Recognizer.cc:210 ../qt/src/Recognizer.cc:194
 msgid "No languages available"
@@ -1059,71 +1051,68 @@ msgid "Multilingual"
 msgstr "Çokdilli"
 
 #: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:298
-#, fuzzy
 msgid "Automatic page segmentation"
-msgstr "Çıktı bölmesi yönelimi:"
+msgstr "Otomatik sayfa bölümlendirme"
 
 #: ../gtk/src/Recognizer.cc:317 ../qt/src/Recognizer.cc:299
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "Yönlendirme ve komut dosyası algılama ile sayfa bölümleme"
 
 #: ../gtk/src/Recognizer.cc:318 ../qt/src/Recognizer.cc:300
 msgid "Assume single column of text"
-msgstr ""
+msgstr "Tek sütünlu metin olarak kabul et"
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:301
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "Dikey olarak hizalanan metnin tek blok olduğunu varsay"
 
 #: ../gtk/src/Recognizer.cc:320 ../qt/src/Recognizer.cc:302
 msgid "Assume a single uniform block of text"
-msgstr ""
+msgstr "Tek bir metin bloğu varsay"
 
 #: ../gtk/src/Recognizer.cc:321 ../qt/src/Recognizer.cc:303
 msgid "Assume a line of text"
-msgstr ""
+msgstr "Bir satırlık metin varsay"
 
 #: ../gtk/src/Recognizer.cc:322 ../qt/src/Recognizer.cc:304
 msgid "Assume a single word"
-msgstr ""
+msgstr "Tek bir kelime varsay"
 
 #: ../gtk/src/Recognizer.cc:323 ../qt/src/Recognizer.cc:305
 msgid "Assume a single word in a circle"
-msgstr ""
+msgstr "Çember içinde tek bir kelime varsay"
 
 #: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:306
 msgid "Sparse text in no particular order"
-msgstr ""
+msgstr "Düzenli bir sırası olmayan aralıklı metin"
 
 #: ../gtk/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:307
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "Yönlendirme ve komut dosyası algılama özellikli metin"
 
 #: ../gtk/src/Recognizer.cc:339 ../qt/src/Recognizer.cc:317
 msgid "Page segmentation mode"
-msgstr ""
+msgstr "Sayfa parçalama kipi"
 
 #: ../gtk/src/Recognizer.cc:345 ../qt/src/Recognizer.cc:324
 msgid "Manage languages..."
-msgstr ""
+msgstr "Dilleri yönet..."
 
 #: ../gtk/src/Recognizer.cc:400 ../qt/src/Recognizer.cc:382
-#, fuzzy
 msgid "Current selection"
-msgstr "Seçimi tanı"
+msgstr "Mevcut seçim"
 
 #: ../gtk/src/Recognizer.cc:469 ../qt/src/Recognizer.cc:452
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Tanınan sayfa %1 (%2 of %3)"
 
 #: ../gtk/src/Recognizer.cc:474 ../qt/src/Recognizer.cc:457
-#, fuzzy
 msgid ""
 "\n"
 "- Page %1: failed to render page"
 msgstr ""
 "\n"
-"\tSayfa %1: sayfanın gerçeklenmesi başarısız oldu"
+"- Sayfa %1: sayfanın işlenemedi"
 
 #: ../gtk/src/Recognizer.cc:496 ../gtk/src/Recognizer.cc:525
 #: ../gtk/src/Recognizer.cc:538 ../qt/src/Recognizer.cc:479
@@ -1233,11 +1222,8 @@ msgid "Delete File?"
 msgstr "Dosya Silinsin mi?"
 
 #: ../gtk/src/SourceManager.cc:202 ../qt/src/SourceManager.cc:227
-#, fuzzy
 msgid "The following files will be deleted:%1"
-msgstr ""
-"Aşağıdaki dosya silinecek:\n"
-"%1"
+msgstr "Aşağıdaki dosyalar silinecek:%1"
 
 #: ../gtk/src/SourceManager.cc:266 ../qt/src/SourceManager.cc:278
 msgid "Missing File"
@@ -1319,36 +1305,38 @@ msgid ""
 "manage the tesseract language packs, or switch to use the user tessdata path "
 "in the configuration dialog."
 msgstr ""
+"PackageKit, sistem çapında tesseract dil paketlerini yönetmek için gerekli "
+"ama bulunamadı. Lütfen tesseract dil paketlerini yönetmek için sistem paketi "
+"yönetim yazılımını kullanın veya yapılandırma iletişim kutusunda kullanıcı "
+"tessdata yolunu kullanmaya geçin."
 
 #: ../gtk/src/TessdataManager.cc:63 ../qt/src/TessdataManager.cc:77
 msgid "Fetching available languages"
-msgstr ""
+msgstr "Kullanılabilir diller getiriliyor"
 
 #: ../gtk/src/TessdataManager.cc:68 ../gtk/src/TessdataManager.cc:89
 #: ../gtk/src/TessdataManager.cc:121 ../qt/src/TessdataManager.cc:82
 #: ../qt/src/TessdataManager.cc:94 ../qt/src/TessdataManager.cc:127
 msgid "Failed to fetch list of available languages: %1"
-msgstr ""
+msgstr "Kullanılabilir dillerin listesi getirilemedi: %1"
 
 #: ../gtk/src/TessdataManager.cc:100 ../gtk/src/TessdataManager.cc:129
 #: ../qt/src/TessdataManager.cc:105 ../qt/src/TessdataManager.cc:114
 #: ../qt/src/TessdataManager.cc:136 ../qt/src/TessdataManager.cc:147
 msgid "Parsing error: %1"
-msgstr ""
+msgstr "İşleme hatası: %1"
 
 #: ../gtk/src/TessdataManager.cc:191 ../qt/src/TessdataManager.cc:191
-#, fuzzy
 msgid "Applying changes..."
 msgstr "Değişiklikler uygulanıyor..."
 
 #: ../gtk/src/TessdataManager.cc:252 ../qt/src/TessdataManager.cc:237
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Tessdata dosyaları için dizin oluşturulamadı."
 
 #: ../gtk/src/TessdataManager.cc:261 ../qt/src/TessdataManager.cc:245
-#, fuzzy
 msgid "Downloading %1..."
-msgstr "'%1' indiriliyor..."
+msgstr "%1 indiriliyor..."
 
 #: ../gtk/src/TessdataManager.cc:281 ../qt/src/TessdataManager.cc:267
 msgid ""
@@ -1357,6 +1345,10 @@ msgid ""
 "\n"
 "Check the connectivity and directory permissions."
 msgstr ""
+"Aşağıdaki dosyalar indirilemedi veya silinemedi:\n"
+"%1\n"
+"\n"
+"Bağlantınızı ve dizin izinlerini denetleyin."
 
 #: ../gtk/src/Utils.cc:62
 msgid "Yes"
@@ -1375,14 +1367,13 @@ msgid "About gImageReader"
 msgstr "gImageReader Hakkında"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr için bir grafik arayüz</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Web sitesi</a></"
+"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr için bir grafik önyüz</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Web adresi</a></"
 "p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
@@ -1395,18 +1386,18 @@ msgstr "Lisans"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
-msgstr ""
+msgstr "Sistem kodlaması"
 
 #: ../qt/data/ConfigDialog.ui.h:15
 msgid "UTF-8"
-msgstr ""
+msgstr "UTF-8"
 
 #: ../qt/data/ConfigDialog.ui.h:19
 msgid "Text file encoding:"
-msgstr ""
+msgstr "Metin dosyası kodlaması"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
@@ -1415,11 +1406,12 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"Anlayışınız için teşekkür ederiz. Uygulamanın gelişimine katkıda bulunmak "
-"için lütfen bu hatayı<a href=\"mailto:manisandro@gmail.com?"
+"<html><head/><body><p><span style=\" font-weight:600;\">Uygulama çöktü</"
+"span></p><p>Anlayışınız için teşekkür ederiz. Uygulamanın gelişimine katkıda "
+"bulunmak için lütfen bu hatayı<a href=\"mailto:manisandro@gmail.com?"
 "subject=gImageReader%20Crash\">manisandro@gmail.com</a> adresine bildirin. "
 "Lütfen çökme olmadan ne yaptığınızı ayrıntılı olarak tanımlayın. Aşağıdaki "
-"bilgiyi de ekleyin. Teşekkür ederiz."
+"bilgiyi de ekleyin. Teşekkür ederiz.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1475,23 +1467,20 @@ msgid "Toggle Output Pane"
 msgstr "Çıktı Bölmesini Değiştir"
 
 #: ../qt/src/MainWindow.cc:518
-#, fuzzy
 msgid "Could not read %1: %2"
-msgstr "%1 okunamadı."
+msgstr "%1 okunamadı: %2"
 
 #: ../qt/src/MainWindow.cc:543
-#, fuzzy
 msgid "The following dictionary files were installed:%1"
-msgstr "Kurulan sözlükler: %1"
+msgstr "Kurulan sözlük dosyaları: %1"
 
 #: ../qt/src/Ui_MainWindow.hh:50
-#, fuzzy
 msgid "Output"
-msgstr "Çıktı:"
+msgstr "Çıktı"
 
 #: ../qt/src/Ui_MainWindow.hh:133
 msgid "OCR mode:"
-msgstr ""
+msgstr "OCR kipi:"
 
 #: ../qt/src/Ui_MainWindow.hh:204
 msgid "Remove Image"
@@ -1508,12 +1497,11 @@ msgstr "Listeyi Temizle"
 #. Output toolbar
 #: ../qt/src/Ui_OutputEditorHOCR.hh:39 ../qt/src/Ui_OutputEditorHOCR.hh:40
 msgid "Open hOCR file"
-msgstr ""
+msgstr "hOCR dosyasını aç"
 
 #: ../qt/src/Ui_OutputEditorHOCR.hh:41 ../qt/src/Ui_OutputEditorHOCR.hh:42
-#, fuzzy
 msgid "Save as hOCR text"
-msgstr "Resim olarak kaydet"
+msgstr "oOCR metni olarak kaydet"
 
 #: ../qt/src/Ui_OutputEditorText.hh:108
 msgid "Strip Line Breaks"
