@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-24 17:29+0100\n"
-"PO-Revision-Date: 2016-10-30 16:09+0100\n"
+"PO-Revision-Date: 2017-01-15 12:05+0100\n"
 "Last-Translator: Piotr Brol <peterb@inetia.pl>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:165
 msgid "Redetect Languages"
-msgstr "Wykryj języki"
+msgstr "Ponownie wykryj języki"
 
 #: ../gtk/data/appmenu.ui.h:2 ../gtk/data/gimagereader.ui.h:39
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:168
@@ -114,7 +114,7 @@ msgstr "DPI:"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "Algorytm ditheringu:"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
@@ -315,14 +315,12 @@ msgid "Match case"
 msgstr "Rozróżniaj duże/małe litery"
 
 #: ../gtk/data/gimagereader.ui.h:1 ../qt/src/Ui_MainWindow.hh:65
-#, fuzzy
 msgid "Rotate current page"
-msgstr "Zastąp bieżący tekst"
+msgstr "Obróć bieżącą stronę"
 
 #: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
-#, fuzzy
 msgid "Rotate all pages"
-msgstr "Obróć w lewo"
+msgstr "Obróć wszystkie strony"
 
 #: ../gtk/data/gimagereader.ui.h:3 ../qt/data/MainWindow.ui.h:35
 msgid "Toggle output pane"
@@ -438,9 +436,8 @@ msgid "Best fit"
 msgstr "Dopasuj rozmiar"
 
 #: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:74
-#, fuzzy
 msgid "Select rotation mode"
-msgstr "Tryb wstawiania"
+msgstr "Wybierz tryb obrotu"
 
 #: ../gtk/data/gimagereader.ui.h:32 ../qt/data/MainWindow.ui.h:31
 msgid "Image controls"
@@ -535,14 +532,12 @@ msgid "Language data locations:"
 msgstr "Lokalizacja danych języków:"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/data/ConfigDialog.ui.h:13
-#, fuzzy
 msgid "Language definitions path:"
-msgstr "Wbudowane definicje języków:"
+msgstr "Ścieżka definicji języków:"
 
 #: ../gtk/data/gimagereader.ui.h:60 ../qt/data/ConfigDialog.ui.h:28
-#, fuzzy
 msgid "Spelling dictionaries path:"
-msgstr "Brak słownika"
+msgstr "Ścieżka słowników:"
 
 #: ../gtk/data/gimagereader.ui.h:61 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
@@ -739,7 +734,7 @@ msgstr "Zastąpić plik?"
 
 #: ../gtk/src/MainWindow.cc:125 ../qt/src/MainWindow.cc:274
 msgid "Using tesseract"
-msgstr ""
+msgstr "Użyty tesseract"
 
 #: ../gtk/src/MainWindow.cc:176 ../qt/src/MainWindow.cc:181
 msgid "Select an image to begin..."
@@ -814,9 +809,8 @@ msgid "Failed to install spelling dictionary: %1"
 msgstr "Błąd instalacji słownika: %1"
 
 #: ../gtk/src/MainWindow.cc:526 ../qt/src/MainWindow.cc:490
-#, fuzzy
 msgid "Failed to create directory for spelling dictionaries."
-msgstr "Błąd instalacji słownika: %1"
+msgstr "Nie udało się utworzyć katalogu dla słowników ortograficznych."
 
 #: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:550
 #: ../qt/src/MainWindow.cc:500
@@ -846,20 +840,19 @@ msgstr "Monochromatyczny"
 
 #: ../gtk/src/OutputEditorHOCR.cc:371 ../qt/src/OutputEditorHOCR.cc:283
 msgid "Threshold (closest color)"
-msgstr ""
+msgstr "Threshold (najbliższy kolor"
 
 #: ../gtk/src/OutputEditorHOCR.cc:374 ../qt/src/OutputEditorHOCR.cc:284
 msgid "Diffuse"
-msgstr ""
+msgstr "Diffuse"
 
 #: ../gtk/src/OutputEditorHOCR.cc:383 ../qt/src/OutputEditorHOCR.cc:285
 msgid "Zip (lossless)"
 msgstr "Zip (bezstratny)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:387 ../qt/src/OutputEditorHOCR.cc:286
-#, fuzzy
 msgid "CCITT Group 4 (lossless)"
-msgstr "Zip (bezstratny)"
+msgstr "CCITT Group 4 (bezstratny)"
 
 #: ../gtk/src/OutputEditorHOCR.cc:391 ../qt/src/OutputEditorHOCR.cc:287
 msgid "Jpeg (lossy)"
@@ -1060,71 +1053,68 @@ msgid "Multilingual"
 msgstr "Wielojęzyczne"
 
 #: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:298
-#, fuzzy
 msgid "Automatic page segmentation"
-msgstr "Orientacja panelu wyjściowego:"
+msgstr "Automatyczna segmentacja strony"
 
 #: ../gtk/src/Recognizer.cc:317 ../qt/src/Recognizer.cc:299
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "Podział strony na segmenty"
 
 #: ../gtk/src/Recognizer.cc:318 ../qt/src/Recognizer.cc:300
 msgid "Assume single column of text"
-msgstr ""
+msgstr "Pojedyncza kolumna tekstu"
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:301
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "Pojedynczy blok tekstu wyrównanego w pionie"
 
 #: ../gtk/src/Recognizer.cc:320 ../qt/src/Recognizer.cc:302
 msgid "Assume a single uniform block of text"
-msgstr ""
+msgstr "Pojedynczy blok tekstu"
 
 #: ../gtk/src/Recognizer.cc:321 ../qt/src/Recognizer.cc:303
 msgid "Assume a line of text"
-msgstr ""
+msgstr "Wiersz tekstu"
 
 #: ../gtk/src/Recognizer.cc:322 ../qt/src/Recognizer.cc:304
 msgid "Assume a single word"
-msgstr ""
+msgstr "Pojedyncze słowo"
 
 #: ../gtk/src/Recognizer.cc:323 ../qt/src/Recognizer.cc:305
 msgid "Assume a single word in a circle"
-msgstr ""
+msgstr "Pojedyncze słowo w okręgu"
 
 #: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:306
 msgid "Sparse text in no particular order"
-msgstr ""
+msgstr "Rzadki nieuporządkowany tekst"
 
 #: ../gtk/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:307
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "Rzadki uporządkowany tekst"
 
 #: ../gtk/src/Recognizer.cc:339 ../qt/src/Recognizer.cc:317
 msgid "Page segmentation mode"
-msgstr ""
+msgstr "Tryb segmentacji"
 
 #: ../gtk/src/Recognizer.cc:345 ../qt/src/Recognizer.cc:324
 msgid "Manage languages..."
 msgstr "Zarządzaj językami..."
 
 #: ../gtk/src/Recognizer.cc:400 ../qt/src/Recognizer.cc:382
-#, fuzzy
 msgid "Current selection"
-msgstr "Rozpoznaj zaznaczenie"
+msgstr "Bieżące zaznaczenie"
 
 #: ../gtk/src/Recognizer.cc:469 ../qt/src/Recognizer.cc:452
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Rozpoznawanie strony %1 (%2 of %3)"
 
 #: ../gtk/src/Recognizer.cc:474 ../qt/src/Recognizer.cc:457
-#, fuzzy
 msgid ""
 "\n"
 "- Page %1: failed to render page"
 msgstr ""
 "\n"
-"\tStona %1: błąd wyświetlania strony"
+"- Strona %1: błąd wyświetlania strony"
 
 #: ../gtk/src/Recognizer.cc:496 ../gtk/src/Recognizer.cc:525
 #: ../gtk/src/Recognizer.cc:538 ../qt/src/Recognizer.cc:479
@@ -1311,15 +1301,14 @@ msgid "Applying substitutions..."
 msgstr "Zamiana wyrazów..."
 
 #: ../gtk/src/TessdataManager.cc:58 ../qt/src/TessdataManager.cc:72
-#, fuzzy
 msgid ""
 "PackageKit is required for managing system-wide tesseract language packs, "
 "but it was not found. Please use the system package management software to "
 "manage the tesseract language packs, or switch to use the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"Użyj zarządzania pakietami dostępnej w systemie operacyjnym aby zainstalować "
-"pakiety językowe tesseract"
+"Użyj zarządzania pakietami dostępnego w systemie operacyjnym, aby "
+"zainstalować pakiety językowe tesseract"
 
 #: ../gtk/src/TessdataManager.cc:63 ../qt/src/TessdataManager.cc:77
 msgid "Fetching available languages"
@@ -1409,7 +1398,7 @@ msgid "Text file encoding:"
 msgstr "Kodowanie znaków:"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
