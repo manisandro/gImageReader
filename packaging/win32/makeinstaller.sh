@@ -48,7 +48,7 @@ mv ${installroot}_$MINGWROOT $installroot
 rm -rf ${installroot}_
 cp $win32dir/gimagereader-icon.rc $builddir
 cp $win32dir/gimagereader.ico $builddir
-cp $win32dir/installer.nsi $builddir
+cp $win32dir/installer.nsi.in $builddir
 
 # Collect dependencies
 function isnativedll {
@@ -177,9 +177,14 @@ rm -rf $installroot/share/appdata
 progName=$(grep -oP 'SET\(PACKAGE_NAME \K(\w+)(?=\))' $srcdir/CMakeLists.txt)
 progVersion=$(grep -oP 'SET\(PACKAGE_VERSION \K([\d\.]+)(?=\))' $srcdir/CMakeLists.txt)
 if [ $withdebug ]; then
-    arch="${arch}_debug"
+    variant="_debug"
 fi
-makensis -DNAME=$progName -DARCH=$arch -DPROGVERSION="$progVersion" -DIFACE="$iface" installer.nsi;
+if [ $bits -eq 32 ]; then
+    sed 's|@PROGRAMFILES@|$PROGRAMFILES|' < installer.nsi.in > installer.nsi
+else
+    sed 's|@PROGRAMFILES@|$PROGRAMFILES64|' < installer.nsi.in > installer.nsi
+fi
+makensis -DNAME=$progName -DARCH=$arch -DVARIANT="$variant" -DPROGVERSION="$progVersion" -DIFACE="$iface" installer.nsi;
 
 # Cleanup
 rm -rf $installroot
