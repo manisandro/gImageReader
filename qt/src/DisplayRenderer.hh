@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * DisplayRenderer.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -24,12 +24,14 @@
 #include <QMutex>
 
 class QImage;
-namespace Poppler { class Document; }
+namespace Poppler {
+class Document;
+}
 
 class DisplayRenderer {
 public:
 	DisplayRenderer(const QString& filename) : m_filename(filename) {}
-	virtual ~DisplayRenderer(){}
+	virtual ~DisplayRenderer() {}
 	virtual QImage render(int page, double resolution) const = 0;
 	virtual int getNPages() const = 0;
 
@@ -41,17 +43,19 @@ protected:
 
 class ImageRenderer : public DisplayRenderer {
 public:
-	ImageRenderer(const QString& filename) : DisplayRenderer(filename) {}
-	QImage render(int page, double resolution) const;
-	int getNPages() const{ return 1; }
+	ImageRenderer(const QString& filename) ;
+	QImage render(int page, double resolution) const override;
+	int getNPages() const override{ return m_pageCount; }
+private:
+	int m_pageCount;
 };
 
 class PDFRenderer : public DisplayRenderer {
 public:
 	PDFRenderer(const QString& filename);
 	~PDFRenderer();
-	QImage render(int page, double resolution) const;
-	int getNPages() const;
+	QImage render(int page, double resolution) const override;
+	int getNPages() const override;
 
 private:
 	Poppler::Document* m_document;

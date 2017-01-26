@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputBuffer.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -31,7 +31,7 @@ public:
 	bool findReplace(bool backwards, bool replace, bool matchCase, const Glib::ustring& searchstr, const Glib::ustring& replacestr, Gtk::TextView* view);
 	bool replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
 
-	static Glib::RefPtr<OutputBuffer> create(){
+	static Glib::RefPtr<OutputBuffer> create() {
 		return Glib::RefPtr<OutputBuffer>(new OutputBuffer());
 	}
 

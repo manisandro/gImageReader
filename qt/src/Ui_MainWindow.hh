@@ -1,18 +1,20 @@
 #ifndef UI_MAINWINDOW_HH
 #define UI_MAINWINDOW_HH
 
+#include "common.hh"
 #include "ui_MainWindow.h"
 #include <QDoubleSpinBox>
 #include <QMenu>
 #include <QWidgetAction>
 
-class UI_MainWindow : public Ui_MainWindow
-{
+class UI_MainWindow : public Ui_MainWindow {
 public:
 	QAction* actionAbout;
 	QAction* actionHelp;
 	QAction* actionPreferences;
 	QAction* actionRedetectLanguages;
+	QAction* actionRotateCurrentPage;
+	QAction* actionRotateAllPages;
 	QAction* actionSourceClear;
 	QAction* actionSourceDelete;
 	QAction* actionSourcePaste;
@@ -24,12 +26,12 @@ public:
 	QSpinBox* spinBoxPage;
 	QFrame* frameRotation;
 	QFrame* framePage;
-	QLabel* labelRotation;
-	QLabel* labelPage;
 	QMenu* menuAppMenu;
 	QMenu* menuAddSource;
 	QMenu* menuLanguages;
+	QMenu* menuRotation;
 	QToolBar* toolBarSources;
+	QToolButton* toolButtonRotation;
 	QToolButton* toolButtonRecognize;
 	QToolButton* toolButtonAppMenu;
 	QToolButton* toolButtonSourceAdd;
@@ -37,8 +39,7 @@ public:
 	QWidgetAction* actionPage;
 
 
-	void setupUi(QMainWindow* MainWindow)
-	{
+	void setupUi(QMainWindow* MainWindow) {
 		Ui_MainWindow::setupUi(MainWindow);
 
 		// Do remaining things which are not possible in designer
@@ -61,9 +62,21 @@ public:
 		layoutRotation->setContentsMargins(1, 1, 1, 1);
 		layoutRotation->setSpacing(0);
 
-		labelRotation = new QLabel(MainWindow);
-		labelRotation->setPixmap(QPixmap(":/icons/angle"));
-		layoutRotation->addWidget(labelRotation);
+		actionRotateCurrentPage = new QAction(QIcon(":/icons/rotate_page"), gettext("Rotate current page"), MainWindow);
+		actionRotateAllPages = new QAction(QIcon(":/icons/rotate_pages"), gettext("Rotate all pages"), MainWindow);
+
+		menuRotation = new QMenu(MainWindow);
+		menuRotation->addAction(actionRotateCurrentPage);
+		menuRotation->addAction(actionRotateAllPages);
+
+		toolButtonRotation = new QToolButton(MainWindow);
+		toolButtonRotation->setIcon(QIcon(":/icons/rotate_pages"));
+		toolButtonRotation->setToolTip(gettext("Select rotation mode"));
+		toolButtonRotation->setPopupMode(QToolButton::InstantPopup);
+		toolButtonRotation->setAutoRaise(true);
+		toolButtonRotation->setMenu(menuRotation);
+
+		layoutRotation->addWidget(toolButtonRotation);
 
 		spinBoxRotation = new QDoubleSpinBox(MainWindow);
 		spinBoxRotation->setRange(0.0, 359.9);
@@ -72,6 +85,7 @@ public:
 		spinBoxRotation->setWrapping(true);
 		spinBoxRotation->setFrame(false);
 		spinBoxRotation->setKeyboardTracking(false);
+		spinBoxRotation->setSizePolicy(spinBoxRotation->sizePolicy().horizontalPolicy(), QSizePolicy::MinimumExpanding);
 		layoutRotation->addWidget(spinBoxRotation);
 
 		actionRotate = new QWidgetAction(MainWindow);
@@ -89,14 +103,17 @@ public:
 		layoutPage->setContentsMargins(1, 1, 1, 1);
 		layoutPage->setSpacing(0);
 
-		labelPage = new QLabel(MainWindow);
-		labelPage->setPixmap(QPixmap(":/icons/page"));
-		layoutPage->addWidget(labelPage);
+		QToolButton* toolButtonPage = new QToolButton(MainWindow);
+		toolButtonPage->setIcon(QPixmap(":/icons/page"));
+		toolButtonPage->setEnabled(false);
+		toolButtonPage->setAutoRaise(true);
+		layoutPage->addWidget(toolButtonPage);
 
 		spinBoxPage = new QSpinBox(MainWindow);
 		spinBoxPage->setRange(1, 1);
 		spinBoxPage->setFrame(false);
 		spinBoxPage->setKeyboardTracking(false);
+		spinBoxPage->setSizePolicy(spinBoxPage->sizePolicy().horizontalPolicy(), QSizePolicy::MinimumExpanding);
 		layoutPage->addWidget(spinBoxPage);
 
 		actionPage = new QWidgetAction(MainWindow);
@@ -120,6 +137,7 @@ public:
 		comboBoxOCRMode->addItems(QStringList() << gettext("Plain text") << gettext("hOCR, PDF"));
 		comboBoxOCRMode->setFont(smallFont);
 		comboBoxOCRMode->setFrame(false);
+		comboBoxOCRMode->setCurrentIndex(-1);
 		ocrModeWidget->layout()->addWidget(comboBoxOCRMode);
 		toolBarMain->insertWidget(actionAutodetectLayout, ocrModeWidget);
 

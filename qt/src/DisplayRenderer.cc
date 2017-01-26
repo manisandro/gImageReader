@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * DisplayRenderer.cc
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -27,9 +27,8 @@
 #include "DisplayRenderer.hh"
 #include "Utils.hh"
 
-void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, bool invert) const
-{
-	if(brightness == 0 && contrast == 0 && !invert){
+void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, bool invert) const {
+	if(brightness == 0 && contrast == 0 && !invert) {
 		return;
 	}
 
@@ -41,10 +40,10 @@ void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, b
 
 	int nLinePixels = image.bytesPerLine() / 4;
 	int nLines = image.height();
-#pragma omp parallel for
-	for(int line = 0; line < nLines; ++line){
+	#pragma omp parallel for
+	for(int line = 0; line < nLines; ++line) {
 		QRgb* rgb = reinterpret_cast<QRgb*>(image.scanLine(line));
-		for(int i = 0; i < nLinePixels; ++i){
+		for(int i = 0; i < nLinePixels; ++i) {
 			int red = qRed(rgb[i]);
 			int green = qGreen(rgb[i]);
 			int blue = qBlue(rgb[i]);
@@ -57,7 +56,7 @@ void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, b
 			green = qMax(0., qMin(FCn * (green - 128.) + 128., 255.));
 			blue = qMax(0., qMin(FCn * (blue - 128.) + 128., 255.));
 			// Invert
-			if(invert){
+			if(invert) {
 				red = 255 - red;
 				green = 255 - green;
 				blue = 255 - blue;
@@ -68,29 +67,32 @@ void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, b
 	}
 }
 
-QImage ImageRenderer::render(int /*page*/, double resolution) const
-{
+ImageRenderer::ImageRenderer(const QString &filename) : DisplayRenderer(filename) {
+	m_pageCount = QImageReader(m_filename).imageCount();
+}
+
+QImage ImageRenderer::render(int page, double resolution) const {
 	QImageReader reader(m_filename);
+	reader.jumpToImage(page - 1);
 	reader.setBackgroundColor(Qt::white);
 	reader.setScaledSize(reader.size() * resolution / 100.);
 	return reader.read().convertToFormat(QImage::Format_RGB32);
 }
 
-PDFRenderer::PDFRenderer(const QString& filename) : DisplayRenderer(filename)
-{
+PDFRenderer::PDFRenderer(const QString& filename) : DisplayRenderer(filename) {
 	m_document = Poppler::Document::load(filename);
-	m_document->setRenderHint(Poppler::Document::Antialiasing);
-	m_document->setRenderHint(Poppler::Document::TextAntialiasing);
+	if(m_document) {
+		m_document->setRenderHint(Poppler::Document::Antialiasing);
+		m_document->setRenderHint(Poppler::Document::TextAntialiasing);
+	}
 }
 
-PDFRenderer::~PDFRenderer()
-{
+PDFRenderer::~PDFRenderer() {
 	delete m_document;
 }
 
-QImage PDFRenderer::render(int page, double resolution) const
-{
-	if(!m_document){
+QImage PDFRenderer::render(int page, double resolution) const {
+	if(!m_document) {
 		return QImage();
 	}
 	m_mutex.lock();
@@ -101,7 +103,6 @@ QImage PDFRenderer::render(int page, double resolution) const
 	return image.convertToFormat(QImage::Format_RGB32);
 }
 
-int PDFRenderer::getNPages() const
-{
-	return m_document->numPages();
+int PDFRenderer::getNPages() const {
+	return m_document ? m_document->numPages() : 1;
 }

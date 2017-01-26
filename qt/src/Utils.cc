@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Utils.cc
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -39,8 +39,7 @@
 #include "MainWindow.hh"
 #include "SourceManager.hh"
 
-QString Utils::documentsFolder()
-{
+QString Utils::documentsFolder() {
 	QString documentsFolder;
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 	documentsFolder = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
@@ -50,19 +49,18 @@ QString Utils::documentsFolder()
 	return documentsFolder.isEmpty() ? QDir::homePath() : documentsFolder;
 }
 
-QString Utils::makeOutputFilename(const QString& filename)
-{
+QString Utils::makeOutputFilename(const QString& filename) {
 	// Ensure directory exists
 	QFileInfo finfo(filename);
 	QDir dir = finfo.absoluteDir();
-	if(!dir.exists()){
+	if(!dir.exists()) {
 		dir = QDir(Utils::documentsFolder());
 	}
 	// Generate non-existing file
 	QString base = finfo.baseName().replace(QRegExp("_[0-9]+$"), "");
 	QString ext = finfo.completeSuffix();
 	QString newfilename = dir.absoluteFilePath(base + "." + ext);
-	for(int i = 1; QFile(newfilename).exists(); ++i){
+	for(int i = 1; QFile(newfilename).exists(); ++i) {
 		newfilename = dir.absoluteFilePath(QString("%1_%2.%3").arg(base).arg(i).arg(ext));
 	}
 	return newfilename;
@@ -71,30 +69,31 @@ QString Utils::makeOutputFilename(const QString& filename)
 class BusyTaskThread : public QThread {
 public:
 	BusyTaskThread(const std::function<bool()> &f) : m_f(f), m_result(false) {}
-	bool getResult() const{ return m_result; }
+	bool getResult() const {
+		return m_result;
+	}
 private:
 	std::function<bool()> m_f;
 	bool m_result;
 
-	void run(){ m_result = m_f(); }
+	void run() {
+		m_result = m_f();
+	}
 };
 
 class BusyEventFilter : public QObject {
 public:
 	bool eventFilter(QObject */*obj*/, QEvent *ev) {
-
 		if(dynamic_cast<QMouseEvent*>(ev)) {
 			QMouseEvent* mev = static_cast<QMouseEvent*>(ev);
-			QPoint btnPos = MAIN->m_progressCancelButton->mapToGlobal(MAIN->m_progressCancelButton->pos());
-			QRect btnRect(btnPos, MAIN->m_progressCancelButton->size());
-			return btnRect.contains(mev->globalPos());
+			QPoint evp = MAIN->m_progressCancelButton->mapFromGlobal(mev->globalPos());
+			return !QRect(QPoint(0, 0), MAIN->m_progressCancelButton->size()).contains(evp);
 		}
 		return dynamic_cast<QInputEvent*>(ev);
 	}
 };
 
-bool Utils::busyTask(const std::function<bool()> &f, const QString& msg)
-{
+bool Utils::busyTask(const std::function<bool()> &f, const QString& msg) {
 	MAIN->pushState(MainWindow::State::Busy, msg);
 	QEventLoop evLoop;
 	BusyTaskThread thread(f);
@@ -109,35 +108,32 @@ bool Utils::busyTask(const std::function<bool()> &f, const QString& msg)
 	return thread.getResult();
 }
 
-void Utils::setSpinBlocked(QSpinBox *spin, int value)
-{
+void Utils::setSpinBlocked(QSpinBox *spin, int value) {
 	spin->blockSignals(true);
 	spin->setValue(value);
 	spin->blockSignals(false);
 }
 
-void Utils::setSpinBlocked(QDoubleSpinBox *spin, double value)
-{
+void Utils::setSpinBlocked(QDoubleSpinBox *spin, double value) {
 	spin->blockSignals(true);
 	spin->setValue(value);
 	spin->blockSignals(false);
 }
 
-bool Utils::handleSourceDragEvent(const QMimeData* mimeData)
-{
-	if(mimeData->hasImage()){
+bool Utils::handleSourceDragEvent(const QMimeData* mimeData) {
+	if(mimeData->hasImage()) {
 		QTextStream(stdout) << "hasImage" << endl;
 		return true;
 	}
 	QList<QByteArray> formats = QImageReader::supportedImageFormats();
 	formats.append("pdf");
-	for(const QUrl url : mimeData->urls()){
+	for(const QUrl url : mimeData->urls()) {
 		QFile file(url.toLocalFile());
-		if(!file.exists()){
+		if(!file.exists()) {
 			continue;
 		}
-		for(const QByteArray& format : formats){
-			if(file.fileName().endsWith(format, Qt::CaseInsensitive)){
+		for(const QByteArray& format : formats) {
+			if(file.fileName().endsWith(format, Qt::CaseInsensitive)) {
 				return true;
 			}
 		}
@@ -145,22 +141,21 @@ bool Utils::handleSourceDragEvent(const QMimeData* mimeData)
 	return false;
 }
 
-void Utils::handleSourceDropEvent(const QMimeData* mimeData)
-{
-	if(mimeData->hasImage()){
+void Utils::handleSourceDropEvent(const QMimeData* mimeData) {
+	if(mimeData->hasImage()) {
 		QTextStream(stdout) << "hasImage" << endl;
-		 MAIN->getSourceManager()->addSourceImage(qvariant_cast<QImage>(mimeData->imageData()));
-		 return;
+		MAIN->getSourceManager()->addSourceImage(qvariant_cast<QImage>(mimeData->imageData()));
+		return;
 	}
 	QList<QByteArray> formats = QImageReader::supportedImageFormats();
 	formats.append("pdf");
-	for(const QUrl url : mimeData->urls()){
+	for(const QUrl url : mimeData->urls()) {
 		QFile file(url.toLocalFile());
-		if(!file.exists()){
+		if(!file.exists()) {
 			continue;
 		}
-		for(const QByteArray& format : formats){
-			if(file.fileName().endsWith(format, Qt::CaseInsensitive)){
+		for(const QByteArray& format : formats) {
+			if(file.fileName().endsWith(format, Qt::CaseInsensitive)) {
 				MAIN->getSourceManager()->addSource(file.fileName());
 				break;
 			}
@@ -168,12 +163,11 @@ void Utils::handleSourceDropEvent(const QMimeData* mimeData)
 	}
 }
 
-QByteArray Utils::download(QUrl url, QString& messages, int timeout)
-{
+QByteArray Utils::download(QUrl url, QString& messages, int timeout) {
 	QNetworkAccessManager networkMgr;
 	QNetworkReply* reply = nullptr;
 
-	while(true){
+	while(true) {
 		QNetworkRequest req(url);
 		req.setRawHeader("User-Agent" , "Wget/1.13.4");
 		QSslConfiguration conf = req.sslConfiguration();
@@ -187,7 +181,7 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout)
 		timer.setSingleShot(true);
 		timer.start(timeout);
 		loop.exec();
-		if(reply->isRunning()){
+		if(reply->isRunning()) {
 			// Timeout
 			reply->close();
 			delete reply;
@@ -195,10 +189,10 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout)
 		}
 
 		QUrl redirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
-		if(redirectUrl.isValid() && url != redirectUrl){
+		if(redirectUrl.isValid() && url != redirectUrl) {
 			delete reply;
 			url = redirectUrl;
-		}else{
+		} else {
 			break;
 		}
 	}
@@ -209,8 +203,7 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout)
 	return result;
 }
 
-QString Utils::getSpellingLanguage(const QString& lang)
-{
+QString Utils::getSpellingLanguage(const QString& lang) {
 	// Look in the lang cultures table if a language is provided
 	Config::Lang langspec = {lang};
 	if(!lang.isEmpty() && MAIN->getConfig()->searchLangSpec(langspec)) {
@@ -221,7 +214,7 @@ QString Utils::getSpellingLanguage(const QString& lang)
 	}
 	// Use the application locale, if specified, otherwise fall back to en
 	QString syslang = QLocale::system().name();
-	if(syslang.toLower() == "c" || syslang.isEmpty()){
+	if(syslang.toLower() == "c" || syslang.isEmpty()) {
 		return "en_US";
 	}
 	return syslang;

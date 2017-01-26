@@ -1,6 +1,7 @@
 #ifndef UI_OUTPUTEDITORHOCR_HH
 #define UI_OUTPUTEDITORHOCR_HH
 
+#include "common.hh"
 #include "OutputTextEdit.hh"
 #include <QCheckBox>
 #include <QComboBox>
@@ -16,15 +17,12 @@
 #include <QVBoxLayout>
 #include <QWidgetAction>
 
-class UI_OutputEditorHOCR
-{
+class UI_OutputEditorHOCR {
 public:
 	QAction* actionOutputOpen;
 	QAction* actionOutputClear;
 	QAction* actionOutputSaveHOCR;
-	QToolButton* toolButtonOutputExport;
-	QAction* actionOutputSavePDFTextOverlay;
-	QAction* actionOutputSavePDF;
+	QAction* actionOutputExportPDF;
 	QToolBar* toolBarOutput;
 
 	QSplitter* splitter;
@@ -32,8 +30,7 @@ public:
 	QTableWidget *tableWidgetProperties;
 	OutputTextEdit *plainTextEditOutput;
 
-	void setupUi(QWidget* widget)
-	{
+	void setupUi(QWidget* widget) {
 		widget->setLayout(new QVBoxLayout());
 		widget->layout()->setContentsMargins(0, 0, 0, 0);
 		widget->layout()->setSpacing(0);
@@ -43,15 +40,10 @@ public:
 		actionOutputOpen->setToolTip(gettext("Open hOCR file"));
 		actionOutputSaveHOCR = new QAction(QIcon::fromTheme("document-save-as"), gettext("Save as hOCR text"), widget);
 		actionOutputSaveHOCR->setToolTip(gettext("Save as hOCR text"));
-		toolButtonOutputExport = new QToolButton(widget);
-		toolButtonOutputExport->setIcon(QIcon::fromTheme("application-pdf"));
-		toolButtonOutputExport->setText(gettext("Export to PDF"));
-		QMenu* saveMenu = new QMenu(widget);
-		toolButtonOutputExport->setToolTip(gettext("Export to PDF"));
-		toolButtonOutputExport->setMenu(saveMenu);
-		toolButtonOutputExport->setPopupMode(QToolButton::InstantPopup);
-		actionOutputSavePDF = saveMenu->addAction(gettext("PDF"));
-		actionOutputSavePDFTextOverlay = saveMenu->addAction(gettext("PDF with invisible text overlay"));
+		actionOutputSaveHOCR->setEnabled(false);
+		actionOutputExportPDF = new QAction(QIcon::fromTheme("application-pdf"), gettext("Export to PDF"), widget);
+		actionOutputExportPDF->setToolTip(gettext("Export to PDF"));
+		actionOutputExportPDF->setEnabled(false);
 		actionOutputClear = new QAction(QIcon::fromTheme("edit-clear"), gettext("Clear output"), widget);
 		actionOutputClear->setToolTip(gettext("Clear output"));
 
@@ -60,7 +52,7 @@ public:
 		toolBarOutput->setIconSize(QSize(1, 1) * toolBarOutput->style()->pixelMetric(QStyle::PM_SmallIconSize));
 		toolBarOutput->addAction(actionOutputOpen);
 		toolBarOutput->addAction(actionOutputSaveHOCR);
-		toolBarOutput->addWidget(toolButtonOutputExport);
+		toolBarOutput->addAction(actionOutputExportPDF);
 		toolBarOutput->addAction(actionOutputClear);
 
 		widget->layout()->addWidget(toolBarOutput);
@@ -70,6 +62,7 @@ public:
 
 		treeWidgetItems = new QTreeWidget(widget);
 		treeWidgetItems->setHeaderHidden(true);
+		treeWidgetItems->setSelectionMode(QTreeWidget::ContiguousSelection);
 		splitter->addWidget(treeWidgetItems);
 
 		QTabWidget* tabWidget = new QTabWidget(widget);

@@ -1,10 +1,12 @@
 #ifndef UI_OUTPUTEDITORTEXT_HH
 #define UI_OUTPUTEDITORTEXT_HH
 
+#include "common.hh"
 #include "OutputTextEdit.hh"
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDoubleSpinBox>
+#include <QLineEdit>
 #include <QMenu>
 #include <QPushButton>
 #include <QToolBar>
@@ -12,8 +14,7 @@
 #include <QVBoxLayout>
 #include <QWidgetAction>
 
-class UI_OutputEditorText
-{
+class UI_OutputEditorText {
 public:
 	QAction* actionOutputModeAppend;
 	QAction* actionOutputModeCursor;
@@ -49,8 +50,7 @@ public:
 	OutputTextEdit *plainTextEditOutput;
 	QFrame *frameOutputSearch;
 
-	void setupUi(QWidget* widget)
-	{
+	void setupUi(QWidget* widget) {
 		widget->setLayout(new QVBoxLayout());
 		widget->layout()->setContentsMargins(0, 0, 0, 0);
 		widget->layout()->setSpacing(0);

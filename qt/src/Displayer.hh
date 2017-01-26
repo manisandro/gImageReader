@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Displayer.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -21,6 +21,7 @@
 #define DISPLAYER_HH
 
 #include <functional>
+#include <QGraphicsRectItem>
 #include <QGraphicsView>
 #include <QImage>
 #include <QMap>
@@ -41,12 +42,20 @@ class Displayer : public QGraphicsView {
 public:
 	Displayer(const UI_MainWindow& _ui, QWidget* parent = nullptr);
 	~Displayer();
-	void setTool(DisplayerTool* tool) { m_tool = tool; }
+	void setTool(DisplayerTool* tool) {
+		m_tool = tool;
+	}
 	bool setSources(QList<Source*> sources);
 	int getCurrentPage() const;
 	double getCurrentAngle() const;
+	double getCurrentScale() const {
+		return m_scale;
+	}
 	int getCurrentResolution() const;
-	const QString& getCurrentImage(int& page) const;
+	QString getCurrentImage(int& page) const;
+	QImage getImage(const QRectF& rect);
+	QRectF getSceneBoundingRect() const;
+	QPointF mapToSceneClamped(const QPoint& p) const;
 	int getNPages() const;
 	bool hasMultipleOCRAreas();
 	QList<QImage> getOCRAreas();
@@ -59,8 +68,7 @@ public slots:
 	void setResolution(int resolution);
 
 private:
-	friend class DisplayerTool;
-
+	enum class RotateMode { CurrentPage, AllPages } m_rotateMode;
 	enum class Zoom { In, Out, Fit, Original };
 	const UI_MainWindow& ui;
 	GraphicsScene* m_scene;
@@ -75,14 +83,13 @@ private:
 	QPoint m_panPos;
 	QTimer m_renderTimer;
 
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	void resizeEvent(QResizeEvent *event);
-	void wheelEvent(QWheelEvent *event);
+	void keyPressEvent(QKeyEvent* event) override;
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
+	void wheelEvent(QWheelEvent *event) override;
 
-	QImage getImage(const QRectF& rect);
-	QPointF mapToSceneClamped(const QPoint& p) const;
 	void setZoom(Zoom action, QGraphicsView::ViewportAnchor anchor = QGraphicsView::AnchorViewCenter);
 
 	struct ScaleRequest {
@@ -99,7 +106,9 @@ private:
 		ScaleThread(const std::function<void()> &f) : m_f(f) {}
 	private:
 		std::function<void()> m_f;
-		void run(){ m_f(); }
+		void run() {
+			m_f();
+		}
 	};
 	QMutex m_scaleMutex;
 	QWaitCondition m_scaleCond;
@@ -112,42 +121,119 @@ private:
 
 private slots:
 	void queueRenderImage();
-	void scaleTimerElapsed(){ sendScaleRequest(m_pendingScaleRequest); }
+	void scaleTimerElapsed() {
+		sendScaleRequest(m_pendingScaleRequest);
+	}
 	void sendScaleRequest(const ScaleRequest& request);
 	bool renderImage();
+	void brightnessChanged();
+	void contrastChanged();
+	void resolutionChanged();
+	void invertColorsChanged();
+	void setRotateMode(QAction* action);
 	void rotate90();
 	void setScaledImage(const QImage& image, double scale);
-	void zoomIn(){ setZoom(Zoom::In); }
-	void zoomOut(){ setZoom(Zoom::Out); }
-	void zoomFit(){ setZoom(Zoom::Fit); }
-	void zoomOriginal(){ setZoom(Zoom::Original); }
+	void zoomIn() {
+		setZoom(Zoom::In);
+	}
+	void zoomOut() {
+		setZoom(Zoom::Out);
+	}
+	void zoomFit() {
+		setZoom(Zoom::Fit);
+	}
+	void zoomOriginal() {
+		setZoom(Zoom::Original);
+	}
 };
 
 
 class DisplayerTool : public QObject {
 public:
 	DisplayerTool(Displayer* displayer, QObject* parent = 0) : QObject(parent), m_displayer(displayer) {}
-	virtual ~DisplayerTool(){}
-	virtual void mousePressEvent(QMouseEvent */*event*/){}
-	virtual void mouseMoveEvent(QMouseEvent */*event*/){}
-	virtual void mouseReleaseEvent(QMouseEvent */*event*/){}
-	virtual void pageChanged(){}
-	virtual void resolutionChanged(double /*factor*/){}
-	virtual void rotationChanged(double /*delta*/){}
+	virtual ~DisplayerTool() {}
+	virtual void mousePressEvent(QMouseEvent */*event*/) {}
+	virtual void mouseMoveEvent(QMouseEvent */*event*/) {}
+	virtual void mouseReleaseEvent(QMouseEvent */*event*/) {}
+	virtual void pageChanged() {}
+	virtual void resolutionChanged(double /*factor*/) {}
+	virtual void rotationChanged(double /*delta*/) {}
 	virtual QList<QImage> getOCRAreas() = 0;
-	virtual bool hasMultipleOCRAreas() const{ return false; }
-	virtual bool allowAutodetectOCRAreas() const{ return false; }
-	virtual void autodetectOCRAreas(){}
+	virtual bool hasMultipleOCRAreas() const {
+		return false;
+	}
+	virtual bool allowAutodetectOCRAreas() const {
+		return false;
+	}
+	virtual void autodetectOCRAreas() {}
+	virtual void reset() {}
+
+	Displayer* getDisplayer() const {
+		return m_displayer;
+	}
 
 protected:
 	Displayer* m_displayer;
+};
 
-	void addItemToScene(QGraphicsItem* item);
-	QRectF getSceneBoundingRect() const;
-	void invalidateRect(const QRectF& rect);
-	QPointF mapToSceneClamped(const QPoint& point);
-	QImage getImage(const QRectF& rect);
-	double getDisplayScale() const;
+class DisplayerSelection : public QObject, public QGraphicsRectItem {
+	Q_OBJECT
+public:
+	DisplayerSelection(DisplayerTool* tool, const QPointF& anchor)
+		: QGraphicsRectItem(QRectF(anchor, anchor)), m_tool(tool), m_anchor(anchor), m_point(anchor) {
+		setAcceptHoverEvents(true);
+	}
+	void setAnchorAndPoint(const QPointF& anchor, const QPointF& point) {
+		m_anchor = anchor;
+		m_point = point;
+		setRect(QRectF(m_anchor, m_point).normalized());
+	}
+	void setPoint(const QPointF& point) {
+		m_point = point;
+		setRect(QRectF(m_anchor, m_point).normalized());
+	}
+	void rotate(const QTransform& transform) {
+		m_anchor = transform.map(m_anchor);
+		m_point = transform.map(m_point);
+		setRect(QRectF(m_anchor, m_point).normalized());
+	}
+	void scale(double factor) {
+		m_anchor *= factor;
+		m_point *= factor;
+	}
+
+protected:
+	DisplayerTool* m_tool;
+
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget* widget) override;
+
+signals:
+	void geometryChanged(QRectF rect);
+
+private:
+	typedef void(*ResizeHandler)(const QPointF&, QPointF&, QPointF&);
+
+	QPointF m_anchor;
+	QPointF m_point;
+	QVector<ResizeHandler> m_resizeHandlers;
+	QPointF m_resizeOffset;
+
+	void hoverMoveEvent(QGraphicsSceneHoverEvent *event) override;
+	void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+
+	static void resizeAnchorX(const QPointF& pos, QPointF& anchor, QPointF& /*point*/) {
+		anchor.rx() = pos.x();
+	}
+	static void resizeAnchorY(const QPointF& pos, QPointF& anchor, QPointF& /*point*/) {
+		anchor.ry() = pos.y();
+	}
+	static void resizePointX(const QPointF& pos, QPointF& /*anchor*/, QPointF& point) {
+		point.rx() = pos.x();
+	}
+	static void resizePointY(const QPointF& pos, QPointF& /*anchor*/, QPointF& point) {
+		point.ry() = pos.y();
+	}
 };
 
 #endif // IMAGEDISPLAYER_HH

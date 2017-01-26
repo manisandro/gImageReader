@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * SourceManager.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -34,7 +34,7 @@ struct Source {
 	int contrast = 0;
 	int resolution = -1;
 	int page = 1;
-	double angle = 0.;
+	std::vector<double> angle;
 	bool invert = false;
 };
 
@@ -45,7 +45,9 @@ public:
 
 	void addSources(const std::vector<Glib::RefPtr<Gio::File>>& files);
 	std::vector<Source*> getSelectedSources() const;
-	sigc::signal<void> signal_sourceChanged(){ return m_signal_sourceChanged; }
+	sigc::signal<void> signal_sourceChanged() {
+		return m_signal_sourceChanged;
+	}
 
 private:
 	class ListViewColumns : public Gtk::TreeModel::ColumnRecord {
@@ -53,7 +55,11 @@ private:
 		Gtk::TreeModelColumn<std::string> filename;
 		Gtk::TreeModelColumn<Source*> source;
 		Gtk::TreeModelColumn<std::string> path;
-		ListViewColumns(){ add(filename); add(source); add(path); }
+		ListViewColumns() {
+			add(filename);
+			add(source);
+			add(path);
+		}
 	};
 
 	Gtk::Notebook* m_notebook;

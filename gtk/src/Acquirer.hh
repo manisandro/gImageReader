@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Acquirer.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -29,14 +29,19 @@ public:
 	Acquirer();
 	~Acquirer();
 
-	sigc::signal<void,std::string> signal_scanPageAvailable() const{ return m_signal_scanPageAvailable; }
+	sigc::signal<void,std::string> signal_scanPageAvailable() const {
+		return m_signal_scanPageAvailable;
+	}
 
 private:
 	class DevicesComboColumns : public Gtk::TreeModel::ColumnRecord {
 	public:
 		Gtk::TreeModelColumn<std::string> label;
 		Gtk::TreeModelColumn<std::string> name;
-		DevicesComboColumns() { add(label); add(name); }
+		DevicesComboColumns() {
+			add(label);
+			add(name);
+		}
 	};
 
 	Gtk::Button* m_refreshButton;

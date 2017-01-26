@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditor.cc
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -22,8 +22,7 @@
 
 Q_DECLARE_METATYPE(OutputEditor::ReadSessionData)
 
-OutputEditor::OutputEditor(QObject* parent) : QObject(parent)
-{
+OutputEditor::OutputEditor(QObject* parent) : QObject(parent) {
 	static int reg = qRegisterMetaType<ReadSessionData>("ReadSessionData");
 	Q_UNUSED(reg);
 }

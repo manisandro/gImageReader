@@ -5,7 +5,7 @@
  *   Copyright (C) 2009-2013 Canonical Ltd.
  *   Author: Robert Ancell <robert.ancell@canonical.com>
  * Modifications are:
- *   Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ *   Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -30,15 +30,14 @@
 #include <QVector>
 #include <sane/sane.h>
 
-class ScannerSane : public Scanner
-{
+class ScannerSane : public Scanner {
 	Q_OBJECT
 public:
-	void init();
-	void redetect();
-	void scan(const Params& params);
-	void cancel();
-	void close();
+	void init() override;
+	void redetect() override;
+	void scan(const Params& params) override;
+	void cancel() override;
+	void close() override;
 
 private:
 	struct ScanJob {

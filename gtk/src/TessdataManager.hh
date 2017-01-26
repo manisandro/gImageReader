@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * TessdataManager.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -22,8 +22,7 @@
 
 #include <gtkmm.h>
 
-class TessdataManager
-{
+class TessdataManager {
 public:
 	static void exec();
 
@@ -39,7 +38,11 @@ private:
 		Gtk::TreeModelColumn<bool> selected;
 		Gtk::TreeModelColumn<Glib::ustring> label;
 		Gtk::TreeModelColumn<Glib::ustring> prefix;
-		ViewColumns() { add(selected); add(label); add(prefix); }
+		ViewColumns() {
+			add(selected);
+			add(label);
+			add(prefix);
+		}
 	} m_viewCols;
 
 	Gtk::Dialog* m_dialog;
@@ -50,6 +53,7 @@ private:
 
 	bool fetchLanguageList(Glib::ustring& messages);
 	void applyChanges();
+	void refresh();
 };
 
 #endif // TESSDATAMANAGER_HH

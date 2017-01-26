@@ -14,6 +14,7 @@ SetCompressor /SOLID /FINAL lzma
 
 !include "MUI2.nsh"
 !include "MultiUser.nsh"
+!include "x64.nsh"
 
 ;********** General **********
 Name "${NAME} ${PROGVERSION}"
@@ -49,6 +50,21 @@ Function .onInit
   !insertmacro MULTIUSER_INIT
   
   InitPluginsDir
+
+  Var /GLOBAL archMismatch
+  StrCpy $archMismatch "false"
+  ${IfNot} ${RunningX64}
+    ${If} ${ARCH} != "i686"
+    ${AndIf} ${ARCH} != "i686_debug"
+      StrCpy $archMismatch "true"
+    ${EndIf}
+  ${EndIf}
+
+  ${If} $archMismatch == "true"
+    MessageBox MB_OK "The installer is not compatible with your system architecture."
+    Abort
+  ${EndIf}
+
 
   ; Remove previous versions before installing new one
   ReadRegStr $0 SHCTX "${REG_UNINSTALL}" "UninstallString"
@@ -137,14 +153,18 @@ Section "Standard" MainSection
   ; Create application shortcut (first in installation dir to have the correct "start in" target)
   SetOutPath "$INSTDIR\bin"
   CreateShortCut "$INSTDIR\bin\${NAME}.lnk" "$INSTDIR\bin\gimagereader-${IFACE}.exe"
+  CreateShortCut "$INSTDIR\bin\Tesseract language definitions.lnk" "$INSTDIR\bin\gimagereader-${IFACE}.exe" tessdatadir
+  CreateShortCut "$INSTDIR\bin\Spelling dictionaries.lnk" "$INSTDIR\bin\gimagereader-${IFACE}.exe" spellingdir
 
   ; Start menu entries
   SetOutPath "$SMPROGRAMS\${NAME}\"
   CopyFiles "$INSTDIR\bin\${NAME}.lnk" "$SMPROGRAMS\${NAME}\"
+  CopyFiles "$INSTDIR\bin\Tesseract language definitions.lnk" "$SMPROGRAMS\${NAME}\"
+  CopyFiles "$INSTDIR\bin\Spelling dictionaries.lnk" "$SMPROGRAMS\${NAME}\"
   Delete "$INSTDIR\bin\${NAME}.lnk"
+  Delete "$INSTDIR\bin\Tesseract language definitions.lnk"
+  Delete "$INSTDIR\bin\Spelling dictionaries.lnk"
   CreateShortCut "$SMPROGRAMS\${NAME}\Manual.lnk" "$INSTDIR\share\doc\gimagereader\manual.html"
-  CreateShortCut "$SMPROGRAMS\${NAME}\Spelling dictionaries.lnk" "$INSTDIR\share\myspell\dicts\"
-  CreateShortCut "$SMPROGRAMS\${NAME}\Tesseract language definitions.lnk" "$INSTDIR\share\tessdata\"
   CreateShortCut "$SMPROGRAMS\${NAME}\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 SectionEnd
 

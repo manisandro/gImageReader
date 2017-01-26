@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * main.cc
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -27,10 +27,10 @@
 #include <cstring>
 
 #include "MainWindow.hh"
+#include "Config.hh"
 #include "CrashHandler.hh"
 
-int main (int argc, char *argv[])
-{
+int main (int argc, char *argv[]) {
 	QApplication app(argc, argv);
 
 	QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
@@ -47,7 +47,7 @@ int main (int argc, char *argv[])
 	QIcon::setThemeSearchPaths({dataDir.absoluteFilePath("icons")});
 	QIcon::setThemeName("hicolor");
 	QDir packageDir = QDir(QString("%1/../").arg(QApplication::applicationDirPath()));
-	if(qgetenv("LANG").isEmpty()){
+	if(qgetenv("LANG").isEmpty()) {
 		qputenv("LANG", QLocale::system().name().toLocal8Bit());
 	}
 #endif
@@ -70,15 +70,20 @@ int main (int argc, char *argv[])
 		int pid = std::atoi(argv[2]);
 		QString savefile = argc >= 4 ? argv[3] : "";
 		window = new CrashHandler(pid, savefile);
-	}else{
+	} else if(argc >= 2 && std::strcmp("tessdatadir", argv[1]) == 0) {
+		Config::openTessdataDir();
+		return 0;
+	} else if(argc >= 2 && std::strcmp("spellingdir", argv[1]) == 0) {
+		Config::openSpellingDir();
+		return 0;
+	} else {
 #ifdef Q_OS_WIN
-		qputenv("TESSDATA_PREFIX", dataDir.absolutePath().toLocal8Bit());
 		qputenv("TWAINDSM_LOG", packageDir.absoluteFilePath("twain.log").toLocal8Bit());
 		std::freopen(packageDir.absoluteFilePath("gimagereader.log").toLocal8Bit().data(), "w", stderr);
 #endif
 		QStringList files;
-		for(int i = 1; i < argc; ++i){
-			if(QFile(argv[i]).exists()){
+		for(int i = 1; i < argc; ++i) {
+			if(QFile(argv[i]).exists()) {
 				files.append(argv[i]);
 			}
 		}

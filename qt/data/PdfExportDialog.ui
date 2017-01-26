@@ -6,36 +6,36 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>242</width>
-    <height>120</height>
+    <width>411</width>
+    <height>436</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>PDF Export</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
-    <widget class="QPushButton" name="buttonFont">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QCheckBox" name="checkBoxFontSize">
-     <property name="text">
-      <string>Use detected font sizes</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="0">
-    <widget class="QLabel" name="labelFont">
+    <widget class="QLabel" name="labelOutputMode">
      <property name="text">
-      <string>Document font:</string>
+      <string>Output mode:</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
+   <item row="0" column="1">
+    <widget class="QComboBox" name="comboBoxOutputMode">
+     <item>
+      <property name="text">
+       <string>PDF</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>PDF with invisible text overlay</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="13" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -45,11 +45,232 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QCheckBox" name="checkBoxUniformizeSpacing">
+   <item row="12" column="0" colspan="2">
+    <widget class="QCheckBox" name="checkBoxPreview">
      <property name="text">
-      <string>Uniformize line spacing</string>
+      <string>Show preview</string>
      </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBoxText">
+     <property name="title">
+      <string>Text settings:</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>4</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
+       <number>4</number>
+      </property>
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="checkBoxUniformizeSpacing">
+        <property name="text">
+         <string>Uniformize line and word spacing</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelPreserve">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Preserve spaces wider than:</string>
+        </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <property name="indent">
+         <number>20</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelFontScaling">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Scale:</string>
+        </property>
+        <property name="indent">
+         <number>20</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="checkBoxFontSize">
+        <property name="text">
+         <string>Use detected font sizes</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelFont">
+        <property name="text">
+         <string>Document font:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="spinBoxPreserve">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLabel" name="labelPreserveCharacters">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>characters</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" colspan="2">
+       <widget class="QSpinBox" name="spinFontScaling">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="suffix">
+         <string notr="true">%</string>
+        </property>
+        <property name="minimum">
+         <number>50</number>
+        </property>
+        <property name="maximum">
+         <number>200</number>
+        </property>
+        <property name="value">
+         <number>100</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="2">
+       <widget class="QPushButton" name="buttonFont">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBoxImage">
+     <property name="title">
+      <string>Image settings:</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>4</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
+       <number>4</number>
+      </property>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="spinBoxDpi">
+        <property name="minimum">
+         <number>50</number>
+        </property>
+        <property name="maximum">
+         <number>1200</number>
+        </property>
+        <property name="singleStep">
+         <number>10</number>
+        </property>
+        <property name="value">
+         <number>300</number>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelCompressionQuality">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Compression quality:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelDpi">
+        <property name="text">
+         <string>DPI:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="comboBoxImageFormat"/>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="spinBoxCompressionQuality">
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>90</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="comboBoxImageCompression"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelImageFormat">
+        <property name="text">
+         <string>Format:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelImageCompression">
+        <property name="text">
+         <string>Compression:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelDithering">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Dithering algorithm:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="comboBoxDithering">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

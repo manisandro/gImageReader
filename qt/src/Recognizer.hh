@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Recognizer.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -25,19 +25,21 @@
 #include "Config.hh"
 #include "Displayer.hh"
 
-namespace tesseract { class TessBaseAPI; }
+namespace tesseract {
+class TessBaseAPI;
+}
 class UI_MainWindow;
 
-class Recognizer : public QObject
-{
+class Recognizer : public QObject {
 	Q_OBJECT
 public:
 	enum class OutputDestination { Buffer, Clipboard };
 
 	Recognizer(const UI_MainWindow& _ui);
 	QStringList getAvailableLanguages() const;
-	QString getTessdataDir() const;
-	const Config::Lang& getSelectedLanguage() const{ return m_curLang; }
+	const Config::Lang& getSelectedLanguage() const {
+		return m_curLang;
+	}
 
 public slots:
 	bool recognizeImage(const QImage& image, OutputDestination dest);
@@ -61,8 +63,8 @@ private:
 	QComboBox* m_pageAreaComboBox;
 	QActionGroup* m_langMenuRadioGroup = nullptr;
 	QActionGroup* m_langMenuCheckGroup = nullptr;
+	QActionGroup* m_psmCheckGroup = nullptr;
 	QAction* m_multilingualAction = nullptr;
-	QAction* m_osdAction = nullptr;
 	QString m_modeLabel;
 	QString m_langLabel;
 	Config::Lang m_curLang;
@@ -70,11 +72,11 @@ private:
 	bool initTesseract(tesseract::TessBaseAPI& tess, const char* language = nullptr) const;
 	QList<int> selectPages(bool& autodetectLayout);
 	void recognize(const QList<int>& pages, bool autodetectLayout = false);
-	bool eventFilter(QObject *obj, QEvent *ev);
+	bool eventFilter(QObject *obj, QEvent *ev) override;
 
 private slots:
 	void clearLineEditPageRangeStyle();
-	void osdToggled(bool state);
+	void psmSelected(QAction* action);
 	void recognizeButtonClicked();
 	void recognizeCurrentPage();
 	void recognizeMultiplePages();

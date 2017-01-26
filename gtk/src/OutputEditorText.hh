@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditorText.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -35,8 +35,12 @@ public:
 	OutputEditorText();
 	~OutputEditorText();
 
-	Gtk::Box* getUI() override { return m_paneWidget; }
-	ReadSessionData* initRead() override{ return new TextReadSessionData; }
+	Gtk::Box* getUI() override {
+		return m_paneWidget;
+	}
+	ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
+		return new TextReadSessionData;
+	}
 	bool clear(bool hide = true) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
@@ -70,6 +74,9 @@ private:
 	Gtk::Button* m_undoButton;
 	Gtk::Button* m_redoButton;
 	Gtk::CheckButton* m_csCheckBox;
+
+	sigc::connection m_connectionCustomFont;
+	sigc::connection m_connectionDefaultFont;
 
 	Glib::RefPtr<OutputBuffer> m_textBuffer;
 

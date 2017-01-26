@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Config.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -48,21 +48,39 @@ public:
 		}
 	}
 	template<class T>
-	T* getSetting(const Glib::ustring& key) const{
+	T* getSetting(const Glib::ustring& key) const {
 		auto it = m_settings.find(key);
 		return it == m_settings.end() ? nullptr : static_cast<T*>(it->second);
+	}
+	void removeSetting(const Glib::ustring& key) {
+		auto it = m_settings.find(key);
+		if(it != m_settings.end()) {
+			delete it->second;
+			m_settings.erase(it);
+		}
 	}
 
 	bool searchLangSpec(Lang& lang) const;
 	std::vector<Glib::ustring> searchLangCultures(const Glib::ustring& code) const;
 	void showDialog();
 
+	bool useSystemDataLocations() const;
+	std::string tessdataLocation() const;
+	std::string spellingLocation() const;
+
+	static void openTessdataDir();
+	static void openSpellingDir();
+
 private:
 	struct LangViewColumns : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Glib::ustring> prefix;
 		Gtk::TreeModelColumn<Glib::ustring> code;
 		Gtk::TreeModelColumn<Glib::ustring> name;
-		LangViewColumns() { add(prefix); add(code); add(name); }
+		LangViewColumns() {
+			add(prefix);
+			add(code);
+			add(name);
+		}
 	};
 
 	static const std::vector<Lang> LANGUAGES;
@@ -89,6 +107,7 @@ private:
 	void addLanguage();
 	void removeLanguage();
 	void langTableSelectionChanged();
+	void setDataLocations(int idx);
 	void toggleAddLanguage(bool forceHide = false);
 };
 

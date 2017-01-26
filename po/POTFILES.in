@@ -26,6 +26,8 @@ gtk/src/DisplayRenderer.hh
 gtk/src/FileDialogs.cc
 gtk/src/FileDialogs.hh
 gtk/src/Geometry.hh
+gtk/src/Image.cc
+gtk/src/Image.hh
 gtk/src/main.cc
 gtk/src/MainWindow.cc
 gtk/src/MainWindow.hh

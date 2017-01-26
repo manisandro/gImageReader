@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Displayer.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -29,6 +29,7 @@
 #include <vector>
 
 class DisplayerItem;
+class DisplayerImageItem;
 class DisplayerTool;
 class DisplayRenderer;
 class Source;
@@ -36,27 +37,53 @@ class Source;
 class Displayer {
 public:
 	Displayer();
-	~Displayer(){ setSources(std::vector<Source*>()); }
-	void setTool(DisplayerTool* tool) { m_tool = tool; }
+	~Displayer() {
+		setSources(std::vector<Source*>());
+	}
+	void setTool(DisplayerTool* tool) {
+		m_tool = tool;
+	}
 	bool setSources(const std::vector<Source*> sources);
-	int getCurrentPage() const{ return m_pagespin->get_value_as_int(); }
+	int getCurrentPage() const {
+		return m_pagespin->get_value_as_int();
+	}
 	bool setCurrentPage(int page);
-	double getCurrentAngle() const{ return m_rotspin->get_value(); }
+	double getCurrentAngle() const {
+		return m_rotspin->get_value();
+	}
+	double getCurrentScale() const {
+		return m_scale;
+	}
 	void setAngle(double angle);
-	int getCurrentResolution(){ return m_resspin->get_value_as_int(); }
+	int getCurrentResolution() {
+		return m_resspin->get_value_as_int();
+	}
 	void setResolution(int resolution);
 	std::string getCurrentImage(int& page) const;
-	int getNPages(){ double min, max; m_pagespin->get_range(min, max); return int(max); }
+	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
+	Geometry::Rectangle getSceneBoundingRect() const;
+	Geometry::Point mapToSceneClamped(const Geometry::Point& p) const;
+	int getNPages() {
+		double min, max;
+		m_pagespin->get_range(min, max);
+		return int(max);
+	}
 	bool hasMultipleOCRAreas();
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
+	bool allowAutodetectOCRAreas() const;
 	void autodetectOCRAreas();
 	void setCursor(Glib::RefPtr<Gdk::Cursor> cursor);
 	void ensureVisible(double evx, double evy);
 
-private:
-	friend class DisplayerTool;
+	void addItem(DisplayerItem* item);
+	void removeItem(DisplayerItem* item);
+	void invalidateRect(const Geometry::Rectangle& rect);
+	void resortItems();
 
+
+private:
 	enum class Zoom { In, Out, Fit, One };
+	enum class RotateMode { CurrentPage, AllPages } m_rotateMode;
 
 	Gtk::DrawingArea* m_canvas;
 	Gtk::Viewport* m_viewport;
@@ -66,6 +93,7 @@ private:
 	Gtk::Button* m_zoomoutbtn;
 	Gtk::ToggleButton* m_zoomfitbtn;
 	Gtk::ToggleButton* m_zoomonebtn;
+	Gtk::Image* m_rotimage;
 	Gtk::SpinButton* m_rotspin;
 	Gtk::SpinButton* m_pagespin;
 	Gtk::SpinButton* m_resspin;
@@ -82,6 +110,7 @@ private:
 	double m_scale = 1.0;
 	double m_scrollPos[2] = {0.5, 0.5};
 	DisplayerTool* m_tool = nullptr;
+	DisplayerImageItem* m_imageItem = nullptr;
 	std::vector<DisplayerItem*> m_items;
 	DisplayerItem* m_activeItem = nullptr;
 	double m_panPos[2] = {0., 0.};
@@ -97,20 +126,23 @@ private:
 	sigc::connection m_connection_zoomoneClicked;
 
 	void resizeEvent();
+	bool keyPressEvent(GdkEventKey* ev);
 	bool mouseMoveEvent(GdkEventMotion* ev);
 	bool mousePressEvent(GdkEventButton* ev);
 	bool mouseReleaseEvent(GdkEventButton* ev);
 	bool scrollEvent(GdkEventScroll* ev);
 
-	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
-	Geometry::Rectangle getImageBoundingBox() const;
-	Geometry::Point mapToSceneClamped(const Geometry::Point& p) const;
 	void setZoom(Zoom zoom);
 
 	bool renderImage();
+	void brightnessChanged();
+	void contrastChanged();
+	void resolutionChanged();
+	void invertColorsChanged();
 	void drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx);
 	void positionCanvas();
 	void queueRenderImage();
+	void setRotateMode(RotateMode mode, const std::string& iconName);
 
 	struct ScaleRequest {
 		enum Request { Scale, Abort, Quit } type;
@@ -124,8 +156,6 @@ private:
 		ScaleRequest(Request _type, double _scale = 0., int _resolution = 0, int _page = 0, int _brightness = 0, int _contrast = 0, bool _invert = 0)
 			: type(_type), scale(_scale), resolution(_resolution), page(_page), brightness(_brightness), contrast(_contrast), invert(_invert) {}
 	};
-	Cairo::RefPtr<Cairo::ImageSurface> m_blurImage;
-	double m_blurScale;
 	Glib::Threads::Thread* m_scaleThread = nullptr;
 	Glib::Threads::Mutex m_scaleMutex;
 	Glib::Threads::Cond m_scaleCond;
@@ -139,51 +169,155 @@ private:
 
 class DisplayerItem {
 public:
-	virtual ~DisplayerItem(){}
+	friend class Displayer;
+	virtual ~DisplayerItem() {}
 
-	void setZIndex(int zIndex) { m_zIndex = zIndex; }
-	void setRect(const Geometry::Rectangle& rect) { m_rect = rect; }
-	const Geometry::Rectangle& rect() const{ return m_rect; }
+	Displayer* displayer() const {
+		return m_displayer;
+	}
+
+	void setZIndex(int zIndex);
+	double zIndex() const {
+		return m_zIndex;
+	}
+	void setRect(const Geometry::Rectangle& rect);
+	const Geometry::Rectangle& rect() const {
+		return m_rect;
+	}
+	void setVisible(bool visible);
+	bool visible() const {
+		return m_visible;
+	}
+	void update();
 
 	virtual void draw(Cairo::RefPtr<Cairo::Context> ctx) const = 0;
-	virtual bool mousePressEvent(GdkEventButton */*event*/) { return false; }
-	virtual bool mouseMoveEvent(GdkEventMotion */*event*/) { return false; }
-	virtual bool mouseReleaseEvent(GdkEventButton */*event*/) { return false; }
+	virtual bool mousePressEvent(GdkEventButton */*event*/) {
+		return false;
+	}
+	virtual bool mouseMoveEvent(GdkEventMotion */*event*/) {
+		return false;
+	}
+	virtual bool mouseReleaseEvent(GdkEventButton */*event*/) {
+		return false;
+	}
 
 	static bool zIndexCmp(const DisplayerItem* lhs, const DisplayerItem* rhs) {
 		return lhs->m_zIndex < rhs->m_zIndex;
 	}
 
-protected:
-	int m_zIndex = 0;
+private:
+	Displayer* m_displayer = nullptr;
 	Geometry::Rectangle m_rect;
+	int m_zIndex = 0;
+	bool m_visible = true;
 };
+
+class DisplayerImageItem : public DisplayerItem {
+public:
+	using DisplayerItem::DisplayerItem;
+	void draw(Cairo::RefPtr<Cairo::Context> ctx) const override;
+	void setImage(Cairo::RefPtr<Cairo::ImageSurface> image) {
+		m_image = image;
+	}
+	void setRotation(double rotation) {
+		m_rotation = rotation;
+	}
+
+protected:
+	Cairo::RefPtr<Cairo::ImageSurface> m_image;
+	double m_rotation = 0.;
+};
+
+class DisplayerSelection : public DisplayerItem {
+public:
+	DisplayerSelection(DisplayerTool* tool, const Geometry::Point& anchor)
+		: m_tool(tool), m_anchor(anchor), m_point(anchor) {
+		setRect(Geometry::Rectangle(anchor, anchor));
+	}
+	void setPoint(const Geometry::Point& point) {
+		m_point = point;
+		setRect(Geometry::Rectangle(m_anchor, m_point));
+	}
+	void setAnchorAndPoint(const Geometry::Point& anchor, const Geometry::Point& point) {
+		m_anchor = anchor;
+		m_point = point;
+		setRect(Geometry::Rectangle(m_anchor, m_point));
+	}
+	void rotate(const Geometry::Rotation &R) {
+		m_anchor = R.rotate(m_anchor);
+		m_point = R.rotate(m_point);
+		setRect(Geometry::Rectangle(m_anchor, m_point));
+	}
+	void scale(double factor) {
+		m_anchor = Geometry::Point(m_anchor.x * factor, m_anchor.y * factor);
+		m_point = Geometry::Point(m_point.x * factor, m_point.y * factor);
+	}
+	sigc::signal<void, Geometry::Rectangle> signal_geometry_changed() {
+		return m_signalGeometryChanged;
+	}
+
+	void draw(Cairo::RefPtr<Cairo::Context> ctx) const override;
+	bool mousePressEvent(GdkEventButton *event) override;
+	bool mouseReleaseEvent(GdkEventButton *event) override;
+	bool mouseMoveEvent(GdkEventMotion *event) override;
+
+protected:
+	DisplayerTool* m_tool;
+
+	virtual void showContextMenu(GdkEventButton* /*event*/) {}
+
+private:
+	typedef void(*ResizeHandler)(const Geometry::Point&, Geometry::Point&, Geometry::Point&);
+
+	Geometry::Point m_anchor;
+	Geometry::Point m_point;
+	std::vector<ResizeHandler> m_resizeHandlers;
+	Geometry::Point m_resizeOffset;
+	sigc::signal<void, Geometry::Rectangle> m_signalGeometryChanged;
+
+	static void resizeAnchorX(const Geometry::Point& pos, Geometry::Point& anchor, Geometry::Point& /*point*/) {
+		anchor.x = pos.x;
+	}
+	static void resizeAnchorY(const Geometry::Point& pos, Geometry::Point& anchor, Geometry::Point& /*point*/) {
+		anchor.y = pos.y;
+	}
+	static void resizePointX(const Geometry::Point& pos, Geometry::Point& /*anchor*/, Geometry::Point& point) {
+		point.x = pos.x;
+	}
+	static void resizePointY(const Geometry::Point& pos, Geometry::Point& /*anchor*/, Geometry::Point& point) {
+		point.y = pos.y;
+	}
+};
+
 
 class DisplayerTool {
 public:
 	DisplayerTool(Displayer* displayer) : m_displayer(displayer) {}
-	virtual ~DisplayerTool(){}
-	virtual bool mousePressEvent(GdkEventButton */*event*/){ return false; }
-	virtual bool mouseMoveEvent(GdkEventMotion */*event*/){ return false; }
-	virtual bool mouseReleaseEvent(GdkEventButton */*event*/){ return false; }
-	virtual void pageChanged(){}
-	virtual void resolutionChanged(double /*factor*/){}
-	virtual void rotationChanged(double /*delta*/){}
+	virtual ~DisplayerTool() {}
+	virtual bool mousePressEvent(GdkEventButton */*event*/) {
+		return false;
+	}
+	virtual bool mouseMoveEvent(GdkEventMotion */*event*/) {
+		return false;
+	}
+	virtual bool mouseReleaseEvent(GdkEventButton */*event*/) {
+		return false;
+	}
+	virtual void pageChanged() {}
+	virtual void resolutionChanged(double /*factor*/) {}
+	virtual void rotationChanged(double /*delta*/) {}
 	virtual std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas() = 0;
-	virtual bool hasMultipleOCRAreas() const{ return false; }
-	virtual void autodetectOCRAreas(){}
+	virtual bool hasMultipleOCRAreas() const {
+		return false;
+	}
+	virtual bool allowAutodetectOCRAreas() const {
+		return false;
+	}
+	virtual void autodetectOCRAreas() {}
+	virtual void reset() {}
 
 protected:
 	Displayer* m_displayer;
-
-	void addItemToCanvas(DisplayerItem* item);
-	void removeItemFromCanvas(DisplayerItem* item);
-	void reorderCanvasItems();
-	Geometry::Rectangle getSceneBoundingRect() const;
-	void invalidateRect(const Geometry::Rectangle& rect);
-	Geometry::Point mapToSceneClamped(const Geometry::Point& point);
-	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect);
-	double getDisplayScale() const;
 };
 
 #endif // IMAGEDISPLAYER_HH

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * MainWindow.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -50,19 +50,35 @@ public:
 
 	typedef void* Notification;
 
-	static MainWindow* getInstance(){ return s_instance; }
+	static MainWindow* getInstance() {
+		return s_instance;
+	}
 	static void signalHandler(int signal);
 
 	MainWindow();
 	~MainWindow();
 
-	Config* getConfig(){ return m_config; }
-	Displayer* getDisplayer(){ return m_displayer; }
-	OutputEditor* getOutputEditor(){ return m_outputEditor; }
-	Recognizer* getRecognizer(){ return m_recognizer; }
-	SourceManager* getSourceManager(){ return m_sourceManager; }
-	Gtk::Window* getWindow() const{ return m_window; }
-	Builder::CastProxy getWidget(const Glib::ustring& name) const{ return m_builder(name); }
+	Config* getConfig() {
+		return m_config;
+	}
+	Displayer* getDisplayer() {
+		return m_displayer;
+	}
+	OutputEditor* getOutputEditor() {
+		return m_outputEditor;
+	}
+	Recognizer* getRecognizer() {
+		return m_recognizer;
+	}
+	SourceManager* getSourceManager() {
+		return m_sourceManager;
+	}
+	Gtk::Window* getWindow() const {
+		return m_window;
+	}
+	Builder::CastProxy getWidget(const Glib::ustring& name) const {
+		return m_builder(name);
+	}
 	void setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel);
 	void redetectLanguages();
 	void showConfig();
@@ -120,12 +136,11 @@ private:
 	void getNewestVersion();
 	void checkVersion(const Glib::ustring& newver);
 #endif
-#if defined(G_OS_UNIX)
+#ifdef G_OS_UNIX
 	void dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring& lang);
 	void dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result);
-#elif defined(G_OS_WIN32)
-	void dictionaryAutoinstall(const Glib::ustring& lang);
 #endif
+	void dictionaryAutoinstall(Glib::ustring lang);
 };
 
 #endif

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Acquirer.cc
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -34,8 +34,7 @@
 #endif
 
 Acquirer::Acquirer(const UI_MainWindow& _ui)
-	: ui(_ui)
-{
+	: ui(_ui) {
 	ui.pushButtonScanCancel->setVisible(false);
 	ui.toolButtonScanDevicesRefresh->setEnabled(false);
 	ui.pushButtonScan->setEnabled(false);
@@ -68,48 +67,42 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 	m_scanner->init();
 }
 
-Acquirer::~Acquirer()
-{
+Acquirer::~Acquirer() {
 	m_scanner->close();
 	delete m_scanner;
 }
 
-void Acquirer::selectOutputPath()
-{
+void Acquirer::selectOutputPath() {
 	QSet<QString> formats;
-	for(const QByteArray& format : QImageReader::supportedImageFormats()){
+	for(const QByteArray& format : QImageReader::supportedImageFormats()) {
 		formats.insert(QString("*.%1").arg(QString(format).toLower()));
 	}
 	QString filter = QString("%1 (%2)").arg(_("Images")).arg(QStringList(formats.toList()).join(" "));
 	QString filename = QFileDialog::getSaveFileName(MAIN, _("Choose Output Filename..."), m_outputPath, filter);
-	if(!filename.isEmpty()){
+	if(!filename.isEmpty()) {
 		m_outputPath = filename;
 		genOutputPath();
 	}
 }
 
-void Acquirer::genOutputPath()
-{
+void Acquirer::genOutputPath() {
 	m_outputPath = Utils::makeOutputFilename(m_outputPath);
 	ui.lineEditScanOutput->setText(m_outputPath);
 	ui.lineEditScanOutput->setToolTip(m_outputPath);;
 	MAIN->getConfig()->getSetting<VarSetting<QString>>("scanoutput")->setValue(m_outputPath);
 }
 
-void Acquirer::scanInitFailed()
-{
+void Acquirer::scanInitFailed() {
 	ui.labelScanMessage->setText(QString("<span style=\"color:#FF0000;\">%1</span>").arg(_("Failed to initialize the scanning backend.")));
 	ui.pushButtonScan->setEnabled(false);
 	ui.toolButtonScanDevicesRefresh->setEnabled(false);
 }
 
-void Acquirer::scanFailed(const QString &msg)
-{
+void Acquirer::scanFailed(const QString &msg) {
 	ui.labelScanMessage->setText(QString("<span style=\"color:#FF0000;\">%1: %2.</span>").arg(_("Scan failed")).arg(msg));
 }
 
-void Acquirer::startDetectDevices()
-{
+void Acquirer::startDetectDevices() {
 	ui.toolButtonScanDevicesRefresh->setEnabled(false);
 	ui.pushButtonScan->setEnabled(false);
 	ui.labelScanMessage->setText("");
@@ -118,14 +111,13 @@ void Acquirer::startDetectDevices()
 	m_scanner->redetect();
 }
 
-void Acquirer::doneDetectDevices(QList<Scanner::Device> devices)
-{
+void Acquirer::doneDetectDevices(QList<Scanner::Device> devices) {
 	ui.comboBoxScanDevice->unsetCursor();
 	ui.toolButtonScanDevicesRefresh->setEnabled(true);
-	if(devices.isEmpty()){
+	if(devices.isEmpty()) {
 		ui.labelScanMessage->setText(QString("<span style=\"color:#FF0000;\">%1</span>").arg(_("No scanners were detected.")));
-	}else{
-		for(const Scanner::Device& device : devices){
+	} else {
+		for(const Scanner::Device& device : devices) {
 			ui.comboBoxScanDevice->addItem(device.label, device.name);
 		}
 		ui.comboBoxScanDevice->setCurrentIndex(0);
@@ -133,8 +125,7 @@ void Acquirer::doneDetectDevices(QList<Scanner::Device> devices)
 	}
 }
 
-void Acquirer::startScan()
-{
+void Acquirer::startScan() {
 	ui.pushButtonScan->setVisible(false);
 	ui.pushButtonScanCancel->setEnabled(true);
 	ui.pushButtonScanCancel->setVisible(true);
@@ -149,38 +140,34 @@ void Acquirer::startScan()
 	genOutputPath(); // Prepare for next
 }
 
-void Acquirer::setScanState(Scanner::State state)
-{
-	if(state == Scanner::State::OPEN){
+void Acquirer::setScanState(Scanner::State state) {
+	if(state == Scanner::State::OPEN) {
 		ui.labelScanMessage->setText(_("Opening device..."));
-	}else if(state == Scanner::State::SET_OPTIONS){
+	} else if(state == Scanner::State::SET_OPTIONS) {
 		ui.labelScanMessage->setText(_("Setting options..."));
-	}else if(state == Scanner::State::START){
+	} else if(state == Scanner::State::START) {
 		ui.labelScanMessage->setText(_("Starting scan..."));
-	}else if(state == Scanner::State::GET_PARAMETERS){
+	} else if(state == Scanner::State::GET_PARAMETERS) {
 		ui.labelScanMessage->setText(_("Getting parameters..."));
-	}else if(state == Scanner::State::READ){
+	} else if(state == Scanner::State::READ) {
 		ui.labelScanMessage->setText(_("Transferring data..."));
-	}else if(state == Scanner::State::IDLE){
+	} else if(state == Scanner::State::IDLE) {
 		doneScan();
 	}
 }
 
-void Acquirer::cancelScan()
-{
+void Acquirer::cancelScan() {
 	ui.labelScanMessage->setText(_("Canceling scan..."));
 	m_scanner->cancel();
 	ui.pushButtonScanCancel->setEnabled(false);
 }
 
-void Acquirer::doneScan()
-{
+void Acquirer::doneScan() {
 	ui.pushButtonScanCancel->setVisible(false);
 	ui.pushButtonScan->setVisible(true);
 	ui.labelScanMessage->setText("");
 }
 
-void Acquirer::setDeviceComboTooltip()
-{
+void Acquirer::setDeviceComboTooltip() {
 	ui.comboBoxScanDevice->setToolTip(ui.comboBoxScanDevice->currentText());
 }

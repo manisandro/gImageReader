@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * common.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -25,16 +25,16 @@
 #include <libintl.h>
 #include <glibmm/i18n.h>
 
-namespace sigc{
+namespace sigc {
 
 #ifndef SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
 #define SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE \
-template <typename T_functor>          \
-struct functor_trait<T_functor, false> \
-{                                      \
-  typedef typename functor_trait<decltype(&T_functor::operator()), false>::result_type result_type; \
-  typedef T_functor functor_type;      \
-};
+	template <typename T_functor>          \
+	struct functor_trait<T_functor, false> \
+	{                                      \
+		typedef typename functor_trait<decltype(&T_functor::operator()), false>::result_type result_type; \
+		typedef T_functor functor_type;      \
+	};
 #endif
 
 SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
@@ -61,8 +61,15 @@ class Builder {
 public:
 	struct CastProxy {
 		CastProxy(Gtk::Widget* widget) : m_widget(widget) {}
-		template <class T> operator T*(){ return static_cast<T*>(m_widget); }
-		template <class T> T* as(){ return static_cast<T*>(m_widget); }
+		template <class T> operator T*() {
+			return static_cast<T*>(m_widget);
+		}
+		template <class T> T* as() {
+			return static_cast<T*>(m_widget);
+		}
+		Gtk::Widget* operator->() {
+			return m_widget;
+		}
 
 		Gtk::Widget* m_widget;
 	};
@@ -71,11 +78,16 @@ public:
 		m_builder = Gtk::Builder::create_from_resource(resourcePath);
 		m_builder->set_translation_domain(GETTEXT_PACKAGE);
 	}
-	CastProxy operator()(const Glib::ustring& name) const{
+	CastProxy operator()(const Glib::ustring& name) const {
 		Gtk::Widget* widget;
 		m_builder->get_widget(name, widget);
 		return CastProxy(widget);
 	}
+	template<class T>
+	void get_derived(const Glib::ustring& name, T*& p) {
+		m_builder->get_widget_derived(name, p);
+	}
+
 private:
 	Glib::RefPtr<Gtk::Builder> m_builder;
 };

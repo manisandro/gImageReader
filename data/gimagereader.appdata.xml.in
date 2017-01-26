@@ -5,18 +5,26 @@
  <metadata_license>CC0-1.0</metadata_license>
  <project_license>GPL-3.0+</project_license>
  <name>gImageReader</name>
+ <name xml:lang="cs_CZ">gImageReader</name>
  <summary>A graphical frontend to tesseract-ocr </summary>
  <summary xml:lang="cs_CZ">Grafická nadstavba pro engine tesseract-ocr </summary>
+ <keywords>
+  <keyword>ocr</keyword>
+  <keyword>optical</keyword>
+  <keyword>recognition</keyword>
+  <keyword>tesseract</keyword>
+  <keyword>pdf</keyword>
+ </keywords>
  <description>
-  <p>gImageReader is a simple OCR application which acts as a frontend to the tesseract OCR engine. Features include:</p>
+  <p>gImageReader is a simple optical character recognition (OCR) application which acts as a frontend to the tesseract OCR engine. Features include:</p>
   <ul>
-   <li>Automatic page layout detection</li>
-   <li>User can manually define and adjust recognition regions</li>
-   <li>Import images from disk, scanning devices, clipboard and screenshots</li>
-   <li>Supports multipage PDF documents</li>
+   <li>Import PDF documents and images from disk, scanning devices, clipboard and screenshots</li>
+   <li>Process multiple images and documents in one go</li>
+   <li>Manual or automatic recognition area definition</li>
+   <li>Recognize to plain text or to hOCR documents</li>
    <li>Recognized text displayed directly next to the image</li>
-   <li>Basic editing of output text, including search/replace and removing line breaks</li>
-   <li>Spellchecking for output text (if corresponding dictionary installed)</li>
+   <li>Post-process the recognized text, including spellchecking</li>
+   <li>Generate PDF documents from hOCR documents</li>
   </ul>
  </description>
  <description xml:lang="cs_CZ">
@@ -38,5 +46,6 @@
   </screenshot>
  </screenshots>
  <url type="homepage">https://github.com/manisandro/gImageReader</url>
- <updatecontact>manisandro@gmail.com</updatecontact>
+ <url type="translate">https://github.com/manisandro/gImageReader/blob/master/README.md</url>
+ <update_contact>manisandro@gmail.com</update_contact>
 </application>

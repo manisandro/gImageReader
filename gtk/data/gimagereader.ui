@@ -83,6 +83,40 @@
     <property name="can_focus">False</property>
     <property name="icon_name">object-select-symbolic</property>
   </object>
+  <object class="GtkImage" id="image:display.rotate.all">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="resource">/org/gnome/gimagereader/rotate_pages.png</property>
+  </object>
+  <object class="GtkImage" id="image:display.rotate.current">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="resource">/org/gnome/gimagereader/rotate_page.png</property>
+  </object>
+  <object class="GtkMenu" id="menu:display.rotate.mode">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkImageMenuItem" id="menuitem:display.rotate.current">
+        <property name="label" translatable="yes">Rotate current page</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="image">image:display.rotate.current</property>
+        <property name="use_stock">False</property>
+        <property name="always_show_image">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkImageMenuItem" id="menuitem:display.rotate.all">
+        <property name="label" translatable="yes">Rotate all pages</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="image">image:display.rotate.all</property>
+        <property name="use_stock">False</property>
+        <property name="always_show_image">True</property>
+      </object>
+    </child>
+  </object>
   <object class="GtkImage" id="image:main.autolayout">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -197,7 +231,7 @@
   <object class="GtkImage" id="image:sources.images.remove">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="icon_name">edit-delete-symbolic</property>
+    <property name="icon_name">list-remove-symbolic</property>
   </object>
   <object class="GtkImage" id="image:sources.images.screenshot">
     <property name="visible">True</property>
@@ -251,6 +285,11 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="icon_name">edit-delete-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image:tessdatamanager.refresh">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">view-refresh-symbolic</property>
   </object>
   <object class="GtkListStore" id="liststore:sources.acquire.device">
     <columns>
@@ -325,7 +364,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
-                                    <property name="tooltip_text" translatable="yes">Select language</property>
+                                    <property name="tooltip_text" translatable="yes">Add Images</property>
                                     <property name="popup">menu:sources.images.add</property>
                                     <property name="use_popover">False</property>
                                     <child>
@@ -843,12 +882,12 @@
                         <child>
                           <object class="GtkViewport" id="viewport:display">
                             <property name="visible">True</property>
-                            <property name="can_focus">False</property>
+                            <property name="can_focus">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_STRUCTURE_MASK</property>
                             <property name="shadow_type">none</property>
                             <child>
                               <object class="GtkDrawingArea" id="drawingarea:display">
-                                <property name="can_focus">False</property>
+                                <property name="can_focus">True</property>
                                 <property name="halign">center</property>
                                 <property name="valign">center</property>
                               </object>
@@ -1043,24 +1082,89 @@
           </packing>
         </child>
         <child>
-          <object class="GtkSpinButton" id="spin:display.rotate">
+          <object class="GtkBox" id="box:display.rotate">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="max_length">5</property>
-            <property name="invisible_char">•</property>
-            <property name="width_chars">10</property>
-            <property name="max_width_chars">5</property>
-            <property name="text">0.0</property>
-            <property name="xalign">0.5</property>
-            <property name="truncate_multiline">True</property>
-            <property name="primary_icon_name">object-rotate-left-symbolic</property>
-            <property name="secondary_icon_name">object-rotate-right-symbolic</property>
-            <property name="adjustment">adjustment:display.rotate</property>
-            <property name="climb_rate">1</property>
-            <property name="digits">1</property>
-            <property name="snap_to_ticks">True</property>
-            <property name="numeric">True</property>
-            <property name="wrap">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkMenuButton" id="menubutton:display.rotate.mode">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="tooltip_text" translatable="yes">Select rotation mode</property>
+                <property name="popup">menu:display.rotate.mode</property>
+                <property name="use_popover">False</property>
+                <child>
+                  <object class="GtkBox" id="box:display.rotate.mode">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkImage" id="image:display.rotate.mode">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="tooltip_text" translatable="yes">Select insert mode</property>
+                        <property name="resource">/org/gnome/gimagereader/rotate_pages.png</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkArrow" id="arrow:display.rotate.mode">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="arrow_type">down</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+                <style>
+                  <class name="image-button"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spin:display.rotate">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="max_length">5</property>
+                <property name="invisible_char">•</property>
+                <property name="width_chars">10</property>
+                <property name="max_width_chars">5</property>
+                <property name="text">0.0</property>
+                <property name="xalign">0.5</property>
+                <property name="truncate_multiline">True</property>
+                <property name="primary_icon_name">object-rotate-left-symbolic</property>
+                <property name="secondary_icon_name">object-rotate-right-symbolic</property>
+                <property name="adjustment">adjustment:display.rotate</property>
+                <property name="climb_rate">1</property>
+                <property name="digits">1</property>
+                <property name="snap_to_ticks">True</property>
+                <property name="numeric">True</property>
+                <property name="wrap">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <style>
+              <class name="raised"/>
+              <class name="linked"/>
+            </style>
           </object>
           <packing>
             <property name="position">2</property>
@@ -1106,7 +1210,6 @@
               <object class="GtkComboBoxText" id="combo:main.ocrmode">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="active">0</property>
                 <items>
                   <item translatable="yes">Plain text</item>
                   <item translatable="yes">hOCR, PDF</item>
@@ -1276,11 +1379,12 @@
     <property name="skip_pager_hint">True</property>
     <property name="transient_for">applicationwindow:main</property>
     <property name="program_name">gImageReader</property>
-    <property name="copyright">Copyright © 2009-2016 Sandro Mani</property>
+    <property name="copyright">Copyright © 2009-2017 Sandro Mani</property>
     <property name="comments" translatable="yes">A graphical frontend to tesseract-ocr</property>
     <property name="website">https://github.com/manisandro/gImageReader/</property>
     <property name="authors">Sandro Mani &lt;manisandro@gmail.com&gt;</property>
-    <property name="translator_credits">Chinese (HK): Timothy Lee &lt;timothy.ty.lee@gmail.com&gt;
+    <property name="translator_credits">Chinese (CN): Timothy Lee &lt;timothy.ty.lee@gmail.com&gt;
+Chinese (HK): Timothy Lee &lt;timothy.ty.lee@gmail.com&gt;
 Chinese (TW): Timothy Lee &lt;timothy.ty.lee@gmail.com&gt;
 Czech: Pavel Borecki &lt;pavel.borecki@gmail.com&gt;
 French: Sandro Mani &lt;manisandro@gmail.com&gt;
@@ -1290,6 +1394,7 @@ Italian: Sandro Mani &lt;manisandro@gmail.com&gt;
 Polish: Piotr Brol &lt;peterb@inetia.pl&gt;
 Portuguese (BR): André Alencar &lt;andre.tre@gmail.com&gt;, Felipe Braga &lt;fbobraga@gmail.com&gt;
 Russian: Oleg Moiseichuk &lt;berroll@mail.ru&gt;
+Slovenian: Bernard Banko &lt;beernarrd@gmail.com&gt;
 Spanish: Antonio Trujillo &lt;lunatc@gmail.com&gt;
 Swedish: Mats Olofsson &lt;mats.olofsson@bokforlaget-alerta.se&gt;
 Turkish: Necdet Yucel &lt;necdetyucel@gmail.com&gt;
@@ -1314,7 +1419,15 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
           </packing>
         </child>
         <child>
-          <placeholder/>
+          <object class="GtkLabel" id="label:about.tesseractver">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
         </child>
       </object>
     </child>
@@ -1460,7 +1573,7 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">5</property>
+                <property name="top_attach">9</property>
                 <property name="width">2</property>
               </packing>
             </child>
@@ -1485,7 +1598,7 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">6</property>
+                <property name="top_attach">10</property>
                 <property name="width">2</property>
               </packing>
             </child>
@@ -1500,7 +1613,7 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">7</property>
+                <property name="top_attach">11</property>
                 <property name="width">2</property>
               </packing>
             </child>
@@ -1525,7 +1638,7 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">8</property>
+                <property name="top_attach">12</property>
                 <property name="width">2</property>
               </packing>
             </child>
@@ -1568,7 +1681,7 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">9</property>
+                <property name="top_attach">13</property>
                 <property name="width">2</property>
               </packing>
             </child>
@@ -1661,7 +1774,7 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">10</property>
+                <property name="top_attach">14</property>
                 <property name="width">2</property>
               </packing>
             </child>
@@ -1717,6 +1830,92 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label:config.datadirs">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Language data locations:</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">5</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label:config.tessdatadir">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">10</property>
+                <property name="label" translatable="yes">Language definitions path:</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">6</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label:config.spelldir">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">10</property>
+                <property name="label" translatable="yes">Spelling dictionaries path:</property>
+                <property name="xalign">0</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">7</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparator" id="separator:config.settings.sep3">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">8</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="combo:config.datadirs">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <items>
+                  <item translatable="yes">System-wide paths</item>
+                  <item translatable="yes">User paths</item>
+                </items>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">5</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="entry:config.tessdatadir">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="editable">False</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">6</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="entry:config.spelldir">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="editable">False</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">7</property>
               </packing>
             </child>
           </object>
@@ -1947,6 +2146,20 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
                 <property name="position">1</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkButton" id="button:tessdatamanager.refresh">
+                <property name="label" translatable="yes">Refresh</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">image:tessdatamanager.refresh</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -1983,6 +2196,7 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="headers_visible">False</property>
+                    <property name="search_column">1</property>
                     <property name="show_expanders">False</property>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection" id="treeviewselection:tessdatamanager"/>
@@ -2008,6 +2222,7 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
     <action-widgets>
       <action-widget response="-10">button:tessdatamanager.apply</action-widget>
       <action-widget response="-7">button:tessdatamanager.close</action-widget>
+      <action-widget response="1">button:tessdatamanager.refresh</action-widget>
     </action-widgets>
   </object>
   <object class="GtkSizeGroup" id="sizegroup:sources.acquire.device">

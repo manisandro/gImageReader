@@ -25,6 +25,14 @@ Installation:
 - ![OpenSUSE](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/opensuse.png) **OpenSUSE**: Available from [OpenSUSE Build Service](https://build.opensuse.org/project/show/home:sandromani)
 - ![ArchLinux](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/arch.png) **ArchLinux**: Available from [AUR](https://aur.archlinux.org/packages/gimagereader/)
 
+Compilation:
+--------------
+The steps for compiling gImageReader from source are documented in the [wiki](https://github.com/manisandro/gImageReader/wiki/Compiling-gImageReader).
+
+Support:
+----------
+If you encounter issues, please file a ticket in the [issue tracker](https://github.com/manisandro/gImageReader/issues), or feel free to mail me directly at `manisandro(at)gmail(dot)com`. Be sure to also consult the [FAQ](https://github.com/manisandro/gImageReader/wiki/FAQ).
+
 Contributing:
 ---------------
 Contributions are always welcome, ideally in the form of pull-requests.

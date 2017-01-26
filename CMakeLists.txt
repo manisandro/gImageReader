@@ -7,7 +7,7 @@ SET(ENV{LC_ALL} "C")
 # Project properties
 PROJECT(gimagereader)
 SET(PACKAGE_NAME gImageReader)
-SET(PACKAGE_VERSION 3.1.91)
+SET(PACKAGE_VERSION 3.2.0)
 SET(PACKAGE_LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/share/locale")
 
 
@@ -55,25 +55,38 @@ FIND_PACKAGE(Gettext REQUIRED)
 FIND_PACKAGE(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(TESSERACT tesseract)
 IF(NOT TESSERACT_FOUND)
-    MESSAGE(WANING "Using hardcoded tesseract cflags and libs")
+    MESSAGE(WARNING "Using hardcoded cflags and ldflags for tesseract")
     SET(TESSERACT_INCLUDE_DIRS /usr/include/tesseract)
     SET(TESSERACT_LDFLAGS -ltesseract)
 ENDIF(NOT TESSERACT_FOUND)
 IF(UNIX)
     PKG_CHECK_MODULES(SANE sane-backends)
 ENDIF(UNIX)
+SET(PODOFO_LDFLAGS -lpodofo)
 
-INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR} ${TESSERACT_INCLUDE_DIRS} ${SANE_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/common ${CMAKE_BINARY_DIR} ${TESSERACT_INCLUDE_DIRS} ${SANE_INCLUDE_DIRS})
 
 IF("${INTERFACE_TYPE}" STREQUAL "gtk")
     PKG_CHECK_MODULES(GTKMM REQUIRED gtkmm-3.0)
     PKG_CHECK_MODULES(GTKSOURCEVIEWMM REQUIRED gtksourceviewmm-3.0)
-    PKG_CHECK_MODULES(GTKSPELLMM REQUIRED gtkspellmm-3.0>=3.0.4)
+    PKG_CHECK_MODULES(GTKSPELLMM REQUIRED gtkspellmm-3.0>=3.0.5)
     PKG_CHECK_MODULES(CAIROMM REQUIRED cairomm-1.0)
     PKG_CHECK_MODULES(PANGOMM REQUIRED pangomm-1.4)
     PKG_CHECK_MODULES(POPPLER REQUIRED poppler-glib)
     PKG_CHECK_MODULES(JSONGLIB REQUIRED json-glib-1.0)
     PKG_CHECK_MODULES(LIBXMLPP REQUIRED libxml++-2.6)
+    FIND_PACKAGE(JPEG)
+    IF(JPEG_FOUND)
+        SET(LIBJPEG_INCLUDE_DIRS ${JPEG_INCLUDE_DIRS})
+        SET(LIBJPEG_LDFLAGS ${JPEG_LIBRARIES})
+    ELSE()
+        PKG_CHECK_MODULES(LIBJPEG libjpeg)
+        IF(NOT LIBJPEG_FOUND)
+            MESSAGE(WARNING "Using hardcoded cflags and ldflags for libjpeg")
+            SET(LIBJPEG_LDFLAGS "-ljpeg")
+        ENDIF()
+    ENDIF()
+    PKG_CHECK_MODULES(FONTCONFIG REQUIRED fontconfig)
     INCLUDE_DIRECTORIES(
         ${GTKMM_INCLUDE_DIRS}
         ${GTKSOURCEVIEWMM_INCLUDE_DIRS}
@@ -83,6 +96,8 @@ IF("${INTERFACE_TYPE}" STREQUAL "gtk")
         ${POPPLER_INCLUDE_DIRS}
         ${JSONGLIB_INCLUDE_DIRS}
         ${LIBXMLPP_INCLUDE_DIRS}
+        ${LIBJPEG_INCLUDE_DIRS}
+        ${FONTCONFIG_INCLUDE_DIRS}
     )
     SET(gimagereader_LIBS
         ${GTKMM_LDFLAGS}
@@ -93,6 +108,9 @@ IF("${INTERFACE_TYPE}" STREQUAL "gtk")
         ${POPPLER_LDFLAGS}
         ${JSONGLIB_LDFLAGS}
         ${LIBXMLPP_LDFLAGS}
+        ${LIBJPEG_LDFLAGS}
+        ${PODOFO_LDFLAGS}
+        ${FONTCONFIG_LDFLAGS}
     )
     SET(srcdir "gtk")
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt4")
@@ -102,7 +120,7 @@ ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt4")
     PKG_CHECK_MODULES(POPPLER REQUIRED poppler-qt4)
     PKG_CHECK_MODULES(QJSON REQUIRED QJson)
     INCLUDE_DIRECTORIES(${QTSPELL_INCLUDE_DIRS} ${POPPLER_INCLUDE_DIRS} ${QJSON_INCLUDE_DIRS})
-    SET(gimagereader_LIBS ${QTSPELL_LDFLAGS} ${POPPLER_LDFLAGS} ${QJSON_LDFLAGS})
+    SET(gimagereader_LIBS ${QTSPELL_LDFLAGS} ${POPPLER_LDFLAGS} ${QJSON_LDFLAGS} ${PODOFO_LDFLAGS})
     SET(srcdir "qt")
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
     SET(CMAKE_AUTOMOC ON)
@@ -114,7 +132,7 @@ ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
     PKG_CHECK_MODULES(QTSPELL REQUIRED QtSpell-qt5>=0.8.0)
     PKG_CHECK_MODULES(POPPLER REQUIRED poppler-qt5)
     INCLUDE_DIRECTORIES(${QTSPELL_INCLUDE_DIRS} ${POPPLER_INCLUDE_DIRS})
-    SET(gimagereader_LIBS ${QTSPELL_LDFLAGS} ${POPPLER_LDFLAGS})
+    SET(gimagereader_LIBS ${QTSPELL_LDFLAGS} ${POPPLER_LDFLAGS} ${PODOFO_LDFLAGS})
     SET(srcdir "qt")
 ELSE()
     MESSAGE(FATAL_ERROR "Invalid interface type ${INTERFACE_TYPE}")
@@ -122,19 +140,16 @@ ENDIF()
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${srcdir}/src/ )
 
-
 # Files
-FILE(GLOB gimagereader_SRCS ${srcdir}/src/*.cc)
+FILE(GLOB gimagereader_SRCS ${srcdir}/src/*.cc common/*.cc)
 # sort lists to avoid dependency on readdir() order and make build reproducible
 LIST(SORT gimagereader_SRCS)
-FILE(GLOB gimagereader_HDRS ${srcdir}/src/*.hh)
+FILE(GLOB gimagereader_HDRS ${srcdir}/src/*.hh common/*.hh)
 LIST(SORT gimagereader_HDRS)
 FILE(GLOB gimagereader_FORMS ${srcdir}/data/*.ui)
 LIST(SORT gimagereader_FORMS)
 FILE(GLOB gimagereader_ICONS data/icons/*.png)
 LIST(SORT gimagereader_ICONS)
-FILE(GLOB gimagereader_PO po/*.po)
-LIST(SORT gimagereader_PO)
 IF("${srcdir}" STREQUAL "qt")
     FILE(GLOB gimagereader_RESOURCES qt/data/*.qrc)
     LIST(SORT gimagereader_RESOURCES)
@@ -180,7 +195,9 @@ ENDIF()
 
 FILE(READ po/LINGUAS langs_string)
 STRING(REGEX MATCHALL "[a-zA-Z_]+" langs "${langs_string}")
-FILE(COPY ${gimagereader_PO} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+FOREACH(lang ${langs})
+    CONFIGURE_FILE(po/${lang}.po ${lang}.po COPYONLY)
+ENDFOREACH()
 GETTEXT_PROCESS_POT_FILE(po/gimagereader.pot ALL INSTALL_DESTINATION ${PACKAGE_LOCALE_DIR} LANGUAGES ${langs})
 
 IF(MINGW)

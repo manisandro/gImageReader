@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * FileDialogs.cc
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -32,8 +32,7 @@
 
 #ifdef G_OS_WIN32
 
-static std::wstring s2ws(const std::string& s)
-{
+static std::wstring s2ws(const std::string& s) {
 	g_assert(sizeof(wchar_t) == sizeof(gunichar2));
 	const char* in = s.c_str();
 	wchar_t* buf = reinterpret_cast<wchar_t*>(g_utf8_to_utf16(in, -1, nullptr, nullptr, nullptr));
@@ -42,8 +41,7 @@ static std::wstring s2ws(const std::string& s)
 	return out;
 }
 
-static std::string ws2s(const std::wstring& s)
-{
+static std::string ws2s(const std::wstring& s) {
 	g_assert(sizeof(wchar_t) == sizeof(gunichar2));
 	const gunichar2* in = reinterpret_cast<const gunichar2*>(s.c_str());
 	char* buf = g_utf16_to_utf8(in, -1, nullptr, nullptr, nullptr);
@@ -53,21 +51,19 @@ static std::string ws2s(const std::wstring& s)
 }
 
 
-std::wstring FileDialogs::FileFilter::to_win32_filter() const
-{
+std::wstring FileDialogs::FileFilter::to_win32_filter() const {
 	std::wstring filterstr = s2ws(name);
 	filterstr += L'\0';
-	for(const std::string& pattern : patterns){
+	for(const std::string& pattern : patterns) {
 		filterstr += s2ws(pattern) + L';';
 	}
-	if(filterstr.back() == L';'){
+	if(filterstr.back() == L';') {
 		filterstr.back() = L'\0';
 	}
 	return filterstr;
 }
 
-static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustring &title, const std::string& initialDirectory, const std::wstring& filter, bool multiple, Gtk::Window *parent)
-{
+static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustring &title, const std::string& initialDirectory, const std::wstring& filter, bool multiple, Gtk::Window *parent) {
 	wchar_t wfile[1024] = {};
 	std::wstring winitialDirectory = s2ws(initialDirectory);
 	std::wstring wtitle = s2ws(title);
@@ -86,7 +82,7 @@ static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustrin
 	bool ok = GetOpenFileNameW(&ofn);
 
 	std::vector<Glib::RefPtr<Gio::File>> files;
-	if(ok){
+	if(ok) {
 		if(ofn.nFileOffset == 0) {
 			// One file only
 			std::string filename = ws2s(ofn.lpstrFile);
@@ -109,8 +105,7 @@ static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustrin
 	return files;
 }
 
-static std::string win32_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, const std::wstring& filter, Gtk::Window *parent)
-{
+static std::string win32_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, const std::wstring& filter, Gtk::Window *parent) {
 	std::wstring wsuggestedFile = s2ws(suggestedFile);
 	std::wstring wtitle = s2ws(title);
 	std::wstring suggestedName = s2ws(Glib::path_get_basename(suggestedFile));
@@ -130,7 +125,7 @@ static std::string win32_save_dialog(const Glib::ustring &title, const std::stri
 	bool ok = GetSaveFileNameW(&ofn);
 
 	std::string filename;
-	if(ok){
+	if(ok) {
 		filename = ws2s(ofn.lpstrFile);
 	}
 	return filename;
@@ -138,21 +133,19 @@ static std::string win32_save_dialog(const Glib::ustring &title, const std::stri
 
 #else
 
-Glib::RefPtr<Gtk::FileFilter> FileDialogs::FileFilter::to_gnome_filter() const
-{
+Glib::RefPtr<Gtk::FileFilter> FileDialogs::FileFilter::to_gnome_filter() const {
 	Glib::RefPtr<Gtk::FileFilter> filefilter = Gtk::FileFilter::create();
 	filefilter->set_name(name);
-	for(const std::string& mime_type : mime_types){
+	for(const std::string& mime_type : mime_types) {
 		filefilter->add_mime_type(mime_type);
 	}
-	for(const std::string& pattern : patterns){
+	for(const std::string& pattern : patterns) {
 		filefilter->add_pattern(pattern);
 	}
 	return filefilter;
 }
 
-static std::vector<Glib::RefPtr<Gio::File>> gnome_open_dialog(const std::string& title, const std::string& initialDirectory, Glib::RefPtr<Gtk::FileFilter> filter, bool multiple, Gtk::Window* parent)
-{
+static std::vector<Glib::RefPtr<Gio::File>> gnome_open_dialog(const std::string& title, const std::string& initialDirectory, Glib::RefPtr<Gtk::FileFilter> filter, bool multiple, Gtk::Window* parent) {
 	Gtk::FileChooserDialog dialog(*parent, title);
 	dialog.add_button(_("Cancel"), Gtk::RESPONSE_CANCEL);
 	dialog.add_button(_("OK"), Gtk::RESPONSE_OK);
@@ -161,14 +154,13 @@ static std::vector<Glib::RefPtr<Gio::File>> gnome_open_dialog(const std::string&
 	dialog.set_filter(filter);
 	dialog.set_current_folder(initialDirectory);
 
-	if(dialog.run() == Gtk::RESPONSE_OK){
+	if(dialog.run() == Gtk::RESPONSE_OK) {
 		return dialog.get_files();
 	}
 	return std::vector<Glib::RefPtr<Gio::File>>();
 }
 
-static std::string gnome_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, Glib::RefPtr<Gtk::FileFilter> filter, Gtk::Window *parent)
-{
+static std::string gnome_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, Glib::RefPtr<Gtk::FileFilter> filter, Gtk::Window *parent) {
 	Gtk::FileChooserDialog dialog(*parent, title, Gtk::FILE_CHOOSER_ACTION_SAVE);
 	dialog.add_button("gtk-cancel", Gtk::RESPONSE_CANCEL);
 	dialog.add_button("gtk-ok", Gtk::RESPONSE_OK);
@@ -181,23 +173,21 @@ static std::string gnome_save_dialog(const Glib::ustring &title, const std::stri
 
 	dialog.set_filter(filter);
 
-	if(dialog.run() == Gtk::RESPONSE_OK){
+	if(dialog.run() == Gtk::RESPONSE_OK) {
 		return dialog.get_filename();
 	}
 	return "";
 }
 
-Glib::ustring FileDialogs::FileFilter::to_kde_filter() const
-{
+Glib::ustring FileDialogs::FileFilter::to_kde_filter() const {
 	Glib::ustring filter;
-	for(const std::string& mime_type : mime_types){
+	for(const std::string& mime_type : mime_types) {
 		filter += mime_type + " ";
 	}
 	return filter;
 }
 
-static std::vector<Glib::RefPtr<Gio::File>> kde_open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const Glib::ustring& filter, bool multiple, Gtk::Window* parent)
-{
+static std::vector<Glib::RefPtr<Gio::File>> kde_open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const Glib::ustring& filter, bool multiple, Gtk::Window* parent) {
 	// Command line
 	std::vector<Glib::ustring> argv = {
 		"/usr/bin/kdialog",
@@ -223,8 +213,7 @@ static std::vector<Glib::RefPtr<Gio::File>> kde_open_dialog(const Glib::ustring&
 	return files;
 }
 
-static std::string kde_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, const Glib::ustring& filter, Gtk::Window *parent)
-{
+static std::string kde_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, const Glib::ustring& filter, Gtk::Window *parent) {
 	std::string filename = suggestedFile;
 	do {
 		std::vector<Glib::ustring> argv = {
@@ -251,7 +240,7 @@ static std::string kde_save_dialog(const Glib::ustring &title, const std::string
 				"--caption", PACKAGE_NAME
 			};
 			Glib::spawn_sync("", argv, /*Glib::SPAWN_DEFAULT*/Glib::SpawnFlags(0), sigc::slot<void>(), nullptr, nullptr, &exit_status);
-			if(exit_status != 0){
+			if(exit_status != 0) {
 				continue;
 			}
 		}
@@ -260,24 +249,22 @@ static std::string kde_save_dialog(const Glib::ustring &title, const std::string
 	return std::string();
 }
 
-static bool is_kde()
-{
+static bool is_kde() {
 	static bool is_kde =
-			Glib::ustring(Glib::getenv("XDG_CURRENT_DESKTOP")).lowercase() == "kde" &&
-			Glib::file_test("/usr/bin/kdialog", Glib::FILE_TEST_EXISTS);
+	    Glib::ustring(Glib::getenv("XDG_CURRENT_DESKTOP")).lowercase() == "kde" &&
+	    Glib::file_test("/usr/bin/kdialog", Glib::FILE_TEST_EXISTS);
 	return is_kde;
 }
 
 #endif
 
-FileDialogs::FileFilter FileDialogs::FileFilter::pixbuf_formats()
-{
+FileDialogs::FileFilter FileDialogs::FileFilter::pixbuf_formats() {
 	FileFilter filter;
 	for(const Gdk::PixbufFormat& format : Gdk::Pixbuf::get_formats()) {
 		for(const Glib::ustring& mime : format.get_mime_types()) {
 			filter.mime_types.push_back(mime);
 		}
-		for(const Glib::ustring& extension : format.get_extensions()){
+		for(const Glib::ustring& extension : format.get_extensions()) {
 			filter.patterns.push_back(Glib::ustring::compose("*.%1", extension));
 		}
 	}
@@ -286,8 +273,7 @@ FileDialogs::FileFilter FileDialogs::FileFilter::pixbuf_formats()
 
 namespace FileDialogs {
 
-std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, const std::string& initialDirectory, const FileFilter &filter, bool multiple, Gtk::Window *parent)
-{
+std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, const std::string& initialDirectory, const FileFilter &filter, bool multiple, Gtk::Window *parent) {
 	std::vector<Glib::RefPtr<Gio::File>> filenames;
 	parent = parent == nullptr ? MAIN->getWindow() : parent;
 	std::string initialDir = initialDirectory.empty() ? Glib::get_home_dir() : initialDirectory;
@@ -303,8 +289,7 @@ std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, con
 	return filenames;
 }
 
-std::string save_dialog(const Glib::ustring &title, const std::string& suggestedFile, const FileFilter& filter, Gtk::Window *parent)
-{
+std::string save_dialog(const Glib::ustring &title, const std::string& suggestedFile, const FileFilter& filter, Gtk::Window *parent) {
 	std::string filename;
 	parent = parent == nullptr ? MAIN->getWindow() : parent;
 #ifdef G_OS_WIN32
@@ -321,7 +306,7 @@ std::string save_dialog(const Glib::ustring &title, const std::string& suggested
 		std::string base, ext;
 		Utils::get_filename_parts(suggestedFile, sbase, sext);
 		Utils::get_filename_parts(filename, base, ext);
-		if(ext.empty()){
+		if(ext.empty()) {
 			filename = base + "." + sext;
 		}
 	}

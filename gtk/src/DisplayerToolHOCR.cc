@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * DisplayerToolHOCR.cc
- * Copyright (C) 2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2016-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -22,76 +22,87 @@
 #include "Recognizer.hh"
 #include "Utils.hh"
 
-class DisplayerToolHOCR::SelectionRect : public DisplayerItem {
-public:
-	SelectionRect(DisplayerToolHOCR* tool) : m_tool(tool) {}
-
-	void draw(Cairo::RefPtr<Cairo::Context> ctx) const override {
-		Gdk::RGBA bgcolor("#4A90D9");
-
-		double scale = m_tool->getDisplayScale();
-
-		double d = 0.5 / scale;
-		double x1 = Utils::round(m_rect.x * scale) / scale + d;
-		double y1 = Utils::round(m_rect.y * scale) / scale + d;
-		double x2 = Utils::round((m_rect.x + m_rect.width) * scale) / scale - d;
-		double y2 = Utils::round((m_rect.y + m_rect.height) * scale) / scale - d;
-		Geometry::Rectangle rect(x1, y1, x2 - x1, y2 - y1);
-		ctx->save();
-		// Semitransparent rectangle with frame
-		ctx->set_line_width(2. * d);
-		ctx->rectangle(rect.x, rect.y, rect.width, rect.height);
-		ctx->set_source_rgba(bgcolor.get_red(), bgcolor.get_green(), bgcolor.get_blue(), 0.25);
-		ctx->fill_preserve();
-		ctx->set_source_rgba(bgcolor.get_red(), bgcolor.get_green(), bgcolor.get_blue(), 1.0);
-		ctx->stroke();
-		ctx->restore();
-	}
-private:
-	DisplayerToolHOCR* m_tool;
-};
 
 DisplayerToolHOCR::DisplayerToolHOCR(Displayer *displayer)
-	: DisplayerTool(displayer)
-{
+	: DisplayerTool(displayer) {
 	MAIN->getRecognizer()->setRecognizeMode(_("Recognize"));
 }
 
-DisplayerToolHOCR::~DisplayerToolHOCR()
-{
+DisplayerToolHOCR::~DisplayerToolHOCR() {
 	clearSelection();
 }
 
-std::vector<Cairo::RefPtr<Cairo::ImageSurface>> DisplayerToolHOCR::getOCRAreas()
-{
+std::vector<Cairo::RefPtr<Cairo::ImageSurface>> DisplayerToolHOCR::getOCRAreas() {
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> surfaces;
-	surfaces.push_back(getImage(getSceneBoundingRect()));
+	surfaces.push_back(m_displayer->getImage(m_displayer->getSceneBoundingRect()));
 	return surfaces;
 }
 
-void DisplayerToolHOCR::setSelection(const Geometry::Rectangle& rect)
-{
-	if(!m_selection) {
-		m_selection = new SelectionRect(this);
-		addItemToCanvas(m_selection);
+bool DisplayerToolHOCR::mousePressEvent(GdkEventButton* event) {
+	if(event->button == 1 && m_drawingSelection) {
+		clearSelection();
+		m_selection = new DisplayerSelection(this, m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y)));
+		m_displayer->addItem(m_selection);
+		return true;
 	}
-	Geometry::Rectangle sceneRect = getSceneBoundingRect();
-	invalidateRect(m_selection->rect());
-	m_selection->setRect(rect.translate(sceneRect.x, sceneRect.y));
-	invalidateRect(m_selection->rect());
+	return false;
 }
 
-Cairo::RefPtr<Cairo::ImageSurface> DisplayerToolHOCR::getSelection(const Geometry::Rectangle& rect)
-{
-	Geometry::Rectangle sceneRect = getSceneBoundingRect();
-	return getImage(rect.translate(sceneRect.x, sceneRect.y));
+bool DisplayerToolHOCR::mouseMoveEvent(GdkEventMotion* event) {
+	if(m_selection && m_drawingSelection) {
+		Geometry::Point p = m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y));
+		m_selection->setPoint(p);
+		m_displayer->ensureVisible(event->x, event->y);
+		return true;
+	}
+	return false;
 }
 
-void DisplayerToolHOCR::clearSelection()
-{
+bool DisplayerToolHOCR::mouseReleaseEvent(GdkEventButton* /*event*/) {
+	if(m_selection && m_drawingSelection) {
+		if(m_selection->rect().width < 5. || m_selection->rect().height < 5.) {
+			clearSelection();
+		} else {
+			Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
+			Geometry::Rectangle r = m_selection->rect().translate(-sceneRect.x, -sceneRect.y);
+			m_signalSelectionDrawn.emit(Geometry::Rectangle(int(r.x), int(r.y), int(r.width), int(r.height)));
+		}
+		m_drawingSelection = false;
+		return true;
+	}
+	m_drawingSelection = false;
+	return false;
+}
+
+void DisplayerToolHOCR::setSelection(const Geometry::Rectangle& rect) {
+	m_drawingSelection = false;
+	Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
+	Geometry::Rectangle r = rect.translate(sceneRect.x, sceneRect.y);
+	if(!m_selection) {
+		m_selection = new DisplayerSelection(this, Geometry::Point(r.x, r.y));
+		CONNECT(m_selection, geometry_changed, [this](const Geometry::Rectangle& rect) {
+			selectionChanged(rect);
+		});
+		m_displayer->addItem(m_selection);
+	}
+	m_selection->setAnchorAndPoint(Geometry::Point(r.x, r.y), Geometry::Point(r.x + r.width, r.y + r.height));
+}
+
+Cairo::RefPtr<Cairo::ImageSurface> DisplayerToolHOCR::getSelection(const Geometry::Rectangle& rect) {
+	Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
+	return m_displayer->getImage(rect.translate(sceneRect.x, sceneRect.y));
+}
+
+void DisplayerToolHOCR::clearSelection() {
 	if(m_selection) {
-		removeItemFromCanvas(m_selection);
+		m_displayer->removeItem(m_selection);
 		delete m_selection;
 		m_selection = nullptr;
 	}
+}
+
+void DisplayerToolHOCR::selectionChanged(const Geometry::Rectangle& rect) {
+	Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
+	Geometry::Rectangle r = rect.translate(-sceneRect.x, -sceneRect.y);
+	m_signalSelectionGeometryChanged.emit(Geometry::Rectangle(int(r.x), int(r.y), int(r.width), int(r.height)));
 }

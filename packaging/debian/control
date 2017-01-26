@@ -17,7 +17,8 @@ Build-Depends: debhelper (>= 9),
  libqtspell-qt5-dev,
  libpoppler-qt5-dev,
  libjson-glib-dev,
- libxml++2.6-dev
+ libxml++2.6-dev,
+ libpodofo-dev
 Standards-Version: 3.9.4
 Homepage: https://github.com/manisandro/gImageReader
 
@@ -26,8 +27,8 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          gimagereader-common (= ${binary:Version})
-Replaces: gimagereader (<< 2.94-1)
-Conflicts: gimagereader (<< 2.94-1)
+Replaces: gimagereader
+Conflicts: gimagereader
 Description: A graphical frontend to tesseract-ocr
  gImageReader is a simple front-end to tesseract. Features include:
   - Import PDF documents and images from disk, scanning devices, clipboard and screenshots
@@ -44,6 +45,7 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          gimagereader-common (= ${binary:Version})
+Suggests: qt5-image-formats-plugins
 Description: A graphical frontend to tesseract-ocr
  gImageReader is a simple front-end to tesseract. Features include:
   - Import PDF documents and images from disk, scanning devices, clipboard and screenshots

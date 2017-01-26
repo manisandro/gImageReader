@@ -3,7 +3,7 @@ Upstream-Name: gimagereader
 Source: https://github.com/manisandro/gImageReader
 
 Files: *
-Copyright: 2009-2016 Sandro Mani <manisandro@gmail.com>
+Copyright: 2009-2017 Sandro Mani <manisandro@gmail.com>
 
 License: GPL-3+
  gImageReader is free software: you can redistribute it and/or modify it
@@ -21,7 +21,7 @@ License: GPL-3+
 
 
 Files: debian/*
-Copyright: 2014-2016 Sandro Mani <manisandro@gmail.com>
+Copyright: 2014-2017 Sandro Mani <manisandro@gmail.com>
 License: GPL-2+
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Recognizer.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -25,22 +25,26 @@
 
 #include <cairomm/cairomm.h>
 
-namespace tesseract { class TessBaseAPI; }
+namespace tesseract {
+class TessBaseAPI;
+}
 
-class Recognizer
-{
+class Recognizer {
 public:
 	enum class OutputDestination { Buffer, Clipboard };
 
 	Recognizer();
 	std::vector<Glib::ustring> getAvailableLanguages() const;
-	std::string getTessdataDir() const;
-	const Config::Lang& getSelectedLanguage() const{ return m_curLang; }
+	const Config::Lang& getSelectedLanguage() const {
+		return m_curLang;
+	}
 
 	void setRecognizeMode(const Glib::ustring& mode);
 	void updateLanguagesMenu();
 	bool recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
-	sigc::signal<void,Config::Lang> signal_languageChanged() const{ return m_signal_languageChanged; }
+	sigc::signal<void,Config::Lang> signal_languageChanged() const {
+		return m_signal_languageChanged;
+	}
 
 private:
 	struct ProgressMonitor;
@@ -56,12 +60,14 @@ private:
 	Gtk::Label* m_langLabel;
 	Gtk::Label* m_modeLabel;
 	Gtk::Button* m_recognizeBtn;
+	Gtk::Label* m_pageAreaLabel;
 	Gtk::ComboBoxText* m_pageAreaCombo;
 	sigc::signal<void,Config::Lang> m_signal_languageChanged;
 	Gtk::RadioButtonGroup m_langMenuRadioGroup;
+	Gtk::RadioButtonGroup m_psmRadioGroup;
+	int m_currentPsmMode;
 	std::vector<std::pair<Gtk::CheckMenuItem*,Glib::ustring>> m_langMenuCheckGroup;
 	MultilingualMenuItem* m_multilingualRadio = nullptr;
-	Gtk::CheckMenuItem* m_osdItem = nullptr;
 	Config::Lang m_curLang;
 
 	bool initTesseract(tesseract::TessBaseAPI& tess, const char* language = nullptr) const;

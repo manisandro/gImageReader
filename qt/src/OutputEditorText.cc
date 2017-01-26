@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditorText.cc
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -32,8 +32,7 @@
 #include "Utils.hh"
 
 
-OutputEditorText::OutputEditorText()
-{
+OutputEditorText::OutputEditorText() {
 	m_insertMode = InsertMode::Append;
 
 	m_widget = new QWidget;
@@ -90,67 +89,69 @@ OutputEditorText::OutputEditorText()
 	setFont();
 }
 
-OutputEditorText::~OutputEditorText()
-{
+OutputEditorText::~OutputEditorText() {
 	delete m_widget;
+	MAIN->getConfig()->removeSetting("keepdot");
+	MAIN->getConfig()->removeSetting("keepquote");
+	MAIN->getConfig()->removeSetting("joinhyphen");
+	MAIN->getConfig()->removeSetting("joinspace");
+	MAIN->getConfig()->removeSetting("keepparagraphs");
+	MAIN->getConfig()->removeSetting("drawwhitespace");
+	MAIN->getConfig()->removeSetting("searchmatchcase");
 }
 
-void OutputEditorText::clearErrorState()
-{
+void OutputEditorText::clearErrorState() {
 	ui.lineEditOutputSearch->setStyleSheet("");
 }
 
-void OutputEditorText::setFont()
-{
-	if(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont")->getValue()){
+void OutputEditorText::setFont() {
+	if(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont")->getValue()) {
 		ui.plainTextEditOutput->setFont(QFont());
-	}else{
+	} else {
 		ui.plainTextEditOutput->setFont(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont")->getValue());
 	}
 }
 
-void OutputEditorText::setInsertMode(QAction* action)
-{
+void OutputEditorText::setInsertMode(QAction* action) {
 	m_insertMode = static_cast<InsertMode>(action->data().value<int>());
 	ui.toolButtonOutputMode->setIcon(action->icon());
 }
 
-void OutputEditorText::filterBuffer()
-{
+void OutputEditorText::filterBuffer() {
 	QTextCursor cursor = ui.plainTextEditOutput->regionBounds();
 	QString txt = cursor.selectedText();
 
-	Utils::busyTask([this,&txt]{
+	Utils::busyTask([this,&txt] {
 		// Always remove trailing whitespace
-		txt.replace(QRegExp("\\s+\u2029"), "\u2029");
+		txt.replace(QRegExp("\\s+$"), "");
 
-		if(ui.actionOutputPostprocJoinHyphen->isChecked()){
-			txt.replace(QRegExp("-\\s*\u2029\\s*"), "");
+		if(ui.actionOutputPostprocJoinHyphen->isChecked()) {
+			txt.replace(QRegExp("[-\u2014]\\s*\u2029\\s*"), "");
 		}
 		QString preChars, sucChars;
-		if(ui.actionOutputPostprocKeepParagraphs->isChecked()){
+		if(ui.actionOutputPostprocKeepParagraphs->isChecked()) {
 			preChars += "\u2029"; // Keep if preceded by line break
 		}
-		if(ui.actionOutputPostprocKeepEndMark->isChecked()){
+		if(ui.actionOutputPostprocKeepEndMark->isChecked()) {
 			preChars += "\\.\\?!"; // Keep if preceded by end mark (.?!)
 		}
-		if(ui.actionOutputPostprocKeepQuote->isChecked()){
+		if(ui.actionOutputPostprocKeepQuote->isChecked()) {
 			preChars += "'\""; // Keep if preceded by dot
 			sucChars += "'\""; // Keep if succeeded by dot
 		}
-		if(ui.actionOutputPostprocKeepParagraphs->isChecked()){
+		if(ui.actionOutputPostprocKeepParagraphs->isChecked()) {
 			sucChars += "\u2029"; // Keep if succeeded by line break
 		}
-		if(!preChars.isEmpty()){
+		if(!preChars.isEmpty()) {
 			preChars = "([^" + preChars + "])";
 		}
-		if(!sucChars.isEmpty()){
+		if(!sucChars.isEmpty()) {
 			sucChars = "(?![" + sucChars + "])";
 		}
 		QString expr = preChars + "\u2029" + sucChars;
 		txt.replace(QRegExp(expr), preChars.isEmpty() ? " " : "\\1 ");
 
-		if(ui.actionOutputPostprocCollapseSpaces->isChecked()){
+		if(ui.actionOutputPostprocCollapseSpaces->isChecked()) {
 			txt.replace(QRegExp("[ \t]+"), " ");
 		}
 		return true;
@@ -161,44 +162,38 @@ void OutputEditorText::filterBuffer()
 	ui.plainTextEditOutput->setTextCursor(cursor);
 }
 
-void OutputEditorText::findNext()
-{
+void OutputEditorText::findNext() {
 	findReplace(false, false);
 }
 
-void OutputEditorText::findPrev()
-{
+void OutputEditorText::findPrev() {
 	findReplace(true, false);
 }
 
-void OutputEditorText::replaceNext()
-{
+void OutputEditorText::replaceNext() {
 	findReplace(false, true);
 }
 
-void OutputEditorText::replaceAll()
-{
+void OutputEditorText::replaceAll() {
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
 	QString searchstr = ui.lineEditOutputSearch->text();
 	QString replacestr = ui.lineEditOutputReplace->text();
-	if(!ui.plainTextEditOutput->replaceAll(searchstr, replacestr, ui.checkBoxOutputSearchMatchCase->isChecked())){
+	if(!ui.plainTextEditOutput->replaceAll(searchstr, replacestr, ui.checkBoxOutputSearchMatchCase->isChecked())) {
 		ui.lineEditOutputSearch->setStyleSheet("background: #FF7777; color: #FFFFFF;");
 	}
 	MAIN->popState();
 }
 
-void OutputEditorText::findReplace(bool backwards, bool replace)
-{
+void OutputEditorText::findReplace(bool backwards, bool replace) {
 	clearErrorState();
 	QString searchstr = ui.lineEditOutputSearch->text();
 	QString replacestr = ui.lineEditOutputReplace->text();
-	if(!ui.plainTextEditOutput->findReplace(backwards, replace, ui.checkBoxOutputSearchMatchCase->isChecked(), searchstr, replacestr)){
+	if(!ui.plainTextEditOutput->findReplace(backwards, replace, ui.checkBoxOutputSearchMatchCase->isChecked(), searchstr, replacestr)) {
 		ui.lineEditOutputSearch->setStyleSheet("background: #FF7777; color: #FFFFFF;");
 	}
 }
 
-void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data)
-{
+void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data) {
 	char* text = tess.GetUTF8Text();
 	bool& insertText = static_cast<TextReadSessionData*>(data)->insertText;
 	QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(text)), Q_ARG(bool, insertText));
@@ -206,24 +201,22 @@ void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data)
 	insertText = true;
 }
 
-void OutputEditorText::readError(const QString &errorMsg, ReadSessionData *data)
-{
+void OutputEditorText::readError(const QString &errorMsg, ReadSessionData *data) {
 	bool& insertText = static_cast<TextReadSessionData*>(data)->insertText;
 	QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, errorMsg), Q_ARG(bool, insertText));
 	insertText = true;
 }
 
-void OutputEditorText::addText(const QString& text, bool insert)
-{
-	if(insert){
+void OutputEditorText::addText(const QString& text, bool insert) {
+	if(insert) {
 		ui.plainTextEditOutput->textCursor().insertText(text);
-	}else{
+	} else {
 		QTextCursor cursor = ui.plainTextEditOutput->textCursor();
-		if(m_insertMode == InsertMode::Append){
+		if(m_insertMode == InsertMode::Append) {
 			cursor.movePosition(QTextCursor::End);
-		}else if(m_insertMode == InsertMode::Cursor){
+		} else if(m_insertMode == InsertMode::Cursor) {
 			// pass
-		}else if(m_insertMode == InsertMode::Replace){
+		} else if(m_insertMode == InsertMode::Replace) {
 			cursor.movePosition(QTextCursor::Start);
 			cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
 		}
@@ -233,21 +226,20 @@ void OutputEditorText::addText(const QString& text, bool insert)
 	MAIN->setOutputPaneVisible(true);
 }
 
-bool OutputEditorText::save(const QString& filename)
-{
+bool OutputEditorText::save(const QString& filename) {
 	QString outname = filename;
-	if(outname.isEmpty()){
+	if(outname.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
 		QString base = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
 		outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(base + ".txt");
 		outname = QFileDialog::getSaveFileName(MAIN, _("Save Output..."), outname, QString("%1 (*.txt)").arg(_("Text Files")));
-		if(outname.isEmpty()){
+		if(outname.isEmpty()) {
 			return false;
 		}
 		MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->setValue(QFileInfo(outname).absolutePath());
 	}
 	QFile file(outname);
-	if(!file.open(QIODevice::WriteOnly)){
+	if(!file.open(QIODevice::WriteOnly)) {
 		QMessageBox::critical(MAIN, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
@@ -256,18 +248,17 @@ bool OutputEditorText::save(const QString& filename)
 	return true;
 }
 
-bool OutputEditorText::clear(bool hide)
-{
-	if(!m_widget->isVisible()){
+bool OutputEditorText::clear(bool hide) {
+	if(!m_widget->isVisible()) {
 		return true;
 	}
-	if(getModified()){
+	if(getModified()) {
 		int response = QMessageBox::question(MAIN, _("Output not saved"), _("Save output before proceeding?"), QMessageBox::Save, QMessageBox::Discard, QMessageBox::Cancel);
-		if(response == QMessageBox::Save){
-			if(!save()){
+		if(response == QMessageBox::Save) {
+			if(!save()) {
 				return false;
 			}
-		}else if(response != QMessageBox::Discard){
+		} else if(response != QMessageBox::Discard) {
 			return false;
 		}
 	}
@@ -279,17 +270,14 @@ bool OutputEditorText::clear(bool hide)
 	return true;
 }
 
-bool OutputEditorText::getModified() const
-{
+bool OutputEditorText::getModified() const {
 	return ui.plainTextEditOutput->document()->isModified();
 }
 
-void OutputEditorText::onVisibilityChanged(bool /*visibile*/)
-{
+void OutputEditorText::onVisibilityChanged(bool /*visibile*/) {
 	m_substitutionsManager->hide();
 }
 
-void OutputEditorText::setLanguage(const Config::Lang& lang)
-{
+void OutputEditorText::setLanguage(const Config::Lang& lang) {
 	m_spell.setLanguage(lang.code.isEmpty() ? Utils::getSpellingLanguage() : lang.code);
 }

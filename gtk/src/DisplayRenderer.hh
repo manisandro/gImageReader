@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * DisplayRenderer.hh
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -27,7 +27,7 @@ typedef struct _PopplerDocument PopplerDocument;
 class DisplayRenderer {
 public:
 	DisplayRenderer(const std::string& filename) : m_filename(filename) {}
-	virtual ~DisplayRenderer(){}
+	virtual ~DisplayRenderer() {}
 	virtual Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const = 0;
 	virtual int getNPages() const = 0;
 
@@ -40,16 +40,18 @@ protected:
 class ImageRenderer : public DisplayRenderer {
 public:
 	ImageRenderer(const std::string& filename) : DisplayRenderer(filename) {}
-	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const;
-	int getNPages() const{ return 1; }
+	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
+	int getNPages() const override {
+		return 1;
+	}
 };
 
 class PDFRenderer : public DisplayRenderer {
 public:
 	PDFRenderer(const std::string& filename);
 	~PDFRenderer();
-	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const;
-	int getNPages() const;
+	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
+	int getNPages() const override;
 
 private:
 	PopplerDocument* m_document;

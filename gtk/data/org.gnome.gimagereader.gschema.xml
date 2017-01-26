@@ -126,30 +126,80 @@
             <summary>Output directory for OCR output</summary>
             <description>Output directory for OCR output.</description>
         </key>
-        <key type="b" name="osd">
-            <default>false</default>
-            <summary>Perform orientation and script detection</summary>
-            <description>Perform orientation and script detection.</description>
+        <key type="i" name="psm">
+            <default>6</default>
+            <summary>Page segmentation mode</summary>
+            <description>Page segmentation mode.</description>
         </key>
         <key type="i" name="outputeditor">
             <default>0</default>
             <summary>Default output editor</summary>
             <description>Default output editor.</description>
         </key>
-        <key type="s" name="hocrfont">
+        <key type="i" name="pdfexportmode">
+            <default>0</default>
+            <summary>PDF export mode</summary>
+            <description>PDF export mode.</description>
+        </key>
+        <key type="s" name="pdffont">
             <default>"Sans 10"</default>
             <summary>Font to use for PDFs</summary>
             <description>Font to use for PDFs.</description>
         </key>
-        <key type="b" name="hocrusedetectedfontsizes">
+        <key type="b" name="pdfusedetectedfontsizes">
             <default>true</default>
             <summary>Use detected font sizes in PDFs</summary>
             <description>Whether to use detected font sizes when generating PDFs.</description>
         </key>
-        <key type="b" name="hocruniformizelinespacing">
-            <default>true</default>
+        <key type="b" name="pdfuniformizelinespacing">
+            <default>false</default>
             <summary>Uniformize line spacing</summary>
             <description>Whether to uniformize line spacing when generating PDFs.</description>
+        </key>
+        <key type="i" name="pdfpreservespaces">
+            <default>4</default>
+            <summary>Preserve spaces wider than</summary>
+            <description>Preserve spaces wider than the specified number of characters when generating PDFs with uniformized spacing.</description>
+        </key>
+        <key type="i" name="pdfimageformat">
+            <default>0</default>
+            <summary>Image color format for PDF output</summary>
+            <description>Image color format for PDF output: color (0), grayscale (1) or monochrome (2).</description>
+        </key>
+        <key type="i" name="pdfimagecompression">
+            <default>0</default>
+            <summary>Compression for images in PDF output</summary>
+            <description>Compression for images in PDF output: Zip (0) or Jpeg (1).</description>
+        </key>
+        <key type="i" name="pdfimagecompressionquality">
+            <default>90</default>
+            <summary>Compression quality for images in PDF output</summary>
+            <description>Compression quality for images in PDF output: [0-100].</description>
+        </key>
+        <key type="b" name="pdfpreview">
+            <default>false</default>
+            <summary>Whether to display a preview when exporting to PDF</summary>
+            <description>Whether to display a preview when exporting to PDF.</description>
+        </key>
+        <key type="i" name="datadirs">
+            <default>0</default>
+            <summary>Where to look for tessdata and spelling files</summary>
+            <description>Whether to look in system-wide (0) or user paths (1) for tessdata and spelling files.</description>
+        </key>
+        <key type="i" name="pdffontscale">
+            <default>100</default>
+            <summary>Scaling factor for detected font sizes</summary>
+            <description>Scaling factor for detected font sizes.</description>
+        </key>
+        <key type="i" name="pdfimagedpi">
+            <default>300</default>
+            <summary>Resolution at which to export images in the PDF</summary>
+            <description>Resolution at which to export images in the PDF.</description>
+        </key>
+        <key type="i" name="pdfimageconversionflags">
+            <default>0</default>
+            <summary>Image conversion flags</summary>
+            <description>Image conversion flags.</description>
         </key>
     </schema>
 </schemalist>

@@ -7,6 +7,7 @@ License:       GPLv3+
 URL:           https://github.com/manisandro/gImageReader
 Source0:       https://github.com/manisandro/gImageReader/releases/download/v%{version}/%{name}-%{version}.tar.xz
 
+BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: gtkmm30-devel
 BuildRequires: gtkspellmm30-devel
@@ -23,6 +24,7 @@ BuildRequires: qtspell-qt5-devel
 BuildRequires: poppler-qt5-devel
 BuildRequires: json-glib-devel
 BuildRequires: libxml++-devel
+BuildRequires: podofo-devel
 
 Requires:      hicolor-icon-theme
 

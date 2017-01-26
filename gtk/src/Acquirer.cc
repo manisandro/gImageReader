@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Acquirer.cc
- * Copyright (C) 2013-2016 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -29,8 +29,7 @@
 #include "scanner/ScannerSane.hh"
 #endif
 
-Acquirer::Acquirer()
-{
+Acquirer::Acquirer() {
 	m_devCombo = MAIN->getWidget("combo:sources.acquire.device");
 	m_refreshButton = MAIN->getWidget("button:inpute.acquire.device.refresh");
 	m_refreshSpinner = MAIN->getWidget("spinner:sources.acquire.device");
@@ -55,16 +54,24 @@ Acquirer::Acquirer()
 
 	m_scanner = new ScannerImpl;
 
-	CONNECT(m_refreshButton, clicked, [this]{ startDetectDevices(); });
-	CONNECT(m_scanButton, clicked, [this]{ startScan(); });
-	CONNECT(m_cancelButton, clicked, [this]{ cancelScan(); });
-	CONNECT(MAIN->getWidget("button:sources.acquire.output").as<Gtk::Button>(), clicked, [this]{ selectOutputPath(); });
-	CONNECT(m_devCombo, changed, [this]{ setDeviceComboTooltip(); });
-	CONNECT(m_scanner, initFailed, [this]{ scanInitFailed(); });
-	CONNECT(m_scanner, devicesDetected, [this](const std::vector<Scanner::Device>& devices){ doneDetectDevices(devices); });
-	CONNECT(m_scanner, scanFailed, [this](const std::string& msg){ scanFailed(msg); });
-	CONNECT(m_scanner, scanStateChanged, [this](Scanner::State state){ setScanState(state); });
-	CONNECT(m_scanner, pageAvailable, [this](const std::string& file){ m_signal_scanPageAvailable.emit(file); });
+	CONNECT(m_refreshButton, clicked, [this] { startDetectDevices(); });
+	CONNECT(m_scanButton, clicked, [this] { startScan(); });
+	CONNECT(m_cancelButton, clicked, [this] { cancelScan(); });
+	CONNECT(MAIN->getWidget("button:sources.acquire.output").as<Gtk::Button>(), clicked, [this] { selectOutputPath(); });
+	CONNECT(m_devCombo, changed, [this] { setDeviceComboTooltip(); });
+	CONNECT(m_scanner, initFailed, [this] { scanInitFailed(); });
+	CONNECT(m_scanner, devicesDetected, [this](const std::vector<Scanner::Device>& devices) {
+		doneDetectDevices(devices);
+	});
+	CONNECT(m_scanner, scanFailed, [this](const std::string& msg) {
+		scanFailed(msg);
+	});
+	CONNECT(m_scanner, scanStateChanged, [this](Scanner::State state) {
+		setScanState(state);
+	});
+	CONNECT(m_scanner, pageAvailable, [this](const std::string& file) {
+		m_signal_scanPageAvailable.emit(file);
+	});
 
 	MAIN->getConfig()->addSetting(new ComboSetting("scanres", MAIN->getWidget("combo:sources.acquire.resolution")));
 	MAIN->getConfig()->addSetting(new ComboSetting("scanmode", MAIN->getWidget("combo:sources.acquire.mode")));
@@ -79,33 +86,29 @@ Acquirer::Acquirer()
 	m_scanner->init();
 }
 
-Acquirer::~Acquirer()
-{
+Acquirer::~Acquirer() {
 	m_scanner->close();
 	delete m_scanner;
 }
 
-void Acquirer::selectOutputPath()
-{
+void Acquirer::selectOutputPath() {
 	FileDialogs::FileFilter filter = FileDialogs::FileFilter::pixbuf_formats();
 	filter.name = _("Images");
 	std::string filename = FileDialogs::save_dialog(_("Choose Output Filename..."), m_outputPath, filter);
-	if(!filename.empty()){
+	if(!filename.empty()) {
 		m_outputPath = filename;
 		genOutputPath();
 	}
 }
 
-void Acquirer::genOutputPath()
-{
+void Acquirer::genOutputPath() {
 	m_outputPath = Utils::make_output_filename(m_outputPath);
 	m_outputLabel->set_text(m_outputPath);
 	m_outputLabel->set_tooltip_text(m_outputPath);
 	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);
 }
 
-void Acquirer::scanInitFailed()
-{
+void Acquirer::scanInitFailed() {
 	m_msgLabel->set_markup(Glib::ustring::compose("<span color='red'>%1</span>", _("Failed to initialize the scanning backend.")));
 	m_scanButton->set_sensitive(false);
 	m_refreshButton->set_sensitive(false);
@@ -114,13 +117,11 @@ void Acquirer::scanInitFailed()
 	m_refreshSpinner->stop();
 }
 
-void Acquirer::scanFailed(const Glib::ustring &msg)
-{
+void Acquirer::scanFailed(const Glib::ustring &msg) {
 	m_msgLabel->set_markup(Glib::ustring::compose("<span color='red'>%1: %2</span>", _("Scan failed"), msg));
 }
 
-void Acquirer::startDetectDevices()
-{
+void Acquirer::startDetectDevices() {
 	m_refreshButton->hide();
 	m_refreshSpinner->show();
 	m_refreshSpinner->start();
@@ -130,16 +131,15 @@ void Acquirer::startDetectDevices()
 	m_scanner->redetect();
 }
 
-void Acquirer::doneDetectDevices(const std::vector<Scanner::Device>& devices)
-{
+void Acquirer::doneDetectDevices(const std::vector<Scanner::Device>& devices) {
 	m_refreshButton->show();
 	m_refreshSpinner->hide();
 	m_refreshSpinner->stop();
-	if(devices.empty()){
+	if(devices.empty()) {
 		m_msgLabel->set_markup(Glib::ustring::compose("<span color='red'>%1</span>", _("No scanners were detected.")));
-	}else{
+	} else {
 		Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_devCombo->get_model());
-		for(const Scanner::Device& device : devices){
+		for(const Scanner::Device& device : devices) {
 			Gtk::TreeIter it = store->append();
 			it->set_value(m_devComboCols.label, device.label);
 			it->set_value(m_devComboCols.name, device.name);
@@ -149,8 +149,7 @@ void Acquirer::doneDetectDevices(const std::vector<Scanner::Device>& devices)
 	}
 }
 
-void Acquirer::startScan()
-{
+void Acquirer::startScan() {
 	m_buttonBox->remove(*m_scanButton);
 	m_cancelButton->set_sensitive(true);
 	m_buttonBox->pack_start(*m_cancelButton, false, true);
@@ -165,39 +164,35 @@ void Acquirer::startScan()
 	genOutputPath();
 }
 
-void Acquirer::setScanState(Scanner::State state)
-{
-	if(state == Scanner::State::OPEN){
+void Acquirer::setScanState(Scanner::State state) {
+	if(state == Scanner::State::OPEN) {
 		m_msgLabel->set_text(_("Opening device..."));
-	}else if(state == Scanner::State::SET_OPTIONS){
+	} else if(state == Scanner::State::SET_OPTIONS) {
 		m_msgLabel->set_text(_("Setting options..."));
-	}else if(state == Scanner::State::START){
+	} else if(state == Scanner::State::START) {
 		m_msgLabel->set_text(_("Starting scan..."));
-	}else if(state == Scanner::State::GET_PARAMETERS){
+	} else if(state == Scanner::State::GET_PARAMETERS) {
 		m_msgLabel->set_text(_("Getting parameters..."));
-	}else if(state == Scanner::State::READ){
+	} else if(state == Scanner::State::READ) {
 		m_msgLabel->set_text(_("Transferring data..."));
-	}else if(state == Scanner::State::IDLE){
+	} else if(state == Scanner::State::IDLE) {
 		doneScan();
 	}
 }
 
-void Acquirer::cancelScan()
-{
+void Acquirer::cancelScan() {
 	m_msgLabel->set_text(_("Canceling scan..."));
 	m_scanner->cancel();
 	m_cancelButton->set_sensitive(false);
 }
 
-void Acquirer::doneScan()
-{
+void Acquirer::doneScan() {
 	m_buttonBox->remove(*m_cancelButton);
 	m_buttonBox->pack_start(*m_scanButton, false, true);
 	m_msgLabel->set_text("");
 }
 
-void Acquirer::setDeviceComboTooltip()
-{
+void Acquirer::setDeviceComboTooltip() {
 	auto it = m_devCombo->get_active();
 	m_devCombo->set_tooltip_text(it ? static_cast<std::string>((*it)[m_devComboCols.label]) : "");
 }
