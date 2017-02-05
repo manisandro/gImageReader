@@ -1,3 +1,15 @@
+gImageReader 3.2.1 (Feb 10 2017):
+* Add possibility to rotate individual pages of multipage documents
+* Ensure the tessdata manager downloads compatible tesseract languge definitions
+* Add CCITT Group4 compression option for monochrome PDF export
+* Allow choosing between diffuse and threshold dithering for monochrome PDF export
+* Preview JPEG compression quality in PDF output preview
+* Make brightness/contrast/resolution changes affect all selected sources
+* [Qt] Support multipage images through QImageReader (Qt5.9+ will support multipage TIFFs)
+* [Gtk] Fix hang when saving selection image
+* [Qt] Fix possible deadlock when rapidly switching sources
+* Updated translations
+
 gImageReader 3.2.0 (Nov 23 2016):
  * gImageReader 3.2.0 stable
  * Add PageUp / PageDown keyboard accelerators for browsing multipage documents

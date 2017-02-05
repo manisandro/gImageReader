@@ -46,6 +46,18 @@
 </ul>
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
+<p>gImageReader 3.2.1 (Feb 10 2017):</p>
+<ul>
+    <li>Add possibility to rotate individual pages of multipage documents</li>
+    <li>Ensure the tessdata manager downloads compatible tesseract languge definitions</li>
+    <li>Add CCITT Group4 compression option for monochrome PDF export</li>
+    <li>Allow choosing between diffuse and threshold dithering for monochrome PDF export</li>
+    <li>Preview JPEG compression quality in PDF output preview</li>
+    <li>Make brightness/contrast/resolution changes affect all selected sources</li>
+    <li>[Gtk] Fix hang when saving selection image</li>
+    <li>[Qt] Fix possible deadlock when rapidly switching sources</li>
+    <li>Updated translations</li>
+</ul>
 <p>gImageReader 3.2.0 (Nov 23 2016):</p>
 <ul>
     <li>gImageReader 3.2.0 stable</li>
@@ -318,7 +330,7 @@ If you find an issue or have a suggestion, please file a ticket to the <a href="
 <li>Try to describe as best as you can what you were doing and whether the problem is reproducible.</li>
 </ul>
 <hr />
-<p>Copyright &copy;2009-2017 Sandro Mani, revision: Sun, Jan 01 2017</p>
+<p>Copyright &copy;2009-2017 Sandro Mani, revision: Sun, Feb 05 2017</p>
 </body>
 
 </html>
