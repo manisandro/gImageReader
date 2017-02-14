@@ -82,7 +82,12 @@ Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::render(int /*page*/, double re
 		ctx->paint();
 	}
 	ctx->scale(scale, scale);
-	Gdk::Cairo::set_source_pixbuf(ctx, pixbuf);
+	try {
+		Gdk::Cairo::set_source_pixbuf(ctx, pixbuf);
+	} catch(const std::exception&) {
+		return Cairo::RefPtr<Cairo::ImageSurface>();
+	}
+
 	ctx->paint();
 	return surf;
 }
