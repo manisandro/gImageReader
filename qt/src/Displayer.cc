@@ -520,6 +520,9 @@ void Displayer::scaleThread() {
 		} else if(req.type == ScaleRequest::Scale) {
 			m_scaleMutex.unlock();
 			QImage image = m_renderer->render(req.page, req.scale * req.resolution);
+			if(image.isNull()) {
+				continue;
+			}
 
 			m_scaleMutex.lock();
 			if(!m_scaleRequests.isEmpty() && m_scaleRequests.first().type == ScaleRequest::Abort) {
