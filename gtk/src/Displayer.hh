@@ -124,6 +124,7 @@ private:
 	sigc::connection m_connection_invcheckToggled;
 	sigc::connection m_connection_zoomfitClicked;
 	sigc::connection m_connection_zoomoneClicked;
+	sigc::connection m_connection_setScaledImage;
 
 	void resizeEvent();
 	bool keyPressEvent(GdkEventKey* ev);
@@ -164,7 +165,7 @@ private:
 
 	void sendScaleRequest(const ScaleRequest& request);
 	void scaleThread();
-	void setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image, double scale);
+	void setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image);
 };
 
 class DisplayerItem {

@@ -628,6 +628,7 @@ void Displayer::scaleThread() {
 		ScaleRequest req = m_scaleRequests.front();
 		m_scaleRequests.pop();
 		if(req.type == ScaleRequest::Quit) {
+			m_connection_setScaledImage.disconnect();
 			break;
 		} else if(req.type == ScaleRequest::Scale) {
 			m_scaleMutex.unlock();
@@ -650,14 +651,14 @@ void Displayer::scaleThread() {
 			m_scaleMutex.unlock();
 
 			double scale = req.scale;
-			Glib::signal_idle().connect_once([this,image,scale] { setScaledImage(image, scale); });
+			m_connection_setScaledImage = Glib::signal_idle().connect([this,image,scale] { setScaledImage(image); return false; });
 			m_scaleMutex.lock();
 		}
 	};
 	m_scaleMutex.unlock();
 }
 
-void Displayer::setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image, double scale) {
+void Displayer::setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image) {
 	m_scaleMutex.lock();
 	if(!m_scaleRequests.empty() && m_scaleRequests.front().type == ScaleRequest::Abort) {
 		m_scaleRequests.pop();
