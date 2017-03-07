@@ -180,6 +180,7 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 		return true;
 	}
 	if(m_scaleThread) {
+		sendScaleRequest({ScaleRequest::Abort});
 		sendScaleRequest({ScaleRequest::Quit});
 		m_scaleThread->join();
 		m_scaleThread = nullptr;
