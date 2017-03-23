@@ -205,6 +205,11 @@ bool Displayer::setSources(QList<Source*> sources) {
 		}
 		delete renderer;
 	}
+	if(page == 0) {
+		m_pageMap.clear();
+		m_sources.clear();
+		return false;
+	}
 
 	ui.spinBoxPage->setMaximum(page);
 	ui.actionPage->setVisible(page > 1);

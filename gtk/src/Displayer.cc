@@ -236,6 +236,11 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 		}
 		delete renderer;
 	}
+	if(page == 0) {
+		m_pageMap.clear();
+		m_sources.clear();
+		return false;
+	}
 
 	m_pagespin->get_adjustment()->set_upper(page);
 	m_pagespin->set_visible(page > 1);
