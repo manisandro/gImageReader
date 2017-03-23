@@ -242,7 +242,9 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 		return false;
 	}
 
+	m_connection_pageSpinChanged.block();
 	m_pagespin->get_adjustment()->set_upper(page);
+	m_connection_pageSpinChanged.unblock();
 	m_pagespin->set_visible(page > 1);
 	m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
 	m_canvas->show();

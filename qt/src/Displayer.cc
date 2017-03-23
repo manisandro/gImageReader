@@ -211,7 +211,9 @@ bool Displayer::setSources(QList<Source*> sources) {
 		return false;
 	}
 
+	ui.spinBoxPage->blockSignals(true);
 	ui.spinBoxPage->setMaximum(page);
+	ui.spinBoxPage->blockSignals(false);
 	ui.actionPage->setVisible(page > 1);
 	setCursor(Qt::CrossCursor);
 	m_imageItem = new QGraphicsPixmapItem();
