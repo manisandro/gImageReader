@@ -222,8 +222,8 @@ public:
 
 class OutputEditorHOCR::PoDoFoPDFPainter : public OutputEditorHOCR::PDFPainter {
 public:
-	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor, double imageScale)
-		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor), m_imageScale(imageScale) {
+	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor)
+		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor) {
 		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
 	}
 	void setFontSize(double pointSize) override {
@@ -234,14 +234,13 @@ public:
 		m_painter->DrawText(x * m_scaleFactor, m_pageHeight - y * m_scaleFactor, pdfString);
 	}
 	void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) override {
+		Image img(image, settings.colorFormat, settings.conversionFlags);
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 		PoDoFo::PdfImage pdfImage(m_document);
 #else
 		PoDoFo::PdfImageCompat pdfImage(m_document);
 #endif
-		Cairo::RefPtr<Cairo::ImageSurface> scaledImage = Image::scale(image, m_imageScale);
 		pdfImage.SetImageColorSpace(settings.colorFormat == Image::Format_RGB24 ? PoDoFo::ePdfColorSpace_DeviceRGB : PoDoFo::ePdfColorSpace_DeviceGray);
-		Image img(scaledImage, settings.colorFormat, settings.conversionFlags);
 		if(settings.compression == PDFSettings::CompressZip) {
 			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<const char*>(img.data), img.bytesPerLine * img.height);
 			pdfImage.SetImageData(img.width, img.height, img.sampleSize, &is, {PoDoFo::ePdfFilter_FlateDecode});
@@ -268,7 +267,7 @@ public:
 			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<char*>(encoded), encodedLen);
 			pdfImage.SetImageDataRaw(img.width, img.height, img.sampleSize, &is);
 		}
-		m_painter->DrawImage(bbox.x * m_scaleFactor, m_pageHeight - (bbox.y + bbox.height) * m_scaleFactor, &pdfImage, m_scaleFactor / m_imageScale, m_scaleFactor / m_imageScale);
+		m_painter->DrawImage(bbox.x * m_scaleFactor, m_pageHeight - (bbox.y + bbox.height) * m_scaleFactor, &pdfImage, m_scaleFactor * bbox.width / double(image->get_width()), m_scaleFactor * bbox.height / double(image->get_height()));
 	}
 	double getAverageCharWidth() const override {
 		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x')) / m_scaleFactor;
@@ -821,7 +820,7 @@ void OutputEditorHOCR::showItemProperties(Gtk::TreeIter item) {
 	}
 }
 
-bool OutputEditorHOCR::setCurrentSource(xmlpp::Element* pageElement, int* pageDpi) const {
+bool OutputEditorHOCR::setCurrentSource(xmlpp::Element* pageElement, int* pageDpi, int* overrideDpi) const {
 	Glib::MatchInfo matchInfo;
 	Glib::ustring titleAttr = getAttribute(pageElement, "title");
 	if(s_pageTitleRx->match(titleAttr, matchInfo)) {
@@ -831,6 +830,9 @@ bool OutputEditorHOCR::setCurrentSource(xmlpp::Element* pageElement, int* pageDp
 		int res = std::atoi(matchInfo.fetch(4).c_str());
 		if(pageDpi) {
 			*pageDpi = res;
+		}
+		if(overrideDpi) {
+			res = *overrideDpi;
 		}
 
 		MAIN->getSourceManager()->addSources({Gio::File::create_for_path(filename)});
@@ -1387,20 +1389,23 @@ void OutputEditorHOCR::savePDF() {
 		xmlpp::DomParser parser;
 		parser.parse_memory((*item)[m_itemStoreCols.source]);
 		xmlpp::Document* doc = parser.get_document();
-		int pageDpi = 72;
-		if(doc->get_root_node() && doc->get_root_node()->get_name() == "div" && setCurrentSource(doc->get_root_node(), &pageDpi)) {
-			double dpiScale = 72. / pageDpi;
-			double imageScale = m_builder("spin:pdfoptions.dpi").as<Gtk::SpinButton>()->get_value() / double(pageDpi);
-			PoDoFo::PdfPage* page = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width * dpiScale, bbox.height * dpiScale));
+		int sourceDpi = -1;
+		int outputDpi = m_builder("spin:pdfoptions.dpi").as<Gtk::SpinButton>()->get_value();
+		if(doc->get_root_node() && doc->get_root_node()->get_name() == "div" && setCurrentSource(doc->get_root_node(), &sourceDpi, &outputDpi)) {
+			double docScale = (72. / sourceDpi);
+			double imgScale = double(outputDpi) / sourceDpi;
+			PoDoFo::PdfPage* page = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width * docScale, bbox.height * docScale));
 			painter.SetPage(page);
 			painter.SetFont(font);
 
-			PoDoFoPDFPainter pdfprinter(document, &painter, dpiScale, imageScale);
+			PoDoFoPDFPainter pdfprinter(document, &painter, docScale);
 			pdfprinter.setFontSize(fontSize);
-			printChildren(pdfprinter, item, pdfSettings);
+			printChildren(pdfprinter, item, pdfSettings, imgScale);
 			if(pdfSettings.overlay) {
-				pdfprinter.drawImage(bbox, m_tool->getSelection(bbox), pdfSettings);
+				Geometry::Rectangle scaledBBox(imgScale * bbox.x, imgScale * bbox.y, imgScale * bbox.width, imgScale * bbox.height);
+				pdfprinter.drawImage(bbox, m_tool->getSelection(scaledBBox), pdfSettings);
 			}
+			MAIN->getDisplayer()->setResolution(sourceDpi);
 			painter.FinishPage();
 		} else {
 			failed.push_back((*item)[m_itemStoreCols.text]);
@@ -1413,7 +1418,7 @@ void OutputEditorHOCR::savePDF() {
 	delete document;
 }
 
-void OutputEditorHOCR::printChildren(PDFPainter& painter, Gtk::TreeIter item, const PDFSettings& pdfSettings) const {
+void OutputEditorHOCR::printChildren(PDFPainter& painter, Gtk::TreeIter item, const PDFSettings& pdfSettings, double imgScale) const {
 	if(!(*item)[m_itemStoreCols.selected]) {
 		return;
 	}
@@ -1454,11 +1459,11 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, Gtk::TreeIter item, co
 			painter.drawText(wordRect.x, y, Glib::ustring((*wordItem)[m_itemStoreCols.text]));
 		}
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {
-		Cairo::RefPtr<Cairo::ImageSurface> sel = m_tool->getSelection(itemRect);
-		painter.drawImage(itemRect, sel, pdfSettings);
+		Geometry::Rectangle scaledItemRect(imgScale * itemRect.x, imgScale * itemRect.y, imgScale * itemRect.width, imgScale * itemRect.height);
+		painter.drawImage(itemRect, m_tool->getSelection(scaledItemRect), pdfSettings);
 	} else {
 		for(Gtk::TreeIter child : item->children()) {
-			printChildren(painter, child, pdfSettings);
+			printChildren(painter, child, pdfSettings, imgScale);
 		}
 	}
 }
@@ -1485,7 +1490,7 @@ void OutputEditorHOCR::updatePreview() {
 	xmlpp::DomParser parser;
 	parser.parse_memory((*item)[m_itemStoreCols.source]);
 	xmlpp::Document* doc = parser.get_document();
-	int pageDpi = 72;
+	int pageDpi = -1;
 	setCurrentSource(doc->get_root_node(), &pageDpi);
 
 	Cairo::RefPtr<Cairo::ImageSurface> image = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, bbox.width, bbox.height);

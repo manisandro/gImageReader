@@ -143,8 +143,8 @@ private:
 	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString, QString>& langCache);
 	QDomElement elementById(QDomElement element, const QString& id) const;
 	void expandChildren(QTreeWidgetItem* item) const;
-	void printChildren(PDFPainter& painter, QTreeWidgetItem* item, const PDFSettings& pdfSettings) const;
-	bool setCurrentSource(const QDomElement& pageElement, int* pageDpi = 0) const;
+	void printChildren(PDFPainter& painter, QTreeWidgetItem* item, const PDFSettings& pdfSettings, double imgScale = 1.) const;
+	bool setCurrentSource(const QDomElement& pageElement, int* pageDpi = 0, int* overrideDpi = 0) const;
 	void updateCurrentItemText();
 	void updateCurrentItemAttribute(const QString& key, const QString& subkey, const QString& newvalue, bool update=true);
 	void updateCurrentItem();

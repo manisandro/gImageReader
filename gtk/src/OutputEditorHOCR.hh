@@ -184,8 +184,8 @@ private:
 	Gtk::TreeIter currentItem();
 	void addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page, bool cleanGraphics);
 	bool addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring, Glib::ustring>& langCache);
-	void printChildren(PDFPainter& painter, Gtk::TreeIter item, const PDFSettings& pdfSettings) const;
-	bool setCurrentSource(xmlpp::Element* pageElement, int* pageDpi = 0) const;
+	void printChildren(PDFPainter& painter, Gtk::TreeIter item, const PDFSettings& pdfSettings, double imgScale = 1.) const;
+	bool setCurrentSource(xmlpp::Element* pageElement, int* pageDpi = 0, int* overrideDpi = 0) const;
 	void updateCurrentItemText();
 	void updateCurrentItemAttribute(const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue, bool update=true);
 	void updateCurrentItem();
