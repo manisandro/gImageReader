@@ -180,6 +180,7 @@ MainWindow::MainWindow()
 		m_window->resize(geom[2], geom[3]);
 		m_window->move(geom[0], geom[1]);
 	}
+	getWidget("paned:output").as<Gtk::Paned>()->set_orientation(static_cast<Gtk::Orientation>(!getWidget("combo:config.settings.paneorient").as<Gtk::ComboBoxText>()->get_active_row_number()));
 #if ENABLE_VERSIONCHECK
 	if(m_config->getSetting<SwitchSetting>("updatecheck")->getValue()) {
 		m_newVerThread = Glib::Threads::Thread::create([this] { getNewestVersion(); });
