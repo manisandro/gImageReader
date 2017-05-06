@@ -9,7 +9,6 @@ SetCompressor /SOLID /FINAL lzma
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME "InstallMode"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "Software\${NAME}"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME "InstallPath"
-!define MULTIUSER_INSTALLMODE_INSTDIR "${NAME}"
 !define REG_UNINSTALL "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}"
 
 !include "MUI2.nsh"
@@ -19,7 +18,6 @@ SetCompressor /SOLID /FINAL lzma
 ;********** General **********
 Name "${NAME} ${PROGVERSION}"
 OutFile "${NAME}_${PROGVERSION}_${IFACE}_${ARCH}.exe"
-InstallDir @PROGRAMFILES@
 
 ;********** Functions **********
 Function GetParent
@@ -48,6 +46,22 @@ Function GetParent
 FunctionEnd
 
 Function .onInit
+  ; Check if user supplied a custom install dir
+  ${If} "$INSTDIR" == ""
+    ; No custom install dir, use default
+    StrCpy $InstDir "$PROGRAMFILES\${NAME}"
+    ; Use $PROGRAMFILES64 if installing 64-bit application on 64-bit Windows
+    ${If} ${RunningX64}
+      ${If} ${ARCH} == "x86_64"
+        SetRegView 64
+        StrCpy $InstDir "$PROGRAMFILES64\${NAME}"
+      ${EndIf}
+    ${EndIf}
+  ${Else}
+    StrCpy $InstDir "$INSTDIR"
+  ${EndIf}
+  !define MULTIUSER_INSTALLMODE_INSTDIR "$InstDir"
+
   !insertmacro MULTIUSER_INIT
   
   InitPluginsDir
@@ -65,7 +79,6 @@ Function .onInit
     MessageBox MB_OK "The installer is not compatible with your system architecture."
     Abort
   ${EndIf}
-
 
   ; Remove previous versions before installing new one
   ReadRegStr $0 SHCTX "${REG_UNINSTALL}" "UninstallString"

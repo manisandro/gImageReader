@@ -48,7 +48,7 @@ mv ${installroot}_$MINGWROOT $installroot
 rm -rf ${installroot}_
 cp $win32dir/gimagereader-icon.rc $builddir
 cp $win32dir/gimagereader.ico $builddir
-cp $win32dir/installer.nsi.in $builddir
+cp $win32dir/installer.nsi $builddir
 
 # Collect dependencies
 function isnativedll {
@@ -133,7 +133,6 @@ elif [ "$iface" == "qt5" ]; then
 
     linkDep $(ls $MINGWROOT/bin/libssl-*.dll | sed "s|^$MINGWROOT/||")
     linkDep $(ls $MINGWROOT/bin/libcrypto-*.dll | sed "s|^$MINGWROOT/||")
-    linkDep lib/qt5/plugins/imageformats/qdds.dll  bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qgif.dll  bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qicns.dll bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qico.dll  bin/imageformats
@@ -178,11 +177,6 @@ progName=$(grep -oP 'SET\(PACKAGE_NAME \K(\w+)(?=\))' $srcdir/CMakeLists.txt)
 progVersion=$(grep -oP 'SET\(PACKAGE_VERSION \K([\d\.]+)(?=\))' $srcdir/CMakeLists.txt)
 if [ $withdebug ]; then
     variant="_debug"
-fi
-if [ $bits -eq 32 ]; then
-    sed 's|@PROGRAMFILES@|$PROGRAMFILES|' < installer.nsi.in > installer.nsi
-else
-    sed 's|@PROGRAMFILES@|$PROGRAMFILES64|' < installer.nsi.in > installer.nsi
 fi
 makensis -DNAME=$progName -DARCH=$arch -DVARIANT="$variant" -DPROGVERSION="$progVersion" -DIFACE="$iface" installer.nsi;
 
