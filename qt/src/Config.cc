@@ -334,7 +334,7 @@ Config::Config(QWidget* parent)
 }
 
 Config::~Config() {
-	qDeleteAll(m_settings.values());
+	qDeleteAll(m_settings);
 }
 
 bool Config::searchLangSpec(Lang& lang) const {

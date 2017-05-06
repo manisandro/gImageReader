@@ -465,7 +465,7 @@ void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int
 	ui.treeWidgetItems->addTopLevelItem(pageItem);
 	QMap<QString,QString> langCache;
 
-	QList<QPair<QDomElement,QRect>> graphicElements;
+	QVector<QPair<QDomElement,QRect>> graphicElements;
 	QDomElement element = pageDiv.firstChildElement("div");
 	while(!element.isNull()) {
 		// Boxes without text are images

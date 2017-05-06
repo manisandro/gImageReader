@@ -345,7 +345,7 @@ void Recognizer::setMultiLanguage() {
 	QString langs;
 	for(QAction* action : m_langMenuCheckGroup->actions()) {
 		if(action->isChecked()) {
-			langs += action->data().value<QString>() + "+";
+			langs += action->data().toString() + "+";
 		}
 	}
 	if(langs.isEmpty()) {
