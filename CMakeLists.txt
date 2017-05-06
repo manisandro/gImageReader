@@ -230,7 +230,12 @@ TARGET_LINK_LIBRARIES(gimagereader
     -ldl
     -lgomp
 )
-SET_TARGET_PROPERTIES(gimagereader PROPERTIES COMPILE_FLAGS "-fopenmp")
+
+IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+ELSE()
+  SET_TARGET_PROPERTIES(gimagereader PROPERTIES COMPILE_FLAGS "-fopenmp")
+ENDIF()
+
 SET_TARGET_PROPERTIES(gimagereader PROPERTIES OUTPUT_NAME gimagereader-${INTERFACE_TYPE})
 IF("${INTERFACE_TYPE}" STREQUAL "qt4")
     QT4_USE_MODULES(gimagereader Core Gui Network DBus Xml)
