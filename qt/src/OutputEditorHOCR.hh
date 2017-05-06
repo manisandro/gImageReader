@@ -131,6 +131,7 @@ private:
 	Ui::PdfExportDialog m_pdfExportDialogUi;
 	QFontDialog m_pdfFontDialog;
 
+	QTreeWidgetItem* m_rootItem = nullptr;
 	QTreeWidgetItem* m_currentItem = nullptr;
 	QTreeWidgetItem* m_currentPageItem = nullptr;
 	QDomDocument m_currentDocument;
@@ -143,6 +144,7 @@ private:
 	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString, QString>& langCache);
 	QDomElement elementById(QDomElement element, const QString& id) const;
 	void expandChildren(QTreeWidgetItem* item) const;
+	void collapseChildren(QTreeWidgetItem* item) const;
 	void printChildren(PDFPainter& painter, QTreeWidgetItem* item, const PDFSettings& pdfSettings, double imgScale = 1.) const;
 	bool setCurrentSource(const QDomElement& pageElement, int* pageDpi = 0, int* overrideDpi = 0) const;
 	void updateCurrentItemText();

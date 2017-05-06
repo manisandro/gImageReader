@@ -102,6 +102,8 @@ private:
 		Gtk::TreeModelColumn<double> fontSize;
 		Gtk::TreeModelColumn<int> baseLine;
 		Gtk::TreeModelColumn<Glib::ustring> textColor;
+		Gtk::TreeModelColumn<bool> checkboxVisible;
+		Gtk::TreeModelColumn<bool> iconVisible;
 		ItemStoreColumns() {
 			add(selected);
 			add(editable);
@@ -112,7 +114,10 @@ private:
 			add(bbox);
 			add(itemClass);
 			add(fontSize);
-			add(baseLine), add(textColor);
+			add(baseLine);
+			add(textColor);
+			add(checkboxVisible);
+			add(iconVisible);
 		}
 	} m_itemStoreCols;
 
@@ -170,6 +175,7 @@ private:
 	Gtk::Dialog* m_pdfExportDialog = nullptr;
 	DisplayerImageItem* m_preview = nullptr;
 
+	Gtk::TreePath m_rootItem;
 	Gtk::TreePath m_currentItem;
 	Gtk::TreePath m_currentPageItem;
 	xmlpp::DomParser* m_currentParser = nullptr;
