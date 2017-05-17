@@ -144,6 +144,13 @@ MainWindow::MainWindow()
 	m_idlegroup.push_back(getWidget("button:main.autolayout"));
 	m_idlegroup.push_back(getWidget("menubutton:main.languages"));
 
+	getWidget("image:main.controls").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/controls.png"));
+	getWidget("image:display.rotate.mode").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/rotate_pages.png"));
+	getWidget("image:display.rotate.all").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/rotate_pages.png"));
+	getWidget("image:display.rotate.current").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/rotate_page.png"));
+	getWidget("image:main.autolayout").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/autolayout.png"));
+
+
 	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) {
 		return closeEvent(ev);
 	});
