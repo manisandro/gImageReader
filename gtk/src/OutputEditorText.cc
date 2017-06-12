@@ -175,8 +175,8 @@ void OutputEditorText::filterBuffer() {
 			preChars += "\\.\\?!"; // Keep if preceded by end mark (.?!)
 		}
 		if(m_filterKeepIfQuote->get_active()) {
-			preChars += "'\"»«"; // Keep if preceded by quote
-			sucChars += "'\"«»"; // Keep if succeeded by quote
+			preChars += "'\"\u00BB\u00AB"; // Keep if preceded by quote
+			sucChars += "'\"\u00AB\u00BB"; // Keep if succeeded by quote
 		}
 		if(m_filterKeepParagraphs->get_active()) {
 			sucChars += "\\n"; // Keep if succeeded by line break
