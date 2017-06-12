@@ -136,8 +136,8 @@ void OutputEditorText::filterBuffer() {
 			preChars += "\\.\\?!"; // Keep if preceded by end mark (.?!)
 		}
 		if(ui.actionOutputPostprocKeepQuote->isChecked()) {
-			preChars += "'\""; // Keep if preceded by dot
-			sucChars += "'\""; // Keep if succeeded by dot
+			preChars += "'\"»«"; // Keep if preceded by quote
+			sucChars += "'\"«»"; // Keep if succeeded by quote
 		}
 		if(ui.actionOutputPostprocKeepParagraphs->isChecked()) {
 			sucChars += "\u2029"; // Keep if succeeded by line break
