@@ -47,7 +47,7 @@
 #include "TessdataManager.hh"
 #include "Utils.hh"
 #include "ui_PageRangeDialog.h"
-#include "ImagePreprocessor.hpp"
+#include "ImagePreprocessor.hh"
 
 struct Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
 	ETEXT_DESC desc;

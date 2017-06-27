@@ -1,31 +1,26 @@
+/* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
-    MIT License
+ * Config.hh
+ * Copyright (C) 2017 Alexander Zaitsev <zamazan4ik@tut.by>
+ *
+ * gImageReader is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * gImageReader is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-    Copyright (c) 2017 Alexander Zaitsev
+#include "Deskew.hh"
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
-*/
-
-#include "Deskew.hpp"
-
-#include "Rotate.hpp"
-#include "FormatConvert.hpp"
+#include "Rotate.hh"
+#include "FormatConvert.hh"
 
 #include "opencv2/imgproc.hpp"
 #include "opencv2/highgui.hpp"
@@ -197,8 +192,6 @@ double FindAngle(const cv::Mat& input_orig)
     return cv_angle;
 }
 
-#include <iostream>
-
 bool prl::deskew(cv::Mat& inputImage, cv::Mat& deskewedImage)
 {
     cv::Mat processingImage;
@@ -216,8 +209,6 @@ bool prl::deskew(cv::Mat& inputImage, cv::Mat& deskewedImage)
     cv::threshold(processingImage, processingImage, 128, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
 
     double angle = FindAngle(processingImage);
-
-    std::cerr << angle << std::endl;
     
     //Check for zero angle and some strange values for double: NaN, inf, -inf
     if ((angle != 0) && (angle > -std::numeric_limits<double>::max() && angle < std::numeric_limits<double>::max()))
@@ -233,8 +224,6 @@ bool prl::deskew(cv::Mat& inputImage, cv::Mat& deskewedImage)
     }
 
     angle = FindOrientation(deskewedImage);
-
-    std::cerr << angle << std::endl;
     
     if (angle != 0)
     {

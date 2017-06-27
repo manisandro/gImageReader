@@ -23,7 +23,7 @@
 **
 ****************************************************************************/
 
-#include "cvmatandqimage.h"
+#include "cvmatandqimage.hh"
 #include <QImage>
 #include <QSysInfo>
 #include <QDebug>
