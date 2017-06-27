@@ -47,12 +47,14 @@ ADD_DEFINITIONS(-DPACKAGE_REVISION=\"${PACKAGE_REVISION}\")
 ADD_DEFINITIONS(-DGETTEXT_PACKAGE=\"${CMAKE_PROJECT_NAME}\")
 ADD_DEFINITIONS(-DENABLE_VERSIONCHECK=${ENABLE_VERSIONCHECK})
 ADD_DEFINITIONS(-DMANUAL_DIR=\"${MANUAL_DIR}\")
-ADD_DEFINITIONS(-std=c++11)
 
+set(CMAKE_CXX_STANDARD 11)
 
 # Dependencies
 FIND_PACKAGE(Gettext REQUIRED)
 FIND_PACKAGE(PkgConfig REQUIRED)
+FIND_PACKAGE(OpenCV REQUIRED)
+PKG_SEARCH_MODULE(LEPTONICA REQUIRED lept)
 PKG_CHECK_MODULES(TESSERACT tesseract)
 IF(NOT TESSERACT_FOUND)
     MESSAGE(WARNING "Using hardcoded cflags and ldflags for tesseract")
@@ -64,7 +66,11 @@ IF(UNIX)
 ENDIF(UNIX)
 SET(PODOFO_LDFLAGS -lpodofo)
 
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/common ${CMAKE_BINARY_DIR} ${TESSERACT_INCLUDE_DIRS} ${SANE_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/common 
+${CMAKE_SOURCE_DIR}/preprocess
+${CMAKE_BINARY_DIR} ${TESSERACT_INCLUDE_DIRS} 
+${SANE_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS}
+${LEPTONICA_INCLUDE_DIRS})
 
 IF("${INTERFACE_TYPE}" STREQUAL "gtk")
     PKG_CHECK_MODULES(GTKMM REQUIRED gtkmm-3.0)
@@ -141,10 +147,10 @@ ENDIF()
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${srcdir}/src/ )
 
 # Files
-FILE(GLOB gimagereader_SRCS ${srcdir}/src/*.cc common/*.cc)
+FILE(GLOB gimagereader_SRCS ${srcdir}/src/*.cc common/*.cc preprocess/*.cpp)
 # sort lists to avoid dependency on readdir() order and make build reproducible
 LIST(SORT gimagereader_SRCS)
-FILE(GLOB gimagereader_HDRS ${srcdir}/src/*.hh common/*.hh)
+FILE(GLOB gimagereader_HDRS ${srcdir}/src/*.hh common/*.hh preprocess/*.hpp)
 LIST(SORT gimagereader_HDRS)
 FILE(GLOB gimagereader_FORMS ${srcdir}/data/*.ui)
 LIST(SORT gimagereader_FORMS)
@@ -161,7 +167,6 @@ ELSE(UNIX)
     LIST(APPEND gimagereader_SRCS ${srcdir}/src/scanner/ScannerTwain.cc)
     LIST(APPEND gimagereader_HDRS ${srcdir}/src/scanner/ScannerTwain.hh)
 ENDIF(UNIX)
-
 
 IF("${srcdir}" STREQUAL "gtk")
     ADD_SCHEMA("gtk/data/org.gnome.gimagereader.gschema.xml")
@@ -186,11 +191,12 @@ ENDIF()
 
 IF("${srcdir}" STREQUAL "qt")
     # Gettextize ui files
-    ADD_CUSTOM_TARGET(
+    # Commented lines below because it forces recompiling all project
+    #[[ADD_CUSTOM_TARGET(
         gettextizeui
         COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/gettextizeui.cmake ${gimagereader_FORMS_HEADERS}
         DEPENDS ${gimagereader_FORMS_HEADERS}
-    )
+    )]]
 ENDIF()
 
 FILE(READ po/LINGUAS langs_string)
@@ -227,6 +233,8 @@ TARGET_LINK_LIBRARIES(gimagereader
     ${TESSERACT_LDFLAGS}
     ${gimagereader_LIBS}
     ${SANE_LDFLAGS}
+    ${OpenCV_LIBS}
+    ${LEPTONICA_LIBRARIES}
     -ldl
     -lgomp
 )

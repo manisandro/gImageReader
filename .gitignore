@@ -1,1 +1,9 @@
 build
+
+\.idea/
+
+cmake-build-debug/
+
+\.kdev4/
+
+*.kdev4
