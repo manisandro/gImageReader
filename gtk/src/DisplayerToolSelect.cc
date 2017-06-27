@@ -196,6 +196,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 	// If a somewhat large deskew angle is detected, automatically rotate image and redetect layout,
 	// unless we already attempted to rotate (to prevent endless loops)
 	avgDeskew = Utils::round(((avgDeskew/nDeskew)/M_PI * 180.) * 10.) / 10.;
+    //TODO: CppCheck warning for 'if' below. Is it correct: std::abs(avgDeskew > .1)? bool inside std::abs
 	if(std::abs(avgDeskew > .1) && !noDeskew) {
 		m_displayer->setAngle(m_displayer->getCurrentAngle() - avgDeskew);
 		autodetectLayout(true);
