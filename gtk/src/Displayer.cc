@@ -149,6 +149,10 @@ bool Displayer::setCurrentPage(int page) {
 	}
 	Source* source = m_pageMap[page].first;
 	if(source != m_currentSource) {
+		sendScaleRequest({ScaleRequest::Abort});
+		sendScaleRequest({ScaleRequest::Quit});
+		m_scaleThread->join();
+		m_scaleThread = nullptr;
 		delete m_renderer;
 		std::string filename = source->file->get_path();
 #ifdef G_OS_WIN32
@@ -169,6 +173,7 @@ bool Displayer::setCurrentPage(int page) {
 		m_invcheck->set_active(source->invert);
 		m_connection_invcheckToggled.block(false);
 		m_currentSource = source;
+		m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
 	}
 	Utils::set_spin_blocked(m_rotspin, source->angle[m_pageMap[page].second - 1] / M_PI * 180., m_connection_rotSpinChanged);
 	Utils::set_spin_blocked(m_pagespin, page, m_connection_pageSpinChanged);

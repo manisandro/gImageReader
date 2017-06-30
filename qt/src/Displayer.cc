@@ -98,6 +98,11 @@ bool Displayer::setCurrentPage(int page) {
 	}
 	Source* source = m_pageMap[page].first;
 	if(source != m_currentSource) {
+		sendScaleRequest({ScaleRequest::Abort});
+		sendScaleRequest({ScaleRequest::Quit});
+		while(m_scaleThread.isRunning()) {
+			QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+		}
 		delete m_renderer;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
 			m_renderer = new PDFRenderer(source->path);
@@ -114,6 +119,7 @@ bool Displayer::setCurrentPage(int page) {
 		ui.checkBoxInvertColors->setChecked(source->invert);
 		ui.checkBoxInvertColors->blockSignals(false);
 		m_currentSource = source;
+		m_scaleThread.start();
 	}
 	Utils::setSpinBlocked(ui.spinBoxRotation, source->angle[m_pageMap[page].second - 1]);
 	Utils::setSpinBlocked(ui.spinBoxPage, page);
