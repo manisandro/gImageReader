@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>256</width>
-    <height>120</height>
+    <width>263</width>
+    <height>202</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,7 +52,7 @@
      </item>
     </widget>
    </item>
-   <item row="4" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -62,7 +62,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
+   <item row="4" column="0" colspan="2">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -74,6 +74,44 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBoxPrepend">
+     <property name="title">
+      <string>Prepend to output text:</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="leftMargin">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>2</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="checkBoxPrependFilename">
+        <property name="text">
+         <string>Source filename</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBoxPrependPage">
+        <property name="text">
+         <string>Source page</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
   </layout>
  </widget>

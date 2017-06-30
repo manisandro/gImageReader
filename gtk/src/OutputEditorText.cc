@@ -254,10 +254,24 @@ void OutputEditorText::findReplace(bool backwards, bool replace) {
 }
 
 void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data) {
-	char* text = tess.GetUTF8Text();
+	char* textbuf = tess.GetUTF8Text();
+	Glib::ustring text = Glib::ustring(textbuf);
+	if(!text.empty() && *--text.end() != '\n')
+		text.append("\n");
+	if(data->prependFile || data->prependPage) {
+		std::vector<Glib::ustring> prepend;
+		if(data->prependFile) {
+			prepend.push_back(Glib::ustring::compose(_("File: %1"), data->file));
+		}
+		if(data->prependPage) {
+			prepend.push_back(Glib::ustring::compose(_("Page: %1"), data->page));
+		}
+		text = Glib::ustring::compose("[%1]\n", Utils::string_join(prepend, "; ")) + text;
+	}
+
 	bool& insertText = static_cast<TextReadSessionData*>(data)->insertText;
 	Utils::runInMainThreadBlocking([&] { addText(text, insertText); });
-	delete[] text;
+	delete[] textbuf;
 	insertText = true;
 }
 
