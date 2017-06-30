@@ -485,10 +485,13 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 				readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
 				readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
 				bool firstChunk = true;
+				bool newFile = readSessionData->file != prevFile;
+				prevFile = readSessionData->file;
 				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : MAIN->getDisplayer()->getOCRAreas()) {
 					readSessionData->prependPage = prependPage && firstChunk;
-					readSessionData->prependFile = prependFile && (readSessionData->prependPage || readSessionData->file != prevFile);
+					readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
 					firstChunk = false;
+					newFile = false;
 					tess.SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
 					tess.SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 					tess.Recognize(&monitor.desc);
@@ -496,7 +499,7 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 						MAIN->getOutputEditor()->read(tess, readSessionData);
 					}
 				}
-				prevFile = readSessionData->file;
+
 				Glib::signal_idle().connect_once([] { MAIN->popState(); });
 				++monitor.donePages;
 				if(monitor.canceled) {

@@ -464,10 +464,13 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 				readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
 				readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
 				bool firstChunk = true;
+				bool newFile = readSessionData->file != prevFile;
+				prevFile = readSessionData->file;
 				for(const QImage& image : MAIN->getDisplayer()->getOCRAreas()) {
 					readSessionData->prependPage = prependPage && firstChunk;
-					readSessionData->prependFile = prependFile && (readSessionData->prependPage || readSessionData->file != prevFile);
+					readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
 					firstChunk = false;
+					newFile = false;
 					tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 					tess.SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 					tess.Recognize(&monitor.desc);
@@ -475,7 +478,6 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 						MAIN->getOutputEditor()->read(tess, readSessionData);
 					}
 				}
-				prevFile = readSessionData->file;
 				QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
 				++monitor.donePages;
 				if(monitor.canceled) {
