@@ -1001,7 +1001,7 @@
           </object>
         </child>
         <child>
-          <object class="GtkBox" id="box:main.zoon">
+          <object class="GtkBox" id="box:main.zoom">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
