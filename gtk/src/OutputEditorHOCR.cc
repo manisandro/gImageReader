@@ -1579,6 +1579,8 @@ bool OutputEditorHOCR::clear(bool hide) {
 	m_sourceView->get_buffer()->set_text("");
 	m_tool->clearSelection();
 	m_modified = false;
+	m_builder("button:hocr.save")->set_sensitive(false);
+	m_builder("button:hocr.export")->set_sensitive(false);
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
 	return true;

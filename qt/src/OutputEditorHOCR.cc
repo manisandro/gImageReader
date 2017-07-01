@@ -1345,6 +1345,8 @@ bool OutputEditorHOCR::clear(bool hide) {
 	ui.plainTextEditOutput->clear();
 	m_tool->clearSelection();
 	m_modified = false;
+	ui.actionOutputSaveHOCR->setEnabled(false);
+	ui.actionOutputExportPDF->setEnabled(false);
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
 	return true;
