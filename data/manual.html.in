@@ -47,6 +47,10 @@
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
 <pre style="max-height: 200px; overflow-y: auto; padding: 1em; border: 1px solid gray;">
+gImageReader 3.2.3 (Jul 01 2017):
+* Fix broken hOCR export
+* Add option to prepend source filename / page to plain text output
+
 gImageReader 3.2.2 (Jun 30 2017):
 * Attempt to use original source image for PDF output
 * Allow collapsing/expanding branches of hOCR tree via context menu

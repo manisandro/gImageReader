@@ -1,3 +1,7 @@
+gImageReader 3.2.3 (Jul 01 2017):
+* Fix broken hOCR export
+* Add option to prepend source filename / page to plain text output
+
 gImageReader 3.2.2 (Jun 30 2017):
 * Attempt to use original source image for PDF output
 * Allow collapsing/expanding branches of hOCR tree via context menu
