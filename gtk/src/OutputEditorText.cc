@@ -59,11 +59,19 @@ OutputEditorText::OutputEditorText()
 	m_toggleSearchButton->add_accelerator("clicked", group, GDK_KEY_F, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 	saveButton->add_accelerator("clicked", group, GDK_KEY_S, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 
+#if GTKMM_CHECK_VERSION(3,12,0)
 	m_builder("image:output.insert").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/ins_append.png"));
 	m_builder("image:output.stripcrlf").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/stripcrlf.png"));
 	m_builder("image:output.insert.append").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/ins_append.png"));
 	m_builder("image:output.insert.cursor").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/ins_cursor.png"));
 	m_builder("image:output.insert.replace").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/ins_replace.png"));
+#else
+	m_builder("image:output.insert").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/ins_append.png", 0)));
+	m_builder("image:output.stripcrlf").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/stripcrlf.png", 0)));
+	m_builder("image:output.insert.append").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/ins_append.png", 0)));
+	m_builder("image:output.insert.cursor").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/ins_cursor.png", 0)));
+	m_builder("image:output.insert.replace").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/ins_replace.png", 0)));
+#endif
 
 	m_substitutionsManager = new SubstitutionsManager(m_builder, m_textBuffer);
 
