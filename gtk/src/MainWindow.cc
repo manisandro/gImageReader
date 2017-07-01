@@ -206,6 +206,11 @@ MainWindow::MainWindow()
 }
 
 MainWindow::~MainWindow() {
+#if ENABLE_VERSIONCHECK
+	if(m_newVerThread) {
+		m_newVerThread->join();
+	}
+#endif
 	delete m_acquirer;
 	delete m_outputEditor;
 	delete m_sourceManager;
@@ -440,6 +445,7 @@ void MainWindow::getNewestVersion() {
 
 void MainWindow::checkVersion(const Glib::ustring& newver) {
 	m_newVerThread->join();
+	m_newVerThread = nullptr;
 	Glib::ustring curver = PACKAGE_VERSION;
 
 	if(newver.compare(curver) > 0) {

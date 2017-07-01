@@ -197,6 +197,11 @@ MainWindow::MainWindow(const QStringList& files)
 }
 
 MainWindow::~MainWindow() {
+#if ENABLE_VERSIONCHECK
+	while(m_versionCheckThread.isRunning()) {
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+	}
+#endif
 	delete m_acquirer;
 	delete m_outputEditor;
 	delete m_sourceManager;
