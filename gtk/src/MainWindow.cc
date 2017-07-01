@@ -144,11 +144,19 @@ MainWindow::MainWindow()
 	m_idlegroup.push_back(getWidget("button:main.autolayout"));
 	m_idlegroup.push_back(getWidget("menubutton:main.languages"));
 
+#if GTKMM_CHECK_VERSION(3,12,0)
 	getWidget("image:main.controls").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/controls.png"));
 	getWidget("image:display.rotate.mode").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/rotate_pages.png"));
 	getWidget("image:display.rotate.all").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/rotate_pages.png"));
 	getWidget("image:display.rotate.current").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/rotate_page.png"));
 	getWidget("image:main.autolayout").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/autolayout.png"));
+#else
+	getWidget("image:main.controls").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/controls.png", 0)));
+	getWidget("image:display.rotate.mode").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/rotate_pages.png", 0)));
+	getWidget("image:display.rotate.all").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/rotate_pages.png", 0)));
+	getWidget("image:display.rotate.current").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/rotate_page.png", 0)));
+	getWidget("image:main.autolayout").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/autolayout.png", 0)));
+#endif
 
 
 	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) {
