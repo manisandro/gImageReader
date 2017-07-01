@@ -436,8 +436,8 @@ void Recognizer::recognizeMultiplePages() {
 
 void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 	tesseract::TessBaseAPI tess;
-	bool prependFile = MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcefilename")->getValue();
-	bool prependPage = MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcepage")->getValue();
+	bool prependFile = pages.size() > 1 && MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcefilename")->getValue();
+	bool prependPage = pages.size() > 1 && MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcepage")->getValue();
 	if(initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())) {
 		QString failed;
 		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_psmCheckGroup->checkedAction()->data().toInt()));
