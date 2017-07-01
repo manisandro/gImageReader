@@ -399,6 +399,7 @@
                             <child>
                               <object class="GtkButton" id="button:sources.images.remove">
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="tooltip_text" translatable="yes">Remove image from list</property>
@@ -414,6 +415,7 @@
                             <child>
                               <object class="GtkButton" id="button:sources.images.delete">
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="tooltip_text" translatable="yes">Delete image</property>
@@ -429,6 +431,7 @@
                             <child>
                               <object class="GtkButton" id="button:sources.images.clear">
                                 <property name="visible">True</property>
+                                <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="tooltip_text" translatable="yes">Clear list</property>
