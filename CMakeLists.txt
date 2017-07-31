@@ -250,7 +250,7 @@ INSTALL(TARGETS gimagereader DESTINATION bin)
 INSTALL(FILES data/icons/48x48/gimagereader.png DESTINATION share/icons/hicolor/48x48/apps/)
 INSTALL(FILES data/icons/128x128/gimagereader.png DESTINATION share/icons/hicolor/128x128/apps/)
 INSTALL(FILES data/icons/256x256/gimagereader.png DESTINATION share/icons/hicolor/256x256/apps/)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.appdata.xml DESTINATION share/appdata)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.appdata.xml DESTINATION share/metainfo)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop DESTINATION share/applications)
 INSTALL(FILES ${manualFiles} DESTINATION "${MANUAL_DIR}")
 
