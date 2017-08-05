@@ -1434,7 +1434,11 @@ void OutputEditorHOCR::savePDF() {
 	if(!failed.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Errors occurred"), Glib::ustring::compose(_("The following pages could not be rendered:\n%1"), Utils::string_join(failed, "\n")));
 	}
-	document->Close();
+	try {
+		document->Close();
+	} catch(PoDoFo::PdfError& e) {
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Export failed"), Glib::ustring::compose(_("The PDF export failed (%1)."), e.what()));
+	}
 	delete document;
 }
 

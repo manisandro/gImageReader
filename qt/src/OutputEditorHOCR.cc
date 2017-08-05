@@ -1215,7 +1215,11 @@ void OutputEditorHOCR::savePDF() {
 	if(!failed.isEmpty()) {
 		QMessageBox::warning(m_widget, _("Errors occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
 	}
-	document->Close();
+	try {
+		document->Close();
+	} catch(PoDoFo::PdfError& e) {
+		QMessageBox::warning(m_widget, _("Export failed"), _("The PDF export failed (%1).").arg(e.what()));
+	}
 	delete document;
 }
 
