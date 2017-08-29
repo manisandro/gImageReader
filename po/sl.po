@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-01 10:34+0200\n"
-"PO-Revision-Date: 2017-06-30 20:02+0100\n"
-"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
-"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2017-08-29 12:50+0200\n"
+"Last-Translator: Bernard Banko <beernarrd at gmail.com>\n"
+"Language-Team: lugos.si\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
-"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
+"X-Generator: Virtaal 0.7.1\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:165
 msgid "Redetect Languages"
@@ -572,18 +572,16 @@ msgid "Autodetect"
 msgstr "Samodejno zaznaj"
 
 #: ../gtk/data/gimagereader.ui.h:69 ../qt/data/PageRangeDialog.ui.h:7
-#, fuzzy
 msgid "Prepend to output text:"
-msgstr "Pripni pod trenutno besedilo"
+msgstr "Pripni pred izhodno besedilo:"
 
 #: ../gtk/data/gimagereader.ui.h:70 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
-msgstr ""
+msgstr "Izvorno ime datoteke"
 
 #: ../gtk/data/gimagereader.ui.h:71 ../qt/data/PageRangeDialog.ui.h:9
-#, fuzzy
 msgid "Source page"
-msgstr "Vir"
+msgstr "Izvorna stran"
 
 #: ../gtk/data/gimagereader.ui.h:72 ../qt/src/TessdataManager.cc:47
 msgid "Tessdata Manager"
@@ -1025,14 +1023,12 @@ msgid "Replacing..."
 msgstr "Zamenjevanje ..."
 
 #: ../gtk/src/OutputEditorText.cc:264 ../qt/src/OutputEditorText.cc:204
-#, fuzzy
 msgid "File: %1"
-msgstr "Datoteke"
+msgstr "Datoteka: %1"
 
 #: ../gtk/src/OutputEditorText.cc:267 ../qt/src/OutputEditorText.cc:207
-#, fuzzy
 msgid "Page: %1"
-msgstr "Napaka sejanja: %1"
+msgstr "Stran: %1"
 
 #: ../gtk/src/OutputEditorText.cc:280 ../gtk/src/Recognizer.cc:481
 #: ../qt/src/Recognizer.cc:460
@@ -1409,15 +1405,14 @@ msgid "About gImageReader"
 msgstr "O programu gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Grafično začelje programa tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Spletna stran</"
-"a></p><p>&nbsp;</p></body></html>"
+"<html><head/><body><p>&nbsp;</p><p>Grafično začelje za tesseract-ocr</p><p><"
+"a href=\"https://github.com/manisandro/gImageReader/\">Spletna "
+"stran</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
