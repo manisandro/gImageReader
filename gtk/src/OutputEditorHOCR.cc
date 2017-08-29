@@ -222,8 +222,8 @@ public:
 
 class OutputEditorHOCR::PoDoFoPDFPainter : public OutputEditorHOCR::PDFPainter {
 public:
-	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor, double imageScale)
-		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor), m_imageScale(imageScale) {
+	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor)
+		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor) {
 		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
 	}
 	void setFontSize(double pointSize) override {
@@ -234,14 +234,13 @@ public:
 		m_painter->DrawText(x * m_scaleFactor, m_pageHeight - y * m_scaleFactor, pdfString);
 	}
 	void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) override {
+		Image img(image, settings.colorFormat, settings.conversionFlags);
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 		PoDoFo::PdfImage pdfImage(m_document);
 #else
 		PoDoFo::PdfImageCompat pdfImage(m_document);
 #endif
-		Cairo::RefPtr<Cairo::ImageSurface> scaledImage = Image::scale(image, m_imageScale);
 		pdfImage.SetImageColorSpace(settings.colorFormat == Image::Format_RGB24 ? PoDoFo::ePdfColorSpace_DeviceRGB : PoDoFo::ePdfColorSpace_DeviceGray);
-		Image img(scaledImage, settings.colorFormat, settings.conversionFlags);
 		if(settings.compression == PDFSettings::CompressZip) {
 			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<const char*>(img.data), img.bytesPerLine * img.height);
 			pdfImage.SetImageData(img.width, img.height, img.sampleSize, &is, {PoDoFo::ePdfFilter_FlateDecode});
@@ -268,7 +267,7 @@ public:
 			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<char*>(encoded), encodedLen);
 			pdfImage.SetImageDataRaw(img.width, img.height, img.sampleSize, &is);
 		}
-		m_painter->DrawImage(bbox.x * m_scaleFactor, m_pageHeight - (bbox.y + bbox.height) * m_scaleFactor, &pdfImage, m_scaleFactor / m_imageScale, m_scaleFactor / m_imageScale);
+		m_painter->DrawImage(bbox.x * m_scaleFactor, m_pageHeight - (bbox.y + bbox.height) * m_scaleFactor, &pdfImage, m_scaleFactor * bbox.width / double(image->get_width()), m_scaleFactor * bbox.height / double(image->get_height()));
 	}
 	double getAverageCharWidth() const override {
 		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x')) / m_scaleFactor;
@@ -306,6 +305,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	Gtk::TreeView_Private::_connect_auto_store_editable_signal_handler<bool>(m_itemView, itemViewCol->get_cells()[0], m_itemStoreCols.selected);
 	itemViewCol->pack_start(m_itemStoreCols.icon, false);
 	itemViewCol->pack_start(m_itemStoreCols.text, true);
+	itemViewCol->add_attribute(*itemViewCol->get_cells()[0], "visible", m_itemStoreCols.checkboxVisible);
+	itemViewCol->add_attribute(*itemViewCol->get_cells()[1], "visible", m_itemStoreCols.iconVisible);
 	Gtk::TreeView_Private::_connect_auto_store_editable_signal_handler<Glib::ustring>(m_itemView, itemViewCol->get_cells()[2], m_itemStoreCols.text);
 	m_itemView->append_column(*itemViewCol);
 	m_itemView->set_expander_column(*m_itemView->get_column(0));
@@ -314,6 +315,11 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 		itemViewCol->add_attribute(textRenderer->property_foreground(), m_itemStoreCols.textColor);
 		itemViewCol->add_attribute(textRenderer->property_editable(), m_itemStoreCols.editable);
 	}
+	Gtk::TreeIter rootItem = m_itemStore->append();
+	rootItem->set_value(m_itemStoreCols.text, Glib::ustring(_("Document")));
+	rootItem->set_value(m_itemStoreCols.checkboxVisible, false);
+	rootItem->set_value(m_itemStoreCols.iconVisible, false);
+	m_rootItem = m_itemStore->get_path(rootItem);
 
 	m_propView = m_builder("treeview:hocr.properties");
 	m_propStore = Gtk::TreeStore::create(m_propStoreCols);
@@ -585,7 +591,7 @@ void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& fil
 	int x2 = std::atoi(matchInfo.fetch(3).c_str());
 	int y2 = std::atoi(matchInfo.fetch(4).c_str());
 
-	Gtk::TreeIter pageItem = m_itemStore->append();
+	Gtk::TreeIter pageItem = m_itemStore->append(m_itemStore->get_iter(m_rootItem)->children());
 	pageItem->set_value(m_itemStoreCols.text, Glib::ustring::compose("%1 [%2]", filename, page));
 	pageItem->set_value(m_itemStoreCols.id, getAttribute(pageDiv, "id"));
 	pageItem->set_value(m_itemStoreCols.bbox, Geometry::Rectangle(x1, y1, x2-x1, y2-y1));
@@ -598,6 +604,8 @@ void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& fil
 	pageItem->set_value(m_itemStoreCols.selected, true);
 	pageItem->set_value(m_itemStoreCols.editable, false);
 	pageItem->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
+	pageItem->set_value(m_itemStoreCols.checkboxVisible, true);
+	pageItem->set_value(m_itemStoreCols.iconVisible, true);
 
 	std::map<Glib::ustring,Glib::ustring> langCache;
 
@@ -648,11 +656,14 @@ void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& fil
 			item->set_value(m_itemStoreCols.itemClass, Glib::ustring("ocr_graphic"));
 			item->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
 			item->set_value(m_itemStoreCols.bbox, Geometry::Rectangle(x1, y1, x2-x1, y2-y1));
+			item->set_value(m_itemStoreCols.checkboxVisible, true);
+			item->set_value(m_itemStoreCols.iconVisible, true);
 		} else {
 			element->get_parent()->remove_child(element);
 		}
 	}
 	pageItem->set_value(m_itemStoreCols.source, getElementXML(pageDiv));
+	m_itemView->expand_to_path(Gtk::TreePath(pageItem));
 	m_itemView->expand_row(Gtk::TreePath(pageItem), true);
 	MAIN->setOutputPaneVisible(true);
 	m_modified = true;
@@ -744,6 +755,8 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 						}
 					}
 					item->set_value(m_itemStoreCols.text, title);
+					item->set_value(m_itemStoreCols.checkboxVisible, true);
+					item->set_value(m_itemStoreCols.iconVisible, true);
 				} else {
 					m_itemStore->erase(item);
 				}
@@ -765,12 +778,13 @@ void OutputEditorHOCR::showItemProperties(Gtk::TreeIter item) {
 	m_currentElement = nullptr;
 	delete m_currentParser;
 	m_currentParser = nullptr;
-	if(!item) {
+	Gtk::TreeIter rootIter = m_itemStore->get_iter(m_rootItem);
+	if(!item || item == rootIter) {
 		return;
 	}
 	m_currentItem = m_itemStore->get_path(item);
 	Gtk::TreeIter parentItem = item;
-	while(parentItem->parent()) {
+	while(parentItem->parent() != rootIter) {
 		parentItem = parentItem->parent();
 	}
 	m_currentPageItem = m_itemStore->get_path(parentItem);
@@ -821,7 +835,7 @@ void OutputEditorHOCR::showItemProperties(Gtk::TreeIter item) {
 	}
 }
 
-bool OutputEditorHOCR::setCurrentSource(xmlpp::Element* pageElement, int* pageDpi) const {
+bool OutputEditorHOCR::setCurrentSource(xmlpp::Element* pageElement, int* pageDpi, int* overrideDpi) const {
 	Glib::MatchInfo matchInfo;
 	Glib::ustring titleAttr = getAttribute(pageElement, "title");
 	if(s_pageTitleRx->match(titleAttr, matchInfo)) {
@@ -831,6 +845,9 @@ bool OutputEditorHOCR::setCurrentSource(xmlpp::Element* pageElement, int* pageDp
 		int res = std::atoi(matchInfo.fetch(4).c_str());
 		if(pageDpi) {
 			*pageDpi = res;
+		}
+		if(overrideDpi) {
+			res = *overrideDpi;
 		}
 
 		MAIN->getSourceManager()->addSources({Gio::File::create_for_path(filename)});
@@ -1029,6 +1046,8 @@ void OutputEditorHOCR::addGraphicRection(const Geometry::Rectangle &rect) {
 	item->set_value(m_itemStoreCols.itemClass, Glib::ustring("ocr_graphic"));
 	item->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
 	item->set_value(m_itemStoreCols.bbox, rect);
+	item->set_value(m_itemStoreCols.checkboxVisible, true);
+	item->set_value(m_itemStoreCols.iconVisible, true);
 
 	m_itemView->get_selection()->unselect_all();
 	m_itemView->get_selection()->select(item);
@@ -1137,78 +1156,81 @@ void OutputEditorHOCR::showContextMenu(GdkEventButton* ev) {
 		return;
 	}
 	Glib::ustring itemClass = (*it)[m_itemStoreCols.itemClass];
-
+	Gtk::Menu menu;
 	if(itemClass == "ocr_page") {
-		// Context menu on page items with Remove option
-		Gtk::Menu menu;
-		Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
 		Gtk::MenuItem* addGraphicItem = Gtk::manage(new Gtk::MenuItem(_("Add graphic region")));
 		menu.append(*addGraphicItem);
-		menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
-		Gtk::MenuItem* removeItem = Gtk::manage(new Gtk::MenuItem(_("Remove")));
-		menu.append(*removeItem);
-		CONNECT(removeItem, activate, [&] {
-			m_itemStore->erase(it);
-			m_connectionPropViewRowEdited.block(true);
-			m_propStore->clear();
-			m_connectionPropViewRowEdited.block(false);
-			m_builder("button:hocr.save")->set_sensitive(!m_itemStore->children().empty());
-			m_builder("button:hocr.export")->set_sensitive(!m_itemStore->children().empty());
-		});
 		CONNECT(addGraphicItem, activate, [this] {
 			m_tool->clearSelection();
 			m_tool->activateDrawSelection();
 		});
-		CONNECT(&menu, hide, [&] { loop->quit(); });
-		menu.show_all();
-		menu.popup(ev->button, ev->time);
-		loop->run();
-		return;
-	} else {
-		// Context menu on word items with spelling suggestions, if any
-		Gtk::Menu menu;
-		Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
-		if(itemClass == "ocrx_word") {
-			Glib::ustring prefix, suffix, trimmed = trimWord((*it)[m_itemStoreCols.text], &prefix, &suffix);
-			for(const Glib::ustring& suggestion : m_spell.get_suggestions(trimmed)) {
-				Glib::ustring replacement = prefix + suggestion + suffix;
-				Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
-				CONNECT(item, activate, [this, replacement, it] { (*it)[m_itemStoreCols.text] = replacement; });
-				menu.append(*item);
-			}
-			if(menu.get_children().empty()) {
-				Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("No suggestions")));
-				item->set_sensitive(false);
-				menu.append(*item);
-			}
-			if(!m_spell.check_word(trimWord((*it)[m_itemStoreCols.text]))) {
-				menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
-				Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
-				CONNECT(additem, activate, [this, it] {
-					m_spell.add_to_dictionary((*it)[m_itemStoreCols.text]);
-					it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
-				});
-				menu.append(*additem);
-				Gtk::MenuItem* ignoreitem = Gtk::manage(new Gtk::MenuItem(_("Ignore word")));
-				CONNECT(ignoreitem, activate, [this, it] {
-					m_spell.ignore_word((*it)[m_itemStoreCols.text]);
-					it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
-				});
-				menu.append(*ignoreitem);
-			}
+	}
+	if(itemClass == "ocrx_word") {
+		Glib::ustring prefix, suffix, trimmed = trimWord((*it)[m_itemStoreCols.text], &prefix, &suffix);
+		for(const Glib::ustring& suggestion : m_spell.get_suggestions(trimmed)) {
+			Glib::ustring replacement = prefix + suggestion + suffix;
+			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
+			CONNECT(item, activate, [this, replacement, it] { (*it)[m_itemStoreCols.text] = replacement; });
+			menu.append(*item);
+		}
+		if(menu.get_children().empty()) {
+			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("No suggestions")));
+			item->set_sensitive(false);
+			menu.append(*item);
+		}
+		if(!m_spell.check_word(trimWord((*it)[m_itemStoreCols.text]))) {
+			menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
+			Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
+			CONNECT(additem, activate, [this, it] {
+				m_spell.add_to_dictionary((*it)[m_itemStoreCols.text]);
+				it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
+			});
+			menu.append(*additem);
+			Gtk::MenuItem* ignoreitem = Gtk::manage(new Gtk::MenuItem(_("Ignore word")));
+			CONNECT(ignoreitem, activate, [this, it] {
+				m_spell.ignore_word((*it)[m_itemStoreCols.text]);
+				it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
+			});
+			menu.append(*ignoreitem);
+		}
+	}
+	if(path != m_rootItem) {
+		if(!menu.get_children().empty()) {
 			menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
 		}
-		Gtk::MenuItem* removeItem = Gtk::manage(new Gtk::MenuItem(_("Remove")));
-		menu.append(*removeItem);
-		CONNECT(removeItem, activate, [this] { removeCurrentItem(); });
-
-		CONNECT(&menu, hide, [&] { loop->quit(); });
-		menu.show_all();
-		menu.popup(ev->button, ev->time);
-		loop->run();
-		return;
+		if(itemClass == "ocr_page") {
+			Gtk::MenuItem* removeItem = Gtk::manage(new Gtk::MenuItem(_("Remove")));
+			menu.append(*removeItem);
+			CONNECT(removeItem, activate, [&] {
+				m_itemStore->erase(it);
+				m_connectionPropViewRowEdited.block(true);
+				m_propStore->clear();
+				m_connectionPropViewRowEdited.block(false);
+				m_builder("button:hocr.save")->set_sensitive(!m_itemStore->get_iter(m_rootItem)->children().empty());
+				m_builder("button:hocr.export")->set_sensitive(!m_itemStore->get_iter(m_rootItem)->children().empty());
+			});
+		} else {
+			Gtk::MenuItem* removeItem = Gtk::manage(new Gtk::MenuItem(_("Remove")));
+			menu.append(*removeItem);
+			CONNECT(removeItem, activate, [this] { removeCurrentItem(); });
+		}
 	}
-	return;
+	if(itemClass != "ocrx_word" && itemClass != "ocr_graphic") {
+		if(!menu.get_children().empty()) {
+			menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
+		}
+		Gtk::MenuItem* expandItem = Gtk::manage(new Gtk::MenuItem(_("Expand all")));
+		menu.append(*expandItem);
+		CONNECT(expandItem, activate, [this, path] { m_itemView->expand_row(path, true); });
+		Gtk::MenuItem* collapseItem = Gtk::manage(new Gtk::MenuItem(_("Collapse all")));
+		menu.append(*collapseItem);
+		CONNECT(collapseItem, activate, [this, path] { m_itemView->collapse_row(path); });
+	}
+	Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
+	CONNECT(&menu, hide, [&] { loop->quit(); });
+	menu.show_all();
+	menu.popup(ev->button, ev->time);
+	loop->run();
 }
 
 void OutputEditorHOCR::checkCellEditable(const Glib::ustring& path, Gtk::CellRenderer* renderer) {
@@ -1286,7 +1308,7 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 	                           "  </head>\n"
 	                           "<body>\n", tess.Version());
 	file.write(header.data(), header.bytes());
-	for(Gtk::TreeIter item : m_itemStore->children()) {
+	for(Gtk::TreeIter item : m_itemStore->get_iter(m_rootItem)->children()) {
 		Glib::ustring itemSource = (*item)[m_itemStoreCols.source];
 		file.write(itemSource.data(), itemSource.bytes());
 	}
@@ -1379,7 +1401,7 @@ void OutputEditorHOCR::savePDF() {
 	pdfSettings.overlay = m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>()->get_active_row_number() == 1;
 	pdfSettings.detectedFontScaling = m_builder("spin:pdfoptions.fontscale").as<Gtk::SpinButton>()->get_value() / 100.;
 	std::vector<Glib::ustring> failed;
-	for(Gtk::TreeIter item : m_itemStore->children()) {
+	for(Gtk::TreeIter item : m_itemStore->get_iter(m_rootItem)->children()) {
 		if(!(*item)[m_itemStoreCols.selected]) {
 			continue;
 		}
@@ -1387,20 +1409,23 @@ void OutputEditorHOCR::savePDF() {
 		xmlpp::DomParser parser;
 		parser.parse_memory((*item)[m_itemStoreCols.source]);
 		xmlpp::Document* doc = parser.get_document();
-		int pageDpi = 72;
-		if(doc->get_root_node() && doc->get_root_node()->get_name() == "div" && setCurrentSource(doc->get_root_node(), &pageDpi)) {
-			double dpiScale = 72. / pageDpi;
-			double imageScale = m_builder("spin:pdfoptions.dpi").as<Gtk::SpinButton>()->get_value() / double(pageDpi);
-			PoDoFo::PdfPage* page = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width * dpiScale, bbox.height * dpiScale));
+		int sourceDpi = -1;
+		int outputDpi = m_builder("spin:pdfoptions.dpi").as<Gtk::SpinButton>()->get_value();
+		if(doc->get_root_node() && doc->get_root_node()->get_name() == "div" && setCurrentSource(doc->get_root_node(), &sourceDpi, &outputDpi)) {
+			double docScale = (72. / sourceDpi);
+			double imgScale = double(outputDpi) / sourceDpi;
+			PoDoFo::PdfPage* page = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width * docScale, bbox.height * docScale));
 			painter.SetPage(page);
 			painter.SetFont(font);
 
-			PoDoFoPDFPainter pdfprinter(document, &painter, dpiScale, imageScale);
+			PoDoFoPDFPainter pdfprinter(document, &painter, docScale);
 			pdfprinter.setFontSize(fontSize);
-			printChildren(pdfprinter, item, pdfSettings);
+			printChildren(pdfprinter, item, pdfSettings, imgScale);
 			if(pdfSettings.overlay) {
-				pdfprinter.drawImage(bbox, m_tool->getSelection(bbox), pdfSettings);
+				Geometry::Rectangle scaledBBox(imgScale * bbox.x, imgScale * bbox.y, imgScale * bbox.width, imgScale * bbox.height);
+				pdfprinter.drawImage(bbox, m_tool->getSelection(scaledBBox), pdfSettings);
 			}
+			MAIN->getDisplayer()->setResolution(sourceDpi);
 			painter.FinishPage();
 		} else {
 			failed.push_back((*item)[m_itemStoreCols.text]);
@@ -1409,11 +1434,15 @@ void OutputEditorHOCR::savePDF() {
 	if(!failed.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Errors occurred"), Glib::ustring::compose(_("The following pages could not be rendered:\n%1"), Utils::string_join(failed, "\n")));
 	}
-	document->Close();
+	try {
+		document->Close();
+	} catch(PoDoFo::PdfError& e) {
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Export failed"), Glib::ustring::compose(_("The PDF export failed (%1)."), e.what()));
+	}
 	delete document;
 }
 
-void OutputEditorHOCR::printChildren(PDFPainter& painter, Gtk::TreeIter item, const PDFSettings& pdfSettings) const {
+void OutputEditorHOCR::printChildren(PDFPainter& painter, Gtk::TreeIter item, const PDFSettings& pdfSettings, double imgScale) const {
 	if(!(*item)[m_itemStoreCols.selected]) {
 		return;
 	}
@@ -1454,11 +1483,11 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, Gtk::TreeIter item, co
 			painter.drawText(wordRect.x, y, Glib::ustring((*wordItem)[m_itemStoreCols.text]));
 		}
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {
-		Cairo::RefPtr<Cairo::ImageSurface> sel = m_tool->getSelection(itemRect);
-		painter.drawImage(itemRect, sel, pdfSettings);
+		Geometry::Rectangle scaledItemRect(imgScale * itemRect.x, imgScale * itemRect.y, imgScale * itemRect.width, imgScale * itemRect.height);
+		painter.drawImage(itemRect, m_tool->getSelection(scaledItemRect), pdfSettings);
 	} else {
 		for(Gtk::TreeIter child : item->children()) {
-			printChildren(painter, child, pdfSettings);
+			printChildren(painter, child, pdfSettings, imgScale);
 		}
 	}
 }
@@ -1469,12 +1498,12 @@ void OutputEditorHOCR::updatePreview() {
 	}
 	bool visible = m_builder("checkbox:pdfoptions.preview").as<Gtk::CheckButton>()->get_active();
 	m_preview->setVisible(visible);
-	if(m_itemStore->children().empty()|| !visible) {
+	if(m_itemStore->get_iter(m_rootItem)->children().empty()|| !visible) {
 		return;
 	}
 	Gtk::TreeIter item = currentItem();
 	if(!item) {
-		item = *m_itemStore->children().begin();
+		item = *m_itemStore->get_iter(m_rootItem)->children().begin();
 	} else {
 		while(item->parent()) {
 			item = item->parent();
@@ -1485,7 +1514,7 @@ void OutputEditorHOCR::updatePreview() {
 	xmlpp::DomParser parser;
 	parser.parse_memory((*item)[m_itemStoreCols.source]);
 	xmlpp::Document* doc = parser.get_document();
-	int pageDpi = 72;
+	int pageDpi = -1;
 	setCurrentSource(doc->get_root_node(), &pageDpi);
 
 	Cairo::RefPtr<Cairo::ImageSurface> image = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, bbox.width, bbox.height);
@@ -1545,12 +1574,17 @@ bool OutputEditorHOCR::clear(bool hide) {
 	}
 	m_idCounter = 0;
 	m_connectionSelectionChanged.block();
-	m_itemStore->clear();
+	Gtk::TreeIter rootIter = m_itemStore->get_iter(m_rootItem);
+	while(!rootIter->children().empty()) {
+		m_itemStore->erase(*rootIter->children()[0]);
+	}
 	m_connectionSelectionChanged.unblock();
 	m_propStore->clear();
 	m_sourceView->get_buffer()->set_text("");
 	m_tool->clearSelection();
 	m_modified = false;
+	m_builder("button:hocr.save")->set_sensitive(false);
+	m_builder("button:hocr.export")->set_sensitive(false);
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
 	return true;

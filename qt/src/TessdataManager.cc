@@ -128,7 +128,7 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 		return false;
 	}
 
-	QList<QPair<QString,QString>> extraFiles;
+	QVector<QPair<QString,QString>> extraFiles;
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 	ok = false;
 	json = parser.parse( data, &ok ).toList();

@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the gImageReader package.
 #
 # Timothy Lee <timothy.ty.lee@gmail.com>, 2017.
-# Sandro Mani <manisandro@gmail.com>, 2016.
+# Sandro Mani <manisandro@gmail.com>, 2016, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 17:29+0100\n"
-"PO-Revision-Date: 2017-01-12 22:39+0800\n"
-"Last-Translator: Timothy Lee <timothy.ty.lee@gmail.com>\n"
+"POT-Creation-Date: 2017-07-01 10:34+0200\n"
+"PO-Revision-Date: 2017-06-30 20:23+0100\n"
+"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
 "Language: zh_HK\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgid "Preferences"
 msgstr "選項"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:40
-#: ../gtk/src/MainWindow.cc:468 ../qt/src/MainWindow.cc:445
+#: ../gtk/src/MainWindow.cc:484 ../qt/src/MainWindow.cc:445
 #: ../qt/src/Ui_MainWindow.hh:173
 msgid "Help"
 msgstr "協助"
@@ -212,18 +212,18 @@ msgstr "清除"
 msgid "Add"
 msgstr "新增"
 
-#: ../gtk/data/editor_text.ui.h:9 ../gtk/src/OutputEditorHOCR.cc:1148
-#: ../gtk/src/OutputEditorHOCR.cc:1201 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/OutputEditorHOCR.cc:958 ../qt/src/OutputEditorHOCR.cc:987
+#: ../gtk/data/editor_text.ui.h:9 ../gtk/src/OutputEditorHOCR.cc:1202
+#: ../gtk/src/OutputEditorHOCR.cc:1213 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/OutputEditorHOCR.cc:998 ../qt/src/OutputEditorHOCR.cc:1000
 #: ../qt/src/SubstitutionsManager.cc:54 ../qt/src/SubstitutionsManager.cc:55
 msgid "Remove"
 msgstr "刪除"
 
-#: ../gtk/data/editor_text.ui.h:10 ../gtk/data/gimagereader.ui.h:70
+#: ../gtk/data/editor_text.ui.h:10 ../gtk/data/gimagereader.ui.h:73
 msgid "Apply"
 msgstr "應用"
 
-#: ../gtk/data/editor_text.ui.h:11 ../gtk/data/gimagereader.ui.h:71
+#: ../gtk/data/editor_text.ui.h:11 ../gtk/data/gimagereader.ui.h:74
 msgid "Close"
 msgstr "關閉"
 
@@ -378,14 +378,14 @@ msgstr "輸出："
 msgid "Mode:"
 msgstr "模式："
 
-#: ../gtk/data/gimagereader.ui.h:17 ../gtk/src/OutputEditorHOCR.cc:356
-#: ../qt/data/MainWindow.ui.h:11 ../qt/src/OutputEditorHOCR.cc:275
+#: ../gtk/data/gimagereader.ui.h:17 ../gtk/src/OutputEditorHOCR.cc:362
+#: ../qt/data/MainWindow.ui.h:11 ../qt/src/OutputEditorHOCR.cc:273
 msgid "Color"
 msgstr "彩色"
 
-#: ../gtk/data/gimagereader.ui.h:18 ../gtk/src/OutputEditorHOCR.cc:359
-#: ../qt/data/MainWindow.ui.h:10 ../qt/src/OutputEditorHOCR.cc:277
-#: ../qt/src/OutputEditorHOCR.cc:279
+#: ../gtk/data/gimagereader.ui.h:18 ../gtk/src/OutputEditorHOCR.cc:365
+#: ../qt/data/MainWindow.ui.h:10 ../qt/src/OutputEditorHOCR.cc:275
+#: ../qt/src/OutputEditorHOCR.cc:277
 msgid "Grayscale"
 msgstr "灰階"
 
@@ -561,8 +561,8 @@ msgstr "<small><b>例如：</b> 1-10, 13, 14-18</small>"
 msgid "Recognition area:"
 msgstr "辨認區域："
 
-#: ../gtk/data/gimagereader.ui.h:67 ../gtk/src/Recognizer.cc:400
-#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:382
+#: ../gtk/data/gimagereader.ui.h:67 ../gtk/src/Recognizer.cc:403
+#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:381
 msgid "Entire page"
 msgstr "整頁"
 
@@ -570,40 +570,54 @@ msgstr "整頁"
 msgid "Autodetect"
 msgstr "自動偵測"
 
-#: ../gtk/data/gimagereader.ui.h:69 ../qt/src/TessdataManager.cc:47
+#: ../gtk/data/gimagereader.ui.h:69 ../qt/data/PageRangeDialog.ui.h:7
+#, fuzzy
+msgid "Prepend to output text:"
+msgstr "附加到現有文字"
+
+#: ../gtk/data/gimagereader.ui.h:70 ../qt/data/PageRangeDialog.ui.h:8
+msgid "Source filename"
+msgstr ""
+
+#: ../gtk/data/gimagereader.ui.h:71 ../qt/data/PageRangeDialog.ui.h:9
+#, fuzzy
+msgid "Source page"
+msgstr "來源"
+
+#: ../gtk/data/gimagereader.ui.h:72 ../qt/src/TessdataManager.cc:47
 msgid "Tessdata Manager"
 msgstr "Tessdata 管理員"
 
-#: ../gtk/data/gimagereader.ui.h:72 ../qt/src/TessdataManager.cc:49
+#: ../gtk/data/gimagereader.ui.h:75 ../qt/src/TessdataManager.cc:49
 msgid "Manage installed languages:"
 msgstr "管理已安裝的語言："
 
-#: ../gtk/data/gimagereader.ui.h:73 ../qt/src/DisplayerToolSelect.cc:240
+#: ../gtk/data/gimagereader.ui.h:76 ../qt/src/DisplayerToolSelect.cc:240
 msgid "Delete"
 msgstr "刪除"
 
-#: ../gtk/data/gimagereader.ui.h:74 ../qt/src/DisplayerToolSelect.cc:226
+#: ../gtk/data/gimagereader.ui.h:77 ../qt/src/DisplayerToolSelect.cc:226
 msgid "Order:"
 msgstr "排序："
 
-#: ../gtk/data/gimagereader.ui.h:75 ../gtk/src/DisplayerToolHOCR.cc:28
+#: ../gtk/data/gimagereader.ui.h:78 ../gtk/src/DisplayerToolHOCR.cc:28
 #: ../qt/src/DisplayerToolHOCR.cc:30 ../qt/src/DisplayerToolSelect.cc:241
 msgid "Recognize"
 msgstr "辨認"
 
-#: ../gtk/data/gimagereader.ui.h:76 ../qt/src/DisplayerToolSelect.cc:242
+#: ../gtk/data/gimagereader.ui.h:79 ../qt/src/DisplayerToolSelect.cc:242
 msgid "Recognize to clipboard"
 msgstr "辨認至剪貼簿"
 
-#: ../gtk/data/gimagereader.ui.h:77 ../qt/src/DisplayerToolSelect.cc:243
+#: ../gtk/data/gimagereader.ui.h:80 ../qt/src/DisplayerToolSelect.cc:243
 msgid "Save as image"
 msgstr "儲存為圖像"
 
-#: ../gtk/data/gimagereader.ui.h:78 ../qt/src/Recognizer.cc:77
+#: ../gtk/data/gimagereader.ui.h:81 ../qt/src/Recognizer.cc:76
 msgid "Current Page"
 msgstr "現時頁面"
 
-#: ../gtk/data/gimagereader.ui.h:79 ../qt/src/Recognizer.cc:80
+#: ../gtk/data/gimagereader.ui.h:82 ../qt/src/Recognizer.cc:79
 msgid "Multiple Pages..."
 msgstr "多頁……"
 
@@ -685,11 +699,11 @@ msgstr "沒有未儲存的工作。"
 msgid "Failed to obtain backtrace. Is gdb installed?"
 msgstr "無法取得 backtrace。已安裝 gdb 嗎？"
 
-#: ../gtk/src/Displayer.cc:247 ../qt/src/Displayer.cc:214
+#: ../gtk/src/Displayer.cc:261 ../qt/src/Displayer.cc:231
 msgid "Failed to load image"
 msgstr "無法載入圖像"
 
-#: ../gtk/src/Displayer.cc:247 ../qt/src/Displayer.cc:214
+#: ../gtk/src/Displayer.cc:261 ../qt/src/Displayer.cc:231
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -734,129 +748,133 @@ msgstr "覆寫檔案？"
 msgid "Using tesseract"
 msgstr "採用 tesseract"
 
-#: ../gtk/src/MainWindow.cc:176 ../qt/src/MainWindow.cc:181
+#: ../gtk/src/MainWindow.cc:191 ../qt/src/MainWindow.cc:181
 msgid "Select an image to begin..."
 msgstr "請選取圖像作為開始……"
 
-#: ../gtk/src/MainWindow.cc:290 ../qt/src/MainWindow.cc:262
+#: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:262
 msgid "Multiple sources"
 msgstr "多個來源"
 
-#: ../gtk/src/MainWindow.cc:291 ../qt/src/MainWindow.cc:263
+#: ../gtk/src/MainWindow.cc:307 ../qt/src/MainWindow.cc:263
 msgid "Ready"
 msgstr "就緒"
 
-#: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:390
+#: ../gtk/src/MainWindow.cc:446 ../qt/src/MainWindow.cc:390
 msgid "New version"
 msgstr "新版本"
 
-#: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:390
+#: ../gtk/src/MainWindow.cc:446 ../qt/src/MainWindow.cc:390
 msgid "gImageReader %1 is available"
 msgstr "gImageReader %1 已面世"
 
-#: ../gtk/src/MainWindow.cc:431 ../qt/src/MainWindow.cc:391
+#: ../gtk/src/MainWindow.cc:447 ../qt/src/MainWindow.cc:391
 msgid "Download"
 msgstr "下載"
 
-#: ../gtk/src/MainWindow.cc:432 ../qt/src/MainWindow.cc:392
+#: ../gtk/src/MainWindow.cc:448 ../qt/src/MainWindow.cc:392
 msgid "Changelog"
 msgstr "修改日誌"
 
-#: ../gtk/src/MainWindow.cc:433 ../qt/src/MainWindow.cc:393
+#: ../gtk/src/MainWindow.cc:449 ../qt/src/MainWindow.cc:393
 msgid "Don't notify again"
 msgstr "不再提示"
 
-#: ../gtk/src/MainWindow.cc:452 ../qt/src/MainWindow.cc:438
+#: ../gtk/src/MainWindow.cc:468 ../qt/src/MainWindow.cc:438
 msgid "Don't show again"
 msgstr "不再顯示"
 
-#: ../gtk/src/MainWindow.cc:453 ../gtk/src/MainWindow.cc:466
+#: ../gtk/src/MainWindow.cc:469 ../gtk/src/MainWindow.cc:482
 #: ../qt/src/MainWindow.cc:439
 msgid "Install"
 msgstr "安裝"
 
-#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:451
+#: ../gtk/src/MainWindow.cc:489 ../qt/src/MainWindow.cc:451
 msgid "Spelling dictionary missing"
 msgstr "遺漏拼字詞典"
 
-#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:451
+#: ../gtk/src/MainWindow.cc:489 ../qt/src/MainWindow.cc:451
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "未安裝 %1 的拼字詞典"
 
-#: ../gtk/src/MainWindow.cc:480 ../gtk/src/MainWindow.cc:512
+#: ../gtk/src/MainWindow.cc:496 ../gtk/src/MainWindow.cc:528
 #: ../qt/src/MainWindow.cc:458
 msgid "Installing spelling dictionary for '%1'"
 msgstr "正在安裝 '%1' 的拼字詞典"
 
-#: ../gtk/src/MainWindow.cc:501 ../gtk/src/MainWindow.cc:526
-#: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:544
-#: ../gtk/src/MainWindow.cc:550 ../gtk/src/MainWindow.cc:579
-#: ../gtk/src/OutputEditorHOCR.cc:1353 ../gtk/src/Recognizer.cc:161
+#: ../gtk/src/MainWindow.cc:517 ../gtk/src/MainWindow.cc:542
+#: ../gtk/src/MainWindow.cc:550 ../gtk/src/MainWindow.cc:560
+#: ../gtk/src/MainWindow.cc:566 ../gtk/src/MainWindow.cc:595
+#: ../gtk/src/OutputEditorHOCR.cc:1375 ../gtk/src/Recognizer.cc:163
 #: ../gtk/src/TessdataManager.cc:58 ../gtk/src/TessdataManager.cc:68
 #: ../gtk/src/TessdataManager.cc:290 ../qt/src/MainWindow.cc:477
 #: ../qt/src/MainWindow.cc:490 ../qt/src/MainWindow.cc:500
 #: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:518
-#: ../qt/src/MainWindow.cc:546 ../qt/src/OutputEditorHOCR.cc:1123
-#: ../qt/src/Recognizer.cc:141 ../qt/src/TessdataManager.cc:72
+#: ../qt/src/MainWindow.cc:546 ../qt/src/OutputEditorHOCR.cc:1157
+#: ../qt/src/Recognizer.cc:138 ../qt/src/TessdataManager.cc:72
 #: ../qt/src/TessdataManager.cc:82 ../qt/src/TessdataManager.cc:275
 msgid "Error"
 msgstr "錯誤"
 
-#: ../gtk/src/MainWindow.cc:501 ../qt/src/MainWindow.cc:477
+#: ../gtk/src/MainWindow.cc:517 ../qt/src/MainWindow.cc:477
 msgid "Failed to install spelling dictionary: %1"
 msgstr "無法安裝拼字詞典：%1"
 
-#: ../gtk/src/MainWindow.cc:526 ../qt/src/MainWindow.cc:490
+#: ../gtk/src/MainWindow.cc:542 ../qt/src/MainWindow.cc:490
 msgid "Failed to create directory for spelling dictionaries."
 msgstr "無法建立拼字詞典目錄。"
 
-#: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:550
+#: ../gtk/src/MainWindow.cc:550 ../gtk/src/MainWindow.cc:566
 #: ../qt/src/MainWindow.cc:500
 msgid "Could not read %1: %2."
 msgstr "無法讀取 %1：%2。"
 
-#: ../gtk/src/MainWindow.cc:544 ../gtk/src/MainWindow.cc:579
+#: ../gtk/src/MainWindow.cc:560 ../gtk/src/MainWindow.cc:595
 #: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:546
 msgid "No spelling dictionaries found for '%1'."
 msgstr "找不到 '%1' 的拼字詞典。"
 
-#: ../gtk/src/MainWindow.cc:560 ../qt/src/MainWindow.cc:529
+#: ../gtk/src/MainWindow.cc:576 ../qt/src/MainWindow.cc:529
 msgid "Downloading '%1'..."
 msgstr "正在下載 '%1'……"
 
-#: ../gtk/src/MainWindow.cc:576 ../qt/src/MainWindow.cc:543
+#: ../gtk/src/MainWindow.cc:592 ../qt/src/MainWindow.cc:543
 msgid "Dictionaries installed"
 msgstr "已安裝詞典"
 
-#: ../gtk/src/MainWindow.cc:576
+#: ../gtk/src/MainWindow.cc:592
 msgid "The following dictionaries were installed:%1"
 msgstr "已安裝下列詞典：%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:362 ../qt/src/OutputEditorHOCR.cc:281
+#: ../gtk/src/OutputEditorHOCR.cc:319 ../qt/src/OutputEditorHOCR.cc:291
+msgid "Document"
+msgstr "文件"
+
+#: ../gtk/src/OutputEditorHOCR.cc:368 ../qt/src/OutputEditorHOCR.cc:279
 msgid "Monochrome"
 msgstr "黑白"
 
-#: ../gtk/src/OutputEditorHOCR.cc:371 ../qt/src/OutputEditorHOCR.cc:283
+#: ../gtk/src/OutputEditorHOCR.cc:377 ../qt/src/OutputEditorHOCR.cc:281
 msgid "Threshold (closest color)"
 msgstr "定限（最接近顏色）"
 
-#: ../gtk/src/OutputEditorHOCR.cc:374 ../qt/src/OutputEditorHOCR.cc:284
+#: ../gtk/src/OutputEditorHOCR.cc:380 ../qt/src/OutputEditorHOCR.cc:282
 msgid "Diffuse"
 msgstr "擴散"
 
-#: ../gtk/src/OutputEditorHOCR.cc:383 ../qt/src/OutputEditorHOCR.cc:285
+#: ../gtk/src/OutputEditorHOCR.cc:389 ../qt/src/OutputEditorHOCR.cc:283
 msgid "Zip (lossless)"
 msgstr "Zip（無損）"
 
-#: ../gtk/src/OutputEditorHOCR.cc:387 ../qt/src/OutputEditorHOCR.cc:286
+#: ../gtk/src/OutputEditorHOCR.cc:393 ../qt/src/OutputEditorHOCR.cc:284
 msgid "CCITT Group 4 (lossless)"
 msgstr "CCITT 第 4 組（無損）"
 
-#: ../gtk/src/OutputEditorHOCR.cc:391 ../qt/src/OutputEditorHOCR.cc:287
+#: ../gtk/src/OutputEditorHOCR.cc:397 ../qt/src/OutputEditorHOCR.cc:285
 msgid "Jpeg (lossy)"
 msgstr "Jpeg（失真）"
 
-#: ../gtk/src/OutputEditorHOCR.cc:547 ../qt/src/OutputEditorHOCR.cc:428
+#: ../gtk/src/OutputEditorHOCR.cc:553 ../qt/src/OutputEditorHOCR.cc:429
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -864,108 +882,116 @@ msgstr ""
 "無法處理下列頁面：\n"
 "%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:548 ../qt/src/OutputEditorHOCR.cc:429
+#: ../gtk/src/OutputEditorHOCR.cc:554 ../qt/src/OutputEditorHOCR.cc:430
 msgid "Recognition errors"
 msgstr "辨認時出現錯誤"
 
 #. Add tree item
-#: ../gtk/src/OutputEditorHOCR.cc:639 ../gtk/src/OutputEditorHOCR.cc:1020
-#: ../qt/src/OutputEditorHOCR.cc:503 ../qt/src/OutputEditorHOCR.cc:881
+#: ../gtk/src/OutputEditorHOCR.cc:647 ../gtk/src/OutputEditorHOCR.cc:1037
+#: ../qt/src/OutputEditorHOCR.cc:504 ../qt/src/OutputEditorHOCR.cc:894
 msgid "Graphic"
 msgstr "圖像"
 
-#: ../gtk/src/OutputEditorHOCR.cc:692 ../qt/src/OutputEditorHOCR.cc:553
+#: ../gtk/src/OutputEditorHOCR.cc:703 ../qt/src/OutputEditorHOCR.cc:563
 msgid "Paragraph"
 msgstr "段落"
 
-#: ../gtk/src/OutputEditorHOCR.cc:695 ../qt/src/OutputEditorHOCR.cc:556
+#: ../gtk/src/OutputEditorHOCR.cc:706 ../qt/src/OutputEditorHOCR.cc:566
 msgid "Textline"
 msgstr "文字"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1117 ../qt/src/OutputEditorHOCR.cc:937
+#: ../gtk/src/OutputEditorHOCR.cc:1136 ../qt/src/OutputEditorHOCR.cc:950
 msgid "Merge"
 msgstr "合併"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1145 ../qt/src/OutputEditorHOCR.cc:956
+#: ../gtk/src/OutputEditorHOCR.cc:1161 ../qt/src/OutputEditorHOCR.cc:977
 msgid "Add graphic region"
 msgstr "新增圖像區域"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1180 ../qt/src/OutputEditorHOCR.cc:978
+#: ../gtk/src/OutputEditorHOCR.cc:1177 ../qt/src/OutputEditorHOCR.cc:985
 msgid "No suggestions"
 msgstr "沒有建議"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1186 ../qt/src/OutputEditorHOCR.cc:982
+#: ../gtk/src/OutputEditorHOCR.cc:1183 ../qt/src/OutputEditorHOCR.cc:989
 msgid "Add to dictionary"
 msgstr "新增詞典"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1192 ../qt/src/OutputEditorHOCR.cc:983
+#: ../gtk/src/OutputEditorHOCR.cc:1189 ../qt/src/OutputEditorHOCR.cc:990
 msgid "Ignore word"
 msgstr "忽略字詞"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1226 ../gtk/src/OutputEditorHOCR.cc:1265
-#: ../qt/src/OutputEditorHOCR.cc:1015 ../qt/src/OutputEditorHOCR.cc:1045
+#: ../gtk/src/OutputEditorHOCR.cc:1222 ../qt/src/OutputEditorHOCR.cc:1007
+msgid "Expand all"
+msgstr "展開"
+
+#: ../gtk/src/OutputEditorHOCR.cc:1225 ../qt/src/OutputEditorHOCR.cc:1008
+msgid "Collapse all"
+msgstr "收起"
+
+#: ../gtk/src/OutputEditorHOCR.cc:1248 ../gtk/src/OutputEditorHOCR.cc:1287
+#: ../qt/src/OutputEditorHOCR.cc:1049 ../qt/src/OutputEditorHOCR.cc:1079
 msgid "hOCR HTML Files"
 msgstr "hOCR HTML 檔"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1227 ../qt/src/OutputEditorHOCR.cc:1015
+#: ../gtk/src/OutputEditorHOCR.cc:1249 ../qt/src/OutputEditorHOCR.cc:1049
 msgid "Open hOCR File"
 msgstr "開啟 hOCR 檔"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1236 ../qt/src/OutputEditorHOCR.cc:1021
+#: ../gtk/src/OutputEditorHOCR.cc:1258 ../qt/src/OutputEditorHOCR.cc:1055
 msgid "Failed to open file"
 msgstr "無法開啟檔案"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1236 ../qt/src/OutputEditorHOCR.cc:1021
+#: ../gtk/src/OutputEditorHOCR.cc:1258 ../qt/src/OutputEditorHOCR.cc:1055
 msgid "The file could not be opened: %1."
 msgstr "無法開啟檔案：%1。"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1245 ../qt/src/OutputEditorHOCR.cc:1028
+#: ../gtk/src/OutputEditorHOCR.cc:1267 ../qt/src/OutputEditorHOCR.cc:1062
 msgid "Invalid hOCR file"
 msgstr "無效的 hOCR 檔"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1245 ../qt/src/OutputEditorHOCR.cc:1028
+#: ../gtk/src/OutputEditorHOCR.cc:1267 ../qt/src/OutputEditorHOCR.cc:1062
 msgid "The file does not appear to contain valid hOCR HTML: %1"
 msgstr "此檔案似乎並不包含有效的 hOCR HTML：%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1261 ../gtk/src/OutputEditorHOCR.cc:1321
-#: ../gtk/src/OutputEditorText.cc:286 ../qt/src/OutputEditorHOCR.cc:1043
-#: ../qt/src/OutputEditorHOCR.cc:1097 ../qt/src/OutputEditorText.cc:233
+#: ../gtk/src/OutputEditorHOCR.cc:1283 ../gtk/src/OutputEditorHOCR.cc:1343
+#: ../gtk/src/OutputEditorText.cc:306 ../qt/src/OutputEditorHOCR.cc:1077
+#: ../qt/src/OutputEditorHOCR.cc:1131 ../qt/src/OutputEditorText.cc:246
 msgid "output"
 msgstr "輸出"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1266 ../qt/src/OutputEditorHOCR.cc:1045
+#: ../gtk/src/OutputEditorHOCR.cc:1288 ../qt/src/OutputEditorHOCR.cc:1079
 msgid "Save hOCR Output..."
 msgstr "儲存 hOCR 輸出……"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1274 ../gtk/src/OutputEditorHOCR.cc:1335
-#: ../gtk/src/OutputEditorText.cc:299 ../qt/src/OutputEditorHOCR.cc:1053
-#: ../qt/src/OutputEditorHOCR.cc:1109 ../qt/src/OutputEditorText.cc:243
+#: ../gtk/src/OutputEditorHOCR.cc:1296 ../gtk/src/OutputEditorHOCR.cc:1357
+#: ../gtk/src/OutputEditorText.cc:319 ../qt/src/OutputEditorHOCR.cc:1087
+#: ../qt/src/OutputEditorHOCR.cc:1143 ../qt/src/OutputEditorText.cc:256
 msgid "Failed to save output"
 msgstr "無法儲存輸出……"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1274 ../gtk/src/OutputEditorHOCR.cc:1335
-#: ../gtk/src/OutputEditorText.cc:299 ../qt/src/OutputEditorHOCR.cc:1053
-#: ../qt/src/OutputEditorHOCR.cc:1109 ../qt/src/OutputEditorText.cc:243
+#: ../gtk/src/OutputEditorHOCR.cc:1296 ../gtk/src/OutputEditorHOCR.cc:1357
+#: ../gtk/src/OutputEditorText.cc:319 ../qt/src/OutputEditorHOCR.cc:1087
+#: ../qt/src/OutputEditorHOCR.cc:1143 ../qt/src/OutputEditorText.cc:256
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "請檢查你在所選取資料夾擁有寫入權限。"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1324 ../qt/src/OutputEditorHOCR.cc:1099
+#: ../gtk/src/OutputEditorHOCR.cc:1346 ../qt/src/OutputEditorHOCR.cc:1133
 msgid "PDF Files"
 msgstr "PDF 檔"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1325 ../qt/src/OutputEditorHOCR.cc:1099
+#: ../gtk/src/OutputEditorHOCR.cc:1347 ../qt/src/OutputEditorHOCR.cc:1133
 msgid "Save PDF Output..."
 msgstr "儲存 PDF 輸出……"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1353 ../qt/src/OutputEditorHOCR.cc:1123
+#: ../gtk/src/OutputEditorHOCR.cc:1375 ../qt/src/OutputEditorHOCR.cc:1157
 msgid "The PDF library does not support the selected font."
 msgstr "PDF 程式庫不支援所選取字型。"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1410 ../qt/src/OutputEditorHOCR.cc:1179
+#: ../gtk/src/OutputEditorHOCR.cc:1435 ../qt/src/OutputEditorHOCR.cc:1216
 msgid "Errors occurred"
 msgstr "發生錯誤"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1410 ../qt/src/OutputEditorHOCR.cc:1179
+#: ../gtk/src/OutputEditorHOCR.cc:1435 ../qt/src/OutputEditorHOCR.cc:1216
 msgid ""
 "The following pages could not be rendered:\n"
 "%1"
@@ -973,30 +999,40 @@ msgstr ""
 "無法繪畫下列頁面：\n"
 "%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1537 ../gtk/src/OutputEditorText.cc:313
-#: ../qt/src/OutputEditorHOCR.cc:1293 ../qt/src/OutputEditorText.cc:256
+#: ../gtk/src/OutputEditorHOCR.cc:1562 ../gtk/src/OutputEditorText.cc:333
+#: ../qt/src/OutputEditorHOCR.cc:1331 ../qt/src/OutputEditorText.cc:269
 msgid "Output not saved"
 msgstr "未儲存輸出"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1537 ../gtk/src/OutputEditorText.cc:313
-#: ../qt/src/OutputEditorHOCR.cc:1293 ../qt/src/OutputEditorText.cc:256
+#: ../gtk/src/OutputEditorHOCR.cc:1562 ../gtk/src/OutputEditorText.cc:333
+#: ../qt/src/OutputEditorHOCR.cc:1331 ../qt/src/OutputEditorText.cc:269
 msgid "Save output before proceeding?"
 msgstr "先儲存輸出再繼續？"
 
-#: ../gtk/src/OutputEditorText.cc:191 ../qt/src/OutputEditorText.cc:158
+#: ../gtk/src/OutputEditorText.cc:197 ../qt/src/OutputEditorText.cc:158
 msgid "Stripping line breaks..."
 msgstr "去除換行符號……"
 
-#: ../gtk/src/OutputEditorText.cc:205
+#: ../gtk/src/OutputEditorText.cc:211
 msgid "Check spelling"
 msgstr "檢查拼字"
 
-#: ../gtk/src/OutputEditorText.cc:232 ../qt/src/OutputEditorText.cc:178
+#: ../gtk/src/OutputEditorText.cc:238 ../qt/src/OutputEditorText.cc:178
 msgid "Replacing..."
 msgstr "取代中……"
 
-#: ../gtk/src/OutputEditorText.cc:260 ../gtk/src/Recognizer.cc:475
-#: ../qt/src/Recognizer.cc:458
+#: ../gtk/src/OutputEditorText.cc:264 ../qt/src/OutputEditorText.cc:204
+#, fuzzy
+msgid "File: %1"
+msgstr "檔案"
+
+#: ../gtk/src/OutputEditorText.cc:267 ../qt/src/OutputEditorText.cc:207
+#, fuzzy
+msgid "Page: %1"
+msgstr "剖析錯誤：%1"
+
+#: ../gtk/src/OutputEditorText.cc:280 ../gtk/src/Recognizer.cc:481
+#: ../qt/src/Recognizer.cc:460
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -1004,15 +1040,15 @@ msgstr ""
 "\n"
 "[無法辨認第 %1 頁]\n"
 
-#: ../gtk/src/OutputEditorText.cc:290 ../qt/src/OutputEditorText.cc:235
+#: ../gtk/src/OutputEditorText.cc:310 ../qt/src/OutputEditorText.cc:248
 msgid "Text Files"
 msgstr "文字檔"
 
-#: ../gtk/src/OutputEditorText.cc:291 ../qt/src/OutputEditorText.cc:235
+#: ../gtk/src/OutputEditorText.cc:311 ../qt/src/OutputEditorText.cc:248
 msgid "Save Output..."
 msgstr "儲存輸出……"
 
-#: ../gtk/src/Recognizer.cc:154 ../qt/src/Recognizer.cc:134
+#: ../gtk/src/Recognizer.cc:156 ../qt/src/Recognizer.cc:131
 msgid ""
 "Tesseract crashed with the following message:\n"
 "\n"
@@ -1037,76 +1073,76 @@ msgstr ""
 "\n"
 "請確保你的語言資料檔是正確的及兼容 tesseract %2 。"
 
-#: ../gtk/src/Recognizer.cc:210 ../qt/src/Recognizer.cc:194
+#: ../gtk/src/Recognizer.cc:212 ../qt/src/Recognizer.cc:191
 msgid "No languages available"
 msgstr "沒有可用語言"
 
-#: ../gtk/src/Recognizer.cc:210 ../qt/src/Recognizer.cc:194
+#: ../gtk/src/Recognizer.cc:212 ../qt/src/Recognizer.cc:191
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr "沒有可用的 tesseract 語言。辨認將會失敗。"
 
-#: ../gtk/src/Recognizer.cc:264 ../qt/src/Recognizer.cc:254
+#: ../gtk/src/Recognizer.cc:266 ../qt/src/Recognizer.cc:251
 msgid "Multilingual"
 msgstr "多語言"
 
-#: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:298
+#: ../gtk/src/Recognizer.cc:318 ../qt/src/Recognizer.cc:295
 msgid "Automatic page segmentation"
 msgstr "自動分割頁面"
 
-#: ../gtk/src/Recognizer.cc:317 ../qt/src/Recognizer.cc:299
+#: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:296
 msgid "Page segmentation with orientation and script detection"
 msgstr "分割頁面並偵測方向及文字"
 
-#: ../gtk/src/Recognizer.cc:318 ../qt/src/Recognizer.cc:300
+#: ../gtk/src/Recognizer.cc:320 ../qt/src/Recognizer.cc:297
 msgid "Assume single column of text"
 msgstr "假設只有一欄文字"
 
-#: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:301
+#: ../gtk/src/Recognizer.cc:321 ../qt/src/Recognizer.cc:298
 msgid "Assume single block of vertically aligned text"
 msgstr "假設只有一段垂直對整的文字"
 
-#: ../gtk/src/Recognizer.cc:320 ../qt/src/Recognizer.cc:302
+#: ../gtk/src/Recognizer.cc:322 ../qt/src/Recognizer.cc:299
 msgid "Assume a single uniform block of text"
 msgstr "假設只有一段均勻的文字"
 
-#: ../gtk/src/Recognizer.cc:321 ../qt/src/Recognizer.cc:303
+#: ../gtk/src/Recognizer.cc:323 ../qt/src/Recognizer.cc:300
 msgid "Assume a line of text"
 msgstr "假設只有一行文字"
 
-#: ../gtk/src/Recognizer.cc:322 ../qt/src/Recognizer.cc:304
+#: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:301
 msgid "Assume a single word"
 msgstr "假設只有一個字"
 
-#: ../gtk/src/Recognizer.cc:323 ../qt/src/Recognizer.cc:305
+#: ../gtk/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:302
 msgid "Assume a single word in a circle"
 msgstr "假設是圓圈內的一個字"
 
-#: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:306
+#: ../gtk/src/Recognizer.cc:326 ../qt/src/Recognizer.cc:303
 msgid "Sparse text in no particular order"
 msgstr "沒有特定次序的稀疏文字"
 
-#: ../gtk/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:307
+#: ../gtk/src/Recognizer.cc:327 ../qt/src/Recognizer.cc:304
 msgid "Sparse text with orientation and script detection"
 msgstr "偵測稀疏文字的方向及文字"
 
-#: ../gtk/src/Recognizer.cc:339 ../qt/src/Recognizer.cc:317
+#: ../gtk/src/Recognizer.cc:341 ../qt/src/Recognizer.cc:314
 msgid "Page segmentation mode"
 msgstr "分割頁面模式"
 
-#: ../gtk/src/Recognizer.cc:345 ../qt/src/Recognizer.cc:324
+#: ../gtk/src/Recognizer.cc:347 ../qt/src/Recognizer.cc:321
 msgid "Manage languages..."
 msgstr "管理語言……"
 
-#: ../gtk/src/Recognizer.cc:400 ../qt/src/Recognizer.cc:382
+#: ../gtk/src/Recognizer.cc:403 ../qt/src/Recognizer.cc:381
 msgid "Current selection"
 msgstr "現有選取區"
 
-#: ../gtk/src/Recognizer.cc:469 ../qt/src/Recognizer.cc:452
+#: ../gtk/src/Recognizer.cc:475 ../qt/src/Recognizer.cc:454
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "辨認第 %1 頁（%3 之 %2）"
 
-#: ../gtk/src/Recognizer.cc:474 ../qt/src/Recognizer.cc:457
+#: ../gtk/src/Recognizer.cc:480 ../qt/src/Recognizer.cc:459
 msgid ""
 "\n"
 "- Page %1: failed to render page"
@@ -1114,22 +1150,22 @@ msgstr ""
 "\n"
 "- 第 %1 頁：無法繪畫頁面"
 
-#: ../gtk/src/Recognizer.cc:496 ../gtk/src/Recognizer.cc:525
-#: ../gtk/src/Recognizer.cc:538 ../qt/src/Recognizer.cc:479
-#: ../qt/src/Recognizer.cc:508 ../qt/src/Recognizer.cc:521
+#: ../gtk/src/Recognizer.cc:510 ../gtk/src/Recognizer.cc:539
+#: ../gtk/src/Recognizer.cc:552 ../qt/src/Recognizer.cc:488
+#: ../qt/src/Recognizer.cc:517 ../qt/src/Recognizer.cc:530
 msgid "Recognizing..."
 msgstr "辨認中……"
 
-#: ../gtk/src/Recognizer.cc:500 ../gtk/src/Recognizer.cc:508
-#: ../qt/src/Recognizer.cc:483 ../qt/src/Recognizer.cc:491
+#: ../gtk/src/Recognizer.cc:514 ../gtk/src/Recognizer.cc:522
+#: ../qt/src/Recognizer.cc:492 ../qt/src/Recognizer.cc:500
 msgid "Recognition errors occurred"
 msgstr "辨認時出現錯誤"
 
-#: ../gtk/src/Recognizer.cc:500 ../qt/src/Recognizer.cc:483
+#: ../gtk/src/Recognizer.cc:514 ../qt/src/Recognizer.cc:492
 msgid "The following errors occurred:%1"
 msgstr "出現下列錯誤：%1"
 
-#: ../gtk/src/Recognizer.cc:508 ../qt/src/Recognizer.cc:491
+#: ../gtk/src/Recognizer.cc:522 ../qt/src/Recognizer.cc:500
 msgid "Failed to initialize tesseract"
 msgstr "無法初始化 tesseract"
 
@@ -1365,6 +1401,7 @@ msgid "About gImageReader"
 msgstr "有關 gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
+#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
@@ -1395,7 +1432,7 @@ msgid "Text file encoding:"
 msgstr "文字檔編碼："
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, no-c-format
+#, fuzzy, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
@@ -1404,11 +1441,10 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">此應用程式已異常終止"
-"</span><p><p>我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給"
-"<a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+"我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給<a href="
+"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
 "\">manisandro@gmail.com</a>。請嘗試描述你在程式終止前所做的事情。另外，請一併"
-"附上下列資料。謝謝。</p></body></html>"
+"附上下列資料。謝謝。"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1515,3 +1551,25 @@ msgstr "儲存輸出"
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Clear Output"
 msgstr "清除輸出"
+
+#, fuzzy
+#~ msgid ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
+#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
+#~ "application, please consider reporting the issue to &lt;a href=&quot;"
+#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
+#~ "doing before the application crashed. Also, include the information "
+#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+#~ msgstr ""
+#~ "<html><head/><body><p><span style=\" font-weight:600;\">此應用程式已異常終"
+#~ "止</span><p><p>我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯"
+#~ "報給<a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+#~ "\">manisandro@gmail.com</a>。請嘗試描述你在程式終止前所做的事情。另外，請"
+#~ "一併附上下列資料。謝謝。</p></body></html>"
+
+#, fuzzy
+#~ msgid ""
+#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ msgstr "<small><b>例如：</b> 1-10, 13, 14-18</small>"

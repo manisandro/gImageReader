@@ -102,6 +102,8 @@ private:
 		Gtk::TreeModelColumn<double> fontSize;
 		Gtk::TreeModelColumn<int> baseLine;
 		Gtk::TreeModelColumn<Glib::ustring> textColor;
+		Gtk::TreeModelColumn<bool> checkboxVisible;
+		Gtk::TreeModelColumn<bool> iconVisible;
 		ItemStoreColumns() {
 			add(selected);
 			add(editable);
@@ -112,7 +114,10 @@ private:
 			add(bbox);
 			add(itemClass);
 			add(fontSize);
-			add(baseLine), add(textColor);
+			add(baseLine);
+			add(textColor);
+			add(checkboxVisible);
+			add(iconVisible);
 		}
 	} m_itemStoreCols;
 
@@ -170,6 +175,7 @@ private:
 	Gtk::Dialog* m_pdfExportDialog = nullptr;
 	DisplayerImageItem* m_preview = nullptr;
 
+	Gtk::TreePath m_rootItem;
 	Gtk::TreePath m_currentItem;
 	Gtk::TreePath m_currentPageItem;
 	xmlpp::DomParser* m_currentParser = nullptr;
@@ -184,8 +190,8 @@ private:
 	Gtk::TreeIter currentItem();
 	void addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page, bool cleanGraphics);
 	bool addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring, Glib::ustring>& langCache);
-	void printChildren(PDFPainter& painter, Gtk::TreeIter item, const PDFSettings& pdfSettings) const;
-	bool setCurrentSource(xmlpp::Element* pageElement, int* pageDpi = 0) const;
+	void printChildren(PDFPainter& painter, Gtk::TreeIter item, const PDFSettings& pdfSettings, double imgScale = 1.) const;
+	bool setCurrentSource(xmlpp::Element* pageElement, int* pageDpi = 0, int* overrideDpi = 0) const;
 	void updateCurrentItemText();
 	void updateCurrentItemAttribute(const Glib::ustring& key, const Glib::ustring& subkey, const Glib::ustring& newvalue, bool update=true);
 	void updateCurrentItem();

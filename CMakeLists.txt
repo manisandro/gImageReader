@@ -7,7 +7,7 @@ SET(ENV{LC_ALL} "C")
 # Project properties
 PROJECT(gimagereader)
 SET(PACKAGE_NAME gImageReader)
-SET(PACKAGE_VERSION 3.2.0)
+SET(PACKAGE_VERSION 3.2.3)
 SET(PACKAGE_LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/share/locale")
 
 
@@ -47,7 +47,8 @@ ADD_DEFINITIONS(-DPACKAGE_REVISION=\"${PACKAGE_REVISION}\")
 ADD_DEFINITIONS(-DGETTEXT_PACKAGE=\"${CMAKE_PROJECT_NAME}\")
 ADD_DEFINITIONS(-DENABLE_VERSIONCHECK=${ENABLE_VERSIONCHECK})
 ADD_DEFINITIONS(-DMANUAL_DIR=\"${MANUAL_DIR}\")
-ADD_DEFINITIONS(-std=c++11)
+SET(CMAKE_CXX_STANDARD 11)
+SET(CXX_STANDARD_REQUIRED ON)
 
 
 # Dependencies
@@ -230,13 +231,18 @@ TARGET_LINK_LIBRARIES(gimagereader
     -ldl
     -lgomp
 )
-SET_TARGET_PROPERTIES(gimagereader PROPERTIES COMPILE_FLAGS "-fopenmp")
+
+IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+ELSE()
+  SET_TARGET_PROPERTIES(gimagereader PROPERTIES COMPILE_FLAGS "-fopenmp")
+ENDIF()
+
 SET_TARGET_PROPERTIES(gimagereader PROPERTIES OUTPUT_NAME gimagereader-${INTERFACE_TYPE})
 IF("${INTERFACE_TYPE}" STREQUAL "qt4")
-    QT4_USE_MODULES(gimagereader Core Gui Network DBus Xml)
+    TARGET_LINK_LIBRARIES(gimagereader Qt4::QtCore Qt4::QtGui Qt4::QtNetwork Qt4::QtDBus Qt4::QtXml)
     ADD_DEPENDENCIES(gimagereader gettextizeui)
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
-    QT5_USE_MODULES(gimagereader Widgets Network DBus Xml PrintSupport)
+    TARGET_LINK_LIBRARIES(gimagereader Qt5::Widgets Qt5::Network Qt5::DBus Qt5::Xml Qt5::PrintSupport)
     ADD_DEPENDENCIES(gimagereader gettextizeui)
 ENDIF()
 
@@ -244,7 +250,7 @@ INSTALL(TARGETS gimagereader DESTINATION bin)
 INSTALL(FILES data/icons/48x48/gimagereader.png DESTINATION share/icons/hicolor/48x48/apps/)
 INSTALL(FILES data/icons/128x128/gimagereader.png DESTINATION share/icons/hicolor/128x128/apps/)
 INSTALL(FILES data/icons/256x256/gimagereader.png DESTINATION share/icons/hicolor/256x256/apps/)
-INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.appdata.xml DESTINATION share/appdata)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.appdata.xml DESTINATION share/metainfo)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop DESTINATION share/applications)
 INSTALL(FILES ${manualFiles} DESTINATION "${MANUAL_DIR}")
 

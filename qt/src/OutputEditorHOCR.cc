@@ -183,8 +183,8 @@ public:
 
 class OutputEditorHOCR::PoDoFoPDFPainter : public OutputEditorHOCR::PDFPainter {
 public:
-	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor, double imageScale)
-		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor), m_imageScale(imageScale) {
+	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor)
+		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor) {
 		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
 	}
 	void setFontSize(double pointSize) override {
@@ -195,8 +195,7 @@ public:
 		m_painter->DrawText(x * m_scaleFactor, m_pageHeight - y * m_scaleFactor, pdfString);
 	}
 	void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) override {
-		QImage scaledImage = image.scaled(image.width() * m_imageScale, image.height() * m_imageScale, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-		QImage img = convertedImage(scaledImage, settings.colorFormat, settings.conversionFlags);
+		QImage img = convertedImage(image, settings.colorFormat, settings.conversionFlags);
 		if(settings.colorFormat == QImage::Format_Mono) {
 			img.invertPixels();
 		}
@@ -241,7 +240,7 @@ public:
 			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<char*>(encoded), encodedLen);
 			pdfImage.SetImageDataRaw(img.width(), img.height(), sampleSize, &is);
 		}
-		m_painter->DrawImage(bbox.x() * m_scaleFactor, m_pageHeight - (bbox.y() + bbox.height()) * m_scaleFactor, &pdfImage, m_scaleFactor / m_imageScale, m_scaleFactor / m_imageScale);
+		m_painter->DrawImage(bbox.x() * m_scaleFactor, m_pageHeight - (bbox.y() + bbox.height()) * m_scaleFactor, &pdfImage, m_scaleFactor * bbox.width() / double(image.width()), m_scaleFactor * bbox.height() / double(image.height()));
 	}
 	double getAverageCharWidth() const override {
 		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x')) / m_scaleFactor;
@@ -255,7 +254,6 @@ private:
 	PoDoFo::PdfDocument* m_document;
 	PoDoFo::PdfPainter* m_painter;
 	double m_scaleFactor;
-	double m_imageScale;
 	double m_pageHeight;
 };
 
@@ -290,6 +288,9 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.actionOutputSaveHOCR->setShortcut(Qt::CTRL + Qt::Key_S);
 
 	ui.treeWidgetItems->setContextMenuPolicy(Qt::CustomContextMenu);
+	m_rootItem = new QTreeWidgetItem(QStringList() << _("Document"));
+	ui.treeWidgetItems->addTopLevelItem(m_rootItem);
+	m_rootItem->setExpanded(true);
 
 	connect(ui.actionOutputOpen, SIGNAL(triggered()), this, SLOT(open()));
 	connect(ui.actionOutputSaveHOCR, SIGNAL(triggered()), this, SLOT(save()));
@@ -464,10 +465,10 @@ void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int
 	pageItem->setData(0, ClassRole, "ocr_page");
 	pageItem->setIcon(0, QIcon(":/icons/item_page"));
 	pageItem->setCheckState(0, Qt::Checked);
-	ui.treeWidgetItems->addTopLevelItem(pageItem);
+	m_rootItem->addChild(pageItem);
 	QMap<QString,QString> langCache;
 
-	QList<QPair<QDomElement,QRect>> graphicElements;
+	QVector<QPair<QDomElement,QRect>> graphicElements;
 	QDomElement element = pageDiv.firstChildElement("div");
 	while(!element.isNull()) {
 		// Boxes without text are images
@@ -528,6 +529,15 @@ void OutputEditorHOCR::expandChildren(QTreeWidgetItem* item) const {
 		item->setExpanded(true);
 		for(int i = 0, n = item->childCount(); i < n; ++i) {
 			expandChildren(item->child(i));
+		}
+	}
+}
+
+void OutputEditorHOCR::collapseChildren(QTreeWidgetItem* item) const {
+	if(item->childCount() > 0) {
+		item->setExpanded(false);
+		for(int i = 0, n = item->childCount(); i < n; ++i) {
+			collapseChildren(item->child(i));
 		}
 	}
 }
@@ -630,13 +640,13 @@ void OutputEditorHOCR::showItemProperties(QTreeWidgetItem* item) {
 	m_tool->clearSelection();
 	m_currentPageItem = nullptr;
 	m_currentItem = item;
-	if(!item) {
+	if(!item || item == m_rootItem) {
 		m_currentDocument = QDomDocument();
 		m_currentElement = QDomElement();
 		return;
 	}
 	m_currentPageItem = item;
-	while(m_currentPageItem->parent()) {
+	while(m_currentPageItem->parent() != m_rootItem) {
 		m_currentPageItem = m_currentPageItem->parent();
 	}
 	QString id = item->data(0, IdRole).toString();
@@ -686,7 +696,7 @@ void OutputEditorHOCR::showItemProperties(QTreeWidgetItem* item) {
 	}
 }
 
-bool OutputEditorHOCR::setCurrentSource(const QDomElement& pageElement, int* pageDpi) const {
+bool OutputEditorHOCR::setCurrentSource(const QDomElement& pageElement, int* pageDpi, int* overrideDpi) const {
 	if(s_pageTitleRx.indexIn(pageElement.attribute("title")) != -1) {
 		QString filename = s_pageTitleRx.cap(1);
 		int page = s_pageTitleRx.cap(2).toInt();
@@ -694,6 +704,9 @@ bool OutputEditorHOCR::setCurrentSource(const QDomElement& pageElement, int* pag
 		int res = s_pageTitleRx.cap(4).toInt();
 		if(pageDpi) {
 			*pageDpi = res;
+		}
+		if(overrideDpi) {
+			res = *overrideDpi;
 		}
 
 		MAIN->getSourceManager()->addSource(filename);
@@ -948,57 +961,78 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 		return;
 	}
 	QString itemClass = item->data(0, ClassRole).toString();
-	if(itemClass.isEmpty()) {
+	if(itemClass.isEmpty() && item != m_rootItem) {
 		return;
 	}
+	QMenu menu;
+	QAction* actionAddGraphic = nullptr;
+	QAction* addWordAction = nullptr;
+	QAction* ignoreWordAction = nullptr;
+	QList<QAction*> setTextActions;
+	QAction* actionRemoveItem = nullptr;
+	QAction* actionRemovePage = nullptr;
+	QAction* actionExpand = nullptr;
+	QAction* actionCollapse = nullptr;
 	if(itemClass == "ocr_page") {
-		QMenu menu;
-		QAction* actionAddGraphic = menu.addAction(_("Add graphic region"));
-		menu.addSeparator();
-		QAction* actionRemove = menu.addAction(_("Remove"));
-		QAction* clickedAction = menu.exec(ui.treeWidgetItems->mapToGlobal(point));
-		if(clickedAction == actionRemove) {
-			delete item;
-			ui.actionOutputSaveHOCR->setEnabled(ui.treeWidgetItems->topLevelItemCount() > 0);
-			ui.actionOutputExportPDF->setEnabled(ui.treeWidgetItems->topLevelItemCount() > 0);
-		} else if(clickedAction == actionAddGraphic) {
-			m_tool->clearSelection();
-			m_tool->activateDrawSelection();
+		actionAddGraphic = menu.addAction(_("Add graphic region"));
+	}
+	if(itemClass == "ocrx_word") {
+		QString prefix, suffix, trimmedWord = trimWord(item->text(0), &prefix, &suffix);
+		for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
+			setTextActions.append(menu.addAction(prefix + suggestion + suffix));
 		}
-	} else {
-		QMenu menu;
-		QAction* addAction = nullptr;
-		QAction* ignoreAction = nullptr;
-		if(itemClass == "ocrx_word") {
-			QString prefix, suffix, trimmedWord = trimWord(item->text(0), &prefix, &suffix);
-			for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
-				menu.addAction(prefix + suggestion + suffix);
-			}
-			if(menu.actions().isEmpty()) {
-				menu.addAction(_("No suggestions"))->setEnabled(false);
-			}
-			if(!m_spell.checkWord(trimWord(item->text(0)))) {
-				menu.addSeparator();
-				addAction = menu.addAction(_("Add to dictionary"));
-				ignoreAction = menu.addAction(_("Ignore word"));
-			}
+		if(setTextActions.isEmpty()) {
+			menu.addAction(_("No suggestions"))->setEnabled(false);
+		}
+		if(!m_spell.checkWord(trimWord(item->text(0)))) {
+			menu.addSeparator();
+			addWordAction = menu.addAction(_("Add to dictionary"));
+			ignoreWordAction = menu.addAction(_("Ignore word"));
+		}
+	}
+	if(item != m_rootItem) {
+		if(!menu.actions().isEmpty()) {
 			menu.addSeparator();
 		}
-		QAction* removeAction = menu.addAction(_("Remove"));
-		QAction* clickedAction = menu.exec(ui.treeWidgetItems->mapToGlobal(point));
-		if(clickedAction) {
-			if(clickedAction == addAction) {
-				m_spell.addWordToDictionary(item->text(0));
-				item->setForeground(0, item->parent()->foreground(0));
-			} else if(clickedAction == ignoreAction) {
-				m_spell.ignoreWord(item->text(0));
-				item->setForeground(0, item->parent()->foreground(0));
-			} else if(clickedAction == removeAction) {
-				removeCurrentItem();
-			} else {
-				item->setText(0, clickedAction->text());
-			}
+		if(itemClass == "ocr_page") {
+			actionRemovePage = menu.addAction(_("Remove"));
+		} else {
+			actionRemoveItem = menu.addAction(_("Remove"));
 		}
+	}
+	if(itemClass != "ocrx_word" && itemClass != "ocr_graphic") {
+		if(!menu.actions().isEmpty()) {
+			menu.addSeparator();
+		}
+		actionExpand = menu.addAction(_("Expand all"));
+		actionCollapse = menu.addAction(_("Collapse all"));
+	}
+
+	QAction* clickedAction = menu.exec(ui.treeWidgetItems->mapToGlobal(point));
+	if(!clickedAction) {
+		return;
+	}
+	if(clickedAction == actionAddGraphic) {
+		m_tool->clearSelection();
+		m_tool->activateDrawSelection();
+	} else if(clickedAction == addWordAction) {
+		m_spell.addWordToDictionary(item->text(0));
+		item->setForeground(0, item->parent()->foreground(0));
+	} else if(clickedAction == ignoreWordAction) {
+		m_spell.ignoreWord(item->text(0));
+		item->setForeground(0, item->parent()->foreground(0));
+	} else if(setTextActions.contains(clickedAction)){
+		item->setText(0, clickedAction->text());
+	} else if(clickedAction == actionRemoveItem) {
+		removeCurrentItem();
+	} else if(clickedAction == actionRemovePage) {
+		delete item;
+		ui.actionOutputSaveHOCR->setEnabled(m_rootItem->childCount() > 0);
+		ui.actionOutputExportPDF->setEnabled(m_rootItem->childCount() > 0);
+	} else if(clickedAction == actionExpand) {
+		expandChildren(item);
+	} else if(clickedAction == actionCollapse) {
+		collapseChildren(item);
 	}
 }
 
@@ -1065,8 +1099,8 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	                     "  </head>\n"
 	                     "<body>\n").arg(tess.Version());
 	file.write(header.toUtf8());
-	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
-		file.write(ui.treeWidgetItems->topLevelItem(i)->data(0, SourceRole).toString().toUtf8());
+	for(int i = 0, n = m_rootItem->childCount(); i < n; ++i) {
+		file.write(m_rootItem->child(i)->data(0, SourceRole).toString().toUtf8());
 	}
 	file.write("</body>\n</html>\n");
 	m_modified = false;
@@ -1148,28 +1182,31 @@ void OutputEditorHOCR::savePDF() {
 	pdfSettings.overlay = m_pdfExportDialogUi.comboBoxOutputMode->currentIndex() == 1;
 	pdfSettings.detectedFontScaling = m_pdfExportDialogUi.spinFontScaling->value() / 100.;
 	QStringList failed;
-	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
-		QTreeWidgetItem* item = ui.treeWidgetItems->topLevelItem(i);
+	for(int i = 0, n = m_rootItem->childCount(); i < n; ++i) {
+		QTreeWidgetItem* item = m_rootItem->child(i);
 		if(item->checkState(0) != Qt::Checked) {
 			continue;
 		}
 		QRect bbox = item->data(0, BBoxRole).toRect();
 		QDomDocument doc;
 		doc.setContent(item->data(0, SourceRole).toString());
-		int pageDpi = 72;
-		if(setCurrentSource(doc.firstChildElement("div"), &pageDpi)) {
-			double dpiScale = 72. / pageDpi;
-			double imageScale = m_pdfExportDialogUi.spinBoxDpi->value() / double(pageDpi);
-			PoDoFo::PdfPage* page = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width() * dpiScale, bbox.height() * dpiScale));
+		int sourceDpi = -1;
+		int outputDpi = m_pdfExportDialogUi.spinBoxDpi->value();
+		if(setCurrentSource(doc.firstChildElement("div"), &sourceDpi, &outputDpi)) {
+			double docScale = (72. / sourceDpi);
+			double imgScale = double(outputDpi) / sourceDpi;
+			PoDoFo::PdfPage* page = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width() * docScale, bbox.height() * docScale));
 			painter.SetPage(page);
 			painter.SetFont(font);
 
-			PoDoFoPDFPainter pdfprinter(document, &painter, dpiScale, imageScale);
+			PoDoFoPDFPainter pdfprinter(document, &painter, docScale);
 			pdfprinter.setFontSize(m_pdfFontDialog.currentFont().pointSize());
-			printChildren(pdfprinter, item, pdfSettings);
+			printChildren(pdfprinter, item, pdfSettings, imgScale);
 			if(pdfSettings.overlay) {
-				pdfprinter.drawImage(bbox, m_tool->getSelection(bbox), pdfSettings);
+				QRect scaledBBox(imgScale * bbox.left(), imgScale * bbox.top(), imgScale * bbox.width(), imgScale * bbox.height());
+				pdfprinter.drawImage(bbox, m_tool->getSelection(scaledBBox), pdfSettings);
 			}
+			MAIN->getDisplayer()->setResolution(sourceDpi);
 			painter.FinishPage();
 		} else {
 			failed.append(item->text(0));
@@ -1178,11 +1215,15 @@ void OutputEditorHOCR::savePDF() {
 	if(!failed.isEmpty()) {
 		QMessageBox::warning(m_widget, _("Errors occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
 	}
-	document->Close();
+	try {
+		document->Close();
+	} catch(PoDoFo::PdfError& e) {
+		QMessageBox::warning(m_widget, _("Export failed"), _("The PDF export failed (%1).").arg(e.what()));
+	}
 	delete document;
 }
 
-void OutputEditorHOCR::printChildren(PDFPainter& painter, QTreeWidgetItem* item, const PDFSettings& pdfSettings) const {
+void OutputEditorHOCR::printChildren(PDFPainter& painter, QTreeWidgetItem* item, const PDFSettings& pdfSettings, double imgScale) const {
 	if(item->checkState(0) != Qt::Checked) {
 		return;
 	}
@@ -1225,10 +1266,11 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, QTreeWidgetItem* item,
 			painter.drawText(wordRect.x(), y, wordItem->text(0));
 		}
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {
-		painter.drawImage(itemRect, m_tool->getSelection(itemRect), pdfSettings);
+		QRect scaledItemRect(itemRect.left() * imgScale, itemRect.top() * imgScale, itemRect.width() * imgScale, itemRect.height() * imgScale);
+		painter.drawImage(itemRect, m_tool->getSelection(scaledItemRect), pdfSettings);
 	} else {
 		for(int i = 0, n = item->childCount(); i < n; ++i) {
-			printChildren(painter, item->child(i), pdfSettings);
+			printChildren(painter, item->child(i), pdfSettings, imgScale);
 		}
 	}
 }
@@ -1238,12 +1280,12 @@ void OutputEditorHOCR::updatePreview() {
 		return;
 	}
 	m_preview->setVisible(m_pdfExportDialogUi.checkBoxPreview->isChecked());
-	if(ui.treeWidgetItems->topLevelItemCount() == 0 || !m_pdfExportDialogUi.checkBoxPreview->isChecked()) {
+	if(m_rootItem->childCount() == 0 || !m_pdfExportDialogUi.checkBoxPreview->isChecked()) {
 		return;
 	}
 	QTreeWidgetItem* item = ui.treeWidgetItems->currentItem();
 	if(!item) {
-		item = ui.treeWidgetItems->topLevelItem(0);
+		item = m_rootItem->child(0);
 	} else {
 		while(item->parent()) {
 			item = item->parent();
@@ -1251,7 +1293,7 @@ void OutputEditorHOCR::updatePreview() {
 	}
 	QRect bbox = item->data(0, BBoxRole).toRect();
 	QDomDocument doc;
-	int pageDpi = 72;
+	int pageDpi = -1;
 	doc.setContent(item->data(0, SourceRole).toString());
 	setCurrentSource(doc.firstChildElement("div"), &pageDpi);
 
@@ -1300,11 +1342,15 @@ bool OutputEditorHOCR::clear(bool hide) {
 		}
 	}
 	m_idCounter = 0;
-	ui.treeWidgetItems->clear();
+	while(m_rootItem->childCount() > 0) {
+		delete m_rootItem->child(0);
+	}
 	ui.tableWidgetProperties->setRowCount(0);
 	ui.plainTextEditOutput->clear();
 	m_tool->clearSelection();
 	m_modified = false;
+	ui.actionOutputSaveHOCR->setEnabled(false);
+	ui.actionOutputExportPDF->setEnabled(false);
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
 	return true;

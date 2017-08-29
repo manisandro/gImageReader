@@ -121,6 +121,8 @@ Recognizer::Recognizer() {
 
 	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("language"));
 	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", MAIN->getWidget("comboboxtext:dialog.regions")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("ocraddsourcefilename", MAIN->getWidget("checkbutton:dialog.pages.prepend.filename")));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("ocraddsourcepage", MAIN->getWidget("checkbutton:dialog.pages.prepend.page")));
 	MAIN->getConfig()->addSetting(new VarSetting<int>("psm"));
 }
 
@@ -395,6 +397,7 @@ std::vector<int> Recognizer::selectPages(bool& autodetectLayout) {
 	m_pagesEntry->grab_focus();
 	m_pageAreaLabel->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
 	m_pageAreaCombo->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	MAIN->getWidget("box:dialog.pages.prepend")->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_pageAreaCombo->get_model());
 	int col = m_pageAreaCombo->get_entry_text_column();
 	store->children()[0]->set_value<Glib::ustring>(col, MAIN->getDisplayer()->hasMultipleOCRAreas() ? _("Current selection") : _("Entire page"));
@@ -454,6 +457,8 @@ void Recognizer::recognizeMultiplePages() {
 
 void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout) {
 	tesseract::TessBaseAPI tess;
+	bool prependFile = pages.size() > 1 && MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcefilename")->getValue();
+	bool prependPage = pages.size() > 1 && MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcepage")->getValue();
 	if(initTesseract(tess, m_curLang.prefix.c_str())) {
 		Glib::ustring failed;
 		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_currentPsmMode));
@@ -463,6 +468,7 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 		Utils::busyTask([&] {
 			int npages = pages.size();
 			int idx = 0;
+			std::string prevFile;
 			for(int page : pages) {
 				monitor.desc.progress = 0;
 				++idx;
@@ -478,7 +484,14 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 				readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
 				readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
 				readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
+				bool firstChunk = true;
+				bool newFile = readSessionData->file != prevFile;
+				prevFile = readSessionData->file;
 				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : MAIN->getDisplayer()->getOCRAreas()) {
+					readSessionData->prependPage = prependPage && firstChunk;
+					readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
+					firstChunk = false;
+					newFile = false;
 					tess.SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
 					tess.SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 					tess.Recognize(&monitor.desc);
@@ -486,6 +499,7 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 						MAIN->getOutputEditor()->read(tess, readSessionData);
 					}
 				}
+
 				Glib::signal_idle().connect_once([] { MAIN->popState(); });
 				++monitor.donePages;
 				if(monitor.canceled) {

@@ -16,7 +16,7 @@ iface=${2:-qt5}
 # Note: This script is written to be used with the Fedora mingw environment
 MINGWROOT=/usr/$arch-w64-mingw32/sys-root/mingw
 
-optflags="-g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4"
+optflags="-g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4 -fno-omit-frame-pointer"
 
 # Halt on errors
 set -e
@@ -133,7 +133,6 @@ elif [ "$iface" == "qt5" ]; then
 
     linkDep $(ls $MINGWROOT/bin/libssl-*.dll | sed "s|^$MINGWROOT/||")
     linkDep $(ls $MINGWROOT/bin/libcrypto-*.dll | sed "s|^$MINGWROOT/||")
-    linkDep lib/qt5/plugins/imageformats/qdds.dll  bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qgif.dll  bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qicns.dll bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qico.dll  bin/imageformats
@@ -177,9 +176,9 @@ rm -rf $installroot/share/appdata
 progName=$(grep -oP 'SET\(PACKAGE_NAME \K(\w+)(?=\))' $srcdir/CMakeLists.txt)
 progVersion=$(grep -oP 'SET\(PACKAGE_VERSION \K([\d\.]+)(?=\))' $srcdir/CMakeLists.txt)
 if [ $withdebug ]; then
-    arch="${arch}_debug"
+    variant="_debug"
 fi
-makensis -DNAME=$progName -DARCH=$arch -DPROGVERSION="$progVersion" -DIFACE="$iface" installer.nsi;
+makensis -DNAME=$progName -DARCH=$arch -DVARIANT="$variant" -DPROGVERSION="$progVersion" -DIFACE="$iface" installer.nsi;
 
 # Cleanup
 rm -rf $installroot

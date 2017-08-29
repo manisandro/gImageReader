@@ -46,7 +46,6 @@
 #include "Recognizer.hh"
 #include "TessdataManager.hh"
 #include "Utils.hh"
-#include "ui_PageRangeDialog.h"
 
 struct Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
 	ETEXT_DESC desc;
@@ -85,11 +84,7 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	m_menuPages->addAction(multiplePagesAction);
 
 	m_pagesDialog = new QDialog(MAIN);
-	Ui::PageRangeDialog uiPageRangeDialog;
-	uiPageRangeDialog.setupUi(m_pagesDialog);
-	m_pagesLineEdit = uiPageRangeDialog.lineEditPageRange;
-	m_pageAreaLabel = uiPageRangeDialog.labelRecognitionArea;
-	m_pageAreaComboBox = uiPageRangeDialog.comboBoxRecognitionArea;
+	m_pagesDialogUi.setupUi(m_pagesDialog);
 
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 	ui.menuLanguages->installEventFilter(this);
@@ -97,10 +92,12 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	connect(ui.toolButtonRecognize, SIGNAL(clicked()), this, SLOT(recognizeButtonClicked()));
 	connect(currentPageAction, SIGNAL(triggered()), this, SLOT(recognizeCurrentPage()));
 	connect(multiplePagesAction, SIGNAL(triggered()), this, SLOT(recognizeMultiplePages()));
-	connect(uiPageRangeDialog.lineEditPageRange, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditPageRangeStyle()));
+	connect(m_pagesDialogUi.lineEditPageRange, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditPageRangeStyle()));
 
 	MAIN->getConfig()->addSetting(new VarSetting<QString>("language", "eng:en_EN"));
-	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", uiPageRangeDialog.comboBoxRecognitionArea, 0));
+	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", m_pagesDialogUi.comboBoxRecognitionArea, 0));
+	MAIN->getConfig()->addSetting(new SwitchSetting("ocraddsourcefilename", m_pagesDialogUi.checkBoxPrependFilename));
+	MAIN->getConfig()->addSetting(new SwitchSetting("ocraddsourcepage", m_pagesDialogUi.checkBoxPrependPage));
 	MAIN->getConfig()->addSetting(new VarSetting<int>("psm", 6));
 }
 
@@ -345,7 +342,7 @@ void Recognizer::setMultiLanguage() {
 	QString langs;
 	for(QAction* action : m_langMenuCheckGroup->actions()) {
 		if(action->isChecked()) {
-			langs += action->data().value<QString>() + "+";
+			langs += action->data().toString() + "+";
 		}
 	}
 	if(langs.isEmpty()) {
@@ -375,15 +372,17 @@ void Recognizer::psmSelected(QAction *action) {
 QList<int> Recognizer::selectPages(bool& autodetectLayout) {
 	int nPages = MAIN->getDisplayer()->getNPages();
 
-	m_pagesLineEdit->setText(QString("1-%1").arg(nPages));
-	m_pagesLineEdit->setFocus();
-	m_pageAreaLabel->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
-	m_pageAreaComboBox->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
-	m_pageAreaComboBox->setItemText(0, MAIN->getDisplayer()->hasMultipleOCRAreas() ? _("Current selection") : _("Entire page"));
+	m_pagesDialogUi.lineEditPageRange->setText(QString("1-%1").arg(nPages));
+	m_pagesDialogUi.lineEditPageRange->setFocus();
+	m_pagesDialogUi.labelRecognitionArea->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	m_pagesDialogUi.comboBoxRecognitionArea->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	m_pagesDialogUi.groupBoxPrepend->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+
+	m_pagesDialogUi.comboBoxRecognitionArea->setItemText(0, MAIN->getDisplayer()->hasMultipleOCRAreas() ? _("Current selection") : _("Entire page"));
 
 	QList<int> pages;
 	if(m_pagesDialog->exec() == QDialog::Accepted) {
-		QString text = m_pagesLineEdit->text();
+		QString text = m_pagesDialogUi.lineEditPageRange->text();
 		text.replace(QRegExp("\\s+"), "");
 		for(const QString& block : text.split(',', QString::SkipEmptyParts)) {
 			QStringList ranges = block.split('-', QString::SkipEmptyParts);
@@ -404,11 +403,11 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout) {
 			}
 		}
 		if(pages.empty()) {
-			m_pagesLineEdit->setStyleSheet("background: #FF7777; color: #FFFFFF;");
+			m_pagesDialogUi.lineEditPageRange->setStyleSheet("background: #FF7777; color: #FFFFFF;");
 		}
 	}
 	qSort(pages);
-	autodetectLayout = m_pageAreaComboBox->isVisible() ? m_pageAreaComboBox->currentIndex() == 1 : false;
+	autodetectLayout = m_pagesDialogUi.comboBoxRecognitionArea->isVisible() ? m_pagesDialogUi.comboBoxRecognitionArea->currentIndex() == 1 : false;
 	return pages;
 }
 
@@ -437,6 +436,8 @@ void Recognizer::recognizeMultiplePages() {
 
 void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 	tesseract::TessBaseAPI tess;
+	bool prependFile = pages.size() > 1 && MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcefilename")->getValue();
+	bool prependPage = pages.size() > 1 && MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcepage")->getValue();
 	if(initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())) {
 		QString failed;
 		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_psmCheckGroup->checkedAction()->data().toInt()));
@@ -446,6 +447,7 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 		Utils::busyTask([&] {
 			int npages = pages.size();
 			int idx = 0;
+			QString prevFile;
 			for(int page : pages) {
 				monitor.desc.progress = 0;
 				++idx;
@@ -461,7 +463,14 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 				readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
 				readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
 				readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
+				bool firstChunk = true;
+				bool newFile = readSessionData->file != prevFile;
+				prevFile = readSessionData->file;
 				for(const QImage& image : MAIN->getDisplayer()->getOCRAreas()) {
+					readSessionData->prependPage = prependPage && firstChunk;
+					readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
+					firstChunk = false;
+					newFile = false;
 					tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 					tess.SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 					tess.Recognize(&monitor.desc);

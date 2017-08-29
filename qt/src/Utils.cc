@@ -127,7 +127,7 @@ bool Utils::handleSourceDragEvent(const QMimeData* mimeData) {
 	}
 	QList<QByteArray> formats = QImageReader::supportedImageFormats();
 	formats.append("pdf");
-	for(const QUrl url : mimeData->urls()) {
+	for(const QUrl& url : mimeData->urls()) {
 		QFile file(url.toLocalFile());
 		if(!file.exists()) {
 			continue;
@@ -149,7 +149,7 @@ void Utils::handleSourceDropEvent(const QMimeData* mimeData) {
 	}
 	QList<QByteArray> formats = QImageReader::supportedImageFormats();
 	formats.append("pdf");
-	for(const QUrl url : mimeData->urls()) {
+	for(const QUrl& url : mimeData->urls()) {
 		QFile file(url.toLocalFile());
 		if(!file.exists()) {
 			continue;

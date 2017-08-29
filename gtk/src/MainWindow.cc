@@ -144,6 +144,21 @@ MainWindow::MainWindow()
 	m_idlegroup.push_back(getWidget("button:main.autolayout"));
 	m_idlegroup.push_back(getWidget("menubutton:main.languages"));
 
+#if GTKMM_CHECK_VERSION(3,12,0)
+	getWidget("image:main.controls").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/controls.png"));
+	getWidget("image:display.rotate.mode").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/rotate_pages.png"));
+	getWidget("image:display.rotate.all").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/rotate_pages.png"));
+	getWidget("image:display.rotate.current").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/rotate_page.png"));
+	getWidget("image:main.autolayout").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/autolayout.png"));
+#else
+	getWidget("image:main.controls").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/controls.png", 0)));
+	getWidget("image:display.rotate.mode").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/rotate_pages.png", 0)));
+	getWidget("image:display.rotate.all").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/rotate_pages.png", 0)));
+	getWidget("image:display.rotate.current").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/rotate_page.png", 0)));
+	getWidget("image:main.autolayout").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/autolayout.png", 0)));
+#endif
+
+
 	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) {
 		return closeEvent(ev);
 	});
@@ -180,6 +195,7 @@ MainWindow::MainWindow()
 		m_window->resize(geom[2], geom[3]);
 		m_window->move(geom[0], geom[1]);
 	}
+	getWidget("paned:output").as<Gtk::Paned>()->set_orientation(static_cast<Gtk::Orientation>(!getWidget("combo:config.settings.paneorient").as<Gtk::ComboBoxText>()->get_active_row_number()));
 #if ENABLE_VERSIONCHECK
 	if(m_config->getSetting<SwitchSetting>("updatecheck")->getValue()) {
 		m_newVerThread = Glib::Threads::Thread::create([this] { getNewestVersion(); });
@@ -190,6 +206,11 @@ MainWindow::MainWindow()
 }
 
 MainWindow::~MainWindow() {
+#if ENABLE_VERSIONCHECK
+	if(m_newVerThread) {
+		m_newVerThread->join();
+	}
+#endif
 	delete m_acquirer;
 	delete m_outputEditor;
 	delete m_sourceManager;
@@ -424,12 +445,13 @@ void MainWindow::getNewestVersion() {
 
 void MainWindow::checkVersion(const Glib::ustring& newver) {
 	m_newVerThread->join();
+	m_newVerThread = nullptr;
 	Glib::ustring curver = PACKAGE_VERSION;
 
 	if(newver.compare(curver) > 0) {
 		addNotification(_("New version"), Glib::ustring::compose(_("gImageReader %1 is available"), newver), {
-			{_("Download"), []{ gtk_show_uri(Gdk::Screen::get_default()->gobj(), DOWNLOADURL, GDK_CURRENT_TIME, 0); return false; }},
-			{_("Changelog"), []{ gtk_show_uri(Gdk::Screen::get_default()->gobj(), CHANGELOGURL, GDK_CURRENT_TIME, 0); return false; }},
+			{_("Download"), [=]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(m_window)->gobj(), DOWNLOADURL, GDK_CURRENT_TIME, 0); return false; }},
+			{_("Changelog"), [=]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(m_window)->gobj(), CHANGELOGURL, GDK_CURRENT_TIME, 0); return false; }},
 			{_("Don't notify again"), [this]{ m_config->getSetting<SwitchSetting>("updatecheck")->setValue(false); return true; }}
 		});
 	}

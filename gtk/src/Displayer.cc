@@ -149,6 +149,10 @@ bool Displayer::setCurrentPage(int page) {
 	}
 	Source* source = m_pageMap[page].first;
 	if(source != m_currentSource) {
+		sendScaleRequest({ScaleRequest::Abort});
+		sendScaleRequest({ScaleRequest::Quit});
+		m_scaleThread->join();
+		m_scaleThread = nullptr;
 		delete m_renderer;
 		std::string filename = source->file->get_path();
 #ifdef G_OS_WIN32
@@ -169,6 +173,7 @@ bool Displayer::setCurrentPage(int page) {
 		m_invcheck->set_active(source->invert);
 		m_connection_invcheckToggled.block(false);
 		m_currentSource = source;
+		m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
 	}
 	Utils::set_spin_blocked(m_rotspin, source->angle[m_pageMap[page].second - 1] / M_PI * 180., m_connection_rotSpinChanged);
 	Utils::set_spin_blocked(m_pagespin, page, m_connection_pageSpinChanged);
@@ -180,6 +185,7 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 		return true;
 	}
 	if(m_scaleThread) {
+		sendScaleRequest({ScaleRequest::Abort});
 		sendScaleRequest({ScaleRequest::Quit});
 		m_scaleThread->join();
 		m_scaleThread = nullptr;
@@ -235,8 +241,15 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 		}
 		delete renderer;
 	}
+	if(page == 0) {
+		m_pageMap.clear();
+		m_sources.clear();
+		return false;
+	}
 
+	m_connection_pageSpinChanged.block();
 	m_pagespin->get_adjustment()->set_upper(page);
+	m_connection_pageSpinChanged.unblock();
 	m_pagespin->set_visible(page > 1);
 	m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
 	m_canvas->show();
@@ -628,6 +641,7 @@ void Displayer::scaleThread() {
 		ScaleRequest req = m_scaleRequests.front();
 		m_scaleRequests.pop();
 		if(req.type == ScaleRequest::Quit) {
+			m_connection_setScaledImage.disconnect();
 			break;
 		} else if(req.type == ScaleRequest::Scale) {
 			m_scaleMutex.unlock();
@@ -650,14 +664,14 @@ void Displayer::scaleThread() {
 			m_scaleMutex.unlock();
 
 			double scale = req.scale;
-			Glib::signal_idle().connect_once([this,image,scale] { setScaledImage(image, scale); });
+			m_connection_setScaledImage = Glib::signal_idle().connect([this,image,scale] { setScaledImage(image); return false; });
 			m_scaleMutex.lock();
 		}
 	};
 	m_scaleMutex.unlock();
 }
 
-void Displayer::setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image, double scale) {
+void Displayer::setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image) {
 	m_scaleMutex.lock();
 	if(!m_scaleRequests.empty() && m_scaleRequests.front().type == ScaleRequest::Abort) {
 		m_scaleRequests.pop();

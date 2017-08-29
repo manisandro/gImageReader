@@ -1,13 +1,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Bernard Banko <beernarrd (at) gmail.com>, 2016.
-# Sandro Mani <manisandro@gmail.com>, 2016.
+# Sandro Mani <manisandro@gmail.com>, 2016, 2017.
+# Bernard Banko <beernarrd at gmail.com>, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 17:29+0100\n"
-"PO-Revision-Date: 2016-10-06 23:33+0100\n"
+"POT-Creation-Date: 2017-07-01 10:34+0200\n"
+"PO-Revision-Date: 2017-06-30 20:02+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: sl\n"
@@ -28,7 +29,7 @@ msgid "Preferences"
 msgstr "Možnosti"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/gimagereader.ui.h:40
-#: ../gtk/src/MainWindow.cc:468 ../qt/src/MainWindow.cc:445
+#: ../gtk/src/MainWindow.cc:484 ../qt/src/MainWindow.cc:445
 #: ../qt/src/Ui_MainWindow.hh:173
 msgid "Help"
 msgstr "Pomoč"
@@ -83,9 +84,8 @@ msgid "OK"
 msgstr "V redu"
 
 #: ../gtk/data/editor_hocr.ui.h:4 ../qt/data/PdfExportDialog.ui.h:2
-#, fuzzy
 msgid "Output mode:"
-msgstr "Izhod:"
+msgstr "Vrsta izpisa:"
 
 #: ../gtk/data/editor_hocr.ui.h:5 ../qt/data/PdfExportDialog.ui.h:3
 msgid "PDF"
@@ -97,15 +97,15 @@ msgstr "PDF z nevidno plastjo besedila"
 
 #: ../gtk/data/editor_hocr.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Format:"
-msgstr ""
+msgstr "Vrsta:"
 
 #: ../gtk/data/editor_hocr.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
 msgid "Compression:"
-msgstr ""
+msgstr "Stiskanje:"
 
 #: ../gtk/data/editor_hocr.ui.h:9 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression quality:"
-msgstr ""
+msgstr "Kakovost stiskanja:"
 
 #: ../gtk/data/editor_hocr.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
 msgid "DPI:"
@@ -113,20 +113,19 @@ msgstr "DPI:"
 
 #: ../gtk/data/editor_hocr.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "Algoritem razprševanja:"
 
 #: ../gtk/data/editor_hocr.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
-msgstr ""
+msgstr "Nastavitve slike:"
 
 #: ../gtk/data/editor_hocr.ui.h:13 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Document font:"
 msgstr "Pisava dokumenta:"
 
 #: ../gtk/data/editor_hocr.ui.h:14 ../qt/data/PdfExportDialog.ui.h:7
-#, fuzzy
 msgid "Uniformize line and word spacing"
-msgstr "Poenoti razdalje med vrsticami"
+msgstr "Poenoti razdalje med vrsticami in besedami"
 
 #: ../gtk/data/editor_hocr.ui.h:15 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Use detected font sizes"
@@ -134,24 +133,23 @@ msgstr "Uporabi zaznane velikosti pisave"
 
 #: ../gtk/data/editor_hocr.ui.h:16 ../qt/data/PdfExportDialog.ui.h:8
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "Ohrani presledke, širše kot:"
 
 #: ../gtk/data/editor_hocr.ui.h:17 ../qt/data/PdfExportDialog.ui.h:12
 msgid "characters"
-msgstr ""
+msgstr "znakov"
 
 #: ../gtk/data/editor_hocr.ui.h:18 ../qt/data/PdfExportDialog.ui.h:9
 msgid "Scale:"
-msgstr ""
+msgstr "Merilo:"
 
 #: ../gtk/data/editor_hocr.ui.h:19 ../qt/data/PdfExportDialog.ui.h:6
-#, fuzzy
 msgid "Text settings:"
-msgstr "Kodiranje besedilne datoteke:"
+msgstr "Nastavitve besedila:"
 
 #: ../gtk/data/editor_hocr.ui.h:20 ../qt/data/PdfExportDialog.ui.h:5
 msgid "Show preview"
-msgstr ""
+msgstr "Pokaži predogled"
 
 #: ../gtk/data/editor_hocr.ui.h:21 ../gtk/data/editor_text.ui.h:26
 #: ../qt/src/Ui_OutputEditorText.hh:123
@@ -215,18 +213,18 @@ msgstr "Počisti"
 msgid "Add"
 msgstr "Dodaj"
 
-#: ../gtk/data/editor_text.ui.h:9 ../gtk/src/OutputEditorHOCR.cc:1148
-#: ../gtk/src/OutputEditorHOCR.cc:1201 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/OutputEditorHOCR.cc:958 ../qt/src/OutputEditorHOCR.cc:987
+#: ../gtk/data/editor_text.ui.h:9 ../gtk/src/OutputEditorHOCR.cc:1202
+#: ../gtk/src/OutputEditorHOCR.cc:1213 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/OutputEditorHOCR.cc:998 ../qt/src/OutputEditorHOCR.cc:1000
 #: ../qt/src/SubstitutionsManager.cc:54 ../qt/src/SubstitutionsManager.cc:55
 msgid "Remove"
 msgstr "Odstrani"
 
-#: ../gtk/data/editor_text.ui.h:10 ../gtk/data/gimagereader.ui.h:70
+#: ../gtk/data/editor_text.ui.h:10 ../gtk/data/gimagereader.ui.h:73
 msgid "Apply"
 msgstr "Uporabi"
 
-#: ../gtk/data/editor_text.ui.h:11 ../gtk/data/gimagereader.ui.h:71
+#: ../gtk/data/editor_text.ui.h:11 ../gtk/data/gimagereader.ui.h:74
 msgid "Close"
 msgstr "Zapri"
 
@@ -316,14 +314,12 @@ msgid "Match case"
 msgstr "Upoštevaj velikost"
 
 #: ../gtk/data/gimagereader.ui.h:1 ../qt/src/Ui_MainWindow.hh:65
-#, fuzzy
 msgid "Rotate current page"
-msgstr "Zamenjaj trenutno besedilo"
+msgstr "Zavrti trenutno stran"
 
 #: ../gtk/data/gimagereader.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
-#, fuzzy
 msgid "Rotate all pages"
-msgstr "Zasukaj levo"
+msgstr "Zavrti vse strani"
 
 #: ../gtk/data/gimagereader.ui.h:3 ../qt/data/MainWindow.ui.h:35
 msgid "Toggle output pane"
@@ -383,14 +379,14 @@ msgstr "Izhod:"
 msgid "Mode:"
 msgstr "Način:"
 
-#: ../gtk/data/gimagereader.ui.h:17 ../gtk/src/OutputEditorHOCR.cc:356
-#: ../qt/data/MainWindow.ui.h:11 ../qt/src/OutputEditorHOCR.cc:275
+#: ../gtk/data/gimagereader.ui.h:17 ../gtk/src/OutputEditorHOCR.cc:362
+#: ../qt/data/MainWindow.ui.h:11 ../qt/src/OutputEditorHOCR.cc:273
 msgid "Color"
 msgstr "Barvno"
 
-#: ../gtk/data/gimagereader.ui.h:18 ../gtk/src/OutputEditorHOCR.cc:359
-#: ../qt/data/MainWindow.ui.h:10 ../qt/src/OutputEditorHOCR.cc:277
-#: ../qt/src/OutputEditorHOCR.cc:279
+#: ../gtk/data/gimagereader.ui.h:18 ../gtk/src/OutputEditorHOCR.cc:365
+#: ../qt/data/MainWindow.ui.h:10 ../qt/src/OutputEditorHOCR.cc:275
+#: ../qt/src/OutputEditorHOCR.cc:277
 msgid "Grayscale"
 msgstr "Sivinsko"
 
@@ -439,9 +435,8 @@ msgid "Best fit"
 msgstr "Najboljše ujemanje"
 
 #: ../gtk/data/gimagereader.ui.h:30 ../qt/src/Ui_MainWindow.hh:74
-#, fuzzy
 msgid "Select rotation mode"
-msgstr "Izberi način vstavljanja"
+msgstr "Izberi način vrtenja"
 
 #: ../gtk/data/gimagereader.ui.h:32 ../qt/data/MainWindow.ui.h:31
 msgid "Image controls"
@@ -533,25 +528,23 @@ msgstr "Privzeto"
 
 #: ../gtk/data/gimagereader.ui.h:58 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "Mesta jezikovnih podatkov:"
 
 #: ../gtk/data/gimagereader.ui.h:59 ../qt/data/ConfigDialog.ui.h:13
-#, fuzzy
 msgid "Language definitions path:"
-msgstr "Preddoločene nastavitve jezika:"
+msgstr "Pot jezikovnih določil:"
 
 #: ../gtk/data/gimagereader.ui.h:60 ../qt/data/ConfigDialog.ui.h:28
-#, fuzzy
 msgid "Spelling dictionaries path:"
-msgstr "Slovar za črkovanje manjka"
+msgstr "Pot slovarjev črkovalnika:"
 
 #: ../gtk/data/gimagereader.ui.h:61 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "Sistemske poti"
 
 #: ../gtk/data/gimagereader.ui.h:62 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Uporabnikove poti"
 
 #: ../gtk/data/gimagereader.ui.h:63 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -569,8 +562,8 @@ msgstr "<small><b>Primer:</b>1-10, 13, 14-18</small>"
 msgid "Recognition area:"
 msgstr "Področje prepoznavanja:"
 
-#: ../gtk/data/gimagereader.ui.h:67 ../gtk/src/Recognizer.cc:400
-#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:382
+#: ../gtk/data/gimagereader.ui.h:67 ../gtk/src/Recognizer.cc:403
+#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:381
 msgid "Entire page"
 msgstr "Celotna stran"
 
@@ -578,40 +571,54 @@ msgstr "Celotna stran"
 msgid "Autodetect"
 msgstr "Samodejno zaznaj"
 
-#: ../gtk/data/gimagereader.ui.h:69 ../qt/src/TessdataManager.cc:47
+#: ../gtk/data/gimagereader.ui.h:69 ../qt/data/PageRangeDialog.ui.h:7
+#, fuzzy
+msgid "Prepend to output text:"
+msgstr "Pripni pod trenutno besedilo"
+
+#: ../gtk/data/gimagereader.ui.h:70 ../qt/data/PageRangeDialog.ui.h:8
+msgid "Source filename"
+msgstr ""
+
+#: ../gtk/data/gimagereader.ui.h:71 ../qt/data/PageRangeDialog.ui.h:9
+#, fuzzy
+msgid "Source page"
+msgstr "Vir"
+
+#: ../gtk/data/gimagereader.ui.h:72 ../qt/src/TessdataManager.cc:47
 msgid "Tessdata Manager"
 msgstr "Upravljalnik Tessdata"
 
-#: ../gtk/data/gimagereader.ui.h:72 ../qt/src/TessdataManager.cc:49
+#: ../gtk/data/gimagereader.ui.h:75 ../qt/src/TessdataManager.cc:49
 msgid "Manage installed languages:"
 msgstr "Upravljaj nameščene jezike:"
 
-#: ../gtk/data/gimagereader.ui.h:73 ../qt/src/DisplayerToolSelect.cc:240
+#: ../gtk/data/gimagereader.ui.h:76 ../qt/src/DisplayerToolSelect.cc:240
 msgid "Delete"
 msgstr "Zbriši"
 
-#: ../gtk/data/gimagereader.ui.h:74 ../qt/src/DisplayerToolSelect.cc:226
+#: ../gtk/data/gimagereader.ui.h:77 ../qt/src/DisplayerToolSelect.cc:226
 msgid "Order:"
 msgstr "Vrstni red:"
 
-#: ../gtk/data/gimagereader.ui.h:75 ../gtk/src/DisplayerToolHOCR.cc:28
+#: ../gtk/data/gimagereader.ui.h:78 ../gtk/src/DisplayerToolHOCR.cc:28
 #: ../qt/src/DisplayerToolHOCR.cc:30 ../qt/src/DisplayerToolSelect.cc:241
 msgid "Recognize"
 msgstr "Prepoznaj"
 
-#: ../gtk/data/gimagereader.ui.h:76 ../qt/src/DisplayerToolSelect.cc:242
+#: ../gtk/data/gimagereader.ui.h:79 ../qt/src/DisplayerToolSelect.cc:242
 msgid "Recognize to clipboard"
 msgstr "Prepoznaj na odložišče"
 
-#: ../gtk/data/gimagereader.ui.h:77 ../qt/src/DisplayerToolSelect.cc:243
+#: ../gtk/data/gimagereader.ui.h:80 ../qt/src/DisplayerToolSelect.cc:243
 msgid "Save as image"
 msgstr "Shrani kot sliko"
 
-#: ../gtk/data/gimagereader.ui.h:78 ../qt/src/Recognizer.cc:77
+#: ../gtk/data/gimagereader.ui.h:81 ../qt/src/Recognizer.cc:76
 msgid "Current Page"
 msgstr "Trenutno stran"
 
-#: ../gtk/data/gimagereader.ui.h:79 ../qt/src/Recognizer.cc:80
+#: ../gtk/data/gimagereader.ui.h:82 ../qt/src/Recognizer.cc:79
 msgid "Multiple Pages..."
 msgstr "Več strani ..."
 
@@ -693,11 +700,11 @@ msgstr "Neshranjenega dela ni."
 msgid "Failed to obtain backtrace. Is gdb installed?"
 msgstr "Pridobivanje povratnega sledenja spodletelo. Je gdb nameščen?"
 
-#: ../gtk/src/Displayer.cc:247 ../qt/src/Displayer.cc:214
+#: ../gtk/src/Displayer.cc:261 ../qt/src/Displayer.cc:231
 msgid "Failed to load image"
 msgstr "Nalaganje slike spodletelo"
 
-#: ../gtk/src/Displayer.cc:247 ../qt/src/Displayer.cc:214
+#: ../gtk/src/Displayer.cc:261 ../qt/src/Displayer.cc:231
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -742,132 +749,135 @@ msgstr "Naj bo datoteka prepisana?"
 
 #: ../gtk/src/MainWindow.cc:125 ../qt/src/MainWindow.cc:274
 msgid "Using tesseract"
-msgstr ""
+msgstr "Uporaba tesseracta"
 
-#: ../gtk/src/MainWindow.cc:176 ../qt/src/MainWindow.cc:181
+#: ../gtk/src/MainWindow.cc:191 ../qt/src/MainWindow.cc:181
 msgid "Select an image to begin..."
 msgstr "Izberite sliko za začetek ..."
 
-#: ../gtk/src/MainWindow.cc:290 ../qt/src/MainWindow.cc:262
+#: ../gtk/src/MainWindow.cc:306 ../qt/src/MainWindow.cc:262
 msgid "Multiple sources"
 msgstr "Več virov"
 
-#: ../gtk/src/MainWindow.cc:291 ../qt/src/MainWindow.cc:263
+#: ../gtk/src/MainWindow.cc:307 ../qt/src/MainWindow.cc:263
 msgid "Ready"
 msgstr "Pripravljeno"
 
-#: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:390
+#: ../gtk/src/MainWindow.cc:446 ../qt/src/MainWindow.cc:390
 msgid "New version"
 msgstr "Nova različica"
 
-#: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:390
+#: ../gtk/src/MainWindow.cc:446 ../qt/src/MainWindow.cc:390
 msgid "gImageReader %1 is available"
 msgstr "gImageReader %1 je na voljo"
 
-#: ../gtk/src/MainWindow.cc:431 ../qt/src/MainWindow.cc:391
+#: ../gtk/src/MainWindow.cc:447 ../qt/src/MainWindow.cc:391
 msgid "Download"
 msgstr "Prejmi"
 
-#: ../gtk/src/MainWindow.cc:432 ../qt/src/MainWindow.cc:392
+#: ../gtk/src/MainWindow.cc:448 ../qt/src/MainWindow.cc:392
 msgid "Changelog"
 msgstr "Spremembe"
 
-#: ../gtk/src/MainWindow.cc:433 ../qt/src/MainWindow.cc:393
+#: ../gtk/src/MainWindow.cc:449 ../qt/src/MainWindow.cc:393
 msgid "Don't notify again"
 msgstr "Ne obveščaj več"
 
-#: ../gtk/src/MainWindow.cc:452 ../qt/src/MainWindow.cc:438
+#: ../gtk/src/MainWindow.cc:468 ../qt/src/MainWindow.cc:438
 msgid "Don't show again"
 msgstr "Ne kaži več"
 
-#: ../gtk/src/MainWindow.cc:453 ../gtk/src/MainWindow.cc:466
+#: ../gtk/src/MainWindow.cc:469 ../gtk/src/MainWindow.cc:482
 #: ../qt/src/MainWindow.cc:439
 msgid "Install"
 msgstr "Namesti"
 
-#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:451
+#: ../gtk/src/MainWindow.cc:489 ../qt/src/MainWindow.cc:451
 msgid "Spelling dictionary missing"
 msgstr "Slovar za črkovanje manjka"
 
-#: ../gtk/src/MainWindow.cc:473 ../qt/src/MainWindow.cc:451
+#: ../gtk/src/MainWindow.cc:489 ../qt/src/MainWindow.cc:451
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Slovar črkovalnika za %1 ni nameščen"
 
-#: ../gtk/src/MainWindow.cc:480 ../gtk/src/MainWindow.cc:512
+#: ../gtk/src/MainWindow.cc:496 ../gtk/src/MainWindow.cc:528
 #: ../qt/src/MainWindow.cc:458
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Nameščanje slovarja črkovalnika za '%1'"
 
-#: ../gtk/src/MainWindow.cc:501 ../gtk/src/MainWindow.cc:526
-#: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:544
-#: ../gtk/src/MainWindow.cc:550 ../gtk/src/MainWindow.cc:579
-#: ../gtk/src/OutputEditorHOCR.cc:1353 ../gtk/src/Recognizer.cc:161
+#: ../gtk/src/MainWindow.cc:517 ../gtk/src/MainWindow.cc:542
+#: ../gtk/src/MainWindow.cc:550 ../gtk/src/MainWindow.cc:560
+#: ../gtk/src/MainWindow.cc:566 ../gtk/src/MainWindow.cc:595
+#: ../gtk/src/OutputEditorHOCR.cc:1375 ../gtk/src/Recognizer.cc:163
 #: ../gtk/src/TessdataManager.cc:58 ../gtk/src/TessdataManager.cc:68
 #: ../gtk/src/TessdataManager.cc:290 ../qt/src/MainWindow.cc:477
 #: ../qt/src/MainWindow.cc:490 ../qt/src/MainWindow.cc:500
 #: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:518
-#: ../qt/src/MainWindow.cc:546 ../qt/src/OutputEditorHOCR.cc:1123
-#: ../qt/src/Recognizer.cc:141 ../qt/src/TessdataManager.cc:72
+#: ../qt/src/MainWindow.cc:546 ../qt/src/OutputEditorHOCR.cc:1157
+#: ../qt/src/Recognizer.cc:138 ../qt/src/TessdataManager.cc:72
 #: ../qt/src/TessdataManager.cc:82 ../qt/src/TessdataManager.cc:275
 msgid "Error"
 msgstr "Napaka"
 
-#: ../gtk/src/MainWindow.cc:501 ../qt/src/MainWindow.cc:477
+#: ../gtk/src/MainWindow.cc:517 ../qt/src/MainWindow.cc:477
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Nameščanje slovarja črkovalnika spodletelo: %1"
 
-#: ../gtk/src/MainWindow.cc:526 ../qt/src/MainWindow.cc:490
-#, fuzzy
+#: ../gtk/src/MainWindow.cc:542 ../qt/src/MainWindow.cc:490
 msgid "Failed to create directory for spelling dictionaries."
-msgstr "Nameščanje slovarja črkovalnika spodletelo: %1"
+msgstr "Ustvarjanje imenika za slovarje črkovalnika je spodletelo."
 
-#: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:550
+#: ../gtk/src/MainWindow.cc:550 ../gtk/src/MainWindow.cc:566
 #: ../qt/src/MainWindow.cc:500
 msgid "Could not read %1: %2."
 msgstr "Branje %1 ni bilo možno: %2."
 
-#: ../gtk/src/MainWindow.cc:544 ../gtk/src/MainWindow.cc:579
+#: ../gtk/src/MainWindow.cc:560 ../gtk/src/MainWindow.cc:595
 #: ../qt/src/MainWindow.cc:510 ../qt/src/MainWindow.cc:546
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Za '%1' ni bilo možno najti slovarjev."
 
-#: ../gtk/src/MainWindow.cc:560 ../qt/src/MainWindow.cc:529
+#: ../gtk/src/MainWindow.cc:576 ../qt/src/MainWindow.cc:529
 msgid "Downloading '%1'..."
 msgstr "Prejemanje '%1' ..."
 
-#: ../gtk/src/MainWindow.cc:576 ../qt/src/MainWindow.cc:543
+#: ../gtk/src/MainWindow.cc:592 ../qt/src/MainWindow.cc:543
 msgid "Dictionaries installed"
 msgstr "Slovarji nameščeni"
 
-#: ../gtk/src/MainWindow.cc:576
+#: ../gtk/src/MainWindow.cc:592
 msgid "The following dictionaries were installed:%1"
 msgstr "Naslednji slovarji so bili nameščeni: %1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:362 ../qt/src/OutputEditorHOCR.cc:281
+#: ../gtk/src/OutputEditorHOCR.cc:319 ../qt/src/OutputEditorHOCR.cc:291
+msgid "Document"
+msgstr "Dokument"
+
+#: ../gtk/src/OutputEditorHOCR.cc:368 ../qt/src/OutputEditorHOCR.cc:279
 msgid "Monochrome"
-msgstr ""
+msgstr "Enobarvno"
 
-#: ../gtk/src/OutputEditorHOCR.cc:371 ../qt/src/OutputEditorHOCR.cc:283
+#: ../gtk/src/OutputEditorHOCR.cc:377 ../qt/src/OutputEditorHOCR.cc:281
 msgid "Threshold (closest color)"
-msgstr ""
+msgstr "Prag (najbližja barva)"
 
-#: ../gtk/src/OutputEditorHOCR.cc:374 ../qt/src/OutputEditorHOCR.cc:284
+#: ../gtk/src/OutputEditorHOCR.cc:380 ../qt/src/OutputEditorHOCR.cc:282
 msgid "Diffuse"
-msgstr ""
+msgstr "Difuzno"
 
-#: ../gtk/src/OutputEditorHOCR.cc:383 ../qt/src/OutputEditorHOCR.cc:285
+#: ../gtk/src/OutputEditorHOCR.cc:389 ../qt/src/OutputEditorHOCR.cc:283
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Zip (brezizgubno)"
 
-#: ../gtk/src/OutputEditorHOCR.cc:387 ../qt/src/OutputEditorHOCR.cc:286
+#: ../gtk/src/OutputEditorHOCR.cc:393 ../qt/src/OutputEditorHOCR.cc:284
 msgid "CCITT Group 4 (lossless)"
-msgstr ""
+msgstr "CCITT Group 4 (brezizgubno)"
 
-#: ../gtk/src/OutputEditorHOCR.cc:391 ../qt/src/OutputEditorHOCR.cc:287
+#: ../gtk/src/OutputEditorHOCR.cc:397 ../qt/src/OutputEditorHOCR.cc:285
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "Jpeg (izgubno)"
 
-#: ../gtk/src/OutputEditorHOCR.cc:547 ../qt/src/OutputEditorHOCR.cc:428
+#: ../gtk/src/OutputEditorHOCR.cc:553 ../qt/src/OutputEditorHOCR.cc:429
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -875,108 +885,116 @@ msgstr ""
 "Naslednjih strani ni bilo mogoče obdelati:\n"
 "%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:548 ../qt/src/OutputEditorHOCR.cc:429
+#: ../gtk/src/OutputEditorHOCR.cc:554 ../qt/src/OutputEditorHOCR.cc:430
 msgid "Recognition errors"
 msgstr "Napake pri prepoznavanju"
 
 #. Add tree item
-#: ../gtk/src/OutputEditorHOCR.cc:639 ../gtk/src/OutputEditorHOCR.cc:1020
-#: ../qt/src/OutputEditorHOCR.cc:503 ../qt/src/OutputEditorHOCR.cc:881
+#: ../gtk/src/OutputEditorHOCR.cc:647 ../gtk/src/OutputEditorHOCR.cc:1037
+#: ../qt/src/OutputEditorHOCR.cc:504 ../qt/src/OutputEditorHOCR.cc:894
 msgid "Graphic"
 msgstr "Grafika"
 
-#: ../gtk/src/OutputEditorHOCR.cc:692 ../qt/src/OutputEditorHOCR.cc:553
+#: ../gtk/src/OutputEditorHOCR.cc:703 ../qt/src/OutputEditorHOCR.cc:563
 msgid "Paragraph"
 msgstr "Odstavek"
 
-#: ../gtk/src/OutputEditorHOCR.cc:695 ../qt/src/OutputEditorHOCR.cc:556
+#: ../gtk/src/OutputEditorHOCR.cc:706 ../qt/src/OutputEditorHOCR.cc:566
 msgid "Textline"
 msgstr "Vrstica"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1117 ../qt/src/OutputEditorHOCR.cc:937
+#: ../gtk/src/OutputEditorHOCR.cc:1136 ../qt/src/OutputEditorHOCR.cc:950
 msgid "Merge"
-msgstr ""
+msgstr "Združi"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1145 ../qt/src/OutputEditorHOCR.cc:956
+#: ../gtk/src/OutputEditorHOCR.cc:1161 ../qt/src/OutputEditorHOCR.cc:977
 msgid "Add graphic region"
-msgstr ""
+msgstr "Dodaj področje grafike"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1180 ../qt/src/OutputEditorHOCR.cc:978
+#: ../gtk/src/OutputEditorHOCR.cc:1177 ../qt/src/OutputEditorHOCR.cc:985
 msgid "No suggestions"
 msgstr "Ni predlogov"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1186 ../qt/src/OutputEditorHOCR.cc:982
+#: ../gtk/src/OutputEditorHOCR.cc:1183 ../qt/src/OutputEditorHOCR.cc:989
 msgid "Add to dictionary"
-msgstr ""
+msgstr "Dodaj v slovar"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1192 ../qt/src/OutputEditorHOCR.cc:983
+#: ../gtk/src/OutputEditorHOCR.cc:1189 ../qt/src/OutputEditorHOCR.cc:990
 msgid "Ignore word"
-msgstr ""
+msgstr "Prezri besedo"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1226 ../gtk/src/OutputEditorHOCR.cc:1265
-#: ../qt/src/OutputEditorHOCR.cc:1015 ../qt/src/OutputEditorHOCR.cc:1045
+#: ../gtk/src/OutputEditorHOCR.cc:1222 ../qt/src/OutputEditorHOCR.cc:1007
+msgid "Expand all"
+msgstr "Razširi"
+
+#: ../gtk/src/OutputEditorHOCR.cc:1225 ../qt/src/OutputEditorHOCR.cc:1008
+msgid "Collapse all"
+msgstr "Zloži"
+
+#: ../gtk/src/OutputEditorHOCR.cc:1248 ../gtk/src/OutputEditorHOCR.cc:1287
+#: ../qt/src/OutputEditorHOCR.cc:1049 ../qt/src/OutputEditorHOCR.cc:1079
 msgid "hOCR HTML Files"
 msgstr "Datoteke hOCR HTML"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1227 ../qt/src/OutputEditorHOCR.cc:1015
+#: ../gtk/src/OutputEditorHOCR.cc:1249 ../qt/src/OutputEditorHOCR.cc:1049
 msgid "Open hOCR File"
 msgstr "Odpri datoteko hOCR"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1236 ../qt/src/OutputEditorHOCR.cc:1021
+#: ../gtk/src/OutputEditorHOCR.cc:1258 ../qt/src/OutputEditorHOCR.cc:1055
 msgid "Failed to open file"
 msgstr "Odpiranje datoteke spodletelo"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1236 ../qt/src/OutputEditorHOCR.cc:1021
+#: ../gtk/src/OutputEditorHOCR.cc:1258 ../qt/src/OutputEditorHOCR.cc:1055
 msgid "The file could not be opened: %1."
 msgstr "Datoteke ni bilo mogoče odpreti: %1."
 
-#: ../gtk/src/OutputEditorHOCR.cc:1245 ../qt/src/OutputEditorHOCR.cc:1028
+#: ../gtk/src/OutputEditorHOCR.cc:1267 ../qt/src/OutputEditorHOCR.cc:1062
 msgid "Invalid hOCR file"
 msgstr "Neveljavna datoteka hOCR"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1245 ../qt/src/OutputEditorHOCR.cc:1028
+#: ../gtk/src/OutputEditorHOCR.cc:1267 ../qt/src/OutputEditorHOCR.cc:1062
 msgid "The file does not appear to contain valid hOCR HTML: %1"
 msgstr "Ni videti, da bi imela datoteka veljaven zapis hOCR HTML: %1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1261 ../gtk/src/OutputEditorHOCR.cc:1321
-#: ../gtk/src/OutputEditorText.cc:286 ../qt/src/OutputEditorHOCR.cc:1043
-#: ../qt/src/OutputEditorHOCR.cc:1097 ../qt/src/OutputEditorText.cc:233
+#: ../gtk/src/OutputEditorHOCR.cc:1283 ../gtk/src/OutputEditorHOCR.cc:1343
+#: ../gtk/src/OutputEditorText.cc:306 ../qt/src/OutputEditorHOCR.cc:1077
+#: ../qt/src/OutputEditorHOCR.cc:1131 ../qt/src/OutputEditorText.cc:246
 msgid "output"
 msgstr "rezultat"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1266 ../qt/src/OutputEditorHOCR.cc:1045
+#: ../gtk/src/OutputEditorHOCR.cc:1288 ../qt/src/OutputEditorHOCR.cc:1079
 msgid "Save hOCR Output..."
 msgstr "Shrani rezultat hOCR ..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:1274 ../gtk/src/OutputEditorHOCR.cc:1335
-#: ../gtk/src/OutputEditorText.cc:299 ../qt/src/OutputEditorHOCR.cc:1053
-#: ../qt/src/OutputEditorHOCR.cc:1109 ../qt/src/OutputEditorText.cc:243
+#: ../gtk/src/OutputEditorHOCR.cc:1296 ../gtk/src/OutputEditorHOCR.cc:1357
+#: ../gtk/src/OutputEditorText.cc:319 ../qt/src/OutputEditorHOCR.cc:1087
+#: ../qt/src/OutputEditorHOCR.cc:1143 ../qt/src/OutputEditorText.cc:256
 msgid "Failed to save output"
 msgstr "Shranjevanje rezultata spodletelo"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1274 ../gtk/src/OutputEditorHOCR.cc:1335
-#: ../gtk/src/OutputEditorText.cc:299 ../qt/src/OutputEditorHOCR.cc:1053
-#: ../qt/src/OutputEditorHOCR.cc:1109 ../qt/src/OutputEditorText.cc:243
+#: ../gtk/src/OutputEditorHOCR.cc:1296 ../gtk/src/OutputEditorHOCR.cc:1357
+#: ../gtk/src/OutputEditorText.cc:319 ../qt/src/OutputEditorHOCR.cc:1087
+#: ../qt/src/OutputEditorHOCR.cc:1143 ../qt/src/OutputEditorText.cc:256
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Preverite, če imate v izbrani mapi pravico pisanja."
 
-#: ../gtk/src/OutputEditorHOCR.cc:1324 ../qt/src/OutputEditorHOCR.cc:1099
+#: ../gtk/src/OutputEditorHOCR.cc:1346 ../qt/src/OutputEditorHOCR.cc:1133
 msgid "PDF Files"
 msgstr "Datoteke PDF"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1325 ../qt/src/OutputEditorHOCR.cc:1099
+#: ../gtk/src/OutputEditorHOCR.cc:1347 ../qt/src/OutputEditorHOCR.cc:1133
 msgid "Save PDF Output..."
 msgstr "Shrani rezultat PDF ..."
 
-#: ../gtk/src/OutputEditorHOCR.cc:1353 ../qt/src/OutputEditorHOCR.cc:1123
+#: ../gtk/src/OutputEditorHOCR.cc:1375 ../qt/src/OutputEditorHOCR.cc:1157
 msgid "The PDF library does not support the selected font."
-msgstr ""
+msgstr "Knjižnica PDF ne podpira izbrane pisave."
 
-#: ../gtk/src/OutputEditorHOCR.cc:1410 ../qt/src/OutputEditorHOCR.cc:1179
+#: ../gtk/src/OutputEditorHOCR.cc:1435 ../qt/src/OutputEditorHOCR.cc:1216
 msgid "Errors occurred"
 msgstr "Pojavile so se napake"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1410 ../qt/src/OutputEditorHOCR.cc:1179
+#: ../gtk/src/OutputEditorHOCR.cc:1435 ../qt/src/OutputEditorHOCR.cc:1216
 msgid ""
 "The following pages could not be rendered:\n"
 "%1"
@@ -984,30 +1002,40 @@ msgstr ""
 "Naslednjih strani ni bilo mogoče prikazati:\n"
 "%1"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1537 ../gtk/src/OutputEditorText.cc:313
-#: ../qt/src/OutputEditorHOCR.cc:1293 ../qt/src/OutputEditorText.cc:256
+#: ../gtk/src/OutputEditorHOCR.cc:1562 ../gtk/src/OutputEditorText.cc:333
+#: ../qt/src/OutputEditorHOCR.cc:1331 ../qt/src/OutputEditorText.cc:269
 msgid "Output not saved"
 msgstr "Rezultat ni bil shranjen"
 
-#: ../gtk/src/OutputEditorHOCR.cc:1537 ../gtk/src/OutputEditorText.cc:313
-#: ../qt/src/OutputEditorHOCR.cc:1293 ../qt/src/OutputEditorText.cc:256
+#: ../gtk/src/OutputEditorHOCR.cc:1562 ../gtk/src/OutputEditorText.cc:333
+#: ../qt/src/OutputEditorHOCR.cc:1331 ../qt/src/OutputEditorText.cc:269
 msgid "Save output before proceeding?"
 msgstr "Ali naj se pred nadaljevanjem shrani rezultat?"
 
-#: ../gtk/src/OutputEditorText.cc:191 ../qt/src/OutputEditorText.cc:158
+#: ../gtk/src/OutputEditorText.cc:197 ../qt/src/OutputEditorText.cc:158
 msgid "Stripping line breaks..."
 msgstr "Odstranjevanje prelomov vrstic ..."
 
-#: ../gtk/src/OutputEditorText.cc:205
+#: ../gtk/src/OutputEditorText.cc:211
 msgid "Check spelling"
 msgstr "Preveri črkovanje"
 
-#: ../gtk/src/OutputEditorText.cc:232 ../qt/src/OutputEditorText.cc:178
+#: ../gtk/src/OutputEditorText.cc:238 ../qt/src/OutputEditorText.cc:178
 msgid "Replacing..."
 msgstr "Zamenjevanje ..."
 
-#: ../gtk/src/OutputEditorText.cc:260 ../gtk/src/Recognizer.cc:475
-#: ../qt/src/Recognizer.cc:458
+#: ../gtk/src/OutputEditorText.cc:264 ../qt/src/OutputEditorText.cc:204
+#, fuzzy
+msgid "File: %1"
+msgstr "Datoteke"
+
+#: ../gtk/src/OutputEditorText.cc:267 ../qt/src/OutputEditorText.cc:207
+#, fuzzy
+msgid "Page: %1"
+msgstr "Napaka sejanja: %1"
+
+#: ../gtk/src/OutputEditorText.cc:280 ../gtk/src/Recognizer.cc:481
+#: ../qt/src/Recognizer.cc:460
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -1015,15 +1043,15 @@ msgstr ""
 "\n"
 "[Prepoznavanje strani %1 spodletelo]\n"
 
-#: ../gtk/src/OutputEditorText.cc:290 ../qt/src/OutputEditorText.cc:235
+#: ../gtk/src/OutputEditorText.cc:310 ../qt/src/OutputEditorText.cc:248
 msgid "Text Files"
 msgstr "Besedilne datoteke"
 
-#: ../gtk/src/OutputEditorText.cc:291 ../qt/src/OutputEditorText.cc:235
+#: ../gtk/src/OutputEditorText.cc:311 ../qt/src/OutputEditorText.cc:248
 msgid "Save Output..."
 msgstr "Shrani rezultat ..."
 
-#: ../gtk/src/Recognizer.cc:154 ../qt/src/Recognizer.cc:134
+#: ../gtk/src/Recognizer.cc:156 ../qt/src/Recognizer.cc:131
 msgid ""
 "Tesseract crashed with the following message:\n"
 "\n"
@@ -1037,105 +1065,113 @@ msgid ""
 "Make sure your language data files are valid and compatible with tesseract "
 "%2."
 msgstr ""
+"Tesseract se je sesul s sledečim opisom napake:\n"
+"\n"
+"%1\n"
+"\n"
+"Do tega pride običajno zaradi naslednjih razlogov:\n"
+"- uporabe zastarelih datotek za učenje;\n"
+"- manjkajočih pomožnih datotek z jezikovnimi podatki;\n"
+"- poškodovanih datotek z jezikovnimi podatki.\n"
+"\n"
+"Poskrbite, da bodo vaše jezikovne datoteke veljavne in združljive s pogonom "
+"tesseract %2."
 
-#: ../gtk/src/Recognizer.cc:210 ../qt/src/Recognizer.cc:194
+#: ../gtk/src/Recognizer.cc:212 ../qt/src/Recognizer.cc:191
 msgid "No languages available"
 msgstr "Nobenega jezika ni na voljo"
 
-#: ../gtk/src/Recognizer.cc:210 ../qt/src/Recognizer.cc:194
+#: ../gtk/src/Recognizer.cc:212 ../qt/src/Recognizer.cc:191
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
 "Zaledje tesseract ne more uporabiti nobenega jezika. Prepoznavanje ne bo "
 "delovalo."
 
-#: ../gtk/src/Recognizer.cc:264 ../qt/src/Recognizer.cc:254
+#: ../gtk/src/Recognizer.cc:266 ../qt/src/Recognizer.cc:251
 msgid "Multilingual"
 msgstr "Večjezično"
 
-#: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:298
-#, fuzzy
+#: ../gtk/src/Recognizer.cc:318 ../qt/src/Recognizer.cc:295
 msgid "Automatic page segmentation"
-msgstr "Postavitev rezultata:"
+msgstr "Samodejen razrez strani"
 
-#: ../gtk/src/Recognizer.cc:317 ../qt/src/Recognizer.cc:299
+#: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:296
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "Razrez strani z odkrivanjem postavitve in pisave"
 
-#: ../gtk/src/Recognizer.cc:318 ../qt/src/Recognizer.cc:300
+#: ../gtk/src/Recognizer.cc:320 ../qt/src/Recognizer.cc:297
 msgid "Assume single column of text"
-msgstr ""
+msgstr "Predpostavi besedilo v enem stolpcu"
 
-#: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:301
+#: ../gtk/src/Recognizer.cc:321 ../qt/src/Recognizer.cc:298
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "Predpostavi en blok navpično poravnanega besedila"
 
-#: ../gtk/src/Recognizer.cc:320 ../qt/src/Recognizer.cc:302
+#: ../gtk/src/Recognizer.cc:322 ../qt/src/Recognizer.cc:299
 msgid "Assume a single uniform block of text"
-msgstr ""
+msgstr "Predpostavi en sam blok enotnega besedila"
 
-#: ../gtk/src/Recognizer.cc:321 ../qt/src/Recognizer.cc:303
+#: ../gtk/src/Recognizer.cc:323 ../qt/src/Recognizer.cc:300
 msgid "Assume a line of text"
-msgstr ""
+msgstr "Predpostavi eno vrstico besedila"
 
-#: ../gtk/src/Recognizer.cc:322 ../qt/src/Recognizer.cc:304
+#: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:301
 msgid "Assume a single word"
-msgstr ""
+msgstr "Predpostavi eno samo besedo"
 
-#: ../gtk/src/Recognizer.cc:323 ../qt/src/Recognizer.cc:305
+#: ../gtk/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:302
 msgid "Assume a single word in a circle"
-msgstr ""
+msgstr "Predpostavi eno besedo v krogu"
 
-#: ../gtk/src/Recognizer.cc:324 ../qt/src/Recognizer.cc:306
+#: ../gtk/src/Recognizer.cc:326 ../qt/src/Recognizer.cc:303
 msgid "Sparse text in no particular order"
-msgstr ""
+msgstr "Redko besedilo brez posebnega reda"
 
-#: ../gtk/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:307
+#: ../gtk/src/Recognizer.cc:327 ../qt/src/Recognizer.cc:304
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "Redko besedilo z odkrivanjem postavitve in pisave"
 
-#: ../gtk/src/Recognizer.cc:339 ../qt/src/Recognizer.cc:317
+#: ../gtk/src/Recognizer.cc:341 ../qt/src/Recognizer.cc:314
 msgid "Page segmentation mode"
-msgstr ""
+msgstr "Način razreza strani"
 
-#: ../gtk/src/Recognizer.cc:345 ../qt/src/Recognizer.cc:324
+#: ../gtk/src/Recognizer.cc:347 ../qt/src/Recognizer.cc:321
 msgid "Manage languages..."
 msgstr "Upravljaj z jeziki ..."
 
-#: ../gtk/src/Recognizer.cc:400 ../qt/src/Recognizer.cc:382
-#, fuzzy
+#: ../gtk/src/Recognizer.cc:403 ../qt/src/Recognizer.cc:381
 msgid "Current selection"
-msgstr "Prepoznaj izbor"
+msgstr "Trenutni izbor"
 
-#: ../gtk/src/Recognizer.cc:469 ../qt/src/Recognizer.cc:452
+#: ../gtk/src/Recognizer.cc:475 ../qt/src/Recognizer.cc:454
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Prepoznavanje strani %1 (%2 od %3)"
 
-#: ../gtk/src/Recognizer.cc:474 ../qt/src/Recognizer.cc:457
-#, fuzzy
+#: ../gtk/src/Recognizer.cc:480 ../qt/src/Recognizer.cc:459
 msgid ""
 "\n"
 "- Page %1: failed to render page"
 msgstr ""
 "\n"
-"\tStran %1: prikaz strani spodletel"
+"- Stran %1: prikaz strani spodletel"
 
-#: ../gtk/src/Recognizer.cc:496 ../gtk/src/Recognizer.cc:525
-#: ../gtk/src/Recognizer.cc:538 ../qt/src/Recognizer.cc:479
-#: ../qt/src/Recognizer.cc:508 ../qt/src/Recognizer.cc:521
+#: ../gtk/src/Recognizer.cc:510 ../gtk/src/Recognizer.cc:539
+#: ../gtk/src/Recognizer.cc:552 ../qt/src/Recognizer.cc:488
+#: ../qt/src/Recognizer.cc:517 ../qt/src/Recognizer.cc:530
 msgid "Recognizing..."
 msgstr "Prepoznavanje ..."
 
-#: ../gtk/src/Recognizer.cc:500 ../gtk/src/Recognizer.cc:508
-#: ../qt/src/Recognizer.cc:483 ../qt/src/Recognizer.cc:491
+#: ../gtk/src/Recognizer.cc:514 ../gtk/src/Recognizer.cc:522
+#: ../qt/src/Recognizer.cc:492 ../qt/src/Recognizer.cc:500
 msgid "Recognition errors occurred"
 msgstr "Pri prepoznavanju je prišlo do napak"
 
-#: ../gtk/src/Recognizer.cc:500 ../qt/src/Recognizer.cc:483
+#: ../gtk/src/Recognizer.cc:514 ../qt/src/Recognizer.cc:492
 msgid "The following errors occurred:%1"
 msgstr "Prišlo je do naslednjih napak: %1"
 
-#: ../gtk/src/Recognizer.cc:508 ../qt/src/Recognizer.cc:491
+#: ../gtk/src/Recognizer.cc:522 ../qt/src/Recognizer.cc:500
 msgid "Failed to initialize tesseract"
 msgstr "Prednastavljanje začelja tesseract spodletelo"
 
@@ -1305,7 +1341,6 @@ msgid "Applying substitutions..."
 msgstr "Uveljavljanje zamenjav ..."
 
 #: ../gtk/src/TessdataManager.cc:58 ../qt/src/TessdataManager.cc:72
-#, fuzzy
 msgid ""
 "PackageKit is required for managing system-wide tesseract language packs, "
 "but it was not found. Please use the system package management software to "
@@ -1314,7 +1349,8 @@ msgid ""
 msgstr ""
 "Za upravljanje jezikovnih paketov tesseract je potreben PackageKit, ki pa ga "
 "ni bilo mogoče najti. Uporabite upravljalnik paketov vašega operacijskega "
-"sistema in namestite jezikovne pakete."
+"sistema in namestite jezikovne pakete ali pa v pogovornem oknu nastavitev "
+"preklopite na uporabniško določeno pot podatkov tessdata."
 
 #: ../gtk/src/TessdataManager.cc:63 ../qt/src/TessdataManager.cc:77
 msgid "Fetching available languages"
@@ -1338,7 +1374,7 @@ msgstr "Uveljavljanje sprememb ..."
 
 #: ../gtk/src/TessdataManager.cc:252 ../qt/src/TessdataManager.cc:237
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Ustvarjanje imenika za datoteke tessdata je spodletelo."
 
 #: ../gtk/src/TessdataManager.cc:261 ../qt/src/TessdataManager.cc:245
 msgid "Downloading %1..."
@@ -1379,7 +1415,7 @@ msgid ""
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Grafični vmesnik za tesseract-ocr</"
+"<html><head/><body><p>&nbsp;</p><p>Grafično začelje programa tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Spletna stran</"
 "a></p><p>&nbsp;</p></body></html>"
 
@@ -1404,7 +1440,7 @@ msgid "Text file encoding:"
 msgstr "Kodiranje besedilne datoteke:"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
@@ -1413,11 +1449,12 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"Opravičujemo se za nevšečnosti. Če želite pomagati pri izpopolnjevanju "
-"programa, lahko javite napako na <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Pri tem poizkusite "
-"opisati, kaj ste delali, preden se je program sesul. Vključite tudi spodnje "
-"podatke. Hvala."
+"<html><head/><body><p><span style=\" font-weight:600;\">Program se je sesul</"
+"span></p><p>Opravičujemo se za nevšečnosti. Če želite pomagati pri "
+"izpopolnjevanju programa, lahko javite napako na <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Pri tem poizkusite opisati, kaj ste delali, preden se je program sesul. "
+"Vključite tudi spodnje podatke. Hvala.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1525,18 +1562,6 @@ msgstr "Shrani rezultat"
 msgid "Clear Output"
 msgstr "Počisti rezultat"
 
-#~ msgid "Detect script and orientation"
-#~ msgstr "Zaznaj besedilo in postavitev"
-
-#~ msgid ""
-#~ "PackageKit is required for managing tesseract language packs, but it was "
-#~ "not found. Please use the system package management software to manage "
-#~ "the tesseract language packs."
-#~ msgstr ""
-#~ "Za upravljanje jezikovnih paketov tesseract je potreben PackageKit, ki pa "
-#~ "ga ni bilo mogoče najti. Uporabite upravljalnik paketov vašega "
-#~ "operacijskega sistema in namestite jezikovne pakete."
-
 #, fuzzy
 #~ msgid ""
 #~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
@@ -1559,6 +1584,18 @@ msgstr "Počisti rezultat"
 #~ msgid ""
 #~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
 #~ msgstr "<small><b>Primer:</b>1-10, 13, 14-18</small>"
+
+#~ msgid "Detect script and orientation"
+#~ msgstr "Zaznaj besedilo in postavitev"
+
+#~ msgid ""
+#~ "PackageKit is required for managing tesseract language packs, but it was "
+#~ "not found. Please use the system package management software to manage "
+#~ "the tesseract language packs."
+#~ msgstr ""
+#~ "Za upravljanje jezikovnih paketov tesseract je potreben PackageKit, ki pa "
+#~ "ga ni bilo mogoče najti. Uporabite upravljalnik paketov vašega "
+#~ "operacijskega sistema in namestite jezikovne pakete."
 
 #~ msgid ""
 #~ "\n"

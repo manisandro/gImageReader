@@ -30,6 +30,8 @@ class OutputEditor {
 public:
 	struct ReadSessionData {
 		virtual ~ReadSessionData() = default;
+		bool prependFile;
+		bool prependPage;
 		int page;
 		std::string file;
 		double angle;

@@ -32,6 +32,8 @@ class OutputEditor : public QObject {
 public:
 	struct ReadSessionData {
 		virtual ~ReadSessionData() = default;
+		bool prependFile;
+		bool prependPage;
 		int page;
 		QString file;
 		double angle;

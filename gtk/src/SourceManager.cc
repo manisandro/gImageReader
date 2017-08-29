@@ -224,7 +224,7 @@ void SourceManager::removeSource(bool deleteFile) {
 		m_listView->get_selection()->select(it);
 	}
 	m_connectionSelectionChanged.block(false);
-	m_signal_sourceChanged.emit();
+	selectionChanged();
 }
 
 void SourceManager::clearSources() {
@@ -239,7 +239,7 @@ void SourceManager::clearSources() {
 	m_connectionSelectionChanged.block(true);
 	store->clear();
 	m_connectionSelectionChanged.block(false);
-	m_signal_sourceChanged.emit();
+	selectionChanged();
 }
 
 void SourceManager::selectionChanged() {
