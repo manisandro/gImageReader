@@ -48,7 +48,9 @@
 #include <sys/prctl.h>
 #include <sys/wait.h>
 #endif
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 
 #if ENABLE_VERSIONCHECK

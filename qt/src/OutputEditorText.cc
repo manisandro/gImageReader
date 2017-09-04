@@ -23,7 +23,9 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QUrl>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 #include "OutputEditorText.hh"
 #include "Recognizer.hh"

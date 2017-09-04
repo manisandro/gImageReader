@@ -27,7 +27,9 @@
 #include <QStandardPaths>
 #endif
 #include <QUrl>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 const QList<Config::Lang> Config::LANGUAGES = {
 	// {ISO 639-2, ISO 639-1, name}

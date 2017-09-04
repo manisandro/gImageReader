@@ -34,7 +34,9 @@
 #include <sys/prctl.h>
 #endif
 #include <QtSpell.hpp>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 #include "MainWindow.hh"
 #include "Acquirer.hh"

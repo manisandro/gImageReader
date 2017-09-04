@@ -28,10 +28,12 @@
 #include <gtkspellmm.h>
 #include <csignal>
 #include <cstring>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #include <tesseract/strngs.h>
 #include <tesseract/genericvector.h>
 #include <tesseract/ocrclass.h>
+#undef USE_STD_NAMESPACE
 #include <unistd.h>
 #include <setjmp.h>
 

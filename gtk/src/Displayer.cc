@@ -26,7 +26,9 @@
 #include "Utils.hh"
 #include "FileDialogs.hh"
 
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 Displayer::Displayer() {
 	m_canvas = MAIN->getWidget("drawingarea:display");

@@ -40,8 +40,10 @@
 #include <podofo/doc/PdfPage.h>
 #include <podofo/doc/PdfPainter.h>
 #include <podofo/doc/PdfStreamedDocument.h>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #include <tesseract/ocrclass.h>
+#undef USE_STD_NAMESPACE
 
 #include "CCITTFax4Encoder.hh"
 #include "DisplayerToolHOCR.hh"

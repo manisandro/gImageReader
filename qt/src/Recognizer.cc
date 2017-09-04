@@ -27,10 +27,12 @@
 #include <cstring>
 #include <iostream>
 #include <sstream>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #include <tesseract/ocrclass.h>
 #include <tesseract/strngs.h>
 #include <tesseract/genericvector.h>
+#undef USE_STD_NAMESPACE
 #include <QMouseEvent>
 #include <unistd.h>
 #include <setjmp.h>

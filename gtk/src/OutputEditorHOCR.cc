@@ -20,8 +20,10 @@
 #include <fstream>
 #include <cairomm/cairomm.h>
 #include <pangomm/font.h>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #include <tesseract/ocrclass.h>
+#undef USE_STD_NAMESPACE
 #include <libxml++/libxml++.h>
 #include <podofo/base/PdfDictionary.h>
 #include <podofo/base/PdfFilter.h>
