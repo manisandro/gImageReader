@@ -102,7 +102,11 @@ bool Displayer::setCurrentPage(int page) {
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
 			m_renderer = new PDFRenderer(source->path);
 			if(source->resolution == -1) source->resolution = 300;
-		} else {
+        } else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
+            m_renderer = new DJVURenderer(source->path);
+            if(source->resolution == -1) source->resolution = 300;
+        }
+        else {
 			m_renderer = new ImageRenderer(source->path);
 			if(source->resolution == -1) source->resolution = 100;
 		}
@@ -196,7 +200,11 @@ bool Displayer::setSources(QList<Source*> sources) {
 		DisplayRenderer* renderer;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
 			renderer = new PDFRenderer(source->path);
-		} else {
+		}
+        else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
+            renderer = new DJVURenderer(source->path);
+        }
+        else {
 			renderer = new ImageRenderer(source->path);
 		}
 		source->angle.resize(renderer->getNPages());

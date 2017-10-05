@@ -234,6 +234,7 @@ TARGET_LINK_LIBRARIES(gimagereader
     ${SANE_LDFLAGS}
     ${OpenCV_LIBS}
     ${LEPTONICA_LIBRARIES}
+    -ldjvulibre
     -ldl
     -lgomp
 )

@@ -47,7 +47,6 @@
 #include "TessdataManager.hh"
 #include "Utils.hh"
 #include "ui_PageRangeDialog.h"
-#include "ImagePreprocessor.hh"
 
 struct Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
 	ETEXT_DESC desc;
@@ -463,12 +462,8 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 				readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
 				readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
 				for(const QImage& image : MAIN->getDisplayer()->getOCRAreas()) {
-                    //Start preprocessing
 
-                    QImage prepImage = prl::ImagePreprocessor::preprocess(image);
-
-                    //End preprocessing
-					tess.SetImage(prepImage.bits(), prepImage.width(), prepImage.height(), 4, prepImage.bytesPerLine());
+					tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 					tess.SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 					tess.Recognize(&monitor.desc);
 					if(!monitor.canceled) {
@@ -492,17 +487,13 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 }
 
 bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
-	//Start preprocessing
 
-    QImage prepImage = prl::ImagePreprocessor::preprocess(image);
-
-	//End preprocessing
 	tesseract::TessBaseAPI tess;
 	if(!initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())) {
 		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 		return false;
 	}
-	tess.SetImage(prepImage.bits(), prepImage.width(), prepImage.height(), 4, prepImage.bytesPerLine());
+	tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 	ProgressMonitor monitor(1);
 	MAIN->showProgress(&monitor);
 	if(dest == OutputDestination::Buffer) {
