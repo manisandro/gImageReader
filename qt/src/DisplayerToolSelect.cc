@@ -189,7 +189,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 	// If a somewhat large deskew angle is detected, automatically rotate image and redetect layout,
 	// unless we already attempted to rotate (to prevent endless loops)
 	avgDeskew = qRound(((avgDeskew/nDeskew)/M_PI * 180.) * 10.) / 10.;
-	if(qAbs(avgDeskew > .1) && !noDeskew) {
+	if(qAbs(avgDeskew) > .1 && !noDeskew) {
 		m_displayer->setAngle(m_displayer->getCurrentAngle() - avgDeskew);
 		autodetectLayout(true);
 	} else {
