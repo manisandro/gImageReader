@@ -20,6 +20,7 @@
 #include "DisplayRenderer.hh"
 #include "Utils.hh"
 
+#include <algorithm>
 #include <poppler-document.h>
 #include <poppler-page.h>
 

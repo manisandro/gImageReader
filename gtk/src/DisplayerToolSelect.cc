@@ -24,6 +24,7 @@
 #include "Recognizer.hh"
 #include "Utils.hh"
 
+#include <algorithm>
 #include <cmath>
 #include <tesseract/baseapi.h>
 

@@ -22,6 +22,8 @@
 
 #include "common.hh"
 
+#include <algorithm>
+
 namespace Geometry {
 
 class Point {

@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <algorithm>
 #include <QImageReader>
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 #include <poppler-qt4.h>
@@ -55,9 +56,9 @@ void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, b
 			green = dBr * (1.f - kBr) + green * kBr;
 			blue = dBr * (1.f - kBr) + blue * kBr;
 			// Contrast
-			red = qMax(0., qMin(FCn * (red - 128.) + 128., 255.));
-			green = qMax(0., qMin(FCn * (green - 128.) + 128., 255.));
-			blue = qMax(0., qMin(FCn * (blue - 128.) + 128., 255.));
+			red = std::max(0., std::min(FCn * (red - 128.) + 128., 255.));
+			green = std::max(0., std::min(FCn * (green - 128.) + 128., 255.));
+			blue = std::max(0., std::min(FCn * (blue - 128.) + 128., 255.));
 			// Invert
 			if(invert) {
 				red = 255 - red;

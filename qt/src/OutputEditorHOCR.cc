@@ -873,8 +873,8 @@ void OutputEditorHOCR::addGraphicRegion(QRect rect) {
 	QDomElement blockEl = pageDiv.firstChildElement("div");
 	while(!blockEl.isNull()) {
 		if(s_idRx.indexIn(blockEl.attribute("id")) != -1) {
-			pageId = qMax(pageId, s_idRx.cap(1).toInt() + 1);
-			blockId = qMax(blockId, s_idRx.cap(2).toInt() + 1);
+			pageId = std::max(pageId, s_idRx.cap(1).toInt() + 1);
+			blockId = std::max(blockId, s_idRx.cap(2).toInt() + 1);
 		}
 		blockEl = blockEl.nextSiblingElement();
 	}

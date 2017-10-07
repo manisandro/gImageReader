@@ -25,6 +25,7 @@
 #include "TessdataManager.hh"
 #include "Utils.hh"
 
+#include <algorithm>
 #include <gtkspellmm.h>
 #include <csignal>
 #include <cstring>

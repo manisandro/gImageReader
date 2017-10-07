@@ -22,6 +22,7 @@
  */
 
 #include "ScannerSane.hh"
+#include <algorithm>
 #include <cstring>
 #include <sane/saneopts.h>
 

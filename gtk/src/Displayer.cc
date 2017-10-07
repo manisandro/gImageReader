@@ -26,6 +26,7 @@
 #include "Utils.hh"
 #include "FileDialogs.hh"
 
+#include <algorithm>
 #include <tesseract/baseapi.h>
 
 Displayer::Displayer() {
