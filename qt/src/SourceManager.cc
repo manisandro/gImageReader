@@ -151,6 +151,7 @@ void SourceManager::openSources() {
 		formats.insert(QString("*.%1").arg(QString(format).toLower()));
 	}
 	formats.insert("*.pdf");
+	formats.insert("*.djvu");
 	QString filter = QString("%1 (%2)").arg(_("Images and PDFs")).arg(QStringList(formats.toList()).join(" "));
 	addSources(QFileDialog::getOpenFileNames(MAIN, _("Select Files"), dir, filter));
 }

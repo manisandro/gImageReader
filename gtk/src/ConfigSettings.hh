@@ -20,6 +20,7 @@
 #ifndef CONFIGSETTINGS_HH
 #define CONFIGSETTINGS_HH
 
+#include <algorithm>
 #include <gtkmm.h>
 #include <tuple>
 #include <vector>

@@ -24,6 +24,7 @@
 #include "SourceManager.hh"
 #include "Utils.hh"
 
+#include <algorithm>
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneDragDropEvent>
@@ -31,7 +32,6 @@
 #include <QMouseEvent>
 #include <QScrollBar>
 #include <QWheelEvent>
-
 
 class GraphicsScene : public QGraphicsScene {
 public:
@@ -107,7 +107,10 @@ bool Displayer::setCurrentPage(int page) {
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
 			m_renderer = new PDFRenderer(source->path);
 			if(source->resolution == -1) source->resolution = 300;
-		} else {
+        } else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
+            m_renderer = new DJVURenderer(source->path);
+            if(source->resolution == -1) source->resolution = 300;
+        } else {
 			m_renderer = new ImageRenderer(source->path);
 			if(source->resolution == -1) source->resolution = 100;
 		}
@@ -202,7 +205,10 @@ bool Displayer::setSources(QList<Source*> sources) {
 		DisplayRenderer* renderer;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
 			renderer = new PDFRenderer(source->path);
-		} else {
+		}
+        else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
+            renderer = new DJVURenderer(source->path);
+        } else {
 			renderer = new ImageRenderer(source->path);
 		}
 		source->angle.resize(renderer->getNPages());
@@ -292,14 +298,14 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor) {
 	setUpdatesEnabled(false);
 
 	QRectF bb = m_imageItem->sceneBoundingRect();
-	double fit = qMin(viewport()->width() / bb.width(), viewport()->height() / bb.height());
+	double fit = std::min(viewport()->width() / bb.width(), viewport()->height() / bb.height());
 
 	if(action == Zoom::Original) {
 		m_scale = 1.0;
 	} else if(action == Zoom::In) {
-		m_scale = qMin(10., m_scale * 1.25);
+		m_scale = std::min(10., m_scale * 1.25);
 	} else if(action == Zoom::Out) {
-		m_scale = qMax(0.05, m_scale * 0.8);
+		m_scale = std::min(0.05, m_scale * 0.8);
 	}
 	ui.actionBestFit->setChecked(false);
 	if(action == Zoom::Fit || (m_scale / fit >= 0.9 && m_scale / fit <= 1.09)) {
@@ -473,8 +479,8 @@ void Displayer::wheelEvent(QWheelEvent *event) {
 QPointF Displayer::mapToSceneClamped(const QPoint &p) const {
 	QPointF q = mapToScene(p);
 	QRectF bb = m_imageItem->sceneBoundingRect();
-	q.rx() = qMin(qMax(bb.x(), q.x()), bb.x() + bb.width());
-	q.ry() = qMin(qMax(bb.y(), q.y()), bb.y() + bb.height());
+	q.rx() = std::min(std::max(bb.x(), q.x()), bb.x() + bb.width());
+	q.ry() = std::min(std::max(bb.y(), q.y()), bb.y() + bb.height());
 	return q;
 }
 
@@ -637,8 +643,8 @@ void DisplayerSelection::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 void DisplayerSelection::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	QPointF p = event->pos() - m_resizeOffset;
 	QRectF bb = m_tool->getDisplayer()->getSceneBoundingRect();
-	p.rx() = qMin(qMax(bb.x(), p.x()), bb.x() + bb.width());
-	p.ry() = qMin(qMax(bb.y(), p.y()), bb.y() + bb.height());
+	p.rx() = std::min(std::max(bb.x(), p.x()), bb.x() + bb.width());
+	p.ry() = std::min(std::max(bb.y(), p.y()), bb.y() + bb.height());
 	if(!m_resizeHandlers.isEmpty()) {
 		for(const ResizeHandler& handler : m_resizeHandlers) {
 			handler(p, m_anchor, m_point);

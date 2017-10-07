@@ -23,6 +23,8 @@
 #include <QString>
 #include <QMutex>
 
+class KDjVu;
+
 class QImage;
 namespace Poppler {
 class Document;
@@ -59,6 +61,19 @@ public:
 
 private:
 	Poppler::Document* m_document;
+	mutable QMutex m_mutex;
+};
+
+class DJVURenderer : public DisplayRenderer {
+public:
+	DJVURenderer(const QString& filename);
+	~DJVURenderer();
+	QImage render(int page, double resolution) const override;
+	int getNPages() const override;
+
+private:
+    KDjVu* m_djvu;
+
 	mutable QMutex m_mutex;
 };
 

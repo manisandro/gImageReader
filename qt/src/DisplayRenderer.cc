@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <algorithm>
 #include <QImageReader>
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 #include <poppler-qt4.h>
@@ -24,8 +25,11 @@
 #include <poppler-qt5.h>
 #endif
 
+
+#include "Kdjvu.hh"
 #include "DisplayRenderer.hh"
 #include "Utils.hh"
+
 
 void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, bool invert) const {
 	if(brightness == 0 && contrast == 0 && !invert) {
@@ -52,9 +56,9 @@ void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, b
 			green = dBr * (1.f - kBr) + green * kBr;
 			blue = dBr * (1.f - kBr) + blue * kBr;
 			// Contrast
-			red = qMax(0., qMin(FCn * (red - 128.) + 128., 255.));
-			green = qMax(0., qMin(FCn * (green - 128.) + 128., 255.));
-			blue = qMax(0., qMin(FCn * (blue - 128.) + 128., 255.));
+			red = std::max(0., std::min(FCn * (red - 128.) + 128., 255.));
+			green = std::max(0., std::min(FCn * (green - 128.) + 128., 255.));
+			blue = std::max(0., std::min(FCn * (blue - 128.) + 128., 255.));
 			// Invert
 			if(invert) {
 				red = 255 - red;
@@ -105,4 +109,31 @@ QImage PDFRenderer::render(int page, double resolution) const {
 
 int PDFRenderer::getNPages() const {
 	return m_document ? m_document->numPages() : 1;
+}
+
+DJVURenderer::DJVURenderer(const QString& filename) : DisplayRenderer(filename) {
+    m_djvu = new KDjVu();
+    m_djvu->setCacheEnabled( false );
+
+    m_djvu->openFile(filename);
+}
+
+DJVURenderer::~DJVURenderer() {
+    delete m_djvu;
+}
+
+
+QImage DJVURenderer::render(int page, double resolution) const
+{
+    auto djvuPages = m_djvu->pages();
+
+    double scaleFactor = resolution / djvuPages[page]->dpi();
+
+    QImage pageRender = m_djvu->image(page, djvuPages[page]->width(), djvuPages[page]->height(), djvuPages[page]->orientation());
+    pageRender = pageRender.scaled(pageRender.width() * scaleFactor, pageRender.height() * scaleFactor, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+    return pageRender.convertToFormat(QImage::Format_RGB32);
+}
+
+int DJVURenderer::getNPages() const {
+    return m_djvu->pageCount();
 }

@@ -19,6 +19,8 @@
 
 #include "OutputBuffer.hh"
 
+#include <algorithm>
+
 OutputBuffer::OutputBuffer()
 	: Gsv::Buffer() {
 	m_regionBeginMark = Gtk::TextMark::create(true);
