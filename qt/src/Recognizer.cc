@@ -50,7 +50,6 @@
 #include "TessdataManager.hh"
 #include "Utils.hh"
 
-
 struct Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
 	ETEXT_DESC desc;
 	bool canceled = false;

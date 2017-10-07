@@ -26,7 +26,6 @@
 #include "Utils.hh"
 #include "FileDialogs.hh"
 
-#include <algorithm>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
