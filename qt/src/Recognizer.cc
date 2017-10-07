@@ -394,8 +394,8 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout) {
 					pages.append(page);
 				}
 			} else if(ranges.size() == 2) {
-				int start = qMax(1, ranges[0].toInt());
-				int end = qMin(nPages, ranges[1].toInt());
+				int start = std::max(1, ranges[0].toInt());
+				int end = std::min(nPages, ranges[1].toInt());
 				for(int page = start; page <= end; ++page) {
 					pages.append(page);
 				}

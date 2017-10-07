@@ -110,9 +110,9 @@ bool OutputTextEdit::findReplace(bool backwards, bool replace, bool matchCase, c
 			return true;
 		}
 		if(backwards) {
-			selCursor.setPosition(qMin(selCursor.position(), selCursor.anchor()));
+			selCursor.setPosition(std::min(selCursor.position(), selCursor.anchor()));
 		} else {
-			selCursor.setPosition(qMax(selCursor.position(), selCursor.anchor()));
+			selCursor.setPosition(std::max(selCursor.position(), selCursor.anchor()));
 		}
 	}
 
@@ -145,7 +145,7 @@ bool OutputTextEdit::replaceAll(const QString &searchstr, const QString &replace
 		tmp.movePosition(QTextCursor::End);
 		end = tmp.position();
 	} else {
-		cursor.setPosition(qMin(cursor.anchor(), cursor.position()));
+		cursor.setPosition(std::min(cursor.anchor(), cursor.position()));
 	}
 	QTextDocument::FindFlags flags = 0;
 	if(matchCase) {

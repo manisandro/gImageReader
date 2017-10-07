@@ -266,7 +266,7 @@ void NumberedDisplayerSelection::paint(QPainter *painter, const QStyleOptionGrap
 	painter->setRenderHint(QPainter::Antialiasing, false);
 	QRectF r = rect();
 	qreal w = 20. / m_tool->getDisplayer()->getCurrentScale();
-	w = qMin(w, qMin(r.width(), r.height()));
+	w = std::min(w, std::min(r.width(), r.height()));
 	QRectF box(r.x(), r.y(), w, w);
 	painter->setBrush(QPalette().highlight());
 	painter->drawRect(box);

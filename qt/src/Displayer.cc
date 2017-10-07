@@ -292,14 +292,14 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor) {
 	setUpdatesEnabled(false);
 
 	QRectF bb = m_imageItem->sceneBoundingRect();
-	double fit = qMin(viewport()->width() / bb.width(), viewport()->height() / bb.height());
+	double fit = std::min(viewport()->width() / bb.width(), viewport()->height() / bb.height());
 
 	if(action == Zoom::Original) {
 		m_scale = 1.0;
 	} else if(action == Zoom::In) {
-		m_scale = qMin(10., m_scale * 1.25);
+		m_scale = std::min(10., m_scale * 1.25);
 	} else if(action == Zoom::Out) {
-		m_scale = qMax(0.05, m_scale * 0.8);
+		m_scale = std::min(0.05, m_scale * 0.8);
 	}
 	ui.actionBestFit->setChecked(false);
 	if(action == Zoom::Fit || (m_scale / fit >= 0.9 && m_scale / fit <= 1.09)) {
@@ -473,8 +473,8 @@ void Displayer::wheelEvent(QWheelEvent *event) {
 QPointF Displayer::mapToSceneClamped(const QPoint &p) const {
 	QPointF q = mapToScene(p);
 	QRectF bb = m_imageItem->sceneBoundingRect();
-	q.rx() = qMin(qMax(bb.x(), q.x()), bb.x() + bb.width());
-	q.ry() = qMin(qMax(bb.y(), q.y()), bb.y() + bb.height());
+	q.rx() = std::min(std::max(bb.x(), q.x()), bb.x() + bb.width());
+	q.ry() = std::min(std::max(bb.y(), q.y()), bb.y() + bb.height());
 	return q;
 }
 
@@ -637,8 +637,8 @@ void DisplayerSelection::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 void DisplayerSelection::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	QPointF p = event->pos() - m_resizeOffset;
 	QRectF bb = m_tool->getDisplayer()->getSceneBoundingRect();
-	p.rx() = qMin(qMax(bb.x(), p.x()), bb.x() + bb.width());
-	p.ry() = qMin(qMax(bb.y(), p.y()), bb.y() + bb.height());
+	p.rx() = std::min(std::max(bb.x(), p.x()), bb.x() + bb.width());
+	p.ry() = std::min(std::max(bb.y(), p.y()), bb.y() + bb.height());
 	if(!m_resizeHandlers.isEmpty()) {
 		for(const ResizeHandler& handler : m_resizeHandlers) {
 			handler(p, m_anchor, m_point);

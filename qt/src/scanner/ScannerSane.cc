@@ -404,7 +404,7 @@ void ScannerSane::doGetParameters() {
 	       m_job->parameters.lines,
 	       m_job->parameters.depth);
 
-	m_job->height = qMax(1, m_job->parameters.lines);
+	m_job->height = std::max(1, m_job->parameters.lines);
 	m_job->rowstride = m_job->parameters.pixels_per_line * 3; // Buffer is for a 24 bit RGB image
 	m_job->imgbuf.resize(m_job->rowstride * m_job->parameters.lines);
 
@@ -561,7 +561,7 @@ void ScannerSane::setIntOption(SANE_Handle handle, const SANE_Option_Descriptor*
 	if(option->constraint_type == SANE_CONSTRAINT_RANGE) {
 		if(option->constraint.range->quant != 0)
 			v *= option->constraint.range->quant;
-		v = qMax(option->constraint.range->min, qMin(option->constraint.range->max, v));
+		v = std::max(option->constraint.range->min, std::min(option->constraint.range->max, v));
 	} else if(option->constraint_type == SANE_CONSTRAINT_WORD_LIST) {
 		int distance = std::numeric_limits<int>::max();
 		int nearest = 0;
@@ -592,7 +592,7 @@ void ScannerSane::setFixedOption(SANE_Handle handle, const SANE_Option_Descripto
 	if(option->constraint_type == SANE_CONSTRAINT_RANGE) {
 		double min = SANE_UNFIX(option->constraint.range->min);
 		double max = SANE_UNFIX(option->constraint.range->max);
-		v = qMax(min, qMin(max, v));
+		v = std::max(min, std::min(max, v));
 	} else if(option->constraint_type == SANE_CONSTRAINT_WORD_LIST) {
 		double distance = std::numeric_limits<double>::max();
 		double nearest = 0.0;

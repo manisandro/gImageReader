@@ -221,7 +221,7 @@ void SubstitutionsManager::applySubstitutions() {
 		cursor.setPosition(start);
 		while(true) {
 			cursor = m_textEdit->document()->find(search, cursor, flags);
-			if(cursor.isNull() || qMax(cursor.anchor(), cursor.position()) > end) {
+			if(cursor.isNull() || std::max(cursor.anchor(), cursor.position()) > end) {
 				break;
 			}
 			cursor.insertText(replace);
