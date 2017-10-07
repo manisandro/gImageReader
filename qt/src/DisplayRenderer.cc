@@ -111,8 +111,6 @@ int PDFRenderer::getNPages() const {
 	return m_document ? m_document->numPages() : 1;
 }
 
-#include <QDebug>
-
 DJVURenderer::DJVURenderer(const QString& filename) : DisplayRenderer(filename) {
     m_djvu = new KDjVu();
     m_djvu->setCacheEnabled( false );
