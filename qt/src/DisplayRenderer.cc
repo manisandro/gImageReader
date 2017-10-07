@@ -24,6 +24,7 @@
 #include <poppler-qt5.h>
 #endif
 
+#include "DjVuDocument.hh"
 #include "DisplayRenderer.hh"
 #include "Utils.hh"
 
@@ -105,4 +106,29 @@ QImage PDFRenderer::render(int page, double resolution) const {
 
 int PDFRenderer::getNPages() const {
 	return m_document ? m_document->numPages() : 1;
+}
+
+DJVURenderer::DJVURenderer(const QString& filename) : DisplayRenderer(filename) {
+	m_djvu = new DjVuDocument();
+    m_djvu->openFile(filename);
+}
+
+DJVURenderer::~DJVURenderer() {
+    delete m_djvu;
+}
+
+
+QImage DJVURenderer::render(int page, double resolution) const
+{
+    auto djvuPages = m_djvu->pages();
+
+    double scaleFactor = resolution / djvuPages[page]->dpi();
+
+	QImage pageRender = m_djvu->image(page, djvuPages[page]->width(), djvuPages[page]->height());
+    pageRender = pageRender.scaled(pageRender.width() * scaleFactor, pageRender.height() * scaleFactor, Qt::IgnoreAspectRatio, Qt::TransformationMode::SmoothTransformation);
+    return pageRender.convertToFormat(QImage::Format_RGB32);
+}
+
+int DJVURenderer::getNPages() const {
+    return m_djvu->pageCount();
 }

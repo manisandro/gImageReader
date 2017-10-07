@@ -55,6 +55,7 @@ SET(CXX_STANDARD_REQUIRED ON)
 FIND_PACKAGE(Gettext REQUIRED)
 FIND_PACKAGE(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(TESSERACT tesseract)
+PKG_CHECK_MODULES(ddjvuapi REQUIRED ddjvuapi)
 IF(NOT TESSERACT_FOUND)
     MESSAGE(WARNING "Using hardcoded cflags and ldflags for tesseract")
     SET(TESSERACT_INCLUDE_DIRS /usr/include/tesseract)
@@ -228,6 +229,7 @@ TARGET_LINK_LIBRARIES(gimagereader
     ${TESSERACT_LDFLAGS}
     ${gimagereader_LIBS}
     ${SANE_LDFLAGS}
+    ${ddjvuapi_LDFLAGS}
     -ldl
     -lgomp
 )
