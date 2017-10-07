@@ -46,171 +46,166 @@
 </ul>
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
-<p>gImageReader 3.2.1 (Feb 10 2017):</p>
-<ul>
-    <li>Add possibility to rotate individual pages of multipage documents</li>
-    <li>Ensure the tessdata manager downloads compatible tesseract languge definitions</li>
-    <li>Add CCITT Group4 compression option for monochrome PDF export</li>
-    <li>Allow choosing between diffuse and threshold dithering for monochrome PDF export</li>
-    <li>Preview JPEG compression quality in PDF output preview</li>
-    <li>Make brightness/contrast/resolution changes affect all selected sources</li>
-    <li>[Gtk] Fix hang when saving selection image</li>
-    <li>[Qt] Fix possible deadlock when rapidly switching sources</li>
-    <li>Updated translations</li>
-</ul>
-<p>gImageReader 3.2.0 (Nov 23 2016):</p>
-<ul>
-    <li>gImageReader 3.2.0 stable</li>
-    <li>Add PageUp / PageDown keyboard accelerators for browsing multipage documents</li>
-    <li>See 3.1.9x changelogs for all other feature changes since previous stable</li>
-    <li>Many bug fixes since 3.1.99 - special thanks to Daniel Plakhotich</li>
-    <li>Full details in commit log: https://github.com/manisandro/gImageReader/commits/master</li>
-</ul>
-<p>gImageReader 3.1.99 (Oct 13 2016):</p>
-<ul>
-<li>gImageReader 3.2 release candidate</li>
-<li>General improvements:</li>
-<ul>
-    <li>Catch critical tesseract errors which otherwise result in the application crashing</li>
-    <li>Improve spelling dictionary auto-installation logic</li>
-    <li>Allow choosing whether to store language files (language definitions, spelling dictionaries) in system-wide or user-local directories</li>
-</ul>
-</li>
-<li>Plain text mode improvements:
-<ul>
-    <li>Allow recognizing user-defined regions on multiple pages</li>
-    <li>Also treat \u2014 character as a hyphen</li>
-    <li>Make preserve paragraphs option correctly deal with trailing whitespace</li>
-</ul>
-</li>
-<li>hOCR editor improvements:
-<ul>
-    <li>Add "Add to dictionary" and "Ignore word" actions to spell-checking menu in hOCR editor</li>
-    <li>Exclude non-word characters from spell-checking</li>
-    <li>Allow merging adjacent word items</li>
-    <li>Allow adjusting bounding boxes of document elements by resizing the selection in the canvas</li>
-    <li>Allow removing arbitrary items from the document tree</li>
-    <li>Allow defining custom graphic regions from context-menu of the respective page item</li>
-</ul>
-</li>
-<li>PDF export improvements:
-<ul>
-    <li>Add previewing capability</li>
-    <li>Take into account baseline information to better position the words in the generated PDF</li>
-    <li>Add options to choose color format and compression of images written to PDF, allowing to greatly reduce the size of PDF</li>
-    <li>Correctly handle paper size and DPI</li>
-    <li>Improve logic for uniformizing word and line spacing</li>
-    <li>Make sure correct hypen character is used, allowing PDF applications to correctly find hyphenated words</li>
-</ul>
-</li>
-<li>New and updated translations</li>
-<li>Various bug fixes</li>
-<li>Full details in commit log: https://github.com/manisandro/gImageReader/commits/master</li>
-</ul>
-<p>gImageReader 3.1.91 (May 03 2016):</p>
-<ul>
- <li>gImageReader 3.2 beta 2</li>
- <li>Fix crash when editing items in the hOCR editor</li>
- <li>Fix build with Ubuntu 14.04</li>
- <li>Updated czech translation</li>
- <li>Fix some string typos</li>
-</ul>
-<p>gImageReader 3.1.90 (Apr 28 2016):</p>
-<ul>
- <li>gImageReader 3.2 beta 1</li>
- <li>Add an initial hOCR editor implementation, with possibility to save as hOCR HTML, PDF with invisible text overlay, or a PDF reconstructed from the extracted text and graphics</li>
- <li>Allow selecting and working on multiple sources at once</li>
- <li>Add a tessdata manager, to conveniently manage tesseract language definitions directly from the application</li>
- <li>Show a progress bar when recognizing, add a cancel button</li>
- <li>Modernized Gtk UI</li>
- <li>Expose script and orientation detection support</li>
- <li>Possiblity to pan via middle button drag</li>
- <li>Remove the need to specify the culture code in custom language definitions, and use a built-in language-culture mapping instead to search for spelling dictionaries</li>
- <li>Various bug fixes</li>
-</ul>
-<p>gImageReader 3.1.2 (Jun 30 2015):</p>
-<ul>
-    <li>Fix incorrect behavior of "Append to current text" with multiple recognition areas</li>
-    <li>Full details in commit log: https://github.com/manisandro/gImageReader/commits/master</li>
-</ul>
-<p>gImageReader 3.1.1 (Jun 11 2015):</p>
-<ul>
-    <li>Fix titlebar now shown when window maximized in Gnome 3</li>
-    <li>New translations: Chinese (Hong Kong), Chinese (Taiwan)</li>
-    <li>Updated translations: Russian, Portoguese</li>
-</ul>
-<p>gImageReader 3.1 (May 1 2015):</p>
-<ul>
-    <li>Add option to draw whitespace</li>
-    <li>Allow searching and replacing only in selected portion of output text</li>
-    <li>Add "preserve paragraphs" postprocessing option</li>
-    <li>Allow to open files via drag and drop</li>
-    <li>Improve rendering of certain PDF files with the Qt interface</li>
-    <li>Fix scanning broken with certain scanners under Windows</li>
-    <li>Support automatic spelling dictionary installation under Windows</li>
-    <li>Allow saving scans in other formats than png</li>
-    <li>Handful of bugs fixed</li>
-</ul>
-<p>gImageReader 3.0.1 (Jan 4 2015):</p>
-<ul>
-    <li>Fix a bug in the Qt interface when loading substitutions list from file</li>
-    <li>Improve behaviour of strip line breaks functionality with multiple line breaks</li>
-    <li>Small UI improvements</li>
-    <li>Full details in commit log: https://github.com/manisandro/gImageReader/commits/master</li>
-</ul>
-<p>gImageReader 3.0 (Dec 12 2014):</p>
-<ul>
-    <li>gImageReader 3.0 stable</li>
-    <li>New Qt4/5 interface, as alternative to the Gtk interface</li>
-    <li>Fixed scanning on Windows</li>
-    <li>Memorize image settings (brightness, contrast, etc) when switching images</li>
-    <li>Search forward and backward, replace all, case sensitive search</li>
-    <li>Many bug fixes</li>
-    <li>Translation updates</li>
-    <li>Full details in commit log: https://github.com/manisandro/gImageReader/commits/master</li>
-</ul>
-<p>gImageReader 2.93 (Apr 30 2014):</p>
-<ul>
-    <li>gImageReader 3.0 beta 4</li>
-    <li>Add possibility to choose multiple recognition languages</li>
-    <li>Add button to show/hide output pane</li>
-    <li>Allow toggling spell checking from context menu</li>
-    <li>Fix a crash when loading a scanned document</li>
-</ul>
-<p>gImageReader 2.92 (Mar 19 2014):</p>
-<ul>
-    <li>gImageReader 3.0 beta 3</li>
-    <li>Add replacement-list feature, allowing the user to specify a list of replacements to perform on the recognized text</li>
-    <li>Fix saving output resulting in empty files</li>
-    <li>Fix crashes when rendering PDF files</li>
-    <li>Keep line-breaks if preeded by line-break</li>
-    <li>Fix localization not working on Windows</li>
-</ul>
-<p>gImageReader 2.91 (Feb 20 2014):</p>
-<ul>
-    <li>gImageReader 3.0 beta 2</li>
-    <li>Improve page-layout autodetection by merging overlapping regions</li>
-    <li>Use native file-chooser dialogs on Gnome/KDE/Windows</li>
-    <li>Allow performing multipage-recognition with page-layout autodetection</li>
-    <li>Fix broken search/replace which caused the application to crash</li>
-    <li>Add Win64 packages</li>
-</ul>
-<p>gImageReader 2.90 (Feb 11 2014):</p>
-<ul>
-    <li>gImageReader 3.0 beta 1</li>
-    <li>Support multiple selections (via CTRL-key). Rightclicking a selection opens a context menu which allows to:
-    <ul>
-        <li>Deleted and reordered individual selections</li>
-        <li>Recognize the selected text, either to clipboard or to the output pane</li>
-    </ul></li>
-    <li>Basic automatic page layout detection</li>
-    <li>The output pane now supports undo and redo</li>
-    <li>Configuration is now automatic</li>
-    <li>Proper arbitrary rotation of images</li>
-    <li>Detect deleted/renamed files</li>
-    <li>Cleaner UI</li>
-    <li>Port to Gtk+3, rewrite in C++ using the Gtkmm bindings</li>
-</ul>
+<pre style="max-height: 200px; overflow-y: auto; padding: 1em; border: 1px solid gray;">
+gImageReader 3.2.3 (Jul 01 2017):
+* Fix broken hOCR export
+* Add option to prepend source filename / page to plain text output
+
+gImageReader 3.2.2 (Jun 30 2017):
+* Attempt to use original source image for PDF output
+* Allow collapsing/expanding branches of hOCR tree via context menu
+* Recognize guillemets as quote characters
+* Fix crash when adding zero-page sources
+* Fix possible crash when rapidly switching documents
+* [Gtk] Fix output pane orientation not properly restored
+* [Gtk] Don't crash when rendering of image fails
+* [Gtk] Fix icons not appearing with recent Gtk versions
+* [Qt] Don't display empty image if rendering of downscaled image fails
+
+gImageReader 3.2.1 (Feb 10 2017):
+* Add possibility to rotate individual pages of multipage documents
+* Ensure the tessdata manager downloads compatible tesseract languge definitions
+* Add CCITT Group4 compression option for monochrome PDF export
+* Allow choosing between diffuse and threshold dithering for monochrome PDF export
+* Preview JPEG compression quality in PDF output preview
+* Make brightness/contrast/resolution changes affect all selected sources
+* [Qt] Support multipage images through QImageReader (Qt5.9+ will support multipage TIFFs)
+* [Gtk] Fix hang when saving selection image
+* [Qt] Fix possible deadlock when rapidly switching sources
+* Updated translations
+
+gImageReader 3.2.0 (Nov 23 2016):
+ * gImageReader 3.2.0 stable
+ * Add PageUp / PageDown keyboard accelerators for browsing multipage documents
+ * See 3.1.9x changelogs for all other feature changes since previous stable
+ * Many bug fixes since 3.1.99 - special thanks to Daniel Plakhotich
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
+gImageReader 3.1.99 (Oct 13 2016):
+ * gImageReader 3.2 release candidate
+ * General improvements:
+   - Catch critical tesseract errors which otherwise result in the application crashing
+   - Improve spelling dictionary auto-installation logic
+   - Allow choosing whether to store language files (language definitions, spelling dictionaries) in system-wide or user-local directories
+ * Plain text mode improvements:
+   - Allow recognizing user-defined regions on multiple pages
+   - Also treat \u2014 character as a hyphen
+   - Make preserve paragraphs option correctly deal with trailing whitespace
+ * hOCR editor improvements:
+   - Add "Add to dictionary" and "Ignore word" actions to spell-checking menu in hOCR editor
+   - Exclude non-word characters from spell-checking
+   - Allow merging adjacent word items
+   - Allow adjusting bounding boxes of document elements by resizing the selection in the canvas
+   - Allow removing arbitrary items from the document tree
+   - Allow defining custom graphic regions from context-menu of the respective page item
+ * PDF export improvements:
+   - Add previewing capability
+   - Take into account baseline information to better position the words in the generated PDF
+   - Add options to choose color format and compression of images written to PDF, allowing to greatly reduce the size of PDF
+   - Correctly handle paper size and DPI
+   - Improve logic for uniformizing word and line spacing
+   - Make sure correct hypen character is used, allowing PDF applications to correctly find hyphenated words
+ * New and updated translations
+ * Various bug fixes
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
+gImageReader 3.1.91 (May 03 2016):
+ * gImageReader 3.2 beta 2
+ * Fix crash when editing items in the hOCR editor
+ * Fix build with Ubuntu 14.04
+ * Updated czech translation
+ * Fix some string typos
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
+gImageReader 3.1.90 (Apr 28 2016):
+ * gImageReader 3.2 beta 1
+ * Add an initial hOCR editor implementation, with possibility to save as hOCR HTML, PDF with invisible text overlay, or a PDF reconstructed from the extracted text and graphics
+ * Allow selecting and working on multiple sources at once
+ * Add a tessdata manager, to conveniently manage tesseract language definitions directly from the application
+ * Show a progress bar when recognizing, add a cancel button
+ * Modernized Gtk UI
+ * Expose script and orientation detection support
+ * Possiblity to pan via middle button drag
+ * Remove the need to specify the culture code in custom language definitions, and use a built-in language-culture mapping instead to search for spelling dictionaries
+ * Various bug fixes
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
+gImageReader 3.1.2 (Jun 30 2015):
+ * Fix incorrect behavior of "Append to current text" with multiple recognition areas
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
+gImageReader 3.1.1 (Jun 11 2015):
+ * Fix titlebar now shown when window maximized in Gnome 3
+ * New translations: Chinese (Hong Kong), Chinese (Taiwan)
+ * Updated translations: Russian, Portoguese
+
+gImageReader 3.1 (May 1 2015):
+ * Add option to draw whitespace
+ * Allow searching and replacing only in selected portion of output text
+ * Add "preserve paragraphs" postprocessing option
+ * Allow to open files via drag and drop
+ * Improve rendering of certain PDF files with the Qt interface
+ * Fix scanning broken with certain scanners under Windows
+ * Support automatic spelling dictionary installation under Windows
+ * Allow saving scans in other formats than png
+ * Handful of bugs fixed
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
+gImageReader 3.0.1 (Jan 4 2015):
+ * Fix a bug in the Qt interface when loading substitutions list from file
+ * Improve behaviour of strip line breaks functionality with multiple line breaks
+ * Small UI improvements
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
+gImageReader 3.0 (Dec 12 2014):
+ * gImageReader 3.0 stable
+ * New Qt4/5 interface, as alternative to the Gtk interface
+ * Fixed scanning on Windows
+ * Memorize image settings (brightness, contrast, etc) when switching images
+ * Search forward and backward, replace all, case sensitive search
+ * Many bug fixes
+ * Translation updates
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
+gImageReader 2.93 (Apr 30 2014):
+ * gImageReader 3.0 beta 4
+ * Add possibility to choose multiple recognition languages
+ * Add button to show/hide output pane
+ * Fix a crash when loading a scanned document
+ * Allow toggling spell checking from context menu
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
+gImageReader 2.92 (Mar 19 2014):
+ * gImageReader 3.0 beta 3
+ * Add replacement-list feature, allowing the user to specify a list of replacements to perform on the recognized text
+ * Fix saving output resulting in empty files
+ * Fix crashes when rendering PDF files
+ * Keep line-breaks if preeded by line-break
+ * Fix localization not working on Windows
+ * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
+gImageReader 2.91 (Feb 20 2014):
+ * gImageReader 3.0 beta 2
+ * Improve page-layout autodetection by merging overlapping regions
+ * Use native file-chooser dialogs on Gnome/KDE/Windows
+ * Allow performing multipage-recognition with page-layout autodetection
+ * Fix broken search/replace which caused the application to crash
+ * Add Win64 packages
+ * Fix some other bugs, full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
+gImageReader 2.90 (Feb 11 2014):
+ * First beta of the grand new gImageReader:
+   - Support multiple selections (via CTRL-key). Rightclicking a selection opens a context menu which allows to:
+     - Deleted and reordered individual selections.
+     - Recognize the selected text, either to clipboard or to the output pane.
+   - Basic automatic page layout detection.
+   - The output pane now supports undo and redo.
+   - Configuration is now automatic.
+   - Proper arbitrary rotation of images.
+   - Detect deleted/renamed files.
+   - Cleaner UI.
+   - Port to Gtk+3, rewrite in C++ using the Gtkmm bindings.
+</pre>
 <h2><a name="Usage">Usage</a></h2>
 <h3><a name="Usage_Open">Opening and importing images</a></h3>
 <ul>
@@ -330,7 +325,7 @@ If you find an issue or have a suggestion, please file a ticket to the <a href="
 <li>Try to describe as best as you can what you were doing and whether the problem is reproducible.</li>
 </ul>
 <hr />
-<p>Copyright &copy;2009-2017 Sandro Mani, revision: Sun, Feb 05 2017</p>
+<p>Copyright &copy;2009-2017 Sandro Mani, revision: Fri, Jun 30 2017</p>
 </body>
 
 </html>

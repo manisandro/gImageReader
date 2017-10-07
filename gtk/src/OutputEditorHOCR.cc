@@ -20,8 +20,10 @@
 #include <fstream>
 #include <cairomm/cairomm.h>
 #include <pangomm/font.h>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #include <tesseract/ocrclass.h>
+#undef USE_STD_NAMESPACE
 #include <libxml++/libxml++.h>
 #include <podofo/base/PdfDictionary.h>
 #include <podofo/base/PdfFilter.h>
@@ -1206,8 +1208,8 @@ void OutputEditorHOCR::showContextMenu(GdkEventButton* ev) {
 				m_connectionPropViewRowEdited.block(true);
 				m_propStore->clear();
 				m_connectionPropViewRowEdited.block(false);
-				m_builder("button:hocr.save")->set_sensitive(!m_itemStore->children().empty());
-				m_builder("button:hocr.export")->set_sensitive(!m_itemStore->children().empty());
+				m_builder("button:hocr.save")->set_sensitive(!m_itemStore->get_iter(m_rootItem)->children().empty());
+				m_builder("button:hocr.export")->set_sensitive(!m_itemStore->get_iter(m_rootItem)->children().empty());
 			});
 		} else {
 			Gtk::MenuItem* removeItem = Gtk::manage(new Gtk::MenuItem(_("Remove")));
@@ -1308,7 +1310,7 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 	                           "  </head>\n"
 	                           "<body>\n", tess.Version());
 	file.write(header.data(), header.bytes());
-	for(Gtk::TreeIter item : m_itemStore->children()) {
+	for(Gtk::TreeIter item : m_itemStore->get_iter(m_rootItem)->children()) {
 		Glib::ustring itemSource = (*item)[m_itemStoreCols.source];
 		file.write(itemSource.data(), itemSource.bytes());
 	}
@@ -1401,7 +1403,7 @@ void OutputEditorHOCR::savePDF() {
 	pdfSettings.overlay = m_builder("combo:pdfoptions.mode").as<Gtk::ComboBox>()->get_active_row_number() == 1;
 	pdfSettings.detectedFontScaling = m_builder("spin:pdfoptions.fontscale").as<Gtk::SpinButton>()->get_value() / 100.;
 	std::vector<Glib::ustring> failed;
-	for(Gtk::TreeIter item : m_itemStore->children()) {
+	for(Gtk::TreeIter item : m_itemStore->get_iter(m_rootItem)->children()) {
 		if(!(*item)[m_itemStoreCols.selected]) {
 			continue;
 		}
@@ -1434,7 +1436,11 @@ void OutputEditorHOCR::savePDF() {
 	if(!failed.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Errors occurred"), Glib::ustring::compose(_("The following pages could not be rendered:\n%1"), Utils::string_join(failed, "\n")));
 	}
-	document->Close();
+	try {
+		document->Close();
+	} catch(PoDoFo::PdfError& e) {
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Export failed"), Glib::ustring::compose(_("The PDF export failed (%1)."), e.what()));
+	}
 	delete document;
 }
 
@@ -1494,12 +1500,12 @@ void OutputEditorHOCR::updatePreview() {
 	}
 	bool visible = m_builder("checkbox:pdfoptions.preview").as<Gtk::CheckButton>()->get_active();
 	m_preview->setVisible(visible);
-	if(m_itemStore->children().empty()|| !visible) {
+	if(m_itemStore->get_iter(m_rootItem)->children().empty()|| !visible) {
 		return;
 	}
 	Gtk::TreeIter item = currentItem();
 	if(!item) {
-		item = *m_itemStore->children().begin();
+		item = *m_itemStore->get_iter(m_rootItem)->children().begin();
 	} else {
 		while(item->parent()) {
 			item = item->parent();
@@ -1579,6 +1585,8 @@ bool OutputEditorHOCR::clear(bool hide) {
 	m_sourceView->get_buffer()->set_text("");
 	m_tool->clearSelection();
 	m_modified = false;
+	m_builder("button:hocr.save")->set_sensitive(false);
+	m_builder("button:hocr.export")->set_sensitive(false);
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
 	return true;

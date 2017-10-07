@@ -25,7 +25,9 @@
 
 #include <algorithm>
 #include <cmath>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QLabel>

@@ -23,7 +23,9 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QUrl>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 #include "OutputEditorText.hh"
 #include "Recognizer.hh"
@@ -194,10 +196,23 @@ void OutputEditorText::findReplace(bool backwards, bool replace) {
 }
 
 void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data) {
-	char* text = tess.GetUTF8Text();
+	char* textbuf = tess.GetUTF8Text();
+	QString text = QString::fromUtf8(textbuf);
+	if(!text.endsWith('\n'))
+		text.append('\n');
+	if(data->prependFile || data->prependPage) {
+		QStringList prepend;
+		if(data->prependFile) {
+            prepend.append(_("File: %1").arg(data->file));
+		}
+		if(data->prependPage) {
+            prepend.append(_("Page: %1").arg(data->page));
+		}
+		text.prepend(QString("[%1]\n").arg(prepend.join("; ")));
+	}
 	bool& insertText = static_cast<TextReadSessionData*>(data)->insertText;
-	QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(text)), Q_ARG(bool, insertText));
-	delete[] text;
+	QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, text), Q_ARG(bool, insertText));
+	delete[] textbuf;
 	insertText = true;
 }
 

@@ -26,7 +26,9 @@
 
 #include <algorithm>
 #include <cmath>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 
 DisplayerToolSelect::DisplayerToolSelect(Displayer *displayer)

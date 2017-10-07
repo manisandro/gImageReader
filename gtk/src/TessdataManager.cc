@@ -28,7 +28,9 @@
 #ifdef G_OS_UNIX
 #include <gdk/gdkx.h>
 #endif
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 void TessdataManager::exec() {
 	static TessdataManager instance;

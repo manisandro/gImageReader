@@ -24,6 +24,7 @@
 
 #include "Config.hh"
 #include "Displayer.hh"
+#include "ui_PageRangeDialog.h"
 
 namespace tesseract {
 class TessBaseAPI;
@@ -58,9 +59,7 @@ private:
 	QMenu* m_menuPages = nullptr;
 	QMenu* m_menuMultilanguage = nullptr;
 	QDialog* m_pagesDialog;
-	QLineEdit* m_pagesLineEdit;
-	QLabel* m_pageAreaLabel;
-	QComboBox* m_pageAreaComboBox;
+	Ui::PageRangeDialog m_pagesDialogUi;
 	QActionGroup* m_langMenuRadioGroup = nullptr;
 	QActionGroup* m_langMenuCheckGroup = nullptr;
 	QActionGroup* m_psmCheckGroup = nullptr;

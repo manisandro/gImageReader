@@ -24,7 +24,9 @@
 
 #include <clocale>
 #include <fontconfig/fontconfig.h>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 void Utils::popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gtk::Menu* menu, bool alignRight, bool alignBottom) {
 	ref->get_window()->get_origin(x, y);

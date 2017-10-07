@@ -1,3 +1,18 @@
+gImageReader 3.2.3 (Jul 01 2017):
+* Fix broken hOCR export
+* Add option to prepend source filename / page to plain text output
+
+gImageReader 3.2.2 (Jun 30 2017):
+* Attempt to use original source image for PDF output
+* Allow collapsing/expanding branches of hOCR tree via context menu
+* Recognize guillemets as quote characters
+* Fix crash when adding zero-page sources
+* Fix possible crash when rapidly switching documents
+* [Gtk] Fix output pane orientation not properly restored
+* [Gtk] Don't crash when rendering of image fails
+* [Gtk] Fix icons not appearing with recent Gtk versions
+* [Qt] Don't display empty image if rendering of downscaled image fails
+
 gImageReader 3.2.1 (Feb 10 2017):
 * Add possibility to rotate individual pages of multipage documents
 * Ensure the tessdata manager downloads compatible tesseract languge definitions

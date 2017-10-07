@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2014 Sandro Mani <manisandro@gmail.com> -->
-<application>
+<component>
  <id type="desktop">gimagereader-@INTERFACE_TYPE@.desktop</id>
  <metadata_license>CC0-1.0</metadata_license>
  <project_license>GPL-3.0+</project_license>
@@ -48,4 +48,4 @@
  <url type="homepage">https://github.com/manisandro/gImageReader</url>
  <url type="translate">https://github.com/manisandro/gImageReader/blob/master/README.md</url>
  <update_contact>manisandro@gmail.com</update_contact>
-</application>
+</component>

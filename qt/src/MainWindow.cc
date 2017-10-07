@@ -34,7 +34,9 @@
 #include <sys/prctl.h>
 #endif
 #include <QtSpell.hpp>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 #include "MainWindow.hh"
 #include "Acquirer.hh"
@@ -197,6 +199,11 @@ MainWindow::MainWindow(const QStringList& files)
 }
 
 MainWindow::~MainWindow() {
+#if ENABLE_VERSIONCHECK
+	while(m_versionCheckThread.isRunning()) {
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+	}
+#endif
 	delete m_acquirer;
 	delete m_outputEditor;
 	delete m_sourceManager;

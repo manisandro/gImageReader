@@ -201,5 +201,15 @@
             <summary>Image conversion flags</summary>
             <description>Image conversion flags.</description>
         </key>
+        <key type="b" name="ocraddsourcefilename">
+            <default>false</default>
+            <summary>Prepend filename to output</summary>
+            <description>Whether to prepend the filename to the output text.</description>
+        </key>
+        <key type="b" name="ocraddsourcepage">
+            <default>false</default>
+            <summary>Prepend page number to output</summary>
+            <description>Whether to prepend the page number to the output text.</description>
+        </key>
     </schema>
 </schemalist>

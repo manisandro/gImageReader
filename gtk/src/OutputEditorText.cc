@@ -17,7 +17,9 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 #include "FileDialogs.hh"
 #include "OutputBuffer.hh"
@@ -59,11 +61,19 @@ OutputEditorText::OutputEditorText()
 	m_toggleSearchButton->add_accelerator("clicked", group, GDK_KEY_F, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 	saveButton->add_accelerator("clicked", group, GDK_KEY_S, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 
+#if GTKMM_CHECK_VERSION(3,12,0)
 	m_builder("image:output.insert").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/ins_append.png"));
 	m_builder("image:output.stripcrlf").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/stripcrlf.png"));
 	m_builder("image:output.insert.append").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/ins_append.png"));
 	m_builder("image:output.insert.cursor").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/ins_cursor.png"));
 	m_builder("image:output.insert.replace").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/ins_replace.png"));
+#else
+	m_builder("image:output.insert").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/ins_append.png", 0)));
+	m_builder("image:output.stripcrlf").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/stripcrlf.png", 0)));
+	m_builder("image:output.insert.append").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/ins_append.png", 0)));
+	m_builder("image:output.insert.cursor").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/ins_cursor.png", 0)));
+	m_builder("image:output.insert.replace").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/ins_replace.png", 0)));
+#endif
 
 	m_substitutionsManager = new SubstitutionsManager(m_builder, m_textBuffer);
 
@@ -254,10 +264,24 @@ void OutputEditorText::findReplace(bool backwards, bool replace) {
 }
 
 void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data) {
-	char* text = tess.GetUTF8Text();
+	char* textbuf = tess.GetUTF8Text();
+	Glib::ustring text = Glib::ustring(textbuf);
+	if(!text.empty() && *--text.end() != '\n')
+		text.append("\n");
+	if(data->prependFile || data->prependPage) {
+		std::vector<Glib::ustring> prepend;
+		if(data->prependFile) {
+			prepend.push_back(Glib::ustring::compose(_("File: %1"), data->file));
+		}
+		if(data->prependPage) {
+			prepend.push_back(Glib::ustring::compose(_("Page: %1"), data->page));
+		}
+		text = Glib::ustring::compose("[%1]\n", Utils::string_join(prepend, "; ")) + text;
+	}
+
 	bool& insertText = static_cast<TextReadSessionData*>(data)->insertText;
 	Utils::runInMainThreadBlocking([&] { addText(text, insertText); });
-	delete[] text;
+	delete[] textbuf;
 	insertText = true;
 }
 

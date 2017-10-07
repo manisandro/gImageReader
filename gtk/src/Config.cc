@@ -21,7 +21,9 @@
 #include "MainWindow.hh"
 #include "Utils.hh"
 
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 const std::vector<Config::Lang> Config::LANGUAGES = {
 	// {ISO 639-2, ISO 639-1, name}

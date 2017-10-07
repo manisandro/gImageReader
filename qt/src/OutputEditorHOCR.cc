@@ -40,8 +40,10 @@
 #include <podofo/doc/PdfPage.h>
 #include <podofo/doc/PdfPainter.h>
 #include <podofo/doc/PdfStreamedDocument.h>
+#define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #include <tesseract/ocrclass.h>
+#undef USE_STD_NAMESPACE
 
 #include "CCITTFax4Encoder.hh"
 #include "DisplayerToolHOCR.hh"
@@ -1027,8 +1029,8 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 		removeCurrentItem();
 	} else if(clickedAction == actionRemovePage) {
 		delete item;
-		ui.actionOutputSaveHOCR->setEnabled(ui.treeWidgetItems->topLevelItemCount() > 0);
-		ui.actionOutputExportPDF->setEnabled(ui.treeWidgetItems->topLevelItemCount() > 0);
+		ui.actionOutputSaveHOCR->setEnabled(m_rootItem->childCount() > 0);
+		ui.actionOutputExportPDF->setEnabled(m_rootItem->childCount() > 0);
 	} else if(clickedAction == actionExpand) {
 		expandChildren(item);
 	} else if(clickedAction == actionCollapse) {
@@ -1099,8 +1101,8 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	                     "  </head>\n"
 	                     "<body>\n").arg(tess.Version());
 	file.write(header.toUtf8());
-	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
-		file.write(ui.treeWidgetItems->topLevelItem(i)->data(0, SourceRole).toString().toUtf8());
+	for(int i = 0, n = m_rootItem->childCount(); i < n; ++i) {
+		file.write(m_rootItem->child(i)->data(0, SourceRole).toString().toUtf8());
 	}
 	file.write("</body>\n</html>\n");
 	m_modified = false;
@@ -1182,8 +1184,8 @@ void OutputEditorHOCR::savePDF() {
 	pdfSettings.overlay = m_pdfExportDialogUi.comboBoxOutputMode->currentIndex() == 1;
 	pdfSettings.detectedFontScaling = m_pdfExportDialogUi.spinFontScaling->value() / 100.;
 	QStringList failed;
-	for(int i = 0, n = ui.treeWidgetItems->topLevelItemCount(); i < n; ++i) {
-		QTreeWidgetItem* item = ui.treeWidgetItems->topLevelItem(i);
+	for(int i = 0, n = m_rootItem->childCount(); i < n; ++i) {
+		QTreeWidgetItem* item = m_rootItem->child(i);
 		if(item->checkState(0) != Qt::Checked) {
 			continue;
 		}
@@ -1215,7 +1217,11 @@ void OutputEditorHOCR::savePDF() {
 	if(!failed.isEmpty()) {
 		QMessageBox::warning(m_widget, _("Errors occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
 	}
-	document->Close();
+	try {
+		document->Close();
+	} catch(PoDoFo::PdfError& e) {
+		QMessageBox::warning(m_widget, _("Export failed"), _("The PDF export failed (%1).").arg(e.what()));
+	}
 	delete document;
 }
 
@@ -1276,12 +1282,12 @@ void OutputEditorHOCR::updatePreview() {
 		return;
 	}
 	m_preview->setVisible(m_pdfExportDialogUi.checkBoxPreview->isChecked());
-	if(ui.treeWidgetItems->topLevelItemCount() == 0 || !m_pdfExportDialogUi.checkBoxPreview->isChecked()) {
+	if(m_rootItem->childCount() == 0 || !m_pdfExportDialogUi.checkBoxPreview->isChecked()) {
 		return;
 	}
 	QTreeWidgetItem* item = ui.treeWidgetItems->currentItem();
 	if(!item) {
-		item = ui.treeWidgetItems->topLevelItem(0);
+		item = m_rootItem->child(0);
 	} else {
 		while(item->parent()) {
 			item = item->parent();
@@ -1345,6 +1351,8 @@ bool OutputEditorHOCR::clear(bool hide) {
 	ui.plainTextEditOutput->clear();
 	m_tool->clearSelection();
 	m_modified = false;
+	ui.actionOutputSaveHOCR->setEnabled(false);
+	ui.actionOutputExportPDF->setEnabled(false);
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
 	return true;
