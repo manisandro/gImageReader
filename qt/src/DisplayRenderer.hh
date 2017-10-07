@@ -23,7 +23,7 @@
 #include <QString>
 #include <QMutex>
 
-#include "Kdjvu.hh"
+class KDjVu;
 
 class QImage;
 namespace Poppler {
