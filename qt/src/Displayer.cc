@@ -33,7 +33,6 @@
 #include <QScrollBar>
 #include <QWheelEvent>
 
-
 class GraphicsScene : public QGraphicsScene {
 public:
 	using QGraphicsScene::QGraphicsScene;
@@ -111,8 +110,7 @@ bool Displayer::setCurrentPage(int page) {
         } else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
             m_renderer = new DJVURenderer(source->path);
             if(source->resolution == -1) source->resolution = 300;
-        }
-        else {
+        } else {
 			m_renderer = new ImageRenderer(source->path);
 			if(source->resolution == -1) source->resolution = 100;
 		}
@@ -210,8 +208,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 		}
         else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
             renderer = new DJVURenderer(source->path);
-        }
-        else {
+        } else {
 			renderer = new ImageRenderer(source->path);
 		}
 		source->angle.resize(renderer->getNPages());
