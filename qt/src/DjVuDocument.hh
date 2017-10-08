@@ -16,38 +16,32 @@
 #include <QImage>
 #include <QVector>
 
+typedef struct ddjvu_context_s    ddjvu_context_t;
+typedef struct ddjvu_document_s   ddjvu_document_t;
+typedef struct ddjvu_format_s     ddjvu_format_t;
+
 class DjVuDocument
 {
 public:
 	DjVuDocument();
 	~DjVuDocument();
 
-	class Page
-	{
-		friend class DjVuDocument;
-
-	public:
-		int width() const{ return m_width; }
-		int height() const{ return m_height; }
-		int dpi() const{ return m_dpi; }
-
-	private:
-		Page() = default;
-
-		int m_width;
-		int m_height;
-		int m_dpi;
-	};
-
 	bool openFile( const QString & fileName );
 	void closeFile();
-	const QVector<DjVuDocument::Page*> &pages() const;
-	QImage image( int page, int width, int height );
-	int pageCount() const;
+	QImage image(int pageno, int resolution);
+	int pageCount() const{ return m_pages.size(); }
 
 private:
-	class Private;
-	Private * const d;
+	struct Page {
+		int width;
+		int height;
+		int dpi;
+	};
+
+	ddjvu_context_t *m_djvu_cxt = nullptr;
+	ddjvu_document_t *m_djvu_document = nullptr;
+	ddjvu_format_t *m_format = nullptr;
+	QVector<Page> m_pages;
 };
 
 #endif
