@@ -164,6 +164,13 @@ bool Displayer::setCurrentPage(int page) {
 #endif
 			m_renderer = new PDFRenderer(filename);
 			if(source->resolution == -1) source->resolution = 300;
+#ifdef G_OS_WIN32
+		} else if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".djvu") {
+#else
+		} else if(Utils::get_content_type(filename) == "image/vnd.djvu") {
+#endif
+			m_renderer = new DJVURenderer(filename);
+			if(source->resolution == -1) source->resolution = 300;
 		} else {
 			m_renderer = new ImageRenderer(filename);
 			if(source->resolution == -1) source->resolution = 100;
@@ -234,6 +241,12 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 		if(Utils::get_content_type(filename) == "application/pdf") {
 #endif
 			renderer = new PDFRenderer(filename);
+#ifdef G_OS_WIN32
+		} else if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".djvu") {
+#else
+		} else if(Utils::get_content_type(filename) == "image/vnd.djvu") {
+#endif
+			renderer = new DJVURenderer(filename);
 		} else {
 			renderer = new ImageRenderer(filename);
 		}

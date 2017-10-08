@@ -24,6 +24,9 @@
 
 typedef struct _PopplerDocument PopplerDocument;
 
+class DjVuDocument;
+
+
 class DisplayRenderer {
 public:
 	DisplayRenderer(const std::string& filename) : m_filename(filename) {}
@@ -55,6 +58,19 @@ public:
 
 private:
 	PopplerDocument* m_document;
+	mutable Glib::Threads::Mutex m_mutex;
+};
+
+class DJVURenderer : public DisplayRenderer {
+public:
+	DJVURenderer(const std::string& filename);
+	~DJVURenderer();
+	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
+	int getNPages() const override;
+
+private:
+	DjVuDocument* m_djvu;
+
 	mutable Glib::Threads::Mutex m_mutex;
 };
 

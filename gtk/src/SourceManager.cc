@@ -46,6 +46,8 @@ SourceManager::SourceManager() {
 	recentFilter->add_pixbuf_formats();
 	recentFilter->add_mime_type("application/pdf");
 	recentFilter->add_pattern("*.pdf");
+	recentFilter->add_mime_type("image/vnd.djvu");
+	recentFilter->add_pattern("*.djvu");
 	Gtk::RecentChooserMenu* recentChooser = Gtk::manage(new Gtk::RecentChooserMenu());
 	recentChooser->set_filter(recentFilter);
 	recentChooser->set_local_only(false);
@@ -134,6 +136,8 @@ void SourceManager::openSources() {
 	filter.name = _("Images and PDFs");
 	filter.mime_types.push_back("application/pdf");
 	filter.patterns.push_back("*.pdf");
+	filter.mime_types.push_back("image/vnd.djvu");
+	filter.patterns.push_back("*.djvu");
 	addSources(FileDialogs::open_dialog(_("Select Files"), initialFolder, filter, true));
 }
 

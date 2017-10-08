@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "DjVuDocument.hh"
 #include "DisplayRenderer.hh"
 #include "Utils.hh"
 
@@ -131,4 +132,23 @@ Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::render(int page, double resoluti
 
 int PDFRenderer::getNPages() const {
 	return m_document ? poppler_document_get_n_pages(m_document) : 1;
+}
+
+
+DJVURenderer::DJVURenderer(const std::string& filename) : DisplayRenderer(filename) {
+	m_djvu = new DjVuDocument();
+	m_djvu->openFile(filename);
+}
+
+DJVURenderer::~DJVURenderer() {
+	delete m_djvu;
+}
+
+Cairo::RefPtr<Cairo::ImageSurface> DJVURenderer::render(int page, double resolution) const
+{
+	return m_djvu->image(page, resolution);
+}
+
+int DJVURenderer::getNPages() const {
+	return m_djvu->pageCount();
 }
