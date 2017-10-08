@@ -305,7 +305,7 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor) {
 	} else if(action == Zoom::In) {
 		m_scale = std::min(10., m_scale * 1.25);
 	} else if(action == Zoom::Out) {
-		m_scale = std::min(0.05, m_scale * 0.8);
+		m_scale = std::max(0.05, m_scale * 0.8);
 	}
 	ui.actionBestFit->setChecked(false);
 	if(action == Zoom::Fit || (m_scale / fit >= 0.9 && m_scale / fit <= 1.09)) {
