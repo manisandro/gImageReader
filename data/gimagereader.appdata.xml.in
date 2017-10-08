@@ -15,6 +15,13 @@
   <keyword>tesseract</keyword>
   <keyword>pdf</keyword>
  </keywords>
+ <keywords xml:lang="cs_CZ">
+  <keyword xml:lang="cs_CZ">ocr</keyword>
+  <keyword xml:lang="cs_CZ">optické</keyword>
+  <keyword xml:lang="cs_CZ">rozpoznávání</keyword>
+  <keyword xml:lang="cs_CZ">tesseract</keyword>
+  <keyword xml:lang="cs_CZ">pdf</keyword>
+ </keywords>
  <description>
   <p>gImageReader is a simple optical character recognition (OCR) application which acts as a frontend to the tesseract OCR engine. Features include:</p>
   <ul>
@@ -30,13 +37,13 @@
  <description xml:lang="cs_CZ">
   <p>gImageReader je jednoduše použitelná aplikace pro rozpoznávání textu z obrázků, využívající OCR engine tesseract. Mezi funkce patří:</p>
   <ul>
-   <li>Samočinné rozpoznání rozvržení strany</li>
-   <li>Možnost ručně určit a upravit oblasti pro rozpoznání</li>
-   <li>Import obrázků ze souborů, skenovacích zařízení, schránky a snímků obrazovky</li>
-   <li>Rozpoznávání z vícestránkových PDF dokumentů</li>
+   <li>Import PDF dokumentů a obrázků z počítače, skenovacích zařízení, schránky a snímků obrazovky</li>
+   <li>Zpracování vícero obrázků a dokumentů naráz</li>
+   <li>Ruční nebo automatická definice oblasti k rozpoznávání</li>
+   <li>Rozpoznání do holého textu nebo hOCR dokumentů</li>
    <li>Rozpoznaný text je zobrazen hned vedle zdrojového obrázku</li>
-   <li>Základní úprava výstupního textu, včetně hledání/nahrazování a odebírání konců řádků</li>
-   <li>Kontrola překlepů ve výstupním textu (pokud jsou nainstalovány příslušné slovníky)</li>
+   <li>Následné zpracování rozpoznaného textu včetně kontroly překlepů</li>
+   <li>Vytváření PDF dokumentů z hOCR dokumentů</li>
   </ul>
  </description>
  <screenshots>
