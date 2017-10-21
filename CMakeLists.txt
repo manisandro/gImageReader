@@ -50,8 +50,11 @@ ADD_DEFINITIONS(-DMANUAL_DIR=\"${MANUAL_DIR}\")
 SET(CMAKE_CXX_STANDARD 11)
 SET(CXX_STANDARD_REQUIRED ON)
 
+include_directories(out_include)
+link_directories(out_include)
 
 # Dependencies
+FIND_PACKAGE(OpenCV REQUIRED)
 FIND_PACKAGE(Gettext REQUIRED)
 FIND_PACKAGE(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(TESSERACT tesseract)
@@ -66,6 +69,7 @@ IF(UNIX)
 ENDIF(UNIX)
 SET(PODOFO_LDFLAGS -lpodofo)
 
+include_directories(${OpenCV_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/common ${CMAKE_BINARY_DIR} ${TESSERACT_INCLUDE_DIRS} ${SANE_INCLUDE_DIRS})
 
 IF("${INTERFACE_TYPE}" STREQUAL "gtk")
@@ -188,11 +192,11 @@ ENDIF()
 
 IF("${srcdir}" STREQUAL "qt")
     # Gettextize ui files
-    ADD_CUSTOM_TARGET(
+    #[[ADD_CUSTOM_TARGET(
         gettextizeui
         COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/gettextizeui.cmake ${gimagereader_FORMS_HEADERS}
         DEPENDS ${gimagereader_FORMS_HEADERS}
-    )
+    )]]
 ENDIF()
 
 FILE(READ po/LINGUAS langs_string)
@@ -226,10 +230,13 @@ ADD_EXECUTABLE(gimagereader
     ${gimagereader_RESOURCES_RCC}
 )
 TARGET_LINK_LIBRARIES(gimagereader
+    libprlib.a
     ${TESSERACT_LDFLAGS}
     ${gimagereader_LIBS}
     ${SANE_LDFLAGS}
     ${ddjvuapi_LDFLAGS}
+    ${OpenCV_LIBS}
+    -llept
     -ldl
     -lgomp
 )
