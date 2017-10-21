@@ -303,7 +303,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tabSources">
         <attribute name="title">
@@ -562,6 +562,38 @@
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContentsOutput"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetImageProcessing">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::AllDockWidgetAreas</set>
+   </property>
+   <property name="windowTitle">
+    <string notr="true">&amp;Enhance</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <widget class="QPushButton" name="pushButtonDeskew">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>80</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="whatsThis">
+      <string>Deskew image</string>
+     </property>
+     <property name="text">
+      <string>Deskew</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <action name="actionSources">
    <property name="checkable">
