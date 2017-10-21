@@ -20,6 +20,8 @@
 #ifndef MAINWINDOW_HH
 #define MAINWINDOW_HH
 
+#include <memory>
+
 #include <QList>
 #include <QMainWindow>
 #include <QStack>
@@ -36,6 +38,7 @@ class Config;
 class Acquirer;
 class Displayer;
 class DisplayerTool;
+class ImageProcessor;
 class OutputEditor;
 class Recognizer;
 class SourceManager;
@@ -111,6 +114,7 @@ private:
 	OutputEditor* m_outputEditor = nullptr;
 	Recognizer* m_recognizer = nullptr;
 	SourceManager* m_sourceManager = nullptr;
+	std::unique_ptr<ImageProcessor> m_imageProcessor;
 
 	QActionGroup m_idleActions;
 	QList<QWidget*> m_idleWidgets;

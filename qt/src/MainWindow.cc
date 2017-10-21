@@ -44,6 +44,7 @@
 #include "Displayer.hh"
 #include "DisplayerToolSelect.hh"
 #include "DisplayerToolHOCR.hh"
+#include "ImageProcessor.hh"
 #include "OutputEditorText.hh"
 #include "OutputEditorHOCR.hh"
 #include "Recognizer.hh"
@@ -124,6 +125,8 @@ MainWindow::MainWindow(const QStringList& files)
 	m_displayer = new Displayer(ui);
 	m_recognizer = new Recognizer(ui);
 	m_sourceManager = new SourceManager(ui);
+    // TODO: Use own-written make_unique function
+	m_imageProcessor.reset(new ImageProcessor(ui, *m_displayer));
 
 	ui.centralwidget->layout()->addWidget(m_displayer);
 
