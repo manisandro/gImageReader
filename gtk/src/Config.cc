@@ -346,6 +346,9 @@ Config::Config() {
 	addSetting(new FontSetting("customoutputfont", MAIN->getWidget("fontbutton:config.settings.customoutputfont")));
 	addSetting(new ComboSetting("outputorient", MAIN->getWidget("combo:config.settings.paneorient")));
 	addSetting(new ComboSetting("datadirs", MAIN->getWidget("combo:config.datadirs")));
+	addSetting(new VarSetting<Glib::ustring>("sourcedir"));
+	addSetting(new VarSetting<Glib::ustring>("outputdir"));
+	addSetting(new VarSetting<Glib::ustring>("auxdir"));
 }
 
 Config::~Config() {

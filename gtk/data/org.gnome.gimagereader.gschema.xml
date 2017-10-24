@@ -56,11 +56,6 @@
             <summary>Scanning mode</summary>
             <description>Scanning mode.</description>
         </key>
-        <key type="s" name="scanoutput">
-            <default>""</default>
-            <summary>Output path for scanned files</summary>
-            <description>Output path for scanned files.</description>
-        </key>
         <key type="ai" name="wingeom">
             <default>[0,0,640,480]</default>
             <summary>Window geometry</summary>
@@ -106,20 +101,20 @@
             <summary>Replacement list</summary>
             <description>List of search-replace strings.</description>
         </key>
-        <key type="s" name="replacelistfile">
-            <default>""</default>
-            <summary>Path of replacement list</summary>
-            <description>Path of replacement list.</description>
-        </key>
-        <key type="s" name="selectionsavefile">
-            <default>""</default>
-            <summary>Path for saving selections</summary>
-            <description>Path for saving selections.</description>
-        </key>
         <key type="b" name="searchmatchcase">
             <default>false</default>
             <summary>Match case when searching</summary>
             <description>Match case when searching.</description>
+        </key>
+        <key type="s" name="sourcedir">
+            <default>""</default>
+            <summary>Source directory for OCR input</summary>
+            <description>Source directory for OCR input.</description>
+        </key>
+        <key type="s" name="auxdir">
+            <default>""</default>
+            <summary>Directory for auxiliary files</summary>
+            <description>Directory for auxiliary files.</description>
         </key>
         <key type="s" name="outputdir">
             <default>""</default>

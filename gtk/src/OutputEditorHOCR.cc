@@ -447,10 +447,6 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	CONNECT(m_builder("spin:pdfoptions.preserve").as<Gtk::SpinButton>(), value_changed, [this] { updatePreview(); });
 	CONNECT(m_builder("checkbox:pdfoptions.preview").as<Gtk::CheckButton>(), toggled, [this] { updatePreview(); });
 
-	if(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue().empty()) {
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->setValue(Utils::get_documents_dir());
-	}
-
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", m_builder("combo:pdfoptions.mode")));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagecompressionquality", m_builder("spin:pdfoptions.quality")));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimagecompression", m_builder("combo:pdfoptions.compression")));
@@ -1246,9 +1242,8 @@ void OutputEditorHOCR::open() {
 	if(!clear(false)) {
 		return;
 	}
-	Glib::ustring dir = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue();
 	FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html","text/xml", "text/plain"}, {"*.html"}};
-	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open hOCR File"), dir, filter, false);
+	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open hOCR File"), "", "outputdir", filter, false);
 	if(files.empty()) {
 		return;
 	}
@@ -1284,14 +1279,11 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 		std::string ext, base;
 		std::string name = !sources.empty() ? sources.front()->displayname : _("output");
 		Utils::get_filename_parts(name, base, ext);
-		outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), base + ".html");
-
 		FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html"}, {"*.html"}};
-		outname = FileDialogs::save_dialog(_("Save hOCR Output..."), outname, filter);
+		outname = FileDialogs::save_dialog(_("Save hOCR Output..."), base + ".html", "outputdir", filter);
 		if(outname.empty()) {
 			return false;
 		}
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->setValue(Glib::path_get_dirname(outname));
 	}
 	std::ofstream file(outname);
 	if(!file.is_open()) {
@@ -1344,14 +1336,12 @@ void OutputEditorHOCR::savePDF() {
 		std::string ext, base;
 		std::string name = !sources.empty() ? sources.front()->displayname : _("output");
 		Utils::get_filename_parts(name, base, ext);
-		std::string outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), base + ".pdf");
 		FileDialogs::FileFilter filter = {_("PDF Files"), {"application/pdf"}, {"*.pdf"}};
-		outname = FileDialogs::save_dialog(_("Save PDF Output..."), outname, filter);
+		std::string outname = FileDialogs::save_dialog(_("Save PDF Output..."), base + ".pdf", "outputdir", filter);
 		if(outname.empty()) {
 			accepted = false;
 			break;
 		}
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->setValue(Glib::path_get_dirname(outname));
 
 		try {
 			document = new PoDoFo::PdfStreamedDocument(outname.c_str());

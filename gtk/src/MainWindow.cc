@@ -185,7 +185,6 @@ MainWindow::MainWindow()
 
 	m_config->addSetting(new VarSetting<std::vector<int>>("wingeom"));
 	m_config->addSetting(new SwitchSettingT<Gtk::ToggleButton>("showcontrols", m_builder("button:main.controls")));
-	m_config->addSetting(new VarSetting<Glib::ustring>("outputdir"));
 	m_config->addSetting(new ComboSetting("outputeditor", m_builder("combo:main.ocrmode")));
 
 	m_recognizer->updateLanguagesMenu();

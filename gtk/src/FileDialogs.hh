@@ -37,8 +37,8 @@ struct FileFilter {
 	static FileFilter pixbuf_formats();
 };
 
-std::vector<Glib::RefPtr<Gio::File> > open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const FileFilter& filter, bool multiple, Gtk::Window* parent = nullptr);
-std::string save_dialog(const Glib::ustring &title, const std::string& suggestedFile, const FileFilter& filter, Gtk::Window *parent = nullptr);
+std::vector<Glib::RefPtr<Gio::File> > open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, const FileFilter& filter, bool multiple, Gtk::Window* parent = nullptr);
+std::string save_dialog(const Glib::ustring &title, const std::string& initialFilename, const std::string& initialDirSetting, const FileFilter& filter, bool generateUniqueName = false, Gtk::Window *parent = nullptr);
 
 
 } // FileDialogs

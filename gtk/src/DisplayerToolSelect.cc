@@ -35,13 +35,6 @@ DisplayerToolSelect::DisplayerToolSelect(Displayer *displayer)
 	Gtk::Button* autolayoutButton = MAIN->getWidget("button:main.autolayout");
 	m_connectionAutolayout = CONNECT(autolayoutButton, clicked, [this] { autodetectLayout(); });
 
-	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("selectionsavefile"));
-	std::string selectionsavefile = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->getValue();
-	if(selectionsavefile.empty()) {
-		selectionsavefile = Glib::build_filename(Utils::get_documents_dir(), _("selection.png"));
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->setValue(selectionsavefile);
-	}
-
 	autolayoutButton->set_visible(true);
 	updateRecognitionModeLabel();
 }
@@ -146,11 +139,9 @@ void DisplayerToolSelect::reorderSelection(int oldNum, int newNum) {
 
 void DisplayerToolSelect::saveSelection(NumberedDisplayerSelection* selection) {
 	Cairo::RefPtr<Cairo::ImageSurface> img = m_displayer->getImage(selection->rect());
-	std::string filename = Utils::make_output_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->getValue());
 	FileDialogs::FileFilter filter = {_("PNG Images"), {"image/png"}, {"*.png"}};
-	filename = FileDialogs::save_dialog(_("Save Selection Image"), filename, filter);
+	std::string filename = FileDialogs::save_dialog(_("Save Selection Image"), _("selection.png"), "outputdir", filter, true);
 	if(!filename.empty()) {
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("selectionsavefile")->setValue(filename);
 		img->write_to_png(filename);
 	}
 }

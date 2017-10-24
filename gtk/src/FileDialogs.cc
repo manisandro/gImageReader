@@ -18,6 +18,7 @@
  */
 
 #include "FileDialogs.hh"
+#include "Config.hh"
 #include "MainWindow.hh"
 #include "Utils.hh"
 #include <sstream>
@@ -273,10 +274,16 @@ FileDialogs::FileFilter FileDialogs::FileFilter::pixbuf_formats() {
 
 namespace FileDialogs {
 
-std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, const std::string& initialDirectory, const FileFilter &filter, bool multiple, Gtk::Window *parent) {
+std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, const std::string& initialDirectory, const std::string& initialDirSetting, const FileFilter &filter, bool multiple, Gtk::Window *parent) {
 	std::vector<Glib::RefPtr<Gio::File>> filenames;
 	parent = parent == nullptr ? MAIN->getWindow() : parent;
-	std::string initialDir = initialDirectory.empty() ? Glib::get_home_dir() : initialDirectory;
+	std::string initialDir = initialDirectory;
+	if(initialDir.empty()) {
+		initialDir = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
+		if(initialDir.empty()) {
+			initialDir = Utils::get_documents_dir();
+		}
+	}
 #ifdef G_OS_WIN32
 	filenames = win32_open_dialog(title, initialDir, filter.to_win32_filter(), multiple, parent);
 #else
@@ -286,12 +293,28 @@ std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, con
 		filenames = gnome_open_dialog(title, initialDir, filter.to_gnome_filter(), multiple, parent);
 	}
 #endif
+	if(!filenames.empty()) {
+		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filenames.front()->get_path()));
+	}
 	return filenames;
 }
 
-std::string save_dialog(const Glib::ustring &title, const std::string& suggestedFile, const FileFilter& filter, Gtk::Window *parent) {
+std::string save_dialog(const Glib::ustring &title, const std::string& initialFilename, const std::string& initialDirSetting, const FileFilter& filter, bool generateUniqueName, Gtk::Window *parent) {
 	std::string filename;
 	parent = parent == nullptr ? MAIN->getWindow() : parent;
+	std::string suggestedFile;
+	if(!initialFilename.empty() && Glib::path_is_absolute(initialFilename)) {
+		suggestedFile = initialFilename;
+	} else {
+		std::string initialDir = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
+		if(initialDir.empty()) {
+			initialDir = Utils::get_documents_dir();
+		}
+		suggestedFile = Glib::build_filename(initialDir, initialFilename);
+		if(generateUniqueName) {
+			suggestedFile = Utils::make_output_filename(suggestedFile);
+		}
+	}
 #ifdef G_OS_WIN32
 	filename = win32_save_dialog(title, suggestedFile, filter.to_win32_filter(), parent);
 #else
@@ -309,6 +332,7 @@ std::string save_dialog(const Glib::ustring &title, const std::string& suggested
 		if(ext.empty()) {
 			filename = base + "." + sext;
 		}
+		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filename));
 	}
 	return filename;
 }

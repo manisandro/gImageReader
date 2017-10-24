@@ -123,10 +123,6 @@ OutputEditorText::OutputEditorText()
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("drawwhitespace", m_builder("menuitem:output.stripcrlf.drawwhitespace")));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("searchmatchcase", m_builder("checkbutton:output.matchcase")));
 
-	if(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue().empty()) {
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->setValue(Utils::get_documents_dir());
-	}
-
 	setFont();
 }
 
@@ -315,14 +311,12 @@ bool OutputEditorText::save(const std::string& filename) {
 		std::string ext, base;
 		std::string name = !sources.empty() ? sources.front()->displayname : _("output");
 		Utils::get_filename_parts(name, base, ext);
-		outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), base + ".txt");
 
 		FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
-		outname = FileDialogs::save_dialog(_("Save Output..."), outname, filter);
+		outname = FileDialogs::save_dialog(_("Save Output..."), base + ".txt", "outputdir", filter);
 		if(outname.empty()) {
 			return false;
 		}
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->setValue(Glib::path_get_dirname(outname));
 	}
 	std::ofstream file(outname);
 	if(!file.is_open()) {

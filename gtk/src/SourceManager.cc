@@ -138,7 +138,7 @@ void SourceManager::openSources() {
 	filter.patterns.push_back("*.pdf");
 	filter.mime_types.push_back("image/vnd.djvu");
 	filter.patterns.push_back("*.djvu");
-	addSources(FileDialogs::open_dialog(_("Select Files"), initialFolder, filter, true));
+	addSources(FileDialogs::open_dialog(_("Select Files"), initialFolder, "sourcedir", filter, true));
 }
 
 void SourceManager::pasteClipboard() {
