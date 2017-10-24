@@ -272,6 +272,15 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 
 	m_pdfExportDialog = new QDialog(m_widget);
 	m_pdfExportDialogUi.setupUi(m_pdfExportDialog);
+    m_pdfExportDialogUi.comboBoxPdfVersion->addItem(_("PDF 1.0"), PoDoFo::EPdfVersion::ePdfVersion_1_0);
+    m_pdfExportDialogUi.comboBoxPdfVersion->addItem(_("PDF 1.1"), PoDoFo::EPdfVersion::ePdfVersion_1_1);
+    m_pdfExportDialogUi.comboBoxPdfVersion->addItem(_("PDF 1.2"), PoDoFo::EPdfVersion::ePdfVersion_1_2);
+    m_pdfExportDialogUi.comboBoxPdfVersion->addItem(_("PDF 1.3"), PoDoFo::EPdfVersion::ePdfVersion_1_3);
+    m_pdfExportDialogUi.comboBoxPdfVersion->addItem(_("PDF 1.4"), PoDoFo::EPdfVersion::ePdfVersion_1_4);
+    m_pdfExportDialogUi.comboBoxPdfVersion->addItem(_("PDF 1.5"), PoDoFo::EPdfVersion::ePdfVersion_1_5);
+    m_pdfExportDialogUi.comboBoxPdfVersion->addItem(_("PDF 1.6"), PoDoFo::EPdfVersion::ePdfVersion_1_6);
+    m_pdfExportDialogUi.comboBoxPdfVersion->addItem(_("PDF 1.7"), PoDoFo::EPdfVersion::ePdfVersion_1_7);
+    m_pdfExportDialogUi.comboBoxPdfVersion->setCurrentIndex(3); // Because default version before was PDF 1.3
 	m_pdfExportDialogUi.comboBoxImageFormat->addItem(_("Color"), QImage::Format_RGB888);
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 	m_pdfExportDialogUi.comboBoxImageFormat->addItem(_("Grayscale"), QImage::Format_Indexed8);
@@ -309,6 +318,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(m_pdfExportDialogUi.comboBoxOutputMode, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(imageFormatChanged()));
+    connect(m_pdfExportDialogUi.comboBoxPdfVersion, SIGNAL(currentIndexChanged(int)), this, SLOT(pdfVersionChanged()));
 	connect(m_pdfExportDialogUi.comboBoxDithering, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(m_pdfExportDialogUi.comboBoxImageCompression, SIGNAL(currentIndexChanged(int)), this, SLOT(imageCompressionChanged()));
 	connect(m_pdfExportDialogUi.spinBoxCompressionQuality, SIGNAL(valueChanged(int)), this, SLOT(updatePreview()));
@@ -400,6 +410,11 @@ void OutputEditorHOCR::imageFormatChanged() {
 		m_pdfExportDialogUi.labelDithering->setEnabled(false);
 		m_pdfExportDialogUi.comboBoxDithering->setEnabled(false);
 	}
+}
+
+void OutputEditorHOCR::pdfVersionChanged()
+{
+    pdfVersion = static_cast<PoDoFo::EPdfVersion>(m_pdfExportDialogUi.comboBoxPdfVersion->itemData(m_pdfExportDialogUi.comboBoxPdfVersion->currentIndex()).toInt());
 }
 
 void OutputEditorHOCR::imageCompressionChanged() {
@@ -1140,7 +1155,7 @@ void OutputEditorHOCR::savePDF() {
 		MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->setValue(QFileInfo(outname).absolutePath());
 
 		try {
-			document = new PoDoFo::PdfStreamedDocument(outname.toLocal8Bit().data());
+			document = new PoDoFo::PdfStreamedDocument(outname.toLocal8Bit().data(), pdfVersion);
 		} catch(...) {
 			QMessageBox::critical(MAIN, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 			continue;

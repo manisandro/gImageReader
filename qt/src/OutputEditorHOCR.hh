@@ -28,6 +28,8 @@
 #include <QDomElement>
 #include <QtSpell.hpp>
 
+#include <podofo/base/PdfDefines.h>
+
 class DisplayerToolHOCR;
 class QGraphicsPixmapItem;
 
@@ -129,6 +131,7 @@ private:
 	bool m_modified = false;
 	QDialog* m_pdfExportDialog;
 	Ui::PdfExportDialog m_pdfExportDialogUi;
+	PoDoFo::EPdfVersion pdfVersion;
 	QFontDialog m_pdfFontDialog;
 
 	QTreeWidgetItem* m_rootItem = nullptr;
@@ -161,6 +164,7 @@ private slots:
 	void showItemProperties(QTreeWidgetItem* item);
 	void itemChanged(QTreeWidgetItem* item, int col);
 	void imageFormatChanged();
+	void pdfVersionChanged();
 	void imageCompressionChanged();
 	void propertyCellChanged(int row, int col);
 	void showTreeWidgetContextMenu(const QPoint& point);
