@@ -55,18 +55,10 @@ SubstitutionsManager::SubstitutionsManager(const Builder& builder, const Glib::R
 	CONNECT(m_dialog, hide, [this] { dialogClosed(); });
 
 	MAIN->getConfig()->addSetting(new ListStoreSetting("replacelist", Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model())));
-	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("replacelistfile"));
-
-	m_currentFile = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("replacelistfile")->getValue();
-	if(m_currentFile.empty()) {
-		m_currentFile = Glib::build_filename(Utils::get_documents_dir(), _("substitution_list.txt"));
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("replacelistfile")->setValue(m_currentFile);
-	}
 }
 
 SubstitutionsManager::~SubstitutionsManager() {
 	MAIN->getConfig()->removeSetting("replacelist");
-	MAIN->getConfig()->removeSetting("replacelistfile");
 }
 
 void SubstitutionsManager::set_visible(bool visible) {
@@ -80,9 +72,9 @@ void SubstitutionsManager::openList() {
 	if(!clearList()) {
 		return;
 	}
-	std::string dir = Glib::path_get_dirname(m_currentFile);
+	std::string dir = !m_currentFile.empty() ? Glib::path_get_dirname(m_currentFile) : "";
 	FileDialogs::FileFilter filter = { _("Substitutions List"), {"text/plain"}, {"*.txt"}};
-	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open Substitutions List"), dir, filter, false, m_dialog);
+	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open Substitutions List"), dir, "auxdir", filter, false, m_dialog);
 
 	if(!files.empty()) {
 		std::ifstream file(files.front()->get_path());
@@ -91,7 +83,6 @@ void SubstitutionsManager::openList() {
 			return;
 		}
 		m_currentFile = files.front()->get_path();
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("replacelistfile")->setValue(m_currentFile);
 
 		std::string line;
 		bool errors = false;
@@ -117,7 +108,7 @@ void SubstitutionsManager::openList() {
 
 bool SubstitutionsManager::saveList() {
 	FileDialogs::FileFilter filter = { _("Substitutions List"), {"text/plain"}, {"*.txt"} };
-	std::string filename = FileDialogs::save_dialog(_("Save Substitutions List"), m_currentFile, filter, m_dialog);
+	std::string filename = FileDialogs::save_dialog(_("Save Substitutions List"), m_currentFile, "auxdir", filter, false, m_dialog);
 	if(filename.empty()) {
 		return false;
 	}
@@ -127,7 +118,6 @@ bool SubstitutionsManager::saveList() {
 		return false;
 	}
 	m_currentFile = filename;
-	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("replacelistfile")->setValue(m_currentFile);
 	Glib::ustring str;
 	for(const Gtk::TreeModel::Row& row : m_listStore->children()) {
 		Glib::ustring search, replace;

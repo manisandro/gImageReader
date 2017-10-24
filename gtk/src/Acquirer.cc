@@ -75,13 +75,10 @@ Acquirer::Acquirer() {
 
 	MAIN->getConfig()->addSetting(new ComboSetting("scanres", MAIN->getWidget("combo:sources.acquire.resolution")));
 	MAIN->getConfig()->addSetting(new ComboSetting("scanmode", MAIN->getWidget("combo:sources.acquire.mode")));
-	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("scanoutput"));
 	MAIN->getConfig()->addSetting(new ComboSetting("scandev", MAIN->getWidget("combo:sources.acquire.device")));
 
-	m_outputPath = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->getValue();
-	if(m_outputPath.empty()) {
-		m_outputPath = Glib::build_filename(Utils::get_documents_dir(), _("scan.png"));
-	}
+	std::string sourcedir = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("sourcedir")->getValue();
+	m_outputPath = Glib::build_filename(sourcedir.empty() ? Utils::get_documents_dir() : sourcedir, _("scan.png"));
 	genOutputPath();
 	m_scanner->init();
 }
@@ -94,7 +91,7 @@ Acquirer::~Acquirer() {
 void Acquirer::selectOutputPath() {
 	FileDialogs::FileFilter filter = FileDialogs::FileFilter::pixbuf_formats();
 	filter.name = _("Images");
-	std::string filename = FileDialogs::save_dialog(_("Choose Output Filename..."), m_outputPath, filter);
+	std::string filename = FileDialogs::save_dialog(_("Choose Output Filename..."), m_outputPath, "sourcedir", filter);
 	if(!filename.empty()) {
 		m_outputPath = filename;
 		genOutputPath();
@@ -105,7 +102,6 @@ void Acquirer::genOutputPath() {
 	m_outputPath = Utils::make_output_filename(m_outputPath);
 	m_outputLabel->set_text(m_outputPath);
 	m_outputLabel->set_tooltip_text(m_outputPath);
-	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("scanoutput")->setValue(m_outputPath);
 }
 
 void Acquirer::scanInitFailed() {
