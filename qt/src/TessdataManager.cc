@@ -257,7 +257,7 @@ void TessdataManager::applyChanges() {
 						}
 					}
 				} else if(item->checkState() != Qt::Checked && availableLanguages.contains(prefix)) {
-					foreach(const QString& file, tessDataDir.entryList(QStringList() << prefix + ".*")) {
+					for(const QString& file : tessDataDir.entryList(QStringList() << prefix + ".*")) {
 						if(!QFile(tessDataDir.absoluteFilePath(file)).remove()) {
 							errors.append(file);
 						}
