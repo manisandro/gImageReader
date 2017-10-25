@@ -76,7 +76,7 @@ private:
 	QList<Source*> m_sources;
 	QMap<int, QPair<Source*, int>> m_pageMap;
 	Source* m_currentSource = nullptr;
-	std::unique_ptr<DisplayRenderer> m_renderer = nullptr;
+	std::unique_ptr<DisplayRenderer> m_renderer;
 	QPixmap m_pixmap;
 	QGraphicsPixmapItem* m_imageItem = nullptr;
 	double m_scale = 1.0;

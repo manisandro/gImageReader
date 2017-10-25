@@ -174,7 +174,6 @@ bool Displayer::setSources(QList<Source*> sources) {
 	}
 	m_renderTimer.stop();
 	m_scene->clear();
-	delete m_renderer;
 	m_renderer = nullptr;
 	m_currentSource = nullptr;
 	m_sources.clear();

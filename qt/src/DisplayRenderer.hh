@@ -20,6 +20,8 @@
 #ifndef DISPLAYRENDERER_HH
 #define DISPLAYRENDERER_HH
 
+#include <memory>
+
 #include <QString>
 #include <QMutex>
 
@@ -60,7 +62,7 @@ public:
 	int getNPages() const override;
 
 private:
-	Poppler::Document* m_document;
+	std::unique_ptr<Poppler::Document> m_document;
 	mutable QMutex m_mutex;
 };
 
@@ -72,7 +74,7 @@ public:
 	int getNPages() const override;
 
 private:
-	DjVuDocument* m_djvu;
+	std::unique_ptr<DjVuDocument> m_djvu;
 
 	mutable QMutex m_mutex;
 };

@@ -26,6 +26,7 @@
 
 #include <cmath>
 
+#include "CppBackports.hh"
 #include "DjVuDocument.hh"
 #include "DisplayRenderer.hh"
 #include "Utils.hh"
@@ -83,7 +84,7 @@ QImage ImageRenderer::render(int page, double resolution) const {
 }
 
 PDFRenderer::PDFRenderer(const QString& filename) : DisplayRenderer(filename) {
-	m_document = Poppler::Document::load(filename);
+	m_document.reset(Poppler::Document::load(filename));
 	if(m_document) {
 		m_document->setRenderHint(Poppler::Document::Antialiasing);
 		m_document->setRenderHint(Poppler::Document::TextAntialiasing);
@@ -91,7 +92,6 @@ PDFRenderer::PDFRenderer(const QString& filename) : DisplayRenderer(filename) {
 }
 
 PDFRenderer::~PDFRenderer() {
-	delete m_document;
 }
 
 QImage PDFRenderer::render(int page, double resolution) const {
@@ -111,12 +111,11 @@ int PDFRenderer::getNPages() const {
 }
 
 DJVURenderer::DJVURenderer(const QString& filename) : DisplayRenderer(filename) {
-	m_djvu = new DjVuDocument();
+	m_djvu = gstd::make_unique<DjVuDocument>();
 	m_djvu->openFile(filename);
 }
 
 DJVURenderer::~DJVURenderer() {
-	delete m_djvu;
 }
 
 QImage DJVURenderer::render(int page, double resolution) const
