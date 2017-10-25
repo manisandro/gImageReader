@@ -24,6 +24,7 @@
 #include "SourceManager.hh"
 #include "Utils.hh"
 
+#include <cmath>
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneDragDropEvent>
@@ -600,10 +601,10 @@ void DisplayerSelection::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
 	QRectF r = rect();
 	double tol = 10.0 / m_tool->getDisplayer()->getCurrentScale();
 
-	bool left = qAbs(r.x() - p.x()) < tol;
-	bool right = qAbs(r.x() + r.width() - p.x()) < tol;
-	bool top = qAbs(r.y() - p.y()) < tol;
-	bool bottom = qAbs(r.y() + r.height() - p.y()) < tol;
+	bool left = std::abs(r.x() - p.x()) < tol;
+	bool right = std::abs(r.x() + r.width() - p.x()) < tol;
+	bool top = std::abs(r.y() - p.y()) < tol;
+	bool bottom = std::abs(r.y() + r.height() - p.y()) < tol;
 
 	if((top && left) || (bottom && right)) {
 		setCursor(Qt::SizeFDiagCursor);
@@ -623,17 +624,17 @@ void DisplayerSelection::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	double tol = 10.0 / m_tool->getDisplayer()->getCurrentScale();
 	m_resizeHandlers.clear();
 	m_resizeOffset = QPointF(0.0, 0.0);
-	if(qAbs(m_point.x() - p.x()) < tol) { // pointx
+	if(std::abs(m_point.x() - p.x()) < tol) { // pointx
 		m_resizeHandlers.append(resizePointX);
 		m_resizeOffset.setX(event->pos().x() - m_point.x());
-	} else if(qAbs(m_anchor.x() - p.x()) < tol) { // anchorx
+	} else if(std::abs(m_anchor.x() - p.x()) < tol) { // anchorx
 		m_resizeHandlers.append(resizeAnchorX);
 		m_resizeOffset.setX(event->pos().x() - m_anchor.x());
 	}
-	if(qAbs(m_point.y() - p.y()) < tol) { // pointy
+	if(std::abs(m_point.y() - p.y()) < tol) { // pointy
 		m_resizeHandlers.append(resizePointY);
 		m_resizeOffset.setY(event->pos().y() - m_point.y());
-	} else if(qAbs(m_anchor.y() - p.y()) < tol) { // anchory
+	} else if(std::abs(m_anchor.y() - p.y()) < tol) { // anchory
 		m_resizeHandlers.append(resizeAnchorY);
 		m_resizeOffset.setY(event->pos().y() - m_anchor.y());
 	}
