@@ -20,6 +20,8 @@
 #ifndef OUTPUTTEXTEDIT_HH
 #define OUTPUTTEXTEDIT_HH
 
+#include <memory>
+
 #include <QPlainTextEdit>
 
 class OutputTextEdit : public QPlainTextEdit {
@@ -40,7 +42,7 @@ protected:
 
 private:
 	class WhitespaceHighlighter;
-	WhitespaceHighlighter* m_wsHighlighter = nullptr;
+	std::unique_ptr<WhitespaceHighlighter> m_wsHighlighter;
 	bool m_drawWhitespace = false;
 	QTextCursor m_regionCursor;
 	bool m_entireRegion;

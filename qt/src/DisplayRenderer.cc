@@ -25,6 +25,7 @@
 #endif
 
 #include <cmath>
+#include <memory>
 
 #include "CppBackports.hh"
 #include "DjVuDocument.hh"
@@ -99,10 +100,9 @@ QImage PDFRenderer::render(int page, double resolution) const {
 		return QImage();
 	}
 	m_mutex.lock();
-	Poppler::Page* poppage = m_document->page(page - 1);
+	std::unique_ptr<Poppler::Page> poppage(m_document->page(page - 1));
 	m_mutex.unlock();
 	QImage image = poppage->renderToImage(resolution, resolution);
-	delete poppage;
 	return image.convertToFormat(QImage::Format_RGB32);
 }
 

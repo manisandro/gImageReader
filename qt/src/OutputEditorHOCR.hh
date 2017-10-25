@@ -24,6 +24,8 @@
 #include "Ui_OutputEditorHOCR.hh"
 #include "ui_PdfExportDialog.h"
 
+#include <memory>
+
 #include <QDomDocument>
 #include <QDomElement>
 #include <QtSpell.hpp>
@@ -38,7 +40,7 @@ public:
 	~OutputEditorHOCR();
 
 	QWidget* getUI() override {
-		return m_widget;
+		return m_widget.get();
 	}
 	ReadSessionData* initRead(tesseract::TessBaseAPI &tess) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
@@ -122,9 +124,9 @@ private:
 
 	int m_idCounter = 0;
 	DisplayerToolHOCR* m_tool;
-	QWidget* m_widget;
+	std::unique_ptr<QWidget> m_widget;
 	UI_OutputEditorHOCR ui;
-	HTMLHighlighter* m_highlighter;
+	std::unique_ptr<HTMLHighlighter> m_highlighter;
 	QtSpell::TextEditChecker m_spell;
 	bool m_modified = false;
 	QDialog* m_pdfExportDialog;

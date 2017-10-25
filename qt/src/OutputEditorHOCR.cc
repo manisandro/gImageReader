@@ -46,6 +46,7 @@
 #undef USE_STD_NAMESPACE
 
 #include "CCITTFax4Encoder.hh"
+#include "CppBackports.hh"
 #include "DisplayerToolHOCR.hh"
 #include "MainWindow.hh"
 #include "OutputEditorHOCR.hh"
@@ -266,11 +267,11 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	Q_UNUSED(reg);
 
 	m_tool = tool;
-	m_widget = new QWidget;
-	ui.setupUi(m_widget);
-	m_highlighter = new HTMLHighlighter(ui.plainTextEditOutput->document());
+	m_widget = gstd::make_unique<QWidget>();
+	ui.setupUi(m_widget.get());
+	m_highlighter = gstd::make_unique<HTMLHighlighter>(ui.plainTextEditOutput->document());
 
-	m_pdfExportDialog = new QDialog(m_widget);
+	m_pdfExportDialog = new QDialog(m_widget.get());
 	m_pdfExportDialogUi.setupUi(m_pdfExportDialog);
 	m_pdfExportDialogUi.comboBoxImageFormat->addItem(_("Color"), QImage::Format_RGB888);
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
@@ -353,7 +354,6 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 }
 
 OutputEditorHOCR::~OutputEditorHOCR() {
-	delete m_widget;
 	MAIN->getConfig()->removeSetting("pdfexportmode");
 	MAIN->getConfig()->removeSetting("pdffont");
 	MAIN->getConfig()->removeSetting("pdfimagecompressionquality");
@@ -1048,7 +1048,7 @@ void OutputEditorHOCR::open() {
 		return;
 	}
 	QString dir = MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue();
-	QString filename = QFileDialog::getOpenFileName(m_widget, _("Open hOCR File"), dir, QString("%1 (*.html)").arg(_("hOCR HTML Files")));
+	QString filename = QFileDialog::getOpenFileName(m_widget.get(), _("Open hOCR File"), dir, QString("%1 (*.html)").arg(_("hOCR HTML Files")));
 	if(filename.isEmpty()) {
 		return;
 	}
@@ -1215,12 +1215,12 @@ void OutputEditorHOCR::savePDF() {
 		}
 	}
 	if(!failed.isEmpty()) {
-		QMessageBox::warning(m_widget, _("Errors occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
+		QMessageBox::warning(m_widget.get(), _("Errors occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
 	}
 	try {
 		document->Close();
 	} catch(PoDoFo::PdfError& e) {
-		QMessageBox::warning(m_widget, _("Export failed"), _("The PDF export failed (%1).").arg(e.what()));
+		QMessageBox::warning(m_widget.get(), _("Export failed"), _("The PDF export failed (%1).").arg(e.what()));
 	}
 	delete document;
 }

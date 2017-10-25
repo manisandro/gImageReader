@@ -18,6 +18,7 @@
  */
 
 #include "OutputTextEdit.hh"
+#include "CppBackports.hh"
 
 #include <QApplication>
 #include <QEventLoop>
@@ -47,7 +48,7 @@ private:
 
 OutputTextEdit::OutputTextEdit(QWidget *parent)
 	: QPlainTextEdit(parent) {
-	m_wsHighlighter = new WhitespaceHighlighter(document());
+	m_wsHighlighter = gstd::make_unique<WhitespaceHighlighter>(document());
 
 	m_regionCursor = textCursor();
 	m_regionCursor.movePosition(QTextCursor::Start);
@@ -68,7 +69,6 @@ OutputTextEdit::OutputTextEdit(QWidget *parent)
 }
 
 OutputTextEdit::~OutputTextEdit() {
-	delete m_wsHighlighter;
 }
 
 QTextCursor OutputTextEdit::regionBounds() const {
