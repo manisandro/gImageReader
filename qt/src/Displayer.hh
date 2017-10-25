@@ -21,6 +21,7 @@
 #define DISPLAYER_HH
 
 #include <functional>
+#include <memory>
 #include <QGraphicsRectItem>
 #include <QGraphicsView>
 #include <QImage>
@@ -75,7 +76,7 @@ private:
 	QList<Source*> m_sources;
 	QMap<int, QPair<Source*, int>> m_pageMap;
 	Source* m_currentSource = nullptr;
-	DisplayRenderer* m_renderer = nullptr;
+	std::unique_ptr<DisplayRenderer> m_renderer = nullptr;
 	QPixmap m_pixmap;
 	QGraphicsPixmapItem* m_imageItem = nullptr;
 	double m_scale = 1.0;

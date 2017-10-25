@@ -19,12 +19,14 @@
 
 #include "MainWindow.hh"
 #include "Config.hh"
+#include "CppBackports.hh"
 #include "Displayer.hh"
 #include "DisplayRenderer.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
 
 #include <cmath>
+#include <memory>
 
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
@@ -105,15 +107,14 @@ bool Displayer::setCurrentPage(int page) {
 		while(m_scaleThread.isRunning()) {
 			QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 		}
-		delete m_renderer;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
-			m_renderer = new PDFRenderer(source->path);
+			m_renderer = gstd::make_unique<PDFRenderer>(source->path);
 			if(source->resolution == -1) source->resolution = 300;
 		} else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
-			m_renderer = new DJVURenderer(source->path);
+			m_renderer = gstd::make_unique<DJVURenderer>(source->path);
 			if(source->resolution == -1) source->resolution = 300;
 		} else {
-			m_renderer = new ImageRenderer(source->path);
+			m_renderer = gstd::make_unique<ImageRenderer>(source->path);
 			if(source->resolution == -1) source->resolution = 100;
 		}
 
@@ -204,20 +205,19 @@ bool Displayer::setSources(QList<Source*> sources) {
 
 	int page = 0;
 	for(Source* source : m_sources) {
-		DisplayRenderer* renderer;
+		std::unique_ptr<DisplayRenderer> renderer;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
-			renderer = new PDFRenderer(source->path);
+			renderer = gstd::make_unique<PDFRenderer>(source->path);
 		}
 		else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
-			renderer = new DJVURenderer(source->path);
+			renderer = gstd::make_unique<DJVURenderer>(source->path);
 		} else {
-			renderer = new ImageRenderer(source->path);
+			renderer = gstd::make_unique<ImageRenderer>(source->path);
 		}
 		source->angle.resize(renderer->getNPages());
 		for(int iPage = 1, nPages = renderer->getNPages(); iPage <= nPages; ++iPage) {
 			m_pageMap.insert(++page, qMakePair(source, iPage));
 		}
-		delete renderer;
 	}
 	if(page == 0) {
 		m_pageMap.clear();
