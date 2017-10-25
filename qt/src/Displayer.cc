@@ -63,8 +63,8 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	m_renderTimer.setSingleShot(true);
 	m_scaleTimer.setSingleShot(true);
 
-	ui.actionRotateLeft->setData(270.);
-	ui.actionRotateRight->setData(90.);
+	ui.actionRotateLeft->setData(270.0);
+	ui.actionRotateRight->setData(90.0);
 
 	connect(ui.menuRotation, SIGNAL(triggered(QAction*)), this, SLOT(setRotateMode(QAction*)));
 	connect(ui.actionRotateLeft, SIGNAL(triggered()), this, SLOT(rotate90()));
@@ -337,7 +337,7 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor) {
 
 void Displayer::setAngle(double angle) {
 	if(m_imageItem) {
-		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
+		angle = angle < 0.0 ? angle + 360.0 : angle >= 360.0 ? angle - 360.0 : angle,
 		Utils::setSpinBlocked(ui.spinBoxRotation, angle);
 		int sourcePage = m_pageMap[getCurrentPage()].second;
 		double delta = angle - m_currentSource->angle[sourcePage - 1];
@@ -491,7 +491,7 @@ void Displayer::setRotateMode(QAction *action) {
 
 void Displayer::rotate90() {
 	double angle = ui.spinBoxRotation->value() + qobject_cast<QAction*>(QObject::sender())->data().toDouble();
-	ui.spinBoxRotation->setValue(angle >= 360. ? angle - 360. : angle);
+	ui.spinBoxRotation->setValue(angle >= 360.0 ? angle - 360.0 : angle);
 }
 
 QImage Displayer::getImage(const QRectF& rect) {
@@ -573,7 +573,7 @@ void Displayer::setScaledImage(const QImage &image, double scale) {
 		m_scaleRequests.removeFirst();
 	} else {
 		m_imageItem->setPixmap(QPixmap::fromImage(image));
-		m_imageItem->setScale(1.f / scale);
+		m_imageItem->setScale(1.0 / scale);
 		m_imageItem->setTransformOriginPoint(m_imageItem->boundingRect().center());
 		m_imageItem->setPos(m_imageItem->pos() - m_imageItem->sceneBoundingRect().center());
 	}
@@ -622,7 +622,7 @@ void DisplayerSelection::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	QPointF p = event->pos();
 	double tol = 10.0 / m_tool->getDisplayer()->getCurrentScale();
 	m_resizeHandlers.clear();
-	m_resizeOffset = QPointF(0., 0.);
+	m_resizeOffset = QPointF(0.0, 0.0);
 	if(qAbs(m_point.x() - p.x()) < tol) { // pointx
 		m_resizeHandlers.append(resizePointX);
 		m_resizeOffset.setX(event->pos().x() - m_point.x());

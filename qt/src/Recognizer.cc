@@ -62,7 +62,7 @@ struct Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
 		nPages = _nPages;
 	}
 	int getProgress() {
-		return 100 * ((donePages + desc.progress / 100.) / nPages);
+		return 100.0 * ((donePages + desc.progress / 100.0) / nPages);
 	}
 	void cancel() {
 		canceled = true;
