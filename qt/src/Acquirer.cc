@@ -131,7 +131,7 @@ void Acquirer::startScan() {
 	ui.pushButtonScanCancel->setVisible(true);
 	ui.labelScanMessage->setText(_("Starting scan..."));
 
-	double dpi[] = {75., 100., 200., 300., 600., 1200.};
+	double dpi[] = {75.0, 100.0, 200.0, 300.0, 600.0, 1200.0};
 	Scanner::ScanMode modes[] = {Scanner::ScanMode::GRAY, Scanner::ScanMode::COLOR};
 	genOutputPath();
 	QString device = ui.comboBoxScanDevice->itemData(ui.comboBoxScanDevice->currentIndex()).toString();

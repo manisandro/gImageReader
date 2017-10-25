@@ -58,7 +58,7 @@ void DisplayerToolHOCR::mouseMoveEvent(QMouseEvent *event) {
 
 void DisplayerToolHOCR::mouseReleaseEvent(QMouseEvent *event) {
 	if(m_selection && m_drawingSelection) {
-		if(m_selection->rect().width() < 5. || m_selection->rect().height() < 5.) {
+		if(m_selection->rect().width() < 5.0 || m_selection->rect().height() < 5.0) {
 			clearSelection();
 		} else {
 			QRect r = m_selection->rect().translated(-m_displayer->getSceneBoundingRect().toRect().topLeft()).toRect();
