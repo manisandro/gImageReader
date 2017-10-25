@@ -1,0 +1,8 @@
+//
+// Created by zamazan4ik on 25.10.17.
+//
+
+#ifndef GIMAGEREADER_CPPBACKPORTS_HH
+#define GIMAGEREADER_CPPBACKPORTS_HH
+
+#endif //GIMAGEREADER_CPPBACKPORTS_HH
