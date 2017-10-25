@@ -24,6 +24,7 @@
 #include <poppler-qt5.h>
 #endif
 
+#include <cmath>
 #include "DjVuDocument.hh"
 #include "DisplayRenderer.hh"
 #include "Utils.hh"
@@ -33,7 +34,7 @@ void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, b
 		return;
 	}
 
-	double kBr = 1.f - qAbs(brightness / 200.f);
+	double kBr = 1.0 - std::abs(brightness / 200.0);
 	double dBr = brightness > 0 ? 255.0 : 0.0;
 
 	double kCn = contrast * 2.55;
