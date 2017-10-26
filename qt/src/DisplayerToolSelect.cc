@@ -19,6 +19,7 @@
 
 #include "DisplayerToolSelect.hh"
 #include "Displayer.hh"
+#include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "Recognizer.hh"
 #include "Utils.hh"
@@ -27,7 +28,6 @@
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
-#include <QFileDialog>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMenu>
@@ -38,8 +38,6 @@
 DisplayerToolSelect::DisplayerToolSelect(QAction* actionAutodetectLayout, Displayer *displayer, QObject *parent)
 	: DisplayerTool(displayer, parent), mActionAutodetectLayout(actionAutodetectLayout) {
 	connect(mActionAutodetectLayout, SIGNAL(triggered()), this, SLOT(autodetectLayout()));
-
-	MAIN->getConfig()->addSetting(new VarSetting<QString>("selectionsavefile", QDir(Utils::documentsFolder()).absoluteFilePath(_("selection.png"))));
 
 	mActionAutodetectLayout->setVisible(true);
 	updateRecognitionModeLabel();
@@ -137,10 +135,8 @@ void DisplayerToolSelect::reorderSelection(int oldNum, int newNum) {
 
 void DisplayerToolSelect::saveSelection(NumberedDisplayerSelection* selection) {
 	QImage img = m_displayer->getImage(selection->rect());
-	QString filename = Utils::makeOutputFilename(MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->getValue());
-	filename = QFileDialog::getSaveFileName(MAIN, _("Save Selection Image"), filename, QString("%1 (*.png)").arg(_("PNG Images")));
+	QString filename = FileDialogs::saveDialog(_("Save Selection Image"), _("selection.png"), "outputdir", QString("%1 (*.png)").arg(_("PNG Images")), true);
 	if(!filename.isEmpty()) {
-		MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->setValue(filename);
 		img.save(filename);
 	}
 }

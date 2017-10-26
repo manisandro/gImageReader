@@ -20,15 +20,16 @@
 #include <QClipboard>
 #include <QDesktopWidget>
 #include <QDesktopServices>
+#include <QDir>
 #include <QDragEnterEvent>
 #include <QFile>
-#include <QFileDialog>
 #include <QFileInfo>
 #include <QImageReader>
 #include <QMessageBox>
 #include <QTemporaryFile>
 
 #include "Config.hh"
+#include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
@@ -140,11 +141,9 @@ void SourceManager::prepareSourcesMenu() {
 
 void SourceManager::openSources() {
 	QList<Source*> current = getSelectedSources();
-	QString dir;
+	QString initialFolder;
 	if(!current.isEmpty() && !current.front()->isTemp) {
-		dir = QFileInfo(current.front()->path).absolutePath();
-	} else {
-		dir = Utils::documentsFolder();
+		initialFolder = QFileInfo(current.front()->path).absolutePath();
 	}
 	QSet<QString> formats;
 	for(const QByteArray& format : QImageReader::supportedImageFormats()) {
@@ -153,7 +152,7 @@ void SourceManager::openSources() {
 	formats.insert("*.pdf");
 	formats.insert("*.djvu");
 	QString filter = QString("%1 (%2)").arg(_("Images and PDFs")).arg(QStringList(formats.toList()).join(" "));
-	addSources(QFileDialog::getOpenFileNames(MAIN, _("Select Files"), dir, filter));
+	addSources(FileDialogs::openDialog(_("Select Files"), initialFolder, "sourcedir", filter, true));
 }
 
 void SourceManager::openRecentItem() {

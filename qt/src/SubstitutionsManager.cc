@@ -20,16 +20,16 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QFile>
-#include <QFileDialog>
 #include <QFileInfo>
 #include <QList>
 #include <QMessageBox>
 
-#include "SubstitutionsManager.hh"
-#include "MainWindow.hh"
 #include "Config.hh"
 #include "ConfigSettings.hh"
+#include "FileDialogs.hh"
+#include "MainWindow.hh"
 #include "OutputTextEdit.hh"
+#include "SubstitutionsManager.hh"
 #include "Utils.hh"
 
 SubstitutionsManager::SubstitutionsManager(OutputTextEdit* textEdit, QCheckBox* csCheckBox, QWidget* parent)
@@ -96,31 +96,27 @@ SubstitutionsManager::SubstitutionsManager(OutputTextEdit* textEdit, QCheckBox* 
 	connect(m_tableWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onTableSelectionChanged(QItemSelection,QItemSelection)));
 
 	MAIN->getConfig()->addSetting(new TableSetting("substitutionslist", m_tableWidget));
-	MAIN->getConfig()->addSetting(new VarSetting<QString>("substitutionslistfile", QDir(Utils::documentsFolder()).absoluteFilePath(_("substitution_list.txt"))));
-
-	m_currentFile = MAIN->getConfig()->getSetting<VarSetting<QString>>("substitutionslistfile")->getValue();
 }
 
 SubstitutionsManager::~SubstitutionsManager() {
 	MAIN->getConfig()->removeSetting("replacelist");
-	MAIN->getConfig()->removeSetting("replacelistfile");
 }
 
 void SubstitutionsManager::openList() {
 	if(!clearList()) {
 		return;
 	}
-	QString dir = !m_currentFile.isEmpty() ? QFileInfo(m_currentFile).absolutePath() : Utils::documentsFolder();
-	QString filename = QFileDialog::getOpenFileName(this, _("Open Substitutions List"), dir, QString("%1 (*.txt)").arg(_("Substitutions List")));
+	QString dir = !m_currentFile.isEmpty() ? QFileInfo(m_currentFile).absolutePath() : "";
+	QStringList files = FileDialogs::openDialog(_("Open Substitutions List"), dir, "auxdir", QString("%1 (*.txt)").arg(_("Substitutions List")), false, this);
 
-	if(!filename.isEmpty()) {
+	if(!files.isEmpty()) {
+		QString filename = files.front();
 		QFile file(filename);
 		if(!file.open(QIODevice::ReadOnly)) {
 			QMessageBox::critical(this, _("Error Reading File"), _("Unable to read '%1'.").arg(filename));
 			return;
 		}
 		m_currentFile = filename;
-		MAIN->getConfig()->getSetting<VarSetting<QString>>("substitutionslistfile")->setValue(m_currentFile);
 
 		bool errors = false;
 		m_tableWidget->blockSignals(true);
@@ -149,7 +145,7 @@ void SubstitutionsManager::openList() {
 }
 
 bool SubstitutionsManager::saveList() {
-	QString filename = QFileDialog::getSaveFileName(this, _("Save Substitutions List"), m_currentFile, QString("%1 (*.txt)").arg(_("Substitutions List")));
+	QString filename = FileDialogs::saveDialog(_("Save Substitutions List"), m_currentFile, "auxdir", QString("%1 (*.txt)").arg(_("Substitutions List")), false, this);
 	if(filename.isEmpty()) {
 		return false;
 	}
@@ -159,7 +155,6 @@ bool SubstitutionsManager::saveList() {
 		return false;
 	}
 	m_currentFile = filename;
-	MAIN->getConfig()->getSetting<VarSetting<QString>>("substitutionslistfile")->setValue(m_currentFile);
 	for(int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row) {
 		QString line = QString("%1\t%2\n").arg(m_tableWidget->item(row, 0)->text()).arg(m_tableWidget->item(row, 1)->text());
 		file.write(MAIN->getConfig()->useUtf8() ? line.toUtf8() : line.toLocal8Bit());

@@ -18,12 +18,12 @@
  */
 
 #include <QDir>
-#include <QFileDialog>
 #include <QImageReader>
 #include <QThread>
 
 #include "Acquirer.hh"
 #include "Config.hh"
+#include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "Utils.hh"
 
@@ -60,9 +60,9 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 	MAIN->getConfig()->addSetting(new ComboSetting("scanres", ui.comboBoxScanResolution, 2));
 	MAIN->getConfig()->addSetting(new ComboSetting("scanmode", ui.comboBoxScanMode, 0));
 	MAIN->getConfig()->addSetting(new ComboSetting("scandev", ui.comboBoxScanDevice, 0));
-	MAIN->getConfig()->addSetting(new VarSetting<QString>("scanoutput", QDir(Utils::documentsFolder()).absoluteFilePath(_("scan.png"))));
 
-	m_outputPath = MAIN->getConfig()->getSetting<VarSetting<QString>>("scanoutput")->getValue();
+	QString sourcedir = MAIN->getConfig()->getSetting<VarSetting<QString>>("sourcedir")->getValue();
+	m_outputPath = QDir(sourcedir.isEmpty() ? Utils::documentsFolder() : sourcedir).absoluteFilePath(_("scan.png"));
 	genOutputPath();
 	m_scanner->init();
 }
@@ -78,7 +78,7 @@ void Acquirer::selectOutputPath() {
 		formats.insert(QString("*.%1").arg(QString(format).toLower()));
 	}
 	QString filter = QString("%1 (%2)").arg(_("Images")).arg(QStringList(formats.toList()).join(" "));
-	QString filename = QFileDialog::getSaveFileName(MAIN, _("Choose Output Filename..."), m_outputPath, filter);
+	QString filename = FileDialogs::saveDialog(_("Choose Output Filename..."), m_outputPath, "sourcedir", filter);
 	if(!filename.isEmpty()) {
 		m_outputPath = filename;
 		genOutputPath();
@@ -88,8 +88,7 @@ void Acquirer::selectOutputPath() {
 void Acquirer::genOutputPath() {
 	m_outputPath = Utils::makeOutputFilename(m_outputPath);
 	ui.lineEditScanOutput->setText(m_outputPath);
-	ui.lineEditScanOutput->setToolTip(m_outputPath);;
-	MAIN->getConfig()->getSetting<VarSetting<QString>>("scanoutput")->setValue(m_outputPath);
+	ui.lineEditScanOutput->setToolTip(m_outputPath);
 }
 
 void Acquirer::scanInitFailed() {
