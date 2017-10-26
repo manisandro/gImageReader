@@ -25,7 +25,6 @@
 #include <QImage>
 #include <QMessageBox>
 #include <QFileInfo>
-#include <QFileDialog>
 #include <QPainter>
 #include <QStandardItemModel>
 #include <QSyntaxHighlighter>
@@ -47,6 +46,7 @@
 
 #include "CCITTFax4Encoder.hh"
 #include "DisplayerToolHOCR.hh"
+#include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "OutputEditorHOCR.hh"
 #include "Recognizer.hh"
@@ -1047,11 +1047,11 @@ void OutputEditorHOCR::open() {
 	if(!clear(false)) {
 		return;
 	}
-	QString dir = MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue();
-	QString filename = QFileDialog::getOpenFileName(m_widget, _("Open hOCR File"), dir, QString("%1 (*.html)").arg(_("hOCR HTML Files")));
-	if(filename.isEmpty()) {
+	QStringList files = FileDialogs::openDialog(_("Open hOCR File"), "", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")), false);
+	if(files.isEmpty()) {
 		return;
 	}
+	QString filename = files.front();
 	QFile file(filename);
 	if(!file.open(QIODevice::ReadOnly)) {
 		QMessageBox::critical(MAIN, _("Failed to open file"), _("The file could not be opened: %1.").arg(filename));
@@ -1077,12 +1077,10 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	if(outname.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
 		QString base = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
-		outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(base + ".html");
-		outname = QFileDialog::getSaveFileName(MAIN, _("Save hOCR Output..."), outname, QString("%1 (*.html)").arg(_("hOCR HTML Files")));
+		outname = FileDialogs::saveDialog(_("Save hOCR Output..."), base + ".html", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")));
 		if(outname.isEmpty()) {
 			return false;
 		}
-		MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->setValue(QFileInfo(outname).absolutePath());
 	}
 	QFile file(outname);
 	if(!file.open(QIODevice::WriteOnly)) {
@@ -1131,13 +1129,11 @@ void OutputEditorHOCR::savePDF() {
 
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
 		QString base = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
-		QString outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(base + ".pdf");
-		outname = QFileDialog::getSaveFileName(MAIN, _("Save PDF Output..."), outname, QString("%1 (*.pdf)").arg(_("PDF Files")));
+		QString outname = FileDialogs::saveDialog(_("Save PDF Output..."), base + ".pdf", "outputdir", QString("%1 (*.pdf)").arg(_("PDF Files")));
 		if(outname.isEmpty()) {
 			accepted = false;
 			break;
 		}
-		MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->setValue(QFileInfo(outname).absolutePath());
 
 		try {
 			document = new PoDoFo::PdfStreamedDocument(outname.toLocal8Bit().data());

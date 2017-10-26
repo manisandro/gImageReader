@@ -160,7 +160,6 @@ MainWindow::MainWindow(const QStringList& files)
 	m_config->addSetting(new VarSetting<QByteArray>("wingeom"));
 	m_config->addSetting(new VarSetting<QByteArray>("winstate"));
 	m_config->addSetting(new ActionSetting("showcontrols", ui.actionImageControls));
-	m_config->addSetting(new VarSetting<QString>("outputdir", Utils::documentsFolder()));
 	m_config->addSetting(new ComboSetting("outputeditor", ui.comboBoxOCRMode, 0));
 
 	m_recognizer->updateLanguagesMenu();
