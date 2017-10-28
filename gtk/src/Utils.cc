@@ -280,10 +280,7 @@ Glib::ustring Utils::getSpellingLanguage(const Glib::ustring& lang) {
 	// Look in the lang cultures table if a language hint is provided
 	Config::Lang langspec = {lang};
 	if(!lang.empty() && MAIN->getConfig()->searchLangSpec(langspec)) {
-		std::vector<Glib::ustring> langCultures = MAIN->getConfig()->searchLangCultures(langspec.code);
-		if(!langCultures.empty()) {
-			return langCultures.front();
-		}
+		return langspec.code;
 	}
 	// Use the application locale, if specified, otherwise fall back to en
 	Glib::ustring syslocale = g_getenv ("LANG");

@@ -48,6 +48,7 @@ public:
 
 public slots:
 	bool clear(bool hide = true) override;
+	void setLanguage(const Config::Lang &lang) override;
 	void open();
 	bool save(const QString& filename = "") override;
 	void savePDF();
@@ -125,6 +126,7 @@ private:
 	QWidget* m_widget;
 	UI_OutputEditorHOCR ui;
 	HTMLHighlighter* m_highlighter;
+	QString m_spellLanguage = "en_US";
 	QtSpell::TextEditChecker m_spell;
 	bool m_modified = false;
 	QDialog* m_pdfExportDialog;
@@ -141,7 +143,7 @@ private:
 
 	void findReplace(bool backwards, bool replace);
 	void addPage(QDomElement pageDiv, const QString& filename, int page, bool cleanGraphics);
-	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString, QString>& langCache);
+	bool addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString, QString>& langCache, QString lang);
 	QDomElement elementById(QDomElement element, const QString& id) const;
 	void expandChildren(QTreeWidgetItem* item) const;
 	void collapseChildren(QTreeWidgetItem* item) const;

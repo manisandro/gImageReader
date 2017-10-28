@@ -606,13 +606,14 @@ void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& fil
 	pageItem->set_value(m_itemStoreCols.iconVisible, true);
 
 	std::map<Glib::ustring,Glib::ustring> langCache;
+	Glib::ustring lang = m_spellLanguage;
 
 	std::vector<std::pair<xmlpp::Element*,Geometry::Rectangle>> graphicElements;
 	xmlpp::Element* element = getFirstChildElement(pageDiv, "div");
 	while(element) {
 		// Boxes without text are images
 		titleAttr = getAttribute(element, "title");
-		if(!addChildItems(getFirstChildElement(element), pageItem, langCache) && s_bboxRx->match(titleAttr, matchInfo)) {
+		if(!addChildItems(getFirstChildElement(element), pageItem, langCache, lang) && s_bboxRx->match(titleAttr, matchInfo)) {
 			x1 = std::atoi(matchInfo.fetch(1).c_str());
 			y1 = std::atoi(matchInfo.fetch(2).c_str());
 			x2 = std::atoi(matchInfo.fetch(3).c_str());
@@ -678,7 +679,7 @@ Gtk::TreeIter OutputEditorHOCR::currentItem() {
 	return Gtk::TreeIter();
 }
 
-bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring,Glib::ustring>& langCache) {
+bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring,Glib::ustring>& langCache, Glib::ustring lang) {
 	bool haveWord = false;
 	while(element) {
 		xmlpp::Element* nextElement = getNextSiblingElement(element);
@@ -688,6 +689,16 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 			Glib::ustring newId = Glib::ustring::compose("%1_%2_%3", matchInfo.fetch(1), m_idCounter, matchInfo.fetch(2));
 			element->set_attribute("id", newId);
 		}
+		Glib::ustring elemLang = getAttribute(element, "lang");
+		if(!elemLang.empty()) {
+			auto it = langCache.find(elemLang);
+			if(it == langCache.end()) {
+				it = langCache.insert(std::make_pair(lang, Utils::getSpellingLanguage(elemLang))).first;
+			}
+			lang = it->second;
+			element->remove_attribute("lang");
+		}
+
 		Glib::ustring titleAttr = getAttribute(element, "title");
 		if(s_bboxRx->match(titleAttr, matchInfo)) {
 			Glib::ustring type = getAttribute(element, "class");
@@ -709,7 +720,7 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 			}
 			if(title != "") {
 				Gtk::TreeIter item = m_itemStore->append(parentItem->children());
-				if(type == "ocrx_word" || addChildItems(getFirstChildElement(element), item, langCache)) {
+				if(type == "ocrx_word" || addChildItems(getFirstChildElement(element), item, langCache, lang)) {
 					item->set_value(m_itemStoreCols.selected, true);
 					item->set_value(m_itemStoreCols.id, getAttribute(element, "id"));
 					if(!icon.empty()) {
@@ -739,14 +750,10 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 						if(s_fontSizeRx->match(titleAttr, matchInfo)) {
 							item->set_value(m_itemStoreCols.fontSize, std::atof(matchInfo.fetch(1).c_str()));
 						}
-						Glib::ustring lang = getAttribute(element, "lang");
-						auto it = langCache.find(lang);
-						if(it == langCache.end()) {
-							it = langCache.insert(std::make_pair(lang, Utils::getSpellingLanguage(lang))).first;
-						}
-						Glib::ustring spellingLang = it->second;
-						if(m_spell.get_language() != spellingLang) {
-							m_spell.set_language(spellingLang);
+						lang = m_spellLanguage.empty() ? lang : m_spellLanguage;
+						element->set_attribute("lang", lang);
+						if(m_spell.get_language() != lang) {
+							m_spell.set_language(lang);
 						}
 						if(!m_spell.check_word(trimWord(title))) {
 							item->set_value(m_itemStoreCols.textColor, Glib::ustring("#F00"));
@@ -956,7 +963,7 @@ void OutputEditorHOCR::updateCurrentItemBBox(const Geometry::Rectangle &rect) {
 
 void OutputEditorHOCR::updateCurrentItem() {
 	Gtk::TreeIter item = m_itemStore->get_iter(m_currentItem);
-	Glib::ustring spellLang = Utils::getSpellingLanguage(getAttribute(m_currentElement, "lang"));
+	Glib::ustring spellLang = getAttribute(m_currentElement, "lang");
 	if(m_spell.get_language() != spellLang) {
 		m_spell.set_language(spellLang);
 	}
@@ -1165,6 +1172,10 @@ void OutputEditorHOCR::showContextMenu(GdkEventButton* ev) {
 	}
 	if(itemClass == "ocrx_word") {
 		Glib::ustring prefix, suffix, trimmed = trimWord((*it)[m_itemStoreCols.text], &prefix, &suffix);
+		Glib::ustring spellLang = getAttribute(m_currentElement, "lang");
+		if(m_spell.get_language() != spellLang) {
+			m_spell.set_language(spellLang);
+		}
 		for(const Glib::ustring& suggestion : m_spell.get_suggestions(trimmed)) {
 			Glib::ustring replacement = prefix + suggestion + suffix;
 			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
@@ -1580,6 +1591,11 @@ bool OutputEditorHOCR::clear(bool hide) {
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
 	return true;
+}
+
+void OutputEditorHOCR::setLanguage(const Config::Lang &lang)
+{
+	m_spellLanguage = lang.code;
 }
 
 bool OutputEditorHOCR::getModified() const {

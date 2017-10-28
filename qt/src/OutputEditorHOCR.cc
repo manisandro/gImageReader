@@ -469,12 +469,13 @@ void OutputEditorHOCR::addPage(QDomElement pageDiv, const QString& filename, int
 	pageItem->setCheckState(0, Qt::Checked);
 	m_rootItem->addChild(pageItem);
 	QMap<QString,QString> langCache;
+	QString lang = m_spellLanguage;
 
 	QVector<QPair<QDomElement,QRect>> graphicElements;
 	QDomElement element = pageDiv.firstChildElement("div");
 	while(!element.isNull()) {
 		// Boxes without text are images
-		if(!addChildItems(element.firstChildElement(), pageItem, langCache) && s_bboxRx.indexIn(element.attribute("title")) != -1) {
+		if(!addChildItems(element.firstChildElement(), pageItem, langCache, lang) && s_bboxRx.indexIn(element.attribute("title")) != -1) {
 			x1 = s_bboxRx.cap(1).toInt();
 			y1 = s_bboxRx.cap(2).toInt();
 			x2 = s_bboxRx.cap(3).toInt();
@@ -544,13 +545,22 @@ void OutputEditorHOCR::collapseChildren(QTreeWidgetItem* item) const {
 	}
 }
 
-bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString,QString>& langCache) {
+bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* parentItem, QMap<QString,QString>& langCache, QString lang) {
 	bool haveWord = false;
 	while(!element.isNull()) {
 		QDomElement nextElement = element.nextSiblingElement();
 		if(s_idRx.indexIn(element.attribute("id")) != -1) {
 			QString newId = QString("%1_%2_%3").arg(s_idRx.cap(1)).arg(m_idCounter).arg(s_idRx.cap(2));
 			element.setAttribute("id", newId);
+		}
+		QString elemLang = element.attribute("lang");
+		if(!elemLang.isEmpty()) {
+			auto it = langCache.find(elemLang);
+			if(it == langCache.end()) {
+				it = langCache.insert(lang, Utils::getSpellingLanguage(elemLang));
+			}
+			lang = it.value();
+			element.removeAttribute("lang");
 		}
 
 		if(s_bboxRx.indexIn(element.attribute("title")) != -1) {
@@ -573,7 +583,7 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 			}
 			if(!title.isEmpty()) {
 				QTreeWidgetItem* item = new QTreeWidgetItem(QStringList() << title);
-				if(type == "ocrx_word" || addChildItems(element.firstChildElement(), item, langCache)) {
+				if(type == "ocrx_word" || addChildItems(element.firstChildElement(), item, langCache, lang)) {
 					item->setCheckState(0, Qt::Checked);
 					item->setData(0, IdRole, element.attribute("id"));
 					item->setIcon(0, QIcon(QString(":/icons/item_%1").arg(icon)));
@@ -597,14 +607,10 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 							item->setData(0, FontSizeRole, s_fontSizeRx.cap(1).toDouble());
 						}
 						item->setFlags(item->flags() | Qt::ItemIsEditable);
-						QString lang = element.attribute("lang");
-						auto it = langCache.find(lang);
-						if(it == langCache.end()) {
-							it = langCache.insert(lang, Utils::getSpellingLanguage(lang));
-						}
-						QString spellingLang = it.value();
-						if(m_spell.getLanguage() != spellingLang) {
-							m_spell.setLanguage(spellingLang);
+						lang = m_spellLanguage.isEmpty() ? lang : m_spellLanguage;
+						element.setAttribute("lang", lang);
+						if(m_spell.getLanguage() != lang) {
+							m_spell.setLanguage(lang);
 						}
 						if(!m_spell.checkWord(trimWord(title))) {
 							item->setForeground(0, Qt::red);
@@ -823,7 +829,7 @@ void OutputEditorHOCR::updateCurrentItemBBox(QRect rect) {
 }
 
 void OutputEditorHOCR::updateCurrentItem() {
-	QString spellLang = Utils::getSpellingLanguage(m_currentElement.attribute("lang"));
+	QString spellLang = m_currentElement.attribute("lang");
 	if(m_spell.getLanguage() != spellLang) {
 		m_spell.setLanguage(spellLang);
 	}
@@ -980,6 +986,10 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	}
 	if(itemClass == "ocrx_word") {
 		QString prefix, suffix, trimmedWord = trimWord(item->text(0), &prefix, &suffix);
+		QString spellLang = m_currentElement.attribute("lang");
+		if(m_spell.getLanguage() != spellLang) {
+			m_spell.setLanguage(spellLang);
+		}
 		for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
 			setTextActions.append(menu.addAction(prefix + suggestion + suffix));
 		}
@@ -1352,6 +1362,11 @@ bool OutputEditorHOCR::clear(bool hide) {
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
 	return true;
+}
+
+void OutputEditorHOCR::setLanguage(const Config::Lang &lang)
+{
+	m_spellLanguage = lang.code;
 }
 
 bool OutputEditorHOCR::getModified() const {
