@@ -5,10 +5,14 @@ SetCompressor /SOLID /FINAL lzma
 !define MULTIUSER_MUI
 !define MULTIUSER_EXECUTIONLEVEL Highest
 !define MULTIUSER_INSTALLMODE_COMMANDLINE
+!define MULTIUSER_INSTALLMODE_INSTDIR "${NAME}"
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY "Software\${NAME}"
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME "InstallMode"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "Software\${NAME}"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME "InstallPath"
+!if ${ARCH} == "x86_64"
+!define MULTIUSER_USE_PROGRAMFILES64
+!endif
 !define REG_UNINSTALL "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}"
 
 !include "MUI2.nsh"
@@ -46,23 +50,18 @@ Function GetParent
 FunctionEnd
 
 Function .onInit
-  ; Check if user supplied a custom install dir
-  ${If} "$INSTDIR" == ""
-    ; No custom install dir, use default
-    StrCpy $InstDir "$PROGRAMFILES\${NAME}"
-    ; Use $PROGRAMFILES64 if installing 64-bit application on 64-bit Windows
-    ${If} ${RunningX64}
-      ${If} ${ARCH} == "x86_64"
-        SetRegView 64
-        StrCpy $InstDir "$PROGRAMFILES64\${NAME}"
-      ${EndIf}
-    ${EndIf}
-  ${Else}
-    StrCpy $InstDir "$INSTDIR"
+  ; Check if custom install dir specified
+  Var /GLOBAL CUSTOMINSTDIR
+  ${If} "$INSTDIR" != ""
+    StrCpy $CUSTOMINSTDIR "$INSTDIR"
   ${EndIf}
-  !define MULTIUSER_INSTALLMODE_INSTDIR "$InstDir"
 
   !insertmacro MULTIUSER_INIT
+
+  ; MULTIUSER_INIT overrides $INSTDIR, restore if necessary
+  ${If} "$CUSTOMINSTDIR" != ""
+    StrCpy $INSTDIR "$CUSTOMINSTDIR"
+  ${EndIf}
   
   InitPluginsDir
 
@@ -81,18 +80,23 @@ Function .onInit
   ${EndIf}
 
   ; Remove previous versions before installing new one
-  ReadRegStr $0 SHCTX "${REG_UNINSTALL}" "UninstallString"
-  StrCmp "$0" "" done
+  Var /GLOBAL UNINSTCMD
+  ReadRegStr $UNINSTCMD HKCU "${REG_UNINSTALL}" "UninstallString"
+  StrCmp "$UNINSTCMD" "" 0 uninst_query
 
-  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-    "${NAME} is already installed.$\n$\nTo remove the installed version, press 'OK'. To cancel the installation, press 'Cancel'." \
-    IDOK uninst
-  Abort
+  ReadRegStr $UNINSTCMD HKLM "${REG_UNINSTALL}" "UninstallString"
+  StrCmp "$UNINSTCMD" "" done uninst_query
+
+  uninst_query:
+    MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
+      "${NAME} is already installed.$\n$\nTo remove the installed version, press 'OK'. To cancel the installation, press 'Cancel'." \
+      IDOK uninst
+    Abort
 
   uninst:
     ; Backup dictionaries and language definitions
-    Push $0
-    Call GetParent
+    Push $UNINSTCMD
+    Call GetParent ; Get dirname of path to uninstall.exe, i.e. the install root path
     Pop $R0
     StrCpy $1 $R0 "" 1 ; Remove leading quote
     CreateDirectory "$PLUGINSDIR\dicts"
@@ -101,7 +105,7 @@ Function .onInit
     CopyFiles "$1\share\tessdata\*" "$PLUGINSDIR\tessdata\"
 
     ClearErrors
-    ExecWait '$0 _?=$INSTDIR'
+    ExecWait '$UNINSTCMD'
     IfErrors uninst_err done
 
   uninst_err:
