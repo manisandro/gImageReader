@@ -207,10 +207,7 @@ QString Utils::getSpellingLanguage(const QString& lang) {
 	// Look in the lang cultures table if a language is provided
 	Config::Lang langspec = {lang};
 	if(!lang.isEmpty() && MAIN->getConfig()->searchLangSpec(langspec)) {
-		QList<QString> langCultures = MAIN->getConfig()->searchLangCultures(langspec.code);
-		if(!langCultures.isEmpty()) {
-			return langCultures.front();
-		}
+		return langspec.code;
 	}
 	// Use the application locale, if specified, otherwise fall back to en
 	QString syslang = QLocale::system().name();
