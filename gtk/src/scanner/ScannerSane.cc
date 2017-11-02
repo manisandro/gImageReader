@@ -426,6 +426,11 @@ void ScannerSane::doRead() {
 
 	/* Completed read */
 	if(status == SANE_STATUS_EOF) {
+		// EOF with no data read, means ADF has no further page
+		if(m_job->lineCount == 0) {
+			doStop();
+			return;
+		}
 		if(m_job->parameters.lines > 0 && m_job->lineCount != m_job->parameters.lines)
 			g_critical("Scan completed with %d lines, expected %d lines", m_job->lineCount, m_job->parameters.lines);
 		if(m_job->nUsed > 0)
@@ -488,7 +493,7 @@ void ScannerSane::doCompletePage() {
 	if(m_job->params.type != ScanType::SINGLE) {
 		std::string base, ext;
 		Utils::get_filename_parts(filename, base, ext);
-		filename = Glib::ustring::compose("%1/%2_%3.%4", base, m_job->pageNumber, ext);
+		filename = Glib::ustring::compose("%1_%2.%3", base, m_job->pageNumber, ext);
 	}
 	std::string base, ext;
 	Utils::get_filename_parts(filename, base, ext);

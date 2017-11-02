@@ -427,6 +427,11 @@ void ScannerSane::doRead() {
 
 	/* Completed read */
 	if(status == SANE_STATUS_EOF) {
+		// EOF with no data read, means ADF has no further page
+		if(m_job->lineCount == 0) {
+			doStop();
+			return;
+		}
 		if(m_job->parameters.lines > 0 && m_job->lineCount != m_job->parameters.lines)
 			qWarning("Scan completed with %d lines, expected %d lines", m_job->lineCount, m_job->parameters.lines);
 		if(m_job->nUsed > 0)
