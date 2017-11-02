@@ -56,6 +56,11 @@
             <summary>Scanning mode</summary>
             <description>Scanning mode.</description>
         </key>
+        <key type="i" name="scansource">
+            <default>0</default>
+            <summary>Scanning source</summary>
+            <description>Scanning source.</description>
+        </key>
         <key type="ai" name="wingeom">
             <default>[0,0,640,480]</default>
             <summary>Window geometry</summary>

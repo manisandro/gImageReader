@@ -51,6 +51,7 @@ private:
 	Gtk::ComboBox* m_devCombo;
 	Gtk::ComboBox* m_modeCombo;
 	Gtk::ComboBox* m_resCombo;
+	Gtk::ComboBox* m_sourceCombo;
 	Gtk::Label* m_msgLabel;
 	Gtk::Label* m_outputLabel;
 	Gtk::Spinner* m_refreshSpinner;

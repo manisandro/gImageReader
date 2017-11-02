@@ -60,6 +60,11 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 	MAIN->getConfig()->addSetting(new ComboSetting("scanres", ui.comboBoxScanResolution, 2));
 	MAIN->getConfig()->addSetting(new ComboSetting("scanmode", ui.comboBoxScanMode, 0));
 	MAIN->getConfig()->addSetting(new ComboSetting("scandev", ui.comboBoxScanDevice, 0));
+	MAIN->getConfig()->addSetting(new ComboSetting("scansource", ui.comboBoxScanSource, 0));
+#ifdef Q_OS_WIN32
+	ui.labelScanSource->setVisible(false);
+	ui.comboBoxScanSource->setVisible(false);
+#endif
 
 	QString sourcedir = MAIN->getConfig()->getSetting<VarSetting<QString>>("sourcedir")->getValue();
 	m_outputPath = QDir(sourcedir.isEmpty() ? Utils::documentsFolder() : sourcedir).absoluteFilePath(_("scan.png"));
@@ -132,9 +137,10 @@ void Acquirer::startScan() {
 
 	double dpi[] = {75.0, 100.0, 200.0, 300.0, 600.0, 1200.0};
 	Scanner::ScanMode modes[] = {Scanner::ScanMode::GRAY, Scanner::ScanMode::COLOR};
+	Scanner::ScanType types[] = {Scanner::ScanType::SINGLE, Scanner::ScanType::ADF_FRONT, Scanner::ScanType::ADF_BACK, Scanner::ScanType::ADF_BOTH};
 	genOutputPath();
 	QString device = ui.comboBoxScanDevice->itemData(ui.comboBoxScanDevice->currentIndex()).toString();
-	Scanner::Params params = {device, m_outputPath, dpi[ui.comboBoxScanResolution->currentIndex()], modes[ui.comboBoxScanMode->currentIndex()], 8, Scanner::ScanType::SINGLE, 0, 0};
+	Scanner::Params params = {device, m_outputPath, dpi[ui.comboBoxScanResolution->currentIndex()], modes[ui.comboBoxScanMode->currentIndex()], 8, types[ui.comboBoxScanSource->currentIndex()], 0, 0};
 	m_scanner->scan(params);
 	genOutputPath(); // Prepare for next
 }
