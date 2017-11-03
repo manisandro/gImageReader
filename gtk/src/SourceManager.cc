@@ -258,14 +258,15 @@ void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib:
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model());
 	Source* source = it->get_value(m_listViewCols.source);
 	if(event == Gio::FILE_MONITOR_EVENT_MOVED) {
-		source->file = otherFile;
-		source->monitor = otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED);
+		Source* newSource = new Source(otherFile, otherFile->get_basename(), otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), source->isTemp);
+		it->set_value(m_listViewCols.source, newSource);
 		it->set_value(m_listViewCols.filename, otherFile->get_basename());
 		it->set_value(m_listViewCols.path, otherFile->get_path());
-		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
-		if(it == m_listView->get_selection()->get_selected()) {
+		CONNECT(newSource->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
+		if(m_listView->get_selection()->is_selected(it)) {
 			m_signal_sourceChanged.emit();
 		}
+		delete source;
 	} else if(event == Gio::FILE_MONITOR_EVENT_DELETED) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Missing File"), Glib::ustring::compose(_("The following file has been deleted or moved:\n%1"), file->get_path()));
 		delete source;
