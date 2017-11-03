@@ -80,7 +80,7 @@ void MainWindow::signalHandler(int signal) {
 	std::raise(signal);
 }
 
-#ifndef __ARMEL__
+#if !(defined(__ARMEL__) || defined(__LCC__) && __LCC__ <= 121)
 static void terminateHandler() {
 	std::set_terminate(nullptr);
 	std::exception_ptr exptr = std::current_exception();
@@ -107,7 +107,7 @@ MainWindow::MainWindow(const QStringList& files)
 
 	std::signal(SIGSEGV, signalHandler);
 	std::signal(SIGABRT, signalHandler);
-#ifndef __ARMEL__
+#if !(defined(__ARMEL__) || defined(__LCC__) && __LCC__ <= 121)
 	std::set_terminate(terminateHandler);
 #endif
 
