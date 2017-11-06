@@ -162,7 +162,7 @@ bool Displayer::setCurrentPage(int page) {
 #else
 		if(Utils::get_content_type(filename) == "application/pdf") {
 #endif
-			m_renderer = new PDFRenderer(filename);
+			m_renderer = new PDFRenderer(filename, source->password);
 			if(source->resolution == -1) source->resolution = 300;
 #ifdef G_OS_WIN32
 		} else if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".djvu") {
@@ -240,7 +240,7 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 #else
 		if(Utils::get_content_type(filename) == "application/pdf") {
 #endif
-			renderer = new PDFRenderer(filename);
+			renderer = new PDFRenderer(filename, source->password);
 #ifdef G_OS_WIN32
 		} else if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".djvu") {
 #else
