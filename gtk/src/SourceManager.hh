@@ -24,8 +24,7 @@
 
 
 struct Source {
-	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
-		: file(_file), displayname(_displayname), monitor(_monitor), isTemp(_isTemp) {}
+	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false);
 	Glib::RefPtr<Gio::File> file;
 	std::string displayname;
 	Glib::RefPtr<Gio::FileMonitor> monitor;
@@ -36,6 +35,7 @@ struct Source {
 	int page = 1;
 	std::vector<double> angle;
 	bool invert = false;
+	Glib::ustring password;
 };
 
 class SourceManager {

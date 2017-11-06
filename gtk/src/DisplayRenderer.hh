@@ -51,7 +51,7 @@ public:
 
 class PDFRenderer : public DisplayRenderer {
 public:
-	PDFRenderer(const std::string& filename);
+	PDFRenderer(const std::string& filename, const Glib::ustring& password);
 	~PDFRenderer();
 	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
 	int getNPages() const override;
