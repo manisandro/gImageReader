@@ -65,7 +65,7 @@ Source::Source(const QString& _path, const QString& _displayname, bool _isTemp)
 			while(true) {
 				text = QInputDialog::getText(MAIN, _("Protected PDF"),
 											 _("Enter password for the PDF file:"), QLineEdit::Password,
-											 "", &ok);
+											 text, &ok);
 				if(!ok) {
 					throw std::invalid_argument("Locked PDF: skip file.");
 				}
