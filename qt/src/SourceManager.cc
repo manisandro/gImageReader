@@ -17,6 +17,9 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <memory>
+#include <stdexcept>
+
 #include <QClipboard>
 #include <QDesktopWidget>
 #include <QDesktopServices>
@@ -25,8 +28,15 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QImageReader>
+#include <QInputDialog>
 #include <QMessageBox>
+#include <QString>
 #include <QTemporaryFile>
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+#include <poppler-qt4.h>
+#else
+#include <poppler-qt5.h>
+#endif
 
 #include "Config.hh"
 #include "FileDialogs.hh"
@@ -42,6 +52,30 @@ QDataStream& operator<<(QDataStream& ds, const Source*&) {
 }
 QDataStream& operator>>(QDataStream& ds, Source*&) {
 	return ds;
+}
+
+Source::Source(const QString& _path, const QString& _displayname, bool _isTemp)
+				: path(_path), displayname(_displayname), isTemp(_isTemp) {
+	// Check whether input PDF file is encrypted
+	if(path.endsWith(".pdf", Qt::CaseInsensitive)) {
+		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(path));
+		if(document && document->isLocked()) {
+			bool ok = false;
+			QString text;
+			while(true) {
+				text = QInputDialog::getText(MAIN, _("Protected PDF"),
+											 _("Enter password for the PDF file:"), QLineEdit::Password,
+											 "", &ok);
+				if(!ok) {
+					throw std::invalid_argument("Locked PDF: skip file.");
+				}
+				if(!document->unlock(text.toLocal8Bit(), text.toLocal8Bit())) {
+					password = text.toLocal8Bit();
+					break;
+				}
+			}
+		}
+	}
 }
 
 
@@ -94,9 +128,15 @@ void SourceManager::addSources(const QStringList& files) {
 		if(contains) {
 			continue;
 		}
+		Source* source = nullptr;
+		try {
+			source = new Source(filename, QFileInfo(filename).fileName());
+		}
+		catch (...) {
+			continue;
+		}
 		item = new QListWidgetItem(QFileInfo(filename).fileName(), ui.listWidgetSources);
 		item->setToolTip(filename);
-		Source* source = new Source(filename, QFileInfo(filename).fileName());
 		item->setData(Qt::UserRole, QVariant::fromValue(source));
 		m_fsWatcher.addPath(filename);
 		recentItems.removeAll(filename);
