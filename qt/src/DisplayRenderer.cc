@@ -81,9 +81,13 @@ QImage ImageRenderer::render(int page, double resolution) const {
 	return reader.read().convertToFormat(QImage::Format_RGB32);
 }
 
-PDFRenderer::PDFRenderer(const QString& filename) : DisplayRenderer(filename) {
+PDFRenderer::PDFRenderer(const QString& filename, const QByteArray& password) : DisplayRenderer(filename) {
 	m_document = Poppler::Document::load(filename);
 	if(m_document) {
+		if(m_document->isLocked()) {
+			m_document->unlock(password, password);
+		}
+
 		m_document->setRenderHint(Poppler::Document::Antialiasing);
 		m_document->setRenderHint(Poppler::Document::TextAntialiasing);
 	}

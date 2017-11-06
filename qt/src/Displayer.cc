@@ -106,7 +106,7 @@ bool Displayer::setCurrentPage(int page) {
 		}
 		delete m_renderer;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
-			m_renderer = new PDFRenderer(source->path);
+			m_renderer = new PDFRenderer(source->path, source->password);
 			if(source->resolution == -1) source->resolution = 300;
 		} else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
 			m_renderer = new DJVURenderer(source->path);
@@ -205,7 +205,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 	for(Source* source : m_sources) {
 		DisplayRenderer* renderer;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
-			renderer = new PDFRenderer(source->path);
+			renderer = new PDFRenderer(source->path, source->password);
 		}
 		else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
 			renderer = new DJVURenderer(source->path);

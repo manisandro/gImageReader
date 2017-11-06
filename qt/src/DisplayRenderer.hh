@@ -20,6 +20,7 @@
 #ifndef DISPLAYRENDERER_HH
 #define DISPLAYRENDERER_HH
 
+#include <QByteArray>
 #include <QString>
 #include <QMutex>
 
@@ -54,7 +55,7 @@ private:
 
 class PDFRenderer : public DisplayRenderer {
 public:
-	PDFRenderer(const QString& filename);
+	PDFRenderer(const QString& filename, const QByteArray& password);
 	~PDFRenderer();
 	QImage render(int page, double resolution) const override;
 	int getNPages() const override;
