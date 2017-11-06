@@ -176,6 +176,16 @@
     <property name="can_focus">False</property>
     <property name="icon_name">object-select-symbolic</property>
   </object>
+  <object class="GtkImage" id="image:pdfpassword:cancel">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">action-unavailable-symbolic</property>
+  </object>
+  <object class="GtkImage" id="image:pdfpassword:ok">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">object-select-symbolic</property>
+  </object>
   <object class="GtkImage" id="image:selectionmenu.clipboard">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -1976,6 +1986,98 @@ Ukranian: Yuriy Bahriy &lt;yhmtargaryen@gmail.com&gt;</property>
       <widget name="buttonbox:config.langs.custom.edit"/>
       <widget name="box:config.langs.custom.add"/>
     </widgets>
+  </object>
+  <object class="GtkDialog" id="dialog:pdfpassword">
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Protected PDF</property>
+    <property name="type_hint">dialog</property>
+    <property name="transient_for">applicationwindow:main</property>
+    <property name="attached_to">applicationwindow:main</property>
+    <child internal-child="vbox">
+      <object class="GtkBox" id="box:pdfpassword">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="buttonbox:pdfpassword">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="button:pdfpassword:cancel">
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">image:pdfpassword:cancel</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button:pdfpassword:ok">
+                <property name="label" translatable="yes">OK</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="can_default">True</property>
+                <property name="has_default">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">image:pdfpassword:ok</property>
+                <style>
+                  <class name="suggested-action"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label:pdfpassword">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Enter password for the PDF file:</property>
+            <property name="xalign">0</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="entry:pdfpassword">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="visibility">False</property>
+            <property name="invisible_char">●</property>
+            <property name="activates_default">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">button:pdfpassword:cancel</action-widget>
+      <action-widget response="-5">button:pdfpassword:ok</action-widget>
+    </action-widgets>
+    <child>
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkDialog" id="dialog:recognize.pages">
     <property name="can_focus">False</property>
