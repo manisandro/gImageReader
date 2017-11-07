@@ -42,6 +42,7 @@ Source::Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _display
 			err = nullptr;
 			Gtk::Dialog* passwordDialog = MAIN->getWidget("dialog:pdfpassword");
 			Gtk::Entry* passwordEntry = MAIN->getWidget("entry:pdfpassword");
+			MAIN->getWidget("label:pdfpassword").as<Gtk::Label>()->set_text(Glib::ustring::compose(_("Enter password for file '%1':"), displayname));
 			while(true) {
 				passwordEntry->select_region(0, -1);
 				passwordEntry->grab_focus();
