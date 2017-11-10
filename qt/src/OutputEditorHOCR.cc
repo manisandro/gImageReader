@@ -19,6 +19,7 @@
 
 #include <QApplication>
 #include <QBuffer>
+#include <QDesktopServices>
 #include <QDir>
 #include <QDomDocument>
 #include <QGraphicsPixmapItem>
@@ -1033,7 +1034,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	} else if(clickedAction == ignoreWordAction) {
 		m_spell.ignoreWord(item->text(0));
 		item->setForeground(0, item->parent()->foreground(0));
-	} else if(setTextActions.contains(clickedAction)){
+	} else if(setTextActions.contains(clickedAction)) {
 		item->setText(0, clickedAction->text());
 	} else if(clickedAction == actionRemoveItem) {
 		removeCurrentItem();
@@ -1131,6 +1132,7 @@ void OutputEditorHOCR::savePDF() {
 #else
 	const PoDoFo::PdfEncoding* pdfEncoding = new PoDoFo::PdfIdentityEncoding;
 #endif
+	QString outname;
 	while(true) {
 		accepted = (m_pdfExportDialog->exec() == QDialog::Accepted);
 		if(!accepted) {
@@ -1139,7 +1141,7 @@ void OutputEditorHOCR::savePDF() {
 
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
 		QString base = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
-		QString outname = FileDialogs::saveDialog(_("Save PDF Output..."), base + ".pdf", "outputdir", QString("%1 (*.pdf)").arg(_("PDF Files")));
+		outname = FileDialogs::saveDialog(_("Save PDF Output..."), base + ".pdf", "outputdir", QString("%1 (*.pdf)").arg(_("PDF Files")));
 		if(outname.isEmpty()) {
 			accepted = false;
 			break;
@@ -1223,11 +1225,18 @@ void OutputEditorHOCR::savePDF() {
 	if(!failed.isEmpty()) {
 		QMessageBox::warning(m_widget, _("Errors occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
 	}
+
+	bool pdfCanBeOpened = true;
 	try {
 		document->Close();
 	} catch(PoDoFo::PdfError& e) {
+		pdfCanBeOpened = false;
 		QMessageBox::warning(m_widget, _("Export failed"), _("The PDF export failed (%1).").arg(e.what()));
 	}
+	if(m_pdfExportDialogUi.checkBoxOpenOutputPdf->isChecked() && pdfCanBeOpened) {
+		QDesktopServices::openUrl(QUrl::fromLocalFile(outname));
+	}
+
 	delete document;
 }
 
@@ -1364,8 +1373,7 @@ bool OutputEditorHOCR::clear(bool hide) {
 	return true;
 }
 
-void OutputEditorHOCR::setLanguage(const Config::Lang &lang)
-{
+void OutputEditorHOCR::setLanguage(const Config::Lang &lang) {
 	m_spellLanguage = lang.code;
 }
 
