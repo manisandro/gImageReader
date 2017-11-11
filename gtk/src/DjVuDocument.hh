@@ -20,8 +20,7 @@ typedef struct ddjvu_context_s    ddjvu_context_t;
 typedef struct ddjvu_document_s   ddjvu_document_t;
 typedef struct ddjvu_format_s     ddjvu_format_t;
 
-class DjVuDocument
-{
+class DjVuDocument {
 public:
 	DjVuDocument();
 	~DjVuDocument();
@@ -29,7 +28,9 @@ public:
 	bool openFile( const std::string& fileName );
 	void closeFile();
 	Cairo::RefPtr<Cairo::ImageSurface> image(int pageno, int resolution);
-	int pageCount() const{ return m_pages.size(); }
+	int pageCount() const {
+		return m_pages.size();
+	}
 
 private:
 	struct Page {

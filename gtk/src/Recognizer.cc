@@ -326,7 +326,8 @@ void Recognizer::updateLanguagesMenu() {
 		PsmEntry{_("Assume a single word"), tesseract::PSM_SINGLE_WORD, false},
 		PsmEntry{_("Assume a single word in a circle"), tesseract::PSM_CIRCLE_WORD, false},
 		PsmEntry{_("Sparse text in no particular order"), tesseract::PSM_SPARSE_TEXT, false},
-		PsmEntry{_("Sparse text with orientation and script detection"), tesseract::PSM_SPARSE_TEXT_OSD, true}};
+		PsmEntry{_("Sparse text with orientation and script detection"), tesseract::PSM_SPARSE_TEXT_OSD, true}
+	};
 	for(const auto& entry : psmModes) {
 		Gtk::RadioMenuItem* item = Gtk::manage(new Gtk::RadioMenuItem(m_psmRadioGroup, entry.label));
 		item->set_sensitive(!entry.requireOsd || haveOsd);
