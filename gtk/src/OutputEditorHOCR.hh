@@ -208,6 +208,7 @@ private:
 	void imageCompressionChanged();
 	void showItemProperties(Gtk::TreeIter item);
 	void itemChanged(const Gtk::TreeIter& iter);
+	void passwordChanged();
 	void propertyCellChanged(const Gtk::TreeIter& iter);
 	void showContextMenu(GdkEventButton* ev);
 	void checkCellEditable(const Glib::ustring& path, Gtk::CellRenderer* renderer);
