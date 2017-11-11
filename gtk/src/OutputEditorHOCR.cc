@@ -446,6 +446,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	});
 	CONNECT(m_builder("spin:pdfoptions.preserve").as<Gtk::SpinButton>(), value_changed, [this] { updatePreview(); });
 	CONNECT(m_builder("checkbox:pdfoptions.preview").as<Gtk::CheckButton>(), toggled, [this] { updatePreview(); });
+	CONNECT(m_builder("entry:pdfoptions.encryption.password").as<Gtk::Entry>(), changed, [this]{ passwordChanged(); });
+	CONNECT(m_builder("entry:pdfoptions.encryption.confirm").as<Gtk::Entry>(), changed, [this]{ passwordChanged(); });
 
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", m_builder("combo:pdfoptions.mode")));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagecompressionquality", m_builder("spin:pdfoptions.quality")));
@@ -1355,8 +1357,19 @@ void OutputEditorHOCR::savePDF() {
 			break;
 		}
 
+		Glib::ustring password = m_builder("entry:pdfoptions.encryption.password").as<Gtk::Entry>()->get_text();
+		PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(password, password,
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
+									   PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
 		try {
-			document = new PoDoFo::PdfStreamedDocument(outname.c_str());
+			document = new PoDoFo::PdfStreamedDocument(outname.c_str(), PoDoFo::EPdfVersion::ePdfVersion_1_7, encrypt);
 		} catch(...) {
 			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 			continue;
@@ -1498,6 +1511,18 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, Gtk::TreeIter item, co
 		for(Gtk::TreeIter child : item->children()) {
 			printChildren(painter, child, pdfSettings, imgScale);
 		}
+	}
+}
+
+void OutputEditorHOCR::passwordChanged() {
+	Gtk::Entry* passwordEntry = m_builder("entry:pdfoptions.encryption.password");
+	Gtk::Entry* confirmEntry = m_builder("entry:pdfoptions.encryption.confirm");
+	if(passwordEntry->get_text() == confirmEntry->get_text()) {
+		Utils::clear_error_state(confirmEntry);
+		m_builder("button:pdfoptions.ok").as<Gtk::Button>()->set_sensitive(true);
+	} else {
+		Utils::set_error_state(confirmEntry);
+		m_builder("button:pdfoptions.ok").as<Gtk::Button>()->set_sensitive(false);
 	}
 }
 
