@@ -1335,6 +1335,7 @@ void OutputEditorHOCR::savePDF() {
 #else
 	const PoDoFo::PdfEncoding* pdfEncoding = new PoDoFo::PdfIdentityEncoding;
 #endif
+	std::string outname;
 	double fontSize = 0;
 	while(true) {
 		accepted = m_pdfExportDialog->run() ==  Gtk::RESPONSE_OK;
@@ -1348,7 +1349,7 @@ void OutputEditorHOCR::savePDF() {
 		std::string name = !sources.empty() ? sources.front()->displayname : _("output");
 		Utils::get_filename_parts(name, base, ext);
 		FileDialogs::FileFilter filter = {_("PDF Files"), {"application/pdf"}, {"*.pdf"}};
-		std::string outname = FileDialogs::save_dialog(_("Save PDF Output..."), base + ".pdf", "outputdir", filter);
+		outname = FileDialogs::save_dialog(_("Save PDF Output..."), base + ".pdf", "outputdir", filter);
 		if(outname.empty()) {
 			accepted = false;
 			break;
@@ -1437,10 +1438,15 @@ void OutputEditorHOCR::savePDF() {
 	if(!failed.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Errors occurred"), Glib::ustring::compose(_("The following pages could not be rendered:\n%1"), Utils::string_join(failed, "\n")));
 	}
+	bool pdfCanBeOpened = true;
 	try {
 		document->Close();
 	} catch(PoDoFo::PdfError& e) {
+		pdfCanBeOpened = false;
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Export failed"), Glib::ustring::compose(_("The PDF export failed (%1)."), e.what()));
+	}
+	if(m_builder("checkbox:pdfoptions.openoutput").as<Gtk::CheckButton>()->get_active() && pdfCanBeOpened) {
+		Utils::openUri(Glib::filename_to_uri(outname));
 	}
 	delete document;
 }
