@@ -202,6 +202,14 @@ Glib::ustring Utils::string_trim(const Glib::ustring &str) {
 	return ret;
 }
 
+int Utils::parseInt(const Glib::ustring& str, bool* ok)
+{
+	static Glib::RefPtr<Glib::Regex> nrRegEx = Glib::Regex::create("^\\d+$");
+	bool match = nrRegEx->match(str);
+	if(ok) *ok = match;
+	return match ? std::atoi(str.c_str()) : 0;
+}
+
 void Utils::handle_drag_drop(const Glib::RefPtr<Gdk::DragContext> &context, int /*x*/, int /*y*/, const Gtk::SelectionData &selection_data, guint /*info*/, guint time) {
 	if ((selection_data.get_length() >= 0) && (selection_data.get_format() == 8)) {
 		std::vector<Glib::RefPtr<Gio::File>> files;
