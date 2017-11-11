@@ -294,16 +294,17 @@ void Recognizer::updateLanguagesMenu() {
 		bool requireOsd;
 	};
 	QVector<PsmEntry> psmModes = {
-			PsmEntry{_("Automatic page segmentation"), tesseract::PSM_AUTO, false},
-			PsmEntry{_("Page segmentation with orientation and script detection"), tesseract::PSM_AUTO_OSD, true},
-			PsmEntry{_("Assume single column of text"), tesseract::PSM_SINGLE_COLUMN, false},
-			PsmEntry{_("Assume single block of vertically aligned text"), tesseract::PSM_SINGLE_BLOCK_VERT_TEXT, false},
-			PsmEntry{_("Assume a single uniform block of text"), tesseract::PSM_SINGLE_BLOCK, false},
-			PsmEntry{_("Assume a line of text"), tesseract::PSM_SINGLE_LINE, false},
-			PsmEntry{_("Assume a single word"), tesseract::PSM_SINGLE_WORD, false},
-			PsmEntry{_("Assume a single word in a circle"), tesseract::PSM_CIRCLE_WORD, false},
-			PsmEntry{_("Sparse text in no particular order"), tesseract::PSM_SPARSE_TEXT, false},
-			PsmEntry{_("Sparse text with orientation and script detection"), tesseract::PSM_SPARSE_TEXT_OSD, true}};
+		PsmEntry{_("Automatic page segmentation"), tesseract::PSM_AUTO, false},
+		PsmEntry{_("Page segmentation with orientation and script detection"), tesseract::PSM_AUTO_OSD, true},
+		PsmEntry{_("Assume single column of text"), tesseract::PSM_SINGLE_COLUMN, false},
+		PsmEntry{_("Assume single block of vertically aligned text"), tesseract::PSM_SINGLE_BLOCK_VERT_TEXT, false},
+		PsmEntry{_("Assume a single uniform block of text"), tesseract::PSM_SINGLE_BLOCK, false},
+		PsmEntry{_("Assume a line of text"), tesseract::PSM_SINGLE_LINE, false},
+		PsmEntry{_("Assume a single word"), tesseract::PSM_SINGLE_WORD, false},
+		PsmEntry{_("Assume a single word in a circle"), tesseract::PSM_CIRCLE_WORD, false},
+		PsmEntry{_("Sparse text in no particular order"), tesseract::PSM_SPARSE_TEXT, false},
+		PsmEntry{_("Sparse text with orientation and script detection"), tesseract::PSM_SPARSE_TEXT_OSD, true}
+	};
 	for(const auto& entry : psmModes) {
 		QAction* item = psmMenu->addAction(entry.label);
 		item->setData(entry.psmMode);

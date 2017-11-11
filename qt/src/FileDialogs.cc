@@ -28,8 +28,7 @@
 
 namespace FileDialogs {
 
-QStringList openDialog(const QString& title, const QString& initialDirectory, const QString& initialDirSetting, const QString& filter, bool multiple, QWidget* parent)
-{
+QStringList openDialog(const QString& title, const QString& initialDirectory, const QString& initialDirSetting, const QString& filter, bool multiple, QWidget* parent) {
 	parent = parent == nullptr ? MAIN : parent;
 	QString initialDir = initialDirectory;
 	if(initialDir.isEmpty()) {
@@ -53,8 +52,7 @@ QStringList openDialog(const QString& title, const QString& initialDirectory, co
 	return filenames;
 }
 
-QString saveDialog(const QString& title, const QString& initialFilename, const QString& initialDirSetting, const QString& filter, bool generateUniqueName, QWidget* parent)
-{
+QString saveDialog(const QString& title, const QString& initialFilename, const QString& initialDirSetting, const QString& filter, bool generateUniqueName, QWidget* parent) {
 	parent = parent == nullptr ? MAIN : parent;
 	QString suggestedFile;
 	if(!initialFilename.isEmpty() && QFileInfo(initialFilename).isAbsolute()) {

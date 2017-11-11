@@ -203,10 +203,10 @@ void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data)
 	if(data->prependFile || data->prependPage) {
 		QStringList prepend;
 		if(data->prependFile) {
-            prepend.append(_("File: %1").arg(data->file));
+			prepend.append(_("File: %1").arg(data->file));
 		}
 		if(data->prependPage) {
-            prepend.append(_("Page: %1").arg(data->page));
+			prepend.append(_("Page: %1").arg(data->page));
 		}
 		text.prepend(QString("[%1]\n").arg(prepend.join("; ")));
 	}
