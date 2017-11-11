@@ -87,7 +87,7 @@ void Utils::set_spin_blocked(Gtk::SpinButton *spin, double value, sigc::connecti
 
 static Glib::RefPtr<Gtk::CssProvider> createErrorStyleProvider() {
 	Glib::RefPtr<Gtk::CssProvider> provider = Gtk::CssProvider::create();
-	provider->load_from_data("GtkEntry { background: #FF7777; color: #FFFFFF; }");
+	provider->load_from_data(".error { background-color: #FF7777; color: #FFFFFF; }");
 	return provider;
 }
 
@@ -97,10 +97,12 @@ static Glib::RefPtr<Gtk::CssProvider> getErrorStyleProvider() {
 }
 
 void Utils::set_error_state(Gtk::Entry *entry) {
-	entry->get_style_context()->add_provider(getErrorStyleProvider(), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	entry->get_style_context()->add_provider(getErrorStyleProvider(), 10000);
+	entry->get_style_context()->add_class("error");
 }
 
 void Utils::clear_error_state(Gtk::Entry *entry) {
+	entry->get_style_context()->remove_class("error");
 	entry->get_style_context()->remove_provider(getErrorStyleProvider());
 }
 
