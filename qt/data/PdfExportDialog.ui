@@ -6,21 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>411</width>
-    <height>451</height>
+    <width>629</width>
+    <height>585</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>PDF Export</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="13" column="0" colspan="2">
-    <widget class="QCheckBox" name="checkBoxPreview">
-     <property name="text">
-      <string>Show preview</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBoxImage">
      <property name="title">
@@ -125,7 +118,69 @@
      </layout>
     </widget>
    </item>
-   <item row="14" column="0" colspan="2">
+   <item row="3" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBoxEncryption">
+     <property name="title">
+      <string>Encryption (optional):</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelPasswordOpen">
+        <property name="text">
+         <string>Password:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lineEditPasswordOpen">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelConfirmPasswordOpen">
+        <property name="text">
+         <string>Confirm password:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineEditConfirmPasswordOpen">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="labelOutputMode">
+     <property name="text">
+      <string>Output mode:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -135,21 +190,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QComboBox" name="comboBoxOutputMode">
-     <item>
-      <property name="text">
-       <string>PDF</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>PDF with invisible text overlay</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="2">
+   <item row="2" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBoxText">
      <property name="title">
       <string>Text settings:</string>
@@ -167,13 +208,6 @@
       <property name="bottomMargin">
        <number>4</number>
       </property>
-      <item row="3" column="0">
-       <widget class="QCheckBox" name="checkBoxUniformizeSpacing">
-        <property name="text">
-         <string>Uniformize line and word spacing</string>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="0">
        <widget class="QLabel" name="labelPreserve">
         <property name="enabled">
@@ -203,13 +237,6 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QCheckBox" name="checkBoxFontSize">
-        <property name="text">
-         <string>Use detected font sizes</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="labelFont">
         <property name="text">
@@ -222,6 +249,12 @@
         <property name="enabled">
          <bool>false</bool>
         </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimum">
          <number>1</number>
         </property>
@@ -232,6 +265,12 @@
         <property name="enabled">
          <bool>false</bool>
         </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>characters</string>
         </property>
@@ -241,6 +280,12 @@
        <widget class="QSpinBox" name="spinFontScaling">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
         <property name="suffix">
          <string notr="true">%</string>
@@ -258,27 +303,74 @@
       </item>
       <item row="0" column="1" colspan="2">
        <widget class="QPushButton" name="buttonFont">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="3">
+       <widget class="QCheckBox" name="checkBoxUniformizeSpacing">
+        <property name="text">
+         <string>Uniformize line and word spacing</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="3">
+       <widget class="QCheckBox" name="checkBoxFontSize">
+        <property name="text">
+         <string>Use detected font sizes</string>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="labelOutputMode">
-     <property name="text">
-      <string>Output mode:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="0">
+   <item row="4" column="0">
     <widget class="QCheckBox" name="checkBoxOpenOutputPdf">
      <property name="text">
       <string>Open output PDF</string>
      </property>
     </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QCheckBox" name="checkBoxPreview">
+     <property name="text">
+      <string>Show preview</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="comboBoxOutputMode">
+     <item>
+      <property name="text">
+       <string>PDF</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>PDF with invisible text overlay</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

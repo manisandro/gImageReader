@@ -322,6 +322,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), m_pdfExportDialogUi.labelPreserve, SLOT(setEnabled(bool)));
 	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), m_pdfExportDialogUi.labelPreserveCharacters, SLOT(setEnabled(bool)));
 	connect(m_pdfExportDialogUi.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), m_pdfExportDialogUi.spinBoxPreserve, SLOT(setEnabled(bool)));
+	connect(m_pdfExportDialogUi.lineEditPasswordOpen, SIGNAL(textChanged(const QString&)), this, SLOT(passwordChanged()));
+	connect(m_pdfExportDialogUi.lineEditConfirmPasswordOpen, SIGNAL(textChanged(const QString&)), this, SLOT(passwordChanged()));
 	connect(m_pdfExportDialogUi.checkBoxPreview, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(m_tool, SIGNAL(selectionGeometryChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
 	connect(m_tool, SIGNAL(selectionDrawn(QRect)), this, SLOT(addGraphicRegion(QRect)));
@@ -761,6 +763,18 @@ void OutputEditorHOCR::itemChanged(QTreeWidgetItem* item, int col) {
 	ui.treeWidgetItems->blockSignals(false);
 }
 
+void OutputEditorHOCR::passwordChanged() {
+	if(m_pdfExportDialogUi.lineEditPasswordOpen->text() ==
+	        m_pdfExportDialogUi.lineEditConfirmPasswordOpen->text()) {
+
+		m_pdfExportDialogUi.lineEditConfirmPasswordOpen->setStyleSheet(QStringLiteral(""));
+		m_pdfExportDialogUi.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
+	} else {
+		m_pdfExportDialogUi.lineEditConfirmPasswordOpen->setStyleSheet("background: #FF7777; color: #FFFFFF;");
+		m_pdfExportDialogUi.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+	}
+}
+
 void OutputEditorHOCR::propertyCellChanged(int row, int /*col*/) {
 	QTableWidgetItem* keyItem = ui.tableWidgetProperties->item(row, 0);
 	QTableWidgetItem* valueItem = ui.tableWidgetProperties->item(row, 1);
@@ -1147,8 +1161,20 @@ void OutputEditorHOCR::savePDF() {
 			break;
 		}
 
+		PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(m_pdfExportDialogUi.lineEditPasswordOpen->text().toStdString(),
+		                              m_pdfExportDialogUi.lineEditPasswordOpen->text().toStdString(),
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
+		                              PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
 		try {
-			document = new PoDoFo::PdfStreamedDocument(outname.toLocal8Bit().data());
+
+			document = new PoDoFo::PdfStreamedDocument(outname.toLocal8Bit().data(), PoDoFo::EPdfVersion::ePdfVersion_1_7, encrypt);
 		} catch(...) {
 			QMessageBox::critical(MAIN, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 			continue;
