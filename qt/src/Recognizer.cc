@@ -383,30 +383,36 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout) {
 
 	m_pagesDialogUi.comboBoxRecognitionArea->setItemText(0, MAIN->getDisplayer()->hasMultipleOCRAreas() ? _("Current selection") : _("Entire page"));
 
+	QRegExp validateRegEx("^[\\d,\\-\\s]+$");
 	QList<int> pages;
-	if(m_pagesDialog->exec() == QDialog::Accepted) {
+	while(m_pagesDialog->exec() == QDialog::Accepted) {
+		pages.clear();
 		QString text = m_pagesDialogUi.lineEditPageRange->text();
-		text.replace(QRegExp("\\s+"), "");
-		for(const QString& block : text.split(',', QString::SkipEmptyParts)) {
-			QStringList ranges = block.split('-', QString::SkipEmptyParts);
-			if(ranges.size() == 1) {
-				int page = ranges[0].toInt();
-				if(page > 0 && page <= nPages) {
-					pages.append(page);
+		if(validateRegEx.indexIn(text) != -1) {
+			text.replace(QRegExp("\\s+"), "");
+			for(const QString& block : text.split(',', QString::SkipEmptyParts)) {
+				QStringList ranges = block.split('-', QString::SkipEmptyParts);
+				if(ranges.size() == 1) {
+					int page = ranges[0].toInt();
+					if(page > 0 && page <= nPages) {
+						pages.append(page);
+					}
+				} else if(ranges.size() == 2) {
+					int start = std::max(1, ranges[0].toInt());
+					int end = std::min(nPages, ranges[1].toInt());
+					for(int page = start; page <= end; ++page) {
+						pages.append(page);
+					}
+				} else {
+					pages.clear();
+					break;
 				}
-			} else if(ranges.size() == 2) {
-				int start = std::max(1, ranges[0].toInt());
-				int end = std::min(nPages, ranges[1].toInt());
-				for(int page = start; page <= end; ++page) {
-					pages.append(page);
-				}
-			} else {
-				pages.clear();
-				break;
 			}
 		}
 		if(pages.empty()) {
 			m_pagesDialogUi.lineEditPageRange->setStyleSheet("background: #FF7777; color: #FFFFFF;");
+		} else {
+			break;
 		}
 	}
 	qSort(pages);
