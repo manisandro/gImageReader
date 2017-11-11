@@ -164,6 +164,7 @@ private slots:
 	void itemChanged(QTreeWidgetItem* item, int col);
 	void imageFormatChanged();
 	void imageCompressionChanged();
+	void passwordChanged();
 	void propertyCellChanged(int row, int col);
 	void showTreeWidgetContextMenu(const QPoint& point);
 	void updateFontButton(const QFont& font);
