@@ -1593,8 +1593,7 @@ bool OutputEditorHOCR::clear(bool hide) {
 	return true;
 }
 
-void OutputEditorHOCR::setLanguage(const Config::Lang &lang)
-{
+void OutputEditorHOCR::setLanguage(const Config::Lang &lang) {
 	m_spellLanguage = lang.code;
 }
 

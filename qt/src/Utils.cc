@@ -169,7 +169,7 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout) {
 
 	while(true) {
 		QNetworkRequest req(url);
-		req.setRawHeader("User-Agent" , "Wget/1.13.4");
+		req.setRawHeader("User-Agent", "Wget/1.13.4");
 		QSslConfiguration conf = req.sslConfiguration();
 		conf.setPeerVerifyMode(QSslSocket::VerifyNone);
 		req.setSslConfiguration(conf);

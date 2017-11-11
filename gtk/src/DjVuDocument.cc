@@ -19,13 +19,11 @@
 /**
  * Explore the message queue until there are no message left in it.
  */
-static void handle_ddjvu_messages( ddjvu_context_t *ctx, int wait )
-{
+static void handle_ddjvu_messages( ddjvu_context_t *ctx, int wait ) {
 	const ddjvu_message_t *msg;
 	if ( wait )
 		ddjvu_message_wait( ctx );
-	while ( ( msg = ddjvu_message_peek( ctx ) ) )
-	{
+	while ( ( msg = ddjvu_message_peek( ctx ) ) ) {
 		ddjvu_message_pop( ctx );
 	}
 }
@@ -33,19 +31,16 @@ static void handle_ddjvu_messages( ddjvu_context_t *ctx, int wait )
 /**
  * Explore the message queue until the message \p mid is found.
  */
-static void wait_for_ddjvu_message( ddjvu_context_t *ctx, ddjvu_message_tag_t mid )
-{
+static void wait_for_ddjvu_message( ddjvu_context_t *ctx, ddjvu_message_tag_t mid ) {
 	ddjvu_message_wait( ctx );
 	const ddjvu_message_t *msg;
-	while ( ( msg = ddjvu_message_peek( ctx ) ) && msg && ( msg->m_any.tag != mid ) )
-	{
+	while ( ( msg = ddjvu_message_peek( ctx ) ) && msg && ( msg->m_any.tag != mid ) ) {
 		ddjvu_message_pop( ctx );
 	}
 }
 
 
-DjVuDocument::DjVuDocument()
-{
+DjVuDocument::DjVuDocument() {
 	// creating the djvu context
 	m_djvu_cxt = ddjvu_context_create( "DjVuDocument" );
 	// creating the rendering format
@@ -55,15 +50,13 @@ DjVuDocument::DjVuDocument()
 	ddjvu_format_set_y_direction( m_format, 1 );
 }
 
-DjVuDocument::~DjVuDocument()
-{
+DjVuDocument::~DjVuDocument() {
 	closeFile();
 	ddjvu_format_release( m_format );
 	ddjvu_context_release( m_djvu_cxt );
 }
 
-bool DjVuDocument::openFile( const std::string& fileName )
-{
+bool DjVuDocument::openFile( const std::string& fileName ) {
 	// first, close the old file
 	if ( m_djvu_document )
 		closeFile();
@@ -73,8 +66,7 @@ bool DjVuDocument::openFile( const std::string& fileName )
 	if ( !m_djvu_document ) return false;
 	// ...and wait for its loading
 	wait_for_ddjvu_message( m_djvu_cxt, DDJVU_DOCINFO );
-	if ( ddjvu_document_decoding_error( m_djvu_document ) )
-	{
+	if ( ddjvu_document_decoding_error( m_djvu_document ) ) {
 		ddjvu_document_release( m_djvu_document );
 		m_djvu_document = nullptr;
 		return false;
@@ -90,8 +82,7 @@ bool DjVuDocument::openFile( const std::string& fileName )
 		ddjvu_pageinfo_t info;
 		while ( ( sts = ddjvu_document_get_pageinfo( m_djvu_document, i, &info ) ) < DDJVU_JOB_OK )
 			handle_ddjvu_messages( m_djvu_cxt, true );
-		if ( sts >= DDJVU_JOB_FAILED )
-		{
+		if ( sts >= DDJVU_JOB_FAILED ) {
 			closeFile();
 			return false;
 		}
@@ -101,8 +92,7 @@ bool DjVuDocument::openFile( const std::string& fileName )
 	return true;
 }
 
-void DjVuDocument::closeFile()
-{
+void DjVuDocument::closeFile() {
 	m_pages.clear();
 	// releasing the old document
 	if ( m_djvu_document )
@@ -110,8 +100,7 @@ void DjVuDocument::closeFile()
 	m_djvu_document = nullptr;
 }
 
-Cairo::RefPtr<Cairo::ImageSurface> DjVuDocument::image( int pageno, int resolution )
-{
+Cairo::RefPtr<Cairo::ImageSurface> DjVuDocument::image( int pageno, int resolution ) {
 	if(pageno < 0 || pageno >= pageCount()) {
 		return Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 0, 0);
 	}

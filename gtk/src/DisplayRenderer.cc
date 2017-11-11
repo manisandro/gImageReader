@@ -144,8 +144,7 @@ DJVURenderer::~DJVURenderer() {
 	delete m_djvu;
 }
 
-Cairo::RefPtr<Cairo::ImageSurface> DJVURenderer::render(int page, double resolution) const
-{
+Cairo::RefPtr<Cairo::ImageSurface> DJVURenderer::render(int page, double resolution) const {
 	return m_djvu->image(page, resolution);
 }
 

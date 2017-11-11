@@ -122,8 +122,7 @@ DJVURenderer::~DJVURenderer() {
 	delete m_djvu;
 }
 
-QImage DJVURenderer::render(int page, double resolution) const
-{
+QImage DJVURenderer::render(int page, double resolution) const {
 	return m_djvu->image(page, resolution);
 }
 

@@ -206,8 +206,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 		DisplayRenderer* renderer;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
 			renderer = new PDFRenderer(source->path, source->password);
-		}
-		else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
+		} else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
 			renderer = new DJVURenderer(source->path);
 		} else {
 			renderer = new ImageRenderer(source->path);
@@ -412,8 +411,7 @@ void Displayer::resizeEvent(QResizeEvent *event) {
 	}
 }
 
-void Displayer::keyPressEvent(QKeyEvent *event)
-{
+void Displayer::keyPressEvent(QKeyEvent *event) {
 	if(event->key() == Qt::Key_PageUp) {
 		ui.spinBoxPage->setValue(ui.spinBoxPage->value() - 1);
 		event->accept();
