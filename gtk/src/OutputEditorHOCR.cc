@@ -757,7 +757,8 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 						if(m_spell.get_language() != lang) {
 							m_spell.set_language(lang);
 						}
-						if(!m_spell.check_word(trimWord(title))) {
+						Glib::ustring trimmed = trimWord(title);
+						if(!trimmed.empty() && !m_spell.check_word(trimmed)) {
 							item->set_value(m_itemStoreCols.textColor, Glib::ustring("#F00"));
 						}
 					}
@@ -970,7 +971,8 @@ void OutputEditorHOCR::updateCurrentItem() {
 		m_spell.set_language(spellLang);
 	}
 	m_connectionItemViewRowEdited.block(true); // prevent row edited signal
-	if(m_spell.check_word(trimWord((*item)[m_itemStoreCols.text]))) {
+	Glib::ustring trimmed = trimWord(trimWord((*item)[m_itemStoreCols.text]));
+	if(trimmed.empty() || m_spell.check_word(trimmed)) {
 		item->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
 	} else {
 		item->set_value(m_itemStoreCols.textColor, Glib::ustring("#F00"));
@@ -1062,7 +1064,7 @@ void OutputEditorHOCR::addGraphicRection(const Geometry::Rectangle &rect) {
 }
 
 Glib::ustring OutputEditorHOCR::trimWord(const Glib::ustring& word, Glib::ustring* prefix, Glib::ustring* suffix) {
-	Glib::RefPtr<Glib::Regex> re = Glib::Regex::create("^(\\W*)(.*\\w)(\\W*)$");
+	Glib::RefPtr<Glib::Regex> re = Glib::Regex::create("^(\\W*)(\\w*)(\\W*)$");
 	Glib::MatchInfo match_info;
 	if(re->match(word, -1, 0, match_info, static_cast<Glib::RegexMatchFlags>(0))) {
 		if(prefix)
@@ -1178,31 +1180,33 @@ void OutputEditorHOCR::showContextMenu(GdkEventButton* ev) {
 		if(m_spell.get_language() != spellLang) {
 			m_spell.set_language(spellLang);
 		}
-		for(const Glib::ustring& suggestion : m_spell.get_suggestions(trimmed)) {
-			Glib::ustring replacement = prefix + suggestion + suffix;
-			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
-			CONNECT(item, activate, [this, replacement, it] { (*it)[m_itemStoreCols.text] = replacement; });
-			menu.append(*item);
-		}
-		if(menu.get_children().empty()) {
-			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("No suggestions")));
-			item->set_sensitive(false);
-			menu.append(*item);
-		}
-		if(!m_spell.check_word(trimWord((*it)[m_itemStoreCols.text]))) {
-			menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
-			Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
-			CONNECT(additem, activate, [this, it] {
-				m_spell.add_to_dictionary((*it)[m_itemStoreCols.text]);
-				it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
-			});
-			menu.append(*additem);
-			Gtk::MenuItem* ignoreitem = Gtk::manage(new Gtk::MenuItem(_("Ignore word")));
-			CONNECT(ignoreitem, activate, [this, it] {
-				m_spell.ignore_word((*it)[m_itemStoreCols.text]);
-				it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
-			});
-			menu.append(*ignoreitem);
+		if(!trimmed.empty()) {
+			for(const Glib::ustring& suggestion : m_spell.get_suggestions(trimmed)) {
+				Glib::ustring replacement = prefix + suggestion + suffix;
+				Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
+				CONNECT(item, activate, [this, replacement, it] { (*it)[m_itemStoreCols.text] = replacement; });
+				menu.append(*item);
+			}
+			if(menu.get_children().empty()) {
+				Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("No suggestions")));
+				item->set_sensitive(false);
+				menu.append(*item);
+			}
+			if(!m_spell.check_word(trimmed)) {
+				menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
+				Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
+				CONNECT(additem, activate, [this, it, trimmed] {
+					m_spell.add_to_dictionary(trimmed);
+					it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
+				});
+				menu.append(*additem);
+				Gtk::MenuItem* ignoreitem = Gtk::manage(new Gtk::MenuItem(_("Ignore word")));
+				CONNECT(ignoreitem, activate, [this, it, trimmed] {
+					m_spell.ignore_word(trimmed);
+					it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
+				});
+				menu.append(*ignoreitem);
+			}
 		}
 	}
 	if(path != m_rootItem) {
