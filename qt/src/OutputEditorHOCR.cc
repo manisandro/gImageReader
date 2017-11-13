@@ -615,7 +615,8 @@ bool OutputEditorHOCR::addChildItems(QDomElement element, QTreeWidgetItem* paren
 						if(m_spell.getLanguage() != lang) {
 							m_spell.setLanguage(lang);
 						}
-						if(!m_spell.checkWord(trimWord(title))) {
+						QString trimmed = trimWord(title);
+						if(!trimmed.isEmpty() && !m_spell.checkWord(trimmed)) {
 							item->setForeground(0, Qt::red);
 						}
 					}
@@ -849,7 +850,12 @@ void OutputEditorHOCR::updateCurrentItem() {
 		m_spell.setLanguage(spellLang);
 	}
 	ui.treeWidgetItems->blockSignals(true); // prevent item changed signal
-	m_currentItem->setForeground(0, m_spell.checkWord(trimWord(m_currentItem->text(0))) ? m_currentItem->parent()->foreground(0) : QBrush(Qt::red));
+	QString trimmed = trimWord(m_currentItem->text(0));
+	if(trimmed.isEmpty() || m_spell.checkWord(trimmed)) {
+		m_currentItem->setForeground(0, m_currentItem->parent()->foreground(0));
+	} else {
+		m_currentItem->setForeground(0, QBrush(Qt::red));
+	}
 	ui.treeWidgetItems->blockSignals(false);
 
 	QString str;
@@ -926,7 +932,7 @@ void OutputEditorHOCR::addGraphicRegion(QRect rect) {
 }
 
 QString OutputEditorHOCR::trimWord(const QString& word, QString* prefix, QString* suffix) {
-	QRegExp wordRe("^(\\W*)(.*\\w)(\\W*)$");
+	QRegExp wordRe("^(\\W*)(\\w*)(\\W*)$");
 	if(wordRe.indexIn(word) != -1) {
 		if(prefix)
 			*prefix = wordRe.cap(1);
@@ -1005,16 +1011,18 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 		if(m_spell.getLanguage() != spellLang) {
 			m_spell.setLanguage(spellLang);
 		}
-		for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
-			setTextActions.append(menu.addAction(prefix + suggestion + suffix));
-		}
-		if(setTextActions.isEmpty()) {
-			menu.addAction(_("No suggestions"))->setEnabled(false);
-		}
-		if(!m_spell.checkWord(trimWord(item->text(0)))) {
-			menu.addSeparator();
-			addWordAction = menu.addAction(_("Add to dictionary"));
-			ignoreWordAction = menu.addAction(_("Ignore word"));
+		if(!trimmedWord.isEmpty()) {
+			for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
+				setTextActions.append(menu.addAction(prefix + suggestion + suffix));
+			}
+			if(setTextActions.isEmpty()) {
+				menu.addAction(_("No suggestions"))->setEnabled(false);
+			}
+			if(!m_spell.checkWord(trimWord(item->text(0)))) {
+				menu.addSeparator();
+				addWordAction = menu.addAction(_("Add to dictionary"));
+				ignoreWordAction = menu.addAction(_("Ignore word"));
+			}
 		}
 	}
 	if(item != m_rootItem) {
