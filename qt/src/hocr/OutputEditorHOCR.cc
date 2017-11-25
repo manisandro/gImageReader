@@ -454,6 +454,8 @@ void OutputEditorHOCR::open() {
 		div = div.nextSiblingElement("div");
 	}
 	m_modified = false;
+	ui.actionOutputSaveHOCR->setEnabled(true);
+	ui.actionOutputExportPDF->setEnabled(true);
 }
 
 bool OutputEditorHOCR::save(const QString& filename) {
