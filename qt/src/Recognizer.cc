@@ -545,10 +545,7 @@ bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 }
 
 bool Recognizer::setPage(int page, bool autodetectLayout) {
-	bool success = true;
-	if(page != MAIN->getDisplayer()->getCurrentPage()) {
-		success = MAIN->getDisplayer()->setCurrentPage(page);
-	}
+	bool success = MAIN->getDisplayer()->setup(&page);
 	if(success && autodetectLayout) {
 		MAIN->getDisplayer()->autodetectOCRAreas();
 	}

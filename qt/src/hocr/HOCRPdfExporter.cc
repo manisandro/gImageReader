@@ -366,7 +366,7 @@ bool HOCRPdfExporter::run() {
 		int sourceDpi = page->resolution();
 		int outputDpi = ui.spinBoxDpi->value();
 		if(MAIN->getSourceManager()->addSource(page->sourceFile())) {
-			MAIN->getDisplayer()->setCurrentPage(page->pageNr(), &page->angle(), &outputDpi);
+			MAIN->getDisplayer()->setup(&page->pageNr(), &outputDpi, &page->angle());
 			double docScale = (72. / sourceDpi);
 			double imgScale = double(outputDpi) / sourceDpi;
 			PoDoFo::PdfPage* pdfpage = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width() * docScale, bbox.height() * docScale));
@@ -380,7 +380,7 @@ bool HOCRPdfExporter::run() {
 				QRect scaledBBox(imgScale * bbox.left(), imgScale * bbox.top(), imgScale * bbox.width(), imgScale * bbox.height());
 				pdfprinter.drawImage(bbox, m_displayerTool->getSelection(scaledBBox), pdfSettings);
 			}
-			MAIN->getDisplayer()->setResolution(sourceDpi);
+			MAIN->getDisplayer()->setup(nullptr, &sourceDpi);
 			painter.FinishPage();
 		} else {
 			failed.append(page->title());
