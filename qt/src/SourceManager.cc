@@ -108,24 +108,26 @@ SourceManager::~SourceManager() {
 	clearSources();
 }
 
-void SourceManager::addSources(const QStringList& files) {
+int SourceManager::addSources(const QStringList& files) {
 	QString failed;
 	QListWidgetItem* item = nullptr;
 	QStringList recentItems = MAIN->getConfig()->getSetting<VarSetting<QStringList>>("recentitems")->getValue();
+	int added = 0;
 	for(const QString& filename : files) {
 		if(!QFile(filename).exists()) {
 			failed += "\n\t" + filename;
 			continue;
 		}
-		bool contains = false;
-		for(int row = 0, nRows = ui.listWidgetSources->count(); row < nRows; ++row) {
+		item = ui.listWidgetSources->currentItem();
+		bool contains = item ? item->toolTip() == filename : false;
+		for(int row = 0, nRows = ui.listWidgetSources->count(); !contains && row < nRows; ++row) {
 			if(ui.listWidgetSources->item(row)->toolTip() == filename) {
 				item = ui.listWidgetSources->item(row);
 				contains = true;
-				break;
 			}
 		}
 		if(contains) {
+			++added;
 			continue;
 		}
 		Source* source = nullptr;
@@ -141,9 +143,10 @@ void SourceManager::addSources(const QStringList& files) {
 		m_fsWatcher.addPath(filename);
 		recentItems.removeAll(filename);
 		recentItems.prepend(filename);
+		++added;
 	}
 	MAIN->getConfig()->getSetting<VarSetting<QStringList>>("recentitems")->setValue(recentItems);
-	if(item) {
+	if(item != ui.listWidgetSources->currentItem()) {
 		ui.listWidgetSources->blockSignals(true);
 		ui.listWidgetSources->clearSelection();
 		ui.listWidgetSources->blockSignals(false);
@@ -152,6 +155,7 @@ void SourceManager::addSources(const QStringList& files) {
 	if(!failed.isEmpty()) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:%1").arg(failed));
 	}
+	return added;
 }
 
 QList<Source*> SourceManager::getSelectedSources() const {

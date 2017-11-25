@@ -204,7 +204,14 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout) {
 }
 
 QString Utils::getSpellingLanguage(const QString& lang) {
-	// Look in the lang cultures table if a language is provided
+	// If it is already a valid code, return it
+	if(lang.length() == 2) {
+		return lang;
+	}
+	if(QRegExp("^[a-z]{2}_[A-Z]{2}").indexIn(lang) != -1) {
+		return lang;
+	}
+	// Treat the language as a tesseract lang spec and try to find a matching code
 	Config::Lang langspec = {lang};
 	if(!lang.isEmpty() && MAIN->getConfig()->searchLangSpec(langspec)) {
 		return langspec.code;
