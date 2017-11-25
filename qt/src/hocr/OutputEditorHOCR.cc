@@ -454,6 +454,7 @@ void OutputEditorHOCR::open() {
 		div = div.nextSiblingElement("div");
 	}
 	m_modified = false;
+	m_filename = filename;
 	ui.actionOutputSaveHOCR->setEnabled(true);
 	ui.actionOutputExportPDF->setEnabled(true);
 }
@@ -462,8 +463,11 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	QString outname = filename;
 	if(outname.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-		QString base = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
-		outname = FileDialogs::saveDialog(_("Save hOCR Output..."), base + ".html", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")));
+		QString suggestion = m_filename;
+		if(suggestion.isEmpty()) {
+			suggestion = (!sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output")) + ".html";
+		}
+		outname = FileDialogs::saveDialog(_("Save hOCR Output..."), suggestion, "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")));
 		if(outname.isEmpty()) {
 			return false;
 		}
@@ -487,6 +491,7 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	file.write(m_document->toHTML().toUtf8());
 	file.write("</html>\n");
 	m_modified = false;
+	m_filename = outname;
 	return true;
 }
 
@@ -520,6 +525,7 @@ bool OutputEditorHOCR::clear(bool hide)
 	ui.plainTextEditOutput->clear();
 	m_tool->clearSelection();
 	m_modified = false;
+	m_filename.clear();
 	ui.actionOutputSaveHOCR->setEnabled(false);
 	ui.actionOutputExportPDF->setEnabled(false);
 	if(hide)
