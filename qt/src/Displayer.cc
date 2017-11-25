@@ -71,11 +71,11 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	connect(ui.actionRotateLeft, SIGNAL(triggered()), this, SLOT(rotate90()));
 	connect(ui.actionRotateRight, SIGNAL(triggered()), this, SLOT(rotate90()));
 	connect(ui.spinBoxRotation, SIGNAL(valueChanged(double)), this, SLOT(setAngle(double)));
-	connect(ui.spinBoxPage, SIGNAL(valueChanged(int)), this, SLOT(setCurrentPage(int)));
-	connect(ui.spinBoxBrightness, SIGNAL(valueChanged(int)), this, SLOT(brightnessChanged()));
-	connect(ui.spinBoxContrast, SIGNAL(valueChanged(int)), this, SLOT(contrastChanged()));
-	connect(ui.spinBoxResolution, SIGNAL(valueChanged(int)), this, SLOT(resolutionChanged()));
-	connect(ui.checkBoxInvertColors, SIGNAL(toggled(bool)), this, SLOT(invertColorsChanged()));
+	connect(ui.spinBoxPage, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
+	connect(ui.spinBoxBrightness, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
+	connect(ui.spinBoxContrast, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
+	connect(ui.spinBoxResolution, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
+	connect(ui.checkBoxInvertColors, SIGNAL(toggled(bool)), this, SLOT(queueRenderImage()));
 	connect(ui.actionZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
 	connect(ui.actionZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
 	connect(ui.actionBestFit, SIGNAL(triggered()), this, SLOT(zoomFit()));
@@ -87,89 +87,6 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 Displayer::~Displayer() {
 	setSources(QList<Source*>());
 	delete m_scene;
-}
-
-bool Displayer::setCurrentPage(int page, const double* angle, const int* resolution) {
-	ui.spinBoxPage->setEnabled(false);
-	if(m_sources.isEmpty()) {
-		return false;
-	}
-	if(m_tool && page != ui.spinBoxPage->value()) {
-		m_tool->pageChanged();
-	}
-	bool changed = false;
-	Source* source = m_pageMap[page].first;
-	if(!source) {
-		return false;
-	}
-	if(source != m_currentSource) {
-		sendScaleRequest({ScaleRequest::Abort});
-		sendScaleRequest({ScaleRequest::Quit});
-		while(m_scaleThread.isRunning()) {
-			QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
-		}
-		delete m_renderer;
-		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
-			m_renderer = new PDFRenderer(source->path, source->password);
-			if(source->resolution == -1) source->resolution = 300;
-		} else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
-			m_renderer = new DJVURenderer(source->path);
-			if(source->resolution == -1) source->resolution = 300;
-		} else {
-			m_renderer = new ImageRenderer(source->path);
-			if(source->resolution == -1) source->resolution = 100;
-		}
-
-		Utils::setSpinBlocked(ui.spinBoxBrightness, source->brightness);
-		Utils::setSpinBlocked(ui.spinBoxContrast, source->contrast);
-		ui.checkBoxInvertColors->blockSignals(true);
-		ui.checkBoxInvertColors->setChecked(source->invert);
-		ui.checkBoxInvertColors->blockSignals(false);
-		m_currentSource = source;
-		m_scaleThread.start();
-		changed = true;
-	}
-	if(angle) {
-		changed |= (source->angle[m_pageMap[page].second - 1] != *angle);
-		source->angle[m_pageMap[page].second - 1] = *angle;
-	}
-	if(resolution) {
-		changed |= (source->resolution != *resolution);
-		source->resolution = *resolution;
-	}
-	changed |= (page != ui.spinBoxPage->value());
-	Utils::setSpinBlocked(ui.spinBoxPage, page);
-
-	changed |= (source->angle[m_pageMap[page].second - 1] != ui.spinBoxRotation->value());
-	Utils::setSpinBlocked(ui.spinBoxRotation, source->angle[m_pageMap[page].second - 1]);
-
-	changed |= (source->resolution != ui.spinBoxResolution->value());
-	Utils::setSpinBlocked(ui.spinBoxResolution, source->resolution);
-
-	bool result = changed ? renderImage() : true;
-	ui.spinBoxPage->setEnabled(true);
-	return result;
-}
-
-int Displayer::getCurrentPage() const {
-	return ui.spinBoxPage->value();
-}
-
-double Displayer::getCurrentAngle() const {
-	return ui.spinBoxRotation->value();
-}
-
-int Displayer::getCurrentResolution() const {
-	return ui.spinBoxResolution->value();
-}
-
-QString Displayer::getCurrentImage(int& page) const {
-	page = m_pageMap[ui.spinBoxPage->value()].second;
-	return m_pageMap[ui.spinBoxPage->value()].first ? m_pageMap[ui.spinBoxPage->value()].first->path : "";
-}
-
-int Displayer::getNPages() const {
-	return ui.spinBoxPage->maximum();
 }
 
 bool Displayer::setSources(QList<Source*> sources) {
@@ -184,6 +101,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 		while(m_scaleThread.isRunning()) {
 			QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 		}
+		m_scaleRequests.clear();
 	}
 	if(m_tool) {
 		m_tool->reset();
@@ -198,12 +116,14 @@ bool Displayer::setSources(QList<Source*> sources) {
 	m_pixmap = QPixmap();
 	m_imageItem = nullptr;
 	ui.actionBestFit->setChecked(true);
-	ui.spinBoxPage->setEnabled(false);
+	ui.actionPage->setVisible(false);
+	ui.spinBoxPage->blockSignals(true);
 	ui.spinBoxPage->setRange(1, 1);
-	ui.spinBoxRotation->setValue(0.);
-	ui.spinBoxBrightness->setValue(0);
-	ui.spinBoxContrast->setValue(0);
-	ui.spinBoxResolution->setValue(100);
+	ui.spinBoxPage->blockSignals(false);
+	Utils::setSpinBlocked(ui.spinBoxRotation, 0);
+	Utils::setSpinBlocked(ui.spinBoxBrightness, 0);
+	Utils::setSpinBlocked(ui.spinBoxContrast, 0);
+	Utils::setSpinBlocked(ui.spinBoxResolution, 100);
 	ui.checkBoxInvertColors->setChecked(false);
 	ui.actionBestFit->setChecked(true);
 	ui.actionOriginalSize->setChecked(false);
@@ -249,8 +169,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 	m_imageItem = new QGraphicsPixmapItem();
 	m_imageItem->setTransformationMode(Qt::SmoothTransformation);
 	m_scene->addItem(m_imageItem);
-	m_scaleThread.start();
-	if(!setCurrentPage(1)) {
+	if(!renderImage()) {
 		Q_ASSERT(m_currentSource);
 		QMessageBox::critical(this, _("Failed to load image"), _("The file might not be an image or be corrupt:\n%1").arg(m_currentSource->displayname));
 		setSources(QList<Source*>());
@@ -259,35 +178,91 @@ bool Displayer::setSources(QList<Source*> sources) {
 	return true;
 }
 
-bool Displayer::hasMultipleOCRAreas() {
-	return m_tool->hasMultipleOCRAreas();
+bool Displayer::setup(const int* page, const int* resolution, const double* angle)
+{
+	bool changed = false;
+	if(page) {
+		changed |= *page != ui.spinBoxPage->value();
+		Utils::setSpinBlocked(ui.spinBoxPage, *page);
+	}
+	if(resolution) {
+		changed |= *resolution != ui.spinBoxResolution->value();
+		Utils::setSpinBlocked(ui.spinBoxResolution, *resolution);
+	}
+	if(changed && !renderImage()) {
+		return false;
+	}
+	if(angle) {
+		setAngle(*angle);
+	}
+	return true;
 }
 
-QList<QImage> Displayer::getOCRAreas() {
-	return m_tool->getOCRAreas();
-}
-
-bool Displayer::allowAutodetectOCRAreas() const {
-	return m_tool->allowAutodetectOCRAreas();
-}
-
-void Displayer::autodetectOCRAreas() {
-	m_tool->autodetectOCRAreas();
+void Displayer::queueRenderImage() {
+	m_renderTimer.start(500);
 }
 
 bool Displayer::renderImage() {
-	sendScaleRequest({ScaleRequest::Abort});
-	if(m_currentSource->resolution != ui.spinBoxResolution->value()) {
-		double factor = double(ui.spinBoxResolution->value()) / double(m_currentSource->resolution);
-		if(m_tool) {
+	if(m_sources.isEmpty()) {
+		return false;
+	}
+	int page = ui.spinBoxPage->value();
+
+	// Set current source according to selected page
+	Source* source = m_pageMap[page].first;
+	if(!source) {
+		return false;
+	}
+
+	if(source != m_currentSource) {
+		sendScaleRequest({ScaleRequest::Abort});
+		sendScaleRequest({ScaleRequest::Quit});
+		while(m_scaleThread.isRunning()) {
+			QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+		}
+		m_scaleRequests.clear();
+		delete m_renderer;
+		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
+			m_renderer = new PDFRenderer(source->path, source->password);
+			if(source->resolution == -1) source->resolution = 300;
+		} else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
+			m_renderer = new DJVURenderer(source->path);
+			if(source->resolution == -1) source->resolution = 300;
+		} else {
+			m_renderer = new ImageRenderer(source->path);
+			if(source->resolution == -1) source->resolution = 100;
+		}
+
+		Utils::setSpinBlocked(ui.spinBoxResolution, source->resolution);
+		Utils::setSpinBlocked(ui.spinBoxBrightness, source->brightness);
+		Utils::setSpinBlocked(ui.spinBoxContrast, source->contrast);
+		ui.checkBoxInvertColors->blockSignals(true);
+		ui.checkBoxInvertColors->setChecked(source->invert);
+		ui.checkBoxInvertColors->blockSignals(false);
+		m_currentSource = source;
+		m_scaleThread.start();
+	}
+
+	// Notify tools about changes
+	if(m_tool) {
+		if(m_currentSource->page != ui.spinBoxPage->value()) {
+			m_tool->pageChanged();
+		}
+		if(m_currentSource->resolution != ui.spinBoxResolution->value()) {
+			double factor = double(ui.spinBoxResolution->value()) / double(m_currentSource->resolution);
 			m_tool->resolutionChanged(factor);
 		}
 	}
+
+	// Update source struct
 	m_currentSource->page = m_pageMap[ui.spinBoxPage->value()].second;
 	m_currentSource->brightness = ui.spinBoxBrightness->value();
 	m_currentSource->contrast = ui.spinBoxContrast->value();
 	m_currentSource->resolution = ui.spinBoxResolution->value();
 	m_currentSource->invert = ui.checkBoxInvertColors->isChecked();
+
+	// Render new image
+	sendScaleRequest({ScaleRequest::Abort});
 	QImage image = m_renderer->render(m_currentSource->page, m_currentSource->resolution);
 	if(image.isNull()) {
 		return false;
@@ -306,6 +281,43 @@ bool Displayer::renderImage() {
 		m_scaleTimer.start(100);
 	}
 	return true;
+}
+
+int Displayer::getCurrentPage() const {
+	return ui.spinBoxPage->value();
+}
+
+int Displayer::getNPages() const {
+	return ui.spinBoxPage->maximum();
+}
+
+double Displayer::getCurrentAngle() const {
+	return ui.spinBoxRotation->value();
+}
+
+int Displayer::getCurrentResolution() const {
+	return ui.spinBoxResolution->value();
+}
+
+QString Displayer::getCurrentImage(int& page) const {
+	page = m_pageMap[ui.spinBoxPage->value()].second;
+	return m_pageMap[ui.spinBoxPage->value()].first ? m_pageMap[ui.spinBoxPage->value()].first->path : "";
+}
+
+bool Displayer::hasMultipleOCRAreas() {
+	return m_tool->hasMultipleOCRAreas();
+}
+
+QList<QImage> Displayer::getOCRAreas() {
+	return m_tool->getOCRAreas();
+}
+
+bool Displayer::allowAutodetectOCRAreas() const {
+	return m_tool->allowAutodetectOCRAreas();
+}
+
+void Displayer::autodetectOCRAreas() {
+	m_tool->autodetectOCRAreas();
 }
 
 void Displayer::setZoom(Zoom action, ViewportAnchor anchor) {
@@ -378,48 +390,8 @@ void Displayer::setAngle(double angle) {
 	}
 }
 
-
-void Displayer::brightnessChanged() {
-	int brightness = ui.spinBoxBrightness->value();
-	for(int page : m_pageMap.keys()) {
-		m_pageMap[page].first->brightness = brightness;
-	}
-	queueRenderImage();
-}
-
-void Displayer::contrastChanged() {
-	int contrast = ui.spinBoxBrightness->value();
-	for(int page : m_pageMap.keys()) {
-		m_pageMap[page].first->contrast = contrast;
-	}
-	queueRenderImage();
-}
-
-void Displayer::resolutionChanged() {
-	int resolution = ui.spinBoxResolution->value();
-	for(int page : m_pageMap.keys()) {
-		m_pageMap[page].first->resolution = resolution;
-	}
-	queueRenderImage();
-}
-
-void Displayer::invertColorsChanged() {
-	bool invert = ui.checkBoxInvertColors->isChecked();
-	for(int page : m_pageMap.keys()) {
-		m_pageMap[page].first->invert = invert;
-	}
-	queueRenderImage();
-}
-
-void Displayer::setResolution(int resolution) {
-	Utils::setSpinBlocked(ui.spinBoxResolution, resolution);
-	renderImage();
-}
-
-void Displayer::queueRenderImage() {
-	if(m_renderer) {
-		m_renderTimer.start(500);
-	}
+void Displayer::rotate90() {
+	setAngle(ui.spinBoxRotation->value() + qobject_cast<QAction*>(QObject::sender())->data().toDouble());
 }
 
 void Displayer::resizeEvent(QResizeEvent *event) {
@@ -506,11 +478,6 @@ void Displayer::setRotateMode(QAction *action) {
 	ui.toolButtonRotation->setIcon(action->icon());
 }
 
-void Displayer::rotate90() {
-	double angle = ui.spinBoxRotation->value() + qobject_cast<QAction*>(QObject::sender())->data().toDouble();
-	ui.spinBoxRotation->setValue(angle >= 360.0 ? angle - 360.0 : angle);
-}
-
 QImage Displayer::getImage(const QRectF& rect) {
 	QImage image(rect.width(), rect.height(), QImage::Format_RGB32);
 	image.fill(Qt::black);
@@ -535,6 +502,10 @@ QRectF Displayer::getSceneBoundingRect() const {
 	QTransform transform;
 	transform.rotate(ui.spinBoxRotation->value());
 	return transform.mapRect(rect);
+}
+
+void Displayer::scaleTimerElapsed() {
+	sendScaleRequest(m_pendingScaleRequest);
 }
 
 void Displayer::sendScaleRequest(const ScaleRequest& request) {
