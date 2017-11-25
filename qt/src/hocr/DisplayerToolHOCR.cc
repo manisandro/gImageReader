@@ -78,6 +78,7 @@ void DisplayerToolHOCR::setSelection(const QRect& rect) {
 		m_displayer->scene()->addItem(m_selection);
 	}
 	m_selection->setAnchorAndPoint(r.topLeft(), r.bottomRight());
+	m_displayer->ensureVisible(m_selection);
 }
 
 QImage DisplayerToolHOCR::getSelection(const QRect& rect) {
