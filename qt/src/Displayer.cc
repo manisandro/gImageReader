@@ -89,15 +89,19 @@ Displayer::~Displayer() {
 	delete m_scene;
 }
 
-bool Displayer::setCurrentPage(int page) {
+bool Displayer::setCurrentPage(int page, const double* angle, const int* resolution) {
 	ui.spinBoxPage->setEnabled(false);
 	if(m_sources.isEmpty()) {
 		return false;
 	}
-	if(m_tool) {
+	if(m_tool && page != ui.spinBoxPage->value()) {
 		m_tool->pageChanged();
 	}
+	bool changed = false;
 	Source* source = m_pageMap[page].first;
+	if(!source) {
+		return false;
+	}
 	if(source != m_currentSource) {
 		sendScaleRequest({ScaleRequest::Abort});
 		sendScaleRequest({ScaleRequest::Quit});
@@ -118,17 +122,31 @@ bool Displayer::setCurrentPage(int page) {
 
 		Utils::setSpinBlocked(ui.spinBoxBrightness, source->brightness);
 		Utils::setSpinBlocked(ui.spinBoxContrast, source->contrast);
-		Utils::setSpinBlocked(ui.spinBoxResolution, source->resolution);
 		ui.checkBoxInvertColors->blockSignals(true);
 		ui.checkBoxInvertColors->setChecked(source->invert);
 		ui.checkBoxInvertColors->blockSignals(false);
 		m_currentSource = source;
 		m_scaleThread.start();
+		changed = true;
 	}
-	Utils::setSpinBlocked(ui.spinBoxRotation, source->angle[m_pageMap[page].second - 1]);
+	if(angle) {
+		changed |= (source->angle[m_pageMap[page].second - 1] != *angle);
+		source->angle[m_pageMap[page].second - 1] = *angle;
+	}
+	if(resolution) {
+		changed |= (source->resolution != *resolution);
+		source->resolution = *resolution;
+	}
+	changed |= (page != ui.spinBoxPage->value());
 	Utils::setSpinBlocked(ui.spinBoxPage, page);
 
-	bool result = renderImage();
+	changed |= (source->angle[m_pageMap[page].second - 1] != ui.spinBoxRotation->value());
+	Utils::setSpinBlocked(ui.spinBoxRotation, source->angle[m_pageMap[page].second - 1]);
+
+	changed |= (source->resolution != ui.spinBoxResolution->value());
+	Utils::setSpinBlocked(ui.spinBoxResolution, source->resolution);
+
+	bool result = changed ? renderImage() : true;
 	ui.spinBoxPage->setEnabled(true);
 	return result;
 }

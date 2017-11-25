@@ -24,9 +24,10 @@ public:
 	QAction* actionOutputSaveHOCR;
 	QAction* actionOutputExportPDF;
 	QToolBar* toolBarOutput;
+	QTabWidget* tabWidget;
 
 	QSplitter* splitter;
-	QTreeWidget *treeWidgetItems;
+	QTreeView *treeViewHOCR;
 	QTableWidget *tableWidgetProperties;
 	OutputTextEdit *plainTextEditOutput;
 
@@ -60,12 +61,12 @@ public:
 		splitter = new QSplitter(Qt::Vertical, widget);
 		widget->layout()->addWidget(splitter);
 
-		treeWidgetItems = new QTreeWidget(widget);
-		treeWidgetItems->setHeaderHidden(true);
-		treeWidgetItems->setSelectionMode(QTreeWidget::ContiguousSelection);
-		splitter->addWidget(treeWidgetItems);
+		treeViewHOCR = new QTreeView(widget);
+		treeViewHOCR->setHeaderHidden(true);
+		treeViewHOCR->setSelectionMode(QTreeWidget::ExtendedSelection);
+		splitter->addWidget(treeViewHOCR);
 
-		QTabWidget* tabWidget = new QTabWidget(widget);
+		tabWidget = new QTabWidget(widget);
 
 		tableWidgetProperties = new QTableWidget(widget);
 		tableWidgetProperties->setColumnCount(2);

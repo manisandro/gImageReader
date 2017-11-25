@@ -63,7 +63,7 @@ public:
 	void autodetectOCRAreas();
 
 public slots:
-	bool setCurrentPage(int page);
+	bool setCurrentPage(int page, const double* angle = nullptr, const int* resolution = nullptr);
 	void setAngle(double angle);
 	void setResolution(int resolution);
 
