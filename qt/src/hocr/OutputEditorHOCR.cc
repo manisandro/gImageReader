@@ -112,11 +112,16 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	m_document = new HOCRDocument(&m_spell, ui.treeViewHOCR);
 	ui.treeViewHOCR->setModel(m_document);
 	ui.treeViewHOCR->setContextMenuPolicy(Qt::CustomContextMenu);
+	ui.treeViewHOCR->header()->setStretchLastSection(false);
+	ui.treeViewHOCR->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+	ui.treeViewHOCR->setColumnWidth(1, 32);
+	ui.treeViewHOCR->setColumnHidden(1, true);
 
 	connect(ui.actionOutputOpen, SIGNAL(triggered()), this, SLOT(open()));
 	connect(ui.actionOutputSaveHOCR, SIGNAL(triggered()), this, SLOT(save()));
 	connect(ui.actionOutputExportPDF, SIGNAL(triggered()), this, SLOT(savePDF()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
+	connect(ui.actionToggleWConf, SIGNAL(toggled(bool)), this, SLOT(toggleWConfColumn(bool)));
 	connect(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(ui.treeViewHOCR->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(showItemProperties(QModelIndex)));
@@ -422,6 +427,11 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	} else if(clickedAction == actionCollapse) {
 		expandCollapseChildren(index, false);
 	}
+}
+
+void OutputEditorHOCR::toggleWConfColumn(bool active)
+{
+	ui.treeViewHOCR->setColumnHidden(1, !active);
 }
 
 void OutputEditorHOCR::open() {
