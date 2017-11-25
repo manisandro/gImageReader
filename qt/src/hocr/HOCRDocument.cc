@@ -50,7 +50,7 @@ void HOCRDocument::clear()
 
 void HOCRDocument::recheckSpelling()
 {
-	recursiveDataChanged(QModelIndex(), {Qt::DisplayRole}, 3); // depth 3: {0=page, 1=para, 2=line, 3=word}
+	recursiveDataChanged(QModelIndex(), {Qt::DisplayRole}, 3); // depth 4: {0=page, 1=block, 2=para, 3=line, 4=word}
 }
 
 QModelIndex HOCRDocument::addPage(const QDomElement& pageElement, bool cleanGraphics)
@@ -291,6 +291,8 @@ QString HOCRDocument::displayRoleForItem(const HOCRItem* item) const
 	if(itemClass == "ocr_page") {
 		const HOCRPage* page = static_cast<const HOCRPage*>(item);
 		return page->title();
+	} else if(itemClass == "ocr_carea") {
+		return _("Text block");
 	} else if(itemClass == "ocr_par") {
 		return _("Paragraph");
 	} else if(itemClass == "ocr_line") {
@@ -308,6 +310,8 @@ QIcon HOCRDocument::decorationRoleForItem(const HOCRItem* item) const
 	QString itemClass = item->itemClass();
 	if(itemClass == "ocr_page") {
 		return QIcon(":/icons/item_page");
+	} else if(itemClass == "ocr_carea") {
+		return QIcon(":/icons/item_block");
 	} else if(itemClass == "ocr_par") {
 		return QIcon(":/icons/item_par");
 	} else if(itemClass == "ocr_line") {
@@ -495,52 +499,28 @@ HOCRPage::HOCRPage(QDomElement element, int pageId, const QString& language, boo
 	m_angle = attrs["rot"].toDouble();
 	m_resolution = attrs["res"].toInt();
 
-	QVector<HOCRItem*> graphicItems;
-	QDomElement careaElement = m_domElement.firstChildElement("div");
-	while(!careaElement.isNull()) {
-		Q_ASSERT(careaElement.attribute("class") == "ocr_carea");
-		// careas without any word children are graphics
-		QDomElement childElement = careaElement.firstChildElement();
-		bool haveWords = false;
-		if(!childElement.isNull()) {
-			m_childItems.append(new HOCRItem(childElement, this, this));
-			haveWords = m_childItems.last()->addChildren(language);
-			if(!haveWords) {
+	QDomElement childElement = m_domElement.firstChildElement("div");
+	while(!childElement.isNull()) {
+		HOCRItem* item = new HOCRItem(childElement, this, this);
+		m_childItems.append(item);
+		if(!item->addChildren(language)) {
+			// No word children -> treat as graphic
+			if(cleanGraphics && (item->bbox().width() < 10 || item->bbox().height() < 10))
+			{
+				// Ignore graphics which are less than 10 x 10
 				delete m_childItems.takeLast();
-			}
-		}
-		if(!haveWords) {
-			careaElement.setAttribute("class", "ocr_graphic");
-			graphicItems.append(new HOCRItem(careaElement, this, this));
-		}
-		careaElement = careaElement.nextSiblingElement();
-	}
-
-	// Delete graphics which are less than 10x10 px or those which intersect a paragraph
-	for(HOCRItem* graphicItem : graphicItems) {
-		bool deleteGraphic = false;
-		if(cleanGraphics) {
-			if(graphicItem->bbox().width() < 10 || graphicItem->bbox().height() < 10) {
-				deleteGraphic = true;
 			} else {
-				for(const HOCRItem* otherItem : m_childItems) {
-					if(otherItem->itemClass() != "ocr_graphic" && otherItem->bbox().intersects(graphicItem->bbox())) {
-						deleteGraphic = true;
-						break;
-					}
+				childElement.setAttribute("class", "ocr_graphic");
+				qDeleteAll(item->m_childItems);
+				item->m_childItems.clear();
+				// Remove any children since they are not meaningful
+				QDomNodeList childNodes = childElement.childNodes();
+				for(int i = 0, n = childNodes.size(); i < n; ++i) {
+					childElement.removeChild(childNodes.at(i));
 				}
 			}
 		}
-		if(deleteGraphic) {
-			delete graphicItem;
-		} else {
-			// Don't expose any children since they are not meaningful
-			QDomNodeList childNodes = graphicItem->m_domElement.childNodes();
-			for(int i = 0, n = childNodes.size(); i < n; ++i) {
-				graphicItem->m_domElement.removeChild(childNodes.at(i));
-			}
-			m_childItems.append(graphicItem);
-		}
+		childElement = childElement.nextSiblingElement();
 	}
 }
 
