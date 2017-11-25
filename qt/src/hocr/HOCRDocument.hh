@@ -61,7 +61,7 @@ public:
 	QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
 	QModelIndex parent(const QModelIndex &child) const;
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
-	int columnCount(const QModelIndex &/*parent*/ = QModelIndex()) const{ return 1; }
+	int columnCount(const QModelIndex &parent = QModelIndex()) const;
 
 	static QMap<QString, QString> deserializeAttrGroup(const QString& string);
 	static QString serializeAttrGroup(const QMap<QString, QString>& attrs);

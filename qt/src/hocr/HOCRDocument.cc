@@ -77,6 +77,10 @@ bool HOCRDocument::editItemAttribute(QModelIndex& index, const QString& group, c
 		attrs[key] = value;
 		item->m_domElement.setAttribute(group, HOCRDocument::serializeAttrGroup(attrs));
 	}
+	if(key == "x_wconf") {
+		QModelIndex colIdx = index.sibling(index.row(), 1);
+		emit dataChanged(colIdx, colIdx, {Qt::DisplayRole});
+	}
 	emit itemAttributesChanged();
 	return true;
 }
@@ -172,29 +176,35 @@ QVariant HOCRDocument::data(const QModelIndex &index, int role) const
 
 	HOCRItem *item = static_cast<HOCRItem*>(index.internalPointer());
 
-	switch (role) {
-	case Qt::DisplayRole:
-		return displayRoleForItem(item);
-	case Qt::DecorationRole:
-		return decorationRoleForItem(item);
-	case Qt::ForegroundRole:
-	{
-		bool enabled = item->isEnabled();
-		const HOCRItem* parent = item->parent();
-		while(enabled && parent) {
-			enabled = parent->isEnabled();
-			parent = parent->parent();
+	if(index.column() == 0) {
+		switch (role) {
+		case Qt::DisplayRole:
+			return displayRoleForItem(item);
+		case Qt::DecorationRole:
+			return decorationRoleForItem(item);
+		case Qt::ForegroundRole:
+		{
+			bool enabled = item->isEnabled();
+			const HOCRItem* parent = item->parent();
+			while(enabled && parent) {
+				enabled = parent->isEnabled();
+				parent = parent->parent();
+			}
+			if(enabled) {
+				return checkItemSpelling(item) ? QVariant() : QVariant(QColor(Qt::red));
+			} else {
+				return checkItemSpelling(item) ? QVariant(QColor(Qt::gray)) : QVariant(QColor(208, 80, 82));
+			}
 		}
-		if(enabled) {
-			return checkItemSpelling(item) ? QVariant() : QVariant(QColor(Qt::red));
-		} else {
-			return checkItemSpelling(item) ? QVariant(QColor(Qt::gray)) : QVariant(QColor(208, 80, 82));
+		case Qt::CheckStateRole:
+			return item->isEnabled() ? Qt::Checked : Qt::Unchecked;
+		default:
+			break;
 		}
-	}
-	case Qt::CheckStateRole:
-		return item->isEnabled() ? Qt::Checked : Qt::Unchecked;
-	default:
-		break;
+	} else if(index.column() == 1) {
+		if(role == Qt::DisplayRole && item->itemClass() == "ocrx_word") {
+			return deserializeAttrGroup(item->element().attribute("title"))["x_wconf"];
+		}
 	}
 	return QVariant();
 }
@@ -242,7 +252,7 @@ Qt::ItemFlags HOCRDocument::flags(const QModelIndex &index) const
 		return 0;
 
 	HOCRItem *item = static_cast<HOCRItem*>(index.internalPointer());
-	return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | (item->itemClass() == "ocrx_word" ? Qt::ItemIsEditable : Qt::NoItemFlags);
+	return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | (item->itemClass() == "ocrx_word" && index.column() == 0 ? Qt::ItemIsEditable : Qt::NoItemFlags);
 }
 
 QModelIndex HOCRDocument::index(int row, int column, const QModelIndex &parent) const
@@ -283,6 +293,11 @@ int HOCRDocument::rowCount(const QModelIndex &parent) const
 	if (parent.column() > 0)
 		return 0;
 	return !parent.isValid() ? m_pages.size() : static_cast<HOCRItem*>(parent.internalPointer())->m_childItems.size();
+}
+
+int HOCRDocument::columnCount(const QModelIndex &/*parent*/) const
+{
+	return 2;
 }
 
 QString HOCRDocument::displayRoleForItem(const HOCRItem* item) const

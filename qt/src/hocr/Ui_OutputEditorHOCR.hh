@@ -23,6 +23,7 @@ public:
 	QAction* actionOutputClear;
 	QAction* actionOutputSaveHOCR;
 	QAction* actionOutputExportPDF;
+	QAction* actionToggleWConf;
 	QToolBar* toolBarOutput;
 	QTabWidget* tabWidget;
 
@@ -47,6 +48,9 @@ public:
 		actionOutputExportPDF->setEnabled(false);
 		actionOutputClear = new QAction(QIcon::fromTheme("edit-clear"), gettext("Clear output"), widget);
 		actionOutputClear->setToolTip(gettext("Clear output"));
+		actionToggleWConf = new QAction(QIcon(":/icons/wconf"), gettext("Show confidence values"), widget);
+		actionToggleWConf->setToolTip(gettext("Show confidence values"));
+		actionToggleWConf->setCheckable(true);
 
 		toolBarOutput = new QToolBar(widget);
 		toolBarOutput->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -55,6 +59,8 @@ public:
 		toolBarOutput->addAction(actionOutputSaveHOCR);
 		toolBarOutput->addAction(actionOutputExportPDF);
 		toolBarOutput->addAction(actionOutputClear);
+		toolBarOutput->addSeparator();
+		toolBarOutput->addAction(actionToggleWConf);
 
 		widget->layout()->addWidget(toolBarOutput);
 

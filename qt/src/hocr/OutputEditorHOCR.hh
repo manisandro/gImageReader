@@ -82,6 +82,7 @@ private slots:
 	void setModified() { m_modified = true; }
 	void showItemProperties(const QModelIndex& current);
 	void showTreeWidgetContextMenu(const QPoint& point);
+	void toggleWConfColumn(bool active);
 	void updateSourceText();
 	void updateCurrentItemBBox(QRect bbox);
 };
