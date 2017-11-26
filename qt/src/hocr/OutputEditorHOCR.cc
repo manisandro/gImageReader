@@ -456,8 +456,10 @@ void OutputEditorHOCR::open() {
 		return;
 	}
 	while(!div.isNull()) {
+		// Need to query next before adding page since the element is reparented
+		QDomElement nextDiv = div.nextSiblingElement("div");
 		m_document->addPage(div, false);
-		div = div.nextSiblingElement("div");
+		div = nextDiv;
 	}
 	m_modified = false;
 	m_filename = filename;
