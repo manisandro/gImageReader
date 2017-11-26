@@ -490,11 +490,11 @@ bool OutputEditorHOCR::save(const QString& filename) {
 						 "<!DOCTYPE html>\n"
 						 "<html>\n"
 						 " <head>\n"
-						 "  <title></title>\n"
+						 "  <title>%1</title>\n"
 						 "  <meta charset=\"utf-8\" /> \n"
-						 "  <meta name='ocr-system' content='tesseract %1' />\n"
+						 "  <meta name='ocr-system' content='tesseract %2' />\n"
 						 "  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
-						 " </head>\n").arg(tess.Version());
+						 " </head>\n").arg(QFileInfo(outname).fileName()).arg(tess.Version());
 	file.write(header.toUtf8());
 	file.write(m_document->toHTML().toUtf8());
 	file.write("</html>\n");
