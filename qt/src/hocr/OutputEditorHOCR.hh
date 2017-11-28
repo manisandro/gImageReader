@@ -66,7 +66,7 @@ private:
 	UI_OutputEditorHOCR ui;
 	HTMLHighlighter* m_highlighter;
 	bool m_modified = false;
-	QString m_filename;
+	QString m_filebasename;
 	QtSpell::TextEditChecker m_spell;
 
 	HOCRDocument* m_document;
