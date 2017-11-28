@@ -462,7 +462,7 @@ void OutputEditorHOCR::open() {
 		div = nextDiv;
 	}
 	m_modified = false;
-	m_filename = filename;
+	m_filebasename = QFileInfo(filename).completeBaseName();
 	ui.actionOutputSaveHOCR->setEnabled(true);
 	ui.actionOutputExportPDF->setEnabled(true);
 }
@@ -470,12 +470,12 @@ void OutputEditorHOCR::open() {
 bool OutputEditorHOCR::save(const QString& filename) {
 	QString outname = filename;
 	if(outname.isEmpty()) {
-		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-		QString suggestion = m_filename;
+		QString suggestion = m_filebasename;
 		if(suggestion.isEmpty()) {
-			suggestion = (!sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output")) + ".html";
+			QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+			suggestion = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
 		}
-		outname = FileDialogs::saveDialog(_("Save hOCR Output..."), suggestion, "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")));
+		outname = FileDialogs::saveDialog(_("Save hOCR Output..."), suggestion + ".html", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")));
 		if(outname.isEmpty()) {
 			return false;
 		}
@@ -499,7 +499,7 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	file.write(m_document->toHTML().toUtf8());
 	file.write("</html>\n");
 	m_modified = false;
-	m_filename = outname;
+	m_filebasename = QFileInfo(outname).completeBaseName();
 	return true;
 }
 
@@ -509,7 +509,7 @@ bool OutputEditorHOCR::savePDF()
 	const HOCRItem* item = m_document->itemAtIndex(current);
 	const HOCRPage* page = item ? item->page() : m_document->page(0);
 	if(showPage(page)) {
-		return HOCRPdfExporter(m_document, page, m_tool).run();
+		return HOCRPdfExporter(m_document, page, m_tool).run(m_filebasename);
 	}
 	return false;
 }
@@ -533,7 +533,7 @@ bool OutputEditorHOCR::clear(bool hide)
 	ui.plainTextEditOutput->clear();
 	m_tool->clearSelection();
 	m_modified = false;
-	m_filename.clear();
+	m_filebasename.clear();
 	ui.actionOutputSaveHOCR->setEnabled(false);
 	ui.actionOutputExportPDF->setEnabled(false);
 	if(hide)
