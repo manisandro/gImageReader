@@ -122,12 +122,14 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.actionOutputExportPDF, SIGNAL(triggered()), this, SLOT(savePDF()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
 	connect(ui.actionToggleWConf, SIGNAL(toggled(bool)), this, SLOT(toggleWConfColumn(bool)));
+	connect(ui.actionSyncPage, SIGNAL(toggled(bool)), this, SLOT(synchronizePage()));
 	connect(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(ui.treeViewHOCR->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(showItemProperties(QModelIndex)));
 	connect(ui.treeViewHOCR, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showTreeWidgetContextMenu(QPoint)));
 	connect(ui.tableWidgetProperties, SIGNAL(cellChanged(int,int)), this, SLOT(propertyCellChanged(int,int)));
 	connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(updateSourceText()));
+	connect(m_tool, SIGNAL(displayedSourceChanged()), this, SLOT(synchronizePage()));
 	connect(m_tool, SIGNAL(selectionGeometryChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
 	connect(m_tool, SIGNAL(selectionDrawn(QRect)), this, SLOT(addGraphicRegion(QRect)));
 	connect(m_document, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(setModified()));
@@ -151,6 +153,7 @@ void OutputEditorHOCR::setFont() {
 }
 
 OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI &tess) {
+	m_recognizing = true;
 	tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
 	return new HOCRReadSessionData;
 }
@@ -167,6 +170,7 @@ void OutputEditorHOCR::readError(const QString& errorMsg, ReadSessionData *data)
 }
 
 void OutputEditorHOCR::finalizeRead(ReadSessionData *data) {
+	m_recognizing = false;
 	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
 	if(!hdata->errors.isEmpty()) {
 		QString message = QString(_("The following pages could not be processed:\n%1").arg(hdata->errors.join("\n")));
@@ -426,6 +430,15 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 		expandCollapseChildren(index, true);
 	} else if(clickedAction == actionCollapse) {
 		expandCollapseChildren(index, false);
+	}
+}
+
+void OutputEditorHOCR::synchronizePage()
+{
+	if(!m_recognizing && ui.actionSyncPage->isChecked()) {
+		int page;
+		QString filename = m_tool->getDisplayer()->getCurrentImage(page);
+		ui.treeViewHOCR->setCurrentIndex(m_document->searchPage(filename, page));
 	}
 }
 

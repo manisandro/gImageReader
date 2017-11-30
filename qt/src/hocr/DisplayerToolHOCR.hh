@@ -30,6 +30,7 @@ public:
 
 	QList<QImage> getOCRAreas() override;
 	void pageChanged() override {
+		emit displayedSourceChanged();
 		clearSelection();
 	}
 	void resolutionChanged(double /*factor*/) override {
@@ -54,6 +55,7 @@ public:
 	void clearSelection();
 
 signals:
+	void displayedSourceChanged();
 	void selectionDrawn(QRect rect);
 	void selectionGeometryChanged(QRect rect);
 

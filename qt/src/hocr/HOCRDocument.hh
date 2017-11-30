@@ -56,6 +56,7 @@ public:
 	bool removeItem(const QModelIndex& index);
 
 	bool referencesSource(const QString& filename) const;
+	QModelIndex searchPage(const QString& filename, int pageNr) const;
 
 	QVariant data(const QModelIndex &index, int role) const;
 	bool setData(const QModelIndex &index, const QVariant &value, int role) override;
