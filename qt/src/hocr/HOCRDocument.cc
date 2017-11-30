@@ -179,6 +179,17 @@ bool HOCRDocument::referencesSource(const QString& filename) const
 	return false;
 }
 
+QModelIndex HOCRDocument::searchPage(const QString& filename, int pageNr) const
+{
+	for(int iPage = 0, nPages = m_pages.size(); iPage < nPages; ++iPage) {
+		const HOCRPage* page = m_pages[iPage];
+		if(page->sourceFile() == filename && page->pageNr() == pageNr) {
+			return index(iPage, 0);
+		}
+	}
+	return QModelIndex();
+}
+
 QVariant HOCRDocument::data(const QModelIndex &index, int role) const
 {
 	if (!index.isValid())
