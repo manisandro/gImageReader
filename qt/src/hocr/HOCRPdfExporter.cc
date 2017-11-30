@@ -298,9 +298,19 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 			suggestion = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
 		}
 
-		outname = FileDialogs::saveDialog(_("Save PDF Output..."), suggestion + ".pdf", "outputdir", QString("%1 (*.pdf)").arg(_("PDF Files")));
-		if(outname.isEmpty()) {
-			accepted = false;
+		while(true) {
+			outname = FileDialogs::saveDialog(_("Save PDF Output..."), suggestion + ".pdf", "outputdir", QString("%1 (*.pdf)").arg(_("PDF Files")));
+			if(outname.isEmpty()) {
+				accepted = false;
+				break;
+			}
+			if(m_hocrdocument->referencesSource(outname)) {
+				QMessageBox::warning(MAIN, _("Invalid Output"), _("Cannot overwrite a file which is a source image of this document."));
+				continue;
+			}
+			break;
+		}
+		if(!accepted) {
 			break;
 		}
 		filebasename = QFileInfo(outname).completeBaseName();

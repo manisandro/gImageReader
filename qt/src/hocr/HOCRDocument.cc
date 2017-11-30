@@ -169,6 +169,16 @@ bool HOCRDocument::removeItem(const QModelIndex& index)
 	return true;
 }
 
+bool HOCRDocument::referencesSource(const QString& filename) const
+{
+	for(const HOCRPage* page : m_pages) {
+		if(page->sourceFile() == filename) {
+			return true;
+		}
+	}
+	return false;
+}
+
 QVariant HOCRDocument::data(const QModelIndex &index, int role) const
 {
 	if (!index.isValid())
