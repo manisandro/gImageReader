@@ -106,7 +106,7 @@ public:
 	const QRect& bbox() const{ return m_bbox; }
 	QString text() const{ return m_domElement.text(); }
 	QString lang() const{ return m_domElement.attribute("lang"); }
-	QString source() const;
+	QString toHtml(int indent = 1) const;
 	int baseLine() const;
 	double fontSize() const;
 
