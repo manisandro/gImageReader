@@ -24,7 +24,6 @@ public:
 	QAction* actionOutputSaveHOCR;
 	QAction* actionOutputExportPDF;
 	QAction* actionToggleWConf;
-	QAction* actionSyncPage;
 	QAction* actionPick;
 	QToolBar* toolBarOutput;
 	QTabWidget* tabWidget;
@@ -53,9 +52,6 @@ public:
 		actionToggleWConf = new QAction(QIcon(":/icons/wconf"), gettext("Show confidence values"), widget);
 		actionToggleWConf->setToolTip(gettext("Show confidence values"));
 		actionToggleWConf->setCheckable(true);
-		actionSyncPage = new QAction(QIcon(":/icons/lock_page"), gettext("Syncronize with displayed page"), widget);
-		actionSyncPage->setToolTip(gettext("Syncronize with displayed page"));
-		actionSyncPage->setCheckable(true);
 		actionPick = new QAction(QIcon(":/icons/pick"), gettext("Select item at position"), widget);
 		actionPick->setToolTip(gettext("Select item at position"));
 		actionPick->setCheckable(true);
@@ -69,7 +65,6 @@ public:
 		toolBarOutput->addAction(actionOutputClear);
 		toolBarOutput->addSeparator();
 		toolBarOutput->addAction(actionToggleWConf);
-		toolBarOutput->addAction(actionSyncPage);
 		toolBarOutput->addAction(actionPick);
 
 		widget->layout()->addWidget(toolBarOutput);
