@@ -122,7 +122,6 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.actionOutputExportPDF, SIGNAL(triggered()), this, SLOT(savePDF()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
 	connect(ui.actionToggleWConf, SIGNAL(toggled(bool)), this, SLOT(toggleWConfColumn(bool)));
-	connect(ui.actionSyncPage, SIGNAL(toggled(bool)), this, SLOT(synchronizePage()));
 	connect(ui.actionPick, SIGNAL(toggled(bool)), this, SLOT(pickPosition(bool)));
 	connect(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
@@ -130,7 +129,6 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.treeViewHOCR, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showTreeWidgetContextMenu(QPoint)));
 	connect(ui.tableWidgetProperties, SIGNAL(cellChanged(int,int)), this, SLOT(propertyCellChanged(int,int)));
 	connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(updateSourceText()));
-	connect(m_tool, SIGNAL(displayedSourceChanged()), this, SLOT(synchronizePage()));
 	connect(m_tool, SIGNAL(bboxChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
 	connect(m_tool, SIGNAL(bboxDrawn(QRect)), this, SLOT(addGraphicRegion(QRect)));
 	connect(m_tool, SIGNAL(positionPicked(QPoint)), this, SLOT(pickItem(QPoint)));
@@ -156,7 +154,6 @@ void OutputEditorHOCR::setFont() {
 }
 
 OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI &tess) {
-	m_recognizing = true;
 	tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
 	return new HOCRReadSessionData;
 }
@@ -173,7 +170,6 @@ void OutputEditorHOCR::readError(const QString& errorMsg, ReadSessionData *data)
 }
 
 void OutputEditorHOCR::finalizeRead(ReadSessionData *data) {
-	m_recognizing = false;
 	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
 	if(!hdata->errors.isEmpty()) {
 		QString message = QString(_("The following pages could not be processed:\n%1").arg(hdata->errors.join("\n")));
@@ -458,15 +454,6 @@ void OutputEditorHOCR::pickItem(const QPoint& point)
 	int page;
 	QString filename = m_tool->getDisplayer()->getCurrentImage(page);
 	showItemProperties(m_document->searchAtCanvasPos(filename, page, point));
-}
-
-void OutputEditorHOCR::synchronizePage()
-{
-	if(!m_recognizing && ui.actionSyncPage->isChecked()) {
-		int page;
-		QString filename = m_tool->getDisplayer()->getCurrentImage(page);
-		showItemProperties(m_document->searchPage(filename, page));
-	}
 }
 
 void OutputEditorHOCR::toggleWConfColumn(bool active)

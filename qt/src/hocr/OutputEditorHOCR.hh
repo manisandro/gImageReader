@@ -68,7 +68,6 @@ private:
 	bool m_modified = false;
 	QString m_filebasename;
 	QtSpell::TextEditChecker m_spell;
-	bool m_recognizing = false;
 
 	HOCRDocument* m_document;
 
@@ -85,7 +84,6 @@ private slots:
 	void setModified() { m_modified = true; }
 	void showItemProperties(const QModelIndex& current);
 	void showTreeWidgetContextMenu(const QPoint& point);
-	void synchronizePage();
 	void toggleWConfColumn(bool active);
 	void toolActionChanged(int action);
 	void updateSourceText();
