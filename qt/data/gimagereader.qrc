@@ -26,5 +26,6 @@
         <file alias="rotate_pages">../../data/icons/rotate_pages.png</file>
         <file alias="lock_page">../../data/icons/lock_page.png</file>
         <file alias="wconf">../../data/icons/wconf.png</file>
+        <file alias="pick">../../data/icons/pick.png</file>
     </qresource>
 </RCC>

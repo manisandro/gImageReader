@@ -190,6 +190,30 @@ QModelIndex HOCRDocument::searchPage(const QString& filename, int pageNr) const
 	return QModelIndex();
 }
 
+QModelIndex HOCRDocument::searchAtCanvasPos(const QString& filename, int pageNr, const QPoint& pos) const
+{
+	QModelIndex index = searchPage(filename, pageNr);
+	if(!index.isValid()) {
+		return QModelIndex();
+	}
+	const HOCRItem* item = static_cast<const HOCRItem*>(index.internalPointer());
+	while(true) {
+		int iChild = 0, nChildren = item->children().size();
+		for(; iChild < nChildren; ++iChild) {
+			const HOCRItem* childItem = item->children()[iChild];
+			if(childItem->bbox().contains(pos)) {
+				item = childItem;
+				index = index.child(iChild, 0);
+				break;
+			}
+		}
+		if(iChild == nChildren) {
+			break;
+		}
+	}
+	return index;
+}
+
 QVariant HOCRDocument::data(const QModelIndex &index, int role) const
 {
 	if (!index.isValid())
