@@ -123,6 +123,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
 	connect(ui.actionToggleWConf, SIGNAL(toggled(bool)), this, SLOT(toggleWConfColumn(bool)));
 	connect(ui.actionSyncPage, SIGNAL(toggled(bool)), this, SLOT(synchronizePage()));
+	connect(ui.actionPick, SIGNAL(toggled(bool)), this, SLOT(pickPosition(bool)));
 	connect(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(ui.treeViewHOCR->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(showItemProperties(QModelIndex)));
@@ -130,8 +131,10 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.tableWidgetProperties, SIGNAL(cellChanged(int,int)), this, SLOT(propertyCellChanged(int,int)));
 	connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(updateSourceText()));
 	connect(m_tool, SIGNAL(displayedSourceChanged()), this, SLOT(synchronizePage()));
-	connect(m_tool, SIGNAL(selectionGeometryChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
-	connect(m_tool, SIGNAL(selectionDrawn(QRect)), this, SLOT(addGraphicRegion(QRect)));
+	connect(m_tool, SIGNAL(bboxChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
+	connect(m_tool, SIGNAL(bboxDrawn(QRect)), this, SLOT(addGraphicRegion(QRect)));
+	connect(m_tool, SIGNAL(positionPicked(QPoint)), this, SLOT(pickItem(QPoint)));
+	connect(m_tool, SIGNAL(actionChanged(int)), this, SLOT(toolActionChanged(int)));
 	connect(m_document, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(setModified()));
 	connect(m_document, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(setModified()));
 	connect(m_document, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(setModified()));
@@ -216,6 +219,9 @@ bool OutputEditorHOCR::showPage(const HOCRPage *page)
 }
 
 void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
+	ui.treeViewHOCR->blockSignals(true);
+	ui.treeViewHOCR->setCurrentIndex(current);
+	ui.treeViewHOCR->blockSignals(false);
 	ui.tableWidgetProperties->blockSignals(true);
 	ui.tableWidgetProperties->setRowCount(0);
 	ui.tableWidgetProperties->blockSignals(false);
@@ -414,8 +420,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 		return;
 	}
 	if(clickedAction == actionAddGraphic) {
-		m_tool->clearSelection();
-		m_tool->activateDrawSelection();
+		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_RECT);
 	} else if(clickedAction == addWordAction) {
 		m_spell.addWordToDictionary(addWordAction->data().toString());
 		m_document->recheckSpelling();
@@ -433,18 +438,47 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	}
 }
 
+void OutputEditorHOCR::pickPosition(bool enabled)
+{
+	if(enabled) {
+		int pageNr;
+		QString filename = m_tool->getDisplayer()->getCurrentImage(pageNr);
+		const HOCRItem* currentItem = m_document->itemAtIndex(m_document->searchPage(filename, pageNr));
+		if(currentItem) {
+			showPage(currentItem->page()); // Ensure rotation and resolution are correct
+		}
+		m_tool->setAction(DisplayerToolHOCR::ACTION_PICK_POSITION);
+	} else {
+		m_tool->setAction(DisplayerToolHOCR::ACTION_NONE);
+	}
+}
+
+void OutputEditorHOCR::pickItem(const QPoint& point)
+{
+	int page;
+	QString filename = m_tool->getDisplayer()->getCurrentImage(page);
+	showItemProperties(m_document->searchAtCanvasPos(filename, page, point));
+}
+
 void OutputEditorHOCR::synchronizePage()
 {
 	if(!m_recognizing && ui.actionSyncPage->isChecked()) {
 		int page;
 		QString filename = m_tool->getDisplayer()->getCurrentImage(page);
-		ui.treeViewHOCR->setCurrentIndex(m_document->searchPage(filename, page));
+		showItemProperties(m_document->searchPage(filename, page));
 	}
 }
 
 void OutputEditorHOCR::toggleWConfColumn(bool active)
 {
 	ui.treeViewHOCR->setColumnHidden(1, !active);
+}
+
+void OutputEditorHOCR::toolActionChanged(int action)
+{
+	ui.actionPick->blockSignals(true);
+	ui.actionPick->setChecked(action == DisplayerToolHOCR::ACTION_PICK_POSITION);
+	ui.actionPick->blockSignals(false);
 }
 
 void OutputEditorHOCR::open() {
