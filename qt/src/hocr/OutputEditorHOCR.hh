@@ -77,7 +77,6 @@ private:
 private slots:
 	void addGraphicRegion(const QRect& bbox);
 	void addPage(const QString& hocrText, ReadSessionData data);
-	void pickPosition(bool enabled);
 	void pickItem(const QPoint& point);
 	void propertyCellChanged(int row, int col);
 	void setFont();
@@ -85,7 +84,6 @@ private slots:
 	void showItemProperties(const QModelIndex& current);
 	void showTreeWidgetContextMenu(const QPoint& point);
 	void toggleWConfColumn(bool active);
-	void toolActionChanged(int action);
 	void updateSourceText();
 	void updateCurrentItemBBox(QRect bbox);
 };

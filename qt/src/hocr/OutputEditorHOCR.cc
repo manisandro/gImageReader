@@ -23,6 +23,7 @@
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QSyntaxHighlighter>
+#include <cmath>
 #include <cstring>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
@@ -122,7 +123,6 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.actionOutputExportPDF, SIGNAL(triggered()), this, SLOT(savePDF()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
 	connect(ui.actionToggleWConf, SIGNAL(toggled(bool)), this, SLOT(toggleWConfColumn(bool)));
-	connect(ui.actionPick, SIGNAL(toggled(bool)), this, SLOT(pickPosition(bool)));
 	connect(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(ui.treeViewHOCR->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(showItemProperties(QModelIndex)));
@@ -132,7 +132,6 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(m_tool, SIGNAL(bboxChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
 	connect(m_tool, SIGNAL(bboxDrawn(QRect)), this, SLOT(addGraphicRegion(QRect)));
 	connect(m_tool, SIGNAL(positionPicked(QPoint)), this, SLOT(pickItem(QPoint)));
-	connect(m_tool, SIGNAL(actionChanged(int)), this, SLOT(toolActionChanged(int)));
 	connect(m_document, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(setModified()));
 	connect(m_document, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(setModified()));
 	connect(m_document, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(setModified()));
@@ -434,38 +433,27 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	}
 }
 
-void OutputEditorHOCR::pickPosition(bool enabled)
-{
-	if(enabled) {
-		int pageNr;
-		QString filename = m_tool->getDisplayer()->getCurrentImage(pageNr);
-		const HOCRItem* currentItem = m_document->itemAtIndex(m_document->searchPage(filename, pageNr));
-		if(currentItem) {
-			showPage(currentItem->page()); // Ensure rotation and resolution are correct
-		}
-		m_tool->setAction(DisplayerToolHOCR::ACTION_PICK_POSITION);
-	} else {
-		m_tool->setAction(DisplayerToolHOCR::ACTION_NONE);
-	}
-}
-
 void OutputEditorHOCR::pickItem(const QPoint& point)
 {
-	int page;
-	QString filename = m_tool->getDisplayer()->getCurrentImage(page);
-	showItemProperties(m_document->searchAtCanvasPos(filename, page, point));
+	int pageNr;
+	QString filename = m_tool->getDisplayer()->getCurrentImage(pageNr);
+	QModelIndex pageIndex = m_document->searchPage(filename, pageNr);
+	const HOCRItem* currentItem = m_document->itemAtIndex(pageIndex);
+	if(!currentItem) {
+		return;
+	}
+	const HOCRPage* page = currentItem->page();
+	// Transform point in coordinate space used when page was OCRed
+	double alpha = (page->angle() - m_tool->getDisplayer()->getCurrentAngle()) / 180. * M_PI;
+	double scale = double(page->resolution()) / double(m_tool->getDisplayer()->getCurrentResolution());
+	QPoint newPoint( scale * (point.x() * std::cos(alpha) - point.y() * std::sin(alpha)) + 0.5 * page->bbox().width(),
+					 scale * (point.x() * std::sin(alpha) + point.y() * std::cos(alpha)) + 0.5 * page->bbox().height());
+	showItemProperties(m_document->searchAtCanvasPos(pageIndex, newPoint));
 }
 
 void OutputEditorHOCR::toggleWConfColumn(bool active)
 {
 	ui.treeViewHOCR->setColumnHidden(1, !active);
-}
-
-void OutputEditorHOCR::toolActionChanged(int action)
-{
-	ui.actionPick->blockSignals(true);
-	ui.actionPick->setChecked(action == DisplayerToolHOCR::ACTION_PICK_POSITION);
-	ui.actionPick->blockSignals(false);
 }
 
 void OutputEditorHOCR::open() {

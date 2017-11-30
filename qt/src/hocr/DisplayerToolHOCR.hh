@@ -25,7 +25,7 @@
 class DisplayerToolHOCR : public DisplayerTool {
 	Q_OBJECT
 public:
-	enum Action {ACTION_NONE, ACTION_DRAW_RECT, ACTION_PICK_POSITION};
+	enum Action {ACTION_NONE, ACTION_DRAW_RECT};
 
 	DisplayerToolHOCR(Displayer* displayer, QObject* parent = 0);
 	~DisplayerToolHOCR();

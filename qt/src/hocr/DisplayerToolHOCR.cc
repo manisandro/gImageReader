@@ -65,10 +65,9 @@ void DisplayerToolHOCR::mouseReleaseEvent(QMouseEvent *event) {
 			emit bboxDrawn(r);
 		}
 		event->accept();
-	} else if(m_currentAction == ACTION_PICK_POSITION) {
+	} else {
 		QPoint p = m_displayer->mapToSceneClamped(event->pos()).toPoint();
-		QPoint offset = m_displayer->getSceneBoundingRect().toRect().topLeft();
-		emit positionPicked(p - offset);
+		emit positionPicked(p);
 	}
 	setAction(ACTION_NONE, false);
 }
