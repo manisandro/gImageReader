@@ -462,11 +462,11 @@ HOCRItem::~HOCRItem()
 	qDeleteAll(m_childItems);
 }
 
-QString HOCRItem::source() const
+QString HOCRItem::toHtml(int indent) const
 {
 	QString str;
 	QTextStream stream(&str);
-	m_domElement.save(stream, 1);
+	m_domElement.save(stream, indent);
 	return str;
 }
 

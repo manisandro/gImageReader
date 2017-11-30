@@ -257,7 +257,7 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
 	}
 	ui.tableWidgetProperties->blockSignals(false);
 
-	ui.plainTextEditOutput->setPlainText(currentItem->source());
+	ui.plainTextEditOutput->setPlainText(currentItem->toHtml());
 
 	m_tool->setSelection(currentItem->bbox());
 }
@@ -314,7 +314,7 @@ void OutputEditorHOCR::updateSourceText() {
 		QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
 		const HOCRItem* currentItem = m_document->itemAtIndex(current);
 		if(currentItem) {
-			ui.plainTextEditOutput->setPlainText(currentItem->source());
+			ui.plainTextEditOutput->setPlainText(currentItem->toHtml());
 		}
 	}
 }
