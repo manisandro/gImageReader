@@ -52,9 +52,6 @@ public:
 		actionToggleWConf = new QAction(QIcon(":/icons/wconf"), gettext("Show confidence values"), widget);
 		actionToggleWConf->setToolTip(gettext("Show confidence values"));
 		actionToggleWConf->setCheckable(true);
-		actionPick = new QAction(QIcon(":/icons/pick"), gettext("Select item at position"), widget);
-		actionPick->setToolTip(gettext("Select item at position"));
-		actionPick->setCheckable(true);
 
 		toolBarOutput = new QToolBar(widget);
 		toolBarOutput->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -65,7 +62,6 @@ public:
 		toolBarOutput->addAction(actionOutputClear);
 		toolBarOutput->addSeparator();
 		toolBarOutput->addAction(actionToggleWConf);
-		toolBarOutput->addAction(actionPick);
 
 		widget->layout()->addWidget(toolBarOutput);
 

@@ -57,7 +57,7 @@ public:
 
 	bool referencesSource(const QString& filename) const;
 	QModelIndex searchPage(const QString& filename, int pageNr) const;
-	QModelIndex searchAtCanvasPos(const QString& filename, int pageNr, const QPoint& pos) const;
+	QModelIndex searchAtCanvasPos(const QModelIndex& pageIndex, const QPoint& pos) const;
 
 	QVariant data(const QModelIndex &index, int role) const;
 	bool setData(const QModelIndex &index, const QVariant &value, int role) override;

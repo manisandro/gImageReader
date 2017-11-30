@@ -190,9 +190,9 @@ QModelIndex HOCRDocument::searchPage(const QString& filename, int pageNr) const
 	return QModelIndex();
 }
 
-QModelIndex HOCRDocument::searchAtCanvasPos(const QString& filename, int pageNr, const QPoint& pos) const
+QModelIndex HOCRDocument::searchAtCanvasPos(const QModelIndex& pageIndex, const QPoint& pos) const
 {
-	QModelIndex index = searchPage(filename, pageNr);
+	QModelIndex index = pageIndex;
 	if(!index.isValid()) {
 		return QModelIndex();
 	}
