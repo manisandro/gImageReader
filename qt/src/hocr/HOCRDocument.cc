@@ -224,6 +224,7 @@ QVariant HOCRDocument::data(const QModelIndex &index, int role) const
 	if(index.column() == 0) {
 		switch (role) {
 		case Qt::DisplayRole:
+		case Qt::EditRole:
 			return displayRoleForItem(item);
 		case Qt::DecorationRole:
 			return decorationRoleForItem(item);
