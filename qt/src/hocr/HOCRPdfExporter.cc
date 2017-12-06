@@ -315,7 +315,8 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 		}
 		filebasename = QFileInfo(outname).completeBaseName();
 
-		PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(ui.lineEditPasswordOpen->text().toStdString(),
+		try {
+			PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(ui.lineEditPasswordOpen->text().toStdString(),
 									  ui.lineEditPasswordOpen->text().toStdString(),
 									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
 									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
@@ -326,11 +327,10 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
 									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
 									  PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
-		try {
 
 			document = new PoDoFo::PdfStreamedDocument(outname.toLocal8Bit().data(), PoDoFo::EPdfVersion::ePdfVersion_1_7, encrypt);
-		} catch(...) {
-			QMessageBox::critical(MAIN, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
+		} catch(PoDoFo::PdfError& err) {
+			QMessageBox::critical(MAIN, _("Failed to create output"), _("Check that you have writing permissions in the selected folder. The returned error was: %1").arg(err.what()));
 			continue;
 		}
 		try {
@@ -340,11 +340,11 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 #else
 			font = document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), pdfEncoding);
 #endif
-		} catch(...) {
+		} catch(PoDoFo::PdfError& err) {
+			QMessageBox::critical(MAIN, _("Error"), _("The PDF library could not load the selected font: %1.").arg(err.what()));
 			font = nullptr;
 		}
 		if(!font) {
-			QMessageBox::critical(MAIN, _("Error"), _("The PDF library does not support the selected font."));
 			document->Close();
 			delete document;
 			continue;
