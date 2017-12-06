@@ -93,9 +93,8 @@ private:
 	Ui::PdfExportDialog ui;
 	QFontDialog* m_pdfFontDialog = nullptr;
 	QGraphicsPixmapItem* m_preview = nullptr;
-	const HOCRPage* m_previewPage;
-
 	const HOCRDocument* m_hocrdocument;
+	const HOCRPage* m_previewPage;
 	DisplayerToolHOCR* m_displayerTool;
 
 	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale = 1.) const;
