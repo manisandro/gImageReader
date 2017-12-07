@@ -214,6 +214,10 @@ bool Displayer::renderImage() {
 		return false;
 	}
 
+	int oldResolution = m_currentSource ? m_currentSource->resolution : -1;
+	int oldPage = m_currentSource ? m_currentSource->page : -1;
+	Source* oldSource = m_currentSource;
+
 	if(source != m_currentSource) {
 		sendScaleRequest({ScaleRequest::Abort});
 		sendScaleRequest({ScaleRequest::Quit});
@@ -243,23 +247,25 @@ bool Displayer::renderImage() {
 		m_scaleThread.start();
 	}
 
-	// Notify tools about changes
-	if(m_tool) {
-		if(m_currentSource->page != ui.spinBoxPage->value()) {
-			m_tool->pageChanged();
-		}
-		if(m_currentSource->resolution != ui.spinBoxResolution->value()) {
-			double factor = double(ui.spinBoxResolution->value()) / double(m_currentSource->resolution);
-			m_tool->resolutionChanged(factor);
-		}
-	}
-
 	// Update source struct
 	m_currentSource->page = m_pageMap[ui.spinBoxPage->value()].second;
 	m_currentSource->brightness = ui.spinBoxBrightness->value();
 	m_currentSource->contrast = ui.spinBoxContrast->value();
 	m_currentSource->resolution = ui.spinBoxResolution->value();
 	m_currentSource->invert = ui.checkBoxInvertColors->isChecked();
+
+	// Notify tools about changes
+	if(m_tool) {
+		if(m_currentSource != oldSource || m_currentSource->page != oldPage) {
+			m_tool->pageChanged();
+		}
+		if(oldResolution != m_currentSource->resolution) {
+			double factor = double(m_currentSource->resolution) / double(oldResolution);
+			m_tool->resolutionChanged(factor);
+		}
+	}
+
+	Utils::setSpinBlocked(ui.spinBoxRotation, m_currentSource->angle[m_currentSource->page - 1]);
 
 	// Render new image
 	sendScaleRequest({ScaleRequest::Abort});
@@ -376,11 +382,13 @@ void Displayer::setAngle(double angle) {
 		} else if(delta != 0) {
 			for(int page : m_pageMap.keys()) {
 				auto pair = m_pageMap[page];
-				pair.first->angle[pair.second - 1] += delta;
+				double newangle = pair.first->angle[pair.second - 1] + delta;
+				newangle = newangle < 0.0 ? newangle + 360.0 : newangle >= 360.0 ? newangle - 360.0 : newangle,
+				pair.first->angle[pair.second - 1] = newangle;
 			}
 		}
 		m_imageItem->setRotation(angle);
-		if(m_tool) {
+		if(m_tool && delta != 0) {
 			m_tool->rotationChanged(delta);
 		}
 		m_scene->setSceneRect(m_imageItem->sceneBoundingRect());
