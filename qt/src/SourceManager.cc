@@ -146,12 +146,10 @@ int SourceManager::addSources(const QStringList& files) {
 		++added;
 	}
 	MAIN->getConfig()->getSetting<VarSetting<QStringList>>("recentitems")->setValue(recentItems);
-	if(item != ui.listWidgetSources->currentItem()) {
-		ui.listWidgetSources->blockSignals(true);
-		ui.listWidgetSources->clearSelection();
-		ui.listWidgetSources->blockSignals(false);
-		ui.listWidgetSources->setCurrentItem(item);
-	}
+	ui.listWidgetSources->blockSignals(true);
+	ui.listWidgetSources->clearSelection();
+	ui.listWidgetSources->blockSignals(false);
+	ui.listWidgetSources->setCurrentItem(item);
 	if(!failed.isEmpty()) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:%1").arg(failed));
 	}
