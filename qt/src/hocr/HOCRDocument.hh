@@ -32,8 +32,6 @@ class HOCRDocument : public QAbstractItemModel {
 	Q_OBJECT
 
 public:
-	static const int BBoxRole = Qt::UserRole + 1;
-
 	HOCRDocument(QtSpell::TextEditChecker* spell, QObject *parent = 0);
 	~HOCRDocument();
 
@@ -50,7 +48,7 @@ public:
 	int pageCount() const { return m_pages.size(); }
 
 	const HOCRItem* itemAtIndex(const QModelIndex& index) const{ return index.isValid() ? static_cast<HOCRItem*>(index.internalPointer()) : nullptr; }
-	bool editItemAttribute(QModelIndex& index, const QString& group, const QString& key, const QString& value);
+	bool editItemAttribute(QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass = QString());
 	QModelIndex mergeItems(const QModelIndex& parent, int startRow, int endRow);
 	QModelIndex addItem(const QModelIndex& parent, const QDomElement& element);
 	bool removeItem(const QModelIndex& index);
@@ -72,7 +70,7 @@ public:
 	static QString trimmedWord(const QString& word, QString* prefix = nullptr, QString* suffix = nullptr);
 
 signals:
-	void itemAttributesChanged();
+	void itemAttributeChanged(const QModelIndex& itemIndex, const QString& name, const QString& value);
 
 private:
 	int m_pageIdCounter = 0;
@@ -87,18 +85,21 @@ private:
 
 	bool checkItemSpelling(const HOCRItem* item) const;
 	void deleteItem(HOCRItem* item);
-	void recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, int fromDepth = 0, int curDepth = 0);
+	void recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, const QStringList& itemClasses = QStringList());
 };
 
 
 class HOCRItem
 {
 public:
-	HOCRItem(QDomElement element, HOCRPage* page, HOCRItem *parent = nullptr);
+	// attrname : attrvalue : occurences
+	typedef QMap<QString, QMap<QString, int>> AttrOccurenceMap_t;
+
+	HOCRItem( QDomElement element, HOCRPage* page, HOCRItem *parent = nullptr);
 	virtual ~HOCRItem();
-	const HOCRPage* page() const{ return m_pageItem; }
+	HOCRPage* page() const{ return m_pageItem; }
 	const QVector<HOCRItem*>& children() const{ return m_childItems; }
-	const HOCRItem* parent() const{ return m_parentItem; }
+	HOCRItem* parent() const{ return m_parentItem; }
 	const QDomElement& element() const{ return m_domElement; }
 	bool isEnabled() const{ return m_enabled; }
 
@@ -107,13 +108,24 @@ public:
 	const QRect& bbox() const{ return m_bbox; }
 	QString text() const{ return m_domElement.text(); }
 	QString lang() const{ return m_domElement.attribute("lang"); }
+	QMap<QString,QString> getAllAttributes() const;
+	QMap<QString,QString> getAttributes(const QList<QString>& names) const;
+	void getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString> > >& occurences) const;
 	QString toHtml(int indent = 1) const;
 	int baseLine() const;
 	double fontSize() const;
 
+	void addChild(HOCRItem* child);
+	void removeChild(HOCRItem* child);
+	QVector<HOCRItem*> takeChildren();
+	void setEnabled(bool enabled) { m_enabled = enabled; }
+	void setText(const QString& newText);
+	void setAttribute(const QString& name, const QString& value, const QString& attrItemClass = QString());
+
+	static bool isChildClass(const QString& parentClass, const QString& childClass);
+
 protected:
 	friend class HOCRPage;
-	friend class HOCRDocument;
 
 	static const QRegExp s_bboxRx;
 	static const QRegExp s_baseLineRx;
@@ -128,8 +140,7 @@ protected:
 
 	QRect m_bbox;
 
-	bool addChildren(QString language);
-	void updateBoundingBox(const QRect& bbox);
+	bool parseChildren(QString language);
 };
 
 

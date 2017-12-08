@@ -19,6 +19,7 @@
 
 #include <QApplication>
 #include <QDomDocument>
+#include <QFontComboBox>
 #include <QImage>
 #include <QMessageBox>
 #include <QFileInfo>
@@ -98,6 +99,45 @@ private:
 	}
 };
 
+///////////////////////////////////////////////////////////////////////////////
+
+HOCRAttributeEditor::HOCRAttributeEditor(const QString& value, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass)
+	: QLineEdit(value), m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_origValue(value), m_attrItemClass(attrItemClass)
+{
+	setFrame(false);
+	connect(m_doc, SIGNAL(itemAttributeChanged(QModelIndex,QString, QString)), this, SLOT(updateValue(QModelIndex,QString, QString)));
+	connect(this, SIGNAL(textChanged(QString)), this, SLOT(validateCahanges()));
+}
+
+void HOCRAttributeEditor::focusOutEvent(QFocusEvent *ev){
+	QLineEdit::focusOutEvent(ev);
+	validateChanges();
+}
+
+void HOCRAttributeEditor::updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value) {
+	if(itemIndex == m_itemIndex && name == m_attrName) {
+		blockSignals(true);
+		setText(value);
+		blockSignals(false);
+	}
+}
+void HOCRAttributeEditor::validateChanges() {
+	if(!hasFocus()) {
+		int pos;
+		QString newValue = text();
+		if(newValue == m_origValue) {
+			return;
+		}
+		if(validator() && validator()->validate(newValue, pos) != QValidator::Acceptable) {
+			setText(m_origValue);
+		} else {
+			m_doc->editItemAttribute(m_itemIndex, m_attrName, newValue, m_attrItemClass);
+			m_origValue = newValue;
+		}
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
 
 OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	static int reg = qRegisterMetaType<QList<QRect>>("QList<QRect>");
@@ -127,7 +167,6 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(ui.treeViewHOCR->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(showItemProperties(QModelIndex)));
 	connect(ui.treeViewHOCR, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showTreeWidgetContextMenu(QPoint)));
-	connect(ui.tableWidgetProperties, SIGNAL(cellChanged(int,int)), this, SLOT(propertyCellChanged(int,int)));
 	connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(updateSourceText()));
 	connect(m_tool, SIGNAL(bboxChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
 	connect(m_tool, SIGNAL(bboxDrawn(QRect)), this, SLOT(addGraphicRegion(QRect)));
@@ -135,7 +174,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(m_document, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(setModified()));
 	connect(m_document, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(setModified()));
 	connect(m_document, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(setModified()));
-	connect(m_document, SIGNAL(itemAttributesChanged()), this, SLOT(setModified()));
+	connect(m_document, SIGNAL(itemAttributeChanged(QModelIndex,QString,QString)), this, SLOT(setModified()));
+	connect(m_document, SIGNAL(itemAttributeChanged(QModelIndex,QString,QString)), this, SLOT(updateSourceText()));
 
 	setFont();
 }
@@ -214,9 +254,11 @@ bool OutputEditorHOCR::showPage(const HOCRPage *page)
 }
 
 void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
-	ui.treeViewHOCR->blockSignals(true);
-	ui.treeViewHOCR->setCurrentIndex(current);
-	ui.treeViewHOCR->blockSignals(false);
+	if(ui.treeViewHOCR->currentIndex() != current) {
+		ui.treeViewHOCR->blockSignals(true);
+		ui.treeViewHOCR->setCurrentIndex(current);
+		ui.treeViewHOCR->blockSignals(false);
+	}
 	ui.tableWidgetProperties->blockSignals(true);
 	ui.tableWidgetProperties->setRowCount(0);
 	ui.tableWidgetProperties->blockSignals(false);
@@ -229,31 +271,45 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
 	const HOCRPage* page = currentItem->page();
 	showPage(page);
 
-	QDomNamedNodeMap attributes = currentItem->element().attributes();
 	int row = -1;
 	ui.tableWidgetProperties->blockSignals(true);
-	for(int i = 0, n = attributes.count(); i < n; ++i) {
-		QDomNode attribNode = attributes.item(i);
-		QString nodeName = attribNode.nodeName();
-		if(nodeName == "title") {
-			QMap<QString, QString> attrs = HOCRDocument::deserializeAttrGroup(attribNode.nodeValue());
-			for(auto it = attrs.begin(), itEnd = attrs.end(); it != itEnd; ++it) {
-				ui.tableWidgetProperties->insertRow(++row);
-				QTableWidgetItem* attrNameItem = new QTableWidgetItem(it.key());
-				attrNameItem->setFlags(attrNameItem->flags() & ~Qt::ItemIsEditable);
-				attrNameItem->setData(ParentAttrRole, "title");
-				ui.tableWidgetProperties->setItem(row, 0, attrNameItem);
-				ui.tableWidgetProperties->setItem(row, 1, new QTableWidgetItem(it.value()));
-				if(attrNameItem->text() == "bbox") {
-					ui.tableWidgetProperties->setProperty("bboxrow", row);
-				}
-			}
-		} else if(nodeName != "class" && nodeName != "id"){
+	QMap<QString, QString> attrs = currentItem->getAllAttributes();
+	for(auto it = attrs.begin(), itEnd = attrs.end(); it != itEnd; ++it) {
+		QString attrName = it.key();
+		if(attrName == "class" || attrName == "id"){
+			continue;
+		}
+		QStringList parts = attrName.split(":");
+		ui.tableWidgetProperties->insertRow(++row);
+		QTableWidgetItem* attrNameItem = new QTableWidgetItem(parts.last());
+		attrNameItem->setFlags(attrNameItem->flags() & ~Qt::ItemIsEditable);
+		ui.tableWidgetProperties->setItem(row, 0, attrNameItem);
+		ui.tableWidgetProperties->setCellWidget(row, 1, createAttrWidget(current, attrName, it.value()));
+	}
+
+	// ocr_class:attr_key:attr_values
+	QMap<QString, QMap<QString, QSet<QString>>> occurences;
+	currentItem->getPropagatableAttributes(occurences);
+	for(auto it = occurences.begin(), itEnd = occurences.end(); it != itEnd; ++it) {
+		ui.tableWidgetProperties->insertRow(++row);
+		QTableWidgetItem* sectionItem = new QTableWidgetItem(it.key());
+		sectionItem->setFlags(sectionItem->flags() & ~(Qt::ItemIsEditable|Qt::ItemIsSelectable));
+		sectionItem->setBackgroundColor(Qt::lightGray);
+		QFont sectionFont = sectionItem->font();
+		sectionFont.setBold(true);
+		sectionItem->setFont(sectionFont);
+		ui.tableWidgetProperties->setItem(row, 0, sectionItem);
+		ui.tableWidgetProperties->setSpan(row, 0, 1, 2);
+		for(auto attrIt = it.value().begin(), attrItEnd = it.value().end(); attrIt != attrItEnd; ++attrIt) {
+			const QString& attrName = attrIt.key();
+			const QSet<QString>& attrValues = attrIt.value();
+			int attrValueCount = attrValues.size();
 			ui.tableWidgetProperties->insertRow(++row);
-			QTableWidgetItem* attrNameItem = new QTableWidgetItem(attribNode.nodeName());
+			QStringList parts = attrName.split(":");
+			QTableWidgetItem* attrNameItem = new QTableWidgetItem(parts.last());
 			attrNameItem->setFlags(attrNameItem->flags() & ~Qt::ItemIsEditable);
 			ui.tableWidgetProperties->setItem(row, 0, attrNameItem);
-			ui.tableWidgetProperties->setItem(row, 1, new QTableWidgetItem(attribNode.nodeValue()));
+			ui.tableWidgetProperties->setCellWidget(row, 1, createAttrWidget(current, attrName, attrValueCount == 1 ? *(attrValues.begin()) : "", it.key(), attrValueCount > 1));
 		}
 	}
 	ui.tableWidgetProperties->blockSignals(false);
@@ -263,51 +319,44 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
 	m_tool->setSelection(currentItem->bbox());
 }
 
-void OutputEditorHOCR::propertyCellChanged(int row, int /*col*/) {
-	QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
-	const HOCRItem* currentItem = m_document->itemAtIndex(current);
-	if(!currentItem) {
-		return;
-	}
-
-	QTableWidgetItem* keyItem = ui.tableWidgetProperties->item(row, 0);
-	QTableWidgetItem* valueItem = ui.tableWidgetProperties->item(row, 1);
-	QString parentAttr = keyItem->data(ParentAttrRole).toString();
-	QString key = keyItem->text();
-	QString value = valueItem->text().trimmed();
-	if(parentAttr == "title" && key == "bbox") {
-		// Do some validation for bbox inputs
-		static QRegExp bboxRegExp("^(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)$");
-		if(bboxRegExp.indexIn(value) == -1) {
-			const QRect& bbox = currentItem->bbox();
-			ui.tableWidgetProperties->blockSignals(true);
-			valueItem->setText(QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom()));
-			ui.tableWidgetProperties->blockSignals(false);
-		} else {
-			int x1 = bboxRegExp.cap(1).toInt();
-			int y1 = bboxRegExp.cap(2).toInt();
-			int x2 = bboxRegExp.cap(3).toInt();
-			int y2 = bboxRegExp.cap(4).toInt();
-			QRect bbox;
-			bbox.setCoords(x1, y1, x2, y2);
-			m_document->setData(current, bbox, HOCRDocument::BBoxRole);
-			m_tool->setSelection(bbox);
+QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const QString& attrName, const QString& attrValue, const QString& attrItemClass, bool multiple)
+{
+	static QMap<QString, QString> attrLineEdits = {
+		{"title:bbox", "\\d+\\s+\\d+\\s+\\d+\\s+\\d+"},
+		{"lang", "[a-z]{2}(?:_[A-Z]{2})?"},
+		{"title:x_fsize", "\\d+"},
+		{"title:baseline", "[-+]?\\d+\\.?\\d*\\s[-+]?\\d+\\.?\\d*"}
+	};
+	auto it = attrLineEdits.find(attrName);
+	if(it != attrLineEdits.end()) {
+		QLineEdit* lineEdit = new HOCRAttributeEditor(attrValue, m_document, itemIndex, attrName, attrItemClass);
+		lineEdit->setValidator(new QRegExpValidator(QRegExp(it.value())));
+		if(multiple) {
+			lineEdit->setPlaceholderText(_("Multiple values"));
 		}
+		return lineEdit;
+	} else if(attrName == "title:x_font") {
+		QFontComboBox* combo = new QFontComboBox();
+		combo->setLineEdit(new HOCRAttributeEditor(attrValue, m_document, itemIndex, attrName, attrItemClass));
+		if(multiple) {
+			combo->setCurrentIndex(-1);
+			combo->lineEdit()->setPlaceholderText(_("Multiple values"));
+		} else {
+			combo->lineEdit()->setText(attrValue);
+		}
+		return combo;
 	} else {
-		m_document->editItemAttribute(current, parentAttr, key, value);
+		QLineEdit* lineEdit = new QLineEdit(attrValue);
+		lineEdit->setFrame(false);
+		lineEdit->setReadOnly(true);
+		return lineEdit;
 	}
 }
 
 void OutputEditorHOCR::updateCurrentItemBBox(QRect bbox) {
 	QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
-	m_document->setData(current, bbox, HOCRDocument::BBoxRole);
-	int row = ui.tableWidgetProperties->property("bboxrow").toInt();
 	QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-	ui.tableWidgetProperties->blockSignals(true);
-	ui.tableWidgetProperties->item(row, 1)->setText(bboxstr);
-	ui.tableWidgetProperties->blockSignals(false);
-
-	updateSourceText();
+	m_document->editItemAttribute(current, "title:bbox", bboxstr);
 }
 
 void OutputEditorHOCR::updateSourceText() {

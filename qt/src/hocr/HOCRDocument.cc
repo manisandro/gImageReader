@@ -19,6 +19,7 @@
 
 #include <QFileInfo>
 #include <QIcon>
+#include <QSet>
 #include <QTextStream>
 #include <QtSpell.hpp>
 
@@ -50,7 +51,7 @@ void HOCRDocument::clear()
 
 void HOCRDocument::recheckSpelling()
 {
-	recursiveDataChanged(QModelIndex(), {Qt::DisplayRole}, 3); // depth 4: {0=page, 1=block, 2=para, 3=line, 4=word}
+	recursiveDataChanged(QModelIndex(), {Qt::DisplayRole}, {"ocrx_word"});
 }
 
 QModelIndex HOCRDocument::addPage(const QDomElement& pageElement, bool cleanGraphics)
@@ -63,25 +64,23 @@ QModelIndex HOCRDocument::addPage(const QDomElement& pageElement, bool cleanGrap
 	return index(newRow, 0);
 }
 
-bool HOCRDocument::editItemAttribute(QModelIndex& index, const QString& group, const QString& key, const QString& value)
+bool HOCRDocument::editItemAttribute(QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass)
 {
 	if(!index.isValid()) {
 		return false;
 	}
+	QTextStream(stdout) << "Editing " << name << " = " << value << endl;
 	HOCRItem* item = static_cast<HOCRItem*>(index.internalPointer());
 
-	if(group.isEmpty()) {
-		item->m_domElement.setAttribute(key, value);
-	} else {
-		QMap<QString, QString> attrs = HOCRDocument::deserializeAttrGroup(item->element().attribute(group));
-		attrs[key] = value;
-		item->m_domElement.setAttribute(group, HOCRDocument::serializeAttrGroup(attrs));
-	}
-	if(key == "x_wconf") {
+	item->setAttribute(name, value, attrItemClass);
+	if(name == "title:x_wconf") {
 		QModelIndex colIdx = index.sibling(index.row(), 1);
 		emit dataChanged(colIdx, colIdx, {Qt::DisplayRole});
 	}
-	emit itemAttributesChanged();
+	if(name == "lang") {
+		recursiveDataChanged(index, {Qt::DisplayRole}, {"ocrx_word"});
+	}
+	emit itemAttributeChanged(index, name, value);
 	return true;
 }
 
@@ -109,10 +108,11 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 			deleteItem(item);
 		}
 		endRemoveRows();
-		targetItem->updateBoundingBox(bbox);
-		QDomElement& element = targetItem->m_domElement;
-		element.replaceChild(m_document.createTextNode(text), element.firstChild());
-		emit dataChanged(targetIndex, targetIndex, {Qt::DisplayRole, Qt::ForegroundRole, BBoxRole});
+		targetItem->setText(text);
+		emit dataChanged(targetIndex, targetIndex, {Qt::DisplayRole, Qt::ForegroundRole});
+		QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
+		targetItem->setAttribute("title:bbox", bboxstr);
+		emit itemAttributeChanged(targetIndex, "title:bbox", bboxstr);
 	} else {
 		// Merge other items: merge dom trees and bounding boxes
 		QRect bbox = targetItem->bbox();
@@ -121,22 +121,20 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 		for(int row = startRow + 1; row <= endRow; ++row) {
 			HOCRItem* item = static_cast<HOCRItem*>(parent.child(row, 0).internalPointer());
 			Q_ASSERT(item);
-			moveChilds.append(item->m_childItems);
+			moveChilds.append(item->takeChildren());
 			bbox = bbox.united(item->bbox());
-			item->m_childItems.clear();
 			deleteItem(item);
 		}
 		endRemoveRows();
 		int pos = targetItem->children().size();
 		beginInsertRows(targetIndex, pos, pos + moveChilds.size() - 1);
 		for(HOCRItem* child : moveChilds) {
-			targetItem->m_childItems.append(child);
-			child->m_parentItem = targetItem;
-			targetItem->m_domElement.appendChild(child->m_domElement);
+			targetItem->addChild(child);
 		}
 		endInsertRows();
-		targetItem->updateBoundingBox(bbox);
-		emit dataChanged(targetIndex, targetIndex, {BBoxRole});
+		QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
+		targetItem->setAttribute("title:bbox", bboxstr);
+		emit itemAttributeChanged(targetIndex, "title:bbox", bboxstr);
 	}
 	return targetIndex;
 }
@@ -147,11 +145,10 @@ QModelIndex HOCRDocument::addItem(const QModelIndex &parent, const QDomElement &
 		return QModelIndex();
 	}
 	HOCRItem* parentItem = static_cast<HOCRItem*>(parent.internalPointer());
-	HOCRItem* item = new HOCRItem(element, parentItem->m_pageItem, parentItem);
-	parentItem->m_domElement.appendChild(element);
-	int pos = parentItem->m_childItems.size();
+	HOCRItem* item = new HOCRItem(element, parentItem->page(), parentItem);
+	int pos = parentItem->children().size();
 	beginInsertRows(parent, pos, pos);
-	parentItem->m_childItems.append(item);
+	parentItem->addChild(item);
 	endInsertRows();
 	return index(pos, 0, parent);
 }
@@ -262,16 +259,11 @@ bool HOCRDocument::setData(const QModelIndex &index, const QVariant &value, int 
 
 	HOCRItem *item = static_cast<HOCRItem*>(index.internalPointer());
 	if(role == Qt::EditRole && item->itemClass() == "ocrx_word") {
-		QDomElement& element = item->m_domElement;
-		element.replaceChild(m_document.createTextNode(value.toString()), element.firstChild());
+		item->setText(value.toString());
 		emit dataChanged(index, index, {Qt::DisplayRole, Qt::ForegroundRole});
 		return true;
-	} else if(role == BBoxRole) {
-		item->updateBoundingBox(value.toRect());
-		emit dataChanged(index, index, {BBoxRole});
-		return true;
 	} else if(role == Qt::CheckStateRole) {
-		item->m_enabled = value == Qt::Checked;
+		item->setEnabled(value == Qt::Checked);
 		emit dataChanged(index, index, {Qt::CheckStateRole});
 		recursiveDataChanged(index, {Qt::CheckStateRole});
 		return true;
@@ -279,15 +271,17 @@ bool HOCRDocument::setData(const QModelIndex &index, const QVariant &value, int 
 	return false;
 }
 
-void HOCRDocument::recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, int fromDepth, int curDepth)
+void HOCRDocument::recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, const QStringList& itemClasses)
 {
 	int rows = rowCount(parent);
 	if(rows > 0) {
-		if(curDepth >= fromDepth) {
-			emit dataChanged(index(0, 0, parent), index(rows - 1, 0, parent), roles);
+		QModelIndex firstChild = index(0, 0, parent);
+		QString childItemClass = static_cast<HOCRItem*>(firstChild.internalPointer())->itemClass();
+		if(itemClasses.contains(childItemClass)) {
+			emit dataChanged(firstChild, index(rows - 1, 0, parent), roles);
 		}
 		for(int i = 0; i < rows; ++i) {
-			recursiveDataChanged(index(i, 0, parent), roles, fromDepth, curDepth + 1);
+			recursiveDataChanged(index(i, 0, parent), roles, itemClasses);
 		}
 	}
 }
@@ -311,7 +305,7 @@ QModelIndex HOCRDocument::index(int row, int column, const QModelIndex &parent) 
 		childItem = m_pages.value(row);
 	} else {
 		HOCRItem *parentItem = static_cast<HOCRItem*>(parent.internalPointer());
-		childItem = parentItem->m_childItems.value(row);
+		childItem = parentItem->children().value(row);
 	}
 	return childItem ? createIndex(row, column, childItem) : QModelIndex();
 }
@@ -321,13 +315,13 @@ QModelIndex HOCRDocument::parent(const QModelIndex &child) const
 	if (!child.isValid())
 		return QModelIndex();
 
-	HOCRItem *item = static_cast<HOCRItem*>(child.internalPointer())->m_parentItem;
+	HOCRItem *item = static_cast<HOCRItem*>(child.internalPointer())->parent();
 	if(!item) {
 		return QModelIndex();
 	}
 	int row = -1;
-	if(item->m_parentItem) {
-		row = item->m_parentItem->m_childItems.indexOf(item);
+	if(item->parent()) {
+		row = item->parent()->children().indexOf(item);
 	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
 		row = m_pages.indexOf(page);
 	}
@@ -338,7 +332,7 @@ int HOCRDocument::rowCount(const QModelIndex &parent) const
 {
 	if (parent.column() > 0)
 		return 0;
-	return !parent.isValid() ? m_pages.size() : static_cast<HOCRItem*>(parent.internalPointer())->m_childItems.size();
+	return !parent.isValid() ? m_pages.size() : static_cast<HOCRItem*>(parent.internalPointer())->children().size();
 }
 
 int HOCRDocument::columnCount(const QModelIndex &/*parent*/) const
@@ -402,9 +396,8 @@ bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const
 
 void HOCRDocument::deleteItem(HOCRItem* item)
 {
-	if(item->m_parentItem) {
-		int idx = item->m_parentItem->m_childItems.indexOf(item);
-		delete item->m_parentItem->m_childItems.takeAt(idx);
+	if(item->parent()) {
+		item->parent()->removeChild(item);
 	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
 		int idx = m_pages.indexOf(page);
 		delete m_pages.takeAt(idx);
@@ -450,6 +443,10 @@ const QRegExp HOCRItem::s_baseLineRx = QRegExp("baseline\\s+(-?\\d+\\.?\\d*)\\s+
 
 QMap<QString,QString> HOCRItem::s_langCache = QMap<QString,QString>();
 
+bool HOCRItem::isChildClass(const QString& parentClass, const QString& childClass){
+	static QStringList classes = {"ocr_page", "ocr_carea", "ocr_graphic", "ocr_par", "ocr_line", "ocrx_word"};
+	return classes.indexOf(parentClass) < classes.indexOf(childClass);
+}
 
 HOCRItem::HOCRItem(QDomElement element, HOCRPage* page, HOCRItem* parent)
 	: m_domElement(element), m_pageItem(page), m_parentItem(parent)
@@ -487,6 +484,122 @@ HOCRItem::~HOCRItem()
 	qDeleteAll(m_childItems);
 }
 
+void HOCRItem::addChild(HOCRItem* child)
+{
+	m_domElement.appendChild(child->m_domElement);
+	m_childItems.append(child);
+	child->m_parentItem = this;
+	child->m_pageItem = m_pageItem;
+}
+
+void HOCRItem::removeChild(HOCRItem *child)
+{
+	m_domElement.removeChild(child->m_domElement);
+	delete m_childItems.takeAt(m_childItems.indexOf(child));
+}
+
+QVector<HOCRItem*> HOCRItem::takeChildren()
+{
+	QVector<HOCRItem*> children(m_childItems);
+	m_childItems.clear();
+	return children;
+}
+
+void HOCRItem::setText(const QString& newText)
+{
+	m_domElement.replaceChild(m_domElement.ownerDocument().createTextNode(newText), m_domElement.firstChild());
+}
+
+QMap<QString,QString> HOCRItem::getAllAttributes() const
+{
+	QMap<QString,QString> attrValues;
+	QDomNamedNodeMap attributes = m_domElement.attributes();
+	for(int i = 0, n = attributes.count(); i < n; ++i) {
+		QDomNode attribNode = attributes.item(i);
+		QString attrName = attribNode.nodeName();
+		if(attrName == "title") {
+			QMap<QString, QString> titleAttrs = HOCRDocument::deserializeAttrGroup(attribNode.nodeValue());
+			for(auto it = titleAttrs.begin(), itEnd = titleAttrs.end(); it != itEnd; ++it) {
+				attrValues.insert(QString("title:%1").arg(it.key()), it.value());
+			}
+		} else {
+			attrValues.insert(attrName, attribNode.nodeValue());
+		}
+	}
+	return attrValues;
+}
+
+QMap<QString,QString> HOCRItem::getAttributes(const QList<QString>& names = QList<QString>()) const
+{
+	QMap<QString,QString> attrValues;
+	QMap<QString,QMap<QString, QString>> groupAttrCache;
+	for(const QString& attrName : names) {
+		QStringList parts = attrName.split(":");
+		if(parts.size() > 1) {
+			auto it = groupAttrCache.find(parts[0]);
+			if(it == groupAttrCache.end()) {
+				it = groupAttrCache.insert(parts[0], HOCRDocument::deserializeAttrGroup(m_domElement.attribute(parts[0])));
+			}
+			attrValues.insert(attrName, it.value().value(parts[1]));
+		} else {
+			attrValues.insert(attrName, m_domElement.attribute(attrName));
+		}
+	}
+	return attrValues;
+}
+
+void HOCRItem::getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString>>>& occurences) const
+{
+	static QMap<QString,QStringList> s_propagatableAttributes = {
+		{"ocr_line", {"title:baseline"}},
+		{"ocrx_word", {"lang", "title:x_fsize", "title:x_font"}}
+	};
+
+	QString childClass = m_childItems.isEmpty() ? "" : m_childItems.front()->itemClass();
+	auto it = s_propagatableAttributes.find(childClass);
+	if(it != s_propagatableAttributes.end()) {
+		for(HOCRItem* child : m_childItems) {
+			QMap<QString, QString> attrs = child->getAttributes(it.value());
+			for(auto attrIt = attrs.begin(), attrItEnd = attrs.end(); attrIt != attrItEnd; ++attrIt) {
+				occurences[childClass][attrIt.key()].insert(attrIt.value());
+			}
+		}
+	}
+	if(childClass != "ocrx_word") {
+		for(HOCRItem* child : m_childItems) {
+			child->getPropagatableAttributes(occurences);
+		}
+	}
+}
+
+void HOCRItem::setAttribute(const QString& name, const QString& value, const QString& attrItemClass)
+{
+	if(!attrItemClass.isEmpty() && itemClass() != attrItemClass) {
+		for(HOCRItem* child : m_childItems) {
+			child->setAttribute(name, value, attrItemClass);
+		}
+		return;
+	}
+	QStringList parts = name.split(":");
+	if(parts.size() < 2) {
+		m_domElement.setAttribute(name, value);
+	} else {
+		QMap<QString, QString> attrs = HOCRDocument::deserializeAttrGroup(m_domElement.attribute(parts[0]));
+		attrs[parts[1]] = value;
+		m_domElement.setAttribute(parts[0], HOCRDocument::serializeAttrGroup(attrs));
+		if(name == "title:bbox") {
+			static QRegExp bboxRegExp("^(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)$");
+			int index = bboxRegExp.indexIn(value);
+			Q_ASSERT(index != -1);
+			int x1 = bboxRegExp.cap(1).toInt();
+			int y1 = bboxRegExp.cap(2).toInt();
+			int x2 = bboxRegExp.cap(3).toInt();
+			int y2 = bboxRegExp.cap(4).toInt();
+			m_bbox.setCoords(x1, y1, x2, y2);
+		}
+	}
+}
+
 QString HOCRItem::toHtml(int indent) const
 {
 	QString str;
@@ -511,7 +624,7 @@ double HOCRItem::fontSize() const
 	return 0;
 }
 
-bool HOCRItem::addChildren(QString language)
+bool HOCRItem::parseChildren(QString language)
 {
 	// Determine item language (inherit from parent if not specified)
 	QString elemLang = m_domElement.attribute("lang");
@@ -520,7 +633,7 @@ bool HOCRItem::addChildren(QString language)
 		if(it == s_langCache.end()) {
 			it = s_langCache.insert(elemLang, Utils::getSpellingLanguage(elemLang));
 		}
-		m_domElement.setAttribute("lang", it.value());
+		m_domElement.removeAttribute("lang");
 		language = it.value();
 	}
 
@@ -532,19 +645,10 @@ bool HOCRItem::addChildren(QString language)
 	QDomElement childElement = m_domElement.firstChildElement();
 	while(!childElement.isNull()) {
 		m_childItems.append(new HOCRItem(childElement, m_pageItem, this));
-		haveWords |= m_childItems.last()->addChildren(language);
+		haveWords |= m_childItems.last()->parseChildren(language);
 		childElement = childElement.nextSiblingElement();
 	}
 	return haveWords;
-}
-
-void HOCRItem::updateBoundingBox(const QRect &bbox)
-{
-	QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-	QMap<QString, QString> attrs = HOCRDocument::deserializeAttrGroup(m_domElement.attribute("title"));
-	attrs["bbox"] = bboxstr;
-	m_domElement.setAttribute("title", HOCRDocument::serializeAttrGroup(attrs));
-	m_bbox = bbox;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -556,7 +660,7 @@ HOCRPage::HOCRPage(QDomElement element, int pageId, const QString& language, boo
 
 	QMap<QString, QString> attrs = HOCRDocument::deserializeAttrGroup(m_domElement.attribute("title"));
 	m_sourceFile = attrs["image"].replace(QRegExp("^'"), "").replace(QRegExp("'$"), "");
-	m_pageNr = attrs["pageno"].toInt();
+	m_pageNr = attrs["ppageno"].toInt();
 	m_angle = attrs["rot"].toDouble();
 	m_resolution = attrs["res"].toInt();
 
@@ -564,7 +668,7 @@ HOCRPage::HOCRPage(QDomElement element, int pageId, const QString& language, boo
 	while(!childElement.isNull()) {
 		HOCRItem* item = new HOCRItem(childElement, this, this);
 		m_childItems.append(item);
-		if(!item->addChildren(language)) {
+		if(!item->parseChildren(language)) {
 			// No word children -> treat as graphic
 			if(cleanGraphics && (item->bbox().width() < 10 || item->bbox().height() < 10))
 			{
