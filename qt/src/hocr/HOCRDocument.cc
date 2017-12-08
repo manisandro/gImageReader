@@ -660,6 +660,13 @@ HOCRPage::HOCRPage(QDomElement element, int pageId, const QString& language, boo
 	QMap<QString, QString> attrs = HOCRDocument::deserializeAttrGroup(m_domElement.attribute("title"));
 	m_sourceFile = attrs["image"].replace(QRegExp("^'"), "").replace(QRegExp("'$"), "");
 	m_pageNr = attrs["ppageno"].toInt();
+	// Code to handle pageno -> ppageno typo in previous versions of gImageReader
+	if(m_pageNr == 0) {
+		m_pageNr = attrs["pageno"].toInt();
+		attrs["ppageno"] = attrs["pageno"];
+		attrs.remove("pageno");
+		m_domElement.setAttribute("title", HOCRDocument::serializeAttrGroup(attrs));
+	}
 	m_angle = attrs["rot"].toDouble();
 	m_resolution = attrs["res"].toInt();
 
