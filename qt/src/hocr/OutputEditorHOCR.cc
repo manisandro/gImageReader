@@ -226,7 +226,7 @@ void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data) {
 	QDomElement pageDiv = doc.firstChildElement("div");
 	QMap<QString, QString> attrs = HOCRDocument::deserializeAttrGroup(pageDiv.attribute("title"));
 	attrs["image"] = QString("'%1'").arg(data.file);
-	attrs["pageno"] = QString::number(data.page);
+	attrs["ppageno"] = QString::number(data.page);
 	attrs["rot"] = QString::number(data.angle);
 	attrs["res"] = QString::number(data.resolution);
 	pageDiv.setAttribute("title", HOCRDocument::serializeAttrGroup(attrs));
