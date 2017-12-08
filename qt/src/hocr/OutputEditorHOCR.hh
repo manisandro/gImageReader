@@ -59,8 +59,6 @@ private:
 		QStringList errors;
 	};
 
-	static const int ParentAttrRole = Qt::UserRole + 1;
-
 	DisplayerToolHOCR* m_tool;
 	QWidget* m_widget;
 	UI_OutputEditorHOCR ui;
@@ -71,6 +69,7 @@ private:
 
 	HOCRDocument* m_document;
 
+	QWidget* createAttrWidget(const QModelIndex& itemIndex, const QString& attrName, const QString& attrValue, const QString& attrItemClass = QString(), bool multiple = false);
 	void expandCollapseChildren(const QModelIndex& index, bool expand) const;
 	bool showPage(const HOCRPage* page);
 
@@ -78,7 +77,6 @@ private slots:
 	void addGraphicRegion(const QRect& bbox);
 	void addPage(const QString& hocrText, ReadSessionData data);
 	void pickItem(const QPoint& point);
-	void propertyCellChanged(int row, int col);
 	void setFont();
 	void setModified() { m_modified = true; }
 	void showItemProperties(const QModelIndex& current);
@@ -88,5 +86,25 @@ private slots:
 	void updateCurrentItemBBox(QRect bbox);
 };
 
+class HOCRAttributeEditor : public QLineEdit
+{
+	Q_OBJECT
+public:
+	HOCRAttributeEditor(const QString& value, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass);
+
+protected:
+	void focusOutEvent(QFocusEvent *ev);
+
+private:
+	HOCRDocument* m_doc;
+	QModelIndex m_itemIndex;
+	QString m_attrName;
+	QString m_origValue;
+	QString m_attrItemClass;
+
+private slots:
+	void updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value);
+	void validateChanges();
+};
 
 #endif // OUTPUTEDITORHOCR_HH
