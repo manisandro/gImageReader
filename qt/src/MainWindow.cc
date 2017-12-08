@@ -263,14 +263,16 @@ void MainWindow::closeEvent(QCloseEvent* ev) {
 }
 
 void MainWindow::onSourceChanged() {
-	if(m_stateStack.top().first == State::Normal) {
-		popState();
-	}
 	QList<Source*> sources = m_sourceManager->getSelectedSources();
 	if(m_displayer->setSources(sources)) {
 		setWindowTitle(QString("%1 - %2").arg(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources")).arg(PACKAGE_NAME));
-		pushState(State::Normal, _("Ready"));
+		if(m_stateStack.top().first == State::Idle) {
+			pushState(State::Normal, _("Ready"));
+		}
 	} else {
+		if(m_stateStack.top().first == State::Normal) {
+			popState();
+		}
 		setWindowTitle(PACKAGE_NAME);
 	}
 }
