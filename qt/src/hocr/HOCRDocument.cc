@@ -276,7 +276,7 @@ void HOCRDocument::recursiveDataChanged(const QModelIndex& parent, const QVector
 	if(rows > 0) {
 		QModelIndex firstChild = index(0, 0, parent);
 		QString childItemClass = static_cast<HOCRItem*>(firstChild.internalPointer())->itemClass();
-		if(itemClasses.contains(childItemClass)) {
+		if(itemClasses.isEmpty() || itemClasses.contains(childItemClass)) {
 			emit dataChanged(firstChild, index(rows - 1, 0, parent), roles);
 		}
 		for(int i = 0; i < rows; ++i) {
