@@ -64,6 +64,7 @@ signals:
 private:
 	DisplayerSelection* m_selection = nullptr;
 	Action m_currentAction = ACTION_NONE;
+	bool m_pressed = false;
 
 private slots:
 	void selectionChanged(QRectF rect);
