@@ -50,7 +50,8 @@ public slots:
 	void setLanguage(const Config::Lang &lang) override;
 	void open();
 	bool save(const QString& filename = "") override;
-	bool savePDF();
+	bool exportToPDF();
+	bool exportToText();
 
 private:
 	class HTMLHighlighter;

@@ -35,6 +35,7 @@
 #include "FileDialogs.hh"
 #include "HOCRDocument.hh"
 #include "HOCRPdfExporter.hh"
+#include "HOCRTextExporter.hh"
 #include "MainWindow.hh"
 #include "OutputEditorHOCR.hh"
 #include "Recognizer.hh"
@@ -160,7 +161,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 
 	connect(ui.actionOutputOpen, SIGNAL(triggered()), this, SLOT(open()));
 	connect(ui.actionOutputSaveHOCR, SIGNAL(triggered()), this, SLOT(save()));
-	connect(ui.actionOutputExportPDF, SIGNAL(triggered()), this, SLOT(savePDF()));
+	connect(ui.actionOutputExportPDF, SIGNAL(triggered()), this, SLOT(exportToPDF()));
+	connect(ui.actionOutputExportText, SIGNAL(triggered()), this, SLOT(exportToText()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
 	connect(ui.actionToggleWConf, SIGNAL(toggled(bool)), this, SLOT(toggleWConfColumn(bool)));
 	connect(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
@@ -235,7 +237,7 @@ void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data) {
 	MAIN->setOutputPaneVisible(true);
 	m_modified = true;
 	ui.actionOutputSaveHOCR->setEnabled(true);
-	ui.actionOutputExportPDF->setEnabled(true);
+	ui.toolButtonOutputExport->setEnabled(true);
 }
 
 void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool expand) const {
@@ -536,7 +538,7 @@ void OutputEditorHOCR::open() {
 	m_modified = false;
 	m_filebasename = QFileInfo(filename).completeBaseName();
 	ui.actionOutputSaveHOCR->setEnabled(true);
-	ui.actionOutputExportPDF->setEnabled(true);
+	ui.toolButtonOutputExport->setEnabled(true);
 }
 
 bool OutputEditorHOCR::save(const QString& filename) {
@@ -575,7 +577,7 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	return true;
 }
 
-bool OutputEditorHOCR::savePDF()
+bool OutputEditorHOCR::exportToPDF()
 {
 	QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
 	const HOCRItem* item = m_document->itemAtIndex(current);
@@ -584,6 +586,11 @@ bool OutputEditorHOCR::savePDF()
 		return HOCRPdfExporter(m_document, page, m_tool).run(m_filebasename);
 	}
 	return false;
+}
+
+bool OutputEditorHOCR::exportToText()
+{
+	return HOCRTextExporter().run(m_document, m_filebasename);
 }
 
 bool OutputEditorHOCR::clear(bool hide)
@@ -607,7 +614,7 @@ bool OutputEditorHOCR::clear(bool hide)
 	m_modified = false;
 	m_filebasename.clear();
 	ui.actionOutputSaveHOCR->setEnabled(false);
-	ui.actionOutputExportPDF->setEnabled(false);
+	ui.toolButtonOutputExport->setEnabled(false);
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
 	return true;
