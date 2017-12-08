@@ -266,6 +266,7 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
 
 	const HOCRItem* currentItem = m_document->itemAtIndex(current);
 	if(!currentItem) {
+		m_tool->clearSelection();
 		return;
 	}
 	const HOCRPage* page = currentItem->page();
