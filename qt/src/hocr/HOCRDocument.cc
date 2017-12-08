@@ -69,7 +69,6 @@ bool HOCRDocument::editItemAttribute(QModelIndex& index, const QString& name, co
 	if(!index.isValid()) {
 		return false;
 	}
-	QTextStream(stdout) << "Editing " << name << " = " << value << endl;
 	HOCRItem* item = static_cast<HOCRItem*>(index.internalPointer());
 
 	item->setAttribute(name, value, attrItemClass);
