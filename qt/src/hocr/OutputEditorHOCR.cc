@@ -122,6 +122,7 @@ void HOCRAttributeEditor::updateValue(const QModelIndex& itemIndex, const QStrin
 		blockSignals(false);
 	}
 }
+
 void HOCRAttributeEditor::validateChanges() {
 	if(!hasFocus()) {
 		int pos;
@@ -542,6 +543,7 @@ void OutputEditorHOCR::open() {
 }
 
 bool OutputEditorHOCR::save(const QString& filename) {
+	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
 	QString outname = filename;
 	if(outname.isEmpty()) {
 		QString suggestion = m_filebasename;
@@ -579,6 +581,7 @@ bool OutputEditorHOCR::save(const QString& filename) {
 
 bool OutputEditorHOCR::exportToPDF()
 {
+	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
 	QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
 	const HOCRItem* item = m_document->itemAtIndex(current);
 	const HOCRPage* page = item ? item->page() : m_document->page(0);
@@ -590,6 +593,7 @@ bool OutputEditorHOCR::exportToPDF()
 
 bool OutputEditorHOCR::exportToText()
 {
+	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
 	return HOCRTextExporter().run(m_document, m_filebasename);
 }
 
