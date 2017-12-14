@@ -245,7 +245,7 @@ QVariant HOCRDocument::data(const QModelIndex &index, int role) const
 		}
 	} else if(index.column() == 1) {
 		if(role == Qt::DisplayRole && item->itemClass() == "ocrx_word") {
-			return deserializeAttrGroup(item->element().attribute("title"))["x_wconf"];
+			return item->getTitleAttributes()["x_wconf"];
 		}
 	}
 	return QVariant();
@@ -436,16 +436,7 @@ QString HOCRDocument::trimmedWord(const QString& word, QString* prefix, QString*
 
 ///////////////////////////////////////////////////////////////////////////////
 
-const QRegExp HOCRItem::s_bboxRx = QRegExp("bbox\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)");
-const QRegExp HOCRItem::s_fontSizeRx = QRegExp("x_fsize\\s+(\\d+)");
-const QRegExp HOCRItem::s_baseLineRx = QRegExp("baseline\\s+(-?\\d+\\.?\\d*)\\s+(-?\\d+)");
-
 QMap<QString,QString> HOCRItem::s_langCache = QMap<QString,QString>();
-
-bool HOCRItem::isChildClass(const QString& parentClass, const QString& childClass){
-	static QStringList classes = {"ocr_page", "ocr_carea", "ocr_graphic", "ocr_par", "ocr_line", "ocrx_word"};
-	return classes.indexOf(parentClass) < classes.indexOf(childClass);
-}
 
 HOCRItem::HOCRItem(QDomElement element, HOCRPage* page, HOCRItem* parent)
 	: m_domElement(element), m_pageItem(page), m_parentItem(parent)
@@ -459,13 +450,13 @@ HOCRItem::HOCRItem(QDomElement element, HOCRPage* page, HOCRItem* parent)
 		m_domElement.setAttribute("id", newId);
 	}
 
+	// Deserialize title attrs
+	m_titleAttrs = HOCRDocument::deserializeAttrGroup(m_domElement.attribute("title"));
+
 	// Parse item bbox
-	if(s_bboxRx.indexIn(m_domElement.attribute("title")) != -1) {
-		int x1 = s_bboxRx.cap(1).toInt();
-		int y1 = s_bboxRx.cap(2).toInt();
-		int x2 = s_bboxRx.cap(3).toInt();
-		int y2 = s_bboxRx.cap(4).toInt();
-		m_bbox.setCoords(x1, y1, x2, y2);
+	QStringList bbox = m_titleAttrs["bbox"].split(QRegExp("\\s+"));
+	if(bbox.size() == 4) {
+		m_bbox.setCoords(bbox[0].toInt(), bbox[1].toInt(), bbox[2].toInt(), bbox[3].toInt());
 	}
 
 	// For the last word items of the line, ensure the correct hyphen is used
@@ -476,6 +467,8 @@ HOCRItem::HOCRItem(QDomElement element, HOCRPage* page, HOCRItem* parent)
 			element.replaceChild(element.ownerDocument().createTextNode(newText), element.firstChild());
 		}
 	}
+
+
 }
 
 HOCRItem::~HOCRItem()
@@ -517,8 +510,7 @@ QMap<QString,QString> HOCRItem::getAllAttributes() const
 		QDomNode attribNode = attributes.item(i);
 		QString attrName = attribNode.nodeName();
 		if(attrName == "title") {
-			QMap<QString, QString> titleAttrs = HOCRDocument::deserializeAttrGroup(attribNode.nodeValue());
-			for(auto it = titleAttrs.begin(), itEnd = titleAttrs.end(); it != itEnd; ++it) {
+			for(auto it = m_titleAttrs.begin(), itEnd = m_titleAttrs.end(); it != itEnd; ++it) {
 				attrValues.insert(QString("title:%1").arg(it.key()), it.value());
 			}
 		} else {
@@ -531,15 +523,11 @@ QMap<QString,QString> HOCRItem::getAllAttributes() const
 QMap<QString,QString> HOCRItem::getAttributes(const QList<QString>& names = QList<QString>()) const
 {
 	QMap<QString,QString> attrValues;
-	QMap<QString,QMap<QString, QString>> groupAttrCache;
 	for(const QString& attrName : names) {
 		QStringList parts = attrName.split(":");
 		if(parts.size() > 1) {
-			auto it = groupAttrCache.find(parts[0]);
-			if(it == groupAttrCache.end()) {
-				it = groupAttrCache.insert(parts[0], HOCRDocument::deserializeAttrGroup(m_domElement.attribute(parts[0])));
-			}
-			attrValues.insert(attrName, it.value().value(parts[1]));
+			Q_ASSERT(parts[0] == "title");
+			attrValues.insert(attrName, m_titleAttrs.value(parts[1]));
 		} else {
 			attrValues.insert(attrName, m_domElement.attribute(attrName));
 		}
@@ -583,18 +571,13 @@ void HOCRItem::setAttribute(const QString& name, const QString& value, const QSt
 	if(parts.size() < 2) {
 		m_domElement.setAttribute(name, value);
 	} else {
-		QMap<QString, QString> attrs = HOCRDocument::deserializeAttrGroup(m_domElement.attribute(parts[0]));
-		attrs[parts[1]] = value;
-		m_domElement.setAttribute(parts[0], HOCRDocument::serializeAttrGroup(attrs));
+		Q_ASSERT(parts[0] == "title");
+		m_titleAttrs[parts[1]] = value;
+		m_domElement.setAttribute("title", HOCRDocument::serializeAttrGroup(m_titleAttrs));
 		if(name == "title:bbox") {
-			static QRegExp bboxRegExp("^(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)$");
-			int index = bboxRegExp.indexIn(value);
-			Q_ASSERT(index != -1);
-			int x1 = bboxRegExp.cap(1).toInt();
-			int y1 = bboxRegExp.cap(2).toInt();
-			int x2 = bboxRegExp.cap(3).toInt();
-			int y2 = bboxRegExp.cap(4).toInt();
-			m_bbox.setCoords(x1, y1, x2, y2);
+			QStringList bbox = value.split(QRegExp("\\s+"));
+			Q_ASSERT(bbox.size() == 4);
+			m_bbox.setCoords(bbox[0].toInt(), bbox[1].toInt(), bbox[2].toInt(), bbox[3].toInt());
 		}
 	}
 }
@@ -609,16 +592,9 @@ QString HOCRItem::toHtml(int indent) const
 
 int HOCRItem::baseLine() const
 {
-	if(s_baseLineRx.indexIn(m_domElement.attribute("title")) != -1) {
-		return s_baseLineRx.cap(2).toInt();
-	}
-	return 0;
-}
-
-double HOCRItem::fontSize() const
-{
-	if(s_fontSizeRx.indexIn(m_domElement.attribute("title")) != -1) {
-		return s_fontSizeRx.cap(1).toDouble();
+	static const QRegExp baseLineRx = QRegExp("([+-]?\\d+\\.?\\d*)\\s+([+-]?\\d+)");
+	if(baseLineRx.indexIn(m_titleAttrs["baseline"]) != -1) {
+		return baseLineRx.cap(2).toInt();
 	}
 	return 0;
 }
@@ -657,18 +633,16 @@ HOCRPage::HOCRPage(QDomElement element, int pageId, const QString& language, boo
 {
 	m_domElement.setAttribute("id", QString("page_%1").arg(pageId));
 
-	QMap<QString, QString> attrs = HOCRDocument::deserializeAttrGroup(m_domElement.attribute("title"));
-	m_sourceFile = attrs["image"].replace(QRegExp("^'"), "").replace(QRegExp("'$"), "");
-	m_pageNr = attrs["ppageno"].toInt();
+	m_sourceFile = m_titleAttrs["image"].replace(QRegExp("^'"), "").replace(QRegExp("'$"), "");
+	m_pageNr = m_titleAttrs["ppageno"].toInt();
 	// Code to handle pageno -> ppageno typo in previous versions of gImageReader
 	if(m_pageNr == 0) {
-		m_pageNr = attrs["pageno"].toInt();
-		attrs["ppageno"] = attrs["pageno"];
-		attrs.remove("pageno");
-		m_domElement.setAttribute("title", HOCRDocument::serializeAttrGroup(attrs));
+		m_pageNr = m_titleAttrs["pageno"].toInt();
+		m_titleAttrs["ppageno"] = m_titleAttrs["pageno"];
+		m_titleAttrs.remove("pageno");
 	}
-	m_angle = attrs["rot"].toDouble();
-	m_resolution = attrs["res"].toInt();
+	m_angle = m_titleAttrs["rot"].toDouble();
+	m_resolution = m_titleAttrs["res"].toInt();
 
 	QDomElement childElement = m_domElement.firstChildElement("div");
 	while(!childElement.isNull()) {
