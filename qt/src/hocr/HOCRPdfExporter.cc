@@ -21,6 +21,7 @@
 #include <QBuffer>
 #include <QDesktopServices>
 #include <QFileInfo>
+#include <QFontDatabase>
 #include <QFontDialog>
 #include <QGraphicsPixmapItem>
 #include <QMessageBox>
@@ -51,15 +52,25 @@
 
 class HOCRPdfExporter::QPainterPDFPainter : public HOCRPdfExporter::PDFPainter {
 public:
-	QPainterPDFPainter(QPainter* painter) : m_painter(painter) {
-		m_curFontSize = m_painter->font().pointSize();
+	QPainterPDFPainter(QPainter* painter, const QFont& defaultFont)
+		: m_painter(painter), m_defaultFont(defaultFont)
+	{
+		m_curFont = painter->font();
+	}
+	void setFontFamily(const QString& family) override {
+		if(family != m_curFont.family()) {
+			if(m_fontDatabase.hasFamily(family)) {
+				m_curFont.setFamily(family);
+			}  else {
+				m_curFont = m_defaultFont;
+			}
+			m_painter->setFont(m_curFont);
+		}
 	}
 	void setFontSize(double pointSize) override {
-		if(pointSize != m_curFontSize) {
-			QFont font = m_painter->font();
-			font.setPointSize(pointSize);
-			m_painter->setFont(font);
-			m_curFontSize = pointSize;
+		if(pointSize != m_curFont.pointSize()) {
+			m_curFont.setPointSize(pointSize);
+			m_painter->setFont(m_curFont);
 		}
 	}
 	void drawText(double x, double y, const QString& text) override {
@@ -83,8 +94,10 @@ public:
 	}
 
 private:
+	QFontDatabase m_fontDatabase;
 	QPainter* m_painter;
-	int m_curFontSize;
+	QFont m_curFont;
+	QFont m_defaultFont;
 };
 
 #if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
@@ -113,9 +126,40 @@ public:
 
 class HOCRPdfExporter::PoDoFoPDFPainter : public HOCRPdfExporter::PDFPainter {
 public:
-	PoDoFoPDFPainter(PoDoFo::PdfDocument* document, PoDoFo::PdfPainter* painter, double scaleFactor)
-		: m_document(document), m_painter(painter), m_scaleFactor(scaleFactor) {
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont)
+#else
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont)
+#endif
+		: m_document(document), m_painter(painter), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont)
+	{
+	}
+	~PoDoFoPDFPainter() {
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
+		delete m_pdfFontEncoding;
+#endif
+		delete m_document;
+		// Fonts are deleted by the internal PoDoFo font cache of the document
+	}
+	void setPage(PoDoFo::PdfPage* page, double scaleFactor) {
+		m_painter->SetPage(page);
 		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
+		m_painter->SetFont(m_defaultFont);
+		m_scaleFactor = scaleFactor;
+	}
+	bool finalize(QString* errMsg) {
+		try {
+			m_document->Close();
+		} catch(PoDoFo::PdfError& e) {
+			*errMsg = e.what();
+			return false;
+		}
+		return true;
+	}
+	void setFontFamily(const QString& family) override {
+		float curSize = m_painter->GetFont()->GetFontSize();
+		m_painter->SetFont(getFont(family));
+		m_painter->GetFont()->SetFontSize(curSize);
 	}
 	void setFontSize(double pointSize) override {
 		m_painter->GetFont()->SetFontSize(pointSize);
@@ -181,10 +225,36 @@ public:
 	}
 
 private:
-	PoDoFo::PdfDocument* m_document;
+	QMap<QString, PoDoFo::PdfFont*> m_fontCache;
+	PoDoFo::PdfStreamedDocument* m_document;
 	PoDoFo::PdfPainter* m_painter;
-	double m_scaleFactor;
-	double m_pageHeight;
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+	const PoDoFo::PdfEncoding* m_pdfFontEncoding;
+#else
+	PoDoFo::PdfEncoding* m_pdfFontEncoding;
+#endif
+	PoDoFo::PdfFont* m_defaultFont;
+	double m_scaleFactor = 1.0;
+	double m_pageHeight = 0.0;
+
+	PoDoFo::PdfFont* getFont(const QString& family) {
+		auto it = m_fontCache.find(family);
+		if(it == m_fontCache.end()) {
+			QFontInfo info = QFontInfo(QFont(family));
+			PoDoFo::PdfFont* font = nullptr;
+			try {
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+				font = m_document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), false, m_pdfFontEncoding);
+#else
+				font = m_document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), m_pdfFontEncoding);
+#endif
+			} catch(PoDoFo::PdfError& /*err*/) {
+				return m_defaultFont;
+			}
+			it = m_fontCache.insert(family, font);
+		}
+		return it.value();
+	}
 };
 
 
@@ -207,19 +277,23 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	ui.comboBoxImageCompression->addItem(_("Jpeg (lossy)"), PDFSettings::CompressJpeg);
 	ui.comboBoxImageCompression->setCurrentIndex(-1);
 
-	m_pdfFontDialog = new QFontDialog(this);
-
-	connect(ui.buttonFont, SIGNAL(clicked()), m_pdfFontDialog, SLOT(exec()));
-	connect(m_pdfFontDialog, SIGNAL(fontSelected(QFont)), this, SLOT(updateFontButton(QFont)));
 	connect(ui.comboBoxOutputMode, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(ui.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(ui.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(imageFormatChanged()));
 	connect(ui.comboBoxDithering, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(ui.comboBoxImageCompression, SIGNAL(currentIndexChanged(int)), this, SLOT(imageCompressionChanged()));
 	connect(ui.spinBoxCompressionQuality, SIGNAL(valueChanged(int)), this, SLOT(updatePreview()));
+	connect(ui.checkBoxFontFamily, SIGNAL(toggled(bool)), ui.comboBoxFontFamily, SLOT(setEnabled(bool)));
+	connect(ui.checkBoxFontFamily, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
+	connect(ui.checkBoxFontFamily, SIGNAL(toggled(bool)), ui.labelFallbackFontFamily, SLOT(setDisabled(bool)));
+	connect(ui.checkBoxFontFamily, SIGNAL(toggled(bool)), ui.comboBoxFallbackFontFamily, SLOT(setDisabled(bool)));
+	connect(ui.comboBoxFontFamily, SIGNAL(currentFontChanged(QFont)), this, SLOT(updatePreview()));
+	connect(ui.comboBoxFallbackFontFamily, SIGNAL(currentFontChanged(QFont)), this, SLOT(updatePreview()));
+	connect(ui.checkBoxFontSize, SIGNAL(toggled(bool)), ui.spinBoxFontSize, SLOT(setEnabled(bool)));
 	connect(ui.checkBoxFontSize, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
-	connect(ui.checkBoxFontSize, SIGNAL(toggled(bool)), ui.labelFontScaling, SLOT(setEnabled(bool)));
-	connect(ui.checkBoxFontSize, SIGNAL(toggled(bool)), ui.spinFontScaling, SLOT(setEnabled(bool)));
+	connect(ui.checkBoxFontSize, SIGNAL(toggled(bool)), ui.labelFontScaling, SLOT(setDisabled(bool)));
+	connect(ui.checkBoxFontSize, SIGNAL(toggled(bool)), ui.spinFontScaling, SLOT(setDisabled(bool)));
+	connect(ui.spinBoxFontSize, SIGNAL(valueChanged(int)), this, SLOT(updatePreview()));
 	connect(ui.spinFontScaling, SIGNAL(valueChanged(int)), this, SLOT(updatePreview()));
 	connect(ui.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(ui.spinBoxPreserve, SIGNAL(valueChanged(int)), this, SLOT(updatePreview()));
@@ -231,13 +305,16 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	connect(ui.checkBoxPreview, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", ui.comboBoxOutputMode));
-	MAIN->getConfig()->addSetting(new FontSetting("pdffont", m_pdfFontDialog, QFont().toString()));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagecompressionquality", ui.spinBoxCompressionQuality, 90));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimagecompression", ui.comboBoxImageCompression));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageformat", ui.comboBoxImageFormat));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageconversionflags", ui.comboBoxDithering));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagedpi", ui.spinBoxDpi, 300));
-	MAIN->getConfig()->addSetting(new SwitchSetting("pdfusedetectedfontsizes", ui.checkBoxFontSize, true));
+	MAIN->getConfig()->addSetting(new SwitchSetting("pdfoverridefontfamily", ui.checkBoxFontFamily, true));
+	MAIN->getConfig()->addSetting(new FontComboSetting("pdffontfamily", ui.comboBoxFontFamily));
+	MAIN->getConfig()->addSetting(new FontComboSetting("pdffallbackfontfamily", ui.comboBoxFallbackFontFamily));
+	MAIN->getConfig()->addSetting(new SwitchSetting("pdfoverridefontsizes", ui.checkBoxFontSize, true));
+	MAIN->getConfig()->addSetting(new SpinSetting("pdffontsize", ui.spinBoxFontSize, 10));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdffontscale", ui.spinFontScaling, 100));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfuniformizelinespacing", ui.checkBoxUniformizeSpacing, false));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfpreservespaces", ui.spinBoxPreserve, 4));
@@ -247,13 +324,11 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 #define MAKE_VERSION(...) 0
 #endif
 #if !defined(TESSERACT_VERSION) || TESSERACT_VERSION < MAKE_VERSION(3,04,00)
-	ui.checkBoxFontSize->setChecked(false);
-	ui.checkBoxFontSize->setVisible(false);
-	ui.spinFontScaling->setVisible(false);
-	ui.labelFontScaling->setVisible(false);
+	ui.checkBoxFontFamily->setChecked(true);
+	ui.checkBoxFontFamily->setEnabled(true);
+	ui.checkBoxFontSize->setChecked(true);
+	ui.checkBoxFontSize->setEnabled(true);
 #endif
-
-	updateFontButton(m_pdfFontDialog->currentFont());
 }
 
 HOCRPdfExporter::~HOCRPdfExporter()
@@ -279,12 +354,13 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 
 	bool accepted = false;
 	PoDoFo::PdfStreamedDocument* document = nullptr;
-	PoDoFo::PdfFont* font = nullptr;
+	PoDoFo::PdfFont* defaultPdfFont = nullptr;
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	const PoDoFo::PdfEncoding* pdfEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
+	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
 #else
-	const PoDoFo::PdfEncoding* pdfEncoding = new PoDoFo::PdfIdentityEncoding;
+	PoDoFo::PdfEncoding* pdfFontEncoding = new PoDoFo::PdfIdentityEncoding;
 #endif
+
 	QString outname;
 	while(true) {
 		accepted = (exec() == QDialog::Accepted);
@@ -333,22 +409,20 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 			QMessageBox::critical(MAIN, _("Failed to create output"), _("Check that you have writing permissions in the selected folder. The returned error was: %1").arg(err.what()));
 			continue;
 		}
+
+		QFont defaultFont = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont() : ui.comboBoxFallbackFontFamily->currentFont();
+		QFontInfo info(defaultFont);
 		try {
-			QFontInfo info(m_pdfFontDialog->currentFont());
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-			font = document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), false, pdfEncoding);
+			defaultPdfFont = document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), false, pdfFontEncoding);
 #else
-			font = document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), pdfEncoding);
+			defaultPdfFont = document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), pdfFontEncoding);
 #endif
 		} catch(PoDoFo::PdfError& err) {
-			QMessageBox::critical(MAIN, _("Error"), _("The PDF library could not load the selected font: %1.").arg(err.what()));
-			font = nullptr;
-		}
-		if(!font) {
-			document->Close();
-			delete document;
+			QMessageBox::critical(MAIN, _("Error"), _("The PDF library could not load the font '%1': %2.").arg(defaultFont.family()).arg(err.what()));
 			continue;
 		}
+
 		break;
 	}
 
@@ -359,18 +433,24 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 		return false;
 	}
 
-	PoDoFo::PdfPainter painter;
-
 	PDFSettings pdfSettings;
 	pdfSettings.colorFormat = static_cast<QImage::Format>(ui.comboBoxImageFormat->itemData(ui.comboBoxImageFormat->currentIndex()).toInt());
 	pdfSettings.conversionFlags = pdfSettings.colorFormat == QImage::Format_Mono ? static_cast<Qt::ImageConversionFlags>(ui.comboBoxDithering->itemData(ui.comboBoxDithering->currentIndex()).toInt()) : Qt::AutoColor;
 	pdfSettings.compression = static_cast<PDFSettings::Compression>(ui.comboBoxImageCompression->itemData(ui.comboBoxImageCompression->currentIndex()).toInt());
 	pdfSettings.compressionQuality = ui.spinBoxCompressionQuality->value();
-	pdfSettings.useDetectedFontSizes = ui.checkBoxFontSize->isChecked();
+	pdfSettings.fontFamily = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont().family() : "";
+	pdfSettings.fontSize = ui.checkBoxFontSize->isChecked() ? ui.spinBoxFontSize->value() : -1;
 	pdfSettings.uniformizeLineSpacing = ui.checkBoxUniformizeSpacing->isChecked();
 	pdfSettings.preserveSpaceWidth = ui.spinBoxPreserve->value();
 	pdfSettings.overlay = ui.comboBoxOutputMode->currentIndex() == 1;
 	pdfSettings.detectedFontScaling = ui.spinFontScaling->value() / 100.;
+
+	PoDoFo::PdfPainter painter;
+	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont);
+	if(pdfSettings.fontSize != -1) {
+		pdfprinter.setFontSize(pdfSettings.fontSize);
+	}
+
 	QStringList failed;
 	for(int i = 0, n = m_hocrdocument->pageCount(); i < n; ++i) {
 		const HOCRPage* page = m_hocrdocument->page(i);
@@ -385,11 +465,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 			double docScale = (72. / sourceDpi);
 			double imgScale = double(outputDpi) / sourceDpi;
 			PoDoFo::PdfPage* pdfpage = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width() * docScale, bbox.height() * docScale));
-			painter.SetPage(pdfpage);
-			painter.SetFont(font);
-
-			PoDoFoPDFPainter pdfprinter(document, &painter, docScale);
-			pdfprinter.setFontSize(m_pdfFontDialog->currentFont().pointSize());
+			pdfprinter.setPage(pdfpage, docScale);
 			printChildren(pdfprinter, page, pdfSettings, imgScale);
 			if(pdfSettings.overlay) {
 				QRect scaledBBox(imgScale * bbox.left(), imgScale * bbox.top(), imgScale * bbox.width(), imgScale * bbox.height());
@@ -405,19 +481,15 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 		QMessageBox::warning(MAIN, _("Errors occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
 	}
 
-	bool pdfCanBeOpened = true;
-	try {
-		document->Close();
-	} catch(PoDoFo::PdfError& e) {
-		pdfCanBeOpened = false;
-		QMessageBox::warning(MAIN, _("Export failed"), _("The PDF export failed (%1).").arg(e.what()));
-	}
-	if(ui.checkBoxOpenOutputPdf->isChecked() && pdfCanBeOpened) {
+	QString errMsg;
+	bool success = pdfprinter.finalize(&errMsg);
+	if(!success) {
+		QMessageBox::warning(MAIN, _("Export failed"), _("The PDF export failed (%1).").arg(errMsg));
+	} else if(ui.checkBoxOpenOutputPdf->isChecked()) {
 		QDesktopServices::openUrl(QUrl::fromLocalFile(outname));
 	}
 
-	delete document;
-	return pdfCanBeOpened;
+	return success;
 }
 
 void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale) const {
@@ -441,7 +513,10 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 					continue;
 				}
 				QRect wordRect = wordItem->bbox();
-				if(pdfSettings.useDetectedFontSizes) {
+				if(pdfSettings.fontFamily.isEmpty()) {
+					painter.setFontFamily(wordItem->fontFamily());
+				}
+				if(pdfSettings.fontSize == -1) {
 					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 				}
 				// If distance from previous word is large, keep the space
@@ -460,7 +535,10 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 		for(int iWord = 0, nWords = item->children().size(); iWord < nWords; ++iWord) {
 			HOCRItem* wordItem = item->children()[iWord];
 			QRect wordRect = wordItem->bbox();
-			if(pdfSettings.useDetectedFontSizes) {
+			if(pdfSettings.fontFamily.isEmpty()) {
+				painter.setFontFamily(wordItem->fontFamily());
+			}
+			if(pdfSettings.fontSize == -1) {
 				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 			}
 			painter.drawText(wordRect.x(), y, wordItem->text());
@@ -483,6 +561,7 @@ void HOCRPdfExporter::updatePreview() {
 	if(m_hocrdocument->pageCount() == 0 || !ui.checkBoxPreview->isChecked()) {
 		return;
 	}
+
 	const HOCRPage* page = m_previewPage;
 	QRect bbox = page->bbox();
 	int pageDpi = page->resolution();
@@ -492,19 +571,27 @@ void HOCRPdfExporter::updatePreview() {
 	pdfSettings.conversionFlags = pdfSettings.colorFormat == QImage::Format_Mono ? static_cast<Qt::ImageConversionFlags>(ui.comboBoxDithering->itemData(ui.comboBoxDithering->currentIndex()).toInt()) : Qt::AutoColor;
 	pdfSettings.compression = static_cast<PDFSettings::Compression>(ui.comboBoxImageCompression->itemData(ui.comboBoxImageCompression->currentIndex()).toInt());
 	pdfSettings.compressionQuality = ui.spinBoxCompressionQuality->value();
-	pdfSettings.useDetectedFontSizes = ui.checkBoxFontSize->isChecked();
+	pdfSettings.fontFamily = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont().family() : "";
+	pdfSettings.fontSize = ui.checkBoxFontSize->isChecked() ? ui.spinBoxFontSize->value() : -1;
 	pdfSettings.uniformizeLineSpacing = ui.checkBoxUniformizeSpacing->isChecked();
 	pdfSettings.preserveSpaceWidth = ui.spinBoxPreserve->value();
 	pdfSettings.overlay = ui.comboBoxOutputMode->currentIndex() == 1;
 	pdfSettings.detectedFontScaling = ui.spinFontScaling->value() / 100.;
+
+	QFont defaultFont = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont() : ui.comboBoxFallbackFontFamily->currentFont();
 
 	QImage image(bbox.size(), QImage::Format_ARGB32);
 	image.setDotsPerMeterX(pageDpi / 0.0254);
 	image.setDotsPerMeterY(pageDpi / 0.0254);
 	QPainter painter(&image);
 	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setFont(m_pdfFontDialog->currentFont());
-	QPainterPDFPainter pdfPrinter(&painter);
+	QPainterPDFPainter pdfPrinter(&painter, defaultFont);
+	if(!pdfSettings.fontFamily.isEmpty()) {
+		pdfPrinter.setFontFamily(pdfSettings.fontFamily);
+	}
+	if(pdfSettings.fontSize != -1) {
+		pdfPrinter.setFontSize(pdfSettings.fontSize);
+	}
 
 	if(pdfSettings.overlay) {
 		pdfPrinter.drawImage(bbox, m_displayerTool->getSelection(bbox), pdfSettings);
@@ -561,9 +648,4 @@ void HOCRPdfExporter::passwordChanged() {
 		ui.lineEditConfirmPasswordOpen->setStyleSheet("background: #FF7777; color: #FFFFFF;");
 		ui.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 	}
-}
-
-void HOCRPdfExporter::updateFontButton(const QFont& font) {
-	ui.buttonFont->setText(QString("%1 %2").arg(font.family()).arg(font.pointSize()));
-	updatePreview();
 }

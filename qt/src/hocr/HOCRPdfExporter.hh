@@ -48,7 +48,8 @@ private:
 		Qt::ImageConversionFlags conversionFlags;
 		enum Compression { CompressZip, CompressFax4, CompressJpeg } compression;
 		int compressionQuality;
-		bool useDetectedFontSizes;
+		QString fontFamily;
+		int fontSize;
 		bool uniformizeLineSpacing;
 		int preserveSpaceWidth;
 		bool overlay;
@@ -57,6 +58,7 @@ private:
 
 	class PDFPainter {
 	public:
+		virtual void setFontFamily(const QString& family) = 0;
 		virtual void setFontSize(double pointSize) = 0;
 		virtual void drawText(double x, double y, const QString& text) = 0;
 		virtual void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) = 0;
@@ -91,7 +93,6 @@ private:
 	class QPainterPDFPainter;
 
 	Ui::PdfExportDialog ui;
-	QFontDialog* m_pdfFontDialog = nullptr;
 	QGraphicsPixmapItem* m_preview = nullptr;
 	const HOCRDocument* m_hocrdocument;
 	const HOCRPage* m_previewPage;
@@ -103,7 +104,6 @@ private slots:
 	void imageFormatChanged();
 	void imageCompressionChanged();
 	void passwordChanged();
-	void updateFontButton(const QFont& font);
 	void updatePreview();
 };
 
