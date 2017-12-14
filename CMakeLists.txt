@@ -201,6 +201,8 @@ ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
 ENDIF()
 
 IF("${srcdir}" STREQUAL "qt")
+  SET_PROPERTY(SOURCE ${gimagereader_FORMS_HEADERS} PROPERTY SKIP_AUTOMOC ON)
+  SET_PROPERTY(SOURCE ${gimagereader_RESOURCES_RCC} PROPERTY SKIP_AUTOMOC ON)
     # Gettextize ui files
     ADD_CUSTOM_TARGET(
         gettextizeui
