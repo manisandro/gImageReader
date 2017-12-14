@@ -108,12 +108,14 @@ public:
 	const QRect& bbox() const{ return m_bbox; }
 	QString text() const{ return m_domElement.text(); }
 	QString lang() const{ return m_domElement.attribute("lang"); }
+	const QMap<QString, QString> getTitleAttributes() const { return m_titleAttrs; }
 	QMap<QString,QString> getAllAttributes() const;
 	QMap<QString,QString> getAttributes(const QList<QString>& names) const;
 	void getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString> > >& occurences) const;
 	QString toHtml(int indent = 1) const;
 	int baseLine() const;
-	double fontSize() const;
+	QString fontFamily() const{ return m_titleAttrs["x_font"]; }
+	double fontSize() const{ return m_titleAttrs["x_fsize"].toDouble(); }
 
 	void addChild(HOCRItem* child);
 	void removeChild(HOCRItem* child);
@@ -122,17 +124,13 @@ public:
 	void setText(const QString& newText);
 	void setAttribute(const QString& name, const QString& value, const QString& attrItemClass = QString());
 
-	static bool isChildClass(const QString& parentClass, const QString& childClass);
-
 protected:
 	friend class HOCRPage;
 
-	static const QRegExp s_bboxRx;
-	static const QRegExp s_baseLineRx;
-	static const QRegExp s_fontSizeRx;
 	static QMap<QString,QString> s_langCache;
 
 	QDomElement m_domElement;
+	QMap<QString, QString> m_titleAttrs;
 	QVector<HOCRItem*> m_childItems;
 	HOCRPage* m_pageItem = nullptr;
 	HOCRItem* m_parentItem = nullptr;
