@@ -107,7 +107,7 @@ HOCRAttributeEditor::HOCRAttributeEditor(const QString& value, HOCRDocument* doc
 {
 	setFrame(false);
 	connect(m_doc, SIGNAL(itemAttributeChanged(QModelIndex,QString, QString)), this, SLOT(updateValue(QModelIndex,QString, QString)));
-	connect(this, SIGNAL(textChanged(QString)), this, SLOT(validateCahanges()));
+	connect(this, SIGNAL(textChanged(QString)), this, SLOT(validateChanges()));
 }
 
 void HOCRAttributeEditor::focusOutEvent(QFocusEvent *ev){
