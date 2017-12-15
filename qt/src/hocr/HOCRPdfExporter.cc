@@ -127,11 +127,11 @@ public:
 class HOCRPdfExporter::PoDoFoPDFPainter : public HOCRPdfExporter::PDFPainter {
 public:
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, double defaultFontSize)
 #else
-	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, double defaultFontSize)
 #endif
-		: m_document(document), m_painter(painter), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont)
+		: m_document(document), m_painter(painter), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontSize(defaultFontSize)
 	{
 	}
 	~PoDoFoPDFPainter() {
@@ -145,6 +145,9 @@ public:
 		m_painter->SetPage(page);
 		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
 		m_painter->SetFont(m_defaultFont);
+		if(m_defaultFontSize > 0) {
+			m_painter->GetFont()->SetFontSize(m_defaultFontSize);
+		}
 		m_scaleFactor = scaleFactor;
 	}
 	bool finalize(QString* errMsg) {
@@ -234,6 +237,7 @@ private:
 	PoDoFo::PdfEncoding* m_pdfFontEncoding;
 #endif
 	PoDoFo::PdfFont* m_defaultFont;
+	double m_defaultFontSize = -1.0;
 	double m_scaleFactor = 1.0;
 	double m_pageHeight = 0.0;
 
@@ -446,10 +450,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	pdfSettings.detectedFontScaling = ui.spinFontScaling->value() / 100.;
 
 	PoDoFo::PdfPainter painter;
-	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont);
-	if(pdfSettings.fontSize != -1) {
-		pdfprinter.setFontSize(pdfSettings.fontSize);
-	}
+	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont, pdfSettings.fontSize);
 
 	QStringList failed;
 	for(int i = 0, n = m_hocrdocument->pageCount(); i < n; ++i) {
