@@ -65,6 +65,7 @@ public:
 
 public slots:
 	void setAngle(double angle);
+	void setScaledImage(const QImage& image, double scale = 1.0);
 
 private:
 	enum class RotateMode { CurrentPage, AllPages } m_rotateMode;
@@ -125,7 +126,6 @@ private slots:
 	bool renderImage();
 	void setRotateMode(QAction* action);
 	void rotate90();
-	void setScaledImage(const QImage& image, double scale);
 	void zoomIn() {
 		setZoom(Zoom::In);
 	}
