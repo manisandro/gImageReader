@@ -23,7 +23,7 @@
 */
 
 #include "splitPage.h"
-#include "deskew.h"
+#include "deskew/deskew.h"
 #include "imageLibCommon.h"
 
 #include <algorithm>
