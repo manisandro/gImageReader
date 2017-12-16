@@ -601,7 +601,34 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_4"/>
+   <widget class="QWidget" name="dockWidgetContents_4">
+    <widget class="QPushButton" name="pushButtonCleanBackground">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>161</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clean background</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonDeskew">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>161</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Deskew</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <action name="actionSources">
    <property name="checkable">
