@@ -246,7 +246,6 @@ ADD_EXECUTABLE(gimagereader
     ${gimagereader_RESOURCES_RCC}
 )
 TARGET_LINK_LIBRARIES(gimagereader
-    libprlib.a
     ${TESSERACT_LDFLAGS}
     ${gimagereader_LIBS}
     ${SANE_LDFLAGS}
