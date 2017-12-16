@@ -38,6 +38,7 @@ private:
 
 private slots:
     void deskew();
+    void cleanBackground();
 };
 
 #endif //GIMAGEREADER_IMAGEPROCESSING_HH

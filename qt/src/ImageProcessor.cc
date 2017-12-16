@@ -8,17 +8,21 @@
 #include "Displayer.hh"
 #include "MainWindow.hh"
 
-#include <prlib/deskew.h>
+#include <image_processing/deskew/deskew.h>
+#include <image_processing/cleanBackgroundToWhite.h>
 
 ImageProcessor::ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer)
-        : ui(_ui), displayer(_displayer) {
+        : ui(_ui), displayer(_displayer)
+{
     connect(ui.pushButtonDeskew, SIGNAL(clicked()), this, SLOT(deskew()));
+    connect(ui.pushButtonCleanBackground, SIGNAL(clicked()), this, SLOT(cleanBackground()));
 }
 
 ImageProcessor::~ImageProcessor()
 {}
 
-void ImageProcessor::deskew() {
+void ImageProcessor::deskew()
+{
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
@@ -26,8 +30,22 @@ void ImageProcessor::deskew() {
     prl::deskew(opencvImage, deskewedImage);
 
     image = matToImage(deskewedImage);
+
+    displayer.setScaledImage(image);
 }
 
+void ImageProcessor::cleanBackground()
+{
+    QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    cv::Mat opencvImage = imageToMat(image, CV_8UC3);
+
+    cv::Mat deskewedImage;
+    prl::cleanBackgroundToWhite(opencvImage, deskewedImage);
+
+    image = matToImage(deskewedImage);
+
+    displayer.setScaledImage(image);
+}
 
 namespace {
 
