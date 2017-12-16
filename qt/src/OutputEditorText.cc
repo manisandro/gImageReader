@@ -19,7 +19,6 @@
 
 #include <QDesktopServices>
 #include <QFile>
-#include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QUrl>
@@ -27,6 +26,7 @@
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
 
+#include "FileDialogs.hh"
 #include "OutputEditorText.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
@@ -203,10 +203,10 @@ void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data)
 	if(data->prependFile || data->prependPage) {
 		QStringList prepend;
 		if(data->prependFile) {
-            prepend.append(_("File: %1").arg(data->file));
+			prepend.append(_("File: %1").arg(data->file));
 		}
 		if(data->prependPage) {
-            prepend.append(_("Page: %1").arg(data->page));
+			prepend.append(_("Page: %1").arg(data->page));
 		}
 		text.prepend(QString("[%1]\n").arg(prepend.join("; ")));
 	}
@@ -246,12 +246,10 @@ bool OutputEditorText::save(const QString& filename) {
 	if(outname.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
 		QString base = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
-		outname = QDir(MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->getValue()).absoluteFilePath(base + ".txt");
-		outname = QFileDialog::getSaveFileName(MAIN, _("Save Output..."), outname, QString("%1 (*.txt)").arg(_("Text Files")));
+		outname = FileDialogs::saveDialog(_("Save Output..."), base + ".txt", "outputdir", QString("%1 (*.txt)").arg(_("Text Files")));
 		if(outname.isEmpty()) {
 			return false;
 		}
-		MAIN->getConfig()->getSetting<VarSetting<QString>>("outputdir")->setValue(QFileInfo(outname).absolutePath());
 	}
 	QFile file(outname);
 	if(!file.open(QIODevice::WriteOnly)) {

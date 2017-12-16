@@ -17,18 +17,29 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <memory>
+#include <stdexcept>
+
 #include <QClipboard>
 #include <QDesktopWidget>
 #include <QDesktopServices>
+#include <QDir>
 #include <QDragEnterEvent>
 #include <QFile>
-#include <QFileDialog>
 #include <QFileInfo>
 #include <QImageReader>
+#include <QInputDialog>
 #include <QMessageBox>
+#include <QString>
 #include <QTemporaryFile>
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+#include <poppler-qt4.h>
+#else
+#include <poppler-qt5.h>
+#endif
 
 #include "Config.hh"
+#include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
@@ -41,6 +52,30 @@ QDataStream& operator<<(QDataStream& ds, const Source*&) {
 }
 QDataStream& operator>>(QDataStream& ds, Source*&) {
 	return ds;
+}
+
+Source::Source(const QString& _path, const QString& _displayname, bool _isTemp)
+				: path(_path), displayname(_displayname), isTemp(_isTemp) {
+	// Check whether input PDF file is encrypted
+	if(path.endsWith(".pdf", Qt::CaseInsensitive)) {
+		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(path));
+		if(document && document->isLocked()) {
+			bool ok = false;
+			QString text;
+			while(true) {
+				text = QInputDialog::getText(MAIN, _("Protected PDF"),
+											 QString(_("Enter password for file '%1':")).arg(displayname), QLineEdit::Password,
+											 text, &ok);
+				if(!ok) {
+					throw std::invalid_argument("Locked PDF: skip file.");
+				}
+				if(!document->unlock(text.toLocal8Bit(), text.toLocal8Bit())) {
+					password = text.toLocal8Bit();
+					break;
+				}
+			}
+		}
+	}
 }
 
 
@@ -73,44 +108,52 @@ SourceManager::~SourceManager() {
 	clearSources();
 }
 
-void SourceManager::addSources(const QStringList& files) {
+int SourceManager::addSources(const QStringList& files) {
 	QString failed;
 	QListWidgetItem* item = nullptr;
 	QStringList recentItems = MAIN->getConfig()->getSetting<VarSetting<QStringList>>("recentitems")->getValue();
+	int added = 0;
 	for(const QString& filename : files) {
 		if(!QFile(filename).exists()) {
 			failed += "\n\t" + filename;
 			continue;
 		}
-		bool contains = false;
-		for(int row = 0, nRows = ui.listWidgetSources->count(); row < nRows; ++row) {
+		item = ui.listWidgetSources->currentItem();
+		bool contains = item ? item->toolTip() == filename : false;
+		for(int row = 0, nRows = ui.listWidgetSources->count(); !contains && row < nRows; ++row) {
 			if(ui.listWidgetSources->item(row)->toolTip() == filename) {
 				item = ui.listWidgetSources->item(row);
 				contains = true;
-				break;
 			}
 		}
 		if(contains) {
+			++added;
+			continue;
+		}
+		Source* source = nullptr;
+		try {
+			source = new Source(filename, QFileInfo(filename).fileName());
+		}
+		catch (...) {
 			continue;
 		}
 		item = new QListWidgetItem(QFileInfo(filename).fileName(), ui.listWidgetSources);
 		item->setToolTip(filename);
-		Source* source = new Source(filename, QFileInfo(filename).fileName());
 		item->setData(Qt::UserRole, QVariant::fromValue(source));
 		m_fsWatcher.addPath(filename);
 		recentItems.removeAll(filename);
 		recentItems.prepend(filename);
+		++added;
 	}
 	MAIN->getConfig()->getSetting<VarSetting<QStringList>>("recentitems")->setValue(recentItems);
-	if(item) {
-		ui.listWidgetSources->blockSignals(true);
-		ui.listWidgetSources->clearSelection();
-		ui.listWidgetSources->blockSignals(false);
-		ui.listWidgetSources->setCurrentItem(item);
-	}
+	ui.listWidgetSources->blockSignals(true);
+	ui.listWidgetSources->clearSelection();
+	ui.listWidgetSources->blockSignals(false);
+	ui.listWidgetSources->setCurrentItem(item);
 	if(!failed.isEmpty()) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:%1").arg(failed));
 	}
+	return added;
 }
 
 QList<Source*> SourceManager::getSelectedSources() const {
@@ -140,11 +183,9 @@ void SourceManager::prepareSourcesMenu() {
 
 void SourceManager::openSources() {
 	QList<Source*> current = getSelectedSources();
-	QString dir;
+	QString initialFolder;
 	if(!current.isEmpty() && !current.front()->isTemp) {
-		dir = QFileInfo(current.front()->path).absolutePath();
-	} else {
-		dir = Utils::documentsFolder();
+		initialFolder = QFileInfo(current.front()->path).absolutePath();
 	}
 	QSet<QString> formats;
 	for(const QByteArray& format : QImageReader::supportedImageFormats()) {
@@ -153,7 +194,7 @@ void SourceManager::openSources() {
 	formats.insert("*.pdf");
 	formats.insert("*.djvu");
 	QString filter = QString("%1 (%2)").arg(_("Images and PDFs")).arg(QStringList(formats.toList()).join(" "));
-	addSources(QFileDialog::getOpenFileNames(MAIN, _("Select Files"), dir, filter));
+	addSources(FileDialogs::openDialog(_("Select Files"), initialFolder, "sourcedir", filter, true));
 }
 
 void SourceManager::openRecentItem() {

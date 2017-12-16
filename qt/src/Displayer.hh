@@ -46,26 +46,25 @@ public:
 		m_tool = tool;
 	}
 	bool setSources(QList<Source*> sources);
+	bool setup(const int* page = nullptr, const int* resolution = nullptr, const double* angle = nullptr);
 	int getCurrentPage() const;
+	int getNPages() const;
+	int getCurrentResolution() const;
 	double getCurrentAngle() const;
 	double getCurrentScale() const {
 		return m_scale;
 	}
-	int getCurrentResolution() const;
 	QString getCurrentImage(int& page) const;
 	QImage getImage(const QRectF& rect);
 	QRectF getSceneBoundingRect() const;
 	QPointF mapToSceneClamped(const QPoint& p) const;
-	int getNPages() const;
 	bool hasMultipleOCRAreas();
 	QList<QImage> getOCRAreas();
 	bool allowAutodetectOCRAreas() const;
 	void autodetectOCRAreas();
 
 public slots:
-	bool setCurrentPage(int page);
 	void setAngle(double angle);
-	void setResolution(int resolution);
 
 private:
 	enum class RotateMode { CurrentPage, AllPages } m_rotateMode;
@@ -121,15 +120,9 @@ private:
 
 private slots:
 	void queueRenderImage();
-	void scaleTimerElapsed() {
-		sendScaleRequest(m_pendingScaleRequest);
-	}
+	void scaleTimerElapsed();
 	void sendScaleRequest(const ScaleRequest& request);
 	bool renderImage();
-	void brightnessChanged();
-	void contrastChanged();
-	void resolutionChanged();
-	void invertColorsChanged();
 	void setRotateMode(QAction* action);
 	void rotate90();
 	void setScaledImage(const QImage& image, double scale);

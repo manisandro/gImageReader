@@ -49,6 +49,7 @@ public:
 	bool getModified() const override;
 
 	bool clear(bool hide = true) override;
+	void setLanguage(const Config::Lang &lang) override;
 	void open();
 	bool save(const std::string& filename = "") override;
 	void savePDF();
@@ -170,6 +171,7 @@ private:
 	Gsv::View* m_sourceView;
 	int m_idCounter = 0;
 	DisplayerToolHOCR* m_tool;
+	Glib::ustring m_spellLanguage = "en_US";
 	GtkSpell::Checker m_spell;
 	bool m_modified = false;
 	Gtk::Dialog* m_pdfExportDialog = nullptr;
@@ -189,7 +191,7 @@ private:
 
 	Gtk::TreeIter currentItem();
 	void addPage(xmlpp::Element* pageDiv, const Glib::ustring& filename, int page, bool cleanGraphics);
-	bool addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring, Glib::ustring>& langCache);
+	bool addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring, Glib::ustring>& langCache, Glib::ustring lang);
 	void printChildren(PDFPainter& painter, Gtk::TreeIter item, const PDFSettings& pdfSettings, double imgScale = 1.) const;
 	bool setCurrentSource(xmlpp::Element* pageElement, int* pageDpi = 0, int* overrideDpi = 0) const;
 	void updateCurrentItemText();
@@ -206,6 +208,7 @@ private:
 	void imageCompressionChanged();
 	void showItemProperties(Gtk::TreeIter item);
 	void itemChanged(const Gtk::TreeIter& iter);
+	void passwordChanged();
 	void propertyCellChanged(const Gtk::TreeIter& iter);
 	void showContextMenu(GdkEventButton* ev);
 	void checkCellEditable(const Glib::ustring& path, Gtk::CellRenderer* renderer);

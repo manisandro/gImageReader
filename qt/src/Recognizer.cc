@@ -62,7 +62,7 @@ struct Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
 		nPages = _nPages;
 	}
 	int getProgress() {
-		return 100 * ((donePages + desc.progress / 100.) / nPages);
+		return 100.0 * ((donePages + desc.progress / 100.0) / nPages);
 	}
 	void cancel() {
 		canceled = true;
@@ -294,16 +294,17 @@ void Recognizer::updateLanguagesMenu() {
 		bool requireOsd;
 	};
 	QVector<PsmEntry> psmModes = {
-			PsmEntry{_("Automatic page segmentation"), tesseract::PSM_AUTO, false},
-			PsmEntry{_("Page segmentation with orientation and script detection"), tesseract::PSM_AUTO_OSD, true},
-			PsmEntry{_("Assume single column of text"), tesseract::PSM_SINGLE_COLUMN, false},
-			PsmEntry{_("Assume single block of vertically aligned text"), tesseract::PSM_SINGLE_BLOCK_VERT_TEXT, false},
-			PsmEntry{_("Assume a single uniform block of text"), tesseract::PSM_SINGLE_BLOCK, false},
-			PsmEntry{_("Assume a line of text"), tesseract::PSM_SINGLE_LINE, false},
-			PsmEntry{_("Assume a single word"), tesseract::PSM_SINGLE_WORD, false},
-			PsmEntry{_("Assume a single word in a circle"), tesseract::PSM_CIRCLE_WORD, false},
-			PsmEntry{_("Sparse text in no particular order"), tesseract::PSM_SPARSE_TEXT, false},
-			PsmEntry{_("Sparse text with orientation and script detection"), tesseract::PSM_SPARSE_TEXT_OSD, true}};
+		PsmEntry{_("Automatic page segmentation"), tesseract::PSM_AUTO, false},
+		PsmEntry{_("Page segmentation with orientation and script detection"), tesseract::PSM_AUTO_OSD, true},
+		PsmEntry{_("Assume single column of text"), tesseract::PSM_SINGLE_COLUMN, false},
+		PsmEntry{_("Assume single block of vertically aligned text"), tesseract::PSM_SINGLE_BLOCK_VERT_TEXT, false},
+		PsmEntry{_("Assume a single uniform block of text"), tesseract::PSM_SINGLE_BLOCK, false},
+		PsmEntry{_("Assume a line of text"), tesseract::PSM_SINGLE_LINE, false},
+		PsmEntry{_("Assume a single word"), tesseract::PSM_SINGLE_WORD, false},
+		PsmEntry{_("Assume a single word in a circle"), tesseract::PSM_CIRCLE_WORD, false},
+		PsmEntry{_("Sparse text in no particular order"), tesseract::PSM_SPARSE_TEXT, false},
+		PsmEntry{_("Sparse text with orientation and script detection"), tesseract::PSM_SPARSE_TEXT_OSD, true}
+	};
 	for(const auto& entry : psmModes) {
 		QAction* item = psmMenu->addAction(entry.label);
 		item->setData(entry.psmMode);
@@ -382,30 +383,36 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout) {
 
 	m_pagesDialogUi.comboBoxRecognitionArea->setItemText(0, MAIN->getDisplayer()->hasMultipleOCRAreas() ? _("Current selection") : _("Entire page"));
 
+	QRegExp validateRegEx("^[\\d,\\-\\s]+$");
 	QList<int> pages;
-	if(m_pagesDialog->exec() == QDialog::Accepted) {
+	while(m_pagesDialog->exec() == QDialog::Accepted) {
+		pages.clear();
 		QString text = m_pagesDialogUi.lineEditPageRange->text();
-		text.replace(QRegExp("\\s+"), "");
-		for(const QString& block : text.split(',', QString::SkipEmptyParts)) {
-			QStringList ranges = block.split('-', QString::SkipEmptyParts);
-			if(ranges.size() == 1) {
-				int page = ranges[0].toInt();
-				if(page > 0 && page <= nPages) {
-					pages.append(page);
+		if(validateRegEx.indexIn(text) != -1) {
+			text.replace(QRegExp("\\s+"), "");
+			for(const QString& block : text.split(',', QString::SkipEmptyParts)) {
+				QStringList ranges = block.split('-', QString::SkipEmptyParts);
+				if(ranges.size() == 1) {
+					int page = ranges[0].toInt();
+					if(page > 0 && page <= nPages) {
+						pages.append(page);
+					}
+				} else if(ranges.size() == 2) {
+					int start = std::max(1, ranges[0].toInt());
+					int end = std::min(nPages, ranges[1].toInt());
+					for(int page = start; page <= end; ++page) {
+						pages.append(page);
+					}
+				} else {
+					pages.clear();
+					break;
 				}
-			} else if(ranges.size() == 2) {
-				int start = std::max(1, ranges[0].toInt());
-				int end = std::min(nPages, ranges[1].toInt());
-				for(int page = start; page <= end; ++page) {
-					pages.append(page);
-				}
-			} else {
-				pages.clear();
-				break;
 			}
 		}
 		if(pages.empty()) {
 			m_pagesDialogUi.lineEditPageRange->setStyleSheet("background: #FF7777; color: #FFFFFF;");
+		} else {
+			break;
 		}
 	}
 	qSort(pages);
@@ -538,10 +545,7 @@ bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 }
 
 bool Recognizer::setPage(int page, bool autodetectLayout) {
-	bool success = true;
-	if(page != MAIN->getDisplayer()->getCurrentPage()) {
-		success = MAIN->getDisplayer()->setCurrentPage(page);
-	}
+	bool success = MAIN->getDisplayer()->setup(&page);
 	if(success && autodetectLayout) {
 		MAIN->getDisplayer()->autodetectOCRAreas();
 	}

@@ -24,5 +24,6 @@
         <file alias="item_halftone">../../data/icons/item_halftone.png</file>
         <file alias="rotate_page">../../data/icons/rotate_page.png</file>
         <file alias="rotate_pages">../../data/icons/rotate_pages.png</file>
+        <file alias="wconf">../../data/icons/wconf.png</file>
     </qresource>
 </RCC>

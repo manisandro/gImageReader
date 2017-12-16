@@ -23,6 +23,49 @@
 #include "Utils.hh"
 
 #include <pangomm.h>
+#include <poppler-document.h>
+
+
+Source::Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp)
+	: file(_file), displayname(_displayname), monitor(_monitor), isTemp(_isTemp)
+{
+	std::string filename = file->get_path();
+#ifdef G_OS_WIN32
+	if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf") {
+#else
+	if(Utils::get_content_type(filename) == "application/pdf") {
+#endif
+		GError* err = nullptr;
+		PopplerDocument* document = poppler_document_new_from_file(Glib::filename_to_uri(filename).c_str(), 0, &err);
+		if(err && g_error_matches (err, POPPLER_ERROR, POPPLER_ERROR_ENCRYPTED)) {
+			g_error_free(err);
+			err = nullptr;
+			Gtk::Dialog* passwordDialog = MAIN->getWidget("dialog:pdfpassword");
+			Gtk::Entry* passwordEntry = MAIN->getWidget("entry:pdfpassword");
+			MAIN->getWidget("label:pdfpassword").as<Gtk::Label>()->set_text(Glib::ustring::compose(_("Enter password for file '%1':"), displayname));
+			while(true) {
+				passwordEntry->select_region(0, -1);
+				passwordEntry->grab_focus();
+				int response = passwordDialog->run();
+				passwordDialog->hide();
+				if(response != Gtk::RESPONSE_OK) {
+					throw std::invalid_argument("Locked PDF: skip file.");
+				}
+				Glib::ustring pass = passwordEntry->get_text();
+				document = poppler_document_new_from_file(Glib::filename_to_uri(filename).c_str(), pass.c_str(), &err);
+				if(!err) {
+					password = pass;
+					break;
+				}
+				g_error_free(err);
+				err = nullptr;
+			}
+		}
+		if(document) {
+			g_object_unref(document);
+		}
+	}
+}
 
 SourceManager::SourceManager() {
 	m_notebook = MAIN->getWidget("notebook:sources");
@@ -101,9 +144,15 @@ void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files
 		if(contains) {
 			continue;
 		}
+		Source* source = nullptr;
+		 try {
+			source = new Source(file, file->get_basename(), file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false);
+		 }
+		 catch (...) {
+			continue;
+		 }
 		it = store->append();
 		it->set_value(m_listViewCols.filename, file->get_basename());
-		Source* source = new Source(file, file->get_basename(), file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false);
 		it->set_value(m_listViewCols.source, source);
 		it->set_value(m_listViewCols.path, file->get_path());
 		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
@@ -138,7 +187,7 @@ void SourceManager::openSources() {
 	filter.patterns.push_back("*.pdf");
 	filter.mime_types.push_back("image/vnd.djvu");
 	filter.patterns.push_back("*.djvu");
-	addSources(FileDialogs::open_dialog(_("Select Files"), initialFolder, filter, true));
+	addSources(FileDialogs::open_dialog(_("Select Files"), initialFolder, "sourcedir", filter, true));
 }
 
 void SourceManager::pasteClipboard() {
@@ -258,14 +307,15 @@ void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib:
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model());
 	Source* source = it->get_value(m_listViewCols.source);
 	if(event == Gio::FILE_MONITOR_EVENT_MOVED) {
-		source->file = otherFile;
-		source->monitor = otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED);
+		Source* newSource = new Source(otherFile, otherFile->get_basename(), otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), source->isTemp);
+		it->set_value(m_listViewCols.source, newSource);
 		it->set_value(m_listViewCols.filename, otherFile->get_basename());
 		it->set_value(m_listViewCols.path, otherFile->get_path());
-		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
-		if(it == m_listView->get_selection()->get_selected()) {
+		CONNECT(newSource->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
+		if(m_listView->get_selection()->is_selected(it)) {
 			m_signal_sourceChanged.emit();
 		}
+		delete source;
 	} else if(event == Gio::FILE_MONITOR_EVENT_DELETED) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Missing File"), Glib::ustring::compose(_("The following file has been deleted or moved:\n%1"), file->get_path()));
 		delete source;

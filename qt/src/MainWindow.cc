@@ -81,7 +81,7 @@ void MainWindow::signalHandler(int signal) {
 	std::raise(signal);
 }
 
-#ifndef __ARMEL__
+#if !(defined(__ARMEL__) || defined(__LCC__) && __LCC__ <= 121)
 static void terminateHandler() {
 	std::set_terminate(nullptr);
 	std::exception_ptr exptr = std::current_exception();
@@ -108,7 +108,7 @@ MainWindow::MainWindow(const QStringList& files)
 
 	std::signal(SIGSEGV, signalHandler);
 	std::signal(SIGABRT, signalHandler);
-#ifndef __ARMEL__
+#if !(defined(__ARMEL__) || defined(__LCC__) && __LCC__ <= 121)
 	std::set_terminate(terminateHandler);
 #endif
 
@@ -160,7 +160,6 @@ MainWindow::MainWindow(const QStringList& files)
 	m_config->addSetting(new VarSetting<QByteArray>("wingeom"));
 	m_config->addSetting(new VarSetting<QByteArray>("winstate"));
 	m_config->addSetting(new ActionSetting("showcontrols", ui.actionImageControls));
-	m_config->addSetting(new VarSetting<QString>("outputdir", Utils::documentsFolder()));
 	m_config->addSetting(new ComboSetting("outputeditor", ui.comboBoxOCRMode, 0));
 
 	m_recognizer->updateLanguagesMenu();
@@ -264,14 +263,16 @@ void MainWindow::closeEvent(QCloseEvent* ev) {
 }
 
 void MainWindow::onSourceChanged() {
-	if(m_stateStack.top().first == State::Normal) {
-		popState();
-	}
 	QList<Source*> sources = m_sourceManager->getSelectedSources();
 	if(m_displayer->setSources(sources)) {
 		setWindowTitle(QString("%1 - %2").arg(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources")).arg(PACKAGE_NAME));
-		pushState(State::Normal, _("Ready"));
+		if(m_stateStack.top().first == State::Idle) {
+			pushState(State::Normal, _("Ready"));
+		}
 	} else {
+		if(m_stateStack.top().first == State::Normal) {
+			popState();
+		}
 		setWindowTitle(PACKAGE_NAME);
 	}
 }

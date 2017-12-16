@@ -24,6 +24,7 @@
 #include <QAbstractButton>
 #include <QComboBox>
 #include <QFontDialog>
+#include <QFontComboBox>
 #include <QSettings>
 #include <QSpinBox>
 #include <QString>
@@ -159,6 +160,25 @@ public slots:
 
 private:
 	QComboBox* m_combo;
+};
+
+class FontComboSetting : public AbstractSetting {
+	Q_OBJECT
+public:
+	FontComboSetting(const QString& key, QFontComboBox* combo, const QFont defaultFont = QFont())
+		: AbstractSetting(key), m_combo(combo) {
+		combo->setCurrentFont(QFont(QSettings().value(m_key, defaultFont.family()).toString()));
+		connect(combo, SIGNAL(currentFontChanged(QFont)), this, SLOT(serialize()));
+	}
+
+public slots:
+	void serialize() override {
+		QSettings().setValue(m_key, m_combo->currentFont().family());
+		emit changed();
+	}
+
+private:
+	QFontComboBox* m_combo;
 };
 
 class SpinSetting : public AbstractSetting {

@@ -87,7 +87,7 @@ void Utils::set_spin_blocked(Gtk::SpinButton *spin, double value, sigc::connecti
 
 static Glib::RefPtr<Gtk::CssProvider> createErrorStyleProvider() {
 	Glib::RefPtr<Gtk::CssProvider> provider = Gtk::CssProvider::create();
-	provider->load_from_data("GtkEntry { background: #FF7777; color: #FFFFFF; }");
+	provider->load_from_data(".error { background-color: #FF7777; color: #FFFFFF; }");
 	return provider;
 }
 
@@ -97,10 +97,12 @@ static Glib::RefPtr<Gtk::CssProvider> getErrorStyleProvider() {
 }
 
 void Utils::set_error_state(Gtk::Entry *entry) {
-	entry->get_style_context()->add_provider(getErrorStyleProvider(), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	entry->get_style_context()->add_provider(getErrorStyleProvider(), 10000);
+	entry->get_style_context()->add_class("error");
 }
 
 void Utils::clear_error_state(Gtk::Entry *entry) {
+	entry->get_style_context()->remove_class("error");
 	entry->get_style_context()->remove_provider(getErrorStyleProvider());
 }
 
@@ -200,6 +202,14 @@ Glib::ustring Utils::string_trim(const Glib::ustring &str) {
 	return ret;
 }
 
+int Utils::parseInt(const Glib::ustring& str, bool* ok)
+{
+	static Glib::RefPtr<Glib::Regex> nrRegEx = Glib::Regex::create("^\\d+$");
+	bool match = nrRegEx->match(str);
+	if(ok) *ok = match;
+	return match ? std::atoi(str.c_str()) : 0;
+}
+
 void Utils::handle_drag_drop(const Glib::RefPtr<Gdk::DragContext> &context, int /*x*/, int /*y*/, const Gtk::SelectionData &selection_data, guint /*info*/, guint time) {
 	if ((selection_data.get_length() >= 0) && (selection_data.get_format() == 8)) {
 		std::vector<Glib::RefPtr<Gio::File>> files;
@@ -280,10 +290,7 @@ Glib::ustring Utils::getSpellingLanguage(const Glib::ustring& lang) {
 	// Look in the lang cultures table if a language hint is provided
 	Config::Lang langspec = {lang};
 	if(!lang.empty() && MAIN->getConfig()->searchLangSpec(langspec)) {
-		std::vector<Glib::ustring> langCultures = MAIN->getConfig()->searchLangCultures(langspec.code);
-		if(!langCultures.empty()) {
-			return langCultures.front();
-		}
+		return langspec.code;
 	}
 	// Use the application locale, if specified, otherwise fall back to en
 	Glib::ustring syslocale = g_getenv ("LANG");

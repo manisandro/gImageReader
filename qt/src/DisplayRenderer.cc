@@ -24,6 +24,7 @@
 #include <poppler-qt5.h>
 #endif
 
+#include <cmath>
 #include "DjVuDocument.hh"
 #include "DisplayRenderer.hh"
 #include "Utils.hh"
@@ -33,11 +34,11 @@ void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, b
 		return;
 	}
 
-	double kBr = 1.f - qAbs(brightness / 200.f);
-	double dBr = brightness > 0 ? 255. : 0.;
+	double kBr = 1.0 - std::abs(brightness / 200.0);
+	double dBr = brightness > 0 ? 255.0 : 0.0;
 
 	double kCn = contrast * 2.55;
-	double FCn = (259. * (kCn + 255.)) / (255. * (259. - kCn));
+	double FCn = (259.0 * (kCn + 255.0)) / (255.0 * (259.0 - kCn));
 
 	int nLinePixels = image.bytesPerLine() / 4;
 	int nLines = image.height();
@@ -49,13 +50,13 @@ void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, b
 			int green = qGreen(rgb[i]);
 			int blue = qBlue(rgb[i]);
 			// Brighntess
-			red = dBr * (1.f - kBr) + red * kBr;
-			green = dBr * (1.f - kBr) + green * kBr;
-			blue = dBr * (1.f - kBr) + blue * kBr;
+			red = dBr * (1.0 - kBr) + red * kBr;
+			green = dBr * (1.0 - kBr) + green * kBr;
+			blue = dBr * (1.0 - kBr) + blue * kBr;
 			// Contrast
-			red = std::max(0., std::min(FCn * (red - 128.) + 128., 255.));
-			green = std::max(0., std::min(FCn * (green - 128.) + 128., 255.));
-			blue = std::max(0., std::min(FCn * (blue - 128.) + 128., 255.));
+			red = std::max(0.0, std::min(FCn * (red - 128.0) + 128.0, 255.0));
+			green = std::max(0.0, std::min(FCn * (green - 128.0) + 128.0, 255.0));
+			blue = std::max(0.0, std::min(FCn * (blue - 128.0) + 128.0, 255.0));
 			// Invert
 			if(invert) {
 				red = 255 - red;
@@ -76,13 +77,17 @@ QImage ImageRenderer::render(int page, double resolution) const {
 	QImageReader reader(m_filename);
 	reader.jumpToImage(page - 1);
 	reader.setBackgroundColor(Qt::white);
-	reader.setScaledSize(reader.size() * resolution / 100.);
+	reader.setScaledSize(reader.size() * resolution / 100.0);
 	return reader.read().convertToFormat(QImage::Format_RGB32);
 }
 
-PDFRenderer::PDFRenderer(const QString& filename) : DisplayRenderer(filename) {
+PDFRenderer::PDFRenderer(const QString& filename, const QByteArray& password) : DisplayRenderer(filename) {
 	m_document = Poppler::Document::load(filename);
 	if(m_document) {
+		if(m_document->isLocked()) {
+			m_document->unlock(password, password);
+		}
+
 		m_document->setRenderHint(Poppler::Document::Antialiasing);
 		m_document->setRenderHint(Poppler::Document::TextAntialiasing);
 	}
@@ -117,8 +122,7 @@ DJVURenderer::~DJVURenderer() {
 	delete m_djvu;
 }
 
-QImage DJVURenderer::render(int page, double resolution) const
-{
+QImage DJVURenderer::render(int page, double resolution) const {
 	return m_djvu->image(page, resolution);
 }
 

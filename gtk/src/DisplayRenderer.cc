@@ -93,8 +93,8 @@ Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::render(int /*page*/, double re
 	return surf;
 }
 
-PDFRenderer::PDFRenderer(const std::string& filename) : DisplayRenderer(filename) {
-	m_document = poppler_document_new_from_file(Glib::filename_to_uri(m_filename).c_str(), 0, 0);
+PDFRenderer::PDFRenderer(const std::string& filename, const Glib::ustring& password) : DisplayRenderer(filename) {
+	m_document = poppler_document_new_from_file(Glib::filename_to_uri(m_filename).c_str(), password.c_str(), 0);
 }
 
 PDFRenderer::~PDFRenderer() {
@@ -144,8 +144,7 @@ DJVURenderer::~DJVURenderer() {
 	delete m_djvu;
 }
 
-Cairo::RefPtr<Cairo::ImageSurface> DJVURenderer::render(int page, double resolution) const
-{
+Cairo::RefPtr<Cairo::ImageSurface> DJVURenderer::render(int page, double resolution) const {
 	return m_djvu->image(page, resolution);
 }
 

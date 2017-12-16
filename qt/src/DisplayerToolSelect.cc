@@ -19,6 +19,7 @@
 
 #include "DisplayerToolSelect.hh"
 #include "Displayer.hh"
+#include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "Recognizer.hh"
 #include "Utils.hh"
@@ -27,7 +28,6 @@
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
-#include <QFileDialog>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMenu>
@@ -38,8 +38,6 @@
 DisplayerToolSelect::DisplayerToolSelect(QAction* actionAutodetectLayout, Displayer *displayer, QObject *parent)
 	: DisplayerTool(displayer, parent), mActionAutodetectLayout(actionAutodetectLayout) {
 	connect(mActionAutodetectLayout, SIGNAL(triggered()), this, SLOT(autodetectLayout()));
-
-	MAIN->getConfig()->addSetting(new VarSetting<QString>("selectionsavefile", QDir(Utils::documentsFolder()).absoluteFilePath(_("selection.png"))));
 
 	mActionAutodetectLayout->setVisible(true);
 	updateRecognitionModeLabel();
@@ -73,7 +71,7 @@ void DisplayerToolSelect::mouseMoveEvent(QMouseEvent *event) {
 
 void DisplayerToolSelect::mouseReleaseEvent(QMouseEvent *event) {
 	if(m_curSel) {
-		if(m_curSel->rect().width() < 5. || m_curSel->rect().height() < 5.) {
+		if(m_curSel->rect().width() < 5.0 || m_curSel->rect().height() < 5.0) {
 			delete m_curSel;
 		} else {
 			m_selections.append(m_curSel);
@@ -137,10 +135,8 @@ void DisplayerToolSelect::reorderSelection(int oldNum, int newNum) {
 
 void DisplayerToolSelect::saveSelection(NumberedDisplayerSelection* selection) {
 	QImage img = m_displayer->getImage(selection->rect());
-	QString filename = Utils::makeOutputFilename(MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->getValue());
-	filename = QFileDialog::getSaveFileName(MAIN, _("Save Selection Image"), filename, QString("%1 (*.png)").arg(_("PNG Images")));
+	QString filename = FileDialogs::saveDialog(_("Save Selection Image"), _("selection.png"), "outputdir", QString("%1 (*.png)").arg(_("PNG Images")), true);
 	if(!filename.isEmpty()) {
-		MAIN->getConfig()->getSetting<VarSetting<QString>>("selectionsavefile")->setValue(filename);
 		img.save(filename);
 	}
 }
@@ -152,7 +148,7 @@ void DisplayerToolSelect::updateRecognitionModeLabel() {
 void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 	clearSelections();
 
-	double avgDeskew = 0.;
+	double avgDeskew = 0.0;
 	int nDeskew = 0;
 	QList<QRectF> rects;
 	QImage img = m_displayer->getImage(m_displayer->getSceneBoundingRect());
@@ -187,8 +183,8 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 
 	// If a somewhat large deskew angle is detected, automatically rotate image and redetect layout,
 	// unless we already attempted to rotate (to prevent endless loops)
-	avgDeskew = qRound(((avgDeskew/nDeskew)/M_PI * 180.) * 10.) / 10.;
-	if(qAbs(avgDeskew) > .1 && !noDeskew) {
+	avgDeskew = qRound(((avgDeskew/nDeskew)/M_PI * 180.0) * 10.0) / 10.0;
+	if(std::abs(avgDeskew) > 0.1 && !noDeskew) {
 		m_displayer->setAngle(m_displayer->getCurrentAngle() - avgDeskew);
 		autodetectLayout(true);
 	} else {
@@ -265,7 +261,7 @@ void NumberedDisplayerSelection::paint(QPainter *painter, const QStyleOptionGrap
 
 	painter->setRenderHint(QPainter::Antialiasing, false);
 	QRectF r = rect();
-	qreal w = 20. / m_tool->getDisplayer()->getCurrentScale();
+	qreal w = 20.0 / m_tool->getDisplayer()->getCurrentScale();
 	w = std::min(w, std::min(r.width(), r.height()));
 	QRectF box(r.x(), r.y(), w, w);
 	painter->setBrush(QPalette().highlight());

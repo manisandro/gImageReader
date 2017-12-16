@@ -30,10 +30,10 @@ class UI_MainWindow;
 
 
 struct Source {
-	Source(const QString& _path, const QString& _displayname, bool _isTemp = false)
-		: path(_path), displayname(_displayname), isTemp(_isTemp) {}
+	Source(const QString& _path, const QString& _displayname, bool _isTemp = false);
 	QString path;
 	QString displayname;
+	QByteArray password;
 	bool isTemp;
 	int brightness = 0;
 	int contrast = 0;
@@ -51,10 +51,11 @@ public:
 	QList<Source*> getSelectedSources() const;
 	void addSourceImage(const QImage& image);
 
+	int addSources(const QStringList& files);
+
 public slots:
-	void addSources(const QStringList& files);
-	void addSource(const QString& file) {
-		addSources(QStringList() << file);
+	bool addSource(const QString& file) {
+		return addSources(QStringList() << file) == 1;
 	}
 
 signals:

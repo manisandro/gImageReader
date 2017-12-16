@@ -61,6 +61,8 @@ std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, b
 Glib::ustring string_join(const std::vector<Glib::ustring>& strings, const Glib::ustring& joiner);
 Glib::ustring string_trim(const Glib::ustring& str);
 
+int parseInt(const Glib::ustring& str, bool* ok = nullptr);
+
 void handle_drag_drop(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, const Gtk::SelectionData& selection_data, guint info, guint time);
 
 Glib::RefPtr<Glib::ByteArray> download(const std::string& url, Glib::ustring& messages, unsigned timeout = 60000);

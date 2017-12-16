@@ -85,7 +85,7 @@ void MainWindow::signalHandler(int sig) {
 	std::raise(sig);
 }
 
-#ifndef __ARMEL__
+#if !(defined(__ARMEL__) || defined(__LCC__) && __LCC__ <= 121)
 static void terminateHandler() {
 	std::set_terminate(nullptr);
 	std::exception_ptr exptr = std::current_exception();
@@ -112,7 +112,7 @@ MainWindow::MainWindow()
 
 	std::signal(SIGSEGV, signalHandler);
 	std::signal(SIGABRT, signalHandler);
-#ifndef __ARMEL__
+#if !(defined(__ARMEL__) || defined(__LCC__) && __LCC__ <= 121)
 	std::set_terminate(terminateHandler);
 #endif
 
@@ -185,7 +185,6 @@ MainWindow::MainWindow()
 
 	m_config->addSetting(new VarSetting<std::vector<int>>("wingeom"));
 	m_config->addSetting(new SwitchSettingT<Gtk::ToggleButton>("showcontrols", m_builder("button:main.controls")));
-	m_config->addSetting(new VarSetting<Glib::ustring>("outputdir"));
 	m_config->addSetting(new ComboSetting("outputeditor", m_builder("combo:main.ocrmode")));
 
 	m_recognizer->updateLanguagesMenu();

@@ -88,7 +88,11 @@ autoLinkDeps $installroot/bin/gimagereader-$iface.exe
 linkDep bin/gdb.exe
 
 linkDep bin/twaindsm.dll
-linkDep lib/enchant/libenchant_myspell.dll
+if [ -e "$installroot/bin/libenchant-2.dll" ]; then
+    linkDep lib/enchant-2/libenchant_myspell.dll
+else
+    linkDep lib/enchant/libenchant_myspell.dll
+fi
 
 if [ "$iface" == "gtk" ]; then
 

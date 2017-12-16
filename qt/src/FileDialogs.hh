@@ -20,26 +20,14 @@
 #ifndef FILEDIALOGS_HH
 #define FILEDIALOGS_HH
 
-#include "common.hh"
+#include <QString>
+
+class QWidget;
 
 namespace FileDialogs {
 
-struct FileFilter {
-	std::string name;
-	std::vector<std::string> mime_types;
-	std::vector<std::string> patterns;
-
-#ifdef G_OS_WIN32
-	std::wstring to_win32_filter() const;
-#endif
-	Glib::RefPtr<Gtk::FileFilter> to_gnome_filter() const;
-	Glib::ustring to_kde_filter() const;
-	static FileFilter pixbuf_formats();
-};
-
-std::vector<Glib::RefPtr<Gio::File> > open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, const FileFilter& filter, bool multiple, Gtk::Window* parent = nullptr);
-std::string save_dialog(const Glib::ustring &title, const std::string& initialFilename, const std::string& initialDirSetting, const FileFilter& filter, bool generateUniqueName = false, Gtk::Window *parent = nullptr);
-
+QStringList openDialog(const QString& title, const QString& initialDirectory, const QString& initialDirSetting, const QString& filter, bool multiple, QWidget* parent = nullptr);
+QString saveDialog(const QString& title, const QString& initialFilename, const QString& initialDirSetting, const QString& filter, bool generateUniqueName = false, QWidget* parent = nullptr);
 
 } // FileDialogs
 

@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: Sandro Mani <manisandro@gmail.com>
 Build-Depends: debhelper (>= 9),
  cmake,
+ libdjvulibre-dev,
  libgtkspellmm-3.0-dev,
  libgtkmm-3.0-dev,
  libgtksourceviewmm-3.0-dev,

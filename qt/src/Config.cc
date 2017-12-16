@@ -19,6 +19,7 @@
 
 #include "Config.hh"
 #include "MainWindow.hh"
+#include "Utils.hh"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -331,6 +332,9 @@ Config::Config(QWidget* parent)
 	addSetting(new FontSetting("customoutputfont", &m_fontDialog, QFont().toString()));
 	addSetting(new ComboSetting("textencoding", ui.comboBoxEncoding, 0));
 	addSetting(new ComboSetting("datadirs", ui.comboBoxDataLocation, 0));
+	addSetting(new VarSetting<QString>("sourcedir", Utils::documentsFolder()));
+	addSetting(new VarSetting<QString>("outputdir", Utils::documentsFolder()));
+	addSetting(new VarSetting<QString>("auxdir", Utils::documentsFolder()));
 
 	updateFontButton(m_fontDialog.currentFont());
 }

@@ -144,18 +144,32 @@ ELSE()
     MESSAGE(FATAL_ERROR "Invalid interface type ${INTERFACE_TYPE}")
 ENDIF()
 
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/${srcdir}/src/ )
+INCLUDE_DIRECTORIES(
+  ${CMAKE_SOURCE_DIR}/${srcdir}/src/
+  ${CMAKE_SOURCE_DIR}/${srcdir}/src/hocr/
+)
 
 # Files
-FILE(GLOB gimagereader_SRCS ${srcdir}/src/*.cc common/*.cc)
 # sort lists to avoid dependency on readdir() order and make build reproducible
+FILE(GLOB gimagereader_SRCS
+  ${srcdir}/src/*.cc
+  ${srcdir}/src/hocr/*.cc
+  common/*.cc
+)
 LIST(SORT gimagereader_SRCS)
-FILE(GLOB gimagereader_HDRS ${srcdir}/src/*.hh common/*.hh)
+
+FILE(GLOB gimagereader_HDRS
+  ${srcdir}/src/*.hh
+  ${srcdir}/src/hocr/*.hh
+  common/*.hh)
 LIST(SORT gimagereader_HDRS)
+
 FILE(GLOB gimagereader_FORMS ${srcdir}/data/*.ui)
 LIST(SORT gimagereader_FORMS)
+
 FILE(GLOB gimagereader_ICONS data/icons/*.png)
 LIST(SORT gimagereader_ICONS)
+
 IF("${srcdir}" STREQUAL "qt")
     FILE(GLOB gimagereader_RESOURCES qt/data/*.qrc)
     LIST(SORT gimagereader_RESOURCES)
@@ -191,6 +205,8 @@ ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
 ENDIF()
 
 IF("${srcdir}" STREQUAL "qt")
+  SET_PROPERTY(SOURCE ${gimagereader_FORMS_HEADERS} PROPERTY SKIP_AUTOMOC ON)
+  SET_PROPERTY(SOURCE ${gimagereader_RESOURCES_RCC} PROPERTY SKIP_AUTOMOC ON)
     # Gettextize ui files
     #[[ADD_CUSTOM_TARGET(
         gettextizeui
@@ -238,13 +254,11 @@ TARGET_LINK_LIBRARIES(gimagereader
     ${OpenCV_LIBS}
     -llept
     -ldl
-    -lgomp
 )
 
-IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-ELSE()
-  SET_TARGET_PROPERTIES(gimagereader PROPERTIES COMPILE_FLAGS "-fopenmp")
-ENDIF()
+FIND_PACKAGE(OpenMP REQUIRED)
+SET (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 
 SET_TARGET_PROPERTIES(gimagereader PROPERTIES OUTPUT_NAME gimagereader-${INTERFACE_TYPE})
 IF("${INTERFACE_TYPE}" STREQUAL "qt4")

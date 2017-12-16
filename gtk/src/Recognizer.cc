@@ -326,7 +326,8 @@ void Recognizer::updateLanguagesMenu() {
 		PsmEntry{_("Assume a single word"), tesseract::PSM_SINGLE_WORD, false},
 		PsmEntry{_("Assume a single word in a circle"), tesseract::PSM_CIRCLE_WORD, false},
 		PsmEntry{_("Sparse text in no particular order"), tesseract::PSM_SPARSE_TEXT, false},
-		PsmEntry{_("Sparse text with orientation and script detection"), tesseract::PSM_SPARSE_TEXT_OSD, true}};
+		PsmEntry{_("Sparse text with orientation and script detection"), tesseract::PSM_SPARSE_TEXT_OSD, true}
+	};
 	for(const auto& entry : psmModes) {
 		Gtk::RadioMenuItem* item = Gtk::manage(new Gtk::RadioMenuItem(m_psmRadioGroup, entry.label));
 		item->set_sensitive(!entry.requireOsd || haveOsd);
@@ -404,31 +405,37 @@ std::vector<int> Recognizer::selectPages(bool& autodetectLayout) {
 	int col = m_pageAreaCombo->get_entry_text_column();
 	store->children()[0]->set_value<Glib::ustring>(col, MAIN->getDisplayer()->hasMultipleOCRAreas() ? _("Current selection") : _("Entire page"));
 
+	static Glib::RefPtr<Glib::Regex> validateRegEx = Glib::Regex::create("^[\\d,\\-\\s]+$");
 	std::vector<int> pages;
-	if(m_pagesDialog->run() == Gtk::RESPONSE_OK) {
+	while(m_pagesDialog->run() == Gtk::RESPONSE_OK) {
+		pages.clear();
 		Glib::ustring text = m_pagesEntry->get_text();
-		text = Glib::Regex::create("\\s+")->replace(text, 0, "", static_cast<Glib::RegexMatchFlags>(0));
-		std::vector<Glib::ustring>&& blocks = Utils::string_split(text, ',', false);
-		for(const Glib::ustring& block : blocks) {
-			std::vector<Glib::ustring>&& ranges = Utils::string_split(block, '-', false);
-			if(ranges.size() == 1) {
-				int page = atoi(ranges[0].c_str());
-				if(page > 0 && page <= nPages) {
-					pages.push_back(page);
+		if(validateRegEx->match(text)) {
+			text = Glib::Regex::create("\\s+")->replace(text, 0, "", static_cast<Glib::RegexMatchFlags>(0));
+			std::vector<Glib::ustring> blocks = Utils::string_split(text, ',', false);
+			for(const Glib::ustring& block : blocks) {
+				std::vector<Glib::ustring> ranges = Utils::string_split(block, '-', false);
+				if(ranges.size() == 1) {
+					int page = Utils::parseInt(ranges[0]);
+					if(page > 0 && page <= nPages) {
+						pages.push_back(page);
+					}
+				} else if(ranges.size() == 2) {
+					int start = std::max(1, Utils::parseInt(ranges[0]));
+					int end = std::min(nPages, Utils::parseInt(ranges[1]));
+					for(int page = start; page <= end; ++page) {
+						pages.push_back(page);
+					}
+				} else {
+					pages.clear();
+					break;
 				}
-			} else if(ranges.size() == 2) {
-				int start = std::max(1, atoi(ranges[0].c_str()));
-				int end = std::min(nPages, atoi(ranges[1].c_str()));
-				for(int page = start; page <= end; ++page) {
-					pages.push_back(page);
-				}
-			} else {
-				pages.clear();
-				break;
 			}
 		}
 		if(pages.empty()) {
 			Utils::set_error_state(m_pagesEntry);
+		} else {
+			break;
 		}
 	}
 	autodetectLayout = m_pageAreaCombo->get_visible() ? m_pageAreaCombo->get_active_row_number() == 1 : false;

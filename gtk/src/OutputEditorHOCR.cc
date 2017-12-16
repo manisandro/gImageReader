@@ -446,10 +446,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	});
 	CONNECT(m_builder("spin:pdfoptions.preserve").as<Gtk::SpinButton>(), value_changed, [this] { updatePreview(); });
 	CONNECT(m_builder("checkbox:pdfoptions.preview").as<Gtk::CheckButton>(), toggled, [this] { updatePreview(); });
-
-	if(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue().empty()) {
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->setValue(Utils::get_documents_dir());
-	}
+	CONNECT(m_builder("entry:pdfoptions.encryption.password").as<Gtk::Entry>(), changed, [this]{ passwordChanged(); });
+	CONNECT(m_builder("entry:pdfoptions.encryption.confirm").as<Gtk::Entry>(), changed, [this]{ passwordChanged(); });
 
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", m_builder("combo:pdfoptions.mode")));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagecompressionquality", m_builder("spin:pdfoptions.quality")));
@@ -610,13 +608,14 @@ void OutputEditorHOCR::addPage(xmlpp::Element* pageDiv, const Glib::ustring& fil
 	pageItem->set_value(m_itemStoreCols.iconVisible, true);
 
 	std::map<Glib::ustring,Glib::ustring> langCache;
+	Glib::ustring lang = m_spellLanguage;
 
 	std::vector<std::pair<xmlpp::Element*,Geometry::Rectangle>> graphicElements;
 	xmlpp::Element* element = getFirstChildElement(pageDiv, "div");
 	while(element) {
 		// Boxes without text are images
 		titleAttr = getAttribute(element, "title");
-		if(!addChildItems(getFirstChildElement(element), pageItem, langCache) && s_bboxRx->match(titleAttr, matchInfo)) {
+		if(!addChildItems(getFirstChildElement(element), pageItem, langCache, lang) && s_bboxRx->match(titleAttr, matchInfo)) {
 			x1 = std::atoi(matchInfo.fetch(1).c_str());
 			y1 = std::atoi(matchInfo.fetch(2).c_str());
 			x2 = std::atoi(matchInfo.fetch(3).c_str());
@@ -682,7 +681,7 @@ Gtk::TreeIter OutputEditorHOCR::currentItem() {
 	return Gtk::TreeIter();
 }
 
-bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring,Glib::ustring>& langCache) {
+bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter parentItem, std::map<Glib::ustring,Glib::ustring>& langCache, Glib::ustring lang) {
 	bool haveWord = false;
 	while(element) {
 		xmlpp::Element* nextElement = getNextSiblingElement(element);
@@ -692,6 +691,16 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 			Glib::ustring newId = Glib::ustring::compose("%1_%2_%3", matchInfo.fetch(1), m_idCounter, matchInfo.fetch(2));
 			element->set_attribute("id", newId);
 		}
+		Glib::ustring elemLang = getAttribute(element, "lang");
+		if(!elemLang.empty()) {
+			auto it = langCache.find(elemLang);
+			if(it == langCache.end()) {
+				it = langCache.insert(std::make_pair(lang, Utils::getSpellingLanguage(elemLang))).first;
+			}
+			lang = it->second;
+			element->remove_attribute("lang");
+		}
+
 		Glib::ustring titleAttr = getAttribute(element, "title");
 		if(s_bboxRx->match(titleAttr, matchInfo)) {
 			Glib::ustring type = getAttribute(element, "class");
@@ -713,7 +722,7 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 			}
 			if(title != "") {
 				Gtk::TreeIter item = m_itemStore->append(parentItem->children());
-				if(type == "ocrx_word" || addChildItems(getFirstChildElement(element), item, langCache)) {
+				if(type == "ocrx_word" || addChildItems(getFirstChildElement(element), item, langCache, lang)) {
 					item->set_value(m_itemStoreCols.selected, true);
 					item->set_value(m_itemStoreCols.id, getAttribute(element, "id"));
 					if(!icon.empty()) {
@@ -743,16 +752,13 @@ bool OutputEditorHOCR::addChildItems(xmlpp::Element* element, Gtk::TreeIter pare
 						if(s_fontSizeRx->match(titleAttr, matchInfo)) {
 							item->set_value(m_itemStoreCols.fontSize, std::atof(matchInfo.fetch(1).c_str()));
 						}
-						Glib::ustring lang = getAttribute(element, "lang");
-						auto it = langCache.find(lang);
-						if(it == langCache.end()) {
-							it = langCache.insert(std::make_pair(lang, Utils::getSpellingLanguage(lang))).first;
+						lang = m_spellLanguage.empty() ? lang : m_spellLanguage;
+						element->set_attribute("lang", lang);
+						if(m_spell.get_language() != lang) {
+							m_spell.set_language(lang);
 						}
-						Glib::ustring spellingLang = it->second;
-						if(m_spell.get_language() != spellingLang) {
-							m_spell.set_language(spellingLang);
-						}
-						if(!m_spell.check_word(trimWord(title))) {
+						Glib::ustring trimmed = trimWord(title);
+						if(!trimmed.empty() && !m_spell.check_word(trimmed)) {
 							item->set_value(m_itemStoreCols.textColor, Glib::ustring("#F00"));
 						}
 					}
@@ -960,12 +966,13 @@ void OutputEditorHOCR::updateCurrentItemBBox(const Geometry::Rectangle &rect) {
 
 void OutputEditorHOCR::updateCurrentItem() {
 	Gtk::TreeIter item = m_itemStore->get_iter(m_currentItem);
-	Glib::ustring spellLang = Utils::getSpellingLanguage(getAttribute(m_currentElement, "lang"));
+	Glib::ustring spellLang = getAttribute(m_currentElement, "lang");
 	if(m_spell.get_language() != spellLang) {
 		m_spell.set_language(spellLang);
 	}
 	m_connectionItemViewRowEdited.block(true); // prevent row edited signal
-	if(m_spell.check_word(trimWord((*item)[m_itemStoreCols.text]))) {
+	Glib::ustring trimmed = trimWord(trimWord((*item)[m_itemStoreCols.text]));
+	if(trimmed.empty() || m_spell.check_word(trimmed)) {
 		item->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
 	} else {
 		item->set_value(m_itemStoreCols.textColor, Glib::ustring("#F00"));
@@ -1057,7 +1064,7 @@ void OutputEditorHOCR::addGraphicRection(const Geometry::Rectangle &rect) {
 }
 
 Glib::ustring OutputEditorHOCR::trimWord(const Glib::ustring& word, Glib::ustring* prefix, Glib::ustring* suffix) {
-	Glib::RefPtr<Glib::Regex> re = Glib::Regex::create("^(\\W*)(.*\\w)(\\W*)$");
+	Glib::RefPtr<Glib::Regex> re = Glib::Regex::create("^(\\W*)(\\w*)(\\W*)$");
 	Glib::MatchInfo match_info;
 	if(re->match(word, -1, 0, match_info, static_cast<Glib::RegexMatchFlags>(0))) {
 		if(prefix)
@@ -1169,31 +1176,37 @@ void OutputEditorHOCR::showContextMenu(GdkEventButton* ev) {
 	}
 	if(itemClass == "ocrx_word") {
 		Glib::ustring prefix, suffix, trimmed = trimWord((*it)[m_itemStoreCols.text], &prefix, &suffix);
-		for(const Glib::ustring& suggestion : m_spell.get_suggestions(trimmed)) {
-			Glib::ustring replacement = prefix + suggestion + suffix;
-			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
-			CONNECT(item, activate, [this, replacement, it] { (*it)[m_itemStoreCols.text] = replacement; });
-			menu.append(*item);
+		Glib::ustring spellLang = getAttribute(m_currentElement, "lang");
+		if(m_spell.get_language() != spellLang) {
+			m_spell.set_language(spellLang);
 		}
-		if(menu.get_children().empty()) {
-			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("No suggestions")));
-			item->set_sensitive(false);
-			menu.append(*item);
-		}
-		if(!m_spell.check_word(trimWord((*it)[m_itemStoreCols.text]))) {
-			menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
-			Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
-			CONNECT(additem, activate, [this, it] {
-				m_spell.add_to_dictionary((*it)[m_itemStoreCols.text]);
-				it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
-			});
-			menu.append(*additem);
-			Gtk::MenuItem* ignoreitem = Gtk::manage(new Gtk::MenuItem(_("Ignore word")));
-			CONNECT(ignoreitem, activate, [this, it] {
-				m_spell.ignore_word((*it)[m_itemStoreCols.text]);
-				it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
-			});
-			menu.append(*ignoreitem);
+		if(!trimmed.empty()) {
+			for(const Glib::ustring& suggestion : m_spell.get_suggestions(trimmed)) {
+				Glib::ustring replacement = prefix + suggestion + suffix;
+				Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
+				CONNECT(item, activate, [this, replacement, it] { (*it)[m_itemStoreCols.text] = replacement; });
+				menu.append(*item);
+			}
+			if(menu.get_children().empty()) {
+				Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("No suggestions")));
+				item->set_sensitive(false);
+				menu.append(*item);
+			}
+			if(!m_spell.check_word(trimmed)) {
+				menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
+				Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
+				CONNECT(additem, activate, [this, it, trimmed] {
+					m_spell.add_to_dictionary(trimmed);
+					it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
+				});
+				menu.append(*additem);
+				Gtk::MenuItem* ignoreitem = Gtk::manage(new Gtk::MenuItem(_("Ignore word")));
+				CONNECT(ignoreitem, activate, [this, it, trimmed] {
+					m_spell.ignore_word(trimmed);
+					it->set_value(m_itemStoreCols.textColor, Glib::ustring("#000"));
+				});
+				menu.append(*ignoreitem);
+			}
 		}
 	}
 	if(path != m_rootItem) {
@@ -1246,9 +1259,8 @@ void OutputEditorHOCR::open() {
 	if(!clear(false)) {
 		return;
 	}
-	Glib::ustring dir = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue();
 	FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html","text/xml", "text/plain"}, {"*.html"}};
-	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open hOCR File"), dir, filter, false);
+	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open hOCR File"), "", "outputdir", filter, false);
 	if(files.empty()) {
 		return;
 	}
@@ -1284,14 +1296,11 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 		std::string ext, base;
 		std::string name = !sources.empty() ? sources.front()->displayname : _("output");
 		Utils::get_filename_parts(name, base, ext);
-		outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), base + ".html");
-
 		FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html"}, {"*.html"}};
-		outname = FileDialogs::save_dialog(_("Save hOCR Output..."), outname, filter);
+		outname = FileDialogs::save_dialog(_("Save hOCR Output..."), base + ".html", "outputdir", filter);
 		if(outname.empty()) {
 			return false;
 		}
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->setValue(Glib::path_get_dirname(outname));
 	}
 	std::ofstream file(outname);
 	if(!file.is_open()) {
@@ -1332,6 +1341,7 @@ void OutputEditorHOCR::savePDF() {
 #else
 	const PoDoFo::PdfEncoding* pdfEncoding = new PoDoFo::PdfIdentityEncoding;
 #endif
+	std::string outname;
 	double fontSize = 0;
 	while(true) {
 		accepted = m_pdfExportDialog->run() ==  Gtk::RESPONSE_OK;
@@ -1344,17 +1354,26 @@ void OutputEditorHOCR::savePDF() {
 		std::string ext, base;
 		std::string name = !sources.empty() ? sources.front()->displayname : _("output");
 		Utils::get_filename_parts(name, base, ext);
-		std::string outname = Glib::build_filename(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->getValue(), base + ".pdf");
 		FileDialogs::FileFilter filter = {_("PDF Files"), {"application/pdf"}, {"*.pdf"}};
-		outname = FileDialogs::save_dialog(_("Save PDF Output..."), outname, filter);
+		outname = FileDialogs::save_dialog(_("Save PDF Output..."), base + ".pdf", "outputdir", filter);
 		if(outname.empty()) {
 			accepted = false;
 			break;
 		}
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("outputdir")->setValue(Glib::path_get_dirname(outname));
 
+		Glib::ustring password = m_builder("entry:pdfoptions.encryption.password").as<Gtk::Entry>()->get_text();
+		PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(password, password,
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
+									   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
+									   PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
 		try {
-			document = new PoDoFo::PdfStreamedDocument(outname.c_str());
+			document = new PoDoFo::PdfStreamedDocument(outname.c_str(), PoDoFo::EPdfVersion::ePdfVersion_1_7, encrypt);
 		} catch(...) {
 			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 			continue;
@@ -1436,10 +1455,15 @@ void OutputEditorHOCR::savePDF() {
 	if(!failed.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Errors occurred"), Glib::ustring::compose(_("The following pages could not be rendered:\n%1"), Utils::string_join(failed, "\n")));
 	}
+	bool pdfCanBeOpened = true;
 	try {
 		document->Close();
 	} catch(PoDoFo::PdfError& e) {
+		pdfCanBeOpened = false;
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Export failed"), Glib::ustring::compose(_("The PDF export failed (%1)."), e.what()));
+	}
+	if(m_builder("checkbox:pdfoptions.openoutput").as<Gtk::CheckButton>()->get_active() && pdfCanBeOpened) {
+		Utils::openUri(Glib::filename_to_uri(outname));
 	}
 	delete document;
 }
@@ -1491,6 +1515,18 @@ void OutputEditorHOCR::printChildren(PDFPainter& painter, Gtk::TreeIter item, co
 		for(Gtk::TreeIter child : item->children()) {
 			printChildren(painter, child, pdfSettings, imgScale);
 		}
+	}
+}
+
+void OutputEditorHOCR::passwordChanged() {
+	Gtk::Entry* passwordEntry = m_builder("entry:pdfoptions.encryption.password");
+	Gtk::Entry* confirmEntry = m_builder("entry:pdfoptions.encryption.confirm");
+	if(passwordEntry->get_text() == confirmEntry->get_text()) {
+		Utils::clear_error_state(confirmEntry);
+		m_builder("button:pdfoptions.ok").as<Gtk::Button>()->set_sensitive(true);
+	} else {
+		Utils::set_error_state(confirmEntry);
+		m_builder("button:pdfoptions.ok").as<Gtk::Button>()->set_sensitive(false);
 	}
 }
 
@@ -1590,6 +1626,10 @@ bool OutputEditorHOCR::clear(bool hide) {
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
 	return true;
+}
+
+void OutputEditorHOCR::setLanguage(const Config::Lang &lang) {
+	m_spellLanguage = lang.code;
 }
 
 bool OutputEditorHOCR::getModified() const {
