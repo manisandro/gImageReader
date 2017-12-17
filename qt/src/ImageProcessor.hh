@@ -44,6 +44,9 @@ private slots:
     void denoise();
     void binarize();
     void deblur();
+    void warpCrop();
+    void autoCrop();
+    void borderDetection();
 };
 
 #endif //GIMAGEREADER_IMAGEPROCESSING_HH

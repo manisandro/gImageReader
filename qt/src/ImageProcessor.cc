@@ -1,5 +1,7 @@
 #include "ImageProcessor.hh"
 
+#include <vector>
+
 #include <QImage>
 
 #include <opencv2/core/core.hpp>
@@ -17,6 +19,8 @@
 #include <image_processing/binarizations/binarizeCOCOCLUST.h>
 #include <image_processing/binarizations/binarizeLocalOtsu.h>
 #include <image_processing/deblur/basicDeblur.h>
+#include <image_processing/warp.h>
+#include <image_processing/border_detection/autoCrop.h>
 
 ImageProcessor::ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer)
         : ui(_ui), displayer(_displayer)
@@ -28,6 +32,9 @@ ImageProcessor::ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer)
     connect(ui.pushButtonShadowsRemoval, SIGNAL(clicked()), this, SLOT(denoise()));
     connect(ui.pushButtonBinarize, SIGNAL(clicked()), this, SLOT(binarize()));
     connect(ui.pushButtonDeblur, SIGNAL(clicked()), this, SLOT(deblur()));
+    connect(ui.pushButtonAutoCrop, SIGNAL(clicked()), this, SLOT(autoCrop()));
+    connect(ui.pushButtonCrop, SIGNAL(clicked()), this, SLOT(warpCrop()));
+    connect(ui.pushButtonPageDetection, SIGNAL(clicked()), this, SLOT(borderDetection()));
 }
 
 ImageProcessor::~ImageProcessor()
@@ -136,6 +143,48 @@ void ImageProcessor::deblur()
 
     cv::Mat deskewedImage;
     prl::basicDeblur(opencvImage, deskewedImage);
+
+    image = matToImage(deskewedImage);
+
+    displayer.setScaledImage(image);
+}
+
+void ImageProcessor::warpCrop()
+{
+    QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    cv::Mat opencvImage = imageToMat(image, CV_8UC3);
+
+    cv::Mat deskewedImage;
+    //TODO: Add possibility to choose border
+    //prl::warpCrop(opencvImage, deskewedImage,);
+
+    image = matToImage(deskewedImage);
+
+    displayer.setScaledImage(image);
+}
+
+void ImageProcessor::autoCrop()
+{
+    QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    cv::Mat opencvImage = imageToMat(image, CV_8UC3);
+
+    cv::Mat deskewedImage;
+    prl::autoCrop(opencvImage, deskewedImage);
+
+    image = matToImage(deskewedImage);
+
+    displayer.setScaledImage(image);
+}
+
+void ImageProcessor::borderDetection()
+{
+    QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    cv::Mat opencvImage = imageToMat(image, CV_8UC3);
+
+    cv::Mat deskewedImage;
+
+    std::vector<cv::Point2f> resultContour;
+    prl::documentContour(opencvImage, 1.0, 1.0, resultContour);
 
     image = matToImage(deskewedImage);
 
