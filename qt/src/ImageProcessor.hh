@@ -20,7 +20,7 @@ enum MatColorOrder {
 class ImageProcessor : public QObject {
     Q_OBJECT
 public:
-    enum class Binarization {LocalOtsu, COCOCLUST};
+    enum class Binarization {LocalOtsu, COCOCLUST, Sauvola, Niblack, Feng, WolfJolion, NICK, Mokji, Otsu, NativeAdaptive};
     enum class Denoise {General, SaltAndPepper};
 
     ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer);
@@ -50,6 +50,7 @@ private slots:
     void warpCrop();
     void autoCrop();
     void borderDetection();
+    void autoProcess();
 };
 
 #endif //GIMAGEREADER_IMAGEPROCESSING_HH

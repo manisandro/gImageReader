@@ -16,8 +16,17 @@
 #include <image_processing/backgroundNormalization.h>
 #include <image_processing/denoise/denoiseNLM.h>
 #include <image_processing/denoise/denoiseSaltPepper.h>
+
 #include <image_processing/binarizations/binarizeCOCOCLUST.h>
 #include <image_processing/binarizations/binarizeLocalOtsu.h>
+#include <image_processing/binarizations/binarizeSauvola.h>
+#include <image_processing/binarizations/binarizeFeng.h>
+#include <image_processing/binarizations/binarizeMokji.h>
+#include <image_processing/binarizations/binarizeNICK.h>
+#include <image_processing/binarizations/binarizeNiblack.h>
+#include <image_processing/binarizations/binarizeWolfJolion.h>
+#include <image_processing/binarizations/binarizeNativeAdaptive.h>
+
 #include <image_processing/deblur/basicDeblur.h>
 #include <image_processing/warp.h>
 #include <image_processing/border_detection/autoCrop.h>
@@ -26,6 +35,14 @@ ImageProcessor::ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer)
         : ui(_ui), displayer(_displayer)
 {
     ui.comboBoxBinarize->addItem(_("Local Otsu"), static_cast<int>(Binarization::LocalOtsu));
+    ui.comboBoxBinarize->addItem(_("Sauvola"), static_cast<int>(Binarization::Sauvola));
+    ui.comboBoxBinarize->addItem(_("Feng"), static_cast<int>(Binarization::Feng));
+    ui.comboBoxBinarize->addItem(_("Wolf Jolion"), static_cast<int>(Binarization::WolfJolion));
+    ui.comboBoxBinarize->addItem(_("Niblack"), static_cast<int>(Binarization::Niblack));
+    ui.comboBoxBinarize->addItem(_("NICK"), static_cast<int>(Binarization::NICK));
+    ui.comboBoxBinarize->addItem(_("Global Otsu"), static_cast<int>(Binarization::Otsu));
+    ui.comboBoxBinarize->addItem(_("Mokji"), static_cast<int>(Binarization::Mokji));
+    ui.comboBoxBinarize->addItem(_("Native adaptive"), static_cast<int>(Binarization::NativeAdaptive));
     ui.comboBoxBinarize->addItem(_("For screenshots"), static_cast<int>(Binarization::COCOCLUST));
     ui.comboBoxBinarize->setCurrentIndex(0);
 
@@ -43,6 +60,7 @@ ImageProcessor::ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer)
     connect(ui.pushButtonAutoCrop, SIGNAL(clicked()), this, SLOT(autoCrop()));
     connect(ui.pushButtonCrop, SIGNAL(clicked()), this, SLOT(warpCrop()));
     connect(ui.pushButtonPageDetection, SIGNAL(clicked()), this, SLOT(borderDetection()));
+    connect(ui.pushButtonAutoProcess, SIGNAL(clicked()), this, SLOT(autoProcess()));
 }
 
 ImageProcessor::~ImageProcessor()
@@ -66,10 +84,10 @@ void ImageProcessor::cleanBackground()
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
-    cv::Mat deskewedImage;
-    prl::cleanBackgroundToWhite(opencvImage, deskewedImage);
+    cv::Mat outputImage;
+    prl::cleanBackgroundToWhite(opencvImage, outputImage);
 
-    image = matToImage(deskewedImage);
+    image = matToImage(outputImage);
 
     displayer.setScaledImage(image);
 }
@@ -79,10 +97,10 @@ void ImageProcessor::removeHolePunch()
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
-    cv::Mat deskewedImage;
-    prl::removeHolePunch(opencvImage, deskewedImage);
+    cv::Mat outputImage;
+    prl::removeHolePunch(opencvImage, outputImage);
 
-    image = matToImage(deskewedImage);
+    image = matToImage(outputImage);
 
     displayer.setScaledImage(image);
 }
@@ -92,10 +110,10 @@ void ImageProcessor::shadowsRemoval()
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
-    cv::Mat deskewedImage;
-    prl::backgroundNormalization(opencvImage, deskewedImage);
+    cv::Mat outputImage;
+    prl::backgroundNormalization(opencvImage, outputImage);
 
-    image = matToImage(deskewedImage);
+    image = matToImage(outputImage);
 
     displayer.setScaledImage(image);
 }
@@ -105,19 +123,19 @@ void ImageProcessor::denoise()
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
-    cv::Mat deskewedImage;
+    cv::Mat denoisedImage;
 
     switch(static_cast<Denoise>(ui.comboBoxDenoise->itemData(ui.comboBoxDenoise->currentIndex()).toInt()))
     {
         case Denoise::General:
-            prl::denoise(opencvImage, deskewedImage);
+            prl::denoise(opencvImage, denoisedImage);
             break;
         case Denoise::SaltAndPepper:
-            prl::denoiseSaltPepper(opencvImage, deskewedImage, 3, 3);
+            prl::denoiseSaltPepper(opencvImage, denoisedImage, 3, 3);
             break;
     }
 
-    image = matToImage(deskewedImage);
+    image = matToImage(denoisedImage);
 
     displayer.setScaledImage(image);
 }
@@ -127,20 +145,44 @@ void ImageProcessor::binarize()
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
-    cv::Mat deskewedImage;
+    cv::Mat binarizedImage;
 
     //static_cast<QImage::Format>(ui.comboBoxImageFormat->itemData(ui.comboBoxImageFormat->currentIndex()).toInt());
     switch(static_cast<Binarization>(ui.comboBoxBinarize->itemData(ui.comboBoxBinarize->currentIndex()).toInt()))
     {
         case Binarization::LocalOtsu:
-            prl::binarizeLocalOtsu(opencvImage, deskewedImage);
+            prl::binarizeLocalOtsu(opencvImage, binarizedImage);
             break;
         case Binarization::COCOCLUST:
-            prl::binarizeCOCOCLUST(opencvImage, deskewedImage);
+            prl::binarizeCOCOCLUST(opencvImage, binarizedImage);
+            break;
+        case Binarization::NICK:
+            prl::binarizeNICK(opencvImage, binarizedImage);
+            break;
+        case Binarization::Niblack:
+            prl::binarizeNiblack(opencvImage, binarizedImage);
+            break;
+        case Binarization::Sauvola:
+            prl::binarizeSauvola(opencvImage, binarizedImage);
+            break;
+        case Binarization::Feng:
+            prl::binarizeFeng(opencvImage, binarizedImage);
+            break;
+        case Binarization::WolfJolion:
+            prl::binarizeWolfJolion(opencvImage, binarizedImage);
+            break;
+        case Binarization::Mokji:
+            prl::binarizeMokji(opencvImage, binarizedImage);
+            break;
+        case Binarization::NativeAdaptive:
+            prl::binarizeNativeAdaptive(opencvImage, binarizedImage);
+            break;
+        case Binarization::Otsu:
+            cv::threshold(opencvImage, binarizedImage, 0.0, 255.0, CV_THRESH_BINARY | CV_THRESH_OTSU);
             break;
     }
 
-    image = matToImage(deskewedImage);
+    image = matToImage(binarizedImage);
 
     displayer.setScaledImage(image);
 }
@@ -150,10 +192,10 @@ void ImageProcessor::deblur()
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
-    cv::Mat deskewedImage;
-    prl::basicDeblur(opencvImage, deskewedImage);
+    cv::Mat outputImage;
+    prl::basicDeblur(opencvImage, outputImage);
 
-    image = matToImage(deskewedImage);
+    image = matToImage(outputImage);
 
     displayer.setScaledImage(image);
 }
@@ -163,11 +205,11 @@ void ImageProcessor::warpCrop()
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
-    cv::Mat deskewedImage;
+    cv::Mat outputImage;
     //TODO: Add possibility to choose border
-    //prl::warpCrop(opencvImage, deskewedImage,);
+    //prl::warpCrop(opencvImage, outputImage,);
 
-    image = matToImage(deskewedImage);
+    image = matToImage(outputImage);
 
     displayer.setScaledImage(image);
 }
@@ -177,10 +219,10 @@ void ImageProcessor::autoCrop()
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
-    cv::Mat deskewedImage;
-    prl::autoCrop(opencvImage, deskewedImage);
+    cv::Mat outputImage;
+    prl::autoCrop(opencvImage, outputImage);
 
-    image = matToImage(deskewedImage);
+    image = matToImage(outputImage);
 
     displayer.setScaledImage(image);
 }
@@ -190,12 +232,29 @@ void ImageProcessor::borderDetection()
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
-    cv::Mat deskewedImage;
+    cv::Mat outputImage;
 
     std::vector<cv::Point2f> resultContour;
     prl::documentContour(opencvImage, 1.0, 1.0, resultContour);
 
-    image = matToImage(deskewedImage);
+    image = matToImage(outputImage);
+
+    displayer.setScaledImage(image);
+}
+
+void ImageProcessor::autoProcess()
+{
+    QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    cv::Mat opencvImage = imageToMat(image, CV_8UC3);
+
+    cv::Mat outputImage;
+
+    // TODO: Write processing here:
+    // 1) Detect required algorithms
+    // 2) Show messagebox with choosed algorithms
+    // 3) If user pressed OK, run required algorithms
+
+    image = matToImage(outputImage);
 
     displayer.setScaledImage(image);
 }
