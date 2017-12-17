@@ -676,16 +676,6 @@
        <height>31</height>
       </rect>
      </property>
-     <item>
-      <property name="text">
-       <string>Local Otsu</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>For screenshots</string>
-      </property>
-     </item>
     </widget>
     <widget class="QPushButton" name="pushButtonDenoise">
      <property name="geometry">
@@ -709,16 +699,6 @@
        <height>31</height>
       </rect>
      </property>
-     <item>
-      <property name="text">
-       <string>General</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Salt and pepper</string>
-      </property>
-     </item>
     </widget>
     <widget class="QPushButton" name="pushButtonDeblur">
      <property name="geometry">
