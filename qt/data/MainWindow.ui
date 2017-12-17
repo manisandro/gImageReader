@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1064</width>
-    <height>572</height>
+    <height>887</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -303,7 +303,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="tabSources">
         <attribute name="title">
@@ -587,12 +587,192 @@
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="windowTitle">
-    <string notr="true">&amp;Output</string>
+    <string notr="true">Ou&amp;tput</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContentsOutput"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidgetImageProcessing">
+   <property name="windowTitle">
+    <string>E&amp;nhance</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4">
+    <widget class="QPushButton" name="pushButtonCleanBackground">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>131</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clean background</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonDeskew">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>131</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Deskew</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonRemoveHolePunch">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>131</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Remove Hole Punch</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonShadowsRemoval">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>130</y>
+       <width>131</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Shadows Removal</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonBinarize">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>131</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Binarize</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxBinarize">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>170</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Local Otsu</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>For screenshots</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QPushButton" name="pushButtonDenoise">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>210</y>
+       <width>131</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Denoise</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxDenoise">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>210</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>General</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Salt and pepper</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QPushButton" name="pushButtonDeblur">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>250</y>
+       <width>131</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Deblur</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonAutoCrop">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>290</y>
+       <width>131</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Auto crop</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonCrop">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>330</y>
+       <width>131</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Crop</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonPageDetection">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>290</y>
+       <width>121</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Page detection</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <action name="actionSources">
    <property name="checkable">
