@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1064</width>
-    <height>887</height>
+    <height>913</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -756,13 +756,39 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>410</y>
+       <y>450</y>
        <width>261</width>
        <height>33</height>
       </rect>
      </property>
      <property name="text">
       <string>Recommended processing</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonInvert">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>370</y>
+       <width>131</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Invert</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonAutoInvert">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>370</y>
+       <width>121</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>AutoInvert</string>
      </property>
     </widget>
    </widget>
