@@ -10,12 +10,24 @@
 
 #include <image_processing/deskew/deskew.h>
 #include <image_processing/cleanBackgroundToWhite.h>
+#include <image_processing/removeHolePunch.h>
+#include <image_processing/backgroundNormalization.h>
+#include <image_processing/denoise/denoiseNLM.h>
+#include <image_processing/denoise/denoiseSaltPepper.h>
+#include <image_processing/binarizations/binarizeCOCOCLUST.h>
+#include <image_processing/binarizations/binarizeLocalOtsu.h>
+#include <image_processing/deblur/basicDeblur.h>
 
 ImageProcessor::ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer)
         : ui(_ui), displayer(_displayer)
 {
     connect(ui.pushButtonDeskew, SIGNAL(clicked()), this, SLOT(deskew()));
     connect(ui.pushButtonCleanBackground, SIGNAL(clicked()), this, SLOT(cleanBackground()));
+    connect(ui.pushButtonRemoveHolePunch, SIGNAL(clicked()), this, SLOT(removeHolePunch()));
+    connect(ui.pushButtonShadowsRemoval, SIGNAL(clicked()), this, SLOT(shadowsRemoval()));
+    connect(ui.pushButtonShadowsRemoval, SIGNAL(clicked()), this, SLOT(denoise()));
+    connect(ui.pushButtonBinarize, SIGNAL(clicked()), this, SLOT(binarize()));
+    connect(ui.pushButtonDeblur, SIGNAL(clicked()), this, SLOT(deblur()));
 }
 
 ImageProcessor::~ImageProcessor()
@@ -41,6 +53,89 @@ void ImageProcessor::cleanBackground()
 
     cv::Mat deskewedImage;
     prl::cleanBackgroundToWhite(opencvImage, deskewedImage);
+
+    image = matToImage(deskewedImage);
+
+    displayer.setScaledImage(image);
+}
+
+void ImageProcessor::removeHolePunch()
+{
+    QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    cv::Mat opencvImage = imageToMat(image, CV_8UC3);
+
+    cv::Mat deskewedImage;
+    prl::removeHolePunch(opencvImage, deskewedImage);
+
+    image = matToImage(deskewedImage);
+
+    displayer.setScaledImage(image);
+}
+
+void ImageProcessor::shadowsRemoval()
+{
+    QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    cv::Mat opencvImage = imageToMat(image, CV_8UC3);
+
+    cv::Mat deskewedImage;
+    prl::backgroundNormalization(opencvImage, deskewedImage);
+
+    image = matToImage(deskewedImage);
+
+    displayer.setScaledImage(image);
+}
+
+void ImageProcessor::denoise()
+{
+    QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    cv::Mat opencvImage = imageToMat(image, CV_8UC3);
+
+    cv::Mat deskewedImage;
+
+    switch(ui.comboBoxDenoise->currentIndex())
+    {
+        case 0:
+            prl::denoise(opencvImage, deskewedImage);
+            break;
+        case 1:
+            prl::denoiseSaltPepper(opencvImage, deskewedImage, 3, 3);
+            break;
+    }
+
+    image = matToImage(deskewedImage);
+
+    displayer.setScaledImage(image);
+}
+
+void ImageProcessor::binarize()
+{
+    QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    cv::Mat opencvImage = imageToMat(image, CV_8UC3);
+
+    cv::Mat deskewedImage;
+
+    switch(ui.comboBoxBinarize->currentIndex())
+    {
+        case 0:
+            prl::binarizeLocalOtsu(opencvImage, deskewedImage);
+            break;
+        case 1:
+            prl::binarizeCOCOCLUST(opencvImage, deskewedImage);
+            break;
+    }
+
+    image = matToImage(deskewedImage);
+
+    displayer.setScaledImage(image);
+}
+
+void ImageProcessor::deblur()
+{
+    QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    cv::Mat opencvImage = imageToMat(image, CV_8UC3);
+
+    cv::Mat deskewedImage;
+    prl::basicDeblur(opencvImage, deskewedImage);
 
     image = matToImage(deskewedImage);
 

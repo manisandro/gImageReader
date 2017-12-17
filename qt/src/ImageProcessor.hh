@@ -39,6 +39,11 @@ private:
 private slots:
     void deskew();
     void cleanBackground();
+    void shadowsRemoval();
+    void removeHolePunch();
+    void denoise();
+    void binarize();
+    void deblur();
 };
 
 #endif //GIMAGEREADER_IMAGEPROCESSING_HH
