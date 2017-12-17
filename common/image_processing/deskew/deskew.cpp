@@ -70,6 +70,7 @@
 double prl::findOrientation(const cv::Mat& inputImage)
 {
     cv::Mat grayImage;
+    grayImage = inputImage.clone();
     if(inputImage.channels() == 3)
     {
         cv::cvtColor(inputImage, grayImage, CV_BGR2GRAY);
