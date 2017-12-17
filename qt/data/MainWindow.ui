@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1064</width>
-    <height>657</height>
+    <height>887</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -731,6 +731,45 @@
      </property>
      <property name="text">
       <string>Deblur</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonAutoCrop">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>290</y>
+       <width>131</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Auto crop</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonCrop">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>330</y>
+       <width>131</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Crop</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonPageDetection">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>290</y>
+       <width>121</width>
+       <height>33</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Page detection</string>
      </property>
     </widget>
    </widget>
