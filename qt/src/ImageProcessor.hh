@@ -20,6 +20,9 @@ enum MatColorOrder {
 class ImageProcessor : public QObject {
     Q_OBJECT
 public:
+    enum class Binarization {LocalOtsu, COCOCLUST};
+    enum class Denoise {General, SaltAndPepper};
+
     ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer);
     ~ImageProcessor();
 

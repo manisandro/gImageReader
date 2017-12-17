@@ -25,11 +25,19 @@
 ImageProcessor::ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer)
         : ui(_ui), displayer(_displayer)
 {
+    ui.comboBoxBinarize->addItem(_("Local Otsu"), static_cast<int>(Binarization::LocalOtsu));
+    ui.comboBoxBinarize->addItem(_("For screenshots"), static_cast<int>(Binarization::COCOCLUST));
+    ui.comboBoxBinarize->setCurrentIndex(0);
+
+    ui.comboBoxDenoise->addItem(_("General"), static_cast<int>(Denoise::General));
+    ui.comboBoxDenoise->addItem(_("Salt and pepper"), static_cast<int>(Denoise::SaltAndPepper));
+    ui.comboBoxDenoise->setCurrentIndex(0);
+
     connect(ui.pushButtonDeskew, SIGNAL(clicked()), this, SLOT(deskew()));
     connect(ui.pushButtonCleanBackground, SIGNAL(clicked()), this, SLOT(cleanBackground()));
     connect(ui.pushButtonRemoveHolePunch, SIGNAL(clicked()), this, SLOT(removeHolePunch()));
     connect(ui.pushButtonShadowsRemoval, SIGNAL(clicked()), this, SLOT(shadowsRemoval()));
-    connect(ui.pushButtonShadowsRemoval, SIGNAL(clicked()), this, SLOT(denoise()));
+    connect(ui.pushButtonDenoise, SIGNAL(clicked()), this, SLOT(denoise()));
     connect(ui.pushButtonBinarize, SIGNAL(clicked()), this, SLOT(binarize()));
     connect(ui.pushButtonDeblur, SIGNAL(clicked()), this, SLOT(deblur()));
     connect(ui.pushButtonAutoCrop, SIGNAL(clicked()), this, SLOT(autoCrop()));
@@ -99,12 +107,12 @@ void ImageProcessor::denoise()
 
     cv::Mat deskewedImage;
 
-    switch(ui.comboBoxDenoise->currentIndex())
+    switch(static_cast<Denoise>(ui.comboBoxDenoise->itemData(ui.comboBoxDenoise->currentIndex()).toInt()))
     {
-        case 0:
+        case Denoise::General:
             prl::denoise(opencvImage, deskewedImage);
             break;
-        case 1:
+        case Denoise::SaltAndPepper:
             prl::denoiseSaltPepper(opencvImage, deskewedImage, 3, 3);
             break;
     }
@@ -121,12 +129,13 @@ void ImageProcessor::binarize()
 
     cv::Mat deskewedImage;
 
-    switch(ui.comboBoxBinarize->currentIndex())
+    //static_cast<QImage::Format>(ui.comboBoxImageFormat->itemData(ui.comboBoxImageFormat->currentIndex()).toInt());
+    switch(static_cast<Binarization>(ui.comboBoxBinarize->itemData(ui.comboBoxBinarize->currentIndex()).toInt()))
     {
-        case 0:
+        case Binarization::LocalOtsu:
             prl::binarizeLocalOtsu(opencvImage, deskewedImage);
             break;
-        case 1:
+        case Binarization::COCOCLUST:
             prl::binarizeCOCOCLUST(opencvImage, deskewedImage);
             break;
     }
