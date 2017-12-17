@@ -61,6 +61,8 @@ ImageProcessor::ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer)
     connect(ui.pushButtonAutoCrop, SIGNAL(clicked()), this, SLOT(autoCrop()));
     connect(ui.pushButtonCrop, SIGNAL(clicked()), this, SLOT(warpCrop()));
     connect(ui.pushButtonPageDetection, SIGNAL(clicked()), this, SLOT(borderDetection()));
+    connect(ui.pushButtonInvert, SIGNAL(clicked()), this, SLOT(invert()));
+    connect(ui.pushButtonAutoInvert, SIGNAL(clicked()), this, SLOT(autoInvert()));
     connect(ui.pushButtonAutoProcess, SIGNAL(clicked()), this, SLOT(autoProcess()));
 }
 
@@ -237,6 +239,35 @@ void ImageProcessor::borderDetection()
 
     std::vector<cv::Point2f> resultContour;
     prl::documentContour(opencvImage, 1.0, 1.0, resultContour);
+
+    image = matToImage(outputImage);
+
+    displayer.setScaledImage(image);
+}
+
+void ImageProcessor::invert()
+{
+    QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    cv::Mat opencvImage = imageToMat(image, CV_8UC3);
+
+    cv::Mat outputImage;
+
+    cv::invert(opencvImage, outputImage);
+
+    image = matToImage(outputImage);
+
+    displayer.setScaledImage(image);
+}
+
+void ImageProcessor::autoInvert()
+{
+    QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    cv::Mat opencvImage = imageToMat(image, CV_8UC3);
+
+    cv::Mat outputImage;
+
+    // TODO: Add logic for detection inverted images
+    cv::invert(opencvImage, outputImage);
 
     image = matToImage(outputImage);
 

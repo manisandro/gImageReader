@@ -51,6 +51,8 @@ private slots:
     void autoCrop();
     void borderDetection();
     void autoProcess();
+    void invert();
+    void autoInvert();
 };
 
 #endif //GIMAGEREADER_IMAGEPROCESSING_HH
