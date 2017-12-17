@@ -3,6 +3,7 @@
 #include <vector>
 
 #include <QImage>
+#include <QMessageBox>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -253,6 +254,17 @@ void ImageProcessor::autoProcess()
     // 1) Detect required algorithms
     // 2) Show messagebox with choosed algorithms
     // 3) If user pressed OK, run required algorithms
+
+    //double angle = prl::findAngle(opencvImage);
+
+    // Step two: show messagebox
+    int response = QMessageBox::question(MAIN, _("Preprocess automatically?"), _("Do you want to apply these algorithms?"),
+                                         QMessageBox::Ok, QMessageBox::Cancel);
+
+    if(response != QMessageBox::Ok)
+    {
+        return;
+    }
 
     image = matToImage(outputImage);
 
