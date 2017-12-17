@@ -52,6 +52,7 @@ SET(CXX_STANDARD_REQUIRED ON)
 
 
 # Dependencies
+FIND_PACKAGE(OpenCV REQUIRED)
 FIND_PACKAGE(Gettext REQUIRED)
 FIND_PACKAGE(PkgConfig REQUIRED)
 PKG_CHECK_MODULES(TESSERACT tesseract)
@@ -66,7 +67,8 @@ IF(UNIX)
 ENDIF(UNIX)
 SET(PODOFO_LDFLAGS -lpodofo)
 
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/common ${CMAKE_BINARY_DIR} ${TESSERACT_INCLUDE_DIRS} ${SANE_INCLUDE_DIRS})
+include_directories(${OpenCV_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/common ${CMAKE_SOURCE_DIR}/common/image_processing  ${CMAKE_BINARY_DIR} ${TESSERACT_INCLUDE_DIRS} ${SANE_INCLUDE_DIRS})
 
 IF("${INTERFACE_TYPE}" STREQUAL "gtk")
     PKG_CHECK_MODULES(GTKMM REQUIRED gtkmm-3.0)
@@ -143,6 +145,9 @@ ENDIF()
 INCLUDE_DIRECTORIES(
   ${CMAKE_SOURCE_DIR}/${srcdir}/src/
   ${CMAKE_SOURCE_DIR}/${srcdir}/src/hocr/
+  ${CMAKE_SOURCE_DIR}/${srcdir}/src/common/
+  ${CMAKE_SOURCE_DIR}/${srcdir}/src/common/image_processing/
+        /src/common/image_processing/
 )
 
 # Files
@@ -150,13 +155,19 @@ INCLUDE_DIRECTORIES(
 FILE(GLOB gimagereader_SRCS
   ${srcdir}/src/*.cc
   ${srcdir}/src/hocr/*.cc
+  ${srcdir}/src/common/image_processing/*.cpp
   common/*.cc
+  common/image_processing/*.cpp
+  common/image_processing/*/*.cpp
 )
 LIST(SORT gimagereader_SRCS)
 
 FILE(GLOB gimagereader_HDRS
   ${srcdir}/src/*.hh
   ${srcdir}/src/hocr/*.hh
+  ${srcdir}/src/common/image_processing/*.h
+  common/image_processing/*.h
+  common/image_processing/*/*.h
   common/*.hh)
 LIST(SORT gimagereader_HDRS)
 
@@ -246,6 +257,8 @@ TARGET_LINK_LIBRARIES(gimagereader
     ${gimagereader_LIBS}
     ${SANE_LDFLAGS}
     ${ddjvuapi_LDFLAGS}
+    ${OpenCV_LIBS}
+    -llept
     -ldl
 )
 
