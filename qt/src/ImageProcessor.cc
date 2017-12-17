@@ -32,6 +32,9 @@
 #include <image_processing/warp.h>
 #include <image_processing/border_detection/autoCrop.h>
 
+#include <image_processing/detectors/blurDetection.h>
+#include <image_processing/autoInvert.h>
+
 ImageProcessor::ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer)
         : ui(_ui), displayer(_displayer)
 {
@@ -279,8 +282,6 @@ void ImageProcessor::autoProcess()
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
-    cv::Mat outputImage;
-
     // TODO: Write processing here:
     // 1) Detect required algorithms
     // 2) Show messagebox with choosed algorithms
@@ -288,14 +289,40 @@ void ImageProcessor::autoProcess()
 
     //double angle = prl::findAngle(opencvImage);
 
+    // Step one: detection
+
+    bool isBlurred = prl::isBlurred(opencvImage);
+    bool isInvertionNeeded = prl::needAutoInvert(opencvImage);
+
+    QString algorithms;
+    int algoNum = 1;
+
+    if(isBlurred)
+    {
+        algorithms += QString::number(algoNum++) + ". " + "Deblur\n";
+    }
+    if(isInvertionNeeded)
+    {
+        algorithms += QString::number(algoNum++) + ". " + "Invertion\n";
+    }
+
     // Step two: show messagebox
-    int response = QMessageBox::question(MAIN, _("Preprocess automatically?"), _("Do you want to apply these algorithms?"),
+    int response = QMessageBox::question(MAIN, _("Preprocess automatically?"), _("Do you want to apply these algorithms?\n") + algorithms,
                                          QMessageBox::Ok, QMessageBox::Cancel);
 
     if(response != QMessageBox::Ok)
     {
         return;
     }
+
+    cv::Mat outputImage;
+    // Step 3: Run algorithms
+    if(isBlurred)
+    {
+        prl::basicDeblur(opencvImage, outputImage);
+    }
+
+
 
     image = matToImage(outputImage);
 
