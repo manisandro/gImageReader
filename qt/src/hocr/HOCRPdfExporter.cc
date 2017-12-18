@@ -27,6 +27,7 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QStandardItemModel>
+#include <QUrl>
 #include <podofo/base/PdfDictionary.h>
 #include <podofo/base/PdfFilter.h>
 #include <podofo/base/PdfStream.h>
