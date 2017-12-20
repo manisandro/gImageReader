@@ -99,8 +99,8 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 		QString text = targetItem->text();
 		QRect bbox = targetItem->bbox();
 		beginRemoveRows(parent, startRow + 1, endRow);
-		for(int row = startRow + 1; row <= endRow; ++row) {
-			HOCRItem* item = static_cast<HOCRItem*>(parent.child(row, 0).internalPointer());
+		for(int row = ++startRow; row <= endRow; ++row) {
+			HOCRItem* item = static_cast<HOCRItem*>(parent.child(startRow, 0).internalPointer());
 			Q_ASSERT(item);
 			text += item->text();
 			bbox = bbox.united(item->bbox());
@@ -117,8 +117,8 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 		QRect bbox = targetItem->bbox();
 		QVector<HOCRItem*> moveChilds;
 		beginRemoveRows(parent, startRow + 1, endRow);
-		for(int row = startRow + 1; row <= endRow; ++row) {
-			HOCRItem* item = static_cast<HOCRItem*>(parent.child(row, 0).internalPointer());
+		for(int row = ++startRow; row <= endRow; ++row) {
+			HOCRItem* item = static_cast<HOCRItem*>(parent.child(startRow, 0).internalPointer());
 			Q_ASSERT(item);
 			moveChilds.append(item->takeChildren());
 			bbox = bbox.united(item->bbox());
