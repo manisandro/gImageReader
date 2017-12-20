@@ -98,13 +98,15 @@ private:
 	const HOCRPage* m_previewPage;
 	DisplayerToolHOCR* m_displayerTool;
 
-	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale = 1.) const;
+	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale = 1.);
 
 private slots:
 	void imageFormatChanged();
 	void imageCompressionChanged();
 	void passwordChanged();
 	void updatePreview();
+	bool setSource(const QString& sourceFile, int page, int dpi, double angle);
+	QImage getSelection(const QRect& bbox);
 };
 
 #endif // HOCRPDFEXPORTER_HH

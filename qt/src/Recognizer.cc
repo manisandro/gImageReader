@@ -49,26 +49,23 @@
 #include "TessdataManager.hh"
 #include "Utils.hh"
 
-struct Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
+class Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
+public:
 	ETEXT_DESC desc;
-	bool canceled = false;
-	int donePages = 0;
-	int nPages;
 
-	ProgressMonitor(int _nPages) {
+	ProgressMonitor(int nPages) : MainWindow::ProgressMonitor(nPages){
 		desc.progress = 0;
 		desc.cancel = cancelCallback;
 		desc.cancel_this = this;
-		nPages = _nPages;
 	}
-	int getProgress() {
-		return 100.0 * ((donePages + desc.progress / 100.0) / nPages);
-	}
-	void cancel() {
-		canceled = true;
+	int getProgress() const override {
+		QMutexLocker locker(&mMutex);
+		return 100.0 * ((mProgress + desc.progress / 100.0) / mTotal);
 	}
 	static bool cancelCallback(void* instance, int /*words*/) {
-		return reinterpret_cast<ProgressMonitor*>(instance)->canceled;
+		ProgressMonitor* monitor = reinterpret_cast<ProgressMonitor*>(instance);
+		QMutexLocker locker(&monitor->mMutex);
+		return monitor->mCancelled;
 	}
 };
 
@@ -483,13 +480,13 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 					tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 					tess.SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 					tess.Recognize(&monitor.desc);
-					if(!monitor.canceled) {
+					if(!monitor.cancelled()) {
 						MAIN->getOutputEditor()->read(tess, readSessionData);
 					}
 				}
 				QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
-				++monitor.donePages;
-				if(monitor.canceled) {
+				monitor.increaseProgress();
+				if(monitor.cancelled()) {
 					break;
 				}
 			}
@@ -519,7 +516,7 @@ bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 		readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
 		Utils::busyTask([&] {
 			tess.Recognize(&monitor.desc);
-			if(!monitor.canceled) {
+			if(!monitor.cancelled()) {
 				MAIN->getOutputEditor()->read(tess, readSessionData);
 			}
 			return true;
@@ -529,7 +526,7 @@ bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 		QString output;
 		if(Utils::busyTask([&] {
 		tess.Recognize(&monitor.desc);
-			if(!monitor.canceled) {
+			if(!monitor.cancelled()) {
 				char* text = tess.GetUTF8Text();
 				output = QString::fromUtf8(text);
 				delete[] text;

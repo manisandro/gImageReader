@@ -50,6 +50,7 @@
 #include "HOCRPdfExporter.hh"
 #include "MainWindow.hh"
 #include "SourceManager.hh"
+#include "Utils.hh"
 
 class HOCRPdfExporter::QPainterPDFPainter : public HOCRPdfExporter::PDFPainter {
 public:
@@ -454,31 +455,45 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont, pdfSettings.fontSize);
 
 	QStringList failed;
-	for(int i = 0, n = m_hocrdocument->pageCount(); i < n; ++i) {
-		const HOCRPage* page = m_hocrdocument->page(i);
-		if(!page->isEnabled()) {
-			continue;
-		}
-		QRect bbox = page->bbox();
-		int sourceDpi = page->resolution();
-		int outputDpi = ui.spinBoxDpi->value();
-		if(MAIN->getSourceManager()->addSource(page->sourceFile())) {
-			MAIN->getDisplayer()->setup(&page->pageNr(), &outputDpi, &page->angle());
-			double docScale = (72. / sourceDpi);
-			double imgScale = double(outputDpi) / sourceDpi;
-			PoDoFo::PdfPage* pdfpage = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width() * docScale, bbox.height() * docScale));
-			pdfprinter.setPage(pdfpage, docScale);
-			printChildren(pdfprinter, page, pdfSettings, imgScale);
-			if(pdfSettings.overlay) {
-				QRect scaledBBox(imgScale * bbox.left(), imgScale * bbox.top(), imgScale * bbox.width(), imgScale * bbox.height());
-				pdfprinter.drawImage(bbox, m_displayerTool->getSelection(scaledBBox), pdfSettings);
+	int pageCount = m_hocrdocument->pageCount();
+
+	MainWindow::ProgressMonitor monitor(pageCount);
+	MAIN->showProgress(&monitor);
+	Utils::busyTask([&] {
+		for(int i = 0; i < pageCount; ++i) {
+			if(monitor.cancelled()) {
+				return false;
 			}
-			MAIN->getDisplayer()->setup(nullptr, &sourceDpi);
-			painter.FinishPage();
-		} else {
-			failed.append(page->title());
+			const HOCRPage* page = m_hocrdocument->page(i);
+			if(page->isEnabled()) {
+				QRect bbox = page->bbox();
+				int sourceDpi = page->resolution();
+				int outputDpi = ui.spinBoxDpi->value();
+				bool success = false;
+				QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, page->sourceFile()), Q_ARG(int, page->pageNr()), Q_ARG(int, outputDpi), Q_ARG(double, page->angle()));
+				if(success) {
+					double docScale = (72. / sourceDpi);
+					double imgScale = double(outputDpi) / sourceDpi;
+					PoDoFo::PdfPage* pdfpage = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width() * docScale, bbox.height() * docScale));
+					pdfprinter.setPage(pdfpage, docScale);
+					printChildren(pdfprinter, page, pdfSettings, imgScale);
+					if(pdfSettings.overlay) {
+						QRect scaledBBox(imgScale * bbox.left(), imgScale * bbox.top(), imgScale * bbox.width(), imgScale * bbox.height());
+						QImage selection;
+						QMetaObject::invokeMethod(this, "getSelection",  Qt::BlockingQueuedConnection, Q_RETURN_ARG(QImage, selection), Q_ARG(QRect, scaledBBox));
+						pdfprinter.drawImage(bbox, selection, pdfSettings);
+					}
+					QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, page->sourceFile()), Q_ARG(int, page->pageNr()), Q_ARG(int, sourceDpi), Q_ARG(double, page->angle()));
+					painter.FinishPage();
+				} else {
+					failed.append(page->title());
+				}
+			}
+			monitor.increaseProgress();
 		}
-	}
+		return true;
+	}, _("Exporting to PDF..."));
+	MAIN->hideProgress();
 	if(!failed.isEmpty()) {
 		QMessageBox::warning(MAIN, _("Errors occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
 	}
@@ -494,7 +509,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	return success;
 }
 
-void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale) const {
+void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale) {
 	if(!item->isEnabled()) {
 		return;
 	}
@@ -547,7 +562,9 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 		}
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {
 		QRect scaledItemRect(itemRect.left() * imgScale, itemRect.top() * imgScale, itemRect.width() * imgScale, itemRect.height() * imgScale);
-		painter.drawImage(itemRect, m_displayerTool->getSelection(scaledItemRect), pdfSettings);
+		QImage selection;
+		QMetaObject::invokeMethod(this, "getSelection", QThread::currentThread() == qApp->thread() ? Qt::DirectConnection : Qt::BlockingQueuedConnection, Q_RETURN_ARG(QImage, selection), Q_ARG(QRect, scaledItemRect));
+		painter.drawImage(itemRect, selection, pdfSettings);
 	} else {
 		for(int i = 0, n = item->children().size(); i < n; ++i) {
 			printChildren(painter, item->children()[i], pdfSettings, imgScale);
@@ -650,4 +667,20 @@ void HOCRPdfExporter::passwordChanged() {
 		ui.lineEditConfirmPasswordOpen->setStyleSheet("background: #FF7777; color: #FFFFFF;");
 		ui.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 	}
+}
+
+
+bool HOCRPdfExporter::setSource(const QString& sourceFile, int page, int dpi, double angle)
+{
+	if(MAIN->getSourceManager()->addSource(sourceFile)) {
+		MAIN->getDisplayer()->setup(&page, &dpi, &angle);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+QImage HOCRPdfExporter::getSelection(const QRect& bbox)
+{
+	return m_displayerTool->getSelection(bbox);
 }

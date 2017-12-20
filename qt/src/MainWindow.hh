@@ -22,6 +22,7 @@
 
 #include <QList>
 #include <QMainWindow>
+#include <QMutexLocker>
 #include <QStack>
 #include <QStringList>
 #include <QThread>
@@ -54,10 +55,20 @@ public:
 		bool close;
 	};
 
-	struct ProgressMonitor {
+	class ProgressMonitor {
+	public:
+		ProgressMonitor(int total) : mTotal(total) {}
 		virtual ~ProgressMonitor() {}
-		virtual int getProgress() = 0;
-		virtual void cancel() = 0;
+		int increaseProgress() { QMutexLocker locker(&mMutex); ++mProgress; }
+		virtual int getProgress() const { QMutexLocker locker(&mMutex); return (mProgress * 100) / mTotal; }
+		virtual void cancel() { QMutexLocker locker(&mMutex); mCancelled = true; }
+		bool cancelled() const{ QMutexLocker locker(&mMutex); return mCancelled; }
+
+	protected:
+		mutable QMutex mMutex;
+		const int mTotal;
+		int mProgress = 0;
+		bool mCancelled = false;
 	};
 
 	typedef void* Notification;
