@@ -459,20 +459,22 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 				++idx;
 				QMetaObject::invokeMethod(MAIN, "pushState", Qt::QueuedConnection, Q_ARG(MainWindow::State, MainWindow::State::Busy), Q_ARG(QString, _("Recognizing page %1 (%2 of %3)").arg(page).arg(idx).arg(npages)));
 
-				bool success = false;
-				QMetaObject::invokeMethod(this, "setPage", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(int, page), Q_ARG(bool, autodetectLayout));
-				if(!success) {
+				PageData pageData;
+				pageData.success = false;
+				QMetaObject::invokeMethod(this, "setPage", Qt::BlockingQueuedConnection, Q_RETURN_ARG(PageData, pageData), Q_ARG(int, page), Q_ARG(bool, autodetectLayout));
+				if(!pageData.success) {
 					failed.append(_("\n- Page %1: failed to render page").arg(page));
 					MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
 					continue;
 				}
-				readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
-				readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
-				readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
+				readSessionData->file = pageData.filename;
+				readSessionData->page = pageData.page;
+				readSessionData->angle = pageData.angle;
+				readSessionData->resolution = pageData.resolution;
 				bool firstChunk = true;
 				bool newFile = readSessionData->file != prevFile;
 				prevFile = readSessionData->file;
-				for(const QImage& image : MAIN->getDisplayer()->getOCRAreas()) {
+				for(const QImage& image : pageData.ocrAreas) {
 					readSessionData->prependPage = prependPage && firstChunk;
 					readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
 					firstChunk = false;
@@ -541,12 +543,19 @@ bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 	return true;
 }
 
-bool Recognizer::setPage(int page, bool autodetectLayout) {
-	bool success = MAIN->getDisplayer()->setup(&page);
-	if(success && autodetectLayout) {
-		MAIN->getDisplayer()->autodetectOCRAreas();
+Recognizer::PageData Recognizer::setPage(int page, bool autodetectLayout) {
+	PageData pageData;
+	pageData.success = MAIN->getDisplayer()->setup(&page);
+	if(pageData.success) {
+		if(autodetectLayout) {
+			MAIN->getDisplayer()->autodetectOCRAreas();
+		}
+		pageData.filename = MAIN->getDisplayer()->getCurrentImage(pageData.page);
+		pageData.angle = MAIN->getDisplayer()->getCurrentAngle();
+		pageData.resolution = MAIN->getDisplayer()->getCurrentResolution();
+		pageData.ocrAreas = MAIN->getDisplayer()->getOCRAreas();
 	}
-	return success;
+	return pageData;
 }
 
 bool Recognizer::eventFilter(QObject* obj, QEvent* ev) {

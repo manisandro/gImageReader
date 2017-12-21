@@ -54,6 +54,14 @@ private:
 	struct ProgressMonitor;
 	enum class PageSelection { Prompt, Current, Multiple };
 	enum class PageArea { EntirePage, Autodetect };
+	struct PageData {
+		bool success;
+		QString filename;
+		int page;
+		double angle;
+		int resolution;
+		QList<QImage> ocrAreas;
+	};
 
 	const UI_MainWindow& ui;
 	QMenu* m_menuPages = nullptr;
@@ -81,7 +89,7 @@ private slots:
 	void recognizeMultiplePages();
 	void setLanguage();
 	void setMultiLanguage();
-	bool setPage(int page, bool autodetectLayout);
+	PageData setPage(int page, bool autodetectLayout);
 	void manageInstalledLanguages();
 };
 
