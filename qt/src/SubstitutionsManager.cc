@@ -32,12 +32,9 @@
 #include "SubstitutionsManager.hh"
 #include "Utils.hh"
 
-SubstitutionsManager::SubstitutionsManager(OutputTextEdit* textEdit, QCheckBox* csCheckBox, QWidget* parent)
+SubstitutionsManager::SubstitutionsManager(QWidget* parent)
 	: QDialog(parent) {
 	setWindowTitle(_("Substitutions"));
-
-	m_textEdit = textEdit;
-	m_csCheckBox = csCheckBox;
 
 	QAction* openAction = new QAction(QIcon::fromTheme("document-open"), _("Open"), this);
 	openAction->setToolTip(_("Open"));
@@ -90,7 +87,7 @@ SubstitutionsManager::SubstitutionsManager(OutputTextEdit* textEdit, QCheckBox* 
 	connect(saveAction, SIGNAL(triggered()), this, SLOT(saveList()));
 	connect(clearAction, SIGNAL(triggered()), this, SLOT(clearList()));
 	connect(addAction, SIGNAL(triggered()), this, SLOT(addRow()));
-	connect(buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(applySubstitutions()));
+	connect(buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(emitApplySubstitutions()));
 	connect(buttonBox->button(QDialogButtonBox::Close), SIGNAL(clicked()), this, SLOT(hide()));
 	connect(m_removeAction, SIGNAL(triggered()), this, SLOT(removeRows()));
 	connect(m_tableWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onTableSelectionChanged(QItemSelection,QItemSelection)));
@@ -99,6 +96,7 @@ SubstitutionsManager::SubstitutionsManager(OutputTextEdit* textEdit, QCheckBox* 
 }
 
 SubstitutionsManager::~SubstitutionsManager() {
+	MAIN->getConfig()->getSetting<TableSetting>("substitutionslist")->serialize();
 	MAIN->getConfig()->removeSetting("replacelist");
 }
 
@@ -137,7 +135,6 @@ void SubstitutionsManager::openList() {
 			m_tableWidget->setItem(row, 1, new QTableWidgetItem(fields[1]));
 		}
 		m_tableWidget->blockSignals(false);
-		MAIN->getConfig()->getSetting<TableSetting>("substitutionslist")->serialize();
 		if(errors) {
 			QMessageBox::warning(this, _("Errors Occurred Reading File"), _("Some entries of the substitutions list could not be read."));
 		}
@@ -173,7 +170,6 @@ bool SubstitutionsManager::clearList() {
 			return false;
 		}
 		m_tableWidget->setRowCount(0);
-		MAIN->getConfig()->getSetting<TableSetting>("substitutionslist")->serialize();
 	}
 	return true;
 }
@@ -192,37 +188,16 @@ void SubstitutionsManager::removeRows() {
 		m_tableWidget->removeRow(index.row());
 	}
 	m_tableWidget->blockSignals(false);
-	MAIN->getConfig()->getSetting<TableSetting>("substitutionslist")->serialize();
 }
 
 void SubstitutionsManager::onTableSelectionChanged(const QItemSelection& selected, const QItemSelection& /*deselected*/) {
 	m_removeAction->setEnabled(!selected.isEmpty());
 }
 
-void SubstitutionsManager::applySubstitutions() {
-	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
-	QTextCursor cursor =  m_textEdit->regionBounds();
-	int end = cursor.position();
-	cursor.setPosition(cursor.anchor());
-	QTextDocument::FindFlags flags = 0;
-	if(m_csCheckBox->isChecked()) {
-		flags = QTextDocument::FindCaseSensitively;
-	}
-	int start = cursor.position();
+void SubstitutionsManager::emitApplySubstitutions() {
+	QMap<QString,QString> substitutions;
 	for(int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row) {
-		QString search = m_tableWidget->item(row, 0)->text();
-		QString replace = m_tableWidget->item(row, 1)->text();
-		int diff = replace.length() - search.length();
-		cursor.setPosition(start);
-		while(true) {
-			cursor = m_textEdit->document()->find(search, cursor, flags);
-			if(cursor.isNull() || std::max(cursor.anchor(), cursor.position()) > end) {
-				break;
-			}
-			cursor.insertText(replace);
-			end += diff;
-		}
-		QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+		substitutions.insert(m_tableWidget->item(row, 0)->text(), m_tableWidget->item(row, 1)->text());
 	}
-	MAIN->popState();
+	emit applySubstitutions(substitutions);
 }

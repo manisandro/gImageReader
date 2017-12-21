@@ -3,6 +3,7 @@
 
 #include "common.hh"
 #include "OutputTextEdit.hh"
+#include "SearchReplaceFrame.hh"
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDoubleSpinBox>
@@ -39,16 +40,8 @@ public:
 	QToolButton* toolButtonOutputMode;
 	QToolButton* toolButtonOutputPostproc;
 
-	QLineEdit *lineEditOutputSearch;
-	QLineEdit *lineEditOutputReplace;
-	QToolButton *toolButtonOutputFindNext;
-	QToolButton *toolButtonOutputReplace;
-	QToolButton *toolButtonOutputReplaceAll;
-	QToolButton *toolButtonOutputFindPrev;
-	QPushButton *pushButtonOutputReplacementList;
-	QCheckBox *checkBoxOutputSearchMatchCase;
 	OutputTextEdit *plainTextEditOutput;
-	QFrame *frameOutputSearch;
+	SearchReplaceFrame* searchFrame;
 
 	void setupUi(QWidget* widget) {
 		widget->setLayout(new QVBoxLayout());
@@ -137,52 +130,9 @@ public:
 
 		widget->layout()->addWidget(toolBarOutput);
 
-		// Search/Replace field
-		frameOutputSearch = new QFrame(widget);
-		frameOutputSearch->setFrameShape(QFrame::StyledPanel);
-		frameOutputSearch->setFrameShadow(QFrame::Plain);
-		QGridLayout* frameOutputSearchLayout = new QGridLayout(frameOutputSearch);
-		frameOutputSearchLayout->setSpacing(2);
-		frameOutputSearchLayout->setContentsMargins(2, 2, 2, 2);
-
-		lineEditOutputSearch = new QLineEdit(frameOutputSearch);
-		lineEditOutputSearch->setPlaceholderText(gettext("Find"));
-		frameOutputSearchLayout->addWidget(lineEditOutputSearch, 0, 0, 1, 1);
-
-		lineEditOutputReplace = new QLineEdit(frameOutputSearch);
-		lineEditOutputReplace->setPlaceholderText(gettext("Replace"));
-		frameOutputSearchLayout->addWidget(lineEditOutputReplace, 1, 0, 1, 1);
-
-		toolButtonOutputFindNext = new QToolButton(frameOutputSearch);
-		toolButtonOutputFindNext->setIcon(QIcon::fromTheme("go-down"));
-		toolButtonOutputFindNext->setToolTip(gettext("Find next"));
-		frameOutputSearchLayout->addWidget(toolButtonOutputFindNext, 0, 1, 1, 1);
-
-		toolButtonOutputFindPrev = new QToolButton(frameOutputSearch);
-		toolButtonOutputFindPrev->setIcon(QIcon::fromTheme("go-up"));
-		toolButtonOutputFindPrev->setToolTip(gettext("Find previous"));
-		frameOutputSearchLayout->addWidget(toolButtonOutputFindPrev, 0, 2, 1, 1);
-
-		toolButtonOutputReplace = new QToolButton(frameOutputSearch);
-		toolButtonOutputReplace->setIcon(QIcon::fromTheme("edit-find-replace"));
-		toolButtonOutputReplace->setToolTip(gettext("Replace"));
-		frameOutputSearchLayout->addWidget(toolButtonOutputReplace, 1, 1, 1, 1);
-
-		toolButtonOutputReplaceAll = new QToolButton(frameOutputSearch);
-		toolButtonOutputReplaceAll->setIcon(QIcon::fromTheme("edit-find-replace"));
-		toolButtonOutputReplaceAll->setToolTip(gettext("Replace all"));
-		frameOutputSearchLayout->addWidget(toolButtonOutputReplaceAll, 1, 2, 1, 1);
-
-		pushButtonOutputReplacementList = new QPushButton(frameOutputSearch);
-		pushButtonOutputReplacementList->setText(gettext("Substitutions"));
-		pushButtonOutputReplacementList->setIcon(QIcon::fromTheme("document-edit"));
-		frameOutputSearchLayout->addWidget(pushButtonOutputReplacementList, 3, 0, 1, 3);
-
-		checkBoxOutputSearchMatchCase = new QCheckBox(frameOutputSearch);
-		checkBoxOutputSearchMatchCase->setText(gettext("Match case"));
-		frameOutputSearchLayout->addWidget(checkBoxOutputSearchMatchCase, 2, 0, 1, 3);
-
-		widget->layout()->addWidget(frameOutputSearch);
+		searchFrame = new SearchReplaceFrame(widget);
+		searchFrame->setVisible(false);
+		widget->layout()->addWidget(searchFrame);
 
 		plainTextEditOutput = new OutputTextEdit(widget);
 		widget->layout()->addWidget(plainTextEditOutput);

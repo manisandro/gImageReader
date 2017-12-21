@@ -30,19 +30,20 @@ class QTableWidget;
 class SubstitutionsManager : public QDialog {
 	Q_OBJECT
 public:
-	SubstitutionsManager(OutputTextEdit* textEdit, QCheckBox* csCheckBox, QWidget* parent = nullptr);
+	SubstitutionsManager(QWidget* parent = nullptr);
 	~SubstitutionsManager();
+
+signals:
+	void applySubstitutions(const QMap<QString, QString>& substitutions);
 
 private:
 	QAction* m_removeAction;
 	QString m_currentFile;
 	QTableWidget* m_tableWidget;
-	OutputTextEdit* m_textEdit;
-	QCheckBox* m_csCheckBox;
 
 private slots:
 	void addRow();
-	void applySubstitutions();
+	void emitApplySubstitutions();
 	bool clearList();
 	void onTableSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 	void openList();

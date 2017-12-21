@@ -27,8 +27,6 @@
 #include "OutputEditor.hh"
 #include "Ui_OutputEditorText.hh"
 
-class SubstitutionsManager;
-
 class OutputEditorText : public OutputEditor {
 	Q_OBJECT
 public:
@@ -63,18 +61,13 @@ private:
 
 	InsertMode m_insertMode;
 	QtSpell::TextEditChecker m_spell;
-	SubstitutionsManager* m_substitutionsManager;
-
-	void findReplace(bool backwards, bool replace);
 
 private slots:
 	void addText(const QString& text, bool insert);
-	void clearErrorState();
 	void filterBuffer();
-	void findNext();
-	void findPrev();
-	void replaceAll();
-	void replaceNext();
+	void findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace);
+	void replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase);
+	void applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase);
 	void setFont();
 	void setInsertMode(QAction* action);
 };
