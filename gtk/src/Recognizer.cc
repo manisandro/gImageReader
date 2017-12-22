@@ -43,26 +43,23 @@
 #endif
 
 
-struct Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
+class Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
+public:
 	ETEXT_DESC desc;
-	bool canceled = false;
-	int donePages = 0;
-	int nPages;
 
-	ProgressMonitor(int _nPages) {
+	ProgressMonitor(int nPages) : MainWindow::ProgressMonitor(nPages){
 		desc.progress = 0;
 		desc.cancel = cancelCallback;
 		desc.cancel_this = this;
-		nPages = _nPages;
 	}
-	int getProgress() {
-		return 100 * ((donePages + desc.progress / 100.) / nPages);
-	}
-	void cancel() {
-		canceled = true;
+	int getProgress() const override {
+		Glib::Threads::Mutex::Lock lock(m_mutex);
+		return 100.0 * ((m_progress + desc.progress / 100.0) / m_total);
 	}
 	static bool cancelCallback(void* instance, int /*words*/) {
-		return reinterpret_cast<ProgressMonitor*>(instance)->canceled;
+		ProgressMonitor* monitor = reinterpret_cast<ProgressMonitor*>(instance);
+		Glib::Threads::Mutex::Lock lock(monitor->m_mutex);
+		return monitor->m_cancelled;
 	}
 };
 
@@ -483,20 +480,21 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 				++idx;
 				Glib::signal_idle().connect_once([=] { MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
 
-				bool success = false;
-				Utils::runInMainThreadBlocking([&] { success = setPage(page, autodetectLayout); });
-				if(!success) {
+				PageData pageData;
+				Utils::runInMainThreadBlocking([&] { pageData = setPage(page, autodetectLayout); });
+				if(!pageData.success) {
 					failed.append(Glib::ustring::compose(_("\n- Page %1: failed to render page"), page));
 					MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
 					continue;
 				}
-				readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
-				readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
-				readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
+				readSessionData->file = pageData.filename;
+				readSessionData->page = pageData.page;
+				readSessionData->angle = pageData.angle;
+				readSessionData->resolution = pageData.resolution;
 				bool firstChunk = true;
 				bool newFile = readSessionData->file != prevFile;
 				prevFile = readSessionData->file;
-				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : MAIN->getDisplayer()->getOCRAreas()) {
+				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : pageData.ocrAreas) {
 					readSessionData->prependPage = prependPage && firstChunk;
 					readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
 					firstChunk = false;
@@ -504,14 +502,14 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 					tess.SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
 					tess.SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 					tess.Recognize(&monitor.desc);
-					if(!monitor.canceled) {
+					if(!monitor.cancelled()) {
 						MAIN->getOutputEditor()->read(tess, readSessionData);
 					}
 				}
 
 				Glib::signal_idle().connect_once([] { MAIN->popState(); });
-				++monitor.donePages;
-				if(monitor.canceled) {
+				monitor.increaseProgress();
+				if(monitor.cancelled()) {
 					break;
 				}
 			}
@@ -541,7 +539,7 @@ bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, O
 		readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
 		Utils::busyTask([&] {
 			tess.Recognize(&monitor.desc);
-			if(!monitor.canceled) {
+			if(!monitor.cancelled()) {
 				MAIN->getOutputEditor()->read(tess, readSessionData);
 			}
 			return true;
@@ -551,7 +549,7 @@ bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, O
 		Glib::ustring output;
 		if(Utils::busyTask([&] {
 		tess.Recognize(&monitor.desc);
-			if(!monitor.canceled) {
+			if(!monitor.cancelled()) {
 				char* text = tess.GetUTF8Text();
 				output = text;
 				delete[] text;
@@ -566,15 +564,19 @@ bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, O
 	return true;
 }
 
-bool Recognizer::setPage(int page, bool autodetectLayout) {
-	bool success = true;
-	if(page != MAIN->getDisplayer()->getCurrentPage()) {
-		success = MAIN->getDisplayer()->setup(&page);
+Recognizer::PageData Recognizer::setPage(int page, bool autodetectLayout) {
+	PageData pageData;
+	pageData.success = MAIN->getDisplayer()->setup(&page);
+	if(pageData.success) {
+		if(autodetectLayout) {
+			MAIN->getDisplayer()->autodetectOCRAreas();
+		}
+		pageData.filename = MAIN->getDisplayer()->getCurrentImage(pageData.page);
+		pageData.angle = MAIN->getDisplayer()->getCurrentAngle();
+		pageData.resolution = MAIN->getDisplayer()->getCurrentResolution();
+		pageData.ocrAreas = MAIN->getDisplayer()->getOCRAreas();
 	}
-	if(autodetectLayout) {
-		MAIN->getDisplayer()->autodetectOCRAreas();
-	}
-	return success;
+	return pageData;
 }
 
 bool Recognizer::onMultilingualMenuButtonEvent(GdkEventButton* ev) {

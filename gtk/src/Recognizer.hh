@@ -52,6 +52,14 @@ private:
 
 	enum class PageArea { EntirePage, Autodetect };
 	enum class TaskState { Waiting, Succeeded, Failed };
+	struct PageData {
+		bool success;
+		std::string filename;
+		int page;
+		double angle;
+		int resolution;
+		std::vector<Cairo::RefPtr<Cairo::ImageSurface>> ocrAreas;
+	};
 
 	Gtk::Menu* m_menuLanguages;
 	Gtk::Menu* m_menuPages;
@@ -78,7 +86,7 @@ private:
 	std::vector<int> selectPages(bool& autodetectLayout);
 	void setLanguage(const Gtk::RadioMenuItem *item, const Config::Lang& lang);
 	void setMultiLanguage();
-	bool setPage(int page, bool autodetectLayout);
+	PageData setPage(int page, bool autodetectLayout);
 	bool onMultilingualMenuButtonEvent(GdkEventButton* ev);
 	bool onMultilingualItemButtonEvent(GdkEventButton* ev, Gtk::CheckMenuItem* item);
 	void manageInstalledLanguages();

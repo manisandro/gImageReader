@@ -42,10 +42,20 @@ public:
 		std::function<bool()> action;
 	};
 
-	struct ProgressMonitor {
+	class ProgressMonitor {
+	public:
+		ProgressMonitor(int total) : m_total(total) {}
 		virtual ~ProgressMonitor() {}
-		virtual int getProgress() = 0;
-		virtual void cancel() = 0;
+		int increaseProgress() { Glib::Threads::Mutex::Lock lock(m_mutex); ++m_progress; }
+		virtual int getProgress() const { Glib::Threads::Mutex::Lock lock(m_mutex); return (m_progress * 100) / m_total; }
+		virtual void cancel() { Glib::Threads::Mutex::Lock lock(m_mutex); m_cancelled = true; }
+		bool cancelled() const{ Glib::Threads::Mutex::Lock lock(m_mutex); return m_cancelled; }
+
+	protected:
+		mutable Glib::Threads::Mutex m_mutex;
+		const int m_total;
+		int m_progress = 0;
+		bool m_cancelled = false;
 	};
 
 	typedef void* Notification;
