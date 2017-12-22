@@ -105,20 +105,20 @@ void runInMainThreadBlocking(const std::function<void()>& f);
 template<typename T, typename S = std::deque<T>>
 class AsyncQueue {
 	std::queue<T,S>   queue_;
-	Glib::Mutex       mutex_;
-	Glib::Cond        cond_;
+	Glib::Threads::Mutex       mutex_;
+	Glib::Threads::Cond        cond_;
 public:
 	bool empty() {
-		Glib::Mutex::Lock queue_guard(mutex_);
+		Glib::Threads::Mutex::Lock queue_guard(mutex_);
 		return queue_.empty();
 	}
 	void enqueue(const T& item) {
-		Glib::Mutex::Lock queue_guard(mutex_);
+		Glib::Threads::Mutex::Lock queue_guard(mutex_);
 		queue_.push(item);
 		cond_.signal();
 	}
 	T dequeue() {
-		Glib::Mutex::Lock queue_guard(mutex_);
+		Glib::Threads::Mutex::Lock queue_guard(mutex_);
 		if(queue_.empty()) {
 			while ( queue_.empty() )
 				cond_.wait(mutex_);
