@@ -50,7 +50,7 @@ public:
 	const HOCRItem* itemAtIndex(const QModelIndex& index) const{ return index.isValid() ? static_cast<HOCRItem*>(index.internalPointer()) : nullptr; }
 	bool editItemAttribute(QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass = QString());
 	QModelIndex mergeItems(const QModelIndex& parent, int startRow, int endRow);
-	QModelIndex swapItems(const QModelIndex& parent, int startRow, int endRow);
+	QModelIndex swapItems(const QModelIndex& parent, int startRow, int endRow, bool pages);
 	QModelIndex addItem(const QModelIndex& parent, const QDomElement& element);
 	bool removeItem(const QModelIndex& index);
 
@@ -157,6 +157,8 @@ public:
 	const int& resolution() const{ return m_resolution; }
 	int pageId() const{ return m_pageId; }
 	QString title() const;
+
+	void changeNr(int newNr) { m_pageNr = newNr; }
 
 private:
 	friend class HOCRItem;
