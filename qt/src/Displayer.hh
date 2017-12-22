@@ -64,7 +64,7 @@ public:
 	void autodetectOCRAreas();
 
 public slots:
-	void setAngle(double angle);
+
 
 private:
 	enum class RotateMode { CurrentPage, AllPages } m_rotateMode;
@@ -123,8 +123,9 @@ private slots:
 	void scaleTimerElapsed();
 	void sendScaleRequest(const ScaleRequest& request);
 	bool renderImage();
-	void setRotateMode(QAction* action);
 	void rotate90();
+	void setAngle(double angle);
+	void setRotateMode(QAction* action);
 	void setScaledImage(const QImage& image, double scale);
 	void zoomIn() {
 		setZoom(Zoom::In);
