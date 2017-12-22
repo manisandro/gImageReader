@@ -104,8 +104,7 @@ QModelIndex HOCRDocument::swapItems(const QModelIndex& parent, int firstRow, int
 		beginInsertRows(parent, secondRow, secondRow);
 		parentItem->insertChild(firstItem, secondRow);
 		endInsertRows();
-	}
-	else if(pages) {
+	} else if(pages) {
 		HOCRPage* firstPage = m_pages.at(firstRow);
 		HOCRPage* secondPage = m_pages.at(secondRow);
 		int firstNr = firstPage->pageNr();
@@ -120,8 +119,7 @@ QModelIndex HOCRDocument::swapItems(const QModelIndex& parent, int firstRow, int
 		m_pages.replace(secondRow, firstPage);
 		firstPage->changeNr(secondNr);
 		emit layoutChanged({secondChild});
-	}
-	else {
+	} else {
 		return QModelIndex();
 	}
 	return index(firstRow, 0, parent);

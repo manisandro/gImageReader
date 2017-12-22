@@ -422,8 +422,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 			QModelIndex newIndex;
 			if(clickedAction == mergeAction) {
 					newIndex = m_document->mergeItems(indices.first().parent(), rows.first(), rows.last());
-			}
-			if(clickedAction == swapAction) {
+			} else if(clickedAction == swapAction) {
 					newIndex = m_document->swapItems(indices.first().parent(), rows.first(), rows.last(), pages);
 			}
 			if(newIndex.isValid()) {
