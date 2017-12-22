@@ -30,7 +30,6 @@
 #include "OutputEditorText.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
-#include "SubstitutionsManager.hh"
 #include "Utils.hh"
 
 
