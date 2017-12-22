@@ -64,7 +64,7 @@ QModelIndex HOCRDocument::addPage(const QDomElement& pageElement, bool cleanGrap
 	return index(newRow, 0);
 }
 
-bool HOCRDocument::editItemAttribute(QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass)
+bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass)
 {
 	if(!index.isValid()) {
 		return false;
@@ -163,6 +163,53 @@ bool HOCRDocument::removeItem(const QModelIndex& index)
 	deleteItem(item);
 	endRemoveRows();
 	return true;
+}
+
+QModelIndex HOCRDocument::nextIndex(const QModelIndex& current)
+{
+	QModelIndex idx = current;
+	// If the current index is invalid return first index
+	if(!idx.isValid()) {
+		return index(0, 0);
+	}
+	// If item has children, return next child
+	while(rowCount(idx) > 0) {
+		return idx.child(0, 0);
+	}
+	// Return next possible sibling
+	QModelIndex parent = idx.parent();
+	while(parent.isValid() && idx.row() >= rowCount(parent) - 1) {
+		idx = parent;
+		parent = idx.parent();
+	}
+	if(!parent.isValid()) {
+		// Wrap around
+		return index(0, 0);
+	}
+	return idx.sibling(idx.row() + 1, 0);
+}
+
+QModelIndex HOCRDocument::prevIndex(const QModelIndex& current)
+{
+	QModelIndex idx = current;
+	// If the current index is invalid return last index
+	if(!idx.isValid()) {
+		return index(rowCount() - 1, 0);
+	}
+	// Return last possible leaf of previous sibling, if any, or parent
+	if(idx.row() > 0) {
+		idx = idx.sibling(idx.row() - 1, 0);
+	} else {
+		if(idx.parent().isValid()) {
+			return idx.parent();
+		}
+		// Wrap around
+		idx = index(rowCount() - 1, 0);
+	}
+	while(rowCount(idx) > 0) {
+		idx = idx.child(rowCount(idx) - 1, 0);
+	}
+	return idx;
 }
 
 bool HOCRDocument::referencesSource(const QString& filename) const

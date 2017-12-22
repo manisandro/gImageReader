@@ -19,10 +19,12 @@
 
 #include <QApplication>
 #include <QDomDocument>
+#include <QFileInfo>
 #include <QFontComboBox>
 #include <QImage>
+#include <QStyledItemDelegate>
 #include <QMessageBox>
-#include <QFileInfo>
+#include <QPointer>
 #include <QSyntaxHighlighter>
 #include <cmath>
 #include <cstring>
@@ -141,6 +143,34 @@ void HOCRAttributeEditor::validateChanges() {
 
 ///////////////////////////////////////////////////////////////////////////////
 
+class HOCRTextDelegate : public QStyledItemDelegate {
+public:
+	using QStyledItemDelegate::QStyledItemDelegate;
+
+	QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &/* option */, const QModelIndex &/* index */) const
+	{
+		return new QLineEdit(parent);
+	}
+	void setEditorData(QWidget *editor, const QModelIndex &index) const
+	{
+		m_currentIndex = index;
+		m_currentEditor = static_cast<QLineEdit*>(editor);
+		static_cast<QLineEdit*>(editor)->setText(index.model()->data(index, Qt::EditRole).toString());
+	}
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+	{
+		model->setData(index, static_cast<QLineEdit*>(editor)->text(), Qt::EditRole);
+	}
+	const QModelIndex& getCurrentIndex() const{ return m_currentIndex; }
+	QLineEdit* getCurrentEditor() const{ return m_currentEditor; }
+
+private:
+	mutable QModelIndex m_currentIndex;
+	mutable QPointer<QLineEdit> m_currentEditor;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+
 OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	static int reg = qRegisterMetaType<QList<QRect>>("QList<QRect>");
 	Q_UNUSED(reg);
@@ -150,6 +180,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.setupUi(m_widget);
 	m_highlighter = new HTMLHighlighter(ui.plainTextEditOutput->document());
 
+	ui.actionOutputReplace->setShortcut(Qt::CTRL + Qt::Key_F);
 	ui.actionOutputSaveHOCR->setShortcut(Qt::CTRL + Qt::Key_S);
 
 	m_document = new HOCRDocument(&m_spell, ui.treeViewHOCR);
@@ -159,13 +190,19 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.treeViewHOCR->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	ui.treeViewHOCR->setColumnWidth(1, 32);
 	ui.treeViewHOCR->setColumnHidden(1, true);
+	ui.treeViewHOCR->setItemDelegateForColumn(0, new HOCRTextDelegate(ui.treeViewHOCR));
 
 	connect(ui.actionOutputOpen, SIGNAL(triggered()), this, SLOT(open()));
 	connect(ui.actionOutputSaveHOCR, SIGNAL(triggered()), this, SLOT(save()));
 	connect(ui.actionOutputExportPDF, SIGNAL(triggered()), this, SLOT(exportToPDF()));
 	connect(ui.actionOutputExportText, SIGNAL(triggered()), this, SLOT(exportToText()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
+	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(setVisible(bool)));
+	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(clear()));
 	connect(ui.actionToggleWConf, SIGNAL(toggled(bool)), this, SLOT(toggleWConfColumn(bool)));
+	connect(ui.searchFrame, SIGNAL(findReplace(QString,QString,bool,bool,bool)), this, SLOT(findReplace(QString,QString,bool,bool,bool)));
+	connect(ui.searchFrame, SIGNAL(replaceAll(QString,QString,bool)), this, SLOT(replaceAll(QString,QString,bool)));
+	connect(ui.searchFrame, SIGNAL(applySubstitutions(QMap<QString,QString>,bool)), this, SLOT(applySubstitutions(QMap<QString,QString>,bool)));
 	connect(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(ui.treeViewHOCR->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(showItemProperties(QModelIndex)));
@@ -626,4 +663,120 @@ bool OutputEditorHOCR::clear(bool hide)
 
 void OutputEditorHOCR::setLanguage(const Config::Lang &lang) {
 	m_document->setDefaultLanguage(lang.code);
+}
+
+void OutputEditorHOCR::onVisibilityChanged(bool /*visibile*/) {
+	ui.searchFrame->hideSubstitutionsManager();
+}
+
+bool OutputEditorHOCR::findReplaceInItem(const QModelIndex& index, const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace, bool& currentSelectionMatchesSearch)
+{
+	// Check that the item is a word
+	const HOCRItem* item = m_document->itemAtIndex(index);
+	if(!item || item->itemClass() != "ocrx_word") {
+		return false;
+	}
+	Qt::CaseSensitivity cs = matchCase ? Qt::CaseSensitive : Qt::CaseInsensitive;
+	HOCRTextDelegate* delegate = static_cast<HOCRTextDelegate*>(ui.treeViewHOCR->itemDelegateForColumn(0));
+	// If the item is already in edit mode, continue searching inside the text
+	if(delegate->getCurrentIndex() == index && delegate->getCurrentEditor()) {
+		QLineEdit* editor = delegate->getCurrentEditor();
+		bool matchesSearch = editor->selectedText().compare(searchstr, cs) == 0;
+		int selStart = editor->selectionStart();
+		if(matchesSearch && replace) {
+			QString oldText = editor->text();
+			editor->setText(oldText.left(selStart) + replacestr + oldText.mid(selStart + searchstr.length()));
+			editor->setSelection(selStart, replacestr.length());
+			return true;
+		}
+		bool matchesReplace = editor->selectedText().compare(searchstr, cs) == 0;
+		int pos = -1;
+		if(backwards) {
+			pos = selStart - 1;
+			pos = pos < 0 ? -1 : editor->text().lastIndexOf(searchstr, pos, cs);
+		} else {
+			pos = matchesSearch ? selStart + searchstr.length() : matchesReplace ? selStart + replacestr.length() : selStart;
+			pos = editor->text().indexOf(searchstr, pos, cs);
+		}
+		if(pos != -1) {
+			editor->setSelection(pos, searchstr.length());
+			return true;
+		}
+		currentSelectionMatchesSearch = matchesSearch;
+		return false;
+	}
+	// Otherwise, if item contains text, set it in edit mode
+	int pos = backwards ? item->text().lastIndexOf(searchstr, -1, cs) : item->text().indexOf(searchstr, 0, cs);
+	if(pos != -1) {
+		ui.treeViewHOCR->setCurrentIndex(index);
+		ui.treeViewHOCR->edit(index);
+		Q_ASSERT(delegate->getCurrentIndex() == index && delegate->getCurrentEditor());
+		delegate->getCurrentEditor()->setSelection(pos, searchstr.length());
+		return true;
+	}
+	return false;
+}
+
+void OutputEditorHOCR::findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace)
+{
+	ui.searchFrame->clearErrorState();
+	QModelIndex current = ui.treeViewHOCR->currentIndex();
+	if(!current.isValid()) {
+		current = m_document->index(backwards ? (m_document->rowCount() - 1) : 0, 0);
+	}
+	QModelIndex neww = current;
+	bool currentSelectionMatchesSearch = false;
+	while(!findReplaceInItem(neww, searchstr, replacestr, matchCase, backwards, replace, currentSelectionMatchesSearch)) {
+		neww = backwards ? m_document->prevIndex(neww) : m_document->nextIndex(neww);
+		if(!neww.isValid() || neww == current) {
+			// Break endless loop
+			if(!currentSelectionMatchesSearch) {
+				ui.searchFrame->setErrorState();
+			}
+			return;
+		}
+	}
+}
+
+void OutputEditorHOCR::replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase)
+{
+	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
+	QModelIndex start = m_document->index(0, 0);
+	QModelIndex curr = start;
+	Qt::CaseSensitivity cs = matchCase ? Qt::CaseSensitive : Qt::CaseInsensitive;
+	int count = 0;
+	do {
+		const HOCRItem* item = m_document->itemAtIndex(curr);
+		if(item && item->itemClass() == "ocrx_word") {
+			count += item->text().contains(searchstr, cs);
+			m_document->setData(curr, item->text().replace(searchstr, replacestr, cs), Qt::EditRole);
+		}
+		curr = m_document->nextIndex(curr);
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+	} while(curr != start);
+	if(count == 0) {
+		ui.searchFrame->setErrorState();
+	}
+	MAIN->popState();
+}
+
+void OutputEditorHOCR::applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase)
+{
+	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
+	QModelIndex start = m_document->index(0, 0);
+	Qt::CaseSensitivity cs = matchCase ? Qt::CaseSensitive : Qt::CaseInsensitive;
+	for(auto it = substitutions.begin(), itEnd = substitutions.end(); it != itEnd; ++it) {
+		QString search = it.key();
+		QString replace = it.value();
+		QModelIndex curr = start;
+		do {
+			const HOCRItem* item = m_document->itemAtIndex(curr);
+			if(item && item->itemClass() == "ocrx_word") {
+				m_document->setData(curr, item->text().replace(search, replace, cs), Qt::EditRole);
+			}
+			curr = m_document->nextIndex(curr);
+			QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+		} while(curr != start);
+	}
+	MAIN->popState();
 }

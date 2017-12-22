@@ -48,6 +48,7 @@ public:
 public slots:
 	bool clear(bool hide = true) override;
 	void setLanguage(const Config::Lang &lang) override;
+	void onVisibilityChanged(bool visible) override;
 	void open();
 	bool save(const QString& filename = "") override;
 	bool exportToPDF();
@@ -72,6 +73,7 @@ private:
 
 	QWidget* createAttrWidget(const QModelIndex& itemIndex, const QString& attrName, const QString& attrValue, const QString& attrItemClass = QString(), bool multiple = false);
 	void expandCollapseChildren(const QModelIndex& index, bool expand) const;
+	bool findReplaceInItem(const QModelIndex& index, const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace, bool& currentSelectionMatchesSearch);
 	bool showPage(const HOCRPage* page);
 
 private slots:
@@ -85,6 +87,9 @@ private slots:
 	void toggleWConfColumn(bool active);
 	void updateSourceText();
 	void updateCurrentItemBBox(QRect bbox);
+	void findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace);
+	void replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase);
+	void applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase);
 };
 
 class HOCRAttributeEditor : public QLineEdit

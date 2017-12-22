@@ -3,6 +3,7 @@
 
 #include "common.hh"
 #include "OutputTextEdit.hh"
+#include "SearchReplaceFrame.hh"
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDoubleSpinBox>
@@ -25,6 +26,7 @@ public:
 	QAction* actionOutputSaveHOCR;
 	QAction* actionOutputExportText;
 	QAction* actionOutputExportPDF;
+	QAction* actionOutputReplace;
 	QAction* actionToggleWConf;
 	QAction* actionPick;
 	QToolBar* toolBarOutput;
@@ -34,6 +36,7 @@ public:
 	QTreeView *treeViewHOCR;
 	QTableWidget *tableWidgetProperties;
 	OutputTextEdit *plainTextEditOutput;
+	SearchReplaceFrame* searchFrame;
 
 	void setupUi(QWidget* widget) {
 		widget->setLayout(new QVBoxLayout());
@@ -62,6 +65,9 @@ public:
 		toolButtonOutputExport->setPopupMode(QToolButton::InstantPopup);
 		actionOutputClear = new QAction(QIcon::fromTheme("edit-clear"), gettext("Clear output"), widget);
 		actionOutputClear->setToolTip(gettext("Clear output"));
+		actionOutputReplace = new QAction(QIcon::fromTheme("edit-find-replace"), gettext("Find and Replace"), widget);
+		actionOutputReplace->setToolTip(gettext("Find and replace"));
+		actionOutputReplace->setCheckable(true);
 		actionToggleWConf = new QAction(QIcon(":/icons/wconf"), gettext("Show confidence values"), widget);
 		actionToggleWConf->setToolTip(gettext("Show confidence values"));
 		actionToggleWConf->setCheckable(true);
@@ -74,9 +80,14 @@ public:
 		toolBarOutput->addWidget(toolButtonOutputExport);
 		toolBarOutput->addAction(actionOutputClear);
 		toolBarOutput->addSeparator();
+		toolBarOutput->addAction(actionOutputReplace);
 		toolBarOutput->addAction(actionToggleWConf);
 
 		widget->layout()->addWidget(toolBarOutput);
+
+		searchFrame = new SearchReplaceFrame(widget);
+		searchFrame->setVisible(false);
+		widget->layout()->addWidget(searchFrame);
 
 		splitter = new QSplitter(Qt::Vertical, widget);
 		widget->layout()->addWidget(splitter);

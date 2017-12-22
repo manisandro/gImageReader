@@ -48,10 +48,13 @@ public:
 	int pageCount() const { return m_pages.size(); }
 
 	const HOCRItem* itemAtIndex(const QModelIndex& index) const{ return index.isValid() ? static_cast<HOCRItem*>(index.internalPointer()) : nullptr; }
-	bool editItemAttribute(QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass = QString());
+	bool editItemAttribute(const QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass = QString());
 	QModelIndex mergeItems(const QModelIndex& parent, int startRow, int endRow);
 	QModelIndex addItem(const QModelIndex& parent, const QDomElement& element);
 	bool removeItem(const QModelIndex& index);
+
+	QModelIndex nextIndex(const QModelIndex& current);
+	QModelIndex prevIndex(const QModelIndex& current);
 
 	bool referencesSource(const QString& filename) const;
 	QModelIndex searchPage(const QString& filename, int pageNr) const;
