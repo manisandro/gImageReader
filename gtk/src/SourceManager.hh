@@ -43,7 +43,8 @@ public:
 	SourceManager();
 	~SourceManager();
 
-	void addSources(const std::vector<Glib::RefPtr<Gio::File>>& files);
+	int addSources(const std::vector<Glib::RefPtr<Gio::File>>& files);
+	bool addSource(Glib::RefPtr<Gio::File> file) { return addSources({file}) == 1; }
 	std::vector<Source*> getSelectedSources() const;
 	sigc::signal<void> signal_sourceChanged() {
 		return m_signal_sourceChanged;

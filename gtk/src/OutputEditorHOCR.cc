@@ -858,25 +858,7 @@ bool OutputEditorHOCR::setCurrentSource(xmlpp::Element* pageElement, int* pageDp
 			res = *overrideDpi;
 		}
 
-		MAIN->getSourceManager()->addSources({Gio::File::create_for_path(filename)});
-		while(Gtk::Main::events_pending()) {
-			Gtk::Main::iteration();
-		}
-		int dummy;
-		// TODO: Handle this better
-		if(MAIN->getDisplayer()->getCurrentImage(dummy) != filename) {
-			return false;
-		}
-		if(MAIN->getDisplayer()->getCurrentPage() != page) {
-			MAIN->getDisplayer()->setCurrentPage(page);
-		}
-		if(MAIN->getDisplayer()->getCurrentAngle() != angle) {
-			MAIN->getDisplayer()->setAngle(angle);
-		}
-		if(MAIN->getDisplayer()->getCurrentResolution() != res) {
-			MAIN->getDisplayer()->setResolution(res);
-		}
-		return true;
+		return MAIN->getSourceManager()->addSource(Gio::File::create_for_path(filename)) && MAIN->getDisplayer()->setup(&page, &res, &angle);
 	}
 	return false;
 }
@@ -1446,7 +1428,7 @@ void OutputEditorHOCR::savePDF() {
 				Geometry::Rectangle scaledBBox(imgScale * bbox.x, imgScale * bbox.y, imgScale * bbox.width, imgScale * bbox.height);
 				pdfprinter.drawImage(bbox, m_tool->getSelection(scaledBBox), pdfSettings);
 			}
-			MAIN->getDisplayer()->setResolution(sourceDpi);
+			MAIN->getDisplayer()->setup(nullptr, &sourceDpi, nullptr);
 			painter.FinishPage();
 		} else {
 			failed.push_back((*item)[m_itemStoreCols.text]);

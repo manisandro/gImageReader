@@ -23,7 +23,6 @@
 #include "OutputEditor.hh"
 #include "Geometry.hh"
 #include "Image.hh"
-
 #include <gtksourceviewmm.h>
 #include <gtkspellmm.h>
 

@@ -190,7 +190,8 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 	// unless we already attempted to rotate (to prevent endless loops)
 	avgDeskew = Utils::round(((avgDeskew/nDeskew)/M_PI * 180.) * 10.) / 10.;
 	if(std::abs(avgDeskew) > .1 && !noDeskew) {
-		m_displayer->setAngle(m_displayer->getCurrentAngle() - avgDeskew);
+		double newangle = m_displayer->getCurrentAngle() - avgDeskew;
+		m_displayer->setup(nullptr, nullptr, &newangle);
 		autodetectLayout(true);
 	} else {
 		// Merge overlapping rectangles

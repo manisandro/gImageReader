@@ -125,10 +125,11 @@ SourceManager::~SourceManager() {
 	clearSources();
 }
 
-void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files) {
+int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files) {
 	Glib::ustring failed;
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model());
 	Gtk::TreeIter it = store->children().end();
+	int added = 0;
 	for(Glib::RefPtr<Gio::File> file : files) {
 		if(!file->query_exists()) {
 			failed += "\n\t" + file->get_path();
@@ -138,10 +139,12 @@ void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files
 		for(const Gtk::TreeModel::Row& row : store->children()) {
 			if(row.get_value(m_listViewCols.source)->file->get_uri() == file->get_uri()) {
 				contains = true;
+				it = row;
 				break;
 			}
 		}
 		if(contains) {
+			++added;
 			continue;
 		}
 		Source* source = nullptr;
@@ -158,16 +161,18 @@ void SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files
 		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
 
 		Gtk::RecentManager::get_default()->add_item(file->get_uri());
+		++added;
 	}
+	m_connectionSelectionChanged.block(true);
+	m_listView->get_selection()->unselect_all();
+	m_connectionSelectionChanged.block(false);
 	if(it) {
-		m_connectionSelectionChanged.block(true);
-		m_listView->get_selection()->unselect_all();
-		m_connectionSelectionChanged.block(false);
 		m_listView->get_selection()->select(it);
 	}
 	if(!failed.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Unable to open files"), Glib::ustring::compose(_("The following files could not be opened:%1"), failed));
 	}
+	return added;
 }
 
 std::vector<Source*> SourceManager::getSelectedSources() const {

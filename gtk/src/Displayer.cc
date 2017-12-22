@@ -68,33 +68,18 @@ Displayer::Displayer() {
 	CONNECT(MAIN->getWidget("menuitem:display.rotate.current").as<Gtk::MenuItem>(), activate, [this] { setRotateMode(RotateMode::CurrentPage, "rotate_page.png"); });
 	CONNECT(MAIN->getWidget("menuitem:display.rotate.all").as<Gtk::MenuItem>(), activate, [this] { setRotateMode(RotateMode::AllPages, "rotate_pages.png"); });
 	m_connection_rotSpinChanged = CONNECT(m_rotspin, value_changed, [this] { setAngle(m_rotspin->get_value()); });
-	m_connection_pageSpinChanged = CONNECT(m_pagespin, value_changed, [this] { setCurrentPage(m_pagespin->get_value_as_int()); });
-	m_connection_briSpinChanged = CONNECT(m_brispin, value_changed, [this] { brightnessChanged(); });
-	m_connection_conSpinChanged = CONNECT(m_conspin, value_changed, [this] { contrastChanged(); });
-	m_connection_resSpinChanged = CONNECT(m_resspin, value_changed, [this] { resolutionChanged(); });
-	m_connection_invcheckToggled = CONNECT(m_invcheck, toggled, [this] { invertColorsChanged(); });
-	CONNECT(m_viewport, size_allocate, [this](Gdk::Rectangle&) {
-		resizeEvent();
-	});
-	CONNECT(m_viewport, key_press_event, [this](GdkEventKey* ev) {
-		return keyPressEvent(ev);
-	});
-	CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev) {
-		return mouseMoveEvent(ev);
-	});
-	CONNECT(m_viewport, button_press_event, [this](GdkEventButton* ev) {
-		return mousePressEvent(ev);
-	});
-	CONNECT(m_viewport, button_release_event, [this](GdkEventButton* ev) {
-		return mouseReleaseEvent(ev);
-	});
-	CONNECT(m_viewport, scroll_event, [this](GdkEventScroll* ev) {
-		return scrollEvent(ev);
-	});
-	CONNECT(m_canvas, draw, [this](const Cairo::RefPtr<Cairo::Context>& ctx) {
-		drawCanvas(ctx);
-		return false;
-	});
+	m_connection_pageSpinChanged = CONNECT(m_pagespin, value_changed, [this] { queueRenderImage(); });
+	m_connection_briSpinChanged = CONNECT(m_brispin, value_changed, [this] { queueRenderImage(); });
+	m_connection_conSpinChanged = CONNECT(m_conspin, value_changed, [this] { queueRenderImage(); });
+	m_connection_resSpinChanged = CONNECT(m_resspin, value_changed, [this] { queueRenderImage(); });
+	m_connection_invcheckToggled = CONNECT(m_invcheck, toggled, [this] { queueRenderImage(); });
+	CONNECT(m_viewport, size_allocate, [this](Gdk::Rectangle&) { resizeEvent(); });
+	CONNECT(m_viewport, key_press_event, [this](GdkEventKey* ev) { return keyPressEvent(ev); });
+	CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev) { return mouseMoveEvent(ev); });
+	CONNECT(m_viewport, button_press_event, [this](GdkEventButton* ev) { return mousePressEvent(ev); });
+	CONNECT(m_viewport, button_release_event, [this](GdkEventButton* ev) { return mouseReleaseEvent(ev); });
+	CONNECT(m_viewport, scroll_event, [this](GdkEventScroll* ev) { return scrollEvent(ev); });
+	CONNECT(m_canvas, draw, [this](const Cairo::RefPtr<Cairo::Context>& ctx) { drawCanvas(ctx); return false; });
 	CONNECT(m_zoominbtn, clicked, [this] { setZoom(Zoom::In); });
 	CONNECT(m_zoomoutbtn, clicked, [this] { setZoom(Zoom::Out); });
 	m_connection_zoomfitClicked = CONNECT(m_zoomfitbtn, clicked, [this] { setZoom(Zoom::Fit); });
@@ -142,53 +127,6 @@ std::string Displayer::getCurrentImage(int& page) const {
 	return "";
 }
 
-bool Displayer::setCurrentPage(int page) {
-	if(m_sources.empty()) {
-		return false;
-	}
-	if(m_tool) {
-		m_tool->pageChanged();
-	}
-	Source* source = m_pageMap[page].first;
-	if(source != m_currentSource) {
-		sendScaleRequest({ScaleRequest::Abort});
-		sendScaleRequest({ScaleRequest::Quit});
-		m_scaleThread->join();
-		m_scaleThread = nullptr;
-		delete m_renderer;
-		std::string filename = source->file->get_path();
-#ifdef G_OS_WIN32
-		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf") {
-#else
-		if(Utils::get_content_type(filename) == "application/pdf") {
-#endif
-			m_renderer = new PDFRenderer(filename, source->password);
-			if(source->resolution == -1) source->resolution = 300;
-#ifdef G_OS_WIN32
-		} else if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".djvu") {
-#else
-		} else if(Utils::get_content_type(filename) == "image/vnd.djvu") {
-#endif
-			m_renderer = new DJVURenderer(filename);
-			if(source->resolution == -1) source->resolution = 300;
-		} else {
-			m_renderer = new ImageRenderer(filename);
-			if(source->resolution == -1) source->resolution = 100;
-		}
-		Utils::set_spin_blocked(m_brispin, source->brightness, m_connection_briSpinChanged);
-		Utils::set_spin_blocked(m_conspin, source->contrast, m_connection_conSpinChanged);
-		Utils::set_spin_blocked(m_resspin, source->resolution, m_connection_resSpinChanged);
-		m_connection_invcheckToggled.block(true);
-		m_invcheck->set_active(source->invert);
-		m_connection_invcheckToggled.block(false);
-		m_currentSource = source;
-		m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
-	}
-	Utils::set_spin_blocked(m_rotspin, source->angle[m_pageMap[page].second - 1] / M_PI * 180., m_connection_rotSpinChanged);
-	Utils::set_spin_blocked(m_pagespin, page, m_connection_pageSpinChanged);
-	return renderImage();
-}
-
 bool Displayer::setSources(std::vector<Source*> sources) {
 	if(sources == m_sources) {
 		return true;
@@ -199,6 +137,7 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 		m_scaleThread->join();
 		m_scaleThread = nullptr;
 	}
+	std::queue<ScaleRequest>().swap(m_scaleRequests); // clear...
 	m_scale = 1.0;
 	m_scrollPos[0] = m_scrollPos[1] = 0.5;
 	if(m_tool) {
@@ -214,12 +153,17 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	m_sources.clear();
 	m_pageMap.clear();
 	m_canvas->hide();
+	m_pagespin->hide();
+	m_connection_pageSpinChanged.block(true);
 	m_pagespin->set_range(1, 1);
-	m_rotspin->set_value(0);
-	m_brispin->set_value(0);
-	m_conspin->set_value(0);
-	m_resspin->set_value(100);
+	m_connection_pageSpinChanged.block(false);
+	Utils::set_spin_blocked(m_rotspin, 0, m_connection_rotSpinChanged);
+	Utils::set_spin_blocked(m_brispin, 0, m_connection_briSpinChanged);
+	Utils::set_spin_blocked(m_conspin, 0, m_connection_conSpinChanged);
+	Utils::set_spin_blocked(m_resspin, 100, m_connection_resSpinChanged);
+	m_connection_invcheckToggled.block(true);
 	m_invcheck->set_active(false);
+	m_connection_invcheckToggled.block(false);
 	m_zoomfitbtn->set_active(true);
 	m_zoomonebtn->set_active(false);
 	m_zoominbtn->set_sensitive(true);
@@ -268,10 +212,9 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	m_pagespin->set_visible(page > 1);
 	m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
 	m_canvas->show();
-	m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
 	m_imageItem = new DisplayerImageItem;
 
-	if(!setCurrentPage(1)) {
+	if(!renderImage()) {
 		g_assert_nonnull(m_currentSource);
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to load image"), Glib::ustring::compose(_("The file might not be an image or be corrupt:\n%1"), m_currentSource->displayname));
 		setSources(std::vector<Source*>());
@@ -280,40 +223,112 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	return true;
 }
 
-bool Displayer::hasMultipleOCRAreas() {
-	return m_tool->hasMultipleOCRAreas();
+bool Displayer::setup(const int* page, const int* resolution, const double* angle)
+{
+	bool changed = false;
+	if(page) {
+		changed |= *page != m_pagespin->get_value_as_int();
+		Utils::set_spin_blocked(m_pagespin, *page, m_connection_pageSpinChanged);
+	}
+	if(resolution) {
+		changed |= *resolution != m_rotspin->get_value();
+		Utils::set_spin_blocked(m_rotspin, *page, m_connection_rotSpinChanged);
+	}
+	if(changed && !renderImage()) {
+		return false;
+	}
+	if(angle) {
+		setAngle(*angle);
+	}
+	return true;
 }
 
-std::vector<Cairo::RefPtr<Cairo::ImageSurface>> Displayer::getOCRAreas() {
-	return m_tool->getOCRAreas();
-}
-
-bool Displayer::allowAutodetectOCRAreas() const {
-	return m_tool->allowAutodetectOCRAreas();
-}
-
-void Displayer::autodetectOCRAreas() {
-	m_tool->autodetectOCRAreas();
+void Displayer::queueRenderImage() {
+	m_renderTimer.disconnect();
+	m_renderTimer = Glib::signal_timeout().connect([this] { renderImage(); return false; }, 200);
 }
 
 bool Displayer::renderImage() {
-	sendScaleRequest({ScaleRequest::Abort});
-	if(m_currentSource->resolution != m_resspin->get_value_as_int()) {
-		double factor = double(m_resspin->get_value_as_int()) / double(m_currentSource->resolution);
-		if(m_tool) {
-			m_tool->resolutionChanged(factor);
-		}
+	if(m_sources.empty()) {
+		return false;
 	}
+	int page = m_pagespin->get_value_as_int();
+
+	// Set current source according to selected page
+	Source* source = m_pageMap[page].first;
+	if(!source) {
+		return false;
+	}
+
+	int oldResolution = m_currentSource ? m_currentSource->resolution : -1;
+	int oldPage = m_currentSource ? m_currentSource->page : -1;
+	Source* oldSource = m_currentSource;
+
+	if(source != m_currentSource) {
+		if(m_scaleThread) {
+			sendScaleRequest({ScaleRequest::Abort});
+			sendScaleRequest({ScaleRequest::Quit});
+			m_scaleThread->join();
+			m_scaleThread = nullptr;
+		}
+		std::queue<ScaleRequest>().swap(m_scaleRequests); // clear...
+		delete m_renderer;
+		std::string filename = source->file->get_path();
+#ifdef G_OS_WIN32
+		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf") {
+#else
+		if(Utils::get_content_type(filename) == "application/pdf") {
+#endif
+			m_renderer = new PDFRenderer(filename, source->password);
+			if(source->resolution == -1) source->resolution = 300;
+#ifdef G_OS_WIN32
+		} else if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".djvu") {
+#else
+		} else if(Utils::get_content_type(filename) == "image/vnd.djvu") {
+#endif
+			m_renderer = new DJVURenderer(filename);
+			if(source->resolution == -1) source->resolution = 300;
+		} else {
+			m_renderer = new ImageRenderer(filename);
+			if(source->resolution == -1) source->resolution = 100;
+		}
+		Utils::set_spin_blocked(m_brispin, source->brightness, m_connection_briSpinChanged);
+		Utils::set_spin_blocked(m_conspin, source->contrast, m_connection_conSpinChanged);
+		Utils::set_spin_blocked(m_resspin, source->resolution, m_connection_resSpinChanged);
+		m_connection_invcheckToggled.block(true);
+		m_invcheck->set_active(source->invert);
+		m_connection_invcheckToggled.block(false);
+		m_currentSource = source;
+		m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
+	}
+
+	// Update source struct
 	m_currentSource->page = m_pageMap[m_pagespin->get_value_as_int()].second;
 	m_currentSource->brightness = m_brispin->get_value_as_int();
 	m_currentSource->contrast = m_conspin->get_value_as_int();
 	m_currentSource->resolution = m_resspin->get_value_as_int();
 	m_currentSource->invert = m_invcheck->get_active();
+
+	// Notify tools about changes
+	if(m_tool) {
+		if(m_currentSource != oldSource || m_currentSource->page != oldPage) {
+			m_tool->pageChanged();
+		}
+		if(oldResolution != m_currentSource->resolution) {
+			double factor = double(m_currentSource->resolution) / double(oldResolution);
+			m_tool->resolutionChanged(factor);
+		}
+	}
+
+	Utils::set_spin_blocked(m_rotspin, m_currentSource->angle[m_currentSource->page - 1], m_connection_rotSpinChanged);
+
+	// Render new image
+	sendScaleRequest({ScaleRequest::Abort});
 	Cairo::RefPtr<Cairo::ImageSurface> image = m_renderer->render(m_currentSource->page, m_currentSource->resolution);
-	m_renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
 	if(!bool(image)) {
 		return false;
 	}
+	m_renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
 	m_image = image;
 	m_imageItem->setImage(m_image);
 	m_imageItem->setRect(Geometry::Rectangle(-0.5 * m_image->get_width(), -0.5 * m_image->get_height(), m_image->get_width(), m_image->get_height()));
@@ -380,7 +395,6 @@ void Displayer::setAngle(double angle) {
 	if(m_image) {
 		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
 		Utils::set_spin_blocked(m_rotspin, angle, m_connection_rotSpinChanged);
-		angle *= M_PI / 180.;
 		int sourcePage = m_pageMap[getCurrentPage()].second;
 		double delta = angle - m_currentSource->angle[sourcePage - 1];
 		if(m_rotateMode == RotateMode::CurrentPage) {
@@ -388,11 +402,13 @@ void Displayer::setAngle(double angle) {
 		} else if(delta != 0) {
 			for(const auto& keyval  : m_pageMap) {
 				auto pair = keyval.second;
-				pair.first->angle[pair.second - 1] += delta;
+				double newangle = pair.first->angle[pair.second - 1] + delta;
+				newangle = newangle < 0.0 ? newangle + 360.0 : newangle >= 360.0 ? newangle - 360.0 : newangle,
+				pair.first->angle[pair.second - 1] = newangle;
 			}
 		}
-		m_imageItem->setRotation(angle);
-		if(m_tool) {
+		m_imageItem->setRotation(angle * M_PI / 180);
+		if(m_tool && delta != 0) {
 			m_tool->rotationChanged(delta);
 		}
 		if(m_zoomfitbtn->get_active() == true) {
@@ -403,41 +419,20 @@ void Displayer::setAngle(double angle) {
 	}
 }
 
-void Displayer::brightnessChanged() {
-	int brightness = m_brispin->get_value_as_int();
-	for(const auto& keyval  : m_pageMap) {
-		keyval.second.first->brightness = brightness;
-	}
-	queueRenderImage();
+bool Displayer::hasMultipleOCRAreas() {
+	return m_tool->hasMultipleOCRAreas();
 }
 
-void Displayer::contrastChanged() {
-	int contrast = m_conspin->get_value_as_int();
-	for(const auto& keyval  : m_pageMap) {
-		keyval.second.first->contrast = contrast;
-	}
-	queueRenderImage();
+std::vector<Cairo::RefPtr<Cairo::ImageSurface>> Displayer::getOCRAreas() {
+	return m_tool->getOCRAreas();
 }
 
-void Displayer::resolutionChanged() {
-	int resolution = m_resspin->get_value_as_int();
-	for(const auto& keyval  : m_pageMap) {
-		keyval.second.first->resolution = resolution;
-	}
-	queueRenderImage();
+bool Displayer::allowAutodetectOCRAreas() const {
+	return m_tool->allowAutodetectOCRAreas();
 }
 
-void Displayer::invertColorsChanged() {
-	bool invert = m_invcheck->get_active();
-	for(const auto& keyval  : m_pageMap) {
-		keyval.second.first->invert = invert;
-	}
-	queueRenderImage();
-}
-
-void Displayer::setResolution(int resolution) {
-	Utils::set_spin_blocked(m_resspin, resolution, m_connection_resSpinChanged);
-	renderImage();
+void Displayer::autodetectOCRAreas() {
+	m_tool->autodetectOCRAreas();
 }
 
 void Displayer::setCursor(Glib::RefPtr<Gdk::Cursor> cursor) {
@@ -445,13 +440,6 @@ void Displayer::setCursor(Glib::RefPtr<Gdk::Cursor> cursor) {
 		m_viewport->get_window()->set_cursor(cursor);
 	} else {
 		m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
-	}
-}
-
-void Displayer::queueRenderImage() {
-	if(m_image) {
-		m_renderTimer.disconnect();
-		m_renderTimer = Glib::signal_timeout().connect([this] { renderImage(); return false; }, 200);
 	}
 }
 

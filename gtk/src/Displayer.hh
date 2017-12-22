@@ -44,22 +44,13 @@ public:
 		m_tool = tool;
 	}
 	bool setSources(const std::vector<Source*> sources);
-	int getCurrentPage() const {
-		return m_pagespin->get_value_as_int();
-	}
-	bool setCurrentPage(int page);
-	double getCurrentAngle() const {
-		return m_rotspin->get_value();
-	}
-	double getCurrentScale() const {
-		return m_scale;
-	}
-	void setAngle(double angle);
-	int getCurrentResolution() {
-		return m_resspin->get_value_as_int();
-	}
-	void setResolution(int resolution);
+	bool setup(const int* page, const int* resolution = nullptr, const double* angle = nullptr);
+	int getCurrentPage() const { return m_pagespin->get_value_as_int(); }
+	int getCurrentResolution() { return m_resspin->get_value_as_int(); }
+	double getCurrentAngle() const { return m_rotspin->get_value(); }
+	double getCurrentScale() const { return m_scale; }
 	std::string getCurrentImage(int& page) const;
+
 	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
 	Geometry::Rectangle getSceneBoundingRect() const;
 	Geometry::Point mapToSceneClamped(const Geometry::Point& p) const;
@@ -136,13 +127,10 @@ private:
 	void setZoom(Zoom zoom);
 
 	bool renderImage();
-	void brightnessChanged();
-	void contrastChanged();
-	void resolutionChanged();
-	void invertColorsChanged();
 	void drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx);
 	void positionCanvas();
 	void queueRenderImage();
+	void setAngle(double angle);
 	void setRotateMode(RotateMode mode, const std::string& iconName);
 
 	struct ScaleRequest {

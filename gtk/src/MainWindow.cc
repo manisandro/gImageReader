@@ -304,14 +304,16 @@ bool MainWindow::closeEvent(GdkEventAny*) {
 }
 
 void MainWindow::onSourceChanged() {
-	if(m_stateStack.back() == State::Normal) {
-		popState();
-	}
 	std::vector<Source*> sources = m_sourceManager->getSelectedSources();
 	if(m_displayer->setSources(sources)) {
 		m_headerbar->set_subtitle(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources"));
-		pushState(State::Normal, _("Ready"));
+		if(m_stateStack.back() == State::Idle) {
+			pushState(State::Normal, _("Ready"));
+		}
 	} else {
+		if(m_stateStack.back() == State::Normal) {
+			popState();
+		}
 		m_headerbar->set_subtitle("");
 	}
 }
