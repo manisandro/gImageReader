@@ -26,7 +26,7 @@
 #include "OutputEditorText.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
-#include "SubstitutionsManager.hh"
+#include "SearchReplaceFrame.hh"
 #include "Utils.hh"
 
 #include <fstream>
@@ -37,28 +37,27 @@ OutputEditorText::OutputEditorText()
 	m_paneWidget = m_builder("box:output");
 	m_insButton = m_builder("menubutton:output.insert");
 	m_insImage = m_builder("image:output.insert");
-	m_replaceBox = m_builder("box:output.findreplace");
 	m_outputBox = m_builder("box:output");
 	m_textView = m_builder("textview:output");
-	m_searchEntry = m_builder("entry:output.search");
-	m_replaceEntry = m_builder("entry:output.replace");
 	m_filterKeepIfEndMark = m_builder("menuitem:output.stripcrlf.keependmark");
 	m_filterKeepIfQuote = m_builder("menuitem:output.stripcrlf.keepquote");
 	m_filterJoinHyphen = m_builder("menuitem:output.stripcrlf.joinhyphen");
 	m_filterJoinSpace = m_builder("menuitem:output.stripcrlf.joinspace");
 	m_filterKeepParagraphs = m_builder("menuitem:output.stripcrlf.keepparagraphs");
-	m_toggleSearchButton = m_builder("button:output.findreplace");
-	m_undoButton = m_builder("button:output.undo");
-	m_redoButton = m_builder("button:output.redo");
-	m_csCheckBox = m_builder("checkbutton:output.matchcase");
+	m_searchFrame = new SearchReplaceFrame();
+	m_builder("box:output.search").as<Gtk::Box>()->pack_start(*Gtk::manage(m_searchFrame->getWidget()));
+	m_searchFrame->getWidget()->set_visible(false);
 	m_textBuffer = OutputBuffer::create();
 	m_textView->set_source_buffer(m_textBuffer);
 	Gtk::Button* saveButton = m_builder("button:output.save");
+	Gtk::ToggleButton* toggleSearchButton = m_builder("button:output.findreplace");
+	Gtk::Button* undoButton = m_builder("button:output.undo");
+	Gtk::Button* redoButton = m_builder("button:output.redo");
 
 	Glib::RefPtr<Gtk::AccelGroup> group = MAIN->getWindow()->get_accel_group();
-	m_undoButton->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
-	m_redoButton->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK|Gdk::SHIFT_MASK, Gtk::AccelFlags(0));
-	m_toggleSearchButton->add_accelerator("clicked", group, GDK_KEY_F, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
+	undoButton->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
+	redoButton->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK|Gdk::SHIFT_MASK, Gtk::AccelFlags(0));
+	toggleSearchButton->add_accelerator("clicked", group, GDK_KEY_F, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 	saveButton->add_accelerator("clicked", group, GDK_KEY_S, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 
 #if GTKMM_CHECK_VERSION(3,12,0)
@@ -75,8 +74,6 @@ OutputEditorText::OutputEditorText()
 	m_builder("image:output.insert.replace").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/ins_replace.png", 0)));
 #endif
 
-	m_substitutionsManager = new SubstitutionsManager(m_builder, m_textBuffer);
-
 	m_insertMode = InsertMode::Append;
 
 	m_spell.attach(*m_textView);
@@ -86,24 +83,18 @@ OutputEditorText::OutputEditorText()
 	CONNECT(m_builder("menuitem:output.insert.cursor").as<Gtk::MenuItem>(), activate, [this] { setInsertMode(InsertMode::Cursor, "ins_cursor.png"); });
 	CONNECT(m_builder("menuitem:output.insert.replace").as<Gtk::MenuItem>(), activate, [this] { setInsertMode(InsertMode::Replace, "ins_replace.png"); });
 	CONNECT(m_builder("button:output.stripcrlf").as<Gtk::Button>(), clicked, [this] { filterBuffer(); });
-	CONNECT(m_toggleSearchButton, toggled, [this] { toggleReplaceBox(); });
-	CONNECT(m_undoButton, clicked, [this] { m_textBuffer->undo(); scrollCursorIntoView(); });
-	CONNECT(m_redoButton, clicked, [this] { m_textBuffer->redo(); scrollCursorIntoView(); });
+	CONNECTS(toggleSearchButton, toggled, [this] (Gtk::ToggleButton* btn){ m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(btn->get_active()); });
+	CONNECT(undoButton, clicked, [this] { m_textBuffer->undo(); scrollCursorIntoView(); });
+	CONNECT(redoButton, clicked, [this] { m_textBuffer->redo(); scrollCursorIntoView(); });
 	CONNECT(saveButton, clicked, [this] { save(); });
 	CONNECT(m_builder("button:output.clear").as<Gtk::Button>(), clicked, [this] { clear(); });
-	CONNECTP(m_textBuffer, can_undo, [this] { m_undoButton->set_sensitive(m_textBuffer->can_undo()); });
-	CONNECTP(m_textBuffer, can_redo, [this] { m_redoButton->set_sensitive(m_textBuffer->can_redo()); });
-	CONNECT(m_csCheckBox, toggled, [this] { Utils::clear_error_state(m_searchEntry); });
-	CONNECT(m_searchEntry, changed, [this] { Utils::clear_error_state(m_searchEntry); });
-	CONNECT(m_searchEntry, activate, [this] { findReplace(false, false); });
-	CONNECT(m_replaceEntry, activate, [this] { findReplace(false, true); });
-	CONNECT(m_builder("button:output.searchnext").as<Gtk::Button>(), clicked, [this] { findReplace(false, false); });
-	CONNECT(m_builder("button:output.searchprev").as<Gtk::Button>(), clicked, [this] { findReplace(true, false); });
-	CONNECT(m_builder("button:output.replace").as<Gtk::Button>(), clicked, [this] { findReplace(false, true); });
-	CONNECT(m_builder("button:output.replaceall").as<Gtk::Button>(), clicked, [this] { replaceAll(); });
+	CONNECTP(m_textBuffer, can_undo, [this,undoButton] { undoButton->set_sensitive(m_textBuffer->can_undo()); });
+	CONNECTP(m_textBuffer, can_redo, [this,redoButton] { redoButton->set_sensitive(m_textBuffer->can_redo()); });
+	CONNECT(m_searchFrame, find_replace, sigc::mem_fun(this, &OutputEditorText::findReplace));
+	CONNECT(m_searchFrame, replace_all, sigc::mem_fun(this, &OutputEditorText::replaceAll));
+	CONNECT(m_searchFrame, apply_substitutions, sigc::mem_fun(this, &OutputEditorText::applySubstitutions));
 	m_connectionCustomFont = CONNECTP(MAIN->getWidget("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>(), font_name, [this] { setFont(); });
 	m_connectionDefaultFont = CONNECT(MAIN->getWidget("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [this] { setFont(); });
-	CONNECT(m_builder("button:output.substitutions").as<Gtk::Button>(), clicked, [this] { m_substitutionsManager->set_visible(true); });
 	CONNECT(m_textView, populate_popup, [this](Gtk::Menu* menu) {
 		completeTextViewMenu(menu);
 	});
@@ -121,13 +112,12 @@ OutputEditorText::OutputEditorText()
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinspace", m_builder("menuitem:output.stripcrlf.joinspace")));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepparagraphs", m_builder("menuitem:output.stripcrlf.keepparagraphs")));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("drawwhitespace", m_builder("menuitem:output.stripcrlf.drawwhitespace")));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("searchmatchcase", m_builder("checkbutton:output.matchcase")));
 
 	setFont();
 }
 
 OutputEditorText::~OutputEditorText() {
-	delete m_substitutionsManager;
+	delete m_searchFrame;
 	m_connectionCustomFont.disconnect();
 	m_connectionDefaultFont.disconnect();
 	MAIN->getConfig()->removeSetting("keepdot");
@@ -136,7 +126,6 @@ OutputEditorText::~OutputEditorText() {
 	MAIN->getConfig()->removeSetting("joinspace");
 	MAIN->getConfig()->removeSetting("keepparagraphs");
 	MAIN->getConfig()->removeSetting("drawwhitespace");
-	MAIN->getConfig()->removeSetting("searchmatchcase");
 }
 
 void OutputEditorText::setFont() {
@@ -207,12 +196,6 @@ void OutputEditorText::filterBuffer() {
 	m_textBuffer->select_range(start, end);
 }
 
-void OutputEditorText::toggleReplaceBox() {
-	m_searchEntry->set_text("");
-	m_replaceEntry->set_text("");
-	m_replaceBox->set_visible(m_toggleSearchButton->get_active());
-}
-
 void OutputEditorText::completeTextViewMenu(Gtk::Menu *menu) {
 	Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(_("Check spelling")));
 	item->set_active(bool(GtkSpell::Checker::get_from_text_view(*m_textView)));
@@ -228,35 +211,50 @@ void OutputEditorText::completeTextViewMenu(Gtk::Menu *menu) {
 	menu->show_all();
 }
 
-void OutputEditorText::findNext() {
-	findReplace(false, false);
+void OutputEditorText::findReplace(const Glib::ustring &searchstr, const Glib::ustring &replacestr, bool matchCase, bool backwards, bool replace) {
+	m_searchFrame->clearErrorState();
+	if(!m_textBuffer->findReplace(backwards, replace, matchCase, searchstr, replacestr, m_textView)) {
+		m_searchFrame->setErrorState();
+	}
 }
 
-void OutputEditorText::findPrev() {
-	findReplace(true, false);
-}
-
-void OutputEditorText::replaceNext() {
-	findReplace(false, true);
-}
-
-void OutputEditorText::replaceAll() {
+void OutputEditorText::replaceAll(const Glib::ustring &searchstr, const Glib::ustring &replacestr, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
-	Glib::ustring searchstr = m_searchEntry->get_text();
-	Glib::ustring replacestr = m_replaceEntry->get_text();
-	if(!m_textBuffer->replaceAll(searchstr, replacestr, m_csCheckBox->get_active())) {
-		Utils::set_error_state(m_searchEntry);
+	if(!m_textBuffer->replaceAll(searchstr, replacestr, matchCase)) {
+		m_searchFrame->setErrorState();
 	}
 	MAIN->popState();
 }
 
-void OutputEditorText::findReplace(bool backwards, bool replace) {
-	Utils::clear_error_state(m_searchEntry);
-	Glib::ustring searchstr = m_searchEntry->get_text();
-	Glib::ustring replacestr = m_replaceEntry->get_text();
-	if(!m_textBuffer->findReplace(backwards, replace, m_csCheckBox->get_active(), searchstr, replacestr, m_textView)) {
-		Utils::set_error_state(m_searchEntry);
+void OutputEditorText::applySubstitutions(const std::map<Glib::ustring,Glib::ustring>& substitutions, bool matchCase) {
+	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
+	Gtk::TextIter start, end;
+	m_textBuffer->get_region_bounds(start, end);
+	int startpos = start.get_offset();
+	int endpos = end.get_offset();
+	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY|Gtk::TEXT_SEARCH_TEXT_ONLY;
+	if(!matchCase) {
+		flags |= Gtk::TEXT_SEARCH_CASE_INSENSITIVE;
 	}
+	for(auto sit = substitutions.begin(), sitEnd = substitutions.end(); sit != sitEnd; ++sit) {
+		Glib::ustring search = sit->first;
+		Glib::ustring replace = sit->second;
+		int diff = replace.length() - search.length();
+		Gtk::TextIter it = m_textBuffer->get_iter_at_offset(startpos);
+		while(true) {
+			Gtk::TextIter matchStart, matchEnd;
+			if(!it.forward_search(search, flags, matchStart, matchEnd) || matchEnd.get_offset() > endpos) {
+				break;
+			}
+			it = m_textBuffer->insert(m_textBuffer->erase(matchStart, matchEnd), replace);
+			endpos += diff;
+		}
+		while(Gtk::Main::events_pending()) {
+			Gtk::Main::iteration();
+		}
+	}
+	m_textBuffer->select_range(m_textBuffer->get_iter_at_offset(startpos), m_textBuffer->get_iter_at_offset(endpos));
+	MAIN->popState();
 }
 
 void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data) {
@@ -357,7 +355,7 @@ bool OutputEditorText::getModified() const {
 }
 
 void OutputEditorText::onVisibilityChanged(bool /*visibile*/) {
-	m_substitutionsManager->set_visible(false);
+	m_searchFrame->hideSubstitutionsManager();
 }
 
 void OutputEditorText::setLanguage(const Config::Lang& lang) {

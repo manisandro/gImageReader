@@ -27,12 +27,10 @@
 
 #include <fstream>
 
-SubstitutionsManager::SubstitutionsManager(const Builder& builder, const Glib::RefPtr<OutputBuffer>& buffer)
-	: m_buffer(buffer) {
-	m_dialog = builder("window:postproc");
-	m_listView = builder("treeview:postproc");
-	m_removeButton = builder("toolbutton:postproc.remove");
-	m_csCheckBox = builder("checkbutton:output.matchcase");
+SubstitutionsManager::SubstitutionsManager(const Builder& builder) {
+	m_dialog = builder("window:substitutions");
+	m_listView = builder("treeview:substitutions");
+	Gtk::ToolButton* removeButton = builder("toolbutton:substitutions.remove");
 
 	m_listStore = Gtk::ListStore::create(m_viewCols);
 	m_listView->set_model(m_listStore);
@@ -44,20 +42,21 @@ SubstitutionsManager::SubstitutionsManager(const Builder& builder, const Glib::R
 	m_listView->get_column(1)->set_expand(true);
 	m_listView->set_fixed_height_mode();
 
-	CONNECT(builder("toolbutton:postproc.open").as<Gtk::Button>(), clicked, [this] { openList(); });
-	CONNECT(builder("toolbutton:postproc.save").as<Gtk::Button>(), clicked, [this] { saveList(); });
-	CONNECT(builder("toolbutton:postproc.clear").as<Gtk::Button>(), clicked, [this] { clearList(); });
-	CONNECT(builder("toolbutton:postproc.add").as<Gtk::Button>(), clicked, [this] { addRow(); });
-	CONNECT(builder("button:postproc.apply").as<Gtk::Button>(), clicked, [this] { applySubstitutions(); });
-	CONNECT(builder("button:postproc.close").as<Gtk::Button>(), clicked, [this] { m_dialog->hide(); });
-	CONNECT(m_removeButton, clicked, [this] { removeRows(); });
-	CONNECT(m_listView->get_selection(), changed, [this] { m_removeButton->set_sensitive(m_listView->get_selection()->count_selected_rows() != 0); });
-	CONNECT(m_dialog, hide, [this] { dialogClosed(); });
+	CONNECT(builder("toolbutton:substitutions.open").as<Gtk::Button>(), clicked, [this] { openList(); });
+	CONNECT(builder("toolbutton:substitutions.save").as<Gtk::Button>(), clicked, [this] { saveList(); });
+	CONNECT(builder("toolbutton:substitutions.clear").as<Gtk::Button>(), clicked, [this] { clearList(); });
+	CONNECT(builder("toolbutton:substitutions.add").as<Gtk::Button>(), clicked, [this] { addRow(); });
+	CONNECT(builder("button:substitutions.apply").as<Gtk::Button>(), clicked, [this] { applySubstitutions(); });
+	CONNECT(builder("button:substitutions.close").as<Gtk::Button>(), clicked, [this] { m_dialog->hide(); });
+	CONNECT(removeButton, clicked, [this] { removeRows(); });
+	CONNECT(m_listView->get_selection(), changed, [this,removeButton] { removeButton->set_sensitive(m_listView->get_selection()->count_selected_rows() != 0); });
 
 	MAIN->getConfig()->addSetting(new ListStoreSetting("replacelist", Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model())));
 }
 
 SubstitutionsManager::~SubstitutionsManager() {
+	MAIN->getConfig()->getSetting<ListStoreSetting>("replacelist")->serialize();
+	delete m_dialog; // Toplevel widgets need to be explicitly deleted
 	MAIN->getConfig()->removeSetting("replacelist");
 }
 
@@ -161,38 +160,13 @@ void SubstitutionsManager::removeRows() {
 	}
 }
 
-void SubstitutionsManager::dialogClosed() {
-	MAIN->getConfig()->getSetting<ListStoreSetting>("replacelist")->serialize();
-}
-
 void SubstitutionsManager::applySubstitutions() {
-	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
-	Gtk::TextIter start, end;
-	m_buffer->get_region_bounds(start, end);
-	int startpos = start.get_offset();
-	int endpos = end.get_offset();
-	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY|Gtk::TEXT_SEARCH_TEXT_ONLY;
-	if(!m_csCheckBox->get_active()) {
-		flags |= Gtk::TEXT_SEARCH_CASE_INSENSITIVE;
-	}
+	std::map<Glib::ustring,Glib::ustring> substitutions;
 	for(const Gtk::TreeModel::Row& row : m_listStore->children()) {
 		Glib::ustring search, replace;
 		row.get_value(0, search);
 		row.get_value(1, replace);
-		int diff = replace.length() - search.length();
-		Gtk::TextIter it = m_buffer->get_iter_at_offset(startpos);
-		while(true) {
-			Gtk::TextIter matchStart, matchEnd;
-			if(!it.forward_search(search, flags, matchStart, matchEnd) || matchEnd.get_offset() > endpos) {
-				break;
-			}
-			it = m_buffer->insert(m_buffer->erase(matchStart, matchEnd), replace);
-			endpos += diff;
-		}
-		while(Gtk::Main::events_pending()) {
-			Gtk::Main::iteration();
-		}
+		substitutions.insert(std::make_pair(search, replace));
 	}
-	m_buffer->select_range(m_buffer->get_iter_at_offset(startpos), m_buffer->get_iter_at_offset(endpos));
-	MAIN->popState();
+	m_signal_apply_substitutions.emit(substitutions);
 }

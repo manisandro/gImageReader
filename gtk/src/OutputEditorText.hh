@@ -28,7 +28,7 @@
 #include "OutputBuffer.hh"
 #include "OutputEditor.hh"
 
-class SubstitutionsManager;
+class SearchReplaceFrame;
 
 class OutputEditorText : public OutputEditor {
 public:
@@ -60,42 +60,31 @@ private:
 	Gtk::Box* m_paneWidget;
 	Gtk::MenuButton* m_insButton;
 	Gtk::Image* m_insImage;
-	Gtk::EventBox* m_replaceBox;
 	Gtk::Box* m_outputBox;
 	Gsv::View* m_textView;
-	Gtk::Entry* m_searchEntry;
-	Gtk::Entry* m_replaceEntry;
 	Gtk::CheckMenuItem* m_filterKeepIfEndMark;
 	Gtk::CheckMenuItem* m_filterKeepIfQuote;
 	Gtk::CheckMenuItem* m_filterJoinHyphen;
 	Gtk::CheckMenuItem* m_filterJoinSpace;
 	Gtk::CheckMenuItem* m_filterKeepParagraphs;
-	Gtk::ToggleButton* m_toggleSearchButton;
-	Gtk::Button* m_undoButton;
-	Gtk::Button* m_redoButton;
-	Gtk::CheckButton* m_csCheckBox;
-
-	sigc::connection m_connectionCustomFont;
-	sigc::connection m_connectionDefaultFont;
-
+	SearchReplaceFrame* m_searchFrame;
 	Glib::RefPtr<OutputBuffer> m_textBuffer;
 
 	InsertMode m_insertMode;
 	GtkSpell::Checker m_spell;
-	SubstitutionsManager* m_substitutionsManager;
+
+	sigc::connection m_connectionCustomFont;
+	sigc::connection m_connectionDefaultFont;
 
 	void addText(const Glib::ustring& text, bool insert);
 	void completeTextViewMenu(Gtk::Menu *menu);
 	void filterBuffer();
-	void findNext();
-	void findPrev();
-	void findReplace(bool backwards, bool replace);
-	void replaceAll();
-	void replaceNext();
+	void findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace);
+	void replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
+	void applySubstitutions(const std::map<Glib::ustring,Glib::ustring>& substitutions, bool matchCase);
 	void scrollCursorIntoView();
 	void setFont();
 	void setInsertMode(InsertMode mode, const std::string& iconName);
-	void toggleReplaceBox();
 };
 
 #endif // OUTPUTEDITORTEXT_HH

@@ -26,9 +26,11 @@ class OutputBuffer;
 
 class SubstitutionsManager {
 public:
-	SubstitutionsManager(const Builder& builder, const Glib::RefPtr<OutputBuffer>& buffer);
+	SubstitutionsManager(const Builder& builder);
 	~SubstitutionsManager();
 	void set_visible(bool visible);
+
+	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> signal_apply_substitutions() { return m_signal_apply_substitutions; }
 
 private:
 	struct ReplaceListColumns : public Gtk::TreeModel::ColumnRecord {
@@ -40,19 +42,17 @@ private:
 		}
 	};
 
+	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> m_signal_apply_substitutions;
+
 	std::string m_currentFile;
 	ReplaceListColumns m_viewCols;
 	Gtk::Window* m_dialog;
 	Gtk::TreeView* m_listView;
-	Gtk::Button* m_removeButton;
 	Glib::RefPtr<Gtk::ListStore> m_listStore;
-	Glib::RefPtr<OutputBuffer> m_buffer;
-	Gtk::CheckButton* m_csCheckBox;
 
 	void addRow();
 	void applySubstitutions();
 	bool clearList();
-	void dialogClosed();
 	void openList();
 	void removeRows();
 	bool saveList();

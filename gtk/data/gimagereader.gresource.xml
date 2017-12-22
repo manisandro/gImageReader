@@ -6,6 +6,7 @@
 		<file preprocess="xml-stripblanks" compressed="true">appmenu.ui</file>
 		<file preprocess="xml-stripblanks" compressed="true">editor_text.ui</file>
 		<file preprocess="xml-stripblanks" compressed="true">editor_hocr.ui</file>
+		<file preprocess="xml-stripblanks" compressed="true">searchreplace.ui</file>
 		<file preprocess="to-pixdata" alias="angle.png">../../data/icons/angle.png</file>
 		<file preprocess="to-pixdata" alias="autolayout.png">../../data/icons/autolayout.png</file>
 		<file preprocess="to-pixdata" alias="brightness.png">../../data/icons/brightness.png</file>
@@ -24,7 +25,7 @@
 		<file preprocess="to-pixdata" alias="item_page.png">../../data/icons/item_page.png</file>
 		<file preprocess="to-pixdata" alias="item_par.png">../../data/icons/item_par.png</file>
 		<file preprocess="to-pixdata" alias="item_word.png">../../data/icons/item_word.png</file>
-    <file preprocess="to-pixdata" alias="rotate_page.png">../../data/icons/rotate_page.png</file>
-    <file preprocess="to-pixdata" alias="rotate_pages.png">../../data/icons/rotate_pages.png</file>
+		<file preprocess="to-pixdata" alias="rotate_page.png">../../data/icons/rotate_page.png</file>
+		<file preprocess="to-pixdata" alias="rotate_pages.png">../../data/icons/rotate_pages.png</file>
 	</gresource>
 </gresources> 
