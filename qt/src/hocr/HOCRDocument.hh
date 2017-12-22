@@ -50,6 +50,7 @@ public:
 	const HOCRItem* itemAtIndex(const QModelIndex& index) const{ return index.isValid() ? static_cast<HOCRItem*>(index.internalPointer()) : nullptr; }
 	bool editItemAttribute(QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass = QString());
 	QModelIndex mergeItems(const QModelIndex& parent, int startRow, int endRow);
+	QModelIndex swapItems(const QModelIndex& parent, int startRow, int endRow);
 	QModelIndex addItem(const QModelIndex& parent, const QDomElement& element);
 	bool removeItem(const QModelIndex& index);
 
@@ -85,6 +86,7 @@ private:
 
 	bool checkItemSpelling(const HOCRItem* item) const;
 	void deleteItem(HOCRItem* item);
+	void takeItem(HOCRItem* item);
 	void recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, const QStringList& itemClasses = QStringList());
 };
 
@@ -118,7 +120,9 @@ public:
 	double fontSize() const{ return m_titleAttrs["x_fsize"].toDouble(); }
 
 	void addChild(HOCRItem* child);
+	void insertChild(HOCRItem* child, int index);
 	void removeChild(HOCRItem* child);
+	void takeChild(HOCRItem* child);
 	QVector<HOCRItem*> takeChildren();
 	void setEnabled(bool enabled) { m_enabled = enabled; }
 	void setText(const QString& newText);

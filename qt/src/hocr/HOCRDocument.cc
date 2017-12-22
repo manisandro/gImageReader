@@ -83,6 +83,32 @@ bool HOCRDocument::editItemAttribute(QModelIndex& index, const QString& name, co
 	return true;
 }
 
+QModelIndex HOCRDocument::swapItems(const QModelIndex& parent, int firstRow, int secondRow)
+{
+	if(!parent.isValid() || !parent.internalPointer()) {
+		return QModelIndex();
+	}
+	if(secondRow - firstRow <= 0) {
+		std::swap(firstRow, secondRow); // necessary for following indexing changes
+	}
+	HOCRItem* parentItem = static_cast<HOCRItem*>(parent.internalPointer());
+	HOCRItem* firstItem = static_cast<HOCRItem*>(parent.child(firstRow, 0).internalPointer());
+	HOCRItem* secondItem = static_cast<HOCRItem*>(parent.child(secondRow, 0).internalPointer());
+	beginRemoveRows(parent, secondRow, secondRow);
+	takeItem(secondItem);
+	endRemoveRows();
+	beginInsertRows(parent, firstRow, firstRow);
+	parentItem->insertChild(secondItem, firstRow);
+	endInsertRows();
+	beginRemoveRows(parent, firstRow+1, firstRow+1);
+	takeItem(firstItem);
+	endRemoveRows();
+	beginInsertRows(parent, secondRow, secondRow);
+	parentItem->insertChild(firstItem, secondRow);
+	endInsertRows();
+	return index(firstRow, 0, parent);
+}
+
 QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, int endRow)
 {
 	if(endRow - startRow <= 0) {
@@ -403,6 +429,16 @@ void HOCRDocument::deleteItem(HOCRItem* item)
 	}
 }
 
+void HOCRDocument::takeItem(HOCRItem* item)
+{
+	if(item->parent()) {
+		item->parent()->takeChild(item);
+	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
+		int idx = m_pages.indexOf(page);
+		m_pages.takeAt(idx);
+	}
+}
+
 QMap<QString, QString> HOCRDocument::deserializeAttrGroup(const QString& string)
 {
 	QMap<QString, QString> attrs;
@@ -484,10 +520,24 @@ void HOCRItem::addChild(HOCRItem* child)
 	child->m_pageItem = m_pageItem;
 }
 
+void HOCRItem::insertChild(HOCRItem* child, int i)
+{
+	m_domElement.insertBefore(child->m_domElement, m_domElement.childNodes().at(i));
+	m_childItems.insert(i, child);
+	child->m_parentItem = this;
+	child->m_pageItem = m_pageItem;
+}
+
 void HOCRItem::removeChild(HOCRItem *child)
 {
 	m_domElement.removeChild(child->m_domElement);
 	delete m_childItems.takeAt(m_childItems.indexOf(child));
+}
+
+void HOCRItem::takeChild(HOCRItem* child)
+{
+	m_domElement.removeChild(child->m_domElement);
+	m_childItems.takeAt(m_childItems.indexOf(child));
 }
 
 QVector<HOCRItem*> HOCRItem::takeChildren()
