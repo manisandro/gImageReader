@@ -124,7 +124,9 @@ bool Displayer::setSources(QList<Source*> sources) {
 	Utils::setSpinBlocked(ui.spinBoxBrightness, 0);
 	Utils::setSpinBlocked(ui.spinBoxContrast, 0);
 	Utils::setSpinBlocked(ui.spinBoxResolution, 100);
+	ui.checkBoxInvertColors->blockSignals(true);
 	ui.checkBoxInvertColors->setChecked(false);
+	ui.checkBoxInvertColors->blockSignals(false);
 	ui.actionBestFit->setChecked(true);
 	ui.actionOriginalSize->setChecked(false);
 	ui.actionZoomIn->setEnabled(true);
