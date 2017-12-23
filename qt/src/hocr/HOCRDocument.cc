@@ -83,6 +83,48 @@ bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& na
 	return true;
 }
 
+QModelIndex HOCRDocument::swapItems(const QModelIndex& parent, int firstRow, int secondRow, bool pages)
+{
+	if(parent.isValid() && parent.internalPointer()) {
+		if(secondRow - firstRow <= 0) {
+			std::swap(firstRow, secondRow); // necessary for following indexing changes
+		}
+		HOCRItem* firstItem = static_cast<HOCRItem*>(parent.child(firstRow, 0).internalPointer());
+		HOCRItem* secondItem = static_cast<HOCRItem*>(parent.child(secondRow, 0).internalPointer());
+		HOCRItem* parentItem = static_cast<HOCRItem*>(parent.internalPointer());
+		beginRemoveRows(parent, secondRow, secondRow);
+		takeItem(secondItem);
+		endRemoveRows();
+		beginInsertRows(parent, firstRow, firstRow);
+		parentItem->insertChild(secondItem, firstRow);
+		endInsertRows();
+		beginRemoveRows(parent, firstRow+1, firstRow+1);
+		takeItem(firstItem);
+		endRemoveRows();
+		beginInsertRows(parent, secondRow, secondRow);
+		parentItem->insertChild(firstItem, secondRow);
+		endInsertRows();
+	} else if(pages) {
+		HOCRPage* firstPage = m_pages.at(firstRow);
+		HOCRPage* secondPage = m_pages.at(secondRow);
+		int firstNr = firstPage->pageNr();
+		int secondNr = secondPage->pageNr();
+		QModelIndex firstChild = index(firstRow, 0);
+		QModelIndex secondChild = index(secondRow, 0);
+		emit layoutAboutToBeChanged({firstChild});
+		m_pages.replace(firstRow, secondPage);
+		secondPage->changeNr(firstNr);
+		emit layoutChanged({firstChild});
+		emit layoutAboutToBeChanged({secondChild});
+		m_pages.replace(secondRow, firstPage);
+		firstPage->changeNr(secondNr);
+		emit layoutChanged({secondChild});
+	} else {
+		return QModelIndex();
+	}
+	return index(firstRow, 0, parent);
+}
+
 QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, int endRow)
 {
 	if(endRow - startRow <= 0) {
@@ -94,10 +136,10 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 		return QModelIndex();
 	}
 
+	QRect bbox = targetItem->bbox();
 	if(targetItem->itemClass() == "ocrx_word") {
 		// Merge word items: join text, merge bounding boxes
 		QString text = targetItem->text();
-		QRect bbox = targetItem->bbox();
 		beginRemoveRows(parent, startRow + 1, endRow);
 		for(int row = ++startRow; row <= endRow; ++row) {
 			HOCRItem* item = static_cast<HOCRItem*>(parent.child(startRow, 0).internalPointer());
@@ -109,12 +151,8 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 		endRemoveRows();
 		targetItem->setText(text);
 		emit dataChanged(targetIndex, targetIndex, {Qt::DisplayRole, Qt::ForegroundRole});
-		QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-		targetItem->setAttribute("title:bbox", bboxstr);
-		emit itemAttributeChanged(targetIndex, "title:bbox", bboxstr);
 	} else {
 		// Merge other items: merge dom trees and bounding boxes
-		QRect bbox = targetItem->bbox();
 		QVector<HOCRItem*> moveChilds;
 		beginRemoveRows(parent, startRow + 1, endRow);
 		for(int row = ++startRow; row <= endRow; ++row) {
@@ -131,10 +169,10 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 			targetItem->addChild(child);
 		}
 		endInsertRows();
-		QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-		targetItem->setAttribute("title:bbox", bboxstr);
-		emit itemAttributeChanged(targetIndex, "title:bbox", bboxstr);
 	}
+	QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
+	targetItem->setAttribute("title:bbox", bboxstr);
+	emit itemAttributeChanged(targetIndex, "title:bbox", bboxstr);
 	return targetIndex;
 }
 
@@ -450,6 +488,16 @@ void HOCRDocument::deleteItem(HOCRItem* item)
 	}
 }
 
+void HOCRDocument::takeItem(HOCRItem* item)
+{
+	if(item->parent()) {
+		item->parent()->takeChild(item);
+	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
+		int idx = m_pages.indexOf(page);
+		m_pages.takeAt(idx);
+	}
+}
+
 QMap<QString, QString> HOCRDocument::deserializeAttrGroup(const QString& string)
 {
 	QMap<QString, QString> attrs;
@@ -531,10 +579,24 @@ void HOCRItem::addChild(HOCRItem* child)
 	child->m_pageItem = m_pageItem;
 }
 
+void HOCRItem::insertChild(HOCRItem* child, int i)
+{
+	m_domElement.insertBefore(child->m_domElement, m_domElement.childNodes().at(i));
+	m_childItems.insert(i, child);
+	child->m_parentItem = this;
+	child->m_pageItem = m_pageItem;
+}
+
 void HOCRItem::removeChild(HOCRItem *child)
 {
 	m_domElement.removeChild(child->m_domElement);
 	delete m_childItems.takeAt(m_childItems.indexOf(child));
+}
+
+void HOCRItem::takeChild(HOCRItem* child)
+{
+	m_domElement.removeChild(child->m_domElement);
+	m_childItems.takeAt(m_childItems.indexOf(child));
 }
 
 QVector<HOCRItem*> HOCRItem::takeChildren()

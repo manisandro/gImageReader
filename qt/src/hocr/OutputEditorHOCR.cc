@@ -425,29 +425,50 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	QModelIndexList indices = ui.treeViewHOCR->selectionModel()->selectedRows();
 	int nIndices = indices.size();
 	if(nIndices > 1) {
-		// Check if item merging is allowed (no pages, all items with same parent and consecutive)
-		const HOCRItem* firstItem = m_document->itemAtIndex(indices.first());
-		bool ok = firstItem && firstItem->itemClass() != "ocr_page";
+		bool siblings = true;
+		bool graphics = false;
 		QVector<int> rows = {indices.first().row()};
-		for(int i = 1; i < nIndices && ok; ++i) {
-			ok &= indices[i].parent() == indices.first().parent();
+		for(int i = 1; i < nIndices && siblings; ++i) {
+			siblings &= indices[i].parent() == indices.first().parent();
+			const HOCRItem* item = m_document->itemAtIndex(indices[i]);
+			graphics |= !item || item->itemClass() == "ocr_graphic";
 			rows.append(indices[i].row());
 		}
-		qSort(rows);
-		ok &= (rows.last() - rows.first()) == nIndices - 1;
-		if(ok) {
+		if(siblings) { // Merging or swapping allowed
 			QMenu menu;
-			QAction* mergeAction = menu.addAction(_("Merge"));
-			if(menu.exec(ui.treeViewHOCR->mapToGlobal(point)) == mergeAction) {
-				ui.treeViewHOCR->selectionModel()->blockSignals(true);
-				QModelIndex newIndex = m_document->mergeItems(indices.first().parent(), rows.first(), rows.last());
-				if(newIndex.isValid()) {
-					ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect);
-					showItemProperties(newIndex);
-				}
-				ui.treeViewHOCR->selectionModel()->blockSignals(false);
+			qSort(rows);
+			bool consecutive = (rows.last() - rows.first()) == nIndices - 1;
+			const HOCRItem* firstItem = m_document->itemAtIndex(indices.first());
+			graphics |= !firstItem || firstItem->itemClass() == "ocr_graphic";
+			bool pages = firstItem && firstItem->itemClass() == "ocr_page";
+
+			QAction* mergeAction = nullptr;
+			QAction* swapAction = nullptr;
+			if(consecutive && !graphics && !pages) { // Merging allowed
+				mergeAction = menu.addAction(_("Merge"));
 			}
+			if(nIndices == 2) { // Swapping allowed
+				swapAction = menu.addAction(_("Swap"));
+			}
+
+			QAction* clickedAction = menu.exec(ui.treeViewHOCR->mapToGlobal(point));
+			if(!clickedAction) {
+				return;
+			}
+			ui.treeViewHOCR->selectionModel()->blockSignals(true);
+			QModelIndex newIndex;
+			if(clickedAction == mergeAction) {
+					newIndex = m_document->mergeItems(indices.first().parent(), rows.first(), rows.last());
+			} else if(clickedAction == swapAction) {
+					newIndex = m_document->swapItems(indices.first().parent(), rows.first(), rows.last(), pages);
+			}
+			if(newIndex.isValid()) {
+			ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect);
+				showItemProperties(newIndex);
+			}
+			ui.treeViewHOCR->selectionModel()->blockSignals(false);
 		}
+		// Nothing else is allowed with multiple items selected
 		return;
 	}
 	QModelIndex index = ui.treeViewHOCR->indexAt(point);
