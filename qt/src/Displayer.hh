@@ -54,6 +54,7 @@ public:
 	double getCurrentScale() const {
 		return m_scale;
 	}
+	Source* getCurrentSource() const;
 	QString getCurrentImage(int& page) const;
 	QImage getImage(const QRectF& rect);
 	QRectF getSceneBoundingRect() const;
@@ -66,6 +67,7 @@ public:
 public slots:
 	void setAngle(double angle);
 	void setScaledImage(const QImage& image, double scale = 1.0);
+	bool renderImage();
 
 private:
 	enum class RotateMode { CurrentPage, AllPages } m_rotateMode;
@@ -123,7 +125,6 @@ private slots:
 	void queueRenderImage();
 	void scaleTimerElapsed();
 	void sendScaleRequest(const ScaleRequest& request);
-	bool renderImage();
 	void setRotateMode(QAction* action);
 	void rotate90();
 	void zoomIn() {

@@ -218,6 +218,11 @@ bool Displayer::renderImage() {
 	int oldPage = m_currentSource ? m_currentSource->page : -1;
 	Source* oldSource = m_currentSource;
 
+    if(source->preprocessedImages.contains(getCurrentPage())) {
+        m_renderer = new ImageRenderer(source->preprocessedImages[getCurrentPage()]);
+        if(source->resolution == -1) source->resolution = 100;
+    }
+
 	if(source != m_currentSource) {
 		sendScaleRequest({ScaleRequest::Abort});
 		sendScaleRequest({ScaleRequest::Quit});
@@ -226,7 +231,10 @@ bool Displayer::renderImage() {
 		}
 		m_scaleRequests.clear();
 		delete m_renderer;
-		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
+        if(source->preprocessedImages.contains(getCurrentPage())) {
+            m_renderer = new ImageRenderer(source->preprocessedImages[getCurrentPage()]);
+            if(source->resolution == -1) source->resolution = 100;
+        } else if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
 			m_renderer = new PDFRenderer(source->path, source->password);
 			if(source->resolution == -1) source->resolution = 300;
 		} else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
@@ -246,6 +254,35 @@ bool Displayer::renderImage() {
 		m_currentSource = source;
 		m_scaleThread.start();
 	}
+
+    if(!source->preprocessedImages.contains(getCurrentPage())) {
+        sendScaleRequest({ScaleRequest::Abort});
+        sendScaleRequest({ScaleRequest::Quit});
+        while(m_scaleThread.isRunning()) {
+            QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+        }
+        m_scaleRequests.clear();
+        delete m_renderer;
+        if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
+            m_renderer = new PDFRenderer(source->path, source->password);
+            if(source->resolution == -1) source->resolution = 300;
+        } else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
+            m_renderer = new DJVURenderer(source->path);
+            if(source->resolution == -1) source->resolution = 300;
+        } else {
+            m_renderer = new ImageRenderer(source->path);
+            if(source->resolution == -1) source->resolution = 100;
+        }
+
+        Utils::setSpinBlocked(ui.spinBoxResolution, source->resolution);
+        Utils::setSpinBlocked(ui.spinBoxBrightness, source->brightness);
+        Utils::setSpinBlocked(ui.spinBoxContrast, source->contrast);
+        ui.checkBoxInvertColors->blockSignals(true);
+        ui.checkBoxInvertColors->setChecked(source->invert);
+        ui.checkBoxInvertColors->blockSignals(false);
+        m_currentSource = source;
+        m_scaleThread.start();
+    }
 
 	// Update source struct
 	m_currentSource->page = m_pageMap[ui.spinBoxPage->value()].second;
@@ -303,6 +340,10 @@ double Displayer::getCurrentAngle() const {
 
 int Displayer::getCurrentResolution() const {
 	return ui.spinBoxResolution->value();
+}
+
+Source* Displayer::getCurrentSource() const {
+	return m_currentSource;
 }
 
 QString Displayer::getCurrentImage(int& page) const {
