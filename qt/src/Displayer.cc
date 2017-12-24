@@ -220,7 +220,7 @@ bool Displayer::renderImage() {
 
     if(source->preprocessedImages.contains(getCurrentPage())) {
         m_renderer = new ImageRenderer(source->preprocessedImages[getCurrentPage()]);
-        if(source->resolution == -1) source->resolution = 100;
+        source->resolution = 100;
     }
 
 	if(source != m_currentSource) {
@@ -233,7 +233,7 @@ bool Displayer::renderImage() {
 		delete m_renderer;
         if(source->preprocessedImages.contains(getCurrentPage())) {
             m_renderer = new ImageRenderer(source->preprocessedImages[getCurrentPage()]);
-            if(source->resolution == -1) source->resolution = 100;
+            source->resolution = 100;
         } else if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
 			m_renderer = new PDFRenderer(source->path, source->password);
 			if(source->resolution == -1) source->resolution = 300;
@@ -288,7 +288,7 @@ bool Displayer::renderImage() {
 	m_currentSource->page = m_pageMap[ui.spinBoxPage->value()].second;
 	m_currentSource->brightness = ui.spinBoxBrightness->value();
 	m_currentSource->contrast = ui.spinBoxContrast->value();
-	m_currentSource->resolution = ui.spinBoxResolution->value();
+	//m_currentSource->resolution = ui.spinBoxResolution->value();
 	m_currentSource->invert = ui.checkBoxInvertColors->isChecked();
 
 	// Notify tools about changes
