@@ -6,15 +6,189 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>629</width>
-    <height>617</height>
+    <width>446</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>PDF Export</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0" colspan="2">
+   <property name="horizontalSpacing">
+    <number>2</number>
+   </property>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="comboBoxPaperSize">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="labelOutputMode">
+     <property name="text">
+      <string>Output mode:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="2">
+    <widget class="QComboBox" name="comboBoxOutputMode">
+     <item>
+      <property name="text">
+       <string>PDF</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>PDF with invisible text overlay</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="labelPaperSize">
+     <property name="text">
+      <string>Paper size:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QCheckBox" name="checkBoxOpenOutputPdf">
+     <property name="text">
+      <string>Open output PDF</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QCheckBox" name="checkBoxPreview">
+     <property name="text">
+      <string>Show preview</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QWidget" name="widgetPaperOrientation" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QToolButton" name="toolButtonPortrait">
+        <property name="toolTip">
+         <string>Portrait</string>
+        </property>
+        <property name="icon">
+         <iconset resource="gimagereader.qrc">
+          <normaloff>:/icons/portrait</normaloff>:/icons/portrait</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButtonLandscape">
+        <property name="toolTip">
+         <string>Landscape</string>
+        </property>
+        <property name="icon">
+         <iconset resource="gimagereader.qrc">
+          <normaloff>:/icons/landscape</normaloff>:/icons/landscape</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="10" column="0" colspan="3">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" colspan="2">
+    <widget class="QWidget" name="widgetPaperSize" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLineEdit" name="lineEditPaperHeight">
+        <property name="placeholderText">
+         <string>Width</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelX">
+        <property name="text">
+         <string notr="true">x</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditPaperWidth">
+        <property name="placeholderText">
+         <string>Height</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBoxPaperSizeUnit"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="3">
     <widget class="QGroupBox" name="groupBoxImage">
      <property name="title">
       <string>Image settings:</string>
@@ -118,79 +292,7 @@
      </layout>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QGroupBox" name="groupBoxEncryption">
-     <property name="title">
-      <string>Encryption (optional):</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_5">
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelPasswordOpen">
-        <property name="text">
-         <string>Password:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEditPasswordOpen">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
-        </property>
-        <property name="dragEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelConfirmPasswordOpen">
-        <property name="text">
-         <string>Confirm password:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEditConfirmPasswordOpen">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
-        </property>
-        <property name="dragEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="labelOutputMode">
-     <property name="text">
-      <string>Output mode:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0" colspan="2">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
+   <item row="5" column="0" colspan="3">
     <widget class="QGroupBox" name="groupBoxText">
      <property name="title">
       <string>Text settings:</string>
@@ -354,35 +456,62 @@
      </layout>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QCheckBox" name="checkBoxOpenOutputPdf">
-     <property name="text">
-      <string>Open output PDF</string>
+   <item row="6" column="0" colspan="3">
+    <widget class="QGroupBox" name="groupBoxEncryption">
+     <property name="title">
+      <string>Encryption (optional):</string>
      </property>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelPasswordOpen">
+        <property name="text">
+         <string>Password:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lineEditPasswordOpen">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelConfirmPasswordOpen">
+        <property name="text">
+         <string>Confirm password:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineEditConfirmPasswordOpen">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QCheckBox" name="checkBoxPreview">
-     <property name="text">
-      <string>Show preview</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QComboBox" name="comboBoxOutputMode">
-     <item>
-      <property name="text">
-       <string>PDF</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>PDF with invisible text overlay</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="2">
+   <item row="9" column="0" colspan="3">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -397,7 +526,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="gimagereader.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
