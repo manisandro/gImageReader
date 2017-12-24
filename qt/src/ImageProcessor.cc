@@ -2,14 +2,18 @@
 
 #include <vector>
 
+#include <QDir>
 #include <QImage>
+#include <QList>
 #include <QMessageBox>
+#include <QTemporaryFile>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
 #include "Displayer.hh"
 #include "MainWindow.hh"
+#include "SourceManager.hh"
 
 #include <image_processing/deskew/deskew.h>
 #include <image_processing/cleanBackgroundToWhite.h>
@@ -72,9 +76,29 @@ ImageProcessor::ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer)
 ImageProcessor::~ImageProcessor()
 {}
 
+QString ImageProcessor::savePixmap(const QPixmap& pixmap) {
+    QString filename;
+    bool success = true;
+    QTemporaryFile tmpfile(QDir::temp().absoluteFilePath("gimagereader_XXXXXX.png"));
+    if(!tmpfile.open()) {
+        success = false;
+    } else {
+        tmpfile.setAutoRemove(false);
+        filename = tmpfile.fileName();
+        success = pixmap.save(filename);
+    }
+    if(!success) {
+        QMessageBox::critical(MAIN, _("Cannot Write Temporary File"),  _("Could not write to %1.").arg(filename));
+        return "";
+    }
+    return filename;
+}
+
 void ImageProcessor::deskew()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     cv::Mat deskewedImage;
@@ -88,6 +112,8 @@ void ImageProcessor::deskew()
 void ImageProcessor::cleanBackground()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     cv::Mat outputImage;
@@ -95,12 +121,15 @@ void ImageProcessor::cleanBackground()
 
     image = matToImage(outputImage);
 
-    displayer.setScaledImage(image);
+    displayer.getCurrentSource()->preprocessedImages[displayer.getCurrentPage()] = savePixmap(QPixmap::fromImage(image));
+    displayer.renderImage();
 }
 
 void ImageProcessor::removeHolePunch()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     cv::Mat outputImage;
@@ -114,6 +143,8 @@ void ImageProcessor::removeHolePunch()
 void ImageProcessor::shadowsRemoval()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     cv::Mat outputImage;
@@ -127,10 +158,11 @@ void ImageProcessor::shadowsRemoval()
 void ImageProcessor::denoise()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     cv::Mat denoisedImage;
-
     switch(static_cast<Denoise>(ui.comboBoxDenoise->itemData(ui.comboBoxDenoise->currentIndex()).toInt()))
     {
         case Denoise::General:
@@ -149,11 +181,12 @@ void ImageProcessor::denoise()
 void ImageProcessor::binarize()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     cv::Mat binarizedImage;
 
-    //static_cast<QImage::Format>(ui.comboBoxImageFormat->itemData(ui.comboBoxImageFormat->currentIndex()).toInt());
     switch(static_cast<Binarization>(ui.comboBoxBinarize->itemData(ui.comboBoxBinarize->currentIndex()).toInt()))
     {
         case Binarization::LocalOtsu:
@@ -184,18 +217,24 @@ void ImageProcessor::binarize()
             prl::binarizeNativeAdaptive(opencvImage, binarizedImage);
             break;
         case Binarization::Otsu:
+            if(opencvImage.channels() != 1) {
+                cv::cvtColor(opencvImage, opencvImage, CV_BGR2GRAY);
+            }
             cv::threshold(opencvImage, binarizedImage, 0.0, 255.0, CV_THRESH_BINARY | CV_THRESH_OTSU);
             break;
     }
 
     image = matToImage(binarizedImage);
 
-    displayer.setScaledImage(image);
+    displayer.getCurrentSource()->preprocessedImages[displayer.getCurrentPage()] = savePixmap(QPixmap::fromImage(image));
+    displayer.renderImage();
 }
 
 void ImageProcessor::deblur()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     cv::Mat outputImage;
@@ -209,6 +248,8 @@ void ImageProcessor::deblur()
 void ImageProcessor::warpCrop()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     cv::Mat outputImage;
@@ -223,6 +264,8 @@ void ImageProcessor::warpCrop()
 void ImageProcessor::autoCrop()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     cv::Mat outputImage;
@@ -236,6 +279,8 @@ void ImageProcessor::autoCrop()
 void ImageProcessor::borderDetection()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     cv::Mat outputImage;
@@ -251,6 +296,8 @@ void ImageProcessor::borderDetection()
 void ImageProcessor::invert()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     cv::Mat outputImage;
@@ -265,6 +312,8 @@ void ImageProcessor::invert()
 void ImageProcessor::autoInvert()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     cv::Mat outputImage;
@@ -280,6 +329,8 @@ void ImageProcessor::autoInvert()
 void ImageProcessor::autoProcess()
 {
     QImage image = displayer.getImage(displayer.getSceneBoundingRect());
+    if(image.isNull())  return;
+
     cv::Mat opencvImage = imageToMat(image, CV_8UC3);
 
     // TODO: Write processing here:

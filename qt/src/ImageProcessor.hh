@@ -1,8 +1,12 @@
 #ifndef GIMAGEREADER_IMAGEPROCESSING_HH
 #define GIMAGEREADER_IMAGEPROCESSING_HH
 
+#include <list>
+#include <utility>
+
 #include <QObject>
 #include <QImage>
+#include <QString>
 
 #include <opencv2/core/core.hpp>
 
@@ -26,14 +30,14 @@ public:
     ImageProcessor(const UI_MainWindow& _ui, Displayer& _displayer);
     ~ImageProcessor();
 
-    signals:
-
 private:
     cv::Mat imageToMat(const QImage& img, int requiredMatType = CV_8UC(0), MatColorOrder requiredOrder = MCO_BGR);
     QImage matToImage(const cv::Mat& mat, MatColorOrder order = MCO_BGR,
                       QImage::Format formatHint = QImage::Format_Invalid);
     cv::Mat imageToMat_shared(const QImage& img, MatColorOrder* order = nullptr);
     QImage matToImage_shared(const cv::Mat& mat, QImage::Format formatHint = QImage::Format_Invalid);
+
+    QString savePixmap(const QPixmap& pixmap);
 
 private:
     const UI_MainWindow& ui;
