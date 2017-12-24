@@ -595,6 +595,9 @@
    <widget class="QWidget" name="dockWidgetContentsOutput"/>
   </widget>
   <widget class="QDockWidget" name="dockWidgetImageProcessing">
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
    <property name="windowTitle">
     <string>E&amp;nhance</string>
    </property>
