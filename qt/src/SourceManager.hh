@@ -20,6 +20,7 @@
 #ifndef SOURCEMANAGER_HH
 #define SOURCEMANAGER_HH
 
+#include <QMap>
 #include <QMetaType>
 #include <QStringList>
 #include <QFileSystemWatcher>
@@ -40,6 +41,7 @@ struct Source {
 	int resolution = -1;
 	int page = 1;
 	QVector<double> angle;
+	QMap<int, QString> preprocessedImages;
 	bool invert = false;
 };
 
