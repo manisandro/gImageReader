@@ -105,7 +105,8 @@ void ImageProcessor::deskew()
 
     image = matToImage(deskewedImage);
 
-    displayer.setScaledImage(image);
+    displayer.getCurrentSource()->preprocessedImages[displayer.getCurrentPage()] = savePixmap(QPixmap::fromImage(image));
+    displayer.renderImage();
 }
 
 void ImageProcessor::cleanBackground()
@@ -136,7 +137,8 @@ void ImageProcessor::removeHolePunch()
 
     image = matToImage(outputImage);
 
-    displayer.setScaledImage(image);
+    displayer.getCurrentSource()->preprocessedImages[displayer.getCurrentPage()] = savePixmap(QPixmap::fromImage(image));
+    displayer.renderImage();
 }
 
 void ImageProcessor::shadowsRemoval()
@@ -151,7 +153,8 @@ void ImageProcessor::shadowsRemoval()
 
     image = matToImage(outputImage);
 
-    displayer.setScaledImage(image);
+    displayer.getCurrentSource()->preprocessedImages[displayer.getCurrentPage()] = savePixmap(QPixmap::fromImage(image));
+    displayer.renderImage();
 }
 
 void ImageProcessor::denoise()
@@ -174,7 +177,8 @@ void ImageProcessor::denoise()
 
     image = matToImage(denoisedImage);
 
-    displayer.setScaledImage(image);
+    displayer.getCurrentSource()->preprocessedImages[displayer.getCurrentPage()] = savePixmap(QPixmap::fromImage(image));
+    displayer.renderImage();
 }
 
 void ImageProcessor::binarize()
@@ -241,7 +245,8 @@ void ImageProcessor::deblur()
 
     image = matToImage(outputImage);
 
-    displayer.setScaledImage(image);
+    displayer.getCurrentSource()->preprocessedImages[displayer.getCurrentPage()] = savePixmap(QPixmap::fromImage(image));
+    displayer.renderImage();
 }
 
 void ImageProcessor::warpCrop()
@@ -257,7 +262,8 @@ void ImageProcessor::warpCrop()
 
     image = matToImage(outputImage);
 
-    displayer.setScaledImage(image);
+    displayer.getCurrentSource()->preprocessedImages[displayer.getCurrentPage()] = savePixmap(QPixmap::fromImage(image));
+    displayer.renderImage();
 }
 
 void ImageProcessor::autoCrop()
@@ -272,7 +278,8 @@ void ImageProcessor::autoCrop()
 
     image = matToImage(outputImage);
 
-    displayer.setScaledImage(image);
+    displayer.getCurrentSource()->preprocessedImages[displayer.getCurrentPage()] = savePixmap(QPixmap::fromImage(image));
+    displayer.renderImage();
 }
 
 void ImageProcessor::borderDetection()
@@ -285,11 +292,15 @@ void ImageProcessor::borderDetection()
     cv::Mat outputImage;
 
     std::vector<cv::Point2f> resultContour;
-    prl::documentContour(opencvImage, 1.0, 1.0, resultContour);
+    if(prl::documentContour(opencvImage, 1.0, 1.0, resultContour))
+    {
+        // TODO: Show border on image
+    }
 
     image = matToImage(outputImage);
 
-    displayer.setScaledImage(image);
+    displayer.getCurrentSource()->preprocessedImages[displayer.getCurrentPage()] = savePixmap(QPixmap::fromImage(image));
+    displayer.renderImage();
 }
 
 void ImageProcessor::invert()
@@ -305,7 +316,8 @@ void ImageProcessor::invert()
 
     image = matToImage(outputImage);
 
-    displayer.setScaledImage(image);
+    displayer.getCurrentSource()->preprocessedImages[displayer.getCurrentPage()] = savePixmap(QPixmap::fromImage(image));
+    displayer.renderImage();
 }
 
 void ImageProcessor::autoProcess()
@@ -359,7 +371,8 @@ void ImageProcessor::autoProcess()
 
     image = matToImage(outputImage);
 
-    displayer.setScaledImage(image);
+    displayer.getCurrentSource()->preprocessedImages[displayer.getCurrentPage()] = savePixmap(QPixmap::fromImage(image));
+    displayer.renderImage();
 }
 
 namespace {
