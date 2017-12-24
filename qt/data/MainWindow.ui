@@ -781,19 +781,6 @@
       <string>Invert</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButtonAutoInvert">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>370</y>
-       <width>121</width>
-       <height>33</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>AutoInvert</string>
-     </property>
-    </widget>
    </widget>
   </widget>
   <action name="actionSources">
