@@ -98,6 +98,7 @@ private:
 	const HOCRPage* m_previewPage;
 	DisplayerToolHOCR* m_displayerTool;
 
+	PDFSettings getPdfSettings() const;
 	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale = 1.);
 
 private slots:

@@ -439,17 +439,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 		return false;
 	}
 
-	PDFSettings pdfSettings;
-	pdfSettings.colorFormat = static_cast<QImage::Format>(ui.comboBoxImageFormat->itemData(ui.comboBoxImageFormat->currentIndex()).toInt());
-	pdfSettings.conversionFlags = pdfSettings.colorFormat == QImage::Format_Mono ? static_cast<Qt::ImageConversionFlags>(ui.comboBoxDithering->itemData(ui.comboBoxDithering->currentIndex()).toInt()) : Qt::AutoColor;
-	pdfSettings.compression = static_cast<PDFSettings::Compression>(ui.comboBoxImageCompression->itemData(ui.comboBoxImageCompression->currentIndex()).toInt());
-	pdfSettings.compressionQuality = ui.spinBoxCompressionQuality->value();
-	pdfSettings.fontFamily = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont().family() : "";
-	pdfSettings.fontSize = ui.checkBoxFontSize->isChecked() ? ui.spinBoxFontSize->value() : -1;
-	pdfSettings.uniformizeLineSpacing = ui.checkBoxUniformizeSpacing->isChecked();
-	pdfSettings.preserveSpaceWidth = ui.spinBoxPreserve->value();
-	pdfSettings.overlay = ui.comboBoxOutputMode->currentIndex() == 1;
-	pdfSettings.detectedFontScaling = ui.spinFontScaling->value() / 100.;
+	PDFSettings pdfSettings = getPdfSettings();
 
 	PoDoFo::PdfPainter painter;
 	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont, pdfSettings.fontSize);
@@ -507,6 +497,22 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	}
 
 	return success;
+}
+
+HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const
+{
+	PDFSettings pdfSettings;
+	pdfSettings.colorFormat = static_cast<QImage::Format>(ui.comboBoxImageFormat->itemData(ui.comboBoxImageFormat->currentIndex()).toInt());
+	pdfSettings.conversionFlags = pdfSettings.colorFormat == QImage::Format_Mono ? static_cast<Qt::ImageConversionFlags>(ui.comboBoxDithering->itemData(ui.comboBoxDithering->currentIndex()).toInt()) : Qt::AutoColor;
+	pdfSettings.compression = static_cast<PDFSettings::Compression>(ui.comboBoxImageCompression->itemData(ui.comboBoxImageCompression->currentIndex()).toInt());
+	pdfSettings.compressionQuality = ui.spinBoxCompressionQuality->value();
+	pdfSettings.fontFamily = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont().family() : "";
+	pdfSettings.fontSize = ui.checkBoxFontSize->isChecked() ? ui.spinBoxFontSize->value() : -1;
+	pdfSettings.uniformizeLineSpacing = ui.checkBoxUniformizeSpacing->isChecked();
+	pdfSettings.preserveSpaceWidth = ui.spinBoxPreserve->value();
+	pdfSettings.overlay = ui.comboBoxOutputMode->currentIndex() == 1;
+	pdfSettings.detectedFontScaling = ui.spinFontScaling->value() / 100.;
+	return pdfSettings;
 }
 
 void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale) {
@@ -585,17 +591,7 @@ void HOCRPdfExporter::updatePreview() {
 	QRect bbox = page->bbox();
 	int pageDpi = page->resolution();
 
-	PDFSettings pdfSettings;
-	pdfSettings.colorFormat = static_cast<QImage::Format>(ui.comboBoxImageFormat->itemData(ui.comboBoxImageFormat->currentIndex()).toInt());
-	pdfSettings.conversionFlags = pdfSettings.colorFormat == QImage::Format_Mono ? static_cast<Qt::ImageConversionFlags>(ui.comboBoxDithering->itemData(ui.comboBoxDithering->currentIndex()).toInt()) : Qt::AutoColor;
-	pdfSettings.compression = static_cast<PDFSettings::Compression>(ui.comboBoxImageCompression->itemData(ui.comboBoxImageCompression->currentIndex()).toInt());
-	pdfSettings.compressionQuality = ui.spinBoxCompressionQuality->value();
-	pdfSettings.fontFamily = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont().family() : "";
-	pdfSettings.fontSize = ui.checkBoxFontSize->isChecked() ? ui.spinBoxFontSize->value() : -1;
-	pdfSettings.uniformizeLineSpacing = ui.checkBoxUniformizeSpacing->isChecked();
-	pdfSettings.preserveSpaceWidth = ui.spinBoxPreserve->value();
-	pdfSettings.overlay = ui.comboBoxOutputMode->currentIndex() == 1;
-	pdfSettings.detectedFontScaling = ui.spinFontScaling->value() / 100.;
+	PDFSettings pdfSettings = getPdfSettings();
 
 	QFont defaultFont = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont() : ui.comboBoxFallbackFontFamily->currentFont();
 
