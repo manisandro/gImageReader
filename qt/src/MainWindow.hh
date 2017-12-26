@@ -29,11 +29,11 @@
 #include <QTimer>
 
 #include "common.hh"
+#include "Config.hh"
 #include "Ui_MainWindow.hh"
 
 #define MAIN MainWindow::getInstance()
 
-class Config;
 class Acquirer;
 class Displayer;
 class DisplayerTool;
@@ -160,7 +160,7 @@ private slots:
 	void progressCancel();
 	void progressUpdate();
 	void setOCRMode(int idx);
-	void languageChanged();
+	void languageChanged(const Config::Lang& lang);
 	void dictionaryAutoinstall();
 };
 

@@ -151,7 +151,7 @@ MainWindow::MainWindow(const QStringList& files)
 	connect(m_sourceManager, SIGNAL(sourceChanged()), this, SLOT(onSourceChanged()));
 	connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), ui.dockWidgetOutput, SLOT(setVisible(bool)));
 	connect(ui.comboBoxOCRMode, SIGNAL(currentIndexChanged(int)), this, SLOT(setOCRMode(int)));
-	connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), this, SLOT(languageChanged()));
+	connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), this, SLOT(languageChanged(Config::Lang)));
 	connect(ui.actionAutodetectLayout, SIGNAL(triggered()), m_displayer, SLOT(autodetectOCRAreas()));
 
 	m_config->addSetting(new VarSetting<QByteArray>("wingeom"));
@@ -325,7 +325,6 @@ void MainWindow::setOCRMode(int idx) {
 		}
 		ui.actionAutodetectLayout->setVisible(m_displayerTool->allowAutodetectOCRAreas());
 		m_displayer->setTool(m_displayerTool);
-		connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), m_outputEditor, SLOT(setLanguage(Config::Lang)));
 		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
 		connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), m_outputEditor, SLOT(onVisibilityChanged(bool)));
 		ui.dockWidgetOutput->setWidget(m_outputEditor->getUI());
@@ -439,10 +438,13 @@ void MainWindow::progressUpdate() {
 	}
 }
 
-void MainWindow::languageChanged() {
+void MainWindow::languageChanged(const Config::Lang& lang) {
+	if(m_outputEditor) {
+		m_outputEditor->setLanguage(lang);
+	}
 	hideNotification(m_notifierHandle);
 	m_notifierHandle = nullptr;
-	const QString& code = m_recognizer->getSelectedLanguage().code;
+	const QString& code = lang.code;
 	if(!code.isEmpty() && !QtSpell::checkLanguageInstalled(code) && m_config->getSetting<SwitchSetting>("dictinstall")->getValue()) {
 		NotificationAction actionDontShowAgain = {_("Don't show again"), m_config, SLOT(disableDictInstall()), true};
 		NotificationAction actionInstall = {_("Install"), this, SLOT(dictionaryAutoinstall()), false};
