@@ -427,7 +427,7 @@ QIcon HOCRDocument::decorationRoleForItem(const HOCRItem* item) const
 bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const
 {
 	if(item->itemClass() == "ocrx_word") {
-		QString trimmed = trimmedWord(item->element().text());
+		QString trimmed = HOCRItem::trimmedWord(item->text());
 		if(!trimmed.isEmpty()) {
 			QString lang = item->lang();
 			if(m_spell->getLanguage() != lang) {
@@ -449,7 +449,11 @@ void HOCRDocument::deleteItem(HOCRItem* item)
 	}
 }
 
-QMap<QString, QString> HOCRDocument::deserializeAttrGroup(const QString& string)
+///////////////////////////////////////////////////////////////////////////////
+
+QMap<QString,QString> HOCRItem::s_langCache = QMap<QString,QString>();
+
+QMap<QString, QString> HOCRItem::deserializeAttrGroup(const QString& string)
 {
 	QMap<QString, QString> attrs;
 	for(const QString& attr : string.split(QRegExp("\\s*;\\s*"))) {
@@ -459,7 +463,7 @@ QMap<QString, QString> HOCRDocument::deserializeAttrGroup(const QString& string)
 	return attrs;
 }
 
-QString HOCRDocument::serializeAttrGroup(const QMap<QString, QString>& attrs)
+QString HOCRItem::serializeAttrGroup(const QMap<QString, QString>& attrs)
 {
 	QStringList list;
 	for(auto it = attrs.begin(), itEnd = attrs.end(); it != itEnd; ++it) {
@@ -468,7 +472,7 @@ QString HOCRDocument::serializeAttrGroup(const QMap<QString, QString>& attrs)
 	return list.join("; ");
 }
 
-QString HOCRDocument::trimmedWord(const QString& word, QString* prefix, QString* suffix) {
+QString HOCRItem::trimmedWord(const QString& word, QString* prefix, QString* suffix) {
 	QRegExp wordRe("^(\\W*)(\\w*)(\\W*)$");
 	if(wordRe.indexIn(word) != -1) {
 		if(prefix)
@@ -479,10 +483,6 @@ QString HOCRDocument::trimmedWord(const QString& word, QString* prefix, QString*
 	}
 	return word;
 }
-
-///////////////////////////////////////////////////////////////////////////////
-
-QMap<QString,QString> HOCRItem::s_langCache = QMap<QString,QString>();
 
 HOCRItem::HOCRItem(QDomElement element, HOCRPage* page, HOCRItem* parent)
 	: m_domElement(element), m_pageItem(page), m_parentItem(parent)
@@ -497,7 +497,7 @@ HOCRItem::HOCRItem(QDomElement element, HOCRPage* page, HOCRItem* parent)
 	}
 
 	// Deserialize title attrs
-	m_titleAttrs = HOCRDocument::deserializeAttrGroup(m_domElement.attribute("title"));
+	m_titleAttrs = deserializeAttrGroup(m_domElement.attribute("title"));
 
 	// Parse item bbox
 	QStringList bbox = m_titleAttrs["bbox"].split(QRegExp("\\s+"));
@@ -618,7 +618,7 @@ void HOCRItem::setAttribute(const QString& name, const QString& value, const QSt
 	} else {
 		Q_ASSERT(parts[0] == "title");
 		m_titleAttrs[parts[1]] = value;
-		m_domElement.setAttribute("title", HOCRDocument::serializeAttrGroup(m_titleAttrs));
+		m_domElement.setAttribute("title", serializeAttrGroup(m_titleAttrs));
 		if(name == "title:bbox") {
 			QStringList bbox = value.split(QRegExp("\\s+"));
 			Q_ASSERT(bbox.size() == 4);

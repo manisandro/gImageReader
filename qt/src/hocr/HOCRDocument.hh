@@ -68,10 +68,6 @@ public:
 	int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 	int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
-	static QMap<QString, QString> deserializeAttrGroup(const QString& string);
-	static QString serializeAttrGroup(const QMap<QString, QString>& attrs);
-	static QString trimmedWord(const QString& word, QString* prefix = nullptr, QString* suffix = nullptr);
-
 signals:
 	void itemAttributeChanged(const QModelIndex& itemIndex, const QString& name, const QString& value);
 
@@ -127,6 +123,10 @@ public:
 	void setEnabled(bool enabled) { m_enabled = enabled; }
 	void setText(const QString& newText);
 	void setAttribute(const QString& name, const QString& value, const QString& attrItemClass = QString());
+
+	static QMap<QString, QString> deserializeAttrGroup(const QString& string);
+	static QString serializeAttrGroup(const QMap<QString, QString>& attrs);
+	static QString trimmedWord(const QString& word, QString* prefix = nullptr, QString* suffix = nullptr);
 
 protected:
 	friend class HOCRPage;

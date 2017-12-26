@@ -262,12 +262,12 @@ void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data) {
 	doc.setContent(hocrText);
 
 	QDomElement pageDiv = doc.firstChildElement("div");
-	QMap<QString, QString> attrs = HOCRDocument::deserializeAttrGroup(pageDiv.attribute("title"));
+	QMap<QString, QString> attrs = HOCRItem::deserializeAttrGroup(pageDiv.attribute("title"));
 	attrs["image"] = QString("'%1'").arg(data.file);
 	attrs["ppageno"] = QString::number(data.page);
 	attrs["rot"] = QString::number(data.angle);
 	attrs["res"] = QString::number(data.resolution);
-	pageDiv.setAttribute("title", HOCRDocument::serializeAttrGroup(attrs));
+	pageDiv.setAttribute("title", HOCRItem::serializeAttrGroup(attrs));
 
 	QModelIndex index = m_document->addPage(pageDiv, true);
 
@@ -467,7 +467,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	if(item->itemClass() == "ocr_page") {
 		actionAddGraphic = menu.addAction(_("Add graphic region"));
 	} else if(item->itemClass() == "ocrx_word") {
-		QString prefix, suffix, trimmedWord = HOCRDocument::trimmedWord(item->text(), &prefix, &suffix);
+		QString prefix, suffix, trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
 		QString spellLang = item->lang();
 		if(m_spell.getLanguage() != spellLang) {
 			m_spell.setLanguage(spellLang);
