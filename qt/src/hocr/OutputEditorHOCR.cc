@@ -297,18 +297,16 @@ bool OutputEditorHOCR::showPage(const HOCRPage *page)
 	return page && MAIN->getSourceManager()->addSource(page->sourceFile()) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
 }
 
-void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
-	if(ui.treeViewHOCR->currentIndex() != current) {
+void OutputEditorHOCR::showItemProperties(const QModelIndex& index) {
+	if(ui.treeViewHOCR->currentIndex() != index) {
 		ui.treeViewHOCR->blockSignals(true);
-		ui.treeViewHOCR->setCurrentIndex(current);
+		ui.treeViewHOCR->setCurrentIndex(index);
 		ui.treeViewHOCR->blockSignals(false);
 	}
-	ui.tableWidgetProperties->blockSignals(true);
 	ui.tableWidgetProperties->setRowCount(0);
-	ui.tableWidgetProperties->blockSignals(false);
 	ui.plainTextEditOutput->setPlainText("");
 
-	const HOCRItem* currentItem = m_document->itemAtIndex(current);
+	const HOCRItem* currentItem = m_document->itemAtIndex(index);
 	if(!currentItem) {
 		m_tool->clearSelection();
 		return;
@@ -317,7 +315,6 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
 	showPage(page);
 
 	int row = -1;
-	ui.tableWidgetProperties->blockSignals(true);
 	QMap<QString, QString> attrs = currentItem->getAllAttributes();
 	for(auto it = attrs.begin(), itEnd = attrs.end(); it != itEnd; ++it) {
 		QString attrName = it.key();
@@ -329,7 +326,7 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
 		QTableWidgetItem* attrNameItem = new QTableWidgetItem(parts.last());
 		attrNameItem->setFlags(attrNameItem->flags() & ~Qt::ItemIsEditable);
 		ui.tableWidgetProperties->setItem(row, 0, attrNameItem);
-		ui.tableWidgetProperties->setCellWidget(row, 1, createAttrWidget(current, attrName, it.value()));
+		ui.tableWidgetProperties->setCellWidget(row, 1, createAttrWidget(index, attrName, it.value()));
 	}
 
 	// ocr_class:attr_key:attr_values
@@ -354,10 +351,9 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
 			QTableWidgetItem* attrNameItem = new QTableWidgetItem(parts.last());
 			attrNameItem->setFlags(attrNameItem->flags() & ~Qt::ItemIsEditable);
 			ui.tableWidgetProperties->setItem(row, 0, attrNameItem);
-			ui.tableWidgetProperties->setCellWidget(row, 1, createAttrWidget(current, attrName, attrValueCount == 1 ? *(attrValues.begin()) : "", it.key(), attrValueCount > 1));
+			ui.tableWidgetProperties->setCellWidget(row, 1, createAttrWidget(index, attrName, attrValueCount == 1 ? *(attrValues.begin()) : "", it.key(), attrValueCount > 1));
 		}
 	}
-	ui.tableWidgetProperties->blockSignals(false);
 
 	ui.plainTextEditOutput->setPlainText(currentItem->toHtml());
 
@@ -497,9 +493,6 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	}
 	actionRemoveItem = menu.addAction(_("Remove"));
 	if(m_document->rowCount(index) > 0) {
-		if(!menu.actions().isEmpty()) {
-			menu.addSeparator();
-		}
 		actionExpand = menu.addAction(_("Expand all"));
 		actionCollapse = menu.addAction(_("Collapse all"));
 	}
@@ -530,7 +523,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 void OutputEditorHOCR::pickItem(const QPoint& point)
 {
 	int pageNr;
-	QString filename = m_tool->getDisplayer()->getCurrentImage(pageNr);
+	QString filename = MAIN->getDisplayer()->getCurrentImage(pageNr);
 	QModelIndex pageIndex = m_document->searchPage(filename, pageNr);
 	const HOCRItem* currentItem = m_document->itemAtIndex(pageIndex);
 	if(!currentItem) {
@@ -538,8 +531,8 @@ void OutputEditorHOCR::pickItem(const QPoint& point)
 	}
 	const HOCRPage* page = currentItem->page();
 	// Transform point in coordinate space used when page was OCRed
-	double alpha = (page->angle() - m_tool->getDisplayer()->getCurrentAngle()) / 180. * M_PI;
-	double scale = double(page->resolution()) / double(m_tool->getDisplayer()->getCurrentResolution());
+	double alpha = (page->angle() - MAIN->getDisplayer()->getCurrentAngle()) / 180. * M_PI;
+	double scale = double(page->resolution()) / double(MAIN->getDisplayer()->getCurrentResolution());
 	QPoint newPoint( scale * (point.x() * std::cos(alpha) - point.y() * std::sin(alpha)) + 0.5 * page->bbox().width(),
 					 scale * (point.x() * std::sin(alpha) + point.y() * std::cos(alpha)) + 0.5 * page->bbox().height());
 	showItemProperties(m_document->searchAtCanvasPos(pageIndex, newPoint));

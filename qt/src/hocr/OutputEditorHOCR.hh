@@ -82,7 +82,7 @@ private slots:
 	void pickItem(const QPoint& point);
 	void setFont();
 	void setModified();
-	void showItemProperties(const QModelIndex& current);
+	void showItemProperties(const QModelIndex& index);
 	void showTreeWidgetContextMenu(const QPoint& point);
 	void toggleWConfColumn(bool active);
 	void updateSourceText();
