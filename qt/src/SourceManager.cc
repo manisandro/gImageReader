@@ -54,30 +54,6 @@ QDataStream& operator>>(QDataStream& ds, Source*&) {
 	return ds;
 }
 
-Source::Source(const QString& _path, const QString& _displayname, bool _isTemp)
-				: path(_path), displayname(_displayname), isTemp(_isTemp) {
-	// Check whether input PDF file is encrypted
-	if(path.endsWith(".pdf", Qt::CaseInsensitive)) {
-		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(path));
-		if(document && document->isLocked()) {
-			bool ok = false;
-			QString text;
-			while(true) {
-				text = QInputDialog::getText(MAIN, _("Protected PDF"),
-											 QString(_("Enter password for file '%1':")).arg(displayname), QLineEdit::Password,
-											 text, &ok);
-				if(!ok) {
-					throw std::invalid_argument("Locked PDF: skip file.");
-				}
-				if(!document->unlock(text.toLocal8Bit(), text.toLocal8Bit())) {
-					password = text.toLocal8Bit();
-					break;
-				}
-			}
-		}
-	}
-}
-
 
 SourceManager::SourceManager(const UI_MainWindow& _ui)
 	: ui(_ui) {
@@ -130,13 +106,11 @@ int SourceManager::addSources(const QStringList& files) {
 			++added;
 			continue;
 		}
-		Source* source = nullptr;
-		try {
-			source = new Source(filename, QFileInfo(filename).fileName());
-		}
-		catch (...) {
+		QByteArray password;
+		if(!querySourcePassword(filename, password)) {
 			continue;
 		}
+		Source* source = new Source(filename, QFileInfo(filename).fileName(), password);
 		item = new QListWidgetItem(QFileInfo(filename).fileName(), ui.listWidgetSources);
 		item->setToolTip(filename);
 		item->setData(Qt::UserRole, QVariant::fromValue(source));
@@ -154,6 +128,32 @@ int SourceManager::addSources(const QStringList& files) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:%1").arg(failed));
 	}
 	return added;
+}
+
+bool SourceManager::querySourcePassword(const QString& filename, QByteArray& password) const
+{
+	bool success = true;
+	if(filename.endsWith(".pdf", Qt::CaseInsensitive)) {
+		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(filename));
+		if(document && document->isLocked()) {
+			success = false;
+			bool ok = false;
+			QString message = QString(_("Enter password for file '%1':")).arg(QFileInfo(filename).fileName());
+			QString text;
+			while(true) {
+				text = QInputDialog::getText(MAIN, _("Protected PDF"), message, QLineEdit::Password, text, &ok);
+				if(!ok) {
+					break;
+				}
+				if(!document->unlock(text.toLocal8Bit(), text.toLocal8Bit())) {
+					password = text.toLocal8Bit();
+					success = true;
+					break;
+				}
+			}
+		}
+	}
+	return success;
 }
 
 QList<Source*> SourceManager::getSelectedSources() const {
@@ -248,7 +248,7 @@ void SourceManager::savePixmap(const QPixmap& pixmap, const QString& displayname
 	} else {
 		QListWidgetItem* item = new QListWidgetItem(displayname, ui.listWidgetSources);
 		item->setToolTip(filename);
-		Source* source = new Source(filename, displayname, true);
+		Source* source = new Source(filename, displayname, QByteArray(), true);
 		item->setData(Qt::UserRole, QVariant::fromValue(source));
 		m_fsWatcher.addPath(filename);
 		ui.listWidgetSources->blockSignals(true);

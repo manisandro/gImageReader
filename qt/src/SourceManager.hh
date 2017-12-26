@@ -30,7 +30,8 @@ class UI_MainWindow;
 
 
 struct Source {
-	Source(const QString& _path, const QString& _displayname, bool _isTemp = false);
+	Source(const QString& _path, const QString& _displayname, const QByteArray& _password, bool _isTemp = false)
+		: path(_path), displayname(_displayname), password(_password), isTemp(_isTemp) {}
 	QString path;
 	QString displayname;
 	QByteArray password;
@@ -70,6 +71,7 @@ private:
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;
 
+	bool querySourcePassword(const QString& filename, QByteArray& password) const;
 	void savePixmap(const QPixmap& pixmap, const QString& displayname);
 	void selectionChanged();
 	bool eventFilter(QObject* object, QEvent* event) override;
