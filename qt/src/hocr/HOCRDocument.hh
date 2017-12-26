@@ -41,7 +41,7 @@ public:
 	void recheckSpelling();
 
 	QDomDocument& getDomDocument() { return m_document; }
-	QString toHTML(int indent = 1){ return m_document.toString(indent); }
+	QString toHTML(int indent = 1) const { return m_document.toString(indent); }
 
 	QModelIndex addPage(const QDomElement& pageElement, bool cleanGraphics);
 	const HOCRPage* page(int i) const{ return m_pages.value(i); }
@@ -60,13 +60,13 @@ public:
 	QModelIndex searchPage(const QString& filename, int pageNr) const;
 	QModelIndex searchAtCanvasPos(const QModelIndex& pageIndex, const QPoint& pos) const;
 
-	QVariant data(const QModelIndex &index, int role) const;
+	QVariant data(const QModelIndex &index, int role) const override;
 	bool setData(const QModelIndex &index, const QVariant &value, int role) override;
-	Qt::ItemFlags flags(const QModelIndex &index) const;
-	QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
-	QModelIndex parent(const QModelIndex &child) const;
-	int rowCount(const QModelIndex &parent = QModelIndex()) const;
-	int columnCount(const QModelIndex &parent = QModelIndex()) const;
+	Qt::ItemFlags flags(const QModelIndex &index) const override;
+	QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
+	QModelIndex parent(const QModelIndex &child) const override;
+	int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+	int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
 	static QMap<QString, QString> deserializeAttrGroup(const QString& string);
 	static QString serializeAttrGroup(const QMap<QString, QString>& attrs);
@@ -89,6 +89,7 @@ private:
 	bool checkItemSpelling(const HOCRItem* item) const;
 	void deleteItem(HOCRItem* item);
 	void recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, const QStringList& itemClasses = QStringList());
+	HOCRItem* mutableItemAtIndex(const QModelIndex& index) const{ return index.isValid() ? static_cast<HOCRItem*>(index.internalPointer()) : nullptr; }
 };
 
 
