@@ -232,6 +232,12 @@ void OutputEditorHOCR::setFont() {
 	}
 }
 
+void OutputEditorHOCR::setModified(){
+	ui.actionOutputSaveHOCR->setEnabled(m_document->pageCount() > 0);
+	ui.toolButtonOutputExport->setEnabled(m_document->pageCount() > 0);
+	m_modified = true;
+}
+
 OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI &tess) {
 	tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
 	return new HOCRReadSessionData;
@@ -274,8 +280,6 @@ void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data) {
 	expandCollapseChildren(index, true);
 	MAIN->setOutputPaneVisible(true);
 	m_modified = true;
-	ui.actionOutputSaveHOCR->setEnabled(true);
-	ui.toolButtonOutputExport->setEnabled(true);
 }
 
 void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool expand) const {
@@ -575,8 +579,6 @@ void OutputEditorHOCR::open() {
 	}
 	m_modified = false;
 	m_filebasename = QFileInfo(filename).completeBaseName();
-	ui.actionOutputSaveHOCR->setEnabled(true);
-	ui.toolButtonOutputExport->setEnabled(true);
 }
 
 bool OutputEditorHOCR::save(const QString& filename) {
@@ -654,8 +656,6 @@ bool OutputEditorHOCR::clear(bool hide)
 	m_tool->clearSelection();
 	m_modified = false;
 	m_filebasename.clear();
-	ui.actionOutputSaveHOCR->setEnabled(false);
-	ui.toolButtonOutputExport->setEnabled(false);
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
 	return true;

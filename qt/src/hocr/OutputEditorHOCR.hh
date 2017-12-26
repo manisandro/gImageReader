@@ -81,7 +81,7 @@ private slots:
 	void addPage(const QString& hocrText, ReadSessionData data);
 	void pickItem(const QPoint& point);
 	void setFont();
-	void setModified() { m_modified = true; }
+	void setModified();
 	void showItemProperties(const QModelIndex& current);
 	void showTreeWidgetContextMenu(const QPoint& point);
 	void toggleWConfColumn(bool active);
