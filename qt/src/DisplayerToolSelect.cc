@@ -35,17 +35,13 @@
 #include <QStyle>
 
 
-DisplayerToolSelect::DisplayerToolSelect(QAction* actionAutodetectLayout, Displayer *displayer, QObject *parent)
-	: DisplayerTool(displayer, parent), mActionAutodetectLayout(actionAutodetectLayout) {
-	connect(mActionAutodetectLayout, SIGNAL(triggered()), this, SLOT(autodetectLayout()));
-
-	mActionAutodetectLayout->setVisible(true);
+DisplayerToolSelect::DisplayerToolSelect(Displayer *displayer, QObject *parent)
+	: DisplayerTool(displayer, parent) {
 	updateRecognitionModeLabel();
 }
 
 DisplayerToolSelect::~DisplayerToolSelect() {
 	clearSelections();
-	mActionAutodetectLayout->setVisible(false);
 }
 
 void DisplayerToolSelect::mousePressEvent(QMouseEvent *event) {

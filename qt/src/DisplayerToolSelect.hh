@@ -31,7 +31,7 @@ class NumberedDisplayerSelection;
 class DisplayerToolSelect : public DisplayerTool {
 	Q_OBJECT
 public:
-	DisplayerToolSelect(QAction* actionAutodetectLayout, Displayer* displayer, QObject* parent = 0);
+	DisplayerToolSelect(Displayer* displayer, QObject* parent = 0);
 	~DisplayerToolSelect();
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
@@ -55,7 +55,6 @@ public:
 
 private:
 	friend class NumberedDisplayerSelection;
-	QAction* mActionAutodetectLayout = nullptr;
 	NumberedDisplayerSelection* m_curSel = nullptr;
 	QList<NumberedDisplayerSelection*> m_selections;
 
@@ -64,8 +63,6 @@ private:
 	void reorderSelection(int oldNum, int newNum);
 	void saveSelection(NumberedDisplayerSelection* selection);
 	void updateRecognitionModeLabel();
-
-private slots:
 	void autodetectLayout(bool noDeskew = false);
 };
 

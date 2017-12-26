@@ -152,7 +152,7 @@ MainWindow::MainWindow(const QStringList& files)
 	connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), ui.dockWidgetOutput, SLOT(setVisible(bool)));
 	connect(ui.comboBoxOCRMode, SIGNAL(currentIndexChanged(int)), this, SLOT(setOCRMode(int)));
 	connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), this, SLOT(languageChanged()));
-
+	connect(ui.actionAutodetectLayout, SIGNAL(triggered()), m_displayer, SLOT(autodetectOCRAreas()));
 
 	m_config->addSetting(new VarSetting<QByteArray>("wingeom"));
 	m_config->addSetting(new VarSetting<QByteArray>("winstate"));
@@ -317,12 +317,13 @@ void MainWindow::setOCRMode(int idx) {
 		delete m_displayerTool;
 		delete m_outputEditor;
 		if(idx == 0) {
-			m_displayerTool = new DisplayerToolSelect(ui.actionAutodetectLayout, m_displayer);
+			m_displayerTool = new DisplayerToolSelect(m_displayer);
 			m_outputEditor = new OutputEditorText();
 		} else { /*if(idx == 1)*/
 			m_displayerTool = new DisplayerToolHOCR(m_displayer);
 			m_outputEditor = new OutputEditorHOCR(static_cast<DisplayerToolHOCR*>(m_displayerTool));
 		}
+		ui.actionAutodetectLayout->setVisible(m_displayerTool->allowAutodetectOCRAreas());
 		m_displayer->setTool(m_displayerTool);
 		connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), m_outputEditor, SLOT(setLanguage(Config::Lang)));
 		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());

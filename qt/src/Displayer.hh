@@ -51,9 +51,7 @@ public:
 	int getNPages() const;
 	int getCurrentResolution() const;
 	double getCurrentAngle() const;
-	double getCurrentScale() const {
-		return m_scale;
-	}
+	double getCurrentScale() const { return m_scale; }
 	QString getCurrentImage(int& page) const;
 	QImage getImage(const QRectF& rect);
 	QRectF getSceneBoundingRect() const;
@@ -61,10 +59,9 @@ public:
 	bool hasMultipleOCRAreas();
 	QList<QImage> getOCRAreas();
 	bool allowAutodetectOCRAreas() const;
-	void autodetectOCRAreas();
 
 public slots:
-
+	void autodetectOCRAreas();
 
 private:
 	enum class RotateMode { CurrentPage, AllPages } m_rotateMode;
