@@ -325,6 +325,7 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfuniformizelinespacing", ui.checkBoxUniformizeSpacing, false));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfpreservespaces", ui.spinBoxPreserve, 4));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfpreview", ui.checkBoxPreview, false));
+	MAIN->getConfig()->addSetting(new SwitchSetting("pdfopenoutput", ui.checkBoxOpenOutputPdf, false));
 
 #ifndef MAKE_VERSION
 #define MAKE_VERSION(...) 0
@@ -340,16 +341,20 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 HOCRPdfExporter::~HOCRPdfExporter()
 {
 	MAIN->getConfig()->removeSetting("pdfexportmode");
-	MAIN->getConfig()->removeSetting("pdffont");
 	MAIN->getConfig()->removeSetting("pdfimagecompressionquality");
 	MAIN->getConfig()->removeSetting("pdfimagecompression");
 	MAIN->getConfig()->removeSetting("pdfimageformat");
+	MAIN->getConfig()->removeSetting("pdfimagedithering");
 	MAIN->getConfig()->removeSetting("pdfimagedpi");
-	MAIN->getConfig()->removeSetting("pdfusedetectedfontsizes");
+	MAIN->getConfig()->removeSetting("pdffontfamily");
+	MAIN->getConfig()->removeSetting("pdffallbackfontfamily");
+	MAIN->getConfig()->removeSetting("pdfoverridefontsizes");
+	MAIN->getConfig()->removeSetting("pdffontsize");
 	MAIN->getConfig()->removeSetting("pdffontscale");
 	MAIN->getConfig()->removeSetting("pdfuniformizelinespacing");
 	MAIN->getConfig()->removeSetting("pdfpreservespaces");
 	MAIN->getConfig()->removeSetting("pdfpreview");
+	MAIN->getConfig()->removeSetting("pdfopenoutput");
 }
 
 bool HOCRPdfExporter::run(QString& filebasename) {
