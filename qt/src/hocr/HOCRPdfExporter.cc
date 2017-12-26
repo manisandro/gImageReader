@@ -332,9 +332,9 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 #endif
 #if !defined(TESSERACT_VERSION) || TESSERACT_VERSION < MAKE_VERSION(3,04,00)
 	ui.checkBoxFontFamily->setChecked(true);
-	ui.checkBoxFontFamily->setEnabled(true);
+	ui.checkBoxFontFamily->setEnabled(false);
 	ui.checkBoxFontSize->setChecked(true);
-	ui.checkBoxFontSize->setEnabled(true);
+	ui.checkBoxFontSize->setEnabled(false);
 #endif
 }
 
