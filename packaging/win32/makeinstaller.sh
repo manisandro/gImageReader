@@ -89,7 +89,7 @@ linkDep bin/gdb.exe
 
 linkDep bin/twaindsm.dll
 if [ -e "$installroot/bin/libenchant-2.dll" ]; then
-    linkDep lib/enchant-2/libenchant_myspell.dll
+    linkDep lib/enchant-2/enchant_hunspell.dll
 else
     linkDep lib/enchant/libenchant_myspell.dll
 fi
@@ -109,10 +109,10 @@ if [ "$iface" == "gtk" ]; then
             install -Dpm 0644 $file $installroot/$file
         done
     )
-    
+
     # Copy skeleton
     cp -R $win32dir/gtk_skel/* $installroot
-    
+
     # Install and compile schemas
     install -Dpm 0644 /usr/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml $installroot/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
     glib-compile-schemas $installroot/share/glib-2.0/schemas
