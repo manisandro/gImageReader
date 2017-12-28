@@ -683,7 +683,7 @@ bool OutputEditorHOCR::findReplaceInItem(const QModelIndex& index, const QString
 			editor->setSelection(selStart, replacestr.length());
 			return true;
 		}
-		bool matchesReplace = editor->selectedText().compare(searchstr, cs) == 0;
+		bool matchesReplace = editor->selectedText().compare(replacestr, cs) == 0;
 		int pos = -1;
 		if(backwards) {
 			pos = selStart - 1;
