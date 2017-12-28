@@ -430,10 +430,11 @@ bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const
 		QString trimmed = HOCRItem::trimmedWord(item->text());
 		if(!trimmed.isEmpty()) {
 			QString lang = item->lang();
+			bool haveLanguage = true;
 			if(m_spell->getLanguage() != lang) {
-				m_spell->setLanguage(lang);
+				haveLanguage = m_spell->setLanguage(lang);
 			}
-			return m_spell->checkWord(trimmed);
+			return !haveLanguage || m_spell->checkWord(trimmed);
 		}
 	}
 	return true;

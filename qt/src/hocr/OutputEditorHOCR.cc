@@ -469,8 +469,9 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	} else if(item->itemClass() == "ocrx_word") {
 		QString prefix, suffix, trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
 		QString spellLang = item->lang();
+		bool haveLanguage = true;
 		if(m_spell.getLanguage() != spellLang) {
-			m_spell.setLanguage(spellLang);
+			haveLanguage = m_spell.setLanguage(spellLang);
 		}
 		if(!trimmedWord.isEmpty()) {
 			for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
