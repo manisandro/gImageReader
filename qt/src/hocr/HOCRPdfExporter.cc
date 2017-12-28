@@ -230,6 +230,7 @@ public:
 	}
 
 private:
+	QFontDatabase m_fontDatabase;
 	QMap<QString, PoDoFo::PdfFont*> m_fontCache;
 	PoDoFo::PdfStreamedDocument* m_document;
 	PoDoFo::PdfPainter* m_painter;
@@ -246,18 +247,22 @@ private:
 	PoDoFo::PdfFont* getFont(const QString& family) {
 		auto it = m_fontCache.find(family);
 		if(it == m_fontCache.end()) {
-			QFontInfo info = QFontInfo(QFont(family));
-			PoDoFo::PdfFont* font = nullptr;
-			try {
+			if(!m_fontDatabase.hasFamily(family)) {
+				it = m_fontCache.insert(family, m_defaultFont);;
+			} else {
+				QFontInfo info = QFontInfo(QFont(family));
+				PoDoFo::PdfFont* font = nullptr;
+				try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-				font = m_document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), false, m_pdfFontEncoding);
+					font = m_document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), false, m_pdfFontEncoding);
 #else
-				font = m_document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), m_pdfFontEncoding);
+					font = m_document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), m_pdfFontEncoding);
 #endif
-			} catch(PoDoFo::PdfError& /*err*/) {
-				return m_defaultFont;
+					it = m_fontCache.insert(family, font);
+				} catch(PoDoFo::PdfError& /*err*/) {
+					it = m_fontCache.insert(family, m_defaultFont);;
+				}
 			}
-			it = m_fontCache.insert(family, font);
 		}
 		return it.value();
 	}
