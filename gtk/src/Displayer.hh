@@ -20,7 +20,6 @@
 #ifndef DISPLAYER_HH
 #define DISPLAYER_HH
 
-#include "common.hh"
 #include "Geometry.hh"
 
 #include <cairomm/cairomm.h>
@@ -33,10 +32,11 @@ class DisplayerImageItem;
 class DisplayerTool;
 class DisplayRenderer;
 class Source;
+namespace Ui { class MainWindow; }
 
 class Displayer {
 public:
-	Displayer();
+	Displayer(const Ui::MainWindow& _ui);
 	~Displayer() {
 		setSources(std::vector<Source*>());
 	}
@@ -45,20 +45,16 @@ public:
 	}
 	bool setSources(const std::vector<Source*> sources);
 	bool setup(const int* page, const int* resolution = nullptr, const double* angle = nullptr);
-	int getCurrentPage() const { return m_pagespin->get_value_as_int(); }
-	int getCurrentResolution() { return m_resspin->get_value_as_int(); }
-	double getCurrentAngle() const { return m_rotspin->get_value(); }
+	int getCurrentPage() const;
+	int getCurrentResolution() const;
+	double getCurrentAngle() const;
 	double getCurrentScale() const { return m_scale; }
 	std::string getCurrentImage(int& page) const;
+	int getNPages() const;
 
 	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
 	Geometry::Rectangle getSceneBoundingRect() const;
 	Geometry::Point mapToSceneClamped(const Geometry::Point& p) const;
-	int getNPages() {
-		double min, max;
-		m_pagespin->get_range(min, max);
-		return int(max);
-	}
 	bool hasMultipleOCRAreas();
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
 	bool allowAutodetectOCRAreas() const;
@@ -76,22 +72,11 @@ private:
 	enum class Zoom { In, Out, Fit, One };
 	enum class RotateMode { CurrentPage, AllPages } m_rotateMode;
 
-	Gtk::DrawingArea* m_canvas;
-	Gtk::Viewport* m_viewport;
+	const Ui::MainWindow& ui;
+	ConnectionsStore m_connections;
+
 	Glib::RefPtr<Gtk::Adjustment> m_hadj;
 	Glib::RefPtr<Gtk::Adjustment> m_vadj;
-	Gtk::Button* m_zoominbtn;
-	Gtk::Button* m_zoomoutbtn;
-	Gtk::ToggleButton* m_zoomfitbtn;
-	Gtk::ToggleButton* m_zoomonebtn;
-	Gtk::Image* m_rotimage;
-	Gtk::SpinButton* m_rotspin;
-	Gtk::SpinButton* m_pagespin;
-	Gtk::SpinButton* m_resspin;
-	Gtk::SpinButton* m_brispin;
-	Gtk::SpinButton* m_conspin;
-	Gtk::ScrolledWindow* m_scrollwin;
-	Gtk::CheckButton* m_invcheck;
 
 	std::vector<Source*> m_sources;
 	std::map<int, std::pair<Source*, int>> m_pageMap;
@@ -156,7 +141,7 @@ private:
 	void setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image);
 };
 
-class DisplayerItem {
+class DisplayerItem : public sigc::trackable {
 public:
 	friend class Displayer;
 	virtual ~DisplayerItem() {}

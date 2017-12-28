@@ -179,38 +179,58 @@ ELSE(UNIX)
 ENDIF(UNIX)
 
 
+# Generate resources
 IF("${srcdir}" STREQUAL "gtk")
     ADD_SCHEMA("gtk/data/org.gnome.gimagereader.gschema.xml")
     ADD_CUSTOM_COMMAND(
         OUTPUT gimagereader.gresource.c
         COMMAND glib-compile-resources gimagereader.gresource.xml --target=${CMAKE_CURRENT_BINARY_DIR}/gimagereader.gresource.c --generate-source
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/gtk/data/
-        DEPENDS ${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.gresource.xml
-                ${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.ui
-                ${CMAKE_SOURCE_DIR}/gtk/data/crashhandler.ui
-                ${CMAKE_SOURCE_DIR}/gtk/data/appmenu.ui
-                ${CMAKE_SOURCE_DIR}/gtk/data/editor_text.ui
-                ${CMAKE_SOURCE_DIR}/gtk/data/editor_hocr.ui)
+        DEPENDS ${gimagereader_FORMS})
     LIST(APPEND gimagereader_SRCS gimagereader.gresource.c)
-ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt4")
-    QT4_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})
-    QT4_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
-ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
-    QT5_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})
-    QT5_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
+
+    FOREACH(form ${gimagereader_FORMS})
+        GET_FILENAME_COMPONENT(outfile ${form} NAME_WE)
+        SET(outfile ${CMAKE_BINARY_DIR}/ui_${outfile}.hh)
+        MESSAGE(${outfile})
+        ADD_CUSTOM_COMMAND(
+            OUTPUT ${outfile}
+            COMMAND python3 ARGS ${CMAKE_SOURCE_DIR}/gtk/data/uigen.py ${form}
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            DEPENDS ${form}
+        )
+        LIST(APPEND gimagereader_FORMS_HEADERS ${outfile})
+    ENDFOREACH()
+
+ELSEIF("${srcdir}" STREQUAL "qt")
+    IF("${INTERFACE_TYPE}" STREQUAL "qt4")
+        QT4_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
+        SET(UIC_EXECUTABLE ${QT_UIC_EXECUTABLE})
+    ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
+        QT5_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
+        SET(UIC_EXECUTABLE Qt5::uic)
+    ENDIF()
+
+    # Custom WRAP_UI which also gettext-izes the result
+    MESSAGE(${CMAKE_COMMAND})
+    FOREACH(form ${gimagereader_FORMS})
+        GET_FILENAME_COMPONENT(outfile ${form} NAME_WE)
+        SET(outfile ${CMAKE_BINARY_DIR}/ui_${outfile}.h)
+        ADD_CUSTOM_COMMAND(
+            OUTPUT ${outfile}
+            COMMAND ${UIC_EXECUTABLE} ARGS -o ${outfile} ${form}
+            COMMAND ${CMAKE_COMMAND} ARGS -P ${CMAKE_SOURCE_DIR}/cmake/gettextizeui.cmake ${outfile}
+            DEPENDS ${form}
+        )
+        LIST(APPEND gimagereader_FORMS_HEADERS ${outfile})
+    ENDFOREACH()
+
+    SET_PROPERTY(SOURCE ${gimagereader_FORMS_HEADERS} PROPERTY SKIP_AUTOMOC ON)
+    SET_PROPERTY(SOURCE ${gimagereader_RESOURCES_RCC} PROPERTY SKIP_AUTOMOC ON)
 ENDIF()
 
-IF("${srcdir}" STREQUAL "qt")
-  SET_PROPERTY(SOURCE ${gimagereader_FORMS_HEADERS} PROPERTY SKIP_AUTOMOC ON)
-  SET_PROPERTY(SOURCE ${gimagereader_RESOURCES_RCC} PROPERTY SKIP_AUTOMOC ON)
-    # Gettextize ui files
-    ADD_CUSTOM_TARGET(
-        gettextizeui
-        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/gettextizeui.cmake ${gimagereader_FORMS_HEADERS}
-        DEPENDS ${gimagereader_FORMS_HEADERS}
-    )
-ENDIF()
 
+# Process translations
 FILE(READ po/LINGUAS langs_string)
 STRING(REGEX MATCHALL "[a-zA-Z_]+" langs "${langs_string}")
 FOREACH(lang ${langs})
@@ -256,10 +276,8 @@ SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 SET_TARGET_PROPERTIES(gimagereader PROPERTIES OUTPUT_NAME gimagereader-${INTERFACE_TYPE})
 IF("${INTERFACE_TYPE}" STREQUAL "qt4")
     TARGET_LINK_LIBRARIES(gimagereader Qt4::QtCore Qt4::QtGui Qt4::QtNetwork Qt4::QtDBus Qt4::QtXml)
-    ADD_DEPENDENCIES(gimagereader gettextizeui)
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
     TARGET_LINK_LIBRARIES(gimagereader Qt5::Widgets Qt5::Network Qt5::DBus Qt5::Xml Qt5::PrintSupport)
-    ADD_DEPENDENCIES(gimagereader gettextizeui)
 ENDIF()
 
 INSTALL(TARGETS gimagereader DESTINATION bin)

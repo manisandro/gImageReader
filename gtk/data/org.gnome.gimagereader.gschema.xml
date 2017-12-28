@@ -146,11 +146,6 @@
             <summary>Font to use for PDFs</summary>
             <description>Font to use for PDFs.</description>
         </key>
-        <key type="b" name="pdfusedetectedfontsizes">
-            <default>true</default>
-            <summary>Use detected font sizes in PDFs</summary>
-            <description>Whether to use detected font sizes when generating PDFs.</description>
-        </key>
         <key type="b" name="pdfuniformizelinespacing">
             <default>false</default>
             <summary>Uniformize line spacing</summary>
@@ -181,6 +176,11 @@
             <summary>Whether to display a preview when exporting to PDF</summary>
             <description>Whether to display a preview when exporting to PDF.</description>
         </key>
+        <key type="b" name="pdfopenoutput">
+            <default>false</default>
+            <summary>Whether to open PDF output after export</summary>
+            <description>Whether to open PDF output after export.</description>
+        </key>
         <key type="i" name="datadirs">
             <default>0</default>
             <summary>Where to look for tessdata and spelling files</summary>
@@ -196,10 +196,35 @@
             <summary>Resolution at which to export images in the PDF</summary>
             <description>Resolution at which to export images in the PDF.</description>
         </key>
-        <key type="i" name="pdfimageconversionflags">
+        <key type="i" name="pdfimagedithering">
             <default>0</default>
             <summary>Image conversion flags</summary>
             <description>Image conversion flags.</description>
+        </key>
+        <key type="b" name="pdfoverridefontfamily">
+            <default>false</default>
+            <summary>Whether to override font family when exporting to PDF</summary>
+            <description>Whether to override font family when exporting to PDF.</description>
+        </key>
+        <key type="s" name="pdffontfamily">
+            <default>"Sans"</default>
+            <summary>Font family to use when exporting to PDF</summary>
+            <description>Font family to use when exporting to PDF.</description>
+        </key>
+        <key type="s" name="pdffallbackfontfamily">
+            <default>"Sans"</default>
+            <summary>Fallback font family to use when exporting to PDF</summary>
+            <description>Fallback font family to use when exporting to PDF.</description>
+        </key>
+        <key type="b" name="pdfoverridefontsizes">
+            <default>false</default>
+            <summary>Whether to override font size when exporting to PDF</summary>
+            <description>Whether to override font size when exporting to PDF.</description>
+        </key>
+        <key type="i" name="pdffontsize">
+            <default>0</default>
+            <summary>Font size when exporting to PDF</summary>
+            <description>Font size when exporting to PDF.</description>
         </key>
         <key type="b" name="ocraddsourcefilename">
             <default>false</default>
@@ -211,5 +236,6 @@
             <summary>Prepend page number to output</summary>
             <description>Whether to prepend the page number to the output text.</description>
         </key>
+
     </schema>
 </schemalist>

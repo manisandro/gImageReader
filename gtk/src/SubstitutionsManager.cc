@@ -27,43 +27,40 @@
 
 #include <fstream>
 
-SubstitutionsManager::SubstitutionsManager(const Builder& builder) {
-	m_dialog = builder("window:substitutions");
-	m_listView = builder("treeview:substitutions");
-	Gtk::ToolButton* removeButton = builder("toolbutton:substitutions.remove");
+SubstitutionsManager::SubstitutionsManager() {
+	ui.setupUi();
 
 	m_listStore = Gtk::ListStore::create(m_viewCols);
-	m_listView->set_model(m_listStore);
-	m_listView->append_column_editable(_("Search for"), m_viewCols.search);
-	m_listView->append_column_editable(_("Replace with"), m_viewCols.replace);
-	m_listView->get_column(0)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
-	m_listView->get_column(1)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
-	m_listView->get_column(0)->set_expand(true);
-	m_listView->get_column(1)->set_expand(true);
-	m_listView->set_fixed_height_mode();
+	ui.treeview->set_model(m_listStore);
+	ui.treeview->append_column_editable(_("Search for"), m_viewCols.search);
+	ui.treeview->append_column_editable(_("Replace with"), m_viewCols.replace);
+	ui.treeview->get_column(0)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
+	ui.treeview->get_column(1)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
+	ui.treeview->get_column(0)->set_expand(true);
+	ui.treeview->get_column(1)->set_expand(true);
+	ui.treeview->set_fixed_height_mode();
 
-	CONNECT(builder("toolbutton:substitutions.open").as<Gtk::Button>(), clicked, [this] { openList(); });
-	CONNECT(builder("toolbutton:substitutions.save").as<Gtk::Button>(), clicked, [this] { saveList(); });
-	CONNECT(builder("toolbutton:substitutions.clear").as<Gtk::Button>(), clicked, [this] { clearList(); });
-	CONNECT(builder("toolbutton:substitutions.add").as<Gtk::Button>(), clicked, [this] { addRow(); });
-	CONNECT(builder("button:substitutions.apply").as<Gtk::Button>(), clicked, [this] { applySubstitutions(); });
-	CONNECT(builder("button:substitutions.close").as<Gtk::Button>(), clicked, [this] { m_dialog->hide(); });
-	CONNECT(removeButton, clicked, [this] { removeRows(); });
-	CONNECT(m_listView->get_selection(), changed, [this,removeButton] { removeButton->set_sensitive(m_listView->get_selection()->count_selected_rows() != 0); });
+	CONNECT(ui.toolbuttonOpen, clicked, [this] { openList(); });
+	CONNECT(ui.toolbuttonSave, clicked, [this] { saveList(); });
+	CONNECT(ui.toolbuttonClear, clicked, [this] { clearList(); });
+	CONNECT(ui.toolbuttonAdd, clicked, [this] { addRow(); });
+	CONNECT(ui.toolbuttonRemove, clicked, [this] { removeRows(); });
+	CONNECT(ui.buttonApply, clicked, [this] { applySubstitutions(); });
+	CONNECT(ui.buttonClose, clicked, [this] { ui.windowSubstitutions->hide(); });
+	CONNECT(ui.treeview->get_selection(), changed, [this] { ui.toolbuttonRemove->set_sensitive(ui.treeview->get_selection()->count_selected_rows() != 0); });
 
-	MAIN->getConfig()->addSetting(new ListStoreSetting("replacelist", Glib::RefPtr<Gtk::ListStore>::cast_static(m_listView->get_model())));
+	MAIN->getConfig()->addSetting(new ListStoreSetting("replacelist", Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeview->get_model())));
 }
 
 SubstitutionsManager::~SubstitutionsManager() {
 	MAIN->getConfig()->getSetting<ListStoreSetting>("replacelist")->serialize();
-	delete m_dialog; // Toplevel widgets need to be explicitly deleted
 	MAIN->getConfig()->removeSetting("replacelist");
 }
 
 void SubstitutionsManager::set_visible(bool visible) {
-	m_dialog->set_visible(visible);
-	if(visible && m_dialog->is_visible()) {
-		m_dialog->raise();
+	ui.windowSubstitutions->set_visible(visible);
+	if(visible) {
+		ui.windowSubstitutions->raise();
 	}
 }
 
@@ -73,7 +70,7 @@ void SubstitutionsManager::openList() {
 	}
 	std::string dir = !m_currentFile.empty() ? Glib::path_get_dirname(m_currentFile) : "";
 	FileDialogs::FileFilter filter = { _("Substitutions List"), {"text/plain"}, {"*.txt"}};
-	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open Substitutions List"), dir, "auxdir", filter, false, m_dialog);
+	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open Substitutions List"), dir, "auxdir", filter, false, ui.windowSubstitutions);
 
 	if(!files.empty()) {
 		std::ifstream file(files.front()->get_path());
@@ -107,7 +104,7 @@ void SubstitutionsManager::openList() {
 
 bool SubstitutionsManager::saveList() {
 	FileDialogs::FileFilter filter = { _("Substitutions List"), {"text/plain"}, {"*.txt"} };
-	std::string filename = FileDialogs::save_dialog(_("Save Substitutions List"), m_currentFile, "auxdir", filter, false, m_dialog);
+	std::string filename = FileDialogs::save_dialog(_("Save Substitutions List"), m_currentFile, "auxdir", filter, false, ui.windowSubstitutions);
 	if(filename.empty()) {
 		return false;
 	}
@@ -130,7 +127,7 @@ bool SubstitutionsManager::saveList() {
 
 bool SubstitutionsManager::clearList() {
 	if(m_listStore->children().size() > 0) {
-		int response = Utils::question_dialog(_("Save List?"), _("Do you want to save the current list?"), Utils::Button::Save|Utils::Button::Discard|Utils::Button::Cancel, m_dialog);
+		int response = Utils::question_dialog(_("Save List?"), _("Do you want to save the current list?"), Utils::Button::Save|Utils::Button::Discard|Utils::Button::Cancel, ui.windowSubstitutions);
 		if(response == Utils::Button::Save) {
 			if(!saveList()) {
 				return false;
@@ -145,13 +142,13 @@ bool SubstitutionsManager::clearList() {
 
 void SubstitutionsManager::addRow() {
 	Gtk::TreeIter it = m_listStore->append();
-	m_listView->set_cursor(m_listStore->get_path(it), *m_listView->get_column(0), true);
+	ui.treeview->set_cursor(m_listStore->get_path(it), *ui.treeview->get_column(0), true);
 }
 
 void SubstitutionsManager::removeRows() {
-	if(m_listView->get_selection()->count_selected_rows() != 0) {
+	if(ui.treeview->get_selection()->count_selected_rows() != 0) {
 		std::vector<Gtk::ListStore::RowReference> rows;
-		for(const Gtk::ListStore::TreeModel::Path& path : m_listView->get_selection()->get_selected_rows()) {
+		for(const Gtk::ListStore::TreeModel::Path& path : ui.treeview->get_selection()->get_selected_rows()) {
 			rows.push_back(Gtk::ListStore::RowReference(m_listStore, path));
 		}
 		for(const Gtk::ListStore::RowReference& row : rows) {

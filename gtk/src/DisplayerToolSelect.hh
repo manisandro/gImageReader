@@ -52,7 +52,6 @@ private:
 	friend class NumberedDisplayerSelection;
 	NumberedDisplayerSelection* m_curSel = nullptr;
 	std::vector<NumberedDisplayerSelection*> m_selections;
-	sigc::connection m_connectionAutolayout;
 
 	void clearSelections();
 	void removeSelection(int num);

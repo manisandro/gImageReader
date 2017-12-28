@@ -21,6 +21,7 @@
 #define SEARCHREPLACEFRAME_HH
 
 #include "common.hh"
+#include "ui_SearchReplaceFrame.hh"
 
 class SubstitutionsManager;
 
@@ -29,7 +30,7 @@ public:
 	explicit SearchReplaceFrame();
 	~SearchReplaceFrame();
 
-	Gtk::Box* getWidget() const{ return m_widget; }
+	Gtk::Box* getWidget() const{ return ui.boxSearchreplace; }
 	void clear();
 	void clearErrorState();
 	void setErrorState();
@@ -44,19 +45,16 @@ private:
 	sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool> m_signal_replace_all;
 	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&, bool> m_signal_apply_substitutions;
 
-	Builder m_builder;
-	Gtk::Box* m_widget;
-	Gtk::Entry* m_lineEditSearch;
-	Gtk::Entry* m_lineEditReplace;
-	Gtk::CheckButton* m_checkBoxMatchCase;
+	Ui::SearchReplaceFrame ui;
+	ConnectionsStore m_connections;
 	SubstitutionsManager* m_substitutionsManager;
 
 private:
-	void findNext() { m_signal_find_replace.emit(m_lineEditSearch->get_text(), m_lineEditReplace->get_text(), m_checkBoxMatchCase->get_active(), false, false); }
-	void findPrev() { m_signal_find_replace.emit(m_lineEditSearch->get_text(), m_lineEditReplace->get_text(), m_checkBoxMatchCase->get_active(), true, false); }
-	void replaceNext() { m_signal_find_replace.emit(m_lineEditSearch->get_text(), m_lineEditReplace->get_text(), m_checkBoxMatchCase->get_active(), false, true); }
-	void emitReplaceAll() { m_signal_replace_all.emit(m_lineEditSearch->get_text(), m_lineEditReplace->get_text(), m_checkBoxMatchCase->get_active()); }
-	void emitApplySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions) { m_signal_apply_substitutions.emit(substitutions, m_checkBoxMatchCase->get_active()); }
+	void findNext() { m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), false, false); }
+	void findPrev() { m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), true, false); }
+	void replaceNext() { m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), false, true); }
+	void emitReplaceAll() { m_signal_replace_all.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active()); }
+	void emitApplySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions) { m_signal_apply_substitutions.emit(substitutions, ui.checkbuttonMatchcase->get_active()); }
 };
 
 #endif // SEARCHREPLACEFRAME_HH

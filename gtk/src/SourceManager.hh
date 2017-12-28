@@ -22,11 +22,14 @@
 
 #include "common.hh"
 
+namespace Ui { class MainWindow; }
 
 struct Source {
-	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false);
+	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::ustring& _password, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
+		: file(_file), displayname(_displayname), password(_password), monitor(_monitor), isTemp(_isTemp) {}
 	Glib::RefPtr<Gio::File> file;
 	std::string displayname;
+	Glib::ustring password;
 	Glib::RefPtr<Gio::FileMonitor> monitor;
 	bool isTemp;
 	int brightness = 0;
@@ -35,12 +38,11 @@ struct Source {
 	int page = 1;
 	std::vector<double> angle;
 	bool invert = false;
-	Glib::ustring password;
 };
 
 class SourceManager {
 public:
-	SourceManager();
+	SourceManager(const Ui::MainWindow& _ui);
 	~SourceManager();
 
 	int addSources(const std::vector<Glib::RefPtr<Gio::File>>& files);
@@ -61,19 +63,11 @@ private:
 			add(source);
 			add(path);
 		}
-	};
+	} m_listViewCols;
 
-	Gtk::Notebook* m_notebook;
-	Gtk::TreeView* m_listView;
-	Gtk::Button* m_addButton;
-	Gtk::MenuButton* m_addButtonMenu;
-	Gtk::Button* m_removeButton;
-	Gtk::Button* m_deleteButton;
-	Gtk::Button* m_clearButton;
-	Gtk::MenuItem* m_pasteItem;
-
+	const Ui::MainWindow& ui;
+	ConnectionsStore m_connections;
 	Glib::RefPtr<Gtk::Clipboard> m_clipboard;
-	ListViewColumns m_listViewCols;
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;
 	sigc::signal<void> m_signal_sourceChanged;
@@ -83,6 +77,7 @@ private:
 	void fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event, Gtk::TreeIter it);
 	void openSources();
 	void pasteClipboard();
+	bool querySourcePassword(const Glib::RefPtr<Gio::File>& file, Glib::ustring& password) const;
 	void removeSource(bool deleteFile);
 	void savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const std::string& displayname);
 	void selectionChanged();

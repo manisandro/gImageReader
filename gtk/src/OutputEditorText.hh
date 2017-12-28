@@ -27,6 +27,7 @@
 #include "MainWindow.hh"
 #include "OutputBuffer.hh"
 #include "OutputEditor.hh"
+#include "ui_OutputEditorText.hh"
 
 class SearchReplaceFrame;
 
@@ -35,9 +36,7 @@ public:
 	OutputEditorText();
 	~OutputEditorText();
 
-	Gtk::Box* getUI() override {
-		return m_paneWidget;
-	}
+	Gtk::Box* getUI() const override { return ui.boxEditorText; }
 	ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
 		return new TextReadSessionData;
 	}
@@ -56,25 +55,14 @@ private:
 
 	enum class InsertMode { Append, Cursor, Replace };
 
-	Builder m_builder;
-	Gtk::Box* m_paneWidget;
-	Gtk::MenuButton* m_insButton;
-	Gtk::Image* m_insImage;
-	Gtk::Box* m_outputBox;
-	Gsv::View* m_textView;
-	Gtk::CheckMenuItem* m_filterKeepIfEndMark;
-	Gtk::CheckMenuItem* m_filterKeepIfQuote;
-	Gtk::CheckMenuItem* m_filterJoinHyphen;
-	Gtk::CheckMenuItem* m_filterJoinSpace;
-	Gtk::CheckMenuItem* m_filterKeepParagraphs;
+
+	Ui::OutputEditorText ui;
+	ConnectionsStore m_connections;
 	SearchReplaceFrame* m_searchFrame;
 	Glib::RefPtr<OutputBuffer> m_textBuffer;
 
 	InsertMode m_insertMode;
 	GtkSpell::Checker m_spell;
-
-	sigc::connection m_connectionCustomFont;
-	sigc::connection m_connectionDefaultFont;
 
 	void addText(const Glib::ustring& text, bool insert);
 	void completeTextViewMenu(Gtk::Menu *menu);

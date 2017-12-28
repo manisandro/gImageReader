@@ -326,12 +326,10 @@ std::string save_dialog(const Glib::ustring &title, const std::string& initialFi
 	}
 #endif
 	if(!filename.empty()) {
-		std::string sbase, sext;
-		std::string base, ext;
-		Utils::get_filename_parts(suggestedFile, sbase, sext);
-		Utils::get_filename_parts(filename, base, ext);
-		if(ext.empty()) {
-			filename = base + "." + sext;
+		std::pair<std::string, std::string> sparts = Utils::split_filename(suggestedFile);
+		std::pair<std::string, std::string> parts = Utils::split_filename(filename);
+		if(parts.second.empty()) {
+			filename = parts.first + "." + sparts.second;
 		}
 		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filename));
 	}

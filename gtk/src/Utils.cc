@@ -114,19 +114,18 @@ Glib::ustring Utils::get_content_type(const std::string &filename) {
 	return contenttype;
 }
 
-void Utils::get_filename_parts(const std::string& filename, std::string& base, std::string& ext) {
+std::pair<std::string, std::string> Utils::split_filename(const std::string& filename)
+{
 	std::string::size_type pos = filename.rfind('.');
 	if(pos == std::string::npos) {
-		base = filename;
-		ext = "";
-		return;
+		return std::make_pair(filename, std::string());
 	}
-	base = filename.substr(0, pos);
-	ext = filename.substr(pos + 1);
-	if(base.size() > 3 && base.substr(pos - 4) == ".tar") {
-		base = base.substr(0, pos - 4);
-		ext = "tar." + ext;
+	std::pair<std::string, std::string> parts = std::make_pair(filename.substr(0, pos), filename.substr(pos + 1));
+	if(parts.first.size() > 3 && parts.first.substr(pos - 4) == ".tar") {
+		parts.first = parts.first.substr(0, pos - 4);
+		parts.second = "tar." + parts.second;
 	}
+	return parts;
 }
 
 std::string Utils::make_absolute_path(const std::string& path) {
@@ -154,12 +153,11 @@ std::string Utils::make_output_filename(const std::string& filename) {
 	std::string newfilename = Glib::build_filename(dirname, basename);
 	// Generate non-existing file
 	int i = 0;
-	std::string base, ext;
-	Utils::get_filename_parts(newfilename, base, ext);
-	base = Glib::Regex::create("_[0-9]+$")->replace(base, 0, "", static_cast<Glib::RegexMatchFlags>(0));
-	newfilename = Glib::ustring::compose("%1.%2", base, ext);
+	std::pair<std::string,std::string> parts = split_filename(newfilename);
+	parts.first = Glib::Regex::create("_[0-9]+$")->replace(parts.first, 0, "", static_cast<Glib::RegexMatchFlags>(0));
+	newfilename = Glib::ustring::compose("%1.%2", parts.first, parts.second);
 	while(Glib::file_test(newfilename, Glib::FILE_TEST_EXISTS)) {
-		newfilename = Glib::ustring::compose("%1_%2.%3", base, ++i, ext);
+		newfilename = Glib::ustring::compose("%1_%2.%3", parts.first, ++i, parts.second);
 	}
 	return newfilename;
 }
@@ -192,14 +190,57 @@ Glib::ustring Utils::string_join(const std::vector<Glib::ustring>& strings, cons
 	return result;
 }
 
-Glib::ustring Utils::string_trim(const Glib::ustring &str) {
+Glib::ustring Utils::string_trim(const Glib::ustring &str, char what) {
 	Glib::ustring ret = str;
-	ret.erase(0, ret.find_first_not_of(' '));
-	std::size_t rpos = ret.find_last_not_of(' ');
+	ret.erase(0, ret.find_first_not_of(what));
+	std::size_t rpos = ret.find_last_not_of(what);
 	if(rpos != Glib::ustring::npos) {
 		ret.erase(rpos + 1);
 	}
 	return ret;
+}
+
+bool Utils::strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, bool matchCase)
+{
+	return matchCase ? (str1 == str2) : (str1.casefold() == str2.casefold());
+}
+
+std::size_t Utils::string_firstIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase)
+{
+	std::size_t res = Glib::ustring::npos;
+	if(matchCase) {
+		res = str.find(search, pos);
+	} else {
+		res = str.lowercase().find(search.lowercase(), pos);
+	}
+	return res == Glib::ustring::npos ? -1 : res;
+}
+
+std::size_t Utils::string_lastIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase)
+{
+	std::size_t res = Glib::ustring::npos;
+	if(matchCase) {
+		res = str.rfind(search, pos);
+	} else {
+		res = str.lowercase().rfind(search.lowercase(), pos);
+	}
+	return res == Glib::ustring::npos ? -1 : res;
+}
+
+int Utils::string_replace(Glib::ustring& str, const Glib::ustring& search, const Glib::ustring& replace, bool matchCase)
+{
+	int pos = 0;
+	int count = 0;
+	while(true) {
+		pos = Utils::string_firstIndex(str, search, pos, matchCase);
+		if(pos == -1) {
+			break;
+		}
+		str = str.replace(pos, search.size(), replace);
+		pos += replace.size();
+		++count;
+	}
+	return count;
 }
 
 int Utils::parseInt(const Glib::ustring& str, bool* ok)
@@ -287,7 +328,15 @@ Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string &url, Glib::ustr
 
 
 Glib::ustring Utils::getSpellingLanguage(const Glib::ustring& lang) {
-	// Look in the lang cultures table if a language hint is provided
+	// If it is already a valid code, return it
+	if(lang.length() == 2) {
+		return lang;
+	}
+	static Glib::RefPtr<Glib::Regex> langPattern = Glib::Regex::create("^[a-z]{2}_[A-Z]{2}");
+	if(langPattern->match(lang)) {
+		return lang;
+	}
+	// Treat the language as a tesseract lang spec and try to find a matching code
 	Config::Lang langspec = {lang};
 	if(!lang.empty() && MAIN->getConfig()->searchLangSpec(langspec)) {
 		return langspec.code;

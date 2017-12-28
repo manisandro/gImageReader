@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * CrashHandler.hh
+ * XmlUtils.hh
  * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
@@ -17,29 +17,29 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CRASHHANDLER_HH
-#define CRASHHANDLER_HH
+#ifndef XMLUTILS_HH
+#define XMLUTILS_HH
 
-#include "common.hh"
-#include "ui_CrashHandler.hh"
+#include <glibmm/ustring.h>
 
-class CrashHandler : public Gtk::Application {
+namespace xmlpp {
+	class Document;
+	class Element;
+	class Node;
+}
+
+class XmlUtils {
 public:
-	CrashHandler(int argc, char* argv[]);
-	void on_startup();
+	static Glib::ustring elementText(const xmlpp::Element* element);
+	static xmlpp::Element* firstChildElement(xmlpp::Node* node, const Glib::ustring& name = Glib::ustring());
+	static xmlpp::Element* nextSiblingElement(xmlpp::Node* node, const Glib::ustring& name = Glib::ustring());
+	static Glib::ustring documentXML(xmlpp::Document* doc);
+	static Glib::ustring elementXML(const xmlpp::Element* element);
+	static xmlpp::Element* takeChild(xmlpp::Element* parent, xmlpp::Element* child);
+	static xmlpp::Element* createElement(const Glib::ustring& name);
 
 private:
-	Ui::CrashHandler ui;
-	ConnectionsStore m_connections;
-	sigc::connection m_progressConnection;
-	std::string m_saveFile;
-	int m_pid = 0;
-
-	void generate_backtrace();
-	void generate_backtrace_end(bool success);
-	bool pulse_progress();
-	bool handle_stdout(Glib::IOCondition cond, Glib::RefPtr<Glib::IOChannel> ch);
-	static void handle_child_exit(GPid pid, gint status, void* data);
+	static xmlpp::Element* dummyElement();
 };
 
-#endif // CRASH_HANDLER_HH
+#endif // XMLUTILS_HH

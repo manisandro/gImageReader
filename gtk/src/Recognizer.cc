@@ -93,35 +93,23 @@ protected:
 	}
 
 private:
+	ConnectionsStore m_connections;
 	bool m_selected = false;
 	bool m_ignoreNextActivate = false;
 };
 
-Recognizer::Recognizer() {
-	m_menuPages = MAIN->getWidget("menu:recognize.pages");
-	m_menuLanguages = MAIN->getWidget("menu:main.languages");
-	m_pagesDialog = MAIN->getWidget("dialog:recognize.pages");
-	m_pagesEntry = MAIN->getWidget("entry:dialog.pages");
-	m_langLabel = MAIN->getWidget("label:main.recognize.lang");
-	m_modeLabel = MAIN->getWidget("label:main.recognize.mode");
-	m_pageAreaLabel = MAIN->getWidget("label:dialog.regions");
-	m_pageAreaCombo = MAIN->getWidget("comboboxtext:dialog.regions");
-	Gtk::MenuButton* recognizeBtn = MAIN->getWidget("menubutton:main.languages");
-	recognizeBtn->set_menu(*m_menuLanguages);
-	m_recognizeBtn = MAIN->getWidget("button:main.recognize");
-
-	CONNECT(m_recognizeBtn, clicked, [this] { recognizeButtonClicked(); });
-	CONNECT(MAIN->getWidget("menuitem:recognize.pages.current").as<Gtk::MenuItem>(), activate, [this] { recognizeCurrentPage(); });
-	CONNECT(MAIN->getWidget("menuitem:recognize.pages.multiple").as<Gtk::MenuItem>(), activate, [this] { recognizeMultiplePages();; });
-	CONNECTS(m_pagesEntry, focus_in_event, [](GdkEventFocus*, Gtk::Entry* e) {
-		Utils::clear_error_state(e);
-		return false;
-	});
+Recognizer::Recognizer(const Ui::MainWindow& _ui)
+	: ui(_ui)
+{
+	CONNECT(ui.buttonRecognize, clicked, [this] { recognizeButtonClicked(); });
+	CONNECT(ui.menuitemRecognizeCurrent, activate, [this] { recognizeCurrentPage(); });
+	CONNECT(ui.menuitemRecognizeMultiple, activate, [this] { recognizeMultiplePages();; });
+	CONNECT(ui.entryPageRange, focus_in_event, [this](GdkEventFocus*) { Utils::clear_error_state(ui.entryPageRange); return false; });
 
 	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("language"));
-	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", MAIN->getWidget("comboboxtext:dialog.regions")));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("ocraddsourcefilename", MAIN->getWidget("checkbutton:dialog.pages.prepend.filename")));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("ocraddsourcepage", MAIN->getWidget("checkbutton:dialog.pages.prepend.page")));
+	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", ui.comboPageRangeRegions));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("ocraddsourcefilename", ui.checkPageRangePrependFile));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("ocraddsourcepage", ui.checkPageRangePrependPage));
 	MAIN->getConfig()->addSetting(new VarSetting<int>("psm"));
 }
 
@@ -189,9 +177,7 @@ bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* languag
 }
 
 void Recognizer::updateLanguagesMenu() {
-	m_menuLanguages->foreach([this](Gtk::Widget& w) {
-	m_menuLanguages->remove(w);
-	});
+	ui.menuLanguages->foreach([this](Gtk::Widget& w) { ui.menuLanguages->remove(w); });
 	m_langMenuRadioGroup = Gtk::RadioButtonGroup();
 	m_langMenuCheckGroup = std::vector<std::pair<Gtk::CheckMenuItem*, Glib::ustring>>();
 	m_psmRadioGroup = Gtk::RadioButtonGroup();
@@ -209,7 +195,7 @@ void Recognizer::updateLanguagesMenu() {
 
 	if(availLanguages.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("No languages available"), _("No tesseract languages are available for use. Recognition will not work."));
-		m_langLabel->set_text("");
+		ui.labelRecognizeLang->set_text("");
 	}
 
 	// Add menu items for languages, with spelling submenu if available
@@ -247,7 +233,7 @@ void Recognizer::updateLanguagesMenu() {
 				submenu->append(*curitem);
 			}
 			item->set_submenu(*submenu);
-			m_menuLanguages->append(*item);
+			ui.menuLanguages->append(*item);
 		} else {
 			curitem = Gtk::manage(new Gtk::RadioMenuItem(m_langMenuRadioGroup, lang.name));
 			CONNECT(curitem, toggled, [this, curitem, lang] { setLanguage(curitem, lang); });
@@ -255,13 +241,13 @@ void Recognizer::updateLanguagesMenu() {
 				curlang = lang;
 				activeitem = curitem;
 			}
-			m_menuLanguages->append(*curitem);
+			ui.menuLanguages->append(*curitem);
 		}
 	}
 	// Add multilanguage menu
 	bool isMultilingual = false;
 	if(!availLanguages.empty()) {
-		m_menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+		ui.menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 		m_multilingualRadio = Gtk::manage(new MultilingualMenuItem(m_langMenuRadioGroup, _("Multilingual")));
 		Gtk::Menu* submenu = Gtk::manage(new Gtk::Menu);
 		isMultilingual = curlang.prefix.find('+') != curlang.prefix.npos;
@@ -294,7 +280,7 @@ void Recognizer::updateLanguagesMenu() {
 		CONNECT(submenu, button_release_event, [this](GdkEventButton* ev) {
 			return onMultilingualMenuButtonEvent(ev);
 		}, false);
-		m_menuLanguages->append(*m_multilingualRadio);
+		ui.menuLanguages->append(*m_multilingualRadio);
 	}
 	if(isMultilingual) {
 		activeitem = m_multilingualRadio;
@@ -304,7 +290,7 @@ void Recognizer::updateLanguagesMenu() {
 	}
 
 	// Add PSM items
-	m_menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+	ui.menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 	Gtk::Menu* psmMenu = Gtk::manage(new Gtk::Menu);
 	m_currentPsmMode = MAIN->getConfig()->getSetting<VarSetting<int>>("psm")->getValue();
 
@@ -340,15 +326,15 @@ void Recognizer::updateLanguagesMenu() {
 
 	Gtk::MenuItem* psmItem = Gtk::manage(new Gtk::MenuItem(_("Page segmentation mode")));
 	psmItem->set_submenu(*psmMenu);
-	m_menuLanguages->append(*psmItem);
+	ui.menuLanguages->append(*psmItem);
 
 	// Add installer item
-	m_menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+	ui.menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 	Gtk::MenuItem* manageItem = Gtk::manage(new Gtk::MenuItem(_("Manage languages...")));
 	CONNECT(manageItem, activate, [this] { manageInstalledLanguages(); });
-	m_menuLanguages->append(*manageItem);
+	ui.menuLanguages->append(*manageItem);
 
-	m_menuLanguages->show_all();
+	ui.menuLanguages->show_all();
 	if(activeitem) {
 		activeitem->set_active(true);
 		activeitem->toggled(); // Ensure signal is emitted
@@ -358,9 +344,9 @@ void Recognizer::updateLanguagesMenu() {
 void Recognizer::setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang &lang) {
 	if(item->get_active()) {
 		if(!lang.code.empty()) {
-			m_langLabel->set_markup(Glib::ustring::compose("<small> %1 (%2)</small>", lang.name, lang.code));
+			ui.labelRecognizeLang->set_markup(Glib::ustring::compose("<small> %1 (%2)</small>", lang.name, lang.code));
 		} else {
-			m_langLabel->set_markup(Glib::ustring::compose("<small> %1</small>", lang.name));
+			ui.labelRecognizeLang->set_markup(Glib::ustring::compose("<small> %1</small>", lang.name));
 		}
 		m_curLang = lang;
 		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("language")->setValue(lang.prefix + ":" + lang.code);
@@ -380,33 +366,33 @@ void Recognizer::setMultiLanguage() {
 		langs = "eng+";
 	}
 	langs = langs.substr(0, langs.length() - 1);
-	m_langLabel->set_markup("<small>" + langs + "</small>");
+	ui.labelRecognizeLang->set_markup("<small>" + langs + "</small>");
 	m_curLang = {langs, "", "Multilingual"};
 	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("language")->setValue(langs + ":");
 	m_signal_languageChanged.emit(m_curLang);
 }
 
 void Recognizer::setRecognizeMode(const Glib::ustring& mode) {
-	m_modeLabel->set_markup(Glib::ustring::compose("<small>%1</small>", mode));
+	ui.labelRecognizeMode->set_markup(Glib::ustring::compose("<small>%1</small>", mode));
 }
 
 std::vector<int> Recognizer::selectPages(bool& autodetectLayout) {
 	int nPages = MAIN->getDisplayer()->getNPages();
 
-	m_pagesEntry->set_text(Glib::ustring::compose("1-%1", nPages));
-	m_pagesEntry->grab_focus();
-	m_pageAreaLabel->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
-	m_pageAreaCombo->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
-	MAIN->getWidget("box:dialog.pages.prepend")->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
-	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_pageAreaCombo->get_model());
-	int col = m_pageAreaCombo->get_entry_text_column();
+	ui.entryPageRange->set_text(Glib::ustring::compose("1-%1", nPages));
+	ui.entryPageRange->grab_focus();
+	ui.labelPageRangeRegions->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	ui.comboPageRangeRegions->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	ui.boxPageRangePrepend->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.comboPageRangeRegions->get_model());
+	int col = ui.comboPageRangeRegions->get_entry_text_column();
 	store->children()[0]->set_value<Glib::ustring>(col, MAIN->getDisplayer()->hasMultipleOCRAreas() ? _("Current selection") : _("Entire page"));
 
 	static Glib::RefPtr<Glib::Regex> validateRegEx = Glib::Regex::create("^[\\d,\\-\\s]+$");
 	std::vector<int> pages;
-	while(m_pagesDialog->run() == Gtk::RESPONSE_OK) {
+	while(ui.dialogPageRange->run() == Gtk::RESPONSE_OK) {
 		pages.clear();
-		Glib::ustring text = m_pagesEntry->get_text();
+		Glib::ustring text = ui.entryPageRange->get_text();
 		if(validateRegEx->match(text)) {
 			text = Glib::Regex::create("\\s+")->replace(text, 0, "", static_cast<Glib::RegexMatchFlags>(0));
 			std::vector<Glib::ustring> blocks = Utils::string_split(text, ',', false);
@@ -430,13 +416,13 @@ std::vector<int> Recognizer::selectPages(bool& autodetectLayout) {
 			}
 		}
 		if(pages.empty()) {
-			Utils::set_error_state(m_pagesEntry);
+			Utils::set_error_state(ui.entryPageRange);
 		} else {
 			break;
 		}
 	}
-	autodetectLayout = m_pageAreaCombo->get_visible() ? m_pageAreaCombo->get_active_row_number() == 1 : false;
-	m_pagesDialog->hide();
+	autodetectLayout = ui.comboPageRangeRegions->get_visible() ? ui.comboPageRangeRegions->get_active_row_number() == 1 : false;
+	ui.dialogPageRange->hide();
 	std::sort(pages.begin(), pages.end());
 	return pages;
 }
@@ -446,8 +432,8 @@ void Recognizer::recognizeButtonClicked() {
 	if(nPages == 1) {
 		recognize({MAIN->getDisplayer()->getCurrentPage()});
 	} else {
-		auto positioner = sigc::bind(sigc::ptr_fun(Utils::popup_positioner), m_recognizeBtn, m_menuPages, false, true);
-		m_menuPages->popup(positioner, 0, gtk_get_current_event_time());
+		auto positioner = sigc::bind(sigc::ptr_fun(Utils::popup_positioner), ui.buttonRecognize, ui.menuRecognizePages, false, true);
+		ui.menuRecognizePages->popup(positioner, 0, gtk_get_current_event_time());
 	}
 }
 

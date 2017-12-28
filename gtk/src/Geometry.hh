@@ -67,9 +67,15 @@ public:
 
 	Rectangle(double _x = 0., double _y = 0., double _width = 0., double _height = 0.)
 		: x(_x), y(_y), width(_width), height(_height) {}
-	Rectangle(const Point& p1, const Point& p2)
-		: x(std::min(p1.x, p2.x)), y(std::min(p1.y, p2.y)),
-		  width(std::abs(p2.x - p1.x)), height(std::abs(p2.y - p1.y)) {}
+	Rectangle(const Point& p1, const Point& p2) {
+		setCoords(p1.x, p1.y, p2.x, p2.y);
+	}
+	void setCoords(double x1, double y1, double x2, double y2) {
+		x = std::min(x1, x2);
+		y = std::min(y1, y2);
+		width = std::abs(x2 - x1);
+		height = std::abs(y2 - y1);
+	}
 	bool contains(const Point& p) const {
 		return p.x >= x && p.x <= x + width && p.y >= y && p.y <= y + height;
 	}

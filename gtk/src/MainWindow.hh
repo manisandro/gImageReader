@@ -21,6 +21,8 @@
 #define MAINWINDOW_HH
 
 #include "common.hh"
+#include "Config.hh"
+#include "ui_MainWindow.hh"
 
 #define MAIN MainWindow::getInstance()
 
@@ -84,10 +86,7 @@ public:
 		return m_sourceManager;
 	}
 	Gtk::Window* getWindow() const {
-		return m_window;
-	}
-	Builder::CastProxy getWidget(const Glib::ustring& name) const {
-		return m_builder(name);
+		return ui.windowMain;
 	}
 	void setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel);
 	void redetectLanguages();
@@ -106,13 +105,8 @@ public:
 private:
 	static MainWindow* s_instance;
 
-	Builder m_builder;
-	Gtk::ApplicationWindow* m_window;
-	Gtk::HeaderBar* m_headerbar;
-	Gtk::AboutDialog* m_aboutdialog;
-	Gtk::Statusbar* m_statusbar;
-	Gtk::ComboBoxText* m_ocrModeCombo;
-	Gtk::ToggleButton* m_outputPaneToggleButton;
+	Ui::MainWindow ui;
+	ConnectionsStore m_connections;
 
 	Config* m_config = nullptr;
 	Acquirer* m_acquirer = nullptr;
@@ -131,12 +125,10 @@ private:
 	std::vector<Gtk::Widget*> m_idlegroup;
 	std::vector<State> m_stateStack;
 	sigc::connection m_connection_setOCRMode;
-	sigc::connection m_connection_setOutputEditorLanguage;
-	sigc::connection m_connection_setOutputEditorVisibility;
 	sigc::connection m_connection_progressUpdate;
 
 	bool closeEvent(GdkEventAny*);
-	void languageChanged();
+	void languageChanged(const Config::Lang& lang);
 	void onSourceChanged();
 	void setOCRMode(int idx);
 	void setState(State state);

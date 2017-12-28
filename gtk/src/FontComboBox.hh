@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * CrashHandler.hh
+ * FontComboBox.hh
  * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
@@ -17,29 +17,35 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CRASHHANDLER_HH
-#define CRASHHANDLER_HH
+#ifndef FONTCOMBOBOX_HH
+#define FONTCOMBOBOX_HH
 
 #include "common.hh"
-#include "ui_CrashHandler.hh"
 
-class CrashHandler : public Gtk::Application {
+class FontComboBox : public Gtk::ComboBox {
 public:
-	CrashHandler(int argc, char* argv[]);
-	void on_startup();
+	FontComboBox();
+	FontComboBox(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
+	Glib::ustring get_active_font() const;
+	void set_active_font(const Glib::ustring& font);
+
+	sigc::signal<void, Glib::ustring> signal_font_changed() { return m_signal_font_changed; }
 
 private:
-	Ui::CrashHandler ui;
 	ConnectionsStore m_connections;
-	sigc::connection m_progressConnection;
-	std::string m_saveFile;
-	int m_pid = 0;
+	sigc::signal<void, Glib::ustring> m_signal_font_changed;
 
-	void generate_backtrace();
-	void generate_backtrace_end(bool success);
-	bool pulse_progress();
-	bool handle_stdout(Glib::IOCondition cond, Glib::RefPtr<Glib::IOChannel> ch);
-	static void handle_child_exit(GPid pid, gint status, void* data);
+	struct FontComboColums : public Gtk::TreeModel::ColumnRecord {
+		Gtk::TreeModelColumn<Glib::ustring> fontFamily;
+		FontComboColums() {
+			add(fontFamily);
+		}
+	};
+
+	void init();
+
+	static FontComboColums s_fontComboCols;
+	static Glib::RefPtr<Gtk::ListStore> getModel();
 };
 
-#endif // CRASH_HANDLER_HH
+#endif // FONTCOMBOBOX_HH

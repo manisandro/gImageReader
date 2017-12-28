@@ -491,12 +491,10 @@ void ScannerSane::doCompletePage() {
 	}
 	std::string filename = m_job->params.filename;
 	if(m_job->params.type != ScanType::SINGLE) {
-		std::string base, ext;
-		Utils::get_filename_parts(filename, base, ext);
-		filename = Glib::ustring::compose("%1_%2.%3", base, m_job->pageNumber, ext);
+		std::pair<std::string, std::string> parts = Utils::split_filename(filename);
+		filename = Glib::ustring::compose("%1_%2.%3", parts.first, m_job->pageNumber, parts.second);
 	}
-	std::string base, ext;
-	Utils::get_filename_parts(filename, base, ext);
+	std::string ext = Utils::split_filename(filename).second;
 	try {
 		Gdk::Pixbuf::create_from_data(m_job->imgbuf.data(), Gdk::COLORSPACE_RGB, false, 8, m_job->rowstride/3, m_job->height, m_job->rowstride)->save(filename, ext);
 	} catch(const Glib::Error&) {

@@ -279,34 +279,22 @@ std::multimap<Glib::ustring,Glib::ustring> Config::buildLanguageCultureTable() {
 const std::multimap<Glib::ustring,Glib::ustring> Config::LANGUAGE_CULTURES = Config::buildLanguageCultureTable();
 
 Config::Config() {
-	m_dialog = MAIN->getWidget("dialog:config");
-	m_addLangBox = MAIN->getWidget("box:config.langs.custom.add");
-	m_addLangPrefix = MAIN->getWidget("entry:config.langs.custom.add.prefix");
-	m_addLangName = MAIN->getWidget("entry:config.langs.custom.add.name");
-	m_addLangCode = MAIN->getWidget("entry:config.langs.custom.add.code");
-	m_editLangBox = MAIN->getWidget("buttonbox:config.langs.custom.edit");
-	m_addLangButton = MAIN->getWidget("button:config.langs.custom.edit.add");
-	m_addLangButtonOk = MAIN->getWidget("button:config.langs.custom.add.ok");
-	m_removeLangButton = MAIN->getWidget("button:config.langs.custom.edit.remove");
-	m_predefLangView = MAIN->getWidget("treeview:config.langs.predef");
-	m_customLangView = MAIN->getWidget("treeview:config.langs.custom");
-	m_dialogOkButton = MAIN->getWidget("button:config.ok");
+	ui.setupUi();
+	ui.dialogConfig->set_transient_for(*MAIN->getWindow());
 
-	for(Gtk::TreeView* view : {
-	            m_predefLangView, m_customLangView
-	        }) {
+	for(Gtk::TreeView* view : {ui.treeviewLangsPredef, ui.treeviewLangsCustom}) {
 		view->set_model(Gtk::ListStore::create(m_langViewCols));
 		view->append_column_editable(_("Filename prefix"), m_langViewCols.prefix);
 		view->append_column_editable(_("Code"), m_langViewCols.code);
 		view->append_column_editable(_("Native name"), m_langViewCols.name);
-		for(int i=0; i<3; ++i) {
+		for(int i = 0; i < 3; ++i) {
 			view->get_column(i)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
 			view->get_column(i)->set_expand(true);
 		}
 		view->set_fixed_height_mode(true);
 	}
 
-	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_predefLangView->get_model());
+	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsPredef->get_model());
 	for(const auto& lang : LANGUAGES) {
 		Gtk::TreeIter it = store->append();
 		(*it)[m_langViewCols.prefix] = lang.prefix;
@@ -314,41 +302,32 @@ Config::Config() {
 		(*it)[m_langViewCols.name] = lang.name;
 	}
 
-	CONNECTS(MAIN->getWidget("checkbutton:config.settings.defaultoutputfont").as<Gtk::CheckButton>(), toggled, [](Gtk::CheckButton* btn) {
-		MAIN->getWidget("fontbutton:config.settings.customoutputfont").as<Gtk::FontButton>()->set_sensitive(!btn->get_active());
-	});
-	CONNECT(m_addLangButton, clicked, [this] { toggleAddLanguage(); });
-	CONNECT(m_removeLangButton, clicked, [this] { removeLanguage(); });
-	CONNECT(m_addLangButtonOk, clicked, [this] { addLanguage(); });
-	CONNECT(MAIN->getWidget("button:config.langs.custom.add.cancel").as<Gtk::Button>(), clicked, [this] { toggleAddLanguage(); });
-	CONNECT(m_customLangView->get_selection(), changed, [this] { langTableSelectionChanged(); });
-	CONNECT(MAIN->getWidget("button:config.help").as<Gtk::Button>(), clicked, [] { MAIN->showHelp("#Usage_Options"); });
-	CONNECT(m_addLangPrefix, focus_in_event, [this](GdkEventFocus*) {
-		Utils::clear_error_state(m_addLangPrefix);
-		return false;
-	});
-	CONNECT(m_addLangName, focus_in_event, [this](GdkEventFocus*) {
-		Utils::clear_error_state(m_addLangName);
-		return false;
-	});
-	CONNECT(m_addLangCode, focus_in_event, [this](GdkEventFocus*) {
-		Utils::clear_error_state(m_addLangCode);
-		return false;
-	});
-	CONNECTS(MAIN->getWidget("combo:config.datadirs").as<Gtk::ComboBox>(), changed, [this](Gtk::ComboBox* combo) {
-		setDataLocations(combo->get_active_row_number());
-	});
+	CONNECT(ui.checkbuttonDefaultoutputfont, toggled, [this]{ ui.fontbuttonCustomoutputfont->set_sensitive(!ui.checkbuttonDefaultoutputfont->get_active()); });
+	CONNECT(ui.buttonLangsEditAdd, clicked, [this] { toggleAddLanguage(); });
+	CONNECT(ui.buttonLangsEditRemove, clicked, [this] { removeLanguage(); });
+	CONNECT(ui.buttonLangsAddOk, clicked, [this] { addLanguage(); });
+	CONNECT(ui.buttonLangsAddCancel, clicked, [this] { toggleAddLanguage(); });
+	CONNECT(ui.treeviewLangsCustom->get_selection(), changed, [this] { langTableSelectionChanged(); });
+	CONNECT(ui.buttonHelp, clicked, [] { MAIN->showHelp("#Usage_Options"); });
+	CONNECT(ui.entryLangsAddPrefix, focus_in_event, [this](GdkEventFocus*) { Utils::clear_error_state(ui.entryLangsAddPrefix); return false; });
+	CONNECT(ui.entryLangsAddName, focus_in_event, [this](GdkEventFocus*) { Utils::clear_error_state(ui.entryLangsAddName); return false; });
+	CONNECT(ui.entryLangsAddCode, focus_in_event, [this](GdkEventFocus*) { Utils::clear_error_state(ui.entryLangsAddCode); return false; });
+	CONNECT(ui.comboDatadirs, changed, [this] { setDataLocations(ui.comboDatadirs->get_active_row_number()); });
 
-	addSetting(new SwitchSettingT<Gtk::CheckButton>("dictinstall", MAIN->getWidget("check:config.settings.dictinstall")));
-	addSetting(new SwitchSettingT<Gtk::CheckButton>("updatecheck", MAIN->getWidget("check:config.settings.update")));
-	addSetting(new ListStoreSetting("customlangs", Glib::RefPtr<Gtk::ListStore>::cast_static(m_customLangView->get_model())));
-	addSetting(new SwitchSettingT<Gtk::CheckButton>("systemoutputfont", MAIN->getWidget("checkbutton:config.settings.defaultoutputfont")));
-	addSetting(new FontSetting("customoutputfont", MAIN->getWidget("fontbutton:config.settings.customoutputfont")));
-	addSetting(new ComboSetting("outputorient", MAIN->getWidget("combo:config.settings.paneorient")));
-	addSetting(new ComboSetting("datadirs", MAIN->getWidget("combo:config.datadirs")));
+	addSetting(new SwitchSettingT<Gtk::CheckButton>("dictinstall", ui.checkDictinstall));
+	addSetting(new SwitchSettingT<Gtk::CheckButton>("updatecheck", ui.checkUpdate));
+	addSetting(new ListStoreSetting("customlangs", Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsCustom->get_model())));
+	addSetting(new SwitchSettingT<Gtk::CheckButton>("systemoutputfont", ui.checkbuttonDefaultoutputfont));
+	addSetting(new FontSetting("customoutputfont", ui.fontbuttonCustomoutputfont));
+	addSetting(new ComboSetting("outputorient", ui.comboPaneorient));
+	addSetting(new ComboSetting("datadirs", ui.comboDatadirs));
 	addSetting(new VarSetting<Glib::ustring>("sourcedir"));
 	addSetting(new VarSetting<Glib::ustring>("outputdir"));
 	addSetting(new VarSetting<Glib::ustring>("auxdir"));
+
+#if !ENABLE_VERSIONCHECK
+	ui.checkUpdate->hide();
+#endif
 }
 
 Config::~Config() {
@@ -359,7 +338,7 @@ Config::~Config() {
 
 bool Config::searchLangSpec(Lang& lang) const {
 	for(const Glib::RefPtr<Gtk::TreeModel>& model : {
-	m_predefLangView->get_model(), m_customLangView->get_model()
+	ui.treeviewLangsPredef->get_model(), ui.treeviewLangsCustom->get_model()
 	}) {
 		Gtk::TreeIter it = std::find_if(model->children().begin(), model->children().end(),
 		[this, &lang](const Gtk::TreeRow& row) {
@@ -383,22 +362,22 @@ std::vector<Glib::ustring> Config::searchLangCultures(const Glib::ustring& code)
 }
 
 bool Config::useSystemDataLocations() const {
-	return MAIN->getWidget("combo:config.datadirs").as<Gtk::ComboBox>()->get_active_row_number() == 0;
+	return ui.comboDatadirs->get_active_row_number() == 0;
 }
 
 std::string Config::tessdataLocation() const {
-	return MAIN->getWidget("entry:config.tessdatadir").as<Gtk::Entry>()->get_text();
+	return ui.entryTessdatadir->get_text();
 }
 
 std::string Config::spellingLocation() const {
-	return MAIN->getWidget("entry:config.spelldir").as<Gtk::Entry>()->get_text();
+	return ui.entrySpelldir->get_text();
 }
 
 void Config::showDialog() {
 	toggleAddLanguage(true);
-	while(m_dialog->run() == Gtk::RESPONSE_HELP);
+	while(ui.dialogConfig->run() == Gtk::RESPONSE_HELP);
 	getSetting<ListStoreSetting>("customlangs")->serialize();
-	m_dialog->hide();
+	ui.dialogConfig->hide();
 }
 
 void Config::setDataLocations(int idx) {
@@ -414,18 +393,18 @@ void Config::setDataLocations(int idx) {
 		if(!dictDir->query_exists()) {
 			dictDir = Gio::File::create_for_path(Glib::build_filename(dataDir, "myspell"));
 		}
-		MAIN->getWidget("entry:config.spelldir").as<Gtk::Entry>()->set_text(dictDir->get_path());
+		ui.entrySpelldir->set_text(dictDir->get_path());
 	} else {
 		std::string configDir = Glib::get_user_config_dir();
 		Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(configDir, "tessdata"));
-		MAIN->getWidget("entry:config.spelldir").as<Gtk::Entry>()->set_text(Glib::build_filename(configDir, "enchant", "myspell"));
+		ui.entrySpelldir->set_text(Glib::build_filename(configDir, "enchant", "myspell"));
 	}
 	tesseract::TessBaseAPI tess;
 	std::string current = setlocale(LC_NUMERIC, NULL);
 	setlocale(LC_NUMERIC, "C");
 	tess.Init(nullptr, nullptr);
 	setlocale(LC_NUMERIC, current.c_str());
-	MAIN->getWidget("entry:config.tessdatadir").as<Gtk::Entry>()->set_text(tess.GetDatapath());
+	ui.entryTessdatadir->set_text(tess.GetDatapath());
 }
 
 void Config::openTessdataDir() {
@@ -469,57 +448,57 @@ void Config::openSpellingDir() {
 }
 
 void Config::toggleAddLanguage(bool forceHide) {
-	bool addVisible = forceHide ? true : m_addLangBox->get_visible();
-	m_addLangBox->set_visible(!addVisible);
-	m_editLangBox->set_visible(addVisible);
+	bool addVisible = forceHide ? true : ui.boxLangsAdd->get_visible();
+	ui.boxLangsAdd->set_visible(!addVisible);
+	ui.buttonboxLangsEdit->set_visible(addVisible);
 	if(addVisible) {
-		m_addLangButton->grab_focus();
+		ui.buttonLangsEditAdd->grab_focus();
 	} else {
-		m_addLangButtonOk->grab_focus();
+		ui.buttonLangsAddOk->grab_focus();
 	}
-	m_addLangPrefix->set_text("");
-	m_addLangCode->set_text("");
-	m_addLangName->set_text("");
-	Utils::clear_error_state(m_addLangPrefix);
-	Utils::clear_error_state(m_addLangCode);
-	Utils::clear_error_state(m_addLangName);
+	ui.entryLangsAddPrefix->set_text("");
+	ui.entryLangsAddCode->set_text("");
+	ui.entryLangsAddName->set_text("");
+	Utils::clear_error_state(ui.entryLangsAddPrefix);
+	Utils::clear_error_state(ui.entryLangsAddCode);
+	Utils::clear_error_state(ui.entryLangsAddName);
 }
 
 void Config::addLanguage() {
 	bool invalid = false;
-	if(!Glib::Regex::create("^\\w+$")->match(m_addLangPrefix->get_text())) {
+	if(!Glib::Regex::create("^\\w+$")->match(ui.entryLangsAddPrefix->get_text())) {
 		invalid = true;
-		Utils::set_error_state(m_addLangPrefix);
+		Utils::set_error_state(ui.entryLangsAddPrefix);
 	}
-	if(!Glib::Regex::create("^.+$")->match(m_addLangName->get_text())) {
+	if(!Glib::Regex::create("^.+$")->match(ui.entryLangsAddName->get_text())) {
 		invalid = true;
-		Utils::set_error_state(m_addLangName);
+		Utils::set_error_state(ui.entryLangsAddName);
 	}
-	if(!Glib::Regex::create("^[a-z]{2}$")->match(m_addLangCode->get_text()) &&
-	        !Glib::Regex::create("^[a-z]{2}_[A-Z]{2}$")->match(m_addLangCode->get_text())) {
+	if(!Glib::Regex::create("^[a-z]{2}$")->match(ui.entryLangsAddCode->get_text()) &&
+			!Glib::Regex::create("^[a-z]{2}_[A-Z]{2}$")->match(ui.entryLangsAddCode->get_text())) {
 		invalid = true;
-		Utils::set_error_state(m_addLangCode);
+		Utils::set_error_state(ui.entryLangsAddCode);
 	}
 	if(!invalid) {
-		Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_customLangView->get_model());
+		Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsCustom->get_model());
 		Gtk::TreeIter it = store->append();
-		(*it)[m_langViewCols.prefix] = m_addLangPrefix->get_text();
-		(*it)[m_langViewCols.code] = m_addLangCode->get_text();
-		(*it)[m_langViewCols.name] = m_addLangName->get_text();
-		m_addLangPrefix->set_text("");
-		m_addLangCode->set_text("");
-		m_addLangName->set_text("");
+		(*it)[m_langViewCols.prefix] = ui.entryLangsAddPrefix->get_text();
+		(*it)[m_langViewCols.code] = ui.entryLangsAddCode->get_text();
+		(*it)[m_langViewCols.name] = ui.entryLangsAddName->get_text();
+		ui.entryLangsAddPrefix->set_text("");
+		ui.entryLangsAddCode->set_text("");
+		ui.entryLangsAddName->set_text("");
 		toggleAddLanguage();
 	}
 }
 
 void Config::removeLanguage() {
-	if(m_customLangView->get_selection()->count_selected_rows() != 0) {
-		Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(m_customLangView->get_model());
-		store->erase(m_customLangView->get_selection()->get_selected());
+	if(ui.treeviewLangsCustom->get_selection()->count_selected_rows() != 0) {
+		Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsCustom->get_model());
+		store->erase(ui.treeviewLangsCustom->get_selection()->get_selected());
 	}
 }
 
 void Config::langTableSelectionChanged() {
-	m_removeLangButton->set_sensitive(m_customLangView->get_selection()->count_selected_rows() != 0);
+	ui.buttonLangsEditRemove->set_sensitive(ui.treeviewLangsCustom->get_selection()->count_selected_rows() != 0);
 }

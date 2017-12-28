@@ -52,14 +52,18 @@ void set_error_state(Gtk::Entry* entry);
 void clear_error_state(Gtk::Entry* entry);
 
 Glib::ustring get_content_type(const std::string& filename);
-void get_filename_parts(const std::string& filename, std::string& base, std::string& ext);
+std::pair<std::string, std::string> split_filename(const std::string& filename);
 std::string make_absolute_path(const std::string& path);
 std::string get_documents_dir();
 std::string make_output_filename(const std::string& filename);
 
 std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, bool keepEmpty = true);
 Glib::ustring string_join(const std::vector<Glib::ustring>& strings, const Glib::ustring& joiner);
-Glib::ustring string_trim(const Glib::ustring& str);
+Glib::ustring string_trim(const Glib::ustring& str, char what=' ');
+bool strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, bool matchCase);
+std::size_t string_firstIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
+std::size_t string_lastIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
+int string_replace(Glib::ustring& str, const Glib::ustring& search, const Glib::ustring& replace, bool matchCase);
 
 int parseInt(const Glib::ustring& str, bool* ok = nullptr);
 

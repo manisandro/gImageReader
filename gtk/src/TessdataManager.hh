@@ -20,7 +20,7 @@
 #ifndef TESSDATAMANAGER_HH
 #define TESSDATAMANAGER_HH
 
-#include <gtkmm.h>
+#include "ui_TessdataManager.hh"
 
 class TessdataManager {
 public:
@@ -45,8 +45,7 @@ private:
 		}
 	} m_viewCols;
 
-	Gtk::Dialog* m_dialog;
-	Gtk::TreeView* m_languageList;
+	Ui::TessdataManager ui;
 	Glib::RefPtr<Gtk::ListStore> m_languageListStore;
 	std::map<Glib::ustring,std::vector<LangFile>> m_languageFiles;
 	Glib::RefPtr<Gio::DBus::Proxy> m_dbusProxy;

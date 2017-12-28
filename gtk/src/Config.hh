@@ -26,6 +26,7 @@
 
 #include "common.hh"
 #include "ConfigSettings.hh"
+#include "ui_ConfigDialog.hh"
 
 class Config {
 public:
@@ -86,18 +87,8 @@ private:
 	static const std::vector<Lang> LANGUAGES;
 	static const std::multimap<Glib::ustring,Glib::ustring> LANGUAGE_CULTURES ;
 
-	Gtk::Dialog* m_dialog;
-	Gtk::Box* m_addLangBox;
-	Gtk::Entry* m_addLangPrefix;
-	Gtk::Entry* m_addLangName;
-	Gtk::Entry* m_addLangCode;
-	Gtk::ButtonBox* m_editLangBox;
-	Gtk::Button* m_addLangButton;
-	Gtk::Button* m_addLangButtonOk;
-	Gtk::Button* m_removeLangButton;
-	Gtk::TreeView* m_predefLangView;
-	Gtk::TreeView* m_customLangView;
-	Gtk::Button* m_dialogOkButton;
+	Ui::ConfigDialog ui;
+	ConnectionsStore m_connections;
 
 	LangViewColumns m_langViewCols;
 	std::map<Glib::ustring,AbstractSetting*> m_settings;

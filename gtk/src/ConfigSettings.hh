@@ -25,6 +25,7 @@
 #include <vector>
 
 #include "common.hh"
+#include "FontComboBox.hh"
 
 Glib::RefPtr<Gio::Settings> get_default_settings();
 
@@ -37,9 +38,12 @@ public:
 		return m_key;
 	}
 	virtual void serialize() {}
+	sigc::signal<void> signal_changed(){ return m_signal_changed; }
 
 protected:
+	ConnectionsStore m_connections;
 	Glib::ustring m_key;
+	sigc::signal<void> m_signal_changed;
 };
 
 template <class T>
@@ -53,6 +57,7 @@ public:
 	}
 	void setValue(const T& value) {
 		get_default_settings()->set_value(m_key, Glib::Variant<T>::create(value));
+		m_signal_changed.emit();
 	}
 };
 
@@ -65,6 +70,7 @@ public:
 	}
 	void serialize() override {
 		get_default_settings()->set_string(m_key, m_widget->get_font_name());
+		m_signal_changed.emit();
 	}
 	Glib::ustring getValue() const {
 		return m_widget->get_font_name();
@@ -91,6 +97,7 @@ public:
 	}
 	void serialize() override {
 		get_default_settings()->set_boolean(m_key, m_widget->get_active());
+		m_signal_changed.emit();
 	}
 	void setValue(bool value) override {
 		m_widget->set_active(value);
@@ -114,10 +121,30 @@ public:
 	}
 	void serialize() override {
 		get_default_settings()->set_int(m_key, m_widget->get_active_row_number());
+		m_signal_changed.emit();
 	}
+	int getValue() const { return m_widget->get_active_row_number(); }
 
 private:
 	Gtk::ComboBox* m_widget;
+};
+
+class FontComboSetting : public AbstractSetting {
+public:
+	FontComboSetting(const Glib::ustring& key, FontComboBox* widget)
+		: AbstractSetting(key), m_widget(widget) {
+		Glib::ustring font = get_default_settings()->get_string(m_key);
+		m_widget->set_active_font(font);
+		CONNECT(m_widget, changed, [this] { serialize(); });
+	}
+	void serialize() override {
+		get_default_settings()->set_string(m_key, m_widget->get_active_font());
+		m_signal_changed.emit();
+	}
+	Glib::ustring getValue() const { return m_widget->get_active_font(); }
+
+private:
+	FontComboBox* m_widget;
 };
 
 class SpinSetting : public AbstractSetting {
@@ -130,6 +157,7 @@ public:
 	}
 	void serialize() override {
 		get_default_settings()->set_int(m_key, m_widget->get_value());
+		m_signal_changed.emit();
 	}
 
 private:

@@ -57,4 +57,5 @@ void ListStoreSetting::serialize() {
 	}
 	Glib::Variant<Glib::ustring> v = Glib::Variant<Glib::ustring>::create(str);
 	get_default_settings()->set_value(m_key, v);
+	m_signal_changed.emit();
 }

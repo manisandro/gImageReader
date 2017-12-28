@@ -24,27 +24,23 @@
 #include "Utils.hh"
 
 SearchReplaceFrame::SearchReplaceFrame()
-	: m_builder("/org/gnome/gimagereader/searchreplace.ui")
 {
-	m_widget = m_builder("box:searchreplace");
-	m_lineEditSearch = m_builder("entry:search");
-	m_lineEditReplace = m_builder("entry:replace");
-	m_checkBoxMatchCase = m_builder("checkbutton:matchcase");
-	m_substitutionsManager = new SubstitutionsManager(m_builder);
+	ui.setupUi();
 
-	CONNECT(m_checkBoxMatchCase, toggled, [this]{ clearErrorState(); });
-	CONNECT(m_lineEditSearch, changed, [this]{ clearErrorState(); });
-	CONNECT(m_lineEditSearch, activate, [this]{ findNext(); });
-	CONNECT(m_lineEditReplace, activate, [this]{ replaceNext(); });
-	CONNECT(m_builder("button:searchnext").as<Gtk::Button>(), clicked, [this] { findNext(); });
-	CONNECT(m_builder("button:searchprev").as<Gtk::Button>(), clicked, [this] { findPrev(); });
-	CONNECT(m_builder("button:replace").as<Gtk::Button>(), clicked, [this] { replaceNext(); });
-	CONNECT(m_builder("button:replaceall").as<Gtk::Button>(), clicked, [this] { emitReplaceAll(); });
+	m_substitutionsManager = new SubstitutionsManager();
 
-	CONNECT(m_builder("button:substitutions").as<Gtk::Button>(), clicked, [this] { m_substitutionsManager->set_visible(true); });
+	CONNECT(ui.checkbuttonMatchcase, toggled, [this]{ clearErrorState(); });
+	CONNECT(ui.entrySearch, changed, [this]{ clearErrorState(); });
+	CONNECT(ui.entrySearch, activate, [this]{ findNext(); });
+	CONNECT(ui.entryReplace, activate, [this]{ replaceNext(); });
+	CONNECT(ui.buttonSearchnext, clicked, [this] { findNext(); });
+	CONNECT(ui.buttonSearchprev, clicked, [this] { findPrev(); });
+	CONNECT(ui.buttonReplace, clicked, [this] { replaceNext(); });
+	CONNECT(ui.buttonReplaceall, clicked, [this] { emitReplaceAll(); });
+	CONNECT(ui.buttonSubstitutions, clicked, [this] { m_substitutionsManager->set_visible(true); });
 	CONNECT(m_substitutionsManager, apply_substitutions, [this]( const std::map<Glib::ustring,Glib::ustring>& substitutions) { emitApplySubstitutions(substitutions); });
 
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("searchmatchcase", m_checkBoxMatchCase));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("searchmatchcase", ui.checkbuttonMatchcase));
 }
 
 SearchReplaceFrame::~SearchReplaceFrame()
@@ -55,18 +51,18 @@ SearchReplaceFrame::~SearchReplaceFrame()
 
 void SearchReplaceFrame::clear()
 {
-	m_lineEditSearch->set_text("");
-	m_lineEditReplace->set_text("");
+	ui.entrySearch->set_text("");
+	ui.entryReplace->set_text("");
 }
 
 void SearchReplaceFrame::clearErrorState()
 {
-	Utils::clear_error_state(m_lineEditSearch);
+	Utils::clear_error_state(ui.entrySearch);
 }
 
 void SearchReplaceFrame::setErrorState()
 {
-	Utils::set_error_state(m_lineEditSearch);
+	Utils::set_error_state(ui.entrySearch);
 }
 
 void SearchReplaceFrame::hideSubstitutionsManager()

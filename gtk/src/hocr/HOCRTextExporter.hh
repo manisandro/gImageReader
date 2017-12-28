@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * CrashHandler.hh
+ * HOCRTextExporter.hh
  * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
@@ -17,29 +17,22 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CRASHHANDLER_HH
-#define CRASHHANDLER_HH
+#ifndef HOCRTEXTEXPORTER_HH
+#define HOCRTEXTEXPORTER_HH
 
 #include "common.hh"
-#include "ui_CrashHandler.hh"
 
-class CrashHandler : public Gtk::Application {
+class HOCRDocument;
+class HOCRItem;
+class QTextStream;
+
+
+class HOCRTextExporter {
 public:
-	CrashHandler(int argc, char* argv[]);
-	void on_startup();
+	bool run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string& filebasename);
 
 private:
-	Ui::CrashHandler ui;
-	ConnectionsStore m_connections;
-	sigc::connection m_progressConnection;
-	std::string m_saveFile;
-	int m_pid = 0;
-
-	void generate_backtrace();
-	void generate_backtrace_end(bool success);
-	bool pulse_progress();
-	bool handle_stdout(Glib::IOCondition cond, Glib::RefPtr<Glib::IOChannel> ch);
-	static void handle_child_exit(GPid pid, gint status, void* data);
+	void printItem(std::ofstream& outputStream, const HOCRItem* item, bool lastChild = false);
 };
 
-#endif // CRASH_HANDLER_HH
+#endif // HOCRTEXTEXPORTER_HH

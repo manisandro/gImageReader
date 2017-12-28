@@ -38,12 +38,12 @@ void TessdataManager::exec() {
 }
 
 TessdataManager::TessdataManager() {
-	m_dialog = MAIN->getWidget("dialog:tessdatamanager");
-	m_languageList = MAIN->getWidget("treeview:tessdatamanager");
+	ui.setupUi();
+
 	m_languageListStore = Gtk::ListStore::create(m_viewCols);
-	m_languageList->set_model(m_languageListStore);
-	m_languageList->append_column_editable("selected", m_viewCols.selected);
-	m_languageList->append_column("label", m_viewCols.label);
+	ui.treeview->set_model(m_languageListStore);
+	ui.treeview->append_column_editable("selected", m_viewCols.selected);
+	ui.treeview->append_column("label", m_viewCols.label);
 }
 
 void TessdataManager::run() {
@@ -71,7 +71,7 @@ void TessdataManager::run() {
 		return;
 	}
 	while(true) {
-		int response = m_dialog->run();
+		int response = ui.dialogTessdatamanager->run();
 		if(response == Gtk::RESPONSE_APPLY) {
 			applyChanges();
 		} else if(response == 1) {
@@ -80,7 +80,7 @@ void TessdataManager::run() {
 			break;
 		}
 	}
-	m_dialog->hide();
+	ui.dialogTessdatamanager->hide();
 }
 
 bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
@@ -191,8 +191,8 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 
 void TessdataManager::applyChanges() {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying changes..."));
-	m_dialog->set_sensitive(false);
-	m_dialog->get_window()->set_cursor(Gdk::Cursor::create(Gdk::WATCH));
+	ui.dialogTessdatamanager->set_sensitive(false);
+	ui.dialogTessdatamanager->get_window()->set_cursor(Gdk::Cursor::create(Gdk::WATCH));
 	Glib::ustring errorMsg;
 	std::vector<Glib::ustring> availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
 	std::string tessDataPath = MAIN->getConfig()->tessdataLocation();
@@ -216,7 +216,7 @@ void TessdataManager::applyChanges() {
 				removeFiles.push_back(Glib::build_filename(tessDataPath, prefix + ".traineddata"));
 			}
 		}
-		std::uint32_t xid = gdk_x11_window_get_xid(m_dialog->get_window()->gobj());
+		std::uint32_t xid = gdk_x11_window_get_xid(ui.dialogTessdatamanager->get_window()->gobj());
 
 		if(!installFiles.empty()) {
 			std::vector<Glib::VariantBase> params = { Glib::Variant<std::uint32_t>::create(xid),
@@ -284,12 +284,12 @@ void TessdataManager::applyChanges() {
 			}
 		}
 	}
-	m_dialog->get_window()->set_cursor(Glib::RefPtr<Gdk::Cursor>());
-	m_dialog->set_sensitive(true);
+	ui.dialogTessdatamanager->get_window()->set_cursor(Glib::RefPtr<Gdk::Cursor>());
+	ui.dialogTessdatamanager->set_sensitive(true);
 	MAIN->popState();
 	refresh();
 	if(!errorMsg.empty()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), errorMsg, m_dialog);
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), errorMsg, ui.dialogTessdatamanager);
 	}
 }
 

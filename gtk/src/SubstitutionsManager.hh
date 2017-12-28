@@ -21,12 +21,13 @@
 #define SUBSTITUTIONS_MANAGER_HH
 
 #include "common.hh"
+#include "ui_SubstitutionsManager.hh"
 
 class OutputBuffer;
 
 class SubstitutionsManager {
 public:
-	SubstitutionsManager(const Builder& builder);
+	SubstitutionsManager();
 	~SubstitutionsManager();
 	void set_visible(bool visible);
 
@@ -44,10 +45,11 @@ private:
 
 	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> m_signal_apply_substitutions;
 
+	Ui::SubstitutionsManager ui;
+	ConnectionsStore m_connections;
+
 	std::string m_currentFile;
 	ReplaceListColumns m_viewCols;
-	Gtk::Window* m_dialog;
-	Gtk::TreeView* m_listView;
 	Glib::RefPtr<Gtk::ListStore> m_listStore;
 
 	void addRow();
