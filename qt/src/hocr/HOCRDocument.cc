@@ -171,7 +171,7 @@ QModelIndex HOCRDocument::nextIndex(const QModelIndex& current)
 	if(!idx.isValid()) {
 		return index(0, 0);
 	}
-	// If item has children, return next child
+	// If item has children, return first child
 	if(rowCount(idx) > 0) {
 		return idx.child(0, 0);
 	}
