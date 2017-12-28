@@ -352,6 +352,7 @@ HOCRPdfExporter::~HOCRPdfExporter()
 	MAIN->getConfig()->removeSetting("pdfimagedithering");
 	MAIN->getConfig()->removeSetting("pdfimagedpi");
 	MAIN->getConfig()->removeSetting("pdffontfamily");
+	MAIN->getConfig()->removeSetting("pdfoverridefontfamily");
 	MAIN->getConfig()->removeSetting("pdffallbackfontfamily");
 	MAIN->getConfig()->removeSetting("pdfoverridefontsizes");
 	MAIN->getConfig()->removeSetting("pdffontsize");
