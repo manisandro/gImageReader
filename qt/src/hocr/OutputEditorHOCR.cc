@@ -378,12 +378,14 @@ QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const 
 		return lineEdit;
 	} else if(attrName == "title:x_font") {
 		QFontComboBox* combo = new QFontComboBox();
-		combo->setLineEdit(new HOCRAttributeEditor(attrValue, m_document, itemIndex, attrName, attrItemClass));
+		combo->setCurrentIndex(-1);
+		QLineEdit* edit = new HOCRAttributeEditor(attrValue, m_document, itemIndex, attrName, attrItemClass);
+		edit->blockSignals(true); // Because the combobox alters the text as soon as setLineEdit is called...
+		combo->setLineEdit(edit);
+		edit->setText(attrValue);
+		edit->blockSignals(false);
 		if(multiple) {
-			combo->setCurrentIndex(-1);
 			combo->lineEdit()->setPlaceholderText(_("Multiple values"));
-		} else {
-			combo->lineEdit()->setText(attrValue);
 		}
 		return combo;
 	} else {
