@@ -523,7 +523,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 					double imgScale = double(outputDpi) / sourceDpi;
 					PoDoFo::PdfPage* pdfpage = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width * docScale, bbox.height * docScale));
 					pdfprinter.setPage(pdfpage, docScale);
-					printChildren(pdfprinter, page, pdfSettings, imgScale);
+					printChildren(pdfprinter, page, pdfSettings, imgScale, true);
 					if(pdfSettings.overlay) {
 						Geometry::Rectangle scaledBBox(imgScale * bbox.x, imgScale * bbox.y, imgScale * bbox.width, imgScale * bbox.height);
 						Cairo::RefPtr<Cairo::ImageSurface> selection;
@@ -572,7 +572,7 @@ HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const
 	return pdfSettings;
 }
 
-void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale) {
+void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale, bool inThread) {
 	if(!item->isEnabled()) {
 		return;
 	}
@@ -626,11 +626,15 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {
 		Geometry::Rectangle scaledItemRect(imgScale * itemRect.x, imgScale * itemRect.y, imgScale * itemRect.width, imgScale * itemRect.height);
 		Cairo::RefPtr<Cairo::ImageSurface> selection;
-		Utils::runInMainThreadBlocking([&]{ selection = getSelection(scaledItemRect); });
+		if(inThread) {
+			Utils::runInMainThreadBlocking([&]{ selection = getSelection(scaledItemRect); });
+		} else {
+			selection = getSelection(scaledItemRect);
+		}
 		painter.drawImage(itemRect, selection, pdfSettings);
 	} else {
 		for(int i = 0, n = item->children().size(); i < n; ++i) {
-			printChildren(painter, item->children()[i], pdfSettings, imgScale);
+			printChildren(painter, item->children()[i], pdfSettings, imgScale, inThread);
 		}
 	}
 }

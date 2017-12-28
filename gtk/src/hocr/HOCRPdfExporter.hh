@@ -106,7 +106,7 @@ private:
 	std::vector<Glib::ustring> m_fontFamilies;
 
 	PDFSettings getPdfSettings() const;
-	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale = 1.);
+	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale = 1., bool inThread = false);
 
 	void imageFormatChanged();
 	void imageCompressionChanged();
