@@ -742,8 +742,10 @@ void OutputEditorHOCR::replaceAll(const QString& searchstr, const QString& repla
 	do {
 		const HOCRItem* item = m_document->itemAtIndex(curr);
 		if(item && item->itemClass() == "ocrx_word") {
-			count += item->text().contains(searchstr, cs);
-			m_document->setData(curr, item->text().replace(searchstr, replacestr, cs), Qt::EditRole);
+			if(item->text().contains(searchstr, cs)) {
+				++count;
+				m_document->setData(curr, item->text().replace(searchstr, replacestr, cs), Qt::EditRole);
+			}
 		}
 		curr = m_document->nextIndex(curr);
 		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
