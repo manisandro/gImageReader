@@ -539,6 +539,7 @@ void OutputEditorHOCR::pickItem(const QPoint& point)
 	QPoint newPoint( scale * (point.x() * std::cos(alpha) - point.y() * std::sin(alpha)) + 0.5 * page->bbox().width(),
 					 scale * (point.x() * std::sin(alpha) + point.y() * std::cos(alpha)) + 0.5 * page->bbox().height());
 	showItemProperties(m_document->searchAtCanvasPos(pageIndex, newPoint));
+	ui.treeViewHOCR->setFocus();
 }
 
 void OutputEditorHOCR::toggleWConfColumn(bool active)
