@@ -527,14 +527,25 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 	int nIndices = paths.size();
 	if(nIndices > 1) {
 		// Check if item merging is allowed (no pages, all items with same parent and consecutive)
-		// TreePath is a vector of row numbers, from root to leaf
-		bool ok = paths.front().size() > 1; // Don't allow merging on first level (pages)
+		const HOCRItem* firstItem = m_document->itemAtIndex(m_document->get_iter(paths.front()));
+		bool ok = firstItem;
+		std::set<Glib::ustring> classes;
+		if(firstItem) {
+			classes.insert(firstItem->itemClass());
+		}
 		std::vector<int> rows = {paths.front().back()};
 		for(int i = 1; i < nIndices && ok; ++i) {
-			ok &= paths[i].size() == paths[0].size(); // TreePath same size means that depth is the same
+			const HOCRItem* item = m_document->itemAtIndex(m_document->get_iter(paths[i]));
+			if(!item) {
+				ok = false;
+				break;
+			}
+			ok &= item->parent() == firstItem->parent();
+			classes.insert(item->itemClass());
 			rows.push_back(paths[i].back());
 		}
 		std::sort(rows.begin(), rows.end());
+		ok &= classes.size() == 1 && *classes.begin() != "ocr_page";
 		ok &= (rows.back() - rows.front()) == nIndices - 1;
 		if(ok) {
 			Gtk::Menu menu;

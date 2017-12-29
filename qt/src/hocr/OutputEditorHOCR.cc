@@ -427,15 +427,26 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	QModelIndexList indices = ui.treeViewHOCR->selectionModel()->selectedRows();
 	int nIndices = indices.size();
 	if(nIndices > 1) {
-		// Check if item merging is allowed (no pages, all items with same parent and consecutive)
+		// Check if item merging is allowed (no pages, all items of same class and with same parent and consecutive)
 		const HOCRItem* firstItem = m_document->itemAtIndex(indices.first());
-		bool ok = firstItem && firstItem->itemClass() != "ocr_page";
+		bool ok = firstItem;
+		QSet<QString> classes;
+		if(firstItem) {
+			classes.insert(firstItem->itemClass());
+		}
 		QVector<int> rows = {indices.first().row()};
 		for(int i = 1; i < nIndices && ok; ++i) {
-			ok &= indices[i].parent() == indices.first().parent();
+			const HOCRItem* item = m_document->itemAtIndex(indices[i]);
+			if(!item) {
+				ok = false;
+				break;
+			}
+			ok &= item->parent() == firstItem->parent();
+			classes.insert(item->itemClass());
 			rows.append(indices[i].row());
 		}
 		qSort(rows);
+		ok &= classes.size() == 1 && *classes.begin() != "ocr_page";
 		ok &= (rows.last() - rows.first()) == nIndices - 1;
 		if(ok) {
 			QMenu menu;
