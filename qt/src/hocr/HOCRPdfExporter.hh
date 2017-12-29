@@ -105,10 +105,10 @@ private slots:
 	void imageFormatChanged();
 	void imageCompressionChanged();
 	void paperSizeChanged();
-	void passwordChanged();
 	void updatePreview();
 	bool setSource(const QString& sourceFile, int page, int dpi, double angle);
 	QImage getSelection(const QRect& bbox);
+	void updateValid();
 };
 
 #endif // HOCRPDFEXPORTER_HH

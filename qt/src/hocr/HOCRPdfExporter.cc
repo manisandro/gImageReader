@@ -330,12 +330,14 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	connect(ui.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), ui.labelPreserve, SLOT(setEnabled(bool)));
 	connect(ui.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), ui.labelPreserveCharacters, SLOT(setEnabled(bool)));
 	connect(ui.checkBoxUniformizeSpacing, SIGNAL(toggled(bool)), ui.spinBoxPreserve, SLOT(setEnabled(bool)));
-	connect(ui.lineEditPasswordOpen, SIGNAL(textChanged(const QString&)), this, SLOT(passwordChanged()));
-	connect(ui.lineEditConfirmPasswordOpen, SIGNAL(textChanged(const QString&)), this, SLOT(passwordChanged()));
+	connect(ui.lineEditPasswordOpen, SIGNAL(textChanged(const QString&)), this, SLOT(updateValid()));
+	connect(ui.lineEditConfirmPasswordOpen, SIGNAL(textChanged(const QString&)), this, SLOT(updateValid()));
 	connect(ui.checkBoxPreview, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
 	connect(ui.comboBoxPaperSize, SIGNAL(currentIndexChanged(int)), this, SLOT(paperSizeChanged()));
 	connect(ui.comboBoxPaperSizeUnit, SIGNAL(currentIndexChanged(int)), this, SLOT(paperSizeChanged()));
 	connect(ui.toolButtonLandscape, SIGNAL(toggled(bool)), this, SLOT(paperSizeChanged()));
+	connect(ui.lineEditPaperWidth, SIGNAL(textChanged(QString)), this, SLOT(updateValid()));
+	connect(ui.lineEditPaperHeight, SIGNAL(textChanged(QString)), this, SLOT(updateValid()));
 
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", ui.comboBoxOutputMode));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagecompressionquality", ui.spinBoxCompressionQuality, 90));
@@ -716,19 +718,6 @@ void HOCRPdfExporter::imageCompressionChanged() {
 	ui.labelCompressionQuality->setEnabled(jpegCompression);
 }
 
-void HOCRPdfExporter::passwordChanged() {
-	if(ui.lineEditPasswordOpen->text() ==
-	        ui.lineEditConfirmPasswordOpen->text()) {
-
-		ui.lineEditConfirmPasswordOpen->setStyleSheet(QStringLiteral(""));
-		ui.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-	} else {
-		ui.lineEditConfirmPasswordOpen->setStyleSheet("background: #FF7777; color: #FFFFFF;");
-		ui.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-	}
-}
-
-
 bool HOCRPdfExporter::setSource(const QString& sourceFile, int page, int dpi, double angle) {
 	if(MAIN->getSourceManager()->addSource(sourceFile)) {
 		MAIN->getDisplayer()->setup(&page, &dpi, &angle);
@@ -766,4 +755,34 @@ void HOCRPdfExporter::paperSizeChanged()
 		ui.lineEditPaperWidth->setText(locale.toString(outputPaperSize.width, 'f', 1));
 		ui.lineEditPaperHeight->setText(locale.toString(outputPaperSize.height, 'f', 1));
 	}
+	updateValid();
+}
+
+void HOCRPdfExporter::updateValid()
+{
+	bool valid = true;
+
+	// Passwords must match
+	if(ui.lineEditPasswordOpen->text() == ui.lineEditConfirmPasswordOpen->text()) {
+		ui.lineEditConfirmPasswordOpen->setStyleSheet(QStringLiteral(""));
+	} else {
+		ui.lineEditConfirmPasswordOpen->setStyleSheet("background: #FF7777; color: #FFFFFF;");
+		valid = false;
+	}
+
+	// In custom paper size mode, size must be specified
+	QString paperSize = ui.comboBoxPaperSize->itemData(ui.comboBoxPaperSize->currentIndex()).toString();
+	ui.lineEditPaperWidth->setStyleSheet(QStringLiteral(""));
+	ui.lineEditPaperHeight->setStyleSheet(QStringLiteral(""));
+	if(paperSize == "custom") {
+		if(ui.lineEditPaperWidth->text().isEmpty()) {
+			ui.lineEditPaperWidth->setStyleSheet("background: #FF7777; color: #FFFFFF;");
+			valid = false;
+		}
+		if(ui.lineEditPaperHeight->text().isEmpty()) {
+			ui.lineEditPaperHeight->setStyleSheet("background: #FF7777; color: #FFFFFF;");
+			valid = false;
+		}
+	}
+	ui.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
