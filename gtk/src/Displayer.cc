@@ -233,13 +233,13 @@ bool Displayer::setup(const int* page, const int* resolution, const double* angl
 		Utils::set_spin_blocked(ui.spinPage, *page, m_connection_pageSpinChanged);
 	}
 	if(resolution) {
-		changed |= *resolution != ui.spinRotate->get_value();
-		Utils::set_spin_blocked(ui.spinRotate, *page, m_connection_rotSpinChanged);
+		changed |= *resolution != ui.spinResolution->get_value();
+		Utils::set_spin_blocked(ui.spinResolution, *resolution, m_connection_resSpinChanged);
 	}
 	if(changed && !renderImage()) {
 		return false;
 	}
-	if(angle) {
+	if(angle && std::abs(*angle - ui.spinRotate->get_value()) > 1E-2) {
 		setAngle(*angle);
 	}
 	return true;
