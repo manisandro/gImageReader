@@ -38,6 +38,11 @@ Displayer::Displayer(const Ui::MainWindow& _ui)
 
 	m_rotateMode = RotateMode::AllPages;
 
+	ui.spinPage->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/page.png"));
+	ui.spinResolution->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/resolution.png"));
+	ui.spinBrightness->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/brightness.png"));
+	ui.spinContrast->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/contrast.png"));
+
 	ui.scrollwinDisplay->drag_dest_set({Gtk::TargetEntry("text/uri-list")}, Gtk::DEST_DEFAULT_MOTION | Gtk::DEST_DEFAULT_DROP, Gdk::ACTION_COPY | Gdk::ACTION_MOVE);
 	ui.viewportDisplay->override_background_color(Gdk::RGBA("#a0a0a4"));
 
