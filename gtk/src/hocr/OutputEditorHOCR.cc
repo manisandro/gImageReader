@@ -753,7 +753,8 @@ bool OutputEditorHOCR::clear(bool hide)
 			return false;
 		}
 	}
-	m_document->clear();
+	m_document = Glib::RefPtr<HOCRDocument>(new HOCRDocument(&m_spell));
+	m_treeView->set_model(m_document);
 	ui.textviewSource->get_buffer()->set_text("");
 	m_tool->clearSelection();
 	m_modified = false;

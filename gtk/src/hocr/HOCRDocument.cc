@@ -38,21 +38,10 @@ HOCRDocument::HOCRDocument(GtkSpell::Checker* spell)
 
 HOCRDocument::~HOCRDocument()
 {
-	clear();
-	delete m_document;
-}
-
-void HOCRDocument::clear()
-{
 	for(HOCRPage* page : m_pages) {
-		Gtk::TreePath pagePath = get_root_path(page->index());
-		delete m_pages.back();
-		m_pages.pop_back();
-		row_deleted(pagePath);
+		delete page;
 	}
-	m_pages.clear();
-	m_pageIdCounter = 0;
-	m_document->create_root_node("body");
+	delete m_document;
 }
 
 void HOCRDocument::recheckSpelling()

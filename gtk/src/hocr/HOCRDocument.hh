@@ -42,8 +42,6 @@ public:
 	HOCRDocument(GtkSpell::Checker* spell);
 	~HOCRDocument();
 
-	void clear();
-
 	void setDefaultLanguage(const Glib::ustring& language) { m_defaultLanguage = language; }
 	void recheckSpelling();
 
