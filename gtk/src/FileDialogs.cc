@@ -181,7 +181,7 @@ static std::string gnome_save_dialog(const Glib::ustring &title, const std::stri
 }
 
 Glib::ustring FileDialogs::FileFilter::to_kde_filter() const {
-	Glib::ustring filter = name + "(" + Utils::string_join(patterns, " ") + ")";
+	Glib::ustring filter = name + " (" + Utils::string_join(patterns, " ") + ")";
 	return filter;
 }
 
