@@ -25,6 +25,7 @@
 #include <QComboBox>
 #include <QFontDialog>
 #include <QFontComboBox>
+#include <QLineEdit>
 #include <QSettings>
 #include <QSpinBox>
 #include <QString>
@@ -210,6 +211,25 @@ public slots:
 
 private:
 	QTableWidget* m_table;
+};
+
+class LineEditSetting : public AbstractSetting {
+	Q_OBJECT
+public:
+	LineEditSetting(const QString& key, QLineEdit* lineEdit, const QString& defaultValue = "")
+		: AbstractSetting(key), m_lineEdit(lineEdit) {
+		lineEdit->setText(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toString());
+		connect(lineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(serialize()));
+	}
+
+public slots:
+	void serialize() override {
+		QSettings().setValue(m_key, QVariant::fromValue(m_lineEdit->text()));
+		emit changed();
+	}
+
+private:
+	QLineEdit* m_lineEdit;
 };
 
 #endif // CONFIGSETTINGS_HH
