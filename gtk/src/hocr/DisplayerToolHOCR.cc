@@ -101,7 +101,7 @@ void DisplayerToolHOCR::setSelection(const Geometry::Rectangle& rect) {
 		m_displayer->addItem(m_selection);
 	}
 	m_selection->setAnchorAndPoint(Geometry::Point(r.x, r.y), Geometry::Point(r.x + r.width, r.y + r.height));
-//	TODO: m_displayer->ensureVisible(m_selection);
+	m_displayer->ensureVisible(m_selection->rect());
 }
 
 Cairo::RefPtr<Cairo::ImageSurface> DisplayerToolHOCR::getSelection(const Geometry::Rectangle& rect) const {

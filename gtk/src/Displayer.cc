@@ -551,17 +551,54 @@ bool Displayer::scrollEvent(GdkEventScroll *ev) {
 	return false;
 }
 
+std::pair<int, int> Displayer::getPointVisible(const Geometry::Point& p) const
+{
+	// 0 means visible, -1 means to the left/top of visible area, +1 means to the right/bottom of visible area
+	int vx = 0;
+	int vy = 0;
+	double margin = 30.; // 30px margin
+	if(p.x - margin < m_hadj->get_value()) {
+		vx = -1;
+	} else if(p.x + 30. > m_hadj->get_value() + m_hadj->get_page_size()) {
+		vx = +1;
+	}
+	if(p.y - margin < m_vadj->get_value()) {
+		vy = -1;
+	} else if(p.y + margin > m_vadj->get_value() + m_vadj->get_page_size()) {
+		vy = +1;
+	}
+	return std::make_pair(vx, vy);
+}
+
 void Displayer::ensureVisible(double evx, double evy) {
-	if(evx - 30. < m_hadj->get_value()) {
-		m_hadj->set_value(std::max(0., evx - 30.));
+	double margin = 30.; // 30px margin
+	if(evx - margin < m_hadj->get_value()) {
+		m_hadj->set_value(std::max(0., evx - margin));
 	} else if(evx + 30. > m_hadj->get_value() + m_hadj->get_page_size()) {
 		m_hadj->set_value(std::min(m_hadj->get_upper(), evx + 30.) - m_hadj->get_page_size());
 	}
-	if(evy - 30.< m_vadj->get_value()) {
-		m_vadj->set_value(std::max(0., evy - 30.));
-	} else if(evy + 30. > m_vadj->get_value() + m_vadj->get_page_size()) {
-		m_vadj->set_value(std::min(m_vadj->get_upper(), evy + 30.) - m_vadj->get_page_size());
+	if(evy - margin < m_vadj->get_value()) {
+		m_vadj->set_value(std::max(0., evy - margin));
+	} else if(evy + margin > m_vadj->get_value() + m_vadj->get_page_size()) {
+		m_vadj->set_value(std::min(m_vadj->get_upper(), evy + margin) - m_vadj->get_page_size());
 	}
+}
+
+void Displayer::ensureVisible(const Geometry::Rectangle& rect)
+{
+	Geometry::Point p1 = mapToView(Geometry::Point(rect.x, rect.y));
+	Geometry::Point p2 = mapToView(Geometry::Point(rect.x + rect.width, rect.y + rect.height));
+	std::pair<int,int> vis1 = getPointVisible(p1);
+	std::pair<int,int> vis2 = getPointVisible(p2);
+	if(vis1.first == 0 && vis1.second == 0 && vis2.first == 0 && vis2.second == 0) {
+		// Both points visible, do nothing
+		return;
+	}
+
+	double ox = m_hadj->get_value() + 0.5 * (m_hadj->get_page_size() - (p2.x - p1.x)) - p1.x;
+	double oy = m_vadj->get_value() + 0.5 * (m_vadj->get_page_size() - (p2.y - p1.y)) - p1.y;
+	m_hadj->set_value(std::min(std::max(0., m_hadj->get_value() - ox), m_hadj->get_upper() - m_hadj->get_page_size()));
+	m_vadj->set_value(std::min(std::max(0., m_vadj->get_value() - oy), m_hadj->get_upper() - m_hadj->get_page_size()));
 }
 
 void Displayer::addItem(DisplayerItem* item) {
@@ -610,6 +647,13 @@ Geometry::Point Displayer::mapToSceneClamped(const Geometry::Point& p) const {
 	double x = (std::max(0., std::min(p.x - alloc.get_x(), double(alloc.get_width()))) - 0.5 * alloc.get_width()) / m_scale;
 	double y = (std::max(0., std::min(p.y - alloc.get_y(), double(alloc.get_height()))) - 0.5 * alloc.get_height()) / m_scale;
 	return Geometry::Point(x, y);
+}
+
+Geometry::Point Displayer::mapToView(const Geometry::Point &p) const
+{
+	Gtk::Allocation alloc = ui.drawingareaDisplay->get_allocation();
+	return Geometry::Point(alloc.get_x() + 0.5 * alloc.get_width()+ p.x * m_scale,
+						   alloc.get_y() + 0.5 * alloc.get_height() + p.y * m_scale);
 }
 
 Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle &rect) const {

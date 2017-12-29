@@ -55,12 +55,14 @@ public:
 	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
 	Geometry::Rectangle getSceneBoundingRect() const;
 	Geometry::Point mapToSceneClamped(const Geometry::Point& p) const;
+	Geometry::Point mapToView(const Geometry::Point& p) const;
 	bool hasMultipleOCRAreas();
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
 	bool allowAutodetectOCRAreas() const;
 	void autodetectOCRAreas();
 	void setCursor(Glib::RefPtr<Gdk::Cursor> cursor);
 	void ensureVisible(double evx, double evy);
+	void ensureVisible(const Geometry::Rectangle& rect);
 
 	void addItem(DisplayerItem* item);
 	void removeItem(DisplayerItem* item);
@@ -139,6 +141,7 @@ private:
 	void sendScaleRequest(const ScaleRequest& request);
 	void scaleThread();
 	void setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image);
+	std::pair<int, int> getPointVisible(const Geometry::Point& p) const;
 };
 
 class DisplayerItem : public sigc::trackable {
