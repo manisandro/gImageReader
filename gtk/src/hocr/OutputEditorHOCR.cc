@@ -281,11 +281,11 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	CONNECT(m_tool, bbox_changed, sigc::mem_fun(this, &OutputEditorHOCR::updateCurrentItemBBox));
 	CONNECT(m_tool, bbox_drawn, sigc::mem_fun(this, &OutputEditorHOCR::addGraphicRegion));
 	CONNECT(m_tool, position_picked, sigc::mem_fun(this, &OutputEditorHOCR::pickItem));
-	CONNECT(m_document, row_inserted, [this](const Gtk::TreePath&, const Gtk::TreeIter&){ setModified(); });
-	CONNECT(m_document, row_deleted, [this](const Gtk::TreePath&){ setModified(); });
-	CONNECT(m_document, row_changed, [this](const Gtk::TreePath&, const Gtk::TreeIter&){ setModified(); updateSourceText(); });
-	CONNECT(m_document, item_attribute_changed, [this](const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&){ setModified(); });
-	CONNECT(m_document, item_attribute_changed, [this](const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value){ updateAttributes(it, attr, value); updateSourceText(); });
+	CONNECTX(m_document, row_inserted, [this](const Gtk::TreePath&, const Gtk::TreeIter&){ setModified(); });
+	CONNECTX(m_document, row_deleted, [this](const Gtk::TreePath&){ setModified(); });
+	CONNECTX(m_document, row_changed, [this](const Gtk::TreePath&, const Gtk::TreeIter&){ setModified(); updateSourceText(); });
+	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&){ setModified(); });
+	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value){ updateAttributes(it, attr, value); updateSourceText(); });
 
 	setFont();
 }
@@ -754,10 +754,17 @@ bool OutputEditorHOCR::clear(bool hide)
 		}
 	}
 	m_document = Glib::RefPtr<HOCRDocument>(new HOCRDocument(&m_spell));
+	CONNECTX(m_document, row_inserted, [this](const Gtk::TreePath&, const Gtk::TreeIter&){ setModified(); });
+	CONNECTX(m_document, row_deleted, [this](const Gtk::TreePath&){ setModified(); });
+	CONNECTX(m_document, row_changed, [this](const Gtk::TreePath&, const Gtk::TreeIter&){ setModified(); updateSourceText(); });
+	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&){ setModified(); });
+	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value){ updateAttributes(it, attr, value); updateSourceText(); });
 	m_treeView->set_model(m_document);
 	ui.textviewSource->get_buffer()->set_text("");
 	m_tool->clearSelection();
 	m_modified = false;
+	ui.buttonSave->set_sensitive(false);
+	ui.buttonExport->set_sensitive(false);
 	m_filebasename.clear();
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
