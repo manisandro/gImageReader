@@ -382,6 +382,7 @@ void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index) {
 		if(index) {
 			m_treeView->expand_to_path(m_document->get_path(index));
 			m_treeView->get_selection()->select(index);
+			m_treeView->set_cursor(m_document->get_path(index));
 			m_treeView->scroll_to_row(m_document->get_path(index));
 		}
 		m_connectionSelectionChanged.block(false);
