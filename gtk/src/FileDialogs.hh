@@ -26,8 +26,8 @@ namespace FileDialogs {
 
 struct FileFilter {
 	std::string name;
-	std::vector<std::string> mime_types;
-	std::vector<std::string> patterns;
+	std::vector<Glib::ustring> mime_types;
+	std::vector<Glib::ustring> patterns;
 
 #ifdef G_OS_WIN32
 	std::wstring to_win32_filter() const;
