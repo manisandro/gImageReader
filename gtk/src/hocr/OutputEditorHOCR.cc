@@ -38,7 +38,6 @@
 #include "SourceManager.hh"
 #include "Utils.hh"
 #include "XmlUtils.hh"
-#include <iostream>
 
 
 class OutputEditorHOCR::HOCRCellRendererText : public Gtk::CellRendererText
@@ -439,7 +438,7 @@ void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index) {
 			item->set_value(m_propStoreCols.weight, static_cast<int>(Pango::WEIGHT_NORMAL));
 		}
 	}
-// TODO: FontCombo
+
 	ui.textviewSource->get_buffer()->set_text(currentItem->toHtml());
 
 	m_tool->setSelection(currentItem->bbox());
