@@ -213,7 +213,7 @@ QModelIndex HOCRDocument::prevIndex(const QModelIndex& current)
 
 bool HOCRDocument::indexIsMisspelledWord(const QModelIndex& index) const
 {
-	return !index.data(Qt::ForegroundRole).isNull();
+	return !checkItemSpelling(itemAtIndex(index));
 }
 
 bool HOCRDocument::referencesSource(const QString& filename) const
