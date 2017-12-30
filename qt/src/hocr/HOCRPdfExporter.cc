@@ -41,7 +41,6 @@
 #include <podofo/doc/PdfStreamedDocument.h>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
-
 #undef USE_STD_NAMESPACE
 
 #include "CCITTFax4Encoder.hh"
@@ -534,12 +533,11 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 				if(success) {
 					double docScale = (72.0 / sourceDpi);
 					double imgScale = double(outputDpi) / sourceDpi;
-					PoDoFo::PdfPage* pdfpage;
 					if(paperSize == "source") {
 						pageWidth = bbox.width() * docScale;
 						pageHeight = bbox.height() * docScale;
 					}
-					pdfpage = document->CreatePage(PoDoFo::PdfRect(0, 0, pageWidth, pageHeight));
+					PoDoFo::PdfPage* pdfpage = document->CreatePage(PoDoFo::PdfRect(0, 0, pageWidth, pageHeight));
 					double offsetX = 0.5 * (pageWidth - bbox.width() * docScale);
 					double offsetY = 0.5 * (pageHeight - bbox.height() * docScale);
 					pdfprinter.setPage(pdfpage, docScale, offsetX, offsetY);
@@ -566,7 +564,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	}
 
 	// Set PDF info
-	auto pdfInfo = document->GetInfo();
+	PoDoFo::PdfInfo* pdfInfo = document->GetInfo();
 	pdfInfo->SetProducer(ui.lineEditProducer->text().toStdString());
 	pdfInfo->SetCreator(ui.lineEditCreator->text().toStdString());
 	pdfInfo->SetTitle(ui.lineEditTitle->text().toStdString());
@@ -770,7 +768,7 @@ void HOCRPdfExporter::paperSizeChanged()
 		ui.widgetPaperOrientation->setVisible(true);
 		ui.lineEditPaperWidth->setDisabled(true);
 		ui.lineEditPaperHeight->setDisabled(true);
-		PaperSize::Unit unit= static_cast<PaperSize::Unit>(ui.comboBoxPaperSizeUnit->itemData(ui.comboBoxPaperSizeUnit->currentIndex()).toInt());
+		PaperSize::Unit unit = static_cast<PaperSize::Unit>(ui.comboBoxPaperSizeUnit->itemData(ui.comboBoxPaperSizeUnit->currentIndex()).toInt());
 		auto outputPaperSize = PaperSize::getSize(unit, paperSize.toStdString(), ui.toolButtonLandscape->isChecked());
 		QLocale locale;
 		ui.lineEditPaperWidth->setText(locale.toString(outputPaperSize.width, 'f', 1));
