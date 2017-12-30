@@ -27,5 +27,7 @@
         <file alias="wconf">../../data/icons/wconf.png</file>
         <file alias="landscape">../../data/icons/landscape.png</file>
         <file alias="portrait">../../data/icons/portrait.png</file>
+        <file alias="collapse">../../data/icons/collapse.png</file>
+        <file alias="expand">../../data/icons/expand.png</file>
     </qresource>
 </RCC>

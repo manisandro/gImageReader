@@ -113,8 +113,8 @@ public:
 		actionNavigateNext = new QAction(QIcon::fromTheme("go-down"), gettext("Next (F3)"), widget);
 		actionNavigatePrev = new QAction(QIcon::fromTheme("go-up"), gettext("Previous (Shift+F3)"), widget);
 		comboBoxNavigate = new QComboBox();
-		actionExpandAll = new QAction(QIcon::fromTheme("list-add"), gettext("Expand all"), widget);
-		actionCollapseAll = new QAction(QIcon::fromTheme("list-remove"), gettext("Collapse all"), widget);
+		actionExpandAll = new QAction(QIcon(":/icons/expand"), gettext("Expand all"), widget);
+		actionCollapseAll = new QAction(QIcon(":/icons/collapse"), gettext("Collapse all"), widget);
 
 		toolBarNavigate = new QToolBar(widget);
 		toolBarNavigate->setToolButtonStyle(Qt::ToolButtonIconOnly);
