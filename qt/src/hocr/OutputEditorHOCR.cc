@@ -327,6 +327,7 @@ void OutputEditorHOCR::expandCollapseItemClass(bool expand)
 		}
 		next = m_document->nextIndex(next);
 	} while(next != start);
+	ui.treeViewHOCR->scrollTo(ui.treeViewHOCR->currentIndex());
 }
 
 void OutputEditorHOCR::navigateNextPrev(bool next)
