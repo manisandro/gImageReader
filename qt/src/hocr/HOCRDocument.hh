@@ -55,6 +55,7 @@ public:
 
 	QModelIndex nextIndex(const QModelIndex& current);
 	QModelIndex prevIndex(const QModelIndex& current);
+	bool indexIsMisspelledWord(const QModelIndex& index) const;
 
 	bool referencesSource(const QString& filename) const;
 	QModelIndex searchPage(const QString& filename, int pageNr) const;

@@ -211,6 +211,11 @@ QModelIndex HOCRDocument::prevIndex(const QModelIndex& current)
 	return idx;
 }
 
+bool HOCRDocument::indexIsMisspelledWord(const QModelIndex& index) const
+{
+	return !index.data(Qt::ForegroundRole).isNull();
+}
+
 bool HOCRDocument::referencesSource(const QString& filename) const
 {
 	for(const HOCRPage* page : m_pages) {

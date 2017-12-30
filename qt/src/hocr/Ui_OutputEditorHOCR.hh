@@ -29,7 +29,14 @@ public:
 	QAction* actionOutputReplace;
 	QAction* actionToggleWConf;
 	QAction* actionPick;
+	QAction* actionNavigateNext;
+	QAction* actionNavigatePrev;
+	QAction* actionExpandAll;
+	QAction* actionCollapseAll;
+	QComboBox* comboBoxNavigate;
+
 	QToolBar* toolBarOutput;
+	QToolBar* toolBarNavigate;
 	QTabWidget* tabWidget;
 
 	QSplitter* splitter;
@@ -92,10 +99,34 @@ public:
 		splitter = new QSplitter(Qt::Vertical, widget);
 		widget->layout()->addWidget(splitter);
 
+		QWidget* treeContainer = new QWidget(widget);
+		treeContainer->setLayout(new QVBoxLayout());
+		treeContainer->layout()->setSpacing(0);
+		treeContainer->layout()->setContentsMargins(0, 0, 0, 0);
+		splitter->addWidget(treeContainer);
+
 		treeViewHOCR = new QTreeView(widget);
 		treeViewHOCR->setHeaderHidden(true);
 		treeViewHOCR->setSelectionMode(QTreeWidget::ExtendedSelection);
-		splitter->addWidget(treeViewHOCR);
+		treeContainer->layout()->addWidget(treeViewHOCR);
+
+		actionNavigateNext = new QAction(QIcon::fromTheme("go-down"), gettext("Next (F3)"), widget);
+		actionNavigatePrev = new QAction(QIcon::fromTheme("go-up"), gettext("Previous (Shift+F3)"), widget);
+		comboBoxNavigate = new QComboBox();
+		actionExpandAll = new QAction(QIcon::fromTheme("list-add"), gettext("Expand all"), widget);
+		actionCollapseAll = new QAction(QIcon::fromTheme("list-remove"), gettext("Collapse all"), widget);
+
+		toolBarNavigate = new QToolBar(widget);
+		toolBarNavigate->setToolButtonStyle(Qt::ToolButtonIconOnly);
+		toolBarNavigate->setIconSize(QSize(1, 1) * toolBarOutput->style()->pixelMetric(QStyle::PM_SmallIconSize));
+		toolBarNavigate->addWidget(comboBoxNavigate);
+		toolBarNavigate->addSeparator();
+		toolBarNavigate->addAction(actionNavigateNext);
+		toolBarNavigate->addAction(actionNavigatePrev);
+		toolBarNavigate->addSeparator();
+		toolBarNavigate->addAction(actionExpandAll);
+		toolBarNavigate->addAction(actionCollapseAll);
+		treeContainer->layout()->addWidget(toolBarNavigate);
 
 		tabWidget = new QTabWidget(widget);
 

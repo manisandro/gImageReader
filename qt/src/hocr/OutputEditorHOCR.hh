@@ -73,12 +73,19 @@ private:
 
 	QWidget* createAttrWidget(const QModelIndex& itemIndex, const QString& attrName, const QString& attrValue, const QString& attrItemClass = QString(), bool multiple = false);
 	void expandCollapseChildren(const QModelIndex& index, bool expand) const;
+	void expandCollapseItemClass(bool expand);
+	void navigateNextPrev(bool next);
 	bool findReplaceInItem(const QModelIndex& index, const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace, bool& currentSelectionMatchesSearch);
 	bool showPage(const HOCRPage* page);
 
 private slots:
 	void addGraphicRegion(const QRect& bbox);
 	void addPage(const QString& hocrText, ReadSessionData data);
+	void expandItemClass(){ expandCollapseItemClass(true); }
+	void collapseItemClass(){ expandCollapseItemClass(false); }
+	void navigateTargetChanged();
+	void navigateNext(){ navigateNextPrev(true); }
+	void navigatePrev(){ navigateNextPrev(false); }
 	void pickItem(const QPoint& point);
 	void setFont();
 	void setModified();

@@ -182,6 +182,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 
 	ui.actionOutputReplace->setShortcut(Qt::CTRL + Qt::Key_F);
 	ui.actionOutputSaveHOCR->setShortcut(Qt::CTRL + Qt::Key_S);
+	ui.actionNavigateNext->setShortcut(Qt::Key_F3);
+	ui.actionNavigatePrev->setShortcut(Qt::SHIFT + Qt::Key_F3);
 
 	m_document = new HOCRDocument(&m_spell, ui.treeViewHOCR);
 	ui.treeViewHOCR->setModel(m_document);
@@ -191,6 +193,13 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.treeViewHOCR->setColumnWidth(1, 32);
 	ui.treeViewHOCR->setColumnHidden(1, true);
 	ui.treeViewHOCR->setItemDelegateForColumn(0, new HOCRTextDelegate(ui.treeViewHOCR));
+
+	ui.comboBoxNavigate->addItem(_("Page"), "ocr_page");
+	ui.comboBoxNavigate->addItem(_("Block"), "ocr_carea");
+	ui.comboBoxNavigate->addItem(_("Paragraph"), "ocr_par");
+	ui.comboBoxNavigate->addItem(_("Line"), "ocr_line");
+	ui.comboBoxNavigate->addItem(_("Word"), "ocrx_word");
+	ui.comboBoxNavigate->addItem(_("Misspelled word"), "ocrx_word_bad");
 
 	connect(ui.actionOutputOpen, SIGNAL(triggered()), this, SLOT(open()));
 	connect(ui.actionOutputSaveHOCR, SIGNAL(triggered()), this, SLOT(save()));
@@ -216,6 +225,11 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(m_document, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(setModified()));
 	connect(m_document, SIGNAL(itemAttributeChanged(QModelIndex,QString,QString)), this, SLOT(setModified()));
 	connect(m_document, SIGNAL(itemAttributeChanged(QModelIndex,QString,QString)), this, SLOT(updateSourceText()));
+	connect(ui.comboBoxNavigate, SIGNAL(currentIndexChanged(int)), this, SLOT(navigateTargetChanged()));
+	connect(ui.actionNavigateNext, SIGNAL(triggered(bool)), this, SLOT(navigateNext()));
+	connect(ui.actionNavigatePrev, SIGNAL(triggered(bool)), this, SLOT(navigatePrev()));
+	connect(ui.actionExpandAll, SIGNAL(triggered(bool)), this, SLOT(expandItemClass()));
+	connect(ui.actionCollapseAll, SIGNAL(triggered(bool)), this, SLOT(collapseItemClass()));
 
 	setFont();
 }
@@ -235,6 +249,7 @@ void OutputEditorHOCR::setFont() {
 void OutputEditorHOCR::setModified(){
 	ui.actionOutputSaveHOCR->setEnabled(m_document->pageCount() > 0);
 	ui.toolButtonOutputExport->setEnabled(m_document->pageCount() > 0);
+	ui.toolBarNavigate->setEnabled(m_document->pageCount() > 0);
 	m_modified = true;
 }
 
@@ -280,6 +295,51 @@ void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data) {
 	expandCollapseChildren(index, true);
 	MAIN->setOutputPaneVisible(true);
 	m_modified = true;
+}
+
+void OutputEditorHOCR::navigateTargetChanged()
+{
+	QString target = ui.comboBoxNavigate->itemData(ui.comboBoxNavigate->currentIndex()).toString();
+	bool allowExpandCollapse = !target.startsWith("ocrx_word");
+	ui.actionExpandAll->setEnabled(allowExpandCollapse);
+	ui.actionCollapseAll->setEnabled(allowExpandCollapse);
+}
+
+void OutputEditorHOCR::expandCollapseItemClass(bool expand)
+{
+	QString target = ui.comboBoxNavigate->itemData(ui.comboBoxNavigate->currentIndex()).toString();
+	QModelIndex start = m_document->index(0, 0);
+	QModelIndex next = start;
+	do {
+		const HOCRItem* item = m_document->itemAtIndex(next);
+		if(item && item->itemClass() == target) {
+			ui.treeViewHOCR->setExpanded(next, expand);
+		}
+		next = m_document->nextIndex(next);
+	} while(next != start);
+}
+
+void OutputEditorHOCR::navigateNextPrev(bool next)
+{
+	QString target = ui.comboBoxNavigate->itemData(ui.comboBoxNavigate->currentIndex()).toString();
+	bool misspelled = false;
+	if(target == "ocrx_word_bad") {
+		target = "ocrx_word";
+		misspelled = true;
+	}
+	QModelIndex start = ui.treeViewHOCR->currentIndex();
+	if(!start.isValid()) {
+		start = m_document->index(0, 0);
+	}
+	QModelIndex curr = next? m_document->nextIndex(start) : m_document->prevIndex(start);
+	while(curr != start) {
+		const HOCRItem* item = m_document->itemAtIndex(curr);
+		if(item && item->itemClass() == target && (!misspelled || m_document->indexIsMisspelledWord(curr))) {
+			break;
+		}
+		curr = next? m_document->nextIndex(curr) : m_document->prevIndex(curr);
+	};
+	ui.treeViewHOCR->setCurrentIndex(curr);
 }
 
 void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool expand) const {
