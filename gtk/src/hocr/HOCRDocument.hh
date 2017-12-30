@@ -61,6 +61,7 @@ public:
 
 	Gtk::TreeIter nextIndex(const Gtk::TreeIter& current) const;
 	Gtk::TreeIter prevIndex(const Gtk::TreeIter& current) const;
+	bool indexIsMisspelledWord(const Gtk::TreeIter& index) const;
 
 	bool referencesSource(const Glib::ustring& filename) const;
 	Gtk::TreeIter searchPage(const Glib::ustring& filename, int pageNr) const;

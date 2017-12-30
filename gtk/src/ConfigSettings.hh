@@ -173,4 +173,20 @@ private:
 	Glib::RefPtr<Gtk::ListStore> m_liststore;
 };
 
+class EntrySetting : public AbstractSetting {
+public:
+	EntrySetting(const Glib::ustring& key, Gtk::Entry* entry)
+		: AbstractSetting(key), m_entry(entry) {
+		entry->set_text(get_default_settings()->get_string(m_key));
+		CONNECT(m_entry, changed, [this] { serialize(); });
+	}
+	void serialize() override {
+		get_default_settings()->set_string(m_key, m_entry->get_text());
+		m_signal_changed.emit();
+	}
+
+private:
+	Gtk::Entry* m_entry;
+};
+
 #endif // CONFIGSETTINGS_HH

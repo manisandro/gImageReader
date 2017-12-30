@@ -222,7 +222,7 @@
             <description>Whether to override font size when exporting to PDF.</description>
         </key>
         <key type="i" name="pdffontsize">
-            <default>0</default>
+            <default>10</default>
             <summary>Font size when exporting to PDF</summary>
             <description>Font size when exporting to PDF.</description>
         </key>
@@ -236,6 +236,60 @@
             <summary>Prepend page number to output</summary>
             <description>Whether to prepend the page number to the output text.</description>
         </key>
-
+        <key type="i" name="pdfexportpapersize">
+            <default>0</default>
+            <summary>PDF export paper size</summary>
+            <description>PDF export paper size.</description>
+        </key>
+        <key type="s" name="pdfexportpaperwidth">
+            <default>""</default>
+            <summary>PDF export custom page width</summary>
+            <description>PDF export custom page height.</description>
+        </key>
+        <key type="s" name="pdfexportpaperheight">
+            <default>""</default>
+            <summary>PDF export custom page height</summary>
+            <description>PDF export custom page height.</description>
+        </key>
+        <key type="i" name="pdfexportpapersizeunit">
+            <default>0</default>
+            <summary>PDF export paper size unit</summary>
+            <description>PDF export paper size unit.</description>
+        </key>
+        <key type="b" name="pdfexportpaperlandscape">
+            <default>false</default>
+            <summary>PDF export paper orientation</summary>
+            <description>PDF export paper orientation.</description>
+        </key>
+        <key type="s" name="pdfexportinfoauthor">
+            <default>""</default>
+            <summary>PDF export metadata: author</summary>
+            <description>PDF export metadata: author.</description>
+        </key>
+        <key type="s" name="pdfexportinfotitle">
+            <default>""</default>
+            <summary>PDF export metadata: title</summary>
+            <description>PDF export metadata: title.</description>
+        </key>
+        <key type="s" name="pdfexportinfosubject">
+            <default>""</default>
+            <summary>PDF export metadata: subject</summary>
+            <description>PDF export metadata: subject.</description>
+        </key>
+        <key type="s" name="pdfexportinfoproducer">
+            <default>"gImageReader"</default>
+            <summary>PDF export metadata: produce</summary>
+            <description>PDF export metadata: producer.</description>
+        </key>
+        <key type="s" name="pdfexportinfocreator">
+            <default>"gImageReader"</default>
+            <summary>PDF export metadata: creator</summary>
+            <description>PDF export metadata: creator.</description>
+        </key>
+        <key type="s" name="pdfexportinfokeywords">
+            <default>""</default>
+            <summary>PDF export metadata: keywords</summary>
+            <description>PDF export metadata: keywords.</description>
+        </key>
     </schema>
 </schemalist>

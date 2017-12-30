@@ -65,6 +65,24 @@ private:
 	class PoDoFoPDFPainter;
 	class CairoPDFPainter;
 
+	struct PaperFormatComboColums : public Gtk::TreeModel::ColumnRecord {
+		Gtk::TreeModelColumn<Glib::ustring> label;
+		Gtk::TreeModelColumn<std::string> format;
+		PaperFormatComboColums() {
+			add(label);
+			add(format);
+		}
+	} m_paperFormatComboCols;
+
+	struct SizeUnitComboColums : public Gtk::TreeModel::ColumnRecord {
+		Gtk::TreeModelColumn<Glib::ustring> label;
+		Gtk::TreeModelColumn<int> unit;
+		SizeUnitComboColums() {
+			add(label);
+			add(unit);
+		}
+	} m_sizeUnitComboCols;
+
 	struct FormatComboColums : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Image::Format> format;
 		Gtk::TreeModelColumn<Glib::ustring> label;
@@ -104,14 +122,18 @@ private:
 	const HOCRPage* m_previewPage;
 	DisplayerToolHOCR* m_displayerTool;
 	std::vector<Glib::ustring> m_fontFamilies;
+	sigc::connection m_connPortrait;
+	sigc::connection m_connLandscape;
 
 	PDFSettings getPdfSettings() const;
 	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale = 1., bool inThread = false);
 
 	void imageFormatChanged();
 	void imageCompressionChanged();
-	void passwordChanged();
+	void paperOrientationChanged(bool landscape);
+	void paperSizeChanged();
 	void updatePreview();
+	void updateValid();
 	bool setSource(const Glib::ustring& sourceFile, int page, int dpi, double angle);
 	Cairo::RefPtr<Cairo::ImageSurface> getSelection(const Geometry::Rectangle& bbox);
 };

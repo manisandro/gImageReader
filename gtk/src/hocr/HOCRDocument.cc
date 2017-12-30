@@ -227,6 +227,11 @@ Gtk::TreeIter HOCRDocument::prevIndex(const Gtk::TreeIter& current) const
 	return iter;
 }
 
+bool HOCRDocument::indexIsMisspelledWord(const Gtk::TreeIter& index) const
+{
+	return !checkItemSpelling(itemAtIndex(index));
+}
+
 bool HOCRDocument::referencesSource(const Glib::ustring& filename) const
 {
 	for(const HOCRPage* page : m_pages) {

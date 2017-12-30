@@ -62,6 +62,15 @@ private:
 		std::vector<Glib::ustring> errors;
 	};
 
+	struct NavigationComboColumns : public Gtk::TreeModel::ColumnRecord {
+		Gtk::TreeModelColumn<Glib::ustring> label;
+		Gtk::TreeModelColumn<Glib::ustring> itemClass;
+		NavigationComboColumns() {
+			add(label);
+			add(itemClass);
+		}
+	} m_navigationComboCols;
+
 	struct PropStoreColumns : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Glib::ustring> attr;
 		Gtk::TreeModelColumn<Glib::ustring> name;
@@ -110,6 +119,9 @@ private:
 	void addGraphicRegion(const Geometry::Rectangle& rect);
 	void addPage(const Glib::ustring& hocrText, ReadSessionData data);
 	void editAttribute(const Glib::ustring& path, const Glib::ustring& value);
+	void expandCollapseItemClass(bool expand);
+	void navigateNextPrev(bool next);
+	void navigateTargetChanged();
 	void pickItem(const Geometry::Point& point);
 	void setFont();
 	void setModified();

@@ -18,6 +18,7 @@
  */
 
 #include <cstring>
+#include <iomanip>
 #include <podofo/base/PdfDictionary.h>
 #include <podofo/base/PdfFilter.h>
 #include <podofo/base/PdfStream.h>
@@ -40,6 +41,7 @@
 #include "HOCRDocument.hh"
 #include "HOCRPdfExporter.hh"
 #include "MainWindow.hh"
+#include "PaperSize.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
 
@@ -147,7 +149,7 @@ public:
 		delete m_document;
 		// Fonts are deleted by the internal PoDoFo font cache of the document
 	}
-	void setPage(PoDoFo::PdfPage* page, double scaleFactor) {
+	void setPage(PoDoFo::PdfPage* page, double scaleFactor, double offsetX = 0.0, double offsetY = 0.0) {
 		m_painter->SetPage(page);
 		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
 		m_painter->SetFont(m_defaultFont);
@@ -155,6 +157,8 @@ public:
 			m_painter->GetFont()->SetFontSize(m_defaultFontSize);
 		}
 		m_scaleFactor = scaleFactor;
+		m_offsetX = offsetX;
+		m_offsetY = offsetY;
 	}
 	bool finalize(Glib::ustring* errMsg) {
 		try {
@@ -175,7 +179,7 @@ public:
 	}
 	void drawText(double x, double y, const Glib::ustring& text) override {
 		PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.c_str()));
-		m_painter->DrawText(x * m_scaleFactor, m_pageHeight - y * m_scaleFactor, pdfString);
+		m_painter->DrawText(m_offsetX + x * m_scaleFactor, m_pageHeight - m_offsetY - y * m_scaleFactor, pdfString);
 	}
 	void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) override {
 		Image img(image, settings.colorFormat, settings.conversionFlags);
@@ -211,7 +215,8 @@ public:
 			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<char*>(encoded), encodedLen);
 			pdfImage.SetImageDataRaw(img.width, img.height, img.sampleSize, &is);
 		}
-		m_painter->DrawImage(bbox.x * m_scaleFactor, m_pageHeight - (bbox.y + bbox.height) * m_scaleFactor, &pdfImage, m_scaleFactor * bbox.width / double(image->get_width()), m_scaleFactor * bbox.height / double(image->get_height()));
+		m_painter->DrawImage(m_offsetX + bbox.x * m_scaleFactor, m_pageHeight - m_offsetY - (bbox.y + bbox.height) * m_scaleFactor,
+							 &pdfImage, m_scaleFactor * bbox.width / double(image->get_width()), m_scaleFactor * bbox.height / double(image->get_height()));
 	}
 	double getAverageCharWidth() const override {
 		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x')) / m_scaleFactor;
@@ -235,6 +240,8 @@ private:
 	double m_defaultFontSize = -1.0;
 	double m_scaleFactor = 1.0;
 	double m_pageHeight = 0.0;
+	double m_offsetX = 0.0;
+	double m_offsetY = 0.0;
 
 	PoDoFo::PdfFont* getFont(const Glib::ustring& family) {
 		auto it = m_fontCache.find(family);
@@ -271,10 +278,39 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 	ui.setupUi();
 	ui.dialogPdfExport->set_transient_for(*MAIN->getWindow());
 
+	// Paper format combo
+	Glib::RefPtr<Gtk::ListStore> paperFormatComboModel = Gtk::ListStore::create(m_paperFormatComboCols);
+	ui.comboPaperFormat->set_model(paperFormatComboModel);
+	Gtk::TreeModel::Row row = *(paperFormatComboModel->append());
+	row[m_paperFormatComboCols.label] = _("Same as source");
+	row[m_paperFormatComboCols.format] = "source";
+	row = *(paperFormatComboModel->append());
+	row[m_paperFormatComboCols.label] = _("Custom");
+	row[m_paperFormatComboCols.format] = "custom";
+	for(const auto& size : PaperSize::paperSizes) {
+		row = *(paperFormatComboModel->append());
+		row[m_paperFormatComboCols.label] = size.first;
+		row[m_paperFormatComboCols.format] = size.first;
+	}
+	ui.comboPaperFormat->pack_start(m_paperFormatComboCols.label);
+	ui.comboPaperFormat->set_active(-1);
+
+	// Paper size combo
+	Glib::RefPtr<Gtk::ListStore> sizeUnitComboModel = Gtk::ListStore::create(m_sizeUnitComboCols);
+	ui.comboPaperSizeUnit->set_model(sizeUnitComboModel);
+	row = *(sizeUnitComboModel->append());
+	row[m_sizeUnitComboCols.label] = _("cm");
+	row[m_sizeUnitComboCols.unit] = static_cast<int>(PaperSize::cm);
+	row = *(sizeUnitComboModel->append());
+	row[m_sizeUnitComboCols.label] = _("in");
+	row[m_sizeUnitComboCols.unit] = static_cast<int>(PaperSize::inch);
+	ui.comboPaperSizeUnit->pack_start(m_sizeUnitComboCols.label);
+	ui.comboPaperSizeUnit->set_active(0);
+
 	// Image format combo
 	Glib::RefPtr<Gtk::ListStore> formatComboModel = Gtk::ListStore::create(m_formatComboCols);
 	ui.comboImageformat->set_model(formatComboModel);
-	Gtk::TreeModel::Row row = *(formatComboModel->append());
+	row = *(formatComboModel->append());
 	row[m_formatComboCols.format] = Image::Format_RGB24;
 	row[m_formatComboCols.label] = _("Color");
 	row = *(formatComboModel->append());
@@ -353,9 +389,15 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 		updatePreview();
 	});
 	CONNECT(ui.spinPreserve, value_changed, [this]{ updatePreview(); });
-	CONNECT(ui.entryEncryptionPassword, changed, [this]{ passwordChanged(); });
-	CONNECT(ui.entryEncryptionConfirm, changed, [this]{ passwordChanged(); });
+	CONNECT(ui.entryEncryptionPassword, changed, [this]{ updateValid(); });
+	CONNECT(ui.entryEncryptionConfirm, changed, [this]{ updateValid(); });
 	CONNECT(ui.checkboxPreview, toggled, [this] { updatePreview(); });
+	CONNECT(ui.comboPaperFormat, changed, [this] { paperSizeChanged(); });
+	CONNECT(ui.comboPaperSizeUnit, changed, [this] { paperSizeChanged(); });
+	m_connLandscape = CONNECT(ui.buttonLandscape, toggled, [this] { paperOrientationChanged(true); });
+	m_connPortrait = CONNECT(ui.buttonPortrait, toggled, [this] { paperOrientationChanged(false); });
+	CONNECT(ui.entryPaperWidth, changed, [this] { paperSizeChanged(); });
+	CONNECT(ui.entryPaperHeight, changed, [this] { paperSizeChanged(); });
 
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", ui.comboMode));
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagecompressionquality", ui.spinQuality));
@@ -373,6 +415,17 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 	MAIN->getConfig()->addSetting(new SpinSetting("pdfpreservespaces", ui.spinPreserve));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfpreview", ui.checkboxPreview));
 	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfopenoutput", ui.checkboxOpenoutput));
+	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportpapersize", ui.comboPaperFormat));
+	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportpaperwidth", ui.entryPaperWidth));
+	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportpaperheight", ui.entryPaperHeight));
+	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportpapersizeunit", ui.comboPaperSizeUnit));
+	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::ToggleButton>("pdfexportpaperlandscape", ui.buttonLandscape));
+	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportinfoauthor", ui.entryMetadataAuthor));
+	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportinfotitle", ui.entryMetadataTitle));
+	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportinfosubject", ui.entryMetadataSubject));
+	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportinfoproducer", ui.entryMetadataProducer));
+	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportinfocreator", ui.entryMetadataCreator));
+	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportinfokeywords", ui.entryMetadataKeywords));
 
 #ifndef MAKE_VERSION
 #define MAKE_VERSION(...) 0
@@ -403,6 +456,17 @@ HOCRPdfExporter::~HOCRPdfExporter()
 	MAIN->getConfig()->removeSetting("pdfpreservespaces");
 	MAIN->getConfig()->removeSetting("pdfpreview");
 	MAIN->getConfig()->removeSetting("pdfopenoutput");
+	MAIN->getConfig()->removeSetting("pdfexportpapersize");
+	MAIN->getConfig()->removeSetting("pdfexportpaperwidth");
+	MAIN->getConfig()->removeSetting("pdfexportpaperheight");
+	MAIN->getConfig()->removeSetting("pdfexportpapersizeunit");
+	MAIN->getConfig()->removeSetting("pdfexportpaperlandscape");
+	MAIN->getConfig()->removeSetting("pdfexportinfoauthor");
+	MAIN->getConfig()->removeSetting("pdfexportinfotitle");
+	MAIN->getConfig()->removeSetting("pdfexportinfosubject");
+	MAIN->getConfig()->removeSetting("pdfexportinfoproducer");
+	MAIN->getConfig()->removeSetting("pdfexportinfocreator");
+	MAIN->getConfig()->removeSetting("pdfexportinfokeywords");
 }
 
 bool HOCRPdfExporter::run(std::string& filebasename) {
@@ -498,6 +562,24 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 
 	PDFSettings pdfSettings = getPdfSettings();
 
+	std::string paperSize = (*ui.comboPaperFormat->get_active())[m_paperFormatComboCols.format];
+
+	double pageWidth, pageHeight;
+	if(paperSize == "custom") {
+		pageWidth = std::atof(ui.entryPaperWidth->get_text().c_str()) * 72.0;
+		pageHeight = std::atof(ui.entryPaperHeight->get_text().c_str())* 72.0;
+
+		PaperSize::Unit unit = static_cast<PaperSize::Unit>(static_cast<int>((*ui.comboPaperSizeUnit->get_active())[m_sizeUnitComboCols.unit]));
+		if(unit == PaperSize::cm) {
+			pageWidth /= PaperSize::CMtoInch;
+			pageHeight /= PaperSize::CMtoInch;
+		}
+	} else if (paperSize != "source") {
+		auto inchSize = PaperSize::getSize(PaperSize::inch, paperSize, ui.buttonLandscape->get_active());
+		pageWidth = inchSize.width * 72.0;
+		pageHeight = inchSize.height * 72.0;
+	}
+
 	PoDoFo::PdfPainter painter;
 	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont, pdfSettings.fontSize, m_fontFamilies);
 
@@ -521,8 +603,14 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 				if(success) {
 					double docScale = (72. / sourceDpi);
 					double imgScale = double(outputDpi) / sourceDpi;
-					PoDoFo::PdfPage* pdfpage = document->CreatePage(PoDoFo::PdfRect(0, 0, bbox.width * docScale, bbox.height * docScale));
-					pdfprinter.setPage(pdfpage, docScale);
+					if(paperSize == "source") {
+						pageWidth = bbox.width * docScale;
+						pageHeight = bbox.height * docScale;
+					}
+					PoDoFo::PdfPage* pdfpage = document->CreatePage(PoDoFo::PdfRect(0, 0, pageWidth, pageHeight));
+					double offsetX = 0.5 * (pageWidth - bbox.width * docScale);
+					double offsetY = 0.5 * (pageHeight - bbox.height * docScale);
+					pdfprinter.setPage(pdfpage, docScale, offsetX, offsetY);
 					printChildren(pdfprinter, page, pdfSettings, imgScale, true);
 					if(pdfSettings.overlay) {
 						Geometry::Rectangle scaledBBox(imgScale * bbox.x, imgScale * bbox.y, imgScale * bbox.width, imgScale * bbox.height);
@@ -544,6 +632,15 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 	if(!failed.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Errors occurred"), Glib::ustring::compose(_("The following pages could not be rendered:\n%1"), Utils::string_join(failed, "\n")));
 	}
+
+	// Set PDF info
+	PoDoFo::PdfInfo* pdfInfo = document->GetInfo();
+	pdfInfo->SetProducer(ui.entryMetadataProducer->get_text().c_str());
+	pdfInfo->SetCreator(ui.entryMetadataCreator->get_text().c_str());
+	pdfInfo->SetTitle(ui.entryMetadataTitle->get_text().c_str());
+	pdfInfo->SetSubject(ui.entryMetadataSubject->get_text().c_str());
+	pdfInfo->SetKeywords(ui.entryMetadataKeywords->get_text().c_str());
+	pdfInfo->SetAuthor(ui.entryMetadataAuthor->get_text().c_str());
 
 	Glib::ustring errMsg;
 	bool success = pdfprinter.finalize(&errMsg);
@@ -710,17 +807,6 @@ void HOCRPdfExporter::imageCompressionChanged() {
 	ui.labelQuality->set_sensitive(jpegCompression);
 }
 
-void HOCRPdfExporter::passwordChanged() {
-	if(ui.entryEncryptionPassword->get_text() == ui.entryEncryptionConfirm->get_text()) {
-		Utils::clear_error_state(ui.entryEncryptionConfirm);
-		ui.buttonOk->set_sensitive(true);
-	} else {
-		Utils::set_error_state(ui.entryEncryptionConfirm);
-		ui.buttonOk->set_sensitive(false);
-	}
-}
-
-
 bool HOCRPdfExporter::setSource(const Glib::ustring& sourceFile, int page, int dpi, double angle)
 {
 	Glib::RefPtr<Gio::File> file = Gio::File::create_for_path(sourceFile);
@@ -735,4 +821,67 @@ bool HOCRPdfExporter::setSource(const Glib::ustring& sourceFile, int page, int d
 Cairo::RefPtr<Cairo::ImageSurface> HOCRPdfExporter::getSelection(const Geometry::Rectangle& bbox)
 {
 	return m_displayerTool->getSelection(bbox);
+}
+
+void HOCRPdfExporter::paperOrientationChanged(bool landscape) {
+	m_connPortrait.block(true);
+	m_connLandscape.block(true);
+	ui.buttonPortrait->set_active(!landscape);
+	ui.buttonLandscape->set_active(landscape);
+	m_connPortrait.block(false);
+	m_connLandscape.block(false);
+	paperSizeChanged();
+}
+
+void HOCRPdfExporter::paperSizeChanged() {
+	std::string paperSize = (*ui.comboPaperFormat->get_active())[m_paperFormatComboCols.format];
+	if(paperSize == "custom") {
+		ui.entryPaperWidth->set_sensitive(true);
+		ui.entryPaperHeight->set_sensitive(true);
+		ui.boxPaperSize->set_visible(true);
+		ui.boxPaperOrientation->set_visible(false);
+	} else if(paperSize == "source") {
+		ui.entryPaperWidth->set_sensitive(true);
+		ui.entryPaperHeight->set_sensitive(true);
+		ui.boxPaperSize->set_visible(false);
+		ui.boxPaperOrientation->set_visible(false);
+	} else {
+		ui.boxPaperSize->set_visible(true);
+		ui.boxPaperOrientation->set_visible(true);
+		ui.entryPaperWidth->set_sensitive(false);
+		ui.entryPaperHeight->set_sensitive(false);
+		PaperSize::Unit unit = static_cast<PaperSize::Unit>(static_cast<int>((*ui.comboPaperSizeUnit->get_active())[m_sizeUnitComboCols.unit]));
+		auto outputPaperSize = PaperSize::getSize(unit, paperSize, ui.buttonLandscape->get_active());
+		ui.entryPaperWidth->set_text(Glib::ustring::format(std::fixed, std::setprecision(1), outputPaperSize.width));
+		ui.entryPaperHeight->set_text(Glib::ustring::format(std::fixed, std::setprecision(1), outputPaperSize.height));
+	}
+	updateValid();
+}
+
+void HOCRPdfExporter::updateValid() {
+	bool valid = true;
+
+	// Passwords must match
+	if(ui.entryEncryptionPassword->get_text() == ui.entryEncryptionConfirm->get_text()) {
+		Utils::clear_error_state(ui.entryEncryptionConfirm);
+	} else {
+		Utils::set_error_state(ui.entryEncryptionConfirm);
+		valid = false;
+	}
+
+	// In custom paper size mode, size must be specified
+	std::string paperSize = (*ui.comboPaperFormat->get_active())[m_paperFormatComboCols.format];
+	Utils::clear_error_state(ui.entryPaperWidth);
+	Utils::clear_error_state(ui.entryPaperHeight);
+	if(paperSize == "custom") {
+		if(ui.entryPaperWidth->get_text().empty()) {
+			Utils::set_error_state(ui.entryPaperWidth);
+			valid = false;
+		}
+		if(ui.entryPaperHeight->get_text().empty()) {
+			Utils::set_error_state(ui.entryPaperHeight);
+			valid = false;
+		}
+	}
+	ui.buttonOk->set_sensitive(valid);
 }

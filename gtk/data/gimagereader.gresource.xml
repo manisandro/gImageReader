@@ -33,5 +33,9 @@
 		<file preprocess="to-pixdata" alias="rotate_page.png">../../data/icons/rotate_page.png</file>
 		<file preprocess="to-pixdata" alias="rotate_pages.png">../../data/icons/rotate_pages.png</file>
 		<file preprocess="to-pixdata" alias="wconf.png">../../data/icons/wconf.png</file>
+		<file preprocess="to-pixdata" alias="landscape.png">../../data/icons/landscape.png</file>
+		<file preprocess="to-pixdata" alias="portrait.png">../../data/icons/portrait.png</file>
+		<file preprocess="to-pixdata" alias="collapse.png">../../data/icons/collapse.png</file>
+		<file preprocess="to-pixdata" alias="expand.png">../../data/icons/expand.png</file>
 	</gresource>
 </gresources> 

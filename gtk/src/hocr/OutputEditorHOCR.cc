@@ -214,6 +214,30 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	itemViewCol2->set_visible(false);
 	itemViewCol2->set_fixed_width(32);
 
+	// Navigation target combo box
+	Glib::RefPtr<Gtk::ListStore> navigationComboModel = Gtk::ListStore::create(m_navigationComboCols);
+	ui.comboNavigation->set_model(navigationComboModel);
+	Gtk::TreeRow row = *(navigationComboModel->append());
+	row[m_navigationComboCols.label] = _("Page");
+	row[m_navigationComboCols.itemClass] = "ocr_page";
+	row = *(navigationComboModel->append());
+	row[m_navigationComboCols.label] = _("Block");
+	row[m_navigationComboCols.itemClass] = "ocr_carea";
+	row = *(navigationComboModel->append());
+	row[m_navigationComboCols.label] = _("Paragraph");
+	row[m_navigationComboCols.itemClass] = "ocr_par";
+	row = *(navigationComboModel->append());
+	row[m_navigationComboCols.label] = _("Line");
+	row[m_navigationComboCols.itemClass] = "ocr_line";
+	row = *(navigationComboModel->append());
+	row[m_navigationComboCols.label] = _("Word");
+	row[m_navigationComboCols.itemClass] = "ocrx_word";
+	row = *(navigationComboModel->append());
+	row[m_navigationComboCols.label] = _("Misspelled word");
+	row[m_navigationComboCols.itemClass] = "ocrx_word_bad";
+	ui.comboNavigation->pack_start(m_navigationComboCols.label);
+	ui.comboNavigation->set_active(0);
+
 	// HOCR item property table
 	m_propStore = Gtk::TreeStore::create(m_propStoreCols);
 	ui.treeviewProperties->set_model(m_propStore);
@@ -259,6 +283,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	Glib::RefPtr<Gtk::AccelGroup> group = MAIN->getWindow()->get_accel_group();
 	ui.buttonSave->add_accelerator("clicked", group, GDK_KEY_S, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 	ui.buttonFindreplace->add_accelerator("clicked", group, GDK_KEY_F, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
+	ui.buttonNavigationNext->add_accelerator("clicked", group, GDK_KEY_F3, Gdk::ModifierType(0), Gtk::AccelFlags(0));
+	ui.buttonNavigationPrev->add_accelerator("clicked", group, GDK_KEY_F3, Gdk::SHIFT_MASK, Gtk::AccelFlags(0));
 
 	ui.buttonSave->set_sensitive(false);
 	ui.buttonExport->set_sensitive(false);
@@ -286,6 +312,11 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	CONNECTX(m_document, row_changed, [this](const Gtk::TreePath&, const Gtk::TreeIter&){ setModified(); updateSourceText(); });
 	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&){ setModified(); });
 	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value){ updateAttributes(it, attr, value); updateSourceText(); });
+	CONNECT(ui.comboNavigation, changed, [this]{ navigateTargetChanged(); });
+	CONNECT(ui.buttonNavigationNext, clicked, [this]{ navigateNextPrev(true); });
+	CONNECT(ui.buttonNavigationPrev, clicked, [this]{ navigateNextPrev(false); });
+	CONNECT(ui.buttonExpandAll, clicked, [this]{ expandCollapseItemClass(true); });
+	CONNECT(ui.buttonCollapseAll, clicked, [this]{ expandCollapseItemClass(false); });
 
 	setFont();
 }
@@ -308,6 +339,7 @@ void OutputEditorHOCR::setFont() {
 void OutputEditorHOCR::setModified() {
 	ui.buttonSave->set_sensitive(m_document->pageCount() > 0);
 	ui.buttonExport->set_sensitive(m_document->pageCount() > 0);
+	ui.boxNavigation->set_sensitive(m_document->pageCount() > 0);
 	m_modified = true;
 }
 
@@ -358,6 +390,63 @@ void OutputEditorHOCR::addPage(const Glib::ustring& hocrText, ReadSessionData da
 	m_treeView->expand_row(m_document->get_path(index), true);
 	MAIN->setOutputPaneVisible(true);
 	m_modified = true;
+}
+
+void OutputEditorHOCR::navigateTargetChanged()
+{
+	Glib::ustring target = (*ui.comboNavigation->get_active())[m_navigationComboCols.itemClass];
+	bool allowExpandCollapse = target.substr(0, 9) != "ocrx_word";
+	ui.buttonExpandAll->set_sensitive(allowExpandCollapse);
+	ui.buttonCollapseAll->set_sensitive(allowExpandCollapse);
+}
+
+void OutputEditorHOCR::expandCollapseItemClass(bool expand)
+{
+	Glib::ustring target = (*ui.comboNavigation->get_active())[m_navigationComboCols.itemClass];
+	Gtk::TreeIter start = m_document->get_iter("0");
+	Gtk::TreeIter next = start;
+	do {
+		const HOCRItem* item = m_document->itemAtIndex(next);
+		if(item && item->itemClass() == target) {
+			if(expand) {
+				m_treeView->expand_to_path(m_document->get_path(next));
+				for(const Gtk::TreeIter& child : next->children()) {
+					m_treeView->collapse_row(m_document->get_path(child));
+				}
+			} else {
+				m_treeView->collapse_row(m_document->get_path(next));
+			}
+		}
+		next = m_document->nextIndex(next);
+	} while(next != start);
+	Gtk::TreeIter it = m_treeView->currentIndex();
+	if(it) {
+		m_treeView->scroll_to_row(m_document->get_path(it));
+	}
+}
+
+void OutputEditorHOCR::navigateNextPrev(bool next)
+{
+	Glib::ustring target = (*ui.comboNavigation->get_active())[m_navigationComboCols.itemClass];
+	bool misspelled = false;
+	if(target == "ocrx_word_bad") {
+		target = "ocrx_word";
+		misspelled = true;
+	}
+	Gtk::TreeIter start = m_treeView->currentIndex();
+	if(!start) {
+		start = m_document->get_iter("0");
+	}
+	Gtk::TreeIter curr = next? m_document->nextIndex(start) : m_document->prevIndex(start);
+	while(curr != start) {
+		const HOCRItem* item = m_document->itemAtIndex(curr);
+		if(item && item->itemClass() == target && (!misspelled || m_document->indexIsMisspelledWord(curr))) {
+			break;
+		}
+		curr = next? m_document->nextIndex(curr) : m_document->prevIndex(curr);
+	};
+	// Sets current index
+	showItemProperties(curr);
 }
 
 void OutputEditorHOCR::expandCollapseChildren(const Gtk::TreeIter& index, bool expand) const {
@@ -776,6 +865,7 @@ bool OutputEditorHOCR::clear(bool hide)
 	m_modified = false;
 	ui.buttonSave->set_sensitive(false);
 	ui.buttonExport->set_sensitive(false);
+	ui.boxNavigation->set_sensitive(false);
 	m_filebasename.clear();
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
