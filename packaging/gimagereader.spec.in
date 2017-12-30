@@ -146,7 +146,7 @@ fi
 
 %files common -f %{name}.lang
 %license COPYING
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS NEWS README.md
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 %{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 %{_datadir}/icons/hicolor/256x256/apps/%{name}.png
