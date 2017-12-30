@@ -355,6 +355,8 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfpreview", ui.checkBoxPreview, false));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfopenoutput", ui.checkBoxOpenOutputPdf, false));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportpapersize", ui.comboBoxPaperSize));
+	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportpaperwidth", ui.lineEditPaperWidth));
+	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportpaperheight", ui.lineEditPaperHeight));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportpapersizeunit", ui.comboBoxPaperSize));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfexportpaperlandscape", ui.toolButtonLandscape));
 	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfoauthor", ui.lineEditAuthor, PACKAGE_NAME));
@@ -393,6 +395,8 @@ HOCRPdfExporter::~HOCRPdfExporter() {
 	MAIN->getConfig()->removeSetting("pdfpreview");
 	MAIN->getConfig()->removeSetting("pdfopenoutput");
 	MAIN->getConfig()->removeSetting("pdfexportpapersize");
+	MAIN->getConfig()->removeSetting("pdfexportpaperwidth");
+	MAIN->getConfig()->removeSetting("pdfexportpaperheight");
 	MAIN->getConfig()->removeSetting("pdfexportpapersizeunit");
 	MAIN->getConfig()->removeSetting("pdfexportpaperlandscape");
 	MAIN->getConfig()->removeSetting("pdfexportinfoauthor");
