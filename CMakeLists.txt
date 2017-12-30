@@ -183,16 +183,24 @@ ENDIF(UNIX)
 IF("${srcdir}" STREQUAL "gtk")
     ADD_SCHEMA("gtk/data/org.gnome.gimagereader.gschema.xml")
     ADD_CUSTOM_COMMAND(
-        OUTPUT gimagereader.gresource.c
-        COMMAND glib-compile-resources gimagereader.gresource.xml --target=${CMAKE_CURRENT_BINARY_DIR}/gimagereader.gresource.c --generate-source
+        OUTPUT  ${CMAKE_BINARY_DIR}/gimagereader.gresource.c
+        COMMAND glib-compile-resources gimagereader.gresource.xml ARGS --target=${CMAKE_BINARY_DIR}/gimagereader.gresource.c --generate-source
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/gtk/data/
         DEPENDS ${gimagereader_FORMS})
-    LIST(APPEND gimagereader_SRCS gimagereader.gresource.c)
+    LIST(APPEND gimagereader_SRCS ${CMAKE_BINARY_DIR}/gimagereader.gresource.c)
+
+    # Just to allow running the application from the build tree (via XDG_DATA_DIRS=$PWD:$XDG_DATA_DIRS ./gimagereader-gtk)
+    ADD_CUSTOM_COMMAND(
+        OUTPUT  ${CMAKE_BINARY_DIR}/glib-2.0/schemas/gschemas.compiled
+        COMMAND ${CMAKE_COMMAND} ARGS -E copy ${CMAKE_SOURCE_DIR}/gtk/data/org.gnome.gimagereader.gschema.xml ${CMAKE_BINARY_DIR}/glib-2.0/schemas/org.gnome.gimagereader.gschema.xml
+        COMMAND glib-compile-schemas ARGS ${CMAKE_BINARY_DIR}/glib-2.0/schemas/
+        DEPENDS ${CMAKE_SOURCE_DIR}/gtk/data/org.gnome.gimagereader.gschema.xml
+    )
+    SET(gimagereader_RESOURCES_RCC ${CMAKE_BINARY_DIR}/glib-2.0/schemas/gschemas.compiled)
 
     FOREACH(form ${gimagereader_FORMS})
         GET_FILENAME_COMPONENT(outfile ${form} NAME_WE)
         SET(outfile ${CMAKE_BINARY_DIR}/ui_${outfile}.hh)
-        MESSAGE(${outfile})
         ADD_CUSTOM_COMMAND(
             OUTPUT ${outfile}
             COMMAND python3 ARGS ${CMAKE_SOURCE_DIR}/gtk/data/uigen.py ${form}
