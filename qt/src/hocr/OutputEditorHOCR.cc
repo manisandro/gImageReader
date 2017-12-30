@@ -313,7 +313,17 @@ void OutputEditorHOCR::expandCollapseItemClass(bool expand)
 	do {
 		const HOCRItem* item = m_document->itemAtIndex(next);
 		if(item && item->itemClass() == target) {
-			ui.treeViewHOCR->setExpanded(next, expand);
+			if(expand) {
+				ui.treeViewHOCR->setExpanded(next, expand);
+				for(QModelIndex parent = next.parent(); parent.isValid(); parent = parent.parent()) {
+					ui.treeViewHOCR->setExpanded(parent, true);
+				}
+				for(QModelIndex child = next.child(0, 0); child.isValid(); child = child.sibling(child.row() + 1, 0)) {
+					expandCollapseChildren(child, false);
+				}
+			} else {
+				expandCollapseChildren(next, false);
+			}
 		}
 		next = m_document->nextIndex(next);
 	} while(next != start);
