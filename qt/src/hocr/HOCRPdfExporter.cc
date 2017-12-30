@@ -358,6 +358,12 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportpapersize", ui.comboBoxPaperSize));
 	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportpapersizeunit", ui.comboBoxPaperSize));
 	MAIN->getConfig()->addSetting(new SwitchSetting("pdfexportpaperlandscape", ui.toolButtonLandscape));
+	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfoauthor", ui.lineEditAuthor, "gImageReader"));
+	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfotitle", ui.lineEditTitle));
+	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfosubject", ui.lineEditSubject));
+	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfoproducer", ui.lineEditProducer, "gImageReader"));
+	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfocreator", ui.lineEditCreator, "gImageReader"));
+	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfokeywords", ui.lineEditKeywords));
 
 #ifndef MAKE_VERSION
 #define MAKE_VERSION(...) 0
@@ -390,6 +396,12 @@ HOCRPdfExporter::~HOCRPdfExporter() {
 	MAIN->getConfig()->removeSetting("pdfexportpapersize");
 	MAIN->getConfig()->removeSetting("pdfexportpapersizeunit");
 	MAIN->getConfig()->removeSetting("pdfexportpaperlandscape");
+	MAIN->getConfig()->removeSetting("pdfexportinfoauthor");
+	MAIN->getConfig()->removeSetting("pdfexportinfotitle");
+	MAIN->getConfig()->removeSetting("pdfexportinfosubject");
+	MAIN->getConfig()->removeSetting("pdfexportinfoproducer");
+	MAIN->getConfig()->removeSetting("pdfexportinfocreator");
+	MAIN->getConfig()->removeSetting("pdfexportinfokeywords");
 }
 
 bool HOCRPdfExporter::run(QString& filebasename) {
@@ -552,6 +564,15 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	if(!failed.isEmpty()) {
 		QMessageBox::warning(MAIN, _("Errors occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
 	}
+
+	// Set PDF info
+	auto pdfInfo = document->GetInfo();
+	pdfInfo->SetProducer(ui.lineEditProducer->text().toStdString());
+	pdfInfo->SetCreator(ui.lineEditCreator->text().toStdString());
+	pdfInfo->SetTitle(ui.lineEditTitle->text().toStdString());
+	pdfInfo->SetSubject(ui.lineEditSubject->text().toStdString());
+	pdfInfo->SetKeywords(ui.lineEditKeywords->text().toStdString());
+	pdfInfo->SetAuthor(ui.lineEditAuthor->text().toStdString());
 
 	QString errMsg;
 	bool success = pdfprinter.finalize(&errMsg);
