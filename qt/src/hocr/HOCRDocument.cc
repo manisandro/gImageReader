@@ -176,16 +176,16 @@ QModelIndex HOCRDocument::nextIndex(const QModelIndex& current)
 		return idx.child(0, 0);
 	}
 	// Return next possible sibling
-	QModelIndex parent = idx.parent();
-	while(parent.isValid() && idx.row() >= rowCount(parent) - 1) {
-		idx = parent;
-		parent = idx.parent();
+	QModelIndex next = idx.sibling(idx.row() + 1, 0);
+	while(idx.isValid() && !next.isValid()) {
+		idx = idx.parent();
+		next = idx.sibling(idx.row() + 1, 0);
 	}
-	if(!parent.isValid()) {
+	if(!idx.isValid()) {
 		// Wrap around
 		return index(0, 0);
 	}
-	return idx.sibling(idx.row() + 1, 0);
+	return next;
 }
 
 QModelIndex HOCRDocument::prevIndex(const QModelIndex& current)
