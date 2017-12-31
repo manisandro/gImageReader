@@ -240,7 +240,7 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="orientation">vertical</property>
-        <property name="position">200</property>
+        <property name="position">300</property>
         <child>
           <object class="GtkBox" id="boxItems">
             <property name="visible">True</property>
