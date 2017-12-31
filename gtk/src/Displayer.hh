@@ -75,7 +75,7 @@ private:
 	enum class RotateMode { CurrentPage, AllPages } m_rotateMode;
 
 	const Ui::MainWindow& ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 
 	Glib::RefPtr<Gtk::Adjustment> m_hadj;
 	Glib::RefPtr<Gtk::Adjustment> m_vadj;

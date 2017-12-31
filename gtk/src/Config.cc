@@ -18,6 +18,7 @@
  */
 
 #include "Config.hh"
+#include "ConfigSettings.hh"
 #include "MainWindow.hh"
 #include "Utils.hh"
 
@@ -314,26 +315,20 @@ Config::Config() {
 	CONNECT(ui.entryLangsAddCode, focus_in_event, [this](GdkEventFocus*) { Utils::clear_error_state(ui.entryLangsAddCode); return false; });
 	CONNECT(ui.comboDatadirs, changed, [this] { setDataLocations(ui.comboDatadirs->get_active_row_number()); });
 
-	addSetting(new SwitchSettingT<Gtk::CheckButton>("dictinstall", ui.checkDictinstall));
-	addSetting(new SwitchSettingT<Gtk::CheckButton>("updatecheck", ui.checkUpdate));
-	addSetting(new ListStoreSetting("customlangs", Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsCustom->get_model())));
-	addSetting(new SwitchSettingT<Gtk::CheckButton>("systemoutputfont", ui.checkbuttonDefaultoutputfont));
-	addSetting(new FontSetting("customoutputfont", ui.fontbuttonCustomoutputfont));
-	addSetting(new ComboSetting("outputorient", ui.comboPaneorient));
-	addSetting(new ComboSetting("datadirs", ui.comboDatadirs));
-	addSetting(new VarSetting<Glib::ustring>("sourcedir"));
-	addSetting(new VarSetting<Glib::ustring>("outputdir"));
-	addSetting(new VarSetting<Glib::ustring>("auxdir"));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("dictinstall", ui.checkDictinstall));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("updatecheck", ui.checkUpdate));
+	ADD_SETTING(ListStoreSetting("customlangs", Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsCustom->get_model())));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("systemoutputfont", ui.checkbuttonDefaultoutputfont));
+	ADD_SETTING(FontSetting("customoutputfont", ui.fontbuttonCustomoutputfont));
+	ADD_SETTING(ComboSetting("outputorient", ui.comboPaneorient));
+	ADD_SETTING(ComboSetting("datadirs", ui.comboDatadirs));
+	ADD_SETTING(VarSetting<Glib::ustring>("sourcedir"));
+	ADD_SETTING(VarSetting<Glib::ustring>("outputdir"));
+	ADD_SETTING(VarSetting<Glib::ustring>("auxdir"));
 
 #if !ENABLE_VERSIONCHECK
 	ui.checkUpdate->hide();
 #endif
-}
-
-Config::~Config() {
-	for(const auto& keyVal : m_settings) {
-		delete keyVal.second;
-	}
 }
 
 bool Config::searchLangSpec(Lang& lang) const {
@@ -376,7 +371,7 @@ std::string Config::spellingLocation() const {
 void Config::showDialog() {
 	toggleAddLanguage(true);
 	while(ui.dialogConfig->run() == Gtk::RESPONSE_HELP);
-	getSetting<ListStoreSetting>("customlangs")->serialize();
+	ConfigSettings::get<ListStoreSetting>("customlangs")->serialize();
 	ui.dialogConfig->hide();
 }
 

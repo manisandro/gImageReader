@@ -17,9 +17,9 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "MainWindow.hh"
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "Displayer.hh"
+#include "MainWindow.hh"
 #include "OutputEditor.hh"
 #include "Recognizer.hh"
 #include "TessdataManager.hh"
@@ -93,7 +93,7 @@ protected:
 	}
 
 private:
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 	bool m_selected = false;
 	bool m_ignoreNextActivate = false;
 };
@@ -106,11 +106,11 @@ Recognizer::Recognizer(const Ui::MainWindow& _ui)
 	CONNECT(ui.menuitemRecognizeMultiple, activate, [this] { recognizeMultiplePages();; });
 	CONNECT(ui.entryPageRange, focus_in_event, [this](GdkEventFocus*) { Utils::clear_error_state(ui.entryPageRange); return false; });
 
-	MAIN->getConfig()->addSetting(new VarSetting<Glib::ustring>("language"));
-	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", ui.comboPageRangeRegions));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("ocraddsourcefilename", ui.checkPageRangePrependFile));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("ocraddsourcepage", ui.checkPageRangePrependPage));
-	MAIN->getConfig()->addSetting(new VarSetting<int>("psm"));
+	ADD_SETTING(VarSetting<Glib::ustring>("language"));
+	ADD_SETTING(ComboSetting("ocrregionstrategy", ui.comboPageRangeRegions));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("ocraddsourcefilename", ui.checkPageRangePrependFile));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("ocraddsourcepage", ui.checkPageRangePrependPage));
+	ADD_SETTING(VarSetting<int>("psm"));
 }
 
 std::vector<Glib::ustring> Recognizer::getAvailableLanguages() const {
@@ -186,7 +186,7 @@ void Recognizer::updateLanguagesMenu() {
 	Gtk::RadioMenuItem* activeitem = nullptr;
 	bool haveOsd = false;
 
-	std::vector<Glib::ustring> parts = Utils::string_split(MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("language")->getValue(), ':');
+	std::vector<Glib::ustring> parts = Utils::string_split(ConfigSettings::get<VarSetting<Glib::ustring>>("language")->getValue(), ':');
 	Config::Lang curlang = {parts.empty() ? "eng" : parts[0], parts.size() < 2 ? "" : parts[1]};
 
 	std::vector<Glib::ustring> dicts = GtkSpell::Checker::get_language_list();
@@ -292,7 +292,7 @@ void Recognizer::updateLanguagesMenu() {
 	// Add PSM items
 	ui.menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 	Gtk::Menu* psmMenu = Gtk::manage(new Gtk::Menu);
-	m_currentPsmMode = MAIN->getConfig()->getSetting<VarSetting<int>>("psm")->getValue();
+	m_currentPsmMode = ConfigSettings::get<VarSetting<int>>("psm")->getValue();
 
 	struct PsmEntry {
 		Glib::ustring label;
@@ -318,7 +318,7 @@ void Recognizer::updateLanguagesMenu() {
 		CONNECT(item, toggled, [this, entry, item] {
 			if(item->get_active()) {
 				m_currentPsmMode = entry.psmMode;
-				MAIN->getConfig()->getSetting<VarSetting<int>>("psm")->setValue(entry.psmMode);
+				ConfigSettings::get<VarSetting<int>>("psm")->setValue(entry.psmMode);
 			}
 		});
 		psmMenu->append(*item);
@@ -349,7 +349,7 @@ void Recognizer::setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang 
 			ui.labelRecognizeLang->set_markup(Glib::ustring::compose("<small> %1</small>", lang.name));
 		}
 		m_curLang = lang;
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("language")->setValue(lang.prefix + ":" + lang.code);
+		ConfigSettings::get<VarSetting<Glib::ustring>>("language")->setValue(lang.prefix + ":" + lang.code);
 		m_signal_languageChanged.emit(m_curLang);
 	}
 }
@@ -368,7 +368,7 @@ void Recognizer::setMultiLanguage() {
 	langs = langs.substr(0, langs.length() - 1);
 	ui.labelRecognizeLang->set_markup("<small>" + langs + "</small>");
 	m_curLang = {langs, "", "Multilingual"};
-	MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("language")->setValue(langs + ":");
+	ConfigSettings::get<VarSetting<Glib::ustring>>("language")->setValue(langs + ":");
 	m_signal_languageChanged.emit(m_curLang);
 }
 
@@ -449,8 +449,8 @@ void Recognizer::recognizeMultiplePages() {
 
 void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout) {
 	tesseract::TessBaseAPI tess;
-	bool prependFile = pages.size() > 1 && MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcefilename")->getValue();
-	bool prependPage = pages.size() > 1 && MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcepage")->getValue();
+	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
+	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
 	if(initTesseract(tess, m_curLang.prefix.c_str())) {
 		Glib::ustring failed;
 		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_currentPsmMode));

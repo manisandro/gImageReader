@@ -31,12 +31,37 @@
 #include <QString>
 #include <QTableWidget>
 
+class AbstractSetting;
+
+#define ADD_SETTING(...) ((new __VA_ARGS__)->setParent(this))
+
+class ConfigSettings {
+public:
+	template<class T>
+	static T* get(const QString& key) {
+		auto it = s_settings.find(key);
+		return it == s_settings.end() ? nullptr : static_cast<T*>(it.value());
+	}
+
+private:
+	friend class AbstractSetting;
+	static QMap<QString,AbstractSetting*> s_settings;
+
+	static void add(AbstractSetting* setting);
+	static void remove(const QString& key);
+};
+
+
 class AbstractSetting : public QObject {
 	Q_OBJECT
 public:
 	AbstractSetting(const QString& key)
-		: m_key(key) {}
-	virtual ~AbstractSetting() {}
+		: m_key(key) {
+		ConfigSettings::add(this);
+	}
+	virtual ~AbstractSetting() {
+		ConfigSettings::remove(m_key);
+	}
 	const QString& key() const {
 		return m_key;
 	}

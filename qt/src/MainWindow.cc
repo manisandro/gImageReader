@@ -40,7 +40,7 @@
 
 #include "MainWindow.hh"
 #include "Acquirer.hh"
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "Displayer.hh"
 #include "DisplayerToolSelect.hh"
 #include "DisplayerToolHOCR.hh"
@@ -154,10 +154,10 @@ MainWindow::MainWindow(const QStringList& files)
 	connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), this, SLOT(languageChanged(Config::Lang)));
 	connect(ui.actionAutodetectLayout, SIGNAL(triggered()), m_displayer, SLOT(autodetectOCRAreas()));
 
-	m_config->addSetting(new VarSetting<QByteArray>("wingeom"));
-	m_config->addSetting(new VarSetting<QByteArray>("winstate"));
-	m_config->addSetting(new ActionSetting("showcontrols", ui.actionImageControls));
-	m_config->addSetting(new ComboSetting("outputeditor", ui.comboBoxOCRMode, 0));
+	ADD_SETTING(VarSetting<QByteArray>("wingeom"));
+	ADD_SETTING(VarSetting<QByteArray>("winstate"));
+	ADD_SETTING(ActionSetting("showcontrols", ui.actionImageControls));
+	ADD_SETTING(ComboSetting("outputeditor", ui.comboBoxOCRMode, 0));
 
 	m_recognizer->updateLanguagesMenu();
 
@@ -181,14 +181,14 @@ MainWindow::MainWindow(const QStringList& files)
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
-	restoreGeometry(m_config->getSetting<VarSetting<QByteArray>>("wingeom")->getValue());
-	restoreState(m_config->getSetting<VarSetting<QByteArray>>("winstate")->getValue());
+	restoreGeometry(ConfigSettings::get<VarSetting<QByteArray>>("wingeom")->getValue());
+	restoreState(ConfigSettings::get<VarSetting<QByteArray>>("winstate")->getValue());
 	ui.dockWidgetOutput->setVisible(false);
 
 	ui.actionSources->trigger();
 
 #if ENABLE_VERSIONCHECK
-	if(m_config->getSetting<SwitchSetting>("updatecheck")->getValue()) {
+	if(ConfigSettings::get<SwitchSetting>("updatecheck")->getValue()) {
 		connect(&m_versionCheckThread, SIGNAL(finished()), this, SLOT(checkVersion()));
 		m_versionCheckThread.start();
 	}
@@ -254,8 +254,8 @@ void MainWindow::closeEvent(QCloseEvent* ev) {
 	} else if(!m_outputEditor->clear()) {
 		ev->ignore();
 	} else if(!isMaximized()) {
-		m_config->getSetting<VarSetting<QByteArray>>("wingeom")->setValue(saveGeometry());
-		m_config->getSetting<VarSetting<QByteArray>>("winstate")->setValue(saveState());
+		ConfigSettings::get<VarSetting<QByteArray>>("wingeom")->setValue(saveGeometry());
+		ConfigSettings::get<VarSetting<QByteArray>>("winstate")->setValue(saveState());
 	}
 }
 
@@ -445,7 +445,7 @@ void MainWindow::languageChanged(const Config::Lang& lang) {
 	hideNotification(m_notifierHandle);
 	m_notifierHandle = nullptr;
 	const QString& code = lang.code;
-	if(!code.isEmpty() && !QtSpell::checkLanguageInstalled(code) && m_config->getSetting<SwitchSetting>("dictinstall")->getValue()) {
+	if(!code.isEmpty() && !QtSpell::checkLanguageInstalled(code) && ConfigSettings::get<SwitchSetting>("dictinstall")->getValue()) {
 		NotificationAction actionDontShowAgain = {_("Don't show again"), m_config, SLOT(disableDictInstall()), true};
 		NotificationAction actionInstall = {_("Install"), this, SLOT(dictionaryAutoinstall()), false};
 #ifdef Q_OS_LINUX

@@ -46,7 +46,7 @@ private:
 	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> m_signal_apply_substitutions;
 
 	Ui::SubstitutionsManager ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 
 	std::string m_currentFile;
 	ReplaceListColumns m_viewCols;

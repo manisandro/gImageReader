@@ -20,7 +20,9 @@
 #ifndef SEARCHREPLACEFRAME_HH
 #define SEARCHREPLACEFRAME_HH
 
+#include "common.hh"
 #include "ui_SearchReplaceFrame.h"
+
 #include <QFrame>
 
 class SubstitutionsManager;
@@ -29,7 +31,6 @@ class SearchReplaceFrame : public QFrame {
 	Q_OBJECT
 public:
 	explicit SearchReplaceFrame(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
-	~SearchReplaceFrame();
 
 public slots:
 	void clear();

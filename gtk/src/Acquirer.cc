@@ -18,7 +18,7 @@
  */
 
 #include "Acquirer.hh"
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "Utils.hh"
@@ -58,16 +58,17 @@ Acquirer::Acquirer(const Ui::MainWindow& _ui)
 	CONNECT(m_scanner, scanStateChanged, [this](Scanner::State state) { setScanState(state); });
 	CONNECT(m_scanner, pageAvailable, [this](const std::string& file) { m_signal_scanPageAvailable.emit(file); });
 
-	MAIN->getConfig()->addSetting(new ComboSetting("scanres", ui.comboAcquireResolution));
-	MAIN->getConfig()->addSetting(new ComboSetting("scanmode", ui.comboAcquireMode));
-	MAIN->getConfig()->addSetting(new ComboSetting("scandev", ui.comboAcquireDevice));
-	MAIN->getConfig()->addSetting(new ComboSetting("scansource", ui.comboAcquireSource));
+	ADD_SETTING(ComboSetting("scanres", ui.comboAcquireResolution));
+	ADD_SETTING(ComboSetting("scanmode", ui.comboAcquireMode));
+	ADD_SETTING(ComboSetting("scandev", ui.comboAcquireDevice));
+	ADD_SETTING(ComboSetting("scansource", ui.comboAcquireSource));
+
 #ifdef G_OS_WIN32
 	ui.labelAcquireSource->set_visible(false);
 	ui.comboAcquireSource->set_visible(false);
 #endif
 
-	std::string sourcedir = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>("sourcedir")->getValue();
+	std::string sourcedir = ConfigSettings::get<VarSetting<Glib::ustring>>("sourcedir")->getValue();
 	m_outputPath = Glib::build_filename(sourcedir.empty() ? Utils::get_documents_dir() : sourcedir, _("scan.png"));
 	genOutputPath();
 	m_scanner->init();

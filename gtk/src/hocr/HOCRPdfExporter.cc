@@ -33,7 +33,7 @@
 #undef USE_STD_NAMESPACE
 
 #include "CCITTFax4Encoder.hh"
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "Displayer.hh"
 #include "DisplayerToolHOCR.hh"
 #include "FileDialogs.hh"
@@ -399,33 +399,33 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 	CONNECT(ui.entryPaperWidth, changed, [this] { paperSizeChanged(); });
 	CONNECT(ui.entryPaperHeight, changed, [this] { paperSizeChanged(); });
 
-	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", ui.comboMode));
-	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagecompressionquality", ui.spinQuality));
-	MAIN->getConfig()->addSetting(new ComboSetting("pdfimagecompression", ui.comboCompression));
-	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageformat", ui.comboImageformat));
-	MAIN->getConfig()->addSetting(new ComboSetting("pdfimagedithering", ui.comboDithering));
-	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagedpi", ui.spinDpi));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfoverridefontfamily", ui.checkboxOverridefontfamily));
-	MAIN->getConfig()->addSetting(new FontComboSetting("pdffontfamily", m_comboOverrideFont));
-	MAIN->getConfig()->addSetting(new FontComboSetting("pdffallbackfontfamily", m_comboFallbackFont));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfoverridefontsizes", ui.checkboxOverridefontsize));
-	MAIN->getConfig()->addSetting(new SpinSetting("pdffontsize", ui.spinOverridefontsize));
-	MAIN->getConfig()->addSetting(new SpinSetting("pdffontscale", ui.spinFontscale));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfuniformizelinespacing", ui.checkboxUniformlinespacing));
-	MAIN->getConfig()->addSetting(new SpinSetting("pdfpreservespaces", ui.spinPreserve));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfpreview", ui.checkboxPreview));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("pdfopenoutput", ui.checkboxOpenoutput));
-	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportpapersize", ui.comboPaperFormat));
-	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportpaperwidth", ui.entryPaperWidth));
-	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportpaperheight", ui.entryPaperHeight));
-	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportpapersizeunit", ui.comboPaperSizeUnit));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::ToggleButton>("pdfexportpaperlandscape", ui.buttonLandscape));
-	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportinfoauthor", ui.entryMetadataAuthor));
-	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportinfotitle", ui.entryMetadataTitle));
-	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportinfosubject", ui.entryMetadataSubject));
-	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportinfoproducer", ui.entryMetadataProducer));
-	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportinfocreator", ui.entryMetadataCreator));
-	MAIN->getConfig()->addSetting(new EntrySetting("pdfexportinfokeywords", ui.entryMetadataKeywords));
+	ADD_SETTING(ComboSetting("pdfexportmode", ui.comboMode));
+	ADD_SETTING(SpinSetting("pdfimagecompressionquality", ui.spinQuality));
+	ADD_SETTING(ComboSetting("pdfimagecompression", ui.comboCompression));
+	ADD_SETTING(ComboSetting("pdfimageformat", ui.comboImageformat));
+	ADD_SETTING(ComboSetting("pdfimagedithering", ui.comboDithering));
+	ADD_SETTING(SpinSetting("pdfimagedpi", ui.spinDpi));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfoverridefontfamily", ui.checkboxOverridefontfamily));
+	ADD_SETTING(FontComboSetting("pdffontfamily", m_comboOverrideFont));
+	ADD_SETTING(FontComboSetting("pdffallbackfontfamily", m_comboFallbackFont));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfoverridefontsizes", ui.checkboxOverridefontsize));
+	ADD_SETTING(SpinSetting("pdffontsize", ui.spinOverridefontsize));
+	ADD_SETTING(SpinSetting("pdffontscale", ui.spinFontscale));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfuniformizelinespacing", ui.checkboxUniformlinespacing));
+	ADD_SETTING(SpinSetting("pdfpreservespaces", ui.spinPreserve));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfpreview", ui.checkboxPreview));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfopenoutput", ui.checkboxOpenoutput));
+	ADD_SETTING(ComboSetting("pdfexportpapersize", ui.comboPaperFormat));
+	ADD_SETTING(EntrySetting("pdfexportpaperwidth", ui.entryPaperWidth));
+	ADD_SETTING(EntrySetting("pdfexportpaperheight", ui.entryPaperHeight));
+	ADD_SETTING(ComboSetting("pdfexportpapersizeunit", ui.comboPaperSizeUnit));
+	ADD_SETTING(SwitchSettingT<Gtk::ToggleButton>("pdfexportpaperlandscape", ui.buttonLandscape));
+	ADD_SETTING(EntrySetting("pdfexportinfoauthor", ui.entryMetadataAuthor));
+	ADD_SETTING(EntrySetting("pdfexportinfotitle", ui.entryMetadataTitle));
+	ADD_SETTING(EntrySetting("pdfexportinfosubject", ui.entryMetadataSubject));
+	ADD_SETTING(EntrySetting("pdfexportinfoproducer", ui.entryMetadataProducer));
+	ADD_SETTING(EntrySetting("pdfexportinfocreator", ui.entryMetadataCreator));
+	ADD_SETTING(EntrySetting("pdfexportinfokeywords", ui.entryMetadataKeywords));
 
 #ifndef MAKE_VERSION
 #define MAKE_VERSION(...) 0
@@ -436,37 +436,6 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 	checkboxFontSize->set_active(true);
 	checkboxFontSize->set_sensitive(true);
 #endif
-}
-
-HOCRPdfExporter::~HOCRPdfExporter()
-{
-	MAIN->getConfig()->removeSetting("pdfexportmode");
-	MAIN->getConfig()->removeSetting("pdfimagecompressionquality");
-	MAIN->getConfig()->removeSetting("pdfimagecompression");
-	MAIN->getConfig()->removeSetting("pdfimageformat");
-	MAIN->getConfig()->removeSetting("pdfimagedithering");
-	MAIN->getConfig()->removeSetting("pdfimagedpi");
-	MAIN->getConfig()->removeSetting("pdfoverridefontfamily");
-	MAIN->getConfig()->removeSetting("pdffontfamily");
-	MAIN->getConfig()->removeSetting("pdffallbackfontfamily");
-	MAIN->getConfig()->removeSetting("pdfoverridefontsizes");
-	MAIN->getConfig()->removeSetting("pdffontsize");
-	MAIN->getConfig()->removeSetting("pdffontscale");
-	MAIN->getConfig()->removeSetting("pdfuniformizelinespacing");
-	MAIN->getConfig()->removeSetting("pdfpreservespaces");
-	MAIN->getConfig()->removeSetting("pdfpreview");
-	MAIN->getConfig()->removeSetting("pdfopenoutput");
-	MAIN->getConfig()->removeSetting("pdfexportpapersize");
-	MAIN->getConfig()->removeSetting("pdfexportpaperwidth");
-	MAIN->getConfig()->removeSetting("pdfexportpaperheight");
-	MAIN->getConfig()->removeSetting("pdfexportpapersizeunit");
-	MAIN->getConfig()->removeSetting("pdfexportpaperlandscape");
-	MAIN->getConfig()->removeSetting("pdfexportinfoauthor");
-	MAIN->getConfig()->removeSetting("pdfexportinfotitle");
-	MAIN->getConfig()->removeSetting("pdfexportinfosubject");
-	MAIN->getConfig()->removeSetting("pdfexportinfoproducer");
-	MAIN->getConfig()->removeSetting("pdfexportinfocreator");
-	MAIN->getConfig()->removeSetting("pdfexportinfokeywords");
 }
 
 bool HOCRPdfExporter::run(std::string& filebasename) {

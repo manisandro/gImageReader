@@ -36,7 +36,6 @@ class HOCRItem;
 class HOCRPdfExporter {
 public:
 	HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument, const HOCRPage* previewPage, DisplayerToolHOCR* displayerTool);
-	~HOCRPdfExporter();
 	bool run(std::string& filebasename);
 
 private:
@@ -113,7 +112,7 @@ private:
 	} m_compressionComboCols;
 
 	Ui::PdfExportDialog ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 
 	FontComboBox* m_comboOverrideFont;
 	FontComboBox* m_comboFallbackFont;

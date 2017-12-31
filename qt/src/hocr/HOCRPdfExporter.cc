@@ -44,7 +44,7 @@
 #undef USE_STD_NAMESPACE
 
 #include "CCITTFax4Encoder.hh"
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "Displayer.hh"
 #include "DisplayerToolHOCR.hh"
 #include "FileDialogs.hh"
@@ -338,33 +338,33 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	connect(ui.lineEditPaperWidth, SIGNAL(textChanged(QString)), this, SLOT(updateValid()));
 	connect(ui.lineEditPaperHeight, SIGNAL(textChanged(QString)), this, SLOT(updateValid()));
 
-	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportmode", ui.comboBoxOutputMode));
-	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagecompressionquality", ui.spinBoxCompressionQuality, 90));
-	MAIN->getConfig()->addSetting(new ComboSetting("pdfimagecompression", ui.comboBoxImageCompression));
-	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageformat", ui.comboBoxImageFormat));
-	MAIN->getConfig()->addSetting(new ComboSetting("pdfimageconversionflags", ui.comboBoxDithering));
-	MAIN->getConfig()->addSetting(new SpinSetting("pdfimagedpi", ui.spinBoxDpi, 300));
-	MAIN->getConfig()->addSetting(new SwitchSetting("pdfoverridefontfamily", ui.checkBoxFontFamily, true));
-	MAIN->getConfig()->addSetting(new FontComboSetting("pdffontfamily", ui.comboBoxFontFamily));
-	MAIN->getConfig()->addSetting(new FontComboSetting("pdffallbackfontfamily", ui.comboBoxFallbackFontFamily));
-	MAIN->getConfig()->addSetting(new SwitchSetting("pdfoverridefontsizes", ui.checkBoxFontSize, true));
-	MAIN->getConfig()->addSetting(new SpinSetting("pdffontsize", ui.spinBoxFontSize, 10));
-	MAIN->getConfig()->addSetting(new SpinSetting("pdffontscale", ui.spinFontScaling, 100));
-	MAIN->getConfig()->addSetting(new SwitchSetting("pdfuniformizelinespacing", ui.checkBoxUniformizeSpacing, false));
-	MAIN->getConfig()->addSetting(new SpinSetting("pdfpreservespaces", ui.spinBoxPreserve, 4));
-	MAIN->getConfig()->addSetting(new SwitchSetting("pdfpreview", ui.checkBoxPreview, false));
-	MAIN->getConfig()->addSetting(new SwitchSetting("pdfopenoutput", ui.checkBoxOpenOutputPdf, false));
-	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportpapersize", ui.comboBoxPaperSize));
-	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportpaperwidth", ui.lineEditPaperWidth));
-	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportpaperheight", ui.lineEditPaperHeight));
-	MAIN->getConfig()->addSetting(new ComboSetting("pdfexportpapersizeunit", ui.comboBoxPaperSize));
-	MAIN->getConfig()->addSetting(new SwitchSetting("pdfexportpaperlandscape", ui.toolButtonLandscape));
-	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfoauthor", ui.lineEditAuthor, PACKAGE_NAME));
-	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfotitle", ui.lineEditTitle));
-	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfosubject", ui.lineEditSubject));
-	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfoproducer", ui.lineEditProducer, PACKAGE_NAME));
-	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfocreator", ui.lineEditCreator, PACKAGE_NAME));
-	MAIN->getConfig()->addSetting(new LineEditSetting("pdfexportinfokeywords", ui.lineEditKeywords));
+	ADD_SETTING(ComboSetting("pdfexportmode", ui.comboBoxOutputMode));
+	ADD_SETTING(SpinSetting("pdfimagecompressionquality", ui.spinBoxCompressionQuality, 90));
+	ADD_SETTING(ComboSetting("pdfimagecompression", ui.comboBoxImageCompression));
+	ADD_SETTING(ComboSetting("pdfimageformat", ui.comboBoxImageFormat));
+	ADD_SETTING(ComboSetting("pdfimageconversionflags", ui.comboBoxDithering));
+	ADD_SETTING(SpinSetting("pdfimagedpi", ui.spinBoxDpi, 300));
+	ADD_SETTING(SwitchSetting("pdfoverridefontfamily", ui.checkBoxFontFamily, true));
+	ADD_SETTING(FontComboSetting("pdffontfamily", ui.comboBoxFontFamily));
+	ADD_SETTING(FontComboSetting("pdffallbackfontfamily", ui.comboBoxFallbackFontFamily));
+	ADD_SETTING(SwitchSetting("pdfoverridefontsizes", ui.checkBoxFontSize, true));
+	ADD_SETTING(SpinSetting("pdffontsize", ui.spinBoxFontSize, 10));
+	ADD_SETTING(SpinSetting("pdffontscale", ui.spinFontScaling, 100));
+	ADD_SETTING(SwitchSetting("pdfuniformizelinespacing", ui.checkBoxUniformizeSpacing, false));
+	ADD_SETTING(SpinSetting("pdfpreservespaces", ui.spinBoxPreserve, 4));
+	ADD_SETTING(SwitchSetting("pdfpreview", ui.checkBoxPreview, false));
+	ADD_SETTING(SwitchSetting("pdfopenoutput", ui.checkBoxOpenOutputPdf, false));
+	ADD_SETTING(ComboSetting("pdfexportpapersize", ui.comboBoxPaperSize));
+	ADD_SETTING(LineEditSetting("pdfexportpaperwidth", ui.lineEditPaperWidth));
+	ADD_SETTING(LineEditSetting("pdfexportpaperheight", ui.lineEditPaperHeight));
+	ADD_SETTING(ComboSetting("pdfexportpapersizeunit", ui.comboBoxPaperSize));
+	ADD_SETTING(SwitchSetting("pdfexportpaperlandscape", ui.toolButtonLandscape));
+	ADD_SETTING(LineEditSetting("pdfexportinfoauthor", ui.lineEditAuthor, PACKAGE_NAME));
+	ADD_SETTING(LineEditSetting("pdfexportinfotitle", ui.lineEditTitle));
+	ADD_SETTING(LineEditSetting("pdfexportinfosubject", ui.lineEditSubject));
+	ADD_SETTING(LineEditSetting("pdfexportinfoproducer", ui.lineEditProducer, PACKAGE_NAME));
+	ADD_SETTING(LineEditSetting("pdfexportinfocreator", ui.lineEditCreator, PACKAGE_NAME));
+	ADD_SETTING(LineEditSetting("pdfexportinfokeywords", ui.lineEditKeywords));
 
 #ifndef MAKE_VERSION
 #define MAKE_VERSION(...) 0
@@ -375,36 +375,6 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	ui.checkBoxFontSize->setChecked(true);
 	ui.checkBoxFontSize->setEnabled(false);
 #endif
-}
-
-HOCRPdfExporter::~HOCRPdfExporter() {
-	MAIN->getConfig()->removeSetting("pdfexportmode");
-	MAIN->getConfig()->removeSetting("pdfimagecompressionquality");
-	MAIN->getConfig()->removeSetting("pdfimagecompression");
-	MAIN->getConfig()->removeSetting("pdfimageformat");
-	MAIN->getConfig()->removeSetting("pdfimagedithering");
-	MAIN->getConfig()->removeSetting("pdfimagedpi");
-	MAIN->getConfig()->removeSetting("pdffontfamily");
-	MAIN->getConfig()->removeSetting("pdfoverridefontfamily");
-	MAIN->getConfig()->removeSetting("pdffallbackfontfamily");
-	MAIN->getConfig()->removeSetting("pdfoverridefontsizes");
-	MAIN->getConfig()->removeSetting("pdffontsize");
-	MAIN->getConfig()->removeSetting("pdffontscale");
-	MAIN->getConfig()->removeSetting("pdfuniformizelinespacing");
-	MAIN->getConfig()->removeSetting("pdfpreservespaces");
-	MAIN->getConfig()->removeSetting("pdfpreview");
-	MAIN->getConfig()->removeSetting("pdfopenoutput");
-	MAIN->getConfig()->removeSetting("pdfexportpapersize");
-	MAIN->getConfig()->removeSetting("pdfexportpaperwidth");
-	MAIN->getConfig()->removeSetting("pdfexportpaperheight");
-	MAIN->getConfig()->removeSetting("pdfexportpapersizeunit");
-	MAIN->getConfig()->removeSetting("pdfexportpaperlandscape");
-	MAIN->getConfig()->removeSetting("pdfexportinfoauthor");
-	MAIN->getConfig()->removeSetting("pdfexportinfotitle");
-	MAIN->getConfig()->removeSetting("pdfexportinfosubject");
-	MAIN->getConfig()->removeSetting("pdfexportinfoproducer");
-	MAIN->getConfig()->removeSetting("pdfexportinfocreator");
-	MAIN->getConfig()->removeSetting("pdfexportinfokeywords");
 }
 
 bool HOCRPdfExporter::run(QString& filebasename) {

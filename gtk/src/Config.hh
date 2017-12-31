@@ -25,7 +25,6 @@
 #include <vector>
 
 #include "common.hh"
-#include "ConfigSettings.hh"
 #include "ui_ConfigDialog.hh"
 
 class Config {
@@ -37,29 +36,6 @@ public:
 	};
 
 	Config();
-	~Config();
-
-	void addSetting(AbstractSetting* setting) {
-		auto it = m_settings.find(setting->key());
-		if(it != m_settings.end()) {
-			delete it->second;
-			it->second = setting;
-		} else {
-			m_settings.insert(std::make_pair(setting->key(), setting));
-		}
-	}
-	template<class T>
-	T* getSetting(const Glib::ustring& key) const {
-		auto it = m_settings.find(key);
-		return it == m_settings.end() ? nullptr : static_cast<T*>(it->second);
-	}
-	void removeSetting(const Glib::ustring& key) {
-		auto it = m_settings.find(key);
-		if(it != m_settings.end()) {
-			delete it->second;
-			m_settings.erase(it);
-		}
-	}
 
 	bool searchLangSpec(Lang& lang) const;
 	std::vector<Glib::ustring> searchLangCultures(const Glib::ustring& code) const;
@@ -88,10 +64,9 @@ private:
 	static const std::multimap<Glib::ustring,Glib::ustring> LANGUAGE_CULTURES ;
 
 	Ui::ConfigDialog ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 
 	LangViewColumns m_langViewCols;
-	std::map<Glib::ustring,AbstractSetting*> m_settings;
 
 	static std::multimap<Glib::ustring,Glib::ustring> buildLanguageCultureTable();
 

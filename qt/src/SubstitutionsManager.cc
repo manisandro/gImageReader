@@ -24,7 +24,6 @@
 #include <QList>
 #include <QMessageBox>
 
-#include "Config.hh"
 #include "ConfigSettings.hh"
 #include "FileDialogs.hh"
 #include "MainWindow.hh"
@@ -92,12 +91,11 @@ SubstitutionsManager::SubstitutionsManager(QWidget* parent)
 	connect(m_removeAction, SIGNAL(triggered()), this, SLOT(removeRows()));
 	connect(m_tableWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onTableSelectionChanged(QItemSelection,QItemSelection)));
 
-	MAIN->getConfig()->addSetting(new TableSetting("substitutionslist", m_tableWidget));
+	ADD_SETTING(TableSetting("substitutionslist", m_tableWidget));
 }
 
 SubstitutionsManager::~SubstitutionsManager() {
-	MAIN->getConfig()->getSetting<TableSetting>("substitutionslist")->serialize();
-	MAIN->getConfig()->removeSetting("replacelist");
+	ConfigSettings::get<TableSetting>("substitutionslist")->serialize();
 }
 
 void SubstitutionsManager::openList() {

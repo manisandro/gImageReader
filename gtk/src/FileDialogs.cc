@@ -17,8 +17,8 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ConfigSettings.hh"
 #include "FileDialogs.hh"
-#include "Config.hh"
 #include "MainWindow.hh"
 #include "Utils.hh"
 #include <sstream>
@@ -276,7 +276,7 @@ std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, con
 	parent = parent == nullptr ? MAIN->getWindow() : parent;
 	std::string initialDir = initialDirectory;
 	if(initialDir.empty()) {
-		initialDir = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
+		initialDir = ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
 		if(initialDir.empty()) {
 			initialDir = Utils::get_documents_dir();
 		}
@@ -291,7 +291,7 @@ std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, con
 	}
 #endif
 	if(!filenames.empty()) {
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filenames.front()->get_path()));
+		ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filenames.front()->get_path()));
 	}
 	return filenames;
 }
@@ -303,7 +303,7 @@ std::string save_dialog(const Glib::ustring &title, const std::string& initialFi
 	if(!initialFilename.empty() && Glib::path_is_absolute(initialFilename)) {
 		suggestedFile = initialFilename;
 	} else {
-		std::string initialDir = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
+		std::string initialDir = ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
 		if(initialDir.empty()) {
 			initialDir = Utils::get_documents_dir();
 		}
@@ -327,7 +327,7 @@ std::string save_dialog(const Glib::ustring &title, const std::string& initialFi
 		if(parts.second.empty()) {
 			filename = parts.first + "." + sparts.second;
 		}
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filename));
+		ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filename));
 	}
 	return filename;
 }

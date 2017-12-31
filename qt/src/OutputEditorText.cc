@@ -26,6 +26,7 @@
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
 
+#include "ConfigSettings.hh"
 #include "FileDialogs.hh"
 #include "OutputEditorText.hh"
 #include "Recognizer.hh"
@@ -64,35 +65,29 @@ OutputEditorText::OutputEditorText() {
 	connect(ui.searchFrame, SIGNAL(applySubstitutions(QMap<QString,QString>,bool)), this, SLOT(applySubstitutions(QMap<QString,QString>,bool)));
 	connect(&m_spell, SIGNAL(undoAvailable(bool)), ui.actionOutputUndo, SLOT(setEnabled(bool)));
 	connect(&m_spell, SIGNAL(redoAvailable(bool)), ui.actionOutputRedo, SLOT(setEnabled(bool)));
-	connect(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
-	connect(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
+	connect(ConfigSettings::get<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
+	connect(ConfigSettings::get<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(ui.actionOutputPostprocDrawWhitespace, SIGNAL(toggled(bool)), ui.plainTextEditOutput, SLOT(setDrawWhitespace(bool)));
 
-	MAIN->getConfig()->addSetting(new ActionSetting("keepdot", ui.actionOutputPostprocKeepEndMark, true));
-	MAIN->getConfig()->addSetting(new ActionSetting("keepquote", ui.actionOutputPostprocKeepQuote));
-	MAIN->getConfig()->addSetting(new ActionSetting("joinhyphen", ui.actionOutputPostprocJoinHyphen, true));
-	MAIN->getConfig()->addSetting(new ActionSetting("joinspace", ui.actionOutputPostprocCollapseSpaces, true));
-	MAIN->getConfig()->addSetting(new ActionSetting("keepparagraphs", ui.actionOutputPostprocKeepParagraphs, true));
-	MAIN->getConfig()->addSetting(new ActionSetting("drawwhitespace", ui.actionOutputPostprocDrawWhitespace));
+	ADD_SETTING(ActionSetting("keepdot", ui.actionOutputPostprocKeepEndMark, true));
+	ADD_SETTING(ActionSetting("keepquote", ui.actionOutputPostprocKeepQuote));
+	ADD_SETTING(ActionSetting("joinhyphen", ui.actionOutputPostprocJoinHyphen, true));
+	ADD_SETTING(ActionSetting("joinspace", ui.actionOutputPostprocCollapseSpaces, true));
+	ADD_SETTING(ActionSetting("keepparagraphs", ui.actionOutputPostprocKeepParagraphs, true));
+	ADD_SETTING(ActionSetting("drawwhitespace", ui.actionOutputPostprocDrawWhitespace));
 
 	setFont();
 }
 
 OutputEditorText::~OutputEditorText() {
 	delete m_widget;
-	MAIN->getConfig()->removeSetting("keepdot");
-	MAIN->getConfig()->removeSetting("keepquote");
-	MAIN->getConfig()->removeSetting("joinhyphen");
-	MAIN->getConfig()->removeSetting("joinspace");
-	MAIN->getConfig()->removeSetting("keepparagraphs");
-	MAIN->getConfig()->removeSetting("drawwhitespace");
 }
 
 void OutputEditorText::setFont() {
-	if(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont")->getValue()) {
+	if(ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
 		ui.plainTextEditOutput->setFont(QFont());
 	} else {
-		ui.plainTextEditOutput->setFont(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont")->getValue());
+		ui.plainTextEditOutput->setFont(ConfigSettings::get<FontSetting>("customoutputfont")->getValue());
 	}
 }
 

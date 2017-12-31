@@ -26,7 +26,6 @@
 
 #define MAIN MainWindow::getInstance()
 
-class Config;
 class Acquirer;
 class Displayer;
 class DisplayerTool;
@@ -106,7 +105,7 @@ private:
 	static MainWindow* s_instance;
 
 	Ui::MainWindow ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 
 	Config* m_config = nullptr;
 	Acquirer* m_acquirer = nullptr;

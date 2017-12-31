@@ -18,7 +18,6 @@
  */
 
 #include "MainWindow.hh"
-#include "Config.hh"
 #include "Displayer.hh"
 #include "DisplayRenderer.hh"
 #include "SourceManager.hh"

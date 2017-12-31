@@ -21,6 +21,7 @@
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
 
+#include "ConfigSettings.hh"
 #include "FileDialogs.hh"
 #include "OutputBuffer.hh"
 #include "OutputEditorText.hh"
@@ -66,8 +67,8 @@ OutputEditorText::OutputEditorText() {
 	CONNECT(m_searchFrame, find_replace, sigc::mem_fun(this, &OutputEditorText::findReplace));
 	CONNECT(m_searchFrame, replace_all, sigc::mem_fun(this, &OutputEditorText::replaceAll));
 	CONNECT(m_searchFrame, apply_substitutions, sigc::mem_fun(this, &OutputEditorText::applySubstitutions));
-	CONNECT(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), changed, [this] { setFont(); });
-	CONNECT(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(); });
+	CONNECT(ConfigSettings::get<FontSetting>("customoutputfont"), changed, [this] { setFont(); });
+	CONNECT(ConfigSettings::get<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(); });
 	CONNECT(ui.textview, populate_popup, [this](Gtk::Menu* menu) {
 		completeTextViewMenu(menu);
 	});
@@ -79,31 +80,25 @@ OutputEditorText::OutputEditorText() {
 	CONNECTP(m_textBuffer, cursor_position, [this] { m_textBuffer->save_region_bounds(ui.textview->is_focus()); });
 	CONNECTP(m_textBuffer, has_selection, [this] { m_textBuffer->save_region_bounds(ui.textview->is_focus()); });
 
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepdot", ui.menuitemStripcrlfKeependmark));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepquote", ui.menuitemStripcrlfKeepquote));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinhyphen", ui.menuitemStripcrlfJoinhyphen));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("joinspace", ui.menuitemStripcrlfJoinspace));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("keepparagraphs", ui.menuitemStripcrlfKeepparagraphs));
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckMenuItem>("drawwhitespace", ui.menuitemStripcrlfDrawwhitespace));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("keepdot", ui.menuitemStripcrlfKeependmark));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("keepquote", ui.menuitemStripcrlfKeepquote));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("joinhyphen", ui.menuitemStripcrlfJoinhyphen));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("joinspace", ui.menuitemStripcrlfJoinspace));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("keepparagraphs", ui.menuitemStripcrlfKeepparagraphs));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("drawwhitespace", ui.menuitemStripcrlfDrawwhitespace));
 
 	setFont();
 }
 
 OutputEditorText::~OutputEditorText() {
 	delete m_searchFrame;
-	MAIN->getConfig()->removeSetting("keepdot");
-	MAIN->getConfig()->removeSetting("keepquote");
-	MAIN->getConfig()->removeSetting("joinhyphen");
-	MAIN->getConfig()->removeSetting("joinspace");
-	MAIN->getConfig()->removeSetting("keepparagraphs");
-	MAIN->getConfig()->removeSetting("drawwhitespace");
 }
 
 void OutputEditorText::setFont() {
-	if(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont")->getValue()) {
+	if(ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
 		ui.textview->unset_font();
 	} else {
-		Glib::ustring fontName = MAIN->getConfig()->getSetting<FontSetting>("customoutputfont")->getValue();
+		Glib::ustring fontName = ConfigSettings::get<FontSetting>("customoutputfont")->getValue();
 		ui.textview->override_font(Pango::FontDescription(fontName));
 	}
 }

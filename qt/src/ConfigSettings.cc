@@ -19,6 +19,22 @@
 
 #include "ConfigSettings.hh"
 
+
+QMap<QString,AbstractSetting*> ConfigSettings::s_settings;
+
+
+void ConfigSettings::add(AbstractSetting* setting) {
+	s_settings.insert(setting->key(), setting);
+}
+
+void ConfigSettings::remove(const QString& key) {
+	auto it = s_settings.find(key);
+	if(it != s_settings.end()) {
+		s_settings.erase(it);
+	}
+}
+
+
 TableSetting::TableSetting(const QString& key, QTableWidget* table)
 	: AbstractSetting(key), m_table(table) {
 	QString str = QSettings().value(m_key).toString();

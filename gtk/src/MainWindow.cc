@@ -21,6 +21,7 @@
 #include "MainWindow.hh"
 #include "Acquirer.hh"
 #include "Config.hh"
+#include "ConfigSettings.hh"
 #include "Displayer.hh"
 #include "DisplayerToolHOCR.hh"
 #include "DisplayerToolSelect.hh"
@@ -149,28 +150,28 @@ MainWindow::MainWindow() {
 	CONNECT(ui.buttonOutputpane, toggled, [this] { if(m_outputEditor) m_outputEditor->getUI()->set_visible(ui.buttonOutputpane->get_active()); });
 	m_connection_setOCRMode = CONNECT(ui.comboOcrmode, changed, [this] { setOCRMode(ui.comboOcrmode->get_active_row_number()); });
 	CONNECT(m_recognizer, languageChanged, [this] (const Config::Lang& lang) { languageChanged(lang); });
-	CONNECT(m_config->getSetting<ComboSetting>("outputorient"), changed, [this]{
-		ui.panedOutput->set_orientation(static_cast<Gtk::Orientation>(!m_config->getSetting<ComboSetting>("outputorient")->getValue()));
+	CONNECT(ConfigSettings::get<ComboSetting>("outputorient"), changed, [this]{
+		ui.panedOutput->set_orientation(static_cast<Gtk::Orientation>(!ConfigSettings::get<ComboSetting>("outputorient")->getValue()));
 	});
 	CONNECT(ui.buttonProgressCancel, clicked, [this] { progressCancel(); });
 	CONNECT(ui.buttonAutolayout, clicked, [this]{ m_displayer->autodetectOCRAreas(); });
 
-	m_config->addSetting(new VarSetting<std::vector<int>>("wingeom"));
-	m_config->addSetting(new SwitchSettingT<Gtk::ToggleButton>("showcontrols", ui.buttonControls));
-	m_config->addSetting(new ComboSetting("outputeditor", ui.comboOcrmode));
+	ADD_SETTING(VarSetting<std::vector<int>>("wingeom"));
+	ADD_SETTING(SwitchSettingT<Gtk::ToggleButton>("showcontrols", ui.buttonControls));
+	ADD_SETTING(ComboSetting("outputeditor", ui.comboOcrmode));
 
 	m_recognizer->updateLanguagesMenu();
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
-	const std::vector<int>& geom = m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->getValue();
+	const std::vector<int>& geom = ConfigSettings::get<VarSetting<std::vector<int>>>("wingeom")->getValue();
 	if(geom.size() == 4) {
 		ui.windowMain->resize(geom[2], geom[3]);
 		ui.windowMain->move(geom[0], geom[1]);
 	}
-	ui.panedOutput->set_orientation(static_cast<Gtk::Orientation>(!m_config->getSetting<ComboSetting>("outputorient")->getValue()));
+	ui.panedOutput->set_orientation(static_cast<Gtk::Orientation>(!ConfigSettings::get<ComboSetting>("outputorient")->getValue()));
 #if ENABLE_VERSIONCHECK
-	if(m_config->getSetting<SwitchSetting>("updatecheck")->getValue()) {
+	if(ConfigSettings::get<SwitchSetting>("updatecheck")->getValue()) {
 		m_newVerThread = Glib::Threads::Thread::create([this] { getNewestVersion(); });
 	}
 #endif
@@ -267,7 +268,7 @@ bool MainWindow::closeEvent(GdkEventAny*) {
 		std::vector<int> geom(4);
 		ui.windowMain->get_position(geom[0], geom[1]);
 		ui.windowMain->get_size(geom[2], geom[3]);
-		m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->setValue(geom);
+		ConfigSettings::get<VarSetting<std::vector<int>>>("wingeom")->setValue(geom);
 	}
 	ui.windowMain->hide();
 	return false;
@@ -420,7 +421,7 @@ void MainWindow::checkVersion(const Glib::ustring& newver) {
 		addNotification(_("New version"), Glib::ustring::compose(_("gImageReader %1 is available"), newver), {
 			{_("Download"), [=]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(ui.windowMain)->gobj(), DOWNLOADURL, GDK_CURRENT_TIME, 0); return false; }},
 			{_("Changelog"), [=]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(ui.windowMain)->gobj(), CHANGELOGURL, GDK_CURRENT_TIME, 0); return false; }},
-			{_("Don't notify again"), [this]{ m_config->getSetting<SwitchSetting>("updatecheck")->setValue(false); return true; }}
+			{_("Don't notify again"), [this]{ ConfigSettings::get<SwitchSetting>("updatecheck")->setValue(false); return true; }}
 		});
 	}
 }
@@ -440,8 +441,8 @@ void MainWindow::languageChanged(const Config::Lang& lang) {
 	try {
 		checker.set_language(code);
 	} catch(const GtkSpell::Error& /*e*/) {
-		if(getConfig()->getSetting<SwitchSetting>("dictinstall")->getValue()) {
-			NotificationAction actionDontShowAgain = {_("Don't show again"), [this]{ m_config->getSetting<SwitchSetting>("dictinstall")->setValue(false); return true; }};
+		if(ConfigSettings::get<SwitchSetting>("dictinstall")->getValue()) {
+			NotificationAction actionDontShowAgain = {_("Don't show again"), [this]{ ConfigSettings::get<SwitchSetting>("dictinstall")->setValue(false); return true; }};
 			NotificationAction actionInstall = NotificationAction{_("Install"), [this,lang]{ dictionaryAutoinstall(lang.code); return false; }};
 #ifdef G_OS_UNIX
 			if(getConfig()->useSystemDataLocations()) {

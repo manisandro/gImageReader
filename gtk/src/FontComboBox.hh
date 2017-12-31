@@ -32,7 +32,7 @@ public:
 	sigc::signal<void, Glib::ustring> signal_font_changed() { return m_signal_font_changed; }
 
 private:
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 	sigc::signal<void, Glib::ustring> m_signal_font_changed;
 
 	struct FontComboColums : public Gtk::TreeModel::ColumnRecord {

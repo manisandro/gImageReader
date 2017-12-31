@@ -60,7 +60,7 @@ private:
 	};
 
 	const Ui::MainWindow& ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 	Gtk::RadioButtonGroup m_langMenuRadioGroup;
 	Gtk::RadioButtonGroup m_psmRadioGroup;
 	int m_currentPsmMode;

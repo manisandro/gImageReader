@@ -46,7 +46,7 @@ private:
 	} m_devComboCols;
 
 	const Ui::MainWindow& ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 
 	Gtk::Button* m_cancelButton;
 	std::string m_outputPath;

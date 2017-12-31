@@ -17,7 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "HOCRDocument.hh"
 #include "HOCRTextExporter.hh"
 #include "MainWindow.hh"

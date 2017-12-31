@@ -26,6 +26,7 @@
 #undef USE_STD_NAMESPACE
 #include <libxml++/libxml++.h>
 
+#include "ConfigSettings.hh"
 #include "DisplayerToolHOCR.hh"
 #include "FileDialogs.hh"
 #include "HOCRDocument.hh"
@@ -300,8 +301,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	CONNECT(m_searchFrame, find_replace, sigc::mem_fun(this, &OutputEditorHOCR::findReplace));
 	CONNECT(m_searchFrame, replace_all, sigc::mem_fun(this, &OutputEditorHOCR::replaceAll));
 	CONNECT(m_searchFrame, apply_substitutions, sigc::mem_fun(this, &OutputEditorHOCR::applySubstitutions));
-	m_connectionCustomFont = CONNECT(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), changed, [this] { setFont(); });
-	m_connectionDefaultFont = CONNECT(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(); });
+	m_connectionCustomFont = CONNECT(ConfigSettings::get<FontSetting>("customoutputfont"), changed, [this] { setFont(); });
+	m_connectionDefaultFont = CONNECT(ConfigSettings::get<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(); });
 	m_connectionSelectionChanged = CONNECT(m_treeView->get_selection(), changed, [this] { showItemProperties(m_treeView->currentIndex()); });
 	CONNECT(ui.notebook, switch_page, [this](Gtk::Widget*, guint){ updateSourceText(); });
 	CONNECT(m_tool, bbox_changed, sigc::mem_fun(this, &OutputEditorHOCR::updateCurrentItemBBox));
@@ -328,10 +329,10 @@ OutputEditorHOCR::~OutputEditorHOCR() {
 }
 
 void OutputEditorHOCR::setFont() {
-	if(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont")->getValue()) {
+	if(ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
 		ui.textviewSource->unset_font();
 	} else {
-		Glib::ustring fontName = MAIN->getConfig()->getSetting<FontSetting>("customoutputfont")->getValue();
+		Glib::ustring fontName = ConfigSettings::get<FontSetting>("customoutputfont")->getValue();
 		ui.textviewSource->override_font(Pango::FontDescription(fontName));
 	}
 }

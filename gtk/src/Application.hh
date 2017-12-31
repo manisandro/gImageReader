@@ -81,7 +81,7 @@ private:
 	}
 
 	MainWindow* m_mainWindow = nullptr;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 };
 
 #endif // APPLICATION_HPP

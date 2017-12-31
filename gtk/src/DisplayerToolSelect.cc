@@ -212,7 +212,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 
 void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
 	Ui::SelectionMenu ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 	ui.setupUi();
 	ui.windowSelection->set_attached_to(*MAIN->getWindow());
 	ui.spinSelectionOrder->get_adjustment()->set_upper(static_cast<DisplayerToolSelect*>(m_tool)->m_selections.size());

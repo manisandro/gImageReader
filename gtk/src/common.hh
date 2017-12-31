@@ -24,20 +24,29 @@
 #include <gtkmm.h>
 #include <libintl.h>
 
-class ConnectionsStore {
-public:
-	~ConnectionsStore() {
-		std::for_each(m_connections.begin(), m_connections.end(), [](sigc::connection conn) { conn.disconnect(); });
-	}
-	template<class T>
-	sigc::connection add(const T& conn) { m_connections.push_back(conn); return m_connections.back(); }
-private:
-	std::vector<sigc::connection> m_connections;
+struct ClassDataItem {
+	virtual ~ClassDataItem() = default;
 };
 
-#define CONNECT(src, signal, ...) m_connections.add((src)->signal_##signal().connect(__VA_ARGS__))
+class ClassData {
+public:
+	~ClassData() {
+		std::for_each(m_connections.begin(), m_connections.end(), [](sigc::connection conn) { conn.disconnect(); });
+		for(ClassDataItem* item : m_items) {
+			delete item;
+		}
+	}
+	template<class T>
+	sigc::connection addConn(const T& conn) { m_connections.push_back(conn); return m_connections.back(); }
+	void addItem(ClassDataItem* item) { m_items.push_back(item); }
+private:
+	std::vector<sigc::connection> m_connections;
+	std::vector<ClassDataItem*> m_items;
+};
+
+#define CONNECT(src, signal, ...) m_classdata.addConn((src)->signal_##signal().connect(__VA_ARGS__))
+#define CONNECTP(src, property, ...) m_classdata.addConn((src)->property_##property().signal_changed().connect(__VA_ARGS__))
 #define CONNECTX(src, signal, ...) (src)->signal_##signal().connect(__VA_ARGS__)
-#define CONNECTP(src, property, ...) m_connections.add((src)->property_##property().signal_changed().connect(__VA_ARGS__))
 
 #define APPLICATION_ID "org.gnome.gimagereader"
 

@@ -30,7 +30,7 @@ public:
 
 private:
 	Ui::CrashHandler ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 	sigc::connection m_progressConnection;
 	std::string m_saveFile;
 	int m_pid = 0;

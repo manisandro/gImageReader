@@ -66,7 +66,7 @@ private:
 	} m_listViewCols;
 
 	const Ui::MainWindow& ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 	Glib::RefPtr<Gtk::Clipboard> m_clipboard;
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;

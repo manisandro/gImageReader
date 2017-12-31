@@ -27,13 +27,36 @@
 #include "common.hh"
 #include "FontComboBox.hh"
 
-Glib::RefPtr<Gio::Settings> get_default_settings();
+class AbstractSetting;
 
-class AbstractSetting {
+#define ADD_SETTING(...) m_classdata.addItem(new __VA_ARGS__)
+
+class ConfigSettings {
+public:
+	template<class T>
+	static T* get(const Glib::ustring& key) {
+		auto it = s_settings.find(key);
+		return it == s_settings.end() ? nullptr : static_cast<T*>(it->second);
+	}
+
+private:
+	friend class AbstractSetting;
+	static std::map<Glib::ustring,AbstractSetting*> s_settings;
+
+	static void add(AbstractSetting* setting);
+	static void remove(const Glib::ustring& key);
+};
+
+
+class AbstractSetting : public ClassDataItem {
 public:
 	AbstractSetting(const Glib::ustring& key)
-		: m_key(key) {}
-	virtual ~AbstractSetting() {}
+		: m_key(key) {
+		ConfigSettings::add(this);
+	}
+	~AbstractSetting() {
+		ConfigSettings::remove(m_key);
+	}
 	const Glib::ustring& key() const {
 		return m_key;
 	}
@@ -41,9 +64,11 @@ public:
 	sigc::signal<void> signal_changed(){ return m_signal_changed; }
 
 protected:
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 	Glib::ustring m_key;
 	sigc::signal<void> m_signal_changed;
+
+	static Glib::RefPtr<Gio::Settings> get_default_settings();
 };
 
 template <class T>
@@ -188,5 +213,6 @@ public:
 private:
 	Gtk::Entry* m_entry;
 };
+
 
 #endif // CONFIGSETTINGS_HH

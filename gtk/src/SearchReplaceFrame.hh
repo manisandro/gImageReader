@@ -46,7 +46,7 @@ private:
 	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&, bool> m_signal_apply_substitutions;
 
 	Ui::SearchReplaceFrame ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 	SubstitutionsManager* m_substitutionsManager;
 
 private:

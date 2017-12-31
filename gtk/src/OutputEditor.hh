@@ -20,8 +20,6 @@
 #ifndef OUTPUTEDITOR_HH
 #define OUTPUTEDITOR_HH
 
-#include "Config.hh"
-
 namespace tesseract {
 class TessBaseAPI;
 }

@@ -17,8 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Config.hh"
-#include "MainWindow.hh"
+#include "ConfigSettings.hh"
 #include "SearchReplaceFrame.hh"
 #include "SubstitutionsManager.hh"
 #include "Utils.hh"
@@ -40,13 +39,12 @@ SearchReplaceFrame::SearchReplaceFrame()
 	CONNECT(ui.buttonSubstitutions, clicked, [this] { m_substitutionsManager->set_visible(true); });
 	CONNECT(m_substitutionsManager, apply_substitutions, [this]( const std::map<Glib::ustring,Glib::ustring>& substitutions) { emitApplySubstitutions(substitutions); });
 
-	MAIN->getConfig()->addSetting(new SwitchSettingT<Gtk::CheckButton>("searchmatchcase", ui.checkbuttonMatchcase));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("searchmatchcase", ui.checkbuttonMatchcase));
 }
 
 SearchReplaceFrame::~SearchReplaceFrame()
 {
 	delete m_substitutionsManager;
-	MAIN->getConfig()->removeSetting("searchmatchcase");
 }
 
 void SearchReplaceFrame::clear()

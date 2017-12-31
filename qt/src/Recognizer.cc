@@ -42,6 +42,7 @@
 #define pipe(fds) _pipe(fds, 5000, _O_BINARY)
 #endif
 
+#include "ConfigSettings.hh"
 #include "Displayer.hh"
 #include "MainWindow.hh"
 #include "OutputEditor.hh"
@@ -93,11 +94,11 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	connect(multiplePagesAction, SIGNAL(triggered()), this, SLOT(recognizeMultiplePages()));
 	connect(m_pagesDialogUi.lineEditPageRange, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditPageRangeStyle()));
 
-	MAIN->getConfig()->addSetting(new VarSetting<QString>("language", "eng:en_EN"));
-	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", m_pagesDialogUi.comboBoxRecognitionArea, 0));
-	MAIN->getConfig()->addSetting(new SwitchSetting("ocraddsourcefilename", m_pagesDialogUi.checkBoxPrependFilename));
-	MAIN->getConfig()->addSetting(new SwitchSetting("ocraddsourcepage", m_pagesDialogUi.checkBoxPrependPage));
-	MAIN->getConfig()->addSetting(new VarSetting<int>("psm", 6));
+	ADD_SETTING(VarSetting<QString>("language", "eng:en_EN"));
+	ADD_SETTING(ComboSetting("ocrregionstrategy", m_pagesDialogUi.comboBoxRecognitionArea, 0));
+	ADD_SETTING(SwitchSetting("ocraddsourcefilename", m_pagesDialogUi.checkBoxPrependFilename));
+	ADD_SETTING(SwitchSetting("ocraddsourcepage", m_pagesDialogUi.checkBoxPrependPage));
+	ADD_SETTING(VarSetting<int>("psm", 6));
 }
 
 QStringList Recognizer::getAvailableLanguages() const {
@@ -179,7 +180,7 @@ void Recognizer::updateLanguagesMenu() {
 	QAction* activeitem = nullptr;
 	bool haveOsd = false;
 
-	QStringList parts = MAIN->getConfig()->getSetting<VarSetting<QString>>("language")->getValue().split(":");
+	QStringList parts = ConfigSettings::get<VarSetting<QString>>("language")->getValue().split(":");
 	Config::Lang curlang = {parts.empty() ? "eng" : parts[0], parts.size() < 2 ? "" : parts[1], parts.size() < 3 ? "" : parts[2]};
 
 	QList<QString> dicts = QtSpell::Checker::getLanguageList();
@@ -283,7 +284,7 @@ void Recognizer::updateLanguagesMenu() {
 	// Add PSM items
 	ui.menuLanguages->addSeparator();
 	QMenu* psmMenu = new QMenu();
-	int activePsm = MAIN->getConfig()->getSetting<VarSetting<int>>("psm")->getValue();
+	int activePsm = ConfigSettings::get<VarSetting<int>>("psm")->getValue();
 
 	struct PsmEntry {
 		QString label;
@@ -332,7 +333,7 @@ void Recognizer::setLanguage() {
 		}
 		ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 		m_curLang = lang;
-		MAIN->getConfig()->getSetting<VarSetting<QString>>("language")->setValue(lang.prefix + ":" + lang.code);
+		ConfigSettings::get<VarSetting<QString>>("language")->setValue(lang.prefix + ":" + lang.code);
 		emit languageChanged(m_curLang);
 	}
 }
@@ -352,7 +353,7 @@ void Recognizer::setMultiLanguage() {
 	m_langLabel = langs;
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 	m_curLang = {langs, "", "Multilingual"};
-	MAIN->getConfig()->getSetting<VarSetting<QString>>("language")->setValue(langs + ":");
+	ConfigSettings::get<VarSetting<QString>>("language")->setValue(langs + ":");
 	emit languageChanged(m_curLang);
 }
 
@@ -366,7 +367,7 @@ void Recognizer::clearLineEditPageRangeStyle() {
 }
 
 void Recognizer::psmSelected(QAction *action) {
-	MAIN->getConfig()->getSetting<VarSetting<int>>("psm")->setValue(action->data().toInt());
+	ConfigSettings::get<VarSetting<int>>("psm")->setValue(action->data().toInt());
 }
 
 QList<int> Recognizer::selectPages(bool& autodetectLayout) {
@@ -442,8 +443,8 @@ void Recognizer::recognizeMultiplePages() {
 
 void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 	tesseract::TessBaseAPI tess;
-	bool prependFile = pages.size() > 1 && MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcefilename")->getValue();
-	bool prependPage = pages.size() > 1 && MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcepage")->getValue();
+	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
+	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
 	if(initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())) {
 		QString failed;
 		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_psmCheckGroup->checkedAction()->data().toInt()));

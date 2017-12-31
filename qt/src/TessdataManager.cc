@@ -38,7 +38,7 @@
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
 
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "MainWindow.hh"
 #include "Recognizer.hh"
 #include "TessdataManager.hh"

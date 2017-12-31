@@ -23,7 +23,6 @@
 #include <gtksourceviewmm.h>
 #include <gtkspellmm.h>
 
-#include "Config.hh"
 #include "MainWindow.hh"
 #include "OutputBuffer.hh"
 #include "OutputEditor.hh"
@@ -57,7 +56,7 @@ private:
 
 
 	Ui::OutputEditorText ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 	SearchReplaceFrame* m_searchFrame;
 	Glib::RefPtr<OutputBuffer> m_textBuffer;
 

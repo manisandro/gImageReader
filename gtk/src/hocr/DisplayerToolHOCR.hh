@@ -64,7 +64,7 @@ public:
 	sigc::signal<void, Action> signal_action_changed() { return m_signal_action_changed; }
 
 private:
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 
 	DisplayerSelection* m_selection = nullptr;
 	Action m_currentAction = ACTION_NONE;

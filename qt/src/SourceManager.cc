@@ -38,7 +38,7 @@
 #include <poppler-qt5.h>
 #endif
 
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "SourceManager.hh"
@@ -74,7 +74,7 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	connect(ui.listWidgetSources, SIGNAL(itemSelectionChanged()), this, SLOT(currentSourceChanged()));
 	connect(&m_fsWatcher, SIGNAL(fileChanged(QString)), this, SLOT(fileChanged(QString)));
 
-	MAIN->getConfig()->addSetting(new VarSetting<QStringList>("recentitems"));
+	ADD_SETTING(VarSetting<QStringList>("recentitems"));
 
 	qRegisterMetaType<Source*>("Source*");
 	qRegisterMetaTypeStreamOperators<Source*>("Source*");
@@ -87,7 +87,7 @@ SourceManager::~SourceManager() {
 int SourceManager::addSources(const QStringList& files) {
 	QString failed;
 	QListWidgetItem* item = nullptr;
-	QStringList recentItems = MAIN->getConfig()->getSetting<VarSetting<QStringList>>("recentitems")->getValue();
+	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList>>("recentitems")->getValue();
 	int added = 0;
 	for(const QString& filename : files) {
 		if(!QFile(filename).exists()) {
@@ -119,7 +119,7 @@ int SourceManager::addSources(const QStringList& files) {
 		recentItems.prepend(filename);
 		++added;
 	}
-	MAIN->getConfig()->getSetting<VarSetting<QStringList>>("recentitems")->setValue(recentItems);
+	ConfigSettings::get<VarSetting<QStringList>>("recentitems")->setValue(recentItems);
 	ui.listWidgetSources->blockSignals(true);
 	ui.listWidgetSources->clearSelection();
 	ui.listWidgetSources->blockSignals(false);
@@ -167,7 +167,7 @@ QList<Source*> SourceManager::getSelectedSources() const {
 void SourceManager::prepareSourcesMenu() {
 	// Build recent menu
 	m_recentMenu->clear();
-	for(const QString& filename : MAIN->getConfig()->getSetting<VarSetting<QStringList>>("recentitems")->getValue()) {
+	for(const QString& filename : ConfigSettings::get<VarSetting<QStringList>>("recentitems")->getValue()) {
 		if(QFile(filename).exists()) {
 			QAction* action = new QAction(QFileInfo(filename).fileName(), m_recentMenu);
 			action->setToolTip(filename);

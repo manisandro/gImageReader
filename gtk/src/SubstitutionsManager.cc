@@ -18,8 +18,6 @@
  */
 
 #include "SubstitutionsManager.hh"
-#include "MainWindow.hh"
-#include "Config.hh"
 #include "ConfigSettings.hh"
 #include "FileDialogs.hh"
 #include "OutputBuffer.hh"
@@ -49,12 +47,11 @@ SubstitutionsManager::SubstitutionsManager() {
 	CONNECT(ui.buttonClose, clicked, [this] { ui.windowSubstitutions->hide(); });
 	CONNECT(ui.treeview->get_selection(), changed, [this] { ui.toolbuttonRemove->set_sensitive(ui.treeview->get_selection()->count_selected_rows() != 0); });
 
-	MAIN->getConfig()->addSetting(new ListStoreSetting("replacelist", Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeview->get_model())));
+	ADD_SETTING(ListStoreSetting("replacelist", Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeview->get_model())));
 }
 
 SubstitutionsManager::~SubstitutionsManager() {
-	MAIN->getConfig()->getSetting<ListStoreSetting>("replacelist")->serialize();
-	MAIN->getConfig()->removeSetting("replacelist");
+	ConfigSettings::get<ListStoreSetting>("replacelist")->serialize();
 }
 
 void SubstitutionsManager::set_visible(bool visible) {

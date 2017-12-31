@@ -93,7 +93,7 @@ private:
 	} m_propStoreCols;
 
 	Ui::OutputEditorHOCR ui;
-	ConnectionsStore m_connections;
+	ClassData m_classdata;
 
 	HOCRTreeView* m_treeView;
 	HOCRCellRendererText* m_treeViewTextCell;

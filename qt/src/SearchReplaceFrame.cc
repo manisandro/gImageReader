@@ -17,8 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Config.hh"
-#include "MainWindow.hh"
+#include "ConfigSettings.hh"
 #include "SearchReplaceFrame.hh"
 #include "SubstitutionsManager.hh"
 
@@ -42,12 +41,7 @@ SearchReplaceFrame::SearchReplaceFrame(QWidget *parent, Qt::WindowFlags f)
 	connect(ui.pushButtonSubstitutions, SIGNAL(clicked()), m_substitutionsManager, SLOT(raise()));
 	connect(m_substitutionsManager, SIGNAL(applySubstitutions(QMap<QString,QString>)), this, SLOT(emitApplySubstitutions(QMap<QString,QString>)));
 
-	MAIN->getConfig()->addSetting(new SwitchSetting("searchmatchcase", ui.checkBoxMatchCase));
-}
-
-SearchReplaceFrame::~SearchReplaceFrame()
-{
-	MAIN->getConfig()->removeSetting("searchmatchcase");
+	ADD_SETTING(SwitchSetting("searchmatchcase", ui.checkBoxMatchCase));
 }
 
 void SearchReplaceFrame::clear()
