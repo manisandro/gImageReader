@@ -193,16 +193,16 @@ Gtk::TreeIter HOCRDocument::nextIndex(const Gtk::TreeIter& current) const
 		return iter->children()[0];
 	}
 	// Return next possible sibling
-	Gtk::TreeIter parent = iter->parent();
-	while(!++iter && parent) {
-		iter = parent;
-		parent = parent->parent();
+	Gtk::TreeIter next = iter; ++next;
+	while(iter && !next) {
+		iter = iter->parent();
+		next = iter; ++next;
 	}
-	if(!parent) {
+	if(!iter) {
 		// Wrap around
 		return get_iter(get_root_path(0));
 	}
-	return iter;
+	return next;
 }
 
 Gtk::TreeIter HOCRDocument::prevIndex(const Gtk::TreeIter& current) const
