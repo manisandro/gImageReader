@@ -601,7 +601,7 @@ void OutputEditorHOCR::addGraphicRegion(const Geometry::Rectangle& bbox) {
 	Gtk::TreeIter current = m_treeView->currentIndex();
 	xmlpp::Element* graphicElement = XmlUtils::createElement("div");
 	graphicElement->set_attribute("class", "ocr_graphic");
-	graphicElement->set_attribute("title", Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height));
+	graphicElement->set_attribute("title", Glib::ustring::compose("bbox %1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height));
 	Gtk::TreeIter index = m_document->addItem(current, graphicElement);
 	if(index) {
 		m_connectionSelectionChanged.block(true);
