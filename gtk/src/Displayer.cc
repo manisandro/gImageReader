@@ -597,7 +597,7 @@ void Displayer::ensureVisible(const Geometry::Rectangle& rect)
 	double ox = m_hadj->get_value() + 0.5 * (m_hadj->get_page_size() - (p2.x - p1.x)) - p1.x;
 	double oy = m_vadj->get_value() + 0.5 * (m_vadj->get_page_size() - (p2.y - p1.y)) - p1.y;
 	m_hadj->set_value(std::min(std::max(0., m_hadj->get_value() - ox), m_hadj->get_upper() - m_hadj->get_page_size()));
-	m_vadj->set_value(std::min(std::max(0., m_vadj->get_value() - oy), m_hadj->get_upper() - m_hadj->get_page_size()));
+	m_vadj->set_value(std::min(std::max(0., m_vadj->get_value() - oy), m_vadj->get_upper() - m_vadj->get_page_size()));
 }
 
 void Displayer::addItem(DisplayerItem* item) {
