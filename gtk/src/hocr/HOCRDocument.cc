@@ -842,6 +842,8 @@ HOCRPage::HOCRPage(xmlpp::Element* element, int pageId, const Glib::ustring& lan
 
 	xmlpp::Element* childElement = XmlUtils::firstChildElement(m_domElement, "div");
 	while(childElement) {
+		// Need to query here because "delete m_childItems.back();" may delete the item
+		xmlpp::Element* nextSibling = XmlUtils::nextSiblingElement(childElement);
 		HOCRItem* item = new HOCRItem(childElement, this, this, m_childItems.size());
 		m_childItems.push_back(item);
 		if(!item->parseChildren(language)) {
@@ -861,7 +863,7 @@ HOCRPage::HOCRPage(xmlpp::Element* element, int pageId, const Glib::ustring& lan
 				}
 			}
 		}
-		childElement = XmlUtils::nextSiblingElement(childElement);
+		childElement = nextSibling;
 	}
 }
 
