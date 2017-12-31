@@ -43,6 +43,7 @@ bool DisplayerToolHOCR::mousePressEvent(GdkEventButton* event) {
 	if(event->button == 1 && m_currentAction == ACTION_DRAW_RECT) {
 		clearSelection();
 		m_selection = new DisplayerSelection(this, m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y)));
+		CONNECT(m_selection, geometry_changed, sigc::mem_fun(this, &DisplayerToolHOCR::selectionChanged));
 		m_displayer->addItem(m_selection);
 		return true;
 	}

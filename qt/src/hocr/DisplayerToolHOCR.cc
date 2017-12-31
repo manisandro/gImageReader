@@ -43,6 +43,7 @@ void DisplayerToolHOCR::mousePressEvent(QMouseEvent *event) {
 	if(event->button() == Qt::LeftButton && m_currentAction == ACTION_DRAW_RECT) {
 		clearSelection();
 		m_selection = new DisplayerSelection(this,  m_displayer->mapToSceneClamped(event->pos()));
+		connect(m_selection, SIGNAL(geometryChanged(QRectF)), this, SLOT(selectionChanged(QRectF)));
 		m_displayer->scene()->addItem(m_selection);
 		event->accept();
 	}
