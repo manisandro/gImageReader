@@ -59,7 +59,7 @@ QModelIndex HOCRDocument::addPage(const QDomElement& pageElement, bool cleanGrap
 	m_document.documentElement().appendChild(pageElement);
 	int newRow = m_pages.size();
 	beginInsertRows(QModelIndex(), newRow, newRow);
-	m_pages.append(new HOCRPage(pageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics));
+	m_pages.append(new HOCRPage(pageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics, m_pages.size()));
 	endInsertRows();
 	return index(newRow, 0);
 }
@@ -369,12 +369,7 @@ QModelIndex HOCRDocument::parent(const QModelIndex &child) const
 	if(!item) {
 		return QModelIndex();
 	}
-	int row = -1;
-	if(item->parent()) {
-		row = item->parent()->children().indexOf(item);
-	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
-		row = m_pages.indexOf(page);
-	}
+	int row = item->index();
 	return row >= 0 ? createIndex(row, 0, item) : QModelIndex();
 }
 
@@ -450,7 +445,7 @@ void HOCRDocument::deleteItem(HOCRItem* item)
 	if(item->parent()) {
 		item->parent()->removeChild(item);
 	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
-		int idx = m_pages.indexOf(page);
+		int idx = page->index();
 		delete m_pages.takeAt(idx);
 	}
 }
@@ -490,8 +485,8 @@ QString HOCRItem::trimmedWord(const QString& word, QString* prefix, QString* suf
 	return word;
 }
 
-HOCRItem::HOCRItem(QDomElement element, HOCRPage* page, HOCRItem* parent)
-	: m_domElement(element), m_pageItem(page), m_parentItem(parent)
+HOCRItem::HOCRItem(QDomElement element, HOCRPage* page, HOCRItem* parent, int index)
+	: m_domElement(element), m_pageItem(page), m_parentItem(parent), m_index(index)
 {
 	// Adjust item id based on pageId
 	if(parent) {
@@ -533,12 +528,17 @@ void HOCRItem::addChild(HOCRItem* child)
 	m_childItems.append(child);
 	child->m_parentItem = this;
 	child->m_pageItem = m_pageItem;
+	child->m_index = m_childItems.size() - 1;
 }
 
 void HOCRItem::removeChild(HOCRItem *child)
 {
 	m_domElement.removeChild(child->m_domElement);
-	delete m_childItems.takeAt(m_childItems.indexOf(child));
+	int idx = child->index();
+	delete m_childItems.takeAt(idx);
+	for(int i = idx, n = m_childItems.size(); i < n ; ++i) {
+		m_childItems[i]->m_index = i;
+	}
 }
 
 QVector<HOCRItem*> HOCRItem::takeChildren()
@@ -670,7 +670,7 @@ bool HOCRItem::parseChildren(QString language)
 	bool haveWords = false;
 	QDomElement childElement = m_domElement.firstChildElement();
 	while(!childElement.isNull()) {
-		m_childItems.append(new HOCRItem(childElement, m_pageItem, this));
+		m_childItems.append(new HOCRItem(childElement, m_pageItem, this, m_childItems.size()));
 		haveWords |= m_childItems.last()->parseChildren(language);
 		childElement = childElement.nextSiblingElement();
 	}
@@ -679,8 +679,8 @@ bool HOCRItem::parseChildren(QString language)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-HOCRPage::HOCRPage(QDomElement element, int pageId, const QString& language, bool cleanGraphics)
-	: HOCRItem(element, this), m_pageId(pageId)
+HOCRPage::HOCRPage(QDomElement element, int pageId, const QString& language, bool cleanGraphics, int index)
+	: HOCRItem(element, this, nullptr, index), m_pageId(pageId)
 {
 	m_domElement.setAttribute("id", QString("page_%1").arg(pageId));
 
@@ -697,7 +697,7 @@ HOCRPage::HOCRPage(QDomElement element, int pageId, const QString& language, boo
 
 	QDomElement childElement = m_domElement.firstChildElement("div");
 	while(!childElement.isNull()) {
-		HOCRItem* item = new HOCRItem(childElement, this, this);
+		HOCRItem* item = new HOCRItem(childElement, this, this, m_childItems.size());
 		m_childItems.append(item);
 		if(!item->parseChildren(language)) {
 			// No word children -> treat as graphic

@@ -96,11 +96,12 @@ public:
 	// attrname : attrvalue : occurences
 	typedef QMap<QString, QMap<QString, int>> AttrOccurenceMap_t;
 
-	HOCRItem( QDomElement element, HOCRPage* page, HOCRItem *parent = nullptr);
+	HOCRItem( QDomElement element, HOCRPage* page, HOCRItem *parent, int index = -1);
 	virtual ~HOCRItem();
 	HOCRPage* page() const{ return m_pageItem; }
 	const QVector<HOCRItem*>& children() const{ return m_childItems; }
 	HOCRItem* parent() const{ return m_parentItem; }
+	int index() const{ return m_index; }
 	const QDomElement& element() const{ return m_domElement; }
 	bool isEnabled() const{ return m_enabled; }
 
@@ -130,6 +131,7 @@ public:
 	static QString trimmedWord(const QString& word, QString* prefix = nullptr, QString* suffix = nullptr);
 
 protected:
+	friend class HOCRDocument;
 	friend class HOCRPage;
 
 	static QMap<QString,QString> s_langCache;
@@ -139,6 +141,7 @@ protected:
 	QVector<HOCRItem*> m_childItems;
 	HOCRPage* m_pageItem = nullptr;
 	HOCRItem* m_parentItem = nullptr;
+	int m_index;
 	bool m_enabled = true;
 
 	QRect m_bbox;
@@ -149,7 +152,7 @@ protected:
 
 class HOCRPage : public HOCRItem {
 public:
-	HOCRPage(QDomElement element, int pageId, const QString& language, bool cleanGraphics);
+	HOCRPage(QDomElement element, int pageId, const QString& language, bool cleanGraphics, int index);
 
 	const QString& sourceFile() const{ return m_sourceFile; }
 	// const-refs here to avoid taking reference from temporaries
