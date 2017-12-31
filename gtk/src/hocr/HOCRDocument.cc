@@ -652,7 +652,6 @@ void HOCRItem::addChild(HOCRItem* child)
 
 void HOCRItem::removeChild(HOCRItem *child)
 {
-	child->m_domElement = XmlUtils::takeChild(m_domElement, child->m_domElement);
 	auto it = std::find(m_childItems.begin(), m_childItems.end(), child);
 	if(it != m_childItems.end()) {
 		int idx = std::distance(m_childItems.begin(), it);
