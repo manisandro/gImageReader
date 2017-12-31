@@ -61,6 +61,7 @@ QModelIndex HOCRDocument::addPage(const QDomElement& pageElement, bool cleanGrap
 	beginInsertRows(QModelIndex(), newRow, newRow);
 	m_pages.append(new HOCRPage(pageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics, m_pages.size()));
 	endInsertRows();
+	emit dataChanged(index(0, 0), index(m_pages.size() - 1, 0), {Qt::DisplayRole});
 	return index(newRow, 0);
 }
 
@@ -390,7 +391,7 @@ QString HOCRDocument::displayRoleForItem(const HOCRItem* item) const
 	QString itemClass = item->itemClass();
 	if(itemClass == "ocr_page") {
 		const HOCRPage* page = static_cast<const HOCRPage*>(item);
-		return page->title();
+		return QString("%1 (%2 %3/%4)").arg(page->title()).arg(tr("Page")).arg(item->index() + 1).arg(m_pages.size());
 	} else if(itemClass == "ocr_carea") {
 		return _("Text block");
 	} else if(itemClass == "ocr_par") {
@@ -447,6 +448,10 @@ void HOCRDocument::deleteItem(HOCRItem* item)
 	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
 		int idx = page->index();
 		delete m_pages.takeAt(idx);
+		for(int i = idx, n = m_pages.size(); i < n; ++i) {
+			m_pages[i]->m_index = i;
+		}
+		emit dataChanged(index(0, 0), index(m_pages.size() - 1, 0), {Qt::DisplayRole});
 	}
 }
 

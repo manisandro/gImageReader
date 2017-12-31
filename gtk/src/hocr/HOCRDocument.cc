@@ -68,6 +68,10 @@ Gtk::TreeIter HOCRDocument::addPage(const xmlpp::Element* pageElement, bool clea
 	m_pages.push_back(new HOCRPage(importedPageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics, m_pages.size()));
 	Gtk::TreeIter iter = get_iter(get_root_path(m_pages.back()->index()));
 	recursiveRowInserted(iter);
+	for(int i = 0, n = m_pages.size(); i < n; ++i) {
+		Gtk::TreePath path = get_root_path(i);
+		row_changed(path, get_iter(path));
+	}
 	return iter;
 }
 
@@ -495,7 +499,7 @@ Glib::ustring HOCRDocument::displayRoleForItem(const HOCRItem* item) const
 	Glib::ustring itemClass = item->itemClass();
 	if(itemClass == "ocr_page") {
 		const HOCRPage* page = static_cast<const HOCRPage*>(item);
-		return page->title();
+		return Glib::ustring::compose("%1 (%2 %3/%4)", page->title(), _("Page"), page->index() + 1, m_pages.size());
 	} else if(itemClass == "ocr_carea") {
 		return _("Text block");
 	} else if(itemClass == "ocr_par") {
@@ -558,6 +562,10 @@ void HOCRDocument::deleteItem(HOCRItem* item)
 		delete page;
 		for(int i = idx, n = m_pages.size(); i < n; ++i) {
 			m_pages[i]->m_index = i;
+		}
+		for(int i = 0, n = m_pages.size(); i < n; ++i) {
+			Gtk::TreePath path = get_root_path(i);
+			row_changed(path, get_iter(path));
 		}
 	}
 }
