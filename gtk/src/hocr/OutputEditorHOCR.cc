@@ -438,7 +438,7 @@ void OutputEditorHOCR::navigateNextPrev(bool next)
 	if(!start) {
 		start = m_document->get_iter("0");
 	}
-	Gtk::TreeIter curr = next? m_document->nextIndex(start) : m_document->prevIndex(start);
+	Gtk::TreeIter curr = next ? m_document->nextIndex(start) : m_document->prevIndex(start);
 	while(curr != start) {
 		const HOCRItem* item = m_document->itemAtIndex(curr);
 		if(item && item->itemClass() == target && (!misspelled || m_document->indexIsMisspelledWord(curr))) {
