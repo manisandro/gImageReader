@@ -634,7 +634,11 @@ void DisplayerSelection::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 		m_resizeHandlers.append(resizeAnchorY);
 		m_resizeOffset.setY(event->pos().y() - m_anchor.y());
 	}
-	event->accept();
+	if(!m_resizeHandlers.empty()) {
+		event->accept();
+	} else {
+		event->ignore();
+	}
 }
 
 void DisplayerSelection::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {

@@ -809,7 +809,7 @@ bool DisplayerSelection::mousePressEvent(GdkEventButton *event) {
 			m_resizeHandlers.push_back(resizeAnchorY);
 			m_resizeOffset.y = p.y - m_anchor.y;
 		}
-		return true;
+		return !m_resizeHandlers.empty();
 	} else if(event->button == 3) {
 		showContextMenu(event);
 	}
