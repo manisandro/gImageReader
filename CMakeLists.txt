@@ -266,6 +266,7 @@ ENDIF()
 ADD_EXECUTABLE(gimagereader
     ${gimagereader_HDRS}
     ${gimagereader_SRCS}
+    ${gimagereader_FORMS}
     ${gimagereader_FORMS_HEADERS}
     ${gimagereader_RESOURCES_RCC}
 )
