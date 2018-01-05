@@ -65,7 +65,7 @@ public:
 	double x, y;
 	double width, height;
 
-	Rectangle(double _x = 0., double _y = 0., double _width = 0., double _height = 0.)
+	Rectangle(double _x = 0., double _y = 0., double _width = -1., double _height = -1.)
 		: x(_x), y(_y), width(_width), height(_height) {}
 	Rectangle(const Point& p1, const Point& p2) {
 		setCoords(p1.x, p1.y, p2.x, p2.y);
@@ -77,12 +77,25 @@ public:
 		height = std::abs(y2 - y1);
 	}
 	bool contains(const Point& p) const {
+		if(isEmpty()) {
+			return false;
+		}
 		return p.x >= x && p.x <= x + width && p.y >= y && p.y <= y + height;
 	}
 	bool overlaps(const Rectangle& r) const {
+		if(isEmpty() || r.isEmpty()) {
+			return false;
+		}
 		return x < r.x + r.width && x + width > r.x && y < r.y + r.height && y + height > r.y;
 	}
 	Rectangle unite(const Rectangle& r) const {
+		if(isEmpty() && r.isEmpty()) {
+			return Rectangle();
+		} else if(isEmpty()) {
+			return r;
+		} else if(r.isEmpty()) {
+			return *this;
+		}
 		double _x = std::min(x, r.x);
 		double _y = std::min(y, r.y);
 		double _w = std::max(x + width, r.x + r.width) - _x;
@@ -91,6 +104,9 @@ public:
 	}
 	Rectangle translate(double dx, double dy) const {
 		return Rectangle(x + dx, y + dy, width, height);
+	}
+	bool isEmpty() const {
+		return width < 0. || height < 0.;
 	}
 };
 

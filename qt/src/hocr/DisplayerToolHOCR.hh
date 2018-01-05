@@ -50,7 +50,7 @@ public:
 	void mouseReleaseEvent(QMouseEvent *event) override;
 
 	void setAction(Action action, bool clearSel = true);
-	void setSelection(const QRect& rect);
+	void setSelection(const QRect& rect, const QRect& minRect);
 	QImage getSelection(const QRect& rect) const;
 	void clearSelection();
 

@@ -533,7 +533,12 @@ void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index) {
 
 	ui.textviewSource->get_buffer()->set_text(currentItem->toHtml());
 
-	m_tool->setSelection(currentItem->bbox());
+	// Minimum bounding box (bbox of children)
+	Geometry::Rectangle minBBox;
+	for(const HOCRItem* child : currentItem->children()) {
+		minBBox = minBBox.unite(child->bbox());
+	}
+	m_tool->setSelection(currentItem->bbox(), minBBox);
 }
 
 Glib::RefPtr<Glib::Regex> OutputEditorHOCR::attributeValidator(const Glib::ustring& attribName) const

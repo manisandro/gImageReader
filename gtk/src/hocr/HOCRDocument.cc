@@ -88,6 +88,19 @@ bool HOCRDocument::editItemAttribute(const Gtk::TreeIter& index, const Glib::ust
 		recursiveDataChanged(index, {"ocrx_word"});
 	}
 	m_signal_item_attribute_changed.emit(index, name, value);
+	if(name == "title:bbox") {
+		// Update parent bboxes (except page)
+		HOCRItem* parent = item->parent();
+		while(parent && parent->parent()) {
+			Geometry::Rectangle bbox;
+			for(const HOCRItem* child : parent->children()) {
+				bbox = bbox.unite(child->bbox());
+			}
+			Glib::ustring bboxstr = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
+			parent->setAttribute(name, bboxstr);
+			parent = parent->parent();
+		}
+	}
 	return true;
 }
 

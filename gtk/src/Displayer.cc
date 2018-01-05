@@ -851,7 +851,8 @@ bool DisplayerSelection::mouseMoveEvent(GdkEventMotion *event) {
 		for(const ResizeHandler& handler : m_resizeHandlers) {
 			handler(movePos, m_anchor, m_point);
 		}
-		setRect(Geometry::Rectangle(m_anchor, m_point));
+		Geometry::Rectangle newRect = Geometry::Rectangle(m_anchor, m_point).unite(m_minRect);
+		setRect(newRect);
 		m_signalGeometryChanged.emit(rect());
 		displayer()->ensureVisible(event->x, event->y);
 		return true;

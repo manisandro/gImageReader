@@ -92,16 +92,18 @@ void DisplayerToolHOCR::setAction(Action action, bool clearSel) {
 	m_currentAction = action;
 }
 
-void DisplayerToolHOCR::setSelection(const Geometry::Rectangle& rect) {
+void DisplayerToolHOCR::setSelection(const Geometry::Rectangle& rect, const Geometry::Rectangle& minRect) {
 	setAction(ACTION_NONE, false);
 	Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
 	Geometry::Rectangle r = rect.translate(sceneRect.x, sceneRect.y);
+	Geometry::Rectangle mr = minRect.translate(sceneRect.x, sceneRect.y);
 	if(!m_selection) {
 		m_selection = new DisplayerSelection(this, Geometry::Point(r.x, r.y));
 		CONNECT(m_selection, geometry_changed, sigc::mem_fun(this, &DisplayerToolHOCR::selectionChanged));
 		m_displayer->addItem(m_selection);
 	}
 	m_selection->setAnchorAndPoint(Geometry::Point(r.x, r.y), Geometry::Point(r.x + r.width, r.y + r.height));
+	m_selection->setMinimumRect(mr);
 	m_displayer->ensureVisible(m_selection->rect());
 }
 

@@ -81,6 +81,19 @@ bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& na
 		recursiveDataChanged(index, {Qt::DisplayRole}, {"ocrx_word"});
 	}
 	emit itemAttributeChanged(index, name, value);
+	if(name == "title:bbox") {
+		// Update parent bboxes (except page)
+		HOCRItem* parent = item->parent();
+		while(parent && parent->parent()) {
+			QRect bbox;
+			for(const HOCRItem* child : parent->children()) {
+				bbox = bbox.united(child->bbox());
+			}
+			QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
+			parent->setAttribute(name, bboxstr);
+			parent = parent->parent();
+		}
+	}
 	return true;
 }
 

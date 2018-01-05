@@ -179,6 +179,9 @@ public:
 		m_point = point;
 		setRect(QRectF(m_anchor, m_point).normalized());
 	}
+	void setMinimumRect(const QRectF& rect) {
+		m_minRect = rect;
+	}
 	void setPoint(const QPointF& point) {
 		m_point = point;
 		setRect(QRectF(m_anchor, m_point).normalized());
@@ -206,6 +209,7 @@ private:
 
 	QPointF m_anchor;
 	QPointF m_point;
+	QRectF m_minRect;
 	QVector<ResizeHandler> m_resizeHandlers;
 	QPointF m_resizeOffset;
 

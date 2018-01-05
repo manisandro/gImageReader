@@ -220,6 +220,9 @@ public:
 		m_point = point;
 		setRect(Geometry::Rectangle(m_anchor, m_point));
 	}
+	void setMinimumRect(const Geometry::Rectangle& rect) {
+		m_minRect = rect;
+	}
 	void rotate(const Geometry::Rotation &R) {
 		m_anchor = R.rotate(m_anchor);
 		m_point = R.rotate(m_point);
@@ -248,6 +251,7 @@ private:
 
 	Geometry::Point m_anchor;
 	Geometry::Point m_point;
+	Geometry::Rectangle m_minRect;
 	std::vector<ResizeHandler> m_resizeHandlers;
 	Geometry::Point m_resizeOffset;
 	sigc::signal<void, Geometry::Rectangle> m_signalGeometryChanged;

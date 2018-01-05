@@ -429,7 +429,12 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index) {
 
 	ui.plainTextEditOutput->setPlainText(currentItem->toHtml());
 
-	m_tool->setSelection(currentItem->bbox());
+	// Minimum bounding box (bbox of children)
+	QRect minBBox;
+	for(const HOCRItem* child : currentItem->children()) {
+		minBBox = minBBox.united(child->bbox());
+	}
+	m_tool->setSelection(currentItem->bbox(), minBBox);
 }
 
 QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const QString& attrName, const QString& attrValue, const QString& attrItemClass, bool multiple)

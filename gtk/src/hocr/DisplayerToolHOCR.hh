@@ -53,7 +53,7 @@ public:
 	bool mouseReleaseEvent(GdkEventButton *event) override;
 
 	void setAction(Action action, bool clearSel = true);
-	void setSelection(const Geometry::Rectangle& rect);
+	void setSelection(const Geometry::Rectangle& rect, const Geometry::Rectangle& minRect);
 	Cairo::RefPtr<Cairo::ImageSurface> getSelection(const Geometry::Rectangle& rect) const;
 	void clearSelection();
 

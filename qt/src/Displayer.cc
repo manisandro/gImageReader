@@ -650,7 +650,8 @@ void DisplayerSelection::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 		for(const ResizeHandler& handler : m_resizeHandlers) {
 			handler(p, m_anchor, m_point);
 		}
-		setRect(QRectF(m_anchor, m_point).normalized());
+		QRectF newRect = QRectF(m_anchor, m_point).normalized().united(m_minRect);
+		setRect(newRect);
 		emit geometryChanged(rect());
 		event->accept();
 	} else {
