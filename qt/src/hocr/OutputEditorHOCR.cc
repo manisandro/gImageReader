@@ -429,10 +429,14 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index) {
 
 	ui.plainTextEditOutput->setPlainText(currentItem->toHtml());
 
-	// Minimum bounding box (bbox of children)
+	// Minimum bounding box
 	QRect minBBox;
-	for(const HOCRItem* child : currentItem->children()) {
-		minBBox = minBBox.united(child->bbox());
+	if(currentItem->itemClass() == "ocr_page") {
+		minBBox = currentItem->bbox();
+	} else {
+		for(const HOCRItem* child : currentItem->children()) {
+			minBBox = minBBox.united(child->bbox());
+		}
 	}
 	m_tool->setSelection(currentItem->bbox(), minBBox);
 }

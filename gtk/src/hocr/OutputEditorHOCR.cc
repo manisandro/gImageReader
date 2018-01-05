@@ -533,10 +533,14 @@ void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index) {
 
 	ui.textviewSource->get_buffer()->set_text(currentItem->toHtml());
 
-	// Minimum bounding box (bbox of children)
+	// Minimum bounding box
 	Geometry::Rectangle minBBox;
-	for(const HOCRItem* child : currentItem->children()) {
-		minBBox = minBBox.unite(child->bbox());
+	if(currentItem->itemClass() == "ocr_page") {
+		minBBox = currentItem->bbox();
+	} else {
+		for(const HOCRItem* child : currentItem->children()) {
+			minBBox = minBBox.unite(child->bbox());
+		}
 	}
 	m_tool->setSelection(currentItem->bbox(), minBBox);
 }
