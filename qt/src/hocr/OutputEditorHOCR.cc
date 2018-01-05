@@ -37,6 +37,7 @@
 #include "DisplayerToolHOCR.hh"
 #include "FileDialogs.hh"
 #include "HOCRDocument.hh"
+#include "HOCROdtExporter.hh"
 #include "HOCRPdfExporter.hh"
 #include "HOCRTextExporter.hh"
 #include "MainWindow.hh"
@@ -204,6 +205,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 
 	connect(ui.actionOutputOpen, SIGNAL(triggered()), this, SLOT(open()));
 	connect(ui.actionOutputSaveHOCR, SIGNAL(triggered()), this, SLOT(save()));
+	connect(ui.actionOutputExportODT, SIGNAL(triggered()), this, SLOT(exportToODT()));
 	connect(ui.actionOutputExportPDF, SIGNAL(triggered()), this, SLOT(exportToPDF()));
 	connect(ui.actionOutputExportText, SIGNAL(triggered()), this, SLOT(exportToText()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
@@ -705,6 +707,12 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	m_modified = false;
 	m_filebasename = QFileInfo(outname).completeBaseName();
 	return true;
+}
+
+bool OutputEditorHOCR::exportToODT()
+{
+	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
+	return HOCROdtExporter(m_tool).run(m_document, m_filebasename);
 }
 
 bool OutputEditorHOCR::exportToPDF()

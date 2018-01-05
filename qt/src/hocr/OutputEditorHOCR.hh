@@ -51,6 +51,7 @@ public slots:
 	void onVisibilityChanged(bool visible) override;
 	void open();
 	bool save(const QString& filename = "") override;
+	bool exportToODT();
 	bool exportToPDF();
 	bool exportToText();
 

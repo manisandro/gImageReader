@@ -26,6 +26,7 @@ public:
 	QAction* actionOutputSaveHOCR;
 	QAction* actionOutputExportText;
 	QAction* actionOutputExportPDF;
+	QAction* actionOutputExportODT;
 	QAction* actionOutputReplace;
 	QAction* actionToggleWConf;
 	QAction* actionPick;
@@ -63,6 +64,9 @@ public:
 		actionOutputExportPDF = new QAction(QIcon::fromTheme("application-pdf"), gettext("Export to PDF"), widget);
 		actionOutputExportPDF->setToolTip(gettext("Export to PDF"));
 		exportMenu->addAction(actionOutputExportPDF);
+		actionOutputExportODT= new QAction(QIcon::fromTheme("x-office-document"), gettext("Export to ODT"), widget);
+		actionOutputExportODT->setToolTip(gettext("Export to ODT"));
+		exportMenu->addAction(actionOutputExportODT);
 		toolButtonOutputExport = new QToolButton(widget);
 		toolButtonOutputExport->setIcon(QIcon::fromTheme("document-export"));
 		toolButtonOutputExport->setText(gettext("Export"));

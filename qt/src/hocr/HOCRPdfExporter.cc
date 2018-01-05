@@ -549,7 +549,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	QString errMsg;
 	bool success = pdfprinter.finalize(&errMsg);
 	if(!success) {
-		QMessageBox::warning(MAIN, _("Export failed"), _("The PDF export failed (%1).").arg(errMsg));
+		QMessageBox::warning(MAIN, _("Export failed"), _("The PDF export failed: %1.").arg(errMsg));
 	} else if(ui.checkBoxOpenOutputPdf->isChecked()) {
 		QDesktopServices::openUrl(QUrl::fromLocalFile(outname));
 	}
