@@ -19,7 +19,8 @@ Build-Depends: debhelper (>= 9),
  libpoppler-qt5-dev,
  libjson-glib-dev,
  libxml++2.6-dev,
- libpodofo-dev
+ libpodofo-dev,
+ libquazip-qt5-dev
 Standards-Version: 3.9.4
 Homepage: https://github.com/manisandro/gImageReader
 

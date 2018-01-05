@@ -26,6 +26,7 @@ BuildRequires: json-glib-devel
 BuildRequires: libxml++-devel
 BuildRequires: podofo-devel
 BuildRequires: djvulibre-devel
+BuildRequires: quazip-qt5-devel
 
 Requires:      hicolor-icon-theme
 
