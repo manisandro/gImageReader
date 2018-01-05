@@ -94,6 +94,12 @@ int main (int argc, char *argv[]) {
 	}
 #endif
 
+    // Run OpenMP once before tesseract is called, otherwise it might be
+    // _very_ slow, see https://github.com/manisandro/gImageReader/issues/285
+    // Sleep 1 millisecond to prevent being optimized out.
+    #pragma omp parallel for schedule(static)
+    for(int i = 0; i < 1; i++) { sleep(1); }
+
 	std::string localeDir = Glib::build_filename(pkgDir, "share", "locale");
 
 	bindtextdomain(GETTEXT_PACKAGE, localeDir.c_str());
