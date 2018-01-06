@@ -29,8 +29,7 @@ dnf install -y \
   mingw32-qtspell-qt5 \
   mingw32-tesseract \
   mingw32-twaindsm \
-  mingw32-quazip-qt5 \
-  mingw32-libzip \
+  mingw32-quazip-qt5
   \
   mingw64-gdb \
   mingw64-gcc-c++ \
@@ -47,8 +46,7 @@ dnf install -y \
   mingw64-qtspell-qt5 \
   mingw64-tesseract \
   mingw64-twaindsm \
-  mingw64-quazip-qt5 \
-  mingw64-libzip
+  mingw64-quazip-qt5
 
 WORKDIR /workspace
 VOLUME ["/workspace"]
