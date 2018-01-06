@@ -192,7 +192,6 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 void TessdataManager::applyChanges() {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying changes..."));
 	setEnabled(false);
-	setCursor(Qt::WaitCursor);
 	QString errorMsg;
 	QStringList availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
 	QDir tessDataDir(MAIN->getConfig()->tessdataLocation());
@@ -269,7 +268,6 @@ void TessdataManager::applyChanges() {
 			errorMsg = _("The following files could not be downloaded or removed:\n%1\n\nCheck the connectivity and directory permissions.").arg(errors.join("\n"));
 		}
 	}
-	unsetCursor();
 	setEnabled(true);
 	MAIN->popState();
 	refresh();
