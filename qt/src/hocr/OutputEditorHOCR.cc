@@ -753,6 +753,7 @@ bool OutputEditorHOCR::clear(bool hide)
 		}
 	}
 	m_document->clear();
+	ui.tableWidgetProperties->setRowCount(0);
 	ui.plainTextEditOutput->clear();
 	m_tool->clearSelection();
 	m_modified = false;
