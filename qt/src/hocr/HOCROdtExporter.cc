@@ -92,8 +92,6 @@ bool HOCROdtExporter::run(const HOCRDocument *hocrdocument, QString &filebasenam
 		QuaZipFile* manifest = new QuaZipFile(&zip);
 		manifest->open(QIODevice::WriteOnly, QuaZipNewInfo("META-INF/manifest.xml"));
 		QXmlStreamWriter manifestWriter(manifest);
-		manifestWriter.setAutoFormatting(true);
-		manifestWriter.setAutoFormattingIndent(1);
 		manifestWriter.writeNamespace(manifestNS, "manifest");
 		manifestWriter.writeStartDocument();
 		manifestWriter.writeStartElement(manifestNS, "manifest");
@@ -121,8 +119,6 @@ bool HOCROdtExporter::run(const HOCRDocument *hocrdocument, QString &filebasenam
 		QuaZipFile* content = new QuaZipFile(&zip);
 		content->open(QIODevice::WriteOnly, QuaZipNewInfo("content.xml"));
 		QXmlStreamWriter writer(content);
-		writer.setAutoFormatting(true);
-		writer.setAutoFormattingIndent(2);
 
 		writer.writeNamespace(officeNS, "office");
 		writer.writeNamespace(textNS, "text");
