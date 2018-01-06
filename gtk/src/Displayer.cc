@@ -632,6 +632,9 @@ void Displayer::resortItems() {
 }
 
 Geometry::Rectangle Displayer::getSceneBoundingRect() const {
+	if(!m_image){
+		return Geometry::Rectangle();
+	}
 	int w = m_image->get_width();
 	int h = m_image->get_height();
 	Geometry::Rotation R(ui.spinRotate->get_value() / 180. * M_PI);
