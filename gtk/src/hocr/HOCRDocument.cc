@@ -843,7 +843,7 @@ HOCRPage::HOCRPage(xmlpp::Element* element, int pageId, const Glib::ustring& lan
 {
 	m_domElement->set_attribute("id", Glib::ustring::compose("page_%1", pageId));
 
-	m_sourceFile = Utils::string_trim(m_titleAttrs["image"], '\'');
+	m_sourceFile = Utils::string_trim(m_titleAttrs["image"], "\'");
 	m_pageNr = std::atoi(m_titleAttrs["ppageno"].c_str());
 	// Code to handle pageno -> ppageno typo in previous versions of gImageReader
 	if(m_pageNr == 0) {

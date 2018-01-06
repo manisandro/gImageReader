@@ -190,7 +190,7 @@ Glib::ustring Utils::string_join(const std::vector<Glib::ustring>& strings, cons
 	return result;
 }
 
-Glib::ustring Utils::string_trim(const Glib::ustring &str, char what) {
+Glib::ustring Utils::string_trim(const Glib::ustring &str, const Glib::ustring& what) {
 	Glib::ustring ret = str;
 	ret.erase(0, ret.find_first_not_of(what));
 	std::size_t rpos = ret.find_last_not_of(what);
