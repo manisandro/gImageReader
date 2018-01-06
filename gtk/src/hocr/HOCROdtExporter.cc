@@ -153,21 +153,53 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 			documentContentEl->set_namespace_declaration(svgNS_URI, svgNS);
 			documentContentEl->set_attribute("version", "1.2", officeNS);
 
-			// - Styles
+			// - Page styles
 			xmlpp::Element* automaticStylesEl = documentContentEl->add_child("automatic-styles", officeNS);
+			for(int i = 0; i < pageCount; ++i) {
+				const HOCRPage* page = hocrdocument->page(i);
+				if(page->isEnabled()) {
+					xmlpp::Element* pageLayoutEl = automaticStylesEl->add_child("page-layout", styleNS);
+					pageLayoutEl->set_attribute("name", Glib::ustring::compose("PL%1", i), styleNS);
+					xmlpp::Element* pageLayoutPropertiesEl = pageLayoutEl->add_child("page-layout-properties", styleNS);
+					pageLayoutPropertiesEl->set_attribute("page-width", Glib::ustring::compose("%1in", page->bbox().width / double(page->resolution())), foNS);
+					pageLayoutPropertiesEl->set_attribute("page-height", Glib::ustring::compose("%1in", page->bbox().height / double(page->resolution())), foNS);
+					pageLayoutPropertiesEl->set_attribute("print-orientation", page->bbox().width > page->bbox().height ? "landscape" : "portrait", styleNS);
+					pageLayoutPropertiesEl->set_attribute("writing-mode", "lr-tb", styleNS);
+					pageLayoutPropertiesEl->set_attribute("margin-top", "0in", foNS);
+					pageLayoutPropertiesEl->set_attribute("margin-bottom", "0in", foNS);
+					pageLayoutPropertiesEl->set_attribute("margin-left", "0in", foNS);
+					pageLayoutPropertiesEl->set_attribute("margin-right", "0in", foNS);
+				}
+			}
+			xmlpp::Element* masterStylesEl = documentContentEl->add_child("master-styles", officeNS);
+			for(int i = 0; i < pageCount; ++i) {
+				if(hocrdocument->page(i)->isEnabled()) {
+					xmlpp::Element* masterPageEl = masterStylesEl->add_child("master-page", styleNS);
+					masterPageEl->set_attribute("name", Glib::ustring::compose("MP%1", i), styleNS);
+					masterPageEl->set_attribute("page-layout-name", Glib::ustring::compose("PL%1", i), styleNS);
+				}
+			}
+
+			// - Styles
+			automaticStylesEl = documentContentEl->add_child("automatic-styles", officeNS);
 
 			// -- Standard paragraph
 			xmlpp::Element* styleEl = automaticStylesEl->add_child("style", styleNS);
 			styleEl->set_attribute("name", "P", styleNS);
 			styleEl->set_attribute("parent-style-name", "Standard", styleNS);
 
-			// -- Paragraph preceded by page break
-			styleEl = automaticStylesEl->add_child("style", styleNS);
-			styleEl->set_attribute("name", "PB", styleNS);
-			styleEl->set_attribute("family", "paragraph", styleNS);
-			styleEl->set_attribute("parent-style-name", "Standard", styleNS);
-			xmlpp::Element* paragraphPropertiesEl = styleEl->add_child("paragraph-properties", styleNS);
-			paragraphPropertiesEl->set_attribute("break-before", "page", foNS);
+			// -- Page paragraphs
+			for(int i = 0; i < pageCount; ++i) {
+				if(hocrdocument->page(i)->isEnabled()) {
+					xmlpp::Element* styleEl = automaticStylesEl->add_child("style", styleNS);
+					styleEl->set_attribute("name", Glib::ustring::compose("PP%1", i), styleNS);
+					styleEl->set_attribute("family", "paragraph", styleNS);
+					styleEl->set_attribute("parent-style-name", "Standard", styleNS);
+					styleEl->set_attribute("master-page-name", Glib::ustring::compose("MP%1", i), styleNS);
+					xmlpp::Element* paragraphPropertiesEl = styleEl->add_child("paragraph-properties", styleNS);
+					paragraphPropertiesEl->set_attribute("break-before", "page", foNS);
+				}
+			}
 
 			// -- Frame, absolutely positioned on page
 			styleEl = automaticStylesEl->add_child("style", styleNS);
@@ -212,20 +244,19 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 			xmlpp::Element* bodyEl = documentContentEl->add_child("body", officeNS);
 			xmlpp::Element* textEl = bodyEl->add_child("text", officeNS);
 
-			bool firstPage = true;
+			int pageCounter = 1;
 			for(int i = 0; i < pageCount; ++i) {
 				monitor.increaseProgress();
 				const HOCRPage* page = hocrdocument->page(i);
 				if(!page->isEnabled()) {
 					continue;
 				}
-				if(!firstPage) {
-					textEl->add_child("p", textNS)->set_attribute("style-name", "PB", textNS);
-				}
-				firstPage = false;
+				xmlpp::Element* pEl = textEl->add_child("p", textNS);
+				pEl->set_attribute("style-name", Glib::ustring::compose("PP%1", i), textNS);
 				for(const HOCRItem* item : page->children()) {
-					printItem(textEl, item, page->resolution(), fontStyles, imageFiles);
+					printItem(pEl, item, pageCounter, page->resolution(), fontStyles, imageFiles);
 				}
+				++pageCounter;
 			}
 
 			Glib::ustring data = doc.write_to_string();
@@ -289,7 +320,7 @@ void HOCROdtExporter::collectFontStyles(std::map<Glib::ustring,std::map<double,G
 	}
 }
 
-void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, int dpi, std::map<Glib::ustring,std::map<double,Glib::ustring>>& fontStyleNames, std::map<const HOCRItem*,Glib::ustring>& images)
+void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, int pageNr, int dpi, std::map<Glib::ustring,std::map<double,Glib::ustring>>& fontStyleNames, std::map<const HOCRItem*,Glib::ustring>& images)
 {
 	if(!item->isEnabled()) {
 		return;
@@ -297,13 +328,10 @@ void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, 
 	Glib::ustring itemClass = item->itemClass();
 	const Geometry::Rectangle& bbox = item->bbox();
 	if(itemClass == "ocr_graphic") {
-		xmlpp::Element* pEl = parentEl->add_child("p", textNS);
-		pEl->set_attribute("style-name", "P", textNS);
-
-		xmlpp::Element* frameEl = pEl->add_child("frame", drawNS);
+		xmlpp::Element* frameEl = parentEl->add_child("frame", drawNS);
 		frameEl->set_attribute("style-name", "F", drawNS);
 		frameEl->set_attribute("anchor-type", "page", textNS);
-		frameEl->set_attribute("anchor-page-number", Glib::ustring::format(std::fixed, std::setprecision(0), item->page()->pageNr()), textNS);
+		frameEl->set_attribute("anchor-page-number", Glib::ustring::format(std::fixed, std::setprecision(0), pageNr), textNS);
 		frameEl->set_attribute("x", Glib::ustring::compose("%1in", bbox.x / double(dpi)), svgNS);
 		frameEl->set_attribute("y", Glib::ustring::compose("%1in", bbox.y / double(dpi)), svgNS);
 		frameEl->set_attribute("width", Glib::ustring::compose("%1in", bbox.width / double(dpi)), svgNS);
@@ -316,13 +344,10 @@ void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, 
 		imageEl->set_attribute("show", "embed", xlinkNS);
 	}
 	else if(itemClass == "ocr_par") {
-		xmlpp::Element* pEl = parentEl->add_child("p", textNS);
-		pEl->set_attribute("style-name", "P", textNS);
-
-		xmlpp::Element* frameEl = pEl->add_child("frame", drawNS);
+		xmlpp::Element* frameEl = parentEl->add_child("frame", drawNS);
 		frameEl->set_attribute("style-name", "F", drawNS);
 		frameEl->set_attribute("anchor-type", "page", textNS);
-		frameEl->set_attribute("anchor-page-number", Glib::ustring::format(std::fixed, std::setprecision(0), item->page()->pageNr()), textNS);
+		frameEl->set_attribute("anchor-page-number", Glib::ustring::format(std::fixed, std::setprecision(0), pageNr), textNS);
 		frameEl->set_attribute("x", Glib::ustring::compose("%1in", bbox.x / double(dpi)), svgNS);
 		frameEl->set_attribute("y", Glib::ustring::compose("%1in", bbox.y / double(dpi)), svgNS);
 		frameEl->set_attribute("width", Glib::ustring::compose("%1in", bbox.width / double(dpi)), svgNS);
@@ -334,7 +359,7 @@ void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, 
 		xmlpp::Element* ppEl = textBoxEl->add_child("p", textNS);
 		ppEl->set_attribute("style-name", "P", textNS);
 		for(const HOCRItem* child : item->children()) {
-			printItem(ppEl, child, dpi, fontStyleNames, images);
+			printItem(ppEl, child, pageNr, dpi, fontStyleNames, images);
 		}
 	} else if(itemClass == "ocr_line") {
 		const HOCRItem* firstWord = nullptr;
@@ -368,7 +393,7 @@ void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, 
 		parentEl->add_child("line-break", textNS);
 	} else {
 		for(const HOCRItem* child : item->children()) {
-			printItem(parentEl, child, dpi, fontStyleNames, images);
+			printItem(parentEl, child, pageNr, dpi, fontStyleNames, images);
 		}
 	}
 }

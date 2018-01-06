@@ -131,6 +131,36 @@ bool HOCROdtExporter::run(const HOCRDocument *hocrdocument, QString &filebasenam
 		writer.writeStartElement(officeNS, "document-content");
 		writer.writeAttribute(officeNS, "version", "1.2");
 
+		// - Page styles
+		writer.writeStartElement(officeNS, "automatic-styles");
+		for(int i = 0; i < pageCount; ++i) {
+			const HOCRPage* page = hocrdocument->page(i);
+			if(page->isEnabled()) {
+				writer.writeStartElement(styleNS, "page-layout");
+				writer.writeAttribute(styleNS, "name", QString("PL%1").arg(i));
+				writer.writeEmptyElement(styleNS, "page-layout-properties");
+				writer.writeAttribute(foNS, "page-width", QString("%1in").arg(page->bbox().width() / double(page->resolution())));
+				writer.writeAttribute(foNS, "page-height", QString("%1in").arg(page->bbox().height() / double(page->resolution())));
+				writer.writeAttribute(styleNS, "print-orientation", page->bbox().width() > page->bbox().height() ? "landscape" : "portrait");
+				writer.writeAttribute(styleNS, "writing-mode", "lr-tb");
+				writer.writeAttribute(foNS, "margin-top", "0in");
+				writer.writeAttribute(foNS, "margin-bottom", "0in");
+				writer.writeAttribute(foNS, "margin-left", "0in");
+				writer.writeAttribute(foNS, "margin-right", "0in");
+				writer.writeEndElement(); // page-layout
+			}
+		}
+		writer.writeEndElement(); // automatic-styles
+		writer.writeStartElement(officeNS, "master-styles");
+		for(int i = 0; i < pageCount; ++i) {
+			if(hocrdocument->page(i)->isEnabled()) {
+				writer.writeEmptyElement(styleNS, "master-page");
+				writer.writeAttribute(styleNS, "name", QString("MP%1").arg(i));
+				writer.writeAttribute(styleNS, "page-layout-name", QString("PL%1").arg(i));
+			}
+		}
+		writer.writeEndElement(); // master-styles
+
 		// - Styles
 		writer.writeStartElement(officeNS, "automatic-styles");
 
@@ -140,14 +170,19 @@ bool HOCROdtExporter::run(const HOCRDocument *hocrdocument, QString &filebasenam
 		writer.writeAttribute(styleNS, "parent-style-name", "Standard");
 		writer.writeEndElement();
 
-		// -- Paragraph preceded by page break
-		writer.writeStartElement(styleNS, "style");
-		writer.writeAttribute(styleNS, "name", "PB");
-		writer.writeAttribute(styleNS, "family", "paragraph");
-		writer.writeAttribute(styleNS, "parent-style-name", "Standard");
-		writer.writeEmptyElement(styleNS, "paragraph-properties");
-		writer.writeAttribute(foNS, "break-before", "page");
-		writer.writeEndElement();
+		// -- Page paragraphs
+		for(int i = 0; i < pageCount; ++i) {
+			if(hocrdocument->page(i)->isEnabled()) {
+				writer.writeStartElement(styleNS, "style");
+				writer.writeAttribute(styleNS, "name", QString("PP%1").arg(i));
+				writer.writeAttribute(styleNS, "family", "paragraph");
+				writer.writeAttribute(styleNS, "parent-style-name", "Standard");
+				writer.writeAttribute(styleNS, "master-page-name", QString("MP%1").arg(i));
+				writer.writeEmptyElement(styleNS, "paragraph-properties");
+				writer.writeAttribute(foNS, "break-before", "page");
+				writer.writeEndElement();
+			}
+		}
 
 		// -- Frame, absolutely positioned on page
 		writer.writeStartElement(styleNS, "style");
@@ -198,21 +233,20 @@ bool HOCROdtExporter::run(const HOCRDocument *hocrdocument, QString &filebasenam
 		writer.writeStartElement(officeNS, "body");
 		writer.writeStartElement(officeNS, "text");
 
-		bool firstPage = true;
+		int pageCounter = 1;
 		for(int i = 0; i < pageCount; ++i) {
 			monitor.increaseProgress();
 			const HOCRPage* page = hocrdocument->page(i);
 			if(!page->isEnabled()) {
 				continue;
 			}
-			if(!firstPage) {
-				writer.writeEmptyElement(textNS, "p");
-				writer.writeAttribute(textNS, "style-name", "PB");
-			}
-			firstPage = false;
+			writer.writeStartElement(textNS, "p");
+			writer.writeAttribute(textNS, "style-name", QString("PP%1").arg(i));
 			for(const HOCRItem* item : page->children()) {
-				printItem(writer, item, page->resolution(), fontStyles, imageFiles);
+				printItem(writer, item, pageCounter, page->resolution(), fontStyles, imageFiles);
 			}
+			writer.writeEndElement();
+			++pageCounter;
 		}
 
 		writer.writeEndElement(); // text
@@ -259,7 +293,7 @@ void HOCROdtExporter::collectFontStyles(QMap<QString,QMap<double,QString>>& styl
 	}
 }
 
-void HOCROdtExporter::printItem(QXmlStreamWriter& writer, const HOCRItem* item, int dpi, const QMap<QString,QMap<double,QString>>& fontStyleNames, const QMap<const HOCRItem*,QString>& images)
+void HOCROdtExporter::printItem(QXmlStreamWriter& writer, const HOCRItem* item, int pageNr, int dpi, const QMap<QString,QMap<double,QString>>& fontStyleNames, const QMap<const HOCRItem*,QString>& images)
 {
 	if(!item->isEnabled()) {
 		return;
@@ -267,13 +301,10 @@ void HOCROdtExporter::printItem(QXmlStreamWriter& writer, const HOCRItem* item, 
 	QString itemClass = item->itemClass();
 	const QRect& bbox = item->bbox();
 	if(itemClass == "ocr_graphic") {
-		writer.writeStartElement(textNS, "p");
-		writer.writeAttribute(textNS, "style-name", "P");
-
 		writer.writeStartElement(drawNS, "frame");
 		writer.writeAttribute(drawNS, "style-name", "F");
 		writer.writeAttribute(textNS, "anchor-type", "page");
-		writer.writeAttribute(textNS, "anchor-page-number", QString::number(item->page()->pageNr()));
+		writer.writeAttribute(textNS, "anchor-page-number", QString::number(pageNr));
 		writer.writeAttribute(svgNS, "x", QString("%1in").arg(bbox.x() / double(dpi)));
 		writer.writeAttribute(svgNS, "y", QString("%1in").arg(bbox.y() / double(dpi)));
 		writer.writeAttribute(svgNS, "width", QString("%1in").arg(bbox.width() / double(dpi)));
@@ -287,16 +318,12 @@ void HOCROdtExporter::printItem(QXmlStreamWriter& writer, const HOCRItem* item, 
 		writer.writeEndElement(); // image
 
 		writer.writeEndElement(); // frame
-		writer.writeEndElement(); // p
 	}
 	else if(itemClass == "ocr_par") {
-		writer.writeStartElement(textNS, "p");
-		writer.writeAttribute(textNS, "style-name", "P");
-
 		writer.writeStartElement(drawNS, "frame");
 		writer.writeAttribute(drawNS, "style-name", "F");
 		writer.writeAttribute(textNS, "anchor-type", "page");
-		writer.writeAttribute(textNS, "anchor-page-number", QString::number(item->page()->pageNr()));
+		writer.writeAttribute(textNS, "anchor-page-number", QString::number(pageNr));
 		writer.writeAttribute(svgNS, "x", QString("%1in").arg(bbox.x() / double(dpi)));
 		writer.writeAttribute(svgNS, "y", QString("%1in").arg(bbox.y() / double(dpi)));
 		writer.writeAttribute(svgNS, "width", QString("%1in").arg(bbox.width() / double(dpi)));
@@ -308,13 +335,12 @@ void HOCROdtExporter::printItem(QXmlStreamWriter& writer, const HOCRItem* item, 
 		writer.writeStartElement(textNS, "p");
 		writer.writeAttribute(textNS, "style-name", "P");
 		for(const HOCRItem* child : item->children()) {
-			printItem(writer, child, dpi, fontStyleNames, images);
+			printItem(writer, child, pageNr, dpi, fontStyleNames, images);
 		}
 		writer.writeEndElement();
 
 		writer.writeEndElement(); // text-box
 		writer.writeEndElement(); // frame
-		writer.writeEndElement(); // p
 	} else if(itemClass == "ocr_line") {
 		const HOCRItem* firstWord = nullptr;
 		int iChild = 0, nChilds = item->children().size();
@@ -349,7 +375,7 @@ void HOCROdtExporter::printItem(QXmlStreamWriter& writer, const HOCRItem* item, 
 		writer.writeEmptyElement(textNS, "line-break");
 	} else {
 		for(const HOCRItem* child : item->children()) {
-			printItem(writer, child, dpi, fontStyleNames, images);
+			printItem(writer, child, pageNr, dpi, fontStyleNames, images);
 		}
 	}
 }
