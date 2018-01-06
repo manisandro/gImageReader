@@ -53,7 +53,8 @@ void clear_error_state(Gtk::Entry* entry);
 
 Glib::ustring get_content_type(const std::string& filename);
 std::pair<std::string, std::string> split_filename(const std::string& filename);
-std::string make_absolute_path(const std::string& path);
+std::string make_absolute_path(const std::string& path, const std::string& basepath);
+std::string make_relative_path(const std::string& path, const std::string& basepath);
 std::string get_documents_dir();
 std::string make_output_filename(const std::string& filename);
 

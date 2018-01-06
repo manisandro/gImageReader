@@ -304,9 +304,9 @@ void MainWindow::showHelp(const std::string& chapter) {
 	std::string manualDir = MANUAL_DIR;
 	std::string language = Glib::getenv("LANG").substr(0, 2);
 #endif
-	std::string manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir, Glib::ustring::compose("manual-%1.html", language)));
+	std::string manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir, Glib::ustring::compose("manual-%1.html", language)), Glib::get_current_dir());
 	if(!Glib::file_test(manualFile, Glib::FILE_TEST_EXISTS)) {
-		manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir,"manual.html"));
+		manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir,"manual.html"), Glib::get_current_dir());
 	}
 	Utils::openUri(Glib::filename_to_uri(manualFile) + chapter);
 }

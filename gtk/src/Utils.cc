@@ -128,11 +128,27 @@ std::pair<std::string, std::string> Utils::split_filename(const std::string& fil
 	return parts;
 }
 
-std::string Utils::make_absolute_path(const std::string& path) {
+std::string Utils::make_absolute_path(const std::string& path, const std::string& basepath) {
 	if(Glib::path_is_absolute(path)) {
 		return path;
 	}
-	return Glib::build_path("/", std::vector<std::string> {Glib::get_current_dir(), path});
+	std::string abspath = Glib::build_filename(basepath, path);
+	char* realabspath = realpath(abspath.c_str(), nullptr);
+	abspath = std::string(realabspath);
+	free(realabspath);
+	return abspath;
+}
+
+std::string Utils::make_relative_path(const std::string& path, const std::string& basepath)
+{
+	if(!Glib::path_is_absolute(path)) {
+		return path;
+	}
+	int pos = path.find(basepath);
+	if(pos != 0) {
+		return path;
+	}
+	return Glib::build_filename(".", path.substr(basepath.size()));
 }
 
 std::string Utils::get_documents_dir() {
