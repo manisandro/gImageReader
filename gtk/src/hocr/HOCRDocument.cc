@@ -89,17 +89,7 @@ bool HOCRDocument::editItemAttribute(const Gtk::TreeIter& index, const Glib::ust
 	}
 	m_signal_item_attribute_changed.emit(index, name, value);
 	if(name == "title:bbox") {
-		// Update parent bboxes (except page)
-		HOCRItem* parent = item->parent();
-		while(parent && parent->parent()) {
-			Geometry::Rectangle bbox;
-			for(const HOCRItem* child : parent->children()) {
-				bbox = bbox.unite(child->bbox());
-			}
-			Glib::ustring bboxstr = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
-			parent->setAttribute(name, bboxstr);
-			parent = parent->parent();
-		}
+		recomputeParentBBoxes(item);
 	}
 	return true;
 }
@@ -181,6 +171,7 @@ Gtk::TreeIter HOCRDocument::addItem(const Gtk::TreeIter& parent, const xmlpp::El
 	xmlpp::Element* importedElement = static_cast<xmlpp::Element*>(parentItem->importElement(element));
 	HOCRItem* item = new HOCRItem(importedElement, parentItem->page(), parentItem);
 	parentItem->addChild(item);
+	recomputeParentBBoxes(item);
 	Gtk::TreeIter child = parent->children()[item->index()];
 	recursiveRowInserted(child);
 	return child;
@@ -194,6 +185,7 @@ bool HOCRDocument::removeItem(const Gtk::TreeIter& index)
 	}
 	Gtk::TreePath path = get_path(index);
 	deleteItem(item);
+	recomputeParentBBoxes(item);
 	row_deleted(path);
 	return true;
 }
@@ -305,6 +297,21 @@ void HOCRDocument::recursiveRowInserted(const Gtk::TreeIter& index)
 	row_inserted(get_path(index), index);
 	for(const Gtk::TreeIter& childIndex : index->children()) {
 		recursiveRowInserted(childIndex);
+	}
+}
+
+void HOCRDocument::recomputeParentBBoxes(const HOCRItem* item)
+{
+	// Update parent bboxes (except page)
+	HOCRItem* parent = item->parent();
+	while(parent && parent->parent()) {
+		Geometry::Rectangle bbox;
+		for(const HOCRItem* child : parent->children()) {
+			bbox = bbox.unite(child->bbox());
+		}
+		Glib::ustring bboxstr = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
+		parent->setAttribute("title:bbox", bboxstr);
+		parent = parent->parent();
 	}
 }
 

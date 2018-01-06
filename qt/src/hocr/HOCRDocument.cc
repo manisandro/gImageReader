@@ -82,17 +82,7 @@ bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& na
 	}
 	emit itemAttributeChanged(index, name, value);
 	if(name == "title:bbox") {
-		// Update parent bboxes (except page)
-		HOCRItem* parent = item->parent();
-		while(parent && parent->parent()) {
-			QRect bbox;
-			for(const HOCRItem* child : parent->children()) {
-				bbox = bbox.united(child->bbox());
-			}
-			QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-			parent->setAttribute(name, bboxstr);
-			parent = parent->parent();
-		}
+		recomputeParentBBoxes(item);
 	}
 	return true;
 }
@@ -162,6 +152,7 @@ QModelIndex HOCRDocument::addItem(const QModelIndex &parent, const QDomElement &
 	int pos = parentItem->children().size();
 	beginInsertRows(parent, pos, pos);
 	parentItem->addChild(item);
+	recomputeParentBBoxes(item);
 	endInsertRows();
 	return index(pos, 0, parent);
 }
@@ -174,6 +165,7 @@ bool HOCRDocument::removeItem(const QModelIndex& index)
 	}
 	beginRemoveRows(index.parent(), index.row(), index.row());
 	deleteItem(item);
+	recomputeParentBBoxes(item);
 	endRemoveRows();
 	return true;
 }
@@ -347,6 +339,21 @@ void HOCRDocument::recursiveDataChanged(const QModelIndex& parent, const QVector
 		for(int i = 0; i < rows; ++i) {
 			recursiveDataChanged(index(i, 0, parent), roles, itemClasses);
 		}
+	}
+}
+
+void HOCRDocument::recomputeParentBBoxes(const HOCRItem *item)
+{
+	// Update parent bboxes (except page)
+	HOCRItem* parent = item->parent();
+	while(parent && parent->parent()) {
+		QRect bbox;
+		for(const HOCRItem* child : parent->children()) {
+			bbox = bbox.united(child->bbox());
+		}
+		QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
+		parent->setAttribute("title:bbox", bboxstr);
+		parent = parent->parent();
 	}
 }
 

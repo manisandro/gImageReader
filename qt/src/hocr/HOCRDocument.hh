@@ -86,6 +86,7 @@ private:
 	bool checkItemSpelling(const HOCRItem* item) const;
 	void deleteItem(HOCRItem* item);
 	void recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, const QStringList& itemClasses = QStringList());
+	void recomputeParentBBoxes(const HOCRItem* item);
 	HOCRItem* mutableItemAtIndex(const QModelIndex& index) const{ return index.isValid() ? static_cast<HOCRItem*>(index.internalPointer()) : nullptr; }
 };
 

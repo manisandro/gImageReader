@@ -110,6 +110,7 @@ private:
 	void deleteItem(HOCRItem* item);
 	void recursiveDataChanged(const Gtk::TreeIter& index, const std::vector<Glib::ustring>& itemClasses = {});
 	void recursiveRowInserted(const Gtk::TreeIter& index);
+	void recomputeParentBBoxes(const HOCRItem* item);
 
 	HOCRItem* mutableItemAtIndex(const Gtk::TreeIter& index) const{ return static_cast<HOCRItem*>(index.gobj()->user_data); }
 };
