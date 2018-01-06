@@ -66,6 +66,7 @@ public:
 	bool referencesSource(const Glib::ustring& filename) const;
 	Gtk::TreeIter searchPage(const Glib::ustring& filename, int pageNr) const;
 	Gtk::TreeIter searchAtCanvasPos(const Gtk::TreeIter& pageIndex, const Geometry::Point& pos) const;
+	void convertSourcePaths(const std::string& basepath, bool absolute);
 
 	Gtk::TreePath get_root_path(int idx) const{ Gtk::TreePath path; path.push_back(idx); return path; }
 	// Upstream forgot the consts...
@@ -200,6 +201,8 @@ private:
 	int m_pageNr;
 	double m_angle;
 	int m_resolution;
+
+	void convertSourcePath(const std::string& basepath, bool absolute);
 };
 
 

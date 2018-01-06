@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDir>
 #include <QFileInfo>
 #include <QIcon>
 #include <QSet>
@@ -265,6 +266,13 @@ QModelIndex HOCRDocument::searchAtCanvasPos(const QModelIndex& pageIndex, const 
 		}
 	}
 	return index;
+}
+
+void HOCRDocument::convertSourcePaths(const QString& basepath, bool absolute)
+{
+	for(HOCRPage* page : m_pages) {
+		page->convertSourcePath(basepath, absolute);
+	}
 }
 
 QVariant HOCRDocument::data(const QModelIndex &index, int role) const
@@ -747,4 +755,15 @@ HOCRPage::HOCRPage(QDomElement element, int pageId, const QString& language, boo
 
 QString HOCRPage::title() const {
 	return QString("%1 [%2]").arg(QFileInfo(m_sourceFile).fileName()).arg(m_pageNr);
+}
+
+void HOCRPage::convertSourcePath(const QString& basepath, bool absolute)
+{
+	if(absolute && !QFileInfo(m_sourceFile).isAbsolute()) {
+		m_sourceFile = QDir::cleanPath(QDir(basepath).absoluteFilePath(m_sourceFile));
+	} else if(!absolute && QFileInfo(m_sourceFile).isAbsolute() && m_sourceFile.startsWith(basepath)) {
+		m_sourceFile = QString(".%1%2").arg(QDir::separator()).arg(QDir(basepath).relativeFilePath(m_sourceFile));
+	}
+	m_titleAttrs["image"] = QString("'%1'").arg(m_sourceFile);
+	m_domElement.setAttribute("title", serializeAttrGroup(m_titleAttrs));
 }

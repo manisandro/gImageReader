@@ -60,6 +60,7 @@ public:
 	bool referencesSource(const QString& filename) const;
 	QModelIndex searchPage(const QString& filename, int pageNr) const;
 	QModelIndex searchAtCanvasPos(const QModelIndex& pageIndex, const QPoint& pos) const;
+	void convertSourcePaths(const QString& basepath, bool absolute);
 
 	QVariant data(const QModelIndex &index, int role) const override;
 	bool setData(const QModelIndex &index, const QVariant &value, int role) override;
@@ -165,6 +166,7 @@ public:
 
 private:
 	friend class HOCRItem;
+	friend class HOCRDocument;
 
 	int m_pageId;
 	QMap<QString, int> m_idCounters;
@@ -172,6 +174,8 @@ private:
 	int m_pageNr;
 	double m_angle;
 	int m_resolution;
+
+	void convertSourcePath(const QString& basepath, bool absolute);
 };
 
 

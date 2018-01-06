@@ -278,6 +278,13 @@ Gtk::TreeIter HOCRDocument::searchAtCanvasPos(const Gtk::TreeIter& pageIndex, co
 	return index;
 }
 
+void HOCRDocument::convertSourcePaths(const std::string& basepath, bool absolute)
+{
+	for(HOCRPage* page : m_pages) {
+		page->convertSourcePath(basepath, absolute);
+	}
+}
+
 void HOCRDocument::recursiveDataChanged(const Gtk::TreeIter& index, const std::vector<Glib::ustring>& itemClasses)
 {
 	if(index && !index->children().empty()) {
@@ -891,4 +898,11 @@ HOCRPage::HOCRPage(xmlpp::Element* element, int pageId, const Glib::ustring& lan
 Glib::ustring HOCRPage::title() const {
 	std::string basename = Gio::File::create_for_path(m_sourceFile)->get_basename();
 	return Glib::ustring::compose("%1 [%2]", basename, m_pageNr);
+}
+
+void HOCRPage::convertSourcePath(const std::string &basepath, bool absolute)
+{
+	m_sourceFile = absolute ? Utils::make_absolute_path(m_sourceFile, basepath) : Utils::make_relative_path(m_sourceFile, basepath);
+	m_titleAttrs["image"] = Glib::ustring::compose("'%1'", m_sourceFile);
+	m_domElement->set_attribute("title", serializeAttrGroup(m_titleAttrs));
 }

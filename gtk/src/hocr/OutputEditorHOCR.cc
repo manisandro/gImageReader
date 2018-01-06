@@ -787,6 +787,7 @@ void OutputEditorHOCR::open() {
 		m_document->addPage(div, false);
 		div = XmlUtils::nextSiblingElement(div, "div");
 	}
+	m_document->convertSourcePaths(Glib::path_get_dirname(filename), true);
 	m_modified = false;
 	m_filebasename = Utils::split_filename(filename).first;
 }
@@ -820,7 +821,9 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 						 "  <meta name='ocr-system' content='tesseract %2' />\n"
 						 "  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
 						 " </head>\n", Glib::path_get_basename(outname), tess.Version());
+	m_document->convertSourcePaths(Glib::path_get_dirname(outname), false);
 	Glib::ustring body = m_document->toHTML();
+	m_document->convertSourcePaths(Glib::path_get_dirname(outname), true);
 	Glib::ustring footer = "</html>\n";
 	file.write(header.data(), header.bytes());
 	file.write(body.data(), body.bytes());

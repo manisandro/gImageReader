@@ -669,6 +669,7 @@ void OutputEditorHOCR::open() {
 		m_document->addPage(div, false);
 		div = nextDiv;
 	}
+	m_document->convertSourcePaths(QFileInfo(filename).absolutePath(), true);
 	m_modified = false;
 	m_filebasename = QFileInfo(filename).completeBaseName();
 }
@@ -703,7 +704,9 @@ bool OutputEditorHOCR::save(const QString& filename) {
 						 "  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
 						 " </head>\n").arg(QFileInfo(outname).fileName()).arg(tess.Version());
 	file.write(header.toUtf8());
+	m_document->convertSourcePaths(QFileInfo(outname).absolutePath(), false);
 	file.write(m_document->toHTML().toUtf8());
+	m_document->convertSourcePaths(QFileInfo(outname).absolutePath(), true);
 	file.write("</html>\n");
 	m_modified = false;
 	m_filebasename = QFileInfo(outname).completeBaseName();
