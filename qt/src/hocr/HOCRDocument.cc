@@ -717,7 +717,7 @@ HOCRPage::HOCRPage(QDomElement element, int pageId, const QString& language, boo
 {
 	m_domElement.setAttribute("id", QString("page_%1").arg(pageId));
 
-	m_sourceFile = m_titleAttrs["image"].replace(QRegExp("^'"), "").replace(QRegExp("'$"), "");
+	m_sourceFile = m_titleAttrs["image"].replace(QRegExp("^['\"]"), "").replace(QRegExp("['\"]$"), "");
 	m_pageNr = m_titleAttrs["ppageno"].toInt();
 	// Code to handle pageno -> ppageno typo in previous versions of gImageReader
 	if(m_pageNr == 0) {
