@@ -27,6 +27,7 @@ BuildRequires: libxml++-devel
 BuildRequires: podofo-devel
 BuildRequires: djvulibre-devel
 BuildRequires: quazip-qt5-devel
+BuildRequires: libzip-devel
 
 Requires:      hicolor-icon-theme
 
