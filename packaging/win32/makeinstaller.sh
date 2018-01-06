@@ -147,6 +147,7 @@ elif [ "$iface" == "qt5" ]; then
     linkDep lib/qt5/plugins/imageformats/qwbmp.dll bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qwebp.dll bin/imageformats
     linkDep lib/qt5/plugins/platforms/qwindows.dll bin/platforms
+    linkDep lib/qt5/plugins/styles/qwindowsvistastyle.dll bin/styles
 
     # Install locale files
     mkdir -p $installroot/share/qt5/translations/
