@@ -228,7 +228,7 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 				}
 			}
 
-			Glib::ustring data = doc.write_to_string_formatted();
+			Glib::ustring data = doc.write_to_string();
 			zip_source* source = zip_source_buffer_from_data(fzip, data.c_str(), data.bytes());
 			if(zip_file_add(fzip, "content.xml", source, ZIP_FL_ENC_UTF_8) < 0) {
 				zip_source_free(source);
@@ -245,7 +245,7 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 	}
 	return success;
 }
-#include <fstream>
+
 void HOCROdtExporter::writeImage(zip* fzip, std::map<const HOCRItem*,Glib::ustring>& images, const HOCRItem* item)
 {
 	if(!item->isEnabled()) {
@@ -265,11 +265,6 @@ void HOCROdtExporter::writeImage(zip* fzip, std::map<const HOCRItem*,Glib::ustri
 			pngbytes->append(data, length);
 			return CAIRO_STATUS_SUCCESS;
 		});
-		std::ofstream file;
-		file.open(filename.c_str());
-		file.write(reinterpret_cast<const char*>(pngbytes->get_data()), pngbytes->size());
-		file.close();
-
 
 		zip_source* source = zip_source_buffer_from_data(fzip, pngbytes->get_data(), pngbytes->size());
 		if(zip_file_add(fzip, filename.c_str(), source, ZIP_FL_ENC_UTF_8) < 0) {
