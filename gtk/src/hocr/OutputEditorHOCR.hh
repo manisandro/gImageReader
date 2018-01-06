@@ -52,6 +52,7 @@ public:
 	void savePDF();
 	bool exportToPDF();
 	bool exportToText();
+	bool exportToODT();
 
 private:
 	class HOCRTreeView;

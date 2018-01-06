@@ -614,7 +614,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 	Glib::ustring errMsg;
 	bool success = pdfprinter.finalize(&errMsg);
 	if(!success) {
-		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Export failed"), Glib::ustring::compose(_("The PDF export failed (%1)."), errMsg));
+		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Export failed"), Glib::ustring::compose(_("The PDF export failed: %1."), errMsg));
 	} else if(ui.checkboxOpenoutput->get_active()) {
 		Utils::openUri(Glib::filename_to_uri(outname));
 	}

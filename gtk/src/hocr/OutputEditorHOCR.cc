@@ -30,6 +30,7 @@
 #include "DisplayerToolHOCR.hh"
 #include "FileDialogs.hh"
 #include "HOCRDocument.hh"
+#include "HOCROdtExporter.hh"
 #include "HOCRPdfExporter.hh"
 #include "HOCRTextExporter.hh"
 #include "MainWindow.hh"
@@ -294,6 +295,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	CONNECT(ui.buttonSave, clicked, [this]{ save(); });
 	CONNECT(ui.menuitemExportText, activate, [this]{ exportToText(); });
 	CONNECT(ui.menuitemExportPdf, activate, [this]{ exportToPDF(); });
+	CONNECT(ui.menuitemExportOdt, activate, [this]{ exportToODT(); });
 	CONNECT(ui.buttonClear, clicked, [this]{ clear(); });
 	CONNECT(ui.buttonFindreplace, toggled, [this]{ m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(ui.buttonFindreplace->get_active()); });
 	CONNECT(ui.buttonWconf, toggled, [this]{ m_treeView->get_column(1)->set_visible(ui.buttonWconf->get_active());});
@@ -825,6 +827,14 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 	m_modified = false;
 	m_filebasename = Utils::split_filename(filename).first;
 	return true;
+}
+
+bool OutputEditorHOCR::exportToODT()
+{
+	if(m_document->pageCount() == 0) {
+		return false;
+	}
+	return HOCROdtExporter(m_tool).run(m_document, m_filebasename);
 }
 
 bool OutputEditorHOCR::exportToPDF()
