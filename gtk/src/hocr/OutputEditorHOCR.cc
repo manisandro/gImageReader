@@ -488,7 +488,6 @@ void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index) {
 		return;
 	}
 	const HOCRPage* page = currentItem->page();
-	showPage(page);
 
 	std::map<Glib::ustring, Glib::ustring> attrs = currentItem->getAllAttributes();
 	for(auto it = attrs.begin(), itEnd = attrs.end(); it != itEnd; ++it) {
@@ -535,16 +534,18 @@ void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index) {
 
 	ui.textviewSource->get_buffer()->set_text(currentItem->toHtml());
 
-	// Minimum bounding box
-	Geometry::Rectangle minBBox;
-	if(currentItem->itemClass() == "ocr_page") {
-		minBBox = currentItem->bbox();
-	} else {
-		for(const HOCRItem* child : currentItem->children()) {
-			minBBox = minBBox.unite(child->bbox());
+	if(showPage(page)) {
+		// Minimum bounding box
+		Geometry::Rectangle minBBox;
+		if(currentItem->itemClass() == "ocr_page") {
+			minBBox = currentItem->bbox();
+		} else {
+			for(const HOCRItem* child : currentItem->children()) {
+				minBBox = minBBox.unite(child->bbox());
+			}
 		}
+		m_tool->setSelection(currentItem->bbox(), minBBox);
 	}
-	m_tool->setSelection(currentItem->bbox(), minBBox);
 }
 
 Glib::RefPtr<Glib::Regex> OutputEditorHOCR::attributeValidator(const Glib::ustring& attribName) const

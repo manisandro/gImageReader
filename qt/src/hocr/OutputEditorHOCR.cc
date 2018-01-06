@@ -386,7 +386,6 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index) {
 		return;
 	}
 	const HOCRPage* page = currentItem->page();
-	showPage(page);
 
 	int row = -1;
 	QMap<QString, QString> attrs = currentItem->getAllAttributes();
@@ -431,16 +430,18 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index) {
 
 	ui.plainTextEditOutput->setPlainText(currentItem->toHtml());
 
-	// Minimum bounding box
-	QRect minBBox;
-	if(currentItem->itemClass() == "ocr_page") {
-		minBBox = currentItem->bbox();
-	} else {
-		for(const HOCRItem* child : currentItem->children()) {
-			minBBox = minBBox.united(child->bbox());
+	if(showPage(page)) {
+		// Minimum bounding box
+		QRect minBBox;
+		if(currentItem->itemClass() == "ocr_page") {
+			minBBox = currentItem->bbox();
+		} else {
+			for(const HOCRItem* child : currentItem->children()) {
+				minBBox = minBBox.united(child->bbox());
+			}
 		}
+		m_tool->setSelection(currentItem->bbox(), minBBox);
 	}
-	m_tool->setSelection(currentItem->bbox(), minBBox);
 }
 
 QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const QString& attrName, const QString& attrValue, const QString& attrItemClass, bool multiple)
