@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>480</width>
-    <height>502</height>
+    <height>608</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,14 +34,14 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="0" colspan="3">
+   <item row="12" column="0" colspan="3">
     <widget class="QLabel" name="labelPredefLang">
      <property name="text">
       <string>Predefined language definitions:</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="0" colspan="3">
+   <item row="6" column="0" colspan="3">
     <widget class="QCheckBox" name="checkBoxUpdateCheck">
      <property name="text">
       <string>Automatically check for new program versions</string>
@@ -55,14 +55,14 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
+   <item row="8" column="0">
     <widget class="QLabel" name="labelDataLocation">
      <property name="text">
       <string>Language data locations:</string>
      </property>
     </widget>
    </item>
-   <item row="15" column="0" colspan="3">
+   <item row="16" column="0" colspan="3">
     <widget class="QTableWidget" name="tableWidgetAdditionalLang">
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -96,7 +96,7 @@
      </column>
     </widget>
    </item>
-   <item row="7" column="1" colspan="2">
+   <item row="8" column="1" colspan="2">
     <widget class="QComboBox" name="comboBoxDataLocation">
      <property name="currentIndex">
       <number>-1</number>
@@ -113,21 +113,21 @@
      </item>
     </widget>
    </item>
-   <item row="6" column="0" colspan="3">
+   <item row="7" column="0" colspan="3">
     <widget class="Line" name="line_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item row="14" column="0" colspan="3">
+   <item row="15" column="0" colspan="3">
     <widget class="QLabel" name="labelAdditionalLang">
      <property name="text">
       <string>Additional language definitions:</string>
      </property>
     </widget>
    </item>
-   <item row="13" column="0" colspan="3">
+   <item row="14" column="0" colspan="3">
     <widget class="QTableWidget" name="tableWidgetPredefLang">
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -161,7 +161,7 @@
      </column>
     </widget>
    </item>
-   <item row="8" column="0">
+   <item row="9" column="0">
     <widget class="QLabel" name="labelTessdataLocation">
      <property name="text">
       <string>Language definitions path:</string>
@@ -171,7 +171,7 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="0" colspan="3">
+   <item row="11" column="0" colspan="3">
     <widget class="Line" name="line">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -192,7 +192,7 @@
      </item>
     </widget>
    </item>
-   <item row="16" column="0" colspan="3">
+   <item row="17" column="0" colspan="3">
     <widget class="QWidget" name="widgetAddRemoveLang" native="true">
      <layout class="QHBoxLayout" name="horizontalLayoutAddRemoveLang">
       <property name="leftMargin">
@@ -267,7 +267,7 @@
      </property>
     </widget>
    </item>
-   <item row="20" column="0" colspan="3">
+   <item row="21" column="0" colspan="3">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -284,7 +284,7 @@
      </property>
     </widget>
    </item>
-   <item row="18" column="0" colspan="3">
+   <item row="19" column="0" colspan="3">
     <widget class="QWidget" name="widgetAddLang" native="true">
      <layout class="QHBoxLayout" name="horizontalLayoutAddLang">
       <property name="leftMargin">
@@ -354,7 +354,7 @@
      </layout>
     </widget>
    </item>
-   <item row="9" column="0">
+   <item row="10" column="0">
     <widget class="QLabel" name="labelSpellLocation">
      <property name="text">
       <string>Spelling dictionaries path:</string>
@@ -364,17 +364,24 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="1" colspan="2">
+   <item row="9" column="1" colspan="2">
     <widget class="QLineEdit" name="lineEditTessdataLocation">
      <property name="readOnly">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="9" column="1" colspan="2">
+   <item row="10" column="1" colspan="2">
     <widget class="QLineEdit" name="lineEditSpellLocation">
      <property name="readOnly">
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="3">
+    <widget class="QCheckBox" name="checkBoxOpenAfterExport">
+     <property name="text">
+      <string>Automatically open exported documents with default application</string>
      </property>
     </widget>
    </item>
