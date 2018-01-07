@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ConfigSettings.hh"
 #include "DisplayerToolHOCR.hh"
 #include "HOCRDocument.hh"
 #include "HOCROdtExporter.hh"
@@ -25,6 +26,7 @@
 #include "SourceManager.hh"
 #include "Utils.hh"
 
+#include <QDesktopServices>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QUuid>
@@ -254,6 +256,12 @@ bool HOCROdtExporter::run(const HOCRDocument *hocrdocument, QString &filebasenam
 	MAIN->hideProgress();
 
 	zip.close();
+
+	bool openAfterExport = ConfigSettings::get<SwitchSetting>("openafterexport")->getValue();
+    if(openAfterExport) {
+        QDesktopServices::openUrl(QUrl::fromLocalFile(outname));
+    }
+
 	return true;
 }
 

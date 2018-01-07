@@ -24,6 +24,7 @@
 #include "FileDialogs.hh"
 #include "SourceManager.hh"
 
+#include <QDesktopServices>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QTextStream>
@@ -58,6 +59,11 @@ bool HOCRTextExporter::run(const HOCRDocument *hocrdocument, QString &filebasena
 		printItem(outputStream, page);
 	}
 	outputFile.write(MAIN->getConfig()->useUtf8() ? output.toUtf8() : output.toLocal8Bit());
+	outputFile.close();
+	bool openAfterExport = ConfigSettings::get<SwitchSetting>("openafterexport")->getValue();
+	if(openAfterExport) {
+		QDesktopServices::openUrl(QUrl::fromLocalFile(outname));
+	}
 	return true;
 }
 
