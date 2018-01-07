@@ -114,8 +114,7 @@ Glib::ustring Utils::get_content_type(const std::string &filename) {
 	return contenttype;
 }
 
-std::pair<std::string, std::string> Utils::split_filename(const std::string& filename)
-{
+std::pair<std::string, std::string> Utils::split_filename(const std::string& filename) {
 	std::string::size_type pos = filename.rfind('.');
 	if(pos == std::string::npos) {
 		return std::make_pair(filename, std::string());
@@ -139,8 +138,7 @@ std::string Utils::make_absolute_path(const std::string& path, const std::string
 	return abspath;
 }
 
-std::string Utils::make_relative_path(const std::string& path, const std::string& basepath)
-{
+std::string Utils::make_relative_path(const std::string& path, const std::string& basepath) {
 	if(!Glib::path_is_absolute(path)) {
 		return path;
 	}
@@ -216,13 +214,11 @@ Glib::ustring Utils::string_trim(const Glib::ustring &str, const Glib::ustring& 
 	return ret;
 }
 
-bool Utils::strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, bool matchCase)
-{
+bool Utils::strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, bool matchCase) {
 	return matchCase ? (str1 == str2) : (str1.casefold() == str2.casefold());
 }
 
-std::size_t Utils::string_firstIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase)
-{
+std::size_t Utils::string_firstIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase) {
 	std::size_t res = Glib::ustring::npos;
 	if(matchCase) {
 		res = str.find(search, pos);
@@ -232,8 +228,7 @@ std::size_t Utils::string_firstIndex(const Glib::ustring& str, const Glib::ustri
 	return res == Glib::ustring::npos ? -1 : res;
 }
 
-std::size_t Utils::string_lastIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase)
-{
+std::size_t Utils::string_lastIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase) {
 	std::size_t res = Glib::ustring::npos;
 	if(matchCase) {
 		res = str.rfind(search, pos);
@@ -243,8 +238,7 @@ std::size_t Utils::string_lastIndex(const Glib::ustring& str, const Glib::ustrin
 	return res == Glib::ustring::npos ? -1 : res;
 }
 
-int Utils::string_replace(Glib::ustring& str, const Glib::ustring& search, const Glib::ustring& replace, bool matchCase)
-{
+int Utils::string_replace(Glib::ustring& str, const Glib::ustring& search, const Glib::ustring& replace, bool matchCase) {
 	int pos = 0;
 	int count = 0;
 	while(true) {
@@ -259,8 +253,7 @@ int Utils::string_replace(Glib::ustring& str, const Glib::ustring& search, const
 	return count;
 }
 
-int Utils::parseInt(const Glib::ustring& str, bool* ok)
-{
+int Utils::parseInt(const Glib::ustring& str, bool* ok) {
 	static Glib::RefPtr<Glib::Regex> nrRegEx = Glib::Regex::create("^\\d+$");
 	bool match = nrRegEx->match(str);
 	if(ok) *ok = match;

@@ -26,8 +26,7 @@
 
 #include <fstream>
 
-bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string &filebasename)
-{
+bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string &filebasename) {
 	std::string suggestion = filebasename;
 	if(suggestion.empty()) {
 		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
@@ -57,8 +56,7 @@ bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::
 	return true;
 }
 
-void HOCRTextExporter::printItem(std::ofstream& outputStream, const HOCRItem* item, bool lastChild)
-{
+void HOCRTextExporter::printItem(std::ofstream& outputStream, const HOCRItem* item, bool lastChild) {
 	if(!item->isEnabled()) {
 		return;
 	}

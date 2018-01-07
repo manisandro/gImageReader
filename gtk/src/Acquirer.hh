@@ -23,7 +23,9 @@
 #include "common.hh"
 #include "Scanner.hh"
 
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 
 class Acquirer {
 public:

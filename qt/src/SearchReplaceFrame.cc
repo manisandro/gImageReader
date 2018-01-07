@@ -22,8 +22,7 @@
 #include "SubstitutionsManager.hh"
 
 SearchReplaceFrame::SearchReplaceFrame(QWidget *parent, Qt::WindowFlags f)
-	: QFrame(parent, f)
-{
+	: QFrame(parent, f) {
 	ui.setupUi(this);
 
 	m_substitutionsManager = new SubstitutionsManager(this);
@@ -44,23 +43,19 @@ SearchReplaceFrame::SearchReplaceFrame(QWidget *parent, Qt::WindowFlags f)
 	ADD_SETTING(SwitchSetting("searchmatchcase", ui.checkBoxMatchCase));
 }
 
-void SearchReplaceFrame::clear()
-{
+void SearchReplaceFrame::clear() {
 	ui.lineEditSearch->clear();
 	ui.lineEditReplace->clear();
 }
 
-void SearchReplaceFrame::clearErrorState()
-{
+void SearchReplaceFrame::clearErrorState() {
 	ui.lineEditSearch->setStyleSheet("");
 }
 
-void SearchReplaceFrame::setErrorState()
-{
+void SearchReplaceFrame::setErrorState() {
 	ui.lineEditSearch->setStyleSheet("background: #FF7777; color: #FFFFFF;");
 }
 
-void SearchReplaceFrame::hideSubstitutionsManager()
-{
+void SearchReplaceFrame::hideSubstitutionsManager() {
 	m_substitutionsManager->hide();
 }

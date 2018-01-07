@@ -283,7 +283,9 @@ Config::Config() {
 	ui.setupUi();
 	ui.dialogConfig->set_transient_for(*MAIN->getWindow());
 
-	for(Gtk::TreeView* view : {ui.treeviewLangsPredef, ui.treeviewLangsCustom}) {
+	for(Gtk::TreeView* view : {
+	            ui.treeviewLangsPredef, ui.treeviewLangsCustom
+	        }) {
 		view->set_model(Gtk::ListStore::create(m_langViewCols));
 		view->append_column_editable(_("Filename prefix"), m_langViewCols.prefix);
 		view->append_column_editable(_("Code"), m_langViewCols.code);
@@ -303,16 +305,25 @@ Config::Config() {
 		(*it)[m_langViewCols.name] = lang.name;
 	}
 
-	CONNECT(ui.checkbuttonDefaultoutputfont, toggled, [this]{ ui.fontbuttonCustomoutputfont->set_sensitive(!ui.checkbuttonDefaultoutputfont->get_active()); });
+	CONNECT(ui.checkbuttonDefaultoutputfont, toggled, [this] { ui.fontbuttonCustomoutputfont->set_sensitive(!ui.checkbuttonDefaultoutputfont->get_active()); });
 	CONNECT(ui.buttonLangsEditAdd, clicked, [this] { toggleAddLanguage(); });
 	CONNECT(ui.buttonLangsEditRemove, clicked, [this] { removeLanguage(); });
 	CONNECT(ui.buttonLangsAddOk, clicked, [this] { addLanguage(); });
 	CONNECT(ui.buttonLangsAddCancel, clicked, [this] { toggleAddLanguage(); });
 	CONNECT(ui.treeviewLangsCustom->get_selection(), changed, [this] { langTableSelectionChanged(); });
 	CONNECT(ui.buttonHelp, clicked, [] { MAIN->showHelp("#Usage_Options"); });
-	CONNECT(ui.entryLangsAddPrefix, focus_in_event, [this](GdkEventFocus*) { Utils::clear_error_state(ui.entryLangsAddPrefix); return false; });
-	CONNECT(ui.entryLangsAddName, focus_in_event, [this](GdkEventFocus*) { Utils::clear_error_state(ui.entryLangsAddName); return false; });
-	CONNECT(ui.entryLangsAddCode, focus_in_event, [this](GdkEventFocus*) { Utils::clear_error_state(ui.entryLangsAddCode); return false; });
+	CONNECT(ui.entryLangsAddPrefix, focus_in_event, [this](GdkEventFocus*) {
+		Utils::clear_error_state(ui.entryLangsAddPrefix);
+		return false;
+	});
+	CONNECT(ui.entryLangsAddName, focus_in_event, [this](GdkEventFocus*) {
+		Utils::clear_error_state(ui.entryLangsAddName);
+		return false;
+	});
+	CONNECT(ui.entryLangsAddCode, focus_in_event, [this](GdkEventFocus*) {
+		Utils::clear_error_state(ui.entryLangsAddCode);
+		return false;
+	});
 	CONNECT(ui.comboDatadirs, changed, [this] { setDataLocations(ui.comboDatadirs->get_active_row_number()); });
 
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("dictinstall", ui.checkDictinstall));
@@ -470,7 +481,7 @@ void Config::addLanguage() {
 		Utils::set_error_state(ui.entryLangsAddName);
 	}
 	if(!Glib::Regex::create("^[a-z]{2}$")->match(ui.entryLangsAddCode->get_text()) &&
-			!Glib::Regex::create("^[a-z]{2}_[A-Z]{2}$")->match(ui.entryLangsAddCode->get_text())) {
+	        !Glib::Regex::create("^[a-z]{2}_[A-Z]{2}$")->match(ui.entryLangsAddCode->get_text())) {
 		invalid = true;
 		Utils::set_error_state(ui.entryLangsAddCode);
 	}

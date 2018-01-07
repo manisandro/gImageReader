@@ -51,7 +51,9 @@ public:
 	int getNPages() const;
 	int getCurrentResolution() const;
 	double getCurrentAngle() const;
-	double getCurrentScale() const { return m_scale; }
+	double getCurrentScale() const {
+		return m_scale;
+	}
 	QString getCurrentImage(int& page) const;
 	QImage getImage(const QRectF& rect);
 	QRectF getSceneBoundingRect() const;

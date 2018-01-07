@@ -30,29 +30,25 @@
 
 HOCRDocument::HOCRDocument(GtkSpell::Checker* spell)
 	: Glib::ObjectBase("HOCRDocument")
-	, m_spell(spell)
-{
+	, m_spell(spell) {
 	m_document = new xmlpp::Document();
 	m_document->create_root_node("body");
 }
 
-HOCRDocument::~HOCRDocument()
-{
+HOCRDocument::~HOCRDocument() {
 	for(HOCRPage* page : m_pages) {
 		delete page;
 	}
 	delete m_document;
 }
 
-void HOCRDocument::recheckSpelling()
-{
+void HOCRDocument::recheckSpelling() {
 	for(HOCRPage* page : m_pages) {
 		recursiveDataChanged(get_iter(get_root_path(page->index())), {"ocrx_word"});
 	}
 }
 
-Glib::ustring HOCRDocument::toHTML()
-{
+Glib::ustring HOCRDocument::toHTML() {
 	Glib::ustring xml = m_document->write_to_string();
 	// Strip entity declaration
 	if(xml.substr(0, 5) == "<?xml") {
@@ -62,8 +58,7 @@ Glib::ustring HOCRDocument::toHTML()
 	return xml;
 }
 
-Gtk::TreeIter HOCRDocument::addPage(const xmlpp::Element* pageElement, bool cleanGraphics)
-{
+Gtk::TreeIter HOCRDocument::addPage(const xmlpp::Element* pageElement, bool cleanGraphics) {
 	xmlpp::Element* importedPageElement = static_cast<xmlpp::Element*>(m_document->get_root_node()->import_node(pageElement));
 	m_pages.push_back(new HOCRPage(importedPageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics, m_pages.size()));
 	Gtk::TreeIter iter = get_iter(get_root_path(m_pages.back()->index()));
@@ -75,8 +70,7 @@ Gtk::TreeIter HOCRDocument::addPage(const xmlpp::Element* pageElement, bool clea
 	return iter;
 }
 
-bool HOCRDocument::editItemAttribute(const Gtk::TreeIter& index, const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass)
-{
+bool HOCRDocument::editItemAttribute(const Gtk::TreeIter& index, const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass) {
 	HOCRItem* item = mutableItemAtIndex(index);
 	if(!item) {
 		return false;
@@ -94,8 +88,7 @@ bool HOCRDocument::editItemAttribute(const Gtk::TreeIter& index, const Glib::ust
 	return true;
 }
 
-bool HOCRDocument::editItemText(const Gtk::TreeIter& index, const Glib::ustring& text)
-{
+bool HOCRDocument::editItemText(const Gtk::TreeIter& index, const Glib::ustring& text) {
 	HOCRItem* item = mutableItemAtIndex(index);
 	if(!item) {
 		return false;
@@ -105,8 +98,7 @@ bool HOCRDocument::editItemText(const Gtk::TreeIter& index, const Glib::ustring&
 	return true;
 }
 
-Gtk::TreeIter HOCRDocument::mergeItems(const Gtk::TreeIter& parent, int startRow, int endRow)
-{
+Gtk::TreeIter HOCRDocument::mergeItems(const Gtk::TreeIter& parent, int startRow, int endRow) {
 	if(endRow - startRow <= 0) {
 		return Gtk::TreeIter();
 	}
@@ -162,8 +154,7 @@ Gtk::TreeIter HOCRDocument::mergeItems(const Gtk::TreeIter& parent, int startRow
 	return targetIndex;
 }
 
-Gtk::TreeIter HOCRDocument::addItem(const Gtk::TreeIter& parent, const xmlpp::Element* element)
-{
+Gtk::TreeIter HOCRDocument::addItem(const Gtk::TreeIter& parent, const xmlpp::Element* element) {
 	HOCRItem* parentItem = mutableItemAtIndex(parent);
 	if(!parentItem) {
 		return Gtk::TreeIter();
@@ -177,8 +168,7 @@ Gtk::TreeIter HOCRDocument::addItem(const Gtk::TreeIter& parent, const xmlpp::El
 	return child;
 }
 
-bool HOCRDocument::removeItem(const Gtk::TreeIter& index)
-{
+bool HOCRDocument::removeItem(const Gtk::TreeIter& index) {
 	HOCRItem* item = mutableItemAtIndex(index);
 	if(!item) {
 		return false;
@@ -190,8 +180,7 @@ bool HOCRDocument::removeItem(const Gtk::TreeIter& index)
 	return true;
 }
 
-Gtk::TreeIter HOCRDocument::nextIndex(const Gtk::TreeIter& current) const
-{
+Gtk::TreeIter HOCRDocument::nextIndex(const Gtk::TreeIter& current) const {
 	Gtk::TreeIter iter = current;
 	// If the current index is invalid return first index
 	if(!iter) {
@@ -202,10 +191,12 @@ Gtk::TreeIter HOCRDocument::nextIndex(const Gtk::TreeIter& current) const
 		return iter->children()[0];
 	}
 	// Return next possible sibling
-	Gtk::TreeIter next = iter; ++next;
+	Gtk::TreeIter next = iter;
+	++next;
 	while(iter && !next) {
 		iter = iter->parent();
-		next = iter; ++next;
+		next = iter;
+		++next;
 	}
 	if(!iter) {
 		// Wrap around
@@ -214,8 +205,7 @@ Gtk::TreeIter HOCRDocument::nextIndex(const Gtk::TreeIter& current) const
 	return next;
 }
 
-Gtk::TreeIter HOCRDocument::prevIndex(const Gtk::TreeIter& current) const
-{
+Gtk::TreeIter HOCRDocument::prevIndex(const Gtk::TreeIter& current) const {
 	Gtk::TreeIter iter = current;
 	// If the current index is invalid return last index
 	if(!iter) {
@@ -236,13 +226,11 @@ Gtk::TreeIter HOCRDocument::prevIndex(const Gtk::TreeIter& current) const
 	return iter;
 }
 
-bool HOCRDocument::indexIsMisspelledWord(const Gtk::TreeIter& index) const
-{
+bool HOCRDocument::indexIsMisspelledWord(const Gtk::TreeIter& index) const {
 	return !checkItemSpelling(itemAtIndex(index));
 }
 
-bool HOCRDocument::referencesSource(const Glib::ustring& filename) const
-{
+bool HOCRDocument::referencesSource(const Glib::ustring& filename) const {
 	for(const HOCRPage* page : m_pages) {
 		if(page->sourceFile() == filename) {
 			return true;
@@ -251,8 +239,7 @@ bool HOCRDocument::referencesSource(const Glib::ustring& filename) const
 	return false;
 }
 
-Gtk::TreeIter HOCRDocument::searchPage(const Glib::ustring& filename, int pageNr) const
-{
+Gtk::TreeIter HOCRDocument::searchPage(const Glib::ustring& filename, int pageNr) const {
 	for(const HOCRPage* page : m_pages) {
 		if(page->sourceFile() == filename && page->pageNr() == pageNr) {
 			return get_iter(get_root_path(page->index()));
@@ -261,8 +248,7 @@ Gtk::TreeIter HOCRDocument::searchPage(const Glib::ustring& filename, int pageNr
 	return Gtk::TreeIter();
 }
 
-Gtk::TreeIter HOCRDocument::searchAtCanvasPos(const Gtk::TreeIter& pageIndex, const Geometry::Point& pos) const
-{
+Gtk::TreeIter HOCRDocument::searchAtCanvasPos(const Gtk::TreeIter& pageIndex, const Geometry::Point& pos) const {
 	Gtk::TreeIter index = pageIndex;
 	bool found = bool(index);
 	while(found) {
@@ -278,15 +264,13 @@ Gtk::TreeIter HOCRDocument::searchAtCanvasPos(const Gtk::TreeIter& pageIndex, co
 	return index;
 }
 
-void HOCRDocument::convertSourcePaths(const std::string& basepath, bool absolute)
-{
+void HOCRDocument::convertSourcePaths(const std::string& basepath, bool absolute) {
 	for(HOCRPage* page : m_pages) {
 		page->convertSourcePath(basepath, absolute);
 	}
 }
 
-void HOCRDocument::recursiveDataChanged(const Gtk::TreeIter& index, const std::vector<Glib::ustring>& itemClasses)
-{
+void HOCRDocument::recursiveDataChanged(const Gtk::TreeIter& index, const std::vector<Glib::ustring>& itemClasses) {
 	if(index && !index->children().empty()) {
 		bool emitChanged = (itemClasses.empty() || std::find(itemClasses.begin(), itemClasses.end(), itemAtIndex(index)->itemClass()) != itemClasses.end());
 		for(const Gtk::TreeIter& childIndex : index->children()) {
@@ -298,8 +282,7 @@ void HOCRDocument::recursiveDataChanged(const Gtk::TreeIter& index, const std::v
 	}
 }
 
-void HOCRDocument::recursiveRowInserted(const Gtk::TreeIter& index)
-{
+void HOCRDocument::recursiveRowInserted(const Gtk::TreeIter& index) {
 	DEBUG(std::cout << "Inserted: " << get_path(index).to_string() << std::endl;)
 	row_inserted(get_path(index), index);
 	for(const Gtk::TreeIter& childIndex : index->children()) {
@@ -307,8 +290,7 @@ void HOCRDocument::recursiveRowInserted(const Gtk::TreeIter& index)
 	}
 }
 
-void HOCRDocument::recomputeParentBBoxes(const HOCRItem* item)
-{
+void HOCRDocument::recomputeParentBBoxes(const HOCRItem* item) {
 	// Update parent bboxes (except page)
 	HOCRItem* parent = item->parent();
 	while(parent && parent->parent()) {
@@ -322,13 +304,11 @@ void HOCRDocument::recomputeParentBBoxes(const HOCRItem* item)
 	}
 }
 
-Gtk::TreeModelFlags HOCRDocument::get_flags_vfunc() const
-{
+Gtk::TreeModelFlags HOCRDocument::get_flags_vfunc() const {
 	return Gtk::TREE_MODEL_ITERS_PERSIST;
 }
 
-GType HOCRDocument::get_column_type_vfunc(int index) const
-{
+GType HOCRDocument::get_column_type_vfunc(int index) const {
 	if(index == COLUMN_EDITABLE) {
 		return Glib::Value<bool>::value_type();
 	} else if(index == COLUMN_CHECKED) {
@@ -345,13 +325,11 @@ GType HOCRDocument::get_column_type_vfunc(int index) const
 	return G_TYPE_INVALID;
 }
 
-int HOCRDocument::get_n_columns_vfunc() const
-{
+int HOCRDocument::get_n_columns_vfunc() const {
 	return NUM_COLUMNS;
 }
 
-bool HOCRDocument::iter_next_vfunc(const iterator& iter, iterator& iter_next) const
-{
+bool HOCRDocument::iter_next_vfunc(const iterator& iter, iterator& iter_next) const {
 	DEBUG(std::cout << "iter_next_vfunc " << get_path(iter).to_string() << ": ";)
 	const HOCRItem* item = itemAtIndex(iter);
 	HOCRItem* nextItem = nullptr;
@@ -368,8 +346,7 @@ bool HOCRDocument::iter_next_vfunc(const iterator& iter, iterator& iter_next) co
 	return iter_next.gobj()->user_data != nullptr;
 }
 
-bool HOCRDocument::get_iter_vfunc(const Path& path, iterator& iter) const
-{
+bool HOCRDocument::get_iter_vfunc(const Path& path, iterator& iter) const {
 	DEBUG(std::cout << "get_iter_vfunc " << path.to_string() << ": ";)
 	if(path.empty() || m_pages.empty()) {
 		DEBUG(std::cout << "0" << std::endl;)
@@ -386,8 +363,7 @@ bool HOCRDocument::get_iter_vfunc(const Path& path, iterator& iter) const
 	return item != nullptr;
 }
 
-bool HOCRDocument::iter_children_vfunc(const iterator& parent, iterator& iter) const
-{
+bool HOCRDocument::iter_children_vfunc(const iterator& parent, iterator& iter) const {
 	DEBUG(std::cout << "iter_children_vfunc " << get_path(parent).to_string() << ": ";)
 	HOCRItem* parentItem = mutableItemAtIndex(parent);
 	iter.gobj()->user_data = parentItem && !parentItem->children().empty() ? parentItem->children().front() : nullptr;
@@ -396,8 +372,7 @@ bool HOCRDocument::iter_children_vfunc(const iterator& parent, iterator& iter) c
 	return iter.gobj()->user_data != nullptr;
 }
 
-bool HOCRDocument::iter_parent_vfunc(const iterator& child, iterator& iter) const
-{
+bool HOCRDocument::iter_parent_vfunc(const iterator& child, iterator& iter) const {
 	DEBUG(std::cout << "iter_parent_vfunc " << get_path(child).to_string() << ": ";)
 	HOCRItem* childItem = mutableItemAtIndex(child);
 	iter.gobj()->user_data = childItem ? childItem->parent() : nullptr;
@@ -406,8 +381,7 @@ bool HOCRDocument::iter_parent_vfunc(const iterator& child, iterator& iter) cons
 	return iter.gobj()->user_data != nullptr;
 }
 
-bool HOCRDocument::iter_nth_child_vfunc(const iterator& parent, int n, iterator& iter) const
-{
+bool HOCRDocument::iter_nth_child_vfunc(const iterator& parent, int n, iterator& iter) const {
 	DEBUG(std::cout << "iter_nth_child_vfunc " << get_path(parent).to_string() << "@" << n << ": ";)
 	HOCRItem* parentItem = mutableItemAtIndex(parent);
 	iter.gobj()->user_data = parentItem && n < parentItem->children().size() ? parentItem->children()[n] : nullptr;
@@ -416,8 +390,7 @@ bool HOCRDocument::iter_nth_child_vfunc(const iterator& parent, int n, iterator&
 	return iter.gobj()->user_data != nullptr;
 }
 
-bool HOCRDocument::iter_nth_root_child_vfunc(int n, iterator& iter) const
-{
+bool HOCRDocument::iter_nth_root_child_vfunc(int n, iterator& iter) const {
 	DEBUG(std::cout << "iter_nth_root_child_vfunc " << n << ": ";)
 	iter.gobj()->user_data =  n < m_pages.size() ? m_pages[n] : nullptr;
 	iter.set_stamp(iter.gobj()->user_data != nullptr);
@@ -425,30 +398,26 @@ bool HOCRDocument::iter_nth_root_child_vfunc(int n, iterator& iter) const
 	return iter.gobj()->user_data != nullptr;
 }
 
-bool HOCRDocument::iter_has_child_vfunc(const iterator& iter) const
-{
+bool HOCRDocument::iter_has_child_vfunc(const iterator& iter) const {
 	DEBUG(std::cout << "iter_parent_vfunc " << get_path(iter).to_string() << ": ";)
 	HOCRItem* item = mutableItemAtIndex(iter);
 	DEBUG(std::cout << (item && !item->children().empty()) << std::endl;)
 	return item && !item->children().empty();
 }
 
-int HOCRDocument::iter_n_children_vfunc(const iterator& iter) const
-{
+int HOCRDocument::iter_n_children_vfunc(const iterator& iter) const {
 	DEBUG(std::cout << "iter_n_children_vfunc " << get_path(iter).to_string() << ": ";)
 	HOCRItem* item = mutableItemAtIndex(iter);
 	DEBUG(std::cout << (item ? item->children().size() : 0) << std::endl;)
 	return item ? item->children().size() : 0;
 }
 
-int HOCRDocument::iter_n_root_children_vfunc() const
-{
+int HOCRDocument::iter_n_root_children_vfunc() const {
 	DEBUG(std::cout << "iter_n_root_children_vfunc " << m_pages.size() << std::endl;)
 	return m_pages.size();
 }
 
-Gtk::TreeModel::Path HOCRDocument::get_path_vfunc(const iterator& iter) const
-{
+Gtk::TreeModel::Path HOCRDocument::get_path_vfunc(const iterator& iter) const {
 	Gtk::TreeModel::Path path;
 	HOCRItem* item = mutableItemAtIndex(iter);
 	while(item) {
@@ -459,16 +428,14 @@ Gtk::TreeModel::Path HOCRDocument::get_path_vfunc(const iterator& iter) const
 }
 
 template<class T>
-static void setValue(Glib::ValueBase& gvalue, const T& value)
-{
+static void setValue(Glib::ValueBase& gvalue, const T& value) {
 	Glib::Value<T> val;
 	val.init(val.value_type());
 	val.set(value);
 	gvalue.init(val.gobj());
 }
 
-void HOCRDocument::get_value_vfunc(const iterator& iter, int column, Glib::ValueBase& value) const
-{
+void HOCRDocument::get_value_vfunc(const iterator& iter, int column, Glib::ValueBase& value) const {
 	DEBUG(std::cout << "get_value_vfunc Column " << column << " at path " << get_path(iter).to_string() << std::endl);
 	const HOCRItem* item = itemAtIndex(iter);
 	if(!item) {
@@ -500,8 +467,7 @@ void HOCRDocument::get_value_vfunc(const iterator& iter, int column, Glib::Value
 	}
 }
 
-void HOCRDocument::set_value_impl(const iterator& row, int column, const Glib::ValueBase& value)
-{
+void HOCRDocument::set_value_impl(const iterator& row, int column, const Glib::ValueBase& value) {
 	HOCRItem* item = mutableItemAtIndex(row);
 	if(!item) {
 		return;
@@ -516,13 +482,11 @@ void HOCRDocument::set_value_impl(const iterator& row, int column, const Glib::V
 	}
 }
 
-void HOCRDocument::get_value_impl(const iterator& row, int column, Glib::ValueBase& value) const
-{
+void HOCRDocument::get_value_impl(const iterator& row, int column, Glib::ValueBase& value) const {
 	get_value_vfunc(row, column, value);
 }
 
-Glib::ustring HOCRDocument::displayRoleForItem(const HOCRItem* item) const
-{
+Glib::ustring HOCRDocument::displayRoleForItem(const HOCRItem* item) const {
 	Glib::ustring itemClass = item->itemClass();
 	if(itemClass == "ocr_page") {
 		const HOCRPage* page = static_cast<const HOCRPage*>(item);
@@ -541,8 +505,7 @@ Glib::ustring HOCRDocument::displayRoleForItem(const HOCRItem* item) const
 	return "";
 }
 
-Glib::RefPtr<Gdk::Pixbuf> HOCRDocument::decorationRoleForItem(const HOCRItem* item) const
-{
+Glib::RefPtr<Gdk::Pixbuf> HOCRDocument::decorationRoleForItem(const HOCRItem* item) const {
 	Glib::ustring itemClass = item->itemClass();
 	if(itemClass == "ocr_page") {
 		return Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/item_page.png");
@@ -560,8 +523,7 @@ Glib::RefPtr<Gdk::Pixbuf> HOCRDocument::decorationRoleForItem(const HOCRItem* it
 	return Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, false, 8, 0, 0);
 }
 
-bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const
-{
+bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const {
 	if(item->itemClass() == "ocrx_word") {
 		Glib::ustring trimmed = HOCRItem::trimmedWord(item->text());
 		if(!trimmed.empty()) {
@@ -579,8 +541,7 @@ bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const
 	return true;
 }
 
-void HOCRDocument::deleteItem(HOCRItem* item)
-{
+void HOCRDocument::deleteItem(HOCRItem* item) {
 	if(item->parent()) {
 		item->parent()->removeChild(item);
 	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
@@ -601,8 +562,7 @@ void HOCRDocument::deleteItem(HOCRItem* item)
 
 std::map<Glib::ustring,Glib::ustring> HOCRItem::s_langCache = std::map<Glib::ustring,Glib::ustring>();
 
-std::map<Glib::ustring, Glib::ustring> HOCRItem::deserializeAttrGroup(const Glib::ustring& string)
-{
+std::map<Glib::ustring, Glib::ustring> HOCRItem::deserializeAttrGroup(const Glib::ustring& string) {
 	std::map<Glib::ustring, Glib::ustring> attrs;
 	for(const Glib::ustring& attr : Utils::string_split(string, ';', false)) {
 		Glib::ustring trimmed = Utils::string_trim(attr);
@@ -612,8 +572,7 @@ std::map<Glib::ustring, Glib::ustring> HOCRItem::deserializeAttrGroup(const Glib
 	return attrs;
 }
 
-Glib::ustring HOCRItem::serializeAttrGroup(const std::map<Glib::ustring, Glib::ustring>& attrs)
-{
+Glib::ustring HOCRItem::serializeAttrGroup(const std::map<Glib::ustring, Glib::ustring>& attrs) {
 	std::vector<Glib::ustring> list;
 	for(auto it = attrs.begin(), itEnd = attrs.end(); it != itEnd; ++it) {
 		list.push_back(Glib::ustring::compose("%1 %2", it->first, it->second));
@@ -635,8 +594,7 @@ Glib::ustring HOCRItem::trimmedWord(const Glib::ustring& word, Glib::ustring* pr
 }
 
 HOCRItem::HOCRItem(xmlpp::Element* element, HOCRPage* page, HOCRItem* parent, int index)
-	: m_domElement(element), m_pageItem(page), m_parentItem(parent), m_index(index)
-{
+	: m_domElement(element), m_pageItem(page), m_parentItem(parent), m_index(index) {
 	// Adjust item id based on pageId
 	if(parent) {
 		Glib::ustring idClass = itemClass().substr(itemClass().find_first_of('_') + 1);
@@ -665,14 +623,14 @@ HOCRItem::HOCRItem(xmlpp::Element* element, HOCRPage* page, HOCRItem* parent, in
 	}
 }
 
-HOCRItem::~HOCRItem()
-{
-	std::for_each( m_childItems.begin(), m_childItems.end(), [](HOCRItem* item){ delete item; });
+HOCRItem::~HOCRItem() {
+	std::for_each( m_childItems.begin(), m_childItems.end(), [](HOCRItem* item) {
+		delete item;
+	});
 	m_domElement->get_parent()->remove_child(m_domElement);
 }
 
-void HOCRItem::addChild(HOCRItem* child)
-{
+void HOCRItem::addChild(HOCRItem* child) {
 	xmlpp::Element* newElem = static_cast<xmlpp::Element*>(m_domElement->import_node(child->m_domElement));
 	child->m_domElement->get_parent()->remove_child(child->m_domElement);
 	child->m_domElement = newElem;
@@ -682,8 +640,7 @@ void HOCRItem::addChild(HOCRItem* child)
 	child->m_index = m_childItems.size() - 1;
 }
 
-void HOCRItem::removeChild(HOCRItem *child)
-{
+void HOCRItem::removeChild(HOCRItem *child) {
 	int idx = child->index();
 	m_childItems.erase(m_childItems.begin() + idx);
 	delete child;
@@ -692,15 +649,13 @@ void HOCRItem::removeChild(HOCRItem *child)
 	}
 }
 
-std::vector<HOCRItem*> HOCRItem::takeChildren()
-{
+std::vector<HOCRItem*> HOCRItem::takeChildren() {
 	std::vector<HOCRItem*> children;
 	m_childItems.swap(children);
 	return children;
 }
 
-void HOCRItem::setText(const Glib::ustring& newText)
-{
+void HOCRItem::setText(const Glib::ustring& newText) {
 	xmlpp::Element* leaf = m_domElement;
 	while(leaf->get_first_child() && dynamic_cast<xmlpp::Element*>(leaf->get_first_child())) {
 		leaf = static_cast<xmlpp::Element*>(leaf->get_first_child());
@@ -714,18 +669,15 @@ Glib::ustring HOCRItem::itemClass() const {
 	return m_domElement->get_attribute_value("class");
 }
 
-Glib::ustring HOCRItem::text() const
-{
+Glib::ustring HOCRItem::text() const {
 	return XmlUtils::elementText(m_domElement);
 }
 
-Glib::ustring HOCRItem::lang() const
-{
+Glib::ustring HOCRItem::lang() const {
 	return m_domElement->get_attribute_value("lang");
 }
 
-std::map<Glib::ustring,Glib::ustring> HOCRItem::getAllAttributes() const
-{
+std::map<Glib::ustring,Glib::ustring> HOCRItem::getAllAttributes() const {
 	std::map<Glib::ustring,Glib::ustring> attrValues;
 	for(const xmlpp::Attribute* attribute : m_domElement->get_attributes()) {
 		Glib::ustring attrName = attribute->get_name();
@@ -747,8 +699,7 @@ std::map<Glib::ustring,Glib::ustring> HOCRItem::getAllAttributes() const
 	return attrValues;
 }
 
-std::map<Glib::ustring,Glib::ustring> HOCRItem::getAttributes(const std::vector<Glib::ustring>& names) const
-{
+std::map<Glib::ustring,Glib::ustring> HOCRItem::getAttributes(const std::vector<Glib::ustring>& names) const {
 	std::map<Glib::ustring,Glib::ustring> attrValues;
 	for(const Glib::ustring& attrName : names) {
 		std::vector<Glib::ustring> parts = Utils::string_split(attrName, ':');
@@ -766,8 +717,7 @@ std::map<Glib::ustring,Glib::ustring> HOCRItem::getAttributes(const std::vector<
 	return attrValues;
 }
 
-void HOCRItem::getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring>>>& occurences) const
-{
+void HOCRItem::getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring>>>& occurences) const {
 	static std::map<Glib::ustring,std::vector<Glib::ustring>> s_propagatableAttributes = {
 		{"ocr_line", {"title:baseline"}},
 		{"ocrx_word", {"lang", "title:x_fsize", "title:x_font", "bold", "italic"}}
@@ -790,8 +740,7 @@ void HOCRItem::getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::
 	}
 }
 
-void HOCRItem::setAttribute(const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass)
-{
+void HOCRItem::setAttribute(const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass) {
 	if(!attrItemClass.empty() && itemClass() != attrItemClass) {
 		for(HOCRItem* child : m_childItems) {
 			child->setAttribute(name, value, attrItemClass);
@@ -830,18 +779,15 @@ void HOCRItem::setAttribute(const Glib::ustring& name, const Glib::ustring& valu
 	}
 }
 
-xmlpp::Element* HOCRItem::importElement(const xmlpp::Element* element)
-{
+xmlpp::Element* HOCRItem::importElement(const xmlpp::Element* element) {
 	return static_cast<xmlpp::Element*>(m_domElement->import_node(element));
 }
 
-Glib::ustring HOCRItem::toHtml() const
-{
+Glib::ustring HOCRItem::toHtml() const {
 	return XmlUtils::elementXML(m_domElement);
 }
 
-int HOCRItem::baseLine() const
-{
+int HOCRItem::baseLine() const {
 	static const Glib::RefPtr<Glib::Regex> baseLineRx = Glib::Regex::create("([+-]?\\d+\\.?\\d*)\\s+([+-]?\\d+)");
 	Glib::MatchInfo matchInfo;
 	if(baseLineRx->match(getTitleAttribute("baseline"), matchInfo)) {
@@ -850,16 +796,15 @@ int HOCRItem::baseLine() const
 	return 0;
 }
 
-bool HOCRItem::fontBold() const{
+bool HOCRItem::fontBold() const {
 	return !XmlUtils::elementsByTagName(m_domElement, "strong").empty();
 }
 
-bool HOCRItem::fontItalic() const{
+bool HOCRItem::fontItalic() const {
 	return !XmlUtils::elementsByTagName(m_domElement, "em").empty();
 }
 
-bool HOCRItem::parseChildren(Glib::ustring language)
-{
+bool HOCRItem::parseChildren(Glib::ustring language) {
 	// Determine item language (inherit from parent if not specified)
 	Glib::ustring elemLang = m_domElement->get_attribute_value("lang");
 	if(!elemLang.empty()) {
@@ -893,8 +838,7 @@ Glib::ustring HOCRItem::getTitleAttribute(const Glib::ustring& key) const {
 ///////////////////////////////////////////////////////////////////////////////
 
 HOCRPage::HOCRPage(xmlpp::Element* element, int pageId, const Glib::ustring& language, bool cleanGraphics, int index)
-	: HOCRItem(element, this, nullptr, index), m_pageId(pageId)
-{
+	: HOCRItem(element, this, nullptr, index), m_pageId(pageId) {
 	m_domElement->set_attribute("id", Glib::ustring::compose("page_%1", pageId));
 
 	m_sourceFile = Utils::string_trim(m_titleAttrs["image"], "'\"");
@@ -916,14 +860,15 @@ HOCRPage::HOCRPage(xmlpp::Element* element, int pageId, const Glib::ustring& lan
 		m_childItems.push_back(item);
 		if(!item->parseChildren(language)) {
 			// No word children -> treat as graphic
-			if(cleanGraphics && (item->bbox().width < 10 || item->bbox().height < 10))
-			{
+			if(cleanGraphics && (item->bbox().width < 10 || item->bbox().height < 10)) {
 				// Ignore graphics which are less than 10 x 10
 				delete m_childItems.back();
 				m_childItems.pop_back();
 			} else {
 				childElement->set_attribute("class", "ocr_graphic");
-				std::for_each(item->m_childItems.begin(), item->m_childItems.end(), [](HOCRItem* item){ delete item; });
+				std::for_each(item->m_childItems.begin(), item->m_childItems.end(), [](HOCRItem* item) {
+					delete item;
+				});
 				item->m_childItems.clear();
 				// Remove any children since they are not meaningful
 				for(xmlpp::Node* child : childElement->get_children()) {
@@ -940,8 +885,7 @@ Glib::ustring HOCRPage::title() const {
 	return Glib::ustring::compose("%1 [%2]", basename, m_pageNr);
 }
 
-void HOCRPage::convertSourcePath(const std::string &basepath, bool absolute)
-{
+void HOCRPage::convertSourcePath(const std::string &basepath, bool absolute) {
 	m_sourceFile = absolute ? Utils::make_absolute_path(m_sourceFile, basepath) : Utils::make_relative_path(m_sourceFile, basepath);
 	m_titleAttrs["image"] = Glib::ustring::compose("'%1'", m_sourceFile);
 	m_domElement->set_attribute("title", serializeAttrGroup(m_titleAttrs));

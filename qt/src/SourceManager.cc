@@ -142,8 +142,7 @@ int SourceManager::addSources(const QStringList& files) {
 	return added;
 }
 
-bool SourceManager::querySourcePassword(const QString& filename, QByteArray& password) const
-{
+bool SourceManager::querySourcePassword(const QString& filename, QByteArray& password) const {
 	bool success = true;
 	if(filename.endsWith(".pdf", Qt::CaseInsensitive)) {
 		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(filename));

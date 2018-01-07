@@ -59,10 +59,22 @@ public:
 	public:
 		ProgressMonitor(int total) : mTotal(total) {}
 		virtual ~ProgressMonitor() {}
-		int increaseProgress() { QMutexLocker locker(&mMutex); ++mProgress; }
-		virtual int getProgress() const { QMutexLocker locker(&mMutex); return (mProgress * 100) / mTotal; }
-		virtual void cancel() { QMutexLocker locker(&mMutex); mCancelled = true; }
-		bool cancelled() const{ QMutexLocker locker(&mMutex); return mCancelled; }
+		int increaseProgress() {
+			QMutexLocker locker(&mMutex);
+			++mProgress;
+		}
+		virtual int getProgress() const {
+			QMutexLocker locker(&mMutex);
+			return (mProgress * 100) / mTotal;
+		}
+		virtual void cancel() {
+			QMutexLocker locker(&mMutex);
+			mCancelled = true;
+		}
+		bool cancelled() const {
+			QMutexLocker locker(&mMutex);
+			return mCancelled;
+		}
 
 	protected:
 		mutable QMutex mMutex;

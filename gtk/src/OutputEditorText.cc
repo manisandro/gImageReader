@@ -57,7 +57,7 @@ OutputEditorText::OutputEditorText() {
 	CONNECT(ui.menuitemInsertCursor, activate, [this] { setInsertMode(InsertMode::Cursor, "ins_cursor.png"); });
 	CONNECT(ui.menuitemInsertReplace, activate, [this] { setInsertMode(InsertMode::Replace, "ins_replace.png"); });
 	CONNECT(ui.buttonStripcrlf, clicked, [this] { filterBuffer(); });
-	CONNECT(ui.buttonFindreplace, toggled, [this]{ m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(ui.buttonFindreplace->get_active()); });
+	CONNECT(ui.buttonFindreplace, toggled, [this] { m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(ui.buttonFindreplace->get_active()); });
 	CONNECT(ui.buttonUndo, clicked, [this] { m_textBuffer->undo(); scrollCursorIntoView(); });
 	CONNECT(ui.buttonRedo, clicked, [this] { m_textBuffer->redo(); scrollCursorIntoView(); });
 	CONNECT(ui.buttonSave, clicked, [this] { save(); });

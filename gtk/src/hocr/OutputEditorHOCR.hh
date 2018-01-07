@@ -27,7 +27,9 @@
 #include "ui_OutputEditorHOCR.hh"
 
 class DisplayerToolHOCR;
-namespace Geometry{ class Rectangle; }
+namespace Geometry {
+class Rectangle;
+}
 class HOCRDocument;
 class HOCRPage;
 class SearchReplaceFrame;
@@ -37,12 +39,16 @@ public:
 	OutputEditorHOCR(DisplayerToolHOCR* tool);
 	~OutputEditorHOCR();
 
-	Gtk::Box* getUI() const override { return ui.boxEditorHOCR; }
+	Gtk::Box* getUI() const override {
+		return ui.boxEditorHOCR;
+	}
 	ReadSessionData* initRead(tesseract::TessBaseAPI& tess) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
 	void finalizeRead(ReadSessionData *data) override;
-	bool getModified() const override{ return m_modified; }
+	bool getModified() const override {
+		return m_modified;
+	}
 	void onVisibilityChanged(bool /*visibile*/);
 
 	bool clear(bool hide = true) override;

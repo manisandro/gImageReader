@@ -22,7 +22,9 @@
 
 #include "common.hh"
 
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 
 struct Source {
 	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::ustring& _password, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
@@ -46,7 +48,9 @@ public:
 	~SourceManager();
 
 	int addSources(const std::vector<Glib::RefPtr<Gio::File>>& files);
-	bool addSource(Glib::RefPtr<Gio::File> file) { return addSources({file}) == 1; }
+	bool addSource(Glib::RefPtr<Gio::File> file) {
+		return addSources({file}) == 1;
+	}
 	std::vector<Source*> getSelectedSources() const;
 	sigc::signal<void> signal_sourceChanged() {
 		return m_signal_sourceChanged;

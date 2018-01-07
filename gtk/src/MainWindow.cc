@@ -141,20 +141,24 @@ MainWindow::MainWindow() {
 	m_idlegroup.push_back(ui.buttonAutolayout);
 	m_idlegroup.push_back(ui.menubuttonLanguages);
 
-	CONNECT(ui.windowMain, delete_event, [this](GdkEventAny* ev) { return closeEvent(ev); });
-	CONNECT(ui.buttonControls, toggled, [this]{ ui.toolbarDisplay->set_visible(ui.buttonControls->get_active()); });
+	CONNECT(ui.windowMain, delete_event, [this](GdkEventAny* ev) {
+		return closeEvent(ev);
+	});
+	CONNECT(ui.buttonControls, toggled, [this] { ui.toolbarDisplay->set_visible(ui.buttonControls->get_active()); });
 	CONNECT(m_acquirer, scanPageAvailable, [this](const std::string& filename) {
 		m_sourceManager->addSources({Gio::File::create_for_path(filename)});
 	});
 	CONNECT(m_sourceManager, sourceChanged, [this] { onSourceChanged(); });
 	CONNECT(ui.buttonOutputpane, toggled, [this] { if(m_outputEditor) m_outputEditor->getUI()->set_visible(ui.buttonOutputpane->get_active()); });
 	m_connection_setOCRMode = CONNECT(ui.comboOcrmode, changed, [this] { setOCRMode(ui.comboOcrmode->get_active_row_number()); });
-	CONNECT(m_recognizer, languageChanged, [this] (const Config::Lang& lang) { languageChanged(lang); });
-	CONNECT(ConfigSettings::get<ComboSetting>("outputorient"), changed, [this]{
+	CONNECT(m_recognizer, languageChanged, [this] (const Config::Lang& lang) {
+		languageChanged(lang);
+	});
+	CONNECT(ConfigSettings::get<ComboSetting>("outputorient"), changed, [this] {
 		ui.panedOutput->set_orientation(static_cast<Gtk::Orientation>(!ConfigSettings::get<ComboSetting>("outputorient")->getValue()));
 	});
 	CONNECT(ui.buttonProgressCancel, clicked, [this] { progressCancel(); });
-	CONNECT(ui.buttonAutolayout, clicked, [this]{ m_displayer->autodetectOCRAreas(); });
+	CONNECT(ui.buttonAutolayout, clicked, [this] { m_displayer->autodetectOCRAreas(); });
 
 	ADD_SETTING(VarSetting<std::vector<int>>("wingeom"));
 	ADD_SETTING(SwitchSettingT<Gtk::ToggleButton>("showcontrols", ui.buttonControls));

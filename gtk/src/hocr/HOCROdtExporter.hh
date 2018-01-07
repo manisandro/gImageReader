@@ -27,7 +27,9 @@
 class DisplayerToolHOCR;
 class HOCRDocument;
 class HOCRItem;
-namespace xmlpp { class Element; }
+namespace xmlpp {
+class Element;
+}
 struct zip;
 
 

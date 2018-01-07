@@ -57,11 +57,21 @@ public:
 	Cairo::RefPtr<Cairo::ImageSurface> getSelection(const Geometry::Rectangle& rect) const;
 	void clearSelection();
 
-	sigc::signal<void> signal_displayed_source_changed() { return m_signal_displayed_source_changed; }
-	sigc::signal<void, Geometry::Rectangle> signal_bbox_drawn() { return m_signal_bbox_drawn; }
-	sigc::signal<void, Geometry::Rectangle> signal_bbox_changed() { return m_signal_bbox_changed; }
-	sigc::signal<void, Geometry::Point> signal_position_picked() { return m_signal_position_picked; }
-	sigc::signal<void, Action> signal_action_changed() { return m_signal_action_changed; }
+	sigc::signal<void> signal_displayed_source_changed() {
+		return m_signal_displayed_source_changed;
+	}
+	sigc::signal<void, Geometry::Rectangle> signal_bbox_drawn() {
+		return m_signal_bbox_drawn;
+	}
+	sigc::signal<void, Geometry::Rectangle> signal_bbox_changed() {
+		return m_signal_bbox_changed;
+	}
+	sigc::signal<void, Geometry::Point> signal_position_picked() {
+		return m_signal_position_picked;
+	}
+	sigc::signal<void, Action> signal_action_changed() {
+		return m_signal_action_changed;
+	}
 
 private:
 	ClassData m_classdata;

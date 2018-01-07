@@ -27,7 +27,9 @@
 class DisplayerImageItem;
 class DisplayerToolHOCR;
 class FontComboBox;
-namespace Geometry { class Rectangle; }
+namespace Geometry {
+class Rectangle;
+}
 class HOCRDocument;
 class HOCRPage;
 class HOCRItem;

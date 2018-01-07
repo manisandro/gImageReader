@@ -27,8 +27,7 @@
 
 
 SourceManager::SourceManager(const Ui::MainWindow& _ui)
-	: ui(_ui)
-{
+	: ui(_ui) {
 	ui.treeviewSources->set_model(Gtk::ListStore::create(m_listViewCols));
 	ui.treeviewSources->append_column("", m_listViewCols.filename);
 	Gtk::TreeViewColumn* col = ui.treeviewSources->get_column(0);
@@ -53,7 +52,7 @@ SourceManager::SourceManager(const Ui::MainWindow& _ui)
 
 	m_clipboard = Gtk::Clipboard::get_for_display(Gdk::Display::get_default());
 
-	CONNECT(ui.buttonSources, toggled, [this]{ ui.notebookSources->set_visible(ui.buttonSources->get_active()); });
+	CONNECT(ui.buttonSources, toggled, [this] { ui.notebookSources->set_visible(ui.buttonSources->get_active()); });
 	CONNECT(ui.buttonSourcesAdd, clicked, [this] { openSources(); });
 	CONNECT(ui.menubuttonSourcesAdd, clicked, [this] { ui.menuitemSourcesPaste->set_sensitive(m_clipboard->wait_is_image_available()); });
 	CONNECT(ui.menuitemSourcesPaste, activate, [this] { pasteClipboard(); });
@@ -121,8 +120,7 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files)
 	return added;
 }
 
-bool SourceManager::querySourcePassword(const Glib::RefPtr<Gio::File>& file, Glib::ustring& password) const
-{
+bool SourceManager::querySourcePassword(const Glib::RefPtr<Gio::File>& file, Glib::ustring& password) const {
 	std::string filename = file->get_path();
 	bool success = true;
 #ifdef G_OS_WIN32

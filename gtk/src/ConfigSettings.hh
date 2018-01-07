@@ -61,7 +61,9 @@ public:
 		return m_key;
 	}
 	virtual void serialize() {}
-	sigc::signal<void> signal_changed(){ return m_signal_changed; }
+	sigc::signal<void> signal_changed() {
+		return m_signal_changed;
+	}
 
 protected:
 	ClassData m_classdata;
@@ -148,7 +150,9 @@ public:
 		get_default_settings()->set_int(m_key, m_widget->get_active_row_number());
 		m_signal_changed.emit();
 	}
-	int getValue() const { return m_widget->get_active_row_number(); }
+	int getValue() const {
+		return m_widget->get_active_row_number();
+	}
 
 private:
 	Gtk::ComboBox* m_widget;
@@ -166,7 +170,9 @@ public:
 		get_default_settings()->set_string(m_key, m_widget->get_active_font());
 		m_signal_changed.emit();
 	}
-	Glib::ustring getValue() const { return m_widget->get_active_font(); }
+	Glib::ustring getValue() const {
+		return m_widget->get_active_font();
+	}
 
 private:
 	FontComboBox* m_widget;

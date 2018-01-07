@@ -24,8 +24,12 @@
 
 #include <cairomm/cairomm.h>
 
-namespace tesseract { class TessBaseAPI; }
-namespace Ui { class MainWindow; }
+namespace tesseract {
+class TessBaseAPI;
+}
+namespace Ui {
+class MainWindow;
+}
 
 class Recognizer {
 public:

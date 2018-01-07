@@ -35,7 +35,9 @@ public:
 	OutputEditorText();
 	~OutputEditorText();
 
-	Gtk::Box* getUI() const override { return ui.boxEditorText; }
+	Gtk::Box* getUI() const override {
+		return ui.boxEditorText;
+	}
 	ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
 		return new TextReadSessionData;
 	}

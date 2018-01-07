@@ -47,10 +47,22 @@ public:
 	public:
 		ProgressMonitor(int total) : m_total(total) {}
 		virtual ~ProgressMonitor() {}
-		int increaseProgress() { Glib::Threads::Mutex::Lock lock(m_mutex); ++m_progress; }
-		virtual int getProgress() const { Glib::Threads::Mutex::Lock lock(m_mutex); return (m_progress * 100) / m_total; }
-		virtual void cancel() { Glib::Threads::Mutex::Lock lock(m_mutex); m_cancelled = true; }
-		bool cancelled() const{ Glib::Threads::Mutex::Lock lock(m_mutex); return m_cancelled; }
+		int increaseProgress() {
+			Glib::Threads::Mutex::Lock lock(m_mutex);
+			++m_progress;
+		}
+		virtual int getProgress() const {
+			Glib::Threads::Mutex::Lock lock(m_mutex);
+			return (m_progress * 100) / m_total;
+		}
+		virtual void cancel() {
+			Glib::Threads::Mutex::Lock lock(m_mutex);
+			m_cancelled = true;
+		}
+		bool cancelled() const {
+			Glib::Threads::Mutex::Lock lock(m_mutex);
+			return m_cancelled;
+		}
 
 	protected:
 		mutable Glib::Threads::Mutex m_mutex;

@@ -22,19 +22,16 @@
 FontComboBox::FontComboColums FontComboBox::s_fontComboCols;
 
 FontComboBox::FontComboBox()
-	: Gtk::ComboBox(true), Glib::ObjectBase("FontComboBox")
-{
+	: Gtk::ComboBox(true), Glib::ObjectBase("FontComboBox") {
 	init();
 }
 
 FontComboBox::FontComboBox(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder)
-	: Gtk::ComboBox(cobject), Glib::ObjectBase("FontComboBox")
-{
+	: Gtk::ComboBox(cobject), Glib::ObjectBase("FontComboBox") {
 	init();
 }
 
-void FontComboBox::init()
-{
+void FontComboBox::init() {
 	set_model(getModel());
 	set_entry_text_column(s_fontComboCols.fontFamily);
 	add_attribute(*get_first_cell(), "family", s_fontComboCols.fontFamily);
@@ -42,21 +39,18 @@ void FontComboBox::init()
 	completion->set_model(getModel());
 	completion->set_text_column(s_fontComboCols.fontFamily);
 	get_entry()->set_completion(completion);
-	CONNECT(this, changed, [this]{ m_signal_font_changed.emit(get_active_font()); });
+	CONNECT(this, changed, [this] { m_signal_font_changed.emit(get_active_font()); });
 }
 
-Glib::ustring FontComboBox::get_active_font() const
-{
+Glib::ustring FontComboBox::get_active_font() const {
 	return get_entry()->get_text();
 }
 
-void FontComboBox::set_active_font(const Glib::ustring& font)
-{
+void FontComboBox::set_active_font(const Glib::ustring& font) {
 	get_entry()->set_text(font);
 }
 
-Glib::RefPtr<Gtk::ListStore> FontComboBox::getModel()
-{
+Glib::RefPtr<Gtk::ListStore> FontComboBox::getModel() {
 	static Glib::RefPtr<Gtk::ListStore> fontComboModel;
 	if(!fontComboModel) {
 		std::vector<Glib::ustring> fontFamilies;

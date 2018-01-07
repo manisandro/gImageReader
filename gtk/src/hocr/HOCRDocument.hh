@@ -25,10 +25,12 @@
 #include <map>
 #include <set>
 
-namespace GtkSpell { class Checker; }
+namespace GtkSpell {
+class Checker;
+}
 namespace xmlpp {
-	class Document;
-	class Element;
+class Document;
+class Element;
 }
 
 class HOCRItem;
@@ -42,17 +44,27 @@ public:
 	HOCRDocument(GtkSpell::Checker* spell);
 	~HOCRDocument();
 
-	void setDefaultLanguage(const Glib::ustring& language) { m_defaultLanguage = language; }
+	void setDefaultLanguage(const Glib::ustring& language) {
+		m_defaultLanguage = language;
+	}
 	void recheckSpelling();
 
-	xmlpp::Document* getDomDocument() { return m_document; }
+	xmlpp::Document* getDomDocument() {
+		return m_document;
+	}
 	Glib::ustring toHTML();
 
 	Gtk::TreeIter addPage(const xmlpp::Element* pageElement, bool cleanGraphics);
-	const HOCRPage* page(int i) const{ return m_pages[i]; }
-	int pageCount() const { return m_pages.size(); }
+	const HOCRPage* page(int i) const {
+		return m_pages[i];
+	}
+	int pageCount() const {
+		return m_pages.size();
+	}
 
-	const HOCRItem* itemAtIndex(const Gtk::TreeIter& index) const{ return static_cast<HOCRItem*>(index.gobj()->user_data); }
+	const HOCRItem* itemAtIndex(const Gtk::TreeIter& index) const {
+		return static_cast<HOCRItem*>(index.gobj()->user_data);
+	}
 	bool editItemAttribute(const Gtk::TreeIter& index, const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass = Glib::ustring());
 	bool editItemText(const Gtk::TreeIter& index, const Glib::ustring& text);
 	Gtk::TreeIter mergeItems(const Gtk::TreeIter& parent, int startRow, int endRow);
@@ -68,12 +80,22 @@ public:
 	Gtk::TreeIter searchAtCanvasPos(const Gtk::TreeIter& pageIndex, const Geometry::Point& pos) const;
 	void convertSourcePaths(const std::string& basepath, bool absolute);
 
-	Gtk::TreePath get_root_path(int idx) const{ Gtk::TreePath path; path.push_back(idx); return path; }
+	Gtk::TreePath get_root_path(int idx) const {
+		Gtk::TreePath path;
+		path.push_back(idx);
+		return path;
+	}
 	// Upstream forgot the consts...
-	Gtk::TreeIter get_iter(const Gtk::TreePath& path) const { return static_cast<Gtk::TreeModel*>(const_cast<HOCRDocument*>(this))->get_iter(path); }
-	Gtk::TreeIter get_iter(const Glib::ustring& path) const { return static_cast<Gtk::TreeModel*>(const_cast<HOCRDocument*>(this))->get_iter(path); }
+	Gtk::TreeIter get_iter(const Gtk::TreePath& path) const {
+		return static_cast<Gtk::TreeModel*>(const_cast<HOCRDocument*>(this))->get_iter(path);
+	}
+	Gtk::TreeIter get_iter(const Glib::ustring& path) const {
+		return static_cast<Gtk::TreeModel*>(const_cast<HOCRDocument*>(this))->get_iter(path);
+	}
 
-	sigc::signal<void, const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&> signal_item_attribute_changed(){ return m_signal_item_attribute_changed; }
+	sigc::signal<void, const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&> signal_item_attribute_changed() {
+		return m_signal_item_attribute_changed;
+	}
 
 private:
 	int m_pageIdCounter = 0;
@@ -113,46 +135,69 @@ private:
 	void recursiveRowInserted(const Gtk::TreeIter& index);
 	void recomputeParentBBoxes(const HOCRItem* item);
 
-	HOCRItem* mutableItemAtIndex(const Gtk::TreeIter& index) const{ return static_cast<HOCRItem*>(index.gobj()->user_data); }
+	HOCRItem* mutableItemAtIndex(const Gtk::TreeIter& index) const {
+		return static_cast<HOCRItem*>(index.gobj()->user_data);
+	}
 };
 
 
-class HOCRItem
-{
+class HOCRItem {
 public:
 	// attrname : attrvalue : occurences
 	typedef std::map<Glib::ustring, std::map<Glib::ustring, int>> AttrOccurenceMap_t;
 
 	HOCRItem(xmlpp::Element* element, HOCRPage* page, HOCRItem *parent, int index = -1);
 	virtual ~HOCRItem();
-	HOCRPage* page() const{ return m_pageItem; }
-	const std::vector<HOCRItem*>& children() const{ return m_childItems; }
-	HOCRItem* parent() const{ return m_parentItem; }
-	int index() const{ return m_index; }
-	const xmlpp::Element* element() const{ return m_domElement; }
-	bool isEnabled() const{ return m_enabled; }
+	HOCRPage* page() const {
+		return m_pageItem;
+	}
+	const std::vector<HOCRItem*>& children() const {
+		return m_childItems;
+	}
+	HOCRItem* parent() const {
+		return m_parentItem;
+	}
+	int index() const {
+		return m_index;
+	}
+	const xmlpp::Element* element() const {
+		return m_domElement;
+	}
+	bool isEnabled() const {
+		return m_enabled;
+	}
 
 	// HOCR specific convenience getters
 	Glib::ustring itemClass() const;
-	const Geometry::Rectangle& bbox() const{ return m_bbox; }
+	const Geometry::Rectangle& bbox() const {
+		return m_bbox;
+	}
 	Glib::ustring text() const;
 	Glib::ustring lang() const;
-	const std::map<Glib::ustring, Glib::ustring> getTitleAttributes() const { return m_titleAttrs; }
+	const std::map<Glib::ustring, Glib::ustring> getTitleAttributes() const {
+		return m_titleAttrs;
+	}
 	Glib::ustring getTitleAttribute(const Glib::ustring& key) const;
 	std::map<Glib::ustring,Glib::ustring> getAllAttributes() const;
 	std::map<Glib::ustring,Glib::ustring> getAttributes(const std::vector<Glib::ustring>& names) const;
 	void getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring> > >& occurences) const;
 	Glib::ustring toHtml() const;
 	int baseLine() const;
-	Glib::ustring fontFamily() const{ return getTitleAttribute("x_font"); }
-	double fontSize() const{ return std::atof(getTitleAttribute("x_fsize").c_str()); }
+	Glib::ustring fontFamily() const {
+		return getTitleAttribute("x_font");
+	}
+	double fontSize() const {
+		return std::atof(getTitleAttribute("x_fsize").c_str());
+	}
 	bool fontBold() const;
 	bool fontItalic() const;
 
 	void addChild(HOCRItem* child);
 	void removeChild(HOCRItem* child);
 	std::vector<HOCRItem*> takeChildren();
-	void setEnabled(bool enabled) { m_enabled = enabled; }
+	void setEnabled(bool enabled) {
+		m_enabled = enabled;
+	}
 	void setText(const Glib::ustring& newText);
 	void setAttribute(const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass = Glib::ustring());
 
@@ -185,12 +230,22 @@ class HOCRPage : public HOCRItem {
 public:
 	HOCRPage(xmlpp::Element* element, int pageId, const Glib::ustring& language, bool cleanGraphics, int index);
 
-	const Glib::ustring& sourceFile() const{ return m_sourceFile; }
+	const Glib::ustring& sourceFile() const {
+		return m_sourceFile;
+	}
 	// const-refs here to avoid taking reference from temporaries
-	const int& pageNr() const{ return m_pageNr; }
-	const double& angle() const{ return m_angle; }
-	const int& resolution() const{ return m_resolution; }
-	int pageId() const{ return m_pageId; }
+	const int& pageNr() const {
+		return m_pageNr;
+	}
+	const double& angle() const {
+		return m_angle;
+	}
+	const int& resolution() const {
+		return m_resolution;
+	}
+	int pageId() const {
+		return m_pageId;
+	}
 	Glib::ustring title() const;
 
 private:

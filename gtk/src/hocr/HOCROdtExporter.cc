@@ -56,8 +56,7 @@ static zip_source* zip_source_buffer_from_data(zip* fzip, const char_t* data, st
 	return zip_source_buffer(fzip, copy, len, 1);
 }
 
-bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string& filebasename)
-{
+bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string& filebasename) {
 	Glib::ustring suggestion = filebasename;
 	if(suggestion.empty()) {
 		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
@@ -92,7 +91,7 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 				continue;
 			}
 			bool ok = false;
-			Utils::runInMainThreadBlocking([&]{ ok = setSource(page->sourceFile(), page->pageNr(), page->resolution(), page->angle()); });
+			Utils::runInMainThreadBlocking([&] { ok = setSource(page->sourceFile(), page->pageNr(), page->resolution(), page->angle()); });
 			if(!ok) {
 				continue;
 			}
@@ -273,14 +272,13 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 	return success;
 }
 
-void HOCROdtExporter::writeImage(zip* fzip, std::map<const HOCRItem*,Glib::ustring>& images, const HOCRItem* item)
-{
+void HOCROdtExporter::writeImage(zip* fzip, std::map<const HOCRItem*,Glib::ustring>& images, const HOCRItem* item) {
 	if(!item->isEnabled()) {
 		return;
 	}
 	if(item->itemClass() == "ocr_graphic") {
 		Cairo::RefPtr<Cairo::ImageSurface> selection;
-		Utils::runInMainThreadBlocking([&]{ selection = getSelection(item->bbox()); });
+		Utils::runInMainThreadBlocking([&] { selection = getSelection(item->bbox()); });
 		gchar* guuid = g_uuid_string_random();
 		Glib::ustring uuid(guuid);
 		uuid = uuid.substr(1, uuid.length() - 2); // Remove {}
@@ -302,8 +300,7 @@ void HOCROdtExporter::writeImage(zip* fzip, std::map<const HOCRItem*,Glib::ustri
 	}
 }
 
-void HOCROdtExporter::writeFontFaceDecls(std::set<Glib::ustring>& families, const HOCRItem* item, xmlpp::Element* parentEl)
-{
+void HOCROdtExporter::writeFontFaceDecls(std::set<Glib::ustring>& families, const HOCRItem* item, xmlpp::Element* parentEl) {
 	if(!item->isEnabled()) {
 		return;
 	}
@@ -324,8 +321,7 @@ void HOCROdtExporter::writeFontFaceDecls(std::set<Glib::ustring>& families, cons
 	}
 }
 
-void HOCROdtExporter::writeFontStyles(std::map<Glib::ustring,std::map<double,Glib::ustring>>& styles, const HOCRItem* item, xmlpp::Element* parentEl, int& counter)
-{
+void HOCROdtExporter::writeFontStyles(std::map<Glib::ustring,std::map<double,Glib::ustring>>& styles, const HOCRItem* item, xmlpp::Element* parentEl, int& counter) {
 	if(!item->isEnabled()) {
 		return;
 	}
@@ -355,8 +351,7 @@ void HOCROdtExporter::writeFontStyles(std::map<Glib::ustring,std::map<double,Gli
 	}
 }
 
-void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, int pageNr, int dpi, std::map<Glib::ustring,std::map<double,Glib::ustring>>& fontStyleNames, std::map<const HOCRItem*,Glib::ustring>& images)
-{
+void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, int pageNr, int dpi, std::map<Glib::ustring,std::map<double,Glib::ustring>>& fontStyleNames, std::map<const HOCRItem*,Glib::ustring>& images) {
 	if(!item->isEnabled()) {
 		return;
 	}
@@ -377,8 +372,7 @@ void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, 
 		imageEl->set_attribute("href", images[item], xlinkNS);
 		imageEl->set_attribute("type", "simple", xlinkNS);
 		imageEl->set_attribute("show", "embed", xlinkNS);
-	}
-	else if(itemClass == "ocr_par") {
+	} else if(itemClass == "ocr_par") {
 		xmlpp::Element* frameEl = parentEl->add_child("frame", drawNS);
 		frameEl->set_attribute("style-name", "F", drawNS);
 		frameEl->set_attribute("anchor-type", "page", textNS);

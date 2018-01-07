@@ -54,7 +54,7 @@ class Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
 public:
 	ETEXT_DESC desc;
 
-	ProgressMonitor(int nPages) : MainWindow::ProgressMonitor(nPages){
+	ProgressMonitor(int nPages) : MainWindow::ProgressMonitor(nPages) {
 		desc.progress = 0;
 		desc.cancel = cancelCallback;
 		desc.cancel_this = this;

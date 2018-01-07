@@ -31,7 +31,9 @@ public:
 	~SubstitutionsManager();
 	void set_visible(bool visible);
 
-	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> signal_apply_substitutions() { return m_signal_apply_substitutions; }
+	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> signal_apply_substitutions() {
+		return m_signal_apply_substitutions;
+	}
 
 private:
 	struct ReplaceListColumns : public Gtk::TreeModel::ColumnRecord {

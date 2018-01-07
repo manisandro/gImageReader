@@ -32,7 +32,9 @@ class DisplayerImageItem;
 class DisplayerTool;
 class DisplayRenderer;
 class Source;
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 
 class Displayer {
 public:
@@ -48,7 +50,9 @@ public:
 	int getCurrentPage() const;
 	int getCurrentResolution() const;
 	double getCurrentAngle() const;
-	double getCurrentScale() const { return m_scale; }
+	double getCurrentScale() const {
+		return m_scale;
+	}
 	std::string getCurrentImage(int& page) const;
 	int getNPages() const;
 

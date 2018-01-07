@@ -24,9 +24,9 @@
 #include <list>
 
 namespace xmlpp {
-	class Document;
-	class Element;
-	class Node;
+class Document;
+class Element;
+class Node;
 }
 
 class XmlUtils {

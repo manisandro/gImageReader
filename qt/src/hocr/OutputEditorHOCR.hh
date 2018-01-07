@@ -43,7 +43,9 @@ public:
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
 	void finalizeRead(ReadSessionData *data) override;
-	bool getModified() const override{ return m_modified; }
+	bool getModified() const override {
+		return m_modified;
+	}
 
 public slots:
 	bool clear(bool hide = true) override;
@@ -82,11 +84,19 @@ private:
 private slots:
 	void addGraphicRegion(const QRect& bbox);
 	void addPage(const QString& hocrText, ReadSessionData data);
-	void expandItemClass(){ expandCollapseItemClass(true); }
-	void collapseItemClass(){ expandCollapseItemClass(false); }
+	void expandItemClass() {
+		expandCollapseItemClass(true);
+	}
+	void collapseItemClass() {
+		expandCollapseItemClass(false);
+	}
 	void navigateTargetChanged();
-	void navigateNext(){ navigateNextPrev(true); }
-	void navigatePrev(){ navigateNextPrev(false); }
+	void navigateNext() {
+		navigateNextPrev(true);
+	}
+	void navigatePrev() {
+		navigateNextPrev(false);
+	}
 	void pickItem(const QPoint& point);
 	void setFont();
 	void setModified();
@@ -100,8 +110,7 @@ private slots:
 	void applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase);
 };
 
-class HOCRAttributeEditor : public QLineEdit
-{
+class HOCRAttributeEditor : public QLineEdit {
 	Q_OBJECT
 public:
 	HOCRAttributeEditor(const QString& value, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass);
@@ -121,8 +130,7 @@ private slots:
 	void validateChanges();
 };
 
-class HOCRAttributeCheckbox : public QCheckBox
-{
+class HOCRAttributeCheckbox : public QCheckBox {
 	Q_OBJECT
 public:
 	HOCRAttributeCheckbox(Qt::CheckState value, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass);

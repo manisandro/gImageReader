@@ -156,8 +156,7 @@ void OutputEditorText::replaceAll(const QString &searchstr, const QString &repla
 	MAIN->popState();
 }
 
-void OutputEditorText::applySubstitutions(const QMap<QString, QString> &substitutions, bool matchCase)
-{
+void OutputEditorText::applySubstitutions(const QMap<QString, QString> &substitutions, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
 	QTextCursor cursor = ui.plainTextEditOutput->regionBounds();
 	int end = cursor.position();

@@ -30,8 +30,7 @@
 #undef USE_STD_NAMESPACE
 
 Displayer::Displayer(const Ui::MainWindow& _ui)
-	: ui(_ui)
-{
+	: ui(_ui) {
 	m_hadj = ui.scrollwinDisplay->get_hadjustment();
 	m_vadj = ui.scrollwinDisplay->get_vadjustment();
 
@@ -53,13 +52,28 @@ Displayer::Displayer(const Ui::MainWindow& _ui)
 	m_connection_conSpinChanged = CONNECT(ui.spinContrast, value_changed, [this] { queueRenderImage(); });
 	m_connection_resSpinChanged = CONNECT(ui.spinResolution, value_changed, [this] { queueRenderImage(); });
 	m_connection_invcheckToggled = CONNECT(ui.checkInvert, toggled, [this] { queueRenderImage(); });
-	CONNECT(ui.viewportDisplay, size_allocate, [this](Gdk::Rectangle&) { resizeEvent(); });
-	CONNECT(ui.viewportDisplay, key_press_event, [this](GdkEventKey* ev) { return keyPressEvent(ev); });
-	CONNECT(ui.viewportDisplay, motion_notify_event, [this](GdkEventMotion* ev) { return mouseMoveEvent(ev); });
-	CONNECT(ui.viewportDisplay, button_press_event, [this](GdkEventButton* ev) { return mousePressEvent(ev); });
-	CONNECT(ui.viewportDisplay, button_release_event, [this](GdkEventButton* ev) { return mouseReleaseEvent(ev); });
-	CONNECT(ui.viewportDisplay, scroll_event, [this](GdkEventScroll* ev) { return scrollEvent(ev); });
-	CONNECT(ui.drawingareaDisplay, draw, [this](const Cairo::RefPtr<Cairo::Context>& ctx) { drawCanvas(ctx); return false; });
+	CONNECT(ui.viewportDisplay, size_allocate, [this](Gdk::Rectangle&) {
+		resizeEvent();
+	});
+	CONNECT(ui.viewportDisplay, key_press_event, [this](GdkEventKey* ev) {
+		return keyPressEvent(ev);
+	});
+	CONNECT(ui.viewportDisplay, motion_notify_event, [this](GdkEventMotion* ev) {
+		return mouseMoveEvent(ev);
+	});
+	CONNECT(ui.viewportDisplay, button_press_event, [this](GdkEventButton* ev) {
+		return mousePressEvent(ev);
+	});
+	CONNECT(ui.viewportDisplay, button_release_event, [this](GdkEventButton* ev) {
+		return mouseReleaseEvent(ev);
+	});
+	CONNECT(ui.viewportDisplay, scroll_event, [this](GdkEventScroll* ev) {
+		return scrollEvent(ev);
+	});
+	CONNECT(ui.drawingareaDisplay, draw, [this](const Cairo::RefPtr<Cairo::Context>& ctx) {
+		drawCanvas(ctx);
+		return false;
+	});
 	CONNECT(ui.buttonZoomin, clicked, [this] { setZoom(Zoom::In); });
 	CONNECT(ui.buttonZoomout, clicked, [this] { setZoom(Zoom::Out); });
 	m_connection_zoomfitClicked = CONNECT(ui.buttonZoomfit, clicked, [this] { setZoom(Zoom::Fit); });
@@ -98,18 +112,15 @@ void Displayer::positionCanvas() {
 	ui.drawingareaDisplay->queue_draw();
 }
 
-int Displayer::getCurrentPage() const
-{
+int Displayer::getCurrentPage() const {
 	return ui.spinPage->get_value_as_int();
 }
 
-int Displayer::getCurrentResolution() const
-{
+int Displayer::getCurrentResolution() const {
 	return ui.spinResolution->get_value_as_int();
 }
 
-double Displayer::getCurrentAngle() const
-{
+double Displayer::getCurrentAngle() const {
 	return ui.spinRotate->get_value();
 }
 
@@ -224,8 +235,7 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	return true;
 }
 
-bool Displayer::setup(const int* page, const int* resolution, const double* angle)
-{
+bool Displayer::setup(const int* page, const int* resolution, const double* angle) {
 	bool changed = false;
 	if(page) {
 		changed |= *page != ui.spinPage->get_value_as_int();
@@ -550,8 +560,7 @@ bool Displayer::scrollEvent(GdkEventScroll *ev) {
 	return false;
 }
 
-std::pair<int, int> Displayer::getPointVisible(const Geometry::Point& p) const
-{
+std::pair<int, int> Displayer::getPointVisible(const Geometry::Point& p) const {
 	// 0 means visible, -1 means to the left/top of visible area, +1 means to the right/bottom of visible area
 	int vx = 0;
 	int vy = 0;
@@ -583,8 +592,7 @@ void Displayer::ensureVisible(double evx, double evy) {
 	}
 }
 
-void Displayer::ensureVisible(const Geometry::Rectangle& rect)
-{
+void Displayer::ensureVisible(const Geometry::Rectangle& rect) {
 	Geometry::Point p1 = mapToView(Geometry::Point(rect.x, rect.y));
 	Geometry::Point p2 = mapToView(Geometry::Point(rect.x + rect.width, rect.y + rect.height));
 	std::pair<int,int> vis1 = getPointVisible(p1);
@@ -632,7 +640,7 @@ void Displayer::resortItems() {
 }
 
 Geometry::Rectangle Displayer::getSceneBoundingRect() const {
-	if(!m_image){
+	if(!m_image) {
 		return Geometry::Rectangle();
 	}
 	int w = m_image->get_width();
@@ -651,11 +659,10 @@ Geometry::Point Displayer::mapToSceneClamped(const Geometry::Point& p) const {
 	return Geometry::Point(x, y);
 }
 
-Geometry::Point Displayer::mapToView(const Geometry::Point &p) const
-{
+Geometry::Point Displayer::mapToView(const Geometry::Point &p) const {
 	Gtk::Allocation alloc = ui.drawingareaDisplay->get_allocation();
 	return Geometry::Point(alloc.get_x() + 0.5 * alloc.get_width()+ p.x * m_scale,
-						   alloc.get_y() + 0.5 * alloc.get_height() + p.y * m_scale);
+	                       alloc.get_y() + 0.5 * alloc.get_height() + p.y * m_scale);
 }
 
 Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle &rect) const {

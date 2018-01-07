@@ -29,7 +29,9 @@ public:
 	Glib::ustring get_active_font() const;
 	void set_active_font(const Glib::ustring& font);
 
-	sigc::signal<void, Glib::ustring> signal_font_changed() { return m_signal_font_changed; }
+	sigc::signal<void, Glib::ustring> signal_font_changed() {
+		return m_signal_font_changed;
+	}
 
 private:
 	ClassData m_classdata;

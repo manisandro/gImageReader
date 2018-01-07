@@ -47,7 +47,7 @@ class Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
 public:
 	ETEXT_DESC desc;
 
-	ProgressMonitor(int nPages) : MainWindow::ProgressMonitor(nPages){
+	ProgressMonitor(int nPages) : MainWindow::ProgressMonitor(nPages) {
 		desc.progress = 0;
 		desc.cancel = cancelCallback;
 		desc.cancel_this = this;
@@ -99,12 +99,14 @@ private:
 };
 
 Recognizer::Recognizer(const Ui::MainWindow& _ui)
-	: ui(_ui)
-{
+	: ui(_ui) {
 	CONNECT(ui.buttonRecognize, clicked, [this] { recognizeButtonClicked(); });
 	CONNECT(ui.menuitemRecognizeCurrent, activate, [this] { recognizeCurrentPage(); });
 	CONNECT(ui.menuitemRecognizeMultiple, activate, [this] { recognizeMultiplePages();; });
-	CONNECT(ui.entryPageRange, focus_in_event, [this](GdkEventFocus*) { Utils::clear_error_state(ui.entryPageRange); return false; });
+	CONNECT(ui.entryPageRange, focus_in_event, [this](GdkEventFocus*) {
+		Utils::clear_error_state(ui.entryPageRange);
+		return false;
+	});
 
 	ADD_SETTING(VarSetting<Glib::ustring>("language"));
 	ADD_SETTING(ComboSetting("ocrregionstrategy", ui.comboPageRangeRegions));
@@ -177,7 +179,9 @@ bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* languag
 }
 
 void Recognizer::updateLanguagesMenu() {
-	ui.menuLanguages->foreach([this](Gtk::Widget& w) { ui.menuLanguages->remove(w); });
+	ui.menuLanguages->foreach([this](Gtk::Widget& w) {
+	ui.menuLanguages->remove(w);
+	});
 	m_langMenuRadioGroup = Gtk::RadioButtonGroup();
 	m_langMenuCheckGroup = std::vector<std::pair<Gtk::CheckMenuItem*, Glib::ustring>>();
 	m_psmRadioGroup = Gtk::RadioButtonGroup();
