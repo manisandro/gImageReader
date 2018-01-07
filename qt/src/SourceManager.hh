@@ -72,6 +72,7 @@ private:
 	int m_pasteCount = 0;
 
 	bool querySourcePassword(const QString& filename, QByteArray& password) const;
+	bool checkTextLayer(const QString& filename) const;
 	void savePixmap(const QPixmap& pixmap, const QString& displayname);
 	void selectionChanged();
 	bool eventFilter(QObject* object, QEvent* event) override;
