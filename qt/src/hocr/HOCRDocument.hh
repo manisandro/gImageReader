@@ -120,6 +120,8 @@ public:
 	int baseLine() const;
 	QString fontFamily() const{ return m_titleAttrs["x_font"]; }
 	double fontSize() const{ return m_titleAttrs["x_fsize"].toDouble(); }
+	bool fontBold() const{ return !m_domElement.elementsByTagName("strong").isEmpty(); }
+	bool fontItalic() const { return !m_domElement.elementsByTagName("em").isEmpty(); }
 
 	void addChild(HOCRItem* child);
 	void removeChild(HOCRItem* child);

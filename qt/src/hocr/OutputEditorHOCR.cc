@@ -145,6 +145,29 @@ void HOCRAttributeEditor::validateChanges() {
 
 ///////////////////////////////////////////////////////////////////////////////
 
+HOCRAttributeCheckbox::HOCRAttributeCheckbox(Qt::CheckState value, HOCRDocument *doc, const QModelIndex &itemIndex, const QString &attrName, const QString &attrItemClass)
+	: m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_attrItemClass(attrItemClass)
+{
+	setCheckState(value);
+	connect(m_doc, SIGNAL(itemAttributeChanged(QModelIndex,QString, QString)), this, SLOT(updateValue(QModelIndex,QString, QString)));
+	connect(this, SIGNAL(stateChanged(int)), this, SLOT(valueChanged()));
+}
+
+void HOCRAttributeCheckbox::updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value) {
+	if(itemIndex == m_itemIndex && name == m_attrName) {
+		blockSignals(true);
+		setChecked(value == "1");
+		blockSignals(false);
+	}
+}
+
+void HOCRAttributeCheckbox::valueChanged()
+{
+	m_doc->editItemAttribute(m_itemIndex, m_attrName, isChecked() ? "1" : "0", m_attrItemClass);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
 class HOCRTextDelegate : public QStyledItemDelegate {
 public:
 	using QStyledItemDelegate::QStyledItemDelegate;
@@ -472,6 +495,9 @@ QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const 
 			combo->lineEdit()->setPlaceholderText(_("Multiple values"));
 		}
 		return combo;
+	} else if(attrName == "bold" || attrName == "italic") {
+		Qt::CheckState value = multiple ? Qt::PartiallyChecked : attrValue == "1" ? Qt::Checked : Qt::Unchecked;
+		return new HOCRAttributeCheckbox(value, m_document, itemIndex, attrName, attrItemClass);
 	} else {
 		QLineEdit* lineEdit = new QLineEdit(attrValue);
 		lineEdit->setFrame(false);

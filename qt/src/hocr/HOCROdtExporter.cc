@@ -131,6 +131,17 @@ bool HOCROdtExporter::run(const HOCRDocument *hocrdocument, QString &filebasenam
 		writer.writeStartElement(officeNS, "document-content");
 		writer.writeAttribute(officeNS, "version", "1.2");
 
+		// - Font face decls
+		writer.writeStartElement(officeNS, "font-face-decls");
+		QSet<QString> families;
+		for(int i = 0; i < pageCount; ++i) {
+			const HOCRPage* page = hocrdocument->page(i);
+			if(page->isEnabled()) {
+				writeFontFaceDecls(families, page, writer);
+			}
+		}
+		writer.writeEndElement();
+
 		// - Page styles
 		writer.writeStartElement(officeNS, "automatic-styles");
 		for(int i = 0; i < pageCount; ++i) {
@@ -200,30 +211,14 @@ bool HOCROdtExporter::run(const HOCRDocument *hocrdocument, QString &filebasenam
 		writer.writeEndElement();
 
 		// -- Text styles
+		int counter = 0;
 		QMap<QString,QMap<double,QString>> fontStyles;
 		for(int i = 0; i < pageCount; ++i) {
 			const HOCRPage* page = hocrdocument->page(i);
 			if(page->isEnabled()) {
 				for(const HOCRItem* item : page->children()) {
-					collectFontStyles(fontStyles, item);
+					writeFontStyles(fontStyles, item, writer, counter);
 				}
-			}
-		}
-		int counter = 0;
-		for(auto ffit = fontStyles.begin(), ffitEnd = fontStyles.end(); ffit != ffitEnd; ++ffit) {
-			QString fontFamily = ffit.key();
-			for(auto fsit = ffit.value().begin(), fsitEnd = ffit.value().end(); fsit != fsitEnd; ++fsit) {
-				double fontSize = fsit.key();
-				QString styleName = QString("T%1").arg(++counter);
-				fsit.value() = styleName;
-				writer.writeStartElement(styleNS, "style");
-				writer.writeAttribute(styleNS, "name", styleName);
-				writer.writeAttribute(styleNS, "family", "text");
-				writer.writeStartElement(styleNS, "text-properties");
-				writer.writeAttribute(foNS, "font-name", fontFamily);
-				writer.writeAttribute(foNS, "font-size", QString("%1pt").arg(fontSize));
-				writer.writeEndElement(); // text-properties
-				writer.writeEndElement(); // style
 			}
 		}
 
@@ -279,16 +274,54 @@ void HOCROdtExporter::writeImage(QuaZip& zip, QMap<const HOCRItem*,QString>& ima
 	}
 }
 
-void HOCROdtExporter::collectFontStyles(QMap<QString,QMap<double,QString>>& styles, const HOCRItem* item)
+void HOCROdtExporter::writeFontFaceDecls(QSet<QString>& families, const HOCRItem* item, QXmlStreamWriter& writer)
 {
 	if(!item->isEnabled()) {
 		return;
 	}
 	if(item->itemClass() == "ocrx_word") {
-		styles[item->fontFamily()].insert(item->fontSize(), "");
+		if(!families.contains(item->fontFamily())) {
+			writer.writeEmptyElement(styleNS, "font-face");
+			writer.writeAttribute(styleNS, "name", item->fontFamily());
+			writer.writeAttribute(svgNS, "font-family", item->fontFamily());
+			families.insert(item->fontFamily());
+		}
 	} else {
 		for(const HOCRItem* item : item->children()) {
-			collectFontStyles(styles, item);
+			writeFontFaceDecls(families, item, writer);
+		}
+	}
+}
+
+void HOCROdtExporter::writeFontStyles(QMap<QString,QMap<double,QString>>& styles, const HOCRItem* item, QXmlStreamWriter& writer, int& counter)
+{
+	if(!item->isEnabled()) {
+		return;
+	}
+	if(item->itemClass() == "ocrx_word") {
+		QString fontKey = item->fontFamily() + (item->fontBold() ? "@bold" : "") + (item->fontItalic() ? "@italic" : "");
+		if(!styles.contains(fontKey) || !styles[fontKey].contains(item->fontSize())) {
+			QString styleName = QString("T%1").arg(++counter);
+			writer.writeStartElement(styleNS, "style");
+			writer.writeAttribute(styleNS, "name", styleName);
+			writer.writeAttribute(styleNS, "family", "text");
+			writer.writeStartElement(styleNS, "text-properties");
+			writer.writeAttribute(styleNS, "font-name", item->fontFamily());
+			writer.writeAttribute(foNS, "font-size", QString("%1pt").arg(item->fontSize()));
+			if(item->fontBold()) {
+				writer.writeAttribute(foNS, "font-weight", "bold");
+			}
+			if(item->fontItalic()) {
+				writer.writeAttribute(foNS, "font-style", "italic");
+			}
+			writer.writeEndElement(); // text-properties
+			writer.writeEndElement(); // style
+
+			styles[fontKey].insert(item->fontSize(), styleName);
+		}
+	} else {
+		for(const HOCRItem* item : item->children()) {
+			writeFontStyles(styles, item, writer, counter);
 		}
 	}
 }
@@ -354,14 +387,16 @@ void HOCROdtExporter::printItem(QXmlStreamWriter& writer, const HOCRItem* item, 
 		if(!firstWord) {
 			return;
 		}
-		QString currentFontStyleName = fontStyleNames[firstWord->fontFamily()][firstWord->fontSize()];
+		QString fontKey = firstWord->fontFamily() + (firstWord->fontBold() ? "@bold" : "") + (firstWord->fontItalic() ? "@italic" : "");
+		QString currentFontStyleName = fontStyleNames[fontKey][firstWord->fontSize()];
 		writer.writeStartElement(textNS, "span");
 		writer.writeAttribute(textNS, "style-name", currentFontStyleName);
 		writer.writeCharacters(firstWord->text());
 		++iChild;
 		for(; iChild < nChilds; ++iChild) {
 			const HOCRItem* child = item->children()[iChild];
-			QString fontStyleName = fontStyleNames[child->fontFamily()][child->fontSize()];
+			fontKey = child->fontFamily() + (child->fontBold() ? "@bold" : "") + (child->fontItalic() ? "@italic" : "");
+			QString fontStyleName = fontStyleNames[fontKey][child->fontSize()];
 			if(fontStyleName != currentFontStyleName) {
 				currentFontStyleName = fontStyleName;
 				writer.writeEndElement();

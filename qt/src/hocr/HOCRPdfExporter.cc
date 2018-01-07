@@ -61,15 +61,15 @@ public:
 		: m_painter(painter), m_defaultFont(defaultFont) {
 		m_curFont = painter->font();
 	}
-	void setFontFamily(const QString& family) override {
-		if(family != m_curFont.family()) {
-			if(m_fontDatabase.hasFamily(family)) {
-				m_curFont.setFamily(family);
-			}  else {
-				m_curFont = m_defaultFont;
-			}
-			m_painter->setFont(m_curFont);
+	void setFontFamily(const QString& family, bool bold, bool italic) override {
+		if(m_fontDatabase.hasFamily(family)) {
+			m_curFont.setFamily(family);
+		}  else {
+			m_curFont = m_defaultFont;
 		}
+		m_curFont.setBold(bold);
+		m_curFont.setItalic(italic);
+		m_painter->setFont(m_curFont);
 	}
 	void setFontSize(double pointSize) override {
 		if(pointSize != m_curFont.pointSize()) {
@@ -131,11 +131,11 @@ public:
 class HOCRPdfExporter::PoDoFoPDFPainter : public HOCRPdfExporter::PDFPainter {
 public:
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, double defaultFontSize)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const QString& defaultFontFamily, double defaultFontSize)
 #else
-	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, double defaultFontSize)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const QString& defaultFontFamily, double defaultFontSize)
 #endif
-		: m_document(document), m_painter(painter), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontSize(defaultFontSize) {
+		: m_document(document), m_painter(painter), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontFamily(defaultFontFamily), m_defaultFontSize(defaultFontSize) {
 	}
 	~PoDoFoPDFPainter() {
 #if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
@@ -147,7 +147,7 @@ public:
 	void setPage(PoDoFo::PdfPage* page, double scaleFactor, double offsetX = 0.0, double offsetY = 0.0) {
 		m_painter->SetPage(page);
 		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
-		m_painter->SetFont(m_defaultFont);
+		m_painter->SetFont(getFont(m_defaultFontFamily, false, false));
 		if(m_defaultFontSize > 0) {
 			m_painter->GetFont()->SetFontSize(m_defaultFontSize);
 		}
@@ -164,9 +164,9 @@ public:
 		}
 		return true;
 	}
-	void setFontFamily(const QString& family) override {
+	void setFontFamily(const QString& family, bool bold, bool italic) override {
 		float curSize = m_painter->GetFont()->GetFontSize();
-		m_painter->SetFont(getFont(family));
+		m_painter->SetFont(getFont(family, bold, italic));
 		m_painter->GetFont()->SetFontSize(curSize);
 	}
 	void setFontSize(double pointSize) override {
@@ -244,29 +244,29 @@ private:
 	PoDoFo::PdfEncoding* m_pdfFontEncoding;
 #endif
 	PoDoFo::PdfFont* m_defaultFont;
+	QString m_defaultFontFamily;
 	double m_defaultFontSize = -1.0;
 	double m_scaleFactor = 1.0;
 	double m_pageHeight = 0.0;
 	double m_offsetX = 0.0;
 	double m_offsetY = 0.0;
-	PoDoFo::PdfFont* getFont(const QString& family) {
-		auto it = m_fontCache.find(family);
+	PoDoFo::PdfFont* getFont(QString family, bool bold, bool italic) {
+		QString key = family + (bold ? "@bold" : "") + (italic ? "@italic" : "");
+		auto it = m_fontCache.find(key);
 		if(it == m_fontCache.end()) {
-			if(!m_fontDatabase.hasFamily(family)) {
-				it = m_fontCache.insert(family, m_defaultFont);;
-			} else {
-				QFontInfo info = QFontInfo(QFont(family));
-				PoDoFo::PdfFont* font = nullptr;
-				try {
+			if(family.isEmpty() || !m_fontDatabase.hasFamily(family)) {
+				family = m_defaultFontFamily;
+			}
+			PoDoFo::PdfFont* font = nullptr;
+			try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-					font = m_document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), false, m_pdfFontEncoding);
+				font = m_document->CreateFontSubset(family.toLocal8Bit().data(), bold, italic, false, m_pdfFontEncoding);
 #else
-					font = m_document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), m_pdfFontEncoding);
+				font = m_document->CreateFontSubset(family.toLocal8Bit().data(), bold, italic, m_pdfFontEncoding);
 #endif
-					it = m_fontCache.insert(family, font);
-				} catch(PoDoFo::PdfError& /*err*/) {
-					it = m_fontCache.insert(family, m_defaultFont);;
-				}
+				it = m_fontCache.insert(key, font);
+			} catch(PoDoFo::PdfError& /*err*/) {
+				it = m_fontCache.insert(key, m_defaultFont);;
 			}
 		}
 		return it.value();
@@ -385,6 +385,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 
 	bool accepted = false;
 	PoDoFo::PdfStreamedDocument* document = nullptr;
+	QString defaultFontFamily;
 	PoDoFo::PdfFont* defaultPdfFont = nullptr;
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
@@ -441,18 +442,20 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 			continue;
 		}
 
+		// Attempt to load the default/fallback font to ensure it is valid
 		QFont defaultFont = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont() : ui.comboBoxFallbackFontFamily->currentFont();
 		QFontInfo info(defaultFont);
 		try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-			defaultPdfFont = document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), false, pdfFontEncoding);
+			defaultPdfFont = document->CreateFontSubset(info.family().toLocal8Bit().data(), false, false, false, pdfFontEncoding);
 #else
-			defaultPdfFont = document->CreateFontSubset(info.family().toLocal8Bit().data(), info.bold(), info.italic(), pdfFontEncoding);
+			defaultPdfFont = document->CreateFontSubset(info.family().toLocal8Bit().data(), false, false, pdfFontEncoding);
 #endif
 		} catch(PoDoFo::PdfError& err) {
 			QMessageBox::critical(MAIN, _("Error"), _("The PDF library could not load the font '%1': %2.").arg(defaultFont.family()).arg(err.what()));
 			continue;
 		}
+		defaultFontFamily = defaultFont.family();
 
 		break;
 	}
@@ -485,7 +488,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	}
 
 	PoDoFo::PdfPainter painter;
-	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont, pdfSettings.fontSize);
+	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont, defaultFontFamily, pdfSettings.fontSize);
 
 	QStringList failed;
 	int pageCount = m_hocrdocument->pageCount();
@@ -595,7 +598,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 				}
 				QRect wordRect = wordItem->bbox();
 				if(pdfSettings.fontFamily.isEmpty()) {
-					painter.setFontFamily(wordItem->fontFamily());
+					painter.setFontFamily(wordItem->fontFamily(), wordItem->fontBold(), wordItem->fontItalic());
 				}
 				if(pdfSettings.fontSize == -1) {
 					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
@@ -617,7 +620,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 			HOCRItem* wordItem = item->children()[iWord];
 			QRect wordRect = wordItem->bbox();
 			if(pdfSettings.fontFamily.isEmpty()) {
-				painter.setFontFamily(wordItem->fontFamily());
+				painter.setFontFamily(wordItem->fontFamily(), wordItem->fontBold(), wordItem->fontItalic());
 			}
 			if(pdfSettings.fontSize == -1) {
 				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
@@ -660,7 +663,7 @@ void HOCRPdfExporter::updatePreview() {
 	painter.setRenderHint(QPainter::Antialiasing);
 	QPainterPDFPainter pdfPrinter(&painter, defaultFont);
 	if(!pdfSettings.fontFamily.isEmpty()) {
-		pdfPrinter.setFontFamily(pdfSettings.fontFamily);
+		pdfPrinter.setFontFamily(pdfSettings.fontFamily, false, false);
 	}
 	if(pdfSettings.fontSize != -1) {
 		pdfPrinter.setFontSize(pdfSettings.fontSize);

@@ -44,7 +44,8 @@ private:
 	DisplayerToolHOCR* m_displayerTool;
 
 	void writeImage(QuaZip& zip, QMap<const HOCRItem*, QString>& images, const HOCRItem* item);
-	void collectFontStyles(QMap<QString, QMap<double, QString> >& styles, const HOCRItem* item);
+	void writeFontFaceDecls(QSet<QString>& families, const HOCRItem* item, QXmlStreamWriter& writer);
+	void writeFontStyles(QMap<QString, QMap<double, QString> >& styles, const HOCRItem* item, QXmlStreamWriter& writer, int& counter);
 	void printItem(QXmlStreamWriter& writer, const HOCRItem* item, int pageNr, int dpi, const QMap<QString, QMap<double, QString> >& fontStyleNames, const QMap<const HOCRItem*, QString>& images);
 
 private slots:

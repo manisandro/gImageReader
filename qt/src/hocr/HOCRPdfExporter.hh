@@ -57,7 +57,7 @@ private:
 
 	class PDFPainter {
 	public:
-		virtual void setFontFamily(const QString& family) = 0;
+		virtual void setFontFamily(const QString& family, bool bold, bool italic) = 0;
 		virtual void setFontSize(double pointSize) = 0;
 		virtual void drawText(double x, double y, const QString& text) = 0;
 		virtual void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) = 0;

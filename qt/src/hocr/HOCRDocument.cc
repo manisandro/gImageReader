@@ -583,7 +583,11 @@ QVector<HOCRItem*> HOCRItem::takeChildren()
 
 void HOCRItem::setText(const QString& newText)
 {
-	m_domElement.replaceChild(m_domElement.ownerDocument().createTextNode(newText), m_domElement.firstChild());
+	QDomElement leaf = m_domElement;
+	while(!leaf.firstChildElement().isNull()) {
+		leaf = leaf.firstChildElement();
+	}
+	leaf.replaceChild(leaf.ownerDocument().createTextNode(newText), leaf.firstChild());
 }
 
 QMap<QString,QString> HOCRItem::getAllAttributes() const
@@ -601,6 +605,13 @@ QMap<QString,QString> HOCRItem::getAllAttributes() const
 			attrValues.insert(attrName, attribNode.nodeValue());
 		}
 	}
+	if(itemClass() == "ocrx_word") {
+		if(!attrValues.contains("title:x_font")) {
+			attrValues.insert("title:x_font", "");
+		}
+		attrValues.insert("bold", fontBold() ? "1" : "0");
+		attrValues.insert("italic", fontItalic() ? "1" : "0");
+	}
 	return attrValues;
 }
 
@@ -612,6 +623,10 @@ QMap<QString,QString> HOCRItem::getAttributes(const QList<QString>& names = QLis
 		if(parts.size() > 1) {
 			Q_ASSERT(parts[0] == "title");
 			attrValues.insert(attrName, m_titleAttrs.value(parts[1]));
+		} else if(attrName == "bold") {
+			attrValues.insert(attrName, fontBold() ? "1" : "0");
+		} else if(attrName == "italic") {
+			attrValues.insert(attrName, fontItalic() ? "1" : "0");
 		} else {
 			attrValues.insert(attrName, m_domElement.attribute(attrName));
 		}
@@ -623,7 +638,7 @@ void HOCRItem::getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QStrin
 {
 	static QMap<QString,QStringList> s_propagatableAttributes = {
 		{"ocr_line", {"title:baseline"}},
-		{"ocrx_word", {"lang", "title:x_fsize", "title:x_font"}}
+		{"ocrx_word", {"lang", "title:x_fsize", "title:x_font", "bold", "italic"}}
 	};
 
 	QString childClass = m_childItems.isEmpty() ? "" : m_childItems.front()->itemClass();
@@ -652,7 +667,25 @@ void HOCRItem::setAttribute(const QString& name, const QString& value, const QSt
 		return;
 	}
 	QStringList parts = name.split(":");
-	if(parts.size() < 2) {
+	if(name == "bold" || name == "italic") {
+		QString elemName = (name == "bold" ? "strong" : "em");
+		bool currentState = (name == "bold" ? fontBold() : fontItalic());
+		if(value == "1" && !currentState) {
+			QDomElement elem = m_domElement.ownerDocument().createElement(elemName);
+			QDomNodeList children = m_domElement.childNodes();
+			for(int i = 0, n = children.size(); i < n; ++i) {
+				elem.appendChild(children.at(i));
+			}
+			m_domElement.appendChild(elem);
+		} else if(value == "0" && currentState) {
+			QDomElement elem = m_domElement.elementsByTagName(elemName).at(0).toElement();
+			QDomNodeList children = elem.childNodes();
+			for(int i = 0, n = children.size(); i < n; ++i) {
+				elem.parentNode().appendChild(children.at(i));
+			}
+			elem.parentNode().removeChild(elem);
+		}
+	} else if(parts.size() < 2) {
 		m_domElement.setAttribute(name, value);
 	} else {
 		Q_ASSERT(parts[0] == "title");

@@ -121,4 +121,21 @@ private slots:
 	void validateChanges();
 };
 
+class HOCRAttributeCheckbox : public QCheckBox
+{
+	Q_OBJECT
+public:
+	HOCRAttributeCheckbox(Qt::CheckState value, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass);
+
+private:
+	HOCRDocument* m_doc;
+	QModelIndex m_itemIndex;
+	QString m_attrName;
+	QString m_attrItemClass;
+
+private slots:
+	void updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value);
+	void valueChanged();
+};
+
 #endif // OUTPUTEDITORHOCR_HH
