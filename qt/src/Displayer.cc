@@ -179,8 +179,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 	return true;
 }
 
-bool Displayer::setup(const int* page, const int* resolution, const double* angle)
-{
+bool Displayer::setup(const int* page, const int* resolution, const double* angle) {
 	bool changed = false;
 	if(page) {
 		changed |= *page != ui.spinBoxPage->value();

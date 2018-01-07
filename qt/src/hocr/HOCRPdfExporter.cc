@@ -557,8 +557,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	return success;
 }
 
-HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const
-{
+HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const {
 	PDFSettings pdfSettings;
 	pdfSettings.colorFormat = static_cast<QImage::Format>(ui.comboBoxImageFormat->itemData(ui.comboBoxImageFormat->currentIndex()).toInt());
 	pdfSettings.conversionFlags = pdfSettings.colorFormat == QImage::Format_Mono ? static_cast<Qt::ImageConversionFlags>(ui.comboBoxDithering->itemData(ui.comboBoxDithering->currentIndex()).toInt()) : Qt::AutoColor;
@@ -724,8 +723,7 @@ QImage HOCRPdfExporter::getSelection(const QRect& bbox) {
 	return m_displayerTool->getSelection(bbox);
 }
 
-void HOCRPdfExporter::paperSizeChanged()
-{
+void HOCRPdfExporter::paperSizeChanged() {
 	QString paperSize = ui.comboBoxPaperSize->itemData(ui.comboBoxPaperSize->currentIndex()).toString();
 	if(paperSize == "custom") {
 		ui.lineEditPaperWidth->setEnabled(true);
@@ -751,8 +749,7 @@ void HOCRPdfExporter::paperSizeChanged()
 	updateValid();
 }
 
-void HOCRPdfExporter::updateValid()
-{
+void HOCRPdfExporter::updateValid() {
 	bool valid = true;
 
 	// Passwords must match
