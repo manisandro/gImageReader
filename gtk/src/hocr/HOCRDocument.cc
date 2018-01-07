@@ -701,8 +701,12 @@ std::vector<HOCRItem*> HOCRItem::takeChildren()
 
 void HOCRItem::setText(const Glib::ustring& newText)
 {
-	m_domElement->remove_child(m_domElement->get_first_child());
-	m_domElement->add_child_text(newText);
+	xmlpp::Element* leaf = m_domElement;
+	while(leaf->get_first_child() && dynamic_cast<xmlpp::Element*>(leaf->get_first_child())) {
+		leaf = static_cast<xmlpp::Element*>(leaf->get_first_child());
+	}
+	leaf->remove_child(leaf->get_first_child());
+	leaf->add_child_text(newText);
 }
 
 
@@ -733,6 +737,13 @@ std::map<Glib::ustring,Glib::ustring> HOCRItem::getAllAttributes() const
 			attrValues.insert(std::make_pair(attrName, attribute->get_value()));
 		}
 	}
+	if(itemClass() == "ocrx_word") {
+		if(attrValues.find("title:x_font") == attrValues.end()) {
+			attrValues.insert(std::make_pair("title:x_font", ""));
+		}
+		attrValues.insert(std::make_pair("bold", fontBold() ? "1" : "0"));
+		attrValues.insert(std::make_pair("italic", fontItalic() ? "1" : "0"));
+	}
 	return attrValues;
 }
 
@@ -744,6 +755,10 @@ std::map<Glib::ustring,Glib::ustring> HOCRItem::getAttributes(const std::vector<
 		if(parts.size() > 1) {
 			g_assert(parts[0] == "title");
 			attrValues.insert(std::make_pair(attrName, getTitleAttribute(parts[1])));
+		} else if(attrName == "bold") {
+			attrValues.insert(std::make_pair(attrName, fontBold() ? "1" : "0"));
+		} else if(attrName == "italic") {
+			attrValues.insert(std::make_pair(attrName, fontItalic() ? "1" : "0"));
 		} else {
 			attrValues.insert(std::make_pair(attrName, m_domElement->get_attribute_value(attrName)));
 		}
@@ -755,7 +770,7 @@ void HOCRItem::getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::
 {
 	static std::map<Glib::ustring,std::vector<Glib::ustring>> s_propagatableAttributes = {
 		{"ocr_line", {"title:baseline"}},
-		{"ocrx_word", {"lang", "title:x_fsize", "title:x_font"}}
+		{"ocrx_word", {"lang", "title:x_fsize", "title:x_font", "bold", "italic"}}
 	};
 
 	Glib::ustring childClass = m_childItems.empty() ? "" : m_childItems.front()->itemClass();
@@ -784,7 +799,24 @@ void HOCRItem::setAttribute(const Glib::ustring& name, const Glib::ustring& valu
 		return;
 	}
 	std::vector<Glib::ustring> parts = Utils::string_split(name, ':');
-	if(parts.size() < 2) {
+	if(name == "bold" || name == "italic") {
+		Glib::ustring elemName = (name == "bold" ? "strong" : "em");
+		bool currentState = (name == "bold" ? fontBold() : fontItalic());
+		if(value == "1" && !currentState) {
+			xmlpp::Node::NodeList list = m_domElement->get_children();
+			xmlpp::Element* elem = m_domElement->add_child(elemName);
+			for(xmlpp::Node* node : list) {
+				elem->import_node(node);
+				m_domElement->remove_child(node);
+			}
+		} else if(value == "0" && currentState) {
+			xmlpp::Element* elem = XmlUtils::elementsByTagName(m_domElement, elemName).front();
+			for(xmlpp::Node* child : elem->get_children()) {
+				elem->get_parent()->import_node(child);
+			}
+			elem->get_parent()->remove_child(elem);
+		}
+	} else if(parts.size() < 2) {
 		m_domElement->set_attribute(name, value);
 	} else {
 		g_assert(parts[0] == "title");
@@ -816,6 +848,14 @@ int HOCRItem::baseLine() const
 		return std::atoi(matchInfo.fetch(2).c_str());
 	}
 	return 0;
+}
+
+bool HOCRItem::fontBold() const{
+	return !XmlUtils::elementsByTagName(m_domElement, "strong").empty();
+}
+
+bool HOCRItem::fontItalic() const{
+	return !XmlUtils::elementsByTagName(m_domElement, "em").empty();
 }
 
 bool HOCRItem::parseChildren(Glib::ustring language)

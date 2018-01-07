@@ -76,6 +76,7 @@ private:
 		Gtk::TreeModelColumn<Glib::ustring> attr;
 		Gtk::TreeModelColumn<Glib::ustring> name;
 		Gtk::TreeModelColumn<Glib::ustring> value;
+		Gtk::TreeModelColumn<bool> multiple;
 		Gtk::TreeModelColumn<Glib::ustring> placeholder;
 		Gtk::TreeModelColumn<Glib::ustring> itemClass;
 		Gtk::TreeModelColumn<bool> editable;
@@ -85,6 +86,7 @@ private:
 			add(attr);
 			add(name);
 			add(value);
+			add(multiple);
 			add(placeholder);
 			add(itemClass);
 			add(editable);

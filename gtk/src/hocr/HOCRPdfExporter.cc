@@ -53,15 +53,15 @@ public:
 		m_curFont = m_defaultFont;
 		m_context->select_font_face(m_curFont, Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_NORMAL);
 	}
-	void setFontFamily(const Glib::ustring& family) override {
+	void setFontFamily(const Glib::ustring& family, bool bold, bool italic) override {
 		if(family != m_curFont) {
 			if(std::find(m_fontFamilies.begin(), m_fontFamilies.end(), family) != m_fontFamilies.end()) {
 				m_curFont = family;
 			}  else {
 				m_curFont = m_defaultFont;
 			}
-			m_context->select_font_face(m_curFont, Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_NORMAL);
 		}
+		m_context->select_font_face(m_curFont, italic ? Cairo::FONT_SLANT_ITALIC : Cairo::FONT_SLANT_NORMAL, bold ? Cairo::FONT_WEIGHT_BOLD : Cairo::FONT_WEIGHT_NORMAL);
 	}
 	void setFontSize(double pointSize) override {
 		m_context->set_font_size(pointSize);
@@ -135,11 +135,11 @@ public:
 class HOCRPdfExporter::PoDoFoPDFPainter : public HOCRPdfExporter::PDFPainter {
 public:
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, double defaultFontSize, const std::vector<Glib::ustring>& fontFamilies)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const Glib::ustring& defaultFontFamily, double defaultFontSize, const std::vector<Glib::ustring>& fontFamilies)
 #else
-	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, double defaultFontSize, const std::vector<Glib::ustring>& fontFamilies)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const Glib::ustring& defaultFontFamily, double defaultFontSize, const std::vector<Glib::ustring>& fontFamilies)
 #endif
-		: m_fontFamilies(fontFamilies), m_document(document), m_painter(painter), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontSize(defaultFontSize)
+		: m_fontFamilies(fontFamilies), m_document(document), m_painter(painter), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontFamily(defaultFontFamily), m_defaultFontSize(defaultFontSize)
 	{
 	}
 	~PoDoFoPDFPainter() {
@@ -169,9 +169,9 @@ public:
 		}
 		return true;
 	}
-	void setFontFamily(const Glib::ustring& family) override {
+	void setFontFamily(const Glib::ustring& family, bool bold, bool italic) override {
 		float curSize = m_painter->GetFont()->GetFontSize();
-		m_painter->SetFont(getFont(family.c_str()));
+		m_painter->SetFont(getFont(family, bold, italic));
 		m_painter->GetFont()->SetFontSize(curSize);
 	}
 	void setFontSize(double pointSize) override {
@@ -237,32 +237,30 @@ private:
 	PoDoFo::PdfEncoding* m_pdfFontEncoding;
 #endif
 	PoDoFo::PdfFont* m_defaultFont;
+	Glib::ustring m_defaultFontFamily;
 	double m_defaultFontSize = -1.0;
 	double m_scaleFactor = 1.0;
 	double m_pageHeight = 0.0;
 	double m_offsetX = 0.0;
 	double m_offsetY = 0.0;
 
-	PoDoFo::PdfFont* getFont(const Glib::ustring& family) {
-		auto it = m_fontCache.find(family);
+	PoDoFo::PdfFont* getFont(Glib::ustring family, bool bold, bool italic) {
+		Glib::ustring key = family + (bold ? "@bold" : "") + (italic ? "@italic" : "");
+		auto it = m_fontCache.find(key);
 		if(it == m_fontCache.end()) {
-			if(std::find(m_fontFamilies.begin(), m_fontFamilies.end(), family) == m_fontFamilies.end()) {
-				it = m_fontCache.insert(std::make_pair(family, m_defaultFont)).first;
-			} else {
-				Pango::FontDescription fontDesc = Pango::FontDescription(family);
-				bool italic = fontDesc.get_style() == Pango::STYLE_OBLIQUE;
-				bool bold = fontDesc.get_weight() == Pango::WEIGHT_BOLD;
-				PoDoFo::PdfFont* font = nullptr;
-				try {
+			if(family.empty() || std::find(m_fontFamilies.begin(), m_fontFamilies.end(), family) == m_fontFamilies.end()) {
+				family = m_defaultFontFamily;
+			}
+			PoDoFo::PdfFont* font = nullptr;
+			try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-					font = m_document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), bold, italic, false, m_pdfFontEncoding);
+				font = m_document->CreateFontSubset(Utils::resolveFontName(family).c_str(), bold, italic, false, m_pdfFontEncoding);
 #else
-					font = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), bold, italic, m_pdfFontEncoding);
+				font = document->CreateFontSubset(Utils::resolveFontName(family).c_str(), bold, italic, m_pdfFontEncoding);
 #endif
-					it = m_fontCache.insert(std::make_pair(family, font)).first;
-				} catch(PoDoFo::PdfError& /*err*/) {
-					it = m_fontCache.insert(std::make_pair(family, m_defaultFont)).first;
-				}
+				it = m_fontCache.insert(std::make_pair(key, font)).first;
+			} catch(PoDoFo::PdfError& /*err*/) {
+				it = m_fontCache.insert(std::make_pair(key, m_defaultFont)).first;
 			}
 		}
 		return it->second;
@@ -445,6 +443,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 
 	bool accepted = false;
 	PoDoFo::PdfStreamedDocument* document = nullptr;
+	Glib::ustring defaultFontFamily;
 	PoDoFo::PdfFont* defaultPdfFont = nullptr;
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
@@ -505,19 +504,18 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 
 		Glib::ustring fontName = ui.checkboxOverridefontfamily->get_active() ? m_comboOverrideFont->get_active_font() : m_comboFallbackFont->get_active_font();
 		Pango::FontDescription fontDesc = Pango::FontDescription(fontName);
-		bool italic = fontDesc.get_style() == Pango::STYLE_OBLIQUE;
-		bool bold = fontDesc.get_weight() == Pango::WEIGHT_BOLD;
 
 		try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-			defaultPdfFont = document->CreateFontSubset(fontDesc.get_family().c_str(), bold, italic, false, pdfFontEncoding);
+			defaultPdfFont = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), false, false, false, pdfFontEncoding);
 #else
-			defaultPdfFont = document->CreateFontSubset(fontDesc.get_family().c_str(), bold, italic, pdfFontEncoding);
+			defaultPdfFont = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), false, false, pdfFontEncoding);
 #endif
 		} catch(PoDoFo::PdfError& err) {
 			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("The PDF library could not load the font '%1': %2."), fontDesc.get_family(), err.what()));
 			continue;
 		}
+		defaultFontFamily = fontDesc.get_family();
 
 		break;
 	}
@@ -550,7 +548,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 	}
 
 	PoDoFo::PdfPainter painter;
-	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont, pdfSettings.fontSize, m_fontFamilies);
+	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont, defaultFontFamily, pdfSettings.fontSize, m_fontFamilies);
 
 	std::vector<Glib::ustring> failed;
 	int pageCount = m_hocrdocument->pageCount();
@@ -660,7 +658,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 				}
 				Geometry::Rectangle wordRect = wordItem->bbox();
 				if(pdfSettings.fontFamily.empty()) {
-					painter.setFontFamily(wordItem->fontFamily());
+					painter.setFontFamily(wordItem->fontFamily(), wordItem->fontBold(), wordItem->fontItalic());
 				}
 				if(pdfSettings.fontSize == -1) {
 					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
@@ -682,7 +680,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 			HOCRItem* wordItem = item->children()[iWord];
 			Geometry::Rectangle wordRect = wordItem->bbox();
 			if(pdfSettings.fontFamily.empty()) {
-				painter.setFontFamily(wordItem->fontFamily());
+				painter.setFontFamily(wordItem->fontFamily(), wordItem->fontBold(), wordItem->fontItalic());
 			}
 			if(pdfSettings.fontSize == -1) {
 				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
@@ -729,7 +727,7 @@ void HOCRPdfExporter::updatePreview() {
 
 	CairoPDFPainter pdfPrinter(context, defaultFont, m_fontFamilies);
 	if(!pdfSettings.fontFamily.empty()) {
-		pdfPrinter.setFontFamily(pdfSettings.fontFamily);
+		pdfPrinter.setFontFamily(pdfSettings.fontFamily, false, false);
 	}
 	if(pdfSettings.fontSize != -1) {
 		pdfPrinter.setFontSize(pdfSettings.fontSize * pageDpi / 72.);

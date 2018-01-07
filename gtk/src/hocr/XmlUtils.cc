@@ -63,6 +63,20 @@ xmlpp::Element* XmlUtils::nextSiblingElement(xmlpp::Node* node, const Glib::ustr
 	return child ? static_cast<xmlpp::Element*>(child) : nullptr;
 }
 
+std::list<xmlpp::Element*> XmlUtils::elementsByTagName(const xmlpp::Element* element, const Glib::ustring& name)
+{
+	std::list<xmlpp::Element*> elems;
+	for(xmlpp::Node* child : element->get_children()) {
+		if(xmlpp::Element* childElem = dynamic_cast<xmlpp::Element*>(child)) {
+			if(childElem->get_name() == name) {
+				elems.push_back(childElem);
+			}
+			elems.splice(elems.end(), elementsByTagName(childElem, name));
+		}
+	}
+	return elems;
+}
+
 Glib::ustring XmlUtils::documentXML(xmlpp::Document* doc) {
 	Glib::ustring xml = doc->write_to_string();
 	// Strip entity declaration

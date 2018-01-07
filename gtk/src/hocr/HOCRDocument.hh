@@ -146,6 +146,8 @@ public:
 	int baseLine() const;
 	Glib::ustring fontFamily() const{ return getTitleAttribute("x_font"); }
 	double fontSize() const{ return std::atof(getTitleAttribute("x_fsize").c_str()); }
+	bool fontBold() const;
+	bool fontItalic() const;
 
 	void addChild(HOCRItem* child);
 	void removeChild(HOCRItem* child);

@@ -153,6 +153,16 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 			documentContentEl->set_namespace_declaration(svgNS_URI, svgNS);
 			documentContentEl->set_attribute("version", "1.2", officeNS);
 
+			// - Font face decls
+			xmlpp::Element* fontFaceDeclsEl = documentContentEl->add_child("font-face-decls", officeNS);
+			std::set<Glib::ustring> families;
+			for(int i = 0; i < pageCount; ++i) {
+				const HOCRPage* page = hocrdocument->page(i);
+				if(page->isEnabled()) {
+					writeFontFaceDecls(families, page, fontFaceDeclsEl);
+				}
+			}
+
 			// - Page styles
 			xmlpp::Element* automaticStylesEl = documentContentEl->add_child("automatic-styles", officeNS);
 			for(int i = 0; i < pageCount; ++i) {
@@ -215,28 +225,14 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 			graphicPropertiesEl->set_attribute("flow-with-text", "false", styleNS);
 
 			// -- Text styles
+			int counter = 0;
 			std::map<Glib::ustring,std::map<double,Glib::ustring>> fontStyles;
 			for(int i = 0; i < pageCount; ++i) {
 				const HOCRPage* page = hocrdocument->page(i);
 				if(page->isEnabled()) {
 					for(const HOCRItem* item : page->children()) {
-						collectFontStyles(fontStyles, item);
+						writeFontStyles(fontStyles, item, automaticStylesEl, counter);
 					}
-				}
-			}
-			int counter = 0;
-			for(auto ffit = fontStyles.begin(), ffitEnd = fontStyles.end(); ffit != ffitEnd; ++ffit) {
-				Glib::ustring fontFamily = ffit->first;
-				for(auto fsit = ffit->second.begin(), fsitEnd = ffit->second.end(); fsit != fsitEnd; ++fsit) {
-					double fontSize = fsit->first;
-					Glib::ustring styleName = Glib::ustring::compose("T%1", ++counter);
-					fsit->second = styleName;
-					styleEl = automaticStylesEl->add_child("style", styleNS);
-					styleEl->set_attribute("name", styleName, styleNS);
-					styleEl->set_attribute("family", "text", styleNS);
-					xmlpp::Element* textPropertiesEl = styleEl->add_child("text-properties", styleNS);
-					textPropertiesEl->set_attribute("font-name", fontFamily, foNS);
-					textPropertiesEl->set_attribute("font-size", Glib::ustring::compose("%1pt", fontSize), foNS);
 				}
 			}
 
@@ -306,16 +302,55 @@ void HOCROdtExporter::writeImage(zip* fzip, std::map<const HOCRItem*,Glib::ustri
 	}
 }
 
-void HOCROdtExporter::collectFontStyles(std::map<Glib::ustring,std::map<double,Glib::ustring>>& styles, const HOCRItem* item)
+void HOCROdtExporter::writeFontFaceDecls(std::set<Glib::ustring>& families, const HOCRItem* item, xmlpp::Element* parentEl)
 {
 	if(!item->isEnabled()) {
 		return;
 	}
 	if(item->itemClass() == "ocrx_word") {
-		styles[item->fontFamily()].insert(std::make_pair(item->fontSize(), ""));
+		Glib::ustring fontFamily = item->fontFamily();
+		if(families.find(fontFamily) == families.end()) {
+			if(!fontFamily.empty()) {
+				xmlpp::Element* fontFaceEl = parentEl->add_child("font-face", styleNS);
+				fontFaceEl->set_attribute("name", fontFamily, styleNS);
+				fontFaceEl->set_attribute("font-family", fontFamily, svgNS);
+			}
+			families.insert(fontFamily);
+		}
 	} else {
 		for(const HOCRItem* item : item->children()) {
-			collectFontStyles(styles, item);
+			writeFontFaceDecls(families, item, parentEl);
+		}
+	}
+}
+
+void HOCROdtExporter::writeFontStyles(std::map<Glib::ustring,std::map<double,Glib::ustring>>& styles, const HOCRItem* item, xmlpp::Element* parentEl, int& counter)
+{
+	if(!item->isEnabled()) {
+		return;
+	}
+	if(item->itemClass() == "ocrx_word") {
+		Glib::ustring fontKey = item->fontFamily() + (item->fontBold() ? "@bold" : "") + (item->fontItalic() ? "@italic" : "");
+		if(styles.find(fontKey) == styles.end() || styles[fontKey].find(item->fontSize()) == styles[fontKey].end()) {
+			Glib::ustring styleName = Glib::ustring::compose("T%1", ++counter);
+			xmlpp::Element* styleEl = parentEl->add_child("style", styleNS);
+			styleEl->set_attribute("name", styleName, styleNS);
+			styleEl->set_attribute("family", "text", styleNS);
+			xmlpp::Element* textPropertiesEl = styleEl->add_child("text-properties", styleNS);
+			textPropertiesEl->set_attribute("font-name", item->fontFamily(), styleNS);
+			textPropertiesEl->set_attribute("font-size", Glib::ustring::compose("%1pt", item->fontSize()), foNS);
+			if(item->fontBold()) {
+				textPropertiesEl->set_attribute("font-weight", "bold", foNS);
+			}
+			if(item->fontItalic()) {
+				textPropertiesEl->set_attribute("font-style", "italic", foNS);
+			}
+
+			styles[fontKey].insert(std::make_pair(item->fontSize(), styleName));
+		}
+	} else {
+		for(const HOCRItem* item : item->children()) {
+			writeFontStyles(styles, item, parentEl, counter);
 		}
 	}
 }
@@ -374,14 +409,16 @@ void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, 
 		if(!firstWord) {
 			return;
 		}
-		Glib::ustring currentFontStyleName = fontStyleNames[firstWord->fontFamily()][firstWord->fontSize()];
+		Glib::ustring fontKey = firstWord->fontFamily() + (firstWord->fontBold() ? "@bold" : "") + (firstWord->fontItalic() ? "@italic" : "");
+		Glib::ustring currentFontStyleName = fontStyleNames[fontKey][firstWord->fontSize()];
 		xmlpp::Element* spanEl = parentEl->add_child("span", textNS);
 		spanEl->set_attribute("style-name", currentFontStyleName, textNS);
 		spanEl->add_child_text(firstWord->text());
 		++iChild;
 		for(; iChild < nChilds; ++iChild) {
 			const HOCRItem* child = item->children()[iChild];
-			Glib::ustring fontStyleName = fontStyleNames[child->fontFamily()][child->fontSize()];
+			fontKey = child->fontFamily() + (child->fontBold() ? "@bold" : "") + (child->fontItalic() ? "@italic" : "");
+			Glib::ustring fontStyleName = fontStyleNames[fontKey][child->fontSize()];
 			if(fontStyleName != currentFontStyleName) {
 				currentFontStyleName = fontStyleName;
 				spanEl = parentEl->add_child("span", textNS);

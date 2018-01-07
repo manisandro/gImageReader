@@ -100,6 +100,20 @@ protected:
 			});
 			combo->show();
 			return Gtk::manage(combo);
+		} else if(it && ((*it)[m_cols.attr] == "bold" || (*it)[m_cols.attr] == "italic")) {
+			Gtk::ComboBoxText* combo = new Gtk::ComboBoxText();
+			combo->insert(0, "0", _("No"));
+			combo->insert(1, "1", _("Yes"));
+			if((*it)[m_cols.multiple] == true) {
+				combo->set_active(-1);
+			} else {
+				combo->set_active_id((*it)[m_cols.value]);
+			}
+			combo->signal_editing_done().connect([=] {
+				edited(path, combo->get_active_id());
+			});
+			combo->show();
+			return Gtk::manage(combo);
 		} else {
 			Gtk::Entry* entry = new Gtk::Entry;
 			entry->set_text(property_text());
@@ -566,7 +580,7 @@ Glib::RefPtr<Glib::Regex> OutputEditorHOCR::attributeValidator(const Glib::ustri
 
 bool OutputEditorHOCR::attributeEditable(const Glib::ustring& attribName) const
 {
-	static std::vector<Glib::ustring> editableAttrs = {"title:bbox", "lang", "title:x_fsize", "title:baseline", "title:x_font"};
+	static std::vector<Glib::ustring> editableAttrs = {"title:bbox", "lang", "title:x_fsize", "title:baseline", "title:x_font", "bold", "italic"};
 	return std::find(editableAttrs.begin(), editableAttrs.end(), attribName) != editableAttrs.end();
 }
 

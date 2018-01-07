@@ -54,7 +54,7 @@ private:
 
 	class PDFPainter {
 	public:
-		virtual void setFontFamily(const Glib::ustring& family) = 0;
+		virtual void setFontFamily(const Glib::ustring& family, bool bold, bool italic) = 0;
 		virtual void setFontSize(double pointSize) = 0;
 		virtual void drawText(double x, double y, const Glib::ustring& text) = 0;
 		virtual void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) = 0;

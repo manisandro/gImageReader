@@ -21,6 +21,7 @@
 #define XMLUTILS_HH
 
 #include <glibmm/ustring.h>
+#include <list>
 
 namespace xmlpp {
 	class Document;
@@ -33,6 +34,7 @@ public:
 	static Glib::ustring elementText(const xmlpp::Element* element);
 	static xmlpp::Element* firstChildElement(xmlpp::Node* node, const Glib::ustring& name = Glib::ustring());
 	static xmlpp::Element* nextSiblingElement(xmlpp::Node* node, const Glib::ustring& name = Glib::ustring());
+	static std::list<xmlpp::Element*> elementsByTagName(const xmlpp::Element* element, const Glib::ustring& name);
 	static Glib::ustring documentXML(xmlpp::Document* doc);
 	static Glib::ustring elementXML(const xmlpp::Element* element);
 	static xmlpp::Element* takeChild(xmlpp::Element* parent, xmlpp::Element* child);
