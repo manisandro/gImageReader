@@ -147,7 +147,7 @@ public:
 	void setPage(PoDoFo::PdfPage* page, double scaleFactor, double offsetX = 0.0, double offsetY = 0.0) {
 		m_painter->SetPage(page);
 		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
-		m_painter->SetFont(getFont(m_defaultFontFamily, false, false));
+		m_painter->SetFont(m_defaultFont);
 		if(m_defaultFontSize > 0) {
 			m_painter->GetFont()->SetFontSize(m_defaultFontSize);
 		}
