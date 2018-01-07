@@ -280,11 +280,14 @@ void HOCROdtExporter::writeFontFaceDecls(QSet<QString>& families, const HOCRItem
 		return;
 	}
 	if(item->itemClass() == "ocrx_word") {
-		if(!families.contains(item->fontFamily())) {
-			writer.writeEmptyElement(styleNS, "font-face");
-			writer.writeAttribute(styleNS, "name", item->fontFamily());
-			writer.writeAttribute(svgNS, "font-family", item->fontFamily());
-			families.insert(item->fontFamily());
+		QString fontFamily = item->fontFamily();
+		if(!families.contains(fontFamily)) {
+			if(!fontFamily.isEmpty()) {
+				writer.writeEmptyElement(styleNS, "font-face");
+				writer.writeAttribute(styleNS, "name", fontFamily);
+				writer.writeAttribute(svgNS, "font-family", fontFamily);
+			}
+			families.insert(fontFamily);
 		}
 	} else {
 		for(const HOCRItem* item : item->children()) {
