@@ -328,6 +328,7 @@ Config::Config(QWidget* parent)
 
 	ADD_SETTING(SwitchSetting("dictinstall", ui.checkBoxDictInstall, true));
 	ADD_SETTING(SwitchSetting("updatecheck", ui.checkBoxUpdateCheck, true));
+	ADD_SETTING(SwitchSetting("openafterexport", ui.checkBoxOpenAfterExport, false));
 	ADD_SETTING(TableSetting("customlangs", ui.tableWidgetAdditionalLang));
 	ADD_SETTING(SwitchSetting("systemoutputfont", ui.checkBoxDefaultOutputFont, true));
 	ADD_SETTING(FontSetting("customoutputfont", &m_fontDialog, QFont().toString()));

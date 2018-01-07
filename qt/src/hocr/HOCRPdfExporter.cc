@@ -353,7 +353,6 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	ADD_SETTING(SwitchSetting("pdfuniformizelinespacing", ui.checkBoxUniformizeSpacing, false));
 	ADD_SETTING(SpinSetting("pdfpreservespaces", ui.spinBoxPreserve, 4));
 	ADD_SETTING(SwitchSetting("pdfpreview", ui.checkBoxPreview, false));
-	ADD_SETTING(SwitchSetting("pdfopenoutput", ui.checkBoxOpenOutputPdf, false));
 	ADD_SETTING(ComboSetting("pdfexportpapersize", ui.comboBoxPaperSize));
 	ADD_SETTING(LineEditSetting("pdfexportpaperwidth", ui.lineEditPaperWidth));
 	ADD_SETTING(LineEditSetting("pdfexportpaperheight", ui.lineEditPaperHeight));
@@ -551,9 +550,10 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 
 	QString errMsg;
 	bool success = pdfprinter.finalize(&errMsg);
+	bool openAfterExport = ConfigSettings::get<SwitchSetting>("openafterexport")->getValue();
 	if(!success) {
 		QMessageBox::warning(MAIN, _("Export failed"), _("The PDF export failed: %1.").arg(errMsg));
-	} else if(ui.checkBoxOpenOutputPdf->isChecked()) {
+	} else if(openAfterExport) {
 		QDesktopServices::openUrl(QUrl::fromLocalFile(outname));
 	}
 
