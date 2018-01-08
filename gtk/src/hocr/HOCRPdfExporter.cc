@@ -657,9 +657,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 					continue;
 				}
 				Geometry::Rectangle wordRect = wordItem->bbox();
-				if(pdfSettings.fontFamily.empty()) {
-					painter.setFontFamily(wordItem->fontFamily(), wordItem->fontBold(), wordItem->fontItalic());
-				}
+				painter.setFontFamily(pdfSettings.fontFamily.empty() ? wordItem->fontFamily() : pdfSettings.fontFamily, wordItem->fontBold(), wordItem->fontItalic());
 				if(pdfSettings.fontSize == -1) {
 					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 				}
@@ -679,9 +677,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 		for(int iWord = 0, nWords = item->children().size(); iWord < nWords; ++iWord) {
 			HOCRItem* wordItem = item->children()[iWord];
 			Geometry::Rectangle wordRect = wordItem->bbox();
-			if(pdfSettings.fontFamily.empty()) {
-				painter.setFontFamily(wordItem->fontFamily(), wordItem->fontBold(), wordItem->fontItalic());
-			}
+			painter.setFontFamily(pdfSettings.fontFamily.empty() ? wordItem->fontFamily() : pdfSettings.fontFamily, wordItem->fontBold(), wordItem->fontItalic());
 			if(pdfSettings.fontSize == -1) {
 				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 			}

@@ -596,9 +596,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 					continue;
 				}
 				QRect wordRect = wordItem->bbox();
-				if(pdfSettings.fontFamily.isEmpty()) {
-					painter.setFontFamily(wordItem->fontFamily(), wordItem->fontBold(), wordItem->fontItalic());
-				}
+				painter.setFontFamily(pdfSettings.fontFamily.isEmpty() ? wordItem->fontFamily() : pdfSettings.fontFamily, wordItem->fontBold(), wordItem->fontItalic());
 				if(pdfSettings.fontSize == -1) {
 					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 				}
@@ -618,9 +616,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 		for(int iWord = 0, nWords = item->children().size(); iWord < nWords; ++iWord) {
 			HOCRItem* wordItem = item->children()[iWord];
 			QRect wordRect = wordItem->bbox();
-			if(pdfSettings.fontFamily.isEmpty()) {
-				painter.setFontFamily(wordItem->fontFamily(), wordItem->fontBold(), wordItem->fontItalic());
-			}
+			painter.setFontFamily(pdfSettings.fontFamily.isEmpty() ? wordItem->fontFamily() : pdfSettings.fontFamily, wordItem->fontBold(), wordItem->fontItalic());
 			if(pdfSettings.fontSize == -1) {
 				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 			}
