@@ -85,7 +85,6 @@ private:
 	PageData setPage(int page, bool autodetectLayout);
 	bool onMultilingualMenuButtonEvent(GdkEventButton* ev);
 	bool onMultilingualItemButtonEvent(GdkEventButton* ev, Gtk::CheckMenuItem* item);
-	void manageInstalledLanguages();
 };
 
 #endif // RECOGNIZER_HH

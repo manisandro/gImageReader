@@ -101,6 +101,7 @@ public:
 	}
 	void setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel);
 	void redetectLanguages();
+	void manageLanguages();
 	void showConfig();
 	void showHelp(const std::string& chapter = "");
 	void showAbout();

@@ -29,6 +29,7 @@
 #include "OutputEditorText.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
+#include "TessdataManager.hh"
 #include "Utils.hh"
 
 #include <gtkspellmm.h>
@@ -352,6 +353,10 @@ void MainWindow::setOCRMode(int idx) {
 
 void MainWindow::redetectLanguages() {
 	m_recognizer->updateLanguagesMenu();
+}
+
+void MainWindow::manageLanguages() {
+	TessdataManager::exec();
 }
 
 void MainWindow::addNotification(const Glib::ustring &title, const Glib::ustring &message, const std::vector<NotificationAction> &actions, Notification* handle) {

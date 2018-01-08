@@ -22,7 +22,6 @@
 #include "MainWindow.hh"
 #include "OutputEditor.hh"
 #include "Recognizer.hh"
-#include "TessdataManager.hh"
 #include "Utils.hh"
 
 #include <gtkspellmm.h>
@@ -335,7 +334,7 @@ void Recognizer::updateLanguagesMenu() {
 	// Add installer item
 	ui.menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 	Gtk::MenuItem* manageItem = Gtk::manage(new Gtk::MenuItem(_("Manage languages...")));
-	CONNECT(manageItem, activate, [this] { manageInstalledLanguages(); });
+	CONNECT(manageItem, activate, [this] { MAIN->manageLanguages(); });
 	ui.menuLanguages->append(*manageItem);
 
 	ui.menuLanguages->show_all();
@@ -598,8 +597,4 @@ bool Recognizer::onMultilingualItemButtonEvent(GdkEventButton* ev, Gtk::CheckMen
 		return true;
 	}
 	return false;
-}
-
-void Recognizer::manageInstalledLanguages() {
-	TessdataManager::exec();
 }

@@ -90,7 +90,6 @@ private slots:
 	void setLanguage();
 	void setMultiLanguage();
 	PageData setPage(int page, bool autodetectLayout);
-	void manageInstalledLanguages();
 };
 
 #endif // RECOGNIZER_HPP

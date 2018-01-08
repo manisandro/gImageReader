@@ -115,6 +115,7 @@ public:
 	void hideProgress();
 
 public slots:
+	void manageLanguages();
 	void popState();
 	void pushState(MainWindow::State state, const QString& msg);
 	void showHelp(const QString& chapter = "");

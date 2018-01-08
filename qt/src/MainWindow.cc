@@ -48,6 +48,7 @@
 #include "OutputEditorHOCR.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
+#include "TessdataManager.hh"
 #include "Utils.hh"
 #include "ui_AboutDialog.h"
 
@@ -143,6 +144,7 @@ MainWindow::MainWindow(const QStringList& files)
 	m_idleWidgets.append(ui.toolButtonRecognize);
 
 	connect(ui.actionRedetectLanguages, SIGNAL(triggered()), m_recognizer, SLOT(updateLanguagesMenu()));
+	connect(ui.actionManageLanguages, SIGNAL(triggered()), this, SLOT(manageLanguages()));
 	connect(ui.actionPreferences, SIGNAL(triggered()), this, SLOT(showConfig()));
 	connect(ui.actionHelp, SIGNAL(triggered()), this, SLOT(showHelp()));
 	connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
@@ -297,6 +299,13 @@ void MainWindow::showHelp(const QString& chapter) {
 	QUrl manualUrl = QUrl::fromLocalFile(manualFile);
 	manualUrl.setFragment(chapter);
 	QDesktopServices::openUrl(manualUrl);
+}
+
+void MainWindow::manageLanguages() {
+	TessdataManager manager(MAIN);
+	if(manager.setup()) {
+		manager.exec();
+	}
 }
 
 void MainWindow::showConfig() {

@@ -8,6 +8,10 @@
 				<attribute name="action">app.redetectLangs</attribute>
 			</item>
 			<item>
+				<attribute name="label" translatable="yes">Manage Languages</attribute>
+				<attribute name="action">app.manageLangs</attribute>
+			</item>
+			<item>
 				<attribute name="label" translatable="yes">Preferences</attribute>
 				<attribute name="action">app.preferences</attribute>
 			</item>

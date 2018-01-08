@@ -47,7 +47,6 @@
 #include "MainWindow.hh"
 #include "OutputEditor.hh"
 #include "Recognizer.hh"
-#include "TessdataManager.hh"
 #include "Utils.hh"
 
 class Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
@@ -319,7 +318,7 @@ void Recognizer::updateLanguagesMenu() {
 
 	// Add installer item
 	ui.menuLanguages->addSeparator();
-	ui.menuLanguages->addAction(_("Manage languages..."), this, SLOT(manageInstalledLanguages()));
+	ui.menuLanguages->addAction(_("Manage languages..."), MAIN, SLOT(manageLanguages()));
 }
 
 void Recognizer::setLanguage() {
@@ -581,11 +580,4 @@ bool Recognizer::eventFilter(QObject* obj, QEvent* ev) {
 		}
 	}
 	return QObject::eventFilter(obj, ev);
-}
-
-void Recognizer::manageInstalledLanguages() {
-	TessdataManager manager(MAIN);
-	if(manager.setup()) {
-		manager.exec();
-	}
 }
