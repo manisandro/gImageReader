@@ -693,8 +693,8 @@ std::map<Glib::ustring,Glib::ustring> HOCRItem::getAllAttributes() const {
 		if(attrValues.find("title:x_font") == attrValues.end()) {
 			attrValues.insert(std::make_pair("title:x_font", ""));
 		}
-		attrValues.insert(std::make_pair("bold", fontBold() ? "1" : "0"));
-		attrValues.insert(std::make_pair("italic", fontItalic() ? "1" : "0"));
+		attrValues.insert(std::make_pair("bold", fontBold() ? "yes" : "no"));
+		attrValues.insert(std::make_pair("italic", fontItalic() ? "yes" : "no"));
 	}
 	return attrValues;
 }
@@ -707,9 +707,9 @@ std::map<Glib::ustring,Glib::ustring> HOCRItem::getAttributes(const std::vector<
 			g_assert(parts[0] == "title");
 			attrValues.insert(std::make_pair(attrName, getTitleAttribute(parts[1])));
 		} else if(attrName == "bold") {
-			attrValues.insert(std::make_pair(attrName, fontBold() ? "1" : "0"));
+			attrValues.insert(std::make_pair(attrName, fontBold() ? "yes" : "no"));
 		} else if(attrName == "italic") {
-			attrValues.insert(std::make_pair(attrName, fontItalic() ? "1" : "0"));
+			attrValues.insert(std::make_pair(attrName, fontItalic() ? "yes" : "no"));
 		} else {
 			attrValues.insert(std::make_pair(attrName, m_domElement->get_attribute_value(attrName)));
 		}
@@ -751,14 +751,14 @@ void HOCRItem::setAttribute(const Glib::ustring& name, const Glib::ustring& valu
 	if(name == "bold" || name == "italic") {
 		Glib::ustring elemName = (name == "bold" ? "strong" : "em");
 		bool currentState = (name == "bold" ? fontBold() : fontItalic());
-		if(value == "1" && !currentState) {
+		if(value == "yes" && !currentState) {
 			xmlpp::Node::NodeList list = m_domElement->get_children();
 			xmlpp::Element* elem = m_domElement->add_child(elemName);
 			for(xmlpp::Node* node : list) {
 				elem->import_node(node);
 				m_domElement->remove_child(node);
 			}
-		} else if(value == "0" && currentState) {
+		} else if(value == "no" && currentState) {
 			xmlpp::Element* elem = XmlUtils::elementsByTagName(m_domElement, elemName).front();
 			for(xmlpp::Node* child : elem->get_children()) {
 				elem->get_parent()->import_node(child);

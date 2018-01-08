@@ -103,8 +103,8 @@ protected:
 			return Gtk::manage(combo);
 		} else if(it && ((*it)[m_cols.attr] == "bold" || (*it)[m_cols.attr] == "italic")) {
 			Gtk::ComboBoxText* combo = new Gtk::ComboBoxText();
-			combo->insert(0, "0", _("No"));
-			combo->insert(1, "1", _("Yes"));
+			combo->insert(0, "no", "no");
+			combo->insert(1, "yes", "yes");
 			if((*it)[m_cols.multiple] == true) {
 				combo->set_active(-1);
 			} else {
