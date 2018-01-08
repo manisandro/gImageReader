@@ -29,7 +29,7 @@ dnf install -y \
   mingw32-qtspell-qt5 \
   mingw32-tesseract \
   mingw32-twaindsm \
-  mingw32-quazip-qt5
+  mingw32-quazip-qt5 \
   \
   mingw64-gdb \
   mingw64-gcc-c++ \
