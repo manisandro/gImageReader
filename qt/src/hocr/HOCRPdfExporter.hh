@@ -22,7 +22,7 @@
 
 #include <QImage>
 #include <QVector>
-
+#include <QPrinter>
 #include "common.hh"
 #include "ui_PdfExportDialog.h"
 
@@ -99,7 +99,9 @@ private:
 
 	PDFSettings getPdfSettings() const;
 	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale = 1.);
-
+    bool exportePdfByQt(const QString& outname, const QPageSize &pageSize, const PDFSettings &pdfSettings);
+    bool exportePdfByPoDoFo(const QString& outname, const QPageSize &pageSize, const PDFSettings &pdfSettings);
+    QPageSize getPdfPageSize()const;
 private slots:
 	void imageFormatChanged();
 	void imageCompressionChanged();
@@ -108,6 +110,7 @@ private slots:
 	bool setSource(const QString& sourceFile, int page, int dpi, double angle);
 	QImage getSelection(const QRect& bbox);
 	void updateValid();
+    void validExportOptionChanged(int index);
 };
 
 #endif // HOCRPDFEXPORTER_HH

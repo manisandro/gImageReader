@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>475</width>
-    <height>624</height>
+    <width>525</width>
+    <height>878</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,6 +66,9 @@
       <layout class="QGridLayout" name="gridLayout_6">
        <item row="0" column="1" colspan="2">
         <widget class="QComboBox" name="comboBoxOutputMode">
+         <property name="toolTip">
+          <string/>
+         </property>
          <item>
           <property name="text">
            <string>PDF</string>
@@ -78,7 +81,14 @@
          </item>
         </widget>
        </item>
-       <item row="3" column="0" colspan="3">
+       <item row="0" column="0">
+        <widget class="QLabel" name="labelOutputMode">
+         <property name="text">
+          <string>Output mode:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="3">
         <widget class="QGroupBox" name="groupBoxImage">
          <property name="title">
           <string>Image settings:</string>
@@ -182,14 +192,82 @@
          </layout>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelOutputMode">
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelPaperSize">
          <property name="text">
-          <string>Output mode:</string>
+          <string>Paper size:</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="0" colspan="3">
+       <item row="3" column="1" colspan="2">
+        <widget class="QWidget" name="widgetPaperSize" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLineEdit" name="lineEditPaperHeight">
+            <property name="placeholderText">
+             <string>Width</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="labelX">
+            <property name="text">
+             <string notr="true">x</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditPaperWidth">
+            <property name="placeholderText">
+             <string>Height</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBoxPaperSizeUnit"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="comboBoxPaperSize">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="3">
         <widget class="QGroupBox" name="groupBoxText">
          <property name="title">
           <string>Text settings:</string>
@@ -353,17 +431,7 @@
          </layout>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="comboBoxPaperSize">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
+       <item row="2" column="2">
         <widget class="QWidget" name="widgetPaperOrientation" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -427,70 +495,29 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="1" colspan="2">
-        <widget class="QWidget" name="widgetPaperSize" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="spacing">
-           <number>2</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLineEdit" name="lineEditPaperHeight">
-            <property name="placeholderText">
-             <string>Width</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="labelX">
-            <property name="text">
-             <string notr="true">x</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="lineEditPaperWidth">
-            <property name="placeholderText">
-             <string>Height</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="comboBoxPaperSizeUnit"/>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="labelPaperSize">
+        <widget class="QLabel" name="labelExporter">
          <property name="text">
-          <string>Paper size:</string>
+          <string>Exporter:</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
-        <spacer name="verticalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+       <item row="1" column="1" colspan="2">
+        <widget class="QComboBox" name="comboBoxExporter">
+         <property name="toolTip">
+          <string extracomment="Describe the difference between two methods">If PoFodo does`nt support your language, Please Choose another Exporter.</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
+         <item>
+          <property name="text">
+           <string>PoDoFo</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>QtPDF Module</string>
+          </property>
+         </item>
+        </widget>
        </item>
       </layout>
      </widget>
