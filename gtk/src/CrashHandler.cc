@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * CrashHandler.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) (\d+)-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -21,8 +21,7 @@
 #include "Utils.hh"
 
 CrashHandler::CrashHandler(int argc, char* argv[])
-	: Gtk::Application(argc, argv, APPLICATION_ID ".crashhandler", Gio::APPLICATION_HANDLES_COMMAND_LINE)
-{
+	: Gtk::Application(argc, argv, APPLICATION_ID ".crashhandler", Gio::APPLICATION_HANDLES_COMMAND_LINE) {
 	Glib::set_application_name(Glib::ustring::compose("%1 - %2", PACKAGE_NAME, _("Crash Handler")));
 
 	if(argc > 2) {

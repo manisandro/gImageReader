@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Recognizer.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -54,7 +54,7 @@ class Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
 public:
 	ETEXT_DESC desc;
 
-	ProgressMonitor(int nPages) : MainWindow::ProgressMonitor(nPages){
+	ProgressMonitor(int nPages) : MainWindow::ProgressMonitor(nPages) {
 		desc.progress = 0;
 		desc.cancel = cancelCallback;
 		desc.cancel_this = this;

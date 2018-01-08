@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Displayer.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -51,7 +51,9 @@ public:
 	int getNPages() const;
 	int getCurrentResolution() const;
 	double getCurrentAngle() const;
-	double getCurrentScale() const { return m_scale; }
+	double getCurrentScale() const {
+		return m_scale;
+	}
 	QString getCurrentImage(int& page) const;
 	QImage getImage(const QRectF& rect);
 	QRectF getSceneBoundingRect() const;
@@ -179,6 +181,9 @@ public:
 		m_point = point;
 		setRect(QRectF(m_anchor, m_point).normalized());
 	}
+	void setMinimumRect(const QRectF& rect) {
+		m_minRect = rect;
+	}
 	void setPoint(const QPointF& point) {
 		m_point = point;
 		setRect(QRectF(m_anchor, m_point).normalized());
@@ -206,6 +211,7 @@ private:
 
 	QPointF m_anchor;
 	QPointF m_point;
+	QRectF m_minRect;
 	QVector<ResizeHandler> m_resizeHandlers;
 	QPointF m_resizeOffset;
 

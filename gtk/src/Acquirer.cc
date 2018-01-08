@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Acquirer.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) (\d+)-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -30,8 +30,7 @@
 #endif
 
 Acquirer::Acquirer(const Ui::MainWindow& _ui)
-	: ui(_ui)
-{
+	: ui(_ui) {
 	m_cancelButton = Gtk::manage(new Gtk::Button(_("Cancel")));
 	m_cancelButton->set_image_from_icon_name("dialog-cancel", Gtk::ICON_SIZE_BUTTON);
 	m_cancelButton->show();
@@ -53,10 +52,18 @@ Acquirer::Acquirer(const Ui::MainWindow& _ui)
 	CONNECT(ui.buttonAcquireOutput, clicked, [this] { selectOutputPath(); });
 	CONNECT(ui.comboAcquireDevice, changed, [this] { setDeviceComboTooltip(); });
 	CONNECT(m_scanner, initFailed, [this] { scanInitFailed(); });
-	CONNECT(m_scanner, devicesDetected, [this](const std::vector<Scanner::Device>& devices) { doneDetectDevices(devices); });
-	CONNECT(m_scanner, scanFailed, [this](const std::string& msg) { scanFailed(msg); });
-	CONNECT(m_scanner, scanStateChanged, [this](Scanner::State state) { setScanState(state); });
-	CONNECT(m_scanner, pageAvailable, [this](const std::string& file) { m_signal_scanPageAvailable.emit(file); });
+	CONNECT(m_scanner, devicesDetected, [this](const std::vector<Scanner::Device>& devices) {
+		doneDetectDevices(devices);
+	});
+	CONNECT(m_scanner, scanFailed, [this](const std::string& msg) {
+		scanFailed(msg);
+	});
+	CONNECT(m_scanner, scanStateChanged, [this](Scanner::State state) {
+		setScanState(state);
+	});
+	CONNECT(m_scanner, pageAvailable, [this](const std::string& file) {
+		m_signal_scanPageAvailable.emit(file);
+	});
 
 	ADD_SETTING(ComboSetting("scanres", ui.comboAcquireResolution));
 	ADD_SETTING(ComboSetting("scanmode", ui.comboAcquireMode));

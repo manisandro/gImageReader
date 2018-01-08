@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditorText.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -35,7 +35,9 @@ public:
 	OutputEditorText();
 	~OutputEditorText();
 
-	Gtk::Box* getUI() const override { return ui.boxEditorText; }
+	Gtk::Box* getUI() const override {
+		return ui.boxEditorText;
+	}
 	ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
 		return new TextReadSessionData;
 	}

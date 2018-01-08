@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Utils.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -53,13 +53,14 @@ void clear_error_state(Gtk::Entry* entry);
 
 Glib::ustring get_content_type(const std::string& filename);
 std::pair<std::string, std::string> split_filename(const std::string& filename);
-std::string make_absolute_path(const std::string& path);
+std::string make_absolute_path(const std::string& path, const std::string& basepath);
+std::string make_relative_path(const std::string& path, const std::string& basepath);
 std::string get_documents_dir();
 std::string make_output_filename(const std::string& filename);
 
 std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, bool keepEmpty = true);
 Glib::ustring string_join(const std::vector<Glib::ustring>& strings, const Glib::ustring& joiner);
-Glib::ustring string_trim(const Glib::ustring& str, char what=' ');
+Glib::ustring string_trim(const Glib::ustring& str, const Glib::ustring& what=" \t\n\r");
 bool strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, bool matchCase);
 std::size_t string_firstIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
 std::size_t string_lastIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * XmlUtils.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) (\d+)-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -63,6 +63,19 @@ xmlpp::Element* XmlUtils::nextSiblingElement(xmlpp::Node* node, const Glib::ustr
 	return child ? static_cast<xmlpp::Element*>(child) : nullptr;
 }
 
+std::list<xmlpp::Element*> XmlUtils::elementsByTagName(const xmlpp::Element* element, const Glib::ustring& name) {
+	std::list<xmlpp::Element*> elems;
+	for(xmlpp::Node* child : element->get_children()) {
+		if(xmlpp::Element* childElem = dynamic_cast<xmlpp::Element*>(child)) {
+			if(childElem->get_name() == name) {
+				elems.push_back(childElem);
+			}
+			elems.splice(elems.end(), elementsByTagName(childElem, name));
+		}
+	}
+	return elems;
+}
+
 Glib::ustring XmlUtils::documentXML(xmlpp::Document* doc) {
 	Glib::ustring xml = doc->write_to_string();
 	// Strip entity declaration
@@ -79,19 +92,17 @@ Glib::ustring XmlUtils::elementXML(const xmlpp::Element* element) {
 	return documentXML(&doc);
 }
 
-xmlpp::Element* XmlUtils::takeChild(xmlpp::Element* parent, xmlpp::Element* child)
-{
+xmlpp::Element* XmlUtils::takeChild(xmlpp::Element* parent, xmlpp::Element* child) {
 	xmlpp::Element* clone = static_cast<xmlpp::Element*>(dummyElement()->import_node(child));
 	parent->remove_child(child);
 	return clone;
 }
 
-xmlpp::Element* XmlUtils::createElement(const Glib::ustring& name)
-{
+xmlpp::Element* XmlUtils::createElement(const Glib::ustring& name) {
 	return dummyElement()->add_child(name);
 }
 
-xmlpp::Element* XmlUtils::dummyElement(){
+xmlpp::Element* XmlUtils::dummyElement() {
 	static xmlpp::Document doc;
 	static xmlpp::Element* root = doc.create_root_node("root");
 	return root;

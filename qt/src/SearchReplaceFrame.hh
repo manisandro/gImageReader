@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * SearchReplaceFrame.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -48,11 +48,21 @@ private:
 	SubstitutionsManager* m_substitutionsManager;
 
 private slots:
-	void findNext() { emit findReplace(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked(), false, false); }
-	void findPrev() { emit findReplace(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked(), true, false); }
-	void replaceNext() { emit findReplace(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked(), false, true); }
-	void emitReplaceAll() { emit replaceAll(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked()); }
-	void emitApplySubstitutions(const QMap<QString, QString>& substitutions) { emit applySubstitutions(substitutions, ui.checkBoxMatchCase->isChecked()); }
+	void findNext() {
+		emit findReplace(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked(), false, false);
+	}
+	void findPrev() {
+		emit findReplace(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked(), true, false);
+	}
+	void replaceNext() {
+		emit findReplace(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked(), false, true);
+	}
+	void emitReplaceAll() {
+		emit replaceAll(ui.lineEditSearch->text(), ui.lineEditReplace->text(), ui.checkBoxMatchCase->isChecked());
+	}
+	void emitApplySubstitutions(const QMap<QString, QString>& substitutions) {
+		emit applySubstitutions(substitutions, ui.checkBoxMatchCase->isChecked());
+	}
 };
 
 #endif // SEARCHREPLACEFRAME_HH

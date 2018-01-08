@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditorHOCR.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -27,7 +27,9 @@
 #include "ui_OutputEditorHOCR.hh"
 
 class DisplayerToolHOCR;
-namespace Geometry{ class Rectangle; }
+namespace Geometry {
+class Rectangle;
+}
 class HOCRDocument;
 class HOCRPage;
 class SearchReplaceFrame;
@@ -37,12 +39,16 @@ public:
 	OutputEditorHOCR(DisplayerToolHOCR* tool);
 	~OutputEditorHOCR();
 
-	Gtk::Box* getUI() const override { return ui.boxEditorHOCR; }
+	Gtk::Box* getUI() const override {
+		return ui.boxEditorHOCR;
+	}
 	ReadSessionData* initRead(tesseract::TessBaseAPI& tess) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
 	void finalizeRead(ReadSessionData *data) override;
-	bool getModified() const override{ return m_modified; }
+	bool getModified() const override {
+		return m_modified;
+	}
 	void onVisibilityChanged(bool /*visibile*/);
 
 	bool clear(bool hide = true) override;
@@ -52,6 +58,7 @@ public:
 	void savePDF();
 	bool exportToPDF();
 	bool exportToText();
+	bool exportToODT();
 
 private:
 	class HOCRTreeView;
@@ -75,6 +82,7 @@ private:
 		Gtk::TreeModelColumn<Glib::ustring> attr;
 		Gtk::TreeModelColumn<Glib::ustring> name;
 		Gtk::TreeModelColumn<Glib::ustring> value;
+		Gtk::TreeModelColumn<bool> multiple;
 		Gtk::TreeModelColumn<Glib::ustring> placeholder;
 		Gtk::TreeModelColumn<Glib::ustring> itemClass;
 		Gtk::TreeModelColumn<bool> editable;
@@ -84,6 +92,7 @@ private:
 			add(attr);
 			add(name);
 			add(value);
+			add(multiple);
 			add(placeholder);
 			add(itemClass);
 			add(editable);

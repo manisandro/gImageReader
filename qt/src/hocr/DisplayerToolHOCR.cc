@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * DisplayerToolHOCR.cc
- * Copyright (C) 2016-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2016-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -89,15 +89,17 @@ void DisplayerToolHOCR::setAction(Action action, bool clearSel) {
 	m_currentAction = action;
 }
 
-void DisplayerToolHOCR::setSelection(const QRect& rect) {
+void DisplayerToolHOCR::setSelection(const QRect& rect, const QRect& minRect) {
 	setAction(ACTION_NONE, false);
 	QRect r = rect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft());
+	QRect mr = minRect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft());
 	if(!m_selection) {
 		m_selection = new DisplayerSelection(this, r.topLeft());
 		connect(m_selection, SIGNAL(geometryChanged(QRectF)), this, SLOT(selectionChanged(QRectF)));
 		m_displayer->scene()->addItem(m_selection);
 	}
 	m_selection->setAnchorAndPoint(r.topLeft(), r.bottomRight());
+	m_selection->setMinimumRect(mr);
 	m_displayer->ensureVisible(m_selection);
 }
 

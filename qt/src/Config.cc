@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Config.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -328,6 +328,7 @@ Config::Config(QWidget* parent)
 
 	ADD_SETTING(SwitchSetting("dictinstall", ui.checkBoxDictInstall, true));
 	ADD_SETTING(SwitchSetting("updatecheck", ui.checkBoxUpdateCheck, true));
+	ADD_SETTING(SwitchSetting("openafterexport", ui.checkBoxOpenAfterExport, false));
 	ADD_SETTING(TableSetting("customlangs", ui.tableWidgetAdditionalLang));
 	ADD_SETTING(SwitchSetting("systemoutputfont", ui.checkBoxDefaultOutputFont, true));
 	ADD_SETTING(FontSetting("customoutputfont", &m_fontDialog, QFont().toString()));

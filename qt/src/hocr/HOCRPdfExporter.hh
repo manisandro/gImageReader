@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRPdfExporter.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -57,7 +57,7 @@ private:
 
 	class PDFPainter {
 	public:
-		virtual void setFontFamily(const QString& family) = 0;
+		virtual void setFontFamily(const QString& family, bool bold, bool italic) = 0;
 		virtual void setFontSize(double pointSize) = 0;
 		virtual void drawText(double x, double y, const QString& text) = 0;
 		virtual void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) = 0;

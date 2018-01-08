@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * SearchReplaceFrame.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -30,15 +30,23 @@ public:
 	explicit SearchReplaceFrame();
 	~SearchReplaceFrame();
 
-	Gtk::Box* getWidget() const{ return ui.boxSearchreplace; }
+	Gtk::Box* getWidget() const {
+		return ui.boxSearchreplace;
+	}
 	void clear();
 	void clearErrorState();
 	void setErrorState();
 	void hideSubstitutionsManager();
 
-	sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool, bool, bool> signal_find_replace() { return m_signal_find_replace; }
-	sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool> signal_replace_all() { return m_signal_replace_all; }
-	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&, bool> signal_apply_substitutions() { return m_signal_apply_substitutions; }
+	sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool, bool, bool> signal_find_replace() {
+		return m_signal_find_replace;
+	}
+	sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool> signal_replace_all() {
+		return m_signal_replace_all;
+	}
+	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&, bool> signal_apply_substitutions() {
+		return m_signal_apply_substitutions;
+	}
 
 private:
 	sigc::signal<void, const Glib::ustring&, const Glib::ustring&, bool, bool, bool> m_signal_find_replace;
@@ -50,11 +58,21 @@ private:
 	SubstitutionsManager* m_substitutionsManager;
 
 private:
-	void findNext() { m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), false, false); }
-	void findPrev() { m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), true, false); }
-	void replaceNext() { m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), false, true); }
-	void emitReplaceAll() { m_signal_replace_all.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active()); }
-	void emitApplySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions) { m_signal_apply_substitutions.emit(substitutions, ui.checkbuttonMatchcase->get_active()); }
+	void findNext() {
+		m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), false, false);
+	}
+	void findPrev() {
+		m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), true, false);
+	}
+	void replaceNext() {
+		m_signal_find_replace.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active(), false, true);
+	}
+	void emitReplaceAll() {
+		m_signal_replace_all.emit(ui.entrySearch->get_text(), ui.entryReplace->get_text(), ui.checkbuttonMatchcase->get_active());
+	}
+	void emitApplySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions) {
+		m_signal_apply_substitutions.emit(substitutions, ui.checkbuttonMatchcase->get_active());
+	}
 };
 
 #endif // SEARCHREPLACEFRAME_HH

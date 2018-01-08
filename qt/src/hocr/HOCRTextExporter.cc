@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRTextExporter.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -24,12 +24,12 @@
 #include "FileDialogs.hh"
 #include "SourceManager.hh"
 
+#include <QDesktopServices>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QTextStream>
 
-bool HOCRTextExporter::run(const HOCRDocument *hocrdocument, QString &filebasename)
-{
+bool HOCRTextExporter::run(const HOCRDocument *hocrdocument, QString &filebasename) {
 	QString suggestion = filebasename;
 	if(suggestion.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
@@ -58,11 +58,15 @@ bool HOCRTextExporter::run(const HOCRDocument *hocrdocument, QString &filebasena
 		printItem(outputStream, page);
 	}
 	outputFile.write(MAIN->getConfig()->useUtf8() ? output.toUtf8() : output.toLocal8Bit());
+	outputFile.close();
+	bool openAfterExport = ConfigSettings::get<SwitchSetting>("openafterexport")->getValue();
+	if(openAfterExport) {
+		QDesktopServices::openUrl(QUrl::fromLocalFile(outname));
+	}
 	return true;
 }
 
-void HOCRTextExporter::printItem(QTextStream& outputStream, const HOCRItem* item, bool lastChild)
-{
+void HOCRTextExporter::printItem(QTextStream& outputStream, const HOCRItem* item, bool lastChild) {
 	if(!item->isEnabled()) {
 		return;
 	}

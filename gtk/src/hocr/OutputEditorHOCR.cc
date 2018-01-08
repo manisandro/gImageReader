@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditorHOCR.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) (\d+)-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -30,6 +30,7 @@
 #include "DisplayerToolHOCR.hh"
 #include "FileDialogs.hh"
 #include "HOCRDocument.hh"
+#include "HOCROdtExporter.hh"
 #include "HOCRPdfExporter.hh"
 #include "HOCRTextExporter.hh"
 #include "MainWindow.hh"
@@ -41,18 +42,20 @@
 #include "XmlUtils.hh"
 
 
-class OutputEditorHOCR::HOCRCellRendererText : public Gtk::CellRendererText
-{
+class OutputEditorHOCR::HOCRCellRendererText : public Gtk::CellRendererText {
 public:
 	HOCRCellRendererText() : Glib::ObjectBase("CellRendererTextHOCR") {}
-	Gtk::Entry* get_entry() const{ return m_entry; }
-	const Glib::ustring& get_current_path() const{ return m_path; }
+	Gtk::Entry* get_entry() const {
+		return m_entry;
+	}
+	const Glib::ustring& get_current_path() const {
+		return m_path;
+	}
 
 protected:
 	Gtk::Entry* m_entry = nullptr;
 	Glib::ustring m_path;
-	Gtk::CellEditable* start_editing_vfunc(GdkEvent* /*event*/, Gtk::Widget& /*widget*/, const Glib::ustring& path, const Gdk::Rectangle& /*background_area*/, const Gdk::Rectangle& /*cell_area*/, Gtk::CellRendererState /*flags*/) override
-	{
+	Gtk::CellEditable* start_editing_vfunc(GdkEvent* /*event*/, Gtk::Widget& /*widget*/, const Glib::ustring& path, const Gdk::Rectangle& /*background_area*/, const Gdk::Rectangle& /*cell_area*/, Gtk::CellRendererState /*flags*/) override {
 		if(!property_editable()) {
 			return nullptr;
 		}
@@ -81,8 +84,7 @@ protected:
 	Glib::RefPtr<Gtk::TreeStore> m_propStore;
 	const OutputEditorHOCR::PropStoreColumns& m_cols;
 
-	Gtk::CellEditable* start_editing_vfunc(GdkEvent* /*event*/, Gtk::Widget& /*widget*/, const Glib::ustring& path, const Gdk::Rectangle& /*background_area*/, const Gdk::Rectangle& /*cell_area*/, Gtk::CellRendererState /*flags*/) override
-	{
+	Gtk::CellEditable* start_editing_vfunc(GdkEvent* /*event*/, Gtk::Widget& /*widget*/, const Glib::ustring& path, const Gdk::Rectangle& /*background_area*/, const Gdk::Rectangle& /*cell_area*/, Gtk::CellRendererState /*flags*/) override {
 		if(!property_editable()) {
 			return nullptr;
 		}
@@ -96,6 +98,20 @@ protected:
 				if(!combo->property_editing_canceled() && newFont != curFont) {
 					edited(path, combo->get_active_font());
 				}
+			});
+			combo->show();
+			return Gtk::manage(combo);
+		} else if(it && ((*it)[m_cols.attr] == "bold" || (*it)[m_cols.attr] == "italic")) {
+			Gtk::ComboBoxText* combo = new Gtk::ComboBoxText();
+			combo->insert(0, "0", _("No"));
+			combo->insert(1, "1", _("Yes"));
+			if((*it)[m_cols.multiple] == true) {
+				combo->set_active(-1);
+			} else {
+				combo->set_active_id((*it)[m_cols.value]);
+			}
+			combo->signal_editing_done().connect([=] {
+				edited(path, combo->get_active_id());
 			});
 			combo->show();
 			return Gtk::manage(combo);
@@ -118,9 +134,11 @@ protected:
 class OutputEditorHOCR::HOCRTreeView : public Gtk::TreeView {
 public:
 	HOCRTreeView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& /*builder*/)
-			: Gtk::TreeView(cobject) {}
+		: Gtk::TreeView(cobject) {}
 
-	sigc::signal<void, GdkEventButton*> signal_context_menu() { return m_signal_context_menu; }
+	sigc::signal<void, GdkEventButton*> signal_context_menu() {
+		return m_signal_context_menu;
+	}
 
 	Gtk::TreeIter currentIndex() {
 		std::vector<Gtk::TreePath> items = get_selection()->get_selected_rows();
@@ -169,8 +187,7 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////
 
-OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
-{
+OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.builder->get_widget_derived("treeviewItems", m_treeView);
 	ui.setupUi();
 
@@ -290,34 +307,51 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool)
 	ui.buttonSave->set_sensitive(false);
 	ui.buttonExport->set_sensitive(false);
 
-	CONNECT(ui.buttonOpen, clicked, [this]{ open(); });
-	CONNECT(ui.buttonSave, clicked, [this]{ save(); });
-	CONNECT(ui.menuitemExportText, activate, [this]{ exportToText(); });
-	CONNECT(ui.menuitemExportPdf, activate, [this]{ exportToPDF(); });
-	CONNECT(ui.buttonClear, clicked, [this]{ clear(); });
-	CONNECT(ui.buttonFindreplace, toggled, [this]{ m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(ui.buttonFindreplace->get_active()); });
-	CONNECT(ui.buttonWconf, toggled, [this]{ m_treeView->get_column(1)->set_visible(ui.buttonWconf->get_active());});
-	CONNECT(m_treeView, context_menu, [this](GdkEventButton* ev){ showTreeWidgetContextMenu(ev); });
+	CONNECT(ui.buttonOpen, clicked, [this] { open(); });
+	CONNECT(ui.buttonSave, clicked, [this] { save(); });
+	CONNECT(ui.menuitemExportText, activate, [this] { exportToText(); });
+	CONNECT(ui.menuitemExportPdf, activate, [this] { exportToPDF(); });
+	CONNECT(ui.menuitemExportOdt, activate, [this] { exportToODT(); });
+	CONNECT(ui.buttonClear, clicked, [this] { clear(); });
+	CONNECT(ui.buttonFindreplace, toggled, [this] { m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(ui.buttonFindreplace->get_active()); });
+	CONNECT(ui.buttonWconf, toggled, [this] { m_treeView->get_column(1)->set_visible(ui.buttonWconf->get_active());});
+	CONNECT(m_treeView, context_menu, [this](GdkEventButton* ev) {
+		showTreeWidgetContextMenu(ev);
+	});
 	CONNECT(m_searchFrame, find_replace, sigc::mem_fun(this, &OutputEditorHOCR::findReplace));
 	CONNECT(m_searchFrame, replace_all, sigc::mem_fun(this, &OutputEditorHOCR::replaceAll));
 	CONNECT(m_searchFrame, apply_substitutions, sigc::mem_fun(this, &OutputEditorHOCR::applySubstitutions));
 	m_connectionCustomFont = CONNECT(ConfigSettings::get<FontSetting>("customoutputfont"), changed, [this] { setFont(); });
 	m_connectionDefaultFont = CONNECT(ConfigSettings::get<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(); });
 	m_connectionSelectionChanged = CONNECT(m_treeView->get_selection(), changed, [this] { showItemProperties(m_treeView->currentIndex()); });
-	CONNECT(ui.notebook, switch_page, [this](Gtk::Widget*, guint){ updateSourceText(); });
+	CONNECT(ui.notebook, switch_page, [this](Gtk::Widget*, guint) {
+		updateSourceText();
+	});
 	CONNECT(m_tool, bbox_changed, sigc::mem_fun(this, &OutputEditorHOCR::updateCurrentItemBBox));
 	CONNECT(m_tool, bbox_drawn, sigc::mem_fun(this, &OutputEditorHOCR::addGraphicRegion));
 	CONNECT(m_tool, position_picked, sigc::mem_fun(this, &OutputEditorHOCR::pickItem));
-	CONNECTX(m_document, row_inserted, [this](const Gtk::TreePath&, const Gtk::TreeIter&){ setModified(); });
-	CONNECTX(m_document, row_deleted, [this](const Gtk::TreePath&){ setModified(); });
-	CONNECTX(m_document, row_changed, [this](const Gtk::TreePath&, const Gtk::TreeIter&){ setModified(); updateSourceText(); });
-	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&){ setModified(); });
-	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value){ updateAttributes(it, attr, value); updateSourceText(); });
-	CONNECT(ui.comboNavigation, changed, [this]{ navigateTargetChanged(); });
-	CONNECT(ui.buttonNavigationNext, clicked, [this]{ navigateNextPrev(true); });
-	CONNECT(ui.buttonNavigationPrev, clicked, [this]{ navigateNextPrev(false); });
-	CONNECT(ui.buttonExpandAll, clicked, [this]{ expandCollapseItemClass(true); });
-	CONNECT(ui.buttonCollapseAll, clicked, [this]{ expandCollapseItemClass(false); });
+	CONNECTX(m_document, row_inserted, [this](const Gtk::TreePath&, const Gtk::TreeIter&) {
+		setModified();
+	});
+	CONNECTX(m_document, row_deleted, [this](const Gtk::TreePath&) {
+		setModified();
+	});
+	CONNECTX(m_document, row_changed, [this](const Gtk::TreePath&, const Gtk::TreeIter&) {
+		setModified();
+		updateSourceText();
+	});
+	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&) {
+		setModified();
+	});
+	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value) {
+		updateAttributes(it, attr, value);
+		updateSourceText();
+	});
+	CONNECT(ui.comboNavigation, changed, [this] { navigateTargetChanged(); });
+	CONNECT(ui.buttonNavigationNext, clicked, [this] { navigateNextPrev(true); });
+	CONNECT(ui.buttonNavigationPrev, clicked, [this] { navigateNextPrev(false); });
+	CONNECT(ui.buttonExpandAll, clicked, [this] { expandCollapseItemClass(true); });
+	CONNECT(ui.buttonCollapseAll, clicked, [this] { expandCollapseItemClass(false); });
 
 	setFont();
 }
@@ -393,16 +427,14 @@ void OutputEditorHOCR::addPage(const Glib::ustring& hocrText, ReadSessionData da
 	m_modified = true;
 }
 
-void OutputEditorHOCR::navigateTargetChanged()
-{
+void OutputEditorHOCR::navigateTargetChanged() {
 	Glib::ustring target = (*ui.comboNavigation->get_active())[m_navigationComboCols.itemClass];
 	bool allowExpandCollapse = target.substr(0, 9) != "ocrx_word";
 	ui.buttonExpandAll->set_sensitive(allowExpandCollapse);
 	ui.buttonCollapseAll->set_sensitive(allowExpandCollapse);
 }
 
-void OutputEditorHOCR::expandCollapseItemClass(bool expand)
-{
+void OutputEditorHOCR::expandCollapseItemClass(bool expand) {
 	Glib::ustring target = (*ui.comboNavigation->get_active())[m_navigationComboCols.itemClass];
 	Gtk::TreeIter start = m_document->get_iter("0");
 	Gtk::TreeIter next = start;
@@ -426,8 +458,7 @@ void OutputEditorHOCR::expandCollapseItemClass(bool expand)
 	}
 }
 
-void OutputEditorHOCR::navigateNextPrev(bool next)
-{
+void OutputEditorHOCR::navigateNextPrev(bool next) {
 	Glib::ustring target = (*ui.comboNavigation->get_active())[m_navigationComboCols.itemClass];
 	bool misspelled = false;
 	if(target == "ocrx_word_bad") {
@@ -459,8 +490,7 @@ void OutputEditorHOCR::expandCollapseChildren(const Gtk::TreeIter& index, bool e
 	}
 }
 
-bool OutputEditorHOCR::showPage(const HOCRPage *page)
-{
+bool OutputEditorHOCR::showPage(const HOCRPage *page) {
 	return page && MAIN->getSourceManager()->addSource(Gio::File::create_for_path(page->sourceFile())) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
 }
 
@@ -486,12 +516,11 @@ void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index) {
 		return;
 	}
 	const HOCRPage* page = currentItem->page();
-	showPage(page);
 
 	std::map<Glib::ustring, Glib::ustring> attrs = currentItem->getAllAttributes();
 	for(auto it = attrs.begin(), itEnd = attrs.end(); it != itEnd; ++it) {
 		Glib::ustring attrName = it->first;
-		if(attrName == "class" || attrName == "id"){
+		if(attrName == "class" || attrName == "id") {
 			continue;
 		}
 		std::vector<Glib::ustring> parts = Utils::string_split(attrName, ':');
@@ -533,11 +562,21 @@ void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index) {
 
 	ui.textviewSource->get_buffer()->set_text(currentItem->toHtml());
 
-	m_tool->setSelection(currentItem->bbox());
+	if(showPage(page)) {
+		// Minimum bounding box
+		Geometry::Rectangle minBBox;
+		if(currentItem->itemClass() == "ocr_page") {
+			minBBox = currentItem->bbox();
+		} else {
+			for(const HOCRItem* child : currentItem->children()) {
+				minBBox = minBBox.unite(child->bbox());
+			}
+		}
+		m_tool->setSelection(currentItem->bbox(), minBBox);
+	}
 }
 
-Glib::RefPtr<Glib::Regex> OutputEditorHOCR::attributeValidator(const Glib::ustring& attribName) const
-{
+Glib::RefPtr<Glib::Regex> OutputEditorHOCR::attributeValidator(const Glib::ustring& attribName) const {
 	static std::map<Glib::ustring, Glib::RefPtr<Glib::Regex>> validators = {
 		{"title:bbox", Glib::Regex::create("^\\d+\\s+\\d+\\s+\\d+\\s+\\d+$")},
 		{"lang", Glib::Regex::create("^[a-z]{2}(?:_[A-Z]{2})?$")},
@@ -552,14 +591,12 @@ Glib::RefPtr<Glib::Regex> OutputEditorHOCR::attributeValidator(const Glib::ustri
 	}
 }
 
-bool OutputEditorHOCR::attributeEditable(const Glib::ustring& attribName) const
-{
-	static std::vector<Glib::ustring> editableAttrs = {"title:bbox", "lang", "title:x_fsize", "title:baseline", "title:x_font"};
+bool OutputEditorHOCR::attributeEditable(const Glib::ustring& attribName) const {
+	static std::vector<Glib::ustring> editableAttrs = {"title:bbox", "lang", "title:x_fsize", "title:baseline", "title:x_font", "bold", "italic"};
 	return std::find(editableAttrs.begin(), editableAttrs.end(), attribName) != editableAttrs.end();
 }
 
-void OutputEditorHOCR::editAttribute(const Glib::ustring &path, const Glib::ustring &value)
-{
+void OutputEditorHOCR::editAttribute(const Glib::ustring &path, const Glib::ustring &value) {
 	Gtk::TreeIter treeIt = m_treeView->currentIndex();
 	Gtk::TreeIter propIt = m_propStore->get_iter(path);
 	Glib::ustring attrName = (*propIt)[m_propStoreCols.attr];
@@ -575,8 +612,7 @@ void OutputEditorHOCR::updateCurrentItemBBox(const Geometry::Rectangle& bbox) {
 	m_document->editItemAttribute(m_treeView->currentIndex(), "title:bbox", bboxstr);
 }
 
-void OutputEditorHOCR::updateAttributes(const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value)
-{
+void OutputEditorHOCR::updateAttributes(const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value) {
 	Gtk::TreeIter current = m_treeView->currentIndex();
 	if(current && it == current) {
 		for(const Gtk::TreeIter& propIt : m_propStore->children()) {
@@ -726,8 +762,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 	loop->run();
 }
 
-void OutputEditorHOCR::pickItem(const Geometry::Point& point)
-{
+void OutputEditorHOCR::pickItem(const Geometry::Point& point) {
 	int pageNr;
 	Glib::ustring filename = MAIN->getDisplayer()->getCurrentImage(pageNr);
 	Gtk::TreeIter pageIndex = m_document->searchPage(filename, pageNr);
@@ -740,7 +775,7 @@ void OutputEditorHOCR::pickItem(const Geometry::Point& point)
 	double alpha = (page->angle() - MAIN->getDisplayer()->getCurrentAngle()) / 180. * M_PI;
 	double scale = double(page->resolution()) / double(MAIN->getDisplayer()->getCurrentResolution());
 	Geometry::Point newPoint( scale * (point.x * std::cos(alpha) - point.y * std::sin(alpha)) + 0.5 * page->bbox().width,
-					 scale * (point.x * std::sin(alpha) + point.y * std::cos(alpha)) + 0.5 * page->bbox().height);
+	                          scale * (point.x * std::sin(alpha) + point.y * std::cos(alpha)) + 0.5 * page->bbox().height);
 	showItemProperties(m_document->searchAtCanvasPos(pageIndex, newPoint));
 	m_treeView->grab_focus();
 }
@@ -775,6 +810,7 @@ void OutputEditorHOCR::open() {
 		m_document->addPage(div, false);
 		div = XmlUtils::nextSiblingElement(div, "div");
 	}
+	m_document->convertSourcePaths(Glib::path_get_dirname(filename), true);
 	m_modified = false;
 	m_filebasename = Utils::split_filename(filename).first;
 }
@@ -800,15 +836,17 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 	}
 	tesseract::TessBaseAPI tess;
 	Glib::ustring header = Glib::ustring::compose(
-						 "<!DOCTYPE html>\n"
-						 "<html>\n"
-						 " <head>\n"
-						 "  <title>%1</title>\n"
-						 "  <meta charset=\"utf-8\" /> \n"
-						 "  <meta name='ocr-system' content='tesseract %2' />\n"
-						 "  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
-						 " </head>\n", Glib::path_get_basename(outname), tess.Version());
+	                           "<!DOCTYPE html>\n"
+	                           "<html>\n"
+	                           " <head>\n"
+	                           "  <title>%1</title>\n"
+	                           "  <meta charset=\"utf-8\" /> \n"
+	                           "  <meta name='ocr-system' content='tesseract %2' />\n"
+	                           "  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
+	                           " </head>\n", Glib::path_get_basename(outname), tess.Version());
+	m_document->convertSourcePaths(Glib::path_get_dirname(outname), false);
 	Glib::ustring body = m_document->toHTML();
+	m_document->convertSourcePaths(Glib::path_get_dirname(outname), true);
 	Glib::ustring footer = "</html>\n";
 	file.write(header.data(), header.bytes());
 	file.write(body.data(), body.bytes());
@@ -818,8 +856,14 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 	return true;
 }
 
-bool OutputEditorHOCR::exportToPDF()
-{
+bool OutputEditorHOCR::exportToODT() {
+	if(m_document->pageCount() == 0) {
+		return false;
+	}
+	return HOCROdtExporter(m_tool).run(m_document, m_filebasename);
+}
+
+bool OutputEditorHOCR::exportToPDF() {
 	if(m_document->pageCount() == 0) {
 		return false;
 	}
@@ -831,16 +875,14 @@ bool OutputEditorHOCR::exportToPDF()
 	return false;
 }
 
-bool OutputEditorHOCR::exportToText()
-{
+bool OutputEditorHOCR::exportToText() {
 	if(m_document->pageCount() == 0) {
 		return false;
 	}
 	return HOCRTextExporter().run(m_document, m_filebasename);
 }
 
-bool OutputEditorHOCR::clear(bool hide)
-{
+bool OutputEditorHOCR::clear(bool hide) {
 	if(!ui.boxEditorHOCR->get_visible()) {
 		return true;
 	}
@@ -855,11 +897,23 @@ bool OutputEditorHOCR::clear(bool hide)
 		}
 	}
 	m_document = Glib::RefPtr<HOCRDocument>(new HOCRDocument(&m_spell));
-	CONNECTX(m_document, row_inserted, [this](const Gtk::TreePath&, const Gtk::TreeIter&){ setModified(); });
-	CONNECTX(m_document, row_deleted, [this](const Gtk::TreePath&){ setModified(); });
-	CONNECTX(m_document, row_changed, [this](const Gtk::TreePath&, const Gtk::TreeIter&){ setModified(); updateSourceText(); });
-	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&){ setModified(); });
-	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value){ updateAttributes(it, attr, value); updateSourceText(); });
+	CONNECTX(m_document, row_inserted, [this](const Gtk::TreePath&, const Gtk::TreeIter&) {
+		setModified();
+	});
+	CONNECTX(m_document, row_deleted, [this](const Gtk::TreePath&) {
+		setModified();
+	});
+	CONNECTX(m_document, row_changed, [this](const Gtk::TreePath&, const Gtk::TreeIter&) {
+		setModified();
+		updateSourceText();
+	});
+	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&) {
+		setModified();
+	});
+	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value) {
+		updateAttributes(it, attr, value);
+		updateSourceText();
+	});
 	m_treeView->set_model(m_document);
 	ui.textviewSource->get_buffer()->set_text("");
 	m_tool->clearSelection();
@@ -881,8 +935,7 @@ void OutputEditorHOCR::onVisibilityChanged(bool /*visibile*/) {
 	m_searchFrame->hideSubstitutionsManager();
 }
 
-bool OutputEditorHOCR::findReplaceInItem(const Gtk::TreeIter& index, const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace, bool& currentSelectionMatchesSearch)
-{
+bool OutputEditorHOCR::findReplaceInItem(const Gtk::TreeIter& index, const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace, bool& currentSelectionMatchesSearch) {
 	// Check that the item is a word
 	const HOCRItem* item = m_document->itemAtIndex(index);
 	if(!item || item->itemClass() != "ocrx_word") {
@@ -933,8 +986,7 @@ bool OutputEditorHOCR::findReplaceInItem(const Gtk::TreeIter& index, const Glib:
 	return false;
 }
 
-void OutputEditorHOCR::findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace)
-{
+void OutputEditorHOCR::findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace) {
 	m_searchFrame->clearErrorState();
 	Gtk::TreeIter current = m_treeView->currentIndex();
 	if(!current) {
@@ -954,8 +1006,7 @@ void OutputEditorHOCR::findReplace(const Glib::ustring& searchstr, const Glib::u
 	}
 }
 
-void OutputEditorHOCR::replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase)
-{
+void OutputEditorHOCR::replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
 	Gtk::TreeIter start = m_document->get_iter(m_document->get_root_path(0));
 	Gtk::TreeIter curr = start;
@@ -980,8 +1031,7 @@ void OutputEditorHOCR::replaceAll(const Glib::ustring& searchstr, const Glib::us
 	MAIN->popState();
 }
 
-void OutputEditorHOCR::applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase)
-{
+void OutputEditorHOCR::applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
 	Gtk::TreeIter start = m_document->get_iter(m_document->get_root_path(0));
 	for(auto it = substitutions.begin(), itEnd = substitutions.end(); it != itEnd; ++it) {

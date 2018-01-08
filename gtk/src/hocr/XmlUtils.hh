@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * XmlUtils.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -21,11 +21,12 @@
 #define XMLUTILS_HH
 
 #include <glibmm/ustring.h>
+#include <list>
 
 namespace xmlpp {
-	class Document;
-	class Element;
-	class Node;
+class Document;
+class Element;
+class Node;
 }
 
 class XmlUtils {
@@ -33,6 +34,7 @@ public:
 	static Glib::ustring elementText(const xmlpp::Element* element);
 	static xmlpp::Element* firstChildElement(xmlpp::Node* node, const Glib::ustring& name = Glib::ustring());
 	static xmlpp::Element* nextSiblingElement(xmlpp::Node* node, const Glib::ustring& name = Glib::ustring());
+	static std::list<xmlpp::Element*> elementsByTagName(const xmlpp::Element* element, const Glib::ustring& name);
 	static Glib::ustring documentXML(xmlpp::Document* doc);
 	static Glib::ustring elementXML(const xmlpp::Element* element);
 	static xmlpp::Element* takeChild(xmlpp::Element* parent, xmlpp::Element* child);

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * common.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -31,14 +31,21 @@ struct ClassDataItem {
 class ClassData {
 public:
 	~ClassData() {
-		std::for_each(m_connections.begin(), m_connections.end(), [](sigc::connection conn) { conn.disconnect(); });
+		std::for_each(m_connections.begin(), m_connections.end(), [](sigc::connection conn) {
+			conn.disconnect();
+		});
 		for(ClassDataItem* item : m_items) {
 			delete item;
 		}
 	}
 	template<class T>
-	sigc::connection addConn(const T& conn) { m_connections.push_back(conn); return m_connections.back(); }
-	void addItem(ClassDataItem* item) { m_items.push_back(item); }
+	sigc::connection addConn(const T& conn) {
+		m_connections.push_back(conn);
+		return m_connections.back();
+	}
+	void addItem(ClassDataItem* item) {
+		m_items.push_back(item);
+	}
 private:
 	std::vector<sigc::connection> m_connections;
 	std::vector<ClassDataItem*> m_items;

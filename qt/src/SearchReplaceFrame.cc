@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * SearchReplaceFrame.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -22,8 +22,7 @@
 #include "SubstitutionsManager.hh"
 
 SearchReplaceFrame::SearchReplaceFrame(QWidget *parent, Qt::WindowFlags f)
-	: QFrame(parent, f)
-{
+	: QFrame(parent, f) {
 	ui.setupUi(this);
 
 	m_substitutionsManager = new SubstitutionsManager(this);
@@ -44,23 +43,19 @@ SearchReplaceFrame::SearchReplaceFrame(QWidget *parent, Qt::WindowFlags f)
 	ADD_SETTING(SwitchSetting("searchmatchcase", ui.checkBoxMatchCase));
 }
 
-void SearchReplaceFrame::clear()
-{
+void SearchReplaceFrame::clear() {
 	ui.lineEditSearch->clear();
 	ui.lineEditReplace->clear();
 }
 
-void SearchReplaceFrame::clearErrorState()
-{
+void SearchReplaceFrame::clearErrorState() {
 	ui.lineEditSearch->setStyleSheet("");
 }
 
-void SearchReplaceFrame::setErrorState()
-{
+void SearchReplaceFrame::setErrorState() {
 	ui.lineEditSearch->setStyleSheet("background: #FF7777; color: #FFFFFF;");
 }
 
-void SearchReplaceFrame::hideSubstitutionsManager()
-{
+void SearchReplaceFrame::hideSubstitutionsManager() {
 	m_substitutionsManager->hide();
 }

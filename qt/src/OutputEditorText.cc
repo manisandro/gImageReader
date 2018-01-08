@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditorText.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -156,8 +156,7 @@ void OutputEditorText::replaceAll(const QString &searchstr, const QString &repla
 	MAIN->popState();
 }
 
-void OutputEditorText::applySubstitutions(const QMap<QString, QString> &substitutions, bool matchCase)
-{
+void OutputEditorText::applySubstitutions(const QMap<QString, QString> &substitutions, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
 	QTextCursor cursor = ui.plainTextEditOutput->regionBounds();
 	int end = cursor.position();

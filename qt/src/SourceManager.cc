@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * SourceManager.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -89,6 +89,7 @@ int SourceManager::addSources(const QStringList& files) {
 	QListWidgetItem* item = nullptr;
 	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList>>("recentitems")->getValue();
 	int added = 0;
+	QStringList filesWithText;
 	for(const QString& filename : files) {
 		if(!QFile(filename).exists()) {
 			failed += "\n\t" + filename;
@@ -110,6 +111,12 @@ int SourceManager::addSources(const QStringList& files) {
 		if(!querySourcePassword(filename, password)) {
 			continue;
 		}
+
+		// Check text layer.
+		if(!checkTextLayer(filename)) {
+			filesWithText.push_back(filename);
+		}
+
 		Source* source = new Source(filename, QFileInfo(filename).fileName(), password);
 		item = new QListWidgetItem(QFileInfo(filename).fileName(), ui.listWidgetSources);
 		item->setToolTip(filename);
@@ -118,6 +125,11 @@ int SourceManager::addSources(const QStringList& files) {
 		recentItems.removeAll(filename);
 		recentItems.prepend(filename);
 		++added;
+	}
+	// Show files with text here:
+	if(!filesWithText.empty()) {
+		QString messageFiles = filesWithText.join('\n');
+		QMessageBox::information(MAIN->getInstance(), _("Searchable PDF"), _("These PDF files already have text inside:\n") + messageFiles);
 	}
 	ConfigSettings::get<VarSetting<QStringList>>("recentitems")->setValue(recentItems);
 	ui.listWidgetSources->blockSignals(true);
@@ -130,8 +142,7 @@ int SourceManager::addSources(const QStringList& files) {
 	return added;
 }
 
-bool SourceManager::querySourcePassword(const QString& filename, QByteArray& password) const
-{
+bool SourceManager::querySourcePassword(const QString& filename, QByteArray& password) const {
 	bool success = true;
 	if(filename.endsWith(".pdf", Qt::CaseInsensitive)) {
 		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(filename));
@@ -154,6 +165,23 @@ bool SourceManager::querySourcePassword(const QString& filename, QByteArray& pas
 		}
 	}
 	return success;
+}
+
+bool SourceManager::checkTextLayer(const QString& filename) const {
+	if(filename.endsWith(".pdf", Qt::CaseInsensitive)) {
+		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(filename));
+		if(document) {
+			const int pagesNbr = document->numPages();
+
+			for (int i = 0; i < pagesNbr; ++i) {
+				QString text = document->page(i)->text(QRectF());
+				if(!text.isEmpty()) {
+					return false;
+				}
+			}
+		}
+	}
+	return true;
 }
 
 QList<Source*> SourceManager::getSelectedSources() const {

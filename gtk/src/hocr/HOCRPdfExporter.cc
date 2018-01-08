@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRPdfExporter.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) (\d+)-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -48,20 +48,19 @@
 class HOCRPdfExporter::CairoPDFPainter : public HOCRPdfExporter::PDFPainter {
 public:
 	CairoPDFPainter(Cairo::RefPtr<Cairo::Context> context, const Glib::ustring& defaultFont, const std::vector<Glib::ustring>& fontFamilies)
-		: m_context(context), m_defaultFont(defaultFont), m_fontFamilies(fontFamilies)
-	{
+		: m_context(context), m_defaultFont(defaultFont), m_fontFamilies(fontFamilies) {
 		m_curFont = m_defaultFont;
 		m_context->select_font_face(m_curFont, Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_NORMAL);
 	}
-	void setFontFamily(const Glib::ustring& family) override {
+	void setFontFamily(const Glib::ustring& family, bool bold, bool italic) override {
 		if(family != m_curFont) {
 			if(std::find(m_fontFamilies.begin(), m_fontFamilies.end(), family) != m_fontFamilies.end()) {
 				m_curFont = family;
 			}  else {
 				m_curFont = m_defaultFont;
 			}
-			m_context->select_font_face(m_curFont, Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_NORMAL);
 		}
+		m_context->select_font_face(m_curFont, italic ? Cairo::FONT_SLANT_ITALIC : Cairo::FONT_SLANT_NORMAL, bold ? Cairo::FONT_WEIGHT_BOLD : Cairo::FONT_WEIGHT_NORMAL);
 	}
 	void setFontSize(double pointSize) override {
 		m_context->set_font_size(pointSize);
@@ -114,7 +113,7 @@ class PdfImageCompat : public PoDoFo::PdfImage {
 	using PdfImage::PdfImage;
 public:
 	void SetImageDataRaw( unsigned int nWidth, unsigned int nHeight,
-						  unsigned int nBitsPerComponent, PdfInputStream* pStream ) {
+	                      unsigned int nBitsPerComponent, PdfInputStream* pStream ) {
 		m_rRect.SetWidth( nWidth );
 		m_rRect.SetHeight( nHeight );
 
@@ -135,12 +134,11 @@ public:
 class HOCRPdfExporter::PoDoFoPDFPainter : public HOCRPdfExporter::PDFPainter {
 public:
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, double defaultFontSize, const std::vector<Glib::ustring>& fontFamilies)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const Glib::ustring& defaultFontFamily, double defaultFontSize, const std::vector<Glib::ustring>& fontFamilies)
 #else
-	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, double defaultFontSize, const std::vector<Glib::ustring>& fontFamilies)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const Glib::ustring& defaultFontFamily, double defaultFontSize, const std::vector<Glib::ustring>& fontFamilies)
 #endif
-		: m_fontFamilies(fontFamilies), m_document(document), m_painter(painter), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontSize(defaultFontSize)
-	{
+		: m_fontFamilies(fontFamilies), m_document(document), m_painter(painter), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontFamily(defaultFontFamily), m_defaultFontSize(defaultFontSize) {
 	}
 	~PoDoFoPDFPainter() {
 #if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
@@ -169,9 +167,9 @@ public:
 		}
 		return true;
 	}
-	void setFontFamily(const Glib::ustring& family) override {
+	void setFontFamily(const Glib::ustring& family, bool bold, bool italic) override {
 		float curSize = m_painter->GetFont()->GetFontSize();
-		m_painter->SetFont(getFont(family.c_str()));
+		m_painter->SetFont(getFont(family, bold, italic));
 		m_painter->GetFont()->SetFontSize(curSize);
 	}
 	void setFontSize(double pointSize) override {
@@ -216,7 +214,7 @@ public:
 			pdfImage.SetImageDataRaw(img.width, img.height, img.sampleSize, &is);
 		}
 		m_painter->DrawImage(m_offsetX + bbox.x * m_scaleFactor, m_pageHeight - m_offsetY - (bbox.y + bbox.height) * m_scaleFactor,
-							 &pdfImage, m_scaleFactor * bbox.width / double(image->get_width()), m_scaleFactor * bbox.height / double(image->get_height()));
+		                     &pdfImage, m_scaleFactor * bbox.width / double(image->get_width()), m_scaleFactor * bbox.height / double(image->get_height()));
 	}
 	double getAverageCharWidth() const override {
 		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x')) / m_scaleFactor;
@@ -237,32 +235,30 @@ private:
 	PoDoFo::PdfEncoding* m_pdfFontEncoding;
 #endif
 	PoDoFo::PdfFont* m_defaultFont;
+	Glib::ustring m_defaultFontFamily;
 	double m_defaultFontSize = -1.0;
 	double m_scaleFactor = 1.0;
 	double m_pageHeight = 0.0;
 	double m_offsetX = 0.0;
 	double m_offsetY = 0.0;
 
-	PoDoFo::PdfFont* getFont(const Glib::ustring& family) {
-		auto it = m_fontCache.find(family);
+	PoDoFo::PdfFont* getFont(Glib::ustring family, bool bold, bool italic) {
+		Glib::ustring key = family + (bold ? "@bold" : "") + (italic ? "@italic" : "");
+		auto it = m_fontCache.find(key);
 		if(it == m_fontCache.end()) {
-			if(std::find(m_fontFamilies.begin(), m_fontFamilies.end(), family) == m_fontFamilies.end()) {
-				it = m_fontCache.insert(std::make_pair(family, m_defaultFont)).first;
-			} else {
-				Pango::FontDescription fontDesc = Pango::FontDescription(family);
-				bool italic = fontDesc.get_style() == Pango::STYLE_OBLIQUE;
-				bool bold = fontDesc.get_weight() == Pango::WEIGHT_BOLD;
-				PoDoFo::PdfFont* font = nullptr;
-				try {
+			if(family.empty() || std::find(m_fontFamilies.begin(), m_fontFamilies.end(), family) == m_fontFamilies.end()) {
+				family = m_defaultFontFamily;
+			}
+			PoDoFo::PdfFont* font = nullptr;
+			try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-					font = m_document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), bold, italic, false, m_pdfFontEncoding);
+				font = m_document->CreateFontSubset(Utils::resolveFontName(family).c_str(), bold, italic, false, m_pdfFontEncoding);
 #else
-					font = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), bold, italic, m_pdfFontEncoding);
+				font = document->CreateFontSubset(Utils::resolveFontName(family).c_str(), bold, italic, m_pdfFontEncoding);
 #endif
-					it = m_fontCache.insert(std::make_pair(family, font)).first;
-				} catch(PoDoFo::PdfError& /*err*/) {
-					it = m_fontCache.insert(std::make_pair(family, m_defaultFont)).first;
-				}
+				it = m_fontCache.insert(std::make_pair(key, font)).first;
+			} catch(PoDoFo::PdfError& /*err*/) {
+				it = m_fontCache.insert(std::make_pair(key, m_defaultFont)).first;
 			}
 		}
 		return it->second;
@@ -271,8 +267,7 @@ private:
 
 
 HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument, const HOCRPage* previewPage, DisplayerToolHOCR* displayerTool)
-	: m_hocrdocument(hocrdocument), m_previewPage(previewPage), m_displayerTool(displayerTool)
-{
+	: m_hocrdocument(hocrdocument), m_previewPage(previewPage), m_displayerTool(displayerTool) {
 	ui.builder->get_widget_derived("comboOverridefontfamily", m_comboOverrideFont);
 	ui.builder->get_widget_derived("comboFallbackfontfamily", m_comboFallbackFont);
 	ui.setupUi();
@@ -366,31 +361,35 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 	CONNECT(ui.comboDithering, changed, [this] { updatePreview(); });
 	CONNECT(ui.comboCompression, changed, [this] { imageCompressionChanged(); });
 	CONNECT(ui.spinQuality, value_changed, [this] { updatePreview(); });
-	CONNECT(ui.checkboxOverridefontfamily, toggled, [this]{
+	CONNECT(ui.checkboxOverridefontfamily, toggled, [this] {
 		m_comboOverrideFont->set_sensitive(ui.checkboxOverridefontfamily->get_active());
 		m_comboFallbackFont->set_sensitive(!ui.checkboxOverridefontfamily->get_active());
 		ui.labelFallbackfontfamily->set_sensitive(!ui.checkboxOverridefontfamily->get_active());
 		updatePreview();
 	});
-	CONNECT(m_comboFallbackFont, font_changed, [this](Glib::ustring){ updatePreview(); });
-	CONNECT(m_comboOverrideFont, font_changed, [this](Glib::ustring){ updatePreview(); });
-	CONNECT(ui.checkboxOverridefontsize, toggled, [this]{
+	CONNECT(m_comboFallbackFont, font_changed, [this](Glib::ustring) {
+		updatePreview();
+	});
+	CONNECT(m_comboOverrideFont, font_changed, [this](Glib::ustring) {
+		updatePreview();
+	});
+	CONNECT(ui.checkboxOverridefontsize, toggled, [this] {
 		ui.spinOverridefontsize->set_sensitive(ui.checkboxOverridefontsize->get_active());
 		ui.spinFontscale->set_sensitive(!ui.checkboxOverridefontsize->get_active());
 		ui.labelFontscale->set_sensitive(!ui.checkboxOverridefontsize->get_active());
 		updatePreview();
 	});
-	CONNECT(ui.spinOverridefontsize, value_changed, [this]{ updatePreview(); });
-	CONNECT(ui.spinFontscale, value_changed, [this]{ updatePreview(); });
+	CONNECT(ui.spinOverridefontsize, value_changed, [this] { updatePreview(); });
+	CONNECT(ui.spinFontscale, value_changed, [this] { updatePreview(); });
 	CONNECT(ui.checkboxUniformlinespacing, toggled, [this] {
 		ui.labelPreserve->set_sensitive(ui.checkboxUniformlinespacing->get_active());
 		ui.spinPreserve->set_sensitive(ui.checkboxUniformlinespacing->get_active());
 		ui.labelPreserve2->set_sensitive(ui.checkboxUniformlinespacing->get_active());
 		updatePreview();
 	});
-	CONNECT(ui.spinPreserve, value_changed, [this]{ updatePreview(); });
-	CONNECT(ui.entryEncryptionPassword, changed, [this]{ updateValid(); });
-	CONNECT(ui.entryEncryptionConfirm, changed, [this]{ updateValid(); });
+	CONNECT(ui.spinPreserve, value_changed, [this] { updatePreview(); });
+	CONNECT(ui.entryEncryptionPassword, changed, [this] { updateValid(); });
+	CONNECT(ui.entryEncryptionConfirm, changed, [this] { updateValid(); });
 	CONNECT(ui.checkboxPreview, toggled, [this] { updatePreview(); });
 	CONNECT(ui.comboPaperFormat, changed, [this] { paperSizeChanged(); });
 	CONNECT(ui.comboPaperSizeUnit, changed, [this] { paperSizeChanged(); });
@@ -445,6 +444,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 
 	bool accepted = false;
 	PoDoFo::PdfStreamedDocument* document = nullptr;
+	Glib::ustring defaultFontFamily;
 	PoDoFo::PdfFont* defaultPdfFont = nullptr;
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
@@ -487,15 +487,15 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 		try {
 			Glib::ustring password = ui.entryEncryptionPassword->get_text();
 			PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(password, password,
-										   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
-										   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
-										   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
-										   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
-										   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
-										   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
-										   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
-										   PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
-										   PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
+			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
+			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
+			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
+			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
+			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
+			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
+			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
+			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
+			                              PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
 
 			document = new PoDoFo::PdfStreamedDocument(outname.c_str(), PoDoFo::EPdfVersion::ePdfVersion_1_7, encrypt);
 		} catch(PoDoFo::PdfError& err) {
@@ -505,19 +505,18 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 
 		Glib::ustring fontName = ui.checkboxOverridefontfamily->get_active() ? m_comboOverrideFont->get_active_font() : m_comboFallbackFont->get_active_font();
 		Pango::FontDescription fontDesc = Pango::FontDescription(fontName);
-		bool italic = fontDesc.get_style() == Pango::STYLE_OBLIQUE;
-		bool bold = fontDesc.get_weight() == Pango::WEIGHT_BOLD;
 
 		try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-			defaultPdfFont = document->CreateFontSubset(fontDesc.get_family().c_str(), bold, italic, false, pdfFontEncoding);
+			defaultPdfFont = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), false, false, false, pdfFontEncoding);
 #else
-			defaultPdfFont = document->CreateFontSubset(fontDesc.get_family().c_str(), bold, italic, pdfFontEncoding);
+			defaultPdfFont = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), false, false, pdfFontEncoding);
 #endif
 		} catch(PoDoFo::PdfError& err) {
 			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("The PDF library could not load the font '%1': %2."), fontDesc.get_family(), err.what()));
 			continue;
 		}
+		defaultFontFamily = fontDesc.get_family();
 
 		break;
 	}
@@ -550,7 +549,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 	}
 
 	PoDoFo::PdfPainter painter;
-	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont, pdfSettings.fontSize, m_fontFamilies);
+	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont, defaultFontFamily, pdfSettings.fontSize, m_fontFamilies);
 
 	std::vector<Glib::ustring> failed;
 	int pageCount = m_hocrdocument->pageCount();
@@ -568,7 +567,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 				int sourceDpi = page->resolution();
 				int outputDpi = ui.spinDpi->get_value();
 				bool success = false;
-				Utils::runInMainThreadBlocking([&]{ success = setSource(page->sourceFile(), page->pageNr(), outputDpi, page->angle()); });
+				Utils::runInMainThreadBlocking([&] { success = setSource(page->sourceFile(), page->pageNr(), outputDpi, page->angle()); });
 				if(success) {
 					double docScale = (72. / sourceDpi);
 					double imgScale = double(outputDpi) / sourceDpi;
@@ -584,10 +583,10 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 					if(pdfSettings.overlay) {
 						Geometry::Rectangle scaledBBox(imgScale * bbox.x, imgScale * bbox.y, imgScale * bbox.width, imgScale * bbox.height);
 						Cairo::RefPtr<Cairo::ImageSurface> selection;
-						Utils::runInMainThreadBlocking([&]{ selection = getSelection(scaledBBox); });
+						Utils::runInMainThreadBlocking([&] { selection = getSelection(scaledBBox); });
 						pdfprinter.drawImage(bbox, selection, pdfSettings);
 					}
-					Utils::runInMainThreadBlocking([&]{ setSource(page->sourceFile(), page->pageNr(), sourceDpi, page->angle()); });
+					Utils::runInMainThreadBlocking([&] { setSource(page->sourceFile(), page->pageNr(), sourceDpi, page->angle()); });
 					painter.FinishPage();
 				} else {
 					failed.push_back(page->title());
@@ -614,7 +613,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 	Glib::ustring errMsg;
 	bool success = pdfprinter.finalize(&errMsg);
 	if(!success) {
-		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Export failed"), Glib::ustring::compose(_("The PDF export failed (%1)."), errMsg));
+		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Export failed"), Glib::ustring::compose(_("The PDF export failed: %1."), errMsg));
 	} else if(ui.checkboxOpenoutput->get_active()) {
 		Utils::openUri(Glib::filename_to_uri(outname));
 	}
@@ -622,8 +621,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 	return success;
 }
 
-HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const
-{
+HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const {
 	PDFSettings pdfSettings;
 	pdfSettings.colorFormat = (*ui.comboImageformat->get_active())[m_formatComboCols.format];
 	pdfSettings.conversionFlags = pdfSettings.colorFormat == Image::Format_Mono ? (*ui.comboDithering->get_active())[m_ditheringComboCols.conversionFlags] : Image::AutoColor;
@@ -660,7 +658,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 				}
 				Geometry::Rectangle wordRect = wordItem->bbox();
 				if(pdfSettings.fontFamily.empty()) {
-					painter.setFontFamily(wordItem->fontFamily());
+					painter.setFontFamily(wordItem->fontFamily(), wordItem->fontBold(), wordItem->fontItalic());
 				}
 				if(pdfSettings.fontSize == -1) {
 					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
@@ -682,7 +680,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 			HOCRItem* wordItem = item->children()[iWord];
 			Geometry::Rectangle wordRect = wordItem->bbox();
 			if(pdfSettings.fontFamily.empty()) {
-				painter.setFontFamily(wordItem->fontFamily());
+				painter.setFontFamily(wordItem->fontFamily(), wordItem->fontBold(), wordItem->fontItalic());
 			}
 			if(pdfSettings.fontSize == -1) {
 				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
@@ -693,7 +691,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 		Geometry::Rectangle scaledItemRect(imgScale * itemRect.x, imgScale * itemRect.y, imgScale * itemRect.width, imgScale * itemRect.height);
 		Cairo::RefPtr<Cairo::ImageSurface> selection;
 		if(inThread) {
-			Utils::runInMainThreadBlocking([&]{ selection = getSelection(scaledItemRect); });
+			Utils::runInMainThreadBlocking([&] { selection = getSelection(scaledItemRect); });
 		} else {
 			selection = getSelection(scaledItemRect);
 		}
@@ -729,7 +727,7 @@ void HOCRPdfExporter::updatePreview() {
 
 	CairoPDFPainter pdfPrinter(context, defaultFont, m_fontFamilies);
 	if(!pdfSettings.fontFamily.empty()) {
-		pdfPrinter.setFontFamily(pdfSettings.fontFamily);
+		pdfPrinter.setFontFamily(pdfSettings.fontFamily, false, false);
 	}
 	if(pdfSettings.fontSize != -1) {
 		pdfPrinter.setFontSize(pdfSettings.fontSize * pageDpi / 72.);
@@ -776,8 +774,7 @@ void HOCRPdfExporter::imageCompressionChanged() {
 	ui.labelQuality->set_sensitive(jpegCompression);
 }
 
-bool HOCRPdfExporter::setSource(const Glib::ustring& sourceFile, int page, int dpi, double angle)
-{
+bool HOCRPdfExporter::setSource(const Glib::ustring& sourceFile, int page, int dpi, double angle) {
 	Glib::RefPtr<Gio::File> file = Gio::File::create_for_path(sourceFile);
 	if(MAIN->getSourceManager()->addSource(file)) {
 		MAIN->getDisplayer()->setup(&page, &dpi, &angle);
@@ -787,8 +784,7 @@ bool HOCRPdfExporter::setSource(const Glib::ustring& sourceFile, int page, int d
 	}
 }
 
-Cairo::RefPtr<Cairo::ImageSurface> HOCRPdfExporter::getSelection(const Geometry::Rectangle& bbox)
-{
+Cairo::RefPtr<Cairo::ImageSurface> HOCRPdfExporter::getSelection(const Geometry::Rectangle& bbox) {
 	return m_displayerTool->getSelection(bbox);
 }
 

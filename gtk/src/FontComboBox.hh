@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * FontComboBox.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -29,7 +29,9 @@ public:
 	Glib::ustring get_active_font() const;
 	void set_active_font(const Glib::ustring& font);
 
-	sigc::signal<void, Glib::ustring> signal_font_changed() { return m_signal_font_changed; }
+	sigc::signal<void, Glib::ustring> signal_font_changed() {
+		return m_signal_font_changed;
+	}
 
 private:
 	ClassData m_classdata;

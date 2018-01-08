@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * MainWindow.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -47,10 +47,22 @@ public:
 	public:
 		ProgressMonitor(int total) : m_total(total) {}
 		virtual ~ProgressMonitor() {}
-		int increaseProgress() { Glib::Threads::Mutex::Lock lock(m_mutex); ++m_progress; }
-		virtual int getProgress() const { Glib::Threads::Mutex::Lock lock(m_mutex); return (m_progress * 100) / m_total; }
-		virtual void cancel() { Glib::Threads::Mutex::Lock lock(m_mutex); m_cancelled = true; }
-		bool cancelled() const{ Glib::Threads::Mutex::Lock lock(m_mutex); return m_cancelled; }
+		int increaseProgress() {
+			Glib::Threads::Mutex::Lock lock(m_mutex);
+			++m_progress;
+		}
+		virtual int getProgress() const {
+			Glib::Threads::Mutex::Lock lock(m_mutex);
+			return (m_progress * 100) / m_total;
+		}
+		virtual void cancel() {
+			Glib::Threads::Mutex::Lock lock(m_mutex);
+			m_cancelled = true;
+		}
+		bool cancelled() const {
+			Glib::Threads::Mutex::Lock lock(m_mutex);
+			return m_cancelled;
+		}
 
 	protected:
 		mutable Glib::Threads::Mutex m_mutex;

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRTextExporter.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) (\d+)-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -26,8 +26,7 @@
 
 #include <fstream>
 
-bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string &filebasename)
-{
+bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string &filebasename) {
 	std::string suggestion = filebasename;
 	if(suggestion.empty()) {
 		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
@@ -57,8 +56,7 @@ bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::
 	return true;
 }
 
-void HOCRTextExporter::printItem(std::ofstream& outputStream, const HOCRItem* item, bool lastChild)
-{
+void HOCRTextExporter::printItem(std::ofstream& outputStream, const HOCRItem* item, bool lastChild) {
 	if(!item->isEnabled()) {
 		return;
 	}

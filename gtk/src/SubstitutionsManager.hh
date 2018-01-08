@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * SubstitutionsManager.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -31,7 +31,9 @@ public:
 	~SubstitutionsManager();
 	void set_visible(bool visible);
 
-	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> signal_apply_substitutions() { return m_signal_apply_substitutions; }
+	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> signal_apply_substitutions() {
+		return m_signal_apply_substitutions;
+	}
 
 private:
 	struct ReplaceListColumns : public Gtk::TreeModel::ColumnRecord {

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * SourceManager.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -22,7 +22,9 @@
 
 #include "common.hh"
 
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 
 struct Source {
 	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::ustring& _password, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
@@ -46,7 +48,9 @@ public:
 	~SourceManager();
 
 	int addSources(const std::vector<Glib::RefPtr<Gio::File>>& files);
-	bool addSource(Glib::RefPtr<Gio::File> file) { return addSources({file}) == 1; }
+	bool addSource(Glib::RefPtr<Gio::File> file) {
+		return addSources({file}) == 1;
+	}
 	std::vector<Source*> getSelectedSources() const;
 	sigc::signal<void> signal_sourceChanged() {
 		return m_signal_sourceChanged;

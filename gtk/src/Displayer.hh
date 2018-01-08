@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Displayer.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -32,7 +32,9 @@ class DisplayerImageItem;
 class DisplayerTool;
 class DisplayRenderer;
 class Source;
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 
 class Displayer {
 public:
@@ -48,7 +50,9 @@ public:
 	int getCurrentPage() const;
 	int getCurrentResolution() const;
 	double getCurrentAngle() const;
-	double getCurrentScale() const { return m_scale; }
+	double getCurrentScale() const {
+		return m_scale;
+	}
 	std::string getCurrentImage(int& page) const;
 	int getNPages() const;
 
@@ -220,6 +224,9 @@ public:
 		m_point = point;
 		setRect(Geometry::Rectangle(m_anchor, m_point));
 	}
+	void setMinimumRect(const Geometry::Rectangle& rect) {
+		m_minRect = rect;
+	}
 	void rotate(const Geometry::Rotation &R) {
 		m_anchor = R.rotate(m_anchor);
 		m_point = R.rotate(m_point);
@@ -248,6 +255,7 @@ private:
 
 	Geometry::Point m_anchor;
 	Geometry::Point m_point;
+	Geometry::Rectangle m_minRect;
 	std::vector<ResizeHandler> m_resizeHandlers;
 	Geometry::Point m_resizeOffset;
 	sigc::signal<void, Geometry::Rectangle> m_signalGeometryChanged;

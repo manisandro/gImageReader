@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * DisplayerToolHOCR.hh
- * Copyright (C) 2016-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2016-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -53,15 +53,25 @@ public:
 	bool mouseReleaseEvent(GdkEventButton *event) override;
 
 	void setAction(Action action, bool clearSel = true);
-	void setSelection(const Geometry::Rectangle& rect);
+	void setSelection(const Geometry::Rectangle& rect, const Geometry::Rectangle& minRect);
 	Cairo::RefPtr<Cairo::ImageSurface> getSelection(const Geometry::Rectangle& rect) const;
 	void clearSelection();
 
-	sigc::signal<void> signal_displayed_source_changed() { return m_signal_displayed_source_changed; }
-	sigc::signal<void, Geometry::Rectangle> signal_bbox_drawn() { return m_signal_bbox_drawn; }
-	sigc::signal<void, Geometry::Rectangle> signal_bbox_changed() { return m_signal_bbox_changed; }
-	sigc::signal<void, Geometry::Point> signal_position_picked() { return m_signal_position_picked; }
-	sigc::signal<void, Action> signal_action_changed() { return m_signal_action_changed; }
+	sigc::signal<void> signal_displayed_source_changed() {
+		return m_signal_displayed_source_changed;
+	}
+	sigc::signal<void, Geometry::Rectangle> signal_bbox_drawn() {
+		return m_signal_bbox_drawn;
+	}
+	sigc::signal<void, Geometry::Rectangle> signal_bbox_changed() {
+		return m_signal_bbox_changed;
+	}
+	sigc::signal<void, Geometry::Point> signal_position_picked() {
+		return m_signal_position_picked;
+	}
+	sigc::signal<void, Action> signal_action_changed() {
+		return m_signal_action_changed;
+	}
 
 private:
 	ClassData m_classdata;

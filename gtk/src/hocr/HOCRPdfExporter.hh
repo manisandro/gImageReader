@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRPdfExporter.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -27,7 +27,9 @@
 class DisplayerImageItem;
 class DisplayerToolHOCR;
 class FontComboBox;
-namespace Geometry { class Rectangle; }
+namespace Geometry {
+class Rectangle;
+}
 class HOCRDocument;
 class HOCRPage;
 class HOCRItem;
@@ -54,7 +56,7 @@ private:
 
 	class PDFPainter {
 	public:
-		virtual void setFontFamily(const Glib::ustring& family) = 0;
+		virtual void setFontFamily(const Glib::ustring& family, bool bold, bool italic) = 0;
 		virtual void setFontSize(double pointSize) = 0;
 		virtual void drawText(double x, double y, const Glib::ustring& text) = 0;
 		virtual void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) = 0;
