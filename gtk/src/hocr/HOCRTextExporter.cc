@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ConfigSettings.hh"
 #include "HOCRDocument.hh"
 #include "HOCRTextExporter.hh"
 #include "MainWindow.hh"
@@ -52,6 +53,11 @@ bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::
 			continue;
 		}
 		printItem(file, page);
+	}
+	file.close();
+	bool openAfterExport = ConfigSettings::get<SwitchSettingT<Gtk::CheckButton>>("openafterexport")->getValue();
+	if(openAfterExport) {
+		Utils::openUri(Glib::filename_to_uri(outname));
 	}
 	return true;
 }

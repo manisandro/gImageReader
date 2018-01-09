@@ -176,10 +176,10 @@
             <summary>Whether to display a preview when exporting to PDF</summary>
             <description>Whether to display a preview when exporting to PDF.</description>
         </key>
-        <key type="b" name="pdfopenoutput">
+        <key type="b" name="openafterexport">
             <default>false</default>
-            <summary>Whether to open PDF output after export</summary>
-            <description>Whether to open PDF output after export.</description>
+            <summary>Whether to automatically open exported documents output</summary>
+            <description>Whether to automatically open exported documents output.</description>
         </key>
         <key type="i" name="datadirs">
             <default>0</default>

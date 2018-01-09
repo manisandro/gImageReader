@@ -327,6 +327,7 @@ Config::Config() {
 	CONNECT(ui.comboDatadirs, changed, [this] { setDataLocations(ui.comboDatadirs->get_active_row_number()); });
 
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("dictinstall", ui.checkDictinstall));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("openafterexport", ui.checkOpenExported));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("updatecheck", ui.checkUpdate));
 	ADD_SETTING(ListStoreSetting("customlangs", Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsCustom->get_model())));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("systemoutputfont", ui.checkbuttonDefaultoutputfont));

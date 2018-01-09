@@ -413,7 +413,6 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfuniformizelinespacing", ui.checkboxUniformlinespacing));
 	ADD_SETTING(SpinSetting("pdfpreservespaces", ui.spinPreserve));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfpreview", ui.checkboxPreview));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfopenoutput", ui.checkboxOpenoutput));
 	ADD_SETTING(ComboSetting("pdfexportpapersize", ui.comboPaperFormat));
 	ADD_SETTING(EntrySetting("pdfexportpaperwidth", ui.entryPaperWidth));
 	ADD_SETTING(EntrySetting("pdfexportpaperheight", ui.entryPaperHeight));
@@ -612,9 +611,10 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 
 	Glib::ustring errMsg;
 	bool success = pdfprinter.finalize(&errMsg);
+	bool openAfterExport = ConfigSettings::get<SwitchSettingT<Gtk::CheckButton>>("openafterexport")->getValue();
 	if(!success) {
 		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Export failed"), Glib::ustring::compose(_("The PDF export failed: %1."), errMsg));
-	} else if(ui.checkboxOpenoutput->get_active()) {
+	} else if(openAfterExport) {
 		Utils::openUri(Glib::filename_to_uri(outname));
 	}
 
