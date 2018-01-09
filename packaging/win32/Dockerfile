@@ -9,6 +9,7 @@ dnf config-manager --add-repo https://copr.fedorainfracloud.org/coprs/smani/ming
 dnf install -y \
   cmake \
   iso-codes \
+  findutils \
   gettext \
   hunspell-en \
   tesseract \
