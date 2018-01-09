@@ -119,7 +119,7 @@ MainWindow::MainWindow() {
 
 	ui.setupUi();
 	ui.windowMain->set_icon_name("gimagereader");
-	ui.dialogAbout->set_version(PACKAGE_VERSION);
+	ui.dialogAbout->set_version(Glib::ustring::compose("%1 (%2)", PACKAGE_VERSION, Glib::ustring(PACKAGE_REVISION).substr(0, 7)));
 	ui.labelAboutTesseractver->set_markup(Glib::ustring::compose("<small>%1 %2</small>", _("Using tesseract"), TESSERACT_VERSION_STR));
 
 	m_config = new Config;

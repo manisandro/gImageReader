@@ -280,7 +280,7 @@ void MainWindow::showAbout() {
 	QDialog d(this);
 	Ui::AboutDialog aboutDialogUi;
 	aboutDialogUi.setupUi(&d);
-	aboutDialogUi.labelVersion->setText(PACKAGE_VERSION);
+	aboutDialogUi.labelVersion->setText(QString("%1 (%2)").arg(PACKAGE_VERSION, QString(PACKAGE_REVISION).left(6)));;
 	aboutDialogUi.labelTesseractVer->setText(QString("<html><head/><body><p style=\"font-size:small;\">%1 %2</p></body></html>").arg(_("Using tesseract")).arg(TESSERACT_VERSION_STR));
 	d.exec();
 }
