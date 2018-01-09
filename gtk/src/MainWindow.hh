@@ -47,7 +47,7 @@ public:
 	public:
 		ProgressMonitor(int total) : m_total(total) {}
 		virtual ~ProgressMonitor() {}
-		int increaseProgress() {
+		void increaseProgress() {
 			Glib::Threads::Mutex::Lock lock(m_mutex);
 			++m_progress;
 		}

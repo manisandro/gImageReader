@@ -59,7 +59,7 @@ public:
 	public:
 		ProgressMonitor(int total) : mTotal(total) {}
 		virtual ~ProgressMonitor() {}
-		int increaseProgress() {
+		void increaseProgress() {
 			QMutexLocker locker(&mMutex);
 			++mProgress;
 		}
