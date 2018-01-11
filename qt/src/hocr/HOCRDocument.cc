@@ -747,7 +747,7 @@ void HOCRPage::convertSourcePath(const QString& basepath, bool absolute) {
 	if(absolute && !QFileInfo(m_sourceFile).isAbsolute()) {
 		m_sourceFile = QDir::cleanPath(QDir(basepath).absoluteFilePath(m_sourceFile));
 	} else if(!absolute && QFileInfo(m_sourceFile).isAbsolute() && m_sourceFile.startsWith(basepath)) {
-		m_sourceFile = QString(".%1%2").arg(QDir::separator()).arg(QDir(basepath).relativeFilePath(m_sourceFile));
+		m_sourceFile = QString(".%1%2").arg("/").arg(QDir(basepath).relativeFilePath(m_sourceFile));
 	}
 	m_titleAttrs["image"] = QString("'%1'").arg(m_sourceFile);
 	m_domElement.setAttribute("title", serializeAttrGroup(m_titleAttrs));
