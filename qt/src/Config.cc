@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Config.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -18,6 +18,7 @@
  */
 
 #include "Config.hh"
+#include "ConfigSettings.hh"
 #include "MainWindow.hh"
 #include "Utils.hh"
 
@@ -325,22 +326,19 @@ Config::Config(QWidget* parent)
 	connect(ui.lineEditLangCode, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditErrorState()));
 	connect(ui.comboBoxDataLocation, SIGNAL(currentIndexChanged(int)), this, SLOT(setDataLocations(int)));
 
-	addSetting(new SwitchSetting("dictinstall", ui.checkBoxDictInstall, true));
-	addSetting(new SwitchSetting("updatecheck", ui.checkBoxUpdateCheck, true));
-	addSetting(new TableSetting("customlangs", ui.tableWidgetAdditionalLang));
-	addSetting(new SwitchSetting("systemoutputfont", ui.checkBoxDefaultOutputFont, true));
-	addSetting(new FontSetting("customoutputfont", &m_fontDialog, QFont().toString()));
-	addSetting(new ComboSetting("textencoding", ui.comboBoxEncoding, 0));
-	addSetting(new ComboSetting("datadirs", ui.comboBoxDataLocation, 0));
-	addSetting(new VarSetting<QString>("sourcedir", Utils::documentsFolder()));
-	addSetting(new VarSetting<QString>("outputdir", Utils::documentsFolder()));
-	addSetting(new VarSetting<QString>("auxdir", Utils::documentsFolder()));
+	ADD_SETTING(SwitchSetting("dictinstall", ui.checkBoxDictInstall, true));
+	ADD_SETTING(SwitchSetting("updatecheck", ui.checkBoxUpdateCheck, true));
+	ADD_SETTING(SwitchSetting("openafterexport", ui.checkBoxOpenAfterExport, false));
+	ADD_SETTING(TableSetting("customlangs", ui.tableWidgetAdditionalLang));
+	ADD_SETTING(SwitchSetting("systemoutputfont", ui.checkBoxDefaultOutputFont, true));
+	ADD_SETTING(FontSetting("customoutputfont", &m_fontDialog, QFont().toString()));
+	ADD_SETTING(ComboSetting("textencoding", ui.comboBoxEncoding, 0));
+	ADD_SETTING(ComboSetting("datadirs", ui.comboBoxDataLocation, 0));
+	ADD_SETTING(VarSetting<QString>("sourcedir", Utils::documentsFolder()));
+	ADD_SETTING(VarSetting<QString>("outputdir", Utils::documentsFolder()));
+	ADD_SETTING(VarSetting<QString>("auxdir", Utils::documentsFolder()));
 
 	updateFontButton(m_fontDialog.currentFont());
-}
-
-Config::~Config() {
-	qDeleteAll(m_settings);
 }
 
 bool Config::searchLangSpec(Lang& lang) const {
@@ -362,7 +360,7 @@ QList<QString> Config::searchLangCultures(const QString& code) const {
 void Config::showDialog() {
 	toggleAddLanguage(true);
 	exec();
-	getSetting<TableSetting>("customlangs")->serialize();
+	ConfigSettings::get<TableSetting>("customlangs")->serialize();
 }
 
 bool Config::useUtf8() const {
@@ -382,11 +380,11 @@ QString Config::spellingLocation() const {
 }
 
 void Config::disableDictInstall() {
-	getSetting<SwitchSetting>("dictinstall")->setValue(false);
+	ConfigSettings::get<SwitchSetting>("dictinstall")->setValue(false);
 }
 
 void Config::disableUpdateCheck() {
-	getSetting<SwitchSetting>("updatecheck")->setValue(false);
+	ConfigSettings::get<SwitchSetting>("updatecheck")->setValue(false);
 }
 
 void Config::setDataLocations(int idx) {

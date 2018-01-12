@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * SourceManager.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -38,7 +38,7 @@
 #include <poppler-qt5.h>
 #endif
 
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "SourceManager.hh"
@@ -52,30 +52,6 @@ QDataStream& operator<<(QDataStream& ds, const Source*&) {
 }
 QDataStream& operator>>(QDataStream& ds, Source*&) {
 	return ds;
-}
-
-Source::Source(const QString& _path, const QString& _displayname, bool _isTemp)
-				: path(_path), displayname(_displayname), isTemp(_isTemp) {
-	// Check whether input PDF file is encrypted
-	if(path.endsWith(".pdf", Qt::CaseInsensitive)) {
-		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(path));
-		if(document && document->isLocked()) {
-			bool ok = false;
-			QString text;
-			while(true) {
-				text = QInputDialog::getText(MAIN, _("Protected PDF"),
-											 QString(_("Enter password for file '%1':")).arg(displayname), QLineEdit::Password,
-											 text, &ok);
-				if(!ok) {
-					throw std::invalid_argument("Locked PDF: skip file.");
-				}
-				if(!document->unlock(text.toLocal8Bit(), text.toLocal8Bit())) {
-					password = text.toLocal8Bit();
-					break;
-				}
-			}
-		}
-	}
 }
 
 
@@ -98,7 +74,7 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	connect(ui.listWidgetSources, SIGNAL(itemSelectionChanged()), this, SLOT(currentSourceChanged()));
 	connect(&m_fsWatcher, SIGNAL(fileChanged(QString)), this, SLOT(fileChanged(QString)));
 
-	MAIN->getConfig()->addSetting(new VarSetting<QStringList>("recentitems"));
+	ADD_SETTING(VarSetting<QStringList>("recentitems"));
 
 	qRegisterMetaType<Source*>("Source*");
 	qRegisterMetaTypeStreamOperators<Source*>("Source*");
@@ -111,8 +87,9 @@ SourceManager::~SourceManager() {
 int SourceManager::addSources(const QStringList& files) {
 	QString failed;
 	QListWidgetItem* item = nullptr;
-	QStringList recentItems = MAIN->getConfig()->getSetting<VarSetting<QStringList>>("recentitems")->getValue();
+	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList>>("recentitems")->getValue();
 	int added = 0;
+	QStringList filesWithText;
 	for(const QString& filename : files) {
 		if(!QFile(filename).exists()) {
 			failed += "\n\t" + filename;
@@ -130,13 +107,17 @@ int SourceManager::addSources(const QStringList& files) {
 			++added;
 			continue;
 		}
-		Source* source = nullptr;
-		try {
-			source = new Source(filename, QFileInfo(filename).fileName());
-		}
-		catch (...) {
+		QByteArray password;
+		if(!querySourcePassword(filename, password)) {
 			continue;
 		}
+
+		// Check text layer.
+		if(!checkTextLayer(filename)) {
+			filesWithText.push_back(filename);
+		}
+
+		Source* source = new Source(filename, QFileInfo(filename).fileName(), password);
 		item = new QListWidgetItem(QFileInfo(filename).fileName(), ui.listWidgetSources);
 		item->setToolTip(filename);
 		item->setData(Qt::UserRole, QVariant::fromValue(source));
@@ -145,7 +126,12 @@ int SourceManager::addSources(const QStringList& files) {
 		recentItems.prepend(filename);
 		++added;
 	}
-	MAIN->getConfig()->getSetting<VarSetting<QStringList>>("recentitems")->setValue(recentItems);
+	// Show files with text here:
+	if(!filesWithText.empty()) {
+		QString messageFiles = filesWithText.join('\n');
+		QMessageBox::information(MAIN->getInstance(), _("Searchable PDF"), _("These PDF files already have text inside:\n") + messageFiles);
+	}
+	ConfigSettings::get<VarSetting<QStringList>>("recentitems")->setValue(recentItems);
 	ui.listWidgetSources->blockSignals(true);
 	ui.listWidgetSources->clearSelection();
 	ui.listWidgetSources->blockSignals(false);
@@ -154,6 +140,48 @@ int SourceManager::addSources(const QStringList& files) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:%1").arg(failed));
 	}
 	return added;
+}
+
+bool SourceManager::querySourcePassword(const QString& filename, QByteArray& password) const {
+	bool success = true;
+	if(filename.endsWith(".pdf", Qt::CaseInsensitive)) {
+		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(filename));
+		if(document && document->isLocked()) {
+			success = false;
+			bool ok = false;
+			QString message = QString(_("Enter password for file '%1':")).arg(QFileInfo(filename).fileName());
+			QString text;
+			while(true) {
+				text = QInputDialog::getText(MAIN, _("Protected PDF"), message, QLineEdit::Password, text, &ok);
+				if(!ok) {
+					break;
+				}
+				if(!document->unlock(text.toLocal8Bit(), text.toLocal8Bit())) {
+					password = text.toLocal8Bit();
+					success = true;
+					break;
+				}
+			}
+		}
+	}
+	return success;
+}
+
+bool SourceManager::checkTextLayer(const QString& filename) const {
+	if(filename.endsWith(".pdf", Qt::CaseInsensitive)) {
+		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(filename));
+		if(document) {
+			const int pagesNbr = document->numPages();
+
+			for (int i = 0; i < pagesNbr; ++i) {
+				QString text = document->page(i)->text(QRectF());
+				if(!text.isEmpty()) {
+					return false;
+				}
+			}
+		}
+	}
+	return true;
 }
 
 QList<Source*> SourceManager::getSelectedSources() const {
@@ -167,7 +195,7 @@ QList<Source*> SourceManager::getSelectedSources() const {
 void SourceManager::prepareSourcesMenu() {
 	// Build recent menu
 	m_recentMenu->clear();
-	for(const QString& filename : MAIN->getConfig()->getSetting<VarSetting<QStringList>>("recentitems")->getValue()) {
+	for(const QString& filename : ConfigSettings::get<VarSetting<QStringList>>("recentitems")->getValue()) {
 		if(QFile(filename).exists()) {
 			QAction* action = new QAction(QFileInfo(filename).fileName(), m_recentMenu);
 			action->setToolTip(filename);
@@ -248,7 +276,7 @@ void SourceManager::savePixmap(const QPixmap& pixmap, const QString& displayname
 	} else {
 		QListWidgetItem* item = new QListWidgetItem(displayname, ui.listWidgetSources);
 		item->setToolTip(filename);
-		Source* source = new Source(filename, displayname, true);
+		Source* source = new Source(filename, displayname, QByteArray(), true);
 		item->setData(Qt::UserRole, QVariant::fromValue(source));
 		m_fsWatcher.addPath(filename);
 		ui.listWidgetSources->blockSignals(true);

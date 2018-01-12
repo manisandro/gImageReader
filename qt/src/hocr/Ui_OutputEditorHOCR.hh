@@ -3,6 +3,7 @@
 
 #include "common.hh"
 #include "OutputTextEdit.hh"
+#include "SearchReplaceFrame.hh"
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDoubleSpinBox>
@@ -25,15 +26,25 @@ public:
 	QAction* actionOutputSaveHOCR;
 	QAction* actionOutputExportText;
 	QAction* actionOutputExportPDF;
+	QAction* actionOutputExportODT;
+	QAction* actionOutputReplace;
 	QAction* actionToggleWConf;
 	QAction* actionPick;
+	QAction* actionNavigateNext;
+	QAction* actionNavigatePrev;
+	QAction* actionExpandAll;
+	QAction* actionCollapseAll;
+	QComboBox* comboBoxNavigate;
+
 	QToolBar* toolBarOutput;
+	QToolBar* toolBarNavigate;
 	QTabWidget* tabWidget;
 
 	QSplitter* splitter;
 	QTreeView *treeViewHOCR;
 	QTableWidget *tableWidgetProperties;
 	OutputTextEdit *plainTextEditOutput;
+	SearchReplaceFrame* searchFrame;
 
 	void setupUi(QWidget* widget) {
 		widget->setLayout(new QVBoxLayout());
@@ -53,6 +64,9 @@ public:
 		actionOutputExportPDF = new QAction(QIcon::fromTheme("application-pdf"), gettext("Export to PDF"), widget);
 		actionOutputExportPDF->setToolTip(gettext("Export to PDF"));
 		exportMenu->addAction(actionOutputExportPDF);
+		actionOutputExportODT= new QAction(QIcon::fromTheme("x-office-document"), gettext("Export to ODT"), widget);
+		actionOutputExportODT->setToolTip(gettext("Export to ODT"));
+		exportMenu->addAction(actionOutputExportODT);
 		toolButtonOutputExport = new QToolButton(widget);
 		toolButtonOutputExport->setIcon(QIcon::fromTheme("document-export"));
 		toolButtonOutputExport->setText(gettext("Export"));
@@ -62,6 +76,9 @@ public:
 		toolButtonOutputExport->setPopupMode(QToolButton::InstantPopup);
 		actionOutputClear = new QAction(QIcon::fromTheme("edit-clear"), gettext("Clear output"), widget);
 		actionOutputClear->setToolTip(gettext("Clear output"));
+		actionOutputReplace = new QAction(QIcon::fromTheme("edit-find-replace"), gettext("Find and Replace"), widget);
+		actionOutputReplace->setToolTip(gettext("Find and replace"));
+		actionOutputReplace->setCheckable(true);
 		actionToggleWConf = new QAction(QIcon(":/icons/wconf"), gettext("Show confidence values"), widget);
 		actionToggleWConf->setToolTip(gettext("Show confidence values"));
 		actionToggleWConf->setCheckable(true);
@@ -74,17 +91,46 @@ public:
 		toolBarOutput->addWidget(toolButtonOutputExport);
 		toolBarOutput->addAction(actionOutputClear);
 		toolBarOutput->addSeparator();
+		toolBarOutput->addAction(actionOutputReplace);
 		toolBarOutput->addAction(actionToggleWConf);
 
 		widget->layout()->addWidget(toolBarOutput);
 
+		searchFrame = new SearchReplaceFrame(widget);
+		searchFrame->setVisible(false);
+		widget->layout()->addWidget(searchFrame);
+
 		splitter = new QSplitter(Qt::Vertical, widget);
 		widget->layout()->addWidget(splitter);
+
+		QWidget* treeContainer = new QWidget(widget);
+		treeContainer->setLayout(new QVBoxLayout());
+		treeContainer->layout()->setSpacing(0);
+		treeContainer->layout()->setContentsMargins(0, 0, 0, 0);
+		splitter->addWidget(treeContainer);
 
 		treeViewHOCR = new QTreeView(widget);
 		treeViewHOCR->setHeaderHidden(true);
 		treeViewHOCR->setSelectionMode(QTreeWidget::ExtendedSelection);
-		splitter->addWidget(treeViewHOCR);
+		treeContainer->layout()->addWidget(treeViewHOCR);
+
+		actionNavigateNext = new QAction(QIcon::fromTheme("go-down"), gettext("Next (F3)"), widget);
+		actionNavigatePrev = new QAction(QIcon::fromTheme("go-up"), gettext("Previous (Shift+F3)"), widget);
+		comboBoxNavigate = new QComboBox();
+		actionExpandAll = new QAction(QIcon(":/icons/expand"), gettext("Expand all"), widget);
+		actionCollapseAll = new QAction(QIcon(":/icons/collapse"), gettext("Collapse all"), widget);
+
+		toolBarNavigate = new QToolBar(widget);
+		toolBarNavigate->setToolButtonStyle(Qt::ToolButtonIconOnly);
+		toolBarNavigate->setIconSize(QSize(1, 1) * toolBarOutput->style()->pixelMetric(QStyle::PM_SmallIconSize));
+		toolBarNavigate->addWidget(comboBoxNavigate);
+		toolBarNavigate->addSeparator();
+		toolBarNavigate->addAction(actionNavigateNext);
+		toolBarNavigate->addAction(actionNavigatePrev);
+		toolBarNavigate->addSeparator();
+		toolBarNavigate->addAction(actionExpandAll);
+		toolBarNavigate->addAction(actionCollapseAll);
+		treeContainer->layout()->addWidget(toolBarNavigate);
 
 		tabWidget = new QTabWidget(widget);
 

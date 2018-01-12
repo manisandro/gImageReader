@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * DisplayerToolSelect.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -52,7 +52,6 @@ private:
 	friend class NumberedDisplayerSelection;
 	NumberedDisplayerSelection* m_curSel = nullptr;
 	std::vector<NumberedDisplayerSelection*> m_selections;
-	sigc::connection m_connectionAutolayout;
 
 	void clearSelections();
 	void removeSelection(int num);

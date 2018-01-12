@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * FileDialogs.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) (\d+)-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -17,8 +17,8 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ConfigSettings.hh"
 #include "FileDialogs.hh"
-#include "Config.hh"
 #include "MainWindow.hh"
 #include "Utils.hh"
 #include <sstream>
@@ -181,11 +181,7 @@ static std::string gnome_save_dialog(const Glib::ustring &title, const std::stri
 }
 
 Glib::ustring FileDialogs::FileFilter::to_kde_filter() const {
-	Glib::ustring filter = name + "(";
-	for(const std::string& pattern : patterns) {
-		filter += pattern + " ";
-	}
-	filter += ")";
+	Glib::ustring filter = name + " (" + Utils::string_join(patterns, " ") + ")";
 	return filter;
 }
 
@@ -280,7 +276,7 @@ std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, con
 	parent = parent == nullptr ? MAIN->getWindow() : parent;
 	std::string initialDir = initialDirectory;
 	if(initialDir.empty()) {
-		initialDir = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
+		initialDir = ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
 		if(initialDir.empty()) {
 			initialDir = Utils::get_documents_dir();
 		}
@@ -295,7 +291,7 @@ std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, con
 	}
 #endif
 	if(!filenames.empty()) {
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filenames.front()->get_path()));
+		ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filenames.front()->get_path()));
 	}
 	return filenames;
 }
@@ -307,7 +303,7 @@ std::string save_dialog(const Glib::ustring &title, const std::string& initialFi
 	if(!initialFilename.empty() && Glib::path_is_absolute(initialFilename)) {
 		suggestedFile = initialFilename;
 	} else {
-		std::string initialDir = MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
+		std::string initialDir = ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
 		if(initialDir.empty()) {
 			initialDir = Utils::get_documents_dir();
 		}
@@ -326,14 +322,12 @@ std::string save_dialog(const Glib::ustring &title, const std::string& initialFi
 	}
 #endif
 	if(!filename.empty()) {
-		std::string sbase, sext;
-		std::string base, ext;
-		Utils::get_filename_parts(suggestedFile, sbase, sext);
-		Utils::get_filename_parts(filename, base, ext);
-		if(ext.empty()) {
-			filename = base + "." + sext;
+		std::pair<std::string, std::string> sparts = Utils::split_filename(suggestedFile);
+		std::pair<std::string, std::string> parts = Utils::split_filename(filename);
+		if(parts.second.empty()) {
+			filename = parts.first + "." + sparts.second;
 		}
-		MAIN->getConfig()->getSetting<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filename));
+		ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filename));
 	}
 	return filename;
 }

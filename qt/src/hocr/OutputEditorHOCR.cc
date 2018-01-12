@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditorHOCR.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -19,10 +19,12 @@
 
 #include <QApplication>
 #include <QDomDocument>
+#include <QFileInfo>
 #include <QFontComboBox>
 #include <QImage>
+#include <QStyledItemDelegate>
 #include <QMessageBox>
-#include <QFileInfo>
+#include <QPointer>
 #include <QSyntaxHighlighter>
 #include <cmath>
 #include <cstring>
@@ -31,9 +33,11 @@
 #include <tesseract/ocrclass.h>
 #undef USE_STD_NAMESPACE
 
+#include "ConfigSettings.hh"
 #include "DisplayerToolHOCR.hh"
 #include "FileDialogs.hh"
 #include "HOCRDocument.hh"
+#include "HOCROdtExporter.hh"
 #include "HOCRPdfExporter.hh"
 #include "HOCRTextExporter.hh"
 #include "MainWindow.hh"
@@ -103,14 +107,13 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 
 HOCRAttributeEditor::HOCRAttributeEditor(const QString& value, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass)
-	: QLineEdit(value), m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_origValue(value), m_attrItemClass(attrItemClass)
-{
+	: QLineEdit(value), m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_origValue(value), m_attrItemClass(attrItemClass) {
 	setFrame(false);
 	connect(m_doc, SIGNAL(itemAttributeChanged(QModelIndex,QString, QString)), this, SLOT(updateValue(QModelIndex,QString, QString)));
 	connect(this, SIGNAL(textChanged(QString)), this, SLOT(validateChanges()));
 }
 
-void HOCRAttributeEditor::focusOutEvent(QFocusEvent *ev){
+void HOCRAttributeEditor::focusOutEvent(QFocusEvent *ev) {
 	QLineEdit::focusOutEvent(ev);
 	validateChanges();
 }
@@ -141,6 +144,56 @@ void HOCRAttributeEditor::validateChanges() {
 
 ///////////////////////////////////////////////////////////////////////////////
 
+HOCRAttributeCheckbox::HOCRAttributeCheckbox(Qt::CheckState value, HOCRDocument *doc, const QModelIndex &itemIndex, const QString &attrName, const QString &attrItemClass)
+	: m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_attrItemClass(attrItemClass) {
+	setCheckState(value);
+	connect(m_doc, SIGNAL(itemAttributeChanged(QModelIndex,QString, QString)), this, SLOT(updateValue(QModelIndex,QString, QString)));
+	connect(this, SIGNAL(stateChanged(int)), this, SLOT(valueChanged()));
+}
+
+void HOCRAttributeCheckbox::updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value) {
+	if(itemIndex == m_itemIndex && name == m_attrName) {
+		blockSignals(true);
+		setChecked(value == "1");
+		blockSignals(false);
+	}
+}
+
+void HOCRAttributeCheckbox::valueChanged() {
+	m_doc->editItemAttribute(m_itemIndex, m_attrName, isChecked() ? "1" : "0", m_attrItemClass);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+class HOCRTextDelegate : public QStyledItemDelegate {
+public:
+	using QStyledItemDelegate::QStyledItemDelegate;
+
+	QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &/* option */, const QModelIndex &/* index */) const {
+		return new QLineEdit(parent);
+	}
+	void setEditorData(QWidget *editor, const QModelIndex &index) const {
+		m_currentIndex = index;
+		m_currentEditor = static_cast<QLineEdit*>(editor);
+		static_cast<QLineEdit*>(editor)->setText(index.model()->data(index, Qt::EditRole).toString());
+	}
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const {
+		model->setData(index, static_cast<QLineEdit*>(editor)->text(), Qt::EditRole);
+	}
+	const QModelIndex& getCurrentIndex() const {
+		return m_currentIndex;
+	}
+	QLineEdit* getCurrentEditor() const {
+		return m_currentEditor;
+	}
+
+private:
+	mutable QModelIndex m_currentIndex;
+	mutable QPointer<QLineEdit> m_currentEditor;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+
 OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	static int reg = qRegisterMetaType<QList<QRect>>("QList<QRect>");
 	Q_UNUSED(reg);
@@ -150,7 +203,10 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.setupUi(m_widget);
 	m_highlighter = new HTMLHighlighter(ui.plainTextEditOutput->document());
 
+	ui.actionOutputReplace->setShortcut(Qt::CTRL + Qt::Key_F);
 	ui.actionOutputSaveHOCR->setShortcut(Qt::CTRL + Qt::Key_S);
+	ui.actionNavigateNext->setShortcut(Qt::Key_F3);
+	ui.actionNavigatePrev->setShortcut(Qt::SHIFT + Qt::Key_F3);
 
 	m_document = new HOCRDocument(&m_spell, ui.treeViewHOCR);
 	ui.treeViewHOCR->setModel(m_document);
@@ -159,15 +215,29 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.treeViewHOCR->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	ui.treeViewHOCR->setColumnWidth(1, 32);
 	ui.treeViewHOCR->setColumnHidden(1, true);
+	ui.treeViewHOCR->setItemDelegateForColumn(0, new HOCRTextDelegate(ui.treeViewHOCR));
+
+	ui.comboBoxNavigate->addItem(_("Page"), "ocr_page");
+	ui.comboBoxNavigate->addItem(_("Block"), "ocr_carea");
+	ui.comboBoxNavigate->addItem(_("Paragraph"), "ocr_par");
+	ui.comboBoxNavigate->addItem(_("Line"), "ocr_line");
+	ui.comboBoxNavigate->addItem(_("Word"), "ocrx_word");
+	ui.comboBoxNavigate->addItem(_("Misspelled word"), "ocrx_word_bad");
 
 	connect(ui.actionOutputOpen, SIGNAL(triggered()), this, SLOT(open()));
 	connect(ui.actionOutputSaveHOCR, SIGNAL(triggered()), this, SLOT(save()));
+	connect(ui.actionOutputExportODT, SIGNAL(triggered()), this, SLOT(exportToODT()));
 	connect(ui.actionOutputExportPDF, SIGNAL(triggered()), this, SLOT(exportToPDF()));
 	connect(ui.actionOutputExportText, SIGNAL(triggered()), this, SLOT(exportToText()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
+	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(setVisible(bool)));
+	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(clear()));
 	connect(ui.actionToggleWConf, SIGNAL(toggled(bool)), this, SLOT(toggleWConfColumn(bool)));
-	connect(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
-	connect(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
+	connect(ui.searchFrame, SIGNAL(findReplace(QString,QString,bool,bool,bool)), this, SLOT(findReplace(QString,QString,bool,bool,bool)));
+	connect(ui.searchFrame, SIGNAL(replaceAll(QString,QString,bool)), this, SLOT(replaceAll(QString,QString,bool)));
+	connect(ui.searchFrame, SIGNAL(applySubstitutions(QMap<QString,QString>,bool)), this, SLOT(applySubstitutions(QMap<QString,QString>,bool)));
+	connect(ConfigSettings::get<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
+	connect(ConfigSettings::get<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(ui.treeViewHOCR->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(showItemProperties(QModelIndex)));
 	connect(ui.treeViewHOCR, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showTreeWidgetContextMenu(QPoint)));
 	connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(updateSourceText()));
@@ -179,6 +249,11 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(m_document, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(setModified()));
 	connect(m_document, SIGNAL(itemAttributeChanged(QModelIndex,QString,QString)), this, SLOT(setModified()));
 	connect(m_document, SIGNAL(itemAttributeChanged(QModelIndex,QString,QString)), this, SLOT(updateSourceText()));
+	connect(ui.comboBoxNavigate, SIGNAL(currentIndexChanged(int)), this, SLOT(navigateTargetChanged()));
+	connect(ui.actionNavigateNext, SIGNAL(triggered(bool)), this, SLOT(navigateNext()));
+	connect(ui.actionNavigatePrev, SIGNAL(triggered(bool)), this, SLOT(navigatePrev()));
+	connect(ui.actionExpandAll, SIGNAL(triggered(bool)), this, SLOT(expandItemClass()));
+	connect(ui.actionCollapseAll, SIGNAL(triggered(bool)), this, SLOT(collapseItemClass()));
 
 	setFont();
 }
@@ -188,11 +263,18 @@ OutputEditorHOCR::~OutputEditorHOCR() {
 }
 
 void OutputEditorHOCR::setFont() {
-	if(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont")->getValue()) {
+	if(ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
 		ui.plainTextEditOutput->setFont(QFont());
 	} else {
-		ui.plainTextEditOutput->setFont(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont")->getValue());
+		ui.plainTextEditOutput->setFont(ConfigSettings::get<FontSetting>("customoutputfont")->getValue());
 	}
+}
+
+void OutputEditorHOCR::setModified() {
+	ui.actionOutputSaveHOCR->setEnabled(m_document->pageCount() > 0);
+	ui.toolButtonOutputExport->setEnabled(m_document->pageCount() > 0);
+	ui.toolBarNavigate->setEnabled(m_document->pageCount() > 0);
+	m_modified = true;
 }
 
 OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI &tess) {
@@ -225,20 +307,71 @@ void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data) {
 	doc.setContent(hocrText);
 
 	QDomElement pageDiv = doc.firstChildElement("div");
-	QMap<QString, QString> attrs = HOCRDocument::deserializeAttrGroup(pageDiv.attribute("title"));
+	QMap<QString, QString> attrs = HOCRItem::deserializeAttrGroup(pageDiv.attribute("title"));
 	attrs["image"] = QString("'%1'").arg(data.file);
 	attrs["ppageno"] = QString::number(data.page);
 	attrs["rot"] = QString::number(data.angle);
 	attrs["res"] = QString::number(data.resolution);
-	pageDiv.setAttribute("title", HOCRDocument::serializeAttrGroup(attrs));
+	pageDiv.setAttribute("title", HOCRItem::serializeAttrGroup(attrs));
 
 	QModelIndex index = m_document->addPage(pageDiv, true);
 
 	expandCollapseChildren(index, true);
 	MAIN->setOutputPaneVisible(true);
 	m_modified = true;
-	ui.actionOutputSaveHOCR->setEnabled(true);
-	ui.toolButtonOutputExport->setEnabled(true);
+}
+
+void OutputEditorHOCR::navigateTargetChanged() {
+	QString target = ui.comboBoxNavigate->itemData(ui.comboBoxNavigate->currentIndex()).toString();
+	bool allowExpandCollapse = !target.startsWith("ocrx_word");
+	ui.actionExpandAll->setEnabled(allowExpandCollapse);
+	ui.actionCollapseAll->setEnabled(allowExpandCollapse);
+}
+
+void OutputEditorHOCR::expandCollapseItemClass(bool expand) {
+	QString target = ui.comboBoxNavigate->itemData(ui.comboBoxNavigate->currentIndex()).toString();
+	QModelIndex start = m_document->index(0, 0);
+	QModelIndex next = start;
+	do {
+		const HOCRItem* item = m_document->itemAtIndex(next);
+		if(item && item->itemClass() == target) {
+			if(expand) {
+				ui.treeViewHOCR->setExpanded(next, expand);
+				for(QModelIndex parent = next.parent(); parent.isValid(); parent = parent.parent()) {
+					ui.treeViewHOCR->setExpanded(parent, true);
+				}
+				for(QModelIndex child = next.child(0, 0); child.isValid(); child = child.sibling(child.row() + 1, 0)) {
+					expandCollapseChildren(child, false);
+				}
+			} else {
+				expandCollapseChildren(next, false);
+			}
+		}
+		next = m_document->nextIndex(next);
+	} while(next != start);
+	ui.treeViewHOCR->scrollTo(ui.treeViewHOCR->currentIndex());
+}
+
+void OutputEditorHOCR::navigateNextPrev(bool next) {
+	QString target = ui.comboBoxNavigate->itemData(ui.comboBoxNavigate->currentIndex()).toString();
+	bool misspelled = false;
+	if(target == "ocrx_word_bad") {
+		target = "ocrx_word";
+		misspelled = true;
+	}
+	QModelIndex start = ui.treeViewHOCR->currentIndex();
+	if(!start.isValid()) {
+		start = m_document->index(0, 0);
+	}
+	QModelIndex curr = next? m_document->nextIndex(start) : m_document->prevIndex(start);
+	while(curr != start) {
+		const HOCRItem* item = m_document->itemAtIndex(curr);
+		if(item && item->itemClass() == target && (!misspelled || m_document->indexIsMisspelledWord(curr))) {
+			break;
+		}
+		curr = next? m_document->nextIndex(curr) : m_document->prevIndex(curr);
+	};
+	ui.treeViewHOCR->setCurrentIndex(curr);
 }
 
 void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool expand) const {
@@ -251,36 +384,31 @@ void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool exp
 	}
 }
 
-bool OutputEditorHOCR::showPage(const HOCRPage *page)
-{
+bool OutputEditorHOCR::showPage(const HOCRPage *page) {
 	return page && MAIN->getSourceManager()->addSource(page->sourceFile()) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
 }
 
-void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
-	if(ui.treeViewHOCR->currentIndex() != current) {
+void OutputEditorHOCR::showItemProperties(const QModelIndex& index) {
+	if(ui.treeViewHOCR->currentIndex() != index) {
 		ui.treeViewHOCR->blockSignals(true);
-		ui.treeViewHOCR->setCurrentIndex(current);
+		ui.treeViewHOCR->setCurrentIndex(index);
 		ui.treeViewHOCR->blockSignals(false);
 	}
-	ui.tableWidgetProperties->blockSignals(true);
 	ui.tableWidgetProperties->setRowCount(0);
-	ui.tableWidgetProperties->blockSignals(false);
 	ui.plainTextEditOutput->setPlainText("");
 
-	const HOCRItem* currentItem = m_document->itemAtIndex(current);
+	const HOCRItem* currentItem = m_document->itemAtIndex(index);
 	if(!currentItem) {
 		m_tool->clearSelection();
 		return;
 	}
 	const HOCRPage* page = currentItem->page();
-	showPage(page);
 
 	int row = -1;
-	ui.tableWidgetProperties->blockSignals(true);
 	QMap<QString, QString> attrs = currentItem->getAllAttributes();
 	for(auto it = attrs.begin(), itEnd = attrs.end(); it != itEnd; ++it) {
 		QString attrName = it.key();
-		if(attrName == "class" || attrName == "id"){
+		if(attrName == "class" || attrName == "id") {
 			continue;
 		}
 		QStringList parts = attrName.split(":");
@@ -288,7 +416,7 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
 		QTableWidgetItem* attrNameItem = new QTableWidgetItem(parts.last());
 		attrNameItem->setFlags(attrNameItem->flags() & ~Qt::ItemIsEditable);
 		ui.tableWidgetProperties->setItem(row, 0, attrNameItem);
-		ui.tableWidgetProperties->setCellWidget(row, 1, createAttrWidget(current, attrName, it.value()));
+		ui.tableWidgetProperties->setCellWidget(row, 1, createAttrWidget(index, attrName, it.value()));
 	}
 
 	// ocr_class:attr_key:attr_values
@@ -313,18 +441,27 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& current) {
 			QTableWidgetItem* attrNameItem = new QTableWidgetItem(parts.last());
 			attrNameItem->setFlags(attrNameItem->flags() & ~Qt::ItemIsEditable);
 			ui.tableWidgetProperties->setItem(row, 0, attrNameItem);
-			ui.tableWidgetProperties->setCellWidget(row, 1, createAttrWidget(current, attrName, attrValueCount == 1 ? *(attrValues.begin()) : "", it.key(), attrValueCount > 1));
+			ui.tableWidgetProperties->setCellWidget(row, 1, createAttrWidget(index, attrName, attrValueCount == 1 ? *(attrValues.begin()) : "", it.key(), attrValueCount > 1));
 		}
 	}
-	ui.tableWidgetProperties->blockSignals(false);
 
 	ui.plainTextEditOutput->setPlainText(currentItem->toHtml());
 
-	m_tool->setSelection(currentItem->bbox());
+	if(showPage(page)) {
+		// Minimum bounding box
+		QRect minBBox;
+		if(currentItem->itemClass() == "ocr_page") {
+			minBBox = currentItem->bbox();
+		} else {
+			for(const HOCRItem* child : currentItem->children()) {
+				minBBox = minBBox.united(child->bbox());
+			}
+		}
+		m_tool->setSelection(currentItem->bbox(), minBBox);
+	}
 }
 
-QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const QString& attrName, const QString& attrValue, const QString& attrItemClass, bool multiple)
-{
+QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const QString& attrName, const QString& attrValue, const QString& attrItemClass, bool multiple) {
 	static QMap<QString, QString> attrLineEdits = {
 		{"title:bbox", "\\d+\\s+\\d+\\s+\\d+\\s+\\d+"},
 		{"lang", "[a-z]{2}(?:_[A-Z]{2})?"},
@@ -341,14 +478,19 @@ QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const 
 		return lineEdit;
 	} else if(attrName == "title:x_font") {
 		QFontComboBox* combo = new QFontComboBox();
-		combo->setLineEdit(new HOCRAttributeEditor(attrValue, m_document, itemIndex, attrName, attrItemClass));
+		combo->setCurrentIndex(-1);
+		QLineEdit* edit = new HOCRAttributeEditor(attrValue, m_document, itemIndex, attrName, attrItemClass);
+		edit->blockSignals(true); // Because the combobox alters the text as soon as setLineEdit is called...
+		combo->setLineEdit(edit);
+		edit->setText(attrValue);
+		edit->blockSignals(false);
 		if(multiple) {
-			combo->setCurrentIndex(-1);
 			combo->lineEdit()->setPlaceholderText(_("Multiple values"));
-		} else {
-			combo->lineEdit()->setText(attrValue);
 		}
 		return combo;
+	} else if(attrName == "bold" || attrName == "italic") {
+		Qt::CheckState value = multiple ? Qt::PartiallyChecked : attrValue == "1" ? Qt::Checked : Qt::Unchecked;
+		return new HOCRAttributeCheckbox(value, m_document, itemIndex, attrName, attrItemClass);
 	} else {
 		QLineEdit* lineEdit = new QLineEdit(attrValue);
 		lineEdit->setFrame(false);
@@ -388,16 +530,16 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	QModelIndexList indices = ui.treeViewHOCR->selectionModel()->selectedRows();
 	int nIndices = indices.size();
 	if(nIndices > 1) {
-		bool siblings = true;
+		bool siblingsOk = true;
 		bool graphics = false;
 		QVector<int> rows = {indices.first().row()};
-		for(int i = 1; i < nIndices && siblings; ++i) {
-			siblings &= indices[i].parent() == indices.first().parent();
+		for(int i = 1; i < nIndices && siblingsOk; ++i) {
 			const HOCRItem* item = m_document->itemAtIndex(indices[i]);
+			siblingsOk &= item && indices[i].parent() == indices.first().parent();
 			graphics |= !item || item->itemClass() == "ocr_graphic";
 			rows.append(indices[i].row());
 		}
-		if(siblings) { // Merging or swapping allowed
+		if(siblingsOk) { // Merging or swapping allowed
 			QMenu menu;
 			qSort(rows);
 			bool consecutive = (rows.last() - rows.first()) == nIndices - 1;
@@ -451,10 +593,11 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	if(item->itemClass() == "ocr_page") {
 		actionAddGraphic = menu.addAction(_("Add graphic region"));
 	} else if(item->itemClass() == "ocrx_word") {
-		QString prefix, suffix, trimmedWord = HOCRDocument::trimmedWord(item->text(), &prefix, &suffix);
+		QString prefix, suffix, trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
 		QString spellLang = item->lang();
+		bool haveLanguage = true;
 		if(m_spell.getLanguage() != spellLang) {
-			m_spell.setLanguage(spellLang);
+			haveLanguage = m_spell.setLanguage(spellLang);
 		}
 		if(!trimmedWord.isEmpty()) {
 			for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
@@ -477,9 +620,6 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	}
 	actionRemoveItem = menu.addAction(_("Remove"));
 	if(m_document->rowCount(index) > 0) {
-		if(!menu.actions().isEmpty()) {
-			menu.addSeparator();
-		}
 		actionExpand = menu.addAction(_("Expand all"));
 		actionCollapse = menu.addAction(_("Collapse all"));
 	}
@@ -507,10 +647,9 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	}
 }
 
-void OutputEditorHOCR::pickItem(const QPoint& point)
-{
+void OutputEditorHOCR::pickItem(const QPoint& point) {
 	int pageNr;
-	QString filename = m_tool->getDisplayer()->getCurrentImage(pageNr);
+	QString filename = MAIN->getDisplayer()->getCurrentImage(pageNr);
 	QModelIndex pageIndex = m_document->searchPage(filename, pageNr);
 	const HOCRItem* currentItem = m_document->itemAtIndex(pageIndex);
 	if(!currentItem) {
@@ -518,15 +657,15 @@ void OutputEditorHOCR::pickItem(const QPoint& point)
 	}
 	const HOCRPage* page = currentItem->page();
 	// Transform point in coordinate space used when page was OCRed
-	double alpha = (page->angle() - m_tool->getDisplayer()->getCurrentAngle()) / 180. * M_PI;
-	double scale = double(page->resolution()) / double(m_tool->getDisplayer()->getCurrentResolution());
+	double alpha = (page->angle() - MAIN->getDisplayer()->getCurrentAngle()) / 180. * M_PI;
+	double scale = double(page->resolution()) / double(MAIN->getDisplayer()->getCurrentResolution());
 	QPoint newPoint( scale * (point.x() * std::cos(alpha) - point.y() * std::sin(alpha)) + 0.5 * page->bbox().width(),
-					 scale * (point.x() * std::sin(alpha) + point.y() * std::cos(alpha)) + 0.5 * page->bbox().height());
+	                 scale * (point.x() * std::sin(alpha) + point.y() * std::cos(alpha)) + 0.5 * page->bbox().height());
 	showItemProperties(m_document->searchAtCanvasPos(pageIndex, newPoint));
+	ui.treeViewHOCR->setFocus();
 }
 
-void OutputEditorHOCR::toggleWConfColumn(bool active)
-{
+void OutputEditorHOCR::toggleWConfColumn(bool active) {
 	ui.treeViewHOCR->setColumnHidden(1, !active);
 }
 
@@ -557,10 +696,9 @@ void OutputEditorHOCR::open() {
 		m_document->addPage(div, false);
 		div = nextDiv;
 	}
+	m_document->convertSourcePaths(QFileInfo(filename).absolutePath(), true);
 	m_modified = false;
 	m_filebasename = QFileInfo(filename).completeBaseName();
-	ui.actionOutputSaveHOCR->setEnabled(true);
-	ui.toolButtonOutputExport->setEnabled(true);
 }
 
 bool OutputEditorHOCR::save(const QString& filename) {
@@ -584,24 +722,30 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	}
 	tesseract::TessBaseAPI tess;
 	QString header = QString(
-						 "<!DOCTYPE html>\n"
-						 "<html>\n"
-						 " <head>\n"
-						 "  <title>%1</title>\n"
-						 "  <meta charset=\"utf-8\" /> \n"
-						 "  <meta name='ocr-system' content='tesseract %2' />\n"
-						 "  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
-						 " </head>\n").arg(QFileInfo(outname).fileName()).arg(tess.Version());
+	                     "<!DOCTYPE html>\n"
+	                     "<html>\n"
+	                     " <head>\n"
+	                     "  <title>%1</title>\n"
+	                     "  <meta charset=\"utf-8\" /> \n"
+	                     "  <meta name='ocr-system' content='tesseract %2' />\n"
+	                     "  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
+	                     " </head>\n").arg(QFileInfo(outname).fileName()).arg(tess.Version());
 	file.write(header.toUtf8());
+	m_document->convertSourcePaths(QFileInfo(outname).absolutePath(), false);
 	file.write(m_document->toHTML().toUtf8());
+	m_document->convertSourcePaths(QFileInfo(outname).absolutePath(), true);
 	file.write("</html>\n");
 	m_modified = false;
 	m_filebasename = QFileInfo(outname).completeBaseName();
 	return true;
 }
 
-bool OutputEditorHOCR::exportToPDF()
-{
+bool OutputEditorHOCR::exportToODT() {
+	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
+	return HOCROdtExporter(m_tool).run(m_document, m_filebasename);
+}
+
+bool OutputEditorHOCR::exportToPDF() {
 	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
 	QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
 	const HOCRItem* item = m_document->itemAtIndex(current);
@@ -612,14 +756,12 @@ bool OutputEditorHOCR::exportToPDF()
 	return false;
 }
 
-bool OutputEditorHOCR::exportToText()
-{
+bool OutputEditorHOCR::exportToText() {
 	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
 	return HOCRTextExporter().run(m_document, m_filebasename);
 }
 
-bool OutputEditorHOCR::clear(bool hide)
-{
+bool OutputEditorHOCR::clear(bool hide) {
 	if(!m_widget->isVisible()) {
 		return true;
 	}
@@ -634,12 +776,11 @@ bool OutputEditorHOCR::clear(bool hide)
 		}
 	}
 	m_document->clear();
+	ui.tableWidgetProperties->setRowCount(0);
 	ui.plainTextEditOutput->clear();
 	m_tool->clearSelection();
 	m_modified = false;
 	m_filebasename.clear();
-	ui.actionOutputSaveHOCR->setEnabled(false);
-	ui.toolButtonOutputExport->setEnabled(false);
 	if(hide)
 		MAIN->setOutputPaneVisible(false);
 	return true;
@@ -647,4 +788,118 @@ bool OutputEditorHOCR::clear(bool hide)
 
 void OutputEditorHOCR::setLanguage(const Config::Lang &lang) {
 	m_document->setDefaultLanguage(lang.code);
+}
+
+void OutputEditorHOCR::onVisibilityChanged(bool /*visibile*/) {
+	ui.searchFrame->hideSubstitutionsManager();
+}
+
+bool OutputEditorHOCR::findReplaceInItem(const QModelIndex& index, const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace, bool& currentSelectionMatchesSearch) {
+	// Check that the item is a word
+	const HOCRItem* item = m_document->itemAtIndex(index);
+	if(!item || item->itemClass() != "ocrx_word") {
+		return false;
+	}
+	Qt::CaseSensitivity cs = matchCase ? Qt::CaseSensitive : Qt::CaseInsensitive;
+	HOCRTextDelegate* delegate = static_cast<HOCRTextDelegate*>(ui.treeViewHOCR->itemDelegateForColumn(0));
+	// If the item is already in edit mode, continue searching inside the text
+	if(delegate->getCurrentIndex() == index && delegate->getCurrentEditor()) {
+		QLineEdit* editor = delegate->getCurrentEditor();
+		bool matchesSearch = editor->selectedText().compare(searchstr, cs) == 0;
+		int selStart = editor->selectionStart();
+		if(matchesSearch && replace) {
+			QString oldText = editor->text();
+			editor->setText(oldText.left(selStart) + replacestr + oldText.mid(selStart + searchstr.length()));
+			editor->setSelection(selStart, replacestr.length());
+			return true;
+		}
+		bool matchesReplace = editor->selectedText().compare(replacestr, cs) == 0;
+		int pos = -1;
+		if(backwards) {
+			pos = selStart - 1;
+			pos = pos < 0 ? -1 : editor->text().lastIndexOf(searchstr, pos, cs);
+		} else {
+			pos = matchesSearch ? selStart + searchstr.length() : matchesReplace ? selStart + replacestr.length() : selStart;
+			pos = editor->text().indexOf(searchstr, pos, cs);
+		}
+		if(pos != -1) {
+			editor->setSelection(pos, searchstr.length());
+			return true;
+		}
+		currentSelectionMatchesSearch = matchesSearch;
+		return false;
+	}
+	// Otherwise, if item contains text, set it in edit mode
+	int pos = backwards ? item->text().lastIndexOf(searchstr, -1, cs) : item->text().indexOf(searchstr, 0, cs);
+	if(pos != -1) {
+		ui.treeViewHOCR->setCurrentIndex(index);
+		ui.treeViewHOCR->edit(index);
+		Q_ASSERT(delegate->getCurrentIndex() == index && delegate->getCurrentEditor());
+		delegate->getCurrentEditor()->setSelection(pos, searchstr.length());
+		return true;
+	}
+	return false;
+}
+
+void OutputEditorHOCR::findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace) {
+	ui.searchFrame->clearErrorState();
+	QModelIndex current = ui.treeViewHOCR->currentIndex();
+	if(!current.isValid()) {
+		current = m_document->index(backwards ? (m_document->rowCount() - 1) : 0, 0);
+	}
+	QModelIndex neww = current;
+	bool currentSelectionMatchesSearch = false;
+	while(!findReplaceInItem(neww, searchstr, replacestr, matchCase, backwards, replace, currentSelectionMatchesSearch)) {
+		neww = backwards ? m_document->prevIndex(neww) : m_document->nextIndex(neww);
+		if(!neww.isValid() || neww == current) {
+			// Break endless loop
+			if(!currentSelectionMatchesSearch) {
+				ui.searchFrame->setErrorState();
+			}
+			return;
+		}
+	}
+}
+
+void OutputEditorHOCR::replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase) {
+	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
+	QModelIndex start = m_document->index(0, 0);
+	QModelIndex curr = start;
+	Qt::CaseSensitivity cs = matchCase ? Qt::CaseSensitive : Qt::CaseInsensitive;
+	int count = 0;
+	do {
+		const HOCRItem* item = m_document->itemAtIndex(curr);
+		if(item && item->itemClass() == "ocrx_word") {
+			if(item->text().contains(searchstr, cs)) {
+				++count;
+				m_document->setData(curr, item->text().replace(searchstr, replacestr, cs), Qt::EditRole);
+			}
+		}
+		curr = m_document->nextIndex(curr);
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+	} while(curr != start);
+	if(count == 0) {
+		ui.searchFrame->setErrorState();
+	}
+	MAIN->popState();
+}
+
+void OutputEditorHOCR::applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase) {
+	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
+	QModelIndex start = m_document->index(0, 0);
+	Qt::CaseSensitivity cs = matchCase ? Qt::CaseSensitive : Qt::CaseInsensitive;
+	for(auto it = substitutions.begin(), itEnd = substitutions.end(); it != itEnd; ++it) {
+		QString search = it.key();
+		QString replace = it.value();
+		QModelIndex curr = start;
+		do {
+			const HOCRItem* item = m_document->itemAtIndex(curr);
+			if(item && item->itemClass() == "ocrx_word") {
+				m_document->setData(curr, item->text().replace(search, replace, cs), Qt::EditRole);
+			}
+			curr = m_document->nextIndex(curr);
+			QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+		} while(curr != start);
+	}
+	MAIN->popState();
 }

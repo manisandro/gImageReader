@@ -208,9 +208,10 @@ LangString DESC_IntlSection ${LANG_ENGLISH} "${NAME} translations."
 
 ;********** Uninstall **********
 Section "Uninstall"
-  Delete "$INSTDIR\*.*"
+  !include "unfiles.nsi"
+  Delete "$INSTDIR\Uninstall.exe"
+  RmDir "$INSTDIR"
   RmDir /r "$SMPROGRAMS\${NAME}\"
-  RmDir /r "$INSTDIR"
 
   DeleteRegKey /ifempty SHCTX "Software\${NAME}"
   DeleteRegKey SHCTX "${REG_UNINSTALL}"

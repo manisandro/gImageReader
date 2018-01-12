@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Recognizer.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -20,7 +20,6 @@
 #ifndef RECOGNIZER_HH
 #define RECOGNIZER_HH
 
-#include "common.hh"
 #include "Config.hh"
 
 #include <cairomm/cairomm.h>
@@ -28,12 +27,15 @@
 namespace tesseract {
 class TessBaseAPI;
 }
+namespace Ui {
+class MainWindow;
+}
 
 class Recognizer {
 public:
 	enum class OutputDestination { Buffer, Clipboard };
 
-	Recognizer();
+	Recognizer(const Ui::MainWindow& _ui);
 	std::vector<Glib::ustring> getAvailableLanguages() const;
 	const Config::Lang& getSelectedLanguage() const {
 		return m_curLang;
@@ -52,23 +54,25 @@ private:
 
 	enum class PageArea { EntirePage, Autodetect };
 	enum class TaskState { Waiting, Succeeded, Failed };
+	struct PageData {
+		bool success;
+		std::string filename;
+		int page;
+		double angle;
+		int resolution;
+		std::vector<Cairo::RefPtr<Cairo::ImageSurface>> ocrAreas;
+	};
 
-	Gtk::Menu* m_menuLanguages;
-	Gtk::Menu* m_menuPages;
-	Gtk::Dialog* m_pagesDialog;
-	Gtk::Entry* m_pagesEntry;
-	Gtk::Label* m_langLabel;
-	Gtk::Label* m_modeLabel;
-	Gtk::Button* m_recognizeBtn;
-	Gtk::Label* m_pageAreaLabel;
-	Gtk::ComboBoxText* m_pageAreaCombo;
-	sigc::signal<void,Config::Lang> m_signal_languageChanged;
+	const Ui::MainWindow& ui;
+	ClassData m_classdata;
 	Gtk::RadioButtonGroup m_langMenuRadioGroup;
 	Gtk::RadioButtonGroup m_psmRadioGroup;
 	int m_currentPsmMode;
 	std::vector<std::pair<Gtk::CheckMenuItem*,Glib::ustring>> m_langMenuCheckGroup;
 	MultilingualMenuItem* m_multilingualRadio = nullptr;
 	Config::Lang m_curLang;
+
+	sigc::signal<void,Config::Lang> m_signal_languageChanged;
 
 	bool initTesseract(tesseract::TessBaseAPI& tess, const char* language = nullptr) const;
 	void recognizeButtonClicked();
@@ -78,10 +82,9 @@ private:
 	std::vector<int> selectPages(bool& autodetectLayout);
 	void setLanguage(const Gtk::RadioMenuItem *item, const Config::Lang& lang);
 	void setMultiLanguage();
-	bool setPage(int page, bool autodetectLayout);
+	PageData setPage(int page, bool autodetectLayout);
 	bool onMultilingualMenuButtonEvent(GdkEventButton* ev);
 	bool onMultilingualItemButtonEvent(GdkEventButton* ev, Gtk::CheckMenuItem* item);
-	void manageInstalledLanguages();
 };
 
 #endif // RECOGNIZER_HH

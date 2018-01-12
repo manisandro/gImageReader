@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditorText.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -26,11 +26,11 @@
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
 
+#include "ConfigSettings.hh"
 #include "FileDialogs.hh"
 #include "OutputEditorText.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
-#include "SubstitutionsManager.hh"
 #include "Utils.hh"
 
 
@@ -40,12 +40,9 @@ OutputEditorText::OutputEditorText() {
 	m_widget = new QWidget;
 	ui.setupUi(m_widget);
 
-	m_substitutionsManager = new SubstitutionsManager(ui.plainTextEditOutput, ui.checkBoxOutputSearchMatchCase, m_widget);
-
 	ui.actionOutputModeAppend->setData(static_cast<int>(InsertMode::Append));
 	ui.actionOutputModeCursor->setData(static_cast<int>(InsertMode::Cursor));
 	ui.actionOutputModeReplace->setData(static_cast<int>(InsertMode::Replace));
-	ui.frameOutputSearch->setVisible(false);
 
 	ui.actionOutputReplace->setShortcut(Qt::CTRL + Qt::Key_F);
 	ui.actionOutputSave->setShortcut(Qt::CTRL + Qt::Key_S);
@@ -57,60 +54,40 @@ OutputEditorText::OutputEditorText() {
 
 	connect(ui.menuOutputMode, SIGNAL(triggered(QAction*)), this, SLOT(setInsertMode(QAction*)));
 	connect(ui.toolButtonOutputPostproc, SIGNAL(clicked()), this, SLOT(filterBuffer()));
-	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.frameOutputSearch, SLOT(setVisible(bool)));
-	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.lineEditOutputSearch, SLOT(clear()));
-	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.lineEditOutputReplace, SLOT(clear()));
+	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(setVisible(bool)));
+	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(clear()));
 	connect(ui.actionOutputUndo, SIGNAL(triggered()), &m_spell, SLOT(undo()));
 	connect(ui.actionOutputRedo, SIGNAL(triggered()), &m_spell, SLOT(redo()));
 	connect(ui.actionOutputSave, SIGNAL(triggered()), this, SLOT(save()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
+	connect(ui.searchFrame, SIGNAL(findReplace(QString,QString,bool,bool,bool)), this, SLOT(findReplace(QString,QString,bool,bool,bool)));
+	connect(ui.searchFrame, SIGNAL(replaceAll(QString,QString,bool)), this, SLOT(replaceAll(QString,QString,bool)));
+	connect(ui.searchFrame, SIGNAL(applySubstitutions(QMap<QString,QString>,bool)), this, SLOT(applySubstitutions(QMap<QString,QString>,bool)));
 	connect(&m_spell, SIGNAL(undoAvailable(bool)), ui.actionOutputUndo, SLOT(setEnabled(bool)));
 	connect(&m_spell, SIGNAL(redoAvailable(bool)), ui.actionOutputRedo, SLOT(setEnabled(bool)));
-	connect(ui.checkBoxOutputSearchMatchCase, SIGNAL(toggled(bool)), this, SLOT(clearErrorState()));
-	connect(ui.lineEditOutputSearch, SIGNAL(textChanged(QString)), this, SLOT(clearErrorState()));
-	connect(ui.lineEditOutputSearch, SIGNAL(returnPressed()), this, SLOT(findNext()));
-	connect(ui.lineEditOutputReplace, SIGNAL(returnPressed()), this, SLOT(replaceNext()));
-	connect(ui.toolButtonOutputFindNext, SIGNAL(clicked()), this, SLOT(findNext()));
-	connect(ui.toolButtonOutputFindPrev, SIGNAL(clicked()), this, SLOT(findPrev()));
-	connect(ui.toolButtonOutputReplace, SIGNAL(clicked()), this, SLOT(replaceNext()));
-	connect(ui.toolButtonOutputReplaceAll, SIGNAL(clicked()), this, SLOT(replaceAll()));
-	connect(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
-	connect(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
-	connect(ui.pushButtonOutputReplacementList, SIGNAL(clicked()), m_substitutionsManager, SLOT(show()));
-	connect(ui.pushButtonOutputReplacementList, SIGNAL(clicked()), m_substitutionsManager, SLOT(raise()));
+	connect(ConfigSettings::get<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
+	connect(ConfigSettings::get<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(ui.actionOutputPostprocDrawWhitespace, SIGNAL(toggled(bool)), ui.plainTextEditOutput, SLOT(setDrawWhitespace(bool)));
 
-	MAIN->getConfig()->addSetting(new ActionSetting("keepdot", ui.actionOutputPostprocKeepEndMark, true));
-	MAIN->getConfig()->addSetting(new ActionSetting("keepquote", ui.actionOutputPostprocKeepQuote));
-	MAIN->getConfig()->addSetting(new ActionSetting("joinhyphen", ui.actionOutputPostprocJoinHyphen, true));
-	MAIN->getConfig()->addSetting(new ActionSetting("joinspace", ui.actionOutputPostprocCollapseSpaces, true));
-	MAIN->getConfig()->addSetting(new ActionSetting("keepparagraphs", ui.actionOutputPostprocKeepParagraphs, true));
-	MAIN->getConfig()->addSetting(new ActionSetting("drawwhitespace", ui.actionOutputPostprocDrawWhitespace));
-	MAIN->getConfig()->addSetting(new SwitchSetting("searchmatchcase", ui.checkBoxOutputSearchMatchCase));
+	ADD_SETTING(ActionSetting("keepdot", ui.actionOutputPostprocKeepEndMark, true));
+	ADD_SETTING(ActionSetting("keepquote", ui.actionOutputPostprocKeepQuote));
+	ADD_SETTING(ActionSetting("joinhyphen", ui.actionOutputPostprocJoinHyphen, true));
+	ADD_SETTING(ActionSetting("joinspace", ui.actionOutputPostprocCollapseSpaces, true));
+	ADD_SETTING(ActionSetting("keepparagraphs", ui.actionOutputPostprocKeepParagraphs, true));
+	ADD_SETTING(ActionSetting("drawwhitespace", ui.actionOutputPostprocDrawWhitespace));
 
 	setFont();
 }
 
 OutputEditorText::~OutputEditorText() {
 	delete m_widget;
-	MAIN->getConfig()->removeSetting("keepdot");
-	MAIN->getConfig()->removeSetting("keepquote");
-	MAIN->getConfig()->removeSetting("joinhyphen");
-	MAIN->getConfig()->removeSetting("joinspace");
-	MAIN->getConfig()->removeSetting("keepparagraphs");
-	MAIN->getConfig()->removeSetting("drawwhitespace");
-	MAIN->getConfig()->removeSetting("searchmatchcase");
-}
-
-void OutputEditorText::clearErrorState() {
-	ui.lineEditOutputSearch->setStyleSheet("");
 }
 
 void OutputEditorText::setFont() {
-	if(MAIN->getConfig()->getSetting<SwitchSetting>("systemoutputfont")->getValue()) {
+	if(ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
 		ui.plainTextEditOutput->setFont(QFont());
 	} else {
-		ui.plainTextEditOutput->setFont(MAIN->getConfig()->getSetting<FontSetting>("customoutputfont")->getValue());
+		ui.plainTextEditOutput->setFont(ConfigSettings::get<FontSetting>("customoutputfont")->getValue());
 	}
 }
 
@@ -164,35 +141,47 @@ void OutputEditorText::filterBuffer() {
 	ui.plainTextEditOutput->setTextCursor(cursor);
 }
 
-void OutputEditorText::findNext() {
-	findReplace(false, false);
+void OutputEditorText::findReplace(const QString &searchstr, const QString &replacestr, bool matchCase, bool backwards, bool replace) {
+	ui.searchFrame->clearErrorState();
+	if(!ui.plainTextEditOutput->findReplace(backwards, replace, matchCase, searchstr, replacestr)) {
+		ui.searchFrame->setErrorState();
+	}
 }
 
-void OutputEditorText::findPrev() {
-	findReplace(true, false);
-}
-
-void OutputEditorText::replaceNext() {
-	findReplace(false, true);
-}
-
-void OutputEditorText::replaceAll() {
+void OutputEditorText::replaceAll(const QString &searchstr, const QString &replacestr, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
-	QString searchstr = ui.lineEditOutputSearch->text();
-	QString replacestr = ui.lineEditOutputReplace->text();
-	if(!ui.plainTextEditOutput->replaceAll(searchstr, replacestr, ui.checkBoxOutputSearchMatchCase->isChecked())) {
-		ui.lineEditOutputSearch->setStyleSheet("background: #FF7777; color: #FFFFFF;");
+	if(!ui.plainTextEditOutput->replaceAll(searchstr, replacestr, matchCase)) {
+		ui.searchFrame->setErrorState();
 	}
 	MAIN->popState();
 }
 
-void OutputEditorText::findReplace(bool backwards, bool replace) {
-	clearErrorState();
-	QString searchstr = ui.lineEditOutputSearch->text();
-	QString replacestr = ui.lineEditOutputReplace->text();
-	if(!ui.plainTextEditOutput->findReplace(backwards, replace, ui.checkBoxOutputSearchMatchCase->isChecked(), searchstr, replacestr)) {
-		ui.lineEditOutputSearch->setStyleSheet("background: #FF7777; color: #FFFFFF;");
+void OutputEditorText::applySubstitutions(const QMap<QString, QString> &substitutions, bool matchCase) {
+	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
+	QTextCursor cursor = ui.plainTextEditOutput->regionBounds();
+	int end = cursor.position();
+	cursor.setPosition(cursor.anchor());
+	QTextDocument::FindFlags flags = 0;
+	if(matchCase) {
+		flags = QTextDocument::FindCaseSensitively;
 	}
+	int start = cursor.position();
+	for(auto it = substitutions.begin(), itEnd = substitutions.end(); it != itEnd; ++it) {
+		QString search = it.key();
+		QString replace = it.value();
+		int diff = replace.length() - search.length();
+		cursor.setPosition(start);
+		while(true) {
+			cursor = ui.plainTextEditOutput->document()->find(search, cursor, flags);
+			if(cursor.isNull() || std::max(cursor.anchor(), cursor.position()) > end) {
+				break;
+			}
+			cursor.insertText(replace);
+			end += diff;
+		}
+		QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+	}
+	MAIN->popState();
 }
 
 void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data) {
@@ -288,7 +277,7 @@ bool OutputEditorText::getModified() const {
 }
 
 void OutputEditorText::onVisibilityChanged(bool /*visibile*/) {
-	m_substitutionsManager->hide();
+	ui.searchFrame->hideSubstitutionsManager();
 }
 
 void OutputEditorText::setLanguage(const Config::Lang& lang) {

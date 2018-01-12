@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Acquirer.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -22,7 +22,7 @@
 #include <QThread>
 
 #include "Acquirer.hh"
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "Utils.hh"
@@ -57,16 +57,16 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 	connect(m_scanner, SIGNAL(scanStateChanged(Scanner::State)), this, SLOT(setScanState(Scanner::State)));
 	connect(m_scanner, SIGNAL(pageAvailable(QString)), this, SIGNAL(scanPageAvailable(QString)));
 
-	MAIN->getConfig()->addSetting(new ComboSetting("scanres", ui.comboBoxScanResolution, 2));
-	MAIN->getConfig()->addSetting(new ComboSetting("scanmode", ui.comboBoxScanMode, 0));
-	MAIN->getConfig()->addSetting(new ComboSetting("scandev", ui.comboBoxScanDevice, 0));
-	MAIN->getConfig()->addSetting(new ComboSetting("scansource", ui.comboBoxScanSource, 0));
+	ADD_SETTING(ComboSetting("scanres", ui.comboBoxScanResolution, 2));
+	ADD_SETTING(ComboSetting("scanmode", ui.comboBoxScanMode, 0));
+	ADD_SETTING(ComboSetting("scandev", ui.comboBoxScanDevice, 0));
+	ADD_SETTING(ComboSetting("scansource", ui.comboBoxScanSource, 0));
 #ifdef Q_OS_WIN32
 	ui.labelScanSource->setVisible(false);
 	ui.comboBoxScanSource->setVisible(false);
 #endif
 
-	QString sourcedir = MAIN->getConfig()->getSetting<VarSetting<QString>>("sourcedir")->getValue();
+	QString sourcedir = ConfigSettings::get<VarSetting<QString>>("sourcedir")->getValue();
 	m_outputPath = QDir(sourcedir.isEmpty() ? Utils::documentsFolder() : sourcedir).absoluteFilePath(_("scan.png"));
 	genOutputPath();
 	m_scanner->init();

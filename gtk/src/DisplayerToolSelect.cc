@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * DisplayerToolSelect.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) (\d+)-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -23,6 +23,7 @@
 #include "MainWindow.hh"
 #include "Recognizer.hh"
 #include "Utils.hh"
+#include "ui_SelectionMenu.hh"
 
 #include <cmath>
 #define USE_STD_NAMESPACE
@@ -32,17 +33,11 @@
 
 DisplayerToolSelect::DisplayerToolSelect(Displayer *displayer)
 	: DisplayerTool(displayer) {
-	Gtk::Button* autolayoutButton = MAIN->getWidget("button:main.autolayout");
-	m_connectionAutolayout = CONNECT(autolayoutButton, clicked, [this] { autodetectLayout(); });
-
-	autolayoutButton->set_visible(true);
 	updateRecognitionModeLabel();
 }
 
 DisplayerToolSelect::~DisplayerToolSelect() {
 	clearSelections();
-	MAIN->getWidget("button:main.autolayout").as<Gtk::Button>()->set_visible(false);
-	m_connectionAutolayout.disconnect();
 }
 
 bool DisplayerToolSelect::mousePressEvent(GdkEventButton* event) {
@@ -190,7 +185,8 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 	// unless we already attempted to rotate (to prevent endless loops)
 	avgDeskew = Utils::round(((avgDeskew/nDeskew)/M_PI * 180.) * 10.) / 10.;
 	if(std::abs(avgDeskew) > .1 && !noDeskew) {
-		m_displayer->setAngle(m_displayer->getCurrentAngle() - avgDeskew);
+		double newangle = m_displayer->getCurrentAngle() - avgDeskew;
+		m_displayer->setup(nullptr, nullptr, &newangle);
 		autodetectLayout(true);
 	} else {
 		// Merge overlapping rectangles
@@ -215,56 +211,59 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 ///////////////////////////////////////////////////////////////////////////////
 
 void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
-	Gtk::Window* selmenu = MAIN->getWidget("window:selectionmenu");
-	Gtk::SpinButton* spin = MAIN->getWidget("spin:selectionmenu.order");
-	spin->get_adjustment()->set_upper(static_cast<DisplayerToolSelect*>(m_tool)->m_selections.size());
-	spin->get_adjustment()->set_value(m_number);
+	Ui::SelectionMenu ui;
+	ClassData m_classdata;
+	ui.setupUi();
+	ui.windowSelection->set_attached_to(*MAIN->getWindow());
+	ui.spinSelectionOrder->get_adjustment()->set_upper(static_cast<DisplayerToolSelect*>(m_tool)->m_selections.size());
+	ui.spinSelectionOrder->get_adjustment()->set_value(m_number);
+
 	Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
 	std::vector<sigc::connection> selmenuConnections = {
-		CONNECT(spin, value_changed, [&]{ reorderSelection(spin->get_value()); }),
-		CONNECT(MAIN->getWidget("button:selectionmenu.delete").as<Gtk::Button>(), clicked, [&]{
+		CONNECT(ui.spinSelectionOrder, value_changed, [&]{ reorderSelection(ui.spinSelectionOrder->get_value()); }),
+		CONNECT(ui.buttonSelectionDelete, clicked, [&]{
 			loop->quit();
 			static_cast<DisplayerToolSelect*>(m_tool)->removeSelection(m_number);
 		}),
-		CONNECT(MAIN->getWidget("button:selectionmenu.recognize").as<Gtk::Button>(), clicked, [&]{
+		CONNECT(ui.buttonSelectionRecognize, clicked, [&]{
 			loop->quit();
 			MAIN->getRecognizer()->recognizeImage(displayer()->getImage(rect()), Recognizer::OutputDestination::Buffer);
 		}),
-		CONNECT(MAIN->getWidget("button:selectionmenu.clipboard").as<Gtk::Button>(), clicked, [&]{
+		CONNECT(ui.buttonSelectionRecognize, clicked, [&]{
 			loop->quit();
 			MAIN->getRecognizer()->recognizeImage(displayer()->getImage(rect()), Recognizer::OutputDestination::Clipboard);
 		}),
-		CONNECT(MAIN->getWidget("button:selectionmenu.save").as<Gtk::Button>(), clicked, [&]{
+		CONNECT(ui.buttonSelectionSave, clicked, [&]{
 			loop->quit();
 			// Explicitly hide (and wait for hide event to be processed) to avoid key/mouse-grab conflicts with file dialog which pops up
-			selmenu->hide();
+			ui.windowSelection->hide();
 			while(Gtk::Main::events_pending()) {
 				Gtk::Main::iteration(false);
 			}
 			static_cast<DisplayerToolSelect*>(m_tool)->saveSelection(this);
 		}),
-		CONNECT(selmenu, button_press_event, [&](GdkEventButton* ev) {
-			Gtk::Allocation a = selmenu->get_allocation();
+		CONNECT(ui.windowSelection, button_press_event, [&](GdkEventButton* ev) {
+			Gtk::Allocation a = ui.windowSelection->get_allocation();
 			if(ev->x < a.get_x() || ev->x > a.get_x() + a.get_width() || ev->y < a.get_y() || ev->y > a.get_y() + a.get_height()) {
 				loop->quit();
 			}
 			return true;
 		}),
-		CONNECT(selmenu, key_press_event, [&](GdkEventKey* ev) {
+		CONNECT(ui.windowSelection, key_press_event, [&](GdkEventKey* ev) {
 			if(ev->keyval == GDK_KEY_Escape) loop->quit();
 			return true;
 		})
 	};
 	Glib::RefPtr<const Gdk::Screen> screen = MAIN->getWindow()->get_screen();
 	Gdk::Rectangle rect = screen->get_monitor_workarea(screen->get_monitor_at_point(event->x_root, event->y_root));
-	selmenu->show_all();
+	ui.windowSelection->show_all();
 	int w, h, trash;
-	selmenu->get_preferred_width(trash, w);
-	selmenu->get_preferred_height(trash, h);
+	ui.windowSelection->get_preferred_width(trash, w);
+	ui.windowSelection->get_preferred_height(trash, h);
 	int x = std::min(std::max(int(event->x_root), rect.get_x()), rect.get_x() + rect.get_width() - w);
 	int y = std::min(std::max(int(event->y_root), rect.get_y()), rect.get_y() + rect.get_height() - h);
-	selmenu->move(x, y);
-	GdkWindow* gdkwin = selmenu->get_window()->gobj();
+	ui.windowSelection->move(x, y);
+	GdkWindow* gdkwin = ui.windowSelection->get_window()->gobj();
 #if GTK_CHECK_VERSION(3,20,0)
 	gdk_seat_grab(gdk_device_get_seat(gtk_get_current_event_device()), gdkwin, GDK_SEAT_CAPABILITY_ALL, true, nullptr, nullptr, nullptr, nullptr);
 #else
@@ -273,7 +272,7 @@ void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
 
 	loop->run();
 
-	selmenu->hide();
+	ui.windowSelection->hide();
 	for(sigc::connection& conn : selmenuConnections) {
 		conn.disconnect();
 	}

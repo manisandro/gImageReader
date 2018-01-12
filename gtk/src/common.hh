@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * common.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -20,78 +20,46 @@
 #ifndef COMMON_HH
 #define COMMON_HH
 
-#include <gtkmm.h>
-#include <iostream>
-#include <libintl.h>
 #include <glibmm/i18n.h>
+#include <gtkmm.h>
+#include <libintl.h>
 
-namespace sigc {
+struct ClassDataItem {
+	virtual ~ClassDataItem() = default;
+};
 
-#ifndef SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
-#define SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE \
-	template <typename T_functor>          \
-	struct functor_trait<T_functor, false> \
-	{                                      \
-		typedef typename functor_trait<decltype(&T_functor::operator()), false>::result_type result_type; \
-		typedef T_functor functor_type;      \
-	};
-#endif
+class ClassData {
+public:
+	~ClassData() {
+		std::for_each(m_connections.begin(), m_connections.end(), [](sigc::connection conn) {
+			conn.disconnect();
+		});
+		for(ClassDataItem* item : m_items) {
+			delete item;
+		}
+	}
+	template<class T>
+	sigc::connection addConn(const T& conn) {
+		m_connections.push_back(conn);
+		return m_connections.back();
+	}
+	void addItem(ClassDataItem* item) {
+		m_items.push_back(item);
+	}
+private:
+	std::vector<sigc::connection> m_connections;
+	std::vector<ClassDataItem*> m_items;
+};
 
-SIGC_FUNCTORS_DEDUCE_RESULT_TYPE_WITH_DECLTYPE
-}
-
-#define GTKMM_CHECK_VERSION(major,minor,micro)                          \
-	(GTKMM_MAJOR_VERSION > (major) ||                                   \
-	 (GTKMM_MAJOR_VERSION == (major) && GTKMM_MINOR_VERSION > (minor)) || \
-	 (GTKMM_MAJOR_VERSION == (major) && GTKMM_MINOR_VERSION == (minor) && \
-	  GTKMM_MICRO_VERSION >= (micro)))
-
-#define CONNECT(src, signal, ...) (src)->signal_##signal().connect(__VA_ARGS__)
-#define CONNECTS(src, signal, ...) (src)->signal_##signal().connect(sigc::bind(__VA_ARGS__, src))
-#define CONNECTP(src, property, ...) (src)->property_##property().signal_changed().connect(__VA_ARGS__)
-#define CONNECTPS(src, property, ...) {auto sender = src; sender->property_##property().signal_changed().connect(sigc::bind(__VA_ARGS__, sender)); }
+#define CONNECT(src, signal, ...) m_classdata.addConn((src)->signal_##signal().connect(__VA_ARGS__))
+#define CONNECTP(src, property, ...) m_classdata.addConn((src)->property_##property().signal_changed().connect(__VA_ARGS__))
+#define CONNECTX(src, signal, ...) (src)->signal_##signal().connect(__VA_ARGS__)
 
 #define APPLICATION_ID "org.gnome.gimagereader"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-
-class Builder {
-public:
-	struct CastProxy {
-		CastProxy(Gtk::Widget* widget) : m_widget(widget) {}
-		template <class T> operator T*() {
-			return static_cast<T*>(m_widget);
-		}
-		template <class T> T* as() {
-			return static_cast<T*>(m_widget);
-		}
-		Gtk::Widget* operator->() {
-			return m_widget;
-		}
-
-		Gtk::Widget* m_widget;
-	};
-
-	Builder(const Glib::ustring& resourcePath) {
-		m_builder = Gtk::Builder::create_from_resource(resourcePath);
-		m_builder->set_translation_domain(GETTEXT_PACKAGE);
-	}
-	CastProxy operator()(const Glib::ustring& name) const {
-		Gtk::Widget* widget;
-		m_builder->get_widget(name, widget);
-		return CastProxy(widget);
-	}
-	template<class T>
-	void get_derived(const Glib::ustring& name, T*& p) {
-		m_builder->get_widget_derived(name, p);
-	}
-
-private:
-	Glib::RefPtr<Gtk::Builder> m_builder;
-};
-
 
 extern std::string pkgExePath;
 extern std::string pkgDir;

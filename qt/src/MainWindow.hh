@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * MainWindow.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -22,17 +22,18 @@
 
 #include <QList>
 #include <QMainWindow>
+#include <QMutexLocker>
 #include <QStack>
 #include <QStringList>
 #include <QThread>
 #include <QTimer>
 
 #include "common.hh"
+#include "Config.hh"
 #include "Ui_MainWindow.hh"
 
 #define MAIN MainWindow::getInstance()
 
-class Config;
 class Acquirer;
 class Displayer;
 class DisplayerTool;
@@ -54,10 +55,32 @@ public:
 		bool close;
 	};
 
-	struct ProgressMonitor {
+	class ProgressMonitor {
+	public:
+		ProgressMonitor(int total) : mTotal(total) {}
 		virtual ~ProgressMonitor() {}
-		virtual int getProgress() = 0;
-		virtual void cancel() = 0;
+		void increaseProgress() {
+			QMutexLocker locker(&mMutex);
+			++mProgress;
+		}
+		virtual int getProgress() const {
+			QMutexLocker locker(&mMutex);
+			return (mProgress * 100) / mTotal;
+		}
+		virtual void cancel() {
+			QMutexLocker locker(&mMutex);
+			mCancelled = true;
+		}
+		bool cancelled() const {
+			QMutexLocker locker(&mMutex);
+			return mCancelled;
+		}
+
+	protected:
+		mutable QMutex mMutex;
+		const int mTotal;
+		int mProgress = 0;
+		bool mCancelled = false;
 	};
 
 	typedef void* Notification;
@@ -92,6 +115,7 @@ public:
 	void hideProgress();
 
 public slots:
+	void manageLanguages();
 	void popState();
 	void pushState(MainWindow::State state, const QString& msg);
 	void showHelp(const QString& chapter = "");
@@ -149,7 +173,7 @@ private slots:
 	void progressCancel();
 	void progressUpdate();
 	void setOCRMode(int idx);
-	void languageChanged();
+	void languageChanged(const Config::Lang& lang);
 	void dictionaryAutoinstall();
 };
 

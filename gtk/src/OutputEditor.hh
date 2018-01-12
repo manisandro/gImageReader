@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditor.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -19,8 +19,6 @@
 
 #ifndef OUTPUTEDITOR_HH
 #define OUTPUTEDITOR_HH
-
-#include "Config.hh"
 
 namespace tesseract {
 class TessBaseAPI;
@@ -41,7 +39,7 @@ public:
 	OutputEditor() {}
 	virtual ~OutputEditor() {}
 
-	virtual Gtk::Box* getUI() = 0;
+	virtual Gtk::Box* getUI() const = 0;
 	virtual ReadSessionData* initRead(tesseract::TessBaseAPI& tess) = 0;
 	virtual void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) = 0;
 	virtual void readError(const Glib::ustring& errorMsg, ReadSessionData* data) = 0;

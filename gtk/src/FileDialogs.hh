@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * FileDialogs.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -26,8 +26,8 @@ namespace FileDialogs {
 
 struct FileFilter {
 	std::string name;
-	std::vector<std::string> mime_types;
-	std::vector<std::string> patterns;
+	std::vector<Glib::ustring> mime_types;
+	std::vector<Glib::ustring> patterns;
 
 #ifdef G_OS_WIN32
 	std::wstring to_win32_filter() const;

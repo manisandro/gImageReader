@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * CrashHandler.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) (\d+)-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -21,8 +21,7 @@
 #include "Utils.hh"
 
 CrashHandler::CrashHandler(int argc, char* argv[])
-	: Gtk::Application(argc, argv, APPLICATION_ID".crashhandler", Gio::APPLICATION_HANDLES_COMMAND_LINE)
-	, m_builder("/org/gnome/gimagereader/crashhandler.ui") {
+	: Gtk::Application(argc, argv, APPLICATION_ID ".crashhandler", Gio::APPLICATION_HANDLES_COMMAND_LINE) {
 	Glib::set_application_name(Glib::ustring::compose("%1 - %2", PACKAGE_NAME, _("Crash Handler")));
 
 	if(argc > 2) {
@@ -35,41 +34,38 @@ CrashHandler::CrashHandler(int argc, char* argv[])
 
 void CrashHandler::on_startup() {
 	Gtk::Application::on_startup();
-	m_dialog = m_builder("dialog:crashhandler");
-	m_progressBar = m_builder("progressbar:backtrace");
-	m_progressBar->hide();
-	m_textview = m_builder("textview:backtrace");
-	m_refreshButton = m_builder("button:backtrace.regenerate");
-	m_dialog->set_title(Glib::ustring::compose("%1 %2", PACKAGE_NAME, _("Crash Handler")));
+	ui.setupUi();
+	ui.progressbar->hide();
+	ui.dialogCrashhandler->set_title(Glib::ustring::compose("%1 %2", PACKAGE_NAME, _("Crash Handler")));
 	if(!m_saveFile.empty()) {
-		m_builder("label:crashhandler.autosave").as<Gtk::Label>()->set_markup(Glib::ustring::compose(_("Your work has been saved under <b>%1</b>."), m_saveFile));
+		ui.labelAutosave->set_markup(Glib::ustring::compose(_("Your work has been saved under <b>%1</b>."), m_saveFile));
 	} else {
-		m_builder("label:crashhandler.autosave").as<Gtk::Label>()->set_text(_("There was no unsaved work."));
+		ui.labelAutosave->set_text(_("There was no unsaved work."));
 	}
-	CONNECT(m_dialog, delete_event, [this](GdkEventAny* /*ev*/) {
+	CONNECT(ui.dialogCrashhandler, delete_event, [this](GdkEventAny* /*ev*/) {
 		quit();
 		return true;
 	});
-	CONNECT(m_builder("button:crashhandler.close").as<Gtk::Button>(), clicked, [this] { quit(); });
-	CONNECT(m_refreshButton, clicked, [this] { generate_backtrace(); });
+	CONNECT(ui.buttonClose, clicked, [this] { quit(); });
+	CONNECT(ui.buttonRegenerate, clicked, [this] { generate_backtrace(); });
 
-	add_window(*m_dialog);
-	m_dialog->show_all();
+	add_window(*ui.dialogCrashhandler);
+	ui.dialogCrashhandler->show_all();
 
 #ifndef G_OS_WIN32
 	generate_backtrace();
 #else
-	m_refreshButton->hide();
-	m_progressBar->hide();
+	ui.buttonRegenerate->hide();
+	ui.progressbar->hide();
 #endif
 }
 
 void CrashHandler::generate_backtrace() {
 	m_progressConnection = Glib::signal_timeout().connect([this] { return pulse_progress(); }, 200);
-	m_refreshButton->set_sensitive(false);
-	m_textview->set_sensitive(false);
-	m_textview->get_buffer()->set_text(Glib::ustring::compose("%1 %2 (rev %3)\n\n", PACKAGE_NAME, PACKAGE_VERSION, PACKAGE_REVISION));
-	m_progressBar->show();
+	ui.buttonRegenerate->set_sensitive(false);
+	ui.textview->set_sensitive(false);
+	ui.textview->get_buffer()->set_text(Glib::ustring::compose("%1 %2 (rev %3)\n\n", PACKAGE_NAME, PACKAGE_VERSION, PACKAGE_REVISION));
+	ui.progressbar->show();
 
 	GPid child_pid;
 	int child_stdin;
@@ -99,13 +95,13 @@ void CrashHandler::generate_backtrace() {
 
 void CrashHandler::generate_backtrace_end(bool success) {
 	m_progressConnection.disconnect();
-	m_progressBar->hide();
-	m_textview->set_sensitive(true);
-	m_refreshButton->set_sensitive(true);
+	ui.progressbar->hide();
+	ui.textview->set_sensitive(true);
+	ui.buttonRegenerate->set_sensitive(true);
 	if(!success) {
-		m_textview->get_buffer()->set_text(_("Failed to obtain backtrace. Is gdb installed?"));
+		ui.textview->get_buffer()->set_text(_("Failed to obtain backtrace. Is gdb installed?"));
 	} else {
-		std::vector<Glib::ustring> lines = Utils::string_split(m_textview->get_buffer()->get_text(false), '\n', false);
+		std::vector<Glib::ustring> lines = Utils::string_split(ui.textview->get_buffer()->get_text(false), '\n', false);
 		Glib::ustring text = Glib::ustring::compose("%1\n\n", lines[0]);
 		for(int i = 1, n = lines.size(); i < n; ++i) {
 			if(lines[i].substr(0, 6) == "Thread") {
@@ -114,14 +110,14 @@ void CrashHandler::generate_backtrace_end(bool success) {
 				text += Glib::ustring::compose("%1\n", lines[i]);
 			}
 		}
-		m_textview->get_buffer()->set_text(text);
+		ui.textview->get_buffer()->set_text(text);
 	}
-	auto begin = m_textview->get_buffer()->begin();
-	m_textview->scroll_to(begin);
+	auto begin = ui.textview->get_buffer()->begin();
+	ui.textview->scroll_to(begin);
 }
 
 bool CrashHandler::pulse_progress() {
-	m_progressBar->pulse();
+	ui.progressbar->pulse();
 	return true;
 }
 
@@ -131,9 +127,9 @@ bool CrashHandler::handle_stdout(Glib::IOCondition cond, Glib::RefPtr<Glib::IOCh
 	}
 	Glib::ustring text;
 	ch->read_line(text);
-	m_textview->get_buffer()->insert(m_textview->get_buffer()->end(), text);
-	auto end = m_textview->get_buffer()->end();
-	m_textview->scroll_to(end);
+	ui.textview->get_buffer()->insert(ui.textview->get_buffer()->end(), text);
+	auto end = ui.textview->get_buffer()->end();
+	ui.textview->scroll_to(end);
 	return true;
 }
 

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditorText.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -23,20 +23,20 @@
 #include <gtksourceviewmm.h>
 #include <gtkspellmm.h>
 
-#include "Config.hh"
 #include "MainWindow.hh"
 #include "OutputBuffer.hh"
 #include "OutputEditor.hh"
+#include "ui_OutputEditorText.hh"
 
-class SubstitutionsManager;
+class SearchReplaceFrame;
 
 class OutputEditorText : public OutputEditor {
 public:
 	OutputEditorText();
 	~OutputEditorText();
 
-	Gtk::Box* getUI() override {
-		return m_paneWidget;
+	Gtk::Box* getUI() const override {
+		return ui.boxEditorText;
 	}
 	ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
 		return new TextReadSessionData;
@@ -56,46 +56,24 @@ private:
 
 	enum class InsertMode { Append, Cursor, Replace };
 
-	Builder m_builder;
-	Gtk::Box* m_paneWidget;
-	Gtk::MenuButton* m_insButton;
-	Gtk::Image* m_insImage;
-	Gtk::EventBox* m_replaceBox;
-	Gtk::Box* m_outputBox;
-	Gsv::View* m_textView;
-	Gtk::Entry* m_searchEntry;
-	Gtk::Entry* m_replaceEntry;
-	Gtk::CheckMenuItem* m_filterKeepIfEndMark;
-	Gtk::CheckMenuItem* m_filterKeepIfQuote;
-	Gtk::CheckMenuItem* m_filterJoinHyphen;
-	Gtk::CheckMenuItem* m_filterJoinSpace;
-	Gtk::CheckMenuItem* m_filterKeepParagraphs;
-	Gtk::ToggleButton* m_toggleSearchButton;
-	Gtk::Button* m_undoButton;
-	Gtk::Button* m_redoButton;
-	Gtk::CheckButton* m_csCheckBox;
 
-	sigc::connection m_connectionCustomFont;
-	sigc::connection m_connectionDefaultFont;
-
+	Ui::OutputEditorText ui;
+	ClassData m_classdata;
+	SearchReplaceFrame* m_searchFrame;
 	Glib::RefPtr<OutputBuffer> m_textBuffer;
 
 	InsertMode m_insertMode;
 	GtkSpell::Checker m_spell;
-	SubstitutionsManager* m_substitutionsManager;
 
 	void addText(const Glib::ustring& text, bool insert);
 	void completeTextViewMenu(Gtk::Menu *menu);
 	void filterBuffer();
-	void findNext();
-	void findPrev();
-	void findReplace(bool backwards, bool replace);
-	void replaceAll();
-	void replaceNext();
+	void findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace);
+	void replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
+	void applySubstitutions(const std::map<Glib::ustring,Glib::ustring>& substitutions, bool matchCase);
 	void scrollCursorIntoView();
 	void setFont();
 	void setInsertMode(InsertMode mode, const std::string& iconName);
-	void toggleReplaceBox();
 };
 
 #endif // OUTPUTEDITORTEXT_HH

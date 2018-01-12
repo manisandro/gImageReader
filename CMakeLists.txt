@@ -77,6 +77,7 @@ IF("${INTERFACE_TYPE}" STREQUAL "gtk")
     PKG_CHECK_MODULES(POPPLER REQUIRED poppler-glib)
     PKG_CHECK_MODULES(JSONGLIB REQUIRED json-glib-1.0)
     PKG_CHECK_MODULES(LIBXMLPP REQUIRED libxml++-2.6)
+    PKG_CHECK_MODULES(LIBZIP REQUIRED libzip)
     FIND_PACKAGE(JPEG)
     IF(JPEG_FOUND)
         SET(LIBJPEG_INCLUDE_DIRS ${JPEG_INCLUDE_DIRS})
@@ -100,6 +101,7 @@ IF("${INTERFACE_TYPE}" STREQUAL "gtk")
         ${LIBXMLPP_INCLUDE_DIRS}
         ${LIBJPEG_INCLUDE_DIRS}
         ${FONTCONFIG_INCLUDE_DIRS}
+        ${LIBZIP_INCLUDE_DIRS}
     )
     SET(gimagereader_LIBS
         ${GTKMM_LDFLAGS}
@@ -113,16 +115,25 @@ IF("${INTERFACE_TYPE}" STREQUAL "gtk")
         ${LIBJPEG_LDFLAGS}
         ${PODOFO_LDFLAGS}
         ${FONTCONFIG_LDFLAGS}
+        ${LIBZIP_LDFLAGS}
     )
     SET(srcdir "gtk")
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt4")
     SET(CMAKE_AUTOMOC ON)
     FIND_PACKAGE(Qt4 REQUIRED)
+    FIND_PACKAGE(QuaZip)
+    IF(NOT QUAZIP_FOUND)
+        FIND_PATH(QUAZIP_INCLUDE_DIR NAME quazipfile.h PATH_SUFFIXES quazip)
+        FIND_LIBRARY(QUAZIP_LIBRARIES quazip)
+        IF(NOT QUAZIP_INCLUDE_DIR OR NOT QUAZIP_LIBRARIES)
+            MESSAGE(FATAL_ERROR "QuaZip is required but was not found")
+        ENDIF()
+    ENDIF()
     PKG_CHECK_MODULES(QTSPELL REQUIRED QtSpell-qt4>=0.8.0)
     PKG_CHECK_MODULES(POPPLER REQUIRED poppler-qt4)
     PKG_CHECK_MODULES(QJSON REQUIRED QJson)
-    INCLUDE_DIRECTORIES(${QTSPELL_INCLUDE_DIRS} ${POPPLER_INCLUDE_DIRS} ${QJSON_INCLUDE_DIRS})
-    SET(gimagereader_LIBS ${QTSPELL_LDFLAGS} ${POPPLER_LDFLAGS} ${QJSON_LDFLAGS} ${PODOFO_LDFLAGS})
+    INCLUDE_DIRECTORIES(${QTSPELL_INCLUDE_DIRS} ${POPPLER_INCLUDE_DIRS} ${QJSON_INCLUDE_DIRS} ${QUAZIP_INCLUDE_DIR})
+    SET(gimagereader_LIBS ${QTSPELL_LDFLAGS} ${POPPLER_LDFLAGS} ${QJSON_LDFLAGS} ${PODOFO_LDFLAGS} ${QUAZIP_LIBRARIES})
     SET(srcdir "qt")
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
     SET(CMAKE_AUTOMOC ON)
@@ -131,10 +142,18 @@ ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
     FIND_PACKAGE(Qt5Widgets REQUIRED)
     FIND_PACKAGE(Qt5Xml REQUIRED)
     FIND_PACKAGE(Qt5PrintSupport REQUIRED)
+    FIND_PACKAGE(QuaZip5)
+    IF(NOT QUAZIP_FOUND)
+        FIND_PATH(QUAZIP_INCLUDE_DIR NAME quazipfile.h PATH_SUFFIXES quazip5)
+        FIND_LIBRARY(QUAZIP_LIBRARIES quazip5)
+        IF(NOT QUAZIP_INCLUDE_DIR OR NOT QUAZIP_LIBRARIES)
+            MESSAGE(FATAL_ERROR "QuaZip5 is required but was not found")
+        ENDIF()
+    ENDIF()
     PKG_CHECK_MODULES(QTSPELL REQUIRED QtSpell-qt5>=0.8.0)
     PKG_CHECK_MODULES(POPPLER REQUIRED poppler-qt5)
-    INCLUDE_DIRECTORIES(${QTSPELL_INCLUDE_DIRS} ${POPPLER_INCLUDE_DIRS})
-    SET(gimagereader_LIBS ${QTSPELL_LDFLAGS} ${POPPLER_LDFLAGS} ${PODOFO_LDFLAGS})
+    INCLUDE_DIRECTORIES(${QTSPELL_INCLUDE_DIRS} ${POPPLER_INCLUDE_DIRS} ${QUAZIP_INCLUDE_DIR})
+    SET(gimagereader_LIBS ${QTSPELL_LDFLAGS} ${POPPLER_LDFLAGS} ${PODOFO_LDFLAGS} ${QUAZIP_LIBRARIES})
     SET(srcdir "qt")
 ELSE()
     MESSAGE(FATAL_ERROR "Invalid interface type ${INTERFACE_TYPE}")
@@ -179,38 +198,66 @@ ELSE(UNIX)
 ENDIF(UNIX)
 
 
+# Generate resources
 IF("${srcdir}" STREQUAL "gtk")
     ADD_SCHEMA("gtk/data/org.gnome.gimagereader.gschema.xml")
     ADD_CUSTOM_COMMAND(
-        OUTPUT gimagereader.gresource.c
-        COMMAND glib-compile-resources gimagereader.gresource.xml --target=${CMAKE_CURRENT_BINARY_DIR}/gimagereader.gresource.c --generate-source
+        OUTPUT  ${CMAKE_BINARY_DIR}/gimagereader.gresource.c
+        COMMAND glib-compile-resources gimagereader.gresource.xml ARGS --target=${CMAKE_BINARY_DIR}/gimagereader.gresource.c --generate-source
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/gtk/data/
-        DEPENDS ${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.gresource.xml
-                ${CMAKE_SOURCE_DIR}/gtk/data/gimagereader.ui
-                ${CMAKE_SOURCE_DIR}/gtk/data/crashhandler.ui
-                ${CMAKE_SOURCE_DIR}/gtk/data/appmenu.ui
-                ${CMAKE_SOURCE_DIR}/gtk/data/editor_text.ui
-                ${CMAKE_SOURCE_DIR}/gtk/data/editor_hocr.ui)
-    LIST(APPEND gimagereader_SRCS gimagereader.gresource.c)
-ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt4")
-    QT4_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})
-    QT4_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
-ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
-    QT5_WRAP_UI(gimagereader_FORMS_HEADERS ${gimagereader_FORMS})
-    QT5_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
-ENDIF()
+        DEPENDS ${gimagereader_FORMS})
+    LIST(APPEND gimagereader_SRCS ${CMAKE_BINARY_DIR}/gimagereader.gresource.c)
 
-IF("${srcdir}" STREQUAL "qt")
-  SET_PROPERTY(SOURCE ${gimagereader_FORMS_HEADERS} PROPERTY SKIP_AUTOMOC ON)
-  SET_PROPERTY(SOURCE ${gimagereader_RESOURCES_RCC} PROPERTY SKIP_AUTOMOC ON)
-    # Gettextize ui files
-    ADD_CUSTOM_TARGET(
-        gettextizeui
-        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/gettextizeui.cmake ${gimagereader_FORMS_HEADERS}
-        DEPENDS ${gimagereader_FORMS_HEADERS}
+    # Just to allow running the application from the build tree (via XDG_DATA_DIRS=$PWD:$XDG_DATA_DIRS ./gimagereader-gtk)
+    ADD_CUSTOM_COMMAND(
+        OUTPUT  ${CMAKE_BINARY_DIR}/glib-2.0/schemas/gschemas.compiled
+        COMMAND ${CMAKE_COMMAND} ARGS -E copy ${CMAKE_SOURCE_DIR}/gtk/data/org.gnome.gimagereader.gschema.xml ${CMAKE_BINARY_DIR}/glib-2.0/schemas/org.gnome.gimagereader.gschema.xml
+        COMMAND glib-compile-schemas ARGS ${CMAKE_BINARY_DIR}/glib-2.0/schemas/
+        DEPENDS ${CMAKE_SOURCE_DIR}/gtk/data/org.gnome.gimagereader.gschema.xml
     )
+    SET(gimagereader_RESOURCES_RCC ${CMAKE_BINARY_DIR}/glib-2.0/schemas/gschemas.compiled)
+
+    FOREACH(form ${gimagereader_FORMS})
+        GET_FILENAME_COMPONENT(outfile ${form} NAME_WE)
+        SET(outfile ${CMAKE_BINARY_DIR}/ui_${outfile}.hh)
+        ADD_CUSTOM_COMMAND(
+            OUTPUT ${outfile}
+            COMMAND python3 ARGS ${CMAKE_SOURCE_DIR}/gtk/data/uigen.py ${form}
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+            DEPENDS ${form}
+        )
+        LIST(APPEND gimagereader_FORMS_HEADERS ${outfile})
+    ENDFOREACH()
+
+ELSEIF("${srcdir}" STREQUAL "qt")
+    IF("${INTERFACE_TYPE}" STREQUAL "qt4")
+        QT4_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
+        SET(UIC_EXECUTABLE ${QT_UIC_EXECUTABLE})
+    ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
+        QT5_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
+        SET(UIC_EXECUTABLE Qt5::uic)
+    ENDIF()
+
+    # Custom WRAP_UI which also gettext-izes the result
+    MESSAGE(${CMAKE_COMMAND})
+    FOREACH(form ${gimagereader_FORMS})
+        GET_FILENAME_COMPONENT(outfile ${form} NAME_WE)
+        SET(outfile ${CMAKE_BINARY_DIR}/ui_${outfile}.h)
+        ADD_CUSTOM_COMMAND(
+            OUTPUT ${outfile}
+            COMMAND ${UIC_EXECUTABLE} ARGS -o ${outfile} ${form}
+            COMMAND ${CMAKE_COMMAND} ARGS -P ${CMAKE_SOURCE_DIR}/cmake/gettextizeui.cmake ${outfile}
+            DEPENDS ${form}
+        )
+        LIST(APPEND gimagereader_FORMS_HEADERS ${outfile})
+    ENDFOREACH()
+
+    SET_PROPERTY(SOURCE ${gimagereader_FORMS_HEADERS} PROPERTY SKIP_AUTOMOC ON)
+    SET_PROPERTY(SOURCE ${gimagereader_RESOURCES_RCC} PROPERTY SKIP_AUTOMOC ON)
 ENDIF()
 
+
+# Process translations
 FILE(READ po/LINGUAS langs_string)
 STRING(REGEX MATCHALL "[a-zA-Z_]+" langs "${langs_string}")
 FOREACH(lang ${langs})
@@ -238,6 +285,7 @@ ENDIF()
 ADD_EXECUTABLE(gimagereader
     ${gimagereader_HDRS}
     ${gimagereader_SRCS}
+    ${gimagereader_FORMS}
     ${gimagereader_FORMS_HEADERS}
     ${gimagereader_RESOURCES_RCC}
 )
@@ -256,10 +304,8 @@ SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 SET_TARGET_PROPERTIES(gimagereader PROPERTIES OUTPUT_NAME gimagereader-${INTERFACE_TYPE})
 IF("${INTERFACE_TYPE}" STREQUAL "qt4")
     TARGET_LINK_LIBRARIES(gimagereader Qt4::QtCore Qt4::QtGui Qt4::QtNetwork Qt4::QtDBus Qt4::QtXml)
-    ADD_DEPENDENCIES(gimagereader gettextizeui)
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5")
     TARGET_LINK_LIBRARIES(gimagereader Qt5::Widgets Qt5::Network Qt5::DBus Qt5::Xml Qt5::PrintSupport)
-    ADD_DEPENDENCIES(gimagereader gettextizeui)
 ENDIF()
 
 INSTALL(TARGETS gimagereader DESTINATION bin)

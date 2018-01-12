@@ -13,6 +13,7 @@ public:
 	QAction* actionHelp;
 	QAction* actionPreferences;
 	QAction* actionRedetectLanguages;
+	QAction* actionManageLanguages;
 	QAction* actionRotateCurrentPage;
 	QAction* actionRotateAllPages;
 	QAction* actionSourceClear;
@@ -164,6 +165,9 @@ public:
 
 		actionRedetectLanguages = new QAction(QIcon::fromTheme("view-refresh"), gettext("Redetect Languages"), MainWindow);
 		menuAppMenu->addAction(actionRedetectLanguages);
+
+		actionManageLanguages = new QAction(QIcon::fromTheme("applications-education-language"), gettext("Manage Languages"), MainWindow);
+		menuAppMenu->addAction(actionManageLanguages);
 
 		actionPreferences = new QAction(QIcon::fromTheme("preferences-system"), gettext("Preferences"), MainWindow);
 		menuAppMenu->addAction(actionPreferences);

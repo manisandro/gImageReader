@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * CrashHandler.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -21,6 +21,7 @@
 #define CRASHHANDLER_HH
 
 #include "common.hh"
+#include "ui_CrashHandler.hh"
 
 class CrashHandler : public Gtk::Application {
 public:
@@ -28,11 +29,8 @@ public:
 	void on_startup();
 
 private:
-	Builder m_builder;
-	Gtk::Dialog* m_dialog;
-	Gtk::ProgressBar* m_progressBar;
-	Gtk::Button* m_refreshButton;
-	Gtk::TextView* m_textview;
+	Ui::CrashHandler ui;
+	ClassData m_classdata;
 	sigc::connection m_progressConnection;
 	std::string m_saveFile;
 	int m_pid = 0;

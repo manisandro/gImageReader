@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * MainWindow.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -21,10 +21,11 @@
 #define MAINWINDOW_HH
 
 #include "common.hh"
+#include "Config.hh"
+#include "ui_MainWindow.hh"
 
 #define MAIN MainWindow::getInstance()
 
-class Config;
 class Acquirer;
 class Displayer;
 class DisplayerTool;
@@ -42,10 +43,32 @@ public:
 		std::function<bool()> action;
 	};
 
-	struct ProgressMonitor {
+	class ProgressMonitor {
+	public:
+		ProgressMonitor(int total) : m_total(total) {}
 		virtual ~ProgressMonitor() {}
-		virtual int getProgress() = 0;
-		virtual void cancel() = 0;
+		void increaseProgress() {
+			Glib::Threads::Mutex::Lock lock(m_mutex);
+			++m_progress;
+		}
+		virtual int getProgress() const {
+			Glib::Threads::Mutex::Lock lock(m_mutex);
+			return (m_progress * 100) / m_total;
+		}
+		virtual void cancel() {
+			Glib::Threads::Mutex::Lock lock(m_mutex);
+			m_cancelled = true;
+		}
+		bool cancelled() const {
+			Glib::Threads::Mutex::Lock lock(m_mutex);
+			return m_cancelled;
+		}
+
+	protected:
+		mutable Glib::Threads::Mutex m_mutex;
+		const int m_total;
+		int m_progress = 0;
+		bool m_cancelled = false;
 	};
 
 	typedef void* Notification;
@@ -74,13 +97,11 @@ public:
 		return m_sourceManager;
 	}
 	Gtk::Window* getWindow() const {
-		return m_window;
-	}
-	Builder::CastProxy getWidget(const Glib::ustring& name) const {
-		return m_builder(name);
+		return ui.windowMain;
 	}
 	void setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel);
 	void redetectLanguages();
+	void manageLanguages();
 	void showConfig();
 	void showHelp(const std::string& chapter = "");
 	void showAbout();
@@ -96,13 +117,8 @@ public:
 private:
 	static MainWindow* s_instance;
 
-	Builder m_builder;
-	Gtk::ApplicationWindow* m_window;
-	Gtk::HeaderBar* m_headerbar;
-	Gtk::AboutDialog* m_aboutdialog;
-	Gtk::Statusbar* m_statusbar;
-	Gtk::ComboBoxText* m_ocrModeCombo;
-	Gtk::ToggleButton* m_outputPaneToggleButton;
+	Ui::MainWindow ui;
+	ClassData m_classdata;
 
 	Config* m_config = nullptr;
 	Acquirer* m_acquirer = nullptr;
@@ -121,12 +137,10 @@ private:
 	std::vector<Gtk::Widget*> m_idlegroup;
 	std::vector<State> m_stateStack;
 	sigc::connection m_connection_setOCRMode;
-	sigc::connection m_connection_setOutputEditorLanguage;
-	sigc::connection m_connection_setOutputEditorVisibility;
 	sigc::connection m_connection_progressUpdate;
 
 	bool closeEvent(GdkEventAny*);
-	void languageChanged();
+	void languageChanged(const Config::Lang& lang);
 	void onSourceChanged();
 	void setOCRMode(int idx);
 	void setState(State state);

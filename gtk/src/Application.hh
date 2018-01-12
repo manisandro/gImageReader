@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Application.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -41,6 +41,7 @@ private:
 		Gtk::Application::on_startup();
 
 		add_action("redetectLangs", [this] { m_mainWindow->redetectLanguages(); });
+		add_action("manageLangs", [this]{ m_mainWindow->manageLanguages(); });
 		add_action("preferences", [this] { m_mainWindow->showConfig(); });
 		add_action("help", [this] { m_mainWindow->showHelp(); });
 		add_action("about", [this] { m_mainWindow->showAbout(); });
@@ -81,6 +82,7 @@ private:
 	}
 
 	MainWindow* m_mainWindow = nullptr;
+	ClassData m_classdata;
 };
 
 #endif // APPLICATION_HPP

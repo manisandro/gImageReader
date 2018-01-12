@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * DisplayerToolSelect.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -31,7 +31,7 @@ class NumberedDisplayerSelection;
 class DisplayerToolSelect : public DisplayerTool {
 	Q_OBJECT
 public:
-	DisplayerToolSelect(QAction* actionAutodetectLayout, Displayer* displayer, QObject* parent = 0);
+	DisplayerToolSelect(Displayer* displayer, QObject* parent = 0);
 	~DisplayerToolSelect();
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
@@ -55,7 +55,6 @@ public:
 
 private:
 	friend class NumberedDisplayerSelection;
-	QAction* mActionAutodetectLayout = nullptr;
 	NumberedDisplayerSelection* m_curSel = nullptr;
 	QList<NumberedDisplayerSelection*> m_selections;
 
@@ -64,8 +63,6 @@ private:
 	void reorderSelection(int oldNum, int newNum);
 	void saveSelection(NumberedDisplayerSelection* selection);
 	void updateRecognitionModeLabel();
-
-private slots:
 	void autodetectLayout(bool noDeskew = false);
 };
 

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Config.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -22,8 +22,8 @@
 
 #include "common.hh"
 #include "ui_ConfigDialog.h"
-#include "ConfigSettings.hh"
 
+#include <QFontDialog>
 #include <QMap>
 
 class Config : public QDialog {
@@ -34,29 +34,6 @@ public:
 	};
 
 	Config(QWidget* parent = nullptr);
-	~Config();
-
-	void addSetting(AbstractSetting* setting) {
-		auto it = m_settings.find(setting->key());
-		if(it != m_settings.end()) {
-			delete it.value();
-			it.value() = setting;
-		} else {
-			m_settings.insert(setting->key(), setting);
-		}
-	}
-	template<class T>
-	T* getSetting(const QString& key) const {
-		auto it = m_settings.find(key);
-		return it == m_settings.end() ? nullptr : static_cast<T*>(it.value());
-	}
-	void removeSetting(const QString& key) {
-		auto it = m_settings.find(key);
-		if(it != m_settings.end()) {
-			delete it.value();
-			m_settings.erase(it);
-		}
-	}
 
 	bool searchLangSpec(Lang& lang) const;
 	QList<QString> searchLangCultures(const QString& code) const;
@@ -80,7 +57,6 @@ private:
 
 	Ui::ConfigDialog ui;
 	QFontDialog m_fontDialog;
-	QMap<QString, AbstractSetting*> m_settings;
 
 	static QMultiMap<QString,QString> buildLanguageCultureTable();
 

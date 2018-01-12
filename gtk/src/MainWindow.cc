@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * MainWindow.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) (\d+)-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -21,6 +21,7 @@
 #include "MainWindow.hh"
 #include "Acquirer.hh"
 #include "Config.hh"
+#include "ConfigSettings.hh"
 #include "Displayer.hh"
 #include "DisplayerToolHOCR.hh"
 #include "DisplayerToolSelect.hh"
@@ -28,6 +29,7 @@
 #include "OutputEditorText.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
+#include "TessdataManager.hh"
 #include "Utils.hh"
 
 #include <gtkspellmm.h>
@@ -106,8 +108,7 @@ static void terminateHandler() {
 
 MainWindow* MainWindow::s_instance = nullptr;
 
-MainWindow::MainWindow()
-	: m_builder("/org/gnome/gimagereader/gimagereader.ui") {
+MainWindow::MainWindow() {
 	s_instance = this;
 
 	std::signal(SIGSEGV, signalHandler);
@@ -116,93 +117,68 @@ MainWindow::MainWindow()
 	std::set_terminate(terminateHandler);
 #endif
 
-	m_window = getWidget("applicationwindow:main");
-	m_headerbar = getWidget("headerbar:main");
-	m_aboutdialog = getWidget("dialog:about");
-	m_statusbar = getWidget("statusbar:main");
-	m_ocrModeCombo = getWidget("combo:main.ocrmode");
-	m_outputPaneToggleButton = getWidget("button:main.outputpane");
-	m_window->set_icon_name("gimagereader");
-	m_aboutdialog->set_version(PACKAGE_VERSION);
-	getWidget("label:about.tesseractver").as<Gtk::Label>()->set_markup(Glib::ustring::compose("<small>%1 %2</small>", _("Using tesseract"), TESSERACT_VERSION_STR));
+	ui.setupUi();
+	ui.windowMain->set_icon_name("gimagereader");
+	ui.dialogAbout->set_version(Glib::ustring::compose("%1 (%2)", PACKAGE_VERSION, Glib::ustring(PACKAGE_REVISION).substr(0, 7)));
+	ui.labelAboutTesseractver->set_markup(Glib::ustring::compose("<small>%1 %2</small>", _("Using tesseract"), TESSERACT_VERSION_STR));
 
 	m_config = new Config;
-	m_acquirer = new Acquirer;
-	m_displayer = new Displayer;
-	m_recognizer = new Recognizer;
-	m_sourceManager = new SourceManager;
+	m_acquirer = new Acquirer(ui);
+	m_displayer = new Displayer(ui);
+	m_recognizer = new Recognizer(ui);
+	m_sourceManager = new SourceManager(ui);
 
-	m_idlegroup.push_back(getWidget("button:main.zoomin"));
-	m_idlegroup.push_back(getWidget("button:main.zoomout"));
-	m_idlegroup.push_back(getWidget("button:main.zoomnormsize"));
-	m_idlegroup.push_back(getWidget("button:main.zoomfit"));
-	m_idlegroup.push_back(getWidget("button:main.recognize"));
-	m_idlegroup.push_back(getWidget("menubutton:display.rotate.mode"));
-	m_idlegroup.push_back(getWidget("spin:display.rotate"));
-	m_idlegroup.push_back(getWidget("spin:display.page"));
-	m_idlegroup.push_back(getWidget("spin:display.brightness"));
-	m_idlegroup.push_back(getWidget("spin:display.contrast"));
-	m_idlegroup.push_back(getWidget("spin:display.resolution"));
-	m_idlegroup.push_back(getWidget("button:main.autolayout"));
-	m_idlegroup.push_back(getWidget("menubutton:main.languages"));
+	m_idlegroup.push_back(ui.buttonZoomin);
+	m_idlegroup.push_back(ui.buttonZoomout);
+	m_idlegroup.push_back(ui.buttonZoomnorm);
+	m_idlegroup.push_back(ui.buttonZoomfit);
+	m_idlegroup.push_back(ui.buttonRecognize);
+	m_idlegroup.push_back(ui.menubuttonRotateMode);
+	m_idlegroup.push_back(ui.spinRotate);
+	m_idlegroup.push_back(ui.spinPage);
+	m_idlegroup.push_back(ui.spinBrightness);
+	m_idlegroup.push_back(ui.spinContrast);
+	m_idlegroup.push_back(ui.spinResolution);
+	m_idlegroup.push_back(ui.buttonAutolayout);
+	m_idlegroup.push_back(ui.menubuttonLanguages);
 
-#if GTKMM_CHECK_VERSION(3,12,0)
-	getWidget("image:main.controls").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/controls.png"));
-	getWidget("image:display.rotate.mode").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/rotate_pages.png"));
-	getWidget("image:display.rotate.all").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/rotate_pages.png"));
-	getWidget("image:display.rotate.current").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/rotate_page.png"));
-	getWidget("image:main.autolayout").as<Gtk::Image>()->set(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/autolayout.png"));
-#else
-	getWidget("image:main.controls").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/controls.png", 0)));
-	getWidget("image:display.rotate.mode").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/rotate_pages.png", 0)));
-	getWidget("image:display.rotate.all").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/rotate_pages.png", 0)));
-	getWidget("image:display.rotate.current").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/rotate_page.png", 0)));
-	getWidget("image:main.autolayout").as<Gtk::Image>()->set(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/autolayout.png", 0)));
-#endif
-
-
-	CONNECT(m_window, delete_event, [this](GdkEventAny* ev) {
+	CONNECT(ui.windowMain, delete_event, [this](GdkEventAny* ev) {
 		return closeEvent(ev);
 	});
-	CONNECTS(getWidget("button:main.controls").as<Gtk::ToggleButton>(), toggled,
-	[this](Gtk::ToggleButton* b) {
-		getWidget("toolbar:display").as<Gtk::Toolbar>()->set_visible(b->get_active());
-	});
+	CONNECT(ui.buttonControls, toggled, [this] { ui.toolbarDisplay->set_visible(ui.buttonControls->get_active()); });
 	CONNECT(m_acquirer, scanPageAvailable, [this](const std::string& filename) {
 		m_sourceManager->addSources({Gio::File::create_for_path(filename)});
 	});
 	CONNECT(m_sourceManager, sourceChanged, [this] { onSourceChanged(); });
-	CONNECT(m_outputPaneToggleButton, toggled, [this] { m_outputEditor->getUI()->set_visible(m_outputPaneToggleButton->get_active()); });
-	m_connection_setOCRMode = CONNECT(m_ocrModeCombo, changed, [this] { setOCRMode(m_ocrModeCombo->get_active_row_number()); });
-	CONNECT(m_recognizer, languageChanged, [this] (const Config::Lang& /*lang*/ ) {
-		languageChanged();
+	CONNECT(ui.buttonOutputpane, toggled, [this] { if(m_outputEditor) m_outputEditor->getUI()->set_visible(ui.buttonOutputpane->get_active()); });
+	m_connection_setOCRMode = CONNECT(ui.comboOcrmode, changed, [this] { setOCRMode(ui.comboOcrmode->get_active_row_number()); });
+	CONNECT(m_recognizer, languageChanged, [this] (const Config::Lang& lang) {
+		languageChanged(lang);
 	});
-	CONNECTS(getWidget("combo:config.settings.paneorient").as<Gtk::ComboBoxText>(), changed, [this](Gtk::ComboBoxText* combo) {
-		getWidget("paned:output").as<Gtk::Paned>()->set_orientation(static_cast<Gtk::Orientation>(!combo->get_active_row_number()));
+	CONNECT(ConfigSettings::get<ComboSetting>("outputorient"), changed, [this] {
+		ui.panedOutput->set_orientation(static_cast<Gtk::Orientation>(!ConfigSettings::get<ComboSetting>("outputorient")->getValue()));
 	});
-	CONNECT(getWidget("button:main.progress.cancel").as<Gtk::Button>(), clicked, [this] { progressCancel(); });
+	CONNECT(ui.buttonProgressCancel, clicked, [this] { progressCancel(); });
+	CONNECT(ui.buttonAutolayout, clicked, [this] { m_displayer->autodetectOCRAreas(); });
 
-
-	m_config->addSetting(new VarSetting<std::vector<int>>("wingeom"));
-	m_config->addSetting(new SwitchSettingT<Gtk::ToggleButton>("showcontrols", m_builder("button:main.controls")));
-	m_config->addSetting(new ComboSetting("outputeditor", m_builder("combo:main.ocrmode")));
+	ADD_SETTING(VarSetting<std::vector<int>>("wingeom"));
+	ADD_SETTING(SwitchSettingT<Gtk::ToggleButton>("showcontrols", ui.buttonControls));
+	ADD_SETTING(ComboSetting("outputeditor", ui.comboOcrmode));
 
 	m_recognizer->updateLanguagesMenu();
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
-	const std::vector<int>& geom = m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->getValue();
+	const std::vector<int>& geom = ConfigSettings::get<VarSetting<std::vector<int>>>("wingeom")->getValue();
 	if(geom.size() == 4) {
-		m_window->resize(geom[2], geom[3]);
-		m_window->move(geom[0], geom[1]);
+		ui.windowMain->resize(geom[2], geom[3]);
+		ui.windowMain->move(geom[0], geom[1]);
 	}
-	getWidget("paned:output").as<Gtk::Paned>()->set_orientation(static_cast<Gtk::Orientation>(!getWidget("combo:config.settings.paneorient").as<Gtk::ComboBoxText>()->get_active_row_number()));
+	ui.panedOutput->set_orientation(static_cast<Gtk::Orientation>(!ConfigSettings::get<ComboSetting>("outputorient")->getValue()));
 #if ENABLE_VERSIONCHECK
-	if(m_config->getSetting<SwitchSetting>("updatecheck")->getValue()) {
+	if(ConfigSettings::get<SwitchSetting>("updatecheck")->getValue()) {
 		m_newVerThread = Glib::Threads::Thread::create([this] { getNewestVersion(); });
 	}
-#else
-	getWidget("check:config.settings.update")->hide();
 #endif
 }
 
@@ -224,8 +200,8 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::setMenuModel(const Glib::RefPtr<Gio::MenuModel> &menuModel) {
-	getWidget("menubutton:main.options").as<Gtk::MenuButton>()->set_menu_model(menuModel);
-	getWidget("menubutton:main.options").as<Gtk::MenuButton>()->set_visible(true);
+	ui.menubuttonOptions->set_menu_model(menuModel);
+	ui.menubuttonOptions->set_visible(true);
 }
 
 void MainWindow::openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files) {
@@ -233,17 +209,17 @@ void MainWindow::openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files) {
 }
 
 void MainWindow::setOutputPaneVisible(bool visible) {
-	m_outputPaneToggleButton->set_active(visible);
+	ui.buttonOutputpane->set_active(visible);
 }
 
 void MainWindow::pushState(State state, const Glib::ustring &msg) {
 	m_stateStack.push_back(state);
-	m_statusbar->push(msg);
+	ui.statusbar->push(msg);
 	setState(state);
 }
 
 void MainWindow::popState() {
-	m_statusbar->pop();
+	ui.statusbar->pop();
 	m_stateStack.pop_back();
 	setState(m_stateStack.back());
 }
@@ -254,37 +230,37 @@ void MainWindow::setState(State state) {
 	for(Gtk::Widget* w : m_idlegroup) {
 		w->set_sensitive(!isIdle);
 	}
-	getWidget("paned:output").as<Gtk::Box>()->set_sensitive(!isBusy);
-	m_headerbar->set_sensitive(!isBusy);
-	if(m_window->get_window()) {
-		m_window->get_window()->set_cursor(isBusy ? Gdk::Cursor::create(Gdk::WATCH) : Glib::RefPtr<Gdk::Cursor>());
+	ui.panedOutput->set_sensitive(!isBusy);
+	ui.headerbar->set_sensitive(!isBusy);
+	if(ui.windowMain->get_window()) {
+		ui.windowMain->get_window()->set_cursor(isBusy ? Gdk::Cursor::create(Gdk::WATCH) : Glib::RefPtr<Gdk::Cursor>());
 	}
 }
 
 void MainWindow::showProgress(ProgressMonitor* monitor, int updateInterval) {
 	m_progressMonitor = monitor;
 	m_connection_progressUpdate = Glib::signal_timeout().connect([this] { progressUpdate(); return true; }, updateInterval);
-	getWidget("progressbar:main.progress").as<Gtk::ProgressBar>()->set_fraction(0);
-	getWidget("button:main.progress.cancel").as<Gtk::Button>()->set_sensitive(true);
-	getWidget("box:main.progress").as<Gtk::Box>()->set_visible(true);
+	ui.progressbarProgress->set_fraction(0);
+	ui.buttonProgressCancel->set_sensitive(true);
+	ui.boxProgress->set_visible(true);
 }
 
 void MainWindow::hideProgress() {
-	getWidget("box:main.progress").as<Gtk::Box>()->set_visible(false);
+	ui.boxProgress->set_visible(false);
 	m_connection_progressUpdate.disconnect();
 	m_progressMonitor = nullptr;
 }
 
 void MainWindow::progressCancel() {
 	if(m_progressMonitor) {
-		getWidget("button:main.progress.cancel").as<Gtk::Button>()->set_sensitive(true);
+		ui.buttonProgressCancel->set_sensitive(true);
 		m_progressMonitor->cancel();
 	}
 }
 
 void MainWindow::progressUpdate() {
 	if(m_progressMonitor) {
-		getWidget("progressbar:main.progress").as<Gtk::ProgressBar>()->set_fraction(m_progressMonitor->getProgress() / 100.);
+		ui.progressbarProgress->set_fraction(m_progressMonitor->getProgress() / 100.);
 	}
 }
 
@@ -293,32 +269,34 @@ bool MainWindow::closeEvent(GdkEventAny*) {
 	if(!m_outputEditor->clear()) {
 		return true;
 	}
-	if((m_window->get_window()->get_state() & Gdk::WINDOW_STATE_MAXIMIZED) == 0) {
+	if((ui.windowMain->get_window()->get_state() & Gdk::WINDOW_STATE_MAXIMIZED) == 0) {
 		std::vector<int> geom(4);
-		m_window->get_position(geom[0], geom[1]);
-		m_window->get_size(geom[2], geom[3]);
-		m_config->getSetting<VarSetting<std::vector<int>>>("wingeom")->setValue(geom);
+		ui.windowMain->get_position(geom[0], geom[1]);
+		ui.windowMain->get_size(geom[2], geom[3]);
+		ConfigSettings::get<VarSetting<std::vector<int>>>("wingeom")->setValue(geom);
 	}
-	m_window->hide();
+	ui.windowMain->hide();
 	return false;
 }
 
 void MainWindow::onSourceChanged() {
-	if(m_stateStack.back() == State::Normal) {
-		popState();
-	}
 	std::vector<Source*> sources = m_sourceManager->getSelectedSources();
 	if(m_displayer->setSources(sources)) {
-		m_headerbar->set_subtitle(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources"));
-		pushState(State::Normal, _("Ready"));
+		ui.headerbar->set_subtitle(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources"));
+		if(m_stateStack.back() == State::Idle) {
+			pushState(State::Normal, _("Ready"));
+		}
 	} else {
-		m_headerbar->set_subtitle("");
+		if(m_stateStack.back() == State::Normal) {
+			popState();
+		}
+		ui.headerbar->set_subtitle("");
 	}
 }
 
 void MainWindow::showAbout() {
-	m_aboutdialog->run();
-	m_aboutdialog->hide();
+	ui.dialogAbout->run();
+	ui.dialogAbout->hide();
 }
 
 void MainWindow::showHelp(const std::string& chapter) {
@@ -331,9 +309,9 @@ void MainWindow::showHelp(const std::string& chapter) {
 	std::string manualDir = MANUAL_DIR;
 	std::string language = Glib::getenv("LANG").substr(0, 2);
 #endif
-	std::string manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir, Glib::ustring::compose("manual-%1.html", language)));
+	std::string manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir, Glib::ustring::compose("manual-%1.html", language)), Glib::get_current_dir());
 	if(!Glib::file_test(manualFile, Glib::FILE_TEST_EXISTS)) {
-		manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir,"manual.html"));
+		manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir,"manual.html"), Glib::get_current_dir());
 	}
 	Utils::openUri(Glib::filename_to_uri(manualFile) + chapter);
 }
@@ -347,16 +325,14 @@ void MainWindow::setOCRMode(int idx) {
 	if(m_outputEditor && !m_outputEditor->clear()) {
 		m_connection_setOCRMode.block(true);
 		if(dynamic_cast<OutputEditorText*>(m_outputEditor)) {
-			m_ocrModeCombo->set_active(0);
+			ui.comboOcrmode->set_active(0);
 		} else if(dynamic_cast<OutputEditorHOCR*>(m_outputEditor)) {
-			m_ocrModeCombo->set_active(1);
+			ui.comboOcrmode->set_active(1);
 		}
 		m_connection_setOCRMode.block(false);
 	} else {
 		if(m_outputEditor) {
-			m_connection_setOutputEditorLanguage.disconnect();
-			m_connection_setOutputEditorVisibility.disconnect();
-			getWidget("paned:output").as<Gtk::Paned>()->remove(*m_outputEditor->getUI());
+			ui.panedOutput->remove(*m_outputEditor->getUI());
 			delete m_outputEditor;
 		}
 		delete m_displayerTool;
@@ -367,19 +343,20 @@ void MainWindow::setOCRMode(int idx) {
 			m_displayerTool = new DisplayerToolHOCR(m_displayer);
 			m_outputEditor = new OutputEditorHOCR(static_cast<DisplayerToolHOCR*>(m_displayerTool));
 		}
+		ui.buttonAutolayout->set_visible(m_displayerTool->allowAutodetectOCRAreas());
 		m_displayer->setTool(m_displayerTool);
-		m_connection_setOutputEditorLanguage = CONNECT(m_recognizer, languageChanged, [this](const Config::Lang& lang) {
-			m_outputEditor->setLanguage(lang);
-		});
 		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
-		m_connection_setOutputEditorVisibility = CONNECT(m_outputPaneToggleButton, toggled, [this] { m_outputEditor->onVisibilityChanged(m_outputPaneToggleButton->get_active()); });
-		getWidget("paned:output").as<Gtk::Paned>()->pack2(*m_outputEditor->getUI(), true, false);
-		m_outputEditor->getUI()->set_visible(m_outputPaneToggleButton->get_active());
+		ui.panedOutput->pack2(*m_outputEditor->getUI(), true, false);
+		m_outputEditor->getUI()->set_visible(ui.buttonOutputpane->get_active());
 	}
 }
 
 void MainWindow::redetectLanguages() {
 	m_recognizer->updateLanguagesMenu();
+}
+
+void MainWindow::manageLanguages() {
+	TessdataManager::exec();
 }
 
 void MainWindow::addNotification(const Glib::ustring &title, const Glib::ustring &message, const std::vector<NotificationAction> &actions, Notification* handle) {
@@ -408,7 +385,7 @@ void MainWindow::addNotification(const Glib::ustring &title, const Glib::ustring
 		btn->get_child()->override_color(Gdk::RGBA("#0000FF"), Gtk::STATE_FLAG_NORMAL);
 	}
 	frame->show_all();
-	getWidget("box:main").as<Gtk::Box>()->pack_end(*frame, false, true);
+	ui.boxMain->pack_end(*frame, false, true);
 	if(handle != nullptr) {
 		*handle = frame;
 	}
@@ -421,7 +398,7 @@ void MainWindow::hideNotification(Notification handle) {
 		if(h) {
 			*h = nullptr;
 		}
-		getWidget("box:main").as<Gtk::Box>()->remove(*frame);
+		ui.boxMain->remove(*frame);
 		delete frame;
 	}
 }
@@ -451,18 +428,20 @@ void MainWindow::checkVersion(const Glib::ustring& newver) {
 
 	if(newver.compare(curver) > 0) {
 		addNotification(_("New version"), Glib::ustring::compose(_("gImageReader %1 is available"), newver), {
-			{_("Download"), [=]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(m_window)->gobj(), DOWNLOADURL, GDK_CURRENT_TIME, 0); return false; }},
-			{_("Changelog"), [=]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(m_window)->gobj(), CHANGELOGURL, GDK_CURRENT_TIME, 0); return false; }},
-			{_("Don't notify again"), [this]{ m_config->getSetting<SwitchSetting>("updatecheck")->setValue(false); return true; }}
+			{_("Download"), [=]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(ui.windowMain)->gobj(), DOWNLOADURL, GDK_CURRENT_TIME, 0); return false; }},
+			{_("Changelog"), [=]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(ui.windowMain)->gobj(), CHANGELOGURL, GDK_CURRENT_TIME, 0); return false; }},
+			{_("Don't notify again"), [this]{ ConfigSettings::get<SwitchSetting>("updatecheck")->setValue(false); return true; }}
 		});
 	}
 }
 #endif // ENABLE_VERSIONCHECK
 
-void MainWindow::languageChanged() {
+void MainWindow::languageChanged(const Config::Lang& lang) {
+	if(m_outputEditor) {
+		m_outputEditor->setLanguage(lang);
+	}
 	hideNotification(m_notifierHandle);
 	m_notifierHandle = nullptr;
-	const Config::Lang& lang =  m_recognizer->getSelectedLanguage();
 	std::string code = lang.code;
 	if(code.empty()) {
 		return;
@@ -471,8 +450,8 @@ void MainWindow::languageChanged() {
 	try {
 		checker.set_language(code);
 	} catch(const GtkSpell::Error& /*e*/) {
-		if(getConfig()->getSetting<SwitchSetting>("dictinstall")->getValue()) {
-			NotificationAction actionDontShowAgain = {_("Don't show again"), [this]{ m_config->getSetting<SwitchSetting>("dictinstall")->setValue(false); return true; }};
+		if(ConfigSettings::get<SwitchSetting>("dictinstall")->getValue()) {
+			NotificationAction actionDontShowAgain = {_("Don't show again"), [this]{ ConfigSettings::get<SwitchSetting>("dictinstall")->setValue(false); return true; }};
 			NotificationAction actionInstall = NotificationAction{_("Install"), [this,lang]{ dictionaryAutoinstall(lang.code); return false; }};
 #ifdef G_OS_UNIX
 			if(getConfig()->useSystemDataLocations()) {
