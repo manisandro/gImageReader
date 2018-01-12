@@ -548,16 +548,13 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 			classes.insert(item->itemClass());
 			rows.append(indices[i].row());
 		}
-		qSort(rows);
-		ok &= classes.size() == 1 && *classes.begin() != "ocr_page";
-		ok &= (rows.last() - rows.first()) == nIndices - 1;
+		ok &= classes.size() == 1;
 		if(ok) {
 			QMenu menu;
 			qSort(rows);
 			bool consecutive = (rows.last() - rows.first()) == nIndices - 1;
-			const HOCRItem* firstItem = m_document->itemAtIndex(indices.first());
-			graphics |= !firstItem || firstItem->itemClass() == "ocr_graphic";
-			bool pages = firstItem && firstItem->itemClass() == "ocr_page";
+			bool graphics = firstItem->itemClass() == "ocr_graphic";
+			bool pages = firstItem->itemClass() == "ocr_page";
 
 			QAction* mergeAction = nullptr;
 			QAction* swapAction = nullptr;
