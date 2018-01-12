@@ -76,47 +76,54 @@ bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& na
 		recursiveDataChanged(index, {Qt::DisplayRole}, {"ocrx_word"});
 	}
 	emit itemAttributeChanged(index, name, value);
+	if(name == "title:bbox") {
+		recomputeParentBBoxes(item);
+	}
 	return true;
 }
 
-QModelIndex HOCRDocument::swapItems(const QModelIndex& parent, int firstRow, int secondRow, bool pages)
-{
-	if(parent.isValid() && parent.internalPointer()) {
-		if(secondRow - firstRow <= 0) {
-			std::swap(firstRow, secondRow); // necessary for following indexing changes
-		}
-		HOCRItem* firstItem = static_cast<HOCRItem*>(parent.child(firstRow, 0).internalPointer());
-		HOCRItem* secondItem = static_cast<HOCRItem*>(parent.child(secondRow, 0).internalPointer());
-		HOCRItem* parentItem = static_cast<HOCRItem*>(parent.internalPointer());
-		beginRemoveRows(parent, secondRow, secondRow);
-		takeItem(secondItem);
+// Might be more logical to accept oldParent and oldRow as parameters rather than itemIndex
+// (since we need them anyway), if all our callers are likely to know them. Swap does; drag&drop might not.
+QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelIndex& newParent, int newRow, bool page) {
+	HOCRItem* item = mutableItemAtIndex(itemIndex);
+	if(!item) {
+		return QModelIndex();
+	}
+	int oldRow = itemIndex.row();
+	QModelIndex oldParent = itemIndex.parent();
+	HOCRItem* parentItem = mutableItemAtIndex(newParent);
+	bool decr = false;
+	if(decr = (oldParent == newParent && oldRow < newRow)) {
+		--newRow;
+	}
+	if(parentItem) {
+		beginRemoveRows(oldParent, oldRow, oldRow);
+		takeItem(item);
 		endRemoveRows();
-		beginInsertRows(parent, firstRow, firstRow);
-		parentItem->insertChild(secondItem, firstRow);
+		beginInsertRows(newParent, newRow, newRow);
+		parentItem->insertChild(item, newRow);
 		endInsertRows();
-		beginRemoveRows(parent, firstRow+1, firstRow+1);
-		takeItem(firstItem);
+	} else if(page) {
+		beginRemoveRows(QModelIndex(), oldRow, oldRow);
+		HOCRPage* pageItem = m_pages.takeAt(oldRow);
 		endRemoveRows();
-		beginInsertRows(parent, secondRow, secondRow);
-		parentItem->insertChild(firstItem, secondRow);
+		beginInsertRows(QModelIndex(), newRow, newRow);
+		m_pages.insert(newRow, pageItem);
 		endInsertRows();
-	} else if(pages) {
-		HOCRPage* firstPage = m_pages.at(firstRow);
-		HOCRPage* secondPage = m_pages.at(secondRow);
-		int firstNr = firstPage->pageNr();
-		int secondNr = secondPage->pageNr();
-		QModelIndex firstChild = index(firstRow, 0);
-		QModelIndex secondChild = index(secondRow, 0);
-		emit layoutAboutToBeChanged({firstChild});
-		m_pages.replace(firstRow, secondPage);
-		secondPage->changeNr(firstNr);
-		emit layoutChanged({firstChild});
-		emit layoutAboutToBeChanged({secondChild});
-		m_pages.replace(secondRow, firstPage);
-		firstPage->changeNr(secondNr);
-		emit layoutChanged({secondChild});
+		emit dataChanged(index(std::min(oldRow, newRow), 0), index(std::max(oldRow, (decr ? ++newRow : newRow)), 0), {Qt::DisplayRole});
 	} else {
 		return QModelIndex();
+	}
+	return itemIndex;
+}
+
+QModelIndex HOCRDocument::swapItems(const QModelIndex& parent, int firstRow, int secondRow, bool pages) {
+	if(!pages) {
+		moveItem(parent.child(firstRow, 0), parent, secondRow, false);
+		moveItem(parent.child(secondRow, 0), parent, firstRow, false);
+	} else {
+		moveItem(index(firstRow, 0), QModelIndex(), secondRow, true);
+		moveItem(index(secondRow, 0), QModelIndex(), firstRow, true);
 	}
 	return index(firstRow, 0, parent);
 }
@@ -589,8 +596,7 @@ void HOCRItem::removeChild(HOCRItem *child) {
 	}
 }
 
-void HOCRItem::takeChild(HOCRItem* child)
-{
+void HOCRItem::takeChild(HOCRItem* child) {
 	m_domElement.removeChild(child->m_domElement);
 	m_childItems.takeAt(m_childItems.indexOf(child));
 }
