@@ -337,6 +337,7 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	connect(ui.toolButtonLandscape, SIGNAL(toggled(bool)), this, SLOT(paperSizeChanged()));
 	connect(ui.lineEditPaperWidth, SIGNAL(textChanged(QString)), this, SLOT(updateValid()));
 	connect(ui.lineEditPaperHeight, SIGNAL(textChanged(QString)), this, SLOT(updateValid()));
+	connect(ui.pushButtonImportAddInfo, SIGNAL(clicked(bool)), this, SLOT(addInfoClicked()));
 
 	ADD_SETTING(ComboSetting("pdfexportmode", ui.comboBoxOutputMode));
 	ADD_SETTING(SpinSetting("pdfimagecompressionquality", ui.spinBoxCompressionQuality, 90));
@@ -359,11 +360,8 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	ADD_SETTING(ComboSetting("pdfexportpapersizeunit", ui.comboBoxPaperSize));
 	ADD_SETTING(SwitchSetting("pdfexportpaperlandscape", ui.toolButtonLandscape));
 	ADD_SETTING(LineEditSetting("pdfexportinfoauthor", ui.lineEditAuthor, PACKAGE_NAME));
-	ADD_SETTING(LineEditSetting("pdfexportinfotitle", ui.lineEditTitle));
-	ADD_SETTING(LineEditSetting("pdfexportinfosubject", ui.lineEditSubject));
 	ADD_SETTING(LineEditSetting("pdfexportinfoproducer", ui.lineEditProducer, PACKAGE_NAME));
 	ADD_SETTING(LineEditSetting("pdfexportinfocreator", ui.lineEditCreator, PACKAGE_NAME));
-	ADD_SETTING(LineEditSetting("pdfexportinfokeywords", ui.lineEditKeywords));
 
 #ifndef MAKE_VERSION
 #define MAKE_VERSION(...) 0
@@ -774,4 +772,17 @@ void HOCRPdfExporter::updateValid() {
 		}
 	}
 	ui.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
+}
+
+void HOCRPdfExporter::addInfoClicked() {
+	QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+	if(!sources.isEmpty()) {
+		Source* source = sources.first();
+		ui.lineEditAuthor->setText(source->author);
+		ui.lineEditCreator->setText(source->creator);
+		ui.lineEditKeywords->setText(source->keywords);
+		ui.lineEditTitle->setText(source->title);
+		ui.lineEditSubject->setText(source->subject);
+		ui.lineEditProducer->setText(source->producer);
+	}
 }
