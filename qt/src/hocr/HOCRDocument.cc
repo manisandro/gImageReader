@@ -89,6 +89,13 @@ QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelInd
 	if(!item) {
 		return QModelIndex();
 	}
+	QModelIndex ancestor = newParent;
+	while(ancestor.isValid()) {
+		if(ancestor == itemIndex) {
+			return QModelIndex();
+		}
+		ancestor = ancestor.parent();
+	}
 	int oldRow = itemIndex.row();
 	QModelIndex oldParent = itemIndex.parent();
 	HOCRItem* parentItem = mutableItemAtIndex(newParent);
