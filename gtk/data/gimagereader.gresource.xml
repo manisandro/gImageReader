@@ -1,30 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
 	<gresource prefix="/org/gnome/gimagereader">
-		<file preprocess="xml-stripblanks" compressed="true">crashhandler.ui</file>
-		<file preprocess="xml-stripblanks" compressed="true">gimagereader.ui</file>
+		<file preprocess="xml-stripblanks" compressed="true">CrashHandler.ui</file>
+		<file preprocess="xml-stripblanks" compressed="true">MainWindow.ui</file>
 		<file preprocess="xml-stripblanks" compressed="true">appmenu.ui</file>
-		<file preprocess="xml-stripblanks" compressed="true">editor_text.ui</file>
-		<file preprocess="xml-stripblanks" compressed="true">editor_hocr.ui</file>
-		<file preprocess="to-pixdata" alias="angle.png">../../data/icons/angle.png</file>
-		<file preprocess="to-pixdata" alias="autolayout.png">../../data/icons/autolayout.png</file>
-		<file preprocess="to-pixdata" alias="brightness.png">../../data/icons/brightness.png</file>
-		<file preprocess="to-pixdata" alias="contrast.png">../../data/icons/contrast.png</file>
-		<file preprocess="to-pixdata" alias="controls.png">../../data/icons/controls.png</file>
-		<file preprocess="to-pixdata" alias="filtering.png">../../data/icons/filtering.png</file>
-		<file preprocess="to-pixdata" alias="ins_append.png">../../data/icons/ins_append.png</file>
-		<file preprocess="to-pixdata" alias="ins_cursor.png">../../data/icons/ins_cursor.png</file>
-		<file preprocess="to-pixdata" alias="ins_replace.png">../../data/icons/ins_replace.png</file>
-		<file preprocess="to-pixdata" alias="page.png">../../data/icons/page.png</file>
-		<file preprocess="to-pixdata" alias="resolution.png">../../data/icons/resolution.png</file>
-		<file preprocess="to-pixdata" alias="stripcrlf.png">../../data/icons/stripcrlf.png</file>
-		<file preprocess="to-pixdata" alias="item_block.png">../../data/icons/item_block.png</file>
-		<file preprocess="to-pixdata" alias="item_halftone.png">../../data/icons/item_halftone.png</file>
-		<file preprocess="to-pixdata" alias="item_line.png">../../data/icons/item_line.png</file>
-		<file preprocess="to-pixdata" alias="item_page.png">../../data/icons/item_page.png</file>
-		<file preprocess="to-pixdata" alias="item_par.png">../../data/icons/item_par.png</file>
-		<file preprocess="to-pixdata" alias="item_word.png">../../data/icons/item_word.png</file>
-    <file preprocess="to-pixdata" alias="rotate_page.png">../../data/icons/rotate_page.png</file>
-    <file preprocess="to-pixdata" alias="rotate_pages.png">../../data/icons/rotate_pages.png</file>
+		<file preprocess="xml-stripblanks" compressed="true">ConfigDialog.ui</file>
+		<file preprocess="xml-stripblanks" compressed="true">TessdataManager.ui</file>
+		<file preprocess="xml-stripblanks" compressed="true">OutputEditorText.ui</file>
+		<file preprocess="xml-stripblanks" compressed="true">OutputEditorHOCR.ui</file>
+		<file preprocess="xml-stripblanks" compressed="true">PdfExportDialog.ui</file>
+		<file preprocess="xml-stripblanks" compressed="true">SearchReplaceFrame.ui</file>
+		<file preprocess="xml-stripblanks" compressed="true">SubstitutionsManager.ui</file>
+        <file preprocess="xml-stripblanks" compressed="true">SelectionMenu.ui</file>
+		<file alias="angle.png">../../data/icons/angle.png</file>
+		<file alias="autolayout.png">../../data/icons/autolayout.png</file>
+		<file alias="brightness.png">../../data/icons/brightness.png</file>
+		<file alias="contrast.png">../../data/icons/contrast.png</file>
+		<file alias="controls.png">../../data/icons/controls.png</file>
+		<file alias="filtering.png">../../data/icons/filtering.png</file>
+		<file alias="ins_append.png">../../data/icons/ins_append.png</file>
+		<file alias="ins_cursor.png">../../data/icons/ins_cursor.png</file>
+		<file alias="ins_replace.png">../../data/icons/ins_replace.png</file>
+		<file alias="page.png">../../data/icons/page.png</file>
+		<file alias="resolution.png">../../data/icons/resolution.png</file>
+		<file alias="stripcrlf.png">../../data/icons/stripcrlf.png</file>
+		<file alias="item_block.png">../../data/icons/item_block.png</file>
+		<file alias="item_halftone.png">../../data/icons/item_halftone.png</file>
+		<file alias="item_line.png">../../data/icons/item_line.png</file>
+		<file alias="item_page.png">../../data/icons/item_page.png</file>
+		<file alias="item_par.png">../../data/icons/item_par.png</file>
+		<file alias="item_word.png">../../data/icons/item_word.png</file>
+		<file alias="rotate_page.png">../../data/icons/rotate_page.png</file>
+		<file alias="rotate_pages.png">../../data/icons/rotate_pages.png</file>
+		<file alias="wconf.png">../../data/icons/wconf.png</file>
+		<file alias="landscape.png">../../data/icons/landscape.png</file>
+		<file alias="portrait.png">../../data/icons/portrait.png</file>
+		<file alias="collapse.png">../../data/icons/collapse.png</file>
+		<file alias="expand.png">../../data/icons/expand.png</file>
 	</gresource>
 </gresources> 

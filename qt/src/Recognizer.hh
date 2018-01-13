@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Recognizer.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -54,6 +54,14 @@ private:
 	struct ProgressMonitor;
 	enum class PageSelection { Prompt, Current, Multiple };
 	enum class PageArea { EntirePage, Autodetect };
+	struct PageData {
+		bool success;
+		QString filename;
+		int page;
+		double angle;
+		int resolution;
+		QList<QImage> ocrAreas;
+	};
 
 	const UI_MainWindow& ui;
 	QMenu* m_menuPages = nullptr;
@@ -81,8 +89,7 @@ private slots:
 	void recognizeMultiplePages();
 	void setLanguage();
 	void setMultiLanguage();
-	bool setPage(int page, bool autodetectLayout);
-	void manageInstalledLanguages();
+	PageData setPage(int page, bool autodetectLayout);
 };
 
 #endif // RECOGNIZER_HPP

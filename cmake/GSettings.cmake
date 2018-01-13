@@ -25,6 +25,9 @@ macro(add_schema SCHEMA_NAME)
 
     # Run the validator and error if it fails
     execute_process (COMMAND ${PKG_CONFIG_EXECUTABLE} gio-2.0 --variable glib_compile_schemas  OUTPUT_VARIABLE _glib_comple_schemas OUTPUT_STRIP_TRAILING_WHITESPACE)
+    if("${_glib_comple_schemas}" STREQUAL "")
+        MESSAGE(FATAL_ERROR "Could not find glib_compile_schemas")
+    endif()
     execute_process (COMMAND ${_glib_comple_schemas} --dry-run --schema-file=${CMAKE_CURRENT_SOURCE_DIR}/${SCHEMA_NAME} ERROR_VARIABLE _schemas_invalid OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     if (_schemas_invalid)

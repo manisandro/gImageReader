@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Config.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -25,7 +25,7 @@
 #include <vector>
 
 #include "common.hh"
-#include "ConfigSettings.hh"
+#include "ui_ConfigDialog.hh"
 
 class Config {
 public:
@@ -36,29 +36,6 @@ public:
 	};
 
 	Config();
-	~Config();
-
-	void addSetting(AbstractSetting* setting) {
-		auto it = m_settings.find(setting->key());
-		if(it != m_settings.end()) {
-			delete it->second;
-			it->second = setting;
-		} else {
-			m_settings.insert(std::make_pair(setting->key(), setting));
-		}
-	}
-	template<class T>
-	T* getSetting(const Glib::ustring& key) const {
-		auto it = m_settings.find(key);
-		return it == m_settings.end() ? nullptr : static_cast<T*>(it->second);
-	}
-	void removeSetting(const Glib::ustring& key) {
-		auto it = m_settings.find(key);
-		if(it != m_settings.end()) {
-			delete it->second;
-			m_settings.erase(it);
-		}
-	}
 
 	bool searchLangSpec(Lang& lang) const;
 	std::vector<Glib::ustring> searchLangCultures(const Glib::ustring& code) const;
@@ -86,21 +63,10 @@ private:
 	static const std::vector<Lang> LANGUAGES;
 	static const std::multimap<Glib::ustring,Glib::ustring> LANGUAGE_CULTURES ;
 
-	Gtk::Dialog* m_dialog;
-	Gtk::Box* m_addLangBox;
-	Gtk::Entry* m_addLangPrefix;
-	Gtk::Entry* m_addLangName;
-	Gtk::Entry* m_addLangCode;
-	Gtk::ButtonBox* m_editLangBox;
-	Gtk::Button* m_addLangButton;
-	Gtk::Button* m_addLangButtonOk;
-	Gtk::Button* m_removeLangButton;
-	Gtk::TreeView* m_predefLangView;
-	Gtk::TreeView* m_customLangView;
-	Gtk::Button* m_dialogOkButton;
+	Ui::ConfigDialog ui;
+	ClassData m_classdata;
 
 	LangViewColumns m_langViewCols;
-	std::map<Glib::ustring,AbstractSetting*> m_settings;
 
 	static std::multimap<Glib::ustring,Glib::ustring> buildLanguageCultureTable();
 

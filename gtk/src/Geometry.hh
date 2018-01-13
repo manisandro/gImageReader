@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Geometry.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -65,18 +65,37 @@ public:
 	double x, y;
 	double width, height;
 
-	Rectangle(double _x = 0., double _y = 0., double _width = 0., double _height = 0.)
+	Rectangle(double _x = 0., double _y = 0., double _width = -1., double _height = -1.)
 		: x(_x), y(_y), width(_width), height(_height) {}
-	Rectangle(const Point& p1, const Point& p2)
-		: x(std::min(p1.x, p2.x)), y(std::min(p1.y, p2.y)),
-		  width(std::abs(p2.x - p1.x)), height(std::abs(p2.y - p1.y)) {}
+	Rectangle(const Point& p1, const Point& p2) {
+		setCoords(p1.x, p1.y, p2.x, p2.y);
+	}
+	void setCoords(double x1, double y1, double x2, double y2) {
+		x = std::min(x1, x2);
+		y = std::min(y1, y2);
+		width = std::abs(x2 - x1);
+		height = std::abs(y2 - y1);
+	}
 	bool contains(const Point& p) const {
+		if(isEmpty()) {
+			return false;
+		}
 		return p.x >= x && p.x <= x + width && p.y >= y && p.y <= y + height;
 	}
 	bool overlaps(const Rectangle& r) const {
+		if(isEmpty() || r.isEmpty()) {
+			return false;
+		}
 		return x < r.x + r.width && x + width > r.x && y < r.y + r.height && y + height > r.y;
 	}
 	Rectangle unite(const Rectangle& r) const {
+		if(isEmpty() && r.isEmpty()) {
+			return Rectangle();
+		} else if(isEmpty()) {
+			return r;
+		} else if(r.isEmpty()) {
+			return *this;
+		}
 		double _x = std::min(x, r.x);
 		double _y = std::min(y, r.y);
 		double _w = std::max(x + width, r.x + r.width) - _x;
@@ -85,6 +104,9 @@ public:
 	}
 	Rectangle translate(double dx, double dy) const {
 		return Rectangle(x + dx, y + dy, width, height);
+	}
+	bool isEmpty() const {
+		return width < 0. || height < 0.;
 	}
 };
 

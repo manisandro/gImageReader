@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * ConfigSettings.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -18,6 +18,22 @@
  */
 
 #include "ConfigSettings.hh"
+
+
+QMap<QString,AbstractSetting*> ConfigSettings::s_settings;
+
+
+void ConfigSettings::add(AbstractSetting* setting) {
+	s_settings.insert(setting->key(), setting);
+}
+
+void ConfigSettings::remove(const QString& key) {
+	auto it = s_settings.find(key);
+	if(it != s_settings.end()) {
+		s_settings.erase(it);
+	}
+}
+
 
 TableSetting::TableSetting(const QString& key, QTableWidget* table)
 	: AbstractSetting(key), m_table(table) {

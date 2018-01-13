@@ -89,7 +89,7 @@ linkDep bin/gdb.exe
 
 linkDep bin/twaindsm.dll
 if [ -e "$installroot/bin/libenchant-2.dll" ]; then
-    linkDep lib/enchant-2/libenchant_myspell.dll
+    linkDep lib/enchant-2/enchant_hunspell.dll
 else
     linkDep lib/enchant/libenchant_myspell.dll
 fi
@@ -109,10 +109,10 @@ if [ "$iface" == "gtk" ]; then
             install -Dpm 0644 $file $installroot/$file
         done
     )
-    
+
     # Copy skeleton
     cp -R $win32dir/gtk_skel/* $installroot
-    
+
     # Install and compile schemas
     install -Dpm 0644 /usr/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml $installroot/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
     glib-compile-schemas $installroot/share/glib-2.0/schemas
@@ -147,6 +147,7 @@ elif [ "$iface" == "qt5" ]; then
     linkDep lib/qt5/plugins/imageformats/qwbmp.dll bin/imageformats
     linkDep lib/qt5/plugins/imageformats/qwebp.dll bin/imageformats
     linkDep lib/qt5/plugins/platforms/qwindows.dll bin/platforms
+    linkDep lib/qt5/plugins/styles/qwindowsvistastyle.dll bin/styles
 
     # Install locale files
     mkdir -p $installroot/share/qt5/translations/
@@ -175,6 +176,22 @@ install -Dpm 0644 /usr/share/xml/iso-codes/iso_3166.xml $installroot/share/xml/i
 # Remove unused files
 rm -rf $installroot/share/applications
 rm -rf $installroot/share/appdata
+
+# List installed files
+(
+    cd $installroot
+    find -type f -or -type l | sed 's|/|\\|g' | sed -E 's|^\.(.*)$|Delete "\$INSTDIR\1"|g' > $builddir/unfiles.nsi
+
+    # Ensure custom tessdata and spelling files are deleted
+    echo 'Delete "$INSTDIR\share\myspell\dicts\*"' >> $builddir/unfiles.nsi
+    echo 'Delete "$INSTDIR\share\tessdata\*"' >> $builddir/unfiles.nsi
+
+    # Ensure potential log files are deleted
+    echo 'Delete "$INSTDIR\gimagereader.log"' >> $builddir/unfiles.nsi
+    echo 'Delete "$INSTDIR\twain.log"' >> $builddir/unfiles.nsi
+
+    find -type d -depth | sed 's|/|\\|g' | sed -E 's|^\.(.*)$|RMDir "\$INSTDIR\1"|g' >> $builddir/unfiles.nsi
+)
 
 # Build the installer
 progName=$(grep -oP 'SET\(PACKAGE_NAME \K(\w+)(?=\))' $srcdir/CMakeLists.txt)

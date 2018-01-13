@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * SourceManager.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -30,7 +30,8 @@ class UI_MainWindow;
 
 
 struct Source {
-	Source(const QString& _path, const QString& _displayname, bool _isTemp = false);
+	Source(const QString& _path, const QString& _displayname, const QByteArray& _password, bool _isTemp = false)
+		: path(_path), displayname(_displayname), password(_password), isTemp(_isTemp) {}
 	QString path;
 	QString displayname;
 	QByteArray password;
@@ -70,6 +71,8 @@ private:
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;
 
+	bool querySourcePassword(const QString& filename, QByteArray& password) const;
+	bool checkTextLayer(const QString& filename) const;
 	void savePixmap(const QPixmap& pixmap, const QString& displayname);
 	void selectionChanged();
 	bool eventFilter(QObject* object, QEvent* event) override;

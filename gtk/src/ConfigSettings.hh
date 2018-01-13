@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * ConfigSettings.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -25,21 +25,52 @@
 #include <vector>
 
 #include "common.hh"
+#include "FontComboBox.hh"
 
-Glib::RefPtr<Gio::Settings> get_default_settings();
+class AbstractSetting;
 
-class AbstractSetting {
+#define ADD_SETTING(...) m_classdata.addItem(new __VA_ARGS__)
+
+class ConfigSettings {
+public:
+	template<class T>
+	static T* get(const Glib::ustring& key) {
+		auto it = s_settings.find(key);
+		return it == s_settings.end() ? nullptr : static_cast<T*>(it->second);
+	}
+
+private:
+	friend class AbstractSetting;
+	static std::map<Glib::ustring,AbstractSetting*> s_settings;
+
+	static void add(AbstractSetting* setting);
+	static void remove(const Glib::ustring& key);
+};
+
+
+class AbstractSetting : public ClassDataItem {
 public:
 	AbstractSetting(const Glib::ustring& key)
-		: m_key(key) {}
-	virtual ~AbstractSetting() {}
+		: m_key(key) {
+		ConfigSettings::add(this);
+	}
+	~AbstractSetting() {
+		ConfigSettings::remove(m_key);
+	}
 	const Glib::ustring& key() const {
 		return m_key;
 	}
 	virtual void serialize() {}
+	sigc::signal<void> signal_changed() {
+		return m_signal_changed;
+	}
 
 protected:
+	ClassData m_classdata;
 	Glib::ustring m_key;
+	sigc::signal<void> m_signal_changed;
+
+	static Glib::RefPtr<Gio::Settings> get_default_settings();
 };
 
 template <class T>
@@ -53,6 +84,7 @@ public:
 	}
 	void setValue(const T& value) {
 		get_default_settings()->set_value(m_key, Glib::Variant<T>::create(value));
+		m_signal_changed.emit();
 	}
 };
 
@@ -65,6 +97,7 @@ public:
 	}
 	void serialize() override {
 		get_default_settings()->set_string(m_key, m_widget->get_font_name());
+		m_signal_changed.emit();
 	}
 	Glib::ustring getValue() const {
 		return m_widget->get_font_name();
@@ -91,6 +124,7 @@ public:
 	}
 	void serialize() override {
 		get_default_settings()->set_boolean(m_key, m_widget->get_active());
+		m_signal_changed.emit();
 	}
 	void setValue(bool value) override {
 		m_widget->set_active(value);
@@ -114,10 +148,34 @@ public:
 	}
 	void serialize() override {
 		get_default_settings()->set_int(m_key, m_widget->get_active_row_number());
+		m_signal_changed.emit();
+	}
+	int getValue() const {
+		return m_widget->get_active_row_number();
 	}
 
 private:
 	Gtk::ComboBox* m_widget;
+};
+
+class FontComboSetting : public AbstractSetting {
+public:
+	FontComboSetting(const Glib::ustring& key, FontComboBox* widget)
+		: AbstractSetting(key), m_widget(widget) {
+		Glib::ustring font = get_default_settings()->get_string(m_key);
+		m_widget->set_active_font(font);
+		CONNECT(m_widget, changed, [this] { serialize(); });
+	}
+	void serialize() override {
+		get_default_settings()->set_string(m_key, m_widget->get_active_font());
+		m_signal_changed.emit();
+	}
+	Glib::ustring getValue() const {
+		return m_widget->get_active_font();
+	}
+
+private:
+	FontComboBox* m_widget;
 };
 
 class SpinSetting : public AbstractSetting {
@@ -130,6 +188,7 @@ public:
 	}
 	void serialize() override {
 		get_default_settings()->set_int(m_key, m_widget->get_value());
+		m_signal_changed.emit();
 	}
 
 private:
@@ -144,5 +203,22 @@ public:
 private:
 	Glib::RefPtr<Gtk::ListStore> m_liststore;
 };
+
+class EntrySetting : public AbstractSetting {
+public:
+	EntrySetting(const Glib::ustring& key, Gtk::Entry* entry)
+		: AbstractSetting(key), m_entry(entry) {
+		entry->set_text(get_default_settings()->get_string(m_key));
+		CONNECT(m_entry, changed, [this] { serialize(); });
+	}
+	void serialize() override {
+		get_default_settings()->set_string(m_key, m_entry->get_text());
+		m_signal_changed.emit();
+	}
+
+private:
+	Gtk::Entry* m_entry;
+};
+
 
 #endif // CONFIGSETTINGS_HH

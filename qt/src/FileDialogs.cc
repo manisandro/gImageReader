@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * FileDialogs.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -21,7 +21,7 @@
 #include <QFileInfo>
 #include <QStringList>
 
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "FileDialogs.hh"
 #include "MainWindow.hh"
 #include "Utils.hh"
@@ -32,7 +32,7 @@ QStringList openDialog(const QString& title, const QString& initialDirectory, co
 	parent = parent == nullptr ? MAIN : parent;
 	QString initialDir = initialDirectory;
 	if(initialDir.isEmpty()) {
-		initialDir = MAIN->getConfig()->getSetting<VarSetting<QString>>(initialDirSetting)->getValue();
+		initialDir = ConfigSettings::get<VarSetting<QString>>(initialDirSetting)->getValue();
 		if(initialDir.isEmpty()) {
 			initialDir = Utils::documentsFolder();
 		}
@@ -47,7 +47,7 @@ QStringList openDialog(const QString& title, const QString& initialDirectory, co
 		}
 	}
 	if(!filenames.isEmpty()) {
-		MAIN->getConfig()->getSetting<VarSetting<QString>>(initialDirSetting)->setValue(QFileInfo(filenames.first()).absolutePath());
+		ConfigSettings::get<VarSetting<QString>>(initialDirSetting)->setValue(QFileInfo(filenames.first()).absolutePath());
 	}
 	return filenames;
 }
@@ -58,7 +58,7 @@ QString saveDialog(const QString& title, const QString& initialFilename, const Q
 	if(!initialFilename.isEmpty() && QFileInfo(initialFilename).isAbsolute()) {
 		suggestedFile = initialFilename;
 	} else {
-		QString initialDir = MAIN->getConfig()->getSetting<VarSetting<QString>>(initialDirSetting)->getValue();
+		QString initialDir = ConfigSettings::get<VarSetting<QString>>(initialDirSetting)->getValue();
 		if(initialDir.isEmpty()) {
 			initialDir = Utils::documentsFolder();
 		}
@@ -74,7 +74,7 @@ QString saveDialog(const QString& title, const QString& initialFilename, const Q
 		if(ext.isEmpty()) {
 			filename += "." + sext;
 		}
-		MAIN->getConfig()->getSetting<VarSetting<QString>>(initialDirSetting)->setValue(QFileInfo(filename).absolutePath());
+		ConfigSettings::get<VarSetting<QString>>(initialDirSetting)->setValue(QFileInfo(filename).absolutePath());
 	}
 	return filename;
 }

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * MainWindow.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -40,7 +40,7 @@
 
 #include "MainWindow.hh"
 #include "Acquirer.hh"
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "Displayer.hh"
 #include "DisplayerToolSelect.hh"
 #include "DisplayerToolHOCR.hh"
@@ -48,6 +48,7 @@
 #include "OutputEditorHOCR.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
+#include "TessdataManager.hh"
 #include "Utils.hh"
 #include "ui_AboutDialog.h"
 
@@ -143,6 +144,7 @@ MainWindow::MainWindow(const QStringList& files)
 	m_idleWidgets.append(ui.toolButtonRecognize);
 
 	connect(ui.actionRedetectLanguages, SIGNAL(triggered()), m_recognizer, SLOT(updateLanguagesMenu()));
+	connect(ui.actionManageLanguages, SIGNAL(triggered()), this, SLOT(manageLanguages()));
 	connect(ui.actionPreferences, SIGNAL(triggered()), this, SLOT(showConfig()));
 	connect(ui.actionHelp, SIGNAL(triggered()), this, SLOT(showHelp()));
 	connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
@@ -151,13 +153,13 @@ MainWindow::MainWindow(const QStringList& files)
 	connect(m_sourceManager, SIGNAL(sourceChanged()), this, SLOT(onSourceChanged()));
 	connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), ui.dockWidgetOutput, SLOT(setVisible(bool)));
 	connect(ui.comboBoxOCRMode, SIGNAL(currentIndexChanged(int)), this, SLOT(setOCRMode(int)));
-	connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), this, SLOT(languageChanged()));
+	connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), this, SLOT(languageChanged(Config::Lang)));
+	connect(ui.actionAutodetectLayout, SIGNAL(triggered()), m_displayer, SLOT(autodetectOCRAreas()));
 
-
-	m_config->addSetting(new VarSetting<QByteArray>("wingeom"));
-	m_config->addSetting(new VarSetting<QByteArray>("winstate"));
-	m_config->addSetting(new ActionSetting("showcontrols", ui.actionImageControls));
-	m_config->addSetting(new ComboSetting("outputeditor", ui.comboBoxOCRMode, 0));
+	ADD_SETTING(VarSetting<QByteArray>("wingeom"));
+	ADD_SETTING(VarSetting<QByteArray>("winstate"));
+	ADD_SETTING(ActionSetting("showcontrols", ui.actionImageControls));
+	ADD_SETTING(ComboSetting("outputeditor", ui.comboBoxOCRMode, 0));
 
 	m_recognizer->updateLanguagesMenu();
 
@@ -181,14 +183,14 @@ MainWindow::MainWindow(const QStringList& files)
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
-	restoreGeometry(m_config->getSetting<VarSetting<QByteArray>>("wingeom")->getValue());
-	restoreState(m_config->getSetting<VarSetting<QByteArray>>("winstate")->getValue());
+	restoreGeometry(ConfigSettings::get<VarSetting<QByteArray>>("wingeom")->getValue());
+	restoreState(ConfigSettings::get<VarSetting<QByteArray>>("winstate")->getValue());
 	ui.dockWidgetOutput->setVisible(false);
 
 	ui.actionSources->trigger();
 
 #if ENABLE_VERSIONCHECK
-	if(m_config->getSetting<SwitchSetting>("updatecheck")->getValue()) {
+	if(ConfigSettings::get<SwitchSetting>("updatecheck")->getValue()) {
 		connect(&m_versionCheckThread, SIGNAL(finished()), this, SLOT(checkVersion()));
 		m_versionCheckThread.start();
 	}
@@ -254,8 +256,8 @@ void MainWindow::closeEvent(QCloseEvent* ev) {
 	} else if(!m_outputEditor->clear()) {
 		ev->ignore();
 	} else if(!isMaximized()) {
-		m_config->getSetting<VarSetting<QByteArray>>("wingeom")->setValue(saveGeometry());
-		m_config->getSetting<VarSetting<QByteArray>>("winstate")->setValue(saveState());
+		ConfigSettings::get<VarSetting<QByteArray>>("wingeom")->setValue(saveGeometry());
+		ConfigSettings::get<VarSetting<QByteArray>>("winstate")->setValue(saveState());
 	}
 }
 
@@ -278,7 +280,7 @@ void MainWindow::showAbout() {
 	QDialog d(this);
 	Ui::AboutDialog aboutDialogUi;
 	aboutDialogUi.setupUi(&d);
-	aboutDialogUi.labelVersion->setText(PACKAGE_VERSION);
+	aboutDialogUi.labelVersion->setText(QString("%1 (%2)").arg(PACKAGE_VERSION, QString(PACKAGE_REVISION).left(6)));;
 	aboutDialogUi.labelTesseractVer->setText(QString("<html><head/><body><p style=\"font-size:small;\">%1 %2</p></body></html>").arg(_("Using tesseract")).arg(TESSERACT_VERSION_STR));
 	d.exec();
 }
@@ -299,6 +301,13 @@ void MainWindow::showHelp(const QString& chapter) {
 	QDesktopServices::openUrl(manualUrl);
 }
 
+void MainWindow::manageLanguages() {
+	TessdataManager manager(MAIN);
+	if(manager.setup()) {
+		manager.exec();
+	}
+}
+
 void MainWindow::showConfig() {
 	m_config->showDialog();
 	m_recognizer->updateLanguagesMenu();
@@ -317,14 +326,14 @@ void MainWindow::setOCRMode(int idx) {
 		delete m_displayerTool;
 		delete m_outputEditor;
 		if(idx == 0) {
-			m_displayerTool = new DisplayerToolSelect(ui.actionAutodetectLayout, m_displayer);
+			m_displayerTool = new DisplayerToolSelect(m_displayer);
 			m_outputEditor = new OutputEditorText();
 		} else { /*if(idx == 1)*/
 			m_displayerTool = new DisplayerToolHOCR(m_displayer);
 			m_outputEditor = new OutputEditorHOCR(static_cast<DisplayerToolHOCR*>(m_displayerTool));
 		}
+		ui.actionAutodetectLayout->setVisible(m_displayerTool->allowAutodetectOCRAreas());
 		m_displayer->setTool(m_displayerTool);
-		connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), m_outputEditor, SLOT(setLanguage(Config::Lang)));
 		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
 		connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), m_outputEditor, SLOT(onVisibilityChanged(bool)));
 		ui.dockWidgetOutput->setWidget(m_outputEditor->getUI());
@@ -438,11 +447,14 @@ void MainWindow::progressUpdate() {
 	}
 }
 
-void MainWindow::languageChanged() {
+void MainWindow::languageChanged(const Config::Lang& lang) {
+	if(m_outputEditor) {
+		m_outputEditor->setLanguage(lang);
+	}
 	hideNotification(m_notifierHandle);
 	m_notifierHandle = nullptr;
-	const QString& code = m_recognizer->getSelectedLanguage().code;
-	if(!code.isEmpty() && !QtSpell::checkLanguageInstalled(code) && m_config->getSetting<SwitchSetting>("dictinstall")->getValue()) {
+	const QString& code = lang.code;
+	if(!code.isEmpty() && !QtSpell::checkLanguageInstalled(code) && ConfigSettings::get<SwitchSetting>("dictinstall")->getValue()) {
 		NotificationAction actionDontShowAgain = {_("Don't show again"), m_config, SLOT(disableDictInstall()), true};
 		NotificationAction actionInstall = {_("Install"), this, SLOT(dictionaryAutoinstall()), false};
 #ifdef Q_OS_LINUX

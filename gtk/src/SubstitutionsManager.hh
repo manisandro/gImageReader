@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * SubstitutionsManager.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -21,14 +21,19 @@
 #define SUBSTITUTIONS_MANAGER_HH
 
 #include "common.hh"
+#include "ui_SubstitutionsManager.hh"
 
 class OutputBuffer;
 
 class SubstitutionsManager {
 public:
-	SubstitutionsManager(const Builder& builder, const Glib::RefPtr<OutputBuffer>& buffer);
+	SubstitutionsManager();
 	~SubstitutionsManager();
 	void set_visible(bool visible);
+
+	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> signal_apply_substitutions() {
+		return m_signal_apply_substitutions;
+	}
 
 private:
 	struct ReplaceListColumns : public Gtk::TreeModel::ColumnRecord {
@@ -40,19 +45,18 @@ private:
 		}
 	};
 
+	sigc::signal<void, const std::map<Glib::ustring, Glib::ustring>&> m_signal_apply_substitutions;
+
+	Ui::SubstitutionsManager ui;
+	ClassData m_classdata;
+
 	std::string m_currentFile;
 	ReplaceListColumns m_viewCols;
-	Gtk::Window* m_dialog;
-	Gtk::TreeView* m_listView;
-	Gtk::Button* m_removeButton;
 	Glib::RefPtr<Gtk::ListStore> m_listStore;
-	Glib::RefPtr<OutputBuffer> m_buffer;
-	Gtk::CheckButton* m_csCheckBox;
 
 	void addRow();
 	void applySubstitutions();
 	bool clearList();
-	void dialogClosed();
 	void openList();
 	void removeRows();
 	bool saveList();

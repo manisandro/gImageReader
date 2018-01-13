@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Displayer.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) (\d+)-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -18,7 +18,6 @@
  */
 
 #include "MainWindow.hh"
-#include "Config.hh"
 #include "Displayer.hh"
 #include "DisplayRenderer.hh"
 #include "Recognizer.hh"
@@ -30,88 +29,68 @@
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
 
-Displayer::Displayer() {
-	m_canvas = MAIN->getWidget("drawingarea:display");
-	m_viewport = MAIN->getWidget("viewport:display");
-	m_scrollwin = MAIN->getWidget("scrollwin:display");
-	m_hadj = m_scrollwin->get_hadjustment();
-	m_vadj = m_scrollwin->get_vadjustment();
-	m_zoominbtn = MAIN->getWidget("button:main.zoomin");
-	m_zoomoutbtn = MAIN->getWidget("button:main.zoomout");
-	m_zoomonebtn = MAIN->getWidget("button:main.zoomnormsize");
-	m_zoomfitbtn = MAIN->getWidget("button:main.zoomfit");
-	m_rotimage = MAIN->getWidget("image:display.rotate.mode");
-	m_rotspin = MAIN->getWidget("spin:display.rotate");
-	m_pagespin = MAIN->getWidget("spin:display.page");
-	m_resspin = MAIN->getWidget("spin:display.resolution");
-	m_brispin = MAIN->getWidget("spin:display.brightness");
-	m_conspin = MAIN->getWidget("spin:display.contrast");
-	m_invcheck = MAIN->getWidget("check:display.invert");
+Displayer::Displayer(const Ui::MainWindow& _ui)
+	: ui(_ui) {
+	m_hadj = ui.scrollwinDisplay->get_hadjustment();
+	m_vadj = ui.scrollwinDisplay->get_vadjustment();
 
 	m_rotateMode = RotateMode::AllPages;
 
-#if GTKMM_CHECK_VERSION(3,12,0)
-	m_pagespin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/page.png"));
-	m_resspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/resolution.png"));
-	m_brispin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/brightness.png"));
-	m_conspin->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/contrast.png"));
-#else
-	m_pagespin->set_icon_from_pixbuf(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/page.png", 0)));
-	m_resspin->set_icon_from_pixbuf(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/resolution.png", 0)));
-	m_brispin->set_icon_from_pixbuf(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/brightness.png", 0)));
-	m_conspin->set_icon_from_pixbuf(Glib::wrap(gdk_pixbuf_new_from_resource("/org/gnome/gimagereader/contrast.png", 0)));
-#endif
+	ui.spinPage->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/page.png"));
+	ui.spinResolution->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/resolution.png"));
+	ui.spinBrightness->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/brightness.png"));
+	ui.spinContrast->set_icon_from_pixbuf(Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/contrast.png"));
 
-	m_scrollwin->drag_dest_set({Gtk::TargetEntry("text/uri-list")}, Gtk::DEST_DEFAULT_MOTION | Gtk::DEST_DEFAULT_DROP, Gdk::ACTION_COPY | Gdk::ACTION_MOVE);
-	m_viewport->override_background_color(Gdk::RGBA("#a0a0a4"));
+	ui.scrollwinDisplay->drag_dest_set({Gtk::TargetEntry("text/uri-list")}, Gtk::DEST_DEFAULT_MOTION | Gtk::DEST_DEFAULT_DROP, Gdk::ACTION_COPY | Gdk::ACTION_MOVE);
+	ui.viewportDisplay->override_background_color(Gdk::RGBA("#a0a0a4"));
 
-	CONNECT(MAIN->getWidget("menuitem:display.rotate.current").as<Gtk::MenuItem>(), activate, [this] { setRotateMode(RotateMode::CurrentPage, "rotate_page.png"); });
-	CONNECT(MAIN->getWidget("menuitem:display.rotate.all").as<Gtk::MenuItem>(), activate, [this] { setRotateMode(RotateMode::AllPages, "rotate_pages.png"); });
-	m_connection_rotSpinChanged = CONNECT(m_rotspin, value_changed, [this] { setAngle(m_rotspin->get_value()); });
-	m_connection_pageSpinChanged = CONNECT(m_pagespin, value_changed, [this] { setCurrentPage(m_pagespin->get_value_as_int()); });
-	m_connection_briSpinChanged = CONNECT(m_brispin, value_changed, [this] { brightnessChanged(); });
-	m_connection_conSpinChanged = CONNECT(m_conspin, value_changed, [this] { contrastChanged(); });
-	m_connection_resSpinChanged = CONNECT(m_resspin, value_changed, [this] { resolutionChanged(); });
-	m_connection_invcheckToggled = CONNECT(m_invcheck, toggled, [this] { invertColorsChanged(); });
-	CONNECT(m_viewport, size_allocate, [this](Gdk::Rectangle&) {
+	CONNECT(ui.menuitemDisplayRotateCurrent, activate, [this] { setRotateMode(RotateMode::CurrentPage, "rotate_page.png"); });
+	CONNECT(ui.menuitemDisplayRotateAll, activate, [this] { setRotateMode(RotateMode::AllPages, "rotate_pages.png"); });
+	m_connection_rotSpinChanged = CONNECT(ui.spinRotate, value_changed, [this] { setAngle(ui.spinRotate->get_value()); });
+	m_connection_pageSpinChanged = CONNECT(ui.spinPage, value_changed, [this] { queueRenderImage(); });
+	m_connection_briSpinChanged = CONNECT(ui.spinBrightness, value_changed, [this] { queueRenderImage(); });
+	m_connection_conSpinChanged = CONNECT(ui.spinContrast, value_changed, [this] { queueRenderImage(); });
+	m_connection_resSpinChanged = CONNECT(ui.spinResolution, value_changed, [this] { queueRenderImage(); });
+	m_connection_invcheckToggled = CONNECT(ui.checkInvert, toggled, [this] { queueRenderImage(); });
+	CONNECT(ui.viewportDisplay, size_allocate, [this](Gdk::Rectangle&) {
 		resizeEvent();
 	});
-	CONNECT(m_viewport, key_press_event, [this](GdkEventKey* ev) {
+	CONNECT(ui.viewportDisplay, key_press_event, [this](GdkEventKey* ev) {
 		return keyPressEvent(ev);
 	});
-	CONNECT(m_viewport, motion_notify_event, [this](GdkEventMotion* ev) {
+	CONNECT(ui.viewportDisplay, motion_notify_event, [this](GdkEventMotion* ev) {
 		return mouseMoveEvent(ev);
 	});
-	CONNECT(m_viewport, button_press_event, [this](GdkEventButton* ev) {
+	CONNECT(ui.viewportDisplay, button_press_event, [this](GdkEventButton* ev) {
 		return mousePressEvent(ev);
 	});
-	CONNECT(m_viewport, button_release_event, [this](GdkEventButton* ev) {
+	CONNECT(ui.viewportDisplay, button_release_event, [this](GdkEventButton* ev) {
 		return mouseReleaseEvent(ev);
 	});
-	CONNECT(m_viewport, scroll_event, [this](GdkEventScroll* ev) {
+	CONNECT(ui.viewportDisplay, scroll_event, [this](GdkEventScroll* ev) {
 		return scrollEvent(ev);
 	});
-	CONNECT(m_canvas, draw, [this](const Cairo::RefPtr<Cairo::Context>& ctx) {
+	CONNECT(ui.drawingareaDisplay, draw, [this](const Cairo::RefPtr<Cairo::Context>& ctx) {
 		drawCanvas(ctx);
 		return false;
 	});
-	CONNECT(m_zoominbtn, clicked, [this] { setZoom(Zoom::In); });
-	CONNECT(m_zoomoutbtn, clicked, [this] { setZoom(Zoom::Out); });
-	m_connection_zoomfitClicked = CONNECT(m_zoomfitbtn, clicked, [this] { setZoom(Zoom::Fit); });
-	m_connection_zoomoneClicked = CONNECT(m_zoomonebtn, clicked, [this] { setZoom(Zoom::One); });
-	CONNECT(MAIN->getWidget("spin:display.rotate").as<Gtk::SpinButton>(), icon_press, [this](Gtk::EntryIconPosition pos, const GdkEventButton*) {
-		setAngle(m_rotspin->get_value() + (pos == Gtk::ENTRY_ICON_PRIMARY ? -90 : 90));
+	CONNECT(ui.buttonZoomin, clicked, [this] { setZoom(Zoom::In); });
+	CONNECT(ui.buttonZoomout, clicked, [this] { setZoom(Zoom::Out); });
+	m_connection_zoomfitClicked = CONNECT(ui.buttonZoomfit, clicked, [this] { setZoom(Zoom::Fit); });
+	m_connection_zoomoneClicked = CONNECT(ui.buttonZoomnorm, clicked, [this] { setZoom(Zoom::One); });
+	CONNECT(ui.spinRotate, icon_press, [this](Gtk::EntryIconPosition pos, const GdkEventButton*) {
+		setAngle(ui.spinRotate->get_value() + (pos == Gtk::ENTRY_ICON_PRIMARY ? -90 : 90));
 	});
-	CONNECT(MAIN->getWidget("applicationwindow:main").as<Gtk::Window>()->get_style_context(), changed, [this] { m_canvas->queue_draw(); });
+	CONNECT(ui.windowMain->get_style_context(), changed, [this] { ui.drawingareaDisplay->queue_draw(); });
 
-	CONNECT(m_scrollwin, drag_data_received, sigc::ptr_fun(Utils::handle_drag_drop));
+	CONNECT(ui.scrollwinDisplay, drag_data_received, sigc::ptr_fun(Utils::handle_drag_drop));
 }
 
 void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx) {
 	if(!m_imageItem) {
 		return;
 	}
-	Gtk::Allocation alloc = m_canvas->get_allocation();
+	Gtk::Allocation alloc = ui.drawingareaDisplay->get_allocation();
 	ctx->translate(Utils::round(0.5 * alloc.get_width()), Utils::round(0.5 * alloc.get_height()));
 	ctx->scale(m_scale, m_scale);
 	m_imageItem->draw(ctx);
@@ -124,17 +103,29 @@ void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx) {
 
 void Displayer::positionCanvas() {
 	Geometry::Rectangle bb = getSceneBoundingRect();
-	m_canvas->set_size_request(Utils::round(bb.width * m_scale), Utils::round(bb.height * m_scale));
+	ui.drawingareaDisplay->set_size_request(Utils::round(bb.width * m_scale), Utils::round(bb.height * m_scale));
 	// Immediately resize viewport, so that adjustment values are correct below
-	m_viewport->size_allocate(m_viewport->get_allocation());
-	m_viewport->set_allocation(m_viewport->get_allocation());
+	ui.viewportDisplay->size_allocate(ui.viewportDisplay->get_allocation());
+	ui.viewportDisplay->set_allocation(ui.viewportDisplay->get_allocation());
 	m_hadj->set_value(m_scrollPos[0] *(m_hadj->get_upper() - m_hadj->get_page_size()));
 	m_vadj->set_value(m_scrollPos[1] *(m_vadj->get_upper() - m_vadj->get_page_size()));
-	m_canvas->queue_draw();
+	ui.drawingareaDisplay->queue_draw();
+}
+
+int Displayer::getCurrentPage() const {
+	return ui.spinPage->get_value_as_int();
+}
+
+int Displayer::getCurrentResolution() const {
+	return ui.spinResolution->get_value_as_int();
+}
+
+double Displayer::getCurrentAngle() const {
+	return ui.spinRotate->get_value();
 }
 
 std::string Displayer::getCurrentImage(int& page) const {
-	auto it = m_pageMap.find(m_pagespin->get_value_as_int());
+	auto it = m_pageMap.find(ui.spinPage->get_value_as_int());
 	if(it != m_pageMap.end()) {
 		page = it->second.second;
 		return it->second.first->file->get_path();
@@ -142,51 +133,10 @@ std::string Displayer::getCurrentImage(int& page) const {
 	return "";
 }
 
-bool Displayer::setCurrentPage(int page) {
-	if(m_sources.empty()) {
-		return false;
-	}
-	if(m_tool) {
-		m_tool->pageChanged();
-	}
-	Source* source = m_pageMap[page].first;
-	if(source != m_currentSource) {
-		sendScaleRequest({ScaleRequest::Abort});
-		sendScaleRequest({ScaleRequest::Quit});
-		m_scaleThread->join();
-		m_scaleThread = nullptr;
-		delete m_renderer;
-		std::string filename = source->file->get_path();
-#ifdef G_OS_WIN32
-		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf") {
-#else
-		if(Utils::get_content_type(filename) == "application/pdf") {
-#endif
-			m_renderer = new PDFRenderer(filename, source->password);
-			if(source->resolution == -1) source->resolution = 300;
-#ifdef G_OS_WIN32
-		} else if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".djvu") {
-#else
-		} else if(Utils::get_content_type(filename) == "image/vnd.djvu") {
-#endif
-			m_renderer = new DJVURenderer(filename);
-			if(source->resolution == -1) source->resolution = 300;
-		} else {
-			m_renderer = new ImageRenderer(filename);
-			if(source->resolution == -1) source->resolution = 100;
-		}
-		Utils::set_spin_blocked(m_brispin, source->brightness, m_connection_briSpinChanged);
-		Utils::set_spin_blocked(m_conspin, source->contrast, m_connection_conSpinChanged);
-		Utils::set_spin_blocked(m_resspin, source->resolution, m_connection_resSpinChanged);
-		m_connection_invcheckToggled.block(true);
-		m_invcheck->set_active(source->invert);
-		m_connection_invcheckToggled.block(false);
-		m_currentSource = source;
-		m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
-	}
-	Utils::set_spin_blocked(m_rotspin, source->angle[m_pageMap[page].second - 1] / M_PI * 180., m_connection_rotSpinChanged);
-	Utils::set_spin_blocked(m_pagespin, page, m_connection_pageSpinChanged);
-	return renderImage();
+int Displayer::getNPages() const {
+	double min, max;
+	ui.spinPage->get_range(min, max);
+	return int(max);
 }
 
 bool Displayer::setSources(std::vector<Source*> sources) {
@@ -199,6 +149,7 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 		m_scaleThread->join();
 		m_scaleThread = nullptr;
 	}
+	std::queue<ScaleRequest>().swap(m_scaleRequests); // clear...
 	m_scale = 1.0;
 	m_scrollPos[0] = m_scrollPos[1] = 0.5;
 	if(m_tool) {
@@ -213,18 +164,23 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	m_currentSource = nullptr;
 	m_sources.clear();
 	m_pageMap.clear();
-	m_canvas->hide();
-	m_pagespin->set_range(1, 1);
-	m_rotspin->set_value(0);
-	m_brispin->set_value(0);
-	m_conspin->set_value(0);
-	m_resspin->set_value(100);
-	m_invcheck->set_active(false);
-	m_zoomfitbtn->set_active(true);
-	m_zoomonebtn->set_active(false);
-	m_zoominbtn->set_sensitive(true);
-	m_zoomoutbtn->set_sensitive(true);
-	if(m_viewport->get_window()) m_viewport->get_window()->set_cursor();
+	ui.drawingareaDisplay->hide();
+	ui.spinPage->hide();
+	m_connection_pageSpinChanged.block(true);
+	ui.spinPage->set_range(1, 1);
+	m_connection_pageSpinChanged.block(false);
+	Utils::set_spin_blocked(ui.spinRotate, 0, m_connection_rotSpinChanged);
+	Utils::set_spin_blocked(ui.spinBrightness, 0, m_connection_briSpinChanged);
+	Utils::set_spin_blocked(ui.spinContrast, 0, m_connection_conSpinChanged);
+	Utils::set_spin_blocked(ui.spinResolution, 100, m_connection_resSpinChanged);
+	m_connection_invcheckToggled.block(true);
+	ui.checkInvert->set_active(false);
+	m_connection_invcheckToggled.block(false);
+	ui.buttonZoomfit->set_active(true);
+	ui.buttonZoomnorm->set_active(false);
+	ui.buttonZoomin->set_sensitive(true);
+	ui.buttonZoomout->set_sensitive(true);
+	if(ui.viewportDisplay->get_window()) ui.viewportDisplay->get_window()->set_cursor();
 
 	m_sources = sources;
 	if(sources.empty()) {
@@ -263,21 +219,211 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	}
 
 	m_connection_pageSpinChanged.block();
-	m_pagespin->get_adjustment()->set_upper(page);
+	ui.spinPage->get_adjustment()->set_upper(page);
 	m_connection_pageSpinChanged.unblock();
-	m_pagespin->set_visible(page > 1);
-	m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
-	m_canvas->show();
-	m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
+	ui.spinPage->set_visible(page > 1);
+	ui.viewportDisplay->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
+	ui.drawingareaDisplay->show();
 	m_imageItem = new DisplayerImageItem;
 
-	if(!setCurrentPage(1)) {
+	if(!renderImage()) {
 		g_assert_nonnull(m_currentSource);
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to load image"), Glib::ustring::compose(_("The file might not be an image or be corrupt:\n%1"), m_currentSource->displayname));
 		setSources(std::vector<Source*>());
 		return false;
 	}
 	return true;
+}
+
+bool Displayer::setup(const int* page, const int* resolution, const double* angle) {
+	bool changed = false;
+	if(page) {
+		changed |= *page != ui.spinPage->get_value_as_int();
+		Utils::set_spin_blocked(ui.spinPage, *page, m_connection_pageSpinChanged);
+	}
+	if(resolution) {
+		changed |= *resolution != ui.spinResolution->get_value();
+		Utils::set_spin_blocked(ui.spinResolution, *resolution, m_connection_resSpinChanged);
+	}
+	if(changed && !renderImage()) {
+		return false;
+	}
+	if(angle && std::abs(*angle - ui.spinRotate->get_value()) > 1E-2) {
+		setAngle(*angle);
+	}
+	return true;
+}
+
+void Displayer::queueRenderImage() {
+	m_renderTimer.disconnect();
+	m_renderTimer = Glib::signal_timeout().connect([this] { renderImage(); return false; }, 200);
+}
+
+bool Displayer::renderImage() {
+	if(m_sources.empty()) {
+		return false;
+	}
+	int page = ui.spinPage->get_value_as_int();
+
+	// Set current source according to selected page
+	Source* source = m_pageMap[page].first;
+	if(!source) {
+		return false;
+	}
+
+	int oldResolution = m_currentSource ? m_currentSource->resolution : -1;
+	int oldPage = m_currentSource ? m_currentSource->page : -1;
+	Source* oldSource = m_currentSource;
+
+	if(source != m_currentSource) {
+		if(m_scaleThread) {
+			sendScaleRequest({ScaleRequest::Abort});
+			sendScaleRequest({ScaleRequest::Quit});
+			m_scaleThread->join();
+			m_scaleThread = nullptr;
+		}
+		std::queue<ScaleRequest>().swap(m_scaleRequests); // clear...
+		delete m_renderer;
+		std::string filename = source->file->get_path();
+#ifdef G_OS_WIN32
+		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf") {
+#else
+		if(Utils::get_content_type(filename) == "application/pdf") {
+#endif
+			m_renderer = new PDFRenderer(filename, source->password);
+			if(source->resolution == -1) source->resolution = 300;
+#ifdef G_OS_WIN32
+		} else if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".djvu") {
+#else
+		} else if(Utils::get_content_type(filename) == "image/vnd.djvu") {
+#endif
+			m_renderer = new DJVURenderer(filename);
+			if(source->resolution == -1) source->resolution = 300;
+		} else {
+			m_renderer = new ImageRenderer(filename);
+			if(source->resolution == -1) source->resolution = 100;
+		}
+		Utils::set_spin_blocked(ui.spinBrightness, source->brightness, m_connection_briSpinChanged);
+		Utils::set_spin_blocked(ui.spinContrast, source->contrast, m_connection_conSpinChanged);
+		Utils::set_spin_blocked(ui.spinResolution, source->resolution, m_connection_resSpinChanged);
+		m_connection_invcheckToggled.block(true);
+		ui.checkInvert->set_active(source->invert);
+		m_connection_invcheckToggled.block(false);
+		m_currentSource = source;
+		m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
+	}
+
+	// Update source struct
+	m_currentSource->page = m_pageMap[ui.spinPage->get_value_as_int()].second;
+	m_currentSource->brightness = ui.spinBrightness->get_value_as_int();
+	m_currentSource->contrast = ui.spinContrast->get_value_as_int();
+	m_currentSource->resolution = ui.spinResolution->get_value_as_int();
+	m_currentSource->invert = ui.checkInvert->get_active();
+
+	// Notify tools about changes
+	if(m_tool) {
+		if(m_currentSource != oldSource || m_currentSource->page != oldPage) {
+			m_tool->pageChanged();
+		}
+		if(oldResolution != m_currentSource->resolution) {
+			double factor = double(m_currentSource->resolution) / double(oldResolution);
+			m_tool->resolutionChanged(factor);
+		}
+	}
+
+	Utils::set_spin_blocked(ui.spinRotate, m_currentSource->angle[m_currentSource->page - 1], m_connection_rotSpinChanged);
+
+	// Render new image
+	sendScaleRequest({ScaleRequest::Abort});
+	Cairo::RefPtr<Cairo::ImageSurface> image = m_renderer->render(m_currentSource->page, m_currentSource->resolution);
+	if(!bool(image)) {
+		return false;
+	}
+	m_renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
+	m_image = image;
+	m_imageItem->setImage(m_image);
+	m_imageItem->setRect(Geometry::Rectangle(-0.5 * m_image->get_width(), -0.5 * m_image->get_height(), m_image->get_width(), m_image->get_height()));
+	setAngle(ui.spinRotate->get_value());
+	if(m_scale < 1.0) {
+		ScaleRequest request = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
+		m_scaleTimer = Glib::signal_timeout().connect([this,request] { sendScaleRequest(request); return false; }, 100);
+	}
+	return true;
+}
+
+void Displayer::setZoom(Zoom zoom) {
+	if(!m_image) {
+		return;
+	}
+	sendScaleRequest({ScaleRequest::Abort});
+	m_connection_zoomfitClicked.block(true);
+	m_connection_zoomoneClicked.block(true);
+
+	Gtk::Allocation alloc = ui.viewportDisplay->get_allocation();
+	Geometry::Rectangle bb = getSceneBoundingRect();
+	double fit = std::min(alloc.get_width() / bb.width, alloc.get_height() / bb.height);
+
+	if(zoom == Zoom::In) {
+		m_scale = std::min(10., m_scale * 1.25);
+	} else if(zoom == Zoom::Out) {
+		m_scale = std::max(0.05, m_scale * 0.8);
+	} else if(zoom == Zoom::One) {
+		m_scale = 1.0;
+	}
+	ui.buttonZoomfit->set_active(false);
+	if(zoom == Zoom::Fit || (m_scale / fit >= 0.9 && m_scale / fit <= 1.09)) {
+		m_scale = fit;
+		ui.buttonZoomfit->set_active(true);
+	}
+	bool scrollVisible = m_scale > fit;
+	ui.scrollwinDisplay->get_hscrollbar()->set_visible(scrollVisible);
+	ui.scrollwinDisplay->get_vscrollbar()->set_visible(scrollVisible);
+	ui.buttonZoomout->set_sensitive(m_scale > 0.05);
+	ui.buttonZoomin->set_sensitive(m_scale < 10.);
+	ui.buttonZoomnorm->set_active(m_scale == 1.);
+	if(m_scale < 1.0) {
+		ScaleRequest request = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
+		m_scaleTimer = Glib::signal_timeout().connect([this,request] { sendScaleRequest(request); return false; }, 100);
+	} else {
+		m_imageItem->setImage(m_image);
+	}
+	positionCanvas();
+
+	m_connection_zoomfitClicked.block(false);
+	m_connection_zoomoneClicked.block(false);
+}
+
+void Displayer::setRotateMode(RotateMode mode, const std::string& iconName) {
+	m_rotateMode = mode;
+	ui.imageRotateMode->set(Gdk::Pixbuf::create_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/%1", iconName)));
+}
+
+void Displayer::setAngle(double angle) {
+	if(m_image) {
+		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
+		Utils::set_spin_blocked(ui.spinRotate, angle, m_connection_rotSpinChanged);
+		int sourcePage = m_pageMap[getCurrentPage()].second;
+		double delta = angle - m_currentSource->angle[sourcePage - 1];
+		if(m_rotateMode == RotateMode::CurrentPage) {
+			m_currentSource->angle[sourcePage - 1] = angle;
+		} else if(delta != 0) {
+			for(const auto& keyval  : m_pageMap) {
+				auto pair = keyval.second;
+				double newangle = pair.first->angle[pair.second - 1] + delta;
+				newangle = newangle < 0.0 ? newangle + 360.0 : newangle >= 360.0 ? newangle - 360.0 : newangle,
+				pair.first->angle[pair.second - 1] = newangle;
+			}
+		}
+		m_imageItem->setRotation(angle * M_PI / 180);
+		if(m_tool && delta != 0) {
+			m_tool->rotationChanged(delta);
+		}
+		if(ui.buttonZoomfit->get_active() == true) {
+			setZoom(Zoom::Fit);
+		} else {
+			positionCanvas();
+		}
+	}
 }
 
 bool Displayer::hasMultipleOCRAreas() {
@@ -296,173 +442,22 @@ void Displayer::autodetectOCRAreas() {
 	m_tool->autodetectOCRAreas();
 }
 
-bool Displayer::renderImage() {
-	sendScaleRequest({ScaleRequest::Abort});
-	if(m_currentSource->resolution != m_resspin->get_value_as_int()) {
-		double factor = double(m_resspin->get_value_as_int()) / double(m_currentSource->resolution);
-		if(m_tool) {
-			m_tool->resolutionChanged(factor);
-		}
-	}
-	m_currentSource->page = m_pageMap[m_pagespin->get_value_as_int()].second;
-	m_currentSource->brightness = m_brispin->get_value_as_int();
-	m_currentSource->contrast = m_conspin->get_value_as_int();
-	m_currentSource->resolution = m_resspin->get_value_as_int();
-	m_currentSource->invert = m_invcheck->get_active();
-	Cairo::RefPtr<Cairo::ImageSurface> image = m_renderer->render(m_currentSource->page, m_currentSource->resolution);
-	m_renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
-	if(!bool(image)) {
-		return false;
-	}
-	m_image = image;
-	m_imageItem->setImage(m_image);
-	m_imageItem->setRect(Geometry::Rectangle(-0.5 * m_image->get_width(), -0.5 * m_image->get_height(), m_image->get_width(), m_image->get_height()));
-	setAngle(m_rotspin->get_value());
-	if(m_scale < 1.0) {
-		ScaleRequest request = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
-		m_scaleTimer = Glib::signal_timeout().connect([this,request] { sendScaleRequest(request); return false; }, 100);
-	}
-	return true;
-}
-
-void Displayer::setZoom(Zoom zoom) {
-	if(!m_image) {
-		return;
-	}
-	sendScaleRequest({ScaleRequest::Abort});
-	m_connection_zoomfitClicked.block(true);
-	m_connection_zoomoneClicked.block(true);
-
-	Gtk::Allocation alloc = m_viewport->get_allocation();
-	Geometry::Rectangle bb = getSceneBoundingRect();
-	double fit = std::min(alloc.get_width() / bb.width, alloc.get_height() / bb.height);
-
-	if(zoom == Zoom::In) {
-		m_scale = std::min(10., m_scale * 1.25);
-	} else if(zoom == Zoom::Out) {
-		m_scale = std::max(0.05, m_scale * 0.8);
-	} else if(zoom == Zoom::One) {
-		m_scale = 1.0;
-	}
-	m_zoomfitbtn->set_active(false);
-	if(zoom == Zoom::Fit || (m_scale / fit >= 0.9 && m_scale / fit <= 1.09)) {
-		m_scale = fit;
-		m_zoomfitbtn->set_active(true);
-	}
-	bool scrollVisible = m_scale > fit;
-	m_scrollwin->get_hscrollbar()->set_visible(scrollVisible);
-	m_scrollwin->get_vscrollbar()->set_visible(scrollVisible);
-	m_zoomoutbtn->set_sensitive(m_scale > 0.05);
-	m_zoominbtn->set_sensitive(m_scale < 10.);
-	m_zoomonebtn->set_active(m_scale == 1.);
-	if(m_scale < 1.0) {
-		ScaleRequest request = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
-		m_scaleTimer = Glib::signal_timeout().connect([this,request] { sendScaleRequest(request); return false; }, 100);
-	} else {
-		m_imageItem->setImage(m_image);
-	}
-	positionCanvas();
-
-	m_connection_zoomfitClicked.block(false);
-	m_connection_zoomoneClicked.block(false);
-}
-
-void Displayer::setRotateMode(RotateMode mode, const std::string& iconName) {
-	m_rotateMode = mode;
-#if GTKMM_CHECK_VERSION(3,12,0)
-	m_rotimage->set(Gdk::Pixbuf::create_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/%1", iconName)));
-#else
-	m_rotimage->set(Glib::wrap(gdk_pixbuf_new_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/%1", iconName).c_str(), 0)));
-#endif
-}
-
-void Displayer::setAngle(double angle) {
-	if(m_image) {
-		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
-		Utils::set_spin_blocked(m_rotspin, angle, m_connection_rotSpinChanged);
-		angle *= M_PI / 180.;
-		int sourcePage = m_pageMap[getCurrentPage()].second;
-		double delta = angle - m_currentSource->angle[sourcePage - 1];
-		if(m_rotateMode == RotateMode::CurrentPage) {
-			m_currentSource->angle[sourcePage - 1] = angle;
-		} else if(delta != 0) {
-			for(const auto& keyval  : m_pageMap) {
-				auto pair = keyval.second;
-				pair.first->angle[pair.second - 1] += delta;
-			}
-		}
-		m_imageItem->setRotation(angle);
-		if(m_tool) {
-			m_tool->rotationChanged(delta);
-		}
-		if(m_zoomfitbtn->get_active() == true) {
-			setZoom(Zoom::Fit);
-		} else {
-			positionCanvas();
-		}
-	}
-}
-
-void Displayer::brightnessChanged() {
-	int brightness = m_brispin->get_value_as_int();
-	for(const auto& keyval  : m_pageMap) {
-		keyval.second.first->brightness = brightness;
-	}
-	queueRenderImage();
-}
-
-void Displayer::contrastChanged() {
-	int contrast = m_conspin->get_value_as_int();
-	for(const auto& keyval  : m_pageMap) {
-		keyval.second.first->contrast = contrast;
-	}
-	queueRenderImage();
-}
-
-void Displayer::resolutionChanged() {
-	int resolution = m_resspin->get_value_as_int();
-	for(const auto& keyval  : m_pageMap) {
-		keyval.second.first->resolution = resolution;
-	}
-	queueRenderImage();
-}
-
-void Displayer::invertColorsChanged() {
-	bool invert = m_invcheck->get_active();
-	for(const auto& keyval  : m_pageMap) {
-		keyval.second.first->invert = invert;
-	}
-	queueRenderImage();
-}
-
-void Displayer::setResolution(int resolution) {
-	Utils::set_spin_blocked(m_resspin, resolution, m_connection_resSpinChanged);
-	renderImage();
-}
-
 void Displayer::setCursor(Glib::RefPtr<Gdk::Cursor> cursor) {
 	if(cursor) {
-		m_viewport->get_window()->set_cursor(cursor);
+		ui.viewportDisplay->get_window()->set_cursor(cursor);
 	} else {
-		m_viewport->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
-	}
-}
-
-void Displayer::queueRenderImage() {
-	if(m_image) {
-		m_renderTimer.disconnect();
-		m_renderTimer = Glib::signal_timeout().connect([this] { renderImage(); return false; }, 200);
+		ui.viewportDisplay->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
 	}
 }
 
 void Displayer::resizeEvent() {
-	if(m_zoomfitbtn->get_active() == true) {
+	if(ui.buttonZoomfit->get_active() == true) {
 		setZoom(Zoom::Fit);
 	}
 }
 
 bool Displayer::mousePressEvent(GdkEventButton* ev) {
-	m_viewport->grab_focus();
+	ui.viewportDisplay->grab_focus();
 	if(ev->button == 2) {
 		m_panPos[0] = ev->x_root;
 		m_panPos[1] = ev->y_root;
@@ -486,10 +481,10 @@ bool Displayer::mousePressEvent(GdkEventButton* ev) {
 
 bool Displayer::keyPressEvent(GdkEventKey* ev) {
 	if(ev->keyval == GDK_KEY_Page_Up) {
-		m_pagespin->set_value(m_pagespin->get_value_as_int() - 1);
+		ui.spinPage->set_value(ui.spinPage->get_value_as_int() - 1);
 		return true;
 	} else if(ev->keyval == GDK_KEY_Page_Down) {
-		m_pagespin->set_value(m_pagespin->get_value_as_int() + 1);
+		ui.spinPage->set_value(ui.spinPage->get_value_as_int() + 1);
 		return true;
 	} else {
 		return false;
@@ -546,7 +541,7 @@ bool Displayer::mouseReleaseEvent(GdkEventButton* ev) {
 bool Displayer::scrollEvent(GdkEventScroll *ev) {
 	if((ev->state & Gdk::CONTROL_MASK) != 0) {
 		if((ev->direction == GDK_SCROLL_UP || (ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y < 0)) && m_scale * 1.25 < 10) {
-			Gtk::Allocation alloc = m_canvas->get_allocation();
+			Gtk::Allocation alloc = ui.drawingareaDisplay->get_allocation();
 			m_scrollPos[0] = std::max(0., std::min((ev->x + m_hadj->get_value() - alloc.get_x())/alloc.get_width(), 1.0));
 			m_scrollPos[1] = std::max(0., std::min((ev->y + m_vadj->get_value() - alloc.get_y())/alloc.get_height(), 1.0));
 			setZoom(Zoom::In);
@@ -565,17 +560,52 @@ bool Displayer::scrollEvent(GdkEventScroll *ev) {
 	return false;
 }
 
+std::pair<int, int> Displayer::getPointVisible(const Geometry::Point& p) const {
+	// 0 means visible, -1 means to the left/top of visible area, +1 means to the right/bottom of visible area
+	int vx = 0;
+	int vy = 0;
+	double margin = 30.; // 30px margin
+	if(p.x - margin < m_hadj->get_value()) {
+		vx = -1;
+	} else if(p.x + 30. > m_hadj->get_value() + m_hadj->get_page_size()) {
+		vx = +1;
+	}
+	if(p.y - margin < m_vadj->get_value()) {
+		vy = -1;
+	} else if(p.y + margin > m_vadj->get_value() + m_vadj->get_page_size()) {
+		vy = +1;
+	}
+	return std::make_pair(vx, vy);
+}
+
 void Displayer::ensureVisible(double evx, double evy) {
-	if(evx - 30. < m_hadj->get_value()) {
-		m_hadj->set_value(std::max(0., evx - 30.));
+	double margin = 30.; // 30px margin
+	if(evx - margin < m_hadj->get_value()) {
+		m_hadj->set_value(std::max(0., evx - margin));
 	} else if(evx + 30. > m_hadj->get_value() + m_hadj->get_page_size()) {
 		m_hadj->set_value(std::min(m_hadj->get_upper(), evx + 30.) - m_hadj->get_page_size());
 	}
-	if(evy - 30.< m_vadj->get_value()) {
-		m_vadj->set_value(std::max(0., evy - 30.));
-	} else if(evy + 30. > m_vadj->get_value() + m_vadj->get_page_size()) {
-		m_vadj->set_value(std::min(m_vadj->get_upper(), evy + 30.) - m_vadj->get_page_size());
+	if(evy - margin < m_vadj->get_value()) {
+		m_vadj->set_value(std::max(0., evy - margin));
+	} else if(evy + margin > m_vadj->get_value() + m_vadj->get_page_size()) {
+		m_vadj->set_value(std::min(m_vadj->get_upper(), evy + margin) - m_vadj->get_page_size());
 	}
+}
+
+void Displayer::ensureVisible(const Geometry::Rectangle& rect) {
+	Geometry::Point p1 = mapToView(Geometry::Point(rect.x, rect.y));
+	Geometry::Point p2 = mapToView(Geometry::Point(rect.x + rect.width, rect.y + rect.height));
+	std::pair<int,int> vis1 = getPointVisible(p1);
+	std::pair<int,int> vis2 = getPointVisible(p2);
+	if(vis1.first == 0 && vis1.second == 0 && vis2.first == 0 && vis2.second == 0) {
+		// Both points visible, do nothing
+		return;
+	}
+
+	double ox = m_hadj->get_value() + 0.5 * (m_hadj->get_page_size() - (p2.x - p1.x)) - p1.x;
+	double oy = m_vadj->get_value() + 0.5 * (m_vadj->get_page_size() - (p2.y - p1.y)) - p1.y;
+	m_hadj->set_value(std::min(std::max(0., m_hadj->get_value() - ox), m_hadj->get_upper() - m_hadj->get_page_size()));
+	m_vadj->set_value(std::min(std::max(0., m_vadj->get_value() - oy), m_vadj->get_upper() - m_vadj->get_page_size()));
 }
 
 void Displayer::addItem(DisplayerItem* item) {
@@ -596,13 +626,13 @@ void Displayer::removeItem(DisplayerItem* item) {
 }
 
 void Displayer::invalidateRect(const Geometry::Rectangle &rect) {
-	Gtk::Allocation alloc = m_canvas->get_allocation();
+	Gtk::Allocation alloc = ui.drawingareaDisplay->get_allocation();
 	Geometry::Rectangle canvasRect = rect;
 	canvasRect.x = (canvasRect.x * m_scale + 0.5 * alloc.get_width()) - 2;
 	canvasRect.y = (canvasRect.y * m_scale + 0.5 * alloc.get_height()) - 2;
 	canvasRect.width = canvasRect.width * m_scale + 4;
 	canvasRect.height = canvasRect.height * m_scale + 4;
-	m_canvas->queue_draw_area(canvasRect.x, canvasRect.y, canvasRect.width, canvasRect.height);
+	ui.drawingareaDisplay->queue_draw_area(canvasRect.x, canvasRect.y, canvasRect.width, canvasRect.height);
 }
 
 void Displayer::resortItems() {
@@ -610,9 +640,12 @@ void Displayer::resortItems() {
 }
 
 Geometry::Rectangle Displayer::getSceneBoundingRect() const {
+	if(!m_image) {
+		return Geometry::Rectangle();
+	}
 	int w = m_image->get_width();
 	int h = m_image->get_height();
-	Geometry::Rotation R(m_rotspin->get_value() / 180. * M_PI);
+	Geometry::Rotation R(ui.spinRotate->get_value() / 180. * M_PI);
 	int width = std::abs(R(0, 0) * w) + std::abs(R(0, 1) * h);
 	int height = std::abs(R(1, 0) * w) + std::abs(R(1, 1) * h);
 	return Geometry::Rectangle(-0.5 * width, -0.5 * height, width, height);
@@ -620,10 +653,16 @@ Geometry::Rectangle Displayer::getSceneBoundingRect() const {
 
 Geometry::Point Displayer::mapToSceneClamped(const Geometry::Point& p) const {
 	// Selection coordinates are with respect to the center of the image in unscaled (but rotated) coordinates
-	Gtk::Allocation alloc = m_canvas->get_allocation();
+	Gtk::Allocation alloc = ui.drawingareaDisplay->get_allocation();
 	double x = (std::max(0., std::min(p.x - alloc.get_x(), double(alloc.get_width()))) - 0.5 * alloc.get_width()) / m_scale;
 	double y = (std::max(0., std::min(p.y - alloc.get_y(), double(alloc.get_height()))) - 0.5 * alloc.get_height()) / m_scale;
 	return Geometry::Point(x, y);
+}
+
+Geometry::Point Displayer::mapToView(const Geometry::Point &p) const {
+	Gtk::Allocation alloc = ui.drawingareaDisplay->get_allocation();
+	return Geometry::Point(alloc.get_x() + 0.5 * alloc.get_width()+ p.x * m_scale,
+	                       alloc.get_y() + 0.5 * alloc.get_height() + p.y * m_scale);
 }
 
 Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle &rect) const {
@@ -632,7 +671,7 @@ Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle
 	ctx->set_source_rgba(1., 1., 1., 1.);
 	ctx->paint();
 	ctx->translate(-rect.x, -rect.y);
-	ctx->rotate(m_rotspin->get_value() / 180. * M_PI);
+	ctx->rotate(ui.spinRotate->get_value() / 180. * M_PI);
 	ctx->translate(-0.5 * m_image->get_width(), -0.5 * m_image->get_height());
 	ctx->set_source(m_image, 0, 0);
 	ctx->paint();
@@ -692,7 +731,7 @@ void Displayer::setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image) {
 		m_scaleRequests.pop();
 	} else {
 		m_imageItem->setImage(image);
-		m_canvas->queue_draw();
+		ui.drawingareaDisplay->queue_draw();
 	}
 	m_scaleMutex.unlock();
 }
@@ -780,7 +819,7 @@ bool DisplayerSelection::mousePressEvent(GdkEventButton *event) {
 			m_resizeHandlers.push_back(resizeAnchorY);
 			m_resizeOffset.y = p.y - m_anchor.y;
 		}
-		return true;
+		return !m_resizeHandlers.empty();
 	} else if(event->button == 3) {
 		showContextMenu(event);
 	}
@@ -822,7 +861,8 @@ bool DisplayerSelection::mouseMoveEvent(GdkEventMotion *event) {
 		for(const ResizeHandler& handler : m_resizeHandlers) {
 			handler(movePos, m_anchor, m_point);
 		}
-		setRect(Geometry::Rectangle(m_anchor, m_point));
+		Geometry::Rectangle newRect = Geometry::Rectangle(m_anchor, m_point).unite(m_minRect);
+		setRect(newRect);
 		m_signalGeometryChanged.emit(rect());
 		displayer()->ensureVisible(event->x, event->y);
 		return true;

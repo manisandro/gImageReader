@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditorText.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -26,8 +26,6 @@
 #include "MainWindow.hh"
 #include "OutputEditor.hh"
 #include "Ui_OutputEditorText.hh"
-
-class SubstitutionsManager;
 
 class OutputEditorText : public OutputEditor {
 	Q_OBJECT
@@ -63,18 +61,13 @@ private:
 
 	InsertMode m_insertMode;
 	QtSpell::TextEditChecker m_spell;
-	SubstitutionsManager* m_substitutionsManager;
-
-	void findReplace(bool backwards, bool replace);
 
 private slots:
 	void addText(const QString& text, bool insert);
-	void clearErrorState();
 	void filterBuffer();
-	void findNext();
-	void findPrev();
-	void replaceAll();
-	void replaceNext();
+	void findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace);
+	void replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase);
+	void applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase);
 	void setFont();
 	void setInsertMode(QAction* action);
 };

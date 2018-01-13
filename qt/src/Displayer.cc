@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Displayer.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -18,7 +18,6 @@
  */
 
 #include "MainWindow.hh"
-#include "Config.hh"
 #include "Displayer.hh"
 #include "DisplayRenderer.hh"
 #include "SourceManager.hh"
@@ -124,7 +123,9 @@ bool Displayer::setSources(QList<Source*> sources) {
 	Utils::setSpinBlocked(ui.spinBoxBrightness, 0);
 	Utils::setSpinBlocked(ui.spinBoxContrast, 0);
 	Utils::setSpinBlocked(ui.spinBoxResolution, 100);
+	ui.checkBoxInvertColors->blockSignals(true);
 	ui.checkBoxInvertColors->setChecked(false);
+	ui.checkBoxInvertColors->blockSignals(false);
 	ui.actionBestFit->setChecked(true);
 	ui.actionOriginalSize->setChecked(false);
 	ui.actionZoomIn->setEnabled(true);
@@ -178,8 +179,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 	return true;
 }
 
-bool Displayer::setup(const int* page, const int* resolution, const double* angle)
-{
+bool Displayer::setup(const int* page, const int* resolution, const double* angle) {
 	bool changed = false;
 	if(page) {
 		changed |= *page != ui.spinBoxPage->value();
@@ -633,7 +633,11 @@ void DisplayerSelection::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 		m_resizeHandlers.append(resizeAnchorY);
 		m_resizeOffset.setY(event->pos().y() - m_anchor.y());
 	}
-	event->accept();
+	if(!m_resizeHandlers.empty()) {
+		event->accept();
+	} else {
+		event->ignore();
+	}
 }
 
 void DisplayerSelection::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
@@ -645,7 +649,8 @@ void DisplayerSelection::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 		for(const ResizeHandler& handler : m_resizeHandlers) {
 			handler(p, m_anchor, m_point);
 		}
-		setRect(QRectF(m_anchor, m_point).normalized());
+		QRectF newRect = QRectF(m_anchor, m_point).normalized().united(m_minRect);
+		setRect(newRect);
 		emit geometryChanged(rect());
 		event->accept();
 	} else {

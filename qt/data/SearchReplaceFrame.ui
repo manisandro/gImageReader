@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SearchReplaceFrame</class>
+ <widget class="QFrame" name="SearchReplaceFrame">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>337</width>
+    <height>103</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Frame</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::StyledPanel</enum>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
+   </property>
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <item row="3" column="0" colspan="4">
+    <widget class="QPushButton" name="pushButtonSubstitutions">
+     <property name="text">
+      <string>Substitutions</string>
+     </property>
+     <property name="icon">
+      <iconset theme="document-edit">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QLineEdit" name="lineEditReplace">
+     <property name="placeholderText">
+      <string>Replace</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QToolButton" name="toolButtonReplaceAll">
+     <property name="toolTip">
+      <string>Replace all</string>
+     </property>
+     <property name="icon">
+      <iconset theme="edit-find-replace">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLineEdit" name="lineEditSearch">
+     <property name="placeholderText">
+      <string>Find</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QToolButton" name="toolButtonFindPrev">
+     <property name="toolTip">
+      <string>Find previous</string>
+     </property>
+     <property name="icon">
+      <iconset theme="go-up">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QToolButton" name="toolButtonFindNext">
+     <property name="toolTip">
+      <string>Find next</string>
+     </property>
+     <property name="icon">
+      <iconset theme="go-down">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QToolButton" name="toolButtonReplace">
+     <property name="toolTip">
+      <string>Replace</string>
+     </property>
+     <property name="icon">
+      <iconset theme="edit-find-replace">
+       <normaloff>.</normaloff>.</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="4">
+    <widget class="QCheckBox" name="checkBoxMatchCase">
+     <property name="text">
+      <string>Match case</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>lineEditSearch</tabstop>
+  <tabstop>toolButtonFindNext</tabstop>
+  <tabstop>toolButtonFindPrev</tabstop>
+  <tabstop>lineEditReplace</tabstop>
+  <tabstop>toolButtonReplace</tabstop>
+  <tabstop>toolButtonReplaceAll</tabstop>
+  <tabstop>checkBoxMatchCase</tabstop>
+  <tabstop>pushButtonSubstitutions</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

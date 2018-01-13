@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.2 -->
 <interface>
   <requires lib="gtk+" version="3.6"/>
-  <object class="GtkImage" id="image:backtrace:regenerate">
+  <object class="GtkImage" id="imageRegenerate">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="icon_name">view-refresh</property>
   </object>
-  <object class="GtkDialog" id="dialog:crashhandler">
+  <object class="GtkDialog" id="dialogCrashhandler">
     <property name="can_focus">False</property>
     <property name="default_width">480</property>
     <property name="default_height">640</property>
     <property name="icon_name">emblem-important</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">
-      <object class="GtkBox" id="vbox:crashhandler">
+      <object class="GtkBox" id="vbox">
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
-          <object class="GtkButtonBox" id="buttonbox:crashhandler">
+          <object class="GtkButtonBox" id="buttonbox">
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkButton" id="button:backtrace.regenerate">
+              <object class="GtkButton" id="buttonRegenerate">
                 <property name="label" translatable="yes">Regenerate backtrace</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="image">image:backtrace:regenerate</property>
+                <property name="image">imageRegenerate</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -36,7 +36,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button:crashhandler.close">
+              <object class="GtkButton" id="buttonClose">
                 <property name="label">gtk-close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -58,7 +58,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="label:crashhandler.title">
+          <object class="GtkLabel" id="labelTitle">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">&lt;b&gt;The application has crashed&lt;/b&gt;</property>
@@ -73,7 +73,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="label:crashhandler.info">
+          <object class="GtkLabel" id="labelInfo">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="label" translatable="yes">Apologies for the inconvenience. To help improve the application, please consider reporting the issue to &lt;a href="mailto:manisandro@gmail.com?subject=gImageReader%20Crash"&gt;manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were doing before the application crashed. Also, include the information below. Thank you.</property>
@@ -88,7 +88,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="label:crashhandler.autosave">
+          <object class="GtkLabel" id="labelAutosave">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="wrap">True</property>
@@ -101,12 +101,12 @@
           </packing>
         </child>
         <child>
-          <object class="GtkScrolledWindow" id="scrolledwindow:backtrace">
+          <object class="GtkScrolledWindow" id="scrolledwindow">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="shadow_type">in</property>
             <child>
-              <object class="GtkTextView" id="textview:backtrace">
+              <object class="GtkTextView" id="textview">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="editable">False</property>
@@ -120,7 +120,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkProgressBar" id="progressbar:backtrace">
+          <object class="GtkProgressBar" id="progressbar">
             <property name="can_focus">False</property>
           </object>
           <packing>
@@ -132,7 +132,10 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="-5">button:crashhandler.close</action-widget>
+      <action-widget response="-5">buttonClose</action-widget>
     </action-widgets>
+    <child>
+      <placeholder/>
+    </child>
   </object>
 </interface>

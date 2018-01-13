@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * ConfigSettings.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -25,17 +25,43 @@
 #include <QComboBox>
 #include <QFontDialog>
 #include <QFontComboBox>
+#include <QLineEdit>
 #include <QSettings>
 #include <QSpinBox>
 #include <QString>
 #include <QTableWidget>
 
+class AbstractSetting;
+
+#define ADD_SETTING(...) ((new __VA_ARGS__)->setParent(this))
+
+class ConfigSettings {
+public:
+	template<class T>
+	static T* get(const QString& key) {
+		auto it = s_settings.find(key);
+		return it == s_settings.end() ? nullptr : static_cast<T*>(it.value());
+	}
+
+private:
+	friend class AbstractSetting;
+	static QMap<QString,AbstractSetting*> s_settings;
+
+	static void add(AbstractSetting* setting);
+	static void remove(const QString& key);
+};
+
+
 class AbstractSetting : public QObject {
 	Q_OBJECT
 public:
 	AbstractSetting(const QString& key)
-		: m_key(key) {}
-	virtual ~AbstractSetting() {}
+		: m_key(key) {
+		ConfigSettings::add(this);
+	}
+	virtual ~AbstractSetting() {
+		ConfigSettings::remove(m_key);
+	}
 	const QString& key() const {
 		return m_key;
 	}
@@ -210,6 +236,25 @@ public slots:
 
 private:
 	QTableWidget* m_table;
+};
+
+class LineEditSetting : public AbstractSetting {
+	Q_OBJECT
+public:
+	LineEditSetting(const QString& key, QLineEdit* lineEdit, const QString& defaultValue = "")
+		: AbstractSetting(key), m_lineEdit(lineEdit) {
+		lineEdit->setText(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toString());
+		connect(lineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(serialize()));
+	}
+
+public slots:
+	void serialize() override {
+		QSettings().setValue(m_key, QVariant::fromValue(m_lineEdit->text()));
+		emit changed();
+	}
+
+private:
+	QLineEdit* m_lineEdit;
 };
 
 #endif // CONFIGSETTINGS_HH

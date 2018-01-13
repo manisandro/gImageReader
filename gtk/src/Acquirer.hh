@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Acquirer.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -23,10 +23,13 @@
 #include "common.hh"
 #include "Scanner.hh"
 
+namespace Ui {
+class MainWindow;
+}
 
 class Acquirer {
 public:
-	Acquirer();
+	Acquirer(const Ui::MainWindow& _ui);
 	~Acquirer();
 
 	sigc::signal<void,std::string> signal_scanPageAvailable() const {
@@ -42,20 +45,12 @@ private:
 			add(label);
 			add(name);
 		}
-	};
+	} m_devComboCols;
 
-	Gtk::Button* m_refreshButton;
-	Gtk::Button* m_scanButton;
+	const Ui::MainWindow& ui;
+	ClassData m_classdata;
+
 	Gtk::Button* m_cancelButton;
-	Gtk::ButtonBox* m_buttonBox;
-	Gtk::ComboBox* m_devCombo;
-	Gtk::ComboBox* m_modeCombo;
-	Gtk::ComboBox* m_resCombo;
-	Gtk::ComboBox* m_sourceCombo;
-	Gtk::Label* m_msgLabel;
-	Gtk::Label* m_outputLabel;
-	Gtk::Spinner* m_refreshSpinner;
-	DevicesComboColumns m_devComboCols;
 	std::string m_outputPath;
 	sigc::signal<void,std::string> m_signal_scanPageAvailable;
 	Scanner* m_scanner = nullptr;

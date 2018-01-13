@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Utils.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -30,7 +30,6 @@
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 #include <QSslConfiguration>
-#include <QTextStream>
 #include <QTimer>
 #include <QUrl>
 
@@ -122,7 +121,6 @@ void Utils::setSpinBlocked(QDoubleSpinBox *spin, double value) {
 
 bool Utils::handleSourceDragEvent(const QMimeData* mimeData) {
 	if(mimeData->hasImage()) {
-		QTextStream(stdout) << "hasImage" << endl;
 		return true;
 	}
 	QList<QByteArray> formats = QImageReader::supportedImageFormats();
@@ -143,7 +141,6 @@ bool Utils::handleSourceDragEvent(const QMimeData* mimeData) {
 
 void Utils::handleSourceDropEvent(const QMimeData* mimeData) {
 	if(mimeData->hasImage()) {
-		QTextStream(stdout) << "hasImage" << endl;
 		MAIN->getSourceManager()->addSourceImage(qvariant_cast<QImage>(mimeData->imageData()));
 		return;
 	}

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Recognizer.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -42,33 +42,30 @@
 #define pipe(fds) _pipe(fds, 5000, _O_BINARY)
 #endif
 
+#include "ConfigSettings.hh"
 #include "Displayer.hh"
 #include "MainWindow.hh"
 #include "OutputEditor.hh"
 #include "Recognizer.hh"
-#include "TessdataManager.hh"
 #include "Utils.hh"
 
-struct Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
+class Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
+public:
 	ETEXT_DESC desc;
-	bool canceled = false;
-	int donePages = 0;
-	int nPages;
 
-	ProgressMonitor(int _nPages) {
+	ProgressMonitor(int nPages) : MainWindow::ProgressMonitor(nPages) {
 		desc.progress = 0;
 		desc.cancel = cancelCallback;
 		desc.cancel_this = this;
-		nPages = _nPages;
 	}
-	int getProgress() {
-		return 100.0 * ((donePages + desc.progress / 100.0) / nPages);
-	}
-	void cancel() {
-		canceled = true;
+	int getProgress() const override {
+		QMutexLocker locker(&mMutex);
+		return 100.0 * ((mProgress + desc.progress / 100.0) / mTotal);
 	}
 	static bool cancelCallback(void* instance, int /*words*/) {
-		return reinterpret_cast<ProgressMonitor*>(instance)->canceled;
+		ProgressMonitor* monitor = reinterpret_cast<ProgressMonitor*>(instance);
+		QMutexLocker locker(&monitor->mMutex);
+		return monitor->mCancelled;
 	}
 };
 
@@ -96,11 +93,11 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	connect(multiplePagesAction, SIGNAL(triggered()), this, SLOT(recognizeMultiplePages()));
 	connect(m_pagesDialogUi.lineEditPageRange, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditPageRangeStyle()));
 
-	MAIN->getConfig()->addSetting(new VarSetting<QString>("language", "eng:en_EN"));
-	MAIN->getConfig()->addSetting(new ComboSetting("ocrregionstrategy", m_pagesDialogUi.comboBoxRecognitionArea, 0));
-	MAIN->getConfig()->addSetting(new SwitchSetting("ocraddsourcefilename", m_pagesDialogUi.checkBoxPrependFilename));
-	MAIN->getConfig()->addSetting(new SwitchSetting("ocraddsourcepage", m_pagesDialogUi.checkBoxPrependPage));
-	MAIN->getConfig()->addSetting(new VarSetting<int>("psm", 6));
+	ADD_SETTING(VarSetting<QString>("language", "eng:en_EN"));
+	ADD_SETTING(ComboSetting("ocrregionstrategy", m_pagesDialogUi.comboBoxRecognitionArea, 0));
+	ADD_SETTING(SwitchSetting("ocraddsourcefilename", m_pagesDialogUi.checkBoxPrependFilename));
+	ADD_SETTING(SwitchSetting("ocraddsourcepage", m_pagesDialogUi.checkBoxPrependPage));
+	ADD_SETTING(VarSetting<int>("psm", 6));
 }
 
 QStringList Recognizer::getAvailableLanguages() const {
@@ -182,7 +179,7 @@ void Recognizer::updateLanguagesMenu() {
 	QAction* activeitem = nullptr;
 	bool haveOsd = false;
 
-	QStringList parts = MAIN->getConfig()->getSetting<VarSetting<QString>>("language")->getValue().split(":");
+	QStringList parts = ConfigSettings::get<VarSetting<QString>>("language")->getValue().split(":");
 	Config::Lang curlang = {parts.empty() ? "eng" : parts[0], parts.size() < 2 ? "" : parts[1], parts.size() < 3 ? "" : parts[2]};
 
 	QList<QString> dicts = QtSpell::Checker::getLanguageList();
@@ -286,7 +283,7 @@ void Recognizer::updateLanguagesMenu() {
 	// Add PSM items
 	ui.menuLanguages->addSeparator();
 	QMenu* psmMenu = new QMenu();
-	int activePsm = MAIN->getConfig()->getSetting<VarSetting<int>>("psm")->getValue();
+	int activePsm = ConfigSettings::get<VarSetting<int>>("psm")->getValue();
 
 	struct PsmEntry {
 		QString label;
@@ -321,7 +318,7 @@ void Recognizer::updateLanguagesMenu() {
 
 	// Add installer item
 	ui.menuLanguages->addSeparator();
-	ui.menuLanguages->addAction(_("Manage languages..."), this, SLOT(manageInstalledLanguages()));
+	ui.menuLanguages->addAction(_("Manage languages..."), MAIN, SLOT(manageLanguages()));
 }
 
 void Recognizer::setLanguage() {
@@ -335,7 +332,7 @@ void Recognizer::setLanguage() {
 		}
 		ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 		m_curLang = lang;
-		MAIN->getConfig()->getSetting<VarSetting<QString>>("language")->setValue(lang.prefix + ":" + lang.code);
+		ConfigSettings::get<VarSetting<QString>>("language")->setValue(lang.prefix + ":" + lang.code);
 		emit languageChanged(m_curLang);
 	}
 }
@@ -355,7 +352,7 @@ void Recognizer::setMultiLanguage() {
 	m_langLabel = langs;
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 	m_curLang = {langs, "", "Multilingual"};
-	MAIN->getConfig()->getSetting<VarSetting<QString>>("language")->setValue(langs + ":");
+	ConfigSettings::get<VarSetting<QString>>("language")->setValue(langs + ":");
 	emit languageChanged(m_curLang);
 }
 
@@ -369,7 +366,7 @@ void Recognizer::clearLineEditPageRangeStyle() {
 }
 
 void Recognizer::psmSelected(QAction *action) {
-	MAIN->getConfig()->getSetting<VarSetting<int>>("psm")->setValue(action->data().toInt());
+	ConfigSettings::get<VarSetting<int>>("psm")->setValue(action->data().toInt());
 }
 
 QList<int> Recognizer::selectPages(bool& autodetectLayout) {
@@ -445,8 +442,8 @@ void Recognizer::recognizeMultiplePages() {
 
 void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 	tesseract::TessBaseAPI tess;
-	bool prependFile = pages.size() > 1 && MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcefilename")->getValue();
-	bool prependPage = pages.size() > 1 && MAIN->getConfig()->getSetting<SwitchSetting>("ocraddsourcepage")->getValue();
+	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
+	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
 	if(initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())) {
 		QString failed;
 		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_psmCheckGroup->checkedAction()->data().toInt()));
@@ -462,20 +459,22 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 				++idx;
 				QMetaObject::invokeMethod(MAIN, "pushState", Qt::QueuedConnection, Q_ARG(MainWindow::State, MainWindow::State::Busy), Q_ARG(QString, _("Recognizing page %1 (%2 of %3)").arg(page).arg(idx).arg(npages)));
 
-				bool success = false;
-				QMetaObject::invokeMethod(this, "setPage", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(int, page), Q_ARG(bool, autodetectLayout));
-				if(!success) {
+				PageData pageData;
+				pageData.success = false;
+				QMetaObject::invokeMethod(this, "setPage", Qt::BlockingQueuedConnection, Q_RETURN_ARG(PageData, pageData), Q_ARG(int, page), Q_ARG(bool, autodetectLayout));
+				if(!pageData.success) {
 					failed.append(_("\n- Page %1: failed to render page").arg(page));
 					MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
 					continue;
 				}
-				readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
-				readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
-				readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
+				readSessionData->file = pageData.filename;
+				readSessionData->page = pageData.page;
+				readSessionData->angle = pageData.angle;
+				readSessionData->resolution = pageData.resolution;
 				bool firstChunk = true;
 				bool newFile = readSessionData->file != prevFile;
 				prevFile = readSessionData->file;
-				for(const QImage& image : MAIN->getDisplayer()->getOCRAreas()) {
+				for(const QImage& image : pageData.ocrAreas) {
 					readSessionData->prependPage = prependPage && firstChunk;
 					readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
 					firstChunk = false;
@@ -483,13 +482,13 @@ void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
 					tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 					tess.SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 					tess.Recognize(&monitor.desc);
-					if(!monitor.canceled) {
+					if(!monitor.cancelled()) {
 						MAIN->getOutputEditor()->read(tess, readSessionData);
 					}
 				}
 				QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
-				++monitor.donePages;
-				if(monitor.canceled) {
+				monitor.increaseProgress();
+				if(monitor.cancelled()) {
 					break;
 				}
 			}
@@ -519,7 +518,7 @@ bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 		readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
 		Utils::busyTask([&] {
 			tess.Recognize(&monitor.desc);
-			if(!monitor.canceled) {
+			if(!monitor.cancelled()) {
 				MAIN->getOutputEditor()->read(tess, readSessionData);
 			}
 			return true;
@@ -529,7 +528,7 @@ bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 		QString output;
 		if(Utils::busyTask([&] {
 		tess.Recognize(&monitor.desc);
-			if(!monitor.canceled) {
+			if(!monitor.cancelled()) {
 				char* text = tess.GetUTF8Text();
 				output = QString::fromUtf8(text);
 				delete[] text;
@@ -544,12 +543,19 @@ bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 	return true;
 }
 
-bool Recognizer::setPage(int page, bool autodetectLayout) {
-	bool success = MAIN->getDisplayer()->setup(&page);
-	if(success && autodetectLayout) {
-		MAIN->getDisplayer()->autodetectOCRAreas();
+Recognizer::PageData Recognizer::setPage(int page, bool autodetectLayout) {
+	PageData pageData;
+	pageData.success = MAIN->getDisplayer()->setup(&page);
+	if(pageData.success) {
+		if(autodetectLayout) {
+			MAIN->getDisplayer()->autodetectOCRAreas();
+		}
+		pageData.filename = MAIN->getDisplayer()->getCurrentImage(pageData.page);
+		pageData.angle = MAIN->getDisplayer()->getCurrentAngle();
+		pageData.resolution = MAIN->getDisplayer()->getCurrentResolution();
+		pageData.ocrAreas = MAIN->getDisplayer()->getOCRAreas();
 	}
-	return success;
+	return pageData;
 }
 
 bool Recognizer::eventFilter(QObject* obj, QEvent* ev) {
@@ -574,11 +580,4 @@ bool Recognizer::eventFilter(QObject* obj, QEvent* ev) {
 		}
 	}
 	return QObject::eventFilter(obj, ev);
-}
-
-void Recognizer::manageInstalledLanguages() {
-	TessdataManager manager(MAIN);
-	if(manager.setup()) {
-		manager.exec();
-	}
 }

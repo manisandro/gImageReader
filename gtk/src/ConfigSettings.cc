@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * ConfigSettings.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) (\d+)-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -20,7 +20,22 @@
 #include "ConfigSettings.hh"
 #include "Utils.hh"
 
-Glib::RefPtr<Gio::Settings> get_default_settings() {
+
+std::map<Glib::ustring,AbstractSetting*> ConfigSettings::s_settings;
+
+void ConfigSettings::add(AbstractSetting* setting) {
+	s_settings.insert(std::make_pair(setting->key(), setting));
+}
+
+void ConfigSettings::remove(const Glib::ustring& key) {
+	auto it = s_settings.find(key);
+	if(it != s_settings.end()) {
+		s_settings.erase(it);
+	}
+}
+
+
+Glib::RefPtr<Gio::Settings> AbstractSetting::get_default_settings() {
 	static Glib::RefPtr<Gio::Settings> settings = Gio::Settings::create(APPLICATION_ID);
 	return settings;
 }
@@ -57,4 +72,5 @@ void ListStoreSetting::serialize() {
 	}
 	Glib::Variant<Glib::ustring> v = Glib::Variant<Glib::ustring>::create(str);
 	get_default_settings()->set_value(m_key, v);
+	m_signal_changed.emit();
 }

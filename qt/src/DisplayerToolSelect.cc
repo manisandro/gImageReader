@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * DisplayerToolSelect.cc
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -35,17 +35,13 @@
 #include <QStyle>
 
 
-DisplayerToolSelect::DisplayerToolSelect(QAction* actionAutodetectLayout, Displayer *displayer, QObject *parent)
-	: DisplayerTool(displayer, parent), mActionAutodetectLayout(actionAutodetectLayout) {
-	connect(mActionAutodetectLayout, SIGNAL(triggered()), this, SLOT(autodetectLayout()));
-
-	mActionAutodetectLayout->setVisible(true);
+DisplayerToolSelect::DisplayerToolSelect(Displayer *displayer, QObject *parent)
+	: DisplayerTool(displayer, parent) {
 	updateRecognitionModeLabel();
 }
 
 DisplayerToolSelect::~DisplayerToolSelect() {
 	clearSelections();
-	mActionAutodetectLayout->setVisible(false);
 }
 
 void DisplayerToolSelect::mousePressEvent(QMouseEvent *event) {
@@ -185,7 +181,8 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 	// unless we already attempted to rotate (to prevent endless loops)
 	avgDeskew = qRound(((avgDeskew/nDeskew)/M_PI * 180.0) * 10.0) / 10.0;
 	if(std::abs(avgDeskew) > 0.1 && !noDeskew) {
-		m_displayer->setAngle(m_displayer->getCurrentAngle() - avgDeskew);
+		double newangle = m_displayer->getCurrentAngle() - avgDeskew;
+		m_displayer->setup(nullptr, nullptr, &newangle);
 		autodetectLayout(true);
 	} else {
 		// Merge overlapping rectangles

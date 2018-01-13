@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Utils.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -52,14 +52,19 @@ void set_error_state(Gtk::Entry* entry);
 void clear_error_state(Gtk::Entry* entry);
 
 Glib::ustring get_content_type(const std::string& filename);
-void get_filename_parts(const std::string& filename, std::string& base, std::string& ext);
-std::string make_absolute_path(const std::string& path);
+std::pair<std::string, std::string> split_filename(const std::string& filename);
+std::string make_absolute_path(const std::string& path, const std::string& basepath);
+std::string make_relative_path(const std::string& path, const std::string& basepath);
 std::string get_documents_dir();
 std::string make_output_filename(const std::string& filename);
 
 std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, bool keepEmpty = true);
 Glib::ustring string_join(const std::vector<Glib::ustring>& strings, const Glib::ustring& joiner);
-Glib::ustring string_trim(const Glib::ustring& str);
+Glib::ustring string_trim(const Glib::ustring& str, const Glib::ustring& what=" \t\n\r");
+bool strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, bool matchCase);
+std::size_t string_firstIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
+std::size_t string_lastIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
+int string_replace(Glib::ustring& str, const Glib::ustring& search, const Glib::ustring& replace, bool matchCase);
 
 int parseInt(const Glib::ustring& str, bool* ok = nullptr);
 
@@ -105,20 +110,20 @@ void runInMainThreadBlocking(const std::function<void()>& f);
 template<typename T, typename S = std::deque<T>>
 class AsyncQueue {
 	std::queue<T,S>   queue_;
-	Glib::Mutex       mutex_;
-	Glib::Cond        cond_;
+	Glib::Threads::Mutex       mutex_;
+	Glib::Threads::Cond        cond_;
 public:
 	bool empty() {
-		Glib::Mutex::Lock queue_guard(mutex_);
+		Glib::Threads::Mutex::Lock queue_guard(mutex_);
 		return queue_.empty();
 	}
 	void enqueue(const T& item) {
-		Glib::Mutex::Lock queue_guard(mutex_);
+		Glib::Threads::Mutex::Lock queue_guard(mutex_);
 		queue_.push(item);
 		cond_.signal();
 	}
 	T dequeue() {
-		Glib::Mutex::Lock queue_guard(mutex_);
+		Glib::Threads::Mutex::Lock queue_guard(mutex_);
 		if(queue_.empty()) {
 			while ( queue_.empty() )
 				cond_.wait(mutex_);

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * TessdataManager.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -38,7 +38,7 @@
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
 
-#include "Config.hh"
+#include "ConfigSettings.hh"
 #include "MainWindow.hh"
 #include "Recognizer.hh"
 #include "TessdataManager.hh"
@@ -192,7 +192,6 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 void TessdataManager::applyChanges() {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying changes..."));
 	setEnabled(false);
-	setCursor(Qt::WaitCursor);
 	QString errorMsg;
 	QStringList availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
 	QDir tessDataDir(MAIN->getConfig()->tessdataLocation());
@@ -269,7 +268,6 @@ void TessdataManager::applyChanges() {
 			errorMsg = _("The following files could not be downloaded or removed:\n%1\n\nCheck the connectivity and directory permissions.").arg(errors.join("\n"));
 		}
 	}
-	unsetCursor();
 	setEnabled(true);
 	MAIN->popState();
 	refresh();

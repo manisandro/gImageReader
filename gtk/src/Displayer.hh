@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Displayer.hh
- * Copyright (C) 2013-2017 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2018 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -20,7 +20,6 @@
 #ifndef DISPLAYER_HH
 #define DISPLAYER_HH
 
-#include "common.hh"
 #include "Geometry.hh"
 
 #include <cairomm/cairomm.h>
@@ -33,10 +32,13 @@ class DisplayerImageItem;
 class DisplayerTool;
 class DisplayRenderer;
 class Source;
+namespace Ui {
+class MainWindow;
+}
 
 class Displayer {
 public:
-	Displayer();
+	Displayer(const Ui::MainWindow& _ui);
 	~Displayer() {
 		setSources(std::vector<Source*>());
 	}
@@ -44,36 +46,27 @@ public:
 		m_tool = tool;
 	}
 	bool setSources(const std::vector<Source*> sources);
-	int getCurrentPage() const {
-		return m_pagespin->get_value_as_int();
-	}
-	bool setCurrentPage(int page);
-	double getCurrentAngle() const {
-		return m_rotspin->get_value();
-	}
+	bool setup(const int* page, const int* resolution = nullptr, const double* angle = nullptr);
+	int getCurrentPage() const;
+	int getCurrentResolution() const;
+	double getCurrentAngle() const;
 	double getCurrentScale() const {
 		return m_scale;
 	}
-	void setAngle(double angle);
-	int getCurrentResolution() {
-		return m_resspin->get_value_as_int();
-	}
-	void setResolution(int resolution);
 	std::string getCurrentImage(int& page) const;
+	int getNPages() const;
+
 	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
 	Geometry::Rectangle getSceneBoundingRect() const;
 	Geometry::Point mapToSceneClamped(const Geometry::Point& p) const;
-	int getNPages() {
-		double min, max;
-		m_pagespin->get_range(min, max);
-		return int(max);
-	}
+	Geometry::Point mapToView(const Geometry::Point& p) const;
 	bool hasMultipleOCRAreas();
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
 	bool allowAutodetectOCRAreas() const;
 	void autodetectOCRAreas();
 	void setCursor(Glib::RefPtr<Gdk::Cursor> cursor);
 	void ensureVisible(double evx, double evy);
+	void ensureVisible(const Geometry::Rectangle& rect);
 
 	void addItem(DisplayerItem* item);
 	void removeItem(DisplayerItem* item);
@@ -85,22 +78,11 @@ private:
 	enum class Zoom { In, Out, Fit, One };
 	enum class RotateMode { CurrentPage, AllPages } m_rotateMode;
 
-	Gtk::DrawingArea* m_canvas;
-	Gtk::Viewport* m_viewport;
+	const Ui::MainWindow& ui;
+	ClassData m_classdata;
+
 	Glib::RefPtr<Gtk::Adjustment> m_hadj;
 	Glib::RefPtr<Gtk::Adjustment> m_vadj;
-	Gtk::Button* m_zoominbtn;
-	Gtk::Button* m_zoomoutbtn;
-	Gtk::ToggleButton* m_zoomfitbtn;
-	Gtk::ToggleButton* m_zoomonebtn;
-	Gtk::Image* m_rotimage;
-	Gtk::SpinButton* m_rotspin;
-	Gtk::SpinButton* m_pagespin;
-	Gtk::SpinButton* m_resspin;
-	Gtk::SpinButton* m_brispin;
-	Gtk::SpinButton* m_conspin;
-	Gtk::ScrolledWindow* m_scrollwin;
-	Gtk::CheckButton* m_invcheck;
 
 	std::vector<Source*> m_sources;
 	std::map<int, std::pair<Source*, int>> m_pageMap;
@@ -136,13 +118,10 @@ private:
 	void setZoom(Zoom zoom);
 
 	bool renderImage();
-	void brightnessChanged();
-	void contrastChanged();
-	void resolutionChanged();
-	void invertColorsChanged();
 	void drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx);
 	void positionCanvas();
 	void queueRenderImage();
+	void setAngle(double angle);
 	void setRotateMode(RotateMode mode, const std::string& iconName);
 
 	struct ScaleRequest {
@@ -166,9 +145,10 @@ private:
 	void sendScaleRequest(const ScaleRequest& request);
 	void scaleThread();
 	void setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image);
+	std::pair<int, int> getPointVisible(const Geometry::Point& p) const;
 };
 
-class DisplayerItem {
+class DisplayerItem : public sigc::trackable {
 public:
 	friend class Displayer;
 	virtual ~DisplayerItem() {}
@@ -244,6 +224,9 @@ public:
 		m_point = point;
 		setRect(Geometry::Rectangle(m_anchor, m_point));
 	}
+	void setMinimumRect(const Geometry::Rectangle& rect) {
+		m_minRect = rect;
+	}
 	void rotate(const Geometry::Rotation &R) {
 		m_anchor = R.rotate(m_anchor);
 		m_point = R.rotate(m_point);
@@ -272,6 +255,7 @@ private:
 
 	Geometry::Point m_anchor;
 	Geometry::Point m_point;
+	Geometry::Rectangle m_minRect;
 	std::vector<ResizeHandler> m_resizeHandlers;
 	Geometry::Point m_resizeOffset;
 	sigc::signal<void, Geometry::Rectangle> m_signalGeometryChanged;
