@@ -485,24 +485,21 @@ bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const {
 }
 
 void HOCRDocument::deleteItem(HOCRItem* item) {
-	if(item->parent()) {
-		item->parent()->removeChild(item);
-	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
-		int idx = page->index();
-		delete m_pages.takeAt(idx);
-		for(int i = idx, n = m_pages.size(); i < n; ++i) {
-			m_pages[i]->m_index = i;
-		}
-		emit dataChanged(index(0, 0), index(m_pages.size() - 1, 0), {Qt::DisplayRole});
-	}
+	takeItem(item);
+	delete item;
 }
 
 void HOCRDocument::takeItem(HOCRItem* item) {
 	if(item->parent()) {
 		item->parent()->takeChild(item);
 	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
-		int idx = m_pages.indexOf(page);
-		m_pages.takeAt(idx);
+		m_document.documentElement().removeChild(page->m_domElement);
+		int i = page->index();
+		m_pages.remove(i);
+		for(int n = m_pages.size(); i < n; ++i) {
+			m_pages[i]->m_index = i;
+		}
+		emit dataChanged(index(page->index(), 0), index(m_pages.size() - 1, 0), {Qt::DisplayRole});
 	}
 }
 
@@ -587,20 +584,28 @@ void HOCRItem::insertChild(HOCRItem* child, int i) {
 	m_childItems.insert(i, child);
 	child->m_parentItem = this;
 	child->m_pageItem = m_pageItem;
-}
-
-void HOCRItem::removeChild(HOCRItem *child) {
-	m_domElement.removeChild(child->m_domElement);
-	int idx = child->index();
-	delete m_childItems.takeAt(idx);
-	for(int i = idx, n = m_childItems.size(); i < n ; ++i) {
+	child->m_index = i++;
+	for(int n = m_childItems.size(); i < n; ++i) {
 		m_childItems[i]->m_index = i;
 	}
 }
 
+void HOCRItem::removeChild(HOCRItem *child) {
+	takeChild(child);
+	delete child;
+}
+
 void HOCRItem::takeChild(HOCRItem* child) {
+	if(this != child->parent()) {
+		return;
+	}
 	m_domElement.removeChild(child->m_domElement);
-	m_childItems.takeAt(m_childItems.indexOf(child));
+	int i = child->index();
+	m_childItems.remove(i);
+	int n = m_childItems.size();
+	for(int n = m_childItems.size(); i < n; ++i) {
+		m_childItems[i]->m_index = i;
+	}
 }
 
 QVector<HOCRItem*> HOCRItem::takeChildren() {
