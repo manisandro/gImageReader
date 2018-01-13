@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>495</width>
-    <height>603</height>
+    <height>715</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,7 +50,7 @@
    <item row="0" column="0" colspan="2">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabBasic">
       <attribute name="title">
@@ -618,6 +618,13 @@
           </item>
           <item row="2" column="3">
            <widget class="QLineEdit" name="lineEditKeywords"/>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QPushButton" name="pushButtonImportAddInfo">
+            <property name="text">
+             <string>Import from source</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

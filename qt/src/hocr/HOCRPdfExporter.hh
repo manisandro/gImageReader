@@ -101,6 +101,7 @@ private:
 	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale = 1.);
 
 private slots:
+	void addInfoClicked();
 	void imageFormatChanged();
 	void imageCompressionChanged();
 	void paperSizeChanged();

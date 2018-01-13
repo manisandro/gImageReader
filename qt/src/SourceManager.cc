@@ -107,17 +107,13 @@ int SourceManager::addSources(const QStringList& files) {
 			++added;
 			continue;
 		}
-		QByteArray password;
-		if(!querySourcePassword(filename, password)) {
+
+		Source* source = new Source(filename, QFileInfo(filename).fileName());
+		if(!processInputSource(filename, source, filesWithText)) {
+			delete source;
 			continue;
 		}
 
-		// Check text layer.
-		if(!checkTextLayer(filename)) {
-			filesWithText.push_back(filename);
-		}
-
-		Source* source = new Source(filename, QFileInfo(filename).fileName(), password);
 		item = new QListWidgetItem(QFileInfo(filename).fileName(), ui.listWidgetSources);
 		item->setToolTip(filename);
 		item->setData(Qt::UserRole, QVariant::fromValue(source));
@@ -142,46 +138,63 @@ int SourceManager::addSources(const QStringList& files) {
 	return added;
 }
 
-bool SourceManager::querySourcePassword(const QString& filename, QByteArray& password) const {
-	bool success = true;
-	if(filename.endsWith(".pdf", Qt::CaseInsensitive)) {
-		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(filename));
-		if(document && document->isLocked()) {
-			success = false;
-			bool ok = false;
-			QString message = QString(_("Enter password for file '%1':")).arg(QFileInfo(filename).fileName());
-			QString text;
-			while(true) {
-				text = QInputDialog::getText(MAIN, _("Protected PDF"), message, QLineEdit::Password, text, &ok);
-				if(!ok) {
-					break;
-				}
-				if(!document->unlock(text.toLocal8Bit(), text.toLocal8Bit())) {
-					password = text.toLocal8Bit();
-					success = true;
-					break;
-				}
+bool SourceManager::querySourcePassword(const QString& filename, QByteArray& password, Poppler::Document* document) const {
+	if(document->isLocked()) {
+		bool ok = false;
+		QString message = QString(_("Enter password for file '%1':")).arg(QFileInfo(filename).fileName());
+		QString text;
+		while(true) {
+			text = QInputDialog::getText(MAIN, _("Protected PDF"), message, QLineEdit::Password, text, &ok);
+			if(!ok) {
+				return false;
 			}
-		}
-	}
-	return success;
-}
-
-bool SourceManager::checkTextLayer(const QString& filename) const {
-	if(filename.endsWith(".pdf", Qt::CaseInsensitive)) {
-		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(filename));
-		if(document) {
-			const int pagesNbr = document->numPages();
-
-			for (int i = 0; i < pagesNbr; ++i) {
-				QString text = document->page(i)->text(QRectF());
-				if(!text.isEmpty()) {
-					return false;
-				}
+			if(!document->unlock(text.toLocal8Bit(), text.toLocal8Bit())) {
+				password = text.toLocal8Bit();
+				return true;
 			}
 		}
 	}
 	return true;
+}
+
+bool SourceManager::withTextLayer(const Poppler::Document* const document) const {
+	const int pagesNbr = document->numPages();
+
+	for (int i = 0; i < pagesNbr; ++i) {
+		QString text = document->page(i)->text(QRectF());
+		if(!text.isEmpty()) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool SourceManager::processInputSource(const QString& filename, Source* source, QStringList& filesWithText) const {
+	if(filename.endsWith(".pdf", Qt::CaseInsensitive)) {
+		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(filename));
+		if(!document) {
+			return false;
+		}
+		QByteArray password;
+		if(!querySourcePassword(filename, password, document.get())) {
+			return false;
+		}
+		source->password = password;
+		if(withTextLayer(document.get())) {
+			filesWithText.push_back(filename);
+		}
+		extractAdditionalInfo(source, document.get());
+	}
+	return true;
+}
+
+void SourceManager::extractAdditionalInfo(Source* source, const Poppler::Document* const document) const {
+	source->author = document->author();
+	source->creator = document->creator();
+	source->keywords = document->keywords();
+	source->producer = document->producer();
+	source->title = document->title();
+	source->subject = document->subject();
 }
 
 QList<Source*> SourceManager::getSelectedSources() const {
