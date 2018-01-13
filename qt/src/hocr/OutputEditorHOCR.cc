@@ -530,58 +530,56 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 	QModelIndexList indices = ui.treeViewHOCR->selectionModel()->selectedRows();
 	int nIndices = indices.size();
 	if(nIndices > 1) {
-		// Check if item merging is allowed (no pages, all items of same class and with same parent and consecutive)
+		// Check if merging or swapping is allowed (items are valid siblings)
 		const HOCRItem* firstItem = m_document->itemAtIndex(indices.first());
-		bool ok = firstItem;
-		QSet<QString> classes;
-		if(firstItem) {
-			classes.insert(firstItem->itemClass());
+		if(!firstItem) {
+			return;
 		}
+		QSet<QString> classes;
+		classes.insert(firstItem->itemClass());
 		QVector<int> rows = {indices.first().row()};
-		for(int i = 1; i < nIndices && ok; ++i) {
+		for(int i = 1; i < nIndices; ++i) {
 			const HOCRItem* item = m_document->itemAtIndex(indices[i]);
-			if(!item) {
-				ok = false;
-				break;
+			if(!item || item->parent() != firstItem->parent()) {
+				return;
 			}
-			ok &= item->parent() == firstItem->parent();
 			classes.insert(item->itemClass());
 			rows.append(indices[i].row());
 		}
-		ok &= classes.size() == 1;
-		if(ok) {
-			QMenu menu;
-			qSort(rows);
-			bool consecutive = (rows.last() - rows.first()) == nIndices - 1;
-			bool graphics = firstItem->itemClass() == "ocr_graphic";
-			bool pages = firstItem->itemClass() == "ocr_page";
 
-			QAction* mergeAction = nullptr;
-			QAction* swapAction = nullptr;
-			if(consecutive && !graphics && !pages) { // Merging allowed
-				mergeAction = menu.addAction(_("Merge"));
-			}
-			if(nIndices == 2) { // Swapping allowed
-				swapAction = menu.addAction(_("Swap"));
-			}
+		// OK!
+		QMenu menu;
+		qSort(rows);
+		bool consecutive = (rows.last() - rows.first()) == nIndices - 1;
+		bool graphics = firstItem->itemClass() == "ocr_graphic";
+		bool pages = firstItem->itemClass() == "ocr_page";
+		bool sharedClass = classes.size() == 1;
 
-			QAction* clickedAction = menu.exec(ui.treeViewHOCR->mapToGlobal(point));
-			if(!clickedAction) {
-				return;
-			}
-			ui.treeViewHOCR->selectionModel()->blockSignals(true);
-			QModelIndex newIndex;
-			if(clickedAction == mergeAction) {
-					newIndex = m_document->mergeItems(indices.first().parent(), rows.first(), rows.last());
-			} else if(clickedAction == swapAction) {
-					newIndex = m_document->swapItems(indices.first().parent(), rows.first(), rows.last(), pages);
-			}
-			if(newIndex.isValid()) {
-			ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect);
-				showItemProperties(newIndex);
-			}
-			ui.treeViewHOCR->selectionModel()->blockSignals(false);
+		QAction* mergeAction = nullptr;
+		QAction* swapAction = nullptr;
+		if(consecutive && !graphics && !pages && sharedClass) { // Merging allowed
+			mergeAction = menu.addAction(_("Merge"));
 		}
+		if(nIndices == 2) { // Swapping allowed
+			swapAction = menu.addAction(_("Swap"));
+		}
+
+		QAction* clickedAction = menu.exec(ui.treeViewHOCR->mapToGlobal(point));
+		if(!clickedAction) {
+			return;
+		}
+		ui.treeViewHOCR->selectionModel()->blockSignals(true);
+		QModelIndex newIndex;
+		if(clickedAction == mergeAction) {
+			newIndex = m_document->mergeItems(indices.first().parent(), rows.first(), rows.last());
+		} else if(clickedAction == swapAction) {
+			newIndex = m_document->swapItems(indices.first().parent(), rows.first(), rows.last(), pages);
+		}
+		if(newIndex.isValid()) {
+		ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect);
+			showItemProperties(newIndex);
+		}
+		ui.treeViewHOCR->selectionModel()->blockSignals(false);
 		// Nothing else is allowed with multiple items selected
 		return;
 	}
