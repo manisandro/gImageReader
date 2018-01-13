@@ -84,7 +84,7 @@ bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& na
 
 // Might be more logical to accept oldParent and oldRow as parameters rather than itemIndex
 // (since we need them anyway), if all our callers are likely to know them. Swap does; drag&drop might not.
-QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelIndex& newParent, int newRow, bool page) {
+QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelIndex& newParent, int newRow) {
 	HOCRItem* item = mutableItemAtIndex(itemIndex);
 	if(!item) {
 		return QModelIndex();
@@ -98,11 +98,11 @@ QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelInd
 	}
 	int oldRow = itemIndex.row();
 	QModelIndex oldParent = itemIndex.parent();
-	HOCRItem* parentItem = mutableItemAtIndex(newParent);
 	bool decr = false;
 	if(decr = (oldParent == newParent && oldRow < newRow)) {
 		--newRow;
 	}
+	HOCRItem* parentItem = mutableItemAtIndex(newParent);
 	if(parentItem) {
 		beginRemoveRows(oldParent, oldRow, oldRow);
 		takeItem(item);
@@ -110,7 +110,7 @@ QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelInd
 		beginInsertRows(newParent, newRow, newRow);
 		parentItem->insertChild(item, newRow);
 		endInsertRows();
-	} else if(page) {
+	} else if(item->itemClass() == "ocr_page") {
 		beginRemoveRows(QModelIndex(), oldRow, oldRow);
 		HOCRPage* pageItem = m_pages.takeAt(oldRow);
 		endRemoveRows();
@@ -124,14 +124,9 @@ QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelInd
 	return itemIndex;
 }
 
-QModelIndex HOCRDocument::swapItems(const QModelIndex& parent, int firstRow, int secondRow, bool pages) {
-	if(!pages) {
-		moveItem(parent.child(firstRow, 0), parent, secondRow, false);
-		moveItem(parent.child(secondRow, 0), parent, firstRow, false);
-	} else {
-		moveItem(index(firstRow, 0), QModelIndex(), secondRow, true);
-		moveItem(index(secondRow, 0), QModelIndex(), firstRow, true);
-	}
+QModelIndex HOCRDocument::swapItems(const QModelIndex& parent, int firstRow, int secondRow) {
+	moveItem(index(firstRow, 0, parent), parent, secondRow);
+	moveItem(index(secondRow, 0, parent), parent, firstRow);
 	return index(firstRow, 0, parent);
 }
 

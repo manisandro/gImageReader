@@ -573,7 +573,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 		if(clickedAction == mergeAction) {
 			newIndex = m_document->mergeItems(indices.first().parent(), rows.first(), rows.last());
 		} else if(clickedAction == swapAction) {
-			newIndex = m_document->swapItems(indices.first().parent(), rows.first(), rows.last(), pages);
+			newIndex = m_document->swapItems(indices.first().parent(), rows.first(), rows.last());
 		}
 		if(newIndex.isValid()) {
 		ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect);
