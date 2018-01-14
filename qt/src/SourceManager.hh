@@ -48,6 +48,9 @@ struct Source {
 
 	//Additional info from original file
 	QString author, title, creator, producer, keywords, subject;
+
+	//Pdf version
+	int pdfVersionMajor = -1, pdfVersionMinor = -1;
 };
 
 class SourceManager : public QObject {

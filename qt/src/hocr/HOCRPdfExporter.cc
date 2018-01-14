@@ -306,6 +306,17 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	ui.lineEditPaperHeight->setValidator(new QDoubleValidator(0.0, 10000000.0, 1));
 	ui.lineEditPaperWidth->setValidator(new QDoubleValidator(0.0, 10000000.0, 1));
 
+	ui.comboBoxPdfVersion->addItem("1.0", PoDoFo::EPdfVersion::ePdfVersion_1_0);
+	ui.comboBoxPdfVersion->addItem("1.1", PoDoFo::EPdfVersion::ePdfVersion_1_1);
+	ui.comboBoxPdfVersion->addItem("1.2", PoDoFo::EPdfVersion::ePdfVersion_1_2);
+	ui.comboBoxPdfVersion->addItem("1.3", PoDoFo::EPdfVersion::ePdfVersion_1_3);
+	ui.comboBoxPdfVersion->addItem("1.4", PoDoFo::EPdfVersion::ePdfVersion_1_4);
+	ui.comboBoxPdfVersion->addItem("1.5", PoDoFo::EPdfVersion::ePdfVersion_1_5);
+	ui.comboBoxPdfVersion->addItem("1.6", PoDoFo::EPdfVersion::ePdfVersion_1_6);
+	ui.comboBoxPdfVersion->addItem("1.7", PoDoFo::EPdfVersion::ePdfVersion_1_7);
+
+	ui.comboBoxPdfVersion->setCurrentIndex(-1);
+
 	connect(ui.comboBoxOutputMode, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(ui.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(ui.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(imageFormatChanged()));
@@ -362,6 +373,7 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	ADD_SETTING(LineEditSetting("pdfexportinfoauthor", ui.lineEditAuthor, PACKAGE_NAME));
 	ADD_SETTING(LineEditSetting("pdfexportinfoproducer", ui.lineEditProducer, PACKAGE_NAME));
 	ADD_SETTING(LineEditSetting("pdfexportinfocreator", ui.lineEditCreator, PACKAGE_NAME));
+	ADD_SETTING(ComboSetting("pdfexportpdfversion", ui.comboBoxPdfVersion, ui.comboBoxPdfVersion->findData(PoDoFo::EPdfVersion::ePdfVersion_1_7)));
 
 #ifndef MAKE_VERSION
 #define MAKE_VERSION(...) 0
@@ -433,7 +445,8 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
 			                              PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
 
-			document = new PoDoFo::PdfStreamedDocument(outname.toLocal8Bit().data(), PoDoFo::EPdfVersion::ePdfVersion_1_7, encrypt);
+			PoDoFo::EPdfVersion pdfVersion = static_cast<PoDoFo::EPdfVersion>(ui.comboBoxPdfVersion->itemData(ui.comboBoxPdfVersion->currentIndex()).toInt());
+			document = new PoDoFo::PdfStreamedDocument(outname.toLocal8Bit().data(), pdfVersion, encrypt);
 		} catch(PoDoFo::PdfError& err) {
 			QMessageBox::critical(MAIN, _("Failed to create output"), _("Check that you have writing permissions in the selected folder. The returned error was: %1").arg(err.what()));
 			continue;
@@ -784,5 +797,11 @@ void HOCRPdfExporter::addInfoClicked() {
 		ui.lineEditTitle->setText(source->title);
 		ui.lineEditSubject->setText(source->subject);
 		ui.lineEditProducer->setText(source->producer);
+
+		PoDoFo::EPdfVersion sourcePdfVersion = PoDoFo::EPdfVersion::ePdfVersion_1_7;
+		if(source->pdfVersionMajor == 1 && source->pdfVersionMinor >= 0 && source->pdfVersionMinor <= 7) {
+			sourcePdfVersion = static_cast<PoDoFo::EPdfVersion>(PoDoFo::EPdfVersion::ePdfVersion_1_0 + source->pdfVersionMinor);
+		}
+		ui.comboBoxPdfVersion->setCurrentIndex(ui.comboBoxPdfVersion->findData(sourcePdfVersion));
 	}
 }
