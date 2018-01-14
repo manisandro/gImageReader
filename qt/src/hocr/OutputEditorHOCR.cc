@@ -26,6 +26,7 @@
 #include <QMessageBox>
 #include <QPointer>
 #include <QSyntaxHighlighter>
+#include <algorithm>
 #include <cmath>
 #include <cstring>
 #define USE_STD_NAMESPACE
@@ -548,7 +549,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 			classes.insert(item->itemClass());
 			rows.append(indices[i].row());
 		}
-		qSort(rows);
+		std::sort(rows.begin(), rows.end());
 		ok &= classes.size() == 1 && *classes.begin() != "ocr_page";
 		ok &= (rows.last() - rows.first()) == nIndices - 1;
 		if(ok) {

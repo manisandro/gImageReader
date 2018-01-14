@@ -23,6 +23,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QtSpell.hpp>
+#include <algorithm>
 #include <csignal>
 #include <cstring>
 #include <iostream>
@@ -209,7 +210,7 @@ void Recognizer::updateLanguagesMenu() {
 					spelldicts.append(dict);
 				}
 			}
-			qSort(spelldicts);
+			std::sort(spelldicts.begin(), spelldicts.end());
 		}
 		if(!spelldicts.empty()) {
 			QAction* item = new QAction(lang.name, ui.menuLanguages);
@@ -412,7 +413,7 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout) {
 			break;
 		}
 	}
-	qSort(pages);
+	std::sort(pages.begin(), pages.end());
 	autodetectLayout = m_pagesDialogUi.comboBoxRecognitionArea->isVisible() ? m_pagesDialogUi.comboBoxRecognitionArea->currentIndex() == 1 : false;
 	return pages;
 }
