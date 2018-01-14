@@ -195,6 +195,7 @@ void SourceManager::extractAdditionalInfo(Source* source, const Poppler::Documen
 	source->producer = document->producer();
 	source->title = document->title();
 	source->subject = document->subject();
+	document->getPdfVersion(&source->pdfVersionMajor, &source->pdfVersionMinor);
 }
 
 QList<Source*> SourceManager::getSelectedSources() const {
