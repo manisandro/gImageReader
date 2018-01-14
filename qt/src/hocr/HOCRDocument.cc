@@ -92,10 +92,10 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 		return QModelIndex();
 	}
 
+	QRect bbox = targetItem->bbox();
 	if(targetItem->itemClass() == "ocrx_word") {
 		// Merge word items: join text, merge bounding boxes
 		QString text = targetItem->text();
-		QRect bbox = targetItem->bbox();
 		beginRemoveRows(parent, startRow + 1, endRow);
 		for(int row = ++startRow; row <= endRow; ++row) {
 			HOCRItem* item = mutableItemAtIndex(parent.child(startRow, 0));
@@ -107,12 +107,8 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 		endRemoveRows();
 		targetItem->setText(text);
 		emit dataChanged(targetIndex, targetIndex, {Qt::DisplayRole, Qt::ForegroundRole});
-		QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-		targetItem->setAttribute("title:bbox", bboxstr);
-		emit itemAttributeChanged(targetIndex, "title:bbox", bboxstr);
 	} else {
 		// Merge other items: merge dom trees and bounding boxes
-		QRect bbox = targetItem->bbox();
 		QVector<HOCRItem*> moveChilds;
 		beginRemoveRows(parent, startRow + 1, endRow);
 		for(int row = ++startRow; row <= endRow; ++row) {
@@ -129,10 +125,10 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 			targetItem->addChild(child);
 		}
 		endInsertRows();
-		QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-		targetItem->setAttribute("title:bbox", bboxstr);
-		emit itemAttributeChanged(targetIndex, "title:bbox", bboxstr);
 	}
+	QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
+	targetItem->setAttribute("title:bbox", bboxstr);
+	emit itemAttributeChanged(targetIndex, "title:bbox", bboxstr);
 	return targetIndex;
 }
 
