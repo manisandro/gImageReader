@@ -82,6 +82,41 @@ bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& na
 	return true;
 }
 
+// Might be more logical to accept oldParent and oldRow as parameters rather than itemIndex
+// (since we need them anyway), if all our callers are likely to know them. Swap does; drag&drop might not.
+QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelIndex& newParent, int newRow) {
+	HOCRItem* item = mutableItemAtIndex(itemIndex);
+	HOCRItem* parentItem = mutableItemAtIndex(newParent);
+	if(!item || (!parentItem && item->itemClass() != "ocr_page")) {
+		return QModelIndex();
+	}
+	QModelIndex ancestor = newParent;
+	while(ancestor.isValid()) {
+		if(ancestor == itemIndex) {
+			return QModelIndex();
+		}
+		ancestor = ancestor.parent();
+	}
+	int oldRow = itemIndex.row();
+	QModelIndex oldParent = itemIndex.parent();
+	if(oldParent == newParent && oldRow < newRow) {
+		--newRow;
+	}
+	beginRemoveRows(oldParent, oldRow, oldRow);
+	takeItem(item);
+	endRemoveRows();
+	beginInsertRows(newParent, newRow, newRow);
+	insertItem(parentItem, item, newRow);
+	endInsertRows();
+	return itemIndex;
+}
+
+QModelIndex HOCRDocument::swapItems(const QModelIndex& parent, int firstRow, int secondRow) {
+	moveItem(index(firstRow, 0, parent), parent, secondRow);
+	moveItem(index(secondRow, 0, parent), parent, firstRow);
+	return index(firstRow, 0, parent);
+}
+
 QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, int endRow) {
 	if(endRow - startRow <= 0) {
 		return QModelIndex();
@@ -92,10 +127,10 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 		return QModelIndex();
 	}
 
+	QRect bbox = targetItem->bbox();
 	if(targetItem->itemClass() == "ocrx_word") {
 		// Merge word items: join text, merge bounding boxes
 		QString text = targetItem->text();
-		QRect bbox = targetItem->bbox();
 		beginRemoveRows(parent, startRow + 1, endRow);
 		for(int row = ++startRow; row <= endRow; ++row) {
 			HOCRItem* item = mutableItemAtIndex(parent.child(startRow, 0));
@@ -107,12 +142,8 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 		endRemoveRows();
 		targetItem->setText(text);
 		emit dataChanged(targetIndex, targetIndex, {Qt::DisplayRole, Qt::ForegroundRole});
-		QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-		targetItem->setAttribute("title:bbox", bboxstr);
-		emit itemAttributeChanged(targetIndex, "title:bbox", bboxstr);
 	} else {
 		// Merge other items: merge dom trees and bounding boxes
-		QRect bbox = targetItem->bbox();
 		QVector<HOCRItem*> moveChilds;
 		beginRemoveRows(parent, startRow + 1, endRow);
 		for(int row = ++startRow; row <= endRow; ++row) {
@@ -129,10 +160,10 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 			targetItem->addChild(child);
 		}
 		endInsertRows();
-		QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-		targetItem->setAttribute("title:bbox", bboxstr);
-		emit itemAttributeChanged(targetIndex, "title:bbox", bboxstr);
 	}
+	QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
+	targetItem->setAttribute("title:bbox", bboxstr);
+	emit itemAttributeChanged(targetIndex, "title:bbox", bboxstr);
 	return targetIndex;
 }
 
@@ -440,16 +471,36 @@ bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const {
 	return true;
 }
 
-void HOCRDocument::deleteItem(HOCRItem* item) {
-	if(item->parent()) {
-		item->parent()->removeChild(item);
+void HOCRDocument::insertItem(HOCRItem* parent, HOCRItem* item, int i) {
+	if(parent) {
+		parent->insertChild(item, i);
 	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
-		int idx = page->index();
-		delete m_pages.takeAt(idx);
-		for(int i = idx, n = m_pages.size(); i < n; ++i) {
+		m_document.documentElement().insertBefore(page->m_domElement, m_pages[i]->m_domElement);
+		page->m_index = i;
+		m_pages.insert(i++, page);
+		for(int n = m_pages.size(); i < n; ++i) {
 			m_pages[i]->m_index = i;
 		}
-		emit dataChanged(index(0, 0), index(m_pages.size() - 1, 0), {Qt::DisplayRole});
+		emit dataChanged(index(page->index(), 0), index(m_pages.size() - 1, 0), {Qt::DisplayRole});
+	}
+}
+
+void HOCRDocument::deleteItem(HOCRItem* item) {
+	takeItem(item);
+	delete item;
+}
+
+void HOCRDocument::takeItem(HOCRItem* item) {
+	if(item->parent()) {
+		item->parent()->takeChild(item);
+	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
+		m_document.documentElement().removeChild(page->m_domElement);
+		int i = page->index();
+		m_pages.remove(i);
+		for(int n = m_pages.size(); i < n; ++i) {
+			m_pages[i]->m_index = i;
+		}
+		emit dataChanged(index(page->index(), 0), index(m_pages.size() - 1, 0), {Qt::DisplayRole});
 	}
 }
 
@@ -529,11 +580,31 @@ void HOCRItem::addChild(HOCRItem* child) {
 	child->m_index = m_childItems.size() - 1;
 }
 
+void HOCRItem::insertChild(HOCRItem* child, int i) {
+	m_domElement.insertBefore(child->m_domElement, m_domElement.childNodes().at(i));
+	m_childItems.insert(i, child);
+	child->m_parentItem = this;
+	child->m_pageItem = m_pageItem;
+	child->m_index = i++;
+	for(int n = m_childItems.size(); i < n; ++i) {
+		m_childItems[i]->m_index = i;
+	}
+}
+
 void HOCRItem::removeChild(HOCRItem *child) {
+	takeChild(child);
+	delete child;
+}
+
+void HOCRItem::takeChild(HOCRItem* child) {
+	if(this != child->parent()) {
+		return;
+	}
 	m_domElement.removeChild(child->m_domElement);
-	int idx = child->index();
-	delete m_childItems.takeAt(idx);
-	for(int i = idx, n = m_childItems.size(); i < n ; ++i) {
+	int i = child->index();
+	m_childItems.remove(i);
+	int n = m_childItems.size();
+	for(int n = m_childItems.size(); i < n; ++i) {
 		m_childItems[i]->m_index = i;
 	}
 }
