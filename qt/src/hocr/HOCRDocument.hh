@@ -63,6 +63,8 @@ public:
 		return index.isValid() ? static_cast<HOCRItem*>(index.internalPointer()) : nullptr;
 	}
 	bool editItemAttribute(const QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass = QString());
+	QModelIndex moveItem(const QModelIndex& itemIndex, const QModelIndex& newParent, int row);
+	QModelIndex swapItems(const QModelIndex& parent, int startRow, int endRow);
 	QModelIndex mergeItems(const QModelIndex& parent, int startRow, int endRow);
 	QModelIndex addItem(const QModelIndex& parent, const QDomElement& element);
 	bool removeItem(const QModelIndex& index);

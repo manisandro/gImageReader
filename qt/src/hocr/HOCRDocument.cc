@@ -82,6 +82,41 @@ bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& na
 	return true;
 }
 
+// Might be more logical to accept oldParent and oldRow as parameters rather than itemIndex
+// (since we need them anyway), if all our callers are likely to know them. Swap does; drag&drop might not.
+QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelIndex& newParent, int newRow) {
+	HOCRItem* item = mutableItemAtIndex(itemIndex);
+	HOCRItem* parentItem = mutableItemAtIndex(newParent);
+	if(!item || (!parentItem && item->itemClass() != "ocr_page")) {
+		return QModelIndex();
+	}
+	QModelIndex ancestor = newParent;
+	while(ancestor.isValid()) {
+		if(ancestor == itemIndex) {
+			return QModelIndex();
+		}
+		ancestor = ancestor.parent();
+	}
+	int oldRow = itemIndex.row();
+	QModelIndex oldParent = itemIndex.parent();
+	if(oldParent == newParent && oldRow < newRow) {
+		--newRow;
+	}
+	beginRemoveRows(oldParent, oldRow, oldRow);
+	takeItem(item);
+	endRemoveRows();
+	beginInsertRows(newParent, newRow, newRow);
+	insertItem(parentItem, item, newRow);
+	endInsertRows();
+	return itemIndex;
+}
+
+QModelIndex HOCRDocument::swapItems(const QModelIndex& parent, int firstRow, int secondRow) {
+	moveItem(index(firstRow, 0, parent), parent, secondRow);
+	moveItem(index(secondRow, 0, parent), parent, firstRow);
+	return index(firstRow, 0, parent);
+}
+
 QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, int endRow) {
 	if(endRow - startRow <= 0) {
 		return QModelIndex();
