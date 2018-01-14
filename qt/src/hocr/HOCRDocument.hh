@@ -99,7 +99,9 @@ private:
 	QIcon decorationRoleForItem(const HOCRItem* item) const;
 
 	bool checkItemSpelling(const HOCRItem* item) const;
+	void insertItem(HOCRItem* parent, HOCRItem* item, int i);
 	void deleteItem(HOCRItem* item);
+	void takeItem(HOCRItem* item);
 	void recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, const QStringList& itemClasses = QStringList());
 	void recomputeParentBBoxes(const HOCRItem* item);
 	HOCRItem* mutableItemAtIndex(const QModelIndex& index) const {
@@ -169,7 +171,9 @@ public:
 	}
 
 	void addChild(HOCRItem* child);
+	void insertChild(HOCRItem* child, int index);
 	void removeChild(HOCRItem* child);
+	void takeChild(HOCRItem* child);
 	QVector<HOCRItem*> takeChildren();
 	void setEnabled(bool enabled) {
 		m_enabled = enabled;
