@@ -86,7 +86,8 @@ bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& na
 // (since we need them anyway), if all our callers are likely to know them. Swap does; drag&drop might not.
 QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelIndex& newParent, int newRow) {
 	HOCRItem* item = mutableItemAtIndex(itemIndex);
-	if(!item) {
+	HOCRItem* parentItem = mutableItemAtIndex(newParent);
+	if(!item || (!parentItem && item->itemClass() != "ocr_page")) {
 		return QModelIndex();
 	}
 	QModelIndex ancestor = newParent;
@@ -98,29 +99,15 @@ QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelInd
 	}
 	int oldRow = itemIndex.row();
 	QModelIndex oldParent = itemIndex.parent();
-	bool decr = false;
-	if(decr = (oldParent == newParent && oldRow < newRow)) {
+	if(oldParent == newParent && oldRow < newRow) {
 		--newRow;
 	}
-	HOCRItem* parentItem = mutableItemAtIndex(newParent);
-	if(parentItem) {
-		beginRemoveRows(oldParent, oldRow, oldRow);
-		takeItem(item);
-		endRemoveRows();
-		beginInsertRows(newParent, newRow, newRow);
-		parentItem->insertChild(item, newRow);
-		endInsertRows();
-	} else if(item->itemClass() == "ocr_page") {
-		beginRemoveRows(QModelIndex(), oldRow, oldRow);
-		HOCRPage* pageItem = m_pages.takeAt(oldRow);
-		endRemoveRows();
-		beginInsertRows(QModelIndex(), newRow, newRow);
-		m_pages.insert(newRow, pageItem);
-		endInsertRows();
-		emit dataChanged(index(std::min(oldRow, newRow), 0), index(std::max(oldRow, (decr ? ++newRow : newRow)), 0), {Qt::DisplayRole});
-	} else {
-		return QModelIndex();
-	}
+	beginRemoveRows(oldParent, oldRow, oldRow);
+	takeItem(item);
+	endRemoveRows();
+	beginInsertRows(newParent, newRow, newRow);
+	insertItem(parentItem, item, newRow);
+	endInsertRows();
 	return itemIndex;
 }
 
@@ -482,6 +469,20 @@ bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const {
 		}
 	}
 	return true;
+}
+
+void HOCRDocument::insertItem(HOCRItem* parent, HOCRItem* item, int i) {
+	if(parent) {
+		parent->insertChild(item, i);
+	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
+		m_document.documentElement().insertBefore(page->m_domElement, m_pages[i]->m_domElement);
+		page->m_index = i;
+		m_pages.insert(i++, page);
+		for(int n = m_pages.size(); i < n; ++i) {
+			m_pages[i]->m_index = i;
+		}
+		emit dataChanged(index(page->index(), 0), index(m_pages.size() - 1, 0), {Qt::DisplayRole});
+	}
 }
 
 void HOCRDocument::deleteItem(HOCRItem* item) {

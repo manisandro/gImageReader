@@ -101,6 +101,7 @@ private:
 	QIcon decorationRoleForItem(const HOCRItem* item) const;
 
 	bool checkItemSpelling(const HOCRItem* item) const;
+	void insertItem(HOCRItem* parent, HOCRItem* item, int i);
 	void deleteItem(HOCRItem* item);
 	void takeItem(HOCRItem* item);
 	void recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, const QStringList& itemClasses = QStringList());
