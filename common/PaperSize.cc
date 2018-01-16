@@ -46,10 +46,10 @@ PaperSize::Size<double> PaperSize::getSize(PaperSize::Unit unit, const std::stri
 	if(landscape) {
 		std::swap(formatResult.width, formatResult.height);
 	}
-	if(unit == PaperSize::cm) {
-		return formatResult;
-	} else if(unit == PaperSize::inch) {
+	if(unit == PaperSize::inch) {
 		return {formatResult.width / CMtoInch, formatResult.height / CMtoInch};
+	} else /*if(unit == PaperSize::cm)*/ {
+		return formatResult;
 	}
 }
 

@@ -603,7 +603,6 @@ void HOCRItem::takeChild(HOCRItem* child) {
 	m_domElement.removeChild(child->m_domElement);
 	int i = child->index();
 	m_childItems.remove(i);
-	int n = m_childItems.size();
 	for(int n = m_childItems.size(); i < n; ++i) {
 		m_childItems[i]->m_index = i;
 	}
