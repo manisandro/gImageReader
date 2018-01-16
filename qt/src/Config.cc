@@ -392,7 +392,7 @@ void Config::setDataLocations(int idx) {
 #ifdef Q_OS_WIN
 		QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
 		qputenv("TESSDATA_PREFIX", dataDir.absolutePath().toLocal8Bit());
-		ui.lineEditSpellLocation->setText(dataDir.absoluteFilePath("myspell/dicts"));
+		ui.lineEditSpellLocation->setText(dataDir.absoluteFilePath("myspell"));
 #else
 		QDir dataDir("/usr/share");
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
@@ -466,8 +466,8 @@ void Config::openSpellingDir() {
 	if(idx == 0) {
 #ifdef Q_OS_WIN
 		QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
-		QDir().mkpath(dataDir.absoluteFilePath("myspell/dicts"));
-		QDesktopServices::openUrl(QUrl::fromLocalFile(dataDir.absoluteFilePath("myspell/dicts")));
+		QDir().mkpath(dataDir.absoluteFilePath("myspell"));
+		QDesktopServices::openUrl(QUrl::fromLocalFile(dataDir.absoluteFilePath("myspell")));
 #else
 		QDir dataDir("/usr/share");
 		if(QDir(dataDir.absoluteFilePath("myspell/dicts")).exists()) {

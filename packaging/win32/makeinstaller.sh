@@ -160,8 +160,8 @@ cp -R $win32dir/skel/* $installroot
 
 # Add english language data and spelling dictionaries
 install -Dpm 0644 /usr/share/tesseract/tessdata/eng.traineddata $installroot/share/tessdata/eng.traineddata
-install -Dpm 0644 /usr/share/myspell/en_US.dic $installroot/share/myspell/dicts/en_US.dic
-install -Dpm 0644 /usr/share/myspell/en_US.aff $installroot/share/myspell/dicts/en_US.aff
+install -Dpm 0644 /usr/share/myspell/en_US.dic $installroot/share/myspell/en_US.dic
+install -Dpm 0644 /usr/share/myspell/en_US.aff $installroot/share/myspell/en_US.aff
 
 # Copy isocodes
 install -Dpm 0644 /usr/share/xml/iso-codes/iso_639.xml $installroot/share/xml/iso-codes/iso_639.xml
@@ -183,8 +183,12 @@ rm -rf $installroot/share/appdata
     find -type f -or -type l | sed 's|/|\\|g' | sed -E 's|^\.(.*)$|Delete "\$INSTDIR\1"|g' > $builddir/unfiles.nsi
 
     # Ensure custom tessdata and spelling files are deleted
-    echo 'Delete "$INSTDIR\share\myspell\dicts\*"' >> $builddir/unfiles.nsi
+    echo 'Delete "$INSTDIR\share\myspell\*"' >> $builddir/unfiles.nsi
     echo 'Delete "$INSTDIR\share\tessdata\*"' >> $builddir/unfiles.nsi
+
+    # Ensure legacy spelling dictionaries location is cleaned up
+    echo 'Delete "$INSTDIR\share\myspell\dicts\*"' >> $builddir/unfiles.nsi
+    echo 'RMDir "$INSTDIR\share\myspell\dicts"' >> $builddir/unfiles.nsi
 
     # Ensure potential log files are deleted
     echo 'Delete "$INSTDIR\gimagereader.log"' >> $builddir/unfiles.nsi

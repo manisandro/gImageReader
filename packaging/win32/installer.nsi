@@ -101,7 +101,10 @@ Function .onInit
     StrCpy $1 $R0 "" 1 ; Remove leading quote
     CreateDirectory "$PLUGINSDIR\dicts"
     CreateDirectory "$PLUGINSDIR\tessdata"
-    CopyFiles "$1\share\myspell\dicts\*" "$PLUGINSDIR\dicts\"
+    CopyFiles "$1\share\myspell\dicts\*.dic" "$PLUGINSDIR\dicts\"
+    CopyFiles "$1\share\myspell\dicts\*.aff" "$PLUGINSDIR\dicts\"
+    CopyFiles "$1\share\myspell\*.dic" "$PLUGINSDIR\dicts\"
+    CopyFiles "$1\share\myspell\*.aff" "$PLUGINSDIR\dicts\"
     CopyFiles "$1\share\tessdata\*" "$PLUGINSDIR\tessdata\"
 
     ClearErrors
@@ -121,8 +124,8 @@ Function .onInstSuccess
   ; Restore dictionaries and language definitions
   IfFileExists "$PLUGINSDIR\dicts" backupExists
   backupExists:
-    CopyFiles "$PLUGINSDIR\dicts\*" "$INSTDIR\share\myspell\dicts"
-    CopyFiles "$PLUGINSDIR\tessdata\*" "$INSTDIR\share\tessdata"
+    CopyFiles "$PLUGINSDIR\dicts\*" "$INSTDIR\share\myspell\"
+    CopyFiles "$PLUGINSDIR\tessdata\*" "$INSTDIR\share\tessdata\"
 FunctionEnd
 
 Function un.onInit 
