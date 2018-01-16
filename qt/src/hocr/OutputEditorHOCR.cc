@@ -606,7 +606,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 		if(m_spell.getLanguage() != spellLang) {
 			haveLanguage = m_spell.setLanguage(spellLang);
 		}
-		if(!trimmedWord.isEmpty()) {
+		if(!trimmedWord.isEmpty() && haveLanguage) {
 			for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
 				setTextActions.append(menu.addAction(prefix + suggestion + suffix));
 			}
