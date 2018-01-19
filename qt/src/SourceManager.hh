@@ -28,10 +28,6 @@ class QMenu;
 class QPixmap;
 class UI_MainWindow;
 
-namespace Poppler {
-class Document;
-}
-
 struct Source {
 	Source(const QString& _path, const QString& _displayname, const QByteArray& _password = "", bool _isTemp = false)
 		: path(_path), displayname(_displayname), password(_password), isTemp(_isTemp) {}
@@ -48,8 +44,6 @@ struct Source {
 
 	//Additional info from original file
 	QString author, title, creator, producer, keywords, subject;
-
-	//Pdf version
 	int pdfVersionMajor = -1, pdfVersionMinor = -1;
 };
 
@@ -80,10 +74,7 @@ private:
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;
 
-	bool processInputSource(const QString& filename, Source* source, QStringList& filesWithText) const;
-	bool querySourcePassword(const QString& filename, QByteArray& password, Poppler::Document* document) const;
-	bool withTextLayer(const Poppler::Document* document) const;
-	void extractAdditionalInfo(Source* source, const Poppler::Document* document) const;
+	bool checkPdfSource(Source* source, QStringList& filesWithText) const;
 	void savePixmap(const QPixmap& pixmap, const QString& displayname);
 	void selectionChanged();
 	bool eventFilter(QObject* object, QEvent* event) override;

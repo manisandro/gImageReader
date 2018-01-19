@@ -17,9 +17,6 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <memory>
-#include <stdexcept>
-
 #include <QClipboard>
 #include <QDesktopWidget>
 #include <QDesktopServices>
@@ -109,7 +106,7 @@ int SourceManager::addSources(const QStringList& files) {
 		}
 
 		Source* source = new Source(filename, QFileInfo(filename).fileName());
-		if(!processInputSource(filename, source, filesWithText)) {
+		if(source->path.endsWith(".pdf", Qt::CaseInsensitive) && !checkPdfSource(source, filesWithText)) {
 			delete source;
 			continue;
 		}
@@ -122,10 +119,8 @@ int SourceManager::addSources(const QStringList& files) {
 		recentItems.prepend(filename);
 		++added;
 	}
-	// Show files with text here:
 	if(!filesWithText.empty()) {
-		QString messageFiles = filesWithText.join('\n');
-		QMessageBox::information(MAIN->getInstance(), _("Searchable PDF"), _("These PDF files already have text inside:\n") + messageFiles);
+		QMessageBox::information(MAIN->getInstance(), _("PDFs with text"), _("These PDF files already contain text:\n%1").arg(filesWithText.join('\n')));
 	}
 	ConfigSettings::get<VarSetting<QStringList>>("recentitems")->setValue(recentItems);
 	ui.listWidgetSources->blockSignals(true);
@@ -138,10 +133,13 @@ int SourceManager::addSources(const QStringList& files) {
 	return added;
 }
 
-bool SourceManager::querySourcePassword(const QString& filename, QByteArray& password, Poppler::Document* document) const {
+bool SourceManager::checkPdfSource(Source* source, QStringList& filesWithText) const {
+	std::unique_ptr<Poppler::Document> document(Poppler::Document::load(source->path));
+
+	// Unlock if necessary
 	if(document->isLocked()) {
 		bool ok = false;
-		QString message = QString(_("Enter password for file '%1':")).arg(QFileInfo(filename).fileName());
+		QString message = QString(_("Enter password for file '%1':")).arg(QFileInfo(source->path).fileName());
 		QString text;
 		while(true) {
 			text = QInputDialog::getText(MAIN, _("Protected PDF"), message, QLineEdit::Password, text, &ok);
@@ -149,46 +147,21 @@ bool SourceManager::querySourcePassword(const QString& filename, QByteArray& pas
 				return false;
 			}
 			if(!document->unlock(text.toLocal8Bit(), text.toLocal8Bit())) {
-				password = text.toLocal8Bit();
-				return true;
+				source->password = text.toLocal8Bit();
+				break;
 			}
 		}
 	}
-	return true;
-}
 
-bool SourceManager::withTextLayer(const Poppler::Document* const document) const {
-	const int pagesNbr = document->numPages();
-
-	for (int i = 0; i < pagesNbr; ++i) {
-		QString text = document->page(i)->text(QRectF());
-		if(!text.isEmpty()) {
-			return true;
+	// Check whether the PDF already contains text
+	for (int i = 0, n = document->numPages(); i < n; ++i) {
+		if(!document->page(i)->text(QRectF()).isEmpty()) {
+			filesWithText.append(source->path);
+			break;
 		}
 	}
-	return false;
-}
 
-bool SourceManager::processInputSource(const QString& filename, Source* source, QStringList& filesWithText) const {
-	if(filename.endsWith(".pdf", Qt::CaseInsensitive)) {
-		std::unique_ptr<Poppler::Document> document(Poppler::Document::load(filename));
-		if(!document) {
-			return false;
-		}
-		QByteArray password;
-		if(!querySourcePassword(filename, password, document.get())) {
-			return false;
-		}
-		source->password = password;
-		if(withTextLayer(document.get())) {
-			filesWithText.push_back(filename);
-		}
-		extractAdditionalInfo(source, document.get());
-	}
-	return true;
-}
-
-void SourceManager::extractAdditionalInfo(Source* source, const Poppler::Document* const document) const {
+	// Extract document metadata
 	source->author = document->author();
 	source->creator = document->creator();
 	source->keywords = document->keywords();
@@ -196,6 +169,8 @@ void SourceManager::extractAdditionalInfo(Source* source, const Poppler::Documen
 	source->title = document->title();
 	source->subject = document->subject();
 	document->getPdfVersion(&source->pdfVersionMajor, &source->pdfVersionMinor);
+
+	return true;
 }
 
 QList<Source*> SourceManager::getSelectedSources() const {
