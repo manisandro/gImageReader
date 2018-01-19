@@ -356,6 +356,35 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 		m_fontFamilies.push_back(family->get_name());
 	}
 
+	Glib::RefPtr<Gtk::ListStore> pdfVersionModel = Gtk::ListStore::create(m_pdfVersionComboCols);
+	ui.comboPdfVersion->set_model(pdfVersionModel);
+	row = *(pdfVersionModel->append());
+	row[m_pdfVersionComboCols.label] = "1.0";
+	row[m_pdfVersionComboCols.version] = PoDoFo::EPdfVersion::ePdfVersion_1_0;
+	row = *(pdfVersionModel->append());
+	row[m_pdfVersionComboCols.label] = "1.1";
+	row[m_pdfVersionComboCols.version] = PoDoFo::EPdfVersion::ePdfVersion_1_1;
+	row = *(pdfVersionModel->append());
+	row[m_pdfVersionComboCols.label] = "1.2";
+	row[m_pdfVersionComboCols.version] = PoDoFo::EPdfVersion::ePdfVersion_1_2;
+	row = *(pdfVersionModel->append());
+	row[m_pdfVersionComboCols.label] = "1.3";
+	row[m_pdfVersionComboCols.version] = PoDoFo::EPdfVersion::ePdfVersion_1_3;
+	row = *(pdfVersionModel->append());
+	row[m_pdfVersionComboCols.label] = "1.4";
+	row[m_pdfVersionComboCols.version] = PoDoFo::EPdfVersion::ePdfVersion_1_4;
+	row = *(pdfVersionModel->append());
+	row[m_pdfVersionComboCols.label] = "1.5";
+	row[m_pdfVersionComboCols.version] = PoDoFo::EPdfVersion::ePdfVersion_1_5;
+	row = *(pdfVersionModel->append());
+	row[m_pdfVersionComboCols.label] = "1.6";
+	row[m_pdfVersionComboCols.version] = PoDoFo::EPdfVersion::ePdfVersion_1_6;
+	row = *(pdfVersionModel->append());
+	row[m_pdfVersionComboCols.label] = "1.7";
+	row[m_pdfVersionComboCols.version] = PoDoFo::EPdfVersion::ePdfVersion_1_7;
+	ui.comboPdfVersion->pack_start(m_pdfVersionComboCols.label);
+	ui.comboPdfVersion->set_active(-1);
+
 	CONNECT(ui.comboMode, changed, [this] { updatePreview(); });
 	CONNECT(ui.comboImageformat, changed, [this] { imageFormatChanged(); updatePreview(); });
 	CONNECT(ui.comboDithering, changed, [this] { updatePreview(); });
@@ -397,6 +426,7 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 	m_connPortrait = CONNECT(ui.buttonPortrait, toggled, [this] { paperOrientationChanged(false); });
 	CONNECT(ui.entryPaperWidth, changed, [this] { paperSizeChanged(); });
 	CONNECT(ui.entryPaperHeight, changed, [this] { paperSizeChanged(); });
+	CONNECT(ui.buttonImportFromSource, clicked, [this]{ importMetadataFromSource(); });
 
 	ADD_SETTING(ComboSetting("pdfexportmode", ui.comboMode));
 	ADD_SETTING(SpinSetting("pdfimagecompressionquality", ui.spinQuality));
@@ -419,11 +449,9 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 	ADD_SETTING(ComboSetting("pdfexportpapersizeunit", ui.comboPaperSizeUnit));
 	ADD_SETTING(SwitchSettingT<Gtk::ToggleButton>("pdfexportpaperlandscape", ui.buttonLandscape));
 	ADD_SETTING(EntrySetting("pdfexportinfoauthor", ui.entryMetadataAuthor));
-	ADD_SETTING(EntrySetting("pdfexportinfotitle", ui.entryMetadataTitle));
-	ADD_SETTING(EntrySetting("pdfexportinfosubject", ui.entryMetadataSubject));
 	ADD_SETTING(EntrySetting("pdfexportinfoproducer", ui.entryMetadataProducer));
 	ADD_SETTING(EntrySetting("pdfexportinfocreator", ui.entryMetadataCreator));
-	ADD_SETTING(EntrySetting("pdfexportinfokeywords", ui.entryMetadataKeywords));
+	ADD_SETTING(ComboSetting("pdfexportpdfversion", ui.comboPdfVersion));
 
 #ifndef MAKE_VERSION
 #define MAKE_VERSION(...) 0
@@ -496,7 +524,8 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
 			                              PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
 
-			document = new PoDoFo::PdfStreamedDocument(outname.c_str(), PoDoFo::EPdfVersion::ePdfVersion_1_7, encrypt);
+			int pdfVersion = (*ui.comboPdfVersion->get_active())[m_pdfVersionComboCols.version];
+			document = new PoDoFo::PdfStreamedDocument(outname.c_str(), static_cast<PoDoFo::EPdfVersion>(pdfVersion), encrypt);
 		} catch(PoDoFo::PdfError& err) {
 			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to create output"), Glib::ustring::compose(_("Check that you have writing permissions in the selected folder. The returned error was: %1"), err.what()));
 			continue;
@@ -845,4 +874,23 @@ void HOCRPdfExporter::updateValid() {
 		}
 	}
 	ui.buttonOk->set_sensitive(valid);
+}
+
+void HOCRPdfExporter::importMetadataFromSource() {
+	std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+	if(!sources.empty()) {
+		Source* source = sources.front();
+		ui.entryMetadataAuthor->set_text(source->author);
+		ui.entryMetadataCreator->set_text(source->creator);
+		ui.entryMetadataKeywords->set_text(source->keywords);
+		ui.entryMetadataTitle->set_text(source->title);
+		ui.entryMetadataSubject->set_text(source->subject);
+		ui.entryMetadataProducer->set_text(source->producer);
+
+		PoDoFo::EPdfVersion sourcePdfVersion = PoDoFo::EPdfVersion::ePdfVersion_1_7;
+		if(source->pdfVersionMajor == 1 && source->pdfVersionMinor >= 0 && source->pdfVersionMinor <= 7) {
+			sourcePdfVersion = static_cast<PoDoFo::EPdfVersion>(PoDoFo::EPdfVersion::ePdfVersion_1_0 + source->pdfVersionMinor);
+		}
+		ui.comboPdfVersion->set_active(sourcePdfVersion);
+	}
 }

@@ -266,16 +266,6 @@
             <summary>PDF export metadata: author</summary>
             <description>PDF export metadata: author.</description>
         </key>
-        <key type="s" name="pdfexportinfotitle">
-            <default>""</default>
-            <summary>PDF export metadata: title</summary>
-            <description>PDF export metadata: title.</description>
-        </key>
-        <key type="s" name="pdfexportinfosubject">
-            <default>""</default>
-            <summary>PDF export metadata: subject</summary>
-            <description>PDF export metadata: subject.</description>
-        </key>
         <key type="s" name="pdfexportinfoproducer">
             <default>"gImageReader"</default>
             <summary>PDF export metadata: produce</summary>
@@ -286,10 +276,10 @@
             <summary>PDF export metadata: creator</summary>
             <description>PDF export metadata: creator.</description>
         </key>
-        <key type="s" name="pdfexportinfokeywords">
-            <default>""</default>
-            <summary>PDF export metadata: keywords</summary>
-            <description>PDF export metadata: keywords.</description>
+        <key type="i" name="pdfexportpdfversion">
+            <default>7</default>
+            <summary>PDF export version</summary>
+            <description>PDF export version.</description>
         </key>
     </schema>
 </schemalist>

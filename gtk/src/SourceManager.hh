@@ -27,8 +27,8 @@ class MainWindow;
 }
 
 struct Source {
-	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::ustring& _password, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
-		: file(_file), displayname(_displayname), password(_password), monitor(_monitor), isTemp(_isTemp) {}
+	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
+		: file(_file), displayname(_displayname), monitor(_monitor), isTemp(_isTemp) {}
 	Glib::RefPtr<Gio::File> file;
 	std::string displayname;
 	Glib::ustring password;
@@ -40,6 +40,10 @@ struct Source {
 	int page = 1;
 	std::vector<double> angle;
 	bool invert = false;
+
+	//Additional info from original file
+	Glib::ustring author, title, creator, producer, keywords, subject;
+	guint pdfVersionMajor = -1, pdfVersionMinor = -1;
 };
 
 class SourceManager {
@@ -81,7 +85,7 @@ private:
 	void fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event, Gtk::TreeIter it);
 	void openSources();
 	void pasteClipboard();
-	bool querySourcePassword(const Glib::RefPtr<Gio::File>& file, Glib::ustring& password) const;
+	bool checkPdfSource(Source* source, std::vector<Glib::ustring>& filesWithText) const;
 	void removeSource(bool deleteFile);
 	void savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const std::string& displayname);
 	void selectionChanged();

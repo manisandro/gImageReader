@@ -113,6 +113,15 @@ private:
 		}
 	} m_compressionComboCols;
 
+	struct PdfVersionComboCols : public Gtk::TreeModel::ColumnRecord {
+		Gtk::TreeModelColumn<Glib::ustring> label;
+		Gtk::TreeModelColumn<int> version;
+		PdfVersionComboCols() {
+			add(label);
+			add(version);
+		}
+	} m_pdfVersionComboCols;
+
 	Ui::PdfExportDialog ui;
 	ClassData m_classdata;
 
@@ -129,6 +138,7 @@ private:
 	PDFSettings getPdfSettings() const;
 	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale = 1., bool inThread = false);
 
+	void importMetadataFromSource();
 	void imageFormatChanged();
 	void imageCompressionChanged();
 	void paperOrientationChanged(bool landscape);

@@ -77,6 +77,7 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files)
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewSources->get_model());
 	Gtk::TreeIter it = store->children().end();
 	int added = 0;
+	std::vector<Glib::ustring> filesWithText;
 	for(Glib::RefPtr<Gio::File> file : files) {
 		if(!file->query_exists()) {
 			failed += "\n\t" + file->get_path();
@@ -94,11 +95,16 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files)
 			++added;
 			continue;
 		}
-		Glib::ustring password;
-		if(!querySourcePassword(file, password)) {
+		Source* source = new Source(file, file->get_basename(), file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false);
+		std::string filename = file->get_path();
+#ifdef G_OS_WIN32
+		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf" && !checkPdfSource(source, filesWithText)) {
+#else
+		if(Utils::get_content_type(filename) == "application/pdf" && !checkPdfSource(source, filesWithText)) {
+#endif
+			delete source;
 			continue;
 		}
-		Source* source = new Source(file, file->get_basename(), password, file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false);
 		it = store->append();
 		it->set_value(m_listViewCols.filename, file->get_basename());
 		it->set_value(m_listViewCols.source, source);
@@ -107,6 +113,9 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files)
 
 		Gtk::RecentManager::get_default()->add_item(file->get_uri());
 		++added;
+	}
+	if(!filesWithText.empty()) {
+		Utils::message_dialog(Gtk::MESSAGE_INFO, _("PDFs with text"), Glib::ustring::compose(_("These PDF files already contain text:\n%1"), Utils::string_join(filesWithText, "\n")));
 	}
 	m_connectionSelectionChanged.block(true);
 	ui.treeviewSources->get_selection()->unselect_all();
@@ -120,46 +129,57 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files)
 	return added;
 }
 
-bool SourceManager::querySourcePassword(const Glib::RefPtr<Gio::File>& file, Glib::ustring& password) const {
-	std::string filename = file->get_path();
-	bool success = true;
-#ifdef G_OS_WIN32
-	if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf") {
-#else
-	if(Utils::get_content_type(filename) == "application/pdf") {
-#endif
-		GError* err = nullptr;
-		PopplerDocument* document = poppler_document_new_from_file(Glib::filename_to_uri(filename).c_str(), 0, &err);
-		if(err && g_error_matches (err, POPPLER_ERROR, POPPLER_ERROR_ENCRYPTED)) {
+bool SourceManager::checkPdfSource(Source* source, std::vector<Glib::ustring>& filesWithText) const {
+	GError* err = nullptr;
+	std::string filename = source->file->get_path();
+	PopplerDocument* document = poppler_document_new_from_file(Glib::filename_to_uri(filename).c_str(), 0, &err);
+
+	// Unlock if necessary
+	if(err && g_error_matches (err, POPPLER_ERROR, POPPLER_ERROR_ENCRYPTED)) {
+		g_error_free(err);
+		err = nullptr;
+		ui.labelPdfpassword->set_text(Glib::ustring::compose(_("Enter password for file '%1':"), source->file->get_basename()));
+		ui.entryPdfpassword->set_text("");
+		while(true) {
+			ui.entryPdfpassword->select_region(0, -1);
+			ui.entryPdfpassword->grab_focus();
+			int response = ui.dialogPdfpassword->run();
+			ui.dialogPdfpassword->hide();
+			if(response != Gtk::RESPONSE_OK) {
+				return false;
+			}
+			Glib::ustring pass = ui.entryPdfpassword->get_text();
+			document = poppler_document_new_from_file(Glib::filename_to_uri(filename).c_str(), pass.c_str(), &err);
+			if(!err) {
+				source->password = pass;
+				break;
+			}
 			g_error_free(err);
 			err = nullptr;
-			success = false;
-			ui.labelPdfpassword->set_text(Glib::ustring::compose(_("Enter password for file '%1':"), file->get_basename()));
-			ui.entryPdfpassword->set_text("");
-			while(true) {
-				ui.entryPdfpassword->select_region(0, -1);
-				ui.entryPdfpassword->grab_focus();
-				int response = ui.dialogPdfpassword->run();
-				ui.dialogPdfpassword->hide();
-				if(response != Gtk::RESPONSE_OK) {
-					break;
-				}
-				Glib::ustring pass = ui.entryPdfpassword->get_text();
-				document = poppler_document_new_from_file(Glib::filename_to_uri(filename).c_str(), pass.c_str(), &err);
-				if(!err) {
-					password = pass;
-					success = true;
-					break;
-				}
-				g_error_free(err);
-				err = nullptr;
-			}
-		}
-		if(document) {
-			g_object_unref(document);
 		}
 	}
-	return success;
+
+	// Check whether the PDF already contains text
+	for (int i = 0, n = poppler_document_get_n_pages(document); i < n; ++i) {
+		PopplerPage* poppage = poppler_document_get_page(document, i);
+		bool hasText = poppler_page_get_text(poppage) != nullptr;
+		g_object_unref(poppage);
+		if(hasText) {
+			filesWithText.push_back(filename);
+			break;
+		}
+	}
+
+	// Extract document metadata
+	source->author = poppler_document_get_author(document) ? poppler_document_get_author(document) : "";
+	source->creator = poppler_document_get_creator(document) ? poppler_document_get_creator(document) : "";
+	source->keywords = poppler_document_get_keywords(document) ? poppler_document_get_keywords(document) : "";
+	source->producer = poppler_document_get_producer(document) ? poppler_document_get_producer(document) : "";
+	source->title = poppler_document_get_title(document) ? poppler_document_get_title(document) : "";
+	source->subject = poppler_document_get_subject(document) ? poppler_document_get_subject(document) : "";
+	poppler_document_get_pdf_version(document, &source->pdfVersionMajor, &source->pdfVersionMinor);
+
+	return true;
 }
 
 std::vector<Source*> SourceManager::getSelectedSources() const {
@@ -224,7 +244,7 @@ void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf> &pixbuf, const st
 	MAIN->popState();
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewSources->get_model());
 	Glib::RefPtr<Gio::File> file = Gio::File::create_for_path(filename);
-	Source* source = new Source(file, displayname, "", file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), true);
+	Source* source = new Source(file, displayname, file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), true);
 	Gtk::TreeIter it = store->append();
 	it->set_value(m_listViewCols.filename, displayname);
 	it->set_value(m_listViewCols.path, filename);
@@ -299,15 +319,15 @@ void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib:
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewSources->get_model());
 	Source* source = it->get_value(m_listViewCols.source);
 	if(event == Gio::FILE_MONITOR_EVENT_MOVED) {
-		Source* newSource = new Source(otherFile, otherFile->get_basename(), source->password, otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), source->isTemp);
-		it->set_value(m_listViewCols.source, newSource);
+		source->file = otherFile;
+		source->displayname = otherFile->get_basename();
+		source->monitor = otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED);
 		it->set_value(m_listViewCols.filename, otherFile->get_basename());
 		it->set_value(m_listViewCols.path, otherFile->get_path());
-		CONNECT(newSource->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
+		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
 		if(ui.treeviewSources->get_selection()->is_selected(it)) {
 			m_signal_sourceChanged.emit();
 		}
-		delete source;
 	} else if(event == Gio::FILE_MONITOR_EVENT_DELETED) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Missing File"), Glib::ustring::compose(_("The following file has been deleted or moved:\n%1"), file->get_path()));
 		delete source;
