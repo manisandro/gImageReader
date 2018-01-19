@@ -348,7 +348,7 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	connect(ui.toolButtonLandscape, SIGNAL(toggled(bool)), this, SLOT(paperSizeChanged()));
 	connect(ui.lineEditPaperWidth, SIGNAL(textChanged(QString)), this, SLOT(updateValid()));
 	connect(ui.lineEditPaperHeight, SIGNAL(textChanged(QString)), this, SLOT(updateValid()));
-	connect(ui.pushButtonImportAddInfo, SIGNAL(clicked(bool)), this, SLOT(addInfoClicked()));
+	connect(ui.pushButtonImport, SIGNAL(clicked(bool)), this, SLOT(importMetadataFromSource()));
 
 	ADD_SETTING(ComboSetting("pdfexportmode", ui.comboBoxOutputMode));
 	ADD_SETTING(SpinSetting("pdfimagecompressionquality", ui.spinBoxCompressionQuality, 90));
@@ -787,7 +787,7 @@ void HOCRPdfExporter::updateValid() {
 	ui.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
-void HOCRPdfExporter::addInfoClicked() {
+void HOCRPdfExporter::importMetadataFromSource() {
 	QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
 	if(!sources.isEmpty()) {
 		Source* source = sources.first();
