@@ -21,9 +21,9 @@
 #define HOCRDOCUMENT_HH
 
 #include <QAbstractItemModel>
-#include <QDomDocument>
 #include <QRect>
 
+class QDomElement;
 namespace QtSpell {
 class TextEditChecker;
 }
@@ -44,12 +44,7 @@ public:
 	}
 	void recheckSpelling();
 
-	QDomDocument& getDomDocument() {
-		return m_document;
-	}
-	QString toHTML(int indent = 1) const {
-		return m_document.toString(indent);
-	}
+	QString toHTML() const;
 
 	QModelIndex addPage(const QDomElement& pageElement, bool cleanGraphics);
 	const HOCRPage* page(int i) const {
@@ -91,7 +86,6 @@ signals:
 
 private:
 	int m_pageIdCounter = 0;
-	QDomDocument m_document;
 	QString m_defaultLanguage = "en_US";
 	QtSpell::TextEditChecker* m_spell;
 
@@ -117,7 +111,7 @@ public:
 	// attrname : attrvalue : occurences
 	typedef QMap<QString, QMap<QString, int>> AttrOccurenceMap_t;
 
-	HOCRItem( QDomElement element, HOCRPage* page, HOCRItem *parent, int index = -1);
+	HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem *parent, int index = -1);
 	virtual ~HOCRItem();
 	HOCRPage* page() const {
 		return m_pageItem;
@@ -131,25 +125,25 @@ public:
 	int index() const {
 		return m_index;
 	}
-	const QDomElement& element() const {
-		return m_domElement;
-	}
 	bool isEnabled() const {
 		return m_enabled;
 	}
 
 	// HOCR specific convenience getters
 	QString itemClass() const {
-		return m_domElement.attribute("class");
+		return m_attrs["class"];
 	}
 	const QRect& bbox() const {
 		return m_bbox;
 	}
 	QString text() const {
-		return m_domElement.text();
+		return m_text;
 	}
 	QString lang() const {
-		return m_domElement.attribute("lang");
+		return m_attrs["lang"];
+	}
+	const QMap<QString, QString> getAttributes() const {
+		return m_attrs;
 	}
 	const QMap<QString, QString> getTitleAttributes() const {
 		return m_titleAttrs;
@@ -157,7 +151,7 @@ public:
 	QMap<QString,QString> getAllAttributes() const;
 	QMap<QString,QString> getAttributes(const QList<QString>& names) const;
 	void getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString> > >& occurences) const;
-	QString toHtml(int indent = 1) const;
+	QString toHtml(int indent = 0) const;
 	int baseLine() const;
 	QString fontFamily() const {
 		return m_titleAttrs["x_font"];
@@ -166,10 +160,10 @@ public:
 		return m_titleAttrs["x_fsize"].toDouble();
 	}
 	bool fontBold() const {
-		return !m_domElement.elementsByTagName("strong").isEmpty();
+		return m_bold;
 	}
 	bool fontItalic() const {
-		return !m_domElement.elementsByTagName("em").isEmpty();
+		return m_italic;
 	}
 
 	void addChild(HOCRItem* child);
@@ -180,7 +174,9 @@ public:
 	void setEnabled(bool enabled) {
 		m_enabled = enabled;
 	}
-	void setText(const QString& newText);
+	void setText(const QString& newText) {
+		m_text = newText;
+	}
 	void setAttribute(const QString& name, const QString& value, const QString& attrItemClass = QString());
 
 	static QMap<QString, QString> deserializeAttrGroup(const QString& string);
@@ -193,7 +189,11 @@ protected:
 
 	static QMap<QString,QString> s_langCache;
 
-	QDomElement m_domElement;
+	QString m_text;
+	bool m_bold;
+	bool m_italic;
+
+	QMap<QString, QString> m_attrs;
 	QMap<QString, QString> m_titleAttrs;
 	QVector<HOCRItem*> m_childItems;
 	HOCRPage* m_pageItem = nullptr;
@@ -203,13 +203,13 @@ protected:
 
 	QRect m_bbox;
 
-	bool parseChildren(QString language);
+	bool parseChildren(const QDomElement& element, QString language);
 };
 
 
 class HOCRPage : public HOCRItem {
 public:
-	HOCRPage(QDomElement element, int pageId, const QString& language, bool cleanGraphics, int index);
+	HOCRPage(const QDomElement& element, int pageId, const QString& language, bool cleanGraphics, int index);
 
 	const QString& sourceFile() const {
 		return m_sourceFile;

@@ -18,6 +18,7 @@
  */
 
 #include <QDir>
+#include <QDomElement>
 #include <QFileInfo>
 #include <QIcon>
 #include <QSet>
@@ -31,7 +32,6 @@
 
 HOCRDocument::HOCRDocument(QtSpell::TextEditChecker* spell, QObject *parent)
 	: QAbstractItemModel(parent), m_spell(spell) {
-	m_document.setContent(QByteArray("<body></body>"));
 }
 
 HOCRDocument::~HOCRDocument() {
@@ -43,7 +43,6 @@ void HOCRDocument::clear() {
 	qDeleteAll(m_pages);
 	m_pages.clear();
 	m_pageIdCounter = 0;
-	m_document.setContent(QByteArray("<body></body>"));
 	endResetModel();
 }
 
@@ -51,8 +50,17 @@ void HOCRDocument::recheckSpelling() {
 	recursiveDataChanged(QModelIndex(), {Qt::DisplayRole}, {"ocrx_word"});
 }
 
+QString HOCRDocument::toHTML() const
+{
+	QString html = "<body>\n";
+	for(const HOCRPage* page : m_pages) {
+		html += page->toHtml(1);
+	}
+	html += "</body>\n";
+	return html;
+}
+
 QModelIndex HOCRDocument::addPage(const QDomElement& pageElement, bool cleanGraphics) {
-	m_document.documentElement().appendChild(pageElement);
 	int newRow = m_pages.size();
 	beginInsertRows(QModelIndex(), newRow, newRow);
 	m_pages.append(new HOCRPage(pageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics, m_pages.size()));
@@ -475,7 +483,6 @@ void HOCRDocument::insertItem(HOCRItem* parent, HOCRItem* item, int i) {
 	if(parent) {
 		parent->insertChild(item, i);
 	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
-		m_document.documentElement().insertBefore(page->m_domElement, m_pages[i]->m_domElement);
 		page->m_index = i;
 		m_pages.insert(i++, page);
 		for(int n = m_pages.size(); i < n; ++i) {
@@ -494,7 +501,6 @@ void HOCRDocument::takeItem(HOCRItem* item) {
 	if(item->parent()) {
 		item->parent()->takeChild(item);
 	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
-		m_document.documentElement().removeChild(page->m_domElement);
 		int i = page->index();
 		m_pages.remove(i);
 		for(int n = m_pages.size(); i < n; ++i) {
@@ -537,19 +543,26 @@ QString HOCRItem::trimmedWord(const QString& word, QString* prefix, QString* suf
 	return word;
 }
 
-HOCRItem::HOCRItem(QDomElement element, HOCRPage* page, HOCRItem* parent, int index)
-	: m_domElement(element), m_pageItem(page), m_parentItem(parent), m_index(index) {
+HOCRItem::HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem* parent, int index)
+	: m_pageItem(page), m_parentItem(parent), m_index(index) {
+	// Read attrs
+	QDomNamedNodeMap attributes = element.attributes();
+	for(int i = 0, n = attributes.size(); i < n; ++i) {
+		QString attrName = attributes.item(i).nodeName();
+		if(attrName == "title") {
+			m_titleAttrs = deserializeAttrGroup(attributes.item(i).nodeValue());
+		} else {
+			m_attrs[attrName] = attributes.item(i).nodeValue();
+		}
+	}
 	// Adjust item id based on pageId
 	if(parent) {
 		QString idClass = itemClass().mid(itemClass().indexOf("_") + 1);
 		int counter = page->m_idCounters.value(idClass, 0) + 1;
 		page->m_idCounters[idClass] = counter;
 		QString newId = QString("%1_%2_%3").arg(idClass).arg(page->pageId()).arg(counter);
-		m_domElement.setAttribute("id", newId);
+		m_attrs["id"] = newId;
 	}
-
-	// Deserialize title attrs
-	m_titleAttrs = deserializeAttrGroup(m_domElement.attribute("title"));
 
 	// Parse item bbox
 	QStringList bbox = m_titleAttrs["bbox"].split(QRegExp("\\s+"));
@@ -557,15 +570,16 @@ HOCRItem::HOCRItem(QDomElement element, HOCRPage* page, HOCRItem* parent, int in
 		m_bbox.setCoords(bbox[0].toInt(), bbox[1].toInt(), bbox[2].toInt(), bbox[3].toInt());
 	}
 
-	// For the last word items of the line, ensure the correct hyphen is used
 	if(itemClass() == "ocrx_word") {
-		QDomElement nextElement = m_domElement.nextSiblingElement();
+		m_text = element.text();
+		m_bold = !element.elementsByTagName("strong").isEmpty();
+		m_italic = !element.elementsByTagName("em").isEmpty();
+		// For the last word items of the line, ensure the correct hyphen is used
+		QDomElement nextElement = element.nextSiblingElement();
 		if(nextElement.isNull()) {
-			setText(m_domElement.text().replace(QRegExp("[-\u2014]\\s*$"), "-"));
+			m_text.replace(QRegExp("[-\u2014]\\s*$"), "-");
 		}
 	}
-
-
 }
 
 HOCRItem::~HOCRItem() {
@@ -573,7 +587,6 @@ HOCRItem::~HOCRItem() {
 }
 
 void HOCRItem::addChild(HOCRItem* child) {
-	m_domElement.appendChild(child->m_domElement);
 	m_childItems.append(child);
 	child->m_parentItem = this;
 	child->m_pageItem = m_pageItem;
@@ -581,7 +594,6 @@ void HOCRItem::addChild(HOCRItem* child) {
 }
 
 void HOCRItem::insertChild(HOCRItem* child, int i) {
-	m_domElement.insertBefore(child->m_domElement, m_domElement.childNodes().at(i));
 	m_childItems.insert(i, child);
 	child->m_parentItem = this;
 	child->m_pageItem = m_pageItem;
@@ -600,7 +612,6 @@ void HOCRItem::takeChild(HOCRItem* child) {
 	if(this != child->parent()) {
 		return;
 	}
-	m_domElement.removeChild(child->m_domElement);
 	int i = child->index();
 	m_childItems.remove(i);
 	for(int n = m_childItems.size(); i < n; ++i) {
@@ -614,27 +625,13 @@ QVector<HOCRItem*> HOCRItem::takeChildren() {
 	return children;
 }
 
-void HOCRItem::setText(const QString& newText) {
-	QDomElement leaf = m_domElement;
-	while(!leaf.firstChildElement().isNull()) {
-		leaf = leaf.firstChildElement();
-	}
-	leaf.replaceChild(leaf.ownerDocument().createTextNode(newText), leaf.firstChild());
-}
-
 QMap<QString,QString> HOCRItem::getAllAttributes() const {
 	QMap<QString,QString> attrValues;
-	QDomNamedNodeMap attributes = m_domElement.attributes();
-	for(int i = 0, n = attributes.count(); i < n; ++i) {
-		QDomNode attribNode = attributes.item(i);
-		QString attrName = attribNode.nodeName();
-		if(attrName == "title") {
-			for(auto it = m_titleAttrs.begin(), itEnd = m_titleAttrs.end(); it != itEnd; ++it) {
-				attrValues.insert(QString("title:%1").arg(it.key()), it.value());
-			}
-		} else {
-			attrValues.insert(attrName, attribNode.nodeValue());
-		}
+	for(auto it = m_attrs.begin(), itEnd = m_attrs.end(); it != itEnd; ++it) {
+		attrValues.insert(it.key(), it.value());
+	}
+	for(auto it = m_titleAttrs.begin(), itEnd = m_titleAttrs.end(); it != itEnd; ++it) {
+		attrValues.insert(QString("title:%1").arg(it.key()), it.value());
 	}
 	if(itemClass() == "ocrx_word") {
 		if(!attrValues.contains("title:x_font")) {
@@ -658,7 +655,7 @@ QMap<QString,QString> HOCRItem::getAttributes(const QList<QString>& names = QLis
 		} else if(attrName == "italic") {
 			attrValues.insert(attrName, fontItalic() ? "1" : "0");
 		} else {
-			attrValues.insert(attrName, m_domElement.attribute(attrName));
+			attrValues.insert(attrName, m_attrs[attrName]);
 		}
 	}
 	return attrValues;
@@ -695,30 +692,15 @@ void HOCRItem::setAttribute(const QString& name, const QString& value, const QSt
 		return;
 	}
 	QStringList parts = name.split(":");
-	if(name == "bold" || name == "italic") {
-		QString elemName = (name == "bold" ? "strong" : "em");
-		bool currentState = (name == "bold" ? fontBold() : fontItalic());
-		if(value == "1" && !currentState) {
-			QDomElement elem = m_domElement.ownerDocument().createElement(elemName);
-			QDomNodeList children = m_domElement.childNodes();
-			for(int i = 0, n = children.size(); i < n; ++i) {
-				elem.appendChild(children.at(i));
-			}
-			m_domElement.appendChild(elem);
-		} else if(value == "0" && currentState) {
-			QDomElement elem = m_domElement.elementsByTagName(elemName).at(0).toElement();
-			QDomNodeList children = elem.childNodes();
-			for(int i = 0, n = children.size(); i < n; ++i) {
-				elem.parentNode().appendChild(children.at(i));
-			}
-			elem.parentNode().removeChild(elem);
-		}
+	if(name == "bold") {
+		m_bold = value == "1";
+	} else if(name == "italic") {
+		m_italic = value == "1";
 	} else if(parts.size() < 2) {
-		m_domElement.setAttribute(name, value);
+		m_attrs[name] = value;
 	} else {
 		Q_ASSERT(parts[0] == "title");
 		m_titleAttrs[parts[1]] = value;
-		m_domElement.setAttribute("title", serializeAttrGroup(m_titleAttrs));
 		if(name == "title:bbox") {
 			QStringList bbox = value.split(QRegExp("\\s+"));
 			Q_ASSERT(bbox.size() == 4);
@@ -728,10 +710,48 @@ void HOCRItem::setAttribute(const QString& name, const QString& value, const QSt
 }
 
 QString HOCRItem::toHtml(int indent) const {
-	QString str;
-	QTextStream stream(&str);
-	m_domElement.save(stream, indent);
-	return str;
+	QString cls = itemClass();
+	QString tag;
+	if(cls == "ocr_page" || cls == "ocr_carea" || cls == "ocr_graphic") {
+		tag = "div";
+	} else if(cls == "ocr_par") {
+		tag = "p";
+	} else {
+		tag = "span";
+	}
+	QString html = QString(indent, ' ') + "<" + tag;
+	html += QString(" title=\"%1\"").arg(serializeAttrGroup(m_titleAttrs));
+	for(auto it = m_attrs.begin(), itEnd = m_attrs.end(); it != itEnd; ++it) {
+		html += QString(" %1=\"%2\"").arg(it.key(), it.value());
+	}
+	html += ">";
+	if(cls == "ocrx_word") {
+		if(m_bold) {
+			html += "<strong>";
+		}
+		if(m_italic) {
+			html += "<em>";
+		}
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+		html += m_text.toHtmlEscaped();
+#else
+		html += Qt::escape(m_text);
+#endif
+		if(m_italic) {
+			html += "</em>";
+		}
+		if(m_bold) {
+			html += "</strong>";
+		}
+	} else {
+		html += "\n";
+		for(const HOCRItem* child : m_childItems) {
+			html += child->toHtml(indent + 1);
+		}
+		html += QString(indent, ' ');
+	}
+	html += "</" + tag + ">\n";
+	return html;
 }
 
 int HOCRItem::baseLine() const {
@@ -742,27 +762,27 @@ int HOCRItem::baseLine() const {
 	return 0;
 }
 
-bool HOCRItem::parseChildren(QString language) {
+bool HOCRItem::parseChildren(const QDomElement& element, QString language) {
 	// Determine item language (inherit from parent if not specified)
-	QString elemLang = m_domElement.attribute("lang");
+	QString elemLang = element.attribute("lang");
 	if(!elemLang.isEmpty()) {
 		auto it = s_langCache.find(elemLang);
 		if(it == s_langCache.end()) {
 			it = s_langCache.insert(elemLang, Utils::getSpellingLanguage(elemLang));
 		}
-		m_domElement.removeAttribute("lang");
+		m_attrs.remove("lang");
 		language = it.value();
 	}
 
 	if(itemClass() == "ocrx_word") {
-		m_domElement.setAttribute("lang", language);
-		return !m_domElement.text().isEmpty();
+		m_attrs["lang"] = language;
+		return !m_text.isEmpty();
 	}
 	bool haveWords = false;
-	QDomElement childElement = m_domElement.firstChildElement();
+	QDomElement childElement = element.firstChildElement();
 	while(!childElement.isNull()) {
 		m_childItems.append(new HOCRItem(childElement, m_pageItem, this, m_childItems.size()));
-		haveWords |= m_childItems.last()->parseChildren(language);
+		haveWords |= m_childItems.last()->parseChildren(childElement, language);
 		childElement = childElement.nextSiblingElement();
 	}
 	return haveWords;
@@ -770,9 +790,9 @@ bool HOCRItem::parseChildren(QString language) {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-HOCRPage::HOCRPage(QDomElement element, int pageId, const QString& language, bool cleanGraphics, int index)
+HOCRPage::HOCRPage(const QDomElement& element, int pageId, const QString& language, bool cleanGraphics, int index)
 	: HOCRItem(element, this, nullptr, index), m_pageId(pageId) {
-	m_domElement.setAttribute("id", QString("page_%1").arg(pageId));
+	m_attrs["id"] = QString("page_%1").arg(pageId);
 
 	m_sourceFile = m_titleAttrs["image"].replace(QRegExp("^['\"]"), "").replace(QRegExp("['\"]$"), "");
 	m_pageNr = m_titleAttrs["ppageno"].toInt();
@@ -785,24 +805,19 @@ HOCRPage::HOCRPage(QDomElement element, int pageId, const QString& language, boo
 	m_angle = m_titleAttrs["rot"].toDouble();
 	m_resolution = m_titleAttrs["res"].toInt();
 
-	QDomElement childElement = m_domElement.firstChildElement("div");
+	QDomElement childElement = element.firstChildElement("div");
 	while(!childElement.isNull()) {
 		HOCRItem* item = new HOCRItem(childElement, this, this, m_childItems.size());
 		m_childItems.append(item);
-		if(!item->parseChildren(language)) {
+		if(!item->parseChildren(childElement, language)) {
 			// No word children -> treat as graphic
 			if(cleanGraphics && (item->bbox().width() < 10 || item->bbox().height() < 10)) {
 				// Ignore graphics which are less than 10 x 10
 				delete m_childItems.takeLast();
 			} else {
-				childElement.setAttribute("class", "ocr_graphic");
+				item->setAttribute("class", "ocr_graphic");
 				qDeleteAll(item->m_childItems);
 				item->m_childItems.clear();
-				// Remove any children since they are not meaningful
-				QDomNodeList childNodes = childElement.childNodes();
-				for(int i = 0, n = childNodes.size(); i < n; ++i) {
-					childElement.removeChild(childNodes.at(i));
-				}
 			}
 		}
 		childElement = childElement.nextSiblingElement();
@@ -820,5 +835,4 @@ void HOCRPage::convertSourcePath(const QString& basepath, bool absolute) {
 		m_sourceFile = QString(".%1%2").arg("/").arg(QDir(basepath).relativeFilePath(m_sourceFile));
 	}
 	m_titleAttrs["image"] = QString("'%1'").arg(m_sourceFile);
-	m_domElement.setAttribute("title", serializeAttrGroup(m_titleAttrs));
 }

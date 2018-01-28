@@ -517,8 +517,9 @@ void OutputEditorHOCR::updateSourceText() {
 }
 
 void OutputEditorHOCR::addGraphicRegion(const QRect& bbox) {
+	QDomDocument doc;
 	QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
-	QDomElement graphicElement = m_document->getDomDocument().createElement("div");
+	QDomElement graphicElement = doc.createElement("div");
 	graphicElement.setAttribute("class", "ocr_graphic");
 	graphicElement.setAttribute("title", QString("bbox %1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom()));
 	QModelIndex index = m_document->addItem(current, graphicElement);
@@ -731,12 +732,12 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	QString header = QString(
 	                     "<!DOCTYPE html>\n"
 	                     "<html>\n"
-	                     " <head>\n"
-	                     "  <title>%1</title>\n"
-	                     "  <meta charset=\"utf-8\" /> \n"
-	                     "  <meta name='ocr-system' content='tesseract %2' />\n"
-	                     "  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
-	                     " </head>\n").arg(QFileInfo(outname).fileName()).arg(tess.Version());
+	                     "<head>\n"
+	                     " <title>%1</title>\n"
+	                     " <meta charset=\"utf-8\" /> \n"
+	                     " <meta name='ocr-system' content='tesseract %2' />\n"
+	                     " <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
+	                     "</head>\n").arg(QFileInfo(outname).fileName()).arg(tess.Version());
 	file.write(header.toUtf8());
 	m_document->convertSourcePaths(QFileInfo(outname).absolutePath(), false);
 	file.write(m_document->toHTML().toUtf8());
