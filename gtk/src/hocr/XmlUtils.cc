@@ -27,46 +27,46 @@ Glib::ustring XmlUtils::elementText(const xmlpp::Element* element) {
 	if(!element)
 		return Glib::ustring();
 	Glib::ustring text;
-	for(xmlpp::Node* node : element->get_children()) {
-		if(dynamic_cast<xmlpp::TextNode*>(node)) {
-			text += static_cast<xmlpp::TextNode*>(node)->get_content();
-		} else if(dynamic_cast<xmlpp::Element*>(node)) {
-			text += elementText(static_cast<xmlpp::Element*>(node));
+	for(const xmlpp::Node* node : element->get_children()) {
+		if(dynamic_cast<const xmlpp::TextNode*>(node)) {
+			text += static_cast<const xmlpp::TextNode*>(node)->get_content();
+		} else if(dynamic_cast<const xmlpp::Element*>(node)) {
+			text += elementText(static_cast<const xmlpp::Element*>(node));
 		}
 	}
 	return Utils::string_trim(text);
 }
 
-xmlpp::Element* XmlUtils::firstChildElement(xmlpp::Node* node, const Glib::ustring& name) {
+const xmlpp::Element* XmlUtils::firstChildElement(const xmlpp::Node* node, const Glib::ustring& name) {
 	if(!node)
 		return nullptr;
-	xmlpp::Node* child = node->get_first_child(name);
-	while(child && !dynamic_cast<xmlpp::Element*>(child)) {
+	const xmlpp::Node* child = node->get_first_child(name);
+	while(child && !dynamic_cast<const xmlpp::Element*>(child)) {
 		child = child->get_next_sibling();
 	}
-	return child ? static_cast<xmlpp::Element*>(child) : nullptr;
+	return child ? static_cast<const xmlpp::Element*>(child) : nullptr;
 }
 
-xmlpp::Element* XmlUtils::nextSiblingElement(xmlpp::Node* node, const Glib::ustring& name) {
+const xmlpp::Element* XmlUtils::nextSiblingElement(const xmlpp::Node* node, const Glib::ustring& name) {
 	if(!node)
 		return nullptr;
-	xmlpp::Node* child = node->get_next_sibling();
+	const xmlpp::Node* child = node->get_next_sibling();
 	if(name != "") {
-		while(child && (child->get_name() != name || !dynamic_cast<xmlpp::Element*>(child))) {
+		while(child && (child->get_name() != name || !dynamic_cast<const xmlpp::Element*>(child))) {
 			child = child->get_next_sibling();
 		}
 	} else {
-		while(child && !dynamic_cast<xmlpp::Element*>(child)) {
+		while(child && !dynamic_cast<const xmlpp::Element*>(child)) {
 			child = child->get_next_sibling();
 		}
 	}
-	return child ? static_cast<xmlpp::Element*>(child) : nullptr;
+	return child ? static_cast<const xmlpp::Element*>(child) : nullptr;
 }
 
-std::list<xmlpp::Element*> XmlUtils::elementsByTagName(const xmlpp::Element* element, const Glib::ustring& name) {
-	std::list<xmlpp::Element*> elems;
-	for(xmlpp::Node* child : element->get_children()) {
-		if(xmlpp::Element* childElem = dynamic_cast<xmlpp::Element*>(child)) {
+std::list<const xmlpp::Element*> XmlUtils::elementsByTagName(const xmlpp::Element* element, const Glib::ustring& name) {
+	std::list<const xmlpp::Element*> elems;
+	for(const xmlpp::Node* child : element->get_children()) {
+		if(const xmlpp::Element* childElem = dynamic_cast<const xmlpp::Element*>(child)) {
 			if(childElem->get_name() == name) {
 				elems.push_back(childElem);
 			}
@@ -76,30 +76,8 @@ std::list<xmlpp::Element*> XmlUtils::elementsByTagName(const xmlpp::Element* ele
 	return elems;
 }
 
-Glib::ustring XmlUtils::documentXML(xmlpp::Document* doc) {
-	Glib::ustring xml = doc->write_to_string();
-	// Strip entity declaration
-	if(xml.substr(0, 5) == "<?xml") {
-		std::size_t pos = xml.find("?>\n");
-		xml = xml.substr(pos + 3);
-	}
-	return xml;
-}
-
-Glib::ustring XmlUtils::elementXML(const xmlpp::Element* element) {
-	xmlpp::Document doc;
-	doc.create_root_node_by_import(element);
-	return documentXML(&doc);
-}
-
-xmlpp::Element* XmlUtils::takeChild(xmlpp::Element* parent, xmlpp::Element* child) {
-	xmlpp::Element* clone = static_cast<xmlpp::Element*>(dummyElement()->import_node(child));
-	parent->remove_child(child);
-	return clone;
-}
-
 xmlpp::Element* XmlUtils::createElement(const Glib::ustring& name) {
-	return dummyElement()->add_child(name);
+	return dummyElement()->add_child_element(name);
 }
 
 xmlpp::Element* XmlUtils::dummyElement() {

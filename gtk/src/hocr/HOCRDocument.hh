@@ -29,7 +29,6 @@ namespace GtkSpell {
 class Checker;
 }
 namespace xmlpp {
-class Document;
 class Element;
 }
 
@@ -49,9 +48,6 @@ public:
 	}
 	void recheckSpelling();
 
-	xmlpp::Document* getDomDocument() {
-		return m_document;
-	}
 	Glib::ustring toHTML();
 
 	Gtk::TreeIter addPage(const xmlpp::Element* pageElement, bool cleanGraphics);
@@ -67,6 +63,8 @@ public:
 	}
 	bool editItemAttribute(const Gtk::TreeIter& index, const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass = Glib::ustring());
 	bool editItemText(const Gtk::TreeIter& index, const Glib::ustring& text);
+	Gtk::TreeIter moveItem(const Gtk::TreeIter& itemIndex, const Gtk::TreeIter& newParent, int row);
+	Gtk::TreeIter swapItems(const Gtk::TreeIter& parent, int startRow, int endRow);
 	Gtk::TreeIter mergeItems(const Gtk::TreeIter& parent, int startRow, int endRow);
 	Gtk::TreeIter addItem(const Gtk::TreeIter& parent, const xmlpp::Element* element);
 	bool removeItem(const Gtk::TreeIter& index);
@@ -99,7 +97,6 @@ public:
 
 private:
 	int m_pageIdCounter = 0;
-	xmlpp::Document* m_document;
 	Glib::ustring m_defaultLanguage = "en_US";
 	GtkSpell::Checker* m_spell;
 
@@ -130,7 +127,9 @@ private:
 	Glib::RefPtr<Gdk::Pixbuf> decorationRoleForItem(const HOCRItem* item) const;
 
 	bool checkItemSpelling(const HOCRItem* item) const;
+	void insertItem(HOCRItem* parent, HOCRItem* item, int i);
 	void deleteItem(HOCRItem* item);
+	void takeItem(HOCRItem* item);
 	void recursiveDataChanged(const Gtk::TreeIter& index, const std::vector<Glib::ustring>& itemClasses = {});
 	void recursiveRowInserted(const Gtk::TreeIter& index);
 	void recomputeParentBBoxes(const HOCRItem* item);
@@ -146,7 +145,7 @@ public:
 	// attrname : attrvalue : occurences
 	typedef std::map<Glib::ustring, std::map<Glib::ustring, int>> AttrOccurenceMap_t;
 
-	HOCRItem(xmlpp::Element* element, HOCRPage* page, HOCRItem *parent, int index = -1);
+	HOCRItem(const xmlpp::Element* element, HOCRPage* page, HOCRItem *parent, int index = -1);
 	virtual ~HOCRItem();
 	HOCRPage* page() const {
 		return m_pageItem;
@@ -160,28 +159,32 @@ public:
 	int index() const {
 		return m_index;
 	}
-	const xmlpp::Element* element() const {
-		return m_domElement;
-	}
 	bool isEnabled() const {
 		return m_enabled;
 	}
 
 	// HOCR specific convenience getters
-	Glib::ustring itemClass() const;
+	Glib::ustring itemClass() const {
+		return getAttribute("class");
+	}
 	const Geometry::Rectangle& bbox() const {
 		return m_bbox;
 	}
-	Glib::ustring text() const;
-	Glib::ustring lang() const;
+	Glib::ustring text() const {
+		return m_text;
+	}
+	Glib::ustring lang() const {
+		return getAttribute("lang");
+	}
 	const std::map<Glib::ustring, Glib::ustring> getTitleAttributes() const {
 		return m_titleAttrs;
 	}
+	Glib::ustring getAttribute(const Glib::ustring& key) const;
 	Glib::ustring getTitleAttribute(const Glib::ustring& key) const;
 	std::map<Glib::ustring,Glib::ustring> getAllAttributes() const;
 	std::map<Glib::ustring,Glib::ustring> getAttributes(const std::vector<Glib::ustring>& names) const;
 	void getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring> > >& occurences) const;
-	Glib::ustring toHtml() const;
+	Glib::ustring toHtml(int indent = 0) const;
 	int baseLine() const;
 	Glib::ustring fontFamily() const {
 		return getTitleAttribute("x_font");
@@ -189,19 +192,25 @@ public:
 	double fontSize() const {
 		return std::atof(getTitleAttribute("x_fsize").c_str());
 	}
-	bool fontBold() const;
-	bool fontItalic() const;
+	bool fontBold() const {
+		return m_bold;
+	}
+	bool fontItalic() const {
+		return m_italic;
+	}
 
 	void addChild(HOCRItem* child);
+	void insertChild(HOCRItem* child, int index);
 	void removeChild(HOCRItem* child);
+	void takeChild(HOCRItem* child);
 	std::vector<HOCRItem*> takeChildren();
 	void setEnabled(bool enabled) {
 		m_enabled = enabled;
 	}
-	void setText(const Glib::ustring& newText);
+	void setText(const Glib::ustring& newText){
+		m_text = newText;
+	}
 	void setAttribute(const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass = Glib::ustring());
-
-	xmlpp::Element* importElement(const xmlpp::Element* element);
 
 	static std::map<Glib::ustring, Glib::ustring> deserializeAttrGroup(const Glib::ustring& string);
 	static Glib::ustring serializeAttrGroup(const std::map<Glib::ustring, Glib::ustring>& attrs);
@@ -212,7 +221,11 @@ protected:
 
 	static std::map<Glib::ustring,Glib::ustring> s_langCache;
 
-	xmlpp::Element* m_domElement;
+	Glib::ustring m_text;
+	bool m_bold;
+	bool m_italic;
+
+	std::map<Glib::ustring, Glib::ustring> m_attrs;
 	std::map<Glib::ustring, Glib::ustring> m_titleAttrs;
 	std::vector<HOCRItem*> m_childItems;
 	HOCRPage* m_pageItem = nullptr;
@@ -222,13 +235,13 @@ protected:
 
 	Geometry::Rectangle m_bbox;
 
-	bool parseChildren(Glib::ustring language);
+	bool parseChildren(const xmlpp::Element* element, Glib::ustring language);
 };
 
 
 class HOCRPage : public HOCRItem {
 public:
-	HOCRPage(xmlpp::Element* element, int pageId, const Glib::ustring& language, bool cleanGraphics, int index);
+	HOCRPage(const xmlpp::Element* element, int pageId, const Glib::ustring& language, bool cleanGraphics, int index);
 
 	const Glib::ustring& sourceFile() const {
 		return m_sourceFile;

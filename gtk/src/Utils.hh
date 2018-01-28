@@ -65,6 +65,7 @@ bool strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, bool ma
 std::size_t string_firstIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
 std::size_t string_lastIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
 int string_replace(Glib::ustring& str, const Glib::ustring& search, const Glib::ustring& replace, bool matchCase);
+Glib::ustring string_html_escape(const Glib::ustring& str);
 
 int parseInt(const Glib::ustring& str, bool* ok = nullptr);
 

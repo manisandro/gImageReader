@@ -646,36 +646,38 @@ void OutputEditorHOCR::addGraphicRegion(const Geometry::Rectangle& bbox) {
 		m_treeView->get_selection()->select(index);
 		m_treeView->scroll_to_row(m_document->get_path(index));
 	}
+	graphicElement->get_parent()->remove_node(graphicElement);
 }
 
 void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 	std::vector<Gtk::TreePath> paths = m_treeView->get_selection()->get_selected_rows();
 	int nIndices = paths.size();
 	if(nIndices > 1) {
-		// Check if item merging is allowed (no pages, all items with same parent and consecutive)
+		// Check if merging or swapping is allowed (items are valid siblings)
 		const HOCRItem* firstItem = m_document->itemAtIndex(m_document->get_iter(paths.front()));
-		bool ok = firstItem;
-		std::set<Glib::ustring> classes;
-		if(firstItem) {
-			classes.insert(firstItem->itemClass());
+		if(!firstItem) {
+			return;
 		}
+		std::set<Glib::ustring> classes;
+		classes.insert(firstItem->itemClass());
 		std::vector<int> rows = {paths.front().back()};
-		for(int i = 1; i < nIndices && ok; ++i) {
+		for(int i = 1; i < nIndices; ++i) {
 			const HOCRItem* item = m_document->itemAtIndex(m_document->get_iter(paths[i]));
-			if(!item) {
-				ok = false;
-				break;
+			if(!item || item->parent() != firstItem->parent()) {
+				return;
 			}
-			ok &= item->parent() == firstItem->parent();
 			classes.insert(item->itemClass());
 			rows.push_back(paths[i].back());
 		}
 		std::sort(rows.begin(), rows.end());
-		ok &= classes.size() == 1 && *classes.begin() != "ocr_page";
-		ok &= (rows.back() - rows.front()) == nIndices - 1;
-		if(ok) {
-			Gtk::Menu menu;
-			Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
+		bool consecutive = (rows.back() - rows.front()) == nIndices - 1;
+		bool graphics = firstItem->itemClass() == "ocr_graphic";
+		bool pages = firstItem->itemClass() == "ocr_page";
+		bool sameClass = classes.size() == 1;
+
+		Gtk::Menu menu;
+		Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
+		if(consecutive && !graphics && !pages && sameClass) { // Merging allowed
 			Gtk::MenuItem* mergeItem = Gtk::manage(new Gtk::MenuItem(_("Merge")));
 			menu.append(*mergeItem);
 			CONNECT(mergeItem, activate, [&] {
@@ -683,11 +685,21 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 				m_treeView->get_selection()->unselect_all();
 				m_treeView->get_selection()->select(newIndex);
 			});
-			CONNECT(&menu, hide, [&] { loop->quit(); });
-			menu.show_all();
-			menu.popup(ev->button, ev->time);
-			loop->run();
 		}
+		if(nIndices == 2) { // Swapping allowed
+			Gtk::MenuItem* swapItem = Gtk::manage(new Gtk::MenuItem(_("Swap")));
+			menu.append(*swapItem);
+			CONNECT(swapItem, activate, [&] {
+				Gtk::TreeIter newIndex = m_document->swapItems(m_document->get_iter(paths.front())->parent(), rows.front(), rows.back());
+				m_treeView->get_selection()->unselect_all();
+				m_treeView->get_selection()->select(newIndex);
+			});
+		}
+		CONNECT(&menu, hide, [&] { loop->quit(); });
+		menu.show_all();
+		menu.popup(ev->button, ev->time);
+		loop->run();
+		// Nothing else is allowed with multiple items selected
 		return;
 	}
 	Gtk::TreeIter index = m_treeView->indexAtPos(ev->x, ev->y);
@@ -801,7 +813,7 @@ void OutputEditorHOCR::open() {
 	xmlpp::DomParser parser;
 	parser.parse_memory(source);
 	xmlpp::Document* doc = parser.get_document();
-	xmlpp::Element* div = XmlUtils::firstChildElement(XmlUtils::firstChildElement(doc->get_root_node(), "body"), "div");
+	const xmlpp::Element* div = XmlUtils::firstChildElement(XmlUtils::firstChildElement(doc->get_root_node(), "body"), "div");
 	if(!div || div->get_attribute_value("class") != "ocr_page") {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Invalid hOCR file"), Glib::ustring::compose(_("The file does not appear to contain valid hOCR HTML: %1"), filename));
 		return;
@@ -838,12 +850,12 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 	Glib::ustring header = Glib::ustring::compose(
 	                           "<!DOCTYPE html>\n"
 	                           "<html>\n"
-	                           " <head>\n"
-	                           "  <title>%1</title>\n"
-	                           "  <meta charset=\"utf-8\" /> \n"
-	                           "  <meta name='ocr-system' content='tesseract %2' />\n"
-	                           "  <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
-	                           " </head>\n", Glib::path_get_basename(outname), tess.Version());
+							   "<head>\n"
+							   " <title>%1</title>\n"
+							   " <meta charset=\"utf-8\" /> \n"
+							   " <meta name='ocr-system' content='tesseract %2' />\n"
+							   " <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
+							   "</head>\n", Glib::path_get_basename(outname), tess.Version());
 	m_document->convertSourcePaths(Glib::path_get_dirname(outname), false);
 	Glib::ustring body = m_document->toHTML();
 	m_document->convertSourcePaths(Glib::path_get_dirname(outname), true);

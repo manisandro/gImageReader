@@ -23,7 +23,7 @@ BuildRequires: qt5-qtbase-devel
 BuildRequires: qtspell-qt5-devel
 BuildRequires: poppler-qt5-devel
 BuildRequires: json-glib-devel
-BuildRequires: libxml++-devel
+BuildRequires: libxml++30-devel
 BuildRequires: podofo-devel
 BuildRequires: djvulibre-devel
 BuildRequires: quazip-qt5-devel

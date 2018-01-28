@@ -32,12 +32,10 @@ class Node;
 class XmlUtils {
 public:
 	static Glib::ustring elementText(const xmlpp::Element* element);
-	static xmlpp::Element* firstChildElement(xmlpp::Node* node, const Glib::ustring& name = Glib::ustring());
-	static xmlpp::Element* nextSiblingElement(xmlpp::Node* node, const Glib::ustring& name = Glib::ustring());
-	static std::list<xmlpp::Element*> elementsByTagName(const xmlpp::Element* element, const Glib::ustring& name);
-	static Glib::ustring documentXML(xmlpp::Document* doc);
-	static Glib::ustring elementXML(const xmlpp::Element* element);
-	static xmlpp::Element* takeChild(xmlpp::Element* parent, xmlpp::Element* child);
+	static const xmlpp::Element* firstChildElement(const xmlpp::Node* node, const Glib::ustring& name = Glib::ustring());
+	static const xmlpp::Element* nextSiblingElement(const xmlpp::Node* node, const Glib::ustring& name = Glib::ustring());
+	static std::list<const xmlpp::Element*> elementsByTagName(const xmlpp::Element* element, const Glib::ustring& name);
+
 	static xmlpp::Element* createElement(const Glib::ustring& name);
 
 private:

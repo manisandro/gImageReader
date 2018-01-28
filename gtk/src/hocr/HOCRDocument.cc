@@ -31,15 +31,12 @@
 HOCRDocument::HOCRDocument(GtkSpell::Checker* spell)
 	: Glib::ObjectBase("HOCRDocument")
 	, m_spell(spell) {
-	m_document = new xmlpp::Document();
-	m_document->create_root_node("body");
 }
 
 HOCRDocument::~HOCRDocument() {
 	for(HOCRPage* page : m_pages) {
 		delete page;
 	}
-	delete m_document;
 }
 
 void HOCRDocument::recheckSpelling() {
@@ -49,18 +46,16 @@ void HOCRDocument::recheckSpelling() {
 }
 
 Glib::ustring HOCRDocument::toHTML() {
-	Glib::ustring xml = m_document->write_to_string();
-	// Strip entity declaration
-	if(xml.substr(0, 5) == "<?xml") {
-		std::size_t pos = xml.find("?>\n");
-		xml = xml.substr(pos + 3);
+	Glib::ustring html = "<body>\n";
+	for(const HOCRPage* page : m_pages) {
+		html += page->toHtml(1);
 	}
-	return xml;
+	html += "</body>\n";
+	return html;
 }
 
 Gtk::TreeIter HOCRDocument::addPage(const xmlpp::Element* pageElement, bool cleanGraphics) {
-	xmlpp::Element* importedPageElement = static_cast<xmlpp::Element*>(m_document->get_root_node()->import_node(pageElement));
-	m_pages.push_back(new HOCRPage(importedPageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics, m_pages.size()));
+	m_pages.push_back(new HOCRPage(pageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics, m_pages.size()));
 	Gtk::TreeIter iter = get_iter(get_root_path(m_pages.back()->index()));
 	recursiveRowInserted(iter);
 	for(int i = 0, n = m_pages.size(); i < n; ++i) {
@@ -98,6 +93,39 @@ bool HOCRDocument::editItemText(const Gtk::TreeIter& index, const Glib::ustring&
 	return true;
 }
 
+Gtk::TreeIter HOCRDocument::moveItem(const Gtk::TreeIter& itemIndex, const Gtk::TreeIter& newParent, int newRow) {
+	HOCRItem* item = mutableItemAtIndex(itemIndex);
+	HOCRItem* parentItem = mutableItemAtIndex(newParent);
+	if(!item || (!parentItem && item->itemClass() != "ocr_page")) {
+		return Gtk::TreeIter();
+	}
+	Gtk::TreeIter ancestor = newParent;
+	while(ancestor) {
+		if(ancestor == itemIndex) {
+			return Gtk::TreeIter();
+		}
+		ancestor = ancestor->parent();
+	}
+	int oldRow = item->index();
+	Gtk::TreeIter oldParent = itemIndex->parent();
+	if(oldParent == newParent && oldRow < newRow) {
+		--newRow;
+	}
+	Gtk::TreePath itemPath = get_path(itemIndex);
+	takeItem(item);
+	row_deleted(itemPath);
+	insertItem(parentItem, item, newRow);
+	Gtk::TreeIter newIndex = newParent->children()[newRow];
+	recursiveRowInserted(newIndex);
+	return newIndex;
+}
+
+Gtk::TreeIter HOCRDocument::swapItems(const Gtk::TreeIter& parent, int firstRow, int secondRow) {
+	moveItem(parent->children()[firstRow], parent, secondRow);
+	moveItem(parent->children()[secondRow], parent, firstRow);
+	return parent->children()[firstRow];
+}
+
 Gtk::TreeIter HOCRDocument::mergeItems(const Gtk::TreeIter& parent, int startRow, int endRow) {
 	if(endRow - startRow <= 0) {
 		return Gtk::TreeIter();
@@ -108,10 +136,10 @@ Gtk::TreeIter HOCRDocument::mergeItems(const Gtk::TreeIter& parent, int startRow
 		return Gtk::TreeIter();
 	}
 
+	Geometry::Rectangle bbox = targetItem->bbox();
 	if(targetItem->itemClass() == "ocrx_word") {
 		// Merge word items: join text, merge bounding boxes
 		Glib::ustring text = targetItem->text();
-		Geometry::Rectangle bbox = targetItem->bbox();
 		for(int row = ++startRow; row <= endRow; ++row) {
 			Gtk::TreeIter childIndex = parent->children()[startRow];
 			HOCRItem* item = mutableItemAtIndex(childIndex);
@@ -124,12 +152,8 @@ Gtk::TreeIter HOCRDocument::mergeItems(const Gtk::TreeIter& parent, int startRow
 		}
 		targetItem->setText(text);
 		row_changed(get_path(targetIndex), targetIndex);
-		Glib::ustring bboxstr = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
-		targetItem->setAttribute("title:bbox", bboxstr);
-		m_signal_item_attribute_changed.emit(targetIndex, "title:bbox", bboxstr);
 	} else {
 		// Merge other items: merge dom trees and bounding boxes
-		Geometry::Rectangle bbox = targetItem->bbox();
 		std::vector<HOCRItem*> moveChilds;
 		for(int row = ++startRow; row <= endRow; ++row) {
 			Gtk::TreeIter childIndex = parent->children()[startRow];
@@ -147,10 +171,10 @@ Gtk::TreeIter HOCRDocument::mergeItems(const Gtk::TreeIter& parent, int startRow
 			Gtk::TreeIter newIndex = targetIndex->children()[child->index()];
 			row_inserted(get_path(newIndex), newIndex);
 		}
-		Glib::ustring bboxstr = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
-		targetItem->setAttribute("title:bbox", bboxstr);
-		m_signal_item_attribute_changed.emit(targetIndex, "title:bbox", bboxstr);
 	}
+	Glib::ustring bboxstr = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
+	targetItem->setAttribute("title:bbox", bboxstr);
+	m_signal_item_attribute_changed.emit(targetIndex, "title:bbox", bboxstr);
 	return targetIndex;
 }
 
@@ -159,8 +183,7 @@ Gtk::TreeIter HOCRDocument::addItem(const Gtk::TreeIter& parent, const xmlpp::El
 	if(!parentItem) {
 		return Gtk::TreeIter();
 	}
-	xmlpp::Element* importedElement = static_cast<xmlpp::Element*>(parentItem->importElement(element));
-	HOCRItem* item = new HOCRItem(importedElement, parentItem->page(), parentItem);
+	HOCRItem* item = new HOCRItem(element, parentItem->page(), parentItem);
 	parentItem->addChild(item);
 	recomputeParentBBoxes(item);
 	Gtk::TreeIter child = parent->children()[item->index()];
@@ -541,13 +564,31 @@ bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const {
 	return true;
 }
 
+void HOCRDocument::insertItem(HOCRItem* parent, HOCRItem* item, int i) {
+	if(parent) {
+		parent->insertChild(item, i);
+	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
+		page->m_index = i;
+		m_pages.insert(m_pages.begin() + i++, page);
+		for(int n = m_pages.size(); i < n; ++i) {
+			m_pages[i]->m_index = i;
+			Gtk::TreePath path = get_root_path(i);
+			row_changed(path, get_iter(path));
+		}
+	}
+}
+
 void HOCRDocument::deleteItem(HOCRItem* item) {
+	takeItem(item);
+	delete item;
+}
+
+void HOCRDocument::takeItem(HOCRItem* item) {
 	if(item->parent()) {
-		item->parent()->removeChild(item);
+		item->parent()->takeChild(item);
 	} else if(HOCRPage* page = dynamic_cast<HOCRPage*>(item)) {
 		int idx = page->index();
 		m_pages.erase(m_pages.begin() + idx);
-		delete page;
 		for(int i = idx, n = m_pages.size(); i < n; ++i) {
 			m_pages[i]->m_index = i;
 		}
@@ -593,19 +634,26 @@ Glib::ustring HOCRItem::trimmedWord(const Glib::ustring& word, Glib::ustring* pr
 	return word;
 }
 
-HOCRItem::HOCRItem(xmlpp::Element* element, HOCRPage* page, HOCRItem* parent, int index)
-	: m_domElement(element), m_pageItem(page), m_parentItem(parent), m_index(index) {
+HOCRItem::HOCRItem(const xmlpp::Element* element, HOCRPage* page, HOCRItem* parent, int index)
+	: m_pageItem(page), m_parentItem(parent), m_index(index) {
+
+	// Read attrs
+	for(const xmlpp::Attribute* attr : element->get_attributes()) {
+		Glib::ustring attrName = attr->get_name();
+		if(attrName == "title") {
+			m_titleAttrs = deserializeAttrGroup(element->get_attribute_value("title"));
+		} else {
+			m_attrs[attrName] = attr->get_value();
+		}
+	}
 	// Adjust item id based on pageId
 	if(parent) {
 		Glib::ustring idClass = itemClass().substr(itemClass().find_first_of('_') + 1);
 		int counter = page->m_idCounters[idClass] + 1;
 		page->m_idCounters[idClass] = counter;
 		Glib::ustring newId = Glib::ustring::compose("%1_%2_%3", idClass, page->pageId(), counter);
-		m_domElement->set_attribute("id", newId);
+		m_attrs["id"] = newId;
 	}
-
-	// Deserialize title attrs
-	m_titleAttrs = deserializeAttrGroup(m_domElement->get_attribute_value("title"));
 
 	// Parse item bbox
 	std::vector<Glib::ustring> bbox = Utils::string_split(m_titleAttrs["bbox"], ' ', false);
@@ -613,12 +661,14 @@ HOCRItem::HOCRItem(xmlpp::Element* element, HOCRPage* page, HOCRItem* parent, in
 		m_bbox.setCoords(std::atof(bbox[0].c_str()), std::atof(bbox[1].c_str()), std::atof(bbox[2].c_str()), std::atof(bbox[3].c_str()));
 	}
 
-	// For the last word items of the line, ensure the correct hyphen is used
 	if(itemClass() == "ocrx_word") {
-		xmlpp::Element* nextElement = XmlUtils::nextSiblingElement(m_domElement);
+		m_text = XmlUtils::elementText(element);
+		m_bold = !XmlUtils::elementsByTagName(element, "strong").empty();
+		m_italic = !XmlUtils::elementsByTagName(element, "em").empty();
+		// For the last word items of the line, ensure the correct hyphen is used
+		const xmlpp::Element* nextElement = XmlUtils::nextSiblingElement(element);
 		if(!nextElement) {
-			Glib::ustring text = XmlUtils::elementText(m_domElement);
-			setText(Glib::Regex::create("[-\u2014]\\s*$")->replace(text, 0, "-", static_cast<Glib::RegexMatchFlags>(0)));
+			m_text = Glib::Regex::create("[-\u2014]\\s*$")->replace(m_text, 0, "-", static_cast<Glib::RegexMatchFlags>(0));
 		}
 	}
 }
@@ -627,23 +677,33 @@ HOCRItem::~HOCRItem() {
 	std::for_each( m_childItems.begin(), m_childItems.end(), [](HOCRItem* item) {
 		delete item;
 	});
-	m_domElement->get_parent()->remove_child(m_domElement);
 }
 
 void HOCRItem::addChild(HOCRItem* child) {
-	xmlpp::Element* newElem = static_cast<xmlpp::Element*>(m_domElement->import_node(child->m_domElement));
-	child->m_domElement->get_parent()->remove_child(child->m_domElement);
-	child->m_domElement = newElem;
 	m_childItems.push_back(child);
 	child->m_parentItem = this;
 	child->m_pageItem = m_pageItem;
 	child->m_index = m_childItems.size() - 1;
 }
 
+void HOCRItem::insertChild(HOCRItem* child, int i) {
+	m_childItems.insert(m_childItems.begin() + i, child);
+	child->m_parentItem = this;
+	child->m_pageItem = m_pageItem;
+	child->m_index = i++;
+	for(int n = m_childItems.size(); i < n; ++i) {
+		m_childItems[i]->m_index = i;
+	}
+}
+
 void HOCRItem::removeChild(HOCRItem *child) {
+	takeChild(child);
+	delete child;
+}
+
+void HOCRItem::takeChild(HOCRItem *child) {
 	int idx = child->index();
 	m_childItems.erase(m_childItems.begin() + idx);
-	delete child;
 	for(int i = idx, n = m_childItems.size(); i < n ; ++i) {
 		m_childItems[i]->m_index = i;
 	}
@@ -655,39 +715,13 @@ std::vector<HOCRItem*> HOCRItem::takeChildren() {
 	return children;
 }
 
-void HOCRItem::setText(const Glib::ustring& newText) {
-	xmlpp::Element* leaf = m_domElement;
-	while(leaf->get_first_child() && dynamic_cast<xmlpp::Element*>(leaf->get_first_child())) {
-		leaf = static_cast<xmlpp::Element*>(leaf->get_first_child());
-	}
-	leaf->remove_child(leaf->get_first_child());
-	leaf->add_child_text(newText);
-}
-
-
-Glib::ustring HOCRItem::itemClass() const {
-	return m_domElement->get_attribute_value("class");
-}
-
-Glib::ustring HOCRItem::text() const {
-	return XmlUtils::elementText(m_domElement);
-}
-
-Glib::ustring HOCRItem::lang() const {
-	return m_domElement->get_attribute_value("lang");
-}
-
 std::map<Glib::ustring,Glib::ustring> HOCRItem::getAllAttributes() const {
 	std::map<Glib::ustring,Glib::ustring> attrValues;
-	for(const xmlpp::Attribute* attribute : m_domElement->get_attributes()) {
-		Glib::ustring attrName = attribute->get_name();
-		if(attrName == "title") {
-			for(auto it = m_titleAttrs.begin(), itEnd = m_titleAttrs.end(); it != itEnd; ++it) {
-				attrValues.insert(std::make_pair(Glib::ustring::compose("title:%1", it->first), it->second));
-			}
-		} else {
-			attrValues.insert(std::make_pair(attrName, attribute->get_value()));
-		}
+	for(auto it = m_attrs.begin(), itEnd = m_attrs.end(); it != itEnd; ++it) {
+		attrValues.insert(*it);
+	}
+	for(auto it = m_titleAttrs.begin(), itEnd = m_titleAttrs.end(); it != itEnd; ++it) {
+		attrValues.insert(std::make_pair(Glib::ustring::compose("title:%1", it->first), it->second));
 	}
 	if(itemClass() == "ocrx_word") {
 		if(attrValues.find("title:x_font") == attrValues.end()) {
@@ -711,7 +745,7 @@ std::map<Glib::ustring,Glib::ustring> HOCRItem::getAttributes(const std::vector<
 		} else if(attrName == "italic") {
 			attrValues.insert(std::make_pair(attrName, fontItalic() ? "yes" : "no"));
 		} else {
-			attrValues.insert(std::make_pair(attrName, m_domElement->get_attribute_value(attrName)));
+			attrValues.insert(std::make_pair(attrName, getAttribute(attrName)));
 		}
 	}
 	return attrValues;
@@ -748,29 +782,15 @@ void HOCRItem::setAttribute(const Glib::ustring& name, const Glib::ustring& valu
 		return;
 	}
 	std::vector<Glib::ustring> parts = Utils::string_split(name, ':');
-	if(name == "bold" || name == "italic") {
-		Glib::ustring elemName = (name == "bold" ? "strong" : "em");
-		bool currentState = (name == "bold" ? fontBold() : fontItalic());
-		if(value == "yes" && !currentState) {
-			xmlpp::Node::NodeList list = m_domElement->get_children();
-			xmlpp::Element* elem = m_domElement->add_child(elemName);
-			for(xmlpp::Node* node : list) {
-				elem->import_node(node);
-				m_domElement->remove_child(node);
-			}
-		} else if(value == "no" && currentState) {
-			xmlpp::Element* elem = XmlUtils::elementsByTagName(m_domElement, elemName).front();
-			for(xmlpp::Node* child : elem->get_children()) {
-				elem->get_parent()->import_node(child);
-			}
-			elem->get_parent()->remove_child(elem);
-		}
+	if(name == "bold") {
+		m_bold = value == "yes";
+	} else if(name == "italic") {
+		m_italic = value == "yes";
 	} else if(parts.size() < 2) {
-		m_domElement->set_attribute(name, value);
+		m_attrs[name] = value;
 	} else {
 		g_assert(parts[0] == "title");
 		m_titleAttrs[parts[1]] = value;
-		m_domElement->set_attribute("title", serializeAttrGroup(m_titleAttrs));
 		if(name == "title:bbox") {
 			std::vector<Glib::ustring> bbox = Utils::string_split(value, ' ', false);
 			g_assert(bbox.size() == 4);
@@ -779,12 +799,45 @@ void HOCRItem::setAttribute(const Glib::ustring& name, const Glib::ustring& valu
 	}
 }
 
-xmlpp::Element* HOCRItem::importElement(const xmlpp::Element* element) {
-	return static_cast<xmlpp::Element*>(m_domElement->import_node(element));
-}
-
-Glib::ustring HOCRItem::toHtml() const {
-	return XmlUtils::elementXML(m_domElement);
+Glib::ustring HOCRItem::toHtml(int indent) const {
+	Glib::ustring cls = itemClass();
+	Glib::ustring tag;
+	if(cls == "ocr_page" || cls == "ocr_carea" || cls == "ocr_graphic") {
+		tag = "div";
+	} else if(cls == "ocr_par") {
+		tag = "p";
+	} else {
+		tag = "span";
+	}
+	Glib::ustring html = Glib::ustring(indent, ' ') + "<" + tag;
+	html += Glib::ustring::compose(" title=\"%1\"", serializeAttrGroup(m_titleAttrs));
+	for(auto it = m_attrs.begin(), itEnd = m_attrs.end(); it != itEnd; ++it) {
+		html += Glib::ustring::compose(" %1=\"%2\"", it->first, it->second);
+	}
+	html += ">";
+	if(cls == "ocrx_word") {
+		if(m_bold) {
+			html += "<strong>";
+		}
+		if(m_italic) {
+			html += "<em>";
+		}
+		html += Utils::string_html_escape(m_text);
+		if(m_italic) {
+			html += "</em>";
+		}
+		if(m_bold) {
+			html += "</strong>";
+		}
+	} else {
+		html += "\n";
+		for(const HOCRItem* child : m_childItems) {
+			html += child->toHtml(indent + 1);
+		}
+		html += Glib::ustring(indent, ' ');
+	}
+	html += "</" + tag + ">\n";
+	return html;
 }
 
 int HOCRItem::baseLine() const {
@@ -796,38 +849,35 @@ int HOCRItem::baseLine() const {
 	return 0;
 }
 
-bool HOCRItem::fontBold() const {
-	return !XmlUtils::elementsByTagName(m_domElement, "strong").empty();
-}
-
-bool HOCRItem::fontItalic() const {
-	return !XmlUtils::elementsByTagName(m_domElement, "em").empty();
-}
-
-bool HOCRItem::parseChildren(Glib::ustring language) {
+bool HOCRItem::parseChildren(const xmlpp::Element* element, Glib::ustring language) {
 	// Determine item language (inherit from parent if not specified)
-	Glib::ustring elemLang = m_domElement->get_attribute_value("lang");
+	Glib::ustring elemLang = getAttribute("lang");
 	if(!elemLang.empty()) {
 		auto it = s_langCache.find(elemLang);
 		if(it == s_langCache.end()) {
 			it = s_langCache.insert(std::make_pair(elemLang, Utils::getSpellingLanguage(elemLang))).first;
 		}
-		m_domElement->remove_attribute("lang");
+		m_attrs.erase(m_attrs.find("lang"));
 		language = it->second;
 	}
 
 	if(itemClass() == "ocrx_word") {
-		m_domElement->set_attribute("lang", language);
-		return !XmlUtils::elementText(m_domElement).empty();
+		m_attrs["lang"] = language;
+		return !m_text.empty();
 	}
 	bool haveWords = false;
-	xmlpp::Element* childElement = XmlUtils::firstChildElement(m_domElement);
+	const xmlpp::Element* childElement = XmlUtils::firstChildElement(element);
 	while(childElement) {
 		m_childItems.push_back(new HOCRItem(childElement, m_pageItem, this, m_childItems.size()));
-		haveWords |= m_childItems.back()->parseChildren(language);
+		haveWords |= m_childItems.back()->parseChildren(childElement, language);
 		childElement = XmlUtils::nextSiblingElement(childElement);
 	}
 	return haveWords;
+}
+
+Glib::ustring HOCRItem::getAttribute(const Glib::ustring& key) const {
+	auto it = m_attrs.find(key);
+	return it == m_attrs.end() ? Glib::ustring() : it->second;
 }
 
 Glib::ustring HOCRItem::getTitleAttribute(const Glib::ustring& key) const {
@@ -837,9 +887,9 @@ Glib::ustring HOCRItem::getTitleAttribute(const Glib::ustring& key) const {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-HOCRPage::HOCRPage(xmlpp::Element* element, int pageId, const Glib::ustring& language, bool cleanGraphics, int index)
+HOCRPage::HOCRPage(const xmlpp::Element* element, int pageId, const Glib::ustring& language, bool cleanGraphics, int index)
 	: HOCRItem(element, this, nullptr, index), m_pageId(pageId) {
-	m_domElement->set_attribute("id", Glib::ustring::compose("page_%1", pageId));
+	m_attrs["id"] = Glib::ustring::compose("page_%1", pageId);
 
 	m_sourceFile = Utils::string_trim(m_titleAttrs["image"], "'\"");
 	m_pageNr = std::atoi(m_titleAttrs["ppageno"].c_str());
@@ -852,28 +902,24 @@ HOCRPage::HOCRPage(xmlpp::Element* element, int pageId, const Glib::ustring& lan
 	m_angle = std::atof(m_titleAttrs["rot"].c_str());
 	m_resolution = std::atoi(m_titleAttrs["res"].c_str());
 
-	xmlpp::Element* childElement = XmlUtils::firstChildElement(m_domElement, "div");
+	const xmlpp::Element* childElement = XmlUtils::firstChildElement(element, "div");
 	while(childElement) {
 		// Need to query here because "delete m_childItems.back();" may delete the item
-		xmlpp::Element* nextSibling = XmlUtils::nextSiblingElement(childElement);
+		const xmlpp::Element* nextSibling = XmlUtils::nextSiblingElement(childElement);
 		HOCRItem* item = new HOCRItem(childElement, this, this, m_childItems.size());
 		m_childItems.push_back(item);
-		if(!item->parseChildren(language)) {
+		if(!item->parseChildren(childElement, language)) {
 			// No word children -> treat as graphic
 			if(cleanGraphics && (item->bbox().width < 10 || item->bbox().height < 10)) {
 				// Ignore graphics which are less than 10 x 10
 				delete m_childItems.back();
 				m_childItems.pop_back();
 			} else {
-				childElement->set_attribute("class", "ocr_graphic");
+				item->setAttribute("itemClass", "ocr_graphic");
 				std::for_each(item->m_childItems.begin(), item->m_childItems.end(), [](HOCRItem* item) {
 					delete item;
 				});
 				item->m_childItems.clear();
-				// Remove any children since they are not meaningful
-				for(xmlpp::Node* child : childElement->get_children()) {
-					childElement->remove_child(child);
-				}
 			}
 		}
 		childElement = nextSibling;
@@ -888,5 +934,4 @@ Glib::ustring HOCRPage::title() const {
 void HOCRPage::convertSourcePath(const std::string &basepath, bool absolute) {
 	m_sourceFile = absolute ? Utils::make_absolute_path(m_sourceFile, basepath) : Utils::make_relative_path(m_sourceFile, basepath);
 	m_titleAttrs["image"] = Glib::ustring::compose("'%1'", m_sourceFile);
-	m_domElement->set_attribute("title", serializeAttrGroup(m_titleAttrs));
 }
