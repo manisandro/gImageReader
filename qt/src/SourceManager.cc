@@ -82,7 +82,7 @@ SourceManager::~SourceManager() {
 	clearSources();
 }
 
-int SourceManager::addSources(const QStringList& files) {
+int SourceManager::addSources(const QStringList& files, bool suppressTextWarning) {
 	QString failed;
 	QListWidgetItem* item = nullptr;
 	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList>>("recentitems")->getValue();
@@ -120,7 +120,7 @@ int SourceManager::addSources(const QStringList& files) {
 		recentItems.prepend(filename);
 		++added;
 	}
-	if(!filesWithText.empty()) {
+	if(!suppressTextWarning && !filesWithText.empty()) {
 		QMessageBox::information(MAIN->getInstance(), _("PDFs with text"), _("These PDF files already contain text:\n%1").arg(filesWithText.join('\n')));
 	}
 	ConfigSettings::get<VarSetting<QStringList>>("recentitems")->setValue(recentItems);

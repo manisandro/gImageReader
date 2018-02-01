@@ -421,7 +421,7 @@ void HOCROdtExporter::printItem(QXmlStreamWriter& writer, const HOCRItem* item, 
 }
 
 bool HOCROdtExporter::setSource(const QString& sourceFile, int page, int dpi, double angle) {
-	if(MAIN->getSourceManager()->addSource(sourceFile)) {
+	if(MAIN->getSourceManager()->addSource(sourceFile, true)) {
 		MAIN->getDisplayer()->setup(&page, &dpi, &angle);
 		return true;
 	} else {

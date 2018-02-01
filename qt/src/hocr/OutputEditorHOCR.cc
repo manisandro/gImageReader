@@ -386,7 +386,7 @@ void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool exp
 }
 
 bool OutputEditorHOCR::showPage(const HOCRPage *page) {
-	return page && MAIN->getSourceManager()->addSource(page->sourceFile()) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
+	return page && MAIN->getSourceManager()->addSource(page->sourceFile(), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
 }
 
 void OutputEditorHOCR::showItemProperties(const QModelIndex& index) {
