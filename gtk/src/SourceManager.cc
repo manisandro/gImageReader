@@ -72,7 +72,7 @@ SourceManager::~SourceManager() {
 	clearSources();
 }
 
-int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files) {
+int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files, bool suppressTextWarning) {
 	Glib::ustring failed;
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewSources->get_model());
 	Gtk::TreeIter it = store->children().end();
@@ -114,7 +114,7 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files)
 		Gtk::RecentManager::get_default()->add_item(file->get_uri());
 		++added;
 	}
-	if(!filesWithText.empty()) {
+	if(!suppressTextWarning && !filesWithText.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_INFO, _("PDFs with text"), Glib::ustring::compose(_("These PDF files already contain text:\n%1"), Utils::string_join(filesWithText, "\n")));
 	}
 	m_connectionSelectionChanged.block(true);

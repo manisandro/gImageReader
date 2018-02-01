@@ -801,7 +801,7 @@ void HOCRPdfExporter::imageCompressionChanged() {
 
 bool HOCRPdfExporter::setSource(const Glib::ustring& sourceFile, int page, int dpi, double angle) {
 	Glib::RefPtr<Gio::File> file = Gio::File::create_for_path(sourceFile);
-	if(MAIN->getSourceManager()->addSource(file)) {
+	if(MAIN->getSourceManager()->addSource(file, true)) {
 		MAIN->getDisplayer()->setup(&page, &dpi, &angle);
 		return true;
 	} else {

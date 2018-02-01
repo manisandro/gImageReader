@@ -491,7 +491,7 @@ void OutputEditorHOCR::expandCollapseChildren(const Gtk::TreeIter& index, bool e
 }
 
 bool OutputEditorHOCR::showPage(const HOCRPage *page) {
-	return page && MAIN->getSourceManager()->addSource(Gio::File::create_for_path(page->sourceFile())) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
+	return page && MAIN->getSourceManager()->addSource(Gio::File::create_for_path(page->sourceFile()), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
 }
 
 void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index) {
