@@ -28,7 +28,9 @@
 #include <QLocale>
 #include <QMessageBox>
 #include <QPainter>
+#include <QPrinter>
 #include <QStandardItemModel>
+#include <QToolTip>
 #include <QUrl>
 #include <podofo/base/PdfDictionary.h>
 #include <podofo/base/PdfFilter.h>
@@ -59,14 +61,16 @@ class HOCRPdfExporter::QPainterPDFPainter : public HOCRPdfExporter::PDFPainter {
 public:
 	QPainterPDFPainter(QPainter* painter, const QFont& defaultFont)
 		: m_painter(painter), m_defaultFont(defaultFont) {
-		m_curFont = painter->font();
+		m_curFont = m_defaultFont;
 	}
 	void setFontFamily(const QString& family, bool bold, bool italic) override {
+		float curSize = m_curFont.pointSize();
 		if(m_fontDatabase.hasFamily(family)) {
 			m_curFont.setFamily(family);
 		}  else {
 			m_curFont = m_defaultFont;
 		}
+		m_curFont.setPointSize(curSize);
 		m_curFont.setBold(bold);
 		m_curFont.setItalic(italic);
 		m_painter->setFont(m_curFont);
@@ -78,7 +82,7 @@ public:
 		}
 	}
 	void drawText(double x, double y, const QString& text) override {
-		m_painter->drawText(x, y, text);
+		m_painter->drawText(m_offsetX + x, m_offsetY + y, text);
 	}
 	void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) override {
 		QImage img = convertedImage(image, settings.colorFormat, settings.conversionFlags);
@@ -97,11 +101,66 @@ public:
 		return m_painter->fontMetrics().width(text);
 	}
 
-private:
+protected:
 	QFontDatabase m_fontDatabase;
 	QPainter* m_painter;
 	QFont m_curFont;
 	QFont m_defaultFont;
+	double m_offsetX = 0.0;
+	double m_offsetY = 0.0;
+};
+
+class HOCRPdfExporter::QPrinterPDFPainter : public HOCRPdfExporter::QPainterPDFPainter {
+public:
+	QPrinterPDFPainter(const QString& filename, const QString& creator, const QFont& defaultFont)
+		: QPainterPDFPainter(nullptr, defaultFont)
+	{
+		m_printer.setOutputFormat(QPrinter::PdfFormat);
+		m_printer.setOutputFileName(filename);
+		m_printer.setResolution(72); // This to ensure that painter units are points - images are passed pre-scaled to drawImage, so that the resulting dpi in the box is the output dpi (the document resolution only matters for images)
+		m_printer.setFontEmbeddingEnabled(true);
+		m_printer.setFullPage(true);
+		m_printer.setCreator(creator);
+	}
+	~QPrinterPDFPainter() {
+		delete m_painter;
+	}
+	bool createPage(double width, double height, double offsetX, double offsetY) override {
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+		m_printer.setPaperSize(width, pageDpi), QPrinter::Point);
+#else
+		m_printer.setPageSize(QPageSize(QSizeF(width, height), QPageSize::Point));
+#endif
+		if(!m_firstPage) {
+			if(!m_printer.newPage()) {
+				return false;
+			}
+		} else {
+			// Need to create painter after setting paper size, otherwise default paper size is used for first page...
+			m_painter = new QPainter();
+			m_painter->setRenderHint(QPainter::Antialiasing);
+			if(!m_painter->begin(&m_printer)) {
+				return false;
+			}
+			m_firstPage = false;
+		}
+		m_curFont = m_defaultFont;
+		m_painter->setFont(m_curFont);
+		m_offsetX = offsetX;
+		m_offsetY = offsetY;
+		return true;
+	}
+	bool finishDocument(QString& /*errMsg*/) override {
+		return m_painter->end();
+	}
+	void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) override {
+		QImage img = convertedImage(image, settings.colorFormat, settings.conversionFlags);
+		m_painter->drawImage(bbox, img);
+	}
+
+private:
+	QPrinter m_printer;
+	bool m_firstPage = true;
 };
 
 #if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
@@ -280,6 +339,11 @@ private:
 HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPage* previewPage, DisplayerToolHOCR* displayerTool, QWidget* parent)
 	: QDialog(parent), m_hocrdocument(hocrdocument), m_previewPage(previewPage), m_displayerTool(displayerTool) {
 	ui.setupUi(this);
+
+	ui.comboBoxBackend->addItem(_("PoDoFo"), BackendPoDoFo);
+	ui.comboBoxBackend->addItem(_("QPrinter"), BackendQPrinter);
+	ui.comboBoxBackend->setCurrentIndex(-1);
+
 	ui.comboBoxImageFormat->addItem(_("Color"), QImage::Format_RGB888);
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 	ui.comboBoxImageFormat->addItem(_("Grayscale"), QImage::Format_Indexed8);
@@ -320,6 +384,8 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 
 	ui.comboBoxPdfVersion->setCurrentIndex(-1);
 
+	connect(ui.comboBoxBackend, SIGNAL(currentIndexChanged(int)), this, SLOT(backendChanged()));
+	connect(ui.toolButtonBackendHint, SIGNAL(clicked(bool)), this, SLOT(toggleBackendHint()));
 	connect(ui.comboBoxOutputMode, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(ui.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(updatePreview()));
 	connect(ui.comboBoxImageFormat, SIGNAL(currentIndexChanged(int)), this, SLOT(imageFormatChanged()));
@@ -377,6 +443,7 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	ADD_SETTING(LineEditSetting("pdfexportinfoproducer", ui.lineEditProducer, PACKAGE_NAME));
 	ADD_SETTING(LineEditSetting("pdfexportinfocreator", ui.lineEditCreator, PACKAGE_NAME));
 	ADD_SETTING(ComboSetting("pdfexportpdfversion", ui.comboBoxPdfVersion, ui.comboBoxPdfVersion->findData(PoDoFo::EPdfVersion::ePdfVersion_1_7)));
+	ADD_SETTING(ComboSetting("pdfexportbackend", ui.comboBoxBackend));
 
 #ifndef MAKE_VERSION
 #define MAKE_VERSION(...) 0
@@ -434,7 +501,12 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 
 		QString errMsg;
 
-		painter = createPoDoFoPrinter(outname, defaultFont, errMsg);
+		PDFBackend backend = static_cast<PDFBackend>(ui.comboBoxBackend->itemData(ui.comboBoxBackend->currentIndex()).toInt());
+		if(backend == BackendPoDoFo) {
+			painter = createPoDoFoPrinter(outname, defaultFont, errMsg);
+		} else if(backend == BackendQPrinter) {
+			painter = new QPrinterPDFPainter(outname, ui.lineEditCreator->text(), defaultFont);
+		}
 
 		if(!painter) {
 			QMessageBox::critical(MAIN, _("Failed to create output"), _("Failed to create output. The returned error was: %1").arg(errMsg));
@@ -704,6 +776,41 @@ void HOCRPdfExporter::updatePreview() {
 	printChildren(pdfPrinter, page, pdfSettings, 1.);
 	m_preview->setPixmap(QPixmap::fromImage(image));
 	m_preview->setPos(-0.5 * bbox.width(), -0.5 * bbox.height());
+}
+
+void HOCRPdfExporter::backendChanged()
+{
+	int jpegIdx = ui.comboBoxImageCompression->findData(PDFSettings::CompressJpeg);
+	bool podofoBackend = ui.comboBoxBackend->itemData(ui.comboBoxBackend->currentIndex()).toInt() == BackendPoDoFo;
+	ui.groupBoxEncryption->setEnabled(podofoBackend);
+	ui.labelImageCompression->setEnabled(podofoBackend);
+	ui.comboBoxImageCompression->setEnabled(podofoBackend);
+	if(!podofoBackend) {
+		// QPainter compresses images in PDFs to JPEG at 94% quality
+		ui.comboBoxImageCompression->setCurrentIndex(jpegIdx);
+		ui.spinBoxCompressionQuality->setValue(94);
+	}
+	ui.labelAuthor->setEnabled(podofoBackend);
+	ui.lineEditAuthor->setEnabled(podofoBackend);
+	ui.labelTitle->setEnabled(podofoBackend);
+	ui.lineEditTitle->setEnabled(podofoBackend);
+	ui.labelProducer->setEnabled(podofoBackend);
+	ui.lineEditProducer->setEnabled(podofoBackend);
+	ui.labelKeywords->setEnabled(podofoBackend);
+	ui.lineEditKeywords->setEnabled(podofoBackend);
+	ui.labelSubject->setEnabled(podofoBackend);
+	ui.lineEditSubject->setEnabled(podofoBackend);
+	ui.labelPdfVersion->setEnabled(podofoBackend);
+	ui.comboBoxPdfVersion->setEnabled(podofoBackend);
+	ui.spinBoxCompressionQuality->setEnabled(podofoBackend);
+	ui.labelCompressionQuality->setEnabled(podofoBackend);
+}
+
+void HOCRPdfExporter::toggleBackendHint()
+{
+	QString tooltip = tr("<html><head/><body><ul><li>PoDoFo: offers more image compression options, but does not handle complex scripts.</li><li>QPrinter: only supports JPEG compression for storing images, but supports complex scripts.</li></ul></body></html>");
+	QRect r = ui.toolButtonBackendHint->rect();
+	QToolTip::showText(ui.toolButtonBackendHint->mapToGlobal(QPoint(0, 0.5 * r.height())), tooltip, ui.toolButtonBackendHint, r);
 }
 
 void HOCRPdfExporter::imageFormatChanged() {

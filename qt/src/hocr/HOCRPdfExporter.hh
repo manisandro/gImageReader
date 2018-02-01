@@ -42,6 +42,8 @@ public:
 	bool run(QString& filebasename);
 
 private:
+	enum PDFBackend { BackendPoDoFo, BackendQPrinter};
+
 	struct PDFSettings {
 		QImage::Format colorFormat;
 		Qt::ImageConversionFlags conversionFlags;
@@ -93,6 +95,7 @@ private:
 	};
 	class PoDoFoPDFPainter;
 	class QPainterPDFPainter;
+	class QPrinterPDFPainter;
 
 	Ui::PdfExportDialog ui;
 	QGraphicsPixmapItem* m_preview = nullptr;
@@ -105,6 +108,8 @@ private:
 	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu, double imgScale = 1.);
 
 private slots:
+	void backendChanged();
+	void toggleBackendHint();
 	void importMetadataFromSource();
 	void imageFormatChanged();
 	void imageCompressionChanged();
