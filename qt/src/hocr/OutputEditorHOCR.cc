@@ -22,6 +22,7 @@
 #include <QFileInfo>
 #include <QFontComboBox>
 #include <QImage>
+#include <QShortcut>
 #include <QStyledItemDelegate>
 #include <QMessageBox>
 #include <QPointer>
@@ -224,6 +225,9 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.comboBoxNavigate->addItem(_("Line"), "ocr_line");
 	ui.comboBoxNavigate->addItem(_("Word"), "ocrx_word");
 	ui.comboBoxNavigate->addItem(_("Misspelled word"), "ocrx_word_bad");
+
+	QShortcut* shortcut = new QShortcut(QKeySequence(Qt::Key_Delete), m_widget);
+	QObject::connect(shortcut, SIGNAL(activated()), this, SLOT(removeItem()));
 
 	connect(ui.actionOutputOpen, SIGNAL(triggered()), this, SLOT(open()));
 	connect(ui.actionOutputSaveHOCR, SIGNAL(triggered()), this, SLOT(save()));
@@ -627,6 +631,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 		menu.addSeparator();
 	}
 	actionRemoveItem = menu.addAction(_("Remove"));
+	actionRemoveItem->setShortcut(QKeySequence(Qt::Key_Delete));
 	if(m_document->rowCount(index) > 0) {
 		actionExpand = menu.addAction(_("Expand all"));
 		actionCollapse = menu.addAction(_("Collapse all"));
@@ -911,4 +916,8 @@ void OutputEditorHOCR::applySubstitutions(const QMap<QString, QString>& substitu
 		} while(curr != start);
 	}
 	MAIN->popState();
+}
+
+void OutputEditorHOCR::removeItem() {
+	m_document->removeItem(ui.treeViewHOCR->selectionModel()->currentIndex());
 }
