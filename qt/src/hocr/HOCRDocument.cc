@@ -50,8 +50,7 @@ void HOCRDocument::recheckSpelling() {
 	recursiveDataChanged(QModelIndex(), {Qt::DisplayRole}, {"ocrx_word"});
 }
 
-QString HOCRDocument::toHTML() const
-{
+QString HOCRDocument::toHTML() const {
 	QString html = "<body>\n";
 	for(const HOCRPage* page : m_pages) {
 		html += page->toHtml(1);

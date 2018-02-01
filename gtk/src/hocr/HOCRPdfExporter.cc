@@ -426,7 +426,7 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 	m_connPortrait = CONNECT(ui.buttonPortrait, toggled, [this] { paperOrientationChanged(false); });
 	CONNECT(ui.entryPaperWidth, changed, [this] { paperSizeChanged(); });
 	CONNECT(ui.entryPaperHeight, changed, [this] { paperSizeChanged(); });
-	CONNECT(ui.buttonImportFromSource, clicked, [this]{ importMetadataFromSource(); });
+	CONNECT(ui.buttonImportFromSource, clicked, [this] { importMetadataFromSource(); });
 
 	ADD_SETTING(ComboSetting("pdfexportmode", ui.comboMode));
 	ADD_SETTING(SpinSetting("pdfimagecompressionquality", ui.spinQuality));
