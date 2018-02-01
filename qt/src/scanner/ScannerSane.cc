@@ -164,7 +164,7 @@ void ScannerSane::doOpen() {
 	if(status != SANE_STATUS_GOOD) {
 		m_job->handle = nullptr;
 		qWarning("Unable to get open device: %s", sane_strstatus(status));
-		failScan(_("Unable to connect to scanner"));
+		failScan(getErrorMessage(status, _("Unable to connect to scanner")));
 		return;
 	}
 
@@ -384,7 +384,7 @@ void ScannerSane::doStart() {
 		setState(State::GET_PARAMETERS);
 	} else {
 		doStop();
-		failScan(_("Unable to start scan"));
+		failScan(getErrorMessage(status, _("Unable to start scan")));
 	}
 }
 
@@ -392,7 +392,7 @@ void ScannerSane::doGetParameters() {
 	SANE_Status status = sane_get_parameters(m_job->handle, &m_job->parameters);
 	qDebug("sane_get_parameters() -> %s", sane_strstatus(status));
 	if(status != SANE_STATUS_GOOD) {
-		failScan(_("Error communicating with scanner"));
+		failScan(getErrorMessage(status, _("Error communicating with scanner")));
 		return;
 	}
 
@@ -440,7 +440,7 @@ void ScannerSane::doRead() {
 		return;
 	} else if(status != SANE_STATUS_GOOD) {
 		qWarning("Unable to read frame from device: %s", sane_strstatus(status));
-		failScan(_("Error communicating with scanner"));
+		failScan(getErrorMessage(status, _("Error communicating with scanner")));
 		return;
 	}
 
@@ -760,5 +760,24 @@ QString ScannerSane::getFrameModeString(SANE_Frame frame) {
 		return framestr[frame];
 	} else {
 		return QString("SANE_FRAME(%1)").arg(frame);
+	}
+}
+
+QString ScannerSane::getErrorMessage(SANE_Status status, const QString& defaultMessage) {
+	switch (status) {
+		case SANE_STATUS_CANCELLED:
+			return _("Operation is cancelled.");
+		case SANE_STATUS_DEVICE_BUSY:
+			return _("Device is busy.");
+		case SANE_STATUS_COVER_OPEN:
+			return _("Cover is opened.");
+		case SANE_STATUS_JAMMED:
+			return _("Document feeder jammed.");
+		case SANE_STATUS_NO_DOCS:
+			return _("Document feeder out of documents.");
+		case SANE_STATUS_ACCESS_DENIED:
+			return _("Access to scanner is denied.");
+		default:
+			return defaultMessage;
 	}
 }

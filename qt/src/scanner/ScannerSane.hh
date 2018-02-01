@@ -85,6 +85,7 @@ private:
 	void logOption(SANE_Int index, const SANE_Option_Descriptor* option);
 
 	static QString getFrameModeString(SANE_Frame frame);
+	static QString getErrorMessage(SANE_Status status, const QString& defaultMessage);
 
 private slots:
 	void run();
