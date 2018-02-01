@@ -56,12 +56,16 @@ private:
 
 	class PDFPainter {
 	public:
+		virtual ~PDFPainter() {}
 		virtual void setFontFamily(const Glib::ustring& family, bool bold, bool italic) = 0;
 		virtual void setFontSize(double pointSize) = 0;
 		virtual void drawText(double x, double y, const Glib::ustring& text) = 0;
 		virtual void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) = 0;
 		virtual double getAverageCharWidth() const = 0;
 		virtual double getTextWidth(const Glib::ustring& text) const = 0;
+		virtual bool createPage(double /*width*/, double /*height*/, double /*offsetX*/, double /*offsetY*/, Glib::ustring& /*errMsg*/) { return true; }
+		virtual void finishPage() {}
+		virtual bool finishDocument(Glib::ustring& /*errMsg*/) { return true; }
 	};
 	class PoDoFoPDFPainter;
 	class CairoPDFPainter;
@@ -136,7 +140,8 @@ private:
 	sigc::connection m_connLandscape;
 
 	PDFSettings getPdfSettings() const;
-	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale = 1., bool inThread = false);
+	PDFPainter* createPoDoFoPrinter(const std::string& filename, const Glib::ustring& defaultFont, double defaultFontSize, Glib::ustring& errMsg);
+	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu, double imgScale = 1., bool inThread = false);
 
 	void importMetadataFromSource();
 	void imageFormatChanged();

@@ -134,11 +134,11 @@ public:
 class HOCRPdfExporter::PoDoFoPDFPainter : public HOCRPdfExporter::PDFPainter {
 public:
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const Glib::ustring& defaultFontFamily, double defaultFontSize, const std::vector<Glib::ustring>& fontFamilies)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const Glib::ustring& defaultFontFamily, double defaultFontSize, const std::vector<Glib::ustring>& fontFamilies)
 #else
-	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const Glib::ustring& defaultFontFamily, double defaultFontSize, const std::vector<Glib::ustring>& fontFamilies)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const Glib::ustring& defaultFontFamily, double defaultFontSize, const std::vector<Glib::ustring>& fontFamilies)
 #endif
-		: m_fontFamilies(fontFamilies), m_document(document), m_painter(painter), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontFamily(defaultFontFamily), m_defaultFontSize(defaultFontSize) {
+		: m_fontFamilies(fontFamilies), m_document(document), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontFamily(defaultFontFamily), m_defaultFontSize(defaultFontSize) {
 	}
 	~PoDoFoPDFPainter() {
 #if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
@@ -147,37 +147,41 @@ public:
 		delete m_document;
 		// Fonts are deleted by the internal PoDoFo font cache of the document
 	}
-	void setPage(PoDoFo::PdfPage* page, double scaleFactor, double offsetX = 0.0, double offsetY = 0.0) {
-		m_painter->SetPage(page);
-		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
-		m_painter->SetFont(m_defaultFont);
+	bool createPage(double width, double height, double offsetX, double offsetY, Glib::ustring& /*errMsg*/) override {
+		PoDoFo::PdfPage* pdfpage = m_document->CreatePage(PoDoFo::PdfRect(0, 0, width, height));
+		m_painter.SetPage(pdfpage);
+		m_pageHeight = m_painter.GetPage()->GetPageSize().GetHeight();
+		m_painter.SetFont(m_defaultFont);
 		if(m_defaultFontSize > 0) {
-			m_painter->GetFont()->SetFontSize(m_defaultFontSize);
+			m_painter.GetFont()->SetFontSize(m_defaultFontSize);
 		}
-		m_scaleFactor = scaleFactor;
 		m_offsetX = offsetX;
 		m_offsetY = offsetY;
+		return true;
 	}
-	bool finalize(Glib::ustring* errMsg) {
+	void finishPage() override {
+		m_painter.FinishPage();
+	}
+	bool finishDocument(Glib::ustring& errMsg) override {
 		try {
 			m_document->Close();
 		} catch(PoDoFo::PdfError& e) {
-			*errMsg = e.what();
+			errMsg = e.what();
 			return false;
 		}
 		return true;
 	}
 	void setFontFamily(const Glib::ustring& family, bool bold, bool italic) override {
-		float curSize = m_painter->GetFont()->GetFontSize();
-		m_painter->SetFont(getFont(family, bold, italic));
-		m_painter->GetFont()->SetFontSize(curSize);
+		float curSize = m_painter.GetFont()->GetFontSize();
+		m_painter.SetFont(getFont(family, bold, italic));
+		m_painter.GetFont()->SetFontSize(curSize);
 	}
 	void setFontSize(double pointSize) override {
-		m_painter->GetFont()->SetFontSize(pointSize);
+		m_painter.GetFont()->SetFontSize(pointSize);
 	}
 	void drawText(double x, double y, const Glib::ustring& text) override {
 		PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.c_str()));
-		m_painter->DrawText(m_offsetX + x * m_scaleFactor, m_pageHeight - m_offsetY - y * m_scaleFactor, pdfString);
+		m_painter.DrawText(m_offsetX + x, m_pageHeight - m_offsetY - y, pdfString);
 	}
 	void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) override {
 		Image img(image, settings.colorFormat, settings.conversionFlags);
@@ -213,22 +217,22 @@ public:
 			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<char*>(encoded), encodedLen);
 			pdfImage.SetImageDataRaw(img.width, img.height, img.sampleSize, &is);
 		}
-		m_painter->DrawImage(m_offsetX + bbox.x * m_scaleFactor, m_pageHeight - m_offsetY - (bbox.y + bbox.height) * m_scaleFactor,
-		                     &pdfImage, m_scaleFactor * bbox.width / double(image->get_width()), m_scaleFactor * bbox.height / double(image->get_height()));
+		m_painter.DrawImage(m_offsetX + bbox.x, m_pageHeight - m_offsetY - (bbox.y + bbox.height),
+							&pdfImage, bbox.width / double(image->get_width()), bbox.height / double(image->get_height()));
 	}
 	double getAverageCharWidth() const override {
-		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x')) / m_scaleFactor;
+		return m_painter.GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x'));
 	}
 	double getTextWidth(const Glib::ustring& text) const override {
 		PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.c_str()));
-		return m_painter->GetFont()->GetFontMetrics()->StringWidth(pdfString) / m_scaleFactor;
+		return m_painter.GetFont()->GetFontMetrics()->StringWidth(pdfString);
 	}
 
 private:
 	const std::vector<Glib::ustring>& m_fontFamilies;
 	std::map<Glib::ustring, PoDoFo::PdfFont*> m_fontCache;
 	PoDoFo::PdfStreamedDocument* m_document;
-	PoDoFo::PdfPainter* m_painter;
+	PoDoFo::PdfPainter m_painter;
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 	const PoDoFo::PdfEncoding* m_pdfFontEncoding;
 #else
@@ -237,7 +241,6 @@ private:
 	PoDoFo::PdfFont* m_defaultFont;
 	Glib::ustring m_defaultFontFamily;
 	double m_defaultFontSize = -1.0;
-	double m_scaleFactor = 1.0;
 	double m_pageHeight = 0.0;
 	double m_offsetX = 0.0;
 	double m_offsetY = 0.0;
@@ -470,14 +473,8 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 	MAIN->getDisplayer()->addItem(m_preview);
 
 	bool accepted = false;
-	PoDoFo::PdfStreamedDocument* document = nullptr;
-	Glib::ustring defaultFontFamily;
-	PoDoFo::PdfFont* defaultPdfFont = nullptr;
-#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
-#else
-	PoDoFo::PdfEncoding* pdfFontEncoding = new PoDoFo::PdfIdentityEncoding;
-#endif
+	PDFPainter* painter = nullptr;
+	int pageCount = m_hocrdocument->pageCount();
 
 	std::string outname;
 	while(true) {
@@ -511,40 +508,15 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 		}
 		filebasename = Utils::split_filename(outname).first;
 
-		try {
-			Glib::ustring password = ui.entryEncryptionPassword->get_text();
-			PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(password, password,
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
-			                              PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
+		Glib::ustring defaultFont = ui.checkboxOverridefontfamily->get_active() ? m_comboOverrideFont->get_active_font() : m_comboFallbackFont->get_active_font();
+		double defaultFontSize = ui.checkboxOverridefontsize->get_active() ? ui.spinOverridefontsize->get_value() : 0;
 
-			int pdfVersion = (*ui.comboPdfVersion->get_active())[m_pdfVersionComboCols.version];
-			document = new PoDoFo::PdfStreamedDocument(outname.c_str(), static_cast<PoDoFo::EPdfVersion>(pdfVersion), encrypt);
-		} catch(PoDoFo::PdfError& err) {
-			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to create output"), Glib::ustring::compose(_("Check that you have writing permissions in the selected folder. The returned error was: %1"), err.what()));
+		Glib::ustring errMsg;
+		painter = createPoDoFoPrinter(outname, defaultFont, defaultFontSize, errMsg);
+		if(!painter) {
+			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to create output"), Glib::ustring::compose(_("Failed to create output. The returned error was: %1"), errMsg));
 			continue;
 		}
-
-		Glib::ustring fontName = ui.checkboxOverridefontfamily->get_active() ? m_comboOverrideFont->get_active_font() : m_comboFallbackFont->get_active_font();
-		Pango::FontDescription fontDesc = Pango::FontDescription(fontName);
-
-		try {
-#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-			defaultPdfFont = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), false, false, false, pdfFontEncoding);
-#else
-			defaultPdfFont = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), false, false, pdfFontEncoding);
-#endif
-		} catch(PoDoFo::PdfError& err) {
-			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("The PDF library could not load the font '%1': %2."), fontDesc.get_family(), err.what()));
-			continue;
-		}
-		defaultFontFamily = fontDesc.get_family();
 
 		break;
 	}
@@ -558,9 +530,11 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 
 	PDFSettings pdfSettings = getPdfSettings();
 
+	int outputDpi = ui.spinDpi->get_value();
 	std::string paperSize = (*ui.comboPaperFormat->get_active())[m_paperFormatComboCols.format];
 
 	double pageWidth, pageHeight;
+	// Page dimensions are in points: 1 in = 72 pt
 	if(paperSize == "custom") {
 		pageWidth = std::atof(ui.entryPaperWidth->get_text().c_str()) * 72.0;
 		pageHeight = std::atof(ui.entryPaperHeight->get_text().c_str())* 72.0;
@@ -576,57 +550,112 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 		pageHeight = inchSize.height * 72.0;
 	}
 
-	PoDoFo::PdfPainter painter;
-	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont, defaultFontFamily, pdfSettings.fontSize, m_fontFamilies);
-
-	std::vector<Glib::ustring> failed;
-	int pageCount = m_hocrdocument->pageCount();
-
 	MainWindow::ProgressMonitor monitor(pageCount);
 	MAIN->showProgress(&monitor);
-	Utils::busyTask([&] {
+	Glib::ustring errMsg;
+	bool success = Utils::busyTask([&] {
 		for(int i = 0; i < pageCount; ++i) {
 			if(monitor.cancelled()) {
+				errMsg = _("The operation was cancelled");
 				return false;
 			}
 			const HOCRPage* page = m_hocrdocument->page(i);
 			if(page->isEnabled()) {
 				Geometry::Rectangle bbox = page->bbox();
 				int sourceDpi = page->resolution();
-				int outputDpi = ui.spinDpi->get_value();
 				bool success = false;
 				Utils::runInMainThreadBlocking([&] { success = setSource(page->sourceFile(), page->pageNr(), outputDpi, page->angle()); });
 				if(success) {
-					double docScale = (72. / sourceDpi);
+					// [pt] = 72 * [in]
+					// [in] = 1 / dpi * [px]
+					// => [pt] = 72 / dpi * [px]
+					double px2pt = (72.0 / sourceDpi);
 					double imgScale = double(outputDpi) / sourceDpi;
 					if(paperSize == "source") {
-						pageWidth = bbox.width * docScale;
-						pageHeight = bbox.height * docScale;
+						pageWidth = bbox.width * px2pt;
+						pageHeight = bbox.height * px2pt;
 					}
-					PoDoFo::PdfPage* pdfpage = document->CreatePage(PoDoFo::PdfRect(0, 0, pageWidth, pageHeight));
-					double offsetX = 0.5 * (pageWidth - bbox.width * docScale);
-					double offsetY = 0.5 * (pageHeight - bbox.height * docScale);
-					pdfprinter.setPage(pdfpage, docScale, offsetX, offsetY);
-					printChildren(pdfprinter, page, pdfSettings, imgScale, true);
+					double offsetX = 0.5 * (pageWidth - bbox.width * px2pt);
+					double offsetY = 0.5 * (pageHeight - bbox.height * px2pt);
+					if(!painter->createPage(pageWidth, pageHeight, offsetX, offsetY, errMsg)) {
+						return false;
+					}
+					printChildren(*painter, page, pdfSettings, px2pt, imgScale, true);
 					if(pdfSettings.overlay) {
-						Geometry::Rectangle scaledBBox(imgScale * bbox.x, imgScale * bbox.y, imgScale * bbox.width, imgScale * bbox.height);
+						Geometry::Rectangle scaledRect(imgScale * bbox.x, imgScale * bbox.y, imgScale * bbox.width, imgScale * bbox.height);
+						Geometry::Rectangle printRect(bbox.x * px2pt, bbox.y * px2pt, bbox.width * px2pt, bbox.height * px2pt);
 						Cairo::RefPtr<Cairo::ImageSurface> selection;
-						Utils::runInMainThreadBlocking([&] { selection = getSelection(scaledBBox); });
-						pdfprinter.drawImage(bbox, selection, pdfSettings);
+						Utils::runInMainThreadBlocking([&] { selection = getSelection(scaledRect); });
+						painter->drawImage(printRect, selection, pdfSettings);
 					}
 					Utils::runInMainThreadBlocking([&] { setSource(page->sourceFile(), page->pageNr(), sourceDpi, page->angle()); });
-					painter.FinishPage();
+					painter->finishPage();
 				} else {
-					failed.push_back(page->title());
+					errMsg = Glib::ustring::compose(_("Failed to render page %1"), page->title());
+					return false;
 				}
 			}
 			monitor.increaseProgress();
 		}
-		return true;
+		return painter->finishDocument(errMsg);
 	}, _("Exporting to PDF..."));
 	MAIN->hideProgress();
-	if(!failed.empty()) {
-		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Errors occurred"), Glib::ustring::compose(_("The following pages could not be rendered:\n%1"), Utils::string_join(failed, "\n")));
+
+	bool openAfterExport = ConfigSettings::get<SwitchSettingT<Gtk::CheckButton>>("openafterexport")->getValue();
+	if(!success) {
+		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Export failed"), Glib::ustring::compose(_("The PDF export failed: %1."), errMsg));
+	} else if(openAfterExport) {
+		Utils::openUri(Glib::filename_to_uri(outname));
+	}
+	delete painter;
+
+	return success;
+}
+
+
+HOCRPdfExporter::PDFPainter* HOCRPdfExporter::createPoDoFoPrinter(const std::string& filename, const Glib::ustring& defaultFont, double defaultFontSize, Glib::ustring& errMsg)
+{
+	PoDoFo::PdfStreamedDocument* document = nullptr;
+	PoDoFo::PdfFont* defaultPdfFont = nullptr;
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
+#else
+	PoDoFo::PdfEncoding* pdfFontEncoding = new PoDoFo::PdfIdentityEncoding;
+#endif
+
+	try {
+		PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(ui.entryEncryptionPassword->get_text(), ui.entryEncryptionConfirm->get_text(),
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
+									  PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
+
+		PoDoFo::EPdfVersion pdfVersion = static_cast<PoDoFo::EPdfVersion>(static_cast<int>((*ui.comboPdfVersion->get_active())[m_pdfVersionComboCols.version]));
+		document = new PoDoFo::PdfStreamedDocument(filename.c_str(), pdfVersion, encrypt);
+	} catch(PoDoFo::PdfError& err) {
+		errMsg = err.what();
+		return nullptr;
+	}
+
+	Pango::FontDescription fontDesc = Pango::FontDescription(defaultFont);
+
+	// Attempt to load the default/fallback font to ensure it is valid
+	try {
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+		defaultPdfFont = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), false, false, false, pdfFontEncoding);
+#else
+		defaultPdfFont = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), false, false, pdfFontEncoding);
+#endif
+	} catch(PoDoFo::PdfError&) {
+	}
+	if(!defaultPdfFont) {
+		errMsg = Glib::ustring::compose(_("The PDF library could not load the font '%1'."), defaultFont);
+		return nullptr;
 	}
 
 	// Set PDF info
@@ -638,16 +667,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 	pdfInfo->SetKeywords(ui.entryMetadataKeywords->get_text().c_str());
 	pdfInfo->SetAuthor(ui.entryMetadataAuthor->get_text().c_str());
 
-	Glib::ustring errMsg;
-	bool success = pdfprinter.finalize(&errMsg);
-	bool openAfterExport = ConfigSettings::get<SwitchSettingT<Gtk::CheckButton>>("openafterexport")->getValue();
-	if(!success) {
-		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Export failed"), Glib::ustring::compose(_("The PDF export failed: %1."), errMsg));
-	} else if(openAfterExport) {
-		Utils::openUri(Glib::filename_to_uri(outname));
-	}
-
-	return success;
+	return new PoDoFoPDFPainter(document, pdfFontEncoding, defaultPdfFont, defaultFont, defaultFontSize, m_fontFamilies);
 }
 
 HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const {
@@ -665,7 +685,7 @@ HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const {
 	return pdfSettings;
 }
 
-void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale, bool inThread) {
+void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu/*pixels to printer units*/, double imgScale, bool inThread) {
 	if(!item->isEnabled()) {
 		return;
 	}
@@ -691,13 +711,13 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 				}
 				// If distance from previous word is large, keep the space
-				if(wordRect.x - prevWordRight > pdfSettings.preserveSpaceWidth * painter.getAverageCharWidth()) {
+				if(wordRect.x - prevWordRight > pdfSettings.preserveSpaceWidth * painter.getAverageCharWidth() / px2pu) {
 					x = wordRect.x;
 				}
 				prevWordRight = wordRect.x + wordRect.width;
 				Glib::ustring text = wordItem->text();
-				painter.drawText(x, y + baseline, text);
-				x += painter.getTextWidth(text + " ");
+				painter.drawText(x * px2pu, (y + baseline) * px2pu, text);
+				x += painter.getTextWidth(text + " ") / px2pu;
 			}
 		}
 	} else if(itemClass == "ocr_line" && !pdfSettings.uniformizeLineSpacing) {
@@ -710,20 +730,21 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 			if(pdfSettings.fontSize == -1) {
 				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 			}
-			painter.drawText(wordRect.x, y, wordItem->text());
+			painter.drawText(wordRect.x * px2pu, y * px2pu, wordItem->text());
 		}
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {
 		Geometry::Rectangle scaledItemRect(imgScale * itemRect.x, imgScale * itemRect.y, imgScale * itemRect.width, imgScale * itemRect.height);
+		Geometry::Rectangle printRect(itemRect.x * px2pu, itemRect.y * px2pu, itemRect.width * px2pu, itemRect.height * px2pu);
 		Cairo::RefPtr<Cairo::ImageSurface> selection;
 		if(inThread) {
 			Utils::runInMainThreadBlocking([&] { selection = getSelection(scaledItemRect); });
 		} else {
 			selection = getSelection(scaledItemRect);
 		}
-		painter.drawImage(itemRect, selection, pdfSettings);
+		painter.drawImage(printRect, selection, pdfSettings);
 	} else {
 		for(int i = 0, n = item->children().size(); i < n; ++i) {
-			printChildren(painter, item->children()[i], pdfSettings, imgScale, inThread);
+			printChildren(painter, item->children()[i], pdfSettings, px2pu, imgScale, inThread);
 		}
 	}
 }
@@ -772,7 +793,7 @@ void HOCRPdfExporter::updatePreview() {
 		context->fill();
 		context->restore();
 	}
-	printChildren(pdfPrinter, page, pdfSettings);
+	printChildren(pdfPrinter, page, pdfSettings, 1.);
 	m_preview->setImage(image);
 	m_preview->setRect(Geometry::Rectangle(-0.5 * image->get_width(), -0.5 * image->get_height(), image->get_width(), image->get_height()));
 }
