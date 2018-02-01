@@ -204,16 +204,11 @@ public:
 		delete m_document;
 		// Fonts are deleted by the internal PoDoFo font cache of the document
 	}
-	bool createPage(double width, double height, double offsetX, double offsetY, QString& errMsg) override {
+	bool createPage(double width, double height, double offsetX, double offsetY, QString& /*errMsg*/) override {
 		PoDoFo::PdfPage* pdfpage = m_document->CreatePage(PoDoFo::PdfRect(0, 0, width, height));
 		m_painter.SetPage(pdfpage);
 		m_pageHeight = m_painter.GetPage()->GetPageSize().GetHeight();
-		try {
-			m_painter.SetFont(m_defaultFont);
-		} catch(const PoDoFo::PdfError& err) {
-			errMsg = err.what();
-			return false;
-		}
+		m_painter.SetFont(m_defaultFont);
 		if(m_defaultFontSize > 0) {
 			m_painter.GetFont()->SetFontSize(m_defaultFontSize);
 		}

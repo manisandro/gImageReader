@@ -37,6 +37,7 @@
 
 DisplayerToolSelect::DisplayerToolSelect(Displayer *displayer, QObject *parent)
 	: DisplayerTool(displayer, parent) {
+	displayer->setCursor(Qt::CrossCursor);
 	updateRecognitionModeLabel();
 }
 

@@ -27,6 +27,7 @@
 
 DisplayerToolHOCR::DisplayerToolHOCR(Displayer *displayer, QObject *parent)
 	: DisplayerTool(displayer, parent) {
+	displayer->setCursor(Qt::ArrowCursor);
 	MAIN->getRecognizer()->setRecognizeMode(_("Recognize"));
 }
 

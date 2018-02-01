@@ -166,7 +166,6 @@ bool Displayer::setSources(QList<Source*> sources) {
 	ui.spinBoxPage->setMaximum(page);
 	ui.spinBoxPage->blockSignals(false);
 	ui.actionPage->setVisible(page > 1);
-	setCursor(Qt::CrossCursor);
 	m_imageItem = new QGraphicsPixmapItem();
 	m_imageItem->setTransformationMode(Qt::SmoothTransformation);
 	m_scene->addItem(m_imageItem);
