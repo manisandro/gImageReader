@@ -25,6 +25,7 @@
 
 DisplayerToolHOCR::DisplayerToolHOCR(Displayer *displayer)
 	: DisplayerTool(displayer) {
+	displayer->setDefaultCursor(Gdk::Cursor::create(Gdk::ARROW));
 	MAIN->getRecognizer()->setRecognizeMode(_("Recognize"));
 }
 

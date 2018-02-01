@@ -31,6 +31,7 @@
 
 Displayer::Displayer(const Ui::MainWindow& _ui)
 	: ui(_ui) {
+	m_defaultCursor = Gdk::Cursor::create(Gdk::ARROW);
 	m_hadj = ui.scrollwinDisplay->get_hadjustment();
 	m_vadj = ui.scrollwinDisplay->get_vadjustment();
 
@@ -222,7 +223,7 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	ui.spinPage->get_adjustment()->set_upper(page);
 	m_connection_pageSpinChanged.unblock();
 	ui.spinPage->set_visible(page > 1);
-	ui.viewportDisplay->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
+	ui.viewportDisplay->get_window()->set_cursor(m_defaultCursor);
 	ui.drawingareaDisplay->show();
 	m_imageItem = new DisplayerImageItem;
 
@@ -442,11 +443,20 @@ void Displayer::autodetectOCRAreas() {
 	m_tool->autodetectOCRAreas();
 }
 
+void Displayer::setDefaultCursor(Glib::RefPtr<Gdk::Cursor> cursor) {
+	m_defaultCursor = cursor;
+	setCursor(m_defaultCursor);
+}
+
 void Displayer::setCursor(Glib::RefPtr<Gdk::Cursor> cursor) {
 	if(cursor) {
-		ui.viewportDisplay->get_window()->set_cursor(cursor);
+		if(m_imageItem && ui.viewportDisplay->get_window()) {
+			ui.viewportDisplay->get_window()->set_cursor(cursor);
+		}
 	} else {
-		ui.viewportDisplay->get_window()->set_cursor(Gdk::Cursor::create(Gdk::TCROSS));
+		if(m_imageItem && ui.viewportDisplay->get_window()) {
+			ui.viewportDisplay->get_window()->set_cursor(m_defaultCursor);
+		}
 	}
 }
 

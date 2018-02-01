@@ -33,6 +33,7 @@
 
 DisplayerToolSelect::DisplayerToolSelect(Displayer *displayer)
 	: DisplayerTool(displayer) {
+	displayer->setDefaultCursor(Gdk::Cursor::create(Gdk::TCROSS));
 	updateRecognitionModeLabel();
 }
 

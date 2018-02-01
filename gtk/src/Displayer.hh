@@ -64,6 +64,7 @@ public:
 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
 	bool allowAutodetectOCRAreas() const;
 	void autodetectOCRAreas();
+	void setDefaultCursor(Glib::RefPtr<Gdk::Cursor> cursor);
 	void setCursor(Glib::RefPtr<Gdk::Cursor> cursor);
 	void ensureVisible(double evx, double evy);
 	void ensureVisible(const Geometry::Rectangle& rect);
@@ -96,6 +97,7 @@ private:
 	std::vector<DisplayerItem*> m_items;
 	DisplayerItem* m_activeItem = nullptr;
 	double m_panPos[2] = {0., 0.};
+	Glib::RefPtr<Gdk::Cursor> m_defaultCursor;
 
 	sigc::connection m_renderTimer;
 	sigc::connection m_connection_pageSpinChanged;
