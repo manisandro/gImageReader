@@ -59,6 +59,7 @@ private:
 
 	class PDFPainter {
 	public:
+		virtual ~PDFPainter() {}
 		virtual void setFontFamily(const QString& family, bool bold, bool italic) = 0;
 		virtual void setFontSize(double pointSize) = 0;
 		virtual void drawText(double x, double y, const QString& text) = 0;
@@ -67,7 +68,7 @@ private:
 		virtual double getTextWidth(const QString& text) const = 0;
 		virtual bool createPage(double /*width*/, double /*height*/, double /*offsetX*/, double /*offsetY*/, QString& /*errMsg*/) { return true; }
 		virtual void finishPage() {}
-		virtual bool finishDocument(QString& /*errMsg*/) {}
+		virtual bool finishDocument(QString& /*errMsg*/) { return true; }
 	protected:
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 		QVector<QRgb> createGray8Table() const {
