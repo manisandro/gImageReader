@@ -139,6 +139,9 @@ public:
 	sigc::signal<void, GdkEventButton*> signal_context_menu() {
 		return m_signal_context_menu;
 	}
+	sigc::signal<void> signal_delete() {
+		return m_signal_delete;
+	}
 
 	Gtk::TreeIter currentIndex() {
 		std::vector<Gtk::TreePath> items = get_selection()->get_selected_rows();
@@ -180,9 +183,17 @@ protected:
 		}
 		return true;
 	}
+	bool on_key_press_event(GdkEventKey* key_event) {
+		if(key_event->keyval == GDK_KEY_Delete) {
+			m_signal_delete.emit();
+			return true;
+		}
+		return Gtk::TreeView::on_key_press_event(key_event);
+	}
 
 private:
 	sigc::signal<void, GdkEventButton*> m_signal_context_menu;
+	sigc::signal<void> m_signal_delete;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -317,6 +328,9 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	CONNECT(ui.buttonWconf, toggled, [this] { m_treeView->get_column(1)->set_visible(ui.buttonWconf->get_active());});
 	CONNECT(m_treeView, context_menu, [this](GdkEventButton * ev) {
 		showTreeWidgetContextMenu(ev);
+	});
+	CONNECT(m_treeView, delete, [this] {
+		m_document->removeItem(m_treeView->currentIndex());
 	});
 	CONNECT(m_searchFrame, find_replace, sigc::mem_fun(this, &OutputEditorHOCR::findReplace));
 	CONNECT(m_searchFrame, replace_all, sigc::mem_fun(this, &OutputEditorHOCR::replaceAll));
