@@ -13,8 +13,10 @@ srcthemedir="$1"
 icons="\
 $(grep -o "property name=\"icon_name\">[^<]*<" ../../gtk/data/*.ui | awk -F'[<>]' '{print $2}')
 $(grep -o "from_icon_name\s*(\s*\"[^\*]*\"" ../../gtk/src/{*.cc,*.hh} | awk -F'"' '{print $2}')
+$(grep -o "from_icon_name\s*(\s*\"[^\*]*\"" ../../gtk/src/hocr/{*.cc,*.hh} | awk -F'"' '{print $2}')
 $(grep -o "<iconset theme=\"[^\"]*\"" ../../qt/data/*.ui | awk -F'"' '{print $2}')
-$(grep -o "QIcon::fromTheme\s*(\s*\"[^\"]*\"" ../../qt/src/{*.cc,*.hh} | awk -F'"' '{print $2}')"
+$(grep -o "QIcon::fromTheme\s*(\s*\"[^\"]*\"" ../../qt/src/{*.cc,*.hh} | awk -F'"' '{print $2}')
+$(grep -o "QIcon::fromTheme\s*(\s*\"[^\"]*\"" ../../qt/src/hocr/{*.cc,*.hh} | awk -F'"' '{print $2}')"
 
 (
 for icon in $(echo "$icons" | sort | uniq); do
