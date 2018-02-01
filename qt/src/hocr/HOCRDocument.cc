@@ -195,8 +195,8 @@ bool HOCRDocument::removeItem(const QModelIndex& index) {
 		return false;
 	}
 	beginRemoveRows(index.parent(), index.row(), index.row());
-	deleteItem(item);
 	recomputeParentBBoxes(item);
+	deleteItem(item);
 	endRemoveRows();
 	return true;
 }
