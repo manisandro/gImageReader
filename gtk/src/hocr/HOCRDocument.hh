@@ -207,7 +207,7 @@ public:
 	void setEnabled(bool enabled) {
 		m_enabled = enabled;
 	}
-	void setText(const Glib::ustring& newText){
+	void setText(const Glib::ustring& newText) {
 		m_text = newText;
 	}
 	void setAttribute(const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass = Glib::ustring());

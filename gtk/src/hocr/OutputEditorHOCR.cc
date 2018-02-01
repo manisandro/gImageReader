@@ -850,12 +850,12 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 	Glib::ustring header = Glib::ustring::compose(
 	                           "<!DOCTYPE html>\n"
 	                           "<html>\n"
-							   "<head>\n"
-							   " <title>%1</title>\n"
-							   " <meta charset=\"utf-8\" /> \n"
-							   " <meta name='ocr-system' content='tesseract %2' />\n"
-							   " <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
-							   "</head>\n", Glib::path_get_basename(outname), tess.Version());
+	                           "<head>\n"
+	                           " <title>%1</title>\n"
+	                           " <meta charset=\"utf-8\" /> \n"
+	                           " <meta name='ocr-system' content='tesseract %2' />\n"
+	                           " <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
+	                           "</head>\n", Glib::path_get_basename(outname), tess.Version());
 	m_document->convertSourcePaths(Glib::path_get_dirname(outname), false);
 	Glib::ustring body = m_document->toHTML();
 	m_document->convertSourcePaths(Glib::path_get_dirname(outname), true);

@@ -41,7 +41,7 @@ private:
 		Gtk::Application::on_startup();
 
 		add_action("redetectLangs", [this] { m_mainWindow->redetectLanguages(); });
-		add_action("manageLangs", [this]{ m_mainWindow->manageLanguages(); });
+		add_action("manageLangs", [this] { m_mainWindow->manageLanguages(); });
 		add_action("preferences", [this] { m_mainWindow->showConfig(); });
 		add_action("help", [this] { m_mainWindow->showHelp(); });
 		add_action("about", [this] { m_mainWindow->showAbout(); });
