@@ -197,8 +197,8 @@ bool HOCRDocument::removeItem(const Gtk::TreeIter& index) {
 		return false;
 	}
 	Gtk::TreePath path = get_path(index);
-	deleteItem(item);
 	recomputeParentBBoxes(item);
+	deleteItem(item);
 	row_deleted(path);
 	return true;
 }
