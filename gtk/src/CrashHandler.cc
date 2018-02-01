@@ -71,7 +71,7 @@ void CrashHandler::generate_backtrace() {
 	int child_stdin;
 	int child_stdout;
 	try {
-		Glib::spawn_async_with_pipes("", std::vector<std::string> {"gdb", "-q", "-p", Glib::ustring::compose("%1", m_pid)}, Glib::SPAWN_DO_NOT_REAP_CHILD|Glib::SPAWN_SEARCH_PATH|Glib::SPAWN_STDERR_TO_DEV_NULL, sigc::slot<void>(), &child_pid, &child_stdin, &child_stdout);
+		Glib::spawn_async_with_pipes("", std::vector<std::string> {"gdb", "-q", "-p", Glib::ustring::compose("%1", m_pid)}, Glib::SPAWN_DO_NOT_REAP_CHILD | Glib::SPAWN_SEARCH_PATH | Glib::SPAWN_STDERR_TO_DEV_NULL, sigc::slot<void>(), &child_pid, &child_stdin, &child_stdout);
 	} catch(Glib::Error&) {
 		generate_backtrace_end(false);
 		return;
@@ -80,7 +80,7 @@ void CrashHandler::generate_backtrace() {
 	g_child_watch_add(child_pid, handle_child_exit, this);
 
 	Glib::RefPtr<Glib::IOChannel> ch_out = Glib::IOChannel::create_from_fd(child_stdout);
-	Glib::RefPtr<Glib::IOSource> src_out = ch_out->create_watch(Glib::IO_IN|Glib::IO_HUP);
+	Glib::RefPtr<Glib::IOSource> src_out = ch_out->create_watch(Glib::IO_IN | Glib::IO_HUP);
 	src_out->connect([this, ch_out](Glib::IOCondition cond) {
 		return handle_stdout(cond, ch_out);
 	});

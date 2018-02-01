@@ -53,12 +53,12 @@ public slots:
 
 private:
 	static const QList<Lang> LANGUAGES;
-	static const QMultiMap<QString,QString> LANGUAGE_CULTURES;
+	static const QMultiMap<QString, QString> LANGUAGE_CULTURES;
 
 	Ui::ConfigDialog ui;
 	QFontDialog m_fontDialog;
 
-	static QMultiMap<QString,QString> buildLanguageCultureTable();
+	static QMultiMap<QString, QString> buildLanguageCultureTable();
 
 
 private slots:

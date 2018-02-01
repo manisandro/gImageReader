@@ -58,7 +58,7 @@ Glib::RefPtr<Gtk::ListStore> FontComboBox::getModel() {
 		for(const Glib::RefPtr<Pango::FontFamily>& family : fontMap->list_families()) {
 			fontFamilies.push_back(family->get_name());
 		}
-		std::sort(fontFamilies.begin(), fontFamilies.end(), [](const Glib::ustring& a, const Glib::ustring& b) {
+		std::sort(fontFamilies.begin(), fontFamilies.end(), [](const Glib::ustring & a, const Glib::ustring & b) {
 			return a.casefold().compare(b.casefold()) < 0;
 		});
 		fontComboModel = Gtk::ListStore::create(s_fontComboCols);

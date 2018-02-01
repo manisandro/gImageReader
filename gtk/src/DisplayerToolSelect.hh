@@ -28,9 +28,9 @@ class DisplayerToolSelect : public DisplayerTool {
 public:
 	DisplayerToolSelect(Displayer* displayer);
 	~DisplayerToolSelect();
-	bool mousePressEvent(GdkEventButton *event) override;
-	bool mouseMoveEvent(GdkEventMotion *event) override;
-	bool mouseReleaseEvent(GdkEventButton *event) override;
+	bool mousePressEvent(GdkEventButton* event) override;
+	bool mouseMoveEvent(GdkEventMotion* event) override;
+	bool mouseReleaseEvent(GdkEventButton* event) override;
 	void resolutionChanged(double factor) override;
 	void rotationChanged(double delta) override;
 
@@ -77,7 +77,7 @@ public:
 private:
 	int m_number;
 
-	void showContextMenu(GdkEventButton *event) override;
+	void showContextMenu(GdkEventButton* event) override;
 };
 
 #endif // DISPLAYERTOOLSELECT_HH

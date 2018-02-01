@@ -122,11 +122,11 @@ static void tessCrashHandler(int /*signal*/) {
 	int bytesRead = 0;
 	QString captured;
 	do {
-		if((bytesRead = read(g_pipe[0], buf, sizeof(buf)-1)) > 0) {
+		if((bytesRead = read(g_pipe[0], buf, sizeof(buf) - 1)) > 0) {
 			buf[bytesRead] = 0;
 			captured += buf;
 		}
-	} while(bytesRead == sizeof(buf)-1);
+	} while(bytesRead == sizeof(buf) - 1);
 	tesseract::TessBaseAPI tess;
 	QString errMsg = QString(_("Tesseract crashed with the following message:\n\n"
 	                           "%1\n\n"
@@ -278,8 +278,9 @@ void Recognizer::updateLanguagesMenu() {
 	} else if(activeitem == nullptr) {
 		activeitem = curitem;
 	}
-	if(activeitem)
+	if(activeitem) {
 		activeitem->trigger();
+	}
 
 	// Add PSM items
 	ui.menuLanguages->addSeparator();
@@ -357,7 +358,7 @@ void Recognizer::setMultiLanguage() {
 	emit languageChanged(m_curLang);
 }
 
-void Recognizer::setRecognizeMode(const QString &mode) {
+void Recognizer::setRecognizeMode(const QString& mode) {
 	m_modeLabel = mode;
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 }
@@ -366,7 +367,7 @@ void Recognizer::clearLineEditPageRangeStyle() {
 	qobject_cast<QLineEdit*>(QObject::sender())->setStyleSheet("");
 }
 
-void Recognizer::psmSelected(QAction *action) {
+void Recognizer::psmSelected(QAction* action) {
 	ConfigSettings::get<VarSetting<int>>("psm")->setValue(action->data().toInt());
 }
 
@@ -441,7 +442,7 @@ void Recognizer::recognizeMultiplePages() {
 	recognize(pages, autodetectLayout);
 }
 
-void Recognizer::recognize(const QList<int> &pages, bool autodetectLayout) {
+void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 	tesseract::TessBaseAPI tess;
 	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
 	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();

@@ -124,7 +124,7 @@ bool SubstitutionsManager::saveList() {
 
 bool SubstitutionsManager::clearList() {
 	if(m_listStore->children().size() > 0) {
-		int response = Utils::question_dialog(_("Save List?"), _("Do you want to save the current list?"), Utils::Button::Save|Utils::Button::Discard|Utils::Button::Cancel, ui.windowSubstitutions);
+		int response = Utils::question_dialog(_("Save List?"), _("Do you want to save the current list?"), Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel, ui.windowSubstitutions);
 		if(response == Utils::Button::Save) {
 			if(!saveList()) {
 				return false;
@@ -155,7 +155,7 @@ void SubstitutionsManager::removeRows() {
 }
 
 void SubstitutionsManager::applySubstitutions() {
-	std::map<Glib::ustring,Glib::ustring> substitutions;
+	std::map<Glib::ustring, Glib::ustring> substitutions;
 	for(const Gtk::TreeModel::Row& row : m_listStore->children()) {
 		Glib::ustring search, replace;
 		row.get_value(0, search);

@@ -229,7 +229,7 @@ void SourceManager::takeScreenshot() {
 	savePixbuf(pixbuf, displayname);
 }
 
-void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf> &pixbuf, const std::string &displayname) {
+void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const std::string& displayname) {
 	MAIN->pushState(MainWindow::State::Busy, _("Saving image..."));
 	std::string filename;
 	try {
@@ -264,7 +264,7 @@ void SourceManager::removeSource(bool deleteFile) {
 	if(paths.empty()) {
 		return;
 	}
-	if(deleteFile && Utils::Button::Yes != Utils::question_dialog(_("Delete File?"), Glib::ustring::compose(_("The following files will be deleted:%1"), paths), Utils::Button::Yes|Utils::Button::No)) {
+	if(deleteFile && Utils::Button::Yes != Utils::question_dialog(_("Delete File?"), Glib::ustring::compose(_("The following files will be deleted:%1"), paths), Utils::Button::Yes | Utils::Button::No)) {
 		return;
 	}
 	// Avoid multiple sourceChanged emissions when removing items

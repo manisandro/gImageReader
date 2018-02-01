@@ -21,7 +21,7 @@
 #include "SearchReplaceFrame.hh"
 #include "SubstitutionsManager.hh"
 
-SearchReplaceFrame::SearchReplaceFrame(QWidget *parent, Qt::WindowFlags f)
+SearchReplaceFrame::SearchReplaceFrame(QWidget* parent, Qt::WindowFlags f)
 	: QFrame(parent, f) {
 	ui.setupUi(this);
 
@@ -38,7 +38,7 @@ SearchReplaceFrame::SearchReplaceFrame(QWidget *parent, Qt::WindowFlags f)
 
 	connect(ui.pushButtonSubstitutions, SIGNAL(clicked()), m_substitutionsManager, SLOT(show()));
 	connect(ui.pushButtonSubstitutions, SIGNAL(clicked()), m_substitutionsManager, SLOT(raise()));
-	connect(m_substitutionsManager, SIGNAL(applySubstitutions(QMap<QString,QString>)), this, SLOT(emitApplySubstitutions(QMap<QString,QString>)));
+	connect(m_substitutionsManager, SIGNAL(applySubstitutions(QMap<QString, QString>)), this, SLOT(emitApplySubstitutions(QMap<QString, QString>)));
 
 	ADD_SETTING(SwitchSetting("searchmatchcase", ui.checkBoxMatchCase));
 }

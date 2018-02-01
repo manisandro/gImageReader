@@ -42,7 +42,7 @@ void Utils::popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gt
 	push_in = true;
 }
 
-void Utils::message_dialog(Gtk::MessageType message, const Glib::ustring &title, const Glib::ustring &text, Gtk::Window *parent) {
+void Utils::message_dialog(Gtk::MessageType message, const Glib::ustring& title, const Glib::ustring& text, Gtk::Window* parent) {
 	if(!parent) {
 		parent = MAIN->getWindow();
 	}
@@ -51,7 +51,7 @@ void Utils::message_dialog(Gtk::MessageType message, const Glib::ustring &title,
 	dialog.run();
 }
 
-Utils::Button::Type Utils::question_dialog(const Glib::ustring &title, const Glib::ustring &text, int buttons, Gtk::Window *parent) {
+Utils::Button::Type Utils::question_dialog(const Glib::ustring& title, const Glib::ustring& text, int buttons, Gtk::Window* parent) {
 	if(!parent) {
 		parent = MAIN->getWindow();
 	}
@@ -79,7 +79,7 @@ Utils::Button::Type Utils::question_dialog(const Glib::ustring &title, const Gli
 	return static_cast<Button::Type>(dialog.run());
 }
 
-void Utils::set_spin_blocked(Gtk::SpinButton *spin, double value, sigc::connection &conn) {
+void Utils::set_spin_blocked(Gtk::SpinButton* spin, double value, sigc::connection& conn) {
 	conn.block(true);
 	spin->set_value(value);
 	conn.block(false);
@@ -96,17 +96,17 @@ static Glib::RefPtr<Gtk::CssProvider> getErrorStyleProvider() {
 	return provider;
 }
 
-void Utils::set_error_state(Gtk::Entry *entry) {
+void Utils::set_error_state(Gtk::Entry* entry) {
 	entry->get_style_context()->add_provider(getErrorStyleProvider(), 10000);
 	entry->get_style_context()->add_class("error");
 }
 
-void Utils::clear_error_state(Gtk::Entry *entry) {
+void Utils::clear_error_state(Gtk::Entry* entry) {
 	entry->get_style_context()->remove_class("error");
 	entry->get_style_context()->remove_provider(getErrorStyleProvider());
 }
 
-Glib::ustring Utils::get_content_type(const std::string &filename) {
+Glib::ustring Utils::get_content_type(const std::string& filename) {
 	gboolean uncertain;
 	gchar* type = g_content_type_guess(filename.c_str(), 0, 0, &uncertain);
 	Glib::ustring contenttype(type);
@@ -167,7 +167,7 @@ std::string Utils::make_output_filename(const std::string& filename) {
 	std::string newfilename = Glib::build_filename(dirname, basename);
 	// Generate non-existing file
 	int i = 0;
-	std::pair<std::string,std::string> parts = split_filename(newfilename);
+	std::pair<std::string, std::string> parts = split_filename(newfilename);
 	parts.first = Glib::Regex::create("_[0-9]+$")->replace(parts.first, 0, "", static_cast<Glib::RegexMatchFlags>(0));
 	newfilename = Glib::ustring::compose("%1.%2", parts.first, parts.second);
 	while(Glib::file_test(newfilename, Glib::FILE_TEST_EXISTS)) {
@@ -176,7 +176,7 @@ std::string Utils::make_output_filename(const std::string& filename) {
 	return newfilename;
 }
 
-std::vector<Glib::ustring> Utils::string_split(const Glib::ustring &text, char delim, bool keepEmpty) {
+std::vector<Glib::ustring> Utils::string_split(const Glib::ustring& text, char delim, bool keepEmpty) {
 	std::vector<Glib::ustring> parts;
 	Glib::ustring::size_type startPos = 0, endPos = 0;
 	Glib::ustring::size_type npos = Glib::ustring::npos;
@@ -187,7 +187,7 @@ std::vector<Glib::ustring> Utils::string_split(const Glib::ustring &text, char d
 		if(n > 0 || keepEmpty) {
 			parts.push_back(text.substr(startPos, n));
 		}
-		if(endPos == npos) break;
+		if(endPos == npos) { break; }
 		++endPos;
 	}
 	return parts;
@@ -204,7 +204,7 @@ Glib::ustring Utils::string_join(const std::vector<Glib::ustring>& strings, cons
 	return result;
 }
 
-Glib::ustring Utils::string_trim(const Glib::ustring &str, const Glib::ustring& what) {
+Glib::ustring Utils::string_trim(const Glib::ustring& str, const Glib::ustring& what) {
 	Glib::ustring ret = str;
 	ret.erase(0, ret.find_first_not_of(what));
 	std::size_t rpos = ret.find_last_not_of(what);
@@ -253,18 +253,29 @@ int Utils::string_replace(Glib::ustring& str, const Glib::ustring& search, const
 	return count;
 }
 
-Glib::ustring Utils::string_html_escape(const Glib::ustring &str)
-{
+Glib::ustring Utils::string_html_escape(const Glib::ustring& str) {
 	std::string result;
 	result.reserve(str.bytes());
 	for(size_t pos = 0; pos != str.bytes(); ++pos) {
 		switch(str[pos]) {
-			case '&':  result.append("&amp;");       break;
-			case '"': result.append("&quot;");       break;
-			case '\'': result.append("&apos;");      break;
-			case '<':  result.append("&lt;");        break;
-			case '>':  result.append("&gt;");        break;
-			default:   result.append(str.data() + pos, 1); break;
+		case '&':
+			result.append("&amp;");
+			break;
+		case '"':
+			result.append("&quot;");
+			break;
+		case '\'':
+			result.append("&apos;");
+			break;
+		case '<':
+			result.append("&lt;");
+			break;
+		case '>':
+			result.append("&gt;");
+			break;
+		default:
+			result.append(str.data() + pos, 1);
+			break;
 		}
 	}
 	return result;
@@ -273,11 +284,11 @@ Glib::ustring Utils::string_html_escape(const Glib::ustring &str)
 int Utils::parseInt(const Glib::ustring& str, bool* ok) {
 	static Glib::RefPtr<Glib::Regex> nrRegEx = Glib::Regex::create("^\\d+$");
 	bool match = nrRegEx->match(str);
-	if(ok) *ok = match;
+	if(ok) { *ok = match; }
 	return match ? std::atoi(str.c_str()) : 0;
 }
 
-void Utils::handle_drag_drop(const Glib::RefPtr<Gdk::DragContext> &context, int /*x*/, int /*y*/, const Gtk::SelectionData &selection_data, guint /*info*/, guint time) {
+void Utils::handle_drag_drop(const Glib::RefPtr<Gdk::DragContext>& context, int /*x*/, int /*y*/, const Gtk::SelectionData& selection_data, guint /*info*/, guint time) {
 	if ((selection_data.get_length() >= 0) && (selection_data.get_format() == 8)) {
 		std::vector<Glib::RefPtr<Gio::File>> files;
 		for(const Glib::ustring& uri : selection_data.get_uris()) {
@@ -290,7 +301,7 @@ void Utils::handle_drag_drop(const Glib::RefPtr<Gdk::DragContext> &context, int 
 	context->drag_finish(false, false, time);
 }
 
-Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string &url, Glib::ustring& messages, unsigned timeout) {
+Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string& url, Glib::ustring& messages, unsigned timeout) {
 	enum Status { Waiting, Ready, Failed, Eos } status = Waiting;
 
 	Glib::RefPtr<Glib::ByteArray> result = Glib::ByteArray::create();
@@ -378,28 +389,30 @@ Glib::ustring Utils::getSpellingLanguage(const Glib::ustring& lang) {
 Glib::ustring Utils::resolveFontName(const Glib::ustring& family) {
 	Glib::ustring resolvedName = family;
 
-	FcPattern *pat = FcNameParse(reinterpret_cast<const FcChar8*>(family.c_str()));
+	FcPattern* pat = FcNameParse(reinterpret_cast<const FcChar8*>(family.c_str()));
 	FcConfigSubstitute (0, pat, FcMatchPattern);
-	FcFontSet *fs = FcFontSetCreate();
+	FcFontSet* fs = FcFontSetCreate();
 
 	FcResult result;
-	FcPattern *match = FcFontMatch (0, pat, &result);
-	if (match)
+	FcPattern* match = FcFontMatch (0, pat, &result);
+	if (match) {
 		FcFontSetAdd (fs, match);
+	}
 	FcPatternDestroy (pat);
 
-	FcObjectSet *os = 0;
+	FcObjectSet* os = 0;
 	if(fs->nfont > 0) {
-		FcPattern *font = FcPatternFilter (fs->fonts[0], os);
-		FcChar8 *s = FcPatternFormat (font, reinterpret_cast<const FcChar8*>("%{family}"));
+		FcPattern* font = FcPatternFilter (fs->fonts[0], os);
+		FcChar8* s = FcPatternFormat (font, reinterpret_cast<const FcChar8*>("%{family}"));
 		resolvedName = Glib::ustring(reinterpret_cast<const char*>(s));
 		FcStrFree (s);
 		FcPatternDestroy (font);
 	}
 	FcFontSetDestroy (fs);
 
-	if (os)
+	if (os) {
 		FcObjectSetDestroy (os);
+	}
 	return resolvedName;
 }
 
@@ -411,7 +424,7 @@ void Utils::openUri(const std::string& uri) {
 #endif
 }
 
-bool Utils::busyTask(const std::function<bool()> &f, const Glib::ustring &msg) {
+bool Utils::busyTask(const std::function<bool()>& f, const Glib::ustring& msg) {
 	enum class TaskState { Waiting, Succeeded, Failed };
 	TaskState taskState = TaskState::Waiting;
 	Glib::Threads::Mutex mutex;

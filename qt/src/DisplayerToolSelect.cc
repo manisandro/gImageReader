@@ -35,7 +35,7 @@
 #include <QStyle>
 
 
-DisplayerToolSelect::DisplayerToolSelect(Displayer *displayer, QObject *parent)
+DisplayerToolSelect::DisplayerToolSelect(Displayer* displayer, QObject* parent)
 	: DisplayerTool(displayer, parent) {
 	displayer->setCursor(Qt::CrossCursor);
 	updateRecognitionModeLabel();
@@ -45,7 +45,7 @@ DisplayerToolSelect::~DisplayerToolSelect() {
 	clearSelections();
 }
 
-void DisplayerToolSelect::mousePressEvent(QMouseEvent *event) {
+void DisplayerToolSelect::mousePressEvent(QMouseEvent* event) {
 	if(event->button() == Qt::LeftButton &&  m_curSel == nullptr) {
 		if((event->modifiers() & Qt::ControlModifier) == 0) {
 			clearSelections();
@@ -57,7 +57,7 @@ void DisplayerToolSelect::mousePressEvent(QMouseEvent *event) {
 	}
 }
 
-void DisplayerToolSelect::mouseMoveEvent(QMouseEvent *event) {
+void DisplayerToolSelect::mouseMoveEvent(QMouseEvent* event) {
 	if(m_curSel) {
 		QPointF p = m_displayer->mapToSceneClamped(event->pos());
 		m_curSel->setPoint(p);
@@ -66,7 +66,7 @@ void DisplayerToolSelect::mouseMoveEvent(QMouseEvent *event) {
 	}
 }
 
-void DisplayerToolSelect::mouseReleaseEvent(QMouseEvent *event) {
+void DisplayerToolSelect::mouseReleaseEvent(QMouseEvent* event) {
 	if(m_curSel) {
 		if(m_curSel->rect().width() < 5.0 || m_curSel->rect().height() < 5.0) {
 			delete m_curSel;
@@ -151,7 +151,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 	QImage img = m_displayer->getImage(m_displayer->getSceneBoundingRect());
 
 	// Perform layout analysis
-	Utils::busyTask([this,&nDeskew,&avgDeskew,&rects,&img] {
+	Utils::busyTask([this, &nDeskew, &avgDeskew, &rects, &img] {
 		tesseract::TessBaseAPI tess;
 		tess.InitForAnalysePage();
 		tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
@@ -180,7 +180,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 
 	// If a somewhat large deskew angle is detected, automatically rotate image and redetect layout,
 	// unless we already attempted to rotate (to prevent endless loops)
-	avgDeskew = qRound(((avgDeskew/nDeskew)/M_PI * 180.0) * 10.0) / 10.0;
+	avgDeskew = qRound(((avgDeskew / nDeskew) / M_PI * 180.0) * 10.0) / 10.0;
 	if(std::abs(avgDeskew) > 0.1 && !noDeskew) {
 		double newangle = m_displayer->getCurrentAngle() - avgDeskew;
 		m_displayer->setup(nullptr, nullptr, &newangle);
@@ -207,7 +207,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void NumberedDisplayerSelection::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
+void NumberedDisplayerSelection::contextMenuEvent(QGraphicsSceneContextMenuEvent* event) {
 	QMenu menu;
 
 	QWidget* orderWidget = new QWidget(&menu);
@@ -254,7 +254,7 @@ void NumberedDisplayerSelection::reorderSelection(int newNumber) {
 	static_cast<DisplayerToolSelect*>(m_tool)->reorderSelection(m_number, newNumber);
 }
 
-void NumberedDisplayerSelection::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void NumberedDisplayerSelection::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
 	DisplayerSelection::paint(painter, option, widget);
 
 	painter->setRenderHint(QPainter::Antialiasing, false);

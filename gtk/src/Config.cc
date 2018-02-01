@@ -136,8 +136,8 @@ const std::vector<Config::Lang> Config::LANGUAGES = {
 	{"yid",      "yi", "\u05d9\u05d9\u05b4\u05d3\u05d9\u05e9"}, // Yiddish
 };
 
-std::multimap<Glib::ustring,Glib::ustring> Config::buildLanguageCultureTable() {
-	std::multimap<Glib::ustring,Glib::ustring> map;
+std::multimap<Glib::ustring, Glib::ustring> Config::buildLanguageCultureTable() {
+	std::multimap<Glib::ustring, Glib::ustring> map;
 	map.insert(std::make_pair("af", "af_ZA"));
 	map.insert(std::make_pair("ar", "ar_AE"));
 	map.insert(std::make_pair("ar", "ar_BH"));
@@ -277,7 +277,7 @@ std::multimap<Glib::ustring,Glib::ustring> Config::buildLanguageCultureTable() {
 	return map;
 }
 
-const std::multimap<Glib::ustring,Glib::ustring> Config::LANGUAGE_CULTURES = Config::buildLanguageCultureTable();
+const std::multimap<Glib::ustring, Glib::ustring> Config::LANGUAGE_CULTURES = Config::buildLanguageCultureTable();
 
 Config::Config() {
 	ui.setupUi();
@@ -345,10 +345,10 @@ Config::Config() {
 
 bool Config::searchLangSpec(Lang& lang) const {
 	for(const Glib::RefPtr<Gtk::TreeModel>& model : {
-	ui.treeviewLangsPredef->get_model(), ui.treeviewLangsCustom->get_model()
-	}) {
+	            ui.treeviewLangsPredef->get_model(), ui.treeviewLangsCustom->get_model()
+	        }) {
 		Gtk::TreeIter it = std::find_if(model->children().begin(), model->children().end(),
-		[this, &lang](const Gtk::TreeRow& row) {
+		[this, &lang](const Gtk::TreeRow & row) {
 			return row[m_langViewCols.prefix] == lang.prefix;
 		});
 		if(it) {

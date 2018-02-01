@@ -30,7 +30,7 @@
 #include "Config.hh"
 #include "CrashHandler.hh"
 
-int main (int argc, char *argv[]) {
+int main (int argc, char* argv[]) {
 	QApplication app(argc, argv);
 
 	QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));

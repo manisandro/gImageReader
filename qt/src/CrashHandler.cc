@@ -21,7 +21,7 @@
 #include "CrashHandler.hh"
 #include <QPushButton>
 
-CrashHandler::CrashHandler(int pid, const QString& savefile, QWidget *parent):
+CrashHandler::CrashHandler(int pid, const QString& savefile, QWidget* parent):
 	QDialog(parent), m_pid(pid) {
 	ui.setupUi(this);
 
@@ -40,12 +40,12 @@ CrashHandler::CrashHandler(int pid, const QString& savefile, QWidget *parent):
 
 	m_gdbProcess.setProcessChannelMode(QProcess::SeparateChannels);
 	connect(&m_gdbProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(appendGdbOutput()));
-	connect(&m_gdbProcess, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(handleGdbFinished(int,QProcess::ExitStatus)));
+	connect(&m_gdbProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(handleGdbFinished(int, QProcess::ExitStatus)));
 
 	regenerateBacktrace();
 }
 
-void CrashHandler::closeEvent(QCloseEvent *) {
+void CrashHandler::closeEvent(QCloseEvent*) {
 	m_gdbProcess.kill();
 }
 

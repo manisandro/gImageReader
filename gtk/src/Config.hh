@@ -61,14 +61,14 @@ private:
 	};
 
 	static const std::vector<Lang> LANGUAGES;
-	static const std::multimap<Glib::ustring,Glib::ustring> LANGUAGE_CULTURES ;
+	static const std::multimap<Glib::ustring, Glib::ustring> LANGUAGE_CULTURES ;
 
 	Ui::ConfigDialog ui;
 	ClassData m_classdata;
 
 	LangViewColumns m_langViewCols;
 
-	static std::multimap<Glib::ustring,Glib::ustring> buildLanguageCultureTable();
+	static std::multimap<Glib::ustring, Glib::ustring> buildLanguageCultureTable();
 
 	void addLanguage();
 	void removeLanguage();

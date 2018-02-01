@@ -54,7 +54,7 @@ public:
 		return Point(m_data[0] * p.x + m_data[1] * p.y, m_data[2] * p.x + m_data[3] * p.y);
 	}
 	double operator()(int i, int j) const {
-		return m_data[2*i + j];
+		return m_data[2 * i + j];
 	}
 private:
 	double m_data[4];

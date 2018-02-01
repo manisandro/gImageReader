@@ -80,7 +80,7 @@ Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat, Conver
 					uint8_t newpixel = oldpixel > 127 ? 255 : 0;
 					int err = int(oldpixel) - int(newpixel);
 					if(newpixel == 255) {
-						newdata[y * bytesPerLine + x/8] |= 0x80 >> x%8;
+						newdata[y * bytesPerLine + x / 8] |= 0x80 >> x % 8;
 					}
 					if(flags == DiffuseDithering) {
 						if(x + 1 < width) { // right neighbor

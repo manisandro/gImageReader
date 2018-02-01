@@ -66,7 +66,7 @@ void OutputBuffer::get_region_bounds(Gtk::TextIter& start, Gtk::TextIter& stop) 
 	stop = get_iter_at_mark(m_regionEndMark);
 }
 
-Gtk::TextIter OutputBuffer::replace_range(const Glib::ustring &text, const Gtk::TextIter& start, const Gtk::TextIter& end) {
+Gtk::TextIter OutputBuffer::replace_range(const Glib::ustring& text, const Gtk::TextIter& start, const Gtk::TextIter& end) {
 	return insert(erase(start, end), text);
 }
 
@@ -74,13 +74,13 @@ bool OutputBuffer::findReplace(bool backwards, bool replace, bool matchCase, con
 	if(searchstr.empty()) {
 		return false;
 	}
-	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY|Gtk::TEXT_SEARCH_TEXT_ONLY;
+	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY | Gtk::TEXT_SEARCH_TEXT_ONLY;
 	auto comparator = matchCase ?
-	[](const Glib::ustring& s1, const Glib::ustring& s2) {
+	[](const Glib::ustring & s1, const Glib::ustring & s2) {
 		return s1 == s2;
 	}
 :
-	[](const Glib::ustring& s1, const Glib::ustring& s2) {
+	[](const Glib::ustring & s1, const Glib::ustring & s2) {
 		return s1.lowercase() == s2.lowercase();
 	};
 	if(!matchCase) {
@@ -131,7 +131,7 @@ bool OutputBuffer::replaceAll(const Glib::ustring& searchstr, const Glib::ustrin
 	get_region_bounds(start, end);
 	int startpos = start.get_offset();
 	int endpos = end.get_offset();
-	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY|Gtk::TEXT_SEARCH_TEXT_ONLY;
+	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY | Gtk::TEXT_SEARCH_TEXT_ONLY;
 	if(!matchCase) {
 		flags |= Gtk::TEXT_SEARCH_CASE_INSENSITIVE;
 	}

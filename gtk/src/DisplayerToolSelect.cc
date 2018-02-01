@@ -31,7 +31,7 @@
 #undef USE_STD_NAMESPACE
 
 
-DisplayerToolSelect::DisplayerToolSelect(Displayer *displayer)
+DisplayerToolSelect::DisplayerToolSelect(Displayer* displayer)
 	: DisplayerTool(displayer) {
 	displayer->setDefaultCursor(Gdk::Cursor::create(Gdk::TCROSS));
 	updateRecognitionModeLabel();
@@ -155,7 +155,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 	Cairo::RefPtr<Cairo::ImageSurface> img = m_displayer->getImage(m_displayer->getSceneBoundingRect());
 
 	// Perform layout analysis
-	Utils::busyTask([this,&nDeskew,&avgDeskew,&rects,&img] {
+	Utils::busyTask([this, &nDeskew, &avgDeskew, &rects, &img] {
 		tesseract::TessBaseAPI tess;
 		tess.InitForAnalysePage();
 		tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
@@ -184,7 +184,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 
 	// If a somewhat large deskew angle is detected, automatically rotate image and redetect layout,
 	// unless we already attempted to rotate (to prevent endless loops)
-	avgDeskew = Utils::round(((avgDeskew/nDeskew)/M_PI * 180.) * 10.) / 10.;
+	avgDeskew = Utils::round(((avgDeskew / nDeskew) / M_PI * 180.) * 10.) / 10.;
 	if(std::abs(avgDeskew) > .1 && !noDeskew) {
 		double newangle = m_displayer->getCurrentAngle() - avgDeskew;
 		m_displayer->setup(nullptr, nullptr, &newangle);
@@ -243,15 +243,15 @@ void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
 			}
 			static_cast<DisplayerToolSelect*>(m_tool)->saveSelection(this);
 		}),
-		CONNECT(ui.windowSelection, button_press_event, [&](GdkEventButton* ev) {
+		CONNECT(ui.windowSelection, button_press_event, [&](GdkEventButton * ev) {
 			Gtk::Allocation a = ui.windowSelection->get_allocation();
 			if(ev->x < a.get_x() || ev->x > a.get_x() + a.get_width() || ev->y < a.get_y() || ev->y > a.get_y() + a.get_height()) {
 				loop->quit();
 			}
 			return true;
 		}),
-		CONNECT(ui.windowSelection, key_press_event, [&](GdkEventKey* ev) {
-			if(ev->keyval == GDK_KEY_Escape) loop->quit();
+		CONNECT(ui.windowSelection, key_press_event, [&](GdkEventKey * ev) {
+			if(ev->keyval == GDK_KEY_Escape) { loop->quit(); }
 			return true;
 		})
 	};

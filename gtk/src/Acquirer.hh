@@ -32,7 +32,7 @@ public:
 	Acquirer(const Ui::MainWindow& _ui);
 	~Acquirer();
 
-	sigc::signal<void,std::string> signal_scanPageAvailable() const {
+	sigc::signal<void, std::string> signal_scanPageAvailable() const {
 		return m_signal_scanPageAvailable;
 	}
 
@@ -52,7 +52,7 @@ private:
 
 	Gtk::Button* m_cancelButton;
 	std::string m_outputPath;
-	sigc::signal<void,std::string> m_signal_scanPageAvailable;
+	sigc::signal<void, std::string> m_signal_scanPageAvailable;
 	Scanner* m_scanner = nullptr;
 
 	void genOutputPath();

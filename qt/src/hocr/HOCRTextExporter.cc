@@ -29,7 +29,7 @@
 #include <QMessageBox>
 #include <QTextStream>
 
-bool HOCRTextExporter::run(const HOCRDocument *hocrdocument, QString &filebasename) {
+bool HOCRTextExporter::run(const HOCRDocument* hocrdocument, QString& filebasename) {
 	QString suggestion = filebasename;
 	if(suggestion.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();

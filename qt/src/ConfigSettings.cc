@@ -20,7 +20,7 @@
 #include "ConfigSettings.hh"
 
 
-QMap<QString,AbstractSetting*> ConfigSettings::s_settings;
+QMap<QString, AbstractSetting*> ConfigSettings::s_settings;
 
 
 void ConfigSettings::add(AbstractSetting* setting) {

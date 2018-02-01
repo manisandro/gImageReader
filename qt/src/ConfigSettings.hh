@@ -45,7 +45,7 @@ public:
 
 private:
 	friend class AbstractSetting;
-	static QMap<QString,AbstractSetting*> s_settings;
+	static QMap<QString, AbstractSetting*> s_settings;
 
 	static void add(AbstractSetting* setting);
 	static void remove(const QString& key);

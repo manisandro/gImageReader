@@ -66,7 +66,7 @@ void TessdataManager::run() {
 	bool success = fetchLanguageList(messages);
 	MAIN->popState();
 	if(!success) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR,_("Error"), Glib::ustring::compose(_("Failed to fetch list of available languages: %1"), messages));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Failed to fetch list of available languages: %1"), messages));
 		return;
 	}
 	while(true) {
@@ -131,7 +131,7 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 		g_object_unref(parser);
 		return false;
 	}
-	std::vector<std::pair<Glib::ustring,Glib::ustring>> extraFiles;
+	std::vector<std::pair<Glib::ustring, Glib::ustring>> extraFiles;
 	root = json_parser_get_root(parser);
 	array = json_node_get_array(root);
 	elementArray = json_array_get_elements(array);
@@ -155,11 +155,11 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 	g_list_free(elementArray);
 	g_object_unref(parser);
 
-	for(const std::pair<Glib::ustring,Glib::ustring>& extraFile : extraFiles) {
+	for(const std::pair<Glib::ustring, Glib::ustring>& extraFile : extraFiles) {
 		Glib::ustring lang = extraFile.first.substr(0, extraFile.first.find("."));
 		auto it = m_languageFiles.find(lang);
 		if(it != m_languageFiles.end()) {
-			it->second.push_back({extraFile.first,extraFile.second});
+			it->second.push_back({extraFile.first, extraFile.second});
 		}
 	}
 

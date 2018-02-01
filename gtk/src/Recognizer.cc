@@ -135,11 +135,11 @@ static void tessCrashHandler(int /*signal*/) {
 	int bytesRead = 0;
 	Glib::ustring captured;
 	do {
-		if((bytesRead = read(g_pipe[0], buf, sizeof(buf)-1)) > 0) {
+		if((bytesRead = read(g_pipe[0], buf, sizeof(buf) - 1)) > 0) {
 			buf[bytesRead] = 0;
 			captured += buf;
 		}
-	} while(bytesRead == sizeof(buf)-1);
+	} while(bytesRead == sizeof(buf) - 1);
 	tesseract::TessBaseAPI tess;
 	Glib::ustring errMsg = Glib::ustring::compose(_("Tesseract crashed with the following message:\n\n"
 	                       "%1\n\n"
@@ -265,10 +265,10 @@ void Recognizer::updateLanguagesMenu() {
 			}
 			Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(lang.name));
 			item->set_active(isMultilingual && std::find(sellangs.begin(), sellangs.end(), lang.prefix) != sellangs.end());
-			CONNECT(item, button_press_event, [this,item](GdkEventButton* ev) {
+			CONNECT(item, button_press_event, [this, item](GdkEventButton * ev) {
 				return onMultilingualItemButtonEvent(ev, item);
 			}, false);
-			CONNECT(item, button_release_event, [this,item](GdkEventButton* ev) {
+			CONNECT(item, button_release_event, [this, item](GdkEventButton * ev) {
 				return onMultilingualItemButtonEvent(ev, item);
 			}, false);
 			//		CONNECT(item, toggled, [this]{ setMultiLanguage(); });
@@ -277,10 +277,10 @@ void Recognizer::updateLanguagesMenu() {
 		}
 		m_multilingualRadio->set_submenu(*submenu);
 		CONNECT(m_multilingualRadio, toggled, [this] { if(m_multilingualRadio->get_active()) setMultiLanguage(); });
-		CONNECT(submenu, button_press_event, [this](GdkEventButton* ev) {
+		CONNECT(submenu, button_press_event, [this](GdkEventButton * ev) {
 			return onMultilingualMenuButtonEvent(ev);
 		}, false);
-		CONNECT(submenu, button_release_event, [this](GdkEventButton* ev) {
+		CONNECT(submenu, button_release_event, [this](GdkEventButton * ev) {
 			return onMultilingualMenuButtonEvent(ev);
 		}, false);
 		ui.menuLanguages->append(*m_multilingualRadio);
@@ -344,7 +344,7 @@ void Recognizer::updateLanguagesMenu() {
 	}
 }
 
-void Recognizer::setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang &lang) {
+void Recognizer::setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang& lang) {
 	if(item->get_active()) {
 		if(!lang.code.empty()) {
 			ui.labelRecognizeLang->set_markup(Glib::ustring::compose("<small> %1 (%2)</small>", lang.name, lang.code));
@@ -450,7 +450,7 @@ void Recognizer::recognizeMultiplePages() {
 	recognize(pages, autodetectLayout);
 }
 
-void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout) {
+void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout) {
 	tesseract::TessBaseAPI tess;
 	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
 	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
@@ -467,7 +467,7 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 			for(int page : pages) {
 				monitor.desc.progress = 0;
 				++idx;
-				Glib::signal_idle().connect_once([=] { MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
+				Glib::signal_idle().connect_once([ = ] { MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
 
 				PageData pageData;
 				Utils::runInMainThreadBlocking([&] { pageData = setPage(page, autodetectLayout); });
@@ -512,7 +512,7 @@ void Recognizer::recognize(const std::vector<int> &pages, bool autodetectLayout)
 	}
 }
 
-bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface> &img, OutputDestination dest) {
+bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest) {
 	tesseract::TessBaseAPI tess;
 	if(!initTesseract(tess, m_curLang.prefix.c_str())) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), _("Failed to initialize tesseract"));

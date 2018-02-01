@@ -140,8 +140,9 @@ void ScannerSane::doRedetect() {
 
 			/* Abbreviate HP as it is a long string and does not match what is on the physical scanner */
 			QString vendor = device_list[i]->vendor;
-			if(vendor == "Hewlett-Packard")
+			if(vendor == "Hewlett-Packard") {
 				vendor = "HP";
+			}
 
 			scan_device.label = QString("%1 %2").arg(vendor).arg(device_list[i]->model);
 			scan_device.label.replace('_', " ");
@@ -231,23 +232,27 @@ void ScannerSane::doSetOptions() {
 		switch(m_job->params.type) {
 		case ScanType::SINGLE:
 			if(!setDefaultOption(m_job->handle, option, index))
-				if(!setConstrainedStringOption(m_job->handle, option, index, flatbed_sources, nullptr))
+				if(!setConstrainedStringOption(m_job->handle, option, index, flatbed_sources, nullptr)) {
 					qWarning("Unable to set single page source, please file a bug");
+				}
 			break;
 		case ScanType::ADF_FRONT:
 			if(!setConstrainedStringOption(m_job->handle, option, index, adf_front_sources, nullptr))
-				if(!setConstrainedStringOption(m_job->handle, option, index, adf_sources, nullptr))
+				if(!setConstrainedStringOption(m_job->handle, option, index, adf_sources, nullptr)) {
 					qWarning("Unable to set front ADF source, please file a bug");
+				}
 			break;
 		case ScanType::ADF_BACK:
 			if(!setConstrainedStringOption(m_job->handle, option, index, adf_back_sources, nullptr))
-				if(!setConstrainedStringOption(m_job->handle, option, index, adf_sources, nullptr))
+				if(!setConstrainedStringOption(m_job->handle, option, index, adf_sources, nullptr)) {
 					qWarning("Unable to set back ADF source, please file a bug");
+				}
 			break;
 		case ScanType::ADF_BOTH:
 			if(!setConstrainedStringOption(m_job->handle, option, index, adf_duplex_sources, nullptr))
-				if(!setConstrainedStringOption(m_job->handle, option, index, adf_sources, nullptr))
+				if(!setConstrainedStringOption(m_job->handle, option, index, adf_sources, nullptr)) {
 					qWarning("Unable to set duplex ADF source, please file a bug");
+				}
 			break;
 		}
 	}
@@ -287,16 +292,19 @@ void ScannerSane::doSetOptions() {
 
 		switch(m_job->params.scan_mode) {
 		case ScanMode::COLOR:
-			if(!setConstrainedStringOption(m_job->handle, option, index, color_scan_modes, nullptr))
+			if(!setConstrainedStringOption(m_job->handle, option, index, color_scan_modes, nullptr)) {
 				qWarning("Unable to set Color mode, please file a bug");
+			}
 			break;
 		case ScanMode::GRAY:
-			if(!setConstrainedStringOption(m_job->handle, option, index, gray_scan_modes, nullptr))
+			if(!setConstrainedStringOption(m_job->handle, option, index, gray_scan_modes, nullptr)) {
 				qWarning("Unable to set Gray mode, please file a bug");
+			}
 			break;
 		case ScanMode::LINEART:
-			if(!setConstrainedStringOption(m_job->handle, option, index, lineart_scan_modes, nullptr))
+			if(!setConstrainedStringOption(m_job->handle, option, index, lineart_scan_modes, nullptr)) {
 				qWarning("Unable to set Lineart mode, please file a bug");
+			}
 			break;
 		default:
 			break;
@@ -305,13 +313,15 @@ void ScannerSane::doSetOptions() {
 
 	/* Duplex */
 	option = getOptionByName(options, m_job->handle, "duplex", index);
-	if(option != nullptr && option->type == SANE_TYPE_BOOL)
+	if(option != nullptr && option->type == SANE_TYPE_BOOL) {
 		setBoolOption(m_job->handle, option, index, m_job->params.type == ScanType::ADF_BOTH, nullptr);
+	}
 
 	/* Multi-page options */
 	option = getOptionByName(options, m_job->handle, "batch-scan", index);
-	if(option != nullptr && option->type == SANE_TYPE_BOOL)
+	if(option != nullptr && option->type == SANE_TYPE_BOOL) {
 		setBoolOption(m_job->handle, option, index, m_job->params.type != ScanType::SINGLE, nullptr);
+	}
 
 	/* Disable compression, we will compress after scanning */
 	option = getOptionByName(options, m_job->handle, "compression", index);
@@ -323,55 +333,61 @@ void ScannerSane::doSetOptions() {
 			"none"
 		};
 
-		if(!setConstrainedStringOption(m_job->handle, option, index, disable_compression_names, nullptr))
+		if(!setConstrainedStringOption(m_job->handle, option, index, disable_compression_names, nullptr)) {
 			qWarning("Unable to disable compression, please file a bug");
+		}
 	}
 
 	/* Set resolution and bit depth */
 	option = getOptionByName(options, m_job->handle, SANE_NAME_SCAN_RESOLUTION, index);
 	if(option != nullptr) {
-		if(option->type == SANE_TYPE_FIXED)
+		if(option->type == SANE_TYPE_FIXED) {
 			setFixedOption(m_job->handle, option, index, m_job->params.dpi, &m_job->params.dpi);
-		else {
+		} else {
 			int dpi;
 			setIntOption(m_job->handle, option, index, m_job->params.dpi, &dpi);
 			m_job->params.dpi = dpi;
 		}
 		option = getOptionByName(options, m_job->handle, SANE_NAME_BIT_DEPTH, index);
-		if(option != nullptr && m_job->params.depth > 0)
+		if(option != nullptr && m_job->params.depth > 0) {
 			setIntOption(m_job->handle, option, index, m_job->params.depth, nullptr);
+		}
 	}
 
 	/* Always use maximum scan area - some scanners default to using partial areas.  This should be patched in sane-backends */
 	option = getOptionByName(options, m_job->handle, SANE_NAME_SCAN_BR_X, index);
 	if(option != nullptr && option->constraint_type == SANE_CONSTRAINT_RANGE) {
-		if(option->type == SANE_TYPE_FIXED)
+		if(option->type == SANE_TYPE_FIXED) {
 			setFixedOption(m_job->handle, option, index, SANE_UNFIX(option->constraint.range->max), nullptr);
-		else
+		} else {
 			setIntOption(m_job->handle, option, index, option->constraint.range->max, nullptr);
+		}
 	}
 	option = getOptionByName(options, m_job->handle, SANE_NAME_SCAN_BR_Y, index);
 	if(option != nullptr && option->constraint_type == SANE_CONSTRAINT_RANGE) {
-		if(option->type == SANE_TYPE_FIXED)
+		if(option->type == SANE_TYPE_FIXED) {
 			setFixedOption(m_job->handle, option, index, SANE_UNFIX(option->constraint.range->max), nullptr);
-		else
+		} else {
 			setIntOption(m_job->handle, option, index, option->constraint.range->max, nullptr);
+		}
 	}
 
 	/* Set page dimensions */
 	option = getOptionByName(options, m_job->handle, SANE_NAME_PAGE_WIDTH, index);
 	if(option != nullptr && m_job->params.page_width > 0.0) {
-		if(option->type == SANE_TYPE_FIXED)
+		if(option->type == SANE_TYPE_FIXED) {
 			setFixedOption(m_job->handle, option, index, m_job->params.page_width / 10.0, nullptr);
-		else
+		} else {
 			setIntOption(m_job->handle, option, index, m_job->params.page_width / 10, nullptr);
+		}
 	}
 	option = getOptionByName(options, m_job->handle, SANE_NAME_PAGE_HEIGHT, index);
 	if(option != nullptr && m_job->params.page_height > 0.0) {
-		if(option->type == SANE_TYPE_FIXED)
+		if(option->type == SANE_TYPE_FIXED) {
 			setFixedOption(m_job->handle, option, index, m_job->params.page_height / 10.0, nullptr);
-		else
+		} else {
 			setIntOption(m_job->handle, option, index, m_job->params.page_height / 10, nullptr);
+		}
 	}
 
 	setState(State::START);
@@ -432,10 +448,12 @@ void ScannerSane::doRead() {
 			doStop();
 			return;
 		}
-		if(m_job->parameters.lines > 0 && m_job->lineCount != m_job->parameters.lines)
+		if(m_job->parameters.lines > 0 && m_job->lineCount != m_job->parameters.lines) {
 			qWarning("Scan completed with %d lines, expected %d lines", m_job->lineCount, m_job->parameters.lines);
-		if(m_job->nUsed > 0)
+		}
+		if(m_job->nUsed > 0) {
 			qWarning("Scan complete with %d bytes of unused data", m_job->nUsed);
+		}
 		doCompletePage();
 		return;
 	} else if(status != SANE_STATUS_GOOD) {
@@ -461,21 +479,21 @@ void ScannerSane::doRead() {
 		int offset = (m_job->lineCount - 1) * m_job->rowstride;
 		if(m_job->parameters.format == SANE_FRAME_GRAY) {
 			for(int i = 0; i < m_job->lineBuffer.size(); ++i) {
-				std::memset(&m_job->imgbuf[offset + 3*i], m_job->lineBuffer[i], 3);
+				std::memset(&m_job->imgbuf[offset + 3 * i], m_job->lineBuffer[i], 3);
 			}
 		} else if(m_job->parameters.format == SANE_FRAME_RGB) {
 			std::memcpy(&m_job->imgbuf[offset], &m_job->lineBuffer[0], m_job->lineBuffer.size());
 		} else if(m_job->parameters.format == SANE_FRAME_RED) {
 			for(int i = 0; i < m_job->lineBuffer.size(); ++i) {
-				m_job->imgbuf[offset + 3*i + 0] = m_job->lineBuffer[i];
+				m_job->imgbuf[offset + 3 * i + 0] = m_job->lineBuffer[i];
 			}
 		} else if(m_job->parameters.format == SANE_FRAME_GREEN) {
 			for(int i = 0; i < m_job->lineBuffer.size(); ++i) {
-				m_job->imgbuf[offset + 3*i + 1] = m_job->lineBuffer[i];
+				m_job->imgbuf[offset + 3 * i + 1] = m_job->lineBuffer[i];
 			}
 		} else if(m_job->parameters.format == SANE_FRAME_BLUE) {
 			for(int i = 0; i < m_job->lineBuffer.size(); ++i) {
-				m_job->imgbuf[offset + 3*i + 2] = m_job->lineBuffer[i];
+				m_job->imgbuf[offset + 3 * i + 2] = m_job->lineBuffer[i];
 			}
 		}
 
@@ -524,7 +542,7 @@ void ScannerSane::doStop() {
 }
 
 /***************************** Sane option stuff *****************************/
-const SANE_Option_Descriptor* ScannerSane::getOptionByName(const QMap<QString, int>& options, SANE_Handle, const QString& name, int &index) {
+const SANE_Option_Descriptor* ScannerSane::getOptionByName(const QMap<QString, int>& options, SANE_Handle, const QString& name, int& index) {
 	QMap<QString, int>::const_iterator it = options.find(name);
 	if(it != options.end()) {
 		index = it.value();
@@ -536,13 +554,15 @@ const SANE_Option_Descriptor* ScannerSane::getOptionByName(const QMap<QString, i
 
 bool ScannerSane::setDefaultOption(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index) {
 	/* Check if supports automatic option */
-	if((option->cap & SANE_CAP_AUTOMATIC) == 0)
+	if((option->cap & SANE_CAP_AUTOMATIC) == 0) {
 		return false;
+	}
 
 	SANE_Status status = sane_control_option(handle, option_index, SANE_ACTION_SET_AUTO, nullptr, nullptr);
 	qDebug("sane_control_option(%d, SANE_ACTION_SET_AUTO) -> %s", option_index, sane_strstatus(status));
-	if(status != SANE_STATUS_GOOD)
+	if(status != SANE_STATUS_GOOD) {
 		qWarning("Error setting default option %s: %s", option->name, sane_strstatus(status));
+	}
 	return status == SANE_STATUS_GOOD;
 }
 
@@ -553,7 +573,7 @@ void ScannerSane::setBoolOption(SANE_Handle handle, const SANE_Option_Descriptor
 
 	SANE_Bool v = static_cast<SANE_Bool>(value);
 	SANE_Status status = sane_control_option(handle, option_index, SANE_ACTION_SET_VALUE, &v, nullptr);
-	if(result) *result = static_cast<bool>(v);
+	if(result) { *result = static_cast<bool>(v); }
 	qDebug("sane_control_option(%d, SANE_ACTION_SET_VALUE, %s) -> (%s, %s)", option_index, value ? "SANE_TRUE" : "SANE_FALSE", sane_strstatus(status), result ? "SANE_TRUE" : "SANE_FALSE");
 }
 
@@ -564,8 +584,9 @@ void ScannerSane::setIntOption(SANE_Handle handle, const SANE_Option_Descriptor*
 
 	SANE_Word v = static_cast<SANE_Word>(value);
 	if(option->constraint_type == SANE_CONSTRAINT_RANGE) {
-		if(option->constraint.range->quant != 0)
+		if(option->constraint.range->quant != 0) {
 			v *= option->constraint.range->quant;
+		}
 		v = std::max(option->constraint.range->min, std::min(option->constraint.range->max, v));
 	} else if(option->constraint_type == SANE_CONSTRAINT_WORD_LIST) {
 		int distance = std::numeric_limits<int>::max();
@@ -573,7 +594,7 @@ void ScannerSane::setIntOption(SANE_Handle handle, const SANE_Option_Descriptor*
 
 		/* Find nearest value to requested */
 		for(int i = 0; i < option->constraint.word_list[0]; ++i) {
-			int x = option->constraint.word_list[i+1];
+			int x = option->constraint.word_list[i + 1];
 			int d = qAbs(x - v);
 			if(d < distance) {
 				distance = d;
@@ -585,10 +606,10 @@ void ScannerSane::setIntOption(SANE_Handle handle, const SANE_Option_Descriptor*
 
 	SANE_Status status = sane_control_option(handle, option_index, SANE_ACTION_SET_VALUE, &v, nullptr);
 	qDebug("sane_control_option(%d, SANE_ACTION_SET_VALUE, %d) -> (%s, %d)", option_index, value, sane_strstatus(status), v);
-	if(result) *result = v;
+	if(result) { *result = v; }
 }
 
-void ScannerSane::setFixedOption(SANE_Handle handle, const SANE_Option_Descriptor *option, SANE_Int option_index, double value, double* result) {
+void ScannerSane::setFixedOption(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index, double value, double* result) {
 	if(option->type != SANE_TYPE_FIXED) {
 		return;
 	}
@@ -604,7 +625,7 @@ void ScannerSane::setFixedOption(SANE_Handle handle, const SANE_Option_Descripto
 
 		/* Find nearest value to requested */
 		for(int i = 0; i < option->constraint.word_list[0]; ++i) {
-			double x = SANE_UNFIX(option->constraint.word_list[i+1]);
+			double x = SANE_UNFIX(option->constraint.word_list[i + 1]);
 			double d = qAbs(x - v);
 			if(d < distance) {
 				distance = d;
@@ -618,25 +639,25 @@ void ScannerSane::setFixedOption(SANE_Handle handle, const SANE_Option_Descripto
 	SANE_Status status = sane_control_option(handle, option_index, SANE_ACTION_SET_VALUE, &v_fixed, nullptr);
 	qDebug("sane_control_option(%d, SANE_ACTION_SET_VALUE, %f) -> (%s, %f)", option_index, value, sane_strstatus(status), SANE_UNFIX(v_fixed));
 
-	if(result) *result = SANE_UNFIX(v_fixed);
+	if(result) { *result = SANE_UNFIX(v_fixed); }
 }
 
-bool ScannerSane::setStringOption(SANE_Handle handle, const SANE_Option_Descriptor *option, SANE_Int option_index, const QString& value, QString* result) {
+bool ScannerSane::setStringOption(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const QString& value, QString* result) {
 	if(option->type != SANE_TYPE_STRING) {
 		return false;
 	}
 
 	char* v = new char[value.size() + 1]; // +1: \0
 	QByteArray val = value.toLocal8Bit();
-	strncpy(v, val.data(), val.size()+1);
+	strncpy(v, val.data(), val.size() + 1);
 	SANE_Status status = sane_control_option(handle, option_index, SANE_ACTION_SET_VALUE, v, nullptr);
 	qDebug("sane_control_option(%d, SANE_ACTION_SET_VALUE, \"%s\") -> (%s, \"%s\")", option_index, val.data(), sane_strstatus(status), v);
-	if(result) *result = v;
+	if(result) { *result = v; }
 	delete[] v;
 	return status == SANE_STATUS_GOOD;
 }
 
-bool ScannerSane::setConstrainedStringOption(SANE_Handle handle, const SANE_Option_Descriptor *option, SANE_Int option_index, const QStringList& values, QString* result) {
+bool ScannerSane::setConstrainedStringOption(SANE_Handle handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const QStringList& values, QString* result) {
 	if(option->type != SANE_TYPE_STRING) {
 		return false;
 	}
@@ -651,18 +672,20 @@ bool ScannerSane::setConstrainedStringOption(SANE_Handle handle, const SANE_Opti
 			}
 		}
 	}
-	if(result) *result = "";
+	if(result) { *result = ""; }
 	return false;
 }
 
-void ScannerSane::logOption(SANE_Int index, const SANE_Option_Descriptor *option) {
+void ScannerSane::logOption(SANE_Int index, const SANE_Option_Descriptor* option) {
 	QString s = QString("Option %1:").arg(index);
 
-	if(option->name && std::strlen(option->name) > 0)
+	if(option->name && std::strlen(option->name) > 0) {
 		s += QString(" name='%1'").arg(option->name);
+	}
 
-	if(option->title && std::strlen(option->title) > 0)
+	if(option->title && std::strlen(option->title) > 0) {
 		s += QString(" title='%1'").arg(option->title);
+	}
 
 	QString typestr[] = {"bool", "int", "fixed", "string", "button", "group"};
 	if(option->type <= SANE_TYPE_GROUP) {
@@ -682,28 +705,32 @@ void ScannerSane::logOption(SANE_Int index, const SANE_Option_Descriptor *option
 
 	switch(option->constraint_type) {
 	case SANE_CONSTRAINT_RANGE:
-		if(option->type == SANE_TYPE_FIXED)
+		if(option->type == SANE_TYPE_FIXED) {
 			s += QString(" min=%1, max=%2, quant=%3").arg(SANE_UNFIX(option->constraint.range->min)).arg(SANE_UNFIX(option->constraint.range->max)).arg(option->constraint.range->quant);
-		else
+		} else {
 			s += QString(" min=%1, max=%2, quant=%3").arg(option->constraint.range->min).arg(option->constraint.range->max).arg(option->constraint.range->quant);
+		}
 		break;
 	case SANE_CONSTRAINT_WORD_LIST:
 		s += " values=[";
 		for(int i = 0; i < option->constraint.word_list[0]; ++i) {
-			if(i > 0)
+			if(i > 0) {
 				s += ", ";
-			if(option->type == SANE_TYPE_INT)
-				s += QString("%1").arg(option->constraint.word_list[i+1]);
-			else
-				s += QString("%1").arg(SANE_UNFIX(option->constraint.word_list[i+1]));
+			}
+			if(option->type == SANE_TYPE_INT) {
+				s += QString("%1").arg(option->constraint.word_list[i + 1]);
+			} else {
+				s += QString("%1").arg(SANE_UNFIX(option->constraint.word_list[i + 1]));
+			}
 		}
 		s += "]";
 		break;
 	case SANE_CONSTRAINT_STRING_LIST:
 		s += " values=[";
 		for(int i = 0; option->constraint.string_list[i] != nullptr; ++i) {
-			if(i > 0)
+			if(i > 0) {
 				s += ", ";
+			}
 			s += QString("\"%1\"").arg(option->constraint.string_list[i]);
 		}
 		s += "]";
@@ -750,8 +777,9 @@ void ScannerSane::logOption(SANE_Int index, const SANE_Option_Descriptor *option
 	}
 
 	qDebug("%s", qPrintable(s));
-	if(option->desc != nullptr)
+	if(option->desc != nullptr) {
 		qDebug("  Description: %s", option->desc);
+	}
 }
 
 QString ScannerSane::getFrameModeString(SANE_Frame frame) {

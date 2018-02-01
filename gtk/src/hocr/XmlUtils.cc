@@ -24,8 +24,9 @@
 #include <libxml++/libxml++.h>
 
 Glib::ustring XmlUtils::elementText(const xmlpp::Element* element) {
-	if(!element)
+	if(!element) {
 		return Glib::ustring();
+	}
 	Glib::ustring text;
 	for(const xmlpp::Node* node : element->get_children()) {
 		if(dynamic_cast<const xmlpp::TextNode*>(node)) {
@@ -38,8 +39,9 @@ Glib::ustring XmlUtils::elementText(const xmlpp::Element* element) {
 }
 
 const xmlpp::Element* XmlUtils::firstChildElement(const xmlpp::Node* node, const Glib::ustring& name) {
-	if(!node)
+	if(!node) {
 		return nullptr;
+	}
 	const xmlpp::Node* child = node->get_first_child(name);
 	while(child && !dynamic_cast<const xmlpp::Element*>(child)) {
 		child = child->get_next_sibling();
@@ -48,8 +50,9 @@ const xmlpp::Element* XmlUtils::firstChildElement(const xmlpp::Node* node, const
 }
 
 const xmlpp::Element* XmlUtils::nextSiblingElement(const xmlpp::Node* node, const Glib::ustring& name) {
-	if(!node)
+	if(!node) {
 		return nullptr;
+	}
 	const xmlpp::Node* child = node->get_next_sibling();
 	if(name != "") {
 		while(child && (child->get_name() != name || !dynamic_cast<const xmlpp::Element*>(child))) {

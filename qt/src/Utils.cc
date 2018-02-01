@@ -67,7 +67,7 @@ QString Utils::makeOutputFilename(const QString& filename) {
 
 class BusyTaskThread : public QThread {
 public:
-	BusyTaskThread(const std::function<bool()> &f) : m_f(f), m_result(false) {}
+	BusyTaskThread(const std::function<bool()>& f) : m_f(f), m_result(false) {}
 	bool getResult() const {
 		return m_result;
 	}
@@ -82,7 +82,7 @@ private:
 
 class BusyEventFilter : public QObject {
 public:
-	bool eventFilter(QObject */*obj*/, QEvent *ev) {
+	bool eventFilter(QObject* /*obj*/, QEvent* ev) {
 		if(dynamic_cast<QMouseEvent*>(ev)) {
 			QMouseEvent* mev = static_cast<QMouseEvent*>(ev);
 			QPoint evp = MAIN->m_progressCancelButton->mapFromGlobal(mev->globalPos());
@@ -92,7 +92,7 @@ public:
 	}
 };
 
-bool Utils::busyTask(const std::function<bool()> &f, const QString& msg) {
+bool Utils::busyTask(const std::function<bool()>& f, const QString& msg) {
 	MAIN->pushState(MainWindow::State::Busy, msg);
 	QEventLoop evLoop;
 	BusyTaskThread thread(f);
@@ -107,13 +107,13 @@ bool Utils::busyTask(const std::function<bool()> &f, const QString& msg) {
 	return thread.getResult();
 }
 
-void Utils::setSpinBlocked(QSpinBox *spin, int value) {
+void Utils::setSpinBlocked(QSpinBox* spin, int value) {
 	spin->blockSignals(true);
 	spin->setValue(value);
 	spin->blockSignals(false);
 }
 
-void Utils::setSpinBlocked(QDoubleSpinBox *spin, double value) {
+void Utils::setSpinBlocked(QDoubleSpinBox* spin, double value) {
 	spin->blockSignals(true);
 	spin->setValue(value);
 	spin->blockSignals(false);

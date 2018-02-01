@@ -43,7 +43,7 @@ public:
 	OutputEditor(QObject* parent = 0);
 
 	virtual QWidget* getUI() = 0;
-	virtual ReadSessionData* initRead(tesseract::TessBaseAPI &tess) = 0;
+	virtual ReadSessionData* initRead(tesseract::TessBaseAPI& tess) = 0;
 	virtual void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) = 0;
 	virtual void readError(const QString& errorMsg, ReadSessionData* data) = 0;
 	virtual void finalizeRead(ReadSessionData* data) {
@@ -56,7 +56,7 @@ public slots:
 	virtual void onVisibilityChanged(bool /*visible*/) {}
 	virtual bool clear(bool hide = true) = 0;
 	virtual bool save(const QString& filename = "") = 0;
-	virtual void setLanguage(const Config::Lang &lang) {}
+	virtual void setLanguage(const Config::Lang& lang) {}
 };
 
 #endif // OUTPUTEDITOR_HH

@@ -25,7 +25,7 @@ public:
 	DjVuDocument();
 	~DjVuDocument();
 
-	bool openFile( const QString & fileName );
+	bool openFile( const QString& fileName );
 	void closeFile();
 	QImage image(int pageno, int resolution);
 	int pageCount() const {
@@ -39,9 +39,9 @@ private:
 		int dpi;
 	};
 
-	ddjvu_context_t *m_djvu_cxt = nullptr;
-	ddjvu_document_t *m_djvu_document = nullptr;
-	ddjvu_format_t *m_format = nullptr;
+	ddjvu_context_t* m_djvu_cxt = nullptr;
+	ddjvu_document_t* m_djvu_document = nullptr;
+	ddjvu_format_t* m_format = nullptr;
 	QVector<Page> m_pages;
 };
 

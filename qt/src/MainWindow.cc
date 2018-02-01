@@ -88,7 +88,7 @@ static void terminateHandler() {
 	if (exptr != 0) {
 		try {
 			std::rethrow_exception(exptr);
-		} catch (std::exception &ex) {
+		} catch (std::exception& ex) {
 			std::cerr << "Terminated due to exception: " << ex.what() << std::endl;
 		} catch (...) {
 			std::cerr << "Terminated due to unknown exception" << std::endl;
@@ -113,8 +113,9 @@ MainWindow::MainWindow(const QStringList& files)
 #endif
 
 	QList<QNetworkProxy> listOfProxies = QNetworkProxyFactory::systemProxyForQuery(QNetworkProxyQuery(QUrl(CHECKURL)));
-	if (listOfProxies.size())
+	if (listOfProxies.size()) {
 		QNetworkProxy::setApplicationProxy(listOfProxies[0]);
+	}
 
 	qRegisterMetaType<MainWindow::State>();
 
@@ -246,8 +247,9 @@ void MainWindow::popState() {
 void MainWindow::setState(State state) {
 	bool isIdle = state == State::Idle;
 	m_idleActions.setEnabled(!isIdle);
-	for(QWidget* widget : m_idleWidgets)
+	for(QWidget* widget : m_idleWidgets) {
 		widget->setEnabled(!isIdle);
+	}
 }
 
 void MainWindow::closeEvent(QCloseEvent* ev) {
@@ -340,9 +342,9 @@ void MainWindow::setOCRMode(int idx) {
 	}
 }
 
-void MainWindow::addNotification(const QString& title, const QString& message, const QList<NotificationAction> &actions, MainWindow::Notification* handle) {
+void MainWindow::addNotification(const QString& title, const QString& message, const QList<NotificationAction>& actions, MainWindow::Notification* handle) {
 	QFrame* frame = new QFrame();
-	frame->setFrameStyle(QFrame::StyledPanel|QFrame::Raised);
+	frame->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 	frame->setStyleSheet("background: #FFD000;");
 	QHBoxLayout* layout = new QHBoxLayout(frame);
 	layout->addWidget(new QLabel(QString("<b>%1</b>").arg(title), frame));
@@ -494,7 +496,7 @@ void MainWindow::dictionaryAutoinstall() {
 		req.setArguments(QList<QVariant>() << QVariant::fromValue((quint32)winId()) << QVariant::fromValue(files) << QVariant::fromValue(QString("always")));
 		QDBusMessage reply = QDBusConnection::sessionBus().call(req, QDBus::BlockWithGui, 3600000);
 		if(reply.type() == QDBusMessage::ErrorMessage) {
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to install spelling dictionary: %1").arg(reply.errorMessage()), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)) {
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to install spelling dictionary: %1").arg(reply.errorMessage()), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 		}
@@ -507,7 +509,7 @@ void MainWindow::dictionaryAutoinstall() {
 		QDir spellingDir(getConfig()->spellingLocation());
 		if(!QDir().mkpath(spellingDir.absolutePath())) {
 			popState();
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to create directory for spelling dictionaries."), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)) {
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to create directory for spelling dictionaries."), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 			return;
@@ -517,7 +519,7 @@ void MainWindow::dictionaryAutoinstall() {
 		QByteArray html = Utils::download(url, messages);
 		if(html.isNull()) {
 			popState();
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2.").arg(url).arg(messages), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)) {
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2.").arg(url).arg(messages), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 			return;
@@ -527,7 +529,7 @@ void MainWindow::dictionaryAutoinstall() {
 			urlcode = code.left(2);
 		} else {
 			popState();
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)) {
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 			return;
@@ -535,7 +537,7 @@ void MainWindow::dictionaryAutoinstall() {
 		html = Utils::download(url + urlcode + "/", messages);
 		if(html.isNull()) {
 			popState();
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2").arg(url + urlcode + "/").arg(messages), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)) {
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2").arg(url + urlcode + "/").arg(messages), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 			return;
@@ -563,7 +565,7 @@ void MainWindow::dictionaryAutoinstall() {
 			QMessageBox::information(this, _("Dictionaries installed"), _("The following dictionary files were installed:%1").arg(downloaded));
 			m_recognizer->updateLanguagesMenu();
 		} else {
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok|QMessageBox::Help, QMessageBox::Ok)) {
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 		}

@@ -45,14 +45,14 @@ public:
 	ReadSessionData* initRead(tesseract::TessBaseAPI& tess) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
-	void finalizeRead(ReadSessionData *data) override;
+	void finalizeRead(ReadSessionData* data) override;
 	bool getModified() const override {
 		return m_modified;
 	}
 	void onVisibilityChanged(bool /*visibile*/);
 
 	bool clear(bool hide = true) override;
-	void setLanguage(const Config::Lang &lang) override;
+	void setLanguage(const Config::Lang& lang) override;
 	void open();
 	bool save(const std::string& filename = "") override;
 	void savePDF();

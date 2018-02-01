@@ -55,12 +55,12 @@ bool ScannerTwain::saveDIB(TW_MEMREF hImg, const QString& filename) {
 		}
 	}
 
-	quint64 imageSize = pDIB->biSizeImage + sizeof(RGBQUAD)*paletteSize + sizeof(BITMAPINFOHEADER);
+	quint64 imageSize = pDIB->biSizeImage + sizeof(RGBQUAD) * paletteSize + sizeof(BITMAPINFOHEADER);
 
 	BITMAPFILEHEADER bmpFIH = {0};
 	bmpFIH.bfType = ( (WORD) ('M' << 8) | 'B');
 	bmpFIH.bfSize = imageSize + sizeof(BITMAPFILEHEADER);
-	bmpFIH.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + (sizeof(RGBQUAD)*paletteSize);
+	bmpFIH.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + (sizeof(RGBQUAD) * paletteSize);
 
 	unsigned char* bmpData = new unsigned char[sizeof(BITMAPFILEHEADER) + imageSize];
 	std::memcpy(bmpData, &bmpFIH, sizeof(BITMAPFILEHEADER));
@@ -173,7 +173,7 @@ void ScannerTwain::redetect() {
 	emit devicesDetected(sources);
 }
 
-void ScannerTwain::scan(const Params &params) {
+void ScannerTwain::scan(const Params& params) {
 	if(params.device.isEmpty()) {
 		failScan(_("No scanner specified"));
 		return;
@@ -229,12 +229,13 @@ void ScannerTwain::scan(const Params &params) {
 	setCapability(ICAP_BITDEPTH, CapOneVal(TWTY_UINT16, params.depth));
 
 	if(params.scan_mode != ScanMode::DEFAULT) {
-		if(params.scan_mode == ScanMode::COLOR)
+		if(params.scan_mode == ScanMode::COLOR) {
 			setCapability(ICAP_PIXELTYPE, CapOneVal(TWTY_UINT16, TWPT_RGB));
-		else if(params.scan_mode == ScanMode::GRAY)
+		} else if(params.scan_mode == ScanMode::GRAY) {
 			setCapability(ICAP_PIXELTYPE, CapOneVal(TWTY_UINT16, TWPT_GRAY));
-		else if(params.scan_mode == ScanMode::LINEART)
+		} else if(params.scan_mode == ScanMode::LINEART) {
 			setCapability(ICAP_PIXELTYPE, CapOneVal(TWTY_UINT16, TWPT_BW));
+		}
 	}
 
 	// TODO: ADF, duplex, paper size
@@ -343,7 +344,7 @@ void ScannerTwain::doStop() {
 	emit scanStateChanged(State::IDLE);
 }
 
-void ScannerTwain::failScan(const QString &errorString) {
+void ScannerTwain::failScan(const QString& errorString) {
 	doStop();
 	emit scanFailed(errorString);
 }

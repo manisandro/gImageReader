@@ -33,9 +33,9 @@ class DisplayerToolSelect : public DisplayerTool {
 public:
 	DisplayerToolSelect(Displayer* displayer, QObject* parent = 0);
 	~DisplayerToolSelect();
-	void mousePressEvent(QMouseEvent *event) override;
-	void mouseMoveEvent(QMouseEvent *event) override;
-	void mouseReleaseEvent(QMouseEvent *event) override;
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
 	void resolutionChanged(double factor) override;
 	void rotationChanged(double delta) override;
 
@@ -81,8 +81,8 @@ private slots:
 
 private:
 	int m_number;
-	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event) override;
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
+	void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 };
 
 #endif // DISPLAYERTOOLSELECT_HH

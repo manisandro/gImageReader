@@ -218,7 +218,7 @@ public:
 			pdfImage.SetImageDataRaw(img.width, img.height, img.sampleSize, &is);
 		}
 		m_painter.DrawImage(m_offsetX + bbox.x, m_pageHeight - m_offsetY - (bbox.y + bbox.height),
-							&pdfImage, bbox.width / double(image->get_width()), bbox.height / double(image->get_height()));
+		                    &pdfImage, bbox.width / double(image->get_width()), bbox.height / double(image->get_height()));
 	}
 	double getAverageCharWidth() const override {
 		return m_painter.GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x'));
@@ -429,7 +429,7 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 	m_connPortrait = CONNECT(ui.buttonPortrait, toggled, [this] { paperOrientationChanged(false); });
 	CONNECT(ui.entryPaperWidth, changed, [this] { paperSizeChanged(); });
 	CONNECT(ui.entryPaperHeight, changed, [this] { paperSizeChanged(); });
-	CONNECT(ui.buttonImportFromSource, clicked, [this]{ importMetadataFromSource(); });
+	CONNECT(ui.buttonImportFromSource, clicked, [this] { importMetadataFromSource(); });
 
 	ADD_SETTING(ComboSetting("pdfexportmode", ui.comboMode));
 	ADD_SETTING(SpinSetting("pdfimagecompressionquality", ui.spinQuality));
@@ -537,7 +537,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 	// Page dimensions are in points: 1 in = 72 pt
 	if(paperSize == "custom") {
 		pageWidth = std::atof(ui.entryPaperWidth->get_text().c_str()) * 72.0;
-		pageHeight = std::atof(ui.entryPaperHeight->get_text().c_str())* 72.0;
+		pageHeight = std::atof(ui.entryPaperHeight->get_text().c_str()) * 72.0;
 
 		PaperSize::Unit unit = static_cast<PaperSize::Unit>(static_cast<int>((*ui.comboPaperSizeUnit->get_active())[m_sizeUnitComboCols.unit]));
 		if(unit == PaperSize::cm) {
@@ -613,8 +613,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 }
 
 
-HOCRPdfExporter::PDFPainter* HOCRPdfExporter::createPoDoFoPrinter(const std::string& filename, const Glib::ustring& defaultFont, double defaultFontSize, Glib::ustring& errMsg)
-{
+HOCRPdfExporter::PDFPainter* HOCRPdfExporter::createPoDoFoPrinter(const std::string& filename, const Glib::ustring& defaultFont, double defaultFontSize, Glib::ustring& errMsg) {
 	PoDoFo::PdfStreamedDocument* document = nullptr;
 	PoDoFo::PdfFont* defaultPdfFont = nullptr;
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
@@ -625,15 +624,15 @@ HOCRPdfExporter::PDFPainter* HOCRPdfExporter::createPoDoFoPrinter(const std::str
 
 	try {
 		PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(ui.entryEncryptionPassword->get_text(), ui.entryEncryptionConfirm->get_text(),
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
-									  PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
+		                              PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
 
 		PoDoFo::EPdfVersion pdfVersion = static_cast<PoDoFo::EPdfVersion>(static_cast<int>((*ui.comboPdfVersion->get_active())[m_pdfVersionComboCols.version]));
 		document = new PoDoFo::PdfStreamedDocument(filename.c_str(), pdfVersion, encrypt);

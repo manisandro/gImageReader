@@ -174,13 +174,13 @@ public:
 	void update();
 
 	virtual void draw(Cairo::RefPtr<Cairo::Context> ctx) const = 0;
-	virtual bool mousePressEvent(GdkEventButton */*event*/) {
+	virtual bool mousePressEvent(GdkEventButton* /*event*/) {
 		return false;
 	}
-	virtual bool mouseMoveEvent(GdkEventMotion */*event*/) {
+	virtual bool mouseMoveEvent(GdkEventMotion* /*event*/) {
 		return false;
 	}
-	virtual bool mouseReleaseEvent(GdkEventButton */*event*/) {
+	virtual bool mouseReleaseEvent(GdkEventButton* /*event*/) {
 		return false;
 	}
 
@@ -229,7 +229,7 @@ public:
 	void setMinimumRect(const Geometry::Rectangle& rect) {
 		m_minRect = rect;
 	}
-	void rotate(const Geometry::Rotation &R) {
+	void rotate(const Geometry::Rotation& R) {
 		m_anchor = R.rotate(m_anchor);
 		m_point = R.rotate(m_point);
 		setRect(Geometry::Rectangle(m_anchor, m_point));
@@ -243,9 +243,9 @@ public:
 	}
 
 	void draw(Cairo::RefPtr<Cairo::Context> ctx) const override;
-	bool mousePressEvent(GdkEventButton *event) override;
-	bool mouseReleaseEvent(GdkEventButton *event) override;
-	bool mouseMoveEvent(GdkEventMotion *event) override;
+	bool mousePressEvent(GdkEventButton* event) override;
+	bool mouseReleaseEvent(GdkEventButton* event) override;
+	bool mouseMoveEvent(GdkEventMotion* event) override;
 
 protected:
 	DisplayerTool* m_tool;
@@ -281,13 +281,13 @@ class DisplayerTool {
 public:
 	DisplayerTool(Displayer* displayer) : m_displayer(displayer) {}
 	virtual ~DisplayerTool() {}
-	virtual bool mousePressEvent(GdkEventButton */*event*/) {
+	virtual bool mousePressEvent(GdkEventButton* /*event*/) {
 		return false;
 	}
-	virtual bool mouseMoveEvent(GdkEventMotion */*event*/) {
+	virtual bool mouseMoveEvent(GdkEventMotion* /*event*/) {
 		return false;
 	}
-	virtual bool mouseReleaseEvent(GdkEventButton */*event*/) {
+	virtual bool mouseReleaseEvent(GdkEventButton* /*event*/) {
 		return false;
 	}
 	virtual void pageChanged() {}

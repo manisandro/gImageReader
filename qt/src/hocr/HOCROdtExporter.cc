@@ -43,7 +43,7 @@ static QString drawNS ("urn:oasis:names:tc:opendocument:xmlns:drawing:1.0");
 static QString xlinkNS ("http://www.w3.org/1999/xlink");
 static QString svgNS ("urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0");
 
-bool HOCROdtExporter::run(const HOCRDocument *hocrdocument, QString &filebasename) {
+bool HOCROdtExporter::run(const HOCRDocument* hocrdocument, QString& filebasename) {
 	QString suggestion = filebasename;
 	if(suggestion.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
@@ -213,7 +213,7 @@ bool HOCROdtExporter::run(const HOCRDocument *hocrdocument, QString &filebasenam
 
 		// -- Text styles
 		int counter = 0;
-		QMap<QString,QMap<double,QString>> fontStyles;
+		QMap<QString, QMap<double, QString>> fontStyles;
 		for(int i = 0; i < pageCount; ++i) {
 			const HOCRPage* page = hocrdocument->page(i);
 			if(page->isEnabled()) {
@@ -264,7 +264,7 @@ bool HOCROdtExporter::run(const HOCRDocument *hocrdocument, QString &filebasenam
 	return true;
 }
 
-void HOCROdtExporter::writeImage(QuaZip& zip, QMap<const HOCRItem*,QString>& images, const HOCRItem* item) {
+void HOCROdtExporter::writeImage(QuaZip& zip, QMap<const HOCRItem*, QString>& images, const HOCRItem* item) {
 	if(!item->isEnabled()) {
 		return;
 	}
@@ -301,7 +301,7 @@ void HOCROdtExporter::writeFontFaceDecls(QSet<QString>& families, const HOCRItem
 	}
 }
 
-void HOCROdtExporter::writeFontStyles(QMap<QString,QMap<double,QString>>& styles, const HOCRItem* item, QXmlStreamWriter& writer, int& counter) {
+void HOCROdtExporter::writeFontStyles(QMap<QString, QMap<double, QString>>& styles, const HOCRItem* item, QXmlStreamWriter& writer, int& counter) {
 	if(!item->isEnabled()) {
 		return;
 	}
@@ -333,7 +333,7 @@ void HOCROdtExporter::writeFontStyles(QMap<QString,QMap<double,QString>>& styles
 	}
 }
 
-void HOCROdtExporter::printItem(QXmlStreamWriter& writer, const HOCRItem* item, int pageNr, int dpi, const QMap<QString,QMap<double,QString>>& fontStyleNames, const QMap<const HOCRItem*,QString>& images) {
+void HOCROdtExporter::printItem(QXmlStreamWriter& writer, const HOCRItem* item, int pageNr, int dpi, const QMap<QString, QMap<double, QString>>& fontStyleNames, const QMap<const HOCRItem*, QString>& images) {
 	if(!item->isEnabled()) {
 		return;
 	}

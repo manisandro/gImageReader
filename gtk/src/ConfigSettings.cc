@@ -21,7 +21,7 @@
 #include "Utils.hh"
 
 
-std::map<Glib::ustring,AbstractSetting*> ConfigSettings::s_settings;
+std::map<Glib::ustring, AbstractSetting*> ConfigSettings::s_settings;
 
 void ConfigSettings::add(AbstractSetting* setting) {
 	s_settings.insert(std::make_pair(setting->key(), setting));
@@ -40,7 +40,7 @@ Glib::RefPtr<Gio::Settings> AbstractSetting::get_default_settings() {
 	return settings;
 }
 
-ListStoreSetting::ListStoreSetting(const Glib::ustring &key, Glib::RefPtr<Gtk::ListStore> liststore)
+ListStoreSetting::ListStoreSetting(const Glib::ustring& key, Glib::RefPtr<Gtk::ListStore> liststore)
 	: AbstractSetting(key), m_liststore(liststore) {
 	Glib::ustring str = get_default_settings()->get_string(m_key);
 	m_liststore->clear();

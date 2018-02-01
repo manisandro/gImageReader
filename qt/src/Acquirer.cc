@@ -102,7 +102,7 @@ void Acquirer::scanInitFailed() {
 	ui.toolButtonScanDevicesRefresh->setEnabled(false);
 }
 
-void Acquirer::scanFailed(const QString &msg) {
+void Acquirer::scanFailed(const QString& msg) {
 	ui.labelScanMessage->setText(QString("<span style=\"color:#FF0000;\">%1: %2.</span>").arg(_("Scan failed")).arg(msg));
 }
 

@@ -345,7 +345,7 @@ void SourceManager::fileChanged(const QString& filename) {
 	}
 }
 
-bool SourceManager::eventFilter(QObject *object, QEvent *event) {
+bool SourceManager::eventFilter(QObject* object, QEvent* event) {
 	if(event->type() == QEvent::DragEnter) {
 		QDragEnterEvent* dragEnterEvent = static_cast<QDragEnterEvent*>(event);
 		if(Utils::handleSourceDragEvent(dragEnterEvent->mimeData())) {

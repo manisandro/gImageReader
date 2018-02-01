@@ -36,7 +36,7 @@ public:
 	QWidget* getUI() override {
 		return m_widget;
 	}
-	ReadSessionData* initRead(tesseract::TessBaseAPI &/*tess*/) override {
+	ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
 		return new TextReadSessionData;
 	}
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
@@ -47,7 +47,7 @@ public slots:
 	void onVisibilityChanged(bool visible) override;
 	bool clear(bool hide = true) override;
 	bool save(const QString& filename = "") override;
-	void setLanguage(const Config::Lang &lang) override;
+	void setLanguage(const Config::Lang& lang) override;
 
 private:
 	struct TextReadSessionData : ReadSessionData {

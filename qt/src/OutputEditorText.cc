@@ -60,9 +60,9 @@ OutputEditorText::OutputEditorText() {
 	connect(ui.actionOutputRedo, SIGNAL(triggered()), &m_spell, SLOT(redo()));
 	connect(ui.actionOutputSave, SIGNAL(triggered()), this, SLOT(save()));
 	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
-	connect(ui.searchFrame, SIGNAL(findReplace(QString,QString,bool,bool,bool)), this, SLOT(findReplace(QString,QString,bool,bool,bool)));
-	connect(ui.searchFrame, SIGNAL(replaceAll(QString,QString,bool)), this, SLOT(replaceAll(QString,QString,bool)));
-	connect(ui.searchFrame, SIGNAL(applySubstitutions(QMap<QString,QString>,bool)), this, SLOT(applySubstitutions(QMap<QString,QString>,bool)));
+	connect(ui.searchFrame, SIGNAL(findReplace(QString, QString, bool, bool, bool)), this, SLOT(findReplace(QString, QString, bool, bool, bool)));
+	connect(ui.searchFrame, SIGNAL(replaceAll(QString, QString, bool)), this, SLOT(replaceAll(QString, QString, bool)));
+	connect(ui.searchFrame, SIGNAL(applySubstitutions(QMap<QString, QString>, bool)), this, SLOT(applySubstitutions(QMap<QString, QString>, bool)));
 	connect(&m_spell, SIGNAL(undoAvailable(bool)), ui.actionOutputUndo, SLOT(setEnabled(bool)));
 	connect(&m_spell, SIGNAL(redoAvailable(bool)), ui.actionOutputRedo, SLOT(setEnabled(bool)));
 	connect(ConfigSettings::get<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
@@ -100,7 +100,7 @@ void OutputEditorText::filterBuffer() {
 	QTextCursor cursor = ui.plainTextEditOutput->regionBounds();
 	QString txt = cursor.selectedText();
 
-	Utils::busyTask([this,&txt] {
+	Utils::busyTask([this, &txt] {
 		// Always remove trailing whitespace
 		txt.replace(QRegExp("\\s+$"), "");
 
@@ -141,14 +141,14 @@ void OutputEditorText::filterBuffer() {
 	ui.plainTextEditOutput->setTextCursor(cursor);
 }
 
-void OutputEditorText::findReplace(const QString &searchstr, const QString &replacestr, bool matchCase, bool backwards, bool replace) {
+void OutputEditorText::findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace) {
 	ui.searchFrame->clearErrorState();
 	if(!ui.plainTextEditOutput->findReplace(backwards, replace, matchCase, searchstr, replacestr)) {
 		ui.searchFrame->setErrorState();
 	}
 }
 
-void OutputEditorText::replaceAll(const QString &searchstr, const QString &replacestr, bool matchCase) {
+void OutputEditorText::replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
 	if(!ui.plainTextEditOutput->replaceAll(searchstr, replacestr, matchCase)) {
 		ui.searchFrame->setErrorState();
@@ -156,7 +156,7 @@ void OutputEditorText::replaceAll(const QString &searchstr, const QString &repla
 	MAIN->popState();
 }
 
-void OutputEditorText::applySubstitutions(const QMap<QString, QString> &substitutions, bool matchCase) {
+void OutputEditorText::applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
 	QTextCursor cursor = ui.plainTextEditOutput->regionBounds();
 	int end = cursor.position();
@@ -184,11 +184,12 @@ void OutputEditorText::applySubstitutions(const QMap<QString, QString> &substitu
 	MAIN->popState();
 }
 
-void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data) {
+void OutputEditorText::read(tesseract::TessBaseAPI& tess, ReadSessionData* data) {
 	char* textbuf = tess.GetUTF8Text();
 	QString text = QString::fromUtf8(textbuf);
-	if(!text.endsWith('\n'))
+	if(!text.endsWith('\n')) {
 		text.append('\n');
+	}
 	if(data->prependFile || data->prependPage) {
 		QStringList prepend;
 		if(data->prependFile) {
@@ -205,7 +206,7 @@ void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data)
 	insertText = true;
 }
 
-void OutputEditorText::readError(const QString &errorMsg, ReadSessionData *data) {
+void OutputEditorText::readError(const QString& errorMsg, ReadSessionData* data) {
 	bool& insertText = static_cast<TextReadSessionData*>(data)->insertText;
 	QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, errorMsg), Q_ARG(bool, insertText));
 	insertText = true;
@@ -267,8 +268,9 @@ bool OutputEditorText::clear(bool hide) {
 	ui.plainTextEditOutput->clear();
 	m_spell.clearUndoRedo();
 	ui.plainTextEditOutput->document()->setModified(false);
-	if(hide)
+	if(hide) {
 		MAIN->setOutputPaneVisible(false);
+	}
 	return true;
 }
 

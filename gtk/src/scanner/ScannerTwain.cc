@@ -54,12 +54,12 @@ bool ScannerTwain::saveDIB(TW_MEMREF hImg, const std::string& filename) {
 		}
 	}
 
-	std::uint64_t imageSize = pDIB->biSizeImage + sizeof(RGBQUAD)*paletteSize + sizeof(BITMAPINFOHEADER);
+	std::uint64_t imageSize = pDIB->biSizeImage + sizeof(RGBQUAD) * paletteSize + sizeof(BITMAPINFOHEADER);
 
 	BITMAPFILEHEADER bmpFIH = {0};
 	bmpFIH.bfType = ( (WORD) ('M' << 8) | 'B');
 	bmpFIH.bfSize = imageSize + sizeof(BITMAPFILEHEADER);
-	bmpFIH.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + (sizeof(RGBQUAD)*paletteSize);
+	bmpFIH.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + (sizeof(RGBQUAD) * paletteSize);
 
 	unsigned char* bmpData = new unsigned char[sizeof(BITMAPFILEHEADER) + imageSize];
 	std::memcpy(bmpData, &bmpFIH, sizeof(BITMAPFILEHEADER));
@@ -181,7 +181,7 @@ void ScannerTwain::redetect() {
 	m_signal_devicesDetected.emit(sources);
 }
 
-void ScannerTwain::scan(const Params &params) {
+void ScannerTwain::scan(const Params& params) {
 	if(params.device.empty()) {
 		failScan(_("No scanner specified"));
 		return;
@@ -237,12 +237,13 @@ void ScannerTwain::scan(const Params &params) {
 	setCapability(ICAP_BITDEPTH, CapOneVal(TWTY_UINT16, params.depth));
 
 	if(params.scan_mode != ScanMode::DEFAULT) {
-		if(params.scan_mode == ScanMode::COLOR)
+		if(params.scan_mode == ScanMode::COLOR) {
 			setCapability(ICAP_PIXELTYPE, CapOneVal(TWTY_UINT16, TWPT_RGB));
-		else if(params.scan_mode == ScanMode::GRAY)
+		} else if(params.scan_mode == ScanMode::GRAY) {
 			setCapability(ICAP_PIXELTYPE, CapOneVal(TWTY_UINT16, TWPT_GRAY));
-		else if(params.scan_mode == ScanMode::LINEART)
+		} else if(params.scan_mode == ScanMode::LINEART) {
 			setCapability(ICAP_PIXELTYPE, CapOneVal(TWTY_UINT16, TWPT_BW));
+		}
 	}
 
 	// TODO: ADF, duplex, paper size
@@ -366,7 +367,7 @@ void ScannerTwain::close() {
 }
 
 #ifdef G_OS_WIN32
-GdkFilterReturn ScannerTwain::eventFilter(GdkXEvent *xevent, GdkEvent *event, gpointer data) {
+GdkFilterReturn ScannerTwain::eventFilter(GdkXEvent* xevent, GdkEvent* event, gpointer data) {
 	LPMSG msg = static_cast<LPMSG>(xevent);
 
 	if(msg->message == WM_CLOSE) {

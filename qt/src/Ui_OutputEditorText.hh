@@ -40,7 +40,7 @@ public:
 	QToolButton* toolButtonOutputMode;
 	QToolButton* toolButtonOutputPostproc;
 
-	OutputTextEdit *plainTextEditOutput;
+	OutputTextEdit* plainTextEditOutput;
 	SearchReplaceFrame* searchFrame;
 
 	void setupUi(QWidget* widget) {

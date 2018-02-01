@@ -94,7 +94,7 @@ static void terminateHandler() {
 	if (exptr != 0) {
 		try {
 			std::rethrow_exception(exptr);
-		} catch (std::exception &ex) {
+		} catch (std::exception& ex) {
 			std::cerr << "Terminated due to exception: " << ex.what() << std::endl;
 		} catch (...) {
 			std::cerr << "Terminated due to unknown exception" << std::endl;
@@ -142,17 +142,17 @@ MainWindow::MainWindow() {
 	m_idlegroup.push_back(ui.buttonAutolayout);
 	m_idlegroup.push_back(ui.menubuttonLanguages);
 
-	CONNECT(ui.windowMain, delete_event, [this](GdkEventAny* ev) {
+	CONNECT(ui.windowMain, delete_event, [this](GdkEventAny * ev) {
 		return closeEvent(ev);
 	});
 	CONNECT(ui.buttonControls, toggled, [this] { ui.toolbarDisplay->set_visible(ui.buttonControls->get_active()); });
-	CONNECT(m_acquirer, scanPageAvailable, [this](const std::string& filename) {
+	CONNECT(m_acquirer, scanPageAvailable, [this](const std::string & filename) {
 		m_sourceManager->addSources({Gio::File::create_for_path(filename)});
 	});
 	CONNECT(m_sourceManager, sourceChanged, [this] { onSourceChanged(); });
 	CONNECT(ui.buttonOutputpane, toggled, [this] { if(m_outputEditor) m_outputEditor->getUI()->set_visible(ui.buttonOutputpane->get_active()); });
 	m_connection_setOCRMode = CONNECT(ui.comboOcrmode, changed, [this] { setOCRMode(ui.comboOcrmode->get_active_row_number()); });
-	CONNECT(m_recognizer, languageChanged, [this] (const Config::Lang& lang) {
+	CONNECT(m_recognizer, languageChanged, [this] (const Config::Lang & lang) {
 		languageChanged(lang);
 	});
 	CONNECT(ConfigSettings::get<ComboSetting>("outputorient"), changed, [this] {
@@ -199,7 +199,7 @@ MainWindow::~MainWindow() {
 	s_instance = nullptr;
 }
 
-void MainWindow::setMenuModel(const Glib::RefPtr<Gio::MenuModel> &menuModel) {
+void MainWindow::setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel) {
 	ui.menubuttonOptions->set_menu_model(menuModel);
 	ui.menubuttonOptions->set_visible(true);
 }
@@ -212,7 +212,7 @@ void MainWindow::setOutputPaneVisible(bool visible) {
 	ui.buttonOutputpane->set_active(visible);
 }
 
-void MainWindow::pushState(State state, const Glib::ustring &msg) {
+void MainWindow::pushState(State state, const Glib::ustring& msg) {
 	m_stateStack.push_back(state);
 	ui.statusbar->push(msg);
 	setState(state);
@@ -311,7 +311,7 @@ void MainWindow::showHelp(const std::string& chapter) {
 #endif
 	std::string manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir, Glib::ustring::compose("manual-%1.html", language)), Glib::get_current_dir());
 	if(!Glib::file_test(manualFile, Glib::FILE_TEST_EXISTS)) {
-		manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir,"manual.html"), Glib::get_current_dir());
+		manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir, "manual.html"), Glib::get_current_dir());
 	}
 	Utils::openUri(Glib::filename_to_uri(manualFile) + chapter);
 }
@@ -359,7 +359,7 @@ void MainWindow::manageLanguages() {
 	TessdataManager::exec();
 }
 
-void MainWindow::addNotification(const Glib::ustring &title, const Glib::ustring &message, const std::vector<NotificationAction> &actions, Notification* handle) {
+void MainWindow::addNotification(const Glib::ustring& title, const Glib::ustring& message, const std::vector<NotificationAction>& actions, Notification* handle) {
 	Gtk::Frame* frame = Gtk::manage(new Gtk::Frame);
 	frame->set_data(notificationHandleKey, handle);
 	frame->set_shadow_type(Gtk::SHADOW_OUT);
@@ -372,15 +372,15 @@ void MainWindow::addNotification(const Glib::ustring &title, const Glib::ustring
 	box->pack_start(*Gtk::manage(new Gtk::Label(message, Gtk::ALIGN_START)), true, true);
 	Gtk::Button* closebtn = Gtk::manage(new Gtk::Button());
 	closebtn->set_image_from_icon_name("window-close", Gtk::ICON_SIZE_MENU);
-	CONNECT(closebtn, clicked, [this,frame] { hideNotification(frame); });
+	CONNECT(closebtn, clicked, [this, frame] { hideNotification(frame); });
 	box->pack_end(*closebtn, false, true);
 	for(const NotificationAction& action : actions) {
 		Gtk::Button* btn = Gtk::manage(new Gtk::Button(action.label));
 		btn->set_relief(Gtk::RELIEF_NONE);
-		CONNECT(btn, clicked, [this,frame,action] { if(action.action()) {
+		CONNECT(btn, clicked, [this, frame, action] { if(action.action()) {
 		hideNotification(frame);
 		}
-		                                          });
+		                                            });
 		box->pack_start(*btn, false, true);
 		btn->get_child()->override_color(Gdk::RGBA("#0000FF"), Gtk::STATE_FLAG_NORMAL);
 	}
@@ -417,7 +417,7 @@ void MainWindow::getNewestVersion() {
 	g_debug("Newest version is: %s", newver.c_str());
 	newver.erase(std::remove_if(newver.begin(), newver.end(), ::isspace), newver.end());
 	if(Glib::Regex::create(R"(^[\d+\.]+\d+$)")->match(newver, 0, Glib::RegexMatchFlags(0))) {
-		Glib::signal_idle().connect_once([this,newver] { checkVersion(newver); });
+		Glib::signal_idle().connect_once([this, newver] { checkVersion(newver); });
 	}
 }
 
@@ -428,8 +428,8 @@ void MainWindow::checkVersion(const Glib::ustring& newver) {
 
 	if(newver.compare(curver) > 0) {
 		addNotification(_("New version"), Glib::ustring::compose(_("gImageReader %1 is available"), newver), {
-			{_("Download"), [=]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(ui.windowMain)->gobj(), DOWNLOADURL, GDK_CURRENT_TIME, 0); return false; }},
-			{_("Changelog"), [=]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(ui.windowMain)->gobj(), CHANGELOGURL, GDK_CURRENT_TIME, 0); return false; }},
+			{_("Download"), [ = ]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(ui.windowMain)->gobj(), DOWNLOADURL, GDK_CURRENT_TIME, 0); return false; }},
+			{_("Changelog"), [ = ]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(ui.windowMain)->gobj(), CHANGELOGURL, GDK_CURRENT_TIME, 0); return false; }},
 			{_("Don't notify again"), [this]{ ConfigSettings::get<SwitchSetting>("updatecheck")->setValue(false); return true; }}
 		});
 	}
@@ -452,7 +452,7 @@ void MainWindow::languageChanged(const Config::Lang& lang) {
 	} catch(const GtkSpell::Error& /*e*/) {
 		if(ConfigSettings::get<SwitchSetting>("dictinstall")->getValue()) {
 			NotificationAction actionDontShowAgain = {_("Don't show again"), [this]{ ConfigSettings::get<SwitchSetting>("dictinstall")->setValue(false); return true; }};
-			NotificationAction actionInstall = NotificationAction{_("Install"), [this,lang]{ dictionaryAutoinstall(lang.code); return false; }};
+			NotificationAction actionInstall = NotificationAction{_("Install"), [this, lang]{ dictionaryAutoinstall(lang.code); return false; }};
 #ifdef G_OS_UNIX
 			if(getConfig()->useSystemDataLocations()) {
 				// Try initiating a DBUS connection for PackageKit
@@ -465,7 +465,7 @@ void MainWindow::languageChanged(const Config::Lang& lang) {
 				} catch(...) {
 				}
 				if(!service_owner.empty()) {
-					actionInstall = MainWindow::NotificationAction{_("Install"), [this,proxy,lang]{ dictionaryAutoinstall(proxy, lang.code); return false; }};
+					actionInstall = MainWindow::NotificationAction{_("Install"), [this, proxy, lang]{ dictionaryAutoinstall(proxy, lang.code); return false; }};
 				} else {
 					actionInstall = {_("Help"), [this]{ showHelp("#InstallSpelling"); return false; }};
 					g_warning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
@@ -478,7 +478,7 @@ void MainWindow::languageChanged(const Config::Lang& lang) {
 }
 
 #ifdef G_OS_UNIX
-void MainWindow::dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring &code) {
+void MainWindow::dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, const Glib::ustring& code) {
 	pushState(State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), code));
 	std::uint32_t xid = gdk_x11_window_get_xid(getWindow()->get_window()->gobj());
 	std::vector<Glib::ustring> files;
@@ -490,7 +490,7 @@ void MainWindow::dictionaryAutoinstall(Glib::RefPtr<Gio::DBus::Proxy> proxy, con
 	                                          Glib::Variant<std::vector<Glib::ustring>>::create(files),
 	                                          Glib::Variant<Glib::ustring>::create("always")
 	                                        };
-	proxy->call("InstallProvideFiles", [proxy,this](Glib::RefPtr<Gio::AsyncResult> r) {
+	proxy->call("InstallProvideFiles", [proxy, this](Glib::RefPtr<Gio::AsyncResult> r) {
 		dictionaryAutoinstallDone(proxy, r);
 	},
 	Glib::VariantContainerBase::create_tuple(params), 3600000);
@@ -512,7 +512,7 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
 	code = codes.empty() ? code : codes.front();
 
 	pushState(State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), code));
-	Glib::ustring url= "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
+	Glib::ustring url = "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
 	Glib::ustring plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
 	Glib::ustring urlcode = code;
 	std::string dictPath = getConfig()->spellingLocation();

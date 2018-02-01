@@ -27,7 +27,7 @@ class CrashHandler : public QDialog {
 	Q_OBJECT
 
 public:
-	explicit CrashHandler(int pid, const QString& savefile, QWidget *parent = 0);
+	explicit CrashHandler(int pid, const QString& savefile, QWidget* parent = 0);
 
 private:
 	Ui::CrashHandler ui;
@@ -35,7 +35,7 @@ private:
 	QProcess m_gdbProcess;
 	QPushButton* m_refreshButton = nullptr;
 
-	void closeEvent(QCloseEvent *) override;
+	void closeEvent(QCloseEvent*) override;
 
 private slots:
 	void appendGdbOutput();

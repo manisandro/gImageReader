@@ -52,7 +52,7 @@ public:
 	virtual void onVisibilityChanged(bool /*visible*/) {}
 	virtual bool clear(bool hide = true) = 0;
 	virtual bool save(const std::string& filename = "") = 0;
-	virtual void setLanguage(const Config::Lang &/*lang*/) {}
+	virtual void setLanguage(const Config::Lang& /*lang*/) {}
 };
 
 #endif // OUTPUTEDITOR_HH

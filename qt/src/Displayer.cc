@@ -38,13 +38,13 @@ public:
 	using QGraphicsScene::QGraphicsScene;
 
 protected:
-	void dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
+	void dragEnterEvent(QGraphicsSceneDragDropEvent* event) {
 		if(Utils::handleSourceDragEvent(event->mimeData())) {
 			event->acceptProposedAction();
 		}
 	}
-	void dragMoveEvent(QGraphicsSceneDragDropEvent *event) {}
-	void dropEvent(QGraphicsSceneDragDropEvent *event) {
+	void dragMoveEvent(QGraphicsSceneDragDropEvent* event) {}
+	void dropEvent(QGraphicsSceneDragDropEvent* event) {
 		Utils::handleSourceDropEvent(event->mimeData());
 	}
 };
@@ -227,13 +227,13 @@ bool Displayer::renderImage() {
 		delete m_renderer;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
 			m_renderer = new PDFRenderer(source->path, source->password);
-			if(source->resolution == -1) source->resolution = 300;
+			if(source->resolution == -1) { source->resolution = 300; }
 		} else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
 			m_renderer = new DJVURenderer(source->path);
-			if(source->resolution == -1) source->resolution = 300;
+			if(source->resolution == -1) { source->resolution = 300; }
 		} else {
 			m_renderer = new ImageRenderer(source->path);
-			if(source->resolution == -1) source->resolution = 100;
+			if(source->resolution == -1) { source->resolution = 100; }
 		}
 
 		Utils::setSpinBlocked(ui.spinBoxResolution, source->resolution);
@@ -401,14 +401,14 @@ void Displayer::rotate90() {
 	setAngle(ui.spinBoxRotation->value() + qobject_cast<QAction*>(QObject::sender())->data().toDouble());
 }
 
-void Displayer::resizeEvent(QResizeEvent *event) {
+void Displayer::resizeEvent(QResizeEvent* event) {
 	QGraphicsView::resizeEvent(event);
 	if(ui.actionBestFit->isChecked()) {
 		setZoom(Zoom::Fit);
 	}
 }
 
-void Displayer::keyPressEvent(QKeyEvent *event) {
+void Displayer::keyPressEvent(QKeyEvent* event) {
 	if(event->key() == Qt::Key_PageUp) {
 		ui.spinBoxPage->setValue(ui.spinBoxPage->value() - 1);
 		event->accept();
@@ -420,7 +420,7 @@ void Displayer::keyPressEvent(QKeyEvent *event) {
 	}
 }
 
-void Displayer::mousePressEvent(QMouseEvent *event) {
+void Displayer::mousePressEvent(QMouseEvent* event) {
 	if(event->button() == Qt::MiddleButton) {
 		m_panPos = event->pos();
 	} else {
@@ -432,7 +432,7 @@ void Displayer::mousePressEvent(QMouseEvent *event) {
 	}
 }
 
-void Displayer::mouseMoveEvent(QMouseEvent *event) {
+void Displayer::mouseMoveEvent(QMouseEvent* event) {
 	if((event->buttons() & Qt::MiddleButton) == Qt::MiddleButton) {
 		QPoint delta = event->pos() - m_panPos;
 		horizontalScrollBar()->setValue( horizontalScrollBar()->value() - delta.x() );
@@ -447,7 +447,7 @@ void Displayer::mouseMoveEvent(QMouseEvent *event) {
 	}
 }
 
-void Displayer::mouseReleaseEvent(QMouseEvent *event) {
+void Displayer::mouseReleaseEvent(QMouseEvent* event) {
 	event->ignore();
 	QGraphicsView::mouseReleaseEvent(event);
 	if(!event->isAccepted() && m_tool && m_currentSource) {
@@ -455,7 +455,7 @@ void Displayer::mouseReleaseEvent(QMouseEvent *event) {
 	}
 }
 
-void Displayer::wheelEvent(QWheelEvent *event) {
+void Displayer::wheelEvent(QWheelEvent* event) {
 	if(event->modifiers() & Qt::ControlModifier) {
 		setZoom(event->delta() > 0 ? Zoom::In : Zoom::Out, QGraphicsView::AnchorUnderMouse);
 		event->accept();
@@ -472,7 +472,7 @@ void Displayer::wheelEvent(QWheelEvent *event) {
 	}
 }
 
-QPointF Displayer::mapToSceneClamped(const QPoint &p) const {
+QPointF Displayer::mapToSceneClamped(const QPoint& p) const {
 	QPointF q = mapToScene(p);
 	QRectF bb = m_imageItem->sceneBoundingRect();
 	q.rx() = std::min(std::max(bb.x(), q.x()), bb.x() + bb.width());
@@ -480,7 +480,7 @@ QPointF Displayer::mapToSceneClamped(const QPoint &p) const {
 	return q;
 }
 
-void Displayer::setRotateMode(QAction *action) {
+void Displayer::setRotateMode(QAction* action) {
 	m_rotateMode = static_cast<RotateMode>(action->data().value<int>());
 	ui.toolButtonRotation->setIcon(action->icon());
 }
@@ -562,7 +562,7 @@ void Displayer::scaleThread() {
 	m_scaleMutex.unlock();
 }
 
-void Displayer::setScaledImage(const QImage &image, double scale) {
+void Displayer::setScaledImage(const QImage& image, double scale) {
 	m_scaleMutex.lock();
 	if(!m_scaleRequests.isEmpty() && m_scaleRequests.first().type == ScaleRequest::Abort) {
 		m_scaleRequests.removeFirst();
@@ -577,7 +577,7 @@ void Displayer::setScaledImage(const QImage &image, double scale) {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void DisplayerSelection::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void DisplayerSelection::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
 	QColor c = QPalette().highlight().color();
 	setBrush(QColor(c.red(), c.green(), c.blue(), 63));
 	QPen pen;
@@ -590,7 +590,7 @@ void DisplayerSelection::paint(QPainter *painter, const QStyleOptionGraphicsItem
 	painter->setRenderHint(QPainter::Antialiasing, true);
 }
 
-void DisplayerSelection::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
+void DisplayerSelection::hoverMoveEvent(QGraphicsSceneHoverEvent* event) {
 	QPointF p = event->pos();
 	QRectF r = rect();
 	double tol = 10.0 / m_tool->getDisplayer()->getCurrentScale();
@@ -613,7 +613,7 @@ void DisplayerSelection::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
 	}
 }
 
-void DisplayerSelection::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+void DisplayerSelection::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 	QPointF p = event->pos();
 	double tol = 10.0 / m_tool->getDisplayer()->getCurrentScale();
 	m_resizeHandlers.clear();
@@ -639,7 +639,7 @@ void DisplayerSelection::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	}
 }
 
-void DisplayerSelection::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+void DisplayerSelection::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 	QPointF p = event->pos() - m_resizeOffset;
 	QRectF bb = m_tool->getDisplayer()->getSceneBoundingRect();
 	p.rx() = std::min(std::max(bb.x(), p.x()), bb.x() + bb.width());

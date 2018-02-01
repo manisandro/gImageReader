@@ -27,7 +27,7 @@
 
 #include <fstream>
 
-bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string &filebasename) {
+bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string& filebasename) {
 	std::string suggestion = filebasename;
 	if(suggestion.empty()) {
 		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();

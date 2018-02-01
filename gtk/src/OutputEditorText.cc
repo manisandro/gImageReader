@@ -44,7 +44,7 @@ OutputEditorText::OutputEditorText() {
 
 	Glib::RefPtr<Gtk::AccelGroup> group = MAIN->getWindow()->get_accel_group();
 	ui.buttonUndo->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
-	ui.buttonRedo->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK|Gdk::SHIFT_MASK, Gtk::AccelFlags(0));
+	ui.buttonRedo->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK | Gdk::SHIFT_MASK, Gtk::AccelFlags(0));
 	ui.buttonFindreplace->add_accelerator("clicked", group, GDK_KEY_F, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 	ui.buttonSave->add_accelerator("clicked", group, GDK_KEY_S, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 
@@ -69,11 +69,11 @@ OutputEditorText::OutputEditorText() {
 	CONNECT(m_searchFrame, apply_substitutions, sigc::mem_fun(this, &OutputEditorText::applySubstitutions));
 	CONNECT(ConfigSettings::get<FontSetting>("customoutputfont"), changed, [this] { setFont(); });
 	CONNECT(ConfigSettings::get<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(); });
-	CONNECT(ui.textview, populate_popup, [this](Gtk::Menu* menu) {
+	CONNECT(ui.textview, populate_popup, [this](Gtk::Menu * menu) {
 		completeTextViewMenu(menu);
 	});
 	CONNECT(ui.menuitemStripcrlfDrawwhitespace, toggled, [this] {
-		ui.textview->set_draw_spaces(ui.menuitemStripcrlfDrawwhitespace->get_active() ? (Gsv::DRAW_SPACES_NEWLINE|Gsv::DRAW_SPACES_TAB|Gsv::DRAW_SPACES_SPACE) : Gsv::DrawSpacesFlags(0));
+		ui.textview->set_draw_spaces(ui.menuitemStripcrlfDrawwhitespace->get_active() ? (Gsv::DRAW_SPACES_NEWLINE | Gsv::DRAW_SPACES_TAB | Gsv::DRAW_SPACES_SPACE) : Gsv::DrawSpacesFlags(0));
 	});
 
 	// If the insert or selection mark change save the bounds either if the view is focused or the selection is non-empty
@@ -118,7 +118,7 @@ void OutputEditorText::filterBuffer() {
 	m_textBuffer->get_region_bounds(start, end);
 	Glib::ustring txt = m_textBuffer->get_text(start, end);
 
-	Utils::busyTask([this,&txt] {
+	Utils::busyTask([this, &txt] {
 		// Always remove trailing whitespace
 		txt = Glib::Regex::create("\\s+$")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags>(0));
 		if(ui.menuitemStripcrlfJoinhyphen->get_active()) {
@@ -158,7 +158,7 @@ void OutputEditorText::filterBuffer() {
 	m_textBuffer->select_range(start, end);
 }
 
-void OutputEditorText::completeTextViewMenu(Gtk::Menu *menu) {
+void OutputEditorText::completeTextViewMenu(Gtk::Menu* menu) {
 	Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(_("Check spelling")));
 	item->set_active(bool(GtkSpell::Checker::get_from_text_view(*ui.textview)));
 	CONNECT(item, toggled, [this, item] {
@@ -173,14 +173,14 @@ void OutputEditorText::completeTextViewMenu(Gtk::Menu *menu) {
 	menu->show_all();
 }
 
-void OutputEditorText::findReplace(const Glib::ustring &searchstr, const Glib::ustring &replacestr, bool matchCase, bool backwards, bool replace) {
+void OutputEditorText::findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace) {
 	m_searchFrame->clearErrorState();
 	if(!m_textBuffer->findReplace(backwards, replace, matchCase, searchstr, replacestr, ui.textview)) {
 		m_searchFrame->setErrorState();
 	}
 }
 
-void OutputEditorText::replaceAll(const Glib::ustring &searchstr, const Glib::ustring &replacestr, bool matchCase) {
+void OutputEditorText::replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
 	if(!m_textBuffer->replaceAll(searchstr, replacestr, matchCase)) {
 		m_searchFrame->setErrorState();
@@ -188,13 +188,13 @@ void OutputEditorText::replaceAll(const Glib::ustring &searchstr, const Glib::us
 	MAIN->popState();
 }
 
-void OutputEditorText::applySubstitutions(const std::map<Glib::ustring,Glib::ustring>& substitutions, bool matchCase) {
+void OutputEditorText::applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
 	Gtk::TextIter start, end;
 	m_textBuffer->get_region_bounds(start, end);
 	int startpos = start.get_offset();
 	int endpos = end.get_offset();
-	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY|Gtk::TEXT_SEARCH_TEXT_ONLY;
+	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY | Gtk::TEXT_SEARCH_TEXT_ONLY;
 	if(!matchCase) {
 		flags |= Gtk::TEXT_SEARCH_CASE_INSENSITIVE;
 	}
@@ -219,11 +219,12 @@ void OutputEditorText::applySubstitutions(const std::map<Glib::ustring,Glib::ust
 	MAIN->popState();
 }
 
-void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data) {
+void OutputEditorText::read(tesseract::TessBaseAPI& tess, ReadSessionData* data) {
 	char* textbuf = tess.GetUTF8Text();
 	Glib::ustring text = Glib::ustring(textbuf);
-	if(!text.empty() && *--text.end() != '\n')
+	if(!text.empty() && *--text.end() != '\n') {
 		text.append("\n");
+	}
 	if(data->prependFile || data->prependPage) {
 		std::vector<Glib::ustring> prepend;
 		if(data->prependFile) {
@@ -241,7 +242,7 @@ void OutputEditorText::read(tesseract::TessBaseAPI &tess, ReadSessionData *data)
 	insertText = true;
 }
 
-void OutputEditorText::readError(const Glib::ustring &errorMsg, ReadSessionData *data) {
+void OutputEditorText::readError(const Glib::ustring& errorMsg, ReadSessionData* data) {
 	bool& insertText = static_cast<TextReadSessionData*>(data)->insertText;
 	Utils::runInMainThreadBlocking([&] { addText(Glib::ustring::compose(_("\n[Failed to recognize page %1]\n"), errorMsg), insertText); });
 	insertText = true;
@@ -292,7 +293,7 @@ bool OutputEditorText::clear(bool hide) {
 		return true;
 	}
 	if(getModified()) {
-		int response = Utils::question_dialog(_("Output not saved"), _("Save output before proceeding?"), Utils::Button::Save|Utils::Button::Discard|Utils::Button::Cancel);
+		int response = Utils::question_dialog(_("Output not saved"), _("Save output before proceeding?"), Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel);
 		if(response == Utils::Button::Save) {
 			if(!save()) {
 				return false;
@@ -305,8 +306,9 @@ bool OutputEditorText::clear(bool hide) {
 	m_textBuffer->set_text("");
 	m_textBuffer->end_not_undoable_action();
 	m_textBuffer->set_modified(false);
-	if(hide)
+	if(hide) {
 		MAIN->setOutputPaneVisible(false);
+	}
 	return true;
 }
 

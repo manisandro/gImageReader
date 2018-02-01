@@ -25,7 +25,7 @@
 class OutputTextEdit : public QPlainTextEdit {
 	Q_OBJECT
 public:
-	explicit OutputTextEdit(QWidget *parent = 0);
+	explicit OutputTextEdit(QWidget* parent = 0);
 	~OutputTextEdit();
 
 	QTextCursor regionBounds() const;
@@ -36,7 +36,7 @@ public slots:
 	void setDrawWhitespace(bool drawWhitespace);
 
 protected:
-	void paintEvent(QPaintEvent *e) override;
+	void paintEvent(QPaintEvent* e) override;
 
 private:
 	class WhitespaceHighlighter;

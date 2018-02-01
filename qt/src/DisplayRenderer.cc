@@ -29,7 +29,7 @@
 #include "DisplayRenderer.hh"
 #include "Utils.hh"
 
-void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, bool invert) const {
+void DisplayRenderer::adjustImage(QImage& image, int brightness, int contrast, bool invert) const {
 	if(brightness == 0 && contrast == 0 && !invert) {
 		return;
 	}
@@ -69,7 +69,7 @@ void DisplayRenderer::adjustImage(QImage &image, int brightness, int contrast, b
 	}
 }
 
-ImageRenderer::ImageRenderer(const QString &filename) : DisplayRenderer(filename) {
+ImageRenderer::ImageRenderer(const QString& filename) : DisplayRenderer(filename) {
 	m_pageCount = QImageReader(m_filename).imageCount();
 }
 

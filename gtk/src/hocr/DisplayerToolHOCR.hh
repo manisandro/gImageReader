@@ -48,9 +48,9 @@ public:
 		setAction(ACTION_NONE, true);
 	}
 
-	bool mousePressEvent(GdkEventButton *event) override;
-	bool mouseMoveEvent(GdkEventMotion *event) override;
-	bool mouseReleaseEvent(GdkEventButton *event) override;
+	bool mousePressEvent(GdkEventButton* event) override;
+	bool mouseMoveEvent(GdkEventMotion* event) override;
+	bool mouseReleaseEvent(GdkEventButton* event) override;
 
 	void setAction(Action action, bool clearSel = true);
 	void setSelection(const Geometry::Rectangle& rect, const Geometry::Rectangle& minRect);

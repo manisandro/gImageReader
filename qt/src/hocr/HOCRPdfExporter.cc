@@ -113,8 +113,7 @@ protected:
 class HOCRPdfExporter::QPrinterPDFPainter : public HOCRPdfExporter::QPainterPDFPainter {
 public:
 	QPrinterPDFPainter(const QString& filename, const QString& creator, const QFont& defaultFont)
-		: QPainterPDFPainter(nullptr, defaultFont)
-	{
+		: QPainterPDFPainter(nullptr, defaultFont) {
 		m_printer.setOutputFormat(QPrinter::PdfFormat);
 		m_printer.setOutputFileName(filename);
 		m_printer.setResolution(72); // This to ensure that painter units are points - images are passed pre-scaled to drawImage, so that the resulting dpi in the box is the output dpi (the document resolution only matters for images)
@@ -132,7 +131,7 @@ public:
 		m_printer.setPageSize(QPageSize(QSizeF(width, height), QPageSize::Point));
 #endif
 		if(!m_firstPage) {
-			if(!m_printer.newPage()) {
+		if(!m_printer.newPage()) {
 				return false;
 			}
 		} else {
@@ -287,7 +286,7 @@ public:
 			pdfImage.SetImageDataRaw(img.width(), img.height(), sampleSize, &is);
 		}
 		m_painter.DrawImage(m_offsetX + bbox.x(), m_pageHeight - m_offsetY - (bbox.y() + bbox.height()),
-							 &pdfImage, bbox.width() / double(image.width()), bbox.height() / double(image.height()));
+		                    &pdfImage, bbox.width() / double(image.width()), bbox.height() / double(image.height()));
 	}
 	double getAverageCharWidth() const override {
 		return m_painter.GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x'));
@@ -606,8 +605,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	return success;
 }
 
-HOCRPdfExporter::PDFPainter* HOCRPdfExporter::createPoDoFoPrinter(const QString& filename, const QFont& defaultFont, QString& errMsg)
-{
+HOCRPdfExporter::PDFPainter* HOCRPdfExporter::createPoDoFoPrinter(const QString& filename, const QFont& defaultFont, QString& errMsg) {
 	PoDoFo::PdfStreamedDocument* document = nullptr;
 	PoDoFo::PdfFont* defaultPdfFont = nullptr;
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
@@ -618,15 +616,15 @@ HOCRPdfExporter::PDFPainter* HOCRPdfExporter::createPoDoFoPrinter(const QString&
 
 	try {
 		PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(ui.lineEditPasswordOpen->text().toStdString(), ui.lineEditPasswordOpen->text().toStdString(),
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
-									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
-									  PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
+		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
+		                              PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
 
 		PoDoFo::EPdfVersion pdfVersion = static_cast<PoDoFo::EPdfVersion>(ui.comboBoxPdfVersion->itemData(ui.comboBoxPdfVersion->currentIndex()).toInt());
 		document = new PoDoFo::PdfStreamedDocument(filename.toLocal8Bit().data(), pdfVersion, encrypt);
@@ -780,8 +778,7 @@ void HOCRPdfExporter::updatePreview() {
 	m_preview->setPos(-0.5 * bbox.width(), -0.5 * bbox.height());
 }
 
-void HOCRPdfExporter::backendChanged()
-{
+void HOCRPdfExporter::backendChanged() {
 	int jpegIdx = ui.comboBoxImageCompression->findData(PDFSettings::CompressJpeg);
 	bool podofoBackend = ui.comboBoxBackend->itemData(ui.comboBoxBackend->currentIndex()).toInt() == BackendPoDoFo;
 	ui.groupBoxEncryption->setEnabled(podofoBackend);
@@ -808,8 +805,7 @@ void HOCRPdfExporter::backendChanged()
 	ui.labelCompressionQuality->setEnabled(podofoBackend);
 }
 
-void HOCRPdfExporter::toggleBackendHint()
-{
+void HOCRPdfExporter::toggleBackendHint() {
 	QString tooltip = tr("<html><head/><body><ul><li>PoDoFo: offers more image compression options, but does not handle complex scripts.</li><li>QPrinter: only supports JPEG compression for storing images, but supports complex scripts.</li></ul></body></html>");
 	QRect r = ui.toolButtonBackendHint->rect();
 	QToolTip::showText(ui.toolButtonBackendHint->mapToGlobal(QPoint(0, 0.5 * r.height())), tooltip, ui.toolButtonBackendHint, r);
@@ -827,16 +823,16 @@ void HOCRPdfExporter::imageFormatChanged() {
 		if(ui.comboBoxImageCompression->currentIndex() == jpegIdx) {
 			ui.comboBoxImageCompression->setCurrentIndex(zipIdx);
 		}
-		ccittItem->setFlags(ccittItem->flags()|Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-		jpegItem->setFlags(jpegItem->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled));
+		ccittItem->setFlags(ccittItem->flags() | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		jpegItem->setFlags(jpegItem->flags() & ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled));
 		ui.labelDithering->setEnabled(true);
 		ui.comboBoxDithering->setEnabled(true);
 	} else {
 		if(ui.comboBoxImageCompression->currentIndex() == ccittIdx) {
 			ui.comboBoxImageCompression->setCurrentIndex(zipIdx);
 		}
-		ccittItem->setFlags(ccittItem->flags() & ~(Qt::ItemIsSelectable|Qt::ItemIsEnabled));
-		jpegItem->setFlags(jpegItem->flags()|Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+		ccittItem->setFlags(ccittItem->flags() & ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled));
+		jpegItem->setFlags(jpegItem->flags() | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		ui.labelDithering->setEnabled(false);
 		ui.comboBoxDithering->setEnabled(false);
 	}

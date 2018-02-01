@@ -41,8 +41,8 @@ Acquirer::Acquirer(const Ui::MainWindow& _ui)
 	ui.comboAcquireDevice->pack_start(*cell, true);
 	ui.comboAcquireDevice->add_attribute(*cell, "text", 0);
 
-	if(ui.comboAcquireResolution->get_active_row_number() == -1) ui.comboAcquireResolution->set_active(2);
-	if(ui.comboAcquireMode->get_active_row_number() == -1) ui.comboAcquireMode->set_active(0);
+	if(ui.comboAcquireResolution->get_active_row_number() == -1) { ui.comboAcquireResolution->set_active(2); }
+	if(ui.comboAcquireMode->get_active_row_number() == -1) { ui.comboAcquireMode->set_active(0); }
 
 	m_scanner = new ScannerImpl;
 
@@ -55,13 +55,13 @@ Acquirer::Acquirer(const Ui::MainWindow& _ui)
 	CONNECT(m_scanner, devicesDetected, [this](const std::vector<Scanner::Device>& devices) {
 		doneDetectDevices(devices);
 	});
-	CONNECT(m_scanner, scanFailed, [this](const std::string& msg) {
+	CONNECT(m_scanner, scanFailed, [this](const std::string & msg) {
 		scanFailed(msg);
 	});
 	CONNECT(m_scanner, scanStateChanged, [this](Scanner::State state) {
 		setScanState(state);
 	});
-	CONNECT(m_scanner, pageAvailable, [this](const std::string& file) {
+	CONNECT(m_scanner, pageAvailable, [this](const std::string & file) {
 		m_signal_scanPageAvailable.emit(file);
 	});
 
@@ -111,7 +111,7 @@ void Acquirer::scanInitFailed() {
 	ui.spinnerAcquire->stop();
 }
 
-void Acquirer::scanFailed(const Glib::ustring &msg) {
+void Acquirer::scanFailed(const Glib::ustring& msg) {
 	ui.labelAcquireMessage->set_markup(Glib::ustring::compose("<span color='red'>%1: %2</span>", _("Scan failed"), msg));
 }
 

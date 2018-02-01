@@ -44,7 +44,7 @@ public:
 	void setRecognizeMode(const Glib::ustring& mode);
 	void updateLanguagesMenu();
 	bool recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
-	sigc::signal<void,Config::Lang> signal_languageChanged() const {
+	sigc::signal<void, Config::Lang> signal_languageChanged() const {
 		return m_signal_languageChanged;
 	}
 
@@ -68,11 +68,11 @@ private:
 	Gtk::RadioButtonGroup m_langMenuRadioGroup;
 	Gtk::RadioButtonGroup m_psmRadioGroup;
 	int m_currentPsmMode;
-	std::vector<std::pair<Gtk::CheckMenuItem*,Glib::ustring>> m_langMenuCheckGroup;
+	std::vector<std::pair<Gtk::CheckMenuItem*, Glib::ustring>> m_langMenuCheckGroup;
 	MultilingualMenuItem* m_multilingualRadio = nullptr;
 	Config::Lang m_curLang;
 
-	sigc::signal<void,Config::Lang> m_signal_languageChanged;
+	sigc::signal<void, Config::Lang> m_signal_languageChanged;
 
 	bool initTesseract(tesseract::TessBaseAPI& tess, const char* language = nullptr) const;
 	void recognizeButtonClicked();
@@ -80,7 +80,7 @@ private:
 	void recognizeMultiplePages();
 	void recognize(const std::vector<int>& pages, bool autodetectLayout = false);
 	std::vector<int> selectPages(bool& autodetectLayout);
-	void setLanguage(const Gtk::RadioMenuItem *item, const Config::Lang& lang);
+	void setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang& lang);
 	void setMultiLanguage();
 	PageData setPage(int page, bool autodetectLayout);
 	bool onMultilingualMenuButtonEvent(GdkEventButton* ev);

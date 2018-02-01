@@ -25,7 +25,7 @@
 #include <QMouseEvent>
 
 
-DisplayerToolHOCR::DisplayerToolHOCR(Displayer *displayer, QObject *parent)
+DisplayerToolHOCR::DisplayerToolHOCR(Displayer* displayer, QObject* parent)
 	: DisplayerTool(displayer, parent) {
 	displayer->setCursor(Qt::ArrowCursor);
 	MAIN->getRecognizer()->setRecognizeMode(_("Recognize"));
@@ -39,7 +39,7 @@ QList<QImage> DisplayerToolHOCR::getOCRAreas() {
 	return QList<QImage>() << m_displayer->getImage(m_displayer->getSceneBoundingRect());
 }
 
-void DisplayerToolHOCR::mousePressEvent(QMouseEvent *event) {
+void DisplayerToolHOCR::mousePressEvent(QMouseEvent* event) {
 	m_pressed = true;
 	if(event->button() == Qt::LeftButton && m_currentAction == ACTION_DRAW_RECT) {
 		clearSelection();
@@ -50,7 +50,7 @@ void DisplayerToolHOCR::mousePressEvent(QMouseEvent *event) {
 	}
 }
 
-void DisplayerToolHOCR::mouseMoveEvent(QMouseEvent *event) {
+void DisplayerToolHOCR::mouseMoveEvent(QMouseEvent* event) {
 	if(m_selection && m_currentAction == ACTION_DRAW_RECT) {
 		QPointF p = m_displayer->mapToSceneClamped(event->pos());
 		m_selection->setPoint(p);
@@ -59,7 +59,7 @@ void DisplayerToolHOCR::mouseMoveEvent(QMouseEvent *event) {
 	}
 }
 
-void DisplayerToolHOCR::mouseReleaseEvent(QMouseEvent *event) {
+void DisplayerToolHOCR::mouseReleaseEvent(QMouseEvent* event) {
 	// Don't do anything if the release event does not follow a press event...
 	if(!m_pressed) {
 		return;

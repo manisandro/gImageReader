@@ -56,19 +56,19 @@ Displayer::Displayer(const Ui::MainWindow& _ui)
 	CONNECT(ui.viewportDisplay, size_allocate, [this](Gdk::Rectangle&) {
 		resizeEvent();
 	});
-	CONNECT(ui.viewportDisplay, key_press_event, [this](GdkEventKey* ev) {
+	CONNECT(ui.viewportDisplay, key_press_event, [this](GdkEventKey * ev) {
 		return keyPressEvent(ev);
 	});
-	CONNECT(ui.viewportDisplay, motion_notify_event, [this](GdkEventMotion* ev) {
+	CONNECT(ui.viewportDisplay, motion_notify_event, [this](GdkEventMotion * ev) {
 		return mouseMoveEvent(ev);
 	});
-	CONNECT(ui.viewportDisplay, button_press_event, [this](GdkEventButton* ev) {
+	CONNECT(ui.viewportDisplay, button_press_event, [this](GdkEventButton * ev) {
 		return mousePressEvent(ev);
 	});
-	CONNECT(ui.viewportDisplay, button_release_event, [this](GdkEventButton* ev) {
+	CONNECT(ui.viewportDisplay, button_release_event, [this](GdkEventButton * ev) {
 		return mouseReleaseEvent(ev);
 	});
-	CONNECT(ui.viewportDisplay, scroll_event, [this](GdkEventScroll* ev) {
+	CONNECT(ui.viewportDisplay, scroll_event, [this](GdkEventScroll * ev) {
 		return scrollEvent(ev);
 	});
 	CONNECT(ui.drawingareaDisplay, draw, [this](const Cairo::RefPtr<Cairo::Context>& ctx) {
@@ -87,7 +87,7 @@ Displayer::Displayer(const Ui::MainWindow& _ui)
 	CONNECT(ui.scrollwinDisplay, drag_data_received, sigc::ptr_fun(Utils::handle_drag_drop));
 }
 
-void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context> &ctx) {
+void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx) {
 	if(!m_imageItem) {
 		return;
 	}
@@ -108,8 +108,8 @@ void Displayer::positionCanvas() {
 	// Immediately resize viewport, so that adjustment values are correct below
 	ui.viewportDisplay->size_allocate(ui.viewportDisplay->get_allocation());
 	ui.viewportDisplay->set_allocation(ui.viewportDisplay->get_allocation());
-	m_hadj->set_value(m_scrollPos[0] *(m_hadj->get_upper() - m_hadj->get_page_size()));
-	m_vadj->set_value(m_scrollPos[1] *(m_vadj->get_upper() - m_vadj->get_page_size()));
+	m_hadj->set_value(m_scrollPos[0] * (m_hadj->get_upper() - m_hadj->get_page_size()));
+	m_vadj->set_value(m_scrollPos[1] * (m_vadj->get_upper() - m_vadj->get_page_size()));
 	ui.drawingareaDisplay->queue_draw();
 }
 
@@ -181,7 +181,7 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	ui.buttonZoomnorm->set_active(false);
 	ui.buttonZoomin->set_sensitive(true);
 	ui.buttonZoomout->set_sensitive(true);
-	if(ui.viewportDisplay->get_window()) ui.viewportDisplay->get_window()->set_cursor();
+	if(ui.viewportDisplay->get_window()) { ui.viewportDisplay->get_window()->set_cursor(); }
 
 	m_sources = sources;
 	if(sources.empty()) {
@@ -292,17 +292,17 @@ bool Displayer::renderImage() {
 		if(Utils::get_content_type(filename) == "application/pdf") {
 #endif
 			m_renderer = new PDFRenderer(filename, source->password);
-			if(source->resolution == -1) source->resolution = 300;
+			if(source->resolution == -1) { source->resolution = 300; }
 #ifdef G_OS_WIN32
 		} else if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".djvu") {
 #else
 		} else if(Utils::get_content_type(filename) == "image/vnd.djvu") {
 #endif
 			m_renderer = new DJVURenderer(filename);
-			if(source->resolution == -1) source->resolution = 300;
+			if(source->resolution == -1) { source->resolution = 300; }
 		} else {
 			m_renderer = new ImageRenderer(filename);
-			if(source->resolution == -1) source->resolution = 100;
+			if(source->resolution == -1) { source->resolution = 100; }
 		}
 		Utils::set_spin_blocked(ui.spinBrightness, source->brightness, m_connection_briSpinChanged);
 		Utils::set_spin_blocked(ui.spinContrast, source->contrast, m_connection_conSpinChanged);
@@ -347,7 +347,7 @@ bool Displayer::renderImage() {
 	setAngle(ui.spinRotate->get_value());
 	if(m_scale < 1.0) {
 		ScaleRequest request = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
-		m_scaleTimer = Glib::signal_timeout().connect([this,request] { sendScaleRequest(request); return false; }, 100);
+		m_scaleTimer = Glib::signal_timeout().connect([this, request] { sendScaleRequest(request); return false; }, 100);
 	}
 	return true;
 }
@@ -384,7 +384,7 @@ void Displayer::setZoom(Zoom zoom) {
 	ui.buttonZoomnorm->set_active(m_scale == 1.);
 	if(m_scale < 1.0) {
 		ScaleRequest request = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
-		m_scaleTimer = Glib::signal_timeout().connect([this,request] { sendScaleRequest(request); return false; }, 100);
+		m_scaleTimer = Glib::signal_timeout().connect([this, request] { sendScaleRequest(request); return false; }, 100);
 	} else {
 		m_imageItem->setImage(m_image);
 	}
@@ -501,7 +501,7 @@ bool Displayer::keyPressEvent(GdkEventKey* ev) {
 	}
 }
 
-bool Displayer::mouseMoveEvent(GdkEventMotion *ev) {
+bool Displayer::mouseMoveEvent(GdkEventMotion* ev) {
 	if(ev->state & Gdk::BUTTON2_MASK) {
 		double dx = m_panPos[0] - ev->x_root;
 		double dy = m_panPos[1] - ev->y_root;
@@ -548,12 +548,12 @@ bool Displayer::mouseReleaseEvent(GdkEventButton* ev) {
 	return false;
 }
 
-bool Displayer::scrollEvent(GdkEventScroll *ev) {
+bool Displayer::scrollEvent(GdkEventScroll* ev) {
 	if((ev->state & Gdk::CONTROL_MASK) != 0) {
 		if((ev->direction == GDK_SCROLL_UP || (ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y < 0)) && m_scale * 1.25 < 10) {
 			Gtk::Allocation alloc = ui.drawingareaDisplay->get_allocation();
-			m_scrollPos[0] = std::max(0., std::min((ev->x + m_hadj->get_value() - alloc.get_x())/alloc.get_width(), 1.0));
-			m_scrollPos[1] = std::max(0., std::min((ev->y + m_vadj->get_value() - alloc.get_y())/alloc.get_height(), 1.0));
+			m_scrollPos[0] = std::max(0., std::min((ev->x + m_hadj->get_value() - alloc.get_x()) / alloc.get_width(), 1.0));
+			m_scrollPos[1] = std::max(0., std::min((ev->y + m_vadj->get_value() - alloc.get_y()) / alloc.get_height(), 1.0));
 			setZoom(Zoom::In);
 		} else if((ev->direction == GDK_SCROLL_DOWN || (ev->direction == GDK_SCROLL_SMOOTH && ev->delta_y > 0)) && m_scale * 0.8 > 0.05) {
 			setZoom(Zoom::Out);
@@ -605,8 +605,8 @@ void Displayer::ensureVisible(double evx, double evy) {
 void Displayer::ensureVisible(const Geometry::Rectangle& rect) {
 	Geometry::Point p1 = mapToView(Geometry::Point(rect.x, rect.y));
 	Geometry::Point p2 = mapToView(Geometry::Point(rect.x + rect.width, rect.y + rect.height));
-	std::pair<int,int> vis1 = getPointVisible(p1);
-	std::pair<int,int> vis2 = getPointVisible(p2);
+	std::pair<int, int> vis1 = getPointVisible(p1);
+	std::pair<int, int> vis2 = getPointVisible(p2);
 	if(vis1.first == 0 && vis1.second == 0 && vis2.first == 0 && vis2.second == 0) {
 		// Both points visible, do nothing
 		return;
@@ -619,8 +619,9 @@ void Displayer::ensureVisible(const Geometry::Rectangle& rect) {
 }
 
 void Displayer::addItem(DisplayerItem* item) {
-	if(!m_items.empty())
+	if(!m_items.empty()) {
 		item->setZIndex(m_items.back()->zIndex() + 1);
+	}
 	m_items.push_back(item);
 	item->m_displayer = this;
 	invalidateRect(item->rect());
@@ -635,7 +636,7 @@ void Displayer::removeItem(DisplayerItem* item) {
 	invalidateRect(item->rect());
 }
 
-void Displayer::invalidateRect(const Geometry::Rectangle &rect) {
+void Displayer::invalidateRect(const Geometry::Rectangle& rect) {
 	Gtk::Allocation alloc = ui.drawingareaDisplay->get_allocation();
 	Geometry::Rectangle canvasRect = rect;
 	canvasRect.x = (canvasRect.x * m_scale + 0.5 * alloc.get_width()) - 2;
@@ -669,13 +670,13 @@ Geometry::Point Displayer::mapToSceneClamped(const Geometry::Point& p) const {
 	return Geometry::Point(x, y);
 }
 
-Geometry::Point Displayer::mapToView(const Geometry::Point &p) const {
+Geometry::Point Displayer::mapToView(const Geometry::Point& p) const {
 	Gtk::Allocation alloc = ui.drawingareaDisplay->get_allocation();
-	return Geometry::Point(alloc.get_x() + 0.5 * alloc.get_width()+ p.x * m_scale,
+	return Geometry::Point(alloc.get_x() + 0.5 * alloc.get_width() + p.x * m_scale,
 	                       alloc.get_y() + 0.5 * alloc.get_height() + p.y * m_scale);
 }
 
-Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle &rect) const {
+Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle& rect) const {
 	Cairo::RefPtr<Cairo::ImageSurface> surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, std::ceil(rect.width), std::ceil(rect.height));
 	Cairo::RefPtr<Cairo::Context> ctx = Cairo::Context::create(surf);
 	ctx->set_source_rgba(1., 1., 1., 1.);
@@ -728,7 +729,7 @@ void Displayer::scaleThread() {
 			m_scaleMutex.unlock();
 
 			double scale = req.scale;
-			m_connection_setScaledImage = Glib::signal_idle().connect([this,image,scale] { setScaledImage(image); return false; });
+			m_connection_setScaledImage = Glib::signal_idle().connect([this, image, scale] { setScaledImage(image); return false; });
 			m_scaleMutex.lock();
 		}
 	};
@@ -756,11 +757,12 @@ void DisplayerItem::setZIndex(int zIndex) {
 	}
 }
 
-void DisplayerItem::setRect(const Geometry::Rectangle &rect) {
+void DisplayerItem::setRect(const Geometry::Rectangle& rect) {
 	Geometry::Rectangle invalidateArea = m_rect.unite(rect);
 	m_rect = rect;
-	if(m_displayer)
+	if(m_displayer) {
 		m_displayer->invalidateRect(invalidateArea);
+	}
 }
 
 void DisplayerItem::setVisible(bool visible) {
@@ -769,8 +771,9 @@ void DisplayerItem::setVisible(bool visible) {
 }
 
 void DisplayerItem::update() {
-	if(m_displayer)
+	if(m_displayer) {
 		m_displayer->invalidateRect(m_rect);
+	}
 }
 
 void DisplayerImageItem::draw(Cairo::RefPtr<Cairo::Context> ctx) const {
@@ -810,7 +813,7 @@ void DisplayerSelection::draw(Cairo::RefPtr<Cairo::Context> ctx) const {
 	ctx->restore();
 }
 
-bool DisplayerSelection::mousePressEvent(GdkEventButton *event) {
+bool DisplayerSelection::mousePressEvent(GdkEventButton* event) {
 	if(event->button == 1) {
 		Geometry::Point p = displayer()->mapToSceneClamped(Geometry::Point(event->x, event->y));
 		double tol = 10.0 / displayer()->getCurrentScale();
@@ -836,12 +839,12 @@ bool DisplayerSelection::mousePressEvent(GdkEventButton *event) {
 	return false;
 }
 
-bool DisplayerSelection::mouseReleaseEvent(GdkEventButton */*event*/) {
+bool DisplayerSelection::mouseReleaseEvent(GdkEventButton* /*event*/) {
 	m_resizeHandlers.clear();
 	return false;
 }
 
-bool DisplayerSelection::mouseMoveEvent(GdkEventMotion *event) {
+bool DisplayerSelection::mouseMoveEvent(GdkEventMotion* event) {
 	Geometry::Point p = displayer()->mapToSceneClamped(Geometry::Point(event->x, event->y));
 	if(m_resizeHandlers.empty()) {
 		double tol = 10.0 / displayer()->getCurrentScale();

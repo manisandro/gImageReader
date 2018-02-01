@@ -64,7 +64,7 @@ std::wstring FileDialogs::FileFilter::to_win32_filter() const {
 	return filterstr;
 }
 
-static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustring &title, const std::string& initialDirectory, const std::wstring& filter, bool multiple, Gtk::Window *parent) {
+static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::wstring& filter, bool multiple, Gtk::Window* parent) {
 	wchar_t wfile[1024] = {};
 	std::wstring winitialDirectory = s2ws(initialDirectory);
 	std::wstring wtitle = s2ws(title);
@@ -78,8 +78,8 @@ static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustrin
 	ofn.nMaxFile = sizeof(wfile);
 	ofn.lpstrInitialDir = winitialDirectory.c_str();
 	ofn.lpstrTitle = wtitle.c_str();
-	ofn.Flags = OFN_NONETWORKBUTTON|OFN_EXPLORER;
-	if(multiple) ofn.Flags |= OFN_ALLOWMULTISELECT;
+	ofn.Flags = OFN_NONETWORKBUTTON | OFN_EXPLORER;
+	if(multiple) { ofn.Flags |= OFN_ALLOWMULTISELECT; }
 	bool ok = GetOpenFileNameW(&ofn);
 
 	std::vector<Glib::RefPtr<Gio::File>> files;
@@ -106,7 +106,7 @@ static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustrin
 	return files;
 }
 
-static std::string win32_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, const std::wstring& filter, Gtk::Window *parent) {
+static std::string win32_save_dialog(const Glib::ustring& title, const std::string& suggestedFile, const std::wstring& filter, Gtk::Window* parent) {
 	std::wstring wsuggestedFile = s2ws(suggestedFile);
 	std::wstring wtitle = s2ws(title);
 	std::wstring suggestedName = s2ws(Glib::path_get_basename(suggestedFile));
@@ -122,7 +122,7 @@ static std::string win32_save_dialog(const Glib::ustring &title, const std::stri
 	ofn.nMaxFile = sizeof(wfile);
 	ofn.lpstrInitialDir = wsuggestedFile.c_str();
 	ofn.lpstrTitle = wtitle.c_str();
-	ofn.Flags = OFN_NONETWORKBUTTON|OFN_EXPLORER|OFN_OVERWRITEPROMPT;
+	ofn.Flags = OFN_NONETWORKBUTTON | OFN_EXPLORER | OFN_OVERWRITEPROMPT;
 	bool ok = GetSaveFileNameW(&ofn);
 
 	std::string filename;
@@ -161,7 +161,7 @@ static std::vector<Glib::RefPtr<Gio::File>> gnome_open_dialog(const std::string&
 	return std::vector<Glib::RefPtr<Gio::File>>();
 }
 
-static std::string gnome_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, Glib::RefPtr<Gtk::FileFilter> filter, Gtk::Window *parent) {
+static std::string gnome_save_dialog(const Glib::ustring& title, const std::string& suggestedFile, Glib::RefPtr<Gtk::FileFilter> filter, Gtk::Window* parent) {
 	Gtk::FileChooserDialog dialog(*parent, title, Gtk::FILE_CHOOSER_ACTION_SAVE);
 	dialog.add_button("gtk-cancel", Gtk::RESPONSE_CANCEL);
 	dialog.add_button("gtk-ok", Gtk::RESPONSE_OK);
@@ -211,7 +211,7 @@ static std::vector<Glib::RefPtr<Gio::File>> kde_open_dialog(const Glib::ustring&
 	return files;
 }
 
-static std::string kde_save_dialog(const Glib::ustring &title, const std::string &suggestedFile, const Glib::ustring& filter, Gtk::Window *parent) {
+static std::string kde_save_dialog(const Glib::ustring& title, const std::string& suggestedFile, const Glib::ustring& filter, Gtk::Window* parent) {
 	std::string filename = suggestedFile;
 	do {
 		std::vector<Glib::ustring> argv = {
@@ -271,7 +271,7 @@ FileDialogs::FileFilter FileDialogs::FileFilter::pixbuf_formats() {
 
 namespace FileDialogs {
 
-std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, const std::string& initialDirectory, const std::string& initialDirSetting, const FileFilter &filter, bool multiple, Gtk::Window *parent) {
+std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, const FileFilter& filter, bool multiple, Gtk::Window* parent) {
 	std::vector<Glib::RefPtr<Gio::File>> filenames;
 	parent = parent == nullptr ? MAIN->getWindow() : parent;
 	std::string initialDir = initialDirectory;
@@ -296,7 +296,7 @@ std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring &title, con
 	return filenames;
 }
 
-std::string save_dialog(const Glib::ustring &title, const std::string& initialFilename, const std::string& initialDirSetting, const FileFilter& filter, bool generateUniqueName, Gtk::Window *parent) {
+std::string save_dialog(const Glib::ustring& title, const std::string& initialFilename, const std::string& initialDirSetting, const FileFilter& filter, bool generateUniqueName, Gtk::Window* parent) {
 	std::string filename;
 	parent = parent == nullptr ? MAIN->getWindow() : parent;
 	std::string suggestedFile;

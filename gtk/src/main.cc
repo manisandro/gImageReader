@@ -82,7 +82,7 @@ static std::string get_application_exec_path(char* argv0) {
 	return pathstr;
 }
 
-int main (int argc, char *argv[]) {
+int main (int argc, char* argv[]) {
 	pkgDir = get_application_dir(argv[0]);
 	pkgExePath = get_application_exec_path(argv[0]);
 

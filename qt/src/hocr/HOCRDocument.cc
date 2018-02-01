@@ -30,7 +30,7 @@
 #include "Utils.hh"
 
 
-HOCRDocument::HOCRDocument(QtSpell::TextEditChecker* spell, QObject *parent)
+HOCRDocument::HOCRDocument(QtSpell::TextEditChecker* spell, QObject* parent)
 	: QAbstractItemModel(parent), m_spell(spell) {
 }
 
@@ -50,8 +50,7 @@ void HOCRDocument::recheckSpelling() {
 	recursiveDataChanged(QModelIndex(), {Qt::DisplayRole}, {"ocrx_word"});
 }
 
-QString HOCRDocument::toHTML() const
-{
+QString HOCRDocument::toHTML() const {
 	QString html = "<body>\n";
 	for(const HOCRPage* page : m_pages) {
 		html += page->toHtml(1);
@@ -175,7 +174,7 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 	return targetIndex;
 }
 
-QModelIndex HOCRDocument::addItem(const QModelIndex &parent, const QDomElement &element) {
+QModelIndex HOCRDocument::addItem(const QModelIndex& parent, const QDomElement& element) {
 	HOCRItem* parentItem = mutableItemAtIndex(parent);
 	if(!parentItem) {
 		return QModelIndex();
@@ -298,11 +297,12 @@ void HOCRDocument::convertSourcePaths(const QString& basepath, bool absolute) {
 	}
 }
 
-QVariant HOCRDocument::data(const QModelIndex &index, int role) const {
-	if (!index.isValid())
+QVariant HOCRDocument::data(const QModelIndex& index, int role) const {
+	if (!index.isValid()) {
 		return QVariant();
+	}
 
-	HOCRItem *item = mutableItemAtIndex(index);
+	HOCRItem* item = mutableItemAtIndex(index);
 
 	if(index.column() == 0) {
 		switch (role) {
@@ -337,11 +337,12 @@ QVariant HOCRDocument::data(const QModelIndex &index, int role) const {
 	return QVariant();
 }
 
-bool HOCRDocument::setData(const QModelIndex &index, const QVariant &value, int role) {
-	if(!index.isValid())
+bool HOCRDocument::setData(const QModelIndex& index, const QVariant& value, int role) {
+	if(!index.isValid()) {
 		return false;
+	}
 
-	HOCRItem *item = mutableItemAtIndex(index);
+	HOCRItem* item = mutableItemAtIndex(index);
 	if(role == Qt::EditRole && item->itemClass() == "ocrx_word") {
 		item->setText(value.toString());
 		emit dataChanged(index, index, {Qt::DisplayRole, Qt::ForegroundRole});
@@ -369,7 +370,7 @@ void HOCRDocument::recursiveDataChanged(const QModelIndex& parent, const QVector
 	}
 }
 
-void HOCRDocument::recomputeParentBBoxes(const HOCRItem *item) {
+void HOCRDocument::recomputeParentBBoxes(const HOCRItem* item) {
 	// Update parent bboxes (except page)
 	HOCRItem* parent = item->parent();
 	while(parent && parent->parent()) {
@@ -383,33 +384,36 @@ void HOCRDocument::recomputeParentBBoxes(const HOCRItem *item) {
 	}
 }
 
-Qt::ItemFlags HOCRDocument::flags(const QModelIndex &index) const {
-	if (!index.isValid())
+Qt::ItemFlags HOCRDocument::flags(const QModelIndex& index) const {
+	if (!index.isValid()) {
 		return 0;
+	}
 
-	HOCRItem *item = mutableItemAtIndex(index);
+	HOCRItem* item = mutableItemAtIndex(index);
 	return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | (item->itemClass() == "ocrx_word" && index.column() == 0 ? Qt::ItemIsEditable : Qt::NoItemFlags);
 }
 
-QModelIndex HOCRDocument::index(int row, int column, const QModelIndex &parent) const {
-	if (!hasIndex(row, column, parent))
+QModelIndex HOCRDocument::index(int row, int column, const QModelIndex& parent) const {
+	if (!hasIndex(row, column, parent)) {
 		return QModelIndex();
+	}
 
 	HOCRItem* childItem = nullptr;
 	if(!parent.isValid()) {
 		childItem = m_pages.value(row);
 	} else {
-		HOCRItem *parentItem = mutableItemAtIndex(parent);
+		HOCRItem* parentItem = mutableItemAtIndex(parent);
 		childItem = parentItem->children().value(row);
 	}
 	return childItem ? createIndex(row, column, childItem) : QModelIndex();
 }
 
-QModelIndex HOCRDocument::parent(const QModelIndex &child) const {
-	if (!child.isValid())
+QModelIndex HOCRDocument::parent(const QModelIndex& child) const {
+	if (!child.isValid()) {
 		return QModelIndex();
+	}
 
-	HOCRItem *item = mutableItemAtIndex(child)->parent();
+	HOCRItem* item = mutableItemAtIndex(child)->parent();
 	if(!item) {
 		return QModelIndex();
 	}
@@ -417,13 +421,14 @@ QModelIndex HOCRDocument::parent(const QModelIndex &child) const {
 	return row >= 0 ? createIndex(row, 0, item) : QModelIndex();
 }
 
-int HOCRDocument::rowCount(const QModelIndex &parent) const {
-	if (parent.column() > 0)
+int HOCRDocument::rowCount(const QModelIndex& parent) const {
+	if (parent.column() > 0) {
 		return 0;
+	}
 	return !parent.isValid() ? m_pages.size() : itemAtIndex(parent)->children().size();
 }
 
-int HOCRDocument::columnCount(const QModelIndex &/*parent*/) const {
+int HOCRDocument::columnCount(const QModelIndex& /*parent*/) const {
 	return 2;
 }
 
@@ -512,7 +517,7 @@ void HOCRDocument::takeItem(HOCRItem* item) {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-QMap<QString,QString> HOCRItem::s_langCache = QMap<QString,QString>();
+QMap<QString, QString> HOCRItem::s_langCache = QMap<QString, QString>();
 
 QMap<QString, QString> HOCRItem::deserializeAttrGroup(const QString& string) {
 	QMap<QString, QString> attrs;
@@ -534,10 +539,12 @@ QString HOCRItem::serializeAttrGroup(const QMap<QString, QString>& attrs) {
 QString HOCRItem::trimmedWord(const QString& word, QString* prefix, QString* suffix) {
 	QRegExp wordRe("^(\\W*)(\\w*)(\\W*)$");
 	if(wordRe.indexIn(word) != -1) {
-		if(prefix)
+		if(prefix) {
 			*prefix = wordRe.cap(1);
-		if(suffix)
+		}
+		if(suffix) {
 			*suffix = wordRe.cap(3);
+		}
 		return wordRe.cap(2);
 	}
 	return word;
@@ -603,7 +610,7 @@ void HOCRItem::insertChild(HOCRItem* child, int i) {
 	}
 }
 
-void HOCRItem::removeChild(HOCRItem *child) {
+void HOCRItem::removeChild(HOCRItem* child) {
 	takeChild(child);
 	delete child;
 }
@@ -625,8 +632,8 @@ QVector<HOCRItem*> HOCRItem::takeChildren() {
 	return children;
 }
 
-QMap<QString,QString> HOCRItem::getAllAttributes() const {
-	QMap<QString,QString> attrValues;
+QMap<QString, QString> HOCRItem::getAllAttributes() const {
+	QMap<QString, QString> attrValues;
 	for(auto it = m_attrs.begin(), itEnd = m_attrs.end(); it != itEnd; ++it) {
 		attrValues.insert(it.key(), it.value());
 	}
@@ -643,8 +650,8 @@ QMap<QString,QString> HOCRItem::getAllAttributes() const {
 	return attrValues;
 }
 
-QMap<QString,QString> HOCRItem::getAttributes(const QList<QString>& names = QList<QString>()) const {
-	QMap<QString,QString> attrValues;
+QMap<QString, QString> HOCRItem::getAttributes(const QList<QString>& names = QList<QString>()) const {
+	QMap<QString, QString> attrValues;
 	for(const QString& attrName : names) {
 		QStringList parts = attrName.split(":");
 		if(parts.size() > 1) {
@@ -662,7 +669,7 @@ QMap<QString,QString> HOCRItem::getAttributes(const QList<QString>& names = QLis
 }
 
 void HOCRItem::getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString>>>& occurences) const {
-	static QMap<QString,QStringList> s_propagatableAttributes = {
+	static QMap<QString, QStringList> s_propagatableAttributes = {
 		{"ocr_line", {"title:baseline"}},
 		{"ocrx_word", {"lang", "title:x_fsize", "title:x_font", "bold", "italic"}}
 	};

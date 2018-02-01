@@ -36,7 +36,7 @@ SearchReplaceFrame::SearchReplaceFrame() {
 	CONNECT(ui.buttonReplace, clicked, [this] { replaceNext(); });
 	CONNECT(ui.buttonReplaceall, clicked, [this] { emitReplaceAll(); });
 	CONNECT(ui.buttonSubstitutions, clicked, [this] { m_substitutionsManager->set_visible(true); });
-	CONNECT(m_substitutionsManager, apply_substitutions, [this]( const std::map<Glib::ustring,Glib::ustring>& substitutions) {
+	CONNECT(m_substitutionsManager, apply_substitutions, [this]( const std::map<Glib::ustring, Glib::ustring>& substitutions) {
 		emitApplySubstitutions(substitutions);
 	});
 

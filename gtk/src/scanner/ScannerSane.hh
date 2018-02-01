@@ -75,12 +75,12 @@ private:
 	void failScan(const Glib::ustring& errorString);
 
 	const SANE_Option_Descriptor* getOptionByName(const std::map<std::string, int>& options, SANE_Handle, const std::string& name, int& index);
-	bool setDefaultOption(SANE_Handle m_handle, const SANE_Option_Descriptor *option, SANE_Int option_index);
-	void setBoolOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool*result);
+	bool setDefaultOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index);
+	void setBoolOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool* result);
 	void setIntOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, int value, int* result);
 	void setFixedOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, double value, double* result);
 	bool setStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const std::string& value, std::string* result);
-	bool setConstrainedStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const std::vector<std::string>& values, std::string *result);
+	bool setConstrainedStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const std::vector<std::string>& values, std::string* result);
 	void logOption(SANE_Int index, const SANE_Option_Descriptor* option);
 
 	static Glib::ustring getFrameModeString(SANE_Frame frame);

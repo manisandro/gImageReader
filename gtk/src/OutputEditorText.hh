@@ -47,7 +47,7 @@ public:
 	bool getModified() const override;
 	void onVisibilityChanged(bool visible) override;
 	bool save(const std::string& filename = "") override;
-	void setLanguage(const Config::Lang &lang) override;
+	void setLanguage(const Config::Lang& lang) override;
 
 private:
 	struct TextReadSessionData : ReadSessionData {
@@ -66,11 +66,11 @@ private:
 	GtkSpell::Checker m_spell;
 
 	void addText(const Glib::ustring& text, bool insert);
-	void completeTextViewMenu(Gtk::Menu *menu);
+	void completeTextViewMenu(Gtk::Menu* menu);
 	void filterBuffer();
 	void findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace);
 	void replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
-	void applySubstitutions(const std::map<Glib::ustring,Glib::ustring>& substitutions, bool matchCase);
+	void applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase);
 	void scrollCursorIntoView();
 	void setFont();
 	void setInsertMode(InsertMode mode, const std::string& iconName);

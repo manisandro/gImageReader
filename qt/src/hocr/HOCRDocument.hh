@@ -34,7 +34,7 @@ class HOCRDocument : public QAbstractItemModel {
 	Q_OBJECT
 
 public:
-	HOCRDocument(QtSpell::TextEditChecker* spell, QObject *parent = 0);
+	HOCRDocument(QtSpell::TextEditChecker* spell, QObject* parent = 0);
 	~HOCRDocument();
 
 	void clear();
@@ -73,13 +73,13 @@ public:
 	QModelIndex searchAtCanvasPos(const QModelIndex& pageIndex, const QPoint& pos) const;
 	void convertSourcePaths(const QString& basepath, bool absolute);
 
-	QVariant data(const QModelIndex &index, int role) const override;
-	bool setData(const QModelIndex &index, const QVariant &value, int role) override;
-	Qt::ItemFlags flags(const QModelIndex &index) const override;
-	QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
-	QModelIndex parent(const QModelIndex &child) const override;
-	int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-	int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+	QVariant data(const QModelIndex& index, int role) const override;
+	bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+	Qt::ItemFlags flags(const QModelIndex& index) const override;
+	QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+	QModelIndex parent(const QModelIndex& child) const override;
+	int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+	int columnCount(const QModelIndex& parent = QModelIndex()) const override;
 
 signals:
 	void itemAttributeChanged(const QModelIndex& itemIndex, const QString& name, const QString& value);
@@ -111,7 +111,7 @@ public:
 	// attrname : attrvalue : occurences
 	typedef QMap<QString, QMap<QString, int>> AttrOccurenceMap_t;
 
-	HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem *parent, int index = -1);
+	HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem* parent, int index = -1);
 	virtual ~HOCRItem();
 	HOCRPage* page() const {
 		return m_pageItem;
@@ -148,8 +148,8 @@ public:
 	const QMap<QString, QString> getTitleAttributes() const {
 		return m_titleAttrs;
 	}
-	QMap<QString,QString> getAllAttributes() const;
-	QMap<QString,QString> getAttributes(const QList<QString>& names) const;
+	QMap<QString, QString> getAllAttributes() const;
+	QMap<QString, QString> getAttributes(const QList<QString>& names) const;
 	void getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString> > >& occurences) const;
 	QString toHtml(int indent = 0) const;
 	int baseLine() const;
@@ -187,7 +187,7 @@ protected:
 	friend class HOCRDocument;
 	friend class HOCRPage;
 
-	static QMap<QString,QString> s_langCache;
+	static QMap<QString, QString> s_langCache;
 
 	QString m_text;
 	bool m_bold;

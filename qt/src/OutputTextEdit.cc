@@ -30,7 +30,7 @@ public:
 	WhitespaceHighlighter(QTextDocument* document)
 		: QSyntaxHighlighter(document) {}
 private:
-	void highlightBlock(const QString &text) {
+	void highlightBlock(const QString& text) {
 		QTextCharFormat fmt;
 		fmt.setForeground(Qt::gray);
 
@@ -45,7 +45,7 @@ private:
 };
 
 
-OutputTextEdit::OutputTextEdit(QWidget *parent)
+OutputTextEdit::OutputTextEdit(QWidget* parent)
 	: QPlainTextEdit(parent) {
 	m_wsHighlighter = new WhitespaceHighlighter(document());
 
@@ -60,7 +60,7 @@ OutputTextEdit::OutputTextEdit(QWidget *parent)
 	// Force inactive selection to have same color as active selection
 	QColor highlightColor = palette().color(QPalette::Highlight);
 	QColor highlightedTextColor = palette().color(QPalette::HighlightedText);
-	auto colorToString = [&](const QColor& color) {
+	auto colorToString = [&](const QColor & color) {
 		return QString("rgb(%1, %2, %3)").arg(color.red()).arg(color.green()).arg(color.blue());
 	};
 	setStyleSheet(QString("QPlainTextEdit { selection-background-color: %1; selection-color: %2; }")
@@ -82,7 +82,7 @@ QTextCursor OutputTextEdit::regionBounds() const {
 	return c;
 }
 
-bool OutputTextEdit::findReplace(bool backwards, bool replace, bool matchCase, const QString &searchstr, const QString &replacestr) {
+bool OutputTextEdit::findReplace(bool backwards, bool replace, bool matchCase, const QString& searchstr, const QString& replacestr) {
 	clearFocus();
 	if(searchstr.isEmpty()) {
 		return false;
@@ -133,7 +133,7 @@ bool OutputTextEdit::findReplace(bool backwards, bool replace, bool matchCase, c
 	return true;
 }
 
-bool OutputTextEdit::replaceAll(const QString &searchstr, const QString &replacestr, bool matchCase) {
+bool OutputTextEdit::replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase) {
 	QTextCursor cursor =  regionBounds();
 	int end = cursor.position();
 	QString cursel = cursor.selectedText();
@@ -180,7 +180,7 @@ void OutputTextEdit::setDrawWhitespace(bool drawWhitespace) {
 	document()->setDefaultTextOption(textOption);
 }
 
-void OutputTextEdit::paintEvent(QPaintEvent *e) {
+void OutputTextEdit::paintEvent(QPaintEvent* e) {
 	QPointF offset = contentOffset();
 
 	if(!m_entireRegion) {
@@ -255,7 +255,7 @@ void OutputTextEdit::paintEvent(QPaintEvent *e) {
 		// block.next().isValid(): don't draw line break on last block
 		while(block.isValid() && block.next().isValid() && top <= e->rect().bottom()) {
 			if(block.isVisible() && bottom >= e->rect().top()) {
-				QTextLayout *layout = block.layout();
+				QTextLayout* layout = block.layout();
 				// Draw hard line breaks (i.e. those not due to word wrapping)
 				QTextLine line = layout->lineAt(layout->lineCount() - 1);
 				QRectF lineRect = line.naturalTextRect().translated(offset.x(), top);

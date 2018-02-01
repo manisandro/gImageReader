@@ -71,7 +71,7 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 	}
 	filebasename = Utils::split_filename(outname).first;
 
-	zip* fzip = zip_open(outname.c_str(), ZIP_CREATE|ZIP_TRUNCATE, nullptr);
+	zip* fzip = zip_open(outname.c_str(), ZIP_CREATE | ZIP_TRUNCATE, nullptr);
 	if(!fzip) {
 		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Export failed"), _("The ODT export failed: unable to write output file."));
 		return false;
@@ -226,7 +226,7 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 
 			// -- Text styles
 			int counter = 0;
-			std::map<Glib::ustring,std::map<double,Glib::ustring>> fontStyles;
+			std::map<Glib::ustring, std::map<double, Glib::ustring>> fontStyles;
 			for(int i = 0; i < pageCount; ++i) {
 				const HOCRPage* page = hocrdocument->page(i);
 				if(page->isEnabled()) {
@@ -276,7 +276,7 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 	return success;
 }
 
-void HOCROdtExporter::writeImage(zip* fzip, std::map<const HOCRItem*,Glib::ustring>& images, const HOCRItem* item) {
+void HOCROdtExporter::writeImage(zip* fzip, std::map<const HOCRItem*, Glib::ustring>& images, const HOCRItem* item) {
 	if(!item->isEnabled()) {
 		return;
 	}
@@ -325,7 +325,7 @@ void HOCROdtExporter::writeFontFaceDecls(std::set<Glib::ustring>& families, cons
 	}
 }
 
-void HOCROdtExporter::writeFontStyles(std::map<Glib::ustring,std::map<double,Glib::ustring>>& styles, const HOCRItem* item, xmlpp::Element* parentEl, int& counter) {
+void HOCROdtExporter::writeFontStyles(std::map<Glib::ustring, std::map<double, Glib::ustring>>& styles, const HOCRItem* item, xmlpp::Element* parentEl, int& counter) {
 	if(!item->isEnabled()) {
 		return;
 	}
@@ -355,7 +355,7 @@ void HOCROdtExporter::writeFontStyles(std::map<Glib::ustring,std::map<double,Gli
 	}
 }
 
-void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, int pageNr, int dpi, std::map<Glib::ustring,std::map<double,Glib::ustring>>& fontStyleNames, std::map<const HOCRItem*,Glib::ustring>& images) {
+void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, int pageNr, int dpi, std::map<Glib::ustring, std::map<double, Glib::ustring>>& fontStyleNames, std::map<const HOCRItem*, Glib::ustring>& images) {
 	if(!item->isEnabled()) {
 		return;
 	}

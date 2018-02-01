@@ -41,7 +41,7 @@ public:
 
 private:
 	friend class AbstractSetting;
-	static std::map<Glib::ustring,AbstractSetting*> s_settings;
+	static std::map<Glib::ustring, AbstractSetting*> s_settings;
 
 	static void add(AbstractSetting* setting);
 	static void remove(const Glib::ustring& key);

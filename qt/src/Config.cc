@@ -144,7 +144,7 @@ const QList<Config::Lang> Config::LANGUAGES = {
 };
 
 QMultiMap<QString, QString> Config::buildLanguageCultureTable() {
-	QMultiMap<QString,QString> map;
+	QMultiMap<QString, QString> map;
 	map.insert("af", "af_ZA");
 	map.insert("ar", "ar_AE");
 	map.insert("ar", "ar_BH");
@@ -284,7 +284,7 @@ QMultiMap<QString, QString> Config::buildLanguageCultureTable() {
 	return map;
 }
 
-const QMultiMap<QString,QString> Config::LANGUAGE_CULTURES = Config::buildLanguageCultureTable();
+const QMultiMap<QString, QString> Config::LANGUAGE_CULTURES = Config::buildLanguageCultureTable();
 
 
 Config::Config(QWidget* parent)
@@ -319,7 +319,7 @@ Config::Config(QWidget* parent)
 	connect(ui.pushButtonRemoveLang, SIGNAL(clicked()), this, SLOT(removeLanguage()));
 	connect(ui.pushButtonAddLangOk, SIGNAL(clicked()), this, SLOT(addLanguage()));
 	connect(ui.pushButtonAddLangCancel, SIGNAL(clicked()), this, SLOT(toggleAddLanguage()));
-	connect(ui.tableWidgetAdditionalLang->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(langTableSelectionChanged(QItemSelection,QItemSelection)));
+	connect(ui.tableWidgetAdditionalLang->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this, SLOT(langTableSelectionChanged(QItemSelection, QItemSelection)));
 	connect(ui.buttonBox->button(QDialogButtonBox::Help), SIGNAL(clicked()), MAIN, SLOT(showHelp()));
 	connect(ui.lineEditLangPrefix, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditErrorState()));
 	connect(ui.lineEditLangName, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditErrorState()));
@@ -543,11 +543,11 @@ void Config::removeLanguage() {
 	}
 }
 
-void Config::updateFontButton(const QFont &font) {
+void Config::updateFontButton(const QFont& font) {
 	ui.pushButtonOutputFont->setText(QString("%1 %2").arg(font.family()).arg(font.pointSize()));
 }
 
-void Config::langTableSelectionChanged(const QItemSelection &selected, const QItemSelection &/*deselected*/) {
+void Config::langTableSelectionChanged(const QItemSelection& selected, const QItemSelection& /*deselected*/) {
 	ui.pushButtonRemoveLang->setDisabled(selected.isEmpty());
 }
 

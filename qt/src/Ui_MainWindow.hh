@@ -157,7 +157,7 @@ public:
 
 		// Spacer before app menu button
 		QWidget* toolBarMainSpacer = new QWidget(toolBarMain);
-		toolBarMainSpacer->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+		toolBarMainSpacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 		toolBarMain->addWidget(toolBarMainSpacer);
 
 		// App menu

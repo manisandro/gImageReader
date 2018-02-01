@@ -39,17 +39,17 @@ public:
 	QWidget* getUI() override {
 		return m_widget;
 	}
-	ReadSessionData* initRead(tesseract::TessBaseAPI &tess) override;
+	ReadSessionData* initRead(tesseract::TessBaseAPI& tess) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
-	void finalizeRead(ReadSessionData *data) override;
+	void finalizeRead(ReadSessionData* data) override;
 	bool getModified() const override {
 		return m_modified;
 	}
 
 public slots:
 	bool clear(bool hide = true) override;
-	void setLanguage(const Config::Lang &lang) override;
+	void setLanguage(const Config::Lang& lang) override;
 	void onVisibilityChanged(bool visible) override;
 	void open();
 	bool save(const QString& filename = "") override;
@@ -116,7 +116,7 @@ public:
 	HOCRAttributeEditor(const QString& value, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass);
 
 protected:
-	void focusOutEvent(QFocusEvent *ev);
+	void focusOutEvent(QFocusEvent* ev);
 
 private:
 	HOCRDocument* m_doc;

@@ -62,7 +62,7 @@ protected:
 		m_entry = new Gtk::Entry;
 		m_entry->set_text(property_text());
 		m_entry->set_has_frame(false);
-		m_entry->signal_editing_done().connect([=] {
+		m_entry->signal_editing_done().connect([ = ] {
 			if(!m_entry->property_editing_canceled()) {
 				edited(path, m_entry->get_text());
 			}
@@ -93,7 +93,7 @@ protected:
 			FontComboBox* combo = new FontComboBox();
 			Glib::ustring curFont = property_text();
 			combo->set_active_font(property_text());
-			combo->signal_editing_done().connect([=] {
+			combo->signal_editing_done().connect([ = ] {
 				Glib::ustring newFont = combo->get_active_font();
 				if(!combo->property_editing_canceled() && newFont != curFont) {
 					edited(path, combo->get_active_font());
@@ -110,7 +110,7 @@ protected:
 			} else {
 				combo->set_active_id((*it)[m_cols.value]);
 			}
-			combo->signal_editing_done().connect([=] {
+			combo->signal_editing_done().connect([ = ] {
 				edited(path, combo->get_active_id());
 			});
 			combo->show();
@@ -119,7 +119,7 @@ protected:
 			Gtk::Entry* entry = new Gtk::Entry;
 			entry->set_text(property_text());
 			entry->set_has_frame(false);
-			entry->signal_editing_done().connect([=] {
+			entry->signal_editing_done().connect([ = ] {
 				if(!entry->property_editing_canceled()) {
 					edited(path, entry->get_text());
 				}
@@ -159,7 +159,7 @@ public:
 	}
 
 protected:
-	bool on_button_press_event(GdkEventButton *button_event) {
+	bool on_button_press_event(GdkEventButton* button_event) {
 		bool rightclick = (button_event->type == GDK_BUTTON_PRESS && button_event->button == 3);
 
 		Gtk::TreePath path;
@@ -200,7 +200,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	m_treeView->get_selection()->set_mode(Gtk::SELECTION_MULTIPLE);
 	// First column: [checkbox][icon][text]
 	m_treeViewTextCell = Gtk::manage(new HOCRCellRendererText);
-	Gtk::TreeViewColumn *itemViewCol1 = Gtk::manage(new Gtk::TreeViewColumn(""));
+	Gtk::TreeViewColumn* itemViewCol1 = Gtk::manage(new Gtk::TreeViewColumn(""));
 	Gtk::CellRendererToggle& checkRenderer = *Gtk::manage(new Gtk::CellRendererToggle);
 	Gtk::CellRendererPixbuf& iconRenderer = *Gtk::manage(new Gtk::CellRendererPixbuf);
 	Gtk::CellRendererText& textRenderer = *m_treeViewTextCell;
@@ -212,19 +212,19 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	itemViewCol1->add_attribute(textRenderer, "text", HOCRDocument::COLUMN_TEXT);
 	itemViewCol1->add_attribute(textRenderer, "editable", HOCRDocument::COLUMN_EDITABLE);
 	itemViewCol1->add_attribute(textRenderer, "foreground", HOCRDocument::COLUMN_TEXT_COLOR);
-	CONNECT(&checkRenderer, toggled, [this](const Glib::ustring& path) {
+	CONNECT(&checkRenderer, toggled, [this](const Glib::ustring & path) {
 		Gtk::TreeIter it = m_document->get_iter(path);
 		bool prev;
 		it->get_value<bool>(HOCRDocument::COLUMN_CHECKED, prev);
 		it->set_value(HOCRDocument::COLUMN_CHECKED, !prev);
 	});
-	CONNECT(&textRenderer, edited, [this](const Glib::ustring& path, const Glib::ustring& text) {
+	CONNECT(&textRenderer, edited, [this](const Glib::ustring & path, const Glib::ustring & text) {
 		m_document->get_iter(path)->set_value(HOCRDocument::COLUMN_TEXT, text);
 	});
 	m_treeView->append_column(*itemViewCol1);
 	m_treeView->set_expander_column(*itemViewCol1);
 	// Second column: wconf, hidden by default
-	Gtk::TreeViewColumn *itemViewCol2 = Gtk::manage(new Gtk::TreeViewColumn(""));
+	Gtk::TreeViewColumn* itemViewCol2 = Gtk::manage(new Gtk::TreeViewColumn(""));
 	Gtk::CellRendererText& wconfRenderer = *Gtk::manage(new Gtk::CellRendererText);
 	itemViewCol2->pack_start(wconfRenderer, true);
 	itemViewCol2->add_attribute(wconfRenderer, "text", HOCRDocument::COLUMN_WCONF);
@@ -315,7 +315,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	CONNECT(ui.buttonClear, clicked, [this] { clear(); });
 	CONNECT(ui.buttonFindreplace, toggled, [this] { m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(ui.buttonFindreplace->get_active()); });
 	CONNECT(ui.buttonWconf, toggled, [this] { m_treeView->get_column(1)->set_visible(ui.buttonWconf->get_active());});
-	CONNECT(m_treeView, context_menu, [this](GdkEventButton* ev) {
+	CONNECT(m_treeView, context_menu, [this](GdkEventButton * ev) {
 		showTreeWidgetContextMenu(ev);
 	});
 	CONNECT(m_searchFrame, find_replace, sigc::mem_fun(this, &OutputEditorHOCR::findReplace));
@@ -343,7 +343,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&) {
 		setModified();
 	});
-	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value) {
+	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter & it, const Glib::ustring & attr, const Glib::ustring & value) {
 		updateAttributes(it, attr, value);
 		updateSourceText();
 	});
@@ -378,23 +378,23 @@ void OutputEditorHOCR::setModified() {
 	m_modified = true;
 }
 
-OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI &tess) {
+OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI& tess) {
 	tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
 	return new HOCRReadSessionData;
 }
 
-void OutputEditorHOCR::read(tesseract::TessBaseAPI &tess, ReadSessionData *data) {
+void OutputEditorHOCR::read(tesseract::TessBaseAPI& tess, ReadSessionData* data) {
 	tess.SetVariable("hocr_font_info", "true");
 	char* text = tess.GetHOCRText(data->page);
 	Utils::runInMainThreadBlocking([&] { addPage(text, *data); });
 	delete[] text;
 }
 
-void OutputEditorHOCR::readError(const Glib::ustring& errorMsg, ReadSessionData *data) {
+void OutputEditorHOCR::readError(const Glib::ustring& errorMsg, ReadSessionData* data) {
 	static_cast<HOCRReadSessionData*>(data)->errors.push_back(Glib::ustring::compose("%1[%2]: %3", data->file, data->page, errorMsg));
 }
 
-void OutputEditorHOCR::finalizeRead(ReadSessionData *data) {
+void OutputEditorHOCR::finalizeRead(ReadSessionData* data) {
 	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
 	if(!hdata->errors.empty()) {
 		Glib::ustring message = Glib::ustring::compose(_("The following pages could not be processed:\n%1"), Utils::string_join(hdata->errors, "\n"));
@@ -475,7 +475,7 @@ void OutputEditorHOCR::navigateNextPrev(bool next) {
 		if(item && item->itemClass() == target && (!misspelled || m_document->indexIsMisspelledWord(curr))) {
 			break;
 		}
-		curr = next? m_document->nextIndex(curr) : m_document->prevIndex(curr);
+		curr = next ? m_document->nextIndex(curr) : m_document->prevIndex(curr);
 	};
 	// Sets current index
 	showItemProperties(curr);
@@ -490,7 +490,7 @@ void OutputEditorHOCR::expandCollapseChildren(const Gtk::TreeIter& index, bool e
 	}
 }
 
-bool OutputEditorHOCR::showPage(const HOCRPage *page) {
+bool OutputEditorHOCR::showPage(const HOCRPage* page) {
 	return page && MAIN->getSourceManager()->addSource(Gio::File::create_for_path(page->sourceFile()), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
 }
 
@@ -551,10 +551,10 @@ void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index) {
 			std::vector<Glib::ustring> parts = Utils::string_split(attrName, ':');
 			item->set_value(m_propStoreCols.attr, attrName);
 			item->set_value(m_propStoreCols.name, parts[parts.size() - 1]);
-			item->set_value(m_propStoreCols.value, attrValueCount > 1 ? "" : *(attrValues.begin()));
+			item->set_value(m_propStoreCols.value, attrValueCount > 1 ? "" : * (attrValues.begin()));
 			item->set_value(m_propStoreCols.itemClass, itemClass);
 			item->set_value(m_propStoreCols.editable, attributeEditable(attrName));
-			item->set_value(m_propStoreCols.placeholder, attrValueCount > 1 ?_("Multiple values") : Glib::ustring());
+			item->set_value(m_propStoreCols.placeholder, attrValueCount > 1 ? _("Multiple values") : Glib::ustring());
 			item->set_value(m_propStoreCols.background, Glib::ustring("#FFF"));
 			item->set_value(m_propStoreCols.weight, static_cast<int>(Pango::WEIGHT_NORMAL));
 		}
@@ -596,7 +596,7 @@ bool OutputEditorHOCR::attributeEditable(const Glib::ustring& attribName) const 
 	return std::find(editableAttrs.begin(), editableAttrs.end(), attribName) != editableAttrs.end();
 }
 
-void OutputEditorHOCR::editAttribute(const Glib::ustring &path, const Glib::ustring &value) {
+void OutputEditorHOCR::editAttribute(const Glib::ustring& path, const Glib::ustring& value) {
 	Gtk::TreeIter treeIt = m_treeView->currentIndex();
 	Gtk::TreeIter propIt = m_propStore->get_iter(path);
 	Glib::ustring attrName = (*propIt)[m_propStoreCols.attr];
@@ -796,7 +796,7 @@ void OutputEditorHOCR::open() {
 	if(!clear(false)) {
 		return;
 	}
-	FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html","text/xml", "text/plain"}, {"*.html"}};
+	FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html", "text/xml", "text/plain"}, {"*.html"}};
 	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open hOCR File"), "", "outputdir", filter, false);
 	if(files.empty()) {
 		return;
@@ -850,12 +850,12 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 	Glib::ustring header = Glib::ustring::compose(
 	                           "<!DOCTYPE html>\n"
 	                           "<html>\n"
-							   "<head>\n"
-							   " <title>%1</title>\n"
-							   " <meta charset=\"utf-8\" /> \n"
-							   " <meta name='ocr-system' content='tesseract %2' />\n"
-							   " <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
-							   "</head>\n", Glib::path_get_basename(outname), tess.Version());
+	                           "<head>\n"
+	                           " <title>%1</title>\n"
+	                           " <meta charset=\"utf-8\" /> \n"
+	                           " <meta name='ocr-system' content='tesseract %2' />\n"
+	                           " <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
+	                           "</head>\n", Glib::path_get_basename(outname), tess.Version());
 	m_document->convertSourcePaths(Glib::path_get_dirname(outname), false);
 	Glib::ustring body = m_document->toHTML();
 	m_document->convertSourcePaths(Glib::path_get_dirname(outname), true);
@@ -899,7 +899,7 @@ bool OutputEditorHOCR::clear(bool hide) {
 		return true;
 	}
 	if(getModified()) {
-		int response = Utils::question_dialog(_("Output not saved"), _("Save output before proceeding?"), Utils::Button::Save|Utils::Button::Discard|Utils::Button::Cancel);
+		int response = Utils::question_dialog(_("Output not saved"), _("Save output before proceeding?"), Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel);
 		if(response == Utils::Button::Save) {
 			if(!save()) {
 				return false;
@@ -922,7 +922,7 @@ bool OutputEditorHOCR::clear(bool hide) {
 	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&) {
 		setModified();
 	});
-	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value) {
+	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter & it, const Glib::ustring & attr, const Glib::ustring & value) {
 		updateAttributes(it, attr, value);
 		updateSourceText();
 	});
@@ -934,12 +934,13 @@ bool OutputEditorHOCR::clear(bool hide) {
 	ui.buttonExport->set_sensitive(false);
 	ui.boxNavigation->set_sensitive(false);
 	m_filebasename.clear();
-	if(hide)
+	if(hide) {
 		MAIN->setOutputPaneVisible(false);
+	}
 	return true;
 }
 
-void OutputEditorHOCR::setLanguage(const Config::Lang &lang) {
+void OutputEditorHOCR::setLanguage(const Config::Lang& lang) {
 	m_document->setDefaultLanguage(lang.code);
 }
 

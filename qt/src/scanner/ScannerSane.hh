@@ -76,12 +76,12 @@ private:
 	void failScan(const QString& errorString);
 
 	const SANE_Option_Descriptor* getOptionByName(const QMap<QString, int>& options, SANE_Handle, const QString& name, int& index);
-	bool setDefaultOption(SANE_Handle m_handle, const SANE_Option_Descriptor *option, SANE_Int option_index);
-	void setBoolOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool*result);
+	bool setDefaultOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index);
+	void setBoolOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, bool value, bool* result);
 	void setIntOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, int value, int* result);
 	void setFixedOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, double value, double* result);
 	bool setStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const QString& value, QString* result);
-	bool setConstrainedStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const QStringList& values, QString *result);
+	bool setConstrainedStringOption(SANE_Handle m_handle, const SANE_Option_Descriptor* option, SANE_Int option_index, const QStringList& values, QString* result);
 	void logOption(SANE_Int index, const SANE_Option_Descriptor* option);
 
 	static QString getFrameModeString(SANE_Frame frame);

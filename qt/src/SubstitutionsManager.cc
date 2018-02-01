@@ -72,7 +72,7 @@ SubstitutionsManager::SubstitutionsManager(QWidget* parent)
 	m_tableWidget->verticalHeader()->setVisible(false);
 	m_tableWidget->setHorizontalHeaderLabels(QStringList() << _("Search for") << _("Replace with"));
 
-	QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Apply|QDialogButtonBox::Close);
+	QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Apply | QDialogButtonBox::Close);
 
 	QVBoxLayout* layout = new QVBoxLayout(this);
 	layout->setMargin(4);
@@ -89,7 +89,7 @@ SubstitutionsManager::SubstitutionsManager(QWidget* parent)
 	connect(buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(emitApplySubstitutions()));
 	connect(buttonBox->button(QDialogButtonBox::Close), SIGNAL(clicked()), this, SLOT(hide()));
 	connect(m_removeAction, SIGNAL(triggered()), this, SLOT(removeRows()));
-	connect(m_tableWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onTableSelectionChanged(QItemSelection,QItemSelection)));
+	connect(m_tableWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this, SLOT(onTableSelectionChanged(QItemSelection, QItemSelection)));
 
 	ADD_SETTING(TableSetting("substitutionslist", m_tableWidget));
 }
@@ -193,7 +193,7 @@ void SubstitutionsManager::onTableSelectionChanged(const QItemSelection& selecte
 }
 
 void SubstitutionsManager::emitApplySubstitutions() {
-	QMap<QString,QString> substitutions;
+	QMap<QString, QString> substitutions;
 	for(int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row) {
 		substitutions.insert(m_tableWidget->item(row, 0)->text(), m_tableWidget->item(row, 1)->text());
 	}

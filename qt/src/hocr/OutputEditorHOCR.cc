@@ -50,7 +50,7 @@
 
 class OutputEditorHOCR::HTMLHighlighter : public QSyntaxHighlighter {
 public:
-	HTMLHighlighter(QTextDocument *document) : QSyntaxHighlighter(document) {
+	HTMLHighlighter(QTextDocument* document) : QSyntaxHighlighter(document) {
 		mFormatMap[NormalState].setForeground(QColor(Qt::black));
 		mFormatMap[InTag].setForeground(QColor(75, 75, 255));
 		mFormatMap[InAttrKey].setForeground(QColor(75, 200, 75));
@@ -75,10 +75,10 @@ private:
 		bool addMatched; // add matched length to pos
 	};
 
-	QMap<State,QTextCharFormat> mFormatMap;
-	QMap<State,QList<Rule>> mStateMap;
+	QMap<State, QTextCharFormat> mFormatMap;
+	QMap<State, QList<Rule>> mStateMap;
 
-	void highlightBlock(const QString &text) override {
+	void highlightBlock(const QString& text) override {
 		int pos = 0;
 		int len = text.length();
 		State state = static_cast<State>(previousBlockState());
@@ -110,11 +110,11 @@ private:
 HOCRAttributeEditor::HOCRAttributeEditor(const QString& value, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass)
 	: QLineEdit(value), m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_origValue(value), m_attrItemClass(attrItemClass) {
 	setFrame(false);
-	connect(m_doc, SIGNAL(itemAttributeChanged(QModelIndex,QString, QString)), this, SLOT(updateValue(QModelIndex,QString, QString)));
+	connect(m_doc, SIGNAL(itemAttributeChanged(QModelIndex, QString, QString)), this, SLOT(updateValue(QModelIndex, QString, QString)));
 	connect(this, SIGNAL(textChanged(QString)), this, SLOT(validateChanges()));
 }
 
-void HOCRAttributeEditor::focusOutEvent(QFocusEvent *ev) {
+void HOCRAttributeEditor::focusOutEvent(QFocusEvent* ev) {
 	QLineEdit::focusOutEvent(ev);
 	validateChanges();
 }
@@ -145,10 +145,10 @@ void HOCRAttributeEditor::validateChanges() {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-HOCRAttributeCheckbox::HOCRAttributeCheckbox(Qt::CheckState value, HOCRDocument *doc, const QModelIndex &itemIndex, const QString &attrName, const QString &attrItemClass)
+HOCRAttributeCheckbox::HOCRAttributeCheckbox(Qt::CheckState value, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass)
 	: m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_attrItemClass(attrItemClass) {
 	setCheckState(value);
-	connect(m_doc, SIGNAL(itemAttributeChanged(QModelIndex,QString, QString)), this, SLOT(updateValue(QModelIndex,QString, QString)));
+	connect(m_doc, SIGNAL(itemAttributeChanged(QModelIndex, QString, QString)), this, SLOT(updateValue(QModelIndex, QString, QString)));
 	connect(this, SIGNAL(stateChanged(int)), this, SLOT(valueChanged()));
 }
 
@@ -170,15 +170,15 @@ class HOCRTextDelegate : public QStyledItemDelegate {
 public:
 	using QStyledItemDelegate::QStyledItemDelegate;
 
-	QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &/* option */, const QModelIndex &/* index */) const {
+	QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& /* option */, const QModelIndex& /* index */) const {
 		return new QLineEdit(parent);
 	}
-	void setEditorData(QWidget *editor, const QModelIndex &index) const {
+	void setEditorData(QWidget* editor, const QModelIndex& index) const {
 		m_currentIndex = index;
 		m_currentEditor = static_cast<QLineEdit*>(editor);
 		static_cast<QLineEdit*>(editor)->setText(index.model()->data(index, Qt::EditRole).toString());
 	}
-	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const {
+	void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const {
 		model->setData(index, static_cast<QLineEdit*>(editor)->text(), Qt::EditRole);
 	}
 	const QModelIndex& getCurrentIndex() const {
@@ -234,22 +234,22 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(setVisible(bool)));
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(clear()));
 	connect(ui.actionToggleWConf, SIGNAL(toggled(bool)), this, SLOT(toggleWConfColumn(bool)));
-	connect(ui.searchFrame, SIGNAL(findReplace(QString,QString,bool,bool,bool)), this, SLOT(findReplace(QString,QString,bool,bool,bool)));
-	connect(ui.searchFrame, SIGNAL(replaceAll(QString,QString,bool)), this, SLOT(replaceAll(QString,QString,bool)));
-	connect(ui.searchFrame, SIGNAL(applySubstitutions(QMap<QString,QString>,bool)), this, SLOT(applySubstitutions(QMap<QString,QString>,bool)));
+	connect(ui.searchFrame, SIGNAL(findReplace(QString, QString, bool, bool, bool)), this, SLOT(findReplace(QString, QString, bool, bool, bool)));
+	connect(ui.searchFrame, SIGNAL(replaceAll(QString, QString, bool)), this, SLOT(replaceAll(QString, QString, bool)));
+	connect(ui.searchFrame, SIGNAL(applySubstitutions(QMap<QString, QString>, bool)), this, SLOT(applySubstitutions(QMap<QString, QString>, bool)));
 	connect(ConfigSettings::get<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(ConfigSettings::get<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
-	connect(ui.treeViewHOCR->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(showItemProperties(QModelIndex)));
+	connect(ui.treeViewHOCR->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(showItemProperties(QModelIndex)));
 	connect(ui.treeViewHOCR, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showTreeWidgetContextMenu(QPoint)));
 	connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(updateSourceText()));
 	connect(m_tool, SIGNAL(bboxChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
 	connect(m_tool, SIGNAL(bboxDrawn(QRect)), this, SLOT(addGraphicRegion(QRect)));
 	connect(m_tool, SIGNAL(positionPicked(QPoint)), this, SLOT(pickItem(QPoint)));
-	connect(m_document, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)), this, SLOT(setModified()));
-	connect(m_document, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(setModified()));
-	connect(m_document, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(setModified()));
-	connect(m_document, SIGNAL(itemAttributeChanged(QModelIndex,QString,QString)), this, SLOT(setModified()));
-	connect(m_document, SIGNAL(itemAttributeChanged(QModelIndex,QString,QString)), this, SLOT(updateSourceText()));
+	connect(m_document, SIGNAL(dataChanged(QModelIndex, QModelIndex, QVector<int>)), this, SLOT(setModified()));
+	connect(m_document, SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(setModified()));
+	connect(m_document, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(setModified()));
+	connect(m_document, SIGNAL(itemAttributeChanged(QModelIndex, QString, QString)), this, SLOT(setModified()));
+	connect(m_document, SIGNAL(itemAttributeChanged(QModelIndex, QString, QString)), this, SLOT(updateSourceText()));
 	connect(ui.comboBoxNavigate, SIGNAL(currentIndexChanged(int)), this, SLOT(navigateTargetChanged()));
 	connect(ui.actionNavigateNext, SIGNAL(triggered(bool)), this, SLOT(navigateNext()));
 	connect(ui.actionNavigatePrev, SIGNAL(triggered(bool)), this, SLOT(navigatePrev()));
@@ -278,23 +278,23 @@ void OutputEditorHOCR::setModified() {
 	m_modified = true;
 }
 
-OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI &tess) {
+OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI& tess) {
 	tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
 	return new HOCRReadSessionData;
 }
 
-void OutputEditorHOCR::read(tesseract::TessBaseAPI &tess, ReadSessionData *data) {
+void OutputEditorHOCR::read(tesseract::TessBaseAPI& tess, ReadSessionData* data) {
 	tess.SetVariable("hocr_font_info", "true");
 	char* text = tess.GetHOCRText(data->page);
 	QMetaObject::invokeMethod(this, "addPage", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(text)), Q_ARG(ReadSessionData, *data));
 	delete[] text;
 }
 
-void OutputEditorHOCR::readError(const QString& errorMsg, ReadSessionData *data) {
+void OutputEditorHOCR::readError(const QString& errorMsg, ReadSessionData* data) {
 	static_cast<HOCRReadSessionData*>(data)->errors.append(QString("%1[%2]: %3").arg(data->file).arg(data->page).arg(errorMsg));
 }
 
-void OutputEditorHOCR::finalizeRead(ReadSessionData *data) {
+void OutputEditorHOCR::finalizeRead(ReadSessionData* data) {
 	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
 	if(!hdata->errors.isEmpty()) {
 		QString message = QString(_("The following pages could not be processed:\n%1").arg(hdata->errors.join("\n")));
@@ -364,13 +364,13 @@ void OutputEditorHOCR::navigateNextPrev(bool next) {
 	if(!start.isValid()) {
 		start = m_document->index(0, 0);
 	}
-	QModelIndex curr = next? m_document->nextIndex(start) : m_document->prevIndex(start);
+	QModelIndex curr = next ? m_document->nextIndex(start) : m_document->prevIndex(start);
 	while(curr != start) {
 		const HOCRItem* item = m_document->itemAtIndex(curr);
 		if(item && item->itemClass() == target && (!misspelled || m_document->indexIsMisspelledWord(curr))) {
 			break;
 		}
-		curr = next? m_document->nextIndex(curr) : m_document->prevIndex(curr);
+		curr = next ? m_document->nextIndex(curr) : m_document->prevIndex(curr);
 	};
 	ui.treeViewHOCR->setCurrentIndex(curr);
 }
@@ -385,7 +385,7 @@ void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool exp
 	}
 }
 
-bool OutputEditorHOCR::showPage(const HOCRPage *page) {
+bool OutputEditorHOCR::showPage(const HOCRPage* page) {
 	return page && MAIN->getSourceManager()->addSource(page->sourceFile(), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
 }
 
@@ -426,7 +426,7 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index) {
 	for(auto it = occurences.begin(), itEnd = occurences.end(); it != itEnd; ++it) {
 		ui.tableWidgetProperties->insertRow(++row);
 		QTableWidgetItem* sectionItem = new QTableWidgetItem(it.key());
-		sectionItem->setFlags(sectionItem->flags() & ~(Qt::ItemIsEditable|Qt::ItemIsSelectable));
+		sectionItem->setFlags(sectionItem->flags() & ~(Qt::ItemIsEditable | Qt::ItemIsSelectable));
 		sectionItem->setBackgroundColor(Qt::lightGray);
 		QFont sectionFont = sectionItem->font();
 		sectionFont.setBold(true);
@@ -442,7 +442,7 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index) {
 			QTableWidgetItem* attrNameItem = new QTableWidgetItem(parts.last());
 			attrNameItem->setFlags(attrNameItem->flags() & ~Qt::ItemIsEditable);
 			ui.tableWidgetProperties->setItem(row, 0, attrNameItem);
-			ui.tableWidgetProperties->setCellWidget(row, 1, createAttrWidget(index, attrName, attrValueCount == 1 ? *(attrValues.begin()) : "", it.key(), attrValueCount > 1));
+			ui.tableWidgetProperties->setCellWidget(row, 1, createAttrWidget(index, attrName, attrValueCount == 1 ? * (attrValues.begin()) : "", it.key(), attrValueCount > 1));
 		}
 	}
 
@@ -528,7 +528,7 @@ void OutputEditorHOCR::addGraphicRegion(const QRect& bbox) {
 	}
 }
 
-void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
+void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 	QModelIndexList indices = ui.treeViewHOCR->selectionModel()->selectedRows();
 	int nIndices = indices.size();
 	if(nIndices > 1) {
@@ -577,7 +577,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint &point) {
 			newIndex = m_document->swapItems(indices.first().parent(), rows.first(), rows.last());
 		}
 		if(newIndex.isValid()) {
-		ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect);
+			ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect);
 			showItemProperties(newIndex);
 		}
 		ui.treeViewHOCR->selectionModel()->blockSignals(false);
@@ -789,12 +789,13 @@ bool OutputEditorHOCR::clear(bool hide) {
 	m_tool->clearSelection();
 	m_modified = false;
 	m_filebasename.clear();
-	if(hide)
+	if(hide) {
 		MAIN->setOutputPaneVisible(false);
+	}
 	return true;
 }
 
-void OutputEditorHOCR::setLanguage(const Config::Lang &lang) {
+void OutputEditorHOCR::setLanguage(const Config::Lang& lang) {
 	m_document->setDefaultLanguage(lang.code);
 }
 

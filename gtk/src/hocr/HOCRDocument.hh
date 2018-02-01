@@ -145,7 +145,7 @@ public:
 	// attrname : attrvalue : occurences
 	typedef std::map<Glib::ustring, std::map<Glib::ustring, int>> AttrOccurenceMap_t;
 
-	HOCRItem(const xmlpp::Element* element, HOCRPage* page, HOCRItem *parent, int index = -1);
+	HOCRItem(const xmlpp::Element* element, HOCRPage* page, HOCRItem* parent, int index = -1);
 	virtual ~HOCRItem();
 	HOCRPage* page() const {
 		return m_pageItem;
@@ -181,8 +181,8 @@ public:
 	}
 	Glib::ustring getAttribute(const Glib::ustring& key) const;
 	Glib::ustring getTitleAttribute(const Glib::ustring& key) const;
-	std::map<Glib::ustring,Glib::ustring> getAllAttributes() const;
-	std::map<Glib::ustring,Glib::ustring> getAttributes(const std::vector<Glib::ustring>& names) const;
+	std::map<Glib::ustring, Glib::ustring> getAllAttributes() const;
+	std::map<Glib::ustring, Glib::ustring> getAttributes(const std::vector<Glib::ustring>& names) const;
 	void getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring> > >& occurences) const;
 	Glib::ustring toHtml(int indent = 0) const;
 	int baseLine() const;
@@ -207,7 +207,7 @@ public:
 	void setEnabled(bool enabled) {
 		m_enabled = enabled;
 	}
-	void setText(const Glib::ustring& newText){
+	void setText(const Glib::ustring& newText) {
 		m_text = newText;
 	}
 	void setAttribute(const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass = Glib::ustring());
@@ -219,7 +219,7 @@ public:
 protected:
 	friend class HOCRPage;
 
-	static std::map<Glib::ustring,Glib::ustring> s_langCache;
+	static std::map<Glib::ustring, Glib::ustring> s_langCache;
 
 	Glib::ustring m_text;
 	bool m_bold;

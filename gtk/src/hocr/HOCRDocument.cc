@@ -601,7 +601,7 @@ void HOCRDocument::takeItem(HOCRItem* item) {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-std::map<Glib::ustring,Glib::ustring> HOCRItem::s_langCache = std::map<Glib::ustring,Glib::ustring>();
+std::map<Glib::ustring, Glib::ustring> HOCRItem::s_langCache = std::map<Glib::ustring, Glib::ustring>();
 
 std::map<Glib::ustring, Glib::ustring> HOCRItem::deserializeAttrGroup(const Glib::ustring& string) {
 	std::map<Glib::ustring, Glib::ustring> attrs;
@@ -625,10 +625,12 @@ Glib::ustring HOCRItem::trimmedWord(const Glib::ustring& word, Glib::ustring* pr
 	static const Glib::RefPtr<Glib::Regex> wordRe = Glib::Regex::create("^(\\W*)(\\w*)(\\W*)$");
 	Glib::MatchInfo matchInfo;
 	if(wordRe->match(word, matchInfo)) {
-		if(prefix)
+		if(prefix) {
 			*prefix = matchInfo.fetch(1);
-		if(suffix)
+		}
+		if(suffix) {
 			*suffix = matchInfo.fetch(3);
+		}
 		return matchInfo.fetch(2);
 	}
 	return word;
@@ -674,7 +676,7 @@ HOCRItem::HOCRItem(const xmlpp::Element* element, HOCRPage* page, HOCRItem* pare
 }
 
 HOCRItem::~HOCRItem() {
-	std::for_each( m_childItems.begin(), m_childItems.end(), [](HOCRItem* item) {
+	std::for_each( m_childItems.begin(), m_childItems.end(), [](HOCRItem * item) {
 		delete item;
 	});
 }
@@ -696,12 +698,12 @@ void HOCRItem::insertChild(HOCRItem* child, int i) {
 	}
 }
 
-void HOCRItem::removeChild(HOCRItem *child) {
+void HOCRItem::removeChild(HOCRItem* child) {
 	takeChild(child);
 	delete child;
 }
 
-void HOCRItem::takeChild(HOCRItem *child) {
+void HOCRItem::takeChild(HOCRItem* child) {
 	int idx = child->index();
 	m_childItems.erase(m_childItems.begin() + idx);
 	for(int i = idx, n = m_childItems.size(); i < n ; ++i) {
@@ -715,8 +717,8 @@ std::vector<HOCRItem*> HOCRItem::takeChildren() {
 	return children;
 }
 
-std::map<Glib::ustring,Glib::ustring> HOCRItem::getAllAttributes() const {
-	std::map<Glib::ustring,Glib::ustring> attrValues;
+std::map<Glib::ustring, Glib::ustring> HOCRItem::getAllAttributes() const {
+	std::map<Glib::ustring, Glib::ustring> attrValues;
 	for(auto it = m_attrs.begin(), itEnd = m_attrs.end(); it != itEnd; ++it) {
 		attrValues.insert(*it);
 	}
@@ -733,8 +735,8 @@ std::map<Glib::ustring,Glib::ustring> HOCRItem::getAllAttributes() const {
 	return attrValues;
 }
 
-std::map<Glib::ustring,Glib::ustring> HOCRItem::getAttributes(const std::vector<Glib::ustring>& names) const {
-	std::map<Glib::ustring,Glib::ustring> attrValues;
+std::map<Glib::ustring, Glib::ustring> HOCRItem::getAttributes(const std::vector<Glib::ustring>& names) const {
+	std::map<Glib::ustring, Glib::ustring> attrValues;
 	for(const Glib::ustring& attrName : names) {
 		std::vector<Glib::ustring> parts = Utils::string_split(attrName, ':');
 		if(parts.size() > 1) {
@@ -752,7 +754,7 @@ std::map<Glib::ustring,Glib::ustring> HOCRItem::getAttributes(const std::vector<
 }
 
 void HOCRItem::getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring>>>& occurences) const {
-	static std::map<Glib::ustring,std::vector<Glib::ustring>> s_propagatableAttributes = {
+	static std::map<Glib::ustring, std::vector<Glib::ustring>> s_propagatableAttributes = {
 		{"ocr_line", {"title:baseline"}},
 		{"ocrx_word", {"lang", "title:x_fsize", "title:x_font", "bold", "italic"}}
 	};
@@ -916,7 +918,7 @@ HOCRPage::HOCRPage(const xmlpp::Element* element, int pageId, const Glib::ustrin
 				m_childItems.pop_back();
 			} else {
 				item->setAttribute("itemClass", "ocr_graphic");
-				std::for_each(item->m_childItems.begin(), item->m_childItems.end(), [](HOCRItem* item) {
+				std::for_each(item->m_childItems.begin(), item->m_childItems.end(), [](HOCRItem * item) {
 					delete item;
 				});
 				item->m_childItems.clear();
@@ -931,7 +933,7 @@ Glib::ustring HOCRPage::title() const {
 	return Glib::ustring::compose("%1 [%2]", basename, m_pageNr);
 }
 
-void HOCRPage::convertSourcePath(const std::string &basepath, bool absolute) {
+void HOCRPage::convertSourcePath(const std::string& basepath, bool absolute) {
 	m_sourceFile = absolute ? Utils::make_absolute_path(m_sourceFile, basepath) : Utils::make_relative_path(m_sourceFile, basepath);
 	m_titleAttrs["image"] = Glib::ustring::compose("'%1'", m_sourceFile);
 }

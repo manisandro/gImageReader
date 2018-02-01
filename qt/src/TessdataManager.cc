@@ -44,7 +44,7 @@
 #include "TessdataManager.hh"
 #include "Utils.hh"
 
-TessdataManager::TessdataManager(QWidget *parent)
+TessdataManager::TessdataManager(QWidget* parent)
 	: QDialog(parent) {
 	setWindowTitle(_("Tessdata Manager"));
 	setLayout(new QVBoxLayout());
@@ -130,7 +130,7 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 		return false;
 	}
 
-	QVector<QPair<QString,QString>> extraFiles;
+	QVector<QPair<QString, QString>> extraFiles;
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 	ok = false;
 	json = parser.parse( data, &ok ).toList();
@@ -155,16 +155,16 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 		QString url = treeObj.value("download_url").toString();
 #endif
 		if(name.endsWith(".traineddata")) {
-			m_languageFiles[name.left(name.indexOf("."))].append({name,url});
+			m_languageFiles[name.left(name.indexOf("."))].append({name, url});
 		} else {
 			// Delay decision to determine whether file is a supplementary language file
 			extraFiles.append(qMakePair(name, url));
 		}
 	}
-	for(const QPair<QString,QString>& extraFile : extraFiles) {
+	for(const QPair<QString, QString>& extraFile : extraFiles) {
 		QString lang = extraFile.first.left(extraFile.first.indexOf("."));
 		if(m_languageFiles.contains(lang)) {
-			m_languageFiles[lang].append({extraFile.first,extraFile.second});
+			m_languageFiles[lang].append({extraFile.first, extraFile.second});
 		}
 	}
 
