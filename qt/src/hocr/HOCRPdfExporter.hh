@@ -63,6 +63,9 @@ private:
 		virtual void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) = 0;
 		virtual double getAverageCharWidth() const = 0;
 		virtual double getTextWidth(const QString& text) const = 0;
+		virtual bool createPage(double /*width*/, double /*height*/, double /*offsetX*/, double /*offsetY*/) { return true; }
+		virtual void finishPage() {}
+		virtual bool finishDocument(QString& /*errMsg*/) {}
 	protected:
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 		QVector<QRgb> createGray8Table() const {
@@ -98,7 +101,8 @@ private:
 	DisplayerToolHOCR* m_displayerTool;
 
 	PDFSettings getPdfSettings() const;
-	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale = 1.);
+	PDFPainter* createPoDoFoPrinter(const QString& filename, const QFont& defaultFont, QString& errMsg);
+	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu, double imgScale = 1.);
 
 private slots:
 	void importMetadataFromSource();

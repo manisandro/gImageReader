@@ -131,11 +131,11 @@ public:
 class HOCRPdfExporter::PoDoFoPDFPainter : public HOCRPdfExporter::PDFPainter {
 public:
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const QString& defaultFontFamily, double defaultFontSize)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const QString& defaultFontFamily, double defaultFontSize)
 #else
-	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfPainter* painter, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const QString& defaultFontFamily, double defaultFontSize)
+	PoDoFoPDFPainter(PoDoFo::PdfStreamedDocument* document, PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const QString& defaultFontFamily, double defaultFontSize)
 #endif
-		: m_document(document), m_painter(painter), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontFamily(defaultFontFamily), m_defaultFontSize(defaultFontSize) {
+		: m_document(document), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontFamily(defaultFontFamily), m_defaultFontSize(defaultFontSize) {
 	}
 	~PoDoFoPDFPainter() {
 #if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
@@ -144,37 +144,41 @@ public:
 		delete m_document;
 		// Fonts are deleted by the internal PoDoFo font cache of the document
 	}
-	void setPage(PoDoFo::PdfPage* page, double scaleFactor, double offsetX = 0.0, double offsetY = 0.0) {
-		m_painter->SetPage(page);
-		m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
-		m_painter->SetFont(m_defaultFont);
+	bool createPage(double width, double height, double offsetX, double offsetY) override {
+		PoDoFo::PdfPage* pdfpage = m_document->CreatePage(PoDoFo::PdfRect(0, 0, width, height));
+		m_painter.SetPage(pdfpage);
+		m_pageHeight = m_painter.GetPage()->GetPageSize().GetHeight();
+		m_painter.SetFont(m_defaultFont);
 		if(m_defaultFontSize > 0) {
-			m_painter->GetFont()->SetFontSize(m_defaultFontSize);
+			m_painter.GetFont()->SetFontSize(m_defaultFontSize);
 		}
-		m_scaleFactor = scaleFactor;
 		m_offsetX = offsetX;
 		m_offsetY = offsetY;
+		return true;
 	}
-	bool finalize(QString* errMsg) {
+	void finishPage() override {
+		m_painter.FinishPage();
+	}
+	bool finishDocument(QString& errMsg) override {
 		try {
 			m_document->Close();
 		} catch(PoDoFo::PdfError& e) {
-			*errMsg = e.what();
+			errMsg = e.what();
 			return false;
 		}
 		return true;
 	}
 	void setFontFamily(const QString& family, bool bold, bool italic) override {
-		float curSize = m_painter->GetFont()->GetFontSize();
-		m_painter->SetFont(getFont(family, bold, italic));
-		m_painter->GetFont()->SetFontSize(curSize);
+		float curSize = m_painter.GetFont()->GetFontSize();
+		m_painter.SetFont(getFont(family, bold, italic));
+		m_painter.GetFont()->SetFontSize(curSize);
 	}
 	void setFontSize(double pointSize) override {
-		m_painter->GetFont()->SetFontSize(pointSize);
+		m_painter.GetFont()->SetFontSize(pointSize);
 	}
 	void drawText(double x, double y, const QString& text) override {
 		PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.toUtf8().data()));
-		m_painter->DrawText(m_offsetX + x * m_scaleFactor, m_pageHeight - m_offsetY - y * m_scaleFactor, pdfString);
+		m_painter.DrawText(m_offsetX + x, m_pageHeight - m_offsetY - y, pdfString);
 	}
 	void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) override {
 		QImage img = convertedImage(image, settings.colorFormat, settings.conversionFlags);
@@ -222,22 +226,22 @@ public:
 			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<char*>(encoded), encodedLen);
 			pdfImage.SetImageDataRaw(img.width(), img.height(), sampleSize, &is);
 		}
-		m_painter->DrawImage(m_offsetX + bbox.x() * m_scaleFactor, m_pageHeight - m_offsetY - (bbox.y() + bbox.height()) * m_scaleFactor,
-		                     &pdfImage, m_scaleFactor * bbox.width() / double(image.width()), m_scaleFactor * bbox.height() / double(image.height()));
+		m_painter.DrawImage(m_offsetX + bbox.x(), m_pageHeight - m_offsetY - (bbox.y() + bbox.height()),
+							 &pdfImage, bbox.width() / double(image.width()), bbox.height() / double(image.height()));
 	}
 	double getAverageCharWidth() const override {
-		return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x')) / m_scaleFactor;
+		return m_painter.GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x'));
 	}
 	double getTextWidth(const QString& text) const override {
 		PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.toUtf8().data()));
-		return m_painter->GetFont()->GetFontMetrics()->StringWidth(pdfString) / m_scaleFactor;
+		return m_painter.GetFont()->GetFontMetrics()->StringWidth(pdfString);
 	}
 
 private:
 	QFontDatabase m_fontDatabase;
 	QMap<QString, PoDoFo::PdfFont*> m_fontCache;
+	PoDoFo::PdfPainter m_painter;
 	PoDoFo::PdfStreamedDocument* m_document;
-	PoDoFo::PdfPainter* m_painter;
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 	const PoDoFo::PdfEncoding* m_pdfFontEncoding;
 #else
@@ -246,7 +250,6 @@ private:
 	PoDoFo::PdfFont* m_defaultFont;
 	QString m_defaultFontFamily;
 	double m_defaultFontSize = -1.0;
-	double m_scaleFactor = 1.0;
 	double m_pageHeight = 0.0;
 	double m_offsetX = 0.0;
 	double m_offsetY = 0.0;
@@ -393,14 +396,8 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	MAIN->getDisplayer()->scene()->addItem(m_preview);
 
 	bool accepted = false;
-	PoDoFo::PdfStreamedDocument* document = nullptr;
-	QString defaultFontFamily;
-	PoDoFo::PdfFont* defaultPdfFont = nullptr;
-#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
-#else
-	PoDoFo::PdfEncoding* pdfFontEncoding = new PoDoFo::PdfIdentityEncoding;
-#endif
+	PDFPainter* painter = nullptr;
+	int pageCount = m_hocrdocument->pageCount();
 
 	QString outname;
 	while(true) {
@@ -432,41 +429,17 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 		}
 		filebasename = QFileInfo(outname).completeBaseName();
 
-		try {
-			PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(ui.lineEditPasswordOpen->text().toStdString(),
-			                              ui.lineEditPasswordOpen->text().toStdString(),
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
-			                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
-			                              PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
-
-			PoDoFo::EPdfVersion pdfVersion = static_cast<PoDoFo::EPdfVersion>(ui.comboBoxPdfVersion->itemData(ui.comboBoxPdfVersion->currentIndex()).toInt());
-			document = new PoDoFo::PdfStreamedDocument(outname.toLocal8Bit().data(), pdfVersion, encrypt);
-		} catch(PoDoFo::PdfError& err) {
-			QMessageBox::critical(MAIN, _("Failed to create output"), _("Check that you have writing permissions in the selected folder. The returned error was: %1").arg(err.what()));
-			continue;
-		}
-
-		// Attempt to load the default/fallback font to ensure it is valid
 		QFont defaultFont = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont() : ui.comboBoxFallbackFontFamily->currentFont();
-		QFontInfo info(defaultFont);
-		try {
-#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-			defaultPdfFont = document->CreateFontSubset(info.family().toLocal8Bit().data(), false, false, false, pdfFontEncoding);
-#else
-			defaultPdfFont = document->CreateFontSubset(info.family().toLocal8Bit().data(), false, false, pdfFontEncoding);
-#endif
-		} catch(PoDoFo::PdfError& err) {
-			QMessageBox::critical(MAIN, _("Error"), _("The PDF library could not load the font '%1': %2.").arg(defaultFont.family()).arg(err.what()));
+		defaultFont.setPointSize(ui.checkBoxFontSize->isChecked() ? ui.spinBoxFontSize->value() : 0);
+
+		QString errMsg;
+
+		painter = createPoDoFoPrinter(outname, defaultFont, errMsg);
+
+		if(!painter) {
+			QMessageBox::critical(MAIN, _("Failed to create output"), _("Failed to create output. The returned error was: %1").arg(errMsg));
 			continue;
 		}
-		defaultFontFamily = defaultFont.family();
-
 		break;
 	}
 
@@ -478,10 +451,11 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	}
 
 	PDFSettings pdfSettings = getPdfSettings();
-
+	int outputDpi = ui.spinBoxDpi->value();
 	QString paperSize = ui.comboBoxPaperSize->itemData(ui.comboBoxPaperSize->currentIndex()).toString();
 
 	double pageWidth, pageHeight;
+	// Page dimensions are in points: 1 in = 72 pt
 	if(paperSize == "custom") {
 		pageWidth = ui.lineEditPaperWidth->text().toDouble() * 72.0;
 		pageHeight = ui.lineEditPaperHeight->text().toDouble() * 72.0;
@@ -497,57 +471,110 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 		pageHeight = inchSize.height * 72.0;
 	}
 
-	PoDoFo::PdfPainter painter;
-	PoDoFoPDFPainter pdfprinter(document, &painter, pdfFontEncoding, defaultPdfFont, defaultFontFamily, pdfSettings.fontSize);
-
-	QStringList failed;
-	int pageCount = m_hocrdocument->pageCount();
-
 	MainWindow::ProgressMonitor monitor(pageCount);
 	MAIN->showProgress(&monitor);
-	Utils::busyTask([&] {
+	QString errMsg;
+	bool success = Utils::busyTask([&] {
 		for(int i = 0; i < pageCount; ++i) {
 			if(monitor.cancelled()) {
+				errMsg = _("The operation was cancelled");
 				return false;
 			}
 			const HOCRPage* page = m_hocrdocument->page(i);
 			if(page->isEnabled()) {
 				QRect bbox = page->bbox();
 				int sourceDpi = page->resolution();
-				int outputDpi = ui.spinBoxDpi->value();
 				bool success = false;
 				QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, page->sourceFile()), Q_ARG(int, page->pageNr()), Q_ARG(int, outputDpi), Q_ARG(double, page->angle()));
 				if(success) {
-					double docScale = (72.0 / sourceDpi);
+					// [pt] = 72 * [in]
+					// [in] = 1 / dpi * [px]
+					// => [pt] = 72 / dpi * [px]
+					double px2pt = (72.0 / sourceDpi);
 					double imgScale = double(outputDpi) / sourceDpi;
 					if(paperSize == "source") {
-						pageWidth = bbox.width() * docScale;
-						pageHeight = bbox.height() * docScale;
+						pageWidth = bbox.width() * px2pt;
+						pageHeight = bbox.height() * px2pt;
 					}
-					PoDoFo::PdfPage* pdfpage = document->CreatePage(PoDoFo::PdfRect(0, 0, pageWidth, pageHeight));
-					double offsetX = 0.5 * (pageWidth - bbox.width() * docScale);
-					double offsetY = 0.5 * (pageHeight - bbox.height() * docScale);
-					pdfprinter.setPage(pdfpage, docScale, offsetX, offsetY);
-					printChildren(pdfprinter, page, pdfSettings, imgScale);
+					double offsetX = 0.5 * (pageWidth - bbox.width() * px2pt);
+					double offsetY = 0.5 * (pageHeight - bbox.height() * px2pt);
+					if(!painter->createPage(pageWidth, pageHeight, offsetX, offsetY)) {
+						errMsg = _("Failed to render page %1").arg(page->title());
+						return false;
+					}
+					printChildren(*painter, page, pdfSettings, px2pt, imgScale);
 					if(pdfSettings.overlay) {
-						QRect scaledBBox(imgScale * bbox.left(), imgScale * bbox.top(), imgScale * bbox.width(), imgScale * bbox.height());
+						QRect scaledRect(imgScale * bbox.left(), imgScale * bbox.top(), imgScale * bbox.width(), imgScale * bbox.height());
+						QRect printRect(bbox.left() * px2pt, bbox.top() * px2pt, bbox.width() * px2pt, bbox.height() * px2pt);
 						QImage selection;
-						QMetaObject::invokeMethod(this, "getSelection",  Qt::BlockingQueuedConnection, Q_RETURN_ARG(QImage, selection), Q_ARG(QRect, scaledBBox));
-						pdfprinter.drawImage(bbox, selection, pdfSettings);
+						QMetaObject::invokeMethod(this, "getSelection",  Qt::BlockingQueuedConnection, Q_RETURN_ARG(QImage, selection), Q_ARG(QRect, scaledRect));
+						painter->drawImage(printRect, selection, pdfSettings);
 					}
 					QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, page->sourceFile()), Q_ARG(int, page->pageNr()), Q_ARG(int, sourceDpi), Q_ARG(double, page->angle()));
-					painter.FinishPage();
+					painter->finishPage();
 				} else {
-					failed.append(page->title());
+					errMsg = _("Failed to render page %1").arg(page->title());
+					return false;;
 				}
 			}
 			monitor.increaseProgress();
 		}
-		return true;
+		return painter->finishDocument(errMsg);
 	}, _("Exporting to PDF..."));
 	MAIN->hideProgress();
-	if(!failed.isEmpty()) {
-		QMessageBox::warning(MAIN, _("Errors occurred"), _("The following pages could not be rendered:\n%1").arg(failed.join("\n")));
+
+	bool openAfterExport = ConfigSettings::get<SwitchSetting>("openafterexport")->getValue();
+	if(!success) {
+		QMessageBox::warning(MAIN, _("Export failed"), _("The PDF export failed: %1.").arg(errMsg));
+	} else if(openAfterExport) {
+		QDesktopServices::openUrl(QUrl::fromLocalFile(outname));
+	}
+	delete painter;
+
+	return success;
+}
+
+HOCRPdfExporter::PDFPainter* HOCRPdfExporter::createPoDoFoPrinter(const QString& filename, const QFont& defaultFont, QString& errMsg)
+{
+	PoDoFo::PdfStreamedDocument* document = nullptr;
+	PoDoFo::PdfFont* defaultPdfFont = nullptr;
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
+#else
+	PoDoFo::PdfEncoding* pdfFontEncoding = new PoDoFo::PdfIdentityEncoding;
+#endif
+
+	try {
+		PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(ui.lineEditPasswordOpen->text().toStdString(), ui.lineEditPasswordOpen->text().toStdString(),
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
+									  PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
+									  PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
+
+		PoDoFo::EPdfVersion pdfVersion = static_cast<PoDoFo::EPdfVersion>(ui.comboBoxPdfVersion->itemData(ui.comboBoxPdfVersion->currentIndex()).toInt());
+		document = new PoDoFo::PdfStreamedDocument(filename.toLocal8Bit().data(), pdfVersion, encrypt);
+	} catch(PoDoFo::PdfError& err) {
+		QMessageBox::critical(MAIN, _("Failed to create output"), _("Check that you have writing permissions in the selected folder. The returned error was: %1").arg(err.what()));
+		return nullptr;
+	}
+
+	QFontInfo info(defaultFont);
+
+	// Attempt to load the default/fallback font to ensure it is valid
+	try {
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+		defaultPdfFont = document->CreateFontSubset(info.family().toLocal8Bit().data(), false, false, false, pdfFontEncoding);
+#else
+		defaultPdfFont = document->CreateFontSubset(info.family().toLocal8Bit().data(), false, false, pdfFontEncoding);
+#endif
+	} catch(PoDoFo::PdfError& err) {
+		errMsg = _("The PDF library could not load the font '%1': %2.").arg(defaultFont.family()).arg(err.what());
+		return nullptr;
 	}
 
 	// Set PDF info
@@ -559,16 +586,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 	pdfInfo->SetKeywords(ui.lineEditKeywords->text().toStdString());
 	pdfInfo->SetAuthor(ui.lineEditAuthor->text().toStdString());
 
-	QString errMsg;
-	bool success = pdfprinter.finalize(&errMsg);
-	bool openAfterExport = ConfigSettings::get<SwitchSetting>("openafterexport")->getValue();
-	if(!success) {
-		QMessageBox::warning(MAIN, _("Export failed"), _("The PDF export failed: %1.").arg(errMsg));
-	} else if(openAfterExport) {
-		QDesktopServices::openUrl(QUrl::fromLocalFile(outname));
-	}
-
-	return success;
+	return new PoDoFoPDFPainter(document, pdfFontEncoding, defaultPdfFont, defaultFont.family(), defaultFont.pointSize());
 }
 
 HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const {
@@ -586,7 +604,7 @@ HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const {
 	return pdfSettings;
 }
 
-void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double imgScale) {
+void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu/*pixels to printer units*/, double imgScale) {
 	if(!item->isEnabled()) {
 		return;
 	}
@@ -612,13 +630,13 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 				}
 				// If distance from previous word is large, keep the space
-				if(wordRect.x() - prevWordRight > pdfSettings.preserveSpaceWidth * painter.getAverageCharWidth()) {
+				if(wordRect.x() - prevWordRight > pdfSettings.preserveSpaceWidth * painter.getAverageCharWidth() / px2pu) {
 					x = wordRect.x();
 				}
 				prevWordRight = wordRect.right();
 				QString text = wordItem->text();
-				painter.drawText(x, y + baseline, text);
-				x += painter.getTextWidth(text + " ");
+				painter.drawText(x * px2pu, (y + baseline) * px2pu, text);
+				x += painter.getTextWidth(text + " ") / px2pu;
 			}
 		}
 	} else if(itemClass == "ocr_line" && !pdfSettings.uniformizeLineSpacing) {
@@ -631,16 +649,17 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 			if(pdfSettings.fontSize == -1) {
 				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 			}
-			painter.drawText(wordRect.x(), y, wordItem->text());
+			painter.drawText(wordRect.x() * px2pu, y * px2pu, wordItem->text());
 		}
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {
 		QRect scaledItemRect(itemRect.left() * imgScale, itemRect.top() * imgScale, itemRect.width() * imgScale, itemRect.height() * imgScale);
+		QRect printRect(itemRect.left() * px2pu, itemRect.top() * px2pu, itemRect.width() * px2pu, itemRect.height() * px2pu);
 		QImage selection;
 		QMetaObject::invokeMethod(this, "getSelection", QThread::currentThread() == qApp->thread() ? Qt::DirectConnection : Qt::BlockingQueuedConnection, Q_RETURN_ARG(QImage, selection), Q_ARG(QRect, scaledItemRect));
-		painter.drawImage(itemRect, selection, pdfSettings);
+		painter.drawImage(printRect, selection, pdfSettings);
 	} else {
 		for(int i = 0, n = item->children().size(); i < n; ++i) {
-			printChildren(painter, item->children()[i], pdfSettings, imgScale);
+			printChildren(painter, item->children()[i], pdfSettings, px2pu, imgScale);
 		}
 	}
 }
@@ -663,7 +682,7 @@ void HOCRPdfExporter::updatePreview() {
 	QFont defaultFont = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont() : ui.comboBoxFallbackFontFamily->currentFont();
 
 	QImage image(bbox.size(), QImage::Format_ARGB32);
-	image.setDotsPerMeterX(pageDpi / 0.0254);
+	image.setDotsPerMeterX(pageDpi / 0.0254); // 1 in = 0.0254 m
 	image.setDotsPerMeterY(pageDpi / 0.0254);
 	QPainter painter(&image);
 	painter.setRenderHint(QPainter::Antialiasing);
@@ -681,7 +700,8 @@ void HOCRPdfExporter::updatePreview() {
 	} else {
 		image.fill(Qt::white);
 	}
-	printChildren(pdfPrinter, page, pdfSettings);
+	// Units of QPainter on pixel based devices is pixels, so px2pu = 1.
+	printChildren(pdfPrinter, page, pdfSettings, 1.);
 	m_preview->setPixmap(QPixmap::fromImage(image));
 	m_preview->setPos(-0.5 * bbox.width(), -0.5 * bbox.height());
 }
