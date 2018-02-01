@@ -56,6 +56,7 @@ public slots:
 	bool exportToODT();
 	bool exportToPDF();
 	bool exportToText();
+	void removeItem();
 
 private:
 	class HTMLHighlighter;
