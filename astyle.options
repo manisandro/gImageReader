@@ -3,3 +3,8 @@
 --style=java
 --indent=tab#4
 --suffix=none
+--pad-oper
+--align-pointer=type
+--align-reference=type
+--add-braces
+--keep-one-line-blocks
