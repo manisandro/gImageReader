@@ -65,7 +65,7 @@ private:
 		virtual void drawImage(const QRect& bbox, const QImage& image, const PDFSettings& settings) = 0;
 		virtual double getAverageCharWidth() const = 0;
 		virtual double getTextWidth(const QString& text) const = 0;
-		virtual bool createPage(double /*width*/, double /*height*/, double /*offsetX*/, double /*offsetY*/) { return true; }
+		virtual bool createPage(double /*width*/, double /*height*/, double /*offsetX*/, double /*offsetY*/, QString& /*errMsg*/) { return true; }
 		virtual void finishPage() {}
 		virtual bool finishDocument(QString& /*errMsg*/) {}
 	protected:

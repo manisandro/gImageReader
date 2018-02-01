@@ -125,7 +125,7 @@ public:
 	~QPrinterPDFPainter() {
 		delete m_painter;
 	}
-	bool createPage(double width, double height, double offsetX, double offsetY) override {
+	bool createPage(double width, double height, double offsetX, double offsetY, QString& errMsg) override {
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 		m_printer.setPaperSize(width, pageDpi), QPrinter::Point);
 #else
@@ -140,6 +140,7 @@ public:
 			m_painter = new QPainter();
 			m_painter->setRenderHint(QPainter::Antialiasing);
 			if(!m_painter->begin(&m_printer)) {
+				errMsg = _("Failed to write to file");
 				return false;
 			}
 			m_firstPage = false;
@@ -203,11 +204,16 @@ public:
 		delete m_document;
 		// Fonts are deleted by the internal PoDoFo font cache of the document
 	}
-	bool createPage(double width, double height, double offsetX, double offsetY) override {
+	bool createPage(double width, double height, double offsetX, double offsetY, QString& errMsg) override {
 		PoDoFo::PdfPage* pdfpage = m_document->CreatePage(PoDoFo::PdfRect(0, 0, width, height));
 		m_painter.SetPage(pdfpage);
 		m_pageHeight = m_painter.GetPage()->GetPageSize().GetHeight();
-		m_painter.SetFont(m_defaultFont);
+		try {
+			m_painter.SetFont(m_defaultFont);
+		} catch(const PoDoFo::PdfError& err) {
+			errMsg = err.what();
+			return false;
+		}
 		if(m_defaultFontSize > 0) {
 			m_painter.GetFont()->SetFontSize(m_defaultFontSize);
 		}
@@ -570,8 +576,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 					}
 					double offsetX = 0.5 * (pageWidth - bbox.width() * px2pt);
 					double offsetY = 0.5 * (pageHeight - bbox.height() * px2pt);
-					if(!painter->createPage(pageWidth, pageHeight, offsetX, offsetY)) {
-						errMsg = _("Failed to render page %1").arg(page->title());
+					if(!painter->createPage(pageWidth, pageHeight, offsetX, offsetY, errMsg)) {
 						return false;
 					}
 					printChildren(*painter, page, pdfSettings, px2pt, imgScale);
@@ -631,7 +636,7 @@ HOCRPdfExporter::PDFPainter* HOCRPdfExporter::createPoDoFoPrinter(const QString&
 		PoDoFo::EPdfVersion pdfVersion = static_cast<PoDoFo::EPdfVersion>(ui.comboBoxPdfVersion->itemData(ui.comboBoxPdfVersion->currentIndex()).toInt());
 		document = new PoDoFo::PdfStreamedDocument(filename.toLocal8Bit().data(), pdfVersion, encrypt);
 	} catch(PoDoFo::PdfError& err) {
-		QMessageBox::critical(MAIN, _("Failed to create output"), _("Check that you have writing permissions in the selected folder. The returned error was: %1").arg(err.what()));
+		errMsg = err.what();
 		return nullptr;
 	}
 
@@ -644,8 +649,10 @@ HOCRPdfExporter::PDFPainter* HOCRPdfExporter::createPoDoFoPrinter(const QString&
 #else
 		defaultPdfFont = document->CreateFontSubset(info.family().toLocal8Bit().data(), false, false, pdfFontEncoding);
 #endif
-	} catch(PoDoFo::PdfError& err) {
-		errMsg = _("The PDF library could not load the font '%1': %2.").arg(defaultFont.family()).arg(err.what());
+	} catch(PoDoFo::PdfError&) {
+	}
+	if(!defaultPdfFont) {
+		errMsg = _("The PDF library could not load the font '%1'.").arg(defaultFont.family());
 		return nullptr;
 	}
 
