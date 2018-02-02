@@ -400,6 +400,9 @@ void HOCROdtExporter::printItem(QXmlStreamWriter& writer, const HOCRItem* item, 
 		++iChild;
 		for(; iChild < nChilds; ++iChild) {
 			const HOCRItem* child = item->children()[iChild];
+			if(!child->isEnabled()) {
+				continue;
+			}
 			fontKey = child->fontFamily() + (child->fontBold() ? "@bold" : "") + (child->fontItalic() ? "@italic" : "");
 			QString fontStyleName = fontStyleNames[fontKey][child->fontSize()];
 			if(fontStyleName != currentFontStyleName) {
