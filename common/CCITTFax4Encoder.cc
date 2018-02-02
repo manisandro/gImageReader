@@ -300,10 +300,9 @@ uint8_t* CCITTFax4Encoder::encode(const uint8_t *buffer, uint32_t width, uint32_
 	m_state->data = 0;
 	m_state->bit = 8;
 
-	uint8_t whiteline[rowbytes];
-	std::fill_n(whiteline, rowbytes, 0);
+	std::vector<uint8_t> whiteline(rowbytes, 0);
 
-	const uint8_t* refline = whiteline;
+	const uint8_t* refline = whiteline.data();
 	for(uint32_t y = 0; y < height; ++y) {
 		encode2DRow(buffer, refline, width);
 		refline = buffer;
