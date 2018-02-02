@@ -90,7 +90,7 @@ int SourceManager::addSources(const QStringList& files, bool suppressTextWarning
 	QStringList filesWithText;
 	for(const QString& filename : files) {
 		if(!QFile(filename).exists()) {
-			failed += "\n\t" + filename;
+			failed += "\n " + filename;
 			continue;
 		}
 		item = ui.listWidgetSources->currentItem();
