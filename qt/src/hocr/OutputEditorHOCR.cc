@@ -205,6 +205,12 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.setupUi(m_widget);
 	m_highlighter = new HTMLHighlighter(ui.plainTextEditOutput->document());
 
+	m_preview = new QGraphicsPixmapItem();
+	m_preview->setTransformationMode(Qt::SmoothTransformation);
+	m_preview->setZValue(2);
+	MAIN->getDisplayer()->scene()->addItem(m_preview);
+	m_previewTimer.setSingleShot(true);
+
 	ui.actionOutputReplace->setShortcut(Qt::CTRL + Qt::Key_F);
 	ui.actionOutputSaveHOCR->setShortcut(Qt::CTRL + Qt::Key_S);
 	ui.actionNavigateNext->setShortcut(Qt::Key_F3);
@@ -238,12 +244,14 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(setVisible(bool)));
 	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(clear()));
 	connect(ui.actionToggleWConf, SIGNAL(toggled(bool)), this, SLOT(toggleWConfColumn(bool)));
+	connect(ui.actionPreview, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
+	connect(&m_previewTimer, SIGNAL(timeout()), this, SLOT(updatePreview()));
 	connect(ui.searchFrame, SIGNAL(findReplace(QString, QString, bool, bool, bool)), this, SLOT(findReplace(QString, QString, bool, bool, bool)));
 	connect(ui.searchFrame, SIGNAL(replaceAll(QString, QString, bool)), this, SLOT(replaceAll(QString, QString, bool)));
 	connect(ui.searchFrame, SIGNAL(applySubstitutions(QMap<QString, QString>, bool)), this, SLOT(applySubstitutions(QMap<QString, QString>, bool)));
 	connect(ConfigSettings::get<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
 	connect(ConfigSettings::get<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
-	connect(ui.treeViewHOCR->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(showItemProperties(QModelIndex)));
+	connect(ui.treeViewHOCR->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(showItemProperties(QModelIndex, QModelIndex)));
 	connect(ui.treeViewHOCR, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showTreeWidgetContextMenu(QPoint)));
 	connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(updateSourceText()));
 	connect(m_tool, SIGNAL(bboxChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
@@ -264,6 +272,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 }
 
 OutputEditorHOCR::~OutputEditorHOCR() {
+	m_previewTimer.stop();
+	delete m_preview;
 	delete m_widget;
 }
 
@@ -279,6 +289,8 @@ void OutputEditorHOCR::setModified() {
 	ui.actionOutputSaveHOCR->setEnabled(m_document->pageCount() > 0);
 	ui.toolButtonOutputExport->setEnabled(m_document->pageCount() > 0);
 	ui.toolBarNavigate->setEnabled(m_document->pageCount() > 0);
+	m_preview->setVisible(false);
+	m_previewTimer.start(100); // Use a timer because setModified is potentially called a large number of times when the HOCR tree changes
 	m_modified = true;
 }
 
@@ -393,7 +405,8 @@ bool OutputEditorHOCR::showPage(const HOCRPage* page) {
 	return page && MAIN->getSourceManager()->addSource(page->sourceFile(), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
 }
 
-void OutputEditorHOCR::showItemProperties(const QModelIndex& index) {
+void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModelIndex& prev) {
+	const HOCRItem* prevItem = m_document->itemAtIndex(prev);
 	if(ui.treeViewHOCR->currentIndex() != index) {
 		ui.treeViewHOCR->blockSignals(true);
 		ui.treeViewHOCR->setCurrentIndex(index);
@@ -453,6 +466,10 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index) {
 	ui.plainTextEditOutput->setPlainText(currentItem->toHtml());
 
 	if(showPage(page)) {
+		// Update preview if necessary
+		if(!prevItem || prevItem->page() != page) {
+			updatePreview();
+		}
 		// Minimum bounding box
 		QRect minBBox;
 		if(currentItem->itemClass() == "ocr_page") {
@@ -760,6 +777,7 @@ bool OutputEditorHOCR::exportToODT() {
 
 bool OutputEditorHOCR::exportToPDF() {
 	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
+	ui.actionPreview->setChecked(false); // Disable preview because if conflicts with preview from PDF dialog
 	QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
 	const HOCRItem* item = m_document->itemAtIndex(current);
 	const HOCRPage* page = item ? item->page() : m_document->page(0);
@@ -775,6 +793,8 @@ bool OutputEditorHOCR::exportToText() {
 }
 
 bool OutputEditorHOCR::clear(bool hide) {
+	m_previewTimer.stop();
+	m_preview->setVisible(false);
 	if(!m_widget->isVisible()) {
 		return true;
 	}
@@ -920,4 +940,61 @@ void OutputEditorHOCR::applySubstitutions(const QMap<QString, QString>& substitu
 
 void OutputEditorHOCR::removeItem() {
 	m_document->removeItem(ui.treeViewHOCR->selectionModel()->currentIndex());
+}
+
+void OutputEditorHOCR::updatePreview() {
+	const HOCRItem* item = m_document->itemAtIndex(ui.treeViewHOCR->currentIndex());
+	if(!ui.actionPreview->isChecked() || !item) {
+		m_preview->setVisible(false);
+		return;
+	}
+
+	const HOCRPage* page = item->page();
+	QRect bbox = page->bbox();
+	int pageDpi = page->resolution();
+
+	QImage image(bbox.size(), QImage::Format_ARGB32);
+	image.fill(QColor(255, 255, 255, 127));
+	image.setDotsPerMeterX(pageDpi / 0.0254); // 1 in = 0.0254 m
+	image.setDotsPerMeterY(pageDpi / 0.0254);
+	QPainter painter(&image);
+	painter.setRenderHint(QPainter::Antialiasing);
+
+	drawPreview(painter, page);
+
+	m_preview->setPixmap(QPixmap::fromImage(image));
+	m_preview->setPos(-0.5 * bbox.width(), -0.5 * bbox.height());
+	m_preview->setVisible(true);
+}
+
+void OutputEditorHOCR::drawPreview(QPainter& painter, const HOCRItem* item) {
+	if(!item->isEnabled()) {
+		return;
+	}
+	QString itemClass = item->itemClass();
+	if(itemClass == "ocr_line") {
+		QPair<double, double> baseline = item->baseLine();
+		const QRect& lineRect = item->bbox();
+		for(HOCRItem* wordItem : item->children()) {
+			if(!wordItem->isEnabled()) {
+				continue;
+			}
+			const QRect& wordRect = wordItem->bbox();
+			QFont font;
+			font.setFamily(wordItem->fontFamily());
+			font.setBold(wordItem->fontBold());
+			font.setItalic(wordItem->fontItalic());
+			font.setPointSizeF(wordItem->fontSize());
+			painter.setFont(font);
+			// See https://github.com/kba/hocr-spec/issues/15
+			double y = lineRect.bottom() + (wordRect.center().x() - lineRect.x()) * baseline.first + baseline.second;
+			painter.drawText(wordRect.x(), y, wordItem->text());
+		}
+	} else if(itemClass == "ocr_graphic") {
+		painter.drawImage(item->bbox(), m_tool->getSelection(item->bbox()));
+	} else {
+		for(HOCRItem* childItem : item->children()) {
+			drawPreview(painter, childItem);;
+		}
+	}
 }

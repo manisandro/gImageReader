@@ -28,6 +28,7 @@
 class DisplayerToolHOCR;
 class HOCRDocument;
 class HOCRPage;
+class HOCRItem;
 class QGraphicsPixmapItem;
 
 class OutputEditorHOCR : public OutputEditor {
@@ -67,6 +68,8 @@ private:
 
 	DisplayerToolHOCR* m_tool;
 	QWidget* m_widget;
+	QGraphicsPixmapItem* m_preview = nullptr;
+	QTimer m_previewTimer;
 	UI_OutputEditorHOCR ui;
 	HTMLHighlighter* m_highlighter;
 	bool m_modified = false;
@@ -81,6 +84,7 @@ private:
 	void navigateNextPrev(bool next);
 	bool findReplaceInItem(const QModelIndex& index, const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace, bool& currentSelectionMatchesSearch);
 	bool showPage(const HOCRPage* page);
+	void drawPreview(QPainter& painter, const HOCRItem* item);
 
 private slots:
 	void addGraphicRegion(const QRect& bbox);
@@ -101,7 +105,7 @@ private slots:
 	void pickItem(const QPoint& point);
 	void setFont();
 	void setModified();
-	void showItemProperties(const QModelIndex& index);
+	void showItemProperties(const QModelIndex& index, const QModelIndex& prev = QModelIndex());
 	void showTreeWidgetContextMenu(const QPoint& point);
 	void toggleWConfColumn(bool active);
 	void updateSourceText();
@@ -109,6 +113,7 @@ private slots:
 	void findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace);
 	void replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase);
 	void applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase);
+	void updatePreview();
 };
 
 class HOCRAttributeEditor : public QLineEdit {

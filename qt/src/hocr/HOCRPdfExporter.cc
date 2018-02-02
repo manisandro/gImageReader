@@ -459,6 +459,7 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 bool HOCRPdfExporter::run(QString& filebasename) {
 	m_preview = new QGraphicsPixmapItem();
 	m_preview->setTransformationMode(Qt::SmoothTransformation);
+	m_preview->setZValue(2);
 	updatePreview();
 	MAIN->getDisplayer()->scene()->addItem(m_preview);
 

@@ -29,7 +29,7 @@ public:
 	QAction* actionOutputExportODT;
 	QAction* actionOutputReplace;
 	QAction* actionToggleWConf;
-	QAction* actionPick;
+	QAction* actionPreview;
 	QAction* actionNavigateNext;
 	QAction* actionNavigatePrev;
 	QAction* actionExpandAll;
@@ -82,6 +82,9 @@ public:
 		actionToggleWConf = new QAction(QIcon(":/icons/wconf"), gettext("Show confidence values"), widget);
 		actionToggleWConf->setToolTip(gettext("Show confidence values"));
 		actionToggleWConf->setCheckable(true);
+		actionPreview = new QAction(QIcon::fromTheme("document-preview"), gettext("Show preview"), widget);
+		actionPreview->setToolTip(gettext("Show preview"));
+		actionPreview->setCheckable(true);
 
 		toolBarOutput = new QToolBar(widget);
 		toolBarOutput->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -93,6 +96,7 @@ public:
 		toolBarOutput->addSeparator();
 		toolBarOutput->addAction(actionOutputReplace);
 		toolBarOutput->addAction(actionToggleWConf);
+		toolBarOutput->addAction(actionPreview);
 
 		widget->layout()->addWidget(toolBarOutput);
 

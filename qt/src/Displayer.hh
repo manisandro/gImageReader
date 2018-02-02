@@ -175,6 +175,7 @@ public:
 	DisplayerSelection(DisplayerTool* tool, const QPointF& anchor)
 		: QGraphicsRectItem(QRectF(anchor, anchor)), m_tool(tool), m_anchor(anchor), m_point(anchor) {
 		setAcceptHoverEvents(true);
+		setZValue(10);
 	}
 	void setAnchorAndPoint(const QPointF& anchor, const QPointF& point) {
 		m_anchor = anchor;

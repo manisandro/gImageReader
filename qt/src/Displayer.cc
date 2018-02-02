@@ -106,7 +106,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 		m_tool->reset();
 	}
 	m_renderTimer.stop();
-	m_scene->clear();
+	m_scene->removeItem(m_imageItem);
 	delete m_renderer;
 	m_renderer = nullptr;
 	m_currentSource = nullptr;
