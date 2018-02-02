@@ -686,7 +686,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 	if(itemClass == "ocr_par" && pdfSettings.uniformizeLineSpacing) {
 		double yInc = double(itemRect.height()) / childCount;
 		double y = itemRect.top() + yInc;
-		int baseline = childCount > 0 ? item->children()[0]->baseLine() : 0;
+		QPair<double, double> baseline = childCount > 0 ? item->children()[0]->baseLine() : qMakePair(0.0, 0.0);
 		for(int iLine = 0; iLine < childCount; ++iLine, y += yInc) {
 			HOCRItem* lineItem = item->children()[iLine];
 			int x = itemRect.x();
@@ -707,13 +707,13 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 				}
 				prevWordRight = wordRect.right();
 				QString text = wordItem->text();
-				painter.drawText(x * px2pu, (y + baseline) * px2pu, text);
+				double wordBaseline = (x - itemRect.x()) * baseline.first + baseline.second;
+				painter.drawText(x * px2pu, (y + wordBaseline) * px2pu, text);
 				x += painter.getTextWidth(text + " ") / px2pu;
 			}
 		}
 	} else if(itemClass == "ocr_line" && !pdfSettings.uniformizeLineSpacing) {
-		int baseline = item->baseLine();
-		double y = itemRect.bottom() + baseline;
+		QPair<double, double> baseline = item->baseLine();
 		for(int iWord = 0, nWords = item->children().size(); iWord < nWords; ++iWord) {
 			HOCRItem* wordItem = item->children()[iWord];
 			QRect wordRect = wordItem->bbox();
@@ -721,6 +721,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 			if(pdfSettings.fontSize == -1) {
 				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 			}
+			double y = itemRect.bottom() + (wordRect.center().x() - itemRect.x()) * baseline.first + baseline.second;
 			painter.drawText(wordRect.x() * px2pu, y * px2pu, wordItem->text());
 		}
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {

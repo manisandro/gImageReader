@@ -761,12 +761,12 @@ QString HOCRItem::toHtml(int indent) const {
 	return html;
 }
 
-int HOCRItem::baseLine() const {
-	static const QRegExp baseLineRx = QRegExp("([+-]?\\d+\\.?\\d*)\\s+([+-]?\\d+)");
+QPair<double, double> HOCRItem::baseLine() const {
+	static const QRegExp baseLineRx = QRegExp("([+-]?\\d+\\.?\\d*)\\s+([+-]?\\d+\\.?\\d*)");
 	if(baseLineRx.indexIn(m_titleAttrs["baseline"]) != -1) {
-		return baseLineRx.cap(2).toInt();
+		return qMakePair(baseLineRx.cap(1).toDouble(), baseLineRx.cap(2).toDouble());
 	}
-	return 0;
+	return qMakePair(0.0, 0.0);
 }
 
 bool HOCRItem::parseChildren(const QDomElement& element, QString language) {

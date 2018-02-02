@@ -152,7 +152,7 @@ public:
 	QMap<QString, QString> getAttributes(const QList<QString>& names) const;
 	void getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString> > >& occurences) const;
 	QString toHtml(int indent = 0) const;
-	int baseLine() const;
+	QPair<double, double> baseLine() const;
 	QString fontFamily() const {
 		return m_titleAttrs["x_font"];
 	}
