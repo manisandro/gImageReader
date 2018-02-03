@@ -25,7 +25,7 @@
 class DisplayerToolHOCR : public DisplayerTool {
 	Q_OBJECT
 public:
-	enum Action {ACTION_NONE, ACTION_DRAW_RECT};
+	enum Action {ACTION_NONE, ACTION_DRAW_GRAPHIC_RECT, ACTION_DRAW_CAREA_RECT, ACTION_DRAW_PAR_RECT, ACTION_DRAW_LINE_RECT, ACTION_DRAW_WORD_RECT};
 
 	DisplayerToolHOCR(Displayer* displayer, QObject* parent = 0);
 	~DisplayerToolHOCR();
@@ -56,7 +56,7 @@ public:
 
 signals:
 	void displayedSourceChanged();
-	void bboxDrawn(QRect rect);
+	void bboxDrawn(QRect rect, int action);
 	void bboxChanged(QRect rect);
 	void positionPicked(QPoint pos);
 	void actionChanged(int action);

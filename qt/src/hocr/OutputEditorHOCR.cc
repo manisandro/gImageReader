@@ -22,6 +22,7 @@
 #include <QFileInfo>
 #include <QFontComboBox>
 #include <QImage>
+#include <QInputDialog>
 #include <QShortcut>
 #include <QStyledItemDelegate>
 #include <QMessageBox>
@@ -255,7 +256,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.treeViewHOCR, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showTreeWidgetContextMenu(QPoint)));
 	connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(updateSourceText()));
 	connect(m_tool, SIGNAL(bboxChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
-	connect(m_tool, SIGNAL(bboxDrawn(QRect)), this, SLOT(addGraphicRegion(QRect)));
+	connect(m_tool, SIGNAL(bboxDrawn(QRect, int)), this, SLOT(bboxDrawn(QRect, int)));
 	connect(m_tool, SIGNAL(positionPicked(QPoint)), this, SLOT(pickItem(QPoint)));
 	connect(m_document, SIGNAL(dataChanged(QModelIndex, QModelIndex, QVector<int>)), this, SLOT(setModified()));
 	connect(m_document, SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(setModified()));
@@ -406,6 +407,7 @@ bool OutputEditorHOCR::showPage(const HOCRPage* page) {
 }
 
 void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModelIndex& prev) {
+	m_tool->setAction(DisplayerToolHOCR::ACTION_NONE);
 	const HOCRItem* prevItem = m_document->itemAtIndex(prev);
 	if(ui.treeViewHOCR->currentIndex() != index) {
 		ui.treeViewHOCR->blockSignals(true);
@@ -537,13 +539,59 @@ void OutputEditorHOCR::updateSourceText() {
 	}
 }
 
-void OutputEditorHOCR::addGraphicRegion(const QRect& bbox) {
+void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 	QDomDocument doc;
 	QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
-	QDomElement graphicElement = doc.createElement("div");
-	graphicElement.setAttribute("class", "ocr_graphic");
-	graphicElement.setAttribute("title", QString("bbox %1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom()));
-	QModelIndex index = m_document->addItem(current, graphicElement);
+	const HOCRItem* currentItem = m_document->itemAtIndex(current);
+	if(!currentItem) {
+		return;
+	}
+	QDomElement newElement;
+	if(action == DisplayerToolHOCR::ACTION_DRAW_GRAPHIC_RECT) {
+		newElement = doc.createElement("div");
+		newElement.setAttribute("class", "ocr_graphic");
+		newElement.setAttribute("title", QString("bbox %1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom()));
+	} else if(action == DisplayerToolHOCR::ACTION_DRAW_CAREA_RECT) {
+		newElement = doc.createElement("div");
+		newElement.setAttribute("class", "ocr_carea");
+		newElement.setAttribute("title", QString("bbox %1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom()));
+	} else if(action == DisplayerToolHOCR::ACTION_DRAW_PAR_RECT) {
+		newElement = doc.createElement("p");
+		newElement.setAttribute("class", "ocr_par");
+		newElement.setAttribute("title", QString("bbox %1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom()));
+	} else if(action == DisplayerToolHOCR::ACTION_DRAW_LINE_RECT) {
+		newElement = doc.createElement("span");
+		newElement.setAttribute("class", "ocr_line");
+		// Tesseract does as follows:
+		// row_height = x_height + ascenders - descenders
+		// font_pt_size = row_height * 72 / dpi (72 = pointsPerInch)
+		// As a first approximation, assume x_size = bbox.height() and ascenders = descenders = bbox.height() / 4
+		QMap<QString, QString> titleAttrs;
+		titleAttrs["bbox"] = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
+		titleAttrs["x_ascenders"] = QString("%1").arg(0.25 * bbox.height());
+		titleAttrs["x_descenders"] = QString("%1").arg(0.25 * bbox.height());
+		titleAttrs["x_size"] = QString("%1").arg(bbox.height());
+		titleAttrs["baseline"] = QString("0 0");
+		newElement.setAttribute("title", HOCRItem::serializeAttrGroup(titleAttrs));
+	} else if(action == DisplayerToolHOCR::ACTION_DRAW_WORD_RECT) {
+		QString text = QInputDialog::getText(m_widget, _("Add Word"), _("Enter word:"));
+		if(text.isEmpty()) {
+			return;
+		}
+		newElement = doc.createElement("span");
+		newElement.setAttribute("class", "ocrx_word");
+		newElement.setAttribute("lang", m_spell.getLanguage());
+		QMap<QString, QString> titleAttrs;
+		titleAttrs["bbox"] = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
+		titleAttrs["x_font"] = QFont().family();
+		titleAttrs["x_fsize"] = QString("%1").arg(qRound(bbox.height() * 72. / currentItem->page()->resolution()));
+		titleAttrs["x_wconf"] = "100";
+		newElement.setAttribute("title", HOCRItem::serializeAttrGroup(titleAttrs));
+		newElement.appendChild(doc.createTextNode(text));
+	} else {
+		return;
+	}
+	QModelIndex index = m_document->addItem(current, newElement);
 	if(index.isValid()) {
 		ui.treeViewHOCR->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
 	}
@@ -613,6 +661,10 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 
 	QMenu menu;
 	QAction* actionAddGraphic = nullptr;
+	QAction* actionAddCArea = nullptr;
+	QAction* actionAddPar = nullptr;
+	QAction* actionAddLine = nullptr;
+	QAction* actionAddWord = nullptr;
 	QAction* addWordAction = nullptr;
 	QAction* ignoreWordAction = nullptr;
 	QList<QAction*> setTextActions;
@@ -621,6 +673,13 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 	QAction* actionCollapse = nullptr;
 	if(item->itemClass() == "ocr_page") {
 		actionAddGraphic = menu.addAction(_("Add graphic region"));
+		actionAddCArea = menu.addAction(_("Add text block"));
+	} else if(item->itemClass() == "ocr_carea") {
+		actionAddPar = menu.addAction(_("Add paragraph"));
+	} else if(item->itemClass() == "ocr_par") {
+		actionAddLine = menu.addAction(_("Add line"));
+	} else if(item->itemClass() == "ocr_line") {
+		actionAddWord = menu.addAction(_("Add word"));
 	} else if(item->itemClass() == "ocrx_word") {
 		QString prefix, suffix, trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
 		QString spellLang = item->lang();
@@ -659,7 +718,15 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 		return;
 	}
 	if(clickedAction == actionAddGraphic) {
-		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_RECT);
+		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_GRAPHIC_RECT);
+	} else if(clickedAction == actionAddCArea) {
+		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_CAREA_RECT);
+	} else if(clickedAction == actionAddPar) {
+		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_PAR_RECT);
+	} else if(clickedAction == actionAddLine) {
+		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_LINE_RECT);
+	} else if(clickedAction == actionAddWord) {
+		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_WORD_RECT);
 	} else if(clickedAction == addWordAction) {
 		m_spell.addWordToDictionary(addWordAction->data().toString());
 		m_document->recheckSpelling();

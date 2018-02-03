@@ -41,7 +41,7 @@ QList<QImage> DisplayerToolHOCR::getOCRAreas() {
 
 void DisplayerToolHOCR::mousePressEvent(QMouseEvent* event) {
 	m_pressed = true;
-	if(event->button() == Qt::LeftButton && m_currentAction == ACTION_DRAW_RECT) {
+	if(event->button() == Qt::LeftButton && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
 		clearSelection();
 		m_selection = new DisplayerSelection(this,  m_displayer->mapToSceneClamped(event->pos()));
 		connect(m_selection, SIGNAL(geometryChanged(QRectF)), this, SLOT(selectionChanged(QRectF)));
@@ -51,7 +51,7 @@ void DisplayerToolHOCR::mousePressEvent(QMouseEvent* event) {
 }
 
 void DisplayerToolHOCR::mouseMoveEvent(QMouseEvent* event) {
-	if(m_selection && m_currentAction == ACTION_DRAW_RECT) {
+	if(m_selection && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
 		QPointF p = m_displayer->mapToSceneClamped(event->pos());
 		m_selection->setPoint(p);
 		m_displayer->ensureVisible(QRectF(p, p));
@@ -65,12 +65,12 @@ void DisplayerToolHOCR::mouseReleaseEvent(QMouseEvent* event) {
 		return;
 	}
 	m_pressed = false;
-	if(m_selection && m_currentAction == ACTION_DRAW_RECT) {
+	if(m_selection && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
 		if(m_selection->rect().width() < 5.0 || m_selection->rect().height() < 5.0) {
 			clearSelection();
 		} else {
 			QRect r = m_selection->rect().translated(-m_displayer->getSceneBoundingRect().toRect().topLeft()).toRect();
-			emit bboxDrawn(r);
+			emit bboxDrawn(r, m_currentAction);
 		}
 		event->accept();
 	} else {
@@ -88,6 +88,11 @@ void DisplayerToolHOCR::setAction(Action action, bool clearSel) {
 		clearSelection();
 	}
 	m_currentAction = action;
+	if(m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
+		m_displayer->setCursor(Qt::CrossCursor);
+	} else {
+		m_displayer->setCursor(Qt::ArrowCursor);
+	}
 }
 
 void DisplayerToolHOCR::setSelection(const QRect& rect, const QRect& minRect) {
