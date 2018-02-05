@@ -3,6 +3,89 @@
 <interface>
   <requires lib="gtk+" version="3.10"/>
   <requires lib="gtksourceview" version="3.0"/>
+  <object class="GtkDialog" id="dialogAddWord">
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Add Word</property>
+    <property name="type_hint">dialog</property>
+    <child internal-child="vbox">
+      <object class="GtkBox" id="boxAddWord">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="buttonBoxAddWord">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="buttonAddWordCancel">
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="buttonAddWordOk">
+                <property name="label" translatable="yes">OK</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <style>
+                  <class name="suggested-action"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="labelAddWord">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Enter word:</property>
+            <property name="xalign">0</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="entryAddWord">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">buttonAddWordCancel</action-widget>
+      <action-widget response="-5">buttonAddWordOk</action-widget>
+    </action-widgets>
+    <child>
+      <placeholder/>
+    </child>
+  </object>
   <object class="GtkImage" id="imageClear">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -37,6 +120,11 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="icon_name">document-open-symbolic</property>
+  </object>
+  <object class="GtkImage" id="imagePreview">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">document-print-preview-symbolic</property>
   </object>
   <object class="GtkImage" id="imageSave">
     <property name="visible">True</property>
@@ -219,6 +307,21 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToggleButton" id="buttonPreview">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="tooltip_text" translatable="yes">Show preview</property>
+            <property name="image">imagePreview</property>
+            <property name="relief">none</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">7</property>
           </packing>
         </child>
       </object>

@@ -24,6 +24,7 @@
 #include "Geometry.hh"
 #include <map>
 #include <set>
+#include <utility>
 
 namespace GtkSpell {
 class Checker;
@@ -185,7 +186,7 @@ public:
 	std::map<Glib::ustring, Glib::ustring> getAttributes(const std::vector<Glib::ustring>& names) const;
 	void getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring> > >& occurences) const;
 	Glib::ustring toHtml(int indent = 0) const;
-	int baseLine() const;
+	std::pair<double, double> baseLine() const;
 	Glib::ustring fontFamily() const {
 		return getTitleAttribute("x_font");
 	}

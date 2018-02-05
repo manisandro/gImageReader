@@ -165,7 +165,7 @@ void ScannerSane::doOpen() {
 	if(status != SANE_STATUS_GOOD) {
 		g_critical("Unable to get open device: %s", sane_strstatus(status));
 		m_job->handle = nullptr;
-		failScan(_("Unable to connect to scanner"));
+		failScan(getErrorMessage(status, _("Unable to connect to scanner")));
 		return;
 	}
 
@@ -400,7 +400,7 @@ void ScannerSane::doStart() {
 		setState(State::GET_PARAMETERS);
 	} else {
 		doStop();
-		failScan(_("Unable to start scan"));
+		failScan(getErrorMessage(status, _("Unable to start scan")));
 	}
 }
 
@@ -408,7 +408,7 @@ void ScannerSane::doGetParameters() {
 	SANE_Status status = sane_get_parameters(m_job->handle, &m_job->parameters);
 	g_debug("sane_get_parameters() -> %s", sane_strstatus(status));
 	if(status != SANE_STATUS_GOOD) {
-		failScan(_("Error communicating with scanner"));
+		failScan(getErrorMessage(status, _("Error communicating with scanner")));
 		return;
 	}
 
@@ -794,3 +794,21 @@ Glib::ustring ScannerSane::getFrameModeString(SANE_Frame frame) {
 	}
 }
 
+Glib::ustring ScannerSane::getErrorMessage(SANE_Status status, const Glib::ustring& defaultMessage) {
+	switch (status) {
+	case SANE_STATUS_CANCELLED:
+		return _("Operation is cancelled.");
+	case SANE_STATUS_DEVICE_BUSY:
+		return _("Device is busy.");
+	case SANE_STATUS_COVER_OPEN:
+		return _("Cover is opened.");
+	case SANE_STATUS_JAMMED:
+		return _("Document feeder jammed.");
+	case SANE_STATUS_NO_DOCS:
+		return _("Document feeder out of documents.");
+	case SANE_STATUS_ACCESS_DENIED:
+		return _("Access to scanner is denied.");
+	default:
+		return defaultMessage;
+	}
+}

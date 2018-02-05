@@ -28,7 +28,7 @@ class Rectangle;
 
 class DisplayerToolHOCR : public DisplayerTool {
 public:
-	enum Action {ACTION_NONE, ACTION_DRAW_RECT};
+	enum Action {ACTION_NONE, ACTION_DRAW_GRAPHIC_RECT, ACTION_DRAW_CAREA_RECT, ACTION_DRAW_PAR_RECT, ACTION_DRAW_LINE_RECT, ACTION_DRAW_WORD_RECT};
 
 	DisplayerToolHOCR(Displayer* displayer);
 	~DisplayerToolHOCR();
@@ -60,7 +60,7 @@ public:
 	sigc::signal<void> signal_displayed_source_changed() {
 		return m_signal_displayed_source_changed;
 	}
-	sigc::signal<void, Geometry::Rectangle> signal_bbox_drawn() {
+	sigc::signal<void, Geometry::Rectangle, Action> signal_bbox_drawn() {
 		return m_signal_bbox_drawn;
 	}
 	sigc::signal<void, Geometry::Rectangle> signal_bbox_changed() {
@@ -80,7 +80,7 @@ private:
 	Action m_currentAction = ACTION_NONE;
 	bool m_pressed = false;
 	sigc::signal<void> m_signal_displayed_source_changed;
-	sigc::signal<void, Geometry::Rectangle> m_signal_bbox_drawn;
+	sigc::signal<void, Geometry::Rectangle, Action> m_signal_bbox_drawn;
 	sigc::signal<void, Geometry::Rectangle> m_signal_bbox_changed;
 	sigc::signal<void, Geometry::Point> m_signal_position_picked;
 	sigc::signal<void, Action> m_signal_action_changed;

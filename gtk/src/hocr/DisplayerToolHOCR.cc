@@ -41,7 +41,7 @@ std::vector<Cairo::RefPtr<Cairo::ImageSurface>> DisplayerToolHOCR::getOCRAreas()
 
 bool DisplayerToolHOCR::mousePressEvent(GdkEventButton* event) {
 	m_pressed = true;
-	if(event->button == 1 && m_currentAction == ACTION_DRAW_RECT) {
+	if(event->button == 1 && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
 		clearSelection();
 		m_selection = new DisplayerSelection(this, m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y)));
 		CONNECT(m_selection, geometry_changed, sigc::mem_fun(this, &DisplayerToolHOCR::selectionChanged));
@@ -52,7 +52,7 @@ bool DisplayerToolHOCR::mousePressEvent(GdkEventButton* event) {
 }
 
 bool DisplayerToolHOCR::mouseMoveEvent(GdkEventMotion* event) {
-	if(m_selection && m_currentAction == ACTION_DRAW_RECT) {
+	if(m_selection && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
 		Geometry::Point p = m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y));
 		m_selection->setPoint(p);
 		m_displayer->ensureVisible(event->x, event->y);
@@ -67,13 +67,13 @@ bool DisplayerToolHOCR::mouseReleaseEvent(GdkEventButton* event) {
 		return false;
 	}
 	m_pressed = false;
-	if(m_selection && m_currentAction == ACTION_DRAW_RECT) {
+	if(m_selection && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
 		if(m_selection->rect().width < 5. || m_selection->rect().height < 5.) {
 			clearSelection();
 		} else {
 			Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
 			Geometry::Rectangle r = m_selection->rect().translate(-sceneRect.x, -sceneRect.y);
-			m_signal_bbox_drawn.emit(Geometry::Rectangle(int(r.x), int(r.y), int(r.width), int(r.height)));
+			m_signal_bbox_drawn.emit(Geometry::Rectangle(int(r.x), int(r.y), int(r.width), int(r.height)), m_currentAction);
 		}
 	} else {
 		Geometry::Point p = m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y));
@@ -91,6 +91,11 @@ void DisplayerToolHOCR::setAction(Action action, bool clearSel) {
 		clearSelection();
 	}
 	m_currentAction = action;
+	if(m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
+		m_displayer->setCursor(Gdk::Cursor::create(Gdk::CROSS));
+	} else {
+		m_displayer->setCursor(Glib::RefPtr<Gdk::Cursor>(0));
+	}
 }
 
 void DisplayerToolHOCR::setSelection(const Geometry::Rectangle& rect, const Geometry::Rectangle& minRect) {

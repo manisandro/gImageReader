@@ -35,11 +35,6 @@ public:
 	static const xmlpp::Element* firstChildElement(const xmlpp::Node* node, const Glib::ustring& name = Glib::ustring());
 	static const xmlpp::Element* nextSiblingElement(const xmlpp::Node* node, const Glib::ustring& name = Glib::ustring());
 	static std::list<const xmlpp::Element*> elementsByTagName(const xmlpp::Element* element, const Glib::ustring& name);
-
-	static xmlpp::Element* createElement(const Glib::ustring& name);
-
-private:
-	static xmlpp::Element* dummyElement();
 };
 
 #endif // XMLUTILS_HH

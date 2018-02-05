@@ -216,6 +216,7 @@ public:
 	DisplayerSelection(DisplayerTool* tool, const Geometry::Point& anchor)
 		: m_tool(tool), m_anchor(anchor), m_point(anchor) {
 		setRect(Geometry::Rectangle(anchor, anchor));
+		setZIndex(10);
 	}
 	void setPoint(const Geometry::Point& point) {
 		m_point = point;

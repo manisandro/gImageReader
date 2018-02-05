@@ -78,13 +78,3 @@ std::list<const xmlpp::Element*> XmlUtils::elementsByTagName(const xmlpp::Elemen
 	}
 	return elems;
 }
-
-xmlpp::Element* XmlUtils::createElement(const Glib::ustring& name) {
-	return dummyElement()->add_child_element(name);
-}
-
-xmlpp::Element* XmlUtils::dummyElement() {
-	static xmlpp::Document doc;
-	static xmlpp::Element* root = doc.create_root_node("root");
-	return root;
-}

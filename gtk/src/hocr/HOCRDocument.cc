@@ -842,13 +842,15 @@ Glib::ustring HOCRItem::toHtml(int indent) const {
 	return html;
 }
 
-int HOCRItem::baseLine() const {
-	static const Glib::RefPtr<Glib::Regex> baseLineRx = Glib::Regex::create("([+-]?\\d+\\.?\\d*)\\s+([+-]?\\d+)");
+std::pair<double, double> HOCRItem::baseLine() const {
+	static const Glib::RefPtr<Glib::Regex> baseLineRx = Glib::Regex::create("([+-]?\\d+\\.?\\d*)\\s+([+-]?\\d+\\.?\\d*)");
 	Glib::MatchInfo matchInfo;
 	if(baseLineRx->match(getTitleAttribute("baseline"), matchInfo)) {
-		return std::atoi(matchInfo.fetch(2).c_str());
+		double a = std::atof(matchInfo.fetch(1).c_str());
+		double b = std::atof(matchInfo.fetch(2).c_str());
+		return std::make_pair(a, b);
 	}
-	return 0;
+	return std::make_pair(0.0, 0.0);
 }
 
 bool HOCRItem::parseChildren(const xmlpp::Element* element, Glib::ustring language) {

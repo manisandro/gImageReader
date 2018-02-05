@@ -84,6 +84,7 @@ private:
 	void logOption(SANE_Int index, const SANE_Option_Descriptor* option);
 
 	static Glib::ustring getFrameModeString(SANE_Frame frame);
+	static Glib::ustring getErrorMessage(SANE_Status status, const Glib::ustring& defaultMessage);
 };
 
 typedef ScannerSane ScannerImpl;

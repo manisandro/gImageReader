@@ -26,12 +26,14 @@
 #include "OutputEditor.hh"
 #include "ui_OutputEditorHOCR.hh"
 
+class DisplayerImageItem;
 class DisplayerToolHOCR;
 namespace Geometry {
 class Rectangle;
 }
 class HOCRDocument;
 class HOCRPage;
+class HOCRItem;
 class SearchReplaceFrame;
 
 class OutputEditorHOCR : public OutputEditor {
@@ -104,6 +106,8 @@ private:
 	Ui::OutputEditorHOCR ui;
 	ClassData m_classdata;
 
+	DisplayerImageItem* m_preview = nullptr;
+	sigc::connection m_connectionPreviewTimer;
 	HOCRTreeView* m_treeView;
 	HOCRCellRendererText* m_treeViewTextCell;
 	Glib::RefPtr<Gtk::TreeStore> m_propStore;
@@ -125,7 +129,7 @@ private:
 	bool findReplaceInItem(const Gtk::TreeIter& index, const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace, bool& currentSelectionMatchesSearch);
 	bool showPage(const HOCRPage* page);
 
-	void addGraphicRegion(const Geometry::Rectangle& rect);
+	void bboxDrawn(const Geometry::Rectangle& bbox, int action);
 	void addPage(const Glib::ustring& hocrText, ReadSessionData data);
 	void editAttribute(const Glib::ustring& path, const Glib::ustring& value);
 	void expandCollapseItemClass(bool expand);
@@ -134,7 +138,7 @@ private:
 	void pickItem(const Geometry::Point& point);
 	void setFont();
 	void setModified();
-	void showItemProperties(const Gtk::TreeIter& index);
+	void showItemProperties(const Gtk::TreeIter& index, const Gtk::TreeIter& prev = Gtk::TreeIter());
 	void showTreeWidgetContextMenu(GdkEventButton* ev);
 	void updateSourceText();
 	void updateAttributes(const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value);
@@ -142,6 +146,8 @@ private:
 	void findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace);
 	void replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
 	void applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase);
+	void updatePreview();
+	void drawPreview(Cairo::RefPtr<Cairo::Context> context, const HOCRItem* item);
 };
 
 #endif // OUTPUTEDITORHOCR_HH

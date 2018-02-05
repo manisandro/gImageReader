@@ -80,7 +80,7 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files,
 	std::vector<Glib::ustring> filesWithText;
 	for(Glib::RefPtr<Gio::File> file : files) {
 		if(!file->query_exists()) {
-			failed += "\n\t" + file->get_path();
+			failed += "\n " + file->get_path();
 			continue;
 		}
 		bool contains = false;

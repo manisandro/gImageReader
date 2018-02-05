@@ -469,6 +469,7 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 
 bool HOCRPdfExporter::run(std::string& filebasename) {
 	m_preview = new DisplayerImageItem();
+	m_preview->setZIndex(2);
 	updatePreview();
 	MAIN->getDisplayer()->addItem(m_preview);
 
@@ -694,7 +695,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 	if(itemClass == "ocr_par" && pdfSettings.uniformizeLineSpacing) {
 		double yInc = double(itemRect.height) / childCount;
 		double y = itemRect.y + yInc;
-		int baseline = childCount > 0 ? item->children()[0]->baseLine() : 0;
+		std::pair<double, double> baseline = childCount > 0 ? item->children()[0]->baseLine() : std::make_pair(0.0, 0.0);
 		for(int iLine = 0; iLine < childCount; ++iLine, y += yInc) {
 			HOCRItem* lineItem = item->children()[iLine];
 			int x = itemRect.x;
@@ -715,20 +716,24 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 				}
 				prevWordRight = wordRect.x + wordRect.width;
 				Glib::ustring text = wordItem->text();
-				painter.drawText(x * px2pu, (y + baseline) * px2pu, text);
+				double wordBaseline = (x - itemRect.x) * baseline.first + baseline.second;
+				painter.drawText(x * px2pu, (y + wordBaseline) * px2pu, text);
 				x += painter.getTextWidth(text + " ") / px2pu;
 			}
 		}
 	} else if(itemClass == "ocr_line" && !pdfSettings.uniformizeLineSpacing) {
-		int baseline = item->baseLine();
-		double y = itemRect.y + itemRect.height + baseline;
+		std::pair<double, double> baseline = item->baseLine();
 		for(int iWord = 0, nWords = item->children().size(); iWord < nWords; ++iWord) {
 			HOCRItem* wordItem = item->children()[iWord];
+			if(!wordItem->isEnabled()) {
+				continue;
+			}
 			Geometry::Rectangle wordRect = wordItem->bbox();
 			painter.setFontFamily(pdfSettings.fontFamily.empty() ? wordItem->fontFamily() : pdfSettings.fontFamily, wordItem->fontBold(), wordItem->fontItalic());
 			if(pdfSettings.fontSize == -1) {
 				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 			}
+			double y = itemRect.y + itemRect.height + (wordRect.x + 0.5 * wordRect.width - itemRect.x) * baseline.first + baseline.second;
 			painter.drawText(wordRect.x * px2pu, y * px2pu, wordItem->text());
 		}
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {

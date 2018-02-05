@@ -134,8 +134,16 @@ protected:
 class OutputEditorHOCR::HOCRTreeView : public Gtk::TreeView {
 public:
 	HOCRTreeView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& /*builder*/)
-		: Gtk::TreeView(cobject) {}
-
+		: Gtk::TreeView(cobject) {
+		CONNECT(get_selection(), changed, [this] {
+			Gtk::TreeIter oldIndex = m_currentIndex;
+			m_currentIndex = currentIndex();
+			m_signal_current_index_changed(m_currentIndex, oldIndex);
+		});
+	}
+	sigc::signal<void, Gtk::TreeIter, Gtk::TreeIter> signal_current_index_changed() {
+		return m_signal_current_index_changed;
+	}
 	sigc::signal<void, GdkEventButton*> signal_context_menu() {
 		return m_signal_context_menu;
 	}
@@ -192,6 +200,9 @@ protected:
 	}
 
 private:
+	ClassData m_classdata;
+	Gtk::TreeIter m_currentIndex;
+	sigc::signal<void, Gtk::TreeIter, Gtk::TreeIter> m_signal_current_index_changed;
 	sigc::signal<void, GdkEventButton*> m_signal_context_menu;
 	sigc::signal<void> m_signal_delete;
 };
@@ -201,6 +212,11 @@ private:
 OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.builder->get_widget_derived("treeviewItems", m_treeView);
 	ui.setupUi();
+	ui.dialogAddWord->set_transient_for(*MAIN->getWindow());
+
+	m_preview = new DisplayerImageItem();
+	m_preview->setZIndex(2);
+	MAIN->getDisplayer()->addItem(m_preview);
 
 	m_tool = tool;
 
@@ -326,6 +342,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	CONNECT(ui.buttonClear, clicked, [this] { clear(); });
 	CONNECT(ui.buttonFindreplace, toggled, [this] { m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(ui.buttonFindreplace->get_active()); });
 	CONNECT(ui.buttonWconf, toggled, [this] { m_treeView->get_column(1)->set_visible(ui.buttonWconf->get_active());});
+	CONNECT(ui.buttonPreview, toggled, [this] { updatePreview(); });
 	CONNECT(m_treeView, context_menu, [this](GdkEventButton * ev) {
 		showTreeWidgetContextMenu(ev);
 	});
@@ -337,12 +354,12 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	CONNECT(m_searchFrame, apply_substitutions, sigc::mem_fun(this, &OutputEditorHOCR::applySubstitutions));
 	m_connectionCustomFont = CONNECT(ConfigSettings::get<FontSetting>("customoutputfont"), changed, [this] { setFont(); });
 	m_connectionDefaultFont = CONNECT(ConfigSettings::get<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(); });
-	m_connectionSelectionChanged = CONNECT(m_treeView->get_selection(), changed, [this] { showItemProperties(m_treeView->currentIndex()); });
+	m_connectionSelectionChanged = CONNECT(m_treeView, current_index_changed, sigc::mem_fun(this, &OutputEditorHOCR::showItemProperties));
 	CONNECT(ui.notebook, switch_page, [this](Gtk::Widget*, guint) {
 		updateSourceText();
 	});
 	CONNECT(m_tool, bbox_changed, sigc::mem_fun(this, &OutputEditorHOCR::updateCurrentItemBBox));
-	CONNECT(m_tool, bbox_drawn, sigc::mem_fun(this, &OutputEditorHOCR::addGraphicRegion));
+	CONNECT(m_tool, bbox_drawn, sigc::mem_fun(this, &OutputEditorHOCR::bboxDrawn));
 	CONNECT(m_tool, position_picked, sigc::mem_fun(this, &OutputEditorHOCR::pickItem));
 	CONNECTX(m_document, row_inserted, [this](const Gtk::TreePath&, const Gtk::TreeIter&) {
 		setModified();
@@ -371,6 +388,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 }
 
 OutputEditorHOCR::~OutputEditorHOCR() {
+	delete m_preview;
 	delete m_searchFrame;
 	m_connectionCustomFont.disconnect();
 	m_connectionDefaultFont.disconnect();
@@ -389,6 +407,8 @@ void OutputEditorHOCR::setModified() {
 	ui.buttonSave->set_sensitive(m_document->pageCount() > 0);
 	ui.buttonExport->set_sensitive(m_document->pageCount() > 0);
 	ui.boxNavigation->set_sensitive(m_document->pageCount() > 0);
+	m_preview->setVisible(false);
+	m_connectionPreviewTimer = Glib::signal_timeout().connect([this] { updatePreview(); return false; }, 100); // Use a timer because setModified is potentially called a large number of times when the HOCR tree changes
 	m_modified = true;
 }
 
@@ -508,7 +528,9 @@ bool OutputEditorHOCR::showPage(const HOCRPage* page) {
 	return page && MAIN->getSourceManager()->addSource(Gio::File::create_for_path(page->sourceFile()), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
 }
 
-void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index) {
+void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index, const Gtk::TreeIter& prev) {
+	m_tool->setAction(DisplayerToolHOCR::ACTION_NONE);
+	const HOCRItem* prevItem = m_document->itemAtIndex(prev);
 	Gtk::TreeIter current = m_treeView->currentIndex();
 	if(!current || current != index) {
 		m_connectionSelectionChanged.block(true);
@@ -577,6 +599,10 @@ void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index) {
 	ui.textviewSource->get_buffer()->set_text(currentItem->toHtml());
 
 	if(showPage(page)) {
+		// Update preview if necessary
+		if(!prevItem || prevItem->page() != page) {
+			updatePreview();
+		}
 		// Minimum bounding box
 		Geometry::Rectangle minBBox;
 		if(currentItem->itemClass() == "ocr_page") {
@@ -647,20 +673,69 @@ void OutputEditorHOCR::updateSourceText() {
 	}
 }
 
-void OutputEditorHOCR::addGraphicRegion(const Geometry::Rectangle& bbox) {
+void OutputEditorHOCR::bboxDrawn(const Geometry::Rectangle& bbox, int action) {
+	xmlpp::Document doc;
 	Gtk::TreeIter current = m_treeView->currentIndex();
-	xmlpp::Element* graphicElement = XmlUtils::createElement("div");
-	graphicElement->set_attribute("class", "ocr_graphic");
-	graphicElement->set_attribute("title", Glib::ustring::compose("bbox %1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height));
-	Gtk::TreeIter index = m_document->addItem(current, graphicElement);
+	const HOCRItem* currentItem = m_document->itemAtIndex(current);
+	if(!currentItem) {
+		return;
+	}
+	xmlpp::Element* newElement;
+	if(action == DisplayerToolHOCR::ACTION_DRAW_GRAPHIC_RECT) {
+		newElement = doc.create_root_node("div");
+		newElement->set_attribute("class", "ocr_graphic");
+		newElement->set_attribute("title", Glib::ustring::compose("bbox %1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height));
+	} else if(action == DisplayerToolHOCR::ACTION_DRAW_CAREA_RECT) {
+		newElement = doc.create_root_node("div");
+		newElement->set_attribute("class", "ocr_carea");
+		newElement->set_attribute("title", Glib::ustring::compose("bbox %1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height));
+	} else if(action == DisplayerToolHOCR::ACTION_DRAW_PAR_RECT) {
+		newElement = doc.create_root_node("p");
+		newElement->set_attribute("class", "ocr_par");
+		newElement->set_attribute("title", Glib::ustring::compose("bbox %1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height));
+	} else if(action == DisplayerToolHOCR::ACTION_DRAW_LINE_RECT) {
+		newElement = doc.create_root_node("span");
+		newElement->set_attribute("class", "ocr_line");
+		// Tesseract does as follows:
+		// row_height = x_height + ascenders - descenders
+		// font_pt_size = row_height * 72 / dpi (72 = pointsPerInch)
+		// As a first approximation, assume x_size = bbox.height() and ascenders = descenders = bbox.height() / 4
+		std::map<Glib::ustring, Glib::ustring> titleAttrs;
+		titleAttrs["bbox"] = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
+		titleAttrs["x_ascenders"] = Glib::ustring::compose("%1", 0.25 * bbox.height);
+		titleAttrs["x_descenders"] = Glib::ustring::compose("%1", 0.25 * bbox.height);
+		titleAttrs["x_size"] = Glib::ustring::compose("%1", bbox.height);
+		titleAttrs["baseline"] = Glib::ustring("0 0");
+		newElement->set_attribute("title", HOCRItem::serializeAttrGroup(titleAttrs));
+	} else if(action == DisplayerToolHOCR::ACTION_DRAW_WORD_RECT) {
+		ui.entryAddWord->set_text("");
+		int response = ui.dialogAddWord->run();
+		ui.dialogAddWord->hide();
+		if(response !=  Gtk::RESPONSE_OK || ui.entryAddWord->get_text().empty()) {
+			return;
+		}
+		newElement = doc.create_root_node("span");
+		newElement->set_attribute("class", "ocrx_word");
+		newElement->set_attribute("lang", m_spell.get_language());
+		std::map<Glib::ustring, Glib::ustring> titleAttrs;
+		titleAttrs["bbox"] = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
+		titleAttrs["x_font"] = "sans";
+		titleAttrs["x_fsize"] = Glib::ustring::compose("%1", std::round(bbox.height * 72. / currentItem->page()->resolution()));
+		titleAttrs["x_wconf"] = "100";
+		newElement->set_attribute("title", HOCRItem::serializeAttrGroup(titleAttrs));
+		newElement->add_child_text(ui.entryAddWord->get_text());
+	} else {
+		return;
+	}
+	Gtk::TreeIter index = m_document->addItem(current, newElement);
 	if(index) {
 		m_connectionSelectionChanged.block(true);
 		m_treeView->get_selection()->unselect_all();
 		m_connectionSelectionChanged.block(false);
+		m_treeView->expand_to_path(m_document->get_path(index));
 		m_treeView->get_selection()->select(index);
 		m_treeView->scroll_to_row(m_document->get_path(index));
 	}
-	graphicElement->get_parent()->remove_node(graphicElement);
 }
 
 void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
@@ -726,7 +801,22 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 	if(item->itemClass() == "ocr_page") {
 		Gtk::MenuItem* addGraphicItem = Gtk::manage(new Gtk::MenuItem(_("Add graphic region")));
 		menu.append(*addGraphicItem);
-		CONNECT(addGraphicItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_RECT); });
+		CONNECT(addGraphicItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_GRAPHIC_RECT); });
+		Gtk::MenuItem* addTextBlockItem = Gtk::manage(new Gtk::MenuItem(_("Add text block")));
+		menu.append(*addTextBlockItem);
+		CONNECT(addTextBlockItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_CAREA_RECT); });
+	} else if(item->itemClass() == "ocr_carea") {
+		Gtk::MenuItem* addParagraphItem = Gtk::manage(new Gtk::MenuItem(_("Add paragraph")));
+		menu.append(*addParagraphItem);
+		CONNECT(addParagraphItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_PAR_RECT); });
+	} else if(item->itemClass() == "ocr_par") {
+		Gtk::MenuItem* addLineItem = Gtk::manage(new Gtk::MenuItem(_("Add line")));
+		menu.append(*addLineItem);
+		CONNECT(addLineItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_LINE_RECT); });
+	} else if(item->itemClass() == "ocr_line") {
+		Gtk::MenuItem* addWordItem = Gtk::manage(new Gtk::MenuItem(_("Add word")));
+		menu.append(*addWordItem);
+		CONNECT(addWordItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_WORD_RECT); });
 	} else if(item->itemClass() == "ocrx_word") {
 		Glib::ustring prefix, suffix, trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
 		Glib::ustring spellLang = item->lang();
@@ -893,6 +983,7 @@ bool OutputEditorHOCR::exportToPDF() {
 	if(m_document->pageCount() == 0) {
 		return false;
 	}
+	ui.buttonPreview->set_active(false); // Disable preview because if conflicts with preview from PDF dialog
 	const HOCRItem* item = m_document->itemAtIndex(m_treeView->currentIndex());
 	const HOCRPage* page = item ? item->page() : m_document->page(0);
 	if(showPage(page)) {
@@ -909,6 +1000,8 @@ bool OutputEditorHOCR::exportToText() {
 }
 
 bool OutputEditorHOCR::clear(bool hide) {
+	m_connectionPreviewTimer.disconnect();
+	m_preview->setVisible(false);
 	if(!ui.boxEditorHOCR->get_visible()) {
 		return true;
 	}
@@ -1080,4 +1173,64 @@ void OutputEditorHOCR::applySubstitutions(const std::map<Glib::ustring, Glib::us
 		} while(curr != start);
 	}
 	MAIN->popState();
+}
+
+void OutputEditorHOCR::updatePreview() {
+	const HOCRItem* item = m_document->itemAtIndex(m_treeView->currentIndex());
+	if(!ui.buttonPreview->get_active() || !item) {
+		m_preview->setVisible(false);
+		return;
+	}
+
+	const HOCRPage* page = item->page();
+	const Geometry::Rectangle& bbox = page->bbox();
+	int pageDpi = page->resolution();
+
+	Cairo::RefPtr<Cairo::ImageSurface> image = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, bbox.width, bbox.height);
+	Cairo::RefPtr<Cairo::Context> context = Cairo::Context::create(image);
+	context->save();
+	context->rectangle(0, 0, image->get_width(), image->get_height());
+	context->set_source_rgba(1., 1., 1., .5);
+	context->fill();
+	context->restore();
+
+	drawPreview(context, page);
+
+	m_preview->setImage(image);
+	m_preview->setRect(Geometry::Rectangle(-0.5 * image->get_width(), -0.5 * image->get_height(), image->get_width(), image->get_height()));
+	m_preview->setVisible(true);
+}
+
+void OutputEditorHOCR::drawPreview(Cairo::RefPtr<Cairo::Context> context, const HOCRItem* item) {
+	if(!item->isEnabled()) {
+		return;
+	}
+	Glib::ustring itemClass = item->itemClass();
+	if(itemClass == "ocr_line") {
+		std::pair<double, double> baseline = item->baseLine();
+		const Geometry::Rectangle& lineRect = item->bbox();
+		for(HOCRItem* wordItem : item->children()) {
+			if(!wordItem->isEnabled()) {
+				continue;
+			}
+			const Geometry::Rectangle& wordRect = wordItem->bbox();
+			context->select_font_face(wordItem->fontFamily(), wordItem->fontItalic() ? Cairo::FONT_SLANT_ITALIC : Cairo::FONT_SLANT_NORMAL, wordItem->fontBold() ? Cairo::FONT_WEIGHT_BOLD : Cairo::FONT_WEIGHT_NORMAL);
+			context->set_font_size(wordItem->fontSize() * (item->page()->resolution() / 72.));
+			// See https://github.com/kba/hocr-spec/issues/15
+			double y = lineRect.y + lineRect.height + (wordRect.x + 0.5 * wordRect.width - lineRect.x) * baseline.first + baseline.second;
+			context->move_to(wordRect.x, y);
+			context->show_text(wordItem->text());
+		}
+	} else if(itemClass == "ocr_graphic") {
+		const Geometry::Rectangle& bbox = item->bbox();
+		context->save();
+		context->move_to(bbox.x, bbox.y);
+		context->set_source(m_tool->getSelection(bbox), bbox.x, bbox.y);
+		context->paint();
+		context->restore();
+	} else {
+		for(HOCRItem* childItem : item->children()) {
+			drawPreview(context, childItem);;
+		}
+	}
 }
