@@ -793,19 +793,19 @@ QString ScannerSane::getFrameModeString(SANE_Frame frame) {
 
 QString ScannerSane::getErrorMessage(SANE_Status status, const QString& defaultMessage) {
 	switch (status) {
-		case SANE_STATUS_CANCELLED:
-			return _("Operation is cancelled.");
-		case SANE_STATUS_DEVICE_BUSY:
-			return _("Device is busy.");
-		case SANE_STATUS_COVER_OPEN:
-			return _("Cover is opened.");
-		case SANE_STATUS_JAMMED:
-			return _("Document feeder jammed.");
-		case SANE_STATUS_NO_DOCS:
-			return _("Document feeder out of documents.");
-		case SANE_STATUS_ACCESS_DENIED:
-			return _("Access to scanner is denied.");
-		default:
-			return defaultMessage;
+	case SANE_STATUS_CANCELLED:
+		return _("Operation is cancelled.");
+	case SANE_STATUS_DEVICE_BUSY:
+		return _("Device is busy.");
+	case SANE_STATUS_COVER_OPEN:
+		return _("Cover is opened.");
+	case SANE_STATUS_JAMMED:
+		return _("Document feeder jammed.");
+	case SANE_STATUS_NO_DOCS:
+		return _("Document feeder out of documents.");
+	case SANE_STATUS_ACCESS_DENIED:
+		return _("Access to scanner is denied.");
+	default:
+		return defaultMessage;
 	}
 }
