@@ -1017,7 +1017,7 @@ void OutputEditorHOCR::updatePreview() {
 	}
 
 	const HOCRPage* page = item->page();
-	QRect bbox = page->bbox();
+	const QRect& bbox = page->bbox();
 	int pageDpi = page->resolution();
 
 	QImage image(bbox.size(), QImage::Format_ARGB32);
