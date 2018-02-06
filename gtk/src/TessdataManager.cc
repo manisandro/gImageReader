@@ -279,7 +279,7 @@ void TessdataManager::applyChanges() {
 				}
 			}
 			if(!errors.empty()) {
-				errorMsg = Glib::ustring::compose(_("The following files could not be downloaded or removed:\n%1\n\nCheck the connectivity and directory permissions."), errors);
+				errorMsg = Glib::ustring::compose(_("The following files could not be downloaded or removed:\n%1\n\nCheck the connectivity and directory permissions.\n\nHint: If you don't have write permissions in system folders, you can switch to user paths in the settings dialog."), errors);
 			}
 		}
 	}

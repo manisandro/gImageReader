@@ -545,7 +545,8 @@ void MainWindow::dictionaryAutoinstall() {
 		QRegExp pat(QString(">(%1[^<]*\\.(dic|aff))<").arg(code.left(2)));
 		QString htmls = html;
 
-		QString downloaded;
+		QStringList downloaded;
+		QStringList failed;
 		int pos = 0;
 		while((pos = htmls.indexOf(pat, pos)) != -1) {
 			pushState(State::Busy, _("Downloading '%1'...").arg(pat.cap(1)));
@@ -554,20 +555,22 @@ void MainWindow::dictionaryAutoinstall() {
 				QFile file(spellingDir.absoluteFilePath(pat.cap(1)));
 				if(file.open(QIODevice::WriteOnly)) {
 					file.write(data);
-					downloaded.append(QString("\n%1").arg(pat.cap(1)));
+					downloaded.append(pat.cap(1));
+				} else {
+					failed.append(pat.cap(1));
 				}
+			} else {
+				failed.append(pat.cap(1));
 			}
 			popState();
 			pos += pat.matchedLength();
 		}
 		popState();
-		if(!downloaded.isEmpty()) {
-			QMessageBox::information(this, _("Dictionaries installed"), _("The following dictionary files were installed:%1").arg(downloaded));
+		if(!failed.isEmpty()) {
+			QMessageBox::critical(this, _("Error"), _("The following dictionaries could not be downloaded:\n%1\n\nCheck the connectivity and directory permissions.\nHint: If you don't have write permissions in system folders, you can switch to user paths in the settings dialog.").arg(failed.join("\n")));
+		} else if(!downloaded.isEmpty()) {
 			m_recognizer->updateLanguagesMenu();
-		} else {
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
-				showHelp("#InstallSpelling");
-			}
+			QMessageBox::information(this, _("Dictionaries installed"), _("The following dictionary files were installed:%1").arg(downloaded.join("\n")));
 		}
 	}
 }

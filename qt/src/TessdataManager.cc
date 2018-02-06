@@ -265,7 +265,7 @@ void TessdataManager::applyChanges() {
 			}
 		}
 		if(!errors.isEmpty()) {
-			errorMsg = _("The following files could not be downloaded or removed:\n%1\n\nCheck the connectivity and directory permissions.").arg(errors.join("\n"));
+			errorMsg = _("The following files could not be downloaded or removed:\n%1\n\nCheck the connectivity and directory permissions.\nHint: If you don't have write permissions in system folders, you can switch to user paths in the settings dialog.").arg(errors.join("\n"));
 		}
 	}
 	setEnabled(true);

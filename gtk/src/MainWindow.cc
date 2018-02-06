@@ -555,7 +555,8 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
 	Glib::RefPtr<Glib::Regex> pat = Glib::Regex::create(Glib::ustring::compose(">(%1[^<]*\\.(dic|aff))<", code.substr(0, 2)));
 	htmls = Glib::ustring(reinterpret_cast<const char*>(html->get_data()), html->size());
 
-	Glib::ustring downloaded;
+	std::vector<Glib::ustring> downloaded;
+	std::vector<Glib::ustring> failed;
 	int pos = 0;
 	Glib::MatchInfo matchInfo;
 	while(pat->match(htmls, pos, matchInfo)) {
@@ -565,19 +566,22 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
 			std::ofstream file(Glib::build_filename(dictPath, matchInfo.fetch(1)), std::ios::binary);
 			if(file.is_open()) {
 				file.write(reinterpret_cast<char*>(data->get_data()), data->size());
-				downloaded.append(Glib::ustring::compose("\n%1", matchInfo.fetch(1)));
+				downloaded.push_back(matchInfo.fetch(1));
+			} else {
+				failed.push_back(matchInfo.fetch(1));
 			}
+		} else {
+			failed.push_back(matchInfo.fetch(1));
 		}
 		popState();
 		int start;
 		matchInfo.fetch_pos(0, start, pos);
 	}
-	if(!downloaded.empty()) {
+	popState();
+	if(!failed.empty()) {
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("The following dictionaries could not be downloaded:\n%1\n\nCheck the connectivity and directory permissions.\nHint: If you don't have write permissions in system folders, you can switch to user paths in the settings dialog."), Utils::string_join(failed, "\n")));
+	} else if(!downloaded.empty()) {
 		getRecognizer()->updateLanguagesMenu();
-		popState();
-		Utils::message_dialog(Gtk::MESSAGE_INFO, _("Dictionaries installed"), Glib::ustring::compose(_("The following dictionaries were installed:%1"), downloaded));
-	} else {
-		popState();
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
+		Utils::message_dialog(Gtk::MESSAGE_INFO, _("Dictionaries installed"), Glib::ustring::compose(_("The following dictionaries were installed:\n%1"), Utils::string_join(downloaded, "\n")));
 	}
 }
