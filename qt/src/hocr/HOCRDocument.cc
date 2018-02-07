@@ -586,6 +586,9 @@ HOCRItem::HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem* parent,
 		if(nextElement.isNull()) {
 			m_text.replace(QRegExp("[-\u2014]\\s*$"), "-");
 		}
+	} else if(itemClass() == "ocr_line") {
+		// Depending on the locale, tesseract can use a comma instead of a dot as decimal separator in the baseline...
+		m_titleAttrs["baseline"] = m_titleAttrs["baseline"].replace(",", ".");
 	}
 }
 

@@ -672,6 +672,9 @@ HOCRItem::HOCRItem(const xmlpp::Element* element, HOCRPage* page, HOCRItem* pare
 		if(!nextElement) {
 			m_text = Glib::Regex::create("[-\u2014]\\s*$")->replace(m_text, 0, "-", static_cast<Glib::RegexMatchFlags>(0));
 		}
+	} else if(itemClass() == "ocr_line") {
+		// Depending on the locale, tesseract can use a comma instead of a dot as decimal separator in the baseline...
+		Utils::string_replace(m_titleAttrs["baseline"], ",", ".", true);
 	}
 }
 
