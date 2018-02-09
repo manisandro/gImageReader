@@ -92,9 +92,9 @@ void DisplayerToolHOCR::setAction(Action action, bool clearSel) {
 	}
 	m_currentAction = action;
 	if(m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
-		m_displayer->setCursor(Gdk::Cursor::create(Gdk::CROSS));
+		m_displayer->setDefaultCursor(Gdk::Cursor::create(Gdk::TCROSS));
 	} else {
-		m_displayer->setCursor(Glib::RefPtr<Gdk::Cursor>(0));
+		m_displayer->setDefaultCursor(Gdk::Cursor::create(Gdk::ARROW));
 	}
 }
 
