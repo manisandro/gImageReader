@@ -388,6 +388,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 }
 
 OutputEditorHOCR::~OutputEditorHOCR() {
+	MAIN->getDisplayer()->removeItem(m_preview);
 	delete m_preview;
 	delete m_searchFrame;
 	m_connectionCustomFont.disconnect();
