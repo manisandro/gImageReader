@@ -146,6 +146,7 @@ void Utils::handleSourceDropEvent(const QMimeData* mimeData) {
 	}
 	QList<QByteArray> formats = QImageReader::supportedImageFormats();
 	formats.append("pdf");
+	formats.append("djvu");
 	for(const QUrl& url : mimeData->urls()) {
 		QFile file(url.toLocalFile());
 		if(!file.exists()) {
