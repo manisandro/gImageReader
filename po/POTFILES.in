@@ -1,10 +1,16 @@
 # List of source files containing translatable strings.
 
 [type: gettext/glade]gtk/data/appmenu.ui
-[type: gettext/glade]gtk/data/crashhandler.ui
-[type: gettext/glade]gtk/data/editor_hocr.ui
-[type: gettext/glade]gtk/data/editor_text.ui
-[type: gettext/glade]gtk/data/gimagereader.ui
+[type: gettext/glade]gtk/data/ConfigDialog.ui
+[type: gettext/glade]gtk/data/CrashHandler.ui
+[type: gettext/glade]gtk/data/MainWindow.ui
+[type: gettext/glade]gtk/data/OutputEditorHOCR.ui
+[type: gettext/glade]gtk/data/OutputEditorText.ui
+[type: gettext/glade]gtk/data/PdfExportDialog.ui
+[type: gettext/glade]gtk/data/SearchReplaceFrame.ui
+[type: gettext/glade]gtk/data/SelectionMenu.ui
+[type: gettext/glade]gtk/data/SubstitutionsManager.ui
+[type: gettext/glade]gtk/data/TessdataManager.ui
 gtk/src/Acquirer.cc
 gtk/src/Acquirer.hh
 gtk/src/Application.hh
@@ -17,15 +23,31 @@ gtk/src/CrashHandler.cc
 gtk/src/CrashHandler.hh
 gtk/src/Displayer.cc
 gtk/src/Displayer.hh
-gtk/src/DisplayerToolHOCR.cc
-gtk/src/DisplayerToolHOCR.hh
 gtk/src/DisplayerToolSelect.cc
 gtk/src/DisplayerToolSelect.hh
 gtk/src/DisplayRenderer.cc
 gtk/src/DisplayRenderer.hh
+gtk/src/DjVuDocument.cc
+gtk/src/DjVuDocument.hh
 gtk/src/FileDialogs.cc
 gtk/src/FileDialogs.hh
+gtk/src/FontComboBox.cc
+gtk/src/FontComboBox.hh
 gtk/src/Geometry.hh
+gtk/src/hocr/DisplayerToolHOCR.cc
+gtk/src/hocr/DisplayerToolHOCR.hh
+gtk/src/hocr/HOCRDocument.cc
+gtk/src/hocr/HOCRDocument.hh
+gtk/src/hocr/HOCROdtExporter.cc
+gtk/src/hocr/HOCROdtExporter.hh
+gtk/src/hocr/HOCRPdfExporter.cc
+gtk/src/hocr/HOCRPdfExporter.hh
+gtk/src/hocr/HOCRTextExporter.cc
+gtk/src/hocr/HOCRTextExporter.hh
+gtk/src/hocr/OutputEditorHOCR.cc
+gtk/src/hocr/OutputEditorHOCR.hh
+gtk/src/hocr/XmlUtils.cc
+gtk/src/hocr/XmlUtils.hh
 gtk/src/Image.cc
 gtk/src/Image.hh
 gtk/src/main.cc
@@ -34,8 +56,6 @@ gtk/src/MainWindow.hh
 gtk/src/OutputBuffer.cc
 gtk/src/OutputBuffer.hh
 gtk/src/OutputEditor.hh
-gtk/src/OutputEditorHOCR.cc
-gtk/src/OutputEditorHOCR.hh
 gtk/src/OutputEditorText.cc
 gtk/src/OutputEditorText.hh
 gtk/src/Recognizer.cc
@@ -45,6 +65,8 @@ gtk/src/scanner/ScannerSane.cc
 gtk/src/scanner/ScannerSane.hh
 gtk/src/scanner/ScannerTwain.cc
 gtk/src/scanner/ScannerTwain.hh
+gtk/src/SearchReplaceFrame.cc
+gtk/src/SearchReplaceFrame.hh
 gtk/src/SourceManager.cc
 gtk/src/SourceManager.hh
 gtk/src/SubstitutionsManager.cc
@@ -59,6 +81,7 @@ gtk/src/Utils.hh
 [type: gettext/qtdesigner]qt/data/MainWindow.ui
 [type: gettext/qtdesigner]qt/data/PageRangeDialog.ui
 [type: gettext/qtdesigner]qt/data/PdfExportDialog.ui
+[type: gettext/qtdesigner]qt/data/SearchReplaceFrame.ui
 qt/src/Acquirer.cc
 qt/src/Acquirer.hh
 qt/src/common.hh
@@ -70,19 +93,32 @@ qt/src/CrashHandler.cc
 qt/src/CrashHandler.hh
 qt/src/Displayer.cc
 qt/src/Displayer.hh
-qt/src/DisplayerToolHOCR.cc
-qt/src/DisplayerToolHOCR.hh
 qt/src/DisplayerToolSelect.cc
 qt/src/DisplayerToolSelect.hh
 qt/src/DisplayRenderer.cc
 qt/src/DisplayRenderer.hh
+qt/src/DjVuDocument.cc
+qt/src/DjVuDocument.hh
+qt/src/FileDialogs.cc
+qt/src/FileDialogs.hh
+qt/src/hocr/DisplayerToolHOCR.cc
+qt/src/hocr/DisplayerToolHOCR.hh
+qt/src/hocr/HOCRDocument.cc
+qt/src/hocr/HOCRDocument.hh
+qt/src/hocr/HOCROdtExporter.cc
+qt/src/hocr/HOCROdtExporter.hh
+qt/src/hocr/HOCRPdfExporter.cc
+qt/src/hocr/HOCRPdfExporter.hh
+qt/src/hocr/HOCRTextExporter.cc
+qt/src/hocr/HOCRTextExporter.hh
+qt/src/hocr/OutputEditorHOCR.cc
+qt/src/hocr/OutputEditorHOCR.hh
+qt/src/hocr/Ui_OutputEditorHOCR.hh
 qt/src/main.cc
 qt/src/MainWindow.cc
 qt/src/MainWindow.hh
 qt/src/OutputEditor.cc
 qt/src/OutputEditor.hh
-qt/src/OutputEditorHOCR.cc
-qt/src/OutputEditorHOCR.hh
 qt/src/OutputEditorText.cc
 qt/src/OutputEditorText.hh
 qt/src/OutputTextEdit.cc
@@ -95,6 +131,8 @@ qt/src/scanner/ScannerSane.cc
 qt/src/scanner/ScannerSane.hh
 qt/src/scanner/ScannerTwain.cc
 qt/src/scanner/ScannerTwain.hh
+qt/src/SearchReplaceFrame.cc
+qt/src/SearchReplaceFrame.hh
 qt/src/SourceManager.cc
 qt/src/SourceManager.hh
 qt/src/SubstitutionsManager.cc
@@ -102,7 +140,6 @@ qt/src/SubstitutionsManager.hh
 qt/src/TessdataManager.cc
 qt/src/TessdataManager.hh
 qt/src/Ui_MainWindow.hh
-qt/src/Ui_OutputEditorHOCR.hh
 qt/src/Ui_OutputEditorText.hh
 qt/src/Utils.cc
 qt/src/Utils.hh

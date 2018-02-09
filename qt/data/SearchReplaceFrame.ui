@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Frame</string>
+   <string></string>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
