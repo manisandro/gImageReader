@@ -121,6 +121,8 @@ public:
 		actionNavigateNext = new QAction(QIcon::fromTheme("go-down"), gettext("Next (F3)"), widget);
 		actionNavigatePrev = new QAction(QIcon::fromTheme("go-up"), gettext("Previous (Shift+F3)"), widget);
 		comboBoxNavigate = new QComboBox();
+		comboBoxNavigate->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
+		comboBoxNavigate->setMinimumContentsLength(10);
 		actionExpandAll = new QAction(QIcon(":/icons/expand"), gettext("Expand all"), widget);
 		actionCollapseAll = new QAction(QIcon(":/icons/collapse"), gettext("Collapse all"), widget);
 
