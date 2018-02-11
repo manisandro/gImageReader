@@ -11,25 +11,25 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 00:12+0100\n"
-"PO-Revision-Date: 2017-06-30 20:18+0100\n"
-"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
-"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2018-02-12 23:40+0000\n"
+"Last-Translator: Alexander <zamazan4ik@tut.by>\n"
+"Language-Team: Russian "
+"<https://hosted.weblate.org/projects/gimagereader/translations/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2.19-dev\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
 msgid "Redetect Languages"
 msgstr "Повторить обнаружение языков"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
-#, fuzzy
 msgid "Manage Languages"
-msgstr "Управление языками..."
+msgstr "Управление языками"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
@@ -148,7 +148,7 @@ msgstr "Пользовательские пути"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr ""
+msgstr "Автоматически открывать экспортированные документы"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:36
 msgid "Regenerate backtrace"
@@ -259,9 +259,8 @@ msgid "Scan"
 msgstr "Отсканировать"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:17
-#, fuzzy
 msgid "Source:"
-msgstr "Источник"
+msgstr "Источник:"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
@@ -362,22 +361,20 @@ msgid "Autodetect"
 msgstr "Автоопределение"
 
 #: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:7
-#, fuzzy
 msgid "Prepend to output text:"
-msgstr "Добавить к текущему тексту"
+msgstr "Добавить к текущему тексту:"
 
 #: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
-msgstr ""
+msgstr "Имя исходного файла"
 
 #: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:9
-#, fuzzy
 msgid "Source page"
-msgstr "Источник"
+msgstr "Исходная страница"
 
 #: ../gtk/data/MainWindow.ui.h:51 ../qt/src/SourceManager.cc:146
 msgid "Protected PDF"
-msgstr ""
+msgstr "PDF с паролем"
 
 #: ../gtk/data/MainWindow.ui.h:52 ../qt/src/Recognizer.cc:76
 msgid "Current Page"
@@ -389,18 +386,16 @@ msgstr "Несколько страниц..."
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:577
 msgid "Add Word"
-msgstr ""
+msgstr "Добавить слово"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:577
-#, fuzzy
 msgid "Enter word:"
-msgstr "Игнорировать слово"
+msgstr "Введите слово:"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:61
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
-#, fuzzy
 msgid "Export to plain text"
-msgstr "Экспорт в PDF"
+msgstr "Экспорт в текст"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:65
@@ -409,9 +404,8 @@ msgstr "Экспорт в PDF"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:67
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:68
-#, fuzzy
 msgid "Export to ODT"
-msgstr "Экспорт в PDF"
+msgstr "Экспорт в ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/Ui_OutputEditorText.hh:116
@@ -420,9 +414,8 @@ msgstr "Сохранить результаты"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
-#, fuzzy
 msgid "Export"
-msgstr "Экспорт в PDF"
+msgstr "Экспорт"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11 ../gtk/data/OutputEditorText.ui.h:19
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
@@ -441,7 +434,7 @@ msgstr "Найти и заменить"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:83
 msgid "Show confidence values"
-msgstr ""
+msgstr "Показать вероятности"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/PdfExportDialog.ui.h:46
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
@@ -452,12 +445,12 @@ msgstr "Показать предпросмотр"
 #: ../gtk/data/OutputEditorHOCR.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
 msgid "Next (F3)"
-msgstr ""
+msgstr "Следующий (F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:16
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
 msgid "Previous (Shift+F3)"
-msgstr ""
+msgstr "Предыдущий (Shift+F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/src/hocr/OutputEditorHOCR.cc:867
 #: ../qt/src/hocr/OutputEditorHOCR.cc:712
@@ -575,7 +568,7 @@ msgstr "Качество сжатия:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:10
 msgid "90"
-msgstr ""
+msgstr "90"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:15
 msgid "DPI:"
@@ -583,7 +576,7 @@ msgstr "Точек на дюйм:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12
 msgid "300"
-msgstr ""
+msgstr "300"
 
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
@@ -599,7 +592,7 @@ msgstr "Уравнять интервалы между строками и сл�
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
-msgstr ""
+msgstr "Принудительно использовать шрифт:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:27
 msgid "Fallback font family:"
@@ -612,24 +605,24 @@ msgstr "Использовать размеры шрифта оригинала"
 
 #: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
-msgstr ""
+msgstr "Масштабирование шрифта:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:20
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:26
 msgid "pt"
-msgstr ""
+msgstr "точек"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22
 msgid "10"
-msgstr ""
+msgstr "10"
 
 #: ../gtk/data/PdfExportDialog.ui.h:24
 #, no-c-format
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:22
 msgid "Preserve spaces wider than:"
@@ -637,7 +630,7 @@ msgstr "Сохранить пробелы шире чем:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:24
 msgid "characters"
@@ -649,73 +642,71 @@ msgstr "Параметры текста:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Paper size:"
-msgstr ""
+msgstr "Размер страницы:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Width"
-msgstr ""
+msgstr "Ширина"
 
 #: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Height"
-msgstr ""
+msgstr "Высота"
 
 #: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
-msgstr ""
+msgstr "Базовый"
 
 #: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:29
-#, fuzzy
 msgid "PDF version:"
-msgstr "Новая версия"
+msgstr "Версия PDF:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:31
 msgid "Password:"
-msgstr ""
+msgstr "Пароль:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:32
 msgid "Confirm password:"
-msgstr ""
+msgstr "Подтвердить пароль:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:30
 msgid "Encryption (optional):"
-msgstr ""
+msgstr "Шифрование (опционально):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:34
 msgid "Author:"
-msgstr ""
+msgstr "Автор:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:36
 msgid "Title:"
-msgstr ""
+msgstr "Заголовок:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:39 ../qt/data/PdfExportDialog.ui.h:38
 msgid "Subject:"
-msgstr ""
+msgstr "Тема:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:40 ../qt/data/PdfExportDialog.ui.h:35
 msgid "Creator:"
-msgstr ""
+msgstr "Создатель:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:41 ../qt/data/PdfExportDialog.ui.h:37
 msgid "Producer:"
-msgstr ""
+msgstr "Изготовитель:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:42 ../qt/data/PdfExportDialog.ui.h:39
 msgid "Keywords:"
-msgstr ""
+msgstr "Ключевые слова:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:43 ../qt/data/PdfExportDialog.ui.h:33
-#, fuzzy
 msgid "Additional information (optional):"
-msgstr "Дополнительные определения языков:"
+msgstr "Дополнительная информация (опционально):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:44 ../qt/data/PdfExportDialog.ui.h:40
 msgid "Import from current source"
-msgstr ""
+msgstr "Импорт из текущего источника"
 
 #: ../gtk/data/PdfExportDialog.ui.h:45 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Advanced"
-msgstr ""
+msgstr "Расширенный"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:4
 msgid "Find"
@@ -757,7 +748,7 @@ msgstr "Порядок:"
 
 #: ../gtk/data/SelectionMenu.ui.h:3
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
 #: ../qt/src/DisplayerToolSelect.cc:237 ../qt/src/hocr/DisplayerToolHOCR.cc:31
@@ -941,14 +932,12 @@ msgstr "Перезаписать файл?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:516 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/OutputEditorHOCR.cc:229
-#, fuzzy
 msgid "Page"
-msgstr "Ошибка анализа: %1"
+msgstr "Страница"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:518 ../qt/src/hocr/HOCRDocument.cc:441
-#, fuzzy
 msgid "Text block"
-msgstr "Текстовые файлы"
+msgstr "Блок текста"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:520 ../gtk/src/hocr/OutputEditorHOCR.cc:272
 #: ../qt/src/hocr/HOCRDocument.cc:443 ../qt/src/hocr/OutputEditorHOCR.cc:231
@@ -977,44 +966,40 @@ msgid "OpenDocument Text Documents"
 msgstr ""
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
-#, fuzzy
 msgid "Save ODT Output..."
-msgstr "Сохранить результаты в PDF..."
+msgstr "Сохранить ODT..."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:272
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCROdtExporter.cc:61
 #: ../qt/src/hocr/HOCRPdfExporter.cc:600 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
-msgstr ""
+msgstr "Ошибка во время экспорта"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:272
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
-msgstr ""
+msgstr "Ошибка по время экспорта в ODT: невозможна запись в выходной файл."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:266 ../qt/src/hocr/HOCROdtExporter.cc:254
-#, fuzzy
 msgid "Exporting to ODT..."
-msgstr "Экспорт в PDF"
+msgstr "Экспорт в ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:365
-#, fuzzy
 msgid "Same as source"
-msgstr "Источник"
+msgstr "Как оригинал"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:366
 msgid "Custom"
-msgstr ""
+msgstr "Особый"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:362
 msgid "cm"
-msgstr ""
+msgstr "см"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:363
-#, fuzzy
 msgid "in"
-msgstr "Найти"
+msgstr "дюйм"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:353
 msgid "Monochrome"
@@ -1049,47 +1034,42 @@ msgid "Save PDF Output..."
 msgstr "Сохранить результаты в PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
-#, fuzzy
 msgid "Invalid Output"
-msgstr "Сохранить результаты"
+msgstr "Неправильный результат"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
 msgid "Cannot overwrite a file which is a source image of this document."
 msgstr ""
+"Невозможно перезаписать файл, который является исходным изображением данного "
+"документа."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
-#, fuzzy
 msgid "Failed to create output"
-msgstr "Не удалось сохранить результаты"
+msgstr "Невозможно получить результат"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
 msgid "Failed to create output. The returned error was: %1"
-msgstr ""
+msgstr "Невозможно сделать результат. Ошибка: %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:560 ../qt/src/hocr/HOCRPdfExporter.cc:553
 msgid "The operation was cancelled"
-msgstr ""
+msgstr "Операция была отменена"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:595 ../qt/src/hocr/HOCRPdfExporter.cc:588
-#, fuzzy
 msgid "Failed to render page %1"
-msgstr ""
-"\n"
-"[Не удалось распознать страницу %1]\n"
+msgstr "Не удалось отрисовать страницу %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:602 ../qt/src/hocr/HOCRPdfExporter.cc:595
-#, fuzzy
 msgid "Exporting to PDF..."
-msgstr "Экспорт в PDF"
+msgstr "Экспорт в PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607 ../qt/src/hocr/HOCRPdfExporter.cc:600
 msgid "The PDF export failed: %1."
-msgstr ""
+msgstr "Ошибка экспорта в PDF: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:657 ../qt/src/hocr/HOCRPdfExporter.cc:649
-#, fuzzy
 msgid "The PDF library could not load the font '%1'."
-msgstr "Библиотека PDF не поддерживает выбранный шрифт."
+msgstr "Библиотека PDF не может загрузить выбранный шрифт '%1'."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:274
 #: ../qt/src/hocr/HOCRTextExporter.cc:39 ../qt/src/OutputEditorText.cc:239
@@ -1097,33 +1077,32 @@ msgid "Text Files"
 msgstr "Текстовые файлы"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:39
-#, fuzzy
 msgid "Save Text Output..."
-msgstr "Сохранить результаты..."
+msgstr "Сохранить текст..."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
-msgstr ""
+msgstr "Ошибка во время экспорта в текст: невозможна запись в выходной файл."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
 #: ../qt/src/hocr/OutputEditorHOCR.cc:230
 msgid "Block"
-msgstr ""
+msgstr "Блок"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
 #: ../qt/src/hocr/OutputEditorHOCR.cc:232
 msgid "Line"
-msgstr ""
+msgstr "Линия"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
 #: ../qt/src/hocr/OutputEditorHOCR.cc:233
 msgid "Word"
-msgstr ""
+msgstr "Слово"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
 #: ../qt/src/hocr/OutputEditorHOCR.cc:234
 msgid "Misspelled word"
-msgstr ""
+msgstr "Слово с ошибкой"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:434
 #: ../qt/src/hocr/OutputEditorHOCR.cc:317
@@ -1142,9 +1121,8 @@ msgstr "Ошибки распознавания"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:593
 #: ../qt/src/hocr/OutputEditorHOCR.cc:500
 #: ../qt/src/hocr/OutputEditorHOCR.cc:512
-#, fuzzy
 msgid "Multiple values"
-msgstr "Несколько источников"
+msgstr "Несколько значений"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:770
@@ -1156,7 +1134,7 @@ msgstr "Объединить"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:779
 #: ../qt/src/hocr/OutputEditorHOCR.cc:634
 msgid "Swap"
-msgstr ""
+msgstr "Обмен"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:802
 #: ../qt/src/hocr/OutputEditorHOCR.cc:675
@@ -1166,24 +1144,22 @@ msgstr "Добавить графическую область"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:805
 #: ../qt/src/hocr/OutputEditorHOCR.cc:676
 msgid "Add text block"
-msgstr ""
+msgstr "Добавить текстовый блок"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:809
 #: ../qt/src/hocr/OutputEditorHOCR.cc:678
-#, fuzzy
 msgid "Add paragraph"
-msgstr "Абзац"
+msgstr "Добавить абзац"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:813
 #: ../qt/src/hocr/OutputEditorHOCR.cc:680
-#, fuzzy
 msgid "Add line"
-msgstr "Добавить изображения"
+msgstr "Добавить линию"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:817
 #: ../qt/src/hocr/OutputEditorHOCR.cc:682
 msgid "Add word"
-msgstr ""
+msgstr "Добавить слово"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:839
 #: ../qt/src/hocr/OutputEditorHOCR.cc:695
@@ -1368,17 +1344,24 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"Эта словари не могут быть загружены:\n"
+"%1\n"
+"\n"
+"Проверьте соединение и права директории.\n"
+"Подсказка: если у Вас нет прав на запись в системные директории, Вы можете "
+"сменить пути в настройках."
 
 #: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:573
 msgid "Dictionaries installed"
 msgstr "Словари установлены"
 
 #: ../gtk/src/MainWindow.cc:585
-#, fuzzy
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
-msgstr "Были установлены следующие словари:%1"
+msgstr ""
+"Были установлены следующие словари:\n"
+"%1"
 
 #: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
@@ -1389,14 +1372,12 @@ msgid "Check spelling"
 msgstr "Проверить орфографию"
 
 #: ../gtk/src/OutputEditorText.cc:231 ../qt/src/OutputEditorText.cc:196
-#, fuzzy
 msgid "File: %1"
-msgstr "Файлы"
+msgstr "Файл: %1"
 
 #: ../gtk/src/OutputEditorText.cc:234 ../qt/src/OutputEditorText.cc:199
-#, fuzzy
 msgid "Page: %1"
-msgstr "Ошибка анализа: %1"
+msgstr "Страница: %1"
 
 #: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:476
 #: ../qt/src/Recognizer.cc:469
@@ -1566,40 +1547,40 @@ msgid "Failed to save image"
 msgstr "Не удалось сохранить изображение"
 
 #: ../gtk/src/scanner/ScannerSane.cc:800 ../qt/src/scanner/ScannerSane.cc:797
-#, fuzzy
 msgid "Operation is cancelled."
-msgstr "Сканирование отменено"
+msgstr "Операция отменена."
 
 #: ../gtk/src/scanner/ScannerSane.cc:802 ../qt/src/scanner/ScannerSane.cc:799
 msgid "Device is busy."
-msgstr ""
+msgstr "Устройство занято."
 
 #: ../gtk/src/scanner/ScannerSane.cc:804 ../qt/src/scanner/ScannerSane.cc:801
 msgid "Cover is opened."
-msgstr ""
+msgstr "Крышка открыта."
 
 #: ../gtk/src/scanner/ScannerSane.cc:806 ../qt/src/scanner/ScannerSane.cc:803
 msgid "Document feeder jammed."
-msgstr ""
+msgstr "Сканер заклинило."
 
 #: ../gtk/src/scanner/ScannerSane.cc:808 ../qt/src/scanner/ScannerSane.cc:805
 msgid "Document feeder out of documents."
-msgstr ""
+msgstr "В сканере больше нет документов."
 
 #: ../gtk/src/scanner/ScannerSane.cc:810 ../qt/src/scanner/ScannerSane.cc:807
-#, fuzzy
 msgid "Access to scanner is denied."
-msgstr "Не задан сканер"
+msgstr "Доступ к сканеру запрещён."
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid "PDFs with text"
-msgstr ""
+msgstr "PDF с текстом"
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid ""
 "These PDF files already contain text:\n"
 "%1"
 msgstr ""
+"Эта PDF файлы уже содержат текст:\n"
+"%1"
 
 #: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
 msgid "Unable to open files"
@@ -1611,7 +1592,7 @@ msgstr "Невозможно открыть следующие файлы:%1"
 
 #: ../gtk/src/SourceManager.cc:141 ../qt/src/SourceManager.cc:143
 msgid "Enter password for file '%1':"
-msgstr ""
+msgstr "Введите пароль для файла: '%1':"
 
 #: ../gtk/src/SourceManager.cc:197 ../qt/src/SourceManager.cc:214
 msgid "Images and PDFs"
@@ -1772,7 +1753,6 @@ msgid "Downloading %1..."
 msgstr "Скачивается %1..."
 
 #: ../gtk/src/TessdataManager.cc:282
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1785,7 +1765,10 @@ msgstr ""
 "Следующие файлы не могут быть загружены или удалены:\n"
 "%1\n"
 "\n"
-"Проверьте соединение и права доступа к папкам."
+"Проверьте соединение и права доступа к папкам.\n"
+"\n"
+"Подсказка: если у Вас нет прав для записи в системные директории, Вы можете "
+"настроить использование пользовательских путей в настройках."
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
@@ -1858,7 +1841,7 @@ msgstr "gImageReader"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
-msgstr ""
+msgstr "Планшетный"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Front"
@@ -1923,28 +1906,27 @@ msgstr "Показать/скрыть панель результатов"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
-msgstr ""
+msgstr "Метод экспорта:"
 
 #: ../qt/data/PdfExportDialog.ui.h:6
 msgid "Portrait"
-msgstr ""
+msgstr "Портретный"
 
 #: ../qt/data/PdfExportDialog.ui.h:7
 msgid "Landscape"
-msgstr ""
+msgstr "Альбомный"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:142
-#, fuzzy
 msgid "Failed to write to file"
-msgstr "Не удалось открыть файл"
+msgstr "Не удалось записать в файл"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:343
 msgid "PoDoFo"
-msgstr ""
+msgstr "PoDoFo"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:344
 msgid "QPrinter"
-msgstr ""
+msgstr "QPrinter"
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
