@@ -10,24 +10,24 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 00:12+0100\n"
-"PO-Revision-Date: 2017-08-09 09:49+0200\n"
+"PO-Revision-Date: 2018-02-12 17:35+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
-"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"Language-Team: Czech "
+"<https://hosted.weblate.org/projects/gimagereader/translations/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Weblate 2.19-dev\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
 msgid "Redetect Languages"
 msgstr "Znovu zjistit přítomnost jazykových dat"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
-#, fuzzy
 msgid "Manage Languages"
-msgstr "Spravovat jazyková data…"
+msgstr "Spravovat jazyková data"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
@@ -146,7 +146,7 @@ msgstr "Pro jednotlivé uživatele"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr ""
+msgstr "Automaticky otevřít exportované dokumenty pomocí výchozí aplikace"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:36
 msgid "Regenerate backtrace"
@@ -257,9 +257,8 @@ msgid "Scan"
 msgstr "Skenovat"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:17
-#, fuzzy
 msgid "Source:"
-msgstr "Zdroj"
+msgstr "Zdroj:"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
@@ -373,7 +372,7 @@ msgstr "Zdrojová stránka"
 
 #: ../gtk/data/MainWindow.ui.h:51 ../qt/src/SourceManager.cc:146
 msgid "Protected PDF"
-msgstr ""
+msgstr "Chráněné PDF"
 
 #: ../gtk/data/MainWindow.ui.h:52 ../qt/src/Recognizer.cc:76
 msgid "Current Page"
@@ -385,18 +384,16 @@ msgstr "Vícero stránek…"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:577
 msgid "Add Word"
-msgstr ""
+msgstr "Přidat slovo"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:577
-#, fuzzy
 msgid "Enter word:"
-msgstr "Ignorovat slovo"
+msgstr "Zadejte slovo:"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:61
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
-#, fuzzy
 msgid "Export to plain text"
-msgstr "Exportovat do PDF"
+msgstr "Exportovat do holého textu"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:65
@@ -405,9 +402,8 @@ msgstr "Exportovat do PDF"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:67
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:68
-#, fuzzy
 msgid "Export to ODT"
-msgstr "Exportovat do PDF"
+msgstr "Exportovat do ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/Ui_OutputEditorText.hh:116
@@ -416,9 +412,8 @@ msgstr "Uložit výstup"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
-#, fuzzy
 msgid "Export"
-msgstr "Export do PDF"
+msgstr "Export"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11 ../gtk/data/OutputEditorText.ui.h:19
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
@@ -437,7 +432,7 @@ msgstr "Najít a nahradit"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:83
 msgid "Show confidence values"
-msgstr ""
+msgstr "Zobrazit důvěrné hodnoty"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/PdfExportDialog.ui.h:46
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
@@ -448,12 +443,12 @@ msgstr "Zobrazit náhled"
 #: ../gtk/data/OutputEditorHOCR.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
 msgid "Next (F3)"
-msgstr ""
+msgstr "Následující (F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:16
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
 msgid "Previous (Shift+F3)"
-msgstr ""
+msgstr "Předchozí (Shift+F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/src/hocr/OutputEditorHOCR.cc:867
 #: ../qt/src/hocr/OutputEditorHOCR.cc:712
@@ -571,7 +566,7 @@ msgstr "Stupeň komprese:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:10
 msgid "90"
-msgstr ""
+msgstr "90"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:15
 msgid "DPI:"
@@ -579,7 +574,7 @@ msgstr "Bodů na palec (DPI):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12
 msgid "300"
-msgstr ""
+msgstr "300"
 
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
@@ -595,37 +590,36 @@ msgstr "Sjednotit velikost rozestupů řádků a slov"
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
-msgstr ""
+msgstr "Přepsat skupinu písem:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:27
 msgid "Fallback font family:"
-msgstr ""
+msgstr "Náhradní skupina písem:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:20
-#, fuzzy
 msgid "Override font size:"
-msgstr "Použít zjištěné velikosti písma"
+msgstr "Přepsat velikost písma:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
-msgstr ""
+msgstr "Měřítko písma:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:20
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:26
 msgid "pt"
-msgstr ""
+msgstr "bodů"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22
 msgid "10"
-msgstr ""
+msgstr "10"
 
 #: ../gtk/data/PdfExportDialog.ui.h:24
 #, no-c-format
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:22
 msgid "Preserve spaces wider than:"
@@ -645,73 +639,71 @@ msgstr "Nastavení textu:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Paper size:"
-msgstr ""
+msgstr "Velikost papíru:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Width"
-msgstr ""
+msgstr "Šířka"
 
 #: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Height"
-msgstr ""
+msgstr "Výška"
 
 #: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
-msgstr ""
+msgstr "Základní"
 
 #: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:29
-#, fuzzy
 msgid "PDF version:"
-msgstr "Nová verze"
+msgstr "Verze PDF:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:31
 msgid "Password:"
-msgstr ""
+msgstr "Heslo:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:32
 msgid "Confirm password:"
-msgstr ""
+msgstr "Potvrzení hesla:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:30
 msgid "Encryption (optional):"
-msgstr ""
+msgstr "Šifrování (volitelné):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:34
 msgid "Author:"
-msgstr ""
+msgstr "Autor:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:36
 msgid "Title:"
-msgstr ""
+msgstr "Titul:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:39 ../qt/data/PdfExportDialog.ui.h:38
 msgid "Subject:"
-msgstr ""
+msgstr "Předmět:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:40 ../qt/data/PdfExportDialog.ui.h:35
 msgid "Creator:"
-msgstr ""
+msgstr "Tvůrce:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:41 ../qt/data/PdfExportDialog.ui.h:37
 msgid "Producer:"
-msgstr ""
+msgstr "Producent:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:42 ../qt/data/PdfExportDialog.ui.h:39
 msgid "Keywords:"
-msgstr ""
+msgstr "Klíčová slova:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:43 ../qt/data/PdfExportDialog.ui.h:33
-#, fuzzy
 msgid "Additional information (optional):"
-msgstr "Další jazykové definice:"
+msgstr "Další informace (volitelné):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:44 ../qt/data/PdfExportDialog.ui.h:40
 msgid "Import from current source"
-msgstr ""
+msgstr "Importovat ze stávajícího zdroje"
 
 #: ../gtk/data/PdfExportDialog.ui.h:45 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Advanced"
-msgstr ""
+msgstr "Pokročilé"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:4
 msgid "Find"
@@ -753,7 +745,7 @@ msgstr "Pořadí:"
 
 #: ../gtk/data/SelectionMenu.ui.h:3
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
 #: ../qt/src/DisplayerToolSelect.cc:237 ../qt/src/hocr/DisplayerToolHOCR.cc:31
@@ -938,14 +930,12 @@ msgstr "Přepsat soubor?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:516 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/OutputEditorHOCR.cc:229
-#, fuzzy
 msgid "Page"
-msgstr "Strana: %1"
+msgstr "Strana"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:518 ../qt/src/hocr/HOCRDocument.cc:441
-#, fuzzy
 msgid "Text block"
-msgstr "Textové soubory"
+msgstr "Blok textu"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:520 ../gtk/src/hocr/OutputEditorHOCR.cc:272
 #: ../qt/src/hocr/HOCRDocument.cc:443 ../qt/src/hocr/OutputEditorHOCR.cc:231
@@ -971,47 +961,43 @@ msgstr "výstup"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:67 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "OpenDocument Text Documents"
-msgstr ""
+msgstr "Textové dokumenty OpenDocument"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
-#, fuzzy
 msgid "Save ODT Output..."
-msgstr "Uložit výstup do formátu PDF…"
+msgstr "Uložit výstup do formátu ODT…"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:272
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCROdtExporter.cc:61
 #: ../qt/src/hocr/HOCRPdfExporter.cc:600 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
-msgstr ""
+msgstr "Export se nezdařil"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:272
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
-msgstr ""
+msgstr "Export do ODT se nezdařil: nepodařilo se zapsat soubor s výstupem."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:266 ../qt/src/hocr/HOCROdtExporter.cc:254
-#, fuzzy
 msgid "Exporting to ODT..."
-msgstr "Exportovat do PDF"
+msgstr "Export do ODT…"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:365
-#, fuzzy
 msgid "Same as source"
-msgstr "Vybrat zdroje"
+msgstr "Stejné jako zdroj"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:366
 msgid "Custom"
-msgstr ""
+msgstr "Uživatelem určené"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:362
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:363
-#, fuzzy
 msgid "in"
-msgstr "Najít"
+msgstr "palce"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:353
 msgid "Monochrome"
@@ -1046,49 +1032,43 @@ msgid "Save PDF Output..."
 msgstr "Uložit výstup do formátu PDF…"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
-#, fuzzy
 msgid "Invalid Output"
-msgstr "Uložit výstup"
+msgstr "Neplatný výstup"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
 msgid "Cannot overwrite a file which is a source image of this document."
 msgstr ""
+"Není možné přepsat soubor který je zdrojovým obrázkem pro tento dokument."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
-#, fuzzy
 msgid "Failed to create output"
-msgstr "Uložení výstupu se nezdařilo"
+msgstr "Vytvoření výstupu se nezdařilo"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
 msgid "Failed to create output. The returned error was: %1"
-msgstr ""
+msgstr "Vytvoření výstupu se nezdařilo. Vrácená chyba byla: %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:560 ../qt/src/hocr/HOCRPdfExporter.cc:553
 msgid "The operation was cancelled"
-msgstr ""
+msgstr "Operace byla zrušena"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:595 ../qt/src/hocr/HOCRPdfExporter.cc:588
-#, fuzzy
 msgid "Failed to render page %1"
-msgstr ""
-"\n"
-"[Rozpoznávání na stránce %1 se nezdařilo]\n"
+msgstr "Nepodařilo se vykreslit stránku %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:602 ../qt/src/hocr/HOCRPdfExporter.cc:595
-#, fuzzy
 msgid "Exporting to PDF..."
-msgstr "Exportovat do PDF"
+msgstr "Export do PDF…"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607 ../qt/src/hocr/HOCRPdfExporter.cc:600
 msgid "The PDF export failed: %1."
-msgstr ""
+msgstr "Export do PDF se nezdařil: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:657 ../qt/src/hocr/HOCRPdfExporter.cc:649
-#, fuzzy
 msgid "The PDF library could not load the font '%1'."
 msgstr ""
-"(softwarová) knihovna funkcí pro práci s formátem PDF nepodporuje zvolené "
-"písmo."
+"(softwarová) knihovně funkcí pro práci s formátem PDF se nepodařilo načíst "
+"písmo „%1“."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:274
 #: ../qt/src/hocr/HOCRTextExporter.cc:39 ../qt/src/OutputEditorText.cc:239
@@ -1096,33 +1076,32 @@ msgid "Text Files"
 msgstr "Textové soubory"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:39
-#, fuzzy
 msgid "Save Text Output..."
-msgstr "Uložit výstup…"
+msgstr "Uložit textový výstup…"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
-msgstr ""
+msgstr "Export textu se nezdařil: nepodařilo se zapsat soubor s výstupem."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
 #: ../qt/src/hocr/OutputEditorHOCR.cc:230
 msgid "Block"
-msgstr ""
+msgstr "Blok"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
 #: ../qt/src/hocr/OutputEditorHOCR.cc:232
 msgid "Line"
-msgstr ""
+msgstr "Řádek"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
 #: ../qt/src/hocr/OutputEditorHOCR.cc:233
 msgid "Word"
-msgstr ""
+msgstr "Slovo"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
 #: ../qt/src/hocr/OutputEditorHOCR.cc:234
 msgid "Misspelled word"
-msgstr ""
+msgstr "Zkomolené slovo"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:434
 #: ../qt/src/hocr/OutputEditorHOCR.cc:317
@@ -1141,9 +1120,8 @@ msgstr "Chyby rozpoznávání"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:593
 #: ../qt/src/hocr/OutputEditorHOCR.cc:500
 #: ../qt/src/hocr/OutputEditorHOCR.cc:512
-#, fuzzy
 msgid "Multiple values"
-msgstr "Vícero zdrojů"
+msgstr "Vícero hodnot"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:770
@@ -1155,7 +1133,7 @@ msgstr "Sloučit"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:779
 #: ../qt/src/hocr/OutputEditorHOCR.cc:634
 msgid "Swap"
-msgstr ""
+msgstr "Prohodit"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:802
 #: ../qt/src/hocr/OutputEditorHOCR.cc:675
@@ -1165,24 +1143,22 @@ msgstr "Přidat oblast s grafikou"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:805
 #: ../qt/src/hocr/OutputEditorHOCR.cc:676
 msgid "Add text block"
-msgstr ""
+msgstr "Přidat textový blok"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:809
 #: ../qt/src/hocr/OutputEditorHOCR.cc:678
-#, fuzzy
 msgid "Add paragraph"
-msgstr "Odstavec"
+msgstr "Přidat odstavec"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:813
 #: ../qt/src/hocr/OutputEditorHOCR.cc:680
-#, fuzzy
 msgid "Add line"
-msgstr "Přidat obrázky"
+msgstr "Přidat řádek"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:817
 #: ../qt/src/hocr/OutputEditorHOCR.cc:682
 msgid "Add word"
-msgstr ""
+msgstr "Přidat slovo"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:839
 #: ../qt/src/hocr/OutputEditorHOCR.cc:695
@@ -1367,17 +1343,24 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"Následující slovníky se nepodařilo stáhnout:\n"
+"%1\n"
+"\n"
+"Zkontrolujte svoje připojení k Internetu a oprávnění na složce.\n"
+"Rada: pokud nemáte oprávnění zapisovat do systémových složek, můžete v "
+"dialogu nastavení přepnout na ty uživatelské."
 
 #: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:573
 msgid "Dictionaries installed"
 msgstr "Slovníky byly nainstalovány"
 
 #: ../gtk/src/MainWindow.cc:585
-#, fuzzy
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
-msgstr "Byly nainstalovány tyto slovníky:%1"
+msgstr ""
+"Byly nainstalovány tyto slovníky:\n"
+"%1"
 
 #: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
@@ -1564,40 +1547,40 @@ msgid "Failed to save image"
 msgstr "Obrázek se nepodařilo uložit"
 
 #: ../gtk/src/scanner/ScannerSane.cc:800 ../qt/src/scanner/ScannerSane.cc:797
-#, fuzzy
 msgid "Operation is cancelled."
-msgstr "Skenování bylo zrušeno"
+msgstr "Operace byla zrušena."
 
 #: ../gtk/src/scanner/ScannerSane.cc:802 ../qt/src/scanner/ScannerSane.cc:799
 msgid "Device is busy."
-msgstr ""
+msgstr "Zařízení je zaneprázdněné."
 
 #: ../gtk/src/scanner/ScannerSane.cc:804 ../qt/src/scanner/ScannerSane.cc:801
 msgid "Cover is opened."
-msgstr ""
+msgstr "Je otevřený kryt."
 
 #: ../gtk/src/scanner/ScannerSane.cc:806 ../qt/src/scanner/ScannerSane.cc:803
 msgid "Document feeder jammed."
-msgstr ""
+msgstr "Předloha se zasekla v podavači."
 
 #: ../gtk/src/scanner/ScannerSane.cc:808 ../qt/src/scanner/ScannerSane.cc:805
 msgid "Document feeder out of documents."
-msgstr ""
+msgstr "V podavači došly předlohy."
 
 #: ../gtk/src/scanner/ScannerSane.cc:810 ../qt/src/scanner/ScannerSane.cc:807
-#, fuzzy
 msgid "Access to scanner is denied."
-msgstr "Nebyl určen žádný skener"
+msgstr "Přístup ke skeneru odepřen."
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid "PDFs with text"
-msgstr ""
+msgstr "PDF soubory s textem"
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid ""
 "These PDF files already contain text:\n"
 "%1"
 msgstr ""
+"Tyto PDF soubory už obsahují text.\n"
+"%1"
 
 #: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
 msgid "Unable to open files"
@@ -1609,7 +1592,7 @@ msgstr "Následující soubory se nepodařilo otevřít:%1"
 
 #: ../gtk/src/SourceManager.cc:141 ../qt/src/SourceManager.cc:143
 msgid "Enter password for file '%1':"
-msgstr ""
+msgstr "Zadejte heslo k souboru „%1“:"
 
 #: ../gtk/src/SourceManager.cc:197 ../qt/src/SourceManager.cc:214
 msgid "Images and PDFs"
@@ -1772,7 +1755,6 @@ msgid "Downloading %1..."
 msgstr "Stahování %1…"
 
 #: ../gtk/src/TessdataManager.cc:282
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1786,7 +1768,10 @@ msgstr ""
 "%1\n"
 "\n"
 "Zkontrolujte své připojení k Internetu a přístupová práva na příslušné "
-"složce."
+"složce.\n"
+"\n"
+"Rada: pokud nemáte oprávnění zapisovat do systémových složek, můžete v "
+"dialogu nastavení přepnout na ty uživatelské."
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
@@ -1805,13 +1790,12 @@ msgid "About gImageReader"
 msgstr "O aplikaci gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Grafická nadstavba pro engine tesseract-"
+"<html><head/><body><p>&nbsp;</p><p>Grafická nadstavba pro tesseract-"
 "ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Webové "
 "stránky</a></p><p>&nbsp;</p></body></html>"
 
@@ -1858,19 +1842,19 @@ msgstr "gImageReader"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
-msgstr ""
+msgstr "Deskový"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Front"
-msgstr ""
+msgstr "Aut. podavač dokumentů přední"
 
 #: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Back"
-msgstr ""
+msgstr "Aut. podavač dokumentů zadní"
 
 #: ../qt/data/MainWindow.ui.h:21
 msgid "ADF Duplex"
-msgstr ""
+msgstr "Aut. podavač dokumentů oboustranné"
 
 #. Remove & from some labels which designer insists in adding
 #: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:50
@@ -1923,28 +1907,27 @@ msgstr "Zobrazit či skrýt podokno s výstupním textem"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
-msgstr ""
+msgstr "Podpůrná vrstva (backend):"
 
 #: ../qt/data/PdfExportDialog.ui.h:6
 msgid "Portrait"
-msgstr ""
+msgstr "Na výšku"
 
 #: ../qt/data/PdfExportDialog.ui.h:7
 msgid "Landscape"
-msgstr ""
+msgstr "Na šířku"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:142
-#, fuzzy
 msgid "Failed to write to file"
-msgstr "Nepodařilo se otevřít soubor"
+msgstr "Nepodařilo se zapsat soubor"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:343
 msgid "PoDoFo"
-msgstr ""
+msgstr "PoDoFo"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:344
 msgid "QPrinter"
-msgstr ""
+msgstr "QPrinter"
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
@@ -1971,7 +1954,6 @@ msgid "The following dictionary files were installed:%1"
 msgstr "Byly nainstalovány tyto soubory se slovníky:%1"
 
 #: ../qt/src/TessdataManager.cc:268
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1984,7 +1966,9 @@ msgstr ""
 "%1\n"
 "\n"
 "Zkontrolujte své připojení k Internetu a přístupová práva na příslušné "
-"složce."
+"složce.\n"
+"Rada: Pokud nemáte oprávnění zapisovat do systémových složek, můžete v "
+"dialogu nastavení přepnout na ty uživatelské."
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
