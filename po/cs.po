@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 00:12+0100\n"
-"PO-Revision-Date: 2018-02-12 17:35+0000\n"
+"PO-Revision-Date: 2018-02-14 06:35+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech "
 "<https://hosted.weblate.org/projects/gimagereader/translations/cs/>\n"
@@ -432,7 +432,7 @@ msgstr "Najít a nahradit"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:83
 msgid "Show confidence values"
-msgstr "Zobrazit důvěrné hodnoty"
+msgstr "Zobrazit hodnoty jistoty"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/PdfExportDialog.ui.h:46
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
@@ -488,7 +488,7 @@ msgstr "Nahradit stávající text"
 #. Output postprocessing
 #: ../gtk/data/OutputEditorText.ui.h:4 ../qt/src/Ui_OutputEditorText.hh:62
 msgid "Keep line break if..."
-msgstr "Ponechat zalomení řádku pokud:"
+msgstr "Ponechat zalomení řádku pokud…"
 
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:64
 msgid "Preceded by end mark (.?!)"
@@ -917,7 +917,7 @@ msgstr "Rozpoznat výběr"
 
 #: ../gtk/src/DisplayerToolSelect.cc:183 ../qt/src/DisplayerToolSelect.cc:179
 msgid "Performing layout analysis"
-msgstr "Analyzování rozvržení stránky…"
+msgstr "Analyzuje se rozvržení stránky"
 
 #: ../gtk/src/FileDialogs.cc:235
 msgid ""
@@ -944,7 +944,7 @@ msgstr "Odstavec"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:522 ../qt/src/hocr/HOCRDocument.cc:445
 msgid "Textline"
-msgstr "Textový řádek"
+msgstr "Řádek textu"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:526 ../qt/src/hocr/HOCRDocument.cc:449
 msgid "Graphic"
@@ -1046,7 +1046,7 @@ msgstr "Vytvoření výstupu se nezdařilo"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
 msgid "Failed to create output. The returned error was: %1"
-msgstr "Vytvoření výstupu se nezdařilo. Vrácená chyba byla: %1"
+msgstr "Vytvoření výstupu se nezdařilo. Byla vrácena chyba: %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:560 ../qt/src/hocr/HOCRPdfExporter.cc:553
 msgid "The operation was cancelled"
@@ -1067,7 +1067,7 @@ msgstr "Export do PDF se nezdařil: %1."
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:657 ../qt/src/hocr/HOCRPdfExporter.cc:649
 msgid "The PDF library could not load the font '%1'."
 msgstr ""
-"(softwarová) knihovně funkcí pro práci s formátem PDF se nepodařilo načíst "
+"(softwarové) knihovně funkcí pro práci s formátem PDF se nepodařilo načíst "
 "písmo „%1“."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:274
@@ -1195,12 +1195,12 @@ msgstr "Nepodařilo se otevřít soubor"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:913
 #: ../qt/src/hocr/OutputEditorHOCR.cc:780
 msgid "The file could not be opened: %1."
-msgstr "Soubor se nepodařilo otevřít: %1"
+msgstr "Soubor se nepodařilo otevřít: %1."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:922
 #: ../qt/src/hocr/OutputEditorHOCR.cc:787
 msgid "Invalid hOCR file"
-msgstr "soubor neobsahuje platná data ve formátu hOCR"
+msgstr "Soubor neobsahuje platná data ve formátu hOCR"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:922
 #: ../qt/src/hocr/OutputEditorHOCR.cc:787
@@ -1298,7 +1298,7 @@ msgstr "Není nainstalovaný slovník pro kontrolu překlepů pro %1"
 #: ../gtk/src/MainWindow.cc:482 ../gtk/src/MainWindow.cc:514
 #: ../qt/src/MainWindow.cc:480
 msgid "Installing spelling dictionary for '%1'"
-msgstr "Instalace slovníku pro kontrolu překlepů pro „%1“…"
+msgstr "Instaluje se slovník pro kontrolu překlepů pro „%1“"
 
 #: ../gtk/src/MainWindow.cc:503 ../gtk/src/MainWindow.cc:528
 #: ../gtk/src/MainWindow.cc:536 ../gtk/src/MainWindow.cc:546
@@ -1346,7 +1346,7 @@ msgstr ""
 "Následující slovníky se nepodařilo stáhnout:\n"
 "%1\n"
 "\n"
-"Zkontrolujte svoje připojení k Internetu a oprávnění na složce.\n"
+"Zkontrolujte své připojení k Internetu a oprávnění na složce.\n"
 "Rada: pokud nemáte oprávnění zapisovat do systémových složek, můžete v "
 "dialogu nastavení přepnout na ty uživatelské."
 
@@ -1486,7 +1486,7 @@ msgstr "Stávající výběr"
 
 #: ../gtk/src/Recognizer.cc:470 ../qt/src/Recognizer.cc:462
 msgid "Recognizing page %1 (%2 of %3)"
-msgstr "Rozpoznávání strany %1 (%2 ze %3)…"
+msgstr "Rozpoznávání strany %1 (%2 ze %3)"
 
 #: ../gtk/src/Recognizer.cc:475 ../qt/src/Recognizer.cc:468
 msgid ""
@@ -1621,7 +1621,7 @@ msgstr "Chyba při pořizování snímku obrazovky"
 
 #: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
 msgid "Failed to take screenshot."
-msgstr "Nepodařilo se pořídit snímek obrazkovky."
+msgstr "Nepodařilo se pořídit snímek obrazovky."
 
 #: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:247
 msgid "Screenshot %1"
@@ -1661,11 +1661,11 @@ msgstr ""
 
 #: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:73
 msgid "Search for"
-msgstr "Hledat výskyt:"
+msgstr "Hledat výskyt"
 
 #: ../gtk/src/SubstitutionsManager.cc:34 ../qt/src/SubstitutionsManager.cc:73
 msgid "Replace with"
-msgstr "Čím nahradit:"
+msgstr "Čím nahradit"
 
 #: ../gtk/src/SubstitutionsManager.cc:69 ../gtk/src/SubstitutionsManager.cc:103
 #: ../qt/src/SubstitutionsManager.cc:106 ../qt/src/SubstitutionsManager.cc:143
