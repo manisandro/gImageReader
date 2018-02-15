@@ -24,10 +24,8 @@ IF(NOT IS_ABSOLUTE "${MANUAL_DIR}")
     SET(MANUAL_DIR "${CMAKE_INSTALL_PREFIX}/${MANUAL_DIR}")
 ENDIF()
 
-
 # Configure files
 CONFIGURE_FILE(data/gimagereader.appdata.xml.in data/gimagereader-${INTERFACE_TYPE}.appdata.xml @ONLY)
-CONFIGURE_FILE(data/gimagereader.desktop.in data/gimagereader-${INTERFACE_TYPE}.desktop @ONLY)
 CONFIGURE_FILE(packaging/gimagereader.spec.in packaging/gimagereader.spec @ONLY)
 CONFIGURE_FILE(packaging/debian/changelog.in packaging/debian/changelog @ONLY)
 
@@ -63,6 +61,10 @@ IF(NOT TESSERACT_FOUND)
 ENDIF(NOT TESSERACT_FOUND)
 IF(UNIX)
     PKG_CHECK_MODULES(SANE sane-backends)
+    FIND_PROGRAM(INTLTOOL_MERGE_EXECUTABLE intltool-merge)
+    IF(NOT INTLTOOL_MERGE_EXECUTABLE)
+        MESSAGE(FATAL_ERROR "Couldn't find intltool-merge, please install intltool")
+    ENDIF(NOT INTLTOOL_MERGE_EXECUTABLE)
 ENDIF(UNIX)
 SET(PODOFO_LDFLAGS -lpodofo)
 
@@ -264,6 +266,19 @@ FOREACH(lang ${langs})
     CONFIGURE_FILE(po/${lang}.po ${lang}.po COPYONLY)
 ENDFOREACH()
 GETTEXT_PROCESS_POT_FILE(po/gimagereader.pot ALL INSTALL_DESTINATION ${PACKAGE_LOCALE_DIR} LANGUAGES ${langs})
+
+# Process desktop file
+IF(UNIX)
+    CONFIGURE_FILE(data/gimagereader.desktop.in data/gimagereader-${INTERFACE_TYPE}.desktop.in @ONLY)
+    # add translations to desktop file
+    ADD_CUSTOM_COMMAND(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop
+        COMMAND ${INTLTOOL_MERGE_EXECUTABLE} --desktop-style ${CMAKE_SOURCE_DIR}/po ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop
+        DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop.in)
+    ADD_CUSTOM_TARGET(desktop_file ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop)
+ELSE(UNIX)
+    CONFIGURE_FILE(data/gimagereader.desktop.in data/gimagereader-${INTERFACE_TYPE}.desktop @ONLY)
+ENDIF(UNIX)
 
 IF(MINGW)
   ENABLE_LANGUAGE(RC)

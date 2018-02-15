@@ -21,6 +21,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Weblate 2.19-dev\n"
 
+#: ../data/gimagereader.desktop.in:3
+msgid "OCR application"
+msgstr "optické rozpoznávání znaků (OCR)"
+
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
 msgid "Redetect Languages"
 msgstr "Znovu zjistit přítomnost jazykových dat"

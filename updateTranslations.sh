@@ -6,6 +6,7 @@ cd "$(dirname "$(readlink -f "$0")")"
 echo "Updating POTFILES.in..."
 echo "# List of source files containing translatable strings." > po/POTFILES.in
 echo "" >> po/POTFILES.in
+echo "data/gimagereader.desktop.in" >> po/POTFILES.in
 find gtk/data/ -type f -name *.ui -printf '[type: gettext/glade]%p\n' | sort >> po/POTFILES.in
 find gtk/src/ -type f \( -name *.hh -or -name *.cc \) -print | sort >> po/POTFILES.in
 find qt/data/ -type f -name *.ui -printf '[type: gettext/qtdesigner]%p\n' | sort >> po/POTFILES.in
