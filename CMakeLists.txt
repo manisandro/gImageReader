@@ -27,7 +27,7 @@ ENDIF()
 
 # Configure files
 CONFIGURE_FILE(data/gimagereader.appdata.xml.in data/gimagereader-${INTERFACE_TYPE}.appdata.xml @ONLY)
-CONFIGURE_FILE(data/gimagereader.desktop.in data/gimagereader-${INTERFACE_TYPE}.desktop @ONLY)
+CONFIGURE_FILE(data/gimagereader.desktop.in data/gimagereader-${INTERFACE_TYPE}.desktop.in @ONLY)
 CONFIGURE_FILE(packaging/gimagereader.spec.in packaging/gimagereader.spec @ONLY)
 CONFIGURE_FILE(packaging/debian/changelog.in packaging/debian/changelog @ONLY)
 
@@ -264,6 +264,16 @@ FOREACH(lang ${langs})
     CONFIGURE_FILE(po/${lang}.po ${lang}.po COPYONLY)
 ENDFOREACH()
 GETTEXT_PROCESS_POT_FILE(po/gimagereader.pot ALL INSTALL_DESTINATION ${PACKAGE_LOCALE_DIR} LANGUAGES ${langs})
+
+# add translations to desktop file
+find_program(INTLTOOL_MERGE_EXECUTABLE intltool-merge)
+IF(UNIX AND INTLTOOL_MERGE_EXECUTABLE)
+    ADD_CUSTOM_COMMAND(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop
+        COMMAND ${INTLTOOL_MERGE_EXECUTABLE} --desktop-style ${CMAKE_SOURCE_DIR}/po ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop
+        DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop.in)
+    ADD_CUSTOM_TARGET(desktop_file ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/data/gimagereader-${INTERFACE_TYPE}.desktop)
+ENDIF()
 
 IF(MINGW)
   ENABLE_LANGUAGE(RC)
