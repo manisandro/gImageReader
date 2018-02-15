@@ -1,7 +1,6 @@
 [Desktop Entry]
 Name=gImageReader
-GenericName=OCR application
-GenericName[cs]=optické rozpoznávání znaků (OCR)
+_GenericName=OCR application
 Exec=gimagereader-@INTERFACE_TYPE@ %U
 Icon=gimagereader
 Terminal=false
