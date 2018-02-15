@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 00:12+0100\n"
-"PO-Revision-Date: 2018-02-15 13:59+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2018-02-15 22:50+0000\n"
+"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Italian "
 "<https://hosted.weblate.org/projects/gimagereader/translations/it/>\n"
 "Language: it\n"
@@ -18,16 +18,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.19-dev\n"
+"X-Generator: Weblate 2.19\n"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
 msgid "Redetect Languages"
 msgstr "Ri-rilevare lingue"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
-#, fuzzy
 msgid "Manage Languages"
-msgstr "Gestione lingue..."
+msgstr "Gestione lingue"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
@@ -146,7 +145,7 @@ msgstr "Percorsi utente"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr ""
+msgstr "Apri i documenti esportati con l'applicazione predefinita"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:36
 msgid "Regenerate backtrace"
@@ -257,9 +256,8 @@ msgid "Scan"
 msgstr "Scansione"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:17
-#, fuzzy
 msgid "Source:"
-msgstr "Fonte"
+msgstr "Fonte:"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
@@ -373,7 +371,7 @@ msgstr "Pagina di origine"
 
 #: ../gtk/data/MainWindow.ui.h:51 ../qt/src/SourceManager.cc:146
 msgid "Protected PDF"
-msgstr ""
+msgstr "PDF protetto"
 
 #: ../gtk/data/MainWindow.ui.h:52 ../qt/src/Recognizer.cc:76
 msgid "Current Page"
@@ -385,18 +383,16 @@ msgstr "Più pagine..."
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:577
 msgid "Add Word"
-msgstr ""
+msgstr "Aggiungi parola"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:577
-#, fuzzy
 msgid "Enter word:"
-msgstr "Ignorare parola"
+msgstr "Aggiungi parola:"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:61
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
-#, fuzzy
 msgid "Export to plain text"
-msgstr "Esportare in PDF"
+msgstr "Esporta come testo"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:65
@@ -405,9 +401,8 @@ msgstr "Esportare in PDF"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:67
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:68
-#, fuzzy
 msgid "Export to ODT"
-msgstr "Esportare in PDF"
+msgstr "Esporta come ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/Ui_OutputEditorText.hh:116
@@ -416,9 +411,8 @@ msgstr "Salvare output"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
-#, fuzzy
 msgid "Export"
-msgstr "Esportazione PDF"
+msgstr "Esporta"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11 ../gtk/data/OutputEditorText.ui.h:19
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
@@ -437,7 +431,7 @@ msgstr "Cercare e sostituire"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:83
 msgid "Show confidence values"
-msgstr ""
+msgstr "Mostra valori di confidenza"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/PdfExportDialog.ui.h:46
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
@@ -448,12 +442,12 @@ msgstr "Mostra anteprima"
 #: ../gtk/data/OutputEditorHOCR.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
 msgid "Next (F3)"
-msgstr ""
+msgstr "Successivo (F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:16
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
 msgid "Previous (Shift+F3)"
-msgstr ""
+msgstr "Precedente (Shift+F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/src/hocr/OutputEditorHOCR.cc:867
 #: ../qt/src/hocr/OutputEditorHOCR.cc:712
@@ -571,7 +565,7 @@ msgstr "Qualità di compressione:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:10
 msgid "90"
-msgstr ""
+msgstr "90"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:15
 msgid "DPI:"
@@ -579,7 +573,7 @@ msgstr "DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12
 msgid "300"
-msgstr ""
+msgstr "300"
 
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
@@ -595,37 +589,36 @@ msgstr "Omogenizzare la spaziatura"
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
-msgstr ""
+msgstr "Usa sempre il seguente carattere:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:27
 msgid "Fallback font family:"
-msgstr ""
+msgstr "Carattere di fallback:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:20
-#, fuzzy
 msgid "Override font size:"
-msgstr "Usare le dimensioni carattere rilevate"
+msgstr "Usa sempre la seguente dimensione carattere:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
-msgstr ""
+msgstr "Dimensione carattere:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:20
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:26
 msgid "pt"
-msgstr ""
+msgstr "pt"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22
 msgid "10"
-msgstr ""
+msgstr "10"
 
 #: ../gtk/data/PdfExportDialog.ui.h:24
 #, no-c-format
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:22
 msgid "Preserve spaces wider than:"
@@ -633,7 +626,7 @@ msgstr "Preservare spazi più larghi di:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:24
 msgid "characters"
@@ -645,73 +638,71 @@ msgstr "Testo:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Paper size:"
-msgstr ""
+msgstr "Dimensione pagina:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Width"
-msgstr ""
+msgstr "Larghezza"
 
 #: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Height"
-msgstr ""
+msgstr "Altezza"
 
 #: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
-msgstr ""
+msgstr "Base"
 
 #: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:29
-#, fuzzy
 msgid "PDF version:"
-msgstr "Nuova versione"
+msgstr "Versione PDF:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:31
 msgid "Password:"
-msgstr ""
+msgstr "Password:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:32
 msgid "Confirm password:"
-msgstr ""
+msgstr "Conferma password:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:30
 msgid "Encryption (optional):"
-msgstr ""
+msgstr "Protezione (opzionale):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:34
 msgid "Author:"
-msgstr ""
+msgstr "Autore:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:36
 msgid "Title:"
-msgstr ""
+msgstr "Titolo:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:39 ../qt/data/PdfExportDialog.ui.h:38
 msgid "Subject:"
-msgstr ""
+msgstr "Soggetto:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:40 ../qt/data/PdfExportDialog.ui.h:35
 msgid "Creator:"
-msgstr ""
+msgstr "Creatore:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:41 ../qt/data/PdfExportDialog.ui.h:37
 msgid "Producer:"
-msgstr ""
+msgstr "Produttore:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:42 ../qt/data/PdfExportDialog.ui.h:39
 msgid "Keywords:"
-msgstr ""
+msgstr "Parole chiave:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:43 ../qt/data/PdfExportDialog.ui.h:33
-#, fuzzy
 msgid "Additional information (optional):"
-msgstr "Ulteriori definizioni di lingue:"
+msgstr "Ulteriori informazioni (opzionale):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:44 ../qt/data/PdfExportDialog.ui.h:40
 msgid "Import from current source"
-msgstr ""
+msgstr "Importa dalla sorgente corrente"
 
 #: ../gtk/data/PdfExportDialog.ui.h:45 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Advanced"
-msgstr ""
+msgstr "Avanzato"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:4
 msgid "Find"
@@ -753,7 +744,7 @@ msgstr "Ordine:"
 
 #: ../gtk/data/SelectionMenu.ui.h:3
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
 #: ../qt/src/DisplayerToolSelect.cc:237 ../qt/src/hocr/DisplayerToolHOCR.cc:31
@@ -936,14 +927,12 @@ msgstr "Sovrascrivere il file?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:516 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/OutputEditorHOCR.cc:229
-#, fuzzy
 msgid "Page"
-msgstr "Pagina: %1"
+msgstr "Pagina"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:518 ../qt/src/hocr/HOCRDocument.cc:441
-#, fuzzy
 msgid "Text block"
-msgstr "File di testo"
+msgstr "Blocco di testo"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:520 ../gtk/src/hocr/OutputEditorHOCR.cc:272
 #: ../qt/src/hocr/HOCRDocument.cc:443 ../qt/src/hocr/OutputEditorHOCR.cc:231
@@ -969,47 +958,43 @@ msgstr "output"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:67 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "OpenDocument Text Documents"
-msgstr ""
+msgstr "Documenti di testo OpenDocument"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
-#, fuzzy
 msgid "Save ODT Output..."
-msgstr "Salvare output PDF..."
+msgstr "Salva output ODT..."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:272
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCROdtExporter.cc:61
 #: ../qt/src/hocr/HOCRPdfExporter.cc:600 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
-msgstr ""
+msgstr "Esportazione fallita"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:272
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
-msgstr ""
+msgstr "L'esportazione ODT è fallita: impossibile scrivere il file di output."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:266 ../qt/src/hocr/HOCROdtExporter.cc:254
-#, fuzzy
 msgid "Exporting to ODT..."
-msgstr "Esportare in PDF"
+msgstr "Esportando a ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:365
-#, fuzzy
 msgid "Same as source"
-msgstr "Selezionare fonti"
+msgstr "Uguale alla sorgente"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:366
 msgid "Custom"
-msgstr ""
+msgstr "Personalizzata"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:362
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:363
-#, fuzzy
 msgid "in"
-msgstr "Cerca"
+msgstr "in"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:353
 msgid "Monochrome"
@@ -1044,9 +1029,8 @@ msgid "Save PDF Output..."
 msgstr "Salvare output PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
-#, fuzzy
 msgid "Invalid Output"
-msgstr "Salvare output"
+msgstr "Output invalido"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
 msgid "Cannot overwrite a file which is a source image of this document."
