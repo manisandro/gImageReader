@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 00:12+0100\n"
-"PO-Revision-Date: 2018-02-15 22:50+0000\n"
+"PO-Revision-Date: 2018-02-16 21:12+0000\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Italian "
 "<https://hosted.weblate.org/projects/gimagereader/translations/it/>\n"
@@ -1035,40 +1035,35 @@ msgstr "Output invalido"
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
 msgid "Cannot overwrite a file which is a source image of this document."
 msgstr ""
+"Impossibile sovrascrivere un file che è una sorgente del documento corrente."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
-#, fuzzy
 msgid "Failed to create output"
-msgstr "Impossibile salvare output"
+msgstr "Impossibile creare l'output"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
 msgid "Failed to create output. The returned error was: %1"
-msgstr ""
+msgstr "Impossibile creare l'output. L'errore segnalato è: %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:560 ../qt/src/hocr/HOCRPdfExporter.cc:553
 msgid "The operation was cancelled"
-msgstr ""
+msgstr "L'operazione è stata annullata"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:595 ../qt/src/hocr/HOCRPdfExporter.cc:588
-#, fuzzy
 msgid "Failed to render page %1"
-msgstr ""
-"\n"
-"[Ricognizione della pagina %1 fallita]\n"
+msgstr "Errore renderizzando la pagina %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:602 ../qt/src/hocr/HOCRPdfExporter.cc:595
-#, fuzzy
 msgid "Exporting to PDF..."
-msgstr "Esportare in PDF"
+msgstr "Esportando a PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607 ../qt/src/hocr/HOCRPdfExporter.cc:600
 msgid "The PDF export failed: %1."
-msgstr ""
+msgstr "L'esportazione a PDF è fallita: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:657 ../qt/src/hocr/HOCRPdfExporter.cc:649
-#, fuzzy
 msgid "The PDF library could not load the font '%1'."
-msgstr "La libreria PDF non supporta il carattere selezionato."
+msgstr "La libreria PDF non supporta il carattere '%1'."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:274
 #: ../qt/src/hocr/HOCRTextExporter.cc:39 ../qt/src/OutputEditorText.cc:239
@@ -1076,33 +1071,32 @@ msgid "Text Files"
 msgstr "File di testo"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:39
-#, fuzzy
 msgid "Save Text Output..."
-msgstr "Salvare output..."
+msgstr "Salva output come testo..."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
-msgstr ""
+msgstr "L'esportazione è fallita: impossibile scrivere il file di output."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
 #: ../qt/src/hocr/OutputEditorHOCR.cc:230
 msgid "Block"
-msgstr ""
+msgstr "Blocco"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
 #: ../qt/src/hocr/OutputEditorHOCR.cc:232
 msgid "Line"
-msgstr ""
+msgstr "Riga"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
 #: ../qt/src/hocr/OutputEditorHOCR.cc:233
 msgid "Word"
-msgstr ""
+msgstr "Parola"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
 #: ../qt/src/hocr/OutputEditorHOCR.cc:234
 msgid "Misspelled word"
-msgstr ""
+msgstr "Errori ortografici"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:434
 #: ../qt/src/hocr/OutputEditorHOCR.cc:317
@@ -1121,9 +1115,8 @@ msgstr "Errori di ricognizione"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:593
 #: ../qt/src/hocr/OutputEditorHOCR.cc:500
 #: ../qt/src/hocr/OutputEditorHOCR.cc:512
-#, fuzzy
 msgid "Multiple values"
-msgstr "Più fonti"
+msgstr "Valori multipli"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:770
@@ -1135,7 +1128,7 @@ msgstr "Unire"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:779
 #: ../qt/src/hocr/OutputEditorHOCR.cc:634
 msgid "Swap"
-msgstr ""
+msgstr "Scambia"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:802
 #: ../qt/src/hocr/OutputEditorHOCR.cc:675
@@ -1145,24 +1138,22 @@ msgstr "Aggiungere regione grafica"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:805
 #: ../qt/src/hocr/OutputEditorHOCR.cc:676
 msgid "Add text block"
-msgstr ""
+msgstr "Aggiungi blocco di testo"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:809
 #: ../qt/src/hocr/OutputEditorHOCR.cc:678
-#, fuzzy
 msgid "Add paragraph"
-msgstr "Paragrafo"
+msgstr "Aggiungi paragrafo"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:813
 #: ../qt/src/hocr/OutputEditorHOCR.cc:680
-#, fuzzy
 msgid "Add line"
-msgstr "Aggiungere immagini"
+msgstr "Aggiungi riga"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:817
 #: ../qt/src/hocr/OutputEditorHOCR.cc:682
 msgid "Add word"
-msgstr ""
+msgstr "Aggiungi parola"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:839
 #: ../qt/src/hocr/OutputEditorHOCR.cc:695
@@ -1349,17 +1340,25 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"Impossibile scaricare i seguenti dizionari:\n"
+"%1\n"
+"\n"
+"Verificare la connessione e i permessi di scrittura.\n"
+"Aiuto: Se non hai accesso di scrittura nelle cartelle di sistema, puoi "
+"scegliere di utilizzare cartelle nel profilo dell'utente nel dialogo delle "
+"impostazioni."
 
 #: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:573
 msgid "Dictionaries installed"
 msgstr "Dizionari ortografici installati"
 
 #: ../gtk/src/MainWindow.cc:585
-#, fuzzy
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
-msgstr "I seguenti dizionari ortografici sono stati installati:%1"
+msgstr ""
+"I seguenti dizionari sono stati installati:\n"
+"%1"
 
 #: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
@@ -1546,40 +1545,40 @@ msgid "Failed to save image"
 msgstr "Impossibile salvare l'immagine"
 
 #: ../gtk/src/scanner/ScannerSane.cc:800 ../qt/src/scanner/ScannerSane.cc:797
-#, fuzzy
 msgid "Operation is cancelled."
-msgstr "Scansione interrotta"
+msgstr "L'operazione è stata annullata."
 
 #: ../gtk/src/scanner/ScannerSane.cc:802 ../qt/src/scanner/ScannerSane.cc:799
 msgid "Device is busy."
-msgstr ""
+msgstr "Il dispositivo è occupato."
 
 #: ../gtk/src/scanner/ScannerSane.cc:804 ../qt/src/scanner/ScannerSane.cc:801
 msgid "Cover is opened."
-msgstr ""
+msgstr "Il coperchio è aperto."
 
 #: ../gtk/src/scanner/ScannerSane.cc:806 ../qt/src/scanner/ScannerSane.cc:803
 msgid "Document feeder jammed."
-msgstr ""
+msgstr "L'alimentatore dei documenti è bloccato."
 
 #: ../gtk/src/scanner/ScannerSane.cc:808 ../qt/src/scanner/ScannerSane.cc:805
 msgid "Document feeder out of documents."
-msgstr ""
+msgstr "L'alimentatore dei documenti non ha più documenti."
 
 #: ../gtk/src/scanner/ScannerSane.cc:810 ../qt/src/scanner/ScannerSane.cc:807
-#, fuzzy
 msgid "Access to scanner is denied."
-msgstr "Nessun scanner specificato"
+msgstr "Accesso allo scanner negato."
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid "PDFs with text"
-msgstr ""
+msgstr "PDF con testo"
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid ""
 "These PDF files already contain text:\n"
 "%1"
 msgstr ""
+"I seguenti file PDF contengono già del testo:\n"
+"%1"
 
 #: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
 msgid "Unable to open files"
@@ -1591,7 +1590,7 @@ msgstr "Non è stato possibile aprire i seguenti file:%1"
 
 #: ../gtk/src/SourceManager.cc:141 ../qt/src/SourceManager.cc:143
 msgid "Enter password for file '%1':"
-msgstr ""
+msgstr "Specificare la password per il file '%1':"
 
 #: ../gtk/src/SourceManager.cc:197 ../qt/src/SourceManager.cc:214
 msgid "Images and PDFs"
@@ -1752,7 +1751,6 @@ msgid "Downloading %1..."
 msgstr "Scaricando '%1'..."
 
 #: ../gtk/src/TessdataManager.cc:282
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1762,10 +1760,13 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Non è stato possibile scaricare risp. rimuovere i seguenti file:\n"
+"Impossibile scaricare o rimuovere i seguenti file:\n"
 "%1\n"
 "\n"
-"Verificare la connettività e i permessi delle cartelle."
+"Verificare la connessione e i permessi di scrittura.\n"
+"Aiuto: Se non hai accesso di scrittura nelle cartelle di sistema, puoi "
+"scegliere di utilizzare cartelle nel profilo dell'utente nel dialogo delle "
+"impostazioni."
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
@@ -1784,15 +1785,14 @@ msgid "About gImageReader"
 msgstr "Info gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Un'interfaccia grafica per tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
-"p><p>&nbsp;</p></body></html>"
+"<html><head/><body><p>&nbsp;</p><p>Un'interfaccia grafica per tesseract-"
+"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Website</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -1838,19 +1838,19 @@ msgstr "gImageReader"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
-msgstr ""
+msgstr "Letto piatto"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Front"
-msgstr ""
+msgstr "ADF Fronte"
 
 #: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Back"
-msgstr ""
+msgstr "ADF Retro"
 
 #: ../qt/data/MainWindow.ui.h:21
 msgid "ADF Duplex"
-msgstr ""
+msgstr "ADF Duplex"
 
 #. Remove & from some labels which designer insists in adding
 #: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:50
@@ -1903,28 +1903,27 @@ msgstr "Mostra/nascondi riquadro output"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
-msgstr ""
+msgstr "Backend:"
 
 #: ../qt/data/PdfExportDialog.ui.h:6
 msgid "Portrait"
-msgstr ""
+msgstr "Verticale"
 
 #: ../qt/data/PdfExportDialog.ui.h:7
 msgid "Landscape"
-msgstr ""
+msgstr "Orizzontale"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:142
-#, fuzzy
 msgid "Failed to write to file"
-msgstr "Impossibile aprire il file"
+msgstr "Impossibile scrivere il file"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:343
 msgid "PoDoFo"
-msgstr ""
+msgstr "PoDoFo"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:344
 msgid "QPrinter"
-msgstr ""
+msgstr "QPrinter"
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
