@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-10 00:12+0100\n"
+"POT-Creation-Date: 2018-02-16 22:08+0100\n"
 "PO-Revision-Date: 2017-08-09 09:49+0200\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: ../data/gimagereader.desktop.in:3
+#: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
 msgstr "optické rozpoznávání znaků (OCR)"
 
@@ -346,7 +346,7 @@ msgstr "Strany"
 msgid "Page range:"
 msgstr "Strany:"
 
-#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/PageRangeDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:44
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Příklad:</b> 1-10, 13, 14-18</small>"
 
@@ -443,7 +443,7 @@ msgstr "Najít a nahradit"
 msgid "Show confidence values"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/PdfExportDialog.ui.h:46
+#: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/PdfExportDialog.ui.h:39
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:86
 msgid "Show preview"
@@ -459,25 +459,25 @@ msgstr ""
 msgid "Previous (Shift+F3)"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/src/hocr/OutputEditorHOCR.cc:867
+#: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/src/hocr/OutputEditorHOCR.cc:868
 #: ../qt/src/hocr/OutputEditorHOCR.cc:712
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:124
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:126
 msgid "Expand all"
 msgstr "Rozbalit vše"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:18 ../gtk/src/hocr/OutputEditorHOCR.cc:870
+#: ../gtk/data/OutputEditorHOCR.ui.h:18 ../gtk/src/hocr/OutputEditorHOCR.cc:871
 #: ../qt/src/hocr/OutputEditorHOCR.cc:713
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:125
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:127
 msgid "Collapse all"
 msgstr "Sbalit vše"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:19
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:146
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:148
 msgid "Properties"
 msgstr "Vlastnosti"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:20
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:150
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:152
 msgid "Source"
 msgstr "Zdroj"
 
@@ -573,147 +573,122 @@ msgstr "Komprese:"
 msgid "Compression quality:"
 msgstr "Stupeň komprese:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:10
-msgid "90"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:15
+#: ../gtk/data/PdfExportDialog.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
 msgid "DPI:"
 msgstr "Bodů na palec (DPI):"
 
-#: ../gtk/data/PdfExportDialog.ui.h:12
-msgid "300"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:18
+#: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
 msgstr "Rozmývací algoritmus:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:13
+#: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
 msgstr "Nastavení obrázku:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:25
+#: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
 msgid "Uniformize line and word spacing"
 msgstr "Sjednotit velikost rozestupů řádků a slov"
 
-#: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:21
+#: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:27
+#: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
 msgid "Fallback font family:"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:20
+#: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
 #, fuzzy
 msgid "Override font size:"
 msgstr "Použít zjištěné velikosti písma"
 
-#: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:23
+#: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:20
-msgid "100"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:26
+#: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
 msgid "pt"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:22
-msgid "10"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:24
-#, no-c-format
-msgid "%"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:22
+#: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
 msgid "Preserve spaces wider than:"
 msgstr "Zachovat mezery širší než:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:26
-msgid "4"
-msgstr "4"
-
-#: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:24
+#: ../gtk/data/PdfExportDialog.ui.h:20 ../qt/data/PdfExportDialog.ui.h:24
 msgid "characters"
 msgstr "znaky"
 
-#: ../gtk/data/PdfExportDialog.ui.h:28 ../qt/data/PdfExportDialog.ui.h:19
+#: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
 msgstr "Nastavení textu:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:10
+#: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Paper size:"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:11
+#: ../gtk/data/PdfExportDialog.ui.h:23 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Width"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:12
+#: ../gtk/data/PdfExportDialog.ui.h:24 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Height"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:3
+#: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:29
+#: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
 #, fuzzy
 msgid "PDF version:"
 msgstr "Nová verze"
 
-#: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:31
+#: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:31
 msgid "Password:"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:32
+#: ../gtk/data/PdfExportDialog.ui.h:28 ../qt/data/PdfExportDialog.ui.h:32
 msgid "Confirm password:"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:30
+#: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:30
 msgid "Encryption (optional):"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:34
+#: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:34
 msgid "Author:"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:36
+#: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:36
 msgid "Title:"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:39 ../qt/data/PdfExportDialog.ui.h:38
+#: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:38
 msgid "Subject:"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:40 ../qt/data/PdfExportDialog.ui.h:35
+#: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:35
 msgid "Creator:"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:41 ../qt/data/PdfExportDialog.ui.h:37
+#: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:37
 msgid "Producer:"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:42 ../qt/data/PdfExportDialog.ui.h:39
+#: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:39
 msgid "Keywords:"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:43 ../qt/data/PdfExportDialog.ui.h:33
+#: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:33
 #, fuzzy
 msgid "Additional information (optional):"
 msgstr "Další jazykové definice:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:44 ../qt/data/PdfExportDialog.ui.h:40
+#: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:40
 msgid "Import from current source"
 msgstr ""
 
-#: ../gtk/data/PdfExportDialog.ui.h:45 ../qt/data/PdfExportDialog.ui.h:28
+#: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Advanced"
 msgstr ""
 
@@ -755,20 +730,16 @@ msgstr "Smazat"
 msgid "Order:"
 msgstr "Pořadí:"
 
-#: ../gtk/data/SelectionMenu.ui.h:3
-msgid "1"
-msgstr ""
-
-#: ../gtk/data/SelectionMenu.ui.h:4 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
+#: ../gtk/data/SelectionMenu.ui.h:3 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
 #: ../qt/src/DisplayerToolSelect.cc:237 ../qt/src/hocr/DisplayerToolHOCR.cc:31
 msgid "Recognize"
 msgstr "Rozpoznat"
 
-#: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:238
+#: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:238
 msgid "Recognize to clipboard"
 msgstr "Rozpoznat do schránky"
 
-#: ../gtk/data/SelectionMenu.ui.h:6 ../qt/src/DisplayerToolSelect.cc:239
+#: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:239
 msgid "Save as image"
 msgstr "Uložit jako obrázek"
 
@@ -793,7 +764,7 @@ msgid "Add"
 msgstr "Přidat"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:863 ../qt/data/ConfigDialog.ui.h:17
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:864 ../qt/data/ConfigDialog.ui.h:17
 #: ../qt/src/hocr/OutputEditorHOCR.cc:709 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
@@ -895,11 +866,11 @@ msgstr ""
 "Nezdařilo se získat backtrace diagnostiku. Je nainstalován ladící nástroj "
 "gdb?"
 
-#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
+#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:173
 msgid "Failed to load image"
 msgstr "Obrázek se nepodařilo načíst"
 
-#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
+#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:173
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -966,7 +937,7 @@ msgstr "Grafika"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:64 ../gtk/src/hocr/HOCRPdfExporter.cc:491
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:940 ../gtk/src/OutputEditorText.cc:272
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:941 ../gtk/src/OutputEditorText.cc:272
 #: ../qt/src/hocr/HOCROdtExporter.cc:50 ../qt/src/hocr/HOCRPdfExporter.cc:480
 #: ../qt/src/hocr/HOCRTextExporter.cc:36 ../qt/src/hocr/OutputEditorHOCR.cc:808
 #: ../qt/src/OutputEditorText.cc:238
@@ -1128,7 +1099,7 @@ msgstr ""
 msgid "Misspelled word"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:434
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:435
 #: ../qt/src/hocr/OutputEditorHOCR.cc:317
 msgid ""
 "The following pages could not be processed:\n"
@@ -1137,12 +1108,12 @@ msgstr ""
 "Následující stránky nebylo možné zpracovat:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:435
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:436
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
 msgid "Recognition errors"
 msgstr "Chyby rozpoznávání"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:593
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:594
 #: ../qt/src/hocr/OutputEditorHOCR.cc:500
 #: ../qt/src/hocr/OutputEditorHOCR.cc:512
 #, fuzzy
@@ -1150,122 +1121,122 @@ msgid "Multiple values"
 msgstr "Vícero zdrojů"
 
 #. Merging allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:770
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:771
 #: ../qt/src/hocr/OutputEditorHOCR.cc:631
 msgid "Merge"
 msgstr "Sloučit"
 
 #. Swapping allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:779
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:780
 #: ../qt/src/hocr/OutputEditorHOCR.cc:634
 msgid "Swap"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:802
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:803
 #: ../qt/src/hocr/OutputEditorHOCR.cc:675
 msgid "Add graphic region"
 msgstr "Přidat oblast s grafikou"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:805
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:806
 #: ../qt/src/hocr/OutputEditorHOCR.cc:676
 msgid "Add text block"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:809
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:810
 #: ../qt/src/hocr/OutputEditorHOCR.cc:678
 #, fuzzy
 msgid "Add paragraph"
 msgstr "Odstavec"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:813
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:814
 #: ../qt/src/hocr/OutputEditorHOCR.cc:680
 #, fuzzy
 msgid "Add line"
 msgstr "Přidat obrázky"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:817
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:818
 #: ../qt/src/hocr/OutputEditorHOCR.cc:682
 msgid "Add word"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:839
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:840
 #: ../qt/src/hocr/OutputEditorHOCR.cc:695
 msgid "No suggestions"
 msgstr "Žádné návrhy"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:845
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:846
 #: ../qt/src/hocr/OutputEditorHOCR.cc:699
 msgid "Add to dictionary"
 msgstr "Přidat do slovníku"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:851
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:852
 #: ../qt/src/hocr/OutputEditorHOCR.cc:701
 msgid "Ignore word"
 msgstr "Ignorovat slovo"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:903
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:942
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:904
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:943
 #: ../qt/src/hocr/OutputEditorHOCR.cc:773
 #: ../qt/src/hocr/OutputEditorHOCR.cc:810
 msgid "hOCR HTML Files"
 msgstr "HTML soubory ve formátu hOCR"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:904
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:905
 #: ../qt/src/hocr/OutputEditorHOCR.cc:773
 msgid "Open hOCR File"
 msgstr "Otevřít soubor formátu hOCR"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:913
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:914
 #: ../qt/src/hocr/OutputEditorHOCR.cc:780
 msgid "Failed to open file"
 msgstr "Nepodařilo se otevřít soubor"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:913
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:914
 #: ../qt/src/hocr/OutputEditorHOCR.cc:780
 msgid "The file could not be opened: %1."
 msgstr "Soubor se nepodařilo otevřít: %1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:922
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:923
 #: ../qt/src/hocr/OutputEditorHOCR.cc:787
 msgid "Invalid hOCR file"
 msgstr "soubor neobsahuje platná data ve formátu hOCR"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:922
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:923
 #: ../qt/src/hocr/OutputEditorHOCR.cc:787
 msgid "The file does not appear to contain valid hOCR HTML: %1"
 msgstr "Soubor neobsahuje platnou HTML podobu formátu HOCR: %1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:943
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
 #: ../qt/src/hocr/OutputEditorHOCR.cc:810
 msgid "Save hOCR Output..."
 msgstr "Uložit výstup do formátu hOCR…"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:950 ../gtk/src/OutputEditorText.cc:282
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:951 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/OutputEditorHOCR.cc:817 ../qt/src/OutputEditorText.cc:246
 msgid "Failed to save output"
 msgstr "Uložení výstupu se nezdařilo"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:950 ../gtk/src/OutputEditorText.cc:282
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:951 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/OutputEditorHOCR.cc:817 ../qt/src/OutputEditorText.cc:246
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Zkontrolujte své oprávnění zapisovat do zvolené složky."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1009 ../gtk/src/OutputEditorText.cc:296
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1010 ../gtk/src/OutputEditorText.cc:296
 #: ../qt/src/hocr/OutputEditorHOCR.cc:869 ../qt/src/OutputEditorText.cc:259
 msgid "Output not saved"
 msgstr "Výstup nebyl uložen"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1009 ../gtk/src/OutputEditorText.cc:296
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1010 ../gtk/src/OutputEditorText.cc:296
 #: ../qt/src/hocr/OutputEditorHOCR.cc:869 ../qt/src/OutputEditorText.cc:259
 msgid "Save output before proceeding?"
 msgstr "Před pokračováním – uložit výstup?"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1130 ../gtk/src/OutputEditorText.cc:184
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1131 ../gtk/src/OutputEditorText.cc:184
 #: ../qt/src/hocr/OutputEditorHOCR.cc:966 ../qt/src/OutputEditorText.cc:152
 msgid "Replacing..."
 msgstr "Nahrazování…"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1155 ../gtk/src/OutputEditorText.cc:192
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1156 ../gtk/src/OutputEditorText.cc:192
 #: ../qt/src/hocr/OutputEditorHOCR.cc:989 ../qt/src/OutputEditorText.cc:160
 msgid "Applying substitutions..."
 msgstr "Provádění dosazení…"
@@ -1811,9 +1782,10 @@ msgstr "O aplikaci gImageReader"
 #: ../qt/data/AboutDialog.ui.h:3
 #, fuzzy
 msgid ""
-"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
-"p><p>&nbsp;</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
+"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
+"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
+"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Grafická nadstavba pro engine tesseract-"
 "ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Webové "
@@ -1842,19 +1814,22 @@ msgstr "Znaková sada textového souboru:"
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
 msgid ""
-"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
-"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
-"application, please consider reporting the issue to <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Please try to describe what you were doing before the application "
-"crashed. Also, include the information below. Thank you.</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
+"p&gt;Apologies for the inconvenience. To help improve the application, "
+"please consider reporting the issue to &lt;a href=&quot;mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
+"com&lt;/a&gt;. Please try to describe what you were doing before the "
+"application crashed. Also, include the information below. Thank you.&lt;/"
+"p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Došlo k pádu "
-"aplikace</span></p><p>Velmi se omlouváme za vzniklé potíže. Prosíme pomozte "
-"s odstraněním příčiny tohoto problému nahlášením na e-mail <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Ve zprávě se pokuste popsat svou činnost před pádem aplikace. Též "
-"přiložte níže uvedené informace. Děkujeme.</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;Aplikace byla neočekávaně ukončena&lt;/span&gt;&lt;/"
+"p&gt;&lt;p&gt;Omlouváme se za vzniklé nepohodlí. Chcete-li pomoci aplikaci "
+"zlepšit nahlaste problém na &lt;a href=&quot;mailto:manisandro@gmail.com?"
+"subject=gImageReader%20Crash\">manisandro@gmail.com&lt;/a&gt;. Zde se "
+"pokuste popsat svou činnost před pádem aplikace. Též přiložte níže uvedené "
+"informace.Díky.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1924,6 +1899,10 @@ msgstr "Automaticky zjistit rozvržení stránky"
 #: ../qt/data/MainWindow.ui.h:39
 msgid "Toggle Output Pane"
 msgstr "Zobrazit či skrýt podokno s výstupním textem"
+
+#: ../qt/data/PageRangeDialog.ui.h:3
+msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+msgstr "&lt;small&gt;&lt;b&gt;Příklad:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
@@ -2022,29 +2001,24 @@ msgstr "Uložit výstup"
 msgid "Clear Output"
 msgstr "Vyčistit výstup"
 
-#~ msgid ""
-#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
-#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
-#~ "application, please consider reporting the issue to &lt;a href=&quot;"
-#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
-#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
-#~ "doing before the application crashed. Also, include the information "
-#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
-#~ msgstr ""
-#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-#~ "weight:600;&quot;&gt;Aplikace byla neočekávaně ukončena&lt;/span&gt;&lt;/"
-#~ "p&gt;&lt;p&gt;Omlouváme se za vzniklé nepohodlí. Chcete-li pomoci "
-#~ "aplikaci zlepšit nahlaste problém na &lt;a href=&quot;mailto:"
-#~ "manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail."
-#~ "com&lt;/a&gt;. Zde se pokuste popsat svou činnost před pádem aplikace. "
-#~ "Též přiložte níže uvedené informace.Díky.&lt;/p&gt;&lt;/body&gt;&lt;/"
-#~ "html&gt;"
+#~ msgid "4"
+#~ msgstr "4"
 
 #~ msgid ""
-#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ "<html><head/><body><p><span style=\" font-weight:600;\">The application "
+#~ "has crashed</span></p><p>Apologies for the inconvenience. To help improve "
+#~ "the application, please consider reporting the issue to <a href=\"mailto:"
+#~ "manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+#~ "a>. Please try to describe what you were doing before the application "
+#~ "crashed. Also, include the information below. Thank you.</p></body></html>"
 #~ msgstr ""
-#~ "&lt;small&gt;&lt;b&gt;Příklad:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ "<html><head/><body><p><span style=\" font-weight:600;\">Došlo k pádu "
+#~ "aplikace</span></p><p>Velmi se omlouváme za vzniklé potíže. Prosíme "
+#~ "pomozte s odstraněním příčiny tohoto problému nahlášením na e-mail <a "
+#~ "href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+#~ "\">manisandro@gmail.com</a>. Ve zprávě se pokuste popsat svou činnost "
+#~ "před pádem aplikace. Též přiložte níže uvedené informace. Děkujeme.</p></"
+#~ "body></html>"
 
 #~ msgid "Document font:"
 #~ msgstr "Písmo dokumentu:"
