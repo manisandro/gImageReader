@@ -1,3 +1,5 @@
+[![Translation status](https://hosted.weblate.org/widgets/gimagereader/-/svg-badge.svg)](https://hosted.weblate.org/engage/gimagereader/?utm_source=widget)
+
 gImageReader
 ============
 
