@@ -37,7 +37,6 @@ Contributing:
 ---------------
 Contributions are always welcome, ideally in the form of pull-requests.
 
-Especially welcome are translations. These can be created as follows:
-  1. Copy `po/gimagereader.pot` file to `po/<language>.po` (i.e. `po/de.po`)
-  2. Translate the strings in `po/<language>.po`
-  3. Add the language to `po/LINGUAS`
+Translating:
+--------------
+gImageReader translations are hosted on [weblate](https://hosted.weblate.org/translate/gimagereader/) and are periodically merged into master.
