@@ -217,7 +217,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="hexpand">True</property>
-                                <property name="text" translatable="yes">90</property>
                                 <property name="adjustment">adjustmentPdfQuality</property>
                                 <property name="value">90</property>
                               </object>
@@ -242,7 +241,6 @@
                               <object class="GtkSpinButton" id="spinDpi">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="text" translatable="yes">300</property>
                                 <property name="adjustment">adjustmentPdfDpi</property>
                                 <property name="value">300</property>
                               </object>
@@ -380,7 +378,6 @@
                               <object class="GtkSpinButton" id="spinFontscale">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="text" translatable="yes">100</property>
                                 <property name="adjustment">adjustmentPdfFontscale</property>
                                 <property name="value">100</property>
                               </object>
@@ -406,7 +403,6 @@
                                 <property name="visible">True</property>
                                 <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
-                                <property name="text" translatable="yes">10</property>
                                 <property name="adjustment">adjustmentPdfOverridefontsize</property>
                                 <property name="value">10</property>
                               </object>
@@ -419,7 +415,7 @@
                               <object class="GtkLabel" id="labelPercent">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">%</property>
+                                <property name="label">%</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -446,7 +442,6 @@
                                 <property name="hexpand">True</property>
                                 <property name="width_chars">2</property>
                                 <property name="max_width_chars">2</property>
-                                <property name="text" translatable="yes">4</property>
                                 <property name="adjustment">adjustmentPdfPreserve</property>
                                 <property name="snap_to_ticks">True</property>
                                 <property name="numeric">True</property>
