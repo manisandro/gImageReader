@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-21 23:19+0100\n"
+"POT-Creation-Date: 2018-02-22 00:10+0100\n"
 "PO-Revision-Date: 2017-08-29 12:50+0200\n"
 "Last-Translator: Bernard Banko <beernarrd at gmail.com>\n"
 "Language-Team: lugos.si\n"
@@ -115,7 +115,7 @@ msgstr "Ime"
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
 #: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
-#: ../qt/data/MainWindow.ui.h:13
+#: ../qt/data/MainWindow.ui.h:12
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -174,7 +174,7 @@ msgstr ""
 "opisati, kaj ste delali, preden se je program sesul. Vključite tudi spodnje "
 "podatke. Hvala."
 
-#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
+#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
 msgstr "Preklopi prikaz rezultata"
 
@@ -219,84 +219,84 @@ msgstr "Zbriši sliko"
 msgid "Clear list"
 msgstr "Počisti spisek"
 
-#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
 msgstr "Datoteke"
 
-#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:8
 msgid "Device:"
 msgstr "Naprava:"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../gtk/data/TessdataManager.ui.h:4
-#: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:59
+#: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:59
 msgid "Refresh"
 msgstr "Osveži"
 
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:9
 msgid "Output:"
 msgstr "Izhod:"
 
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:14
+#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:13
 msgid "Mode:"
 msgstr "Način:"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExporter.cc:313
-#: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExporter.cc:347
+#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:347
 msgid "Color"
 msgstr "Barvno"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../gtk/src/hocr/HOCRPdfExporter.cc:316
-#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:349
+#: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:349
 #: ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "Grayscale"
 msgstr "Sivinsko"
 
-#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:10
 msgid "Resolution:"
 msgstr "Ločljivost:"
 
-#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:12
+#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:11
 msgid "Scan"
 msgstr "Zaznaj"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:17
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:16
 #, fuzzy
 msgid "Source:"
 msgstr "Vir"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
 msgstr "Pridobi"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
 msgstr "Svetlost"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
 msgstr "Ločljivost"
 
-#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
 msgstr "Obrni barve"
 
-#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:24
+#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:23
 msgid "Zoom in"
 msgstr "Približaj"
 
-#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:26
+#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:25
 msgid "Zoom out"
 msgstr "Oddalji"
 
-#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:28
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:27
 msgid "Normal size"
 msgstr "Normalna velikost"
 
-#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:30
+#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:29
 msgid "Best fit"
 msgstr "Najboljše ujemanje"
 
@@ -309,7 +309,7 @@ msgstr "Izberi način vrtenja"
 msgid "Select insert mode"
 msgstr "Izberi način vstavljanja"
 
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:36
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
 msgstr "Kontrolniki slike"
 
@@ -321,7 +321,7 @@ msgstr "Neoblikovano besedilo"
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:38
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect layout"
 msgstr "Samodejno zaznaj razporeditev"
 
@@ -1821,72 +1821,68 @@ msgstr ""
 "a>. Pri tem poizkusite opisati, kaj ste delali, preden se je program sesul. "
 "Vključite tudi spodnje podatke. Hvala.</p></body></html>"
 
-#: ../qt/data/MainWindow.ui.h:1
-msgid "gImageReader"
-msgstr "gImageReader"
-
-#: ../qt/data/MainWindow.ui.h:18
+#: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:19
+#: ../qt/data/MainWindow.ui.h:18
 msgid "ADF Front"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:20
+#: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Back"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:21
+#: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Duplex"
 msgstr ""
 
 #. Remove & from some labels which designer insists in adding
-#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:50
+#: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
 msgid "Sources"
 msgstr "Viri"
 
-#: ../qt/data/MainWindow.ui.h:23
+#: ../qt/data/MainWindow.ui.h:22
 msgid "Zoom In"
 msgstr "Približaj"
 
-#: ../qt/data/MainWindow.ui.h:25
+#: ../qt/data/MainWindow.ui.h:24
 msgid "Zoom Out"
 msgstr "Oddalji"
 
-#: ../qt/data/MainWindow.ui.h:27
+#: ../qt/data/MainWindow.ui.h:26
 msgid "Normal Size"
 msgstr "Normalna velikost"
 
-#: ../qt/data/MainWindow.ui.h:29
+#: ../qt/data/MainWindow.ui.h:28
 msgid "Best Fit"
 msgstr "Najboljše ujemanje"
 
-#: ../qt/data/MainWindow.ui.h:31
+#: ../qt/data/MainWindow.ui.h:30
 msgid "Rotate Left"
 msgstr "Zasukaj levo"
 
-#: ../qt/data/MainWindow.ui.h:32
+#: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate left"
 msgstr "Zasukaj levo"
 
-#: ../qt/data/MainWindow.ui.h:33
+#: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate Right"
 msgstr "Zasukaj desno"
 
-#: ../qt/data/MainWindow.ui.h:34
+#: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate right"
 msgstr "Zasukaj desno"
 
-#: ../qt/data/MainWindow.ui.h:35
+#: ../qt/data/MainWindow.ui.h:34
 msgid "Image Controls"
 msgstr "Kontrolniki slike"
 
-#: ../qt/data/MainWindow.ui.h:37
+#: ../qt/data/MainWindow.ui.h:36
 msgid "Autodetect Layout"
 msgstr "Samodejno zaznaj razporeditev"
 
-#: ../qt/data/MainWindow.ui.h:39
+#: ../qt/data/MainWindow.ui.h:38
 msgid "Toggle Output Pane"
 msgstr "Preklopi prikaz rezultata"
 
@@ -1906,14 +1902,6 @@ msgstr ""
 #, fuzzy
 msgid "Failed to write to file"
 msgstr "Odpiranje datoteke spodletelo"
-
-#: ../qt/src/hocr/HOCRPdfExporter.cc:343
-msgid "PoDoFo"
-msgstr ""
-
-#: ../qt/src/hocr/HOCRPdfExporter.cc:344
-msgid "QPrinter"
-msgstr ""
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
@@ -1985,6 +1973,9 @@ msgstr "Shrani rezultat"
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
 msgstr "Počisti rezultat"
+
+#~ msgid "gImageReader"
+#~ msgstr "gImageReader"
 
 #, fuzzy
 #~ msgid ""

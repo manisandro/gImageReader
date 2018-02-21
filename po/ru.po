@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-21 23:19+0100\n"
+"POT-Creation-Date: 2018-02-22 00:10+0100\n"
 "PO-Revision-Date: 2018-02-21 23:16+0000\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Russian "
@@ -118,7 +118,7 @@ msgstr "Название"
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
 #: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
-#: ../qt/data/MainWindow.ui.h:13
+#: ../qt/data/MainWindow.ui.h:12
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -177,7 +177,7 @@ msgstr ""
 "описать, какие действия вы выполняли перед сбоем программы. Также приложите "
 "информацию, размещённую ниже. Спасибо."
 
-#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
+#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
 msgstr "Показать/скрыть панель результатов"
 
@@ -222,83 +222,83 @@ msgstr "Удалить изображение"
 msgid "Clear list"
 msgstr "Очистить список"
 
-#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
 msgstr "Файлы"
 
-#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:8
 msgid "Device:"
 msgstr "Устройство:"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../gtk/data/TessdataManager.ui.h:4
-#: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:59
+#: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:59
 msgid "Refresh"
 msgstr "Обновить"
 
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:9
 msgid "Output:"
 msgstr "Сканировать в:"
 
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:14
+#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:13
 msgid "Mode:"
 msgstr "Режим:"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExporter.cc:313
-#: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExporter.cc:347
+#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:347
 msgid "Color"
 msgstr "Цветной"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../gtk/src/hocr/HOCRPdfExporter.cc:316
-#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:349
+#: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:349
 #: ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "Grayscale"
 msgstr "В оттенках серого"
 
-#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:10
 msgid "Resolution:"
 msgstr "Разрешение:"
 
-#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:12
+#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:11
 msgid "Scan"
 msgstr "Отсканировать"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:17
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:16
 msgid "Source:"
 msgstr "Источник:"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
 msgstr "Сканировать"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
 msgstr "Яркость"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
 msgstr "Контрастность"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
 msgstr "Разрешение"
 
-#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
 msgstr "Инвертировать цвета"
 
-#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:24
+#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:23
 msgid "Zoom in"
 msgstr "Увеличить"
 
-#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:26
+#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:25
 msgid "Zoom out"
 msgstr "Уменьшить"
 
-#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:28
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:27
 msgid "Normal size"
 msgstr "Обычный размер"
 
-#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:30
+#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:29
 msgid "Best fit"
 msgstr "Наилучшее заполнение"
 
@@ -311,7 +311,7 @@ msgstr "Выбрать режим вращения"
 msgid "Select insert mode"
 msgstr "Выбрать режим вставки"
 
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:36
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
 msgstr "Управление изображением"
 
@@ -323,7 +323,7 @@ msgstr "Простой текст"
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:38
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect layout"
 msgstr "Автоопределение структуры"
 
@@ -1809,72 +1809,68 @@ msgstr ""
 "программы. Также приложите информацию, размещённую ниже. Спасибо.</p></"
 "body></html>"
 
-#: ../qt/data/MainWindow.ui.h:1
-msgid "gImageReader"
-msgstr "gImageReader"
-
-#: ../qt/data/MainWindow.ui.h:18
+#: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
 msgstr "Планшетный"
 
-#: ../qt/data/MainWindow.ui.h:19
+#: ../qt/data/MainWindow.ui.h:18
 msgid "ADF Front"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:20
+#: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Back"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:21
+#: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Duplex"
 msgstr ""
 
 #. Remove & from some labels which designer insists in adding
-#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:50
+#: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
 msgid "Sources"
 msgstr "Источники"
 
-#: ../qt/data/MainWindow.ui.h:23
+#: ../qt/data/MainWindow.ui.h:22
 msgid "Zoom In"
 msgstr "Увеличить"
 
-#: ../qt/data/MainWindow.ui.h:25
+#: ../qt/data/MainWindow.ui.h:24
 msgid "Zoom Out"
 msgstr "Уменьшить"
 
-#: ../qt/data/MainWindow.ui.h:27
+#: ../qt/data/MainWindow.ui.h:26
 msgid "Normal Size"
 msgstr "Обычный размер"
 
-#: ../qt/data/MainWindow.ui.h:29
+#: ../qt/data/MainWindow.ui.h:28
 msgid "Best Fit"
 msgstr "Наилучшее заполнение"
 
-#: ../qt/data/MainWindow.ui.h:31
+#: ../qt/data/MainWindow.ui.h:30
 msgid "Rotate Left"
 msgstr "Повернуть влево"
 
-#: ../qt/data/MainWindow.ui.h:32
+#: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate left"
 msgstr "Повернуть влево"
 
-#: ../qt/data/MainWindow.ui.h:33
+#: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate Right"
 msgstr "Повернуть вправо"
 
-#: ../qt/data/MainWindow.ui.h:34
+#: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate right"
 msgstr "Повернуть вправо"
 
-#: ../qt/data/MainWindow.ui.h:35
+#: ../qt/data/MainWindow.ui.h:34
 msgid "Image Controls"
 msgstr "Управление изображением"
 
-#: ../qt/data/MainWindow.ui.h:37
+#: ../qt/data/MainWindow.ui.h:36
 msgid "Autodetect Layout"
 msgstr "Автоопределение структуры"
 
-#: ../qt/data/MainWindow.ui.h:39
+#: ../qt/data/MainWindow.ui.h:38
 msgid "Toggle Output Pane"
 msgstr "Показать/скрыть панель результатов"
 
@@ -1893,14 +1889,6 @@ msgstr "Альбомный"
 #: ../qt/src/hocr/HOCRPdfExporter.cc:142
 msgid "Failed to write to file"
 msgstr "Не удалось записать в файл"
-
-#: ../qt/src/hocr/HOCRPdfExporter.cc:343
-msgid "PoDoFo"
-msgstr "PoDoFo"
-
-#: ../qt/src/hocr/HOCRPdfExporter.cc:344
-msgid "QPrinter"
-msgstr "QPrinter"
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
@@ -1972,6 +1960,15 @@ msgstr "Сохранить результаты"
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
 msgstr "Очистить результаты"
+
+#~ msgid "gImageReader"
+#~ msgstr "gImageReader"
+
+#~ msgid "PoDoFo"
+#~ msgstr "PoDoFo"
+
+#~ msgid "QPrinter"
+#~ msgstr "QPrinter"
 
 #~ msgid ""
 #~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"

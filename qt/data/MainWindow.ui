@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>gImageReader</string>
+   <string notr="true">gImageReader</string>
   </property>
   <property name="windowIcon">
    <iconset resource="gimagereader.qrc">
