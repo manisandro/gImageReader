@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-20 23:56+0100\n"
+"POT-Creation-Date: 2018-02-21 23:19+0100\n"
 "PO-Revision-Date: 2017-06-30 20:23+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
@@ -344,7 +344,7 @@ msgstr "頁面範圍"
 msgid "Page range:"
 msgstr "頁面範圍："
 
-#: ../gtk/data/MainWindow.ui.h:44
+#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>例如：</b> 1-10, 13, 14-18</small>"
 
@@ -1772,10 +1772,9 @@ msgstr "有關 gImageReader"
 #: ../qt/data/AboutDialog.ui.h:3
 #, fuzzy
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
-"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>tesseract-ocr 的圖像介面</p><p><a href="
 "\"https://github.com/manisandro/gImageReader/\">網站</a></p><p>&nbsp;</p></"
@@ -1804,20 +1803,17 @@ msgstr "文字檔編碼："
 #: ../qt/data/CrashHandler.ui.h:2
 #, fuzzy, no-c-format
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
-"p&gt;Apologies for the inconvenience. To help improve the application, "
-"please consider reporting the issue to &lt;a href=&quot;mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
-"com&lt;/a&gt;. Please try to describe what you were doing before the "
-"application crashed. Also, include the information below. Thank you.&lt;/"
-"p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">此應用程式已異常終止"
-"</span><p><p>我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給"
-"<a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+"我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給<a href="
+"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
 "\">manisandro@gmail.com</a>。請嘗試描述你在程式終止前所做的事情。另外，請一併"
-"附上下列資料。謝謝。</p></body></html>"
+"附上下列資料。謝謝。"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1887,11 +1883,6 @@ msgstr "自動偵測佈局"
 #: ../qt/data/MainWindow.ui.h:39
 msgid "Toggle Output Pane"
 msgstr "切換輸出面板"
-
-#: ../qt/data/PageRangeDialog.ui.h:3
-#, fuzzy
-msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>例如：</b> 1-10, 13, 14-18</small>"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
@@ -1991,17 +1982,25 @@ msgstr "清除輸出"
 
 #, fuzzy
 #~ msgid ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">The application "
-#~ "has crashed</span></p><p>Apologies for the inconvenience. To help improve "
-#~ "the application, please consider reporting the issue to <a href=\"mailto:"
-#~ "manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-#~ "a>. Please try to describe what you were doing before the application "
-#~ "crashed. Also, include the information below. Thank you.</p></body></html>"
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
+#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
+#~ "application, please consider reporting the issue to &lt;a href=&quot;"
+#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
+#~ "doing before the application crashed. Also, include the information "
+#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 #~ msgstr ""
-#~ "我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給<a href="
-#~ "\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+#~ "<html><head/><body><p><span style=\" font-weight:600;\">此應用程式已異常終"
+#~ "止</span><p><p>我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯"
+#~ "報給<a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
 #~ "\">manisandro@gmail.com</a>。請嘗試描述你在程式終止前所做的事情。另外，請"
-#~ "一併附上下列資料。謝謝。"
+#~ "一併附上下列資料。謝謝。</p></body></html>"
+
+#, fuzzy
+#~ msgid ""
+#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ msgstr "<small><b>例如：</b> 1-10, 13, 14-18</small>"
 
 #~ msgid "Document font:"
 #~ msgstr "文件字型："
