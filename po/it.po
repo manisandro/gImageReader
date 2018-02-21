@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-21 23:19+0100\n"
-"PO-Revision-Date: 2018-02-21 22:21+0000\n"
+"PO-Revision-Date: 2018-02-21 23:06+0000\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Italian "
 "<https://hosted.weblate.org/projects/gimagereader/translations/it/>\n"
@@ -26,7 +26,7 @@ msgstr "Applicazione OCR"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
 msgid "Redetect Languages"
-msgstr "Ri-rilevare lingue"
+msgstr "Ri-rileva lingue"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
 msgid "Manage Languages"
@@ -50,7 +50,7 @@ msgstr "Info"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
-msgstr "Terminare"
+msgstr "Termina"
 
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:42
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
@@ -73,11 +73,11 @@ msgstr "Verticale"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr "Chiedere di installare dizionari ortografici mancanti"
+msgstr "Chiedi di installare dizionari ortografici mancanti"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr "Verificare la disponibilità di nuove versioni"
+msgstr "Verifica la disponibilità di nuove versioni"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
@@ -101,7 +101,7 @@ msgstr "Il codice lingua ISO 639-1, seguito dal codice del paese"
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
-msgstr "Codice"
+msgstr "Codice ISO"
 
 #: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:24
 msgid "The name of the language"
@@ -117,7 +117,7 @@ msgstr "Nome"
 #: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
 #: ../qt/data/MainWindow.ui.h:13
 msgid "Cancel"
-msgstr "Interrompere"
+msgstr "Interrompi"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
@@ -129,7 +129,7 @@ msgstr "Predefinito"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr "Percorsi dati:"
+msgstr "Percorsi dati di lingua:"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
@@ -153,7 +153,7 @@ msgstr "Apri i documenti esportati con l'applicazione predefinita"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:36
 msgid "Regenerate backtrace"
-msgstr "Rigenerare backtrace"
+msgstr "Rigenera backtrace"
 
 #: ../gtk/data/CrashHandler.ui.h:2
 msgid "<b>The application has crashed</b>"
@@ -168,11 +168,11 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"Per aiutare a migliorare l'applicazione, per favore considerate di segnalare "
-"il problema a <a href=\"mailto:manisandro@gmail.com?subject=gImageReader"
-"%20Crash\">manisandro@gmail.com</a>. Per favore provate a descrivere cosa si "
-"stava facendo prima che l'applicazione smettesse di funzionare. Includete "
-"anche l'informazione sottostante. Grazie."
+"Per aiutare a migliorare l'applicazione, per favore segnalare il problema a <"
+"a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>, se possibile descrivendo cosa si stava facendo "
+"prima che l'applicazione smettesse di funzionare, e includendo "
+"l'informazione sottostante. Grazie."
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
@@ -180,11 +180,11 @@ msgstr "Mostra/nascondi riquadro output"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
-msgstr "Ruotare pagina corrente"
+msgstr "Ruota pagina corrente"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
-msgstr "Ruotare tutte le pagine"
+msgstr "Ruota tutte le pagine"
 
 #. Sources toolbar
 #: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:191
@@ -193,31 +193,31 @@ msgstr "Recenti"
 
 #: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:192
 msgid "Paste"
-msgstr "Incollare"
+msgstr "Incolla"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:193
 msgid "Take Screenshot"
-msgstr "Catturare Screenshot"
+msgstr "Cattura schermo"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:204
 msgid "Add images"
-msgstr "Aggiungere immagini"
+msgstr "Aggiungi immagini"
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/src/Ui_MainWindow.hh:203
 msgid "Add Images"
-msgstr "Aggiungere immagini"
+msgstr "Aggiungi immagini"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:209
 msgid "Remove image from list"
-msgstr "Rimuovere immagine dalla lista"
+msgstr "Rimuovi immagine dalla lista"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/src/Ui_MainWindow.hh:212
 msgid "Delete image"
-msgstr "Eliminare immagine"
+msgstr "Elimina immagine"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:215
 msgid "Clear list"
-msgstr "Svuotare lista"
+msgstr "Svuota lista"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:6
 msgid "Files"
@@ -230,7 +230,7 @@ msgstr "Dispositivo:"
 #: ../gtk/data/MainWindow.ui.h:14 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:59
 msgid "Refresh"
-msgstr "Aggiornare"
+msgstr "Aggiorna"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:10
 msgid "Output:"
@@ -249,7 +249,7 @@ msgstr "Colore"
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:349
 #: ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "Grayscale"
-msgstr "Scala grigi"
+msgstr "Scala di grigi"
 
 #: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:11
 msgid "Resolution:"
@@ -265,7 +265,7 @@ msgstr "Fonte:"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
-msgstr "Acquisire"
+msgstr "Acquisci"
 
 #: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:2
 msgid "Brightness"
@@ -281,15 +281,15 @@ msgstr "Risoluzione"
 
 #: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:5
 msgid "Invert colors"
-msgstr "Invertire colori"
+msgstr "Inverti colori"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:24
 msgid "Zoom in"
-msgstr "Ingrandire"
+msgstr "Ingrandisci"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:26
 msgid "Zoom out"
-msgstr "Rimpicciolire"
+msgstr "Rimpicciolisci"
 
 #: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:28
 msgid "Normal size"
@@ -301,12 +301,12 @@ msgstr "Dimensioni ideali"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
-msgstr "Selezionare modalità di rotazione"
+msgstr "Seleziona modalità di rotazione"
 
 #: ../gtk/data/MainWindow.ui.h:32 ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../gtk/data/OutputEditorText.ui.h:13 ../qt/src/Ui_OutputEditorText.hh:95
 msgid "Select insert mode"
-msgstr "Selezionare modalità di inserimento"
+msgstr "Seleziona modalità di inserimento"
 
 #: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
@@ -322,15 +322,15 @@ msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:38
 msgid "Autodetect layout"
-msgstr "Rilevare impaginazione"
+msgstr "Rileva impaginazione"
 
 #: ../gtk/data/MainWindow.ui.h:37
 msgid "<small>Recognize all</small>"
-msgstr "<small>Riconoscere tutto</small>"
+msgstr "<small>Riconosci tutto</small>"
 
 #: ../gtk/data/MainWindow.ui.h:38
 msgid "Select language"
-msgstr "Selezionare lingua"
+msgstr "Seleziona lingua"
 
 #: ../gtk/data/MainWindow.ui.h:39
 msgid "A graphical frontend to tesseract-ocr"
@@ -401,7 +401,7 @@ msgstr "Esporta come testo"
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:65
 msgid "Export to PDF"
-msgstr "Esportare in PDF"
+msgstr "Esporta come PDF"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:67
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:68
@@ -411,7 +411,7 @@ msgstr "Esporta come ODT"
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/Ui_OutputEditorText.hh:116
 msgid "Save output"
-msgstr "Salvare output"
+msgstr "Salva output"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
@@ -423,13 +423,13 @@ msgstr "Esporta"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:78
 #: ../qt/src/Ui_OutputEditorText.hh:118
 msgid "Clear output"
-msgstr "Cancellare output"
+msgstr "Cancella output"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:12 ../gtk/data/OutputEditorText.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:80
 #: ../qt/src/Ui_OutputEditorText.hh:107
 msgid "Find and replace"
-msgstr "Cercare e sostituire"
+msgstr "Cerca e sostituisci"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
@@ -478,20 +478,20 @@ msgstr "Fonte"
 #. Output insert mode
 #: ../gtk/data/OutputEditorText.ui.h:1 ../qt/src/Ui_OutputEditorText.hh:52
 msgid "Append to current text"
-msgstr "Appendere al testo esistente"
+msgstr "Appendi al testo esistente"
 
 #: ../gtk/data/OutputEditorText.ui.h:2 ../qt/src/Ui_OutputEditorText.hh:53
 msgid "Insert at cursor"
-msgstr "Inserire al cursore"
+msgstr "Inserisci al cursore"
 
 #: ../gtk/data/OutputEditorText.ui.h:3 ../qt/src/Ui_OutputEditorText.hh:54
 msgid "Replace current text"
-msgstr "Rimpiazzare testo esistente"
+msgstr "Sostituisci testo esistente"
 
 #. Output postprocessing
 #: ../gtk/data/OutputEditorText.ui.h:4 ../qt/src/Ui_OutputEditorText.hh:62
 msgid "Keep line break if..."
-msgstr "Tenere interruzioni di riga se..."
+msgstr "Tenere interruzioni di linea se..."
 
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:64
 msgid "Preceded by end mark (.?!)"
@@ -507,15 +507,15 @@ msgstr "Altre opzioni"
 
 #: ../gtk/data/OutputEditorText.ui.h:8 ../qt/src/Ui_OutputEditorText.hh:70
 msgid "Join hyphenated words"
-msgstr "Unire parole divise"
+msgstr "Unisci parole divise"
 
 #: ../gtk/data/OutputEditorText.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:72
 msgid "Collapse whitespace"
-msgstr "Collassare spazi bianchi"
+msgstr "Collassa spazi bianchi"
 
 #: ../gtk/data/OutputEditorText.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:74
 msgid "Preserve paragraphs"
-msgstr "Preservare paragrafi"
+msgstr "Preserva paragrafi"
 
 #: ../gtk/data/OutputEditorText.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:76
 msgid "Visual aids"
@@ -523,21 +523,21 @@ msgstr "Aiuti visuali"
 
 #: ../gtk/data/OutputEditorText.ui.h:12 ../qt/src/Ui_OutputEditorText.hh:78
 msgid "Draw whitespace"
-msgstr "Disegnare spazi bianchi"
+msgstr "Disegna spazi bianchi"
 
 #: ../gtk/data/OutputEditorText.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
-msgstr "Rimuovere interruzioni di riga nel testo selezionato"
+msgstr "Rimuovi interruzioni di riga nel testo selezionato"
 
 #: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:109
 #: ../qt/src/Ui_OutputEditorText.hh:110
 msgid "Undo"
-msgstr "Annullare"
+msgstr "Annulla"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:112
 #: ../qt/src/Ui_OutputEditorText.hh:113
 msgid "Redo"
-msgstr "Rifare"
+msgstr "Ripeti"
 
 #: ../gtk/data/PdfExportDialog.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
@@ -577,11 +577,11 @@ msgstr "Algoritmo di dithering:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
-msgstr "Immagini:"
+msgstr "Impostazioni immagini:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
 msgid "Uniformize line and word spacing"
-msgstr "Omogenizzare la spaziatura"
+msgstr "Omogenizza la spaziatura"
 
 #: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
@@ -597,7 +597,7 @@ msgstr "Usa sempre la seguente dimensione carattere:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
-msgstr "Dimensione carattere:"
+msgstr "Ridimensiona carattere:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
 msgid "pt"
@@ -605,7 +605,7 @@ msgstr "pt"
 
 #: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
 msgid "Preserve spaces wider than:"
-msgstr "Preservare spazi più larghi di:"
+msgstr "Preserva spazi più larghi di:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:20 ../qt/data/PdfExportDialog.ui.h:24
 msgid "characters"
@@ -613,7 +613,7 @@ msgstr "caratteri"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
-msgstr "Testo:"
+msgstr "Impostazioni testo:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Paper size:"
@@ -705,7 +705,7 @@ msgstr "Cerca successivo"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:6 ../qt/data/SearchReplaceFrame.ui.h:7
 msgid "Match case"
-msgstr "Considera maiuscole e  minuscole"
+msgstr "Considera maiuscole e minuscole"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:7
 #: ../gtk/data/SubstitutionsManager.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:1
@@ -724,11 +724,11 @@ msgstr "Ordine:"
 #: ../gtk/data/SelectionMenu.ui.h:3 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
 #: ../qt/src/DisplayerToolSelect.cc:237 ../qt/src/hocr/DisplayerToolHOCR.cc:31
 msgid "Recognize"
-msgstr "Riconoscere"
+msgstr "Riconosci"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:238
 msgid "Recognize to clipboard"
-msgstr "Riconoscere negli appunti"
+msgstr "Riconosci negli appunti"
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:239
 msgid "Save as image"
@@ -737,37 +737,37 @@ msgstr "Salva come immagine"
 #: ../gtk/data/SubstitutionsManager.ui.h:2 ../qt/src/SubstitutionsManager.cc:38
 #: ../qt/src/SubstitutionsManager.cc:39
 msgid "Open"
-msgstr "Aprire"
+msgstr "Apri"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:3 ../gtk/src/Utils.cc:73
 #: ../qt/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:42
 msgid "Save"
-msgstr "Salvare"
+msgstr "Salva"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:4 ../qt/src/SubstitutionsManager.cc:44
 #: ../qt/src/SubstitutionsManager.cc:45
 msgid "Clear"
-msgstr "Svuotare lista"
+msgstr "Svuota lista"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:5 ../qt/data/ConfigDialog.ui.h:16
 #: ../qt/src/SubstitutionsManager.cc:47 ../qt/src/SubstitutionsManager.cc:48
 msgid "Add"
-msgstr "Aggiungere"
+msgstr "Aggiungi"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:864 ../qt/data/ConfigDialog.ui.h:17
 #: ../qt/src/hocr/OutputEditorHOCR.cc:709 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
-msgstr "Rimuovere"
+msgstr "Rimuovi"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
 msgid "Apply"
-msgstr "Applicare"
+msgstr "Applica"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:8 ../gtk/data/TessdataManager.ui.h:3
 msgid "Close"
-msgstr "Chiudere"
+msgstr "Chiudi"
 
 #: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:49
 msgid "Tessdata Manager"
@@ -787,7 +787,7 @@ msgstr "Immagini"
 
 #: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:86
 msgid "Choose Output Filename..."
-msgstr "Scegliere nome file di output..."
+msgstr "Scegli nome file di output..."
 
 #: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
 msgid "Failed to initialize the scanning backend."
@@ -853,7 +853,7 @@ msgstr "Non vi è lavoro non salvato."
 
 #: ../gtk/src/CrashHandler.cc:102 ../qt/src/CrashHandler.cc:60
 msgid "Failed to obtain backtrace. Is gdb installed?"
-msgstr "Non è stato possibile ottenere un backtrace. È installato gdb?"
+msgstr "Impossibile ottenere un backtrace. È installato gdb?"
 
 #: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:173
 msgid "Failed to load image"
@@ -864,7 +864,7 @@ msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
-"Il file potrebbe non essere un'immagine, oppure essere corrotto:\n"
+"Il file non è un'immagine oppure è corrotto:\n"
 "%1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
@@ -873,7 +873,7 @@ msgstr "Immagini PNG"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "Save Selection Image"
-msgstr "Salvare immagine selezionata"
+msgstr "Salva immagine selezionata"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "selection.png"
@@ -881,11 +881,11 @@ msgstr "selezione.png"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize all"
-msgstr "Riconoscere tutto"
+msgstr "Riconosci tutto"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize selection"
-msgstr "Riconoscere selezione"
+msgstr "Riconosci selezione"
 
 #: ../gtk/src/DisplayerToolSelect.cc:183 ../qt/src/DisplayerToolSelect.cc:179
 msgid "Performing layout analysis"
@@ -953,7 +953,7 @@ msgstr "L'esportazione ODT è fallita: impossibile scrivere il file di output."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:266 ../qt/src/hocr/HOCROdtExporter.cc:254
 msgid "Exporting to ODT..."
-msgstr "Esportando a ODT..."
+msgstr "Esportando come ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:365
 msgid "Same as source"
@@ -1001,7 +1001,7 @@ msgstr "File PDF"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:496 ../qt/src/hocr/HOCRPdfExporter.cc:484
 msgid "Save PDF Output..."
-msgstr "Salvare output PDF..."
+msgstr "Salva output PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
 msgid "Invalid Output"
@@ -1030,11 +1030,11 @@ msgstr "Errore renderizzando la pagina %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:602 ../qt/src/hocr/HOCRPdfExporter.cc:595
 msgid "Exporting to PDF..."
-msgstr "Esportando a PDF..."
+msgstr "Esportando come PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607 ../qt/src/hocr/HOCRPdfExporter.cc:600
 msgid "The PDF export failed: %1."
-msgstr "L'esportazione a PDF è fallita: %1."
+msgstr "L'esportazione come PDF è fallita: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:657 ../qt/src/hocr/HOCRPdfExporter.cc:649
 msgid "The PDF library could not load the font '%1'."
@@ -1097,7 +1097,7 @@ msgstr "Valori multipli"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:771
 #: ../qt/src/hocr/OutputEditorHOCR.cc:631
 msgid "Merge"
-msgstr "Unire"
+msgstr "Unisci"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:780
@@ -1108,7 +1108,7 @@ msgstr "Scambia"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:803
 #: ../qt/src/hocr/OutputEditorHOCR.cc:675
 msgid "Add graphic region"
-msgstr "Aggiungere regione grafica"
+msgstr "Aggiungi regione grafica"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:806
 #: ../qt/src/hocr/OutputEditorHOCR.cc:676
@@ -1138,12 +1138,12 @@ msgstr "Nessun suggerimento"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:846
 #: ../qt/src/hocr/OutputEditorHOCR.cc:699
 msgid "Add to dictionary"
-msgstr "Aggiungere al dizionario"
+msgstr "Aggiungi al dizionario"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:852
 #: ../qt/src/hocr/OutputEditorHOCR.cc:701
 msgid "Ignore word"
-msgstr "Ignorare parola"
+msgstr "Ignora parola"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:904
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:943
@@ -1155,7 +1155,7 @@ msgstr "File HTML hOCR"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:905
 #: ../qt/src/hocr/OutputEditorHOCR.cc:773
 msgid "Open hOCR File"
-msgstr "Aprire file hOCR"
+msgstr "Apri file hOCR"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:914
 #: ../qt/src/hocr/OutputEditorHOCR.cc:780
@@ -1165,7 +1165,7 @@ msgstr "Impossibile aprire il file"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:914
 #: ../qt/src/hocr/OutputEditorHOCR.cc:780
 msgid "The file could not be opened: %1."
-msgstr "Non è stato possibile aprire il file: %1"
+msgstr "Non è stato possibile aprire il file: %1."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:923
 #: ../qt/src/hocr/OutputEditorHOCR.cc:787
@@ -1180,7 +1180,7 @@ msgstr "Il file non sembra contenere del HTML hOCR valido: %1"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:944
 #: ../qt/src/hocr/OutputEditorHOCR.cc:810
 msgid "Save hOCR Output..."
-msgstr "Salvare output hOCR..."
+msgstr "Salva output hOCR..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:951 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/OutputEditorHOCR.cc:817 ../qt/src/OutputEditorText.cc:246
@@ -1220,7 +1220,7 @@ msgstr "Utilizzando tesseract"
 
 #: ../gtk/src/MainWindow.cc:170 ../qt/src/MainWindow.cc:185
 msgid "Select an image to begin..."
-msgstr "Selezionare un'immagine per iniziare..."
+msgstr "Seleziona un'immagine per iniziare..."
 
 #: ../gtk/src/MainWindow.cc:285 ../qt/src/MainWindow.cc:269
 msgid "Multiple sources"
@@ -1240,7 +1240,7 @@ msgstr "gImageReader %1 è disponibile"
 
 #: ../gtk/src/MainWindow.cc:431 ../qt/src/MainWindow.cc:410
 msgid "Download"
-msgstr "Scaricare"
+msgstr "Scarica"
 
 #: ../gtk/src/MainWindow.cc:432 ../qt/src/MainWindow.cc:411
 msgid "Changelog"
@@ -1257,7 +1257,7 @@ msgstr "Non mostrare nuovamente"
 #: ../gtk/src/MainWindow.cc:455 ../gtk/src/MainWindow.cc:468
 #: ../qt/src/MainWindow.cc:461
 msgid "Install"
-msgstr "Installare"
+msgstr "Installa"
 
 #: ../gtk/src/MainWindow.cc:475 ../qt/src/MainWindow.cc:473
 msgid "Spelling dictionary missing"
@@ -1319,8 +1319,8 @@ msgstr ""
 "%1\n"
 "\n"
 "Verificare la connessione e i permessi di scrittura.\n"
-"Aiuto: Se non hai accesso di scrittura nelle cartelle di sistema, puoi "
-"scegliere di utilizzare cartelle nel profilo dell'utente nel dialogo delle "
+"Aiuto: Se non si ha accesso di scrittura nelle cartelle di sistema, "
+"scegliere di utilizzare cartelle del profilo dell'utente nel dialogo delle "
 "impostazioni."
 
 #: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:573
@@ -1362,7 +1362,7 @@ msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:275 ../qt/src/OutputEditorText.cc:239
 msgid "Save Output..."
-msgstr "Salvare output..."
+msgstr "Salva output..."
 
 #: ../gtk/src/Recognizer.cc:144 ../qt/src/Recognizer.cc:131
 msgid ""
@@ -1415,35 +1415,35 @@ msgstr "Segmentazione della pagina con rilevamento di script e orientamento"
 
 #: ../gtk/src/Recognizer.cc:308 ../qt/src/Recognizer.cc:298
 msgid "Assume single column of text"
-msgstr "Assumere singola colonna di testo"
+msgstr "Assumi singola colonna di testo"
 
 #: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:299
 msgid "Assume single block of vertically aligned text"
-msgstr "Assumere singolo blocco di testo allineato verticalmente"
+msgstr "Assumi singolo blocco di testo allineato verticalmente"
 
 #: ../gtk/src/Recognizer.cc:310 ../qt/src/Recognizer.cc:300
 msgid "Assume a single uniform block of text"
-msgstr "Assumere singolo blocco uniforme di testo"
+msgstr "Assumi singolo blocco uniforme di testo"
 
 #: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:301
 msgid "Assume a line of text"
-msgstr "Assumere una singola linea di testo"
+msgstr "Assumi una singola linea di testo"
 
 #: ../gtk/src/Recognizer.cc:312 ../qt/src/Recognizer.cc:302
 msgid "Assume a single word"
-msgstr "Assumere una singola parola"
+msgstr "Assumi una singola parola"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:303
 msgid "Assume a single word in a circle"
-msgstr "Assumere una singola parola in un cerchio"
+msgstr "Assumi una singola parola in un cerchio"
 
 #: ../gtk/src/Recognizer.cc:314 ../qt/src/Recognizer.cc:304
 msgid "Sparse text in no particular order"
-msgstr "Assumere testo sparso senza ordine particolare"
+msgstr "Assumi testo sparso senza ordine particolare"
 
 #: ../gtk/src/Recognizer.cc:315 ../qt/src/Recognizer.cc:305
 msgid "Sparse text with orientation and script detection"
-msgstr "Assumere testo sparso con rilevamento di script e di orientamento"
+msgstr "Assumi testo sparso con rilevamento di script e di orientamento"
 
 #: ../gtk/src/Recognizer.cc:330 ../qt/src/Recognizer.cc:316
 msgid "Page segmentation mode"
@@ -1590,11 +1590,11 @@ msgstr "Appunti %1"
 
 #: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
 msgid "Screenshot Error"
-msgstr "Errore screenshot"
+msgstr "Errore cattura schermo"
 
 #: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
 msgid "Failed to take screenshot."
-msgstr "Impossibile catturare screenshot."
+msgstr "Impossibile catturare lo schermo."
 
 #: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:247
 msgid "Screenshot %1"
@@ -1647,7 +1647,7 @@ msgstr "Lista sostituzioni"
 
 #: ../gtk/src/SubstitutionsManager.cc:70 ../qt/src/SubstitutionsManager.cc:106
 msgid "Open Substitutions List"
-msgstr "Aprire lista sostituzioni"
+msgstr "Apri lista sostituzioni"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
 msgid "Error Reading File"
@@ -1694,8 +1694,8 @@ msgid ""
 msgstr ""
 "PackageKit, il quale è necessario per gestire le lingue tesseract, non è "
 "stato rilevato. Utilizzare la gestione pacchetti del sistema per gestire le "
-"lingue tesseract, oppure scegliere di utilizzare i percorsi utente nel "
-"dialogo di configurazione del programma."
+"lingue tesseract, oppure scegliere di utilizzare i percorsi del profilo "
+"dell'utente nel dialogo delle impostazioni."
 
 #: ../gtk/src/TessdataManager.cc:64 ../qt/src/TessdataManager.cc:79
 msgid "Fetching available languages"
@@ -1739,8 +1739,9 @@ msgstr ""
 "%1\n"
 "\n"
 "Verificare la connessione e i permessi di scrittura.\n"
-"Aiuto: Se non hai accesso di scrittura nelle cartelle di sistema, puoi "
-"scegliere di utilizzare cartelle nel profilo dell'utente nel dialogo delle "
+"\n"
+"Aiuto: Se non si ha accesso di scrittura nelle cartelle di sistema, "
+"scegliere di utilizzare cartelle del profilo dell'utente nel dialogo delle "
 "impostazioni."
 
 #: ../gtk/src/Utils.cc:64
@@ -1753,22 +1754,21 @@ msgstr "No"
 
 #: ../gtk/src/Utils.cc:76
 msgid "Discard"
-msgstr "Scartare"
+msgstr "Scarta"
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
-msgstr "Info gImageReader"
+msgstr "Info su gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Un'interfaccia grafica per tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
-"p><p>&nbsp;</p></body></html>"
+"<html><head/><body><p>&nbsp;</p><p>Un'interfaccia grafica per tesseract-"
+"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Website</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -1802,11 +1802,11 @@ msgid ""
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">L'applicazione ha "
 "smesso di funzionare</span></p><p>Per aiutare a migliorare l'applicazione, "
-"per favore considerate di segnalare il problema a <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Per favore provate a descrivere cosa si stava facendo prima che "
-"l'applicazione smettesse di funzionare. Includete anche l'informazione "
-"sottostante. Grazie.</p></body></html>"
+"per favore segnalare il problema a <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>, se possibile descrivendo cosa si stava facendo "
+"prima che l'applicazione smettesse di funzionare, e includendo "
+"l'informazione sottostante. Grazie.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:1
 msgid "gImageReader"
@@ -1831,15 +1831,15 @@ msgstr "ADF Duplex"
 #. Remove & from some labels which designer insists in adding
 #: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:50
 msgid "Sources"
-msgstr "Fonti"
+msgstr "Sorgenti"
 
 #: ../qt/data/MainWindow.ui.h:23
 msgid "Zoom In"
-msgstr "Ingrandire"
+msgstr "Ingrandisci"
 
 #: ../qt/data/MainWindow.ui.h:25
 msgid "Zoom Out"
-msgstr "Rimpicciolire"
+msgstr "Rimpicciolisci"
 
 #: ../qt/data/MainWindow.ui.h:27
 msgid "Normal Size"
@@ -1851,19 +1851,19 @@ msgstr "Dimensioni ideali"
 
 #: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate Left"
-msgstr "Ruotare a sinistra"
+msgstr "Ruota a sinistra"
 
 #: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate left"
-msgstr "Ruotare a sinistra"
+msgstr "Ruota a sinistra"
 
 #: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate Right"
-msgstr "Ruotare a destra"
+msgstr "Ruota a destra"
 
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Rotate right"
-msgstr "Ruotare a destra"
+msgstr "Ruota a destra"
 
 #: ../qt/data/MainWindow.ui.h:35
 msgid "Image Controls"
@@ -1871,7 +1871,7 @@ msgstr "Controlli immagine"
 
 #: ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect Layout"
-msgstr "Rilevare impaginazione"
+msgstr "Rileva impaginazione"
 
 #: ../qt/data/MainWindow.ui.h:39
 msgid "Toggle Output Pane"
@@ -1905,17 +1905,17 @@ msgstr "QPrinter"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:56
 msgid "Open hOCR file"
-msgstr "Aprire file hOCR"
+msgstr "Apri file hOCR"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:57
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:58
 msgid "Save as hOCR text"
-msgstr "Salvare come testo hOCR"
+msgstr "Salva come testo hOCR"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:79
 #: ../qt/src/Ui_OutputEditorText.hh:106
 msgid "Find and Replace"
-msgstr "Cercare e sostituire"
+msgstr "Cerca e sostituisci"
 
 #: ../qt/src/MainWindow.cc:540
 msgid "Could not read %1: %2"
@@ -1926,7 +1926,6 @@ msgid "The following dictionary files were installed:%1"
 msgstr "I seguenti dizionari ortografici sono stati installati:%1"
 
 #: ../qt/src/TessdataManager.cc:268
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1935,10 +1934,13 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Non è stato possibile scaricare risp. rimuovere i seguenti file:\n"
+"Non è stato possibile scaricare o rimuovere i seguenti file:\n"
 "%1\n"
 "\n"
-"Verificare la connettività e i permessi delle cartelle."
+"Verificare la connettività e i permessi delle cartelle.\n"
+"Aiuto: Se non si ha accesso di scrittura nelle cartelle di sistema, "
+"scegliere di utilizzare cartelle del profilo dell'utente nel dialogo delle "
+"impostazioni."
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
@@ -1950,27 +1952,27 @@ msgstr "Modalità OCR:"
 
 #: ../qt/src/Ui_MainWindow.hh:208
 msgid "Remove Image"
-msgstr "Rimuovere immagine"
+msgstr "Rimuovi immagine"
 
 #: ../qt/src/Ui_MainWindow.hh:211
 msgid "Delete Image"
-msgstr "Eliminare immagine"
+msgstr "Elimina immagine"
 
 #: ../qt/src/Ui_MainWindow.hh:214
 msgid "Clear List"
-msgstr "Svuotare lista"
+msgstr "Svuota lista"
 
 #: ../qt/src/Ui_OutputEditorText.hh:101
 msgid "Strip Line Breaks"
-msgstr "Rimuovere interruzioni di riga"
+msgstr "Rimuovi interruzioni di riga"
 
 #: ../qt/src/Ui_OutputEditorText.hh:115
 msgid "Save Output"
-msgstr "Salvare output"
+msgstr "Salva output"
 
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
-msgstr "Cancellare output"
+msgstr "Cancella output"
 
 #~ msgid ""
 #~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
