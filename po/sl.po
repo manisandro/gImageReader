@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-20 23:56+0100\n"
+"POT-Creation-Date: 2018-02-21 23:19+0100\n"
 "PO-Revision-Date: 2017-08-29 12:50+0200\n"
 "Last-Translator: Bernard Banko <beernarrd at gmail.com>\n"
 "Language-Team: lugos.si\n"
@@ -345,7 +345,7 @@ msgstr "Obseg strani"
 msgid "Page range:"
 msgstr "Obseg strani:"
 
-#: ../gtk/data/MainWindow.ui.h:44
+#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Primer:</b>1-10, 13, 14-18</small>"
 
@@ -1776,10 +1776,9 @@ msgstr "O programu gImageReader"
 #: ../qt/data/AboutDialog.ui.h:3
 #, fuzzy
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
-"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Grafično začelje za tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Spletna stran</"
@@ -1806,16 +1805,14 @@ msgid "Text file encoding:"
 msgstr "Kodiranje besedilne datoteke:"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
-"p&gt;Apologies for the inconvenience. To help improve the application, "
-"please consider reporting the issue to &lt;a href=&quot;mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
-"com&lt;/a&gt;. Please try to describe what you were doing before the "
-"application crashed. Also, include the information below. Thank you.&lt;/"
-"p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Program se je sesul</"
 "span></p><p>Opravičujemo se za nevšečnosti. Če želite pomagati pri "
@@ -1892,11 +1889,6 @@ msgstr "Samodejno zaznaj razporeditev"
 #: ../qt/data/MainWindow.ui.h:39
 msgid "Toggle Output Pane"
 msgstr "Preklopi prikaz rezultata"
-
-#: ../qt/data/PageRangeDialog.ui.h:3
-#, fuzzy
-msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>Primer:</b>1-10, 13, 14-18</small>"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
@@ -1994,13 +1986,16 @@ msgstr "Shrani rezultat"
 msgid "Clear Output"
 msgstr "Počisti rezultat"
 
+#, fuzzy
 #~ msgid ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">The application "
-#~ "has crashed</span></p><p>Apologies for the inconvenience. To help improve "
-#~ "the application, please consider reporting the issue to <a href=\"mailto:"
-#~ "manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-#~ "a>. Please try to describe what you were doing before the application "
-#~ "crashed. Also, include the information below. Thank you.</p></body></html>"
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
+#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
+#~ "application, please consider reporting the issue to &lt;a href=&quot;"
+#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
+#~ "doing before the application crashed. Also, include the information "
+#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 #~ msgstr ""
 #~ "<html><head/><body><p><span style=\" font-weight:600;\">Program se je "
 #~ "sesul</span></p><p>Opravičujemo se za nevšečnosti. Če želite pomagati pri "
@@ -2008,6 +2003,11 @@ msgstr "Počisti rezultat"
 #~ "manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
 #~ "a>. Pri tem poizkusite opisati, kaj ste delali, preden se je program "
 #~ "sesul. Vključite tudi spodnje podatke. Hvala.</p></body></html>"
+
+#, fuzzy
+#~ msgid ""
+#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ msgstr "<small><b>Primer:</b>1-10, 13, 14-18</small>"
 
 #~ msgid "Document font:"
 #~ msgstr "Pisava dokumenta:"
