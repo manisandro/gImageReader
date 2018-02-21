@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-21 23:19+0100\n"
+"POT-Creation-Date: 2018-02-22 00:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,7 +112,7 @@ msgstr ""
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
 #: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
-#: ../qt/data/MainWindow.ui.h:13
+#: ../qt/data/MainWindow.ui.h:12
 msgid "Cancel"
 msgstr ""
 
@@ -166,7 +166,7 @@ msgid ""
 "the information below. Thank you."
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
+#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
 msgstr ""
 
@@ -211,83 +211,83 @@ msgstr ""
 msgid "Clear list"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:8
 msgid "Device:"
 msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:14 ../gtk/data/TessdataManager.ui.h:4
-#: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:59
+#: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:59
 msgid "Refresh"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:9
 msgid "Output:"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:14
+#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:13
 msgid "Mode:"
 msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExporter.cc:313
-#: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExporter.cc:347
+#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:347
 msgid "Color"
 msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:18 ../gtk/src/hocr/HOCRPdfExporter.cc:316
-#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:349
+#: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:349
 #: ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "Grayscale"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:10
 msgid "Resolution:"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:12
+#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:11
 msgid "Scan"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:17
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:16
 msgid "Source:"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:24
+#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:23
 msgid "Zoom in"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:26
+#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:25
 msgid "Zoom out"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:28
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:27
 msgid "Normal size"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:30
+#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:29
 msgid "Best fit"
 msgstr ""
 
@@ -300,7 +300,7 @@ msgstr ""
 msgid "Select insert mode"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:36
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
 msgstr ""
 
@@ -312,7 +312,7 @@ msgstr ""
 msgid "hOCR, PDF"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:38
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect layout"
 msgstr ""
 
@@ -1741,72 +1741,68 @@ msgid ""
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:1
-msgid "gImageReader"
-msgstr ""
-
-#: ../qt/data/MainWindow.ui.h:18
+#: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:19
+#: ../qt/data/MainWindow.ui.h:18
 msgid "ADF Front"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:20
+#: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Back"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:21
+#: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Duplex"
 msgstr ""
 
 #. Remove & from some labels which designer insists in adding
-#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:50
+#: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
 msgid "Sources"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:23
+#: ../qt/data/MainWindow.ui.h:22
 msgid "Zoom In"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:25
+#: ../qt/data/MainWindow.ui.h:24
 msgid "Zoom Out"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:27
+#: ../qt/data/MainWindow.ui.h:26
 msgid "Normal Size"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:29
+#: ../qt/data/MainWindow.ui.h:28
 msgid "Best Fit"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:31
+#: ../qt/data/MainWindow.ui.h:30
 msgid "Rotate Left"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:32
+#: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate left"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:33
+#: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate Right"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:34
+#: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate right"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:35
+#: ../qt/data/MainWindow.ui.h:34
 msgid "Image Controls"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:37
+#: ../qt/data/MainWindow.ui.h:36
 msgid "Autodetect Layout"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:39
+#: ../qt/data/MainWindow.ui.h:38
 msgid "Toggle Output Pane"
 msgstr ""
 
@@ -1824,14 +1820,6 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:142
 msgid "Failed to write to file"
-msgstr ""
-
-#: ../qt/src/hocr/HOCRPdfExporter.cc:343
-msgid "PoDoFo"
-msgstr ""
-
-#: ../qt/src/hocr/HOCRPdfExporter.cc:344
-msgid "QPrinter"
 msgstr ""
 
 #. Output toolbar

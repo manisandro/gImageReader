@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-21 23:19+0100\n"
+"POT-Creation-Date: 2018-02-22 00:10+0100\n"
 "PO-Revision-Date: 2018-02-15 22:50+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gimagereader/"
@@ -115,7 +115,7 @@ msgstr "Nombre"
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
 #: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
-#: ../qt/data/MainWindow.ui.h:13
+#: ../qt/data/MainWindow.ui.h:12
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -174,7 +174,7 @@ msgstr ""
 "describir lo que estaba haciendo antes del fallo de la aplicación. Incluya "
 "también la información que aparece debajo. Gracias."
 
-#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
+#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
 msgstr "Mostrar/ocultar panel de salida"
 
@@ -219,84 +219,84 @@ msgstr "Borrar imagen"
 msgid "Clear list"
 msgstr "Borrar lista"
 
-#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
 msgstr "Ficheros"
 
-#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:8
 msgid "Device:"
 msgstr "Dispositivo:"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../gtk/data/TessdataManager.ui.h:4
-#: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:59
+#: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:59
 msgid "Refresh"
 msgstr "Actualizar"
 
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:9
 msgid "Output:"
 msgstr "Salida:"
 
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:14
+#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:13
 msgid "Mode:"
 msgstr "Modo:"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExporter.cc:313
-#: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExporter.cc:347
+#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:347
 msgid "Color"
 msgstr "Color"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../gtk/src/hocr/HOCRPdfExporter.cc:316
-#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:349
+#: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:349
 #: ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "Grayscale"
 msgstr "Escala de grises"
 
-#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:10
 msgid "Resolution:"
 msgstr "Resolución"
 
-#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:12
+#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:11
 msgid "Scan"
 msgstr "Escanear"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:17
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:16
 #, fuzzy
 msgid "Source:"
 msgstr "Origen"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
 msgstr "Adquirir"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
 msgstr "Brillo"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
 msgstr "Contraste"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
 msgstr "Resolución"
 
-#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
 msgstr "Invertir colores"
 
-#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:24
+#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:23
 msgid "Zoom in"
 msgstr "Acercar"
 
-#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:26
+#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:25
 msgid "Zoom out"
 msgstr "Alejar"
 
-#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:28
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:27
 msgid "Normal size"
 msgstr "Tamaño normal"
 
-#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:30
+#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:29
 msgid "Best fit"
 msgstr "Ajustar"
 
@@ -309,7 +309,7 @@ msgstr "Seleccionar modo de rotación"
 msgid "Select insert mode"
 msgstr "Seleccionar modo de inserción"
 
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:36
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
 msgstr "Controles de imagen"
 
@@ -321,7 +321,7 @@ msgstr "Texto simple"
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:38
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect layout"
 msgstr "Autodetectar disposición"
 
@@ -1820,72 +1820,68 @@ msgstr ""
 "describir lo que estaba haciendo antes del fallo de la aplicación. Incluya "
 "también la información que aparece debajo. Gracias.</p></body></html>"
 
-#: ../qt/data/MainWindow.ui.h:1
-msgid "gImageReader"
-msgstr "gImageReader"
-
-#: ../qt/data/MainWindow.ui.h:18
+#: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:19
+#: ../qt/data/MainWindow.ui.h:18
 msgid "ADF Front"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:20
+#: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Back"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:21
+#: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Duplex"
 msgstr ""
 
 #. Remove & from some labels which designer insists in adding
-#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:50
+#: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
 msgid "Sources"
 msgstr "Orígenes"
 
-#: ../qt/data/MainWindow.ui.h:23
+#: ../qt/data/MainWindow.ui.h:22
 msgid "Zoom In"
 msgstr "Acercar"
 
-#: ../qt/data/MainWindow.ui.h:25
+#: ../qt/data/MainWindow.ui.h:24
 msgid "Zoom Out"
 msgstr "Alejar"
 
-#: ../qt/data/MainWindow.ui.h:27
+#: ../qt/data/MainWindow.ui.h:26
 msgid "Normal Size"
 msgstr "Tamaño normal"
 
-#: ../qt/data/MainWindow.ui.h:29
+#: ../qt/data/MainWindow.ui.h:28
 msgid "Best Fit"
 msgstr "Ajustar"
 
-#: ../qt/data/MainWindow.ui.h:31
+#: ../qt/data/MainWindow.ui.h:30
 msgid "Rotate Left"
 msgstr "Rotar a la Izquierda"
 
-#: ../qt/data/MainWindow.ui.h:32
+#: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate left"
 msgstr "Rotar a la izquierda"
 
-#: ../qt/data/MainWindow.ui.h:33
+#: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate Right"
 msgstr "Rotar a la Derecha"
 
-#: ../qt/data/MainWindow.ui.h:34
+#: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate right"
 msgstr "Rotar a la derecha"
 
-#: ../qt/data/MainWindow.ui.h:35
+#: ../qt/data/MainWindow.ui.h:34
 msgid "Image Controls"
 msgstr "Controles de Imagen"
 
-#: ../qt/data/MainWindow.ui.h:37
+#: ../qt/data/MainWindow.ui.h:36
 msgid "Autodetect Layout"
 msgstr "Autodetectar disposición"
 
-#: ../qt/data/MainWindow.ui.h:39
+#: ../qt/data/MainWindow.ui.h:38
 msgid "Toggle Output Pane"
 msgstr "Mostrar/ocultar Panel de Salida"
 
@@ -1905,14 +1901,6 @@ msgstr ""
 #, fuzzy
 msgid "Failed to write to file"
 msgstr "No se pudo abrir el fichero"
-
-#: ../qt/src/hocr/HOCRPdfExporter.cc:343
-msgid "PoDoFo"
-msgstr ""
-
-#: ../qt/src/hocr/HOCRPdfExporter.cc:344
-msgid "QPrinter"
-msgstr ""
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
@@ -1984,6 +1972,9 @@ msgstr "Guardar Salida"
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
 msgstr "Limpiar Salida"
+
+#~ msgid "gImageReader"
+#~ msgstr "gImageReader"
 
 #~ msgid ""
 #~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"

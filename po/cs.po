@@ -9,11 +9,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-21 23:19+0100\n"
+"POT-Creation-Date: 2018-02-22 00:10+0100\n"
 "PO-Revision-Date: 2018-02-21 23:07+0000\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
-"Language-Team: Czech "
-"<https://hosted.weblate.org/projects/gimagereader/translations/cs/>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/gimagereader/"
+"translations/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -116,7 +116,7 @@ msgstr "Název"
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
 #: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
-#: ../qt/data/MainWindow.ui.h:13
+#: ../qt/data/MainWindow.ui.h:12
 msgid "Cancel"
 msgstr "Storno"
 
@@ -175,7 +175,7 @@ msgstr ""
 "pokuste popsat svou činnost před pádem aplikace. Též přiložte níže uvedené "
 "informace. Děkujeme."
 
-#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
+#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
 msgstr "Zobrazit či skrýt podokno s výstupním textem"
 
@@ -220,83 +220,83 @@ msgstr "Smazat obrázek"
 msgid "Clear list"
 msgstr "Vyčistit seznam"
 
-#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
 msgstr "Soubory"
 
-#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:8
 msgid "Device:"
 msgstr "Zařízení:"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../gtk/data/TessdataManager.ui.h:4
-#: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:59
+#: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:59
 msgid "Refresh"
 msgstr "Znovu načíst"
 
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:9
 msgid "Output:"
 msgstr "Výstup:"
 
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:14
+#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:13
 msgid "Mode:"
 msgstr "Režim:"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExporter.cc:313
-#: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExporter.cc:347
+#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:347
 msgid "Color"
 msgstr "Barevný"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../gtk/src/hocr/HOCRPdfExporter.cc:316
-#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:349
+#: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:349
 #: ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "Grayscale"
 msgstr "Stupně šedé"
 
-#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:10
 msgid "Resolution:"
 msgstr "Rozlišení:"
 
-#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:12
+#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:11
 msgid "Scan"
 msgstr "Skenovat"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:17
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:16
 msgid "Source:"
 msgstr "Zdroj:"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
 msgstr "Získat"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
 msgstr "Světlost"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
 msgstr "Rozlišení"
 
-#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
 msgstr "Převrátit barvy"
 
-#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:24
+#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:23
 msgid "Zoom in"
 msgstr "Přiblížit"
 
-#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:26
+#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:25
 msgid "Zoom out"
 msgstr "Oddálit"
 
-#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:28
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:27
 msgid "Normal size"
 msgstr "Původní velikost"
 
-#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:30
+#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:29
 msgid "Best fit"
 msgstr "Přizpůsobit oknu"
 
@@ -309,7 +309,7 @@ msgstr "Vyberte režim otáčení"
 msgid "Select insert mode"
 msgstr "Vyberte režim vkládání"
 
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:36
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
 msgstr "Ovládání parametrů obrázku"
 
@@ -321,7 +321,7 @@ msgstr "Holý text"
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:38
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect layout"
 msgstr "Automaticky zjistit rozvržení stránky"
 
@@ -1770,9 +1770,9 @@ msgid ""
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Grafická nadstavba pro tesseract-"
-"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Webové "
-"stránky</a></p><p>&nbsp;</p></body></html>"
+"<html><head/><body><p>&nbsp;</p><p>Grafická nadstavba pro tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Webové stránky</"
+"a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -1811,72 +1811,68 @@ msgstr ""
 "a>. Ve zprávě se pokuste popsat svou činnost před pádem aplikace. Též "
 "přiložte níže uvedené informace. Děkujeme.</p></body></html>"
 
-#: ../qt/data/MainWindow.ui.h:1
-msgid "gImageReader"
-msgstr "gImageReader"
-
-#: ../qt/data/MainWindow.ui.h:18
+#: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
 msgstr "Deskový"
 
-#: ../qt/data/MainWindow.ui.h:19
+#: ../qt/data/MainWindow.ui.h:18
 msgid "ADF Front"
 msgstr "Aut. podavač dokumentů přední"
 
-#: ../qt/data/MainWindow.ui.h:20
+#: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Back"
 msgstr "Aut. podavač dokumentů zadní"
 
-#: ../qt/data/MainWindow.ui.h:21
+#: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Duplex"
 msgstr "Aut. podavač dokumentů oboustranné"
 
 #. Remove & from some labels which designer insists in adding
-#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:50
+#: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
 msgid "Sources"
 msgstr "Zdroje"
 
-#: ../qt/data/MainWindow.ui.h:23
+#: ../qt/data/MainWindow.ui.h:22
 msgid "Zoom In"
 msgstr "Přiblížit"
 
-#: ../qt/data/MainWindow.ui.h:25
+#: ../qt/data/MainWindow.ui.h:24
 msgid "Zoom Out"
 msgstr "Oddálit"
 
-#: ../qt/data/MainWindow.ui.h:27
+#: ../qt/data/MainWindow.ui.h:26
 msgid "Normal Size"
 msgstr "Původní velikost"
 
-#: ../qt/data/MainWindow.ui.h:29
+#: ../qt/data/MainWindow.ui.h:28
 msgid "Best Fit"
 msgstr "Přizpůsobit oknu"
 
-#: ../qt/data/MainWindow.ui.h:31
+#: ../qt/data/MainWindow.ui.h:30
 msgid "Rotate Left"
 msgstr "Otočit vlevo"
 
-#: ../qt/data/MainWindow.ui.h:32
+#: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate left"
 msgstr "Otočit vlevo"
 
-#: ../qt/data/MainWindow.ui.h:33
+#: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate Right"
 msgstr "Otočit vpravo"
 
-#: ../qt/data/MainWindow.ui.h:34
+#: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate right"
 msgstr "Otočit vpravo"
 
-#: ../qt/data/MainWindow.ui.h:35
+#: ../qt/data/MainWindow.ui.h:34
 msgid "Image Controls"
 msgstr "Ovládání parametrů obrázku"
 
-#: ../qt/data/MainWindow.ui.h:37
+#: ../qt/data/MainWindow.ui.h:36
 msgid "Autodetect Layout"
 msgstr "Automaticky zjistit rozvržení stránky"
 
-#: ../qt/data/MainWindow.ui.h:39
+#: ../qt/data/MainWindow.ui.h:38
 msgid "Toggle Output Pane"
 msgstr "Zobrazit či skrýt podokno s výstupním textem"
 
@@ -1895,14 +1891,6 @@ msgstr "Na šířku"
 #: ../qt/src/hocr/HOCRPdfExporter.cc:142
 msgid "Failed to write to file"
 msgstr "Nepodařilo se zapsat soubor"
-
-#: ../qt/src/hocr/HOCRPdfExporter.cc:343
-msgid "PoDoFo"
-msgstr "PoDoFo"
-
-#: ../qt/src/hocr/HOCRPdfExporter.cc:344
-msgid "QPrinter"
-msgstr "QPrinter"
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
@@ -1976,6 +1964,15 @@ msgstr "Uložit výstup"
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
 msgstr "Vyčistit výstup"
+
+#~ msgid "gImageReader"
+#~ msgstr "gImageReader"
+
+#~ msgid "PoDoFo"
+#~ msgstr "PoDoFo"
+
+#~ msgid "QPrinter"
+#~ msgstr "QPrinter"
 
 #~ msgid ""
 #~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"

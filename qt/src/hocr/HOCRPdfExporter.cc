@@ -340,8 +340,8 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	: QDialog(parent), m_hocrdocument(hocrdocument), m_previewPage(previewPage), m_displayerTool(displayerTool) {
 	ui.setupUi(this);
 
-	ui.comboBoxBackend->addItem(_("PoDoFo"), BackendPoDoFo);
-	ui.comboBoxBackend->addItem(_("QPrinter"), BackendQPrinter);
+	ui.comboBoxBackend->addItem("PoDoFo", BackendPoDoFo);
+	ui.comboBoxBackend->addItem("QPrinter", BackendQPrinter);
 	ui.comboBoxBackend->setCurrentIndex(-1);
 
 	ui.comboBoxImageFormat->addItem(_("Color"), QImage::Format_RGB888);
