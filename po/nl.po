@@ -8,104 +8,107 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 00:13+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2018-02-21 22:21+0000\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"Language-Team: Dutch "
+"<https://hosted.weblate.org/projects/gimagereader/translations/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.20-dev\n"
 
 #: ../data/gimagereader.desktop.in:3
 msgid "OCR application"
-msgstr ""
+msgstr "OCR-applicatie"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
 msgid "Redetect Languages"
-msgstr ""
+msgstr "Talen opnieuw detecteren"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
 msgid "Manage Languages"
-msgstr ""
+msgstr "Talen beheren"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
 msgid "Preferences"
-msgstr ""
+msgstr "Voorkeuren"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:470 ../qt/src/MainWindow.cc:467
 #: ../qt/src/Ui_MainWindow.hh:177
 msgid "Help"
-msgstr ""
+msgstr "Hulp"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:180
 msgid "About"
-msgstr ""
+msgstr "Over"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
-msgstr ""
+msgstr "Afsluiten"
 
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:42
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
 #: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
 #: ../qt/data/ConfigDialog.ui.h:26
 msgid "OK"
-msgstr ""
+msgstr "Oké"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
-msgstr ""
+msgstr "Oriëntatie van uitvoerpaneel:"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontaal"
 
 #: ../gtk/data/ConfigDialog.ui.h:6
 msgid "Vertical"
-msgstr ""
+msgstr "Verticaal"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr ""
+msgstr "Opdracht om ontbrekende woordenboek te installeren"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr ""
+msgstr "Automatisch controleren op nieuwe versies"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr ""
+msgstr "Vooraf gedefinieerde taaldefinities:"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
-msgstr ""
+msgstr "Extra taaldefinities:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr ""
+msgstr "De extensie van het tesseract-taalgegevensbestand"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
-msgstr ""
+msgstr "Extensie"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr ""
+msgstr "De ISO 639-1 taalcode, gevolgd door de landcode"
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
-msgstr ""
+msgstr "ISO-code"
 
 #: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:24
 msgid "The name of the language"
-msgstr ""
+msgstr "De naam van de taal"
 
 #: ../gtk/data/ConfigDialog.ui.h:16 ../qt/data/ConfigDialog.ui.h:25
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
 #: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:41
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
@@ -113,39 +116,39 @@ msgstr ""
 #: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
 #: ../qt/data/MainWindow.ui.h:13
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleren"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
-msgstr ""
+msgstr "Lettertype van uitvoerpaneel:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
-msgstr ""
+msgstr "Standaard"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "Taalgegevens-locaties:"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
-msgstr ""
+msgstr "Taaldefinities-pad:"
 
 #: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
-msgstr ""
+msgstr "Spellingcontrole-woordenboekenpad:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "Systeembrede paden"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Gebruikerspaden"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr ""
+msgstr "Geëxporteerde documenten automatisch openen met standaard applicatie"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:36
 msgid "Regenerate backtrace"
