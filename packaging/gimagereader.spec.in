@@ -28,6 +28,7 @@ BuildRequires: podofo-devel
 BuildRequires: djvulibre-devel
 BuildRequires: quazip-qt5-devel
 BuildRequires: libzip-devel
+BuildRequires: python3-gobject
 
 Requires:      hicolor-icon-theme
 
@@ -83,7 +84,7 @@ Common files for %{name}.
 
 
 %prep
-%setup -q
+%autosetup -p1
 
 
 %build
@@ -91,13 +92,13 @@ mkdir build_gtk
 (
 cd build_gtk
 %cmake -DINTERFACE_TYPE=gtk -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%{_defaultdocdir}/%{name}-common" ..
-make %{?_smp_mflags}
+%make_build
 )
 mkdir build_qt
 (
 cd build_qt
 %cmake -DINTERFACE_TYPE=qt5 -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%{_defaultdocdir}/%{name}-common" ..
-make %{?_smp_mflags}
+%make_build
 )
 
 
