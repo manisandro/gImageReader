@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: Sandro Mani <manisandro@gmail.com>
 Build-Depends: debhelper (>= 9),
  cmake,
+ intltool,
  libdjvulibre-dev,
  libgtkspellmm-3.0-dev,
  libgtkmm-3.0-dev,
@@ -20,7 +21,8 @@ Build-Depends: debhelper (>= 9),
  libjson-glib-dev,
  libxml++2.6-dev,
  libpodofo-dev,
- libquazip-qt5-dev,
+ libquazip5-dev,
+ libquazip5-headers,
  libzip-dev,
  python3-gi
 Standards-Version: 3.9.4
