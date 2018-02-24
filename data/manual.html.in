@@ -47,6 +47,31 @@
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
 <pre style="max-height: 200px; overflow-y: auto; padding: 1em; border: 1px solid gray;">
+gImageReader 3.2.99 (Feb 24 2018):
+* gImageReader 3.3 beta
+* Add support for reading DJVU documents
+* Add support for encrypted PDF files
+* Rewrite HOCR editor and greatly expand its functionality:
+  - Allow displaying confidence values in HOCR tree
+  - Allow clicking in the canvas to jump to the corresponding item in the HOCR tree
+  - Support mass-editing of HOCR child item attributes from parent
+  - Honour font family attributes if possible
+  - Honour and allow toggling bold and italic attributes
+  - Correctly honour the baseline
+  - Add search/replace and substitution list support
+  - Add preview mode while editing
+  - Allow manually adding lines, words and paragraphs
+  - Allow swapping items
+  - Automatically adjust parent bounding boxes when resizing and removing children
+  - Add navigation toolbar to facilitate navigating through the HOCR tree
+  - Use relative paths to source files in HOCR HTML document if source files are on same level or below the HOCR file
+  - Add export to text
+  - Add export to ODT
+  - Allow choosing paper size in PDF export
+  - Allow setting document metadata in PDF export
+  - Allow setting encryption in PDF export
+  - [Qt] Allow using QPrinter as PDF export backend, which has better support for complex scripts
+
 gImageReader 3.2.3 (Jul 01 2017):
 * Fix broken hOCR export
 * Add option to prepend source filename / page to plain text output
