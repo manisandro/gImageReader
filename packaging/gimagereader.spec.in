@@ -7,28 +7,33 @@ License:       GPLv3+
 URL:           https://github.com/manisandro/gImageReader
 Source0:       https://github.com/manisandro/gImageReader/releases/download/v%{version}/%{name}-%{version}.tar.xz
 
-BuildRequires: gcc-c++
-BuildRequires: cmake
-BuildRequires: gtkmm30-devel
-BuildRequires: gtkspellmm30-devel
-BuildRequires: gtksourceviewmm3-devel
-BuildRequires: cairomm-devel
-BuildRequires: poppler-glib-devel
-BuildRequires: tesseract-devel
-BuildRequires: sane-backends-devel
-BuildRequires: intltool
 BuildRequires: desktop-file-utils
+BuildRequires: djvulibre-devel
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: intltool
+BuildRequires: make
+BuildRequires: podofo-devel
+BuildRequires: sane-backends-devel
+BuildRequires: tesseract-devel
+
+BuildRequires: cairomm-devel
 BuildRequires: libappstream-glib
+BuildRequires: libjpeg-turbo-devel
+BuildRequires: libxml++30-devel
+BuildRequires: libuuid-devel
+BuildRequires: libzip-devel
+BuildRequires: gtkmm30-devel
+BuildRequires: gtksourceviewmm3-devel
+BuildRequires: gtkspellmm30-devel
+BuildRequires: json-glib-devel
+BuildRequires: poppler-glib-devel
+BuildRequires: python3-gobject
+
+BuildRequires: poppler-qt5-devel
 BuildRequires: qt5-qtbase-devel
 BuildRequires: qtspell-qt5-devel
-BuildRequires: poppler-qt5-devel
-BuildRequires: json-glib-devel
-BuildRequires: libxml++30-devel
-BuildRequires: podofo-devel
-BuildRequires: djvulibre-devel
 BuildRequires: quazip-qt5-devel
-BuildRequires: libzip-devel
-BuildRequires: python3-gobject
 
 Requires:      hicolor-icon-theme
 
