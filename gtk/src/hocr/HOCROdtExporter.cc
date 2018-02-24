@@ -29,6 +29,7 @@
 #include <cstring>
 #include <iomanip>
 #include <libxml++/libxml++.h>
+#include <uuid.h>
 #include <zip.h>
 
 static Glib::ustring manifestNS_URI("urn:oasis:names:tc:opendocument:xmlns:manifest:1.0");
@@ -120,16 +121,28 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 			xmlpp::Element* manifestEl = doc.create_root_node("manifest", manifestNS_URI, manifestNS);
 			manifestEl->set_attribute("version", "1.2", manifestNS);
 
+#ifdef HAVE_LIBXMLPP_2
+			xmlpp::Element* fileEntryEl = manifestEl->add_child("file-entry", manifestNS);
+#else
 			xmlpp::Element* fileEntryEl = manifestEl->add_child_element("file-entry", manifestNS);
+#endif
 			fileEntryEl->set_attribute("media-type", "application/vnd.oasis.opendocument.text", manifestNS);
 			fileEntryEl->set_attribute("full-path", "/", manifestNS);
 
+#ifdef HAVE_LIBXMLPP_2
+			fileEntryEl = manifestEl->add_child("file-entry", manifestNS);
+#else
 			fileEntryEl = manifestEl->add_child_element("file-entry", manifestNS);
+#endif
 			fileEntryEl->set_attribute("media-type", "text/xml", manifestNS);
 			fileEntryEl->set_attribute("full-path", "content.xml", manifestNS);
 
 			for(auto it = imageFiles.begin(), itEnd = imageFiles.end(); it != itEnd; ++it) {
+#ifdef HAVE_LIBXMLPP_2
+				fileEntryEl = manifestEl->add_child("file-entry", manifestNS);
+#else
 				fileEntryEl = manifestEl->add_child_element("file-entry", manifestNS);
+#endif
 				fileEntryEl->set_attribute("media-type", "image/png", manifestNS);
 				fileEntryEl->set_attribute("full-path", it->second, manifestNS);
 			}
@@ -154,7 +167,11 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 			documentContentEl->set_attribute("version", "1.2", officeNS);
 
 			// - Font face decls
+#ifdef HAVE_LIBXMLPP_2
+			xmlpp::Element* fontFaceDeclsEl = documentContentEl->add_child("font-face-decls", officeNS);
+#else
 			xmlpp::Element* fontFaceDeclsEl = documentContentEl->add_child_element("font-face-decls", officeNS);
+#endif
 			std::set<Glib::ustring> families;
 			for(int i = 0; i < pageCount; ++i) {
 				const HOCRPage* page = hocrdocument->page(i);
@@ -164,13 +181,25 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 			}
 
 			// - Page styles
+#ifdef HAVE_LIBXMLPP_2
+			xmlpp::Element* automaticStylesEl = documentContentEl->add_child("automatic-styles", officeNS);
+#else
 			xmlpp::Element* automaticStylesEl = documentContentEl->add_child_element("automatic-styles", officeNS);
+#endif
 			for(int i = 0; i < pageCount; ++i) {
 				const HOCRPage* page = hocrdocument->page(i);
 				if(page->isEnabled()) {
+#ifdef HAVE_LIBXMLPP_2
+					xmlpp::Element* pageLayoutEl = automaticStylesEl->add_child("page-layout", styleNS);
+#else
 					xmlpp::Element* pageLayoutEl = automaticStylesEl->add_child_element("page-layout", styleNS);
+#endif
 					pageLayoutEl->set_attribute("name", Glib::ustring::compose("PL%1", i), styleNS);
+#ifdef HAVE_LIBXMLPP_2
+					xmlpp::Element* pageLayoutPropertiesEl = pageLayoutEl->add_child("page-layout-properties", styleNS);
+#else
 					xmlpp::Element* pageLayoutPropertiesEl = pageLayoutEl->add_child_element("page-layout-properties", styleNS);
+#endif
 					pageLayoutPropertiesEl->set_attribute("page-width", Glib::ustring::compose("%1in", page->bbox().width / double(page->resolution())), foNS);
 					pageLayoutPropertiesEl->set_attribute("page-height", Glib::ustring::compose("%1in", page->bbox().height / double(page->resolution())), foNS);
 					pageLayoutPropertiesEl->set_attribute("print-orientation", page->bbox().width > page->bbox().height ? "landscape" : "portrait", styleNS);
@@ -181,41 +210,73 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 					pageLayoutPropertiesEl->set_attribute("margin-right", "0in", foNS);
 				}
 			}
+#ifdef HAVE_LIBXMLPP_2
+			xmlpp::Element* masterStylesEl = documentContentEl->add_child("master-styles", officeNS);
+#else
 			xmlpp::Element* masterStylesEl = documentContentEl->add_child_element("master-styles", officeNS);
+#endif
 			for(int i = 0; i < pageCount; ++i) {
 				if(hocrdocument->page(i)->isEnabled()) {
+#ifdef HAVE_LIBXMLPP_2
+					xmlpp::Element* masterPageEl = masterStylesEl->add_child("master-page", styleNS);
+#else
 					xmlpp::Element* masterPageEl = masterStylesEl->add_child_element("master-page", styleNS);
+#endif
 					masterPageEl->set_attribute("name", Glib::ustring::compose("MP%1", i), styleNS);
 					masterPageEl->set_attribute("page-layout-name", Glib::ustring::compose("PL%1", i), styleNS);
 				}
 			}
 
 			// - Styles
+#ifdef HAVE_LIBXMLPP_2
+			automaticStylesEl = documentContentEl->add_child("automatic-styles", officeNS);
+#else
 			automaticStylesEl = documentContentEl->add_child_element("automatic-styles", officeNS);
+#endif
 
 			// -- Standard paragraph
+#ifdef HAVE_LIBXMLPP_2
+			xmlpp::Element* styleEl = automaticStylesEl->add_child("style", styleNS);
+#else
 			xmlpp::Element* styleEl = automaticStylesEl->add_child_element("style", styleNS);
+#endif
 			styleEl->set_attribute("name", "P", styleNS);
 			styleEl->set_attribute("parent-style-name", "Standard", styleNS);
 
 			// -- Page paragraphs
 			for(int i = 0; i < pageCount; ++i) {
 				if(hocrdocument->page(i)->isEnabled()) {
+#ifdef HAVE_LIBXMLPP_2
+					xmlpp::Element* styleEl = automaticStylesEl->add_child("style", styleNS);
+#else
 					xmlpp::Element* styleEl = automaticStylesEl->add_child_element("style", styleNS);
+#endif
 					styleEl->set_attribute("name", Glib::ustring::compose("PP%1", i), styleNS);
 					styleEl->set_attribute("family", "paragraph", styleNS);
 					styleEl->set_attribute("parent-style-name", "Standard", styleNS);
 					styleEl->set_attribute("master-page-name", Glib::ustring::compose("MP%1", i), styleNS);
+#ifdef HAVE_LIBXMLPP_2
+					xmlpp::Element* paragraphPropertiesEl = styleEl->add_child("paragraph-properties", styleNS);
+#else
 					xmlpp::Element* paragraphPropertiesEl = styleEl->add_child_element("paragraph-properties", styleNS);
+#endif
 					paragraphPropertiesEl->set_attribute("break-before", "page", foNS);
 				}
 			}
 
 			// -- Frame, absolutely positioned on page
+#ifdef HAVE_LIBXMLPP_2
+			styleEl = automaticStylesEl->add_child("style", styleNS);
+#else
 			styleEl = automaticStylesEl->add_child_element("style", styleNS);
+#endif
 			styleEl->set_attribute("name", "F", styleNS);
 			styleEl->set_attribute("family", "graphic", styleNS);
+#ifdef HAVE_LIBXMLPP_2
+			xmlpp::Element* graphicPropertiesEl = styleEl->add_child("graphic-properties", styleNS);
+#else
 			xmlpp::Element* graphicPropertiesEl = styleEl->add_child_element("graphic-properties", styleNS);
+#endif
 			graphicPropertiesEl->set_attribute("stroke", "none", drawNS);
 			graphicPropertiesEl->set_attribute("fill", "none", drawNS);
 			graphicPropertiesEl->set_attribute("vertical-pos", "from-top", styleNS);
@@ -237,8 +298,13 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 			}
 
 			// - Body
+#ifdef HAVE_LIBXMLPP_2
+			xmlpp::Element* bodyEl = documentContentEl->add_child("body", officeNS);
+			xmlpp::Element* textEl = bodyEl->add_child("text", officeNS);
+#else
 			xmlpp::Element* bodyEl = documentContentEl->add_child_element("body", officeNS);
 			xmlpp::Element* textEl = bodyEl->add_child_element("text", officeNS);
+#endif
 
 			int pageCounter = 1;
 			for(int i = 0; i < pageCount; ++i) {
@@ -247,7 +313,11 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 				if(!page->isEnabled()) {
 					continue;
 				}
+#ifdef HAVE_LIBXMLPP_2
+				xmlpp::Element* pEl = textEl->add_child("p", textNS);
+#else
 				xmlpp::Element* pEl = textEl->add_child_element("p", textNS);
+#endif
 				pEl->set_attribute("style-name", Glib::ustring::compose("PP%1", i), textNS);
 				for(const HOCRItem* item : page->children()) {
 					printItem(pEl, item, pageCounter, page->resolution(), fontStyles, imageFiles);
@@ -283,10 +353,18 @@ void HOCROdtExporter::writeImage(zip* fzip, std::map<const HOCRItem*, Glib::ustr
 	if(item->itemClass() == "ocr_graphic") {
 		Cairo::RefPtr<Cairo::ImageSurface> selection;
 		Utils::runInMainThreadBlocking([&] { selection = getSelection(item->bbox()); });
-		gchar* guuid = g_uuid_string_random();
-		Glib::ustring uuid(guuid);
-		uuid = uuid.substr(1, uuid.length() - 2); // Remove {}
-		g_free(guuid);
+//#if GLIB_CHECK_VERSION(2, 52, 0)
+//		gchar* guuid = g_uuid_string_random();
+//		Glib::ustring uuid(guuid);
+//		g_free(guuid);
+//		uuid = uuid.substr(1, uuid.length() - 2); // Remove {}
+//#else
+		uuid_t uuidGenerated;
+		uuid_generate_random(uuidGenerated);
+		char uuidBuff[36];
+		uuid_unparse(uuidGenerated, uuidBuff);
+		Glib::ustring uuid(uuidBuff);
+//#endif
 		Glib::ustring filename = Glib::ustring::compose("Pictures/%1.png", uuid);
 
 		Glib::RefPtr<Glib::ByteArray> pngbytes = Glib::ByteArray::create();
@@ -312,7 +390,11 @@ void HOCROdtExporter::writeFontFaceDecls(std::set<Glib::ustring>& families, cons
 		Glib::ustring fontFamily = item->fontFamily();
 		if(families.find(fontFamily) == families.end()) {
 			if(!fontFamily.empty()) {
+#ifdef HAVE_LIBXMLPP_2
+				xmlpp::Element* fontFaceEl = parentEl->add_child("font-face", styleNS);
+#else
 				xmlpp::Element* fontFaceEl = parentEl->add_child_element("font-face", styleNS);
+#endif
 				fontFaceEl->set_attribute("name", fontFamily, styleNS);
 				fontFaceEl->set_attribute("font-family", fontFamily, svgNS);
 			}
@@ -333,10 +415,18 @@ void HOCROdtExporter::writeFontStyles(std::map<Glib::ustring, std::map<double, G
 		Glib::ustring fontKey = item->fontFamily() + (item->fontBold() ? "@bold" : "") + (item->fontItalic() ? "@italic" : "");
 		if(styles.find(fontKey) == styles.end() || styles[fontKey].find(item->fontSize()) == styles[fontKey].end()) {
 			Glib::ustring styleName = Glib::ustring::compose("T%1", ++counter);
+#ifdef HAVE_LIBXMLPP_2
+			xmlpp::Element* styleEl = parentEl->add_child("style", styleNS);
+#else
 			xmlpp::Element* styleEl = parentEl->add_child_element("style", styleNS);
+#endif
 			styleEl->set_attribute("name", styleName, styleNS);
 			styleEl->set_attribute("family", "text", styleNS);
+#ifdef HAVE_LIBXMLPP_2
+			xmlpp::Element* textPropertiesEl = styleEl->add_child("text-properties", styleNS);
+#else
 			xmlpp::Element* textPropertiesEl = styleEl->add_child_element("text-properties", styleNS);
+#endif
 			textPropertiesEl->set_attribute("font-name", item->fontFamily(), styleNS);
 			textPropertiesEl->set_attribute("font-size", Glib::ustring::compose("%1pt", item->fontSize()), foNS);
 			if(item->fontBold()) {
@@ -362,7 +452,11 @@ void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, 
 	Glib::ustring itemClass = item->itemClass();
 	const Geometry::Rectangle& bbox = item->bbox();
 	if(itemClass == "ocr_graphic") {
+#ifdef HAVE_LIBXMLPP_2
+		xmlpp::Element* frameEl = parentEl->add_child("frame", drawNS);
+#else
 		xmlpp::Element* frameEl = parentEl->add_child_element("frame", drawNS);
+#endif
 		frameEl->set_attribute("style-name", "F", drawNS);
 		frameEl->set_attribute("anchor-type", "page", textNS);
 		frameEl->set_attribute("anchor-page-number", Glib::ustring::format(std::fixed, std::setprecision(0), pageNr), textNS);
@@ -372,12 +466,20 @@ void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, 
 		frameEl->set_attribute("height", Glib::ustring::compose("%1in", bbox.height / double(dpi)), svgNS);
 		frameEl->set_attribute("z-index", "0", drawNS);
 
+#ifdef HAVE_LIBXMLPP_2
+		xmlpp::Element* imageEl = frameEl->add_child("image", drawNS);
+#else
 		xmlpp::Element* imageEl = frameEl->add_child_element("image", drawNS);
+#endif
 		imageEl->set_attribute("href", images[item], xlinkNS);
 		imageEl->set_attribute("type", "simple", xlinkNS);
 		imageEl->set_attribute("show", "embed", xlinkNS);
 	} else if(itemClass == "ocr_par") {
+#ifdef HAVE_LIBXMLPP_2
+		xmlpp::Element* frameEl = parentEl->add_child("frame", drawNS);
+#else
 		xmlpp::Element* frameEl = parentEl->add_child_element("frame", drawNS);
+#endif
 		frameEl->set_attribute("style-name", "F", drawNS);
 		frameEl->set_attribute("anchor-type", "page", textNS);
 		frameEl->set_attribute("anchor-page-number", Glib::ustring::format(std::fixed, std::setprecision(0), pageNr), textNS);
@@ -387,9 +489,14 @@ void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, 
 		frameEl->set_attribute("height", Glib::ustring::compose("%1in", bbox.height / double(dpi)), svgNS);
 		frameEl->set_attribute("z-index", "1", drawNS);
 
+#ifdef HAVE_LIBXMLPP_2
+		xmlpp::Element* textBoxEl = frameEl->add_child("text-box", drawNS);
+		xmlpp::Element* ppEl = textBoxEl->add_child("p", textNS);
+#else
 		xmlpp::Element* textBoxEl = frameEl->add_child_element("text-box", drawNS);
-
 		xmlpp::Element* ppEl = textBoxEl->add_child_element("p", textNS);
+#endif
+
 		ppEl->set_attribute("style-name", "P", textNS);
 		for(const HOCRItem* child : item->children()) {
 			printItem(ppEl, child, pageNr, dpi, fontStyleNames, images);
@@ -409,7 +516,11 @@ void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, 
 		}
 		Glib::ustring fontKey = firstWord->fontFamily() + (firstWord->fontBold() ? "@bold" : "") + (firstWord->fontItalic() ? "@italic" : "");
 		Glib::ustring currentFontStyleName = fontStyleNames[fontKey][firstWord->fontSize()];
+#ifdef HAVE_LIBXMLPP_2
+		xmlpp::Element* spanEl = parentEl->add_child("span", textNS);
+#else
 		xmlpp::Element* spanEl = parentEl->add_child_element("span", textNS);
+#endif
 		spanEl->set_attribute("style-name", currentFontStyleName, textNS);
 		spanEl->add_child_text(firstWord->text());
 		++iChild;
@@ -422,13 +533,21 @@ void HOCROdtExporter::printItem(xmlpp::Element* parentEl, const HOCRItem* item, 
 			Glib::ustring fontStyleName = fontStyleNames[fontKey][child->fontSize()];
 			if(fontStyleName != currentFontStyleName) {
 				currentFontStyleName = fontStyleName;
+#ifdef HAVE_LIBXMLPP_2
+				spanEl = parentEl->add_child("span", textNS);
+#else
 				spanEl = parentEl->add_child_element("span", textNS);
+#endif
 				spanEl->set_attribute("style-name", currentFontStyleName, textNS);
 			}
 			spanEl->add_child_text(" ");
 			spanEl->add_child_text(child->text());
 		}
+#ifdef HAVE_LIBXMLPP_2
+		parentEl->add_child("line-break", textNS);
+#else
 		parentEl->add_child_element("line-break", textNS);
+#endif
 	} else {
 		for(const HOCRItem* child : item->children()) {
 			printItem(parentEl, child, pageNr, dpi, fontStyleNames, images);
