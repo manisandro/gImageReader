@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-22 00:10+0100\n"
-"PO-Revision-Date: 2018-02-25 09:30+0000\n"
+"PO-Revision-Date: 2018-02-26 10:40+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese (Brazil) "
 "<https://hosted.weblate.org/projects/gimagereader/translations/pt_BR/>\n"
@@ -90,7 +90,7 @@ msgstr "Definições de idiomas adicionais:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr "O prefixo do arquivo de dados do idioma do tesseract"
+msgstr "O prefixo do ficheiro de dados do idioma do tesseract"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
@@ -214,7 +214,7 @@ msgstr "Remover imagem da lista"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/src/Ui_MainWindow.hh:212
 msgid "Delete image"
-msgstr "Excluir imagem"
+msgstr "Apagar imagem"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:215
 msgid "Clear list"
@@ -412,7 +412,7 @@ msgstr "Exportar para ODT"
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/Ui_OutputEditorText.hh:116
 msgid "Save output"
-msgstr "Salvar saída"
+msgstr "Gravar saída"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
@@ -716,7 +716,7 @@ msgstr "Substituições"
 
 #: ../gtk/data/SelectionMenu.ui.h:1 ../qt/src/DisplayerToolSelect.cc:236
 msgid "Delete"
-msgstr "Excluir"
+msgstr "Apagar"
 
 #: ../gtk/data/SelectionMenu.ui.h:2 ../qt/src/DisplayerToolSelect.cc:222
 msgid "Order:"
@@ -733,7 +733,7 @@ msgstr "Reconhecer para a área de transferência"
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:239
 msgid "Save as image"
-msgstr "Salvar como imagem"
+msgstr "Gravar como imagem"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:2 ../qt/src/SubstitutionsManager.cc:38
 #: ../qt/src/SubstitutionsManager.cc:39
@@ -743,7 +743,7 @@ msgstr "Abrir"
 #: ../gtk/data/SubstitutionsManager.ui.h:3 ../gtk/src/Utils.cc:73
 #: ../qt/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:42
 msgid "Save"
-msgstr "Salvar"
+msgstr "Gravar"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:4 ../qt/src/SubstitutionsManager.cc:44
 #: ../qt/src/SubstitutionsManager.cc:45
@@ -788,7 +788,7 @@ msgstr "Imagens"
 
 #: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:86
 msgid "Choose Output Filename..."
-msgstr "Escolha nome do arquivo de saída..."
+msgstr "Escolha nome do ficheiro de saída..."
 
 #: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
 msgid "Failed to initialize the scanning backend."
@@ -829,7 +829,7 @@ msgstr "Cancelando a digitalização..."
 
 #: ../gtk/src/Config.cc:290 ../qt/data/ConfigDialog.ui.h:7
 msgid "Filename prefix"
-msgstr "Prefixo do nome do arquivo"
+msgstr "Prefixo do nome do ficheiro"
 
 #: ../gtk/src/Config.cc:291 ../qt/data/ConfigDialog.ui.h:8
 msgid "Code"
@@ -865,7 +865,7 @@ msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
-"O arquivo pode não ser uma imagem ou está corrompido:\n"
+"O ficheiro pode não ser uma imagem ou está corrompido:\n"
 "%1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
@@ -874,7 +874,7 @@ msgstr "Imagens PNG"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "Save Selection Image"
-msgstr "Salvar imagem selecionada"
+msgstr "Gravar imagem selecionada"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "selection.png"
@@ -895,11 +895,11 @@ msgstr "Executando análise de layout"
 #: ../gtk/src/FileDialogs.cc:235
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-msgstr "Um arquivo chamado \"%1\" já existe. Você deseja sobrescrevê-lo?"
+msgstr "Um ficheiro chamado \"%1\" já existe. Você deseja sobrescrevê-lo?"
 
 #: ../gtk/src/FileDialogs.cc:237
 msgid "Overwrite File?"
-msgstr "Sobrescrever arquivo?"
+msgstr "Sobrescrever ficheiro?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:516 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/OutputEditorHOCR.cc:229
@@ -938,7 +938,7 @@ msgstr "Documentos de texto OpenDocument"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "Save ODT Output..."
-msgstr "Salvar saída ODT ..."
+msgstr "Gravar saída ODT ..."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:272
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607
@@ -1187,7 +1187,7 @@ msgstr "Gravando saída hOCR..."
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:951 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/OutputEditorHOCR.cc:817 ../qt/src/OutputEditorText.cc:246
 msgid "Failed to save output"
-msgstr "Falha ao salvar a saída"
+msgstr "Falha ao gravar a saída"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:951 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/OutputEditorHOCR.cc:817 ../qt/src/OutputEditorText.cc:246
@@ -1202,7 +1202,7 @@ msgstr "Saída não salva"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1010 ../gtk/src/OutputEditorText.cc:296
 #: ../qt/src/hocr/OutputEditorHOCR.cc:869 ../qt/src/OutputEditorText.cc:259
 msgid "Save output before proceeding?"
-msgstr "Salvar a saída antes de continuar?"
+msgstr "Gravar a saída antes de continuar?"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1131 ../gtk/src/OutputEditorText.cc:184
 #: ../qt/src/hocr/OutputEditorHOCR.cc:966 ../qt/src/OutputEditorText.cc:152
@@ -1516,7 +1516,7 @@ msgstr "Erro de comunicação com o digitalizador"
 
 #: ../gtk/src/scanner/ScannerSane.cc:520 ../qt/src/scanner/ScannerSane.cc:517
 msgid "Failed to save image"
-msgstr "Falha ao salvar imagem"
+msgstr "Falha ao gravar imagem"
 
 #: ../gtk/src/scanner/ScannerSane.cc:800 ../qt/src/scanner/ScannerSane.cc:797
 msgid "Operation is cancelled."
@@ -1605,15 +1605,15 @@ msgstr "Salvando imagem..."
 
 #: ../gtk/src/SourceManager.cc:240 ../qt/src/SourceManager.cc:265
 msgid "Cannot Write File"
-msgstr "Não foi possível gravar o arquivo"
+msgstr "Não foi possível gravar o ficheiro"
 
 #: ../gtk/src/SourceManager.cc:240 ../qt/src/SourceManager.cc:265
 msgid "Could not write to %1."
-msgstr "Não foi possível escrever no arquivo %1."
+msgstr "Não foi possível escrever no ficheiro %1."
 
 #: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
 msgid "Delete File?"
-msgstr "Excluir o arquivo?"
+msgstr "Apagar o ficheiro?"
 
 #: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
 msgid "The following files will be deleted:%1"
@@ -1621,14 +1621,14 @@ msgstr "Os seguintes ficheiros serão apagados:%1"
 
 #: ../gtk/src/SourceManager.cc:332 ../qt/src/SourceManager.cc:338
 msgid "Missing File"
-msgstr "Arquivo ausente"
+msgstr "Ficheiro ausente"
 
 #: ../gtk/src/SourceManager.cc:332 ../qt/src/SourceManager.cc:338
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
 msgstr ""
-"O seguinte arquivo foi excluído ou movido:\n"
+"O seguinte ficheiro foi apagado ou movido:\n"
 "%1"
 
 #: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:73
@@ -1650,7 +1650,7 @@ msgstr "Abrir lista de substituições"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
 msgid "Error Reading File"
-msgstr "Erro ao ler arquivo"
+msgstr "Erro ao ler ficheiro"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
 msgid "Unable to read '%1'."
@@ -1658,7 +1658,7 @@ msgstr "Não foi possível ler '%1'."
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
 msgid "Errors Occurred Reading File"
-msgstr "Erros ocorreram na leitura do arquivo"
+msgstr "Erros ocorreram na leitura do ficheiro"
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
 msgid "Some entries of the substitutions list could not be read."
@@ -1666,11 +1666,11 @@ msgstr "Algumas entradas da lista de substituições não puderam ser lidas."
 
 #: ../gtk/src/SubstitutionsManager.cc:104 ../qt/src/SubstitutionsManager.cc:143
 msgid "Save Substitutions List"
-msgstr "Salvar lista de substituições"
+msgstr "Gravar lista de substituições"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
 msgid "Error Saving File"
-msgstr "Erro ao salvar arquivo"
+msgstr "Erro ao gravar ficheiro"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
 msgid "Unable to write to '%1'."
@@ -1678,11 +1678,11 @@ msgstr "Não foi possível escrever em '%1'."
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
 msgid "Save List?"
-msgstr "Salvar lista?"
+msgstr "Gravar lista?"
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
 msgid "Do you want to save the current list?"
-msgstr "Você deseja salvar a lista atual?"
+msgstr "Você deseja gravar a lista atual?"
 
 #: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:74
 msgid ""
@@ -1886,7 +1886,7 @@ msgstr "Paisagem"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:142
 msgid "Failed to write to file"
-msgstr "Falha ao gravar arquivo"
+msgstr "Falha ao gravar ficheiro"
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
@@ -1943,7 +1943,7 @@ msgstr "Remover imagem"
 
 #: ../qt/src/Ui_MainWindow.hh:211
 msgid "Delete Image"
-msgstr "Excluir imagem"
+msgstr "Apagar imagem"
 
 #: ../qt/src/Ui_MainWindow.hh:214
 msgid "Clear List"
@@ -1955,7 +1955,7 @@ msgstr "Remover quebras de linha"
 
 #: ../qt/src/Ui_OutputEditorText.hh:115
 msgid "Save Output"
-msgstr "Salvar saída"
+msgstr "Gravar saída"
 
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
