@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-22 00:10+0100\n"
-"PO-Revision-Date: 2018-02-24 16:35+0000\n"
+"PO-Revision-Date: 2018-02-26 12:34+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch "
 "<https://hosted.weblate.org/projects/gimagereader/translations/nl/>\n"
@@ -1320,32 +1320,40 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"De volgende woordenboeken kunnen niet worden gedownload:\n"
+"%1\n"
+"\n"
+"Controleer uw internetverbinding en maprechten.\n"
+"Tip: als u geen schrijfrechten hebt in systeemmappen, dan kunt u in de "
+"instellingen de locatie wijzigen naar een gebruikersmap."
 
 #: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:573
 msgid "Dictionaries installed"
-msgstr ""
+msgstr "De woordenboeken zijn geïnstalleerd"
 
 #: ../gtk/src/MainWindow.cc:585
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
 msgstr ""
+"De volgende woordenboeken zijn geïnstalleerd:\n"
+"%1"
 
 #: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
-msgstr ""
+msgstr "Bezig met verwijderen van regeleindes..."
 
 #: ../gtk/src/OutputEditorText.cc:162
 msgid "Check spelling"
-msgstr ""
+msgstr "Spelling controleren"
 
 #: ../gtk/src/OutputEditorText.cc:231 ../qt/src/OutputEditorText.cc:196
 msgid "File: %1"
-msgstr ""
+msgstr "Bestand: %1"
 
 #: ../gtk/src/OutputEditorText.cc:234 ../qt/src/OutputEditorText.cc:199
 msgid "Page: %1"
-msgstr ""
+msgstr "Pagina: %1"
 
 #: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:476
 #: ../qt/src/Recognizer.cc:469
@@ -1353,10 +1361,12 @@ msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
 msgstr ""
+"\n"
+"[Het herkennen van pagina %1 is mislukt]\n"
 
 #: ../gtk/src/OutputEditorText.cc:275 ../qt/src/OutputEditorText.cc:239
 msgid "Save Output..."
-msgstr ""
+msgstr "Uitvoer opslaan..."
 
 #: ../gtk/src/Recognizer.cc:144 ../qt/src/Recognizer.cc:131
 msgid ""
@@ -1372,293 +1382,312 @@ msgid ""
 "Make sure your language data files are valid and compatible with tesseract "
 "%2."
 msgstr ""
+"Tesseract is gecrasht met de volgende melding:\n"
+"\n"
+"%1\n"
+"\n"
+"Dit gebeurt meestal vanwege één van de volgende redenen:\n"
+"-Er worden verouderde traineddata-bestanden gebruikt.\n"
+"-De ondersteunende taalgegevensbestanden ontbreken.\n"
+"-De taalgegevensbestanden zijn beschadigd.\n"
+"\n"
+"Zorg ervoor dat uw taalgegevensbestanden juist zijn en compatibel met "
+"tesseract %2."
 
 #: ../gtk/src/Recognizer.cc:200 ../qt/src/Recognizer.cc:191
 msgid "No languages available"
-msgstr ""
+msgstr "Geen beschikbare talen"
 
 #: ../gtk/src/Recognizer.cc:200 ../qt/src/Recognizer.cc:191
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
+"Er zijn geen tesseract-talen beschikbaar; de herkenningsfunctie zal niet "
+"werken."
 
 #: ../gtk/src/Recognizer.cc:254 ../qt/src/Recognizer.cc:251
 msgid "Multilingual"
-msgstr ""
+msgstr "Meertalig"
 
 #: ../gtk/src/Recognizer.cc:306 ../qt/src/Recognizer.cc:296
 msgid "Automatic page segmentation"
-msgstr ""
+msgstr "Automatische paginasegmentatie"
 
 #: ../gtk/src/Recognizer.cc:307 ../qt/src/Recognizer.cc:297
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "Paginasegmentatie met oriëntatie- en scriptdetectie"
 
 #: ../gtk/src/Recognizer.cc:308 ../qt/src/Recognizer.cc:298
 msgid "Assume single column of text"
-msgstr ""
+msgstr "Eén tekstkolom veronderstellen"
 
 #: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:299
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "Eén blok van verticaal uitgelijnde tekst veronderstellen"
 
 #: ../gtk/src/Recognizer.cc:310 ../qt/src/Recognizer.cc:300
 msgid "Assume a single uniform block of text"
-msgstr ""
+msgstr "Eén uniform tekstblok veronderstellen"
 
 #: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:301
 msgid "Assume a line of text"
-msgstr ""
+msgstr "Tekstregel veronderstellen"
 
 #: ../gtk/src/Recognizer.cc:312 ../qt/src/Recognizer.cc:302
 msgid "Assume a single word"
-msgstr ""
+msgstr "Los woord veronderstellen"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:303
 msgid "Assume a single word in a circle"
-msgstr ""
+msgstr "Eén woord in een cirkel veronderstellen"
 
 #: ../gtk/src/Recognizer.cc:314 ../qt/src/Recognizer.cc:304
 msgid "Sparse text in no particular order"
-msgstr ""
+msgstr "Schaarse tekst, niet in een bepaalde volgorde"
 
 #: ../gtk/src/Recognizer.cc:315 ../qt/src/Recognizer.cc:305
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "Schaarse tekst met oriëntatie- en scriptdetectie"
 
 #: ../gtk/src/Recognizer.cc:330 ../qt/src/Recognizer.cc:316
 msgid "Page segmentation mode"
-msgstr ""
+msgstr "Paginasegmentatiemodus"
 
 #: ../gtk/src/Recognizer.cc:336 ../qt/src/Recognizer.cc:323
 msgid "Manage languages..."
-msgstr ""
+msgstr "Talen beheren..."
 
 #: ../gtk/src/Recognizer.cc:392 ../qt/src/Recognizer.cc:383
 msgid "Current selection"
-msgstr ""
+msgstr "Huidige selectie"
 
 #: ../gtk/src/Recognizer.cc:470 ../qt/src/Recognizer.cc:462
 msgid "Recognizing page %1 (%2 of %3)"
-msgstr ""
+msgstr "Bezig met herkennen van pagina %1 (%2 van %3)"
 
 #: ../gtk/src/Recognizer.cc:475 ../qt/src/Recognizer.cc:468
 msgid ""
 "\n"
 "- Page %1: failed to render page"
 msgstr ""
+"\n"
+"-Pagina %1: het renderen van de pagina is mislukt"
 
 #: ../gtk/src/Recognizer.cc:506 ../gtk/src/Recognizer.cc:535
 #: ../gtk/src/Recognizer.cc:548 ../qt/src/Recognizer.cc:498
 #: ../qt/src/Recognizer.cc:527 ../qt/src/Recognizer.cc:540
 msgid "Recognizing..."
-msgstr ""
+msgstr "Bezig met herkennen..."
 
 #: ../gtk/src/Recognizer.cc:510 ../gtk/src/Recognizer.cc:518
 #: ../qt/src/Recognizer.cc:502 ../qt/src/Recognizer.cc:510
 msgid "Recognition errors occurred"
-msgstr ""
+msgstr "Herkenningsfouten"
 
 #: ../gtk/src/Recognizer.cc:510 ../qt/src/Recognizer.cc:502
 msgid "The following errors occurred:%1"
-msgstr ""
+msgstr "De volgende fouten zijn opgetreden: %1"
 
 #: ../gtk/src/Recognizer.cc:518 ../qt/src/Recognizer.cc:510
 msgid "Failed to initialize tesseract"
-msgstr ""
+msgstr "Initialiseren van tesseract is mislukt"
 
 #: ../gtk/src/scanner/ScannerSane.cc:84 ../gtk/src/scanner/ScannerTwain.cc:288
 #: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
 msgid "Scan canceled"
-msgstr ""
+msgstr "Scannen geannuleerd"
 
 #: ../gtk/src/scanner/ScannerSane.cc:159 ../gtk/src/scanner/ScannerTwain.cc:186
 #: ../qt/src/scanner/ScannerSane.cc:159 ../qt/src/scanner/ScannerTwain.cc:178
 msgid "No scanner specified"
-msgstr ""
+msgstr "Geen scanner opgegeven"
 
 #: ../gtk/src/scanner/ScannerSane.cc:168 ../gtk/src/scanner/ScannerTwain.cc:195
 #: ../qt/src/scanner/ScannerSane.cc:168 ../qt/src/scanner/ScannerTwain.cc:187
 msgid "Unable to connect to scanner"
-msgstr ""
+msgstr "Verbinden met scanner is mislukt"
 
 #: ../gtk/src/scanner/ScannerSane.cc:403 ../gtk/src/scanner/ScannerTwain.cc:266
 #: ../gtk/src/scanner/ScannerTwain.cc:292 ../qt/src/scanner/ScannerSane.cc:403
 #: ../qt/src/scanner/ScannerTwain.cc:258 ../qt/src/scanner/ScannerTwain.cc:290
 msgid "Unable to start scan"
-msgstr ""
+msgstr "Starten van scan is mislukt"
 
 #: ../gtk/src/scanner/ScannerSane.cc:411 ../gtk/src/scanner/ScannerSane.cc:461
 #: ../gtk/src/scanner/ScannerTwain.cc:318 ../qt/src/scanner/ScannerSane.cc:411
 #: ../qt/src/scanner/ScannerSane.cc:461 ../qt/src/scanner/ScannerTwain.cc:316
 msgid "Error communicating with scanner"
-msgstr ""
+msgstr "Fout tijdens communiceren met scanner"
 
 #: ../gtk/src/scanner/ScannerSane.cc:520 ../qt/src/scanner/ScannerSane.cc:517
 msgid "Failed to save image"
-msgstr ""
+msgstr "Afbeelding opslaan mislukt"
 
 #: ../gtk/src/scanner/ScannerSane.cc:800 ../qt/src/scanner/ScannerSane.cc:797
 msgid "Operation is cancelled."
-msgstr ""
+msgstr "De operatie is geannuleerd."
 
 #: ../gtk/src/scanner/ScannerSane.cc:802 ../qt/src/scanner/ScannerSane.cc:799
 msgid "Device is busy."
-msgstr ""
+msgstr "Het apparaat is bezig."
 
 #: ../gtk/src/scanner/ScannerSane.cc:804 ../qt/src/scanner/ScannerSane.cc:801
 msgid "Cover is opened."
-msgstr ""
+msgstr "De klep is geopend."
 
 #: ../gtk/src/scanner/ScannerSane.cc:806 ../qt/src/scanner/ScannerSane.cc:803
 msgid "Document feeder jammed."
-msgstr ""
+msgstr "De documentinvoer is geblokkeerd."
 
 #: ../gtk/src/scanner/ScannerSane.cc:808 ../qt/src/scanner/ScannerSane.cc:805
 msgid "Document feeder out of documents."
-msgstr ""
+msgstr "De documentinvoer bevat geen documenten meer."
 
 #: ../gtk/src/scanner/ScannerSane.cc:810 ../qt/src/scanner/ScannerSane.cc:807
 msgid "Access to scanner is denied."
-msgstr ""
+msgstr "Scannertoegang is geweigerd."
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid "PDFs with text"
-msgstr ""
+msgstr "PDF-bestanden met tekst"
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid ""
 "These PDF files already contain text:\n"
 "%1"
 msgstr ""
+"Deze PDF-bestanden bevatten al tekst:\n"
+"%1"
 
 #: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
 msgid "Unable to open files"
-msgstr ""
+msgstr "Openen van bestanden mislukt"
 
 #: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
 msgid "The following files could not be opened:%1"
-msgstr ""
+msgstr "De volgende bestanden kunnen niet worden geopend: %1"
 
 #: ../gtk/src/SourceManager.cc:141 ../qt/src/SourceManager.cc:143
 msgid "Enter password for file '%1':"
-msgstr ""
+msgstr "Voer het wachtwoord in voor het bestand '%1':"
 
 #: ../gtk/src/SourceManager.cc:197 ../qt/src/SourceManager.cc:214
 msgid "Images and PDFs"
-msgstr ""
+msgstr "Afbeeldingen en PDF-bestanden"
 
 #: ../gtk/src/SourceManager.cc:202 ../qt/src/SourceManager.cc:215
 msgid "Select Files"
-msgstr ""
+msgstr "Bestanden selecteren"
 
 #: ../gtk/src/SourceManager.cc:208 ../qt/src/SourceManager.cc:226
 msgid "Clipboard Error"
-msgstr ""
+msgstr "Klembordfout"
 
 #: ../gtk/src/SourceManager.cc:208 ../qt/src/SourceManager.cc:226
 msgid "Failed to read the clipboard."
-msgstr ""
+msgstr "Het uitlezen van het klembord is mislukt."
 
 #: ../gtk/src/SourceManager.cc:212 ../qt/src/SourceManager.cc:230
 #: ../qt/src/SourceManager.cc:236
 msgid "Pasted %1"
-msgstr ""
+msgstr "%1 geplakt"
 
 #: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
 msgid "Screenshot Error"
-msgstr ""
+msgstr "Schermafbeeldingsfout"
 
 #: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
 msgid "Failed to take screenshot."
-msgstr ""
+msgstr "Het maken van een schermafbeelding is mislukt."
 
 #: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:247
 msgid "Screenshot %1"
-msgstr ""
+msgstr "Schermafbeelding %1"
 
 #: ../gtk/src/SourceManager.cc:233 ../qt/src/SourceManager.cc:252
 msgid "Saving image..."
-msgstr ""
+msgstr "Bezig met opslaan van afbeelding..."
 
 #: ../gtk/src/SourceManager.cc:240 ../qt/src/SourceManager.cc:265
 msgid "Cannot Write File"
-msgstr ""
+msgstr "Bestand kan niet worden geschreven"
 
 #: ../gtk/src/SourceManager.cc:240 ../qt/src/SourceManager.cc:265
 msgid "Could not write to %1."
-msgstr ""
+msgstr "Er kan niet worden geschreven naar %1."
 
 #: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
 msgid "Delete File?"
-msgstr ""
+msgstr "Bestand verwijderen?"
 
 #: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
 msgid "The following files will be deleted:%1"
-msgstr ""
+msgstr "De volgende bestanden worden verwijderd: %1"
 
 #: ../gtk/src/SourceManager.cc:332 ../qt/src/SourceManager.cc:338
 msgid "Missing File"
-msgstr ""
+msgstr "Ontbrekend bestand"
 
 #: ../gtk/src/SourceManager.cc:332 ../qt/src/SourceManager.cc:338
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
 msgstr ""
+"Het volgende bestand is verwijderd of verplaatst:\n"
+"%1"
 
 #: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:73
 msgid "Search for"
-msgstr ""
+msgstr "Zoeken naar"
 
 #: ../gtk/src/SubstitutionsManager.cc:34 ../qt/src/SubstitutionsManager.cc:73
 msgid "Replace with"
-msgstr ""
+msgstr "Vervangen door"
 
 #: ../gtk/src/SubstitutionsManager.cc:69 ../gtk/src/SubstitutionsManager.cc:103
 #: ../qt/src/SubstitutionsManager.cc:106 ../qt/src/SubstitutionsManager.cc:143
 msgid "Substitutions List"
-msgstr ""
+msgstr "Vervangingslijst"
 
 #: ../gtk/src/SubstitutionsManager.cc:70 ../qt/src/SubstitutionsManager.cc:106
 msgid "Open Substitutions List"
-msgstr ""
+msgstr "Vervangingslijst openen"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
 msgid "Error Reading File"
-msgstr ""
+msgstr "Fout tijdens lezen van bestand"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
 msgid "Unable to read '%1'."
-msgstr ""
+msgstr "'%1' kan niet worden gelezen."
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
 msgid "Errors Occurred Reading File"
-msgstr ""
+msgstr "Fouten opgetreden tijdens lezen van bestand"
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
 msgid "Some entries of the substitutions list could not be read."
-msgstr ""
+msgstr "Sommige items op de vervangingslijst kunnen niet worden gelezen."
 
 #: ../gtk/src/SubstitutionsManager.cc:104 ../qt/src/SubstitutionsManager.cc:143
 msgid "Save Substitutions List"
-msgstr ""
+msgstr "Vervangingslijst opslaan"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
 msgid "Error Saving File"
-msgstr ""
+msgstr "Fout bij opslaan van bestand"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
 msgid "Unable to write to '%1'."
-msgstr ""
+msgstr "Er kan niet worden geschreven naar '%1'."
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
 msgid "Save List?"
-msgstr ""
+msgstr "Lijst opslaan?"
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
 msgid "Do you want to save the current list?"
-msgstr ""
+msgstr "Wilt u de huidige lijst opslaan?"
 
 #: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:74
 msgid ""
@@ -1667,34 +1696,38 @@ msgid ""
 "manage the tesseract language packs, or switch to use the user tessdata path "
 "in the configuration dialog."
 msgstr ""
+"PackageKit is vereist voor het beheren van systeembreed geïnstalleerde "
+"tesseract-taalpakketten, maar is niet gevonden. Gebruik het pakketbeheer van "
+"uw systeem om de tesseract-taalpakketten te beheren of schakel over naar een "
+"gebruikerspad op het configuratiescherm."
 
 #: ../gtk/src/TessdataManager.cc:64 ../qt/src/TessdataManager.cc:79
 msgid "Fetching available languages"
-msgstr ""
+msgstr "Bezig met ophalen van beschikbare talen"
 
 #: ../gtk/src/TessdataManager.cc:69 ../gtk/src/TessdataManager.cc:90
 #: ../gtk/src/TessdataManager.cc:122 ../qt/src/TessdataManager.cc:84
 #: ../qt/src/TessdataManager.cc:96 ../qt/src/TessdataManager.cc:129
 msgid "Failed to fetch list of available languages: %1"
-msgstr ""
+msgstr "Het ophalen van de lijst met beschikbare talen is mislukt: %1"
 
 #: ../gtk/src/TessdataManager.cc:101 ../gtk/src/TessdataManager.cc:130
 #: ../qt/src/TessdataManager.cc:107 ../qt/src/TessdataManager.cc:116
 #: ../qt/src/TessdataManager.cc:138 ../qt/src/TessdataManager.cc:149
 msgid "Parsing error: %1"
-msgstr ""
+msgstr "Verwerkingsfout: %1"
 
 #: ../gtk/src/TessdataManager.cc:192 ../qt/src/TessdataManager.cc:193
 msgid "Applying changes..."
-msgstr ""
+msgstr "Bezig met toepassen van wijzigingen..."
 
 #: ../gtk/src/TessdataManager.cc:253 ../qt/src/TessdataManager.cc:238
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Het creëren van een map voor de tessdata-bestanden is mislukt."
 
 #: ../gtk/src/TessdataManager.cc:262 ../qt/src/TessdataManager.cc:246
 msgid "Downloading %1..."
-msgstr ""
+msgstr "Bezig met downloaden van %1..."
 
 #: ../gtk/src/TessdataManager.cc:282
 msgid ""
@@ -1706,22 +1739,29 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"De volgende bestanden kunnen niet worden gedownload of verwijderd:\n"
+"%1\n"
+"\n"
+"Controleer uw internetverbinding en maprechten.\n"
+"\n"
+"Tip: als u geen schrijfrechten hebt in systeemmappen, dan kunt u het pad "
+"wijzigen in de instellingen."
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: ../gtk/src/Utils.cc:67
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 #: ../gtk/src/Utils.cc:76
 msgid "Discard"
-msgstr ""
+msgstr "Verwerpen"
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
-msgstr ""
+msgstr "Over gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
 msgid ""
@@ -1729,26 +1769,29 @@ msgid ""
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
+"<html><head/><body><p>&nbsp;</p><p>Een grafisch front-end voor tesseract-"
+"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Website</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
-msgstr ""
+msgstr "Met dank aan"
 
 #: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
-msgstr ""
+msgstr "Licentie"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
-msgstr ""
+msgstr "Systeem-tekencodering"
 
 #: ../qt/data/ConfigDialog.ui.h:15
 msgid "UTF-8"
-msgstr ""
+msgstr "UTF-8"
 
 #: ../qt/data/ConfigDialog.ui.h:19
 msgid "Text file encoding:"
-msgstr ""
+msgstr "Tekstbestand-tekencodering:"
 
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
@@ -1760,111 +1803,118 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">De applicatie is "
+"gecrashed</span></p><p>Excuses voor het ongemak. Als u wilt helpen om de "
+"applicatie te verbeteren, overweeg dan om het probleem te melden via <a href="
+"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Probeer te omschrijven wat u aan het doen was "
+"voordat de applicatie crashte. Voeg ook onderstaande informatie bij. "
+"Bedankt.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
-msgstr ""
+msgstr "Flatbed"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "ADF Front"
-msgstr ""
+msgstr "ADF Front"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Back"
-msgstr ""
+msgstr "ADF Back"
 
 #: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Duplex"
-msgstr ""
+msgstr "ADF Duplex"
 
 #. Remove & from some labels which designer insists in adding
 #: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
 msgid "Sources"
-msgstr ""
+msgstr "Bronnen"
 
 #: ../qt/data/MainWindow.ui.h:22
 msgid "Zoom In"
-msgstr ""
+msgstr "Inzoomen"
 
 #: ../qt/data/MainWindow.ui.h:24
 msgid "Zoom Out"
-msgstr ""
+msgstr "Uitzoomen"
 
 #: ../qt/data/MainWindow.ui.h:26
 msgid "Normal Size"
-msgstr ""
+msgstr "Normale grootte"
 
 #: ../qt/data/MainWindow.ui.h:28
 msgid "Best Fit"
-msgstr ""
+msgstr "Best passend"
 
 #: ../qt/data/MainWindow.ui.h:30
 msgid "Rotate Left"
-msgstr ""
+msgstr "Naar links draaien"
 
 #: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate left"
-msgstr ""
+msgstr "Naar links draaien"
 
 #: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate Right"
-msgstr ""
+msgstr "Naar rechts draaien"
 
 #: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate right"
-msgstr ""
+msgstr "Naar rechts draaien"
 
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Image Controls"
-msgstr ""
+msgstr "Afbeeldingshulpmiddelen"
 
 #: ../qt/data/MainWindow.ui.h:36
 msgid "Autodetect Layout"
-msgstr ""
+msgstr "Indeling automatisch detecteren"
 
 #: ../qt/data/MainWindow.ui.h:38
 msgid "Toggle Output Pane"
-msgstr ""
+msgstr "Uitvoerpaneel weergeven/verbergen"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
-msgstr ""
+msgstr "Back-end:"
 
 #: ../qt/data/PdfExportDialog.ui.h:6
 msgid "Portrait"
-msgstr ""
+msgstr "Portret"
 
 #: ../qt/data/PdfExportDialog.ui.h:7
 msgid "Landscape"
-msgstr ""
+msgstr "Landschap"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:142
 msgid "Failed to write to file"
-msgstr ""
+msgstr "Schrijven naar bestand mislukt"
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:56
 msgid "Open hOCR file"
-msgstr ""
+msgstr "hOCR-bestand openen"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:57
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:58
 msgid "Save as hOCR text"
-msgstr ""
+msgstr "Opslaan als hOCR-tekst"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:79
 #: ../qt/src/Ui_OutputEditorText.hh:106
 msgid "Find and Replace"
-msgstr ""
+msgstr "Zoeken en vervangen"
 
 #: ../qt/src/MainWindow.cc:540
 msgid "Could not read %1: %2"
-msgstr ""
+msgstr "%1 kan niet worden gelezen: %2"
 
 #: ../qt/src/MainWindow.cc:573
 msgid "The following dictionary files were installed:%1"
-msgstr ""
+msgstr "De volgende woordenboekbestanden zijn geïnstalleerd: %1"
 
 #: ../qt/src/TessdataManager.cc:268
 msgid ""
@@ -1875,35 +1925,42 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"De volgende bestanden kunnen niet worden gedownload of verwijderd:\n"
+"%1\n"
+"\n"
+"Controleer uw internetverbinding en maprechten.\n"
+"\n"
+"Tip: als u geen schrijfrechten hebt in systeemmappen, dan kunt u het pad "
+"wijzigen in de instellingen."
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
-msgstr ""
+msgstr "Uitvoer"
 
 #: ../qt/src/Ui_MainWindow.hh:134
 msgid "OCR mode:"
-msgstr ""
+msgstr "OCR-modus:"
 
 #: ../qt/src/Ui_MainWindow.hh:208
 msgid "Remove Image"
-msgstr ""
+msgstr "Afbeelding verwijderen"
 
 #: ../qt/src/Ui_MainWindow.hh:211
 msgid "Delete Image"
-msgstr ""
+msgstr "Afbeelding verwijderen"
 
 #: ../qt/src/Ui_MainWindow.hh:214
 msgid "Clear List"
-msgstr ""
+msgstr "Lijst wissen"
 
 #: ../qt/src/Ui_OutputEditorText.hh:101
 msgid "Strip Line Breaks"
-msgstr ""
+msgstr "Regelafbrekingen verwijderen"
 
 #: ../qt/src/Ui_OutputEditorText.hh:115
 msgid "Save Output"
-msgstr ""
+msgstr "Uitvoer opslaan"
 
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
-msgstr ""
+msgstr "Uitvoer wissen"
