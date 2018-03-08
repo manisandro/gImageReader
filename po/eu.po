@@ -8,64 +8,67 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-22 00:10+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2018-03-09 15:34+0000\n"
+"Last-Translator: Aitor Beriain <beriain@bitmessage.ch>\n"
+"Language-Team: Basque "
+"<https://hosted.weblate.org/projects/gimagereader/translations/eu/>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.20-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr ""
+msgstr "OCR aplikazioa"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
 msgid "Redetect Languages"
-msgstr ""
+msgstr "Hizkuntzak berriz antzeman"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
 msgid "Manage Languages"
-msgstr ""
+msgstr "Hizkuntzak kudeatu"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
 msgid "Preferences"
-msgstr ""
+msgstr "Hobespenak"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:470 ../qt/src/MainWindow.cc:467
 #: ../qt/src/Ui_MainWindow.hh:177
 msgid "Help"
-msgstr ""
+msgstr "Laguntza"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:180
 msgid "About"
-msgstr ""
+msgstr "Honi buruz"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
-msgstr ""
+msgstr "Irten"
 
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:42
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
 #: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
 #: ../qt/data/ConfigDialog.ui.h:26
 msgid "OK"
-msgstr ""
+msgstr "Ados"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
-msgstr ""
+msgstr "Irteera panelaren orientazioa:"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontala"
 
 #: ../gtk/data/ConfigDialog.ui.h:6
 msgid "Vertical"
-msgstr ""
+msgstr "Bertikala"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
@@ -73,7 +76,7 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr ""
+msgstr "Automatikoki programaren bertsio berririk dagoen egiaztatu"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
@@ -89,7 +92,7 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
-msgstr ""
+msgstr "Aurrizkia"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
@@ -97,15 +100,15 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
-msgstr ""
+msgstr "ISO kodea"
 
 #: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:24
 msgid "The name of the language"
-msgstr ""
+msgstr "Hizkuntzaren izena"
 
 #: ../gtk/data/ConfigDialog.ui.h:16 ../qt/data/ConfigDialog.ui.h:25
 msgid "Name"
-msgstr ""
+msgstr "Izena"
 
 #: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:41
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
@@ -113,15 +116,15 @@ msgstr ""
 #: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
 #: ../qt/data/MainWindow.ui.h:12
 msgid "Cancel"
-msgstr ""
+msgstr "Utzi"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
-msgstr ""
+msgstr "Irteera panelaren letra mota:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
-msgstr ""
+msgstr "Lehenetsia"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
@@ -153,7 +156,7 @@ msgstr ""
 
 #: ../gtk/data/CrashHandler.ui.h:2
 msgid "<b>The application has crashed</b>"
-msgstr ""
+msgstr "<b>Aplikazioa gelditu egin da</b>"
 
 #: ../gtk/data/CrashHandler.ui.h:4
 #, no-c-format
@@ -171,11 +174,11 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
-msgstr ""
+msgstr "Oraingo orria biratu"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
-msgstr ""
+msgstr "Orri guztiak biratu"
 
 #. Sources toolbar
 #: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:191
@@ -184,83 +187,83 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:192
 msgid "Paste"
-msgstr ""
+msgstr "Itsasi"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:193
 msgid "Take Screenshot"
-msgstr ""
+msgstr "Pantailaren argazkia egin"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:204
 msgid "Add images"
-msgstr ""
+msgstr "Irudiak gehitu"
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/src/Ui_MainWindow.hh:203
 msgid "Add Images"
-msgstr ""
+msgstr "Irudiak gehitu"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:209
 msgid "Remove image from list"
-msgstr ""
+msgstr "Irudia zerrendatik kendu"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/src/Ui_MainWindow.hh:212
 msgid "Delete image"
-msgstr ""
+msgstr "Irudia ezabatu"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:215
 msgid "Clear list"
-msgstr ""
+msgstr "Zerrenda garbitu"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
-msgstr ""
+msgstr "Fitxategiak"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:8
 msgid "Device:"
-msgstr ""
+msgstr "Gailua:"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:59
 msgid "Refresh"
-msgstr ""
+msgstr "Freskatu"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:9
 msgid "Output:"
-msgstr ""
+msgstr "Irteera:"
 
 #: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:13
 msgid "Mode:"
-msgstr ""
+msgstr "Modua:"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExporter.cc:313
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:347
 msgid "Color"
-msgstr ""
+msgstr "Kolorea"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../gtk/src/hocr/HOCRPdfExporter.cc:316
 #: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:349
 #: ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "Grayscale"
-msgstr ""
+msgstr "Gris eskala"
 
 #: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:10
 msgid "Resolution:"
-msgstr ""
+msgstr "Bereizmena:"
 
 #: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:11
 msgid "Scan"
-msgstr ""
+msgstr "Eskaneatu"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:16
 msgid "Source:"
-msgstr ""
+msgstr "Iturria:"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
-msgstr ""
+msgstr "Eskuratu"
 
 #: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
-msgstr ""
+msgstr "Distira"
 
 #: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
