@@ -616,17 +616,21 @@ HOCRPdfExporter::PDFPainter* HOCRPdfExporter::createPoDoFoPrinter(const QString&
 #endif
 
 	try {
-		PoDoFo::PdfEncrypt* encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(ui.lineEditPasswordOpen->text().toStdString(), ui.lineEditPasswordOpen->text().toStdString(),
-		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
-		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
-		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
-		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
-		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
-		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
-		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
-		                              PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
-		                              PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
-
+		const std::string password = ui.lineEditPasswordOpen->text().toStdString();
+		PoDoFo::PdfEncrypt* encrypt = nullptr;
+		if(!password.empty()) {
+			encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(password,
+			          password,
+			          PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Print |
+			          PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Edit |
+			          PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Copy |
+			          PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_EditNotes |
+			          PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_FillAndSign |
+			          PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_Accessible |
+			          PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_DocAssembly |
+			          PoDoFo::PdfEncrypt::EPdfPermissions::ePdfPermissions_HighPrint,
+			          PoDoFo::PdfEncrypt::EPdfEncryptAlgorithm::ePdfEncryptAlgorithm_RC4V2);
+		}
 		PoDoFo::EPdfVersion pdfVersion = static_cast<PoDoFo::EPdfVersion>(ui.comboBoxPdfVersion->itemData(ui.comboBoxPdfVersion->currentIndex()).toInt());
 		document = new PoDoFo::PdfStreamedDocument(filename.toLocal8Bit().data(), pdfVersion, encrypt);
 	} catch(PoDoFo::PdfError& err) {
