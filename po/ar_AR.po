@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-22 00:10+0100\n"
-"PO-Revision-Date: 2018-03-15 11:48+0000\n"
+"PO-Revision-Date: 2018-03-16 12:34+0000\n"
 "Last-Translator: Alaa Sayed <bmwmy@hotmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ar_AR/>\n"
@@ -157,7 +157,7 @@ msgstr "إعادة إنشاء سجلات الأخطاء"
 
 #: ../gtk/data/CrashHandler.ui.h:2
 msgid "<b>The application has crashed</b>"
-msgstr "حدث خطأ مفاجئ في البرنامج"
+msgstr "<b>حدث خطأ مفاجئ في البرنامج</b>"
 
 #: ../gtk/data/CrashHandler.ui.h:4
 #, no-c-format
