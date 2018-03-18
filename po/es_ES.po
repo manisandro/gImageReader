@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-22 00:10+0100\n"
-"PO-Revision-Date: 2018-03-14 21:24+0100\n"
-"Last-Translator: micrococo\n"
-"Language-Team: Spanish\n"
+"PO-Revision-Date: 2018-03-19 21:49+0000\n"
+"Last-Translator: Pablo Hinojosa <pablohn6@gmail.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gimagereader/"
+"translations/es/>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Weblate 2.20-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -253,7 +254,7 @@ msgstr "Escala de grises"
 
 #: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:10
 msgid "Resolution:"
-msgstr "Resolución"
+msgstr "Resolución:"
 
 #: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:11
 msgid "Scan"
@@ -1012,8 +1013,8 @@ msgstr "Salida no válida"
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
 msgid "Cannot overwrite a file which is a source image of this document."
 msgstr ""
-"No se puede sobrescribir un fichero que sea una imagen original de este"
-" documento"
+"No se puede sobrescribir un fichero que sea una imagen original de este "
+"documento."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
 msgid "Failed to create output"
@@ -1194,7 +1195,7 @@ msgstr "Fallo al guardar salida"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:951 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/OutputEditorHOCR.cc:817 ../qt/src/OutputEditorText.cc:246
 msgid "Check that you have writing permissions in the selected folder."
-msgstr "Compruebe que tiene permiso de escritura en el directorio seleccionado"
+msgstr "Compruebe que tiene permiso de escritura en el directorio seleccionado."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1010 ../gtk/src/OutputEditorText.cc:296
 #: ../qt/src/hocr/OutputEditorHOCR.cc:869 ../qt/src/OutputEditorText.cc:259
@@ -1339,7 +1340,7 @@ msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
-msgstr "Quitando los saltos de línea"
+msgstr "Quitando los saltos de línea..."
 
 #: ../gtk/src/OutputEditorText.cc:162
 msgid "Check spelling"
@@ -1528,7 +1529,7 @@ msgstr "La operación se ha cancelado."
 
 #: ../gtk/src/scanner/ScannerSane.cc:802 ../qt/src/scanner/ScannerSane.cc:799
 msgid "Device is busy."
-msgstr "El dispositivo está ocupado:"
+msgstr "El dispositivo está ocupado."
 
 #: ../gtk/src/scanner/ScannerSane.cc:804 ../qt/src/scanner/ScannerSane.cc:801
 msgid "Cover is opened."
@@ -1597,7 +1598,7 @@ msgstr "Error al captura la pantalla"
 
 #: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
 msgid "Failed to take screenshot."
-msgstr "Fallo al tomar captura de pantalla"
+msgstr "Fallo al tomar captura de pantalla."
 
 #: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:247
 msgid "Screenshot %1"
@@ -1699,7 +1700,7 @@ msgstr ""
 "del sistema, pero no se encontró. Por favor, use el gestor de paquetes de su "
 "sistema para gestionar los paquetes de idioma de tesseract, o cambie la "
 "configuración para usar las rutas de usuario para localizar los ficheros "
-"tessdata"
+"tessdata."
 
 #: ../gtk/src/TessdataManager.cc:64 ../qt/src/TessdataManager.cc:79
 msgid "Fetching available languages"
