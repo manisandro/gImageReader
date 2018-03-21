@@ -128,6 +128,7 @@ MainWindow::MainWindow(const QStringList& files)
 	m_sourceManager = new SourceManager(ui);
 
 	ui.centralwidget->layout()->addWidget(m_displayer);
+	ui.toolBarMain->setLayoutDirection(Qt::LeftToRight);
 
 	m_idleActions.setExclusive(false);
 	m_idleActions.addAction(ui.actionZoomIn);
