@@ -68,8 +68,6 @@ private:
 
 	LangViewColumns m_langViewCols;
 
-	static std::multimap<Glib::ustring, Glib::ustring> buildLanguageCultureTable();
-
 	void addLanguage();
 	void removeLanguage();
 	void langTableSelectionChanged();

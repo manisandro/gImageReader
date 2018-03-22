@@ -58,9 +58,6 @@ private:
 	Ui::ConfigDialog ui;
 	QFontDialog m_fontDialog;
 
-	static QMultiMap<QString, QString> buildLanguageCultureTable();
-
-
 private slots:
 	void addLanguage();
 	void removeLanguage();
