@@ -33,114 +33,138 @@
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
 
+// See https://en.wikipedia.org/wiki/List_of_language_names
 const QList<Config::Lang> Config::LANGUAGES = {
 	// {ISO 639-2, ISO 639-1, name}
 	{"afr",      "af", QString::fromUtf8("Afrikaans")}, // Afrikaans
-	{"amh",      "am", QString::fromUtf8("\u12a0\u121b\u122d\u129b")}, // Amharic
-	{"ara",      "ar", QString::fromUtf8("\u0627\u0644\u0639\u0631\u0628\u064a\u0629")}, // Arabic
-	{"asm",      "as", QString::fromUtf8("\u0985\u09b8\u09ae\u09c0\u09af\u09bc\u09be")}, // Assamese
-	{"aze",      "az", QString::fromUtf8("\u0622\u0630\u0631\u0628\u0627\u06cc\u062c\u0627\u0646")}, // Azerbaijani
-	{"aze_cyrl", "az", QString::fromUtf8("Az\u0259rbaycan dili")}, // Azerbaijani (Cyrillic)
-	{"bel",      "be", QString::fromUtf8("\u0431\u0435\u043b\u0430\u0440\u0443\u0441\u043a\u0430\u044f \u043c\u043e\u0432\u0430")}, // Belarusian
-	{"ben",      "bn", QString::fromUtf8("\u09ac\u09be\u0982\u09b2\u09be")}, // Bengali
-	{"bod",      "bo", QString::fromUtf8("\u0f56\u0f7c\u0f51\u0f0b\u0f61\u0f72\u0f42")}, // "Tibetan (Standard)"
-	{"bos",      "bs", QString::fromUtf8("Bosanski jezik")}, // Bosnian
-	{"bul",      "bg", QString::fromUtf8("\u0431\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438 \u0435\u0437\u0438\u043a")}, // Bulgarian
-	{"cat",      "ca", QString::fromUtf8("Catal\u00e0")}, // Catalan
-	{"ceb",      "",   QString::fromUtf8("Cebuano")}, // Cebuano
-	{"ces",      "cs", QString::fromUtf8("\u010ce\u0161tina")}, // Czech
-	{"chi_sim",  "zh_CN", QString::fromUtf8("\u7b80\u4f53\u5b57")}, // Chinese (Simplified)
+	{"amh",      "am", QString::fromUtf8("\u12A3\u121B\u122D\u129B")}, // Amharic
+	{"ara",      "ar", QString::fromUtf8("\u0627\u0644\u0644\u063A\u0629 \u0627\u0644\u0639\u0631\u0628\u064A\u0629")}, // Arabic
+	{"asm",      "as", QString::fromUtf8("\u0985\u09B8\u09AE\u09C0\u09AF\u09BC\u09BE")}, // Assamese
+	{"aze",      "az", QString::fromUtf8("\u0622\u0630\u0631\u0628\u0627\u06CC\u062C\u0627\u0646 \u062F\u06CC\u0644\u06CC")}, // Azerbaijani
+	{"aze_cyrl", "az", QString::fromUtf8("Az\u0259rbaycanca")}, // Azerbaijani (Cyrillic)
+	{"bel",      "be", QString::fromUtf8("\u0411\u0435\u043B\u0430\u0440\u0443\u0441\u043A\u0430\u044F")}, // Belarusian
+	{"ben",      "bn", QString::fromUtf8("\u09AC\u09BE\u0982\u09B2\u09BE")}, // Bengali
+	{"bod",      "bo", QString::fromUtf8("\u0F51\u0F56\u0F74\u0F66\u0F0B\u0F66\u0F90\u0F51\u0F0B")}, // "Tibetan (Standard)"
+	{"bos",      "bs", QString::fromUtf8("Bosanski")}, // Bosnian
+	{"bre",      "bs", QString::fromUtf8("Brezhoneg")}, // Breton
+	{"bul",      "bg", QString::fromUtf8("\u0431\u044A\u043B\u0433\u0430\u0440\u0441\u043A\u0438 \u0435\u0437\u0438\u043A")}, // Bulgarian
+	{"cat",      "ca", QString::fromUtf8("Catal\u00E0")}, // Catalan
+	{"ceb",      "",   QString::fromUtf8("Bisaya")}, // Cebuano
+	{"ces",      "cs", QString::fromUtf8("\u010Ce\u0161tina")}, // Czech
+	{"chi_sim",  "zh_CN", QString::fromUtf8("\u7b80\u4f53\u5b57 ")}, // Chinese (Simplified)
+	{"chi_sim_vert",  "zh_CN", QString::fromUtf8("\u7b80\u4f53\u5b57 \u7EB5")}, // Chinese (Simplified, Vertical)
 	{"chi_tra",  "zh_TW", QString::fromUtf8("\u7e41\u9ad4\u5b57")}, // Chinese (Traditional)
-	{"chr",      "",   QString::fromUtf8("\u13e3\u13b3\u13a9 \u13a6\u13ec\u13c2\u13af\u13cd\u13d7")}, // Cherokee
+	{"chi_tra_vert",  "zh_TW", QString::fromUtf8("\u7e41\u9ad4\u5b57 \u7EB5")}, // Chinese (Traditional, Vertical)
+	{"chr",      "",   QString::fromUtf8("\u13E3\u13B3\u13A9")}, // Cherokee
+	{"cos",      "co", QString::fromUtf8("Corsu")}, // Corsican
 	{"cym",      "cy", QString::fromUtf8("Cymraeg")}, // Welsh
 	{"dan",      "da", QString::fromUtf8("Dansk")}, // Danish
 	{"dan_frak", "da", QString::fromUtf8("Dansk (Fraktur)")}, // Danish (Fraktur)
 	{"deu",      "de", QString::fromUtf8("Deutsch")}, // German
 	{"deu_frak", "de", QString::fromUtf8("Deutsch (Fraktur)")}, // German (Fraktur)
-	{"dzo",      "dz", QString::fromUtf8("\u0f62\u0fab\u0f7c\u0f44\u0f0b\u0f41")}, // Dzongkha
-	{"ell",      "el", QString::fromUtf8("\u03b5\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac")}, // Greek
+	{"div",      "dv", QString::fromUtf8("\u078B\u07A8\u0788\u07AC\u0780\u07A8")}, // Dhivehi
+	{"dzo",      "dz", QString::fromUtf8("\u0F62\u0FAB\u0F7C\u0F44\u0F0B\u0F41\u0F0B")}, // Dzongkha
+	{"ell",      "el", QString::fromUtf8("\u0395\u03BB\u03BB\u03B7\u03BD\u03B9\u03BA\u03AC")}, // Greek
 	{"eng",      "en", QString::fromUtf8("English")},
 	{"enm",      "en", QString::fromUtf8("Middle English (1100-1500)")}, // Middle English (1100-1500)
 	{"epo",      "eo", QString::fromUtf8("Esperanto")}, // Esperanto
 	{"equ",      "",   QString::fromUtf8("Math / Equations")}, // Math / equation
-	{"est",      "et", QString::fromUtf8("Eesti keel")}, // Estonian
+	{"est",      "et", QString::fromUtf8("Eesti")}, // Estonian
 	{"eus",      "eu", QString::fromUtf8("Euskara")}, // Basque
-	{"fas",      "fa", QString::fromUtf8("\u0641\u0627\u0631\u0633\u06cc")}, // Persian (Farsi)
-	{"fin",      "fi", QString::fromUtf8("Suomen kieli")}, // Finnish
-	{"fra",      "fr", QString::fromUtf8("Fran\u00e7ais")}, // French
+	{"fas",      "fa", QString::fromUtf8("\u0641\u0627\u0631\u0633\u06CC")}, // Persian (Farsi)
+	{"fao",      "fo", QString::fromUtf8("F\u00F8royskt")}, // Faroese
+	{"fil",      "",   QString::fromUtf8("Wikang Filipino")}, // Filipino
+	{"fin",      "fi", QString::fromUtf8("Suomi")}, // Finnish
+	{"fra",      "fr", QString::fromUtf8("Fran\u00E7ais")}, // French
 	{"frk",      "",   QString::fromUtf8("Frankish")}, // Frankish
-	{"frm",      "fr", QString::fromUtf8("Moyen fran\u00e7ais (ca. 1400-1600)")}, // Middle French (ca. 1400-1600)
+	{"frm",      "fr", QString::fromUtf8("Moyen fran\u00E7ais (ca. 1400-1600)")}, // Middle French (ca. 1400-1600)
+	{"fry",      "fy", QString::fromUtf8("Frysk")}, // Frisian (West)
+	{"gla",      "gd", QString::fromUtf8("G\u00E0idhlig")}, // Scottish Gaelic
 	{"gle",      "ga", QString::fromUtf8("Gaeilge")}, // Irish
 	{"glg",      "gl", QString::fromUtf8("Galego")}, // Galician
 	{"grc",      "el", QString::fromUtf8("\u1f19\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ae")}, // Ancient Greek
-	{"guj",      "gu", QString::fromUtf8("\u0a97\u0ac1\u0a9c\u0ab0\u0abe\u0aa4\u0ac0")}, // Gujarati
-	{"hat",      "ht", QString::fromUtf8("Krey\u00f2l ayisyen")}, // Haitian
-	{"heb",      "he", QString::fromUtf8("\u05e2\u05d1\u05e8\u05d9\u05ea")}, // Hebrew
-	{"hin",      "hi", QString::fromUtf8("\u0939\u093f\u0928\u094d\u0926\u0940")}, // Hindi
+	{"guj",      "gu", QString::fromUtf8("\u0A97\u0AC1\u0A9C\u0AB0\u0ABE\u0AA4\u0AC0")}, // Gujarati
+	{"hat",      "ht", QString::fromUtf8("Krey\u00F2l Ayisyen")}, // Haitian
+	{"heb",      "he", QString::fromUtf8("\u05E2\u05D1\u05E8\u05D9\u05EA\u202C")}, // Hebrew
+	{"hin",      "hi", QString::fromUtf8("\u0939\u093F\u0928\u094D\u0926\u0940")}, // Hindi
 	{"hrv",      "hr", QString::fromUtf8("Hrvatski")}, // Croatian
 	{"hun",      "hu", QString::fromUtf8("Magyar")}, // Hungarian
-	{"iku",      "iu", QString::fromUtf8("Inuktitut")}, // Inuktitut
-	{"ind",      "id", QString::fromUtf8("Bahasa indonesia")}, // Indonesian
-	{"isl",      "is", QString::fromUtf8("\u00cdslenska")}, // Icelandic
+	{"hye",      "hy", QString::fromUtf8("\u0540\u0561\u0575\u0565\u0580\u0565\u0576")}, // Armenian
+	{"iku",      "iu", QString::fromUtf8("\u1403\u14C4\u1483\u144E\u1450\u1466")}, // Inuktitut
+	{"ind",      "id", QString::fromUtf8("Bahasa Indonesia")}, // Indonesian
+	{"isl",      "is", QString::fromUtf8("\u00CDslenska")}, // Icelandic
 	{"ita",      "it", QString::fromUtf8("Italiano")}, // Italian
 	{"ita_old",  "it", QString::fromUtf8("Italiano (Antico)")}, // Italian (Old)
 	{"jav",      "jv", QString::fromUtf8("Basa jawa")}, // Javanese
-	{"jpn",      "ja", QString::fromUtf8("\u65e5\u672c\u8a9e")}, // Japanese
-	{"kan",      "kn", QString::fromUtf8("\u0c95\u0ca8\u0ccd\u0ca8\u0ca1")}, // Kannada
-	{"kat",      "ka", QString::fromUtf8("\u10e5\u10d0\u10e0\u10d7\u10e3\u10da\u10d8")}, // Georgian
+	{"jpn",      "ja", QString::fromUtf8("\uA9A7\uA9B1\uA997\uA9AE")}, // Japanese
+	{"jpn_vert", "ja", QString::fromUtf8("\uA9A7\uA9B1\uA997\uA9AE \u5782\u76F4")}, // Japanese (Vertical)
+	{"kan",      "kn", QString::fromUtf8("\u0C95\u0CA8\u0CCD\u0CA8\u0CA1")}, // Kannada
+	{"kat",      "ka", QString::fromUtf8("\u10E5\u10D0\u10E0\u10D7\u10E3\u10DA\u10D8")}, // Georgian
 	{"kat_old",  "ka", QString::fromUtf8("\u10d4\u10dc\u10d0\u10f2 \u10e5\u10d0\u10e0\u10d7\u10e3\u10da\u10d8")}, // Georgian (Old)
-	{"kaz",      "kk", QString::fromUtf8("\u049b\u0430\u0437\u0430\u049b \u0442\u0456\u043b\u0456")}, // Kazakh
-	{"khm",      "km", QString::fromUtf8("\u1781\u17d2\u1798\u17c2\u179a")}, // Khmer
+	{"kaz",      "kk", QString::fromUtf8("\u049A\u0430\u0437\u0430\u049B T\u0456\u043B\u0456")}, // Kazakh
+	{"khm",      "km", QString::fromUtf8("\u1797\u17B6\u179F\u17B6\u1781\u17D2\u1798\u17C2\u179A")}, // Khmer
 	{"kir",      "ky", QString::fromUtf8("\u041a\u044b\u0440\u0433\u044b\u0437\u0447\u0430")}, // Kyrgyz
-	{"kor",      "ko", QString::fromUtf8("\ud55c\uad6d\uc5b4")}, // Korean
-	{"kur",      "ku", QString::fromUtf8("\u0643\u0648\u0631\u062f\u06cc")}, // Kurdish
-	{"lao",      "lo", QString::fromUtf8("\u0e9e\u0eb2\u0eaa\u0eb2\u0ea5\u0eb2\u0ea7")}, // Lao
+	{"kor",      "ko", QString::fromUtf8("\uD55C\uAD6D\uC5B4")}, // Korean
+	{"kor_vert", "ko", QString::fromUtf8("\uD55C\uAD6D\uC5B4 \uC218\uC9C1\uC120")}, // Korean (Vertical)
+	{"kur",      "ku", QString::fromUtf8("Kurd\u00ED")}, // Kurdish
+	{"kur_ara",  "ku", QString::fromUtf8("\u06A9\u0648\u0631\u062F\u06CC")}, // Kurdish (Arabic)
+	{"lao",      "lo", QString::fromUtf8("\u0E9E\u0EB2\u0EAA\u0EB2\u0EA5\u0EB2\u0EA7")}, // Lao
 	{"lat",      "la", QString::fromUtf8("Latina")}, // Latin
-	{"lav",      "lv", QString::fromUtf8("Latvie\u0161u valoda")}, // Latvian
-	{"lit",      "lt", QString::fromUtf8("Lietuvos")}, // Lithuanian
-	{"mal",      "ml", QString::fromUtf8("\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02")}, // Malayalam
-	{"mar",      "mr", QString::fromUtf8("\u092e\u0930\u093e\u0920\u0940")}, // Marathi
-	{"mkd",      "mk", QString::fromUtf8("\u043c\u0430\u043a\u0435\u0434\u043e\u043d\u0441\u043a\u0438 \u0458\u0430\u0437\u0438\u043a")}, // Macedonian
+	{"lav",      "lv", QString::fromUtf8("Latvie\u0161u")}, // Latvian
+	{"lit",      "lt", QString::fromUtf8("Lietuvi\u0173")}, // Lithuanian
+	{"ltz",      "lb", QString::fromUtf8("L\u00EBtzebuergesch")}, // Luxembourgish
+	{"mal",      "ml", QString::fromUtf8("\u0D2E\u0D32\u0D2F\u0D3E\u0D33\u0D02")}, // Malayalam
+	{"mar",      "mr", QString::fromUtf8("\u092E\u0930\u093E\u0920\u0940")}, // Marathi
+	{"mkd",      "mk", QString::fromUtf8("M\u0430\u043A\u0435\u0434\u043E\u043D\u0441\u043A\u0438")}, // Macedonian
 	{"mlt",      "mt", QString::fromUtf8("Malti")}, // Maltese
-	{"msa",      "ms", QString::fromUtf8("Melayu")}, // Malay
-	{"mya",      "my", QString::fromUtf8("\u1017\u1019\u102c\u1005\u102c")}, // Burmese
-	{"nep",      "ne", QString::fromUtf8("\u0928\u0947\u092a\u093e\u0932\u0940")}, // Nepali
+	{"mon",      "mn", QString::fromUtf8("\u041C\u043E\u043D\u0433\u043E\u043B \u0425\u044D\u043B")}, // Mongolian
+	{"mri",      "mi", QString::fromUtf8("te Reo M\u0101ori")}, // Maori
+	{"msa",      "ms", QString::fromUtf8("Bahasa Melayu")}, // Malay
+	{"mya",      "my", QString::fromUtf8("\u1019\u103C\u1014\u103A\u1019\u102C\u1005\u102C")}, // Burmese
+	{"nep",      "ne", QString::fromUtf8("\u0928\u0947\u092A\u093E\u0932\u0940")}, // Nepali
 	{"nld",      "nl", QString::fromUtf8("Nederlands")}, // Dutch
 	{"nor",      "no", QString::fromUtf8("Norsk")}, // Norwegian
+	{"oci",      "oc", QString::fromUtf8("Occitan")}, // Occitan
 	{"ori",      "or", QString::fromUtf8("\u0b13\u0b21\u0b3c\u0b3f\u0b06")}, // Oriya
-	{"pan",      "pa", QString::fromUtf8("\u0a2a\u0a70\u0a1c\u0a3e\u0a2c\u0a40")}, // Panjabi
-	{"pol",      "pl", QString::fromUtf8("Polskie")}, // Polish
-	{"por",      "pt", QString::fromUtf8("Portugu\u00eas")}, // Portuguese
-	{"pus",      "ps", QString::fromUtf8("\u067e\u069a\u062a\u0648")}, // Pashto
-	{"ron",      "ro", QString::fromUtf8("Limba rom\u00e2n\u0103")}, // Romanian
-	{"rus",      "ru", QString::fromUtf8("\u0420\u0443\u0441\u0441\u043a\u0438\u0439")}, // Russian
-	{"san",      "sa", QString::fromUtf8("\u0938\u0902\u0938\u094d\u0915\u0943\u0924\u092e\u094d")}, // Sanskrit
-	{"sin",      "si", QString::fromUtf8("\u0dc3\u0dd2\u0d82\u0dc4\u0dbd")}, // Sinhala
-	{"slk",      "sk", QString::fromUtf8("Sloven\u010dina")}, // Slovak
-	{"slk_frak", "sk", QString::fromUtf8("Sloven\u010dina (Frakt\u00far)")}, // Slovak (Fraktur)
-	{"slv",      "sl", QString::fromUtf8("Sloven\u0161\u010dina")}, // Slovene
-	{"spa",      "es", QString::fromUtf8("Espa\u00f1ol")}, // Spanish
-	{"spa_old",  "es", QString::fromUtf8("Espa\u00f1ol (Antiguo)")}, // Spanish (Old)
+	{"pan",      "pa", QString::fromUtf8("\u0A2A\u0A70\u0A1C\u0A3E\u0A2C\u0A40")}, // Punjabi
+	{"pol",      "pl", QString::fromUtf8("Polski")}, // Polish
+	{"por",      "pt", QString::fromUtf8("Portugu\u00EAs")}, // Portuguese
+	{"pus",      "ps", QString::fromUtf8("\u067E\u069A\u062A\u0648")}, // Pashto
+	{"que",      "qu", QString::fromUtf8("Runasimi")}, // Quechuan
+	{"ron",      "ro", QString::fromUtf8("Rom\u00E2n\u0103")}, // Romanian
+	{"rus",      "ru", QString::fromUtf8("\u0420\u0443\u0441\u0441\u043A\u0438\u0439")}, // Russian
+	{"san",      "sa", QString::fromUtf8("\u0938\u0902\u0938\u094D\u0915\u0943\u0924\u092E\u094D")}, // Sanskrit
+	{"sin",      "si", QString::fromUtf8("\u0DC3\u0DD2\u0D82\u0DC4\u0DBD")}, // Sinhala
+	{"slk",      "sk", QString::fromUtf8("Sloven\u010Dina")}, // Slovak
+	{"slk_frak", "sk", QString::fromUtf8("Sloven\u010Dina (Frakt\u00far)")}, // Slovak (Fraktur)
+	{"slv",      "sl", QString::fromUtf8("Sloven\u0161\u010Dina")}, // Slovene
+	{"snd",      "sd", QString::fromUtf8("\u0633\u0646\u068C\u064A")}, // Sindhi
+	{"spa",      "es", QString::fromUtf8("Espa\u00F1ol")}, // Spanish
+	{"spa_old",  "es", QString::fromUtf8("Espa\u00F1ol (Antiguo)")}, // Spanish (Old)
 	{"sqi",      "sq", QString::fromUtf8("Shqip")}, // Albanian
-	{"srp",      "sr", QString::fromUtf8("\u0441\u0440\u043f\u0441\u043a\u0438 \u0458\u0435\u0437\u0438\u043a")}, // Serbian
+	{"srp",      "sr", QString::fromUtf8("\u0421\u0440\u043F\u0441\u043A\u0438")}, // Serbian
 	{"srp_latn", "sr", QString::fromUtf8("Srpski")}, // Serbian (Latin)
-	{"swa",      "sw", QString::fromUtf8("Swahili")}, // Swahili
+	{"sun",      "su", QString::fromUtf8("Sudanese")}, // Sudanese
+	{"swa",      "sw", QString::fromUtf8("Kiswahili")}, // Swahili
 	{"swe",      "sv", QString::fromUtf8("Svenska")}, // Swedish
 	{"syr",      "",   QString::fromUtf8("\u0720\u072b\u0722\u0710 \u0723\u0718\u072a\u071d\u071d\u0710")}, // Syriac
-	{"tam",      "ta", QString::fromUtf8("\u0ba4\u0bae\u0bbf\u0bb4\u0bcd")}, // Tamil
-	{"tel",      "te", QString::fromUtf8("\u0c24\u0c46\u0c32\u0c41\u0c17\u0c41")}, // Telugu
+	{"tam",      "ta", QString::fromUtf8("\u0BA4\u0BAE\u0BBF\u0BB4\u0BCD")}, // Tamil
+	{"tat",      "tt", QString::fromUtf8("Tatar\u00E7a")}, // Tatar
+	{"tel",      "te", QString::fromUtf8("\u0C24\u0C46\u0C32\u0C41\u0C17\u0C41")}, // Telugu
 	{"tgk",      "tg", QString::fromUtf8("\u0442\u043e\u04b7\u0438\u043a\u04e3")}, // Tajik
-	{"tgl",      "tl", QString::fromUtf8("Tagalog")}, // Tagalog
-	{"tha",      "th", QString::fromUtf8("\u0e44\u0e17\u0e22")}, // Thai
-	{"tir",      "ti", QString::fromUtf8("\u1275\u130d\u122d\u129b")}, // Tigrinya
-	{"tur",      "tr", QString::fromUtf8("T\u00fcrk\u00e7e")}, // Turkish
-	{"uig",      "ug", QString::fromUtf8("\u0626\u06c7\u064a\u063a\u06c7\u0631\u0686\u06d5\u200e")}, // Uyghur
-	{"ukr",      "uk", QString::fromUtf8("\u0443\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430 \u043c\u043e\u0432\u0430")}, // Ukrainian
-	{"urd",      "ur", QString::fromUtf8("\u0627\u0631\u062f\u0648")}, // Urdu
-	{"uzb",      "uz", QString::fromUtf8("O\u02bbzbek")}, // Uzbek
-	{"uzb_cyrl", "uz", QString::fromUtf8("\u040e\u0437\u0431\u0435\u043a")}, // Uzbek (Cyrillic)
-	{"vie",      "vi", QString::fromUtf8("Vi\u1ec7t Nam")}, // Vietnamese
-	{"yid",      "yi", QString::fromUtf8("\u05d9\u05d9\u05b4\u05d3\u05d9\u05e9")}, // Yiddish
+	{"tgl",      "tl", QString::fromUtf8("\u170A\u170A\u170C\u1712")}, // Tagalog
+	{"tha",      "th", QString::fromUtf8("\u0E20\u0E32\u0E29\u0E32\u0E44\u0E17\u0E22")}, // Thai
+	{"tir",      "ti", QString::fromUtf8("\u1275\u130D\u122D\u129B")}, // Tigrinya
+	{"ton",      "to", QString::fromUtf8("Lea faka-Tonga")}, // Tongan
+	{"tur",      "tr", QString::fromUtf8("T\u00FCrk\u00E7e")}, // Turkish
+	{"uig",      "ug", QString::fromUtf8("\u0626\u06C7\u064A\u063A\u06C7\u0631 \u062A\u0649\u0644\u0649")}, // Uyghur
+	{"ukr",      "uk", QString::fromUtf8("\u0423\u043A\u0440\u0430\u0457\u043D\u0441\u044C\u043A\u0430")}, // Ukrainian
+	{"urd",      "ur", QString::fromUtf8("\u0627\u064F\u0631\u062F\u064F\u0648")}, // Urdu
+	{"uzb",      "uz", QString::fromUtf8("\u0627\u0648\u0632\u0628\u06CC\u06A9")}, // Uzbek
+	{"uzb_cyrl", "uz", QString::fromUtf8("\u040E\u0437\u0431\u0435\u043A")}, // Uzbek (Cyrillic)
+	{"vie",      "vi", QString::fromUtf8("Ti\u1EBFng Vi\u1EC7t Nam")}, // Vietnamese
+	{"yid",      "yi", QString::fromUtf8("\u05D9\u05D9\u05B4\u05D3\u05D9\u05E9 \u05D9\u05D9\u05B4\u05D3\u05D9\u05E9\u202C")}, // Yiddish
+	{"yor",      "yo", QString::fromUtf8("\u00C8d\u00E8 Yor\u00F9b\u00E1")}, // Yoruba
 };
 
 QMultiMap<QString, QString> Config::buildLanguageCultureTable() {
