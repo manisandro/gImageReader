@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-22 00:10+0100\n"
-"PO-Revision-Date: 2018-03-22 10:11+0000\n"
+"PO-Revision-Date: 2018-03-22 10:19+0000\n"
 "Last-Translator: Alaa Sayed <bmwmy@hotmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ar_SA/>\n"
@@ -175,7 +175,7 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
-msgstr ""
+msgstr "تبديل مكان شاشة المخرجات"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
@@ -200,11 +200,11 @@ msgstr "حفظ لقطة شاشة"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:204
 msgid "Add images"
-msgstr ""
+msgstr "إضافة صور"
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/src/Ui_MainWindow.hh:203
 msgid "Add Images"
-msgstr ""
+msgstr "إضافة صور"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:209
 msgid "Remove image from list"
@@ -212,11 +212,11 @@ msgstr "إلغاء الصورة من القائمة"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/src/Ui_MainWindow.hh:212
 msgid "Delete image"
-msgstr ""
+msgstr "حذف صورة"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:215
 msgid "Clear list"
-msgstr ""
+msgstr "مسح القائمة"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
@@ -284,19 +284,19 @@ msgstr "عكس الألوان"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:23
 msgid "Zoom in"
-msgstr ""
+msgstr "تكبير"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:25
 msgid "Zoom out"
-msgstr ""
+msgstr "تصغير"
 
 #: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:27
 msgid "Normal size"
-msgstr ""
+msgstr "المقاس العادي"
 
 #: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:29
 msgid "Best fit"
-msgstr ""
+msgstr "أفضل تلاؤم"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
@@ -309,7 +309,7 @@ msgstr "اختر وضعية الإدخال"
 
 #: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
-msgstr ""
+msgstr "أزرار التحكم بالصورة"
 
 #: ../gtk/data/MainWindow.ui.h:34 ../qt/src/Ui_MainWindow.hh:138
 msgid "Plain text"
@@ -321,7 +321,7 @@ msgstr "صيغة PDF"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect layout"
-msgstr ""
+msgstr "تعرف تلقائي لتخطيط الصفحة"
 
 #: ../gtk/data/MainWindow.ui.h:37
 msgid "<small>Recognize all</small>"
@@ -386,7 +386,7 @@ msgstr "صفحات متعددة..."
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:577
 msgid "Add Word"
-msgstr ""
+msgstr "إضافة كلمة"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:577
 msgid "Enter word:"
@@ -410,7 +410,7 @@ msgstr "تصدير ODT وورد"
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/Ui_OutputEditorText.hh:116
 msgid "Save output"
-msgstr ""
+msgstr "حفظ المخرج"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
@@ -422,13 +422,13 @@ msgstr "تصدير"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:78
 #: ../qt/src/Ui_OutputEditorText.hh:118
 msgid "Clear output"
-msgstr ""
+msgstr "مسح القائمة"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:12 ../gtk/data/OutputEditorText.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:80
 #: ../qt/src/Ui_OutputEditorText.hh:107
 msgid "Find and replace"
-msgstr ""
+msgstr "بحث واستبدال"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
@@ -928,7 +928,7 @@ msgstr "تصويري"
 #: ../qt/src/hocr/HOCRTextExporter.cc:36 ../qt/src/hocr/OutputEditorHOCR.cc:808
 #: ../qt/src/OutputEditorText.cc:238
 msgid "output"
-msgstr ""
+msgstr "المخرج"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:67 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "OpenDocument Text Documents"
@@ -1126,7 +1126,7 @@ msgstr "إضافة سطر"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:818
 #: ../qt/src/hocr/OutputEditorHOCR.cc:682
 msgid "Add word"
-msgstr ""
+msgstr "إضافة كلمة"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:840
 #: ../qt/src/hocr/OutputEditorHOCR.cc:695
@@ -1153,7 +1153,7 @@ msgstr "ملف HTML بصيغة hOCR"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:905
 #: ../qt/src/hocr/OutputEditorHOCR.cc:773
 msgid "Open hOCR File"
-msgstr ""
+msgstr "فتح ملف hOCR"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:914
 #: ../qt/src/hocr/OutputEditorHOCR.cc:780
@@ -1815,47 +1815,47 @@ msgstr "أزل وقم بتعديل بعض المسميات التي يصر ال�
 
 #: ../qt/data/MainWindow.ui.h:22
 msgid "Zoom In"
-msgstr ""
+msgstr "تكبير"
 
 #: ../qt/data/MainWindow.ui.h:24
 msgid "Zoom Out"
-msgstr ""
+msgstr "تصغير"
 
 #: ../qt/data/MainWindow.ui.h:26
 msgid "Normal Size"
-msgstr ""
+msgstr "المقاس العادي"
 
 #: ../qt/data/MainWindow.ui.h:28
 msgid "Best Fit"
-msgstr ""
+msgstr "أفضل تلاؤم"
 
 #: ../qt/data/MainWindow.ui.h:30
 msgid "Rotate Left"
-msgstr ""
+msgstr "تدوير لليسار"
 
 #: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate left"
-msgstr ""
+msgstr "تدوير لليسار"
 
 #: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate Right"
-msgstr ""
+msgstr "تدوير لليمين"
 
 #: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate right"
-msgstr ""
+msgstr "تدوير لليمين"
 
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Image Controls"
-msgstr ""
+msgstr "أزرار التحكم بالصورة"
 
 #: ../qt/data/MainWindow.ui.h:36
 msgid "Autodetect Layout"
-msgstr ""
+msgstr "تعرف تلقائي لتخطيط الصفحة"
 
 #: ../qt/data/MainWindow.ui.h:38
 msgid "Toggle Output Pane"
-msgstr ""
+msgstr "تبديل شاشة المخرجات"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
@@ -1877,7 +1877,7 @@ msgstr "خطأ أثناء كتابة الملف"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:56
 msgid "Open hOCR file"
-msgstr ""
+msgstr "فتح ملف hOCR"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:57
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:58
@@ -1887,7 +1887,7 @@ msgstr "احفظ بصيغة hOCR"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:79
 #: ../qt/src/Ui_OutputEditorText.hh:106
 msgid "Find and Replace"
-msgstr ""
+msgstr "بحث واستبدال"
 
 #: ../qt/src/MainWindow.cc:540
 msgid "Could not read %1: %2"
@@ -1914,7 +1914,7 @@ msgstr ""
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
-msgstr ""
+msgstr "المخرج"
 
 #: ../qt/src/Ui_MainWindow.hh:134
 msgid "OCR mode:"
@@ -1926,11 +1926,11 @@ msgstr "إزالة الصورة"
 
 #: ../qt/src/Ui_MainWindow.hh:211
 msgid "Delete Image"
-msgstr ""
+msgstr "حذف صورة"
 
 #: ../qt/src/Ui_MainWindow.hh:214
 msgid "Clear List"
-msgstr ""
+msgstr "مسح القائمة"
 
 #: ../qt/src/Ui_OutputEditorText.hh:101
 msgid "Strip Line Breaks"
@@ -1938,8 +1938,8 @@ msgstr "احذف كسر السطور"
 
 #: ../qt/src/Ui_OutputEditorText.hh:115
 msgid "Save Output"
-msgstr ""
+msgstr "حفظ المخرج"
 
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
-msgstr ""
+msgstr "مسح القائمة"
