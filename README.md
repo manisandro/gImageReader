@@ -41,4 +41,4 @@ Contributions are always welcome, ideally in the form of pull-requests.
 
 Translating:
 --------------
-gImageReader translations are hosted on [weblate](https://hosted.weblate.org/translate/gimagereader/) and are periodically merged into master.
+gImageReader translations are hosted on [weblate](https://hosted.weblate.org/projects/gimagereader/) and are periodically merged into master.
