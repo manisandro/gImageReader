@@ -652,7 +652,8 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 			newIndex = m_document->swapItems(indices.first().parent(), rows.first(), rows.last());
 		}
 		if(newIndex.isValid()) {
-			ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect);
+			ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex,
+					QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 			showItemProperties(newIndex);
 		}
 		ui.treeViewHOCR->selectionModel()->blockSignals(false);
