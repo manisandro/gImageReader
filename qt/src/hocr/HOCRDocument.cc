@@ -176,6 +176,42 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 	return targetIndex;
 }
 
+QModelIndex HOCRDocument::splitItem(const QModelIndex& index, int startRow, int endRow) {
+	if(endRow - startRow < 0) {
+		return QModelIndex();
+	}
+	HOCRItem* item = mutableItemAtIndex(index);
+	if(!item) {
+		return QModelIndex();
+	}
+	QString itemClass = item->itemClass();
+	QDomDocument doc;
+	QDomElement newElement;
+	if(itemClass == "ocr_carea") {
+		newElement = doc.createElement("div");
+	} else if(itemClass == "ocr_par") {
+		newElement = doc.createElement("p");
+	} else if(itemClass == "ocr_line") {
+		newElement = doc.createElement("span");
+	} else {
+		return QModelIndex();
+	}
+	newElement.setAttribute("class", itemClass);
+	newElement.setAttribute("title", HOCRItem::serializeAttrGroup(item->getTitleAttributes()));
+	HOCRItem* newItem = new HOCRItem(newElement, item->page(), item->parent(), item->index() + 1);
+	insertItem(item->parent(), newItem, item->index() + 1);
+	QModelIndex newIndex = index.sibling(index.row() + 1, 0);
+
+	for(int row = 0; row <= (endRow - startRow); ++row) {
+		QModelIndex childIndex = index.child(startRow, 0);
+		HOCRItem* child = mutableItemAtIndex(childIndex);
+		Q_ASSERT(child);
+		moveItem(childIndex, newIndex, row);
+	}
+
+	return newIndex;
+}
+
 QModelIndex HOCRDocument::addItem(const QModelIndex& parent, const QDomElement& element) {
 	HOCRItem* parentItem = mutableItemAtIndex(parent);
 	if(!parentItem) {
