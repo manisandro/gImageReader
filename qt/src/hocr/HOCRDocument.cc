@@ -84,7 +84,7 @@ bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& na
 	}
 	emit itemAttributeChanged(index, name, value);
 	if(name == "title:bbox") {
-		recomputeParentBBoxes(item);
+		recomputeBBoxes(item->parent());
 	}
 	return true;
 }
@@ -112,9 +112,11 @@ QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelInd
 	beginRemoveRows(oldParent, oldRow, oldRow);
 	takeItem(item);
 	endRemoveRows();
+	recomputeBBoxes(mutableItemAtIndex(oldParent));
 	beginInsertRows(newParent, newRow, newRow);
 	insertItem(parentItem, item, newRow);
 	endInsertRows();
+	recomputeBBoxes(parentItem);
 	return itemIndex;
 }
 
@@ -183,7 +185,7 @@ QModelIndex HOCRDocument::addItem(const QModelIndex& parent, const QDomElement& 
 	int pos = parentItem->children().size();
 	beginInsertRows(parent, pos, pos);
 	parentItem->addChild(item);
-	recomputeParentBBoxes(item);
+	recomputeBBoxes(parentItem);
 	endInsertRows();
 	return index(pos, 0, parent);
 }
@@ -193,7 +195,7 @@ bool HOCRDocument::removeItem(const QModelIndex& index) {
 	if(!item) {
 		return false;
 	}
-	recomputeParentBBoxes(item);
+	recomputeBBoxes(item->parent());
 	beginRemoveRows(index.parent(), index.row(), index.row());
 	deleteItem(item);
 	endRemoveRows();
@@ -370,17 +372,16 @@ void HOCRDocument::recursiveDataChanged(const QModelIndex& parent, const QVector
 	}
 }
 
-void HOCRDocument::recomputeParentBBoxes(const HOCRItem* item) {
+void HOCRDocument::recomputeBBoxes(HOCRItem* item) {
 	// Update parent bboxes (except page)
-	HOCRItem* parent = item->parent();
-	while(parent && parent->parent()) {
+	while(item && item->parent()) {
 		QRect bbox;
-		for(const HOCRItem* child : parent->children()) {
+		for(const HOCRItem* child : item->children()) {
 			bbox = bbox.united(child->bbox());
 		}
 		QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-		parent->setAttribute("title:bbox", bboxstr);
-		parent = parent->parent();
+		item->setAttribute("title:bbox", bboxstr);
+		item = item->parent();
 	}
 }
 

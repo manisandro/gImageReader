@@ -99,7 +99,7 @@ private:
 	void deleteItem(HOCRItem* item);
 	void takeItem(HOCRItem* item);
 	void recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, const QStringList& itemClasses = QStringList());
-	void recomputeParentBBoxes(const HOCRItem* item);
+	void recomputeBBoxes(HOCRItem* item);
 	HOCRItem* mutableItemAtIndex(const QModelIndex& index) const {
 		return index.isValid() ? static_cast<HOCRItem*>(index.internalPointer()) : nullptr;
 	}
