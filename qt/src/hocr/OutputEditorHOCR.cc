@@ -626,9 +626,13 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 		bool sameClass = classes.size() == 1;
 
 		QAction* mergeAction = nullptr;
+		QAction* splitAction = nullptr;
 		QAction* swapAction = nullptr;
 		if(consecutive && !graphics && !pages && sameClass) { // Merging allowed
 			mergeAction = menu.addAction(_("Merge"));
+			if(firstItem->itemClass() != "ocr_carea") {
+				splitAction = menu.addAction(_("Split"));
+			}
 		}
 		if(nIndices == 2) { // Swapping allowed
 			swapAction = menu.addAction(_("Swap"));
@@ -642,11 +646,14 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 		QModelIndex newIndex;
 		if(clickedAction == mergeAction) {
 			newIndex = m_document->mergeItems(indices.first().parent(), rows.first(), rows.last());
+		} else if(clickedAction == splitAction) {
+			newIndex = m_document->splitItem(indices.first().parent(), rows.first(), rows.last());
 		} else if(clickedAction == swapAction) {
 			newIndex = m_document->swapItems(indices.first().parent(), rows.first(), rows.last());
 		}
 		if(newIndex.isValid()) {
-			ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect);
+			ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex,
+					QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 			showItemProperties(newIndex);
 		}
 		ui.treeViewHOCR->selectionModel()->blockSignals(false);
@@ -665,22 +672,24 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 	QAction* actionAddPar = nullptr;
 	QAction* actionAddLine = nullptr;
 	QAction* actionAddWord = nullptr;
+	QAction* actionSplit = nullptr;
 	QAction* addWordAction = nullptr;
 	QAction* ignoreWordAction = nullptr;
 	QList<QAction*> setTextActions;
 	QAction* actionRemoveItem = nullptr;
 	QAction* actionExpand = nullptr;
 	QAction* actionCollapse = nullptr;
-	if(item->itemClass() == "ocr_page") {
+	QString itemClass = item->itemClass();
+	if(itemClass == "ocr_page") {
 		actionAddGraphic = menu.addAction(_("Add graphic region"));
 		actionAddCArea = menu.addAction(_("Add text block"));
-	} else if(item->itemClass() == "ocr_carea") {
+	} else if(itemClass == "ocr_carea") {
 		actionAddPar = menu.addAction(_("Add paragraph"));
-	} else if(item->itemClass() == "ocr_par") {
+	} else if(itemClass == "ocr_par") {
 		actionAddLine = menu.addAction(_("Add line"));
-	} else if(item->itemClass() == "ocr_line") {
+	} else if(itemClass == "ocr_line") {
 		actionAddWord = menu.addAction(_("Add word"));
-	} else if(item->itemClass() == "ocrx_word") {
+	} else if(itemClass == "ocrx_word") {
 		QString prefix, suffix, trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
 		QString spellLang = item->lang();
 		bool haveLanguage = true;
@@ -705,6 +714,9 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 	}
 	if(!menu.actions().isEmpty()) {
 		menu.addSeparator();
+	}
+	if(itemClass == "ocr_par" || itemClass == "ocr_line" || itemClass == "ocrx_word") {
+		actionSplit = menu.addAction(_("Split"));
 	}
 	actionRemoveItem = menu.addAction(_("Remove"));
 	actionRemoveItem->setShortcut(QKeySequence(Qt::Key_Delete));
@@ -735,6 +747,9 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 		m_document->recheckSpelling();
 	} else if(setTextActions.contains(clickedAction)) {
 		m_document->setData(index, clickedAction->text(), Qt::EditRole);
+	} else if(clickedAction == actionSplit) {
+		QModelIndex index = ui.treeViewHOCR->selectionModel()->currentIndex();
+		m_document->splitItem(index.parent(), index.row(), index.row());
 	} else if(clickedAction == actionRemoveItem) {
 		m_document->removeItem(ui.treeViewHOCR->selectionModel()->currentIndex());
 	} else if(clickedAction == actionExpand) {

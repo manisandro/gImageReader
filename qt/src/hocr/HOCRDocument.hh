@@ -61,6 +61,7 @@ public:
 	QModelIndex moveItem(const QModelIndex& itemIndex, const QModelIndex& newParent, int row);
 	QModelIndex swapItems(const QModelIndex& parent, int startRow, int endRow);
 	QModelIndex mergeItems(const QModelIndex& parent, int startRow, int endRow);
+	QModelIndex splitItem(const QModelIndex& item, int startRow, int endRow);
 	QModelIndex addItem(const QModelIndex& parent, const QDomElement& element);
 	bool removeItem(const QModelIndex& index);
 
@@ -99,7 +100,7 @@ private:
 	void deleteItem(HOCRItem* item);
 	void takeItem(HOCRItem* item);
 	void recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, const QStringList& itemClasses = QStringList());
-	void recomputeParentBBoxes(const HOCRItem* item);
+	void recomputeBBoxes(HOCRItem* item);
 	HOCRItem* mutableItemAtIndex(const QModelIndex& index) const {
 		return index.isValid() ? static_cast<HOCRItem*>(index.internalPointer()) : nullptr;
 	}

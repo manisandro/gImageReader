@@ -84,7 +84,7 @@ bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& na
 	}
 	emit itemAttributeChanged(index, name, value);
 	if(name == "title:bbox") {
-		recomputeParentBBoxes(item);
+		recomputeBBoxes(item->parent());
 	}
 	return true;
 }
@@ -112,9 +112,11 @@ QModelIndex HOCRDocument::moveItem(const QModelIndex& itemIndex, const QModelInd
 	beginRemoveRows(oldParent, oldRow, oldRow);
 	takeItem(item);
 	endRemoveRows();
+	recomputeBBoxes(mutableItemAtIndex(oldParent));
 	beginInsertRows(newParent, newRow, newRow);
 	insertItem(parentItem, item, newRow);
 	endInsertRows();
+	recomputeBBoxes(parentItem);
 	return itemIndex;
 }
 
@@ -174,6 +176,42 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 	return targetIndex;
 }
 
+QModelIndex HOCRDocument::splitItem(const QModelIndex& index, int startRow, int endRow) {
+	if(endRow - startRow < 0) {
+		return QModelIndex();
+	}
+	HOCRItem* item = mutableItemAtIndex(index);
+	if(!item) {
+		return QModelIndex();
+	}
+	QString itemClass = item->itemClass();
+	QDomDocument doc;
+	QDomElement newElement;
+	if(itemClass == "ocr_carea") {
+		newElement = doc.createElement("div");
+	} else if(itemClass == "ocr_par") {
+		newElement = doc.createElement("p");
+	} else if(itemClass == "ocr_line") {
+		newElement = doc.createElement("span");
+	} else {
+		return QModelIndex();
+	}
+	newElement.setAttribute("class", itemClass);
+	newElement.setAttribute("title", HOCRItem::serializeAttrGroup(item->getTitleAttributes()));
+	HOCRItem* newItem = new HOCRItem(newElement, item->page(), item->parent(), item->index() + 1);
+	insertItem(item->parent(), newItem, item->index() + 1);
+	QModelIndex newIndex = index.sibling(index.row() + 1, 0);
+
+	for(int row = 0; row <= (endRow - startRow); ++row) {
+		QModelIndex childIndex = index.child(startRow, 0);
+		HOCRItem* child = mutableItemAtIndex(childIndex);
+		Q_ASSERT(child);
+		moveItem(childIndex, newIndex, row);
+	}
+
+	return newIndex;
+}
+
 QModelIndex HOCRDocument::addItem(const QModelIndex& parent, const QDomElement& element) {
 	HOCRItem* parentItem = mutableItemAtIndex(parent);
 	if(!parentItem) {
@@ -183,7 +221,7 @@ QModelIndex HOCRDocument::addItem(const QModelIndex& parent, const QDomElement& 
 	int pos = parentItem->children().size();
 	beginInsertRows(parent, pos, pos);
 	parentItem->addChild(item);
-	recomputeParentBBoxes(item);
+	recomputeBBoxes(parentItem);
 	endInsertRows();
 	return index(pos, 0, parent);
 }
@@ -193,10 +231,11 @@ bool HOCRDocument::removeItem(const QModelIndex& index) {
 	if(!item) {
 		return false;
 	}
-	recomputeParentBBoxes(item);
+	HOCRItem* parentItem = item->parent();
 	beginRemoveRows(index.parent(), index.row(), index.row());
 	deleteItem(item);
 	endRemoveRows();
+	recomputeBBoxes(parentItem);
 	return true;
 }
 
@@ -370,17 +409,16 @@ void HOCRDocument::recursiveDataChanged(const QModelIndex& parent, const QVector
 	}
 }
 
-void HOCRDocument::recomputeParentBBoxes(const HOCRItem* item) {
+void HOCRDocument::recomputeBBoxes(HOCRItem* item) {
 	// Update parent bboxes (except page)
-	HOCRItem* parent = item->parent();
-	while(parent && parent->parent()) {
+	while(item && item->parent()) {
 		QRect bbox;
-		for(const HOCRItem* child : parent->children()) {
+		for(const HOCRItem* child : item->children()) {
 			bbox = bbox.united(child->bbox());
 		}
 		QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-		parent->setAttribute("title:bbox", bboxstr);
-		parent = parent->parent();
+		item->setAttribute("title:bbox", bboxstr);
+		item = item->parent();
 	}
 }
 
