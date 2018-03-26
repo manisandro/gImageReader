@@ -91,7 +91,12 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 	m_languageList->clear();
 
 	// Get newest tag older or equal to used tesseract version
-	QByteArray data = Utils::download(QUrl("https://api.github.com/repos/tesseract-ocr/tessdata/tags"), messages);
+#if TESSERACT_VERSION >= MAKE_VERSION(4, 0, 0)
+	QUrl url("https://api.github.com/repos/tesseract-ocr/tessdata_fast/tags");
+#else
+	QUrl url("https://api.github.com/repos/tesseract-ocr/tessdata/tags");
+#endif
+	QByteArray data = Utils::download(url, messages);
 	if(data.isEmpty()) {
 		messages = _("Failed to fetch list of available languages: %1").arg(messages);
 		return false;
@@ -123,49 +128,62 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 			tessdataVer = tag;
 		}
 	}
-	data = Utils::download(QUrl("https://api.github.com/repos/tesseract-ocr/tessdata/contents?ref=" + tessdataVer), messages);
-
-	if(data.isEmpty()) {
-		messages = _("Failed to fetch list of available languages: %1").arg(messages);
-		return false;
-	}
 
 	QVector<QPair<QString, QString>> extraFiles;
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-	ok = false;
-	json = parser.parse( data, &ok ).toList();
-	if(!ok) {
-		messages = _("Parsing error: %1").arg(parser.errorLine() + ": " + parser.errorString());
-		return false;
-	}
-	for(const QVariant& value : json) {
-		QVariantMap treeObj = value.toMap();
-		QString name = treeObj.value("name").toString();
-		QString url = treeObj.value("download_url").toString();
+	QList<QUrl> dataUrls;
+#if TESSERACT_VERSION >= MAKE_VERSION(4, 0, 0)
+	dataUrls.append(QUrl("https://api.github.com/repos/tesseract-ocr/tessdata_fast/contents?ref=" + tessdataVer));
+	dataUrls.append(QUrl("https://api.github.com/repos/tesseract-ocr/tessdata_fast/contents/script?ref=" + tessdataVer));
 #else
-	err = QJsonParseError();
-	json = QJsonDocument::fromJson(data, &err);
-	if(json.isNull()) {
-		messages = _("Parsing error: %1").arg(err.errorString());
-		return false;
-	}
-	for(const QJsonValue& value : json.array()) {
-		QJsonObject treeObj = value.toObject();
-		QString name = treeObj.value("name").toString();
-		QString url = treeObj.value("download_url").toString();
+
+	dataUrls.append(QUrl("https://api.github.com/repos/tesseract-ocr/tessdata/contents?ref=" + tessdataVer));
 #endif
-		if(name.endsWith(".traineddata")) {
-			m_languageFiles[name.left(name.indexOf("."))].append({name, url});
-		} else {
-			// Delay decision to determine whether file is a supplementary language file
-			extraFiles.append(qMakePair(name, url));
+	for(const QUrl& url : dataUrls) {
+		data = Utils::download(url, messages);
+
+		if(data.isEmpty()) {
+			continue;
+		}
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+		ok = false;
+		json = parser.parse( data, &ok ).toList();
+		if(!ok) {
+			continue;
+		}
+		for(const QVariant& value : json) {
+			QVariantMap treeObj = value.toMap();
+			QString name = treeObj.value("name").toString();
+			QString url = treeObj.value("download_url").toString();
+#else
+		err = QJsonParseError();
+		json = QJsonDocument::fromJson(data, &err);
+		if(json.isNull()) {
+			continue;
+		}
+		for(const QJsonValue& value : json.array()) {
+			QJsonObject treeObj = value.toObject();
+			QString name = treeObj.value("name").toString();
+			QString url = treeObj.value("download_url").toString();
+#endif
+			if(name.endsWith(".traineddata")) {
+				m_languageFiles[name.left(name.indexOf("."))].append({name, url});
+			} else {
+				// Delay decision to determine whether file is a supplementary language file
+				extraFiles.append(qMakePair(name, url));
+			}
+		}
+		for(const QPair<QString, QString>& extraFile : extraFiles) {
+			QString lang = extraFile.first.left(extraFile.first.indexOf("."));
+			if(m_languageFiles.contains(lang)) {
+				m_languageFiles[lang].append({extraFile.first, extraFile.second});
+			}
 		}
 	}
-	for(const QPair<QString, QString>& extraFile : extraFiles) {
-		QString lang = extraFile.first.left(extraFile.first.indexOf("."));
-		if(m_languageFiles.contains(lang)) {
-			m_languageFiles[lang].append({extraFile.first, extraFile.second});
-		}
+
+	if(m_languageFiles.isEmpty()) {
+		messages = _("Failed to fetch list of available languages: %1").arg(messages);
+		return false;
 	}
 
 	QStringList availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
@@ -177,7 +195,11 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 		lang.prefix = prefix;
 		QString label;
 		if(MAIN->getConfig()->searchLangSpec(lang)) {
-			label = QString("%1 (%2)").arg(lang.name).arg(lang.prefix);
+			if(lang.prefix.startsWith("script") || lang.prefix.left(1) == lang.prefix.left(1).toUpper()) {
+				label = lang.name;
+			} else {
+				label = QString("%1 (%2)").arg(lang.name).arg(lang.prefix);
+			}
 		} else {
 			label = lang.prefix;
 		}

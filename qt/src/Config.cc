@@ -93,6 +93,11 @@ Config::Config(QWidget* parent)
 }
 
 bool Config::searchLangSpec(Lang& lang) const {
+	// Tesseract 4.0.0-beta.1 and previous had Script tessdatas on same level as language tessdatas, but they are distinguishable in that they begin with an upper case character
+	if(lang.prefix.startsWith("script") || lang.prefix.left(1).toUpper() == lang.prefix.left(1)) {
+		lang.name = QString("%1 (%2)").arg(QString(lang.prefix).replace(QRegExp("script[/\\]"), "")).arg(_("Script"));
+		return true;
+	}
 	for(const QTableWidget* table : QList<QTableWidget*> {ui.tableWidgetPredefLang, ui.tableWidgetAdditionalLang}) {
 		for(int row = 0, nRows = table->rowCount(); row < nRows; ++row) {
 			if(table->item(row, 0)->text() == lang.prefix) {
