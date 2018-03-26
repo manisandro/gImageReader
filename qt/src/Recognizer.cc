@@ -110,6 +110,7 @@ QStringList Recognizer::getAvailableLanguages() const {
 	for(int i = 0; i < availLanguages.size(); ++i) {
 		result.append(availLanguages[i].string());
 	}
+	qSort(result);
 	return result;
 }
 
