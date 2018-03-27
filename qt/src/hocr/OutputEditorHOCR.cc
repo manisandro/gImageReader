@@ -631,7 +631,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 		if(consecutive && !graphics && !pages && sameClass) { // Merging allowed
 			mergeAction = menu.addAction(_("Merge"));
 			if(firstItem->itemClass() != "ocr_carea") {
-				splitAction = menu.addAction(_("Split"));
+				splitAction = menu.addAction(_("Split from parent"));
 			}
 		}
 		if(nIndices == 2) { // Swapping allowed
@@ -653,7 +653,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 		}
 		if(newIndex.isValid()) {
 			ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex,
-					QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+			        QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 			showItemProperties(newIndex);
 		}
 		ui.treeViewHOCR->selectionModel()->blockSignals(false);
@@ -716,7 +716,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 		menu.addSeparator();
 	}
 	if(itemClass == "ocr_par" || itemClass == "ocr_line" || itemClass == "ocrx_word") {
-		actionSplit = menu.addAction(_("Split"));
+		actionSplit = menu.addAction(_("Split from parent"));
 	}
 	actionRemoveItem = menu.addAction(_("Remove"));
 	actionRemoveItem->setShortcut(QKeySequence(Qt::Key_Delete));
