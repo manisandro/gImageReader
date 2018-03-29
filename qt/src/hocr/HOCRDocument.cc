@@ -199,9 +199,10 @@ QModelIndex HOCRDocument::splitItem(const QModelIndex& index, int startRow, int 
 	newElement.setAttribute("class", itemClass);
 	newElement.setAttribute("title", HOCRItem::serializeAttrGroup(item->getTitleAttributes()));
 	HOCRItem* newItem = new HOCRItem(newElement, item->page(), item->parent(), item->index() + 1);
+	beginInsertRows(index.parent(), item->index() + 1, item->index() + 1);
 	insertItem(item->parent(), newItem, item->index() + 1);
+	endInsertRows();
 	QModelIndex newIndex = index.sibling(index.row() + 1, 0);
-
 	for(int row = 0; row <= (endRow - startRow); ++row) {
 		QModelIndex childIndex = index.child(startRow, 0);
 		HOCRItem* child = mutableItemAtIndex(childIndex);
