@@ -85,7 +85,12 @@ void TessdataManager::run() {
 bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 	m_languageListStore->clear();
 
-	Glib::RefPtr<Glib::ByteArray> data = Utils::download("https://api.github.com/repos/tesseract-ocr/tessdata/tags", messages);
+#if TESSERACT_VERSION >= MAKE_VERSION(4, 0, 0)
+	std::string url("https://api.github.com/repos/tesseract-ocr/tessdata_fast/tags");
+#else
+	std::string url("https://api.github.com/repos/tesseract-ocr/tessdata/tags");
+#endif
+	Glib::RefPtr<Glib::ByteArray> data = Utils::download(url, messages);
 	if(!data) {
 		messages = Glib::ustring::compose(_("Failed to fetch list of available languages: %1"), messages);
 		return false;
@@ -116,51 +121,64 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 	g_list_free(elementArray);
 	g_object_unref(parser);
 
-	data = Utils::download("https://api.github.com/repos/tesseract-ocr/tessdata/contents?ref=" + tessdataVer, messages);
+	std::vector<std::pair<Glib::ustring, Glib::ustring>> extraFiles;
+	std::vector<std::string> dataUrls;
+#if TESSERACT_VERSION >= MAKE_VERSION(4, 0, 0)
+	dataUrls.push_back(std::string("https://api.github.com/repos/tesseract-ocr/tessdata_fast/contents?ref=" + tessdataVer));
+	dataUrls.push_back(std::string("https://api.github.com/repos/tesseract-ocr/tessdata_fast/contents/script?ref=" + tessdataVer));
+#else
 
-	if(!data) {
+	dataUrls.push_back(std::string("https://api.github.com/repos/tesseract-ocr/tessdata/contents?ref=" + tessdataVer));
+#endif
+	for(const std::string& url : dataUrls) {
+		data = Utils::download(url, messages);
+
+		if(!data) {
+			continue;
+		}
+
+		parser = json_parser_new();
+		parserError = nullptr;
+		json_parser_load_from_data(parser, reinterpret_cast<gchar*>(data->get_data()), data->size(), &parserError);
+		if(parserError) {
+			g_object_unref(parser);
+			continue;
+		}
+		root = json_parser_get_root(parser);
+		array = json_node_get_array(root);
+		elementArray = json_array_get_elements(array);
+		for(GList* l = elementArray; l; l = l->next) {
+			JsonNode* value = static_cast<JsonNode*>(l->data);
+			JsonObject* treeObj = json_node_get_object(value);
+			Glib::ustring name = json_object_get_string_member(treeObj, "name");
+			Glib::ustring url = json_object_get_string_member(treeObj, "download_url");
+			if(name.length() > 12 && name.compare(name.length() - 12, name.npos, "traineddata")) {
+				Glib::ustring key = name.substr(0, name.find("."));
+				auto it = m_languageFiles.find(key);
+				if(it == m_languageFiles.end()) {
+					it = m_languageFiles.insert(std::make_pair(key, std::vector<LangFile>())).first;
+				}
+				it->second.push_back({name, url});
+			} else {
+				// Delay decision to determine whether file is a supplementary language file
+				extraFiles.push_back(std::make_pair(name, url));
+			}
+		}
+		g_list_free(elementArray);
+		g_object_unref(parser);
+
+		for(const std::pair<Glib::ustring, Glib::ustring>& extraFile : extraFiles) {
+			Glib::ustring lang = extraFile.first.substr(0, extraFile.first.find("."));
+			auto it = m_languageFiles.find(lang);
+			if(it != m_languageFiles.end()) {
+				it->second.push_back({extraFile.first, extraFile.second});
+			}
+		}
+	}
+
+	if(m_languageFiles.empty()) {
 		messages = Glib::ustring::compose(_("Failed to fetch list of available languages: %1"), messages);
 		return false;
-	}
-
-	parser = json_parser_new();
-	parserError = nullptr;
-	json_parser_load_from_data(parser, reinterpret_cast<gchar*>(data->get_data()), data->size(), &parserError);
-	if(parserError) {
-		messages = Glib::ustring::compose(_("Parsing error: %1"), parserError->message);
-		g_object_unref(parser);
-		return false;
-	}
-	std::vector<std::pair<Glib::ustring, Glib::ustring>> extraFiles;
-	root = json_parser_get_root(parser);
-	array = json_node_get_array(root);
-	elementArray = json_array_get_elements(array);
-	for(GList* l = elementArray; l; l = l->next) {
-		JsonNode* value = static_cast<JsonNode*>(l->data);
-		JsonObject* treeObj = json_node_get_object(value);
-		Glib::ustring name = json_object_get_string_member(treeObj, "name");
-		Glib::ustring url = json_object_get_string_member(treeObj, "download_url");
-		if(name.length() > 12 && name.compare(name.length() - 12, name.npos, "traineddata")) {
-			Glib::ustring key = name.substr(0, name.find("."));
-			auto it = m_languageFiles.find(key);
-			if(it == m_languageFiles.end()) {
-				it = m_languageFiles.insert(std::make_pair(key, std::vector<LangFile>())).first;
-			}
-			it->second.push_back({name, url});
-		} else {
-			// Delay decision to determine whether file is a supplementary language file
-			extraFiles.push_back(std::make_pair(name, url));
-		}
-	}
-	g_list_free(elementArray);
-	g_object_unref(parser);
-
-	for(const std::pair<Glib::ustring, Glib::ustring>& extraFile : extraFiles) {
-		Glib::ustring lang = extraFile.first.substr(0, extraFile.first.find("."));
-		auto it = m_languageFiles.find(lang);
-		if(it != m_languageFiles.end()) {
-			it->second.push_back({extraFile.first, extraFile.second});
-		}
 	}
 
 	std::vector<Glib::ustring> availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
@@ -175,7 +193,11 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 		lang.prefix = prefix;
 		Glib::ustring label;
 		if(MAIN->getConfig()->searchLangSpec(lang)) {
-			label = Glib::ustring::compose("%1 (%2)", lang.name, lang.prefix);
+			if(lang.prefix.substr(0, 6).lowercase() == "script" || lang.prefix.substr(0, 1) == lang.prefix.substr(0, 1).uppercase()) {
+				label = lang.name;
+			} else {
+				label = Glib::ustring::compose("%1 (%2)", lang.name, lang.prefix);
+			}
 		} else {
 			label = lang.prefix;
 		}
