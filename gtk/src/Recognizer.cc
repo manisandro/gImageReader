@@ -123,6 +123,7 @@ std::vector<Glib::ustring> Recognizer::getAvailableLanguages() const {
 	for(int i = 0; i < availLanguages.size(); ++i) {
 		result.push_back(availLanguages[i].string());
 	}
+	std::sort(result.begin(), result.end());
 	return result;
 }
 
