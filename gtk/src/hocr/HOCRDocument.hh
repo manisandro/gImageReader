@@ -67,6 +67,7 @@ public:
 	Gtk::TreeIter moveItem(const Gtk::TreeIter& itemIndex, const Gtk::TreeIter& newParent, int row);
 	Gtk::TreeIter swapItems(const Gtk::TreeIter& parent, int startRow, int endRow);
 	Gtk::TreeIter mergeItems(const Gtk::TreeIter& parent, int startRow, int endRow);
+	Gtk::TreeIter splitItem(const Gtk::TreeIter& item, int startRow, int endRow);
 	Gtk::TreeIter addItem(const Gtk::TreeIter& parent, const xmlpp::Element* element);
 	bool removeItem(const Gtk::TreeIter& index);
 
@@ -133,7 +134,7 @@ private:
 	void takeItem(HOCRItem* item);
 	void recursiveDataChanged(const Gtk::TreeIter& index, const std::vector<Glib::ustring>& itemClasses = {});
 	void recursiveRowInserted(const Gtk::TreeIter& index);
-	void recomputeParentBBoxes(const HOCRItem* item);
+	void recomputeBBoxes(HOCRItem* item);
 
 	HOCRItem* mutableItemAtIndex(const Gtk::TreeIter& index) const {
 		return static_cast<HOCRItem*>(index.gobj()->user_data);

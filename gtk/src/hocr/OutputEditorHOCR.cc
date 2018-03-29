@@ -775,6 +775,16 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 				m_treeView->get_selection()->unselect_all();
 				m_treeView->get_selection()->select(newIndex);
 			});
+			if(firstItem->itemClass() != "ocr_carea") {
+				Gtk::MenuItem* splitItem = Gtk::manage(new Gtk::MenuItem(_("Split from parent")));
+				menu.append(*splitItem);
+				CONNECT(splitItem, activate, [&] {
+					Gtk::TreeIter newIndex = m_document->splitItem(m_document->get_iter(paths.front())->parent(), rows.front(), rows.back());
+					m_treeView->get_selection()->unselect_all();
+					m_treeView->get_selection()->select(newIndex);
+					expandCollapseChildren(newIndex, true);
+				});
+			}
 		}
 		if(nIndices == 2) { // Swapping allowed
 			Gtk::MenuItem* swapItem = Gtk::manage(new Gtk::MenuItem(_("Swap")));
@@ -799,26 +809,27 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 	}
 
 	Gtk::Menu menu;
-	if(item->itemClass() == "ocr_page") {
+	Glib::ustring itemClass = item->itemClass();
+	if(itemClass == "ocr_page") {
 		Gtk::MenuItem* addGraphicItem = Gtk::manage(new Gtk::MenuItem(_("Add graphic region")));
 		menu.append(*addGraphicItem);
 		CONNECT(addGraphicItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_GRAPHIC_RECT); });
 		Gtk::MenuItem* addTextBlockItem = Gtk::manage(new Gtk::MenuItem(_("Add text block")));
 		menu.append(*addTextBlockItem);
 		CONNECT(addTextBlockItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_CAREA_RECT); });
-	} else if(item->itemClass() == "ocr_carea") {
+	} else if(itemClass == "ocr_carea") {
 		Gtk::MenuItem* addParagraphItem = Gtk::manage(new Gtk::MenuItem(_("Add paragraph")));
 		menu.append(*addParagraphItem);
 		CONNECT(addParagraphItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_PAR_RECT); });
-	} else if(item->itemClass() == "ocr_par") {
+	} else if(itemClass == "ocr_par") {
 		Gtk::MenuItem* addLineItem = Gtk::manage(new Gtk::MenuItem(_("Add line")));
 		menu.append(*addLineItem);
 		CONNECT(addLineItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_LINE_RECT); });
-	} else if(item->itemClass() == "ocr_line") {
+	} else if(itemClass == "ocr_line") {
 		Gtk::MenuItem* addWordItem = Gtk::manage(new Gtk::MenuItem(_("Add word")));
 		menu.append(*addWordItem);
 		CONNECT(addWordItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_WORD_RECT); });
-	} else if(item->itemClass() == "ocrx_word") {
+	} else if(itemClass == "ocrx_word") {
 		Glib::ustring prefix, suffix, trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
 		Glib::ustring spellLang = item->lang();
 		bool haveLanguage = true;
@@ -860,6 +871,16 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 	}
 	if(!menu.get_children().empty()) {
 		menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
+	}
+	if(itemClass == "ocr_par" || itemClass == "ocr_line" || itemClass == "ocrx_word") {
+		Gtk::MenuItem* splitItem = Gtk::manage(new Gtk::MenuItem(_("Split from parent")));
+		CONNECT(splitItem, activate, [this, index, item] {
+			Gtk::TreeIter newIndex = m_document->splitItem(index->parent(), item->index(), item->index());
+			m_treeView->get_selection()->unselect_all();
+			m_treeView->get_selection()->select(newIndex);
+			expandCollapseChildren(newIndex, true);
+		});
+		menu.append(*splitItem);
 	}
 	Gtk::MenuItem* removeItem = Gtk::manage(new Gtk::MenuItem(_("Remove")));
 	CONNECT(removeItem, activate, [this, index] { m_document->removeItem(index); });

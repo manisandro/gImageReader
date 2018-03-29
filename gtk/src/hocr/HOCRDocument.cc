@@ -26,7 +26,7 @@
 #include <libxml++/libxml++.h>
 #include <iostream>
 
-#define DEBUG(...) //__VA_ARGS__
+#define DEBUG(...) __VA_ARGS__
 
 HOCRDocument::HOCRDocument(GtkSpell::Checker* spell)
 	: Glib::ObjectBase("HOCRDocument")
@@ -78,7 +78,7 @@ bool HOCRDocument::editItemAttribute(const Gtk::TreeIter& index, const Glib::ust
 	}
 	m_signal_item_attribute_changed.emit(index, name, value);
 	if(name == "title:bbox") {
-		recomputeParentBBoxes(item);
+		recomputeBBoxes(item->parent());
 	}
 	return true;
 }
@@ -114,9 +114,11 @@ Gtk::TreeIter HOCRDocument::moveItem(const Gtk::TreeIter& itemIndex, const Gtk::
 	Gtk::TreePath itemPath = get_path(itemIndex);
 	takeItem(item);
 	row_deleted(itemPath);
+	recomputeBBoxes(mutableItemAtIndex(oldParent));
 	insertItem(parentItem, item, newRow);
 	Gtk::TreeIter newIndex = newParent->children()[newRow];
 	recursiveRowInserted(newIndex);
+	recomputeBBoxes(parentItem);
 	return newIndex;
 }
 
@@ -178,6 +180,43 @@ Gtk::TreeIter HOCRDocument::mergeItems(const Gtk::TreeIter& parent, int startRow
 	return targetIndex;
 }
 
+Gtk::TreeIter HOCRDocument::splitItem(const Gtk::TreeIter& index, int startRow, int endRow) {
+	if(endRow - startRow < 0) {
+		return Gtk::TreeIter();
+	}
+	HOCRItem* item = mutableItemAtIndex(index);
+	if(!item) {
+		return Gtk::TreeIter();
+	}
+	Glib::ustring itemClass = item->itemClass();
+	xmlpp::Document doc;
+	xmlpp::Element* newElement;
+	if(itemClass == "ocr_carea") {
+		newElement = doc.create_root_node("div");
+	} else if(itemClass == "ocr_par") {
+		newElement = doc.create_root_node("p");
+	} else if(itemClass == "ocr_line") {
+		newElement = doc.create_root_node("span");
+	} else {
+		return Gtk::TreeIter();
+	}
+	newElement->set_attribute("class", itemClass);
+	newElement->set_attribute("title", HOCRItem::serializeAttrGroup(item->getTitleAttributes()));
+	HOCRItem* newItem = new HOCRItem(newElement, item->page(), item->parent());
+	insertItem(item->parent(), newItem, item->index() + 1);
+	Gtk::TreeIter newIndex = index->parent()->children()[item->index() + 1];
+	recursiveRowInserted(newIndex);
+
+	for(int row = 0; row <= (endRow - startRow); ++row) {
+		Gtk::TreeIter childIndex = index->children()[startRow];
+		HOCRItem* child = mutableItemAtIndex(childIndex);
+		g_assert(child);
+		moveItem(childIndex, newIndex, row);
+	}
+
+	return newIndex;
+}
+
 Gtk::TreeIter HOCRDocument::addItem(const Gtk::TreeIter& parent, const xmlpp::Element* element) {
 	HOCRItem* parentItem = mutableItemAtIndex(parent);
 	if(!parentItem) {
@@ -185,7 +224,7 @@ Gtk::TreeIter HOCRDocument::addItem(const Gtk::TreeIter& parent, const xmlpp::El
 	}
 	HOCRItem* item = new HOCRItem(element, parentItem->page(), parentItem);
 	parentItem->addChild(item);
-	recomputeParentBBoxes(item);
+	recomputeBBoxes(parentItem);
 	Gtk::TreeIter child = parent->children()[item->index()];
 	recursiveRowInserted(child);
 	return child;
@@ -197,9 +236,10 @@ bool HOCRDocument::removeItem(const Gtk::TreeIter& index) {
 		return false;
 	}
 	Gtk::TreePath path = get_path(index);
-	recomputeParentBBoxes(item);
+	HOCRItem* parentItem = item->parent();
 	deleteItem(item);
 	row_deleted(path);
+	recomputeBBoxes(parentItem);
 	return true;
 }
 
@@ -313,17 +353,16 @@ void HOCRDocument::recursiveRowInserted(const Gtk::TreeIter& index) {
 	}
 }
 
-void HOCRDocument::recomputeParentBBoxes(const HOCRItem* item) {
+void HOCRDocument::recomputeBBoxes(HOCRItem* item) {
 	// Update parent bboxes (except page)
-	HOCRItem* parent = item->parent();
-	while(parent && parent->parent()) {
+	while(item && item->parent()) {
 		Geometry::Rectangle bbox;
-		for(const HOCRItem* child : parent->children()) {
+		for(const HOCRItem* child : item->children()) {
 			bbox = bbox.unite(child->bbox());
 		}
 		Glib::ustring bboxstr = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
-		parent->setAttribute("title:bbox", bboxstr);
-		parent = parent->parent();
+		item->setAttribute("title:bbox", bboxstr);
+		item = item->parent();
 	}
 }
 
