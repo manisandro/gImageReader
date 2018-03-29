@@ -648,12 +648,12 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 			newIndex = m_document->mergeItems(indices.first().parent(), rows.first(), rows.last());
 		} else if(clickedAction == splitAction) {
 			newIndex = m_document->splitItem(indices.first().parent(), rows.first(), rows.last());
+			expandCollapseChildren(newIndex, true);
 		} else if(clickedAction == swapAction) {
 			newIndex = m_document->swapItems(indices.first().parent(), rows.first(), rows.last());
 		}
 		if(newIndex.isValid()) {
-			ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex,
-			        QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+			ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 			showItemProperties(newIndex);
 		}
 		ui.treeViewHOCR->selectionModel()->blockSignals(false);
@@ -748,8 +748,9 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 	} else if(setTextActions.contains(clickedAction)) {
 		m_document->setData(index, clickedAction->text(), Qt::EditRole);
 	} else if(clickedAction == actionSplit) {
-		QModelIndex index = ui.treeViewHOCR->selectionModel()->currentIndex();
-		m_document->splitItem(index.parent(), index.row(), index.row());
+		QModelIndex newIndex = m_document->splitItem(index.parent(), index.row(), index.row());
+		ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+		expandCollapseChildren(newIndex, true);
 	} else if(clickedAction == actionRemoveItem) {
 		m_document->removeItem(ui.treeViewHOCR->selectionModel()->currentIndex());
 	} else if(clickedAction == actionExpand) {
