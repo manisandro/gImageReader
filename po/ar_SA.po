@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-22 00:10+0100\n"
+"POT-Creation-Date: 2018-03-30 00:17+0200\n"
 "PO-Revision-Date: 2018-03-22 10:19+0000\n"
 "Last-Translator: Alaa Sayed <bmwmy@hotmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gimagereader/"
@@ -38,7 +38,7 @@ msgid "Preferences"
 msgstr "خيارات"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
-#: ../gtk/src/MainWindow.cc:470 ../qt/src/MainWindow.cc:467
+#: ../gtk/src/MainWindow.cc:470 ../qt/src/MainWindow.cc:468
 #: ../qt/src/Ui_MainWindow.hh:177
 msgid "Help"
 msgstr "مساعدة"
@@ -351,8 +351,8 @@ msgstr "<small><b>مثال:</b>1-11,13, 15-19</small>"
 msgid "Recognition area:"
 msgstr "مساحة التعرف الضوئي:"
 
-#: ../gtk/data/MainWindow.ui.h:46 ../gtk/src/Recognizer.cc:392
-#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:383
+#: ../gtk/data/MainWindow.ui.h:46 ../gtk/src/Recognizer.cc:393
+#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:384
 msgid "Entire page"
 msgstr "كامل الصفحة"
 
@@ -452,14 +452,14 @@ msgstr "التالي (F3)"
 msgid "Previous (Shift+F3)"
 msgstr "السابق (Shift+F3)"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/src/hocr/OutputEditorHOCR.cc:868
-#: ../qt/src/hocr/OutputEditorHOCR.cc:712
+#: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/src/hocr/OutputEditorHOCR.cc:889
+#: ../qt/src/hocr/OutputEditorHOCR.cc:724
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:126
 msgid "Expand all"
 msgstr "عرض الكل"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:18 ../gtk/src/hocr/OutputEditorHOCR.cc:871
-#: ../qt/src/hocr/OutputEditorHOCR.cc:713
+#: ../gtk/data/OutputEditorHOCR.ui.h:18 ../gtk/src/hocr/OutputEditorHOCR.cc:892
+#: ../qt/src/hocr/OutputEditorHOCR.cc:725
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:127
 msgid "Collapse all"
 msgstr "تجميع المعروض"
@@ -754,8 +754,8 @@ msgid "Add"
 msgstr "إضافة"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:864 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:709 ../qt/src/SubstitutionsManager.cc:50
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:885 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/hocr/OutputEditorHOCR.cc:721 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
 msgstr "إلغاء"
@@ -825,17 +825,21 @@ msgstr "نقل البيانات..."
 msgid "Canceling scan..."
 msgstr "إلغاء المسح الضوئي..."
 
-#: ../gtk/src/Config.cc:290 ../qt/data/ConfigDialog.ui.h:7
+#: ../gtk/src/Config.cc:41 ../qt/data/ConfigDialog.ui.h:7
 msgid "Filename prefix"
 msgstr "بادئة اسم الملف"
 
-#: ../gtk/src/Config.cc:291 ../qt/data/ConfigDialog.ui.h:8
+#: ../gtk/src/Config.cc:42 ../qt/data/ConfigDialog.ui.h:8
 msgid "Code"
 msgstr "الرمز"
 
-#: ../gtk/src/Config.cc:292 ../qt/data/ConfigDialog.ui.h:9
+#: ../gtk/src/Config.cc:43 ../qt/data/ConfigDialog.ui.h:9
 msgid "Native name"
 msgstr "الاسم الأصلي"
+
+#: ../gtk/src/Config.cc:100 ../qt/src/Config.cc:98
+msgid "Script"
+msgstr ""
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:39
 #: ../qt/src/CrashHandler.cc:34
@@ -854,11 +858,11 @@ msgstr "لا توجد أعمال محفوظة."
 msgid "Failed to obtain backtrace. Is gdb installed?"
 msgstr "فشل في الحصول على سجلات الأخطاء. هل برنامج gdb مثبت؟"
 
-#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:173
+#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
 msgid "Failed to load image"
 msgstr "فشل في تحميل الصورة"
 
-#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:173
+#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -899,58 +903,58 @@ msgstr "الملف المسمى \"%1\" موجود بالفعل. هل أنت مت
 msgid "Overwrite File?"
 msgstr "استبدال الملف؟"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:516 ../gtk/src/hocr/OutputEditorHOCR.cc:266
+#: ../gtk/src/hocr/HOCRDocument.cc:555 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/OutputEditorHOCR.cc:229
 msgid "Page"
 msgstr "الصفحة"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:518 ../qt/src/hocr/HOCRDocument.cc:441
+#: ../gtk/src/hocr/HOCRDocument.cc:557 ../qt/src/hocr/HOCRDocument.cc:480
 msgid "Text block"
 msgstr "كتلة النص"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:520 ../gtk/src/hocr/OutputEditorHOCR.cc:272
-#: ../qt/src/hocr/HOCRDocument.cc:443 ../qt/src/hocr/OutputEditorHOCR.cc:231
+#: ../gtk/src/hocr/HOCRDocument.cc:559 ../gtk/src/hocr/OutputEditorHOCR.cc:272
+#: ../qt/src/hocr/HOCRDocument.cc:482 ../qt/src/hocr/OutputEditorHOCR.cc:231
 msgid "Paragraph"
 msgstr "الفقرة"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:522 ../qt/src/hocr/HOCRDocument.cc:445
+#: ../gtk/src/hocr/HOCRDocument.cc:561 ../qt/src/hocr/HOCRDocument.cc:484
 msgid "Textline"
 msgstr "السطر"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:526 ../qt/src/hocr/HOCRDocument.cc:449
+#: ../gtk/src/hocr/HOCRDocument.cc:565 ../qt/src/hocr/HOCRDocument.cc:488
 msgid "Graphic"
 msgstr "تصويري"
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:64 ../gtk/src/hocr/HOCRPdfExporter.cc:491
+#: ../gtk/src/hocr/HOCROdtExporter.cc:65 ../gtk/src/hocr/HOCRPdfExporter.cc:491
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:941 ../gtk/src/OutputEditorText.cc:272
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:962 ../gtk/src/OutputEditorText.cc:272
 #: ../qt/src/hocr/HOCROdtExporter.cc:50 ../qt/src/hocr/HOCRPdfExporter.cc:480
-#: ../qt/src/hocr/HOCRTextExporter.cc:36 ../qt/src/hocr/OutputEditorHOCR.cc:808
+#: ../qt/src/hocr/HOCRTextExporter.cc:36 ../qt/src/hocr/OutputEditorHOCR.cc:824
 #: ../qt/src/OutputEditorText.cc:238
 msgid "output"
 msgstr "المخرج"
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:67 ../qt/src/hocr/HOCROdtExporter.cc:53
+#: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "OpenDocument Text Documents"
 msgstr "مستندات من نوع OpenDocument"
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
+#: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "Save ODT Output..."
 msgstr "احفظ بصيغة ODT وورد..."
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:272
+#: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCROdtExporter.cc:61
 #: ../qt/src/hocr/HOCRPdfExporter.cc:600 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
 msgstr "فشل في التصدير"
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:272
+#: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
 msgstr "فشل في التصدير: كتابة المخرجات غير ممكنة."
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:266 ../qt/src/hocr/HOCROdtExporter.cc:254
+#: ../gtk/src/hocr/HOCROdtExporter.cc:336 ../qt/src/hocr/HOCROdtExporter.cc:254
 msgid "Exporting to ODT..."
 msgstr "تصدير بصيغة ODT وورد..."
 
@@ -1034,7 +1038,7 @@ msgstr "حفظ بصيغة PDF نصي..."
 msgid "The PDF export failed: %1."
 msgstr "فشل في تصدير PDF: %1."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:657 ../qt/src/hocr/HOCRPdfExporter.cc:649
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:661 ../qt/src/hocr/HOCRPdfExporter.cc:653
 msgid "The PDF library could not load the font '%1'."
 msgstr "مكتبة PDF لا يمكنها تحميل هذا الخط '%1'."
 
@@ -1093,216 +1097,223 @@ msgstr "قيم متعددة"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:771
-#: ../qt/src/hocr/OutputEditorHOCR.cc:631
+#: ../qt/src/hocr/OutputEditorHOCR.cc:632
 msgid "Merge"
 msgstr "دمج"
 
-#. Swapping allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:780
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:779
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:876
 #: ../qt/src/hocr/OutputEditorHOCR.cc:634
+#: ../qt/src/hocr/OutputEditorHOCR.cc:719
+msgid "Split from parent"
+msgstr ""
+
+#. Swapping allowed
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:790
+#: ../qt/src/hocr/OutputEditorHOCR.cc:638
 msgid "Swap"
 msgstr "تبديل"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:803
-#: ../qt/src/hocr/OutputEditorHOCR.cc:675
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:814
+#: ../qt/src/hocr/OutputEditorHOCR.cc:684
 msgid "Add graphic region"
 msgstr "إضافة منطقة للتعرف الضوئي"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:806
-#: ../qt/src/hocr/OutputEditorHOCR.cc:676
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:817
+#: ../qt/src/hocr/OutputEditorHOCR.cc:685
 msgid "Add text block"
 msgstr "إضافة كتلة نص"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:810
-#: ../qt/src/hocr/OutputEditorHOCR.cc:678
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:821
+#: ../qt/src/hocr/OutputEditorHOCR.cc:687
 msgid "Add paragraph"
 msgstr "إضافة فقرة"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:814
-#: ../qt/src/hocr/OutputEditorHOCR.cc:680
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:825
+#: ../qt/src/hocr/OutputEditorHOCR.cc:689
 msgid "Add line"
 msgstr "إضافة سطر"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:818
-#: ../qt/src/hocr/OutputEditorHOCR.cc:682
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:829
+#: ../qt/src/hocr/OutputEditorHOCR.cc:691
 msgid "Add word"
 msgstr "إضافة كلمة"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:840
-#: ../qt/src/hocr/OutputEditorHOCR.cc:695
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:851
+#: ../qt/src/hocr/OutputEditorHOCR.cc:704
 msgid "No suggestions"
 msgstr "لا توجد اقتراحات"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:846
-#: ../qt/src/hocr/OutputEditorHOCR.cc:699
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:857
+#: ../qt/src/hocr/OutputEditorHOCR.cc:708
 msgid "Add to dictionary"
 msgstr "إضافة إلى القاموس"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:852
-#: ../qt/src/hocr/OutputEditorHOCR.cc:701
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:863
+#: ../qt/src/hocr/OutputEditorHOCR.cc:710
 msgid "Ignore word"
 msgstr "تجاهل الكلمة"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:904
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:943
-#: ../qt/src/hocr/OutputEditorHOCR.cc:773
-#: ../qt/src/hocr/OutputEditorHOCR.cc:810
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:925
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:964
+#: ../qt/src/hocr/OutputEditorHOCR.cc:789
+#: ../qt/src/hocr/OutputEditorHOCR.cc:826
 msgid "hOCR HTML Files"
 msgstr "ملف HTML بصيغة hOCR"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:905
-#: ../qt/src/hocr/OutputEditorHOCR.cc:773
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:926
+#: ../qt/src/hocr/OutputEditorHOCR.cc:789
 msgid "Open hOCR File"
 msgstr "فتح ملف hOCR"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:914
-#: ../qt/src/hocr/OutputEditorHOCR.cc:780
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:935
+#: ../qt/src/hocr/OutputEditorHOCR.cc:796
 msgid "Failed to open file"
 msgstr "فشلت عملية فتح الملف"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:914
-#: ../qt/src/hocr/OutputEditorHOCR.cc:780
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:935
+#: ../qt/src/hocr/OutputEditorHOCR.cc:796
 msgid "The file could not be opened: %1."
 msgstr "هذ الملف لا يمكن فتحه: %1."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:923
-#: ../qt/src/hocr/OutputEditorHOCR.cc:787
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
+#: ../qt/src/hocr/OutputEditorHOCR.cc:803
 msgid "Invalid hOCR file"
 msgstr "ملف hOCR غير صالح"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:923
-#: ../qt/src/hocr/OutputEditorHOCR.cc:787
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
+#: ../qt/src/hocr/OutputEditorHOCR.cc:803
 msgid "The file does not appear to contain valid hOCR HTML: %1"
 msgstr "هذا الملف لا يبدو أنه يحتوي على hOCR HTML صالح: %1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
-#: ../qt/src/hocr/OutputEditorHOCR.cc:810
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:965
+#: ../qt/src/hocr/OutputEditorHOCR.cc:826
 msgid "Save hOCR Output..."
 msgstr "احفظ مخرج hOCR..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:951 ../gtk/src/OutputEditorText.cc:282
-#: ../qt/src/hocr/OutputEditorHOCR.cc:817 ../qt/src/OutputEditorText.cc:246
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:972 ../gtk/src/OutputEditorText.cc:282
+#: ../qt/src/hocr/OutputEditorHOCR.cc:833 ../qt/src/OutputEditorText.cc:246
 msgid "Failed to save output"
 msgstr "فشلت عملية حفظ المخرج"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:951 ../gtk/src/OutputEditorText.cc:282
-#: ../qt/src/hocr/OutputEditorHOCR.cc:817 ../qt/src/OutputEditorText.cc:246
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:972 ../gtk/src/OutputEditorText.cc:282
+#: ../qt/src/hocr/OutputEditorHOCR.cc:833 ../qt/src/OutputEditorText.cc:246
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "قم بالتأكد أنك تملك صلاحية كتابة الملفات في المجلد المحدد."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1010 ../gtk/src/OutputEditorText.cc:296
-#: ../qt/src/hocr/OutputEditorHOCR.cc:869 ../qt/src/OutputEditorText.cc:259
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1031 ../gtk/src/OutputEditorText.cc:296
+#: ../qt/src/hocr/OutputEditorHOCR.cc:885 ../qt/src/OutputEditorText.cc:259
 msgid "Output not saved"
 msgstr "المخرج لم يتم حفظه"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1010 ../gtk/src/OutputEditorText.cc:296
-#: ../qt/src/hocr/OutputEditorHOCR.cc:869 ../qt/src/OutputEditorText.cc:259
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1031 ../gtk/src/OutputEditorText.cc:296
+#: ../qt/src/hocr/OutputEditorHOCR.cc:885 ../qt/src/OutputEditorText.cc:259
 msgid "Save output before proceeding?"
 msgstr "حفظ المخرج قبل المتابعة؟"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1131 ../gtk/src/OutputEditorText.cc:184
-#: ../qt/src/hocr/OutputEditorHOCR.cc:966 ../qt/src/OutputEditorText.cc:152
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1152 ../gtk/src/OutputEditorText.cc:184
+#: ../qt/src/hocr/OutputEditorHOCR.cc:982 ../qt/src/OutputEditorText.cc:152
 msgid "Replacing..."
 msgstr "جار الاستبدال..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1156 ../gtk/src/OutputEditorText.cc:192
-#: ../qt/src/hocr/OutputEditorHOCR.cc:989 ../qt/src/OutputEditorText.cc:160
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1177 ../gtk/src/OutputEditorText.cc:192
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1005 ../qt/src/OutputEditorText.cc:160
 msgid "Applying substitutions..."
 msgstr "جار تطبيق الاستبدالات..."
 
-#: ../gtk/src/MainWindow.cc:123 ../qt/src/MainWindow.cc:286
+#: ../gtk/src/MainWindow.cc:123 ../qt/src/MainWindow.cc:287
 msgid "Using tesseract"
 msgstr "باستخدام محرك التعرف tesseract"
 
-#: ../gtk/src/MainWindow.cc:170 ../qt/src/MainWindow.cc:185
+#: ../gtk/src/MainWindow.cc:170 ../qt/src/MainWindow.cc:186
 msgid "Select an image to begin..."
 msgstr "اختر صورة للبدء..."
 
-#: ../gtk/src/MainWindow.cc:285 ../qt/src/MainWindow.cc:269
+#: ../gtk/src/MainWindow.cc:285 ../qt/src/MainWindow.cc:270
 msgid "Multiple sources"
 msgstr "مصادر متعددة"
 
-#: ../gtk/src/MainWindow.cc:287 ../qt/src/MainWindow.cc:271
+#: ../gtk/src/MainWindow.cc:287 ../qt/src/MainWindow.cc:272
 msgid "Ready"
 msgstr "مستعد"
 
-#: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:409
+#: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:410
 msgid "New version"
 msgstr "نسخة جديدة"
 
-#: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:409
+#: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:410
 msgid "gImageReader %1 is available"
 msgstr "البرنامج gImageReader  %1 متوفر"
 
-#: ../gtk/src/MainWindow.cc:431 ../qt/src/MainWindow.cc:410
+#: ../gtk/src/MainWindow.cc:431 ../qt/src/MainWindow.cc:411
 msgid "Download"
 msgstr "تنزيل"
 
-#: ../gtk/src/MainWindow.cc:432 ../qt/src/MainWindow.cc:411
+#: ../gtk/src/MainWindow.cc:432 ../qt/src/MainWindow.cc:412
 msgid "Changelog"
 msgstr "سجل التغييرات"
 
-#: ../gtk/src/MainWindow.cc:433 ../qt/src/MainWindow.cc:412
+#: ../gtk/src/MainWindow.cc:433 ../qt/src/MainWindow.cc:413
 msgid "Don't notify again"
 msgstr "لا تقم بإعلامي مرة أخرى"
 
-#: ../gtk/src/MainWindow.cc:454 ../qt/src/MainWindow.cc:460
+#: ../gtk/src/MainWindow.cc:454 ../qt/src/MainWindow.cc:461
 msgid "Don't show again"
 msgstr "لا تعرض هذا مرة أخرى"
 
 #: ../gtk/src/MainWindow.cc:455 ../gtk/src/MainWindow.cc:468
-#: ../qt/src/MainWindow.cc:461
+#: ../qt/src/MainWindow.cc:462
 msgid "Install"
 msgstr "تثبيت"
 
-#: ../gtk/src/MainWindow.cc:475 ../qt/src/MainWindow.cc:473
+#: ../gtk/src/MainWindow.cc:475 ../qt/src/MainWindow.cc:474
 msgid "Spelling dictionary missing"
 msgstr "قاموس التدقيق الإملائي غير موجود"
 
-#: ../gtk/src/MainWindow.cc:475 ../qt/src/MainWindow.cc:473
+#: ../gtk/src/MainWindow.cc:475 ../qt/src/MainWindow.cc:474
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "قاموس التدقيق الإملائي لـ %1 غير مثبت"
 
 #: ../gtk/src/MainWindow.cc:482 ../gtk/src/MainWindow.cc:514
-#: ../qt/src/MainWindow.cc:480
+#: ../qt/src/MainWindow.cc:481
 msgid "Installing spelling dictionary for '%1'"
 msgstr "جار تثبيت قاموس التدقيق الإملائي لـ '%1'"
 
 #: ../gtk/src/MainWindow.cc:503 ../gtk/src/MainWindow.cc:528
 #: ../gtk/src/MainWindow.cc:536 ../gtk/src/MainWindow.cc:546
 #: ../gtk/src/MainWindow.cc:552 ../gtk/src/MainWindow.cc:582
-#: ../gtk/src/Recognizer.cc:151 ../gtk/src/TessdataManager.cc:59
-#: ../gtk/src/TessdataManager.cc:69 ../gtk/src/TessdataManager.cc:291
-#: ../qt/src/MainWindow.cc:499 ../qt/src/MainWindow.cc:512
-#: ../qt/src/MainWindow.cc:522 ../qt/src/MainWindow.cc:532
-#: ../qt/src/MainWindow.cc:540 ../qt/src/MainWindow.cc:570
-#: ../qt/src/Recognizer.cc:138 ../qt/src/TessdataManager.cc:74
-#: ../qt/src/TessdataManager.cc:84 ../qt/src/TessdataManager.cc:275
+#: ../gtk/src/Recognizer.cc:152 ../gtk/src/TessdataManager.cc:59
+#: ../gtk/src/TessdataManager.cc:69 ../gtk/src/TessdataManager.cc:313
+#: ../qt/src/MainWindow.cc:500 ../qt/src/MainWindow.cc:513
+#: ../qt/src/MainWindow.cc:523 ../qt/src/MainWindow.cc:533
+#: ../qt/src/MainWindow.cc:541 ../qt/src/MainWindow.cc:571
+#: ../qt/src/Recognizer.cc:139 ../qt/src/TessdataManager.cc:74
+#: ../qt/src/TessdataManager.cc:84 ../qt/src/TessdataManager.cc:297
 msgid "Error"
 msgstr "خطأ"
 
-#: ../gtk/src/MainWindow.cc:503 ../qt/src/MainWindow.cc:499
+#: ../gtk/src/MainWindow.cc:503 ../qt/src/MainWindow.cc:500
 msgid "Failed to install spelling dictionary: %1"
 msgstr "فشل في تثبيت قاموس التدقيق الإملائي: %1"
 
-#: ../gtk/src/MainWindow.cc:528 ../qt/src/MainWindow.cc:512
+#: ../gtk/src/MainWindow.cc:528 ../qt/src/MainWindow.cc:513
 msgid "Failed to create directory for spelling dictionaries."
 msgstr "فشل في إنشاء مجلد قواميس التدقيق الإملائي."
 
 #: ../gtk/src/MainWindow.cc:536 ../gtk/src/MainWindow.cc:552
-#: ../qt/src/MainWindow.cc:522
+#: ../qt/src/MainWindow.cc:523
 msgid "Could not read %1: %2."
 msgstr "لا يمكن قراءة %1: %2."
 
-#: ../gtk/src/MainWindow.cc:546 ../qt/src/MainWindow.cc:532
+#: ../gtk/src/MainWindow.cc:546 ../qt/src/MainWindow.cc:533
 msgid "No spelling dictionaries found for '%1'."
 msgstr "لا يتم العثور على قواميس تدقيق إملائي لـ '%1'."
 
-#: ../gtk/src/MainWindow.cc:563 ../qt/src/MainWindow.cc:552
+#: ../gtk/src/MainWindow.cc:563 ../qt/src/MainWindow.cc:553
 msgid "Downloading '%1'..."
 msgstr "جار التنزيل '%1'..."
 
-#: ../gtk/src/MainWindow.cc:582 ../qt/src/MainWindow.cc:570
+#: ../gtk/src/MainWindow.cc:582 ../qt/src/MainWindow.cc:571
 msgid ""
 "The following dictionaries could not be downloaded:\n"
 "%1\n"
@@ -1318,7 +1329,7 @@ msgstr ""
 "تلميح: إذا كان لا يمكنك الكتابة في مجلدات النظام، يمكنك أن تتحول إلى مسار "
 "المستخدمين في الإعدادت."
 
-#: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:573
+#: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:574
 msgid "Dictionaries installed"
 msgstr "القواميس تم تثبيتها"
 
@@ -1346,8 +1357,8 @@ msgstr "ملف: %1"
 msgid "Page: %1"
 msgstr "صفحة: %1"
 
-#: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:476
-#: ../qt/src/Recognizer.cc:469
+#: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:477
+#: ../qt/src/Recognizer.cc:470
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -1359,7 +1370,7 @@ msgstr ""
 msgid "Save Output..."
 msgstr "حفظ المخرج..."
 
-#: ../gtk/src/Recognizer.cc:144 ../qt/src/Recognizer.cc:131
+#: ../gtk/src/Recognizer.cc:145 ../qt/src/Recognizer.cc:132
 msgid ""
 "Tesseract crashed with the following message:\n"
 "\n"
@@ -1384,76 +1395,76 @@ msgstr ""
 "\n"
 "تأكد أن ملف لغة التعرف الضوئي متوافق مع tesseract %2."
 
-#: ../gtk/src/Recognizer.cc:200 ../qt/src/Recognizer.cc:191
+#: ../gtk/src/Recognizer.cc:201 ../qt/src/Recognizer.cc:192
 msgid "No languages available"
 msgstr "لا توجد لغات متاحة"
 
-#: ../gtk/src/Recognizer.cc:200 ../qt/src/Recognizer.cc:191
+#: ../gtk/src/Recognizer.cc:201 ../qt/src/Recognizer.cc:192
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr "لا توجد لغات تعرف ضوئي لمحرك التعرف tesseract. التعرف الضوئي لن يعمل."
 
-#: ../gtk/src/Recognizer.cc:254 ../qt/src/Recognizer.cc:251
+#: ../gtk/src/Recognizer.cc:255 ../qt/src/Recognizer.cc:252
 msgid "Multilingual"
 msgstr "بلغات متعددة"
 
-#: ../gtk/src/Recognizer.cc:306 ../qt/src/Recognizer.cc:296
+#: ../gtk/src/Recognizer.cc:307 ../qt/src/Recognizer.cc:297
 msgid "Automatic page segmentation"
 msgstr "تقسيم تخطيط الصفحة بشكل تلقائي"
 
-#: ../gtk/src/Recognizer.cc:307 ../qt/src/Recognizer.cc:297
+#: ../gtk/src/Recognizer.cc:308 ../qt/src/Recognizer.cc:298
 msgid "Page segmentation with orientation and script detection"
 msgstr "تقسيم تخطيط الصفحة مع التعرف التلقائي للغة واتجاه الصفحة"
 
-#: ../gtk/src/Recognizer.cc:308 ../qt/src/Recognizer.cc:298
+#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:299
 msgid "Assume single column of text"
 msgstr "اعتبر النص في عمود واحد"
 
-#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:299
+#: ../gtk/src/Recognizer.cc:310 ../qt/src/Recognizer.cc:300
 msgid "Assume single block of vertically aligned text"
 msgstr "اعتبر كتلة نص واحدة مضبوطة عموديا"
 
-#: ../gtk/src/Recognizer.cc:310 ../qt/src/Recognizer.cc:300
+#: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:301
 msgid "Assume a single uniform block of text"
 msgstr "اعتبر كتلة نص واحدة"
 
-#: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:301
+#: ../gtk/src/Recognizer.cc:312 ../qt/src/Recognizer.cc:302
 msgid "Assume a line of text"
 msgstr "اعتبر نص في سطر واحد"
 
-#: ../gtk/src/Recognizer.cc:312 ../qt/src/Recognizer.cc:302
+#: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:303
 msgid "Assume a single word"
 msgstr "اعتبر وجود كلمة واحدة"
 
-#: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:303
+#: ../gtk/src/Recognizer.cc:314 ../qt/src/Recognizer.cc:304
 msgid "Assume a single word in a circle"
 msgstr "اعتبر وجود كلمة واحدة في دائرة"
 
-#: ../gtk/src/Recognizer.cc:314 ../qt/src/Recognizer.cc:304
+#: ../gtk/src/Recognizer.cc:315 ../qt/src/Recognizer.cc:305
 msgid "Sparse text in no particular order"
 msgstr "نص متناثر بدون أي ترتيب"
 
-#: ../gtk/src/Recognizer.cc:315 ../qt/src/Recognizer.cc:305
+#: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:306
 msgid "Sparse text with orientation and script detection"
 msgstr "نص متناثر مع التعرف التلقائي لاتجاه الصفحة واللغة"
 
-#: ../gtk/src/Recognizer.cc:330 ../qt/src/Recognizer.cc:316
+#: ../gtk/src/Recognizer.cc:331 ../qt/src/Recognizer.cc:317
 msgid "Page segmentation mode"
 msgstr "وضعية تخطيط الصفحة"
 
-#: ../gtk/src/Recognizer.cc:336 ../qt/src/Recognizer.cc:323
+#: ../gtk/src/Recognizer.cc:337 ../qt/src/Recognizer.cc:324
 msgid "Manage languages..."
 msgstr "إدارة اللغات..."
 
-#: ../gtk/src/Recognizer.cc:392 ../qt/src/Recognizer.cc:383
+#: ../gtk/src/Recognizer.cc:393 ../qt/src/Recognizer.cc:384
 msgid "Current selection"
 msgstr "التحديد الحالي"
 
-#: ../gtk/src/Recognizer.cc:470 ../qt/src/Recognizer.cc:462
+#: ../gtk/src/Recognizer.cc:471 ../qt/src/Recognizer.cc:463
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "جار التعرف الضوئي على الصفحة %1 (%2 من %3)"
 
-#: ../gtk/src/Recognizer.cc:475 ../qt/src/Recognizer.cc:468
+#: ../gtk/src/Recognizer.cc:476 ../qt/src/Recognizer.cc:469
 msgid ""
 "\n"
 "- Page %1: failed to render page"
@@ -1461,22 +1472,22 @@ msgstr ""
 "\n"
 "- الصفحة %1: لا يمكن رسم الصفحة"
 
-#: ../gtk/src/Recognizer.cc:506 ../gtk/src/Recognizer.cc:535
-#: ../gtk/src/Recognizer.cc:548 ../qt/src/Recognizer.cc:498
-#: ../qt/src/Recognizer.cc:527 ../qt/src/Recognizer.cc:540
+#: ../gtk/src/Recognizer.cc:507 ../gtk/src/Recognizer.cc:536
+#: ../gtk/src/Recognizer.cc:549 ../qt/src/Recognizer.cc:499
+#: ../qt/src/Recognizer.cc:528 ../qt/src/Recognizer.cc:541
 msgid "Recognizing..."
 msgstr "جار التعرف الضوئي.."
 
-#: ../gtk/src/Recognizer.cc:510 ../gtk/src/Recognizer.cc:518
-#: ../qt/src/Recognizer.cc:502 ../qt/src/Recognizer.cc:510
+#: ../gtk/src/Recognizer.cc:511 ../gtk/src/Recognizer.cc:519
+#: ../qt/src/Recognizer.cc:503 ../qt/src/Recognizer.cc:511
 msgid "Recognition errors occurred"
 msgstr "حدثت أخطاء في التعرف الضوئي"
 
-#: ../gtk/src/Recognizer.cc:510 ../qt/src/Recognizer.cc:502
+#: ../gtk/src/Recognizer.cc:511 ../qt/src/Recognizer.cc:503
 msgid "The following errors occurred:%1"
 msgstr "حدثت الأخطاء التالية: %1"
 
-#: ../gtk/src/Recognizer.cc:518 ../qt/src/Recognizer.cc:510
+#: ../gtk/src/Recognizer.cc:519 ../qt/src/Recognizer.cc:511
 msgid "Failed to initialize tesseract"
 msgstr "فشل في تهيئة محرك التعرف الضوئي tesseract"
 
@@ -1689,31 +1700,30 @@ msgstr "يوجد أدوات ناقصة في محرك التعرف الضوئي. 
 msgid "Fetching available languages"
 msgstr "جار تغذية الملفات الموجودة"
 
-#: ../gtk/src/TessdataManager.cc:69 ../gtk/src/TessdataManager.cc:90
-#: ../gtk/src/TessdataManager.cc:122 ../qt/src/TessdataManager.cc:84
-#: ../qt/src/TessdataManager.cc:96 ../qt/src/TessdataManager.cc:129
+#: ../gtk/src/TessdataManager.cc:69 ../gtk/src/TessdataManager.cc:95
+#: ../gtk/src/TessdataManager.cc:180 ../qt/src/TessdataManager.cc:84
+#: ../qt/src/TessdataManager.cc:101 ../qt/src/TessdataManager.cc:185
 msgid "Failed to fetch list of available languages: %1"
 msgstr "خطأ أثناء تغذية قائمة اللغات المتاحة: %1"
 
-#: ../gtk/src/TessdataManager.cc:101 ../gtk/src/TessdataManager.cc:130
-#: ../qt/src/TessdataManager.cc:107 ../qt/src/TessdataManager.cc:116
-#: ../qt/src/TessdataManager.cc:138 ../qt/src/TessdataManager.cc:149
+#: ../gtk/src/TessdataManager.cc:106 ../qt/src/TessdataManager.cc:112
+#: ../qt/src/TessdataManager.cc:121
 msgid "Parsing error: %1"
 msgstr "خطأ أثناء التمرير: %1"
 
-#: ../gtk/src/TessdataManager.cc:192 ../qt/src/TessdataManager.cc:193
+#: ../gtk/src/TessdataManager.cc:214 ../qt/src/TessdataManager.cc:215
 msgid "Applying changes..."
 msgstr "جار تطبيق التغييرات..."
 
-#: ../gtk/src/TessdataManager.cc:253 ../qt/src/TessdataManager.cc:238
+#: ../gtk/src/TessdataManager.cc:275 ../qt/src/TessdataManager.cc:260
 msgid "Failed to create directory for tessdata files."
 msgstr "فشل أثناء إنشاء مجلد ملفات لغات التعرف الضوئي tessdata."
 
-#: ../gtk/src/TessdataManager.cc:262 ../qt/src/TessdataManager.cc:246
+#: ../gtk/src/TessdataManager.cc:284 ../qt/src/TessdataManager.cc:268
 msgid "Downloading %1..."
 msgstr "جار التنزيل %1..."
 
-#: ../gtk/src/TessdataManager.cc:282
+#: ../gtk/src/TessdataManager.cc:304
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1753,8 +1763,8 @@ msgid ""
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>برنامج واجهة لمحرك التعرف الضوئي "
-"tesseract-ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
-">الموقع</a></p><p>&nbsp;</p></body></html>"
+"tesseract-ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/"
+"\">الموقع</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -1786,10 +1796,10 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">حدث خطأ في "
-"البرنامج</span></p><p>نعتذر لكم، لتطوير البرنامج يرجى التبليغ عن هذه المشكلة "
-"لـ <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
-">manisandro@gmail.com</a>. فضلا قم بتوضيح ما كنت تعمله قبيل حدوث الخطأ. قم "
+"<html><head/><body><p><span style=\" font-weight:600;\">حدث خطأ في البرنامج</"
+"span></p><p>نعتذر لكم، لتطوير البرنامج يرجى التبليغ عن هذه المشكلة لـ <a "
+"href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+"\">manisandro@gmail.com</a>. فضلا قم بتوضيح ما كنت تعمله قبيل حدوث الخطأ. قم "
 "بإلحاق هذه البيانات أيضا بالأسفل. شكراً لك.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:17
@@ -1889,15 +1899,15 @@ msgstr "احفظ بصيغة hOCR"
 msgid "Find and Replace"
 msgstr "بحث واستبدال"
 
-#: ../qt/src/MainWindow.cc:540
+#: ../qt/src/MainWindow.cc:541
 msgid "Could not read %1: %2"
 msgstr "لا يمكن قراءة %1: %2"
 
-#: ../qt/src/MainWindow.cc:573
+#: ../qt/src/MainWindow.cc:574
 msgid "The following dictionary files were installed:%1"
 msgstr "القاموس التالي غير مثبت:%1"
 
-#: ../qt/src/TessdataManager.cc:268
+#: ../qt/src/TessdataManager.cc:290
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
