@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2018-02-21 23:06+0000\n"
+"PO-Revision-Date: 2018-03-29 22:24+0000\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/it/>\n"
@@ -840,7 +840,7 @@ msgstr "Nome nativo"
 
 #: ../gtk/src/Config.cc:100 ../qt/src/Config.cc:98
 msgid "Script"
-msgstr ""
+msgstr "Carattere"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:39
 #: ../qt/src/CrashHandler.cc:34
@@ -1108,7 +1108,7 @@ msgstr "Unisci"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:634
 #: ../qt/src/hocr/OutputEditorHOCR.cc:719
 msgid "Split from parent"
-msgstr ""
+msgstr "Separa dal gruppo"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:790
