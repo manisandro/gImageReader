@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:17+0200\n"
-"PO-Revision-Date: 2018-02-21 23:07+0000\n"
-"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
+"PO-Revision-Date: 2018-03-30 05:09+0000\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gimagereader/"
 "translations/cs/>\n"
 "Language: cs\n"
@@ -841,7 +841,7 @@ msgstr "Název v daném jazyce"
 
 #: ../gtk/src/Config.cc:100 ../qt/src/Config.cc:98
 msgid "Script"
-msgstr ""
+msgstr "Skript"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:39
 #: ../qt/src/CrashHandler.cc:34
@@ -1113,7 +1113,7 @@ msgstr "Sloučit"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:634
 #: ../qt/src/hocr/OutputEditorHOCR.cc:719
 msgid "Split from parent"
-msgstr ""
+msgstr "Oddělit od nadřazeného"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:790
