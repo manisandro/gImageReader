@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2018-02-26 10:40+0000\n"
+"PO-Revision-Date: 2018-04-05 00:04+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gimagereader/translations/pt_BR/>\n"
@@ -841,7 +841,7 @@ msgstr "Nome nativo"
 
 #: ../gtk/src/Config.cc:100 ../qt/src/Config.cc:98
 msgid "Script"
-msgstr ""
+msgstr "Script"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:39
 #: ../qt/src/CrashHandler.cc:34
@@ -1110,7 +1110,7 @@ msgstr "Unir"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:634
 #: ../qt/src/hocr/OutputEditorHOCR.cc:719
 msgid "Split from parent"
-msgstr ""
+msgstr "Separar do pai"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:790
