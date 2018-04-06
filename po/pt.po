@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Portuguese (Brazil) (gImageReader)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-06 14:05+0200\n"
-"PO-Revision-Date: 2018-04-06 12:08+0000\n"
+"PO-Revision-Date: 2018-04-06 13:27+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pt/>\n"
@@ -172,7 +172,7 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
-msgstr ""
+msgstr "Alternar exibição do painel de saída"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
@@ -197,11 +197,11 @@ msgstr "Capturar a tela"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:204
 msgid "Add images"
-msgstr ""
+msgstr "Adicionar imagens"
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/src/Ui_MainWindow.hh:203
 msgid "Add Images"
-msgstr ""
+msgstr "Adicionar imagens"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:209
 msgid "Remove image from list"
@@ -209,11 +209,11 @@ msgstr "Remover imagem da lista"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/src/Ui_MainWindow.hh:212
 msgid "Delete image"
-msgstr ""
+msgstr "Apagar imagem"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:215
 msgid "Clear list"
-msgstr ""
+msgstr "Limpar lista"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
@@ -281,19 +281,19 @@ msgstr "Inverter cores"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:23
 msgid "Zoom in"
-msgstr ""
+msgstr "Aumentar zoom"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:25
 msgid "Zoom out"
-msgstr ""
+msgstr "Diminuir zoom"
 
 #: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:27
 msgid "Normal size"
-msgstr ""
+msgstr "Tamanho normal"
 
 #: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:29
 msgid "Best fit"
-msgstr ""
+msgstr "Melhor ajuste"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
@@ -306,7 +306,7 @@ msgstr "Selecione o modo de inserção"
 
 #: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
-msgstr ""
+msgstr "Controles de imagem"
 
 #: ../gtk/data/MainWindow.ui.h:34 ../qt/src/Ui_MainWindow.hh:138
 msgid "Plain text"
@@ -318,7 +318,7 @@ msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect layout"
-msgstr ""
+msgstr "Detectar layout automaticamente"
 
 #: ../gtk/data/MainWindow.ui.h:37
 msgid "<small>Recognize all</small>"
@@ -383,7 +383,7 @@ msgstr "Múltiplas páginas..."
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:577
 msgid "Add Word"
-msgstr ""
+msgstr "Adicionar Palavra"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:577
 msgid "Enter word:"
@@ -407,7 +407,7 @@ msgstr "Exportar para ODT"
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/Ui_OutputEditorText.hh:116
 msgid "Save output"
-msgstr ""
+msgstr "Gravar saída"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
@@ -419,13 +419,13 @@ msgstr "Exportar"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:78
 #: ../qt/src/Ui_OutputEditorText.hh:118
 msgid "Clear output"
-msgstr ""
+msgstr "Limpar saída"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:12 ../gtk/data/OutputEditorText.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:80
 #: ../qt/src/Ui_OutputEditorText.hh:107
 msgid "Find and replace"
-msgstr ""
+msgstr "Localizar e substituir"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
@@ -929,7 +929,7 @@ msgstr "Gráfico"
 #: ../qt/src/hocr/HOCRTextExporter.cc:36 ../qt/src/hocr/OutputEditorHOCR.cc:824
 #: ../qt/src/OutputEditorText.cc:238
 msgid "output"
-msgstr ""
+msgstr "Saída"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "OpenDocument Text Documents"
@@ -1136,7 +1136,7 @@ msgstr "Adicionar linha"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:829
 #: ../qt/src/hocr/OutputEditorHOCR.cc:691
 msgid "Add word"
-msgstr ""
+msgstr "Adicionar palavra"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:851
 #: ../qt/src/hocr/OutputEditorHOCR.cc:704
@@ -1163,7 +1163,7 @@ msgstr "Ficheiros hOCR HTML"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:926
 #: ../qt/src/hocr/OutputEditorHOCR.cc:789
 msgid "Open hOCR File"
-msgstr ""
+msgstr "Abrir ficheiro hOCR"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:935
 #: ../qt/src/hocr/OutputEditorHOCR.cc:796
@@ -1835,47 +1835,47 @@ msgstr "Fontes"
 
 #: ../qt/data/MainWindow.ui.h:22
 msgid "Zoom In"
-msgstr ""
+msgstr "Aumentar zoom"
 
 #: ../qt/data/MainWindow.ui.h:24
 msgid "Zoom Out"
-msgstr ""
+msgstr "Diminuir zoom"
 
 #: ../qt/data/MainWindow.ui.h:26
 msgid "Normal Size"
-msgstr ""
+msgstr "Tamanho Normal"
 
 #: ../qt/data/MainWindow.ui.h:28
 msgid "Best Fit"
-msgstr ""
+msgstr "Melhor Ajuste"
 
 #: ../qt/data/MainWindow.ui.h:30
 msgid "Rotate Left"
-msgstr ""
+msgstr "Rotacionar para a esquerda"
 
 #: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate left"
-msgstr ""
+msgstr "Rotacionar para a esquerda"
 
 #: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate Right"
-msgstr ""
+msgstr "Rotacionar para a direita"
 
 #: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate right"
-msgstr ""
+msgstr "Rotacionar para a direita"
 
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Image Controls"
-msgstr ""
+msgstr "Controles de Imagem"
 
 #: ../qt/data/MainWindow.ui.h:36
 msgid "Autodetect Layout"
-msgstr ""
+msgstr "Detectar Layout Automaticamente"
 
 #: ../qt/data/MainWindow.ui.h:38
 msgid "Toggle Output Pane"
-msgstr ""
+msgstr "Alternar Exibição do Painel de Saída"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
@@ -1897,7 +1897,7 @@ msgstr "Falha ao gravar ficheiro"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:56
 msgid "Open hOCR file"
-msgstr ""
+msgstr "Abrir ficheiro hOCR"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:57
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:58
@@ -1907,7 +1907,7 @@ msgstr "Gravar como texto hOCR"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:79
 #: ../qt/src/Ui_OutputEditorText.hh:106
 msgid "Find and Replace"
-msgstr ""
+msgstr "Localizar e Substituir"
 
 #: ../qt/src/MainWindow.cc:541
 msgid "Could not read %1: %2"
@@ -1936,7 +1936,7 @@ msgstr ""
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
-msgstr ""
+msgstr "Saída"
 
 #: ../qt/src/Ui_MainWindow.hh:134
 msgid "OCR mode:"
@@ -1948,11 +1948,11 @@ msgstr "Remover imagem"
 
 #: ../qt/src/Ui_MainWindow.hh:211
 msgid "Delete Image"
-msgstr ""
+msgstr "Apagar Imagem"
 
 #: ../qt/src/Ui_MainWindow.hh:214
 msgid "Clear List"
-msgstr ""
+msgstr "Limpar Lista"
 
 #: ../qt/src/Ui_OutputEditorText.hh:101
 msgid "Strip Line Breaks"
@@ -1960,8 +1960,8 @@ msgstr "Remover quebras de linha"
 
 #: ../qt/src/Ui_OutputEditorText.hh:115
 msgid "Save Output"
-msgstr ""
+msgstr "Gravar Saída"
 
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
-msgstr ""
+msgstr "Limpar Saída"
