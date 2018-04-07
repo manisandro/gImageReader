@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2018-04-07 08:07+0000\n"
+"PO-Revision-Date: 2018-04-08 08:34+0000\n"
 "Last-Translator: Aitor Beriain <beriain@bitmessage.ch>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/gimagereader/"
 "translations/eu/>\n"
@@ -312,49 +312,50 @@ msgid "Plain text"
 msgstr "Testu laua"
 
 #: ../gtk/data/MainWindow.ui.h:35 ../qt/src/Ui_MainWindow.hh:138
+#, fuzzy
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect layout"
-msgstr ""
+msgstr "Antolaketa automatikoki antzeman"
 
 #: ../gtk/data/MainWindow.ui.h:37
 msgid "<small>Recognize all</small>"
-msgstr ""
+msgstr "<small>Dena ikuskatu</small>"
 
 #: ../gtk/data/MainWindow.ui.h:38
 msgid "Select language"
-msgstr ""
+msgstr "Hizkuntza hautatu"
 
 #: ../gtk/data/MainWindow.ui.h:39
 msgid "A graphical frontend to tesseract-ocr"
-msgstr ""
+msgstr "tesseract-ocrentzako frontend grafiko bat"
 
 #: ../gtk/data/MainWindow.ui.h:40 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
-msgstr ""
+msgstr "Orrialde tartea"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
-msgstr ""
+msgstr "Orrialde tartea:"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
-msgstr ""
+msgstr "<small><b>Adibidez:</b> 1-10, 13, 14-18</small>"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
-msgstr ""
+msgstr "Ikuskatze eremua:"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../gtk/src/Recognizer.cc:393
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:384
 msgid "Entire page"
-msgstr ""
+msgstr "Orrialde osoa"
 
 #: ../gtk/data/MainWindow.ui.h:47 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
-msgstr ""
+msgstr "Automatikoki antzeman"
 
 #: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
