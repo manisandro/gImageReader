@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2018-04-08 01:41+0000\n"
+"PO-Revision-Date: 2018-04-08 01:52+0000\n"
 "Last-Translator: ezjerry liao <ezjerry@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "gimagereader/translations/zh_Hant/>\n"
@@ -369,9 +369,8 @@ msgid "Source filename"
 msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:9
-#, fuzzy
 msgid "Source page"
-msgstr "來源"
+msgstr "來源頁"
 
 #: ../gtk/data/MainWindow.ui.h:51 ../qt/src/SourceManager.cc:146
 msgid "Protected PDF"
@@ -390,15 +389,13 @@ msgid "Add Word"
 msgstr ""
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:577
-#, fuzzy
 msgid "Enter word:"
-msgstr "忽略字詞"
+msgstr "輸入字詞："
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:61
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
-#, fuzzy
 msgid "Export to plain text"
-msgstr "匯出至 PDF"
+msgstr "匯出為純文字"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:65
@@ -407,9 +404,8 @@ msgstr "匯出至 PDF"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:67
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:68
-#, fuzzy
 msgid "Export to ODT"
-msgstr "匯出至 PDF"
+msgstr "匯出至 ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/Ui_OutputEditorText.hh:116
@@ -418,9 +414,8 @@ msgstr "儲存輸出"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
-#, fuzzy
 msgid "Export"
-msgstr "匯出 PDF"
+msgstr "匯出"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11 ../gtk/data/OutputEditorText.ui.h:19
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
@@ -596,9 +591,8 @@ msgid "Fallback font family:"
 msgstr ""
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
-#, fuzzy
 msgid "Override font size:"
-msgstr "採用偵測到的字型大小"
+msgstr "覆疊字型大小："
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
@@ -637,9 +631,8 @@ msgid "Basic"
 msgstr ""
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
-#, fuzzy
 msgid "PDF version:"
-msgstr "新版本"
+msgstr "PDF 版本："
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:31
 msgid "Password:"
@@ -678,9 +671,8 @@ msgid "Keywords:"
 msgstr ""
 
 #: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:33
-#, fuzzy
 msgid "Additional information (optional):"
-msgstr "額外語言定義："
+msgstr "附加的資訊(可選)："
 
 #: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:40
 msgid "Import from current source"
@@ -913,14 +905,12 @@ msgstr "覆寫檔案？"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:555 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/OutputEditorHOCR.cc:229
-#, fuzzy
 msgid "Page"
-msgstr "剖析錯誤：%1"
+msgstr "頁面"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:557 ../qt/src/hocr/HOCRDocument.cc:480
-#, fuzzy
 msgid "Text block"
-msgstr "文字檔"
+msgstr "文字區塊"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:559 ../gtk/src/hocr/OutputEditorHOCR.cc:272
 #: ../qt/src/hocr/HOCRDocument.cc:482 ../qt/src/hocr/OutputEditorHOCR.cc:231
@@ -949,9 +939,8 @@ msgid "OpenDocument Text Documents"
 msgstr ""
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:53
-#, fuzzy
 msgid "Save ODT Output..."
-msgstr "儲存 PDF 輸出……"
+msgstr "儲存 ODT 輸出..."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607
@@ -966,14 +955,12 @@ msgid "The ODT export failed: unable to write output file."
 msgstr ""
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:336 ../qt/src/hocr/HOCROdtExporter.cc:254
-#, fuzzy
 msgid "Exporting to ODT..."
-msgstr "匯出至 PDF"
+msgstr "匯出至 ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:365
-#, fuzzy
 msgid "Same as source"
-msgstr "來源"
+msgstr "與來源相同"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:366
 msgid "Custom"
@@ -984,9 +971,8 @@ msgid "cm"
 msgstr ""
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:363
-#, fuzzy
 msgid "in"
-msgstr "尋找"
+msgstr "在"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:353
 msgid "Monochrome"
@@ -1021,18 +1007,16 @@ msgid "Save PDF Output..."
 msgstr "儲存 PDF 輸出……"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
-#, fuzzy
 msgid "Invalid Output"
-msgstr "儲存輸出"
+msgstr "無效輸出"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
 msgid "Cannot overwrite a file which is a source image of this document."
 msgstr ""
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
-#, fuzzy
 msgid "Failed to create output"
-msgstr "無法儲存輸出……"
+msgstr "無法建立輸出"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
 msgid "Failed to create output. The returned error was: %1"
@@ -1043,25 +1027,20 @@ msgid "The operation was cancelled"
 msgstr ""
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:595 ../qt/src/hocr/HOCRPdfExporter.cc:588
-#, fuzzy
 msgid "Failed to render page %1"
-msgstr ""
-"\n"
-"[無法辨認第 %1 頁]\n"
+msgstr "無法辨認第 %1 頁"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:602 ../qt/src/hocr/HOCRPdfExporter.cc:595
-#, fuzzy
 msgid "Exporting to PDF..."
-msgstr "匯出至 PDF"
+msgstr "匯出至 PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607 ../qt/src/hocr/HOCRPdfExporter.cc:600
 msgid "The PDF export failed: %1."
 msgstr ""
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:661 ../qt/src/hocr/HOCRPdfExporter.cc:653
-#, fuzzy
 msgid "The PDF library could not load the font '%1'."
-msgstr "PDF 程式庫不支援所選取字型。"
+msgstr "PDF 程式庫不支援所選取字型 '%1'。"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:274
 #: ../qt/src/hocr/HOCRTextExporter.cc:39 ../qt/src/OutputEditorText.cc:239
@@ -1069,9 +1048,8 @@ msgid "Text Files"
 msgstr "文字檔"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:39
-#, fuzzy
 msgid "Save Text Output..."
-msgstr "儲存輸出……"
+msgstr "儲存文字輸出……"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
