@@ -1049,7 +1049,7 @@ msgstr "文字檔"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:39
 msgid "Save Text Output..."
-msgstr "儲存文字輸出……"
+msgstr "儲存文字輸出..."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
