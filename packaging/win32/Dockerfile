@@ -8,6 +8,7 @@ dnf install -y 'dnf-command(config-manager)' && \
 dnf config-manager --add-repo https://copr.fedorainfracloud.org/coprs/smani/mingw-extras/repo/fedora-rawhide/smani-mingw-extras-fedora-rawhide.repo && \
 dnf install -y \
   cmake \
+  make \
   iso-codes \
   findutils \
   gettext \
