@@ -195,11 +195,7 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 		lang.prefix = prefix;
 		QString label;
 		if(MAIN->getConfig()->searchLangSpec(lang)) {
-			if(lang.prefix.startsWith("script") || lang.prefix.left(1) == lang.prefix.left(1).toUpper()) {
-				label = lang.name;
-			} else {
-				label = QString("%1 (%2)").arg(lang.name).arg(lang.prefix);
-			}
+			label = lang.name;
 		} else {
 			label = lang.prefix;
 		}
