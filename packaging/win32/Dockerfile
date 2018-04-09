@@ -11,6 +11,7 @@ dnf install -y \
   iso-codes \
   findutils \
   gettext \
+  intltool \
   hunspell-en \
   tesseract \
   mingw32-nsis \
