@@ -110,7 +110,15 @@ QStringList Recognizer::getAvailableLanguages() const {
 	for(int i = 0; i < availLanguages.size(); ++i) {
 		result.append(availLanguages[i].string());
 	}
-	qSort(result);
+	qSort(result.begin(), result.end(), [](const QString & s1, const QString & s2) {
+		bool s1Script = s1.startsWith("script") || s1.left(1) == s1.left(1).toUpper();
+		bool s2Script = s2.startsWith("script") || s2.left(1) == s2.left(1).toUpper();
+		if(s1Script != s2Script) {
+			return !s1Script;
+		} else {
+			return s1 < s2;
+		}
+	});
 	return result;
 }
 

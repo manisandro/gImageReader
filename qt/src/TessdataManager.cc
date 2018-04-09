@@ -195,11 +195,7 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 		lang.prefix = prefix;
 		QString label;
 		if(MAIN->getConfig()->searchLangSpec(lang)) {
-			if(lang.prefix.startsWith("script") || lang.prefix.left(1) == lang.prefix.left(1).toUpper()) {
-				label = lang.name;
-			} else {
-				label = QString("%1 (%2)").arg(lang.name).arg(lang.prefix);
-			}
+			label = lang.name;
 		} else {
 			label = lang.prefix;
 		}
@@ -256,7 +252,8 @@ void TessdataManager::applyChanges() {
 #endif
 	} else {
 		QStringList errors;
-		if(!QDir().mkpath(tessDataDir.absolutePath())) {
+		QDir scriptDir = QDir(tessDataDir.absoluteFilePath("script"));
+		if(!QDir().mkpath(tessDataDir.absoluteFilePath("script"))) {
 			errors.append(_("Failed to create directory for tessdata files."));
 		} else {
 			for(int row = 0, nRows = m_languageList->count(); row < nRows; ++row) {
@@ -264,11 +261,13 @@ void TessdataManager::applyChanges() {
 				QString prefix = item->data(Qt::UserRole).toString();
 				if(item->checkState() == Qt::Checked && !availableLanguages.contains(prefix)) {
 					for(const LangFile& langFile : m_languageFiles.value(prefix)) {
-						if(!QFile(tessDataDir.absoluteFilePath(langFile.name)).exists()) {
+						// Traineddatas starting with an uppercase letter are script traineddatas
+						QDir destDir = langFile.name.left(1).toUpper() == langFile.name.left(1) ? scriptDir : tessDataDir;
+						if(!QFile(destDir.absoluteFilePath(langFile.name)).exists()) {
 							MAIN->pushState(MainWindow::State::Busy, _("Downloading %1...").arg(langFile.name));
 							QString messages;
 							QByteArray data = Utils::download(QUrl(langFile.url), messages);
-							QFile file(tessDataDir.absoluteFilePath(langFile.name));
+							QFile file(destDir.absoluteFilePath(langFile.name));
 							if(data.isEmpty() || !file.open(QIODevice::WriteOnly)) {
 								errors.append(langFile.name);
 							} else {
