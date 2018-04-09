@@ -6,14 +6,15 @@
  <project_license>GPL-3.0+</project_license>
  <name>gImageReader</name>
  <name xml:lang="cs_CZ">gImageReader</name>
- <summary>A graphical frontend to tesseract-ocr </summary>
- <summary xml:lang="cs_CZ">Grafická nadstavba pro engine tesseract-ocr </summary>
+ <summary>A graphical (@INTERFACE_TYPE@) frontend to tesseract-ocr</summary>
+ <summary xml:lang="cs_CZ">Grafická (@INTERFACE_TYPE@) nadstavba pro engine tesseract-ocr</summary>
  <keywords>
   <keyword>ocr</keyword>
   <keyword>optical</keyword>
   <keyword>recognition</keyword>
   <keyword>tesseract</keyword>
   <keyword>pdf</keyword>
+  <keyword>@INTERFACE_TYPE@</keyword>
  </keywords>
  <keywords xml:lang="cs_CZ">
   <keyword xml:lang="cs_CZ">ocr</keyword>
@@ -31,7 +32,7 @@
    <li>Recognize to plain text or to hOCR documents</li>
    <li>Recognized text displayed directly next to the image</li>
    <li>Post-process the recognized text, including spellchecking</li>
-   <li>Generate PDF documents from hOCR documents</li>
+   <li>Generate PDF/ODT documents from hOCR documents</li>
   </ul>
  </description>
  <description xml:lang="cs_CZ">
@@ -43,7 +44,7 @@
    <li>Rozpoznání do holého textu nebo hOCR dokumentů</li>
    <li>Rozpoznaný text je zobrazen hned vedle zdrojového obrázku</li>
    <li>Následné zpracování rozpoznaného textu včetně kontroly překlepů</li>
-   <li>Vytváření PDF dokumentů z hOCR dokumentů</li>
+   <li>Vytváření PDF/ODT dokumentů z hOCR dokumentů</li>
   </ul>
  </description>
  <screenshots>
