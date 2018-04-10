@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2018-04-08 01:52+0000\n"
+"PO-Revision-Date: 2018-04-12 00:35+0000\n"
 "Last-Translator: ezjerry liao <ezjerry@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "gimagereader/translations/zh_Hant/>\n"
@@ -1127,9 +1127,8 @@ msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:821
 #: ../qt/src/hocr/OutputEditorHOCR.cc:687
-#, fuzzy
 msgid "Add paragraph"
-msgstr "段落"
+msgstr "增加段落"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:825
 #: ../qt/src/hocr/OutputEditorHOCR.cc:689
@@ -1331,11 +1330,12 @@ msgid "Dictionaries installed"
 msgstr "已安裝詞典"
 
 #: ../gtk/src/MainWindow.cc:585
-#, fuzzy
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
-msgstr "已安裝下列詞典：%1"
+msgstr ""
+"下列詞典已安裝：\n"
+"%1"
 
 #: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
@@ -1346,14 +1346,12 @@ msgid "Check spelling"
 msgstr "檢查拼字"
 
 #: ../gtk/src/OutputEditorText.cc:231 ../qt/src/OutputEditorText.cc:196
-#, fuzzy
 msgid "File: %1"
-msgstr "檔案"
+msgstr "檔案：%1"
 
 #: ../gtk/src/OutputEditorText.cc:234 ../qt/src/OutputEditorText.cc:199
-#, fuzzy
 msgid "Page: %1"
-msgstr "剖析錯誤：%1"
+msgstr "頁面：%1"
 
 #: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:477
 #: ../qt/src/Recognizer.cc:470
@@ -1521,9 +1519,8 @@ msgid "Failed to save image"
 msgstr "無法儲存圖像"
 
 #: ../gtk/src/scanner/ScannerSane.cc:800 ../qt/src/scanner/ScannerSane.cc:797
-#, fuzzy
 msgid "Operation is cancelled."
-msgstr "已取消掃描"
+msgstr "已取消操作。"
 
 #: ../gtk/src/scanner/ScannerSane.cc:802 ../qt/src/scanner/ScannerSane.cc:799
 msgid "Device is busy."
@@ -1542,9 +1539,8 @@ msgid "Document feeder out of documents."
 msgstr ""
 
 #: ../gtk/src/scanner/ScannerSane.cc:810 ../qt/src/scanner/ScannerSane.cc:807
-#, fuzzy
 msgid "Access to scanner is denied."
-msgstr "未指定掃描器"
+msgstr "存取掃描器被拒絕。"
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid "PDFs with text"
@@ -1724,7 +1720,6 @@ msgid "Downloading %1..."
 msgstr "正在下載 %1……"
 
 #: ../gtk/src/TessdataManager.cc:304
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1737,7 +1732,9 @@ msgstr ""
 "無法下載或刪除下列檔案：\n"
 "%1\n"
 "\n"
-"請檢查連線及目錄權限。"
+"請檢查連線及目錄權限。\n"
+"\n"
+"提示：如果您在系統資料夾中沒有寫入權限，您可以在設定對話方塊中切換到使用者路徑。"
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
@@ -1756,15 +1753,14 @@ msgid "About gImageReader"
 msgstr "有關 gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr 的圖像介面</p><p><a href="
-"\"https://github.com/manisandro/gImageReader/\">網站</a></p><p>&nbsp;</p></"
-"body></html>"
+"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr 的圖像介面</p><p><a href=\""
+"https://github.com/manisandro/gImageReader/\""
+">網站</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -1879,9 +1875,8 @@ msgid "Landscape"
 msgstr ""
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:142
-#, fuzzy
 msgid "Failed to write to file"
-msgstr "無法開啟檔案"
+msgstr "無法寫入檔案"
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
@@ -1908,7 +1903,6 @@ msgid "The following dictionary files were installed:%1"
 msgstr "已安裝下列詞典檔：%1"
 
 #: ../qt/src/TessdataManager.cc:290
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1917,10 +1911,11 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"無法下載或刪除下列檔案：\n"
+"下列的檔案無法下載或移除：\n"
 "%1\n"
 "\n"
-"請檢查連線及目錄權限。"
+"請檢查連線及目錄權限。\n"
+"提示：如果您在系統資料夾中沒有寫入權限，您可以在設定對話方塊中切換到使用者路徑。"
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
