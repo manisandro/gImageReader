@@ -193,11 +193,7 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 		lang.prefix = prefix;
 		Glib::ustring label;
 		if(MAIN->getConfig()->searchLangSpec(lang)) {
-			if(lang.prefix.substr(0, 6).lowercase() == "script" || lang.prefix.substr(0, 1) == lang.prefix.substr(0, 1).uppercase()) {
-				label = lang.name;
-			} else {
-				label = Glib::ustring::compose("%1 (%2)", lang.name, lang.prefix);
-			}
+			label = lang.name;
 		} else {
 			label = lang.prefix;
 		}
