@@ -26,7 +26,7 @@
 #include <libxml++/libxml++.h>
 #include <iostream>
 
-#define DEBUG(...) __VA_ARGS__
+#define DEBUG(...) //__VA_ARGS__
 
 HOCRDocument::HOCRDocument(GtkSpell::Checker* spell)
 	: Glib::ObjectBase("HOCRDocument")
