@@ -158,10 +158,11 @@ fi
 
 cp -R $win32dir/skel/* $installroot
 
-# Add english language data and spelling dictionaries
+# Add english language data, poppler-data and spelling dictionaries
 install -Dpm 0644 /usr/share/tesseract/tessdata/eng.traineddata $installroot/share/tessdata/eng.traineddata
 install -Dpm 0644 /usr/share/myspell/en_US.dic $installroot/share/myspell/en_US.dic
 install -Dpm 0644 /usr/share/myspell/en_US.aff $installroot/share/myspell/en_US.aff
+cp -r "/usr/share/poppler/" "$installroot/share/"
 
 # Copy isocodes
 install -Dpm 0644 /usr/share/xml/iso-codes/iso_639.xml $installroot/share/xml/iso-codes/iso_639.xml
