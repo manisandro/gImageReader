@@ -445,10 +445,7 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	ADD_SETTING(ComboSetting("pdfexportpdfversion", ui.comboBoxPdfVersion, ui.comboBoxPdfVersion->findData(PoDoFo::EPdfVersion::ePdfVersion_1_7)));
 	ADD_SETTING(ComboSetting("pdfexportbackend", ui.comboBoxBackend));
 
-#ifndef MAKE_VERSION
-#define MAKE_VERSION(...) 0
-#endif
-#if !defined(TESSERACT_VERSION) || TESSERACT_VERSION < MAKE_VERSION(3,04,00)
+#if !defined(TESSERACT_VERSION) || TESSERACT_VERSION < TESSERACT_MAKE_VERSION(3,04,00)
 	ui.checkBoxFontFamily->setChecked(true);
 	ui.checkBoxFontFamily->setEnabled(false);
 	ui.checkBoxFontSize->setChecked(true);

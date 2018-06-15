@@ -86,7 +86,7 @@ void TessdataManager::run() {
 bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 	m_languageListStore->clear();
 
-#if TESSERACT_VERSION >= MAKE_VERSION(4, 0, 0)
+#if TESSERACT_VERSION >= TESSERACT_MAKE_VERSION(4, 0, 0)
 	std::string url("https://api.github.com/repos/tesseract-ocr/tessdata_fast/tags");
 #else
 	std::string url("https://api.github.com/repos/tesseract-ocr/tessdata/tags");
@@ -119,7 +119,7 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 		Glib::ustring tag = json_object_get_string_member(tagObj, "name");
 		Glib::MatchInfo matchInfo;
 		if(verRegEx->match(tag, matchInfo)) {
-			int tagVer = MAKE_VERSION(std::atoi(matchInfo.fetch(1).c_str()), std::atoi(matchInfo.fetch(2).c_str()), std::atoi(matchInfo.fetch(3).c_str()));
+			int tagVer = TESSERACT_MAKE_VERSION(std::atoi(matchInfo.fetch(1).c_str()), std::atoi(matchInfo.fetch(2).c_str()), std::atoi(matchInfo.fetch(3).c_str()));
 			int dist = TESSERACT_VERSION - tagVer;
 			if(dist >= 0 && dist < bestMatchDist) {
 				bestMatchDist = dist;
@@ -132,7 +132,7 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 
 	std::vector<std::pair<Glib::ustring, Glib::ustring>> extraFiles;
 	std::vector<std::string> dataUrls;
-#if TESSERACT_VERSION >= MAKE_VERSION(4, 0, 0)
+#if TESSERACT_VERSION >= TESSERACT_MAKE_VERSION(4, 0, 0)
 	dataUrls.push_back(std::string("https://api.github.com/repos/tesseract-ocr/tessdata_fast/contents?ref=" + tessdataVer));
 	dataUrls.push_back(std::string("https://api.github.com/repos/tesseract-ocr/tessdata_fast/contents/script?ref=" + tessdataVer));
 #else

@@ -91,7 +91,7 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 	m_languageList->clear();
 
 	// Get newest tag older or equal to used tesseract version
-#if TESSERACT_VERSION >= MAKE_VERSION(4, 0, 0)
+#if TESSERACT_VERSION >= TESSERACT_MAKE_VERSION(4, 0, 0)
 	QUrl url("https://api.github.com/repos/tesseract-ocr/tessdata_fast/tags");
 #else
 	QUrl url("https://api.github.com/repos/tesseract-ocr/tessdata/tags");
@@ -126,7 +126,7 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 		QString tag = value.toObject().value("name").toString();
 #endif
 		if(verRegEx.indexIn(tag) != -1) {
-			int tagVer = MAKE_VERSION(verRegEx.cap(1).toInt(), verRegEx.cap(2).toInt(), verRegEx.cap(3).toInt());
+			int tagVer = TESSERACT_MAKE_VERSION(verRegEx.cap(1).toInt(), verRegEx.cap(2).toInt(), verRegEx.cap(3).toInt());
 			int dist = TESSERACT_VERSION - tagVer;
 			if(dist >= 0 && dist < bestMatchDist) {
 				bestMatchDist = dist;
@@ -137,7 +137,7 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 
 	QVector<QPair<QString, QString>> extraFiles;
 	QList<QUrl> dataUrls;
-#if TESSERACT_VERSION >= MAKE_VERSION(4, 0, 0)
+#if TESSERACT_VERSION >= TESSERACT_MAKE_VERSION(4, 0, 0)
 	dataUrls.append(QUrl("https://api.github.com/repos/tesseract-ocr/tessdata_fast/contents?ref=" + tessdataVer));
 	dataUrls.append(QUrl("https://api.github.com/repos/tesseract-ocr/tessdata_fast/contents/script?ref=" + tessdataVer));
 #else
