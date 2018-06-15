@@ -420,7 +420,7 @@ void Utils::openUri(const std::string& uri) {
 #ifdef G_OS_WIN32
 	ShellExecute(nullptr, "open", uri.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
 #else
-	gtk_show_uri(nullptr, uri.c_str(), GDK_CURRENT_TIME, 0);
+	gtk_show_uri_on_window(MAIN->getWindow()->gobj(), uri.c_str(), GDK_CURRENT_TIME, 0);
 #endif
 }
 

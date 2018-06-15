@@ -428,8 +428,8 @@ void MainWindow::checkVersion(const Glib::ustring& newver) {
 
 	if(newver.compare(curver) > 0) {
 		addNotification(_("New version"), Glib::ustring::compose(_("gImageReader %1 is available"), newver), {
-			{_("Download"), [ = ]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(ui.windowMain)->gobj(), DOWNLOADURL, GDK_CURRENT_TIME, 0); return false; }},
-			{_("Changelog"), [ = ]{ gtk_show_uri_on_window(static_cast<Gtk::Window*>(ui.windowMain)->gobj(), CHANGELOGURL, GDK_CURRENT_TIME, 0); return false; }},
+			{_("Download"), [ = ]{ Utils::openUri(DOWNLOADURL); return false; }},
+			{_("Changelog"), [ = ]{ Utils::openUri(CHANGELOGURL); return false; }},
 			{_("Don't notify again"), [this]{ ConfigSettings::get<SwitchSetting>("updatecheck")->setValue(false); return true; }}
 		});
 	}
