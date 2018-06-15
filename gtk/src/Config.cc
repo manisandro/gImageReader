@@ -95,7 +95,7 @@ Config::Config() {
 }
 
 bool Config::searchLangSpec(Lang& lang) const {
-	// Tesseract 4.0.0-beta.1 and previous had Script tessdatas on same level as language tessdatas, but they are distinguishable in that they begin with an upper case character
+	// Tesseract 4.x up to beta.1 had script tessdatas on same level as language tessdatas, but they are distinguishable in that they begin with an upper case character
 	if(lang.prefix.substr(0, 6).lowercase() == "script" || lang.prefix.substr(0, 1).uppercase() == lang.prefix.substr(0, 1)) {
 		Glib::ustring name = lang.prefix.substr(0, 6).lowercase() == "script" ? lang.prefix.substr(7) : lang.prefix;
 		lang.name = Glib::ustring::compose("%1 [%2]", name, _("Script"));
