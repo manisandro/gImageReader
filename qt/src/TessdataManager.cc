@@ -103,7 +103,8 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 	}
 
 	QString tessdataVer;
-	QString tessVer(TESSERACT_VERSION_STR);
+	int bestMatchDist = std::numeric_limits<int>::max();
+	static const QRegExp verRegEx("^[vV]?(\\d+).(\\d+).(\\d+)-?(\\w?.*)$");
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 	QJson::Parser parser;
 	bool ok = false;
@@ -124,8 +125,13 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 	for(const QJsonValue& value : json.array()) {
 		QString tag = value.toObject().value("name").toString();
 #endif
-		if(tag <= tessVer && tag > tessdataVer) {
-			tessdataVer = tag;
+		if(verRegEx.indexIn(tag) != -1) {
+			int tagVer = MAKE_VERSION(verRegEx.cap(1).toInt(), verRegEx.cap(2).toInt(), verRegEx.cap(3).toInt());
+			int dist = TESSERACT_VERSION - tagVer;
+			if(dist >= 0 && dist < bestMatchDist) {
+				bestMatchDist = dist;
+				tessdataVer = tag;
+			}
 		}
 	}
 
@@ -163,14 +169,20 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 		}
 		for(const QJsonValue& value : json.array()) {
 			QJsonObject treeObj = value.toObject();
-			QString name = treeObj.value("name").toString();
+			QString fileName = treeObj.value("name").toString();
 			QString url = treeObj.value("download_url").toString();
 #endif
-			if(name.endsWith(".traineddata")) {
-				m_languageFiles[name.left(name.indexOf("."))].append({name, url});
+			QString subdir = "";
+			// If filename starts with upper case letter, it is a script
+			if(fileName.left(1) == fileName.left(1).toUpper()) {
+				subdir = "script/";
+			}
+			if(fileName.endsWith(".traineddata")) {
+				QString prefix = subdir + fileName.left(fileName.indexOf("."));
+				m_languageFiles[prefix].append({subdir + fileName, url});
 			} else {
 				// Delay decision to determine whether file is a supplementary language file
-				extraFiles.append(qMakePair(name, url));
+				extraFiles.append(qMakePair(subdir + fileName, url));
 			}
 		}
 		for(const QPair<QString, QString>& extraFile : extraFiles) {
@@ -189,7 +201,16 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 	QStringList availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
 
 	QStringList languages = QStringList(m_languageFiles.keys());
-	languages.sort();
+	qSort(languages.begin(), languages.end(), [](const QString & s1, const QString & s2) {
+		bool s1Script = s1.startsWith("script") || s1.left(1) == s1.left(1).toUpper();
+		bool s2Script = s2.startsWith("script") || s2.left(1) == s2.left(1).toUpper();
+		if(s1Script != s2Script) {
+			return !s1Script;
+		} else {
+			return s1 < s2;
+		}
+	});
+
 	for(const QString& prefix : languages) {
 		Config::Lang lang;
 		lang.prefix = prefix;
@@ -200,8 +221,8 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 			label = lang.prefix;
 		}
 		QListWidgetItem* item = new QListWidgetItem(label);
-		item->setData(Qt::UserRole, prefix);
-		item->setCheckState(availableLanguages.contains(prefix) ? Qt::Checked : Qt::Unchecked);
+		item->setData(Qt::UserRole, lang.prefix);
+		item->setCheckState(availableLanguages.contains(lang.prefix) ? Qt::Checked : Qt::Unchecked);
 		m_languageList->addItem(item);
 	}
 	return true;
@@ -261,13 +282,11 @@ void TessdataManager::applyChanges() {
 				QString prefix = item->data(Qt::UserRole).toString();
 				if(item->checkState() == Qt::Checked && !availableLanguages.contains(prefix)) {
 					for(const LangFile& langFile : m_languageFiles.value(prefix)) {
-						// Traineddatas starting with an uppercase letter are script traineddatas
-						QDir destDir = langFile.name.left(1).toUpper() == langFile.name.left(1) ? scriptDir : tessDataDir;
-						if(!QFile(destDir.absoluteFilePath(langFile.name)).exists()) {
+						QFile file(QDir(tessDataDir).absoluteFilePath(langFile.name));
+						if(!file.exists()) {
 							MAIN->pushState(MainWindow::State::Busy, _("Downloading %1...").arg(langFile.name));
 							QString messages;
 							QByteArray data = Utils::download(QUrl(langFile.url), messages);
-							QFile file(destDir.absoluteFilePath(langFile.name));
 							if(data.isEmpty() || !file.open(QIODevice::WriteOnly)) {
 								errors.append(langFile.name);
 							} else {
@@ -277,9 +296,9 @@ void TessdataManager::applyChanges() {
 						}
 					}
 				} else if(item->checkState() != Qt::Checked && availableLanguages.contains(prefix)) {
-					for(const QString& file : tessDataDir.entryList(QStringList() << prefix + ".*")) {
-						if(!QFile(tessDataDir.absoluteFilePath(file)).remove()) {
-							errors.append(file);
+					for(const LangFile& langFile : m_languageFiles.value(prefix)) {
+						if(!QFile(QDir(tessDataDir).absoluteFilePath(langFile.name)).remove()) {
+							errors.append(langFile.name);
 						}
 					}
 				}
