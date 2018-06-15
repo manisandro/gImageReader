@@ -123,7 +123,15 @@ std::vector<Glib::ustring> Recognizer::getAvailableLanguages() const {
 	for(int i = 0; i < availLanguages.size(); ++i) {
 		result.push_back(availLanguages[i].string());
 	}
-	std::sort(result.begin(), result.end());
+	std::sort(result.begin(), result.end(), [](const Glib::ustring & s1, const Glib::ustring & s2) {
+		bool s1Script = s1.substr(0, 6) == "script" || s1.substr(0, 1) == s1.substr(0, 1).uppercase();
+		bool s2Script = s2.substr(0, 6) == "script" || s2.substr(0, 1) == s2.substr(0, 1).uppercase();
+		if(s1Script != s2Script) {
+			return !s1Script;
+		} else {
+			return s1 < s2;
+		}
+	});
 	return result;
 }
 
