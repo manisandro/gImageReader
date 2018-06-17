@@ -233,7 +233,7 @@ void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
 			loop->quit();
 			MAIN->getRecognizer()->recognizeImage(displayer()->getImage(rect()), Recognizer::OutputDestination::Buffer);
 		}),
-		CONNECT(ui.buttonSelectionRecognize, clicked, [&]{
+		CONNECT(ui.buttonSelectionClipboard, clicked, [&]{
 			loop->quit();
 			MAIN->getRecognizer()->recognizeImage(displayer()->getImage(rect()), Recognizer::OutputDestination::Clipboard);
 		}),
