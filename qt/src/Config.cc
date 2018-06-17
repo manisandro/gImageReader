@@ -176,11 +176,11 @@ void Config::setDataLocations(int idx) {
 		qputenv("TESSDATA_PREFIX", configDir.absoluteFilePath("tessdata").toLocal8Bit());
 		ui.lineEditSpellLocation->setText(configDir.absoluteFilePath("enchant/myspell"));
 	}
+	QByteArray current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
 	tesseract::TessBaseAPI tess;
-	QByteArray current = setlocale(LC_NUMERIC, NULL);
-	setlocale(LC_NUMERIC, "C");
 	tess.Init(nullptr, nullptr);
-	setlocale(LC_NUMERIC, current.constData());
+	setlocale(LC_ALL, current.constData());
 	ui.lineEditTessdataLocation->setText(QString(tess.GetDatapath()));
 }
 

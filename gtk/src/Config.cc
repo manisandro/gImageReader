@@ -163,11 +163,11 @@ void Config::setDataLocations(int idx) {
 		Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(configDir, "tessdata"));
 		ui.entrySpelldir->set_text(Glib::build_filename(configDir, "enchant", "myspell"));
 	}
+	std::string current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
 	tesseract::TessBaseAPI tess;
-	std::string current = setlocale(LC_NUMERIC, NULL);
-	setlocale(LC_NUMERIC, "C");
 	tess.Init(nullptr, nullptr);
-	setlocale(LC_NUMERIC, current.c_str());
+	setlocale(LC_ALL, current.c_str());
 	ui.entryTessdatadir->set_text(tess.GetDatapath());
 }
 

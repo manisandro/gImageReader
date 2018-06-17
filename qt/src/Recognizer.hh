@@ -76,7 +76,7 @@ private:
 	QString m_langLabel;
 	Config::Lang m_curLang;
 
-	bool initTesseract(tesseract::TessBaseAPI& tess, const char* language = nullptr) const;
+	tesseract::TessBaseAPI initTesseract(const char* language = nullptr, bool* ok = nullptr) const;
 	QList<int> selectPages(bool& autodetectLayout);
 	void recognize(const QList<int>& pages, bool autodetectLayout = false);
 	bool eventFilter(QObject* obj, QEvent* ev) override;

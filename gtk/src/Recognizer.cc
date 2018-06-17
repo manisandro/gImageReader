@@ -115,8 +115,7 @@ Recognizer::Recognizer(const Ui::MainWindow& _ui)
 }
 
 std::vector<Glib::ustring> Recognizer::getAvailableLanguages() const {
-	tesseract::TessBaseAPI tess;
-	initTesseract(tess);
+	tesseract::TessBaseAPI tess = initTesseract();
 	GenericVector<STRING> availLanguages;
 	tess.GetAvailableLanguagesAsVector(&availLanguages);
 	std::vector<Glib::ustring> result;
@@ -161,9 +160,10 @@ static void tessCrashHandler(int /*signal*/) {
 	longjmp(g_restore_point, SIGSEGV);
 }
 
-bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* language) const {
-	std::string current = setlocale(LC_NUMERIC, NULL);
-	setlocale(LC_NUMERIC, "C");
+tesseract::TessBaseAPI Recognizer::initTesseract(const char* language, bool* ok) const {
+	std::string current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
+	tesseract::TessBaseAPI tess;
 	// unfortunately tesseract creates deliberate segfaults when an error occurs
 	std::signal(SIGSEGV, tessCrashHandler);
 	pipe(g_pipe);
@@ -179,11 +179,14 @@ bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* languag
 	}
 	dup2(oldstderr, fileno(stderr));
 	std::signal(SIGSEGV, MainWindow::signalHandler);
-	setlocale(LC_NUMERIC, current.c_str());
+	setlocale(LC_ALL, current.c_str());
 
 	close(g_pipe[0]);
 	close(g_pipe[1]);
-	return ret != -1;
+	if(ok) {
+		*ok = ret != -1;
+	}
+	return tess;
 }
 
 void Recognizer::updateLanguagesMenu() {
@@ -460,10 +463,11 @@ void Recognizer::recognizeMultiplePages() {
 }
 
 void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout) {
-	tesseract::TessBaseAPI tess;
 	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
 	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
-	if(initTesseract(tess, m_curLang.prefix.c_str())) {
+	bool ok = false;
+	tesseract::TessBaseAPI tess = initTesseract(m_curLang.prefix.c_str(), &ok);
+	if(ok) {
 		Glib::ustring failed;
 		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_currentPsmMode));
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(tess);
@@ -522,8 +526,9 @@ void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout)
 }
 
 bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest) {
-	tesseract::TessBaseAPI tess;
-	if(!initTesseract(tess, m_curLang.prefix.c_str())) {
+	bool ok = false;
+	tesseract::TessBaseAPI tess = initTesseract(m_curLang.prefix.c_str(), &ok);
+	if(!ok) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 		return false;
 	}

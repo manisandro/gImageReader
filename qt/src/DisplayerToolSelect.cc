@@ -152,8 +152,11 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 
 	// Perform layout analysis
 	Utils::busyTask([this, &nDeskew, &avgDeskew, &rects, &img] {
+		QByteArray current = setlocale(LC_ALL, NULL);
+		setlocale(LC_ALL, "C");
 		tesseract::TessBaseAPI tess;
 		tess.InitForAnalysePage();
+		setlocale(LC_ALL, current.constData());
 		tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
 		tess.SetImage(img.bits(), img.width(), img.height(), 4, img.bytesPerLine());
 		tesseract::PageIterator* it = tess.AnalyseLayout();
