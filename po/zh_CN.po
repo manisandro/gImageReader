@@ -2,14 +2,14 @@
 # Copyright (C) 2017 THE GIMAGEREADER'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gImageReader package.
 #
-# Timothy Lee <timothy.ty.lee@gmail.com>, 2017.
+# Timothy Lee <timothy.ty.lee@gmail.com>, 2017-2018.
 # Sandro Mani <manisandro@gmail.com>, 2016, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2017-06-30 20:09+0100\n"
+"PO-Revision-Date: 2018-05-29 20:09+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
 "Language: zh_CN\n"
@@ -19,145 +19,158 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 2.0\n"
 
-#: ../data/gimagereader.desktop.in.h:1
-msgid "OCR application"
+#: ../gtk/src/Recognizer.cc:476 ../qt/src/Recognizer.cc:469
+msgid ""
+"\n"
+"- Page %1: failed to render page"
 msgstr ""
+"\n"
+"- 第 %1 页：不能绘画页面"
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
-msgid "Redetect Languages"
-msgstr "重新检测语言"
+#: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:477
+#: ../qt/src/Recognizer.cc:470
+msgid ""
+"\n"
+"[Failed to recognize page %1]\n"
+msgstr ""
+"\n"
+"[不能辨认第 %1 页]\n"
 
-#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
-#, fuzzy
-msgid "Manage Languages"
-msgstr "管理语言……"
+#: ../gtk/data/CrashHandler.ui.h:2
+msgid "<b>The application has crashed</b>"
+msgstr "<b>应用程序已异常终止</b>"
 
-#: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
-msgid "Preferences"
-msgstr "选项"
+#: ../qt/data/AboutDialog.ui.h:3
+msgid ""
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
+msgstr ""
+"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr 的图像界面</p><p><a href="
+"\"https://github.com/manisandro/gImageReader/\">网站</a></p><p>&nbsp;</p></"
+"body></html>"
 
-#: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
-#: ../gtk/src/MainWindow.cc:470 ../qt/src/MainWindow.cc:468
-#: ../qt/src/Ui_MainWindow.hh:177
-msgid "Help"
-msgstr "协助"
+#: ../qt/data/CrashHandler.ui.h:2
+#, no-c-format
+msgid ""
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
+msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\""
+">此应用程序已异常终止</span></p><p>我们为带来的不便而道歉。"
+"如你有意改善此程序，请考虑将问题汇报给 <a href="
+"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+"\">manisandro@gmail.com</a>。请尝试描述你在程序终止前所做的事情。"
+"另外，请一并附上下列数据。谢谢。</p></body></html>"
+
+#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/PageRangeDialog.ui.h:3
+msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
+msgstr "<small><b>例如：</b> 1-10, 13, 14-18</small>"
+
+#: ../gtk/data/MainWindow.ui.h:37
+msgid "<small>Recognize all</small>"
+msgstr "<small>辨认全部</small>"
+
+#: ../gtk/src/FileDialogs.cc:235
+msgid ""
+"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
+msgstr "名为 \"%1\" 的文件已存在。你确定要改写它？"
+
+#: ../gtk/data/MainWindow.ui.h:39
+msgid "A graphical frontend to tesseract-ocr"
+msgstr "tesseract-ocr 的图像界面"
+
+#: ../qt/data/MainWindow.ui.h:19
+msgid "ADF Back"
+msgstr "ADF 背面"
+
+#: ../qt/data/MainWindow.ui.h:20
+msgid "ADF Duplex"
+msgstr "ADF 双面"
+
+#: ../qt/data/MainWindow.ui.h:18
+msgid "ADF Front"
+msgstr "ADF 正面"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:180
 msgid "About"
 msgstr "关于"
 
-#: ../gtk/data/appmenu.ui.h:6
-msgid "Quit"
-msgstr "离开"
+#: ../qt/data/AboutDialog.ui.h:1
+msgid "About gImageReader"
+msgstr "有关 gImageReader"
 
-#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:42
-#: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
-#: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
-#: ../qt/data/ConfigDialog.ui.h:26
-msgid "OK"
-msgstr "确定"
+#: ../gtk/src/scanner/ScannerSane.cc:810 ../qt/src/scanner/ScannerSane.cc:807
+msgid "Access to scanner is denied."
+msgstr "访问扫描器被拒绝。"
 
-#: ../gtk/data/ConfigDialog.ui.h:4
-msgid "Output pane orientation:"
-msgstr "输出面板的方向："
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:6
+msgid "Acquire"
+msgstr "捕获"
 
-#: ../gtk/data/ConfigDialog.ui.h:5
-msgid "Horizontal"
-msgstr "横向"
+#: ../gtk/data/SubstitutionsManager.ui.h:5 ../qt/data/ConfigDialog.ui.h:16
+#: ../qt/src/SubstitutionsManager.cc:47 ../qt/src/SubstitutionsManager.cc:48
+msgid "Add"
+msgstr "新增"
 
-#: ../gtk/data/ConfigDialog.ui.h:6
-msgid "Vertical"
-msgstr "纵向"
+#: ../gtk/data/MainWindow.ui.h:8 ../qt/src/Ui_MainWindow.hh:203
+msgid "Add Images"
+msgstr "新增图像"
 
-#: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
-msgid "Query to install missing spellcheck dictionaries"
-msgstr "查找遗漏安装的拼写词典"
+#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:577
+msgid "Add Word"
+msgstr "新增字词"
 
-#: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
-msgid "Automatically check for new program versions"
-msgstr "自动检查新版本"
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:814
+#: ../qt/src/hocr/OutputEditorHOCR.cc:684
+msgid "Add graphic region"
+msgstr "新增图像本地"
 
-#: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
-msgid "Predefined language definitions:"
-msgstr "缺省语言定义："
+#: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:204
+msgid "Add images"
+msgstr "新增图像"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:825
+#: ../qt/src/hocr/OutputEditorHOCR.cc:689
+msgid "Add line"
+msgstr "新增线条"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:821
+#: ../qt/src/hocr/OutputEditorHOCR.cc:687
+msgid "Add paragraph"
+msgstr "新增段落"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:817
+#: ../qt/src/hocr/OutputEditorHOCR.cc:685
+msgid "Add text block"
+msgstr "新增文字方块"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:857
+#: ../qt/src/hocr/OutputEditorHOCR.cc:708
+msgid "Add to dictionary"
+msgstr "新增至词典"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:829
+#: ../qt/src/hocr/OutputEditorHOCR.cc:691
+msgid "Add word"
+msgstr "新增字词"
+
+#: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:33
+msgid "Additional information (optional):"
+msgstr "附加的信息(可选)："
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
 msgstr "额外语言定义："
 
-#: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
-msgid "The prefix of the tesseract language data file"
-msgstr "tesseract 语言数据档的前缀"
-
-#: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
-msgid "Prefix"
-msgstr "前缀"
-
-#: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
-msgid "The ISO 639-1 language code followed by the country code"
-msgstr "ISO 639-1 语言代码并国家代码"
-
-#: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
-msgid "ISO Code"
-msgstr "ISO 代码"
-
-#: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:24
-msgid "The name of the language"
-msgstr "语言名称"
-
-#: ../gtk/data/ConfigDialog.ui.h:16 ../qt/data/ConfigDialog.ui.h:25
-msgid "Name"
-msgstr "名称"
-
-#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:41
-#: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
-#: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
-#: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
-#: ../qt/data/MainWindow.ui.h:12
-msgid "Cancel"
-msgstr "取消"
-
-#: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
-msgid "Output pane font:"
-msgstr "输出面板字体："
-
-#: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
-msgid "Default"
-msgstr "缺省值"
-
-#: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
-msgid "Language data locations:"
-msgstr "语言数据位置："
-
-#: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
-msgid "Language definitions path:"
-msgstr "语言定义路径："
-
-#: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
-msgid "Spelling dictionaries path:"
-msgstr "拼写词典路径："
-
-#: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
-msgid "System-wide paths"
-msgstr "系统路径"
-
-#: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
-msgid "User paths"
-msgstr "用户路径"
-
-#: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
-msgid "Automatically open exported documents with default application"
-msgstr ""
-
-#: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:36
-msgid "Regenerate backtrace"
-msgstr "重建 backtrace"
-
-#: ../gtk/data/CrashHandler.ui.h:2
-msgid "<b>The application has crashed</b>"
-msgstr "<b>应用程序已异常终止</b>"
+#: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:28
+msgid "Advanced"
+msgstr "高级"
 
 #: ../gtk/data/CrashHandler.ui.h:4
 #, no-c-format
@@ -173,256 +186,158 @@ msgstr ""
 "\">manisandro@gmail.com</a>。请尝试描述你在程序终止前所做的事情。另外，请一并"
 "附上下列数据。谢谢。"
 
-#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
-msgid "Toggle output pane"
-msgstr "切换输出面板"
+#. Output insert mode
+#: ../gtk/data/OutputEditorText.ui.h:1 ../qt/src/Ui_OutputEditorText.hh:52
+msgid "Append to current text"
+msgstr "附加到现有文字"
 
-#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
-msgid "Rotate current page"
-msgstr "旋转现有文字"
+#: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
+msgid "Apply"
+msgstr "应用"
 
-#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
-msgid "Rotate all pages"
-msgstr "旋转所有页面"
+#: ../gtk/src/TessdataManager.cc:214 ../qt/src/TessdataManager.cc:215
+msgid "Applying changes..."
+msgstr "正在套用改动……"
 
-#. Sources toolbar
-#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:191
-msgid "Recent"
-msgstr "最近"
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1177 ../gtk/src/OutputEditorText.cc:192
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1005 ../qt/src/OutputEditorText.cc:160
+msgid "Applying substitutions..."
+msgstr "正在套用替换值……"
 
-#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:192
-msgid "Paste"
-msgstr "贴上"
+#: ../gtk/src/Recognizer.cc:312 ../qt/src/Recognizer.cc:302
+msgid "Assume a line of text"
+msgstr "假设只有一行文字"
 
-#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:193
-msgid "Take Screenshot"
-msgstr "画面截图"
+#: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:301
+msgid "Assume a single uniform block of text"
+msgstr "假设只有一段均匀的文字"
 
-#: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:204
-msgid "Add images"
-msgstr "新增图像"
+#: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:303
+msgid "Assume a single word"
+msgstr "假设只有一个字"
 
-#: ../gtk/data/MainWindow.ui.h:8 ../qt/src/Ui_MainWindow.hh:203
-msgid "Add Images"
-msgstr "新增图像"
+#: ../gtk/src/Recognizer.cc:314 ../qt/src/Recognizer.cc:304
+msgid "Assume a single word in a circle"
+msgstr "假设是圆圈内的一个字"
 
-#: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:209
-msgid "Remove image from list"
-msgstr "从清单删除图像"
+#: ../gtk/src/Recognizer.cc:310 ../qt/src/Recognizer.cc:300
+msgid "Assume single block of vertically aligned text"
+msgstr "假设只有一段纵向对整的文字"
 
-#: ../gtk/data/MainWindow.ui.h:10 ../qt/src/Ui_MainWindow.hh:212
-msgid "Delete image"
-msgstr "删除图像"
+#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:299
+msgid "Assume single column of text"
+msgstr "假设只有一栏文字"
 
-#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:215
-msgid "Clear list"
-msgstr "清除清单"
-
-#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:5
-msgid "Files"
-msgstr "文件"
-
-#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:8
-msgid "Device:"
-msgstr "设备："
-
-#: ../gtk/data/MainWindow.ui.h:14 ../gtk/data/TessdataManager.ui.h:4
-#: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:59
-msgid "Refresh"
-msgstr "更新"
-
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:9
-msgid "Output:"
-msgstr "输出："
-
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:13
-msgid "Mode:"
-msgstr "模式："
-
-#: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExporter.cc:313
-#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:347
-msgid "Color"
-msgstr "彩色"
-
-#: ../gtk/data/MainWindow.ui.h:18 ../gtk/src/hocr/HOCRPdfExporter.cc:316
-#: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:349
-#: ../qt/src/hocr/HOCRPdfExporter.cc:351
-msgid "Grayscale"
-msgstr "灰度"
-
-#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:10
-msgid "Resolution:"
-msgstr "解像度："
-
-#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:11
-msgid "Scan"
-msgstr "扫描"
-
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:16
-#, fuzzy
-msgid "Source:"
-msgstr "来源"
-
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:6
-msgid "Acquire"
-msgstr "捕获"
-
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:1
-msgid "Brightness"
-msgstr "亮度"
-
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:2
-msgid "Contrast"
-msgstr "对比"
-
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:3
-msgid "Resolution"
-msgstr "解像度"
-
-#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:4
-msgid "Invert colors"
-msgstr "倒置色版"
-
-#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:23
-msgid "Zoom in"
-msgstr "放大"
-
-#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:25
-msgid "Zoom out"
-msgstr "缩小"
-
-#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:27
-msgid "Normal size"
-msgstr "正常尺寸"
-
-#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:29
-msgid "Best fit"
-msgstr "最佳尺寸"
-
-#: ../gtk/data/MainWindow.ui.h:31 ../qt/src/Ui_MainWindow.hh:75
-msgid "Select rotation mode"
-msgstr "选择旋转模式"
-
-#: ../gtk/data/MainWindow.ui.h:32 ../gtk/data/OutputEditorHOCR.ui.h:10
-#: ../gtk/data/OutputEditorText.ui.h:13 ../qt/src/Ui_OutputEditorText.hh:95
-msgid "Select insert mode"
-msgstr "选用插入模式"
-
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:35
-msgid "Image controls"
-msgstr "图像控制"
-
-#: ../gtk/data/MainWindow.ui.h:34 ../qt/src/Ui_MainWindow.hh:138
-msgid "Plain text"
-msgstr "纯文本"
-
-#: ../gtk/data/MainWindow.ui.h:35 ../qt/src/Ui_MainWindow.hh:138
-msgid "hOCR, PDF"
-msgstr "hOCR、PDF"
-
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:37
-msgid "Autodetect layout"
-msgstr "自动检测布局"
-
-#: ../gtk/data/MainWindow.ui.h:37
-msgid "<small>Recognize all</small>"
-msgstr "<small>辨认全部</small>"
-
-#: ../gtk/data/MainWindow.ui.h:38
-msgid "Select language"
-msgstr "选择语言"
-
-#: ../gtk/data/MainWindow.ui.h:39
-msgid "A graphical frontend to tesseract-ocr"
-msgstr "tesseract-ocr 的图像界面"
-
-#: ../gtk/data/MainWindow.ui.h:40 ../qt/data/PageRangeDialog.ui.h:1
-msgid "Page Range"
-msgstr "页面范围"
-
-#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/PageRangeDialog.ui.h:2
-msgid "Page range:"
-msgstr "页面范围："
-
-#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/PageRangeDialog.ui.h:3
-msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
-msgstr "<small><b>例如：</b> 1-10, 13, 14-18</small>"
-
-#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:4
-msgid "Recognition area:"
-msgstr "辨认本地："
-
-#: ../gtk/data/MainWindow.ui.h:46 ../gtk/src/Recognizer.cc:393
-#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:384
-msgid "Entire page"
-msgstr "整页"
+#: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:34
+msgid "Author:"
+msgstr "作者："
 
 #: ../gtk/data/MainWindow.ui.h:47 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
 msgstr "自动检测"
 
-#: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:7
-#, fuzzy
-msgid "Prepend to output text:"
-msgstr "附加到现有文字"
+#: ../qt/data/MainWindow.ui.h:36
+msgid "Autodetect Layout"
+msgstr "自动检测布局"
 
-#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:8
-msgid "Source filename"
-msgstr ""
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:37
+msgid "Autodetect layout"
+msgstr "自动检测布局"
 
-#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:9
-#, fuzzy
-msgid "Source page"
-msgstr "来源"
+#: ../gtk/src/Recognizer.cc:307 ../qt/src/Recognizer.cc:297
+msgid "Automatic page segmentation"
+msgstr "自动分割页面"
 
-#: ../gtk/data/MainWindow.ui.h:51 ../qt/src/SourceManager.cc:146
-msgid "Protected PDF"
-msgstr ""
+#: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
+msgid "Automatically check for new program versions"
+msgstr "自动检查新版本"
 
-#: ../gtk/data/MainWindow.ui.h:52 ../qt/src/Recognizer.cc:76
-msgid "Current Page"
-msgstr "现时页面"
+#: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
+msgid "Automatically open exported documents with default application"
+msgstr "自动以缺省应用程序打开输出的文件"
 
-#: ../gtk/data/MainWindow.ui.h:53 ../qt/src/Recognizer.cc:79
-msgid "Multiple Pages..."
-msgstr "多页……"
+#: ../qt/data/PdfExportDialog.ui.h:5
+msgid "Backend:"
+msgstr "后端："
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:577
-msgid "Add Word"
-msgstr ""
+#: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
+msgid "Basic"
+msgstr "基本"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:577
-#, fuzzy
-msgid "Enter word:"
-msgstr "忽略字词"
+#: ../qt/data/MainWindow.ui.h:28
+msgid "Best Fit"
+msgstr "最佳尺寸"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:61
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
-#, fuzzy
-msgid "Export to plain text"
-msgstr "输出至 PDF"
+#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:29
+msgid "Best fit"
+msgstr "最佳尺寸"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:65
-msgid "Export to PDF"
-msgstr "输出至 PDF"
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:269
+#: ../qt/src/hocr/OutputEditorHOCR.cc:230
+msgid "Block"
+msgstr "方块"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:67
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:68
-#, fuzzy
-msgid "Export to ODT"
-msgstr "输出至 PDF"
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:1
+msgid "Brightness"
+msgstr "亮度"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
-#: ../qt/src/Ui_OutputEditorText.hh:116
-msgid "Save output"
-msgstr "存储输出"
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:344 ../qt/src/hocr/HOCRPdfExporter.cc:358
+msgid "CCITT Group 4 (lossless)"
+msgstr "CCITT 第 4 组（无损）"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
-#, fuzzy
-msgid "Export"
-msgstr "输出 PDF"
+#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:41
+#: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
+#: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
+#: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
+#: ../qt/data/MainWindow.ui.h:12
+msgid "Cancel"
+msgstr "取消"
+
+#: ../gtk/src/Acquirer.cc:179 ../qt/src/Acquirer.cc:165
+msgid "Canceling scan..."
+msgstr "取消扫描……"
+
+#: ../gtk/src/SourceManager.cc:240 ../qt/src/SourceManager.cc:265
+msgid "Cannot Write File"
+msgstr "不能写入文件"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
+msgid "Cannot overwrite a file which is a source image of this document."
+msgstr "不能改写此文件的来源图像档。"
+
+#: ../gtk/src/MainWindow.cc:432 ../qt/src/MainWindow.cc:412
+msgid "Changelog"
+msgstr "修改日志"
+
+#: ../gtk/src/OutputEditorText.cc:162
+msgid "Check spelling"
+msgstr "检查拼写"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:972 ../gtk/src/OutputEditorText.cc:282
+#: ../qt/src/hocr/OutputEditorHOCR.cc:833 ../qt/src/OutputEditorText.cc:246
+msgid "Check that you have writing permissions in the selected folder."
+msgstr "请检查你在所选择数据夹拥有写入权限。"
+
+#: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:86
+msgid "Choose Output Filename..."
+msgstr "选择输出文件名……"
+
+#: ../gtk/data/SubstitutionsManager.ui.h:4 ../qt/src/SubstitutionsManager.cc:44
+#: ../qt/src/SubstitutionsManager.cc:45
+msgid "Clear"
+msgstr "清除"
+
+#: ../qt/src/Ui_MainWindow.hh:214
+msgid "Clear List"
+msgstr "清除清单"
+
+#: ../qt/src/Ui_OutputEditorText.hh:117
+msgid "Clear Output"
+msgstr "清除输出"
+
+#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:215
+msgid "Clear list"
+msgstr "清除清单"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11 ../gtk/data/OutputEditorText.ui.h:19
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
@@ -431,39 +346,17 @@ msgstr "输出 PDF"
 msgid "Clear output"
 msgstr "清除输出"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:12 ../gtk/data/OutputEditorText.ui.h:15
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:80
-#: ../qt/src/Ui_OutputEditorText.hh:107
-msgid "Find and replace"
-msgstr "寻找及取代"
+#: ../gtk/src/SourceManager.cc:208 ../qt/src/SourceManager.cc:226
+msgid "Clipboard Error"
+msgstr "剪贴板错误"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:13
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:83
-msgid "Show confidence values"
-msgstr ""
+#: ../gtk/data/SubstitutionsManager.ui.h:8 ../gtk/data/TessdataManager.ui.h:3
+msgid "Close"
+msgstr "关闭"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/PdfExportDialog.ui.h:39
-#: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:86
-msgid "Show preview"
-msgstr "显示预览"
-
-#: ../gtk/data/OutputEditorHOCR.ui.h:15
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
-msgid "Next (F3)"
-msgstr ""
-
-#: ../gtk/data/OutputEditorHOCR.ui.h:16
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
-msgid "Previous (Shift+F3)"
-msgstr ""
-
-#: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/src/hocr/OutputEditorHOCR.cc:889
-#: ../qt/src/hocr/OutputEditorHOCR.cc:724
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:126
-msgid "Expand all"
-msgstr "递归展开"
+#: ../gtk/src/Config.cc:42 ../qt/data/ConfigDialog.ui.h:8
+msgid "Code"
+msgstr "代码"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:18 ../gtk/src/hocr/OutputEditorHOCR.cc:892
 #: ../qt/src/hocr/OutputEditorHOCR.cc:725
@@ -471,814 +364,132 @@ msgstr "递归展开"
 msgid "Collapse all"
 msgstr "递归折叠"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:19
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:148
-msgid "Properties"
-msgstr "属性"
-
-#: ../gtk/data/OutputEditorHOCR.ui.h:20
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:152
-msgid "Source"
-msgstr "来源"
-
-#. Output insert mode
-#: ../gtk/data/OutputEditorText.ui.h:1 ../qt/src/Ui_OutputEditorText.hh:52
-msgid "Append to current text"
-msgstr "附加到现有文字"
-
-#: ../gtk/data/OutputEditorText.ui.h:2 ../qt/src/Ui_OutputEditorText.hh:53
-msgid "Insert at cursor"
-msgstr "于光标位置插入"
-
-#: ../gtk/data/OutputEditorText.ui.h:3 ../qt/src/Ui_OutputEditorText.hh:54
-msgid "Replace current text"
-msgstr "取代现有文字"
-
-#. Output postprocessing
-#: ../gtk/data/OutputEditorText.ui.h:4 ../qt/src/Ui_OutputEditorText.hh:62
-msgid "Keep line break if..."
-msgstr "保留换行符号，如果……"
-
-#: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:64
-msgid "Preceded by end mark (.?!)"
-msgstr "以终结号起首（.?!）"
-
-#: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:66
-msgid "Preceded or succeeded by quote"
-msgstr "以引号起首或结尾"
-
-#: ../gtk/data/OutputEditorText.ui.h:7 ../qt/src/Ui_OutputEditorText.hh:68
-msgid "Other options"
-msgstr "其它选项"
-
-#: ../gtk/data/OutputEditorText.ui.h:8 ../qt/src/Ui_OutputEditorText.hh:70
-msgid "Join hyphenated words"
-msgstr "连接断字符号前后的字"
-
 #: ../gtk/data/OutputEditorText.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:72
 msgid "Collapse whitespace"
 msgstr "合并空格"
 
-#: ../gtk/data/OutputEditorText.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:74
-msgid "Preserve paragraphs"
-msgstr "保留段落"
-
-#: ../gtk/data/OutputEditorText.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:76
-msgid "Visual aids"
-msgstr "视觉辅助"
-
-#: ../gtk/data/OutputEditorText.ui.h:12 ../qt/src/Ui_OutputEditorText.hh:78
-msgid "Draw whitespace"
-msgstr "绘画空格"
-
-#: ../gtk/data/OutputEditorText.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:102
-msgid "Strip line breaks on selected text"
-msgstr "去除选择文字的换行符号"
-
-#: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:109
-#: ../qt/src/Ui_OutputEditorText.hh:110
-msgid "Undo"
-msgstr "恢复"
-
-#: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:112
-#: ../qt/src/Ui_OutputEditorText.hh:113
-msgid "Redo"
-msgstr "重做"
-
-#: ../gtk/data/PdfExportDialog.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
-msgid "PDF Export"
-msgstr "输出 PDF"
-
-#: ../gtk/data/PdfExportDialog.ui.h:4 ../qt/data/PdfExportDialog.ui.h:4
-msgid "Output mode:"
-msgstr "输出模式："
-
-#: ../gtk/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportDialog.ui.h:8
-msgid "PDF"
-msgstr "PDF"
-
-#: ../gtk/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportDialog.ui.h:9
-msgid "PDF with invisible text overlay"
-msgstr "包含隐形文字层的 PDF"
-
-#: ../gtk/data/PdfExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
-msgid "Format:"
-msgstr "格式："
-
-#: ../gtk/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
-msgid "Compression:"
-msgstr "压缩："
+#: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExporter.cc:313
+#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:347
+msgid "Color"
+msgstr "彩色"
 
 #: ../gtk/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression quality:"
 msgstr "压缩质量："
 
-#: ../gtk/data/PdfExportDialog.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
-msgid "DPI:"
-msgstr "DPI:"
-
-#: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
-msgid "Dithering algorithm:"
-msgstr "递色演算法："
-
-#: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
-msgid "Image settings:"
-msgstr "图像设置："
-
-#: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
-msgid "Uniformize line and word spacing"
-msgstr "统一行距及字距"
-
-#: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
-msgid "Override font family:"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
-msgid "Fallback font family:"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
-#, fuzzy
-msgid "Override font size:"
-msgstr "采用检测到的字体尺寸"
-
-#: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
-msgid "Font scaling:"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
-msgid "pt"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
-msgid "Preserve spaces wider than:"
-msgstr "保留空格大于："
-
-#: ../gtk/data/PdfExportDialog.ui.h:20 ../qt/data/PdfExportDialog.ui.h:24
-msgid "characters"
-msgstr "字符"
-
-#: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:19
-msgid "Text settings:"
-msgstr "文本设置："
-
-#: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:10
-msgid "Paper size:"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:23 ../qt/data/PdfExportDialog.ui.h:11
-msgid "Width"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:24 ../qt/data/PdfExportDialog.ui.h:12
-msgid "Height"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
-msgid "Basic"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
-#, fuzzy
-msgid "PDF version:"
-msgstr "新版本"
-
-#: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:31
-msgid "Password:"
-msgstr ""
+#: ../gtk/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
+msgid "Compression:"
+msgstr "压缩："
 
 #: ../gtk/data/PdfExportDialog.ui.h:28 ../qt/data/PdfExportDialog.ui.h:32
 msgid "Confirm password:"
-msgstr ""
+msgstr "确认口令："
 
-#: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:30
-msgid "Encryption (optional):"
-msgstr ""
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:2
+msgid "Contrast"
+msgstr "对比"
 
-#: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:34
-msgid "Author:"
-msgstr ""
+#: ../qt/src/MainWindow.cc:541
+msgid "Could not read %1: %2"
+msgstr "不能读入 %1：%2。"
 
-#: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:36
-msgid "Title:"
-msgstr ""
+#: ../gtk/src/MainWindow.cc:536 ../gtk/src/MainWindow.cc:552
+#: ../qt/src/MainWindow.cc:523
+msgid "Could not read %1: %2."
+msgstr "不能读入 %1：%2。"
 
-#: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:38
-msgid "Subject:"
-msgstr ""
+#: ../gtk/src/SourceManager.cc:240 ../qt/src/SourceManager.cc:265
+msgid "Could not write to %1."
+msgstr "不能写进 %1。"
 
-#: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:35
-msgid "Creator:"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:37
-msgid "Producer:"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:39
-msgid "Keywords:"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:33
-#, fuzzy
-msgid "Additional information (optional):"
-msgstr "额外语言定义："
-
-#: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:40
-msgid "Import from current source"
-msgstr ""
-
-#: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:28
-msgid "Advanced"
-msgstr ""
-
-#: ../gtk/data/SearchReplaceFrame.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:4
-msgid "Find"
-msgstr "寻找"
-
-#: ../gtk/data/SearchReplaceFrame.ui.h:2 ../qt/data/SearchReplaceFrame.ui.h:2
-msgid "Replace"
-msgstr "取代"
-
-#: ../gtk/data/SearchReplaceFrame.ui.h:3 ../qt/data/SearchReplaceFrame.ui.h:3
-msgid "Replace all"
-msgstr "全部取代"
-
-#: ../gtk/data/SearchReplaceFrame.ui.h:4 ../qt/data/SearchReplaceFrame.ui.h:5
-msgid "Find previous"
-msgstr "寻找前一个"
-
-#: ../gtk/data/SearchReplaceFrame.ui.h:5 ../qt/data/SearchReplaceFrame.ui.h:6
-msgid "Find next"
-msgstr "寻找下一个"
-
-#: ../gtk/data/SearchReplaceFrame.ui.h:6 ../qt/data/SearchReplaceFrame.ui.h:7
-msgid "Match case"
-msgstr "尺寸写吻合"
-
-#: ../gtk/data/SearchReplaceFrame.ui.h:7
-#: ../gtk/data/SubstitutionsManager.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:1
-#: ../qt/src/SubstitutionsManager.cc:36
-msgid "Substitutions"
-msgstr "替换值"
-
-#: ../gtk/data/SelectionMenu.ui.h:1 ../qt/src/DisplayerToolSelect.cc:236
-msgid "Delete"
-msgstr "删除"
-
-#: ../gtk/data/SelectionMenu.ui.h:2 ../qt/src/DisplayerToolSelect.cc:222
-msgid "Order:"
-msgstr "排序："
-
-#: ../gtk/data/SelectionMenu.ui.h:3 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
-#: ../qt/src/DisplayerToolSelect.cc:237 ../qt/src/hocr/DisplayerToolHOCR.cc:31
-msgid "Recognize"
-msgstr "辨认"
-
-#: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:238
-msgid "Recognize to clipboard"
-msgstr "辨认至剪贴板"
-
-#: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:239
-msgid "Save as image"
-msgstr "存储为图像"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:2 ../qt/src/SubstitutionsManager.cc:38
-#: ../qt/src/SubstitutionsManager.cc:39
-msgid "Open"
-msgstr "打开"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:3 ../gtk/src/Utils.cc:73
-#: ../qt/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:42
-msgid "Save"
-msgstr "存储"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:4 ../qt/src/SubstitutionsManager.cc:44
-#: ../qt/src/SubstitutionsManager.cc:45
-msgid "Clear"
-msgstr "清除"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:5 ../qt/data/ConfigDialog.ui.h:16
-#: ../qt/src/SubstitutionsManager.cc:47 ../qt/src/SubstitutionsManager.cc:48
-msgid "Add"
-msgstr "新增"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:6
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:885 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:721 ../qt/src/SubstitutionsManager.cc:50
-#: ../qt/src/SubstitutionsManager.cc:51
-msgid "Remove"
-msgstr "删除"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
-msgid "Apply"
-msgstr "应用"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:8 ../gtk/data/TessdataManager.ui.h:3
-msgid "Close"
-msgstr "关闭"
-
-#: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:49
-msgid "Tessdata Manager"
-msgstr "Tessdata 管理员"
-
-#: ../gtk/data/TessdataManager.ui.h:5 ../qt/src/TessdataManager.cc:51
-msgid "Manage installed languages:"
-msgstr "管理已安装的语言："
-
-#: ../gtk/src/Acquirer.cc:79 ../qt/src/Acquirer.cc:70
-msgid "scan.png"
-msgstr ""
-
-#: ../gtk/src/Acquirer.cc:91 ../qt/src/Acquirer.cc:85
-msgid "Images"
-msgstr "图像"
-
-#: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:86
-msgid "Choose Output Filename..."
-msgstr "选择输出文件名……"
-
-#: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
-msgid "Failed to initialize the scanning backend."
-msgstr "不能初始化扫描服务。"
-
-#: ../gtk/src/Acquirer.cc:115 ../qt/src/Acquirer.cc:106
-msgid "Scan failed"
-msgstr "不能摺扫描"
-
-#: ../gtk/src/Acquirer.cc:133 ../qt/src/Acquirer.cc:122
-msgid "No scanners were detected."
-msgstr "检测不到扫描器。"
-
-#: ../gtk/src/Acquirer.cc:150 ../gtk/src/Acquirer.cc:168
-#: ../qt/src/Acquirer.cc:136 ../qt/src/Acquirer.cc:154
-msgid "Starting scan..."
-msgstr "开始扫描……"
-
-#: ../gtk/src/Acquirer.cc:164 ../qt/src/Acquirer.cc:150
-msgid "Opening device..."
-msgstr "打开设备……"
-
-#: ../gtk/src/Acquirer.cc:166 ../qt/src/Acquirer.cc:152
-msgid "Setting options..."
-msgstr "设置选项……"
-
-#: ../gtk/src/Acquirer.cc:170 ../qt/src/Acquirer.cc:156
-msgid "Getting parameters..."
-msgstr "获取参数……"
-
-#: ../gtk/src/Acquirer.cc:172 ../qt/src/Acquirer.cc:158
-msgid "Transferring data..."
-msgstr "转输数据……"
-
-#: ../gtk/src/Acquirer.cc:179 ../qt/src/Acquirer.cc:165
-msgid "Canceling scan..."
-msgstr "取消扫描……"
-
-#: ../gtk/src/Config.cc:41 ../qt/data/ConfigDialog.ui.h:7
-msgid "Filename prefix"
-msgstr "文件名前缀"
-
-#: ../gtk/src/Config.cc:42 ../qt/data/ConfigDialog.ui.h:8
-msgid "Code"
-msgstr "代码"
-
-#: ../gtk/src/Config.cc:43 ../qt/data/ConfigDialog.ui.h:9
-msgid "Native name"
-msgstr "原生名称"
-
-#: ../gtk/src/Config.cc:100 ../qt/src/Config.cc:98
-msgid "Script"
-msgstr ""
+#: ../gtk/src/scanner/ScannerSane.cc:804 ../qt/src/scanner/ScannerSane.cc:801
+msgid "Cover is opened."
+msgstr "机盖已打开。"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:39
 #: ../qt/src/CrashHandler.cc:34
 msgid "Crash Handler"
 msgstr "异常终止处理器"
 
-#: ../gtk/src/CrashHandler.cc:41 ../qt/src/CrashHandler.cc:29
-msgid "Your work has been saved under <b>%1</b>."
-msgstr "你的工作已存储于 <b>%1</b>。"
+#: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:35
+msgid "Creator:"
+msgstr "创建者："
 
-#: ../gtk/src/CrashHandler.cc:43 ../qt/src/CrashHandler.cc:31
-msgid "There was no unsaved work."
-msgstr "没有未存储的工作。"
+#: ../qt/data/AboutDialog.ui.h:4
+msgid "Credits"
+msgstr "归功于"
 
-#: ../gtk/src/CrashHandler.cc:102 ../qt/src/CrashHandler.cc:60
-msgid "Failed to obtain backtrace. Is gdb installed?"
-msgstr "不能取得 backtrace。已安装 gdb 吗？"
+#: ../gtk/data/MainWindow.ui.h:52 ../qt/src/Recognizer.cc:76
+msgid "Current Page"
+msgstr "现时页面"
 
-#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
-msgid "Failed to load image"
-msgstr "不能装入图像"
-
-#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
-msgid ""
-"The file might not be an image or be corrupt:\n"
-"%1"
-msgstr ""
-"该文件可能不是图像或已被损坏：\n"
-"%1"
-
-#: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
-msgid "PNG Images"
-msgstr "PNG 图像"
-
-#: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
-msgid "Save Selection Image"
-msgstr "存储选择图像"
-
-#: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
-msgid "selection.png"
-msgstr ""
-
-#: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
-msgid "Recognize all"
-msgstr "辨认全部"
-
-#: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
-msgid "Recognize selection"
-msgstr "辨认选择区"
-
-#: ../gtk/src/DisplayerToolSelect.cc:183 ../qt/src/DisplayerToolSelect.cc:179
-msgid "Performing layout analysis"
-msgstr "进行布局分析"
-
-#: ../gtk/src/FileDialogs.cc:235
-msgid ""
-"A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-msgstr "名为 \"%1\" 的文件已存在。你确定要覆盖它？"
-
-#: ../gtk/src/FileDialogs.cc:237
-msgid "Overwrite File?"
-msgstr "覆盖文件？"
-
-#: ../gtk/src/hocr/HOCRDocument.cc:555 ../gtk/src/hocr/OutputEditorHOCR.cc:266
-#: ../qt/src/hocr/OutputEditorHOCR.cc:229
-#, fuzzy
-msgid "Page"
-msgstr "分析错误：%1"
-
-#: ../gtk/src/hocr/HOCRDocument.cc:557 ../qt/src/hocr/HOCRDocument.cc:480
-#, fuzzy
-msgid "Text block"
-msgstr "文本"
-
-#: ../gtk/src/hocr/HOCRDocument.cc:559 ../gtk/src/hocr/OutputEditorHOCR.cc:272
-#: ../qt/src/hocr/HOCRDocument.cc:482 ../qt/src/hocr/OutputEditorHOCR.cc:231
-msgid "Paragraph"
-msgstr "段落"
-
-#: ../gtk/src/hocr/HOCRDocument.cc:561 ../qt/src/hocr/HOCRDocument.cc:484
-msgid "Textline"
-msgstr "文字"
-
-#: ../gtk/src/hocr/HOCRDocument.cc:565 ../qt/src/hocr/HOCRDocument.cc:488
-msgid "Graphic"
-msgstr "图像"
-
-#: ../gtk/src/hocr/HOCROdtExporter.cc:65 ../gtk/src/hocr/HOCRPdfExporter.cc:491
-#: ../gtk/src/hocr/HOCRTextExporter.cc:34
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:962 ../gtk/src/OutputEditorText.cc:272
-#: ../qt/src/hocr/HOCROdtExporter.cc:50 ../qt/src/hocr/HOCRPdfExporter.cc:480
-#: ../qt/src/hocr/HOCRTextExporter.cc:36 ../qt/src/hocr/OutputEditorHOCR.cc:824
-#: ../qt/src/OutputEditorText.cc:238
-msgid "output"
-msgstr "输出"
-
-#: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
-msgid "OpenDocument Text Documents"
-msgstr ""
-
-#: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:53
-#, fuzzy
-msgid "Save ODT Output..."
-msgstr "存储 PDF 输出……"
-
-#: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:607
-#: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCROdtExporter.cc:61
-#: ../qt/src/hocr/HOCRPdfExporter.cc:600 ../qt/src/hocr/HOCRTextExporter.cc:47
-msgid "Export failed"
-msgstr ""
-
-#: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
-#: ../qt/src/hocr/HOCROdtExporter.cc:61
-msgid "The ODT export failed: unable to write output file."
-msgstr ""
-
-#: ../gtk/src/hocr/HOCROdtExporter.cc:336 ../qt/src/hocr/HOCROdtExporter.cc:254
-#, fuzzy
-msgid "Exporting to ODT..."
-msgstr "输出至 PDF"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:365
-#, fuzzy
-msgid "Same as source"
-msgstr "来源"
+#: ../gtk/src/Recognizer.cc:393 ../qt/src/Recognizer.cc:384
+msgid "Current selection"
+msgstr "现有选择区"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:366
 msgid "Custom"
-msgstr ""
+msgstr "自定"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:362
-msgid "cm"
-msgstr ""
+#: ../gtk/data/PdfExportDialog.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
+msgid "DPI:"
+msgstr "DPI:"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:363
-#, fuzzy
-msgid "in"
-msgstr "寻找"
+#: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
+msgid "Default"
+msgstr "缺省值"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:353
-msgid "Monochrome"
-msgstr "黑白"
+#: ../gtk/data/SelectionMenu.ui.h:1 ../qt/src/DisplayerToolSelect.cc:236
+msgid "Delete"
+msgstr "删除"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:328 ../qt/src/hocr/HOCRPdfExporter.cc:355
-msgid "Threshold (closest color)"
-msgstr "定限（最接近颜色）"
+#: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
+msgid "Delete File?"
+msgstr "删除文件？"
+
+#: ../qt/src/Ui_MainWindow.hh:211
+msgid "Delete Image"
+msgstr "删除图像"
+
+#: ../gtk/data/MainWindow.ui.h:10 ../qt/src/Ui_MainWindow.hh:212
+msgid "Delete image"
+msgstr "删除图像"
+
+#: ../gtk/src/scanner/ScannerSane.cc:802 ../qt/src/scanner/ScannerSane.cc:799
+msgid "Device is busy."
+msgstr "设备现正繁忙。"
+
+#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:8
+msgid "Device:"
+msgstr "设备："
+
+#: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:574
+msgid "Dictionaries installed"
+msgstr "已安装词典"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:331 ../qt/src/hocr/HOCRPdfExporter.cc:356
 msgid "Diffuse"
 msgstr "扩散"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:340 ../qt/src/hocr/HOCRPdfExporter.cc:357
-msgid "Zip (lossless)"
-msgstr "Zip（无损）"
+#: ../gtk/src/Utils.cc:76
+msgid "Discard"
+msgstr "弃置"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:344 ../qt/src/hocr/HOCRPdfExporter.cc:358
-msgid "CCITT Group 4 (lossless)"
-msgstr "CCITT 第 4 组（无损）"
+#: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
+msgid "Dithering algorithm:"
+msgstr "递色演算法："
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:348 ../qt/src/hocr/HOCRPdfExporter.cc:359
-msgid "Jpeg (lossy)"
-msgstr "Jpeg（失真）"
+#: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
+msgid "Do you want to save the current list?"
+msgstr "是否需要存储现有清单？"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:495 ../qt/src/hocr/HOCRPdfExporter.cc:484
-msgid "PDF Files"
-msgstr "PDF 档"
+#: ../gtk/src/scanner/ScannerSane.cc:806 ../qt/src/scanner/ScannerSane.cc:803
+msgid "Document feeder jammed."
+msgstr "进纸器卡纸。"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:496 ../qt/src/hocr/HOCRPdfExporter.cc:484
-msgid "Save PDF Output..."
-msgstr "存储 PDF 输出……"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
-#, fuzzy
-msgid "Invalid Output"
-msgstr "存储输出"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
-msgid "Cannot overwrite a file which is a source image of this document."
-msgstr ""
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
-#, fuzzy
-msgid "Failed to create output"
-msgstr "不能存储输出……"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
-msgid "Failed to create output. The returned error was: %1"
-msgstr ""
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:560 ../qt/src/hocr/HOCRPdfExporter.cc:553
-msgid "The operation was cancelled"
-msgstr ""
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:595 ../qt/src/hocr/HOCRPdfExporter.cc:588
-#, fuzzy
-msgid "Failed to render page %1"
-msgstr ""
-"\n"
-"[不能辨认第 %1 页]\n"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:602 ../qt/src/hocr/HOCRPdfExporter.cc:595
-#, fuzzy
-msgid "Exporting to PDF..."
-msgstr "输出至 PDF"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:607 ../qt/src/hocr/HOCRPdfExporter.cc:600
-msgid "The PDF export failed: %1."
-msgstr ""
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:661 ../qt/src/hocr/HOCRPdfExporter.cc:653
-#, fuzzy
-msgid "The PDF library could not load the font '%1'."
-msgstr "PDF 库不支持所选择字体。"
-
-#: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:274
-#: ../qt/src/hocr/HOCRTextExporter.cc:39 ../qt/src/OutputEditorText.cc:239
-msgid "Text Files"
-msgstr "文本"
-
-#: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:39
-#, fuzzy
-msgid "Save Text Output..."
-msgstr "存储输出……"
-
-#: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCRTextExporter.cc:47
-msgid "The text export failed: unable to write output file."
-msgstr ""
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:269
-#: ../qt/src/hocr/OutputEditorHOCR.cc:230
-msgid "Block"
-msgstr ""
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:275
-#: ../qt/src/hocr/OutputEditorHOCR.cc:232
-msgid "Line"
-msgstr ""
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:278
-#: ../qt/src/hocr/OutputEditorHOCR.cc:233
-msgid "Word"
-msgstr ""
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:281
-#: ../qt/src/hocr/OutputEditorHOCR.cc:234
-msgid "Misspelled word"
-msgstr ""
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:435
-#: ../qt/src/hocr/OutputEditorHOCR.cc:317
-msgid ""
-"The following pages could not be processed:\n"
-"%1"
-msgstr ""
-"不能处理下列页面：\n"
-"%1"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:436
-#: ../qt/src/hocr/OutputEditorHOCR.cc:318
-msgid "Recognition errors"
-msgstr "辨认时出现错误"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:594
-#: ../qt/src/hocr/OutputEditorHOCR.cc:500
-#: ../qt/src/hocr/OutputEditorHOCR.cc:512
-#, fuzzy
-msgid "Multiple values"
-msgstr "多个来源"
-
-#. Merging allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:771
-#: ../qt/src/hocr/OutputEditorHOCR.cc:632
-msgid "Merge"
-msgstr "合并"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:779
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:876
-#: ../qt/src/hocr/OutputEditorHOCR.cc:634
-#: ../qt/src/hocr/OutputEditorHOCR.cc:719
-msgid "Split from parent"
-msgstr ""
-
-#. Swapping allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:790
-#: ../qt/src/hocr/OutputEditorHOCR.cc:638
-msgid "Swap"
-msgstr ""
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:814
-#: ../qt/src/hocr/OutputEditorHOCR.cc:684
-msgid "Add graphic region"
-msgstr "新增图像本地"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:817
-#: ../qt/src/hocr/OutputEditorHOCR.cc:685
-msgid "Add text block"
-msgstr ""
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:821
-#: ../qt/src/hocr/OutputEditorHOCR.cc:687
-#, fuzzy
-msgid "Add paragraph"
-msgstr "段落"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:825
-#: ../qt/src/hocr/OutputEditorHOCR.cc:689
-#, fuzzy
-msgid "Add line"
-msgstr "新增图像"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:829
-#: ../qt/src/hocr/OutputEditorHOCR.cc:691
-msgid "Add word"
-msgstr ""
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:851
-#: ../qt/src/hocr/OutputEditorHOCR.cc:704
-msgid "No suggestions"
-msgstr "没有推荐"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:857
-#: ../qt/src/hocr/OutputEditorHOCR.cc:708
-msgid "Add to dictionary"
-msgstr "新增词典"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:863
-#: ../qt/src/hocr/OutputEditorHOCR.cc:710
-msgid "Ignore word"
-msgstr "忽略字词"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:925
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:964
-#: ../qt/src/hocr/OutputEditorHOCR.cc:789
-#: ../qt/src/hocr/OutputEditorHOCR.cc:826
-msgid "hOCR HTML Files"
-msgstr "hOCR HTML 档"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:926
-#: ../qt/src/hocr/OutputEditorHOCR.cc:789
-msgid "Open hOCR File"
-msgstr "打开 hOCR 档"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:935
-#: ../qt/src/hocr/OutputEditorHOCR.cc:796
-msgid "Failed to open file"
-msgstr "不能打开文件"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:935
-#: ../qt/src/hocr/OutputEditorHOCR.cc:796
-msgid "The file could not be opened: %1."
-msgstr "不能打开文件：%1。"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
-#: ../qt/src/hocr/OutputEditorHOCR.cc:803
-msgid "Invalid hOCR file"
-msgstr "无效的 hOCR 档"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
-#: ../qt/src/hocr/OutputEditorHOCR.cc:803
-msgid "The file does not appear to contain valid hOCR HTML: %1"
-msgstr "此文件似乎并不包含有效的 hOCR HTML：%1"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:965
-#: ../qt/src/hocr/OutputEditorHOCR.cc:826
-msgid "Save hOCR Output..."
-msgstr "存储 hOCR 输出……"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:972 ../gtk/src/OutputEditorText.cc:282
-#: ../qt/src/hocr/OutputEditorHOCR.cc:833 ../qt/src/OutputEditorText.cc:246
-msgid "Failed to save output"
-msgstr "不能存储输出……"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:972 ../gtk/src/OutputEditorText.cc:282
-#: ../qt/src/hocr/OutputEditorHOCR.cc:833 ../qt/src/OutputEditorText.cc:246
-msgid "Check that you have writing permissions in the selected folder."
-msgstr "请检查你在所选择数据夹拥有写入权限。"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1031 ../gtk/src/OutputEditorText.cc:296
-#: ../qt/src/hocr/OutputEditorHOCR.cc:885 ../qt/src/OutputEditorText.cc:259
-msgid "Output not saved"
-msgstr "未存储输出"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1031 ../gtk/src/OutputEditorText.cc:296
-#: ../qt/src/hocr/OutputEditorHOCR.cc:885 ../qt/src/OutputEditorText.cc:259
-msgid "Save output before proceeding?"
-msgstr "先存储输出再继续？"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1152 ../gtk/src/OutputEditorText.cc:184
-#: ../qt/src/hocr/OutputEditorHOCR.cc:982 ../qt/src/OutputEditorText.cc:152
-msgid "Replacing..."
-msgstr "取代中……"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1177 ../gtk/src/OutputEditorText.cc:192
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1005 ../qt/src/OutputEditorText.cc:160
-msgid "Applying substitutions..."
-msgstr "正在套用替换值……"
-
-#: ../gtk/src/MainWindow.cc:123 ../qt/src/MainWindow.cc:287
-msgid "Using tesseract"
-msgstr "采用 tesseract"
-
-#: ../gtk/src/MainWindow.cc:170 ../qt/src/MainWindow.cc:186
-msgid "Select an image to begin..."
-msgstr "请选择图像作为开始……"
-
-#: ../gtk/src/MainWindow.cc:285 ../qt/src/MainWindow.cc:270
-msgid "Multiple sources"
-msgstr "多个来源"
-
-#: ../gtk/src/MainWindow.cc:287 ../qt/src/MainWindow.cc:272
-msgid "Ready"
-msgstr "就绪"
-
-#: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:410
-msgid "New version"
-msgstr "新版本"
-
-#: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:410
-msgid "gImageReader %1 is available"
-msgstr "gImageReader %1 已面世"
-
-#: ../gtk/src/MainWindow.cc:431 ../qt/src/MainWindow.cc:411
-msgid "Download"
-msgstr "下载"
-
-#: ../gtk/src/MainWindow.cc:432 ../qt/src/MainWindow.cc:412
-msgid "Changelog"
-msgstr "修改日志"
+#: ../gtk/src/scanner/ScannerSane.cc:808 ../qt/src/scanner/ScannerSane.cc:805
+msgid "Document feeder out of documents."
+msgstr "进纸器缺文件。"
 
 #: ../gtk/src/MainWindow.cc:433 ../qt/src/MainWindow.cc:413
 msgid "Don't notify again"
@@ -1288,23 +499,38 @@ msgstr "不再提示"
 msgid "Don't show again"
 msgstr "不再显示"
 
-#: ../gtk/src/MainWindow.cc:455 ../gtk/src/MainWindow.cc:468
-#: ../qt/src/MainWindow.cc:462
-msgid "Install"
-msgstr "安装"
+#: ../gtk/src/MainWindow.cc:431 ../qt/src/MainWindow.cc:411
+msgid "Download"
+msgstr "下载"
 
-#: ../gtk/src/MainWindow.cc:475 ../qt/src/MainWindow.cc:474
-msgid "Spelling dictionary missing"
-msgstr "遗漏拼写词典"
+#: ../gtk/src/TessdataManager.cc:284 ../qt/src/TessdataManager.cc:268
+msgid "Downloading %1..."
+msgstr "正在下载 %1……"
 
-#: ../gtk/src/MainWindow.cc:475 ../qt/src/MainWindow.cc:474
-msgid "The spellcheck dictionary for %1 is not installed"
-msgstr "未安装 %1 的拼写词典"
+#: ../gtk/src/MainWindow.cc:563 ../qt/src/MainWindow.cc:553
+msgid "Downloading '%1'..."
+msgstr "正在下载 '%1'……"
 
-#: ../gtk/src/MainWindow.cc:482 ../gtk/src/MainWindow.cc:514
-#: ../qt/src/MainWindow.cc:481
-msgid "Installing spelling dictionary for '%1'"
-msgstr "正在安装 '%1' 的拼写词典"
+#: ../gtk/data/OutputEditorText.ui.h:12 ../qt/src/Ui_OutputEditorText.hh:78
+msgid "Draw whitespace"
+msgstr "绘画空格"
+
+#: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:30
+msgid "Encryption (optional):"
+msgstr "加密（选择性）："
+
+#: ../gtk/src/SourceManager.cc:141 ../qt/src/SourceManager.cc:143
+msgid "Enter password for file '%1':"
+msgstr "请为 '%1' 档输入口令："
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:577
+msgid "Enter word:"
+msgstr "输入字词"
+
+#: ../gtk/data/MainWindow.ui.h:46 ../gtk/src/Recognizer.cc:393
+#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:384
+msgid "Entire page"
+msgstr "整页"
 
 #: ../gtk/src/MainWindow.cc:503 ../gtk/src/MainWindow.cc:528
 #: ../gtk/src/MainWindow.cc:536 ../gtk/src/MainWindow.cc:546
@@ -1319,78 +545,1057 @@ msgstr "正在安装 '%1' 的拼写词典"
 msgid "Error"
 msgstr "错误"
 
-#: ../gtk/src/MainWindow.cc:503 ../qt/src/MainWindow.cc:500
-msgid "Failed to install spelling dictionary: %1"
-msgstr "不能安装拼写词典：%1"
+#: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
+msgid "Error Reading File"
+msgstr "读案错误"
+
+#: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
+msgid "Error Saving File"
+msgstr "存档错误"
+
+#: ../gtk/src/scanner/ScannerSane.cc:411 ../gtk/src/scanner/ScannerSane.cc:461
+#: ../gtk/src/scanner/ScannerTwain.cc:318 ../qt/src/scanner/ScannerSane.cc:411
+#: ../qt/src/scanner/ScannerSane.cc:461 ../qt/src/scanner/ScannerTwain.cc:316
+msgid "Error communicating with scanner"
+msgstr "与扫描器沟通出现错误"
+
+#: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
+msgid "Errors Occurred Reading File"
+msgstr "读入文件时出现错误"
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/src/hocr/OutputEditorHOCR.cc:889
+#: ../qt/src/hocr/OutputEditorHOCR.cc:724
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:126
+msgid "Expand all"
+msgstr "递归展开"
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
+msgid "Export"
+msgstr "输出"
+
+#: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:607
+#: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCROdtExporter.cc:61
+#: ../qt/src/hocr/HOCRPdfExporter.cc:600 ../qt/src/hocr/HOCRTextExporter.cc:47
+msgid "Export failed"
+msgstr "不能输出"
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:67
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:68
+msgid "Export to ODT"
+msgstr "输出至 ODT"
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:65
+msgid "Export to PDF"
+msgstr "输出至 PDF"
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:61
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
+msgid "Export to plain text"
+msgstr "输出为纯文本"
+
+#: ../gtk/src/hocr/HOCROdtExporter.cc:336 ../qt/src/hocr/HOCROdtExporter.cc:254
+msgid "Exporting to ODT..."
+msgstr "输出至 ODT..."
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:602 ../qt/src/hocr/HOCRPdfExporter.cc:595
+msgid "Exporting to PDF..."
+msgstr "输出至 PDF..."
 
 #: ../gtk/src/MainWindow.cc:528 ../qt/src/MainWindow.cc:513
 msgid "Failed to create directory for spelling dictionaries."
 msgstr "不能创建拼写词典目录。"
 
-#: ../gtk/src/MainWindow.cc:536 ../gtk/src/MainWindow.cc:552
-#: ../qt/src/MainWindow.cc:523
-msgid "Could not read %1: %2."
-msgstr "不能读入 %1：%2。"
+#: ../gtk/src/TessdataManager.cc:275 ../qt/src/TessdataManager.cc:260
+msgid "Failed to create directory for tessdata files."
+msgstr "不能为 tessdata 档创建目录。"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
+msgid "Failed to create output"
+msgstr "不能创建输出"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
+msgid "Failed to create output. The returned error was: %1"
+msgstr "不能创建输出。返回错误：%1"
+
+#: ../gtk/src/TessdataManager.cc:69 ../gtk/src/TessdataManager.cc:95
+#: ../gtk/src/TessdataManager.cc:180 ../qt/src/TessdataManager.cc:84
+#: ../qt/src/TessdataManager.cc:101 ../qt/src/TessdataManager.cc:185
+msgid "Failed to fetch list of available languages: %1"
+msgstr "不能取得可用语言的清单：%1"
+
+#: ../gtk/src/Recognizer.cc:519 ../qt/src/Recognizer.cc:511
+msgid "Failed to initialize tesseract"
+msgstr "不能初始化 tesseract"
+
+#: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
+msgid "Failed to initialize the scanning backend."
+msgstr "不能初始化扫描服务。"
+
+#: ../gtk/src/MainWindow.cc:503 ../qt/src/MainWindow.cc:500
+msgid "Failed to install spelling dictionary: %1"
+msgstr "不能安装拼写词典：%1"
+
+#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
+msgid "Failed to load image"
+msgstr "不能装入图像"
+
+#: ../gtk/src/CrashHandler.cc:102 ../qt/src/CrashHandler.cc:60
+msgid "Failed to obtain backtrace. Is gdb installed?"
+msgstr "不能取得 backtrace。已安装 gdb 吗？"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:935
+#: ../qt/src/hocr/OutputEditorHOCR.cc:796
+msgid "Failed to open file"
+msgstr "不能打开文件"
+
+#: ../gtk/src/SourceManager.cc:208 ../qt/src/SourceManager.cc:226
+msgid "Failed to read the clipboard."
+msgstr "不能读入剪贴板。"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:595 ../qt/src/hocr/HOCRPdfExporter.cc:588
+msgid "Failed to render page %1"
+msgstr "不能绘画第 %1 页"
+
+#: ../gtk/src/scanner/ScannerSane.cc:520 ../qt/src/scanner/ScannerSane.cc:517
+msgid "Failed to save image"
+msgstr "不能存储图像"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:972 ../gtk/src/OutputEditorText.cc:282
+#: ../qt/src/hocr/OutputEditorHOCR.cc:833 ../qt/src/OutputEditorText.cc:246
+msgid "Failed to save output"
+msgstr "不能存储输出……"
+
+#: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
+msgid "Failed to take screenshot."
+msgstr "不能截取画面。"
+
+#: ../qt/src/hocr/HOCRPdfExporter.cc:142
+msgid "Failed to write to file"
+msgstr "不能写入文件"
+
+#: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
+msgid "Fallback font family:"
+msgstr "后备字体："
+
+#: ../gtk/src/TessdataManager.cc:64 ../qt/src/TessdataManager.cc:79
+msgid "Fetching available languages"
+msgstr "取得可用语言"
+
+#: ../gtk/src/OutputEditorText.cc:231 ../qt/src/OutputEditorText.cc:196
+msgid "File: %1"
+msgstr "文件：%1"
+
+#: ../gtk/src/Config.cc:41 ../qt/data/ConfigDialog.ui.h:7
+msgid "Filename prefix"
+msgstr "文件名前缀"
+
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:5
+msgid "Files"
+msgstr "文件"
+
+#: ../gtk/data/SearchReplaceFrame.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:4
+msgid "Find"
+msgstr "寻找"
+
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:79
+#: ../qt/src/Ui_OutputEditorText.hh:106
+msgid "Find and Replace"
+msgstr "寻找及取代"
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:12 ../gtk/data/OutputEditorText.ui.h:15
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:80
+#: ../qt/src/Ui_OutputEditorText.hh:107
+msgid "Find and replace"
+msgstr "寻找及取代"
+
+#: ../gtk/data/SearchReplaceFrame.ui.h:5 ../qt/data/SearchReplaceFrame.ui.h:6
+msgid "Find next"
+msgstr "寻找下一个"
+
+#: ../gtk/data/SearchReplaceFrame.ui.h:4 ../qt/data/SearchReplaceFrame.ui.h:5
+msgid "Find previous"
+msgstr "寻找前一个"
+
+#: ../qt/data/MainWindow.ui.h:17
+msgid "Flatbed"
+msgstr "平板"
+
+#: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
+msgid "Font scaling:"
+msgstr "字体缩放："
+
+#: ../gtk/data/PdfExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
+msgid "Format:"
+msgstr "格式："
+
+#: ../gtk/src/Acquirer.cc:170 ../qt/src/Acquirer.cc:156
+msgid "Getting parameters..."
+msgstr "获取参数……"
+
+#: ../gtk/src/hocr/HOCRDocument.cc:565 ../qt/src/hocr/HOCRDocument.cc:488
+msgid "Graphic"
+msgstr "图像"
+
+#: ../gtk/data/MainWindow.ui.h:18 ../gtk/src/hocr/HOCRPdfExporter.cc:316
+#: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:349
+#: ../qt/src/hocr/HOCRPdfExporter.cc:351
+msgid "Grayscale"
+msgstr "灰度"
+
+#: ../gtk/data/PdfExportDialog.ui.h:24 ../qt/data/PdfExportDialog.ui.h:12
+msgid "Height"
+msgstr "高度"
+
+#: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
+#: ../gtk/src/MainWindow.cc:470 ../qt/src/MainWindow.cc:468
+#: ../qt/src/Ui_MainWindow.hh:177
+msgid "Help"
+msgstr "协助"
+
+#: ../gtk/data/ConfigDialog.ui.h:5
+msgid "Horizontal"
+msgstr "横向"
+
+#: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
+msgid "ISO Code"
+msgstr "ISO 代码"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:863
+#: ../qt/src/hocr/OutputEditorHOCR.cc:710
+msgid "Ignore word"
+msgstr "忽略字词"
+
+#: ../qt/data/MainWindow.ui.h:34
+msgid "Image Controls"
+msgstr "图像控制"
+
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:35
+msgid "Image controls"
+msgstr "图像控制"
+
+#: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
+msgid "Image settings:"
+msgstr "图像设置："
+
+#: ../gtk/src/Acquirer.cc:91 ../qt/src/Acquirer.cc:85
+msgid "Images"
+msgstr "图像"
+
+#: ../gtk/src/SourceManager.cc:197 ../qt/src/SourceManager.cc:214
+msgid "Images and PDFs"
+msgstr "图像与 PDF 档"
+
+#: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:40
+msgid "Import from current source"
+msgstr "输入现有来源"
+
+#: ../gtk/data/OutputEditorText.ui.h:2 ../qt/src/Ui_OutputEditorText.hh:53
+msgid "Insert at cursor"
+msgstr "于光标位置插入"
+
+#: ../gtk/src/MainWindow.cc:455 ../gtk/src/MainWindow.cc:468
+#: ../qt/src/MainWindow.cc:462
+msgid "Install"
+msgstr "安装"
+
+#: ../gtk/src/MainWindow.cc:482 ../gtk/src/MainWindow.cc:514
+#: ../qt/src/MainWindow.cc:481
+msgid "Installing spelling dictionary for '%1'"
+msgstr "正在安装 '%1' 的拼写词典"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
+msgid "Invalid Output"
+msgstr "无效输出"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
+#: ../qt/src/hocr/OutputEditorHOCR.cc:803
+msgid "Invalid hOCR file"
+msgstr "无效的 hOCR 档"
+
+#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:4
+msgid "Invert colors"
+msgstr "倒置色版"
+
+#: ../gtk/data/OutputEditorText.ui.h:8 ../qt/src/Ui_OutputEditorText.hh:70
+msgid "Join hyphenated words"
+msgstr "连接断字符号前后的字"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:348 ../qt/src/hocr/HOCRPdfExporter.cc:359
+msgid "Jpeg (lossy)"
+msgstr "Jpeg（失真）"
+
+#. Output postprocessing
+#: ../gtk/data/OutputEditorText.ui.h:4 ../qt/src/Ui_OutputEditorText.hh:62
+msgid "Keep line break if..."
+msgstr "保留换行符号，如果……"
+
+#: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:39
+msgid "Keywords:"
+msgstr "关键字："
+
+#: ../qt/data/PdfExportDialog.ui.h:7
+msgid "Landscape"
+msgstr "横向"
+
+#: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
+msgid "Language data locations:"
+msgstr "语言数据位置："
+
+#: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
+msgid "Language definitions path:"
+msgstr "语言定义路径："
+
+#: ../qt/data/AboutDialog.ui.h:5
+msgid "License"
+msgstr "条款"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:275
+#: ../qt/src/hocr/OutputEditorHOCR.cc:232
+msgid "Line"
+msgstr "线条"
+
+#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
+msgid "Manage Languages"
+msgstr "管理语言"
+
+#: ../gtk/data/TessdataManager.ui.h:5 ../qt/src/TessdataManager.cc:51
+msgid "Manage installed languages:"
+msgstr "管理已安装的语言："
+
+#: ../gtk/src/Recognizer.cc:337 ../qt/src/Recognizer.cc:324
+msgid "Manage languages..."
+msgstr "管理语言……"
+
+#: ../gtk/data/SearchReplaceFrame.ui.h:6 ../qt/data/SearchReplaceFrame.ui.h:7
+msgid "Match case"
+msgstr "尺寸写吻合"
+
+#. Merging allowed
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:771
+#: ../qt/src/hocr/OutputEditorHOCR.cc:632
+msgid "Merge"
+msgstr "合并"
+
+#: ../gtk/src/SourceManager.cc:332 ../qt/src/SourceManager.cc:338
+msgid "Missing File"
+msgstr "遗漏文件"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:281
+#: ../qt/src/hocr/OutputEditorHOCR.cc:234
+msgid "Misspelled word"
+msgstr "错拼字词"
+
+#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:13
+msgid "Mode:"
+msgstr "模式："
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:353
+msgid "Monochrome"
+msgstr "黑白"
+
+#: ../gtk/src/Recognizer.cc:255 ../qt/src/Recognizer.cc:252
+msgid "Multilingual"
+msgstr "多语言"
+
+#: ../gtk/data/MainWindow.ui.h:53 ../qt/src/Recognizer.cc:79
+msgid "Multiple Pages..."
+msgstr "多页……"
+
+#: ../gtk/src/MainWindow.cc:285 ../qt/src/MainWindow.cc:270
+msgid "Multiple sources"
+msgstr "多个来源"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:594
+#: ../qt/src/hocr/OutputEditorHOCR.cc:500
+#: ../qt/src/hocr/OutputEditorHOCR.cc:512
+msgid "Multiple values"
+msgstr "多个数值"
+
+#: ../gtk/data/ConfigDialog.ui.h:16 ../qt/data/ConfigDialog.ui.h:25
+msgid "Name"
+msgstr "名称"
+
+#: ../gtk/src/Config.cc:43 ../qt/data/ConfigDialog.ui.h:9
+msgid "Native name"
+msgstr "原生名称"
+
+#: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:410
+msgid "New version"
+msgstr "新版本"
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:15
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
+msgid "Next (F3)"
+msgstr "下一个（F3）"
+
+#: ../gtk/src/Utils.cc:67
+msgid "No"
+msgstr "否"
+
+#: ../gtk/src/Recognizer.cc:201 ../qt/src/Recognizer.cc:192
+msgid "No languages available"
+msgstr "没有可用语言"
+
+#: ../gtk/src/scanner/ScannerSane.cc:159 ../gtk/src/scanner/ScannerTwain.cc:186
+#: ../qt/src/scanner/ScannerSane.cc:159 ../qt/src/scanner/ScannerTwain.cc:178
+msgid "No scanner specified"
+msgstr "未指定扫描器"
+
+#: ../gtk/src/Acquirer.cc:133 ../qt/src/Acquirer.cc:122
+msgid "No scanners were detected."
+msgstr "检测不到扫描器。"
 
 #: ../gtk/src/MainWindow.cc:546 ../qt/src/MainWindow.cc:533
 msgid "No spelling dictionaries found for '%1'."
 msgstr "找不到 '%1' 的拼写词典。"
 
-#: ../gtk/src/MainWindow.cc:563 ../qt/src/MainWindow.cc:553
-msgid "Downloading '%1'..."
-msgstr "正在下载 '%1'……"
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:851
+#: ../qt/src/hocr/OutputEditorHOCR.cc:704
+msgid "No suggestions"
+msgstr "没有推荐"
 
-#: ../gtk/src/MainWindow.cc:582 ../qt/src/MainWindow.cc:571
+#: ../gtk/src/Recognizer.cc:201 ../qt/src/Recognizer.cc:192
 msgid ""
-"The following dictionaries could not be downloaded:\n"
-"%1\n"
-"\n"
-"Check the connectivity and directory permissions.\n"
-"Hint: If you don't have write permissions in system folders, you can switch "
-"to user paths in the settings dialog."
+"No tesseract languages are available for use. Recognition will not work."
+msgstr "没有可用的 tesseract 语言。辨认将会失败。"
+
+#: ../qt/data/MainWindow.ui.h:26
+msgid "Normal Size"
+msgstr "正常尺寸"
+
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:27
+msgid "Normal size"
+msgstr "正常尺寸"
+
+#: ../data/gimagereader.desktop.in.h:1
+msgid "OCR application"
+msgstr "OCR 应用程序"
+
+#: ../qt/src/Ui_MainWindow.hh:134
+msgid "OCR mode:"
+msgstr "OCR 模式："
+
+#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:42
+#: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
+#: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
+#: ../qt/data/ConfigDialog.ui.h:26
+msgid "OK"
+msgstr "确定"
+
+#: ../gtk/data/SubstitutionsManager.ui.h:2 ../qt/src/SubstitutionsManager.cc:38
+#: ../qt/src/SubstitutionsManager.cc:39
+msgid "Open"
+msgstr "打开"
+
+#: ../gtk/src/SubstitutionsManager.cc:70 ../qt/src/SubstitutionsManager.cc:106
+msgid "Open Substitutions List"
+msgstr "开始替换清单"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:926
+#: ../qt/src/hocr/OutputEditorHOCR.cc:789
+msgid "Open hOCR File"
+msgstr "打开 hOCR 档"
+
+#. Output toolbar
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:56
+msgid "Open hOCR file"
+msgstr "打开 hOCR 档"
+
+#: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
+msgid "OpenDocument Text Documents"
+msgstr "OpenDocument 文件档"
+
+#: ../gtk/src/Acquirer.cc:164 ../qt/src/Acquirer.cc:150
+msgid "Opening device..."
+msgstr "打开设备……"
+
+#: ../gtk/src/scanner/ScannerSane.cc:800 ../qt/src/scanner/ScannerSane.cc:797
+msgid "Operation is cancelled."
+msgstr "已取消操作。"
+
+#: ../gtk/data/SelectionMenu.ui.h:2 ../qt/src/DisplayerToolSelect.cc:222
+msgid "Order:"
+msgstr "排序："
+
+#: ../gtk/data/OutputEditorText.ui.h:7 ../qt/src/Ui_OutputEditorText.hh:68
+msgid "Other options"
+msgstr "其它选项"
+
+#: ../qt/src/Ui_MainWindow.hh:51
+msgid "Output"
+msgstr "输出："
+
+#: ../gtk/data/PdfExportDialog.ui.h:4 ../qt/data/PdfExportDialog.ui.h:4
+msgid "Output mode:"
+msgstr "输出模式："
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1031 ../gtk/src/OutputEditorText.cc:296
+#: ../qt/src/hocr/OutputEditorHOCR.cc:885 ../qt/src/OutputEditorText.cc:259
+msgid "Output not saved"
+msgstr "未存储输出"
+
+#: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
+msgid "Output pane font:"
+msgstr "输出面板字体："
+
+#: ../gtk/data/ConfigDialog.ui.h:4
+msgid "Output pane orientation:"
+msgstr "输出面板的方向："
+
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:9
+msgid "Output:"
+msgstr "输出："
+
+#: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
+msgid "Override font family:"
+msgstr "改写字体："
+
+#: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
+msgid "Override font size:"
+msgstr "改写字体尺寸："
+
+#: ../gtk/src/FileDialogs.cc:237
+msgid "Overwrite File?"
+msgstr "改写文件？"
+
+#: ../gtk/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportDialog.ui.h:8
+msgid "PDF"
+msgstr "PDF"
+
+#: ../gtk/data/PdfExportDialog.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
+msgid "PDF Export"
+msgstr "输出 PDF"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:495 ../qt/src/hocr/HOCRPdfExporter.cc:484
+msgid "PDF Files"
+msgstr "PDF 档"
+
+#: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
+msgid "PDF version:"
+msgstr "PDF 版本："
+
+#: ../gtk/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportDialog.ui.h:9
+msgid "PDF with invisible text overlay"
+msgstr "包含隐形文字层的 PDF"
+
+#: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
+msgid "PDFs with text"
+msgstr "含文字的 PDF"
+
+#: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
+msgid "PNG Images"
+msgstr "PNG 图像"
+
+#: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:74
+msgid ""
+"PackageKit is required for managing system-wide tesseract language packs, "
+"but it was not found. Please use the system package management software to "
+"manage the tesseract language packs, or switch to use the user tessdata path "
+"in the configuration dialog."
 msgstr ""
+"管理 tesseract 的系统语言包须要 PackageKit，但它并不存在。请利用系统的组件管"
+"理软件来管理 tesseract 的语言包，或改用设置页面内的 tessdata 用户路径。"
 
-#: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:574
-msgid "Dictionaries installed"
-msgstr "已安装词典"
+#: ../gtk/src/hocr/HOCRDocument.cc:555 ../gtk/src/hocr/OutputEditorHOCR.cc:266
+#: ../qt/src/hocr/OutputEditorHOCR.cc:229
+msgid "Page"
+msgstr "页面"
 
-#: ../gtk/src/MainWindow.cc:585
-#, fuzzy
-msgid ""
-"The following dictionaries were installed:\n"
-"%1"
-msgstr "已安装下列词典：%1"
+#: ../gtk/data/MainWindow.ui.h:40 ../qt/data/PageRangeDialog.ui.h:1
+msgid "Page Range"
+msgstr "页面范围"
+
+#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/PageRangeDialog.ui.h:2
+msgid "Page range:"
+msgstr "页面范围："
+
+#: ../gtk/src/Recognizer.cc:331 ../qt/src/Recognizer.cc:317
+msgid "Page segmentation mode"
+msgstr "分割页面模式"
+
+#: ../gtk/src/Recognizer.cc:308 ../qt/src/Recognizer.cc:298
+msgid "Page segmentation with orientation and script detection"
+msgstr "分割页面并检测方向及文字"
+
+#: ../gtk/src/OutputEditorText.cc:234 ../qt/src/OutputEditorText.cc:199
+msgid "Page: %1"
+msgstr "页面：%1"
+
+#: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:10
+msgid "Paper size:"
+msgstr "纸张尺寸："
+
+#: ../gtk/src/hocr/HOCRDocument.cc:559 ../gtk/src/hocr/OutputEditorHOCR.cc:272
+#: ../qt/src/hocr/HOCRDocument.cc:482 ../qt/src/hocr/OutputEditorHOCR.cc:231
+msgid "Paragraph"
+msgstr "段落"
+
+#: ../gtk/src/TessdataManager.cc:106 ../qt/src/TessdataManager.cc:112
+#: ../qt/src/TessdataManager.cc:121
+msgid "Parsing error: %1"
+msgstr "分析错误：%1"
+
+#: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:31
+msgid "Password:"
+msgstr "口令："
+
+#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:192
+msgid "Paste"
+msgstr "贴上"
+
+#: ../gtk/src/SourceManager.cc:212 ../qt/src/SourceManager.cc:230
+#: ../qt/src/SourceManager.cc:236
+msgid "Pasted %1"
+msgstr "已贴上 %1"
+
+#: ../gtk/src/DisplayerToolSelect.cc:183 ../qt/src/DisplayerToolSelect.cc:179
+msgid "Performing layout analysis"
+msgstr "进行布局分析"
+
+#: ../gtk/data/MainWindow.ui.h:34 ../qt/src/Ui_MainWindow.hh:138
+msgid "Plain text"
+msgstr "纯文本"
+
+#: ../qt/data/PdfExportDialog.ui.h:6
+msgid "Portrait"
+msgstr "纵向"
+
+#: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:64
+msgid "Preceded by end mark (.?!)"
+msgstr "以终结号起首（.?!）"
+
+#: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:66
+msgid "Preceded or succeeded by quote"
+msgstr "以引号起首或结尾"
+
+#: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
+msgid "Predefined language definitions:"
+msgstr "缺省语言定义："
+
+#: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
+msgid "Preferences"
+msgstr "选项"
+
+#: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
+msgid "Prefix"
+msgstr "前缀"
+
+#: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:7
+msgid "Prepend to output text:"
+msgstr "預先輸出文字："
+
+#: ../gtk/data/OutputEditorText.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:74
+msgid "Preserve paragraphs"
+msgstr "保留段落"
+
+#: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
+msgid "Preserve spaces wider than:"
+msgstr "保留空格大于："
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:16
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
+msgid "Previous (Shift+F3)"
+msgstr "上一个（Shift+F3）"
+
+#: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:37
+msgid "Producer:"
+msgstr "发行者："
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:19
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:148
+msgid "Properties"
+msgstr "属性"
+
+#: ../gtk/data/MainWindow.ui.h:51 ../qt/src/SourceManager.cc:146
+msgid "Protected PDF"
+msgstr "受保护 PDF"
+
+#: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
+msgid "Query to install missing spellcheck dictionaries"
+msgstr "查找遗漏安装的拼写词典"
+
+#: ../gtk/data/appmenu.ui.h:6
+msgid "Quit"
+msgstr "离开"
+
+#: ../gtk/src/MainWindow.cc:287 ../qt/src/MainWindow.cc:272
+msgid "Ready"
+msgstr "就绪"
+
+#. Sources toolbar
+#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:191
+msgid "Recent"
+msgstr "最近"
+
+#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:4
+msgid "Recognition area:"
+msgstr "辨认本地："
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:436
+#: ../qt/src/hocr/OutputEditorHOCR.cc:318
+msgid "Recognition errors"
+msgstr "辨认时出现错误"
+
+#: ../gtk/src/Recognizer.cc:511 ../gtk/src/Recognizer.cc:519
+#: ../qt/src/Recognizer.cc:503 ../qt/src/Recognizer.cc:511
+msgid "Recognition errors occurred"
+msgstr "辨认时出现错误"
+
+#: ../gtk/data/SelectionMenu.ui.h:3 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
+#: ../qt/src/DisplayerToolSelect.cc:237 ../qt/src/hocr/DisplayerToolHOCR.cc:31
+msgid "Recognize"
+msgstr "辨认"
+
+#: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
+msgid "Recognize all"
+msgstr "辨认全部"
+
+#: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
+msgid "Recognize selection"
+msgstr "辨认选择区"
+
+#: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:238
+msgid "Recognize to clipboard"
+msgstr "辨认至剪贴板"
+
+#: ../gtk/src/Recognizer.cc:471 ../qt/src/Recognizer.cc:463
+msgid "Recognizing page %1 (%2 of %3)"
+msgstr "辨认第 %1 页（%3 之 %2）"
+
+#: ../gtk/src/Recognizer.cc:507 ../gtk/src/Recognizer.cc:536
+#: ../gtk/src/Recognizer.cc:549 ../qt/src/Recognizer.cc:499
+#: ../qt/src/Recognizer.cc:528 ../qt/src/Recognizer.cc:541
+msgid "Recognizing..."
+msgstr "辨认中……"
+
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
+msgid "Redetect Languages"
+msgstr "重新检测语言"
+
+#: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:112
+#: ../qt/src/Ui_OutputEditorText.hh:113
+msgid "Redo"
+msgstr "重做"
+
+#: ../gtk/data/MainWindow.ui.h:14 ../gtk/data/TessdataManager.ui.h:4
+#: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:59
+msgid "Refresh"
+msgstr "更新"
+
+#: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:36
+msgid "Regenerate backtrace"
+msgstr "重建 backtrace"
+
+#: ../gtk/data/SubstitutionsManager.ui.h:6
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:885 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/hocr/OutputEditorHOCR.cc:721 ../qt/src/SubstitutionsManager.cc:50
+#: ../qt/src/SubstitutionsManager.cc:51
+msgid "Remove"
+msgstr "删除"
+
+#: ../qt/src/Ui_MainWindow.hh:208
+msgid "Remove Image"
+msgstr "删除图像"
+
+#: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:209
+msgid "Remove image from list"
+msgstr "从清单删除图像"
+
+#: ../gtk/data/SearchReplaceFrame.ui.h:2 ../qt/data/SearchReplaceFrame.ui.h:2
+msgid "Replace"
+msgstr "取代"
+
+#: ../gtk/data/SearchReplaceFrame.ui.h:3 ../qt/data/SearchReplaceFrame.ui.h:3
+msgid "Replace all"
+msgstr "全部取代"
+
+#: ../gtk/data/OutputEditorText.ui.h:3 ../qt/src/Ui_OutputEditorText.hh:54
+msgid "Replace current text"
+msgstr "取代现有文字"
+
+#: ../gtk/src/SubstitutionsManager.cc:34 ../qt/src/SubstitutionsManager.cc:73
+msgid "Replace with"
+msgstr "取代"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1152 ../gtk/src/OutputEditorText.cc:184
+#: ../qt/src/hocr/OutputEditorHOCR.cc:982 ../qt/src/OutputEditorText.cc:152
+msgid "Replacing..."
+msgstr "取代中……"
+
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:3
+msgid "Resolution"
+msgstr "解像度"
+
+#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:10
+msgid "Resolution:"
+msgstr "解像度："
+
+#: ../qt/data/MainWindow.ui.h:30
+msgid "Rotate Left"
+msgstr "向左旋转"
+
+#: ../qt/data/MainWindow.ui.h:32
+msgid "Rotate Right"
+msgstr "向右旋转"
+
+#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
+msgid "Rotate all pages"
+msgstr "旋转所有页面"
+
+#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
+msgid "Rotate current page"
+msgstr "旋转现有文字"
+
+#: ../qt/data/MainWindow.ui.h:31
+msgid "Rotate left"
+msgstr "向左旋转"
+
+#: ../qt/data/MainWindow.ui.h:33
+msgid "Rotate right"
+msgstr "向右旋转"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:365
+msgid "Same as source"
+msgstr "与来源相同"
+
+#: ../gtk/data/SubstitutionsManager.ui.h:3 ../gtk/src/Utils.cc:73
+#: ../qt/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:42
+msgid "Save"
+msgstr "存储"
+
+#: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
+msgid "Save List?"
+msgstr "存储清单？"
+
+#: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:53
+msgid "Save ODT Output..."
+msgstr "存储 ODT 输出……"
+
+#: ../qt/src/Ui_OutputEditorText.hh:115
+msgid "Save Output"
+msgstr "存储输出"
+
+#: ../gtk/src/OutputEditorText.cc:275 ../qt/src/OutputEditorText.cc:239
+msgid "Save Output..."
+msgstr "存储输出……"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:496 ../qt/src/hocr/HOCRPdfExporter.cc:484
+msgid "Save PDF Output..."
+msgstr "存储 PDF 输出……"
+
+#: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
+msgid "Save Selection Image"
+msgstr "存储选择图像"
+
+#: ../gtk/src/SubstitutionsManager.cc:104 ../qt/src/SubstitutionsManager.cc:143
+msgid "Save Substitutions List"
+msgstr "存储替换清单"
+
+#: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:39
+msgid "Save Text Output..."
+msgstr "存储文字输出……"
+
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:57
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:58
+msgid "Save as hOCR text"
+msgstr "存储为 hOCR 文字"
+
+#: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:239
+msgid "Save as image"
+msgstr "存储为图像"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:965
+#: ../qt/src/hocr/OutputEditorHOCR.cc:826
+msgid "Save hOCR Output..."
+msgstr "存储 hOCR 输出……"
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
+#: ../qt/src/Ui_OutputEditorText.hh:116
+msgid "Save output"
+msgstr "存储输出"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1031 ../gtk/src/OutputEditorText.cc:296
+#: ../qt/src/hocr/OutputEditorHOCR.cc:885 ../qt/src/OutputEditorText.cc:259
+msgid "Save output before proceeding?"
+msgstr "先存储输出再继续？"
+
+#: ../gtk/src/SourceManager.cc:233 ../qt/src/SourceManager.cc:252
+msgid "Saving image..."
+msgstr "存储图像中……"
+
+#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:11
+msgid "Scan"
+msgstr "扫描"
+
+#: ../gtk/src/scanner/ScannerSane.cc:84 ../gtk/src/scanner/ScannerTwain.cc:288
+#: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
+msgid "Scan canceled"
+msgstr "已取消扫描"
+
+#: ../gtk/src/Acquirer.cc:115 ../qt/src/Acquirer.cc:106
+msgid "Scan failed"
+msgstr "不能摺扫描"
+
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:247
+msgid "Screenshot %1"
+msgstr "截图 %1"
+
+#: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
+msgid "Screenshot Error"
+msgstr "画面截图错误"
+
+#: ../gtk/src/Config.cc:100 ../qt/src/Config.cc:98
+msgid "Script"
+msgstr "脚本"
+
+#: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:73
+msgid "Search for"
+msgstr "寻找"
+
+#: ../gtk/src/SourceManager.cc:202 ../qt/src/SourceManager.cc:215
+msgid "Select Files"
+msgstr "选择文件"
+
+#: ../gtk/src/MainWindow.cc:170 ../qt/src/MainWindow.cc:186
+msgid "Select an image to begin..."
+msgstr "请选择图像作为开始……"
+
+#: ../gtk/data/MainWindow.ui.h:32 ../gtk/data/OutputEditorHOCR.ui.h:10
+#: ../gtk/data/OutputEditorText.ui.h:13 ../qt/src/Ui_OutputEditorText.hh:95
+msgid "Select insert mode"
+msgstr "选用插入模式"
+
+#: ../gtk/data/MainWindow.ui.h:38
+msgid "Select language"
+msgstr "选择语言"
+
+#: ../gtk/data/MainWindow.ui.h:31 ../qt/src/Ui_MainWindow.hh:75
+msgid "Select rotation mode"
+msgstr "选择旋转模式"
+
+#: ../gtk/src/Acquirer.cc:166 ../qt/src/Acquirer.cc:152
+msgid "Setting options..."
+msgstr "设置选项……"
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:13
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:83
+msgid "Show confidence values"
+msgstr "显示可信度"
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/PdfExportDialog.ui.h:39
+#: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:86
+msgid "Show preview"
+msgstr "显示预览"
+
+#: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
+msgid "Some entries of the substitutions list could not be read."
+msgstr "不能读入替换清单内某些项目。"
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:20
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:152
+msgid "Source"
+msgstr "来源"
+
+#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:8
+msgid "Source filename"
+msgstr "源文件名"
+
+#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:9
+msgid "Source page"
+msgstr "来源页"
+
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:16
+msgid "Source:"
+msgstr "来源："
+
+#. Remove & from some labels which designer insists in adding
+#: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
+msgid "Sources"
+msgstr "来源"
+
+#: ../gtk/src/Recognizer.cc:315 ../qt/src/Recognizer.cc:305
+msgid "Sparse text in no particular order"
+msgstr "没有特定次序的稀疏文字"
+
+#: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:306
+msgid "Sparse text with orientation and script detection"
+msgstr "检测稀疏文字的方向及文字"
+
+#: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
+msgid "Spelling dictionaries path:"
+msgstr "拼写词典路径："
+
+#: ../gtk/src/MainWindow.cc:475 ../qt/src/MainWindow.cc:474
+msgid "Spelling dictionary missing"
+msgstr "遗漏拼写词典"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:779
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:876
+#: ../qt/src/hocr/OutputEditorHOCR.cc:634
+#: ../qt/src/hocr/OutputEditorHOCR.cc:719
+msgid "Split from parent"
+msgstr "从上层分拆出来"
+
+#: ../gtk/src/Acquirer.cc:150 ../gtk/src/Acquirer.cc:168
+#: ../qt/src/Acquirer.cc:136 ../qt/src/Acquirer.cc:154
+msgid "Starting scan..."
+msgstr "开始扫描……"
+
+#: ../qt/src/Ui_OutputEditorText.hh:101
+msgid "Strip Line Breaks"
+msgstr "去除换行符号"
+
+#: ../gtk/data/OutputEditorText.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:102
+msgid "Strip line breaks on selected text"
+msgstr "去除选择文字的换行符号"
 
 #: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
 msgstr "去除换行符号……"
 
-#: ../gtk/src/OutputEditorText.cc:162
-msgid "Check spelling"
-msgstr "检查拼写"
+#: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:38
+msgid "Subject:"
+msgstr "主题："
 
-#: ../gtk/src/OutputEditorText.cc:231 ../qt/src/OutputEditorText.cc:196
-#, fuzzy
-msgid "File: %1"
-msgstr "文件"
+#: ../gtk/data/SearchReplaceFrame.ui.h:7
+#: ../gtk/data/SubstitutionsManager.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:1
+#: ../qt/src/SubstitutionsManager.cc:36
+msgid "Substitutions"
+msgstr "替换值"
 
-#: ../gtk/src/OutputEditorText.cc:234 ../qt/src/OutputEditorText.cc:199
-#, fuzzy
-msgid "Page: %1"
-msgstr "分析错误：%1"
+#: ../gtk/src/SubstitutionsManager.cc:69 ../gtk/src/SubstitutionsManager.cc:103
+#: ../qt/src/SubstitutionsManager.cc:106 ../qt/src/SubstitutionsManager.cc:143
+msgid "Substitutions List"
+msgstr "替换清单"
 
-#: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:477
-#: ../qt/src/Recognizer.cc:470
-msgid ""
-"\n"
-"[Failed to recognize page %1]\n"
-msgstr ""
-"\n"
-"[不能辨认第 %1 页]\n"
+#. Swapping allowed
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:790
+#: ../qt/src/hocr/OutputEditorHOCR.cc:638
+msgid "Swap"
+msgstr "对换"
 
-#: ../gtk/src/OutputEditorText.cc:275 ../qt/src/OutputEditorText.cc:239
-msgid "Save Output..."
-msgstr "存储输出……"
+#: ../qt/data/ConfigDialog.ui.h:14
+msgid "System encoding"
+msgstr "系统编码"
+
+#: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
+msgid "System-wide paths"
+msgstr "系统路径"
+
+#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:193
+msgid "Take Screenshot"
+msgstr "画面截图"
+
+#: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:49
+msgid "Tessdata Manager"
+msgstr "Tessdata 管理员"
 
 #: ../gtk/src/Recognizer.cc:145 ../qt/src/Recognizer.cc:132
 msgid ""
@@ -1417,237 +1622,93 @@ msgstr ""
 "\n"
 "请确保你的语言数据档是正确的及兼容 tesseract %2 。"
 
-#: ../gtk/src/Recognizer.cc:201 ../qt/src/Recognizer.cc:192
-msgid "No languages available"
-msgstr "没有可用语言"
+#: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:274
+#: ../qt/src/hocr/HOCRTextExporter.cc:39 ../qt/src/OutputEditorText.cc:239
+msgid "Text Files"
+msgstr "文本"
 
-#: ../gtk/src/Recognizer.cc:201 ../qt/src/Recognizer.cc:192
+#: ../gtk/src/hocr/HOCRDocument.cc:557 ../qt/src/hocr/HOCRDocument.cc:480
+msgid "Text block"
+msgstr "文字块"
+
+#: ../qt/data/ConfigDialog.ui.h:19
+msgid "Text file encoding:"
+msgstr "文本编码："
+
+#: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:19
+msgid "Text settings:"
+msgstr "文本设置："
+
+#: ../gtk/src/hocr/HOCRDocument.cc:561 ../qt/src/hocr/HOCRDocument.cc:484
+msgid "Textline"
+msgstr "文字"
+
+#: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
+msgid "The ISO 639-1 language code followed by the country code"
+msgstr "ISO 639-1 语言代码并国家代码"
+
+#: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
+#: ../qt/src/hocr/HOCROdtExporter.cc:61
+msgid "The ODT export failed: unable to write output file."
+msgstr "不能输出 ODT：不能创建输出档。"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:607 ../qt/src/hocr/HOCRPdfExporter.cc:600
+msgid "The PDF export failed: %1."
+msgstr "不能输出 PDF：%1。"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:661 ../qt/src/hocr/HOCRPdfExporter.cc:653
+msgid "The PDF library could not load the font '%1'."
+msgstr "PDF 库不支持所选择字体 '%1'。"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:935
+#: ../qt/src/hocr/OutputEditorHOCR.cc:796
+msgid "The file could not be opened: %1."
+msgstr "不能打开文件：%1。"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
+#: ../qt/src/hocr/OutputEditorHOCR.cc:803
+msgid "The file does not appear to contain valid hOCR HTML: %1"
+msgstr "此文件似乎并不包含有效的 hOCR HTML：%1"
+
+#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
 msgid ""
-"No tesseract languages are available for use. Recognition will not work."
-msgstr "没有可用的 tesseract 语言。辨认将会失败。"
-
-#: ../gtk/src/Recognizer.cc:255 ../qt/src/Recognizer.cc:252
-msgid "Multilingual"
-msgstr "多语言"
-
-#: ../gtk/src/Recognizer.cc:307 ../qt/src/Recognizer.cc:297
-msgid "Automatic page segmentation"
-msgstr "自动分割页面"
-
-#: ../gtk/src/Recognizer.cc:308 ../qt/src/Recognizer.cc:298
-msgid "Page segmentation with orientation and script detection"
-msgstr "分割页面并检测方向及文字"
-
-#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:299
-msgid "Assume single column of text"
-msgstr "假设只有一栏文字"
-
-#: ../gtk/src/Recognizer.cc:310 ../qt/src/Recognizer.cc:300
-msgid "Assume single block of vertically aligned text"
-msgstr "假设只有一段纵向对整的文字"
-
-#: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:301
-msgid "Assume a single uniform block of text"
-msgstr "假设只有一段均匀的文字"
-
-#: ../gtk/src/Recognizer.cc:312 ../qt/src/Recognizer.cc:302
-msgid "Assume a line of text"
-msgstr "假设只有一行文字"
-
-#: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:303
-msgid "Assume a single word"
-msgstr "假设只有一个字"
-
-#: ../gtk/src/Recognizer.cc:314 ../qt/src/Recognizer.cc:304
-msgid "Assume a single word in a circle"
-msgstr "假设是圆圈内的一个字"
-
-#: ../gtk/src/Recognizer.cc:315 ../qt/src/Recognizer.cc:305
-msgid "Sparse text in no particular order"
-msgstr "没有特定次序的稀疏文字"
-
-#: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:306
-msgid "Sparse text with orientation and script detection"
-msgstr "检测稀疏文字的方向及文字"
-
-#: ../gtk/src/Recognizer.cc:331 ../qt/src/Recognizer.cc:317
-msgid "Page segmentation mode"
-msgstr "分割页面模式"
-
-#: ../gtk/src/Recognizer.cc:337 ../qt/src/Recognizer.cc:324
-msgid "Manage languages..."
-msgstr "管理语言……"
-
-#: ../gtk/src/Recognizer.cc:393 ../qt/src/Recognizer.cc:384
-msgid "Current selection"
-msgstr "现有选择区"
-
-#: ../gtk/src/Recognizer.cc:471 ../qt/src/Recognizer.cc:463
-msgid "Recognizing page %1 (%2 of %3)"
-msgstr "辨认第 %1 页（%3 之 %2）"
-
-#: ../gtk/src/Recognizer.cc:476 ../qt/src/Recognizer.cc:469
-msgid ""
-"\n"
-"- Page %1: failed to render page"
+"The file might not be an image or be corrupt:\n"
+"%1"
 msgstr ""
+"该文件可能不是图像或已被损坏：\n"
+"%1"
+
+#: ../gtk/src/MainWindow.cc:582 ../qt/src/MainWindow.cc:571
+msgid ""
+"The following dictionaries could not be downloaded:\n"
+"%1\n"
 "\n"
-"- 第 %1 页：不能绘画页面"
+"Check the connectivity and directory permissions.\n"
+"Hint: If you don't have write permissions in system folders, you can switch "
+"to user paths in the settings dialog."
+msgstr ""
+"不能下载或删除下列词典：\n"
+"%1\n"
+"\n"
+"请检查连接及目录权限。\n"
+"提示：如果您在系统数据夹中没有写入权限，您可以在设置对话框中切换到用户路"
+"径。"
 
-#: ../gtk/src/Recognizer.cc:507 ../gtk/src/Recognizer.cc:536
-#: ../gtk/src/Recognizer.cc:549 ../qt/src/Recognizer.cc:499
-#: ../qt/src/Recognizer.cc:528 ../qt/src/Recognizer.cc:541
-msgid "Recognizing..."
-msgstr "辨认中……"
+#: ../gtk/src/MainWindow.cc:585
+msgid ""
+"The following dictionaries were installed:\n"
+"%1"
+msgstr ""
+"已安装下列词典：\n"
+"%1"
 
-#: ../gtk/src/Recognizer.cc:511 ../gtk/src/Recognizer.cc:519
-#: ../qt/src/Recognizer.cc:503 ../qt/src/Recognizer.cc:511
-msgid "Recognition errors occurred"
-msgstr "辨认时出现错误"
+#: ../qt/src/MainWindow.cc:574
+msgid "The following dictionary files were installed:%1"
+msgstr "已安装下列词典档：%1"
 
 #: ../gtk/src/Recognizer.cc:511 ../qt/src/Recognizer.cc:503
 msgid "The following errors occurred:%1"
 msgstr "出现下列错误：%1"
-
-#: ../gtk/src/Recognizer.cc:519 ../qt/src/Recognizer.cc:511
-msgid "Failed to initialize tesseract"
-msgstr "不能初始化 tesseract"
-
-#: ../gtk/src/scanner/ScannerSane.cc:84 ../gtk/src/scanner/ScannerTwain.cc:288
-#: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
-msgid "Scan canceled"
-msgstr "已取消扫描"
-
-#: ../gtk/src/scanner/ScannerSane.cc:159 ../gtk/src/scanner/ScannerTwain.cc:186
-#: ../qt/src/scanner/ScannerSane.cc:159 ../qt/src/scanner/ScannerTwain.cc:178
-msgid "No scanner specified"
-msgstr "未指定扫描器"
-
-#: ../gtk/src/scanner/ScannerSane.cc:168 ../gtk/src/scanner/ScannerTwain.cc:195
-#: ../qt/src/scanner/ScannerSane.cc:168 ../qt/src/scanner/ScannerTwain.cc:187
-msgid "Unable to connect to scanner"
-msgstr "不能连接至扫描器"
-
-#: ../gtk/src/scanner/ScannerSane.cc:403 ../gtk/src/scanner/ScannerTwain.cc:266
-#: ../gtk/src/scanner/ScannerTwain.cc:292 ../qt/src/scanner/ScannerSane.cc:403
-#: ../qt/src/scanner/ScannerTwain.cc:258 ../qt/src/scanner/ScannerTwain.cc:290
-msgid "Unable to start scan"
-msgstr "不能开始扫描"
-
-#: ../gtk/src/scanner/ScannerSane.cc:411 ../gtk/src/scanner/ScannerSane.cc:461
-#: ../gtk/src/scanner/ScannerTwain.cc:318 ../qt/src/scanner/ScannerSane.cc:411
-#: ../qt/src/scanner/ScannerSane.cc:461 ../qt/src/scanner/ScannerTwain.cc:316
-msgid "Error communicating with scanner"
-msgstr "与扫描器沟通出现错误"
-
-#: ../gtk/src/scanner/ScannerSane.cc:520 ../qt/src/scanner/ScannerSane.cc:517
-msgid "Failed to save image"
-msgstr "不能存储图像"
-
-#: ../gtk/src/scanner/ScannerSane.cc:800 ../qt/src/scanner/ScannerSane.cc:797
-#, fuzzy
-msgid "Operation is cancelled."
-msgstr "已取消扫描"
-
-#: ../gtk/src/scanner/ScannerSane.cc:802 ../qt/src/scanner/ScannerSane.cc:799
-msgid "Device is busy."
-msgstr ""
-
-#: ../gtk/src/scanner/ScannerSane.cc:804 ../qt/src/scanner/ScannerSane.cc:801
-msgid "Cover is opened."
-msgstr ""
-
-#: ../gtk/src/scanner/ScannerSane.cc:806 ../qt/src/scanner/ScannerSane.cc:803
-msgid "Document feeder jammed."
-msgstr ""
-
-#: ../gtk/src/scanner/ScannerSane.cc:808 ../qt/src/scanner/ScannerSane.cc:805
-msgid "Document feeder out of documents."
-msgstr ""
-
-#: ../gtk/src/scanner/ScannerSane.cc:810 ../qt/src/scanner/ScannerSane.cc:807
-#, fuzzy
-msgid "Access to scanner is denied."
-msgstr "未指定扫描器"
-
-#: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
-msgid "PDFs with text"
-msgstr ""
-
-#: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
-msgid ""
-"These PDF files already contain text:\n"
-"%1"
-msgstr ""
-
-#: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
-msgid "Unable to open files"
-msgstr "不能打开文件"
-
-#: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
-msgid "The following files could not be opened:%1"
-msgstr "不能打开下列文件：%1"
-
-#: ../gtk/src/SourceManager.cc:141 ../qt/src/SourceManager.cc:143
-msgid "Enter password for file '%1':"
-msgstr ""
-
-#: ../gtk/src/SourceManager.cc:197 ../qt/src/SourceManager.cc:214
-msgid "Images and PDFs"
-msgstr "图像与 PDF 档"
-
-#: ../gtk/src/SourceManager.cc:202 ../qt/src/SourceManager.cc:215
-msgid "Select Files"
-msgstr "选择文件"
-
-#: ../gtk/src/SourceManager.cc:208 ../qt/src/SourceManager.cc:226
-msgid "Clipboard Error"
-msgstr "剪贴板错误"
-
-#: ../gtk/src/SourceManager.cc:208 ../qt/src/SourceManager.cc:226
-msgid "Failed to read the clipboard."
-msgstr "不能读入剪贴板。"
-
-#: ../gtk/src/SourceManager.cc:212 ../qt/src/SourceManager.cc:230
-#: ../qt/src/SourceManager.cc:236
-msgid "Pasted %1"
-msgstr "已贴上 %1"
-
-#: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
-msgid "Screenshot Error"
-msgstr "画面截图错误"
-
-#: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
-msgid "Failed to take screenshot."
-msgstr "不能截取画面。"
-
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:247
-msgid "Screenshot %1"
-msgstr "截图 %1"
-
-#: ../gtk/src/SourceManager.cc:233 ../qt/src/SourceManager.cc:252
-msgid "Saving image..."
-msgstr "存储图像中……"
-
-#: ../gtk/src/SourceManager.cc:240 ../qt/src/SourceManager.cc:265
-msgid "Cannot Write File"
-msgstr "不能写入文件"
-
-#: ../gtk/src/SourceManager.cc:240 ../qt/src/SourceManager.cc:265
-msgid "Could not write to %1."
-msgstr "不能写进 %1。"
-
-#: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
-msgid "Delete File?"
-msgstr "删除文件？"
-
-#: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
-msgid "The following files will be deleted:%1"
-msgstr "下列文件将会被删除：%1"
-
-#: ../gtk/src/SourceManager.cc:332 ../qt/src/SourceManager.cc:338
-msgid "Missing File"
-msgstr "遗漏文件"
 
 #: ../gtk/src/SourceManager.cc:332 ../qt/src/SourceManager.cc:338
 msgid ""
@@ -1657,98 +1718,7 @@ msgstr ""
 "下列文件已被删除或删除：\n"
 "%1"
 
-#: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:73
-msgid "Search for"
-msgstr "寻找"
-
-#: ../gtk/src/SubstitutionsManager.cc:34 ../qt/src/SubstitutionsManager.cc:73
-msgid "Replace with"
-msgstr "取代"
-
-#: ../gtk/src/SubstitutionsManager.cc:69 ../gtk/src/SubstitutionsManager.cc:103
-#: ../qt/src/SubstitutionsManager.cc:106 ../qt/src/SubstitutionsManager.cc:143
-msgid "Substitutions List"
-msgstr "替换清单"
-
-#: ../gtk/src/SubstitutionsManager.cc:70 ../qt/src/SubstitutionsManager.cc:106
-msgid "Open Substitutions List"
-msgstr "开始替换清单"
-
-#: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
-msgid "Error Reading File"
-msgstr "读案错误"
-
-#: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
-msgid "Unable to read '%1'."
-msgstr "不能读入 '%1'。"
-
-#: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
-msgid "Errors Occurred Reading File"
-msgstr "读入文件时出现错误"
-
-#: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
-msgid "Some entries of the substitutions list could not be read."
-msgstr "不能读入替换清单内某些项目。"
-
-#: ../gtk/src/SubstitutionsManager.cc:104 ../qt/src/SubstitutionsManager.cc:143
-msgid "Save Substitutions List"
-msgstr "存储替换清单"
-
-#: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
-msgid "Error Saving File"
-msgstr "存档错误"
-
-#: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
-msgid "Unable to write to '%1'."
-msgstr "不能写进 '%1'。"
-
-#: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
-msgid "Save List?"
-msgstr "存储清单？"
-
-#: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
-msgid "Do you want to save the current list?"
-msgstr "是否需要存储现有清单？"
-
-#: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:74
-msgid ""
-"PackageKit is required for managing system-wide tesseract language packs, "
-"but it was not found. Please use the system package management software to "
-"manage the tesseract language packs, or switch to use the user tessdata path "
-"in the configuration dialog."
-msgstr ""
-"管理 tesseract 的系统语言包须要 PackageKit，但它并不存在。请利用系统的组件管"
-"理软件来管理 tesseract 的语言包，或改用设置页面内的 tessdata 用户路径。"
-
-#: ../gtk/src/TessdataManager.cc:64 ../qt/src/TessdataManager.cc:79
-msgid "Fetching available languages"
-msgstr "取得可用语言"
-
-#: ../gtk/src/TessdataManager.cc:69 ../gtk/src/TessdataManager.cc:95
-#: ../gtk/src/TessdataManager.cc:180 ../qt/src/TessdataManager.cc:84
-#: ../qt/src/TessdataManager.cc:101 ../qt/src/TessdataManager.cc:185
-msgid "Failed to fetch list of available languages: %1"
-msgstr "不能取得可用语言的清单：%1"
-
-#: ../gtk/src/TessdataManager.cc:106 ../qt/src/TessdataManager.cc:112
-#: ../qt/src/TessdataManager.cc:121
-msgid "Parsing error: %1"
-msgstr "分析错误：%1"
-
-#: ../gtk/src/TessdataManager.cc:214 ../qt/src/TessdataManager.cc:215
-msgid "Applying changes..."
-msgstr "正在套用改动……"
-
-#: ../gtk/src/TessdataManager.cc:275 ../qt/src/TessdataManager.cc:260
-msgid "Failed to create directory for tessdata files."
-msgstr "不能为 tessdata 档创建目录"
-
-#: ../gtk/src/TessdataManager.cc:284 ../qt/src/TessdataManager.cc:268
-msgid "Downloading %1..."
-msgstr "正在下载 %1……"
-
 #: ../gtk/src/TessdataManager.cc:304
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1761,90 +1731,168 @@ msgstr ""
 "不能下载或删除下列文件：\n"
 "%1\n"
 "\n"
-"请检查连接及目录权限。"
+"请检查连接及目录权限。\n"
+"\n"
+"提示：如果您在系统数据夹中没有写入权限，您可以在设置对话框中切换到用户路"
+"径。"
 
-#: ../gtk/src/Utils.cc:64
-msgid "Yes"
-msgstr "是"
-
-#: ../gtk/src/Utils.cc:67
-msgid "No"
-msgstr "否"
-
-#: ../gtk/src/Utils.cc:76
-msgid "Discard"
-msgstr "弃置"
-
-#: ../qt/data/AboutDialog.ui.h:1
-msgid "About gImageReader"
-msgstr "有关 gImageReader"
-
-#: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
+#: ../qt/src/TessdataManager.cc:290
 msgid ""
-"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
-"p><p>&nbsp;</p></body></html>"
+"The following files could not be downloaded or removed:\n"
+"%1\n"
+"\n"
+"Check the connectivity and directory permissions.\n"
+"Hint: If you don't have write permissions in system folders, you can switch "
+"to user paths in the settings dialog."
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr 的图像界面</p><p><a href="
-"\"https://github.com/manisandro/gImageReader/\">网站</a></p><p>&nbsp;</p></"
-"body></html>"
+"不能下载或删除下列文件：\n"
+"%1\n"
+"\n"
+"请检查连接及目录权限。\n"
+"提示：如果您在系统数据夹中没有写入权限，您可以在设置对话框中切换到用户路"
+"径。"
 
-#: ../qt/data/AboutDialog.ui.h:4
-msgid "Credits"
-msgstr "归功于"
+#: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
+msgid "The following files could not be opened:%1"
+msgstr "不能打开下列文件：%1"
 
-#: ../qt/data/AboutDialog.ui.h:5
-msgid "License"
-msgstr "条款"
+#: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
+msgid "The following files will be deleted:%1"
+msgstr "下列文件将会被删除：%1"
 
-#: ../qt/data/ConfigDialog.ui.h:14
-msgid "System encoding"
-msgstr "系统编码"
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:435
+#: ../qt/src/hocr/OutputEditorHOCR.cc:317
+msgid ""
+"The following pages could not be processed:\n"
+"%1"
+msgstr ""
+"不能处理下列页面：\n"
+"%1"
+
+#: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:24
+msgid "The name of the language"
+msgstr "语言名称"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:560 ../qt/src/hocr/HOCRPdfExporter.cc:553
+msgid "The operation was cancelled"
+msgstr "已取消操作"
+
+#: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
+msgid "The prefix of the tesseract language data file"
+msgstr "tesseract 语言数据档的前缀"
+
+#: ../gtk/src/MainWindow.cc:475 ../qt/src/MainWindow.cc:474
+msgid "The spellcheck dictionary for %1 is not installed"
+msgstr "未安装 %1 的拼写词典"
+
+#: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCRTextExporter.cc:47
+msgid "The text export failed: unable to write output file."
+msgstr "不能输出文本：不能创建输出档。"
+
+#: ../gtk/src/CrashHandler.cc:43 ../qt/src/CrashHandler.cc:31
+msgid "There was no unsaved work."
+msgstr "没有未存储的工作。"
+
+#: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
+msgid ""
+"These PDF files already contain text:\n"
+"%1"
+msgstr ""
+"这些 PDF 档已包含文字：\n"
+"%1"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:328 ../qt/src/hocr/HOCRPdfExporter.cc:355
+msgid "Threshold (closest color)"
+msgstr "定限（最接近颜色）"
+
+#: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:36
+msgid "Title:"
+msgstr "名称："
+
+#: ../qt/data/MainWindow.ui.h:38
+msgid "Toggle Output Pane"
+msgstr "切换输出面板"
+
+#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
+msgid "Toggle output pane"
+msgstr "切换输出面板"
+
+#: ../gtk/src/Acquirer.cc:172 ../qt/src/Acquirer.cc:158
+msgid "Transferring data..."
+msgstr "转输数据……"
 
 #: ../qt/data/ConfigDialog.ui.h:15
 msgid "UTF-8"
 msgstr ""
 
-#: ../qt/data/ConfigDialog.ui.h:19
-msgid "Text file encoding:"
-msgstr "文本编码："
+#: ../gtk/src/scanner/ScannerSane.cc:168 ../gtk/src/scanner/ScannerTwain.cc:195
+#: ../qt/src/scanner/ScannerSane.cc:168 ../qt/src/scanner/ScannerTwain.cc:187
+msgid "Unable to connect to scanner"
+msgstr "不能连接至扫描器"
 
-#: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
-msgid ""
-"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
-"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
-"application, please consider reporting the issue to <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Please try to describe what you were doing before the application "
-"crashed. Also, include the information below. Thank you.</p></body></html>"
-msgstr ""
-"我们为带来的不便而道歉。如你有意改善此程序，请考虑将问题汇报给<a href="
-"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>。请尝试描述你在程序终止前所做的事情。另外，请一并"
-"附上下列数据。谢谢。"
+#: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
+msgid "Unable to open files"
+msgstr "不能打开文件"
 
-#: ../qt/data/MainWindow.ui.h:17
-msgid "Flatbed"
-msgstr ""
+#: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
+msgid "Unable to read '%1'."
+msgstr "不能读入 '%1'。"
 
-#: ../qt/data/MainWindow.ui.h:18
-msgid "ADF Front"
-msgstr ""
+#: ../gtk/src/scanner/ScannerSane.cc:403 ../gtk/src/scanner/ScannerTwain.cc:266
+#: ../gtk/src/scanner/ScannerTwain.cc:292 ../qt/src/scanner/ScannerSane.cc:403
+#: ../qt/src/scanner/ScannerTwain.cc:258 ../qt/src/scanner/ScannerTwain.cc:290
+msgid "Unable to start scan"
+msgstr "不能开始扫描"
 
-#: ../qt/data/MainWindow.ui.h:19
-msgid "ADF Back"
-msgstr ""
+#: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
+msgid "Unable to write to '%1'."
+msgstr "不能写进 '%1'。"
 
-#: ../qt/data/MainWindow.ui.h:20
-msgid "ADF Duplex"
-msgstr ""
+#: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:109
+#: ../qt/src/Ui_OutputEditorText.hh:110
+msgid "Undo"
+msgstr "恢复"
 
-#. Remove & from some labels which designer insists in adding
-#: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
-msgid "Sources"
-msgstr "来源"
+#: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
+msgid "Uniformize line and word spacing"
+msgstr "统一行距及字距"
+
+#: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
+msgid "User paths"
+msgstr "用户路径"
+
+#: ../gtk/src/MainWindow.cc:123 ../qt/src/MainWindow.cc:287
+msgid "Using tesseract"
+msgstr "采用 tesseract"
+
+#: ../gtk/data/ConfigDialog.ui.h:6
+msgid "Vertical"
+msgstr "纵向"
+
+#: ../gtk/data/OutputEditorText.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:76
+msgid "Visual aids"
+msgstr "视觉辅助"
+
+#: ../gtk/data/PdfExportDialog.ui.h:23 ../qt/data/PdfExportDialog.ui.h:11
+msgid "Width"
+msgstr "阔度"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:278
+#: ../qt/src/hocr/OutputEditorHOCR.cc:233
+msgid "Word"
+msgstr "字词"
+
+#: ../gtk/src/Utils.cc:64
+msgid "Yes"
+msgstr "是"
+
+#: ../gtk/src/CrashHandler.cc:41 ../qt/src/CrashHandler.cc:29
+msgid "Your work has been saved under <b>%1</b>."
+msgstr "你的工作已存储于 <b>%1</b>。"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:340 ../qt/src/hocr/HOCRPdfExporter.cc:357
+msgid "Zip (lossless)"
+msgstr "Zip（无损）"
 
 #: ../qt/data/MainWindow.ui.h:22
 msgid "Zoom In"
@@ -1854,167 +1902,58 @@ msgstr "放大"
 msgid "Zoom Out"
 msgstr "缩小"
 
-#: ../qt/data/MainWindow.ui.h:26
-msgid "Normal Size"
-msgstr "正常尺寸"
+#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:23
+msgid "Zoom in"
+msgstr "放大"
 
-#: ../qt/data/MainWindow.ui.h:28
-msgid "Best Fit"
-msgstr "最佳尺寸"
+#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:25
+msgid "Zoom out"
+msgstr "缩小"
 
-#: ../qt/data/MainWindow.ui.h:30
-msgid "Rotate Left"
-msgstr "向左旋转"
+#: ../gtk/data/PdfExportDialog.ui.h:20 ../qt/data/PdfExportDialog.ui.h:24
+msgid "characters"
+msgstr "字符"
 
-#: ../qt/data/MainWindow.ui.h:31
-msgid "Rotate left"
-msgstr "向左旋转"
-
-#: ../qt/data/MainWindow.ui.h:32
-msgid "Rotate Right"
-msgstr "向右旋转"
-
-#: ../qt/data/MainWindow.ui.h:33
-msgid "Rotate right"
-msgstr "向右旋转"
-
-#: ../qt/data/MainWindow.ui.h:34
-msgid "Image Controls"
-msgstr "图像控制"
-
-#: ../qt/data/MainWindow.ui.h:36
-msgid "Autodetect Layout"
-msgstr "自动检测布局"
-
-#: ../qt/data/MainWindow.ui.h:38
-msgid "Toggle Output Pane"
-msgstr "切换输出面板"
-
-#: ../qt/data/PdfExportDialog.ui.h:5
-msgid "Backend:"
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:362
+msgid "cm"
 msgstr ""
 
-#: ../qt/data/PdfExportDialog.ui.h:6
-msgid "Portrait"
+#: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:410
+msgid "gImageReader %1 is available"
+msgstr "gImageReader %1 已面世"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:925
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:964
+#: ../qt/src/hocr/OutputEditorHOCR.cc:789
+#: ../qt/src/hocr/OutputEditorHOCR.cc:826
+msgid "hOCR HTML Files"
+msgstr "hOCR HTML 档"
+
+#: ../gtk/data/MainWindow.ui.h:35 ../qt/src/Ui_MainWindow.hh:138
+msgid "hOCR, PDF"
+msgstr "hOCR、PDF"
+
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:363
+msgid "in"
+msgstr "在"
+
+#: ../gtk/src/hocr/HOCROdtExporter.cc:65 ../gtk/src/hocr/HOCRPdfExporter.cc:491
+#: ../gtk/src/hocr/HOCRTextExporter.cc:34
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:962 ../gtk/src/OutputEditorText.cc:272
+#: ../qt/src/hocr/HOCROdtExporter.cc:50 ../qt/src/hocr/HOCRPdfExporter.cc:480
+#: ../qt/src/hocr/HOCRTextExporter.cc:36 ../qt/src/hocr/OutputEditorHOCR.cc:824
+#: ../qt/src/OutputEditorText.cc:238
+msgid "output"
+msgstr "输出"
+
+#: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
+msgid "pt"
 msgstr ""
 
-#: ../qt/data/PdfExportDialog.ui.h:7
-msgid "Landscape"
+#: ../gtk/src/Acquirer.cc:79 ../qt/src/Acquirer.cc:70
+msgid "scan.png"
 msgstr ""
 
-#: ../qt/src/hocr/HOCRPdfExporter.cc:142
-#, fuzzy
-msgid "Failed to write to file"
-msgstr "不能打开文件"
-
-#. Output toolbar
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:56
-msgid "Open hOCR file"
-msgstr "打开 hOCR 档"
-
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:57
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:58
-msgid "Save as hOCR text"
-msgstr "存储为 hOCR 文字"
-
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:79
-#: ../qt/src/Ui_OutputEditorText.hh:106
-msgid "Find and Replace"
-msgstr "寻找及取代"
-
-#: ../qt/src/MainWindow.cc:541
-msgid "Could not read %1: %2"
-msgstr "不能读入 %1：%2。"
-
-#: ../qt/src/MainWindow.cc:574
-msgid "The following dictionary files were installed:%1"
-msgstr "已安装下列词典档：%1"
-
-#: ../qt/src/TessdataManager.cc:290
-#, fuzzy
-msgid ""
-"The following files could not be downloaded or removed:\n"
-"%1\n"
-"\n"
-"Check the connectivity and directory permissions.\n"
-"Hint: If you don't have write permissions in system folders, you can switch "
-"to user paths in the settings dialog."
+#: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
+msgid "selection.png"
 msgstr ""
-"不能下载或删除下列文件：\n"
-"%1\n"
-"\n"
-"请检查连接及目录权限。"
-
-#: ../qt/src/Ui_MainWindow.hh:51
-msgid "Output"
-msgstr "输出："
-
-#: ../qt/src/Ui_MainWindow.hh:134
-msgid "OCR mode:"
-msgstr "OCR 模式："
-
-#: ../qt/src/Ui_MainWindow.hh:208
-msgid "Remove Image"
-msgstr "删除图像"
-
-#: ../qt/src/Ui_MainWindow.hh:211
-msgid "Delete Image"
-msgstr "删除图像"
-
-#: ../qt/src/Ui_MainWindow.hh:214
-msgid "Clear List"
-msgstr "清除清单"
-
-#: ../qt/src/Ui_OutputEditorText.hh:101
-msgid "Strip Line Breaks"
-msgstr "去除换行符号"
-
-#: ../qt/src/Ui_OutputEditorText.hh:115
-msgid "Save Output"
-msgstr "存储输出"
-
-#: ../qt/src/Ui_OutputEditorText.hh:117
-msgid "Clear Output"
-msgstr "清除输出"
-
-#, fuzzy
-#~ msgid ""
-#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
-#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
-#~ "application, please consider reporting the issue to &lt;a href=&quot;"
-#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
-#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
-#~ "doing before the application crashed. Also, include the information "
-#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
-#~ msgstr ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">此应用程序已异常终"
-#~ "止</span><p><p>我们为带来的不便而道歉。如你有意改善此程序，请考虑将问题汇"
-#~ "报给<a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-#~ "\">manisandro@gmail.com</a>。请尝试描述你在程序终止前所做的事情。另外，请"
-#~ "一并附上下列数据。谢谢。</p></body></html>"
-
-#, fuzzy
-#~ msgid ""
-#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-#~ msgstr "<small><b>例如：</b> 1-10, 13, 14-18</small>"
-
-#~ msgid "Document font:"
-#~ msgstr "文件字体："
-
-#~ msgid "Scale:"
-#~ msgstr "缩放:"
-
-#~ msgid "Document"
-#~ msgstr "文件"
-
-#~ msgid "Errors occurred"
-#~ msgstr "发生错误"
-
-#~ msgid ""
-#~ "The following pages could not be rendered:\n"
-#~ "%1"
-#~ msgstr ""
-#~ "不能绘画下列页面：\n"
-#~ "%1"

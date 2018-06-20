@@ -38,6 +38,7 @@ void TessdataManager::exec() {
 
 TessdataManager::TessdataManager() {
 	ui.setupUi();
+	ui.dialogTessdatamanager->set_transient_for(*MAIN->getWindow());
 
 	m_languageListStore = Gtk::ListStore::create(m_viewCols);
 	ui.treeview->set_model(m_languageListStore);
@@ -85,7 +86,7 @@ void TessdataManager::run() {
 bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 	m_languageListStore->clear();
 
-#if TESSERACT_VERSION >= MAKE_VERSION(4, 0, 0)
+#if TESSERACT_VERSION >= TESSERACT_MAKE_VERSION(4, 0, 0)
 	std::string url("https://api.github.com/repos/tesseract-ocr/tessdata_fast/tags");
 #else
 	std::string url("https://api.github.com/repos/tesseract-ocr/tessdata/tags");
@@ -96,9 +97,6 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 		return false;
 	}
 
-	Glib::ustring tessdataVer;
-	Glib::ustring tessVer(TESSERACT_VERSION_STR);
-
 	JsonParser* parser = json_parser_new();
 	GError* parserError = nullptr;
 	json_parser_load_from_data(parser, reinterpret_cast<gchar*>(data->get_data()), data->size(), &parserError);
@@ -107,6 +105,11 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 		g_object_unref(parser);
 		return false;
 	}
+
+	Glib::ustring tessdataVer;
+	int bestMatchDist = std::numeric_limits<int>::max();
+	static const Glib::RefPtr<Glib::Regex> verRegEx = Glib::Regex::create("^[vV]?(\\d+).(\\d+).(\\d+)-?(\\w?.*)$");
+
 	JsonNode* root = json_parser_get_root(parser);
 	JsonArray* array = json_node_get_array(root);
 	GList* elementArray = json_array_get_elements(array);
@@ -114,8 +117,14 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 		JsonNode* value = static_cast<JsonNode*>(l->data);
 		JsonObject* tagObj = json_node_get_object(value);
 		Glib::ustring tag = json_object_get_string_member(tagObj, "name");
-		if(tag <= tessVer && tag > tessdataVer) {
-			tessdataVer = tag;
+		Glib::MatchInfo matchInfo;
+		if(verRegEx->match(tag, matchInfo)) {
+			int tagVer = TESSERACT_MAKE_VERSION(std::atoi(matchInfo.fetch(1).c_str()), std::atoi(matchInfo.fetch(2).c_str()), std::atoi(matchInfo.fetch(3).c_str()));
+			int dist = TESSERACT_VERSION - tagVer;
+			if(dist >= 0 && dist < bestMatchDist) {
+				bestMatchDist = dist;
+				tessdataVer = tag;
+			}
 		}
 	}
 	g_list_free(elementArray);
@@ -123,7 +132,7 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 
 	std::vector<std::pair<Glib::ustring, Glib::ustring>> extraFiles;
 	std::vector<std::string> dataUrls;
-#if TESSERACT_VERSION >= MAKE_VERSION(4, 0, 0)
+#if TESSERACT_VERSION >= TESSERACT_MAKE_VERSION(4, 0, 0)
 	dataUrls.push_back(std::string("https://api.github.com/repos/tesseract-ocr/tessdata_fast/contents?ref=" + tessdataVer));
 	dataUrls.push_back(std::string("https://api.github.com/repos/tesseract-ocr/tessdata_fast/contents/script?ref=" + tessdataVer));
 #else
@@ -150,18 +159,23 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 		for(GList* l = elementArray; l; l = l->next) {
 			JsonNode* value = static_cast<JsonNode*>(l->data);
 			JsonObject* treeObj = json_node_get_object(value);
-			Glib::ustring name = json_object_get_string_member(treeObj, "name");
+			Glib::ustring fileName = json_object_get_string_member(treeObj, "name");
 			Glib::ustring url = json_object_get_string_member(treeObj, "download_url");
-			if(name.length() > 12 && name.compare(name.length() - 12, name.npos, "traineddata")) {
-				Glib::ustring key = name.substr(0, name.find("."));
-				auto it = m_languageFiles.find(key);
+			Glib::ustring subdir;
+			// If filename starts with upper case letter, it is a script
+			if(fileName.substr(0, 1).uppercase() == fileName.substr(0, 1)) {
+				subdir = "script/";
+			}
+			if(fileName.length() > 12 && fileName.compare(fileName.length() - 12, fileName.npos, "traineddata")) {
+				Glib::ustring prefix = subdir + fileName.substr(0, fileName.find("."));
+				auto it = m_languageFiles.find(prefix);
 				if(it == m_languageFiles.end()) {
-					it = m_languageFiles.insert(std::make_pair(key, std::vector<LangFile>())).first;
+					it = m_languageFiles.insert(std::make_pair(prefix, std::vector<LangFile>())).first;
 				}
-				it->second.push_back({name, url});
+				it->second.push_back({subdir + fileName, url});
 			} else {
 				// Delay decision to determine whether file is a supplementary language file
-				extraFiles.push_back(std::make_pair(name, url));
+				extraFiles.push_back(std::make_pair(subdir + fileName, url));
 			}
 		}
 		g_list_free(elementArray);
@@ -186,26 +200,30 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 	for(auto it : m_languageFiles) {
 		languages.push_back(it.first);
 	}
-	std::sort(languages.begin(), languages.end());
+	std::sort(languages.begin(), languages.end(), [](const Glib::ustring & s1, const Glib::ustring & s2) {
+		bool s1Script = s1.substr(0, 6) == "script" || s1.substr(0, 1) == s1.substr(0, 1).uppercase();
+		bool s2Script = s2.substr(0, 6) == "script" || s2.substr(0, 1) == s2.substr(0, 1).uppercase();
+		if(s1Script != s2Script) {
+			return !s1Script;
+		} else {
+			return s1 < s2;
+		}
+	});
 
 	for(const Glib::ustring& prefix : languages) {
 		Config::Lang lang;
 		lang.prefix = prefix;
 		Glib::ustring label;
 		if(MAIN->getConfig()->searchLangSpec(lang)) {
-			if(lang.prefix.substr(0, 6).lowercase() == "script" || lang.prefix.substr(0, 1) == lang.prefix.substr(0, 1).uppercase()) {
-				label = lang.name;
-			} else {
-				label = Glib::ustring::compose("%1 (%2)", lang.name, lang.prefix);
-			}
+			label = lang.name;
 		} else {
 			label = lang.prefix;
 		}
 		Gtk::TreeIter it = m_languageListStore->append();
-		bool installed = std::find(availableLanguages.begin(), availableLanguages.end(), prefix) != availableLanguages.end();
+		bool installed = std::find(availableLanguages.begin(), availableLanguages.end(), lang.prefix) != availableLanguages.end();
 		(*it)[m_viewCols.selected] = installed;
 		(*it)[m_viewCols.label] = label;
-		(*it)[m_viewCols.prefix] = prefix;
+		(*it)[m_viewCols.prefix] = lang.prefix;
 	}
 	return true;
 }
@@ -264,7 +282,8 @@ void TessdataManager::applyChanges() {
 #endif
 	} else {
 		Glib::ustring errors;
-		Glib::RefPtr<Gio::File> tessDataDir = Gio::File::create_for_path(tessDataPath);
+		std::string scriptPath = Glib::build_filename(tessDataPath, "script");
+		Glib::RefPtr<Gio::File> tessDataDir = Gio::File::create_for_path(scriptPath);
 		bool dirExists = false;
 		try {
 			dirExists = tessDataDir->make_directory_with_parents();
@@ -293,9 +312,13 @@ void TessdataManager::applyChanges() {
 						MAIN->popState();
 					}
 				} else if(!selected && installed) {
-					for(const std::string& file : Glib::Dir(tessDataPath)) {
-						if(file.size() > 4 && file.compare(0, 4, prefix + ".") == 0) {
-							Gio::File::create_for_path(Glib::build_filename(tessDataPath, file))->remove();
+					auto it = m_languageFiles.find(prefix);
+					if(it != m_languageFiles.end()) {
+						for(const LangFile& langFile : it->second) {
+							Glib::RefPtr<Gio::File> file = Gio::File::create_for_path(Glib::build_filename(tessDataPath, langFile.name));
+							if(file->query_exists() && !file->remove()) {
+								errors.append(langFile.name);
+							}
 						}
 					}
 				}

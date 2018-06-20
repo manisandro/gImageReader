@@ -93,7 +93,7 @@ Config::Config(QWidget* parent)
 }
 
 bool Config::searchLangSpec(Lang& lang) const {
-	// Tesseract 4.0.0-beta.1 and previous had Script tessdatas on same level as language tessdatas, but they are distinguishable in that they begin with an upper case character
+	// Tesseract 4.x up to beta.1 had script tessdatas on same level as language tessdatas, but they are distinguishable in that they begin with an upper case character
 	if(lang.prefix.startsWith("script", Qt::CaseInsensitive) || lang.prefix.left(1).toUpper() == lang.prefix.left(1)) {
 		QString name = lang.prefix.startsWith("script", Qt::CaseInsensitive) ? lang.prefix.mid(7) : lang.prefix;
 		lang.name = QString("%1 [%2]").arg(name).arg(_("Script"));
@@ -176,11 +176,11 @@ void Config::setDataLocations(int idx) {
 		qputenv("TESSDATA_PREFIX", configDir.absoluteFilePath("tessdata").toLocal8Bit());
 		ui.lineEditSpellLocation->setText(configDir.absoluteFilePath("enchant/myspell"));
 	}
+	QByteArray current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
 	tesseract::TessBaseAPI tess;
-	QByteArray current = setlocale(LC_NUMERIC, NULL);
-	setlocale(LC_NUMERIC, "C");
 	tess.Init(nullptr, nullptr);
-	setlocale(LC_NUMERIC, current.constData());
+	setlocale(LC_ALL, current.constData());
 	ui.lineEditTessdataLocation->setText(QString(tess.GetDatapath()));
 }
 

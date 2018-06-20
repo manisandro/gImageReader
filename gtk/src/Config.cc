@@ -95,9 +95,10 @@ Config::Config() {
 }
 
 bool Config::searchLangSpec(Lang& lang) const {
-	// Tesseract 4.0.0-beta.1 and previous had Script tessdatas on same level as language tessdatas, but they are distinguishable in that they begin with an upper case character
+	// Tesseract 4.x up to beta.1 had script tessdatas on same level as language tessdatas, but they are distinguishable in that they begin with an upper case character
 	if(lang.prefix.substr(0, 6).lowercase() == "script" || lang.prefix.substr(0, 1).uppercase() == lang.prefix.substr(0, 1)) {
-		lang.name = Glib::ustring::compose("%1 (%2)", lang.prefix.substr(7), _("Script"));
+		Glib::ustring name = lang.prefix.substr(0, 6).lowercase() == "script" ? lang.prefix.substr(7) : lang.prefix;
+		lang.name = Glib::ustring::compose("%1 [%2]", name, _("Script"));
 		return true;
 	}
 	for(const Glib::RefPtr<Gtk::TreeModel>& model : {
@@ -108,7 +109,7 @@ bool Config::searchLangSpec(Lang& lang) const {
 			return row[m_langViewCols.prefix] == lang.prefix;
 		});
 		if(it) {
-			lang = {(*it)[m_langViewCols.prefix], (*it)[m_langViewCols.code], (*it)[m_langViewCols.name]};
+			lang = {lang.prefix, (*it)[m_langViewCols.code], Glib::ustring::compose("%1 [%2]", (*it)[m_langViewCols.name], lang.prefix)};
 			return true;
 		}
 	}
@@ -162,11 +163,11 @@ void Config::setDataLocations(int idx) {
 		Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(configDir, "tessdata"));
 		ui.entrySpelldir->set_text(Glib::build_filename(configDir, "enchant", "myspell"));
 	}
+	std::string current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
 	tesseract::TessBaseAPI tess;
-	std::string current = setlocale(LC_NUMERIC, NULL);
-	setlocale(LC_NUMERIC, "C");
 	tess.Init(nullptr, nullptr);
-	setlocale(LC_NUMERIC, current.c_str());
+	setlocale(LC_ALL, current.c_str());
 	ui.entryTessdatadir->set_text(tess.GetDatapath());
 }
 

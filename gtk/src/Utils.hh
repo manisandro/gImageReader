@@ -26,6 +26,12 @@
 #include <type_traits>
 #include <utility>
 
+#ifdef MAKE_VERSION
+#define TESSERACT_MAKE_VERSION(maj,min,patch) MAKE_VERSION((maj),(min),(patch))
+#else
+#define TESSERACT_MAKE_VERSION(maj,min,patch) ((maj) << 16 | (min) << 8 | (patch))
+#endif
+
 namespace tesseract {
 class TessBaseAPI;
 }

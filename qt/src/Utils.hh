@@ -31,6 +31,12 @@ class QSpinBox;
 class QDoubleSpinBox;
 class QUrl;
 
+#ifdef MAKE_VERSION
+#define TESSERACT_MAKE_VERSION(maj,min,patch) MAKE_VERSION((maj),(min),(patch))
+#else
+#define TESSERACT_MAKE_VERSION(maj,min,patch) ((maj) << 16 | (min) << 8 | (patch))
+#endif
+
 namespace Utils {
 QString documentsFolder();
 QString makeOutputFilename(const QString& filename);

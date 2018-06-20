@@ -102,8 +102,7 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 }
 
 QStringList Recognizer::getAvailableLanguages() const {
-	tesseract::TessBaseAPI tess;
-	initTesseract(tess);
+	tesseract::TessBaseAPI tess = initTesseract();
 	GenericVector<STRING> availLanguages;
 	tess.GetAvailableLanguagesAsVector(&availLanguages);
 	QStringList result;
@@ -148,9 +147,10 @@ static void tessCrashHandler(int /*signal*/) {
 	longjmp(g_restore_point, SIGSEGV);
 }
 
-bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* language) const {
-	QByteArray current = setlocale(LC_NUMERIC, NULL);
-	setlocale(LC_NUMERIC, "C");
+tesseract::TessBaseAPI Recognizer::initTesseract(const char* language, bool* ok) const {
+	QByteArray current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
+	tesseract::TessBaseAPI tess;
 	// unfortunately tesseract creates deliberate segfaults when an error occurs
 	std::signal(SIGSEGV, tessCrashHandler);
 	pipe(g_pipe);
@@ -170,7 +170,10 @@ bool Recognizer::initTesseract(tesseract::TessBaseAPI& tess, const char* languag
 
 	close(g_pipe[0]);
 	close(g_pipe[1]);
-	return ret != -1;
+	if(ok) {
+		*ok = ret != -1;
+	}
+	return tess;
 }
 
 void Recognizer::updateLanguagesMenu() {
@@ -452,10 +455,11 @@ void Recognizer::recognizeMultiplePages() {
 }
 
 void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
-	tesseract::TessBaseAPI tess;
 	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
 	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
-	if(initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())) {
+	bool ok = false;
+	tesseract::TessBaseAPI tess = initTesseract(m_curLang.prefix.toLocal8Bit().constData(), &ok);
+	if(ok) {
 		QString failed;
 		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_psmCheckGroup->checkedAction()->data().toInt()));
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(tess);
@@ -514,8 +518,9 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 }
 
 bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
-	tesseract::TessBaseAPI tess;
-	if(!initTesseract(tess, m_curLang.prefix.toLocal8Bit().constData())) {
+	bool ok = false;
+	tesseract::TessBaseAPI tess = initTesseract(m_curLang.prefix.toLocal8Bit().constData(), &ok);
+	if(!ok) {
 		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 		return false;
 	}

@@ -156,8 +156,11 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 
 	// Perform layout analysis
 	Utils::busyTask([this, &nDeskew, &avgDeskew, &rects, &img] {
+		std::string current = setlocale(LC_ALL, NULL);
+		setlocale(LC_ALL, "C");
 		tesseract::TessBaseAPI tess;
 		tess.InitForAnalysePage();
+		setlocale(LC_ALL, current.c_str());
 		tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
 		tess.SetImage(img->get_data(), img->get_width(), img->get_height(), 4, 4 * img->get_width());
 		tesseract::PageIterator* it = tess.AnalyseLayout();
@@ -230,7 +233,7 @@ void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
 			loop->quit();
 			MAIN->getRecognizer()->recognizeImage(displayer()->getImage(rect()), Recognizer::OutputDestination::Buffer);
 		}),
-		CONNECT(ui.buttonSelectionRecognize, clicked, [&]{
+		CONNECT(ui.buttonSelectionClipboard, clicked, [&]{
 			loop->quit();
 			MAIN->getRecognizer()->recognizeImage(displayer()->getImage(rect()), Recognizer::OutputDestination::Clipboard);
 		}),
