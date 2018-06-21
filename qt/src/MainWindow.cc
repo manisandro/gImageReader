@@ -476,8 +476,7 @@ void MainWindow::languageChanged(const Config::Lang& lang) {
 }
 
 void MainWindow::dictionaryAutoinstall() {
-	QList<QString> codes = m_config->searchLangCultures(m_recognizer->getSelectedLanguage().code);
-	QString code = codes.isEmpty() ? m_recognizer->getSelectedLanguage().code : codes.front();
+	QString code = m_recognizer->getSelectedLanguage().code;
 	pushState(State::Busy, _("Installing spelling dictionary for '%1'").arg(code));
 #ifdef Q_OS_WIN
 	bool isWindows = true;
@@ -515,63 +514,62 @@ void MainWindow::dictionaryAutoinstall() {
 			}
 			return;
 		}
-		QString urlcode = code;
 		QString messages;
-		QByteArray html = Utils::download(url, messages);
-		if(html.isNull()) {
+		QString html = QString(Utils::download(url, messages));
+		if(html.isEmpty()) {
 			popState();
 			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2.").arg(url).arg(messages), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 			return;
-		} else if(html.indexOf(QString(">%1<").arg(code)) != -1) {
-			// Ok
-		} else if(html.indexOf(QString(">%1<").arg(code.left(2))) != -1) {
-			urlcode = code.left(2);
-		} else {
-			popState();
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
-				showHelp("#InstallSpelling");
-			}
-			return;
 		}
-		html = Utils::download(url + urlcode + "/", messages);
-		if(html.isNull()) {
-			popState();
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2").arg(url + urlcode + "/").arg(messages), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
-				showHelp("#InstallSpelling");
-			}
-			return;
-		}
-		QRegExp pat(QString(">(%1[^<]*\\.(dic|aff))<").arg(code.left(2)));
-		QString htmls = html;
-
+		int pos = 0;
+		QString langCode = code.left(code.indexOf('_'));
+		QRegExp langPat(QString(">(%1_?[A-Z]*)<").arg(langCode));
+		QRegExp dictPat(QString(">(%1_?[\\w_]*\\.(dic|aff))<").arg(langCode));
 		QStringList downloaded;
 		QStringList failed;
-		int pos = 0;
-		while((pos = htmls.indexOf(pat, pos)) != -1) {
-			pushState(State::Busy, _("Downloading '%1'...").arg(pat.cap(1)));
-			QByteArray data = Utils::download(plainurl + urlcode + "/" + pat.cap(1), messages);
-			if(!data.isNull()) {
-				QFile file(spellingDir.absoluteFilePath(pat.cap(1)));
-				if(file.open(QIODevice::WriteOnly)) {
-					file.write(data);
-					downloaded.append(pat.cap(1));
-				} else {
-					failed.append(pat.cap(1));
-				}
-			} else {
-				failed.append(pat.cap(1));
+
+		while((pos = langPat.indexIn(html, pos)) != -1) {
+			QString lang = langPat.cap(1);
+			pos += langPat.matchedLength();
+
+			QString dictHtml = QString(Utils::download(url + lang + "/", messages));
+			if(dictHtml.isEmpty()) {
+				continue;
 			}
-			popState();
-			pos += pat.matchedLength();
+
+			int dictPos = 0;
+			while((dictPos = dictHtml.indexOf(dictPat, dictPos)) != -1) {
+				QString filename = dictPat.cap(1);
+				pushState(State::Busy, _("Downloading '%1'...").arg(filename));
+				QByteArray data = Utils::download(plainurl + lang + "/" + filename, messages);
+				if(!data.isNull()) {
+					QFile file(spellingDir.absoluteFilePath(filename));
+					if(file.open(QIODevice::WriteOnly)) {
+						file.write(data);
+						downloaded.append(filename);
+					} else {
+						failed.append(filename);
+					}
+				} else {
+					failed.append(filename);
+				}
+				popState();
+				dictPos += dictPat.matchedLength();
+			}
 		}
+
 		popState();
 		if(!failed.isEmpty()) {
 			QMessageBox::critical(this, _("Error"), _("The following dictionaries could not be downloaded:\n%1\n\nCheck the connectivity and directory permissions.\nHint: If you don't have write permissions in system folders, you can switch to user paths in the settings dialog.").arg(failed.join("\n")));
 		} else if(!downloaded.isEmpty()) {
 			m_recognizer->updateLanguagesMenu();
-			QMessageBox::information(this, _("Dictionaries installed"), _("The following dictionary files were installed:%1").arg(downloaded.join("\n")));
+			QMessageBox::information(this, _("Dictionaries installed"), _("The following dictionary files were installed:\n%1").arg(downloaded.join("\n")));
+		} else {
+			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
+				showHelp("#InstallSpelling");
+			}
 		}
 	}
 }
