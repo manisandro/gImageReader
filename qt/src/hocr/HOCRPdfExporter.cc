@@ -688,6 +688,8 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 	QString itemClass = item->itemClass();
 	QRect itemRect = item->bbox();
 	int childCount = item->children().size();
+	bool prevSpacedWord, currentSpacedWord;
+	prevSpacedWord = currentSpacedWord = false;
 	if(itemClass == "ocr_par" && pdfSettings.uniformizeLineSpacing) {
 		double yInc = double(itemRect.height()) / childCount;
 		double y = itemRect.top() + yInc;
@@ -706,15 +708,24 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 				if(pdfSettings.fontSize == -1) {
 					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
 				}
+
+				prevWordRight = wordRect.right();
+				QString text = wordItem->text();
+				currentSpacedWord = Utils::SpacedWord(text);
 				// If distance from previous word is large, keep the space
 				if(wordRect.x() - prevWordRight > pdfSettings.preserveSpaceWidth * painter.getAverageCharWidth() / px2pu) {
 					x = wordRect.x();
+				} else {
+					//need space
+					if(currentSpacedWord && prevSpacedWord ) {
+						x += painter.getTextWidth(" ") / px2pu;
+					}
 				}
-				prevWordRight = wordRect.right();
-				QString text = wordItem->text();
+
 				double wordBaseline = (x - itemRect.x()) * baseline.first + baseline.second;
 				painter.drawText(x * px2pu, (y + wordBaseline) * px2pu, text);
-				x += painter.getTextWidth(text + " ") / px2pu;
+				x += painter.getTextWidth(text) / px2pu;
+				prevSpacedWord = currentSpacedWord;
 			}
 		}
 	} else if(itemClass == "ocr_line" && !pdfSettings.uniformizeLineSpacing) {

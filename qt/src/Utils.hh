@@ -47,6 +47,8 @@ QByteArray download(QUrl url, QString& messages, int timeout = 60000);
 
 QString getSpellingLanguage(const QString& lang = QString());
 
+bool SpacedWord(const QString& text);
+
 template<typename T>
 class AsyncQueue {
 public:
