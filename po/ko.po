@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2018-06-14 08:04+0000\n"
+"PO-Revision-Date: 2018-06-21 22:22+0000\n"
 "Last-Translator: peinilla <peinilla1569@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ko/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -490,7 +490,7 @@ msgstr "현재 위치 바꾸기"
 #. Output postprocessing
 #: ../gtk/data/OutputEditorText.ui.h:4 ../qt/src/Ui_OutputEditorText.hh:62
 msgid "Keep line break if..."
-msgstr ""
+msgstr "계속 줄바꾸기..."
 
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:64
 msgid "Preceded by end mark (.?!)"
@@ -498,7 +498,7 @@ msgstr "마침표(.?!) 앞에"
 
 #: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:66
 msgid "Preceded or succeeded by quote"
-msgstr ""
+msgstr "선행되거나 완성된 인용문"
 
 #: ../gtk/data/OutputEditorText.ui.h:7 ../qt/src/Ui_OutputEditorText.hh:68
 msgid "Other options"
@@ -552,7 +552,7 @@ msgstr "PDF"
 
 #: ../gtk/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportDialog.ui.h:9
 msgid "PDF with invisible text overlay"
-msgstr ""
+msgstr "PDF에서 투명 텍스트 덮어쓰기"
 
 #: ../gtk/data/PdfExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Format:"
@@ -584,15 +584,15 @@ msgstr "줄, 단어 간격 균일화"
 
 #: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
-msgstr ""
+msgstr "폰트 패밀리 가져오기:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
 msgid "Fallback font family:"
-msgstr ""
+msgstr "폰트 백업하기:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
 msgid "Override font size:"
-msgstr ""
+msgstr "폰트 사이즈 가져오기:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
@@ -604,11 +604,11 @@ msgstr "pt"
 
 #: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "다음보다 넓은 공간 유지:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:20 ../qt/data/PdfExportDialog.ui.h:24
 msgid "characters"
-msgstr ""
+msgstr "문자"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
@@ -628,7 +628,7 @@ msgstr "세로"
 
 #: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
-msgstr ""
+msgstr "기본"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
 msgid "PDF version:"
@@ -644,7 +644,7 @@ msgstr "비밀번호 확인:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:30
 msgid "Encryption (optional):"
-msgstr ""
+msgstr "암호화 (선택):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:34
 msgid "Author:"
@@ -664,11 +664,11 @@ msgstr "제작자:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:37
 msgid "Producer:"
-msgstr ""
+msgstr "생산자:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:39
 msgid "Keywords:"
-msgstr ""
+msgstr "키워드:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:33
 msgid "Additional information (optional):"
@@ -680,7 +680,7 @@ msgstr "현재 소스에서 가져오기"
 
 #: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Advanced"
-msgstr ""
+msgstr "고급"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:4
 msgid "Find"
@@ -723,205 +723,207 @@ msgstr "차례:"
 #: ../gtk/data/SelectionMenu.ui.h:3 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
 #: ../qt/src/DisplayerToolSelect.cc:237 ../qt/src/hocr/DisplayerToolHOCR.cc:31
 msgid "Recognize"
-msgstr ""
+msgstr "분석하기"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:238
 msgid "Recognize to clipboard"
-msgstr ""
+msgstr "클립보드 분석하기"
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:239
 msgid "Save as image"
-msgstr ""
+msgstr "이미지로 저장"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:2 ../qt/src/SubstitutionsManager.cc:38
 #: ../qt/src/SubstitutionsManager.cc:39
 msgid "Open"
-msgstr ""
+msgstr "열기"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:3 ../gtk/src/Utils.cc:73
 #: ../qt/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:42
 msgid "Save"
-msgstr ""
+msgstr "저장"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:4 ../qt/src/SubstitutionsManager.cc:44
 #: ../qt/src/SubstitutionsManager.cc:45
 msgid "Clear"
-msgstr ""
+msgstr "지우기"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:5 ../qt/data/ConfigDialog.ui.h:16
 #: ../qt/src/SubstitutionsManager.cc:47 ../qt/src/SubstitutionsManager.cc:48
 msgid "Add"
-msgstr ""
+msgstr "추가"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:885 ../qt/data/ConfigDialog.ui.h:17
 #: ../qt/src/hocr/OutputEditorHOCR.cc:721 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
-msgstr ""
+msgstr "삭제"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
 msgid "Apply"
-msgstr ""
+msgstr "적용"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:8 ../gtk/data/TessdataManager.ui.h:3
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:49
 msgid "Tessdata Manager"
-msgstr ""
+msgstr "테서렉트 데이터 매니저"
 
 #: ../gtk/data/TessdataManager.ui.h:5 ../qt/src/TessdataManager.cc:51
 msgid "Manage installed languages:"
-msgstr ""
+msgstr "저장된 언어 매니저:"
 
 #: ../gtk/src/Acquirer.cc:79 ../qt/src/Acquirer.cc:70
 msgid "scan.png"
-msgstr ""
+msgstr "scan.png"
 
 #: ../gtk/src/Acquirer.cc:91 ../qt/src/Acquirer.cc:85
 msgid "Images"
-msgstr ""
+msgstr "이미지"
 
 #: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:86
 msgid "Choose Output Filename..."
-msgstr ""
+msgstr "출력 파일 선택..."
 
 #: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
 msgid "Failed to initialize the scanning backend."
-msgstr ""
+msgstr "스캐닝 백엔드 초기화 실패."
 
 #: ../gtk/src/Acquirer.cc:115 ../qt/src/Acquirer.cc:106
 msgid "Scan failed"
-msgstr ""
+msgstr "스캔 실패"
 
 #: ../gtk/src/Acquirer.cc:133 ../qt/src/Acquirer.cc:122
 msgid "No scanners were detected."
-msgstr ""
+msgstr "발견된 스캐너가 없습니다."
 
 #: ../gtk/src/Acquirer.cc:150 ../gtk/src/Acquirer.cc:168
 #: ../qt/src/Acquirer.cc:136 ../qt/src/Acquirer.cc:154
 msgid "Starting scan..."
-msgstr ""
+msgstr "스캔 시작..."
 
 #: ../gtk/src/Acquirer.cc:164 ../qt/src/Acquirer.cc:150
 msgid "Opening device..."
-msgstr ""
+msgstr "기기 열기..."
 
 #: ../gtk/src/Acquirer.cc:166 ../qt/src/Acquirer.cc:152
 msgid "Setting options..."
-msgstr ""
+msgstr "옵션..."
 
 #: ../gtk/src/Acquirer.cc:170 ../qt/src/Acquirer.cc:156
 msgid "Getting parameters..."
-msgstr ""
+msgstr "인자 가져오기..."
 
 #: ../gtk/src/Acquirer.cc:172 ../qt/src/Acquirer.cc:158
 msgid "Transferring data..."
-msgstr ""
+msgstr "데이터 이동 중..."
 
 #: ../gtk/src/Acquirer.cc:179 ../qt/src/Acquirer.cc:165
 msgid "Canceling scan..."
-msgstr ""
+msgstr "스캔 취소..."
 
 #: ../gtk/src/Config.cc:41 ../qt/data/ConfigDialog.ui.h:7
 msgid "Filename prefix"
-msgstr ""
+msgstr "파일이름 접두어"
 
 #: ../gtk/src/Config.cc:42 ../qt/data/ConfigDialog.ui.h:8
 msgid "Code"
-msgstr ""
+msgstr "코드"
 
 #: ../gtk/src/Config.cc:43 ../qt/data/ConfigDialog.ui.h:9
 msgid "Native name"
-msgstr ""
+msgstr "이름"
 
 #: ../gtk/src/Config.cc:100 ../qt/src/Config.cc:98
 msgid "Script"
-msgstr ""
+msgstr "스크립트"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:39
 #: ../qt/src/CrashHandler.cc:34
 msgid "Crash Handler"
-msgstr ""
+msgstr "충돌 핸들러"
 
 #: ../gtk/src/CrashHandler.cc:41 ../qt/src/CrashHandler.cc:29
 msgid "Your work has been saved under <b>%1</b>."
-msgstr ""
+msgstr "작업물이 다음 경로에 저장되었습니다<b>%1</b>."
 
 #: ../gtk/src/CrashHandler.cc:43 ../qt/src/CrashHandler.cc:31
 msgid "There was no unsaved work."
-msgstr ""
+msgstr "저장하지 않은 작업물입니다."
 
 #: ../gtk/src/CrashHandler.cc:102 ../qt/src/CrashHandler.cc:60
 msgid "Failed to obtain backtrace. Is gdb installed?"
-msgstr ""
+msgstr "역 추적을 가져오지 못했습니다. gdb가 설치되어 있습니까?"
 
 #: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
 msgid "Failed to load image"
-msgstr ""
+msgstr "이미지 로드 실패"
 
 #: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
+"파일이 이미지가 아니거나 손상되었습니다:\n"
+"%1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
 msgid "PNG Images"
-msgstr ""
+msgstr "PNG 이미지"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "Save Selection Image"
-msgstr ""
+msgstr "선택한 이미지 저장"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "selection.png"
-msgstr ""
+msgstr "선택된 이미지.png"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize all"
-msgstr ""
+msgstr "모두 분석"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize selection"
-msgstr ""
+msgstr "선택한 영역 분석"
 
 #: ../gtk/src/DisplayerToolSelect.cc:183 ../qt/src/DisplayerToolSelect.cc:179
 msgid "Performing layout analysis"
-msgstr ""
+msgstr "레이아웃 분석 수행"
 
 #: ../gtk/src/FileDialogs.cc:235
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-msgstr ""
+msgstr "\"%1\"라는 이름의 파일이 이미 있습니다. 덮어 쓰시겠습니까?"
 
 #: ../gtk/src/FileDialogs.cc:237
 msgid "Overwrite File?"
-msgstr ""
+msgstr "파일을 덮어 쓰시겠습니까?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:555 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/OutputEditorHOCR.cc:229
 msgid "Page"
-msgstr ""
+msgstr "페이지"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:557 ../qt/src/hocr/HOCRDocument.cc:480
 msgid "Text block"
-msgstr ""
+msgstr "텍스트 블록"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:559 ../gtk/src/hocr/OutputEditorHOCR.cc:272
 #: ../qt/src/hocr/HOCRDocument.cc:482 ../qt/src/hocr/OutputEditorHOCR.cc:231
 msgid "Paragraph"
-msgstr ""
+msgstr "구절"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:561 ../qt/src/hocr/HOCRDocument.cc:484
 msgid "Textline"
-msgstr ""
+msgstr "텍스트라인"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:565 ../qt/src/hocr/HOCRDocument.cc:488
 msgid "Graphic"
-msgstr ""
+msgstr "그래픽"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:65 ../gtk/src/hocr/HOCRPdfExporter.cc:491
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
@@ -930,95 +932,95 @@ msgstr ""
 #: ../qt/src/hocr/HOCRTextExporter.cc:36 ../qt/src/hocr/OutputEditorHOCR.cc:824
 #: ../qt/src/OutputEditorText.cc:238
 msgid "output"
-msgstr ""
+msgstr "출력"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "OpenDocument Text Documents"
-msgstr ""
+msgstr "문서 열기"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "Save ODT Output..."
-msgstr ""
+msgstr "ODT 파일로 저장하기..."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCROdtExporter.cc:61
 #: ../qt/src/hocr/HOCRPdfExporter.cc:600 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
-msgstr ""
+msgstr "내보내기 실패"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
-msgstr ""
+msgstr "ODT 내보내기 실패: 출력 파일을 쓸 수 없습니다."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:336 ../qt/src/hocr/HOCROdtExporter.cc:254
 msgid "Exporting to ODT..."
-msgstr ""
+msgstr "ODT로 내보내기..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:365
 msgid "Same as source"
-msgstr ""
+msgstr "원본과 같은"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:366
 msgid "Custom"
-msgstr ""
+msgstr "커스텀"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:362
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:363
 msgid "in"
-msgstr ""
+msgstr "in"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:353
 msgid "Monochrome"
-msgstr ""
+msgstr "모노크롬"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:328 ../qt/src/hocr/HOCRPdfExporter.cc:355
 msgid "Threshold (closest color)"
-msgstr ""
+msgstr "임계 값 (근처 색상)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:331 ../qt/src/hocr/HOCRPdfExporter.cc:356
 msgid "Diffuse"
-msgstr ""
+msgstr "확산"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:340 ../qt/src/hocr/HOCRPdfExporter.cc:357
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Zip (무손실)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:344 ../qt/src/hocr/HOCRPdfExporter.cc:358
 msgid "CCITT Group 4 (lossless)"
-msgstr ""
+msgstr "CCITT Group 4 (무손실)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:348 ../qt/src/hocr/HOCRPdfExporter.cc:359
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "Jpeg (손실)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:495 ../qt/src/hocr/HOCRPdfExporter.cc:484
 msgid "PDF Files"
-msgstr ""
+msgstr "PDF 파일"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:496 ../qt/src/hocr/HOCRPdfExporter.cc:484
 msgid "Save PDF Output..."
-msgstr ""
+msgstr "PDF로 저장..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
 msgid "Invalid Output"
-msgstr ""
+msgstr "잘못된 출력"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
 msgid "Cannot overwrite a file which is a source image of this document."
-msgstr ""
+msgstr "이 문서의 원본 이미지 파일을 덮어 쓸 수 없습니다."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
 msgid "Failed to create output"
-msgstr ""
+msgstr "출력을 생성하지 못했습니다"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
 msgid "Failed to create output. The returned error was: %1"
-msgstr ""
+msgstr "출력을 만들지 못했습니다. 반환 된 오류 : %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:560 ../qt/src/hocr/HOCRPdfExporter.cc:553
 msgid "The operation was cancelled"
