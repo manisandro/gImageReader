@@ -221,3 +221,21 @@ QString Utils::getSpellingLanguage(const QString& lang) {
 	}
 	return syslang;
 }
+
+// Unicode blocks http://www.fileformat.info/info/unicode/block/index.htm
+bool Utils::SpacedWord(const QString& text) {
+	short unicode = text.at(0).unicode();
+	// CJK Word
+	std::vector<std::pair<int, int>> cjkWordRange{{0x2480, 0x303f}, {0x31c0, 0x9fff}
+		, {0xf900, 0xfaff}, {0xfe30, 0xfe4f}, {0x20000, 0x2fa1f}};
+	for(int i = 0; i < cjkWordRange.size(); i++) {
+		if(unicode < cjkWordRange[i].first) {
+			return true;
+		} else if(unicode >= cjkWordRange[i].first && unicode <= cjkWordRange[i].second) {
+			return false;
+		} else {
+			continue;
+		}
+	}
+	return true;
+}
