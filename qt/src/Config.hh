@@ -52,11 +52,15 @@ public slots:
 	void disableUpdateCheck();
 
 private:
+	enum Location {SystemLocation = 0, UserLocation = 1};
 	static const QList<Lang> LANGUAGES;
 	static const QMultiMap<QString, QString> LANGUAGE_CULTURES;
 
 	Ui::ConfigDialog ui;
 	QFontDialog m_fontDialog;
+
+	static QString spellingLocation(Location location);
+	static QString tessdataLocation(Location location);
 
 private slots:
 	void addLanguage();

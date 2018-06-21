@@ -145,23 +145,39 @@ void Config::disableUpdateCheck() {
 }
 
 void Config::setDataLocations(int idx) {
-	if(idx == 0) {
+	ui.lineEditSpellLocation->setText(spellingLocation(static_cast<Location>(idx)));
+	ui.lineEditTessdataLocation->setText(tessdataLocation(static_cast<Location>(idx)));
+}
+
+void Config::openTessdataDir() {
+	int idx = QSettings().value("datadirs").toInt();
+	QString tessdataDir = tessdataLocation(static_cast<Location>(idx));
+	QDir().mkpath(tessdataDir);
+	QDesktopServices::openUrl(QUrl::fromLocalFile(tessdataDir));
+}
+
+void Config::openSpellingDir() {
+	int idx = QSettings().value("datadirs").toInt();
+	QString spellingDir = spellingLocation(static_cast<Location>(idx));
+	QDir().mkpath(spellingDir);
+	QDesktopServices::openUrl(QUrl::fromLocalFile(spellingDir));
+}
+
+QString Config::spellingLocation(Location location) {
+	if(location == SystemLocation) {
 #ifdef Q_OS_WIN
 		QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
-		qputenv("TESSDATA_PREFIX", dataDir.absolutePath().toLocal8Bit());
-		ui.lineEditSpellLocation->setText(dataDir.absoluteFilePath("myspell"));
 #else
 		QDir dataDir("/usr/share");
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-		unsetenv("TESSDATA_PREFIX");
-#else
-		qunsetenv("TESSDATA_PREFIX");
 #endif
-		if(QDir(dataDir.absoluteFilePath("myspell/dicts")).exists()) {
-			ui.lineEditSpellLocation->setText(dataDir.absoluteFilePath("myspell/dicts"));
+#if HAVE_ENCHANT2
+		if(QDir(dataDir.absoluteFilePath("myspell")).exists()) {
+			return dataDir.absoluteFilePath("myspell");
 		} else {
-			ui.lineEditSpellLocation->setText(dataDir.absoluteFilePath("myspell"));
+			return dataDir.absoluteFilePath("hunspell");
 		}
+#else
+		return dataDir.absoluteFilePath("myspell/dicts");
 #endif
 	} else {
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
@@ -173,23 +189,19 @@ void Config::setDataLocations(int idx) {
 #else
 		QDir configDir = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation));
 #endif
-		qputenv("TESSDATA_PREFIX", configDir.absoluteFilePath("tessdata").toLocal8Bit());
-		ui.lineEditSpellLocation->setText(configDir.absoluteFilePath("enchant/myspell"));
+#if HAVE_ENCHANT2
+		return configDir.absoluteFilePath("enchant/hunspell");
+#else
+		return configDir.absoluteFilePath("enchant/myspell");
+#endif
 	}
-	QByteArray current = setlocale(LC_ALL, NULL);
-	setlocale(LC_ALL, "C");
-	tesseract::TessBaseAPI tess;
-	tess.Init(nullptr, nullptr);
-	setlocale(LC_ALL, current.constData());
-	ui.lineEditTessdataLocation->setText(QString(tess.GetDatapath()));
 }
 
-void Config::openTessdataDir() {
-	int idx = QSettings().value("datadirs").toInt();
-	if(idx == 0) {
+QString Config::tessdataLocation(Location location) {
+	if(location == SystemLocation) {
 #ifdef Q_OS_WIN
 		QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
-		qputenv("TESSDATA_PREFIX", dataDir.absolutePath().toLocal8Bit());
+		qputenv("TESSDATA_PREFIX", dataDir.absoluteFilePath("tessdata").toLocal8Bit());
 #else
 # if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 		unsetenv("TESSDATA_PREFIX");
@@ -209,43 +221,12 @@ void Config::openTessdataDir() {
 #endif
 		qputenv("TESSDATA_PREFIX", configDir.absoluteFilePath("tessdata").toLocal8Bit());
 	}
+	QByteArray current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
 	tesseract::TessBaseAPI tess;
-	QByteArray current = setlocale(LC_NUMERIC, NULL);
-	setlocale(LC_NUMERIC, "C");
 	tess.Init(nullptr, nullptr);
-	setlocale(LC_NUMERIC, current.constData());
-	QDir().mkpath(QString(tess.GetDatapath()));
-	QDesktopServices::openUrl(QUrl::fromLocalFile(QString(tess.GetDatapath())));
-}
-
-void Config::openSpellingDir() {
-	int idx = QSettings().value("datadirs").toInt();
-	if(idx == 0) {
-#ifdef Q_OS_WIN
-		QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
-		QDir().mkpath(dataDir.absoluteFilePath("myspell"));
-		QDesktopServices::openUrl(QUrl::fromLocalFile(dataDir.absoluteFilePath("myspell")));
-#else
-		QDir dataDir("/usr/share");
-		if(QDir(dataDir.absoluteFilePath("myspell/dicts")).exists()) {
-			QDesktopServices::openUrl(QUrl::fromLocalFile(dataDir.absoluteFilePath("myspell/dicts")));
-		} else {
-			QDesktopServices::openUrl(QUrl::fromLocalFile(dataDir.absoluteFilePath("myspell")));
-		}
-#endif
-	} else {
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-# ifdef Q_OS_WIN
-		QDir configDir = QDir(QDir::home().absoluteFilePath("Local Settings/Application Data"));
-# else
-		QDir configDir = QDir(QDir::home().absoluteFilePath(".config"));
-# endif
-#else
-		QDir configDir = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation));
-#endif
-		QDir().mkpath(configDir.absoluteFilePath("enchant/myspell"));
-		QDesktopServices::openUrl(QUrl::fromLocalFile(configDir.absoluteFilePath("enchant/myspell")));
-	}
+	setlocale(LC_ALL, current.constData());
+	return QString(tess.GetDatapath());
 }
 
 void Config::toggleAddLanguage(bool forceHide) {
