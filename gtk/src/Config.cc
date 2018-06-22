@@ -102,8 +102,8 @@ bool Config::searchLangSpec(Lang& lang) const {
 		return true;
 	}
 	for(const Glib::RefPtr<Gtk::TreeModel>& model : {
-	            ui.treeviewLangsPredef->get_model(), ui.treeviewLangsCustom->get_model()
-	        }) {
+	ui.treeviewLangsPredef->get_model(), ui.treeviewLangsCustom->get_model()
+	}) {
 		Gtk::TreeIter it = std::find_if(model->children().begin(), model->children().end(),
 		[this, &lang](const Gtk::TreeRow & row) {
 			return row[m_langViewCols.prefix] == lang.prefix;
