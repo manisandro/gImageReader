@@ -75,10 +75,16 @@ public:
 		m_curFont.setItalic(italic);
 		m_painter->setFont(m_curFont);
 	}
-	void setFontSize(double pointSize) override {
-		if(pointSize != m_curFont.pointSize()) {
-			m_curFont.setPointSize(pointSize);
-			m_painter->setFont(m_curFont);
+	void setFontSize(double pointSize, bool defaultFont = false) override {
+		if(defaultFont) {
+			if(pointSize != m_defaultFont.pointSize()) {
+				m_defaultFont.setPointSize(pointSize);
+			}
+		} else {
+			if(pointSize != m_curFont.pointSize()) {
+				m_curFont.setPointSize(pointSize);
+				m_painter->setFont(m_curFont);
+			}
 		}
 	}
 	void drawText(double x, double y, const QString& text) override {
@@ -232,8 +238,12 @@ public:
 		m_painter.SetFont(getFont(family, bold, italic));
 		m_painter.GetFont()->SetFontSize(curSize);
 	}
-	void setFontSize(double pointSize) override {
-		m_painter.GetFont()->SetFontSize(pointSize);
+	void setFontSize(double pointSize, bool defaultFont = false) override {
+		if(defaultFont) {
+			m_defaultFontSize = pointSize;
+		} else {
+			m_painter.GetFont()->SetFontSize(pointSize);
+		}
 	}
 	void drawText(double x, double y, const QString& text) override {
 		PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.toUtf8().data()));
@@ -512,7 +522,6 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 		}
 		break;
 	}
-
 	MAIN->getDisplayer()->scene()->removeItem(m_preview);
 	delete m_preview;
 	m_preview = nullptr;
@@ -560,7 +569,15 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 					// [pt] = 72 * [in]
 					// [in] = 1 / dpi * [px]
 					// => [pt] = 72 / dpi * [px]
-					double px2pt = (72.0 / sourceDpi);
+					double sourceSizeToOutSize;
+					if( paperSize == "source") {
+						sourceSizeToOutSize = 1;
+					} else {
+						sourceSizeToOutSize = pageWidth / (72.0 / sourceDpi * bbox.width());
+					}
+					painter->setFontSize(ui.spinBoxFontSize->value() * sourceSizeToOutSize, true);
+					double px2pt = (72.0 / sourceDpi) * sourceSizeToOutSize;
+					pdfSettings.detectedFontScaling *= sourceSizeToOutSize;
 					double imgScale = double(outputDpi) / sourceDpi;
 					if(paperSize == "source") {
 						pageWidth = bbox.width() * px2pt;
