@@ -49,6 +49,8 @@ public:
 	static void openSpellingDir();
 
 private:
+	enum Location {SystemLocation = 0, UserLocation = 1};
+
 	struct LangViewColumns : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Glib::ustring> prefix;
 		Gtk::TreeModelColumn<Glib::ustring> code;
@@ -73,6 +75,9 @@ private:
 	void langTableSelectionChanged();
 	void setDataLocations(int idx);
 	void toggleAddLanguage(bool forceHide = false);
+
+	static std::string spellingLocation(Location location);
+	static std::string tessdataLocation(Location location);
 };
 
 #endif // CONFIG_HH

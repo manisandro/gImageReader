@@ -145,70 +145,68 @@ void Config::showDialog() {
 }
 
 void Config::setDataLocations(int idx) {
-	if(idx == 0) {
+	ui.entrySpelldir->set_text(spellingLocation(static_cast<Location>(idx)));
+	ui.entryTessdatadir->set_text(tessdataLocation(static_cast<Location>(idx)));
+}
+
+void Config::openTessdataDir() {
+	int idx = Gio::Settings::create(APPLICATION_ID)->get_int("datadirs");
+	std::string tessdataDir = tessdataLocation(static_cast<Location>(idx));
+	Gio::File::create_for_path(tessdataDir)->make_directory_with_parents();
+	Utils::openUri(tessdataDir);
+}
+
+void Config::openSpellingDir() {
+	int idx = Gio::Settings::create(APPLICATION_ID)->get_int("datadirs");
+	std::string spellingDir = spellingLocation(static_cast<Location>(idx));
+	Gio::File::create_for_path(spellingDir)->make_directory_with_parents();
+	Utils::openUri(spellingDir);
+}
+
+std::string Config::spellingLocation(Location location) {
+	if(location == SystemLocation) {
 #ifdef G_OS_WIN32
 		std::string dataDir = Glib::build_filename(pkgDir, "share");
-		Glib::setenv("TESSDATA_PREFIX", dataDir);
 #else
 		std::string dataDir("/usr/share");
+#endif
+#if HAVE_ENCHANT2
+		if(Gio::File::create_for_path(Glib::build_filename(dataDir, "myspell"))->query_exists()) {
+			return Glib::build_filename(dataDir, "myspell");
+		} else {
+			return Glib::build_filename(dataDir, "hunspell");
+		}
+#else
+		return Glib::build_filename(dataDir, "myspell", "dicts");
+#endif
+	} else {
+		std::string configDir = Glib::get_user_config_dir();
+#if HAVE_ENCHANT2
+		return Glib::build_filename(configDir, "enchant", "hunspell");
+#else
+		return Glib::build_filename(configDir, "enchant", "myspell");
+#endif
+	}
+}
+
+std::string Config::tessdataLocation(Location location) {
+	if(location == SystemLocation) {
+#ifdef G_OS_WIN32
+		std::string dataDir = Glib::build_filename(pkgDir, "share");
+		Glib::setenv("TESSDATA_PREFIX",  Glib::build_filename(dataDir, "tessdata");
+#else
 		Glib::unsetenv("TESSDATA_PREFIX");
 #endif
-		Glib::RefPtr<Gio::File> dictDir = Gio::File::create_for_path(Glib::build_filename(dataDir, "myspell", "dicts"));
-		if(!dictDir->query_exists()) {
-			dictDir = Gio::File::create_for_path(Glib::build_filename(dataDir, "myspell"));
-		}
-		ui.entrySpelldir->set_text(dictDir->get_path());
 	} else {
 		std::string configDir = Glib::get_user_config_dir();
 		Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(configDir, "tessdata"));
-		ui.entrySpelldir->set_text(Glib::build_filename(configDir, "enchant", "myspell"));
 	}
 	std::string current = setlocale(LC_ALL, NULL);
 	setlocale(LC_ALL, "C");
 	tesseract::TessBaseAPI tess;
 	tess.Init(nullptr, nullptr);
 	setlocale(LC_ALL, current.c_str());
-	ui.entryTessdatadir->set_text(tess.GetDatapath());
-}
-
-void Config::openTessdataDir() {
-	int idx = Gio::Settings::create(APPLICATION_ID)->get_int("datadirs");
-	if(idx == 0) {
-#ifdef G_OS_WIN32
-		std::string dataDir = Glib::build_filename(pkgDir, "share");
-		Glib::setenv("TESSDATA_PREFIX", dataDir);
-#else
-		Glib::unsetenv("TESSDATA_PREFIX");
-#endif
-	} else {
-		std::string configDir = Glib::get_user_config_dir();
-		Glib::setenv("TESSDATA_PREFIX", Glib::build_filename(configDir, "tessdata"));
-	}
-	tesseract::TessBaseAPI tess;
-	std::string current = setlocale(LC_NUMERIC, NULL);
-	setlocale(LC_NUMERIC, "C");
-	tess.Init(nullptr, nullptr);
-	setlocale(LC_NUMERIC, current.c_str());
-	Utils::openUri(Glib::filename_to_uri(tess.GetDatapath()));
-}
-
-void Config::openSpellingDir() {
-	int idx = Gio::Settings::create(APPLICATION_ID)->get_int("datadirs");
-	if(idx == 0) {
-#ifdef G_OS_WIN32
-		std::string dataDir = Glib::build_filename(pkgDir, "share");
-#else
-		std::string dataDir("/usr/share");
-#endif
-		Glib::RefPtr<Gio::File> dictDir = Gio::File::create_for_path(Glib::build_filename(dataDir, "myspell", "dicts"));
-		if(!dictDir->query_exists()) {
-			dictDir = Gio::File::create_for_path(Glib::build_filename(dataDir, "myspell"));
-		}
-		Utils::openUri(Glib::filename_to_uri(dictDir->get_path()));
-	} else {
-		std::string configDir = Glib::get_user_config_dir();
-		Utils::openUri(Glib::filename_to_uri(Glib::build_filename(configDir, "enchant", "myspell")));
-	}
+	return std::string(tess.GetDatapath());
 }
 
 void Config::toggleAddLanguage(bool forceHide) {
