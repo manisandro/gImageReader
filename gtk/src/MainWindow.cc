@@ -508,20 +508,16 @@ void MainWindow::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy,
 #endif
 
 void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
-	std::vector<Glib::ustring> codes = m_config->searchLangCultures(code);
-	code = codes.empty() ? code : codes.front();
-
 	pushState(State::Busy, Glib::ustring::compose(_("Installing spelling dictionary for '%1'"), code));
 	Glib::ustring url = "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
 	Glib::ustring plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
-	Glib::ustring urlcode = code;
-	std::string dictPath = getConfig()->spellingLocation();
-	Glib::RefPtr<Gio::File> dictDir = Gio::File::create_for_path(dictPath);
+	std::string spellingDir = getConfig()->spellingLocation();
+	Glib::RefPtr<Gio::File> dir = Gio::File::create_for_path(spellingDir);
 	bool dirExists = false;
 	try {
-		dirExists = dictDir->make_directory_with_parents();
+		dirExists = dir->make_directory_with_parents();
 	} catch(...) {
-		dirExists = dictDir->query_exists();
+		dirExists = dir->query_exists();
 	}
 	if(!dirExists) {
 		popState();
@@ -530,58 +526,62 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
 	}
 
 	Glib::ustring messages;
-	Glib::RefPtr<Glib::ByteArray> html = Utils::download(url, messages);
-	if(!html) {
+	Glib::RefPtr<Glib::ByteArray> htmlData = Utils::download(url, messages);
+	if(!htmlData) {
 		popState();
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1: %2."), url, messages));
 		return;
 	}
-	Glib::ustring htmls(reinterpret_cast<const char*>(html->get_data()), html->size());
-	if(htmls.find(Glib::ustring::compose(">%1<", code)) != Glib::ustring::npos) {
-		// Ok
-	} else if(htmls.find(Glib::ustring::compose(">%1<", code.substr(0, 2))) != Glib::ustring::npos) {
-		urlcode = code.substr(0, 2);
-	} else {
-		popState();
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
-		return;
-	}
-	html = Utils::download(url + urlcode + "/", messages);
-	if(!html) {
-		popState();
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1: %2."), url + urlcode + "/", messages));
-		return;
-	}
-	Glib::RefPtr<Glib::Regex> pat = Glib::Regex::create(Glib::ustring::compose(">(%1[^<]*\\.(dic|aff))<", code.substr(0, 2)));
-	htmls = Glib::ustring(reinterpret_cast<const char*>(html->get_data()), html->size());
-
+	Glib::ustring html(reinterpret_cast<const char*>(htmlData->get_data()), htmlData->size());
+	std::string langCode = code.substr(0, 2);
+	Glib::RefPtr<Glib::Regex> langPat = Glib::Regex::create(Glib::ustring::compose(">(%1_?[A-Z]*)<", langCode));
+	Glib::RefPtr<Glib::Regex> dictPat = Glib::Regex::create(Glib::ustring::compose(">(%1_?[\\w_]*\\.(dic|aff))<", langCode));
 	std::vector<Glib::ustring> downloaded;
 	std::vector<Glib::ustring> failed;
+
 	int pos = 0;
-	Glib::MatchInfo matchInfo;
-	while(pat->match(htmls, pos, matchInfo)) {
-		pushState(State::Busy, Glib::ustring::compose(_("Downloading '%1'..."), matchInfo.fetch(1)));
-		Glib::RefPtr<Glib::ByteArray> data = Utils::download(plainurl + urlcode + "/" + matchInfo.fetch(1), messages);
-		if(data) {
-			std::ofstream file(Glib::build_filename(dictPath, matchInfo.fetch(1)), std::ios::binary);
-			if(file.is_open()) {
-				file.write(reinterpret_cast<char*>(data->get_data()), data->size());
-				downloaded.push_back(matchInfo.fetch(1));
-			} else {
-				failed.push_back(matchInfo.fetch(1));
-			}
-		} else {
-			failed.push_back(matchInfo.fetch(1));
-		}
-		popState();
+	Glib::MatchInfo langMatchInfo;
+	while(langPat->match(html, pos, langMatchInfo)) {
+		Glib::ustring lang = langMatchInfo.fetch(1);
 		int start;
-		matchInfo.fetch_pos(0, start, pos);
+		langMatchInfo.fetch_pos(0, start, pos);
+
+		Glib::RefPtr<Glib::ByteArray> dictHtmlData = Utils::download(url + lang + "/", messages);
+		if(!dictHtmlData) {
+			continue;
+		}
+		Glib::ustring dictHtml(reinterpret_cast<const char*>(dictHtmlData->get_data()), dictHtmlData->size());
+
+		int dictPos = 0;
+		Glib::MatchInfo dictMatchInfo;
+		while(dictPat->match(dictHtml, dictPos, dictMatchInfo)) {
+			Glib::ustring filename = dictMatchInfo.fetch(1);
+			pushState(State::Busy, Glib::ustring::compose(_("Downloading '%1'..."), filename));
+			Glib::RefPtr<Glib::ByteArray> data = Utils::download(plainurl + lang + "/" + filename, messages);
+			if(data) {
+				std::ofstream file(Glib::build_filename(spellingDir, filename), std::ios::binary);
+				if(file.is_open()) {
+					file.write(reinterpret_cast<char*>(data->get_data()), data->size());
+					downloaded.push_back(filename);
+				} else {
+					failed.push_back(filename);
+				}
+			} else {
+				failed.push_back(filename);
+			}
+			popState();
+			int start;
+			dictMatchInfo.fetch_pos(0, start, dictPos);
+		}
 	}
+
 	popState();
 	if(!failed.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("The following dictionaries could not be downloaded:\n%1\n\nCheck the connectivity and directory permissions.\nHint: If you don't have write permissions in system folders, you can switch to user paths in the settings dialog."), Utils::string_join(failed, "\n")));
 	} else if(!downloaded.empty()) {
-		getRecognizer()->updateLanguagesMenu();
+		m_recognizer->updateLanguagesMenu();
 		Utils::message_dialog(Gtk::MESSAGE_INFO, _("Dictionaries installed"), Glib::ustring::compose(_("The following dictionaries were installed:\n%1"), Utils::string_join(downloaded, "\n")));
+	} else {
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
 	}
 }
