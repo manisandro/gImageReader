@@ -224,7 +224,7 @@ QString Utils::getSpellingLanguage(const QString& lang) {
 
 // Unicode blocks http://www.fileformat.info/info/unicode/block/index.htm
 bool Utils::spacedWord(const QString& text, bool prevWord) {
-	short unicode = (prevWord ? text.back() : text.front()).unicode();
+    short unicode = (prevWord ? text.at(text.size()-1) : text.at(0)).unicode();
 	// CJK Word
 	std::vector<std::pair<int, int>> cjkWordRange{{0x2480, 0x303f}, {0x31c0, 0x9fff}
 		, {0xf900, 0xfaff}, {0xfe30, 0xfe4f}, {0x20000, 0x2fa1f}};
