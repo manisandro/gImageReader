@@ -45,7 +45,7 @@ QString Utils::documentsFolder() {
 #else
 	documentsFolder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 #endif
-	return documentsFolder.isEmpty() ? QDir::homePath() : documentsFolder;
+	return (documentsFolder.isEmpty() || !QDir(documentsFolder).exists()) ? QDir::homePath() : documentsFolder;
 }
 
 QString Utils::makeOutputFilename(const QString& filename) {
