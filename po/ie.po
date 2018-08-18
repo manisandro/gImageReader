@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2018-08-18 09:38+0000\n"
+"PO-Revision-Date: 2018-08-19 10:40+0000\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Occidental <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ie/>\n"
@@ -21,15 +21,15 @@ msgstr ""
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr ""
+msgstr "Application OCR"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
 msgid "Redetect Languages"
-msgstr ""
+msgstr "Redetecter lingues"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
 msgid "Manage Languages"
-msgstr ""
+msgstr "Redacter li lingues"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
@@ -64,19 +64,19 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontal"
 
 #: ../gtk/data/ConfigDialog.ui.h:6
 msgid "Vertical"
-msgstr ""
+msgstr "Vertical"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr ""
+msgstr "Proposir installar mancant ortografic dictionariums"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr ""
+msgstr "Automaticmen controlar nov versiones del programma"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
@@ -104,7 +104,7 @@ msgstr "Code ISO"
 
 #: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:24
 msgid "The name of the language"
-msgstr ""
+msgstr "Li nómine del lingue"
 
 #: ../gtk/data/ConfigDialog.ui.h:16 ../qt/data/ConfigDialog.ui.h:25
 msgid "Name"
@@ -140,11 +140,11 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "Rutes del sistema"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Rutes de usator"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
@@ -174,11 +174,11 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
-msgstr ""
+msgstr "Rotar li actual págine"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
-msgstr ""
+msgstr "Rotar omni págines"
 
 #. Sources toolbar
 #: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:191
@@ -855,13 +855,15 @@ msgstr ""
 
 #: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
 msgid "Failed to load image"
-msgstr ""
+msgstr "Ne successat cargar li image"
 
 #: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
+"Li file possibilmen ne es un image o es corupt:\n"
+"%1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
 msgid "PNG Images"
@@ -877,11 +879,11 @@ msgstr "selection.png"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize all"
-msgstr ""
+msgstr "Reconosser omni"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize selection"
-msgstr ""
+msgstr "Reconosser li selection"
 
 #: ../gtk/src/DisplayerToolSelect.cc:183 ../qt/src/DisplayerToolSelect.cc:179
 msgid "Performing layout analysis"
@@ -899,11 +901,11 @@ msgstr ""
 #: ../gtk/src/hocr/HOCRDocument.cc:555 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/OutputEditorHOCR.cc:229
 msgid "Page"
-msgstr ""
+msgstr "Págine"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:557 ../qt/src/hocr/HOCRDocument.cc:480
 msgid "Text block"
-msgstr ""
+msgstr "Bloc de textu"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:559 ../gtk/src/hocr/OutputEditorHOCR.cc:272
 #: ../qt/src/hocr/HOCRDocument.cc:482 ../qt/src/hocr/OutputEditorHOCR.cc:231
@@ -912,11 +914,11 @@ msgstr "Paragraf"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:561 ../qt/src/hocr/HOCRDocument.cc:484
 msgid "Textline"
-msgstr ""
+msgstr "Linea de textu"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:565 ../qt/src/hocr/HOCRDocument.cc:488
 msgid "Graphic"
-msgstr ""
+msgstr "Pictura"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:65 ../gtk/src/hocr/HOCRPdfExporter.cc:491
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
@@ -929,18 +931,18 @@ msgstr ""
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "OpenDocument Text Documents"
-msgstr ""
+msgstr "Documentes textual OpenDocument"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "Save ODT Output..."
-msgstr ""
+msgstr "Gardar li resultate ODT…"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCROdtExporter.cc:61
 #: ../qt/src/hocr/HOCRPdfExporter.cc:600 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
-msgstr ""
+msgstr "Export ne successat"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
@@ -949,19 +951,19 @@ msgstr ""
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:336 ../qt/src/hocr/HOCROdtExporter.cc:254
 msgid "Exporting to ODT..."
-msgstr ""
+msgstr "Exportante a ODT…"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:365
 msgid "Same as source"
-msgstr ""
+msgstr "Sam quam li orígine"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:366
 msgid "Custom"
-msgstr ""
+msgstr "Personalisat"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:362
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:363
 msgid "in"
@@ -969,7 +971,7 @@ msgstr ""
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:353
 msgid "Monochrome"
-msgstr "Monochrom"
+msgstr "Monocrom"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:328 ../qt/src/hocr/HOCRPdfExporter.cc:355
 msgid "Threshold (closest color)"
