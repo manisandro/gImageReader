@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2018-02-11 10:06+0000\n"
+"PO-Revision-Date: 2018-08-20 18:40+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.19-dev\n"
+"X-Generator: Weblate 3.2-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr ""
+msgstr "Tekstgjenkjenningsprogram"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
 msgid "Redetect Languages"
@@ -72,19 +72,19 @@ msgstr "Loddrett"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr ""
+msgstr "Foreslå installasjon av manglende ordlister"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr ""
+msgstr "Se etter nye programvareversjoner automatisk"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr ""
+msgstr "Forhåndsoppsatte språkdefinisjoner:"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
-msgstr ""
+msgstr "Ytterligere språkdefinisjoner:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
@@ -96,7 +96,7 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr ""
+msgstr "ISO 639-1 -språkkode, fulgt av landskode"
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
@@ -156,7 +156,7 @@ msgstr ""
 
 #: ../gtk/data/CrashHandler.ui.h:2
 msgid "<b>The application has crashed</b>"
-msgstr ""
+msgstr "<b>Programmet har kræsjet"
 
 #: ../gtk/data/CrashHandler.ui.h:4
 #, no-c-format
@@ -174,11 +174,11 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
-msgstr ""
+msgstr "Roter gjeldende side"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
-msgstr ""
+msgstr "Roter alle sider"
 
 #. Sources toolbar
 #: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:191
@@ -224,11 +224,12 @@ msgstr "Enhet:"
 #: ../gtk/data/MainWindow.ui.h:14 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:59
 msgid "Refresh"
-msgstr ""
+msgstr "Gjenoppfrisk"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:9
+#, fuzzy
 msgid "Output:"
-msgstr ""
+msgstr "Utdata:"
 
 #: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:13
 msgid "Mode:"
@@ -295,7 +296,7 @@ msgstr "Beste passform"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
-msgstr ""
+msgstr "Velg rotasjonsmodus"
 
 #: ../gtk/data/MainWindow.ui.h:32 ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../gtk/data/OutputEditorText.ui.h:13 ../qt/src/Ui_OutputEditorText.hh:95
