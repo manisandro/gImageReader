@@ -440,9 +440,9 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModel
 	}
 
 	// ocr_class:attr_key:attr_values
-	QMap<QString, QMap<QString, QSet<QString>>> occurences;
-	currentItem->getPropagatableAttributes(occurences);
-	for(auto it = occurences.begin(), itEnd = occurences.end(); it != itEnd; ++it) {
+	QMap<QString, QMap<QString, QSet<QString>>> occurrences;
+	currentItem->getPropagatableAttributes(occurrences);
+	for(auto it = occurrences.begin(), itEnd = occurrences.end(); it != itEnd; ++it) {
 		ui.tableWidgetProperties->insertRow(++row);
 		QTableWidgetItem* sectionItem = new QTableWidgetItem(it.key());
 		sectionItem->setFlags(sectionItem->flags() & ~(Qt::ItemIsEditable | Qt::ItemIsSelectable));

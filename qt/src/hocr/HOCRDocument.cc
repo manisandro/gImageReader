@@ -710,7 +710,8 @@ QMap<QString, QString> HOCRItem::getAttributes(const QList<QString>& names = QLi
 	return attrValues;
 }
 
-void HOCRItem::getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString>>>& occurences) const {
+// ocr_class:attr_key:attr_values
+void HOCRItem::getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString>>>& occurrences) const {
 	static QMap<QString, QStringList> s_propagatableAttributes = {
 		{"ocr_line", {"title:baseline"}},
 		{"ocrx_word", {"lang", "title:x_fsize", "title:x_font", "bold", "italic"}}
@@ -722,13 +723,13 @@ void HOCRItem::getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QStrin
 		for(HOCRItem* child : m_childItems) {
 			QMap<QString, QString> attrs = child->getAttributes(it.value());
 			for(auto attrIt = attrs.begin(), attrItEnd = attrs.end(); attrIt != attrItEnd; ++attrIt) {
-				occurences[childClass][attrIt.key()].insert(attrIt.value());
+				occurrences[childClass][attrIt.key()].insert(attrIt.value());
 			}
 		}
 	}
 	if(childClass != "ocrx_word") {
 		for(HOCRItem* child : m_childItems) {
-			child->getPropagatableAttributes(occurences);
+			child->getPropagatableAttributes(occurrences);
 		}
 	}
 }
