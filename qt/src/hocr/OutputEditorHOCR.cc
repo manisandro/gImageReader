@@ -546,6 +546,8 @@ void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 	if(!currentItem) {
 		return;
 	}
+	QMap<QString, QMap<QString, QSet<QString>>> propAttrs;
+	currentItem->getPropagatableAttributes(propAttrs);
 	QDomElement newElement;
 	if(action == DisplayerToolHOCR::ACTION_DRAW_GRAPHIC_RECT) {
 		newElement = doc.createElement("div");
@@ -562,6 +564,7 @@ void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 	} else if(action == DisplayerToolHOCR::ACTION_DRAW_LINE_RECT) {
 		newElement = doc.createElement("span");
 		newElement.setAttribute("class", "ocr_line");
+		QSet<QString> propLineBaseline = propAttrs["ocrx_line"]["baseline"];
 		// Tesseract does as follows:
 		// row_height = x_height + ascenders - descenders
 		// font_pt_size = row_height * 72 / dpi (72 = pointsPerInch)
@@ -571,7 +574,7 @@ void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 		titleAttrs["x_ascenders"] = QString("%1").arg(0.25 * bbox.height());
 		titleAttrs["x_descenders"] = QString("%1").arg(0.25 * bbox.height());
 		titleAttrs["x_size"] = QString("%1").arg(bbox.height());
-		titleAttrs["baseline"] = QString("0 0");
+		titleAttrs["baseline"] = propLineBaseline.size() == 1 ? *propLineBaseline.begin() : QString("0 0");
 		newElement.setAttribute("title", HOCRItem::serializeAttrGroup(titleAttrs));
 	} else if(action == DisplayerToolHOCR::ACTION_DRAW_WORD_RECT) {
 		QString text = QInputDialog::getText(m_widget, _("Add Word"), _("Enter word:"));
@@ -580,13 +583,19 @@ void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 		}
 		newElement = doc.createElement("span");
 		newElement.setAttribute("class", "ocrx_word");
-		newElement.setAttribute("lang", m_spell.getLanguage());
+		QMap<QString, QSet<QString>> propWord = propAttrs["ocrx_word"];
+
+		newElement.setAttribute("lang", propWord["lang"].size() == 1 ? *propWord["lang"].begin() : m_spell.getLanguage());
 		QMap<QString, QString> titleAttrs;
 		titleAttrs["bbox"] = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-		titleAttrs["x_font"] = QFont().family();
-		titleAttrs["x_fsize"] = QString("%1").arg(qRound(bbox.height() * 72. / currentItem->page()->resolution()));
 		titleAttrs["x_wconf"] = "100";
+		titleAttrs["x_font"] = propWord["title:x_font"].size() == 1 ?
+				*propWord["title:x_font"].begin() : QFont().family();
+		titleAttrs["x_fsize"] = propWord["title:x_fsize"].size() == 1 ?
+				*propWord["title:x_fsize"].begin() : QString("%1").arg(qRound(bbox.height() * 72. / currentItem->page()->resolution()));
 		newElement.setAttribute("title", HOCRItem::serializeAttrGroup(titleAttrs));
+		if (propWord["bold"].size() == 1) newElement.setAttribute("bold", *propWord["bold"].begin());
+		if (propWord["italic"].size() == 1) newElement.setAttribute("italic", *propWord["italic"].begin());
 		newElement.appendChild(doc.createTextNode(text));
 	} else {
 		return;
