@@ -1,3 +1,9 @@
+gImageReader 3.3.0 (Sep 26 2018):
+* Support tesseract-4.0.0
+* Translation updates
+* See 3.2.9x changelogs for all other feature changes since previous stable
+* Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
 gImageReader 3.2.99 (Feb 24 2018):
 * gImageReader 3.3 beta
 * Add support for reading DJVU documents

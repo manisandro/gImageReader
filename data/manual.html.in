@@ -47,6 +47,12 @@
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
 <pre style="max-height: 200px; overflow-y: auto; padding: 1em; border: 1px solid gray;">
+gImageReader 3.3.0 (Sep 26 2018):
+* Support tesseract-4.0.0
+* Translation updates
+* See 3.2.9x changelogs for all other feature changes since previous stable
+* Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
 gImageReader 3.2.99 (Feb 24 2018):
 * gImageReader 3.3 beta
 * Add support for reading DJVU documents
