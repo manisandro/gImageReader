@@ -61,6 +61,12 @@ public:
 	bool hasMultipleOCRAreas();
 	QList<QImage> getOCRAreas();
 	bool allowAutodetectOCRAreas() const;
+	void setCursor(const QCursor& cursor) {
+		viewport()->setCursor(cursor);
+	}
+	void unsetCursor() {
+		viewport()->unsetCursor();
+	}
 
 public slots:
 	void autodetectOCRAreas();
