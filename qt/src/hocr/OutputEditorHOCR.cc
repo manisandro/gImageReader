@@ -590,12 +590,12 @@ void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 		titleAttrs["bbox"] = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
 		titleAttrs["x_wconf"] = "100";
 		titleAttrs["x_font"] = propWord["title:x_font"].size() == 1 ?
-				*propWord["title:x_font"].begin() : QFont().family();
+		                       *propWord["title:x_font"].begin() : QFont().family();
 		titleAttrs["x_fsize"] = propWord["title:x_fsize"].size() == 1 ?
-				*propWord["title:x_fsize"].begin() : QString("%1").arg(qRound(bbox.height() * 72. / currentItem->page()->resolution()));
+		                        *propWord["title:x_fsize"].begin() : QString("%1").arg(qRound(bbox.height() * 72. / currentItem->page()->resolution()));
 		newElement.setAttribute("title", HOCRItem::serializeAttrGroup(titleAttrs));
-		if (propWord["bold"].size() == 1) newElement.setAttribute("bold", *propWord["bold"].begin());
-		if (propWord["italic"].size() == 1) newElement.setAttribute("italic", *propWord["italic"].begin());
+		if (propWord["bold"].size() == 1) { newElement.setAttribute("bold", *propWord["bold"].begin()); }
+		if (propWord["italic"].size() == 1) { newElement.setAttribute("italic", *propWord["italic"].begin()); }
 		newElement.appendChild(doc.createTextNode(text));
 	} else {
 		return;

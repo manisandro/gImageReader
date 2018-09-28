@@ -509,45 +509,45 @@ QIcon HOCRDocument::decorationRoleForItem(const HOCRItem* item) const {
 }
 
 bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const {
-	if(item->itemClass() != "ocrx_word") return true;
+	if(item->itemClass() != "ocrx_word") { return true; }
 
 	QString trimmed = HOCRItem::trimmedWord(item->text());
-	if(trimmed.isEmpty()) return true;
+	if(trimmed.isEmpty()) { return true; }
 
 	QString lang = item->lang();
-	if(m_spell->getLanguage() != lang && !(m_spell->setLanguage(lang))) return true;
+	if(m_spell->getLanguage() != lang && !(m_spell->setLanguage(lang))) { return true; }
 
-	if(m_spell->checkWord(trimmed)) return true; // handle hyphenated phrases correctly
+	if(m_spell->checkWord(trimmed)) { return true; } // handle hyphenated phrases correctly
 
 	// handle some hyphenated words
 	// don't bother with words not broken over sibling text lines (ie interrupted by other blocks), it's human hard
 	// don't bother with words broken over three or more lines, it's implausible and this treatment is ^ necessarily incomplete
 	HOCRItem* parent = item->parent();
-	if(!parent) return false;
+	if(!parent) { return false; }
 	HOCRItem* grandparent = parent->parent();
-	if(!grandparent) return false;
+	if(!grandparent) { return false; }
 	int idx = item->index();
 	int parentIdx = parent->index();
 	QVector<HOCRItem*> parentSiblings = grandparent->children();
 	if(idx == 0 && parentIdx > 0) {
-		HOCRItem* parentPrevSibling = parentSiblings.at(parentIdx-1);
-		if(!parentPrevSibling) return false;
+		HOCRItem* parentPrevSibling = parentSiblings.at(parentIdx - 1);
+		if(!parentPrevSibling) { return false; }
 		QVector<HOCRItem*> cousins = parentPrevSibling->children();
-		if(cousins.size() < 1) return false;
+		if(cousins.size() < 1) { return false; }
 		HOCRItem* prevCousin = cousins.back();
-		if(!prevCousin || prevCousin->itemClass() != "ocrx_word") return false;
+		if(!prevCousin || prevCousin->itemClass() != "ocrx_word") { return false; }
 		QString prevText = prevCousin->text();
-		if(prevText.isEmpty() || prevText.back() != '-') return false;
+		if(prevText.isEmpty() || prevText.back() != '-') { return false; }
 
 		return m_spell->checkWord(HOCRItem::trimmedWord(prevText) + trimmed);
 	}
-	if(idx+1 == parent->children().size() && parentIdx+1 < parentSiblings.size() && item->text().back() == '-') {
-		HOCRItem* parentNextSibling = parentSiblings.at(parentIdx+1);
-		if(!parentNextSibling) return false;
+	if(idx + 1 == parent->children().size() && parentIdx + 1 < parentSiblings.size() && item->text().back() == '-') {
+		HOCRItem* parentNextSibling = parentSiblings.at(parentIdx + 1);
+		if(!parentNextSibling) { return false; }
 		QVector<HOCRItem*> cousins = parentNextSibling->children();
-		if(cousins.size() < 1) return false;
+		if(cousins.size() < 1) { return false; }
 		HOCRItem* nextCousin = cousins.front();
-		if(!nextCousin || nextCousin->itemClass() != "ocrx_word") return false;
+		if(!nextCousin || nextCousin->itemClass() != "ocrx_word") { return false; }
 
 		return m_spell->checkWord(trimmed + HOCRItem::trimmedWord(nextCousin->text()));
 	}
