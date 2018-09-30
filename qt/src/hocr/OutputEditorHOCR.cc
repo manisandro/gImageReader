@@ -833,7 +833,10 @@ bool OutputEditorHOCR::save(const QString& filename) {
 		QMessageBox::critical(MAIN, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
+	QByteArray current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
 	tesseract::TessBaseAPI tess;
+	setlocale(LC_ALL, current.constData());
 	QString header = QString(
 	                     "<!DOCTYPE html>\n"
 	                     "<html>\n"

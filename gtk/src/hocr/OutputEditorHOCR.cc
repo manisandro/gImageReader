@@ -972,7 +972,10 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
+	std::string current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
 	tesseract::TessBaseAPI tess;
+	setlocale(LC_ALL, current.c_str());
 	Glib::ustring header = Glib::ustring::compose(
 	                           "<!DOCTYPE html>\n"
 	                           "<html>\n"

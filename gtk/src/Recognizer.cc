@@ -148,7 +148,10 @@ static void tessCrashHandler(int /*signal*/) {
 			captured += buf;
 		}
 	} while(bytesRead == sizeof(buf) - 1);
+	std::string current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
 	tesseract::TessBaseAPI tess;
+	setlocale(LC_ALL, current.c_str());
 	Glib::ustring errMsg = Glib::ustring::compose(_("Tesseract crashed with the following message:\n\n"
 	                       "%1\n\n"
 	                       "This typically happens for one of the following reasons:\n"
