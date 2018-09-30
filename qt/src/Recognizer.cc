@@ -135,7 +135,10 @@ static void tessCrashHandler(int /*signal*/) {
 			captured += buf;
 		}
 	} while(bytesRead == sizeof(buf) - 1);
+	QByteArray current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
 	tesseract::TessBaseAPI tess;
+	setlocale(LC_ALL, current.constData());
 	QString errMsg = QString(_("Tesseract crashed with the following message:\n\n"
 	                           "%1\n\n"
 	                           "This typically happens for one of the following reasons:\n"
