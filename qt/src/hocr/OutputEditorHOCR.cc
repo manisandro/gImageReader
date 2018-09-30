@@ -700,19 +700,16 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 		actionAddWord = menu.addAction(_("Add word"));
 	} else if(itemClass == "ocrx_word") {
 		QString prefix, suffix, trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
-		QString spellLang = item->lang();
-		bool haveLanguage = true;
-		if(m_spell.getLanguage() != spellLang) {
-			haveLanguage = m_spell.setLanguage(spellLang);
+		QStringList suggestions;
+		bool valid = m_document->checkItemSpelling(index, &suggestions, 16);
+		for(const QString& suggestion : suggestions) {
+			setTextActions.append(menu.addAction(prefix + suggestion + suffix));
 		}
-		if(!trimmedWord.isEmpty() && haveLanguage) {
-			for(const QString& suggestion : m_spell.getSpellingSuggestions(trimmedWord)) {
-				setTextActions.append(menu.addAction(prefix + suggestion + suffix));
-			}
+		if(!trimmedWord.isEmpty()) {
 			if(setTextActions.isEmpty()) {
 				menu.addAction(_("No suggestions"))->setEnabled(false);
 			}
-			if(!m_spell.checkWord(trimmedWord)) {
+			if(!valid) {
 				menu.addSeparator();
 				actionDictAddWord = menu.addAction(_("Add to dictionary"));
 				actionDictAddWord->setData(trimmedWord);
