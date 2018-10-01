@@ -826,7 +826,8 @@ void HOCRPdfExporter::imageFormatChanged() {
 	QStandardItem* ccittItem = model->item(ccittIdx);
 	QStandardItem* jpegItem = model->item(jpegIdx);
 	if(format == QImage::Format_Mono) {
-		if(ui.comboBoxImageCompression->currentIndex() == jpegIdx) {
+		// for monochrome images, allow zip and ccitt4 (but not jpeg, unless QPrinter is forcing us)
+		if(ui.comboBoxImageCompression->currentIndex() == jpegIdx && ui.comboBoxBackend->itemData(ui.comboBoxBackend->currentIndex()).toInt() != BackendQPrinter) {
 			ui.comboBoxImageCompression->setCurrentIndex(zipIdx);
 		}
 		ccittItem->setFlags(ccittItem->flags() | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
@@ -834,6 +835,7 @@ void HOCRPdfExporter::imageFormatChanged() {
 		ui.labelDithering->setEnabled(true);
 		ui.comboBoxDithering->setEnabled(true);
 	} else {
+		// for color and grayscale images, allow jpeg and zip (but not ccitt4)
 		if(ui.comboBoxImageCompression->currentIndex() == ccittIdx) {
 			ui.comboBoxImageCompression->setCurrentIndex(zipIdx);
 		}
