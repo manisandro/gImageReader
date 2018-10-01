@@ -602,7 +602,7 @@ void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 	}
 	QModelIndex index = m_document->addItem(current, newElement);
 	if(index.isValid()) {
-		ui.treeViewHOCR->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+		ui.treeViewHOCR->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 	}
 }
 
