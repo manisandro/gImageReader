@@ -553,15 +553,26 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 			const HOCRPage* page = m_hocrdocument->page(i);
 			if(page->isEnabled()) {
 				QRect bbox = page->bbox();
+				QString sourceFile = page->sourceFile();
+				// If the source file is an image, its "resolution" is actually just the scale factor that was used for recognizing.
+				bool isImage = !sourceFile.endsWith(".pdf", Qt::CaseInsensitive) && !sourceFile.endsWith(".djvu", Qt::CaseInsensitive);
 				int sourceDpi = page->resolution();
+				int sourceScale = sourceDpi;
+				if(isImage) {
+					sourceDpi = ui.spinBoxPaperSizeDpi->value();
+				}
+				// [pt] = 72 * [in]
+				// [in] = 1 / dpi * [px]
+				// => [pt] = 72 / dpi * [px]
+				double px2pt = (72.0 / sourceDpi);
+				double imgScale = double(outputDpi) / sourceDpi;
 				bool success = false;
-				QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, page->sourceFile()), Q_ARG(int, page->pageNr()), Q_ARG(int, outputDpi), Q_ARG(double, page->angle()));
+				if(isImage) {
+					QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, sourceFile), Q_ARG(int, page->pageNr()), Q_ARG(int, int(sourceScale*imgScale)), Q_ARG(double, page->angle()));
+				} else {
+					QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, sourceFile), Q_ARG(int, page->pageNr()), Q_ARG(int, outputDpi), Q_ARG(double, page->angle()));
+				}
 				if(success) {
-					// [pt] = 72 * [in]
-					// [in] = 1 / dpi * [px]
-					// => [pt] = 72 / dpi * [px]
-					double px2pt = (72.0 / sourceDpi);
-					double imgScale = double(outputDpi) / sourceDpi;
 					if(paperSize == "source") {
 						pageWidth = bbox.width() * px2pt;
 						pageHeight = bbox.height() * px2pt;
@@ -571,7 +582,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 					if(!painter->createPage(pageWidth, pageHeight, offsetX, offsetY, errMsg)) {
 						return false;
 					}
-					printChildren(*painter, page, pdfSettings, px2pt, imgScale);
+					printChildren(*painter, page, pdfSettings, px2pt, imgScale, double(sourceScale)/sourceDpi);
 					if(pdfSettings.overlay) {
 						QRect scaledRect(imgScale * bbox.left(), imgScale * bbox.top(), imgScale * bbox.width(), imgScale * bbox.height());
 						QRect printRect(bbox.left() * px2pt, bbox.top() * px2pt, bbox.width() * px2pt, bbox.height() * px2pt);
@@ -579,11 +590,11 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 						QMetaObject::invokeMethod(this, "getSelection",  Qt::BlockingQueuedConnection, Q_RETURN_ARG(QImage, selection), Q_ARG(QRect, scaledRect));
 						painter->drawImage(printRect, selection, pdfSettings);
 					}
-					QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, page->sourceFile()), Q_ARG(int, page->pageNr()), Q_ARG(int, sourceDpi), Q_ARG(double, page->angle()));
+					QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, page->sourceFile()), Q_ARG(int, page->pageNr()), Q_ARG(int, sourceScale), Q_ARG(double, page->angle()));
 					painter->finishPage();
 				} else {
 					errMsg = _("Failed to render page %1").arg(page->title());
-					return false;;
+					return false;
 				}
 			}
 			monitor.increaseProgress();
@@ -678,9 +689,12 @@ HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const {
 	return pdfSettings;
 }
 
-void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu/*pixels to printer units*/, double imgScale) {
+void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu/*pixels to printer units*/, double imgScale, double fontScale) {
 	if(!item->isEnabled()) {
 		return;
+	}
+	if(pdfSettings.fontSize != -1) {
+		painter.setFontSize(pdfSettings.fontSize * fontScale);
 	}
 	QString itemClass = item->itemClass();
 	QRect itemRect = item->bbox();
@@ -701,7 +715,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 				QRect wordRect = wordItem->bbox();
 				painter.setFontFamily(pdfSettings.fontFamily.isEmpty() ? wordItem->fontFamily() : pdfSettings.fontFamily, wordItem->fontBold(), wordItem->fontItalic());
 				if(pdfSettings.fontSize == -1) {
-					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
+					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling * fontScale);
 				}
 				// If distance from previous word is large, keep the space
 				if(wordRect.x() - prevWordRight > pdfSettings.preserveSpaceWidth * painter.getAverageCharWidth() / px2pu) {
@@ -724,7 +738,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 			QRect wordRect = wordItem->bbox();
 			painter.setFontFamily(pdfSettings.fontFamily.isEmpty() ? wordItem->fontFamily() : pdfSettings.fontFamily, wordItem->fontBold(), wordItem->fontItalic());
 			if(pdfSettings.fontSize == -1) {
-				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
+				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling * fontScale);
 			}
 			double y = itemRect.bottom() + (wordRect.center().x() - itemRect.x()) * baseline.first + baseline.second;
 			painter.drawText(wordRect.x() * px2pu, y * px2pu, wordItem->text());
@@ -737,7 +751,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 		painter.drawImage(printRect, selection, pdfSettings);
 	} else {
 		for(int i = 0, n = item->children().size(); i < n; ++i) {
-			printChildren(painter, item->children()[i], pdfSettings, px2pu, imgScale);
+			printChildren(painter, item->children()[i], pdfSettings, px2pu, imgScale, fontScale);
 		}
 	}
 }
@@ -873,14 +887,17 @@ void HOCRPdfExporter::paperSizeChanged() {
 		ui.lineEditPaperHeight->setEnabled(true);
 		ui.widgetPaperSize->setVisible(true);
 		ui.widgetPaperOrientation->setVisible(false);
+		ui.widgetPaperSizeDpi->setVisible(false);
 	} else if(paperSize == "source") {
 		ui.lineEditPaperWidth->setEnabled(true);
 		ui.lineEditPaperHeight->setEnabled(true);
 		ui.widgetPaperSize->setVisible(false);
 		ui.widgetPaperOrientation->setVisible(false);
+		ui.widgetPaperSizeDpi->setVisible(true);
 	} else {
 		ui.widgetPaperSize->setVisible(true);
 		ui.widgetPaperOrientation->setVisible(true);
+		ui.widgetPaperSizeDpi->setVisible(false);
 		ui.lineEditPaperWidth->setDisabled(true);
 		ui.lineEditPaperHeight->setDisabled(true);
 		PaperSize::Unit unit = static_cast<PaperSize::Unit>(ui.comboBoxPaperSizeUnit->itemData(ui.comboBoxPaperSizeUnit->currentIndex()).toInt());
