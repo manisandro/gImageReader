@@ -559,7 +559,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 				int sourceDpi = page->resolution();
 				int sourceScale = sourceDpi;
 				if(isImage) {
-					sourceDpi = ui.spinBoxPaperSizeDpi->value();
+					sourceDpi *= ui.spinBoxPaperSizeDpi->value() / 100;
 				}
 				// [pt] = 72 * [in]
 				// [in] = 1 / dpi * [px]
