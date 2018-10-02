@@ -666,7 +666,7 @@ QString HOCRItem::serializeAttrGroup(const QMap<QString, QString>& attrs) {
 
 QString HOCRItem::trimmedWord(const QString& word, QString* prefix, QString* suffix) {
 	// correctly trim words with apostrophes or hyphens within them, phrases with dashes, initialisms/acronyms, and numeric citations
-	QRegExp wordRe("^(\\W*)(\\w|\\w(\\w|[-\\x2013\\x2014'’])*\\w|(\\w+\\.){2,})([\\W\\x00b2\\x00b3\\x00b9\\x2070-\\x207e]*)$");
+	QRegExp wordRe("^(\\W*)(\\w?|\\w(\\w|[-\\x2013\\x2014'’])*\\w|(\\w+\\.){2,})([\\W\\x00b2\\x00b3\\x00b9\\x2070-\\x207e]*)$");
 	if(wordRe.indexIn(word) != -1) {
 		if(prefix) {
 			*prefix = wordRe.cap(1);
