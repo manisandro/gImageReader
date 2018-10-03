@@ -564,13 +564,14 @@ bool HOCRDocument::checkSpelling(const QString& trimmed, QStringList* suggestion
 	if(limit > 0) { perWordLimit = int(std::pow(10, std::log10(limit) / words.size())); }
 	QList<QList<QString>> wordSuggestions;
 	bool valid = true;
+	bool multipleWords = words.size() > 1;
 	for(const QStringRef& word : words) {
 		QString wordString = word.toString();
 		bool wordValid = m_spell->checkWord(wordString);
 		valid &= wordValid;
 		if(suggestions) {
 			QList<QString> ws = m_spell->getSpellingSuggestions(wordString);
-			if(wordValid) { ws.prepend(wordString); }
+			if(wordValid && multipleWords) { ws.prepend(wordString); }
 			if(limit == -1) {
 				wordSuggestions.append(ws);
 			} else if(limit > 0) {
