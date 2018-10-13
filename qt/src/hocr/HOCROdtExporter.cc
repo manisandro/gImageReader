@@ -295,8 +295,8 @@ void HOCROdtExporter::writeFontFaceDecls(QSet<QString>& families, const HOCRItem
 			families.insert(fontFamily);
 		}
 	} else {
-		for(const HOCRItem* item : item->children()) {
-			writeFontFaceDecls(families, item, writer);
+		for(const HOCRItem* child : item->children()) {
+			writeFontFaceDecls(families, child, writer);
 		}
 	}
 }
@@ -327,8 +327,8 @@ void HOCROdtExporter::writeFontStyles(QMap<QString, QMap<double, QString>>& styl
 			styles[fontKey].insert(item->fontSize(), styleName);
 		}
 	} else {
-		for(const HOCRItem* item : item->children()) {
-			writeFontStyles(styles, item, writer, counter);
+		for(const HOCRItem* child : item->children()) {
+			writeFontStyles(styles, child, writer, counter);
 		}
 	}
 }

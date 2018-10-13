@@ -914,7 +914,7 @@ void HOCRPdfExporter::importMetadataFromSource() {
 		ui.entryMetadataProducer->set_text(source->producer);
 
 		PoDoFo::EPdfVersion sourcePdfVersion = PoDoFo::EPdfVersion::ePdfVersion_1_7;
-		if(source->pdfVersionMajor == 1 && source->pdfVersionMinor >= 0 && source->pdfVersionMinor <= 7) {
+		if(source->pdfVersionMajor == 1 && source->pdfVersionMinor <= 7) {
 			sourcePdfVersion = static_cast<PoDoFo::EPdfVersion>(PoDoFo::EPdfVersion::ePdfVersion_1_0 + source->pdfVersionMinor);
 		}
 		ui.comboPdfVersion->set_active(sourcePdfVersion);
