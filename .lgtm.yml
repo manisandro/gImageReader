@@ -1,0 +1,10 @@
+extraction:
+  cpp:
+    prepare:
+      packages:
+        - python3-gi
+    configure:
+      command:
+        - mkdir _lgtm_build_dir
+        - cd _lgtm_build_dir
+        - cmake  -DINTERFACE_TYPE=gtk ..
