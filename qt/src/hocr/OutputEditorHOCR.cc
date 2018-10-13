@@ -919,7 +919,7 @@ void OutputEditorHOCR::setLanguage(const Config::Lang& lang) {
 	m_document->setDefaultLanguage(lang.code);
 }
 
-void OutputEditorHOCR::onVisibilityChanged(bool /*visibile*/) {
+void OutputEditorHOCR::onVisibilityChanged(bool /*visible*/) {
 	ui.searchFrame->hideSubstitutionsManager();
 }
 

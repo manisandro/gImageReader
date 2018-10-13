@@ -278,7 +278,7 @@ bool OutputEditorText::getModified() const {
 	return ui.plainTextEditOutput->document()->isModified();
 }
 
-void OutputEditorText::onVisibilityChanged(bool /*visibile*/) {
+void OutputEditorText::onVisibilityChanged(bool /*visible*/) {
 	ui.searchFrame->hideSubstitutionsManager();
 }
 

@@ -135,7 +135,7 @@ gImageReader 3.1.99 (Oct 13 2016):
    - Add options to choose color format and compression of images written to PDF, allowing to greatly reduce the size of PDF
    - Correctly handle paper size and DPI
    - Improve logic for uniformizing word and line spacing
-   - Make sure correct hypen character is used, allowing PDF applications to correctly find hyphenated words
+   - Make sure correct hyphen character is used, allowing PDF applications to correctly find hyphenated words
  * New and updated translations
  * Various bug fixes
  * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
@@ -156,7 +156,7 @@ gImageReader 3.1.90 (Apr 28 2016):
  * Show a progress bar when recognizing, add a cancel button
  * Modernized Gtk UI
  * Expose script and orientation detection support
- * Possiblity to pan via middle button drag
+ * Possibility to pan via middle button drag
  * Remove the need to specify the culture code in custom language definitions, and use a built-in language-culture mapping instead to search for spelling dictionaries
  * Various bug fixes
  * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
@@ -298,7 +298,7 @@ gImageReader 2.90 (Feb 11 2014):
     <li>PDF files can be generated from the <i>PDF export menu</i> in the <i>output pane toolbar</i>. Two modes are available:
         <ul>
             <li><i>PDF</i> will generate a reconstructed PDF the same layout and graphics/pictures as the source document.</li>
-            <li><i>PDF with invisible text overlay</i> will generate a PDF with the unmodified source image as background and invisible (but selectable) text overlayed above the respective source text in the image. This export mode is usefull for generating a document which is visually identical to the input, but with searchable and selectable text.</li>
+            <li><i>PDF with invisible text overlay</i> will generate a PDF with the unmodified source image as background and invisible (but selectable) text overlaid above the respective source text in the image. This export mode is useful for generating a document which is visually identical to the input, but with searchable and selectable text.</li>
         </ul>
     </li>
     <li>When exporting to PDF, the user is prompted for the font family to use, whether to honour the font sizes detected by the OCR engine, and whether to attempt to homogenize the text line spacing. Also, the user can select the color format, resolution and compression method to use for images in the PDF document to control the size of the generated output.</li>
@@ -308,7 +308,7 @@ gImageReader 2.90 (Feb 11 2014):
     <li>The program options can be accessed from the <i>application menu</i>, which opens when clicking the right-most button of the <i>main toolbar</i>. When running the application within the Gnome 3 desktop environment, the application menu is part of the top bar of the desktop shell.</li>
     <li>Options allow setting the font of the output pane, as well as determining whether the application will notify about missing spelling dictionaries and new program versions.</li>
     <li>When running the Gtk+ interface, the options also allow setting the orientation of the <i>output pane</i> (if vertical, it will occupy the right portion of the application, if horizontal, it will occupy the lower portion). When running the Qt interface, the position of the output pane can be freely moved around by dragging on the title bar of the output pane.</li>
-    <li>The <i>language data location</i> setting allows to control whether tesseract language definitions and spelling dictionaries are saved in system-wide (i.e. <tt>%ProgramFiles%</tt> under Windows or typically below <tt>/usr</tt> on Linux) or user-local (i.e. below the current user's home directory) directories. This is usefull if the user does not have writing privileges in system-wide locations.</li>
+    <li>The <i>language data location</i> setting allows to control whether tesseract language definitions and spelling dictionaries are saved in system-wide (i.e. <tt>%ProgramFiles%</tt> under Windows or typically below <tt>/usr</tt> on Linux) or user-local (i.e. below the current user's home directory) directories. This is useful if the user does not have writing privileges in system-wide locations.</li>
     <li>Additionally, one can define new rules to match tesseract language definitions to a language (unfortunately, the tesseract language definitions do not include this information). The list of predefined rules can be seen in the <i>Predefined language definitions</i> section. Additional definitions can be added clicking on the <i>Add</i> button below. The rules for a language definition, which consists of three fields, are as follows:
         <ul>
             <li><b>Filename prefix</b>: The filename of tesseract language data files is of the format <i>&lt;prefix&gt;.traineddata</i>, i.e. for English, the file is called <i>eng.traineddata</i> and the prefix is <i>eng</i>.</li>

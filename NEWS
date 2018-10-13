@@ -86,7 +86,7 @@ gImageReader 3.1.99 (Oct 13 2016):
    - Add options to choose color format and compression of images written to PDF, allowing to greatly reduce the size of PDF
    - Correctly handle paper size and DPI
    - Improve logic for uniformizing word and line spacing
-   - Make sure correct hypen character is used, allowing PDF applications to correctly find hyphenated words
+   - Make sure correct hyphen character is used, allowing PDF applications to correctly find hyphenated words
  * New and updated translations
  * Various bug fixes
  * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
@@ -107,7 +107,7 @@ gImageReader 3.1.90 (Apr 28 2016):
  * Show a progress bar when recognizing, add a cancel button
  * Modernized Gtk UI
  * Expose script and orientation detection support
- * Possiblity to pan via middle button drag
+ * Possibility to pan via middle button drag
  * Remove the need to specify the culture code in custom language definitions, and use a built-in language-culture mapping instead to search for spelling dictionaries
  * Various bug fixes
  * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master

@@ -109,7 +109,7 @@ private:
 
 class HOCRItem {
 public:
-	// attrname : attrvalue : occurences
+	// attrname : attrvalue : occurrences
 	typedef QMap<QString, QMap<QString, int>> AttrOccurenceMap_t;
 
 	HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem* parent, int index = -1);
@@ -151,7 +151,7 @@ public:
 	}
 	QMap<QString, QString> getAllAttributes() const;
 	QMap<QString, QString> getAttributes(const QList<QString>& names) const;
-	void getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString> > >& occurences) const;
+	void getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString> > >& occurrences) const;
 	QString toHtml(int indent = 0) const;
 	QPair<double, double> baseLine() const;
 	QString fontFamily() const {

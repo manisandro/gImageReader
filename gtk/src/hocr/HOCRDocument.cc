@@ -795,7 +795,7 @@ std::map<Glib::ustring, Glib::ustring> HOCRItem::getAttributes(const std::vector
 	return attrValues;
 }
 
-void HOCRItem::getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring>>>& occurences) const {
+void HOCRItem::getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring>>>& occurrences) const {
 	static std::map<Glib::ustring, std::vector<Glib::ustring>> s_propagatableAttributes = {
 		{"ocr_line", {"title:baseline"}},
 		{"ocrx_word", {"lang", "title:x_fsize", "title:x_font", "bold", "italic"}}
@@ -807,13 +807,13 @@ void HOCRItem::getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::
 		for(HOCRItem* child : m_childItems) {
 			std::map<Glib::ustring, Glib::ustring> attrs = child->getAttributes(it->second);
 			for(auto attrIt = attrs.begin(), attrItEnd = attrs.end(); attrIt != attrItEnd; ++attrIt) {
-				occurences[childClass][attrIt->first].insert(attrIt->second);
+				occurrences[childClass][attrIt->first].insert(attrIt->second);
 			}
 		}
 	}
 	if(childClass != "ocrx_word") {
 		for(HOCRItem* child : m_childItems) {
-			child->getPropagatableAttributes(occurences);
+			child->getPropagatableAttributes(occurrences);
 		}
 	}
 }

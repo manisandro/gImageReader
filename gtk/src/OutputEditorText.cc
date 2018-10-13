@@ -316,7 +316,7 @@ bool OutputEditorText::getModified() const {
 	return m_textBuffer->get_modified();
 }
 
-void OutputEditorText::onVisibilityChanged(bool /*visibile*/) {
+void OutputEditorText::onVisibilityChanged(bool /*visible*/) {
 	m_searchFrame->hideSubstitutionsManager();
 }
 
