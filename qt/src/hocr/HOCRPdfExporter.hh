@@ -106,7 +106,7 @@ private:
 
 	PDFSettings getPdfSettings() const;
 	PDFPainter* createPoDoFoPrinter(const QString& filename, const QFont& defaultFont, QString& errMsg);
-	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu, double imgScale = 1.);
+	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu, double imgScale = 1., double fontScale = 1.);
 
 private slots:
 	void backendChanged();

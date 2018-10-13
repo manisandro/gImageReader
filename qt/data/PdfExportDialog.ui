@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>495</width>
-    <height>632</height>
+    <width>502</width>
+    <height>651</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="horizontalSpacing">
     <number>2</number>
    </property>
-   <item row="3" column="0" colspan="2">
+   <item row="4" column="0" colspan="2">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -30,7 +30,7 @@
      </property>
     </spacer>
    </item>
-   <item row="4" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -47,7 +47,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="2">
+   <item row="3" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -82,6 +82,20 @@
          <property name="text">
           <string>Backend:</string>
          </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="comboBoxOutputMode">
+         <item>
+          <property name="text">
+           <string>PDF</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>PDF with invisible text overlay</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="3" column="1">
@@ -177,20 +191,6 @@
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="comboBoxOutputMode">
-         <item>
-          <property name="text">
-           <string>PDF</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>PDF with invisible text overlay</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item row="3" column="0">
@@ -547,6 +547,50 @@
           </item>
           <item row="1" column="1" colspan="2">
            <widget class="QFontComboBox" name="comboBoxFallbackFontFamily"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QWidget" name="widgetPaperSizeDpi" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="labelPaperSizeDpi">
+            <property name="text">
+             <string>Treat image sources as having true DPI:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinBoxPaperSizeDpi">
+            <property name="minimum">
+             <number>50</number>
+            </property>
+            <property name="maximum">
+             <number>1200</number>
+            </property>
+            <property name="singleStep">
+             <number>10</number>
+            </property>
+            <property name="value">
+             <number>300</number>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
