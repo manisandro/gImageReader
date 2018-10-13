@@ -571,9 +571,9 @@ void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index, const Gtk:
 	}
 
 	// ocr_class:attr_key:attr_values
-	std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring>>> occurences;
-	currentItem->getPropagatableAttributes(occurences);
-	for(auto it = occurences.begin(), itEnd = occurences.end(); it != itEnd; ++it) {
+	std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring>>> occurrences;
+	currentItem->getPropagatableAttributes(occurrences);
+	for(auto it = occurrences.begin(), itEnd = occurrences.end(); it != itEnd; ++it) {
 		Gtk::TreeIter item = m_propStore->append();
 		Glib::ustring itemClass = it->first;
 		item->set_value(m_propStoreCols.name, itemClass);
@@ -1076,7 +1076,7 @@ void OutputEditorHOCR::setLanguage(const Config::Lang& lang) {
 	m_document->setDefaultLanguage(lang.code);
 }
 
-void OutputEditorHOCR::onVisibilityChanged(bool /*visibile*/) {
+void OutputEditorHOCR::onVisibilityChanged(bool /*visible*/) {
 	m_searchFrame->hideSubstitutionsManager();
 }
 
