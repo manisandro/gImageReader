@@ -51,7 +51,7 @@ public:
 	bool getModified() const override {
 		return m_modified;
 	}
-	void onVisibilityChanged(bool /*visibile*/);
+	void onVisibilityChanged(bool /*visible*/);
 
 	bool clear(bool hide = true) override;
 	void setLanguage(const Config::Lang& lang) override;

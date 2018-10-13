@@ -113,7 +113,7 @@ Function .onInit
 
   uninst_err:
     MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-      "An error occured while uninstalling.$\n$\nTo continue regardless, press 'OK'. To cancel the installation, press 'Cancel'." \
+      "An error occurred while uninstalling.$\n$\nTo continue regardless, press 'OK'. To cancel the installation, press 'Cancel'." \
       IDOK done
     Abort
 

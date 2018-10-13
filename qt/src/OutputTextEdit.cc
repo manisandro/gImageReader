@@ -217,7 +217,7 @@ void OutputTextEdit::paintEvent(QPaintEvent* e) {
 			rect.setLeft(startLine.cursorToX(startLinePos) - 0.5);
 			painter.drawRect(rect);
 
-			// Draw selections inbetween
+			// Draw selections in between
 			QTextBlock block = startBlock;
 			int lineNo = startLine.lineNumber() + 1;
 			while(!(block.blockNumber() == endBlock.blockNumber() && lineNo == endLine.lineNumber())) {

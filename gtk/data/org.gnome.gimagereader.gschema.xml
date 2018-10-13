@@ -78,7 +78,7 @@
         </key>
         <key type="b" name="joinhyphen">
             <default>true</default>
-            <summary>Join word split by hypen</summary>
+            <summary>Join word split by hyphen</summary>
             <description>Join word split by hyphen.</description>
         </key>
         <key type="b" name="joinspace">
