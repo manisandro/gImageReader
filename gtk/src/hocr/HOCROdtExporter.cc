@@ -401,8 +401,8 @@ void HOCROdtExporter::writeFontFaceDecls(std::set<Glib::ustring>& families, cons
 			families.insert(fontFamily);
 		}
 	} else {
-		for(const HOCRItem* item : item->children()) {
-			writeFontFaceDecls(families, item, parentEl);
+		for(const HOCRItem* child : item->children()) {
+			writeFontFaceDecls(families, child, parentEl);
 		}
 	}
 }
@@ -439,8 +439,8 @@ void HOCROdtExporter::writeFontStyles(std::map<Glib::ustring, std::map<double, G
 			styles[fontKey].insert(std::make_pair(item->fontSize(), styleName));
 		}
 	} else {
-		for(const HOCRItem* item : item->children()) {
-			writeFontStyles(styles, item, parentEl, counter);
+		for(const HOCRItem* child : item->children()) {
+			writeFontStyles(styles, child, parentEl, counter);
 		}
 	}
 }
