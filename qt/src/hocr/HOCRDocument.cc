@@ -24,6 +24,7 @@
 #include <QSet>
 #include <QTextStream>
 #include <QtSpell.hpp>
+#include <cmath>
 
 #include "common.hh"
 #include "HOCRDocument.hh"
@@ -286,7 +287,55 @@ QModelIndex HOCRDocument::prevIndex(const QModelIndex& current) {
 }
 
 bool HOCRDocument::indexIsMisspelledWord(const QModelIndex& index) const {
-	return !checkItemSpelling(itemAtIndex(index));
+	return !checkItemSpelling(index);
+}
+
+bool HOCRDocument::checkItemSpelling(const QModelIndex& index, QStringList* suggestions, int limit) const {
+	const HOCRItem* item = itemAtIndex(index);
+	if(item->itemClass() != "ocrx_word") { return true; }
+
+	QString prefix, suffix, trimmed = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
+	if(trimmed.isEmpty()) { return true; }
+	QString lang = item->lang();
+	if(m_spell->getLanguage() != lang && !(m_spell->setLanguage(lang))) { return true; }
+
+	// check word, including (if requested) setting suggestions; handle hyphenated phrases correctly
+	if(checkSpelling(trimmed, suggestions, limit)) { return true; }
+
+	// handle some hyphenated words
+	// don't bother with words not broken over sibling text lines (ie interrupted by other blocks), it's human hard
+	// don't bother with words broken over three or more lines, it's implausible and this treatment is ^ necessarily incomplete
+	HOCRItem* parent = item->parent();
+	if(!parent) { return false; }
+	HOCRItem* grandparent = parent->parent();
+	if(!grandparent) { return false; }
+	int idx = item->index();
+	int parentIdx = parent->index();
+	QVector<HOCRItem*> parentSiblings = grandparent->children();
+	if(idx == 0 && parentIdx > 0) {
+		HOCRItem* parentPrevSibling = parentSiblings.at(parentIdx-1);
+		if(!parentPrevSibling) { return false; }
+		QVector<HOCRItem*> cousins = parentPrevSibling->children();
+		if(cousins.size() < 1) { return false; }
+		HOCRItem* prevCousin = cousins.back();
+		if(!prevCousin || prevCousin->itemClass() != "ocrx_word") { return false; }
+		QString prevText = prevCousin->text();
+		if(prevText.isEmpty() || prevText.back() != '-') { return false; }
+
+		// don't bother with (reassembled) suggestions for broken words since we can't re-break them
+		return checkSpelling(HOCRItem::trimmedWord(prevText) + trimmed);
+	}
+	if(idx + 1 == parent->children().size() && parentIdx + 1 < parentSiblings.size() && item->text().back() == '-') {
+		HOCRItem* parentNextSibling = parentSiblings.at(parentIdx + 1);
+		if(!parentNextSibling) { return false; }
+		QVector<HOCRItem*> cousins = parentNextSibling->children();
+		if(cousins.size() < 1) { return false; }
+		HOCRItem* nextCousin = cousins.front();
+		if(!nextCousin || nextCousin->itemClass() != "ocrx_word") { return false; }
+
+		return checkSpelling(trimmed + HOCRItem::trimmedWord(nextCousin->text()));
+	}
+	return false;
 }
 
 bool HOCRDocument::referencesSource(const QString& filename) const {
@@ -359,9 +408,9 @@ QVariant HOCRDocument::data(const QModelIndex& index, int role) const {
 				parent = parent->parent();
 			}
 			if(enabled) {
-				return checkItemSpelling(item) ? QVariant() : QVariant(QColor(Qt::red));
+				return checkItemSpelling(index) ? QVariant() : QVariant(QColor(Qt::red));
 			} else {
-				return checkItemSpelling(item) ? QVariant(QColor(Qt::gray)) : QVariant(QColor(208, 80, 82));
+				return checkItemSpelling(index) ? QVariant(QColor(Qt::gray)) : QVariant(QColor(208, 80, 82));
 			}
 		}
 		case Qt::CheckStateRole:
@@ -508,50 +557,60 @@ QIcon HOCRDocument::decorationRoleForItem(const HOCRItem* item) const {
 	return QIcon();
 }
 
-bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const {
-	if(item->itemClass() != "ocrx_word") { return true; }
-
-	QString trimmed = HOCRItem::trimmedWord(item->text());
-	if(trimmed.isEmpty()) { return true; }
-
-	QString lang = item->lang();
-	if(m_spell->getLanguage() != lang && !(m_spell->setLanguage(lang))) { return true; }
-
-	if(m_spell->checkWord(trimmed)) { return true; } // handle hyphenated phrases correctly
-
-	// handle some hyphenated words
-	// don't bother with words not broken over sibling text lines (ie interrupted by other blocks), it's human hard
-	// don't bother with words broken over three or more lines, it's implausible and this treatment is ^ necessarily incomplete
-	HOCRItem* parent = item->parent();
-	if(!parent) { return false; }
-	HOCRItem* grandparent = parent->parent();
-	if(!grandparent) { return false; }
-	int idx = item->index();
-	int parentIdx = parent->index();
-	QVector<HOCRItem*> parentSiblings = grandparent->children();
-	if(idx == 0 && parentIdx > 0) {
-		HOCRItem* parentPrevSibling = parentSiblings.at(parentIdx - 1);
-		if(!parentPrevSibling) { return false; }
-		QVector<HOCRItem*> cousins = parentPrevSibling->children();
-		if(cousins.size() < 1) { return false; }
-		HOCRItem* prevCousin = cousins.back();
-		if(!prevCousin || prevCousin->itemClass() != "ocrx_word") { return false; }
-		QString prevText = prevCousin->text();
-		if(prevText.isEmpty() || prevText.back() != '-') { return false; }
-
-		return m_spell->checkWord(HOCRItem::trimmedWord(prevText) + trimmed);
+bool HOCRDocument::checkSpelling(const QString& trimmed, QStringList* suggestions, int limit) const {
+	QVector<QStringRef> words = trimmed.splitRef(QRegExp("[\\x2013\\x2014]+"));
+	int perWordLimit;
+	// s = p^w => w = log_p(c) = log(c)/log(p) => p = 10^(log(c)/w)
+	if(limit > 0) { perWordLimit = int(std::pow(10, std::log10(limit) / words.size())); }
+	QList<QList<QString>> wordSuggestions;
+	bool valid = true;
+	bool multipleWords = words.size() > 1;
+	for(const QStringRef& word : words) {
+		QString wordString = word.toString();
+		bool wordValid = m_spell->checkWord(wordString);
+		valid &= wordValid;
+		if(suggestions) {
+			QList<QString> ws = m_spell->getSpellingSuggestions(wordString);
+			if(wordValid && multipleWords) { ws.prepend(wordString); }
+			if(limit == -1) {
+				wordSuggestions.append(ws);
+			} else if(limit > 0) {
+				wordSuggestions.append(ws.mid(0, perWordLimit));
+			}
+		}
 	}
-	if(idx + 1 == parent->children().size() && parentIdx + 1 < parentSiblings.size() && item->text().back() == '-') {
-		HOCRItem* parentNextSibling = parentSiblings.at(parentIdx + 1);
-		if(!parentNextSibling) { return false; }
-		QVector<HOCRItem*> cousins = parentNextSibling->children();
-		if(cousins.size() < 1) { return false; }
-		HOCRItem* nextCousin = cousins.front();
-		if(!nextCousin || nextCousin->itemClass() != "ocrx_word") { return false; }
-
-		return m_spell->checkWord(trimmed + HOCRItem::trimmedWord(nextCousin->text()));
+	if(suggestions) {
+		suggestions->clear();
+		QList<QList<QString>> suggestionCombinations;
+		generateCombinations(wordSuggestions, suggestionCombinations, 0, QList<QString>());
+		for(const QList<QString>& combination : suggestionCombinations) {
+			QString s = "";
+			const QStringRef* originalWord = words.begin();
+			int last = 0;
+			int next;
+			for(const QString& suggestedWord : combination) {
+				next = originalWord->position();
+				s.append(trimmed.midRef(last, next - last));
+				s.append(suggestedWord);
+				last = next + originalWord->length();
+				originalWord++;
+			}
+			s.append(trimmed.midRef(last));
+			suggestions->append(s);
+		}
 	}
-	return false;
+	return valid;
+}
+
+// each suggestion for each word => each word in each suggestion
+void HOCRDocument::generateCombinations(const QList<QList<QString>>& lists, QList<QList<QString>>& results, int depth, const QList<QString> c) const {
+	if(depth == lists.size()) {
+		results.append(c);
+		return;
+	}
+	for(int i = 0; i < lists[depth].size(); ++i) {
+		generateCombinations(lists, results, depth + 1, c + QList<QString>({lists[depth][i]}));
+	}
 }
 
 void HOCRDocument::insertItem(HOCRItem* parent, HOCRItem* item, int i) {
@@ -607,8 +666,8 @@ QString HOCRItem::serializeAttrGroup(const QMap<QString, QString>& attrs) {
 }
 
 QString HOCRItem::trimmedWord(const QString& word, QString* prefix, QString* suffix) {
-	// correctly trim words with apostrophes or hyphens within them, initialisms/acronyms, and numeric citations
-	QRegExp wordRe("^(\\W*)(\\w|\\w(\\w|[-'’])*\\w|(\\w+\\.){2,})([\\W\\x00b2\\x00b3\\x00b9\\x2070-\\x207e]*)$");
+	// correctly trim words with apostrophes or hyphens within them, phrases with dashes, initialisms/acronyms, and numeric citations
+	QRegExp wordRe("^(\\W*)(\\w?|\\w(\\w|[-\\x2013\\x2014'’])*\\w|(\\w+\\.){2,})([\\W\\x00b2\\x00b3\\x00b9\\x2070-\\x207e]*)$");
 	if(wordRe.indexIn(word) != -1) {
 		if(prefix) {
 			*prefix = wordRe.cap(1);

@@ -68,6 +68,7 @@ public:
 	QModelIndex nextIndex(const QModelIndex& current);
 	QModelIndex prevIndex(const QModelIndex& current);
 	bool indexIsMisspelledWord(const QModelIndex& index) const;
+	bool checkItemSpelling(const QModelIndex&, QStringList* suggestions = nullptr, int limit = -1) const;
 
 	bool referencesSource(const QString& filename) const;
 	QModelIndex searchPage(const QString& filename, int pageNr) const;
@@ -95,7 +96,8 @@ private:
 	QString displayRoleForItem(const HOCRItem* item) const;
 	QIcon decorationRoleForItem(const HOCRItem* item) const;
 
-	bool checkItemSpelling(const HOCRItem* item) const;
+	bool checkSpelling(const QString& trimmed, QStringList* suggestions = nullptr, int limit = -1) const;
+	void generateCombinations(const QList<QList<QString>>& lists, QList<QList<QString>>& results, int depth, const QList<QString> c) const;
 	void insertItem(HOCRItem* parent, HOCRItem* item, int i);
 	void deleteItem(HOCRItem* item);
 	void takeItem(HOCRItem* item);
