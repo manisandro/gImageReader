@@ -198,12 +198,20 @@ rm -rf $installroot/share/appdata
     find -type d -depth | sed 's|/|\\|g' | sed -E 's|^\.(.*)$|RMDir "\$INSTDIR\1"|g' >> $builddir/unfiles.nsi
 )
 
-# Build the installer
 progName=$(grep -oP 'SET\(PACKAGE_NAME \K(\w+)(?=\))' $srcdir/CMakeLists.txt)
 progVersion=$(grep -oP 'SET\(PACKAGE_VERSION \K([\d\.]+)(?=\))' $srcdir/CMakeLists.txt)
 if [ $withdebug ]; then
     variant="_debug"
 fi
+
+# Build portable zip
+pushd $builddir
+ln -s root ${progName}_${iface}_${progVersion}
+zip -r "${progName}_${iface}_${progVersion}_${arch}.zip" ${progName}_${iface}_${progVersion}
+rm ${progName}_${iface}_${progVersion}
+popd
+
+# Build the installer
 makensis -DNAME=$progName -DARCH=$arch -DVARIANT="$variant" -DPROGVERSION="$progVersion" -DIFACE="$iface" installer.nsi;
 
 # Cleanup
