@@ -15,6 +15,7 @@ dnf install -y \
   hunspell-en \
   tesseract \
   mingw32-nsis \
+  zip \
   \
   mingw32-gdb \
   mingw32-gcc-c++ \
