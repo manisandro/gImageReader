@@ -313,7 +313,7 @@ bool HOCRDocument::checkItemSpelling(const QModelIndex& index, QStringList* sugg
 	int parentIdx = parent->index();
 	QVector<HOCRItem*> parentSiblings = grandparent->children();
 	if(idx == 0 && parentIdx > 0) {
-		HOCRItem* parentPrevSibling = parentSiblings.at(parentIdx-1);
+		HOCRItem* parentPrevSibling = parentSiblings.at(parentIdx - 1);
 		if(!parentPrevSibling) { return false; }
 		QVector<HOCRItem*> cousins = parentPrevSibling->children();
 		if(cousins.size() < 1) { return false; }

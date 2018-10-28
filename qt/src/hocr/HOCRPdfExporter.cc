@@ -568,7 +568,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 				double imgScale = double(outputDpi) / sourceDpi;
 				bool success = false;
 				if(isImage) {
-					QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, sourceFile), Q_ARG(int, page->pageNr()), Q_ARG(int, int(sourceScale*imgScale)), Q_ARG(double, page->angle()));
+					QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, sourceFile), Q_ARG(int, page->pageNr()), Q_ARG(int, int(sourceScale * imgScale)), Q_ARG(double, page->angle()));
 				} else {
 					QMetaObject::invokeMethod(this, "setSource", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, success), Q_ARG(QString, sourceFile), Q_ARG(int, page->pageNr()), Q_ARG(int, outputDpi), Q_ARG(double, page->angle()));
 				}
@@ -582,7 +582,7 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 					if(!painter->createPage(pageWidth, pageHeight, offsetX, offsetY, errMsg)) {
 						return false;
 					}
-					printChildren(*painter, page, pdfSettings, px2pt, imgScale, double(sourceScale)/sourceDpi);
+					printChildren(*painter, page, pdfSettings, px2pt, imgScale, double(sourceScale) / sourceDpi);
 					if(pdfSettings.overlay) {
 						QRect scaledRect(imgScale * bbox.left(), imgScale * bbox.top(), imgScale * bbox.width(), imgScale * bbox.height());
 						QRect printRect(bbox.left() * px2pt, bbox.top() * px2pt, bbox.width() * px2pt, bbox.height() * px2pt);
