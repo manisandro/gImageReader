@@ -55,6 +55,7 @@ private:
 		int preserveSpaceWidth;
 		bool overlay;
 		double detectedFontScaling;
+		bool sanitizeHyphens;
 	};
 
 	class PDFPainter {

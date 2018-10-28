@@ -711,11 +711,6 @@ HOCRItem::HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem* parent,
 		m_text = element.text();
 		m_bold = !element.elementsByTagName("strong").isEmpty();
 		m_italic = !element.elementsByTagName("em").isEmpty();
-		// For the last word items of the line, ensure the correct hyphen is used
-		QDomElement nextElement = element.nextSiblingElement();
-		if(nextElement.isNull()) {
-			m_text.replace(QRegExp("[-\u2014]\\s*$"), "-");
-		}
 	} else if(itemClass() == "ocr_line") {
 		// Depending on the locale, tesseract can use a comma instead of a dot as decimal separator in the baseline...
 		m_titleAttrs["baseline"] = m_titleAttrs["baseline"].replace(",", ".");

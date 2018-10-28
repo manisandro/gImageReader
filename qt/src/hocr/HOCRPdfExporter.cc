@@ -686,6 +686,7 @@ HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const {
 	pdfSettings.preserveSpaceWidth = ui.spinBoxPreserve->value();
 	pdfSettings.overlay = ui.comboBoxOutputMode->currentIndex() == 1;
 	pdfSettings.detectedFontScaling = ui.spinFontScaling->value() / 100.;
+	pdfSettings.sanitizeHyphens = ui.checkBoxSanitizeHyphens->isChecked();
 	return pdfSettings;
 }
 
@@ -723,6 +724,9 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 				}
 				prevWordRight = wordRect.right();
 				QString text = wordItem->text();
+				if(iWord == nWords - 1 && pdfSettings.sanitizeHyphens) {
+					text.replace(QRegExp("[-\u2014]\\s*$"), "-");
+				}
 				double wordBaseline = (x - itemRect.x()) * baseline.first + baseline.second;
 				painter.drawText(x * px2pu, (y + wordBaseline) * px2pu, text);
 				x += painter.getTextWidth(text + " ") / px2pu;
@@ -741,7 +745,11 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling * fontScale);
 			}
 			double y = itemRect.bottom() + (wordRect.center().x() - itemRect.x()) * baseline.first + baseline.second;
-			painter.drawText(wordRect.x() * px2pu, y * px2pu, wordItem->text());
+			QString text = wordItem->text();
+			if(iWord == nWords - 1 && pdfSettings.sanitizeHyphens) {
+				text.replace(QRegExp("[-\u2014]\\s*$"), "-");
+			}
+			painter.drawText(wordRect.x() * px2pu, y * px2pu, text);
 		}
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {
 		QRect scaledItemRect(itemRect.left() * imgScale, itemRect.top() * imgScale, itemRect.width() * imgScale, itemRect.height() * imgScale);

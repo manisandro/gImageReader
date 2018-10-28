@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>502</width>
-    <height>651</height>
+    <height>689</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -412,17 +412,17 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1" colspan="2">
-           <widget class="QFontComboBox" name="comboBoxFontFamily">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QCheckBox" name="checkBoxFontFamily">
             <property name="text">
              <string>Override font family:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="2">
+           <widget class="QFontComboBox" name="comboBoxFontFamily">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -547,6 +547,13 @@
           </item>
           <item row="1" column="1" colspan="2">
            <widget class="QFontComboBox" name="comboBoxFallbackFontFamily"/>
+          </item>
+          <item row="6" column="0" colspan="3">
+           <widget class="QCheckBox" name="checkBoxSanitizeHyphens">
+            <property name="text">
+             <string>Sanitize hyphens before line breaks</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
