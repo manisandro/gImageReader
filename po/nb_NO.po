@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2018-08-20 18:40+0000\n"
+"PO-Revision-Date: 2018-10-25 08:34+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.2-dev\n"
+"X-Generator: Weblate 3.3-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -60,7 +60,7 @@ msgstr "OK"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
-msgstr ""
+msgstr "Sideretning for utdatatekst:"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
@@ -87,12 +87,13 @@ msgid "Additional language definitions:"
 msgstr "Ytterligere språkdefinisjoner:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
+#, fuzzy
 msgid "The prefix of the tesseract language data file"
-msgstr ""
+msgstr "Prefiks for tesseracts språkdatafil"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
-msgstr ""
+msgstr "Prefiks"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
@@ -119,8 +120,9 @@ msgid "Cancel"
 msgstr "Avbryt"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
+#, fuzzy
 msgid "Output pane font:"
-msgstr ""
+msgstr "Skrift for utdatavindu:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
@@ -128,23 +130,23 @@ msgstr "Forvalg"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "Språkdatalokaliteter:"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
-msgstr ""
+msgstr "Språkdefinisjonssti:"
 
 #: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
-msgstr ""
+msgstr "Staveordbokssti:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "Systemomfattende stier"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Brukerstier"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
