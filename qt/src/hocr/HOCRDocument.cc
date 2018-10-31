@@ -320,7 +320,7 @@ bool HOCRDocument::checkItemSpelling(const QModelIndex& index, QStringList* sugg
 		HOCRItem* prevCousin = cousins.back();
 		if(!prevCousin || prevCousin->itemClass() != "ocrx_word") { return false; }
 		QString prevText = prevCousin->text();
-		if(prevText.isEmpty() || prevText.back() != '-') { return false; }
+		if(prevText.isEmpty() || prevText[prevText.size() - 1] != '-') { return false; }
 
 		// don't bother with (reassembled) suggestions for broken words since we can't re-break them
 		return checkSpelling(HOCRItem::trimmedWord(prevText) + trimmed);
