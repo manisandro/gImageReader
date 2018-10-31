@@ -325,7 +325,8 @@ bool HOCRDocument::checkItemSpelling(const QModelIndex& index, QStringList* sugg
 		// don't bother with (reassembled) suggestions for broken words since we can't re-break them
 		return checkSpelling(HOCRItem::trimmedWord(prevText) + trimmed);
 	}
-	if(idx + 1 == parent->children().size() && parentIdx + 1 < parentSiblings.size() && item->text().back() == '-') {
+	QString text = item->text();
+	if(idx + 1 == parent->children().size() && parentIdx + 1 < parentSiblings.size() && !text.isEmpty() && text[text.size() - 1] == '-') {
 		HOCRItem* parentNextSibling = parentSiblings.at(parentIdx + 1);
 		if(!parentNextSibling) { return false; }
 		QVector<HOCRItem*> cousins = parentNextSibling->children();
