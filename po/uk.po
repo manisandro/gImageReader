@@ -11,28 +11,28 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2016-10-06 23:34+0100\n"
-"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
-"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2018-11-08 14:07+0000\n"
+"Last-Translator: ___ <o.kravtsov@ukr.net>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/gimagereader/"
+"translations/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Weblate 3.3-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr ""
+msgstr "OCR-додаток"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
 msgid "Redetect Languages"
-msgstr "Перевизначити мови"
+msgstr "Повторно виявити мови"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
-#, fuzzy
 msgid "Manage Languages"
-msgstr "Керувати мовами..."
+msgstr "Керувати мовами"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
@@ -62,16 +62,17 @@ msgid "OK"
 msgstr "Гаразд"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
+#, fuzzy
 msgid "Output pane orientation:"
-msgstr "Розташування панелі результатів:"
+msgstr "Орієнтація панелі результатів:"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
-msgstr "Горизонтальне"
+msgstr "Горизонтально"
 
 #: ../gtk/data/ConfigDialog.ui.h:6
 msgid "Vertical"
-msgstr "Вертикальне"
+msgstr "Вертикально"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
@@ -83,11 +84,11 @@ msgstr "Автоматично перевіряти наявність нови�
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr "Задані мови визначення:"
+msgstr "Задані визначення мов:"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
-msgstr "Додаткові мови визначення:"
+msgstr "Додаткові визначення мов:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
@@ -99,8 +100,7 @@ msgstr "Префікс"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr ""
-"Код мови ISO 639-1 і поруч код країни, які з'єднані нижнім підкресленням"
+msgstr "Код мови за ISO 639-1 з кодом країни"
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
@@ -128,41 +128,41 @@ msgstr "Шрифт панелі результатів:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
-msgstr "За замовчуванням"
+msgstr "За-замовчуванням"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "Розташування мовних даних:"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
-#, fuzzy
 msgid "Language definitions path:"
-msgstr "Задані мови визначення:"
+msgstr "Розташування визначень мови:"
 
 #: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
-#, fuzzy
 msgid "Spelling dictionaries path:"
-msgstr "Орфографічний словник відсутній"
+msgstr "Розташування орфографічних словників:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "Загальносистемні шляхи"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Користувацькі шляхи"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
 msgstr ""
+"Автоматично відкривати експортовані документи у додатку за-замовчуванням"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:36
+#, fuzzy
 msgid "Regenerate backtrace"
-msgstr "Відновити трасування"
+msgstr "Відновити зворотнє трасування"
 
 #: ../gtk/data/CrashHandler.ui.h:2
 msgid "<b>The application has crashed</b>"
-msgstr "<b>Програма зазнала аварії</b>"
+msgstr "<b>Додаток аварійно завершився</b>"
 
 #: ../gtk/data/CrashHandler.ui.h:4
 #, no-c-format
@@ -173,30 +173,29 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"Прошу вибачення за незручності. Для оптимізації роботи програми, будь ласка "
-"напишіть про проблему на електронну пошту <a href=\"mailto:manisandro@gmail."
-"com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Намагайтеся "
-"описати, які дії ви виконували перед тим як програма зазнала аварії. Також "
-"додайте інформацію, розміщену нижче. Дякую."
+"Приносимо вибачення за незручності. Для допомоги у покращенні додатку, будь "
+"ласка, напишіть про проблему на електронну пошту <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Намагайтеся описати, які дії ви виконували перед "
+"тим, як додаток аварійно завершився. Також додайте інформацію, розміщену "
+"нижче. Дякуємо."
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
 msgstr "Показати/приховати панель результатів"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
-#, fuzzy
 msgid "Rotate current page"
-msgstr "Замінити поточний текст"
+msgstr "Обернути поточну сторінку"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
-#, fuzzy
 msgid "Rotate all pages"
-msgstr "Повернути вліво"
+msgstr "Обернути усі сторінки"
 
 #. Sources toolbar
 #: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:191
 msgid "Recent"
-msgstr "Попередні файли"
+msgstr "Недавні файли"
 
 #: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:192
 msgid "Paste"
@@ -208,15 +207,15 @@ msgstr "Зробити знімок екрану"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:204
 msgid "Add images"
-msgstr "Відкрити зображення"
+msgstr "Додати зображення"
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/src/Ui_MainWindow.hh:203
 msgid "Add Images"
-msgstr "Відкрити зображення"
+msgstr "Додати зображення"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:209
 msgid "Remove image from list"
-msgstr "Усунути зображення із списку"
+msgstr "Видалити зображення зі списку"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/src/Ui_MainWindow.hh:212
 msgid "Delete image"
@@ -267,9 +266,8 @@ msgid "Scan"
 msgstr "Сканувати"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:16
-#, fuzzy
 msgid "Source:"
-msgstr "Джерела"
+msgstr "Джерело:"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
@@ -308,14 +306,13 @@ msgid "Best fit"
 msgstr "Оптимальне заповнення"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../qt/src/Ui_MainWindow.hh:75
-#, fuzzy
 msgid "Select rotation mode"
-msgstr "Вибрати режим вставки"
+msgstr "Обрати режим обертання"
 
 #: ../gtk/data/MainWindow.ui.h:32 ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../gtk/data/OutputEditorText.ui.h:13 ../qt/src/Ui_OutputEditorText.hh:95
 msgid "Select insert mode"
-msgstr "Вибрати режим вставки"
+msgstr "Обрати режим вставки"
 
 #: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
@@ -330,17 +327,17 @@ msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:37
+#, fuzzy
 msgid "Autodetect layout"
-msgstr "Автовизначення вмісту"
+msgstr "Автовизначення макету сторінки"
 
 #: ../gtk/data/MainWindow.ui.h:37
 msgid "<small>Recognize all</small>"
 msgstr "<small>Розпізнати все</small>"
 
 #: ../gtk/data/MainWindow.ui.h:38
-#, fuzzy
 msgid "Select language"
-msgstr "Перевизначити мови"
+msgstr "Обрати мову"
 
 #: ../gtk/data/MainWindow.ui.h:39
 msgid "A graphical frontend to tesseract-ocr"
@@ -360,7 +357,7 @@ msgstr "<small><b>Приклад:</b> 1-10, 13, 14-18</small>"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
-msgstr "Ділянка для розпізнавання:"
+msgstr "Область розпізнавання:"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../gtk/src/Recognizer.cc:393
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:384
@@ -372,26 +369,24 @@ msgid "Autodetect"
 msgstr "Автовизначення"
 
 #: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:7
-#, fuzzy
 msgid "Prepend to output text:"
-msgstr "Додати до поточного тексту"
+msgstr "Додати перед текстом, що виводиться:"
 
 #: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
-msgstr ""
+msgstr "Ім'я вихідного файлу"
 
 #: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:9
-#, fuzzy
 msgid "Source page"
-msgstr "Джерела"
+msgstr "Вихідна сторінка"
 
 #: ../gtk/data/MainWindow.ui.h:51 ../qt/src/SourceManager.cc:146
 msgid "Protected PDF"
-msgstr ""
+msgstr "Захищений PDF"
 
 #: ../gtk/data/MainWindow.ui.h:52 ../qt/src/Recognizer.cc:76
 msgid "Current Page"
-msgstr "Поточну сторінку"
+msgstr "Поточна сторінка"
 
 #: ../gtk/data/MainWindow.ui.h:53 ../qt/src/Recognizer.cc:79
 msgid "Multiple Pages..."
@@ -399,17 +394,16 @@ msgstr "Кілька сторінок..."
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:577
 msgid "Add Word"
-msgstr ""
+msgstr "Додати слово"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:577
 msgid "Enter word:"
-msgstr ""
+msgstr "Введіть слово:"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:61
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
-#, fuzzy
 msgid "Export to plain text"
-msgstr "Експорт у PDF"
+msgstr "Експорт у простий текст"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:65
@@ -418,9 +412,8 @@ msgstr "Експорт у PDF"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:67
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:68
-#, fuzzy
 msgid "Export to ODT"
-msgstr "Експорт у PDF"
+msgstr "Експорт у ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/Ui_OutputEditorText.hh:116
@@ -429,9 +422,8 @@ msgstr "Зберегти результати"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
-#, fuzzy
 msgid "Export"
-msgstr "Експорт у PDF"
+msgstr "Експорт"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11 ../gtk/data/OutputEditorText.ui.h:19
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
@@ -450,36 +442,35 @@ msgstr "Знайти і замінити"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:83
 msgid "Show confidence values"
-msgstr ""
+msgstr "Відображати величини достовірності"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/PdfExportDialog.ui.h:39
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:86
 msgid "Show preview"
-msgstr ""
+msgstr "Відображати попередній перегляд"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
 msgid "Next (F3)"
-msgstr ""
+msgstr "Наступний (F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:16
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
 msgid "Previous (Shift+F3)"
-msgstr ""
+msgstr "Попередній (Shift+F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/src/hocr/OutputEditorHOCR.cc:889
 #: ../qt/src/hocr/OutputEditorHOCR.cc:724
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:126
 msgid "Expand all"
-msgstr ""
+msgstr "Розгорнути усе"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:18 ../gtk/src/hocr/OutputEditorHOCR.cc:892
 #: ../qt/src/hocr/OutputEditorHOCR.cc:725
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:127
-#, fuzzy
 msgid "Collapse all"
-msgstr "Стиснути пробіли"
+msgstr "Згорнути усе"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:19
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:148
@@ -488,9 +479,8 @@ msgstr "Властивості"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:20
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:152
-#, fuzzy
 msgid "Source"
-msgstr "Джерела"
+msgstr "Джерело"
 
 #. Output insert mode
 #: ../gtk/data/OutputEditorText.ui.h:1 ../qt/src/Ui_OutputEditorText.hh:52
@@ -499,7 +489,7 @@ msgstr "Додати до поточного тексту"
 
 #: ../gtk/data/OutputEditorText.ui.h:2 ../qt/src/Ui_OutputEditorText.hh:53
 msgid "Insert at cursor"
-msgstr "Вставити на місце курсору"
+msgstr "Вставити на місці курсору"
 
 #: ../gtk/data/OutputEditorText.ui.h:3 ../qt/src/Ui_OutputEditorText.hh:54
 msgid "Replace current text"
@@ -508,12 +498,11 @@ msgstr "Замінити поточний текст"
 #. Output postprocessing
 #: ../gtk/data/OutputEditorText.ui.h:4 ../qt/src/Ui_OutputEditorText.hh:62
 msgid "Keep line break if..."
-msgstr "Зберегти розрив рядка, якщо..."
+msgstr "Зберігати розрив рядка, якщо..."
 
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:64
-#, fuzzy
 msgid "Preceded by end mark (.?!)"
-msgstr "Перед ним є крапка"
+msgstr "Перед ним є знак кінця речення (.?!)"
 
 #: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:66
 msgid "Preceded or succeeded by quote"
@@ -529,11 +518,11 @@ msgstr "Об'єднати перенесені слова"
 
 #: ../gtk/data/OutputEditorText.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:72
 msgid "Collapse whitespace"
-msgstr "Стиснути пробіли"
+msgstr "Стискати пробіли"
 
 #: ../gtk/data/OutputEditorText.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:74
 msgid "Preserve paragraphs"
-msgstr "Зберегти абзаци"
+msgstr "Зберігати поділ на абзаци"
 
 #: ../gtk/data/OutputEditorText.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:76
 msgid "Visual aids"
@@ -555,16 +544,15 @@ msgstr "Скасувати"
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:112
 #: ../qt/src/Ui_OutputEditorText.hh:113
 msgid "Redo"
-msgstr "Повернути"
+msgstr "Повторити"
 
 #: ../gtk/data/PdfExportDialog.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
-msgstr ""
+msgstr "Експорт у PDF"
 
 #: ../gtk/data/PdfExportDialog.ui.h:4 ../qt/data/PdfExportDialog.ui.h:4
-#, fuzzy
 msgid "Output mode:"
-msgstr "Сканувати до теки:"
+msgstr "Режим виводу:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportDialog.ui.h:8
 msgid "PDF"
@@ -576,135 +564,131 @@ msgstr "PDF з невидимим текстовим шаром"
 
 #: ../gtk/data/PdfExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Format:"
-msgstr ""
+msgstr "Формат:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
 msgid "Compression:"
-msgstr ""
+msgstr "Стиснення:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression quality:"
-msgstr ""
+msgstr "Якість стиснення:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
 msgid "DPI:"
-msgstr "DPI:"
+msgstr "DPI (точок на дюйм):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "Алгоритм згладжування:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
-msgstr ""
+msgstr "Налаштування зображення:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
 msgid "Uniformize line and word spacing"
-msgstr ""
+msgstr "Вирівняти інтервали між рядками і словами"
 
 #: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
-msgstr ""
+msgstr "Примусово використовувати сімейство шрифтів:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
 msgid "Fallback font family:"
-msgstr ""
+msgstr "Запасне сімейство шрифтів:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
-#, fuzzy
 msgid "Override font size:"
-msgstr "Використовувати автоматично визначений розмір шрифту"
+msgstr "Примусово використовувати розмір шрифту:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
-msgstr ""
+msgstr "Масштабування шрифту:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
 msgid "pt"
-msgstr ""
+msgstr "pt (точок)"
 
 #: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "Зберігати пробіли, ширші за:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:20 ../qt/data/PdfExportDialog.ui.h:24
 msgid "characters"
-msgstr ""
+msgstr "символів"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:19
-#, fuzzy
 msgid "Text settings:"
-msgstr "Кодування текстового файлу:"
+msgstr "Налаштування тексту:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Paper size:"
-msgstr ""
+msgstr "Розмір сторінки:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:23 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Width"
-msgstr ""
+msgstr "Ширина"
 
 #: ../gtk/data/PdfExportDialog.ui.h:24 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Height"
-msgstr ""
+msgstr "Висота"
 
 #: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
-msgstr ""
+msgstr "Базовий"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
-#, fuzzy
 msgid "PDF version:"
-msgstr "Нова версія"
+msgstr "PDF-версія:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:31
 msgid "Password:"
-msgstr ""
+msgstr "Пароль:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:28 ../qt/data/PdfExportDialog.ui.h:32
 msgid "Confirm password:"
-msgstr ""
+msgstr "Підтвердіть пароль:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:30
 msgid "Encryption (optional):"
-msgstr ""
+msgstr "Шифрування (необов'язково):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:34
 msgid "Author:"
-msgstr ""
+msgstr "Автор:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:36
 msgid "Title:"
-msgstr ""
+msgstr "Заголовок:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:38
 msgid "Subject:"
-msgstr ""
+msgstr "Тема:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:35
 msgid "Creator:"
-msgstr ""
+msgstr "Творець:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:37
 msgid "Producer:"
-msgstr ""
+msgstr "Виробник:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:39
 msgid "Keywords:"
-msgstr ""
+msgstr "Ключові слова:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:33
-#, fuzzy
 msgid "Additional information (optional):"
-msgstr "Додаткові мови визначення:"
+msgstr "Додаткова інформація (необов'язково):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:40
 msgid "Import from current source"
-msgstr ""
+msgstr "Імпортувати з поточного джерела"
 
 #: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Advanced"
-msgstr ""
+msgstr "Розширені"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:4
 msgid "Find"
@@ -782,7 +766,7 @@ msgstr "Додати"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:721 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
-msgstr "Усунути"
+msgstr "Видалити"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
 msgid "Apply"
@@ -794,7 +778,7 @@ msgstr "Закрити"
 
 #: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:49
 msgid "Tessdata Manager"
-msgstr ""
+msgstr "Менеджер tessdata"
 
 #: ../gtk/data/TessdataManager.ui.h:5 ../qt/src/TessdataManager.cc:51
 msgid "Manage installed languages:"
@@ -802,7 +786,7 @@ msgstr "Керування встановленими мовами:"
 
 #: ../gtk/src/Acquirer.cc:79 ../qt/src/Acquirer.cc:70
 msgid "scan.png"
-msgstr "скан.png"
+msgstr "scan.png"
 
 #: ../gtk/src/Acquirer.cc:91 ../qt/src/Acquirer.cc:85
 msgid "Images"
@@ -822,7 +806,7 @@ msgstr "Сканування не вдалося"
 
 #: ../gtk/src/Acquirer.cc:133 ../qt/src/Acquirer.cc:122
 msgid "No scanners were detected."
-msgstr "Сканерів не виявлено."
+msgstr "Сканери не виявлено."
 
 #: ../gtk/src/Acquirer.cc:150 ../gtk/src/Acquirer.cc:168
 #: ../qt/src/Acquirer.cc:136 ../qt/src/Acquirer.cc:154
@@ -831,7 +815,7 @@ msgstr "Запуск сканування..."
 
 #: ../gtk/src/Acquirer.cc:164 ../qt/src/Acquirer.cc:150
 msgid "Opening device..."
-msgstr "Відкривається пристрій..."
+msgstr "Відкриття пристрою..."
 
 #: ../gtk/src/Acquirer.cc:166 ../qt/src/Acquirer.cc:152
 msgid "Setting options..."
@@ -851,7 +835,7 @@ msgstr "Відміна сканування..."
 
 #: ../gtk/src/Config.cc:41 ../qt/data/ConfigDialog.ui.h:7
 msgid "Filename prefix"
-msgstr "Файловій префікс"
+msgstr "Префікс імені файлу"
 
 #: ../gtk/src/Config.cc:42 ../qt/data/ConfigDialog.ui.h:8
 msgid "Code"
@@ -862,8 +846,9 @@ msgid "Native name"
 msgstr "Рідна назва"
 
 #: ../gtk/src/Config.cc:100 ../qt/src/Config.cc:98
+#, fuzzy
 msgid "Script"
-msgstr ""
+msgstr "Шрифт"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:39
 #: ../qt/src/CrashHandler.cc:34
@@ -872,19 +857,19 @@ msgstr "Обробник збоїв"
 
 #: ../gtk/src/CrashHandler.cc:41 ../qt/src/CrashHandler.cc:29
 msgid "Your work has been saved under <b>%1</b>."
-msgstr "Ваша праця була збережена у <b>%1</b>."
+msgstr "Ваша робота була збережена у <b>%1</b>."
 
 #: ../gtk/src/CrashHandler.cc:43 ../qt/src/CrashHandler.cc:31
 msgid "There was no unsaved work."
-msgstr "Незбережена праця відсутня."
+msgstr "Незбережена робота відсутня."
 
 #: ../gtk/src/CrashHandler.cc:102 ../qt/src/CrashHandler.cc:60
 msgid "Failed to obtain backtrace. Is gdb installed?"
-msgstr "Зворотнє трасування не вдалося. Встановлено gdb?"
+msgstr "Зворотнє трасування не вдалося. Чи встановлено gdb?"
 
 #: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
 msgid "Failed to load image"
-msgstr "Не вдалось завантажити зображення"
+msgstr "Не вдалося завантажити зображення"
 
 #: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
 msgid ""
@@ -904,7 +889,7 @@ msgstr "Зберегти виділене"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "selection.png"
-msgstr "фрагмент.png"
+msgstr "selection.png"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize all"
@@ -916,7 +901,7 @@ msgstr "Розпізнати виділене"
 
 #: ../gtk/src/DisplayerToolSelect.cc:183 ../qt/src/DisplayerToolSelect.cc:179
 msgid "Performing layout analysis"
-msgstr "Виконується аналіз вмісту"
+msgstr "Виконується аналіз макету сторінки"
 
 #: ../gtk/src/FileDialogs.cc:235
 msgid ""
@@ -930,25 +915,21 @@ msgstr "Перезаписати файл?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:555 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/OutputEditorHOCR.cc:229
-#, fuzzy
 msgid "Page"
-msgstr "Помилка читання: %1"
+msgstr "Сторінка"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:557 ../qt/src/hocr/HOCRDocument.cc:480
-#, fuzzy
 msgid "Text block"
-msgstr "Текстові файли"
+msgstr "Блок тексту"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:559 ../gtk/src/hocr/OutputEditorHOCR.cc:272
 #: ../qt/src/hocr/HOCRDocument.cc:482 ../qt/src/hocr/OutputEditorHOCR.cc:231
-#, fuzzy
 msgid "Paragraph"
-msgstr "Зберегти абзаци"
+msgstr "Абзац"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:561 ../qt/src/hocr/HOCRDocument.cc:484
-#, fuzzy
 msgid "Textline"
-msgstr "Текстові файли"
+msgstr "Рядок тексту"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:565 ../qt/src/hocr/HOCRDocument.cc:488
 msgid "Graphic"
@@ -965,81 +946,76 @@ msgstr "результати"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "OpenDocument Text Documents"
-msgstr ""
+msgstr "Текстові документи OpenDocument"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:53
-#, fuzzy
 msgid "Save ODT Output..."
-msgstr "Зберегти результати..."
+msgstr "Зберегти результати в ODT..."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCROdtExporter.cc:61
 #: ../qt/src/hocr/HOCRPdfExporter.cc:600 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
-msgstr ""
+msgstr "Не вдалося експортувати"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
-msgstr ""
+msgstr "Не вдалося експортувати ODT: неможливо записати цільовий файл."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:336 ../qt/src/hocr/HOCROdtExporter.cc:254
-#, fuzzy
 msgid "Exporting to ODT..."
-msgstr "Експорт у PDF"
+msgstr "Експорт у ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:365
-#, fuzzy
 msgid "Same as source"
-msgstr "Джерела"
+msgstr "Як джерело"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:366
+#, fuzzy
 msgid "Custom"
-msgstr ""
+msgstr "Користувальницький"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:362
 msgid "cm"
-msgstr ""
+msgstr "см"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:363
-#, fuzzy
 msgid "in"
-msgstr "Знайти"
+msgstr "дюйм"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:353
 msgid "Monochrome"
-msgstr ""
+msgstr "Монохромний"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:328 ../qt/src/hocr/HOCRPdfExporter.cc:355
 msgid "Threshold (closest color)"
-msgstr ""
+msgstr "Поріг (найближчий колір)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:331 ../qt/src/hocr/HOCRPdfExporter.cc:356
 msgid "Diffuse"
-msgstr ""
+msgstr "Розсіяний"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:340 ../qt/src/hocr/HOCRPdfExporter.cc:357
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Zip (без втрат)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:344 ../qt/src/hocr/HOCRPdfExporter.cc:358
 msgid "CCITT Group 4 (lossless)"
-msgstr ""
+msgstr "CCITT Group 4 (без втрат)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:348 ../qt/src/hocr/HOCRPdfExporter.cc:359
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "Jpeg (з втратами)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:495 ../qt/src/hocr/HOCRPdfExporter.cc:484
-#, fuzzy
 msgid "PDF Files"
-msgstr "Файли"
+msgstr "PDF-файли"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:496 ../qt/src/hocr/HOCRPdfExporter.cc:484
-#, fuzzy
 msgid "Save PDF Output..."
-msgstr "Зберегти результати..."
+msgstr "Зберегти результати в PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
 #, fuzzy
@@ -1048,41 +1024,36 @@ msgstr "Зберегти результати"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
 msgid "Cannot overwrite a file which is a source image of this document."
-msgstr ""
+msgstr "Неможливо перезаписати файл, який є вихідним для цього документу."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
 #, fuzzy
 msgid "Failed to create output"
-msgstr "Зберегти результати не вдалося"
+msgstr "Не вдалося створити результат"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
 msgid "Failed to create output. The returned error was: %1"
-msgstr ""
+msgstr "Не вдалося створити результат. Помилка: %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:560 ../qt/src/hocr/HOCRPdfExporter.cc:553
 msgid "The operation was cancelled"
-msgstr ""
+msgstr "Операцію було скасовано"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:595 ../qt/src/hocr/HOCRPdfExporter.cc:588
-#, fuzzy
 msgid "Failed to render page %1"
-msgstr ""
-"\n"
-"[Не вдалося розпізнати сторінку %1]\n"
+msgstr "Не вдалося візуалізувати сторінку %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:602 ../qt/src/hocr/HOCRPdfExporter.cc:595
-#, fuzzy
 msgid "Exporting to PDF..."
-msgstr "Експорт у PDF"
+msgstr "Експортую у PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607 ../qt/src/hocr/HOCRPdfExporter.cc:600
 msgid "The PDF export failed: %1."
-msgstr ""
+msgstr "Не вдалося експортувати у PDF: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:661 ../qt/src/hocr/HOCRPdfExporter.cc:653
-#, fuzzy
 msgid "The PDF library could not load the font '%1'."
-msgstr "Неможливо відкрити наступні файли:%1"
+msgstr "Бібліотека PDF не може завантажити шрифт '%1'."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:274
 #: ../qt/src/hocr/HOCRTextExporter.cc:39 ../qt/src/OutputEditorText.cc:239
@@ -1090,115 +1061,112 @@ msgid "Text Files"
 msgstr "Текстові файли"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:39
-#, fuzzy
 msgid "Save Text Output..."
-msgstr "Зберегти результати..."
+msgstr "Зберегти результати як текст..."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
-msgstr ""
+msgstr "Не вдалося експортувати текст: неможливо записати цільовий файл."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
 #: ../qt/src/hocr/OutputEditorHOCR.cc:230
 msgid "Block"
-msgstr ""
+msgstr "Блок"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
 #: ../qt/src/hocr/OutputEditorHOCR.cc:232
 msgid "Line"
-msgstr ""
+msgstr "Рядок"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
 #: ../qt/src/hocr/OutputEditorHOCR.cc:233
 msgid "Word"
-msgstr ""
+msgstr "Слово"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
 #: ../qt/src/hocr/OutputEditorHOCR.cc:234
 msgid "Misspelled word"
-msgstr ""
+msgstr "Слово з помилкою"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:435
 #: ../qt/src/hocr/OutputEditorHOCR.cc:317
-#, fuzzy
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
-msgstr "Неможливо відкрити наступні файли:%1"
+msgstr ""
+"Неможливо опрацювати наступні сторінки:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:436
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
-#, fuzzy
 msgid "Recognition errors"
-msgstr "Сталися помилки при розпізнаванні"
+msgstr "Помилки розпізнавання"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:594
 #: ../qt/src/hocr/OutputEditorHOCR.cc:500
 #: ../qt/src/hocr/OutputEditorHOCR.cc:512
-#, fuzzy
 msgid "Multiple values"
-msgstr "Кілька сторінок..."
+msgstr "Кілька значень"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:771
 #: ../qt/src/hocr/OutputEditorHOCR.cc:632
 msgid "Merge"
-msgstr ""
+msgstr "Об'єднати"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:779
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:876
 #: ../qt/src/hocr/OutputEditorHOCR.cc:634
 #: ../qt/src/hocr/OutputEditorHOCR.cc:719
 msgid "Split from parent"
-msgstr ""
+msgstr "Виокремити з батьківського об'єкту"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:790
 #: ../qt/src/hocr/OutputEditorHOCR.cc:638
+#, fuzzy
 msgid "Swap"
-msgstr ""
+msgstr "Обміняти"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:814
 #: ../qt/src/hocr/OutputEditorHOCR.cc:684
 msgid "Add graphic region"
-msgstr ""
+msgstr "Додати область графіки"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:817
 #: ../qt/src/hocr/OutputEditorHOCR.cc:685
 msgid "Add text block"
-msgstr ""
+msgstr "Додати текстовий блок"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:821
 #: ../qt/src/hocr/OutputEditorHOCR.cc:687
-#, fuzzy
 msgid "Add paragraph"
-msgstr "Зберегти абзаци"
+msgstr "Додати абзац"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:825
 #: ../qt/src/hocr/OutputEditorHOCR.cc:689
-#, fuzzy
 msgid "Add line"
-msgstr "Відкрити зображення"
+msgstr "Додати рядок"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:829
 #: ../qt/src/hocr/OutputEditorHOCR.cc:691
 msgid "Add word"
-msgstr ""
+msgstr "Додати слово"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:851
 #: ../qt/src/hocr/OutputEditorHOCR.cc:704
 msgid "No suggestions"
-msgstr "Немає підказок"
+msgstr "Немає пропозицій"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:857
 #: ../qt/src/hocr/OutputEditorHOCR.cc:708
 msgid "Add to dictionary"
-msgstr ""
+msgstr "Додати у словник"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:863
 #: ../qt/src/hocr/OutputEditorHOCR.cc:710
 msgid "Ignore word"
-msgstr ""
+msgstr "Ігнорувати слово"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:925
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:964
@@ -1214,20 +1182,18 @@ msgstr "Відкрити файл hORC"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:935
 #: ../qt/src/hocr/OutputEditorHOCR.cc:796
-#, fuzzy
 msgid "Failed to open file"
-msgstr "Неможливо відкрити файли"
+msgstr "Не вдалося відкрити файл"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:935
 #: ../qt/src/hocr/OutputEditorHOCR.cc:796
-#, fuzzy
 msgid "The file could not be opened: %1."
-msgstr "Неможливо відкрити наступні файли:%1"
+msgstr "Файл не можна відкрити :%1."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:944
 #: ../qt/src/hocr/OutputEditorHOCR.cc:803
 msgid "Invalid hOCR file"
-msgstr "Покшоджений файл hORC"
+msgstr "Некоректний файл hORC"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:944
 #: ../qt/src/hocr/OutputEditorHOCR.cc:803
@@ -1236,9 +1202,8 @@ msgstr "Файл не містить коректного вмісту hORC HTML
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:965
 #: ../qt/src/hocr/OutputEditorHOCR.cc:826
-#, fuzzy
 msgid "Save hOCR Output..."
-msgstr "Зберегти результати..."
+msgstr "Зберегти результати в hOCR..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:972 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/OutputEditorHOCR.cc:833 ../qt/src/OutputEditorText.cc:246
@@ -1268,24 +1233,23 @@ msgstr "Заміна..."
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1177 ../gtk/src/OutputEditorText.cc:192
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1005 ../qt/src/OutputEditorText.cc:160
 msgid "Applying substitutions..."
-msgstr "Застосування замін..."
+msgstr "Застосування підстановок..."
 
 #: ../gtk/src/MainWindow.cc:123 ../qt/src/MainWindow.cc:287
 msgid "Using tesseract"
-msgstr ""
+msgstr "З використанням tesseract"
 
 #: ../gtk/src/MainWindow.cc:170 ../qt/src/MainWindow.cc:186
 msgid "Select an image to begin..."
 msgstr "Щоб розпочати, виберіть зображення..."
 
 #: ../gtk/src/MainWindow.cc:285 ../qt/src/MainWindow.cc:270
-#, fuzzy
 msgid "Multiple sources"
-msgstr "Кілька сторінок..."
+msgstr "Кілька джерел"
 
 #: ../gtk/src/MainWindow.cc:287 ../qt/src/MainWindow.cc:272
 msgid "Ready"
-msgstr "Готово"
+msgstr "Готовий"
 
 #: ../gtk/src/MainWindow.cc:430 ../qt/src/MainWindow.cc:410
 msgid "New version"
@@ -1305,11 +1269,11 @@ msgstr "Список змін"
 
 #: ../gtk/src/MainWindow.cc:433 ../qt/src/MainWindow.cc:413
 msgid "Don't notify again"
-msgstr "Більше не показувати сповіщення"
+msgstr "Більше не сповіщувати"
 
 #: ../gtk/src/MainWindow.cc:454 ../qt/src/MainWindow.cc:461
 msgid "Don't show again"
-msgstr "Не показувати знову"
+msgstr "Більше не показувати"
 
 #: ../gtk/src/MainWindow.cc:455 ../gtk/src/MainWindow.cc:468
 #: ../qt/src/MainWindow.cc:462
@@ -1347,15 +1311,13 @@ msgid "Failed to install spelling dictionary: %1"
 msgstr "Не вдалося встановити орфографічний словник: %1"
 
 #: ../gtk/src/MainWindow.cc:528 ../qt/src/MainWindow.cc:513
-#, fuzzy
 msgid "Failed to create directory for spelling dictionaries."
-msgstr "Не вдалося встановити орфографічний словник: %1"
+msgstr "Не вдалося створити теку для орфографічних словників."
 
 #: ../gtk/src/MainWindow.cc:536 ../gtk/src/MainWindow.cc:552
 #: ../qt/src/MainWindow.cc:523
-#, fuzzy
 msgid "Could not read %1: %2."
-msgstr "Неможливо прочитати %1."
+msgstr "Неможливо прочитати %1: %2."
 
 #: ../gtk/src/MainWindow.cc:546 ../qt/src/MainWindow.cc:533
 msgid "No spelling dictionaries found for '%1'."
@@ -1374,17 +1336,24 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"Не вдалося завантажити наступні словники:\n"
+"%1\n"
+"\n"
+"Перевірте мережеве з'єднання та права доступу до теки.\n"
+"Порада: Якщо ви не маєте дозволу на запис у системні теки, ви можете "
+"перемкнутися на користувацькі шляхи у Налаштуваннях."
 
 #: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:574
 msgid "Dictionaries installed"
 msgstr "Словники встановлено"
 
 #: ../gtk/src/MainWindow.cc:585
-#, fuzzy
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
-msgstr "Було встановлено наступні словники:%1"
+msgstr ""
+"Було встановлено наступні словники:\n"
+"%1"
 
 #: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
@@ -1395,14 +1364,12 @@ msgid "Check spelling"
 msgstr "Перевірити орфографію"
 
 #: ../gtk/src/OutputEditorText.cc:231 ../qt/src/OutputEditorText.cc:196
-#, fuzzy
 msgid "File: %1"
-msgstr "Файли"
+msgstr "Файл: %1"
 
 #: ../gtk/src/OutputEditorText.cc:234 ../qt/src/OutputEditorText.cc:199
-#, fuzzy
 msgid "Page: %1"
-msgstr "Помилка читання: %1"
+msgstr "Сторінка: %1"
 
 #: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:477
 #: ../qt/src/Recognizer.cc:470
@@ -1431,86 +1398,94 @@ msgid ""
 "Make sure your language data files are valid and compatible with tesseract "
 "%2."
 msgstr ""
+"Tesseract аварійно завершився з наступним повідомленням:\n"
+"\n"
+"%1\n"
+"\n"
+"Це зазвичай трапляється з однієї з наступних причин:\n"
+"- Використання застарілих файлів traineddata.\n"
+"- Відсутні файли даних додаткових мов.\n"
+"- Файли даних мов пошкоджені.\n"
+"\n"
+"Переконайтеся, що ваші файли даних мов дійсні і сумісні з tesseract %2."
 
 #: ../gtk/src/Recognizer.cc:201 ../qt/src/Recognizer.cc:192
 msgid "No languages available"
-msgstr "Доступних мов не виявлено"
+msgstr "Немає доступних мов"
 
 #: ../gtk/src/Recognizer.cc:201 ../qt/src/Recognizer.cc:192
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
-msgstr "Мовні файли для tesseract не доступні. Розпізнавання не працюватиме."
+msgstr ""
+"Немає доступних для використання мов tesseract. Розпізнавання не працюватиме."
 
 #: ../gtk/src/Recognizer.cc:255 ../qt/src/Recognizer.cc:252
 msgid "Multilingual"
-msgstr "Кілька мов"
+msgstr "Багатомовний"
 
 #: ../gtk/src/Recognizer.cc:307 ../qt/src/Recognizer.cc:297
-#, fuzzy
 msgid "Automatic page segmentation"
-msgstr "Розташування панелі результатів:"
+msgstr "Автоматична сегментація сторінки"
 
 #: ../gtk/src/Recognizer.cc:308 ../qt/src/Recognizer.cc:298
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "Сегментація сторінки з визначенням орієнтації та шрифту"
 
 #: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:299
 msgid "Assume single column of text"
-msgstr ""
+msgstr "Вважати текстом в один стовпець"
 
 #: ../gtk/src/Recognizer.cc:310 ../qt/src/Recognizer.cc:300
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "Вважати блоком тексту, вирівняного вертикально"
 
 #: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:301
 msgid "Assume a single uniform block of text"
-msgstr ""
+msgstr "Вважати однорідним блоком тексту"
 
 #: ../gtk/src/Recognizer.cc:312 ../qt/src/Recognizer.cc:302
 msgid "Assume a line of text"
-msgstr ""
+msgstr "Вважати рядком тексту"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:303
 msgid "Assume a single word"
-msgstr ""
+msgstr "Вважати окремим словом"
 
 #: ../gtk/src/Recognizer.cc:314 ../qt/src/Recognizer.cc:304
 msgid "Assume a single word in a circle"
-msgstr ""
+msgstr "Вважати окремим словом в колі"
 
 #: ../gtk/src/Recognizer.cc:315 ../qt/src/Recognizer.cc:305
 msgid "Sparse text in no particular order"
-msgstr ""
+msgstr "Розріджений неупорядочений текст"
 
 #: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:306
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "Розріджений текст з визначенням орієнтації та шрифту"
 
 #: ../gtk/src/Recognizer.cc:331 ../qt/src/Recognizer.cc:317
 msgid "Page segmentation mode"
-msgstr ""
+msgstr "Режим сегментації сторінки"
 
 #: ../gtk/src/Recognizer.cc:337 ../qt/src/Recognizer.cc:324
 msgid "Manage languages..."
 msgstr "Керувати мовами..."
 
 #: ../gtk/src/Recognizer.cc:393 ../qt/src/Recognizer.cc:384
-#, fuzzy
 msgid "Current selection"
-msgstr "Розпізнати виділене"
+msgstr "Поточне виділення"
 
 #: ../gtk/src/Recognizer.cc:471 ../qt/src/Recognizer.cc:463
 msgid "Recognizing page %1 (%2 of %3)"
-msgstr "Триває розпізнавання сторінки %1 (%2 із %3)"
+msgstr "Розпізнавання сторінки %1 (%2 із %3)"
 
 #: ../gtk/src/Recognizer.cc:476 ../qt/src/Recognizer.cc:469
-#, fuzzy
 msgid ""
 "\n"
 "- Page %1: failed to render page"
 msgstr ""
 "\n"
-"\tСторінка %1: не вдалося візуалізувати сторінку"
+"- Сторінка %1: не вдалося візуалізувати сторінку"
 
 #: ../gtk/src/Recognizer.cc:507 ../gtk/src/Recognizer.cc:536
 #: ../gtk/src/Recognizer.cc:549 ../qt/src/Recognizer.cc:499
@@ -1563,40 +1538,40 @@ msgid "Failed to save image"
 msgstr "Не вдалося зберегти зображення"
 
 #: ../gtk/src/scanner/ScannerSane.cc:800 ../qt/src/scanner/ScannerSane.cc:797
-#, fuzzy
 msgid "Operation is cancelled."
-msgstr "Сканування скасовано"
+msgstr "Операцію скасовано."
 
 #: ../gtk/src/scanner/ScannerSane.cc:802 ../qt/src/scanner/ScannerSane.cc:799
 msgid "Device is busy."
-msgstr ""
+msgstr "Пристрій зайнятий."
 
 #: ../gtk/src/scanner/ScannerSane.cc:804 ../qt/src/scanner/ScannerSane.cc:801
 msgid "Cover is opened."
-msgstr ""
+msgstr "Кришка відкрита."
 
 #: ../gtk/src/scanner/ScannerSane.cc:806 ../qt/src/scanner/ScannerSane.cc:803
 msgid "Document feeder jammed."
-msgstr ""
+msgstr "Подавач документів заклинило."
 
 #: ../gtk/src/scanner/ScannerSane.cc:808 ../qt/src/scanner/ScannerSane.cc:805
 msgid "Document feeder out of documents."
-msgstr ""
+msgstr "Подавач документів порожній."
 
 #: ../gtk/src/scanner/ScannerSane.cc:810 ../qt/src/scanner/ScannerSane.cc:807
-#, fuzzy
 msgid "Access to scanner is denied."
-msgstr "Сканер не вказано"
+msgstr "Доступ до сканеру заборонено."
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid "PDFs with text"
-msgstr ""
+msgstr "PDF-файли з текстом"
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid ""
 "These PDF files already contain text:\n"
 "%1"
 msgstr ""
+"Ці PDF-файли вже містять текст:\n"
+"%1"
 
 #: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
 msgid "Unable to open files"
@@ -1608,7 +1583,7 @@ msgstr "Неможливо відкрити такі файли:%1"
 
 #: ../gtk/src/SourceManager.cc:141 ../qt/src/SourceManager.cc:143
 msgid "Enter password for file '%1':"
-msgstr ""
+msgstr "Введіть пароль для файлу '%1':"
 
 #: ../gtk/src/SourceManager.cc:197 ../qt/src/SourceManager.cc:214
 msgid "Images and PDFs"
@@ -1637,7 +1612,7 @@ msgstr "Помилка отримання знімка екрану"
 
 #: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
 msgid "Failed to take screenshot."
-msgstr "Не вдалось зробити знімок екрану."
+msgstr "Не вдалося зробити знімок екрану."
 
 #: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:247
 msgid "Screenshot %1"
@@ -1657,14 +1632,11 @@ msgstr "Неможливо записати в %1."
 
 #: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
 msgid "Delete File?"
-msgstr "Вилучити файл?"
+msgstr "Видалити файл?"
 
 #: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
-#, fuzzy
 msgid "The following files will be deleted:%1"
-msgstr ""
-"Буде вилучено наступний файл:\n"
-"%1"
+msgstr "Буде видалено наступні файли:%1"
 
 #: ../gtk/src/SourceManager.cc:332 ../qt/src/SourceManager.cc:338
 msgid "Missing File"
@@ -1675,7 +1647,7 @@ msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
 msgstr ""
-"Наступний файл було вилучено або переміщено:\n"
+"Наступний файл було видалено або переміщено:\n"
 "%1"
 
 #: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:73
@@ -1732,31 +1704,31 @@ msgid "Do you want to save the current list?"
 msgstr "Ви хочете зберегти поточний список?"
 
 #: ../gtk/src/TessdataManager.cc:59 ../qt/src/TessdataManager.cc:74
-#, fuzzy
 msgid ""
 "PackageKit is required for managing system-wide tesseract language packs, "
 "but it was not found. Please use the system package management software to "
 "manage the tesseract language packs, or switch to use the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"Для керування встановленими мовними пакунками tesseract потрібен PackageKit, "
-"але його не знайдено. Будь ласка, скористайтеся системним менеджером "
-"програм, щоб встановити потрібні мовні пакунки."
+"Для керування загальносистемними мовними пакунками tesseract потрібен "
+"PackageKit, але його не знайдено. Будь ласка, скористайтеся системним "
+"менеджером додатків для керування мовними пакунками tesseract або оберіть "
+"використання користувацького шляху до tessdata в діалозі конфігурації."
 
 #: ../gtk/src/TessdataManager.cc:64 ../qt/src/TessdataManager.cc:79
 msgid "Fetching available languages"
-msgstr "Завантаження переліку доступних мов"
+msgstr "Завантаження доступних мов"
 
 #: ../gtk/src/TessdataManager.cc:69 ../gtk/src/TessdataManager.cc:95
 #: ../gtk/src/TessdataManager.cc:180 ../qt/src/TessdataManager.cc:84
 #: ../qt/src/TessdataManager.cc:101 ../qt/src/TessdataManager.cc:185
 msgid "Failed to fetch list of available languages: %1"
-msgstr "Неможливо завантажити перелік доступних мов: %1"
+msgstr "Не вдалося завантажити перелік доступних мов: %1"
 
 #: ../gtk/src/TessdataManager.cc:106 ../qt/src/TessdataManager.cc:112
 #: ../qt/src/TessdataManager.cc:121
 msgid "Parsing error: %1"
-msgstr "Помилка читання: %1"
+msgstr "Помилка аналізу: %1"
 
 #: ../gtk/src/TessdataManager.cc:214 ../qt/src/TessdataManager.cc:215
 #, fuzzy
@@ -1765,15 +1737,13 @@ msgstr "Застосування замін..."
 
 #: ../gtk/src/TessdataManager.cc:275 ../qt/src/TessdataManager.cc:260
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Не вдалося створити теку для файлів tessdata."
 
 #: ../gtk/src/TessdataManager.cc:284 ../qt/src/TessdataManager.cc:268
-#, fuzzy
 msgid "Downloading %1..."
-msgstr "Завантажується '%1'..."
+msgstr "Завантажується %1..."
 
 #: ../gtk/src/TessdataManager.cc:304
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1783,10 +1753,13 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Такі файли не вдалося завантажити чи вилучити:\n"
+"Наступні файли не вдалося завантажити чи вилучити:\n"
 "%1\n"
 "\n"
-"Перевірте з'єдання та права доступу до тек."
+"Перевірте мережеве з'єдання та права доступу до тек.\n"
+"\n"
+"Порада: Якщо ви не маєте дозволу на запис у системні теки, ви можете "
+"перемкнутися на користувацькі шляхи у Налаштуваннях."
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
@@ -1798,22 +1771,21 @@ msgstr "Ні"
 
 #: ../gtk/src/Utils.cc:76
 msgid "Discard"
-msgstr "Знищити"
+msgstr "Відхилити"
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
 msgstr "Про програму gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Графічний інтерфейс для tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Сайт</a></"
-"p><p>&nbsp;</p></body></html>"
+"<html><head/><body><p>&nbsp;</p><p>Графічний інтерфейс для tesseract-"
+"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Сайт</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -1825,11 +1797,11 @@ msgstr "Ліцензія"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
-msgstr "Кодування системи"
+msgstr "Системне кодування"
 
 #: ../qt/data/ConfigDialog.ui.h:15
 msgid "UTF-8"
-msgstr ""
+msgstr "UTF-8"
 
 #: ../qt/data/ConfigDialog.ui.h:19
 msgid "Text file encoding:"
@@ -1846,28 +1818,28 @@ msgid ""
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Програма зазнала "
-"аварії</span></p><p>Прошу вибачення за незручності. Для оптимізації роботи "
-"програми, будь ласка напишіть про проблему на електронну пошту <a href="
-"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>. Намагайтеся описати, які дії ви виконували "
-"перед тим як програма зазнала аварії. Також додайте інформацію, розміщену "
-"нижче. Дякую.</p></body></html>"
+"аварії</span></p><p>Приносимо вибачення за незручності. Для допомоги у "
+"покращенні додатку, будь ласка, напишіть про проблему на електронну пошту <a "
+"href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Намагайтеся описати, які дії ви виконували перед "
+"тим, як додаток аварійно завершився. Також додайте інформацію, розміщену "
+"нижче. Дякуємо.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
-msgstr ""
+msgstr "Планшетний"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "ADF Front"
-msgstr ""
+msgstr "ADF лицьова"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Back"
-msgstr ""
+msgstr "ADF зворотня"
 
 #: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Duplex"
-msgstr ""
+msgstr "ADF дуплекс"
 
 #. Remove & from some labels which designer insists in adding
 #: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
@@ -1892,27 +1864,27 @@ msgstr "Оптимальний розмір"
 
 #: ../qt/data/MainWindow.ui.h:30
 msgid "Rotate Left"
-msgstr "Повернути вліво"
+msgstr "Обернути вліво"
 
 #: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate left"
-msgstr "Повернути вліво"
+msgstr "Обернути вліво"
 
 #: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate Right"
-msgstr "Повернути вправо"
+msgstr "Обернути вправо"
 
 #: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate right"
-msgstr "Повернути вправо"
+msgstr "Обернути вправо"
 
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Image Controls"
-msgstr "Керування зображенням"
+msgstr "Елементи керування зображенням"
 
 #: ../qt/data/MainWindow.ui.h:36
 msgid "Autodetect Layout"
-msgstr "Автовизначення вмісту"
+msgstr "Автовизначення макету"
 
 #: ../qt/data/MainWindow.ui.h:38
 msgid "Toggle Output Pane"
@@ -1924,16 +1896,15 @@ msgstr ""
 
 #: ../qt/data/PdfExportDialog.ui.h:6
 msgid "Portrait"
-msgstr ""
+msgstr "Портретний"
 
 #: ../qt/data/PdfExportDialog.ui.h:7
 msgid "Landscape"
-msgstr ""
+msgstr "Альбомний"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:142
-#, fuzzy
 msgid "Failed to write to file"
-msgstr "Неможливо відкрити файли"
+msgstr "Не вдалося записати у файл"
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
@@ -1943,9 +1914,8 @@ msgstr "Відкрити файл hORC"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:57
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:58
-#, fuzzy
 msgid "Save as hOCR text"
-msgstr "Зберегти як зображення"
+msgstr "Зберегти як текст hOCR"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:79
 #: ../qt/src/Ui_OutputEditorText.hh:106
@@ -1953,17 +1923,14 @@ msgid "Find and Replace"
 msgstr "Знайти і замінити"
 
 #: ../qt/src/MainWindow.cc:541
-#, fuzzy
 msgid "Could not read %1: %2"
-msgstr "Неможливо прочитати %1."
+msgstr "Неможливо прочитати %1: %2"
 
 #: ../qt/src/MainWindow.cc:574
-#, fuzzy
 msgid "The following dictionary files were installed:%1"
-msgstr "Було встановлено такі словники:%1"
+msgstr "Було встановлено наступні словники:%1"
 
 #: ../qt/src/TessdataManager.cc:290
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1972,10 +1939,12 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Такі файли не вдалося завантажити чи вилучити:\n"
+"Наступні файли не вдалося завантажити чи вилучити:\n"
 "%1\n"
 "\n"
-"Перевірте з'єдання та права доступу до тек."
+"Перевірте мережеве з'єдання та права доступу до тек.\n"
+"Порада: Якщо ви не маєте дозволу на запис у системні теки, ви можете "
+"перемкнутися на користувацькі шляхи у Налаштуваннях."
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
@@ -1983,15 +1952,15 @@ msgstr "Результати"
 
 #: ../qt/src/Ui_MainWindow.hh:134
 msgid "OCR mode:"
-msgstr "Режим розпізнавання:"
+msgstr "Режим розпізнавання OCR:"
 
 #: ../qt/src/Ui_MainWindow.hh:208
 msgid "Remove Image"
-msgstr "Усунути зображення"
+msgstr "Видалити зображення"
 
 #: ../qt/src/Ui_MainWindow.hh:211
 msgid "Delete Image"
-msgstr "Вилучити зображення"
+msgstr "Видалити зображення"
 
 #: ../qt/src/Ui_MainWindow.hh:214
 msgid "Clear List"
