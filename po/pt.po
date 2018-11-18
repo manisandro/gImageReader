@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Portuguese (Brazil) (gImageReader)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-06 14:05+0200\n"
-"PO-Revision-Date: 2018-04-06 13:27+0000\n"
+"PO-Revision-Date: 2018-11-19 08:07+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pt/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2.20\n"
+"X-Generator: Weblate 3.3-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -633,11 +633,11 @@ msgstr "Versão de PDF:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:31
 msgid "Password:"
-msgstr "Senha:"
+msgstr "Palavra-passe:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:28 ../qt/data/PdfExportDialog.ui.h:32
 msgid "Confirm password:"
-msgstr "Confirmar senha:"
+msgstr "Confirmar palavra-passe:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:30
 msgid "Encryption (optional):"
@@ -1570,7 +1570,7 @@ msgstr "Os arquivos a seguir não puderam ser abertos: %1"
 
 #: ../gtk/src/SourceManager.cc:141 ../qt/src/SourceManager.cc:143
 msgid "Enter password for file '%1':"
-msgstr "Digite a senha para o ficheiro '%1':"
+msgstr "Digite a palavra-passe para o ficheiro '%1':"
 
 #: ../gtk/src/SourceManager.cc:197 ../qt/src/SourceManager.cc:214
 msgid "Images and PDFs"
