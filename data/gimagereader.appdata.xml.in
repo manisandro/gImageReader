@@ -25,26 +25,22 @@
  </keywords>
  <description>
   <p>gImageReader is a simple optical character recognition (OCR) application which acts as a frontend to the tesseract OCR engine. Features include:</p>
+  <p xml:lang="cs_CZ">gImageReader je jednoduše použitelná aplikace pro rozpoznávání textu z obrázků, využívající OCR engine tesseract. Mezi funkce patří:</p>
   <ul>
    <li>Import PDF documents and images from disk, scanning devices, clipboard and screenshots</li>
+   <li xml:lang="cs_CZ">Import PDF dokumentů a obrázků z počítače, skenovacích zařízení, schránky a snímků obrazovky</li>
    <li>Process multiple images and documents in one go</li>
+   <li xml:lang="cs_CZ">Zpracování vícero obrázků a dokumentů naráz</li>
    <li>Manual or automatic recognition area definition</li>
+   <li xml:lang="cs_CZ">Ruční nebo automatická definice oblasti k rozpoznávání</li>
    <li>Recognize to plain text or to hOCR documents</li>
+   <li xml:lang="cs_CZ">Rozpoznání do holého textu nebo hOCR dokumentů</li>
    <li>Recognized text displayed directly next to the image</li>
+   <li xml:lang="cs_CZ">Rozpoznaný text je zobrazen hned vedle zdrojového obrázku</li>
    <li>Post-process the recognized text, including spellchecking</li>
+   <li xml:lang="cs_CZ">Následné zpracování rozpoznaného textu včetně kontroly překlepů</li>
    <li>Generate PDF/ODT documents from hOCR documents</li>
-  </ul>
- </description>
- <description xml:lang="cs_CZ">
-  <p>gImageReader je jednoduše použitelná aplikace pro rozpoznávání textu z obrázků, využívající OCR engine tesseract. Mezi funkce patří:</p>
-  <ul>
-   <li>Import PDF dokumentů a obrázků z počítače, skenovacích zařízení, schránky a snímků obrazovky</li>
-   <li>Zpracování vícero obrázků a dokumentů naráz</li>
-   <li>Ruční nebo automatická definice oblasti k rozpoznávání</li>
-   <li>Rozpoznání do holého textu nebo hOCR dokumentů</li>
-   <li>Rozpoznaný text je zobrazen hned vedle zdrojového obrázku</li>
-   <li>Následné zpracování rozpoznaného textu včetně kontroly překlepů</li>
-   <li>Vytváření PDF/ODT dokumentů z hOCR dokumentů</li>
+   <li xml:lang="cs_CZ">Vytváření PDF/ODT dokumentů z hOCR dokumentů</li>
   </ul>
  </description>
  <screenshots>
