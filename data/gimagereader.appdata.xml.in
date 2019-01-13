@@ -1,55 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2014 Sandro Mani <manisandro@gmail.com> -->
-<component>
- <id type="desktop">gimagereader-@INTERFACE_TYPE@.desktop</id>
- <metadata_license>CC0-1.0</metadata_license>
- <project_license>GPL-3.0+</project_license>
- <name>gImageReader</name>
- <name xml:lang="cs_CZ">gImageReader</name>
- <summary>A graphical (@INTERFACE_TYPE@) frontend to tesseract-ocr</summary>
- <summary xml:lang="cs_CZ">Grafická (@INTERFACE_TYPE@) nadstavba pro engine tesseract-ocr</summary>
- <keywords>
-  <keyword>ocr</keyword>
-  <keyword>optical</keyword>
-  <keyword>recognition</keyword>
-  <keyword>tesseract</keyword>
-  <keyword>pdf</keyword>
-  <keyword>@INTERFACE_TYPE@</keyword>
- </keywords>
- <keywords xml:lang="cs_CZ">
-  <keyword xml:lang="cs_CZ">ocr</keyword>
-  <keyword xml:lang="cs_CZ">optické</keyword>
-  <keyword xml:lang="cs_CZ">rozpoznávání</keyword>
-  <keyword xml:lang="cs_CZ">tesseract</keyword>
-  <keyword xml:lang="cs_CZ">pdf</keyword>
- </keywords>
- <description>
-  <p>gImageReader is a simple optical character recognition (OCR) application which acts as a frontend to the tesseract OCR engine. Features include:</p>
-  <p xml:lang="cs_CZ">gImageReader je jednoduše použitelná aplikace pro rozpoznávání textu z obrázků, využívající OCR engine tesseract. Mezi funkce patří:</p>
-  <ul>
-   <li>Import PDF documents and images from disk, scanning devices, clipboard and screenshots</li>
-   <li xml:lang="cs_CZ">Import PDF dokumentů a obrázků z počítače, skenovacích zařízení, schránky a snímků obrazovky</li>
-   <li>Process multiple images and documents in one go</li>
-   <li xml:lang="cs_CZ">Zpracování vícero obrázků a dokumentů naráz</li>
-   <li>Manual or automatic recognition area definition</li>
-   <li xml:lang="cs_CZ">Ruční nebo automatická definice oblasti k rozpoznávání</li>
-   <li>Recognize to plain text or to hOCR documents</li>
-   <li xml:lang="cs_CZ">Rozpoznání do holého textu nebo hOCR dokumentů</li>
-   <li>Recognized text displayed directly next to the image</li>
-   <li xml:lang="cs_CZ">Rozpoznaný text je zobrazen hned vedle zdrojového obrázku</li>
-   <li>Post-process the recognized text, including spellchecking</li>
-   <li xml:lang="cs_CZ">Následné zpracování rozpoznaného textu včetně kontroly překlepů</li>
-   <li>Generate PDF/ODT documents from hOCR documents</li>
-   <li xml:lang="cs_CZ">Vytváření PDF/ODT dokumentů z hOCR dokumentů</li>
-  </ul>
- </description>
- <screenshots>
-  <screenshot type="default">
-   <image>https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/gimagereader-@INTERFACE_TYPE@.jpg</image>
-   <caption>gImageReader-@INTERFACE_TYPE@</caption>
-  </screenshot>
- </screenshots>
- <url type="homepage">https://github.com/manisandro/gImageReader</url>
- <url type="translate">https://github.com/manisandro/gImageReader/blob/master/README.md</url>
- <update_contact>manisandro@gmail.com</update_contact>
+<component type="desktop">
+  <id>gimagereader-@INTERFACE_TYPE@.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>gImageReader</name>
+  <name xml:lang="cs_CZ">gImageReader</name>
+  <summary>A graphical (@INTERFACE_TYPE@) frontend to tesseract-ocr</summary>
+  <summary xml:lang="cs_CZ">Grafická (@INTERFACE_TYPE@) nadstavba pro engine tesseract-ocr</summary>
+  <keywords>
+    <keyword>ocr</keyword>
+    <keyword>optical</keyword>
+    <keyword>recognition</keyword>
+    <keyword>tesseract</keyword>
+    <keyword>pdf</keyword>
+    <keyword>@INTERFACE_TYPE@</keyword>
+  </keywords>
+  <keywords xml:lang="cs_CZ">
+    <keyword xml:lang="cs_CZ">ocr</keyword>
+    <keyword xml:lang="cs_CZ">optické</keyword>
+    <keyword xml:lang="cs_CZ">rozpoznávání</keyword>
+    <keyword xml:lang="cs_CZ">tesseract</keyword>
+    <keyword xml:lang="cs_CZ">pdf</keyword>
+  </keywords>
+  <description>
+    <p>gImageReader is a simple optical character recognition (OCR) application which acts as a frontend to the tesseract OCR engine. Features include:</p>
+    <p xml:lang="cs_CZ">gImageReader je jednoduše použitelná aplikace pro rozpoznávání textu z obrázků, využívající OCR engine tesseract. Mezi funkce patří:</p>
+    <ul>
+      <li>Import PDF documents and images from disk, scanning devices, clipboard and screenshots</li>
+      <li xml:lang="cs_CZ">Import PDF dokumentů a obrázků z počítače, skenovacích zařízení, schránky a snímků obrazovky</li>
+      <li>Process multiple images and documents in one go</li>
+      <li xml:lang="cs_CZ">Zpracování vícero obrázků a dokumentů naráz</li>
+      <li>Manual or automatic recognition area definition</li>
+      <li xml:lang="cs_CZ">Ruční nebo automatická definice oblasti k rozpoznávání</li>
+      <li>Recognize to plain text or to hOCR documents</li>
+      <li xml:lang="cs_CZ">Rozpoznání do holého textu nebo hOCR dokumentů</li>
+      <li>Recognized text displayed directly next to the image</li>
+      <li xml:lang="cs_CZ">Rozpoznaný text je zobrazen hned vedle zdrojového obrázku</li>
+      <li>Post-process the recognized text, including spellchecking</li>
+      <li xml:lang="cs_CZ">Následné zpracování rozpoznaného textu včetně kontroly překlepů</li>
+      <li>Generate PDF/ODT documents from hOCR documents</li>
+      <li xml:lang="cs_CZ">Vytváření PDF/ODT dokumentů z hOCR dokumentů</li>
+    </ul>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/gimagereader-@INTERFACE_TYPE@.jpg</image>
+      <caption>gImageReader-@INTERFACE_TYPE@</caption>
+    </screenshot>
+  </screenshots>
+  <url type="bugtracker">https://github.com/manisandro/gImageReader/issues</url>
+  <url type="faq">https://github.com/manisandro/gImageReader/wiki/FAQ</url>
+  <url type="homepage">https://github.com/manisandro/gImageReader</url>
+  <url type="translate">https://github.com/manisandro/gImageReader/blob/master/README.md</url>
+  <update_contact>manisandro@gmail.com</update_contact>
+  <translation type="gettext">gimagereader-@INTERFACE_TYPE@</translation>
+  <provides>
+    <binary>gimagereader-@INTERFACE_TYPE@</binary>
+  </provides>
+  <launchable type="desktop-id">gimagereader-@INTERFACE_TYPE@.desktop</launchable>
+  <content_rating type="oars-1.0">
+    <content_attribute id="social-info">mild</content_attribute>
+  </content_rating>
+  <releases>
+    <release version="3.3.0" date="2018-09-26"/>
+  </releases>
 </component>
