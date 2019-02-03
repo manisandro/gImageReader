@@ -620,7 +620,7 @@ void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index, const Gtk:
 Glib::RefPtr<Glib::Regex> OutputEditorHOCR::attributeValidator(const Glib::ustring& attribName) const {
 	static std::map<Glib::ustring, Glib::RefPtr<Glib::Regex>> validators = {
 		{"title:bbox", Glib::Regex::create("^\\d+\\s+\\d+\\s+\\d+\\s+\\d+$")},
-		{"lang", Glib::Regex::create("^[a-z]{2}(?:_[A-Z]{2})?$")},
+		{"lang", Glib::Regex::create("^[a-z]{2,}(?:_[A-Z]{2,})?$")},
 		{"title:x_fsize", Glib::Regex::create("^\\d+$")},
 		{"title:baseline", Glib::Regex::create("^[-+]?\\d+\\.?\\d*\\s[-+]?\\d+\\.?\\d*$")}
 	};

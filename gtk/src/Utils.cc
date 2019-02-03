@@ -366,10 +366,7 @@ Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string& url, Glib::ustr
 
 Glib::ustring Utils::getSpellingLanguage(const Glib::ustring& lang) {
 	// If it is already a valid code, return it
-	if(lang.length() == 2) {
-		return lang;
-	}
-	static Glib::RefPtr<Glib::Regex> langPattern = Glib::Regex::create("^[a-z]{2}_[A-Z]{2}");
+	static Glib::RefPtr<Glib::Regex> langPattern = Glib::Regex::create("^[a-z]{2,}(_[A-Z]{2,})?$");
 	if(langPattern->match(lang)) {
 		return lang;
 	}

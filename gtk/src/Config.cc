@@ -236,8 +236,7 @@ void Config::addLanguage() {
 		invalid = true;
 		Utils::set_error_state(ui.entryLangsAddName);
 	}
-	if(!Glib::Regex::create("^[a-z]{2,}$")->match(ui.entryLangsAddCode->get_text()) &&
-			!Glib::Regex::create("^[a-z]{2,}_[A-Z]{2,}$")->match(ui.entryLangsAddCode->get_text())) {
+	if(!Glib::Regex::create("^[a-z]{2,}(_[A-Z]{2,})?$")->match(ui.entryLangsAddCode->get_text())) {
 		invalid = true;
 		Utils::set_error_state(ui.entryLangsAddCode);
 	}
