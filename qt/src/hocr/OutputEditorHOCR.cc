@@ -488,7 +488,7 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModel
 QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const QString& attrName, const QString& attrValue, const QString& attrItemClass, bool multiple) {
 	static QMap<QString, QString> attrLineEdits = {
 		{"title:bbox", "\\d+\\s+\\d+\\s+\\d+\\s+\\d+"},
-		{"lang", "[a-z]{2}(?:_[A-Z]{2})?"},
+		{"lang", "[a-z]{2,}(?:_[A-Z]{2,})?"},
 		{"title:x_fsize", "\\d+"},
 		{"title:baseline", "[-+]?\\d+\\.?\\d*\\s[-+]?\\d+\\.?\\d*"}
 	};
