@@ -27,7 +27,7 @@ Installation:
 - ![Debian](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/debian.png) **Debian**: Available from the [official repositories](https://packages.debian.org/unstable/main/gimagereader)
 - ![Ubuntu](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/ubuntu.png) **Ubuntu**: Available from [ppa:sandromani/gimagereader](https://launchpad.net/~sandromani/+archive/ubuntu/gimagereader)
 - ![OpenSUSE](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/opensuse.png) **OpenSUSE**: Available from [OpenSUSE Build Service](https://build.opensuse.org/project/show/home:sandromani)
-- ![ArchLinux](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/arch.png) **ArchLinux**: Available from [AUR (Gtk version)](https://aur.archlinux.org/packages/gimagereader/) and [AUR (Qt version)](https://aur.archlinux.org/packages/gimagereader-qt5/)
+- ![ArchLinux](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/arch.png) **ArchLinux**: Available from the [community repositories](https://www.archlinux.org/packages/community/x86_64/gimagereader/)
 
 Compilation:
 --------------
