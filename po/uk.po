@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2018-11-08 14:07+0000\n"
+"PO-Revision-Date: 2019-04-04 14:04+0000\n"
 "Last-Translator: ___ <o.kravtsov@ukr.net>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/uk/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 3.3-dev\n"
+"X-Generator: Weblate 3.6-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -62,7 +62,6 @@ msgid "OK"
 msgstr "Гаразд"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
-#, fuzzy
 msgid "Output pane orientation:"
 msgstr "Орієнтація панелі результатів:"
 
@@ -156,7 +155,6 @@ msgstr ""
 "Автоматично відкривати експортовані документи у додатку за-замовчуванням"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:36
-#, fuzzy
 msgid "Regenerate backtrace"
 msgstr "Відновити зворотнє трасування"
 
@@ -327,7 +325,6 @@ msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:37
-#, fuzzy
 msgid "Autodetect layout"
 msgstr "Автовизначення макету сторінки"
 
@@ -846,7 +843,6 @@ msgid "Native name"
 msgstr "Рідна назва"
 
 #: ../gtk/src/Config.cc:100 ../qt/src/Config.cc:98
-#, fuzzy
 msgid "Script"
 msgstr "Шрифт"
 
@@ -973,9 +969,8 @@ msgid "Same as source"
 msgstr "Як джерело"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:366
-#, fuzzy
 msgid "Custom"
-msgstr "Користувальницький"
+msgstr "Користувацький"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:362
 msgid "cm"
@@ -1018,16 +1013,14 @@ msgid "Save PDF Output..."
 msgstr "Зберегти результати в PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
-#, fuzzy
 msgid "Invalid Output"
-msgstr "Зберегти результати"
+msgstr "Неприпустимий результат"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:502 ../qt/src/hocr/HOCRPdfExporter.cc:490
 msgid "Cannot overwrite a file which is a source image of this document."
 msgstr "Неможливо перезаписати файл, який є вихідним для цього документу."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:518 ../qt/src/hocr/HOCRPdfExporter.cc:513
-#, fuzzy
 msgid "Failed to create output"
 msgstr "Не вдалося створити результат"
 
@@ -1124,7 +1117,6 @@ msgstr "Виокремити з батьківського об'єкту"
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:790
 #: ../qt/src/hocr/OutputEditorHOCR.cc:638
-#, fuzzy
 msgid "Swap"
 msgstr "Обміняти"
 
@@ -1731,9 +1723,8 @@ msgid "Parsing error: %1"
 msgstr "Помилка аналізу: %1"
 
 #: ../gtk/src/TessdataManager.cc:214 ../qt/src/TessdataManager.cc:215
-#, fuzzy
 msgid "Applying changes..."
-msgstr "Застосування замін..."
+msgstr "Застосування змін..."
 
 #: ../gtk/src/TessdataManager.cc:275 ../qt/src/TessdataManager.cc:260
 msgid "Failed to create directory for tessdata files."
@@ -1892,7 +1883,7 @@ msgstr "Показати/приховати панель результатів"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
-msgstr ""
+msgstr "Метод експорту:"
 
 #: ../qt/data/PdfExportDialog.ui.h:6
 msgid "Portrait"
