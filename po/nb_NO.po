@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2019-02-07 19:09+0000\n"
+"PO-Revision-Date: 2019-04-13 16:04+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.5-dev\n"
+"X-Generator: Weblate 3.6-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -150,11 +150,11 @@ msgstr "Brukerstier"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr ""
+msgstr "Åpne eksporterte dokumenter automatisk med forvalgt program"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:36
 msgid "Regenerate backtrace"
-msgstr ""
+msgstr "Gjenskap tilbakesporing"
 
 #: ../gtk/data/CrashHandler.ui.h:2
 msgid "<b>The application has crashed</b>"
@@ -262,7 +262,7 @@ msgstr "Kilde:"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
-msgstr ""
+msgstr "Hent"
 
 #: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
