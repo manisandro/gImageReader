@@ -30,6 +30,7 @@
 #include <QStandardPaths>
 #endif
 #include <QUrl>
+#include <enchant-provider.h>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
@@ -168,7 +169,9 @@ QString Config::spellingLocation(Location location) {
 #ifdef Q_OS_WIN
 		QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
 #else
-		QDir dataDir("/usr/share");
+		char* prefix = enchant_get_prefix_dir();
+		QDir dataDir(QDir(prefix).absoluteFilePath("share"));
+		free(prefix);
 #endif
 #if HAVE_ENCHANT2
 		if(QDir(dataDir.absoluteFilePath("myspell")).exists()) {
