@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2019-04-13 16:04+0000\n"
+"PO-Revision-Date: 2019-05-16 12:48+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.6-dev\n"
+"X-Generator: Weblate 3.7-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -169,6 +169,10 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
+"Innrapporter problemet til <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a> for å forbedre programmet. Beskriv hva du gjorde "
+"før det kræsjet sammen med informasjonen nedenfor. Takk."
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
@@ -302,8 +306,9 @@ msgstr "Velg rotasjonsmodus"
 
 #: ../gtk/data/MainWindow.ui.h:32 ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../gtk/data/OutputEditorText.ui.h:13 ../qt/src/Ui_OutputEditorText.hh:95
+#, fuzzy
 msgid "Select insert mode"
-msgstr ""
+msgstr "Velg innlimingsmodus"
 
 #: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
@@ -481,7 +486,7 @@ msgstr ""
 
 #: ../gtk/data/OutputEditorText.ui.h:2 ../qt/src/Ui_OutputEditorText.hh:53
 msgid "Insert at cursor"
-msgstr ""
+msgstr "Sett inn ved peker"
 
 #: ../gtk/data/OutputEditorText.ui.h:3 ../qt/src/Ui_OutputEditorText.hh:54
 msgid "Replace current text"
@@ -515,7 +520,7 @@ msgstr ""
 
 #: ../gtk/data/OutputEditorText.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:74
 msgid "Preserve paragraphs"
-msgstr ""
+msgstr "Bevar avsnitt"
 
 #: ../gtk/data/OutputEditorText.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:76
 msgid "Visual aids"
@@ -523,11 +528,11 @@ msgstr "Visuelle hjelpemiddel"
 
 #: ../gtk/data/OutputEditorText.ui.h:12 ../qt/src/Ui_OutputEditorText.hh:78
 msgid "Draw whitespace"
-msgstr ""
+msgstr "Tegn blanktegn"
 
 #: ../gtk/data/OutputEditorText.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
-msgstr ""
+msgstr "Fjern linjeskift i markert tekst"
 
 #: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:109
 #: ../qt/src/Ui_OutputEditorText.hh:110
@@ -553,7 +558,7 @@ msgstr "PDF"
 
 #: ../gtk/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportDialog.ui.h:9
 msgid "PDF with invisible text overlay"
-msgstr ""
+msgstr "PDF med usynlig tekstoverlag"
 
 #: ../gtk/data/PdfExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Format:"
@@ -572,8 +577,9 @@ msgid "DPI:"
 msgstr "DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
+#, fuzzy
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "Fargesjatteringsutjevningsalgoritme:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
@@ -859,7 +865,7 @@ msgstr "Inget arbeid å lagre."
 
 #: ../gtk/src/CrashHandler.cc:102 ../qt/src/CrashHandler.cc:60
 msgid "Failed to obtain backtrace. Is gdb installed?"
-msgstr ""
+msgstr "Klarte ikke å hente tilbakesporing. Er GDB installert?"
 
 #: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
 msgid "Failed to load image"
@@ -1189,7 +1195,7 @@ msgstr "Klarte ikke å åpne fil"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:935
 #: ../qt/src/hocr/OutputEditorHOCR.cc:796
 msgid "The file could not be opened: %1."
-msgstr ""
+msgstr "Kunne ikke åpne fil: %1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:944
 #: ../qt/src/hocr/OutputEditorHOCR.cc:803
@@ -1345,13 +1351,15 @@ msgstr ""
 
 #: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:574
 msgid "Dictionaries installed"
-msgstr ""
+msgstr "Ordbøker installert"
 
 #: ../gtk/src/MainWindow.cc:585
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
 msgstr ""
+"Følgende ordbøker ble installert:\n"
+"%1"
 
 #: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
@@ -1363,11 +1371,11 @@ msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:231 ../qt/src/OutputEditorText.cc:196
 msgid "File: %1"
-msgstr ""
+msgstr "Fil: %1"
 
 #: ../gtk/src/OutputEditorText.cc:234 ../qt/src/OutputEditorText.cc:199
 msgid "Page: %1"
-msgstr ""
+msgstr "Side: %1"
 
 #: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:477
 #: ../qt/src/Recognizer.cc:470
@@ -1375,10 +1383,12 @@ msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
 msgstr ""
+"\n"
+"[Kunne ikke tolke siden %1]\n"
 
 #: ../gtk/src/OutputEditorText.cc:275 ../qt/src/OutputEditorText.cc:239
 msgid "Save Output..."
-msgstr ""
+msgstr "Lagre utdata…"
 
 #: ../gtk/src/Recognizer.cc:145 ../qt/src/Recognizer.cc:132
 msgid ""
@@ -1397,7 +1407,7 @@ msgstr ""
 
 #: ../gtk/src/Recognizer.cc:201 ../qt/src/Recognizer.cc:192
 msgid "No languages available"
-msgstr ""
+msgstr "Ingen språk tilgjengelig"
 
 #: ../gtk/src/Recognizer.cc:201 ../qt/src/Recognizer.cc:192
 msgid ""
@@ -1406,39 +1416,39 @@ msgstr ""
 
 #: ../gtk/src/Recognizer.cc:255 ../qt/src/Recognizer.cc:252
 msgid "Multilingual"
-msgstr ""
+msgstr "Flerspråklig"
 
 #: ../gtk/src/Recognizer.cc:307 ../qt/src/Recognizer.cc:297
 msgid "Automatic page segmentation"
-msgstr ""
+msgstr "Automatisk sideinndeling"
 
 #: ../gtk/src/Recognizer.cc:308 ../qt/src/Recognizer.cc:298
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "Sideinndeling med sidreretning og skript-oppdagelse"
 
 #: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:299
 msgid "Assume single column of text"
-msgstr ""
+msgstr "Anta én tekstkolonne"
 
 #: ../gtk/src/Recognizer.cc:310 ../qt/src/Recognizer.cc:300
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "Anta én blokk med vannrett-anordnet tekst"
 
 #: ../gtk/src/Recognizer.cc:311 ../qt/src/Recognizer.cc:301
 msgid "Assume a single uniform block of text"
-msgstr ""
+msgstr "Anta én helhetlig blokk med tekst"
 
 #: ../gtk/src/Recognizer.cc:312 ../qt/src/Recognizer.cc:302
 msgid "Assume a line of text"
-msgstr ""
+msgstr "Anta én linje med tekst"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:303
 msgid "Assume a single word"
-msgstr ""
+msgstr "Anta ett ord"
 
 #: ../gtk/src/Recognizer.cc:314 ../qt/src/Recognizer.cc:304
 msgid "Assume a single word in a circle"
-msgstr ""
+msgstr "Anta ett ord i en sirkel"
 
 #: ../gtk/src/Recognizer.cc:315 ../qt/src/Recognizer.cc:305
 msgid "Sparse text in no particular order"
@@ -1453,37 +1463,41 @@ msgid "Page segmentation mode"
 msgstr ""
 
 #: ../gtk/src/Recognizer.cc:337 ../qt/src/Recognizer.cc:324
+#, fuzzy
 msgid "Manage languages..."
-msgstr ""
+msgstr "Håndter språk…"
 
 #: ../gtk/src/Recognizer.cc:393 ../qt/src/Recognizer.cc:384
 msgid "Current selection"
-msgstr ""
+msgstr "Nåværende utvalg"
 
 #: ../gtk/src/Recognizer.cc:471 ../qt/src/Recognizer.cc:463
 msgid "Recognizing page %1 (%2 of %3)"
-msgstr ""
+msgstr "Tolker side %1 (%1 av %3)"
 
 #: ../gtk/src/Recognizer.cc:476 ../qt/src/Recognizer.cc:469
 msgid ""
 "\n"
 "- Page %1: failed to render page"
 msgstr ""
+"\n"
+"- Side %1: Klarte ikke å tegne siden"
 
 #: ../gtk/src/Recognizer.cc:507 ../gtk/src/Recognizer.cc:536
 #: ../gtk/src/Recognizer.cc:549 ../qt/src/Recognizer.cc:499
 #: ../qt/src/Recognizer.cc:528 ../qt/src/Recognizer.cc:541
 msgid "Recognizing..."
-msgstr ""
+msgstr "Tolker…"
 
 #: ../gtk/src/Recognizer.cc:511 ../gtk/src/Recognizer.cc:519
 #: ../qt/src/Recognizer.cc:503 ../qt/src/Recognizer.cc:511
 msgid "Recognition errors occurred"
-msgstr ""
+msgstr "Tolkningsfeil inntraff"
 
 #: ../gtk/src/Recognizer.cc:511 ../qt/src/Recognizer.cc:503
+#, fuzzy
 msgid "The following errors occurred:%1"
-msgstr ""
+msgstr "Følgende feil inntraff: %1"
 
 #: ../gtk/src/Recognizer.cc:519 ../qt/src/Recognizer.cc:511
 msgid "Failed to initialize tesseract"
@@ -1492,29 +1506,29 @@ msgstr ""
 #: ../gtk/src/scanner/ScannerSane.cc:84 ../gtk/src/scanner/ScannerTwain.cc:288
 #: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
 msgid "Scan canceled"
-msgstr ""
+msgstr "Skanning avbrutt"
 
 #: ../gtk/src/scanner/ScannerSane.cc:159 ../gtk/src/scanner/ScannerTwain.cc:186
 #: ../qt/src/scanner/ScannerSane.cc:159 ../qt/src/scanner/ScannerTwain.cc:178
 msgid "No scanner specified"
-msgstr ""
+msgstr "Ingen skanner angitt"
 
 #: ../gtk/src/scanner/ScannerSane.cc:168 ../gtk/src/scanner/ScannerTwain.cc:195
 #: ../qt/src/scanner/ScannerSane.cc:168 ../qt/src/scanner/ScannerTwain.cc:187
 msgid "Unable to connect to scanner"
-msgstr ""
+msgstr "Klarte ikke å koble til skanner"
 
 #: ../gtk/src/scanner/ScannerSane.cc:403 ../gtk/src/scanner/ScannerTwain.cc:266
 #: ../gtk/src/scanner/ScannerTwain.cc:292 ../qt/src/scanner/ScannerSane.cc:403
 #: ../qt/src/scanner/ScannerTwain.cc:258 ../qt/src/scanner/ScannerTwain.cc:290
 msgid "Unable to start scan"
-msgstr ""
+msgstr "Klarte ikke å starte skanning"
 
 #: ../gtk/src/scanner/ScannerSane.cc:411 ../gtk/src/scanner/ScannerSane.cc:461
 #: ../gtk/src/scanner/ScannerTwain.cc:318 ../qt/src/scanner/ScannerSane.cc:411
 #: ../qt/src/scanner/ScannerSane.cc:461 ../qt/src/scanner/ScannerTwain.cc:316
 msgid "Error communicating with scanner"
-msgstr ""
+msgstr "Feil under kommunisering med skanner"
 
 #: ../gtk/src/scanner/ScannerSane.cc:520 ../qt/src/scanner/ScannerSane.cc:517
 msgid "Failed to save image"
@@ -1649,11 +1663,11 @@ msgstr "Erstatt med"
 #: ../gtk/src/SubstitutionsManager.cc:69 ../gtk/src/SubstitutionsManager.cc:103
 #: ../qt/src/SubstitutionsManager.cc:106 ../qt/src/SubstitutionsManager.cc:143
 msgid "Substitutions List"
-msgstr ""
+msgstr "Erstatningsliste"
 
 #: ../gtk/src/SubstitutionsManager.cc:70 ../qt/src/SubstitutionsManager.cc:106
 msgid "Open Substitutions List"
-msgstr ""
+msgstr "Åpne erstatningsliste"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
 msgid "Error Reading File"
@@ -1669,11 +1683,11 @@ msgstr "Feil inntraff under lesing av fil"
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
 msgid "Some entries of the substitutions list could not be read."
-msgstr ""
+msgstr "Noen oppføringer i erstatningslisten kunne ikke leses."
 
 #: ../gtk/src/SubstitutionsManager.cc:104 ../qt/src/SubstitutionsManager.cc:143
 msgid "Save Substitutions List"
-msgstr ""
+msgstr "Lagre erstatningsliste"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
 msgid "Error Saving File"
@@ -1701,30 +1715,32 @@ msgstr ""
 
 #: ../gtk/src/TessdataManager.cc:64 ../qt/src/TessdataManager.cc:79
 msgid "Fetching available languages"
-msgstr ""
+msgstr "Henter tilgjengelige språk"
 
 #: ../gtk/src/TessdataManager.cc:69 ../gtk/src/TessdataManager.cc:95
 #: ../gtk/src/TessdataManager.cc:180 ../qt/src/TessdataManager.cc:84
 #: ../qt/src/TessdataManager.cc:101 ../qt/src/TessdataManager.cc:185
 msgid "Failed to fetch list of available languages: %1"
-msgstr ""
+msgstr "Klarte ikke å hente listen over tilgjengelige språk: %1"
 
 #: ../gtk/src/TessdataManager.cc:106 ../qt/src/TessdataManager.cc:112
 #: ../qt/src/TessdataManager.cc:121
 msgid "Parsing error: %1"
-msgstr ""
+msgstr "Tolkningsfeil: %1"
 
 #: ../gtk/src/TessdataManager.cc:214 ../qt/src/TessdataManager.cc:215
+#, fuzzy
 msgid "Applying changes..."
-msgstr ""
+msgstr "Utfører endringer…"
 
 #: ../gtk/src/TessdataManager.cc:275 ../qt/src/TessdataManager.cc:260
 msgid "Failed to create directory for tessdata files."
 msgstr ""
 
 #: ../gtk/src/TessdataManager.cc:284 ../qt/src/TessdataManager.cc:268
+#, fuzzy
 msgid "Downloading %1..."
-msgstr ""
+msgstr "Laster ned %1…"
 
 #: ../gtk/src/TessdataManager.cc:304
 msgid ""
@@ -1739,19 +1755,19 @@ msgstr ""
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: ../gtk/src/Utils.cc:67
 msgid "No"
-msgstr ""
+msgstr "Nei"
 
 #: ../gtk/src/Utils.cc:76
 msgid "Discard"
-msgstr ""
+msgstr "Forkast"
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
-msgstr ""
+msgstr "Om gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
 msgid ""
@@ -1762,23 +1778,23 @@ msgstr ""
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
-msgstr ""
+msgstr "Bidragsytere"
 
 #: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
-msgstr ""
+msgstr "Lisens"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
-msgstr ""
+msgstr "Systemtegnkoding"
 
 #: ../qt/data/ConfigDialog.ui.h:15
 msgid "UTF-8"
-msgstr ""
+msgstr "UTF-8"
 
 #: ../qt/data/ConfigDialog.ui.h:19
 msgid "Text file encoding:"
-msgstr ""
+msgstr "Tekstfilkoding:"
 
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
@@ -1810,43 +1826,43 @@ msgstr ""
 #. Remove & from some labels which designer insists in adding
 #: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
 msgid "Sources"
-msgstr ""
+msgstr "Kilder"
 
 #: ../qt/data/MainWindow.ui.h:22
 msgid "Zoom In"
-msgstr ""
+msgstr "Forstørr"
 
 #: ../qt/data/MainWindow.ui.h:24
 msgid "Zoom Out"
-msgstr ""
+msgstr "Forminsk"
 
 #: ../qt/data/MainWindow.ui.h:26
 msgid "Normal Size"
-msgstr ""
+msgstr "Normal størrelse"
 
 #: ../qt/data/MainWindow.ui.h:28
 msgid "Best Fit"
-msgstr ""
+msgstr "Beste tilpasning"
 
 #: ../qt/data/MainWindow.ui.h:30
 msgid "Rotate Left"
-msgstr ""
+msgstr "Roter til venstre"
 
 #: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate left"
-msgstr ""
+msgstr "Roter til venstre"
 
 #: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate Right"
-msgstr ""
+msgstr "Roter til høyre"
 
 #: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate right"
-msgstr ""
+msgstr "Roter til høyre"
 
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Image Controls"
-msgstr ""
+msgstr "Bildeanpasning"
 
 #: ../qt/data/MainWindow.ui.h:36
 msgid "Autodetect Layout"
@@ -1858,43 +1874,44 @@ msgstr ""
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
-msgstr ""
+msgstr "Bakende:"
 
 #: ../qt/data/PdfExportDialog.ui.h:6
 msgid "Portrait"
-msgstr ""
+msgstr "Stående"
 
 #: ../qt/data/PdfExportDialog.ui.h:7
 msgid "Landscape"
-msgstr ""
+msgstr "Liggende"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:142
 msgid "Failed to write to file"
-msgstr ""
+msgstr "Klarte ikke å skrive til fil"
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:56
 msgid "Open hOCR file"
-msgstr ""
+msgstr "Åpne hOCR-fil"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:57
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:58
 msgid "Save as hOCR text"
-msgstr ""
+msgstr "Lagre som hOCR-tekst"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:79
 #: ../qt/src/Ui_OutputEditorText.hh:106
 msgid "Find and Replace"
-msgstr ""
+msgstr "Finn og erstatt"
 
 #: ../qt/src/MainWindow.cc:541
 msgid "Could not read %1: %2"
-msgstr ""
+msgstr "Kunne ikke lese %1: %2"
 
 #: ../qt/src/MainWindow.cc:574
+#, fuzzy
 msgid "The following dictionary files were installed:%1"
-msgstr ""
+msgstr "Følgende ordbøker ble installert: %1"
 
 #: ../qt/src/TessdataManager.cc:290
 msgid ""
@@ -1908,35 +1925,35 @@ msgstr ""
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
-msgstr ""
+msgstr "Utdata"
 
 #: ../qt/src/Ui_MainWindow.hh:134
 msgid "OCR mode:"
-msgstr ""
+msgstr "OCR-modus:"
 
 #: ../qt/src/Ui_MainWindow.hh:208
 msgid "Remove Image"
-msgstr ""
+msgstr "Fjern bilde"
 
 #: ../qt/src/Ui_MainWindow.hh:211
 msgid "Delete Image"
-msgstr ""
+msgstr "Slett bilde"
 
 #: ../qt/src/Ui_MainWindow.hh:214
 msgid "Clear List"
-msgstr ""
+msgstr "Tøm liste"
 
 #: ../qt/src/Ui_OutputEditorText.hh:101
 msgid "Strip Line Breaks"
-msgstr ""
+msgstr "Fjern linjeskift"
 
 #: ../qt/src/Ui_OutputEditorText.hh:115
 msgid "Save Output"
-msgstr ""
+msgstr "Lagre utdata"
 
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
-msgstr ""
+msgstr "Tøm utdata"
 
 #~ msgid "90"
 #~ msgstr "90"
