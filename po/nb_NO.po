@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2019-05-16 12:48+0000\n"
+"PO-Revision-Date: 2019-06-18 19:05+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7-dev\n"
+"X-Generator: Weblate 3.7\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -481,8 +481,9 @@ msgstr "Kilde"
 
 #. Output insert mode
 #: ../gtk/data/OutputEditorText.ui.h:1 ../qt/src/Ui_OutputEditorText.hh:52
+#, fuzzy
 msgid "Append to current text"
-msgstr ""
+msgstr "Anfør til aktuell tekst"
 
 #: ../gtk/data/OutputEditorText.ui.h:2 ../qt/src/Ui_OutputEditorText.hh:53
 msgid "Insert at cursor"
@@ -500,11 +501,11 @@ msgstr "Behold linjeskift hvis…"
 
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:64
 msgid "Preceded by end mark (.?!)"
-msgstr ""
+msgstr "Foregås av sluttegn (.?!)"
 
 #: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:66
 msgid "Preceded or succeeded by quote"
-msgstr ""
+msgstr "Foregås eller etterfulgt av sittattegn"
 
 #: ../gtk/data/OutputEditorText.ui.h:7 ../qt/src/Ui_OutputEditorText.hh:68
 msgid "Other options"
@@ -512,11 +513,12 @@ msgstr "Andre valg"
 
 #: ../gtk/data/OutputEditorText.ui.h:8 ../qt/src/Ui_OutputEditorText.hh:70
 msgid "Join hyphenated words"
-msgstr ""
+msgstr "Bind sammen ord med bindestrek"
 
 #: ../gtk/data/OutputEditorText.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:72
+#, fuzzy
 msgid "Collapse whitespace"
-msgstr ""
+msgstr "Ta bort blanktegn"
 
 #: ../gtk/data/OutputEditorText.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:74
 msgid "Preserve paragraphs"
@@ -998,16 +1000,18 @@ msgid "Threshold (closest color)"
 msgstr "Terskel (nærmeste farge)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:331 ../qt/src/hocr/HOCRPdfExporter.cc:356
+#, fuzzy
 msgid "Diffuse"
-msgstr ""
+msgstr "Diffuser"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:340 ../qt/src/hocr/HOCRPdfExporter.cc:357
+#, fuzzy
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "ZIP (tapsfri)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:344 ../qt/src/hocr/HOCRPdfExporter.cc:358
 msgid "CCITT Group 4 (lossless)"
-msgstr ""
+msgstr "CCITT Gruppe 4 (tapsfri)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:348 ../qt/src/hocr/HOCRPdfExporter.cc:359
 #, fuzzy
@@ -1114,7 +1118,7 @@ msgstr "Gjenkjennelsesfeil"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:500
 #: ../qt/src/hocr/OutputEditorHOCR.cc:512
 msgid "Multiple values"
-msgstr ""
+msgstr "Flerfoldige verdier"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:771
@@ -1127,13 +1131,14 @@ msgstr "Flett"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:634
 #: ../qt/src/hocr/OutputEditorHOCR.cc:719
 msgid "Split from parent"
-msgstr ""
+msgstr "Del opp fra opphav"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:790
 #: ../qt/src/hocr/OutputEditorHOCR.cc:638
+#, fuzzy
 msgid "Swap"
-msgstr ""
+msgstr "Veksle"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:814
 #: ../qt/src/hocr/OutputEditorHOCR.cc:684
@@ -1220,8 +1225,9 @@ msgstr "Klarte ikke å lagre utdata"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:972 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/OutputEditorHOCR.cc:833 ../qt/src/OutputEditorText.cc:246
+#, fuzzy
 msgid "Check that you have writing permissions in the selected folder."
-msgstr ""
+msgstr "Sjekk at du har skrivetilgang til valgt mappe."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1031 ../gtk/src/OutputEditorText.cc:296
 #: ../qt/src/hocr/OutputEditorHOCR.cc:885 ../qt/src/OutputEditorText.cc:259
@@ -1241,8 +1247,9 @@ msgstr "Erstatter…"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1177 ../gtk/src/OutputEditorText.cc:192
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1005 ../qt/src/OutputEditorText.cc:160
+#, fuzzy
 msgid "Applying substitutions..."
-msgstr ""
+msgstr "Legger til erstatninger…"
 
 #: ../gtk/src/MainWindow.cc:123 ../qt/src/MainWindow.cc:287
 msgid "Using tesseract"
@@ -1363,11 +1370,11 @@ msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
-msgstr ""
+msgstr "Fjerner linjeskift…"
 
 #: ../gtk/src/OutputEditorText.cc:162
 msgid "Check spelling"
-msgstr ""
+msgstr "Stavekontroll"
 
 #: ../gtk/src/OutputEditorText.cc:231 ../qt/src/OutputEditorText.cc:196
 msgid "File: %1"
@@ -1812,16 +1819,17 @@ msgid "Flatbed"
 msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:18
+#, fuzzy
 msgid "ADF Front"
-msgstr ""
+msgstr "ADF-forside"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Back"
-msgstr ""
+msgstr "ADF-bakside"
 
 #: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Duplex"
-msgstr ""
+msgstr "Tosidig ADF"
 
 #. Remove & from some labels which designer insists in adding
 #: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
@@ -1866,7 +1874,7 @@ msgstr "Bildeanpasning"
 
 #: ../qt/data/MainWindow.ui.h:36
 msgid "Autodetect Layout"
-msgstr ""
+msgstr "Oppdag sideretning automatisk"
 
 #: ../qt/data/MainWindow.ui.h:38
 msgid "Toggle Output Pane"
