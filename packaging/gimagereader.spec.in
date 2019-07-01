@@ -36,6 +36,7 @@ BuildRequires: qtspell-qt5-devel
 BuildRequires: quazip-qt5-devel
 
 Requires:      hicolor-icon-theme
+Requires:      gvfs
 
 %description
 gImageReader is a simple front-end to tesseract. Features include:
