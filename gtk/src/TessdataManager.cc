@@ -160,6 +160,9 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 			JsonNode* value = static_cast<JsonNode*>(l->data);
 			JsonObject* treeObj = json_node_get_object(value);
 			Glib::ustring fileName = json_object_get_string_member(treeObj, "name");
+			if(!json_object_get_string_member(treeObj, "download_url")) {
+				continue;
+			}
 			Glib::ustring url = json_object_get_string_member(treeObj, "download_url");
 			Glib::ustring subdir;
 			// If filename starts with upper case letter, it is a script
