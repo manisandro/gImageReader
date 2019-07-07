@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 00:18+0200\n"
-"PO-Revision-Date: 2019-06-18 19:05+0000\n"
+"PO-Revision-Date: 2019-07-08 05:01+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7\n"
+"X-Generator: Weblate 3.8-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -176,7 +176,7 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
-msgstr ""
+msgstr "Veksle utdatafeltet"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
@@ -366,7 +366,7 @@ msgstr "Oppdag automatisk"
 
 #: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
-msgstr ""
+msgstr "Legg til før utdatatekst:"
 
 #: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
@@ -438,7 +438,7 @@ msgstr "Søk og erstatt"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:83
 msgid "Show confidence values"
-msgstr ""
+msgstr "Vis trygghetsnivåer"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/PdfExportDialog.ui.h:39
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
@@ -589,7 +589,7 @@ msgstr "Bildeinnstillinger:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
 msgid "Uniformize line and word spacing"
-msgstr ""
+msgstr "Enhetlig linje ord ordavstand"
 
 #: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
@@ -737,7 +737,7 @@ msgstr "Gjenkjenn"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:238
 msgid "Recognize to clipboard"
-msgstr ""
+msgstr "Fortolk til utklippstavle"
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:239
 msgid "Save as image"
@@ -904,8 +904,9 @@ msgid "Recognize selection"
 msgstr "Gjenkjenn utvalg"
 
 #: ../gtk/src/DisplayerToolSelect.cc:183 ../qt/src/DisplayerToolSelect.cc:179
+#, fuzzy
 msgid "Performing layout analysis"
-msgstr ""
+msgstr "Utfører visningsanalyse"
 
 #: ../gtk/src/FileDialogs.cc:235
 msgid ""
@@ -1355,6 +1356,12 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"Følgende ordbøker kunne ikke lastes ned:\n"
+"%1\n"
+"\n"
+"Sjekk tilkobling- og mappetilganger.\n"
+"Hint: Hvis du ikke har skrivetilganger i systemmapper, kan du bytte til "
+"brukerstier i innstillingsdialogen."
 
 #: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:574
 msgid "Dictionaries installed"
@@ -1398,6 +1405,7 @@ msgid "Save Output..."
 msgstr "Lagre utdata…"
 
 #: ../gtk/src/Recognizer.cc:145 ../qt/src/Recognizer.cc:132
+#, fuzzy
 msgid ""
 "Tesseract crashed with the following message:\n"
 "\n"
@@ -1411,6 +1419,17 @@ msgid ""
 "Make sure your language data files are valid and compatible with tesseract "
 "%2."
 msgstr ""
+"Tesseract kræsjet med følgende feilmelding:\n"
+"\n"
+"%1\n"
+"\n"
+"Dette skjer typisk fordi:\n"
+"- Utdaterte traneddata-filer i bruk.\n"
+"- Støtte for språkdatafiler mangler.\n"
+"- Skadede språkdatafiler.\n"
+"\n"
+"Forsikre deg om at dine språkdatafiler er gyldige og kompatible med "
+"Tesseract %2."
 
 #: ../gtk/src/Recognizer.cc:201 ../qt/src/Recognizer.cc:192
 msgid "No languages available"
@@ -1420,6 +1439,8 @@ msgstr "Ingen språk tilgjengelig"
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
+"Ingen Tesseract-språkfiler er tilgjengelige for bruk. Tolkning vil ikke "
+"fungere."
 
 #: ../gtk/src/Recognizer.cc:255 ../qt/src/Recognizer.cc:252
 msgid "Multilingual"
@@ -1459,15 +1480,15 @@ msgstr "Anta ett ord i en sirkel"
 
 #: ../gtk/src/Recognizer.cc:315 ../qt/src/Recognizer.cc:305
 msgid "Sparse text in no particular order"
-msgstr ""
+msgstr "Tolk tekst i vilkårlig rekkefølge"
 
 #: ../gtk/src/Recognizer.cc:316 ../qt/src/Recognizer.cc:306
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "Tolk tekst med sideretning- og skriptoppdagelse"
 
 #: ../gtk/src/Recognizer.cc:331 ../qt/src/Recognizer.cc:317
 msgid "Page segmentation mode"
-msgstr ""
+msgstr "Sideinndelingsmodus"
 
 #: ../gtk/src/Recognizer.cc:337 ../qt/src/Recognizer.cc:324
 #, fuzzy
@@ -1507,8 +1528,9 @@ msgid "The following errors occurred:%1"
 msgstr "Følgende feil inntraff: %1"
 
 #: ../gtk/src/Recognizer.cc:519 ../qt/src/Recognizer.cc:511
+#, fuzzy
 msgid "Failed to initialize tesseract"
-msgstr ""
+msgstr "Klarte ikke å igangsette Tesseract"
 
 #: ../gtk/src/scanner/ScannerSane.cc:84 ../gtk/src/scanner/ScannerTwain.cc:288
 #: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
@@ -1719,6 +1741,10 @@ msgid ""
 "manage the tesseract language packs, or switch to use the user tessdata path "
 "in the configuration dialog."
 msgstr ""
+"PackageKit kreves for å håndtere Tesseract-språkfiler for hele systemet, men "
+"det ble ikke funnet. Bruk systemets pakkebehandlingsprogramvare for å "
+"håndtere Tesseract-språkpakker, eller bytt for å bruker brukerens tessdata-"
+"sti i oppsettsdialogen."
 
 #: ../gtk/src/TessdataManager.cc:64 ../qt/src/TessdataManager.cc:79
 msgid "Fetching available languages"
@@ -1742,7 +1768,7 @@ msgstr "Utfører endringer…"
 
 #: ../gtk/src/TessdataManager.cc:275 ../qt/src/TessdataManager.cc:260
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Klarte ikke å opprette mappe for tessdata-filer."
 
 #: ../gtk/src/TessdataManager.cc:284 ../qt/src/TessdataManager.cc:268
 #, fuzzy
@@ -1759,6 +1785,13 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"Følgende filer kunne ikke lastes ned eller fjernes:\n"
+"%1\n"
+"\n"
+"Sjekk tilkobling- og mappe-tilganger.\n"
+"\n"
+"Hint: Hvis du ikke har skrivetilganger i systemmapper, kan du bytte til "
+"brukerstier i innstillingsdialogen."
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
@@ -1782,6 +1815,9 @@ msgid ""
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
+"<html><head/><body><p>&nbsp;</p><p>Grafisk grenseflate for tesseract-"
+"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Nettside</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -1813,10 +1849,16 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Programmet har "
+"kræsjet</span></p><p>Beklager bryderiet. For å forbedre programmet, overvei "
+"å innrapportere problemet til <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Prøv å beskrive hva du gjorde før programmet "
+"kræsjet. Inkluder også informasjonen nedenfor. Takk.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
-msgstr ""
+msgstr "Bordscanner"
 
 #: ../qt/data/MainWindow.ui.h:18
 #, fuzzy
@@ -1877,8 +1919,9 @@ msgid "Autodetect Layout"
 msgstr "Oppdag sideretning automatisk"
 
 #: ../qt/data/MainWindow.ui.h:38
+#, fuzzy
 msgid "Toggle Output Pane"
-msgstr ""
+msgstr "Veksle utdatafelt"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
@@ -1930,6 +1973,12 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"Følgende filer kunne ikke lastes ned:\n"
+"%1\n"
+"\n"
+"Sjekk tilkobling- og mappetilganger.\n"
+"Hint: Hvis du ikke har skrivetilganger i systemmapper, kan du bytte til "
+"brukerstier i innstillingsdialogen."
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
