@@ -21,6 +21,7 @@
 #define HOCRDOCUMENT_HH
 
 #include "common.hh"
+#include "Config.hh"
 #include "Geometry.hh"
 #include <map>
 #include <set>
@@ -177,6 +178,11 @@ public:
 	}
 	Glib::ustring lang() const {
 		return getAttribute("lang");
+	}
+	Glib::ustring spellingLang() const {
+		Glib::ustring l = lang();
+		Glib::ustring code = Config::lookupLangCode(l);
+		return code.empty() ? l : code;
 	}
 	const std::map<Glib::ustring, Glib::ustring> getTitleAttributes() const {
 		return m_titleAttrs;

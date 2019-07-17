@@ -46,6 +46,7 @@ public:
 
 	static void openTessdataDir();
 	static void openSpellingDir();
+	static QString lookupLangCode(const QString& prefix) { return LANG_LOOKUP[prefix]; }
 
 public slots:
 	void disableDictInstall();
@@ -54,6 +55,7 @@ public slots:
 private:
 	enum Location {SystemLocation = 0, UserLocation = 1};
 	static const QList<Lang> LANGUAGES;
+	static const QMap<QString, QString> LANG_LOOKUP;
 	static const QMultiMap<QString, QString> LANGUAGE_CULTURES;
 
 	Ui::ConfigDialog ui;

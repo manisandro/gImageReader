@@ -296,7 +296,7 @@ bool HOCRDocument::checkItemSpelling(const QModelIndex& index, QStringList* sugg
 
 	QString prefix, suffix, trimmed = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
 	if(trimmed.isEmpty()) { return true; }
-	QString lang = item->lang();
+	QString lang = item->spellingLang();
 	if(m_spell->getLanguage() != lang && !(m_spell->setLanguage(lang))) { return true; }
 
 	// check word, including (if requested) setting suggestions; handle hyphenated phrases correctly

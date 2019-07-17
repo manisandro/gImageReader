@@ -20,6 +20,7 @@
 #ifndef HOCRDOCUMENT_HH
 #define HOCRDOCUMENT_HH
 
+#include "Config.hh"
 #include <QAbstractItemModel>
 #include <QRect>
 
@@ -144,6 +145,11 @@ public:
 	}
 	QString lang() const {
 		return m_attrs["lang"];
+	}
+	QString spellingLang() const {
+		QString l = lang();
+		QString code = Config::lookupLangCode(l);
+		return code.isEmpty() ? l : code;
 	}
 	const QMap<QString, QString> getAttributes() const {
 		return m_attrs;

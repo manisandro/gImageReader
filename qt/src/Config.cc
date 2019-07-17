@@ -36,6 +36,14 @@
 #undef USE_STD_NAMESPACE
 
 const QList<Config::Lang> Config::LANGUAGES = LangTables::languages<QList<Config::Lang>, QString>([](const char* str) { return QString::fromUtf8(str); });
+const QMap<QString, QString> Config::LANG_LOOKUP = [] {
+	QMap<QString, QString> lookup;
+	for(const Config::Lang& lang : LANGUAGES) {
+		lookup.insert(lang.prefix, lang.code);
+	}
+	return lookup;
+}();
+
 const QMultiMap<QString, QString> Config::LANGUAGE_CULTURES = LangTables::languageCultures<QMultiMap<QString, QString>>();
 
 

@@ -838,7 +838,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 		CONNECT(addWordItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_WORD_RECT); });
 	} else if(itemClass == "ocrx_word") {
 		Glib::ustring prefix, suffix, trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
-		Glib::ustring spellLang = item->lang();
+		Glib::ustring spellLang = item->spellingLang();
 		bool haveLanguage = true;
 		if(m_spell.get_language() != spellLang) {
 			try {

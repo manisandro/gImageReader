@@ -29,6 +29,13 @@
 #undef USE_STD_NAMESPACE
 
 const std::vector<Config::Lang> Config::LANGUAGES = LangTables::languages<std::vector<Config::Lang>, Glib::ustring>([](const char* str) { return Glib::ustring(str); });
+const std::map<Glib::ustring, Glib::ustring> Config::LANG_LOOKUP = [] {
+	std::map<Glib::ustring, Glib::ustring> lookup;
+	for(const Config::Lang& lang : LANGUAGES) {
+		lookup.insert(std::make_pair(lang.prefix, lang.code));
+	}
+	return lookup;
+}();
 const std::multimap<Glib::ustring, Glib::ustring> Config::LANGUAGE_CULTURES = LangTables::languageCultures<std::multimap<Glib::ustring, Glib::ustring>>();
 
 Config::Config() {

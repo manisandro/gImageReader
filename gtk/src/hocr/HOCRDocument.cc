@@ -589,7 +589,7 @@ bool HOCRDocument::checkItemSpelling(const HOCRItem* item) const {
 	if(item->itemClass() == "ocrx_word") {
 		Glib::ustring trimmed = HOCRItem::trimmedWord(item->text());
 		if(!trimmed.empty()) {
-			Glib::ustring lang = item->lang();
+			Glib::ustring lang = item->spellingLang();
 			if(m_spell->get_language() != lang) {
 				try {
 					m_spell->set_language(lang);
