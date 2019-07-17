@@ -647,7 +647,7 @@ std::map<Glib::ustring, Glib::ustring> HOCRItem::deserializeAttrGroup(const Glib
 	for(const Glib::ustring& attr : Utils::string_split(string, ';', false)) {
 		Glib::ustring trimmed = Utils::string_trim(attr);
 		int splitPos = trimmed.find_first_of(' ');
-		attrs.insert(std::make_pair(trimmed.substr(0, splitPos), Utils::string_trim(trimmed.substr(splitPos + 1))));
+		attrs.insert(std::make_pair(trimmed.substr(0, splitPos), splitPos > 0 ? Utils::string_trim(trimmed.substr(splitPos + 1)) : ""));
 	}
 	return attrs;
 }

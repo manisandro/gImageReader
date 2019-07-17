@@ -653,7 +653,7 @@ QMap<QString, QString> HOCRItem::deserializeAttrGroup(const QString& string) {
 	QMap<QString, QString> attrs;
 	for(const QString& attr : string.split(QRegExp("\\s*;\\s*"))) {
 		int splitPos = attr.indexOf(QRegExp("\\s+"));
-		attrs.insert(attr.left(splitPos), attr.mid(splitPos + 1));
+		attrs.insert(attr.left(splitPos), splitPos > 0 ? attr.mid(splitPos + 1) : "");
 	}
 	return attrs;
 }
