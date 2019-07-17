@@ -681,6 +681,8 @@ void OutputEditorHOCR::bboxDrawn(const Geometry::Rectangle& bbox, int action) {
 	if(!currentItem) {
 		return;
 	}
+	std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring>>> propAttrs;
+	currentItem->getPropagatableAttributes(propAttrs);
 	xmlpp::Element* newElement;
 	if(action == DisplayerToolHOCR::ACTION_DRAW_GRAPHIC_RECT) {
 		newElement = doc.create_root_node("div");
@@ -697,6 +699,7 @@ void OutputEditorHOCR::bboxDrawn(const Geometry::Rectangle& bbox, int action) {
 	} else if(action == DisplayerToolHOCR::ACTION_DRAW_LINE_RECT) {
 		newElement = doc.create_root_node("span");
 		newElement->set_attribute("class", "ocr_line");
+		std::set<Glib::ustring> propLineBaseline = propAttrs["ocrx_line"]["baseline"];
 		// Tesseract does as follows:
 		// row_height = x_height + ascenders - descenders
 		// font_pt_size = row_height * 72 / dpi (72 = pointsPerInch)
@@ -706,7 +709,7 @@ void OutputEditorHOCR::bboxDrawn(const Geometry::Rectangle& bbox, int action) {
 		titleAttrs["x_ascenders"] = Glib::ustring::compose("%1", 0.25 * bbox.height);
 		titleAttrs["x_descenders"] = Glib::ustring::compose("%1", 0.25 * bbox.height);
 		titleAttrs["x_size"] = Glib::ustring::compose("%1", bbox.height);
-		titleAttrs["baseline"] = Glib::ustring("0 0");
+		titleAttrs["baseline"] = propLineBaseline.size() == 1 ? *propLineBaseline.begin() : Glib::ustring("0 0");
 		newElement->set_attribute("title", HOCRItem::serializeAttrGroup(titleAttrs));
 	} else if(action == DisplayerToolHOCR::ACTION_DRAW_WORD_RECT) {
 		ui.entryAddWord->set_text("");
@@ -717,13 +720,17 @@ void OutputEditorHOCR::bboxDrawn(const Geometry::Rectangle& bbox, int action) {
 		}
 		newElement = doc.create_root_node("span");
 		newElement->set_attribute("class", "ocrx_word");
-		newElement->set_attribute("lang", m_spell.get_language());
+		std::map<Glib::ustring, std::set<Glib::ustring>> propWord = propAttrs["ocrx_word"];
+
+		newElement->set_attribute("lang", propWord["lang"].size() == 1 ? *propWord["lang"].begin() : m_spell.get_language());
 		std::map<Glib::ustring, Glib::ustring> titleAttrs;
 		titleAttrs["bbox"] = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
-		titleAttrs["x_font"] = "sans";
-		titleAttrs["x_fsize"] = Glib::ustring::compose("%1", std::round(bbox.height * 72. / currentItem->page()->resolution()));
+		titleAttrs["x_font"] = propWord["title:x_font"].size() == 1 ? *propWord["title:x_font"].begin() : "sans";
+		titleAttrs["x_fsize"] = propWord["title:x_fsize"].size() == 1 ? *propWord["title:x_fsize"].begin() : Glib::ustring::compose("%1", std::round(bbox.height * 72. / currentItem->page()->resolution()));
 		titleAttrs["x_wconf"] = "100";
 		newElement->set_attribute("title", HOCRItem::serializeAttrGroup(titleAttrs));
+		if (propWord["bold"].size() == 1) { newElement->set_attribute("bold", *propWord["bold"].begin()); }
+		if (propWord["italic"].size() == 1) { newElement->set_attribute("italic", *propWord["italic"].begin()); }
 		newElement->add_child_text(ui.entryAddWord->get_text());
 	} else {
 		return;
