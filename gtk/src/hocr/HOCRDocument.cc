@@ -696,8 +696,8 @@ Glib::ustring HOCRItem::serializeAttrGroup(const std::map<Glib::ustring, Glib::u
 }
 
 Glib::ustring HOCRItem::trimmedWord(const Glib::ustring& word, Glib::ustring* prefix, Glib::ustring* suffix) {
-	// correctly trim words with apostrophes or hyphens within them and initialisms/acronyms
-	static const Glib::RefPtr<Glib::Regex> wordRe = Glib::Regex::create("^(\\W*)(\\w|\\w(\\w|[-'’])*\\w|(\\w+\\.){2,})(\\W*)$");
+	// correctly trim words with apostrophes or hyphens within them, initialisms/acronyms, and numeric citations
+	static const Glib::RefPtr<Glib::Regex> wordRe = Glib::Regex::create("^(\\W*)(\\w|\\w(\\w|[-'’])*\\w|(\\w+\\.){2,})([\\W\\x00b2\\x00b3\\x00b9\\x2070\\x207e-]*)$");
 	Glib::MatchInfo matchInfo;
 	if(wordRe->match(word, matchInfo)) {
 		if(prefix) {
