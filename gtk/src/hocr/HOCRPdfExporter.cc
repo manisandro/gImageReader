@@ -560,13 +560,27 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 			const HOCRPage* page = m_hocrdocument->page(i);
 			if(page->isEnabled()) {
 				Geometry::Rectangle bbox = page->bbox();
+				Glib::ustring sourceFile = page->sourceFile();
+				// If the source file is an image, its "resolution" is actually just the scale factor that was used for recognizing.
+				bool isImage = Glib::ustring(sourceFile.substr(sourceFile.length() - 4)).lowercase() != ".pdf" && Glib::ustring(sourceFile.substr(sourceFile.length() - 5)).lowercase() != ".djvu";
 				int sourceDpi = page->resolution();
+				int sourceScale = sourceDpi;
+				if(isImage) {
+					sourceDpi = ui.spinBoxPaperSizeDpi->get_value_as_int();
+				}
+				// [pt] = 72 * [in]
+				// [in] = 1 / dpi * [px]
+				// => [pt] = 72 / dpi * [px]
+				double px2pt = (72.0 / sourceDpi);
+				double imgScale = double(outputDpi) / sourceDpi;
+
 				bool success = false;
-				Utils::runInMainThreadBlocking([&] { success = setSource(page->sourceFile(), page->pageNr(), outputDpi, page->angle()); });
+				if(isImage) {
+					Utils::runInMainThreadBlocking([&] { success = setSource(page->sourceFile(), page->pageNr(), sourceScale * imgScale, page->angle()); });
+				} else {
+					Utils::runInMainThreadBlocking([&] { success = setSource(page->sourceFile(), page->pageNr(), outputDpi, page->angle()); });
+				}
 				if(success) {
-					// [pt] = 72 * [in]
-					// [in] = 1 / dpi * [px]
-					// => [pt] = 72 / dpi * [px]
 					double px2pt = (72.0 / sourceDpi);
 					double imgScale = double(outputDpi) / sourceDpi;
 					if(paperSize == "source") {
@@ -578,7 +592,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 					if(!painter->createPage(pageWidth, pageHeight, offsetX, offsetY, errMsg)) {
 						return false;
 					}
-					printChildren(*painter, page, pdfSettings, px2pt, imgScale, true);
+					printChildren(*painter, page, pdfSettings, px2pt, imgScale, double(sourceScale) / sourceDpi, true);
 					if(pdfSettings.overlay) {
 						Geometry::Rectangle scaledRect(imgScale * bbox.x, imgScale * bbox.y, imgScale * bbox.width, imgScale * bbox.height);
 						Geometry::Rectangle printRect(bbox.x * px2pt, bbox.y * px2pt, bbox.width * px2pt, bbox.height * px2pt);
@@ -586,7 +600,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 						Utils::runInMainThreadBlocking([&] { selection = getSelection(scaledRect); });
 						painter->drawImage(printRect, selection, pdfSettings);
 					}
-					Utils::runInMainThreadBlocking([&] { setSource(page->sourceFile(), page->pageNr(), sourceDpi, page->angle()); });
+					Utils::runInMainThreadBlocking([&] { setSource(page->sourceFile(), page->pageNr(), sourceScale, page->angle()); });
 					painter->finishPage();
 				} else {
 					errMsg = Glib::ustring::compose(_("Failed to render page %1"), page->title());
@@ -686,9 +700,12 @@ HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const {
 	return pdfSettings;
 }
 
-void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu/*pixels to printer units*/, double imgScale, bool inThread) {
+void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu/*pixels to printer units*/, double imgScale, double fontScale, bool inThread) {
 	if(!item->isEnabled()) {
 		return;
+	}
+	if(pdfSettings.fontSize != -1) {
+		painter.setFontSize(pdfSettings.fontSize * fontScale);
 	}
 	Glib::ustring itemClass = item->itemClass();
 	Geometry::Rectangle itemRect = item->bbox();
@@ -709,7 +726,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 				Geometry::Rectangle wordRect = wordItem->bbox();
 				painter.setFontFamily(pdfSettings.fontFamily.empty() ? wordItem->fontFamily() : pdfSettings.fontFamily, wordItem->fontBold(), wordItem->fontItalic());
 				if(pdfSettings.fontSize == -1) {
-					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
+					painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling * fontScale);
 				}
 				// If distance from previous word is large, keep the space
 				if(wordRect.x - prevWordRight > pdfSettings.preserveSpaceWidth * painter.getAverageCharWidth() / px2pu) {
@@ -732,7 +749,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 			Geometry::Rectangle wordRect = wordItem->bbox();
 			painter.setFontFamily(pdfSettings.fontFamily.empty() ? wordItem->fontFamily() : pdfSettings.fontFamily, wordItem->fontBold(), wordItem->fontItalic());
 			if(pdfSettings.fontSize == -1) {
-				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling);
+				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling * fontScale);
 			}
 			double y = itemRect.y + itemRect.height + (wordRect.x + 0.5 * wordRect.width - itemRect.x) * baseline.first + baseline.second;
 			painter.drawText(wordRect.x * px2pu, y * px2pu, wordItem->text());
@@ -749,7 +766,7 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 		painter.drawImage(printRect, selection, pdfSettings);
 	} else {
 		for(int i = 0, n = item->children().size(); i < n; ++i) {
-			printChildren(painter, item->children()[i], pdfSettings, px2pu, imgScale, inThread);
+			printChildren(painter, item->children()[i], pdfSettings, px2pu, imgScale, fontScale, inThread);
 		}
 	}
 }
@@ -856,14 +873,17 @@ void HOCRPdfExporter::paperSizeChanged() {
 		ui.entryPaperHeight->set_sensitive(true);
 		ui.boxPaperSize->set_visible(true);
 		ui.boxPaperOrientation->set_visible(false);
+		ui.boxPaperSizeDpi->set_visible(false);
 	} else if(paperSize == "source") {
 		ui.entryPaperWidth->set_sensitive(true);
 		ui.entryPaperHeight->set_sensitive(true);
 		ui.boxPaperSize->set_visible(false);
 		ui.boxPaperOrientation->set_visible(false);
+		ui.boxPaperSizeDpi->set_visible(true);
 	} else {
 		ui.boxPaperSize->set_visible(true);
 		ui.boxPaperOrientation->set_visible(true);
+		ui.boxPaperSizeDpi->set_visible(false);
 		ui.entryPaperWidth->set_sensitive(false);
 		ui.entryPaperHeight->set_sensitive(false);
 		PaperSize::Unit unit = static_cast<PaperSize::Unit>(static_cast<int>((*ui.comboPaperSizeUnit->get_active())[m_sizeUnitComboCols.unit]));

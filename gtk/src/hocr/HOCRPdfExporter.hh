@@ -141,7 +141,7 @@ private:
 
 	PDFSettings getPdfSettings() const;
 	PDFPainter* createPoDoFoPrinter(const std::string& filename, const Glib::ustring& defaultFont, double defaultFontSize, Glib::ustring& errMsg);
-	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu, double imgScale = 1., bool inThread = false);
+	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu, double imgScale = 1., double fontScale = 1., bool inThread = false);
 
 	void importMetadataFromSource();
 	void imageFormatChanged();
