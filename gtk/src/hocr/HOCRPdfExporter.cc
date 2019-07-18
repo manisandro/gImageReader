@@ -566,7 +566,7 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 				int sourceDpi = page->resolution();
 				int sourceScale = sourceDpi;
 				if(isImage) {
-					sourceDpi = ui.spinBoxPaperSizeDpi->get_value_as_int();
+					sourceDpi *= ui.spinBoxPaperSizeDpi->get_value_as_int() / 100;
 				}
 				// [pt] = 72 * [in]
 				// [in] = 1 / dpi * [px]
