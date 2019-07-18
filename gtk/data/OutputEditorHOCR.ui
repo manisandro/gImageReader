@@ -220,7 +220,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="has_tooltip">True</property>
-                    <property name="tooltip_text" translatable="yes">Select insert mode</property>
+                    <property name="tooltip_text" translatable="yes">Export</property>
                     <property name="icon_name">x-office-document-symbolic</property>
                   </object>
                   <packing>
