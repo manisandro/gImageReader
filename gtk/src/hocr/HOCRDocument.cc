@@ -650,12 +650,13 @@ bool HOCRDocument::checkSpelling(const Glib::ustring& trimmed, std::vector<Glib:
 	if(limit > 0) { perWordLimit = std::size_t(std::pow(10, std::log10(limit) / words.size())); }
 	std::vector<std::vector<Glib::ustring>> wordSuggestions;
 	bool valid = true;
+	bool multipleWords = words.size() > 1;
 	for(const std::pair<Glib::ustring, int>& word : words) {
 		bool wordValid = m_spell->check_word(word.first);
 		valid &= wordValid;
 		if(suggestions) {
 			std::vector<Glib::ustring> ws = m_spell->get_suggestions(word.first);
-			if(wordValid) { ws.insert(ws.begin(), word.first); }
+			if(wordValid && multipleWords) { ws.insert(ws.begin(), word.first); }
 			if(limit == -1) {
 				wordSuggestions.push_back(ws);
 			} else if(limit > 0) {
