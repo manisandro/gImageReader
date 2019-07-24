@@ -281,6 +281,22 @@ Glib::ustring Utils::string_html_escape(const Glib::ustring& str) {
 	return result;
 }
 
+std::vector<std::pair<Glib::ustring, int>> Utils::string_split_pos(const Glib::ustring& str, const Glib::RefPtr<Glib::Regex>& splitRe) {
+	int strpos = 0;
+	Glib::MatchInfo info;
+	std::vector<std::pair<Glib::ustring, int>> result;
+	while(splitRe->match(str, strpos, info)) {
+		int start = 0, end = 0;
+		info.fetch_pos(0, start, end);
+		result.push_back(std::make_pair(str.substr(strpos, start - strpos), strpos));
+		strpos = end;
+	}
+	if(strpos < str.length()) {
+		result.push_back(std::make_pair(str.substr(strpos), strpos));
+	}
+	return result;
+}
+
 int Utils::parseInt(const Glib::ustring& str, bool* ok) {
 	static Glib::RefPtr<Glib::Regex> nrRegEx = Glib::Regex::create("^\\d+$");
 	bool match = nrRegEx->match(str);

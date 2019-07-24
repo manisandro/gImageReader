@@ -75,6 +75,7 @@ public:
 	Gtk::TreeIter nextIndex(const Gtk::TreeIter& current) const;
 	Gtk::TreeIter prevIndex(const Gtk::TreeIter& current) const;
 	bool indexIsMisspelledWord(const Gtk::TreeIter& index) const;
+	bool checkItemSpelling(const Gtk::TreeIter& index, std::vector<Glib::ustring>* suggestions = nullptr, int limit = -1) const;
 
 	bool referencesSource(const Glib::ustring& filename) const;
 	Gtk::TreeIter searchPage(const Glib::ustring& filename, int pageNr) const;
@@ -129,7 +130,8 @@ private:
 	Glib::ustring displayRoleForItem(const HOCRItem* item) const;
 	Glib::RefPtr<Gdk::Pixbuf> decorationRoleForItem(const HOCRItem* item) const;
 
-	bool checkItemSpelling(const HOCRItem* item) const;
+	bool checkSpelling(const Glib::ustring& trimmed, std::vector<Glib::ustring>* suggestions = nullptr, int limit = -1) const;
+	void generateCombinations(const std::vector<std::vector<Glib::ustring>>& lists, std::vector<std::vector<Glib::ustring>>& results, int depth, const std::vector<Glib::ustring>& c) const;
 	void insertItem(HOCRItem* parent, HOCRItem* item, int i);
 	void deleteItem(HOCRItem* item);
 	void takeItem(HOCRItem* item);

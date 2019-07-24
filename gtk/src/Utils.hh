@@ -72,6 +72,7 @@ std::size_t string_firstIndex(const Glib::ustring& str, const Glib::ustring& sea
 std::size_t string_lastIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
 int string_replace(Glib::ustring& str, const Glib::ustring& search, const Glib::ustring& replace, bool matchCase);
 Glib::ustring string_html_escape(const Glib::ustring& str);
+std::vector<std::pair<Glib::ustring, int>> string_split_pos(const Glib::ustring& str, const Glib::RefPtr<Glib::Regex>& splitRe);
 
 int parseInt(const Glib::ustring& str, bool* ok = nullptr);
 

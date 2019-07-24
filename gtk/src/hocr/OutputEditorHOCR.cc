@@ -838,28 +838,22 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 		CONNECT(addWordItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_WORD_RECT); });
 	} else if(itemClass == "ocrx_word") {
 		Glib::ustring prefix, suffix, trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
-		Glib::ustring spellLang = item->spellingLang();
-		bool haveLanguage = true;
-		if(m_spell.get_language() != spellLang) {
-			try {
-				m_spell.set_language(spellLang);
-			} catch(const GtkSpell::Error& /*e*/) {
-				haveLanguage = false;
-			}
+		std::vector<Glib::ustring> suggestions;
+		bool valid = m_document->checkItemSpelling(index, &suggestions, 16);
+		for(const Glib::ustring& suggestion : suggestions) {
+			Glib::ustring replacement = prefix + suggestion + suffix;
+			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
+			CONNECT(item, activate, [this, replacement, index] { m_document->editItemText(index, replacement); });
+			menu.append(*item);
 		}
-		if(haveLanguage && !trimmedWord.empty()) {
-			for(const Glib::ustring& suggestion : m_spell.get_suggestions(trimmedWord)) {
-				Glib::ustring replacement = prefix + suggestion + suffix;
-				Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
-				CONNECT(item, activate, [this, replacement, index] { m_document->editItemText(index, replacement); });
-				menu.append(*item);
-			}
+
+		if(!trimmedWord.empty()) {
 			if(menu.get_children().empty()) {
 				Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("No suggestions")));
 				item->set_sensitive(false);
 				menu.append(*item);
 			}
-			if(!m_spell.check_word(trimmedWord)) {
+			if(!valid) {
 				menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
 				Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
 				CONNECT(additem, activate, [this, index, trimmedWord] {
