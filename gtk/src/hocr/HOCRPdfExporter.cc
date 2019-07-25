@@ -444,6 +444,7 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 	ADD_SETTING(SpinSetting("pdffontsize", ui.spinOverridefontsize));
 	ADD_SETTING(SpinSetting("pdffontscale", ui.spinFontscale));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfuniformizelinespacing", ui.checkboxUniformlinespacing));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfsanitizehyphens", ui.checkboxSanitizeHyphens));
 	ADD_SETTING(SpinSetting("pdfpreservespaces", ui.spinPreserve));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfpreview", ui.checkboxPreview));
 	ADD_SETTING(ComboSetting("pdfexportpapersize", ui.comboPaperFormat));
@@ -697,6 +698,7 @@ HOCRPdfExporter::PDFSettings HOCRPdfExporter::getPdfSettings() const {
 	pdfSettings.preserveSpaceWidth = ui.spinPreserve->get_value();
 	pdfSettings.overlay = ui.comboMode->get_active_row_number() == 1;
 	pdfSettings.detectedFontScaling = ui.spinFontscale->get_value() / 100.;
+	pdfSettings.sanitizeHyphens = ui.checkboxSanitizeHyphens->get_active();
 	return pdfSettings;
 }
 
@@ -734,6 +736,9 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 				}
 				prevWordRight = wordRect.x + wordRect.width;
 				Glib::ustring text = wordItem->text();
+				if(iWord == nWords - 1 && pdfSettings.sanitizeHyphens) {
+					text = Glib::Regex::create("[-\u2014]\\s*$")->replace(text, 0, "-", static_cast<Glib::RegexMatchFlags>(0));
+				}
 				double wordBaseline = (x - itemRect.x) * baseline.first + baseline.second;
 				painter.drawText(x * px2pu, (y + wordBaseline) * px2pu, text);
 				x += painter.getTextWidth(text + " ") / px2pu;
@@ -752,7 +757,11 @@ void HOCRPdfExporter::printChildren(PDFPainter& painter, const HOCRItem* item, c
 				painter.setFontSize(wordItem->fontSize() * pdfSettings.detectedFontScaling * fontScale);
 			}
 			double y = itemRect.y + itemRect.height + (wordRect.x + 0.5 * wordRect.width - itemRect.x) * baseline.first + baseline.second;
-			painter.drawText(wordRect.x * px2pu, y * px2pu, wordItem->text());
+			Glib::ustring text = wordItem->text();
+			if(iWord == nWords - 1 && pdfSettings.sanitizeHyphens) {
+				text = Glib::Regex::create("[-\u2014]\\s*$")->replace(text, 0, "-", static_cast<Glib::RegexMatchFlags>(0));
+			}
+			painter.drawText(wordRect.x * px2pu, y * px2pu, text);
 		}
 	} else if(itemClass == "ocr_graphic" && !pdfSettings.overlay) {
 		Geometry::Rectangle scaledItemRect(imgScale * itemRect.x, imgScale * itemRect.y, imgScale * itemRect.width, imgScale * itemRect.height);

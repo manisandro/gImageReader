@@ -151,6 +151,11 @@
             <summary>Uniformize line spacing</summary>
             <description>Whether to uniformize line spacing when generating PDFs.</description>
         </key>
+        <key type="b" name="pdfsanitizehyphens">
+            <default>true</default>
+            <summary>Sanitize line breaks</summary>
+            <description>Whether to sanitize hyphens before line breaks when generating PDFs.</description>
+        </key>
         <key type="i" name="pdfpreservespaces">
             <default>4</default>
             <summary>Preserve spaces wider than</summary>
