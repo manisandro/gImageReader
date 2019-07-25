@@ -66,8 +66,7 @@
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">&lt;b&gt;The application has crashed&lt;/b&gt;
 
-Apologies for the inconvenience. To help improve the application, please consider reporting the issue to &lt;a href="mailto:manisandro@gmail.com?subject=gImageReader%20Crash"&gt;manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were doing before the application crashed. Also, include the information below. Thank you.
-</property>
+Apologies for the inconvenience. To help improve the application, please consider reporting the issue to &lt;a href="mailto:manisandro@gmail.com?subject=gImageReader%20Crash"&gt;manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were doing before the application crashed. Also, include the information below. Thank you.</property>
             <property name="use_markup">True</property>
             <property name="wrap">True</property>
             <property name="xalign">0</property>
