@@ -1073,7 +1073,9 @@ void OutputEditorHOCR::drawPreview(QPainter& painter, const HOCRItem* item) {
 			}
 			const QRect& wordRect = wordItem->bbox();
 			QFont font;
-			font.setFamily(wordItem->fontFamily());
+			if(!wordItem->fontFamily().isEmpty()) {
+				font.setFamily(wordItem->fontFamily());
+			}
 			font.setBold(wordItem->fontBold());
 			font.setItalic(wordItem->fontItalic());
 			font.setPointSizeF(wordItem->fontSize());

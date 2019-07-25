@@ -1240,7 +1240,7 @@ void OutputEditorHOCR::drawPreview(Cairo::RefPtr<Cairo::Context> context, const 
 				continue;
 			}
 			const Geometry::Rectangle& wordRect = wordItem->bbox();
-			context->select_font_face(wordItem->fontFamily(), wordItem->fontItalic() ? Cairo::FONT_SLANT_ITALIC : Cairo::FONT_SLANT_NORMAL, wordItem->fontBold() ? Cairo::FONT_WEIGHT_BOLD : Cairo::FONT_WEIGHT_NORMAL);
+			context->select_font_face(wordItem->fontFamily().empty() ? "sans" : wordItem->fontFamily(), wordItem->fontItalic() ? Cairo::FONT_SLANT_ITALIC : Cairo::FONT_SLANT_NORMAL, wordItem->fontBold() ? Cairo::FONT_WEIGHT_BOLD : Cairo::FONT_WEIGHT_NORMAL);
 			context->set_font_size(wordItem->fontSize() * (item->page()->resolution() / 72.));
 			// See https://github.com/kba/hocr-spec/issues/15
 			double y = lineRect.y + lineRect.height + (wordRect.x + 0.5 * wordRect.width - lineRect.x) * baseline.first + baseline.second;
