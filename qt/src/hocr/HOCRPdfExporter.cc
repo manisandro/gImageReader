@@ -432,6 +432,7 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	ADD_SETTING(SpinSetting("pdffontsize", ui.spinBoxFontSize, 10));
 	ADD_SETTING(SpinSetting("pdffontscale", ui.spinFontScaling, 100));
 	ADD_SETTING(SwitchSetting("pdfuniformizelinespacing", ui.checkBoxUniformizeSpacing, false));
+	ADD_SETTING(SwitchSetting("pdfsanitizehyphens", ui.checkBoxSanitizeHyphens, true));
 	ADD_SETTING(SpinSetting("pdfpreservespaces", ui.spinBoxPreserve, 4));
 	ADD_SETTING(SwitchSetting("pdfpreview", ui.checkBoxPreview, false));
 	ADD_SETTING(ComboSetting("pdfexportpapersize", ui.comboBoxPaperSize));
