@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-25 19:47+0200\n"
+"POT-Creation-Date: 2019-07-25 23:17+0200\n"
 "PO-Revision-Date: 2018-03-30 08:45+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gimagereader/"
@@ -51,7 +51,7 @@ msgstr "Over"
 msgid "Quit"
 msgstr "Afsluiten"
 
-#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:43
+#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:47
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
 #: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
 #: ../qt/data/ConfigDialog.ui.h:26
@@ -110,7 +110,7 @@ msgstr "De naam van de taal"
 msgid "Name"
 msgstr "Naam"
 
-#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:42
+#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:46
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
 #: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
@@ -350,52 +350,69 @@ msgstr "Kleuren omdraaien"
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "Een grafisch front-end voor tesseract-ocr"
 
-#: ../gtk/data/MainWindow.ui.h:41 ../qt/data/PageRangeDialog.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:41 ../qt/data/CharacterListDialog.ui.h:1
+msgid "Character whitelist / blacklist"
+msgstr ""
+
+#: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
+msgid "Exclude these characters from being recognized (blacklist):"
+msgstr ""
+
+#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:3
+#, fuzzy
+msgid "Enter a string of characters..."
+msgstr "Bezig met verkrijgen van parameters..."
+
+#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:4
+msgid "Only allow the following characters to be recognized (whitelist):"
+msgstr ""
+
+#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
 msgstr "Paginabereik"
 
-#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/PageRangeDialog.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
 msgstr "Paginabereik:"
 
-#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Bijvoorbeeld:</b> 1-10, 13, 14-18</small>"
 
-#: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
 msgstr "Herkenningsgebied:"
 
-#: ../gtk/data/MainWindow.ui.h:47 ../gtk/src/Recognizer.cc:365
-#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:355
+#: ../gtk/data/MainWindow.ui.h:51 ../gtk/src/Recognizer.cc:375
+#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:369
 msgid "Entire page"
 msgstr "Gehele pagina"
 
-#: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:52 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
 msgstr "Automatisch detecteren"
 
-#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:53 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
 msgstr "Vastmaken aan uitvoertekst:"
 
-#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:8
+#: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
 msgstr "Bestandsnaam van bron"
 
-#: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:9
 msgid "Source page"
 msgstr "Bronpagina"
 
-#: ../gtk/data/MainWindow.ui.h:52 ../qt/src/SourceManager.cc:146
+#: ../gtk/data/MainWindow.ui.h:56 ../qt/src/SourceManager.cc:146
 msgid "Protected PDF"
 msgstr "Beveiligd PDF-bestand"
 
-#: ../gtk/data/MainWindow.ui.h:53 ../qt/src/Recognizer.cc:76
+#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/Recognizer.cc:76
 msgid "Current Page"
 msgstr "Huidige pagina"
 
-#: ../gtk/data/MainWindow.ui.h:54 ../qt/src/Recognizer.cc:79
+#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:79
 msgid "Multiple Pages..."
 msgstr "Meerdere pagina's..."
 
@@ -1386,8 +1403,8 @@ msgstr "Bestand: %1"
 msgid "Page: %1"
 msgstr "Pagina: %1"
 
-#: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:450
-#: ../qt/src/Recognizer.cc:442
+#: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:471
+#: ../qt/src/Recognizer.cc:462
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -1399,78 +1416,82 @@ msgstr ""
 msgid "Save Output..."
 msgstr "Uitvoer opslaan..."
 
-#: ../gtk/src/Recognizer.cc:173 ../qt/src/Recognizer.cc:163
+#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:172
 msgid "No languages available"
 msgstr "Geen beschikbare talen"
 
-#: ../gtk/src/Recognizer.cc:173 ../qt/src/Recognizer.cc:163
+#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:172
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
 "Er zijn geen tesseract-talen beschikbaar; de herkenningsfunctie zal niet "
 "werken."
 
-#: ../gtk/src/Recognizer.cc:227 ../qt/src/Recognizer.cc:223
+#: ../gtk/src/Recognizer.cc:233 ../qt/src/Recognizer.cc:232
 msgid "Multilingual"
 msgstr "Meertalig"
 
-#: ../gtk/src/Recognizer.cc:279 ../qt/src/Recognizer.cc:268
+#: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:277
 msgid "Automatic page segmentation"
 msgstr "Automatische paginasegmentatie"
 
-#: ../gtk/src/Recognizer.cc:280 ../qt/src/Recognizer.cc:269
+#: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:278
 msgid "Page segmentation with orientation and script detection"
 msgstr "Paginasegmentatie met oriëntatie- en scriptdetectie"
 
-#: ../gtk/src/Recognizer.cc:281 ../qt/src/Recognizer.cc:270
+#: ../gtk/src/Recognizer.cc:287 ../qt/src/Recognizer.cc:279
 msgid "Assume single column of text"
 msgstr "Eén tekstkolom veronderstellen"
 
-#: ../gtk/src/Recognizer.cc:282 ../qt/src/Recognizer.cc:271
+#: ../gtk/src/Recognizer.cc:288 ../qt/src/Recognizer.cc:280
 msgid "Assume single block of vertically aligned text"
 msgstr "Eén blok van verticaal uitgelijnde tekst veronderstellen"
 
-#: ../gtk/src/Recognizer.cc:283 ../qt/src/Recognizer.cc:272
+#: ../gtk/src/Recognizer.cc:289 ../qt/src/Recognizer.cc:281
 msgid "Assume a single uniform block of text"
 msgstr "Eén uniform tekstblok veronderstellen"
 
-#: ../gtk/src/Recognizer.cc:284 ../qt/src/Recognizer.cc:273
+#: ../gtk/src/Recognizer.cc:290 ../qt/src/Recognizer.cc:282
 msgid "Assume a line of text"
 msgstr "Tekstregel veronderstellen"
 
-#: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:274
+#: ../gtk/src/Recognizer.cc:291 ../qt/src/Recognizer.cc:283
 msgid "Assume a single word"
 msgstr "Los woord veronderstellen"
 
-#: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:275
+#: ../gtk/src/Recognizer.cc:292 ../qt/src/Recognizer.cc:284
 msgid "Assume a single word in a circle"
 msgstr "Eén woord in een cirkel veronderstellen"
 
-#: ../gtk/src/Recognizer.cc:287 ../qt/src/Recognizer.cc:276
+#: ../gtk/src/Recognizer.cc:293 ../qt/src/Recognizer.cc:285
 msgid "Sparse text in no particular order"
 msgstr "Schaarse tekst, niet in een bepaalde volgorde"
 
-#: ../gtk/src/Recognizer.cc:288 ../qt/src/Recognizer.cc:277
+#: ../gtk/src/Recognizer.cc:294 ../qt/src/Recognizer.cc:286
 msgid "Sparse text with orientation and script detection"
 msgstr "Schaarse tekst met oriëntatie- en scriptdetectie"
 
-#: ../gtk/src/Recognizer.cc:303 ../qt/src/Recognizer.cc:288
+#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:297
 msgid "Page segmentation mode"
 msgstr "Paginasegmentatiemodus"
 
-#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:295
+#: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:300
+msgid "Character whitelist / blacklist..."
+msgstr ""
+
+#: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:305
 msgid "Manage languages..."
 msgstr "Talen beheren..."
 
-#: ../gtk/src/Recognizer.cc:365 ../qt/src/Recognizer.cc:355
+#: ../gtk/src/Recognizer.cc:375 ../qt/src/Recognizer.cc:369
 msgid "Current selection"
 msgstr "Huidige selectie"
 
-#: ../gtk/src/Recognizer.cc:444 ../qt/src/Recognizer.cc:435
+#: ../gtk/src/Recognizer.cc:465 ../qt/src/Recognizer.cc:455
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Bezig met herkennen van pagina %1 (%2 van %3)"
 
-#: ../gtk/src/Recognizer.cc:449 ../qt/src/Recognizer.cc:441
+#: ../gtk/src/Recognizer.cc:470 ../qt/src/Recognizer.cc:461
 msgid ""
 "\n"
 "- Page %1: failed to render page"
@@ -1478,22 +1499,22 @@ msgstr ""
 "\n"
 "-Pagina %1: het renderen van de pagina is mislukt"
 
-#: ../gtk/src/Recognizer.cc:480 ../gtk/src/Recognizer.cc:510
-#: ../gtk/src/Recognizer.cc:523 ../qt/src/Recognizer.cc:471
-#: ../qt/src/Recognizer.cc:501 ../qt/src/Recognizer.cc:514
+#: ../gtk/src/Recognizer.cc:501 ../gtk/src/Recognizer.cc:531
+#: ../gtk/src/Recognizer.cc:544 ../qt/src/Recognizer.cc:491
+#: ../qt/src/Recognizer.cc:521 ../qt/src/Recognizer.cc:534
 msgid "Recognizing..."
 msgstr "Bezig met herkennen..."
 
-#: ../gtk/src/Recognizer.cc:484 ../gtk/src/Recognizer.cc:493
-#: ../qt/src/Recognizer.cc:475 ../qt/src/Recognizer.cc:484
+#: ../gtk/src/Recognizer.cc:505 ../gtk/src/Recognizer.cc:514
+#: ../qt/src/Recognizer.cc:495 ../qt/src/Recognizer.cc:504
 msgid "Recognition errors occurred"
 msgstr "Herkenningsfouten"
 
-#: ../gtk/src/Recognizer.cc:484 ../qt/src/Recognizer.cc:475
+#: ../gtk/src/Recognizer.cc:505 ../qt/src/Recognizer.cc:495
 msgid "The following errors occurred:%1"
 msgstr "De volgende fouten zijn opgetreden: %1"
 
-#: ../gtk/src/Recognizer.cc:493 ../qt/src/Recognizer.cc:484
+#: ../gtk/src/Recognizer.cc:514 ../qt/src/Recognizer.cc:504
 msgid "Failed to initialize tesseract"
 msgstr "Initialiseren van tesseract is mislukt"
 

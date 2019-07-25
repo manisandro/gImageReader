@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-25 19:47+0200\n"
+"POT-Creation-Date: 2019-07-25 23:17+0200\n"
 "PO-Revision-Date: 2017-06-30 20:04+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -48,7 +48,7 @@ msgstr "Hakkında"
 msgid "Quit"
 msgstr "Çık"
 
-#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:43
+#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:47
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
 #: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
 #: ../qt/data/ConfigDialog.ui.h:26
@@ -107,7 +107,7 @@ msgstr "Dilin adı"
 msgid "Name"
 msgstr "Ad"
 
-#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:42
+#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:46
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
 #: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
@@ -348,54 +348,71 @@ msgstr "Renkleri tersine çevir"
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "tesseract-ocr komutu için bir grafiksel arayüz"
 
-#: ../gtk/data/MainWindow.ui.h:41 ../qt/data/PageRangeDialog.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:41 ../qt/data/CharacterListDialog.ui.h:1
+msgid "Character whitelist / blacklist"
+msgstr ""
+
+#: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
+msgid "Exclude these characters from being recognized (blacklist):"
+msgstr ""
+
+#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:3
+#, fuzzy
+msgid "Enter a string of characters..."
+msgstr "Parametreler alınıyor..."
+
+#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:4
+msgid "Only allow the following characters to be recognized (whitelist):"
+msgstr ""
+
+#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
 msgstr "Sayfa Aralığı"
 
-#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/PageRangeDialog.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
 msgstr "Sayfa aralığı:"
 
-#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Örnek:</b> 1-10, 13, 14-18</small>"
 
-#: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
 msgstr "Tanıma alanı:"
 
-#: ../gtk/data/MainWindow.ui.h:47 ../gtk/src/Recognizer.cc:365
-#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:355
+#: ../gtk/data/MainWindow.ui.h:51 ../gtk/src/Recognizer.cc:375
+#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:369
 msgid "Entire page"
 msgstr "Tüm sayfa"
 
-#: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:52 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
 msgstr "Otomatik Algıla"
 
-#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:53 ../qt/data/PageRangeDialog.ui.h:7
 #, fuzzy
 msgid "Prepend to output text:"
 msgstr "Mevcut metne ekle"
 
-#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:8
+#: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:9
 #, fuzzy
 msgid "Source page"
 msgstr "Kaynak"
 
-#: ../gtk/data/MainWindow.ui.h:52 ../qt/src/SourceManager.cc:146
+#: ../gtk/data/MainWindow.ui.h:56 ../qt/src/SourceManager.cc:146
 msgid "Protected PDF"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:53 ../qt/src/Recognizer.cc:76
+#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/Recognizer.cc:76
 msgid "Current Page"
 msgstr "Geçerli Sayfa"
 
-#: ../gtk/data/MainWindow.ui.h:54 ../qt/src/Recognizer.cc:79
+#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:79
 msgid "Multiple Pages..."
 msgstr "Çoklu Sayfalar..."
 
@@ -1398,8 +1415,8 @@ msgstr "Dosyalar"
 msgid "Page: %1"
 msgstr "İşleme hatası: %1"
 
-#: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:450
-#: ../qt/src/Recognizer.cc:442
+#: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:471
+#: ../qt/src/Recognizer.cc:462
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -1411,76 +1428,80 @@ msgstr ""
 msgid "Save Output..."
 msgstr "Çıktıyı Kaydet..."
 
-#: ../gtk/src/Recognizer.cc:173 ../qt/src/Recognizer.cc:163
+#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:172
 msgid "No languages available"
 msgstr "Kullanılabilir dil yok"
 
-#: ../gtk/src/Recognizer.cc:173 ../qt/src/Recognizer.cc:163
+#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:172
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr "Kullanılacak hiç tesseract dili yok. Tanıma çalışmayacak."
 
-#: ../gtk/src/Recognizer.cc:227 ../qt/src/Recognizer.cc:223
+#: ../gtk/src/Recognizer.cc:233 ../qt/src/Recognizer.cc:232
 msgid "Multilingual"
 msgstr "Çokdilli"
 
-#: ../gtk/src/Recognizer.cc:279 ../qt/src/Recognizer.cc:268
+#: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:277
 msgid "Automatic page segmentation"
 msgstr "Otomatik sayfa bölümlendirme"
 
-#: ../gtk/src/Recognizer.cc:280 ../qt/src/Recognizer.cc:269
+#: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:278
 msgid "Page segmentation with orientation and script detection"
 msgstr "Yönlendirme ve komut dosyası algılama ile sayfa bölümleme"
 
-#: ../gtk/src/Recognizer.cc:281 ../qt/src/Recognizer.cc:270
+#: ../gtk/src/Recognizer.cc:287 ../qt/src/Recognizer.cc:279
 msgid "Assume single column of text"
 msgstr "Tek sütünlu metin olarak kabul et"
 
-#: ../gtk/src/Recognizer.cc:282 ../qt/src/Recognizer.cc:271
+#: ../gtk/src/Recognizer.cc:288 ../qt/src/Recognizer.cc:280
 msgid "Assume single block of vertically aligned text"
 msgstr "Dikey olarak hizalanan metnin tek blok olduğunu varsay"
 
-#: ../gtk/src/Recognizer.cc:283 ../qt/src/Recognizer.cc:272
+#: ../gtk/src/Recognizer.cc:289 ../qt/src/Recognizer.cc:281
 msgid "Assume a single uniform block of text"
 msgstr "Tek bir metin bloğu varsay"
 
-#: ../gtk/src/Recognizer.cc:284 ../qt/src/Recognizer.cc:273
+#: ../gtk/src/Recognizer.cc:290 ../qt/src/Recognizer.cc:282
 msgid "Assume a line of text"
 msgstr "Bir satırlık metin varsay"
 
-#: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:274
+#: ../gtk/src/Recognizer.cc:291 ../qt/src/Recognizer.cc:283
 msgid "Assume a single word"
 msgstr "Tek bir kelime varsay"
 
-#: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:275
+#: ../gtk/src/Recognizer.cc:292 ../qt/src/Recognizer.cc:284
 msgid "Assume a single word in a circle"
 msgstr "Çember içinde tek bir kelime varsay"
 
-#: ../gtk/src/Recognizer.cc:287 ../qt/src/Recognizer.cc:276
+#: ../gtk/src/Recognizer.cc:293 ../qt/src/Recognizer.cc:285
 msgid "Sparse text in no particular order"
 msgstr "Düzenli bir sırası olmayan aralıklı metin"
 
-#: ../gtk/src/Recognizer.cc:288 ../qt/src/Recognizer.cc:277
+#: ../gtk/src/Recognizer.cc:294 ../qt/src/Recognizer.cc:286
 msgid "Sparse text with orientation and script detection"
 msgstr "Yönlendirme ve komut dosyası algılama özellikli metin"
 
-#: ../gtk/src/Recognizer.cc:303 ../qt/src/Recognizer.cc:288
+#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:297
 msgid "Page segmentation mode"
 msgstr "Sayfa parçalama kipi"
 
-#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:295
+#: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:300
+msgid "Character whitelist / blacklist..."
+msgstr ""
+
+#: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:305
 msgid "Manage languages..."
 msgstr "Dilleri yönet..."
 
-#: ../gtk/src/Recognizer.cc:365 ../qt/src/Recognizer.cc:355
+#: ../gtk/src/Recognizer.cc:375 ../qt/src/Recognizer.cc:369
 msgid "Current selection"
 msgstr "Mevcut seçim"
 
-#: ../gtk/src/Recognizer.cc:444 ../qt/src/Recognizer.cc:435
+#: ../gtk/src/Recognizer.cc:465 ../qt/src/Recognizer.cc:455
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Tanınan sayfa %1 (%2 of %3)"
 
-#: ../gtk/src/Recognizer.cc:449 ../qt/src/Recognizer.cc:441
+#: ../gtk/src/Recognizer.cc:470 ../qt/src/Recognizer.cc:461
 msgid ""
 "\n"
 "- Page %1: failed to render page"
@@ -1488,22 +1509,22 @@ msgstr ""
 "\n"
 "- Sayfa %1: sayfanın işlenemedi"
 
-#: ../gtk/src/Recognizer.cc:480 ../gtk/src/Recognizer.cc:510
-#: ../gtk/src/Recognizer.cc:523 ../qt/src/Recognizer.cc:471
-#: ../qt/src/Recognizer.cc:501 ../qt/src/Recognizer.cc:514
+#: ../gtk/src/Recognizer.cc:501 ../gtk/src/Recognizer.cc:531
+#: ../gtk/src/Recognizer.cc:544 ../qt/src/Recognizer.cc:491
+#: ../qt/src/Recognizer.cc:521 ../qt/src/Recognizer.cc:534
 msgid "Recognizing..."
 msgstr "Tanınıyor..."
 
-#: ../gtk/src/Recognizer.cc:484 ../gtk/src/Recognizer.cc:493
-#: ../qt/src/Recognizer.cc:475 ../qt/src/Recognizer.cc:484
+#: ../gtk/src/Recognizer.cc:505 ../gtk/src/Recognizer.cc:514
+#: ../qt/src/Recognizer.cc:495 ../qt/src/Recognizer.cc:504
 msgid "Recognition errors occurred"
 msgstr "Tanıma hataları oluştu"
 
-#: ../gtk/src/Recognizer.cc:484 ../qt/src/Recognizer.cc:475
+#: ../gtk/src/Recognizer.cc:505 ../qt/src/Recognizer.cc:495
 msgid "The following errors occurred:%1"
 msgstr "Aşağıdaki hatalar oluştu: %1"
 
-#: ../gtk/src/Recognizer.cc:493 ../qt/src/Recognizer.cc:484
+#: ../gtk/src/Recognizer.cc:514 ../qt/src/Recognizer.cc:504
 msgid "Failed to initialize tesseract"
 msgstr "tesseract başlatılamadı"
 
