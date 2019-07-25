@@ -121,58 +121,15 @@ QStringList Recognizer::getAvailableLanguages() const {
 	return result;
 }
 
-static int g_pipe[2];
-static jmp_buf g_restore_point;
-
-static void tessCrashHandler(int /*signal*/) {
-	fflush(stderr);
-	char buf[1025];
-	int bytesRead = 0;
-	QString captured;
-	do {
-		if((bytesRead = read(g_pipe[0], buf, sizeof(buf) - 1)) > 0) {
-			buf[bytesRead] = 0;
-			captured += buf;
-		}
-	} while(bytesRead == sizeof(buf) - 1);
-	QByteArray current = setlocale(LC_ALL, NULL);
-	setlocale(LC_ALL, "C");
-	tesseract::TessBaseAPI tess;
-	setlocale(LC_ALL, current.constData());
-	QString errMsg = QString(_("Tesseract crashed with the following message:\n\n"
-	                           "%1\n\n"
-	                           "This typically happens for one of the following reasons:\n"
-	                           "- Outdated traineddata files are used.\n"
-	                           "- Auxiliary language data files are missing.\n"
-	                           "- Corrupt language data files.\n\n"
-	                           "Make sure your language data files are valid and compatible with tesseract %2.")).arg(captured).arg(tess.Version());
-	QMessageBox::critical(MAIN, _("Error"), errMsg);
-	longjmp(g_restore_point, SIGSEGV);
-}
-
 tesseract::TessBaseAPI Recognizer::initTesseract(const char* language, bool* ok) const {
+	// unfortunately tesseract creates deliberate aborts when an error occurs
+	std::signal(SIGABRT, MainWindow::tesseractCrash);
 	QByteArray current = setlocale(LC_ALL, NULL);
 	setlocale(LC_ALL, "C");
 	tesseract::TessBaseAPI tess;
-	// unfortunately tesseract creates deliberate segfaults when an error occurs
-	std::signal(SIGSEGV, tessCrashHandler);
-	pipe(g_pipe);
-	fflush(stderr);
-	int oldstderr = dup(fileno(stderr));
-	dup2(g_pipe[1], fileno(stderr));
-	int ret = -1;
-	int fault_code = setjmp(g_restore_point);
-	if(fault_code == 0) {
-		ret = tess.Init(nullptr, language);
-	} else {
-		ret = -1;
-	}
-	dup2(oldstderr, fileno(stderr));
-	std::signal(SIGSEGV, MainWindow::signalHandler);
+	int ret = tess.Init(nullptr, language);
 	setlocale(LC_NUMERIC, current.constData());
 
-	close(g_pipe[0]);
-	close(g_pipe[1]);
 	if(ok) {
 		*ok = ret != -1;
 	}

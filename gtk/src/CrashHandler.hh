@@ -34,6 +34,7 @@ private:
 	sigc::connection m_progressConnection;
 	std::string m_saveFile;
 	int m_pid = 0;
+	int m_tesseractCrash = 0;
 
 	void generate_backtrace();
 	void generate_backtrace_end(bool success);

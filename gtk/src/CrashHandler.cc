@@ -28,14 +28,16 @@ CrashHandler::CrashHandler(int argc, char* argv[])
 		m_pid = std::atoi(argv[2]);
 	}
 	if(argc > 3) {
-		m_saveFile = argv[3];
+		m_tesseractCrash = std::atoi(argv[3]);
+	}
+	if(argc > 4) {
+		m_saveFile = argv[4];
 	}
 }
 
 void CrashHandler::on_startup() {
 	Gtk::Application::on_startup();
 	ui.setupUi();
-	ui.progressbar->hide();
 	ui.dialogCrashhandler->set_title(Glib::ustring::compose("%1 %2", PACKAGE_NAME, _("Crash Handler")));
 	if(!m_saveFile.empty()) {
 		ui.labelAutosave->set_markup(Glib::ustring::compose(_("Your work has been saved under <b>%1</b>."), m_saveFile));
@@ -51,6 +53,8 @@ void CrashHandler::on_startup() {
 
 	add_window(*ui.dialogCrashhandler);
 	ui.dialogCrashhandler->show_all();
+	ui.labelIntro->set_visible(!m_tesseractCrash);
+	ui.labelIntroTesseract->set_visible(m_tesseractCrash);
 
 #ifndef G_OS_WIN32
 	generate_backtrace();

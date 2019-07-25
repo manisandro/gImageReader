@@ -21,9 +21,11 @@
 #include "CrashHandler.hh"
 #include <QPushButton>
 
-CrashHandler::CrashHandler(int pid, const QString& savefile, QWidget* parent):
+CrashHandler::CrashHandler(int pid, int tesseractCrash, const QString& savefile, QWidget* parent):
 	QDialog(parent), m_pid(pid) {
 	ui.setupUi(this);
+	ui.labelIntroTesseract->setVisible(tesseractCrash);
+	ui.labelIntro->setVisible(!tesseractCrash);
 
 	if(!savefile.isEmpty()) {
 		ui.labelAutosave->setText(_("Your work has been saved under <b>%1</b>.").arg(savefile));

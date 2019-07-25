@@ -58,6 +58,14 @@
 #define CHANGELOGURL "https://raw.githubusercontent.com/manisandro/gImageReader/master/NEWS"
 
 void MainWindow::signalHandler(int signal) {
+	signalHandlerExec(signal, false);
+}
+
+void MainWindow::tesseractCrash(int signal) {
+	signalHandlerExec(signal, true);
+}
+
+void MainWindow::signalHandlerExec(int signal, bool tesseractCrash) {
 	std::signal(signal, nullptr);
 
 	QString filename;
@@ -72,7 +80,7 @@ void MainWindow::signalHandler(int signal) {
 	}
 
 	QProcess process;
-	process.start(QApplication::applicationFilePath(), QStringList() << "crashhandle" << QString::number(QApplication::applicationPid()) << filename);
+	process.start(QApplication::applicationFilePath(), QStringList() << "crashhandle" << QString::number(QApplication::applicationPid()) << QString::number(tesseractCrash) << filename);
 #ifdef Q_OS_LINUX
 	// Allow crash handler spawned debugger to attach to the crashed process
 	prctl(PR_SET_PTRACER, process.pid(), 0, 0, 0);

@@ -64,6 +64,14 @@
 static Glib::Quark notificationHandleKey("handle");
 
 void MainWindow::signalHandler(int sig) {
+	signalHandlerExec(sig, false);
+}
+
+void MainWindow::tesseractCrash(int signal) {
+	signalHandlerExec(signal, true);
+}
+
+void MainWindow::signalHandlerExec(int sig, bool tesseractCrash) {
 	std::signal(sig, nullptr);
 	std::string filename;
 	if(MAIN->getOutputEditor() && MAIN->getOutputEditor()->getModified()) {
@@ -76,7 +84,7 @@ void MainWindow::signalHandler(int sig) {
 		MAIN->getOutputEditor()->save(filename);
 	}
 	Glib::Pid pid;
-	Glib::spawn_async("", std::vector<std::string> {pkgExePath, "crashhandle", Glib::ustring::compose("%1", getpid()), filename}, Glib::SPAWN_DO_NOT_REAP_CHILD, sigc::slot<void>(), &pid);
+	Glib::spawn_async("", std::vector<std::string> {pkgExePath, "crashhandle", Glib::ustring::compose("%1", getpid()), Glib::ustring::compose("%1", tesseractCrash), filename}, Glib::SPAWN_DO_NOT_REAP_CHILD, sigc::slot<void>(), &pid);
 #ifdef G_OS_WIN32
 	WaitForSingleObject((HANDLE)pid, 0);
 #elif __linux__

@@ -89,6 +89,7 @@ public:
 		return s_instance;
 	}
 	static void signalHandler(int signal);
+	static void tesseractCrash(int signal);
 
 	MainWindow(const QStringList& files);
 	~MainWindow();
@@ -122,6 +123,7 @@ public slots:
 	void hideNotification(Notification handle = nullptr);
 
 private:
+	static void signalHandlerExec(int signal, bool tesseractCrash);
 	friend class BusyEventFilter;
 
 	static MainWindow* s_instance;

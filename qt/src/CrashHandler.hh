@@ -27,7 +27,7 @@ class CrashHandler : public QDialog {
 	Q_OBJECT
 
 public:
-	explicit CrashHandler(int pid, const QString& savefile, QWidget* parent = 0);
+	explicit CrashHandler(int pid, int tesseractCrash, const QString& savefile, QWidget* parent = 0);
 
 private:
 	Ui::CrashHandler ui;

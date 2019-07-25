@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>480</width>
-    <height>480</height>
+    <height>352</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -28,6 +28,12 @@
    </property>
    <item>
     <widget class="QLabel" name="labelIntro">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Apologies for the inconvenience. To help improve the application, please consider reporting the issue to &lt;a href=&quot;mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were doing before the application crashed. Also, include the information below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
@@ -40,7 +46,29 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="labelIntroTesseract">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tesseract (the OCR engine) has aborted while recognizing text. This may occur if the used traineddatas are corrupt or incomplatible with the version of tesseract in use, or due to a bug in tesseract.&lt;/p&gt;&lt;p&gt;The stacktrace below may provide additional information about where the crash occured.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="labelAutosave">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string/>
      </property>

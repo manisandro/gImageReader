@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.20.2 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.6"/>
   <object class="GtkImage" id="imageRegenerate">
@@ -13,6 +13,9 @@
     <property name="default_height">640</property>
     <property name="icon_name">emblem-important</property>
     <property name="type_hint">dialog</property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="vbox">
         <property name="can_focus">False</property>
@@ -58,10 +61,13 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="labelTitle">
+          <object class="GtkLabel" id="labelIntro">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">&lt;b&gt;The application has crashed&lt;/b&gt;</property>
+            <property name="label" translatable="yes">&lt;b&gt;The application has crashed&lt;/b&gt;
+
+Apologies for the inconvenience. To help improve the application, please consider reporting the issue to &lt;a href="mailto:manisandro@gmail.com?subject=gImageReader%20Crash"&gt;manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were doing before the application crashed. Also, include the information below. Thank you.
+</property>
             <property name="use_markup">True</property>
             <property name="wrap">True</property>
             <property name="xalign">0</property>
@@ -73,10 +79,15 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="labelInfo">
+          <object class="GtkLabel" id="labelIntroTesseract">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="label" translatable="yes">Apologies for the inconvenience. To help improve the application, please consider reporting the issue to &lt;a href="mailto:manisandro@gmail.com?subject=gImageReader%20Crash"&gt;manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were doing before the application crashed. Also, include the information below. Thank you.</property>
+            <property name="label" translatable="yes">&lt;b&gt;Tesseract has aborted&lt;/b&gt;
+
+Tesseract (the OCR engine) has aborted while recognizing text. This may occur if the used traineddatas are corrupt or incomplatible with the version of tesseract in use, or due to a bug in tesseract.
+
+The stacktrace below may provide additional information about where the crash occured.
+</property>
             <property name="use_markup">True</property>
             <property name="wrap">True</property>
             <property name="xalign">0</property>
@@ -134,8 +145,5 @@
     <action-widgets>
       <action-widget response="-5">buttonClose</action-widget>
     </action-widgets>
-    <child>
-      <placeholder/>
-    </child>
   </object>
 </interface>

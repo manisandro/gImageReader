@@ -77,6 +77,7 @@ public:
 		return s_instance;
 	}
 	static void signalHandler(int signal);
+	static void tesseractCrash(int signal);
 
 	MainWindow();
 	~MainWindow();
@@ -115,6 +116,8 @@ public:
 	void hideProgress();
 
 private:
+	static void signalHandlerExec(int signal, bool tesseractCrash);
+
 	static MainWindow* s_instance;
 
 	Ui::MainWindow ui;

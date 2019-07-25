@@ -68,8 +68,9 @@ int main (int argc, char* argv[]) {
 	QWidget* window;
 	if(argc >= 3 && std::strcmp("crashhandle", argv[1]) == 0) {
 		int pid = std::atoi(argv[2]);
-		QString savefile = argc >= 4 ? argv[3] : "";
-		window = new CrashHandler(pid, savefile);
+		int tesseractCrash = std::atoi(argv[3]);
+		QString savefile = argc >= 5 ? argv[4] : "";
+		window = new CrashHandler(pid, tesseractCrash, savefile);
 	} else if(argc >= 2 && std::strcmp("tessdatadir", argv[1]) == 0) {
 		Config::openTessdataDir();
 		return 0;
