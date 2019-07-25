@@ -299,7 +299,7 @@ void MainWindow::showAbout() {
 void MainWindow::showHelp(const QString& chapter) {
 #ifdef Q_OS_WIN32
 	// Always use relative path on Windows
-	QString manualDirPath
+	QString manualDirPath;
 #else
 	QString manualDirPath(MANUAL_DIR);
 #endif
