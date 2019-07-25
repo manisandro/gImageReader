@@ -106,11 +106,17 @@ Recognizer::Recognizer(const Ui::MainWindow& _ui)
 		Utils::clear_error_state(ui.entryPageRange);
 		return false;
 	});
+	CONNECT(ui.radioButtonBlacklist, toggled, [this] { ui.entryBlacklist->set_sensitive(ui.radioButtonBlacklist->get_active()); });
+	CONNECT(ui.radioButtonWhitelist, toggled, [this] { ui.entryWhitelist->set_sensitive(ui.radioButtonWhitelist->get_active()); });
 
 	ADD_SETTING(VarSetting<Glib::ustring>("language"));
 	ADD_SETTING(ComboSetting("ocrregionstrategy", ui.comboPageRangeRegions));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("ocraddsourcefilename", ui.checkPageRangePrependFile));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("ocraddsourcepage", ui.checkPageRangePrependPage));
+	ADD_SETTING(EntrySetting("ocrcharwhitelist", ui.entryWhitelist));
+	ADD_SETTING(EntrySetting("ocrcharblacklist", ui.entryBlacklist));
+	ADD_SETTING(SwitchSettingT<Gtk::RadioButton>("ocrblacklistenabled", ui.radioButtonBlacklist));
+	ADD_SETTING(SwitchSettingT<Gtk::RadioButton>("ocrwhitelistenabled", ui.radioButtonWhitelist));
 	ADD_SETTING(VarSetting<int>("psm"));
 }
 
@@ -304,6 +310,10 @@ void Recognizer::updateLanguagesMenu() {
 	psmItem->set_submenu(*psmMenu);
 	ui.menuLanguages->append(*psmItem);
 
+	Gtk::MenuItem* charlistItem = Gtk::manage(new Gtk::MenuItem(_("Character whitelist / blacklist...")));
+	CONNECT(charlistItem, activate, [this] { manageCharaterLists(); });
+	ui.menuLanguages->append(*charlistItem);
+
 	// Add installer item
 	ui.menuLanguages->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 	Gtk::MenuItem* manageItem = Gtk::manage(new Gtk::MenuItem(_("Manage languages...")));
@@ -403,6 +413,11 @@ std::vector<int> Recognizer::selectPages(bool& autodetectLayout) {
 	return pages;
 }
 
+void Recognizer::manageCharaterLists() {
+	ui.dialogCharacterLists->run();
+	ui.dialogCharacterLists->hide();
+}
+
 void Recognizer::recognizeButtonClicked() {
 	int nPages = MAIN->getDisplayer()->getNPages();
 	if(nPages == 1) {
@@ -431,6 +446,12 @@ void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout)
 	if(ok) {
 		Glib::ustring failed;
 		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_currentPsmMode));
+		if(ui.radioButtonWhitelist->get_active()) {
+			tess.SetVariable("tessedit_char_whitelist", ui.entryWhitelist->get_text().c_str());
+		}
+		if(ui.radioButtonBlacklist->get_active()) {
+			tess.SetVariable("tessedit_char_blacklist", ui.entryBlacklist->get_text().c_str());
+		}
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(tess);
 		ProgressMonitor monitor(pages.size());
 		MAIN->showProgress(&monitor);

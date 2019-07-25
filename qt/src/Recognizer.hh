@@ -25,6 +25,7 @@
 #include "Config.hh"
 #include "Displayer.hh"
 #include "ui_PageRangeDialog.h"
+#include "ui_CharacterListDialog.h"
 
 namespace tesseract {
 class TessBaseAPI;
@@ -68,6 +69,8 @@ private:
 	QMenu* m_menuMultilanguage = nullptr;
 	QDialog* m_pagesDialog;
 	Ui::PageRangeDialog m_pagesDialogUi;
+	QDialog* m_charListDialog;
+	Ui::CharacterListDialog m_charListDialogUi;
 	QActionGroup* m_langMenuRadioGroup = nullptr;
 	QActionGroup* m_langMenuCheckGroup = nullptr;
 	QActionGroup* m_psmCheckGroup = nullptr;
@@ -83,6 +86,7 @@ private:
 
 private slots:
 	void clearLineEditPageRangeStyle();
+	void manageCharacterLists();
 	void psmSelected(QAction* action);
 	void recognizeButtonClicked();
 	void recognizeCurrentPage();

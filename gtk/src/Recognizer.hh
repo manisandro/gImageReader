@@ -75,6 +75,7 @@ private:
 	sigc::signal<void, Config::Lang> m_signal_languageChanged;
 
 	tesseract::TessBaseAPI initTesseract(const char* language = nullptr, bool* ok = nullptr) const;
+	void manageCharaterLists();
 	void recognizeButtonClicked();
 	void recognizeCurrentPage();
 	void recognizeMultiplePages();

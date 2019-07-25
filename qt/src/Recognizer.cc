@@ -86,6 +86,9 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	m_pagesDialog = new QDialog(MAIN);
 	m_pagesDialogUi.setupUi(m_pagesDialog);
 
+	m_charListDialog = new QDialog(MAIN);
+	m_charListDialogUi.setupUi(m_charListDialog);
+
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 	ui.menuLanguages->installEventFilter(this);
 
@@ -93,11 +96,17 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	connect(currentPageAction, SIGNAL(triggered()), this, SLOT(recognizeCurrentPage()));
 	connect(multiplePagesAction, SIGNAL(triggered()), this, SLOT(recognizeMultiplePages()));
 	connect(m_pagesDialogUi.lineEditPageRange, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditPageRangeStyle()));
+	connect(m_charListDialogUi.radioButtonBlacklist, SIGNAL(toggled(bool)), m_charListDialogUi.lineEditBlacklist, SLOT(setEnabled(bool)));
+	connect(m_charListDialogUi.radioButtonWhitelist, SIGNAL(toggled(bool)), m_charListDialogUi.lineEditWhitelist, SLOT(setEnabled(bool)));
 
 	ADD_SETTING(VarSetting<QString>("language", "eng:en_EN"));
 	ADD_SETTING(ComboSetting("ocrregionstrategy", m_pagesDialogUi.comboBoxRecognitionArea, 0));
 	ADD_SETTING(SwitchSetting("ocraddsourcefilename", m_pagesDialogUi.checkBoxPrependFilename));
 	ADD_SETTING(SwitchSetting("ocraddsourcepage", m_pagesDialogUi.checkBoxPrependPage));
+	ADD_SETTING(LineEditSetting("ocrcharwhitelist", m_charListDialogUi.lineEditWhitelist));
+	ADD_SETTING(LineEditSetting("ocrcharblacklist", m_charListDialogUi.lineEditBlacklist));
+	ADD_SETTING(SwitchSetting("ocrblacklistenabled", m_charListDialogUi.radioButtonBlacklist, true));
+	ADD_SETTING(SwitchSetting("ocrwhitelistenabled", m_charListDialogUi.radioButtonWhitelist, false));
 	ADD_SETTING(VarSetting<int>("psm", 6));
 }
 
@@ -288,6 +297,7 @@ void Recognizer::updateLanguagesMenu() {
 	QAction* psmAction = new QAction(_("Page segmentation mode"), ui.menuLanguages);
 	psmAction->setMenu(psmMenu);
 	ui.menuLanguages->addAction(psmAction);
+	ui.menuLanguages->addAction(_("Character whitelist / blacklist..."), this, SLOT(manageCharacterLists()));
 
 
 	// Add installer item
@@ -341,6 +351,10 @@ void Recognizer::clearLineEditPageRangeStyle() {
 
 void Recognizer::psmSelected(QAction* action) {
 	ConfigSettings::get<VarSetting<int>>("psm")->setValue(action->data().toInt());
+}
+
+void Recognizer::manageCharacterLists() {
+	m_charListDialog->exec();
 }
 
 QList<int> Recognizer::selectPages(bool& autodetectLayout) {
@@ -422,6 +436,12 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 	if(ok) {
 		QString failed;
 		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_psmCheckGroup->checkedAction()->data().toInt()));
+		if(m_charListDialogUi.radioButtonWhitelist->isChecked()) {
+			tess.SetVariable("tessedit_char_whitelist", m_charListDialogUi.lineEditWhitelist->text().toLocal8Bit());
+		}
+		if(m_charListDialogUi.radioButtonBlacklist->isChecked()) {
+			tess.SetVariable("tessedit_char_blacklist", m_charListDialogUi.lineEditBlacklist->text().toLocal8Bit());
+		}
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(tess);
 		ProgressMonitor monitor(pages.size());
 		MAIN->showProgress(&monitor);

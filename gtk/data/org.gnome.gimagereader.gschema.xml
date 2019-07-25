@@ -286,5 +286,26 @@
             <summary>PDF export version</summary>
             <description>PDF export version.</description>
         </key>
+
+        <key type="b" name="ocrblacklistenabled">
+            <default>true</default>
+            <summary>OCR character blacklist enabled</summary>
+            <description>OCR character blacklist enabled.</description>
+        </key>
+        <key type="b" name="ocrwhitelistenabled">
+            <default>false</default>
+            <summary>OCR character whitelist enabled</summary>
+            <description>OCR character whitelist enabled.</description>
+        </key>
+        <key type="s" name="ocrcharblacklist">
+            <default>""</default>
+            <summary>OCR character whitelist</summary>
+            <description>OCR character whitelist.</description>
+        </key>
+        <key type="s" name="ocrcharwhitelist">
+            <default>""</default>
+            <summary>OCR character whitelist</summary>
+            <description>OCR character whitelist.</description>
+        </key>
     </schema>
 </schemalist>
