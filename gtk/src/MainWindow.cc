@@ -301,17 +301,21 @@ void MainWindow::showAbout() {
 
 void MainWindow::showHelp(const std::string& chapter) {
 #ifdef G_OS_WIN32
-	std::string manualDir = Glib::build_filename(pkgDir, "share", "doc", "gimagereader");
+	// Always use relative path on Windows
+	std::string manualDirPath;
 	char* locale = g_win32_getlocale();
 	std::string language(locale, 2);
 	g_free(locale);
 #else
-	std::string manualDir = MANUAL_DIR;
+	std::string manualDirPath = MANUAL_DIR;
 	std::string language = Glib::getenv("LANG").substr(0, 2);
 #endif
-	std::string manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir, Glib::ustring::compose("manual-%1.html", language)), Glib::get_current_dir());
+	if(manualDirPath.empty()) {
+		manualDirPath = Glib::build_filename(pkgDir, "share", "doc", "gimagereader");
+	}
+	std::string manualFile = Utils::make_absolute_path(Glib::build_filename(manualDirPath, Glib::ustring::compose("manual-%1.html", language)), Glib::get_current_dir());
 	if(!Glib::file_test(manualFile, Glib::FILE_TEST_EXISTS)) {
-		manualFile = Utils::make_absolute_path(Glib::build_filename(manualDir, "manual.html"), Glib::get_current_dir());
+		manualFile = Utils::make_absolute_path(Glib::build_filename(manualDirPath, "manual.html"), Glib::get_current_dir());
 	}
 	Utils::openUri(Glib::filename_to_uri(manualFile) + chapter);
 }
