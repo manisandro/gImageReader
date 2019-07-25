@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-25 15:15+0200\n"
+"POT-Creation-Date: 2019-07-25 19:47+0200\n"
 "PO-Revision-Date: 2018-04-05 00:04+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
@@ -23,27 +23,27 @@ msgstr ""
 msgid "OCR application"
 msgstr "Aplicativo de OCR"
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:167
 msgid "Redetect Languages"
 msgstr "Detectar idiomas novamente"
 
-#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
+#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:170
 msgid "Manage Languages"
 msgstr "Gerenciar Idiomas"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:173
 msgid "Preferences"
 msgstr "Preferências"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:482 ../qt/src/MainWindow.cc:481
-#: ../qt/src/Ui_MainWindow.hh:177
+#: ../qt/src/Ui_MainWindow.hh:178
 msgid "Help"
 msgstr "Ajuda"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:180
+#: ../qt/src/Ui_MainWindow.hh:181
 msgid "About"
 msgstr "Sobre"
 
@@ -51,7 +51,7 @@ msgstr "Sobre"
 msgid "Quit"
 msgstr "Sair"
 
-#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:42
+#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:43
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
 #: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
 #: ../qt/data/ConfigDialog.ui.h:26
@@ -112,7 +112,7 @@ msgstr "O nome do idioma"
 msgid "Name"
 msgstr "Nome"
 
-#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:41
+#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:42
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
 #: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
@@ -198,15 +198,15 @@ msgid "Rotate all pages"
 msgstr "Rodar todas as páginas"
 
 #. Sources toolbar
-#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:191
+#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:192
 msgid "Recent"
 msgstr "Recente"
 
-#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:192
+#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:193
 msgid "Paste"
 msgstr "Colar"
 
-#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:193
+#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:194
 msgid "Take Screenshot"
 msgstr "Capturar a tela"
 
@@ -235,164 +235,169 @@ msgstr "Selecione o modo de rotação"
 msgid "Select insert mode"
 msgstr "Selecione o modo de inserção"
 
-#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:35
+#: ../gtk/data/MainWindow.ui.h:13 ../qt/src/Ui_MainWindow.hh:109
+#, fuzzy
+msgid "Select page"
+msgstr "Escolher idioma"
+
+#: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
 msgstr "Controles de imagem"
 
-#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:138
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/src/Ui_MainWindow.hh:139
 msgid "Plain text"
 msgstr "Texto sem formatação"
 
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/src/Ui_MainWindow.hh:138
+#: ../gtk/data/MainWindow.ui.h:16 ../qt/src/Ui_MainWindow.hh:139
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:37
+#: ../gtk/data/MainWindow.ui.h:17 ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect layout"
 msgstr "Detectar layout automaticamente"
 
-#: ../gtk/data/MainWindow.ui.h:17
+#: ../gtk/data/MainWindow.ui.h:18
 msgid "<small>Recognize all</small>"
 msgstr "<small>Reconhecer tudo</small>"
 
-#: ../gtk/data/MainWindow.ui.h:18
+#: ../gtk/data/MainWindow.ui.h:19
 msgid "Select language"
 msgstr "Escolher idioma"
 
-#: ../gtk/data/MainWindow.ui.h:19 ../qt/src/Ui_MainWindow.hh:204
+#: ../gtk/data/MainWindow.ui.h:20 ../qt/src/Ui_MainWindow.hh:205
 msgid "Add images"
 msgstr "Adicionar imagens"
 
-#: ../gtk/data/MainWindow.ui.h:20 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:204
 msgid "Add Images"
 msgstr "Adicionar imagens"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:209
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:210
 msgid "Remove image from list"
 msgstr "Remover imagem da lista"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:212
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:213
 msgid "Delete image"
 msgstr "Apagar imagem"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:215
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:216
 msgid "Clear list"
 msgstr "Limpar lista"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
 msgstr "Arquivos"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:8
+#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:8
 msgid "Device:"
 msgstr "Dispositivo:"
 
-#: ../gtk/data/MainWindow.ui.h:26 ../gtk/data/TessdataManager.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:27 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:59
 msgid "Refresh"
 msgstr "Atualizar"
 
-#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:9
 msgid "Output:"
 msgstr "Saída:"
 
-#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:13
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:13
 msgid "Mode:"
 msgstr "Modo:"
 
-#: ../gtk/data/MainWindow.ui.h:29 ../gtk/src/hocr/HOCRPdfExporter.cc:313
+#: ../gtk/data/MainWindow.ui.h:30 ../gtk/src/hocr/HOCRPdfExporter.cc:313
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:347
 msgid "Color"
 msgstr "Cor"
 
-#: ../gtk/data/MainWindow.ui.h:30 ../gtk/src/hocr/HOCRPdfExporter.cc:316
+#: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:316
 #: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:349
 #: ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "Grayscale"
 msgstr "Escala de cinza"
 
-#: ../gtk/data/MainWindow.ui.h:31 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:32 ../qt/data/MainWindow.ui.h:10
 msgid "Resolution:"
 msgstr "Resolução:"
 
-#: ../gtk/data/MainWindow.ui.h:32 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:11
 msgid "Scan"
 msgstr "Digitalizar"
 
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:16
+#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:16
 msgid "Source:"
 msgstr "Origem:"
 
-#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
 msgstr "Obter"
 
-#: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
 msgstr "Brilho"
 
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
 msgstr "Contraste"
 
-#: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
 msgstr "Resolução"
 
-#: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
 msgstr "Inverter cores"
 
-#: ../gtk/data/MainWindow.ui.h:39
+#: ../gtk/data/MainWindow.ui.h:40
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "Uma interface gráfica para o tesseract-ocr"
 
-#: ../gtk/data/MainWindow.ui.h:40 ../qt/data/PageRangeDialog.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:41 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
 msgstr "Intervalo de páginas"
 
-#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/PageRangeDialog.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
 msgstr "Intervalo de páginas:"
 
-#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/PageRangeDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Exemplo:</b> 1-10, 13, 14-18</small>"
 
-#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
 msgstr "Área de reconhecimento:"
 
-#: ../gtk/data/MainWindow.ui.h:46 ../gtk/src/Recognizer.cc:365
+#: ../gtk/data/MainWindow.ui.h:47 ../gtk/src/Recognizer.cc:365
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:355
 msgid "Entire page"
 msgstr "Página inteira"
 
-#: ../gtk/data/MainWindow.ui.h:47 ../qt/data/PageRangeDialog.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
 msgstr "Detectar automaticamente"
 
-#: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
 msgstr "Antepor ao texto de saída:"
 
-#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:8
+#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
 msgstr "Nome do ficheiro origem"
 
-#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:9
 msgid "Source page"
 msgstr "Página de origem"
 
-#: ../gtk/data/MainWindow.ui.h:51 ../qt/src/SourceManager.cc:146
+#: ../gtk/data/MainWindow.ui.h:52 ../qt/src/SourceManager.cc:146
 msgid "Protected PDF"
 msgstr "PDF protegido"
 
-#: ../gtk/data/MainWindow.ui.h:52 ../qt/src/Recognizer.cc:76
+#: ../gtk/data/MainWindow.ui.h:53 ../qt/src/Recognizer.cc:76
 msgid "Current Page"
 msgstr "Página atual"
 
-#: ../gtk/data/MainWindow.ui.h:53 ../qt/src/Recognizer.cc:79
+#: ../gtk/data/MainWindow.ui.h:54 ../qt/src/Recognizer.cc:79
 msgid "Multiple Pages..."
 msgstr "Múltiplas páginas..."
 
@@ -1945,19 +1950,19 @@ msgstr ""
 msgid "Output"
 msgstr "Saída"
 
-#: ../qt/src/Ui_MainWindow.hh:134
+#: ../qt/src/Ui_MainWindow.hh:135
 msgid "OCR mode:"
 msgstr "Modo de OCR:"
 
-#: ../qt/src/Ui_MainWindow.hh:208
+#: ../qt/src/Ui_MainWindow.hh:209
 msgid "Remove Image"
 msgstr "Remover imagem"
 
-#: ../qt/src/Ui_MainWindow.hh:211
+#: ../qt/src/Ui_MainWindow.hh:212
 msgid "Delete Image"
 msgstr "Apagar imagem"
 
-#: ../qt/src/Ui_MainWindow.hh:214
+#: ../qt/src/Ui_MainWindow.hh:215
 msgid "Clear List"
 msgstr "Limpar lista"
 
