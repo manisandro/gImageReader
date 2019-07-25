@@ -431,6 +431,7 @@
         <child>
           <object class="GtkSpinButton" id="spinPage">
             <property name="can_focus">True</property>
+            <property name="tooltip_text" translatable="yes">Select page</property>
             <property name="invisible_char">●</property>
             <property name="width_chars">6</property>
             <property name="text">1</property>

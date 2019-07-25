@@ -560,7 +560,7 @@ QIcon HOCRDocument::decorationRoleForItem(const HOCRItem* item) const {
 
 bool HOCRDocument::checkSpelling(const QString& trimmed, QStringList* suggestions, int limit) const {
 	QVector<QStringRef> words = trimmed.splitRef(QRegExp("[\\x2013\\x2014]+"));
-	int perWordLimit;
+	int perWordLimit = 0;
 	// s = p^w => w = log_p(c) = log(c)/log(p) => p = 10^(log(c)/w)
 	if(limit > 0) { perWordLimit = int(std::pow(10, std::log10(limit) / words.size())); }
 	QList<QList<QString>> wordSuggestions;

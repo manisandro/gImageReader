@@ -106,6 +106,7 @@ public:
 
 		QToolButton* toolButtonPage = new QToolButton(MainWindow);
 		toolButtonPage->setIcon(QPixmap(":/icons/page"));
+		toolButtonPage->setToolTip(gettext("Select page"));
 		toolButtonPage->setEnabled(false);
 		toolButtonPage->setAutoRaise(true);
 		layoutPage->addWidget(toolButtonPage);

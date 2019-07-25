@@ -645,7 +645,7 @@ bool HOCRDocument::checkSpelling(const Glib::ustring& trimmed, std::vector<Glib:
 	static const Glib::RefPtr<Glib::Regex> splitRe = Glib::Regex::create("[\u2013\u2014]+");
 	std::vector<std::pair<Glib::ustring, int>> words = Utils::string_split_pos(trimmed, splitRe);
 
-	std::size_t perWordLimit;
+	std::size_t perWordLimit = 0;
 	// s = p^w => w = log_p(c) = log(c)/log(p) => p = 10^(log(c)/w)
 	if(limit > 0) { perWordLimit = std::size_t(std::pow(10, std::log10(limit) / words.size())); }
 	std::vector<std::vector<Glib::ustring>> wordSuggestions;
