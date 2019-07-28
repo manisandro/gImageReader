@@ -1,3 +1,15 @@
+gImageReader 3.3.1 (Jul 28 2019):
+* HOCR: propagate attributes to manually added elements (@foghawk)
+* HOCR: improve spelling of hyphenated words (@foghawk)
+* HOCR: improve spelling of words with special characters (@foghawk)
+* HOCR: allow specifying a DPI to assume for image sources when exporting to PDF (@foghawk)
+* HOCR: allow use to choose whether to sanitize hyphens when exporting to PDF
+* HOCR: Attempt to map 639-2 language codes to ISO 639-1 to set spelling language
+* Allow specifying character whitelist / blacklist for recognition
+* Various bugfixes
+* Translation updates
+* Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
 gImageReader 3.3.0 (Sep 26 2018):
 * Support tesseract-4.0.0
 * Translation updates

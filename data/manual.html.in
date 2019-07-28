@@ -47,6 +47,18 @@
 <h3><a name="News">News</a></h3>
 <p><i>A detailed list of changes can be found in the commit log: https://github.com/manisandro/gImageReader/commits/master</i></p>
 <pre style="max-height: 200px; overflow-y: auto; padding: 1em; border: 1px solid gray;">
+gImageReader 3.3.1 (Jul 28 2019):
+* HOCR: propagate attributes to manually added elements (@foghawk)
+* HOCR: improve spelling of hyphenated words (@foghawk)
+* HOCR: improve spelling of words with special characters (@foghawk)
+* HOCR: allow specifying a DPI to assume for image sources when exporting to PDF (@foghawk)
+* HOCR: allow use to choose whether to sanitize hyphens when exporting to PDF
+* HOCR: Attempt to map 639-2 language codes to ISO 639-1 to set spelling language
+* Allow specifying character whitelist / blacklist for recognition
+* Various bugfixes
+* Translation updates
+* Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
+
 gImageReader 3.3.0 (Sep 26 2018):
 * Support tesseract-4.0.0
 * Translation updates
@@ -361,7 +373,7 @@ If you find an issue or have a suggestion, please file a ticket to the <a href="
 <li>Try to describe as best as you can what you were doing and whether the problem is reproducible.</li>
 </ul>
 <hr />
-<p>Copyright &copy;2009-2018 Sandro Mani, revision: Fri, Jun 30 2017</p>
+<p>Copyright &copy;2009-2019 Sandro Mani, revision: Thu, Jul 25 2019</p>
 </body>
 
 </html>
