@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 23:17+0200\n"
-"PO-Revision-Date: 2019-04-04 14:04+0000\n"
-"Last-Translator: ___ <o.kravtsov@ukr.net>\n"
+"PO-Revision-Date: 2019-08-04 03:24+0000\n"
+"Last-Translator: uievawkejf <o.kravtsov@ukr.net>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/uk/>\n"
 "Language: uk\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 3.6-dev\n"
+"X-Generator: Weblate 3.8-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -127,7 +127,7 @@ msgstr "Шрифт панелі результатів:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
-msgstr "За-замовчуванням"
+msgstr "Типово"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
@@ -151,15 +151,14 @@ msgstr "Користувацькі шляхи"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr ""
-"Автоматично відкривати експортовані документи у додатку за-замовчуванням"
+msgstr "Автоматично відкривати експортовані документи у типовому додатку"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
 msgstr "Відновити зворотнє трасування"
 
 #: ../gtk/data/CrashHandler.ui.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -169,11 +168,14 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
+"<b>Додаток аварійно завершився</b>\n"
+"\n"
 "Приносимо вибачення за незручності. Для допомоги у покращенні додатку, будь "
-"ласка, напишіть про проблему на електронну пошту <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Намагайтеся описати, які дії ви виконували перед тим, як додаток "
-"аварійно завершився. Також додайте інформацію, розміщену нижче. Дякуємо."
+"ласка, напишіть про проблему на електронну пошту <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Намагайтеся описати, які дії ви виконували перед "
+"тим, як додаток аварійно завершився. Також додайте інформацію, розміщену "
+"нижче. Дякуємо."
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -186,6 +188,13 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occured.\n"
 msgstr ""
+"<b>Tesseract зупинився</b>\n"
+"\n"
+"Tesseract (OCR-рушій) зупинився під час розпізнавання тексту. це може "
+"траплятися, якщо використовувані файли traineddata пошкоджені або несумісні "
+"з цією версією tesseract, або через помилку у tesseract.\n"
+"\n"
+"Стек-трейс нижче може містити додаткову інформацію про те, де стався збій.\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
@@ -238,9 +247,8 @@ msgid "Select insert mode"
 msgstr "Обрати режим вставки"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../qt/src/Ui_MainWindow.hh:109
-#, fuzzy
 msgid "Select page"
-msgstr "Обрати мову"
+msgstr "Обрати сторінку"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
@@ -356,20 +364,19 @@ msgstr "Графічний інтерфейс для tesseract-ocr"
 
 #: ../gtk/data/MainWindow.ui.h:41 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr ""
+msgstr "Білий / чорний список символів"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "Виключити ці символи з розпізнавання (чорний список):"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:3
-#, fuzzy
 msgid "Enter a string of characters..."
-msgstr "Отримання параметрів..."
+msgstr "Введіть рядок символів..."
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
+msgstr "Дозволити розпізнавання тільки наступних символів (білий список):"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -648,7 +655,7 @@ msgstr "символів"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Sanitize hyphens before line breaks"
-msgstr ""
+msgstr "Видалити символи переносу перед розривами рядка"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
@@ -668,7 +675,7 @@ msgstr "Висота"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
 msgid "Treat image sources as having true DPI:"
-msgstr ""
+msgstr "Вважати, що вихідні зображення мають справжній DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
@@ -1472,7 +1479,7 @@ msgstr "Режим сегментації сторінки"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:300
 msgid "Character whitelist / blacklist..."
-msgstr ""
+msgstr "Білий / чорний список символів..."
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:305
 msgid "Manage languages..."
@@ -1711,7 +1718,6 @@ msgid "Do you want to save the current list?"
 msgstr "Ви хочете зберегти поточний список?"
 
 #: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:74
-#, fuzzy
 msgid ""
 "A session connection to the PackageKit backend is required for managing "
 "system-wide tesseract language packs, but it was not found. This service is "
@@ -1721,10 +1727,6 @@ msgid ""
 "tesseract language packs directly, or switch to using the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"Для керування загальносистемними мовними пакунками tesseract потрібен "
-"PackageKit, але його не знайдено. Будь ласка, скористайтеся системним "
-"менеджером додатків для керування мовними пакунками tesseract або оберіть "
-"використання користувацького шляху до tessdata в діалозі конфігурації."
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:79
 msgid "Fetching available languages"
@@ -1943,11 +1945,12 @@ msgid "Find and Replace"
 msgstr "Знайти і замінити"
 
 #: ../qt/src/MainWindow.cc:581
-#, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
-msgstr "Було встановлено наступні словники:%1"
+msgstr ""
+"Було встановлено наступні файли словників:\n"
+"%1"
 
 #: ../qt/src/TessdataManager.cc:308
 msgid ""
