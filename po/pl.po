@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 23:17+0200\n"
-"PO-Revision-Date: 2019-07-18 17:35+0000\n"
+"PO-Revision-Date: 2019-08-04 03:24+0000\n"
 "Last-Translator: WaldiS <admin@sto.ugu.pl>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pl/>\n"
@@ -158,7 +158,7 @@ msgid "Regenerate backtrace"
 msgstr "Wygeneruj ślad błędu"
 
 #: ../gtk/data/CrashHandler.ui.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -168,10 +168,12 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"Przepraszamy za usterki. Aby poprawić jakość aplikacji, zgłoś problem na "
-"adres <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>. Opisz działania wykonywane przed awarią "
-"programu i dołącz poniższą informację. Dziękuję."
+"<b>Aplikacja uległa awarii</b>\n"
+"\n"
+"Przepraszam za utrudnienia. Aby ulepszyć aplikację, rozważ zgłoszenie "
+"problemu na adres <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%"
+"20Crash\">manisandro@gmail.com</a>. Spróbuj opisać swoje działania przed "
+"awarią aplikacji. Uwzględnij również poniższe informacje. Dziękuję."
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -184,6 +186,14 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occured.\n"
 msgstr ""
+"<b>Tesseract został przerwany</b>\n"
+"\n"
+"Tesseract (silnik OCR) przerwał rozpoznawanie tekstu. Może się to zdarzyć, "
+"jeśli używane wyszkolone dane są uszkodzone lub niekompatybilne z używaną "
+"wersją tesseract lub z powodu błędu w tesseract.\n"
+"\n"
+"Poniższy stacktrace (ślad stosu) może dostarczyć dodatkowych informacji o "
+"miejscu awarii.\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
@@ -236,9 +246,8 @@ msgid "Select insert mode"
 msgstr "Tryb wstawiania"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../qt/src/Ui_MainWindow.hh:109
-#, fuzzy
 msgid "Select page"
-msgstr "Wybierz język"
+msgstr "Wybierz stronę"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
@@ -354,20 +363,19 @@ msgstr "Interfejs graficzny dla tesseract-ocr"
 
 #: ../gtk/data/MainWindow.ui.h:41 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr ""
+msgstr "Biała lista / czarna lista znaków"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "Wyklucz te znaki z rozpoznania (czarna lista):"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:3
-#, fuzzy
 msgid "Enter a string of characters..."
-msgstr "Pobieranie parametrów..."
+msgstr "Wprowadź ciąg znaków..."
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
+msgstr "Pozwól rozpoznawać tylko następujące znaki (biała lista):"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -646,7 +654,7 @@ msgstr "znaki"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Sanitize hyphens before line breaks"
-msgstr ""
+msgstr "Popraw łączniki przed podziałem linii"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
@@ -666,7 +674,7 @@ msgstr "Wysokość"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
 msgid "Treat image sources as having true DPI:"
-msgstr ""
+msgstr "Traktuj źródła obrazu jako posiadające DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
@@ -1468,7 +1476,7 @@ msgstr "Tryb segmentacji"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:300
 msgid "Character whitelist / blacklist..."
-msgstr ""
+msgstr "Znaki na białej / czarnej liście..."
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:305
 msgid "Manage languages..."
@@ -1707,7 +1715,6 @@ msgid "Do you want to save the current list?"
 msgstr "Czy zapisać bieżącą listę?"
 
 #: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:74
-#, fuzzy
 msgid ""
 "A session connection to the PackageKit backend is required for managing "
 "system-wide tesseract language packs, but it was not found. This service is "
@@ -1717,11 +1724,14 @@ msgid ""
 "tesseract language packs directly, or switch to using the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"Pakiet PackageKit jest wymagany do zarządzania pakietami językowymi "
-"tesseract dla całego systemu, ale nie został znaleziony. Użyj oprogramowania "
-"do zarządzania pakietami systemowymi, aby zarządzać pakietami językowymi "
-"tesseract, lub przełącz się, aby użyć ścieżki użytkownika tessdata w oknie "
-"konfiguracji."
+"Do zarządzania pakietami językowymi w całym systemie wymagane jest "
+"połączenie sesji z komponentem PackageKit, ale nie zostało ono znalezione. "
+"Ta usługa jest zazwyczaj świadczona przez aplikację do zarządzania "
+"oprogramowaniem, taką jak Gnome Software. Proszę zainstalować "
+"oprogramowanie, które zapewnia niezbędny interfejs PackageKit, użyć innego "
+"oprogramowania do zarządzania pakietami systemowymi, aby zarządzać pakietami "
+"językowymi tesseract bezpośrednio lub przełączyć się na ścieżkę tessdata "
+"użytkownika w oknie konfiguracji."
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:79
 msgid "Fetching available languages"
@@ -1840,6 +1850,12 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occured.</p></body></html>"
 msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract został "
+"przerwany</span></p><p>Tesseract (silnik OCR) przerwał rozpoznawanie tekstu. "
+"Może się to zdarzyć, jeśli używane wyszkolone dane są uszkodzone lub "
+"niekompatybilne z używaną wersją tesseract lub z powodu błędu w "
+"tesseract.</p><p>Poniższy stacktrace może dostarczyć dodatkowych informacji "
+"o miejscu awarii.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
@@ -1939,11 +1955,12 @@ msgid "Find and Replace"
 msgstr "Znajdź i zamień"
 
 #: ../qt/src/MainWindow.cc:581
-#, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
-msgstr "Zainstalowano słowniki:%1"
+msgstr ""
+"Zainstalowano następujące pliki słowników:\n"
+"%1"
 
 #: ../qt/src/TessdataManager.cc:308
 msgid ""
