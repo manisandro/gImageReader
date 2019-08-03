@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 23:17+0200\n"
-"PO-Revision-Date: 2019-07-08 05:01+0000\n"
+"PO-Revision-Date: 2019-08-04 03:24+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -173,6 +173,7 @@ msgstr ""
 "nedenfor. Takk."
 
 #: ../gtk/data/CrashHandler.ui.h:6
+#, fuzzy
 msgid ""
 "<b>Tesseract has aborted</b>\n"
 "\n"
@@ -183,6 +184,14 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occured.\n"
 msgstr ""
+"<b>Tesseract har avsluttet</b>\n"
+"\n"
+"Tesseract (OCR-motoren) har avsluttet under fortolkning av tekst. Dette kan "
+"skje hvis brukt treningsdata er skadet eller ukompatible med versjonen av "
+"Tesseract i bruk, eller som følge av feil i det.\n"
+"\n"
+"Tilbakesporingen nedenfor kan gi ytterligere info om hvordan kræsjet oppstod."
+"\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
@@ -356,11 +365,11 @@ msgstr "En grafisk grenseflate for tesseract-ocr"
 
 #: ../gtk/data/MainWindow.ui.h:41 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr ""
+msgstr "Svarteliste / hvitliste for tegn"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "Utelukk disse tegnene fra gjenkjennelse (svarteliste):"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:3
 #, fuzzy
@@ -369,7 +378,7 @@ msgstr "Henter parameter…"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
+msgstr "Kun tillat disse tegnene fra gjenkjennelse (hvitliste):"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -653,7 +662,7 @@ msgstr "tegn"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Sanitize hyphens before line breaks"
-msgstr ""
+msgstr "Korriger bindestrek før linjeskift"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
@@ -1501,8 +1510,9 @@ msgid "Page segmentation mode"
 msgstr "Sideinndelingsmodus"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:300
+#, fuzzy
 msgid "Character whitelist / blacklist..."
-msgstr ""
+msgstr "Svarteliste / hvitliste for tegn…"
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:305
 #, fuzzy
@@ -1875,6 +1885,7 @@ msgstr ""
 "</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
+#, fuzzy
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
 "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
@@ -1883,6 +1894,13 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occured.</p></body></html>"
 msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract har "
+"avsluttet</span></p><p>\n"
+"Tesseract (OCR-motoren) har avsluttet under fortolkning av tekst. Dette kan "
+"skje hvis brukt treningsdata er skadet eller ukompatible med versjonen av "
+"Tesseract i bruk, eller som følge av feil i det.\n"
+"</p><p>Tilbakesporingen nedenfor kan gi ytterligere info om hvordan kræsjet "
+"oppstod.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
