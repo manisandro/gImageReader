@@ -103,7 +103,7 @@ void CrashHandler::generate_backtrace_end(bool success) {
 	ui.textview->set_sensitive(true);
 	ui.buttonRegenerate->set_sensitive(true);
 	if(!success) {
-		ui.textview->get_buffer()->set_text(_("Failed to obtain backtrace. Is gdb installed?"));
+		ui.textview->get_buffer()->set_text(_("Failed to obtain backtrace. Is GDB installed?"));
 	} else {
 		std::vector<Glib::ustring> lines = Utils::string_split(ui.textview->get_buffer()->get_text(false), '\n', false);
 		Glib::ustring text = Glib::ustring::compose("%1\n\n", lines[0]);
