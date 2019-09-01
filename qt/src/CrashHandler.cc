@@ -59,7 +59,7 @@ void CrashHandler::handleGdbFinished(int exitCode, QProcess::ExitStatus exitStat
 	ui.progressBarBacktrace->setVisible(false);
 	m_refreshButton->setEnabled(true);
 	if(exitCode != 0 || exitStatus != QProcess::NormalExit) {
-		ui.plainTextEditBacktrace->appendPlainText(_("Failed to obtain backtrace. Is gdb installed?"));
+		ui.plainTextEditBacktrace->appendPlainText(_("Failed to obtain backtrace. Is GDB installed?"));
 	} else {
 		QStringList lines = ui.plainTextEditBacktrace->toPlainText().split("\n", QString::SkipEmptyParts);
 		ui.plainTextEditBacktrace->setPlainText(lines[0]);
