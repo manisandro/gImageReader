@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Portuguese (Brazil) (gImageReader)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 23:17+0200\n"
-"PO-Revision-Date: 2019-08-09 18:23+0000\n"
+"PO-Revision-Date: 2019-09-05 17:24+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pt/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.8-dev\n"
+"X-Generator: Weblate 3.9-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -24,7 +24,7 @@ msgstr "Detectar idiomas novamente"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:170
 msgid "Manage Languages"
-msgstr "Gerenciar Idiomas"
+msgstr "Gerir Idiomas"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:173
@@ -141,7 +141,7 @@ msgstr "Caminhos de todo o sistema"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr "Caminhos de usuário"
+msgstr "Caminhos de utilizador"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
@@ -821,7 +821,7 @@ msgstr "Gerenciador de Tessdata"
 
 #: ../gtk/data/TessdataManager.ui.h:5 ../qt/src/TessdataManager.cc:51
 msgid "Manage installed languages:"
-msgstr "Gerenciar idiomas instalados:"
+msgstr "Gerir idiomas instalados:"
 
 #: ../gtk/src/Acquirer.cc:79 ../qt/src/Acquirer.cc:70
 msgid "scan.png"
@@ -1368,8 +1368,8 @@ msgstr ""
 "%1\n"
 "\n"
 "Verifique as permissões de conectividade e diretório.\n"
-"Dica: Se você não tem permissões de gravação em pastas do sistema, você pode "
-"alternar para caminhos de usuário na caixa de diálogo Configurações."
+"Dica: Se não tem permissões de gravação em pastas do sistema, pode alternar "
+"para caminhos de utilizador na caixa de diálogo Configurações."
 
 #: ../gtk/src/MainWindow.cc:595 ../qt/src/MainWindow.cc:581
 msgid "Dictionaries installed"
@@ -1481,7 +1481,7 @@ msgstr "Lista branca / lista negra de caracteres..."
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:305
 msgid "Manage languages..."
-msgstr "Gerenciar idiomas..."
+msgstr "Gerir idiomas..."
 
 #: ../gtk/src/Recognizer.cc:375 ../qt/src/Recognizer.cc:369
 msgid "Current selection"
@@ -1725,14 +1725,13 @@ msgid ""
 "tesseract language packs directly, or switch to using the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"Uma conexão de sessão com o backend do PackageKit é necessária para "
-"gerenciar pacotes de idiomas do tesseract em todo o sistema, mas não foi "
-"encontrada. Este serviço é normalmente fornecido por uma aplicação de gestão "
-"de software, como o Gnome Software. Instale o software que fornece a "
-"interface necessária do PackageKit, use outro software de gerenciamento de "
-"pacotes do sistema para gerenciar os pacotes de idiomas do tesseract "
-"diretamente ou mude para usar o caminho de tessdata do usuário na caixa de "
-"diálogo de configuração."
+"Uma conexão de sessão com o backend do PackageKit é necessária para gerir "
+"pacotes de idiomas do tesseract em todo o sistema, mas não foi encontrada. "
+"Este serviço é normalmente fornecido por uma aplicação de gestão de "
+"software, como o Gnome Software. Instale o software que fornece a interface "
+"necessária do PackageKit, use outro software de gestão de pacotes do sistema "
+"para gerir os pacotes de idiomas do tesseract diretamente ou mude para usar "
+"o caminho de tessdata do usuário na caixa de diálogo de configuração."
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:79
 msgid "Fetching available languages"
@@ -1776,8 +1775,8 @@ msgstr ""
 "\n"
 "Verifique as permissões de conectividade e diretório.\n"
 "\n"
-"Dica: Se você não tem permissões de gravação em pastas do sistema, você pode "
-"alternar para caminhos de usuário na caixa de diálogo Configurações."
+"Dica: Se não tem permissões de gravação em pastas do sistema, pode alternar "
+"para caminhos de utilizador na caixa de diálogo Configurações."
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
@@ -1978,8 +1977,8 @@ msgstr ""
 "\n"
 "Verifique as permissões de conectividade e diretório.\n"
 "\n"
-"Dica: Se você não tem permissões de gravação em pastas do sistema, você pode "
-"alternar para caminhos de usuário na caixa de diálogo Configurações."
+"Dica: Se não tem permissões de gravação em pastas do sistema, pode alternar "
+"para caminhos de utilizador na caixa de diálogo Configurações."
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
