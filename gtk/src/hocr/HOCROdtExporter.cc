@@ -29,7 +29,7 @@
 #include <cstring>
 #include <iomanip>
 #include <libxml++/libxml++.h>
-#include <uuid.h>
+#include <uuid/uuid.h>
 #include <zip.h>
 
 static Glib::ustring manifestNS_URI("urn:oasis:names:tc:opendocument:xmlns:manifest:1.0");
