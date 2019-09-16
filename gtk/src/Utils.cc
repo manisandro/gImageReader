@@ -392,7 +392,7 @@ Glib::ustring Utils::getSpellingLanguage(const Glib::ustring& lang) {
 		return langspec.code;
 	}
 	// Use the application locale, if specified, otherwise fall back to en
-	Glib::ustring syslocale = g_getenv ("LANG");
+	Glib::ustring syslocale = Glib::getenv("LANG");
 	if(syslocale == "c" || syslocale == "C" || syslocale.empty()) {
 		return "en_US";
 	}
