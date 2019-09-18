@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 23:17+0200\n"
-"PO-Revision-Date: 2018-03-30 05:09+0000\n"
+"PO-Revision-Date: 2019-09-18 05:24+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gimagereader/"
 "translations/cs/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 2.20-dev\n"
+"X-Generator: Weblate 3.9-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -184,6 +184,15 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occured.\n"
 msgstr ""
+"<b>Tesseract přerušen</b>\n"
+"\n"
+"Tesseract (součást vykonávající optické rozpoznávání znaků) přerušena při "
+"rozpoznávání z textu. K tomu může dojít pokud jsou použitá nacvičená data "
+"poškozená nebo nekompatibilní s verzí s použitou verzí tesseract, nebo vinou "
+"chyby v něm.\n"
+"\n"
+"Níže uvedený výpis zásobníku může poskytnout další informace o tom, kde "
+"došlo k pádu.\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
@@ -236,9 +245,8 @@ msgid "Select insert mode"
 msgstr "Vyberte režim vkládání"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../qt/src/Ui_MainWindow.hh:109
-#, fuzzy
 msgid "Select page"
-msgstr "Vyberte jazyk"
+msgstr "Vyberte stránku"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
@@ -358,16 +366,15 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "Vynechat tyto znaky z rozpoznávání (blacklist):"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:3
-#, fuzzy
 msgid "Enter a string of characters..."
-msgstr "Získávání parametrů…"
+msgstr "Zadejte řetězec znaků…"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
+msgstr "Povolit rozpoznávání pouze následujících znaků (whitelist):"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -666,7 +673,7 @@ msgstr "Výška"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
 msgid "Treat image sources as having true DPI:"
-msgstr ""
+msgstr "Zacházet s obrazovými zdroji tak, jako by měly skutečné DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
@@ -1948,11 +1955,12 @@ msgid "Find and Replace"
 msgstr "Najít a nahradit"
 
 #: ../qt/src/MainWindow.cc:581
-#, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
-msgstr "Byly nainstalovány tyto soubory se slovníky:%1"
+msgstr ""
+"Byly nainstalovány tyto soubory se slovníky:\n"
+"%1"
 
 #: ../qt/src/TessdataManager.cc:308
 msgid ""
