@@ -11,17 +11,17 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 23:17+0200\n"
-"PO-Revision-Date: 2019-02-21 23:17+0000\n"
-"Last-Translator: Alexander <ilabdsf@gmail.com>\n"
+"PO-Revision-Date: 2019-10-26 09:53+0000\n"
+"Last-Translator: Olesya_Gerasimenko <gammaray@basealt.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.5-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.9.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -44,7 +44,7 @@ msgstr "Настройки"
 #: ../gtk/src/MainWindow.cc:482 ../qt/src/MainWindow.cc:481
 #: ../qt/src/Ui_MainWindow.hh:178
 msgid "Help"
-msgstr "Помощь"
+msgstr "Справка"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:181
@@ -159,7 +159,7 @@ msgid "Regenerate backtrace"
 msgstr "Обновить обратную трассировку"
 
 #: ../gtk/data/CrashHandler.ui.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -169,11 +169,14 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"Приношу извинения за неудобство. Для улучшения работы программы просьба "
-"сообщить о проблеме по адресу <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Просьба постараться "
-"описать, какие действия вы выполняли перед сбоем программы. Также приложите "
-"информацию, размещённую ниже. Спасибо."
+"<b>Программа аварийно завершилась</b>\n"
+"\n"
+"Приносим извинения за неудобство. Для улучшения работы программы просьба "
+"сообщить о проблеме по адресу <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Пожалуйста, постарайтесь описать, какие действия "
+"вы выполняли перед сбоем программы. Также приложите информацию, размещённую "
+"ниже. Спасибо."
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -186,6 +189,15 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occured.\n"
 msgstr ""
+"<b>Работа tesseract прервана</b>\n"
+"\n"
+"Работа tesseract (модуль распознавания текста) была прервана во время "
+"распознавания текста. Это могло произойти из-за использования обученных "
+"наборов данных, повреждённых или несовместимых с используемой версией "
+"tesseract, или из-за внутренней ошибки tesseract.\n"
+"\n"
+"В приведённой ниже трассировке стека могут иметься дополнительные сведения о "
+"причине сбоя.\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
@@ -238,9 +250,8 @@ msgid "Select insert mode"
 msgstr "Выбрать режим вставки"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../qt/src/Ui_MainWindow.hh:109
-#, fuzzy
 msgid "Select page"
-msgstr "Выбрать язык"
+msgstr "Выбрать страницу"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
@@ -356,20 +367,19 @@ msgstr "Графический интерфейс для tesseract-ocr"
 
 #: ../gtk/data/MainWindow.ui.h:41 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr ""
+msgstr "Разрешённые / запрещённые символы"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "Не распознавать эти символы (список запрещённых):"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:3
-#, fuzzy
 msgid "Enter a string of characters..."
-msgstr "Получение параметров..."
+msgstr "Ввести строку символов..."
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
+msgstr "Распознавать только следующие символы (список разрешённых):"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -648,7 +658,7 @@ msgstr "символов"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Sanitize hyphens before line breaks"
-msgstr ""
+msgstr "Очищать знаки переноса перед разрывами строк"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
@@ -668,7 +678,7 @@ msgstr "Высота"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
 msgid "Treat image sources as having true DPI:"
-msgstr ""
+msgstr "Считать разрешение (точек на дюйм) исходных изображений фактическим:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
@@ -748,7 +758,7 @@ msgstr "Найти следующее"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:6 ../qt/data/SearchReplaceFrame.ui.h:7
 msgid "Match case"
-msgstr "Согласовать регистр"
+msgstr "С учётом регистра"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:7
 #: ../gtk/data/SubstitutionsManager.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:1
@@ -838,7 +848,7 @@ msgstr "Не удалось инициализировать программн�
 
 #: ../gtk/src/Acquirer.cc:115 ../qt/src/Acquirer.cc:106
 msgid "Scan failed"
-msgstr "Сканирование не удалось"
+msgstr "Сбой сканирования"
 
 #: ../gtk/src/Acquirer.cc:133 ../qt/src/Acquirer.cc:122
 msgid "No scanners were detected."
@@ -879,7 +889,7 @@ msgstr "Код"
 
 #: ../gtk/src/Config.cc:51 ../qt/data/ConfigDialog.ui.h:9
 msgid "Native name"
-msgstr "Родное название"
+msgstr "Самоназвание языка"
 
 #: ../gtk/src/Config.cc:109 ../qt/src/Config.cc:108
 msgid "Script"
@@ -942,7 +952,7 @@ msgstr "Выполняется анализ структуры"
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr ""
-"Файл с именем \"%1\" уже существует. Вы уверены, что хотите его перезаписать?"
+"Файл с именем «%1» уже существует. Вы уверены, что хотите его перезаписать?"
 
 #: ../gtk/src/FileDialogs.cc:237
 msgid "Overwrite File?"
@@ -985,7 +995,7 @@ msgstr "Текстовые документы OpenDocument"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "Save ODT Output..."
-msgstr "Сохранить ODT..."
+msgstr "Сохранить результаты в ODT..."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:619
@@ -997,7 +1007,7 @@ msgstr "Ошибка во время экспорта"
 #: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
-msgstr "Ошибка по время экспорта в ODT: невозможна запись в выходной файл."
+msgstr "Ошибка во время экспорта в ODT: невозможна запись в выходной файл."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:336 ../qt/src/hocr/HOCROdtExporter.cc:254
 msgid "Exporting to ODT..."
@@ -1067,7 +1077,7 @@ msgstr "Невозможно получить результат"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:516 ../qt/src/hocr/HOCRPdfExporter.cc:511
 msgid "Failed to create output. The returned error was: %1"
-msgstr "Невозможно сделать результат. Ошибка: %1"
+msgstr "Невозможно получить результат. Ошибка: %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:558 ../qt/src/hocr/HOCRPdfExporter.cc:551
 msgid "The operation was cancelled"
@@ -1083,11 +1093,11 @@ msgstr "Экспорт в PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:619 ../qt/src/hocr/HOCRPdfExporter.cc:609
 msgid "The PDF export failed: %1."
-msgstr "Ошибка экспорта в PDF: %1."
+msgstr "Ошибка во время экспорта в PDF: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:673 ../qt/src/hocr/HOCRPdfExporter.cc:662
 msgid "The PDF library could not load the font '%1'."
-msgstr "Библиотека PDF не может загрузить выбранный шрифт '%1'."
+msgstr "Библиотеке PDF не удалось загрузить выбранный шрифт «%1»."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:274
 #: ../qt/src/hocr/HOCRTextExporter.cc:39 ../qt/src/OutputEditorText.cc:239
@@ -1096,7 +1106,7 @@ msgstr "Текстовые файлы"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:39
 msgid "Save Text Output..."
-msgstr "Сохранить текст..."
+msgstr "Сохранить результаты в текстовый файл..."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
@@ -1128,7 +1138,7 @@ msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr ""
-"Невозможно обработать следующие страницы:\n"
+"Не удалось обработать следующие страницы:\n"
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:436
@@ -1221,7 +1231,7 @@ msgstr "Не удалось открыть файл"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:936
 #: ../qt/src/hocr/OutputEditorHOCR.cc:802
 msgid "The file could not be opened: %1."
-msgstr "Невозможно открыть файл: %1."
+msgstr "Не удалось открыть файл: %1."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:945
 #: ../qt/src/hocr/OutputEditorHOCR.cc:809
@@ -1294,7 +1304,7 @@ msgstr "Доступен gImageReader %1"
 
 #: ../gtk/src/MainWindow.cc:443 ../qt/src/MainWindow.cc:424
 msgid "Download"
-msgstr "Скачать"
+msgstr "Загрузить"
 
 #: ../gtk/src/MainWindow.cc:444 ../qt/src/MainWindow.cc:425
 msgid "Changelog"
@@ -1324,7 +1334,7 @@ msgstr "Орфографический словарь для %1 не устан�
 #: ../gtk/src/MainWindow.cc:494 ../gtk/src/MainWindow.cc:523
 #: ../qt/src/MainWindow.cc:493
 msgid "Installing spelling dictionary for '%1'"
-msgstr "Устанавливается орфографический словарь для '%1'"
+msgstr "Устанавливается орфографический словарь для «%1»"
 
 #: ../gtk/src/MainWindow.cc:515 ../gtk/src/MainWindow.cc:536
 #: ../gtk/src/MainWindow.cc:544 ../gtk/src/MainWindow.cc:592
@@ -1351,7 +1361,7 @@ msgstr "Невозможно прочесть %1: %2."
 
 #: ../gtk/src/MainWindow.cc:571 ../qt/src/MainWindow.cc:558
 msgid "Downloading '%1'..."
-msgstr "Скачивается '%1'..."
+msgstr "Загружается «%1»..."
 
 #: ../gtk/src/MainWindow.cc:592 ../qt/src/MainWindow.cc:578
 msgid ""
@@ -1362,12 +1372,12 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Эта словари не могут быть загружены:\n"
+"Следующие словари не могут быть загружены:\n"
 "%1\n"
 "\n"
-"Проверьте соединение и права директории.\n"
-"Подсказка: если у Вас нет прав на запись в системные директории, Вы можете "
-"сменить пути в настройках."
+"Проверьте соединение и права доступа к папкам.\n"
+"Подсказка: если у вас нет прав на запись в системные папки, вы можете "
+"сменить пути в диалоге настройки."
 
 #: ../gtk/src/MainWindow.cc:595 ../qt/src/MainWindow.cc:581
 msgid "Dictionaries installed"
@@ -1383,7 +1393,7 @@ msgstr ""
 
 #: ../gtk/src/MainWindow.cc:597 ../qt/src/MainWindow.cc:583
 msgid "No spelling dictionaries found for '%1'."
-msgstr "Орфографические словари для '%1' не найдены."
+msgstr "Орфографические словари для «%1» не найдены."
 
 #: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
@@ -1422,7 +1432,7 @@ msgstr "Языки недоступны"
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
-"Недоступны языковые файлы для tesseract. Распознавание работать не будет."
+"Недоступны языковые файлы для tesseract. Распознавание не будет работать."
 
 #: ../gtk/src/Recognizer.cc:233 ../qt/src/Recognizer.cc:232
 msgid "Multilingual"
@@ -1474,7 +1484,7 @@ msgstr "Режим разбиения страницы"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:300
 msgid "Character whitelist / blacklist..."
-msgstr ""
+msgstr "Разрешённые / запрещённые символы..."
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:305
 msgid "Manage languages..."
@@ -1579,7 +1589,7 @@ msgid ""
 "These PDF files already contain text:\n"
 "%1"
 msgstr ""
-"Эта PDF файлы уже содержат текст:\n"
+"Эти PDF-файлы уже содержат текст:\n"
 "%1"
 
 #: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
@@ -1588,11 +1598,11 @@ msgstr "Невозможно открыть файлы"
 
 #: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
 msgid "The following files could not be opened:%1"
-msgstr "Невозможно открыть следующие файлы:%1"
+msgstr "Не удалось открыть следующие файлы:%1"
 
 #: ../gtk/src/SourceManager.cc:141 ../qt/src/SourceManager.cc:143
 msgid "Enter password for file '%1':"
-msgstr "Введите пароль для файла: '%1':"
+msgstr "Введите пароль для файла «%1»:"
 
 #: ../gtk/src/SourceManager.cc:197 ../qt/src/SourceManager.cc:214
 msgid "Images and PDFs"
@@ -1682,7 +1692,7 @@ msgstr "Ошибка чтения файла"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
 msgid "Unable to read '%1'."
-msgstr "Невозможно прочесть '%1'."
+msgstr "Невозможно прочесть «%1»."
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
 msgid "Errors Occurred Reading File"
@@ -1702,7 +1712,7 @@ msgstr "Ошибка сохранения файла"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
 msgid "Unable to write to '%1'."
-msgstr "Невозможно сохранить в '%1'."
+msgstr "Невозможно сохранить в «%1»."
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
 msgid "Save List?"
@@ -1713,7 +1723,6 @@ msgid "Do you want to save the current list?"
 msgstr "Вы хотите сохранить текущий список?"
 
 #: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:74
-#, fuzzy
 msgid ""
 "A session connection to the PackageKit backend is required for managing "
 "system-wide tesseract language packs, but it was not found. This service is "
@@ -1724,9 +1733,11 @@ msgid ""
 "in the configuration dialog."
 msgstr ""
 "Для управления общесистемными языковыми пакетами tesseract требуется "
-"PackageKit, однако он не был найден. Просьба использовать системный пакетный "
-"менеджер для управления языковыми пакетами tesseract, либо переключиться на "
-"пользовательский путь к tessdata в диалоге конфигурации."
+"PackageKit, однако он не был найден. PackageKit можно установить с помощью "
+"GNOME Software — утилиты для установки приложений и обновлений. Пожалуйста, "
+"либо установите требуемый интерфейс PackageKit, либо используйте системный "
+"пакетный менеджер для управления языковыми пакетами tesseract, либо "
+"переключитесь на пользовательский путь к tessdata в диалоге конфигурации."
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:79
 msgid "Fetching available languages"
@@ -1753,7 +1764,7 @@ msgstr "Не удалось создать папку для файлов tessda
 
 #: ../gtk/src/TessdataManager.cc:306 ../qt/src/TessdataManager.cc:287
 msgid "Downloading %1..."
-msgstr "Скачивается %1..."
+msgstr "Загружается %1..."
 
 #: ../gtk/src/TessdataManager.cc:330
 msgid ""
@@ -1770,8 +1781,8 @@ msgstr ""
 "\n"
 "Проверьте соединение и права доступа к папкам.\n"
 "\n"
-"Подсказка: если у Вас нет прав для записи в системные директории, Вы можете "
-"настроить использование пользовательских путей в настройках."
+"Подсказка: если у вас нет прав на запись в системные папки, вы можете "
+"сменить пути в диалоге настройки."
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
@@ -1830,12 +1841,12 @@ msgid ""
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Программа аварийно "
-"завершилась</span></p><p>Приношу извинения за неудобство. Для улучшения "
-"работы программы просьба сообщить о проблеме по адресу <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Просьба постараться описать, какие действия вы выполняли перед сбоем "
-"программы. Также приложите информацию, размещённую ниже. Спасибо.</p></"
-"body></html>"
+"завершилась</span></p><p>Приносим извинения за неудобство. Для улучшения "
+"работы программы просьба сообщить о проблеме по адресу <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Пожалуйста, постарайтесь описать, какие действия "
+"вы выполняли перед сбоем программы. Также приложите информацию, размещённую "
+"ниже. Спасибо.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
 msgid ""
@@ -1846,6 +1857,13 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occured.</p></body></html>"
 msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Работа tesseract "
+"прервана</span></p><p>Работа tesseract (модуль распознавания текста) была "
+"прервана во время распознавания текста. Это могло произойти из-за "
+"использования обученных наборов данных, повреждённых или несовместимых с "
+"используемой версией tesseract, или из-за внутренней ошибки tesseract.</p><p>"
+"В приведённой ниже трассировке стека могут иметься дополнительные сведения о "
+"причине сбоя.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
@@ -1945,11 +1963,12 @@ msgid "Find and Replace"
 msgstr "Найти и заменить"
 
 #: ../qt/src/MainWindow.cc:581
-#, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
-msgstr "Были установлены следующие файлы словарей:%1"
+msgstr ""
+"Были установлены следующие файлы словарей:\n"
+"%1"
 
 #: ../qt/src/TessdataManager.cc:308
 msgid ""
@@ -1964,8 +1983,8 @@ msgstr ""
 "%1\n"
 "\n"
 "Проверьте соединение и права доступа к папкам.\n"
-"Подсказка: Если у вас не прав для записи в системные папки, вы можете "
-"сменить пути в диалоге настроек."
+"Подсказка: если у вас нет прав на запись в системные папки, вы можете "
+"сменить пути в диалоге настройки."
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
