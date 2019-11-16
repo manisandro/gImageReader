@@ -111,12 +111,12 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 }
 
 QStringList Recognizer::getAvailableLanguages() const {
-	tesseract::TessBaseAPI tess = initTesseract();
+	auto tess = initTesseract();
 	GenericVector<STRING> availLanguages;
-	tess.GetAvailableLanguagesAsVector(&availLanguages);
+	tess->GetAvailableLanguagesAsVector(&availLanguages);
 	QStringList result;
 	for(int i = 0; i < availLanguages.size(); ++i) {
-		result.append(availLanguages[i].string());
+		result.append(availLanguages[i].c_str());
 	}
 	qSort(result.begin(), result.end(), [](const QString & s1, const QString & s2) {
 		bool s1Script = s1.startsWith("script") || s1.left(1) == s1.left(1).toUpper();
@@ -130,19 +130,19 @@ QStringList Recognizer::getAvailableLanguages() const {
 	return result;
 }
 
-tesseract::TessBaseAPI Recognizer::initTesseract(const char* language, bool* ok) const {
+std::unique_ptr<tesseract::TessBaseAPI> Recognizer::initTesseract(const char* language, bool* ok) const {
 	// unfortunately tesseract creates deliberate aborts when an error occurs
 	std::signal(SIGABRT, MainWindow::tesseractCrash);
 	QByteArray current = setlocale(LC_ALL, NULL);
 	setlocale(LC_ALL, "C");
-	tesseract::TessBaseAPI tess;
-	int ret = tess.Init(nullptr, language);
+	std::unique_ptr<tesseract::TessBaseAPI> tess(new tesseract::TessBaseAPI());
+	int ret = tess->Init(nullptr, language);
 	setlocale(LC_NUMERIC, current.constData());
 
 	if(ok) {
 		*ok = ret != -1;
 	}
-	return tess;
+	return std::move(tess);
 }
 
 void Recognizer::updateLanguagesMenu() {
@@ -432,17 +432,17 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
 	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
 	bool ok = false;
-	tesseract::TessBaseAPI tess = initTesseract(m_curLang.prefix.toLocal8Bit().constData(), &ok);
+	auto tess = initTesseract(m_curLang.prefix.toLocal8Bit().constData(), &ok);
 	if(ok) {
 		QString failed;
-		tess.SetPageSegMode(static_cast<tesseract::PageSegMode>(m_psmCheckGroup->checkedAction()->data().toInt()));
+		tess->SetPageSegMode(static_cast<tesseract::PageSegMode>(m_psmCheckGroup->checkedAction()->data().toInt()));
 		if(m_charListDialogUi.radioButtonWhitelist->isChecked()) {
-			tess.SetVariable("tessedit_char_whitelist", m_charListDialogUi.lineEditWhitelist->text().toLocal8Bit());
+			tess->SetVariable("tessedit_char_whitelist", m_charListDialogUi.lineEditWhitelist->text().toLocal8Bit());
 		}
 		if(m_charListDialogUi.radioButtonBlacklist->isChecked()) {
-			tess.SetVariable("tessedit_char_blacklist", m_charListDialogUi.lineEditBlacklist->text().toLocal8Bit());
+			tess->SetVariable("tessedit_char_blacklist", m_charListDialogUi.lineEditBlacklist->text().toLocal8Bit());
 		}
-		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(tess);
+		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
 		ProgressMonitor monitor(pages.size());
 		MAIN->showProgress(&monitor);
 		Utils::busyTask([&] {
@@ -474,11 +474,11 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 					readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
 					firstChunk = false;
 					newFile = false;
-					tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
-					tess.SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
-					tess.Recognize(&monitor.desc);
+					tess->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
+					tess->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
+					tess->Recognize(&monitor.desc);
 					if(!monitor.cancelled()) {
-						MAIN->getOutputEditor()->read(tess, readSessionData);
+						MAIN->getOutputEditor()->read(*tess, readSessionData);
 					}
 				}
 				QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
@@ -499,23 +499,23 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 
 bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 	bool ok = false;
-	tesseract::TessBaseAPI tess = initTesseract(m_curLang.prefix.toLocal8Bit().constData(), &ok);
+	auto tess = initTesseract(m_curLang.prefix.toLocal8Bit().constData(), &ok);
 	if(!ok) {
 		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 		return false;
 	}
-	tess.SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
+	tess->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 	ProgressMonitor monitor(1);
 	MAIN->showProgress(&monitor);
 	if(dest == OutputDestination::Buffer) {
-		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(tess);
+		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
 		readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
 		readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
 		readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
 		Utils::busyTask([&] {
-			tess.Recognize(&monitor.desc);
+			tess->Recognize(&monitor.desc);
 			if(!monitor.cancelled()) {
-				MAIN->getOutputEditor()->read(tess, readSessionData);
+				MAIN->getOutputEditor()->read(*tess, readSessionData);
 			}
 			return true;
 		}, _("Recognizing..."));
@@ -523,9 +523,9 @@ bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 	} else if(dest == OutputDestination::Clipboard) {
 		QString output;
 		if(Utils::busyTask([&] {
-		tess.Recognize(&monitor.desc);
+		tess->Recognize(&monitor.desc);
 			if(!monitor.cancelled()) {
-				char* text = tess.GetUTF8Text();
+				char* text = tess->GetUTF8Text();
 				output = QString::fromUtf8(text);
 				delete[] text;
 				return true;
