@@ -21,6 +21,7 @@
 #define RECOGNIZER_HPP
 
 #include <QToolButton>
+#include <memory>
 
 #include "Config.hh"
 #include "Displayer.hh"
@@ -79,7 +80,7 @@ private:
 	QString m_langLabel;
 	Config::Lang m_curLang;
 
-	tesseract::TessBaseAPI initTesseract(const char* language = nullptr, bool* ok = nullptr) const;
+	std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nullptr, bool* ok = nullptr) const;
 	QList<int> selectPages(bool& autodetectLayout);
 	void recognize(const QList<int>& pages, bool autodetectLayout = false);
 	bool eventFilter(QObject* obj, QEvent* ev) override;
