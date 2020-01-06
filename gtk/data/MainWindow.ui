@@ -1349,7 +1349,7 @@
     <property name="skip_pager_hint">True</property>
     <property name="transient_for">windowMain</property>
     <property name="program_name">gImageReader</property>
-    <property name="copyright">Copyright © 2009-2019 Sandro Mani</property>
+    <property name="copyright">Copyright © 2009-2020 Sandro Mani</property>
     <property name="comments" translatable="yes">A graphical frontend to tesseract-ocr</property>
     <property name="website">https://github.com/manisandro/gImageReader/</property>
     <property name="authors">Sandro Mani &lt;manisandro@gmail.com&gt;</property>
