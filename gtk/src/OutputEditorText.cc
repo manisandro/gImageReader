@@ -72,9 +72,17 @@ OutputEditorText::OutputEditorText() {
 	CONNECT(ui.textview, populate_popup, [this](Gtk::Menu * menu) {
 		completeTextViewMenu(menu);
 	});
+#if GTK_SOURCE_MAJOR_VERSION >= 4
+	CONNECT(ui.menuitemStripcrlfDrawwhitespace, toggled, [this] {
+		GtkSourceSpaceDrawer* space_drawer = gtk_source_view_get_space_drawer(ui.textview->gobj());
+		gtk_source_space_drawer_set_types_for_locations (space_drawer, GTK_SOURCE_SPACE_LOCATION_ALL, GTK_SOURCE_SPACE_TYPE_ALL);
+		gtk_source_space_drawer_set_enable_matrix (space_drawer, ui.menuitemStripcrlfDrawwhitespace->get_active() ? TRUE : FALSE);
+	});
+#else
 	CONNECT(ui.menuitemStripcrlfDrawwhitespace, toggled, [this] {
 		ui.textview->set_draw_spaces(ui.menuitemStripcrlfDrawwhitespace->get_active() ? (Gsv::DRAW_SPACES_NEWLINE | Gsv::DRAW_SPACES_TAB | Gsv::DRAW_SPACES_SPACE) : Gsv::DrawSpacesFlags(0));
 	});
+#endif
 
 	// If the insert or selection mark change save the bounds either if the view is focused or the selection is non-empty
 	CONNECTP(m_textBuffer, cursor_position, [this] { m_textBuffer->save_region_bounds(ui.textview->is_focus()); });
