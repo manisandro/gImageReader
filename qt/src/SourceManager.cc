@@ -28,6 +28,7 @@
 #include <QImageReader>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QScreen>
 #include <QString>
 #include <QTemporaryFile>
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
@@ -238,7 +239,7 @@ void SourceManager::addSourceImage(const QImage& image) {
 }
 
 void SourceManager::takeScreenshot() {
-	QPixmap pixmap = QPixmap::grabWindow(QApplication::desktop()->winId());
+	QPixmap pixmap = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
 	if(pixmap.isNull()) {
 		QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot."));
 		return;

@@ -98,7 +98,7 @@ public:
 		return m_painter->fontMetrics().averageCharWidth();
 	}
 	double getTextWidth(const QString& text) const override {
-		return m_painter->fontMetrics().width(text);
+		return m_painter->fontMetrics().horizontalAdvance(text);
 	}
 
 protected:

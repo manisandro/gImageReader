@@ -201,7 +201,7 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 	QStringList availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
 
 	QStringList languages = QStringList(m_languageFiles.keys());
-	qSort(languages.begin(), languages.end(), [](const QString & s1, const QString & s2) {
+	std::sort(languages.begin(), languages.end(), [](const QString & s1, const QString & s2) {
 		bool s1Script = s1.startsWith("script") || s1.left(1) == s1.left(1).toUpper();
 		bool s2Script = s2.startsWith("script") || s2.left(1) == s2.left(1).toUpper();
 		if(s1Script != s2Script) {

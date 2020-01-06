@@ -131,7 +131,7 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 	if(endRow - startRow <= 0) {
 		return QModelIndex();
 	}
-	QModelIndex targetIndex = parent.child(startRow, 0);
+	QModelIndex targetIndex = index(startRow, 0, parent);
 	HOCRItem* targetItem = mutableItemAtIndex(targetIndex);
 	if(!targetItem || targetItem->itemClass() == "ocr_page") {
 		return QModelIndex();
@@ -143,7 +143,7 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 		QString text = targetItem->text();
 		beginRemoveRows(parent, startRow + 1, endRow);
 		for(int row = ++startRow; row <= endRow; ++row) {
-			HOCRItem* item = mutableItemAtIndex(parent.child(startRow, 0));
+			HOCRItem* item = mutableItemAtIndex(index(startRow, 0, parent));
 			Q_ASSERT(item);
 			text += item->text();
 			bbox = bbox.united(item->bbox());
@@ -157,7 +157,7 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 		QVector<HOCRItem*> moveChilds;
 		beginRemoveRows(parent, startRow + 1, endRow);
 		for(int row = ++startRow; row <= endRow; ++row) {
-			HOCRItem* item = mutableItemAtIndex(parent.child(startRow, 0));
+			HOCRItem* item = mutableItemAtIndex(index(startRow, 0, parent));
 			Q_ASSERT(item);
 			moveChilds.append(item->takeChildren());
 			bbox = bbox.united(item->bbox());
@@ -177,11 +177,11 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 	return targetIndex;
 }
 
-QModelIndex HOCRDocument::splitItem(const QModelIndex& index, int startRow, int endRow) {
+QModelIndex HOCRDocument::splitItem(const QModelIndex& itemIndex, int startRow, int endRow) {
 	if(endRow - startRow < 0) {
 		return QModelIndex();
 	}
-	HOCRItem* item = mutableItemAtIndex(index);
+	HOCRItem* item = mutableItemAtIndex(itemIndex);
 	if(!item) {
 		return QModelIndex();
 	}
@@ -200,12 +200,12 @@ QModelIndex HOCRDocument::splitItem(const QModelIndex& index, int startRow, int 
 	newElement.setAttribute("class", itemClass);
 	newElement.setAttribute("title", HOCRItem::serializeAttrGroup(item->getTitleAttributes()));
 	HOCRItem* newItem = new HOCRItem(newElement, item->page(), item->parent(), item->index() + 1);
-	beginInsertRows(index.parent(), item->index() + 1, item->index() + 1);
+	beginInsertRows(itemIndex.parent(), item->index() + 1, item->index() + 1);
 	insertItem(item->parent(), newItem, item->index() + 1);
 	endInsertRows();
-	QModelIndex newIndex = index.sibling(index.row() + 1, 0);
+	QModelIndex newIndex = itemIndex.sibling(itemIndex.row() + 1, 0);
 	for(int row = 0; row <= (endRow - startRow); ++row) {
-		QModelIndex childIndex = index.child(startRow, 0);
+		QModelIndex childIndex = index(startRow, 0, itemIndex);
 		HOCRItem* child = mutableItemAtIndex(childIndex);
 		Q_ASSERT(child);
 		moveItem(childIndex, newIndex, row);
@@ -249,7 +249,7 @@ QModelIndex HOCRDocument::nextIndex(const QModelIndex& current) {
 	}
 	// If item has children, return first child
 	if(rowCount(idx) > 0) {
-		return idx.child(0, 0);
+		return index(0, 0, idx);
 	}
 	// Return next possible sibling
 	QModelIndex next = idx.sibling(idx.row() + 1, 0);
@@ -281,7 +281,7 @@ QModelIndex HOCRDocument::prevIndex(const QModelIndex& current) {
 		idx = index(rowCount() - 1, 0);
 	}
 	while(rowCount(idx) > 0) {
-		idx = idx.child(rowCount(idx) - 1, 0);
+		idx = index(rowCount(idx) - 1, 0, idx);
 	}
 	return idx;
 }
@@ -359,18 +359,18 @@ QModelIndex HOCRDocument::searchPage(const QString& filename, int pageNr) const 
 }
 
 QModelIndex HOCRDocument::searchAtCanvasPos(const QModelIndex& pageIndex, const QPoint& pos) const {
-	QModelIndex index = pageIndex;
-	if(!index.isValid()) {
+	QModelIndex idx = pageIndex;
+	if(!idx.isValid()) {
 		return QModelIndex();
 	}
-	const HOCRItem* item = itemAtIndex(index);
+	const HOCRItem* item = itemAtIndex(idx);
 	while(true) {
 		int iChild = 0, nChildren = item->children().size();
 		for(; iChild < nChildren; ++iChild) {
 			const HOCRItem* childItem = item->children()[iChild];
 			if(childItem->bbox().contains(pos)) {
 				item = childItem;
-				index = index.child(iChild, 0);
+				idx = index(iChild, 0, idx);
 				break;
 			}
 		}
@@ -378,7 +378,7 @@ QModelIndex HOCRDocument::searchAtCanvasPos(const QModelIndex& pageIndex, const 
 			break;
 		}
 	}
-	return index;
+	return idx;
 }
 
 void HOCRDocument::convertSourcePaths(const QString& basepath, bool absolute) {

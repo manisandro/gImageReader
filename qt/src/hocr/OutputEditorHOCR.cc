@@ -358,7 +358,7 @@ void OutputEditorHOCR::expandCollapseItemClass(bool expand) {
 				for(QModelIndex parent = next.parent(); parent.isValid(); parent = parent.parent()) {
 					ui.treeViewHOCR->setExpanded(parent, true);
 				}
-				for(QModelIndex child = next.child(0, 0); child.isValid(); child = child.sibling(child.row() + 1, 0)) {
+				for(QModelIndex child = m_document->index(0, 0, next); child.isValid(); child = child.sibling(child.row() + 1, 0)) {
 					expandCollapseChildren(child, false);
 				}
 			} else {
@@ -397,7 +397,7 @@ void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool exp
 	if(nChildren > 0) {
 		ui.treeViewHOCR->setExpanded(index, expand);
 		for(int i = 0; i < nChildren; ++i) {
-			expandCollapseChildren(index.child(i, 0), expand);
+			expandCollapseChildren(m_document->index(i, 0, index), expand);
 		}
 	}
 }
@@ -446,7 +446,7 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModel
 		ui.tableWidgetProperties->insertRow(++row);
 		QTableWidgetItem* sectionItem = new QTableWidgetItem(it.key());
 		sectionItem->setFlags(sectionItem->flags() & ~(Qt::ItemIsEditable | Qt::ItemIsSelectable));
-		sectionItem->setBackgroundColor(Qt::lightGray);
+		sectionItem->setBackground(Qt::lightGray);
 		QFont sectionFont = sectionItem->font();
 		sectionFont.setBold(true);
 		sectionItem->setFont(sectionFont);
