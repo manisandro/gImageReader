@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gImageReader-3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 23:17+0200\n"
-"PO-Revision-Date: 2020-01-10 16:21+0000\n"
+"PO-Revision-Date: 2020-01-13 13:21+0000\n"
 "Last-Translator: Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sv/>\n"
@@ -30,7 +30,7 @@ msgstr "OCR-program"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:167
 msgid "Redetect Languages"
-msgstr "Känn igen språk på nytt"
+msgstr "Identifiera språk på nytt"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:170
 msgid "Manage Languages"
@@ -65,7 +65,7 @@ msgstr "OK"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
-msgstr "Orientering för utgångstexten:"
+msgstr "Orientering för utdatapanel:"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
@@ -77,11 +77,11 @@ msgstr "Vertikalt"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr "Föreslå installation av saknade ordlistor - ordböcker"
+msgstr "Föreslå installation av saknade rättstavningsordböcker"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr "Sök automatiskt efter nya programvesioner"
+msgstr "Sök automatiskt efter nya programversioner"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
@@ -105,7 +105,7 @@ msgstr "ISO 639-1 språkkod, följt av landskod"
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
-msgstr "ISO Kod"
+msgstr "ISO-kod"
 
 #: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:24
 msgid "The name of the language"
@@ -125,7 +125,7 @@ msgstr "Avbryt"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
-msgstr "Font för utdata-fönstret:"
+msgstr "Teckensnitt för utdatapanel:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
@@ -145,22 +145,22 @@ msgstr "Sökväg till rättstavningslexikon:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr "Systemomfattande sökväg"
+msgstr "Systemövergripande sökväg"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr "Användarsökväg"
+msgstr "Användarsökvägar"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr ""
+msgstr "Öppna automatiskt exporterade dokument med standardprogrammet"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
 msgstr "Återskapa bakåtspårning"
 
 #: ../gtk/data/CrashHandler.ui.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -170,11 +170,13 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
+"<b>Programmet har kraschat</b>\n"
+"\n"
 "Ber om ursäkt för problemet. För att bidra till att förbättra programmet, "
-"kan du överväga att rapportera frågan till <a href=\"mailto:manisandro@gmail."
-"com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Försök att "
-"beskriva vad du gjorde innan programmet kraschade. Lägg dessutom till "
-"informationen nedan. Tack."
+"kan du överväga att rapportera frågan till <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Försök att beskriva vad du gjorde innan "
+"programmet kraschade. Lägg dessutom till nedanstående information. Tack."
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -187,6 +189,13 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occured.\n"
 msgstr ""
+"<b>Tesseract har avbrutits</b>\n"
+"\n"
+"Tesseract (OCR-motorn) har avbrutits under textidentifiering. Detta kan "
+"inträffa om aktuell trained-data är skadad eller inkompatibel med nuvarande "
+"version av Tesseract, eller om det är något fel på Tesseract.\n"
+"\n"
+"Stacktrace nedan kan ge ytterligare information om var kraschen inträffade.\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
@@ -211,7 +220,7 @@ msgstr "Klistra in"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:194
 msgid "Take Screenshot"
-msgstr "Ta en skärmdump"
+msgstr "Ta ett skärmklipp"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:23
 msgid "Zoom in"
@@ -231,17 +240,16 @@ msgstr "Bästa passning"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
-msgstr "Välj sätt att rotera"
+msgstr "Välj rotationsläge"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../gtk/data/OutputEditorText.ui.h:13
 #: ../qt/src/Ui_OutputEditorText.hh:95
 msgid "Select insert mode"
-msgstr "Välj sätt att infoga"
+msgstr "Välj infogningsläge"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../qt/src/Ui_MainWindow.hh:109
-#, fuzzy
 msgid "Select page"
-msgstr "Välj språk"
+msgstr "Välj sida"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
@@ -261,7 +269,7 @@ msgstr "Känn igen layout automatiskt"
 
 #: ../gtk/data/MainWindow.ui.h:18
 msgid "<small>Recognize all</small>"
-msgstr "<small>Känn igen alla</small>"
+msgstr "<small>Tolka allt</small>"
 
 #: ../gtk/data/MainWindow.ui.h:19
 msgid "Select language"
@@ -302,11 +310,11 @@ msgstr "Uppdatera"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:9
 msgid "Output:"
-msgstr "Spara bild:"
+msgstr "Utdata:"
 
 #: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:13
 msgid "Mode:"
-msgstr "Modus:"
+msgstr "Läge:"
 
 #: ../gtk/data/MainWindow.ui.h:30 ../gtk/src/hocr/HOCRPdfExporter.cc:313
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:347
@@ -328,13 +336,12 @@ msgid "Scan"
 msgstr "Skanna"
 
 #: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:16
-#, fuzzy
 msgid "Source:"
-msgstr "Källa"
+msgstr "Källa:"
 
 #: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
-msgstr "Innefatta"
+msgstr "Skanner"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
@@ -358,20 +365,19 @@ msgstr "Ett grafiskt gränssnitt för tesseract-ocr"
 
 #: ../gtk/data/MainWindow.ui.h:41 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr ""
+msgstr "Teckenvitlista/-svartlista"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "Undanta dessa tecken från att tolkas (Svartlista):"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:3
-#, fuzzy
 msgid "Enter a string of characters..."
-msgstr "Hämtar parametrar..."
+msgstr "Ange en sträng med tecken..."
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
+msgstr "Tillåt endast följande ord att tolkas (Vitlista):"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -387,7 +393,7 @@ msgstr "<small><b>Exempel:</b> 1-10, 13, 14-18</small>"
 
 #: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
-msgstr "Erkänningsområde:"
+msgstr "Tolkningsområde:"
 
 #: ../gtk/data/MainWindow.ui.h:51 ../gtk/src/Recognizer.cc:375
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:369
@@ -396,25 +402,23 @@ msgstr "Hela sidan"
 
 #: ../gtk/data/MainWindow.ui.h:52 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
-msgstr "Automatisk igenkänning"
+msgstr "Automatisk identifiering"
 
 #: ../gtk/data/MainWindow.ui.h:53 ../qt/data/PageRangeDialog.ui.h:7
-#, fuzzy
 msgid "Prepend to output text:"
-msgstr "Lägg till efter aktuell text"
+msgstr "Förbered för att skriva ut text:"
 
 #: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
-msgstr ""
+msgstr "Källfilnamn"
 
 #: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:9
-#, fuzzy
 msgid "Source page"
-msgstr "Källa"
+msgstr "Källsida"
 
 #: ../gtk/data/MainWindow.ui.h:56 ../qt/src/SourceManager.cc:146
 msgid "Protected PDF"
-msgstr ""
+msgstr "Skyddad PDF"
 
 #: ../gtk/data/MainWindow.ui.h:57 ../qt/src/Recognizer.cc:76
 msgid "Current Page"
@@ -426,18 +430,16 @@ msgstr "Flera sidor ..."
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:580
 msgid "Add Word"
-msgstr ""
+msgstr "Lägg till ord"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:580
-#, fuzzy
 msgid "Enter word:"
-msgstr "Ignorera ord"
+msgstr "Ange ord:"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:61
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
-#, fuzzy
 msgid "Export to plain text"
-msgstr "Exportera till PDF"
+msgstr "Exportera till oformaterad text"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:65
@@ -446,9 +448,8 @@ msgstr "Exportera till PDF"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:67
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:68
-#, fuzzy
 msgid "Export to ODT"
-msgstr "Exportera till PDF"
+msgstr "Exportera till ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/Ui_OutputEditorText.hh:116
@@ -457,9 +458,8 @@ msgstr "Spara utdata"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
-#, fuzzy
 msgid "Export"
-msgstr "PDF-export"
+msgstr "Exportera"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10 ../gtk/data/OutputEditorText.ui.h:19
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
@@ -478,35 +478,35 @@ msgstr "Sök och ersätt"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:83
 msgid "Show confidence values"
-msgstr ""
+msgstr "Visa konfidensvärden"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13 ../gtk/data/PdfExportDialog.ui.h:41
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:86
 msgid "Show preview"
-msgstr "Förhandsvisa"
+msgstr "Visa förhandsgranskning"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:14
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
 msgid "Next (F3)"
-msgstr ""
+msgstr "Nästa (F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
 msgid "Previous (Shift+F3)"
-msgstr ""
+msgstr "Föregående (Shift+F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:16 ../gtk/src/hocr/OutputEditorHOCR.cc:890
 #: ../qt/src/hocr/OutputEditorHOCR.cc:730
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:126
 msgid "Expand all"
-msgstr "Expandera"
+msgstr "Expandera alla"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/src/hocr/OutputEditorHOCR.cc:893
 #: ../qt/src/hocr/OutputEditorHOCR.cc:731
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:127
 msgid "Collapse all"
-msgstr "Dra ihop"
+msgstr "Komprimera alla"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:18
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:148
@@ -538,7 +538,7 @@ msgstr "Behåll radbrytning om..."
 
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:64
 msgid "Preceded by end mark (.?!)"
-msgstr "Föregås av slut-tecken (.?!)"
+msgstr "Föregås av sluttecken (.?!)"
 
 #: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:66
 msgid "Preceded or succeeded by quote"
@@ -554,7 +554,7 @@ msgstr "Sammanfoga avstavade ord"
 
 #: ../gtk/data/OutputEditorText.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:72
 msgid "Collapse whitespace"
-msgstr "Ta bort blanktecken"
+msgstr "Ta bort blanksteg"
 
 #: ../gtk/data/OutputEditorText.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:74
 msgid "Preserve paragraphs"
@@ -566,11 +566,11 @@ msgstr "Visuella hjälpmedel"
 
 #: ../gtk/data/OutputEditorText.ui.h:12 ../qt/src/Ui_OutputEditorText.hh:78
 msgid "Draw whitespace"
-msgstr "Rita blanktecken"
+msgstr "Rita blanksteg"
 
 #: ../gtk/data/OutputEditorText.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
-msgstr "Rensa radbrytningar i markerad text"
+msgstr "Ta bort radbrytningar i markerad text"
 
 #: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:109
 #: ../qt/src/Ui_OutputEditorText.hh:110
@@ -580,7 +580,7 @@ msgstr "Ångra"
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:112
 #: ../qt/src/Ui_OutputEditorText.hh:113
 msgid "Redo"
-msgstr "Gör om"
+msgstr "Upprepa"
 
 #: ../gtk/data/PdfExportDialog.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
@@ -588,7 +588,7 @@ msgstr "PDF-export"
 
 #: ../gtk/data/PdfExportDialog.ui.h:4 ../qt/data/PdfExportDialog.ui.h:4
 msgid "Output mode:"
-msgstr "Utdata-sätt:"
+msgstr "Utdataläge:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportDialog.ui.h:6
 msgid "PDF"
@@ -596,11 +596,11 @@ msgstr "PDF-export"
 
 #: ../gtk/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportDialog.ui.h:7
 msgid "PDF with invisible text overlay"
-msgstr "PDF med osynlig text gömd"
+msgstr "PDF med osynligt textöverdrag"
 
 #: ../gtk/data/PdfExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Format:"
-msgstr "Databasformat:"
+msgstr "Format:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
 msgid "Compression:"
@@ -616,7 +616,7 @@ msgstr "DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr "Dither-algoritm:"
+msgstr "Gitteralgoritm:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
@@ -624,28 +624,27 @@ msgstr "Bildinställning:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
 msgid "Uniformize line and word spacing"
-msgstr "Gör rad och ordavstånden enhetliga"
+msgstr "Gör rad och ordavstånd enhetliga"
 
 #: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
-msgstr ""
+msgstr "Åsidosätt teckensnitt:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
 msgid "Fallback font family:"
-msgstr ""
+msgstr "Reservteckensnitt:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
-#, fuzzy
 msgid "Override font size:"
-msgstr "Använd detekterad teckenstorlek"
+msgstr "Åsidosätt teckenstorlek:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
-msgstr ""
+msgstr "Teckenskalning:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
 msgid "pt"
-msgstr ""
+msgstr "pt"
 
 #: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
 msgid "Preserve spaces wider than:"
@@ -657,7 +656,7 @@ msgstr "tecken"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Sanitize hyphens before line breaks"
-msgstr ""
+msgstr "Sanera bindestreck före radbrytningar"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
@@ -665,77 +664,75 @@ msgstr "Textinställning:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:23 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Paper size:"
-msgstr ""
+msgstr "Pappersstorlek:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:24 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Width"
-msgstr ""
+msgstr "Bredd"
 
 #: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Height"
-msgstr ""
+msgstr "Höjd"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
 msgid "Treat image sources as having true DPI:"
-msgstr ""
+msgstr "Behandla bildkällor som verklig DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
-msgstr ""
+msgstr "Grundläggande"
 
 #: ../gtk/data/PdfExportDialog.ui.h:28 ../qt/data/PdfExportDialog.ui.h:31
-#, fuzzy
 msgid "PDF version:"
-msgstr "Ny version"
+msgstr "PDF-version:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:33
 msgid "Password:"
-msgstr ""
+msgstr "Lösenord:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:34
 msgid "Confirm password:"
-msgstr ""
+msgstr "Bekräfta lösenord:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:32
 msgid "Encryption (optional):"
-msgstr ""
+msgstr "Kryptering (valfritt):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:36
 msgid "Author:"
-msgstr ""
+msgstr "Författare:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:38
 msgid "Title:"
-msgstr ""
+msgstr "Titel:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:40
 msgid "Subject:"
-msgstr ""
+msgstr "Ämne:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:37
 msgid "Creator:"
-msgstr ""
+msgstr "Skapare:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:39
 msgid "Producer:"
-msgstr ""
+msgstr "Producent:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:41
 msgid "Keywords:"
-msgstr ""
+msgstr "Nyckelord:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:35
-#, fuzzy
 msgid "Additional information (optional):"
-msgstr "Övriga språkdefinitioner:"
+msgstr "Mer information (valfritt):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:39 ../qt/data/PdfExportDialog.ui.h:42
 msgid "Import from current source"
-msgstr ""
+msgstr "Importera från aktuell källa"
 
 #: ../gtk/data/PdfExportDialog.ui.h:40 ../qt/data/PdfExportDialog.ui.h:30
 msgid "Advanced"
-msgstr ""
+msgstr "Avancerat"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:4
 msgid "Find"
@@ -769,11 +766,11 @@ msgstr "Ersättningar"
 
 #: ../gtk/data/SelectionMenu.ui.h:1 ../qt/src/DisplayerToolSelect.cc:239
 msgid "Delete"
-msgstr "Radera"
+msgstr "Ta bort"
 
 #: ../gtk/data/SelectionMenu.ui.h:2 ../qt/src/DisplayerToolSelect.cc:225
 msgid "Order:"
-msgstr "Ordningsföljd:"
+msgstr "Ordning:"
 
 #: ../gtk/data/SelectionMenu.ui.h:3 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
 #: ../qt/src/DisplayerToolSelect.cc:240 ../qt/src/hocr/DisplayerToolHOCR.cc:31
@@ -782,7 +779,7 @@ msgstr "Tolka text"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:241
 msgid "Recognize to clipboard"
-msgstr "Tolka text till klippbordet"
+msgstr "Tolka text till urklipp"
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:242
 msgid "Save as image"
@@ -801,7 +798,7 @@ msgstr "Spara"
 #: ../gtk/data/SubstitutionsManager.ui.h:4 ../qt/src/SubstitutionsManager.cc:44
 #: ../qt/src/SubstitutionsManager.cc:45
 msgid "Clear"
-msgstr "Töm"
+msgstr "Rensa"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:5 ../qt/data/ConfigDialog.ui.h:16
 #: ../qt/src/SubstitutionsManager.cc:47 ../qt/src/SubstitutionsManager.cc:48
@@ -817,7 +814,7 @@ msgstr "Ta bort"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
 msgid "Apply"
-msgstr "Använd"
+msgstr "Tillämpa"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:8 ../gtk/data/TessdataManager.ui.h:3
 msgid "Close"
@@ -845,7 +842,7 @@ msgstr "Välj filnamn för utdatafilen..."
 
 #: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
 msgid "Failed to initialize the scanning backend."
-msgstr "Det gick inte att initiera skannern."
+msgstr "Det gick inte att starta skannerns serverdel."
 
 #: ../gtk/src/Acquirer.cc:115 ../qt/src/Acquirer.cc:106
 msgid "Scan failed"
@@ -862,7 +859,7 @@ msgstr "Startar skanning..."
 
 #: ../gtk/src/Acquirer.cc:164 ../qt/src/Acquirer.cc:150
 msgid "Opening device..."
-msgstr "Skannern startas..."
+msgstr "Öppnar enhet..."
 
 #: ../gtk/src/Acquirer.cc:166 ../qt/src/Acquirer.cc:152
 msgid "Setting options..."
@@ -894,16 +891,16 @@ msgstr "Ursprungligt namn"
 
 #: ../gtk/src/Config.cc:109 ../qt/src/Config.cc:108
 msgid "Script"
-msgstr ""
+msgstr "Skript"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:41
 #: ../qt/src/CrashHandler.cc:36
 msgid "Crash Handler"
-msgstr "Krasch-hanterare"
+msgstr "Kraschhanterare"
 
 #: ../gtk/src/CrashHandler.cc:43 ../qt/src/CrashHandler.cc:31
 msgid "Your work has been saved under <b>%1</b>."
-msgstr "Ditt arbete sparas under <b>%1</b>."
+msgstr "Ditt arbete har sparats under <b>%1</b>."
 
 #: ../gtk/src/CrashHandler.cc:45 ../qt/src/CrashHandler.cc:33
 msgid "There was no unsaved work."
@@ -915,14 +912,14 @@ msgstr "Det gick inte att erhålla bakåtspårning. Är gdb installerad?"
 
 #: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
 msgid "Failed to load image"
-msgstr "Misslyckades att läsa in bild"
+msgstr "Kunde inte läsa in bild"
 
 #: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
-"Filen är möjligen inte en bild eller kan vara skadad:\n"
+"Filen kanske inte är en bild eller kan vara skadad:\n"
 "%1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
@@ -943,7 +940,7 @@ msgstr "Tolka allt"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize selection"
-msgstr "Tolkningsurval"
+msgstr "Tolka markerat"
 
 #: ../gtk/src/DisplayerToolSelect.cc:186 ../qt/src/DisplayerToolSelect.cc:182
 msgid "Performing layout analysis"
@@ -952,22 +949,21 @@ msgstr "Utför layoutanalys"
 #: ../gtk/src/FileDialogs.cc:235
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-msgstr "En fil med namnet \"%1\" existerar redan. Ska den ersättas?"
+msgstr ""
+"En fil med namnet \"%1\" finns redan. Vill du verkligen skriva över den?"
 
 #: ../gtk/src/FileDialogs.cc:237
 msgid "Overwrite File?"
-msgstr "Ska filen skrivas över?"
+msgstr "Vill du skriva över filen?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:611 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/OutputEditorHOCR.cc:229
-#, fuzzy
 msgid "Page"
-msgstr "Tolkningsfel: %1"
+msgstr "Sida"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:613 ../qt/src/hocr/HOCRDocument.cc:530
-#, fuzzy
 msgid "Text block"
-msgstr "Textfiler"
+msgstr "Textblock"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:615 ../gtk/src/hocr/OutputEditorHOCR.cc:272
 #: ../qt/src/hocr/HOCRDocument.cc:532 ../qt/src/hocr/OutputEditorHOCR.cc:231
@@ -993,47 +989,43 @@ msgstr "utdata"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
 msgid "OpenDocument Text Documents"
-msgstr ""
+msgstr "OpenDocument Text Documents"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:53
-#, fuzzy
 msgid "Save ODT Output..."
-msgstr "Spara PDF utdata..."
+msgstr "Spara ODT-utdata..."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:619
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCROdtExporter.cc:61
 #: ../qt/src/hocr/HOCRPdfExporter.cc:609 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
-msgstr ""
+msgstr "Export misslyckades"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
-msgstr ""
+msgstr "OTD-export misslyckades: Kunde inte skriva utdatafil."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:336 ../qt/src/hocr/HOCROdtExporter.cc:254
-#, fuzzy
 msgid "Exporting to ODT..."
-msgstr "Exportera till PDF"
+msgstr "Exporterar till ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:365
-#, fuzzy
 msgid "Same as source"
-msgstr "Källa"
+msgstr "Samma som källan"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:366
 msgid "Custom"
-msgstr ""
+msgstr "Anpassat"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:362
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:363
-#, fuzzy
 msgid "in"
-msgstr "Sök"
+msgstr "i"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:353
 msgid "Monochrome"
@@ -1041,11 +1033,11 @@ msgstr "Monokrom"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:328 ../qt/src/hocr/HOCRPdfExporter.cc:355
 msgid "Threshold (closest color)"
-msgstr "Tröskelvärde (närmaste färgnyans)"
+msgstr "Tröskelvärde (närmaste färg)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:331 ../qt/src/hocr/HOCRPdfExporter.cc:356
 msgid "Diffuse"
-msgstr "Diffusera"
+msgstr "Diffus"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:340 ../qt/src/hocr/HOCRPdfExporter.cc:357
 msgid "Zip (lossless)"
@@ -1068,47 +1060,40 @@ msgid "Save PDF Output..."
 msgstr "Spara PDF utdata..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:488
-#, fuzzy
 msgid "Invalid Output"
-msgstr "Spara utdata"
+msgstr "Ogiltig utdata"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:488
 msgid "Cannot overwrite a file which is a source image of this document."
-msgstr ""
+msgstr "Kan inte skriva över en fil som är en källbild i detta dokument."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:516 ../qt/src/hocr/HOCRPdfExporter.cc:511
-#, fuzzy
 msgid "Failed to create output"
-msgstr "Det gick inte att spara utdata"
+msgstr "Kunde inte skapa utdata"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:516 ../qt/src/hocr/HOCRPdfExporter.cc:511
 msgid "Failed to create output. The returned error was: %1"
-msgstr ""
+msgstr "Kunde inte skapa utdata. Felmeddelandet var: %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:558 ../qt/src/hocr/HOCRPdfExporter.cc:551
 msgid "The operation was cancelled"
-msgstr ""
+msgstr "Åtgärden avbröts"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:607 ../qt/src/hocr/HOCRPdfExporter.cc:597
-#, fuzzy
 msgid "Failed to render page %1"
-msgstr ""
-"\n"
-"[Kunde inte tolka sidan %1]\n"
+msgstr "Kunde inte tolka sidan %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:614 ../qt/src/hocr/HOCRPdfExporter.cc:604
-#, fuzzy
 msgid "Exporting to PDF..."
-msgstr "Exportera till PDF"
+msgstr "Exporterar till PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:619 ../qt/src/hocr/HOCRPdfExporter.cc:609
 msgid "The PDF export failed: %1."
-msgstr ""
+msgstr "PDF-export misslyckades: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:673 ../qt/src/hocr/HOCRPdfExporter.cc:662
-#, fuzzy
 msgid "The PDF library could not load the font '%1'."
-msgstr "PDF-biblioteket stöder inte den valda fonten."
+msgstr "PDF-biblioteket kunde inte läsa in teckensnittet \"%1\"."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:274
 #: ../qt/src/hocr/HOCRTextExporter.cc:39 ../qt/src/OutputEditorText.cc:239
@@ -1116,33 +1101,32 @@ msgid "Text Files"
 msgstr "Textfiler"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:39
-#, fuzzy
 msgid "Save Text Output..."
-msgstr "Spara utdata..."
+msgstr "Spara textutdata..."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
-msgstr ""
+msgstr "Textexport misslyckades: Kunde inte skriva utdatafil."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
 #: ../qt/src/hocr/OutputEditorHOCR.cc:230
 msgid "Block"
-msgstr ""
+msgstr "Block"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
 #: ../qt/src/hocr/OutputEditorHOCR.cc:232
 msgid "Line"
-msgstr ""
+msgstr "Rad"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
 #: ../qt/src/hocr/OutputEditorHOCR.cc:233
 msgid "Word"
-msgstr ""
+msgstr "Ord"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
 #: ../qt/src/hocr/OutputEditorHOCR.cc:234
 msgid "Misspelled word"
-msgstr ""
+msgstr "Felstavade ord"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:435
 #: ../qt/src/hocr/OutputEditorHOCR.cc:317
@@ -1150,20 +1134,19 @@ msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr ""
-"Följande sidor kunde inte behandlas:\n"
+"Följande sidor kunde inte bearbetas:\n"
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:436
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
 msgid "Recognition errors"
-msgstr "Igenkänningsfel"
+msgstr "Tolkningsfel"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:594
 #: ../qt/src/hocr/OutputEditorHOCR.cc:500
 #: ../qt/src/hocr/OutputEditorHOCR.cc:512
-#, fuzzy
 msgid "Multiple values"
-msgstr "Flera källor"
+msgstr "Flera värden"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:778
@@ -1176,13 +1159,13 @@ msgstr "Sammanfoga"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:643
 #: ../qt/src/hocr/OutputEditorHOCR.cc:725
 msgid "Split from parent"
-msgstr ""
+msgstr "Avdela från överordnad"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:797
 #: ../qt/src/hocr/OutputEditorHOCR.cc:647
 msgid "Swap"
-msgstr ""
+msgstr "Växla"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:821
 #: ../qt/src/hocr/OutputEditorHOCR.cc:693
@@ -1192,24 +1175,22 @@ msgstr "Lägg till grafisk region"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:824
 #: ../qt/src/hocr/OutputEditorHOCR.cc:694
 msgid "Add text block"
-msgstr ""
+msgstr "Lägg till textblock"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:828
 #: ../qt/src/hocr/OutputEditorHOCR.cc:696
-#, fuzzy
 msgid "Add paragraph"
-msgstr "Stycke"
+msgstr "Lägg till stycke"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:832
 #: ../qt/src/hocr/OutputEditorHOCR.cc:698
-#, fuzzy
 msgid "Add line"
-msgstr "Lägg till bilder"
+msgstr "Lägg till rad"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:836
 #: ../qt/src/hocr/OutputEditorHOCR.cc:700
 msgid "Add word"
-msgstr ""
+msgstr "Lägg till ord"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:852
 #: ../qt/src/hocr/OutputEditorHOCR.cc:710
@@ -1241,7 +1222,7 @@ msgstr "Öppna hOCR-fil"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:936
 #: ../qt/src/hocr/OutputEditorHOCR.cc:802
 msgid "Failed to open file"
-msgstr "Det gick inte att öppna filen"
+msgstr "Kunde inte att öppna filen"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:936
 #: ../qt/src/hocr/OutputEditorHOCR.cc:802
@@ -1266,12 +1247,12 @@ msgstr "Spara hOCR utdata..."
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:973 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/OutputEditorHOCR.cc:839 ../qt/src/OutputEditorText.cc:246
 msgid "Failed to save output"
-msgstr "Det gick inte att spara utdata"
+msgstr "Kunde inte spara utdata"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:973 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/OutputEditorHOCR.cc:839 ../qt/src/OutputEditorText.cc:246
 msgid "Check that you have writing permissions in the selected folder."
-msgstr "Kontrollera att du har skrivbehörighet i den markerade mappen."
+msgstr "Kontrollera att du har skrivbehörighet i den valda mappen."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1035 ../gtk/src/OutputEditorText.cc:296
 #: ../qt/src/hocr/OutputEditorHOCR.cc:894 ../qt/src/OutputEditorText.cc:259
@@ -1281,7 +1262,7 @@ msgstr "Utdata har inte sparats"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1035 ../gtk/src/OutputEditorText.cc:296
 #: ../qt/src/hocr/OutputEditorHOCR.cc:894 ../qt/src/OutputEditorText.cc:259
 msgid "Save output before proceeding?"
-msgstr "Spara utdata innan du fortsätter?"
+msgstr "Vill du spara utdata innan du fortsätter?"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1156 ../gtk/src/OutputEditorText.cc:184
 #: ../qt/src/hocr/OutputEditorHOCR.cc:991 ../qt/src/OutputEditorText.cc:152
@@ -1295,7 +1276,7 @@ msgstr "Tillämpa ersättningar..."
 
 #: ../gtk/src/MainWindow.cc:131 ../qt/src/MainWindow.cc:295
 msgid "Using tesseract"
-msgstr "Använda tesseract"
+msgstr "Aktuell tesseract-version"
 
 #: ../gtk/src/MainWindow.cc:178 ../qt/src/MainWindow.cc:194
 msgid "Select an image to begin..."
@@ -1327,7 +1308,7 @@ msgstr "Ändringslogg"
 
 #: ../gtk/src/MainWindow.cc:445 ../qt/src/MainWindow.cc:426
 msgid "Don't notify again"
-msgstr "Informera inte igen"
+msgstr "Avisera inte igen"
 
 #: ../gtk/src/MainWindow.cc:466 ../qt/src/MainWindow.cc:474
 msgid "Don't show again"
@@ -1344,12 +1325,12 @@ msgstr "Rättstavningsordlista saknas"
 
 #: ../gtk/src/MainWindow.cc:487 ../qt/src/MainWindow.cc:487
 msgid "The spellcheck dictionary for %1 is not installed"
-msgstr "Ordbok för stavningskontroll %1 är inte installerad"
+msgstr "Ordbok för %1 är inte installerad"
 
 #: ../gtk/src/MainWindow.cc:494 ../gtk/src/MainWindow.cc:523
 #: ../qt/src/MainWindow.cc:493
 msgid "Installing spelling dictionary for '%1'"
-msgstr "Installerar stavningsordlistan för '%1'"
+msgstr "Installerar stavningsordlistan för \"%1\""
 
 #: ../gtk/src/MainWindow.cc:515 ../gtk/src/MainWindow.cc:536
 #: ../gtk/src/MainWindow.cc:544 ../gtk/src/MainWindow.cc:592
@@ -1387,21 +1368,28 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"Följande ordböcker kunde inte laddas ner:\n"
+"%1\n"
+"\n"
+"Kontrollera anslutning och mappbehörigheter.\n"
+"Tips: Om du inte har skrivbehörighet i systemmappar kan du växla till "
+"Användarsökväg i inställningarna."
 
 #: ../gtk/src/MainWindow.cc:595 ../qt/src/MainWindow.cc:581
 msgid "Dictionaries installed"
-msgstr "Rättstavningsordbok installerad"
+msgstr "Rättstavningsordböcker installerade"
 
 #: ../gtk/src/MainWindow.cc:595
-#, fuzzy
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
-msgstr "Följande rättstavningsordböcker installerades:%1"
+msgstr ""
+"Följande ordböcker installerades:\n"
+"%1"
 
 #: ../gtk/src/MainWindow.cc:597 ../qt/src/MainWindow.cc:583
 msgid "No spelling dictionaries found for '%1'."
-msgstr "Ingen rättstavningsordbok hittades för '%1'."
+msgstr "Ingen rättstavningsordbok hittades för \"%1\"."
 
 #: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
@@ -1412,14 +1400,12 @@ msgid "Check spelling"
 msgstr "Kontrollera stavning"
 
 #: ../gtk/src/OutputEditorText.cc:231 ../qt/src/OutputEditorText.cc:196
-#, fuzzy
 msgid "File: %1"
-msgstr "Filer"
+msgstr "Fil: %1"
 
 #: ../gtk/src/OutputEditorText.cc:234 ../qt/src/OutputEditorText.cc:199
-#, fuzzy
 msgid "Page: %1"
-msgstr "Tolkningsfel: %1"
+msgstr "Sida: %1"
 
 #: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:471
 #: ../qt/src/Recognizer.cc:462
@@ -1451,11 +1437,11 @@ msgstr "Flerspråkig"
 
 #: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:277
 msgid "Automatic page segmentation"
-msgstr "Automatisk sidsegmetering"
+msgstr "Automatisk sidsegmentering"
 
 #: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:278
 msgid "Page segmentation with orientation and script detection"
-msgstr "Sidsegmentering med orientering och skriptdetektering"
+msgstr "Sidsegmentering med orientering och skriptidentifiering"
 
 #: ../gtk/src/Recognizer.cc:287 ../qt/src/Recognizer.cc:279
 msgid "Assume single column of text"
@@ -1463,7 +1449,7 @@ msgstr "Antas vara en kolumn med text"
 
 #: ../gtk/src/Recognizer.cc:288 ../qt/src/Recognizer.cc:280
 msgid "Assume single block of vertically aligned text"
-msgstr "Antas vara ett block med vertikalt anordnad text"
+msgstr "Antas vara ett block med vertikalt ordnad text"
 
 #: ../gtk/src/Recognizer.cc:289 ../qt/src/Recognizer.cc:281
 msgid "Assume a single uniform block of text"
@@ -1487,15 +1473,15 @@ msgstr "Gles text utan särskild ordning"
 
 #: ../gtk/src/Recognizer.cc:294 ../qt/src/Recognizer.cc:286
 msgid "Sparse text with orientation and script detection"
-msgstr "Gles text med orientering och skriptdetektering"
+msgstr "Gles text med orientering och skriptidentifiering"
 
 #: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:297
 msgid "Page segmentation mode"
-msgstr "Sidsegmeteringssätt"
+msgstr "Sidsegmeteringsläge"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:300
 msgid "Character whitelist / blacklist..."
-msgstr ""
+msgstr "Teckenvitlista/-svartlista..."
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:305
 msgid "Manage languages..."
@@ -1503,7 +1489,7 @@ msgstr "Hantera språk..."
 
 #: ../gtk/src/Recognizer.cc:375 ../qt/src/Recognizer.cc:369
 msgid "Current selection"
-msgstr "Aktuellt val"
+msgstr "Aktuell markering"
 
 #: ../gtk/src/Recognizer.cc:465 ../qt/src/Recognizer.cc:455
 msgid "Recognizing page %1 (%2 of %3)"
@@ -1515,18 +1501,18 @@ msgid ""
 "- Page %1: failed to render page"
 msgstr ""
 "\n"
-"- Sidan %1: kunde inte rendera sidan"
+"- Sidan %1: Kunde inte rendera sidan"
 
 #: ../gtk/src/Recognizer.cc:501 ../gtk/src/Recognizer.cc:531
 #: ../gtk/src/Recognizer.cc:544 ../qt/src/Recognizer.cc:491
 #: ../qt/src/Recognizer.cc:521 ../qt/src/Recognizer.cc:534
 msgid "Recognizing..."
-msgstr "Tolkning genomförs..."
+msgstr "Tolkar..."
 
 #: ../gtk/src/Recognizer.cc:505 ../gtk/src/Recognizer.cc:514
 #: ../qt/src/Recognizer.cc:495 ../qt/src/Recognizer.cc:504
 msgid "Recognition errors occurred"
-msgstr "Tolkningsfel har inträffat"
+msgstr "Tolkningsfel inträffade"
 
 #: ../gtk/src/Recognizer.cc:505 ../qt/src/Recognizer.cc:495
 msgid "The following errors occurred:%1"
@@ -1534,7 +1520,7 @@ msgstr "Följande fel har inträffat:%1"
 
 #: ../gtk/src/Recognizer.cc:514 ../qt/src/Recognizer.cc:504
 msgid "Failed to initialize tesseract"
-msgstr "Tesseract kunde inte initieras"
+msgstr "Tesseract kunde inte startas"
 
 #: ../gtk/src/scanner/ScannerSane.cc:84 ../gtk/src/scanner/ScannerTwain.cc:288
 #: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
@@ -1549,13 +1535,13 @@ msgstr "Ingen skanner specificerad"
 #: ../gtk/src/scanner/ScannerSane.cc:168 ../gtk/src/scanner/ScannerTwain.cc:195
 #: ../qt/src/scanner/ScannerSane.cc:168 ../qt/src/scanner/ScannerTwain.cc:187
 msgid "Unable to connect to scanner"
-msgstr "Det går inte att ansluta till skanner"
+msgstr "Kan inte ansluta till skanner"
 
 #: ../gtk/src/scanner/ScannerSane.cc:403 ../gtk/src/scanner/ScannerTwain.cc:266
 #: ../gtk/src/scanner/ScannerTwain.cc:292 ../qt/src/scanner/ScannerSane.cc:403
 #: ../qt/src/scanner/ScannerTwain.cc:258 ../qt/src/scanner/ScannerTwain.cc:290
 msgid "Unable to start scan"
-msgstr "Det går inte att starta skanningen"
+msgstr "Kan inte starta skanningen"
 
 #: ../gtk/src/scanner/ScannerSane.cc:411 ../gtk/src/scanner/ScannerSane.cc:461
 #: ../gtk/src/scanner/ScannerTwain.cc:318 ../qt/src/scanner/ScannerSane.cc:411
@@ -1565,47 +1551,47 @@ msgstr "Fel vid kommunikation med skannern"
 
 #: ../gtk/src/scanner/ScannerSane.cc:520 ../qt/src/scanner/ScannerSane.cc:517
 msgid "Failed to save image"
-msgstr "Det gick inte att spara bilden"
+msgstr "Kunde inte inte spara bilden"
 
 #: ../gtk/src/scanner/ScannerSane.cc:800 ../qt/src/scanner/ScannerSane.cc:797
-#, fuzzy
 msgid "Operation is cancelled."
-msgstr "Skanning avbröts"
+msgstr "Åtgärden avbröts."
 
 #: ../gtk/src/scanner/ScannerSane.cc:802 ../qt/src/scanner/ScannerSane.cc:799
 msgid "Device is busy."
-msgstr ""
+msgstr "Enheten är upptagen."
 
 #: ../gtk/src/scanner/ScannerSane.cc:804 ../qt/src/scanner/ScannerSane.cc:801
 msgid "Cover is opened."
-msgstr ""
+msgstr "Omslag är öppna."
 
 #: ../gtk/src/scanner/ScannerSane.cc:806 ../qt/src/scanner/ScannerSane.cc:803
 msgid "Document feeder jammed."
-msgstr ""
+msgstr "Dokumentmataren har fastnat."
 
 #: ../gtk/src/scanner/ScannerSane.cc:808 ../qt/src/scanner/ScannerSane.cc:805
 msgid "Document feeder out of documents."
-msgstr ""
+msgstr "Dokumentmataren har slut på dokument."
 
 #: ../gtk/src/scanner/ScannerSane.cc:810 ../qt/src/scanner/ScannerSane.cc:807
-#, fuzzy
 msgid "Access to scanner is denied."
-msgstr "Ingen skanner specificerad"
+msgstr "Åtkomst till skanner nekades."
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid "PDFs with text"
-msgstr ""
+msgstr "PDF:er med text"
 
 #: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
 msgid ""
 "These PDF files already contain text:\n"
 "%1"
 msgstr ""
+"Dessa PDF-filer innehåller redan text:\n"
+"%1"
 
 #: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
 msgid "Unable to open files"
-msgstr "Det går inte att öppna filer"
+msgstr "Kan inte öppna filer"
 
 #: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
 msgid "The following files could not be opened:%1"
@@ -1613,7 +1599,7 @@ msgstr "Följande filer kunde inte öppnas:%1"
 
 #: ../gtk/src/SourceManager.cc:141 ../qt/src/SourceManager.cc:143
 msgid "Enter password for file '%1':"
-msgstr ""
+msgstr "Ange lösenord för filen \"%1\":"
 
 #: ../gtk/src/SourceManager.cc:197 ../qt/src/SourceManager.cc:214
 msgid "Images and PDFs"
@@ -1629,24 +1615,24 @@ msgstr "Urklippsfel"
 
 #: ../gtk/src/SourceManager.cc:208 ../qt/src/SourceManager.cc:226
 msgid "Failed to read the clipboard."
-msgstr "Det gick inte att läsa urklipp."
+msgstr "Kunde inte läsa urklipp."
 
 #: ../gtk/src/SourceManager.cc:212 ../qt/src/SourceManager.cc:230
 #: ../qt/src/SourceManager.cc:236
 msgid "Pasted %1"
-msgstr "%1 inklistrat"
+msgstr "Klistrade in %1"
 
 #: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
 msgid "Screenshot Error"
-msgstr "Skärmdumpsfel"
+msgstr "Skärmklippsfel"
 
 #: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
 msgid "Failed to take screenshot."
-msgstr "Det gick inte att ta skärmdump."
+msgstr "Kunde inte ta skärmdump."
 
 #: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:247
 msgid "Screenshot %1"
-msgstr "Skärmdump %1"
+msgstr "Skärmklipp %1"
 
 #: ../gtk/src/SourceManager.cc:233 ../qt/src/SourceManager.cc:252
 msgid "Saving image..."
@@ -1662,11 +1648,11 @@ msgstr "Det gick inte att skriva till %1."
 
 #: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
 msgid "Delete File?"
-msgstr "Radera fil?"
+msgstr "Ta bort fil?"
 
 #: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
 msgid "The following files will be deleted:%1"
-msgstr "Följande filer kommer att raderas:%1"
+msgstr "Följande filer kommer att tas bort:%1"
 
 #: ../gtk/src/SourceManager.cc:332 ../qt/src/SourceManager.cc:338
 msgid "Missing File"
@@ -1677,7 +1663,7 @@ msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
 msgstr ""
-"Följande fil har raderats eller flyttats:\n"
+"Följande fil har tagits bort eller flyttats:\n"
 "%1"
 
 #: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:73
@@ -1703,7 +1689,7 @@ msgstr "Fel vid läsning av fil"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
 msgid "Unable to read '%1'."
-msgstr "Det går inte att läsa '%1'."
+msgstr "Kan inte läsa '%1'."
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
 msgid "Errors Occurred Reading File"
@@ -1711,7 +1697,7 @@ msgstr "Fel vid läsning av fil"
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
 msgid "Some entries of the substitutions list could not be read."
-msgstr "Vissa poster i ersättningslistan  kunde inte läsas."
+msgstr "Vissa poster i ersättningslistan kunde inte läsas."
 
 #: ../gtk/src/SubstitutionsManager.cc:104 ../qt/src/SubstitutionsManager.cc:143
 msgid "Save Substitutions List"
@@ -1723,18 +1709,17 @@ msgstr "Fel när filen sparades"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
 msgid "Unable to write to '%1'."
-msgstr "Det går inte att skriva till '%1'."
+msgstr "Kan inte skriva till \"%1\"."
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
 msgid "Save List?"
-msgstr "Spara listan?"
+msgstr "Vill du spara listan?"
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
 msgid "Do you want to save the current list?"
-msgstr "Vill du spara den nuvarande listan?"
+msgstr "Vill du spara den aktuella listan?"
 
 #: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:74
-#, fuzzy
 msgid ""
 "A session connection to the PackageKit backend is required for managing "
 "system-wide tesseract language packs, but it was not found. This service is "
@@ -1744,10 +1729,13 @@ msgid ""
 "tesseract language packs directly, or switch to using the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"PackageKit krävs för att hantera systemomfattande tesseract språkpaket, men "
-"det kunde inte hittas. Använd systempaketets programvara för att hantera "
-"tesseract språkpaket eller byt till användarens tessdatasökväg i dialogrutan "
-"för konfiguration."
+"En sessionsanslutning till PackageKits serverdel, krävs för att hantera "
+"systemövergripande tesseract språkpaket, men kunde inte hittas. Den här "
+"tjänsten tillhandahålls vanligtvis av ett program hanteringsprogram som "
+"Gnome Software. Installera programvara som tillhandahåller det nödvändiga "
+"PackageKit-gränssnittet, använd andra pakethanteringsprogram för att hantera "
+"tesseract språkpaket direkt, eller växla till att använda användarens "
+"tessdata-sökväg i konfigurationsdialogen."
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:79
 msgid "Fetching available languages"
@@ -1777,7 +1765,6 @@ msgid "Downloading %1..."
 msgstr "Laddar ner %1..."
 
 #: ../gtk/src/TessdataManager.cc:330
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1790,7 +1777,10 @@ msgstr ""
 "Följande filer kunde inte hämtas eller tas bort:\n"
 "%1\n"
 "\n"
-"Kontrollera anslutningen och katalogbehörigheterna."
+"Kontrollera anslutningen och mappbehörigheterna.\n"
+"\n"
+"Tips: Om du inte har skrivbehörighet i systemmappar kan du växla till "
+"Användarsökväg i inställningarna."
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
@@ -1809,19 +1799,18 @@ msgid "About gImageReader"
 msgstr "Om gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Ett grafiskt gränssnitt för tesseract-"
-"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Webbsida</"
-"a></p><p>&nbsp;</p></body></html>"
+"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Webbplats</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
-msgstr "Erkännande"
+msgstr "Erkännanden"
 
 #: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
@@ -1829,7 +1818,7 @@ msgstr "Licens"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
-msgstr "System-kodning"
+msgstr "Systemkodning"
 
 #: ../qt/data/ConfigDialog.ui.h:15
 msgid "UTF-8"
@@ -1840,7 +1829,7 @@ msgid "Text file encoding:"
 msgstr "Kodning av textfil:"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
@@ -1849,11 +1838,13 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"Ber om ursäkt för problemet. För att bidra till att förbättra programmet, "
-"kan du överväga att rapportera frågan till <a href=\"mailto:manisandro@gmail."
-"com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Försök att "
-"beskriva vad du gjorde innan programmet kraschade. Lägg dessutom till "
-"informationen nedan. Tack."
+"<html><head/><body><p><span style=\" font-weight:600;\">Programmet har "
+"kraschat</span></p><p>Ber om ursäkt för besväret. För att bidra till att "
+"förbättra programmet, kan du överväga att rapportera frågan till <a  href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Försök att beskriva vad du gjorde innan "
+"programmet kraschade. Lägg också till nedanstående information. "
+"Tack.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
 msgid ""
@@ -1864,22 +1855,31 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occured.</p></body></html>"
 msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract har "
+"avbrutits</span></p><p>Tesseract (OCR-motorn) har avbrutits under "
+"textidentifiering. Detta kan inträffa om aktuell trained-data är skadad "
+"eller inkompatibel med nuvarande version av Tesseract, eller om det är något "
+"fel på Tesseract.</p><p>Bakåtspårningen nedan kan ge ytterligare information "
+"om var kraschen inträffade.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
-msgstr ""
+msgstr "Flatbädd"
 
 #: ../qt/data/MainWindow.ui.h:18
+#, fuzzy
 msgid "ADF Front"
-msgstr ""
+msgstr "ADF Front"
 
 #: ../qt/data/MainWindow.ui.h:19
+#, fuzzy
 msgid "ADF Back"
-msgstr ""
+msgstr "ADF Back"
 
 #: ../qt/data/MainWindow.ui.h:20
+#, fuzzy
 msgid "ADF Duplex"
-msgstr ""
+msgstr "ADF Duplex"
 
 #. Remove & from some labels which designer insists in adding
 #: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
@@ -1932,20 +1932,19 @@ msgstr "Visa/stäng utgångsfönstret"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
-msgstr ""
+msgstr "Serverdel:"
 
 #: ../qt/data/PdfExportDialog.ui.h:8
 msgid "Portrait"
-msgstr ""
+msgstr "Stående"
 
 #: ../qt/data/PdfExportDialog.ui.h:9
 msgid "Landscape"
-msgstr ""
+msgstr "Liggande"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:142
-#, fuzzy
 msgid "Failed to write to file"
-msgstr "Det gick inte att öppna filen"
+msgstr "Kunde inte skriva till filen"
 
 #. Output toolbar
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
@@ -1964,14 +1963,14 @@ msgid "Find and Replace"
 msgstr "Sök och ersätt"
 
 #: ../qt/src/MainWindow.cc:581
-#, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
-msgstr "Följande ordboks-filer installerades:%1"
+msgstr ""
+"Följande ordboksfiler installerades:\n"
+"%1"
 
 #: ../qt/src/TessdataManager.cc:308
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1983,7 +1982,10 @@ msgstr ""
 "Följande filer kunde inte hämtas eller tas bort:\n"
 "%1\n"
 "\n"
-"Kontrollera anslutningen och katalogbehörigheterna."
+"Kontrollera anslutning och mappbehörigheter.\n"
+"\n"
+"Tips: Om du inte har skrivbehörighet i systemmappar kan du växla till "
+"Användarsökväg i inställningarna."
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
@@ -2007,7 +2009,7 @@ msgstr "Töm Lista"
 
 #: ../qt/src/Ui_OutputEditorText.hh:101
 msgid "Strip Line Breaks"
-msgstr "Rensa radbrytningar"
+msgstr "Ta bort radbrytningar"
 
 #: ../qt/src/Ui_OutputEditorText.hh:115
 msgid "Save Output"
