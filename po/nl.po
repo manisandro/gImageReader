@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 23:17+0200\n"
-"PO-Revision-Date: 2018-03-30 08:45+0000\n"
+"PO-Revision-Date: 2020-01-16 13:21+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gimagereader/"
 "translations/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.20-dev\n"
+"X-Generator: Weblate 3.11-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -155,7 +155,7 @@ msgid "Regenerate backtrace"
 msgstr "Backtrace hergenereren"
 
 #: ../gtk/data/CrashHandler.ui.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -165,11 +165,14 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"Excuses voor het ongemak. Als u wilt helpen om de applicatie te verbeteren, "
-"overweeg dan om het probleem te melden aan <a href=\"mailto:manisandro@gmail."
-"com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Omschrijf wat u "
-"aan het doen was voordat de applicatie crashte. Vermeld tevens de "
-"onderstaande informatie. Bedankt."
+"<b>De toepassing is gecrasht.</b>\n"
+"\n"
+"Excuses voor het ongemak. Als u wilt helpen om de toepassing te verbeteren, "
+"overweeg dan om het probleem te melden aan <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Omschrijf wat u aan het doen was voordat de "
+"toepassing crashte. Vermeld tevens onderstaande informatie. Bij voorbaat "
+"dank."
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -234,9 +237,8 @@ msgid "Select insert mode"
 msgstr "Invoegmodus selecteren"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../qt/src/Ui_MainWindow.hh:109
-#, fuzzy
 msgid "Select page"
-msgstr "Taal selecteren"
+msgstr "Pagina selecteren"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
@@ -352,20 +354,19 @@ msgstr "Een grafisch front-end voor tesseract-ocr"
 
 #: ../gtk/data/MainWindow.ui.h:41 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr ""
+msgstr "Witte en zwarte lijst met tekens"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "Herken deze tekens niet (zwarte lijst):"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:3
-#, fuzzy
 msgid "Enter a string of characters..."
-msgstr "Bezig met verkrijgen van parameters..."
+msgstr "Voer een tekenreeks in..."
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
+msgstr "Herken alleen de volgende tekens (witte lijst):"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -664,7 +665,7 @@ msgstr "Hoogte"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
 msgid "Treat image sources as having true DPI:"
-msgstr ""
+msgstr "Behandel afbeeldingsbronnen met werkelijke DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
@@ -1477,7 +1478,7 @@ msgstr "Paginasegmentatiemodus"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:300
 msgid "Character whitelist / blacklist..."
-msgstr ""
+msgstr "Witte en zwarte lijst met tekens..."
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:305
 msgid "Manage languages..."
@@ -1716,7 +1717,6 @@ msgid "Do you want to save the current list?"
 msgstr "Wilt u de huidige lijst opslaan?"
 
 #: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:74
-#, fuzzy
 msgid ""
 "A session connection to the PackageKit backend is required for managing "
 "system-wide tesseract language packs, but it was not found. This service is "
@@ -1948,11 +1948,12 @@ msgid "Find and Replace"
 msgstr "Zoeken en vervangen"
 
 #: ../qt/src/MainWindow.cc:581
-#, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
-msgstr "De volgende woordenboekbestanden zijn geïnstalleerd: %1"
+msgstr ""
+"De volgende woordenboekbestanden zijn geïnstalleerd:\n"
+"%1"
 
 #: ../qt/src/TessdataManager.cc:308
 msgid ""
