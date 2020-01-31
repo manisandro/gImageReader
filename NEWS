@@ -58,7 +58,7 @@ gImageReader 3.2.2 (Jun 30 2017):
 
 gImageReader 3.2.1 (Feb 10 2017):
 * Add possibility to rotate individual pages of multipage documents
-* Ensure the tessdata manager downloads compatible tesseract languge definitions
+* Ensure the tessdata manager downloads compatible tesseract language definitions
 * Add CCITT Group4 compression option for monochrome PDF export
 * Allow choosing between diffuse and threshold dithering for monochrome PDF export
 * Preview JPEG compression quality in PDF output preview

@@ -176,7 +176,7 @@ msgid ""
 "of tesseract in use, or due to a bug in tesseract.\n"
 "\n"
 "The stacktrace below may provide additional information about where the "
-"crash occured.\n"
+"crash occurred.\n"
 msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
@@ -1790,7 +1790,7 @@ msgid ""
 "recognizing text. This may occur if the used traineddatas are corrupt or "
 "incomplatible with the version of tesseract in use, or due to a bug in "
 "tesseract.</p><p>The stacktrace below may provide additional information "
-"about where the crash occured.</p></body></html>"
+"about where the crash occurred.</p></body></html>"
 msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:17

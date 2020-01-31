@@ -99,7 +99,7 @@
         <key type="i" name="ocrregionstrategy">
             <default>0</default>
             <summary>OCR Page Region Strategy</summary>
-            <description>Whether to recognize the entire page or peform page layout autodetection.</description>
+            <description>Whether to recognize the entire page or perform page layout autodetection.</description>
         </key>
         <key type="s" name="replacelist">
             <default>""</default>

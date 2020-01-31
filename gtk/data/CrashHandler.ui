@@ -85,7 +85,7 @@ Apologies for the inconvenience. To help improve the application, please conside
 
 Tesseract (the OCR engine) has aborted while recognizing text. This may occur if the used traineddatas are corrupt or incomplatible with the version of tesseract in use, or due to a bug in tesseract.
 
-The stacktrace below may provide additional information about where the crash occured.
+The stacktrace below may provide additional information about where the crash occurred.
 </property>
             <property name="use_markup">True</property>
             <property name="wrap">True</property>

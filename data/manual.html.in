@@ -33,7 +33,7 @@
 </ul>
 
 <h2><a name="About">About</a></h2>
-<p>gImageReader is a frontent to <a href="https://github.com/tesseract-ocr/tesseract">tesseract-ocr</a> written in C++.</p>
+<p>gImageReader is a frontend to <a href="https://github.com/tesseract-ocr/tesseract">tesseract-ocr</a> written in C++.</p>
 <h3><a name="Features">Features</a></h3>
 <ul>
  <li>Import PDF documents and images from disk, scanning devices, clipboard and screenshots</li>
@@ -107,7 +107,7 @@ gImageReader 3.2.2 (Jun 30 2017):
 
 gImageReader 3.2.1 (Feb 10 2017):
 * Add possibility to rotate individual pages of multipage documents
-* Ensure the tessdata manager downloads compatible tesseract languge definitions
+* Ensure the tessdata manager downloads compatible tesseract language definitions
 * Add CCITT Group4 compression option for monochrome PDF export
 * Allow choosing between diffuse and threshold dithering for monochrome PDF export
 * Preview JPEG compression quality in PDF output preview
@@ -348,7 +348,7 @@ gImageReader 2.90 (Feb 11 2014):
 <h2><a name="InstallSpelling">Installation of spelling dictionaries</a></h2>
 <ul>
     <li>On <b>Linux</b>, if your distribution supports PackageKit, the program will offer to automatically install missing dictionaries when necessary. If automatic installation does not work for some reason, you can install the spelling dictionaries from the package management application (the packages may be called something like <i>hunspell-&lt;lang&gt;</i>).</li>
-    <li>On <b>Windows</b>, the program will attempt to automaticallly download the desired spelling dictionary from <a href="https://cgit.freedesktop.org/libreoffice/dictionaries/tree">http://cgit.freedesktop.org/libreoffice/dictionaries/tree</a>. Dictionaries can also be installed manually: for a desired language (i.e. <tt>it_IT</tt>), download the <b>*.dic and *.aff</b> files and place them in <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Spelling dictionaries</tt>.</li>
+    <li>On <b>Windows</b>, the program will attempt to automatically download the desired spelling dictionary from <a href="https://cgit.freedesktop.org/libreoffice/dictionaries/tree">http://cgit.freedesktop.org/libreoffice/dictionaries/tree</a>. Dictionaries can also be installed manually: for a desired language (i.e. <tt>it_IT</tt>), download the <b>*.dic and *.aff</b> files and place them in <tt>Start&rarr;All Programs&rarr;gImageReader&rarr;Spelling dictionaries</tt>.</li>
 </ul>
 <h2><a name="Contributing">Contributing</a></h2>
 <p>
