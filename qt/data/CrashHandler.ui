@@ -54,7 +54,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tesseract (the OCR engine) has aborted while recognizing text. This may occur if the used traineddatas are corrupt or incomplatible with the version of tesseract in use, or due to a bug in tesseract.&lt;/p&gt;&lt;p&gt;The stacktrace below may provide additional information about where the crash occured.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tesseract (the OCR engine) has aborted while recognizing text. This may occur if the used traineddatas are corrupt or incomplatible with the version of tesseract in use, or due to a bug in tesseract.&lt;/p&gt;&lt;p&gt;The stacktrace below may provide additional information about where the crash occurred.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
