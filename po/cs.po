@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 23:17+0200\n"
-"PO-Revision-Date: 2019-09-18 05:24+0000\n"
+"PO-Revision-Date: 2020-02-04 14:50+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gimagereader/"
 "translations/cs/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 3.11-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -157,7 +157,7 @@ msgid "Regenerate backtrace"
 msgstr "Znovu načíst hlášení backtrace diagnostiky"
 
 #: ../gtk/data/CrashHandler.ui.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -167,11 +167,13 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
+"<b>Aplikace zhavarovala</b>\n"
+"\n"
 "Velmi se omlouváme za vzniklé potíže. Prosíme pomozte s odstraněním příčiny "
-"tohoto problému nahlášením na e-mail <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Ve zprávě se "
-"pokuste popsat svou činnost před pádem aplikace. Též přiložte níže uvedené "
-"informace. Děkujeme."
+"tohoto problému nahlášením na e-mail <a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Ve zprávě se pokuste popsat svou činnost před "
+"pádem aplikace. Též přiložte níže uvedené informace. Děkujeme."
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -362,7 +364,7 @@ msgstr "Grafická nadstavba pro engine tesseract-ocr"
 
 #: ../gtk/data/MainWindow.ui.h:41 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr ""
+msgstr "Seznam povolených/zakázaných znaků"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
@@ -653,7 +655,7 @@ msgstr "znaky"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Sanitize hyphens before line breaks"
-msgstr ""
+msgstr "Sanovat spojovníky před konci řádků"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
@@ -1482,7 +1484,7 @@ msgstr "Režim rozdělování stránky na prvky"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:300
 msgid "Character whitelist / blacklist..."
-msgstr ""
+msgstr "Seznam povolených/zakázaných znaků…"
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:305
 msgid "Manage languages..."
@@ -1721,7 +1723,6 @@ msgid "Do you want to save the current list?"
 msgstr "Chcete stávající seznam uložit?"
 
 #: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:74
-#, fuzzy
 msgid ""
 "A session connection to the PackageKit backend is required for managing "
 "system-wide tesseract language packs, but it was not found. This service is "
@@ -1733,8 +1734,10 @@ msgid ""
 msgstr ""
 "Pro správu balíčků jazykových dat pro engine tesseract, společných pro "
 "všechny uživatele, je třeba nástroje PackageKit, který se ale na tomto "
-"systému nenachází. Namísto toho proto použijte nástroj pro správu balíčků "
-"vašeho systému a jazykové balíčky engine tesseract spravujte jeho "
+"systému nenachází. Tato služba je obvykle poskytována aplikací pro správu "
+"software, jako např. Gnome Software. Nainstalujte software, který poskytuje "
+"potřebné PackageKit rozhraní, nebo použijte jiný nástroj pro správu balíčků "
+"vašeho systému a jazykové balíčky engine tesseract spravujte přímo jeho "
 "prostřednictvím. Případně náhradně v nastavovacím dialogu přepněte na "
 "používání umístění pro jednotlivého uživatele."
 
@@ -1856,6 +1859,12 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occured.</p></body></html>"
 msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract bylo "
+"přerušeno</span></p><p>Tesseract (OCR engine) byl přerušen v průběhu "
+"rozpoznávání textu. K tomu může dojít v případě poškozených natrénovaných "
+"dat nebo použití nekompatibilní verze tesseract, či chybě v tesseract.</p><p>"
+"Výpis zásobníku níže může poskytnout další informace o tom, kde došlo k "
+"pádu.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:17
 msgid "Flatbed"
