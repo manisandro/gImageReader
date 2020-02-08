@@ -110,6 +110,7 @@ int SourceManager::addSources(const QStringList& files, bool suppressTextWarning
 		Source* source = new Source(filename, QFileInfo(filename).fileName());
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive) && !checkPdfSource(source, filesWithText)) {
 			delete source;
+			failed += "\n " + filename;
 			continue;
 		}
 
@@ -137,6 +138,9 @@ int SourceManager::addSources(const QStringList& files, bool suppressTextWarning
 
 bool SourceManager::checkPdfSource(Source* source, QStringList& filesWithText) const {
 	std::unique_ptr<Poppler::Document> document(Poppler::Document::load(source->path));
+	if(!document) {
+		return false;
+	}
 
 	// Unlock if necessary
 	if(document->isLocked()) {
