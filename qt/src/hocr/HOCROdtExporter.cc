@@ -29,6 +29,7 @@
 #include <QDesktopServices>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QUrl>
 #include <QUuid>
 #include <QXmlStreamWriter>
 #include <quazipfile.h>

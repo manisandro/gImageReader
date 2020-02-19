@@ -28,6 +28,7 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QTextStream>
+#include <QUrl>
 
 bool HOCRTextExporter::run(const HOCRDocument* hocrdocument, QString& filebasename) {
 	QString suggestion = filebasename;
