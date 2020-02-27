@@ -8,52 +8,55 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 23:18+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-02-27 16:04+0000\n"
+"Last-Translator: KAWASAKICHIRO <kawasaki.ichiro.52@gmail.com>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/gimagereader/"
+"translations/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr ""
+msgstr "OCR アプリケーション"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:167
 msgid "Redetect Languages"
-msgstr ""
+msgstr "言語を再検出"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:170
 msgid "Manage Languages"
-msgstr ""
+msgstr "言語を管理"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:173
 msgid "Preferences"
-msgstr ""
+msgstr "設定"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:482 ../qt/src/MainWindow.cc:481
 #: ../qt/src/Ui_MainWindow.hh:178
 msgid "Help"
-msgstr ""
+msgstr "ヘルプ"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:181
 msgid "About"
-msgstr ""
+msgstr "gImageReader について"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
-msgstr ""
+msgstr "終了"
 
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:47
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
 #: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
 #: ../qt/data/ConfigDialog.ui.h:26
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
@@ -69,43 +72,43 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr ""
+msgstr "未追加のスペルチェック辞書のインストールを要求する"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr ""
+msgstr "プログラムの新しいバージョンを自動的に確認する"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr ""
+msgstr "既定の言語の定義:"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
-msgstr ""
+msgstr "追加の言語の定義:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr ""
+msgstr "Tesseract 言語データファイルの接頭辞"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
-msgstr ""
+msgstr "接頭辞"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr ""
+msgstr "後ろに国コードを含む言語コード (ISO 639-1)"
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
-msgstr ""
+msgstr "ISO コード"
 
 #: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:24
 msgid "The name of the language"
-msgstr ""
+msgstr "言語の名前"
 
 #: ../gtk/data/ConfigDialog.ui.h:16 ../qt/data/ConfigDialog.ui.h:25
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:46
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
@@ -113,39 +116,39 @@ msgstr ""
 #: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
 #: ../qt/data/MainWindow.ui.h:12
 msgid "Cancel"
-msgstr ""
+msgstr "中止"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
-msgstr ""
+msgstr "出力ペインのフォント:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
-msgstr ""
+msgstr "既定"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "言語データの保存先:"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
-msgstr ""
+msgstr "言語の定義の保存先パス:"
 
 #: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
-msgstr ""
+msgstr "スペルチェック辞書の保存先パス:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "システム全体のパス"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "ユーザーのパス"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr ""
+msgstr "エクスポートした文書を既定のアプリケーションで自動的に開く"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -162,6 +165,12 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
+"<b>アプリケーションがクラッシュしました</b>\n"
+"\n"
+"ご不便をお掛けして申し訳ございません。アプリケーションの改善に役立てるため、<a href=\""
+"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a> "
+"へ問題を報告することをご検討ください。アプリケーションがクラッシュする前に何をしていたか、下記の情報とともにご説明ください。よろしくお願いします。"
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -174,237 +183,243 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occurred.\n"
 msgstr ""
+"<b>Tesseract が中止されました</b>\n"
+"\n"
+"Tesseract (OCR エンジン) がテキストの読み取り中に中止されました。 これは、使用した学習データが破損しているか、"
+"使用中のTesseract のバージョンと互換性がないとき、またはTesseract のバグが原因で発生する場合があります。\n"
+"\n"
+"下記のスタックトレースは、どの箇所でクラッシュが発生したかにかんする追加の情報を提供するかもしれません。\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
 msgid "Toggle output pane"
-msgstr ""
+msgstr "出力ペインの表示を切り替える"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
-msgstr ""
+msgstr "現在のページを回転"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
-msgstr ""
+msgstr "全てのページを回転"
 
 #. Sources toolbar
 #: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:192
 msgid "Recent"
-msgstr ""
+msgstr "最近開いたファイル"
 
 #: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:193
 msgid "Paste"
-msgstr ""
+msgstr "貼り付け"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:194
 msgid "Take Screenshot"
-msgstr ""
+msgstr "スクリーンショットを撮る"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:23
 msgid "Zoom in"
-msgstr ""
+msgstr "拡大"
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/data/MainWindow.ui.h:25
 msgid "Zoom out"
-msgstr ""
+msgstr "縮小"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/data/MainWindow.ui.h:27
 msgid "Normal size"
-msgstr ""
+msgstr "元の縮尺"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:29
 msgid "Best fit"
-msgstr ""
+msgstr "画面に合わせる"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
-msgstr ""
+msgstr "回転のモードを選択"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../gtk/data/OutputEditorText.ui.h:13
 #: ../qt/src/Ui_OutputEditorText.hh:95
 msgid "Select insert mode"
-msgstr ""
+msgstr "挿入モードを選択"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../qt/src/Ui_MainWindow.hh:109
 msgid "Select page"
-msgstr ""
+msgstr "ページを選択"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
-msgstr ""
+msgstr "画像コントロール"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/src/Ui_MainWindow.hh:139
 msgid "Plain text"
-msgstr ""
+msgstr "プレーンテキスト"
 
 #: ../gtk/data/MainWindow.ui.h:16 ../qt/src/Ui_MainWindow.hh:139
 msgid "hOCR, PDF"
-msgstr ""
+msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect layout"
-msgstr ""
+msgstr "レイアウトを自動検出"
 
 #: ../gtk/data/MainWindow.ui.h:18
 msgid "<small>Recognize all</small>"
-msgstr ""
+msgstr "<small>全て読み取り</small>"
 
 #: ../gtk/data/MainWindow.ui.h:19
 msgid "Select language"
-msgstr ""
+msgstr "言語を選択"
 
 #: ../gtk/data/MainWindow.ui.h:20 ../qt/src/Ui_MainWindow.hh:205
 msgid "Add images"
-msgstr ""
+msgstr "画像を追加"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:204
 msgid "Add Images"
-msgstr ""
+msgstr "画像を追加"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:210
 msgid "Remove image from list"
-msgstr ""
+msgstr "一覧から画像を除去"
 
 #: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:213
 msgid "Delete image"
-msgstr ""
+msgstr "画像を削除"
 
 #: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:216
 msgid "Clear list"
-msgstr ""
+msgstr "一覧をクリア"
 
 #: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
-msgstr ""
+msgstr "ファイル"
 
 #: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:8
 msgid "Device:"
-msgstr ""
+msgstr "デバイス:"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:59
 msgid "Refresh"
-msgstr ""
+msgstr "更新"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:9
 msgid "Output:"
-msgstr ""
+msgstr "出力先:"
 
 #: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:13
 msgid "Mode:"
-msgstr ""
+msgstr "モード:"
 
 #: ../gtk/data/MainWindow.ui.h:30 ../gtk/src/hocr/HOCRPdfExporter.cc:313
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:347
 msgid "Color"
-msgstr ""
+msgstr "色"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:316
 #: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:349
 #: ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "Grayscale"
-msgstr ""
+msgstr "グレースケール"
 
 #: ../gtk/data/MainWindow.ui.h:32 ../qt/data/MainWindow.ui.h:10
 msgid "Resolution:"
-msgstr ""
+msgstr "解像度:"
 
 #: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:11
 msgid "Scan"
-msgstr ""
+msgstr "スキャン"
 
 #: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:16
 msgid "Source:"
-msgstr ""
+msgstr "ソース:"
 
 #: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
-msgstr ""
+msgstr "取得"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
-msgstr ""
+msgstr "明るい"
 
 #: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
-msgstr ""
+msgstr "コントラスト"
 
 #: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
-msgstr ""
+msgstr "解像度"
 
 #: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
-msgstr ""
+msgstr "色を反転"
 
 #: ../gtk/data/MainWindow.ui.h:40
 msgid "A graphical frontend to tesseract-ocr"
-msgstr ""
+msgstr "tesseract-ocr の GUI フロントエンド"
 
 #: ../gtk/data/MainWindow.ui.h:41 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr ""
+msgstr "文字のホワイトリスト / ブラックリスト"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "これらの文字を読み取り対象から除外 (ブラックリスト) :"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:3
 msgid "Enter a string of characters..."
-msgstr ""
+msgstr "文字列を入力してください…"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
+msgstr "次の文字のみが読み取られるようにする (ホワイトリスト) :"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
-msgstr ""
+msgstr "ページの範囲"
 
 #: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
-msgstr ""
+msgstr "ページの範囲:"
 
 #: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
-msgstr ""
+msgstr "<small><b>例:</b> 1-10, 13, 14-18</small>"
 
 #: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
-msgstr ""
+msgstr "読み取り領域:"
 
 #: ../gtk/data/MainWindow.ui.h:51 ../gtk/src/Recognizer.cc:375
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:369
 msgid "Entire page"
-msgstr ""
+msgstr "ページ全体"
 
 #: ../gtk/data/MainWindow.ui.h:52 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
-msgstr ""
+msgstr "自動検出"
 
 #: ../gtk/data/MainWindow.ui.h:53 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
-msgstr ""
+msgstr "出力テキストの前に追加:"
 
 #: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
-msgstr ""
+msgstr "ソースのファイル名"
 
 #: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:9
 msgid "Source page"
-msgstr ""
+msgstr "ソースのページ"
 
 #: ../gtk/data/MainWindow.ui.h:56 ../qt/src/SourceManager.cc:146
 msgid "Protected PDF"
-msgstr ""
+msgstr "保護された PDF"
 
 #: ../gtk/data/MainWindow.ui.h:57 ../qt/src/Recognizer.cc:76
 msgid "Current Page"
-msgstr ""
+msgstr "現在のページ"
 
 #: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:79
 msgid "Multiple Pages..."
-msgstr ""
+msgstr "複数のページ…"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:580
 msgid "Add Word"
