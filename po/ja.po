@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-25 23:18+0200\n"
-"PO-Revision-Date: 2020-02-28 18:33+0000\n"
+"PO-Revision-Date: 2020-03-05 09:33+0000\n"
 "Last-Translator: KAWASAKICHIRO <kawasaki.ichiro.52@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ja/>\n"
@@ -465,13 +465,13 @@ msgstr "出力結果をクリア"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:80
 #: ../qt/src/Ui_OutputEditorText.hh:107
 msgid "Find and replace"
-msgstr ""
+msgstr "検索と置換"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:12
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:83
 msgid "Show confidence values"
-msgstr ""
+msgstr "信頼度を表示"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13 ../gtk/data/PdfExportDialog.ui.h:41
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
