@@ -181,7 +181,7 @@ void ScannerTwain::scan(const Params& params) {
 	/** Open device **/
 	emit scanStateChanged(State::OPEN);
 
-	std::strncpy(m_srcID.ProductName, params.device.toLocal8Bit().data(), sizeof(m_srcID.ProductName));
+	std::strncpy(m_srcID.ProductName, params.device.toLocal8Bit().data(), sizeof(m_srcID.ProductName) - 1);
 	// State 3 to 4
 	if(call(nullptr, DG_CONTROL, DAT_IDENTITY, MSG_OPENDS, &m_srcID) != TWRC_SUCCESS) {
 		failScan(_("Unable to connect to scanner"));

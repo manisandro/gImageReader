@@ -142,7 +142,7 @@ std::unique_ptr<tesseract::TessBaseAPI> Recognizer::initTesseract(const char* la
 	if(ok) {
 		*ok = ret != -1;
 	}
-	return std::move(tess);
+	return tess;
 }
 
 void Recognizer::updateLanguagesMenu() {
