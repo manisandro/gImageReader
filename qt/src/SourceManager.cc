@@ -125,7 +125,7 @@ int SourceManager::addSources(const QStringList& files, bool suppressTextWarning
 	if(!suppressTextWarning && !filesWithText.empty()) {
 		QMessageBox::information(MAIN->getInstance(), _("PDFs with text"), _("These PDF files already contain text:\n%1").arg(filesWithText.join('\n')));
 	}
-	ConfigSettings::get<VarSetting<QStringList>>("recentitems")->setValue(recentItems);
+	ConfigSettings::get<VarSetting<QStringList>>("recentitems")->setValue(recentItems.mid(0, sMaxNumRecent));
 	ui.listWidgetSources->blockSignals(true);
 	ui.listWidgetSources->clearSelection();
 	ui.listWidgetSources->blockSignals(false);
@@ -190,12 +190,16 @@ QList<Source*> SourceManager::getSelectedSources() const {
 void SourceManager::prepareSourcesMenu() {
 	// Build recent menu
 	m_recentMenu->clear();
+	int count = 0;
 	for(const QString& filename : ConfigSettings::get<VarSetting<QStringList>>("recentitems")->getValue()) {
 		if(QFile(filename).exists()) {
 			QAction* action = new QAction(QFileInfo(filename).fileName(), m_recentMenu);
 			action->setToolTip(filename);
 			connect(action, SIGNAL(triggered()), this, SLOT(openRecentItem()));
 			m_recentMenu->addAction(action);
+			if(++count >= sMaxNumRecent) {
+				break;
+			}
 		}
 	}
 	ui.actionSourceRecent->setEnabled(!m_recentMenu->isEmpty());

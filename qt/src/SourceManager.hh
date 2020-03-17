@@ -71,6 +71,7 @@ private:
 	QMenu* m_recentMenu;
 	QFileSystemWatcher m_fsWatcher;
 
+	static constexpr int sMaxNumRecent = 15;
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;
 
