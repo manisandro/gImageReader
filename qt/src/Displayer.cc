@@ -25,12 +25,14 @@
 
 #include <cmath>
 #include <QFileDialog>
+#include <QFuture>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneDragDropEvent>
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QScrollBar>
 #include <QWheelEvent>
+#include <QtConcurrent/QtConcurrentRun>
 
 
 class GraphicsScene : public QGraphicsScene {
@@ -43,14 +45,14 @@ protected:
 			event->acceptProposedAction();
 		}
 	}
-	void dragMoveEvent(QGraphicsSceneDragDropEvent* event) {}
+	void dragMoveEvent(QGraphicsSceneDragDropEvent* /*event*/) {}
 	void dropEvent(QGraphicsSceneDragDropEvent* event) {
 		Utils::handleSourceDropEvent(event->mimeData());
 	}
 };
 
 Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
-	: QGraphicsView(parent), ui(_ui), m_scaleThread(std::bind(&Displayer::scaleThread, this)) {
+	: QGraphicsView(parent), ui(_ui) {
 	m_scene = new GraphicsScene();
 	setScene(m_scene);
 	setBackgroundBrush(Qt::gray);
@@ -80,7 +82,9 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	connect(ui.actionBestFit, SIGNAL(triggered()), this, SLOT(zoomFit()));
 	connect(ui.actionOriginalSize, SIGNAL(triggered()), this, SLOT(zoomOriginal()));
 	connect(&m_renderTimer, SIGNAL(timeout()), this, SLOT(renderImage()));
-	connect(&m_scaleTimer, SIGNAL(timeout()), this, SLOT(scaleTimerElapsed()));
+	connect(&m_scaleTimer, SIGNAL(timeout()), this, SLOT(scaleImage()));
+
+	connect(&m_scaleWatcher, &QFutureWatcher<QImage>::finished, this, [this] { setScaledImage(m_scaleWatcher.future().result()); });
 }
 
 Displayer::~Displayer() {
@@ -94,14 +98,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 	}
 
 	m_scaleTimer.stop();
-	if(m_scaleThread.isRunning()) {
-		sendScaleRequest({ScaleRequest::Abort});
-		sendScaleRequest({ScaleRequest::Quit});
-		while(m_scaleThread.isRunning()) {
-			QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
-		}
-		m_scaleRequests.clear();
-	}
+	m_scaleWatcher.waitForFinished();
 	if(m_tool) {
 		m_tool->reset();
 	}
@@ -213,17 +210,14 @@ bool Displayer::renderImage() {
 		return false;
 	}
 
+	m_scaleTimer.stop();
+	m_scaleWatcher.waitForFinished();
+
 	int oldResolution = m_currentSource ? m_currentSource->resolution : -1;
 	int oldPage = m_currentSource ? m_currentSource->page : -1;
 	Source* oldSource = m_currentSource;
 
 	if(source != m_currentSource) {
-		sendScaleRequest({ScaleRequest::Abort});
-		sendScaleRequest({ScaleRequest::Quit});
-		while(m_scaleThread.isRunning()) {
-			QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
-		}
-		m_scaleRequests.clear();
 		delete m_renderer;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
 			m_renderer = new PDFRenderer(source->path, source->password);
@@ -243,7 +237,6 @@ bool Displayer::renderImage() {
 		ui.checkBoxInvertColors->setChecked(source->invert);
 		ui.checkBoxInvertColors->blockSignals(false);
 		m_currentSource = source;
-		m_scaleThread.start();
 	}
 
 	// Update source struct
@@ -267,7 +260,6 @@ bool Displayer::renderImage() {
 	Utils::setSpinBlocked(ui.spinBoxRotation, m_currentSource->angle[m_currentSource->page - 1]);
 
 	// Render new image
-	sendScaleRequest({ScaleRequest::Abort});
 	QImage image = m_renderer->render(m_currentSource->page, m_currentSource->resolution);
 	if(image.isNull()) {
 		return false;
@@ -282,7 +274,6 @@ bool Displayer::renderImage() {
 	centerOn(sceneRect().center());
 	setAngle(ui.spinBoxRotation->value());
 	if(m_scale < 1.0) {
-		m_pendingScaleRequest = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
 		m_scaleTimer.start(100);
 	}
 	return true;
@@ -329,7 +320,8 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor) {
 	if(!m_imageItem) {
 		return;
 	}
-	sendScaleRequest({ScaleRequest::Abort});
+	m_scaleTimer.stop();
+	m_scaleWatcher.waitForFinished();
 	setUpdatesEnabled(false);
 
 	QRectF bb = m_imageItem->sceneBoundingRect();
@@ -358,7 +350,6 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor) {
 	t.scale(m_scale, m_scale);
 	setTransform(t);
 	if(m_scale < 1.0) {
-		m_pendingScaleRequest = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
 		m_scaleTimer.start(100);
 	} else {
 		m_imageItem->setPixmap(m_pixmap);
@@ -511,68 +502,29 @@ QRectF Displayer::getSceneBoundingRect() const {
 	return transform.mapRect(rect);
 }
 
-void Displayer::scaleTimerElapsed() {
-	sendScaleRequest(m_pendingScaleRequest);
-}
-
-void Displayer::sendScaleRequest(const ScaleRequest& request) {
-	m_scaleTimer.stop();
-	m_scaleMutex.lock();
-	m_scaleRequests.append(request);
-	m_scaleCond.wakeOne();
-	m_scaleMutex.unlock();
-}
-
-void Displayer::scaleThread() {
-	m_scaleMutex.lock();
-	while(true) {
-		while(m_scaleRequests.isEmpty()) {
-			m_scaleCond.wait(&m_scaleMutex);
+void Displayer::scaleImage() {
+	int page = m_currentSource->page;
+	double resolution = m_scale * m_currentSource->resolution;
+	int brightness = m_currentSource->brightness;
+	int contrast = m_currentSource->contrast;
+	bool invert = m_currentSource->invert;
+	QFuture<QImage> future = QtConcurrent::run([ = ] {
+		QImage image = m_renderer->render(page, resolution);
+		if(!image.isNull()) {
+			m_renderer->adjustImage(image, brightness, contrast, invert);
 		}
-		ScaleRequest req = m_scaleRequests.takeFirst();
-		if(req.type == ScaleRequest::Quit) {
-			break;
-		} else if(req.type == ScaleRequest::Scale) {
-			m_scaleMutex.unlock();
-			QImage image = m_renderer->render(req.page, req.scale * req.resolution);
-			if(image.isNull()) {
-				continue;
-			}
-
-			m_scaleMutex.lock();
-			if(!m_scaleRequests.isEmpty() && m_scaleRequests.first().type == ScaleRequest::Abort) {
-				m_scaleRequests.removeFirst();
-				continue;
-			}
-			m_scaleMutex.unlock();
-
-			m_renderer->adjustImage(image, req.brightness, req.contrast, req.invert);
-
-			m_scaleMutex.lock();
-			if(!m_scaleRequests.isEmpty() && m_scaleRequests.first().type == ScaleRequest::Abort) {
-				m_scaleRequests.removeFirst();
-				continue;
-			}
-			m_scaleMutex.unlock();
-
-			QMetaObject::invokeMethod(this, "setScaledImage", Qt::BlockingQueuedConnection, Q_ARG(QImage, image), Q_ARG(double, m_scale));
-			m_scaleMutex.lock();
-		}
-	}
-	m_scaleMutex.unlock();
+		return image;
+	});
+	m_scaleWatcher.setFuture(future);
 }
 
-void Displayer::setScaledImage(const QImage& image, double scale) {
-	m_scaleMutex.lock();
-	if(!m_scaleRequests.isEmpty() && m_scaleRequests.first().type == ScaleRequest::Abort) {
-		m_scaleRequests.removeFirst();
-	} else {
+void Displayer::setScaledImage(QImage image) {
+	if(!image.isNull()) {
 		m_imageItem->setPixmap(QPixmap::fromImage(image));
-		m_imageItem->setScale(1.0 / scale);
+		m_imageItem->setScale(1.0 / m_scale);
 		m_imageItem->setTransformOriginPoint(m_imageItem->boundingRect().center());
 		m_imageItem->setPos(m_imageItem->pos() - m_imageItem->sceneBoundingRect().center());
 	}
-	m_scaleMutex.unlock();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
