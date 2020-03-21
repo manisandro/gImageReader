@@ -20,12 +20,12 @@
 #ifndef MAINWINDOW_HH
 #define MAINWINDOW_HH
 
+#include <QFutureWatcher>
 #include <QList>
 #include <QMainWindow>
 #include <QMutexLocker>
 #include <QStack>
 #include <QStringList>
-#include <QThread>
 #include <QTimer>
 
 #include "common.hh"
@@ -149,23 +149,13 @@ private:
 	QTimer m_progressTimer;
 	ProgressMonitor* m_progressMonitor = nullptr;
 
-
-	class VersionCheckThread : public QThread {
-	public:
-		const QString& getNewestVersion() const {
-			return m_newestVersion;
-		}
-	private:
-		QString m_newestVersion;
-		void run();
-	};
-	VersionCheckThread m_versionCheckThread;
+	QFutureWatcher<QString> m_versionWatcher;
 
 	void closeEvent(QCloseEvent* ev);
 	void setState(State state);
 
 private slots:
-	void checkVersion();
+	void checkVersion(const QString& newver);
 	void onSourceChanged();
 	void showAbout();
 	void showConfig();

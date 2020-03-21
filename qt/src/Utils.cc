@@ -30,6 +30,7 @@
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 #include <QSslConfiguration>
+#include <QThread>
 #include <QTimer>
 #include <QUrl>
 

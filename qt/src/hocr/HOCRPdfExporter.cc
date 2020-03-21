@@ -30,6 +30,7 @@
 #include <QPainter>
 #include <QPrinter>
 #include <QStandardItemModel>
+#include <QThread>
 #include <QToolTip>
 #include <QUrl>
 #include <podofo/base/PdfDictionary.h>

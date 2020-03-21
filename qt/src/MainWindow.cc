@@ -28,6 +28,7 @@
 #include <QProgressBar>
 #include <QStatusBar>
 #include <QUrl>
+#include <QtConcurrent/QtConcurrentRun>
 #include <csignal>
 #include <iostream>
 #ifdef Q_OS_LINUX
@@ -201,8 +202,15 @@ MainWindow::MainWindow(const QStringList& files)
 
 #if ENABLE_VERSIONCHECK
 	if(ConfigSettings::get<SwitchSetting>("updatecheck")->getValue()) {
-		connect(&m_versionCheckThread, &QThread::finished, this, &MainWindow::checkVersion);
-		m_versionCheckThread.start();
+		QFuture<QString> future = QtConcurrent::run([ = ] {
+			QString messages;
+			QString newver = Utils::download(QUrl(CHECKURL), messages, 5000);
+			newver.replace(QRegExp("\\s+"), "");
+			QRegExp pat(R"(^[\d+\.]+\d+$)");
+			return pat.exactMatch(newver) ? newver : QString();
+		});
+		connect(&m_versionWatcher, &QFutureWatcher<QString>::finished, this, [ = ] { checkVersion(m_versionWatcher.future().result()); });
+		m_versionWatcher.setFuture(future);
 	}
 #endif
 
@@ -210,11 +218,7 @@ MainWindow::MainWindow(const QStringList& files)
 }
 
 MainWindow::~MainWindow() {
-#if ENABLE_VERSIONCHECK
-	while(m_versionCheckThread.isRunning()) {
-		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
-	}
-#endif
+	m_versionWatcher.waitForFinished();
 	delete m_acquirer;
 	delete m_outputEditor;
 	delete m_sourceManager;
@@ -403,18 +407,7 @@ void MainWindow::hideNotification(Notification handle) {
 	}
 }
 
-void MainWindow::VersionCheckThread::run() {
-	QString messages;
-	QString newver = Utils::download(QUrl(CHECKURL), messages, 5000);
-	newver.replace(QRegExp("\\s+"), "");
-	QRegExp pat(R"(^[\d+\.]+\d+$)");
-	if(pat.exactMatch(newver)) {
-		m_newestVersion = newver;
-	}
-}
-
-void MainWindow::checkVersion() {
-	QString newver = m_versionCheckThread.getNewestVersion();
+void MainWindow::checkVersion(const QString& newver) {
 	qDebug("Newest version is: %s", qPrintable(newver));
 	if(newver.isEmpty()) {
 		return;
