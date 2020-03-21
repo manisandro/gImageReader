@@ -66,6 +66,7 @@ signals:
 	void sourceChanged();
 
 private:
+	enum class PdfWithTextAction {Ask, Add, Skip};
 	const UI_MainWindow& ui;
 
 	QMenu* m_recentMenu;
@@ -75,7 +76,7 @@ private:
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;
 
-	bool checkPdfSource(Source* source, QStringList& filesWithText) const;
+	bool checkPdfSource(Source* source, PdfWithTextAction& textAction, QStringList& failed) const;
 	void savePixmap(const QPixmap& pixmap, const QString& displayname);
 	void selectionChanged();
 	bool eventFilter(QObject* object, QEvent* event) override;

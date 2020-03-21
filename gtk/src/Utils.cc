@@ -63,8 +63,14 @@ Utils::Button::Type Utils::question_dialog(const Glib::ustring& title, const Gli
 	if((buttons & Button::Yes) != 0) {
 		dialog.add_button(_("Yes"), Button::Type::Yes);
 	}
+	if((buttons & Button::YesAll) != 0) {
+		dialog.add_button(_("Yes to all"), Button::Type::YesAll);
+	}
 	if((buttons & Button::No) != 0) {
 		dialog.add_button(_("No"), Button::Type::No);
+	}
+	if((buttons & Button::NoAll) != 0) {
+		dialog.add_button(_("No to all"), Button::Type::NoAll);
 	}
 	if((buttons & Button::Cancel) != 0) {
 		dialog.add_button(_("Cancel"), Button::Type::Cancel);

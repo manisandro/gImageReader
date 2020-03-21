@@ -73,6 +73,7 @@ private:
 		}
 	} m_listViewCols;
 
+	enum class PdfWithTextAction {Ask, Add, Skip};
 	const Ui::MainWindow& ui;
 	ClassData m_classdata;
 	Glib::RefPtr<Gtk::Clipboard> m_clipboard;
@@ -85,7 +86,7 @@ private:
 	void fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event, Gtk::TreeIter it);
 	void openSources();
 	void pasteClipboard();
-	bool checkPdfSource(Source* source, std::vector<Glib::ustring>& filesWithText) const;
+	bool checkPdfSource(Source* source, PdfWithTextAction& textAction, std::vector<Glib::ustring>& failed) const;
 	void removeSource(bool deleteFile);
 	void savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const std::string& displayname);
 	void selectionChanged();

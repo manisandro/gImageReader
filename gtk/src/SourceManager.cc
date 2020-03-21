@@ -73,14 +73,15 @@ SourceManager::~SourceManager() {
 }
 
 int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files, bool suppressTextWarning) {
-	Glib::ustring failed;
+	std::vector<Glib::ustring> failed;
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewSources->get_model());
 	Gtk::TreeIter it = store->children().end();
 	int added = 0;
-	std::vector<Glib::ustring> filesWithText;
+	PdfWithTextAction textAction = suppressTextWarning ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
+
 	for(Glib::RefPtr<Gio::File> file : files) {
 		if(!file->query_exists()) {
-			failed += "\n " + file->get_path();
+			failed.push_back(file->get_path());
 			continue;
 		}
 		bool contains = false;
@@ -98,9 +99,9 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files,
 		Source* source = new Source(file, file->get_basename(), file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false);
 		std::string filename = file->get_path();
 #ifdef G_OS_WIN32
-		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf" && !checkPdfSource(source, filesWithText)) {
+		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf" && !checkPdfSource(source, textAction, failed)) {
 #else
-		if(Utils::get_content_type(filename) == "application/pdf" && !checkPdfSource(source, filesWithText)) {
+		if(Utils::get_content_type(filename) == "application/pdf" && !checkPdfSource(source, textAction, failed)) {
 #endif
 			delete source;
 			continue;
@@ -114,9 +115,6 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files,
 		Gtk::RecentManager::get_default()->add_item(file->get_uri());
 		++added;
 	}
-	if(!suppressTextWarning && !filesWithText.empty()) {
-		Utils::message_dialog(Gtk::MESSAGE_INFO, _("PDFs with text"), Glib::ustring::compose(_("These PDF files already contain text:\n%1"), Utils::string_join(filesWithText, "\n")));
-	}
 	m_connectionSelectionChanged.block(true);
 	ui.treeviewSources->get_selection()->unselect_all();
 	m_connectionSelectionChanged.block(false);
@@ -124,12 +122,12 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files,
 		ui.treeviewSources->get_selection()->select(it);
 	}
 	if(!failed.empty()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Unable to open files"), Glib::ustring::compose(_("The following files could not be opened:%1"), failed));
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Unable to open files"), Glib::ustring::compose(_("The following files could not be opened:\n%1"), Utils::string_join(failed, "\n")));
 	}
 	return added;
 }
 
-bool SourceManager::checkPdfSource(Source* source, std::vector<Glib::ustring>& filesWithText) const {
+bool SourceManager::checkPdfSource(Source* source, PdfWithTextAction& textAction, std::vector<Glib::ustring>& failed) const {
 	GError* err = nullptr;
 	std::string filename = source->file->get_path();
 	PopplerDocument* document = poppler_document_new_from_file(Glib::filename_to_uri(filename).c_str(), 0, &err);
@@ -160,13 +158,28 @@ bool SourceManager::checkPdfSource(Source* source, std::vector<Glib::ustring>& f
 	}
 
 	// Check whether the PDF already contains text
-	for (int i = 0, n = poppler_document_get_n_pages(document); i < n; ++i) {
-		PopplerPage* poppage = poppler_document_get_page(document, i);
-		bool hasText = poppler_page_get_text(poppage) != nullptr;
-		g_object_unref(poppage);
-		if(hasText) {
-			filesWithText.push_back(filename);
-			break;
+	if(textAction != PdfWithTextAction::Add) {
+		bool haveText = false;
+		for (int i = 0, n = poppler_document_get_n_pages(document); i < n; ++i) {
+			PopplerPage* poppage = poppler_document_get_page(document, i);
+			bool hasText = poppler_page_get_text(poppage) != nullptr;
+			g_object_unref(poppage);
+			if(hasText) {
+				haveText = true;
+				break;
+			}
+		}
+		if(haveText && textAction == PdfWithTextAction::Skip) {
+			return false;
+		}
+		int response = Utils::question_dialog(_("PDF with text"), Glib::ustring::compose(_("The PDF file already contains text:\n%1\nOpen it regardless?"), filename), Utils::Button::Yes | Utils::Button::YesAll | Utils::Button::No | Utils::Button::NoAll);
+		if(response == Utils::Button::No) {
+			return false;
+		} else if(response == Utils::Button::NoAll) {
+			textAction = PdfWithTextAction::Skip;
+			return false;
+		} else if(response == Utils::Button::YesAll) {
+			textAction = PdfWithTextAction::Add;
 		}
 	}
 

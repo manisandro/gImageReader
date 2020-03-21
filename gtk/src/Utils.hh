@@ -48,7 +48,9 @@ struct Button {
 		No = 4,
 		Cancel = 8,
 		Save = 16,
-		Discard = 32
+		Discard = 32,
+		YesAll = 64,
+		NoAll = 128
 	};
 };
 Button::Type question_dialog(const Glib::ustring& title, const Glib::ustring& text, int buttons, Gtk::Window* parent = 0);

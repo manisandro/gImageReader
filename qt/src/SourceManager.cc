@@ -84,14 +84,15 @@ SourceManager::~SourceManager() {
 }
 
 int SourceManager::addSources(const QStringList& files, bool suppressTextWarning) {
-	QString failed;
+	QStringList failed;
 	QListWidgetItem* item = nullptr;
 	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList>>("recentitems")->getValue();
 	int added = 0;
-	QStringList filesWithText;
+	PdfWithTextAction textAction = suppressTextWarning ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
+
 	for(const QString& filename : files) {
 		if(!QFile(filename).exists()) {
-			failed += "\n " + filename;
+			failed.append(filename);
 			continue;
 		}
 		item = ui.listWidgetSources->currentItem();
@@ -108,9 +109,8 @@ int SourceManager::addSources(const QStringList& files, bool suppressTextWarning
 		}
 
 		Source* source = new Source(filename, QFileInfo(filename).fileName());
-		if(source->path.endsWith(".pdf", Qt::CaseInsensitive) && !checkPdfSource(source, filesWithText)) {
+		if(source->path.endsWith(".pdf", Qt::CaseInsensitive) && !checkPdfSource(source, textAction, failed)) {
 			delete source;
-			failed += "\n " + filename;
 			continue;
 		}
 
@@ -122,23 +122,21 @@ int SourceManager::addSources(const QStringList& files, bool suppressTextWarning
 		recentItems.prepend(filename);
 		++added;
 	}
-	if(!suppressTextWarning && !filesWithText.empty()) {
-		QMessageBox::information(MAIN->getInstance(), _("PDFs with text"), _("These PDF files already contain text:\n%1").arg(filesWithText.join('\n')));
-	}
 	ConfigSettings::get<VarSetting<QStringList>>("recentitems")->setValue(recentItems.mid(0, sMaxNumRecent));
 	ui.listWidgetSources->blockSignals(true);
 	ui.listWidgetSources->clearSelection();
 	ui.listWidgetSources->blockSignals(false);
 	ui.listWidgetSources->setCurrentItem(item);
 	if(!failed.isEmpty()) {
-		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:%1").arg(failed));
+		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:\n%1").arg(failed.join("\n")));
 	}
 	return added;
 }
 
-bool SourceManager::checkPdfSource(Source* source, QStringList& filesWithText) const {
+bool SourceManager::checkPdfSource(Source* source, PdfWithTextAction& textAction, QStringList& failed) const {
 	std::unique_ptr<Poppler::Document> document(Poppler::Document::load(source->path));
 	if(!document) {
+		failed.append(source->path);
 		return false;
 	}
 
@@ -150,6 +148,7 @@ bool SourceManager::checkPdfSource(Source* source, QStringList& filesWithText) c
 		while(true) {
 			text = QInputDialog::getText(MAIN, _("Protected PDF"), message, QLineEdit::Password, text, &ok);
 			if(!ok) {
+				failed.append(source->path);
 				return false;
 			}
 			if(!document->unlock(text.toLocal8Bit(), text.toLocal8Bit())) {
@@ -160,10 +159,25 @@ bool SourceManager::checkPdfSource(Source* source, QStringList& filesWithText) c
 	}
 
 	// Check whether the PDF already contains text
-	for (int i = 0, n = document->numPages(); i < n; ++i) {
-		if(!document->page(i)->text(QRectF()).isEmpty()) {
-			filesWithText.append(source->path);
-			break;
+	if(textAction != PdfWithTextAction::Add) {
+		bool haveText = false;
+		for (int i = 0, n = document->numPages(); i < n; ++i) {
+			if(!document->page(i)->text(QRectF()).isEmpty()) {
+				haveText = true;
+				break;
+			}
+		}
+		if(haveText && textAction == PdfWithTextAction::Skip) {
+			return false;
+		}
+		int response = QMessageBox::question(MAIN->getInstance(), _("PDF with text"), _("The PDF file already contains text:\n%1\nOpen it regardless?").arg(source->path), QMessageBox::Yes | QMessageBox::YesAll | QMessageBox::No | QMessageBox::NoAll);
+		if(response == QMessageBox::No) {
+			return false;
+		} else if(response == QMessageBox::NoAll) {
+			textAction = PdfWithTextAction::Skip;
+			return false;
+		} else if(response == QMessageBox::YesAll) {
+			textAction = PdfWithTextAction::Add;
 		}
 	}
 
