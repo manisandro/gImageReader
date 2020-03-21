@@ -1,6 +1,6 @@
 #!/bin/sh
 
-arch=${1:-i686}
+arch=${1:-x86_64}
 
 if [ "$arch" == "i686" ]; then
     bits=32
