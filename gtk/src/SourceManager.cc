@@ -151,10 +151,17 @@ bool SourceManager::checkPdfSource(Source* source, PdfWithTextAction& textAction
 			if(!err) {
 				source->password = pass;
 				break;
+			} else if(!g_error_matches (err, POPPLER_ERROR, POPPLER_ERROR_ENCRYPTED)) {
+				break;
 			}
 			g_error_free(err);
 			err = nullptr;
 		}
+	}
+	if(err) {
+		g_error_free(err);
+		err = nullptr;
+		failed.push_back(filename);
 	}
 
 	// Check whether the PDF already contains text
