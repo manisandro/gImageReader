@@ -30,7 +30,7 @@
 #include <QTextStream>
 #include <QUrl>
 
-bool HOCRTextExporter::run(const HOCRDocument* hocrdocument, QString& filebasename) {
+bool HOCRTextExporter::run(const HOCRDocument* hocrdocument, const QString& filebasename) {
 	QString suggestion = filebasename;
 	if(suggestion.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
@@ -41,7 +41,6 @@ bool HOCRTextExporter::run(const HOCRDocument* hocrdocument, QString& filebasena
 	if(outname.isEmpty()) {
 		return false;
 	}
-	filebasename = QFileInfo(outname).completeBaseName();
 
 	QFile outputFile(outname);
 	if(!outputFile.open(QIODevice::WriteOnly)) {

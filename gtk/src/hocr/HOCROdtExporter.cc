@@ -58,7 +58,7 @@ static zip_source* zip_source_buffer_from_data(zip* fzip, const char_t* data, st
 	return zip_source_buffer(fzip, copy, len, 1);
 }
 
-bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string& filebasename) {
+bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, const std::string& filebasename) {
 	Glib::ustring suggestion = filebasename;
 	if(suggestion.empty()) {
 		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
@@ -70,7 +70,6 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::s
 	if(outname.empty()) {
 		return false;
 	}
-	filebasename = Utils::split_filename(outname).first;
 
 	zip* fzip = zip_open(outname.c_str(), ZIP_CREATE | ZIP_TRUNCATE, nullptr);
 	if(!fzip) {

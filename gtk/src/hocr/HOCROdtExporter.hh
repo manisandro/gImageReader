@@ -36,7 +36,7 @@ struct zip;
 class HOCROdtExporter {
 public:
 	HOCROdtExporter(DisplayerToolHOCR* displayerTool) : m_displayerTool(displayerTool) {}
-	bool run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string& filebasename);
+	bool run(const Glib::RefPtr<HOCRDocument>& hocrdocument, const std::string& filebasename);
 
 private:
 	DisplayerToolHOCR* m_displayerTool;

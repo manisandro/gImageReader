@@ -38,7 +38,7 @@ class HOCROdtExporter : public QObject {
 	Q_OBJECT
 public:
 	HOCROdtExporter(DisplayerToolHOCR* displayerTool) : m_displayerTool(displayerTool) {}
-	bool run(const HOCRDocument* hocrdocument, QString& filebasename);
+	bool run(const HOCRDocument* hocrdocument, const QString& filebasename);
 
 private:
 	DisplayerToolHOCR* m_displayerTool;

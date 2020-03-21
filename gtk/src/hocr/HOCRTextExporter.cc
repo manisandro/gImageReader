@@ -27,7 +27,7 @@
 
 #include <fstream>
 
-bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string& filebasename) {
+bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, const std::string& filebasename) {
 	std::string suggestion = filebasename;
 	if(suggestion.empty()) {
 		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
@@ -39,7 +39,6 @@ bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::
 	if(outname.empty()) {
 		return false;
 	}
-	filebasename = Utils::split_filename(outname).first;
 
 	std::ofstream file(outname);
 	if(!file.is_open()) {

@@ -29,7 +29,7 @@ class QTextStream;
 
 class HOCRTextExporter {
 public:
-	bool run(const Glib::RefPtr<HOCRDocument>& hocrdocument, std::string& filebasename);
+	bool run(const Glib::RefPtr<HOCRDocument>& hocrdocument, const std::string& filebasename);
 
 private:
 	void printItem(std::ofstream& outputStream, const HOCRItem* item, bool lastChild = false);

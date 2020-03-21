@@ -39,7 +39,7 @@ class HOCRPdfExporter: public QDialog {
 	Q_OBJECT
 public:
 	HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPage* previewPage, DisplayerToolHOCR* displayerTool, QWidget* parent = 0);
-	bool run(QString& filebasename);
+	bool run(const QString& filebasename);
 
 private:
 	enum PDFBackend { BackendPoDoFo, BackendQPrinter};

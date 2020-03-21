@@ -455,7 +455,7 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 #endif
 }
 
-bool HOCRPdfExporter::run(QString& filebasename) {
+bool HOCRPdfExporter::run(const QString& filebasename) {
 	m_preview = new QGraphicsPixmapItem();
 	m_preview->setTransformationMode(Qt::SmoothTransformation);
 	m_preview->setZValue(2);
@@ -494,7 +494,6 @@ bool HOCRPdfExporter::run(QString& filebasename) {
 		if(!accepted) {
 			break;
 		}
-		filebasename = QFileInfo(outname).completeBaseName();
 
 		QFont defaultFont = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont() : ui.comboBoxFallbackFontFamily->currentFont();
 		defaultFont.setPointSize(ui.checkBoxFontSize->isChecked() ? ui.spinBoxFontSize->value() : 0);

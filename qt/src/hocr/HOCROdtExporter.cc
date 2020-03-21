@@ -44,7 +44,7 @@ static QString drawNS ("urn:oasis:names:tc:opendocument:xmlns:drawing:1.0");
 static QString xlinkNS ("http://www.w3.org/1999/xlink");
 static QString svgNS ("urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0");
 
-bool HOCROdtExporter::run(const HOCRDocument* hocrdocument, QString& filebasename) {
+bool HOCROdtExporter::run(const HOCRDocument* hocrdocument, const QString& filebasename) {
 	QString suggestion = filebasename;
 	if(suggestion.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
@@ -55,7 +55,6 @@ bool HOCROdtExporter::run(const HOCRDocument* hocrdocument, QString& filebasenam
 	if(outname.isEmpty()) {
 		return false;
 	}
-	filebasename = QFileInfo(outname).completeBaseName();
 
 	QuaZip zip(outname);
 	if(!zip.open( QuaZip::mdCreate )) {

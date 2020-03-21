@@ -38,7 +38,7 @@ class HOCRItem;
 class HOCRPdfExporter {
 public:
 	HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument, const HOCRPage* previewPage, DisplayerToolHOCR* displayerTool);
-	bool run(std::string& filebasename);
+	bool run(const std::string& filebasename);
 
 private:
 	struct PDFSettings {

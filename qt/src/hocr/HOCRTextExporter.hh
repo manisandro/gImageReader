@@ -31,7 +31,7 @@ class QTextStream;
 
 class HOCRTextExporter {
 public:
-	bool run(const HOCRDocument* hocrdocument, QString& filebasename);
+	bool run(const HOCRDocument* hocrdocument, const QString& filebasename);
 
 private:
 	void printItem(QTextStream& outputStream, const HOCRItem* item, bool lastChild = false);

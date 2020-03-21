@@ -465,7 +465,7 @@ HOCRPdfExporter::HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument,
 #endif
 }
 
-bool HOCRPdfExporter::run(std::string& filebasename) {
+bool HOCRPdfExporter::run(const std::string& filebasename) {
 	m_preview = new DisplayerImageItem();
 	m_preview->setZIndex(2);
 	updatePreview();
@@ -505,7 +505,6 @@ bool HOCRPdfExporter::run(std::string& filebasename) {
 		if(!accepted) {
 			break;
 		}
-		filebasename = Utils::split_filename(outname).first;
 
 		Glib::ustring defaultFont = ui.checkboxOverridefontfamily->get_active() ? m_comboOverrideFont->get_active_font() : m_comboFallbackFont->get_active_font();
 		double defaultFontSize = ui.checkboxOverridefontsize->get_active() ? ui.spinOverridefontsize->get_value() : 0;
