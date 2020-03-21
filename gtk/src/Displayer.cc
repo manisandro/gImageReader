@@ -347,7 +347,7 @@ bool Displayer::renderImage() {
 	setAngle(ui.spinRotate->get_value());
 	if(m_scale < 1.0) {
 		ScaleRequest request = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
-		m_scaleTimer = Glib::signal_timeout().connect([this, request] { sendScaleRequest(request); return false; }, 100);
+		m_scaleTimer = Glib::signal_timeout().connect([this, request] { if(!m_autoScaleBlocked) { sendScaleRequest(request); } return false; }, 100);
 	}
 	return true;
 }
@@ -384,7 +384,7 @@ void Displayer::setZoom(Zoom zoom) {
 	ui.buttonZoomnorm->set_active(m_scale == 1.);
 	if(m_scale < 1.0) {
 		ScaleRequest request = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
-		m_scaleTimer = Glib::signal_timeout().connect([this, request] { sendScaleRequest(request); return false; }, 100);
+		m_scaleTimer = Glib::signal_timeout().connect([this, request] { if(!m_autoScaleBlocked) { sendScaleRequest(request); } return false; }, 100);
 	} else {
 		m_imageItem->setImage(m_image);
 	}

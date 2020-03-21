@@ -73,6 +73,7 @@ public:
 	void removeItem(DisplayerItem* item);
 	void invalidateRect(const Geometry::Rectangle& rect);
 	void resortItems();
+	void setBlockAutoscale(bool block) { m_autoScaleBlocked = block; }
 
 
 private:
@@ -143,6 +144,7 @@ private:
 	Glib::Threads::Cond m_scaleCond;
 	std::queue<ScaleRequest> m_scaleRequests;
 	sigc::connection m_scaleTimer;
+	bool m_autoScaleBlocked = false;
 
 	void sendScaleRequest(const ScaleRequest& request);
 	void scaleThread();

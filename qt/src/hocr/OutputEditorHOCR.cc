@@ -864,7 +864,10 @@ bool OutputEditorHOCR::save(const QString& filename) {
 
 bool OutputEditorHOCR::exportToODT() {
 	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
-	return HOCROdtExporter(m_tool).run(m_document, m_filebasename);
+	MAIN->getDisplayer()->setBlockAutoscale(true);
+	bool success = HOCROdtExporter(m_tool).run(m_document, m_filebasename);
+	MAIN->getDisplayer()->setBlockAutoscale(false);
+	return success;
 }
 
 bool OutputEditorHOCR::exportToPDF() {
@@ -873,10 +876,13 @@ bool OutputEditorHOCR::exportToPDF() {
 	QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
 	const HOCRItem* item = m_document->itemAtIndex(current);
 	const HOCRPage* page = item ? item->page() : m_document->page(0);
+	bool success = false;
 	if(showPage(page)) {
-		return HOCRPdfExporter(m_document, page, m_tool).run(m_filebasename);
+		MAIN->getDisplayer()->setBlockAutoscale(true);
+		success = HOCRPdfExporter(m_document, page, m_tool).run(m_filebasename);
+		MAIN->getDisplayer()->setBlockAutoscale(false);
 	}
-	return false;
+	return success;
 }
 
 bool OutputEditorHOCR::exportToText() {

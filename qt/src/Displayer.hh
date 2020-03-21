@@ -63,6 +63,7 @@ public:
 	void unsetCursor() {
 		viewport()->unsetCursor();
 	}
+	void setBlockAutoscale(bool block) { m_scaleTimer.blockSignals(block); }
 
 public slots:
 	void autodetectOCRAreas();

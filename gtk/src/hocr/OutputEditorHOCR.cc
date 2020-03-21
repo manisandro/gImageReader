@@ -1002,7 +1002,10 @@ bool OutputEditorHOCR::exportToODT() {
 	if(m_document->pageCount() == 0) {
 		return false;
 	}
-	return HOCROdtExporter(m_tool).run(m_document, m_filebasename);
+	MAIN->getDisplayer()->setBlockAutoscale(true);
+	bool success = HOCROdtExporter(m_tool).run(m_document, m_filebasename);
+	MAIN->getDisplayer()->setBlockAutoscale(false);
+	return success;
 }
 
 bool OutputEditorHOCR::exportToPDF() {
@@ -1012,10 +1015,13 @@ bool OutputEditorHOCR::exportToPDF() {
 	ui.buttonPreview->set_active(false); // Disable preview because if conflicts with preview from PDF dialog
 	const HOCRItem* item = m_document->itemAtIndex(m_treeView->currentIndex());
 	const HOCRPage* page = item ? item->page() : m_document->page(0);
+	bool success = false;
 	if(showPage(page)) {
-		return HOCRPdfExporter(m_document, page, m_tool).run(m_filebasename);
+		MAIN->getDisplayer()->setBlockAutoscale(true);
+		success = HOCRPdfExporter(m_document, page, m_tool).run(m_filebasename);
+		MAIN->getDisplayer()->setBlockAutoscale(false);
 	}
-	return false;
+	return success;
 }
 
 bool OutputEditorHOCR::exportToText() {
