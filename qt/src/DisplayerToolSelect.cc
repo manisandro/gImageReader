@@ -230,7 +230,7 @@ void NumberedDisplayerSelection::contextMenuEvent(QGraphicsSceneContextMenuEvent
 	orderSpin->setRange(1, static_cast<DisplayerToolSelect*>(m_tool)->m_selections.size());
 	orderSpin->setValue(m_number);
 	orderSpin->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	connect(orderSpin, SIGNAL(valueChanged(int)), this, SLOT(reorderSelection(int)));
+	connect(orderSpin, qOverload<int>(&QSpinBox::valueChanged), this, &NumberedDisplayerSelection::reorderSelection);
 	layout->addWidget(orderSpin);
 
 	QWidgetAction* spinAction = new QWidgetAction(&menu);

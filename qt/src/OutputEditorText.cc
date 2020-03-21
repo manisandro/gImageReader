@@ -52,22 +52,22 @@ OutputEditorText::OutputEditorText() {
 	m_spell.setTextEdit(ui.plainTextEditOutput);
 	m_spell.setUndoRedoEnabled(true);
 
-	connect(ui.menuOutputMode, SIGNAL(triggered(QAction*)), this, SLOT(setInsertMode(QAction*)));
-	connect(ui.toolButtonOutputPostproc, SIGNAL(clicked()), this, SLOT(filterBuffer()));
-	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(setVisible(bool)));
-	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(clear()));
-	connect(ui.actionOutputUndo, SIGNAL(triggered()), &m_spell, SLOT(undo()));
-	connect(ui.actionOutputRedo, SIGNAL(triggered()), &m_spell, SLOT(redo()));
-	connect(ui.actionOutputSave, SIGNAL(triggered()), this, SLOT(save()));
-	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
-	connect(ui.searchFrame, SIGNAL(findReplace(QString, QString, bool, bool, bool)), this, SLOT(findReplace(QString, QString, bool, bool, bool)));
-	connect(ui.searchFrame, SIGNAL(replaceAll(QString, QString, bool)), this, SLOT(replaceAll(QString, QString, bool)));
-	connect(ui.searchFrame, SIGNAL(applySubstitutions(QMap<QString, QString>, bool)), this, SLOT(applySubstitutions(QMap<QString, QString>, bool)));
-	connect(&m_spell, SIGNAL(undoAvailable(bool)), ui.actionOutputUndo, SLOT(setEnabled(bool)));
-	connect(&m_spell, SIGNAL(redoAvailable(bool)), ui.actionOutputRedo, SLOT(setEnabled(bool)));
-	connect(ConfigSettings::get<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
-	connect(ConfigSettings::get<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
-	connect(ui.actionOutputPostprocDrawWhitespace, SIGNAL(toggled(bool)), ui.plainTextEditOutput, SLOT(setDrawWhitespace(bool)));
+	connect(ui.menuOutputMode, &QMenu::triggered, this, &OutputEditorText::setInsertMode);
+	connect(ui.toolButtonOutputPostproc, &QToolButton::clicked, this, &OutputEditorText::filterBuffer);
+	connect(ui.actionOutputReplace, &QAction::toggled, ui.searchFrame, &SearchReplaceFrame::setVisible);
+	connect(ui.actionOutputReplace, &QAction::toggled, ui.searchFrame, &SearchReplaceFrame::clear);
+	connect(ui.actionOutputUndo, &QAction::triggered, &m_spell, &QtSpell::TextEditChecker::undo);
+	connect(ui.actionOutputRedo, &QAction::triggered, &m_spell, &QtSpell::TextEditChecker::redo);
+	connect(ui.actionOutputSave, &QAction::triggered, this, [this] { save(); });
+	connect(ui.actionOutputClear, &QAction::triggered, this, &OutputEditorText::clear);
+	connect(ui.searchFrame, &SearchReplaceFrame::findReplace, this, &OutputEditorText::findReplace);
+	connect(ui.searchFrame, &SearchReplaceFrame::replaceAll, this, &OutputEditorText::replaceAll);
+	connect(ui.searchFrame, &SearchReplaceFrame::applySubstitutions, this, &OutputEditorText::applySubstitutions);
+	connect(&m_spell, &QtSpell::TextEditChecker::undoAvailable, ui.actionOutputUndo, &QAction::setEnabled);
+	connect(&m_spell, &QtSpell::TextEditChecker::redoAvailable, ui.actionOutputRedo, &QAction::setEnabled);
+	connect(ConfigSettings::get<FontSetting>("customoutputfont"), &FontSetting::changed, this, &OutputEditorText::setFont);
+	connect(ConfigSettings::get<SwitchSetting>("systemoutputfont"), &SwitchSetting::changed, this, &OutputEditorText::setFont);
+	connect(ui.actionOutputPostprocDrawWhitespace, &QAction::toggled, ui.plainTextEditOutput, &OutputTextEdit::setDrawWhitespace);
 
 	ADD_SETTING(ActionSetting("keepdot", ui.actionOutputPostprocKeepEndMark, true));
 	ADD_SETTING(ActionSetting("keepquote", ui.actionOutputPostprocKeepQuote));

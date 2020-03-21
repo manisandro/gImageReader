@@ -92,12 +92,12 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 	ui.menuLanguages->installEventFilter(this);
 
-	connect(ui.toolButtonRecognize, SIGNAL(clicked()), this, SLOT(recognizeButtonClicked()));
-	connect(currentPageAction, SIGNAL(triggered()), this, SLOT(recognizeCurrentPage()));
-	connect(multiplePagesAction, SIGNAL(triggered()), this, SLOT(recognizeMultiplePages()));
-	connect(m_pagesDialogUi.lineEditPageRange, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditPageRangeStyle()));
-	connect(m_charListDialogUi.radioButtonBlacklist, SIGNAL(toggled(bool)), m_charListDialogUi.lineEditBlacklist, SLOT(setEnabled(bool)));
-	connect(m_charListDialogUi.radioButtonWhitelist, SIGNAL(toggled(bool)), m_charListDialogUi.lineEditWhitelist, SLOT(setEnabled(bool)));
+	connect(ui.toolButtonRecognize, &QToolButton::clicked, this, &Recognizer::recognizeButtonClicked);
+	connect(currentPageAction, &QAction::triggered, this, &Recognizer::recognizeCurrentPage);
+	connect(multiplePagesAction, &QAction::triggered, this, &Recognizer::recognizeMultiplePages);
+	connect(m_pagesDialogUi.lineEditPageRange, &QLineEdit::textChanged, this, &Recognizer::clearLineEditPageRangeStyle);
+	connect(m_charListDialogUi.radioButtonBlacklist, &QRadioButton::toggled, m_charListDialogUi.lineEditBlacklist, &QLineEdit::setEnabled);
+	connect(m_charListDialogUi.radioButtonWhitelist, &QRadioButton::toggled, m_charListDialogUi.lineEditWhitelist, &QLineEdit::setEnabled);
 
 	ADD_SETTING(VarSetting<QString>("language", "eng:en_EN"));
 	ADD_SETTING(ComboSetting("ocrregionstrategy", m_pagesDialogUi.comboBoxRecognitionArea, 0));
@@ -154,7 +154,7 @@ void Recognizer::updateLanguagesMenu() {
 	m_langMenuCheckGroup->setExclusive(false);
 	delete m_psmCheckGroup;
 	m_psmCheckGroup = new QActionGroup(this);
-	connect(m_psmCheckGroup, SIGNAL(triggered(QAction*)), this, SLOT(psmSelected(QAction*)));
+	connect(m_psmCheckGroup, &QActionGroup::triggered, this, &Recognizer::psmSelected);
 	m_menuMultilanguage = nullptr;
 	m_curLang = Config::Lang();
 	QAction* curitem = nullptr;
@@ -201,7 +201,7 @@ void Recognizer::updateLanguagesMenu() {
 				curitem = new QAction(QtSpell::Checker::decodeLanguageCode(dict), m_langMenuRadioGroup);
 				curitem->setCheckable(true);
 				curitem->setData(QVariant::fromValue(itemlang));
-				connect(curitem, SIGNAL(triggered()), this, SLOT(setLanguage()));
+				connect(curitem, &QAction::triggered, this, &Recognizer::setLanguage);
 				if(curlang.prefix == lang.prefix && (
 				            curlang.code == dict ||
 				            (!activeitem && (curlang.code == dict.left(2) || curlang.code.isEmpty())))) {
@@ -216,7 +216,7 @@ void Recognizer::updateLanguagesMenu() {
 			curitem = new QAction(lang.name, m_langMenuRadioGroup);
 			curitem->setCheckable(true);
 			curitem->setData(QVariant::fromValue(lang));
-			connect(curitem, SIGNAL(triggered()), this, SLOT(setLanguage()));
+			connect(curitem, &QAction::triggered, this, &Recognizer::setLanguage);
 			if(curlang.prefix == lang.prefix) {
 				curlang = lang;
 				activeitem = curitem;
@@ -246,7 +246,7 @@ void Recognizer::updateLanguagesMenu() {
 			item->setCheckable(true);
 			item->setData(QVariant::fromValue(lang.prefix));
 			item->setChecked(isMultilingual && sellangs.contains(lang.prefix));
-			connect(item, SIGNAL(triggered()), this, SLOT(setMultiLanguage()));
+			connect(item, &QAction::triggered, this, &Recognizer::setMultiLanguage);
 			m_menuMultilanguage->addAction(item);
 		}
 		m_menuMultilanguage->installEventFilter(this);
@@ -297,12 +297,12 @@ void Recognizer::updateLanguagesMenu() {
 	QAction* psmAction = new QAction(_("Page segmentation mode"), ui.menuLanguages);
 	psmAction->setMenu(psmMenu);
 	ui.menuLanguages->addAction(psmAction);
-	ui.menuLanguages->addAction(_("Character whitelist / blacklist..."), this, SLOT(manageCharacterLists()));
+	ui.menuLanguages->addAction(_("Character whitelist / blacklist..."), this, &Recognizer::manageCharacterLists);
 
 
 	// Add installer item
 	ui.menuLanguages->addSeparator();
-	ui.menuLanguages->addAction(_("Manage languages..."), MAIN, SLOT(manageLanguages()));
+	ui.menuLanguages->addAction(_("Manage languages..."), MAIN, &MainWindow::manageLanguages);
 }
 
 void Recognizer::setLanguage() {

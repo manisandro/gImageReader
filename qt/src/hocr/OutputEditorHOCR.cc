@@ -112,8 +112,8 @@ private:
 HOCRAttributeEditor::HOCRAttributeEditor(const QString& value, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass)
 	: QLineEdit(value), m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_origValue(value), m_attrItemClass(attrItemClass) {
 	setFrame(false);
-	connect(m_doc, SIGNAL(itemAttributeChanged(QModelIndex, QString, QString)), this, SLOT(updateValue(QModelIndex, QString, QString)));
-	connect(this, SIGNAL(textChanged(QString)), this, SLOT(validateChanges()));
+	connect(m_doc, &HOCRDocument::itemAttributeChanged, this, &HOCRAttributeEditor::updateValue);
+	connect(this, &HOCRAttributeEditor::textChanged, this, &HOCRAttributeEditor::validateChanges);
 }
 
 void HOCRAttributeEditor::focusOutEvent(QFocusEvent* ev) {
@@ -150,8 +150,8 @@ void HOCRAttributeEditor::validateChanges() {
 HOCRAttributeCheckbox::HOCRAttributeCheckbox(Qt::CheckState value, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass)
 	: m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_attrItemClass(attrItemClass) {
 	setCheckState(value);
-	connect(m_doc, SIGNAL(itemAttributeChanged(QModelIndex, QString, QString)), this, SLOT(updateValue(QModelIndex, QString, QString)));
-	connect(this, SIGNAL(stateChanged(int)), this, SLOT(valueChanged()));
+	connect(m_doc, &HOCRDocument::itemAttributeChanged, this, &HOCRAttributeCheckbox::updateValue);
+	connect(this, &HOCRAttributeCheckbox::stateChanged, this, &HOCRAttributeCheckbox::valueChanged);
 }
 
 void HOCRAttributeCheckbox::updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value) {
@@ -234,40 +234,40 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.comboBoxNavigate->addItem(_("Misspelled word"), "ocrx_word_bad");
 
 	QShortcut* shortcut = new QShortcut(QKeySequence(Qt::Key_Delete), m_widget);
-	QObject::connect(shortcut, SIGNAL(activated()), this, SLOT(removeItem()));
+	QObject::connect(shortcut, &QShortcut::activated, this, &OutputEditorHOCR::removeItem);
 
-	connect(ui.actionOutputOpen, SIGNAL(triggered()), this, SLOT(open()));
-	connect(ui.actionOutputSaveHOCR, SIGNAL(triggered()), this, SLOT(save()));
-	connect(ui.actionOutputExportODT, SIGNAL(triggered()), this, SLOT(exportToODT()));
-	connect(ui.actionOutputExportPDF, SIGNAL(triggered()), this, SLOT(exportToPDF()));
-	connect(ui.actionOutputExportText, SIGNAL(triggered()), this, SLOT(exportToText()));
-	connect(ui.actionOutputClear, SIGNAL(triggered()), this, SLOT(clear()));
-	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(setVisible(bool)));
-	connect(ui.actionOutputReplace, SIGNAL(toggled(bool)), ui.searchFrame, SLOT(clear()));
-	connect(ui.actionToggleWConf, SIGNAL(toggled(bool)), this, SLOT(toggleWConfColumn(bool)));
-	connect(ui.actionPreview, SIGNAL(toggled(bool)), this, SLOT(updatePreview()));
-	connect(&m_previewTimer, SIGNAL(timeout()), this, SLOT(updatePreview()));
-	connect(ui.searchFrame, SIGNAL(findReplace(QString, QString, bool, bool, bool)), this, SLOT(findReplace(QString, QString, bool, bool, bool)));
-	connect(ui.searchFrame, SIGNAL(replaceAll(QString, QString, bool)), this, SLOT(replaceAll(QString, QString, bool)));
-	connect(ui.searchFrame, SIGNAL(applySubstitutions(QMap<QString, QString>, bool)), this, SLOT(applySubstitutions(QMap<QString, QString>, bool)));
-	connect(ConfigSettings::get<FontSetting>("customoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
-	connect(ConfigSettings::get<SwitchSetting>("systemoutputfont"), SIGNAL(changed()), this, SLOT(setFont()));
-	connect(ui.treeViewHOCR->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), this, SLOT(showItemProperties(QModelIndex, QModelIndex)));
-	connect(ui.treeViewHOCR, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showTreeWidgetContextMenu(QPoint)));
-	connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(updateSourceText()));
-	connect(m_tool, SIGNAL(bboxChanged(QRect)), this, SLOT(updateCurrentItemBBox(QRect)));
-	connect(m_tool, SIGNAL(bboxDrawn(QRect, int)), this, SLOT(bboxDrawn(QRect, int)));
-	connect(m_tool, SIGNAL(positionPicked(QPoint)), this, SLOT(pickItem(QPoint)));
-	connect(m_document, SIGNAL(dataChanged(QModelIndex, QModelIndex, QVector<int>)), this, SLOT(setModified()));
-	connect(m_document, SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(setModified()));
-	connect(m_document, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(setModified()));
-	connect(m_document, SIGNAL(itemAttributeChanged(QModelIndex, QString, QString)), this, SLOT(setModified()));
-	connect(m_document, SIGNAL(itemAttributeChanged(QModelIndex, QString, QString)), this, SLOT(updateSourceText()));
-	connect(ui.comboBoxNavigate, SIGNAL(currentIndexChanged(int)), this, SLOT(navigateTargetChanged()));
-	connect(ui.actionNavigateNext, SIGNAL(triggered(bool)), this, SLOT(navigateNext()));
-	connect(ui.actionNavigatePrev, SIGNAL(triggered(bool)), this, SLOT(navigatePrev()));
-	connect(ui.actionExpandAll, SIGNAL(triggered(bool)), this, SLOT(expandItemClass()));
-	connect(ui.actionCollapseAll, SIGNAL(triggered(bool)), this, SLOT(collapseItemClass()));
+	connect(ui.actionOutputOpen, &QAction::triggered, this, &OutputEditorHOCR::open);
+	connect(ui.actionOutputSaveHOCR, &QAction::triggered, this, [this] { save(); });
+	connect(ui.actionOutputExportODT, &QAction::triggered, this, &OutputEditorHOCR::exportToODT);
+	connect(ui.actionOutputExportPDF, &QAction::triggered, this, &OutputEditorHOCR::exportToPDF);
+	connect(ui.actionOutputExportText, &QAction::triggered, this, &OutputEditorHOCR::exportToText);
+	connect(ui.actionOutputClear, &QAction::triggered, this, &OutputEditorHOCR::clear);
+	connect(ui.actionOutputReplace, &QAction::triggered, ui.searchFrame, &SearchReplaceFrame::setVisible);
+	connect(ui.actionOutputReplace, &QAction::triggered, ui.searchFrame, &SearchReplaceFrame::clear);
+	connect(ui.actionToggleWConf, &QAction::triggered, this, &OutputEditorHOCR::toggleWConfColumn);
+	connect(ui.actionPreview, &QAction::triggered, this, &OutputEditorHOCR::updatePreview);
+	connect(&m_previewTimer, &QTimer::timeout, this, &OutputEditorHOCR::updatePreview);
+	connect(ui.searchFrame, &SearchReplaceFrame::findReplace, this, &OutputEditorHOCR::findReplace);
+	connect(ui.searchFrame, &SearchReplaceFrame::replaceAll, this, &OutputEditorHOCR::replaceAll);
+	connect(ui.searchFrame, &SearchReplaceFrame::applySubstitutions, this, &OutputEditorHOCR::applySubstitutions);
+	connect(ConfigSettings::get<FontSetting>("customoutputfont"), &FontSetting::changed, this, &OutputEditorHOCR::setFont);
+	connect(ConfigSettings::get<SwitchSetting>("systemoutputfont"), &FontSetting::changed, this, &OutputEditorHOCR::setFont);
+	connect(ui.treeViewHOCR->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &OutputEditorHOCR::showItemProperties);
+	connect(ui.treeViewHOCR, &QTreeView::customContextMenuRequested, this, &OutputEditorHOCR::showTreeWidgetContextMenu);
+	connect(ui.tabWidget, &QTabWidget::currentChanged, this, &OutputEditorHOCR::updateSourceText);
+	connect(m_tool, &DisplayerToolHOCR::bboxChanged, this, &OutputEditorHOCR::updateCurrentItemBBox);
+	connect(m_tool, &DisplayerToolHOCR::bboxDrawn, this, &OutputEditorHOCR::bboxDrawn);
+	connect(m_tool, &DisplayerToolHOCR::positionPicked, this, &OutputEditorHOCR::pickItem);
+	connect(m_document, &HOCRDocument::dataChanged, this, &OutputEditorHOCR::setModified);
+	connect(m_document, &HOCRDocument::rowsInserted, this, &OutputEditorHOCR::setModified);
+	connect(m_document, &HOCRDocument::rowsRemoved, this, &OutputEditorHOCR::setModified);
+	connect(m_document, &HOCRDocument::itemAttributeChanged, this, &OutputEditorHOCR::setModified);
+	connect(m_document, &HOCRDocument::itemAttributeChanged, this, &OutputEditorHOCR::updateSourceText);
+	connect(ui.comboBoxNavigate, qOverload<int>(&QComboBox::currentIndexChanged), this, &OutputEditorHOCR::navigateTargetChanged);
+	connect(ui.actionNavigateNext, &QAction::triggered, this, &OutputEditorHOCR::navigateNext);
+	connect(ui.actionNavigatePrev, &QAction::triggered, this, &OutputEditorHOCR::navigatePrev);
+	connect(ui.actionExpandAll, &QAction::triggered, this, &OutputEditorHOCR::expandItemClass);
+	connect(ui.actionCollapseAll, &QAction::triggered, this, &OutputEditorHOCR::collapseItemClass);
 
 	setFont();
 }

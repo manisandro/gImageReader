@@ -153,18 +153,18 @@ MainWindow::MainWindow(const QStringList& files)
 	m_idleWidgets.append(ui.spinBoxResolution);
 	m_idleWidgets.append(ui.toolButtonRecognize);
 
-	connect(ui.actionRedetectLanguages, SIGNAL(triggered()), m_recognizer, SLOT(updateLanguagesMenu()));
-	connect(ui.actionManageLanguages, SIGNAL(triggered()), this, SLOT(manageLanguages()));
-	connect(ui.actionPreferences, SIGNAL(triggered()), this, SLOT(showConfig()));
-	connect(ui.actionHelp, SIGNAL(triggered()), this, SLOT(showHelp()));
-	connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
-	connect(ui.actionImageControls, SIGNAL(toggled(bool)), ui.widgetImageControls, SLOT(setVisible(bool)));
-	connect(m_acquirer, SIGNAL(scanPageAvailable(QString)), m_sourceManager, SLOT(addSource(QString)));
-	connect(m_sourceManager, SIGNAL(sourceChanged()), this, SLOT(onSourceChanged()));
-	connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), ui.dockWidgetOutput, SLOT(setVisible(bool)));
-	connect(ui.comboBoxOCRMode, SIGNAL(currentIndexChanged(int)), this, SLOT(setOCRMode(int)));
-	connect(m_recognizer, SIGNAL(languageChanged(Config::Lang)), this, SLOT(languageChanged(Config::Lang)));
-	connect(ui.actionAutodetectLayout, SIGNAL(triggered()), m_displayer, SLOT(autodetectOCRAreas()));
+	connect(ui.actionRedetectLanguages, &QAction::triggered, m_recognizer, &Recognizer::updateLanguagesMenu);
+	connect(ui.actionManageLanguages, &QAction::triggered, this, &MainWindow::manageLanguages);
+	connect(ui.actionPreferences, &QAction::triggered, this, &MainWindow::showConfig);
+	connect(ui.actionHelp, &QAction::triggered, this, [this] { showHelp(); });
+	connect(ui.actionAbout, &QAction::triggered, this, &MainWindow::showAbout);
+	connect(ui.actionImageControls, &QAction::toggled, ui.widgetImageControls, &QWidget::setVisible);
+	connect(m_acquirer, &Acquirer::scanPageAvailable, m_sourceManager, [this](const QString & source) { m_sourceManager->addSource(source); });
+	connect(m_sourceManager, &SourceManager::sourceChanged, this, &MainWindow::onSourceChanged);
+	connect(ui.actionToggleOutputPane, &QAction::toggled, ui.dockWidgetOutput, &QDockWidget::setVisible);
+	connect(ui.comboBoxOCRMode, qOverload<int>(&QComboBox::currentIndexChanged), this, &MainWindow::setOCRMode);
+	connect(m_recognizer, &Recognizer::languageChanged, this, &MainWindow::languageChanged);
+	connect(ui.actionAutodetectLayout, &QAction::triggered, m_displayer, &Displayer::autodetectOCRAreas);
 
 	ADD_SETTING(VarSetting<QByteArray>("wingeom"));
 	ADD_SETTING(VarSetting<QByteArray>("winstate"));
@@ -182,11 +182,11 @@ MainWindow::MainWindow(const QStringList& files)
 	m_progressBar->setRange(0, 100);
 	m_progressBar->setMaximumWidth(100);
 	m_progressTimer.setSingleShot(false);
-	connect(&m_progressTimer, SIGNAL(timeout()), this, SLOT(progressUpdate()));
+	connect(&m_progressTimer, &QTimer::timeout, this, &MainWindow::progressUpdate);
 	m_progressWidget->layout()->addWidget(m_progressBar);
 	m_progressCancelButton = new QToolButton();
 	m_progressCancelButton->setIcon(QIcon::fromTheme("dialog-close"));
-	connect(m_progressCancelButton, SIGNAL(clicked(bool)), this, SLOT(progressCancel()));
+	connect(m_progressCancelButton, &QToolButton::clicked, this, &MainWindow::progressCancel);
 	m_progressWidget->layout()->addWidget(m_progressCancelButton);
 	statusBar()->addPermanentWidget(m_progressWidget);
 	m_progressWidget->setVisible(false);
@@ -201,7 +201,7 @@ MainWindow::MainWindow(const QStringList& files)
 
 #if ENABLE_VERSIONCHECK
 	if(ConfigSettings::get<SwitchSetting>("updatecheck")->getValue()) {
-		connect(&m_versionCheckThread, SIGNAL(finished()), this, SLOT(checkVersion()));
+		connect(&m_versionCheckThread, &QThread::finished, this, &MainWindow::checkVersion);
 		m_versionCheckThread.start();
 	}
 #endif
@@ -353,7 +353,7 @@ void MainWindow::setOCRMode(int idx) {
 		ui.actionAutodetectLayout->setVisible(m_displayerTool->allowAutodetectOCRAreas());
 		m_displayer->setTool(m_displayerTool);
 		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
-		connect(ui.actionToggleOutputPane, SIGNAL(toggled(bool)), m_outputEditor, SLOT(onVisibilityChanged(bool)));
+		connect(ui.actionToggleOutputPane, &QAction::toggled, m_outputEditor, &OutputEditor::onVisibilityChanged);
 		ui.dockWidgetOutput->setWidget(m_outputEditor->getUI());
 	}
 }
@@ -370,11 +370,11 @@ void MainWindow::addNotification(const QString& title, const QString& message, c
 	for(const NotificationAction& action : actions) {
 		QToolButton* btn = new QToolButton(frame);
 		btn->setText(action.text);
-		connect(btn, SIGNAL(clicked()), action.target, action.slot);
+		connect(btn, &QToolButton::clicked, action.slot);
 		if(action.close) {
 			btn->setProperty("handle", QVariant::fromValue(reinterpret_cast<void*>(handle)));
 			btn->setProperty("frame", QVariant::fromValue(reinterpret_cast<void*>(frame)));
-			connect(btn, SIGNAL(clicked()), this, SLOT(hideNotification()));
+			connect(btn, &QToolButton::clicked, this, [this] { hideNotification(); });
 		}
 		layout->addWidget(btn);
 	}
@@ -382,7 +382,7 @@ void MainWindow::addNotification(const QString& title, const QString& message, c
 	closeBtn->setIcon(QIcon::fromTheme("dialog-close"));
 	closeBtn->setProperty("handle", QVariant::fromValue(reinterpret_cast<void*>(handle)));
 	closeBtn->setProperty("frame", QVariant::fromValue(reinterpret_cast<void*>(frame)));
-	connect(closeBtn, SIGNAL(clicked()), this, SLOT(hideNotification()));
+	connect(closeBtn, &QToolButton::clicked, this, [this] { hideNotification(); });
 	layout->addWidget(closeBtn);
 	ui.centralwidget->layout()->addWidget(frame);
 	if(handle) {
@@ -423,9 +423,9 @@ void MainWindow::checkVersion() {
 
 	if(newver.compare(curver) > 0) {
 		addNotification(_("New version"), _("gImageReader %1 is available").arg(newver), {
-			{_("Download"), this, SLOT(openDownloadUrl()), false},
-			{_("Changelog"), this, SLOT(openChangeLogUrl()), false},
-			{_("Don't notify again"), m_config, SLOT(disableUpdateCheck()), true}
+			{_("Download"), [this]{ openDownloadUrl(); }, false},
+			{_("Changelog"), [this]{ openChangeLogUrl(); }, false},
+			{_("Don't notify again"), [this]{ m_config->disableUpdateCheck(); }, true}
 		});
 	}
 }
@@ -473,14 +473,14 @@ void MainWindow::languageChanged(const Config::Lang& lang) {
 	m_notifierHandle = nullptr;
 	const QString& code = lang.code;
 	if(!code.isEmpty() && !QtSpell::checkLanguageInstalled(code) && ConfigSettings::get<SwitchSetting>("dictinstall")->getValue()) {
-		NotificationAction actionDontShowAgain = {_("Don't show again"), m_config, SLOT(disableDictInstall()), true};
-		NotificationAction actionInstall = {_("Install"), this, SLOT(dictionaryAutoinstall()), false};
+		NotificationAction actionDontShowAgain = {_("Don't show again"), [this]{ m_config->disableDictInstall(); }, true};
+		NotificationAction actionInstall = {_("Install"), [this]{ dictionaryAutoinstall(); }, false};
 #ifdef Q_OS_LINUX
 		if(getConfig()->useSystemDataLocations()) {
 			QDBusConnectionInterface* iface = QDBusConnection::sessionBus().interface();
 			iface->startService("org.freedesktop.PackageKit");
 			if(!iface->isServiceRegistered("org.freedesktop.PackageKit").value()) {
-				actionInstall = {_("Help"), this, SLOT(showHelp()), false}; // TODO #InstallSpelling
+				actionInstall = {_("Help"), [this]{ showHelp(); }, false}; // TODO #InstallSpelling
 				qWarning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
 			}
 		}

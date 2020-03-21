@@ -38,11 +38,11 @@ CrashHandler::CrashHandler(int pid, int tesseractCrash, const QString& savefile,
 	m_refreshButton = new QPushButton(QIcon::fromTheme("view-refresh"), _("Regenerate backtrace"));
 	m_refreshButton->setEnabled(false);
 	ui.buttonBox->addButton(m_refreshButton, QDialogButtonBox::ActionRole);
-	connect(m_refreshButton, SIGNAL(clicked()), this, SLOT(regenerateBacktrace()));
+	connect(m_refreshButton, &QPushButton::clicked, this, &CrashHandler::regenerateBacktrace);
 
 	m_gdbProcess.setProcessChannelMode(QProcess::SeparateChannels);
-	connect(&m_gdbProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(appendGdbOutput()));
-	connect(&m_gdbProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(handleGdbFinished(int, QProcess::ExitStatus)));
+	connect(&m_gdbProcess, &QProcess::readyReadStandardOutput, this, &CrashHandler::appendGdbOutput);
+	connect(&m_gdbProcess, qOverload<int, QProcess::ExitStatus>(&QProcess::finished), this, &CrashHandler::handleGdbFinished);
 
 	regenerateBacktrace();
 }

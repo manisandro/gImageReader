@@ -68,22 +68,21 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	ui.actionRotateLeft->setData(270.0);
 	ui.actionRotateRight->setData(90.0);
 
-	connect(ui.menuRotation, SIGNAL(triggered(QAction*)), this, SLOT(setRotateMode(QAction*)));
-	connect(ui.actionRotateLeft, SIGNAL(triggered()), this, SLOT(rotate90()));
-	connect(ui.actionRotateRight, SIGNAL(triggered()), this, SLOT(rotate90()));
-	connect(ui.spinBoxRotation, SIGNAL(valueChanged(double)), this, SLOT(setAngle(double)));
-	connect(ui.spinBoxPage, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
-	connect(ui.spinBoxBrightness, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
-	connect(ui.spinBoxContrast, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
-	connect(ui.spinBoxResolution, SIGNAL(valueChanged(int)), this, SLOT(queueRenderImage()));
-	connect(ui.checkBoxInvertColors, SIGNAL(toggled(bool)), this, SLOT(queueRenderImage()));
-	connect(ui.actionZoomIn, SIGNAL(triggered()), this, SLOT(zoomIn()));
-	connect(ui.actionZoomOut, SIGNAL(triggered()), this, SLOT(zoomOut()));
-	connect(ui.actionBestFit, SIGNAL(triggered()), this, SLOT(zoomFit()));
-	connect(ui.actionOriginalSize, SIGNAL(triggered()), this, SLOT(zoomOriginal()));
-	connect(&m_renderTimer, SIGNAL(timeout()), this, SLOT(renderImage()));
-	connect(&m_scaleTimer, SIGNAL(timeout()), this, SLOT(scaleImage()));
-
+	connect(ui.menuRotation, &QMenu::triggered, this, &Displayer::setRotateMode);
+	connect(ui.actionRotateLeft, &QAction::triggered, this, &Displayer::rotate90);
+	connect(ui.actionRotateRight, &QAction::triggered, this, &Displayer::rotate90);
+	connect(ui.spinBoxRotation, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &Displayer::setAngle);
+	connect(ui.spinBoxPage, qOverload<int>(&QSpinBox::valueChanged), this, &Displayer::queueRenderImage);
+	connect(ui.spinBoxBrightness, qOverload<int>(&QSpinBox::valueChanged), this, &Displayer::queueRenderImage);
+	connect(ui.spinBoxContrast, qOverload<int>(&QSpinBox::valueChanged), this, &Displayer::queueRenderImage);
+	connect(ui.spinBoxResolution, qOverload<int>(&QSpinBox::valueChanged), this, &Displayer::queueRenderImage);
+	connect(ui.checkBoxInvertColors, &QCheckBox::toggled, this, &Displayer::queueRenderImage);
+	connect(ui.actionZoomIn, &QAction::triggered, this, &Displayer::zoomIn);
+	connect(ui.actionZoomOut, &QAction::triggered, this, &Displayer::zoomOut);
+	connect(ui.actionBestFit, &QAction::triggered, this, &Displayer::zoomFit);
+	connect(ui.actionOriginalSize, &QAction::triggered, this, &Displayer::zoomOriginal);
+	connect(&m_renderTimer, &QTimer::timeout, this, &Displayer::renderImage);
+	connect(&m_scaleTimer, &QTimer::timeout, this, &Displayer::scaleImage);
 	connect(&m_scaleWatcher, &QFutureWatcher<QImage>::finished, this, [this] { setScaledImage(m_scaleWatcher.future().result()); });
 }
 

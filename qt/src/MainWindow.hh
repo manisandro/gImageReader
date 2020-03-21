@@ -50,8 +50,7 @@ public:
 
 	struct NotificationAction {
 		QString text;
-		QObject* target;
-		QByteArray slot;
+		std::function<void()> slot;
 		bool close;
 	};
 

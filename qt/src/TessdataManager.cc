@@ -57,10 +57,10 @@ TessdataManager::TessdataManager(QWidget* parent)
 	bbox->addButton(QDialogButtonBox::Close);
 	bbox->addButton(QDialogButtonBox::Apply);
 	QPushButton* refreshButton = bbox->addButton(_("Refresh"), QDialogButtonBox::ActionRole);
-	connect(bbox->button(QDialogButtonBox::Apply), SIGNAL(clicked(bool)), this, SLOT(applyChanges()));
-	connect(bbox, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(bbox, SIGNAL(rejected()), this, SLOT(reject()));
-	connect(refreshButton, SIGNAL(clicked(bool)), this, SLOT(refresh()));
+	connect(bbox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &TessdataManager::applyChanges);
+	connect(bbox, &QDialogButtonBox::accepted, this, &TessdataManager::accept);
+	connect(bbox, &QDialogButtonBox::rejected, this, &TessdataManager::reject);
+	connect(refreshButton, &QPushButton::clicked, this, &TessdataManager::refresh);
 	layout()->addWidget(bbox);
 	setFixedWidth(320);
 }

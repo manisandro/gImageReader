@@ -31,7 +31,7 @@
 
 void ScannerSane::init() {
 	moveToThread(&m_thread);
-	connect(&m_thread, SIGNAL(started()), this, SLOT(run()));
+	connect(&m_thread, &QThread::started, this, &ScannerSane::run);
 	m_thread.start();
 }
 

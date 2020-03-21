@@ -46,16 +46,16 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 	qRegisterMetaType<QList<Scanner::Device>>();
 	qRegisterMetaType<Scanner::State>();
 
-	connect(ui.toolButtonScanDevicesRefresh, SIGNAL(clicked()), this, SLOT(startDetectDevices()));
-	connect(ui.pushButtonScan, SIGNAL(clicked()), this, SLOT(startScan()));
-	connect(ui.pushButtonScanCancel, SIGNAL(clicked()), this, SLOT(cancelScan()));
-	connect(ui.toolButtonScanOutput, SIGNAL(clicked()), this, SLOT(selectOutputPath()));
-	connect(ui.comboBoxScanDevice, SIGNAL(currentIndexChanged(int)), this, SLOT(setDeviceComboTooltip()));
-	connect(m_scanner, SIGNAL(initFailed()), this, SLOT(scanInitFailed()));
-	connect(m_scanner, SIGNAL(devicesDetected(QList<Scanner::Device>)), this, SLOT(doneDetectDevices(QList<Scanner::Device>)));
-	connect(m_scanner, SIGNAL(scanFailed(QString)), this, SLOT(scanFailed(QString)));
-	connect(m_scanner, SIGNAL(scanStateChanged(Scanner::State)), this, SLOT(setScanState(Scanner::State)));
-	connect(m_scanner, SIGNAL(pageAvailable(QString)), this, SIGNAL(scanPageAvailable(QString)));
+	connect(ui.toolButtonScanDevicesRefresh, &QToolButton::clicked, this, &Acquirer::startDetectDevices);
+	connect(ui.pushButtonScan, &QPushButton::clicked, this, &Acquirer::startScan);
+	connect(ui.pushButtonScanCancel, &QPushButton::clicked, this, &Acquirer::cancelScan);
+	connect(ui.toolButtonScanOutput, &QToolButton::clicked, this, &Acquirer::selectOutputPath);
+	connect(ui.comboBoxScanDevice, qOverload<int>(&QComboBox::currentIndexChanged), this, &Acquirer::setDeviceComboTooltip);
+	connect(m_scanner, &Scanner::initFailed, this, &Acquirer::scanInitFailed);
+	connect(m_scanner, &Scanner::devicesDetected, this, &Acquirer::doneDetectDevices);
+	connect(m_scanner, &Scanner::scanFailed, this, &Acquirer::scanFailed);
+	connect(m_scanner, &Scanner::scanStateChanged, this, &Acquirer::setScanState);
+	connect(m_scanner, &Scanner::pageAvailable, this, &Acquirer::scanPageAvailable);
 
 	ADD_SETTING(ComboSetting("scanres", ui.comboBoxScanResolution, 2));
 	ADD_SETTING(ComboSetting("scanmode", ui.comboBoxScanMode, 0));

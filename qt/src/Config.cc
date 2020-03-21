@@ -72,19 +72,19 @@ Config::Config(QWidget* parent)
 		ui.tableWidgetPredefLang->setItem(row, 2, new QTableWidgetItem(lang.name));
 	}
 
-	connect(ui.checkBoxDefaultOutputFont, SIGNAL(toggled(bool)), ui.pushButtonOutputFont, SLOT(setDisabled(bool)));
-	connect(ui.pushButtonOutputFont, SIGNAL(clicked()), &m_fontDialog, SLOT(exec()));
-	connect(&m_fontDialog, SIGNAL(fontSelected(QFont)), this, SLOT(updateFontButton(QFont)));
-	connect(ui.pushButtonAddLang, SIGNAL(clicked()), this, SLOT(toggleAddLanguage()));
-	connect(ui.pushButtonRemoveLang, SIGNAL(clicked()), this, SLOT(removeLanguage()));
-	connect(ui.pushButtonAddLangOk, SIGNAL(clicked()), this, SLOT(addLanguage()));
-	connect(ui.pushButtonAddLangCancel, SIGNAL(clicked()), this, SLOT(toggleAddLanguage()));
-	connect(ui.tableWidgetAdditionalLang->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this, SLOT(langTableSelectionChanged(QItemSelection, QItemSelection)));
-	connect(ui.buttonBox->button(QDialogButtonBox::Help), SIGNAL(clicked()), MAIN, SLOT(showHelp()));
-	connect(ui.lineEditLangPrefix, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditErrorState()));
-	connect(ui.lineEditLangName, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditErrorState()));
-	connect(ui.lineEditLangCode, SIGNAL(textChanged(QString)), this, SLOT(clearLineEditErrorState()));
-	connect(ui.comboBoxDataLocation, SIGNAL(currentIndexChanged(int)), this, SLOT(setDataLocations(int)));
+	connect(ui.checkBoxDefaultOutputFont, &QCheckBox::toggled, ui.pushButtonOutputFont, &QPushButton::setDisabled);
+	connect(ui.pushButtonOutputFont, &QPushButton::clicked, &m_fontDialog, &QFontDialog::exec);
+	connect(&m_fontDialog, &QFontDialog::fontSelected, this, &Config::updateFontButton);
+	connect(ui.pushButtonAddLang, &QPushButton::clicked, this, &Config::toggleAddLanguage);
+	connect(ui.pushButtonRemoveLang, &QPushButton::clicked, this, &Config::removeLanguage);
+	connect(ui.pushButtonAddLangOk, &QPushButton::clicked, this, &Config::addLanguage);
+	connect(ui.pushButtonAddLangCancel, &QPushButton::clicked, this, &Config::toggleAddLanguage);
+	connect(ui.tableWidgetAdditionalLang->selectionModel(), &QItemSelectionModel::selectionChanged, this, &Config::langTableSelectionChanged);
+	connect(ui.buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, MAIN, [] { MAIN->showHelp(); });
+	connect(ui.lineEditLangPrefix, &QLineEdit::textChanged, this, &Config::clearLineEditErrorState);
+	connect(ui.lineEditLangName, &QLineEdit::textChanged, this, &Config::clearLineEditErrorState);
+	connect(ui.lineEditLangCode, &QLineEdit::textChanged, this, &Config::clearLineEditErrorState);
+	connect(ui.comboBoxDataLocation, qOverload<int>(&QComboBox::currentIndexChanged), this, &Config::setDataLocations);
 
 	ADD_SETTING(SwitchSetting("dictinstall", ui.checkBoxDictInstall, true));
 	ADD_SETTING(SwitchSetting("updatecheck", ui.checkBoxUpdateCheck, true));

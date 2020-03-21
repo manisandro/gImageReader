@@ -82,14 +82,14 @@ SubstitutionsManager::SubstitutionsManager(QWidget* parent)
 
 	setLayout(layout);
 
-	connect(openAction, SIGNAL(triggered()), this, SLOT(openList()));
-	connect(saveAction, SIGNAL(triggered()), this, SLOT(saveList()));
-	connect(clearAction, SIGNAL(triggered()), this, SLOT(clearList()));
-	connect(addAction, SIGNAL(triggered()), this, SLOT(addRow()));
-	connect(buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(emitApplySubstitutions()));
-	connect(buttonBox->button(QDialogButtonBox::Close), SIGNAL(clicked()), this, SLOT(hide()));
-	connect(m_removeAction, SIGNAL(triggered()), this, SLOT(removeRows()));
-	connect(m_tableWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this, SLOT(onTableSelectionChanged(QItemSelection, QItemSelection)));
+	connect(openAction, &QAction::triggered, this, &SubstitutionsManager::openList);
+	connect(saveAction, &QAction::triggered, this, &SubstitutionsManager::saveList);
+	connect(clearAction, &QAction::triggered, this, &SubstitutionsManager::clearList);
+	connect(addAction, &QAction::triggered, this, &SubstitutionsManager::addRow);
+	connect(buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &SubstitutionsManager::emitApplySubstitutions);
+	connect(buttonBox->button(QDialogButtonBox::Close), &QPushButton::clicked, this, &SubstitutionsManager::hide);
+	connect(m_removeAction, &QAction::triggered, this, &SubstitutionsManager::removeRows);
+	connect(m_tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged, this, &SubstitutionsManager::onTableSelectionChanged);
 
 	ADD_SETTING(TableSetting("substitutionslist", m_tableWidget));
 }

@@ -96,7 +96,7 @@ bool Utils::busyTask(const std::function<bool()>& f, const QString& msg) {
 	MAIN->pushState(MainWindow::State::Busy, msg);
 	QEventLoop evLoop;
 	BusyTaskThread thread(f);
-	QObject::connect(&thread, SIGNAL(finished()), &evLoop, SLOT(quit()));
+	QObject::connect(&thread, &QThread::finished, &evLoop, &QEventLoop::quit);
 	thread.start();
 	BusyEventFilter filter;
 	QApplication::instance()->installEventFilter(&filter);
@@ -174,8 +174,8 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout) {
 		reply = networkMgr.get(req);
 		QTimer timer;
 		QEventLoop loop;
-		QObject::connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
-		QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+		QObject::connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
+		QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 		timer.setSingleShot(true);
 		timer.start(timeout);
 		loop.exec();

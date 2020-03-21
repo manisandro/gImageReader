@@ -103,7 +103,7 @@ public:
 		if(font.fromString(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toString())) {
 			m_dialog->setCurrentFont(font);
 		}
-		QObject::connect(dialog, SIGNAL(fontSelected(QFont)), this, SLOT(serialize()));
+		connect(dialog, &QFontDialog::fontSelected, this, &FontSetting::serialize);
 	}
 	QFont getValue() const {
 		return m_dialog->currentFont();
@@ -125,7 +125,7 @@ public:
 	SwitchSetting(const QString& key, QAbstractButton* button, bool defaultState = false)
 		: AbstractSetting(key), m_button(button) {
 		button->setChecked(QSettings().value(m_key, QVariant::fromValue(defaultState)).toBool());
-		connect(button, SIGNAL(toggled(bool)), this, SLOT(serialize()));
+		connect(button, &QAbstractButton::toggled, this, &SwitchSetting::serialize);
 	}
 	void setValue(bool value) {
 		m_button->setChecked(value);
@@ -147,26 +147,26 @@ private:
 class ActionSetting : public AbstractSetting {
 	Q_OBJECT
 public:
-	ActionSetting(const QString& key, QAction* button, bool defaultState = false)
-		: AbstractSetting(key), m_button(button) {
-		button->setChecked(QSettings().value(m_key, QVariant::fromValue(defaultState)).toBool());
-		connect(button, SIGNAL(toggled(bool)), this, SLOT(serialize()));
+	ActionSetting(const QString& key, QAction* action, bool defaultState = false)
+		: AbstractSetting(key), m_action(action) {
+		action->setChecked(QSettings().value(m_key, QVariant::fromValue(defaultState)).toBool());
+		connect(action, &QAction::toggled, this, &ActionSetting::serialize);
 	}
 	void setValue(bool value) {
-		m_button->setChecked(value);
+		m_action->setChecked(value);
 	}
 	bool getValue() const {
-		return m_button->isChecked();
+		return m_action->isChecked();
 	}
 
 public slots:
 	void serialize() override {
-		QSettings().setValue(m_key, QVariant::fromValue(m_button->isChecked()));
+		QSettings().setValue(m_key, QVariant::fromValue(m_action->isChecked()));
 		emit changed();
 	}
 
 private:
-	QAction* m_button;
+	QAction* m_action;
 };
 
 class ComboSetting : public AbstractSetting {
@@ -175,7 +175,7 @@ public:
 	ComboSetting(const QString& key, QComboBox* combo, int defaultIndex = 0)
 		: AbstractSetting(key), m_combo(combo) {
 		combo->setCurrentIndex(QSettings().value(m_key, QVariant::fromValue(defaultIndex)).toInt());
-		connect(combo, SIGNAL(currentIndexChanged(int)), this, SLOT(serialize()));
+		connect(combo, qOverload<int>(&QComboBox::currentIndexChanged), this, &ComboSetting::serialize);
 	}
 
 public slots:
@@ -194,7 +194,7 @@ public:
 	FontComboSetting(const QString& key, QFontComboBox* combo, const QFont defaultFont = QFont())
 		: AbstractSetting(key), m_combo(combo) {
 		combo->setCurrentFont(QFont(QSettings().value(m_key, defaultFont.family()).toString()));
-		connect(combo, SIGNAL(currentFontChanged(QFont)), this, SLOT(serialize()));
+		connect(combo, &QFontComboBox::currentFontChanged, this, &FontComboSetting::serialize);
 	}
 
 public slots:
@@ -213,7 +213,7 @@ public:
 	SpinSetting(const QString& key, QSpinBox* spin, int defaultValue = 0)
 		: AbstractSetting(key), m_spin(spin) {
 		spin->setValue(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toInt());
-		connect(spin, SIGNAL(valueChanged(int)), this, SLOT(serialize()));
+		connect(spin, qOverload<int>(&QSpinBox::valueChanged), this, &SpinSetting::serialize);
 	}
 
 public slots:
@@ -244,7 +244,7 @@ public:
 	LineEditSetting(const QString& key, QLineEdit* lineEdit, const QString& defaultValue = "")
 		: AbstractSetting(key), m_lineEdit(lineEdit) {
 		lineEdit->setText(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toString());
-		connect(lineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(serialize()));
+		connect(lineEdit, &QLineEdit::textChanged, this, &LineEditSetting::serialize);
 	}
 
 public slots:

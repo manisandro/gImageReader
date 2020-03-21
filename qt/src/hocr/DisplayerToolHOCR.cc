@@ -44,7 +44,7 @@ void DisplayerToolHOCR::mousePressEvent(QMouseEvent* event) {
 	if(event->button() == Qt::LeftButton && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
 		clearSelection();
 		m_selection = new DisplayerSelection(this,  m_displayer->mapToSceneClamped(event->pos()));
-		connect(m_selection, SIGNAL(geometryChanged(QRectF)), this, SLOT(selectionChanged(QRectF)));
+		connect(m_selection, &DisplayerSelection::geometryChanged, this, &DisplayerToolHOCR::selectionChanged);
 		m_displayer->scene()->addItem(m_selection);
 		event->accept();
 	}
@@ -101,7 +101,7 @@ void DisplayerToolHOCR::setSelection(const QRect& rect, const QRect& minRect) {
 	QRect mr = minRect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft());
 	if(!m_selection) {
 		m_selection = new DisplayerSelection(this, r.topLeft());
-		connect(m_selection, SIGNAL(geometryChanged(QRectF)), this, SLOT(selectionChanged(QRectF)));
+		connect(m_selection, &DisplayerSelection::geometryChanged, this, &DisplayerToolHOCR::selectionChanged);
 		m_displayer->scene()->addItem(m_selection);
 	}
 	m_selection->setAnchorAndPoint(r.topLeft(), r.bottomRight());

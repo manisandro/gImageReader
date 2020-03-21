@@ -27,18 +27,18 @@ SearchReplaceFrame::SearchReplaceFrame(QWidget* parent, Qt::WindowFlags f)
 
 	m_substitutionsManager = new SubstitutionsManager(this);
 
-	connect(ui.checkBoxMatchCase, SIGNAL(toggled(bool)), this, SLOT(clearErrorState()));
-	connect(ui.lineEditSearch, SIGNAL(textChanged(QString)), this, SLOT(clearErrorState()));
-	connect(ui.lineEditSearch, SIGNAL(returnPressed()), this, SLOT(findNext()));
-	connect(ui.lineEditReplace, SIGNAL(returnPressed()), this, SLOT(replaceNext()));
-	connect(ui.toolButtonFindNext, SIGNAL(clicked()), this, SLOT(findNext()));
-	connect(ui.toolButtonFindPrev, SIGNAL(clicked()), this, SLOT(findPrev()));
-	connect(ui.toolButtonReplace, SIGNAL(clicked()), this, SLOT(replaceNext()));
-	connect(ui.toolButtonReplaceAll, SIGNAL(clicked()), this, SLOT(emitReplaceAll()));
+	connect(ui.checkBoxMatchCase, &QCheckBox::toggled, this, &SearchReplaceFrame::clearErrorState);
+	connect(ui.lineEditSearch, &QLineEdit::textChanged, this, &SearchReplaceFrame::clearErrorState);
+	connect(ui.lineEditSearch, &QLineEdit::returnPressed, this, &SearchReplaceFrame::findNext);
+	connect(ui.lineEditReplace, &QLineEdit::returnPressed, this, &SearchReplaceFrame::replaceNext);
+	connect(ui.toolButtonFindNext, &QToolButton::clicked, this, &SearchReplaceFrame::findNext);
+	connect(ui.toolButtonFindPrev, &QToolButton::clicked, this, &SearchReplaceFrame::findPrev);
+	connect(ui.toolButtonReplace, &QToolButton::clicked, this, &SearchReplaceFrame::replaceNext);
+	connect(ui.toolButtonReplaceAll, &QToolButton::clicked, this, &SearchReplaceFrame::emitReplaceAll);
 
-	connect(ui.pushButtonSubstitutions, SIGNAL(clicked()), m_substitutionsManager, SLOT(show()));
-	connect(ui.pushButtonSubstitutions, SIGNAL(clicked()), m_substitutionsManager, SLOT(raise()));
-	connect(m_substitutionsManager, SIGNAL(applySubstitutions(QMap<QString, QString>)), this, SLOT(emitApplySubstitutions(QMap<QString, QString>)));
+	connect(ui.pushButtonSubstitutions, &QPushButton::clicked, m_substitutionsManager, &SubstitutionsManager::show);
+	connect(ui.pushButtonSubstitutions, &QPushButton::clicked, m_substitutionsManager, &SubstitutionsManager::raise);
+	connect(m_substitutionsManager, &SubstitutionsManager::applySubstitutions, this, &SearchReplaceFrame::emitApplySubstitutions);
 
 	ADD_SETTING(SwitchSetting("searchmatchcase", ui.checkBoxMatchCase));
 }

@@ -62,16 +62,16 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	ui.listWidgetSources->setAcceptDrops(true);
 	ui.listWidgetSources->installEventFilter(this);
 
-	connect(ui.actionSources, SIGNAL(toggled(bool)), ui.dockWidgetSources, SLOT(setVisible(bool)));
-	connect(ui.toolButtonSourceAdd, SIGNAL(clicked()), this, SLOT(openSources()));
-	connect(ui.menuAddSource, SIGNAL(aboutToShow()), this, SLOT(prepareSourcesMenu()));
-	connect(ui.actionSourcePaste, SIGNAL(triggered()), this, SLOT(pasteClipboard()));
-	connect(ui.actionSourceScreenshot, SIGNAL(triggered()), this, SLOT(takeScreenshot()));
-	connect(ui.actionSourceRemove, SIGNAL(triggered()), this, SLOT(removeSource()));
-	connect(ui.actionSourceDelete, SIGNAL(triggered()), this, SLOT(deleteSource()));
-	connect(ui.actionSourceClear, SIGNAL(triggered()), this, SLOT(clearSources()));
-	connect(ui.listWidgetSources, SIGNAL(itemSelectionChanged()), this, SLOT(currentSourceChanged()));
-	connect(&m_fsWatcher, SIGNAL(fileChanged(QString)), this, SLOT(fileChanged(QString)));
+	connect(ui.actionSources, &QAction::toggled, ui.dockWidgetSources, &QDockWidget::setVisible);
+	connect(ui.toolButtonSourceAdd, &QToolButton::clicked, this, &SourceManager::openSources);
+	connect(ui.menuAddSource, &QMenu::aboutToShow, this, &SourceManager::prepareSourcesMenu);
+	connect(ui.actionSourcePaste, &QAction::triggered, this, &SourceManager::pasteClipboard);
+	connect(ui.actionSourceScreenshot, &QAction::triggered, this, &SourceManager::takeScreenshot);
+	connect(ui.actionSourceRemove, &QAction::triggered, this, &SourceManager::removeSource);
+	connect(ui.actionSourceDelete, &QAction::triggered, this, &SourceManager::deleteSource);
+	connect(ui.actionSourceClear, &QAction::triggered, this, &SourceManager::clearSources);
+	connect(ui.listWidgetSources, &QListWidget::itemSelectionChanged, this, &SourceManager::currentSourceChanged);
+	connect(&m_fsWatcher, &QFileSystemWatcher::fileChanged, this, &SourceManager::fileChanged);
 
 	ADD_SETTING(VarSetting<QStringList>("recentitems"));
 
@@ -195,7 +195,7 @@ void SourceManager::prepareSourcesMenu() {
 		if(QFile(filename).exists()) {
 			QAction* action = new QAction(QFileInfo(filename).fileName(), m_recentMenu);
 			action->setToolTip(filename);
-			connect(action, SIGNAL(triggered()), this, SLOT(openRecentItem()));
+			connect(action, &QAction::triggered, this, &SourceManager::openRecentItem);
 			m_recentMenu->addAction(action);
 			if(++count >= sMaxNumRecent) {
 				break;
