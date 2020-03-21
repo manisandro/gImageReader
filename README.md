@@ -1,5 +1,7 @@
 [![Translation status](https://hosted.weblate.org/widgets/gimagereader/-/svg-badge.svg)](https://hosted.weblate.org/engage/gimagereader/?utm_source=widget)
 [![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/manisandro/gImageReader.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/manisandro/gImageReader/context:cpp)
+[![Actions Status](https://github.com/manisandro/gImageReader/workflows/CI%20Build/badge.svg)](https://github.com/manisandro/gImageReader/actions)
+
 
 
 gImageReader
