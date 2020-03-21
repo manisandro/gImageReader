@@ -30,4 +30,17 @@
         <file alias="collapse">../../data/icons/collapse.png</file>
         <file alias="expand">../../data/icons/expand.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>extra-theme-icons/application-pdf.png</file>
+        <file>extra-theme-icons/applications-education-language.png</file>
+        <file>extra-theme-icons/dialog-cancel.png</file>
+        <file>extra-theme-icons/dialog-close.png</file>
+        <file>extra-theme-icons/dialog-ok.png</file>
+        <file>extra-theme-icons/document-edit.png</file>
+        <file>extra-theme-icons/document-export.png</file>
+        <file>extra-theme-icons/document-preview.png</file>
+        <file>extra-theme-icons/help-hint.png</file>
+        <file>extra-theme-icons/object-order-front.png</file>
+        <file>extra-theme-icons/text-plain.png</file>
+    </qresource>
 </RCC>
