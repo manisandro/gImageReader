@@ -22,13 +22,9 @@
 #include <QDialogButtonBox>
 #include <QDir>
 #include <QFile>
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-#include <qjson/parser.h>
-#else
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#endif
 #include <QLabel>
 #include <QListWidget>
 #include <QMessageBox>
@@ -105,17 +101,6 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 	QString tessdataVer;
 	int bestMatchDist = std::numeric_limits<int>::max();
 	static const QRegExp verRegEx("^[vV]?(\\d+).(\\d+).(\\d+)-?(\\w?.*)$");
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-	QJson::Parser parser;
-	bool ok = false;
-	QVariantList json = parser.parse( data, &ok ).toList();
-	if(!ok) {
-		messages = _("Parsing error: %1").arg(parser.errorLine() + ": " + parser.errorString());
-		return false;
-	}
-	for(const QVariant& value : json) {
-		QString tag = value.toMap().value("name").toString();
-#else
 	QJsonParseError err;
 	QJsonDocument json = QJsonDocument::fromJson(data, &err);
 	if(json.isNull()) {
@@ -124,7 +109,6 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 	}
 	for(const QJsonValue& value : json.array()) {
 		QString tag = value.toObject().value("name").toString();
-#endif
 		if(verRegEx.indexIn(tag) != -1) {
 			int tagVer = TESSERACT_MAKE_VERSION(verRegEx.cap(1).toInt(), verRegEx.cap(2).toInt(), verRegEx.cap(3).toInt());
 			int dist = TESSERACT_VERSION - tagVer;
@@ -151,17 +135,6 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 			continue;
 		}
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-		ok = false;
-		json = parser.parse( data, &ok ).toList();
-		if(!ok) {
-			continue;
-		}
-		for(const QVariant& value : json) {
-			QVariantMap treeObj = value.toMap();
-			QString name = treeObj.value("name").toString();
-			QString url = treeObj.value("download_url").toString();
-#else
 		err = QJsonParseError();
 		json = QJsonDocument::fromJson(data, &err);
 		if(json.isNull()) {
@@ -171,7 +144,6 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 			QJsonObject treeObj = value.toObject();
 			QString fileName = treeObj.value("name").toString();
 			QString url = treeObj.value("download_url").toString();
-#endif
 			QString subdir = "";
 			// If filename starts with upper case letter, it is a script
 			if(fileName.left(1) == fileName.left(1).toUpper()) {

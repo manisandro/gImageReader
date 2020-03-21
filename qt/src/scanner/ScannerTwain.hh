@@ -28,9 +28,7 @@
 #include <QWaitCondition>
 #ifdef Q_OS_WIN32
 #include <windows.h>
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 #include <QAbstractNativeEventFilter>
-#endif
 #endif
 #include <twain.h>
 
@@ -95,15 +93,11 @@ private:
 	void setCapability(TW_UINT16 capCode, const CapOneVal& cap);
 #ifdef Q_OS_WIN32
 	bool saveDIB(TW_MEMREF hImg, const QString& filename);
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-	static bool eventFilter(void* message);
-#else
 	class NativeEventFilter : public QAbstractNativeEventFilter {
 	public:
 		bool nativeEventFilter(const QByteArray& eventType, void* message, long* result);
 	};
 	NativeEventFilter m_eventFilter;
-#endif
 #endif
 	static PASCAL TW_UINT16 callback(TW_IDENTITY* origin, TW_IDENTITY* dest, TW_UINT32 DG, TW_UINT16 DAT, TW_UINT16 MSG, TW_MEMREF data);
 	static inline float fix32ToFloat(TW_FIX32 fix32);

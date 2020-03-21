@@ -869,11 +869,7 @@ QString HOCRItem::toHtml(int indent) const {
 		if(m_italic) {
 			html += "<em>";
 		}
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 		html += m_text.toHtmlEscaped();
-#else
-		html += Qt::escape(m_text);
-#endif
 		if(m_italic) {
 			html += "</em>";
 		}

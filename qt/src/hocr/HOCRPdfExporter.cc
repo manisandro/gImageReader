@@ -126,13 +126,9 @@ public:
 		delete m_painter;
 	}
 	bool createPage(double width, double height, double offsetX, double offsetY, QString& errMsg) override {
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-		m_printer.setPaperSize(width, pageDpi), QPrinter::Point);
-#else
 		m_printer.setPageSize(QPageSize(QSizeF(width, height), QPageSize::Point));
-#endif
 		if(!m_firstPage) {
-		if(!m_printer.newPage()) {
+			if(!m_printer.newPage()) {
 				return false;
 			}
 		} else {
@@ -346,11 +342,7 @@ HOCRPdfExporter::HOCRPdfExporter(const HOCRDocument* hocrdocument, const HOCRPag
 	ui.comboBoxBackend->setCurrentIndex(-1);
 
 	ui.comboBoxImageFormat->addItem(_("Color"), QImage::Format_RGB888);
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-	ui.comboBoxImageFormat->addItem(_("Grayscale"), QImage::Format_Indexed8);
-#else
 	ui.comboBoxImageFormat->addItem(_("Grayscale"), QImage::Format_Grayscale8);
-#endif
 	ui.comboBoxImageFormat->addItem(_("Monochrome"), QImage::Format_Mono);
 	ui.comboBoxImageFormat->setCurrentIndex(-1);
 	ui.comboBoxDithering->addItem(_("Threshold (closest color)"), Qt::ThresholdDither);

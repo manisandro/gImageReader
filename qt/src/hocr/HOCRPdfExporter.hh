@@ -71,28 +71,8 @@ private:
 		virtual void finishPage() {}
 		virtual bool finishDocument(QString& /*errMsg*/) { return true; }
 	protected:
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-		QVector<QRgb> createGray8Table() const {
-			QVector<QRgb> colorTable(255);
-			for(int i = 0; i < 255; ++i) {
-				colorTable[i] = qRgb(i, i, i);
-			}
-			return colorTable;
-		}
-#endif
 		QImage convertedImage(const QImage& image, QImage::Format targetFormat, Qt::ImageConversionFlags flags) const {
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-			if(image.format() == targetFormat) {
-				return image;
-			} else if(targetFormat == QImage::Format_Indexed8) {
-				static QVector<QRgb> gray8Table = createGray8Table();
-				return image.convertToFormat(targetFormat, gray8Table);
-			} else {
-				return image.convertToFormat(targetFormat);
-			}
-#else
 			return image.format() == targetFormat ? image : image.convertToFormat(targetFormat, flags);
-#endif
 		}
 	};
 	class PoDoFoPDFPainter;

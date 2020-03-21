@@ -41,11 +41,7 @@
 
 QString Utils::documentsFolder() {
 	QString documentsFolder;
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-	documentsFolder = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-#else
 	documentsFolder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-#endif
 	return (documentsFolder.isEmpty() || !QDir(documentsFolder).exists()) ? QDir::homePath() : documentsFolder;
 }
 

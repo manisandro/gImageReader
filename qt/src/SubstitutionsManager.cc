@@ -63,11 +63,7 @@ SubstitutionsManager::SubstitutionsManager(QWidget* parent)
 	m_tableWidget = new QTableWidget(0, 2, this);
 	m_tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
 	m_tableWidget->setEditTriggers(QAbstractItemView::CurrentChanged);
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-	m_tableWidget->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-#else
 	m_tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-#endif
 	m_tableWidget->horizontalHeader()->setVisible(true);
 	m_tableWidget->verticalHeader()->setVisible(false);
 	m_tableWidget->setHorizontalHeaderLabels(QStringList() << _("Search for") << _("Replace with"));

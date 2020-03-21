@@ -31,11 +31,7 @@
 #include <QScreen>
 #include <QString>
 #include <QTemporaryFile>
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-#include <poppler-qt4.h>
-#else
 #include <poppler-qt5.h>
-#endif
 
 #include "ConfigSettings.hh"
 #include "FileDialogs.hh"

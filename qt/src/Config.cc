@@ -26,9 +26,7 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QMultiMap>
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 #include <QStandardPaths>
-#endif
 #include <QUrl>
 #include <enchant-provider.h>
 #define USE_STD_NAMESPACE
@@ -51,13 +49,8 @@ Config::Config(QWidget* parent)
 	: QDialog(parent) {
 	ui.setupUi(this);
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-	ui.tableWidgetPredefLang->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-	ui.tableWidgetAdditionalLang->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-#else
 	ui.tableWidgetPredefLang->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	ui.tableWidgetAdditionalLang->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-#endif
 	ui.widgetAddLang->setVisible(false);
 
 #if !ENABLE_VERSIONCHECK
@@ -191,15 +184,7 @@ QString Config::spellingLocation(Location location) {
 		return dataDir.absoluteFilePath("myspell/dicts");
 #endif
 	} else {
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-# ifdef Q_OS_WIN
-		QDir configDir = QDir(QDir::home().absoluteFilePath("Local Settings/Application Data"));
-# else
-		QDir configDir = QDir(QDir::home().absoluteFilePath(".config"));
-# endif
-#else
 		QDir configDir = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation));
-#endif
 #if HAVE_ENCHANT2
 		return configDir.absoluteFilePath("enchant/hunspell");
 #else
@@ -214,22 +199,10 @@ QString Config::tessdataLocation(Location location) {
 		QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
 		qputenv("TESSDATA_PREFIX", dataDir.absoluteFilePath("tessdata").toLocal8Bit());
 #else
-# if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-		unsetenv("TESSDATA_PREFIX");
-# else
 		qunsetenv("TESSDATA_PREFIX");
-# endif
 #endif
 	} else {
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-# ifdef Q_OS_WIN
-		QDir configDir = QDir(QDir::home().absoluteFilePath("Local Settings/Application Data"));
-# else
-		QDir configDir = QDir(QDir::home().absoluteFilePath(".config"));
-# endif
-#else
 		QDir configDir = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation));
-#endif
 		qputenv("TESSDATA_PREFIX", configDir.absoluteFilePath("tessdata").toLocal8Bit());
 	}
 	QByteArray current = setlocale(LC_ALL, NULL);
