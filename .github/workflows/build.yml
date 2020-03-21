@@ -1,0 +1,68 @@
+name: gImageReader Build
+on: [push]
+
+jobs:
+  build:
+    name: MinGW build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build gimagereader-mingw-buildenv
+        run: docker build -t gimagereader-mingw-buildenv packaging/win32/
+      - name: Version number
+        id: version_number
+        run: |
+          if [ ${{ startsWith(github.ref, 'refs/tags/') }} = true ]; then
+            VERSION=$(basename ${{ github.ref }})
+          else
+            VERSION=ci-latest-$(basename ${{ github.ref }})
+            PREV_RELEASE=$(curl -s https://api.github.com/repos/$GITHUB_REPOSITORY/releases/tags/$VERSION | jq -r .url)
+          fi
+          PACKAGE_VERSION=$(grep -oP 'SET\(PACKAGE_VERSION \K([\d\.]+)(?=\))' CMakeLists.txt)
+          echo "##[set-output name=version;]$VERSION"
+          echo "##[set-output name=prev_release;]${PREV_RELEASE/null/}"
+          echo "##[set-output name=pkg_version;]$PACKAGE_VERSION"
+      - name: Build application
+        run: docker run -v $PWD:/workspace gimagereader-mingw-buildenv ./packaging/win32/makeinstaller.sh x86_64
+      - name: Reset ci-latest tag
+        run: |
+          VERSION=${{ steps.version_number.outputs.version }}
+          git config --global user.email "ci@github.com"
+          git config --global user.name "Github CI"
+          # Workaround for "could not read Username for 'https://github.com': No such device or address"
+          git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git
+          git tag -d $VERSION || true
+          git push origin :$VERSION || true
+          git tag -m $VERSION $VERSION
+          git push --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: startsWith(steps.version_number.outputs.version, 'ci-latest-')
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version_number.outputs.version }}
+          release_name: CI Build
+          draft: false
+          prerelease: ${{ !startsWith(github.ref, 'refs/tags/') }}
+      - name: Upload portable zip release asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/mingw64-qt5/gImageReader_qt5_${{ steps.version_number.outputs.pkg_version }}_x86_64.zip
+          asset_name: gImageReader_qt5_latest_x86_64.zip
+          asset_content_type: application/zip
+      - name: Upload installer release asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.pkg_version }}_qt5_x86_64.exe
+          asset_name: gImageReader_latest_qt5_x86_64.exe
+          asset_content_type: application/x-dosexec
