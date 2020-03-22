@@ -34,6 +34,8 @@ class QGraphicsPixmapItem;
 class OutputEditorHOCR : public OutputEditor {
 	Q_OBJECT
 public:
+	enum class InsertMode { Replace, Append, InsertBefore };
+
 	OutputEditorHOCR(DisplayerToolHOCR* tool);
 	~OutputEditorHOCR();
 
@@ -52,7 +54,7 @@ public slots:
 	bool clear(bool hide = true) override;
 	void setLanguage(const Config::Lang& lang) override;
 	void onVisibilityChanged(bool visible) override;
-	void open();
+	void open(InsertMode mode);
 	bool save(const QString& filename = "") override;
 	bool exportToODT();
 	bool exportToPDF();
@@ -63,8 +65,10 @@ private:
 	class HTMLHighlighter;
 
 	struct HOCRReadSessionData : ReadSessionData {
+		int insertIndex;
 		QStringList errors;
 	};
+	friend struct QMetaTypeId<HOCRReadSessionData>;
 
 	DisplayerToolHOCR* m_tool;
 	QWidget* m_widget;
@@ -75,6 +79,7 @@ private:
 	bool m_modified = false;
 	QString m_filebasename;
 	QtSpell::TextEditChecker m_spell;
+	InsertMode m_insertMode = InsertMode::Append;
 
 	HOCRDocument* m_document;
 
@@ -84,11 +89,12 @@ private:
 	void navigateNextPrev(bool next);
 	bool findReplaceInItem(const QModelIndex& index, const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace, bool& currentSelectionMatchesSearch);
 	bool showPage(const HOCRPage* page);
+	int currentPage();
 	void drawPreview(QPainter& painter, const HOCRItem* item);
 
 private slots:
 	void bboxDrawn(const QRect& bbox, int action);
-	void addPage(const QString& hocrText, ReadSessionData data);
+	void addPage(const QString& hocrText, HOCRReadSessionData data);
 	void expandItemClass() {
 		expandCollapseItemClass(true);
 	}
@@ -104,6 +110,7 @@ private slots:
 	}
 	void pickItem(const QPoint& point);
 	void setFont();
+	void setInsertMode(QAction* action);
 	void setModified();
 	void showItemProperties(const QModelIndex& index, const QModelIndex& prev = QModelIndex());
 	void showTreeWidgetContextMenu(const QPoint& point);

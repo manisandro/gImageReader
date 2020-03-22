@@ -9,6 +9,9 @@
         <file alias="ins_append">../../data/icons/ins_append.png</file>
         <file alias="ins_cursor">../../data/icons/ins_cursor.png</file>
         <file alias="ins_replace">../../data/icons/ins_replace.png</file>
+        <file alias="ins_hocr_append">../../data/icons/ins_hocr_append.png</file>
+        <file alias="ins_hocr_before">../../data/icons/ins_hocr_before.png</file>
+        <file alias="ins_hocr_replace">../../data/icons/ins_hocr_replace.png</file>
         <file alias="page">../../data/icons/page.png</file>
         <file alias="resolution">../../data/icons/resolution.png</file>
         <file alias="stripcrlf">../../data/icons/stripcrlf.png</file>

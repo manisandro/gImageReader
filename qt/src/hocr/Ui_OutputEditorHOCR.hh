@@ -20,8 +20,15 @@
 
 class UI_OutputEditorHOCR {
 public:
+	QMenu* menuInsertMode;
+	QMenu* menuOpen;
+	QToolButton* toolButtonInsertMode;
 	QToolButton* toolButtonOutputExport;
-	QAction* actionOutputOpen;
+	QToolButton* toolButtonOpen;
+	QAction* actionInsertModeAppend;
+	QAction* actionInsertModeBefore;
+	QAction* actionOpenAppend;
+	QAction* actionOpenInsertBefore;
 	QAction* actionOutputClear;
 	QAction* actionOutputSaveHOCR;
 	QAction* actionOutputExportText;
@@ -52,8 +59,33 @@ public:
 		widget->layout()->setSpacing(0);
 
 		// Output toolbar
-		actionOutputOpen = new QAction(QIcon::fromTheme("document-open"), gettext("Open hOCR file"), widget);
-		actionOutputOpen->setToolTip(gettext("Open hOCR file"));
+		actionInsertModeAppend = new QAction(QIcon(":/icons/ins_hocr_append"), gettext("Append new output after last page"), widget);
+		actionInsertModeBefore = new QAction(QIcon(":/icons/ins_hocr_before"), gettext("Insert new output before current page"), widget);
+
+		menuInsertMode = new QMenu(widget);
+		menuInsertMode->addAction(actionInsertModeAppend);
+		menuInsertMode->addAction(actionInsertModeBefore);
+
+		toolButtonInsertMode = new QToolButton(widget);
+		toolButtonInsertMode->setIcon(QIcon(":/icons/ins_hocr_append"));
+		toolButtonInsertMode->setToolTip(gettext("Select insert mode"));
+		toolButtonInsertMode->setPopupMode(QToolButton::InstantPopup);
+		toolButtonInsertMode->setMenu(menuInsertMode);
+
+		actionOpenAppend = new QAction(gettext("Append document after last page"), widget);
+		actionOpenInsertBefore = new QAction(gettext("Insert document before current page"), widget);
+
+		menuOpen = new QMenu(widget);
+		menuOpen->addAction(actionOpenAppend);
+		menuOpen->addAction(actionOpenInsertBefore);
+
+		toolButtonOpen = new QToolButton(widget);
+		toolButtonOpen->setIcon(QIcon::fromTheme("document-open"));
+		toolButtonOpen->setText(gettext("Open hOCR file"));
+		toolButtonOpen->setToolTip(gettext("Open hOCR file"));
+		toolButtonOpen->setPopupMode(QToolButton::MenuButtonPopup);
+		toolButtonOpen->setMenu(menuOpen);
+
 		actionOutputSaveHOCR = new QAction(QIcon::fromTheme("document-save-as"), gettext("Save as hOCR text"), widget);
 		actionOutputSaveHOCR->setToolTip(gettext("Save as hOCR text"));
 		actionOutputSaveHOCR->setEnabled(false);
@@ -89,7 +121,9 @@ public:
 		toolBarOutput = new QToolBar(widget);
 		toolBarOutput->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		toolBarOutput->setIconSize(QSize(1, 1) * toolBarOutput->style()->pixelMetric(QStyle::PM_SmallIconSize));
-		toolBarOutput->addAction(actionOutputOpen);
+		toolBarOutput->addWidget(toolButtonInsertMode);
+		toolBarOutput->addSeparator();
+		toolBarOutput->addWidget(toolButtonOpen);
 		toolBarOutput->addAction(actionOutputSaveHOCR);
 		toolBarOutput->addWidget(toolButtonOutputExport);
 		toolBarOutput->addAction(actionOutputClear);

@@ -60,13 +60,16 @@ QString HOCRDocument::toHTML() const {
 	return html;
 }
 
-QModelIndex HOCRDocument::addPage(const QDomElement& pageElement, bool cleanGraphics) {
-	int newRow = m_pages.size();
-	beginInsertRows(QModelIndex(), newRow, newRow);
-	m_pages.append(new HOCRPage(pageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics, m_pages.size()));
+
+QModelIndex HOCRDocument::insertPage(int beforeIdx, const QDomElement& pageElement, bool cleanGraphics) {
+	beginInsertRows(QModelIndex(), beforeIdx, beforeIdx);
+	m_pages.insert(beforeIdx, new HOCRPage(pageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics, beforeIdx));
+	for(int i = beforeIdx + 1; i < m_pages.size(); ++i) {
+		m_pages[i]->m_index = i;
+	}
 	endInsertRows();
 	emit dataChanged(index(0, 0), index(m_pages.size() - 1, 0), {Qt::DisplayRole});
-	return index(newRow, 0);
+	return index(beforeIdx, 0);
 }
 
 bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass) {

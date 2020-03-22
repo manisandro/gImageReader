@@ -197,9 +197,14 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////
 
+Q_DECLARE_METATYPE(OutputEditorHOCR::HOCRReadSessionData)
+
 OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	static int reg = qRegisterMetaType<QList<QRect>>("QList<QRect>");
 	Q_UNUSED(reg);
+
+	static int reg2 = qRegisterMetaType<HOCRReadSessionData>("HOCRReadSessionData");
+	Q_UNUSED(reg2);
 
 	m_tool = tool;
 	m_widget = new QWidget;
@@ -236,7 +241,13 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	QShortcut* shortcut = new QShortcut(QKeySequence(Qt::Key_Delete), m_widget);
 	QObject::connect(shortcut, &QShortcut::activated, this, &OutputEditorHOCR::removeItem);
 
-	connect(ui.actionOutputOpen, &QAction::triggered, this, &OutputEditorHOCR::open);
+	ui.actionInsertModeAppend->setData(static_cast<int>(InsertMode::Append));
+	ui.actionInsertModeBefore->setData(static_cast<int>(InsertMode::InsertBefore));
+
+	connect(ui.menuInsertMode, &QMenu::triggered, this, &OutputEditorHOCR::setInsertMode);
+	connect(ui.toolButtonOpen, &QToolButton::clicked, this, [this] { open(InsertMode::Replace); });
+	connect(ui.actionOpenAppend, &QAction::triggered, this, [this] { open(InsertMode::Append); });
+	connect(ui.actionOpenInsertBefore, &QAction::triggered, this, [this] { open(InsertMode::InsertBefore); });
 	connect(ui.actionOutputSaveHOCR, &QAction::triggered, this, [this] { save(); });
 	connect(ui.actionOutputExportODT, &QAction::triggered, this, &OutputEditorHOCR::exportToODT);
 	connect(ui.actionOutputExportPDF, &QAction::triggered, this, &OutputEditorHOCR::exportToPDF);
@@ -286,6 +297,11 @@ void OutputEditorHOCR::setFont() {
 	}
 }
 
+void OutputEditorHOCR::setInsertMode(QAction* action) {
+	m_insertMode = static_cast<InsertMode>(action->data().value<int>());
+	ui.toolButtonInsertMode->setIcon(action->icon());
+}
+
 void OutputEditorHOCR::setModified() {
 	ui.actionOutputSaveHOCR->setEnabled(m_document->pageCount() > 0);
 	ui.toolButtonOutputExport->setEnabled(m_document->pageCount() > 0);
@@ -297,14 +313,18 @@ void OutputEditorHOCR::setModified() {
 
 OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI& tess) {
 	tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
-	return new HOCRReadSessionData;
+	HOCRReadSessionData* data = new HOCRReadSessionData;
+	data->insertIndex = m_insertMode == InsertMode::Append ? m_document->pageCount() : currentPage();
+	return data;
 }
 
 void OutputEditorHOCR::read(tesseract::TessBaseAPI& tess, ReadSessionData* data) {
 	tess.SetVariable("hocr_font_info", "true");
 	char* text = tess.GetHOCRText(data->page);
-	QMetaObject::invokeMethod(this, "addPage", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(text)), Q_ARG(ReadSessionData, *data));
+	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
+	QMetaObject::invokeMethod(this, "addPage", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(text)), Q_ARG(HOCRReadSessionData, *hdata));
 	delete[] text;
+	++hdata->insertIndex;
 }
 
 void OutputEditorHOCR::readError(const QString& errorMsg, ReadSessionData* data) {
@@ -320,7 +340,7 @@ void OutputEditorHOCR::finalizeRead(ReadSessionData* data) {
 	OutputEditor::finalizeRead(data);
 }
 
-void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data) {
+void OutputEditorHOCR::addPage(const QString& hocrText, HOCRReadSessionData data) {
 	QDomDocument doc;
 	doc.setContent(hocrText);
 
@@ -332,7 +352,7 @@ void OutputEditorHOCR::addPage(const QString& hocrText, ReadSessionData data) {
 	attrs["res"] = QString::number(data.resolution);
 	pageDiv.setAttribute("title", HOCRItem::serializeAttrGroup(attrs));
 
-	QModelIndex index = m_document->addPage(pageDiv, true);
+	QModelIndex index = m_document->insertPage(data.insertIndex, pageDiv, true);
 
 	expandCollapseChildren(index, true);
 	MAIN->setOutputPaneVisible(true);
@@ -404,6 +424,21 @@ void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool exp
 
 bool OutputEditorHOCR::showPage(const HOCRPage* page) {
 	return page && MAIN->getSourceManager()->addSource(page->sourceFile(), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
+}
+
+int OutputEditorHOCR::currentPage() {
+	QModelIndexList selected = ui.treeViewHOCR->selectionModel()->selectedIndexes();
+	if(selected.isEmpty()) {
+		return m_document->pageCount();
+	}
+	QModelIndex index = selected.front();
+	if(!index.isValid()) {
+		return m_document->pageCount();
+	}
+	while(index.parent().isValid()) {
+		index = index.parent();
+	}
+	return index.row();
 }
 
 void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModelIndex& prev) {
@@ -788,8 +823,8 @@ void OutputEditorHOCR::toggleWConfColumn(bool active) {
 	ui.treeViewHOCR->setColumnHidden(1, !active);
 }
 
-void OutputEditorHOCR::open() {
-	if(!clear(false)) {
+void OutputEditorHOCR::open(InsertMode mode) {
+	if(mode == InsertMode::Replace && !clear(false)) {
 		return;
 	}
 	QStringList files = FileDialogs::openDialog(_("Open hOCR File"), "", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")), false);
@@ -809,10 +844,11 @@ void OutputEditorHOCR::open() {
 		QMessageBox::critical(MAIN, _("Invalid hOCR file"), _("The file does not appear to contain valid hOCR HTML: %1").arg(filename));
 		return;
 	}
+	int pos = mode == InsertMode::InsertBefore ? currentPage() : m_document->pageCount();
 	while(!div.isNull()) {
 		// Need to query next before adding page since the element is reparented
 		QDomElement nextDiv = div.nextSiblingElement("div");
-		m_document->addPage(div, false);
+		m_document->insertPage(pos++, div, false);
 		div = nextDiv;
 	}
 	m_document->convertSourcePaths(QFileInfo(filename).absolutePath(), true);
