@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-22 14:51+0100\n"
+"POT-Creation-Date: 2020-03-22 15:53+0100\n"
 "PO-Revision-Date: 2018-03-16 12:34+0000\n"
 "Last-Translator: Alaa Sayed <bmwmy@hotmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gimagereader/"
@@ -24,27 +24,27 @@ msgstr ""
 msgid "OCR application"
 msgstr "برنامج التعرف الضوئي للمستندات المصورة"
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:167
 msgid "Redetect Languages"
 msgstr "إعادة تحميل لغات التعرف الضوئي"
 
-#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
+#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:170
 msgid "Manage Languages"
 msgstr "إدارة لغات التعرف الضوئي"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:173
 msgid "Preferences"
 msgstr "خيارات"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:500 ../qt/src/MainWindow.cc:496
-#: ../qt/src/Ui_MainWindow.hh:177
+#: ../qt/src/Ui_MainWindow.hh:178
 msgid "Help"
 msgstr "مساعدة"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:180
+#: ../qt/src/Ui_MainWindow.hh:181
 msgid "About"
 msgstr "نبذة"
 
@@ -52,7 +52,7 @@ msgstr "نبذة"
 msgid "Quit"
 msgstr "إنهاء البرنامج"
 
-#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:47
+#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:48
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
 #: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
 #: ../qt/data/ConfigDialog.ui.h:26
@@ -111,7 +111,7 @@ msgstr "اسم اللغة"
 msgid "Name"
 msgstr "الاسم"
 
-#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:46
+#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:47
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
 #: ../gtk/src/Utils.cc:76 ../qt/data/ConfigDialog.ui.h:27
@@ -187,24 +187,24 @@ msgstr ""
 msgid "Toggle output pane"
 msgstr "تبديل مكان شاشة المخرجات"
 
-#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
+#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate current page"
 msgstr "تدوير اتجاه الصفحة الحالية"
 
-#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
+#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:68
 msgid "Rotate all pages"
 msgstr "تدوير اتجاه كل الصفحات"
 
 #. Sources toolbar
-#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:191
+#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:192
 msgid "Recent"
 msgstr "مستخدم مؤخراً"
 
-#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:192
+#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:193
 msgid "Paste"
 msgstr "لصق"
 
-#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:193
+#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:194
 msgid "Take Screenshot"
 msgstr "حفظ لقطة شاشة"
 
@@ -224,195 +224,200 @@ msgstr "المقاس العادي"
 msgid "Best fit"
 msgstr "أفضل تلاؤم"
 
-#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:75
+#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
+#, fuzzy
+msgid "Rotate page"
+msgstr "تدوير اتجاه كل الصفحات"
+
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
 msgid "Select rotation mode"
 msgstr "اختر وضعية جهة الدوران"
 
-#: ../gtk/data/MainWindow.ui.h:12 ../gtk/data/OutputEditorHOCR.ui.h:12
+#: ../gtk/data/MainWindow.ui.h:13 ../gtk/data/OutputEditorHOCR.ui.h:12
 #: ../gtk/data/OutputEditorText.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:71 ../qt/src/Ui_OutputEditorText.hh:95
 msgid "Select insert mode"
 msgstr "اختر وضعية الإدخال"
 
-#: ../gtk/data/MainWindow.ui.h:13 ../qt/src/Ui_MainWindow.hh:109
+#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:103
 #, fuzzy
 msgid "Select page"
 msgstr "اختر اللغة"
 
-#: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:35
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
 msgstr "أزرار التحكم بالصورة"
 
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/src/MainWindow.cc:157
+#: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:157
 msgid "Plain text"
 msgstr "نص عادي txt"
 
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:158
+#: ../gtk/data/MainWindow.ui.h:17 ../qt/src/MainWindow.cc:158
 msgid "hOCR, PDF"
 msgstr "صيغة PDF"
 
-#: ../gtk/data/MainWindow.ui.h:17 ../qt/data/MainWindow.ui.h:37
+#: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect layout"
 msgstr "تعرف تلقائي لتخطيط الصفحة"
 
-#: ../gtk/data/MainWindow.ui.h:18
+#: ../gtk/data/MainWindow.ui.h:19
 msgid "<small>Recognize all</small>"
 msgstr "<small>التعرف الضوئي للكل</small>"
 
-#: ../gtk/data/MainWindow.ui.h:19
+#: ../gtk/data/MainWindow.ui.h:20
 msgid "Select language"
 msgstr "اختر اللغة"
 
-#: ../gtk/data/MainWindow.ui.h:20 ../qt/src/Ui_MainWindow.hh:204
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:205
 msgid "Add images"
 msgstr "إضافة مصورات"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:204
 msgid "Add Images"
 msgstr "إضافة مصورات"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:209
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:210
 msgid "Remove image from list"
 msgstr "إلغاء الصورة من القائمة"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:212
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:213
 msgid "Delete image"
 msgstr "حذف الصورة"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:215
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:216
 msgid "Clear list"
 msgstr "إلغاء جميع القائمة"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
 msgstr "الملفات"
 
-#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:8
+#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:8
 msgid "Device:"
 msgstr "الجهاز:"
 
-#: ../gtk/data/MainWindow.ui.h:27 ../gtk/data/TessdataManager.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:28 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:55
 msgid "Refresh"
 msgstr "تحديث"
 
-#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:9
 msgid "Output:"
 msgstr "المخرج:"
 
-#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:13
+#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:13
 msgid "Mode:"
 msgstr "الصيغة:"
 
-#: ../gtk/data/MainWindow.ui.h:30 ../gtk/src/hocr/HOCRPdfExporter.cc:313
+#: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:313
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:344
 msgid "Color"
 msgstr "اللون"
 
-#: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:316
+#: ../gtk/data/MainWindow.ui.h:32 ../gtk/src/hocr/HOCRPdfExporter.cc:316
 #: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:345
 msgid "Grayscale"
 msgstr "تدرج الرمادي"
 
-#: ../gtk/data/MainWindow.ui.h:32 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:10
 msgid "Resolution:"
 msgstr "الدقة النقطية:"
 
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:11
 msgid "Scan"
 msgstr "مسح ضوئي"
 
-#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:16
+#: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:16
 msgid "Source:"
 msgstr "المصدر:"
 
-#: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
 msgstr "الحصول"
 
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
 msgstr "السطوع"
 
-#: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
 msgstr "التباين"
 
-#: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
 msgstr "الدقة النقطية"
 
-#: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
 msgstr "عكس الألوان"
 
-#: ../gtk/data/MainWindow.ui.h:40
+#: ../gtk/data/MainWindow.ui.h:41
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "برنامج واجهة لمحرك التعرف الضوئي tesseract-ocr"
 
-#: ../gtk/data/MainWindow.ui.h:41 ../qt/data/CharacterListDialog.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:3
 #, fuzzy
 msgid "Enter a string of characters..."
 msgstr "الحصول على المدخلات..."
 
-#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
 msgstr "مجال الصفحات"
 
-#: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
 msgstr "مجال الصفحات:"
 
-#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>مثال:</b>1-11,13, 15-19</small>"
 
-#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
 msgstr "مساحة التعرف الضوئي:"
 
-#: ../gtk/data/MainWindow.ui.h:51 ../gtk/src/Recognizer.cc:375
-#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:369
+#: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:381
+#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:379
 msgid "Entire page"
 msgstr "كامل الصفحة"
 
-#: ../gtk/data/MainWindow.ui.h:52 ../qt/data/PageRangeDialog.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:53 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
 msgstr "تعرف تلقائي"
 
-#: ../gtk/data/MainWindow.ui.h:53 ../qt/data/PageRangeDialog.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
 msgstr "ألحق المخرج الحالي بنص شاشة المخرجات:"
 
-#: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:8
+#: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
 msgstr "اسم الملف المصور"
 
-#: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:56 ../qt/data/PageRangeDialog.ui.h:9
 msgid "Source page"
 msgstr "مصدر المصورات"
 
-#: ../gtk/data/MainWindow.ui.h:56 ../qt/src/SourceManager.cc:145
+#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:145
 msgid "Protected PDF"
 msgstr "PDF محمي بكلمة سر"
 
-#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/Recognizer.cc:76
+#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:77
 msgid "Current Page"
 msgstr "الصفحة الحالية"
 
-#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:79
+#: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:80
 msgid "Multiple Pages..."
 msgstr "صفحات متعددة..."
 
@@ -1424,8 +1429,8 @@ msgstr "ملف: %1"
 msgid "Page: %1"
 msgstr "صفحة: %1"
 
-#: ../gtk/src/OutputEditorText.cc:255 ../gtk/src/Recognizer.cc:472
-#: ../qt/src/Recognizer.cc:463
+#: ../gtk/src/OutputEditorText.cc:255 ../gtk/src/Recognizer.cc:478
+#: ../qt/src/Recognizer.cc:473
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -1437,80 +1442,80 @@ msgstr ""
 msgid "Save Output..."
 msgstr "حفظ المخرج..."
 
-#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:172
+#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:173
 msgid "No languages available"
 msgstr "لا توجد لغات متاحة"
 
-#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:172
+#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:173
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr "لا توجد لغات تعرف ضوئي لمحرك التعرف tesseract. التعرف الضوئي لن يعمل."
 
-#: ../gtk/src/Recognizer.cc:233 ../qt/src/Recognizer.cc:232
+#: ../gtk/src/Recognizer.cc:233 ../qt/src/Recognizer.cc:233
 msgid "Multilingual"
 msgstr "بلغات متعددة"
 
-#: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:277
+#: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:281
 msgid "Automatic page segmentation"
 msgstr "تقسيم تخطيط الصفحة بشكل تلقائي"
 
-#: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:278
+#: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:282
 msgid "Page segmentation with orientation and script detection"
 msgstr "تقسيم تخطيط الصفحة مع التعرف التلقائي للغة واتجاه الصفحة"
 
-#: ../gtk/src/Recognizer.cc:287 ../qt/src/Recognizer.cc:279
+#: ../gtk/src/Recognizer.cc:287 ../qt/src/Recognizer.cc:283
 msgid "Assume single column of text"
 msgstr "اعتبر النص في عمود واحد"
 
-#: ../gtk/src/Recognizer.cc:288 ../qt/src/Recognizer.cc:280
+#: ../gtk/src/Recognizer.cc:288 ../qt/src/Recognizer.cc:284
 msgid "Assume single block of vertically aligned text"
 msgstr "اعتبر كتلة نص واحدة مضبوطة عموديا"
 
-#: ../gtk/src/Recognizer.cc:289 ../qt/src/Recognizer.cc:281
+#: ../gtk/src/Recognizer.cc:289 ../qt/src/Recognizer.cc:285
 msgid "Assume a single uniform block of text"
 msgstr "اعتبر كتلة نص واحدة"
 
-#: ../gtk/src/Recognizer.cc:290 ../qt/src/Recognizer.cc:282
+#: ../gtk/src/Recognizer.cc:290 ../qt/src/Recognizer.cc:286
 msgid "Assume a line of text"
 msgstr "اعتبر نص في سطر واحد"
 
-#: ../gtk/src/Recognizer.cc:291 ../qt/src/Recognizer.cc:283
+#: ../gtk/src/Recognizer.cc:291 ../qt/src/Recognizer.cc:287
 msgid "Assume a single word"
 msgstr "اعتبر وجود كلمة واحدة"
 
-#: ../gtk/src/Recognizer.cc:292 ../qt/src/Recognizer.cc:284
+#: ../gtk/src/Recognizer.cc:292 ../qt/src/Recognizer.cc:288
 msgid "Assume a single word in a circle"
 msgstr "اعتبر وجود كلمة واحدة في دائرة"
 
-#: ../gtk/src/Recognizer.cc:293 ../qt/src/Recognizer.cc:285
+#: ../gtk/src/Recognizer.cc:293 ../qt/src/Recognizer.cc:289
 msgid "Sparse text in no particular order"
 msgstr "نص متناثر بدون أي ترتيب"
 
-#: ../gtk/src/Recognizer.cc:294 ../qt/src/Recognizer.cc:286
+#: ../gtk/src/Recognizer.cc:294 ../qt/src/Recognizer.cc:290
 msgid "Sparse text with orientation and script detection"
 msgstr "نص متناثر مع التعرف التلقائي لاتجاه الصفحة واللغة"
 
-#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:297
+#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:301
 msgid "Page segmentation mode"
 msgstr "وضعية تخطيط الصفحة"
 
-#: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:300
+#: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:304
 msgid "Character whitelist / blacklist..."
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:305
+#: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:309
 msgid "Manage languages..."
 msgstr "إدارة اللغات..."
 
-#: ../gtk/src/Recognizer.cc:375 ../qt/src/Recognizer.cc:369
+#: ../gtk/src/Recognizer.cc:381 ../qt/src/Recognizer.cc:379
 msgid "Current selection"
 msgstr "التحديد الحالي"
 
-#: ../gtk/src/Recognizer.cc:466 ../qt/src/Recognizer.cc:456
+#: ../gtk/src/Recognizer.cc:472 ../qt/src/Recognizer.cc:466
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "جار التعرف الضوئي على الصفحة %1 (%2 من %3)"
 
-#: ../gtk/src/Recognizer.cc:471 ../qt/src/Recognizer.cc:462
+#: ../gtk/src/Recognizer.cc:477 ../qt/src/Recognizer.cc:472
 msgid ""
 "\n"
 "- Page %1: failed to render page"
@@ -1518,22 +1523,22 @@ msgstr ""
 "\n"
 "- الصفحة %1: لا يمكن رسم الصفحة"
 
-#: ../gtk/src/Recognizer.cc:502 ../gtk/src/Recognizer.cc:533
-#: ../gtk/src/Recognizer.cc:546 ../qt/src/Recognizer.cc:492
-#: ../qt/src/Recognizer.cc:523 ../qt/src/Recognizer.cc:536
+#: ../gtk/src/Recognizer.cc:508 ../gtk/src/Recognizer.cc:539
+#: ../gtk/src/Recognizer.cc:552 ../qt/src/Recognizer.cc:502
+#: ../qt/src/Recognizer.cc:533 ../qt/src/Recognizer.cc:546
 msgid "Recognizing..."
 msgstr "جار التعرف الضوئي.."
 
-#: ../gtk/src/Recognizer.cc:507 ../gtk/src/Recognizer.cc:516
-#: ../qt/src/Recognizer.cc:497 ../qt/src/Recognizer.cc:506
+#: ../gtk/src/Recognizer.cc:513 ../gtk/src/Recognizer.cc:522
+#: ../qt/src/Recognizer.cc:507 ../qt/src/Recognizer.cc:516
 msgid "Recognition errors occurred"
 msgstr "حدثت أخطاء في التعرف الضوئي"
 
-#: ../gtk/src/Recognizer.cc:507 ../qt/src/Recognizer.cc:497
+#: ../gtk/src/Recognizer.cc:513 ../qt/src/Recognizer.cc:507
 msgid "The following errors occurred:%1"
 msgstr "حدثت الأخطاء التالية: %1"
 
-#: ../gtk/src/Recognizer.cc:516 ../qt/src/Recognizer.cc:506
+#: ../gtk/src/Recognizer.cc:522 ../qt/src/Recognizer.cc:516
 msgid "Failed to initialize tesseract"
 msgstr "فشل في تهيئة محرك التعرف الضوئي tesseract"
 
@@ -1981,19 +1986,19 @@ msgstr ""
 msgid "Output"
 msgstr "المخرج"
 
-#: ../qt/src/Ui_MainWindow.hh:135
+#: ../qt/src/Ui_MainWindow.hh:136
 msgid "OCR mode:"
 msgstr "وضعية التعرف الضوئي:"
 
-#: ../qt/src/Ui_MainWindow.hh:208
+#: ../qt/src/Ui_MainWindow.hh:209
 msgid "Remove Image"
 msgstr "إزالة الصورة"
 
-#: ../qt/src/Ui_MainWindow.hh:211
+#: ../qt/src/Ui_MainWindow.hh:212
 msgid "Delete Image"
 msgstr "حذف الصورة"
 
-#: ../qt/src/Ui_MainWindow.hh:214
+#: ../qt/src/Ui_MainWindow.hh:215
 msgid "Clear List"
 msgstr "مسح القائمة بالكامل"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-22 14:51+0100\n"
+"POT-Creation-Date: 2020-03-22 15:53+0100\n"
 "PO-Revision-Date: 2019-06-18 19:05+0000\n"
 "Last-Translator: beriain <beriain@bitmessage.ch>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/gimagereader/"
@@ -23,27 +23,27 @@ msgstr ""
 msgid "OCR application"
 msgstr "OCR aplikazioa"
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:167
 msgid "Redetect Languages"
 msgstr "Hizkuntzak berriz antzeman"
 
-#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
+#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:170
 msgid "Manage Languages"
 msgstr "Hizkuntzak kudeatu"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:173
 msgid "Preferences"
 msgstr "Hobespenak"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:500 ../qt/src/MainWindow.cc:496
-#: ../qt/src/Ui_MainWindow.hh:177
+#: ../qt/src/Ui_MainWindow.hh:178
 msgid "Help"
 msgstr "Laguntza"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:180
+#: ../qt/src/Ui_MainWindow.hh:181
 msgid "About"
 msgstr "Honi buruz"
 
@@ -51,7 +51,7 @@ msgstr "Honi buruz"
 msgid "Quit"
 msgstr "Irten"
 
-#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:47
+#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:48
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
 #: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
 #: ../qt/data/ConfigDialog.ui.h:26
@@ -110,7 +110,7 @@ msgstr "Hizkuntzaren izena"
 msgid "Name"
 msgstr "Izena"
 
-#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:46
+#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:47
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
 #: ../gtk/src/Utils.cc:76 ../qt/data/ConfigDialog.ui.h:27
@@ -183,24 +183,24 @@ msgstr ""
 msgid "Toggle output pane"
 msgstr "Irteera panela txandakatu"
 
-#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
+#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate current page"
 msgstr "Oraingo orria biratu"
 
-#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
+#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:68
 msgid "Rotate all pages"
 msgstr "Orri guztiak biratu"
 
 #. Sources toolbar
-#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:191
+#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:192
 msgid "Recent"
 msgstr "Azkenak"
 
-#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:192
+#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:193
 msgid "Paste"
 msgstr "Itsasi"
 
-#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:193
+#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:194
 msgid "Take Screenshot"
 msgstr "Pantailaren argazkia egin"
 
@@ -220,195 +220,200 @@ msgstr "Neurri normala"
 msgid "Best fit"
 msgstr "Egokitzapen onena"
 
-#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:75
+#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
+#, fuzzy
+msgid "Rotate page"
+msgstr "Orri guztiak biratu"
+
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
 msgid "Select rotation mode"
 msgstr "Biratze modua hautatu"
 
-#: ../gtk/data/MainWindow.ui.h:12 ../gtk/data/OutputEditorHOCR.ui.h:12
+#: ../gtk/data/MainWindow.ui.h:13 ../gtk/data/OutputEditorHOCR.ui.h:12
 #: ../gtk/data/OutputEditorText.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:71 ../qt/src/Ui_OutputEditorText.hh:95
 msgid "Select insert mode"
 msgstr "Sartze modua hautatu"
 
-#: ../gtk/data/MainWindow.ui.h:13 ../qt/src/Ui_MainWindow.hh:109
+#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:103
 #, fuzzy
 msgid "Select page"
 msgstr "Hizkuntza hautatu"
 
-#: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:35
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:35
 msgid "Image controls"
 msgstr "Irudi kontrolak"
 
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/src/MainWindow.cc:157
+#: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:157
 msgid "Plain text"
 msgstr "Testu laua"
 
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:158
+#: ../gtk/data/MainWindow.ui.h:17 ../qt/src/MainWindow.cc:158
 #, fuzzy
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
-#: ../gtk/data/MainWindow.ui.h:17 ../qt/data/MainWindow.ui.h:37
+#: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect layout"
 msgstr "Antolaketa automatikoki antzeman"
 
-#: ../gtk/data/MainWindow.ui.h:18
+#: ../gtk/data/MainWindow.ui.h:19
 msgid "<small>Recognize all</small>"
 msgstr "<small>Dena ikuskatu</small>"
 
-#: ../gtk/data/MainWindow.ui.h:19
+#: ../gtk/data/MainWindow.ui.h:20
 msgid "Select language"
 msgstr "Hizkuntza hautatu"
 
-#: ../gtk/data/MainWindow.ui.h:20 ../qt/src/Ui_MainWindow.hh:204
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:205
 msgid "Add images"
 msgstr "Irudiak gehitu"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:204
 msgid "Add Images"
 msgstr "Irudiak gehitu"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:209
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:210
 msgid "Remove image from list"
 msgstr "Irudia zerrendatik kendu"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:212
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:213
 msgid "Delete image"
 msgstr "Irudia ezabatu"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:215
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:216
 msgid "Clear list"
 msgstr "Zerrenda garbitu"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
 msgstr "Fitxategiak"
 
-#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:8
+#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:8
 msgid "Device:"
 msgstr "Gailua:"
 
-#: ../gtk/data/MainWindow.ui.h:27 ../gtk/data/TessdataManager.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:28 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:55
 msgid "Refresh"
 msgstr "Freskatu"
 
-#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:9
 msgid "Output:"
 msgstr "Irteera:"
 
-#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:13
+#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:13
 msgid "Mode:"
 msgstr "Modua:"
 
-#: ../gtk/data/MainWindow.ui.h:30 ../gtk/src/hocr/HOCRPdfExporter.cc:313
+#: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:313
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:344
 msgid "Color"
 msgstr "Kolorea"
 
-#: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:316
+#: ../gtk/data/MainWindow.ui.h:32 ../gtk/src/hocr/HOCRPdfExporter.cc:316
 #: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:345
 msgid "Grayscale"
 msgstr "Gris eskala"
 
-#: ../gtk/data/MainWindow.ui.h:32 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:10
 msgid "Resolution:"
 msgstr "Bereizmena:"
 
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:11
 msgid "Scan"
 msgstr "Eskaneatu"
 
-#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:16
+#: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:16
 msgid "Source:"
 msgstr "Iturria:"
 
-#: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:6
 msgid "Acquire"
 msgstr "Eskuratu"
 
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
 msgstr "Distira"
 
-#: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
 msgstr "Kontrastea"
 
-#: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
 msgstr "Bereizmena"
 
-#: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
 msgstr "Koloreak alderantzikatu"
 
-#: ../gtk/data/MainWindow.ui.h:40
+#: ../gtk/data/MainWindow.ui.h:41
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "tesseract-ocrentzako frontend grafiko bat"
 
-#: ../gtk/data/MainWindow.ui.h:41 ../qt/data/CharacterListDialog.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:3
 msgid "Enter a string of characters..."
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/PageRangeDialog.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
 msgstr "Orrialde tartea"
 
-#: ../gtk/data/MainWindow.ui.h:48 ../qt/data/PageRangeDialog.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
 msgstr "Orrialde tartea:"
 
-#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Adibidez:</b> 1-10, 13, 14-18</small>"
 
-#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
 msgstr "Ikuskatze eremua:"
 
-#: ../gtk/data/MainWindow.ui.h:51 ../gtk/src/Recognizer.cc:375
-#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:369
+#: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:381
+#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:379
 msgid "Entire page"
 msgstr "Orrialde osoa"
 
-#: ../gtk/data/MainWindow.ui.h:52 ../qt/data/PageRangeDialog.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:53 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
 msgstr "Automatikoki antzeman"
 
-#: ../gtk/data/MainWindow.ui.h:53 ../qt/data/PageRangeDialog.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:8
+#: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
 msgstr "Jatorriaren fitxategi izena"
 
-#: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:56 ../qt/data/PageRangeDialog.ui.h:9
 msgid "Source page"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:56 ../qt/src/SourceManager.cc:145
+#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:145
 msgid "Protected PDF"
 msgstr "Babestutako PDFa"
 
-#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/Recognizer.cc:76
+#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:77
 msgid "Current Page"
 msgstr "Oraingo orrialdea"
 
-#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:79
+#: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:80
 msgid "Multiple Pages..."
 msgstr "Hainbat orrialde..."
 
@@ -1404,8 +1409,8 @@ msgstr ""
 msgid "Page: %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:255 ../gtk/src/Recognizer.cc:472
-#: ../qt/src/Recognizer.cc:463
+#: ../gtk/src/OutputEditorText.cc:255 ../gtk/src/Recognizer.cc:478
+#: ../qt/src/Recognizer.cc:473
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -1415,101 +1420,101 @@ msgstr ""
 msgid "Save Output..."
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:172
+#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:173
 msgid "No languages available"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:172
+#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:173
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:233 ../qt/src/Recognizer.cc:232
+#: ../gtk/src/Recognizer.cc:233 ../qt/src/Recognizer.cc:233
 msgid "Multilingual"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:277
+#: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:281
 msgid "Automatic page segmentation"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:278
+#: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:282
 msgid "Page segmentation with orientation and script detection"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:287 ../qt/src/Recognizer.cc:279
+#: ../gtk/src/Recognizer.cc:287 ../qt/src/Recognizer.cc:283
 msgid "Assume single column of text"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:288 ../qt/src/Recognizer.cc:280
+#: ../gtk/src/Recognizer.cc:288 ../qt/src/Recognizer.cc:284
 msgid "Assume single block of vertically aligned text"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:289 ../qt/src/Recognizer.cc:281
+#: ../gtk/src/Recognizer.cc:289 ../qt/src/Recognizer.cc:285
 msgid "Assume a single uniform block of text"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:290 ../qt/src/Recognizer.cc:282
+#: ../gtk/src/Recognizer.cc:290 ../qt/src/Recognizer.cc:286
 msgid "Assume a line of text"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:291 ../qt/src/Recognizer.cc:283
+#: ../gtk/src/Recognizer.cc:291 ../qt/src/Recognizer.cc:287
 msgid "Assume a single word"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:292 ../qt/src/Recognizer.cc:284
+#: ../gtk/src/Recognizer.cc:292 ../qt/src/Recognizer.cc:288
 msgid "Assume a single word in a circle"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:293 ../qt/src/Recognizer.cc:285
+#: ../gtk/src/Recognizer.cc:293 ../qt/src/Recognizer.cc:289
 msgid "Sparse text in no particular order"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:294 ../qt/src/Recognizer.cc:286
+#: ../gtk/src/Recognizer.cc:294 ../qt/src/Recognizer.cc:290
 msgid "Sparse text with orientation and script detection"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:297
+#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:301
 msgid "Page segmentation mode"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:300
+#: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:304
 msgid "Character whitelist / blacklist..."
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:305
+#: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:309
 msgid "Manage languages..."
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:375 ../qt/src/Recognizer.cc:369
+#: ../gtk/src/Recognizer.cc:381 ../qt/src/Recognizer.cc:379
 msgid "Current selection"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:466 ../qt/src/Recognizer.cc:456
+#: ../gtk/src/Recognizer.cc:472 ../qt/src/Recognizer.cc:466
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:471 ../qt/src/Recognizer.cc:462
+#: ../gtk/src/Recognizer.cc:477 ../qt/src/Recognizer.cc:472
 msgid ""
 "\n"
 "- Page %1: failed to render page"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:502 ../gtk/src/Recognizer.cc:533
-#: ../gtk/src/Recognizer.cc:546 ../qt/src/Recognizer.cc:492
-#: ../qt/src/Recognizer.cc:523 ../qt/src/Recognizer.cc:536
+#: ../gtk/src/Recognizer.cc:508 ../gtk/src/Recognizer.cc:539
+#: ../gtk/src/Recognizer.cc:552 ../qt/src/Recognizer.cc:502
+#: ../qt/src/Recognizer.cc:533 ../qt/src/Recognizer.cc:546
 msgid "Recognizing..."
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:507 ../gtk/src/Recognizer.cc:516
-#: ../qt/src/Recognizer.cc:497 ../qt/src/Recognizer.cc:506
+#: ../gtk/src/Recognizer.cc:513 ../gtk/src/Recognizer.cc:522
+#: ../qt/src/Recognizer.cc:507 ../qt/src/Recognizer.cc:516
 msgid "Recognition errors occurred"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:507 ../qt/src/Recognizer.cc:497
+#: ../gtk/src/Recognizer.cc:513 ../qt/src/Recognizer.cc:507
 msgid "The following errors occurred:%1"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:516 ../qt/src/Recognizer.cc:506
+#: ../gtk/src/Recognizer.cc:522 ../qt/src/Recognizer.cc:516
 msgid "Failed to initialize tesseract"
 msgstr ""
 
@@ -1931,19 +1936,19 @@ msgstr ""
 msgid "Output"
 msgstr ""
 
-#: ../qt/src/Ui_MainWindow.hh:135
+#: ../qt/src/Ui_MainWindow.hh:136
 msgid "OCR mode:"
 msgstr ""
 
-#: ../qt/src/Ui_MainWindow.hh:208
+#: ../qt/src/Ui_MainWindow.hh:209
 msgid "Remove Image"
 msgstr ""
 
-#: ../qt/src/Ui_MainWindow.hh:211
+#: ../qt/src/Ui_MainWindow.hh:212
 msgid "Delete Image"
 msgstr ""
 
-#: ../qt/src/Ui_MainWindow.hh:214
+#: ../qt/src/Ui_MainWindow.hh:215
 msgid "Clear List"
 msgstr ""
 
