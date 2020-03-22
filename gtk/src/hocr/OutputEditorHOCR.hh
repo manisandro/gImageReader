@@ -38,6 +38,8 @@ class SearchReplaceFrame;
 
 class OutputEditorHOCR : public OutputEditor {
 public:
+	enum class InsertMode { Replace, Append, InsertBefore };
+
 	OutputEditorHOCR(DisplayerToolHOCR* tool);
 	~OutputEditorHOCR();
 
@@ -55,7 +57,7 @@ public:
 
 	bool clear(bool hide = true) override;
 	void setLanguage(const Config::Lang& lang) override;
-	void open();
+	void open(InsertMode mode);
 	bool save(const std::string& filename = "") override;
 	void savePDF();
 	bool exportToPDF();
@@ -68,6 +70,7 @@ private:
 	class HOCRAttribRenderer;
 
 	struct HOCRReadSessionData : ReadSessionData {
+		int insertIndex;
 		std::vector<Glib::ustring> errors;
 	};
 
@@ -116,6 +119,7 @@ private:
 	GtkSpell::Checker m_spell;
 	bool m_modified = false;
 	std::string m_filebasename;
+	InsertMode m_insertMode = InsertMode::Append;
 
 	Glib::RefPtr<HOCRDocument> m_document;
 
@@ -128,15 +132,17 @@ private:
 	void expandCollapseChildren(const Gtk::TreeIter& index, bool expand) const;
 	bool findReplaceInItem(const Gtk::TreeIter& index, const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace, bool& currentSelectionMatchesSearch);
 	bool showPage(const HOCRPage* page);
+	int currentPage();
 
 	void bboxDrawn(const Geometry::Rectangle& bbox, int action);
-	void addPage(const Glib::ustring& hocrText, ReadSessionData data);
+	void addPage(const Glib::ustring& hocrText, HOCRReadSessionData data);
 	void editAttribute(const Glib::ustring& path, const Glib::ustring& value);
 	void expandCollapseItemClass(bool expand);
 	void navigateNextPrev(bool next);
 	void navigateTargetChanged();
 	void pickItem(const Geometry::Point& point);
 	void setFont();
+	void setInsertMode(InsertMode mode, const std::string& iconName);
 	void setModified();
 	void showItemProperties(const Gtk::TreeIter& index, const Gtk::TreeIter& prev = Gtk::TreeIter());
 	void showTreeWidgetContextMenu(GdkEventButton* ev);

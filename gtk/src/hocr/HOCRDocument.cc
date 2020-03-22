@@ -54,9 +54,12 @@ Glib::ustring HOCRDocument::toHTML() {
 	return html;
 }
 
-Gtk::TreeIter HOCRDocument::addPage(const xmlpp::Element* pageElement, bool cleanGraphics) {
-	m_pages.push_back(new HOCRPage(pageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics, m_pages.size()));
-	Gtk::TreeIter iter = get_iter(get_root_path(m_pages.back()->index()));
+Gtk::TreeIter HOCRDocument::insertPage(int beforeIdx, const xmlpp::Element* pageElement, bool cleanGraphics) {
+	m_pages.insert(m_pages.begin() + beforeIdx, new HOCRPage(pageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics, beforeIdx));
+	for(std::size_t i = beforeIdx + 1; i < m_pages.size(); ++i) {
+		m_pages[i]->m_index = i;
+	}
+	Gtk::TreeIter iter = get_iter(get_root_path(beforeIdx));
 	recursiveRowInserted(iter);
 	for(int i = 0, n = m_pages.size(); i < n; ++i) {
 		Gtk::TreePath path = get_root_path(i);

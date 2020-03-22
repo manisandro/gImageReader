@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.20.2 -->
+<!-- Generated with glade 3.22.2 -->
 <interface>
-  <requires lib="gtk+" version="3.10"/>
+  <requires lib="gtk+" version="3.12"/>
   <requires lib="gtksourceview" version="3.0"/>
   <object class="GtkDialog" id="dialogAddWord">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Add Word</property>
     <property name="type_hint">dialog</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="boxAddWord">
         <property name="can_focus">False</property>
@@ -82,9 +85,6 @@
       <action-widget response="-6">buttonAddWordCancel</action-widget>
       <action-widget response="-5">buttonAddWordOk</action-widget>
     </action-widgets>
-    <child>
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkImage" id="imageClear">
     <property name="visible">True</property>
@@ -106,6 +106,38 @@
     <property name="can_focus">False</property>
     <property name="icon_name">edit-find-replace-symbolic</property>
   </object>
+  <object class="GtkImage" id="imageInsertAppend">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="resource">/org/gnome/gimagereader/ins_hocr_append.png</property>
+  </object>
+  <object class="GtkImage" id="imageInsertBefore">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="resource">/org/gnome/gimagereader/ins_hocr_before.png</property>
+  </object>
+  <object class="GtkMenu" id="menuInsert">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkImageMenuItem" id="menuItemInsertAppend">
+        <property name="label" translatable="yes">Append new output after last page</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="image">imageInsertAppend</property>
+        <property name="use_stock">False</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkImageMenuItem" id="menuItemInsertBefore">
+        <property name="label" translatable="yes">Insert new output before current page</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="image">imageInsertBefore</property>
+        <property name="use_stock">False</property>
+      </object>
+    </child>
+  </object>
   <object class="GtkImage" id="imageNavigationNext">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -116,11 +148,6 @@
     <property name="can_focus">False</property>
     <property name="icon_name">go-up-symbolic</property>
   </object>
-  <object class="GtkImage" id="imageOpen">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">document-open-symbolic</property>
-  </object>
   <object class="GtkImage" id="imagePreview">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -130,6 +157,11 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="icon_name">document-save-as-symbolic</property>
+  </object>
+  <object class="GtkImage" id="imageSourcesAdd">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">document-open-symbolic</property>
   </object>
   <object class="GtkImage" id="imageWconf">
     <property name="visible">True</property>
@@ -163,6 +195,26 @@
       </object>
     </child>
   </object>
+  <object class="GtkMenu" id="menuOpen">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkMenuItem" id="menuItemOpenAppend">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Append document after last page</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="menuItemOpenInsert">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Insert document before current page</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+  </object>
   <object class="GtkBox" id="boxEditorHOCR">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -172,17 +224,117 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <object class="GtkButton" id="buttonOpen">
+          <object class="GtkMenuButton" id="menubuttonInsert">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="image">imageOpen</property>
+            <property name="receives_default">False</property>
+            <property name="tooltip_text" translatable="yes">Select insert mode</property>
             <property name="relief">none</property>
+            <property name="popup">menuInsert</property>
+            <property name="use_popover">False</property>
+            <child>
+              <object class="GtkBox" id="boxInsert">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkImage" id="imageInsert">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_text" translatable="yes">Select insert mode</property>
+                    <property name="resource">/org/gnome/gimagereader/ins_append.png</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkArrow" id="arrowInsert">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="arrow_type">down</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+            <style>
+              <class name="image-button"/>
+            </style>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="boxOpen">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkButton" id="buttonOpen">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Open hOCR file</property>
+                <property name="image">imageSourcesAdd</property>
+                <property name="relief">none</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkMenuButton" id="menubuttonOpen">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="tooltip_text" translatable="yes">Open hOCR file</property>
+                <property name="relief">none</property>
+                <property name="popup">menuOpen</property>
+                <property name="use_popover">False</property>
+                <child>
+                  <object class="GtkArrow" id="arrowOpen">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="arrow_type">down</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <style>
+              <class name="linked"/>
+            </style>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -198,7 +350,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">3</property>
           </packing>
         </child>
         <child>
@@ -250,7 +402,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">4</property>
           </packing>
         </child>
         <child>
@@ -265,7 +417,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">3</property>
+            <property name="position">5</property>
           </packing>
         </child>
         <child>
@@ -276,7 +428,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">4</property>
+            <property name="position">6</property>
           </packing>
         </child>
         <child>
@@ -291,7 +443,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">5</property>
+            <property name="position">7</property>
           </packing>
         </child>
         <child>
@@ -306,7 +458,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">6</property>
+            <property name="position">8</property>
           </packing>
         </child>
         <child>
@@ -321,7 +473,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">7</property>
+            <property name="position">9</property>
           </packing>
         </child>
       </object>

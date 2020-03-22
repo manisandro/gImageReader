@@ -334,7 +334,11 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.buttonSave->set_sensitive(false);
 	ui.buttonExport->set_sensitive(false);
 
-	CONNECT(ui.buttonOpen, clicked, [this] { open(); });
+	CONNECT(ui.menuItemInsertAppend, activate, [this] { setInsertMode(InsertMode::Append, "ins_hocr_append.png"); });
+	CONNECT(ui.menuItemInsertBefore, activate, [this] { setInsertMode(InsertMode::InsertBefore, "ins_hocr_before.png"); });
+	CONNECT(ui.buttonOpen, clicked, [this] { open(InsertMode::Replace); });
+	CONNECT(ui.menuItemOpenAppend, activate, [this] { open(InsertMode::Append); });
+	CONNECT(ui.menuItemOpenInsert, activate, [this] { open(InsertMode::InsertBefore); });
 	CONNECT(ui.buttonSave, clicked, [this] { save(); });
 	CONNECT(ui.menuitemExportText, activate, [this] { exportToText(); });
 	CONNECT(ui.menuitemExportPdf, activate, [this] { exportToPDF(); });
@@ -404,6 +408,11 @@ void OutputEditorHOCR::setFont() {
 	}
 }
 
+void OutputEditorHOCR::setInsertMode(InsertMode mode, const std::string& iconName) {
+	m_insertMode = mode;
+	ui.imageInsert->set(Gdk::Pixbuf::create_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/%1", iconName)));
+}
+
 void OutputEditorHOCR::setModified() {
 	ui.buttonSave->set_sensitive(m_document->pageCount() > 0);
 	ui.buttonExport->set_sensitive(m_document->pageCount() > 0);
@@ -415,14 +424,18 @@ void OutputEditorHOCR::setModified() {
 
 OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBaseAPI& tess) {
 	tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
-	return new HOCRReadSessionData;
+	HOCRReadSessionData* data = new HOCRReadSessionData;
+	data->insertIndex = m_insertMode == InsertMode::Append ? m_document->pageCount() : currentPage();
+	return data;
 }
 
 void OutputEditorHOCR::read(tesseract::TessBaseAPI& tess, ReadSessionData* data) {
 	tess.SetVariable("hocr_font_info", "true");
 	char* text = tess.GetHOCRText(data->page);
-	Utils::runInMainThreadBlocking([&] { addPage(text, *data); });
+	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
+	Utils::runInMainThreadBlocking([&] { addPage(text, *hdata); });
 	delete[] text;
+	++hdata->insertIndex;
 }
 
 void OutputEditorHOCR::readError(const Glib::ustring& errorMsg, ReadSessionData* data) {
@@ -438,7 +451,7 @@ void OutputEditorHOCR::finalizeRead(ReadSessionData* data) {
 	OutputEditor::finalizeRead(data);
 }
 
-void OutputEditorHOCR::addPage(const Glib::ustring& hocrText, ReadSessionData data) {
+void OutputEditorHOCR::addPage(const Glib::ustring& hocrText, HOCRReadSessionData data) {
 	xmlpp::DomParser parser;
 	parser.parse_memory(hocrText);
 	xmlpp::Document* doc = parser.get_document();
@@ -454,7 +467,7 @@ void OutputEditorHOCR::addPage(const Glib::ustring& hocrText, ReadSessionData da
 	attrs["res"] = Glib::ustring::compose("%1", data.resolution);
 	pageDiv->set_attribute("title", HOCRItem::serializeAttrGroup(attrs));
 
-	Gtk::TreeIter index = m_document->addPage(pageDiv, true);
+	Gtk::TreeIter index = m_document->insertPage(data.insertIndex, pageDiv, true);
 	expandCollapseChildren(index, true);
 	m_treeView->expand_to_path(m_document->get_path(index));
 	m_treeView->expand_row(m_document->get_path(index), true);
@@ -527,6 +540,20 @@ void OutputEditorHOCR::expandCollapseChildren(const Gtk::TreeIter& index, bool e
 
 bool OutputEditorHOCR::showPage(const HOCRPage* page) {
 	return page && MAIN->getSourceManager()->addSource(Gio::File::create_for_path(page->sourceFile()), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
+}
+
+int OutputEditorHOCR::currentPage() {
+	std::vector<Gtk::TreeModel::Path> selected = m_treeView->get_selection()->get_selected_rows();
+	if(selected.empty()) {
+		return m_document->pageCount();
+	}
+	Gtk::TreeModel::Path path = selected.front();
+	gint num;
+	int* indices = gtk_tree_path_get_indices_with_depth(path.gobj(), &num);
+	if(num == 0) {
+		return m_document->pageCount();
+	}
+	return indices[0];
 }
 
 void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index, const Gtk::TreeIter& prev) {
@@ -919,8 +946,8 @@ void OutputEditorHOCR::pickItem(const Geometry::Point& point) {
 	m_treeView->grab_focus();
 }
 
-void OutputEditorHOCR::open() {
-	if(!clear(false)) {
+void OutputEditorHOCR::open(InsertMode mode) {
+	if(mode == InsertMode::Replace && !clear(false)) {
 		return;
 	}
 	FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html", "text/xml", "text/plain"}, {"*.html"}};
@@ -945,8 +972,9 @@ void OutputEditorHOCR::open() {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Invalid hOCR file"), Glib::ustring::compose(_("The file does not appear to contain valid hOCR HTML: %1"), filename));
 		return;
 	}
+	int pos = mode == InsertMode::InsertBefore ? currentPage() : m_document->pageCount();
 	while(div) {
-		m_document->addPage(div, false);
+		m_document->insertPage(pos++, div, false);
 		div = XmlUtils::nextSiblingElement(div, "div");
 	}
 	m_document->convertSourcePaths(Glib::path_get_dirname(filename), true);
