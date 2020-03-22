@@ -303,7 +303,6 @@ bool HOCRDocument::checkItemSpelling(const Gtk::TreeIter& index, std::vector<Gli
 	Glib::ustring prefix, suffix, trimmed = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
 	if(trimmed.empty()) { return true; }
 	Glib::ustring lang = item->spellingLang();
-	bool haveLanguage = true;
 	if(m_spell->get_language() != lang) {
 		try {
 			m_spell->set_language(lang);

@@ -23,6 +23,8 @@
 #include <gtksourceviewmm.h>
 #include <gtkspellmm.h>
 
+#include "Config.hh"
+#include "Geometry.hh"
 #include "OutputEditor.hh"
 #include "ui_OutputEditorHOCR.hh"
 
@@ -53,7 +55,7 @@ public:
 	bool getModified() const override {
 		return m_modified;
 	}
-	void onVisibilityChanged(bool /*visible*/);
+	void onVisibilityChanged(bool /*visible*/) override;
 
 	bool clear(bool hide = true) override;
 	void setLanguage(const Config::Lang& lang) override;
