@@ -47,7 +47,7 @@ public:
 
 	QString toHTML() const;
 
-	QModelIndex insertPage(int beforeIdx, const QDomElement& pageElement, bool cleanGraphics);
+	QModelIndex insertPage(int beforeIdx, const QDomElement& pageElement, bool cleanGraphics, const QString& sourceBasePath = QString());
 	const HOCRPage* page(int i) const {
 		return m_pages.value(i);
 	}

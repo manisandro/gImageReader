@@ -61,9 +61,12 @@ QString HOCRDocument::toHTML() const {
 }
 
 
-QModelIndex HOCRDocument::insertPage(int beforeIdx, const QDomElement& pageElement, bool cleanGraphics) {
+QModelIndex HOCRDocument::insertPage(int beforeIdx, const QDomElement& pageElement, bool cleanGraphics, const QString& sourceBasePath) {
 	beginInsertRows(QModelIndex(), beforeIdx, beforeIdx);
 	m_pages.insert(beforeIdx, new HOCRPage(pageElement, ++m_pageIdCounter, m_defaultLanguage, cleanGraphics, beforeIdx));
+	if(!sourceBasePath.isEmpty()) {
+		m_pages[beforeIdx]->convertSourcePath(sourceBasePath, true);
+	}
 	for(int i = beforeIdx + 1; i < m_pages.size(); ++i) {
 		m_pages[i]->m_index = i;
 	}

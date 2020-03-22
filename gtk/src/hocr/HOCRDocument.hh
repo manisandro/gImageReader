@@ -52,7 +52,7 @@ public:
 
 	Glib::ustring toHTML();
 
-	Gtk::TreeIter insertPage(int beforeIdx, const xmlpp::Element* pageElement, bool cleanGraphics);
+	Gtk::TreeIter insertPage(int beforeIdx, const xmlpp::Element* pageElement, bool cleanGraphics, const std::string& sourceBasePath = std::string());
 	const HOCRPage* page(int i) const {
 		return m_pages[i];
 	}

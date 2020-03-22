@@ -974,10 +974,9 @@ void OutputEditorHOCR::open(InsertMode mode) {
 	}
 	int pos = mode == InsertMode::InsertBefore ? currentPage() : m_document->pageCount();
 	while(div) {
-		m_document->insertPage(pos++, div, false);
+		m_document->insertPage(pos++, div, false, Glib::path_get_dirname(filename));
 		div = XmlUtils::nextSiblingElement(div, "div");
 	}
-	m_document->convertSourcePaths(Glib::path_get_dirname(filename), true);
 	m_modified = mode != InsertMode::Replace;
 	m_filebasename = Utils::split_filename(filename).first;
 }

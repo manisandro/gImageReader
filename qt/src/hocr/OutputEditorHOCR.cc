@@ -848,10 +848,9 @@ void OutputEditorHOCR::open(InsertMode mode) {
 	while(!div.isNull()) {
 		// Need to query next before adding page since the element is reparented
 		QDomElement nextDiv = div.nextSiblingElement("div");
-		m_document->insertPage(pos++, div, false);
+		m_document->insertPage(pos++, div, false, QFileInfo(filename).absolutePath());
 		div = nextDiv;
 	}
-	m_document->convertSourcePaths(QFileInfo(filename).absolutePath(), true);
 	m_modified = mode != InsertMode::Replace;
 	m_filebasename = QFileInfo(filename).completeBaseName();
 }
