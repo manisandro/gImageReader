@@ -154,6 +154,9 @@ MainWindow::MainWindow(const QStringList& files)
 	m_idleWidgets.append(ui.spinBoxResolution);
 	m_idleWidgets.append(ui.toolButtonRecognize);
 
+	ui.comboBoxOCRMode->addItem(_("Plain text"), OutputModeText);
+	ui.comboBoxOCRMode->addItem(_("hOCR, PDF"), OutputModeHOCR);
+
 	connect(ui.actionRedetectLanguages, &QAction::triggered, m_recognizer, &Recognizer::updateLanguagesMenu);
 	connect(ui.actionManageLanguages, &QAction::triggered, this, &MainWindow::manageLanguages);
 	connect(ui.actionPreferences, &QAction::triggered, this, &MainWindow::showConfig);
@@ -163,14 +166,14 @@ MainWindow::MainWindow(const QStringList& files)
 	connect(m_acquirer, &Acquirer::scanPageAvailable, m_sourceManager, [this](const QString & source) { m_sourceManager->addSource(source); });
 	connect(m_sourceManager, &SourceManager::sourceChanged, this, &MainWindow::onSourceChanged);
 	connect(ui.actionToggleOutputPane, &QAction::toggled, ui.dockWidgetOutput, &QDockWidget::setVisible);
-	connect(ui.comboBoxOCRMode, qOverload<int>(&QComboBox::currentIndexChanged), this, &MainWindow::setOCRMode);
+	connect(ui.comboBoxOCRMode, qOverload<int>(&QComboBox::currentIndexChanged), this, [this] { setOutputMode(static_cast<OutputMode>(ui.comboBoxOCRMode->currentData().toInt())); });
 	connect(m_recognizer, &Recognizer::languageChanged, this, &MainWindow::languageChanged);
 	connect(ui.actionAutodetectLayout, &QAction::triggered, m_displayer, &Displayer::autodetectOCRAreas);
 
 	ADD_SETTING(VarSetting<QByteArray>("wingeom"));
 	ADD_SETTING(VarSetting<QByteArray>("winstate"));
 	ADD_SETTING(ActionSetting("showcontrols", ui.actionImageControls));
-	ADD_SETTING(ComboSetting("outputeditor", ui.comboBoxOCRMode, 0));
+	ADD_SETTING(ComboSetting("outputeditor", ui.comboBoxOCRMode, OutputModeText));
 
 	m_recognizer->updateLanguagesMenu();
 
@@ -214,7 +217,22 @@ MainWindow::MainWindow(const QStringList& files)
 	}
 #endif
 
-	m_sourceManager->addSources(files);
+	QStringList hocrFiles;
+	QStringList otherFiles;
+	for(const QString& file : files) {
+		if(file.endsWith(".html", Qt::CaseInsensitive)) {
+			hocrFiles.append(file);
+		} else {
+			otherFiles.append(file);
+		}
+	}
+	m_sourceManager->addSources(otherFiles);
+	if(!hocrFiles.isEmpty()) {
+		if(setOutputMode(OutputModeHOCR)) {
+			static_cast<OutputEditorHOCR*>(m_outputEditor)->open(OutputEditorHOCR::InsertMode::Append, hocrFiles);
+			ui.dockWidgetOutput->setVisible(true);
+		}
+	}
 }
 
 MainWindow::~MainWindow() {
@@ -335,22 +353,23 @@ void MainWindow::showConfig() {
 	m_recognizer->updateLanguagesMenu();
 }
 
-void MainWindow::setOCRMode(int idx) {
+bool MainWindow::setOutputMode(OutputMode mode) {
 	if(m_outputEditor && !m_outputEditor->clear()) {
 		ui.comboBoxOCRMode->blockSignals(true);
 		if(dynamic_cast<OutputEditorText*>(m_outputEditor)) {
-			ui.comboBoxOCRMode->setCurrentIndex(0);
+			ui.comboBoxOCRMode->setCurrentIndex(ui.comboBoxOCRMode->findData(OutputModeText));
 		} else { /*if(dynamic_cast<OutputEditorHOCR*>(m_outputEditor))*/
-			ui.comboBoxOCRMode->setCurrentIndex(1);
+			ui.comboBoxOCRMode->setCurrentIndex(ui.comboBoxOCRMode->findData(OutputModeHOCR));
 		}
 		ui.comboBoxOCRMode->blockSignals(false);
+		return false;
 	} else {
 		delete m_displayerTool;
 		delete m_outputEditor;
-		if(idx == 0) {
+		if(mode == OutputModeText) {
 			m_displayerTool = new DisplayerToolSelect(m_displayer);
 			m_outputEditor = new OutputEditorText();
-		} else { /*if(idx == 1)*/
+		} else { /*if(mode == OutputModeHOCR)*/
 			m_displayerTool = new DisplayerToolHOCR(m_displayer);
 			m_outputEditor = new OutputEditorHOCR(static_cast<DisplayerToolHOCR*>(m_displayerTool));
 		}
@@ -359,6 +378,7 @@ void MainWindow::setOCRMode(int idx) {
 		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
 		connect(ui.actionToggleOutputPane, &QAction::toggled, m_outputEditor, &OutputEditor::onVisibilityChanged);
 		ui.dockWidgetOutput->setWidget(m_outputEditor->getUI());
+		return true;
 	}
 }
 

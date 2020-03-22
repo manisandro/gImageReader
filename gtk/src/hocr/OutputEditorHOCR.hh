@@ -59,7 +59,7 @@ public:
 
 	bool clear(bool hide = true) override;
 	void setLanguage(const Config::Lang& lang) override;
-	void open(InsertMode mode);
+	void open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File>> files = std::vector<Glib::RefPtr<Gio::File>>());
 	bool save(const std::string& filename = "") override;
 	void savePDF();
 	bool exportToPDF();

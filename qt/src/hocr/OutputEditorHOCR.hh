@@ -54,7 +54,7 @@ public slots:
 	bool clear(bool hide = true) override;
 	void setLanguage(const Config::Lang& lang) override;
 	void onVisibilityChanged(bool visible) override;
-	void open(InsertMode mode);
+	void open(InsertMode mode, QStringList files = QStringList());
 	bool save(const QString& filename = "") override;
 	bool exportToODT();
 	bool exportToPDF();

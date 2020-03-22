@@ -47,6 +47,7 @@ class MainWindow : public QMainWindow {
 	Q_OBJECT
 public:
 	enum class State { Idle, Normal, Busy };
+	enum OutputMode {OutputModeText, OutputModeHOCR};
 
 	struct NotificationAction {
 		QString text;
@@ -115,6 +116,7 @@ public:
 	void hideProgress();
 
 public slots:
+	bool setOutputMode(OutputMode mode);
 	void manageLanguages();
 	void popState();
 	void pushState(MainWindow::State state, const QString& msg);
@@ -163,7 +165,6 @@ private slots:
 	void openChangeLogUrl();
 	void progressCancel();
 	void progressUpdate();
-	void setOCRMode(int idx);
 	void languageChanged(const Config::Lang& lang);
 	void dictionaryAutoinstall();
 };

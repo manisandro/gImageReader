@@ -946,39 +946,67 @@ void OutputEditorHOCR::pickItem(const Geometry::Point& point) {
 	m_treeView->grab_focus();
 }
 
-void OutputEditorHOCR::open(InsertMode mode) {
+void OutputEditorHOCR::open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File>> files) {
 	if(mode == InsertMode::Replace && !clear(false)) {
 		return;
 	}
-	FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html", "text/xml", "text/plain"}, {"*.html"}};
-	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open hOCR File"), "", "outputdir", filter, false);
+	if(files.empty()) {
+		FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html", "text/xml", "text/plain"}, {"*.html"}};
+		files = FileDialogs::open_dialog(_("Open hOCR File"), "", "outputdir", filter, true);
+	}
 	if(files.empty()) {
 		return;
 	}
-	std::string filename = files.front()->get_path();
-	std::string source;
-	try {
-		source = Glib::file_get_contents(filename);
-	} catch(Glib::Error&) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to open file"), Glib::ustring::compose(_("The file could not be opened: %1."), filename));
-		return;
-	}
+	std::vector<Glib::ustring> failed;
+	std::vector<Glib::ustring> invalid;
+	int added = 0;
+	for(const Glib::RefPtr<Gio::File>& file : files) {
+		std::string filename = file->get_path();
+		std::string source;
+		try {
+			source = Glib::file_get_contents(filename);
+		} catch(const Glib::Error&) {
+			failed.push_back(filename);
+			continue;
+		}
 
-	xmlpp::DomParser parser;
-	parser.parse_memory(source);
-	xmlpp::Document* doc = parser.get_document();
-	const xmlpp::Element* div = XmlUtils::firstChildElement(XmlUtils::firstChildElement(doc->get_root_node(), "body"), "div");
-	if(!div || div->get_attribute_value("class") != "ocr_page") {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Invalid hOCR file"), Glib::ustring::compose(_("The file does not appear to contain valid hOCR HTML: %1"), filename));
-		return;
+		xmlpp::DomParser parser;
+		try {
+			parser.parse_memory(source);
+		} catch(const xmlpp::exception&) {
+			failed.push_back(filename);
+			continue;
+		}
+
+		xmlpp::Document* doc = parser.get_document();
+		const xmlpp::Element* div = XmlUtils::firstChildElement(XmlUtils::firstChildElement(doc->get_root_node(), "body"), "div");
+		if(!div || div->get_attribute_value("class") != "ocr_page") {
+			invalid.push_back(filename);
+			continue;
+		}
+		int pos = mode == InsertMode::InsertBefore ? currentPage() : m_document->pageCount();
+		while(div) {
+			m_document->insertPage(pos++, div, false, Glib::path_get_dirname(filename));
+			div = XmlUtils::nextSiblingElement(div, "div");
+			++added;
+		}
 	}
-	int pos = mode == InsertMode::InsertBefore ? currentPage() : m_document->pageCount();
-	while(div) {
-		m_document->insertPage(pos++, div, false, Glib::path_get_dirname(filename));
-		div = XmlUtils::nextSiblingElement(div, "div");
+	if(added > 0) {
+		m_modified = mode != InsertMode::Replace;
+		if(mode == InsertMode::Replace && m_filebasename.empty()) {
+			m_filebasename = Utils::split_filename(files.front()->get_path()).first;
+		}
 	}
-	m_modified = mode != InsertMode::Replace;
-	m_filebasename = Utils::split_filename(filename).first;
+	std::vector<Glib::ustring> errorMsg;
+	if(!failed.empty()) {
+		errorMsg.push_back(Glib::ustring::compose(_("The following files could not be opened:\n%1"), Utils::string_join(failed, "\n")));
+	}
+	if(!invalid.empty()) {
+		errorMsg.push_back(Glib::ustring::compose(_("The following files are not valid hOCR HTML:\n%1"), Utils::string_join(invalid, "\n")));
+	}
+	if(!errorMsg.empty()) {
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Unable to open files"), Utils::string_join(errorMsg, "\n\n"));
+	}
 }
 
 bool OutputEditorHOCR::save(const std::string& filename) {

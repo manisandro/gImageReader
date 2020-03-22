@@ -159,7 +159,7 @@ MainWindow::MainWindow() {
 	});
 	CONNECT(m_sourceManager, sourceChanged, [this] { onSourceChanged(); });
 	CONNECT(ui.buttonOutputpane, toggled, [this] { if(m_outputEditor) m_outputEditor->getUI()->set_visible(ui.buttonOutputpane->get_active()); });
-	m_connection_setOCRMode = CONNECT(ui.comboOcrmode, changed, [this] { setOCRMode(ui.comboOcrmode->get_active_row_number()); });
+	m_connection_setOCRMode = CONNECT(ui.comboOcrmode, changed, [this] { setOutputMode(static_cast<OutputMode>(ui.comboOcrmode->get_active_row_number())); });
 	CONNECT(m_recognizer, languageChanged, [this] (const Config::Lang & lang) {
 		languageChanged(lang);
 	});
@@ -213,7 +213,23 @@ void MainWindow::setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel) {
 }
 
 void MainWindow::openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files) {
-	m_sourceManager->addSources(files);
+	std::vector<Glib::RefPtr<Gio::File>> hocrFiles;
+	std::vector<Glib::RefPtr<Gio::File>> otherFiles;
+	for(const Glib::RefPtr<Gio::File>& file : files) {
+		std::string filename = file->get_path();
+		if(Glib::ustring(filename.substr(filename.length() - 5)).lowercase() == ".html") {
+			hocrFiles.push_back(file);
+		} else {
+			otherFiles.push_back(file);
+		}
+	}
+	m_sourceManager->addSources(otherFiles);
+	if(!hocrFiles.empty()) {
+		if(setOutputMode(OutputModeHOCR)) {
+			static_cast<OutputEditorHOCR*>(m_outputEditor)->open(OutputEditorHOCR::InsertMode::Append, hocrFiles);
+			m_outputEditor->getUI()->set_visible(true);
+		}
+	}
 }
 
 void MainWindow::setOutputPaneVisible(bool visible) {
@@ -333,25 +349,26 @@ void MainWindow::showConfig() {
 	m_recognizer->updateLanguagesMenu();
 }
 
-void MainWindow::setOCRMode(int idx) {
+bool MainWindow::setOutputMode(OutputMode mode) {
 	if(m_outputEditor && !m_outputEditor->clear()) {
 		m_connection_setOCRMode.block(true);
 		if(dynamic_cast<OutputEditorText*>(m_outputEditor)) {
-			ui.comboOcrmode->set_active(0);
+			ui.comboOcrmode->set_active(OutputModeText);
 		} else if(dynamic_cast<OutputEditorHOCR*>(m_outputEditor)) {
-			ui.comboOcrmode->set_active(1);
+			ui.comboOcrmode->set_active(OutputModeHOCR);
 		}
 		m_connection_setOCRMode.block(false);
+		return false;
 	} else {
 		if(m_outputEditor) {
 			ui.panedOutput->remove(*m_outputEditor->getUI());
 			delete m_outputEditor;
 		}
 		delete m_displayerTool;
-		if(idx == 0) {
+		if(mode == OutputModeText) {
 			m_displayerTool = new DisplayerToolSelect(m_displayer);
 			m_outputEditor = new OutputEditorText();
-		} else { /*if(idx == 1)*/
+		} else { /*if(mode == OutputModeHOCR)*/
 			m_displayerTool = new DisplayerToolHOCR(m_displayer);
 			m_outputEditor = new OutputEditorHOCR(static_cast<DisplayerToolHOCR*>(m_displayerTool));
 		}
@@ -360,6 +377,7 @@ void MainWindow::setOCRMode(int idx) {
 		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
 		ui.panedOutput->pack2(*m_outputEditor->getUI(), true, false);
 		m_outputEditor->getUI()->set_visible(ui.buttonOutputpane->get_active());
+		return true;
 	}
 }
 

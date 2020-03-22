@@ -823,36 +823,57 @@ void OutputEditorHOCR::toggleWConfColumn(bool active) {
 	ui.treeViewHOCR->setColumnHidden(1, !active);
 }
 
-void OutputEditorHOCR::open(InsertMode mode) {
+void OutputEditorHOCR::open(InsertMode mode, QStringList files) {
 	if(mode == InsertMode::Replace && !clear(false)) {
 		return;
 	}
-	QStringList files = FileDialogs::openDialog(_("Open hOCR File"), "", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")), false);
+	if(files.isEmpty()) {
+		files = FileDialogs::openDialog(_("Open hOCR File"), "", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")), true);
+	}
 	if(files.isEmpty()) {
 		return;
 	}
-	QString filename = files.front();
-	QFile file(filename);
-	if(!file.open(QIODevice::ReadOnly)) {
-		QMessageBox::critical(MAIN, _("Failed to open file"), _("The file could not be opened: %1.").arg(filename));
-		return;
-	}
-	QDomDocument doc;
-	doc.setContent(&file);
-	QDomElement div = doc.firstChildElement("html").firstChildElement("body").firstChildElement("div");
-	if(div.isNull() || div.attribute("class") != "ocr_page") {
-		QMessageBox::critical(MAIN, _("Invalid hOCR file"), _("The file does not appear to contain valid hOCR HTML: %1").arg(filename));
-		return;
-	}
 	int pos = mode == InsertMode::InsertBefore ? currentPage() : m_document->pageCount();
-	while(!div.isNull()) {
-		// Need to query next before adding page since the element is reparented
-		QDomElement nextDiv = div.nextSiblingElement("div");
-		m_document->insertPage(pos++, div, false, QFileInfo(filename).absolutePath());
-		div = nextDiv;
+	QStringList failed;
+	QStringList invalid;
+	int added = 0;
+	for(const QString& filename : files) {
+		QFile file(filename);
+		if(!file.open(QIODevice::ReadOnly)) {
+			failed.append(filename);
+			continue;
+		}
+		QDomDocument doc;
+		doc.setContent(&file);
+		QDomElement div = doc.firstChildElement("html").firstChildElement("body").firstChildElement("div");
+		if(div.isNull() || div.attribute("class") != "ocr_page") {
+			invalid.append(filename);
+			continue;
+		}
+		while(!div.isNull()) {
+			// Need to query next before adding page since the element is reparented
+			QDomElement nextDiv = div.nextSiblingElement("div");
+			m_document->insertPage(pos++, div, false, QFileInfo(filename).absolutePath());
+			div = nextDiv;
+			++added;
+		}
 	}
-	m_modified = mode != InsertMode::Replace;
-	m_filebasename = QFileInfo(filename).completeBaseName();
+	if(added > 0) {
+		m_modified = mode != InsertMode::Replace;
+		if(mode == InsertMode::Replace && m_filebasename.isEmpty()) {
+			m_filebasename = QFileInfo(files.front()).completeBaseName();
+		}
+	}
+	QStringList errorMsg;
+	if(!failed.isEmpty()) {
+		errorMsg.append(_("The following files could not be opened:\n%1").arg(failed.join("\n")));
+	}
+	if(!invalid.isEmpty()) {
+		errorMsg.append(_("The following files are not valid hOCR HTML:\n%1").arg(invalid.join("\n")));
+	}
+	if(!errorMsg.isEmpty()) {
+		QMessageBox::critical(MAIN, _("Unable to open files"), errorMsg.join("\n\n"));
+	}
 }
 
 bool OutputEditorHOCR::save(const QString& filename) {

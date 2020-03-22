@@ -37,6 +37,7 @@ class SourceManager;
 class MainWindow {
 public:
 	enum class State { Idle, Normal, Busy };
+	enum OutputMode {OutputModeText = 0, OutputModeHOCR = 1};
 
 	struct NotificationAction {
 		Glib::ustring label;
@@ -109,6 +110,7 @@ public:
 	void addNotification(const Glib::ustring& title, const Glib::ustring& message, const std::vector<NotificationAction>& actions, Notification* handle = nullptr);
 	void hideNotification(Notification handle);
 	void openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files);
+	bool setOutputMode(OutputMode mode);
 	void setOutputPaneVisible(bool visible);
 	void pushState(State state, const Glib::ustring& msg);
 	void popState();
@@ -145,7 +147,6 @@ private:
 	bool closeEvent(GdkEventAny*);
 	void languageChanged(const Config::Lang& lang);
 	void onSourceChanged();
-	void setOCRMode(int idx);
 	void setState(State state);
 	void progressCancel();
 	void progressUpdate();
