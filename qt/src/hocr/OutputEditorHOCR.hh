@@ -140,7 +140,7 @@ private:
 
 private slots:
 	void updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value);
-	void validateChanges();
+	void validateChanges(bool force = false);
 };
 
 class HOCRAttributeCheckbox : public QCheckBox {

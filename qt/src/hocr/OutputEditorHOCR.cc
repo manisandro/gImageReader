@@ -113,7 +113,8 @@ HOCRAttributeEditor::HOCRAttributeEditor(const QString& value, HOCRDocument* doc
 	: QLineEdit(value), m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_origValue(value), m_attrItemClass(attrItemClass) {
 	setFrame(false);
 	connect(m_doc, &HOCRDocument::itemAttributeChanged, this, &HOCRAttributeEditor::updateValue);
-	connect(this, &HOCRAttributeEditor::textChanged, this, &HOCRAttributeEditor::validateChanges);
+	connect(this, &HOCRAttributeEditor::textChanged, this, [this] { validateChanges(); });
+	connect(this, &QLineEdit::returnPressed, this, [this] { validateChanges(true); });
 }
 
 void HOCRAttributeEditor::focusOutEvent(QFocusEvent* ev) {
@@ -129,8 +130,8 @@ void HOCRAttributeEditor::updateValue(const QModelIndex& itemIndex, const QStrin
 	}
 }
 
-void HOCRAttributeEditor::validateChanges() {
-	if(!hasFocus()) {
+void HOCRAttributeEditor::validateChanges(bool force) {
+	if(!hasFocus() || force) {
 		int pos;
 		QString newValue = text();
 		if(newValue == m_origValue) {
