@@ -68,7 +68,7 @@ private:
 	Gtk::RadioButtonGroup m_langMenuRadioGroup;
 	Gtk::RadioButtonGroup m_psmRadioGroup;
 	int m_currentPsmMode;
-	std::vector<std::pair<Gtk::CheckMenuItem*, Glib::ustring>> m_langMenuCheckGroup;
+	std::map<Gtk::CheckMenuItem*, std::pair<Glib::ustring, gint64>> m_langMenuCheckGroup;
 	MultilingualMenuItem* m_multilingualRadio = nullptr;
 	Config::Lang m_curLang;
 

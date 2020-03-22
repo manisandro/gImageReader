@@ -18,6 +18,7 @@
  */
 
 #include <QClipboard>
+#include <QDateTime>
 #include <QGridLayout>
 #include <QIcon>
 #include <QLabel>
@@ -242,10 +243,13 @@ void Recognizer::updateLanguagesMenu() {
 			if(!MAIN->getConfig()->searchLangSpec(lang)) {
 				lang.name = lang.prefix;
 			}
+			int index = sellangs.indexOf(lang.prefix);
 			QAction* item = new QAction(lang.name, m_langMenuCheckGroup);
 			item->setCheckable(true);
 			item->setData(QVariant::fromValue(lang.prefix));
-			item->setChecked(isMultilingual && sellangs.contains(lang.prefix));
+			item->setChecked(isMultilingual && index != -1);
+			item->setProperty("last_click", QDateTime::fromSecsSinceEpoch(1 + index)); // Hack to preserve order
+			connect(item, &QAction::triggered, item, [item] { item->setProperty("last_click", QDateTime::currentDateTime()); });
 			connect(item, &QAction::triggered, this, &Recognizer::setMultiLanguage);
 			m_menuMultilanguage->addAction(item);
 		}
@@ -323,20 +327,26 @@ void Recognizer::setLanguage() {
 
 void Recognizer::setMultiLanguage() {
 	m_multilingualAction->setChecked(true);
-	QString langs;
+	QList<QPair<QString, QDateTime>> langs;
 	for(QAction* action : m_langMenuCheckGroup->actions()) {
 		if(action->isChecked()) {
-			langs += action->data().toString() + "+";
+			langs.append(qMakePair(action->data().toString(), action->property("last_click").toDateTime()));
 		}
 	}
+	std::sort(langs.begin(), langs.end(), [](auto a, auto b) { return a.second < b.second; });
+	QString lang;
 	if(langs.isEmpty()) {
-		langs = "eng+";
+		lang = "eng+";
+	} else {
+		for(const auto& pair : langs) {
+			lang += pair.first + "+";
+		}
 	}
-	langs = langs.left(langs.length() - 1);
-	m_langLabel = langs;
+	lang = lang.left(lang.length() - 1);
+	m_langLabel = lang;
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
-	m_curLang = {langs, "", "Multilingual"};
-	ConfigSettings::get<VarSetting<QString>>("language")->setValue(langs + ":");
+	m_curLang = {lang, "", "Multilingual"};
+	ConfigSettings::get<VarSetting<QString>>("language")->setValue(lang + ":");
 	emit languageChanged(m_curLang);
 }
 

@@ -161,7 +161,7 @@ void Recognizer::updateLanguagesMenu() {
 	ui.menuLanguages->remove(w);
 	});
 	m_langMenuRadioGroup = Gtk::RadioButtonGroup();
-	m_langMenuCheckGroup = std::vector<std::pair<Gtk::CheckMenuItem*, Glib::ustring>>();
+	m_langMenuCheckGroup = std::map<Gtk::CheckMenuItem*, std::pair<Glib::ustring, gint64>>();
 	m_psmRadioGroup = Gtk::RadioButtonGroup();
 	m_curLang = Config::Lang();
 	Gtk::RadioMenuItem* curitem = nullptr;
@@ -243,16 +243,16 @@ void Recognizer::updateLanguagesMenu() {
 				lang.name = lang.prefix;
 			}
 			Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(lang.name));
-			item->set_active(isMultilingual && std::find(sellangs.begin(), sellangs.end(), lang.prefix) != sellangs.end());
+			auto it = std::find(sellangs.begin(), sellangs.end(), lang.prefix);
+			item->set_active(isMultilingual && it != sellangs.end());
 			CONNECT(item, button_press_event, [this, item](GdkEventButton * ev) {
 				return onMultilingualItemButtonEvent(ev, item);
 			}, false);
 			CONNECT(item, button_release_event, [this, item](GdkEventButton * ev) {
 				return onMultilingualItemButtonEvent(ev, item);
 			}, false);
-			//		CONNECT(item, toggled, [this]{ setMultiLanguage(); });
 			submenu->append(*item);
-			m_langMenuCheckGroup.push_back(std::make_pair(item, lang.prefix));
+			m_langMenuCheckGroup.insert(std::make_pair(item, std::make_pair(lang.prefix, it != sellangs.end() ? std::distance(sellangs.begin(), it) : -1)));
 		}
 		m_multilingualRadio->set_submenu(*submenu);
 		CONNECT(m_multilingualRadio, toggled, [this] { if(m_multilingualRadio->get_active()) setMultiLanguage(); });
@@ -342,19 +342,25 @@ void Recognizer::setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang&
 
 void Recognizer::setMultiLanguage() {
 	m_multilingualRadio->set_active(true);
-	Glib::ustring langs;
+	std::vector<std::pair<Glib::ustring, gint64>> langs;
 	for(const auto& pair : m_langMenuCheckGroup) {
 		if(pair.first->get_active()) {
-			langs += pair.second + "+";
+			langs.push_back(std::make_pair(pair.second.first, pair.second.second));
 		}
 	}
+	std::sort(langs.begin(), langs.end(), [](auto a, auto b) { return a.second < b.second; });
+	Glib::ustring lang;
 	if(langs.empty()) {
-		langs = "eng+";
+		lang = "eng+";
+	} else {
+		for(const auto& pair : langs) {
+			lang += pair.first + "+";
+		}
 	}
-	langs = langs.substr(0, langs.length() - 1);
-	ui.labelRecognizeLang->set_markup("<small>" + langs + "</small>");
-	m_curLang = {langs, "", "Multilingual"};
-	ConfigSettings::get<VarSetting<Glib::ustring>>("language")->setValue(langs + ":");
+	lang = lang.substr(0, lang.length() - 1);
+	ui.labelRecognizeLang->set_markup("<small>" + lang + "</small>");
+	m_curLang = {lang, "", "Multilingual"};
+	ConfigSettings::get<VarSetting<Glib::ustring>>("language")->setValue(lang + ":");
 	m_signal_languageChanged.emit(m_curLang);
 }
 
@@ -589,6 +595,7 @@ bool Recognizer::onMultilingualItemButtonEvent(GdkEventButton* ev, Gtk::CheckMen
 	if(ev->x_root >= item_x_root && ev->x_root <= item_x_root + alloc.get_width() &&
 	        ev->y_root >= item_y_root && ev->y_root <= item_y_root + alloc.get_height()) {
 		if(ev->type == GDK_BUTTON_RELEASE) {
+			m_langMenuCheckGroup[item].second = Glib::DateTime::create_now_utc().to_unix();
 			item->set_active(!item->get_active());
 			setMultiLanguage();
 		}
