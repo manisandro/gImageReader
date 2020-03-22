@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-25 23:18+0200\n"
+"POT-Creation-Date: 2020-03-22 14:51+0100\n"
 "PO-Revision-Date: 2019-07-19 18:07+0000\n"
 "Last-Translator: Shreeshrii <shreeshrii@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/gimagereader/"
@@ -23,27 +23,27 @@ msgstr ""
 msgid "OCR application"
 msgstr ""
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:167
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:166
 msgid "Redetect Languages"
 msgstr ""
 
-#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:170
+#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:169
 msgid "Manage Languages"
 msgstr ""
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:173
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:172
 msgid "Preferences"
 msgstr ""
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
-#: ../gtk/src/MainWindow.cc:482 ../qt/src/MainWindow.cc:481
-#: ../qt/src/Ui_MainWindow.hh:178
+#: ../gtk/src/MainWindow.cc:500 ../qt/src/MainWindow.cc:496
+#: ../qt/src/Ui_MainWindow.hh:177
 msgid "Help"
 msgstr "मदद"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:181
+#: ../qt/src/Ui_MainWindow.hh:180
 msgid "About"
 msgstr "बारे में"
 
@@ -113,7 +113,7 @@ msgstr "नाम"
 #: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:46
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
-#: ../gtk/src/Utils.cc:70 ../qt/data/ConfigDialog.ui.h:27
+#: ../gtk/src/Utils.cc:76 ../qt/data/ConfigDialog.ui.h:27
 #: ../qt/data/MainWindow.ui.h:12
 msgid "Cancel"
 msgstr "रद्द करें"
@@ -196,15 +196,15 @@ msgid "Rotate all pages"
 msgstr "सभी पृष्ठों को घुमाएँ"
 
 #. Sources toolbar
-#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:192
+#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:191
 msgid "Recent"
 msgstr "हाल में"
 
-#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:193
+#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:192
 msgid "Paste"
 msgstr "चिपकाएँ"
 
-#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:194
+#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:193
 msgid "Take Screenshot"
 msgstr "स्क्रीनशॉट लें"
 
@@ -228,8 +228,9 @@ msgstr "सबसे अच्छा फिट"
 msgid "Select rotation mode"
 msgstr "घुमाव मोड का चयन करें"
 
-#: ../gtk/data/MainWindow.ui.h:12 ../gtk/data/OutputEditorText.ui.h:13
-#: ../qt/src/Ui_OutputEditorText.hh:95
+#: ../gtk/data/MainWindow.ui.h:12 ../gtk/data/OutputEditorHOCR.ui.h:12
+#: ../gtk/data/OutputEditorText.ui.h:13
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:71 ../qt/src/Ui_OutputEditorText.hh:95
 msgid "Select insert mode"
 msgstr "इनसर्ट मोड का चयन करें"
 
@@ -241,11 +242,11 @@ msgstr ""
 msgid "Image controls"
 msgstr "छवि नियंत्रण"
 
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/src/Ui_MainWindow.hh:139
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/src/MainWindow.cc:157
 msgid "Plain text"
 msgstr "सादा टेक्स्ट"
 
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/src/Ui_MainWindow.hh:139
+#: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:158
 msgid "hOCR, PDF"
 msgstr "एचओसीआर, पीडीएफ"
 
@@ -261,23 +262,23 @@ msgstr ""
 msgid "Select language"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:20 ../qt/src/Ui_MainWindow.hh:205
+#: ../gtk/data/MainWindow.ui.h:20 ../qt/src/Ui_MainWindow.hh:204
 msgid "Add images"
 msgstr "छवियाँ जोड़ें"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:204
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:203
 msgid "Add Images"
 msgstr "छवियाँ जोड़ें"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:210
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:209
 msgid "Remove image from list"
 msgstr "सूची से छवि निकालें"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:213
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:212
 msgid "Delete image"
 msgstr "छवि हटाएँ"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:216
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:215
 msgid "Clear list"
 msgstr "सूची साफ़ करें"
 
@@ -290,7 +291,7 @@ msgid "Device:"
 msgstr "उपकरण:"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../gtk/data/TessdataManager.ui.h:4
-#: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:59
+#: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:55
 msgid "Refresh"
 msgstr "रिफ़्रेश"
 
@@ -303,13 +304,12 @@ msgid "Mode:"
 msgstr "मोड:"
 
 #: ../gtk/data/MainWindow.ui.h:30 ../gtk/src/hocr/HOCRPdfExporter.cc:313
-#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:347
+#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:344
 msgid "Color"
 msgstr "रंग"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:316
-#: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:349
-#: ../qt/src/hocr/HOCRPdfExporter.cc:351
+#: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:345
 msgid "Grayscale"
 msgstr "ग्रेस्केल"
 
@@ -402,7 +402,7 @@ msgstr ""
 msgid "Source page"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:56 ../qt/src/SourceManager.cc:146
+#: ../gtk/data/MainWindow.ui.h:56 ../qt/src/SourceManager.cc:145
 msgid "Protected PDF"
 msgstr ""
 
@@ -414,93 +414,120 @@ msgstr ""
 msgid "Multiple Pages..."
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:580
+#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:615
 msgid "Add Word"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:580
+#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:615
 msgid "Enter word:"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:61
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
+#. Output toolbar
+#: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
+msgid "Append new output after last page"
+msgstr ""
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
+#, fuzzy
+msgid "Insert new output before current page"
+msgstr "वर्तमान पृष्ठ घुमाएँ"
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
 msgid "Export to plain text"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:65
+#: ../gtk/data/OutputEditorHOCR.ui.h:8 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:96
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:97
 msgid "Export to PDF"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:67
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:68
+#: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:99
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:100
 msgid "Export to ODT"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:8 ../gtk/data/OutputEditorText.ui.h:18
+#: ../gtk/data/OutputEditorHOCR.ui.h:10
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
+msgid "Append document after last page"
+msgstr ""
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:11
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
+msgid "Insert document before current page"
+msgstr ""
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:13
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
+msgid "Open hOCR file"
+msgstr ""
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/Ui_OutputEditorText.hh:116
 msgid "Save output"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:73
+#: ../gtk/data/OutputEditorHOCR.ui.h:15
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:104
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:105
 msgid "Export"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:10 ../gtk/data/OutputEditorText.ui.h:19
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:78
+#: ../gtk/data/OutputEditorHOCR.ui.h:16 ../gtk/data/OutputEditorText.ui.h:19
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:109
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:110
 #: ../qt/src/Ui_OutputEditorText.hh:118
 msgid "Clear output"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:11 ../gtk/data/OutputEditorText.ui.h:15
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:80
+#: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/data/OutputEditorText.ui.h:15
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:112
 #: ../qt/src/Ui_OutputEditorText.hh:107
 msgid "Find and replace"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:12
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:82
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:83
+#: ../gtk/data/OutputEditorHOCR.ui.h:18
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:114
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:115
 msgid "Show confidence values"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:13 ../gtk/data/PdfExportDialog.ui.h:41
-#: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:86
+#: ../gtk/data/OutputEditorHOCR.ui.h:19 ../gtk/data/PdfExportDialog.ui.h:41
+#: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:117
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 msgid "Show preview"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:14
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
+#: ../gtk/data/OutputEditorHOCR.ui.h:20
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:155
 msgid "Next (F3)"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:15
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
+#: ../gtk/data/OutputEditorHOCR.ui.h:21
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:156
 msgid "Previous (Shift+F3)"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:16 ../gtk/src/hocr/OutputEditorHOCR.cc:890
-#: ../qt/src/hocr/OutputEditorHOCR.cc:730
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:126
+#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:917
+#: ../qt/src/hocr/OutputEditorHOCR.cc:765
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Expand all"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/src/hocr/OutputEditorHOCR.cc:893
-#: ../qt/src/hocr/OutputEditorHOCR.cc:731
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:127
+#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:920
+#: ../qt/src/hocr/OutputEditorHOCR.cc:766
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Collapse all"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:18
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:148
+#: ../gtk/data/OutputEditorHOCR.ui.h:24
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:182
 msgid "Properties"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:19
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:152
+#: ../gtk/data/OutputEditorHOCR.ui.h:25
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:186
 msgid "Source"
 msgstr ""
 
@@ -776,7 +803,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: ../gtk/data/SubstitutionsManager.ui.h:3 ../gtk/src/Utils.cc:73
+#: ../gtk/data/SubstitutionsManager.ui.h:3 ../gtk/src/Utils.cc:79
 #: ../qt/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:42
 msgid "Save"
 msgstr ""
@@ -792,8 +819,8 @@ msgid "Add"
 msgstr ""
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:886 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:727 ../qt/src/SubstitutionsManager.cc:50
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:913 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/hocr/OutputEditorHOCR.cc:762 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
 msgstr ""
@@ -806,11 +833,11 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:49
+#: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:45
 msgid "Tessdata Manager"
 msgstr ""
 
-#: ../gtk/data/TessdataManager.ui.h:5 ../qt/src/TessdataManager.cc:51
+#: ../gtk/data/TessdataManager.ui.h:5 ../qt/src/TessdataManager.cc:47
 msgid "Manage installed languages:"
 msgstr ""
 
@@ -875,7 +902,7 @@ msgstr ""
 msgid "Native name"
 msgstr ""
 
-#: ../gtk/src/Config.cc:109 ../qt/src/Config.cc:108
+#: ../gtk/src/Config.cc:109 ../qt/src/Config.cc:101
 msgid "Script"
 msgstr ""
 
@@ -893,14 +920,14 @@ msgid "There was no unsaved work."
 msgstr ""
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
-msgid "Failed to obtain backtrace. Is gdb installed?"
+msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr ""
 
-#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
+#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:170
 msgid "Failed to load image"
 msgstr ""
 
-#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:174
+#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:170
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -939,408 +966,407 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRDocument.cc:611 ../gtk/src/hocr/OutputEditorHOCR.cc:266
-#: ../qt/src/hocr/OutputEditorHOCR.cc:229
+#: ../gtk/src/hocr/HOCRDocument.cc:616 ../gtk/src/hocr/OutputEditorHOCR.cc:266
+#: ../qt/src/hocr/OutputEditorHOCR.cc:234
 msgid "Page"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRDocument.cc:613 ../qt/src/hocr/HOCRDocument.cc:530
+#: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:536
 msgid "Text block"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRDocument.cc:615 ../gtk/src/hocr/OutputEditorHOCR.cc:272
-#: ../qt/src/hocr/HOCRDocument.cc:532 ../qt/src/hocr/OutputEditorHOCR.cc:231
+#: ../gtk/src/hocr/HOCRDocument.cc:620 ../gtk/src/hocr/OutputEditorHOCR.cc:272
+#: ../qt/src/hocr/HOCRDocument.cc:538 ../qt/src/hocr/OutputEditorHOCR.cc:236
 msgid "Paragraph"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRDocument.cc:617 ../qt/src/hocr/HOCRDocument.cc:534
+#: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:540
 msgid "Textline"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRDocument.cc:621 ../qt/src/hocr/HOCRDocument.cc:538
+#: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:544
 msgid "Graphic"
 msgstr ""
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:65 ../gtk/src/hocr/HOCRPdfExporter.cc:489
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:963 ../gtk/src/OutputEditorText.cc:272
-#: ../qt/src/hocr/HOCROdtExporter.cc:50 ../qt/src/hocr/HOCRPdfExporter.cc:478
-#: ../qt/src/hocr/HOCRTextExporter.cc:36 ../qt/src/hocr/OutputEditorHOCR.cc:830
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1018 ../gtk/src/OutputEditorText.cc:280
+#: ../qt/src/hocr/HOCROdtExporter.cc:51 ../qt/src/hocr/HOCRPdfExporter.cc:471
+#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:886
 #: ../qt/src/OutputEditorText.cc:238
 msgid "output"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:53
+#: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:54
 msgid "OpenDocument Text Documents"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:53
+#: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:54
 msgid "Save ODT Output..."
 msgstr ""
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:619
-#: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCROdtExporter.cc:61
-#: ../qt/src/hocr/HOCRPdfExporter.cc:609 ../qt/src/hocr/HOCRTextExporter.cc:47
+#: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:618
+#: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCROdtExporter.cc:61
+#: ../qt/src/hocr/HOCRPdfExporter.cc:601 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:77 ../gtk/src/hocr/HOCROdtExporter.cc:342
+#: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
 msgstr ""
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:336 ../qt/src/hocr/HOCROdtExporter.cc:254
+#: ../gtk/src/hocr/HOCROdtExporter.cc:335 ../qt/src/hocr/HOCROdtExporter.cc:254
 msgid "Exporting to ODT..."
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:365
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:358
 msgid "Same as source"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:366
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:359
 msgid "Custom"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:362
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:355
 msgid "cm"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:363
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:356
 msgid "in"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:353
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:346
 msgid "Monochrome"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:328 ../qt/src/hocr/HOCRPdfExporter.cc:355
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:328 ../qt/src/hocr/HOCRPdfExporter.cc:348
 msgid "Threshold (closest color)"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:331 ../qt/src/hocr/HOCRPdfExporter.cc:356
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:331 ../qt/src/hocr/HOCRPdfExporter.cc:349
 msgid "Diffuse"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:340 ../qt/src/hocr/HOCRPdfExporter.cc:357
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:340 ../qt/src/hocr/HOCRPdfExporter.cc:350
 msgid "Zip (lossless)"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:344 ../qt/src/hocr/HOCRPdfExporter.cc:358
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:344 ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "CCITT Group 4 (lossless)"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:348 ../qt/src/hocr/HOCRPdfExporter.cc:359
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:348 ../qt/src/hocr/HOCRPdfExporter.cc:352
 msgid "Jpeg (lossy)"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:493 ../qt/src/hocr/HOCRPdfExporter.cc:482
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:493 ../qt/src/hocr/HOCRPdfExporter.cc:475
 msgid "PDF Files"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:494 ../qt/src/hocr/HOCRPdfExporter.cc:482
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:494 ../qt/src/hocr/HOCRPdfExporter.cc:475
 msgid "Save PDF Output..."
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:488
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:481
 msgid "Invalid Output"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:488
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:481
 msgid "Cannot overwrite a file which is a source image of this document."
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:516 ../qt/src/hocr/HOCRPdfExporter.cc:511
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:515 ../qt/src/hocr/HOCRPdfExporter.cc:503
 msgid "Failed to create output"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:516 ../qt/src/hocr/HOCRPdfExporter.cc:511
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:515 ../qt/src/hocr/HOCRPdfExporter.cc:503
 msgid "Failed to create output. The returned error was: %1"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:558 ../qt/src/hocr/HOCRPdfExporter.cc:551
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:557 ../qt/src/hocr/HOCRPdfExporter.cc:543
 msgid "The operation was cancelled"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:607 ../qt/src/hocr/HOCRPdfExporter.cc:597
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:606 ../qt/src/hocr/HOCRPdfExporter.cc:589
 msgid "Failed to render page %1"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:614 ../qt/src/hocr/HOCRPdfExporter.cc:604
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:613 ../qt/src/hocr/HOCRPdfExporter.cc:596
 msgid "Exporting to PDF..."
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:619 ../qt/src/hocr/HOCRPdfExporter.cc:609
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:618 ../qt/src/hocr/HOCRPdfExporter.cc:601
 msgid "The PDF export failed: %1."
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:673 ../qt/src/hocr/HOCRPdfExporter.cc:662
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:672 ../qt/src/hocr/HOCRPdfExporter.cc:654
 msgid "The PDF library could not load the font '%1'."
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:274
-#: ../qt/src/hocr/HOCRTextExporter.cc:39 ../qt/src/OutputEditorText.cc:239
+#: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:282
+#: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:239
 msgid "Text Files"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:39
+#: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:40
 msgid "Save Text Output..."
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRTextExporter.cc:46 ../qt/src/hocr/HOCRTextExporter.cc:47
+#: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
-#: ../qt/src/hocr/OutputEditorHOCR.cc:230
+#: ../qt/src/hocr/OutputEditorHOCR.cc:235
 msgid "Block"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
-#: ../qt/src/hocr/OutputEditorHOCR.cc:232
+#: ../qt/src/hocr/OutputEditorHOCR.cc:237
 msgid "Line"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
-#: ../qt/src/hocr/OutputEditorHOCR.cc:233
+#: ../qt/src/hocr/OutputEditorHOCR.cc:238
 msgid "Word"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
-#: ../qt/src/hocr/OutputEditorHOCR.cc:234
+#: ../qt/src/hocr/OutputEditorHOCR.cc:239
 msgid "Misspelled word"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:435
-#: ../qt/src/hocr/OutputEditorHOCR.cc:317
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:448
+#: ../qt/src/hocr/OutputEditorHOCR.cc:337
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:436
-#: ../qt/src/hocr/OutputEditorHOCR.cc:318
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:449
+#: ../qt/src/hocr/OutputEditorHOCR.cc:338
 msgid "Recognition errors"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:594
-#: ../qt/src/hocr/OutputEditorHOCR.cc:500
-#: ../qt/src/hocr/OutputEditorHOCR.cc:512
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:621
+#: ../qt/src/hocr/OutputEditorHOCR.cc:535
+#: ../qt/src/hocr/OutputEditorHOCR.cc:547
 msgid "Multiple values"
 msgstr ""
 
 #. Merging allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:778
-#: ../qt/src/hocr/OutputEditorHOCR.cc:641
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:805
+#: ../qt/src/hocr/OutputEditorHOCR.cc:676
 msgid "Merge"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:786
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:877
-#: ../qt/src/hocr/OutputEditorHOCR.cc:643
-#: ../qt/src/hocr/OutputEditorHOCR.cc:725
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:813
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:904
+#: ../qt/src/hocr/OutputEditorHOCR.cc:678
+#: ../qt/src/hocr/OutputEditorHOCR.cc:760
 msgid "Split from parent"
 msgstr ""
 
 #. Swapping allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:797
-#: ../qt/src/hocr/OutputEditorHOCR.cc:647
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:824
+#: ../qt/src/hocr/OutputEditorHOCR.cc:682
 msgid "Swap"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:821
-#: ../qt/src/hocr/OutputEditorHOCR.cc:693
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:848
+#: ../qt/src/hocr/OutputEditorHOCR.cc:728
 msgid "Add graphic region"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:824
-#: ../qt/src/hocr/OutputEditorHOCR.cc:694
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:851
+#: ../qt/src/hocr/OutputEditorHOCR.cc:729
 msgid "Add text block"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:828
-#: ../qt/src/hocr/OutputEditorHOCR.cc:696
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:855
+#: ../qt/src/hocr/OutputEditorHOCR.cc:731
 msgid "Add paragraph"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:832
-#: ../qt/src/hocr/OutputEditorHOCR.cc:698
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:859
+#: ../qt/src/hocr/OutputEditorHOCR.cc:733
 msgid "Add line"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:836
-#: ../qt/src/hocr/OutputEditorHOCR.cc:700
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:863
+#: ../qt/src/hocr/OutputEditorHOCR.cc:735
 msgid "Add word"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:852
-#: ../qt/src/hocr/OutputEditorHOCR.cc:710
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:879
+#: ../qt/src/hocr/OutputEditorHOCR.cc:745
 msgid "No suggestions"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:858
-#: ../qt/src/hocr/OutputEditorHOCR.cc:714
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:885
+#: ../qt/src/hocr/OutputEditorHOCR.cc:749
 msgid "Add to dictionary"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:864
-#: ../qt/src/hocr/OutputEditorHOCR.cc:716
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:891
+#: ../qt/src/hocr/OutputEditorHOCR.cc:751
 msgid "Ignore word"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:926
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:965
-#: ../qt/src/hocr/OutputEditorHOCR.cc:795
-#: ../qt/src/hocr/OutputEditorHOCR.cc:832
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:954
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1020
+#: ../qt/src/hocr/OutputEditorHOCR.cc:831
+#: ../qt/src/hocr/OutputEditorHOCR.cc:888
 msgid "hOCR HTML Files"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:927
-#: ../qt/src/hocr/OutputEditorHOCR.cc:795
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:955
+#: ../qt/src/hocr/OutputEditorHOCR.cc:831
 msgid "Open hOCR File"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:936
-#: ../qt/src/hocr/OutputEditorHOCR.cc:802
-msgid "Failed to open file"
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1002 ../gtk/src/SourceManager.cc:125
+#: ../qt/src/hocr/OutputEditorHOCR.cc:869 ../qt/src/SourceManager.cc:127
+msgid ""
+"The following files could not be opened:\n"
+"%1"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:936
-#: ../qt/src/hocr/OutputEditorHOCR.cc:802
-msgid "The file could not be opened: %1."
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1005
+#: ../qt/src/hocr/OutputEditorHOCR.cc:872
+msgid ""
+"The following files are not valid hOCR HTML:\n"
+"%1"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:945
-#: ../qt/src/hocr/OutputEditorHOCR.cc:809
-msgid "Invalid hOCR file"
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1008 ../gtk/src/SourceManager.cc:125
+#: ../qt/src/hocr/OutputEditorHOCR.cc:875 ../qt/src/SourceManager.cc:127
+msgid "Unable to open files"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:945
-#: ../qt/src/hocr/OutputEditorHOCR.cc:809
-msgid "The file does not appear to contain valid hOCR HTML: %1"
-msgstr ""
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:966
-#: ../qt/src/hocr/OutputEditorHOCR.cc:832
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1021
+#: ../qt/src/hocr/OutputEditorHOCR.cc:888
 msgid "Save hOCR Output..."
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:973 ../gtk/src/OutputEditorText.cc:282
-#: ../qt/src/hocr/OutputEditorHOCR.cc:839 ../qt/src/OutputEditorText.cc:246
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1028 ../gtk/src/OutputEditorText.cc:290
+#: ../qt/src/hocr/OutputEditorHOCR.cc:895 ../qt/src/OutputEditorText.cc:246
 msgid "Failed to save output"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:973 ../gtk/src/OutputEditorText.cc:282
-#: ../qt/src/hocr/OutputEditorHOCR.cc:839 ../qt/src/OutputEditorText.cc:246
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1028 ../gtk/src/OutputEditorText.cc:290
+#: ../qt/src/hocr/OutputEditorHOCR.cc:895 ../qt/src/OutputEditorText.cc:246
 msgid "Check that you have writing permissions in the selected folder."
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1035 ../gtk/src/OutputEditorText.cc:296
-#: ../qt/src/hocr/OutputEditorHOCR.cc:894 ../qt/src/OutputEditorText.cc:259
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1096 ../gtk/src/OutputEditorText.cc:304
+#: ../qt/src/hocr/OutputEditorHOCR.cc:956 ../qt/src/OutputEditorText.cc:259
 msgid "Output not saved"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1035 ../gtk/src/OutputEditorText.cc:296
-#: ../qt/src/hocr/OutputEditorHOCR.cc:894 ../qt/src/OutputEditorText.cc:259
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1096 ../gtk/src/OutputEditorText.cc:304
+#: ../qt/src/hocr/OutputEditorHOCR.cc:956 ../qt/src/OutputEditorText.cc:259
 msgid "Save output before proceeding?"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1156 ../gtk/src/OutputEditorText.cc:184
-#: ../qt/src/hocr/OutputEditorHOCR.cc:991 ../qt/src/OutputEditorText.cc:152
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1217 ../gtk/src/OutputEditorText.cc:192
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1053 ../qt/src/OutputEditorText.cc:152
 msgid "Replacing..."
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1181 ../gtk/src/OutputEditorText.cc:192
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1014 ../qt/src/OutputEditorText.cc:160
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1242 ../gtk/src/OutputEditorText.cc:200
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1076 ../qt/src/OutputEditorText.cc:160
 msgid "Applying substitutions..."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:131 ../qt/src/MainWindow.cc:295
+#: ../gtk/src/MainWindow.cc:131 ../qt/src/MainWindow.cc:319
 msgid "Using tesseract"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:178 ../qt/src/MainWindow.cc:194
+#: ../gtk/src/MainWindow.cc:178 ../qt/src/MainWindow.cc:198
 msgid "Select an image to begin..."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:293 ../qt/src/MainWindow.cc:278
+#: ../gtk/src/MainWindow.cc:309 ../qt/src/MainWindow.cc:302
 msgid "Multiple sources"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:295 ../qt/src/MainWindow.cc:280
+#: ../gtk/src/MainWindow.cc:311 ../qt/src/MainWindow.cc:304
 msgid "Ready"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:423
+#: ../gtk/src/MainWindow.cc:460 ../qt/src/MainWindow.cc:438
 msgid "New version"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:442 ../qt/src/MainWindow.cc:423
+#: ../gtk/src/MainWindow.cc:460 ../qt/src/MainWindow.cc:438
 msgid "gImageReader %1 is available"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:443 ../qt/src/MainWindow.cc:424
+#: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:439
 msgid "Download"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:444 ../qt/src/MainWindow.cc:425
+#: ../gtk/src/MainWindow.cc:462 ../qt/src/MainWindow.cc:440
 msgid "Changelog"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:445 ../qt/src/MainWindow.cc:426
+#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:441
 msgid "Don't notify again"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:466 ../qt/src/MainWindow.cc:474
+#: ../gtk/src/MainWindow.cc:484 ../qt/src/MainWindow.cc:489
 msgid "Don't show again"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:467 ../gtk/src/MainWindow.cc:480
-#: ../qt/src/MainWindow.cc:475
+#: ../gtk/src/MainWindow.cc:485 ../gtk/src/MainWindow.cc:498
+#: ../qt/src/MainWindow.cc:490
 msgid "Install"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:487 ../qt/src/MainWindow.cc:487
+#: ../gtk/src/MainWindow.cc:505 ../qt/src/MainWindow.cc:502
 msgid "Spelling dictionary missing"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:487 ../qt/src/MainWindow.cc:487
+#: ../gtk/src/MainWindow.cc:505 ../qt/src/MainWindow.cc:502
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:494 ../gtk/src/MainWindow.cc:523
-#: ../qt/src/MainWindow.cc:493
+#: ../gtk/src/MainWindow.cc:512 ../gtk/src/MainWindow.cc:541
+#: ../qt/src/MainWindow.cc:508
 msgid "Installing spelling dictionary for '%1'"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:515 ../gtk/src/MainWindow.cc:536
-#: ../gtk/src/MainWindow.cc:544 ../gtk/src/MainWindow.cc:592
-#: ../gtk/src/MainWindow.cc:597 ../gtk/src/TessdataManager.cc:60
+#: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:554
+#: ../gtk/src/MainWindow.cc:562 ../gtk/src/MainWindow.cc:610
+#: ../gtk/src/MainWindow.cc:615 ../gtk/src/TessdataManager.cc:60
 #: ../gtk/src/TessdataManager.cc:70 ../gtk/src/TessdataManager.cc:339
-#: ../qt/src/MainWindow.cc:512 ../qt/src/MainWindow.cc:525
-#: ../qt/src/MainWindow.cc:534 ../qt/src/MainWindow.cc:578
-#: ../qt/src/MainWindow.cc:583 ../qt/src/TessdataManager.cc:74
-#: ../qt/src/TessdataManager.cc:84 ../qt/src/TessdataManager.cc:315
+#: ../qt/src/MainWindow.cc:527 ../qt/src/MainWindow.cc:540
+#: ../qt/src/MainWindow.cc:549 ../qt/src/MainWindow.cc:593
+#: ../qt/src/MainWindow.cc:598 ../qt/src/TessdataManager.cc:70
+#: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:287
 msgid "Error"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:512
+#: ../gtk/src/MainWindow.cc:533 ../qt/src/MainWindow.cc:527
 msgid "Failed to install spelling dictionary: %1"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:536 ../qt/src/MainWindow.cc:525
+#: ../gtk/src/MainWindow.cc:554 ../qt/src/MainWindow.cc:540
 msgid "Failed to create directory for spelling dictionaries."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:544 ../qt/src/MainWindow.cc:534
+#: ../gtk/src/MainWindow.cc:562 ../qt/src/MainWindow.cc:549
 msgid "Could not read %1: %2."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:571 ../qt/src/MainWindow.cc:558
+#: ../gtk/src/MainWindow.cc:589 ../qt/src/MainWindow.cc:573
 msgid "Downloading '%1'..."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:592 ../qt/src/MainWindow.cc:578
+#: ../gtk/src/MainWindow.cc:610 ../qt/src/MainWindow.cc:593
 msgid ""
 "The following dictionaries could not be downloaded:\n"
 "%1\n"
@@ -1350,44 +1376,44 @@ msgid ""
 "to user paths in the settings dialog."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:595 ../qt/src/MainWindow.cc:581
+#: ../gtk/src/MainWindow.cc:613 ../qt/src/MainWindow.cc:596
 msgid "Dictionaries installed"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:595
+#: ../gtk/src/MainWindow.cc:613
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:597 ../qt/src/MainWindow.cc:583
+#: ../gtk/src/MainWindow.cc:615 ../qt/src/MainWindow.cc:598
 msgid "No spelling dictionaries found for '%1'."
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:154 ../qt/src/OutputEditorText.cc:137
+#: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:137
 msgid "Stripping line breaks..."
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:162
+#: ../gtk/src/OutputEditorText.cc:170
 msgid "Check spelling"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:231 ../qt/src/OutputEditorText.cc:196
+#: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:196
 msgid "File: %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:234 ../qt/src/OutputEditorText.cc:199
+#: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:199
 msgid "Page: %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:247 ../gtk/src/Recognizer.cc:471
-#: ../qt/src/Recognizer.cc:462
+#: ../gtk/src/OutputEditorText.cc:255 ../gtk/src/Recognizer.cc:472
+#: ../qt/src/Recognizer.cc:463
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:275 ../qt/src/OutputEditorText.cc:239
+#: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:239
 msgid "Save Output..."
 msgstr ""
 
@@ -1460,32 +1486,32 @@ msgstr ""
 msgid "Current selection"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:465 ../qt/src/Recognizer.cc:455
+#: ../gtk/src/Recognizer.cc:466 ../qt/src/Recognizer.cc:456
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:470 ../qt/src/Recognizer.cc:461
+#: ../gtk/src/Recognizer.cc:471 ../qt/src/Recognizer.cc:462
 msgid ""
 "\n"
 "- Page %1: failed to render page"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:501 ../gtk/src/Recognizer.cc:531
-#: ../gtk/src/Recognizer.cc:544 ../qt/src/Recognizer.cc:491
-#: ../qt/src/Recognizer.cc:521 ../qt/src/Recognizer.cc:534
+#: ../gtk/src/Recognizer.cc:502 ../gtk/src/Recognizer.cc:533
+#: ../gtk/src/Recognizer.cc:546 ../qt/src/Recognizer.cc:492
+#: ../qt/src/Recognizer.cc:523 ../qt/src/Recognizer.cc:536
 msgid "Recognizing..."
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:505 ../gtk/src/Recognizer.cc:514
-#: ../qt/src/Recognizer.cc:495 ../qt/src/Recognizer.cc:504
+#: ../gtk/src/Recognizer.cc:507 ../gtk/src/Recognizer.cc:516
+#: ../qt/src/Recognizer.cc:497 ../qt/src/Recognizer.cc:506
 msgid "Recognition errors occurred"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:505 ../qt/src/Recognizer.cc:495
+#: ../gtk/src/Recognizer.cc:507 ../qt/src/Recognizer.cc:497
 msgid "The following errors occurred:%1"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:514 ../qt/src/Recognizer.cc:504
+#: ../gtk/src/Recognizer.cc:516 ../qt/src/Recognizer.cc:506
 msgid "Failed to initialize tesseract"
 msgstr ""
 
@@ -1544,145 +1570,139 @@ msgstr ""
 msgid "Access to scanner is denied."
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
-msgid "PDFs with text"
-msgstr ""
-
-#: ../gtk/src/SourceManager.cc:118 ../qt/src/SourceManager.cc:124
-msgid ""
-"These PDF files already contain text:\n"
-"%1"
-msgstr ""
-
-#: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
-msgid "Unable to open files"
-msgstr ""
-
-#: ../gtk/src/SourceManager.cc:127 ../qt/src/SourceManager.cc:132
-msgid "The following files could not be opened:%1"
-msgstr ""
-
-#: ../gtk/src/SourceManager.cc:141 ../qt/src/SourceManager.cc:143
+#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:142
 msgid "Enter password for file '%1':"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:197 ../qt/src/SourceManager.cc:214
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
+#, fuzzy
+msgid "PDF with text"
+msgstr "सादा टेक्स्ट"
+
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
+msgid ""
+"The PDF file already contains text:\n"
+"%1\n"
+"Open it regardless?"
+msgstr ""
+
+#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:233
 msgid "Images and PDFs"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:202 ../qt/src/SourceManager.cc:215
+#: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:234
 msgid "Select Files"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:208 ../qt/src/SourceManager.cc:226
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:245
 msgid "Clipboard Error"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:208 ../qt/src/SourceManager.cc:226
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:245
 msgid "Failed to read the clipboard."
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:212 ../qt/src/SourceManager.cc:230
-#: ../qt/src/SourceManager.cc:236
+#: ../gtk/src/SourceManager.cc:232 ../qt/src/SourceManager.cc:249
+#: ../qt/src/SourceManager.cc:255
 msgid "Pasted %1"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:262
 msgid "Screenshot Error"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:224 ../qt/src/SourceManager.cc:243
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:262
 msgid "Failed to take screenshot."
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:247
+#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:266
 msgid "Screenshot %1"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:233 ../qt/src/SourceManager.cc:252
+#: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:271
 msgid "Saving image..."
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:240 ../qt/src/SourceManager.cc:265
+#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:284
 msgid "Cannot Write File"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:240 ../qt/src/SourceManager.cc:265
+#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:284
 msgid "Could not write to %1."
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
+#: ../gtk/src/SourceManager.cc:287 ../qt/src/SourceManager.cc:306
 msgid "Delete File?"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:287
+#: ../gtk/src/SourceManager.cc:287 ../qt/src/SourceManager.cc:306
 msgid "The following files will be deleted:%1"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:332 ../qt/src/SourceManager.cc:338
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:357
 msgid "Missing File"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:332 ../qt/src/SourceManager.cc:338
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:357
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:73
+#: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:69
 msgid "Search for"
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:34 ../qt/src/SubstitutionsManager.cc:73
+#: ../gtk/src/SubstitutionsManager.cc:34 ../qt/src/SubstitutionsManager.cc:69
 msgid "Replace with"
 msgstr ""
 
 #: ../gtk/src/SubstitutionsManager.cc:69 ../gtk/src/SubstitutionsManager.cc:103
-#: ../qt/src/SubstitutionsManager.cc:106 ../qt/src/SubstitutionsManager.cc:143
+#: ../qt/src/SubstitutionsManager.cc:102 ../qt/src/SubstitutionsManager.cc:139
 msgid "Substitutions List"
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:70 ../qt/src/SubstitutionsManager.cc:106
+#: ../gtk/src/SubstitutionsManager.cc:70 ../qt/src/SubstitutionsManager.cc:102
 msgid "Open Substitutions List"
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
+#: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:108
 msgid "Error Reading File"
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:112
+#: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:108
 msgid "Unable to read '%1'."
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
+#: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:133
 msgid "Errors Occurred Reading File"
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:137
+#: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:133
 msgid "Some entries of the substitutions list could not be read."
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:104 ../qt/src/SubstitutionsManager.cc:143
+#: ../gtk/src/SubstitutionsManager.cc:104 ../qt/src/SubstitutionsManager.cc:139
 msgid "Save Substitutions List"
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
+#: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Error Saving File"
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:149
+#: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Unable to write to '%1'."
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
+#: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:158
 msgid "Save List?"
 msgstr ""
 
-#: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:162
+#: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:158
 msgid "Do you want to save the current list?"
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:74
+#: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:70
 msgid ""
 "A session connection to the PackageKit backend is required for managing "
 "system-wide tesseract language packs, but it was not found. This service is "
@@ -1693,30 +1713,29 @@ msgid ""
 "in the configuration dialog."
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:79
+#: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:75
 msgid "Fetching available languages"
 msgstr ""
 
 #: ../gtk/src/TessdataManager.cc:70 ../gtk/src/TessdataManager.cc:96
-#: ../gtk/src/TessdataManager.cc:197 ../qt/src/TessdataManager.cc:84
-#: ../qt/src/TessdataManager.cc:101 ../qt/src/TessdataManager.cc:197
+#: ../gtk/src/TessdataManager.cc:197 ../qt/src/TessdataManager.cc:80
+#: ../qt/src/TessdataManager.cc:97 ../qt/src/TessdataManager.cc:169
 msgid "Failed to fetch list of available languages: %1"
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:104 ../qt/src/TessdataManager.cc:113
-#: ../qt/src/TessdataManager.cc:122
+#: ../gtk/src/TessdataManager.cc:104 ../qt/src/TessdataManager.cc:107
 msgid "Parsing error: %1"
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:235 ../qt/src/TessdataManager.cc:232
+#: ../gtk/src/TessdataManager.cc:235 ../qt/src/TessdataManager.cc:204
 msgid "Applying changes..."
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:297 ../qt/src/TessdataManager.cc:278
+#: ../gtk/src/TessdataManager.cc:297 ../qt/src/TessdataManager.cc:250
 msgid "Failed to create directory for tessdata files."
 msgstr ""
 
-#: ../gtk/src/TessdataManager.cc:306 ../qt/src/TessdataManager.cc:287
+#: ../gtk/src/TessdataManager.cc:306 ../qt/src/TessdataManager.cc:259
 msgid "Downloading %1..."
 msgstr ""
 
@@ -1736,10 +1755,18 @@ msgid "Yes"
 msgstr ""
 
 #: ../gtk/src/Utils.cc:67
+msgid "Yes to all"
+msgstr ""
+
+#: ../gtk/src/Utils.cc:70
 msgid "No"
 msgstr ""
 
-#: ../gtk/src/Utils.cc:76
+#: ../gtk/src/Utils.cc:73
+msgid "No to all"
+msgstr ""
+
+#: ../gtk/src/Utils.cc:82
 msgid "Discard"
 msgstr ""
 
@@ -1872,33 +1899,27 @@ msgstr ""
 msgid "Landscape"
 msgstr ""
 
-#: ../qt/src/hocr/HOCRPdfExporter.cc:142
+#: ../qt/src/hocr/HOCRPdfExporter.cc:139
 msgid "Failed to write to file"
 msgstr ""
 
-#. Output toolbar
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:55
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:56
-msgid "Open hOCR file"
-msgstr ""
-
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:57
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:58
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
 msgid "Save as hOCR text"
 msgstr ""
 
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:79
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:111
 #: ../qt/src/Ui_OutputEditorText.hh:106
 msgid "Find and Replace"
 msgstr ""
 
-#: ../qt/src/MainWindow.cc:581
+#: ../qt/src/MainWindow.cc:596
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
 msgstr ""
 
-#: ../qt/src/TessdataManager.cc:308
+#: ../qt/src/TessdataManager.cc:280
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -1916,15 +1937,15 @@ msgstr ""
 msgid "OCR mode:"
 msgstr ""
 
-#: ../qt/src/Ui_MainWindow.hh:209
+#: ../qt/src/Ui_MainWindow.hh:208
 msgid "Remove Image"
 msgstr ""
 
-#: ../qt/src/Ui_MainWindow.hh:212
+#: ../qt/src/Ui_MainWindow.hh:211
 msgid "Delete Image"
 msgstr ""
 
-#: ../qt/src/Ui_MainWindow.hh:215
+#: ../qt/src/Ui_MainWindow.hh:214
 msgid "Clear List"
 msgstr ""
 
