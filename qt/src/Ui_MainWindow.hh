@@ -58,6 +58,7 @@ public:
 		frameRotation->setFrameShape(QFrame::StyledPanel);
 		frameRotation->setFrameShadow(QFrame::Sunken);
 		frameRotation->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+		frameRotation->setToolTip(gettext("Rotate page"));
 
 		QHBoxLayout* layoutRotation = new QHBoxLayout(frameRotation);
 		layoutRotation->setContentsMargins(1, 1, 1, 1);
@@ -99,6 +100,7 @@ public:
 		framePage->setFrameShape(QFrame::StyledPanel);
 		framePage->setFrameShadow(QFrame::Sunken);
 		framePage->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+		framePage->setToolTip(gettext("Select page"));
 
 		QHBoxLayout* layoutPage = new QHBoxLayout(framePage);
 		layoutPage->setContentsMargins(1, 1, 1, 1);
@@ -106,7 +108,6 @@ public:
 
 		QToolButton* toolButtonPage = new QToolButton(MainWindow);
 		toolButtonPage->setIcon(QPixmap(":/icons/page"));
-		toolButtonPage->setToolTip(gettext("Select page"));
 		toolButtonPage->setEnabled(false);
 		toolButtonPage->setAutoRaise(true);
 		layoutPage->addWidget(toolButtonPage);
