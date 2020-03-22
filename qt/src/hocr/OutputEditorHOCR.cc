@@ -852,7 +852,7 @@ void OutputEditorHOCR::open(InsertMode mode) {
 		div = nextDiv;
 	}
 	m_document->convertSourcePaths(QFileInfo(filename).absolutePath(), true);
-	m_modified = false;
+	m_modified = mode != InsertMode::Replace;
 	m_filebasename = QFileInfo(filename).completeBaseName();
 }
 

@@ -978,7 +978,7 @@ void OutputEditorHOCR::open(InsertMode mode) {
 		div = XmlUtils::nextSiblingElement(div, "div");
 	}
 	m_document->convertSourcePaths(Glib::path_get_dirname(filename), true);
-	m_modified = false;
+	m_modified = mode != InsertMode::Replace;
 	m_filebasename = Utils::split_filename(filename).first;
 }
 
