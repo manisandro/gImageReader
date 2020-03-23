@@ -51,6 +51,8 @@ gImageReader is a simple front-end to tesseract. Features include:
 
 %package gtk
 Summary:       A Gtk+ front-end to tesseract-ocr
+# For glib networking operations
+Requires:      gvfs-client
 Requires:      %{name}-common = %{version}-%{release}
 Obsoletes:     %{name} < 2.94-1
 
