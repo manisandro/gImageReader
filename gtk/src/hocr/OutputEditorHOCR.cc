@@ -548,12 +548,10 @@ int OutputEditorHOCR::currentPage() {
 		return m_document->pageCount();
 	}
 	Gtk::TreeModel::Path path = selected.front();
-	gint num;
-	int* indices = gtk_tree_path_get_indices_with_depth(path.gobj(), &num);
-	if(num == 0) {
+	if(path.empty()) {
 		return m_document->pageCount();
 	}
-	return indices[0];
+	return path.front();
 }
 
 void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index, const Gtk::TreeIter& prev) {
