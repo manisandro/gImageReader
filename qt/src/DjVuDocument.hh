@@ -25,19 +25,21 @@ public:
 	DjVuDocument();
 	~DjVuDocument();
 
+	struct Page {
+		int width;
+		int height;
+		int dpi;
+	};
+
 	bool openFile( const QString& fileName );
 	void closeFile();
 	QImage image(int pageno, int resolution);
 	int pageCount() const {
 		return m_pages.size();
 	}
+	const Page& page(int pageno) const { return m_pages[pageno]; }
 
 private:
-	struct Page {
-		int width;
-		int height;
-		int dpi;
-	};
 
 	ddjvu_context_t* m_djvu_cxt = nullptr;
 	ddjvu_document_t* m_djvu_document = nullptr;

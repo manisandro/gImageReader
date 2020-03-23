@@ -77,6 +77,16 @@ QImage ImageRenderer::render(int page, double resolution) const {
 	return reader.read().convertToFormat(QImage::Format_RGB32);
 }
 
+QImage ImageRenderer::renderThumbnail(int page) const {
+	QImageReader reader(m_filename);
+	reader.jumpToImage(page - 1);
+	reader.setBackgroundColor(Qt::white);
+	QSize size = reader.size();
+	double scale = size.width() > size.height() ? (64. / size.width()) : (64. / size.height());
+	reader.setScaledSize(size * scale);
+	return reader.read().convertToFormat(QImage::Format_RGB32);
+}
+
 PDFRenderer::PDFRenderer(const QString& filename, const QByteArray& password) : DisplayRenderer(filename) {
 	m_document = Poppler::Document::load(filename);
 	if(m_document) {
@@ -105,6 +115,22 @@ QImage PDFRenderer::render(int page, double resolution) const {
 	return image.convertToFormat(QImage::Format_RGB32);
 }
 
+QImage PDFRenderer::renderThumbnail(int page) const {
+	if(!m_document) {
+		return QImage();
+	}
+	m_mutex.lock();
+	Poppler::Page* poppage = m_document->page(page - 1);
+	m_mutex.unlock();
+	// Resolution such that largest dimension is 64px
+	// [points] / 72 * resolution = 64 => resolution = 64 * 72 / points
+	QSizeF size = poppage->pageSizeF();
+	double resolution = 64. * 72. / qMax(size.width(), size.height());
+	QImage image = poppage->renderToImage(resolution, resolution);
+	delete poppage;
+	return image.convertToFormat(QImage::Format_RGB32);
+}
+
 int PDFRenderer::getNPages() const {
 	return m_document ? m_document->numPages() : 1;
 }
@@ -120,6 +146,12 @@ DJVURenderer::~DJVURenderer() {
 
 QImage DJVURenderer::render(int page, double resolution) const {
 	return m_djvu->image(page, resolution);
+}
+
+QImage DJVURenderer::renderThumbnail(int pageno) const {
+	const DjVuDocument::Page& page = m_djvu->page(pageno);
+	double resolution = 64. / qMax(page.width, page.height) * page.dpi;
+	return m_djvu->image(pageno, resolution);
 }
 
 int DJVURenderer::getNPages() const {

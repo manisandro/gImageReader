@@ -36,6 +36,7 @@ public:
 	DisplayRenderer(const QString& filename) : m_filename(filename) {}
 	virtual ~DisplayRenderer() {}
 	virtual QImage render(int page, double resolution) const = 0;
+	virtual QImage renderThumbnail(int page) const = 0;
 	virtual int getNPages() const = 0;
 
 	void adjustImage(QImage& image, int brightness, int contrast, bool invert) const;
@@ -48,6 +49,7 @@ class ImageRenderer : public DisplayRenderer {
 public:
 	ImageRenderer(const QString& filename) ;
 	QImage render(int page, double resolution) const override;
+	QImage renderThumbnail(int page) const override;
 	int getNPages() const override {
 		return m_pageCount;
 	}
@@ -60,6 +62,7 @@ public:
 	PDFRenderer(const QString& filename, const QByteArray& password);
 	~PDFRenderer();
 	QImage render(int page, double resolution) const override;
+	QImage renderThumbnail(int page) const override;
 	int getNPages() const override;
 
 private:
@@ -72,6 +75,7 @@ public:
 	DJVURenderer(const QString& filename);
 	~DJVURenderer();
 	QImage render(int page, double resolution) const override;
+	QImage renderThumbnail(int page) const override;
 	int getNPages() const override;
 
 private:

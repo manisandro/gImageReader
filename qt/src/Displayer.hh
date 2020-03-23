@@ -76,7 +76,6 @@ private:
 	QList<Source*> m_sources;
 	QMap<int, QPair<Source*, int>> m_pageMap;
 	Source* m_currentSource = nullptr;
-	DisplayRenderer* m_renderer = nullptr;
 	QPixmap m_pixmap;
 	QGraphicsPixmapItem* m_imageItem = nullptr;
 	double m_scale = 1.0;
@@ -95,6 +94,8 @@ private:
 
 	QTimer m_scaleTimer;
 	QFutureWatcher<QImage> m_scaleWatcher;
+
+	QFutureWatcher<QImage> m_thumbnailWatcher;
 
 private slots:
 	void scaleImage();
@@ -116,6 +117,8 @@ private slots:
 	void zoomOriginal() {
 		setZoom(Zoom::Original);
 	}
+	QImage renderThumbnail(int page);
+	void setThumbnail(int index);
 };
 
 
