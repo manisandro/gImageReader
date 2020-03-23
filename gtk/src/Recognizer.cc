@@ -52,12 +52,12 @@ public:
 		desc.cancel_this = this;
 	}
 	int getProgress() const override {
-		Glib::Threads::Mutex::Lock lock(m_mutex);
+		std::lock_guard<std::mutex> lock(m_mutex);
 		return 100.0 * ((m_progress + desc.progress / 100.0) / m_total);
 	}
 	static bool cancelCallback(void* instance, int /*words*/) {
 		ProgressMonitor* monitor = reinterpret_cast<ProgressMonitor*>(instance);
-		Glib::Threads::Mutex::Lock lock(monitor->m_mutex);
+		std::lock_guard<std::mutex> lock(monitor->m_mutex);
 		return monitor->m_cancelled;
 	}
 };

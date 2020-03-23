@@ -25,10 +25,9 @@
 #include <cairomm/cairomm.h>
 #include <atomic>
 #include <cstdint>
-#include <queue>
 #include <thread>
-#include <vector>
 
+namespace std { class thread; }
 class DisplayerItem;
 class DisplayerImageItem;
 class DisplayerTool;

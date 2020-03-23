@@ -21,6 +21,7 @@
 #define UTILS_HH
 
 #include <gtkmm.h>
+#include <condition_variable>
 #include <iterator>
 #include <queue>
 #include <type_traits>
@@ -119,31 +120,31 @@ void runInMainThreadBlocking(const std::function<void()>& f);
 
 template<typename T, typename S = std::deque<T>>
 class AsyncQueue {
-	std::queue<T, S>   queue_;
-	Glib::Threads::Mutex       mutex_;
-	Glib::Threads::Cond        cond_;
+	std::queue<T, S> m_queue;
+	std::mutex m_mutex;
+	std::condition_variable m_cond;
 public:
 	bool empty() {
-		Glib::Threads::Mutex::Lock queue_guard(mutex_);
-		return queue_.empty();
+		std::unique_lock<std::mutex> lock(m_mutex);
+		return m_queue.empty();
 	}
 	void enqueue(const T& item) {
-		Glib::Threads::Mutex::Lock queue_guard(mutex_);
-		queue_.push(item);
-		cond_.signal();
+		std::unique_lock<std::mutex> lock(m_mutex);
+		m_queue.push(item);
+		lock.unlock();
+		m_cond.notify_one();
 	}
 	T dequeue() {
-		Glib::Threads::Mutex::Lock queue_guard(mutex_);
-		if(queue_.empty()) {
-			while ( queue_.empty() ) {
-				cond_.wait(mutex_);
-			}
+		std::unique_lock<std::mutex> lock(m_mutex);
+		while ( m_queue.empty() ) {
+			m_cond.wait(lock);
 		}
-		T result(queue_.front());
-		queue_.pop();
+		T result(m_queue.front());
+		m_queue.pop();
 		return result;
 	}
 };
+
 }
 
 #endif

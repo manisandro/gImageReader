@@ -26,6 +26,7 @@
 
 #define MAIN MainWindow::getInstance()
 
+namespace std { class thread; }
 class Acquirer;
 class Displayer;
 class DisplayerTool;
@@ -49,24 +50,24 @@ public:
 		ProgressMonitor(int total) : m_total(total) {}
 		virtual ~ProgressMonitor() {}
 		void increaseProgress() {
-			Glib::Threads::Mutex::Lock lock(m_mutex);
+			std::lock_guard<std::mutex> lock(m_mutex);
 			++m_progress;
 		}
 		virtual int getProgress() const {
-			Glib::Threads::Mutex::Lock lock(m_mutex);
+			std::lock_guard<std::mutex> lock(m_mutex);
 			return (m_progress * 100) / m_total;
 		}
 		virtual void cancel() {
-			Glib::Threads::Mutex::Lock lock(m_mutex);
+			std::lock_guard<std::mutex> lock(m_mutex);
 			m_cancelled = true;
 		}
 		bool cancelled() const {
-			Glib::Threads::Mutex::Lock lock(m_mutex);
+			std::lock_guard<std::mutex> lock(m_mutex);
 			return m_cancelled;
 		}
 
 	protected:
-		mutable Glib::Threads::Mutex m_mutex;
+		mutable std::mutex m_mutex;
 		const int m_total;
 		int m_progress = 0;
 		bool m_cancelled = false;
@@ -133,7 +134,7 @@ private:
 	Recognizer* m_recognizer = nullptr;
 	SourceManager* m_sourceManager = nullptr;
 
-	Glib::Threads::Thread* m_newVerThread = nullptr;
+	std::thread* m_newVerThread = nullptr;
 
 	MainWindow::Notification m_notifierHandle = nullptr;
 

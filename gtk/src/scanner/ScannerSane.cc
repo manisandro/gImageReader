@@ -23,10 +23,11 @@
 
 #include "ScannerSane.hh"
 #include <cstring>
+#include <thread>
 #include <sane/saneopts.h>
 
 void ScannerSane::init() {
-	m_thread = Glib::Threads::Thread::create([this] { run(); });
+	m_thread = new std::thread(&ScannerSane::run, this);
 }
 
 void ScannerSane::redetect() {
@@ -50,6 +51,7 @@ void ScannerSane::close() {
 		}
 	}
 	m_thread->join();
+	delete m_thread;
 	m_thread = nullptr;
 }
 

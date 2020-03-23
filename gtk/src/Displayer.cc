@@ -724,6 +724,7 @@ void Displayer::waitForThread(std::thread*& thread, std::atomic<bool>& cancelFla
 			Gtk::Main::iteration(false);
 		}
 		thread->join();
+		delete thread;
 		thread = nullptr;
 		cancelFlag = false;
 	}

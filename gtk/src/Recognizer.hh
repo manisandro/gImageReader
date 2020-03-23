@@ -49,7 +49,7 @@ public:
 	}
 
 private:
-	struct ProgressMonitor;
+	class ProgressMonitor;
 	class MultilingualMenuItem;
 
 	enum class PageArea { EntirePage, Autodetect };

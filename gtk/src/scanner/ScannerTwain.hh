@@ -21,6 +21,7 @@
 #define SCANNER_TWAIN_HH
 
 #include "../Scanner.hh"
+#include <condition_variable>
 #include <cstdlib>
 #include <cstring>
 #include <dlfcn.h>
@@ -56,8 +57,8 @@ private:
 	static ScannerTwain* s_instance;
 
 #ifndef G_OS_WIN32
-	Glib::Threads::Mutex m_mutex;
-	Glib::Threads::Cond  m_cond;
+	std::mutex m_mutex;
+	std::condition_variable m_cond;
 #endif
 
 	struct CapOneVal {

@@ -28,6 +28,8 @@
 #include "../Utils.hh"
 #include <sane/sane.h>
 
+namespace std { class thread; }
+
 class ScannerSane : public Scanner {
 public:
 	void init() override;
@@ -56,7 +58,7 @@ private:
 		ScanJob* job;
 	};
 
-	Glib::Threads::Thread* m_thread = nullptr;
+	std::thread* m_thread = nullptr;
 	State m_state = State::IDLE;
 	Utils::AsyncQueue<Request> m_requestQueue;
 	ScanJob* m_job = nullptr;

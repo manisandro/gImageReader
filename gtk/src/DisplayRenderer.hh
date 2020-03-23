@@ -21,6 +21,7 @@
 #define DISPLAYRENDERER_HH
 
 #include "common.hh"
+#include <mutex>
 
 typedef struct _PopplerDocument PopplerDocument;
 
@@ -61,7 +62,7 @@ public:
 
 private:
 	PopplerDocument* m_document;
-	mutable Glib::Threads::Mutex m_mutex;
+	mutable std::mutex m_mutex;
 };
 
 class DJVURenderer : public DisplayRenderer {
@@ -74,8 +75,6 @@ public:
 
 private:
 	DjVuDocument* m_djvu;
-
-	mutable Glib::Threads::Mutex m_mutex;
 };
 
 #endif // IMAGERENDERER_HH

@@ -185,7 +185,7 @@ MainWindow::MainWindow() {
 	ui.panedOutput->set_orientation(static_cast<Gtk::Orientation>(!ConfigSettings::get<ComboSetting>("outputorient")->getValue()));
 #if ENABLE_VERSIONCHECK
 	if(ConfigSettings::get<SwitchSetting>("updatecheck")->getValue()) {
-		m_newVerThread = Glib::Threads::Thread::create([this] { getNewestVersion(); });
+		m_newVerThread = new std::thread(&MainWindow::getNewestVersion, this);
 	}
 #endif
 }
@@ -194,6 +194,7 @@ MainWindow::~MainWindow() {
 #if ENABLE_VERSIONCHECK
 	if(m_newVerThread) {
 		m_newVerThread->join();
+		delete m_newVerThread;
 	}
 #endif
 	delete m_acquirer;
@@ -440,7 +441,7 @@ void MainWindow::getNewestVersion() {
 		Glib::RefPtr<Gio::File> file = Gio::File::create_for_uri(CHECKURL);
 		Glib::RefPtr<Gio::FileInputStream> stream = file->read();
 		stream->read(buf, 16);
-	} catch (const Glib::Error&) {
+	} catch (const Glib::Error& e) {
 		return;
 	}
 	std::string newver(buf);

@@ -278,11 +278,10 @@ void ScannerTwain::scan(const Params& params) {
 	}
 	MAIN->getWindow()->get_window()->remove_filter(eventFilter, nullptr);
 #else
-	m_mutex.lock();
+	std::unique_lock<std::mutex> lock(m_mutex);
 	while(m_dsMsg == MSG_NULL) {
-		m_cond.wait(m_mutex);
+		m_cond.wait(lock);
 	}
-	m_mutex.unlock();
 #endif
 	if(m_cancel) {
 		failScan(_("Scan canceled"));
@@ -430,11 +429,13 @@ TW_UINT16 ScannerTwain::callback(TW_IDENTITY* origin, TW_IDENTITY* /*dest*/, TW_
 		return TWRC_FAILURE;
 	}
 	if(MSG == MSG_XFERREADY || MSG == MSG_CLOSEDSREQ || MSG == MSG_CLOSEDSOK || MSG == MSG_NULL) {
+#ifndef G_OS_WIN32
+		m_mutex.lock();
+#endif
 		s_instance->m_dsMsg = MSG;
 #ifndef G_OS_WIN32
-		s_instance->m_mutex.lock();
-		s_instance->m_cond.wakeOne();
-		s_instance->m_mutex.unlock();
+		m_mutex.unlock();
+		s_instance->m_cond.notify_one();
 #endif
 		return TWRC_SUCCESS;
 	}
