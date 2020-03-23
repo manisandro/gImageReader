@@ -30,7 +30,7 @@
 #undef USE_STD_NAMESPACE
 
 Displayer::Displayer(const Ui::MainWindow& _ui)
-	: ui(_ui), m_scaleThreadCanceled(false), m_thumbThreadCanceled(false) {
+	: ui(_ui), m_scaleThreadCanceled(false), m_scaleThreadIdleJobsCount(0), m_thumbThreadCanceled(false), m_thumbThreadIdleJobsCount(0) {
 	m_defaultCursor = Gdk::Cursor::create(Gdk::ARROW);
 	m_hadj = ui.scrollwinDisplay->get_hadjustment();
 	m_vadj = ui.scrollwinDisplay->get_vadjustment();
@@ -156,8 +156,8 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	if(sources == m_sources) {
 		return true;
 	}
-	waitForThread(m_scaleThread, m_scaleThreadCanceled, &m_scaleTimer);
-	waitForThread(m_thumbThread, m_thumbThreadCanceled);
+	waitForThread(m_scaleThread, m_scaleThreadCanceled, m_scaleThreadIdleJobsCount, &m_scaleTimer);
+	waitForThread(m_thumbThread, m_thumbThreadCanceled, m_thumbThreadIdleJobsCount);
 	m_scale = 1.0;
 	m_scrollPos[0] = m_scrollPos[1] = 0.5;
 	if(m_tool) {
@@ -282,7 +282,7 @@ bool Displayer::renderImage() {
 	if(m_sources.empty()) {
 		return false;
 	}
-	waitForThread(m_scaleThread, m_scaleThreadCanceled, &m_scaleTimer);
+	waitForThread(m_scaleThread, m_scaleThreadCanceled, m_scaleThreadIdleJobsCount, &m_scaleTimer);
 	int page = ui.spinPage->get_value_as_int();
 
 	// Set current source according to selected page
@@ -349,7 +349,7 @@ void Displayer::setZoom(Zoom zoom) {
 	if(!m_image) {
 		return;
 	}
-	waitForThread(m_scaleThread, m_scaleThreadCanceled, &m_scaleTimer);
+	waitForThread(m_scaleThread, m_scaleThreadCanceled, m_scaleThreadIdleJobsCount, &m_scaleTimer);
 	m_connection_zoomfitClicked.block(true);
 	m_connection_zoomoneClicked.block(true);
 
@@ -696,13 +696,18 @@ void Displayer::scaleImage() {
 			return;
 		}
 		Cairo::RefPtr<Cairo::ImageSurface> image = renderer->render(page, resolution);
-		if(!bool(image)) {
+		if(!bool(image) || m_scaleThreadCanceled) {
 			return;
 		}
 		renderer->adjustImage(image, brightness, contrast, invert);
+		if(m_scaleThreadCanceled) {
+			return;
+		}
+		m_scaleThreadIdleJobsCount += 1;
 		Glib::signal_idle().connect_once([ = ] {
 			m_imageItem->setImage(image);
 			ui.drawingareaDisplay->queue_draw();
+			m_scaleThreadIdleJobsCount -= 1;
 		});
 	});
 }
@@ -715,30 +720,32 @@ void Displayer::thumbnailThread() {
 		}
 		Cairo::RefPtr<Cairo::ImageSurface> thumb = renderer->renderThumbnail(pair.second.second);
 		Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(thumb, 0, 0, thumb->get_width(), thumb->get_height());
+		m_thumbThreadIdleJobsCount += 1;
 		Glib::signal_idle().connect_once([ = ] {
 			Glib::RefPtr<Gtk::ListStore> thumbnailStore = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.iconviewThumbnails->get_model());
 			Gtk::TreePath path(1u, pair.first - 1);
 			thumbnailStore->get_iter(path)->set_value(m_thumbListViewCols.pixbuf, pixbuf);
+			m_thumbThreadIdleJobsCount -= 1;
 		});
-		if(m_thumbThreadCanceled.load()) {
+		if(m_thumbThreadCanceled) {
 			break;
 		}
 	}
 }
 
-void Displayer::waitForThread(std::thread*& thread, std::atomic<bool>& cancelFlag, sigc::connection* conn) {
+void Displayer::waitForThread(std::thread*& thread, std::atomic<bool>& cancelFlag, std::atomic<int>& idleJobCount, sigc::connection* conn) {
 	if(conn) {
 		conn->disconnect();
 	}
 	if(thread) {
 		cancelFlag = true;
-		while(Gtk::Main::events_pending()) {
-			Gtk::Main::iteration(false);
-		}
 		thread->join();
 		delete thread;
 		thread = nullptr;
 		cancelFlag = false;
+	}
+	while(idleJobCount > 0) {
+		Gtk::Main::iteration();
 	}
 }
 

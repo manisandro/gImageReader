@@ -129,12 +129,13 @@ private:
 	void setAngle(double angle);
 	void setRotateMode(RotateMode mode, const std::string& iconName);
 	std::pair<int, int> getPointVisible(const Geometry::Point& p) const;
-	void waitForThread(std::thread*& thread, std::atomic<bool>& cancelFlag, sigc::connection* conn = nullptr);
+	void waitForThread(std::thread*& thread, std::atomic<bool>& cancelFlag, std::atomic<int>& idleJobCount, sigc::connection* conn = nullptr);
 
 	bool m_autoScaleBlocked = false;
 	sigc::connection m_scaleTimer;
 	std::thread* m_scaleThread = nullptr;
 	std::atomic<bool> m_scaleThreadCanceled;
+	std::atomic<int> m_scaleThreadIdleJobsCount;
 	void scaleImage();
 
 	class ThumbListViewColumns : public Gtk::TreeModel::ColumnRecord {
@@ -148,6 +149,7 @@ private:
 	} m_thumbListViewCols;
 	std::thread* m_thumbThread = nullptr;
 	std::atomic<bool> m_thumbThreadCanceled;
+	std::atomic<int> m_thumbThreadIdleJobsCount;
 	void thumbnailThread();
 };
 
