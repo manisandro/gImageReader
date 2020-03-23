@@ -112,11 +112,9 @@ bool Displayer::setSources(QList<Source*> sources) {
 	}
 	m_renderTimer.stop();
 	m_scene->removeItem(m_imageItem);
-	for(Source* source : m_sources) {
-		delete source->renderer;
-		source->renderer = nullptr;
-	}
 	m_currentSource = nullptr;
+	qDeleteAll(m_sourceRenderers);
+	m_sourceRenderers.clear();
 	m_sources.clear();
 	m_pageMap.clear();
 	m_pixmap = QPixmap();
@@ -151,18 +149,20 @@ bool Displayer::setSources(QList<Source*> sources) {
 	int page = 0;
 	QList<int> pages;
 	for(Source* source : m_sources) {
+		DisplayRenderer* renderer = nullptr;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
-			source->renderer = new PDFRenderer(source->path, source->password);
+			renderer = new PDFRenderer(source->path, source->password);
 			if(source->resolution == -1) { source->resolution = 300; }
 		} else if(source->path.endsWith(".djvu", Qt::CaseInsensitive)) {
-			source->renderer = new DJVURenderer(source->path);
+			renderer = new DJVURenderer(source->path);
 			if(source->resolution == -1) { source->resolution = 300; }
 		} else {
-			source->renderer = new ImageRenderer(source->path);
+			renderer = new ImageRenderer(source->path);
 			if(source->resolution == -1) { source->resolution = 100; }
 		}
-		source->angle.resize(source->renderer->getNPages());
-		for(int iPage = 1, nPages = source->renderer->getNPages(); iPage <= nPages; ++iPage) {
+		source->angle.resize(renderer->getNPages());
+		m_sourceRenderers[source] = renderer;
+		for(int iPage = 1, nPages = renderer->getNPages(); iPage <= nPages; ++iPage) {
 			m_pageMap.insert(++page, qMakePair(source, iPage));
 
 			QListWidgetItem* item = new QListWidgetItem(QIcon(":/icons/thumbnail"), _("Page %1").arg(page));
@@ -266,11 +266,15 @@ bool Displayer::renderImage() {
 	Utils::setSpinBlocked(ui.spinBoxRotation, m_currentSource->angle[m_currentSource->page - 1]);
 
 	// Render new image
-	QImage image = m_currentSource->renderer->render(m_currentSource->page, m_currentSource->resolution);
+	DisplayRenderer* renderer = m_sourceRenderers[m_currentSource];
+	if(!renderer) {
+		return false;
+	}
+	QImage image = renderer->render(m_currentSource->page, m_currentSource->resolution);
 	if(image.isNull()) {
 		return false;
 	}
-	m_currentSource->renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
+	renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
 	m_pixmap = QPixmap::fromImage(image);
 	m_imageItem->setPixmap(m_pixmap);
 	m_imageItem->setScale(1.);
@@ -515,9 +519,13 @@ void Displayer::scaleImage() {
 	int contrast = m_currentSource->contrast;
 	bool invert = m_currentSource->invert;
 	QFuture<QImage> future = QtConcurrent::run([ = ] {
-		QImage image = m_currentSource->renderer->render(page, resolution);
+		DisplayRenderer* renderer = m_sourceRenderers[m_currentSource];
+		if(!renderer) {
+			return QImage();
+		}
+		QImage image = renderer->render(page, resolution);
 		if(!image.isNull()) {
-			m_currentSource->renderer->adjustImage(image, brightness, contrast, invert);
+			renderer->adjustImage(image, brightness, contrast, invert);
 		}
 		return image;
 	});
@@ -535,12 +543,15 @@ void Displayer::setScaledImage(QImage image) {
 
 QImage Displayer::renderThumbnail(int page) {
 	QPair<Source*, int> map = m_pageMap[page];
-	return map.first->renderer->renderThumbnail(map.second);
+	DisplayRenderer* renderer = m_sourceRenderers[map.first];
+	return renderer ? renderer->renderThumbnail(map.second) : QImage();
 }
 
 void Displayer::setThumbnail(int index) {
 	QImage image = m_thumbnailWatcher.resultAt(index);
-	ui.listWidgetThumbnails->item(index)->setIcon(QPixmap::fromImage(image));
+	if(!image.isNull()) {
+		ui.listWidgetThumbnails->item(index)->setIcon(QPixmap::fromImage(image));
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

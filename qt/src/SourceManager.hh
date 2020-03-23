@@ -27,7 +27,6 @@
 class QMenu;
 class QPixmap;
 class UI_MainWindow;
-class DisplayRenderer;
 
 struct Source {
 	Source(const QString& _path, const QString& _displayname, const QByteArray& _password = "", bool _isTemp = false)
@@ -42,7 +41,6 @@ struct Source {
 	int page = 1;
 	QVector<double> angle;
 	bool invert = false;
-	DisplayRenderer* renderer = nullptr;
 
 	//Additional info from original file
 	QString author, title, creator, producer, keywords, subject;

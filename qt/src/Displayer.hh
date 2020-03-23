@@ -74,6 +74,7 @@ private:
 	const UI_MainWindow& ui;
 	GraphicsScene* m_scene;
 	QList<Source*> m_sources;
+	QMap<Source*, DisplayRenderer*> m_sourceRenderers;
 	QMap<int, QPair<Source*, int>> m_pageMap;
 	Source* m_currentSource = nullptr;
 	QPixmap m_pixmap;

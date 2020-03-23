@@ -41,7 +41,6 @@ struct Source {
 	int page = 1;
 	std::vector<double> angle;
 	bool invert = false;
-	DisplayRenderer* renderer = nullptr;
 
 	//Additional info from original file
 	Glib::ustring author, title, creator, producer, keywords, subject;

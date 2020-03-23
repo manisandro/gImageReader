@@ -167,11 +167,9 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	delete m_imageItem;
 	m_imageItem = nullptr;
 	m_image.clear();
-	for(Source* source : m_sources) {
-		delete source->renderer;
-		source->renderer = nullptr;
-	}
 	m_currentSource = nullptr;
+	std::for_each(m_sourceRenderers.begin(), m_sourceRenderers.end(), [](auto pair) { delete pair.second; });
+	m_sourceRenderers.clear();
 	m_sources.clear();
 	m_pageMap.clear();
 	ui.drawingareaDisplay->hide();
@@ -203,27 +201,29 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	int page = 0;
 	Glib::RefPtr<Gtk::ListStore> thumbnailStore = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.iconviewThumbnails->get_model());
 	for(Source* source : m_sources) {
+		DisplayRenderer* renderer = nullptr;
 		std::string filename = source->file->get_path();
 #ifdef G_OS_WIN32
 		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf") {
 #else
 		if(Utils::get_content_type(filename) == "application/pdf") {
 #endif
-			source->renderer = new PDFRenderer(filename, source->password);
+			renderer = new PDFRenderer(filename, source->password);
 			if(source->resolution == -1) { source->resolution = 300; }
 #ifdef G_OS_WIN32
 		} else if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".djvu") {
 #else
 		} else if(Utils::get_content_type(filename) == "image/vnd.djvu") {
 #endif
-			source->renderer = new DJVURenderer(filename);
+			renderer = new DJVURenderer(filename);
 			if(source->resolution == -1) { source->resolution = 300; }
 		} else {
-			source->renderer = new ImageRenderer(filename);
+			renderer = new ImageRenderer(filename);
 			if(source->resolution == -1) { source->resolution = 100; }
 		}
-		source->angle.resize(source->renderer->getNPages(), 0.);
-		for(int iPage = 1, nPages = source->renderer->getNPages(); iPage <= nPages; ++iPage) {
+		source->angle.resize(renderer->getNPages(), 0.);
+		m_sourceRenderers[source] = renderer;
+		for(int iPage = 1, nPages = renderer->getNPages(); iPage <= nPages; ++iPage) {
 			m_pageMap.insert(std::make_pair(++page, std::make_pair(source, iPage)));
 
 			Gtk::TreeIter it = thumbnailStore->append();
@@ -326,11 +326,15 @@ bool Displayer::renderImage() {
 	Utils::set_spin_blocked(ui.spinRotate, m_currentSource->angle[m_currentSource->page - 1], m_connection_rotSpinChanged);
 
 	// Render new image
-	Cairo::RefPtr<Cairo::ImageSurface> image = m_currentSource->renderer->render(m_currentSource->page, m_currentSource->resolution);
+	DisplayRenderer* renderer = m_sourceRenderers[m_currentSource];
+	if(!renderer) {
+		return false;
+	}
+	Cairo::RefPtr<Cairo::ImageSurface> image = renderer->render(m_currentSource->page, m_currentSource->resolution);
 	if(!bool(image)) {
 		return false;
 	}
-	m_currentSource->renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
+	renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
 	m_image = image;
 	m_imageItem->setImage(m_image);
 	m_imageItem->setRect(Geometry::Rectangle(-0.5 * m_image->get_width(), -0.5 * m_image->get_height(), m_image->get_width(), m_image->get_height()));
@@ -687,11 +691,15 @@ void Displayer::scaleImage() {
 	int contrast = m_currentSource->contrast;
 	bool invert = m_currentSource->invert;
 	m_scaleThread = new std::thread([ = ] {
-		Cairo::RefPtr<Cairo::ImageSurface> image = m_currentSource->renderer->render(page, resolution);
+		DisplayRenderer* renderer = m_sourceRenderers[m_currentSource];
+		if(!renderer) {
+			return;
+		}
+		Cairo::RefPtr<Cairo::ImageSurface> image = renderer->render(page, resolution);
 		if(!bool(image)) {
 			return;
 		}
-		m_currentSource->renderer->adjustImage(image, brightness, contrast, invert);
+		renderer->adjustImage(image, brightness, contrast, invert);
 		Glib::signal_idle().connect_once([ = ] {
 			m_imageItem->setImage(image);
 			ui.drawingareaDisplay->queue_draw();
@@ -701,7 +709,11 @@ void Displayer::scaleImage() {
 
 void Displayer::thumbnailThread() {
 	for(const auto& pair : m_pageMap) {
-		Cairo::RefPtr<Cairo::ImageSurface> thumb = pair.second.first->renderer->renderThumbnail(pair.second.second);
+		DisplayRenderer* renderer = m_sourceRenderers[pair.second.first];
+		if(!renderer) {
+			continue;
+		}
+		Cairo::RefPtr<Cairo::ImageSurface> thumb = renderer->renderThumbnail(pair.second.second);
 		Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(thumb, 0, 0, thumb->get_width(), thumb->get_height());
 		Glib::signal_idle().connect_once([ = ] {
 			Glib::RefPtr<Gtk::ListStore> thumbnailStore = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.iconviewThumbnails->get_model());

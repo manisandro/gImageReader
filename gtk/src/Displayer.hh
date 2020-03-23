@@ -88,6 +88,7 @@ private:
 	Glib::RefPtr<Gtk::Adjustment> m_vadj;
 
 	std::vector<Source*> m_sources;
+	std::map<Source*, DisplayRenderer*> m_sourceRenderers;
 	std::map<int, std::pair<Source*, int>> m_pageMap;
 	Source* m_currentSource = nullptr;
 	Cairo::RefPtr<Cairo::ImageSurface> m_image;
