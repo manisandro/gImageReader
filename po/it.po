@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-22 15:53+0100\n"
+"POT-Creation-Date: 2020-03-23 01:43+0100\n"
 "PO-Revision-Date: 2018-03-29 22:24+0000\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/gimagereader/"
@@ -430,11 +430,11 @@ msgstr "Pagina corrente"
 msgid "Multiple Pages..."
 msgstr "Più pagine..."
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:615
+#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:616
 msgid "Add Word"
 msgstr "Aggiungi parola"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:615
+#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:616
 msgid "Enter word:"
 msgstr "Aggiungi parola:"
 
@@ -525,13 +525,13 @@ msgid "Previous (Shift+F3)"
 msgstr "Precedente (Shift+F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:917
-#: ../qt/src/hocr/OutputEditorHOCR.cc:765
+#: ../qt/src/hocr/OutputEditorHOCR.cc:766
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Expand all"
 msgstr "Espandi"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:920
-#: ../qt/src/hocr/OutputEditorHOCR.cc:766
+#: ../qt/src/hocr/OutputEditorHOCR.cc:767
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Collapse all"
 msgstr "Contrai"
@@ -835,7 +835,7 @@ msgstr "Aggiungi"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:913 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:762 ../qt/src/SubstitutionsManager.cc:50
+#: ../qt/src/hocr/OutputEditorHOCR.cc:763 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
 msgstr "Rimuovi"
@@ -938,11 +938,11 @@ msgstr "Non vi è lavoro non salvato."
 msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "Impossibile ottenere un backtrace. È installato gdb?"
 
-#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:170
+#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:191
 msgid "Failed to load image"
 msgstr "Caricamento immagine fallito"
 
-#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:170
+#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:191
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -984,7 +984,7 @@ msgid "Overwrite File?"
 msgstr "Sovrascrivere il file?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:616 ../gtk/src/hocr/OutputEditorHOCR.cc:266
-#: ../qt/src/hocr/OutputEditorHOCR.cc:234
+#: ../qt/src/hocr/OutputEditorHOCR.cc:235
 msgid "Page"
 msgstr "Pagina"
 
@@ -993,7 +993,7 @@ msgid "Text block"
 msgstr "Blocco di testo"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:620 ../gtk/src/hocr/OutputEditorHOCR.cc:272
-#: ../qt/src/hocr/HOCRDocument.cc:538 ../qt/src/hocr/OutputEditorHOCR.cc:236
+#: ../qt/src/hocr/HOCRDocument.cc:538 ../qt/src/hocr/OutputEditorHOCR.cc:237
 msgid "Paragraph"
 msgstr "Paragrafo"
 
@@ -1009,7 +1009,7 @@ msgstr "Grafica"
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1018 ../gtk/src/OutputEditorText.cc:280
 #: ../qt/src/hocr/HOCROdtExporter.cc:51 ../qt/src/hocr/HOCRPdfExporter.cc:471
-#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:886
+#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:887
 #: ../qt/src/OutputEditorText.cc:238
 msgid "output"
 msgstr "output"
@@ -1137,27 +1137,27 @@ msgid "The text export failed: unable to write output file."
 msgstr "L'esportazione è fallita: impossibile scrivere il file di output."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
-#: ../qt/src/hocr/OutputEditorHOCR.cc:235
+#: ../qt/src/hocr/OutputEditorHOCR.cc:236
 msgid "Block"
 msgstr "Blocco"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
-#: ../qt/src/hocr/OutputEditorHOCR.cc:237
+#: ../qt/src/hocr/OutputEditorHOCR.cc:238
 msgid "Line"
 msgstr "Riga"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
-#: ../qt/src/hocr/OutputEditorHOCR.cc:238
+#: ../qt/src/hocr/OutputEditorHOCR.cc:239
 msgid "Word"
 msgstr "Parola"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
-#: ../qt/src/hocr/OutputEditorHOCR.cc:239
+#: ../qt/src/hocr/OutputEditorHOCR.cc:240
 msgid "Misspelled word"
 msgstr "Errori ortografici"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:448
-#: ../qt/src/hocr/OutputEditorHOCR.cc:337
+#: ../qt/src/hocr/OutputEditorHOCR.cc:338
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -1166,89 +1166,89 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:449
-#: ../qt/src/hocr/OutputEditorHOCR.cc:338
+#: ../qt/src/hocr/OutputEditorHOCR.cc:339
 msgid "Recognition errors"
 msgstr "Errori di ricognizione"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:621
-#: ../qt/src/hocr/OutputEditorHOCR.cc:535
-#: ../qt/src/hocr/OutputEditorHOCR.cc:547
+#: ../qt/src/hocr/OutputEditorHOCR.cc:536
+#: ../qt/src/hocr/OutputEditorHOCR.cc:548
 msgid "Multiple values"
 msgstr "Valori multipli"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:805
-#: ../qt/src/hocr/OutputEditorHOCR.cc:676
+#: ../qt/src/hocr/OutputEditorHOCR.cc:677
 msgid "Merge"
 msgstr "Unisci"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:813
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:904
-#: ../qt/src/hocr/OutputEditorHOCR.cc:678
-#: ../qt/src/hocr/OutputEditorHOCR.cc:760
+#: ../qt/src/hocr/OutputEditorHOCR.cc:679
+#: ../qt/src/hocr/OutputEditorHOCR.cc:761
 msgid "Split from parent"
 msgstr "Separa dal gruppo"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:824
-#: ../qt/src/hocr/OutputEditorHOCR.cc:682
+#: ../qt/src/hocr/OutputEditorHOCR.cc:683
 msgid "Swap"
 msgstr "Scambia"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:848
-#: ../qt/src/hocr/OutputEditorHOCR.cc:728
+#: ../qt/src/hocr/OutputEditorHOCR.cc:729
 msgid "Add graphic region"
 msgstr "Aggiungi regione grafica"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:851
-#: ../qt/src/hocr/OutputEditorHOCR.cc:729
+#: ../qt/src/hocr/OutputEditorHOCR.cc:730
 msgid "Add text block"
 msgstr "Aggiungi blocco di testo"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:855
-#: ../qt/src/hocr/OutputEditorHOCR.cc:731
+#: ../qt/src/hocr/OutputEditorHOCR.cc:732
 msgid "Add paragraph"
 msgstr "Aggiungi paragrafo"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:859
-#: ../qt/src/hocr/OutputEditorHOCR.cc:733
+#: ../qt/src/hocr/OutputEditorHOCR.cc:734
 msgid "Add line"
 msgstr "Aggiungi riga"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:863
-#: ../qt/src/hocr/OutputEditorHOCR.cc:735
+#: ../qt/src/hocr/OutputEditorHOCR.cc:736
 msgid "Add word"
 msgstr "Aggiungi parola"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:879
-#: ../qt/src/hocr/OutputEditorHOCR.cc:745
+#: ../qt/src/hocr/OutputEditorHOCR.cc:746
 msgid "No suggestions"
 msgstr "Nessun suggerimento"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:885
-#: ../qt/src/hocr/OutputEditorHOCR.cc:749
+#: ../qt/src/hocr/OutputEditorHOCR.cc:750
 msgid "Add to dictionary"
 msgstr "Aggiungi al dizionario"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:891
-#: ../qt/src/hocr/OutputEditorHOCR.cc:751
+#: ../qt/src/hocr/OutputEditorHOCR.cc:752
 msgid "Ignore word"
 msgstr "Ignora parola"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:954
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1020
-#: ../qt/src/hocr/OutputEditorHOCR.cc:831
-#: ../qt/src/hocr/OutputEditorHOCR.cc:888
+#: ../qt/src/hocr/OutputEditorHOCR.cc:832
+#: ../qt/src/hocr/OutputEditorHOCR.cc:889
 msgid "hOCR HTML Files"
 msgstr "File HTML hOCR"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:955
-#: ../qt/src/hocr/OutputEditorHOCR.cc:831
+#: ../qt/src/hocr/OutputEditorHOCR.cc:832
 msgid "Open hOCR File"
 msgstr "Apri file hOCR"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1002 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:869 ../qt/src/SourceManager.cc:127
+#: ../qt/src/hocr/OutputEditorHOCR.cc:870 ../qt/src/SourceManager.cc:127
 msgid ""
 "The following files could not be opened:\n"
 "%1"
@@ -1257,7 +1257,7 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1005
-#: ../qt/src/hocr/OutputEditorHOCR.cc:872
+#: ../qt/src/hocr/OutputEditorHOCR.cc:873
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
@@ -1266,44 +1266,44 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1008 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:875 ../qt/src/SourceManager.cc:127
+#: ../qt/src/hocr/OutputEditorHOCR.cc:876 ../qt/src/SourceManager.cc:127
 msgid "Unable to open files"
 msgstr "Impossibile aprire file"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1021
-#: ../qt/src/hocr/OutputEditorHOCR.cc:888
+#: ../qt/src/hocr/OutputEditorHOCR.cc:889
 msgid "Save hOCR Output..."
 msgstr "Salva output hOCR..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1028 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:895 ../qt/src/OutputEditorText.cc:246
+#: ../qt/src/hocr/OutputEditorHOCR.cc:896 ../qt/src/OutputEditorText.cc:246
 msgid "Failed to save output"
 msgstr "Impossibile salvare output"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1028 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:895 ../qt/src/OutputEditorText.cc:246
+#: ../qt/src/hocr/OutputEditorHOCR.cc:896 ../qt/src/OutputEditorText.cc:246
 msgid "Check that you have writing permissions in the selected folder."
 msgstr ""
 "Verificare che l'utente abbia permessi di scrittura nella cartella "
 "selezionata."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1096 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:956 ../qt/src/OutputEditorText.cc:259
+#: ../qt/src/hocr/OutputEditorHOCR.cc:957 ../qt/src/OutputEditorText.cc:259
 msgid "Output not saved"
 msgstr "Output non salvato"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1096 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:956 ../qt/src/OutputEditorText.cc:259
+#: ../qt/src/hocr/OutputEditorHOCR.cc:957 ../qt/src/OutputEditorText.cc:259
 msgid "Save output before proceeding?"
 msgstr "Salvare output prima di continuare?"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1217 ../gtk/src/OutputEditorText.cc:192
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1053 ../qt/src/OutputEditorText.cc:152
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1054 ../qt/src/OutputEditorText.cc:152
 msgid "Replacing..."
 msgstr "Sostituendo..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1242 ../gtk/src/OutputEditorText.cc:200
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1076 ../qt/src/OutputEditorText.cc:160
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1077 ../qt/src/OutputEditorText.cc:160
 msgid "Applying substitutions..."
 msgstr "Applicando sostituzioni..."
 
@@ -1971,6 +1971,10 @@ msgstr "Verticale"
 #: ../qt/data/PdfExportDialog.ui.h:9
 msgid "Landscape"
 msgstr "Orizzontale"
+
+#: ../qt/src/Displayer.cc:168
+msgid "Page %1"
+msgstr "Pagina %1"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:139
 msgid "Failed to write to file"
