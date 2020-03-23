@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-23 01:43+0100\n"
-"PO-Revision-Date: 2020-02-04 14:50+0000\n"
+"PO-Revision-Date: 2020-03-24 10:37+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gimagereader/"
 "translations/cs/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 3.11-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -238,9 +238,8 @@ msgid "Best fit"
 msgstr "Přizpůsobit oknu"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
-#, fuzzy
 msgid "Rotate page"
-msgstr "Otočit všechny stránky"
+msgstr "Otočit stránku"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
 msgid "Select rotation mode"
