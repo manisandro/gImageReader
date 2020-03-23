@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-23 01:43+0100\n"
-"PO-Revision-Date: 2020-01-18 13:21+0000\n"
+"PO-Revision-Date: 2020-03-24 10:37+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gimagereader/"
 "translations/nl/>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.2\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr "OCR-applicatie"
+msgstr "OCR-toepassing"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:167
 msgid "Redetect Languages"
@@ -148,7 +148,7 @@ msgstr "Gebruikerspaden"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr "Geëxporteerde documenten automatisch openen met standaard applicatie"
+msgstr "Geëxporteerde documenten automatisch openen met standaardtoepassing"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -217,7 +217,7 @@ msgstr "Plakken"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:194
 msgid "Take Screenshot"
-msgstr "Schermafbeelding maken"
+msgstr "Schermfoto maken"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:23
 msgid "Zoom in"
@@ -236,9 +236,8 @@ msgid "Best fit"
 msgstr "Passend"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
-#, fuzzy
 msgid "Rotate page"
-msgstr "Alle pagina's draaien"
+msgstr "Pagina draaien"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
 msgid "Select rotation mode"
@@ -441,12 +440,11 @@ msgstr "Voer een woord in:"
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Nieuwe uitvoer invoegen na laatste pagina"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "Huidige pagina draaien"
+msgstr "Nieuwe uitvoer invoegen vóór huidige pagina"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
@@ -465,14 +463,13 @@ msgstr "Exporteren naar ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
-#, fuzzy
 msgid "Append document after last page"
-msgstr "Toepassen op huidige tekst"
+msgstr "Document invoegen na laatste pagina"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Insert document before current page"
-msgstr ""
+msgstr "Document invoegen vóór huidige pagina"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
@@ -937,7 +934,6 @@ msgid "There was no unsaved work."
 msgstr "Er is geen niet-opgeslagen werk."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
-#, fuzzy
 msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "Het verkrijgen van een backtrace is mislukt. Is gdb geïnstalleerd?"
 
@@ -1258,19 +1254,21 @@ msgstr "hOCR-bestand openen"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1002 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:870 ../qt/src/SourceManager.cc:127
-#, fuzzy
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "De volgende bestanden kunnen niet worden geopend: %1"
+msgstr ""
+"De volgende bestanden kunnen niet worden geopend:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1005
 #: ../qt/src/hocr/OutputEditorHOCR.cc:873
-#, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "Het bestand lijkt geen geldige hOCR HTML te bevatten: %1"
+msgstr ""
+"Het bestand lijkt geen geldige hOCR HTML te bevatten:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1008 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:876 ../qt/src/SourceManager.cc:127
@@ -1622,19 +1620,18 @@ msgid "Enter password for file '%1':"
 msgstr "Voer het wachtwoord in voor het bestand '%1':"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
-#, fuzzy
 msgid "PDF with text"
-msgstr "PDF-bestanden met tekst"
+msgstr "PDF-bestand met tekst"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
-#, fuzzy
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
 "Deze PDF-bestanden bevatten al tekst:\n"
-"%1"
+"%1\n"
+"Wil je ze toch openen?"
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:233
 msgid "Images and PDFs"
@@ -1663,11 +1660,11 @@ msgstr "Schermafbeeldingsfout"
 
 #: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:262
 msgid "Failed to take screenshot."
-msgstr "Het maken van een schermafbeelding is mislukt."
+msgstr "Het maken van een schermfoto is mislukt."
 
 #: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:266
 msgid "Screenshot %1"
-msgstr "Schermafbeelding %1"
+msgstr "Schermfoto %1"
 
 #: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:271
 msgid "Saving image..."
@@ -1819,7 +1816,7 @@ msgstr "Ja"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "Ja op alles"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1827,7 +1824,7 @@ msgstr "Nee"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "Nee op alles"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
@@ -1877,13 +1874,13 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">De applicatie is "
-"gecrashed</span></p><p>Excuses voor het ongemak. Als u wilt helpen om de "
-"applicatie te verbeteren, overweeg dan om het probleem te melden via <a href="
-"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>. Probeer te omschrijven wat u aan het doen was "
-"voordat de applicatie crashte. Voeg ook onderstaande informatie bij. Bedankt."
-"</p></body></html>"
+"<html><head/><body><p><span style=\" font-weight:600;\">De toepassing is "
+"gecrasht</span></p><p>Excuses voor het ongemak. Als je wilt helpen om de "
+"toepassing te verbeteren, overweeg dan om het probleem te melden via <a href="
+"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Probeer te omschrijven wat je aan het doen was "
+"voordat de toepassing crashte. Voeg ook onderstaande informatie bij. "
+"Bedankt.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
 msgid ""
@@ -1980,9 +1977,8 @@ msgid "Landscape"
 msgstr "Landschap"
 
 #: ../qt/src/Displayer.cc:168
-#, fuzzy
 msgid "Page %1"
-msgstr "Pagina: %1"
+msgstr "Pagina %1"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:139
 msgid "Failed to write to file"
