@@ -25,20 +25,21 @@ public:
 	DjVuDocument();
 	~DjVuDocument();
 
-	bool openFile( const std::string& fileName );
-	void closeFile();
-	Cairo::RefPtr<Cairo::ImageSurface> image(int pageno, int resolution);
-	int pageCount() const {
-		return m_pages.size();
-	}
-
-private:
 	struct Page {
 		int width;
 		int height;
 		int dpi;
 	};
 
+	bool openFile( const std::string& fileName );
+	void closeFile();
+	Cairo::RefPtr<Cairo::ImageSurface> image(int pageno, int resolution);
+	int pageCount() const {
+		return m_pages.size();
+	}
+	const Page& page(int pageno) const { return m_pages[pageno]; }
+
+private:
 	ddjvu_context_t* m_djvu_cxt = nullptr;
 	ddjvu_document_t* m_djvu_document = nullptr;
 	ddjvu_format_t* m_format = nullptr;

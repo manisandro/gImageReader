@@ -93,6 +93,39 @@ Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::render(int /*page*/, double re
 	return surf;
 }
 
+Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::renderThumbnail(int /*page*/) const {
+	Glib::RefPtr<Gdk::Pixbuf> pixbuf;
+	try {
+		pixbuf = Gdk::Pixbuf::create_from_file(m_filename);
+	} catch(const Glib::Error&) {
+		return Cairo::RefPtr<Cairo::ImageSurface>();
+	}
+
+	double scale = pixbuf->get_width() > pixbuf->get_height() ? (64. / pixbuf->get_width()) : (64. / pixbuf->get_height());
+	int w = Utils::round(pixbuf->get_width() * scale);
+	int h = Utils::round(pixbuf->get_height() * scale);
+	Cairo::RefPtr<Cairo::ImageSurface> surf;
+	try {
+		surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, w, h);
+	} catch(const std::exception&) {
+		return Cairo::RefPtr<Cairo::ImageSurface>();
+	}
+	Cairo::RefPtr<Cairo::Context> ctx = Cairo::Context::create(surf);
+	if(pixbuf->get_has_alpha()) {
+		ctx->set_source_rgba(1., 1., 1., 1.);
+		ctx->paint();
+	}
+	ctx->scale(scale, scale);
+	try {
+		Gdk::Cairo::set_source_pixbuf(ctx, pixbuf);
+	} catch(const std::exception&) {
+		return Cairo::RefPtr<Cairo::ImageSurface>();
+	}
+
+	ctx->paint();
+	return surf;
+}
+
 PDFRenderer::PDFRenderer(const std::string& filename, const Glib::ustring& password) : DisplayRenderer(filename) {
 	m_document = poppler_document_new_from_file(Glib::filename_to_uri(m_filename).c_str(), password.c_str(), 0);
 }
@@ -131,6 +164,35 @@ Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::render(int page, double resoluti
 	return surf;
 }
 
+Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::renderThumbnail(int page) const {
+	if(!m_document) {
+		return Cairo::RefPtr<Cairo::ImageSurface>();
+	}
+	m_mutex.lock();
+	PopplerPage* poppage = poppler_document_get_page(m_document, page - 1);
+	double width, height;
+	poppler_page_get_size(poppage, &width, &height);
+	double resolution = 64. * 72. / std::max(width, height);
+	double scale = resolution / 72;
+	int w = Utils::round(width * scale);
+	int h = Utils::round(height * scale);
+	Cairo::RefPtr<Cairo::ImageSurface> surf;
+	try {
+		surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, w, h);
+	} catch(const std::exception&) {
+		m_mutex.unlock();
+		return Cairo::RefPtr<Cairo::ImageSurface>();
+	}
+	Cairo::RefPtr<Cairo::Context> ctx = Cairo::Context::create(surf);
+	ctx->set_source_rgba(1., 1., 1., 1.);
+	ctx->paint();
+	ctx->scale(scale, scale);
+	poppler_page_render(poppage, ctx->cobj());
+	g_object_unref(poppage);
+	m_mutex.unlock();
+	return surf;
+}
+
 int PDFRenderer::getNPages() const {
 	return m_document ? poppler_document_get_n_pages(m_document) : 1;
 }
@@ -147,6 +209,12 @@ DJVURenderer::~DJVURenderer() {
 
 Cairo::RefPtr<Cairo::ImageSurface> DJVURenderer::render(int page, double resolution) const {
 	return m_djvu->image(page, resolution);
+}
+
+Cairo::RefPtr<Cairo::ImageSurface> DJVURenderer::renderThumbnail(int pageno) const {
+	const DjVuDocument::Page& page = m_djvu->page(pageno);
+	double resolution = 64. / std::max(page.width, page.height) * page.dpi;
+	return m_djvu->image(pageno, resolution);
 }
 
 int DJVURenderer::getNPages() const {

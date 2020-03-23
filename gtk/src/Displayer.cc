@@ -85,6 +85,18 @@ Displayer::Displayer(const Ui::MainWindow& _ui)
 	CONNECT(ui.windowMain->get_style_context(), changed, [this] { ui.drawingareaDisplay->queue_draw(); });
 
 	CONNECT(ui.scrollwinDisplay, drag_data_received, sigc::ptr_fun(Utils::handle_drag_drop));
+	m_connection_thumbClicked = CONNECT(ui.iconviewThumbnails, selection_changed, [this] {
+		if(!ui.iconviewThumbnails->get_selected_items().empty()) {
+			ui.spinPage->set_value(1 + ui.iconviewThumbnails->get_selected_items().front().front());
+		}
+	});
+	CONNECT(ui.spinPage, value_changed, [this] {
+		m_connection_thumbClicked.block(true);
+		Gtk::TreePath path(1u, ui.spinPage->get_value_as_int() - 1);
+		ui.iconviewThumbnails->select_path(path);
+		ui.iconviewThumbnails->scroll_to_path(path, false, 0., 0.);
+		m_connection_thumbClicked.block(false);
+	});
 }
 
 void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx) {
@@ -150,6 +162,15 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 		m_scaleThread->join();
 		m_scaleThread = nullptr;
 	}
+	if(m_thumbThread) {
+		m_thumbThreadCanceled = true;
+		while(Gtk::Main::events_pending()) {
+			Gtk::Main::iteration(false);
+		}
+		m_thumbThread->join();
+		m_thumbThread = nullptr;
+		m_thumbThreadCanceled = false;
+	}
 	std::queue<ScaleRequest>().swap(m_scaleRequests); // clear...
 	m_scale = 1.0;
 	m_scrollPos[0] = m_scrollPos[1] = 0.5;
@@ -160,8 +181,10 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	delete m_imageItem;
 	m_imageItem = nullptr;
 	m_image.clear();
-	delete m_renderer;
-	m_renderer = 0;
+	for(Source* source : m_sources) {
+		delete source->renderer;
+		source->renderer = nullptr;
+	}
 	m_currentSource = nullptr;
 	m_sources.clear();
 	m_pageMap.clear();
@@ -182,6 +205,9 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	ui.buttonZoomin->set_sensitive(true);
 	ui.buttonZoomout->set_sensitive(true);
 	if(ui.viewportDisplay->get_window()) { ui.viewportDisplay->get_window()->set_cursor(); }
+	ui.iconviewThumbnails->set_model(Gtk::ListStore::create(m_thumbListViewCols));
+	ui.iconviewThumbnails->set_pixbuf_column(0);
+	ui.iconviewThumbnails->set_text_column(1);
 
 	m_sources = sources;
 	if(sources.empty()) {
@@ -189,35 +215,43 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	}
 
 	int page = 0;
+	Glib::RefPtr<Gtk::ListStore> thumbnailStore = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.iconviewThumbnails->get_model());
 	for(Source* source : m_sources) {
-		DisplayRenderer* renderer;
 		std::string filename = source->file->get_path();
 #ifdef G_OS_WIN32
 		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf") {
 #else
 		if(Utils::get_content_type(filename) == "application/pdf") {
 #endif
-			renderer = new PDFRenderer(filename, source->password);
+			source->renderer = new PDFRenderer(filename, source->password);
+			if(source->resolution == -1) { source->resolution = 300; }
 #ifdef G_OS_WIN32
 		} else if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".djvu") {
 #else
 		} else if(Utils::get_content_type(filename) == "image/vnd.djvu") {
 #endif
-			renderer = new DJVURenderer(filename);
+			source->renderer = new DJVURenderer(filename);
+			if(source->resolution == -1) { source->resolution = 300; }
 		} else {
-			renderer = new ImageRenderer(filename);
+			source->renderer = new ImageRenderer(filename);
+			if(source->resolution == -1) { source->resolution = 100; }
 		}
-		source->angle.resize(renderer->getNPages(), 0.);
-		for(int iPage = 1, nPages = renderer->getNPages(); iPage <= nPages; ++iPage) {
+		source->angle.resize(source->renderer->getNPages(), 0.);
+		for(int iPage = 1, nPages = source->renderer->getNPages(); iPage <= nPages; ++iPage) {
 			m_pageMap.insert(std::make_pair(++page, std::make_pair(source, iPage)));
+
+			Gtk::TreeIter it = thumbnailStore->append();
+			it->set_value(m_thumbListViewCols.pixbuf, Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/thumbnail.png"));
+			it->set_value(m_thumbListViewCols.label, Glib::ustring::compose(_("Page %1"), page));
 		}
-		delete renderer;
 	}
 	if(page == 0) {
 		m_pageMap.clear();
 		m_sources.clear();
 		return false;
 	}
+
+	m_thumbThread = new std::thread(&Displayer::thumbnailThread, this);
 
 	m_connection_pageSpinChanged.block();
 	ui.spinPage->get_adjustment()->set_upper(page);
@@ -284,26 +318,6 @@ bool Displayer::renderImage() {
 			m_scaleThread = nullptr;
 		}
 		std::queue<ScaleRequest>().swap(m_scaleRequests); // clear...
-		delete m_renderer;
-		std::string filename = source->file->get_path();
-#ifdef G_OS_WIN32
-		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf") {
-#else
-		if(Utils::get_content_type(filename) == "application/pdf") {
-#endif
-			m_renderer = new PDFRenderer(filename, source->password);
-			if(source->resolution == -1) { source->resolution = 300; }
-#ifdef G_OS_WIN32
-		} else if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".djvu") {
-#else
-		} else if(Utils::get_content_type(filename) == "image/vnd.djvu") {
-#endif
-			m_renderer = new DJVURenderer(filename);
-			if(source->resolution == -1) { source->resolution = 300; }
-		} else {
-			m_renderer = new ImageRenderer(filename);
-			if(source->resolution == -1) { source->resolution = 100; }
-		}
 		Utils::set_spin_blocked(ui.spinBrightness, source->brightness, m_connection_briSpinChanged);
 		Utils::set_spin_blocked(ui.spinContrast, source->contrast, m_connection_conSpinChanged);
 		Utils::set_spin_blocked(ui.spinResolution, source->resolution, m_connection_resSpinChanged);
@@ -336,11 +350,11 @@ bool Displayer::renderImage() {
 
 	// Render new image
 	sendScaleRequest({ScaleRequest::Abort});
-	Cairo::RefPtr<Cairo::ImageSurface> image = m_renderer->render(m_currentSource->page, m_currentSource->resolution);
+	Cairo::RefPtr<Cairo::ImageSurface> image = m_currentSource->renderer->render(m_currentSource->page, m_currentSource->resolution);
 	if(!bool(image)) {
 		return false;
 	}
-	m_renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
+	m_currentSource->renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
 	m_image = image;
 	m_imageItem->setImage(m_image);
 	m_imageItem->setRect(Geometry::Rectangle(-0.5 * m_image->get_width(), -0.5 * m_image->get_height(), m_image->get_width(), m_image->get_height()));
@@ -710,7 +724,7 @@ void Displayer::scaleThread() {
 			break;
 		} else if(req.type == ScaleRequest::Scale) {
 			m_scaleMutex.unlock();
-			Cairo::RefPtr<Cairo::ImageSurface> image = m_renderer->render(req.page, 2 * req.scale * req.resolution);
+			Cairo::RefPtr<Cairo::ImageSurface> image = m_currentSource->renderer->render(req.page, 2 * req.scale * req.resolution);
 
 			m_scaleMutex.lock();
 			if(!m_scaleRequests.empty() && m_scaleRequests.front().type == ScaleRequest::Abort) {
@@ -719,7 +733,7 @@ void Displayer::scaleThread() {
 			}
 			m_scaleMutex.unlock();
 
-			m_renderer->adjustImage(image, req.brightness, req.contrast, req.invert);
+			m_currentSource->renderer->adjustImage(image, req.brightness, req.contrast, req.invert);
 
 			m_scaleMutex.lock();
 			if(!m_scaleRequests.empty() && m_scaleRequests.front().type == ScaleRequest::Abort) {
@@ -745,6 +759,21 @@ void Displayer::setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image) {
 		ui.drawingareaDisplay->queue_draw();
 	}
 	m_scaleMutex.unlock();
+}
+
+void Displayer::thumbnailThread() {
+	for(const auto& pair : m_pageMap) {
+		Cairo::RefPtr<Cairo::ImageSurface> thumb = pair.second.first->renderer->renderThumbnail(pair.second.second);
+		Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(thumb, 0, 0, thumb->get_width(), thumb->get_height());
+		Glib::signal_idle().connect_once([ = ] {
+			Glib::RefPtr<Gtk::ListStore> thumbnailStore = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.iconviewThumbnails->get_model());
+			Gtk::TreePath path(1u, pair.first - 1);
+			thumbnailStore->get_iter(path)->set_value(m_thumbListViewCols.pixbuf, pixbuf);
+		});
+		if(m_thumbThreadCanceled.load()) {
+			break;
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

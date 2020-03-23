@@ -25,6 +25,7 @@
 namespace Ui {
 class MainWindow;
 }
+class DisplayRenderer;
 
 struct Source {
 	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
@@ -40,6 +41,7 @@ struct Source {
 	int page = 1;
 	std::vector<double> angle;
 	bool invert = false;
+	DisplayRenderer* renderer = nullptr;
 
 	//Additional info from original file
 	Glib::ustring author, title, creator, producer, keywords, subject;

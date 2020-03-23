@@ -32,6 +32,7 @@ public:
 	DisplayRenderer(const std::string& filename) : m_filename(filename) {}
 	virtual ~DisplayRenderer() {}
 	virtual Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const = 0;
+	virtual Cairo::RefPtr<Cairo::ImageSurface> renderThumbnail(int page) const = 0;
 	virtual int getNPages() const = 0;
 
 	void adjustImage(const Cairo::RefPtr<Cairo::ImageSurface>& surf, int brightness, int contrast, bool invert) const;
@@ -44,6 +45,7 @@ class ImageRenderer : public DisplayRenderer {
 public:
 	ImageRenderer(const std::string& filename) : DisplayRenderer(filename) {}
 	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
+	Cairo::RefPtr<Cairo::ImageSurface> renderThumbnail(int page) const override;
 	int getNPages() const override {
 		return 1;
 	}
@@ -54,6 +56,7 @@ public:
 	PDFRenderer(const std::string& filename, const Glib::ustring& password);
 	~PDFRenderer();
 	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
+	Cairo::RefPtr<Cairo::ImageSurface> renderThumbnail(int page) const override;
 	int getNPages() const override;
 
 private:
@@ -66,6 +69,7 @@ public:
 	DJVURenderer(const std::string& filename);
 	~DJVURenderer();
 	Cairo::RefPtr<Cairo::ImageSurface> render(int page, double resolution) const override;
+	Cairo::RefPtr<Cairo::ImageSurface> renderThumbnail(int pageno) const override;
 	int getNPages() const override;
 
 private:

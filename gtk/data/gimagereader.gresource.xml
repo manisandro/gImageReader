@@ -39,5 +39,6 @@
 		<file alias="expand.png">../../data/icons/expand.png</file>
 		<file alias="ins_hocr_append.png">../../data/icons/ins_hocr_append.png</file>
 		<file alias="ins_hocr_before.png">../../data/icons/ins_hocr_before.png</file>
+                <file alias="thumbnail.png">../../data/icons/thumbnail.png</file>
 	</gresource>
 </gresources> 

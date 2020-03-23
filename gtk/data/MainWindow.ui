@@ -775,25 +775,58 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkScrolledWindow" id="scrollwinSources">
+                          <object class="GtkPaned" id="panedSource">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="shadow_type">in</property>
+                            <property name="orientation">vertical</property>
+                            <property name="position">200</property>
+                            <property name="position_set">True</property>
                             <child>
-                              <object class="GtkTreeView" id="treeviewSources">
+                              <object class="GtkScrolledWindow" id="scrollwinSources">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="headers_visible">False</property>
-                                <property name="reorderable">True</property>
-                                <property name="enable_search">False</property>
-                                <property name="search_column">0</property>
-                                <property name="tooltip_column">2</property>
-                                <child internal-child="selection">
-                                  <object class="GtkTreeSelection" id="treeviewselectionSources">
-                                    <property name="mode">multiple</property>
+                                <property name="shadow_type">in</property>
+                                <child>
+                                  <object class="GtkTreeView" id="treeviewSources">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="headers_visible">False</property>
+                                    <property name="reorderable">True</property>
+                                    <property name="enable_search">False</property>
+                                    <property name="search_column">0</property>
+                                    <property name="tooltip_column">2</property>
+                                    <child internal-child="selection">
+                                      <object class="GtkTreeSelection" id="treeviewselectionSources">
+                                        <property name="mode">multiple</property>
+                                      </object>
+                                    </child>
                                   </object>
                                 </child>
                               </object>
+                              <packing>
+                                <property name="resize">False</property>
+                                <property name="shrink">True</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkScrolledWindow" id="scrollwinThumbnails">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="shadow_type">in</property>
+                                <child>
+                                  <object class="GtkIconView" id="iconviewThumbnails">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="margin">6</property>
+                                    <property name="item_width">64</property>
+                                    <property name="reorderable">True</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="resize">True</property>
+                                <property name="shrink">True</property>
+                              </packing>
                             </child>
                           </object>
                           <packing>

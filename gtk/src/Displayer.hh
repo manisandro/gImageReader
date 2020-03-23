@@ -23,8 +23,10 @@
 #include "Geometry.hh"
 
 #include <cairomm/cairomm.h>
+#include <atomic>
 #include <cstdint>
 #include <queue>
+#include <thread>
 #include <vector>
 
 class DisplayerItem;
@@ -89,7 +91,6 @@ private:
 	std::vector<Source*> m_sources;
 	std::map<int, std::pair<Source*, int>> m_pageMap;
 	Source* m_currentSource = nullptr;
-	DisplayRenderer* m_renderer = nullptr;
 	Cairo::RefPtr<Cairo::ImageSurface> m_image;
 	double m_scale = 1.0;
 	double m_scrollPos[2] = {0.5, 0.5};
@@ -110,6 +111,7 @@ private:
 	sigc::connection m_connection_zoomfitClicked;
 	sigc::connection m_connection_zoomoneClicked;
 	sigc::connection m_connection_setScaledImage;
+	sigc::connection m_connection_thumbClicked;
 
 	void resizeEvent();
 	bool keyPressEvent(GdkEventKey* ev);
@@ -126,6 +128,7 @@ private:
 	void queueRenderImage();
 	void setAngle(double angle);
 	void setRotateMode(RotateMode mode, const std::string& iconName);
+	std::pair<int, int> getPointVisible(const Geometry::Point& p) const;
 
 	struct ScaleRequest {
 		enum Request { Scale, Abort, Quit } type;
@@ -149,7 +152,19 @@ private:
 	void sendScaleRequest(const ScaleRequest& request);
 	void scaleThread();
 	void setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image);
-	std::pair<int, int> getPointVisible(const Geometry::Point& p) const;
+
+	class ThumbListViewColumns : public Gtk::TreeModel::ColumnRecord {
+	public:
+		Gtk::TreeModelColumn<Glib::RefPtr<Gdk::Pixbuf>> pixbuf;
+		Gtk::TreeModelColumn<Glib::ustring> label;
+		ThumbListViewColumns() {
+			add(pixbuf);
+			add(label);
+		}
+	} m_thumbListViewCols;
+	std::thread* m_thumbThread = nullptr;
+	std::atomic<bool> m_thumbThreadCanceled;
+	void thumbnailThread();
 };
 
 class DisplayerItem : public sigc::trackable {
