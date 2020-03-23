@@ -513,7 +513,8 @@ void ScannerSane::doCompletePage() {
 	std::string filename = m_job->params.filename;
 	if(m_job->params.type != ScanType::SINGLE) {
 		std::pair<std::string, std::string> parts = Utils::split_filename(filename);
-		filename = Glib::ustring::compose("%1_%2.%3", parts.first, m_job->pageNumber, parts.second);
+		filename = Glib::ustring::compose("%1-%2.%3", parts.first, m_job->pageNumber, parts.second);
+		filename = Utils::make_output_filename(filename);
 	}
 	std::string ext = Utils::split_filename(filename).second;
 	try {

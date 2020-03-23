@@ -156,7 +156,6 @@ void Acquirer::startScan() {
 	std::string device = (*ui.comboAcquireDevice->get_active())[m_devComboCols.name];
 	Scanner::Params params = {device, m_outputPath, res[ui.comboAcquireResolution->get_active_row_number()], modes[ui.comboAcquireMode->get_active_row_number()], 8, types[ui.comboAcquireSource->get_active_row_number()], 0, 0};
 	m_scanner->scan(params);
-	genOutputPath();
 }
 
 void Acquirer::setScanState(Scanner::State state) {
@@ -185,6 +184,7 @@ void Acquirer::doneScan() {
 	ui.buttonboxAcquire->remove(*m_cancelButton);
 	ui.buttonboxAcquire->pack_start(*ui.buttonAcquireScan, false, true);
 	ui.labelAcquireMessage->set_text("");
+	genOutputPath();
 }
 
 void Acquirer::setDeviceComboTooltip() {

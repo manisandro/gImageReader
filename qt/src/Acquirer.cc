@@ -142,7 +142,6 @@ void Acquirer::startScan() {
 	QString device = ui.comboBoxScanDevice->itemData(ui.comboBoxScanDevice->currentIndex()).toString();
 	Scanner::Params params = {device, m_outputPath, dpi[ui.comboBoxScanResolution->currentIndex()], modes[ui.comboBoxScanMode->currentIndex()], 8, types[ui.comboBoxScanSource->currentIndex()], 0, 0};
 	m_scanner->scan(params);
-	genOutputPath(); // Prepare for next
 }
 
 void Acquirer::setScanState(Scanner::State state) {
@@ -171,6 +170,7 @@ void Acquirer::doneScan() {
 	ui.pushButtonScanCancel->setVisible(false);
 	ui.pushButtonScan->setVisible(true);
 	ui.labelScanMessage->setText("");
+	genOutputPath();
 }
 
 void Acquirer::setDeviceComboTooltip() {

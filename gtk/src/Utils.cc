@@ -174,7 +174,7 @@ std::string Utils::make_output_filename(const std::string& filename) {
 	// Generate non-existing file
 	int i = 0;
 	std::pair<std::string, std::string> parts = split_filename(newfilename);
-	parts.first = Glib::Regex::create("_[0-9]+$")->replace(parts.first, 0, "", static_cast<Glib::RegexMatchFlags>(0));
+	parts.first = Glib::Regex::create(Glib::ustring::compose("_[0-9]+.%1$", parts.second))->replace(parts.first, 0, "", static_cast<Glib::RegexMatchFlags>(0));
 	newfilename = Glib::ustring::compose("%1.%2", parts.first, parts.second);
 	while(Glib::file_test(newfilename, Glib::FILE_TEST_EXISTS)) {
 		newfilename = Glib::ustring::compose("%1_%2.%3", parts.first, ++i, parts.second);

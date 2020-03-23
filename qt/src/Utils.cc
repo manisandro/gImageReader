@@ -53,8 +53,8 @@ QString Utils::makeOutputFilename(const QString& filename) {
 		dir = QDir(Utils::documentsFolder());
 	}
 	// Generate non-existing file
-	QString base = finfo.baseName().replace(QRegExp("_[0-9]+$"), "");
 	QString ext = finfo.completeSuffix();
+	QString base = finfo.baseName().replace(QRegExp(QString("_[0-9]+.%1$").arg(ext)), "");
 	QString newfilename = dir.absoluteFilePath(base + "." + ext);
 	for(int i = 1; QFile(newfilename).exists(); ++i) {
 		newfilename = dir.absoluteFilePath(QString("%1_%2.%3").arg(base).arg(i).arg(ext));
