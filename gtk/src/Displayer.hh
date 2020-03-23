@@ -129,29 +129,13 @@ private:
 	void setAngle(double angle);
 	void setRotateMode(RotateMode mode, const std::string& iconName);
 	std::pair<int, int> getPointVisible(const Geometry::Point& p) const;
+	void waitForThread(std::thread*& thread, std::atomic<bool>& cancelFlag, sigc::connection* conn = nullptr);
 
-	struct ScaleRequest {
-		enum Request { Scale, Abort, Quit } type;
-		double scale;
-		int resolution;
-		int page;
-		int brightness;
-		int contrast;
-		bool invert;
-
-		ScaleRequest(Request _type, double _scale = 0., int _resolution = 0, int _page = 0, int _brightness = 0, int _contrast = 0, bool _invert = 0)
-			: type(_type), scale(_scale), resolution(_resolution), page(_page), brightness(_brightness), contrast(_contrast), invert(_invert) {}
-	};
-	Glib::Threads::Thread* m_scaleThread = nullptr;
-	Glib::Threads::Mutex m_scaleMutex;
-	Glib::Threads::Cond m_scaleCond;
-	std::queue<ScaleRequest> m_scaleRequests;
-	sigc::connection m_scaleTimer;
 	bool m_autoScaleBlocked = false;
-
-	void sendScaleRequest(const ScaleRequest& request);
-	void scaleThread();
-	void setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image);
+	sigc::connection m_scaleTimer;
+	std::thread* m_scaleThread = nullptr;
+	std::atomic<bool> m_scaleThreadCanceled;
+	void scaleImage();
 
 	class ThumbListViewColumns : public Gtk::TreeModel::ColumnRecord {
 	public:

@@ -156,22 +156,8 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	if(sources == m_sources) {
 		return true;
 	}
-	if(m_scaleThread) {
-		sendScaleRequest({ScaleRequest::Abort});
-		sendScaleRequest({ScaleRequest::Quit});
-		m_scaleThread->join();
-		m_scaleThread = nullptr;
-	}
-	if(m_thumbThread) {
-		m_thumbThreadCanceled = true;
-		while(Gtk::Main::events_pending()) {
-			Gtk::Main::iteration(false);
-		}
-		m_thumbThread->join();
-		m_thumbThread = nullptr;
-		m_thumbThreadCanceled = false;
-	}
-	std::queue<ScaleRequest>().swap(m_scaleRequests); // clear...
+	waitForThread(m_scaleThread, m_scaleThreadCanceled, &m_scaleTimer);
+	waitForThread(m_thumbThread, m_thumbThreadCanceled);
 	m_scale = 1.0;
 	m_scrollPos[0] = m_scrollPos[1] = 0.5;
 	if(m_tool) {
@@ -296,6 +282,7 @@ bool Displayer::renderImage() {
 	if(m_sources.empty()) {
 		return false;
 	}
+	waitForThread(m_scaleThread, m_scaleThreadCanceled, &m_scaleTimer);
 	int page = ui.spinPage->get_value_as_int();
 
 	// Set current source according to selected page
@@ -309,13 +296,6 @@ bool Displayer::renderImage() {
 	Source* oldSource = m_currentSource;
 
 	if(source != m_currentSource) {
-		if(m_scaleThread) {
-			sendScaleRequest({ScaleRequest::Abort});
-			sendScaleRequest({ScaleRequest::Quit});
-			m_scaleThread->join();
-			m_scaleThread = nullptr;
-		}
-		std::queue<ScaleRequest>().swap(m_scaleRequests); // clear...
 		Utils::set_spin_blocked(ui.spinBrightness, source->brightness, m_connection_briSpinChanged);
 		Utils::set_spin_blocked(ui.spinContrast, source->contrast, m_connection_conSpinChanged);
 		Utils::set_spin_blocked(ui.spinResolution, source->resolution, m_connection_resSpinChanged);
@@ -323,7 +303,6 @@ bool Displayer::renderImage() {
 		ui.checkInvert->set_active(source->invert);
 		m_connection_invcheckToggled.block(false);
 		m_currentSource = source;
-		m_scaleThread = Glib::Threads::Thread::create(sigc::mem_fun(this, &Displayer::scaleThread));
 	}
 
 	// Update source struct
@@ -347,7 +326,6 @@ bool Displayer::renderImage() {
 	Utils::set_spin_blocked(ui.spinRotate, m_currentSource->angle[m_currentSource->page - 1], m_connection_rotSpinChanged);
 
 	// Render new image
-	sendScaleRequest({ScaleRequest::Abort});
 	Cairo::RefPtr<Cairo::ImageSurface> image = m_currentSource->renderer->render(m_currentSource->page, m_currentSource->resolution);
 	if(!bool(image)) {
 		return false;
@@ -358,8 +336,7 @@ bool Displayer::renderImage() {
 	m_imageItem->setRect(Geometry::Rectangle(-0.5 * m_image->get_width(), -0.5 * m_image->get_height(), m_image->get_width(), m_image->get_height()));
 	setAngle(ui.spinRotate->get_value());
 	if(m_scale < 1.0) {
-		ScaleRequest request = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
-		m_scaleTimer = Glib::signal_timeout().connect([this, request] { if(!m_autoScaleBlocked) { sendScaleRequest(request); } return false; }, 100);
+		m_scaleTimer = Glib::signal_timeout().connect([this] { scaleImage(); return false; }, 100);
 	}
 	return true;
 }
@@ -368,7 +345,7 @@ void Displayer::setZoom(Zoom zoom) {
 	if(!m_image) {
 		return;
 	}
-	sendScaleRequest({ScaleRequest::Abort});
+	waitForThread(m_scaleThread, m_scaleThreadCanceled, &m_scaleTimer);
 	m_connection_zoomfitClicked.block(true);
 	m_connection_zoomoneClicked.block(true);
 
@@ -395,8 +372,7 @@ void Displayer::setZoom(Zoom zoom) {
 	ui.buttonZoomin->set_sensitive(m_scale < 10.);
 	ui.buttonZoomnorm->set_active(m_scale == 1.);
 	if(m_scale < 1.0) {
-		ScaleRequest request = {ScaleRequest::Scale, m_scale, m_currentSource->resolution, m_currentSource->page, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert};
-		m_scaleTimer = Glib::signal_timeout().connect([this, request] { if(!m_autoScaleBlocked) { sendScaleRequest(request); } return false; }, 100);
+		m_scaleTimer = Glib::signal_timeout().connect([this] { scaleImage(); return false; }, 100);
 	} else {
 		m_imageItem->setImage(m_image);
 	}
@@ -701,62 +677,26 @@ Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle
 	return surf;
 }
 
-void Displayer::sendScaleRequest(const ScaleRequest& request) {
-	m_scaleTimer.disconnect();
-	m_scaleMutex.lock();
-	m_scaleRequests.push(request);
-	m_scaleCond.signal();
-	m_scaleMutex.unlock();
-}
-
-void Displayer::scaleThread() {
-	m_scaleMutex.lock();
-	while(true) {
-		while(m_scaleRequests.empty()) {
-			m_scaleCond.wait(m_scaleMutex);
-		}
-		ScaleRequest req = m_scaleRequests.front();
-		m_scaleRequests.pop();
-		if(req.type == ScaleRequest::Quit) {
-			m_connection_setScaledImage.disconnect();
-			break;
-		} else if(req.type == ScaleRequest::Scale) {
-			m_scaleMutex.unlock();
-			Cairo::RefPtr<Cairo::ImageSurface> image = m_currentSource->renderer->render(req.page, 2 * req.scale * req.resolution);
-
-			m_scaleMutex.lock();
-			if(!m_scaleRequests.empty() && m_scaleRequests.front().type == ScaleRequest::Abort) {
-				m_scaleRequests.pop();
-				continue;
-			}
-			m_scaleMutex.unlock();
-
-			m_currentSource->renderer->adjustImage(image, req.brightness, req.contrast, req.invert);
-
-			m_scaleMutex.lock();
-			if(!m_scaleRequests.empty() && m_scaleRequests.front().type == ScaleRequest::Abort) {
-				m_scaleRequests.pop();
-				continue;
-			}
-			m_scaleMutex.unlock();
-
-			double scale = req.scale;
-			m_connection_setScaledImage = Glib::signal_idle().connect([this, image, scale] { setScaledImage(image); return false; });
-			m_scaleMutex.lock();
-		}
-	};
-	m_scaleMutex.unlock();
-}
-
-void Displayer::setScaledImage(Cairo::RefPtr<Cairo::ImageSurface> image) {
-	m_scaleMutex.lock();
-	if(!m_scaleRequests.empty() && m_scaleRequests.front().type == ScaleRequest::Abort) {
-		m_scaleRequests.pop();
-	} else {
-		m_imageItem->setImage(image);
-		ui.drawingareaDisplay->queue_draw();
+void Displayer::scaleImage() {
+	if(m_autoScaleBlocked) {
+		return;
 	}
-	m_scaleMutex.unlock();
+	int page = m_currentSource->page;
+	double resolution = m_scale * m_currentSource->resolution;
+	int brightness = m_currentSource->brightness;
+	int contrast = m_currentSource->contrast;
+	bool invert = m_currentSource->invert;
+	m_scaleThread = new std::thread([ = ] {
+		Cairo::RefPtr<Cairo::ImageSurface> image = m_currentSource->renderer->render(page, resolution);
+		if(!bool(image)) {
+			return;
+		}
+		m_currentSource->renderer->adjustImage(image, brightness, contrast, invert);
+		Glib::signal_idle().connect_once([ = ] {
+			m_imageItem->setImage(image);
+			ui.drawingareaDisplay->queue_draw();
+		});
+	});
 }
 
 void Displayer::thumbnailThread() {
@@ -771,6 +711,21 @@ void Displayer::thumbnailThread() {
 		if(m_thumbThreadCanceled.load()) {
 			break;
 		}
+	}
+}
+
+void Displayer::waitForThread(std::thread*& thread, std::atomic<bool>& cancelFlag, sigc::connection* conn) {
+	if(conn) {
+		conn->disconnect();
+	}
+	if(thread) {
+		cancelFlag = true;
+		while(Gtk::Main::events_pending()) {
+			Gtk::Main::iteration(false);
+		}
+		thread->join();
+		thread = nullptr;
+		cancelFlag = false;
 	}
 }
 
