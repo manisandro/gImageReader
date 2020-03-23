@@ -30,7 +30,7 @@
 #undef USE_STD_NAMESPACE
 
 Displayer::Displayer(const Ui::MainWindow& _ui)
-	: ui(_ui) {
+	: ui(_ui), m_scaleThreadCanceled(false), m_thumbThreadCanceled(false) {
 	m_defaultCursor = Gdk::Cursor::create(Gdk::ARROW);
 	m_hadj = ui.scrollwinDisplay->get_hadjustment();
 	m_vadj = ui.scrollwinDisplay->get_vadjustment();
