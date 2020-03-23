@@ -246,9 +246,7 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 		}
 	}
 	if(page == 0) {
-		m_pageMap.clear();
-		m_sources.clear();
-		return false;
+		return setSources(std::vector<Source*>()); // cleanup
 	}
 
 	m_thumbThread = new std::thread(&Displayer::thumbnailThread, this);

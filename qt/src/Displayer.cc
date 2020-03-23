@@ -172,9 +172,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 		}
 	}
 	if(page == 0) {
-		m_pageMap.clear();
-		m_sources.clear();
-		return false;
+		return setSources(QList<Source*>()); // cleanup
 	}
 
 	m_thumbnailWatcher.setFuture(QtConcurrent::mapped(pages, static_cast<std::function<QImage(int)>>([this](int page) { return renderThumbnail(page); })));
