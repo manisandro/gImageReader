@@ -80,8 +80,6 @@ public:
 
 private:
 	DjVuDocument* m_djvu;
-
-	mutable QMutex m_mutex;
 };
 
 #endif // IMAGERENDERER_HH
