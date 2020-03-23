@@ -22,12 +22,12 @@
 FontComboBox::FontComboColums FontComboBox::s_fontComboCols;
 
 FontComboBox::FontComboBox()
-	: Gtk::ComboBox(true), Glib::ObjectBase("FontComboBox") {
+	: Glib::ObjectBase("FontComboBox"), Gtk::ComboBox(true) {
 	init();
 }
 
 FontComboBox::FontComboBox(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder)
-	: Gtk::ComboBox(cobject), Glib::ObjectBase("FontComboBox") {
+	: Glib::ObjectBase("FontComboBox"), Gtk::ComboBox(cobject) {
 	init();
 }
 

@@ -581,7 +581,6 @@ bool HOCRPdfExporter::run(const std::string& filebasename) {
 					Utils::runInMainThreadBlocking([&] { success = setSource(page->sourceFile(), page->pageNr(), outputDpi, page->angle()); });
 				}
 				if(success) {
-					double px2pt = (72.0 / sourceDpi);
 					double imgScale = double(outputDpi) / sourceDpi;
 					if(paperSize == "source") {
 						pageWidth = bbox.width * px2pt;

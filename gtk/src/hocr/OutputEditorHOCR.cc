@@ -1269,7 +1269,6 @@ void OutputEditorHOCR::updatePreview() {
 
 	const HOCRPage* page = item->page();
 	const Geometry::Rectangle& bbox = page->bbox();
-	int pageDpi = page->resolution();
 
 	Cairo::RefPtr<Cairo::ImageSurface> image = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, bbox.width, bbox.height);
 	Cairo::RefPtr<Cairo::Context> context = Cairo::Context::create(image);
