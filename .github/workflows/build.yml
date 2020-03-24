@@ -54,8 +54,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/mingw64-qt5/gImageReader_qt5_${{ steps.version_number.outputs.pkg_version }}_x86_64.zip
-          asset_name: gImageReader_qt5_latest_x86_64.zip
+          asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.pkg_version }}_qt5_x86_64.zip
+          asset_name: gImageReader_latest_qt5_x86_64.zip
           asset_content_type: application/zip
       - name: Upload installer release asset
         uses: actions/upload-release-asset@v1.0.1
@@ -63,6 +63,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/mingw64-qt5/gImageReader_qt5_${{ steps.version_number.outputs.pkg_version }}_x86_64.exe
-          asset_name: gImageReader_qt5_latest_x86_64.exe
+          asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.pkg_version }}_qt5_x86_64.exe
+          asset_name: gImageReader_latest_qt5_x86_64.exe
           asset_content_type: application/x-dosexec

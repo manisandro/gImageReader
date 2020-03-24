@@ -206,9 +206,9 @@ fi
 
 # Build portable zip
 pushd $builddir
-ln -s root ${progName}_${iface}_${progVersion}
-zip -r "${progName}_${iface}_${progVersion}_${arch}.zip" ${progName}_${iface}_${progVersion}
-rm ${progName}_${iface}_${progVersion}
+ln -s root ${progName}_${progVersion}_${iface}
+zip -r "${progName}_${progVersion}_${iface}_${arch}.zip" ${progName}_${progVersion}_${iface}
+rm ${progName}_${progVersion}_${iface}
 popd
 
 # Build the installer
