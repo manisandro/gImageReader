@@ -221,7 +221,9 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 			renderer = new ImageRenderer(filename);
 			if(source->resolution == -1) { source->resolution = 100; }
 		}
-		source->angle.resize(renderer->getNPages(), 0.);
+		if(renderer->getNPages() >= 0) {
+			source->angle.resize(renderer->getNPages(), 0.); // getNPages can potentially return -1
+		}
 		m_sourceRenderers[source] = renderer;
 		for(int iPage = 1, nPages = renderer->getNPages(); iPage <= nPages; ++iPage) {
 			m_pageMap.insert(std::make_pair(++page, std::make_pair(source, iPage)));

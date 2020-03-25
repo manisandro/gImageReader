@@ -160,7 +160,9 @@ bool Displayer::setSources(QList<Source*> sources) {
 			renderer = new ImageRenderer(source->path);
 			if(source->resolution == -1) { source->resolution = 100; }
 		}
-		source->angle.resize(renderer->getNPages());
+		if(renderer->getNPages() >= 0) {
+			source->angle.resize(renderer->getNPages()); // getNPages can potentially return -1
+		}
 		m_sourceRenderers[source] = renderer;
 		for(int iPage = 1, nPages = renderer->getNPages(); iPage <= nPages; ++iPage) {
 			m_pageMap.insert(++page, qMakePair(source, iPage));
