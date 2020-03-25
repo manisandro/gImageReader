@@ -47,6 +47,7 @@ public:
 	static void openTessdataDir();
 	static void openSpellingDir();
 	static QString lookupLangCode(const QString& prefix) { return LANG_LOOKUP[prefix]; }
+	static QStringList getAvailableLanguages();
 
 public slots:
 	void disableDictInstall();

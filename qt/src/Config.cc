@@ -31,6 +31,7 @@
 #include <enchant-provider.h>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#include <tesseract/genericvector.h>
 #undef USE_STD_NAMESPACE
 
 const QList<Config::Lang> Config::LANGUAGES = LangTables::languages<QList<Config::Lang>, QString>([](const char* str) { return QString::fromUtf8(str); });
@@ -136,6 +137,26 @@ QString Config::tessdataLocation() const {
 
 QString Config::spellingLocation() const {
 	return ui.lineEditSpellLocation->text();
+}
+
+QStringList Config::getAvailableLanguages() {
+	auto tess = Utils::initTesseract();
+	GenericVector<STRING> availLanguages;
+	tess->GetAvailableLanguagesAsVector(&availLanguages);
+	QStringList result;
+	for(int i = 0; i < availLanguages.size(); ++i) {
+		result.append(availLanguages[i].c_str());
+	}
+	std::sort(result.begin(), result.end(), [](const QString & s1, const QString & s2) {
+		bool s1Script = s1.startsWith("script") || s1.left(1) == s1.left(1).toUpper();
+		bool s2Script = s2.startsWith("script") || s2.left(1) == s2.left(1).toUpper();
+		if(s1Script != s2Script) {
+			return !s1Script;
+		} else {
+			return s1 < s2;
+		}
+	});
+	return result;
 }
 
 void Config::disableDictInstall() {

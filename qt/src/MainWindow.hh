@@ -38,6 +38,7 @@ class Acquirer;
 class Displayer;
 class DisplayerTool;
 class OutputEditor;
+class RecognitionMenu;
 class Recognizer;
 class SourceManager;
 class Source;
@@ -109,6 +110,10 @@ public:
 	SourceManager* getSourceManager() const {
 		return m_sourceManager;
 	}
+	RecognitionMenu* getRecognitionMenu() const {
+		return m_recognitionMenu;
+	}
+
 	void addNotification(const QString& title, const QString& message, const QList<NotificationAction>& actions, Notification* handle = nullptr);
 	void openFiles(const QStringList& files);
 	void setOutputPaneVisible(bool visible);
@@ -136,6 +141,7 @@ private:
 	Displayer* m_displayer = nullptr;
 	DisplayerTool* m_displayerTool = nullptr;
 	OutputEditor* m_outputEditor = nullptr;
+	RecognitionMenu* m_recognitionMenu = nullptr;
 	Recognizer* m_recognizer = nullptr;
 	SourceManager* m_sourceManager = nullptr;
 

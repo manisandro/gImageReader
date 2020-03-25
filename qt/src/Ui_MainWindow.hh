@@ -29,7 +29,6 @@ public:
 	QFrame* framePage;
 	QMenu* menuAppMenu;
 	QMenu* menuAddSource;
-	QMenu* menuLanguages;
 	QMenu* menuRotation;
 	QToolBar* toolBarSources;
 	QToolButton* toolButtonRotation;
@@ -152,9 +151,6 @@ public:
 		toolButtonRecognize->setFont(smallFont);
 		toolButtonRecognize->setPopupMode(QToolButton::MenuButtonPopup);
 		toolBarMain->insertWidget(actionToggleOutputPane, toolButtonRecognize);
-
-		menuLanguages = new QMenu(toolButtonRecognize);
-		toolButtonRecognize->setMenu(menuLanguages);
 
 		// Spacer before app menu button
 		QWidget* toolBarMainSpacer = new QWidget(toolBarMain);

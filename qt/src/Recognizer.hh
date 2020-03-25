@@ -24,13 +24,9 @@
 #include <memory>
 
 #include "Config.hh"
-#include "Displayer.hh"
 #include "ui_PageRangeDialog.h"
-#include "ui_CharacterListDialog.h"
 
-namespace tesseract {
-class TessBaseAPI;
-}
+class QActionGroup;
 class UI_MainWindow;
 
 class Recognizer : public QObject {
@@ -39,18 +35,10 @@ public:
 	enum class OutputDestination { Buffer, Clipboard };
 
 	Recognizer(const UI_MainWindow& _ui);
-	QStringList getAvailableLanguages() const;
-	const Config::Lang& getSelectedLanguage() const {
-		return m_curLang;
-	}
 
 public slots:
 	bool recognizeImage(const QImage& image, OutputDestination dest);
 	void setRecognizeMode(const QString& mode);
-	void updateLanguagesMenu();
-
-signals:
-	void languageChanged(const Config::Lang& lang);
 
 private:
 	class ProgressMonitor;
@@ -67,33 +55,20 @@ private:
 
 	const UI_MainWindow& ui;
 	QMenu* m_menuPages = nullptr;
-	QMenu* m_menuMultilanguage = nullptr;
 	QDialog* m_pagesDialog;
 	Ui::PageRangeDialog m_pagesDialogUi;
-	QDialog* m_charListDialog;
-	Ui::CharacterListDialog m_charListDialogUi;
-	QActionGroup* m_langMenuRadioGroup = nullptr;
-	QActionGroup* m_langMenuCheckGroup = nullptr;
-	QActionGroup* m_psmCheckGroup = nullptr;
-	QAction* m_multilingualAction = nullptr;
 	QString m_modeLabel;
 	QString m_langLabel;
-	Config::Lang m_curLang;
 
-	std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nullptr, bool* ok = nullptr) const;
 	QList<int> selectPages(bool& autodetectLayout);
 	void recognize(const QList<int>& pages, bool autodetectLayout = false);
-	bool eventFilter(QObject* obj, QEvent* ev) override;
 
 private slots:
+	void recognitionLanguageChanged(const Config::Lang& lang);
 	void clearLineEditPageRangeStyle();
-	void manageCharacterLists();
-	void psmSelected(QAction* action);
 	void recognizeButtonClicked();
 	void recognizeCurrentPage();
 	void recognizeMultiplePages();
-	void setLanguage();
-	void setMultiLanguage();
 	PageData setPage(int page, bool autodetectLayout);
 };
 

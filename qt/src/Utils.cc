@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <csignal>
 #include <QDesktopServices>
 #include <QDir>
 #include <QEventLoop>
@@ -33,6 +34,9 @@
 #include <QThread>
 #include <QTimer>
 #include <QUrl>
+#define USE_STD_NAMESPACE
+#include <tesseract/baseapi.h>
+#undef USE_STD_NAMESPACE
 
 #include "Utils.hh"
 #include "Config.hh"
@@ -214,4 +218,19 @@ QString Utils::getSpellingLanguage(const QString& lang) {
 		return "en_US";
 	}
 	return syslang;
+}
+
+std::unique_ptr<tesseract::TessBaseAPI> Utils::initTesseract(const char* language, bool* ok) {
+	// unfortunately tesseract creates deliberate aborts when an error occurs
+	std::signal(SIGABRT, MainWindow::tesseractCrash);
+	QByteArray current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
+	std::unique_ptr<tesseract::TessBaseAPI> tess(new tesseract::TessBaseAPI());
+	int ret = tess->Init(nullptr, language);
+	setlocale(LC_NUMERIC, current.constData());
+
+	if(ok) {
+		*ok = ret != -1;
+	}
+	return tess;
 }

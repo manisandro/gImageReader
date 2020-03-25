@@ -47,6 +47,7 @@
 #include "DisplayerToolHOCR.hh"
 #include "OutputEditorText.hh"
 #include "OutputEditorHOCR.hh"
+#include "RecognitionMenu.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
 #include "TessdataManager.hh"
@@ -133,6 +134,7 @@ MainWindow::MainWindow(const QStringList& files)
 	m_config = new Config(this);
 	m_acquirer = new Acquirer(ui);
 	m_displayer = new Displayer(ui);
+	m_recognitionMenu = new RecognitionMenu(this);
 	m_recognizer = new Recognizer(ui);
 	m_sourceManager = new SourceManager(ui);
 
@@ -156,8 +158,9 @@ MainWindow::MainWindow(const QStringList& files)
 
 	ui.comboBoxOCRMode->addItem(_("Plain text"), OutputModeText);
 	ui.comboBoxOCRMode->addItem(_("hOCR, PDF"), OutputModeHOCR);
+	ui.comboBoxOCRMode->setCurrentIndex(-1);
 
-	connect(ui.actionRedetectLanguages, &QAction::triggered, m_recognizer, &Recognizer::updateLanguagesMenu);
+	connect(ui.actionRedetectLanguages, &QAction::triggered, m_recognitionMenu, &RecognitionMenu::rebuild);
 	connect(ui.actionManageLanguages, &QAction::triggered, this, &MainWindow::manageLanguages);
 	connect(ui.actionPreferences, &QAction::triggered, this, &MainWindow::showConfig);
 	connect(ui.actionHelp, &QAction::triggered, this, [this] { showHelp(); });
@@ -167,7 +170,7 @@ MainWindow::MainWindow(const QStringList& files)
 	connect(m_sourceManager, &SourceManager::sourceChanged, this, &MainWindow::onSourceChanged);
 	connect(ui.actionToggleOutputPane, &QAction::toggled, ui.dockWidgetOutput, &QDockWidget::setVisible);
 	connect(ui.comboBoxOCRMode, qOverload<int>(&QComboBox::currentIndexChanged), this, [this] { setOutputMode(static_cast<OutputMode>(ui.comboBoxOCRMode->currentData().toInt())); });
-	connect(m_recognizer, &Recognizer::languageChanged, this, &MainWindow::languageChanged);
+	connect(m_recognitionMenu, &RecognitionMenu::languageChanged, this, &MainWindow::languageChanged);
 	connect(ui.actionAutodetectLayout, &QAction::triggered, m_displayer, &Displayer::autodetectOCRAreas);
 
 	ADD_SETTING(VarSetting<QByteArray>("wingeom"));
@@ -175,7 +178,7 @@ MainWindow::MainWindow(const QStringList& files)
 	ADD_SETTING(ActionSetting("showcontrols", ui.actionImageControls));
 	ADD_SETTING(ComboSetting("outputeditor", ui.comboBoxOCRMode, OutputModeText));
 
-	m_recognizer->updateLanguagesMenu();
+	m_recognitionMenu->rebuild();
 
 	m_progressWidget = new QWidget(this);
 	m_progressWidget->setLayout(new QHBoxLayout());
@@ -350,7 +353,7 @@ void MainWindow::manageLanguages() {
 
 void MainWindow::showConfig() {
 	m_config->showDialog();
-	m_recognizer->updateLanguagesMenu();
+	m_recognitionMenu->rebuild();
 }
 
 bool MainWindow::setOutputMode(OutputMode mode) {
@@ -375,7 +378,7 @@ bool MainWindow::setOutputMode(OutputMode mode) {
 		}
 		ui.actionAutodetectLayout->setVisible(m_displayerTool->allowAutodetectOCRAreas());
 		m_displayer->setTool(m_displayerTool);
-		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
+		m_outputEditor->setLanguage(m_recognitionMenu->getRecognitionLanguage());
 		connect(ui.actionToggleOutputPane, &QAction::toggled, m_outputEditor, &OutputEditor::onVisibilityChanged);
 		ui.dockWidgetOutput->setWidget(m_outputEditor->getUI());
 		return true;
@@ -498,13 +501,13 @@ void MainWindow::languageChanged(const Config::Lang& lang) {
 			}
 		}
 #endif
-		const QString& name = m_recognizer->getSelectedLanguage().name;
+		const QString& name = m_recognitionMenu->getRecognitionLanguage().name;
 		addNotification(_("Spelling dictionary missing"), _("The spellcheck dictionary for %1 is not installed").arg(name), {actionInstall, actionDontShowAgain}, &m_notifierHandle);
 	}
 }
 
 void MainWindow::dictionaryAutoinstall() {
-	QString code = m_recognizer->getSelectedLanguage().code;
+	QString code = m_recognitionMenu->getRecognitionLanguage().code;
 	pushState(State::Busy, _("Installing spelling dictionary for '%1'").arg(code));
 #ifdef Q_OS_WIN
 	bool isWindows = true;
@@ -528,7 +531,7 @@ void MainWindow::dictionaryAutoinstall() {
 				showHelp("#InstallSpelling");
 			}
 		}
-		m_recognizer->updateLanguagesMenu();
+		m_recognitionMenu->rebuild();
 		popState();
 #endif
 	} else {
@@ -592,7 +595,7 @@ void MainWindow::dictionaryAutoinstall() {
 		if(!failed.isEmpty()) {
 			QMessageBox::critical(this, _("Error"), _("The following dictionaries could not be downloaded:\n%1\n\nCheck the connectivity and directory permissions.\nHint: If you don't have write permissions in system folders, you can switch to user paths in the settings dialog.").arg(failed.join("\n")));
 		} else if(!downloaded.isEmpty()) {
-			m_recognizer->updateLanguagesMenu();
+			m_recognitionMenu->rebuild();
 			QMessageBox::information(this, _("Dictionaries installed"), _("The following dictionary files were installed:\n%1").arg(downloaded.join("\n")));
 		} else {
 			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {

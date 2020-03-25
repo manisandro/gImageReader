@@ -36,7 +36,7 @@
 
 #include "ConfigSettings.hh"
 #include "MainWindow.hh"
-#include "Recognizer.hh"
+#include "RecognitionMenu.hh"
 #include "TessdataManager.hh"
 #include "Utils.hh"
 
@@ -170,7 +170,7 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 		return false;
 	}
 
-	QStringList availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
+	QStringList availableLanguages = MAIN->getConfig()->getAvailableLanguages();
 
 	QStringList languages = QStringList(m_languageFiles.keys());
 	std::sort(languages.begin(), languages.end(), [](const QString & s1, const QString & s2) {
@@ -204,7 +204,7 @@ void TessdataManager::applyChanges() {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying changes..."));
 	setEnabled(false);
 	QString errorMsg;
-	QStringList availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
+	QStringList availableLanguages = MAIN->getConfig()->getAvailableLanguages();
 	QDir tessDataDir(MAIN->getConfig()->tessdataLocation());
 #ifdef Q_OS_WIN
 	bool isWindows = true;
@@ -289,8 +289,8 @@ void TessdataManager::applyChanges() {
 }
 
 void TessdataManager::refresh() {
-	MAIN->getRecognizer()->updateLanguagesMenu();
-	QStringList availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
+	MAIN->getRecognitionMenu()->rebuild();
+	QStringList availableLanguages = MAIN->getConfig()->getAvailableLanguages();
 	for(int row = 0, nRows = m_languageList->count(); row < nRows; ++row) {
 		QListWidgetItem* item = m_languageList->item(row);
 		QString prefix = item->data(Qt::UserRole).toString();

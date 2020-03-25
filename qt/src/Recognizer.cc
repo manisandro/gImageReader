@@ -19,25 +19,14 @@
 
 #include <QClipboard>
 #include <QDateTime>
-#include <QGridLayout>
-#include <QIcon>
-#include <QLabel>
 #include <QMessageBox>
 #include <QtSpell.hpp>
 #include <algorithm>
-#include <csignal>
-#include <cstring>
-#include <iostream>
-#include <sstream>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #include <tesseract/ocrclass.h>
-#include <tesseract/strngs.h>
-#include <tesseract/genericvector.h>
 #undef USE_STD_NAMESPACE
 #include <QMouseEvent>
-#include <unistd.h>
-#include <setjmp.h>
 
 #ifdef Q_OS_WIN
 #include <fcntl.h>
@@ -48,6 +37,7 @@
 #include "Displayer.hh"
 #include "MainWindow.hh"
 #include "OutputEditor.hh"
+#include "RecognitionMenu.hh"
 #include "Recognizer.hh"
 #include "Utils.hh"
 
@@ -87,267 +77,18 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	m_pagesDialog = new QDialog(MAIN);
 	m_pagesDialogUi.setupUi(m_pagesDialog);
 
-	m_charListDialog = new QDialog(MAIN);
-	m_charListDialogUi.setupUi(m_charListDialog);
-
-	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
-	ui.menuLanguages->installEventFilter(this);
+	ui.toolButtonRecognize->setMenu(MAIN->getRecognitionMenu());
 
 	connect(ui.toolButtonRecognize, &QToolButton::clicked, this, &Recognizer::recognizeButtonClicked);
 	connect(currentPageAction, &QAction::triggered, this, &Recognizer::recognizeCurrentPage);
 	connect(multiplePagesAction, &QAction::triggered, this, &Recognizer::recognizeMultiplePages);
 	connect(m_pagesDialogUi.lineEditPageRange, &QLineEdit::textChanged, this, &Recognizer::clearLineEditPageRangeStyle);
-	connect(m_charListDialogUi.radioButtonBlacklist, &QRadioButton::toggled, m_charListDialogUi.lineEditBlacklist, &QLineEdit::setEnabled);
-	connect(m_charListDialogUi.radioButtonWhitelist, &QRadioButton::toggled, m_charListDialogUi.lineEditWhitelist, &QLineEdit::setEnabled);
+	connect(MAIN->getRecognitionMenu(), &RecognitionMenu::languageChanged, this, &Recognizer::recognitionLanguageChanged);
 
-	ADD_SETTING(VarSetting<QString>("language", "eng:en_EN"));
+
 	ADD_SETTING(ComboSetting("ocrregionstrategy", m_pagesDialogUi.comboBoxRecognitionArea, 0));
 	ADD_SETTING(SwitchSetting("ocraddsourcefilename", m_pagesDialogUi.checkBoxPrependFilename));
 	ADD_SETTING(SwitchSetting("ocraddsourcepage", m_pagesDialogUi.checkBoxPrependPage));
-	ADD_SETTING(LineEditSetting("ocrcharwhitelist", m_charListDialogUi.lineEditWhitelist));
-	ADD_SETTING(LineEditSetting("ocrcharblacklist", m_charListDialogUi.lineEditBlacklist));
-	ADD_SETTING(SwitchSetting("ocrblacklistenabled", m_charListDialogUi.radioButtonBlacklist, true));
-	ADD_SETTING(SwitchSetting("ocrwhitelistenabled", m_charListDialogUi.radioButtonWhitelist, false));
-	ADD_SETTING(VarSetting<int>("psm", 6));
-}
-
-QStringList Recognizer::getAvailableLanguages() const {
-	auto tess = initTesseract();
-	GenericVector<STRING> availLanguages;
-	tess->GetAvailableLanguagesAsVector(&availLanguages);
-	QStringList result;
-	for(int i = 0; i < availLanguages.size(); ++i) {
-		result.append(availLanguages[i].c_str());
-	}
-	std::sort(result.begin(), result.end(), [](const QString & s1, const QString & s2) {
-		bool s1Script = s1.startsWith("script") || s1.left(1) == s1.left(1).toUpper();
-		bool s2Script = s2.startsWith("script") || s2.left(1) == s2.left(1).toUpper();
-		if(s1Script != s2Script) {
-			return !s1Script;
-		} else {
-			return s1 < s2;
-		}
-	});
-	return result;
-}
-
-std::unique_ptr<tesseract::TessBaseAPI> Recognizer::initTesseract(const char* language, bool* ok) const {
-	// unfortunately tesseract creates deliberate aborts when an error occurs
-	std::signal(SIGABRT, MainWindow::tesseractCrash);
-	QByteArray current = setlocale(LC_ALL, NULL);
-	setlocale(LC_ALL, "C");
-	std::unique_ptr<tesseract::TessBaseAPI> tess(new tesseract::TessBaseAPI());
-	int ret = tess->Init(nullptr, language);
-	setlocale(LC_NUMERIC, current.constData());
-
-	if(ok) {
-		*ok = ret != -1;
-	}
-	return tess;
-}
-
-void Recognizer::updateLanguagesMenu() {
-	ui.menuLanguages->clear();
-	delete m_langMenuRadioGroup;
-	m_langMenuRadioGroup = new QActionGroup(this);
-	delete m_langMenuCheckGroup;
-	m_langMenuCheckGroup = new QActionGroup(this);
-	m_langMenuCheckGroup->setExclusive(false);
-	delete m_psmCheckGroup;
-	m_psmCheckGroup = new QActionGroup(this);
-	connect(m_psmCheckGroup, &QActionGroup::triggered, this, &Recognizer::psmSelected);
-	m_menuMultilanguage = nullptr;
-	m_curLang = Config::Lang();
-	QAction* curitem = nullptr;
-	QAction* activeitem = nullptr;
-	bool haveOsd = false;
-
-	QStringList parts = ConfigSettings::get<VarSetting<QString>>("language")->getValue().split(":");
-	Config::Lang curlang = {parts.empty() ? "eng" : parts[0], parts.size() < 2 ? "" : parts[1], parts.size() < 3 ? "" : parts[2]};
-
-	QList<QString> dicts = QtSpell::Checker::getLanguageList();
-
-	QStringList availLanguages = getAvailableLanguages();
-
-	if(availLanguages.empty()) {
-		QMessageBox::warning(MAIN, _("No languages available"), _("No tesseract languages are available for use. Recognition will not work."));
-		m_langLabel = "";
-		ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
-	}
-
-	// Add menu items for languages, with spelling submenu if available
-	for(const QString& langprefix : availLanguages) {
-		if(langprefix == "osd") {
-			haveOsd = true;
-			continue;
-		}
-		Config::Lang lang = {langprefix, QString(), QString()};
-		if(!MAIN->getConfig()->searchLangSpec(lang)) {
-			lang.name = lang.prefix;
-		}
-		QList<QString> spelldicts;
-		if(!lang.code.isEmpty()) {
-			for(const QString& dict : dicts) {
-				if(dict.left(2) == lang.code.left(2)) {
-					spelldicts.append(dict);
-				}
-			}
-			std::sort(spelldicts.begin(), spelldicts.end());
-		}
-		if(!spelldicts.empty()) {
-			QAction* item = new QAction(lang.name, ui.menuLanguages);
-			QMenu* submenu = new QMenu();
-			for(const QString& dict : spelldicts) {
-				Config::Lang itemlang = {lang.prefix, dict, lang.name};
-				curitem = new QAction(QtSpell::Checker::decodeLanguageCode(dict), m_langMenuRadioGroup);
-				curitem->setCheckable(true);
-				curitem->setData(QVariant::fromValue(itemlang));
-				connect(curitem, &QAction::triggered, this, &Recognizer::setLanguage);
-				if(curlang.prefix == lang.prefix && (
-				            curlang.code == dict ||
-				            (!activeitem && (curlang.code == dict.left(2) || curlang.code.isEmpty())))) {
-					curlang = itemlang;
-					activeitem = curitem;
-				}
-				submenu->addAction(curitem);
-			}
-			item->setMenu(submenu);
-			ui.menuLanguages->addAction(item);
-		} else {
-			curitem = new QAction(lang.name, m_langMenuRadioGroup);
-			curitem->setCheckable(true);
-			curitem->setData(QVariant::fromValue(lang));
-			connect(curitem, &QAction::triggered, this, &Recognizer::setLanguage);
-			if(curlang.prefix == lang.prefix) {
-				curlang = lang;
-				activeitem = curitem;
-			}
-			ui.menuLanguages->addAction(curitem);
-		}
-	}
-
-	// Add multilanguage menu
-	bool isMultilingual = false;
-	if(!availLanguages.isEmpty()) {
-		ui.menuLanguages->addSeparator();
-		m_multilingualAction = new QAction(_("Multilingual"), m_langMenuRadioGroup);
-		m_multilingualAction->setCheckable(true);
-		m_menuMultilanguage = new QMenu();
-		isMultilingual = curlang.prefix.contains('+');
-		QStringList sellangs = curlang.prefix.split('+', QString::SkipEmptyParts);
-		for(const QString& langprefix : availLanguages) {
-			if(langprefix == "osd") {
-				continue;
-			}
-			Config::Lang lang = {langprefix, "", ""};
-			if(!MAIN->getConfig()->searchLangSpec(lang)) {
-				lang.name = lang.prefix;
-			}
-			int index = sellangs.indexOf(lang.prefix);
-			QAction* item = new QAction(lang.name, m_langMenuCheckGroup);
-			item->setCheckable(true);
-			item->setData(QVariant::fromValue(lang.prefix));
-			item->setChecked(isMultilingual && index != -1);
-			item->setProperty("last_click", QDateTime::fromSecsSinceEpoch(1 + index)); // Hack to preserve order
-			connect(item, &QAction::triggered, item, [item] { item->setProperty("last_click", QDateTime::currentDateTime()); });
-			connect(item, &QAction::triggered, this, &Recognizer::setMultiLanguage);
-			m_menuMultilanguage->addAction(item);
-		}
-		m_menuMultilanguage->installEventFilter(this);
-		m_multilingualAction->setMenu(m_menuMultilanguage);
-		ui.menuLanguages->addAction(m_multilingualAction);
-	}
-	if(isMultilingual) {
-		activeitem = m_multilingualAction;
-		setMultiLanguage();
-	} else if(activeitem == nullptr) {
-		activeitem = curitem;
-	}
-	if(activeitem) {
-		activeitem->trigger();
-	}
-
-	// Add PSM items
-	ui.menuLanguages->addSeparator();
-	QMenu* psmMenu = new QMenu();
-	int activePsm = ConfigSettings::get<VarSetting<int>>("psm")->getValue();
-
-	struct PsmEntry {
-		QString label;
-		tesseract::PageSegMode psmMode;
-		bool requireOsd;
-	};
-	QVector<PsmEntry> psmModes = {
-		PsmEntry{_("Automatic page segmentation"), tesseract::PSM_AUTO, false},
-		PsmEntry{_("Page segmentation with orientation and script detection"), tesseract::PSM_AUTO_OSD, true},
-		PsmEntry{_("Assume single column of text"), tesseract::PSM_SINGLE_COLUMN, false},
-		PsmEntry{_("Assume single block of vertically aligned text"), tesseract::PSM_SINGLE_BLOCK_VERT_TEXT, false},
-		PsmEntry{_("Assume a single uniform block of text"), tesseract::PSM_SINGLE_BLOCK, false},
-		PsmEntry{_("Assume a line of text"), tesseract::PSM_SINGLE_LINE, false},
-		PsmEntry{_("Assume a single word"), tesseract::PSM_SINGLE_WORD, false},
-		PsmEntry{_("Assume a single word in a circle"), tesseract::PSM_CIRCLE_WORD, false},
-		PsmEntry{_("Sparse text in no particular order"), tesseract::PSM_SPARSE_TEXT, false},
-		PsmEntry{_("Sparse text with orientation and script detection"), tesseract::PSM_SPARSE_TEXT_OSD, true}
-	};
-	for(const auto& entry : psmModes) {
-		QAction* item = psmMenu->addAction(entry.label);
-		item->setData(entry.psmMode);
-		item->setEnabled(!entry.requireOsd || haveOsd);
-		item->setCheckable(true);
-		item->setChecked(activePsm == entry.psmMode);
-		m_psmCheckGroup->addAction(item);
-	}
-
-	QAction* psmAction = new QAction(_("Page segmentation mode"), ui.menuLanguages);
-	psmAction->setMenu(psmMenu);
-	ui.menuLanguages->addAction(psmAction);
-	ui.menuLanguages->addAction(_("Character whitelist / blacklist..."), this, &Recognizer::manageCharacterLists);
-
-
-	// Add installer item
-	ui.menuLanguages->addSeparator();
-	ui.menuLanguages->addAction(_("Manage languages..."), MAIN, &MainWindow::manageLanguages);
-}
-
-void Recognizer::setLanguage() {
-	QAction* item = qobject_cast<QAction*>(QObject::sender());
-	if(item->isChecked()) {
-		Config::Lang lang = item->data().value<Config::Lang>();
-		if(!lang.code.isEmpty()) {
-			m_langLabel = QString("%1 (%2)").arg(lang.name, lang.code);
-		} else {
-			m_langLabel = QString("%1").arg(lang.name);
-		}
-		ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
-		m_curLang = lang;
-		ConfigSettings::get<VarSetting<QString>>("language")->setValue(lang.prefix + ":" + lang.code);
-		emit languageChanged(m_curLang);
-	}
-}
-
-void Recognizer::setMultiLanguage() {
-	m_multilingualAction->setChecked(true);
-	QList<QPair<QString, QDateTime>> langs;
-	for(QAction* action : m_langMenuCheckGroup->actions()) {
-		if(action->isChecked()) {
-			langs.append(qMakePair(action->data().toString(), action->property("last_click").toDateTime()));
-		}
-	}
-	std::sort(langs.begin(), langs.end(), [](auto a, auto b) { return a.second < b.second; });
-	QString lang;
-	if(langs.isEmpty()) {
-		lang = "eng+";
-	} else {
-		for(const auto& pair : langs) {
-			lang += pair.first + "+";
-		}
-	}
-	lang = lang.left(lang.length() - 1);
-	m_langLabel = lang;
-	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
-	m_curLang = {lang, "", "Multilingual"};
-	ConfigSettings::get<VarSetting<QString>>("language")->setValue(lang + ":");
-	emit languageChanged(m_curLang);
 }
 
 void Recognizer::setRecognizeMode(const QString& mode) {
@@ -355,16 +96,19 @@ void Recognizer::setRecognizeMode(const QString& mode) {
 	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
 }
 
+void Recognizer::recognitionLanguageChanged(const Config::Lang& lang) {
+	if(!lang.code.isEmpty()) {
+		m_langLabel = QString("%1 (%2)").arg(lang.name, lang.code);
+	} else if(lang.name == "Multilingual") {
+		m_langLabel = QString("%1").arg(lang.prefix);
+	} else {
+		m_langLabel = QString("%1").arg(lang.name);
+	}
+	ui.toolButtonRecognize->setText(QString("%1\n%2").arg(m_modeLabel).arg(m_langLabel));
+}
+
 void Recognizer::clearLineEditPageRangeStyle() {
 	qobject_cast<QLineEdit*>(QObject::sender())->setStyleSheet("");
-}
-
-void Recognizer::psmSelected(QAction* action) {
-	ConfigSettings::get<VarSetting<int>>("psm")->setValue(action->data().toInt());
-}
-
-void Recognizer::manageCharacterLists() {
-	m_charListDialog->exec();
 }
 
 QList<int> Recognizer::selectPages(bool& autodetectLayout) {
@@ -442,16 +186,13 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
 	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
 	bool ok = false;
-	auto tess = initTesseract(m_curLang.prefix.toLocal8Bit().constData(), &ok);
+	Config::Lang lang = MAIN->getRecognitionMenu()->getRecognitionLanguage();
+	auto tess = Utils::initTesseract(lang.prefix.toLocal8Bit().constData(), &ok);
 	if(ok) {
 		QString failed;
-		tess->SetPageSegMode(static_cast<tesseract::PageSegMode>(m_psmCheckGroup->checkedAction()->data().toInt()));
-		if(m_charListDialogUi.radioButtonWhitelist->isChecked()) {
-			tess->SetVariable("tessedit_char_whitelist", m_charListDialogUi.lineEditWhitelist->text().toLocal8Bit());
-		}
-		if(m_charListDialogUi.radioButtonBlacklist->isChecked()) {
-			tess->SetVariable("tessedit_char_blacklist", m_charListDialogUi.lineEditBlacklist->text().toLocal8Bit());
-		}
+		tess->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
+		tess->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().toLocal8Bit());
+		tess->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().toLocal8Bit());
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
 		ProgressMonitor monitor(pages.size());
 		MAIN->showProgress(&monitor);
@@ -511,7 +252,8 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 
 bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 	bool ok = false;
-	auto tess = initTesseract(m_curLang.prefix.toLocal8Bit().constData(), &ok);
+	Config::Lang lang = MAIN->getRecognitionMenu()->getRecognitionLanguage();
+	auto tess = Utils::initTesseract(lang.prefix.toLocal8Bit().constData(), &ok);
 	if(!ok) {
 		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 		return false;
@@ -564,28 +306,4 @@ Recognizer::PageData Recognizer::setPage(int page, bool autodetectLayout) {
 		pageData.ocrAreas = MAIN->getDisplayer()->getOCRAreas();
 	}
 	return pageData;
-}
-
-bool Recognizer::eventFilter(QObject* obj, QEvent* ev) {
-	if(obj == ui.menuLanguages && ev->type() == QEvent::MouseButtonPress) {
-		QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(ev);
-		QAction* actionAtPos = ui.menuLanguages->actionAt(mouseEvent->pos());
-		if(actionAtPos && actionAtPos == m_multilingualAction) {
-			m_multilingualAction->toggle();
-			if(m_multilingualAction->isChecked()) {
-				setMultiLanguage();
-			}
-			return true;
-		}
-	} else if(obj == m_menuMultilanguage && (ev->type() == QEvent::MouseButtonPress || ev->type() == QEvent::MouseButtonRelease)) {
-		QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(ev);
-		QAction* action = m_menuMultilanguage->actionAt(mouseEvent->pos());
-		if(action) {
-			if(ev->type() == QEvent::MouseButtonRelease) {
-				action->trigger();
-			}
-			return true;
-		}
-	}
-	return QObject::eventFilter(obj, ev);
 }

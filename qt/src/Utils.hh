@@ -21,6 +21,7 @@
 #define UTILS_HH
 
 #include <functional>
+#include <memory>
 #include <QMutex>
 #include <QQueue>
 #include <QString>
@@ -30,6 +31,8 @@ class QMimeData;
 class QSpinBox;
 class QDoubleSpinBox;
 class QUrl;
+
+namespace tesseract { class TessBaseAPI; }
 
 #ifdef MAKE_VERSION
 #define TESSERACT_MAKE_VERSION(maj,min,patch) MAKE_VERSION((maj),(min),(patch))
@@ -52,6 +55,8 @@ void handleSourceDropEvent(const QMimeData* mimeData);
 QByteArray download(QUrl url, QString& messages, int timeout = 60000);
 
 QString getSpellingLanguage(const QString& lang = QString());
+
+std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nullptr, bool* ok = nullptr);
 
 template<typename T>
 class AsyncQueue {
