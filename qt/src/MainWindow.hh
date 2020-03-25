@@ -94,19 +94,19 @@ public:
 	MainWindow(const QStringList& files);
 	~MainWindow();
 
-	Config* getConfig() {
+	Config* getConfig() const {
 		return m_config;
 	}
-	Displayer* getDisplayer() {
+	Displayer* getDisplayer() const {
 		return m_displayer;
 	}
-	OutputEditor* getOutputEditor() {
+	OutputEditor* getOutputEditor() const {
 		return m_outputEditor;
 	}
-	Recognizer* getRecognizer() {
+	Recognizer* getRecognizer() const {
 		return m_recognizer;
 	}
-	SourceManager* getSourceManager() {
+	SourceManager* getSourceManager() const {
 		return m_sourceManager;
 	}
 	void addNotification(const QString& title, const QString& message, const QList<NotificationAction>& actions, Notification* handle = nullptr);
