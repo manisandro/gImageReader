@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Portuguese (Brazil) (gImageReader)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-23 01:44+0100\n"
-"PO-Revision-Date: 2019-09-08 20:26+0000\n"
+"PO-Revision-Date: 2020-03-25 15:46+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pt/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -232,9 +232,8 @@ msgid "Best fit"
 msgstr "Melhor ajuste"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
-#, fuzzy
 msgid "Rotate page"
-msgstr "Rodar todas as páginas"
+msgstr "Rodar página"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
 msgid "Select rotation mode"
@@ -439,12 +438,11 @@ msgstr "Digite a palavra:"
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Anexar nova saída após a última página"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "Girar a página atual"
+msgstr "Inserir nova saída antes da página atual"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
@@ -463,14 +461,13 @@ msgstr "Exportar para ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
-#, fuzzy
 msgid "Append document after last page"
-msgstr "Acrescentar no texto atual"
+msgstr "Anexar documento após a última página"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Insert document before current page"
-msgstr ""
+msgstr "Inserir documento antes da página atual"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
@@ -935,9 +932,8 @@ msgid "There was no unsaved work."
 msgstr "Não havia trabalho não salvo."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
-#, fuzzy
 msgid "Failed to obtain backtrace. Is GDB installed?"
-msgstr "Falha ao obter o backtrace. O gdb está instalado?"
+msgstr "Falha ao obter o backtrace. Está o GDB instalado?"
 
 #: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:191
 msgid "Failed to load image"
@@ -1251,19 +1247,21 @@ msgstr "Abrir ficheiro hOCR"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1002 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:870 ../qt/src/SourceManager.cc:127
-#, fuzzy
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "Os arquivos a seguir não puderam ser abertos: %1"
+msgstr ""
+"Os seguintes ficheiros não puderam ser abertos:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1005
 #: ../qt/src/hocr/OutputEditorHOCR.cc:873
-#, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "O ficheiro parece não conter hOCR HTML válido: %1"
+msgstr ""
+"Os seguintes ficheiros não são HTML hOCR válidos:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1008 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:876 ../qt/src/SourceManager.cc:127
@@ -1613,19 +1611,18 @@ msgid "Enter password for file '%1':"
 msgstr "Digite a palavra-passe para o ficheiro '%1':"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
-#, fuzzy
 msgid "PDF with text"
 msgstr "PDF com texto"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
-#, fuzzy
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
-"Esses arquivos PDF já contêm texto:\n"
-"%1"
+"O ficheiro PDF já contém texto:\n"
+"%1\n"
+"Abri-lo de qualquer maneira?"
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:233
 msgid "Images and PDFs"
@@ -1813,7 +1810,7 @@ msgstr "Sim"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "Sim a todos"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1821,7 +1818,7 @@ msgstr "Não"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "Não a todos"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
@@ -1973,9 +1970,8 @@ msgid "Landscape"
 msgstr "Paisagem"
 
 #: ../qt/src/Displayer.cc:168
-#, fuzzy
 msgid "Page %1"
-msgstr "Página: %1"
+msgstr "Página %1"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:139
 msgid "Failed to write to file"
