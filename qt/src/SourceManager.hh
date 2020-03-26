@@ -88,6 +88,7 @@ private slots:
 		removeSource(true);
 	}
 	void fileChanged(const QString& filename);
+	void addFolder();
 	void openRecentItem();
 	void openSources();
 	void pasteClipboard();

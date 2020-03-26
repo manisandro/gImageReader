@@ -19,6 +19,7 @@ public:
 	QAction* actionSourceClear;
 	QAction* actionSourceDelete;
 	QAction* actionSourcePaste;
+	QAction* actionSourceFolder;
 	QAction* actionSourceRecent;
 	QAction* actionSourceRemove;
 	QAction* actionSourceScreenshot;
@@ -185,11 +186,13 @@ public:
 		toolBarMain->addWidget(toolButtonAppMenu);
 
 		// Sources toolbar
+		actionSourceFolder = new QAction(QIcon::fromTheme("folder-open"), gettext("Add folder"), MainWindow);
 		actionSourceRecent = new QAction(QIcon::fromTheme("document-open-recent"), gettext("Recent"), MainWindow);
 		actionSourcePaste = new QAction(QIcon::fromTheme("edit-paste"), gettext("Paste"), MainWindow);
 		actionSourceScreenshot = new QAction(QIcon::fromTheme("camera-photo"), gettext("Take Screenshot"), MainWindow);
 
 		menuAddSource = new QMenu(MainWindow);
+		menuAddSource->addAction(actionSourceFolder);
 		menuAddSource->addAction(actionSourceRecent);
 		menuAddSource->addSeparator();
 		menuAddSource->addAction(actionSourcePaste);

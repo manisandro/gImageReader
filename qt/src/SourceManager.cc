@@ -22,8 +22,10 @@
 #include <QDesktopWidget>
 #include <QDesktopServices>
 #include <QDir>
+#include <QDirIterator>
 #include <QDragEnterEvent>
 #include <QFile>
+#include <QFileDialog>
 #include <QFileInfo>
 #include <QImageReader>
 #include <QInputDialog>
@@ -61,6 +63,7 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	connect(ui.actionSources, &QAction::toggled, ui.dockWidgetSources, &QDockWidget::setVisible);
 	connect(ui.toolButtonSourceAdd, &QToolButton::clicked, this, &SourceManager::openSources);
 	connect(ui.menuAddSource, &QMenu::aboutToShow, this, &SourceManager::prepareSourcesMenu);
+	connect(ui.actionSourceFolder, &QAction::triggered, this, &SourceManager::addFolder);
 	connect(ui.actionSourcePaste, &QAction::triggered, this, &SourceManager::pasteClipboard);
 	connect(ui.actionSourceScreenshot, &QAction::triggered, this, &SourceManager::takeScreenshot);
 	connect(ui.actionSourceRemove, &QAction::triggered, this, &SourceManager::removeSource);
@@ -232,6 +235,31 @@ void SourceManager::openSources() {
 	formats.insert("*.djvu");
 	QString filter = QString("%1 (%2)").arg(_("Images and PDFs")).arg(QStringList(formats.toList()).join(" "));
 	addSources(FileDialogs::openDialog(_("Select Files"), initialFolder, "sourcedir", filter, true));
+}
+
+void SourceManager::addFolder() {
+	QString dir = QFileDialog::getExistingDirectory(MAIN, tr("Select folder..."), Utils::documentsFolder());
+	if(dir.isEmpty()) {
+		return;
+	}
+	QStringList nameFilters;
+	QSet<QString> formats;
+	for(const QByteArray& format : QImageReader::supportedImageFormats()) {
+		formats.insert(QString("*.%1").arg(QString(format).toLower()));
+	}
+	formats.insert("*.pdf");
+	formats.insert("*.djvu");
+	nameFilters = formats.toList();
+
+	QDirIterator it(dir, nameFilters, QDir::Files, QDirIterator::Subdirectories);
+
+	QStringList filenames;
+	while(it.hasNext()) {
+		filenames.append(it.next());
+	}
+	if(!filenames.isEmpty()) {
+		addSources(filenames);
+	}
 }
 
 void SourceManager::openRecentItem() {
