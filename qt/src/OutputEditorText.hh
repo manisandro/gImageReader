@@ -30,6 +30,15 @@
 class OutputEditorText : public OutputEditor {
 	Q_OBJECT
 public:
+	class TextBatchProcessor : public BatchProcessor {
+	public:
+		TextBatchProcessor(bool prependPage) : m_prependPage(prependPage) {}
+		QString fileSuffix() const override { return QString(".txt"); }
+		void appendOutput(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const override;
+	private:
+		bool m_prependPage = false;
+	};
+
 	OutputEditorText();
 	~OutputEditorText();
 
@@ -41,6 +50,7 @@ public:
 	}
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
+	BatchProcessor* createBatchProcessor(const QMap<QString, QVariant>& options) const override { return new TextBatchProcessor(options["prependPage"].toBool()); }
 	bool getModified() const override;
 
 public slots:

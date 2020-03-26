@@ -34,6 +34,17 @@
 #include "Utils.hh"
 
 
+void OutputEditorText::TextBatchProcessor::appendOutput(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const {
+	char* text = tess->GetUTF8Text();
+	if(firstArea && m_prependPage) {
+		dev->write(_("Page: %1\n").arg(pageInfo.page).toUtf8());
+	}
+	dev->write(text);
+	dev->write("\n");
+	delete[] text;
+}
+
+
 OutputEditorText::OutputEditorText() {
 	m_insertMode = InsertMode::Append;
 
@@ -193,10 +204,10 @@ void OutputEditorText::read(tesseract::TessBaseAPI& tess, ReadSessionData* data)
 	if(data->prependFile || data->prependPage) {
 		QStringList prepend;
 		if(data->prependFile) {
-			prepend.append(_("File: %1").arg(data->file));
+			prepend.append(_("File: %1").arg(data->pageInfo.filename));
 		}
 		if(data->prependPage) {
-			prepend.append(_("Page: %1").arg(data->page));
+			prepend.append(_("Page: %1").arg(data->pageInfo.page));
 		}
 		text.prepend(QString("[%1]\n").arg(prepend.join("; ")));
 	}

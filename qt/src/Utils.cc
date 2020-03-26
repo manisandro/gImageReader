@@ -220,7 +220,7 @@ QString Utils::getSpellingLanguage(const QString& lang) {
 	return syslang;
 }
 
-std::unique_ptr<tesseract::TessBaseAPI> Utils::initTesseract(const char* language, bool* ok) {
+std::unique_ptr<tesseract::TessBaseAPI> Utils::initTesseract(const char* language) {
 	// unfortunately tesseract creates deliberate aborts when an error occurs
 	std::signal(SIGABRT, MainWindow::tesseractCrash);
 	QByteArray current = setlocale(LC_ALL, NULL);
@@ -229,8 +229,8 @@ std::unique_ptr<tesseract::TessBaseAPI> Utils::initTesseract(const char* languag
 	int ret = tess->Init(nullptr, language);
 	setlocale(LC_NUMERIC, current.constData());
 
-	if(ok) {
-		*ok = ret != -1;
+	if(ret == -1) {
+		return nullptr;
 	}
 	return tess;
 }

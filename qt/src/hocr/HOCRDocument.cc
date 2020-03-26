@@ -531,7 +531,7 @@ QString HOCRDocument::displayRoleForItem(const HOCRItem* item) const {
 	QString itemClass = item->itemClass();
 	if(itemClass == "ocr_page") {
 		const HOCRPage* page = static_cast<const HOCRPage*>(item);
-		return QString("%1 (%2 %3/%4)").arg(page->title()).arg(tr("Page")).arg(item->index() + 1).arg(m_pages.size());
+		return QString("%1 (%2 %3/%4)").arg(page->title()).arg(_("Page")).arg(item->index() + 1).arg(m_pages.size());
 	} else if(itemClass == "ocr_carea") {
 		return _("Text block");
 	} else if(itemClass == "ocr_par") {

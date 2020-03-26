@@ -56,7 +56,7 @@ QByteArray download(QUrl url, QString& messages, int timeout = 60000);
 
 QString getSpellingLanguage(const QString& lang = QString());
 
-std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nullptr, bool* ok = nullptr);
+std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nullptr);
 
 template<typename T>
 class AsyncQueue {

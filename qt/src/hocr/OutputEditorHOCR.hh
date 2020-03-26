@@ -34,6 +34,14 @@ class QGraphicsPixmapItem;
 class OutputEditorHOCR : public OutputEditor {
 	Q_OBJECT
 public:
+	class HOCRBatchProcessor : public BatchProcessor {
+	public:
+		QString fileSuffix() const override { return QString(".html"); }
+		void writeHeader(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo) const override;
+		void writeFooter(QIODevice* dev) const override;
+		void appendOutput(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfos, bool firstArea) const override;
+	};
+
 	enum class InsertMode { Replace, Append, InsertBefore };
 
 	OutputEditorHOCR(DisplayerToolHOCR* tool);
@@ -46,6 +54,7 @@ public:
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
 	void finalizeRead(ReadSessionData* data) override;
+	BatchProcessor* createBatchProcessor(const QMap<QString, QVariant>& /*options*/) const override { return new HOCRBatchProcessor; }
 	bool getModified() const override {
 		return m_modified;
 	}

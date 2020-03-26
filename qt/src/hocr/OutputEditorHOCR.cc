@@ -198,6 +198,41 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////
 
+void OutputEditorHOCR::HOCRBatchProcessor::writeHeader(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo) const {
+	QString header = QString(
+	                     "<!DOCTYPE html>\n"
+	                     "<html>\n"
+	                     "<head>\n"
+	                     " <title>%1</title>\n"
+	                     " <meta charset=\"utf-8\" /> \n"
+	                     " <meta name='ocr-system' content='tesseract %2' />\n"
+	                     " <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
+	                     "</head><body>\n").arg(QFileInfo(pageInfo.filename).fileName()).arg(tess->Version());
+	dev->write(header.toUtf8());
+}
+
+void OutputEditorHOCR::HOCRBatchProcessor::writeFooter(QIODevice* dev) const {
+	dev->write("</body></html>\n");
+}
+
+void OutputEditorHOCR::HOCRBatchProcessor::appendOutput(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfos, bool /*firstArea*/) const {
+	char* text = tess->GetHOCRText(pageInfos.page);
+	QDomDocument doc;
+	doc.setContent(QString::fromUtf8(text));
+	delete[] text;
+
+	QDomElement pageDiv = doc.firstChildElement("div");
+	QMap<QString, QString> attrs = HOCRItem::deserializeAttrGroup(pageDiv.attribute("title"));
+	attrs["image"] = QString("'%1'").arg(pageInfos.filename);
+	attrs["ppageno"] = QString::number(pageInfos.page);
+	attrs["rot"] = QString::number(pageInfos.angle);
+	attrs["res"] = QString::number(pageInfos.resolution);
+	pageDiv.setAttribute("title", HOCRItem::serializeAttrGroup(attrs));
+	dev->write(doc.toByteArray());
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
 Q_DECLARE_METATYPE(OutputEditorHOCR::HOCRReadSessionData)
 
 OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
@@ -321,7 +356,7 @@ OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBas
 
 void OutputEditorHOCR::read(tesseract::TessBaseAPI& tess, ReadSessionData* data) {
 	tess.SetVariable("hocr_font_info", "true");
-	char* text = tess.GetHOCRText(data->page);
+	char* text = tess.GetHOCRText(data->pageInfo.page);
 	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
 	QMetaObject::invokeMethod(this, "addPage", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(text)), Q_ARG(HOCRReadSessionData, *hdata));
 	delete[] text;
@@ -329,7 +364,7 @@ void OutputEditorHOCR::read(tesseract::TessBaseAPI& tess, ReadSessionData* data)
 }
 
 void OutputEditorHOCR::readError(const QString& errorMsg, ReadSessionData* data) {
-	static_cast<HOCRReadSessionData*>(data)->errors.append(QString("%1[%2]: %3").arg(data->file).arg(data->page).arg(errorMsg));
+	static_cast<HOCRReadSessionData*>(data)->errors.append(QString("%1[%2]: %3").arg(data->pageInfo.filename).arg(data->pageInfo.page).arg(errorMsg));
 }
 
 void OutputEditorHOCR::finalizeRead(ReadSessionData* data) {
@@ -347,10 +382,10 @@ void OutputEditorHOCR::addPage(const QString& hocrText, HOCRReadSessionData data
 
 	QDomElement pageDiv = doc.firstChildElement("div");
 	QMap<QString, QString> attrs = HOCRItem::deserializeAttrGroup(pageDiv.attribute("title"));
-	attrs["image"] = QString("'%1'").arg(data.file);
-	attrs["ppageno"] = QString::number(data.page);
-	attrs["rot"] = QString::number(data.angle);
-	attrs["res"] = QString::number(data.resolution);
+	attrs["image"] = QString("'%1'").arg(data.pageInfo.filename);
+	attrs["ppageno"] = QString::number(data.pageInfo.page);
+	attrs["rot"] = QString::number(data.pageInfo.angle);
+	attrs["res"] = QString::number(data.pageInfo.resolution);
 	pageDiv.setAttribute("title", HOCRItem::serializeAttrGroup(attrs));
 
 	QModelIndex index = m_document->insertPage(data.insertIndex, pageDiv, true);

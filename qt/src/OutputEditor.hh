@@ -30,14 +30,25 @@ class TessBaseAPI;
 class OutputEditor : public QObject {
 	Q_OBJECT
 public:
+	struct PageInfo {
+		QString filename;
+		int page;
+		double angle;
+		int resolution;
+	};
 	struct ReadSessionData {
 		virtual ~ReadSessionData() = default;
 		bool prependFile;
 		bool prependPage;
-		int page;
-		QString file;
-		double angle;
-		int resolution;
+		PageInfo pageInfo;
+	};
+	class BatchProcessor {
+	public:
+		virtual ~BatchProcessor() = default;
+		virtual QString fileSuffix() const = 0;
+		virtual void writeHeader(QIODevice* /*dev*/, tesseract::TessBaseAPI* /*tess*/, const PageInfo& /*pageInfo*/) const {}
+		virtual void writeFooter(QIODevice* /*dev*/) const {}
+		virtual void appendOutput(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const = 0;
 	};
 
 	OutputEditor(QObject* parent = 0);
@@ -49,6 +60,7 @@ public:
 	virtual void finalizeRead(ReadSessionData* data) {
 		delete data;
 	}
+	virtual BatchProcessor* createBatchProcessor(const QMap<QString, QVariant>& options) const = 0;
 
 	virtual bool getModified() const = 0;
 
@@ -56,7 +68,7 @@ public slots:
 	virtual void onVisibilityChanged(bool /*visible*/) {}
 	virtual bool clear(bool hide = true) = 0;
 	virtual bool save(const QString& filename = "") = 0;
-	virtual void setLanguage(const Config::Lang& lang) {}
+	virtual void setLanguage(const Config::Lang& /*lang*/) {}
 };
 
 #endif // OUTPUTEDITOR_HH

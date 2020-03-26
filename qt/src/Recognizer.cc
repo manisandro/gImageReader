@@ -19,7 +19,10 @@
 
 #include <QClipboard>
 #include <QDateTime>
+#include <QDir>
+#include <QFileInfo>
 #include <QMessageBox>
+#include <QPlainTextEdit>
 #include <QtSpell.hpp>
 #include <algorithm>
 #define USE_STD_NAMESPACE
@@ -70,18 +73,28 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	QAction* multiplePagesAction = new QAction(_("Multiple Pages..."), this);
 	multiplePagesAction->setData(static_cast<int>(PageSelection::Multiple));
 
+	m_actionBatchMode = new QAction(_("Batch mode..."), this);
+	m_actionBatchMode->setData(static_cast<int>(PageSelection::Batch));
+
 	m_menuPages = new QMenu(ui.toolButtonRecognize);
 	m_menuPages->addAction(currentPageAction);
 	m_menuPages->addAction(multiplePagesAction);
+	m_menuPages->addAction(m_actionBatchMode);
 
 	m_pagesDialog = new QDialog(MAIN);
 	m_pagesDialogUi.setupUi(m_pagesDialog);
+
+	m_batchDialog = new QDialog(MAIN);
+	m_batchDialogUi.setupUi(m_batchDialog);
+	m_batchDialogUi.comboBoxExisting->addItem(_("Overwrite existing output"), BatchOverwriteOutput);
+	m_batchDialogUi.comboBoxExisting->addItem(_("Skip processing source"), BatchSkipSource);
 
 	ui.toolButtonRecognize->setMenu(MAIN->getRecognitionMenu());
 
 	connect(ui.toolButtonRecognize, &QToolButton::clicked, this, &Recognizer::recognizeButtonClicked);
 	connect(currentPageAction, &QAction::triggered, this, &Recognizer::recognizeCurrentPage);
 	connect(multiplePagesAction, &QAction::triggered, this, &Recognizer::recognizeMultiplePages);
+	connect(m_actionBatchMode, &QAction::triggered, this, &Recognizer::recognizeBatch);
 	connect(m_pagesDialogUi.lineEditPageRange, &QLineEdit::textChanged, this, &Recognizer::clearLineEditPageRangeStyle);
 	connect(MAIN->getRecognitionMenu(), &RecognitionMenu::languageChanged, this, &Recognizer::recognitionLanguageChanged);
 
@@ -164,6 +177,7 @@ void Recognizer::recognizeButtonClicked() {
 	if(nPages == 1) {
 		recognize({MAIN->getDisplayer()->getCurrentPage()});
 	} else {
+		m_actionBatchMode->setVisible(MAIN->getDisplayer()->getNSources() > 1);
 		ui.toolButtonRecognize->setCheckable(true);
 		ui.toolButtonRecognize->setChecked(true);
 		m_menuPages->popup(ui.toolButtonRecognize->mapToGlobal(QPoint(0, ui.toolButtonRecognize->height())));
@@ -182,90 +196,93 @@ void Recognizer::recognizeMultiplePages() {
 	recognize(pages, autodetectLayout);
 }
 
-void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
-	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
-	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
-	bool ok = false;
+std::unique_ptr<tesseract::TessBaseAPI> Recognizer::setupTesseract() {
 	Config::Lang lang = MAIN->getRecognitionMenu()->getRecognitionLanguage();
-	auto tess = Utils::initTesseract(lang.prefix.toLocal8Bit().constData(), &ok);
-	if(ok) {
-		QString failed;
+	auto tess = Utils::initTesseract(lang.prefix.toLocal8Bit().constData());
+	if(tess) {
 		tess->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
 		tess->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().toLocal8Bit());
 		tess->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().toLocal8Bit());
-		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
-		ProgressMonitor monitor(pages.size());
-		MAIN->showProgress(&monitor);
-		MAIN->getDisplayer()->setBlockAutoscale(true);
-		Utils::busyTask([&] {
-			int npages = pages.size();
-			int idx = 0;
-			QString prevFile;
-			for(int page : pages) {
-				monitor.desc.progress = 0;
-				++idx;
-				QMetaObject::invokeMethod(MAIN, "pushState", Qt::QueuedConnection, Q_ARG(MainWindow::State, MainWindow::State::Busy), Q_ARG(QString, _("Recognizing page %1 (%2 of %3)").arg(page).arg(idx).arg(npages)));
+	} else {
+		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
+	}
+	return tess;
+}
 
-				PageData pageData;
-				pageData.success = false;
-				QMetaObject::invokeMethod(this, "setPage", Qt::BlockingQueuedConnection, Q_RETURN_ARG(PageData, pageData), Q_ARG(int, page), Q_ARG(bool, autodetectLayout));
-				if(!pageData.success) {
-					failed.append(_("\n- Page %1: failed to render page").arg(page));
-					MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
-					continue;
-				}
-				readSessionData->file = pageData.filename;
-				readSessionData->page = pageData.page;
-				readSessionData->angle = pageData.angle;
-				readSessionData->resolution = pageData.resolution;
-				bool firstChunk = true;
-				bool newFile = readSessionData->file != prevFile;
-				prevFile = readSessionData->file;
-				for(const QImage& image : pageData.ocrAreas) {
-					readSessionData->prependPage = prependPage && firstChunk;
-					readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
-					firstChunk = false;
-					newFile = false;
-					tess->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
-					tess->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
-					tess->Recognize(&monitor.desc);
-					if(!monitor.cancelled()) {
-						MAIN->getOutputEditor()->read(*tess, readSessionData);
-					}
-				}
-				QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
-				monitor.increaseProgress();
-				if(monitor.cancelled()) {
-					break;
+void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
+	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
+	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
+	auto tess = setupTesseract();
+	if(!tess) {
+		return;
+	}
+	QStringList errors;
+	OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
+	ProgressMonitor monitor(pages.size());
+	MAIN->showProgress(&monitor);
+	MAIN->getDisplayer()->setBlockAutoscale(true);
+	Utils::busyTask([&] {
+		int npages = pages.size();
+		int idx = 0;
+		QString prevFile;
+		for(int page : pages) {
+			monitor.desc.progress = 0;
+			++idx;
+			QMetaObject::invokeMethod(MAIN, "pushState", Qt::QueuedConnection, Q_ARG(MainWindow::State, MainWindow::State::Busy), Q_ARG(QString, _("Recognizing page %1 (%2 of %3)").arg(page).arg(idx).arg(npages)));
+
+			PageData pageData;
+			pageData.success = false;
+			QMetaObject::invokeMethod(this, "setPage", Qt::BlockingQueuedConnection, Q_RETURN_ARG(PageData, pageData), Q_ARG(int, page), Q_ARG(bool, autodetectLayout));
+			if(!pageData.success) {
+				errors.append(_("- Page %1: failed to render page").arg(page));
+				MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
+				continue;
+			}
+			readSessionData->pageInfo = pageData.pageInfo;
+			bool firstChunk = true;
+			bool newFile = readSessionData->pageInfo.filename != prevFile;
+			prevFile = readSessionData->pageInfo.filename;
+			for(const QImage& image : pageData.ocrAreas) {
+				readSessionData->prependPage = prependPage && firstChunk;
+				readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
+				firstChunk = false;
+				newFile = false;
+				tess->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
+				tess->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
+				tess->Recognize(&monitor.desc);
+				if(!monitor.cancelled()) {
+					MAIN->getOutputEditor()->read(*tess, readSessionData);
 				}
 			}
-			return true;
-		}, _("Recognizing..."));
-		MAIN->getDisplayer()->setBlockAutoscale(false);
-		MAIN->hideProgress();
-		MAIN->getOutputEditor()->finalizeRead(readSessionData);
-		if(!failed.isEmpty()) {
-			QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("The following errors occurred:%1").arg(failed));
+			QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
+			monitor.increaseProgress();
+			if(monitor.cancelled()) {
+				break;
+			}
 		}
+		return true;
+	}, _("Recognizing..."));
+	MAIN->getDisplayer()->setBlockAutoscale(false);
+	MAIN->hideProgress();
+	MAIN->getOutputEditor()->finalizeRead(readSessionData);
+	if(!errors.isEmpty()) {
+		showRecognitionErrorsDialog(errors);
 	}
 }
 
-bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
-	bool ok = false;
-	Config::Lang lang = MAIN->getRecognitionMenu()->getRecognitionLanguage();
-	auto tess = Utils::initTesseract(lang.prefix.toLocal8Bit().constData(), &ok);
-	if(!ok) {
-		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
-		return false;
+void Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
+	auto tess = setupTesseract();
+	if(!tess) {
+		return;
 	}
 	tess->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 	ProgressMonitor monitor(1);
 	MAIN->showProgress(&monitor);
 	if(dest == OutputDestination::Buffer) {
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
-		readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
-		readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
-		readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
+		readSessionData->pageInfo.filename = MAIN->getDisplayer()->getCurrentImage(readSessionData->pageInfo.page);
+		readSessionData->pageInfo.angle = MAIN->getDisplayer()->getCurrentAngle();
+		readSessionData->pageInfo.resolution = MAIN->getDisplayer()->getCurrentResolution();
 		Utils::busyTask([&] {
 			tess->Recognize(&monitor.desc);
 			if(!monitor.cancelled()) {
@@ -290,7 +307,99 @@ bool Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 		}
 	}
 	MAIN->hideProgress();
-	return true;
+}
+
+void Recognizer::recognizeBatch() {
+	m_batchDialogUi.checkBoxPrependPage->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	m_batchDialogUi.checkBoxAutolayout->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	if(m_batchDialog->exec() != QDialog::Accepted) {
+		return;
+	}
+	BatchExistingBehaviour existingBehaviour = static_cast<BatchExistingBehaviour>(m_batchDialogUi.comboBoxExisting->currentData().toInt());
+	bool prependPage = MAIN->getDisplayer()->allowAutodetectOCRAreas() && m_batchDialogUi.checkBoxPrependPage->isChecked();
+	bool autolayout = MAIN->getDisplayer()->allowAutodetectOCRAreas() && m_batchDialogUi.checkBoxAutolayout->isChecked();
+	int nPages = MAIN->getDisplayer()->getNPages();
+
+	auto tess = setupTesseract();
+	if(!tess) {
+		return;
+	}
+
+	QMap<QString, QVariant> batchOptions;
+	batchOptions["prependPage"] = prependPage;
+	OutputEditor::BatchProcessor* batchProcessor = MAIN->getOutputEditor()->createBatchProcessor(batchOptions);
+
+	QStringList errors;
+	ProgressMonitor monitor(nPages);
+	MAIN->showProgress(&monitor);
+	MAIN->getDisplayer()->setBlockAutoscale(true);
+	Utils::busyTask([&] {
+		int idx = 0;
+		QString currFilename;
+		QFile outputFile;
+		for(int page = 1; page <= nPages; ++page) {
+			monitor.desc.progress = 0;
+			++idx;
+			QMetaObject::invokeMethod(MAIN, "pushState", Qt::QueuedConnection, Q_ARG(MainWindow::State, MainWindow::State::Busy), Q_ARG(QString, _("Recognizing page %1 (%2 of %3)").arg(page).arg(idx).arg(nPages)));
+
+			PageData pageData;
+			pageData.success = false;
+			QMetaObject::invokeMethod(this, "setPage", Qt::BlockingQueuedConnection, Q_RETURN_ARG(PageData, pageData), Q_ARG(int, page), Q_ARG(bool, autolayout));
+			if(!pageData.success) {
+				errors.append(_("- %1:%2: failed to render page").arg(QFileInfo(pageData.pageInfo.filename).fileName()).arg(page));
+				continue;
+			}
+			if(pageData.pageInfo.filename != currFilename) {
+				if(outputFile.isOpen()) {
+					batchProcessor->writeFooter(&outputFile);
+					outputFile.close();
+				}
+				currFilename = pageData.pageInfo.filename;
+				QFileInfo finfo(pageData.pageInfo.filename);
+				QString fileName = QDir(finfo.absolutePath()).absoluteFilePath(finfo.baseName() + batchProcessor->fileSuffix());
+				bool exists = QFileInfo(fileName).exists();
+				if(exists && existingBehaviour == BatchSkipSource) {
+					errors.append(_("- %1: output already exists, skipping").arg(finfo.fileName()));
+				} else {
+					outputFile.setFileName(fileName);
+					if(!outputFile.open(QIODevice::WriteOnly)) {
+						errors.append(_("- %1: failed to create output file").arg(finfo.fileName()).arg(page));
+					} else {
+						batchProcessor->writeHeader(&outputFile, tess.get(), pageData.pageInfo);
+					}
+				}
+			}
+			if(outputFile.isOpen()) {
+				bool firstChunk = true;
+				for(const QImage& image : pageData.ocrAreas) {
+					tess->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
+					tess->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
+					tess->Recognize(&monitor.desc);
+
+					if(!monitor.cancelled()) {
+						batchProcessor->appendOutput(&outputFile, tess.get(), pageData.pageInfo, firstChunk);
+					}
+					firstChunk = false;
+				}
+			}
+			QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
+			monitor.increaseProgress();
+			if(monitor.cancelled()) {
+				break;
+			}
+		}
+		if(outputFile.isOpen()) {
+			batchProcessor->writeFooter(&outputFile);
+			outputFile.close();
+		}
+		return true;
+	}, _("Recognizing..."));
+	MAIN->getDisplayer()->setBlockAutoscale(false);
+	MAIN->hideProgress();
+	if(!errors.isEmpty()) {
+		showRecognitionErrorsDialog(errors);
+	}
+	delete batchProcessor;
 }
 
 Recognizer::PageData Recognizer::setPage(int page, bool autodetectLayout) {
@@ -300,10 +409,27 @@ Recognizer::PageData Recognizer::setPage(int page, bool autodetectLayout) {
 		if(autodetectLayout) {
 			MAIN->getDisplayer()->autodetectOCRAreas();
 		}
-		pageData.filename = MAIN->getDisplayer()->getCurrentImage(pageData.page);
-		pageData.angle = MAIN->getDisplayer()->getCurrentAngle();
-		pageData.resolution = MAIN->getDisplayer()->getCurrentResolution();
+		pageData.pageInfo.filename = MAIN->getDisplayer()->getCurrentImage(pageData.pageInfo.page);
+		pageData.pageInfo.angle = MAIN->getDisplayer()->getCurrentAngle();
+		pageData.pageInfo.resolution = MAIN->getDisplayer()->getCurrentResolution();
 		pageData.ocrAreas = MAIN->getDisplayer()->getOCRAreas();
 	}
 	return pageData;
+}
+
+void Recognizer::showRecognitionErrorsDialog(const QStringList& errors) {
+	QDialog dialog(MAIN);
+	dialog.setWindowTitle(_("Recognition errors occurred"));
+	dialog.setLayout(new QVBoxLayout);
+	dialog.layout()->addWidget(new QLabel(_("The following errors occurred:")));
+	QPlainTextEdit* plainTextEdit = new QPlainTextEdit();
+	plainTextEdit->setReadOnly(true);
+	plainTextEdit->setPlainText(errors.join("\n"));
+	dialog.layout()->addWidget(plainTextEdit);
+	QDialogButtonBox* bbox = new QDialogButtonBox(QDialogButtonBox::Close);
+	connect(bbox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+	connect(bbox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+	dialog.layout()->addWidget(bbox);
+	dialog.resize(480, dialog.height());
+	dialog.exec();
 }

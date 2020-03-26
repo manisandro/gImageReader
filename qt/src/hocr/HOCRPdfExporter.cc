@@ -827,7 +827,7 @@ void HOCRPdfExporter::backendChanged() {
 }
 
 void HOCRPdfExporter::toggleBackendHint() {
-	QString tooltip = tr("<html><head/><body><ul><li>PoDoFo: offers more image compression options, but does not handle complex scripts.</li><li>QPrinter: only supports JPEG compression for storing images, but supports complex scripts.</li></ul></body></html>");
+	QString tooltip = _("<html><head/><body><ul><li>PoDoFo: offers more image compression options, but does not handle complex scripts.</li><li>QPrinter: only supports JPEG compression for storing images, but supports complex scripts.</li></ul></body></html>");
 	QRect r = ui.toolButtonBackendHint->rect();
 	QToolTip::showText(ui.toolButtonBackendHint->mapToGlobal(QPoint(0, 0.5 * r.height())), tooltip, ui.toolButtonBackendHint, r);
 }

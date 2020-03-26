@@ -45,6 +45,7 @@ public:
 	bool setup(const int* page = nullptr, const int* resolution = nullptr, const double* angle = nullptr);
 	int getCurrentPage() const;
 	int getNPages() const;
+	int getNSources() const { return m_sourceRenderers.size(); }
 	int getCurrentResolution() const;
 	double getCurrentAngle() const;
 	double getCurrentScale() const {

@@ -24,7 +24,9 @@
 #include <memory>
 
 #include "Config.hh"
+#include "OutputEditor.hh"
 #include "ui_PageRangeDialog.h"
+#include "ui_BatchModeDialog.h"
 
 class QActionGroup;
 class UI_MainWindow;
@@ -37,31 +39,34 @@ public:
 	Recognizer(const UI_MainWindow& _ui);
 
 public slots:
-	bool recognizeImage(const QImage& image, OutputDestination dest);
+	void recognizeImage(const QImage& image, OutputDestination dest);
 	void setRecognizeMode(const QString& mode);
 
 private:
 	class ProgressMonitor;
-	enum class PageSelection { Prompt, Current, Multiple };
+	enum class PageSelection { Prompt, Current, Multiple, Batch };
 	enum class PageArea { EntirePage, Autodetect };
 	struct PageData {
 		bool success;
-		QString filename;
-		int page;
-		double angle;
-		int resolution;
 		QList<QImage> ocrAreas;
+		OutputEditor::PageInfo pageInfo;
 	};
+	enum BatchExistingBehaviour { BatchOverwriteOutput, BatchSkipSource };
 
 	const UI_MainWindow& ui;
 	QMenu* m_menuPages = nullptr;
+	QAction* m_actionBatchMode = nullptr;
 	QDialog* m_pagesDialog;
 	Ui::PageRangeDialog m_pagesDialogUi;
+	QDialog* m_batchDialog;
+	Ui::BatchModeDialog m_batchDialogUi;
 	QString m_modeLabel;
 	QString m_langLabel;
 
 	QList<int> selectPages(bool& autodetectLayout);
+	std::unique_ptr<tesseract::TessBaseAPI> setupTesseract();
 	void recognize(const QList<int>& pages, bool autodetectLayout = false);
+	void showRecognitionErrorsDialog(const QStringList& errors);
 
 private slots:
 	void recognitionLanguageChanged(const Config::Lang& lang);
@@ -69,6 +74,7 @@ private slots:
 	void recognizeButtonClicked();
 	void recognizeCurrentPage();
 	void recognizeMultiplePages();
+	void recognizeBatch();
 	PageData setPage(int page, bool autodetectLayout);
 };
 
