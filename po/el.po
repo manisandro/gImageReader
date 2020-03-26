@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gImageReader 3.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-23 01:43+0100\n"
+"POT-Creation-Date: 2020-03-26 12:57+0100\n"
 "PO-Revision-Date: 2017-06-30 19:59+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -22,28 +22,28 @@ msgstr ""
 msgid "OCR application"
 msgstr ""
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:167
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:164
 msgid "Redetect Languages"
 msgstr "Επανανίχνευση"
 
-#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:170
+#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:167
 #, fuzzy
 msgid "Manage Languages"
 msgstr "Διαχείριση γλωσσών..."
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:173
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:170
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
-#: ../gtk/src/MainWindow.cc:500 ../qt/src/MainWindow.cc:496
-#: ../qt/src/Ui_MainWindow.hh:178
+#: ../gtk/src/MainWindow.cc:501 ../qt/src/MainWindow.cc:499
+#: ../qt/src/Ui_MainWindow.hh:175
 msgid "Help"
 msgstr "Βοήθεια"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:181
+#: ../qt/src/Ui_MainWindow.hh:178
 msgid "About"
 msgstr "Περί"
 
@@ -195,16 +195,15 @@ msgstr "Περιστροφή τρέχουσας σελίδας"
 msgid "Rotate all pages"
 msgstr "Περιστροφή όλων των σελίδων"
 
-#. Sources toolbar
-#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:192
+#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:190
 msgid "Recent"
 msgstr "Πρόσφατα"
 
-#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:193
+#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:191
 msgid "Paste"
 msgstr "Επικόλληση"
 
-#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:194
+#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:192
 msgid "Take Screenshot"
 msgstr "Λήψη στιγμιοτύπου"
 
@@ -248,11 +247,11 @@ msgstr "Επιλογή γλώσσας"
 msgid "Image controls"
 msgstr "Στοιχεία ελέγχου εικόνας"
 
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:157
+#: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:159
 msgid "Plain text"
 msgstr "Απλό κείμενο"
 
-#: ../gtk/data/MainWindow.ui.h:17 ../qt/src/MainWindow.cc:158
+#: ../gtk/data/MainWindow.ui.h:17 ../qt/src/MainWindow.cc:160
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
@@ -268,23 +267,23 @@ msgstr "<small>Αναγνώριση όλων</small>"
 msgid "Select language"
 msgstr "Επιλογή γλώσσας"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:205
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:204
 msgid "Add images"
 msgstr "Προσθήκη εικόνων"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:204
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:203
 msgid "Add Images"
 msgstr "Προσθήκη εικόνων"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:210
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:209
 msgid "Remove image from list"
 msgstr "Αφαίρεση εικόνας από τη λίστα"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:213
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:212
 msgid "Delete image"
 msgstr "Διαγραφή εικόνας"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:216
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:215
 msgid "Clear list"
 msgstr "Καθαρισμός λίστας"
 
@@ -390,7 +389,7 @@ msgid "Recognition area:"
 msgstr "Περιοχή αναγνώρισης:"
 
 #: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:381
-#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:379
+#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:136
 msgid "Entire page"
 msgstr "Ολόκληρη σελίδα"
 
@@ -412,23 +411,23 @@ msgstr ""
 msgid "Source page"
 msgstr "Προέλευση"
 
-#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:145
+#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:148
 msgid "Protected PDF"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:77
+#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:70
 msgid "Current Page"
 msgstr "Τρέχουσα σελίδα"
 
-#: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:80
+#: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:73
 msgid "Multiple Pages..."
 msgstr "Πολλαπλές σελίδες..."
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:616
+#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:651
 msgid "Add Word"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:616
+#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:651
 #, fuzzy
 msgid "Enter word:"
 msgstr "Παράβλεψη λέξης"
@@ -524,14 +523,14 @@ msgstr ""
 msgid "Previous (Shift+F3)"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:917
-#: ../qt/src/hocr/OutputEditorHOCR.cc:766
+#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:915
+#: ../qt/src/hocr/OutputEditorHOCR.cc:801
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Expand all"
 msgstr "Ανάπτυξη"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:920
-#: ../qt/src/hocr/OutputEditorHOCR.cc:767
+#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:918
+#: ../qt/src/hocr/OutputEditorHOCR.cc:802
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Collapse all"
 msgstr "Σύμπτυξη"
@@ -837,8 +836,8 @@ msgid "Add"
 msgstr "Προσθήκη"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:913 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:763 ../qt/src/SubstitutionsManager.cc:50
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:911 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/hocr/OutputEditorHOCR.cc:798 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
 msgstr "Αφαίρεση"
@@ -883,28 +882,28 @@ msgstr "Αποτυχία σάρωσης"
 msgid "No scanners were detected."
 msgstr "Δεν ανιχνεύτηκαν σαρωτές."
 
-#: ../gtk/src/Acquirer.cc:150 ../gtk/src/Acquirer.cc:168
-#: ../qt/src/Acquirer.cc:136 ../qt/src/Acquirer.cc:154
+#: ../gtk/src/Acquirer.cc:150 ../gtk/src/Acquirer.cc:167
+#: ../qt/src/Acquirer.cc:136 ../qt/src/Acquirer.cc:153
 msgid "Starting scan..."
 msgstr "Έναρξη σάρωσης..."
 
-#: ../gtk/src/Acquirer.cc:164 ../qt/src/Acquirer.cc:150
+#: ../gtk/src/Acquirer.cc:163 ../qt/src/Acquirer.cc:149
 msgid "Opening device..."
 msgstr "Άνοιγμα συσκευής..."
 
-#: ../gtk/src/Acquirer.cc:166 ../qt/src/Acquirer.cc:152
+#: ../gtk/src/Acquirer.cc:165 ../qt/src/Acquirer.cc:151
 msgid "Setting options..."
 msgstr "Ορισμός επιλογών..."
 
-#: ../gtk/src/Acquirer.cc:170 ../qt/src/Acquirer.cc:156
+#: ../gtk/src/Acquirer.cc:169 ../qt/src/Acquirer.cc:155
 msgid "Getting parameters..."
 msgstr "Λήψη παραμέτρων..."
 
-#: ../gtk/src/Acquirer.cc:172 ../qt/src/Acquirer.cc:158
+#: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:157
 msgid "Transferring data..."
 msgstr "Μεταφορά δεδομένων..."
 
-#: ../gtk/src/Acquirer.cc:179 ../qt/src/Acquirer.cc:165
+#: ../gtk/src/Acquirer.cc:178 ../qt/src/Acquirer.cc:164
 msgid "Canceling scan..."
 msgstr "Ακύρωση σάρωσης..."
 
@@ -920,7 +919,7 @@ msgstr "Κωδικός"
 msgid "Native name"
 msgstr "Τοπικό όνομα"
 
-#: ../gtk/src/Config.cc:109 ../qt/src/Config.cc:101
+#: ../gtk/src/Config.cc:109 ../qt/src/Config.cc:102
 msgid "Script"
 msgstr ""
 
@@ -942,11 +941,16 @@ msgstr "Δεν υπάρχει καμία μη αποθηκευμένη εργα�
 msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "Αποτυχία λήψης οπισθοανίχνευσης. Είναι εγκατεστημένο το gdb;"
 
-#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:191
+#: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:170
+#, fuzzy
+msgid "Page %1"
+msgstr "Ανάλυση του σφάλματος: %1"
+
+#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:191
 msgid "Failed to load image"
 msgstr "Αποτυχία φόρτωσης εικόνας"
 
-#: ../gtk/src/Displayer.cc:232 ../qt/src/Displayer.cc:191
+#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:191
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -990,7 +994,7 @@ msgid "Overwrite File?"
 msgstr "Να αντικατασταθεί το αρχείο;"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:616 ../gtk/src/hocr/OutputEditorHOCR.cc:266
-#: ../qt/src/hocr/OutputEditorHOCR.cc:235
+#: ../qt/src/hocr/HOCRDocument.cc:534 ../qt/src/hocr/OutputEditorHOCR.cc:270
 #, fuzzy
 msgid "Page"
 msgstr "Ανάλυση του σφάλματος: %1"
@@ -1001,7 +1005,7 @@ msgid "Text block"
 msgstr "Αρχεία κειμένου"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:620 ../gtk/src/hocr/OutputEditorHOCR.cc:272
-#: ../qt/src/hocr/HOCRDocument.cc:538 ../qt/src/hocr/OutputEditorHOCR.cc:237
+#: ../qt/src/hocr/HOCRDocument.cc:538 ../qt/src/hocr/OutputEditorHOCR.cc:272
 msgid "Paragraph"
 msgstr "Παράγραφος"
 
@@ -1015,10 +1019,10 @@ msgstr "Γραφικό"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:65 ../gtk/src/hocr/HOCRPdfExporter.cc:489
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1018 ../gtk/src/OutputEditorText.cc:280
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1016 ../gtk/src/OutputEditorText.cc:280
 #: ../qt/src/hocr/HOCROdtExporter.cc:51 ../qt/src/hocr/HOCRPdfExporter.cc:471
-#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:887
-#: ../qt/src/OutputEditorText.cc:238
+#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:922
+#: ../qt/src/OutputEditorText.cc:248
 msgid "output"
 msgstr "έξοδος"
 
@@ -1032,7 +1036,7 @@ msgid "Save ODT Output..."
 msgstr "Αποθήκευση εξόδου PDF..."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:618
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:617
 #: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCROdtExporter.cc:61
 #: ../qt/src/hocr/HOCRPdfExporter.cc:601 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
@@ -1120,29 +1124,29 @@ msgstr ""
 msgid "The operation was cancelled"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:606 ../qt/src/hocr/HOCRPdfExporter.cc:589
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:605 ../qt/src/hocr/HOCRPdfExporter.cc:589
 #, fuzzy
 msgid "Failed to render page %1"
 msgstr ""
 "\n"
 "[Αποτυχία αναγνώρισης της σελίδας %1]\n"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:613 ../qt/src/hocr/HOCRPdfExporter.cc:596
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:612 ../qt/src/hocr/HOCRPdfExporter.cc:596
 #, fuzzy
 msgid "Exporting to PDF..."
 msgstr "Εξαγωγή σε PDF"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:618 ../qt/src/hocr/HOCRPdfExporter.cc:601
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:617 ../qt/src/hocr/HOCRPdfExporter.cc:601
 msgid "The PDF export failed: %1."
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:672 ../qt/src/hocr/HOCRPdfExporter.cc:654
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:671 ../qt/src/hocr/HOCRPdfExporter.cc:654
 #, fuzzy
 msgid "The PDF library could not load the font '%1'."
 msgstr "Η βιβλιοθήκη PDF δεν υποστηρίζει την επιλεγμένη γραμματοσειρά."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:282
-#: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:239
+#: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:249
 msgid "Text Files"
 msgstr "Αρχεία κειμένου"
 
@@ -1156,27 +1160,27 @@ msgid "The text export failed: unable to write output file."
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
-#: ../qt/src/hocr/OutputEditorHOCR.cc:236
+#: ../qt/src/hocr/OutputEditorHOCR.cc:271
 msgid "Block"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
-#: ../qt/src/hocr/OutputEditorHOCR.cc:238
+#: ../qt/src/hocr/OutputEditorHOCR.cc:273
 msgid "Line"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
-#: ../qt/src/hocr/OutputEditorHOCR.cc:239
+#: ../qt/src/hocr/OutputEditorHOCR.cc:274
 msgid "Word"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
-#: ../qt/src/hocr/OutputEditorHOCR.cc:240
+#: ../qt/src/hocr/OutputEditorHOCR.cc:275
 msgid "Misspelled word"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:448
-#: ../qt/src/hocr/OutputEditorHOCR.cc:338
+#: ../qt/src/hocr/OutputEditorHOCR.cc:373
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -1185,232 +1189,232 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:449
-#: ../qt/src/hocr/OutputEditorHOCR.cc:339
+#: ../qt/src/hocr/OutputEditorHOCR.cc:374
 msgid "Recognition errors"
 msgstr "Σφάλματα αναγνώρισης"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:621
-#: ../qt/src/hocr/OutputEditorHOCR.cc:536
-#: ../qt/src/hocr/OutputEditorHOCR.cc:548
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:619
+#: ../qt/src/hocr/OutputEditorHOCR.cc:571
+#: ../qt/src/hocr/OutputEditorHOCR.cc:583
 #, fuzzy
 msgid "Multiple values"
 msgstr "Πολλαπλές προελεύσεις"
 
 #. Merging allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:805
-#: ../qt/src/hocr/OutputEditorHOCR.cc:677
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:803
+#: ../qt/src/hocr/OutputEditorHOCR.cc:712
 msgid "Merge"
 msgstr "Συγχώνευση"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:813
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:904
-#: ../qt/src/hocr/OutputEditorHOCR.cc:679
-#: ../qt/src/hocr/OutputEditorHOCR.cc:761
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:811
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:902
+#: ../qt/src/hocr/OutputEditorHOCR.cc:714
+#: ../qt/src/hocr/OutputEditorHOCR.cc:796
 msgid "Split from parent"
 msgstr ""
 
 #. Swapping allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:824
-#: ../qt/src/hocr/OutputEditorHOCR.cc:683
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:822
+#: ../qt/src/hocr/OutputEditorHOCR.cc:718
 msgid "Swap"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:848
-#: ../qt/src/hocr/OutputEditorHOCR.cc:729
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:846
+#: ../qt/src/hocr/OutputEditorHOCR.cc:764
 msgid "Add graphic region"
 msgstr "Προσθήκη περιοχής γραφικών"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:851
-#: ../qt/src/hocr/OutputEditorHOCR.cc:730
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:849
+#: ../qt/src/hocr/OutputEditorHOCR.cc:765
 msgid "Add text block"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:855
-#: ../qt/src/hocr/OutputEditorHOCR.cc:732
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:853
+#: ../qt/src/hocr/OutputEditorHOCR.cc:767
 #, fuzzy
 msgid "Add paragraph"
 msgstr "Παράγραφος"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:859
-#: ../qt/src/hocr/OutputEditorHOCR.cc:734
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:857
+#: ../qt/src/hocr/OutputEditorHOCR.cc:769
 #, fuzzy
 msgid "Add line"
 msgstr "Προσθήκη εικόνων"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:863
-#: ../qt/src/hocr/OutputEditorHOCR.cc:736
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:861
+#: ../qt/src/hocr/OutputEditorHOCR.cc:771
 msgid "Add word"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:879
-#: ../qt/src/hocr/OutputEditorHOCR.cc:746
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:877
+#: ../qt/src/hocr/OutputEditorHOCR.cc:781
 msgid "No suggestions"
 msgstr "Χωρίς προτάσεις"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:885
-#: ../qt/src/hocr/OutputEditorHOCR.cc:750
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:883
+#: ../qt/src/hocr/OutputEditorHOCR.cc:785
 msgid "Add to dictionary"
 msgstr "Προσθήκη στο λεξικό"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:891
-#: ../qt/src/hocr/OutputEditorHOCR.cc:752
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:889
+#: ../qt/src/hocr/OutputEditorHOCR.cc:787
 msgid "Ignore word"
 msgstr "Παράβλεψη λέξης"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:954
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1020
-#: ../qt/src/hocr/OutputEditorHOCR.cc:832
-#: ../qt/src/hocr/OutputEditorHOCR.cc:889
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:952
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1018
+#: ../qt/src/hocr/OutputEditorHOCR.cc:867
+#: ../qt/src/hocr/OutputEditorHOCR.cc:924
 msgid "hOCR HTML Files"
 msgstr "Αρχεία hOCR HTML"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:955
-#: ../qt/src/hocr/OutputEditorHOCR.cc:832
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:953
+#: ../qt/src/hocr/OutputEditorHOCR.cc:867
 msgid "Open hOCR File"
 msgstr "Άνοιγμα αρχείου hOCR"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1002 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:870 ../qt/src/SourceManager.cc:127
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
+#: ../qt/src/hocr/OutputEditorHOCR.cc:905 ../qt/src/SourceManager.cc:130
 #, fuzzy
 msgid ""
 "The following files could not be opened:\n"
 "%1"
 msgstr "Τα παρακάτω αρχεία δεν μπόρεσαν να ανοιχθούν:%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1005
-#: ../qt/src/hocr/OutputEditorHOCR.cc:873
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
+#: ../qt/src/hocr/OutputEditorHOCR.cc:908
 #, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
 msgstr "Το αρχείο δεν φαίνεται να περιέχει έγκυρο hOCR HTML: %1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1008 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:876 ../qt/src/SourceManager.cc:127
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
+#: ../qt/src/hocr/OutputEditorHOCR.cc:911 ../qt/src/SourceManager.cc:130
 msgid "Unable to open files"
 msgstr "Αδυναμία ανοίγματος αρχείων"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1021
-#: ../qt/src/hocr/OutputEditorHOCR.cc:889
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1019
+#: ../qt/src/hocr/OutputEditorHOCR.cc:924
 msgid "Save hOCR Output..."
 msgstr "Αποθήκευση εξόδου hOCR..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1028 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:896 ../qt/src/OutputEditorText.cc:246
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
+#: ../qt/src/hocr/OutputEditorHOCR.cc:931 ../qt/src/OutputEditorText.cc:256
 msgid "Failed to save output"
 msgstr "Αποτυχία αποθήκευσης εξόδου"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1028 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:896 ../qt/src/OutputEditorText.cc:246
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
+#: ../qt/src/hocr/OutputEditorHOCR.cc:931 ../qt/src/OutputEditorText.cc:256
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Ελέγξτε ότι έχετε δικαίωμα εγγραφής στον επιλεγμένο φάκελο."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1096 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:957 ../qt/src/OutputEditorText.cc:259
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
+#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:269
 msgid "Output not saved"
 msgstr "Η έξοδος δεν αποθηκεύτηκε"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1096 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:957 ../qt/src/OutputEditorText.cc:259
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
+#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:269
 msgid "Save output before proceeding?"
 msgstr "Αποθήκευση της εξόδου πριν την συνέχεια;"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1217 ../gtk/src/OutputEditorText.cc:192
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1054 ../qt/src/OutputEditorText.cc:152
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:192
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1089 ../qt/src/OutputEditorText.cc:162
 msgid "Replacing..."
 msgstr "Αντικατάσταση..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1242 ../gtk/src/OutputEditorText.cc:200
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1077 ../qt/src/OutputEditorText.cc:160
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1240 ../gtk/src/OutputEditorText.cc:200
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1112 ../qt/src/OutputEditorText.cc:170
 msgid "Applying substitutions..."
 msgstr "Εφαρμόζονται υποκαταστάσεις..."
 
-#: ../gtk/src/MainWindow.cc:131 ../qt/src/MainWindow.cc:319
+#: ../gtk/src/MainWindow.cc:131 ../qt/src/MainWindow.cc:322
 msgid "Using tesseract"
 msgstr "Χρήση του tesseract"
 
-#: ../gtk/src/MainWindow.cc:178 ../qt/src/MainWindow.cc:198
+#: ../gtk/src/MainWindow.cc:178 ../qt/src/MainWindow.cc:201
 msgid "Select an image to begin..."
 msgstr "Επιλογή εικόνας για έναρξη..."
 
-#: ../gtk/src/MainWindow.cc:309 ../qt/src/MainWindow.cc:302
+#: ../gtk/src/MainWindow.cc:310 ../qt/src/MainWindow.cc:305
 msgid "Multiple sources"
 msgstr "Πολλαπλές προελεύσεις"
 
-#: ../gtk/src/MainWindow.cc:311 ../qt/src/MainWindow.cc:304
+#: ../gtk/src/MainWindow.cc:312 ../qt/src/MainWindow.cc:307
 msgid "Ready"
 msgstr "Έτοιμος"
 
-#: ../gtk/src/MainWindow.cc:460 ../qt/src/MainWindow.cc:438
+#: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:441
 msgid "New version"
 msgstr "Νέα έκδοση"
 
-#: ../gtk/src/MainWindow.cc:460 ../qt/src/MainWindow.cc:438
+#: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:441
 msgid "gImageReader %1 is available"
 msgstr "Ο gImageReader %1 είναι διαθέσιμος"
 
-#: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:439
+#: ../gtk/src/MainWindow.cc:462 ../qt/src/MainWindow.cc:442
 msgid "Download"
 msgstr "Μεταφόρτωση"
 
-#: ../gtk/src/MainWindow.cc:462 ../qt/src/MainWindow.cc:440
+#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:443
 msgid "Changelog"
 msgstr "Αρχείο αλλαγών"
 
-#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:441
+#: ../gtk/src/MainWindow.cc:464 ../qt/src/MainWindow.cc:444
 msgid "Don't notify again"
 msgstr "Να μην ξαναενημερωθώ"
 
-#: ../gtk/src/MainWindow.cc:484 ../qt/src/MainWindow.cc:489
+#: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:492
 msgid "Don't show again"
 msgstr "Να μην ξαναεμφανιστεί"
 
-#: ../gtk/src/MainWindow.cc:485 ../gtk/src/MainWindow.cc:498
-#: ../qt/src/MainWindow.cc:490
+#: ../gtk/src/MainWindow.cc:486 ../gtk/src/MainWindow.cc:499
+#: ../qt/src/MainWindow.cc:493
 msgid "Install"
 msgstr "Εγκατάσταση"
 
-#: ../gtk/src/MainWindow.cc:505 ../qt/src/MainWindow.cc:502
+#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:505
 msgid "Spelling dictionary missing"
 msgstr "Λείπει το ορθογραφικό λεξικό"
 
-#: ../gtk/src/MainWindow.cc:505 ../qt/src/MainWindow.cc:502
+#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:505
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Το ορθογραφικό λεξικό για το %1 δεν είναι εγκατεστημένο"
 
-#: ../gtk/src/MainWindow.cc:512 ../gtk/src/MainWindow.cc:541
-#: ../qt/src/MainWindow.cc:508
+#: ../gtk/src/MainWindow.cc:513 ../gtk/src/MainWindow.cc:542
+#: ../qt/src/MainWindow.cc:511
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Εγκατάσταση του ορθογραφικού λεξικού για το '%1'"
 
-#: ../gtk/src/MainWindow.cc:533 ../gtk/src/MainWindow.cc:554
-#: ../gtk/src/MainWindow.cc:562 ../gtk/src/MainWindow.cc:610
-#: ../gtk/src/MainWindow.cc:615 ../gtk/src/TessdataManager.cc:60
+#: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:555
+#: ../gtk/src/MainWindow.cc:563 ../gtk/src/MainWindow.cc:611
+#: ../gtk/src/MainWindow.cc:616 ../gtk/src/TessdataManager.cc:60
 #: ../gtk/src/TessdataManager.cc:70 ../gtk/src/TessdataManager.cc:339
-#: ../qt/src/MainWindow.cc:527 ../qt/src/MainWindow.cc:540
-#: ../qt/src/MainWindow.cc:549 ../qt/src/MainWindow.cc:593
-#: ../qt/src/MainWindow.cc:598 ../qt/src/TessdataManager.cc:70
+#: ../qt/src/MainWindow.cc:530 ../qt/src/MainWindow.cc:543
+#: ../qt/src/MainWindow.cc:552 ../qt/src/MainWindow.cc:596
+#: ../qt/src/MainWindow.cc:601 ../qt/src/TessdataManager.cc:70
 #: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:287
 msgid "Error"
 msgstr "Σφάλμα"
 
-#: ../gtk/src/MainWindow.cc:533 ../qt/src/MainWindow.cc:527
+#: ../gtk/src/MainWindow.cc:534 ../qt/src/MainWindow.cc:530
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Αποτυχία εγκατάστασης του ορθογραφικού λεξικού: %1"
 
-#: ../gtk/src/MainWindow.cc:554 ../qt/src/MainWindow.cc:540
+#: ../gtk/src/MainWindow.cc:555 ../qt/src/MainWindow.cc:543
 msgid "Failed to create directory for spelling dictionaries."
 msgstr "Αποτυχία δημιουργίας καταλόγου για ορθογραφικά λεξικά."
 
-#: ../gtk/src/MainWindow.cc:562 ../qt/src/MainWindow.cc:549
+#: ../gtk/src/MainWindow.cc:563 ../qt/src/MainWindow.cc:552
 msgid "Could not read %1: %2."
 msgstr "Αδυναμία ανάγνωσης του %1: %2."
 
-#: ../gtk/src/MainWindow.cc:589 ../qt/src/MainWindow.cc:573
+#: ../gtk/src/MainWindow.cc:590 ../qt/src/MainWindow.cc:576
 msgid "Downloading '%1'..."
 msgstr "Μεταφορτώνεται το '%1'..."
 
-#: ../gtk/src/MainWindow.cc:610 ../qt/src/MainWindow.cc:593
+#: ../gtk/src/MainWindow.cc:611 ../qt/src/MainWindow.cc:596
 msgid ""
 "The following dictionaries could not be downloaded:\n"
 "%1\n"
@@ -1420,22 +1424,22 @@ msgid ""
 "to user paths in the settings dialog."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:613 ../qt/src/MainWindow.cc:596
+#: ../gtk/src/MainWindow.cc:614 ../qt/src/MainWindow.cc:599
 msgid "Dictionaries installed"
 msgstr "Εγκατεστημένα λεξικά"
 
-#: ../gtk/src/MainWindow.cc:613
+#: ../gtk/src/MainWindow.cc:614
 #, fuzzy
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
 msgstr "Τα παρακάτω λεξικά εγκαταστάθηκαν: %1"
 
-#: ../gtk/src/MainWindow.cc:615 ../qt/src/MainWindow.cc:598
+#: ../gtk/src/MainWindow.cc:616 ../qt/src/MainWindow.cc:601
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Δεν βρέθηκαν ορθογραφικά λεξικά για το '%1'."
 
-#: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:137
+#: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:147
 msgid "Stripping line breaks..."
 msgstr "Αφαίρεση αλλαγών γραμμών..."
 
@@ -1443,18 +1447,19 @@ msgstr "Αφαίρεση αλλαγών γραμμών..."
 msgid "Check spelling"
 msgstr "Ορθογραφικός έλεγχος"
 
-#: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:196
+#: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:206
 #, fuzzy
 msgid "File: %1"
 msgstr "Αρχεία"
 
-#: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:199
+#: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:40
+#: ../qt/src/OutputEditorText.cc:209
 #, fuzzy
 msgid "Page: %1"
 msgstr "Ανάλυση του σφάλματος: %1"
 
 #: ../gtk/src/OutputEditorText.cc:255 ../gtk/src/Recognizer.cc:478
-#: ../qt/src/Recognizer.cc:473
+#: ../qt/src/Recognizer.cc:238
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -1462,86 +1467,87 @@ msgstr ""
 "\n"
 "[Αποτυχία αναγνώρισης της σελίδας %1]\n"
 
-#: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:239
+#: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:249
 msgid "Save Output..."
 msgstr "Αποθήκευση εξόδου..."
 
-#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:173
+#: ../gtk/src/Recognizer.cc:179 ../qt/src/RecognitionMenu.cc:75
 msgid "No languages available"
 msgstr "Δεν υπάρχουν διαθέσιμες γλώσσες"
 
-#: ../gtk/src/Recognizer.cc:179 ../qt/src/Recognizer.cc:173
+#: ../gtk/src/Recognizer.cc:179 ../qt/src/RecognitionMenu.cc:75
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
 "Δεν υπάρχουν διαθέσιμες γλώσσες tesseract προς χρήση. Η αναγνώριση δεν θα "
 "δουλέψει."
 
-#: ../gtk/src/Recognizer.cc:233 ../qt/src/Recognizer.cc:233
+#: ../gtk/src/Recognizer.cc:233 ../qt/src/RecognitionMenu.cc:133
 msgid "Multilingual"
 msgstr "Πολυγλωσσικός"
 
-#: ../gtk/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:281
+#: ../gtk/src/Recognizer.cc:285 ../qt/src/RecognitionMenu.cc:181
 msgid "Automatic page segmentation"
 msgstr "Αυτόματος τεμαχισμός σελίδας"
 
-#: ../gtk/src/Recognizer.cc:286 ../qt/src/Recognizer.cc:282
+#: ../gtk/src/Recognizer.cc:286 ../qt/src/RecognitionMenu.cc:182
 msgid "Page segmentation with orientation and script detection"
 msgstr "Τεμαχισμός σελίδας με προσανατολισμό και αναγνώριση γραφής"
 
-#: ../gtk/src/Recognizer.cc:287 ../qt/src/Recognizer.cc:283
+#: ../gtk/src/Recognizer.cc:287 ../qt/src/RecognitionMenu.cc:183
 msgid "Assume single column of text"
 msgstr "Θεωρείται μονή στήλη κειμένου"
 
-#: ../gtk/src/Recognizer.cc:288 ../qt/src/Recognizer.cc:284
+#: ../gtk/src/Recognizer.cc:288 ../qt/src/RecognitionMenu.cc:184
 msgid "Assume single block of vertically aligned text"
 msgstr "Θεωρείται μονό μπλοκ κάθετα στοιχισμένου κειμένου"
 
-#: ../gtk/src/Recognizer.cc:289 ../qt/src/Recognizer.cc:285
+#: ../gtk/src/Recognizer.cc:289 ../qt/src/RecognitionMenu.cc:185
 msgid "Assume a single uniform block of text"
 msgstr "Θεωρείται μονό ομοιόμορφο μπλοκ κειμένου"
 
-#: ../gtk/src/Recognizer.cc:290 ../qt/src/Recognizer.cc:286
+#: ../gtk/src/Recognizer.cc:290 ../qt/src/RecognitionMenu.cc:186
 msgid "Assume a line of text"
 msgstr "Θεωρείται γραμμή κειμένου"
 
-#: ../gtk/src/Recognizer.cc:291 ../qt/src/Recognizer.cc:287
+#: ../gtk/src/Recognizer.cc:291 ../qt/src/RecognitionMenu.cc:187
 msgid "Assume a single word"
 msgstr "Θεωρείται απλή λέξη"
 
-#: ../gtk/src/Recognizer.cc:292 ../qt/src/Recognizer.cc:288
+#: ../gtk/src/Recognizer.cc:292 ../qt/src/RecognitionMenu.cc:188
 msgid "Assume a single word in a circle"
 msgstr "Θεωρείται απλή λέξη σε κύκλο"
 
-#: ../gtk/src/Recognizer.cc:293 ../qt/src/Recognizer.cc:289
+#: ../gtk/src/Recognizer.cc:293 ../qt/src/RecognitionMenu.cc:189
 msgid "Sparse text in no particular order"
 msgstr "Αραιό κείμενο χωρίς καμιά συγκεκριμένη τάξη"
 
-#: ../gtk/src/Recognizer.cc:294 ../qt/src/Recognizer.cc:290
+#: ../gtk/src/Recognizer.cc:294 ../qt/src/RecognitionMenu.cc:190
 msgid "Sparse text with orientation and script detection"
 msgstr "Αραιό κείμενο με προσανατολισμό και αναγνώριση γραφής"
 
-#: ../gtk/src/Recognizer.cc:309 ../qt/src/Recognizer.cc:301
+#: ../gtk/src/Recognizer.cc:309 ../qt/src/RecognitionMenu.cc:201
 msgid "Page segmentation mode"
 msgstr "Κατάσταση τεμαχισμού σελίδας"
 
-#: ../gtk/src/Recognizer.cc:313 ../qt/src/Recognizer.cc:304
+#: ../gtk/src/Recognizer.cc:313 ../qt/src/RecognitionMenu.cc:204
 msgid "Character whitelist / blacklist..."
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:319 ../qt/src/Recognizer.cc:309
+#: ../gtk/src/Recognizer.cc:319 ../qt/src/RecognitionMenu.cc:209
 msgid "Manage languages..."
 msgstr "Διαχείριση γλωσσών..."
 
-#: ../gtk/src/Recognizer.cc:381 ../qt/src/Recognizer.cc:379
+#: ../gtk/src/Recognizer.cc:381 ../qt/src/Recognizer.cc:136
 msgid "Current selection"
 msgstr "Τρέχουσα επιλογή"
 
-#: ../gtk/src/Recognizer.cc:472 ../qt/src/Recognizer.cc:466
+#: ../gtk/src/Recognizer.cc:472 ../qt/src/Recognizer.cc:231
+#: ../qt/src/Recognizer.cc:343
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Αναγνώριση της σελίδας %1 (%2 από %3)"
 
-#: ../gtk/src/Recognizer.cc:477 ../qt/src/Recognizer.cc:472
+#: ../gtk/src/Recognizer.cc:477
 msgid ""
 "\n"
 "- Page %1: failed to render page"
@@ -1550,155 +1556,156 @@ msgstr ""
 "- Σελίδα %1: αποτυχία απόδοσης της σελίδας"
 
 #: ../gtk/src/Recognizer.cc:508 ../gtk/src/Recognizer.cc:539
-#: ../gtk/src/Recognizer.cc:552 ../qt/src/Recognizer.cc:502
-#: ../qt/src/Recognizer.cc:533 ../qt/src/Recognizer.cc:546
+#: ../gtk/src/Recognizer.cc:552 ../qt/src/Recognizer.cc:264
+#: ../qt/src/Recognizer.cc:292 ../qt/src/Recognizer.cc:305
+#: ../qt/src/Recognizer.cc:394
 msgid "Recognizing..."
 msgstr "Γίνεται αναγνώριση..."
 
 #: ../gtk/src/Recognizer.cc:513 ../gtk/src/Recognizer.cc:522
-#: ../qt/src/Recognizer.cc:507 ../qt/src/Recognizer.cc:516
+#: ../qt/src/Recognizer.cc:207 ../qt/src/Recognizer.cc:420
 msgid "Recognition errors occurred"
 msgstr "Συνέβησαν σφάλματα αναγνώρισης"
 
-#: ../gtk/src/Recognizer.cc:513 ../qt/src/Recognizer.cc:507
+#: ../gtk/src/Recognizer.cc:513
 msgid "The following errors occurred:%1"
 msgstr "Τα παρακάτω σφάλματα συνέβησαν:%1"
 
-#: ../gtk/src/Recognizer.cc:522 ../qt/src/Recognizer.cc:516
+#: ../gtk/src/Recognizer.cc:522 ../qt/src/Recognizer.cc:207
 msgid "Failed to initialize tesseract"
 msgstr "Αποτυχία προετοιμασίας του tesseract"
 
-#: ../gtk/src/scanner/ScannerSane.cc:84 ../gtk/src/scanner/ScannerTwain.cc:288
+#: ../gtk/src/scanner/ScannerSane.cc:86 ../gtk/src/scanner/ScannerTwain.cc:287
 #: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
 msgid "Scan canceled"
 msgstr "Ακυρώθηκε η σάρωση"
 
-#: ../gtk/src/scanner/ScannerSane.cc:159 ../gtk/src/scanner/ScannerTwain.cc:186
+#: ../gtk/src/scanner/ScannerSane.cc:161 ../gtk/src/scanner/ScannerTwain.cc:186
 #: ../qt/src/scanner/ScannerSane.cc:159 ../qt/src/scanner/ScannerTwain.cc:178
 msgid "No scanner specified"
 msgstr "Δεν ορίστηκε σαρωτής"
 
-#: ../gtk/src/scanner/ScannerSane.cc:168 ../gtk/src/scanner/ScannerTwain.cc:195
+#: ../gtk/src/scanner/ScannerSane.cc:170 ../gtk/src/scanner/ScannerTwain.cc:195
 #: ../qt/src/scanner/ScannerSane.cc:168 ../qt/src/scanner/ScannerTwain.cc:187
 msgid "Unable to connect to scanner"
 msgstr "Αδυναμία σύνδεσης με σαρωτή"
 
-#: ../gtk/src/scanner/ScannerSane.cc:403 ../gtk/src/scanner/ScannerTwain.cc:266
-#: ../gtk/src/scanner/ScannerTwain.cc:292 ../qt/src/scanner/ScannerSane.cc:403
+#: ../gtk/src/scanner/ScannerSane.cc:405 ../gtk/src/scanner/ScannerTwain.cc:266
+#: ../gtk/src/scanner/ScannerTwain.cc:291 ../qt/src/scanner/ScannerSane.cc:403
 #: ../qt/src/scanner/ScannerTwain.cc:258 ../qt/src/scanner/ScannerTwain.cc:290
 msgid "Unable to start scan"
 msgstr "Αδύνατη η έναρξη σάρωσης"
 
-#: ../gtk/src/scanner/ScannerSane.cc:411 ../gtk/src/scanner/ScannerSane.cc:461
-#: ../gtk/src/scanner/ScannerTwain.cc:318 ../qt/src/scanner/ScannerSane.cc:411
+#: ../gtk/src/scanner/ScannerSane.cc:413 ../gtk/src/scanner/ScannerSane.cc:463
+#: ../gtk/src/scanner/ScannerTwain.cc:317 ../qt/src/scanner/ScannerSane.cc:411
 #: ../qt/src/scanner/ScannerSane.cc:461 ../qt/src/scanner/ScannerTwain.cc:316
 msgid "Error communicating with scanner"
 msgstr "Σφάλμα επικοινωνίας με τον σαρωτή"
 
-#: ../gtk/src/scanner/ScannerSane.cc:520 ../qt/src/scanner/ScannerSane.cc:517
+#: ../gtk/src/scanner/ScannerSane.cc:523 ../qt/src/scanner/ScannerSane.cc:518
 msgid "Failed to save image"
 msgstr "Αποτυχία αποθήκευσης της εικόνας"
 
-#: ../gtk/src/scanner/ScannerSane.cc:800 ../qt/src/scanner/ScannerSane.cc:797
+#: ../gtk/src/scanner/ScannerSane.cc:803 ../qt/src/scanner/ScannerSane.cc:798
 #, fuzzy
 msgid "Operation is cancelled."
 msgstr "Ακυρώθηκε η σάρωση"
 
-#: ../gtk/src/scanner/ScannerSane.cc:802 ../qt/src/scanner/ScannerSane.cc:799
+#: ../gtk/src/scanner/ScannerSane.cc:805 ../qt/src/scanner/ScannerSane.cc:800
 msgid "Device is busy."
 msgstr ""
 
-#: ../gtk/src/scanner/ScannerSane.cc:804 ../qt/src/scanner/ScannerSane.cc:801
+#: ../gtk/src/scanner/ScannerSane.cc:807 ../qt/src/scanner/ScannerSane.cc:802
 msgid "Cover is opened."
 msgstr ""
 
-#: ../gtk/src/scanner/ScannerSane.cc:806 ../qt/src/scanner/ScannerSane.cc:803
+#: ../gtk/src/scanner/ScannerSane.cc:809 ../qt/src/scanner/ScannerSane.cc:804
 msgid "Document feeder jammed."
 msgstr ""
 
-#: ../gtk/src/scanner/ScannerSane.cc:808 ../qt/src/scanner/ScannerSane.cc:805
+#: ../gtk/src/scanner/ScannerSane.cc:811 ../qt/src/scanner/ScannerSane.cc:806
 msgid "Document feeder out of documents."
 msgstr ""
 
-#: ../gtk/src/scanner/ScannerSane.cc:810 ../qt/src/scanner/ScannerSane.cc:807
+#: ../gtk/src/scanner/ScannerSane.cc:813 ../qt/src/scanner/ScannerSane.cc:808
 #, fuzzy
 msgid "Access to scanner is denied."
 msgstr "Δεν ορίστηκε σαρωτής"
 
-#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:142
+#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:145
 msgid "Enter password for file '%1':"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:172
 #, fuzzy
 msgid "PDF with text"
 msgstr "Απλό κείμενο"
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:172
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:233
+#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:236
 msgid "Images and PDFs"
 msgstr "Εικόνες και PDF"
 
-#: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:234
+#: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:237
 msgid "Select Files"
 msgstr "Επιλογή αρχείων"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:245
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:273
 msgid "Clipboard Error"
 msgstr "Σφάλμα προχείρου"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:245
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:273
 msgid "Failed to read the clipboard."
 msgstr "Αποτυχία ανάγνωσης του προχείρου"
 
-#: ../gtk/src/SourceManager.cc:232 ../qt/src/SourceManager.cc:249
-#: ../qt/src/SourceManager.cc:255
+#: ../gtk/src/SourceManager.cc:232 ../qt/src/SourceManager.cc:277
+#: ../qt/src/SourceManager.cc:283
 msgid "Pasted %1"
 msgstr "Επικολλήθηκε το %1"
 
-#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:262
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:290
 msgid "Screenshot Error"
 msgstr "Σφάλμα στιγμιοτύπου"
 
-#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:262
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:290
 msgid "Failed to take screenshot."
 msgstr "Αποτυχία λήψης στιγμιοτύπου"
 
-#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:266
+#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:294
 msgid "Screenshot %1"
 msgstr "Στιγμιότυπο %1"
 
-#: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:271
+#: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:299
 msgid "Saving image..."
 msgstr "Αποθηκεύεται η εικόνα..."
 
-#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:284
+#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:312
 msgid "Cannot Write File"
 msgstr "Αδυναμία εγγραφής αρχείου"
 
-#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:284
+#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:312
 msgid "Could not write to %1."
 msgstr "Αδυναμία εγγραφής στο %1."
 
-#: ../gtk/src/SourceManager.cc:287 ../qt/src/SourceManager.cc:306
+#: ../gtk/src/SourceManager.cc:287 ../qt/src/SourceManager.cc:334
 msgid "Delete File?"
 msgstr "Να διαγραφεί το αρχείο;"
 
-#: ../gtk/src/SourceManager.cc:287 ../qt/src/SourceManager.cc:306
+#: ../gtk/src/SourceManager.cc:287 ../qt/src/SourceManager.cc:334
 msgid "The following files will be deleted:%1"
 msgstr "Τα παρακάτω αρχεία θα διαγραφούν:%1"
 
-#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:357
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:385
 msgid "Missing File"
 msgstr "Λείπει αρχείο"
 
-#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:357
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:385
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
@@ -1862,6 +1869,31 @@ msgstr "Μνείες"
 msgid "License"
 msgstr "Άδεια"
 
+#: ../qt/data/BatchModeDialog.ui.h:1
+#, fuzzy
+msgid "Batch Mode"
+msgstr "Ταίριασμα πεζών-κεφαλαίων"
+
+#: ../qt/data/BatchModeDialog.ui.h:2
+#, fuzzy
+msgid "Prepend page numbers to output text"
+msgstr "Προσάρτηση στο υφιστάμενο κείμενο"
+
+#: ../qt/data/BatchModeDialog.ui.h:3
+msgid "Existing output:"
+msgstr ""
+
+#: ../qt/data/BatchModeDialog.ui.h:4
+msgid ""
+"In batch mode, each input source is processed separately and the output "
+"saved side-by-side to the input file."
+msgstr ""
+
+#: ../qt/data/BatchModeDialog.ui.h:5
+#, fuzzy
+msgid "Autodetect page layout"
+msgstr "Αυτόματη ανίχνευση διάταξης"
+
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
 msgstr "Κωδικοποίηση συστήματος"
@@ -1979,15 +2011,18 @@ msgstr ""
 msgid "Landscape"
 msgstr ""
 
-#: ../qt/src/Displayer.cc:168
-#, fuzzy
-msgid "Page %1"
-msgstr "Ανάλυση του σφάλματος: %1"
-
 #: ../qt/src/hocr/HOCRPdfExporter.cc:139
 #, fuzzy
 msgid "Failed to write to file"
 msgstr "Αποτυχία ανοίγματος του αρχείου"
+
+#: ../qt/src/hocr/HOCRPdfExporter.cc:830
+msgid ""
+"<html><head/><body><ul><li>PoDoFo: offers more image compression options, "
+"but does not handle complex scripts.</li><li>QPrinter: only supports JPEG "
+"compression for storing images, but supports complex scripts.</li></ul></"
+"body></html>"
+msgstr ""
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -1999,12 +2034,52 @@ msgstr "Αποθήκευση κειμένου ως hOCR"
 msgid "Find and Replace"
 msgstr "Εύρεση και αντικατάσταση"
 
-#: ../qt/src/MainWindow.cc:596
+#: ../qt/src/MainWindow.cc:599
 #, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
 msgstr "Τα παρακάτω αρχεία λεξικών εγκαταστάθηκαν:%1"
+
+#: ../qt/src/Recognizer.cc:76
+msgid "Batch mode..."
+msgstr ""
+
+#: ../qt/src/Recognizer.cc:89
+msgid "Overwrite existing output"
+msgstr ""
+
+#: ../qt/src/Recognizer.cc:90
+msgid "Skip processing source"
+msgstr ""
+
+#: ../qt/src/Recognizer.cc:237
+#, fuzzy
+msgid "- Page %1: failed to render page"
+msgstr ""
+"\n"
+"- Σελίδα %1: αποτυχία απόδοσης της σελίδας"
+
+#: ../qt/src/Recognizer.cc:349
+#, fuzzy
+msgid "- %1:%2: failed to render page"
+msgstr ""
+"\n"
+"- Σελίδα %1: αποτυχία απόδοσης της σελίδας"
+
+#: ../qt/src/Recognizer.cc:362
+msgid "- %1: output already exists, skipping"
+msgstr ""
+
+#: ../qt/src/Recognizer.cc:366
+#, fuzzy
+msgid "- %1: failed to create output file"
+msgstr "Αποτυχία αποθήκευσης εξόδου"
+
+#: ../qt/src/Recognizer.cc:422
+#, fuzzy
+msgid "The following errors occurred:"
+msgstr "Τα παρακάτω σφάλματα συνέβησαν:%1"
 
 #: ../qt/src/TessdataManager.cc:280
 #, fuzzy
@@ -2029,15 +2104,21 @@ msgstr "Έξοδος:"
 msgid "OCR mode:"
 msgstr "Κατάσταση OCR:"
 
-#: ../qt/src/Ui_MainWindow.hh:209
+#. Sources toolbar
+#: ../qt/src/Ui_MainWindow.hh:189
+#, fuzzy
+msgid "Add folder"
+msgstr "Προσθήκη εικόνων"
+
+#: ../qt/src/Ui_MainWindow.hh:208
 msgid "Remove Image"
 msgstr "Αφαίρεση εικόνας"
 
-#: ../qt/src/Ui_MainWindow.hh:212
+#: ../qt/src/Ui_MainWindow.hh:211
 msgid "Delete Image"
 msgstr "Διαγραφή εικόνας"
 
-#: ../qt/src/Ui_MainWindow.hh:215
+#: ../qt/src/Ui_MainWindow.hh:214
 msgid "Clear List"
 msgstr "Καθαρισμός λίστας"
 
