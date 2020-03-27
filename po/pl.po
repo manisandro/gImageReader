@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-26 12:57+0100\n"
-"PO-Revision-Date: 2019-08-04 03:24+0000\n"
+"POT-Creation-Date: 2020-03-23 01:43+0100\n"
+"PO-Revision-Date: 2020-03-28 16:09+0000\n"
 "Last-Translator: WaldiS <admin@sto.ugu.pl>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pl/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.8-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -236,9 +236,8 @@ msgid "Best fit"
 msgstr "Dopasuj rozmiar"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
-#, fuzzy
 msgid "Rotate page"
-msgstr "Obróć wszystkie strony"
+msgstr "Obróć stronę"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
 msgid "Select rotation mode"
@@ -441,12 +440,11 @@ msgstr "Wpisz słowo:"
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Dodaj nowy wynik po ostatniej stronie"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "Obróć bieżącą stronę"
+msgstr "Wstaw nowy wynik przed bieżącą stroną"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
@@ -465,14 +463,13 @@ msgstr "Eksportuj jako typ: ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
-#, fuzzy
 msgid "Append document after last page"
-msgstr "Dołącz do bieżącego tekstu"
+msgstr "Dołącz dokument po ostatniej stronie"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Insert document before current page"
-msgstr ""
+msgstr "Wstaw dokument przed bieżącą stroną"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
@@ -937,14 +934,12 @@ msgid "There was no unsaved work."
 msgstr "Nie było dokumentu do zapisania."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
-#, fuzzy
 msgid "Failed to obtain backtrace. Is GDB installed?"
-msgstr "Nie udało się uzyskać logu błędu. Czy jest zainstalowany gdb?"
+msgstr "Nie udało się uzyskać śledzenia wstecznego. Czy zainstalowano GDB?"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:170
-#, fuzzy
 msgid "Page %1"
-msgstr "Strona: %1"
+msgstr "Strona %1"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:191
 msgid "Failed to load image"
@@ -1254,21 +1249,23 @@ msgstr "Pliki hOCR HTML"
 msgid "Open hOCR File"
 msgstr "Otwórz plik hOCR"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:905 ../qt/src/SourceManager.cc:130
-#, fuzzy
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1002 ../gtk/src/SourceManager.cc:125
+#: ../qt/src/hocr/OutputEditorHOCR.cc:870 ../qt/src/SourceManager.cc:127
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "Nie można otworzyć plików: %1"
+msgstr ""
+"Nie można otworzyć następujących plików:\n"
+"%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
-#: ../qt/src/hocr/OutputEditorHOCR.cc:908
-#, fuzzy
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1005
+#: ../qt/src/hocr/OutputEditorHOCR.cc:873
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "Plik nie wygląda na prawidłowy hOCR HTML: %1"
+msgstr ""
+"Następujące pliki są nieprawidłowe hOCR HTML:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:911 ../qt/src/SourceManager.cc:130
@@ -1618,20 +1615,19 @@ msgstr "Odmowa dostępu do skanera."
 msgid "Enter password for file '%1':"
 msgstr "Podaj hasło dla pliku '%1':"
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:172
-#, fuzzy
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
 msgid "PDF with text"
-msgstr "Pliki PDF z tekstem"
+msgstr "PDF z tekstem"
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:172
-#, fuzzy
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
-"Te pliki PDF zawierają już tekst:\n"
-"%1"
+"Plik PDF zawiera już tekst:\n"
+"%1\n"
+"Otworzyć go mimo na wszystko?"
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:236
 msgid "Images and PDFs"
@@ -1820,7 +1816,7 @@ msgstr "Tak"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "Tak dla wszystkich"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1828,7 +1824,7 @@ msgstr "Nie"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "Nie dla wszystkich"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
