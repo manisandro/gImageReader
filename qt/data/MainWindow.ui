@@ -330,7 +330,7 @@
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
-           <widget class="QListWidget" name="listWidgetSources">
+           <widget class="QTreeView" name="treeViewSources">
             <property name="editTriggers">
              <set>QAbstractItemView::NoEditTriggers</set>
             </property>
@@ -343,6 +343,9 @@
             <property name="selectionMode">
              <enum>QAbstractItemView::ExtendedSelection</enum>
             </property>
+            <attribute name="headerVisible">
+             <bool>false</bool>
+            </attribute>
            </widget>
            <widget class="QListWidget" name="listWidgetThumbnails">
             <property name="iconSize">

@@ -23,14 +23,18 @@
 #include <QMetaType>
 #include <QStringList>
 #include <QFileSystemWatcher>
+#include "common.hh"
 
+class FileTreeModel;
 class QMenu;
 class QPixmap;
 class UI_MainWindow;
 
-struct Source {
+class Source : public DataObject {
+public:
 	Source(const QString& _path, const QString& _displayname, const QByteArray& _password = "", bool _isTemp = false)
 		: path(_path), displayname(_displayname), password(_password), isTemp(_isTemp) {}
+	~Source();
 	QString path;
 	QString displayname;
 	QByteArray password;
@@ -55,7 +59,7 @@ public:
 	QList<Source*> getSelectedSources() const;
 	void addSourceImage(const QImage& image);
 
-	int addSources(const QStringList& files, bool suppressTextWarning = false);
+	int addSources(const QStringList& files, bool suppressTextWarning = false, const QString& parentDir = QString());
 
 public slots:
 	bool addSource(const QString& file, bool suppressTextWarning = false) {
@@ -69,21 +73,23 @@ private:
 	enum class PdfWithTextAction {Ask, Add, Skip};
 	const UI_MainWindow& ui;
 
-	QMenu* m_recentMenu;
+	FileTreeModel* m_fileTreeModel = nullptr;
+	QMenu* m_recentMenu = nullptr;
 	QFileSystemWatcher m_fsWatcher;
 
 	static constexpr int sMaxNumRecent = 15;
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;
+	bool m_inCurrentSourceChanged = false;
 
 	bool checkPdfSource(Source* source, PdfWithTextAction& textAction, QStringList& failed) const;
 	void savePixmap(const QPixmap& pixmap, const QString& displayname);
-	void selectionChanged();
 	bool eventFilter(QObject* object, QEvent* event) override;
+	void selectRecursive(QItemSelection& parentsel, const QModelIndex& index);
 
 private slots:
 	void clearSources();
-	void currentSourceChanged();
+	void currentSourceChanged(const QItemSelection&, const QItemSelection& deselected);
 	void deleteSource() {
 		removeSource(true);
 	}

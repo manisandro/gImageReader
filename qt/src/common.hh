@@ -23,4 +23,9 @@
 #include <libintl.h>
 #define _(x) QString(gettext(x))
 
+class DataObject {
+public:
+	virtual ~DataObject() = default;
+};
+
 #endif

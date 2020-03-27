@@ -302,7 +302,7 @@ void MainWindow::closeEvent(QCloseEvent* ev) {
 void MainWindow::onSourceChanged() {
 	QList<Source*> sources = m_sourceManager->getSelectedSources();
 	if(m_displayer->setSources(sources)) {
-		setWindowTitle(QString("%1 - %2").arg(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources")).arg(PACKAGE_NAME));
+		setWindowTitle(QString("%1 - %2").arg(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources (%1)").arg(sources.size())).arg(PACKAGE_NAME));
 		if(m_stateStack.top().first == State::Idle) {
 			pushState(State::Normal, _("Ready"));
 		}
