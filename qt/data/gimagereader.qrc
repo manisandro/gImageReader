@@ -46,5 +46,6 @@
         <file>extra-theme-icons/help-hint.png</file>
         <file>extra-theme-icons/object-order-front.png</file>
         <file>extra-theme-icons/text-plain.png</file>
+        <file>extra-theme-icons/folder-open.png</file>
     </qresource>
 </RCC>
