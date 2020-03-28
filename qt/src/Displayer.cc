@@ -18,6 +18,7 @@
  */
 
 #include "MainWindow.hh"
+#include "ConfigSettings.hh"
 #include "Displayer.hh"
 #include "DisplayRenderer.hh"
 #include "SourceManager.hh"
@@ -87,10 +88,13 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	connect(&m_scaleWatcher, &QFutureWatcher<QImage>::finished, this, [this] { setScaledImage(m_scaleWatcher.future().result()); });
 	connect(&m_thumbnailWatcher, &QFutureWatcher<QImage>::resultReadyAt, this, &Displayer::setThumbnail);
 	connect(ui.listWidgetThumbnails, &QListWidget::currentRowChanged, [this](int idx) { ui.spinBoxPage->setValue(idx + 1); });
+	connect(ui.checkBoxThumbnails, &QCheckBox::toggled, this, &Displayer::thumbnailsToggled);
 	connect(ui.spinBoxPage, qOverload<int>(&QSpinBox::valueChanged), this, [this](int page) {
 		QSignalBlocker blocker(ui.listWidgetThumbnails);
 		ui.listWidgetThumbnails->setCurrentRow(page - 1);
 	});
+
+	ADD_SETTING(SwitchSetting("thumbnails", ui.checkBoxThumbnails, true));
 }
 
 Displayer::~Displayer() {
@@ -107,6 +111,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 	m_scaleWatcher.waitForFinished();
 	m_thumbnailWatcher.cancel();
 	m_thumbnailWatcher.waitForFinished();
+	ui.listWidgetThumbnails->clear();
 	if(m_tool) {
 		m_tool->reset();
 	}
@@ -138,7 +143,6 @@ bool Displayer::setSources(QList<Source*> sources) {
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	unsetCursor();
-	ui.listWidgetThumbnails->clear();
 
 	m_sources = sources;
 
@@ -147,7 +151,6 @@ bool Displayer::setSources(QList<Source*> sources) {
 	}
 
 	int page = 0;
-	QList<int> pages;
 	for(Source* source : m_sources) {
 		DisplayRenderer* renderer = nullptr;
 		if(source->path.endsWith(".pdf", Qt::CaseInsensitive)) {
@@ -166,18 +169,13 @@ bool Displayer::setSources(QList<Source*> sources) {
 		m_sourceRenderers[source] = renderer;
 		for(int iPage = 1, nPages = renderer->getNPages(); iPage <= nPages; ++iPage) {
 			m_pageMap.insert(++page, qMakePair(source, iPage));
-
-			QListWidgetItem* item = new QListWidgetItem(QIcon(":/icons/thumbnail"), _("Page %1").arg(page));
-			ui.listWidgetThumbnails->addItem(item);
-			pages.append(page);
-
 		}
 	}
 	if(page == 0) {
 		return setSources(QList<Source*>()); // cleanup
 	}
 
-	m_thumbnailWatcher.setFuture(QtConcurrent::mapped(pages, static_cast<std::function<QImage(int)>>([this](int page) { return renderThumbnail(page); })));
+	generateThumbnails();
 
 	ui.spinBoxPage->blockSignals(true);
 	ui.spinBoxPage->setMaximum(page);
@@ -540,6 +538,32 @@ void Displayer::setScaledImage(QImage image) {
 		m_imageItem->setScale(1.0 / m_scale);
 		m_imageItem->setTransformOriginPoint(m_imageItem->boundingRect().center());
 		m_imageItem->setPos(m_imageItem->pos() - m_imageItem->sceneBoundingRect().center());
+	}
+}
+
+void Displayer::thumbnailsToggled(bool active) {
+	ui.listWidgetThumbnails->setVisible(active);
+	ui.splitter->setSizes(active ? QList<int>() << 50 << 50 : QList<int>() << ui.tabSources->height() << 1);
+	if(active) {
+		generateThumbnails();
+	} else {
+		m_thumbnailWatcher.cancel();
+		m_thumbnailWatcher.waitForFinished();
+		ui.listWidgetThumbnails->clear();
+	}
+}
+
+void Displayer::generateThumbnails() {
+	if(ui.checkBoxThumbnails->isChecked()) {
+		QList<int> pages = m_pageMap.keys();
+		ui.listWidgetThumbnails->setUpdatesEnabled(false);
+		QIcon icon(":/icons/thumbnail");
+		for(int page : pages) {
+			QListWidgetItem* item = new QListWidgetItem(icon, _("Page %1").arg(page));
+			ui.listWidgetThumbnails->addItem(item);
+		}
+		ui.listWidgetThumbnails->setUpdatesEnabled(true);
+		m_thumbnailWatcher.setFuture(QtConcurrent::mapped(pages, static_cast<std::function<QImage(int)>>([this](int page) { return renderThumbnail(page); })));
 	}
 }
 

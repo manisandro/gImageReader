@@ -93,6 +93,8 @@ private:
 	void wheelEvent(QWheelEvent* event) override;
 
 	void setZoom(Zoom action, QGraphicsView::ViewportAnchor anchor = QGraphicsView::AnchorViewCenter);
+	void generateThumbnails();
+	void thumbnailsToggled(bool active);
 
 	QTimer m_scaleTimer;
 	QFutureWatcher<QImage> m_scaleWatcher;
