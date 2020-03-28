@@ -342,7 +342,7 @@ void SourceManager::removeSource(bool deleteFile) {
 	if(paths.isEmpty()) {
 		return;
 	}
-	if(deleteFile && QMessageBox::Yes != QMessageBox::question(MAIN, _("Delete File?"), _("The following files will be deleted:\n%1").arg(paths.join("\n")), QMessageBox::Yes, QMessageBox::No)) {
+	if(deleteFile && QDialogButtonBox::Yes != Utils::messageBox(MAIN, _("Delete Files"), _("Delete the following files?"), paths.join("\n"), QMessageBox::Question, QDialogButtonBox::Yes | QDialogButtonBox::No)) {
 		return;
 	}
 	// Avoid multiple sourceChanged emissions when removing items

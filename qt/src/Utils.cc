@@ -22,12 +22,14 @@
 #include <QDir>
 #include <QEventLoop>
 #include <QFileInfo>
+#include <QGridLayout>
 #include <QImageReader>
 #include <QInputEvent>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QMimeData>
+#include <QPlainTextEdit>
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 #include <QSslConfiguration>
@@ -233,4 +235,49 @@ std::unique_ptr<tesseract::TessBaseAPI> Utils::initTesseract(const char* languag
 		return nullptr;
 	}
 	return tess;
+}
+
+QDialogButtonBox::StandardButton Utils::messageBox(QWidget* parent, const QString& title, const QString& text, const QString& body, QMessageBox::Icon icon, QDialogButtonBox::StandardButtons buttons) {
+	QDialog dialog(parent);
+	dialog.setWindowTitle(title);
+	QGridLayout* layout = new QGridLayout;
+	dialog.setLayout(layout);
+
+	QIcon ico;
+	switch (icon) {
+	case QMessageBox::Information:
+		ico = dialog.style()->standardIcon(QStyle::SP_MessageBoxInformation, 0, &dialog);
+		break;
+	case QMessageBox::Warning:
+		ico = dialog.style()->standardIcon(QStyle::SP_MessageBoxWarning, 0, &dialog);
+		break;
+	case QMessageBox::Critical:
+		ico = dialog.style()->standardIcon(QStyle::SP_MessageBoxCritical, 0, &dialog);
+		break;
+	case QMessageBox::Question:
+		ico = dialog.style()->standardIcon(QStyle::SP_MessageBoxQuestion, 0, &dialog);
+	default:
+		break;
+	}
+	QLabel* iconLabel = new QLabel();
+	iconLabel->setPixmap(ico.pixmap(QSize(48, 48)));
+	iconLabel->setFixedSize(48, 48);
+	layout->addWidget(iconLabel, 0, 0, 2, 1, Qt::AlignTop);
+	layout->addWidget(new QLabel(text), 0, 1);
+	QPlainTextEdit* plainTextEdit = new QPlainTextEdit();
+	plainTextEdit->setReadOnly(true);
+	plainTextEdit->setPlainText(body);
+	layout->addWidget(plainTextEdit, 1, 1);
+
+	QDialogButtonBox* bbox = new QDialogButtonBox(buttons);
+	dialog.connect(bbox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+	dialog.connect(bbox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+	layout->addWidget(bbox, 2, 0, 1, 2);
+	dialog.resize(480, dialog.height());
+
+	QDialogButtonBox::StandardButton clicked;
+	dialog.connect(bbox, &QDialogButtonBox::clicked, bbox, [&](QAbstractButton * button) { clicked = bbox->standardButton(button); });
+	dialog.exec();
+
+	return clicked;
 }

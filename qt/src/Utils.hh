@@ -22,6 +22,8 @@
 
 #include <functional>
 #include <memory>
+#include <QDialogButtonBox>
+#include <QMessageBox>
 #include <QMutex>
 #include <QQueue>
 #include <QString>
@@ -57,6 +59,8 @@ QByteArray download(QUrl url, QString& messages, int timeout = 60000);
 QString getSpellingLanguage(const QString& lang = QString());
 
 std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nullptr);
+
+QDialogButtonBox::StandardButton messageBox(QWidget* parent, const QString& title, const QString& text, const QString& body, QMessageBox::Icon icon, QDialogButtonBox::StandardButtons buttons);
 
 template<typename T>
 class AsyncQueue {

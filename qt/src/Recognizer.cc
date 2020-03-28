@@ -18,11 +18,8 @@
  */
 
 #include <QClipboard>
-#include <QDateTime>
 #include <QDir>
 #include <QFileInfo>
-#include <QMessageBox>
-#include <QPlainTextEdit>
 #include <QtSpell.hpp>
 #include <algorithm>
 #define USE_STD_NAMESPACE
@@ -418,18 +415,5 @@ Recognizer::PageData Recognizer::setPage(int page, bool autodetectLayout) {
 }
 
 void Recognizer::showRecognitionErrorsDialog(const QStringList& errors) {
-	QDialog dialog(MAIN);
-	dialog.setWindowTitle(_("Recognition errors occurred"));
-	dialog.setLayout(new QVBoxLayout);
-	dialog.layout()->addWidget(new QLabel(_("The following errors occurred:")));
-	QPlainTextEdit* plainTextEdit = new QPlainTextEdit();
-	plainTextEdit->setReadOnly(true);
-	plainTextEdit->setPlainText(errors.join("\n"));
-	dialog.layout()->addWidget(plainTextEdit);
-	QDialogButtonBox* bbox = new QDialogButtonBox(QDialogButtonBox::Close);
-	connect(bbox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-	connect(bbox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
-	dialog.layout()->addWidget(bbox);
-	dialog.resize(480, dialog.height());
-	dialog.exec();
+	Utils::messageBox(MAIN, _("Recognition errors occurred"), _("The following errors occurred:"), errors.join("\n"), QMessageBox::Warning, QDialogButtonBox::Close);
 }
