@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-26 12:57+0100\n"
-"PO-Revision-Date: 2020-03-24 10:37+0000\n"
+"POT-Creation-Date: 2020-03-23 01:43+0100\n"
+"PO-Revision-Date: 2020-04-01 00:13+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gimagereader/"
 "translations/cs/>\n"
@@ -441,12 +441,11 @@ msgstr "Zadejte slovo:"
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Připojit nový výstup za poslední stránku"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "Otočit stávající stránku"
+msgstr "Vložit nový výstup před stávající stránku"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
@@ -465,14 +464,13 @@ msgstr "Exportovat do ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
-#, fuzzy
 msgid "Append document after last page"
-msgstr "Připojit za stávající text"
+msgstr "Připojit dokument za poslední stránku"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Insert document before current page"
-msgstr ""
+msgstr "Vložit dokument před stávající stránku"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
@@ -937,16 +935,14 @@ msgid "There was no unsaved work."
 msgstr "Od minulého uložení nepřibylo nic nového."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
-#, fuzzy
 msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr ""
 "Nezdařilo se získat backtrace diagnostiku. Je nainstalován ladící nástroj "
-"gdb?"
+"GDB?"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:170
-#, fuzzy
 msgid "Page %1"
-msgstr "Strana: %1"
+msgstr "Strana %1"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:191
 msgid "Failed to load image"
@@ -1259,21 +1255,23 @@ msgstr "HTML soubory ve formátu hOCR"
 msgid "Open hOCR File"
 msgstr "Otevřít soubor formátu hOCR"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:905 ../qt/src/SourceManager.cc:130
-#, fuzzy
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1002 ../gtk/src/SourceManager.cc:125
+#: ../qt/src/hocr/OutputEditorHOCR.cc:870 ../qt/src/SourceManager.cc:127
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "Následující soubory se nepodařilo otevřít:%1"
+msgstr ""
+"Následující soubory se nepodařilo otevřít:\n"
+"%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
-#: ../qt/src/hocr/OutputEditorHOCR.cc:908
-#, fuzzy
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1005
+#: ../qt/src/hocr/OutputEditorHOCR.cc:873
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "Soubor neobsahuje platnou HTML podobu formátu HOCR: %1"
+msgstr ""
+"Následující soubory neobsahují platnou HTML podobu formátu HOCR:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:911 ../qt/src/SourceManager.cc:130
@@ -1625,20 +1623,19 @@ msgstr "Přístup ke skeneru odepřen."
 msgid "Enter password for file '%1':"
 msgstr "Zadejte heslo k souboru „%1“:"
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:172
-#, fuzzy
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
 msgid "PDF with text"
-msgstr "PDF soubory s textem"
+msgstr "PDF s textem"
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:172
-#, fuzzy
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
-"Tyto PDF soubory už obsahují text.\n"
-"%1"
+"PDF soubor už obsahuje text:\n"
+"%1\n"
+"Otevřít i tak?"
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:236
 msgid "Images and PDFs"
@@ -1828,7 +1825,7 @@ msgstr "Ano"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "Ano na vše"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1836,7 +1833,7 @@ msgstr "Ne"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "Ne na vše"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
