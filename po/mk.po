@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-23 01:44+0100\n"
 "PO-Revision-Date: 2020-04-03 12:44+0000\n"
-"Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
 "Language: mk\n"
@@ -29,34 +29,34 @@ msgstr ""
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:170
 msgid "Manage Languages"
-msgstr ""
+msgstr "Управување со Јазици"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:173
 msgid "Preferences"
-msgstr ""
+msgstr "Поставки"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:500 ../qt/src/MainWindow.cc:496
 #: ../qt/src/Ui_MainWindow.hh:178
 msgid "Help"
-msgstr ""
+msgstr "Помош"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:181
 msgid "About"
-msgstr ""
+msgstr "За апликацијата"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
-msgstr ""
+msgstr "Излез"
 
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:48
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
 #: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
 #: ../qt/data/ConfigDialog.ui.h:26
 msgid "OK"
-msgstr ""
+msgstr "ОК"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
