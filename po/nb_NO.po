@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-26 12:57+0100\n"
-"PO-Revision-Date: 2019-08-09 18:23+0000\n"
+"POT-Creation-Date: 2020-03-23 01:43+0100\n"
+"PO-Revision-Date: 2020-04-04 00:04+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.8-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1280,21 +1280,23 @@ msgstr "hOCD-HTML-filer"
 msgid "Open hOCR File"
 msgstr "Åpne hOCR-fil"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:905 ../qt/src/SourceManager.cc:130
-#, fuzzy
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1002 ../gtk/src/SourceManager.cc:125
+#: ../qt/src/hocr/OutputEditorHOCR.cc:870 ../qt/src/SourceManager.cc:127
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "Følgende filer kunne ikke åpnes: %1"
+msgstr ""
+"Følgende filer kunne ikke åpnes:\n"
+"%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
-#: ../qt/src/hocr/OutputEditorHOCR.cc:908
-#, fuzzy
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1005
+#: ../qt/src/hocr/OutputEditorHOCR.cc:873
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "Filen later ikke til å inneholde gyldig hOCR-HTML: %1"
+msgstr ""
+"Følgende filer later ikke til å inneholde gyldig hOCR-HTML:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:911 ../qt/src/SourceManager.cc:130
@@ -1662,15 +1664,15 @@ msgstr "Skriv inn passordet for filen \"%1\":"
 msgid "PDF with text"
 msgstr "PDF-filer med tekst"
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:172
-#, fuzzy
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:169
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
 "Disse PDF-filene inneholder allerede tekst:\n"
-"%1"
+"%1\n"
+"Åpne uansett?"
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:236
 msgid "Images and PDFs"
