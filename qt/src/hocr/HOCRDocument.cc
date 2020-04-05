@@ -75,6 +75,20 @@ QModelIndex HOCRDocument::insertPage(int beforeIdx, const QDomElement& pageEleme
 	return index(beforeIdx, 0);
 }
 
+QModelIndex HOCRDocument::indexAtItem(const HOCRItem* item) const {
+	QList<HOCRItem*> parents;
+	HOCRItem* parent = item->parent();
+	while(parent) {
+		parents.prepend(parent);
+		parent = parent->parent();
+	}
+	QModelIndex idx;
+	for(HOCRItem* parent : parents) {
+		idx = index(parent->index(), 0, idx);
+	}
+	return index(item->index(), 0, idx);
+}
+
 bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass) {
 	HOCRItem* item = mutableItemAtIndex(index);
 	if(!item) {
