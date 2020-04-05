@@ -178,19 +178,6 @@ public:
 		return m_italic;
 	}
 
-	void addChild(HOCRItem* child);
-	void insertChild(HOCRItem* child, int index);
-	void removeChild(HOCRItem* child);
-	void takeChild(HOCRItem* child);
-	QVector<HOCRItem*> takeChildren();
-	void setEnabled(bool enabled) {
-		m_enabled = enabled;
-	}
-	void setText(const QString& newText) {
-		m_text = newText;
-	}
-	void setAttribute(const QString& name, const QString& value, const QString& attrItemClass = QString());
-
 	static QMap<QString, QString> deserializeAttrGroup(const QString& string);
 	static QString serializeAttrGroup(const QMap<QString, QString>& attrs);
 	static QString trimmedWord(const QString& word, QString* prefix = nullptr, QString* suffix = nullptr);
@@ -216,12 +203,25 @@ protected:
 
 	QRect m_bbox;
 
+	// All mutations must be done through methods of HOCRDocument
+	void addChild(HOCRItem* child);
+	void insertChild(HOCRItem* child, int index);
+	void removeChild(HOCRItem* child);
+	void takeChild(HOCRItem* child);
+	QVector<HOCRItem*> takeChildren();
+	void setEnabled(bool enabled) {
+		m_enabled = enabled;
+	}
+	void setText(const QString& newText) {
+		m_text = newText;
+	}
 	void setMisspelled(int misspelled) {
 		m_misspelled = misspelled;
 	}
 	int isMisspelled() const {
 		return m_misspelled;
 	}
+	void setAttribute(const QString& name, const QString& value, const QString& attrItemClass = QString());
 	bool parseChildren(const QDomElement& element, QString language);
 };
 
