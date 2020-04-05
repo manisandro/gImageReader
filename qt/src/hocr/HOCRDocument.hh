@@ -25,17 +25,15 @@
 #include <QRect>
 
 class QDomElement;
-namespace QtSpell {
-class TextEditChecker;
-}
 class HOCRItem;
 class HOCRPage;
+class HOCRSpellChecker;
 
 class HOCRDocument : public QAbstractItemModel {
 	Q_OBJECT
 
 public:
-	HOCRDocument(QtSpell::TextEditChecker* spell, QObject* parent = 0);
+	HOCRDocument(QObject* parent = nullptr);
 	~HOCRDocument();
 
 	void clear();
@@ -43,7 +41,10 @@ public:
 	void setDefaultLanguage(const QString& language) {
 		m_defaultLanguage = language;
 	}
-	void recheckSpelling();
+	const QString& defaultLanguage() const {
+		return m_defaultLanguage;
+	}
+	void addSpellingActions(QMenu* menu, const QModelIndex& index);
 
 	QString toHTML() const;
 
@@ -70,7 +71,7 @@ public:
 	QModelIndex nextIndex(const QModelIndex& current);
 	QModelIndex prevIndex(const QModelIndex& current);
 	bool indexIsMisspelledWord(const QModelIndex& index) const;
-	bool checkItemSpelling(const QModelIndex&, QStringList* suggestions = nullptr, int limit = -1) const;
+	bool getItemSpellingSuggestions(const QModelIndex& index, QString& trimmedWord, QStringList& suggestions, int limit) const;
 
 	bool referencesSource(const QString& filename) const;
 	QModelIndex searchPage(const QString& filename, int pageNr) const;
@@ -91,18 +92,18 @@ signals:
 private:
 	int m_pageIdCounter = 0;
 	QString m_defaultLanguage = "en_US";
-	QtSpell::TextEditChecker* m_spell;
+	HOCRSpellChecker* m_spell;
 
 	QVector<HOCRPage*> m_pages;
 
 	QString displayRoleForItem(const HOCRItem* item) const;
 	QIcon decorationRoleForItem(const HOCRItem* item) const;
 
-	bool checkSpelling(const QString& trimmed, QStringList* suggestions = nullptr, int limit = -1) const;
-	void generateCombinations(const QList<QList<QString>>& lists, QList<QList<QString>>& results, int depth, const QList<QString> c) const;
 	void insertItem(HOCRItem* parent, HOCRItem* item, int i);
 	void deleteItem(HOCRItem* item);
 	void takeItem(HOCRItem* item);
+	void resetMisspelled(const QModelIndex& index);
+	QList<QModelIndex> recheckItemSpelling(const QModelIndex& index) const;
 	void recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, const QStringList& itemClasses = QStringList());
 	void recomputeBBoxes(HOCRItem* item);
 	HOCRItem* mutableItemAtIndex(const QModelIndex& index) const {
@@ -200,6 +201,7 @@ protected:
 	static QMap<QString, QString> s_langCache;
 
 	QString m_text;
+	int m_misspelled = -1;
 	bool m_bold;
 	bool m_italic;
 
@@ -213,6 +215,12 @@ protected:
 
 	QRect m_bbox;
 
+	void setMisspelled(int misspelled) {
+		m_misspelled = misspelled;
+	}
+	int isMisspelled() const {
+		return m_misspelled;
+	}
 	bool parseChildren(const QDomElement& element, QString language);
 };
 

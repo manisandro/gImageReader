@@ -20,19 +20,21 @@
 #include <QDir>
 #include <QDomElement>
 #include <QFileInfo>
+#include <QMenu>
 #include <QIcon>
 #include <QSet>
 #include <QTextStream>
-#include <QtSpell.hpp>
 #include <cmath>
 
 #include "common.hh"
 #include "HOCRDocument.hh"
+#include "HOCRSpellChecker.hh"
 #include "Utils.hh"
 
 
-HOCRDocument::HOCRDocument(QtSpell::TextEditChecker* spell, QObject* parent)
-	: QAbstractItemModel(parent), m_spell(spell) {
+HOCRDocument::HOCRDocument(QObject* parent)
+	: QAbstractItemModel(parent) {
+	m_spell = new HOCRSpellChecker(this);
 }
 
 HOCRDocument::~HOCRDocument() {
@@ -47,8 +49,40 @@ void HOCRDocument::clear() {
 	endResetModel();
 }
 
-void HOCRDocument::recheckSpelling() {
-	recursiveDataChanged(QModelIndex(), {Qt::DisplayRole}, {"ocrx_word"});
+void HOCRDocument::resetMisspelled(const QModelIndex& index) {
+	if(hasChildren(index)) {
+		for(int i = 0, n = rowCount(index); i < n; ++i) {
+			resetMisspelled(this->index(i, 0, index));
+		}
+	} else {
+		mutableItemAtIndex(index)->setMisspelled(-1);
+		emit dataChanged(index, index, {Qt::DisplayRole});
+	}
+}
+
+void HOCRDocument::addSpellingActions(QMenu* menu, const QModelIndex& index) {
+	QStringList suggestions;
+	QString trimmedWord;
+	bool valid = getItemSpellingSuggestions(index, trimmedWord, suggestions, 16);
+	for(const QString& suggestion : suggestions) {
+		menu->addAction(suggestion, menu, [this, suggestion, index] { setData(index, suggestion, Qt::EditRole); });
+	}
+	if(!trimmedWord.isEmpty()) {
+		if(suggestions.isEmpty()) {
+			menu->addAction(_("No suggestions"))->setEnabled(false);
+		}
+		if(!valid) {
+			menu->addSeparator();
+			menu->addAction(_("Add to dictionary"), menu, [this, trimmedWord, index] {
+				m_spell->addWordToDictionary(trimmedWord);
+				resetMisspelled(index);
+			});
+			menu->addAction(_("Ignore word"), menu, [this, trimmedWord, index] {
+				m_spell->ignoreWord(trimmedWord);
+				resetMisspelled(index);
+			});
+		}
+	}
 }
 
 QString HOCRDocument::toHTML() const {
@@ -101,7 +135,7 @@ bool HOCRDocument::editItemAttribute(const QModelIndex& index, const QString& na
 		emit dataChanged(colIdx, colIdx, {Qt::DisplayRole});
 	}
 	if(name == "lang") {
-		recursiveDataChanged(index, {Qt::DisplayRole}, {"ocrx_word"});
+		resetMisspelled(index);
 	}
 	emit itemAttributeChanged(index, name, value);
 	if(name == "title:bbox") {
@@ -171,7 +205,9 @@ QModelIndex HOCRDocument::mergeItems(const QModelIndex& parent, int startRow, in
 		}
 		endRemoveRows();
 		targetItem->setText(text);
-		emit dataChanged(targetIndex, targetIndex, {Qt::DisplayRole, Qt::ForegroundRole});
+		for(QModelIndex changedIndex : recheckItemSpelling(targetIndex)) {
+			emit dataChanged(changedIndex, changedIndex, {Qt::DisplayRole, Qt::ForegroundRole});
+		}
 	} else {
 		// Merge other items: merge dom trees and bounding boxes
 		QVector<HOCRItem*> moveChilds;
@@ -307,56 +343,90 @@ QModelIndex HOCRDocument::prevIndex(const QModelIndex& current) {
 }
 
 bool HOCRDocument::indexIsMisspelledWord(const QModelIndex& index) const {
-	return !checkItemSpelling(index);
+	const HOCRItem* item = itemAtIndex(index);
+	if(item->isMisspelled() == -1) {
+		recheckItemSpelling(index);
+	}
+	return item->isMisspelled() == 1;
 }
 
-bool HOCRDocument::checkItemSpelling(const QModelIndex& index, QStringList* suggestions, int limit) const {
-	const HOCRItem* item = itemAtIndex(index);
-	if(item->itemClass() != "ocrx_word") { return true; }
+QList<QModelIndex> HOCRDocument::recheckItemSpelling(const QModelIndex& index) const {
+	HOCRItem* item = mutableItemAtIndex(index);
+	if(item->itemClass() != "ocrx_word") { return {}; }
 
 	QString prefix, suffix, trimmed = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
-	if(trimmed.isEmpty()) { return true; }
+	if(trimmed.isEmpty()) {
+		item->setMisspelled(false);
+		return {index};
+	}
 	QString lang = item->spellingLang();
-	if(m_spell->getLanguage() != lang && !(m_spell->setLanguage(lang))) { return true; }
+	if(m_spell->getLanguage() != lang && !(m_spell->setLanguage(lang))) {
+		item->setMisspelled(false);
+		return {index};
+	}
 
 	// check word, including (if requested) setting suggestions; handle hyphenated phrases correctly
-	if(checkSpelling(trimmed, suggestions, limit)) { return true; }
+	if(m_spell->checkSpelling(trimmed)) {
+		item->setMisspelled(false);
+		return {index};
+	}
+	item->setMisspelled(true);
 
 	// handle some hyphenated words
 	// don't bother with words not broken over sibling text lines (ie interrupted by other blocks), it's human hard
 	// don't bother with words broken over three or more lines, it's implausible and this treatment is ^ necessarily incomplete
-	HOCRItem* parent = item->parent();
-	if(!parent) { return false; }
-	HOCRItem* grandparent = parent->parent();
-	if(!grandparent) { return false; }
-	int idx = item->index();
-	int parentIdx = parent->index();
-	QVector<HOCRItem*> parentSiblings = grandparent->children();
-	if(idx == 0 && parentIdx > 0) {
-		HOCRItem* parentPrevSibling = parentSiblings.at(parentIdx - 1);
-		if(!parentPrevSibling) { return false; }
-		QVector<HOCRItem*> cousins = parentPrevSibling->children();
-		if(cousins.size() < 1) { return false; }
-		HOCRItem* prevCousin = cousins.back();
-		if(!prevCousin || prevCousin->itemClass() != "ocrx_word") { return false; }
-		QString prevText = prevCousin->text();
-		if(prevText.isEmpty() || prevText[prevText.size() - 1] != '-') { return false; }
+	HOCRItem* line = item->parent();
+	if(!line) { return {index}; }
+	HOCRItem* paragraph = line->parent();
+	if(!paragraph) { return {index}; }
+	int lineIdx = line->index();
+	const QVector<HOCRItem*>& paragraphLines = paragraph->children();
+	if(item == line->children().front() && lineIdx > 0) {
+		HOCRItem* prevLine = paragraphLines.at(lineIdx - 1);
+		if(!prevLine || prevLine->children().isEmpty()) { return {index}; }
+		HOCRItem* prevWord = prevLine->children().back();
+		if(!prevWord || prevWord->itemClass() != "ocrx_word") { return {index}; }
+		QString prevText = prevWord->text();
+		if(!prevText.endsWith("-")) { return {index}; }
 
 		// don't bother with (reassembled) suggestions for broken words since we can't re-break them
-		return checkSpelling(HOCRItem::trimmedWord(prevText) + trimmed);
-	}
-	QString text = item->text();
-	if(idx + 1 == parent->children().size() && parentIdx + 1 < parentSiblings.size() && !text.isEmpty() && text[text.size() - 1] == '-') {
-		HOCRItem* parentNextSibling = parentSiblings.at(parentIdx + 1);
-		if(!parentNextSibling) { return false; }
-		QVector<HOCRItem*> cousins = parentNextSibling->children();
-		if(cousins.size() < 1) { return false; }
-		HOCRItem* nextCousin = cousins.front();
-		if(!nextCousin || nextCousin->itemClass() != "ocrx_word") { return false; }
+		bool valid = m_spell->checkSpelling(HOCRItem::trimmedWord(prevText) + trimmed);
+		item->setMisspelled(!valid);
+		prevWord->setMisspelled(!valid);
+		return {index, indexAtItem(prevWord)};
+	} else if(item == line->children().back() && lineIdx + 1 < paragraphLines.size() && item->text().endsWith("-")) {
+		HOCRItem* nextLine = paragraphLines.at(lineIdx + 1);
+		if(!nextLine || nextLine->children().isEmpty()) { return {index}; }
+		HOCRItem* nextWord = nextLine->children().front();
+		if(!nextWord || nextWord->itemClass() != "ocrx_word") { return {index}; }
 
-		return checkSpelling(trimmed + HOCRItem::trimmedWord(nextCousin->text()));
+		bool valid = m_spell->checkSpelling(trimmed + HOCRItem::trimmedWord(nextWord->text()));
+		item->setMisspelled(!valid);
+		nextWord->setMisspelled(!valid);
+		return {index, indexAtItem(nextWord)};
 	}
-	return false;
+	return {index};
+}
+
+bool HOCRDocument::getItemSpellingSuggestions(const QModelIndex& index, QString& trimmedWord, QStringList& suggestions, int limit) const {
+	const HOCRItem* item = itemAtIndex(index);
+	if(item->itemClass() != "ocrx_word") { return true; }
+
+	QString prefix, suffix;
+	trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
+	if(trimmedWord.isEmpty()) {
+		return true;
+	}
+	QString lang = item->spellingLang();
+	if(m_spell->getLanguage() != lang && !(m_spell->setLanguage(lang))) {
+		return true;
+	}
+
+	bool valid = m_spell->checkSpelling(trimmedWord, &suggestions, limit);
+	for(int i = 0, n = suggestions.size(); i < n; ++i) {
+		suggestions[i] = prefix + suggestions[i] + suffix;
+	}
+	return valid;
 }
 
 bool HOCRDocument::referencesSource(const QString& filename) const {
@@ -429,9 +499,9 @@ QVariant HOCRDocument::data(const QModelIndex& index, int role) const {
 				parent = parent->parent();
 			}
 			if(enabled) {
-				return checkItemSpelling(index) ? QVariant() : QVariant(QColor(Qt::red));
+				return indexIsMisspelledWord(index) ? QVariant(QColor(Qt::red)) : QVariant();
 			} else {
-				return checkItemSpelling(index) ? QVariant(QColor(Qt::gray)) : QVariant(QColor(208, 80, 82));
+				return indexIsMisspelledWord(index) ? QVariant(QColor(208, 80, 82)) : QVariant(QColor(Qt::gray));
 			}
 		}
 		case Qt::CheckStateRole:
@@ -455,7 +525,10 @@ bool HOCRDocument::setData(const QModelIndex& index, const QVariant& value, int 
 	HOCRItem* item = mutableItemAtIndex(index);
 	if(role == Qt::EditRole && item->itemClass() == "ocrx_word") {
 		item->setText(value.toString());
-		emit dataChanged(index, index, {Qt::DisplayRole, Qt::ForegroundRole});
+		for(QModelIndex changedIndex : recheckItemSpelling(index)) {
+			emit dataChanged(changedIndex, changedIndex, {Qt::DisplayRole, Qt::ForegroundRole});
+		}
+
 		return true;
 	} else if(role == Qt::CheckStateRole) {
 		item->setEnabled(value == Qt::Checked);
@@ -576,62 +649,6 @@ QIcon HOCRDocument::decorationRoleForItem(const HOCRItem* item) const {
 		return QIcon(":/icons/item_halftone");
 	}
 	return QIcon();
-}
-
-bool HOCRDocument::checkSpelling(const QString& trimmed, QStringList* suggestions, int limit) const {
-	QVector<QStringRef> words = trimmed.splitRef(QRegExp("[\\x2013\\x2014]+"));
-	int perWordLimit = 0;
-	// s = p^w => w = log_p(c) = log(c)/log(p) => p = 10^(log(c)/w)
-	if(limit > 0) { perWordLimit = int(std::pow(10, std::log10(limit) / words.size())); }
-	QList<QList<QString>> wordSuggestions;
-	bool valid = true;
-	bool multipleWords = words.size() > 1;
-	for(const QStringRef& word : words) {
-		QString wordString = word.toString();
-		bool wordValid = m_spell->checkWord(wordString);
-		valid &= wordValid;
-		if(suggestions) {
-			QList<QString> ws = m_spell->getSpellingSuggestions(wordString);
-			if(wordValid && multipleWords) { ws.prepend(wordString); }
-			if(limit == -1) {
-				wordSuggestions.append(ws);
-			} else if(limit > 0) {
-				wordSuggestions.append(ws.mid(0, perWordLimit));
-			}
-		}
-	}
-	if(suggestions) {
-		suggestions->clear();
-		QList<QList<QString>> suggestionCombinations;
-		generateCombinations(wordSuggestions, suggestionCombinations, 0, QList<QString>());
-		for(const QList<QString>& combination : suggestionCombinations) {
-			QString s = "";
-			const QStringRef* originalWord = words.begin();
-			int last = 0;
-			int next;
-			for(const QString& suggestedWord : combination) {
-				next = originalWord->position();
-				s.append(trimmed.midRef(last, next - last));
-				s.append(suggestedWord);
-				last = next + originalWord->length();
-				originalWord++;
-			}
-			s.append(trimmed.midRef(last));
-			suggestions->append(s);
-		}
-	}
-	return valid;
-}
-
-// each suggestion for each word => each word in each suggestion
-void HOCRDocument::generateCombinations(const QList<QList<QString>>& lists, QList<QList<QString>>& results, int depth, const QList<QString> c) const {
-	if(depth == lists.size()) {
-		results.append(c);
-		return;
-	}
-	for(int i = 0; i < lists[depth].size(); ++i) {
-		generateCombinations(lists, results, depth + 1, c + QList<QString>({lists[depth][i]}));
-	}
 }
 
 void HOCRDocument::insertItem(HOCRItem* parent, HOCRItem* item, int i) {

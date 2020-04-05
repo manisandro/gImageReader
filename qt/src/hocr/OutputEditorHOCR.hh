@@ -20,15 +20,15 @@
 #ifndef OUTPUTEDITORHOCR_HH
 #define OUTPUTEDITORHOCR_HH
 
-#include <QtSpell.hpp>
+#include <QTimer>
 
 #include "OutputEditor.hh"
 #include "Ui_OutputEditorHOCR.hh"
 
 class DisplayerToolHOCR;
 class HOCRDocument;
-class HOCRPage;
 class HOCRItem;
+class HOCRPage;
 class QGraphicsPixmapItem;
 
 class OutputEditorHOCR : public OutputEditor {
@@ -87,7 +87,6 @@ private:
 	HTMLHighlighter* m_highlighter;
 	bool m_modified = false;
 	QString m_filebasename;
-	QtSpell::TextEditChecker m_spell;
 	InsertMode m_insertMode = InsertMode::Append;
 
 	HOCRDocument* m_document;

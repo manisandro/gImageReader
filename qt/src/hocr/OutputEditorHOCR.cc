@@ -42,6 +42,7 @@
 #include "HOCRDocument.hh"
 #include "HOCROdtExporter.hh"
 #include "HOCRPdfExporter.hh"
+#include "HOCRSpellChecker.hh"
 #include "HOCRTextExporter.hh"
 #include "MainWindow.hh"
 #include "OutputEditorHOCR.hh"
@@ -258,7 +259,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.actionNavigateNext->setShortcut(Qt::Key_F3);
 	ui.actionNavigatePrev->setShortcut(Qt::SHIFT + Qt::Key_F3);
 
-	m_document = new HOCRDocument(&m_spell, ui.treeViewHOCR);
+	m_document = new HOCRDocument(ui.treeViewHOCR);
 	ui.treeViewHOCR->setModel(m_document);
 	ui.treeViewHOCR->setContextMenuPolicy(Qt::CustomContextMenu);
 	ui.treeViewHOCR->header()->setStretchLastSection(false);
@@ -656,7 +657,7 @@ void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 		newElement.setAttribute("class", "ocrx_word");
 		QMap<QString, QSet<QString>> propWord = propAttrs["ocrx_word"];
 
-		newElement.setAttribute("lang", propWord["lang"].size() == 1 ? *propWord["lang"].begin() : m_spell.getLanguage());
+		newElement.setAttribute("lang", propWord["lang"].size() == 1 ? *propWord["lang"].begin() : m_document->defaultLanguage());
 		QMap<QString, QString> titleAttrs;
 		titleAttrs["bbox"] = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
 		titleAttrs["x_wconf"] = "100";
@@ -753,9 +754,6 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 	QAction* actionAddLine = nullptr;
 	QAction* actionAddWord = nullptr;
 	QAction* actionSplit = nullptr;
-	QAction* actionDictAddWord = nullptr;
-	QAction* actionDictIgnoreWord = nullptr;
-	QList<QAction*> setTextActions;
 	QAction* actionRemove = nullptr;
 	QAction* actionExpand = nullptr;
 	QAction* actionCollapse = nullptr;
@@ -770,24 +768,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 	} else if(itemClass == "ocr_line") {
 		actionAddWord = menu.addAction(_("Add word"));
 	} else if(itemClass == "ocrx_word") {
-		QString prefix, suffix, trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
-		QStringList suggestions;
-		bool valid = m_document->checkItemSpelling(index, &suggestions, 16);
-		for(const QString& suggestion : suggestions) {
-			setTextActions.append(menu.addAction(prefix + suggestion + suffix));
-		}
-		if(!trimmedWord.isEmpty()) {
-			if(setTextActions.isEmpty()) {
-				menu.addAction(_("No suggestions"))->setEnabled(false);
-			}
-			if(!valid) {
-				menu.addSeparator();
-				actionDictAddWord = menu.addAction(_("Add to dictionary"));
-				actionDictAddWord->setData(trimmedWord);
-				actionDictIgnoreWord = menu.addAction(_("Ignore word"));
-				actionDictIgnoreWord->setData(trimmedWord);
-			}
-		}
+		m_document->addSpellingActions(&menu, index);
 	}
 	if(!menu.actions().isEmpty()) {
 		menu.addSeparator();
@@ -816,14 +797,6 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_LINE_RECT);
 	} else if(clickedAction == actionAddWord) {
 		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_WORD_RECT);
-	} else if(clickedAction == actionDictAddWord) {
-		m_spell.addWordToDictionary(actionDictAddWord->data().toString());
-		m_document->recheckSpelling();
-	} else if(clickedAction == actionDictIgnoreWord) {
-		m_spell.ignoreWord(actionDictIgnoreWord->data().toString());
-		m_document->recheckSpelling();
-	} else if(setTextActions.contains(clickedAction)) {
-		m_document->setData(index, clickedAction->text(), Qt::EditRole);
 	} else if(clickedAction == actionSplit) {
 		QModelIndex newIndex = m_document->splitItem(index.parent(), index.row(), index.row());
 		ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
