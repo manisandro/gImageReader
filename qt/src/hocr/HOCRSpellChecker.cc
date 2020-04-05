@@ -63,6 +63,8 @@ bool HOCRSpellChecker::checkSpelling(const QString& word, QStringList* suggestio
 			s.append(word.midRef(last));
 			suggestions->append(s);
 		}
+		// Don't list the exact input word
+		suggestions->removeOne(word);
 	}
 	return valid;
 }
