@@ -435,18 +435,7 @@ void OutputEditorHOCR::navigateNextPrev(bool next) {
 		misspelled = true;
 	}
 	QModelIndex start = ui.treeViewHOCR->currentIndex();
-	if(!start.isValid()) {
-		start = m_document->index(0, 0);
-	}
-	QModelIndex curr = next ? m_document->nextIndex(start) : m_document->prevIndex(start);
-	while(curr != start) {
-		const HOCRItem* item = m_document->itemAtIndex(curr);
-		if(item && item->itemClass() == target && (!misspelled || m_document->indexIsMisspelledWord(curr))) {
-			break;
-		}
-		curr = next ? m_document->nextIndex(curr) : m_document->prevIndex(curr);
-	};
-	ui.treeViewHOCR->setCurrentIndex(curr);
+	ui.treeViewHOCR->setCurrentIndex(m_document->prevOrNextIndex(next, start, target, misspelled));
 }
 
 void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool expand) const {

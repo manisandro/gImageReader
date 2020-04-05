@@ -68,8 +68,9 @@ public:
 	QModelIndex addItem(const QModelIndex& parent, const QDomElement& element);
 	bool removeItem(const QModelIndex& index);
 
-	QModelIndex nextIndex(const QModelIndex& current);
-	QModelIndex prevIndex(const QModelIndex& current);
+	QModelIndex nextIndex(const QModelIndex& current) const;
+	QModelIndex prevIndex(const QModelIndex& current) const;
+	QModelIndex prevOrNextIndex(bool next, const QModelIndex& current, const QString& ocrClass, bool misspelled = false) const;
 	bool indexIsMisspelledWord(const QModelIndex& index) const;
 	bool getItemSpellingSuggestions(const QModelIndex& index, QString& trimmedWord, QStringList& suggestions, int limit) const;
 

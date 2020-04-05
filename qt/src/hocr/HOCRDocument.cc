@@ -297,7 +297,7 @@ bool HOCRDocument::removeItem(const QModelIndex& index) {
 	return true;
 }
 
-QModelIndex HOCRDocument::nextIndex(const QModelIndex& current) {
+QModelIndex HOCRDocument::nextIndex(const QModelIndex& current) const {
 	QModelIndex idx = current;
 	// If the current index is invalid return first index
 	if(!idx.isValid()) {
@@ -320,7 +320,7 @@ QModelIndex HOCRDocument::nextIndex(const QModelIndex& current) {
 	return next;
 }
 
-QModelIndex HOCRDocument::prevIndex(const QModelIndex& current) {
+QModelIndex HOCRDocument::prevIndex(const QModelIndex& current) const {
 	QModelIndex idx = current;
 	// If the current index is invalid return last index
 	if(!idx.isValid()) {
@@ -340,6 +340,22 @@ QModelIndex HOCRDocument::prevIndex(const QModelIndex& current) {
 		idx = index(rowCount(idx) - 1, 0, idx);
 	}
 	return idx;
+}
+
+QModelIndex HOCRDocument::prevOrNextIndex(bool next, const QModelIndex& current, const QString& ocrClass, bool misspelled) const {
+	QModelIndex start = current;
+	if(!start.isValid()) {
+		start = index(0, 0);
+	}
+	QModelIndex curr = next ? nextIndex(start) : prevIndex(start);
+	while(curr != start) {
+		const HOCRItem* item = itemAtIndex(curr);
+		if(item && item->itemClass() == ocrClass && (!misspelled || indexIsMisspelledWord(curr))) {
+			break;
+		}
+		curr = next ? nextIndex(curr) : prevIndex(curr);
+	};
+	return curr;
 }
 
 bool HOCRDocument::indexIsMisspelledWord(const QModelIndex& index) const {
