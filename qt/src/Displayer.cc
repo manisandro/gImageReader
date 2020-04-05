@@ -512,6 +512,13 @@ QRectF Displayer::getSceneBoundingRect() const {
 	return transform.mapRect(rect);
 }
 
+void Displayer::setBlockAutoscale(bool block) {
+	m_scaleTimer.blockSignals(block);
+	if(!block) {
+		m_scaleTimer.start(100);
+	}
+}
+
 void Displayer::scaleImage() {
 	int page = m_currentSource->page;
 	double resolution = m_scale * m_currentSource->resolution;
