@@ -151,7 +151,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 	QImage img = m_displayer->getImage(m_displayer->getSceneBoundingRect());
 
 	// Perform layout analysis
-	Utils::busyTask([this, &nDeskew, &avgDeskew, &rects, &img] {
+	Utils::busyTask([&nDeskew, &avgDeskew, &rects, &img] {
 		QByteArray current = setlocale(LC_ALL, NULL);
 		setlocale(LC_ALL, "C");
 		tesseract::TessBaseAPI tess;
