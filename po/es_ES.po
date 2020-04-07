@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-26 12:57+0100\n"
-"PO-Revision-Date: 2019-10-14 04:52+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"POT-Creation-Date: 2020-03-23 01:43+0100\n"
+"PO-Revision-Date: 2020-04-08 11:22+0000\n"
+"Last-Translator: Diego de la Hera <delahera@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/es/>\n"
 "Language: es_ES\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -238,9 +238,8 @@ msgid "Best fit"
 msgstr "Ajustar"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
-#, fuzzy
 msgid "Rotate page"
-msgstr "Girar todas las páginas"
+msgstr "Girar página"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
 msgid "Select rotation mode"
@@ -444,12 +443,11 @@ msgstr "Introducir palabra:"
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Agregar nueva salida después de la última página"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "Girar la página actual"
+msgstr "Insertar la nueva salida antes de la página actual"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
@@ -468,14 +466,13 @@ msgstr "Exportar a ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
-#, fuzzy
 msgid "Append document after last page"
-msgstr "Agregar al texto actual"
+msgstr "Agregar documento después de la última página"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Insert document before current page"
-msgstr ""
+msgstr "Insertar documento antes de la página actual"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
