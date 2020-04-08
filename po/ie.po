@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-26 12:57+0100\n"
+"POT-Creation-Date: 2020-04-08 14:44+0200\n"
 "PO-Revision-Date: 2018-08-19 10:40+0000\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Occidental <https://hosted.weblate.org/projects/gimagereader/"
@@ -114,7 +114,7 @@ msgstr "Nómine"
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
 #: ../gtk/src/Utils.cc:76 ../qt/data/ConfigDialog.ui.h:27
-#: ../qt/data/MainWindow.ui.h:12
+#: ../qt/data/MainWindow.ui.h:13
 msgid "Cancel"
 msgstr "Anullar"
 
@@ -178,7 +178,7 @@ msgid ""
 "crash occurred.\n"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:39
+#: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
 msgstr ""
 
@@ -202,19 +202,19 @@ msgstr "Collar"
 msgid "Take Screenshot"
 msgstr "Capturar li ecran"
 
-#: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:23
+#: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:24
 msgid "Zoom in"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:8 ../qt/data/MainWindow.ui.h:25
+#: ../gtk/data/MainWindow.ui.h:8 ../qt/data/MainWindow.ui.h:26
 msgid "Zoom out"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:9 ../qt/data/MainWindow.ui.h:27
+#: ../gtk/data/MainWindow.ui.h:9 ../qt/data/MainWindow.ui.h:28
 msgid "Normal size"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:29
+#: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:30
 msgid "Best fit"
 msgstr ""
 
@@ -238,7 +238,7 @@ msgstr ""
 msgid "Select page"
 msgstr "Selecter un lingue"
 
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:35
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
 msgstr ""
 
@@ -250,7 +250,7 @@ msgstr ""
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
-#: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:37
+#: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:38
 msgid "Autodetect layout"
 msgstr ""
 
@@ -286,46 +286,46 @@ msgstr ""
 msgid "Files"
 msgstr "Files"
 
-#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:8
+#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:9
 msgid "Device:"
 msgstr "Aparate:"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../gtk/data/TessdataManager.ui.h:4
-#: ../qt/data/MainWindow.ui.h:7 ../qt/src/TessdataManager.cc:55
+#: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:55
 msgid "Refresh"
 msgstr "Refriscar"
 
-#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:10
 msgid "Output:"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:13
+#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:14
 msgid "Mode:"
 msgstr "Mode:"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:313
-#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:344
+#: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExporter.cc:344
 msgid "Color"
 msgstr "Color"
 
 #: ../gtk/data/MainWindow.ui.h:32 ../gtk/src/hocr/HOCRPdfExporter.cc:316
-#: ../qt/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRPdfExporter.cc:345
+#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:345
 msgid "Grayscale"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:11
 msgid "Resolution:"
 msgstr "Resolution:"
 
-#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:12
 msgid "Scan"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:16
+#: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:17
 msgid "Source:"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
 msgstr ""
 
@@ -382,7 +382,7 @@ msgid "Recognition area:"
 msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:381
-#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:136
+#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:133
 msgid "Entire page"
 msgstr ""
 
@@ -402,23 +402,23 @@ msgstr ""
 msgid "Source page"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:148
+#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:155
 msgid "Protected PDF"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:70
+#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:67
 msgid "Current Page"
 msgstr "Págine actual"
 
-#: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:73
+#: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:70
 msgid "Multiple Pages..."
 msgstr "Multiplic págines..."
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:651
+#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:641
 msgid "Add Word"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:651
+#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:641
 msgid "Enter word:"
 msgstr ""
 
@@ -510,13 +510,13 @@ msgid "Previous (Shift+F3)"
 msgstr ""
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:915
-#: ../qt/src/hocr/OutputEditorHOCR.cc:801
+#: ../qt/src/hocr/OutputEditorHOCR.cc:771
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Expand all"
 msgstr ""
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:918
-#: ../qt/src/hocr/OutputEditorHOCR.cc:802
+#: ../qt/src/hocr/OutputEditorHOCR.cc:772
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Collapse all"
 msgstr ""
@@ -820,7 +820,7 @@ msgstr "Adjunter"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:911 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:798 ../qt/src/SubstitutionsManager.cc:50
+#: ../qt/src/hocr/OutputEditorHOCR.cc:768 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
 msgstr "Remover"
@@ -923,16 +923,16 @@ msgstr ""
 msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr ""
 
-#: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:170
+#: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:569
 #, fuzzy
 msgid "Page %1"
 msgstr "Págine"
 
-#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:191
+#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:189
 msgid "Failed to load image"
 msgstr "Ne successat cargar li image"
 
-#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:191
+#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:189
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -974,24 +974,24 @@ msgid "Overwrite File?"
 msgstr ""
 
 #: ../gtk/src/hocr/HOCRDocument.cc:616 ../gtk/src/hocr/OutputEditorHOCR.cc:266
-#: ../qt/src/hocr/HOCRDocument.cc:534 ../qt/src/hocr/OutputEditorHOCR.cc:270
+#: ../qt/src/hocr/HOCRDocument.cc:637 ../qt/src/hocr/OutputEditorHOCR.cc:271
 msgid "Page"
 msgstr "Págine"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:536
+#: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:639
 msgid "Text block"
 msgstr "Bloc de textu"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:620 ../gtk/src/hocr/OutputEditorHOCR.cc:272
-#: ../qt/src/hocr/HOCRDocument.cc:538 ../qt/src/hocr/OutputEditorHOCR.cc:272
+#: ../qt/src/hocr/HOCRDocument.cc:641 ../qt/src/hocr/OutputEditorHOCR.cc:273
 msgid "Paragraph"
 msgstr "Paragraf"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:540
+#: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:643
 msgid "Textline"
 msgstr "Linea de textu"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:544
+#: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:647
 msgid "Graphic"
 msgstr "Pictura"
 
@@ -999,8 +999,8 @@ msgstr "Pictura"
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1016 ../gtk/src/OutputEditorText.cc:280
 #: ../qt/src/hocr/HOCROdtExporter.cc:51 ../qt/src/hocr/HOCRPdfExporter.cc:471
-#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:922
-#: ../qt/src/OutputEditorText.cc:248
+#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:884
+#: ../qt/src/OutputEditorText.cc:249
 msgid "output"
 msgstr ""
 
@@ -1113,7 +1113,7 @@ msgid "The PDF library could not load the font '%1'."
 msgstr ""
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:282
-#: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:249
+#: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:250
 msgid "Text Files"
 msgstr "Files textual"
 
@@ -1126,165 +1126,162 @@ msgid "The text export failed: unable to write output file."
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
-#: ../qt/src/hocr/OutputEditorHOCR.cc:271
+#: ../qt/src/hocr/OutputEditorHOCR.cc:272
 msgid "Block"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
-#: ../qt/src/hocr/OutputEditorHOCR.cc:273
+#: ../qt/src/hocr/OutputEditorHOCR.cc:274
 msgid "Line"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
-#: ../qt/src/hocr/OutputEditorHOCR.cc:274
+#: ../qt/src/hocr/OutputEditorHOCR.cc:275
 msgid "Word"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
-#: ../qt/src/hocr/OutputEditorHOCR.cc:275
+#: ../qt/src/hocr/OutputEditorHOCR.cc:276
 msgid "Misspelled word"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:448
-#: ../qt/src/hocr/OutputEditorHOCR.cc:373
+#: ../qt/src/hocr/OutputEditorHOCR.cc:374
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:449
-#: ../qt/src/hocr/OutputEditorHOCR.cc:374
+#: ../qt/src/hocr/OutputEditorHOCR.cc:375
 msgid "Recognition errors"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:619
-#: ../qt/src/hocr/OutputEditorHOCR.cc:571
-#: ../qt/src/hocr/OutputEditorHOCR.cc:583
+#: ../qt/src/hocr/OutputEditorHOCR.cc:561
+#: ../qt/src/hocr/OutputEditorHOCR.cc:573
 msgid "Multiple values"
 msgstr ""
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:803
-#: ../qt/src/hocr/OutputEditorHOCR.cc:712
+#: ../qt/src/hocr/OutputEditorHOCR.cc:702
 msgid "Merge"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:811
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:902
-#: ../qt/src/hocr/OutputEditorHOCR.cc:714
-#: ../qt/src/hocr/OutputEditorHOCR.cc:796
+#: ../qt/src/hocr/OutputEditorHOCR.cc:704
+#: ../qt/src/hocr/OutputEditorHOCR.cc:766
 msgid "Split from parent"
 msgstr ""
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:822
-#: ../qt/src/hocr/OutputEditorHOCR.cc:718
+#: ../qt/src/hocr/OutputEditorHOCR.cc:708
 msgid "Swap"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:846
-#: ../qt/src/hocr/OutputEditorHOCR.cc:764
+#: ../qt/src/hocr/OutputEditorHOCR.cc:751
 msgid "Add graphic region"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:849
-#: ../qt/src/hocr/OutputEditorHOCR.cc:765
+#: ../qt/src/hocr/OutputEditorHOCR.cc:752
 msgid "Add text block"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:853
-#: ../qt/src/hocr/OutputEditorHOCR.cc:767
+#: ../qt/src/hocr/OutputEditorHOCR.cc:754
 msgid "Add paragraph"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:857
-#: ../qt/src/hocr/OutputEditorHOCR.cc:769
+#: ../qt/src/hocr/OutputEditorHOCR.cc:756
 msgid "Add line"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:861
-#: ../qt/src/hocr/OutputEditorHOCR.cc:771
+#: ../qt/src/hocr/OutputEditorHOCR.cc:758
 msgid "Add word"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:877
-#: ../qt/src/hocr/OutputEditorHOCR.cc:781
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:877 ../qt/src/hocr/HOCRDocument.cc:72
 msgid "No suggestions"
 msgstr "Null suggestiones"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:883
-#: ../qt/src/hocr/OutputEditorHOCR.cc:785
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:883 ../qt/src/hocr/HOCRDocument.cc:76
 msgid "Add to dictionary"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:889
-#: ../qt/src/hocr/OutputEditorHOCR.cc:787
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:889 ../qt/src/hocr/HOCRDocument.cc:80
 msgid "Ignore word"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:952
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1018
-#: ../qt/src/hocr/OutputEditorHOCR.cc:867
-#: ../qt/src/hocr/OutputEditorHOCR.cc:924
+#: ../qt/src/hocr/OutputEditorHOCR.cc:829
+#: ../qt/src/hocr/OutputEditorHOCR.cc:886
 msgid "hOCR HTML Files"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:953
-#: ../qt/src/hocr/OutputEditorHOCR.cc:867
+#: ../qt/src/hocr/OutputEditorHOCR.cc:829
 msgid "Open hOCR File"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:905 ../qt/src/SourceManager.cc:130
+#: ../qt/src/hocr/OutputEditorHOCR.cc:867 ../qt/src/SourceManager.cc:137
 msgid ""
 "The following files could not be opened:\n"
 "%1"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
-#: ../qt/src/hocr/OutputEditorHOCR.cc:908
+#: ../qt/src/hocr/OutputEditorHOCR.cc:870
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:911 ../qt/src/SourceManager.cc:130
+#: ../qt/src/hocr/OutputEditorHOCR.cc:873 ../qt/src/SourceManager.cc:137
 msgid "Unable to open files"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1019
-#: ../qt/src/hocr/OutputEditorHOCR.cc:924
+#: ../qt/src/hocr/OutputEditorHOCR.cc:886
 msgid "Save hOCR Output..."
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:931 ../qt/src/OutputEditorText.cc:256
+#: ../qt/src/hocr/OutputEditorHOCR.cc:893 ../qt/src/OutputEditorText.cc:257
 msgid "Failed to save output"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:931 ../qt/src/OutputEditorText.cc:256
+#: ../qt/src/hocr/OutputEditorHOCR.cc:893 ../qt/src/OutputEditorText.cc:257
 msgid "Check that you have writing permissions in the selected folder."
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:269
+#: ../qt/src/hocr/OutputEditorHOCR.cc:954 ../qt/src/OutputEditorText.cc:270
 msgid "Output not saved"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:269
+#: ../qt/src/hocr/OutputEditorHOCR.cc:954 ../qt/src/OutputEditorText.cc:270
 msgid "Save output before proceeding?"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:192
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1089 ../qt/src/OutputEditorText.cc:162
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1051 ../qt/src/OutputEditorText.cc:163
 msgid "Replacing..."
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1240 ../gtk/src/OutputEditorText.cc:200
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1112 ../qt/src/OutputEditorText.cc:170
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1074 ../qt/src/OutputEditorText.cc:171
 msgid "Applying substitutions..."
 msgstr ""
 
@@ -1296,7 +1293,7 @@ msgstr ""
 msgid "Select an image to begin..."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:310 ../qt/src/MainWindow.cc:305
+#: ../gtk/src/MainWindow.cc:310
 msgid "Multiple sources"
 msgstr ""
 
@@ -1397,7 +1394,7 @@ msgstr ""
 msgid "No spelling dictionaries found for '%1'."
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:147
+#: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:148
 msgid "Stripping line breaks..."
 msgstr ""
 
@@ -1405,23 +1402,22 @@ msgstr ""
 msgid "Check spelling"
 msgstr "Controlar ortografie"
 
-#: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:206
+#: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:207
 msgid "File: %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:40
-#: ../qt/src/OutputEditorText.cc:209
+#: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:210
 msgid "Page: %1"
 msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:255 ../gtk/src/Recognizer.cc:478
-#: ../qt/src/Recognizer.cc:238
+#: ../qt/src/Recognizer.cc:235
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:249
+#: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:250
 msgid "Save Output..."
 msgstr ""
 
@@ -1490,12 +1486,12 @@ msgstr ""
 msgid "Manage languages..."
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:381 ../qt/src/Recognizer.cc:136
+#: ../gtk/src/Recognizer.cc:381 ../qt/src/Recognizer.cc:133
 msgid "Current selection"
 msgstr "Actual selection"
 
-#: ../gtk/src/Recognizer.cc:472 ../qt/src/Recognizer.cc:231
-#: ../qt/src/Recognizer.cc:343
+#: ../gtk/src/Recognizer.cc:472 ../qt/src/Recognizer.cc:228
+#: ../qt/src/Recognizer.cc:340
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr ""
 
@@ -1506,14 +1502,14 @@ msgid ""
 msgstr ""
 
 #: ../gtk/src/Recognizer.cc:508 ../gtk/src/Recognizer.cc:539
-#: ../gtk/src/Recognizer.cc:552 ../qt/src/Recognizer.cc:264
-#: ../qt/src/Recognizer.cc:292 ../qt/src/Recognizer.cc:305
-#: ../qt/src/Recognizer.cc:394
+#: ../gtk/src/Recognizer.cc:552 ../qt/src/Recognizer.cc:261
+#: ../qt/src/Recognizer.cc:289 ../qt/src/Recognizer.cc:302
+#: ../qt/src/Recognizer.cc:393
 msgid "Recognizing..."
 msgstr ""
 
 #: ../gtk/src/Recognizer.cc:513 ../gtk/src/Recognizer.cc:522
-#: ../qt/src/Recognizer.cc:207 ../qt/src/Recognizer.cc:420
+#: ../qt/src/Recognizer.cc:204 ../qt/src/Recognizer.cc:418
 msgid "Recognition errors occurred"
 msgstr ""
 
@@ -1521,7 +1517,7 @@ msgstr ""
 msgid "The following errors occurred:%1"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:522 ../qt/src/Recognizer.cc:207
+#: ../gtk/src/Recognizer.cc:522 ../qt/src/Recognizer.cc:204
 msgid "Failed to initialize tesseract"
 msgstr ""
 
@@ -1580,79 +1576,79 @@ msgstr ""
 msgid "Access to scanner is denied."
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:145
+#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:152
 msgid "Enter password for file '%1':"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:172
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:179
 msgid "PDF with text"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:172
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:179
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:236
+#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:246
 msgid "Images and PDFs"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:237
+#: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:247
 msgid "Select Files"
 msgstr "Selecter files"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:273
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:283
 msgid "Clipboard Error"
 msgstr "Errore del Paperiere"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:273
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:283
 msgid "Failed to read the clipboard."
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:232 ../qt/src/SourceManager.cc:277
-#: ../qt/src/SourceManager.cc:283
+#: ../gtk/src/SourceManager.cc:232 ../qt/src/SourceManager.cc:287
+#: ../qt/src/SourceManager.cc:293
 msgid "Pasted %1"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:290
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:300
 msgid "Screenshot Error"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:290
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:300
 msgid "Failed to take screenshot."
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:294
+#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:304
 msgid "Screenshot %1"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:299
+#: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:309
 msgid "Saving image..."
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:312
+#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:322
 msgid "Cannot Write File"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:312
+#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:322
 msgid "Could not write to %1."
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:287 ../qt/src/SourceManager.cc:334
+#: ../gtk/src/SourceManager.cc:287
 msgid "Delete File?"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:287 ../qt/src/SourceManager.cc:334
+#: ../gtk/src/SourceManager.cc:287
 msgid "The following files will be deleted:%1"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:385
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:431
 msgid "Missing File"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:385
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:431
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
@@ -1853,68 +1849,72 @@ msgid ""
 "about where the crash occurred.</p></body></html>"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:17
-msgid "Flatbed"
+#: ../qt/data/MainWindow.ui.h:6
+msgid "Thumbnails"
 msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:18
-msgid "ADF Front"
+msgid "Flatbed"
 msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:19
-msgid "ADF Back"
+msgid "ADF Front"
 msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:20
+msgid "ADF Back"
+msgstr ""
+
+#: ../qt/data/MainWindow.ui.h:21
 msgid "ADF Duplex"
 msgstr ""
 
 #. Remove & from some labels which designer insists in adding
-#: ../qt/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:50
+#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:50
 msgid "Sources"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:22
+#: ../qt/data/MainWindow.ui.h:23
 msgid "Zoom In"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:24
+#: ../qt/data/MainWindow.ui.h:25
 msgid "Zoom Out"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:26
+#: ../qt/data/MainWindow.ui.h:27
 msgid "Normal Size"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:28
+#: ../qt/data/MainWindow.ui.h:29
 msgid "Best Fit"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:30
+#: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate Left"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:31
+#: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate left"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:32
+#: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate Right"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:33
+#: ../qt/data/MainWindow.ui.h:34
 msgid "Rotate right"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:34
+#: ../qt/data/MainWindow.ui.h:35
 msgid "Image Controls"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:36
+#: ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect Layout"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:38
+#: ../qt/data/MainWindow.ui.h:39
 msgid "Toggle Output Pane"
 msgstr ""
 
@@ -1952,42 +1952,60 @@ msgstr ""
 msgid "Find and Replace"
 msgstr ""
 
+#: ../qt/src/MainWindow.cc:305
+msgid "Multiple sources (%1)"
+msgstr ""
+
 #: ../qt/src/MainWindow.cc:599
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
 msgstr ""
 
-#: ../qt/src/Recognizer.cc:76
+#: ../qt/src/OutputEditorText.cc:40
+#, fuzzy
+msgid "Page: %1\n"
+msgstr "Págine"
+
+#: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
 msgstr ""
 
-#: ../qt/src/Recognizer.cc:89
+#: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
 msgstr ""
 
-#: ../qt/src/Recognizer.cc:90
+#: ../qt/src/Recognizer.cc:87
 msgid "Skip processing source"
 msgstr ""
 
-#: ../qt/src/Recognizer.cc:237
+#: ../qt/src/Recognizer.cc:234
 msgid "- Page %1: failed to render page"
 msgstr ""
 
-#: ../qt/src/Recognizer.cc:349
+#: ../qt/src/Recognizer.cc:346
 msgid "- %1:%2: failed to render page"
 msgstr ""
 
-#: ../qt/src/Recognizer.cc:362
+#: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
 msgstr ""
 
-#: ../qt/src/Recognizer.cc:366
+#: ../qt/src/Recognizer.cc:363
 msgid "- %1: failed to create output file"
 msgstr ""
 
-#: ../qt/src/Recognizer.cc:422
+#: ../qt/src/Recognizer.cc:418
 msgid "The following errors occurred:"
+msgstr ""
+
+#: ../qt/src/SourceManager.cc:345
+#, fuzzy
+msgid "Delete Files"
+msgstr "Selecter files"
+
+#: ../qt/src/SourceManager.cc:345
+msgid "Delete the following files?"
 msgstr ""
 
 #: ../qt/src/TessdataManager.cc:280

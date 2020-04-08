@@ -104,6 +104,8 @@ qt/src/DjVuDocument.cc
 qt/src/DjVuDocument.hh
 qt/src/FileDialogs.cc
 qt/src/FileDialogs.hh
+qt/src/FileTreeModel.cc
+qt/src/FileTreeModel.hh
 qt/src/hocr/DisplayerToolHOCR.cc
 qt/src/hocr/DisplayerToolHOCR.hh
 qt/src/hocr/HOCRDocument.cc
@@ -112,6 +114,10 @@ qt/src/hocr/HOCROdtExporter.cc
 qt/src/hocr/HOCROdtExporter.hh
 qt/src/hocr/HOCRPdfExporter.cc
 qt/src/hocr/HOCRPdfExporter.hh
+qt/src/hocr/HOCRProofReadWidget.cc
+qt/src/hocr/HOCRProofReadWidget.hh
+qt/src/hocr/HOCRSpellChecker.cc
+qt/src/hocr/HOCRSpellChecker.hh
 qt/src/hocr/HOCRTextExporter.cc
 qt/src/hocr/HOCRTextExporter.hh
 qt/src/hocr/OutputEditorHOCR.cc
