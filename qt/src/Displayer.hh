@@ -66,6 +66,10 @@ public:
 	}
 	void setBlockAutoscale(bool block);
 
+signals:
+	void viewportChanged();
+
+
 public slots:
 	void autodetectOCRAreas();
 
@@ -84,6 +88,7 @@ private:
 	DisplayerTool* m_tool = nullptr;
 	QPoint m_panPos;
 	QTimer m_renderTimer;
+	QTransform m_viewportTransform;
 
 	void keyPressEvent(QKeyEvent* event) override;
 	void mousePressEvent(QMouseEvent* event) override;
@@ -102,6 +107,7 @@ private:
 	QFutureWatcher<QImage> m_thumbnailWatcher;
 
 private slots:
+	void checkViewportChanged();
 	void scaleImage();
 	void queueRenderImage();
 	bool renderImage();

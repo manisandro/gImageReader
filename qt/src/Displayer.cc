@@ -93,6 +93,10 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 		QSignalBlocker blocker(ui.listWidgetThumbnails);
 		ui.listWidgetThumbnails->setCurrentRow(page - 1);
 	});
+	connect(horizontalScrollBar(), &QScrollBar::valueChanged, this, &Displayer::checkViewportChanged);
+	connect(horizontalScrollBar(), &QScrollBar::rangeChanged, this, &Displayer::checkViewportChanged);
+	connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &Displayer::checkViewportChanged);
+	connect(verticalScrollBar(), &QScrollBar::rangeChanged, this, &Displayer::checkViewportChanged);
 
 	ADD_SETTING(SwitchSetting("thumbnails", ui.checkBoxThumbnails, true));
 }
@@ -326,6 +330,13 @@ void Displayer::autodetectOCRAreas() {
 	m_tool->autodetectOCRAreas();
 }
 
+void Displayer::checkViewportChanged() {
+	if(m_viewportTransform != viewportTransform()) {
+		m_viewportTransform = viewportTransform();
+		emit viewportChanged();
+	}
+}
+
 void Displayer::setZoom(Zoom action, ViewportAnchor anchor) {
 	if(!m_imageItem) {
 		return;
@@ -369,6 +380,7 @@ void Displayer::setZoom(Zoom action, ViewportAnchor anchor) {
 	}
 	setUpdatesEnabled(true);
 	update();
+	checkViewportChanged();
 }
 
 void Displayer::setAngle(double angle) {

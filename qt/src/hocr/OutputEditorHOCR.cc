@@ -42,6 +42,7 @@
 #include "HOCRDocument.hh"
 #include "HOCROdtExporter.hh"
 #include "HOCRPdfExporter.hh"
+#include "HOCRProofReadWidget.hh"
 #include "HOCRSpellChecker.hh"
 #include "HOCRTextExporter.hh"
 #include "MainWindow.hh"
@@ -268,6 +269,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.treeViewHOCR->setColumnHidden(1, true);
 	ui.treeViewHOCR->setItemDelegateForColumn(0, new HOCRTextDelegate(ui.treeViewHOCR));
 
+	m_proofReadWidget = new HOCRProofReadWidget(ui.treeViewHOCR, MAIN->getDisplayer());
+
 	ui.comboBoxNavigate->addItem(_("Page"), "ocr_page");
 	ui.comboBoxNavigate->addItem(_("Block"), "ocr_carea");
 	ui.comboBoxNavigate->addItem(_("Paragraph"), "ocr_par");
@@ -302,7 +305,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ConfigSettings::get<SwitchSetting>("systemoutputfont"), &FontSetting::changed, this, &OutputEditorHOCR::setFont);
 	connect(ui.treeViewHOCR->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &OutputEditorHOCR::showItemProperties);
 	connect(ui.treeViewHOCR, &QTreeView::customContextMenuRequested, this, &OutputEditorHOCR::showTreeWidgetContextMenu);
-	connect(ui.tabWidget, &QTabWidget::currentChanged, this, &OutputEditorHOCR::updateSourceText);
+	connect(ui.tabWidgetProps, &QTabWidget::currentChanged, this, &OutputEditorHOCR::updateSourceText);
 	connect(m_tool, &DisplayerToolHOCR::bboxChanged, this, &OutputEditorHOCR::updateCurrentItemBBox);
 	connect(m_tool, &DisplayerToolHOCR::bboxDrawn, this, &OutputEditorHOCR::bboxDrawn);
 	connect(m_tool, &DisplayerToolHOCR::positionPicked, this, &OutputEditorHOCR::pickItem);
@@ -324,6 +327,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 OutputEditorHOCR::~OutputEditorHOCR() {
 	m_previewTimer.stop();
 	delete m_preview;
+	delete m_proofReadWidget;
 	delete m_widget;
 }
 
@@ -587,7 +591,7 @@ void OutputEditorHOCR::updateCurrentItemBBox(QRect bbox) {
 }
 
 void OutputEditorHOCR::updateSourceText() {
-	if(ui.tabWidget->currentWidget() == ui.plainTextEditOutput) {
+	if(ui.tabWidgetProps->currentWidget() == ui.plainTextEditOutput) {
 		QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
 		const HOCRItem* currentItem = m_document->itemAtIndex(current);
 		if(currentItem) {
@@ -977,6 +981,7 @@ bool OutputEditorHOCR::clear(bool hide) {
 			return false;
 		}
 	}
+	m_proofReadWidget->clear();
 	m_document->clear();
 	ui.tableWidgetProperties->setRowCount(0);
 	ui.plainTextEditOutput->clear();

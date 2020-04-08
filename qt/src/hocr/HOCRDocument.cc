@@ -56,7 +56,7 @@ void HOCRDocument::resetMisspelled(const QModelIndex& index) {
 		}
 	} else {
 		mutableItemAtIndex(index)->setMisspelled(-1);
-		emit dataChanged(index, index, {Qt::DisplayRole});
+		emit dataChanged(index, index, {Qt::ForegroundRole});
 	}
 }
 
@@ -548,25 +548,15 @@ bool HOCRDocument::setData(const QModelIndex& index, const QVariant& value, int 
 		return true;
 	} else if(role == Qt::CheckStateRole) {
 		item->setEnabled(value == Qt::Checked);
-		emit dataChanged(index, index, {Qt::CheckStateRole});
-		recursiveDataChanged(index, {Qt::CheckStateRole});
+		// Get leaf
+		QModelIndex leaf = index;
+		while(hasChildren(leaf)) {
+			leaf = this->index(rowCount(leaf) - 1, 0, leaf);
+		}
+		emit dataChanged(index, leaf, {Qt::CheckStateRole});
 		return true;
 	}
 	return false;
-}
-
-void HOCRDocument::recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, const QStringList& itemClasses) {
-	int rows = rowCount(parent);
-	if(rows > 0) {
-		QModelIndex firstChild = index(0, 0, parent);
-		QString childItemClass = itemAtIndex(firstChild)->itemClass();
-		if(itemClasses.isEmpty() || itemClasses.contains(childItemClass)) {
-			emit dataChanged(firstChild, index(rows - 1, 0, parent), roles);
-		}
-		for(int i = 0; i < rows; ++i) {
-			recursiveDataChanged(index(i, 0, parent), roles, itemClasses);
-		}
-	}
 }
 
 void HOCRDocument::recomputeBBoxes(HOCRItem* item) {
@@ -745,6 +735,10 @@ HOCRItem::HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem* parent,
 		} else {
 			m_attrs[attrName] = attributes.item(i).nodeValue();
 		}
+	}
+	// Map ocr_header/ocr_caption to ocr_line
+	if(m_attrs["class"] == "ocr_header" || m_attrs["class"] == "ocr_caption") {
+		m_attrs["class"] = "ocr_line";
 	}
 	// Adjust item id based on pageId
 	if(parent) {

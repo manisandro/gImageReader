@@ -105,7 +105,6 @@ private:
 	void takeItem(HOCRItem* item);
 	void resetMisspelled(const QModelIndex& index);
 	QList<QModelIndex> recheckItemSpelling(const QModelIndex& index) const;
-	void recursiveDataChanged(const QModelIndex& parent, const QVector<int>& roles, const QStringList& itemClasses = QStringList());
 	void recomputeBBoxes(HOCRItem* item);
 	HOCRItem* mutableItemAtIndex(const QModelIndex& index) const {
 		return index.isValid() ? static_cast<HOCRItem*>(index.internalPointer()) : nullptr;

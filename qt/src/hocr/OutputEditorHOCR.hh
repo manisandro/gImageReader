@@ -29,6 +29,7 @@ class DisplayerToolHOCR;
 class HOCRDocument;
 class HOCRItem;
 class HOCRPage;
+class HOCRProofReadWidget;
 class QGraphicsPixmapItem;
 
 class OutputEditorHOCR : public OutputEditor {
@@ -83,6 +84,7 @@ private:
 	DisplayerToolHOCR* m_tool;
 	QWidget* m_widget;
 	QGraphicsPixmapItem* m_preview = nullptr;
+	HOCRProofReadWidget* m_proofReadWidget = nullptr;
 	QTimer m_previewTimer;
 	UI_OutputEditorHOCR ui;
 	HTMLHighlighter* m_highlighter;

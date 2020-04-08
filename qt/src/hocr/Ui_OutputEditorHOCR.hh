@@ -45,7 +45,7 @@ public:
 
 	QToolBar* toolBarOutput;
 	QToolBar* toolBarNavigate;
-	QTabWidget* tabWidget;
+	QTabWidget* tabWidgetProps;
 
 	QSplitter* splitter;
 	QTreeView* treeViewHOCR;
@@ -172,20 +172,20 @@ public:
 		toolBarNavigate->addAction(actionCollapseAll);
 		treeContainer->layout()->addWidget(toolBarNavigate);
 
-		tabWidget = new QTabWidget(widget);
+		tabWidgetProps = new QTabWidget(widget);
 
 		tableWidgetProperties = new QTableWidget(widget);
 		tableWidgetProperties->setColumnCount(2);
 		tableWidgetProperties->horizontalHeader()->setVisible(false);
 		tableWidgetProperties->verticalHeader()->setVisible(false);
 		tableWidgetProperties->horizontalHeader()->setStretchLastSection(true);
-		tabWidget->addTab(tableWidgetProperties, gettext("Properties"));
+		tabWidgetProps->addTab(tableWidgetProperties, gettext("Properties"));
 
 		plainTextEditOutput = new OutputTextEdit(widget);
 		plainTextEditOutput->setReadOnly(true);
-		tabWidget->addTab(plainTextEditOutput, gettext("Source"));
+		tabWidgetProps->addTab(plainTextEditOutput, gettext("Source"));
 
-		splitter->addWidget(tabWidget);
+		splitter->addWidget(tabWidgetProps);
 	}
 };
 
