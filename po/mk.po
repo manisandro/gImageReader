@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-08 14:45+0200\n"
-"PO-Revision-Date: 2020-04-09 09:38+0000\n"
+"PO-Revision-Date: 2020-04-09 09:40+0000\n"
 "Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -832,7 +832,7 @@ msgstr ""
 
 #: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:45
 msgid "Tessdata Manager"
-msgstr ""
+msgstr "Tessdata Менаџер"
 
 #: ../gtk/data/TessdataManager.ui.h:5 ../qt/src/TessdataManager.cc:47
 msgid "Manage installed languages:"
