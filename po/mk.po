@@ -1858,7 +1858,7 @@ msgstr "Преден ADF"
 
 #: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Back"
-msgstr ""
+msgstr "Заден ADF"
 
 #: ../qt/data/MainWindow.ui.h:21
 msgid "ADF Duplex"
