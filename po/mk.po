@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-08 14:45+0200\n"
-"PO-Revision-Date: 2020-04-09 10:17+0000\n"
+"PO-Revision-Date: 2020-04-09 10:24+0000\n"
 "Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -1306,7 +1306,7 @@ msgstr ""
 
 #: ../gtk/src/MainWindow.cc:462 ../qt/src/MainWindow.cc:442
 msgid "Download"
-msgstr ""
+msgstr "Преземи"
 
 #: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:443
 msgid "Changelog"
