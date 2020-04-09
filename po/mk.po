@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-08 14:45+0200\n"
-"PO-Revision-Date: 2020-04-09 08:52+0000\n"
+"PO-Revision-Date: 2020-04-09 09:37+0000\n"
 "Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -552,217 +552,217 @@ msgstr "Претходна ознака (.?!)"
 
 #: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:66
 msgid "Preceded or succeeded by quote"
-msgstr ""
+msgstr "Претходно или следно по ознака"
 
 #: ../gtk/data/OutputEditorText.ui.h:7 ../qt/src/Ui_OutputEditorText.hh:68
 msgid "Other options"
-msgstr ""
+msgstr "Други опции"
 
 #: ../gtk/data/OutputEditorText.ui.h:8 ../qt/src/Ui_OutputEditorText.hh:70
 msgid "Join hyphenated words"
-msgstr ""
+msgstr "Спои поделени зборови"
 
 #: ../gtk/data/OutputEditorText.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:72
 msgid "Collapse whitespace"
-msgstr ""
+msgstr "Пропаѓање на бел простор"
 
 #: ../gtk/data/OutputEditorText.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:74
 msgid "Preserve paragraphs"
-msgstr ""
+msgstr "Заштити пасуси"
 
 #: ../gtk/data/OutputEditorText.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:76
 msgid "Visual aids"
-msgstr ""
+msgstr "Визуелни помагала"
 
 #: ../gtk/data/OutputEditorText.ui.h:12 ../qt/src/Ui_OutputEditorText.hh:78
 msgid "Draw whitespace"
-msgstr ""
+msgstr "Исцртај белина"
 
 #: ../gtk/data/OutputEditorText.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
-msgstr ""
+msgstr "Прекин на линијата на избраниот текст"
 
 #: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:109
 #: ../qt/src/Ui_OutputEditorText.hh:110
 msgid "Undo"
-msgstr ""
+msgstr "Врати"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:112
 #: ../qt/src/Ui_OutputEditorText.hh:113
 msgid "Redo"
-msgstr ""
+msgstr "Обнови"
 
 #: ../gtk/data/PdfExportDialog.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
-msgstr ""
+msgstr "PDF експорт"
 
 #: ../gtk/data/PdfExportDialog.ui.h:4 ../qt/data/PdfExportDialog.ui.h:4
 msgid "Output mode:"
-msgstr ""
+msgstr "Режим за излез:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportDialog.ui.h:6
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: ../gtk/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportDialog.ui.h:7
 msgid "PDF with invisible text overlay"
-msgstr ""
+msgstr "PDF со невидливо преклопување на текст"
 
 #: ../gtk/data/PdfExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Format:"
-msgstr ""
+msgstr "Формат:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
 msgid "Compression:"
-msgstr ""
+msgstr "Компресија:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression quality:"
-msgstr ""
+msgstr "Квалитет на компресија:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
 msgid "DPI:"
-msgstr ""
+msgstr "DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "Алгоритaм за дитеринг:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
-msgstr ""
+msgstr "Подесување на слика:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
 msgid "Uniformize line and word spacing"
-msgstr ""
+msgstr "Изедначете го растојанието помеѓу линијата и зборовите"
 
 #: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
-msgstr ""
+msgstr "Отфрли група сродни фонтови:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
 msgid "Fallback font family:"
-msgstr ""
+msgstr "Повлечи група сродни фонтови:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
 msgid "Override font size:"
-msgstr ""
+msgstr "Отфрли големина на фонт:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
-msgstr ""
+msgstr "Опсег на фонт:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
 msgid "pt"
-msgstr ""
+msgstr "pt"
 
 #: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "Зачувај простори пошироки од:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:20 ../qt/data/PdfExportDialog.ui.h:24
 msgid "characters"
-msgstr ""
+msgstr "карактери"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Sanitize hyphens before line breaks"
-msgstr ""
+msgstr "Исчисти црти пред прелом на ред"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
-msgstr ""
+msgstr "Подесување на текст:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:23 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Paper size:"
-msgstr ""
+msgstr "Големина на хартија:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:24 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Width"
-msgstr ""
+msgstr "Ширина"
 
 #: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:12
 msgid "Height"
-msgstr ""
+msgstr "Висина"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
 msgid "Treat image sources as having true DPI:"
-msgstr ""
+msgstr "Третирајте ги изворните слики како да имаат вистински DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
-msgstr ""
+msgstr "Основен (бејзик)"
 
 #: ../gtk/data/PdfExportDialog.ui.h:28 ../qt/data/PdfExportDialog.ui.h:31
 msgid "PDF version:"
-msgstr ""
+msgstr "PDF верзија:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:33
 msgid "Password:"
-msgstr ""
+msgstr "Лозинка:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:34
 msgid "Confirm password:"
-msgstr ""
+msgstr "Потврди лозинка:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:32
 msgid "Encryption (optional):"
-msgstr ""
+msgstr "Енкрипција (опционално):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:36
 msgid "Author:"
-msgstr ""
+msgstr "Автор:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:38
 msgid "Title:"
-msgstr ""
+msgstr "Наслов:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:40
 msgid "Subject:"
-msgstr ""
+msgstr "Предмет:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:37
 msgid "Creator:"
-msgstr ""
+msgstr "Автор:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:39
 msgid "Producer:"
-msgstr ""
+msgstr "Продуцент:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:41
 msgid "Keywords:"
-msgstr ""
+msgstr "Клучни зборови:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:35
 msgid "Additional information (optional):"
-msgstr ""
+msgstr "Дополнителни информации (опционално):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:39 ../qt/data/PdfExportDialog.ui.h:42
 msgid "Import from current source"
-msgstr ""
+msgstr "Увези од тековниот извор"
 
 #: ../gtk/data/PdfExportDialog.ui.h:40 ../qt/data/PdfExportDialog.ui.h:30
 msgid "Advanced"
-msgstr ""
+msgstr "Напредно"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:4
 msgid "Find"
-msgstr ""
+msgstr "Пронајди"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:2 ../qt/data/SearchReplaceFrame.ui.h:2
 msgid "Replace"
-msgstr ""
+msgstr "Замени"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:3 ../qt/data/SearchReplaceFrame.ui.h:3
 msgid "Replace all"
-msgstr ""
+msgstr "Замени се"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:4 ../qt/data/SearchReplaceFrame.ui.h:5
 msgid "Find previous"
-msgstr ""
+msgstr "Пронајди претходно"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:5 ../qt/data/SearchReplaceFrame.ui.h:6
 msgid "Find next"
-msgstr ""
+msgstr "Пронајди следно"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:6 ../qt/data/SearchReplaceFrame.ui.h:7
 msgid "Match case"
@@ -772,24 +772,24 @@ msgstr ""
 #: ../gtk/data/SubstitutionsManager.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:1
 #: ../qt/src/SubstitutionsManager.cc:36
 msgid "Substitutions"
-msgstr ""
+msgstr "Замени"
 
 #: ../gtk/data/SelectionMenu.ui.h:1 ../qt/src/DisplayerToolSelect.cc:239
 msgid "Delete"
-msgstr ""
+msgstr "Избриши"
 
 #: ../gtk/data/SelectionMenu.ui.h:2 ../qt/src/DisplayerToolSelect.cc:225
 msgid "Order:"
-msgstr ""
+msgstr "Ред:"
 
 #: ../gtk/data/SelectionMenu.ui.h:3 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
 #: ../qt/src/DisplayerToolSelect.cc:240 ../qt/src/hocr/DisplayerToolHOCR.cc:31
 msgid "Recognize"
-msgstr ""
+msgstr "Препознава"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:241
 msgid "Recognize to clipboard"
-msgstr ""
+msgstr "Препознава клипборд"
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:242
 msgid "Save as image"
