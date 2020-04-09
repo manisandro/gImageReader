@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-08 14:45+0200\n"
-"PO-Revision-Date: 2020-04-09 10:24+0000\n"
+"PO-Revision-Date: 2020-04-09 14:06+0000\n"
 "Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -72,31 +72,31 @@ msgstr "Вертикално"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr ""
+msgstr "Инсталирај речници за спелување што недостасуваат"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr ""
+msgstr "Автоматски провери за нови верзии"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr ""
+msgstr "Претходно дефинирани дефиниции за јазици:"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
-msgstr ""
+msgstr "Додатни дефиниции за јазици:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr ""
+msgstr "Префикс на датотекана на тесеракт јазикот"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
-msgstr ""
+msgstr "Префикс"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr ""
+msgstr "ISO 639-1 кодот за јазик проследен од кодот за земја"
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
@@ -1514,7 +1514,7 @@ msgstr ""
 
 #: ../gtk/src/Recognizer.cc:522 ../qt/src/Recognizer.cc:204
 msgid "Failed to initialize tesseract"
-msgstr ""
+msgstr "Не успеа да се иницијализира тесеракт"
 
 #: ../gtk/src/scanner/ScannerSane.cc:86 ../gtk/src/scanner/ScannerTwain.cc:287
 #: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
