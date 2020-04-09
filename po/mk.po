@@ -922,7 +922,7 @@ msgstr ""
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:569
 msgid "Page %1"
-msgstr ""
+msgstr "Страна %1"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:189
 msgid "Failed to load image"
