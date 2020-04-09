@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-08 14:45+0200\n"
-"PO-Revision-Date: 2020-04-09 09:41+0000\n"
-"Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
+"PO-Revision-Date: 2020-04-09 09:44+0000\n"
+"Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
 "Language: mk\n"
@@ -936,58 +936,59 @@ msgstr ""
 
 #: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
 msgid "PNG Images"
-msgstr ""
+msgstr "PNG Слики"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "Save Selection Image"
-msgstr ""
+msgstr "Зачувајте ја сликата за избор"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "selection.png"
-msgstr ""
+msgstr "селекција.png"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize all"
-msgstr ""
+msgstr "Препознај ги сите"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize selection"
-msgstr ""
+msgstr "Препознај го селектираното"
 
 #: ../gtk/src/DisplayerToolSelect.cc:186 ../qt/src/DisplayerToolSelect.cc:182
 msgid "Performing layout analysis"
-msgstr ""
+msgstr "Изведување анализа на распоред"
 
 #: ../gtk/src/FileDialogs.cc:235
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr ""
+"Датотеката \"% 1\" веќе постои. Дали сте сигурни дека сакате да се презапише?"
 
 #: ../gtk/src/FileDialogs.cc:237
 msgid "Overwrite File?"
-msgstr ""
+msgstr "Презапишување датотека?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:616 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/HOCRDocument.cc:637 ../qt/src/hocr/OutputEditorHOCR.cc:271
 msgid "Page"
-msgstr ""
+msgstr "Страна"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:639
 msgid "Text block"
-msgstr ""
+msgstr "Текст блок"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:620 ../gtk/src/hocr/OutputEditorHOCR.cc:272
 #: ../qt/src/hocr/HOCRDocument.cc:641 ../qt/src/hocr/OutputEditorHOCR.cc:273
 msgid "Paragraph"
-msgstr ""
+msgstr "Пасус"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:643
 msgid "Textline"
-msgstr ""
+msgstr "Текст линија"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:647
 msgid "Graphic"
-msgstr ""
+msgstr "График"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:65 ../gtk/src/hocr/HOCRPdfExporter.cc:489
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
@@ -996,47 +997,47 @@ msgstr ""
 #: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:884
 #: ../qt/src/OutputEditorText.cc:249
 msgid "output"
-msgstr ""
+msgstr "излез"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:54
 msgid "OpenDocument Text Documents"
-msgstr ""
+msgstr "ОтвориДокумент Текст Документи"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:54
 msgid "Save ODT Output..."
-msgstr ""
+msgstr "Зачувај ODT Излез..."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:617
 #: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCROdtExporter.cc:61
 #: ../qt/src/hocr/HOCRPdfExporter.cc:601 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
-msgstr ""
+msgstr "Експортирањето не успеа"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
-msgstr ""
+msgstr "ODT експортирањето не успеа: не може да се запише излезната датотека."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:335 ../qt/src/hocr/HOCROdtExporter.cc:254
 msgid "Exporting to ODT..."
-msgstr ""
+msgstr "Експортирање во ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:358
 msgid "Same as source"
-msgstr ""
+msgstr "Исто како изворот"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:359
 msgid "Custom"
-msgstr ""
+msgstr "Приспособено"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:355
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:356
 msgid "in"
-msgstr ""
+msgstr "in"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:346
 msgid "Monochrome"
