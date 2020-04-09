@@ -516,7 +516,7 @@ msgstr ""
 #: ../qt/src/hocr/OutputEditorHOCR.cc:772
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Collapse all"
-msgstr ""
+msgstr "Скриј"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:24
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:182
