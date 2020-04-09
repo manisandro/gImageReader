@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-08 14:45+0200\n"
-"PO-Revision-Date: 2020-04-09 14:29+0000\n"
+"PO-Revision-Date: 2020-04-09 14:38+0000\n"
 "Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -1609,7 +1609,7 @@ msgstr ""
 
 #: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:300
 msgid "Screenshot Error"
-msgstr ""
+msgstr "Грешка во слика од екранот"
 
 #: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:300
 msgid "Failed to take screenshot."
