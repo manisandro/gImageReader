@@ -82,6 +82,7 @@ SourceManager::~SourceManager() {
 int SourceManager::addSources(const QStringList& files, bool suppressTextWarning, const QString& parentDir) {
 	QStringList failed;
 	QItemSelection sel;
+	QModelIndex index;
 	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList>>("recentitems")->getValue();
 	int added = 0;
 	PdfWithTextAction textAction = suppressTextWarning ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
@@ -93,7 +94,7 @@ int SourceManager::addSources(const QStringList& files, bool suppressTextWarning
 			failed.append(filename);
 			continue;
 		}
-		QModelIndex index = m_fileTreeModel->findFile(filename);
+		index = m_fileTreeModel->findFile(filename);
 		if(index.isValid()) {
 			sel.select(index, index);
 			++added;
@@ -122,6 +123,11 @@ int SourceManager::addSources(const QStringList& files, bool suppressTextWarning
 	if(added > 0) {
 		if(parentDir.isEmpty()) {
 			ui.treeViewSources->selectionModel()->select(sel, QItemSelectionModel::Select);
+			QModelIndex parent = index.parent();
+			while(parent.isValid()) {
+				ui.treeViewSources->expand(parent);
+				parent = parent.parent();
+			}
 		} else if(added > 0) {
 			QModelIndex idx = m_fileTreeModel->findFile(parentDir, false);
 			if(idx.isValid()) {
