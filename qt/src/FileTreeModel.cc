@@ -188,7 +188,7 @@ QModelIndex FileTreeModel::findFile(const QString& filePath, bool isFile) const 
 	}
 	if(isFile) {
 		auto it = cur->files.find(fileName);
-		return it != cur->files.end() ? index(cur->files.index(*it), 0, idx) : QModelIndex();
+		return it != cur->files.end() ? index(cur->dirs.size() + cur->files.index(*it), 0, idx) : QModelIndex();
 	} else {
 		auto it = cur->dirs.find(fileName);
 		return it != cur->dirs.end() ? index(cur->dirs.index(*it), 0, idx) : QModelIndex();
