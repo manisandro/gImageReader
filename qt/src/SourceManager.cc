@@ -243,7 +243,7 @@ void SourceManager::openSources() {
 	}
 	formats.insert("*.pdf");
 	formats.insert("*.djvu");
-	QString filter = QString("%1 (%2)").arg(_("Images and PDFs")).arg(QStringList(formats.toList()).join(" "));
+	QString filter = QString("%1 (%2)").arg(_("Images and PDFs")).arg(QStringList(formats.values()).join(" "));
 	addSources(FileDialogs::openDialog(_("Select Files"), initialFolder, "sourcedir", filter, true));
 }
 
@@ -259,7 +259,7 @@ void SourceManager::addFolder() {
 	}
 	formats.insert("*.pdf");
 	formats.insert("*.djvu");
-	nameFilters = formats.toList();
+	nameFilters = formats.values();
 
 	QDirIterator it(dir, nameFilters, QDir::Files, QDirIterator::Subdirectories);
 

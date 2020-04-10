@@ -167,7 +167,7 @@ void ScannerTwain::redetect() {
 
 	// Loop through all the sources
 	while (twRC == TWRC_SUCCESS) {
-		sources.append({sourceID.ProductName, sourceID.ProductName});
+		sources.append(Device{sourceID.ProductName, sourceID.ProductName});
 		twRC = call(nullptr, DG_CONTROL, DAT_IDENTITY, MSG_GETNEXT, &sourceID);
 	}
 	emit devicesDetected(sources);

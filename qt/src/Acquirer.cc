@@ -82,7 +82,7 @@ void Acquirer::selectOutputPath() {
 	for(const QByteArray& format : QImageReader::supportedImageFormats()) {
 		formats.insert(QString("*.%1").arg(QString(format).toLower()));
 	}
-	QString filter = QString("%1 (%2)").arg(_("Images")).arg(QStringList(formats.toList()).join(" "));
+	QString filter = QString("%1 (%2)").arg(_("Images")).arg(QStringList(formats.values()).join(" "));
 	QString filename = FileDialogs::saveDialog(_("Choose Output Filename..."), m_outputPath, "sourcedir", filter);
 	if(!filename.isEmpty()) {
 		m_outputPath = filename;
