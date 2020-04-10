@@ -989,7 +989,7 @@ HOCRPage::HOCRPage(const QDomElement& element, int pageId, const QString& langua
 		m_titleAttrs.remove("pageno");
 	}
 	m_angle = m_titleAttrs["rot"].toDouble();
-	m_resolution = m_titleAttrs["res"].toInt();
+	m_resolution = m_titleAttrs.value("res", "100").toInt();
 
 	QDomElement childElement = element.firstChildElement("div");
 	while(!childElement.isNull()) {

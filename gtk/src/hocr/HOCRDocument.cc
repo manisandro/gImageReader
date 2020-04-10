@@ -1046,6 +1046,9 @@ HOCRPage::HOCRPage(const xmlpp::Element* element, int pageId, const Glib::ustrin
 	}
 	m_angle = std::atof(m_titleAttrs["rot"].c_str());
 	m_resolution = std::atoi(m_titleAttrs["res"].c_str());
+	if(m_resolution == 0) {
+		m_resolution = 100;
+	}
 
 	const xmlpp::Element* childElement = XmlUtils::firstChildElement(element, "div");
 	while(childElement) {
