@@ -141,6 +141,9 @@ QString Config::spellingLocation() const {
 
 QStringList Config::getAvailableLanguages() {
 	auto tess = Utils::initTesseract();
+	if(!tess) {
+		return QStringList();
+	}
 	GenericVector<STRING> availLanguages;
 	tess->GetAvailableLanguagesAsVector(&availLanguages);
 	QStringList result;
