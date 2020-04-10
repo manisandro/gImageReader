@@ -20,6 +20,7 @@
 #include <QActionGroup>
 #include <QDateTime>
 #include <QMessageBox>
+#include <QMouseEvent>
 #include <QtSpell.hpp>
 
 #include "ConfigSettings.hh"
