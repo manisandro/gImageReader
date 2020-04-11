@@ -255,6 +255,18 @@ void MainWindow::openFiles(const QStringList& files) {
 	m_sourceManager->addSources(files);
 }
 
+void MainWindow::openOutput(const QString& filename) {
+	if(filename.endsWith(".txt", Qt::CaseInsensitive)) {
+		if(setOutputMode(OutputModeText)) {
+			m_outputEditor->open(filename);
+		}
+	} else if(filename.endsWith(".html", Qt::CaseInsensitive)) {
+		if(setOutputMode(OutputModeHOCR)) {
+			m_outputEditor->open(filename);
+		}
+	}
+}
+
 void MainWindow::setOutputPaneVisible(bool visible) {
 	ui.actionToggleOutputPane->setChecked(visible);
 }

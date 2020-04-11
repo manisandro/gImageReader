@@ -821,15 +821,15 @@ void OutputEditorHOCR::toggleWConfColumn(bool active) {
 	ui.treeViewHOCR->setColumnHidden(1, !active);
 }
 
-void OutputEditorHOCR::open(InsertMode mode, QStringList files) {
+bool OutputEditorHOCR::open(InsertMode mode, QStringList files) {
 	if(mode == InsertMode::Replace && !clear(false)) {
-		return;
+		return false;
 	}
 	if(files.isEmpty()) {
 		files = FileDialogs::openDialog(_("Open hOCR File"), "", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")), true);
 	}
 	if(files.isEmpty()) {
-		return;
+		return false;
 	}
 	int pos = mode == InsertMode::InsertBefore ? currentPage() : m_document->pageCount();
 	QStringList failed;
@@ -861,6 +861,7 @@ void OutputEditorHOCR::open(InsertMode mode, QStringList files) {
 		if(mode == InsertMode::Replace && m_filebasename.isEmpty()) {
 			m_filebasename = QFileInfo(files.front()).completeBaseName();
 		}
+		MAIN->setOutputPaneVisible(true);
 	}
 	QStringList errorMsg;
 	if(!failed.isEmpty()) {
@@ -872,6 +873,7 @@ void OutputEditorHOCR::open(InsertMode mode, QStringList files) {
 	if(!errorMsg.isEmpty()) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), errorMsg.join("\n\n"));
 	}
+	return added > 0;
 }
 
 bool OutputEditorHOCR::save(const QString& filename) {

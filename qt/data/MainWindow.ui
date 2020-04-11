@@ -346,6 +346,9 @@
             <attribute name="headerVisible">
              <bool>false</bool>
             </attribute>
+            <attribute name="headerStretchLastSection">
+             <bool>false</bool>
+            </attribute>
            </widget>
            <widget class="QWidget" name="widgetThumbnails" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_3">

@@ -60,10 +60,11 @@ public:
 	}
 
 public slots:
+	bool open(const QString& filename) override { return open(InsertMode::Replace, {filename}); }
 	bool clear(bool hide = true) override;
 	void setLanguage(const Config::Lang& lang) override;
 	void onVisibilityChanged(bool visible) override;
-	void open(InsertMode mode, QStringList files = QStringList());
+	bool open(InsertMode mode, QStringList files = QStringList());
 	bool save(const QString& filename = "") override;
 	bool exportToODT();
 	bool exportToPDF();

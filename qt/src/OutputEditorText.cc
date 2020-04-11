@@ -242,6 +242,22 @@ void OutputEditorText::addText(const QString& text, bool insert) {
 	MAIN->setOutputPaneVisible(true);
 }
 
+bool OutputEditorText::open(const QString& filename) {
+	if(!clear(false)) {
+		return false;
+	}
+	QFile file(filename);
+	if(file.open(QIODevice::ReadOnly)) {
+		ui.plainTextEditOutput->setPlainText(file.readAll());
+		MAIN->setOutputPaneVisible(true);
+		return true;
+	} else {
+		QString errorMsg(_("The following files could not be opened:\n%1").arg(filename));
+		QMessageBox::critical(MAIN, _("Unable to open files"), errorMsg);
+		return false;
+	}
+}
+
 bool OutputEditorText::save(const QString& filename) {
 	QString outname = filename;
 	if(outname.isEmpty()) {

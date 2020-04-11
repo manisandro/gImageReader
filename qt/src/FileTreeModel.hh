@@ -33,6 +33,8 @@ public:
 	bool removeIndex(const QModelIndex& index);
 	void clear();
 	bool isDir(const QModelIndex& index) const;
+	void setFileEditable(const QModelIndex& index, bool editable);
+	bool isFileEditable(const QModelIndex& index) const;
 
 	template<class T>
 	T fileData(const QModelIndex& index) const { return static_cast<T>(fileData(index)); }
@@ -44,6 +46,8 @@ public:
 	QModelIndex parent(const QModelIndex& child) const override;
 	int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 	int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+
+	static constexpr int OutputFileRole = Qt::UserRole;
 
 private:
 	template<class T>
@@ -75,6 +79,7 @@ private:
 		FileNode(const QString& _fileName, const QString& _path, DirNode* _parent, DataObject* _data, const QString& _displayName)
 			: Node(_fileName, _path, _parent, _displayName), data(_data) {}
 		~FileNode() { delete data; }
+		bool editable = false;
 		DataObject* data = nullptr;
 	};
 	struct DirNode : Node {

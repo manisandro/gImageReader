@@ -116,6 +116,7 @@ public:
 
 	void addNotification(const QString& title, const QString& message, const QList<NotificationAction>& actions, Notification* handle = nullptr);
 	void openFiles(const QStringList& files);
+	void openOutput(const QString& filename);
 	void setOutputPaneVisible(bool visible);
 	void showProgress(ProgressMonitor* monitor, int updateInterval = 500);
 	void hideProgress();

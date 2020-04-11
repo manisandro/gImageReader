@@ -20,6 +20,7 @@
 #ifndef SOURCEMANAGER_HH
 #define SOURCEMANAGER_HH
 
+#include <QMap>
 #include <QMetaType>
 #include <QStringList>
 #include <QFileSystemWatcher>
@@ -76,6 +77,7 @@ private:
 	FileTreeModel* m_fileTreeModel = nullptr;
 	QMenu* m_recentMenu = nullptr;
 	QFileSystemWatcher m_fsWatcher;
+	QMap<QString, int> m_watchedDirectories;
 
 	static constexpr int sMaxNumRecent = 15;
 	int m_screenshotCount = 0;
@@ -90,10 +92,12 @@ private:
 private slots:
 	void clearSources();
 	void currentSourceChanged(const QItemSelection&, const QItemSelection& deselected);
+	void indexClicked(const QModelIndex& index);
 	void deleteSource() {
 		removeSource(true);
 	}
 	void fileChanged(const QString& filename);
+	void directoryChanged(const QString& dir);
 	void addFolder();
 	void openRecentItem();
 	void openSources();

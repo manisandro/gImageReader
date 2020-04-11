@@ -54,6 +54,7 @@ public:
 	bool getModified() const override;
 
 public slots:
+	bool open(const QString& filename) override;
 	void onVisibilityChanged(bool visible) override;
 	bool clear(bool hide = true) override;
 	bool save(const QString& filename = "") override;

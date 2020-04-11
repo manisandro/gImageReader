@@ -250,26 +250,44 @@ bool FileTreeModel::isDir(const QModelIndex& index) const {
 	return dynamic_cast<DirNode*>(static_cast<Node*>(index.internalPointer())) != nullptr;
 }
 
+void FileTreeModel::setFileEditable(const QModelIndex& index, bool editable) {
+	Node* node = static_cast<Node*>(index.internalPointer());
+	if(dynamic_cast<FileNode*>(node)) {
+		static_cast<FileNode*>(node)->editable = editable;
+	}
+}
+
+bool FileTreeModel::isFileEditable(const QModelIndex& index) const {
+	Node* node = static_cast<Node*>(index.internalPointer());
+	return dynamic_cast<FileNode*>(node) && static_cast<FileNode*>(node)->editable;
+}
 
 QVariant FileTreeModel::data(const QModelIndex& index, int role) const {
 	Node* node = static_cast<Node*>(index.internalPointer());
-	if(role == Qt::FontRole) {
-		QFont font;
-		if(m_tmpdir && node->parent == m_tmpdir) {
-			font.setItalic(true);
-		}
-		return font;
-	} else if(role == Qt::DisplayRole) {
-		return !node->displayName.isEmpty() ? node->displayName : node->fileName;
-	} else if(role == Qt::DecorationRole) {
-		bool isDir = dynamic_cast<DirNode*>(node);
+	if(index.column() == 0) {
+		if(role == Qt::FontRole) {
+			QFont font;
+			if(m_tmpdir && node->parent == m_tmpdir) {
+				font.setItalic(true);
+			}
+			return font;
+		} else if(role == Qt::DisplayRole) {
+			return !node->displayName.isEmpty() ? node->displayName : node->fileName;
+		} else if(role == Qt::DecorationRole) {
+			bool isDir = dynamic_cast<DirNode*>(node);
 #ifdef Q_OS_WIN32
-		return isDir ? m_iconProvider.icon(QFileIconProvider::Folder) : m_iconProvider.icon(QFileInfo(node->path.mid(1)));
+			return isDir ? m_iconProvider.icon(QFileIconProvider::Folder) : m_iconProvider.icon(QFileInfo(node->path.mid(1)));
 #else
-		return isDir ? m_iconProvider.icon(QFileIconProvider::Folder) : m_iconProvider.icon(QFileInfo(node->path));
+			return isDir ? m_iconProvider.icon(QFileIconProvider::Folder) : m_iconProvider.icon(QFileInfo(node->path));
 #endif
-	} else if(role == Qt::ToolTipRole) {
-		return node->path;
+		} else if(role == Qt::ToolTipRole) {
+			return node->path;
+		}
+	} else if(index.column() == 1) {
+		if(role == Qt::DecorationRole) {
+			bool editable = dynamic_cast<FileNode*>(node) && static_cast<FileNode*>(node)->editable;
+			return editable ? QIcon::fromTheme("document-edit") : QIcon();
+		}
 	}
 	return QVariant();
 }
@@ -329,7 +347,7 @@ int FileTreeModel::rowCount(const QModelIndex& parent) const {
 }
 
 int FileTreeModel::columnCount(const QModelIndex& /*parent*/) const {
-	return 1;
+	return 2;
 }
 
 static QCollator initCollator() {
