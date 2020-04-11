@@ -311,6 +311,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(m_document, &HOCRDocument::rowsRemoved, this, &OutputEditorHOCR::setModified);
 	connect(m_document, &HOCRDocument::itemAttributeChanged, this, &OutputEditorHOCR::setModified);
 	connect(m_document, &HOCRDocument::itemAttributeChanged, this, &OutputEditorHOCR::updateSourceText);
+	connect(m_document, &HOCRDocument::itemAttributeChanged, this, &OutputEditorHOCR::itemAttributeChanged);
 	connect(ui.comboBoxNavigate, qOverload<int>(&QComboBox::currentIndexChanged), this, &OutputEditorHOCR::navigateTargetChanged);
 	connect(ui.actionNavigateNext, &QAction::triggered, this, &OutputEditorHOCR::navigateNext);
 	connect(ui.actionNavigatePrev, &QAction::triggered, this, &OutputEditorHOCR::navigatePrev);
@@ -597,6 +598,22 @@ void OutputEditorHOCR::updateSourceText() {
 		if(currentItem) {
 			ui.plainTextEditOutput->setPlainText(currentItem->toHtml());
 		}
+	}
+}
+
+void OutputEditorHOCR::itemAttributeChanged(const QModelIndex& itemIndex, const QString& name, const QString& value) {
+	const HOCRItem* currentItem = m_document->itemAtIndex(itemIndex);
+	if(name == "title:bbox" && currentItem) {
+		// Minimum bounding box
+		QRect minBBox;
+		if(currentItem->itemClass() == "ocr_page") {
+			minBBox = currentItem->bbox();
+		} else {
+			for(const HOCRItem* child : currentItem->children()) {
+				minBBox = minBBox.united(child->bbox());
+			}
+		}
+		m_tool->setSelection(currentItem->bbox(), minBBox);
 	}
 }
 

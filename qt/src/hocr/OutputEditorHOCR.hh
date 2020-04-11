@@ -124,6 +124,7 @@ private slots:
 	void showItemProperties(const QModelIndex& index, const QModelIndex& prev = QModelIndex());
 	void showTreeWidgetContextMenu(const QPoint& point);
 	void toggleWConfColumn(bool active);
+	void itemAttributeChanged(const QModelIndex& itemIndex, const QString& name, const QString& value);
 	void updateSourceText();
 	void updateCurrentItemBBox(QRect bbox);
 	void findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace);
