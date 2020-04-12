@@ -42,7 +42,7 @@ public:
 		connect(document, &HOCRDocument::itemAttributeChanged, this, &LineEdit::onAttributeChanged);
 
 		QModelIndex index = document->indexAtItem(m_wordItem);
-		setStyleSheet( document->indexIsMisspelledWord(index) ? "QLineEdit { color: red; }" : "" );
+		setStyleSheet( getStyle( document->indexIsMisspelledWord(index) ) );
 
 		QFont ft = font();
 		ft.setBold(m_wordItem->fontBold());
@@ -55,6 +55,22 @@ private:
 	QTreeView* m_documentTree = nullptr;
 	HOCRItem* m_wordItem = nullptr;
 	bool m_blockSetText = false;
+
+	QString getStyle(bool misspelled) const {
+		QStringList styles;
+		if(misspelled) {
+			styles.append( "color: red;" );
+		}
+		int wconf = m_wordItem->getTitleAttributes()["x_wconf"].toInt();
+		if(wconf < 70) {
+			styles.append( "background: #ffb2b2;" );
+		} else if(wconf < 80) {
+			styles.append( "background: #ffdab0;" );
+		} else if(wconf < 90) {
+			styles.append( "background: #fffdb4;" );
+		}
+		return styles.isEmpty() ? "" : QString("QLineEdit {%1}").arg(styles.join(" "));
+	}
 
 	void onTextChanged() {
 		HOCRDocument* document = static_cast<HOCRDocument*>(m_documentTree->model());
@@ -74,7 +90,7 @@ private:
 				setText(m_wordItem->text());
 			}
 			if(roles.contains(Qt::ForegroundRole)) {
-				setStyleSheet( document->indexIsMisspelledWord(index) ? "QLineEdit { color: red; }" : "" );
+				setStyleSheet( getStyle( document->indexIsMisspelledWord(index) ) );
 			}
 		}
 	}
@@ -348,7 +364,7 @@ void HOCRProofReadWidget::repositionWidget() {
 
 	updateGeometry();
 	move(frameXmin - layout()->spacing(), frameY + 10);
-	resize(frameXmax - frameXmin + 2 + 2 * layout()->spacing(), m_currentLines.size() * (fm.height() + 10) + m_controlsWidget->sizeHint().height());
+	resize(frameXmax - frameXmin + 2 + 2 * layout()->spacing(), m_currentLines.size() * (fm.height() + 10) + 2 * layout()->spacing() + m_controlsWidget->sizeHint().height());
 	show();
 }
 
