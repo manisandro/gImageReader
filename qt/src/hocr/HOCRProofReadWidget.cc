@@ -258,30 +258,30 @@ void HOCRProofReadWidget::setCurrentRow(const QModelIndex& current) {
 
 	const QVector<HOCRItem*>& siblings = lineItem->parent()->children();
 	int targetLine = lineItem->index();
-	if(lineItem == m_currentLine) {
-		// No need to rebuild widget
-		return;
+	if(lineItem != m_currentLine) {
+		// Rebuild widget
+		QMap<const HOCRItem*, QWidget*> newLines;
+		int insPos = 0;
+		for(int i = qMax(0, targetLine - nrSurroundingLines), j = qMin(siblings.size() - 1, targetLine + nrSurroundingLines); i <= j; ++i) {
+			HOCRItem* linei = siblings[i];
+			if(m_currentLines.contains(linei)) {
+				newLines[linei] = m_currentLines.take(linei);
+				insPos = m_linesLayout->indexOf(newLines[linei]) + 1;
+			} else {
+				QWidget* lineWidget = new QWidget();
+				for(HOCRItem* word : siblings[i]->children()) {
+					new LineEdit(m_treeView, word, lineWidget); // Add as child to lineWidget
+				}
+				m_linesLayout->insertWidget(insPos++, lineWidget);
+				newLines.insert(linei, lineWidget);
+			}
+		}
+		qDeleteAll(m_currentLines);
+		m_currentLines = newLines;
+		m_currentLine = lineItem;
+		repositionWidget();
 	}
 
-	QMap<const HOCRItem*, QWidget*> newLines;
-	int insPos = 0;
-	for(int i = qMax(0, targetLine - nrSurroundingLines), j = qMin(siblings.size() - 1, targetLine + nrSurroundingLines); i <= j; ++i) {
-		HOCRItem* linei = siblings[i];
-		if(m_currentLines.contains(linei)) {
-			newLines[linei] = m_currentLines.take(linei);
-			insPos = m_linesLayout->indexOf(newLines[linei]) + 1;
-		} else {
-			QWidget* lineWidget = new QWidget();
-			for(HOCRItem* word : siblings[i]->children()) {
-				new LineEdit(m_treeView, word, lineWidget); // Add as child to lineWidget
-			}
-			m_linesLayout->insertWidget(insPos++, lineWidget);
-			newLines.insert(linei, lineWidget);
-		}
-	}
-	qDeleteAll(m_currentLines);
-	m_currentLines = newLines;
-	m_currentLine = lineItem;
 	// Select selected word or first item of middle line
 	LineEdit* focusLineEdit = static_cast<LineEdit*>(m_currentLines[lineItem]->children()[wordItem ? wordItem->index() : 0]);
 	if(focusLineEdit && !m_treeView->hasFocus()) {
@@ -289,7 +289,6 @@ void HOCRProofReadWidget::setCurrentRow(const QModelIndex& current) {
 		focusLineEdit->selectAll();
 	}
 
-	repositionWidget();
 }
 
 void HOCRProofReadWidget::repositionWidget() {

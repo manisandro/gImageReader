@@ -821,11 +821,11 @@ void OutputEditorHOCR::pickItem(const QPoint& point) {
 	int pageNr;
 	QString filename = MAIN->getDisplayer()->getCurrentImage(pageNr);
 	QModelIndex pageIndex = m_document->searchPage(filename, pageNr);
-	const HOCRItem* currentItem = m_document->itemAtIndex(pageIndex);
-	if(!currentItem) {
+	const HOCRItem* pageItem = m_document->itemAtIndex(pageIndex);
+	if(!pageItem) {
 		return;
 	}
-	const HOCRPage* page = currentItem->page();
+	const HOCRPage* page = pageItem->page();
 	// Transform point in coordinate space used when page was OCRed
 	double alpha = (page->angle() - MAIN->getDisplayer()->getCurrentAngle()) / 180. * M_PI;
 	double scale = double(page->resolution()) / double(MAIN->getDisplayer()->getCurrentResolution());
@@ -833,7 +833,10 @@ void OutputEditorHOCR::pickItem(const QPoint& point) {
 	                 scale * (point.x() * std::sin(alpha) + point.y() * std::cos(alpha)) + 0.5 * page->bbox().height());
 	QModelIndex index = m_document->searchAtCanvasPos(pageIndex, newPoint);
 	ui.treeViewHOCR->setCurrentIndex(index);
-	ui.treeViewHOCR->setFocus();
+	const HOCRItem* item = m_document->itemAtIndex(index);
+	if(item->itemClass() != "ocrx_word" && item->itemClass() != "ocr_line") {
+		ui.treeViewHOCR->setFocus();
+	}
 }
 
 void OutputEditorHOCR::toggleWConfColumn(bool active) {
