@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-08 14:44+0200\n"
-"PO-Revision-Date: 2020-03-05 09:33+0000\n"
-"Last-Translator: khaledbci <khaledbci@gmail.com>\n"
+"PO-Revision-Date: 2020-04-12 18:11+0000\n"
+"Last-Translator: Alaa Sayed <bmwmy@hotmail.com>\n"
 "Language-Team: Arabic (Saudi Arabia) <https://hosted.weblate.org/projects/"
 "gimagereader/translations/ar_SA/>\n"
 "Language: ar_SA\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr "الرسائل الجديدة تظهر هنا."
+msgstr "برنامج التعرف الضوئي"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:164
 msgid "Redetect Languages"
@@ -229,9 +229,8 @@ msgid "Best fit"
 msgstr "أفضل تلاؤم"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
-#, fuzzy
 msgid "Rotate page"
-msgstr "تدوير اتجاه كل الصفحات"
+msgstr "تدوير اتجاه الصفحة"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
 msgid "Select rotation mode"
@@ -434,12 +433,11 @@ msgstr "أدخل كلمة:"
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "أضف النص الجديد بعد آخر صفحة"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "تدوير اتجاه الصفحة الحالية"
+msgstr "أضف النص الجديد قبل الصفحة الحالية"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
@@ -458,14 +456,13 @@ msgstr "تصدير ODT وورد"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
-#, fuzzy
 msgid "Append document after last page"
-msgstr "إلحاق بالنص المخرج الحالي"
+msgstr "أضف المستند بعد الصفحة الأخيرة"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Insert document before current page"
-msgstr ""
+msgstr "أضف المستند قبل الصفحة الحالية"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
@@ -930,12 +927,10 @@ msgid "There was no unsaved work."
 msgstr "لا توجد أعمال محفوظة."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
-#, fuzzy
 msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "فشل في الحصول على سجلات الأخطاء. هل برنامج gdb مثبت؟"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:569
-#, fuzzy
 msgid "Page %1"
 msgstr "صفحة: %1"
 
@@ -1246,19 +1241,21 @@ msgstr "فتح ملف hOCR"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:867 ../qt/src/SourceManager.cc:137
-#, fuzzy
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "لا يمكن فتح الملفات التالية:%1"
+msgstr ""
+"لا يمكن فتح الملفات التالية:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
 #: ../qt/src/hocr/OutputEditorHOCR.cc:870
-#, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "هذا الملف لا يبدو أنه يحتوي على hOCR HTML صالح: %1"
+msgstr ""
+"هذا الملف لا يبدو أنه يحتوي على hOCR HTML صالح:\n"
+" %1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:873 ../qt/src/SourceManager.cc:137
@@ -1608,19 +1605,18 @@ msgid "Enter password for file '%1':"
 msgstr "أدخل كلمة السر للملف '%1':"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:179
-#, fuzzy
 msgid "PDF with text"
 msgstr "ملفات PDF مع نص"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:179
-#, fuzzy
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
 "هذه PDF تحتوي على نصوص بالفعل:\n"
-"%1"
+"%1\n"
+"فتح على أية حال؟"
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:246
 msgid "Images and PDFs"
@@ -1800,7 +1796,7 @@ msgstr "نعم"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "نعم للكل"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1808,7 +1804,7 @@ msgstr "لا"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "لا للكل"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
@@ -1837,27 +1833,26 @@ msgid "License"
 msgstr "الترخيص"
 
 #: ../qt/data/BatchModeDialog.ui.h:1
-#, fuzzy
 msgid "Batch Mode"
-msgstr "طابق نسق الحرف case للإنجليزي"
+msgstr "الوضع المتعدد في آن"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "ألحق المخرج الحالي بنص شاشة المخرجات:"
+msgstr "ألحق أرقام الصفحات بنص شاشة المخرجات"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "المخرج الحالي:"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"في الوضع المتعدد، كل من المدخلات يتم معالجتها بشكل منفصل والمخرجات يتم حفظها "
+"جنبا إلى جنب في الملف المدخل."
 
 #: ../qt/data/BatchModeDialog.ui.h:5
-#, fuzzy
 msgid "Autodetect page layout"
 msgstr "تعرف تلقائي لتخطيط الصفحة"
 
@@ -1904,7 +1899,7 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "مصغرات صورية"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -1994,6 +1989,9 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html><head/><body><ul><li>PoDoFo: يوفر ضغطاً أعلى لكنه غير متوافق مع اللغات "
+"غير اللاتينية كالعربية.</li><li>QPrinter: ضغط أقل من نوع JPG ويدعم كل "
+"اللغات.</li></ul></body></html>"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2006,9 +2004,8 @@ msgid "Find and Replace"
 msgstr "بحث واستبدال"
 
 #: ../qt/src/MainWindow.cc:305
-#, fuzzy
 msgid "Multiple sources (%1)"
-msgstr "مصادر متعددة"
+msgstr "مصادر متعددة (%1)"
 
 #: ../qt/src/MainWindow.cc:599
 msgid ""
@@ -2019,58 +2016,48 @@ msgstr ""
 "%1"
 
 #: ../qt/src/OutputEditorText.cc:40
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "صفحة: %1"
+msgstr "صفحة: %1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
-msgstr ""
+msgstr "الوضع المتعدد في آن..."
 
 #: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "استبدل المخرجات الحالية"
 
 #: ../qt/src/Recognizer.cc:87
 msgid "Skip processing source"
-msgstr ""
+msgstr "تجاهل معالجة المدخلات"
 
 #: ../qt/src/Recognizer.cc:234
-#, fuzzy
 msgid "- Page %1: failed to render page"
-msgstr ""
-"\n"
-"- الصفحة %1: لا يمكن رسم الصفحة"
+msgstr "- صفحة %1: لا يمكن رسم الصفحة"
 
 #: ../qt/src/Recognizer.cc:346
-#, fuzzy
 msgid "- %1:%2: failed to render page"
-msgstr ""
-"\n"
-"- الصفحة %1: لا يمكن رسم الصفحة"
+msgstr "- %1:%2: لا يمكن رسم الصفحة"
 
 #: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "- %1: المخرج موجود بالفعل، تم التجاهل"
 
 #: ../qt/src/Recognizer.cc:363
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "فشل في إنشاء المخرج"
+msgstr "- %1: فشل في إنشاء المخرج"
 
 #: ../qt/src/Recognizer.cc:418
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "حدثت الأخطاء التالية: %1"
+msgstr "حدثت الأخطاء التالية:"
 
 #: ../qt/src/SourceManager.cc:345
-#, fuzzy
 msgid "Delete Files"
-msgstr "حذف الملف؟"
+msgstr "حذف الملفات"
 
 #: ../qt/src/SourceManager.cc:345
 msgid "Delete the following files?"
-msgstr ""
+msgstr "حذف هذه الملفات؟"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2097,9 +2084,8 @@ msgstr "وضعية التعرف الضوئي:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:189
-#, fuzzy
 msgid "Add folder"
-msgstr "إضافة كلمة"
+msgstr "إضافة مجلد"
 
 #: ../qt/src/Ui_MainWindow.hh:208
 msgid "Remove Image"

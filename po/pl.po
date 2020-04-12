@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-23 01:43+0100\n"
-"PO-Revision-Date: 2020-03-28 16:09+0000\n"
+"PO-Revision-Date: 2020-04-12 18:11+0000\n"
 "Last-Translator: WaldiS <admin@sto.ugu.pl>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pl/>\n"
@@ -1853,29 +1853,29 @@ msgid "License"
 msgstr "Licencja"
 
 #: ../qt/data/BatchModeDialog.ui.h:1
-#, fuzzy
 msgid "Batch Mode"
-msgstr "Rozróżniaj wielkość liter"
+msgstr "Tryb wsadowy"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "Dołącz do bieżącego tekstu:"
+msgstr "Dodaj numery stron do tekstu wyjściowego"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
+#, fuzzy
 msgid "Existing output:"
-msgstr ""
+msgstr "Istniejące wyjście:"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"W trybie wsadowym każde źródło wejściowe jest przetwarzane oddzielnie, a "
+"dane wyjściowe zapisywane obok siebie w pliku wejściowym."
 
 #: ../qt/data/BatchModeDialog.ui.h:5
-#, fuzzy
 msgid "Autodetect page layout"
-msgstr "Automatycznie wykryj układ"
+msgstr "Automatycznie wykryj układ strony"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -2010,6 +2010,10 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html><head/><body><ul><li>PoDoFo: oferuje więcej opcji kompresji obrazu, "
+"ale nie obsługuje złożonych skryptów.</li> <li>QPrinter: obsługuje tylko "
+"kompresję JPEG do przechowywania obrazów, ale obsługuje złożone "
+"skrypty.</li></ul></body></html>"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2030,44 +2034,38 @@ msgstr ""
 "%1"
 
 #: ../qt/src/Recognizer.cc:76
+#, fuzzy
 msgid "Batch mode..."
-msgstr ""
+msgstr "Tryb wsadowy..."
 
 #: ../qt/src/Recognizer.cc:89
+#, fuzzy
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "Zastąp istniejące dane wyjściowe"
 
 #: ../qt/src/Recognizer.cc:90
 msgid "Skip processing source"
-msgstr ""
+msgstr "Pomiń źródło przetwarzania"
 
 #: ../qt/src/Recognizer.cc:237
-#, fuzzy
 msgid "- Page %1: failed to render page"
-msgstr ""
-"\n"
-"- Strona %1: błąd wyświetlania strony"
+msgstr "- Strona %1: błąd wyświetlania strony"
 
 #: ../qt/src/Recognizer.cc:349
-#, fuzzy
 msgid "- %1:%2: failed to render page"
-msgstr ""
-"\n"
-"- Strona %1: błąd wyświetlania strony"
+msgstr "- %1:%2: błąd wyświetlania strony"
 
 #: ../qt/src/Recognizer.cc:362
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "-%1: dane wyjściowe już istnieją, pomijam"
 
 #: ../qt/src/Recognizer.cc:366
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "Błąd tworzenia pliku wynikowego"
+msgstr "- %1: nie udało się utworzyć pliku wyjściowego"
 
 #: ../qt/src/Recognizer.cc:422
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "Wystąpiły następujące błędy:%1"
+msgstr "Wystąpiły następujące błędy:"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2095,9 +2093,8 @@ msgstr "Tryb OCR:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:189
-#, fuzzy
 msgid "Add folder"
-msgstr "Dodaj słowo"
+msgstr "Dodaj folder"
 
 #: ../qt/src/Ui_MainWindow.hh:208
 msgid "Remove Image"

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-23 01:43+0100\n"
-"PO-Revision-Date: 2020-04-01 00:13+0000\n"
+"PO-Revision-Date: 2020-04-12 18:11+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gimagereader/"
 "translations/cs/>\n"
@@ -1862,27 +1862,26 @@ msgid "License"
 msgstr "Licence"
 
 #: ../qt/data/BatchModeDialog.ui.h:1
-#, fuzzy
 msgid "Batch Mode"
-msgstr "Rozlišovat malá/velká písmena"
+msgstr "Dávkový režim"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "Přidat před výstupní text:"
+msgstr "Před výstupní text přidávat čísla stránek"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "Stávající výstup:"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"V dávkovém režimu je každý ze vstupních zdrojů zpracován zvlášť a výstup je "
+"uložen ve vstupním souboru vedle sebe."
 
 #: ../qt/data/BatchModeDialog.ui.h:5
-#, fuzzy
 msgid "Autodetect page layout"
 msgstr "Automaticky zjistit rozvržení stránky"
 
@@ -2019,6 +2018,10 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html><head/><body><ul><li>PoDoFo: nabízí více voleb komprimace obrázků, ale "
+"neporadí si s komplexními skripty.</li><li>QPrinter: pro ukládání obrázků "
+"podporuje pouze JPEG kompresi, zato podporuje komplexní "
+"skripty.</li></ul></body></html>"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2040,43 +2043,35 @@ msgstr ""
 
 #: ../qt/src/Recognizer.cc:76
 msgid "Batch mode..."
-msgstr ""
+msgstr "Dávkový režim…"
 
 #: ../qt/src/Recognizer.cc:89
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "Přepsat existující výstup"
 
 #: ../qt/src/Recognizer.cc:90
 msgid "Skip processing source"
-msgstr ""
+msgstr "Přeskočit zpracovávání zdroje"
 
 #: ../qt/src/Recognizer.cc:237
-#, fuzzy
 msgid "- Page %1: failed to render page"
-msgstr ""
-"\n"
-"- Strana %1: vykreslení stránky se nezdařilo"
+msgstr "- Stránka %1: stránku se nepodařilo vykreslit"
 
 #: ../qt/src/Recognizer.cc:349
-#, fuzzy
 msgid "- %1:%2: failed to render page"
-msgstr ""
-"\n"
-"- Strana %1: vykreslení stránky se nezdařilo"
+msgstr "- %1:%2: stránku se nepodařilo vykreslit"
 
 #: ../qt/src/Recognizer.cc:362
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "- %1: výstup už existuje, bude přeskočeno"
 
 #: ../qt/src/Recognizer.cc:366
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "Vytvoření výstupu se nezdařilo"
+msgstr "- %1: nepodařilo se vytvořit výstupní soubor"
 
 #: ../qt/src/Recognizer.cc:422
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "Došlo k těmto chybám:%1"
+msgstr "Došlo k následujícím chybám:"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2105,9 +2100,8 @@ msgstr "Režim OCR:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:189
-#, fuzzy
 msgid "Add folder"
-msgstr "Přidat slovo"
+msgstr "Přidat složku"
 
 #: ../qt/src/Ui_MainWindow.hh:208
 msgid "Remove Image"

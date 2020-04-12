@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-08 14:44+0200\n"
-"PO-Revision-Date: 2020-03-24 10:37+0000\n"
+"PO-Revision-Date: 2020-04-12 18:11+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gimagereader/"
 "translations/nl/>\n"
@@ -1855,27 +1855,26 @@ msgid "License"
 msgstr "Licentie"
 
 #: ../qt/data/BatchModeDialog.ui.h:1
-#, fuzzy
 msgid "Batch Mode"
-msgstr "Hoofdlettergevoelig"
+msgstr "Seriemodus"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "Vastmaken aan uitvoertekst:"
+msgstr "Paginanummers toevoegen aan uitvoertekst"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "Bestaande uitvoer:"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"In seriemodus wordt elke invoerbron apart verwerkt en de uitvoer opgeslagen "
+"naast het invoerbestand."
 
 #: ../qt/data/BatchModeDialog.ui.h:5
-#, fuzzy
 msgid "Autodetect page layout"
 msgstr "Indeling automatisch detecteren"
 
@@ -1928,7 +1927,7 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Miniatuurvoorbeelden"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2018,6 +2017,9 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html><head/><body><ul><li>PoDoFo: biedt meer compressie-opties, maar kan "
+"niet omgaan met complexe scripts.</li><li>QPrinter: ondersteunt alleen JPEG-"
+"compressie, maar kan wel omgaan met complexe scripts.</li></ul></body></html>"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2030,9 +2032,8 @@ msgid "Find and Replace"
 msgstr "Zoeken en vervangen"
 
 #: ../qt/src/MainWindow.cc:305
-#, fuzzy
 msgid "Multiple sources (%1)"
-msgstr "Meerdere bronnen"
+msgstr "Meerdere bronnen (%1)"
 
 #: ../qt/src/MainWindow.cc:599
 msgid ""
@@ -2043,58 +2044,48 @@ msgstr ""
 "%1"
 
 #: ../qt/src/OutputEditorText.cc:40
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "Pagina: %1"
+msgstr "Pagina: %1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
-msgstr ""
+msgstr "Seriemodus..."
 
 #: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "Bestaande uitvoer overschrijven"
 
 #: ../qt/src/Recognizer.cc:87
 msgid "Skip processing source"
-msgstr ""
+msgstr "Bronverwerking overslaan"
 
 #: ../qt/src/Recognizer.cc:234
-#, fuzzy
 msgid "- Page %1: failed to render page"
-msgstr ""
-"\n"
-"-Pagina %1: het renderen van de pagina is mislukt"
+msgstr "-Pagina %1: het renderen van de pagina is mislukt"
 
 #: ../qt/src/Recognizer.cc:346
-#, fuzzy
 msgid "- %1:%2: failed to render page"
-msgstr ""
-"\n"
-"-Pagina %1: het renderen van de pagina is mislukt"
+msgstr "-%1:%2: het renderen van de pagina is mislukt"
 
 #: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "-%1: de uitvoer is al aanwezig - bezig met overslaan"
 
 #: ../qt/src/Recognizer.cc:363
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "Creëren van uitvoer is mislukt"
+msgstr "%1: aanmaken van uitvoer is mislukt"
 
 #: ../qt/src/Recognizer.cc:418
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "De volgende fouten zijn opgetreden: %1"
+msgstr "De volgende fouten zijn opgetreden:"
 
 #: ../qt/src/SourceManager.cc:345
-#, fuzzy
 msgid "Delete Files"
-msgstr "Bestand verwijderen?"
+msgstr "Bestanden verwijderen"
 
 #: ../qt/src/SourceManager.cc:345
 msgid "Delete the following files?"
-msgstr ""
+msgstr "Wilt u de volgende bestanden verwijderen?"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2123,9 +2114,8 @@ msgstr "OCR-modus:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:189
-#, fuzzy
 msgid "Add folder"
-msgstr "Woord toevoegen"
+msgstr "Map toevoegen"
 
 #: ../qt/src/Ui_MainWindow.hh:208
 msgid "Remove Image"
