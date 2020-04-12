@@ -252,6 +252,7 @@ void HOCRProofReadWidget::setCurrentRow(const QModelIndex& current) {
 	} else {
 		qDeleteAll(m_currentLines);
 		m_currentLines.clear();
+		hide();
 		return;
 	}
 
