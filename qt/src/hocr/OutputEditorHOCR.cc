@@ -543,7 +543,7 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModel
 				minBBox = minBBox.united(child->bbox());
 			}
 		}
-		m_tool->setSelection(currentItem->bbox(), minBBox);
+		m_tool->setSelection(currentItem->bbox(), minBBox, currentItem->itemClass() == "ocrx_word" ? currentItem->parent()->bbox() : currentItem->bbox());
 	}
 }
 
@@ -613,7 +613,7 @@ void OutputEditorHOCR::itemAttributeChanged(const QModelIndex& itemIndex, const 
 				minBBox = minBBox.united(child->bbox());
 			}
 		}
-		m_tool->setSelection(currentItem->bbox(), minBBox);
+		m_tool->setSelection(currentItem->bbox(), minBBox, currentItem->itemClass() == "ocrx_word" ? currentItem->parent()->bbox() : currentItem->bbox());
 	}
 }
 
