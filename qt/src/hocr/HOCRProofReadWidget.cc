@@ -348,7 +348,7 @@ void HOCRProofReadWidget::repositionWidget() {
 	}
 
 	updateGeometry();
-	move(frameXmin, frameY + 10);
+	move(frameXmin - layout()->spacing(), frameY + 10);
 	resize(frameXmax - frameXmin + 2 + 2 * layout()->spacing(), m_currentLines.size() * (fm.height() + 10) + m_controlsWidget->sizeHint().height());
 	show();
 }
