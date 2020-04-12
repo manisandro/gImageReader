@@ -127,14 +127,11 @@ int SourceManager::addSources(const QStringList& files, bool suppressTextWarning
 		++added;
 	}
 	ConfigSettings::get<VarSetting<QStringList>>("recentitems")->setValue(recentItems.mid(0, sMaxNumRecent));
-	if(added > 0) {
-		ui.treeViewSources->clearSelection();
-	}
 	ui.treeViewSources->selectionModel()->blockSignals(false);
 	ui.treeViewSources->setUpdatesEnabled(true);
 	if(added > 0) {
 		if(parentDir.isEmpty()) {
-			ui.treeViewSources->selectionModel()->select(sel, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+			ui.treeViewSources->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Select | QItemSelectionModel::Rows);
 			QModelIndex parent = index.parent();
 			while(parent.isValid()) {
 				ui.treeViewSources->expand(parent);
