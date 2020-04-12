@@ -471,11 +471,6 @@ int OutputEditorHOCR::currentPage() {
 void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModelIndex& prev) {
 	m_tool->setAction(DisplayerToolHOCR::ACTION_NONE);
 	const HOCRItem* prevItem = m_document->itemAtIndex(prev);
-	if(ui.treeViewHOCR->currentIndex() != index) {
-		ui.treeViewHOCR->blockSignals(true);
-		ui.treeViewHOCR->setCurrentIndex(index);
-		ui.treeViewHOCR->blockSignals(false);
-	}
 	ui.tableWidgetProperties->setRowCount(0);
 	ui.plainTextEditOutput->setPlainText("");
 
@@ -740,8 +735,10 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 			newIndex = m_document->swapItems(indices.first().parent(), rows.first(), rows.last());
 		}
 		if(newIndex.isValid()) {
+			ui.treeViewHOCR->selectionModel()->blockSignals(true);
+			ui.treeViewHOCR->selectionModel()->clear();
+			ui.treeViewHOCR->selectionModel()->blockSignals(false);
 			ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-			showItemProperties(newIndex);
 		}
 		ui.treeViewHOCR->selectionModel()->blockSignals(false);
 		// Nothing else is allowed with multiple items selected
@@ -830,7 +827,8 @@ void OutputEditorHOCR::pickItem(const QPoint& point) {
 	double scale = double(page->resolution()) / double(MAIN->getDisplayer()->getCurrentResolution());
 	QPoint newPoint( scale * (point.x() * std::cos(alpha) - point.y() * std::sin(alpha)) + 0.5 * page->bbox().width(),
 	                 scale * (point.x() * std::sin(alpha) + point.y() * std::cos(alpha)) + 0.5 * page->bbox().height());
-	showItemProperties(m_document->searchAtCanvasPos(pageIndex, newPoint));
+	QModelIndex index = m_document->searchAtCanvasPos(pageIndex, newPoint);
+	ui.treeViewHOCR->setCurrentIndex(index);
 	ui.treeViewHOCR->setFocus();
 }
 
