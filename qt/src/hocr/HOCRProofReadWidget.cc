@@ -339,7 +339,9 @@ void HOCRProofReadWidget::repositionWidget() {
 	for(QWidget* lineWidget : m_currentLines) {
 		for(int i = 0, n = lineWidget->children().count(); i < n; ++i) {
 			LineEdit* lineEdit = static_cast<LineEdit*>(lineWidget->children()[i]);
-			lineEdit->setFont(ft);
+			QFont lineEditFont = lineEdit->font();
+			lineEditFont.setPointSizeF(ft.pointSizeF());
+			lineEdit->setFont(lineEditFont);
 			lineEdit->setFixedHeight(fm.height() + 5);
 		}
 		lineWidget->setFixedHeight(fm.height() + 10);
