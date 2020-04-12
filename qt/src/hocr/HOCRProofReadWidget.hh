@@ -38,6 +38,7 @@ private:
 
 	QTreeView* m_treeView = nullptr;
 	QVBoxLayout* m_linesLayout = nullptr;
+	const HOCRItem* m_currentLine = nullptr;
 	QWidget* m_controlsWidget = nullptr;
 	QMap<const HOCRItem*, QWidget*> m_currentLines;
 

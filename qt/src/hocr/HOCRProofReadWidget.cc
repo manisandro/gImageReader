@@ -227,6 +227,8 @@ HOCRProofReadWidget::HOCRProofReadWidget(QTreeView* treeView, QWidget* parent)
 void HOCRProofReadWidget::clear() {
 	qDeleteAll(m_currentLines);
 	m_currentLines.clear();
+	m_currentLine = nullptr;
+	hide();
 }
 
 void HOCRProofReadWidget::updateRows() {
@@ -239,7 +241,7 @@ void HOCRProofReadWidget::setCurrentRow(const QModelIndex& current) {
 	HOCRDocument* document = static_cast<HOCRDocument*>(m_treeView->model());
 	const HOCRItem* item = document->itemAtIndex(current);
 	if(!item) {
-		hide();
+		clear();
 		return;
 	}
 	const HOCRItem* lineItem = nullptr;
@@ -250,14 +252,16 @@ void HOCRProofReadWidget::setCurrentRow(const QModelIndex& current) {
 	} else if(item->itemClass() == "ocr_line") {
 		lineItem = item;
 	} else {
-		qDeleteAll(m_currentLines);
-		m_currentLines.clear();
-		hide();
+		clear();
 		return;
 	}
 
 	const QVector<HOCRItem*>& siblings = lineItem->parent()->children();
 	int targetLine = lineItem->index();
+	if(lineItem == m_currentLine) {
+		// No need to rebuild widget
+		return;
+	}
 
 	QMap<const HOCRItem*, QWidget*> newLines;
 	int insPos = 0;
@@ -277,6 +281,7 @@ void HOCRProofReadWidget::setCurrentRow(const QModelIndex& current) {
 	}
 	qDeleteAll(m_currentLines);
 	m_currentLines = newLines;
+	m_currentLine = lineItem;
 	// Select selected word or first item of middle line
 	LineEdit* focusLineEdit = static_cast<LineEdit*>(m_currentLines[lineItem]->children()[wordItem ? wordItem->index() : 0]);
 	if(focusLineEdit && !m_treeView->hasFocus()) {
@@ -288,6 +293,11 @@ void HOCRProofReadWidget::setCurrentRow(const QModelIndex& current) {
 }
 
 void HOCRProofReadWidget::repositionWidget() {
+
+	if(m_currentLines.isEmpty()) {
+		return;
+	}
+
 	// Position frame
 	Displayer* displayer = MAIN->getDisplayer();
 	int frameXmin = std::numeric_limits<int>::max();
