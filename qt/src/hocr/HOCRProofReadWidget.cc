@@ -119,17 +119,21 @@ private:
 			}
 			m_documentTree->setCurrentIndex(index);
 		} else if(ev->key() == Qt::Key_Space && ev->modifiers() == Qt::ControlModifier) {
+			// Spelling menu
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			QMenu menu;
 			document->addSpellingActions(&menu, index);
 			menu.exec(mapToGlobal(QPoint(0, -menu.sizeHint().height())));
 		} else if(ev->key() == Qt::Key_B && ev->modifiers() == Qt::ControlModifier) {
+			// Bold
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			document->editItemAttribute(index, "bold", m_wordItem->fontBold() ? "0" : "1");
 		} else if(ev->key() == Qt::Key_I && ev->modifiers() == Qt::ControlModifier) {
+			// Italic
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			document->editItemAttribute(index, "italic", m_wordItem->fontItalic() ? "0" : "1");
 		} else if((ev->key() == Qt::Key_Up || ev->key() == Qt::Key_Down) && ev->modifiers() & Qt::ControlModifier) {
+			// Adjust bbox top/bottom
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			QRect bbox = m_wordItem->bbox();
 			if(ev->modifiers() & Qt::ShiftModifier) {
@@ -140,6 +144,7 @@ private:
 			QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
 			document->editItemAttribute(index, "title:bbox", bboxstr);
 		} else if((ev->key() == Qt::Key_Left || ev->key() == Qt::Key_Right) && ev->modifiers() & Qt::ControlModifier) {
+			// Adjust bbox left/right
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			QRect bbox = m_wordItem->bbox();
 			if(ev->modifiers() & Qt::ShiftModifier) {
@@ -149,6 +154,14 @@ private:
 			}
 			QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
 			document->editItemAttribute(index, "title:bbox", bboxstr);
+		} else if(ev->key() == Qt::Key_D && ev->modifiers() == Qt::ControlModifier) {
+			// Divide
+			QModelIndex index = document->indexAtItem(m_wordItem);
+			document->splitItemText(index, cursorPosition());
+		} else if(ev->key() == Qt::Key_M && ev->modifiers() & Qt::ControlModifier) {
+			// Merge
+			QModelIndex index = document->indexAtItem(m_wordItem);
+			document->mergeItemText(index, (ev->modifiers() & Qt::ShiftModifier) != 0);
 		} else {
 			QLineEdit::keyPressEvent(ev);
 		}
@@ -337,6 +350,9 @@ void HOCRProofReadWidget::showShortcutsDialog() {
 	                           "<tr><td>Ctrl+Space</td><td>Spelling suggestions</td></tr>"
 	                           "<tr><td>Ctrl+B</td><td>Toggle bold</td></tr>"
 	                           "<tr><td>Ctrl+I</td><td>Toggle italic</td></tr>"
+	                           "<tr><td>Ctrl+D</td><td>Divide word at cursor position</td></tr>"
+	                           "<tr><td>Ctrl+M</td><td>Merge with previous word</td></tr>"
+	                           "<tr><td>Ctrl+Shift+M</td><td>Merge with next word</td></tr>"
 	                           "<tr><td>Ctrl+{Left,Right}</td><td>Adjust left bounding box edge</td></tr>"
 	                           "<tr><td>Ctrl+Shift+{Left,Right}</td><td>Adjust right bounding box edge</td></tr>"
 	                           "<tr><td>Ctrl+{Up,Down}</td><td>Adjust top bounding box edge</td></tr>"

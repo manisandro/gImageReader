@@ -270,6 +270,56 @@ QModelIndex HOCRDocument::splitItem(const QModelIndex& itemIndex, int startRow, 
 	return newIndex;
 }
 
+QModelIndex HOCRDocument::splitItemText(const QModelIndex& itemIndex, int pos) {
+	HOCRItem* item = mutableItemAtIndex(itemIndex);
+	if(!item || item->itemClass() != "ocrx_word") {
+		return QModelIndex();
+	}
+	// Compute new bounding box using font metrics with default font
+	QFontMetrics metrics((QFont()));
+	double fraction = metrics.horizontalAdvance(item->text().left(pos)) / double(metrics.horizontalAdvance(item->text()));
+	QRect bbox = item->bbox();
+	QRect leftBBox = bbox;
+	leftBBox.setWidth(bbox.width() * fraction);
+	QRect rightBBox = bbox;
+	rightBBox.setLeft(bbox.left() + bbox.width() * fraction);
+
+	QDomDocument doc;
+	QDomElement newElement = doc.createElement("span");
+	newElement.appendChild(doc.createTextNode(item->text().mid(pos)));
+	newElement.setAttribute("class", "ocrx_word");
+	QMap<QString, QString> attrs = item->getTitleAttributes();
+	attrs["bbox"] = QString("%1 %2 %3 %4").arg(rightBBox.left()).arg(rightBBox.top()).arg(rightBBox.right()).arg(rightBBox.bottom());
+	newElement.setAttribute("title", HOCRItem::serializeAttrGroup(attrs));
+	HOCRItem* newItem = new HOCRItem(newElement, item->page(), item->parent(), item->index() + 1);
+	beginInsertRows(itemIndex.parent(), item->index() + 1, item->index() + 1);
+	insertItem(item->parent(), newItem, item->index() + 1);
+	endInsertRows();
+	setData(itemIndex, item->text().left(pos), Qt::EditRole);
+	editItemAttribute(itemIndex, "title:bbox", QString("%1 %2 %3 %4").arg(leftBBox.left()).arg(leftBBox.top()).arg(leftBBox.right()).arg(leftBBox.bottom()));
+	return itemIndex.sibling(itemIndex.row() + 1, 0);
+}
+
+QModelIndex HOCRDocument::mergeItemText(const QModelIndex& itemIndex, bool mergeNext) {
+	HOCRItem* item = mutableItemAtIndex(itemIndex);
+	if(!item || item->itemClass() != "ocrx_word") {
+		return QModelIndex();
+	}
+	if((!mergeNext && item->index() == 0) || (mergeNext && item->index() == item->parent()->children().size() - 1)) {
+		return QModelIndex();
+	}
+	int offset = mergeNext ? 1 : -1;
+	HOCRItem* otherItem = item->parent()->children()[item->index() + offset];
+	QString newText = mergeNext ? item->text() + otherItem->text() : otherItem->text() + item->text();
+	QRect newBbox = item->bbox().united(otherItem->bbox());
+	setData(itemIndex, newText, Qt::EditRole);
+	editItemAttribute(itemIndex, "title:bbox", QString("%1 %2 %3 %4").arg(newBbox.left()).arg(newBbox.top()).arg(newBbox.right()).arg(newBbox.bottom()));
+	beginRemoveRows(itemIndex.parent(), itemIndex.row() + offset, itemIndex.row() + offset);
+	deleteItem(otherItem);
+	endRemoveRows();
+	return itemIndex;
+}
+
 QModelIndex HOCRDocument::addItem(const QModelIndex& parent, const QDomElement& element) {
 	HOCRItem* parentItem = mutableItemAtIndex(parent);
 	if(!parentItem) {

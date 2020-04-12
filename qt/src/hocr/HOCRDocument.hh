@@ -65,6 +65,8 @@ public:
 	QModelIndex swapItems(const QModelIndex& parent, int startRow, int endRow);
 	QModelIndex mergeItems(const QModelIndex& parent, int startRow, int endRow);
 	QModelIndex splitItem(const QModelIndex& itemIndex, int startRow, int endRow);
+	QModelIndex splitItemText(const QModelIndex& itemIndex, int pos);
+	QModelIndex mergeItemText(const QModelIndex& itemIndex, bool mergeNext);
 	QModelIndex addItem(const QModelIndex& parent, const QDomElement& element);
 	bool removeItem(const QModelIndex& index);
 
