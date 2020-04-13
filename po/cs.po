@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
-"PO-Revision-Date: 2020-04-12 18:11+0000\n"
+"PO-Revision-Date: 2020-04-16 10:11+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gimagereader/"
 "translations/cs/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.0.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1930,7 +1930,7 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Náhledy"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2027,7 +2027,7 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:219
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Klávesové zkratky"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:377
 msgid ""
@@ -2044,14 +2044,29 @@ msgid ""
 "edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</td><td>Adjust bottom bounding "
 "box edge</td></tr></table>"
 msgstr ""
+"<table><tr><td>Tab</td><td>Následující "
+"kolonka</td></tr><tr><td>Shift+Tab</td><td>Předchozí "
+"kolonka</td></tr><tr><td>Šipka dolů</td><td>Následující "
+"řádek</td></tr><tr><td>Šipka nahoru</td><td>Předchozí "
+"řádek</td></tr><tr><td>Ctrl+Mezerník</td><td>Pravopisná "
+"doporučení</td></tr><tr><td>Ctrl+B</td><td>Vyp/zap. "
+"tučně</td></tr><tr><td>Ctrl+I</td><td>Vyp/zap. "
+"skloněné</td></tr><tr><td>Ctrl+D</td><td>Rozdělit slovo na pozici "
+"kurzoru</td></tr><tr><td>Ctrl+M</td><td>Spojit s předcházejícím "
+"slovem</td></tr><tr><td>Ctrl+Shift+M</td><td>Spojit s následujícím "
+"slovem</td></tr><tr><td>Ctrl+{Šipka vlevo, vpravo}</td><td>Upravit levý "
+"okraj zarovnání</td></tr><tr><td>Ctrl+Shift+{Šipka vlevo, vpravo}</td><td>"
+"Upravit pravý okraj zarovnání</td></tr><tr><td>Ctrl+{Šipka nahoru, "
+"dolů}</td><td>Upravit horní okraj zarovnání</td></tr><tr><td>Ctrl+Shift+{"
+"Šipka nahoru, dolů}</td><td>Upravit spodní okraj zarovnání</td></tr></table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:394
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Klávesové zkratky"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:409
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Míra jistoty: %1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2064,9 +2079,8 @@ msgid "Find and Replace"
 msgstr "Najít a nahradit"
 
 #: ../qt/src/MainWindow.cc:317
-#, fuzzy
 msgid "Multiple sources (%1)"
-msgstr "Vícero zdrojů"
+msgstr "Vícero zdrojů (%1)"
 
 #: ../qt/src/MainWindow.cc:611
 msgid ""
@@ -2077,9 +2091,8 @@ msgstr ""
 "%1"
 
 #: ../qt/src/OutputEditorText.cc:40
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "Strana: %1"
+msgstr "Strana: %1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
@@ -2114,38 +2127,33 @@ msgid "The following errors occurred:"
 msgstr "Došlo k následujícím chybám:"
 
 #: ../qt/src/SourceManager.cc:266
-#, fuzzy
 msgid "Select folder..."
-msgstr "Vybrat zdroje..."
+msgstr "Vybrat složku..."
 
 #: ../qt/src/SourceManager.cc:363
-#, fuzzy
 msgid "Delete Files"
-msgstr "Smazat soubor?"
+msgstr "Smazat soubory"
 
 #: ../qt/src/SourceManager.cc:363
 msgid "Delete the following files?"
-msgstr ""
+msgstr "Smazat následující soubory?"
 
 #: ../qt/src/SourceManager.cc:448
-#, fuzzy
 msgid "Open output"
-msgstr "Uložit výstup"
+msgstr "Otevřít výstup"
 
 #: ../qt/src/SourceManager.cc:448
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr ""
+msgstr "Byl nalezen jak text, tak hOCR výstup. Který chcete otevřít?"
 
 #: ../qt/src/SourceManager.cc:449
-#, fuzzy
 msgid "Text"
-msgstr "Řádek textu"
+msgstr "Text"
 
 #: ../qt/src/SourceManager.cc:450
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
