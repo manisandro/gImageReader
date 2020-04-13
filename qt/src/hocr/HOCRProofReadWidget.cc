@@ -240,6 +240,9 @@ HOCRProofReadWidget::HOCRProofReadWidget(QTreeView* treeView, QWidget* parent)
 	connect(document, &HOCRDocument::rowsMoved, this, &HOCRProofReadWidget::updateRows);
 	connect(MAIN->getDisplayer(), &Displayer::viewportChanged, this, &HOCRProofReadWidget::repositionWidget);
 	connect(MAIN->getSourceManager(), &SourceManager::sourceChanged, this, &HOCRProofReadWidget::hide);
+
+	// Start hidden
+	hide();
 }
 
 void HOCRProofReadWidget::clear() {
