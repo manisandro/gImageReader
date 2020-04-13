@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
-"PO-Revision-Date: 2020-04-13 08:45+0000\n"
-"Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
+"PO-Revision-Date: 2020-04-13 08:50+0000\n"
+"Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
 "Language: mk\n"
@@ -1651,46 +1651,48 @@ msgstr "Не можам да се запише на % 1."
 
 #: ../gtk/src/SourceManager.cc:287
 msgid "Delete File?"
-msgstr ""
+msgstr "Избриши датотека?"
 
 #: ../gtk/src/SourceManager.cc:287
 msgid "The following files will be deleted:%1"
-msgstr ""
+msgstr "Следниве датотеки ќе бидат избришани:% 1"
 
 #: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:476
 msgid "Missing File"
-msgstr ""
+msgstr "Недостасува датотека"
 
 #: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:476
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
 msgstr ""
+"Следната датотека беше избришана или преместена:\n"
+"% 1"
 
 #: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:69
 msgid "Search for"
-msgstr ""
+msgstr "Пребарај за"
 
 #: ../gtk/src/SubstitutionsManager.cc:34 ../qt/src/SubstitutionsManager.cc:69
 msgid "Replace with"
-msgstr ""
+msgstr "Замени со"
 
 #: ../gtk/src/SubstitutionsManager.cc:69 ../gtk/src/SubstitutionsManager.cc:103
 #: ../qt/src/SubstitutionsManager.cc:102 ../qt/src/SubstitutionsManager.cc:139
 msgid "Substitutions List"
-msgstr ""
+msgstr "Список на Измени"
 
 #: ../gtk/src/SubstitutionsManager.cc:70 ../qt/src/SubstitutionsManager.cc:102
 msgid "Open Substitutions List"
-msgstr ""
+msgstr "Отвори Список на Измени"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:108
 msgid "Error Reading File"
-msgstr ""
+msgstr "Грешка при Вчитување на Датотека"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:108
 msgid "Unable to read '%1'."
-msgstr ""
+msgstr "Не може да се прочита '%1'."
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:133
 msgid "Errors Occurred Reading File"
@@ -1698,27 +1700,27 @@ msgstr "Се појави грешка при вчитување на датот
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:133
 msgid "Some entries of the substitutions list could not be read."
-msgstr ""
+msgstr "Некои записи од списокот со измени не може да се прочитаат."
 
 #: ../gtk/src/SubstitutionsManager.cc:104 ../qt/src/SubstitutionsManager.cc:139
 msgid "Save Substitutions List"
-msgstr ""
+msgstr "Зачувај Список на Измени"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Error Saving File"
-msgstr ""
+msgstr "Грешка при Зачувување на Датотека"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Unable to write to '%1'."
-msgstr ""
+msgstr "Не може да се запише на '%1'."
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:158
 msgid "Save List?"
-msgstr ""
+msgstr "Зачувај Листа?"
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:158
 msgid "Do you want to save the current list?"
-msgstr ""
+msgstr "Дали сакате да ја зачувате тековната листа?"
 
 #: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:70
 msgid ""
@@ -1730,32 +1732,40 @@ msgid ""
 "tesseract language packs directly, or switch to using the user tessdata path "
 "in the configuration dialog."
 msgstr ""
+"Потребно е поврзување на сесијата со позадинскиот дел на PackageKit за "
+"управување со системските тесеракт јазични групи, но не беше пронајдена. "
+"Оваа услуга обично се обезбедува со апликација за управување со софтвер, "
+"како што е софтверот Gnome. Ве молиме инсталирајте софтвер кој го обезбедува "
+"потребниот PackageKit интерфејс, користете друг софтвер за управување со "
+"системски пакети за директно управување со системските тесеракт јазични "
+"групи или префрлете се на употреба на корисничката tessdata патека во "
+"дијалогот за конфигурација."
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:75
 msgid "Fetching available languages"
-msgstr ""
+msgstr "Преземање на достапни јазици"
 
 #: ../gtk/src/TessdataManager.cc:70 ../gtk/src/TessdataManager.cc:96
 #: ../gtk/src/TessdataManager.cc:197 ../qt/src/TessdataManager.cc:80
 #: ../qt/src/TessdataManager.cc:97 ../qt/src/TessdataManager.cc:169
 msgid "Failed to fetch list of available languages: %1"
-msgstr ""
+msgstr "Не успеа да се добие список на достапни јазици: % 1"
 
 #: ../gtk/src/TessdataManager.cc:104 ../qt/src/TessdataManager.cc:107
 msgid "Parsing error: %1"
-msgstr ""
+msgstr "Грешка при парсирање: % 1"
 
 #: ../gtk/src/TessdataManager.cc:235 ../qt/src/TessdataManager.cc:204
 msgid "Applying changes..."
-msgstr ""
+msgstr "Примена на промени..."
 
 #: ../gtk/src/TessdataManager.cc:297 ../qt/src/TessdataManager.cc:250
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Не успеа да се креира директориум за датотеки со tessdata."
 
 #: ../gtk/src/TessdataManager.cc:306 ../qt/src/TessdataManager.cc:259
 msgid "Downloading %1..."
-msgstr ""
+msgstr "Преземање % 1..."
 
 #: ../gtk/src/TessdataManager.cc:330
 msgid ""
@@ -1767,37 +1777,37 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Следниве речници не може да се преземат:\n"
+"Следниве датотеки не може да се преземат или отстранат::\n"
 "% 1\n"
 "\n"
-"Проверете ги дозволите за поврзување и директориум.\n"
+"Проверете го поврзувањето и дозволите за директориум.\n"
 "\n"
-"Совет: Ако немате дозволи за пишување во папките на системот, можете да "
+"Совет: Ако немате дозволи за пишување во системските папки, можете да "
 "преминете на корисничките патеки во дијалогот за поставки."
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "Да за сите"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
-msgstr ""
+msgstr "Не"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "Не за се"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
-msgstr ""
+msgstr "Отфрли"
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
-msgstr ""
+msgstr "За gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
 msgid ""
@@ -1805,22 +1815,25 @@ msgid ""
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
+"<html><head/><body><p>&nbsp;</p><p>Графички преден план на "
+"тесеракт-оцр</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Веб-страница</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
-msgstr ""
+msgstr "Одобрувања"
 
 #: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
-msgstr ""
+msgstr "Лиценца"
 
 #: ../qt/data/BatchModeDialog.ui.h:1
 msgid "Batch Mode"
-msgstr ""
+msgstr "Групен режим"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
 msgid "Prepend page numbers to output text"
-msgstr ""
+msgstr "Припремете бројки на страница за излезниот текст:"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
