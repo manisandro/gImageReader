@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
-"PO-Revision-Date: 2020-04-12 18:11+0000\n"
+"PO-Revision-Date: 2020-04-13 07:49+0000\n"
 "Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -140,16 +140,15 @@ msgstr "Патека на речници за правопис:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "Системски патеки"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
 msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
-#, fuzzy
 msgid "Automatically open exported documents with default application"
-msgstr "Автоматски отворете извозни документи со стандардна апликација"
+msgstr "Автоматско отворање извозни документи со стандардна апликација"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
