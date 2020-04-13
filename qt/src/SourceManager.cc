@@ -263,7 +263,7 @@ void SourceManager::openSources() {
 }
 
 void SourceManager::addFolder() {
-	QString dir = QFileDialog::getExistingDirectory(MAIN, tr("Select folder..."), Utils::documentsFolder());
+	QString dir = QFileDialog::getExistingDirectory(MAIN, _("Select folder..."), Utils::documentsFolder());
 	if(dir.isEmpty()) {
 		return;
 	}
