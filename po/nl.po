@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
-"PO-Revision-Date: 2020-04-12 18:11+0000\n"
+"PO-Revision-Date: 2020-04-13 10:38+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gimagereader/"
 "translations/nl/>\n"
@@ -2025,7 +2025,7 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:219
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Sneltoetsen"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:377
 msgid ""
@@ -2045,11 +2045,11 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:394
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Sneltoetsen"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:409
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Zekerheid: %1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2110,9 +2110,8 @@ msgid "The following errors occurred:"
 msgstr "De volgende fouten zijn opgetreden:"
 
 #: ../qt/src/SourceManager.cc:266
-#, fuzzy
 msgid "Select folder..."
-msgstr "Bestanden selecteren"
+msgstr "Map kiezen..."
 
 #: ../qt/src/SourceManager.cc:363
 msgid "Delete Files"
@@ -2123,24 +2122,21 @@ msgid "Delete the following files?"
 msgstr "Wilt u de volgende bestanden verwijderen?"
 
 #: ../qt/src/SourceManager.cc:448
-#, fuzzy
 msgid "Open output"
 msgstr "Uitvoer opslaan"
 
 #: ../qt/src/SourceManager.cc:448
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr ""
+msgstr "Er is zowel tekst als hOCR-uitvoer aangetroffen. Welke wilt u openen?"
 
 #: ../qt/src/SourceManager.cc:449
-#, fuzzy
 msgid "Text"
-msgstr "Tekstregel"
+msgstr "Tekst"
 
 #: ../qt/src/SourceManager.cc:450
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
