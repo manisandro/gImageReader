@@ -321,7 +321,7 @@ void HOCRProofReadWidget::repositionWidget() {
 	Displayer* displayer = MAIN->getDisplayer();
 	int frameXmin = std::numeric_limits<int>::max();
 	int frameXmax = 0;
-	int frameY = 0;
+	int frameY = std::numeric_limits<int>::min();
 	QPoint sceneCorner = displayer->getSceneBoundingRect().toRect().topLeft();
 	for(QWidget* lineWidget : m_currentLines) {
 		if(lineWidget->children().isEmpty()) {
