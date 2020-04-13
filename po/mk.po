@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
 "PO-Revision-Date: 2020-04-13 08:19+0000\n"
-"Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
+"Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
 "Language: mk\n"
@@ -339,7 +339,7 @@ msgstr "Извор:"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
-msgstr "Постигнува  "
+msgstr "Постигнува"
 
 #: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
