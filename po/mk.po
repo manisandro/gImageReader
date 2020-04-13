@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
-"PO-Revision-Date: 2020-04-13 08:51+0000\n"
+"PO-Revision-Date: 2020-04-13 08:54+0000\n"
 "Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -1881,6 +1881,12 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Тесеракт се "
+"прекина</span></p><p>Тесеракт (ОЦР уредот) прекина за време на препознавање "
+"на текстот. Ова може да се случи доколку користените податоци се корумпирани "
+"или некомпатибилни со тековната верзија на тесеракт, или поради грешка во "
+"тесеракт.</p><p>Патеката подолу може да обезбеди дополнителни информации за "
+"тоа како настанала грешката.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
@@ -1977,7 +1983,7 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:219
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Скратеници за тастатура"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:377
 msgid ""
