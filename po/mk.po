@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
-"PO-Revision-Date: 2020-04-13 08:54+0000\n"
+"PO-Revision-Date: 2020-04-13 10:38+0000\n"
 "Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -2046,7 +2046,7 @@ msgstr ""
 
 #: ../qt/src/OutputEditorText.cc:40
 msgid "Page: %1\n"
-msgstr ""
+msgstr "Страна: %1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
@@ -2093,7 +2093,6 @@ msgid "Delete the following files?"
 msgstr "Да се избришат следниве датотеки?"
 
 #: ../qt/src/SourceManager.cc:448
-#, fuzzy
 msgid "Open output"
 msgstr "Зачувај излез"
 
@@ -2103,9 +2102,8 @@ msgid ""
 msgstr ""
 
 #: ../qt/src/SourceManager.cc:449
-#, fuzzy
 msgid "Text"
-msgstr "Текст линија"
+msgstr "Текст"
 
 #: ../qt/src/SourceManager.cc:450
 msgid "hOCR"
