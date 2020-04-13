@@ -152,7 +152,7 @@ msgstr "Автоматско отворање извозни документи 
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
-msgstr ""
+msgstr "Обновување на позадина"
 
 #: ../gtk/data/CrashHandler.ui.h:3
 #, no-c-format
@@ -165,6 +165,12 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
+"<b>Апликацијата падна</b>\n"
+"\n"
+"Се извинуваме. За подобрување на апликацијата, Ве молиме пратете извештај за "
+"проблемот на <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%"
+"20Crash\">manisandro@gmail.com</a>. Ве молиме опишете што работевте пред да "
+"падне апликацијата. Воедно, наведете ги информациите подолу. Ви благодариме."
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -177,6 +183,14 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occurred.\n"
 msgstr ""
+"<b>Тесеракт се прекина</b>\n"
+"\n"
+"Тесеракт (ОЦР уредот) прекина за време на препознавање на текстот. Ова може "
+"да се случи доколку користените  податоци се корумпирани или некомпатибилни "
+"со тековната верзија на тесеракт, или поради грешка во тесеракт. \n"
+"\n"
+"Патеката подолу може да обезбеди дополнителни информации за тоа како "
+"настанала грешката."
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
