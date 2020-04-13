@@ -33,11 +33,11 @@
 
 class HOCRProofReadWidget::LineEdit : public QLineEdit {
 public:
-	LineEdit(QTreeView* documentTree, HOCRItem* wordItem, QWidget* parent = nullptr) :
-		QLineEdit(wordItem->text(), parent), m_documentTree(documentTree), m_wordItem(wordItem) {
+	LineEdit(HOCRProofReadWidget* proofReadWidget, HOCRItem* wordItem, QWidget* parent = nullptr) :
+		QLineEdit(wordItem->text(), parent), m_proofReadWidget(proofReadWidget), m_wordItem(wordItem) {
 		connect(this, &LineEdit::textChanged, this, &LineEdit::onTextChanged);
 
-		HOCRDocument* document = static_cast<HOCRDocument*>(m_documentTree->model());
+		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
 		connect(document, &HOCRDocument::dataChanged, this, &LineEdit::onModelDataChanged);
 		connect(document, &HOCRDocument::itemAttributeChanged, this, &LineEdit::onAttributeChanged);
 
@@ -52,7 +52,7 @@ public:
 	const HOCRItem* item() const { return m_wordItem; }
 
 private:
-	QTreeView* m_documentTree = nullptr;
+	HOCRProofReadWidget* m_proofReadWidget = nullptr;
 	HOCRItem* m_wordItem = nullptr;
 	bool m_blockSetText = false;
 
@@ -61,19 +61,15 @@ private:
 		if(misspelled) {
 			styles.append( "color: red;" );
 		}
-		int wconf = m_wordItem->getTitleAttributes()["x_wconf"].toInt();
-		if(wconf < 70) {
-			styles.append( "background: #ffb2b2;" );
-		} else if(wconf < 80) {
-			styles.append( "background: #ffdab0;" );
-		} else if(wconf < 90) {
-			styles.append( "background: #fffdb4;" );
+		QString confStyle = m_proofReadWidget->confidenceStyle(m_wordItem->getTitleAttributes()["x_wconf"].toInt());
+		if(!confStyle.isEmpty()) {
+			styles.append(confStyle);
 		}
 		return styles.isEmpty() ? "" : QString("QLineEdit {%1}").arg(styles.join(" "));
 	}
 
 	void onTextChanged() {
-		HOCRDocument* document = static_cast<HOCRDocument*>(m_documentTree->model());
+		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
 
 		// Update data in document
 		QModelIndex index = document->indexAtItem(m_wordItem);
@@ -82,7 +78,7 @@ private:
 		m_blockSetText = false;
 	}
 	void onModelDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int>& roles) {
-		HOCRDocument* document = static_cast<HOCRDocument*>(m_documentTree->model());
+		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
 		QItemSelectionRange range(topLeft, bottomRight);
 		QModelIndex index = document->indexAtItem(m_wordItem);
 		if(range.contains(index)) {
@@ -95,7 +91,7 @@ private:
 		}
 	}
 	void onAttributeChanged(const QModelIndex& index, const QString& name, const QString& /*value*/) {
-		HOCRDocument* document = static_cast<HOCRDocument*>(m_documentTree->model());
+		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
 		if(document->itemAtIndex(index) == m_wordItem) {
 			if(name == "bold" || name == "italic") {
 				QFont ft = font();
@@ -114,7 +110,7 @@ private:
 		}
 	}
 	void keyPressEvent(QKeyEvent* ev) override {
-		HOCRDocument* document = static_cast<HOCRDocument*>(m_documentTree->model());
+		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
 
 		bool nextLine = (ev->modifiers() == Qt::NoModifier && ev->key() == Qt::Key_Down) || (ev->key() == Qt::Key_Tab && m_wordItem == m_wordItem->parent()->children().last());
 		bool prevLine = (ev->modifiers() == Qt::NoModifier && ev->key() == Qt::Key_Up) || (ev->key() == Qt::Key_Backtab && m_wordItem == m_wordItem->parent()->children().first());
@@ -133,7 +129,7 @@ private:
 				index = document->prevOrNextIndex(false, index, "ocr_line");
 				index = document->prevOrNextIndex(false, index, "ocrx_word");
 			}
-			m_documentTree->setCurrentIndex(index);
+			m_proofReadWidget->documentTree()->setCurrentIndex(index);
 		} else if(ev->key() == Qt::Key_Space && ev->modifiers() == Qt::ControlModifier) {
 			// Spelling menu
 			QModelIndex index = document->indexAtItem(m_wordItem);
@@ -183,9 +179,9 @@ private:
 		}
 	}
 	void focusInEvent(QFocusEvent* ev) override {
-		HOCRDocument* document = static_cast<HOCRDocument*>(m_documentTree->model());
-		m_documentTree->setCurrentIndex(document->indexAtItem(m_wordItem));
-
+		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
+		m_proofReadWidget->documentTree()->setCurrentIndex(document->indexAtItem(m_wordItem));
+		m_proofReadWidget->setConfidenceLabel(m_wordItem->getTitleAttributes()["x_wconf"].toInt());
 		QLineEdit::focusInEvent(ev);
 	}
 };
@@ -206,18 +202,24 @@ HOCRProofReadWidget::HOCRProofReadWidget(QTreeView* treeView, QWidget* parent)
 	layout->addWidget(linesWidget);
 
 	m_controlsWidget = new QWidget();
-	QFont font = m_controlsWidget->font();
-	font.setPointSizeF(0.75 * font.pointSizeF());
-	m_controlsWidget->setFont(font);
 	m_controlsWidget->setLayout(new QHBoxLayout);
 	m_controlsWidget->layout()->setSpacing(2);
 	m_controlsWidget->layout()->setContentsMargins(0, 0, 0, 0);
 	layout->addWidget(m_controlsWidget);
 
+	QFont smallFont;
+	smallFont.setPointSizeF(0.8 * smallFont.pointSizeF());
+
+	m_confidenceLabel = new QLabel();
+	m_confidenceLabel->setFont(smallFont);
+	m_controlsWidget->layout()->addWidget(m_confidenceLabel);
+
+	m_controlsWidget->layout()->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
+
 	QLabel* helpButton = new QLabel(QString("<a href=\"#help\">%1</a>").arg(_("Keyboard shortcuts")));
+	helpButton->setFont(smallFont);
 	connect(helpButton, &QLabel::linkActivated, this, &HOCRProofReadWidget::showShortcutsDialog);
 	m_controlsWidget->layout()->addWidget(helpButton);
-	m_controlsWidget->layout()->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding));
 
 	setObjectName("proofReadWidget");
 	setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
@@ -244,6 +246,8 @@ void HOCRProofReadWidget::clear() {
 	qDeleteAll(m_currentLines);
 	m_currentLines.clear();
 	m_currentLine = nullptr;
+	m_confidenceLabel->setText("");
+	m_confidenceLabel->setStyleSheet("");
 	hide();
 }
 
@@ -286,7 +290,7 @@ void HOCRProofReadWidget::setCurrentRow(const QModelIndex& current) {
 			} else {
 				QWidget* lineWidget = new QWidget();
 				for(HOCRItem* word : siblings[i]->children()) {
-					new LineEdit(m_treeView, word, lineWidget); // Add as child to lineWidget
+					new LineEdit(this, word, lineWidget); // Add as child to lineWidget
 				}
 				m_linesLayout->insertWidget(insPos++, lineWidget);
 				newLines.insert(linei, lineWidget);
@@ -388,4 +392,21 @@ void HOCRProofReadWidget::showShortcutsDialog() {
 	                           "</table>"
 	                       ));
 	QMessageBox(QMessageBox::NoIcon, _("Keyboard Shortcuts"), text, QMessageBox::Close, MAIN).exec();
+}
+
+QString HOCRProofReadWidget::confidenceStyle(int wconf) const {
+	if(wconf < 70) {
+		return "background: #ffb2b2;";
+	} else if(wconf < 80) {
+		return "background: #ffdab0;";
+	} else if(wconf < 90) {
+		return "background: #fffdb4;";
+	}
+	return QString();
+}
+
+void HOCRProofReadWidget::setConfidenceLabel(int wconf) {
+	m_confidenceLabel->setText(_("Confidence: %1").arg(wconf));
+	QString style = confidenceStyle(wconf);
+	m_confidenceLabel->setStyleSheet(!style.isEmpty() ? QString("QLabel { %1 }").arg(style) : "");
 }

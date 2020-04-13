@@ -23,6 +23,7 @@
 #include <QMap>
 #include <QFrame>
 
+class QLabel;
 class QTreeView;
 class QVBoxLayout;
 class HOCRItem;
@@ -32,6 +33,9 @@ class HOCRProofReadWidget : public QFrame {
 public:
 	HOCRProofReadWidget(QTreeView* treeView, QWidget* parent = nullptr);
 	void clear();
+	QTreeView* documentTree() const { return m_treeView; }
+	void setConfidenceLabel(int wconf);
+	QString confidenceStyle(int wconf) const;
 
 private:
 	class LineEdit;
@@ -40,6 +44,7 @@ private:
 	QVBoxLayout* m_linesLayout = nullptr;
 	const HOCRItem* m_currentLine = nullptr;
 	QWidget* m_controlsWidget = nullptr;
+	QLabel* m_confidenceLabel = nullptr;
 	QMap<const HOCRItem*, QWidget*> m_currentLines;
 
 	// Disable auto tab handling
