@@ -105,7 +105,7 @@ private:
 				QPoint bottomRight = MAIN->getDisplayer()->mapFromScene(sceneBBox.bottomRight());
 				int frameX = parentWidget()->parentWidget()->parentWidget()->pos().x();
 				move(bottomLeft.x() - frameX, 0);
-				setFixedWidth(bottomRight.x() - bottomLeft.x() + 6); // 6: border + padding
+				setFixedWidth(bottomRight.x() - bottomLeft.x() + 8); // 8: border + padding
 			}
 		}
 	}
@@ -340,7 +340,8 @@ void HOCRProofReadWidget::repositionWidget() {
 	// Recompute font sizes so that text matches original as closely as possible
 	QFont ft = font();
 	QFontMetrics fm(ft);
-	double minFactor = std::numeric_limits<double>::max();
+	double avgFactor = 0.0;
+	int nFactors = 0;
 	// First pass: min scaling factor, move to correct location
 	for(QWidget* lineWidget : m_currentLines) {
 		for(int i = 0, n = lineWidget->children().count(); i < n; ++i) {
@@ -348,15 +349,19 @@ void HOCRProofReadWidget::repositionWidget() {
 			QRect sceneBBox = lineEdit->item()->bbox().translated(sceneCorner);
 			QPoint bottomLeft = displayer->mapFromScene(sceneBBox.bottomLeft());
 			QPoint bottomRight = displayer->mapFromScene(sceneBBox.bottomRight());
+			// Factor weighed by length
 			double factor = (bottomRight.x() - bottomLeft.x()) / double(fm.horizontalAdvance(lineEdit->text()));
-			minFactor = std::min(factor, minFactor);
+			avgFactor += lineEdit->text().length() * factor;
+			nFactors += lineEdit->text().length();
 			lineEdit->move(bottomLeft.x() - frameXmin, 0);
-			lineEdit->setFixedWidth(bottomRight.x() - bottomLeft.x() + 6); // 6: border + padding
-			frameXmax = std::max(frameXmax, bottomRight.x() + 6);
+			lineEdit->setFixedWidth(bottomRight.x() - bottomLeft.x() + 8); // 8: border + padding
+			frameXmax = std::max(frameXmax, bottomRight.x() + 8);
 		}
 	}
+	avgFactor = avgFactor > 0 ? avgFactor / nFactors : 1.;
+
 	// Second pass: apply font sizes, set line heights
-	ft.setPointSizeF(ft.pointSizeF() * minFactor);
+	ft.setPointSizeF(ft.pointSizeF() * avgFactor);
 	fm = QFontMetrics(ft);
 	for(QWidget* lineWidget : m_currentLines) {
 		for(int i = 0, n = lineWidget->children().count(); i < n; ++i) {
