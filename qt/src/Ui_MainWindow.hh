@@ -29,7 +29,6 @@ public:
 	QFrame* frameRotation;
 	QFrame* framePage;
 	QMenu* menuAppMenu;
-	QMenu* menuAddSource;
 	QMenu* menuRotation;
 	QToolBar* toolBarSources;
 	QToolButton* toolButtonRotation;
@@ -191,19 +190,11 @@ public:
 		actionSourcePaste = new QAction(QIcon::fromTheme("edit-paste"), gettext("Paste"), MainWindow);
 		actionSourceScreenshot = new QAction(QIcon::fromTheme("camera-photo"), gettext("Take Screenshot"), MainWindow);
 
-		menuAddSource = new QMenu(MainWindow);
-		menuAddSource->addAction(actionSourceFolder);
-		menuAddSource->addAction(actionSourceRecent);
-		menuAddSource->addSeparator();
-		menuAddSource->addAction(actionSourcePaste);
-		menuAddSource->addAction(actionSourceScreenshot);
-
 		toolButtonSourceAdd = new QToolButton(MainWindow);
 		toolButtonSourceAdd->setIcon(QIcon::fromTheme("document-open"));
 		toolButtonSourceAdd->setText(gettext("Add Images"));
 		toolButtonSourceAdd->setToolTip(gettext("Add images"));
 		toolButtonSourceAdd->setPopupMode(QToolButton::MenuButtonPopup);
-		toolButtonSourceAdd->setMenu(menuAddSource);
 
 		actionSourceRemove = new QAction(QIcon::fromTheme("list-remove"), gettext("Remove Image"), MainWindow);
 		actionSourceRemove->setToolTip(gettext("Remove image from list"));
@@ -219,6 +210,9 @@ public:
 		toolBarSources->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		toolBarSources->setIconSize(QSize(1, 1) * toolBarSources->style()->pixelMetric(QStyle::PM_SmallIconSize));
 		toolBarSources->addWidget(toolButtonSourceAdd);
+		toolBarSources->addAction(actionSourceFolder);
+		toolBarSources->addAction(actionSourcePaste);
+		toolBarSources->addAction(actionSourceScreenshot);
 		toolBarSources->addSeparator();
 		toolBarSources->addAction(actionSourceRemove);
 		toolBarSources->addAction(actionSourceDelete);

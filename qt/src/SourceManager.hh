@@ -102,7 +102,7 @@ private slots:
 	void openRecentItem();
 	void openSources();
 	void pasteClipboard();
-	void prepareSourcesMenu();
+	void prepareRecentMenu();
 	void removeSource(bool deleteFile = false);
 	void takeScreenshot();
 };

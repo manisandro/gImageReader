@@ -51,7 +51,7 @@ Source::~Source() {
 SourceManager::SourceManager(const UI_MainWindow& _ui)
 	: ui(_ui) {
 	m_recentMenu = new QMenu(MAIN);
-	ui.actionSourceRecent->setMenu(m_recentMenu);
+	ui.toolButtonSourceAdd->setMenu(m_recentMenu);
 
 	m_fileTreeModel = new FileTreeModel(this);
 
@@ -62,10 +62,11 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	ui.treeViewSources->header()->setSectionResizeMode(1, QHeaderView::Fixed);
 	ui.treeViewSources->header()->resizeSection(1, 16);
 
+	ui.actionSourcePaste->setEnabled(!QApplication::clipboard()->pixmap().isNull());
 
 	connect(ui.actionSources, &QAction::toggled, ui.dockWidgetSources, &QDockWidget::setVisible);
 	connect(ui.toolButtonSourceAdd, &QToolButton::clicked, this, &SourceManager::openSources);
-	connect(ui.menuAddSource, &QMenu::aboutToShow, this, &SourceManager::prepareSourcesMenu);
+	connect(m_recentMenu, &QMenu::aboutToShow, this, &SourceManager::prepareRecentMenu);
 	connect(ui.actionSourceFolder, &QAction::triggered, this, &SourceManager::addFolder);
 	connect(ui.actionSourcePaste, &QAction::triggered, this, &SourceManager::pasteClipboard);
 	connect(ui.actionSourceScreenshot, &QAction::triggered, this, &SourceManager::takeScreenshot);
@@ -76,6 +77,7 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	connect(ui.treeViewSources, &QTreeView::clicked, this, &SourceManager::indexClicked);
 	connect(&m_fsWatcher, &QFileSystemWatcher::fileChanged, this, &SourceManager::fileChanged);
 	connect(&m_fsWatcher, &QFileSystemWatcher::directoryChanged, this, &SourceManager::directoryChanged);
+	connect(QApplication::clipboard(), &QClipboard::dataChanged, this, [this] { ui.actionSourcePaste->setEnabled(!QApplication::clipboard()->pixmap().isNull()); });
 
 	ADD_SETTING(VarSetting<QStringList>("recentitems"));
 }
@@ -225,7 +227,7 @@ QList<Source*> SourceManager::getSelectedSources() const {
 	return selectedSources;
 }
 
-void SourceManager::prepareSourcesMenu() {
+void SourceManager::prepareRecentMenu() {
 	// Build recent menu
 	m_recentMenu->clear();
 	int count = 0;
@@ -240,10 +242,9 @@ void SourceManager::prepareSourcesMenu() {
 			}
 		}
 	}
-	ui.actionSourceRecent->setEnabled(!m_recentMenu->isEmpty());
-
-	// Set paste action sensitivity
-	ui.actionSourcePaste->setEnabled(!QApplication::clipboard()->pixmap().isNull());
+	if(m_recentMenu->isEmpty()) {
+		m_recentMenu->addAction(_("No recent files"))->setEnabled(false);
+	}
 }
 
 void SourceManager::openSources() {
