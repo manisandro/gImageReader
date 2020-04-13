@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
-"PO-Revision-Date: 2020-04-13 07:49+0000\n"
-"Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
+"PO-Revision-Date: 2020-04-13 08:19+0000\n"
+"Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
 "Language: mk\n"
@@ -124,7 +124,7 @@ msgstr "Фонт на излезна рамка:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
-msgstr ""
+msgstr "Стандардно"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
@@ -132,7 +132,7 @@ msgstr "Локации за јазични податоци:"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
-msgstr ""
+msgstr "Патеки за јазични дефиниции:"
 
 #: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
@@ -144,7 +144,7 @@ msgstr "Системски патеки"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Кориснички патеки"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
@@ -186,11 +186,11 @@ msgstr ""
 "<b>Тесеракт се прекина</b>\n"
 "\n"
 "Тесеракт (ОЦР уредот) прекина за време на препознавање на текстот. Ова може "
-"да се случи доколку користените  податоци се корумпирани или некомпатибилни "
+"да се случи доколку користените податоци се корумпирани или некомпатибилни "
 "со тековната верзија на тесеракт, или поради грешка во тесеракт. \n"
 "\n"
 "Патеката подолу може да обезбеди дополнителни информации за тоа како "
-"настанала грешката."
+"настанала грешката.\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
@@ -198,11 +198,11 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate current page"
-msgstr ""
+msgstr "Ротирај ја моменталната страна"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:68
 msgid "Rotate all pages"
-msgstr ""
+msgstr "Ротирај ги сите страни"
 
 #: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:190
 msgid "Recent"
@@ -214,19 +214,19 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:192
 msgid "Take Screenshot"
-msgstr ""
+msgstr "Направи скриншот"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:24
 msgid "Zoom in"
-msgstr ""
+msgstr "Зголеми"
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/data/MainWindow.ui.h:26
 msgid "Zoom out"
-msgstr ""
+msgstr "Намали"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/data/MainWindow.ui.h:28
 msgid "Normal size"
-msgstr ""
+msgstr "Нормална големина"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:30
 msgid "Best fit"
@@ -234,21 +234,21 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
 msgid "Rotate page"
-msgstr ""
+msgstr "Ротирај страна"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
 msgid "Select rotation mode"
-msgstr ""
+msgstr "Избери режим на ротација"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../gtk/data/OutputEditorHOCR.ui.h:12
 #: ../gtk/data/OutputEditorText.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:71 ../qt/src/Ui_OutputEditorText.hh:95
 msgid "Select insert mode"
-msgstr ""
+msgstr "Избери режим на внес"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:103
 msgid "Select page"
-msgstr ""
+msgstr "Избери страна"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
@@ -256,7 +256,7 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:159
 msgid "Plain text"
-msgstr ""
+msgstr "Едноставен текст"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../qt/src/MainWindow.cc:160
 msgid "hOCR, PDF"
@@ -272,86 +272,86 @@ msgstr "<small>Препознај се</small>"
 
 #: ../gtk/data/MainWindow.ui.h:20
 msgid "Select language"
-msgstr ""
+msgstr "Избери јазик"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:204
 msgid "Add images"
-msgstr ""
+msgstr "Додади слики"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:203
 msgid "Add Images"
-msgstr ""
+msgstr "Додади слики"
 
 #: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:209
 msgid "Remove image from list"
-msgstr ""
+msgstr "Отстрани слики од листата"
 
 #: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:212
 msgid "Delete image"
-msgstr ""
+msgstr "Избриши слика"
 
 #: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:215
 msgid "Clear list"
-msgstr ""
+msgstr "Исчисти листа"
 
 #: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
-msgstr ""
+msgstr "Датотеки"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:9
 msgid "Device:"
-msgstr ""
+msgstr "Уред:"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:55
 msgid "Refresh"
-msgstr ""
+msgstr "Освежи"
 
 #: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:10
 msgid "Output:"
-msgstr ""
+msgstr "Излез:"
 
 #: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:14
 msgid "Mode:"
-msgstr ""
+msgstr "Режим:"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:313
 #: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExporter.cc:344
 msgid "Color"
-msgstr ""
+msgstr "Боја"
 
 #: ../gtk/data/MainWindow.ui.h:32 ../gtk/src/hocr/HOCRPdfExporter.cc:316
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:345
 msgid "Grayscale"
-msgstr ""
+msgstr "Сиво"
 
 #: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:11
 msgid "Resolution:"
-msgstr ""
+msgstr "Резолуција:"
 
 #: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:12
 msgid "Scan"
-msgstr ""
+msgstr "Скен"
 
 #: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:17
 msgid "Source:"
-msgstr ""
+msgstr "Извор:"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
-msgstr ""
+msgstr "Превеми"
 
 #: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
-msgstr ""
+msgstr "Осветленост"
 
 #: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
-msgstr ""
+msgstr "Контраст"
 
 #: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
-msgstr ""
+msgstr "Резолуција"
 
 #: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
@@ -396,11 +396,11 @@ msgstr ""
 #: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:381
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:133
 msgid "Entire page"
-msgstr ""
+msgstr "Цела страна"
 
 #: ../gtk/data/MainWindow.ui.h:53 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
-msgstr ""
+msgstr "Автоматско детектирање"
 
 #: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
@@ -412,27 +412,27 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:56 ../qt/data/PageRangeDialog.ui.h:9
 msgid "Source page"
-msgstr ""
+msgstr "Изворна страна"
 
 #: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:170
 msgid "Protected PDF"
-msgstr ""
+msgstr "Заштити PDF"
 
 #: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:67
 msgid "Current Page"
-msgstr ""
+msgstr "Моментална страна"
 
 #: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:70
 msgid "Multiple Pages..."
-msgstr ""
+msgstr "Повеќе страни..."
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:657
 msgid "Add Word"
-msgstr ""
+msgstr "Додади збор"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:657
 msgid "Enter word:"
-msgstr ""
+msgstr "Внеси збор:"
 
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
@@ -446,7 +446,7 @@ msgstr ""
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
 msgid "Export to plain text"
-msgstr ""
+msgstr "Експортирај како едноставен текст"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:96
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:97
@@ -456,7 +456,7 @@ msgstr "Експорт во PDF"
 #: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:99
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:100
 msgid "Export to ODT"
-msgstr ""
+msgstr "Експортирај како ODTѐ"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
@@ -870,11 +870,11 @@ msgstr ""
 
 #: ../gtk/src/Acquirer.cc:115 ../qt/src/Acquirer.cc:106
 msgid "Scan failed"
-msgstr ""
+msgstr "Неуспешно скенирање"
 
 #: ../gtk/src/Acquirer.cc:133 ../qt/src/Acquirer.cc:122
 msgid "No scanners were detected."
-msgstr ""
+msgstr "Не се пронајдени скенери."
 
 #: ../gtk/src/Acquirer.cc:150 ../gtk/src/Acquirer.cc:167
 #: ../qt/src/Acquirer.cc:136 ../qt/src/Acquirer.cc:153
@@ -907,7 +907,7 @@ msgstr ""
 
 #: ../gtk/src/Config.cc:50 ../qt/data/ConfigDialog.ui.h:8
 msgid "Code"
-msgstr ""
+msgstr "Код"
 
 #: ../gtk/src/Config.cc:51 ../qt/data/ConfigDialog.ui.h:9
 msgid "Native name"
@@ -915,7 +915,7 @@ msgstr ""
 
 #: ../gtk/src/Config.cc:109 ../qt/src/Config.cc:102
 msgid "Script"
-msgstr ""
+msgstr "Скрипта"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:41
 #: ../qt/src/CrashHandler.cc:36
@@ -1979,19 +1979,34 @@ msgid ""
 "edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</td><td>Adjust bottom bounding "
 "box edge</td></tr></table>"
 msgstr ""
+"<table><tr><td>Таб</td><td>Следно поле</td></tr><tr><td>Shift+Tab</td><td>"
+"Претходно поле</td></tr><tr><td>Надоле</td><td>Следна "
+"линија</td></tr><tr><td>Up</td><td>Претходна "
+"линија</td></tr><tr><td>Ctrl+Space</td><td>Предлози за "
+"спелување</td></tr><tr><td>Ctrl+B</td><td>Исклучи "
+"болд</td></tr><tr><td>Ctrl+I</td><td>Исклучи "
+"италик</td></tr><tr><td>Ctrl+D</td><td>Подели го зборот на местотот на "
+"курсорот</td></tr><tr><td>Ctrl+M</td><td>Спој со претходниот "
+"збор</td></tr><tr><td>Ctrl+Shift+M</td><td>Спој со следниот "
+"збор</td></tr><tr><td>Ctrl+{Десно,Лево}</td><td>Прилагоди ја левата граница "
+"на кутијата</td></tr><tr><td>Ctrl+Shift+{Лево,Десно}</td><td>Прилагоди ја "
+"десната граница на кутијата</td></tr><tr><td>Ctrl+{Up,Down}</td><td>"
+"Прилагоди ја горната граница на "
+"кутијата</td></tr><tr><td>Ctrl+Shift+{Горе,Доле}</td><td>Прилагоди ја "
+"долната граница на кутијата</td></tr></table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:394
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Скратеници на тастатура"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:409
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Доверба:% 1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
 msgid "Save as hOCR text"
-msgstr ""
+msgstr "Зачувај како hOCR текс"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:111
 #: ../qt/src/Ui_OutputEditorText.hh:106
@@ -2046,7 +2061,7 @@ msgstr "Се случија следниве грешки:"
 
 #: ../qt/src/SourceManager.cc:266
 msgid "Select folder..."
-msgstr ""
+msgstr "Избери папка..."
 
 #: ../qt/src/SourceManager.cc:363
 msgid "Delete Files"
