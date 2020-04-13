@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
-"PO-Revision-Date: 2020-04-13 08:28+0000\n"
+"PO-Revision-Date: 2020-04-13 08:29+0000\n"
 "Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -1352,7 +1352,7 @@ msgstr ""
 #: ../gtk/src/MainWindow.cc:513 ../gtk/src/MainWindow.cc:542
 #: ../qt/src/MainWindow.cc:523
 msgid "Installing spelling dictionary for '%1'"
-msgstr ""
+msgstr "Се инсталира речник за правопис за '%1'"
 
 #: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:555
 #: ../gtk/src/MainWindow.cc:563 ../gtk/src/MainWindow.cc:611
