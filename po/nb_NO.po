@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
-"PO-Revision-Date: 2020-04-04 00:04+0000\n"
+"PO-Revision-Date: 2020-04-16 10:11+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.0.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1972,7 +1972,7 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Miniatyrbilder"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2067,7 +2067,7 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:219
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Tastatursnarveier"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:377
 msgid ""
@@ -2087,7 +2087,7 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:394
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Tastatursnarveier"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:409
 msgid "Confidence: %1"
