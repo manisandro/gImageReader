@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
-"PO-Revision-Date: 2020-04-16 15:02+0000\n"
-"Last-Translator: anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2020-04-16 20:23+0000\n"
+"Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gimagereader/"
 "translations/fr/>\n"
 "Language: fr\n"
@@ -30,7 +30,7 @@ msgstr "Redétecter langues"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:167
 msgid "Manage Languages"
-msgstr "Gérer les langues..."
+msgstr "Gérer les langues"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:170
@@ -367,7 +367,7 @@ msgstr "Une interface graphique pour tesseract-ocr"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr "Whitelist / blacklist des charactèrs"
+msgstr "Liste blanche / noire des caractères"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
@@ -1039,7 +1039,7 @@ msgstr "Exportation a échoué"
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
-msgstr "L'export ODT a échoué: impossible d'écrire le fichier de sortie."
+msgstr "L'export ODT a échoué : impossible d'écrire le fichier de sortie."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:335 ../qt/src/hocr/HOCROdtExporter.cc:254
 msgid "Exporting to ODT..."
@@ -1108,7 +1108,7 @@ msgstr "Échec de la création de sortie"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:515 ../qt/src/hocr/HOCRPdfExporter.cc:503
 msgid "Failed to create output. The returned error was: %1"
-msgstr "Échec de la création de sortie. L'erreur retournée était: %1"
+msgstr "Échec de la création de sortie. L'erreur retournée était : %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:557 ../qt/src/hocr/HOCRPdfExporter.cc:543
 msgid "The operation was cancelled"
@@ -1829,7 +1829,7 @@ msgstr "Oui"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "Oui à tout"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1837,7 +1837,7 @@ msgstr "Non"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "Non à tout"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
@@ -1876,13 +1876,15 @@ msgstr "Ajouter des numéros de page avant le texte de sortie"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "Sortie existante :"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"En mode de traitement par lots, chaque source d'entrée est traitée "
+"séparément et la sortie enregistrée côte à côte dans le fichier d'entrée."
 
 #: ../qt/data/BatchModeDialog.ui.h:5
 #, fuzzy
@@ -1937,7 +1939,7 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Miniatures"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2027,12 +2029,17 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html><head/><body><ul><li>PoDoFo : offre plus d'options de compression "
+"d'image mais ne gère pas les scripts complexes. </li><li>QPrinter : prend "
+"uniquement en charge la compression JPEG pour le stockage d'images mais "
+"prend en charge scripts complexes. </li></ul></body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:219
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Raccourcis clavier"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:377
+#, fuzzy
 msgid ""
 "<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
 "td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
@@ -2047,14 +2054,32 @@ msgid ""
 "edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</td><td>Adjust bottom bounding "
 "box edge</td></tr></table>"
 msgstr ""
+"<table><tr><td>Tab</td><td>Champ "
+"suivant</td></tr><tr><td>Majuscule+Tab</td><td>Champ "
+"précédent</td></tr><tr><td>Bas</td><td>Ligne "
+"suivante</td></tr><tr><td>Up</td><td>Ligne "
+"précédente</td></tr><tr><td>Ctrl+Espace</td><td>Suggestions "
+"orthographiques</td></tr><tr><td>Ctrl+B</td><td>Basculer en "
+"gras</td></tr><tr><td>Ctrl+I</td><td>Basculer en "
+"italique</td></tr><tr><td>Ctrl+D</td><td>Diviser le mot à la position du "
+"curseur</td></tr><tr><td>Ctrl+M</td><td>Fusionner avec le mot "
+"précédent</td></tr><tr><td>Ctrl+Shift+M</td><td>Fusionner avec le mot "
+"suivant</td></tr><tr><td>Ctrl+{Gauche,Droite}</td><td>Ajuster le bord gauche "
+"de la boîte de "
+"délimitation</td></tr><tr><td>Ctrl+Majuscule+{Gauche,Droite}</td><td>Ajuster "
+"le bord droit de la boîte de "
+"délimitation</td></tr><tr><td>Ctrl+{Haut,Bas}</td><td>Ajuster le bord "
+"supérieur de la boîte de "
+"délimitation</td></tr><tr><td>Ctrl+Majuscule+{Haut,Bas}</td><td>Ajuster le "
+"bord inférieur de la boîte de délimitation</td></tr></table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:394
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Raccourcis clavier"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:409
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Confiance : %1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2085,15 +2110,16 @@ msgstr "Page : %1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
-msgstr ""
+msgstr "Mode de traitement par lots…"
 
 #: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "Écraser la sortie existante"
 
 #: ../qt/src/Recognizer.cc:87
+#, fuzzy
 msgid "Skip processing source"
-msgstr ""
+msgstr "Ignorer la source de traitement"
 
 #: ../qt/src/Recognizer.cc:234
 msgid "- Page %1: failed to render page"
@@ -2105,12 +2131,11 @@ msgstr "- Page %1 : erreur de rendu"
 
 #: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "-% 1 : la sortie existe déjà, source ignorée"
 
 #: ../qt/src/Recognizer.cc:363
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "Échec de la création de sortie"
+msgstr "- %1 : échec de la création de sortie"
 
 #: ../qt/src/Recognizer.cc:418
 msgid "The following errors occurred:"
@@ -2126,27 +2151,26 @@ msgstr "Supprimer les fichiers"
 
 #: ../qt/src/SourceManager.cc:363
 msgid "Delete the following files?"
-msgstr ""
+msgstr "Supprimer les fichiers suivants ?"
 
 #: ../qt/src/SourceManager.cc:448
 #, fuzzy
 msgid "Open output"
-msgstr "Enregistrer la reconnaissance"
+msgstr "Ouvrir la reconnaissance"
 
 #: ../qt/src/SourceManager.cc:448
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
 msgstr ""
+"Un texte et une sortie hOCR ont été trouvés. Lequel voulez-vous ouvrir ?"
 
 #: ../qt/src/SourceManager.cc:449
-#, fuzzy
 msgid "Text"
-msgstr "Ligne de texte"
+msgstr "Texte"
 
 #: ../qt/src/SourceManager.cc:450
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2157,16 +2181,13 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Les fichiers suivants ne peuvent pas être téléchargés ou supprimés:\n"
+"Les fichiers suivants ne peuvent pas être téléchargés ou supprimés :\n"
 "%1\n"
 "\n"
 "Vérifiez la connexion et les autorisations de dossier.\n"
-"Note: si vous n'avez pas les droits d'écriture dans les dossiers système, "
+"Note : si vous n'avez pas les droits d'écriture dans les dossiers système, "
 "vous pouvez passer aux chemins d'accès utilisateur dans la boîte de dialogue "
-"des paramètres.\n"
-"Remarque: Si vous n'avez pas les droits d'écriture dans les dossiers "
-"système, vous pouvez passer aux chemins du utilisateur dans le dialogue des "
-"préférences."
+"des paramètres."
 
 #: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
