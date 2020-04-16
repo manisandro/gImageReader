@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
 "PO-Revision-Date: 2020-04-16 20:23+0000\n"
-"Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
+"Last-Translator: doplu <violodk@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gimagereader/"
 "translations/fr/>\n"
 "Language: fr\n"
@@ -1047,7 +1047,7 @@ msgstr "Exporter au format ODT..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:358
 msgid "Same as source"
-msgstr "Même que la source"
+msgstr "Identique à la source"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:359
 msgid "Custom"
@@ -1059,7 +1059,7 @@ msgstr "cm"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:356
 msgid "in"
-msgstr "in"
+msgstr "dans"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:346
 msgid "Monochrome"
@@ -1095,7 +1095,7 @@ msgstr "Enregistrer output PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:481
 msgid "Invalid Output"
-msgstr "Sortie invalide"
+msgstr "Fichier export invalide"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:481
 msgid "Cannot overwrite a file which is a source image of this document."
