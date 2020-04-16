@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
-"PO-Revision-Date: 2020-04-13 10:38+0000\n"
+"PO-Revision-Date: 2020-04-16 20:23+0000\n"
 "Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n==1 || n%10==1 ? 0 : 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.0.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -210,7 +210,7 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:191
 msgid "Paste"
-msgstr ""
+msgstr "Залепи"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:192
 msgid "Take Screenshot"
