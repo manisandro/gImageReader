@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
 "PO-Revision-Date: 2020-04-16 20:23+0000\n"
-"Last-Translator: george k <norhorn@gmail.com>\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/gimagereader/"
 "translations/el/>\n"
 "Language: el\n"
@@ -28,9 +28,8 @@ msgid "Redetect Languages"
 msgstr "Επανανίχνευση"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:167
-#, fuzzy
 msgid "Manage Languages"
-msgstr "Διαχείριση γλωσσών..."
+msgstr "Διαχείριση γλωσσών"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:170
