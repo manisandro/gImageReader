@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
 "PO-Revision-Date: 2020-04-16 20:23+0000\n"
-"Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
 "Language: mk\n"
@@ -1318,7 +1318,7 @@ msgstr ""
 
 #: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:453
 msgid "gImageReader %1 is available"
-msgstr ""
+msgstr "gImageReader %1 iе достапно"
 
 #: ../gtk/src/MainWindow.cc:462 ../qt/src/MainWindow.cc:454
 msgid "Download"
