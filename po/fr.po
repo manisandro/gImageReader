@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
-"PO-Revision-Date: 2019-10-14 04:52+0000\n"
-"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"PO-Revision-Date: 2020-04-16 15:02+0000\n"
+"Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gimagereader/"
 "translations/fr/>\n"
 "Language: fr\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9-dev\n"
+"X-Generator: Weblate 4.0.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -61,7 +61,7 @@ msgstr "OK"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
-msgstr "Orientation de la zone de reconnaissance:"
+msgstr "Orientation de la zone de reconnaissance :"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
@@ -81,11 +81,11 @@ msgstr "Vérifier si une nouvelle version est disponible"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr "Définitions par défaut des langues:"
+msgstr "Définitions par défaut des langues :"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
-msgstr "Définitions de langues supplémentaires"
+msgstr "Définitions de langues supplémentaires :"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
@@ -121,7 +121,7 @@ msgstr "Annuler"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
-msgstr "Police utilisée dans le panneau de reconnaissance:"
+msgstr "Police utilisée dans le panneau de reconnaissance :"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
@@ -129,15 +129,15 @@ msgstr "Prédéfini"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr "Positions de données de langue:"
+msgstr "Positions de données de langue :"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
-msgstr "Chemin du définitions des langues:"
+msgstr "Chemin du définitions des langues :"
 
 #: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
-msgstr "Chemin du dictionnaires:"
+msgstr "Chemin du dictionnaires :"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
@@ -237,9 +237,8 @@ msgid "Best fit"
 msgstr "Ajuster à la page"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
-#, fuzzy
 msgid "Rotate page"
-msgstr "Pivoter toutes les pages"
+msgstr "Pivoter la page"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
 msgid "Select rotation mode"
@@ -305,7 +304,7 @@ msgstr "Fichiers"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:9
 msgid "Device:"
-msgstr "Dispositif:"
+msgstr "Périphérique :"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:55
@@ -314,11 +313,11 @@ msgstr "Actualiser"
 
 #: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:10
 msgid "Output:"
-msgstr "Reconnaissance:"
+msgstr "Reconnaissance :"
 
 #: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:14
 msgid "Mode:"
-msgstr "Modalité:"
+msgstr "Mode :"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:313
 #: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExporter.cc:344
@@ -332,7 +331,7 @@ msgstr "Niveaux de gris"
 
 #: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:11
 msgid "Resolution:"
-msgstr "Résolution:"
+msgstr "Résolution :"
 
 #: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:12
 msgid "Scan"
@@ -340,7 +339,7 @@ msgstr "Scanner"
 
 #: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:17
 msgid "Source:"
-msgstr "Sources:"
+msgstr "Source :"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
@@ -372,7 +371,7 @@ msgstr "Whitelist / blacklist des charactèrs"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr "Exclure ces caractères de la reconnaissance (blacklist):"
+msgstr "Exclure ces caractères de la reconnaissance (blacklist) :"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:3
 msgid "Enter a string of characters..."
@@ -380,7 +379,7 @@ msgstr "Entrez une chaîne de caractères…"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr "Seuls les caractères suivants peuvent être reconnus (whitelist):"
+msgstr "Seuls les caractères suivants peuvent être reconnus (whitelist) :"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -388,7 +387,7 @@ msgstr "Pages"
 
 #: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
-msgstr "Pages:"
+msgstr "Intervalle de pages :"
 
 #: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
@@ -396,7 +395,7 @@ msgstr "<small><b>Par exemple:</b> 1-10, 13, 14-18</small>"
 
 #: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
-msgstr "Zone de reconnaissance:"
+msgstr "Zone de reconnaissance :"
 
 #: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:381
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:133
@@ -409,7 +408,7 @@ msgstr "Détecter automatiquement"
 
 #: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
-msgstr "Ajouter reconnaissance:"
+msgstr "Ajouter reconnaissance :"
 
 #: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
@@ -437,17 +436,16 @@ msgstr "Ajouter un mot"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:657
 msgid "Enter word:"
-msgstr "Ignorer mot:"
+msgstr "Entrer le mot :"
 
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Ajouter une nouvelle sortie après la dernière page"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "Pivoter page courante"
+msgstr "Insérer une nouvelle sortie avant la page actuelle"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
@@ -473,7 +471,7 @@ msgstr "Ajouter au texte existant"
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Insert document before current page"
-msgstr ""
+msgstr "Insérer un document avant la page actuelle"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
@@ -619,7 +617,7 @@ msgstr "Exportation PDF"
 
 #: ../gtk/data/PdfExportDialog.ui.h:4 ../qt/data/PdfExportDialog.ui.h:4
 msgid "Output mode:"
-msgstr "Modalité:"
+msgstr "Mode de sortie :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportDialog.ui.h:6
 msgid "PDF"
@@ -631,27 +629,27 @@ msgstr "PDF avec invisible superposition de texte"
 
 #: ../gtk/data/PdfExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
 msgid "Format:"
-msgstr "Format:"
+msgstr "Format :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
 msgid "Compression:"
-msgstr "Compression:"
+msgstr "Compression :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportDialog.ui.h:14
 msgid "Compression quality:"
-msgstr "Qualité de compression:"
+msgstr "Qualité de compression :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
 msgid "DPI:"
-msgstr "DPI:"
+msgstr "DPI :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr "Algorithme de tramage:"
+msgstr "Algorithme de tramage :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
-msgstr "Paramètres d'image"
+msgstr "Paramètres d'image :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
 msgid "Uniformize line and word spacing"
@@ -659,19 +657,19 @@ msgstr "Homogénéiser interligne"
 
 #: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
-msgstr "Remplacer la police:"
+msgstr "Remplacer la police :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
 msgid "Fallback font family:"
-msgstr "Police de remplacement:"
+msgstr "Police de remplacement :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
 msgid "Override font size:"
-msgstr "Écraser les tailles de police détectés"
+msgstr "Écraser les tailles de police détectés :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
-msgstr "Echelle de police:"
+msgstr "Échelle de police :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
 msgid "pt"
@@ -679,7 +677,7 @@ msgstr "pt"
 
 #: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
 msgid "Preserve spaces wider than:"
-msgstr "Préserver les espaces plus larges que:"
+msgstr "Préserver les espaces plus larges que :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:20 ../qt/data/PdfExportDialog.ui.h:24
 msgid "characters"
@@ -691,11 +689,11 @@ msgstr "Corriger les traits d'union avant les sauts de ligne"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
-msgstr "Paramètres de texte"
+msgstr "Paramètres de texte :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:23 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Paper size:"
-msgstr "Taille du papier"
+msgstr "Taille du papier :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:24 ../qt/data/PdfExportDialog.ui.h:11
 msgid "Width"
@@ -707,7 +705,7 @@ msgstr "Hauteur"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
 msgid "Treat image sources as having true DPI:"
-msgstr "Traiter les sources d'images comme ayant un DPI:"
+msgstr "Traiter les sources d'images comme ayant un DPI :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
@@ -715,47 +713,47 @@ msgstr "Basique"
 
 #: ../gtk/data/PdfExportDialog.ui.h:28 ../qt/data/PdfExportDialog.ui.h:31
 msgid "PDF version:"
-msgstr "Version PDF:"
+msgstr "Version PDF :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:33
 msgid "Password:"
-msgstr "Mot de passe"
+msgstr "Mot de passe :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:34
 msgid "Confirm password:"
-msgstr "Confirmer le mot de passe:"
+msgstr "Confirmer le mot de passe :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:32
 msgid "Encryption (optional):"
-msgstr "Cryptage (facultatif):"
+msgstr "Chiffrement (facultatif) :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:36
 msgid "Author:"
-msgstr "Auteur"
+msgstr "Auteur :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:38
 msgid "Title:"
-msgstr "Titre:"
+msgstr "Titre :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:40
 msgid "Subject:"
-msgstr "Sujet:"
+msgstr "Sujet :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:37
 msgid "Creator:"
-msgstr "Créateur"
+msgstr "Créateur :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:39
 msgid "Producer:"
-msgstr "Producteur:"
+msgstr "Producteur :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:41
 msgid "Keywords:"
-msgstr "Mots clefs :"
+msgstr "Mots-clés :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:35
 msgid "Additional information (optional):"
-msgstr "Informations supplémentaires:"
+msgstr "Informations supplémentaires (facultatif) :"
 
 #: ../gtk/data/PdfExportDialog.ui.h:39 ../qt/data/PdfExportDialog.ui.h:42
 msgid "Import from current source"
@@ -801,7 +799,7 @@ msgstr "Supprimer"
 
 #: ../gtk/data/SelectionMenu.ui.h:2 ../qt/src/DisplayerToolSelect.cc:225
 msgid "Order:"
-msgstr "Ordre:"
+msgstr "Ordre :"
 
 #: ../gtk/data/SelectionMenu.ui.h:3 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
 #: ../qt/src/DisplayerToolSelect.cc:240 ../qt/src/hocr/DisplayerToolHOCR.cc:31
@@ -857,7 +855,7 @@ msgstr "Gestionnaire tessdata"
 
 #: ../gtk/data/TessdataManager.ui.h:5 ../qt/src/TessdataManager.cc:47
 msgid "Manage installed languages:"
-msgstr "Gérer les langues installées:"
+msgstr "Gérer les langues installées :"
 
 #: ../gtk/src/Acquirer.cc:79 ../qt/src/Acquirer.cc:70
 msgid "scan.png"
@@ -943,9 +941,8 @@ msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "Impossible d'obtenir le backtrace. Est-ce que gdb est installé ?"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
-#, fuzzy
 msgid "Page %1"
-msgstr "Page: %1"
+msgstr "Page %1"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid "Failed to load image"
@@ -1258,19 +1255,21 @@ msgstr "Ouvrir fichier hOCR"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:890 ../qt/src/OutputEditorText.cc:255
 #: ../qt/src/SourceManager.cc:152
-#, fuzzy
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "Les fichiers suivants n'ont pas pu être ouvert:%1"
+msgstr ""
+"Les fichiers suivants n'ont pas pu être ouvert :\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
 #: ../qt/src/hocr/OutputEditorHOCR.cc:893
-#, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "Le fichier ne semble pas contenir de code HTML hOCR valide: %1"
+msgstr ""
+"Le fichier ne semble pas contenir de code HTML hOCR valide :\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:896 ../qt/src/OutputEditorText.cc:256
@@ -1626,7 +1625,7 @@ msgstr "L'accès au scanner est refusé."
 
 #: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:167
 msgid "Enter password for file '%1':"
-msgstr "Entrer le mot de passe pour le fichier '%1':"
+msgstr "Entrer le mot de passe pour le fichier « %1 » :"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:194
 #, fuzzy
@@ -1634,14 +1633,14 @@ msgid "PDF with text"
 msgstr "PDF avec texte"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:194
-#, fuzzy
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
-"Ces fichiers PDF contiennent déjà du texte:\n"
-"%1"
+"Ces fichiers PDF contiennent déjà du texte :\n"
+"%1\n"
+"L'ouvrir quand même ?"
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:261
 msgid "Images and PDFs"
@@ -1872,9 +1871,8 @@ msgid "Batch Mode"
 msgstr "Sensible aux majuscules et minuscules"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "Ajouter reconnaissance:"
+msgstr "Ajouter des numéros de page avant le texte de sortie"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
@@ -1901,7 +1899,7 @@ msgstr "UTF-8"
 
 #: ../qt/data/ConfigDialog.ui.h:19
 msgid "Text file encoding:"
-msgstr "Encodage de fichiers texte"
+msgstr "Encodage du fichier texte :"
 
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
@@ -2008,7 +2006,7 @@ msgstr "Montrer / cacher le panneau de reconnaissance"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
-msgstr "Backend:"
+msgstr "Arrière-plan :"
 
 #: ../qt/data/PdfExportDialog.ui.h:8
 msgid "Portrait"
@@ -2082,9 +2080,8 @@ msgstr ""
 "%1"
 
 #: ../qt/src/OutputEditorText.cc:40
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "Page: %1"
+msgstr "Page : %1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
@@ -2099,18 +2096,12 @@ msgid "Skip processing source"
 msgstr ""
 
 #: ../qt/src/Recognizer.cc:234
-#, fuzzy
 msgid "- Page %1: failed to render page"
-msgstr ""
-"\n"
-"- Page %1: erreur de rendering"
+msgstr "- Page %1 : erreur de rendu"
 
 #: ../qt/src/Recognizer.cc:346
-#, fuzzy
 msgid "- %1:%2: failed to render page"
-msgstr ""
-"\n"
-"- Page %1: erreur de rendering"
+msgstr "- Page %1 : erreur de rendu"
 
 #: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
@@ -2122,19 +2113,16 @@ msgid "- %1: failed to create output file"
 msgstr "Échec de la création de sortie"
 
 #: ../qt/src/Recognizer.cc:418
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "Les erreurs suivantes sont survenues:%1"
+msgstr "Les erreurs suivantes sont survenues :"
 
 #: ../qt/src/SourceManager.cc:266
-#, fuzzy
 msgid "Select folder..."
-msgstr "Choisir fichiers"
+msgstr "Choisir le dossier…"
 
 #: ../qt/src/SourceManager.cc:363
-#, fuzzy
 msgid "Delete Files"
-msgstr "Supprimer fichier ?"
+msgstr "Supprimer les fichiers"
 
 #: ../qt/src/SourceManager.cc:363
 msgid "Delete the following files?"
@@ -2186,7 +2174,7 @@ msgstr "Reconnaissance"
 
 #: ../qt/src/Ui_MainWindow.hh:136
 msgid "OCR mode:"
-msgstr "Modalité OCR:"
+msgstr "Mode OCR :"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:189
