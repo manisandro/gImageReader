@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
-"PO-Revision-Date: 2018-03-29 22:24+0000\n"
-"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
+"PO-Revision-Date: 2020-04-16 20:23+0000\n"
+"Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/it/>\n"
 "Language: it\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.20-dev\n"
+"X-Generator: Weblate 4.0.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1817,7 +1817,7 @@ msgstr "Si"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr "Si tutti"
+msgstr "Sì a tutti"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1825,7 +1825,7 @@ msgstr "No"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr "No tutti"
+msgstr "No a tutti"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
@@ -2015,7 +2015,7 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
-"<html><head/><body><ul><li>PoDoFo: öffre più opzioni per la compressione di "
+"<html><head/><body><ul><li>PoDoFo: offre più opzioni per la compressione di "
 "immagini, ma non supporta sistemi di scrittura complessi.</li><li>QPrinter: "
 "supporta solamente JPEG per comprimere le immagini, ma supporta sistemi di "
 "scrittura complessi.</li></ul></body></html>"
