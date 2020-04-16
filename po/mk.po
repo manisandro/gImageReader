@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
 "PO-Revision-Date: 2020-04-16 20:23+0000\n"
-"Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
+"Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
 "Language: mk\n"
@@ -339,7 +339,7 @@ msgstr "Извор:"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
-msgstr "Постигнува"
+msgstr "Стекнува"
 
 #: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
@@ -895,7 +895,7 @@ msgstr ""
 
 #: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:157
 msgid "Transferring data..."
-msgstr ""
+msgstr "Пренесување податоци ..."
 
 #: ../gtk/src/Acquirer.cc:178 ../qt/src/Acquirer.cc:164
 msgid "Canceling scan..."
@@ -924,7 +924,7 @@ msgstr "Управувач при пад"
 
 #: ../gtk/src/CrashHandler.cc:43 ../qt/src/CrashHandler.cc:31
 msgid "Your work has been saved under <b>%1</b>."
-msgstr ""
+msgstr "Вашата работа беше зачувана како <b>%1</b>."
 
 #: ../gtk/src/CrashHandler.cc:45 ../qt/src/CrashHandler.cc:33
 msgid "There was no unsaved work."
@@ -1579,7 +1579,7 @@ msgstr ""
 
 #: ../gtk/src/scanner/ScannerSane.cc:809 ../qt/src/scanner/ScannerSane.cc:804
 msgid "Document feeder jammed."
-msgstr ""
+msgstr "Повлекувачот на документи е заглавен."
 
 #: ../gtk/src/scanner/ScannerSane.cc:811 ../qt/src/scanner/ScannerSane.cc:806
 msgid "Document feeder out of documents."
@@ -2027,7 +2027,7 @@ msgstr "Доверба:% 1"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
 msgid "Save as hOCR text"
-msgstr "Зачувај како hOCR текс"
+msgstr "Зачувај како hOCR текст"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:111
 #: ../qt/src/Ui_OutputEditorText.hh:106
@@ -2062,7 +2062,7 @@ msgstr "Прескокнете го изворот на обработка"
 
 #: ../qt/src/Recognizer.cc:234
 msgid "- Page %1: failed to render page"
-msgstr "- Страна %1: не успеа да се прикаже страница"
+msgstr "- Страница %1: не успеа да се направи страница"
 
 #: ../qt/src/Recognizer.cc:346
 msgid "- %1:%2: failed to render page"
