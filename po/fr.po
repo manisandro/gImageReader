@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
 "PO-Revision-Date: 2020-04-16 15:02+0000\n"
-"Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gimagereader/"
 "translations/fr/>\n"
 "Language: fr\n"
@@ -30,7 +30,7 @@ msgstr "Redétecter langues"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:167
 msgid "Manage Languages"
-msgstr "Gérer langues"
+msgstr "Gérer les langues..."
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:170
