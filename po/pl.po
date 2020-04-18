@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
-"PO-Revision-Date: 2020-04-12 18:11+0000\n"
+"PO-Revision-Date: 2020-04-19 19:11+0000\n"
 "Last-Translator: WaldiS <admin@sto.ugu.pl>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pl/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.0.2-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1859,9 +1859,8 @@ msgid "Prepend page numbers to output text"
 msgstr "Dodaj numery stron do tekstu wyjściowego"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
-#, fuzzy
 msgid "Existing output:"
-msgstr "Istniejące wyjście:"
+msgstr "Istniejące wydanie:"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
@@ -1922,7 +1921,7 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Miniatury"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2019,7 +2018,7 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:219
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Skróty klawiaturowe"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:377
 msgid ""
@@ -2036,14 +2035,28 @@ msgid ""
 "edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</td><td>Adjust bottom bounding "
 "box edge</td></tr></table>"
 msgstr ""
+"<table><tr><td>Tab</td> <td> Następne pole </td> </tr> <tr> <td> Shift+Tab "
+"</td> <td> Poprzednie pole </td> < / tr> <tr> <td> W dół </td> <td> Następny "
+"wiersz </td> </tr> <tr> <td> W górę </td> <td> Poprzedni wiersz </td> </ tr >"
+" <tr> <td> Ctrl+spacja </td> <td> Propozycje pisowni </td> </tr> <tr> <td> "
+"Ctrl+B </td> <td> Pogrubienie </td> < / tr> <tr> <td> Ctrl+I </td> <td> "
+"Kursywa </td> </tr> <tr> <td> Ctrl+D </td> <td> Podziel słowo w miejscu "
+"kursora </td></tr><tr><td>Ctrl+M</td> <td> Połącz z poprzednim słowem </td> "
+"</tr> <tr> <td> Ctrl+Shift+M </ td > <td> Połącz z następnym słowem </td> "
+"</tr> <tr> <td> Ctrl+{Left, Right} </td> <td> Dopasuj lewą krawędź ramki "
+"granicznej </td> </tr> <tr > <td> Ctrl+Shift+{lewy, prawy} </td> <td> "
+"Dostosuj prawą krawędź ramki granicznej </td> </tr> <tr> <td> Ctrl+{w górę, "
+"w dół} </td> <td > Dostosuj górną krawędź ramki ograniczającej </td> </tr> "
+"<tr> <td> Ctrl+Shift+{w górę, w dół} </td> <td> Dopasuj dolną krawędź ramki "
+"ograniczającej </td> </tr> </ tabela>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:394
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Skróty klawiszowe"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:409
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Pewność: %1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2056,9 +2069,8 @@ msgid "Find and Replace"
 msgstr "Znajdź i zamień"
 
 #: ../qt/src/MainWindow.cc:317
-#, fuzzy
 msgid "Multiple sources (%1)"
-msgstr "Wiele źródeł"
+msgstr "Wiele źródeł (% 1)"
 
 #: ../qt/src/MainWindow.cc:611
 msgid ""
@@ -2069,17 +2081,14 @@ msgstr ""
 "%1"
 
 #: ../qt/src/OutputEditorText.cc:40
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "Strona: %1"
+msgstr "Strona: %1\n"
 
 #: ../qt/src/Recognizer.cc:73
-#, fuzzy
 msgid "Batch mode..."
 msgstr "Tryb wsadowy..."
 
 #: ../qt/src/Recognizer.cc:86
-#, fuzzy
 msgid "Overwrite existing output"
 msgstr "Zastąp istniejące dane wyjściowe"
 
@@ -2108,38 +2117,34 @@ msgid "The following errors occurred:"
 msgstr "Wystąpiły następujące błędy:"
 
 #: ../qt/src/SourceManager.cc:266
-#, fuzzy
 msgid "Select folder..."
-msgstr "Wybierz pliki"
+msgstr "Wybierz folder..."
 
 #: ../qt/src/SourceManager.cc:363
-#, fuzzy
 msgid "Delete Files"
-msgstr "Usunąć plik?"
+msgstr "Usuń pliki"
 
 #: ../qt/src/SourceManager.cc:363
 msgid "Delete the following files?"
-msgstr ""
+msgstr "Czy usunąć następujące pliki?"
 
 #: ../qt/src/SourceManager.cc:448
-#, fuzzy
 msgid "Open output"
-msgstr "Zapisz wynik"
+msgstr "Otwórz wyjście"
 
 #: ../qt/src/SourceManager.cc:448
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
 msgstr ""
+"Znaleziono zarówno tekst, jak i wyjście hOCR. Które z nich chcesz otworzyć?"
 
 #: ../qt/src/SourceManager.cc:449
-#, fuzzy
 msgid "Text"
-msgstr "Wiersz tekstu"
+msgstr "Tekst"
 
 #: ../qt/src/SourceManager.cc:450
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
