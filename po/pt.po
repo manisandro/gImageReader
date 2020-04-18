@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Portuguese (Brazil) (gImageReader)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
-"PO-Revision-Date: 2020-03-25 15:46+0000\n"
+"PO-Revision-Date: 2020-04-19 19:11+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pt/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.0.2-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -294,7 +294,7 @@ msgstr "Limpar lista"
 
 #: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
-msgstr "Arquivos"
+msgstr "Ficheiros"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:9
 msgid "Device:"
@@ -1126,7 +1126,7 @@ msgstr "A biblioteca PDF não pôde carregar a fonte '%1'."
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:266
 msgid "Text Files"
-msgstr "Arquivos de texto"
+msgstr "Ficheiros de texto"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:40
 msgid "Save Text Output..."
@@ -1268,7 +1268,7 @@ msgstr ""
 #: ../qt/src/hocr/OutputEditorHOCR.cc:896 ../qt/src/OutputEditorText.cc:256
 #: ../qt/src/SourceManager.cc:152
 msgid "Unable to open files"
-msgstr "Não foi possível abrir os arquivos"
+msgstr "Não foi possível abrir os ficheiros"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1019
 #: ../qt/src/hocr/OutputEditorHOCR.cc:910
@@ -1634,7 +1634,7 @@ msgstr "Imagens e PDFs"
 
 #: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:262
 msgid "Select Files"
-msgstr "Selecione os arquivos"
+msgstr "Selecione os ficheiros"
 
 #: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:298
 msgid "Clipboard Error"
@@ -1851,29 +1851,28 @@ msgid "License"
 msgstr "Licença"
 
 #: ../qt/data/BatchModeDialog.ui.h:1
-#, fuzzy
 msgid "Batch Mode"
-msgstr "Diferenciar maiúsculas e minúsculas"
+msgstr "Modo de Lote"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "Antepor ao texto de saída:"
+msgstr "Antepor números de página ao texto de saída"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "Saída existente:"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"No modo de lote, cada fonte de entrada é processada separadamente e a saída "
+"gravada lado a lado ao ficheiro de entrada."
 
 #: ../qt/data/BatchModeDialog.ui.h:5
-#, fuzzy
 msgid "Autodetect page layout"
-msgstr "Detectar layout automaticamente"
+msgstr "Autodetecção do layout da página"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -1923,7 +1922,7 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Miniaturas"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2013,10 +2012,14 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html><head/><body><ul> <li> PoDoFo: oferece mais opções de compressão de "
+"imagem, mas não lida com scripts complexos. </li> <li> QPrinter: suporta "
+"apenas a compressão JPEG para armazenar imagens, mas suporta scripts "
+"complexos. </li> </ul> </body> </html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:219
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Atalhos de teclado"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:377
 msgid ""
@@ -2033,14 +2036,29 @@ msgid ""
 "edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</td><td>Adjust bottom bounding "
 "box edge</td></tr></table>"
 msgstr ""
+"<table><tr><td>Tab</td> <td> Próximo campo </td> </tr> <tr> <td> Shift + Tab "
+"</td> <td> Campo anterior </td> < / tr> <tr> <td> Para baixo </td> <td> "
+"Próxima linha </td> </tr> <tr> <td> Para cima </td> <td> Linha anterior </td>"
+" </ tr > <tr> <td> Ctrl + Espaço </td> <td> Sugestões de ortografia </td> "
+"</tr> <tr> <td> Ctrl + B </td> <td> Alterne negrito </td> < / tr> <tr> <td> "
+"Ctrl + I </td> <td> Alterna itálico </td> </tr> <tr> <td> Ctrl + D </td> <td>"
+" Divida a palavra na posição do cursor </td></tr><tr><td> Ctrl + M</td> <td> "
+"Mesclar com a palavra anterior </td> </tr> <tr> <td> Ctrl + Shift + M </ td >"
+" <td> Mesclar com a próxima palavra </td> </tr> <tr> <td> Ctrl + {Esquerda, "
+"Direita} </td> <td> Ajustar a borda da caixa delimitadora esquerda </td> "
+"</tr> <tr > <td> Ctrl + Shift + {Esquerda, Direita} </td> <td> Ajustar a "
+"borda da caixa delimitadora direita </td> </tr> <tr> <td> Ctrl + {Para cima, "
+"Para baixo} </td> <td > Ajustar borda da caixa delimitadora superior </td> "
+"</tr> <tr> <td> Ctrl + Shift + {Para cima, Para baixo} </td> <td> Ajustar "
+"borda da caixa delimitadora </td> </tr> </ tabela>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:394
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Atalhos de Teclado"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:409
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Confiança: %1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2053,9 +2071,8 @@ msgid "Find and Replace"
 msgstr "Localizar e Substituir"
 
 #: ../qt/src/MainWindow.cc:317
-#, fuzzy
 msgid "Multiple sources (%1)"
-msgstr "Várias origens"
+msgstr "Várias origens (%1)"
 
 #: ../qt/src/MainWindow.cc:611
 msgid ""
@@ -2066,83 +2083,70 @@ msgstr ""
 "%1"
 
 #: ../qt/src/OutputEditorText.cc:40
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "Página: %1"
+msgstr "Página: %1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
-msgstr ""
+msgstr "Modo de lote..."
 
 #: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "Sobregravar a saída existente"
 
 #: ../qt/src/Recognizer.cc:87
 msgid "Skip processing source"
-msgstr ""
+msgstr "Pular fonte de processamento"
 
 #: ../qt/src/Recognizer.cc:234
-#, fuzzy
 msgid "- Page %1: failed to render page"
-msgstr ""
-"\n"
-"- Página %1: falha ao processar a página"
+msgstr "- Página %1: falha ao processar a página"
 
 #: ../qt/src/Recognizer.cc:346
-#, fuzzy
 msgid "- %1:%2: failed to render page"
-msgstr ""
-"\n"
-"- Página %1: falha ao processar a página"
+msgstr "- %1.%2: falha ao processar a página"
 
 #: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "- %1: a saída já existe, saltando"
 
 #: ../qt/src/Recognizer.cc:363
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "Falha ao criar a saída"
+msgstr "- %1: falha na criação do ficheiro de saída"
 
 #: ../qt/src/Recognizer.cc:418
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "Os seguinte erros ocorreram:%1"
+msgstr "Ocorreram os seguintes erros:"
 
 #: ../qt/src/SourceManager.cc:266
-#, fuzzy
 msgid "Select folder..."
-msgstr "Selecione os arquivos"
+msgstr "Selecionar pasta..."
 
 #: ../qt/src/SourceManager.cc:363
-#, fuzzy
 msgid "Delete Files"
-msgstr "Apagar o ficheiro?"
+msgstr "Apagar ficheiros"
 
 #: ../qt/src/SourceManager.cc:363
 msgid "Delete the following files?"
-msgstr ""
+msgstr "Apagar os seguintes ficheiros?"
 
 #: ../qt/src/SourceManager.cc:448
-#, fuzzy
 msgid "Open output"
-msgstr "Gravar saída"
+msgstr "Abrir saída"
 
 #: ../qt/src/SourceManager.cc:448
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
 msgstr ""
+"Tanto um texto como uma saída hOCR foram encontrados. Qual deles quer abrir?"
 
 #: ../qt/src/SourceManager.cc:449
-#, fuzzy
 msgid "Text"
-msgstr "Linha de texto"
+msgstr "Texto"
 
 #: ../qt/src/SourceManager.cc:450
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2171,9 +2175,8 @@ msgstr "Modo de OCR:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:189
-#, fuzzy
 msgid "Add folder"
-msgstr "Adicionar Palavra"
+msgstr "Adicionar pasta"
 
 #: ../qt/src/Ui_MainWindow.hh:208
 msgid "Remove Image"
