@@ -552,7 +552,7 @@ void Displayer::scaleImage() {
 }
 
 void Displayer::setScaledImage(QImage image) {
-	if(!image.isNull()) {
+	if(!image.isNull() && m_imageItem) {
 		m_imageItem->setPixmap(QPixmap::fromImage(image));
 		m_imageItem->setScale(1.0 / m_scale);
 		m_imageItem->setTransformOriginPoint(m_imageItem->boundingRect().center());
