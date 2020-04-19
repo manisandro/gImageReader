@@ -251,7 +251,7 @@ void SourceManager::prepareRecentMenu() {
 
 void SourceManager::openSources() {
 	QList<Source*> current = getSelectedSources();
-	QString initialFolder;
+	QString initialFolder = Utils::documentsFolder();
 	if(!current.isEmpty() && !current.front()->isTemp) {
 		initialFolder = QFileInfo(current.front()->path).absolutePath();
 	}
@@ -266,7 +266,13 @@ void SourceManager::openSources() {
 }
 
 void SourceManager::addFolder() {
-	QString dir = QFileDialog::getExistingDirectory(MAIN, _("Select folder..."), Utils::documentsFolder());
+	QList<Source*> current = getSelectedSources();
+	QString initialFolder = Utils::documentsFolder();
+	if(!current.isEmpty() && !current.front()->isTemp) {
+		initialFolder = QFileInfo(current.front()->path).absolutePath();
+	}
+
+	QString dir = QFileDialog::getExistingDirectory(MAIN, _("Select folder..."), initialFolder);
 	if(dir.isEmpty()) {
 		return;
 	}
