@@ -117,10 +117,12 @@ int SourceManager::addSources(const QStringList& files, bool suppressTextWarning
 
 		index = m_fileTreeModel->insertFile(filename, source);
 		QString base = finfo.absoluteDir().absoluteFilePath(finfo.baseName());
+		m_watchedDirectories[finfo.absolutePath()] += 1;
+		if(m_watchedDirectories[finfo.absolutePath()] == 1) {
+			m_fsWatcher.addPath(finfo.absolutePath());
+		}
 		if(QFile(base + ".txt").exists() || QFile(base + ".html").exists()) {
 			m_fileTreeModel->setFileEditable(index, true);
-			m_watchedDirectories[finfo.absolutePath()] += 1;
-			m_fsWatcher.addPath(finfo.absolutePath());
 		}
 		sel.select(index, index);
 		m_fsWatcher.addPath(filename);
@@ -342,7 +344,9 @@ void SourceManager::savePixmap(const QPixmap& pixmap, const QString& displayname
 		m_fsWatcher.addPath(filename);
 		QFileInfo finfo(filename);
 		m_watchedDirectories[finfo.absolutePath()] += 1;
-		m_fsWatcher.addPath(finfo.absolutePath());
+		if(m_watchedDirectories[finfo.absolutePath()] == 1) {
+			m_fsWatcher.addPath(finfo.absolutePath());
+		}
 		ui.treeViewSources->selectionModel()->blockSignals(true);
 		ui.treeViewSources->clearSelection();
 		ui.treeViewSources->selectionModel()->blockSignals(false);
