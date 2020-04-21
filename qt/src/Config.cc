@@ -113,7 +113,7 @@ bool Config::searchLangSpec(Lang& lang) const {
 	return false;
 }
 
-QList<QString> Config::searchLangCultures(const QString& code) const {
+QStringList Config::searchLangCultures(const QString& code) const {
 	return LANGUAGE_CULTURES.values(code);
 }
 

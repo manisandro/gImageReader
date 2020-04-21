@@ -36,7 +36,7 @@ public:
 	Config(QWidget* parent = nullptr);
 
 	bool searchLangSpec(Lang& lang) const;
-	QList<QString> searchLangCultures(const QString& code) const;
+	QStringList searchLangCultures(const QString& code) const;
 	void showDialog();
 
 	bool useUtf8() const;
