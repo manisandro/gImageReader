@@ -27,6 +27,7 @@
 #include <QStyledItemDelegate>
 #include <QMessageBox>
 #include <QPointer>
+#include <QStandardItemModel>
 #include <QSyntaxHighlighter>
 #include <algorithm>
 #include <cmath>
@@ -167,6 +168,40 @@ void HOCRAttributeCheckbox::updateValue(const QModelIndex& itemIndex, const QStr
 
 void HOCRAttributeCheckbox::valueChanged() {
 	m_doc->editItemAttribute(m_itemIndex, m_attrName, isChecked() ? "1" : "0", m_attrItemClass);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+HOCRAttributeLangCombo::HOCRAttributeLangCombo(const QString& value, bool multiple, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass)
+	: m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_attrItemClass(attrItemClass) {
+	if(multiple) {
+		addItem(_("Multiple values"));
+		setCurrentIndex(0);
+		QStandardItemModel* itemModel = qobject_cast<QStandardItemModel*>(model());
+		itemModel->item(0)->setFlags(itemModel->item(0)->flags() & ~Qt::ItemIsEnabled);
+	}
+	for(const QString& code : QtSpell::Checker::getLanguageList()) {
+		QString text = QtSpell::Checker::decodeLanguageCode(code);
+		addItem(text, code);
+	}
+	if(!multiple) {
+		setCurrentIndex(findData(value));
+	}
+	connect(m_doc, &HOCRDocument::itemAttributeChanged, this, &HOCRAttributeLangCombo::updateValue);
+	connect(this, qOverload<int>(&HOCRAttributeLangCombo::currentIndexChanged), this, &HOCRAttributeLangCombo::valueChanged);
+}
+
+void HOCRAttributeLangCombo::updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value) {
+	if(itemIndex == m_itemIndex && name == m_attrName) {
+		blockSignals(true);
+		setCurrentIndex(findData(value));
+		blockSignals(false);
+	}
+}
+
+void HOCRAttributeLangCombo::valueChanged() {
+	m_doc->editItemAttribute(m_itemIndex, m_attrName, currentData().toString(), m_attrItemClass);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -549,7 +584,6 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModel
 QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const QString& attrName, const QString& attrValue, const QString& attrItemClass, bool multiple) {
 	static QMap<QString, QString> attrLineEdits = {
 		{"title:bbox", "\\d+\\s+\\d+\\s+\\d+\\s+\\d+"},
-		{"lang", "[a-z]{2,}(?:_[A-Z]{2,})?"},
 		{"title:x_fsize", "\\d+"},
 		{"title:baseline", "[-+]?\\d+\\.?\\d*\\s[-+]?\\d+\\.?\\d*"}
 	};
@@ -572,6 +606,9 @@ QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const 
 		if(multiple) {
 			combo->lineEdit()->setPlaceholderText(_("Multiple values"));
 		}
+		return combo;
+	} else if(attrName == "lang") {
+		HOCRAttributeLangCombo* combo = new HOCRAttributeLangCombo(attrValue, multiple, m_document, itemIndex, attrName, attrItemClass);
 		return combo;
 	} else if(attrName == "bold" || attrName == "italic") {
 		Qt::CheckState value = multiple ? Qt::PartiallyChecked : attrValue == "1" ? Qt::Checked : Qt::Unchecked;

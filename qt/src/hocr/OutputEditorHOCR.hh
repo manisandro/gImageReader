@@ -171,4 +171,20 @@ private slots:
 	void valueChanged();
 };
 
+class HOCRAttributeLangCombo : public QComboBox {
+	Q_OBJECT
+public:
+	HOCRAttributeLangCombo(const QString& value, bool multiple, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass);
+
+private:
+	HOCRDocument* m_doc;
+	QModelIndex m_itemIndex;
+	QString m_attrName;
+	QString m_attrItemClass;
+
+private slots:
+	void updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value);
+	void valueChanged();
+};
+
 #endif // OUTPUTEDITORHOCR_HH
