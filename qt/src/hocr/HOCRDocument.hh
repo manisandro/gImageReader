@@ -223,13 +223,13 @@ protected:
 		return m_misspelled;
 	}
 	void setAttribute(const QString& name, const QString& value, const QString& attrItemClass = QString());
-	bool parseChildren(const QDomElement& element, QString language);
+	bool parseChildren(const QDomElement& element, QString language, const QString& defaultLanguage);
 };
 
 
 class HOCRPage : public HOCRItem {
 public:
-	HOCRPage(const QDomElement& element, int pageId, const QString& language, bool cleanGraphics, int index);
+	HOCRPage(const QDomElement& element, int pageId, const QString& defaultLanguage, bool cleanGraphics, int index);
 
 	const QString& sourceFile() const {
 		return m_sourceFile;

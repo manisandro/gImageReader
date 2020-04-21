@@ -204,15 +204,29 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout) {
 	return result;
 }
 
-QString Utils::getSpellingLanguage(const QString& lang) {
+QString Utils::getSpellingLanguage(const QString& lang, const QString& defaultLanguage) {
 	// If it is already a valid code, return it
-	if(QRegExp("[a-z]{2,}(_[A-Z]{2,})?").exactMatch(lang)) {
+	if(QRegExp("[a-z]{2}(_[A-Z]{2})?").exactMatch(lang)) {
 		return lang;
 	}
 	// Treat the language as a tesseract lang spec and try to find a matching code
-	Config::Lang langspec = {lang};
+	Config::Lang langspec = {lang, "", ""};
 	if(!lang.isEmpty() && MAIN->getConfig()->searchLangSpec(langspec)) {
+		// If default language starts with the returned code, return default language
+		if(!defaultLanguage.isEmpty() && defaultLanguage.startsWith(langspec.code)) {
+			return defaultLanguage;
+		}
+		// Return any one language culture code
+		QStringList langCultures = MAIN->getConfig()->searchLangCultures(langspec.code);
+		if(!langCultures.isEmpty()) {
+			return langCultures.front();
+		}
+		// Return incomplete code (only country)
 		return langspec.code;
+	}
+	// Return default language if specified
+	if(!defaultLanguage.isEmpty()) {
+		return defaultLanguage;
 	}
 	// Use the application locale, if specified, otherwise fall back to en
 	QString syslang = QLocale::system().name();

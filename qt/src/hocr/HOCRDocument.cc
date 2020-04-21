@@ -992,13 +992,13 @@ QPair<double, double> HOCRItem::baseLine() const {
 	return qMakePair(0.0, 0.0);
 }
 
-bool HOCRItem::parseChildren(const QDomElement& element, QString language) {
+bool HOCRItem::parseChildren(const QDomElement& element, QString language, const QString& defaultLanguage) {
 	// Determine item language (inherit from parent if not specified)
 	QString elemLang = element.attribute("lang");
 	if(!elemLang.isEmpty()) {
 		auto it = s_langCache.find(elemLang);
 		if(it == s_langCache.end()) {
-			it = s_langCache.insert(elemLang, Utils::getSpellingLanguage(elemLang));
+			it = s_langCache.insert(elemLang, Utils::getSpellingLanguage(elemLang, defaultLanguage));
 		}
 		m_attrs.remove("lang");
 		language = it.value();
@@ -1012,7 +1012,7 @@ bool HOCRItem::parseChildren(const QDomElement& element, QString language) {
 	QDomElement childElement = element.firstChildElement();
 	while(!childElement.isNull()) {
 		m_childItems.append(new HOCRItem(childElement, m_pageItem, this, m_childItems.size()));
-		haveWords |= m_childItems.last()->parseChildren(childElement, language);
+		haveWords |= m_childItems.last()->parseChildren(childElement, language, defaultLanguage);
 		childElement = childElement.nextSiblingElement();
 	}
 	return haveWords;
@@ -1020,7 +1020,7 @@ bool HOCRItem::parseChildren(const QDomElement& element, QString language) {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-HOCRPage::HOCRPage(const QDomElement& element, int pageId, const QString& language, bool cleanGraphics, int index)
+HOCRPage::HOCRPage(const QDomElement& element, int pageId, const QString& defaultLanguage, bool cleanGraphics, int index)
 	: HOCRItem(element, this, nullptr, index), m_pageId(pageId) {
 	m_attrs["id"] = QString("page_%1").arg(pageId);
 
@@ -1039,7 +1039,7 @@ HOCRPage::HOCRPage(const QDomElement& element, int pageId, const QString& langua
 	while(!childElement.isNull()) {
 		HOCRItem* item = new HOCRItem(childElement, this, this, m_childItems.size());
 		m_childItems.append(item);
-		if(!item->parseChildren(childElement, language)) {
+		if(!item->parseChildren(childElement, defaultLanguage, defaultLanguage)) {
 			// No word children -> treat as graphic
 			if(cleanGraphics && (item->bbox().width() < 10 || item->bbox().height() < 10)) {
 				// Ignore graphics which are less than 10 x 10

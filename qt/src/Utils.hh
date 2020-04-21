@@ -56,7 +56,7 @@ void handleSourceDropEvent(const QMimeData* mimeData);
 
 QByteArray download(QUrl url, QString& messages, int timeout = 60000);
 
-QString getSpellingLanguage(const QString& lang = QString());
+QString getSpellingLanguage(const QString& lang = QString(), const QString& defaultLanguage = QString());
 
 std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nullptr);
 
