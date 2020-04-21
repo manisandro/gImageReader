@@ -183,6 +183,10 @@ private:
 		m_proofReadWidget->documentTree()->setCurrentIndex(document->indexAtItem(m_wordItem));
 		m_proofReadWidget->setConfidenceLabel(m_wordItem->getTitleAttributes()["x_wconf"].toInt());
 		QLineEdit::focusInEvent(ev);
+		if(ev->reason() != Qt::MouseFocusReason) {
+			deselect();
+			setCursorPosition(0);
+		}
 	}
 };
 
@@ -309,7 +313,6 @@ void HOCRProofReadWidget::setCurrentRow(const QModelIndex& current) {
 	LineEdit* focusLineEdit = static_cast<LineEdit*>(m_currentLines[lineItem]->children()[wordItem ? wordItem->index() : 0]);
 	if(focusLineEdit && !m_treeView->hasFocus()) {
 		focusLineEdit->setFocus();
-		focusLineEdit->selectAll();
 	}
 
 }
