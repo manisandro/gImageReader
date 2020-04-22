@@ -18,6 +18,7 @@
  */
 
 #include <cmath>
+#include <QVector>
 
 #include "HOCRSpellChecker.hh"
 
