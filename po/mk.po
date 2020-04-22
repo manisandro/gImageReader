@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
-"PO-Revision-Date: 2020-04-22 14:07+0000\n"
+"PO-Revision-Date: 2020-04-22 14:09+0000\n"
 "Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -1375,19 +1375,19 @@ msgstr "Грешка"
 
 #: ../gtk/src/MainWindow.cc:534 ../qt/src/MainWindow.cc:542
 msgid "Failed to install spelling dictionary: %1"
-msgstr ""
+msgstr "Не успеа да се инсталира правописен речник: % 1"
 
 #: ../gtk/src/MainWindow.cc:555 ../qt/src/MainWindow.cc:555
 msgid "Failed to create directory for spelling dictionaries."
-msgstr ""
+msgstr "Не успеа да се креира директориум за правописни речници."
 
 #: ../gtk/src/MainWindow.cc:563 ../qt/src/MainWindow.cc:564
 msgid "Could not read %1: %2."
-msgstr ""
+msgstr "Не може да прочита %1: %2."
 
 #: ../gtk/src/MainWindow.cc:590 ../qt/src/MainWindow.cc:588
 msgid "Downloading '%1'..."
-msgstr ""
+msgstr "Преземање '%1'..."
 
 #: ../gtk/src/MainWindow.cc:611 ../qt/src/MainWindow.cc:608
 msgid ""
@@ -1398,36 +1398,44 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"Следниве речници не може да се преземат:\n"
+"% 1\n"
+"\n"
+"Проверете го поврзувањето и дозволите за директориум.\n"
+"Совет: Ако немате дозволи за пишување во папките на системот, можете да "
+"преминете на корисничките патеки во дијалогот за поставки."
 
 #: ../gtk/src/MainWindow.cc:614 ../qt/src/MainWindow.cc:611
 msgid "Dictionaries installed"
-msgstr ""
+msgstr "Инсталирани се речници"
 
 #: ../gtk/src/MainWindow.cc:614
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
 msgstr ""
+"Следниве речници беа инсталирани:\n"
+"%1"
 
 #: ../gtk/src/MainWindow.cc:616 ../qt/src/MainWindow.cc:613
 msgid "No spelling dictionaries found for '%1'."
-msgstr ""
+msgstr "Не се пронајдени правописни речници за '%1'."
 
 #: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:148
 msgid "Stripping line breaks..."
-msgstr ""
+msgstr "Отстранување прелом на ред..."
 
 #: ../gtk/src/OutputEditorText.cc:170
 msgid "Check spelling"
-msgstr ""
+msgstr "Проверете правопис"
 
 #: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:207
 msgid "File: %1"
-msgstr ""
+msgstr "Датотека: %1"
 
 #: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:210
 msgid "Page: %1"
-msgstr ""
+msgstr "Страна: %1"
 
 #: ../gtk/src/OutputEditorText.cc:255 ../gtk/src/Recognizer.cc:478
 #: ../qt/src/Recognizer.cc:235
@@ -1440,68 +1448,69 @@ msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:266
 msgid "Save Output..."
-msgstr ""
+msgstr "Зачувај Излез..."
 
 #: ../gtk/src/Recognizer.cc:179 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
-msgstr ""
+msgstr "Нема достапни јазици"
 
 #: ../gtk/src/Recognizer.cc:179 ../qt/src/RecognitionMenu.cc:76
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
+"Нема достапни тесеракт јазици за користење. Препознавањето нема да работи."
 
 #: ../gtk/src/Recognizer.cc:233 ../qt/src/RecognitionMenu.cc:134
 msgid "Multilingual"
-msgstr ""
+msgstr "Повеќејазичен"
 
 #: ../gtk/src/Recognizer.cc:285 ../qt/src/RecognitionMenu.cc:182
 msgid "Automatic page segmentation"
-msgstr ""
+msgstr "Автоматска сегментација на страници"
 
 #: ../gtk/src/Recognizer.cc:286 ../qt/src/RecognitionMenu.cc:183
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "Сегментација на страници со ориентација и откривање на скрипти"
 
 #: ../gtk/src/Recognizer.cc:287 ../qt/src/RecognitionMenu.cc:184
 msgid "Assume single column of text"
-msgstr ""
+msgstr "Претполага една колона од текст"
 
 #: ../gtk/src/Recognizer.cc:288 ../qt/src/RecognitionMenu.cc:185
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "Преземање единечен блок на вертикално порамнет текст"
 
 #: ../gtk/src/Recognizer.cc:289 ../qt/src/RecognitionMenu.cc:186
 msgid "Assume a single uniform block of text"
-msgstr ""
+msgstr "Преземање единечен блок на вертикално порамнет текст"
 
 #: ../gtk/src/Recognizer.cc:290 ../qt/src/RecognitionMenu.cc:187
 msgid "Assume a line of text"
-msgstr ""
+msgstr "Преземање линија од текст"
 
 #: ../gtk/src/Recognizer.cc:291 ../qt/src/RecognitionMenu.cc:188
 msgid "Assume a single word"
-msgstr ""
+msgstr "Преземање единечен збор"
 
 #: ../gtk/src/Recognizer.cc:292 ../qt/src/RecognitionMenu.cc:189
 msgid "Assume a single word in a circle"
-msgstr ""
+msgstr "Преземање единечен збор во круг"
 
 #: ../gtk/src/Recognizer.cc:293 ../qt/src/RecognitionMenu.cc:190
 msgid "Sparse text in no particular order"
-msgstr ""
+msgstr "Редок текст без посебен редослед"
 
 #: ../gtk/src/Recognizer.cc:294 ../qt/src/RecognitionMenu.cc:191
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "Редок текст со ориентација и откривање на скрипти"
 
 #: ../gtk/src/Recognizer.cc:309 ../qt/src/RecognitionMenu.cc:202
 msgid "Page segmentation mode"
-msgstr ""
+msgstr "Режим на сегментација на страници"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/RecognitionMenu.cc:205
 msgid "Character whitelist / blacklist..."
-msgstr ""
+msgstr "Знаци бела листа / црна листа"
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/RecognitionMenu.cc:210
 msgid "Manage languages..."
