@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
-"PO-Revision-Date: 2020-04-19 19:11+0000\n"
+"PO-Revision-Date: 2020-04-22 14:07+0000\n"
 "Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -88,7 +88,7 @@ msgstr "Додатни дефиниции за јазици:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr "Префикс на датотекана на тесеракт јазикот"
+msgstr "Префикс на датотека на тесеракт јазикот"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
@@ -194,7 +194,7 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
-msgstr ""
+msgstr "Префрли излезна рамка"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate current page"
@@ -206,7 +206,7 @@ msgstr "Ротирај ги сите страни"
 
 #: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:190
 msgid "Recent"
-msgstr ""
+msgstr "Недамнешно"
 
 #: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:191
 msgid "Paste"
@@ -230,7 +230,7 @@ msgstr "Нормална големина"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:30
 msgid "Best fit"
-msgstr ""
+msgstr "Најдобро одговара"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
 msgid "Rotate page"
@@ -252,7 +252,7 @@ msgstr "Избери страна"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
-msgstr ""
+msgstr "Контроли на слика"
 
 #: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:159
 msgid "Plain text"
@@ -260,11 +260,11 @@ msgstr "Едноставен текст"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../qt/src/MainWindow.cc:160
 msgid "hOCR, PDF"
-msgstr ""
+msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:38
 msgid "Autodetect layout"
-msgstr ""
+msgstr "Автоматско детектирање на распоред"
 
 #: ../gtk/data/MainWindow.ui.h:19
 msgid "<small>Recognize all</small>"
@@ -367,7 +367,7 @@ msgstr "Знаци бела листа / црна листа"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "Исклучете ги овие карактери од препознавање (црна листа):"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:3
 msgid "Enter a string of characters..."
@@ -379,7 +379,7 @@ msgstr "Дозволено е само следниве карактери да 
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
-msgstr ""
+msgstr "Опсег на Страници:"
 
 #: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
@@ -391,7 +391,7 @@ msgstr "<small><b>Пример:</b> 1-10, 13, 14-18</small>"
 
 #: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
-msgstr ""
+msgstr "Препознатлив дел:"
 
 #: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:381
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:133
@@ -404,11 +404,11 @@ msgstr "Автоматско детектирање"
 
 #: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
-msgstr ""
+msgstr "Припремете излезен текст:"
 
 #: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
-msgstr ""
+msgstr "Име на датотека"
 
 #: ../gtk/data/MainWindow.ui.h:56 ../qt/data/PageRangeDialog.ui.h:9
 msgid "Source page"
@@ -437,11 +437,11 @@ msgstr "Внеси збор:"
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Додадете нов излез после последната страница"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
 msgid "Insert new output before current page"
-msgstr ""
+msgstr "Внесете нов излез пред тековната страница"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
@@ -461,12 +461,12 @@ msgstr "Експортирај како ODTѐ"
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
 msgid "Append document after last page"
-msgstr ""
+msgstr "Додадете документ после последната страница"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Insert document before current page"
-msgstr ""
+msgstr "Внесете документ пред тековната страница"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
@@ -866,7 +866,7 @@ msgstr "Избери име на излезен документ..."
 
 #: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
 msgid "Failed to initialize the scanning backend."
-msgstr ""
+msgstr "Не успеа да се иницира позадината на скенирањето."
 
 #: ../gtk/src/Acquirer.cc:115 ../qt/src/Acquirer.cc:106
 msgid "Scan failed"
@@ -879,19 +879,19 @@ msgstr "Не се пронајдени скенери."
 #: ../gtk/src/Acquirer.cc:150 ../gtk/src/Acquirer.cc:167
 #: ../qt/src/Acquirer.cc:136 ../qt/src/Acquirer.cc:153
 msgid "Starting scan..."
-msgstr ""
+msgstr "Започнува скенирање..."
 
 #: ../gtk/src/Acquirer.cc:163 ../qt/src/Acquirer.cc:149
 msgid "Opening device..."
-msgstr ""
+msgstr "Отварање на уредот..."
 
 #: ../gtk/src/Acquirer.cc:165 ../qt/src/Acquirer.cc:151
 msgid "Setting options..."
-msgstr ""
+msgstr "Подесување опции..."
 
 #: ../gtk/src/Acquirer.cc:169 ../qt/src/Acquirer.cc:155
 msgid "Getting parameters..."
-msgstr ""
+msgstr "Добивање параметри..."
 
 #: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:157
 msgid "Transferring data..."
@@ -899,11 +899,11 @@ msgstr "Пренесување податоци ..."
 
 #: ../gtk/src/Acquirer.cc:178 ../qt/src/Acquirer.cc:164
 msgid "Canceling scan..."
-msgstr ""
+msgstr "Откажување на скенирањето..."
 
 #: ../gtk/src/Config.cc:49 ../qt/data/ConfigDialog.ui.h:7
 msgid "Filename prefix"
-msgstr ""
+msgstr "Префикс на име на датотека"
 
 #: ../gtk/src/Config.cc:50 ../qt/data/ConfigDialog.ui.h:8
 msgid "Code"
@@ -911,7 +911,7 @@ msgstr "Код"
 
 #: ../gtk/src/Config.cc:51 ../qt/data/ConfigDialog.ui.h:9
 msgid "Native name"
-msgstr ""
+msgstr "Матично име"
 
 #: ../gtk/src/Config.cc:109 ../qt/src/Config.cc:102
 msgid "Script"
@@ -928,11 +928,11 @@ msgstr "Вашата работа беше зачувана како <b>%1</b>."
 
 #: ../gtk/src/CrashHandler.cc:45 ../qt/src/CrashHandler.cc:33
 msgid "There was no unsaved work."
-msgstr ""
+msgstr "Немаше зачувана работа."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
 msgid "Failed to obtain backtrace. Is GDB installed?"
-msgstr ""
+msgstr "Не успеа да се добие позадина. Дали е инсталиран GDB?"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
 msgid "Page %1"
@@ -940,7 +940,7 @@ msgstr "Страна %1"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid "Failed to load image"
-msgstr ""
+msgstr "Не успеа да се вчита сликата"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid ""
@@ -1091,58 +1091,58 @@ msgstr ""
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:481
 msgid "Cannot overwrite a file which is a source image of this document."
-msgstr ""
+msgstr "Не може да се презапише датотека што е изворна слика на овој документ."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:515 ../qt/src/hocr/HOCRPdfExporter.cc:503
 msgid "Failed to create output"
-msgstr ""
+msgstr "Не успеа да се креира излез"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:515 ../qt/src/hocr/HOCRPdfExporter.cc:503
 msgid "Failed to create output. The returned error was: %1"
-msgstr ""
+msgstr "Не успеа да се креира излез. Повратната грешка беше: %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:557 ../qt/src/hocr/HOCRPdfExporter.cc:543
 msgid "The operation was cancelled"
-msgstr ""
+msgstr "Операцијата беше откажана"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:605 ../qt/src/hocr/HOCRPdfExporter.cc:589
 msgid "Failed to render page %1"
-msgstr ""
+msgstr "Не успеа да се прикаже страница %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:612 ../qt/src/hocr/HOCRPdfExporter.cc:596
 msgid "Exporting to PDF..."
-msgstr ""
+msgstr "Експортирај во PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:617 ../qt/src/hocr/HOCRPdfExporter.cc:601
 msgid "The PDF export failed: %1."
-msgstr ""
+msgstr "Експортирањето во PDF не успеа: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:671 ../qt/src/hocr/HOCRPdfExporter.cc:654
 msgid "The PDF library could not load the font '%1'."
-msgstr ""
+msgstr "PDF библиотеката не може да го вчита фонтот '%1'."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:266
 msgid "Text Files"
-msgstr ""
+msgstr "Текст Датотеки"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:40
 msgid "Save Text Output..."
-msgstr ""
+msgstr "Зачувај Излез на Текст ..."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
-msgstr ""
+msgstr "Експортирањето текст не успеа: не може да се запише излезна датотека."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
 #: ../qt/src/hocr/OutputEditorHOCR.cc:275
 msgid "Block"
-msgstr ""
+msgstr "Блокира"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
 #: ../qt/src/hocr/OutputEditorHOCR.cc:277
 msgid "Line"
-msgstr ""
+msgstr "Линија"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
 #: ../qt/src/hocr/OutputEditorHOCR.cc:278
@@ -1152,7 +1152,7 @@ msgstr "Збор"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
 #: ../qt/src/hocr/OutputEditorHOCR.cc:279
 msgid "Misspelled word"
-msgstr ""
+msgstr "Погрешно напишан збор"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:448
 #: ../qt/src/hocr/OutputEditorHOCR.cc:379
@@ -1160,85 +1160,87 @@ msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr ""
+"Следниве страници не може да бидат обработени:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:449
 #: ../qt/src/hocr/OutputEditorHOCR.cc:380
 msgid "Recognition errors"
-msgstr ""
+msgstr "Грешки при препознавање"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:619
 #: ../qt/src/hocr/OutputEditorHOCR.cc:561
 #: ../qt/src/hocr/OutputEditorHOCR.cc:573
 msgid "Multiple values"
-msgstr ""
+msgstr "Повеќе вредности"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:803
 #: ../qt/src/hocr/OutputEditorHOCR.cc:718
 msgid "Merge"
-msgstr ""
+msgstr "Спојување"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:811
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:902
 #: ../qt/src/hocr/OutputEditorHOCR.cc:720
 #: ../qt/src/hocr/OutputEditorHOCR.cc:784
 msgid "Split from parent"
-msgstr ""
+msgstr "Одвои од надредено"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:822
 #: ../qt/src/hocr/OutputEditorHOCR.cc:724
 msgid "Swap"
-msgstr ""
+msgstr "Размена"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:846
 #: ../qt/src/hocr/OutputEditorHOCR.cc:769
 msgid "Add graphic region"
-msgstr ""
+msgstr "Додади графички регион"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:849
 #: ../qt/src/hocr/OutputEditorHOCR.cc:770
 msgid "Add text block"
-msgstr ""
+msgstr "Додади блок на текст"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:853
 #: ../qt/src/hocr/OutputEditorHOCR.cc:772
 msgid "Add paragraph"
-msgstr ""
+msgstr "Додади пасус"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:857
 #: ../qt/src/hocr/OutputEditorHOCR.cc:774
 msgid "Add line"
-msgstr ""
+msgstr "Додади линија"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:861
 #: ../qt/src/hocr/OutputEditorHOCR.cc:776
 msgid "Add word"
-msgstr ""
+msgstr "Додади збор"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:877 ../qt/src/hocr/HOCRDocument.cc:72
 msgid "No suggestions"
-msgstr ""
+msgstr "Нема сугестии"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:883 ../qt/src/hocr/HOCRDocument.cc:76
 msgid "Add to dictionary"
-msgstr ""
+msgstr "Додади во речник"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:889 ../qt/src/hocr/HOCRDocument.cc:80
 msgid "Ignore word"
-msgstr ""
+msgstr "Игнорирај збор"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:952
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1018
 #: ../qt/src/hocr/OutputEditorHOCR.cc:851
 #: ../qt/src/hocr/OutputEditorHOCR.cc:910
 msgid "hOCR HTML Files"
-msgstr ""
+msgstr "hOCR HTML Датотеки"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:953
 #: ../qt/src/hocr/OutputEditorHOCR.cc:851
 msgid "Open hOCR File"
-msgstr ""
+msgstr "Орвори hOCR документ"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:890 ../qt/src/OutputEditorText.cc:255
@@ -1247,6 +1249,8 @@ msgid ""
 "The following files could not be opened:\n"
 "%1"
 msgstr ""
+"Следниве датотеки не може да се отворат:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
 #: ../qt/src/hocr/OutputEditorHOCR.cc:893
@@ -1254,67 +1258,69 @@ msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
 msgstr ""
+"Следниве датотеки не се валидни hOCR HTML:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:896 ../qt/src/OutputEditorText.cc:256
 #: ../qt/src/SourceManager.cc:152
 msgid "Unable to open files"
-msgstr ""
+msgstr "Не може да се отворат датотеките"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1019
 #: ../qt/src/hocr/OutputEditorHOCR.cc:910
 msgid "Save hOCR Output..."
-msgstr ""
+msgstr "Зачувај hOCR Излез..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
 #: ../qt/src/hocr/OutputEditorHOCR.cc:917 ../qt/src/OutputEditorText.cc:273
 msgid "Failed to save output"
-msgstr ""
+msgstr "Не успеа да се зачува излез"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
 #: ../qt/src/hocr/OutputEditorHOCR.cc:917 ../qt/src/OutputEditorText.cc:273
 msgid "Check that you have writing permissions in the selected folder."
-msgstr ""
+msgstr "Проверете дали имате дозвола за пишување во избраната папка."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
 #: ../qt/src/hocr/OutputEditorHOCR.cc:978 ../qt/src/OutputEditorText.cc:286
 msgid "Output not saved"
-msgstr ""
+msgstr "Излезот не е зачуван"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
 #: ../qt/src/hocr/OutputEditorHOCR.cc:978 ../qt/src/OutputEditorText.cc:286
 msgid "Save output before proceeding?"
-msgstr ""
+msgstr "Зачувајте излез пред да продолжите?"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:192
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1076 ../qt/src/OutputEditorText.cc:163
 msgid "Replacing..."
-msgstr ""
+msgstr "Заменување..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1240 ../gtk/src/OutputEditorText.cc:200
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1099 ../qt/src/OutputEditorText.cc:171
 msgid "Applying substitutions..."
-msgstr ""
+msgstr "Примена на замени..."
 
 #: ../gtk/src/MainWindow.cc:131 ../qt/src/MainWindow.cc:334
 msgid "Using tesseract"
-msgstr ""
+msgstr "Користење на тесеракт"
 
 #: ../gtk/src/MainWindow.cc:178 ../qt/src/MainWindow.cc:201
 msgid "Select an image to begin..."
-msgstr ""
+msgstr "Изберете слика да започнете..."
 
 #: ../gtk/src/MainWindow.cc:310
 msgid "Multiple sources"
-msgstr ""
+msgstr "Повеќе извори"
 
 #: ../gtk/src/MainWindow.cc:312 ../qt/src/MainWindow.cc:319
 msgid "Ready"
-msgstr ""
+msgstr "Подготвен"
 
 #: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:453
 msgid "New version"
-msgstr ""
+msgstr "Нова верзија"
 
 #: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:453
 msgid "gImageReader %1 is available"
@@ -1326,24 +1332,24 @@ msgstr "Преземи"
 
 #: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:455
 msgid "Changelog"
-msgstr ""
+msgstr "Дневник на измени"
 
 #: ../gtk/src/MainWindow.cc:464 ../qt/src/MainWindow.cc:456
 msgid "Don't notify again"
-msgstr ""
+msgstr "Не известувај повторно"
 
 #: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:504
 msgid "Don't show again"
-msgstr ""
+msgstr "Не прикажувај повторно"
 
 #: ../gtk/src/MainWindow.cc:486 ../gtk/src/MainWindow.cc:499
 #: ../qt/src/MainWindow.cc:505
 msgid "Install"
-msgstr ""
+msgstr "Инсталирај"
 
 #: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
 msgid "Spelling dictionary missing"
-msgstr ""
+msgstr "Недостасува речник за правопис "
 
 #: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
 msgid "The spellcheck dictionary for %1 is not installed"
