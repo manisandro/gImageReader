@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
 "PO-Revision-Date: 2020-04-22 14:07+0000\n"
-"Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
+"Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
 "Language: mk\n"
@@ -1139,7 +1139,7 @@ msgstr "Експортирањето текст не успеа: не може �
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
 #: ../qt/src/hocr/OutputEditorHOCR.cc:275
 msgid "Block"
-msgstr "Блокира"
+msgstr "Блок"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
 #: ../qt/src/hocr/OutputEditorHOCR.cc:277
@@ -1355,7 +1355,7 @@ msgstr "Недостасува речник за правопис"
 
 #: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
 msgid "The spellcheck dictionary for %1 is not installed"
-msgstr ""
+msgstr "Речникот на правопис за % 1 не е инсталиран"
 
 #: ../gtk/src/MainWindow.cc:513 ../gtk/src/MainWindow.cc:542
 #: ../qt/src/MainWindow.cc:523
@@ -1371,7 +1371,7 @@ msgstr "Се инсталира речник за правопис за '%1'"
 #: ../qt/src/MainWindow.cc:613 ../qt/src/TessdataManager.cc:70
 #: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:287
 msgid "Error"
-msgstr ""
+msgstr "Грешка"
 
 #: ../gtk/src/MainWindow.cc:534 ../qt/src/MainWindow.cc:542
 msgid "Failed to install spelling dictionary: %1"
