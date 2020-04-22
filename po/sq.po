@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-08 14:45+0200\n"
-"PO-Revision-Date: 2020-04-16 10:11+0000\n"
+"PO-Revision-Date: 2020-04-22 14:07+0000\n"
 "Last-Translator: Fisnik Shabani <fisnik.shabani@intecsystem.com>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sq/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0.1-dev\n"
+"X-Generator: Weblate 4.0.2-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -60,7 +60,7 @@ msgstr "OK"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
-msgstr ""
+msgstr "Orientimi i kornizës dalëse:"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
@@ -152,9 +152,8 @@ msgstr ""
 "Automatikisht hapni dokumentet e eksportuara me aplikacionin e paracaktuar"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
-#, fuzzy
 msgid "Regenerate backtrace"
-msgstr "Rigjeneroni prapaskenën"
+msgstr "Rigjeneroni backtrace"
 
 #: ../gtk/data/CrashHandler.ui.h:3
 #, no-c-format
@@ -198,9 +197,8 @@ msgstr ""
 "aksidenti.\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
-#, fuzzy
 msgid "Toggle output pane"
-msgstr "Ndrysho panelin dalës"
+msgstr "Përfshini panelin dalës"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate current page"
@@ -270,7 +268,7 @@ msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:38
 msgid "Autodetect layout"
-msgstr ""
+msgstr "Detektimi automatik i orarit"
 
 #: ../gtk/data/MainWindow.ui.h:19
 msgid "<small>Recognize all</small>"
@@ -536,7 +534,7 @@ msgstr "Zgjero të gjitha"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:772
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Collapse all"
-msgstr ""
+msgstr "Fshihe"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:24
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:182
@@ -564,15 +562,15 @@ msgstr "Zëvendësoni tekstin aktual"
 #. Output postprocessing
 #: ../gtk/data/OutputEditorText.ui.h:4 ../qt/src/Ui_OutputEditorText.hh:62
 msgid "Keep line break if..."
-msgstr ""
+msgstr "Mbaje rreshtin e ri nëse..."
 
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:64
 msgid "Preceded by end mark (.?!)"
-msgstr ""
+msgstr "Etiketa e mëparshme (.?!)"
 
 #: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:66
 msgid "Preceded or succeeded by quote"
-msgstr ""
+msgstr "Të paraprijshme ose të suksesshme me etiketë"
 
 #: ../gtk/data/OutputEditorText.ui.h:7 ../qt/src/Ui_OutputEditorText.hh:68
 msgid "Other options"
@@ -580,15 +578,15 @@ msgstr "Opsione të tjera"
 
 #: ../gtk/data/OutputEditorText.ui.h:8 ../qt/src/Ui_OutputEditorText.hh:70
 msgid "Join hyphenated words"
-msgstr ""
+msgstr "Bashko fjalët e ndara"
 
 #: ../gtk/data/OutputEditorText.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:72
 msgid "Collapse whitespace"
-msgstr ""
+msgstr "Kolabo hapsirën e bardhë"
 
 #: ../gtk/data/OutputEditorText.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:74
 msgid "Preserve paragraphs"
-msgstr ""
+msgstr "Mbroj paragrafet"
 
 #: ../gtk/data/OutputEditorText.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:76
 msgid "Visual aids"
@@ -646,7 +644,7 @@ msgstr "DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "Algoritëm për dithering:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
@@ -658,15 +656,15 @@ msgstr "Uniformizoni ndarjen e vijës dhe fjalëve"
 
 #: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
-msgstr ""
+msgstr "Mbingarko familjen e fontit:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
 msgid "Fallback font family:"
-msgstr ""
+msgstr "Tërhiq familjen e fontit:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
 msgid "Override font size:"
-msgstr ""
+msgstr "Mbingarko madhësinë e fontit:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
@@ -686,7 +684,7 @@ msgstr "karaktere"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Sanitize hyphens before line breaks"
-msgstr ""
+msgstr "Pastro vijat para rreshtit të ri"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
@@ -786,7 +784,7 @@ msgstr "Gjeje të ardhshmin"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:6 ../qt/data/SearchReplaceFrame.ui.h:7
 msgid "Match case"
-msgstr ""
+msgstr "Të përputhshme"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:7
 #: ../gtk/data/SubstitutionsManager.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:1
@@ -809,7 +807,7 @@ msgstr "Njihni"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:241
 msgid "Recognize to clipboard"
-msgstr ""
+msgstr "Njihe në klipbord"
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:242
 msgid "Save as image"
@@ -939,7 +937,7 @@ msgstr "Nuk kishte punë të paruajtur."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
 msgid "Failed to obtain backtrace. Is GDB installed?"
-msgstr ""
+msgstr "Nuk arriti të merrte backtrace. A është i instaluar GDB?"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:569
 msgid "Page %1"
@@ -979,7 +977,7 @@ msgstr "Njihni përzgjedhjen"
 
 #: ../gtk/src/DisplayerToolSelect.cc:186 ../qt/src/DisplayerToolSelect.cc:182
 msgid "Performing layout analysis"
-msgstr ""
+msgstr "Duke kryer analizën e orarit"
 
 #: ../gtk/src/FileDialogs.cc:235
 msgid ""
@@ -1008,7 +1006,7 @@ msgstr "Paragraf"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:643
 msgid "Textline"
-msgstr ""
+msgstr "Linja e tekstit"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:647
 msgid "Graphic"
@@ -1053,7 +1051,7 @@ msgstr "Njejtë sikur burimi"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:359
 msgid "Custom"
-msgstr ""
+msgstr "Përshtatshme"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:355
 msgid "cm"
@@ -1069,11 +1067,11 @@ msgstr "Monokrom"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:328 ../qt/src/hocr/HOCRPdfExporter.cc:348
 msgid "Threshold (closest color)"
-msgstr ""
+msgstr "Pragu (ngjyra më e afërt)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:331 ../qt/src/hocr/HOCRPdfExporter.cc:349
 msgid "Diffuse"
-msgstr ""
+msgstr "Difuze"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:340 ../qt/src/hocr/HOCRPdfExporter.cc:350
 msgid "Zip (lossless)"
@@ -1342,7 +1340,6 @@ msgid "Download"
 msgstr "Shkarko"
 
 #: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:443
-#, fuzzy
 msgid "Changelog"
 msgstr "Ditari i ndryshimeve"
 
@@ -1481,7 +1478,7 @@ msgstr "Segmentimi automatik i faqeve"
 
 #: ../gtk/src/Recognizer.cc:286 ../qt/src/RecognitionMenu.cc:182
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "Segmentimi i faqes me orientim dhe detektim të skriptës"
 
 #: ../gtk/src/Recognizer.cc:287 ../qt/src/RecognitionMenu.cc:183
 msgid "Assume single column of text"
@@ -1513,7 +1510,7 @@ msgstr "Tekst i rrallë në asnjë rend të veçantë"
 
 #: ../gtk/src/Recognizer.cc:294 ../qt/src/RecognitionMenu.cc:190
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "Rralli tekstin me orientim dhe detektim të skriptës"
 
 #: ../gtk/src/Recognizer.cc:309 ../qt/src/RecognitionMenu.cc:201
 msgid "Page segmentation mode"
@@ -1931,7 +1928,7 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Fotografi"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -1992,11 +1989,11 @@ msgstr "Kontrollet e imazhit"
 
 #: ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect Layout"
-msgstr ""
+msgstr "Detekto orarin në mënyrë automatike"
 
 #: ../qt/data/MainWindow.ui.h:39
 msgid "Toggle Output Pane"
-msgstr ""
+msgstr "Ndrysho panelin dalës"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
