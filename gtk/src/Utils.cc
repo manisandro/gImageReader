@@ -291,11 +291,17 @@ std::vector<std::pair<Glib::ustring, int>> Utils::string_split_pos(const Glib::u
 	int strpos = 0;
 	Glib::MatchInfo info;
 	std::vector<std::pair<Glib::ustring, int>> result;
-	while(splitRe->match(str, strpos, info)) {
+
+	Glib::ustring matchstr = str;
+	while(splitRe->match(matchstr, 0, info)) {
+		// Fetch pos returns positions in bytes, no characters... Need to extract substring on raw string, and then deduce the new position by comparing the lengths
 		int start = 0, end = 0;
 		info.fetch_pos(0, start, end);
-		result.push_back(std::make_pair(str.substr(strpos, start - strpos), strpos));
-		strpos = end;
+		result.push_back(std::make_pair(str.raw().substr(0, start), strpos));
+
+		Glib::ustring newmatchstr = matchstr.raw().substr(end);
+		strpos += matchstr.length() - newmatchstr.length();
+		matchstr = newmatchstr;
 	}
 	if(strpos < str.length()) {
 		result.push_back(std::make_pair(str.substr(strpos), strpos));
