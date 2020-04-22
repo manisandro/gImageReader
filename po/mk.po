@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
 "PO-Revision-Date: 2020-04-22 14:07+0000\n"
-"Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
+"Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
 "Language: mk\n"
@@ -947,6 +947,8 @@ msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
+"Можно е документот да не е слика или е корумпиран:\n"
+"%1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
 msgid "PNG Images"
@@ -1059,35 +1061,35 @@ msgstr "Монохром"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:328 ../qt/src/hocr/HOCRPdfExporter.cc:348
 msgid "Threshold (closest color)"
-msgstr ""
+msgstr "Праг (најблиска боја)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:331 ../qt/src/hocr/HOCRPdfExporter.cc:349
 msgid "Diffuse"
-msgstr ""
+msgstr "Дифузно"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:340 ../qt/src/hocr/HOCRPdfExporter.cc:350
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Зип (без загуба)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:344 ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "CCITT Group 4 (lossless)"
-msgstr ""
+msgstr "CCITT Group 4 (без загуба)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:348 ../qt/src/hocr/HOCRPdfExporter.cc:352
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "Jpeg (со загуба)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:493 ../qt/src/hocr/HOCRPdfExporter.cc:475
 msgid "PDF Files"
-msgstr ""
+msgstr "PDF Документи"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:494 ../qt/src/hocr/HOCRPdfExporter.cc:475
 msgid "Save PDF Output..."
-msgstr ""
+msgstr "Зачувај PDF излез..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:481
 msgid "Invalid Output"
-msgstr ""
+msgstr "Невалиден излез"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:481
 msgid "Cannot overwrite a file which is a source image of this document."
