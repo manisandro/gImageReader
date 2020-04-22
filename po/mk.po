@@ -1351,7 +1351,7 @@ msgstr "Инсталирај"
 
 #: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
 msgid "Spelling dictionary missing"
-msgstr "Недостасува речник за правопис "
+msgstr "Недостасува речник за правопис"
 
 #: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
 msgid "The spellcheck dictionary for %1 is not installed"
