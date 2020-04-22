@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:36+0200\n"
-"PO-Revision-Date: 2020-04-22 14:09+0000\n"
-"Last-Translator: Sonja <sonja.pitikev@intecsystem.com>\n"
+"PO-Revision-Date: 2020-04-24 19:11+0000\n"
+"Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
 "Language: mk\n"
@@ -1510,7 +1510,7 @@ msgstr "Режим на сегментација на страници"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/RecognitionMenu.cc:205
 msgid "Character whitelist / blacklist..."
-msgstr "Знаци бела листа / црна листа"
+msgstr "Знаци бела листа / црна листа..."
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/RecognitionMenu.cc:210
 msgid "Manage languages..."
