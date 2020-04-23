@@ -174,6 +174,9 @@ private:
 			// Merge
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			document->mergeItemText(index, (ev->modifiers() & Qt::ShiftModifier) != 0);
+		} else if(ev->key() == Qt::Key_Delete && ev->modifiers() == Qt::ControlModifier) {
+			QModelIndex index = document->indexAtItem(m_wordItem);
+			document-> removeItem(index);
 		} else {
 			QLineEdit::keyPressEvent(ev);
 		}
@@ -395,6 +398,7 @@ void HOCRProofReadWidget::showShortcutsDialog() {
 	                           "<tr><td>Ctrl+I</td><td>Toggle italic</td></tr>"
 	                           "<tr><td>Ctrl+D</td><td>Divide word at cursor position</td></tr>"
 	                           "<tr><td>Ctrl+M</td><td>Merge with previous word</td></tr>"
+	                           "<tr><td>Ctrl+Delete</td><td>Delete word</td></tr>"
 	                           "<tr><td>Ctrl+Shift+M</td><td>Merge with next word</td></tr>"
 	                           "<tr><td>Ctrl+{Left,Right}</td><td>Adjust left bounding box edge</td></tr>"
 	                           "<tr><td>Ctrl+Shift+{Left,Right}</td><td>Adjust right bounding box edge</td></tr>"
