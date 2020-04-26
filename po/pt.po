@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Portuguese (Brazil) (gImageReader)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
-"PO-Revision-Date: 2020-04-19 19:11+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"PO-Revision-Date: 2020-04-27 06:11+0000\n"
+"Last-Translator: Peter J. Mello <admin@petermello.net>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pt/>\n"
 "Language: pt\n"
@@ -16,15 +16,15 @@ msgstr ""
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr "Aplicativo de OCR"
+msgstr "Aplicação de OCR"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:164
 msgid "Redetect Languages"
-msgstr "Detectar idiomas novamente"
+msgstr "Redetectar idiomas"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:167
 msgid "Manage Languages"
-msgstr "Gerir Idiomas"
+msgstr "Definir idiomas"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:170
@@ -67,13 +67,11 @@ msgstr "Vertical"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr ""
-"Perguntar pela instalação de dicionários de verificação ortográfica não "
-"encontrados"
+msgstr "Instalar dicionários de verificação ortográfica não encontrados"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr "Verificar automaticamente novas versões do programa"
+msgstr "Procurar automaticamente novas versões de aplicação"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
