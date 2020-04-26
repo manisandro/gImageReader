@@ -18,6 +18,7 @@
  */
 
 #include <QDesktopServices>
+#include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QMessageBox>
@@ -262,8 +263,14 @@ bool OutputEditorText::save(const QString& filename) {
 	QString outname = filename;
 	if(outname.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-		QString base = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
-		outname = FileDialogs::saveDialog(_("Save Output..."), base + ".txt", "outputdir", QString("%1 (*.txt)").arg(_("Text Files")));
+		QString suggestion;
+		if(!sources.isEmpty()) {
+			QFileInfo finfo(sources.first()->path);
+			suggestion = finfo.absoluteDir().absoluteFilePath(finfo.completeBaseName());
+		} else {
+			suggestion = _("output");
+		}
+		outname = FileDialogs::saveDialog(_("Save Output..."), suggestion + ".txt", "outputdir", QString("%1 (*.txt)").arg(_("Text Files")));
 		if(outname.isEmpty()) {
 			return false;
 		}

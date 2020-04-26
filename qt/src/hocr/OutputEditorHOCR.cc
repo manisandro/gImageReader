@@ -18,6 +18,7 @@
  */
 
 #include <QApplication>
+#include <QDir>
 #include <QDomDocument>
 #include <QFileInfo>
 #include <QFontComboBox>
@@ -918,7 +919,8 @@ bool OutputEditorHOCR::open(InsertMode mode, QStringList files) {
 	if(added > 0) {
 		m_modified = mode != InsertMode::Replace;
 		if(mode == InsertMode::Replace && m_filebasename.isEmpty()) {
-			m_filebasename = QFileInfo(files.front()).completeBaseName();
+			QFileInfo finfo(files.front());
+			m_filebasename = finfo.absoluteDir().absoluteFilePath(finfo.completeBaseName());
 		}
 		MAIN->setOutputPaneVisible(true);
 	}
@@ -942,7 +944,12 @@ bool OutputEditorHOCR::save(const QString& filename) {
 		QString suggestion = m_filebasename;
 		if(suggestion.isEmpty()) {
 			QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-			suggestion = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
+			if(!sources.isEmpty()) {
+				QFileInfo finfo(sources.first()->path);
+				suggestion = finfo.absoluteDir().absoluteFilePath(finfo.completeBaseName());
+			} else {
+				suggestion = _("output");
+			}
 		}
 		outname = FileDialogs::saveDialog(_("Save hOCR Output..."), suggestion + ".html", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")));
 		if(outname.isEmpty()) {
@@ -973,7 +980,8 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	m_document->convertSourcePaths(QFileInfo(outname).absolutePath(), true);
 	file.write("</html>\n");
 	m_modified = false;
-	m_filebasename = QFileInfo(outname).completeBaseName();
+	QFileInfo finfo(outname);
+	m_filebasename = finfo.absoluteDir().absoluteFilePath(finfo.completeBaseName());
 	return true;
 }
 
