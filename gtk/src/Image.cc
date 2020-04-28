@@ -72,7 +72,7 @@ Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat, Conver
 			sampleSize = 1;
 			bytesPerLine = width / 8 + (width % 8 != 0);
 			uint8_t* newdata = new uint8_t[height * bytesPerLine];
-			std::memset(newdata, 0, height * bytesPerLine);
+			std::memset(newdata, 0, std::size_t(height) * bytesPerLine);
 			// Dithering: https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering
 			for(int y = 0; y < height; ++y) {
 				for(int x = 0; x < width; ++x) {

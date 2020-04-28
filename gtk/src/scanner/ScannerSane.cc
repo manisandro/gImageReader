@@ -424,7 +424,7 @@ void ScannerSane::doGetParameters() {
 
 	m_job->height = std::max(1, m_job->parameters.lines);
 	m_job->rowstride = m_job->parameters.pixels_per_line * 3; // Buffer is for a 24 bit RGB image
-	m_job->imgbuf.resize(m_job->rowstride * m_job->parameters.lines);
+	m_job->imgbuf.resize(std::size_t(m_job->rowstride) * m_job->parameters.lines);
 
 	/* Prepare for read */
 	m_job->lineBuffer.resize(m_job->parameters.bytes_per_line);
@@ -474,7 +474,7 @@ void ScannerSane::doRead() {
 		// Resize image if necessary
 		if(m_job->lineCount > m_job->height) {
 			m_job->height = m_job->lineCount;
-			m_job->imgbuf.resize(m_job->rowstride * m_job->height);
+			m_job->imgbuf.resize(std::size_t(m_job->rowstride) * m_job->height);
 		}
 
 		// Write data

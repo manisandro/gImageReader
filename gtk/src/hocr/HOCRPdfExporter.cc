@@ -192,7 +192,7 @@ public:
 #endif
 		pdfImage.SetImageColorSpace(settings.colorFormat == Image::Format_RGB24 ? PoDoFo::ePdfColorSpace_DeviceRGB : PoDoFo::ePdfColorSpace_DeviceGray);
 		if(settings.compression == PDFSettings::CompressZip) {
-			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<const char*>(img.data), img.bytesPerLine * img.height);
+			PoDoFo::PdfMemoryInputStream is(reinterpret_cast<const char*>(img.data), PoDoFo::pdf_long(img.bytesPerLine) * img.height);
 			pdfImage.SetImageData(img.width, img.height, img.sampleSize, &is, {PoDoFo::ePdfFilter_FlateDecode});
 		} else if(settings.compression == PDFSettings::CompressJpeg) {
 			PoDoFo::PdfName dctFilterName(PoDoFo::PdfFilterFactory::FilterTypeToName(PoDoFo::ePdfFilter_DCTDecode));
