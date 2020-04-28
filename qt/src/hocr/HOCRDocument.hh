@@ -45,6 +45,7 @@ public:
 		return m_defaultLanguage;
 	}
 	void addSpellingActions(QMenu* menu, const QModelIndex& index);
+	void addWordToDictionary(const QModelIndex& index);
 
 	QString toHTML() const;
 

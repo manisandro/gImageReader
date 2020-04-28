@@ -137,6 +137,9 @@ private:
 			QMenu menu;
 			document->addSpellingActions(&menu, index);
 			menu.exec(mapToGlobal(QPoint(0, -menu.sizeHint().height())));
+		} else if((ev->key() == Qt::Key_Enter || ev->key() == Qt::Key_Return) && ev->modifiers() & Qt::ControlModifier) {
+			QModelIndex index = document->indexAtItem(m_wordItem);
+			document->addWordToDictionary(index);
 		} else if(ev->key() == Qt::Key_B && ev->modifiers() == Qt::ControlModifier) {
 			// Bold
 			QModelIndex index = document->indexAtItem(m_wordItem);
@@ -440,6 +443,7 @@ void HOCRProofReadWidget::showShortcutsDialog() {
 	                           "<tr><td>Down</td><td>Next line</td></tr>"
 	                           "<tr><td>Up</td><td>Previous line</td></tr>"
 	                           "<tr><td>Ctrl+Space</td><td>Spelling suggestions</td></tr>"
+	                           "<tr><td>Ctrl+Enter</td><td>Add word to dictionary</td></tr>"
 	                           "<tr><td>Ctrl+B</td><td>Toggle bold</td></tr>"
 	                           "<tr><td>Ctrl+I</td><td>Toggle italic</td></tr>"
 	                           "<tr><td>Ctrl+D</td><td>Divide word at cursor position</td></tr>"

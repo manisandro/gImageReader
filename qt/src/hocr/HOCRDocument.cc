@@ -85,6 +85,15 @@ void HOCRDocument::addSpellingActions(QMenu* menu, const QModelIndex& index) {
 	}
 }
 
+void HOCRDocument::addWordToDictionary(const QModelIndex& index) {
+	const HOCRItem* item = itemAtIndex(index);
+	if(item && item->isMisspelled()) {
+		QString trimmedWord = HOCRItem::trimmedWord(item->text());
+		m_spell->addWordToDictionary(trimmedWord);
+		resetMisspelled(index);
+	}
+}
+
 QString HOCRDocument::toHTML() const {
 	QString html = "<body>\n";
 	for(const HOCRPage* page : m_pages) {
