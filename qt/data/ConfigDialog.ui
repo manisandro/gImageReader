@@ -133,7 +133,7 @@
       <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
      <property name="editTriggers">
-      <set>QAbstractItemView::DoubleClicked</set>
+      <set>QAbstractItemView::NoEditTriggers</set>
      </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
