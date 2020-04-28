@@ -24,6 +24,7 @@
 #include <QFrame>
 
 class QLabel;
+class QSpinBox;
 class QTreeView;
 class QVBoxLayout;
 class HOCRItem;
@@ -46,6 +47,8 @@ private:
 	QWidget* m_controlsWidget = nullptr;
 	QLabel* m_confidenceLabel = nullptr;
 	QMap<const HOCRItem*, QWidget*> m_currentLines;
+	QSpinBox* m_spinLinesBefore = nullptr;
+	QSpinBox* m_spinLinesAfter = nullptr;
 
 	// Disable auto tab handling
 	bool focusNextPrevChild(bool) override { return false; }
@@ -54,8 +57,7 @@ private:
 
 
 private slots:
-	void updateRows();
-	void setCurrentRow(const QModelIndex& current);
+	void updateWidget(bool force = false);
 	void showShortcutsDialog();
 };
 

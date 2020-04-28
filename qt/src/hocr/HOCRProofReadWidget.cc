@@ -24,6 +24,7 @@
 #include <QVBoxLayout>
 
 #include "Displayer.hh"
+#include "ConfigSettings.hh"
 #include "HOCRDocument.hh"
 #include "HOCRProofReadWidget.hh"
 #include "HOCRSpellChecker.hh"
@@ -228,13 +229,51 @@ HOCRProofReadWidget::HOCRProofReadWidget(QTreeView* treeView, QWidget* parent)
 	connect(helpButton, &QLabel::linkActivated, this, &HOCRProofReadWidget::showShortcutsDialog);
 	m_controlsWidget->layout()->addWidget(helpButton);
 
+
+	QMenu* settingsMenu = new QMenu();
+
+	QWidget* numBeforeWidget = new QWidget();
+	numBeforeWidget->setLayout(new QHBoxLayout());
+	numBeforeWidget->layout()->setContentsMargins(4, 4, 4, 4);
+	numBeforeWidget->layout()->setSpacing(2);
+	numBeforeWidget->layout()->addWidget(new QLabel(_("Lines before:")));
+
+	m_spinLinesBefore = new QSpinBox();
+	m_spinLinesBefore->setRange(0, 10);
+	numBeforeWidget->layout()->addWidget(m_spinLinesBefore);
+
+	QWidgetAction* numBeforeAction = new QWidgetAction(settingsMenu);
+	numBeforeAction->setDefaultWidget(numBeforeWidget);
+	settingsMenu->addAction(numBeforeAction);
+
+	QWidget* numAfterWidget = new QWidget();
+	numAfterWidget->setLayout(new QHBoxLayout());
+	numAfterWidget->layout()->setContentsMargins(4, 4, 4, 4);
+	numAfterWidget->layout()->setSpacing(2);
+	numAfterWidget->layout()->addWidget(new QLabel(_("Lines after:")));
+
+	m_spinLinesAfter = new QSpinBox();
+	m_spinLinesAfter->setRange(0, 10);
+	numAfterWidget->layout()->addWidget(m_spinLinesAfter);
+
+	QWidgetAction* numAfterAction = new QWidgetAction(settingsMenu);
+	numAfterAction->setDefaultWidget(numAfterWidget);
+	settingsMenu->addAction(numAfterAction);
+
+	QToolButton* settingsButton = new QToolButton();
+	settingsButton->setAutoRaise(true);
+	settingsButton->setIcon(QIcon::fromTheme("preferences-system"));
+	settingsButton->setPopupMode(QToolButton::InstantPopup);
+	settingsButton->setMenu(settingsMenu);
+	m_controlsWidget->layout()->addWidget(settingsButton);
+
 	setObjectName("proofReadWidget");
 	setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 	setAutoFillBackground(true);
 
 	setStyleSheet("QLineEdit { border: 1px solid #ddd; }");
 
-	connect(m_treeView->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &HOCRProofReadWidget::setCurrentRow);
+	connect(m_treeView->selectionModel(), &QItemSelectionModel::currentRowChanged, this, [this] { updateWidget(); });
 
 	HOCRDocument* document = static_cast<HOCRDocument*>(m_treeView->model());
 
@@ -242,11 +281,16 @@ HOCRProofReadWidget::HOCRProofReadWidget(QTreeView* treeView, QWidget* parent)
 	connect(document, &HOCRDocument::rowsAboutToBeRemoved, this, &HOCRProofReadWidget::clear);
 	connect(document, &HOCRDocument::rowsAboutToBeInserted, this, &HOCRProofReadWidget::clear);
 	connect(document, &HOCRDocument::rowsAboutToBeMoved, this, &HOCRProofReadWidget::clear);
-	connect(document, &HOCRDocument::rowsRemoved, this, &HOCRProofReadWidget::updateRows);
-	connect(document, &HOCRDocument::rowsInserted, this, &HOCRProofReadWidget::updateRows);
-	connect(document, &HOCRDocument::rowsMoved, this, &HOCRProofReadWidget::updateRows);
+	connect(document, &HOCRDocument::rowsRemoved, this, [this] { updateWidget(); });
+	connect(document, &HOCRDocument::rowsInserted, this, [this] { updateWidget(); });
+	connect(document, &HOCRDocument::rowsMoved, this, [this] { updateWidget(); });
 	connect(MAIN->getDisplayer(), &Displayer::viewportChanged, this, &HOCRProofReadWidget::repositionWidget);
 	connect(MAIN->getSourceManager(), &SourceManager::sourceChanged, this, &HOCRProofReadWidget::hide);
+	connect(m_spinLinesBefore, qOverload<int>(&QSpinBox::valueChanged), this, [this] { updateWidget(true); });
+	connect(m_spinLinesAfter, qOverload<int>(&QSpinBox::valueChanged), this, [this] { updateWidget(true); });
+
+	ADD_SETTING(SpinSetting("proofReadLinesBefore", m_spinLinesBefore, 1));
+	ADD_SETTING(SpinSetting("proofReadLinesAfter", m_spinLinesAfter, 1));
 
 	// Start hidden
 	hide();
@@ -261,12 +305,10 @@ void HOCRProofReadWidget::clear() {
 	hide();
 }
 
-void HOCRProofReadWidget::updateRows() {
-	setCurrentRow(m_treeView->currentIndex());
-}
-
-void HOCRProofReadWidget::setCurrentRow(const QModelIndex& current) {
-	const int nrSurroundingLines = 1;
+void HOCRProofReadWidget::updateWidget(bool force) {
+	QModelIndex current = m_treeView->currentIndex();
+	int nrLinesBefore = m_spinLinesBefore->value();
+	int nrLinesAfter = m_spinLinesAfter->value();
 
 	HOCRDocument* document = static_cast<HOCRDocument*>(m_treeView->model());
 	const HOCRItem* item = document->itemAtIndex(current);
@@ -288,11 +330,11 @@ void HOCRProofReadWidget::setCurrentRow(const QModelIndex& current) {
 
 	const QVector<HOCRItem*>& siblings = lineItem->parent()->children();
 	int targetLine = lineItem->index();
-	if(lineItem != m_currentLine) {
+	if(lineItem != m_currentLine || force) {
 		// Rebuild widget
 		QMap<const HOCRItem*, QWidget*> newLines;
 		int insPos = 0;
-		for(int i = qMax(0, targetLine - nrSurroundingLines), j = qMin(siblings.size() - 1, targetLine + nrSurroundingLines); i <= j; ++i) {
+		for(int i = qMax(0, targetLine - nrLinesBefore), j = qMin(siblings.size() - 1, targetLine + nrLinesAfter); i <= j; ++i) {
 			HOCRItem* linei = siblings[i];
 			if(m_currentLines.contains(linei)) {
 				newLines[linei] = m_currentLines.take(linei);
@@ -330,7 +372,6 @@ void HOCRProofReadWidget::repositionWidget() {
 	Displayer* displayer = MAIN->getDisplayer();
 	int frameXmin = std::numeric_limits<int>::max();
 	int frameXmax = 0;
-	int frameY = std::numeric_limits<int>::min();
 	QPoint sceneCorner = displayer->getSceneBoundingRect().toRect().topLeft();
 	for(QWidget* lineWidget : m_currentLines) {
 		if(lineWidget->children().isEmpty()) {
@@ -340,8 +381,9 @@ void HOCRProofReadWidget::repositionWidget() {
 		LineEdit* lineEdit = static_cast<LineEdit*>(lineWidget->children()[0]);
 		QPoint bottomLeft = displayer->mapFromScene(lineEdit->item()->bbox().translated(sceneCorner).bottomLeft());
 		frameXmin = std::min(frameXmin, bottomLeft.x());
-		frameY = std::max(frameY, bottomLeft.y());
 	}
+	QPoint bottomLeft = displayer->mapFromScene(m_currentLine->bbox().translated(sceneCorner).bottomLeft());
+	int frameY = bottomLeft.y();
 
 	// Recompute font sizes so that text matches original as closely as possible
 	QFont ft = font();
