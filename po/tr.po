@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-13 02:35+0200\n"
+"POT-Creation-Date: 2020-04-29 00:32+0200\n"
 "PO-Revision-Date: 2017-06-30 20:04+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -19,28 +19,28 @@ msgstr ""
 msgid "OCR application"
 msgstr ""
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:164
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:163
 msgid "Redetect Languages"
 msgstr "Dilleri Yeniden Algıla"
 
-#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:167
+#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:166
 #, fuzzy
 msgid "Manage Languages"
 msgstr "Dilleri yönet..."
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:170
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:169
 msgid "Preferences"
 msgstr "Tercihler"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:501 ../qt/src/MainWindow.cc:511
-#: ../qt/src/Ui_MainWindow.hh:175
+#: ../qt/src/Ui_MainWindow.hh:174
 msgid "Help"
 msgstr "Yardım"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:178
+#: ../qt/src/Ui_MainWindow.hh:177
 msgid "About"
 msgstr "Hakkında"
 
@@ -184,23 +184,23 @@ msgstr ""
 msgid "Toggle output pane"
 msgstr "Çıktı bölmesini değiştir"
 
-#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:67
+#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
 msgstr "Mevcut sayfayı döndür"
 
-#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:68
+#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
 msgstr "Tüm sayfaları döndür"
 
-#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:190
+#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:189
 msgid "Recent"
 msgstr "Son kullanılan"
 
-#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:191
+#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:190
 msgid "Paste"
 msgstr "Yapıştır"
 
-#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:192
+#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:191
 msgid "Take Screenshot"
 msgstr "Ekran Görüntüsü Al"
 
@@ -220,12 +220,12 @@ msgstr "Normal boyut"
 msgid "Best fit"
 msgstr "En uygun"
 
-#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
+#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
 #, fuzzy
 msgid "Rotate page"
 msgstr "Tüm sayfaları döndür"
 
-#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
 msgstr "Döndürme kipini seç"
 
@@ -235,7 +235,7 @@ msgstr "Döndürme kipini seç"
 msgid "Select insert mode"
 msgstr "Ekleme kipini seç"
 
-#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:103
+#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:102
 #, fuzzy
 msgid "Select page"
 msgstr "Dili seç"
@@ -264,23 +264,23 @@ msgstr "<small>Tümünü tanı</small>"
 msgid "Select language"
 msgstr "Dili seç"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:204
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:196
 msgid "Add images"
 msgstr "Resim ekle"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:195
 msgid "Add Images"
 msgstr "Resim Ekle"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:209
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:200
 msgid "Remove image from list"
 msgstr "Resmi listeden çıkar"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:212
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:203
 msgid "Delete image"
 msgstr "Resmi sil"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:215
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:206
 msgid "Clear list"
 msgstr "Listeyi temizle"
 
@@ -408,7 +408,7 @@ msgstr ""
 msgid "Source page"
 msgstr "Kaynak"
 
-#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:170
+#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:174
 msgid "Protected PDF"
 msgstr ""
 
@@ -420,11 +420,11 @@ msgstr "Geçerli Sayfa"
 msgid "Multiple Pages..."
 msgstr "Çoklu Sayfalar..."
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:657
+#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:695
 msgid "Add Word"
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:657
+#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:695
 #, fuzzy
 msgid "Enter word:"
 msgstr "Kelimeyi yoksay"
@@ -521,13 +521,13 @@ msgid "Previous (Shift+F3)"
 msgstr ""
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:915
-#: ../qt/src/hocr/OutputEditorHOCR.cc:789
+#: ../qt/src/hocr/OutputEditorHOCR.cc:827
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Expand all"
 msgstr "Genişlet"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:918
-#: ../qt/src/hocr/OutputEditorHOCR.cc:790
+#: ../qt/src/hocr/OutputEditorHOCR.cc:828
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Collapse all"
 msgstr "Daralt"
@@ -834,7 +834,7 @@ msgstr "Ekle"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:911 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:786 ../qt/src/SubstitutionsManager.cc:50
+#: ../qt/src/hocr/OutputEditorHOCR.cc:824 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
 msgstr "Çıkar"
@@ -991,26 +991,26 @@ msgid "Overwrite File?"
 msgstr "Dosyanın Üstüne Yazılsın mı?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:616 ../gtk/src/hocr/OutputEditorHOCR.cc:266
-#: ../qt/src/hocr/HOCRDocument.cc:677 ../qt/src/hocr/OutputEditorHOCR.cc:274
+#: ../qt/src/hocr/HOCRDocument.cc:686 ../qt/src/hocr/OutputEditorHOCR.cc:310
 #, fuzzy
 msgid "Page"
 msgstr "İşleme hatası: %1"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:679
+#: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:688
 #, fuzzy
 msgid "Text block"
 msgstr "Metin Dosyaları"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:620 ../gtk/src/hocr/OutputEditorHOCR.cc:272
-#: ../qt/src/hocr/HOCRDocument.cc:681 ../qt/src/hocr/OutputEditorHOCR.cc:276
+#: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:312
 msgid "Paragraph"
 msgstr "Paragraf"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:683
+#: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:692
 msgid "Textline"
 msgstr "Metin"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:687
+#: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:696
 msgid "Graphic"
 msgstr "Grafik"
 
@@ -1018,8 +1018,8 @@ msgstr "Grafik"
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1016 ../gtk/src/OutputEditorText.cc:280
 #: ../qt/src/hocr/HOCROdtExporter.cc:51 ../qt/src/hocr/HOCRPdfExporter.cc:471
-#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:908
-#: ../qt/src/OutputEditorText.cc:265
+#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:951
+#: ../qt/src/OutputEditorText.cc:271
 msgid "output"
 msgstr "çıktı"
 
@@ -1143,7 +1143,7 @@ msgid "The PDF library could not load the font '%1'."
 msgstr "PDF kitaplığı seçilen yazı tipini desteklemiyor."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:282
-#: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:266
+#: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:273
 msgid "Text Files"
 msgstr "Metin Dosyaları"
 
@@ -1157,27 +1157,27 @@ msgid "The text export failed: unable to write output file."
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
-#: ../qt/src/hocr/OutputEditorHOCR.cc:275
+#: ../qt/src/hocr/OutputEditorHOCR.cc:311
 msgid "Block"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
-#: ../qt/src/hocr/OutputEditorHOCR.cc:277
+#: ../qt/src/hocr/OutputEditorHOCR.cc:313
 msgid "Line"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
-#: ../qt/src/hocr/OutputEditorHOCR.cc:278
+#: ../qt/src/hocr/OutputEditorHOCR.cc:314
 msgid "Word"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
-#: ../qt/src/hocr/OutputEditorHOCR.cc:279
+#: ../qt/src/hocr/OutputEditorHOCR.cc:315
 msgid "Misspelled word"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:448
-#: ../qt/src/hocr/OutputEditorHOCR.cc:379
+#: ../qt/src/hocr/OutputEditorHOCR.cc:415
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -1186,60 +1186,61 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:449
-#: ../qt/src/hocr/OutputEditorHOCR.cc:380
+#: ../qt/src/hocr/OutputEditorHOCR.cc:416
 msgid "Recognition errors"
 msgstr "Tanıma hataları"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:619
-#: ../qt/src/hocr/OutputEditorHOCR.cc:561
-#: ../qt/src/hocr/OutputEditorHOCR.cc:573
+#: ../qt/src/hocr/OutputEditorHOCR.cc:180
+#: ../qt/src/hocr/OutputEditorHOCR.cc:596
+#: ../qt/src/hocr/OutputEditorHOCR.cc:608
 #, fuzzy
 msgid "Multiple values"
 msgstr "Çoklu kaynak"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:803
-#: ../qt/src/hocr/OutputEditorHOCR.cc:718
+#: ../qt/src/hocr/OutputEditorHOCR.cc:756
 msgid "Merge"
 msgstr "Birleştir"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:811
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:902
-#: ../qt/src/hocr/OutputEditorHOCR.cc:720
-#: ../qt/src/hocr/OutputEditorHOCR.cc:784
+#: ../qt/src/hocr/OutputEditorHOCR.cc:758
+#: ../qt/src/hocr/OutputEditorHOCR.cc:822
 msgid "Split from parent"
 msgstr ""
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:822
-#: ../qt/src/hocr/OutputEditorHOCR.cc:724
+#: ../qt/src/hocr/OutputEditorHOCR.cc:762
 msgid "Swap"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:846
-#: ../qt/src/hocr/OutputEditorHOCR.cc:769
+#: ../qt/src/hocr/OutputEditorHOCR.cc:807
 msgid "Add graphic region"
 msgstr "Grafik alanı ekle"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:849
-#: ../qt/src/hocr/OutputEditorHOCR.cc:770
+#: ../qt/src/hocr/OutputEditorHOCR.cc:808
 msgid "Add text block"
 msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:853
-#: ../qt/src/hocr/OutputEditorHOCR.cc:772
+#: ../qt/src/hocr/OutputEditorHOCR.cc:810
 #, fuzzy
 msgid "Add paragraph"
 msgstr "Paragraf"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:857
-#: ../qt/src/hocr/OutputEditorHOCR.cc:774
+#: ../qt/src/hocr/OutputEditorHOCR.cc:812
 #, fuzzy
 msgid "Add line"
 msgstr "Resim ekle"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:861
-#: ../qt/src/hocr/OutputEditorHOCR.cc:776
+#: ../qt/src/hocr/OutputEditorHOCR.cc:814
 msgid "Add word"
 msgstr ""
 
@@ -1257,19 +1258,19 @@ msgstr "Kelimeyi yoksay"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:952
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1018
-#: ../qt/src/hocr/OutputEditorHOCR.cc:851
-#: ../qt/src/hocr/OutputEditorHOCR.cc:910
+#: ../qt/src/hocr/OutputEditorHOCR.cc:889
+#: ../qt/src/hocr/OutputEditorHOCR.cc:954
 msgid "hOCR HTML Files"
 msgstr "hOCR HTML Dosyaları"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:953
-#: ../qt/src/hocr/OutputEditorHOCR.cc:851
+#: ../qt/src/hocr/OutputEditorHOCR.cc:889
 msgid "Open hOCR File"
 msgstr "hOCR Dosyasını Aç"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:890 ../qt/src/OutputEditorText.cc:255
-#: ../qt/src/SourceManager.cc:152
+#: ../qt/src/hocr/OutputEditorHOCR.cc:929 ../qt/src/OutputEditorText.cc:256
+#: ../qt/src/SourceManager.cc:156
 #, fuzzy
 msgid ""
 "The following files could not be opened:\n"
@@ -1277,7 +1278,7 @@ msgid ""
 msgstr "Bu dosyalar açılamadı:%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
-#: ../qt/src/hocr/OutputEditorHOCR.cc:893
+#: ../qt/src/hocr/OutputEditorHOCR.cc:932
 #, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
@@ -1285,43 +1286,43 @@ msgid ""
 msgstr "Dosya geçerli hOCR HTML içermiyor gibi görünüyor: %1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:896 ../qt/src/OutputEditorText.cc:256
-#: ../qt/src/SourceManager.cc:152
+#: ../qt/src/hocr/OutputEditorHOCR.cc:935 ../qt/src/OutputEditorText.cc:257
+#: ../qt/src/SourceManager.cc:156
 msgid "Unable to open files"
 msgstr "Dosyalar açılamadı"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1019
-#: ../qt/src/hocr/OutputEditorHOCR.cc:910
+#: ../qt/src/hocr/OutputEditorHOCR.cc:954
 msgid "Save hOCR Output..."
 msgstr "oOCR Çıktısını Kaydet..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:917 ../qt/src/OutputEditorText.cc:273
+#: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
 msgid "Failed to save output"
 msgstr "Çıktının kaydedilmesi başarısız oldu"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:917 ../qt/src/OutputEditorText.cc:273
+#: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Seçilen klasöre yazma hakkınız olduğundan emin olun."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:978 ../qt/src/OutputEditorText.cc:286
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1023 ../qt/src/OutputEditorText.cc:293
 msgid "Output not saved"
 msgstr "Çıktı kaydedilmedi"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:978 ../qt/src/OutputEditorText.cc:286
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1023 ../qt/src/OutputEditorText.cc:293
 msgid "Save output before proceeding?"
 msgstr "Devam etmeden çıktı kaydedilsin mi?"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:192
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1076 ../qt/src/OutputEditorText.cc:163
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1121 ../qt/src/OutputEditorText.cc:164
 msgid "Replacing..."
 msgstr "Değiştiriliyor..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1240 ../gtk/src/OutputEditorText.cc:200
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1099 ../qt/src/OutputEditorText.cc:171
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1144 ../qt/src/OutputEditorText.cc:172
 msgid "Applying substitutions..."
 msgstr "Değişiklikler uygulanıyor..."
 
@@ -1435,7 +1436,7 @@ msgstr "Kurulan sözlükler: %1"
 msgid "No spelling dictionaries found for '%1'."
 msgstr "'%1' için yazım denetimi sözlüğü bulunamadı."
 
-#: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:148
+#: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:149
 msgid "Stripping line breaks..."
 msgstr "Satır sonları çıkartılıyor..."
 
@@ -1443,12 +1444,12 @@ msgstr "Satır sonları çıkartılıyor..."
 msgid "Check spelling"
 msgstr "Yazım denetimi yap"
 
-#: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:207
+#: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:208
 #, fuzzy
 msgid "File: %1"
 msgstr "Dosyalar"
 
-#: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:210
+#: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:211
 #, fuzzy
 msgid "Page: %1"
 msgstr "İşleme hatası: %1"
@@ -1462,7 +1463,7 @@ msgstr ""
 "\n"
 "[Sayfanın tanınması başarısız oldu %1]\n"
 
-#: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:266
+#: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
 msgstr "Çıktıyı Kaydet..."
 
@@ -1625,64 +1626,64 @@ msgstr ""
 msgid "Access to scanner is denied."
 msgstr "Trayıcı belirtilmedi"
 
-#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:167
+#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:171
 msgid "Enter password for file '%1':"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:194
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
 #, fuzzy
 msgid "PDF with text"
 msgstr "Düz metin"
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:194
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:261
+#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:264
 msgid "Images and PDFs"
 msgstr "Resimler ve PDF dosyaları"
 
-#: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:262
+#: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:265
 msgid "Select Files"
 msgstr "Dosyaları Seçin"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:298
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:307
 msgid "Clipboard Error"
 msgstr "Geçici Taşıma Panosu Hatası"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:298
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:307
 msgid "Failed to read the clipboard."
 msgstr "Taşıma panosu okunamadı."
 
-#: ../gtk/src/SourceManager.cc:232 ../qt/src/SourceManager.cc:302
-#: ../qt/src/SourceManager.cc:308
+#: ../gtk/src/SourceManager.cc:232 ../qt/src/SourceManager.cc:311
+#: ../qt/src/SourceManager.cc:317
 msgid "Pasted %1"
 msgstr "%1 Yapıştırıldı"
 
-#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:315
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
 msgid "Screenshot Error"
 msgstr "Ekran Görüntüsü Hatası"
 
-#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:315
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
 msgid "Failed to take screenshot."
 msgstr "Ekran görüntüsü alınamadı."
 
-#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:319
+#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:328
 msgid "Screenshot %1"
 msgstr "Ekran Görüntüsü %1"
 
-#: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:324
+#: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:333
 msgid "Saving image..."
 msgstr "Resim kaydediliyor..."
 
-#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:337
+#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:346
 msgid "Cannot Write File"
 msgstr "Dosya Yazılamıyor"
 
-#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:337
+#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:346
 msgid "Could not write to %1."
 msgstr "%1 dosyasına yazılamadı."
 
@@ -1694,11 +1695,11 @@ msgstr "Dosya Silinsin mi?"
 msgid "The following files will be deleted:%1"
 msgstr "Aşağıdaki dosyalar silinecek:%1"
 
-#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:476
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:487
 msgid "Missing File"
 msgstr "Eksik Dosya"
 
-#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:476
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:487
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
@@ -1945,7 +1946,7 @@ msgid "ADF Duplex"
 msgstr ""
 
 #. Remove & from some labels which designer insists in adding
-#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:50
+#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:49
 msgid "Sources"
 msgstr "Kaynaklar"
 
@@ -2018,31 +2019,42 @@ msgid ""
 "body></html>"
 msgstr ""
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:219
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:234
 msgid "Keyboard shortcuts"
 msgstr ""
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:377
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:246
+msgid "Lines before:"
+msgstr ""
+
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:260
+msgid "Lines after:"
+msgstr ""
+
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:440
 msgid ""
 "<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
 "td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
 "tr><tr><td>Up</td><td>Previous line</td></tr><tr><td>Ctrl+Space</"
-"td><td>Spelling suggestions</td></tr><tr><td>Ctrl+B</td><td>Toggle bold</"
-"td></tr><tr><td>Ctrl+I</td><td>Toggle italic</td></tr><tr><td>Ctrl+D</"
-"td><td>Divide word at cursor position</td></tr><tr><td>Ctrl+M</td><td>Merge "
-"with previous word</td></tr><tr><td>Ctrl+Shift+M</td><td>Merge with next "
-"word</td></tr><tr><td>Ctrl+{Left,Right}</td><td>Adjust left bounding box "
-"edge</td></tr><tr><td>Ctrl+Shift+{Left,Right}</td><td>Adjust right bounding "
-"box edge</td></tr><tr><td>Ctrl+{Up,Down}</td><td>Adjust top bounding box "
-"edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</td><td>Adjust bottom bounding "
-"box edge</td></tr></table>"
+"td><td>Spelling suggestions</td></tr><tr><td>Ctrl+Enter</td><td>Add word to "
+"dictionary</td></tr><tr><td>Ctrl+B</td><td>Toggle bold</td></tr><tr><td>Ctrl"
+"+I</td><td>Toggle italic</td></tr><tr><td>Ctrl+D</td><td>Divide word at "
+"cursor position</td></tr><tr><td>Ctrl+M</td><td>Merge with previous word</"
+"td></tr><tr><td>Ctrl+Shift+M</td><td>Merge with next word</td></"
+"tr><tr><td>Ctrl+Delete</td><td>Delete word</td></tr><tr><td>Ctrl+{Left,Right}"
+"</td><td>Adjust left bounding box edge</td></tr><tr><td>Ctrl+Shift+{Left,"
+"Right}</td><td>Adjust right bounding box edge</td></tr><tr><td>Ctrl+{Up,Down}"
+"</td><td>Adjust top bounding box edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</"
+"td><td>Adjust bottom bounding box edge</td></tr><tr><td>Ctrl++</"
+"td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
+"size</td></tr></table>"
 msgstr ""
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:394
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:409
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:476
 msgid "Confidence: %1"
 msgstr ""
 
@@ -2068,7 +2080,7 @@ msgid ""
 "%1"
 msgstr "Kurulan sözlük dosyaları: %1"
 
-#: ../qt/src/OutputEditorText.cc:40
+#: ../qt/src/OutputEditorText.cc:41
 #, fuzzy
 msgid "Page: %1\n"
 msgstr "İşleme hatası: %1"
@@ -2113,36 +2125,40 @@ msgstr "Çıktının kaydedilmesi başarısız oldu"
 msgid "The following errors occurred:"
 msgstr "Aşağıdaki hatalar oluştu: %1"
 
-#: ../qt/src/SourceManager.cc:266
+#: ../qt/src/SourceManager.cc:248
+msgid "No recent files"
+msgstr ""
+
+#: ../qt/src/SourceManager.cc:275
 #, fuzzy
 msgid "Select folder..."
 msgstr "Dosyaları Seçin"
 
-#: ../qt/src/SourceManager.cc:363
+#: ../qt/src/SourceManager.cc:374
 #, fuzzy
 msgid "Delete Files"
 msgstr "Dosya Silinsin mi?"
 
-#: ../qt/src/SourceManager.cc:363
+#: ../qt/src/SourceManager.cc:374
 msgid "Delete the following files?"
 msgstr ""
 
-#: ../qt/src/SourceManager.cc:448
+#: ../qt/src/SourceManager.cc:459
 #, fuzzy
 msgid "Open output"
 msgstr "Çıktıyı kaydet"
 
-#: ../qt/src/SourceManager.cc:448
+#: ../qt/src/SourceManager.cc:459
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
 msgstr ""
 
-#: ../qt/src/SourceManager.cc:449
+#: ../qt/src/SourceManager.cc:460
 #, fuzzy
 msgid "Text"
 msgstr "Metin"
 
-#: ../qt/src/SourceManager.cc:450
+#: ../qt/src/SourceManager.cc:461
 #, fuzzy
 msgid "hOCR"
 msgstr "hOCR, PDF"
@@ -2162,29 +2178,29 @@ msgstr ""
 "\n"
 "Bağlantınızı ve dizin izinlerini denetleyin."
 
-#: ../qt/src/Ui_MainWindow.hh:51
+#: ../qt/src/Ui_MainWindow.hh:50
 msgid "Output"
 msgstr "Çıktı"
 
-#: ../qt/src/Ui_MainWindow.hh:136
+#: ../qt/src/Ui_MainWindow.hh:135
 msgid "OCR mode:"
 msgstr "OCR kipi:"
 
 #. Sources toolbar
-#: ../qt/src/Ui_MainWindow.hh:189
+#: ../qt/src/Ui_MainWindow.hh:188
 #, fuzzy
 msgid "Add folder"
 msgstr "Resim ekle"
 
-#: ../qt/src/Ui_MainWindow.hh:208
+#: ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
 msgstr "Resmi Kaldır"
 
-#: ../qt/src/Ui_MainWindow.hh:211
+#: ../qt/src/Ui_MainWindow.hh:202
 msgid "Delete Image"
 msgstr "Resmi Sil"
 
-#: ../qt/src/Ui_MainWindow.hh:214
+#: ../qt/src/Ui_MainWindow.hh:205
 msgid "Clear List"
 msgstr "Listeyi Temizle"
 

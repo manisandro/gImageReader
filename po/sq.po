@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-08 14:45+0200\n"
+"POT-Creation-Date: 2020-04-29 00:32+0200\n"
 "PO-Revision-Date: 2020-04-24 19:11+0000\n"
 "Last-Translator: Fisnik Shabani <fisnik.shabani@intecsystem.com>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/gimagereader/"
@@ -23,27 +23,27 @@ msgstr ""
 msgid "OCR application"
 msgstr "OCR aplikacion"
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:164
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:163
 msgid "Redetect Languages"
 msgstr "Ridetekto Gjuhët"
 
-#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:167
+#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:166
 msgid "Manage Languages"
 msgstr "Menaxhoni gjuhët"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:170
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:169
 msgid "Preferences"
 msgstr "Preferencat"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
-#: ../gtk/src/MainWindow.cc:501 ../qt/src/MainWindow.cc:499
-#: ../qt/src/Ui_MainWindow.hh:175
+#: ../gtk/src/MainWindow.cc:501 ../qt/src/MainWindow.cc:511
+#: ../qt/src/Ui_MainWindow.hh:174
 msgid "Help"
 msgstr "Ndihmë"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:178
+#: ../qt/src/Ui_MainWindow.hh:177
 msgid "About"
 msgstr "Rreth"
 
@@ -169,9 +169,9 @@ msgstr ""
 "<b>Aplikacioni ka rënë</b>\n"
 "\n"
 "Ju kërkojmë falje për shqetësimin. Për të ndihmuar në përmirësimin e "
-"aplikacionit, ju lutemi merrni parasysh raportimin e problemit në <a href=\""
-"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
-">manisandro@gmail.com</a>. Ju lutemi provoni të përshkruani se çfarë po "
+"aplikacionit, ju lutemi merrni parasysh raportimin e problemit në <a href="
+"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+"\">manisandro@gmail.com</a>. Ju lutemi provoni të përshkruani se çfarë po "
 "bënit përpara se të rrëzohej aplikacioni. Gjithashtu, përfshini "
 "informacionin më poshtë. Ju faleminderit."
 
@@ -200,23 +200,23 @@ msgstr ""
 msgid "Toggle output pane"
 msgstr "Përfshini panelin dalës"
 
-#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:67
+#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
 msgstr "Rrotullo faqen aktuale"
 
-#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:68
+#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
 msgstr "Rrotullo të gjitha faqet"
 
-#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:190
+#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:189
 msgid "Recent"
 msgstr "Të fundit"
 
-#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:191
+#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:190
 msgid "Paste"
 msgstr "Ngjit"
 
-#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:192
+#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:191
 msgid "Take Screenshot"
 msgstr "Merrni pamjen e ekranit"
 
@@ -236,11 +236,11 @@ msgstr "Madhësia normale"
 msgid "Best fit"
 msgstr "Përshtatja më e mirë"
 
-#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
+#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
 msgid "Rotate page"
 msgstr "Rrotullo faqen"
 
-#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
 msgstr "Zgjidhni mënyrën e rrotullimit"
 
@@ -250,7 +250,7 @@ msgstr "Zgjidhni mënyrën e rrotullimit"
 msgid "Select insert mode"
 msgstr "Zgjidhni modalitetin e vendosjes"
 
-#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:103
+#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:102
 msgid "Select page"
 msgstr "Zgjedhni faqen"
 
@@ -278,23 +278,23 @@ msgstr "<small>Njihni të gjithë</small>"
 msgid "Select language"
 msgstr "Zgjedh gjuhën"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:204
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:196
 msgid "Add images"
 msgstr "Shto imazhe"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:195
 msgid "Add Images"
 msgstr "Shto imazhe"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:209
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:200
 msgid "Remove image from list"
 msgstr "Largo imazhin nga lista"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:212
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:203
 msgid "Delete image"
 msgstr "Fshije imazhin"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:215
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:206
 msgid "Clear list"
 msgstr "Pastro listën"
 
@@ -418,7 +418,7 @@ msgstr "Emri i skedarit burimorë"
 msgid "Source page"
 msgstr "Faqja burimore"
 
-#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:155
+#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:174
 msgid "Protected PDF"
 msgstr "PDF i mbrojtur"
 
@@ -430,11 +430,11 @@ msgstr "Faqja aktuale"
 msgid "Multiple Pages..."
 msgstr "Më shumë faqe..."
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:641
+#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:695
 msgid "Add Word"
 msgstr "Shto fjalë"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:641
+#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:695
 msgid "Enter word:"
 msgstr "Shkruaj fjalë:"
 
@@ -525,13 +525,13 @@ msgid "Previous (Shift+F3)"
 msgstr "Mëparshëm (Shift+F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:915
-#: ../qt/src/hocr/OutputEditorHOCR.cc:771
+#: ../qt/src/hocr/OutputEditorHOCR.cc:827
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Expand all"
 msgstr "Zgjero të gjitha"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:918
-#: ../qt/src/hocr/OutputEditorHOCR.cc:772
+#: ../qt/src/hocr/OutputEditorHOCR.cc:828
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Collapse all"
 msgstr "Fshihe"
@@ -835,7 +835,7 @@ msgstr "Shto"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:911 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:768 ../qt/src/SubstitutionsManager.cc:50
+#: ../qt/src/hocr/OutputEditorHOCR.cc:824 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
 msgstr "Fshije"
@@ -938,15 +938,15 @@ msgstr "Nuk kishte punë të paruajtur."
 msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "Nuk arriti të merrte backtrace. A është i instaluar GDB?"
 
-#: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:569
+#: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
 msgid "Page %1"
 msgstr "Faqja %1"
 
-#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:189
+#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid "Failed to load image"
 msgstr "Dështoi në ngarkimin e imazhit"
 
-#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:189
+#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -990,24 +990,24 @@ msgid "Overwrite File?"
 msgstr "Rishkruani skedarin?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:616 ../gtk/src/hocr/OutputEditorHOCR.cc:266
-#: ../qt/src/hocr/HOCRDocument.cc:637 ../qt/src/hocr/OutputEditorHOCR.cc:271
+#: ../qt/src/hocr/HOCRDocument.cc:686 ../qt/src/hocr/OutputEditorHOCR.cc:310
 msgid "Page"
 msgstr "Faqja"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:639
+#: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:688
 msgid "Text block"
 msgstr "Blloku i tekstit"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:620 ../gtk/src/hocr/OutputEditorHOCR.cc:272
-#: ../qt/src/hocr/HOCRDocument.cc:641 ../qt/src/hocr/OutputEditorHOCR.cc:273
+#: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:312
 msgid "Paragraph"
 msgstr "Paragraf"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:643
+#: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:692
 msgid "Textline"
 msgstr "Linja e tekstit"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:647
+#: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:696
 msgid "Graphic"
 msgstr "Grafike"
 
@@ -1015,8 +1015,8 @@ msgstr "Grafike"
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1016 ../gtk/src/OutputEditorText.cc:280
 #: ../qt/src/hocr/HOCROdtExporter.cc:51 ../qt/src/hocr/HOCRPdfExporter.cc:471
-#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:884
-#: ../qt/src/OutputEditorText.cc:249
+#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:951
+#: ../qt/src/OutputEditorText.cc:271
 msgid "output"
 msgstr "dalja"
 
@@ -1131,7 +1131,7 @@ msgid "The PDF library could not load the font '%1'."
 msgstr "Biblioteka PDF nuk mund të ngarkonte fontin '% 1'."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:282
-#: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:250
+#: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:273
 msgid "Text Files"
 msgstr "Skedarët e tekstit"
 
@@ -1145,27 +1145,27 @@ msgstr ""
 "Eksporti i tekstit dështoi: në pamundësi për të shkruar skedarin e daljes."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
-#: ../qt/src/hocr/OutputEditorHOCR.cc:272
+#: ../qt/src/hocr/OutputEditorHOCR.cc:311
 msgid "Block"
 msgstr "Bllok"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
-#: ../qt/src/hocr/OutputEditorHOCR.cc:274
+#: ../qt/src/hocr/OutputEditorHOCR.cc:313
 msgid "Line"
 msgstr "Rresht"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
-#: ../qt/src/hocr/OutputEditorHOCR.cc:275
+#: ../qt/src/hocr/OutputEditorHOCR.cc:314
 msgid "Word"
 msgstr "Fjalë"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
-#: ../qt/src/hocr/OutputEditorHOCR.cc:276
+#: ../qt/src/hocr/OutputEditorHOCR.cc:315
 msgid "Misspelled word"
 msgstr "Fjalë e gabuar"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:448
-#: ../qt/src/hocr/OutputEditorHOCR.cc:374
+#: ../qt/src/hocr/OutputEditorHOCR.cc:415
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -1174,57 +1174,58 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:449
-#: ../qt/src/hocr/OutputEditorHOCR.cc:375
+#: ../qt/src/hocr/OutputEditorHOCR.cc:416
 msgid "Recognition errors"
 msgstr "Gabimet e njohjes"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:619
-#: ../qt/src/hocr/OutputEditorHOCR.cc:561
-#: ../qt/src/hocr/OutputEditorHOCR.cc:573
+#: ../qt/src/hocr/OutputEditorHOCR.cc:180
+#: ../qt/src/hocr/OutputEditorHOCR.cc:596
+#: ../qt/src/hocr/OutputEditorHOCR.cc:608
 msgid "Multiple values"
 msgstr "Vlera të shumëfishta"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:803
-#: ../qt/src/hocr/OutputEditorHOCR.cc:702
+#: ../qt/src/hocr/OutputEditorHOCR.cc:756
 msgid "Merge"
 msgstr "Bashkim"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:811
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:902
-#: ../qt/src/hocr/OutputEditorHOCR.cc:704
-#: ../qt/src/hocr/OutputEditorHOCR.cc:766
+#: ../qt/src/hocr/OutputEditorHOCR.cc:758
+#: ../qt/src/hocr/OutputEditorHOCR.cc:822
 msgid "Split from parent"
 msgstr "Ndaje nga prindi"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:822
-#: ../qt/src/hocr/OutputEditorHOCR.cc:708
+#: ../qt/src/hocr/OutputEditorHOCR.cc:762
 msgid "Swap"
 msgstr "Shkëmbim"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:846
-#: ../qt/src/hocr/OutputEditorHOCR.cc:751
+#: ../qt/src/hocr/OutputEditorHOCR.cc:807
 msgid "Add graphic region"
 msgstr "Shtoni regjionin grafik"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:849
-#: ../qt/src/hocr/OutputEditorHOCR.cc:752
+#: ../qt/src/hocr/OutputEditorHOCR.cc:808
 msgid "Add text block"
 msgstr "Shtoni bllokun e tekstit"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:853
-#: ../qt/src/hocr/OutputEditorHOCR.cc:754
+#: ../qt/src/hocr/OutputEditorHOCR.cc:810
 msgid "Add paragraph"
 msgstr "Shtoni paragraf"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:857
-#: ../qt/src/hocr/OutputEditorHOCR.cc:756
+#: ../qt/src/hocr/OutputEditorHOCR.cc:812
 msgid "Add line"
 msgstr "Shtoni linjë"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:861
-#: ../qt/src/hocr/OutputEditorHOCR.cc:758
+#: ../qt/src/hocr/OutputEditorHOCR.cc:814
 msgid "Add word"
 msgstr "Shtoni fjalë"
 
@@ -1242,18 +1243,19 @@ msgstr "Injoroni fjalë"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:952
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1018
-#: ../qt/src/hocr/OutputEditorHOCR.cc:829
-#: ../qt/src/hocr/OutputEditorHOCR.cc:886
+#: ../qt/src/hocr/OutputEditorHOCR.cc:889
+#: ../qt/src/hocr/OutputEditorHOCR.cc:954
 msgid "hOCR HTML Files"
 msgstr "hOCR HTML skedarë"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:953
-#: ../qt/src/hocr/OutputEditorHOCR.cc:829
+#: ../qt/src/hocr/OutputEditorHOCR.cc:889
 msgid "Open hOCR File"
 msgstr "Hapni skedarin hOCR"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:867 ../qt/src/SourceManager.cc:137
+#: ../qt/src/hocr/OutputEditorHOCR.cc:929 ../qt/src/OutputEditorText.cc:256
+#: ../qt/src/SourceManager.cc:156
 msgid ""
 "The following files could not be opened:\n"
 "%1"
@@ -1262,7 +1264,7 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
-#: ../qt/src/hocr/OutputEditorHOCR.cc:870
+#: ../qt/src/hocr/OutputEditorHOCR.cc:932
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
@@ -1271,46 +1273,47 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:873 ../qt/src/SourceManager.cc:137
+#: ../qt/src/hocr/OutputEditorHOCR.cc:935 ../qt/src/OutputEditorText.cc:257
+#: ../qt/src/SourceManager.cc:156
 msgid "Unable to open files"
 msgstr "Në pamundësi për të hapur skedarë"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1019
-#: ../qt/src/hocr/OutputEditorHOCR.cc:886
+#: ../qt/src/hocr/OutputEditorHOCR.cc:954
 msgid "Save hOCR Output..."
 msgstr "Ruani hOCR daljen..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:893 ../qt/src/OutputEditorText.cc:257
+#: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
 msgid "Failed to save output"
 msgstr "Dështoi të ruaj daljen"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:893 ../qt/src/OutputEditorText.cc:257
+#: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Kontrolloni nëse keni leje shkrimi në dosjen e zgjedhur."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:954 ../qt/src/OutputEditorText.cc:270
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1023 ../qt/src/OutputEditorText.cc:293
 msgid "Output not saved"
 msgstr "Dalja nuk është ruajtur"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:954 ../qt/src/OutputEditorText.cc:270
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1023 ../qt/src/OutputEditorText.cc:293
 msgid "Save output before proceeding?"
 msgstr "Ruani daljen para se të vazhdoni?"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:192
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1051 ../qt/src/OutputEditorText.cc:163
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1121 ../qt/src/OutputEditorText.cc:164
 msgid "Replacing..."
 msgstr "Duke zëvendësuar..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1240 ../gtk/src/OutputEditorText.cc:200
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1074 ../qt/src/OutputEditorText.cc:171
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1144 ../qt/src/OutputEditorText.cc:172
 msgid "Applying substitutions..."
 msgstr "Duke aplikuar zëvendësimet..."
 
-#: ../gtk/src/MainWindow.cc:131 ../qt/src/MainWindow.cc:322
+#: ../gtk/src/MainWindow.cc:131 ../qt/src/MainWindow.cc:334
 msgid "Using tesseract"
 msgstr "Duke përdorur tesseract"
 
@@ -1322,49 +1325,49 @@ msgstr "Zgjedhni një imazh pët të filluar..."
 msgid "Multiple sources"
 msgstr "Burime të shumta"
 
-#: ../gtk/src/MainWindow.cc:312 ../qt/src/MainWindow.cc:307
+#: ../gtk/src/MainWindow.cc:312 ../qt/src/MainWindow.cc:319
 msgid "Ready"
 msgstr "Gati"
 
-#: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:441
+#: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:453
 msgid "New version"
 msgstr "Version i ri"
 
-#: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:441
+#: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:453
 msgid "gImageReader %1 is available"
 msgstr "gImageReader% 1 është në dispozicion"
 
-#: ../gtk/src/MainWindow.cc:462 ../qt/src/MainWindow.cc:442
+#: ../gtk/src/MainWindow.cc:462 ../qt/src/MainWindow.cc:454
 msgid "Download"
 msgstr "Shkarko"
 
-#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:443
+#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:455
 msgid "Changelog"
 msgstr "Ditari i ndryshimeve"
 
-#: ../gtk/src/MainWindow.cc:464 ../qt/src/MainWindow.cc:444
+#: ../gtk/src/MainWindow.cc:464 ../qt/src/MainWindow.cc:456
 msgid "Don't notify again"
 msgstr "Mos njofto përsëri"
 
-#: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:492
+#: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:504
 msgid "Don't show again"
 msgstr "Mos u shfaq përsëri"
 
 #: ../gtk/src/MainWindow.cc:486 ../gtk/src/MainWindow.cc:499
-#: ../qt/src/MainWindow.cc:493
+#: ../qt/src/MainWindow.cc:505
 msgid "Install"
 msgstr "Instalo"
 
-#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:505
+#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
 msgid "Spelling dictionary missing"
 msgstr "Fjalori drejtshkrimor mungon"
 
-#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:505
+#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Fjalori i drejtshkrimit për % 1 nuk është i instaluar"
 
 #: ../gtk/src/MainWindow.cc:513 ../gtk/src/MainWindow.cc:542
-#: ../qt/src/MainWindow.cc:511
+#: ../qt/src/MainWindow.cc:523
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Instalimi i fjalorit drejtshkrimor për '% 1'"
 
@@ -1372,30 +1375,30 @@ msgstr "Instalimi i fjalorit drejtshkrimor për '% 1'"
 #: ../gtk/src/MainWindow.cc:563 ../gtk/src/MainWindow.cc:611
 #: ../gtk/src/MainWindow.cc:616 ../gtk/src/TessdataManager.cc:60
 #: ../gtk/src/TessdataManager.cc:70 ../gtk/src/TessdataManager.cc:339
-#: ../qt/src/MainWindow.cc:530 ../qt/src/MainWindow.cc:543
-#: ../qt/src/MainWindow.cc:552 ../qt/src/MainWindow.cc:596
-#: ../qt/src/MainWindow.cc:601 ../qt/src/TessdataManager.cc:70
+#: ../qt/src/MainWindow.cc:542 ../qt/src/MainWindow.cc:555
+#: ../qt/src/MainWindow.cc:564 ../qt/src/MainWindow.cc:608
+#: ../qt/src/MainWindow.cc:613 ../qt/src/TessdataManager.cc:70
 #: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:287
 msgid "Error"
 msgstr "Gabim"
 
-#: ../gtk/src/MainWindow.cc:534 ../qt/src/MainWindow.cc:530
+#: ../gtk/src/MainWindow.cc:534 ../qt/src/MainWindow.cc:542
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Dështoi në instalimin e fjalorit drejtshkrimor:% 1"
 
-#: ../gtk/src/MainWindow.cc:555 ../qt/src/MainWindow.cc:543
+#: ../gtk/src/MainWindow.cc:555 ../qt/src/MainWindow.cc:555
 msgid "Failed to create directory for spelling dictionaries."
 msgstr "Dështoi për të krijuar direktorium për fjalorët drejtshkrues."
 
-#: ../gtk/src/MainWindow.cc:563 ../qt/src/MainWindow.cc:552
+#: ../gtk/src/MainWindow.cc:563 ../qt/src/MainWindow.cc:564
 msgid "Could not read %1: %2."
 msgstr "Nuk mund të lexohet %1: %2."
 
-#: ../gtk/src/MainWindow.cc:590 ../qt/src/MainWindow.cc:576
+#: ../gtk/src/MainWindow.cc:590 ../qt/src/MainWindow.cc:588
 msgid "Downloading '%1'..."
 msgstr "Duke shkarkuar '%1'..."
 
-#: ../gtk/src/MainWindow.cc:611 ../qt/src/MainWindow.cc:596
+#: ../gtk/src/MainWindow.cc:611 ../qt/src/MainWindow.cc:608
 msgid ""
 "The following dictionaries could not be downloaded:\n"
 "%1\n"
@@ -1411,7 +1414,7 @@ msgstr ""
 "Këshillë: Nëse nuk keni leje shkrimi në dosjet e sistemit, mund të kaloni në "
 "shtigjet e përdoruesve në dialogun e cilësimeve."
 
-#: ../gtk/src/MainWindow.cc:614 ../qt/src/MainWindow.cc:599
+#: ../gtk/src/MainWindow.cc:614 ../qt/src/MainWindow.cc:611
 msgid "Dictionaries installed"
 msgstr "Fjalorët u instaluan"
 
@@ -1423,11 +1426,11 @@ msgstr ""
 "Fjalorët e mëposhtëm u instaluan:\n"
 "%1"
 
-#: ../gtk/src/MainWindow.cc:616 ../qt/src/MainWindow.cc:601
+#: ../gtk/src/MainWindow.cc:616 ../qt/src/MainWindow.cc:613
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Asnjë fjalor drejtshkrimor nuk u gjet për '% 1'."
 
-#: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:148
+#: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:149
 msgid "Stripping line breaks..."
 msgstr ""
 
@@ -1435,11 +1438,11 @@ msgstr ""
 msgid "Check spelling"
 msgstr "Kontrolloni drejtshkrimin"
 
-#: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:207
+#: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
 msgstr "Skedari: %1"
 
-#: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:210
+#: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:211
 msgid "Page: %1"
 msgstr "Faqja: %1"
 
@@ -1452,74 +1455,74 @@ msgstr ""
 "\n"
 "[Dështoi të njohë faqen% 1]\n"
 
-#: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:250
+#: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
 msgstr "Ruaje daljen..."
 
-#: ../gtk/src/Recognizer.cc:179 ../qt/src/RecognitionMenu.cc:75
+#: ../gtk/src/Recognizer.cc:179 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
 msgstr "Asnjë gjuhë në dispozicion"
 
-#: ../gtk/src/Recognizer.cc:179 ../qt/src/RecognitionMenu.cc:75
+#: ../gtk/src/Recognizer.cc:179 ../qt/src/RecognitionMenu.cc:76
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
 "Asnjë gjuhë tesseract nuk është në dispozicion për t'u përdorur. Njohja nuk "
 "do të funksionojë."
 
-#: ../gtk/src/Recognizer.cc:233 ../qt/src/RecognitionMenu.cc:133
+#: ../gtk/src/Recognizer.cc:233 ../qt/src/RecognitionMenu.cc:134
 msgid "Multilingual"
 msgstr "Shumëgjuhësor"
 
-#: ../gtk/src/Recognizer.cc:285 ../qt/src/RecognitionMenu.cc:181
+#: ../gtk/src/Recognizer.cc:285 ../qt/src/RecognitionMenu.cc:182
 msgid "Automatic page segmentation"
 msgstr "Segmentimi automatik i faqeve"
 
-#: ../gtk/src/Recognizer.cc:286 ../qt/src/RecognitionMenu.cc:182
+#: ../gtk/src/Recognizer.cc:286 ../qt/src/RecognitionMenu.cc:183
 msgid "Page segmentation with orientation and script detection"
 msgstr "Segmentimi i faqes me orientim dhe detektim të skriptës"
 
-#: ../gtk/src/Recognizer.cc:287 ../qt/src/RecognitionMenu.cc:183
+#: ../gtk/src/Recognizer.cc:287 ../qt/src/RecognitionMenu.cc:184
 msgid "Assume single column of text"
 msgstr "Supozoni kolonën e vetme të tekstit"
 
-#: ../gtk/src/Recognizer.cc:288 ../qt/src/RecognitionMenu.cc:184
+#: ../gtk/src/Recognizer.cc:288 ../qt/src/RecognitionMenu.cc:185
 msgid "Assume single block of vertically aligned text"
 msgstr "Supozoni një bllok të vetëm të tekstit të përafruar vertikalisht"
 
-#: ../gtk/src/Recognizer.cc:289 ../qt/src/RecognitionMenu.cc:185
+#: ../gtk/src/Recognizer.cc:289 ../qt/src/RecognitionMenu.cc:186
 msgid "Assume a single uniform block of text"
 msgstr "Supozoni një bllok të vetëm unik të tekstit"
 
-#: ../gtk/src/Recognizer.cc:290 ../qt/src/RecognitionMenu.cc:186
+#: ../gtk/src/Recognizer.cc:290 ../qt/src/RecognitionMenu.cc:187
 msgid "Assume a line of text"
 msgstr "Supozoni një rresht teksti"
 
-#: ../gtk/src/Recognizer.cc:291 ../qt/src/RecognitionMenu.cc:187
+#: ../gtk/src/Recognizer.cc:291 ../qt/src/RecognitionMenu.cc:188
 msgid "Assume a single word"
 msgstr "Supozoni një fjalë të vetme"
 
-#: ../gtk/src/Recognizer.cc:292 ../qt/src/RecognitionMenu.cc:188
+#: ../gtk/src/Recognizer.cc:292 ../qt/src/RecognitionMenu.cc:189
 msgid "Assume a single word in a circle"
 msgstr "Supozoni një fjalë të vetme në një rreth"
 
-#: ../gtk/src/Recognizer.cc:293 ../qt/src/RecognitionMenu.cc:189
+#: ../gtk/src/Recognizer.cc:293 ../qt/src/RecognitionMenu.cc:190
 msgid "Sparse text in no particular order"
 msgstr "Tekst i rrallë në asnjë rend të veçantë"
 
-#: ../gtk/src/Recognizer.cc:294 ../qt/src/RecognitionMenu.cc:190
+#: ../gtk/src/Recognizer.cc:294 ../qt/src/RecognitionMenu.cc:191
 msgid "Sparse text with orientation and script detection"
 msgstr "Rralli tekstin me orientim dhe detektim të skriptës"
 
-#: ../gtk/src/Recognizer.cc:309 ../qt/src/RecognitionMenu.cc:201
+#: ../gtk/src/Recognizer.cc:309 ../qt/src/RecognitionMenu.cc:202
 msgid "Page segmentation mode"
 msgstr "Modaliteti i segmentimit të faqes"
 
-#: ../gtk/src/Recognizer.cc:313 ../qt/src/RecognitionMenu.cc:204
+#: ../gtk/src/Recognizer.cc:313 ../qt/src/RecognitionMenu.cc:205
 msgid "Character whitelist / blacklist..."
 msgstr "Lista e bardhë / zezë e karaktereve..."
 
-#: ../gtk/src/Recognizer.cc:319 ../qt/src/RecognitionMenu.cc:209
+#: ../gtk/src/Recognizer.cc:319 ../qt/src/RecognitionMenu.cc:210
 msgid "Manage languages..."
 msgstr "Menaxhoni gjuhët ..."
 
@@ -1615,15 +1618,15 @@ msgstr "Prurësi i dokumenteve nuk ka dokumente."
 msgid "Access to scanner is denied."
 msgstr "Qasja në skaner është refuzuar."
 
-#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:152
+#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:171
 msgid "Enter password for file '%1':"
 msgstr "Shkruani fjalëkalimin për skedarin '%1':"
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:179
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
 msgid "PDF with text"
 msgstr "PDF me tekst"
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:179
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
@@ -1633,48 +1636,48 @@ msgstr ""
 "% 1\n"
 "Hapni atë pavarësisht?"
 
-#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:246
+#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:264
 msgid "Images and PDFs"
 msgstr "Imazhe dhe PDF"
 
-#: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:247
+#: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:265
 msgid "Select Files"
 msgstr "Zgjidhni skedarët"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:283
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:307
 msgid "Clipboard Error"
 msgstr "Gabim në klipboard"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:283
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:307
 msgid "Failed to read the clipboard."
 msgstr "Nuk arriti të lexojë clipboard-in."
 
-#: ../gtk/src/SourceManager.cc:232 ../qt/src/SourceManager.cc:287
-#: ../qt/src/SourceManager.cc:293
+#: ../gtk/src/SourceManager.cc:232 ../qt/src/SourceManager.cc:311
+#: ../qt/src/SourceManager.cc:317
 msgid "Pasted %1"
 msgstr "Ngjitur % 1"
 
-#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:300
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
 msgid "Screenshot Error"
 msgstr "Gabim gjatë fotografimit të ekranit"
 
-#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:300
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
 msgid "Failed to take screenshot."
 msgstr "Nuk arriti të merrte pamjen e ekranit."
 
-#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:304
+#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:328
 msgid "Screenshot %1"
 msgstr "Pamja e ekranit %1"
 
-#: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:309
+#: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:333
 msgid "Saving image..."
 msgstr "Duke e ruajtur imazhin..."
 
-#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:322
+#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:346
 msgid "Cannot Write File"
 msgstr "Nuk mund të shkruaj skedarin"
 
-#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:322
+#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:346
 msgid "Could not write to %1."
 msgstr "Nuk mund të shkruaj në % 1."
 
@@ -1686,11 +1689,11 @@ msgstr "Fshini skedarin?"
 msgid "The following files will be deleted:%1"
 msgstr "Skedarët e mëposhtëm do të fshihen:% 1"
 
-#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:431
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:487
 msgid "Missing File"
 msgstr "Skedari që mungon"
 
-#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:431
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:487
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
@@ -1843,9 +1846,9 @@ msgid ""
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Frontend grafik për tesseract-ocr</p><p><"
-"a href=\"https://github.com/manisandro/gImageReader/\""
-">Uebfaqja</a></p><p>&nbsp;</p></body></html>"
+"<html><head/><body><p>&nbsp;</p><p>Frontend grafik për tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Uebfaqja</a></"
+"p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -1901,11 +1904,11 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Aplikacioni ka "
-"rënë</span></p><p>Ju kërkojmë falje për shqetësimin. Për të ndihmuar në "
+"<html><head/><body><p><span style=\" font-weight:600;\">Aplikacioni ka rënë</"
+"span></p><p>Ju kërkojmë falje për shqetësimin. Për të ndihmuar në "
 "përmirësimin e aplikacionit, ju lutemi merrni parasysh raportimin e "
-"problemit në <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%"
-"20Crash\">manisandro@gmail.com</a>. Ju lutemi provoni të përshkruani se "
+"problemit në <a href=\"mailto:manisandro@gmail.com?subject=gImageReader"
+"%20Crash\">manisandro@gmail.com</a>. Ju lutemi provoni të përshkruani se "
 "çfarë po bënit përpara se të rrëzohej aplikacioni. Gjithashtu, përfshini "
 "informacionin më poshtë. Ju faleminderit.</p></body></html>"
 
@@ -1946,7 +1949,7 @@ msgid "ADF Duplex"
 msgstr "ADF Dupleks"
 
 #. Remove & from some labels which designer insists in adding
-#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:50
+#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:49
 msgid "Sources"
 msgstr "Burimet"
 
@@ -2022,6 +2025,45 @@ msgstr ""
 "mbështet vetëm kompresimin JPEG për ruajtjen e imazheve, por mbështet "
 "skriptet komplekse. </li> </ul> </body> </html>"
 
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:234
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:246
+msgid "Lines before:"
+msgstr ""
+
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:260
+msgid "Lines after:"
+msgstr ""
+
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:440
+msgid ""
+"<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
+"td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
+"tr><tr><td>Up</td><td>Previous line</td></tr><tr><td>Ctrl+Space</"
+"td><td>Spelling suggestions</td></tr><tr><td>Ctrl+Enter</td><td>Add word to "
+"dictionary</td></tr><tr><td>Ctrl+B</td><td>Toggle bold</td></tr><tr><td>Ctrl"
+"+I</td><td>Toggle italic</td></tr><tr><td>Ctrl+D</td><td>Divide word at "
+"cursor position</td></tr><tr><td>Ctrl+M</td><td>Merge with previous word</"
+"td></tr><tr><td>Ctrl+Shift+M</td><td>Merge with next word</td></"
+"tr><tr><td>Ctrl+Delete</td><td>Delete word</td></tr><tr><td>Ctrl+{Left,Right}"
+"</td><td>Adjust left bounding box edge</td></tr><tr><td>Ctrl+Shift+{Left,"
+"Right}</td><td>Adjust right bounding box edge</td></tr><tr><td>Ctrl+{Up,Down}"
+"</td><td>Adjust top bounding box edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</"
+"td><td>Adjust bottom bounding box edge</td></tr><tr><td>Ctrl++</"
+"td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
+"size</td></tr></table>"
+msgstr ""
+
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:461
+msgid "Keyboard Shortcuts"
+msgstr ""
+
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:476
+msgid "Confidence: %1"
+msgstr ""
+
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
 msgid "Save as hOCR text"
@@ -2032,11 +2074,11 @@ msgstr "Ruaje si hOCR tekst"
 msgid "Find and Replace"
 msgstr "Gjeni dhe zëvendësoni"
 
-#: ../qt/src/MainWindow.cc:305
+#: ../qt/src/MainWindow.cc:317
 msgid "Multiple sources (%1)"
 msgstr "Burime të shumëfishta (%1)"
 
-#: ../qt/src/MainWindow.cc:599
+#: ../qt/src/MainWindow.cc:611
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
@@ -2044,7 +2086,7 @@ msgstr ""
 "Skedarët e mëposhtëm të fjalorit u instaluan:\n"
 "% 1"
 
-#: ../qt/src/OutputEditorText.cc:40
+#: ../qt/src/OutputEditorText.cc:41
 msgid "Page: %1\n"
 msgstr "Faqja: %1\n"
 
@@ -2080,13 +2122,43 @@ msgstr "-% 1: nuk arriti të krijojë skedarin e daljes"
 msgid "The following errors occurred:"
 msgstr "Gabimet e mëposhtme kanë ndodhur:"
 
-#: ../qt/src/SourceManager.cc:345
+#: ../qt/src/SourceManager.cc:248
+#, fuzzy
+msgid "No recent files"
+msgstr "Emri i skedarit burimorë"
+
+#: ../qt/src/SourceManager.cc:275
+#, fuzzy
+msgid "Select folder..."
+msgstr "Zgjidhni skedarët"
+
+#: ../qt/src/SourceManager.cc:374
 msgid "Delete Files"
 msgstr "Fshi skedarët"
 
-#: ../qt/src/SourceManager.cc:345
+#: ../qt/src/SourceManager.cc:374
 msgid "Delete the following files?"
 msgstr "Fshini skedarët e mëposhtëm?"
+
+#: ../qt/src/SourceManager.cc:459
+#, fuzzy
+msgid "Open output"
+msgstr "Ruani daljen"
+
+#: ../qt/src/SourceManager.cc:459
+msgid ""
+"Both a text and a hOCR output were found. Which one do you want to open?"
+msgstr ""
+
+#: ../qt/src/SourceManager.cc:460
+#, fuzzy
+msgid "Text"
+msgstr "Linja e tekstit"
+
+#: ../qt/src/SourceManager.cc:461
+#, fuzzy
+msgid "hOCR"
+msgstr "hOCR, PDF"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2104,28 +2176,28 @@ msgstr ""
 "Këshillë: Nëse nuk keni leje shkrimi në dosjet e sistemit, mund të kaloni në "
 "shtigjet e përdoruesve në dialogun e cilësimeve."
 
-#: ../qt/src/Ui_MainWindow.hh:51
+#: ../qt/src/Ui_MainWindow.hh:50
 msgid "Output"
 msgstr "Dalja"
 
-#: ../qt/src/Ui_MainWindow.hh:136
+#: ../qt/src/Ui_MainWindow.hh:135
 msgid "OCR mode:"
 msgstr "Modaliteti OCR:"
 
 #. Sources toolbar
-#: ../qt/src/Ui_MainWindow.hh:189
+#: ../qt/src/Ui_MainWindow.hh:188
 msgid "Add folder"
 msgstr "Shto direktorium"
 
-#: ../qt/src/Ui_MainWindow.hh:208
+#: ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
 msgstr "Largoje imazhin"
 
-#: ../qt/src/Ui_MainWindow.hh:211
+#: ../qt/src/Ui_MainWindow.hh:202
 msgid "Delete Image"
 msgstr "Fshije imazhin"
 
-#: ../qt/src/Ui_MainWindow.hh:214
+#: ../qt/src/Ui_MainWindow.hh:205
 msgid "Clear List"
 msgstr "Pastro listën"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-13 02:35+0200\n"
+"POT-Creation-Date: 2020-04-29 00:32+0200\n"
 "PO-Revision-Date: 2018-05-29 20:09+0100\n"
 "Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
 "Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
@@ -23,27 +23,27 @@ msgstr ""
 msgid "OCR application"
 msgstr "OCR 应用程序"
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:164
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:163
 msgid "Redetect Languages"
 msgstr "重新检测语言"
 
-#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:167
+#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:166
 msgid "Manage Languages"
 msgstr "管理语言"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:170
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:169
 msgid "Preferences"
 msgstr "选项"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:501 ../qt/src/MainWindow.cc:511
-#: ../qt/src/Ui_MainWindow.hh:175
+#: ../qt/src/Ui_MainWindow.hh:174
 msgid "Help"
 msgstr "协助"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:178
+#: ../qt/src/Ui_MainWindow.hh:177
 msgid "About"
 msgstr "关于"
 
@@ -186,23 +186,23 @@ msgstr ""
 msgid "Toggle output pane"
 msgstr "切换输出面板"
 
-#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:67
+#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
 msgstr "旋转现有文字"
 
-#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:68
+#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
 msgstr "旋转所有页面"
 
-#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:190
+#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:189
 msgid "Recent"
 msgstr "最近"
 
-#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:191
+#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:190
 msgid "Paste"
 msgstr "贴上"
 
-#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:192
+#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:191
 msgid "Take Screenshot"
 msgstr "画面截图"
 
@@ -222,12 +222,12 @@ msgstr "正常尺寸"
 msgid "Best fit"
 msgstr "最佳尺寸"
 
-#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:61
+#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
 #, fuzzy
 msgid "Rotate page"
 msgstr "旋转所有页面"
 
-#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:76
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
 msgstr "选择旋转模式"
 
@@ -237,7 +237,7 @@ msgstr "选择旋转模式"
 msgid "Select insert mode"
 msgstr "选用插入模式"
 
-#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:103
+#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:102
 #, fuzzy
 msgid "Select page"
 msgstr "选择语言"
@@ -266,23 +266,23 @@ msgstr "<small>辨认全部</small>"
 msgid "Select language"
 msgstr "选择语言"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:204
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:196
 msgid "Add images"
 msgstr "新增图像"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:195
 msgid "Add Images"
 msgstr "新增图像"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:209
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:200
 msgid "Remove image from list"
 msgstr "从清单删除图像"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:212
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:203
 msgid "Delete image"
 msgstr "删除图像"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:215
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:206
 msgid "Clear list"
 msgstr "清除清单"
 
@@ -407,7 +407,7 @@ msgstr "源文件名"
 msgid "Source page"
 msgstr "来源页"
 
-#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:170
+#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:174
 msgid "Protected PDF"
 msgstr "受保护 PDF"
 
@@ -419,11 +419,11 @@ msgstr "现时页面"
 msgid "Multiple Pages..."
 msgstr "多页……"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:657
+#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:695
 msgid "Add Word"
 msgstr "新增字词"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:657
+#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:695
 msgid "Enter word:"
 msgstr "输入字词"
 
@@ -516,13 +516,13 @@ msgid "Previous (Shift+F3)"
 msgstr "上一个（Shift+F3）"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:915
-#: ../qt/src/hocr/OutputEditorHOCR.cc:789
+#: ../qt/src/hocr/OutputEditorHOCR.cc:827
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Expand all"
 msgstr "递归展开"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:918
-#: ../qt/src/hocr/OutputEditorHOCR.cc:790
+#: ../qt/src/hocr/OutputEditorHOCR.cc:828
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Collapse all"
 msgstr "递归折叠"
@@ -826,7 +826,7 @@ msgstr "新增"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:911 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:786 ../qt/src/SubstitutionsManager.cc:50
+#: ../qt/src/hocr/OutputEditorHOCR.cc:824 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
 msgstr "删除"
@@ -981,24 +981,24 @@ msgid "Overwrite File?"
 msgstr "改写文件？"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:616 ../gtk/src/hocr/OutputEditorHOCR.cc:266
-#: ../qt/src/hocr/HOCRDocument.cc:677 ../qt/src/hocr/OutputEditorHOCR.cc:274
+#: ../qt/src/hocr/HOCRDocument.cc:686 ../qt/src/hocr/OutputEditorHOCR.cc:310
 msgid "Page"
 msgstr "页面"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:679
+#: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:688
 msgid "Text block"
 msgstr "文字块"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:620 ../gtk/src/hocr/OutputEditorHOCR.cc:272
-#: ../qt/src/hocr/HOCRDocument.cc:681 ../qt/src/hocr/OutputEditorHOCR.cc:276
+#: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:312
 msgid "Paragraph"
 msgstr "段落"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:683
+#: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:692
 msgid "Textline"
 msgstr "文字"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:687
+#: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:696
 msgid "Graphic"
 msgstr "图像"
 
@@ -1006,8 +1006,8 @@ msgstr "图像"
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1016 ../gtk/src/OutputEditorText.cc:280
 #: ../qt/src/hocr/HOCROdtExporter.cc:51 ../qt/src/hocr/HOCRPdfExporter.cc:471
-#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:908
-#: ../qt/src/OutputEditorText.cc:265
+#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:951
+#: ../qt/src/OutputEditorText.cc:271
 msgid "output"
 msgstr "输出"
 
@@ -1120,7 +1120,7 @@ msgid "The PDF library could not load the font '%1'."
 msgstr "PDF 库不支持所选择字体 '%1'。"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:282
-#: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:266
+#: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:273
 msgid "Text Files"
 msgstr "文本"
 
@@ -1133,27 +1133,27 @@ msgid "The text export failed: unable to write output file."
 msgstr "不能输出文本：不能创建输出档。"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
-#: ../qt/src/hocr/OutputEditorHOCR.cc:275
+#: ../qt/src/hocr/OutputEditorHOCR.cc:311
 msgid "Block"
 msgstr "方块"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
-#: ../qt/src/hocr/OutputEditorHOCR.cc:277
+#: ../qt/src/hocr/OutputEditorHOCR.cc:313
 msgid "Line"
 msgstr "线条"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
-#: ../qt/src/hocr/OutputEditorHOCR.cc:278
+#: ../qt/src/hocr/OutputEditorHOCR.cc:314
 msgid "Word"
 msgstr "字词"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:281
-#: ../qt/src/hocr/OutputEditorHOCR.cc:279
+#: ../qt/src/hocr/OutputEditorHOCR.cc:315
 msgid "Misspelled word"
 msgstr "错拼字词"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:448
-#: ../qt/src/hocr/OutputEditorHOCR.cc:379
+#: ../qt/src/hocr/OutputEditorHOCR.cc:415
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -1162,57 +1162,58 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:449
-#: ../qt/src/hocr/OutputEditorHOCR.cc:380
+#: ../qt/src/hocr/OutputEditorHOCR.cc:416
 msgid "Recognition errors"
 msgstr "辨认时出现错误"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:619
-#: ../qt/src/hocr/OutputEditorHOCR.cc:561
-#: ../qt/src/hocr/OutputEditorHOCR.cc:573
+#: ../qt/src/hocr/OutputEditorHOCR.cc:180
+#: ../qt/src/hocr/OutputEditorHOCR.cc:596
+#: ../qt/src/hocr/OutputEditorHOCR.cc:608
 msgid "Multiple values"
 msgstr "多个数值"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:803
-#: ../qt/src/hocr/OutputEditorHOCR.cc:718
+#: ../qt/src/hocr/OutputEditorHOCR.cc:756
 msgid "Merge"
 msgstr "合并"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:811
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:902
-#: ../qt/src/hocr/OutputEditorHOCR.cc:720
-#: ../qt/src/hocr/OutputEditorHOCR.cc:784
+#: ../qt/src/hocr/OutputEditorHOCR.cc:758
+#: ../qt/src/hocr/OutputEditorHOCR.cc:822
 msgid "Split from parent"
 msgstr "从上层分拆出来"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:822
-#: ../qt/src/hocr/OutputEditorHOCR.cc:724
+#: ../qt/src/hocr/OutputEditorHOCR.cc:762
 msgid "Swap"
 msgstr "对换"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:846
-#: ../qt/src/hocr/OutputEditorHOCR.cc:769
+#: ../qt/src/hocr/OutputEditorHOCR.cc:807
 msgid "Add graphic region"
 msgstr "新增图像本地"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:849
-#: ../qt/src/hocr/OutputEditorHOCR.cc:770
+#: ../qt/src/hocr/OutputEditorHOCR.cc:808
 msgid "Add text block"
 msgstr "新增文字方块"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:853
-#: ../qt/src/hocr/OutputEditorHOCR.cc:772
+#: ../qt/src/hocr/OutputEditorHOCR.cc:810
 msgid "Add paragraph"
 msgstr "新增段落"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:857
-#: ../qt/src/hocr/OutputEditorHOCR.cc:774
+#: ../qt/src/hocr/OutputEditorHOCR.cc:812
 msgid "Add line"
 msgstr "新增线条"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:861
-#: ../qt/src/hocr/OutputEditorHOCR.cc:776
+#: ../qt/src/hocr/OutputEditorHOCR.cc:814
 msgid "Add word"
 msgstr "新增字词"
 
@@ -1230,19 +1231,19 @@ msgstr "忽略字词"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:952
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1018
-#: ../qt/src/hocr/OutputEditorHOCR.cc:851
-#: ../qt/src/hocr/OutputEditorHOCR.cc:910
+#: ../qt/src/hocr/OutputEditorHOCR.cc:889
+#: ../qt/src/hocr/OutputEditorHOCR.cc:954
 msgid "hOCR HTML Files"
 msgstr "hOCR HTML 档"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:953
-#: ../qt/src/hocr/OutputEditorHOCR.cc:851
+#: ../qt/src/hocr/OutputEditorHOCR.cc:889
 msgid "Open hOCR File"
 msgstr "打开 hOCR 档"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:890 ../qt/src/OutputEditorText.cc:255
-#: ../qt/src/SourceManager.cc:152
+#: ../qt/src/hocr/OutputEditorHOCR.cc:929 ../qt/src/OutputEditorText.cc:256
+#: ../qt/src/SourceManager.cc:156
 #, fuzzy
 msgid ""
 "The following files could not be opened:\n"
@@ -1250,7 +1251,7 @@ msgid ""
 msgstr "不能打开下列文件：%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
-#: ../qt/src/hocr/OutputEditorHOCR.cc:893
+#: ../qt/src/hocr/OutputEditorHOCR.cc:932
 #, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
@@ -1258,43 +1259,43 @@ msgid ""
 msgstr "此文件似乎并不包含有效的 hOCR HTML：%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:896 ../qt/src/OutputEditorText.cc:256
-#: ../qt/src/SourceManager.cc:152
+#: ../qt/src/hocr/OutputEditorHOCR.cc:935 ../qt/src/OutputEditorText.cc:257
+#: ../qt/src/SourceManager.cc:156
 msgid "Unable to open files"
 msgstr "不能打开文件"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1019
-#: ../qt/src/hocr/OutputEditorHOCR.cc:910
+#: ../qt/src/hocr/OutputEditorHOCR.cc:954
 msgid "Save hOCR Output..."
 msgstr "存储 hOCR 输出……"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:917 ../qt/src/OutputEditorText.cc:273
+#: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
 msgid "Failed to save output"
 msgstr "不能存储输出……"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:917 ../qt/src/OutputEditorText.cc:273
+#: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "请检查你在所选择数据夹拥有写入权限。"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:978 ../qt/src/OutputEditorText.cc:286
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1023 ../qt/src/OutputEditorText.cc:293
 msgid "Output not saved"
 msgstr "未存储输出"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:978 ../qt/src/OutputEditorText.cc:286
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1023 ../qt/src/OutputEditorText.cc:293
 msgid "Save output before proceeding?"
 msgstr "先存储输出再继续？"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:192
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1076 ../qt/src/OutputEditorText.cc:163
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1121 ../qt/src/OutputEditorText.cc:164
 msgid "Replacing..."
 msgstr "取代中……"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1240 ../gtk/src/OutputEditorText.cc:200
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1099 ../qt/src/OutputEditorText.cc:171
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1144 ../qt/src/OutputEditorText.cc:172
 msgid "Applying substitutions..."
 msgstr "正在套用替换值……"
 
@@ -1414,7 +1415,7 @@ msgstr ""
 msgid "No spelling dictionaries found for '%1'."
 msgstr "找不到 '%1' 的拼写词典。"
 
-#: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:148
+#: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:149
 msgid "Stripping line breaks..."
 msgstr "去除换行符号……"
 
@@ -1422,11 +1423,11 @@ msgstr "去除换行符号……"
 msgid "Check spelling"
 msgstr "检查拼写"
 
-#: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:207
+#: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
 msgstr "文件：%1"
 
-#: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:210
+#: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:211
 msgid "Page: %1"
 msgstr "页面：%1"
 
@@ -1439,7 +1440,7 @@ msgstr ""
 "\n"
 "[不能辨认第 %1 页]\n"
 
-#: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:266
+#: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
 msgstr "存储输出……"
 
@@ -1600,16 +1601,16 @@ msgstr "进纸器缺文件。"
 msgid "Access to scanner is denied."
 msgstr "访问扫描器被拒绝。"
 
-#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:167
+#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:171
 msgid "Enter password for file '%1':"
 msgstr "请为 '%1' 档输入口令："
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:194
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
 #, fuzzy
 msgid "PDF with text"
 msgstr "含文字的 PDF"
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:194
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
 #, fuzzy
 msgid ""
 "The PDF file already contains text:\n"
@@ -1619,48 +1620,48 @@ msgstr ""
 "这些 PDF 档已包含文字：\n"
 "%1"
 
-#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:261
+#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:264
 msgid "Images and PDFs"
 msgstr "图像与 PDF 档"
 
-#: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:262
+#: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:265
 msgid "Select Files"
 msgstr "选择文件"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:298
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:307
 msgid "Clipboard Error"
 msgstr "剪贴板错误"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:298
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:307
 msgid "Failed to read the clipboard."
 msgstr "不能读入剪贴板。"
 
-#: ../gtk/src/SourceManager.cc:232 ../qt/src/SourceManager.cc:302
-#: ../qt/src/SourceManager.cc:308
+#: ../gtk/src/SourceManager.cc:232 ../qt/src/SourceManager.cc:311
+#: ../qt/src/SourceManager.cc:317
 msgid "Pasted %1"
 msgstr "已贴上 %1"
 
-#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:315
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
 msgid "Screenshot Error"
 msgstr "画面截图错误"
 
-#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:315
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
 msgid "Failed to take screenshot."
 msgstr "不能截取画面。"
 
-#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:319
+#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:328
 msgid "Screenshot %1"
 msgstr "截图 %1"
 
-#: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:324
+#: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:333
 msgid "Saving image..."
 msgstr "存储图像中……"
 
-#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:337
+#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:346
 msgid "Cannot Write File"
 msgstr "不能写入文件"
 
-#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:337
+#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:346
 msgid "Could not write to %1."
 msgstr "不能写进 %1。"
 
@@ -1672,11 +1673,11 @@ msgstr "删除文件？"
 msgid "The following files will be deleted:%1"
 msgstr "下列文件将会被删除：%1"
 
-#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:476
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:487
 msgid "Missing File"
 msgstr "遗漏文件"
 
-#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:476
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:487
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
@@ -1920,7 +1921,7 @@ msgid "ADF Duplex"
 msgstr "ADF 双面"
 
 #. Remove & from some labels which designer insists in adding
-#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:50
+#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:49
 msgid "Sources"
 msgstr "来源"
 
@@ -1992,31 +1993,42 @@ msgid ""
 "body></html>"
 msgstr ""
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:219
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:234
 msgid "Keyboard shortcuts"
 msgstr ""
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:377
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:246
+msgid "Lines before:"
+msgstr ""
+
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:260
+msgid "Lines after:"
+msgstr ""
+
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:440
 msgid ""
 "<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
 "td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
 "tr><tr><td>Up</td><td>Previous line</td></tr><tr><td>Ctrl+Space</"
-"td><td>Spelling suggestions</td></tr><tr><td>Ctrl+B</td><td>Toggle bold</"
-"td></tr><tr><td>Ctrl+I</td><td>Toggle italic</td></tr><tr><td>Ctrl+D</"
-"td><td>Divide word at cursor position</td></tr><tr><td>Ctrl+M</td><td>Merge "
-"with previous word</td></tr><tr><td>Ctrl+Shift+M</td><td>Merge with next "
-"word</td></tr><tr><td>Ctrl+{Left,Right}</td><td>Adjust left bounding box "
-"edge</td></tr><tr><td>Ctrl+Shift+{Left,Right}</td><td>Adjust right bounding "
-"box edge</td></tr><tr><td>Ctrl+{Up,Down}</td><td>Adjust top bounding box "
-"edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</td><td>Adjust bottom bounding "
-"box edge</td></tr></table>"
+"td><td>Spelling suggestions</td></tr><tr><td>Ctrl+Enter</td><td>Add word to "
+"dictionary</td></tr><tr><td>Ctrl+B</td><td>Toggle bold</td></tr><tr><td>Ctrl"
+"+I</td><td>Toggle italic</td></tr><tr><td>Ctrl+D</td><td>Divide word at "
+"cursor position</td></tr><tr><td>Ctrl+M</td><td>Merge with previous word</"
+"td></tr><tr><td>Ctrl+Shift+M</td><td>Merge with next word</td></"
+"tr><tr><td>Ctrl+Delete</td><td>Delete word</td></tr><tr><td>Ctrl+{Left,Right}"
+"</td><td>Adjust left bounding box edge</td></tr><tr><td>Ctrl+Shift+{Left,"
+"Right}</td><td>Adjust right bounding box edge</td></tr><tr><td>Ctrl+{Up,Down}"
+"</td><td>Adjust top bounding box edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</"
+"td><td>Adjust bottom bounding box edge</td></tr><tr><td>Ctrl++</"
+"td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
+"size</td></tr></table>"
 msgstr ""
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:394
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:409
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:476
 msgid "Confidence: %1"
 msgstr ""
 
@@ -2042,7 +2054,7 @@ msgid ""
 "%1"
 msgstr "已安装下列词典档：%1"
 
-#: ../qt/src/OutputEditorText.cc:40
+#: ../qt/src/OutputEditorText.cc:41
 #, fuzzy
 msgid "Page: %1\n"
 msgstr "页面：%1"
@@ -2087,36 +2099,41 @@ msgstr "不能创建输出"
 msgid "The following errors occurred:"
 msgstr "出现下列错误：%1"
 
-#: ../qt/src/SourceManager.cc:266
+#: ../qt/src/SourceManager.cc:248
+#, fuzzy
+msgid "No recent files"
+msgstr "源文件名"
+
+#: ../qt/src/SourceManager.cc:275
 #, fuzzy
 msgid "Select folder..."
 msgstr "选择文件"
 
-#: ../qt/src/SourceManager.cc:363
+#: ../qt/src/SourceManager.cc:374
 #, fuzzy
 msgid "Delete Files"
 msgstr "删除文件？"
 
-#: ../qt/src/SourceManager.cc:363
+#: ../qt/src/SourceManager.cc:374
 msgid "Delete the following files?"
 msgstr ""
 
-#: ../qt/src/SourceManager.cc:448
+#: ../qt/src/SourceManager.cc:459
 #, fuzzy
 msgid "Open output"
 msgstr "存储输出"
 
-#: ../qt/src/SourceManager.cc:448
+#: ../qt/src/SourceManager.cc:459
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
 msgstr ""
 
-#: ../qt/src/SourceManager.cc:449
+#: ../qt/src/SourceManager.cc:460
 #, fuzzy
 msgid "Text"
 msgstr "文字"
 
-#: ../qt/src/SourceManager.cc:450
+#: ../qt/src/SourceManager.cc:461
 #, fuzzy
 msgid "hOCR"
 msgstr "hOCR、PDF"
@@ -2136,29 +2153,29 @@ msgstr ""
 "请检查连接及目录权限。\n"
 "提示：如果您在系统数据夹中没有写入权限，您可以在设置对话框中切换到用户路径。"
 
-#: ../qt/src/Ui_MainWindow.hh:51
+#: ../qt/src/Ui_MainWindow.hh:50
 msgid "Output"
 msgstr "输出："
 
-#: ../qt/src/Ui_MainWindow.hh:136
+#: ../qt/src/Ui_MainWindow.hh:135
 msgid "OCR mode:"
 msgstr "OCR 模式："
 
 #. Sources toolbar
-#: ../qt/src/Ui_MainWindow.hh:189
+#: ../qt/src/Ui_MainWindow.hh:188
 #, fuzzy
 msgid "Add folder"
 msgstr "新增字词"
 
-#: ../qt/src/Ui_MainWindow.hh:208
+#: ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
 msgstr "删除图像"
 
-#: ../qt/src/Ui_MainWindow.hh:211
+#: ../qt/src/Ui_MainWindow.hh:202
 msgid "Delete Image"
 msgstr "删除图像"
 
-#: ../qt/src/Ui_MainWindow.hh:214
+#: ../qt/src/Ui_MainWindow.hh:205
 msgid "Clear List"
 msgstr "清除清单"
 
