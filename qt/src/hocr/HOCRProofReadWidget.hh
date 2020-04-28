@@ -37,6 +37,7 @@ public:
 	QTreeView* documentTree() const { return m_treeView; }
 	void setConfidenceLabel(int wconf);
 	QString confidenceStyle(int wconf) const;
+	void adjustFontSize(int diff);
 
 private:
 	class LineEdit;
@@ -49,12 +50,12 @@ private:
 	QMap<const HOCRItem*, QWidget*> m_currentLines;
 	QSpinBox* m_spinLinesBefore = nullptr;
 	QSpinBox* m_spinLinesAfter = nullptr;
+	int m_fontSizeDiff = 0;
 
 	// Disable auto tab handling
 	bool focusNextPrevChild(bool) override { return false; }
 
 	void repositionWidget();
-
 
 private slots:
 	void updateWidget(bool force = false);

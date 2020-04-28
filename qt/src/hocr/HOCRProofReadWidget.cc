@@ -178,6 +178,10 @@ private:
 		} else if(ev->key() == Qt::Key_Delete && ev->modifiers() == Qt::ControlModifier) {
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			document-> removeItem(index);
+		} else if(ev->key() == Qt::Key_Plus && ev->modifiers() & Qt::ControlModifier) {
+			m_proofReadWidget->adjustFontSize(+1);
+		} else if(ev->key() == Qt::Key_Minus && ev->modifiers() & Qt::ControlModifier) {
+			m_proofReadWidget->adjustFontSize(-1);
 		} else {
 			QLineEdit::keyPressEvent(ev);
 		}
@@ -415,7 +419,7 @@ void HOCRProofReadWidget::repositionWidget() {
 		for(int i = 0, n = lineWidget->children().count(); i < n; ++i) {
 			LineEdit* lineEdit = static_cast<LineEdit*>(lineWidget->children()[i]);
 			QFont lineEditFont = lineEdit->font();
-			lineEditFont.setPointSizeF(ft.pointSizeF());
+			lineEditFont.setPointSizeF(ft.pointSizeF() + m_fontSizeDiff);
 			lineEdit->setFont(lineEditFont);
 			lineEdit->setFixedHeight(fm.height() + 5);
 		}
@@ -446,6 +450,8 @@ void HOCRProofReadWidget::showShortcutsDialog() {
 	                           "<tr><td>Ctrl+Shift+{Left,Right}</td><td>Adjust right bounding box edge</td></tr>"
 	                           "<tr><td>Ctrl+{Up,Down}</td><td>Adjust top bounding box edge</td></tr>"
 	                           "<tr><td>Ctrl+Shift+{Up,Down}</td><td>Adjust bottom bounding box edge</td></tr>"
+	                           "<tr><td>Ctrl++</td><td>Increase font size</td></tr>"
+	                           "<tr><td>Ctrl+-</td><td>Decrease font size</td></tr>"
 	                           "</table>"
 	                       ));
 	QMessageBox(QMessageBox::NoIcon, _("Keyboard Shortcuts"), text, QMessageBox::Close, MAIN).exec();
@@ -466,4 +472,9 @@ void HOCRProofReadWidget::setConfidenceLabel(int wconf) {
 	m_confidenceLabel->setText(_("Confidence: %1").arg(wconf));
 	QString style = confidenceStyle(wconf);
 	m_confidenceLabel->setStyleSheet(!style.isEmpty() ? QString("QLabel { %1 }").arg(style) : "");
+}
+
+void HOCRProofReadWidget::adjustFontSize(int diff) {
+	m_fontSizeDiff += diff;
+	repositionWidget();
 }
