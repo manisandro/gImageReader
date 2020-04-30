@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-04-19 19:11+0000\n"
+"PO-Revision-Date: 2020-05-02 18:11+0000\n"
 "Last-Translator: WaldiS <admin@sto.ugu.pl>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pl/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.0.2-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -2023,14 +2023,13 @@ msgstr "Skróty klawiaturowe"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
-msgstr ""
+msgstr "Linie przed:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:260
 msgid "Lines after:"
-msgstr ""
+msgstr "Linie po:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:440
-#, fuzzy
 msgid ""
 "<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
 "td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
@@ -2048,20 +2047,20 @@ msgid ""
 "td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
 "size</td></tr></table>"
 msgstr ""
-"<table><tr><td>Tab</td> <td> Następne pole </td> </tr> <tr> <td> Shift+Tab </"
-"td> <td> Poprzednie pole </td> < / tr> <tr> <td> W dół </td> <td> Następny "
-"wiersz </td> </tr> <tr> <td> W górę </td> <td> Poprzedni wiersz </td> </ tr "
-"> <tr> <td> Ctrl+spacja </td> <td> Propozycje pisowni </td> </tr> <tr> <td> "
-"Ctrl+B </td> <td> Pogrubienie </td> < / tr> <tr> <td> Ctrl+I </td> <td> "
+"<table><tr><td>Tab</td> <td> Następne pole </td> </tr> <tr> <td> Shift+Tab "
+"</td> <td> Poprzednie pole </td> </tr> <tr> <td> W dół </td> <td> Następny "
+"wiersz </td> </tr> <tr> <td> W górę </td> <td> Poprzedni wiersz </td> </tr > "
+"<tr> <td> Ctrl+spacja </td> <td> Propozycje pisowni </td> </tr> <tr> <td> "
+"Ctrl+B </td> <td> Pogrubienie </td> < /tr> <tr> <td> Ctrl+I </td> <td> "
 "Kursywa </td> </tr> <tr> <td> Ctrl+D </td> <td> Podziel słowo w miejscu "
 "kursora </td></tr><tr><td>Ctrl+M</td> <td> Połącz z poprzednim słowem </td> "
-"</tr> <tr> <td> Ctrl+Shift+M </ td > <td> Połącz z następnym słowem </td> </"
-"tr> <tr> <td> Ctrl+{Left, Right} </td> <td> Dopasuj lewą krawędź ramki "
+"</tr> <tr> <td> Ctrl+Shift+M </td > <td> Połącz z następnym słowem </td> "
+"</tr> <tr> <td> Ctrl+{Left, Right} </td> <td> Dopasuj lewą krawędź ramki "
 "granicznej </td> </tr> <tr > <td> Ctrl+Shift+{lewy, prawy} </td> <td> "
 "Dostosuj prawą krawędź ramki granicznej </td> </tr> <tr> <td> Ctrl+{w górę, "
 "w dół} </td> <td > Dostosuj górną krawędź ramki ograniczającej </td> </tr> "
 "<tr> <td> Ctrl+Shift+{w górę, w dół} </td> <td> Dopasuj dolną krawędź ramki "
-"ograniczającej </td> </tr> </ tabela>"
+"ograniczającej </td> </tr> </ table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
@@ -2130,9 +2129,8 @@ msgid "The following errors occurred:"
 msgstr "Wystąpiły następujące błędy:"
 
 #: ../qt/src/SourceManager.cc:248
-#, fuzzy
 msgid "No recent files"
-msgstr "Nazwa pliku źródłowego"
+msgstr "Brak ostatnich plików"
 
 #: ../qt/src/SourceManager.cc:275
 msgid "Select folder..."
