@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-04-16 10:11+0000\n"
+"PO-Revision-Date: 2020-05-02 18:11+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gimagereader/"
 "translations/cs/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.0.1-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -2032,14 +2032,13 @@ msgstr "Klávesové zkratky"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
-msgstr ""
+msgstr "Řádků před:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:260
 msgid "Lines after:"
-msgstr ""
+msgstr "Řádků po:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:440
-#, fuzzy
 msgid ""
 "<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
 "td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
@@ -2057,19 +2056,21 @@ msgid ""
 "td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
 "size</td></tr></table>"
 msgstr ""
-"<table><tr><td>Tab</td><td>Následující kolonka</td></tr><tr><td>Shift+Tab</"
-"td><td>Předchozí kolonka</td></tr><tr><td>Šipka dolů</td><td>Následující "
-"řádek</td></tr><tr><td>Šipka nahoru</td><td>Předchozí řádek</td></"
-"tr><tr><td>Ctrl+Mezerník</td><td>Pravopisná doporučení</td></tr><tr><td>Ctrl"
-"+B</td><td>Vyp/zap. tučně</td></tr><tr><td>Ctrl+I</td><td>Vyp/zap. skloněné</"
-"td></tr><tr><td>Ctrl+D</td><td>Rozdělit slovo na pozici kurzoru</td></"
-"tr><tr><td>Ctrl+M</td><td>Spojit s předcházejícím slovem</td></"
-"tr><tr><td>Ctrl+Shift+M</td><td>Spojit s následujícím slovem</td></"
-"tr><tr><td>Ctrl+{Šipka vlevo, vpravo}</td><td>Upravit levý okraj zarovnání</"
-"td></tr><tr><td>Ctrl+Shift+{Šipka vlevo, vpravo}</td><td>Upravit pravý okraj "
-"zarovnání</td></tr><tr><td>Ctrl+{Šipka nahoru, dolů}</td><td>Upravit horní "
-"okraj zarovnání</td></tr><tr><td>Ctrl+Shift+{Šipka nahoru, dolů}</"
-"td><td>Upravit spodní okraj zarovnání</td></tr></table>"
+"<table><tr><td>Tab</td><td>Následující "
+"kolonka</td></tr><tr><td>Shift+Tab</td><td>Předchozí "
+"kolonka</td></tr><tr><td>Šipka dolů</td><td>Následující "
+"řádek</td></tr><tr><td>Šipka nahoru</td><td>Předchozí "
+"řádek</td></tr><tr><td>Ctrl+Mezerník</td><td>Pravopisná "
+"doporučení</td></tr><tr><td>Ctrl+B</td><td>Vyp/zap. "
+"tučně</td></tr><tr><td>Ctrl+I</td><td>Vyp/zap. "
+"skloněné</td></tr><tr><td>Ctrl+D</td><td>Rozdělit slovo na pozici "
+"kurzoru</td></tr><tr><td>Ctrl+M</td><td>Spojit s předcházejícím "
+"slovem</td></tr><tr><td>Ctrl+Shift+M</td><td>Spojit s následujícím "
+"slovem</td></tr><tr><td>Ctrl+{Šipka vlevo, vpravo}</td><td>Upravit levý "
+"okraj zarovnání</td></tr><tr><td>Ctrl+Shift+{Šipka vlevo, vpravo}</td><td>"
+"Upravit pravý okraj zarovnání</td></tr><tr><td>Ctrl+{Šipka nahoru, "
+"dolů}</td><td>Upravit horní okraj zarovnání</td></tr><tr><td>Ctrl+Shift+{"
+"Šipka nahoru, dolů}</td><td>Upravit spodní okraj zarovnání</td></tr></table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
@@ -2138,9 +2139,8 @@ msgid "The following errors occurred:"
 msgstr "Došlo k následujícím chybám:"
 
 #: ../qt/src/SourceManager.cc:248
-#, fuzzy
 msgid "No recent files"
-msgstr "Název zdrojového souboru"
+msgstr "Žádné nedávné soubory"
 
 #: ../qt/src/SourceManager.cc:275
 msgid "Select folder..."
