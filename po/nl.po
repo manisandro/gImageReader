@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-04-16 10:11+0000\n"
+"PO-Revision-Date: 2020-05-02 18:11+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gimagereader/"
 "translations/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0.1-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -2030,14 +2030,13 @@ msgstr "Sneltoetsen"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
-msgstr ""
+msgstr "Regel voor:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:260
 msgid "Lines after:"
-msgstr ""
+msgstr "Regels na:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:440
-#, fuzzy
 msgid ""
 "<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
 "td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
@@ -2055,19 +2054,20 @@ msgid ""
 "td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
 "size</td></tr></table>"
 msgstr ""
-"<table><tr><td>Tab</td><td>Volgende veld</td></tr><tr><td>Shift+Tab</"
-"td><td>Vorige veld</td></tr><tr><td>Pijltje omlaag</td><td>Volgende regel</"
-"td></tr><tr><td>Pijltje omhoog</td><td>Vorige regel</td></tr><tr><td>Ctrl"
-"+spatiebalk</td><td>Spellingcontrolesuggesties</td></tr><tr><td>Ctrl+B</"
-"td><td>Vetgedrukt aan/uit</td></tr><tr><td>Ctrl+I</td><td>Cursief aan/uit</"
-"td></tr><tr><td>Ctrl+D</td><td>Word splitsen vanaf cursorpositie</td></"
-"tr><tr><td>Ctrl+M</td><td>Samenvoegen met vorige woord</td></tr><tr><td>Ctrl"
-"+Shift+M</td><td>Samenvoegen met volgende woord</td></tr><tr><td>Ctrl"
-"+{pijltje naar links,rechts}</td><td>Linkerveldrand aanpassen</td></"
-"tr><tr><td>Ctrl+Shift+{pijltje naar links,rechts}</td><td>Rechterveldrand "
-"aanpassen</td></tr><tr><td>Ctrl+{pijltje omhoog,omlaag}</td><td>Bovenste "
-"veldrand aanpassen</td></tr><tr><td>Ctrl+Shift+{pijltje omhoog,omlaag}</"
-"td><td>Onderste veldrand aanpassen</td></tr></table>"
+"<table><tr><td>Tab</td><td>Volgende veld</td></tr><tr><td>Shift+Tab</td><td>"
+"Vorige veld</td></tr><tr><td>Pijltje omlaag</td><td>Volgende "
+"regel</td></tr><tr><td>Pijltje omhoog</td><td>Vorige regel</td></tr><tr><td>C"
+"trl+spatiebalk</td><td>Spellingcontrolesuggesties</td></tr><tr><td>Ctrl+B</td"
+"><td>Vetgedrukt aan/uit</td></tr><tr><td>Ctrl+I</td><td>Cursief aan/"
+"uit</td></tr><tr><td>Ctrl+D</td><td>Word splitsen vanaf "
+"cursorpositie</td></tr><tr><td>Ctrl+M</td><td>Samenvoegen met vorige "
+"woord</td></tr><tr><td>Ctrl+Shift+M</td><td>Samenvoegen met volgende "
+"woord</td></tr><tr><td>Ctrl+{pijltje naar links,rechts}</td><td>"
+"Linkerveldrand aanpassen</td></tr><tr><td>Ctrl+Shift+{pijltje naar "
+"links,rechts}</td><td>Rechterveldrand aanpassen</td></tr><tr><td>Ctrl+{"
+"pijltje omhoog,omlaag}</td><td>Bovenste veldrand "
+"aanpassen</td></tr><tr><td>Ctrl+Shift+{pijltje omhoog,omlaag}</td><td>"
+"Onderste veldrand aanpassen</td></tr></table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
@@ -2136,9 +2136,8 @@ msgid "The following errors occurred:"
 msgstr "De volgende fouten zijn opgetreden:"
 
 #: ../qt/src/SourceManager.cc:248
-#, fuzzy
 msgid "No recent files"
-msgstr "Bestandsnaam van bron"
+msgstr "Geen recente bestanden"
 
 #: ../qt/src/SourceManager.cc:275
 msgid "Select folder..."
