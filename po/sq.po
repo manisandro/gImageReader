@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-04-24 19:11+0000\n"
+"PO-Revision-Date: 2020-05-09 09:13+0000\n"
 "Last-Translator: Fisnik Shabani <fisnik.shabani@intecsystem.com>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sq/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0.2-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -2058,11 +2058,11 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Shkurtoret e tastierës"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:476
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Besim: %1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2123,14 +2123,12 @@ msgid "The following errors occurred:"
 msgstr "Gabimet e mëposhtme kanë ndodhur:"
 
 #: ../qt/src/SourceManager.cc:248
-#, fuzzy
 msgid "No recent files"
-msgstr "Emri i skedarit burimorë"
+msgstr "Nuk ka skedarë të fundit"
 
 #: ../qt/src/SourceManager.cc:275
-#, fuzzy
 msgid "Select folder..."
-msgstr "Zgjidhni skedarët"
+msgstr "Zgjidhni skedarin..."
 
 #: ../qt/src/SourceManager.cc:374
 msgid "Delete Files"
@@ -2141,24 +2139,23 @@ msgid "Delete the following files?"
 msgstr "Fshini skedarët e mëposhtëm?"
 
 #: ../qt/src/SourceManager.cc:459
-#, fuzzy
 msgid "Open output"
-msgstr "Ruani daljen"
+msgstr "Hapni daljen"
 
 #: ../qt/src/SourceManager.cc:459
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
 msgstr ""
+"Që të dyja, dalja e tekstit dhe hOCR dalja janë gjetur. Cilën dëshironi ta "
+"hapni?"
 
 #: ../qt/src/SourceManager.cc:460
-#, fuzzy
 msgid "Text"
-msgstr "Linja e tekstit"
+msgstr "Tekst"
 
 #: ../qt/src/SourceManager.cc:461
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
