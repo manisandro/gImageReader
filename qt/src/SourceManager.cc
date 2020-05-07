@@ -319,14 +319,22 @@ void SourceManager::addSourceImage(const QImage& image) {
 }
 
 void SourceManager::takeScreenshot() {
-	QPixmap pixmap = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
-	if(pixmap.isNull()) {
-		QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot."));
-		return;
-	}
-	++m_screenshotCount;
-	QString displayname = _("Screenshot %1").arg(m_screenshotCount);
-	savePixmap(pixmap, displayname);
+	MAIN->hide();
+	QApplication::processEvents();
+	QTimer* timer = new QTimer();
+	connect(timer, &QTimer::timeout, [this, timer] {
+		timer->deleteLater();
+		QPixmap pixmap = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
+		MAIN->show();
+		if(pixmap.isNull()) {
+			QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot."));
+			return;
+		}
+		++m_screenshotCount;
+		QString displayname = _("Screenshot %1").arg(m_screenshotCount);
+		savePixmap(pixmap, displayname);
+	});
+	timer->start(250);
 }
 
 void SourceManager::savePixmap(const QPixmap& pixmap, const QString& displayname) {
