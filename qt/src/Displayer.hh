@@ -210,6 +210,7 @@ private:
 	void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
 	void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 	void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 	static void resizeAnchorX(const QPointF& pos, QPointF& anchor, QPointF& /*point*/) {
 		anchor.rx() = pos.x();

@@ -674,9 +674,15 @@ void DisplayerSelection::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
 		}
 		QRectF newRect = QRectF(m_anchor, m_point).normalized().united(m_minRect);
 		setRect(newRect);
-		emit geometryChanged(rect());
 		event->accept();
 	} else {
 		event->ignore();
+	}
+}
+
+void DisplayerSelection::mouseReleaseEvent(QGraphicsSceneMouseEvent* /*event*/) {
+	if(!m_resizeHandlers.isEmpty()) {
+		emit geometryChanged(rect());
+		m_resizeHandlers.clear();
 	}
 }
