@@ -332,7 +332,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.actionOutputReplace, &QAction::triggered, ui.searchFrame, &SearchReplaceFrame::setVisible);
 	connect(ui.actionOutputReplace, &QAction::triggered, ui.searchFrame, &SearchReplaceFrame::clear);
 	connect(ui.actionToggleWConf, &QAction::triggered, this, &OutputEditorHOCR::toggleWConfColumn);
-	connect(ui.actionPreview, &QAction::triggered, this, &OutputEditorHOCR::updatePreview);
+	connect(ui.actionPreview, &QAction::toggled, this, &OutputEditorHOCR::previewToggled);
 	connect(&m_previewTimer, &QTimer::timeout, this, &OutputEditorHOCR::updatePreview);
 	connect(ui.searchFrame, &SearchReplaceFrame::findReplace, this, &OutputEditorHOCR::findReplace);
 	connect(ui.searchFrame, &SearchReplaceFrame::replaceAll, this, &OutputEditorHOCR::replaceAll);
@@ -356,6 +356,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.actionNavigatePrev, &QAction::triggered, this, &OutputEditorHOCR::navigatePrev);
 	connect(ui.actionExpandAll, &QAction::triggered, this, &OutputEditorHOCR::expandItemClass);
 	connect(ui.actionCollapseAll, &QAction::triggered, this, &OutputEditorHOCR::collapseItemClass);
+	connect(MAIN->getDisplayer(), &Displayer::imageChanged, this, &OutputEditorHOCR::sourceChanged);
 
 	setFont();
 }
@@ -1162,6 +1163,27 @@ void OutputEditorHOCR::applySubstitutions(const QMap<QString, QString>& substitu
 
 void OutputEditorHOCR::removeItem() {
 	m_document->removeItem(ui.treeViewHOCR->selectionModel()->currentIndex());
+}
+
+void OutputEditorHOCR::sourceChanged() {
+	int page;
+	QString path = MAIN->getDisplayer()->getCurrentImage(page);
+	// Check if source is in document tree
+	QModelIndex index = m_document->searchPage(path, page);
+	if(!index.isValid()) {
+		ui.actionPreview->setChecked(false);
+	} else {
+		ui.treeViewHOCR->setCurrentIndex(index);
+	}
+}
+
+void OutputEditorHOCR::previewToggled(bool active) {
+	QModelIndex index = ui.treeViewHOCR->currentIndex();
+	if(active && !index.isValid() && m_document->pageCount() > 0) {
+		ui.treeViewHOCR->setCurrentIndex(m_document->indexAtItem(m_document->page(0)));
+	} else {
+		updatePreview();
+	}
 }
 
 void OutputEditorHOCR::updatePreview() {

@@ -68,6 +68,7 @@ public:
 
 signals:
 	void viewportChanged();
+	void imageChanged();
 
 
 public slots:

@@ -151,6 +151,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 	m_sources = sources;
 
 	if(m_sources.isEmpty()) {
+		emit imageChanged();
 		return false;
 	}
 
@@ -260,6 +261,7 @@ bool Displayer::renderImage() {
 	if(m_tool) {
 		if(m_currentSource != oldSource || m_currentSource->page != oldPage) {
 			m_tool->pageChanged();
+			emit imageChanged();
 		}
 		if(oldResolution != m_currentSource->resolution) {
 			double factor = double(m_currentSource->resolution) / double(oldResolution);
