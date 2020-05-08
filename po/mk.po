@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-05-06 11:29+0000\n"
+"PO-Revision-Date: 2020-05-09 09:13+0000\n"
 "Last-Translator: Darija Cholakova <cholakovadarija@gmail.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/mk/>\n"
@@ -194,7 +194,7 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
-msgstr "Префрли излезна рамка"
+msgstr "Прикажи/скриј излезна рамка"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
@@ -339,7 +339,7 @@ msgstr "Извор:"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
-msgstr "Стекнува"
+msgstr "Скенирај"
 
 #: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
@@ -379,7 +379,7 @@ msgstr "Дозволено е само следниве карактери да 
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
-msgstr "Опсег на Страници:"
+msgstr "Опсег на Страници"
 
 #: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
@@ -590,7 +590,7 @@ msgstr "Визуелни помагала"
 
 #: ../gtk/data/OutputEditorText.ui.h:12 ../qt/src/Ui_OutputEditorText.hh:78
 msgid "Draw whitespace"
-msgstr "Исцртај белина"
+msgstr "Исцртај празен простор"
 
 #: ../gtk/data/OutputEditorText.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
@@ -1986,7 +1986,7 @@ msgstr "Автоматско детектирање Распоред"
 
 #: ../qt/data/MainWindow.ui.h:39
 msgid "Toggle Output Pane"
-msgstr "Префрли Излезна Рамка"
+msgstr "Прикажи/скриј излезна рамка"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
@@ -2128,9 +2128,8 @@ msgid "The following errors occurred:"
 msgstr "Се случија следниве грешки:"
 
 #: ../qt/src/SourceManager.cc:248
-#, fuzzy
 msgid "No recent files"
-msgstr "Име на датотека"
+msgstr "Нема скорешни документи"
 
 #: ../qt/src/SourceManager.cc:275
 msgid "Select folder..."
