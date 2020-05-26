@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-05-09 09:13+0000\n"
+"PO-Revision-Date: 2020-05-27 08:41+0000\n"
 "Last-Translator: Fisnik Shabani <fisnik.shabani@intecsystem.com>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sq/>\n"
@@ -343,7 +343,7 @@ msgstr "Burimi:"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
-msgstr ""
+msgstr "Skano"
 
 #: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
@@ -598,7 +598,7 @@ msgstr "Vizato hapësirën e bardhë"
 
 #: ../gtk/data/OutputEditorText.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
-msgstr ""
+msgstr "Largo ndarjet e rreshtit në tekstin e selektuar"
 
 #: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:109
 #: ../qt/src/Ui_OutputEditorText.hh:110
@@ -1432,7 +1432,7 @@ msgstr "Asnjë fjalor drejtshkrimor nuk u gjet për '% 1'."
 
 #: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:149
 msgid "Stripping line breaks..."
-msgstr ""
+msgstr "Duke larguar ndarjet e rreshtit..."
 
 #: ../gtk/src/OutputEditorText.cc:170
 msgid "Check spelling"
@@ -1934,7 +1934,7 @@ msgstr "Fotografi"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
-msgstr ""
+msgstr "Flatbed"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Front"
@@ -2027,15 +2027,15 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:234
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Shkurtesat e tastierës"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
-msgstr ""
+msgstr "Linjat para:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:260
 msgid "Lines after:"
-msgstr ""
+msgstr "Linjat pas:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:440
 msgid ""
@@ -2055,6 +2055,25 @@ msgid ""
 "td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
 "size</td></tr></table>"
 msgstr ""
+"<table><tr><td>Tab</td> <td> Fusha tjetër </td> </tr> <tr> <td> Shift + Tab "
+"</td> <td> Fusha e mëparshme </td> < / tr> <tr> <td> Poshtë </td> <td> Linja "
+"tjetër </td> </tr> <tr> <td> Up </td> <td> Linja e mëparshme </td> </ tr > "
+"<tr> <td> Ctrl + Hapësirë </td> <td> Sugjerime Drejtshkrimi </td> </tr> <tr> "
+"<td> Ctrl + Enter </td> <td> Shtoni fjalë në fjalor </ td > </tr> <tr> <td> "
+"Ctrl + B </td> <td> Ndërroni të guximshme </td> </tr> <tr> <td> Ctrl + I </"
+"td> <td> Ndryshoni italic < / td> </tr> <tr> <td> Ctrl + D </td> <td> Ndani "
+"fjalën në pozicionin e kursorit </td> </tr> <tr> <td> Ctrl + M </td> < td> "
+"Bashkimi me fjalën e mëparshme </td> </tr> <tr> <td> Ctrl + Shift + M </td> "
+"<td> Bashkimi me fjalën tjetër </td> </tr> <tr> <td> Ctrl + Delete </td> "
+"<td> Fshij fjalën </td> </tr> <tr> <td> Ctrl + {Majtas, Djathtas} </td> "
+"<td>Rregulloni skajin e majtë të kutisë lidhëse </td> </ tr> <tr> <td> Ctrl +"
+" Shift + {Majtas, Djathtas td </td> <td> Rregulloni skajin e djathtë të "
+"kutisë lidhëse </td> </tr> <tr> <td> Ctrl + {Lart, Poshtë} </ td> <td> "
+"Rregulloni skajin e sipërm të kutisë lidhëse </td> </tr> <tr> <td> Ctrl + "
+"Shift + {Up, Down Down </td> <td> Rregulloni skajin e poshtëm të kutisë "
+"lidhëse </td> </ tr> <tr> <td> Ctrl ++ </td> <td> Rritja e madhësisë së "
+"fontit </td> </tr> <tr> <td> Ctrl + - </td> <td>Zvogëlimi i madhësisë së "
+"fontit </ td> </ tr> </ table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
@@ -2200,7 +2219,7 @@ msgstr "Pastro listën"
 
 #: ../qt/src/Ui_OutputEditorText.hh:101
 msgid "Strip Line Breaks"
-msgstr ""
+msgstr "Largo ndarjet e rreshtit"
 
 #: ../qt/src/Ui_OutputEditorText.hh:115
 msgid "Save Output"
