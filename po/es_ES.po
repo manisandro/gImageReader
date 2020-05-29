@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-04-08 11:22+0000\n"
-"Last-Translator: Diego de la Hera <delahera@gmail.com>\n"
+"PO-Revision-Date: 2020-05-31 02:41+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/es/>\n"
 "Language: es_ES\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -937,14 +937,12 @@ msgid "There was no unsaved work."
 msgstr "No hay trabajos sin guardar."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
-#, fuzzy
 msgid "Failed to obtain backtrace. Is GDB installed?"
-msgstr "Fallo al obtener traza inversa del fallo. ¿Está instalado gdb?"
+msgstr "No se pudo obtener el seguimiento regresivo. ¿Se ha instalado GDB?"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
-#, fuzzy
 msgid "Page %1"
-msgstr "Página: %1"
+msgstr "Página %1"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid "Failed to load image"
@@ -1260,19 +1258,21 @@ msgstr "Abrir fichero hOCR"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:929 ../qt/src/OutputEditorText.cc:256
 #: ../qt/src/SourceManager.cc:156
-#, fuzzy
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "Los siguientes ficheros no se pueden abrir: %1"
+msgstr ""
+"No se pudieron abrir los archivos siguientes:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
 #: ../qt/src/hocr/OutputEditorHOCR.cc:932
-#, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "El fichero no parece contener HTML válido de hOCR: %1"
+msgstr ""
+"Los archivos siguientes no contienen HTML de hOCR válido:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:935 ../qt/src/OutputEditorText.cc:257
@@ -1627,19 +1627,18 @@ msgid "Enter password for file '%1':"
 msgstr "Introduzca la contraseña del archivo «%1»:"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
-#, fuzzy
 msgid "PDF with text"
 msgstr "PDF con texto"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
-#, fuzzy
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
-"Estos archivos PDF ya contienen texto:\n"
-"%1"
+"El archivo PDF ya contiene texto:\n"
+"%1\n"
+"¿Quiere abrirlo de todos modos?"
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:264
 msgid "Images and PDFs"
@@ -1827,7 +1826,7 @@ msgstr "Sí"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "Sí a todo"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1835,7 +1834,7 @@ msgstr "No"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "No a todo"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
@@ -1864,29 +1863,28 @@ msgid "License"
 msgstr "Licencia"
 
 #: ../qt/data/BatchModeDialog.ui.h:1
-#, fuzzy
 msgid "Batch Mode"
-msgstr "Distinguir mayúsculas de minúsculas"
+msgstr "Modo por lotes"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "Añadir antes del texto de salida:"
+msgstr "Anteponer números de página al texto de salida"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "Salida existente:"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"En el modo por lotes, cada fuente de entrada se procesa separadamente y la "
+"salida se guarda junto con el archivo de entrada."
 
 #: ../qt/data/BatchModeDialog.ui.h:5
-#, fuzzy
 msgid "Autodetect page layout"
-msgstr "Detectar la disposición automáticamente"
+msgstr "Detectar disposición de páginas automáticamente"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -1937,7 +1935,7 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Miniaturas"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2014,7 +2012,7 @@ msgstr "Vertical"
 
 #: ../qt/data/PdfExportDialog.ui.h:9
 msgid "Landscape"
-msgstr "Apaisado"
+msgstr "Horizontal"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:139
 msgid "Failed to write to file"
@@ -2027,18 +2025,22 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html><head/><body><ul><li>PoDoFo: ofrece más opciones de compresión de "
+"imágenes, pero no maneja secuencias de órdenes complejas.</li><li>QPrinter: "
+"admite solo compresión JPEG para guardar imágenes, pero admite secuencias "
+"complejas.</li></ul></body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:234
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Atajos de teclado"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
-msgstr ""
+msgstr "Renglones antes:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:260
 msgid "Lines after:"
-msgstr ""
+msgstr "Renglones después:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:440
 msgid ""
@@ -2058,14 +2060,34 @@ msgid ""
 "td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
 "size</td></tr></table>"
 msgstr ""
+"<table><tr><td>Tab</td><td>Campo siguiente</td></tr><tr><td>Mayús+Tab</"
+"td><td>Campo anterior</td></tr><tr><td>Abajo</td><td>Renglón "
+"siguiente</td></tr><tr><td>Arriba</td><td>Renglón "
+"anterior</td></tr><tr><td>Ctrl+Espacio</td><td>Sugerencias de "
+"ortografía</td></tr><tr><td>Ctrl+Intro</td><td>Añadir palabra a "
+"diccionario</td></tr><tr><td>Ctrl+B</td><td>Activar o desactivar "
+"negrita</td></tr><tr><td>Ctrl+I</td><td>Activar o desactivar "
+"itálica</td></tr><tr><td>Ctrl+D</td><td>Dividir palabra en la posición del "
+"cursor</td></tr><tr><td>Ctrl+M</td><td>Combinar con la palabra "
+"anterior</td></tr><tr><td>Ctrl+Mayús+M</td><td>Combinar con la palabra "
+"siguiente</td></tr><tr><td>Ctrl+Supr</td><td>Eliminar "
+"palabra</td></tr><tr><td>Ctrl+{Izquierda,Derecha}</td><td>Ajustar borde "
+"superior de caja "
+"delimitadora</td></tr><tr><td>Ctrl+Mayús+{Izquierda,Derecha}</td><td>Ajustar "
+"borde derecho de caja delimitadora</td></tr><tr><td>Ctrl+{Arriba,Abajo}</"
+"td><td>Ajustar borde superior de caja "
+"delimitadora</td></tr><tr><td>Ctrl+Mayús+{Arriba,Abajo}</td><td>Ajustar "
+"borde inferior de caja delimitadora</td></tr><tr><td>Ctrl++</td><td>Aumentar "
+"tamaño de letra</td></tr><tr><td>Ctrl+-</td><td>Reducir tamaño de "
+"letra</td></tr></table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Atajos de teclado"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:476
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Confianza: %1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2075,12 +2097,11 @@ msgstr "Guardar como texto hOCR"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:111
 #: ../qt/src/Ui_OutputEditorText.hh:106
 msgid "Find and Replace"
-msgstr "Buscar y sustituir"
+msgstr "Buscar y reemplazar"
 
 #: ../qt/src/MainWindow.cc:317
-#, fuzzy
 msgid "Multiple sources (%1)"
-msgstr "Múltiples orígenes"
+msgstr "Varios orígenes (%1)"
 
 #: ../qt/src/MainWindow.cc:611
 msgid ""
@@ -2091,88 +2112,73 @@ msgstr ""
 "%1"
 
 #: ../qt/src/OutputEditorText.cc:41
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "Página: %1"
+msgstr "Página: %1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
-msgstr ""
+msgstr "Modo por lotes…"
 
 #: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "Sobrescribir salida existente"
 
 #: ../qt/src/Recognizer.cc:87
 msgid "Skip processing source"
-msgstr ""
+msgstr "Omitir origen de procesamiento"
 
 #: ../qt/src/Recognizer.cc:234
-#, fuzzy
 msgid "- Page %1: failed to render page"
-msgstr ""
-"\n"
-"\tPágina %1: fallo al representar la página"
+msgstr "- Página %1: fallo al representar la página"
 
 #: ../qt/src/Recognizer.cc:346
-#, fuzzy
 msgid "- %1:%2: failed to render page"
-msgstr ""
-"\n"
-"\tPágina %1: fallo al representar la página"
+msgstr "- %1:%2: fallo al representar la página"
 
 #: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "- %1: la salida ya existe; se omite"
 
 #: ../qt/src/Recognizer.cc:363
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "Fallo al guardar salida"
+msgstr "-%1: fallo al guardar el archivo de salida"
 
 #: ../qt/src/Recognizer.cc:418
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "Ocurrieron los siguientes errores: %1"
+msgstr "Ocurrieron los siguientes errores:"
 
 #: ../qt/src/SourceManager.cc:248
-#, fuzzy
 msgid "No recent files"
-msgstr "Nombre del archivo original"
+msgstr "No hay archivos recientes"
 
 #: ../qt/src/SourceManager.cc:275
-#, fuzzy
 msgid "Select folder..."
-msgstr "Seleccionar ficheros"
+msgstr "Seleccionar carpeta…"
 
 #: ../qt/src/SourceManager.cc:374
-#, fuzzy
 msgid "Delete Files"
-msgstr "¿Quiere eliminar el fichero?"
+msgstr "Eliminar archivos"
 
 #: ../qt/src/SourceManager.cc:374
 msgid "Delete the following files?"
-msgstr ""
+msgstr "¿Quiere eliminar los archivos siguientes?"
 
 #: ../qt/src/SourceManager.cc:459
-#, fuzzy
 msgid "Open output"
-msgstr "Guardar la salida"
+msgstr "Abrir salida"
 
 #: ../qt/src/SourceManager.cc:459
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr ""
+msgstr "Se encontraron tanto un texto como una salida hOCR. ¿Cuál quiere abrir?"
 
 #: ../qt/src/SourceManager.cc:460
-#, fuzzy
 msgid "Text"
-msgstr "Línea de texto"
+msgstr "Texto"
 
 #: ../qt/src/SourceManager.cc:461
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2200,9 +2206,8 @@ msgstr "Modo de OCR:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:188
-#, fuzzy
 msgid "Add folder"
-msgstr "Añadir palabra"
+msgstr "Añadir carpeta"
 
 #: ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
