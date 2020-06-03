@@ -31,6 +31,9 @@
 #include <enchant-provider.h>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#if TESSERACT_MAJOR_VERSION >= 5
+#include <tesseract/strngs.h>
+#endif
 #include <tesseract/genericvector.h>
 #undef USE_STD_NAMESPACE
 
