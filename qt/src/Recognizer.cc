@@ -86,7 +86,7 @@ Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	m_batchDialogUi.comboBoxExisting->addItem(_("Overwrite existing output"), BatchOverwriteOutput);
 	m_batchDialogUi.comboBoxExisting->addItem(_("Skip processing source"), BatchSkipSource);
 
-	ui.toolButtonRecognize->setMenu(MAIN->getRecognitionMenu());
+	ui.toolButtonLanguages->setMenu(MAIN->getRecognitionMenu());
 
 	connect(ui.toolButtonRecognize, &QToolButton::clicked, this, &Recognizer::recognizeButtonClicked);
 	connect(currentPageAction, &QAction::triggered, this, &Recognizer::recognizeCurrentPage);

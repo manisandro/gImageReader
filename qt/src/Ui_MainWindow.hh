@@ -33,6 +33,7 @@ public:
 	QToolBar* toolBarSources;
 	QToolButton* toolButtonRotation;
 	QToolButton* toolButtonRecognize;
+	QToolButton* toolButtonLanguages;
 	QToolButton* toolButtonAppMenu;
 	QToolButton* toolButtonSourceAdd;
 	QWidgetAction* actionRotate;
@@ -144,13 +145,19 @@ public:
 
 		actionAutodetectLayout->setVisible(false);
 
-		// Recognize button
+		// Recognize and language button
 		toolButtonRecognize = new QToolButton(MainWindow);
 		toolButtonRecognize->setIcon(QIcon::fromTheme("insert-text"));
 		toolButtonRecognize->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 		toolButtonRecognize->setFont(smallFont);
-		toolButtonRecognize->setPopupMode(QToolButton::MenuButtonPopup);
 		toolBarMain->insertWidget(actionToggleOutputPane, toolButtonRecognize);
+
+		toolButtonLanguages = new QToolButton(MainWindow);
+		toolButtonLanguages->setIcon(QIcon::fromTheme("applications-education-language"));
+		toolButtonLanguages->setPopupMode(QToolButton::InstantPopup);
+		toolBarMain->insertWidget(actionToggleOutputPane, toolButtonLanguages);
+
+		toolBarMain->insertSeparator(actionToggleOutputPane);
 
 		// Spacer before app menu button
 		QWidget* toolBarMainSpacer = new QWidget(toolBarMain);
