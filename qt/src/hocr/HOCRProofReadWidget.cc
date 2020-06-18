@@ -287,6 +287,7 @@ HOCRProofReadWidget::HOCRProofReadWidget(QTreeView* treeView, QWidget* parent)
 	connect(document, &HOCRDocument::rowsRemoved, this, [this] { updateWidget(); });
 	connect(document, &HOCRDocument::rowsInserted, this, [this] { updateWidget(); });
 	connect(document, &HOCRDocument::rowsMoved, this, [this] { updateWidget(); });
+	connect(MAIN->getDisplayer(), &Displayer::imageChanged, this, &HOCRProofReadWidget::clear);
 	connect(MAIN->getDisplayer(), &Displayer::viewportChanged, this, &HOCRProofReadWidget::repositionWidget);
 	connect(MAIN->getSourceManager(), &SourceManager::sourceChanged, this, &HOCRProofReadWidget::hide);
 	connect(m_spinLinesBefore, qOverload<int>(&QSpinBox::valueChanged), this, [this] { updateWidget(true); });
