@@ -62,10 +62,6 @@ private:
 		if(misspelled) {
 			styles.append( "color: red;" );
 		}
-		QString confStyle = m_proofReadWidget->confidenceStyle(m_wordItem->getTitleAttributes()["x_wconf"].toInt());
-		if(!confStyle.isEmpty()) {
-			styles.append(confStyle);
-		}
 		return styles.isEmpty() ? "" : QString("QLineEdit {%1}").arg(styles.join(" "));
 	}
 
