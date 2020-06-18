@@ -281,7 +281,11 @@ QVariant FileTreeModel::data(const QModelIndex& index, int role) const {
 			return isDir ? m_iconProvider.icon(QFileIconProvider::Folder) : m_iconProvider.icon(QFileInfo(node->path));
 #endif
 		} else if(role == Qt::ToolTipRole) {
+#ifdef Q_OS_WIN32
+			return node->path.mid(1); // Omit leading /
+#else
 			return node->path;
+#endif
 		}
 	} else if(index.column() == 1) {
 		if(role == Qt::DecorationRole) {
