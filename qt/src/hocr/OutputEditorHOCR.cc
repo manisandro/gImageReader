@@ -261,7 +261,8 @@ void OutputEditorHOCR::HOCRBatchProcessor::appendOutput(QIODevice* dev, tesserac
 
 	QDomElement pageDiv = doc.firstChildElement("div");
 	QMap<QString, QString> attrs = HOCRItem::deserializeAttrGroup(pageDiv.attribute("title"));
-	attrs["image"] = QString("'%1'").arg(pageInfos.filename);
+	// This works because in batch mode the output is created next to the source image
+	attrs["image"] = QString("'./%1'").arg(QFileInfo(pageInfos.filename).fileName());
 	attrs["ppageno"] = QString::number(pageInfos.page);
 	attrs["rot"] = QString::number(pageInfos.angle);
 	attrs["res"] = QString::number(pageInfos.resolution);
