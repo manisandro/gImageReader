@@ -284,6 +284,10 @@ QModelIndex HOCRDocument::splitItemText(const QModelIndex& itemIndex, int pos) {
 	if(!item || item->itemClass() != "ocrx_word") {
 		return QModelIndex();
 	}
+	// Don't split if it would create empty words
+	if(pos == 0 || pos == item->text().length()) {
+		return itemIndex;
+	}
 	// Compute new bounding box using font metrics with default font
 	QFontMetrics metrics((QFont()));
 	double fraction = metrics.horizontalAdvance(item->text().left(pos)) / double(metrics.horizontalAdvance(item->text()));
