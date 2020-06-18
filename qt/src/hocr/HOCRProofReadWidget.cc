@@ -183,7 +183,7 @@ private:
 			document-> removeItem(index);
 		} else if(ev->key() == Qt::Key_Plus && ev->modifiers() & Qt::ControlModifier) {
 			m_proofReadWidget->adjustFontSize(+1);
-		} else if(ev->key() == Qt::Key_Minus && ev->modifiers() & Qt::ControlModifier) {
+		} else if((ev->key() == Qt::Key_Minus || ev->key() == Qt::Key_Underscore) && ev->modifiers() & Qt::ControlModifier) {
 			m_proofReadWidget->adjustFontSize(-1);
 		} else {
 			QLineEdit::keyPressEvent(ev);
