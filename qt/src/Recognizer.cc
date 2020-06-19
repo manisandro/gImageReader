@@ -213,6 +213,22 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 	if(!tess) {
 		return;
 	}
+	bool contains = false;
+	for(int page : pages) {
+		QString source;
+		int sourcePage;
+		if(MAIN->getDisplayer()->resolvePage(page, source, sourcePage)) {
+			if(MAIN->getOutputEditor()->containsSource(source, sourcePage)) {
+				contains = true;
+				break;
+			}
+		}
+	}
+	if(contains) {
+		if(QMessageBox::No == QMessageBox::question(MAIN, tr("Source already recognized"), tr("One or more selected sources were aready recognized. Proceed anyway?"))) {
+			return;
+		}
+	}
 	QStringList errors;
 	OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
 	ProgressMonitor monitor(pages.size());

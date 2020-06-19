@@ -63,6 +63,7 @@ public:
 	virtual BatchProcessor* createBatchProcessor(const QMap<QString, QVariant>& options) const = 0;
 
 	virtual bool getModified() const = 0;
+	virtual bool containsSource(const QString& source, int sourcePage) const { return false; }
 
 public slots:
 	virtual void onVisibilityChanged(bool /*visible*/) {}

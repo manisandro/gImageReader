@@ -52,6 +52,7 @@ public:
 		return m_scale;
 	}
 	QString getCurrentImage(int& page) const;
+	bool resolvePage(int page, QString& source, int& sourcePage) const;
 	QImage getImage(const QRectF& rect);
 	QRectF getSceneBoundingRect() const;
 	QPointF mapToSceneClamped(const QPoint& p) const;

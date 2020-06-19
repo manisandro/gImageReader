@@ -316,6 +316,16 @@ QString Displayer::getCurrentImage(int& page) const {
 	return m_pageMap[ui.spinBoxPage->value()].first ? m_pageMap[ui.spinBoxPage->value()].first->path : "";
 }
 
+bool Displayer::resolvePage(int page, QString& source, int& sourcePage) const {
+	auto it = m_pageMap.find(page);
+	if(it == m_pageMap.end()) {
+		return false;
+	}
+	source = it.value().first->path;
+	sourcePage = it.value().second;
+	return true;
+}
+
 bool Displayer::hasMultipleOCRAreas() {
 	return m_tool->hasMultipleOCRAreas();
 }

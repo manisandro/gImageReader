@@ -59,6 +59,7 @@ public:
 	bool getModified() const override {
 		return m_modified;
 	}
+	bool containsSource(const QString& source, int sourcePage) const override;
 
 public slots:
 	bool open(const QString& filename) override { return open(InsertMode::Replace, {filename}); }
