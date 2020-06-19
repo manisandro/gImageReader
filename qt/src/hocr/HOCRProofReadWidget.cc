@@ -208,7 +208,7 @@ HOCRProofReadWidget::HOCRProofReadWidget(QTreeView* treeView, QWidget* parent)
 	QWidget* linesWidget = new QWidget();
 	m_linesLayout = new QVBoxLayout();
 	m_linesLayout->setContentsMargins(0, 0, 0, 0);
-	m_linesLayout->setSpacing(2);
+	m_linesLayout->setSpacing(0);
 	linesWidget->setLayout(m_linesLayout);
 	layout->addWidget(linesWidget);
 
@@ -387,6 +387,7 @@ void HOCRProofReadWidget::repositionWidget() {
 		frameXmin = std::min(frameXmin, bottomLeft.x());
 	}
 	QPoint bottomLeft = displayer->mapFromScene(m_currentLine->bbox().translated(sceneCorner).bottomLeft());
+	QPoint topLeft = displayer->mapFromScene(m_currentLine->bbox().translated(sceneCorner).topLeft());
 	int frameY = bottomLeft.y();
 
 	// Recompute font sizes so that text matches original as closely as possible
@@ -425,10 +426,21 @@ void HOCRProofReadWidget::repositionWidget() {
 		}
 		lineWidget->setFixedHeight(fm.height() + 10);
 	}
-
+	frameY += 10;
 	updateGeometry();
-	move(frameXmin - layout()->spacing(), frameY + 10);
 	resize(frameXmax - frameXmin + 2 + 2 * layout()->spacing(), m_currentLines.size() * (fm.height() + 10) + 2 * layout()->spacing() + m_controlsWidget->sizeHint().height());
+
+	// Place widget above line if it overflows page
+	QModelIndex current = m_treeView->currentIndex();
+	HOCRDocument* document = static_cast<HOCRDocument*>(m_treeView->model());
+	const HOCRItem* item = document->itemAtIndex(current);
+	QRect sceneBBox = item->page()->bbox().translated(sceneCorner);
+	double maxy = displayer->mapFromScene(sceneBBox.bottomLeft()).y();
+	if(frameY + height() - maxy > 0) {
+		frameY = topLeft.y() - height();
+	}
+
+	move(frameXmin - layout()->spacing(), frameY);
 	show();
 }
 
