@@ -8,17 +8,20 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-07-03 04:41+0000\n"
+"Last-Translator: Prasanta-Hembram <Prasantahembram720@gmail.com>\n"
+"Language-Team: Santali <https://hosted.weblate.org/projects/gimagereader/"
+"translations/sat/>\n"
 "Language: sat\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr ""
+msgstr "OCR ᱱᱮᱦᱚᱨ ᱥᱟᱠᱟᱢ"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:163
 msgid "Redetect Languages"
@@ -37,7 +40,7 @@ msgstr ""
 #: ../gtk/src/MainWindow.cc:501 ../qt/src/MainWindow.cc:511
 #: ../qt/src/Ui_MainWindow.hh:174
 msgid "Help"
-msgstr ""
+msgstr "ᱜᱚᱸᱲᱚᱸ"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:177
