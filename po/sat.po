@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-07-03 04:41+0000\n"
+"PO-Revision-Date: 2020-07-06 04:19+0000\n"
 "Last-Translator: Prasanta-Hembram <Prasantahembram720@gmail.com>\n"
 "Language-Team: Santali <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sat/>\n"
@@ -25,16 +25,16 @@ msgstr "OCR ᱱᱮᱦᱚᱨ ᱥᱟᱠᱟᱢ"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:163
 msgid "Redetect Languages"
-msgstr ""
+msgstr "ᱟᱲᱟᱝ ᱫᱩᱦᱲᱟ ᱯᱟᱱᱛᱮ"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:166
 msgid "Manage Languages"
-msgstr ""
+msgstr "ᱟᱲᱟᱝ ᱠᱚ ᱢᱮᱱᱮᱡ"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:169
 msgid "Preferences"
-msgstr ""
+msgstr "ᱠᱩᱥᱤ ᱠᱚ"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:501 ../qt/src/MainWindow.cc:511
@@ -45,18 +45,18 @@ msgstr "ᱜᱚᱸᱲᱚᱸ"
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:177
 msgid "About"
-msgstr ""
+msgstr "ᱵᱟᱵᱚᱛ"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
-msgstr ""
+msgstr "ᱵᱟᱹᱜᱤ"
 
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:48
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
 #: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
 #: ../qt/data/ConfigDialog.ui.h:26
 msgid "OK"
-msgstr ""
+msgstr "ᱴᱷᱤᱠ"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
