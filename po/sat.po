@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-07-06 04:19+0000\n"
+"PO-Revision-Date: 2020-07-15 07:41+0000\n"
 "Last-Translator: Prasanta-Hembram <Prasantahembram720@gmail.com>\n"
 "Language-Team: Santali <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sat/>\n"
@@ -60,15 +60,15 @@ msgstr "ᱴᱷᱤᱠ"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
-msgstr ""
+msgstr "ᱟᱨᱡᱟᱣ ᱯᱮᱱ ᱥᱮᱪᱮᱫᱚᱜ:"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
-msgstr ""
+msgstr "ᱜᱤᱛᱤᱡ ᱛᱮᱭᱟᱜ"
 
 #: ../gtk/data/ConfigDialog.ui.h:6
 msgid "Vertical"
-msgstr ""
+msgstr "ᱛᱤᱝᱜᱩ ᱛᱮᱭᱟᱜ"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
@@ -76,23 +76,23 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr ""
+msgstr "ᱟᱡ ᱛᱮᱜᱮ ᱱᱟᱶᱟ ᱯᱨᱚᱜᱨᱟᱢ ᱵᱷᱚᱨᱥᱚᱱ ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ ᱢᱮ"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr ""
+msgstr "ᱢᱟᱲᱟᱝ ᱡᱷᱚᱱ ᱢᱮᱱᱟᱜ ᱚᱱᱚᱨᱚᱢ:"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
-msgstr ""
+msgstr "ᱟᱨᱦᱚᱸ ᱢᱮᱱᱟᱜ ᱚᱱᱚᱨᱚᱢ:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr ""
+msgstr "Tesseract ᱟᱰᱟᱝ ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱨᱮᱫ ᱨᱮᱭᱟᱜ ᱥᱟᱵᱟᱫ ᱮᱛᱚᱦᱚᱵ"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
-msgstr ""
+msgstr "ᱥᱟᱵᱟᱫ ᱮᱛᱚᱦᱚᱵ"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
