@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
 "PO-Revision-Date: 2020-07-20 15:41+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pt/>\n"
 "Language: pt\n"
@@ -20,11 +20,11 @@ msgstr "Aplicação de OCR"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:163
 msgid "Redetect Languages"
-msgstr "Redetectar idiomas"
+msgstr "Redetetar idiomas"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:166
 msgid "Manage Languages"
-msgstr "Definir idiomas"
+msgstr "Gerir idiomas"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:169
@@ -143,11 +143,11 @@ msgstr "Caminhos de utilizador"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr "Abrir automaticamente documentos exportados com o aplicativo padrão"
+msgstr "Abrir automaticamente documentos exportados com a aplicação padrão"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
-msgstr "Regenerar backtrace"
+msgstr "Recriar backtrace"
 
 #: ../gtk/data/CrashHandler.ui.h:3
 #, no-c-format
@@ -160,13 +160,13 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"<b>O app travou</b>\n"
+"<b>A aplicação terminou</b>\n"
 "\n"
-"Pedimos desculpas pela inconveniência. Para ajudar a melhorar esta "
-"aplicação, por favor envie um relatório de erro para <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Tente descrever o que estava fazendo antes do app travar. Inclua também "
-"a informação abaixo. Obrigado."
+"Lamentamos o incómodo. Para nos ajudar a melhorar a aplicação, deve reportar "
+"o erro para <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%"
+"20Crash\">manisandro@gmail.com</a>. Tente descrever o que estava a fazer "
+"quando a aplicações encerrou. Tembém deve incluir a informação abaixo. "
+"Obrigado."
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -190,11 +190,11 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
-msgstr "Alternar exibição do painel de saída"
+msgstr "Comutar painel de saída"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
-msgstr "Girar a página atual"
+msgstr "Rodar página atual"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
@@ -210,15 +210,15 @@ msgstr "Colar"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:191
 msgid "Take Screenshot"
-msgstr "Capturar o ecrã"
+msgstr "Obter captura de ecrã"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:24
 msgid "Zoom in"
-msgstr "Aumentar zoom"
+msgstr "Ampliar"
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/data/MainWindow.ui.h:26
 msgid "Zoom out"
-msgstr "Diminuir zoom"
+msgstr "Reduzir"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/data/MainWindow.ui.h:28
 msgid "Normal size"
@@ -248,7 +248,7 @@ msgstr "Selecionar página"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
-msgstr "Controles de imagem"
+msgstr "Controlos de imagem"
 
 #: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:159
 msgid "Plain text"
@@ -260,7 +260,7 @@ msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:38
 msgid "Autodetect layout"
-msgstr "Detectar layout automaticamente"
+msgstr "Detetar disposição automaticamente"
 
 #: ../gtk/data/MainWindow.ui.h:19
 msgid "<small>Recognize all</small>"
@@ -268,7 +268,7 @@ msgstr "<small>Reconhecer tudo</small>"
 
 #: ../gtk/data/MainWindow.ui.h:20
 msgid "Select language"
-msgstr "Escolher idioma"
+msgstr "Selecionar idioma"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:196
 msgid "Add images"
@@ -301,7 +301,7 @@ msgstr "Aparelho:"
 #: ../gtk/data/MainWindow.ui.h:28 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:55
 msgid "Refresh"
-msgstr "Atualizar"
+msgstr "Recarregar"
 
 #: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:10
 msgid "Output:"
@@ -355,15 +355,15 @@ msgstr "Inverter cores"
 
 #: ../gtk/data/MainWindow.ui.h:41
 msgid "A graphical frontend to tesseract-ocr"
-msgstr "Uma interface gráfica para o tesseract-ocr"
+msgstr "Uma interface gráfica para tesseract-ocr"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr "Lista branca / lista negra de caracteres"
+msgstr "Lista branca/lista negra de caracteres"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr "Excluir estes caracteres de serem reconhecidos (lista negra):"
+msgstr "Excluir estes caracteres do reconhecimento (lista negra):"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:3
 msgid "Enter a string of characters..."
@@ -371,9 +371,7 @@ msgstr "Digite uma cadeia de caracteres..."
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
-"Permitr apenas que os seguintes caracteres a serem reconhecidos (lista "
-"branca):"
+msgstr "Permitir apenas o reconhecimento destes caracteres (lista branca):"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -398,7 +396,7 @@ msgstr "Página inteira"
 
 #: ../gtk/data/MainWindow.ui.h:53 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
-msgstr "Detectar automaticamente"
+msgstr "Deteção automática"
 
 #: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
@@ -426,7 +424,7 @@ msgstr "Múltiplas páginas..."
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:695
 msgid "Add Word"
-msgstr "Adicionar Palavra"
+msgstr "Adicionar palavra"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:695
 msgid "Enter word:"
@@ -528,7 +526,7 @@ msgstr "Expandir tudo"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:828
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Collapse all"
-msgstr "Dobrar tudo"
+msgstr "Recolher tudo"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:24
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:182
@@ -543,7 +541,7 @@ msgstr "Origem"
 #. Output insert mode
 #: ../gtk/data/OutputEditorText.ui.h:1 ../qt/src/Ui_OutputEditorText.hh:52
 msgid "Append to current text"
-msgstr "Acrescentar no texto atual"
+msgstr "Juntar ao texto atual"
 
 #: ../gtk/data/OutputEditorText.ui.h:2 ../qt/src/Ui_OutputEditorText.hh:53
 msgid "Insert at cursor"
@@ -576,11 +574,11 @@ msgstr "Juntar palavras com hífen"
 
 #: ../gtk/data/OutputEditorText.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:72
 msgid "Collapse whitespace"
-msgstr "Juntar espaços em branco"
+msgstr "Recolher espaços em branco"
 
 #: ../gtk/data/OutputEditorText.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:74
 msgid "Preserve paragraphs"
-msgstr "Preservar parágrafos"
+msgstr "Manter parágrafos"
 
 #: ../gtk/data/OutputEditorText.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:76
 msgid "Visual aids"
@@ -634,35 +632,35 @@ msgstr "Qualidade de compressão:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
 msgid "DPI:"
-msgstr "DPI:"
+msgstr "PPP:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr "Algoritmo de pontilhamento:"
+msgstr "Algoritmo de pontilhado:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
-msgstr "Configurações de imagem:"
+msgstr "Definições de imagem:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
 msgid "Uniformize line and word spacing"
-msgstr "Homogenizar a linha e espaçamento entre palavras"
+msgstr "Uniformizar linha e espaçamento entre palavras"
 
 #: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
 msgid "Override font family:"
-msgstr "Sobrescrever a família da fonte:"
+msgstr "Substituir tipo de letra:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
 msgid "Fallback font family:"
-msgstr "Família de fonte fallback:"
+msgstr "Tipo de letra de recurso:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
 msgid "Override font size:"
-msgstr "Sobrescrever o tamanho da fonte:"
+msgstr "Substituir tamanho do tipo de letra:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
-msgstr "Escala de fonte:"
+msgstr "Escala do tipo de letra:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
 msgid "pt"
@@ -670,19 +668,19 @@ msgstr "pt"
 
 #: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
 msgid "Preserve spaces wider than:"
-msgstr "Preserve espaços mais largos do que:"
+msgstr "Manter espaços mais largos do que:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:20 ../qt/data/PdfExportDialog.ui.h:24
 msgid "characters"
-msgstr "letras"
+msgstr "caracteres"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Sanitize hyphens before line breaks"
-msgstr "Limpar hífens antes de quebras de linha"
+msgstr "Limpar hífenes antes de quebras de linha"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
-msgstr "Configurações de texto:"
+msgstr "Definições de texto:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:23 ../qt/data/PdfExportDialog.ui.h:10
 msgid "Paper size:"
@@ -698,7 +696,7 @@ msgstr "Altura"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
 msgid "Treat image sources as having true DPI:"
-msgstr "Tratar as fontes de imagem como tendo DPI verdadeiro:"
+msgstr "Tratar fontes da imagem como tendo PPP verdadeiros:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
@@ -718,7 +716,7 @@ msgstr "Confirmar palavra-passe:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:32
 msgid "Encryption (optional):"
-msgstr "Criptografia (opcional):"
+msgstr "Cifra (opcional):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:36
 msgid "Author:"
@@ -805,7 +803,7 @@ msgstr "Reconhecer para a área de transferência"
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:242
 msgid "Save as image"
-msgstr "Gravar como imagem"
+msgstr "Guardar como imagem"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:2 ../qt/src/SubstitutionsManager.cc:38
 #: ../qt/src/SubstitutionsManager.cc:39
@@ -844,7 +842,7 @@ msgstr "Fechar"
 
 #: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:45
 msgid "Tessdata Manager"
-msgstr "Gerenciador de Tessdata"
+msgstr "Gestor Tessdata"
 
 #: ../gtk/data/TessdataManager.ui.h:5 ../qt/src/TessdataManager.cc:47
 msgid "Manage installed languages:"
@@ -852,7 +850,7 @@ msgstr "Gerir idiomas instalados:"
 
 #: ../gtk/src/Acquirer.cc:79 ../qt/src/Acquirer.cc:70
 msgid "scan.png"
-msgstr "scan.png"
+msgstr "imagem.png"
 
 #: ../gtk/src/Acquirer.cc:91 ../qt/src/Acquirer.cc:85
 msgid "Images"
@@ -872,7 +870,7 @@ msgstr "A digitalização falhou"
 
 #: ../gtk/src/Acquirer.cc:133 ../qt/src/Acquirer.cc:122
 msgid "No scanners were detected."
-msgstr "Nenhum digitalizador foi detectado."
+msgstr "Não foi detetado qualquer digitalizador."
 
 #: ../gtk/src/Acquirer.cc:150 ../gtk/src/Acquirer.cc:167
 #: ../qt/src/Acquirer.cc:136 ../qt/src/Acquirer.cc:153
@@ -885,7 +883,7 @@ msgstr "Abrindo aparelho..."
 
 #: ../gtk/src/Acquirer.cc:165 ../qt/src/Acquirer.cc:151
 msgid "Setting options..."
-msgstr "definindo opções..."
+msgstr "Definindo opções..."
 
 #: ../gtk/src/Acquirer.cc:169 ../qt/src/Acquirer.cc:155
 msgid "Getting parameters..."
@@ -897,7 +895,7 @@ msgstr "Transferindo dados..."
 
 #: ../gtk/src/Acquirer.cc:178 ../qt/src/Acquirer.cc:164
 msgid "Canceling scan..."
-msgstr "Cancelando a digitalização..."
+msgstr "Cancelando digitalização..."
 
 #: ../gtk/src/Config.cc:49 ../qt/data/ConfigDialog.ui.h:7
 msgid "Filename prefix"
@@ -918,19 +916,19 @@ msgstr "Script"
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:41
 #: ../qt/src/CrashHandler.cc:36
 msgid "Crash Handler"
-msgstr "Gerenciador de erros"
+msgstr "Gestor de erros"
 
 #: ../gtk/src/CrashHandler.cc:43 ../qt/src/CrashHandler.cc:31
 msgid "Your work has been saved under <b>%1</b>."
-msgstr "O seu trabalho foi salvo em <b>%1</b>."
+msgstr "O seu trabalho foi guardado em <b>%1</b>."
 
 #: ../gtk/src/CrashHandler.cc:45 ../qt/src/CrashHandler.cc:33
 msgid "There was no unsaved work."
-msgstr "Não havia trabalho não salvo."
+msgstr "Não existem trabalhos por guardar."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
 msgid "Failed to obtain backtrace. Is GDB installed?"
-msgstr "Falha ao obter o backtrace. Está o GDB instalado?"
+msgstr "Falha ao obter 'backtrace'. GDB instalado?"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
 msgid "Page %1"
@@ -954,11 +952,11 @@ msgstr "Imagens PNG"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "Save Selection Image"
-msgstr "Gravar imagem selecionada"
+msgstr "Guardar imagem selecionada"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "selection.png"
-msgstr "selection.png"
+msgstr "seleção.png"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize all"
@@ -970,16 +968,16 @@ msgstr "Reconhecer seleção"
 
 #: ../gtk/src/DisplayerToolSelect.cc:186 ../qt/src/DisplayerToolSelect.cc:182
 msgid "Performing layout analysis"
-msgstr "Executando análise de layout"
+msgstr "Executando análise à disposição"
 
 #: ../gtk/src/FileDialogs.cc:235
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-msgstr "Um ficheiro chamado \"%1\" já existe. Você deseja sobrescrevê-lo?"
+msgstr "Já existe um ficheiro com o nome \"%1\". Substituir?"
 
 #: ../gtk/src/FileDialogs.cc:237
 msgid "Overwrite File?"
-msgstr "Sobrescrever ficheiro?"
+msgstr "Substituir ficheiro?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:616 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/HOCRDocument.cc:686 ../qt/src/hocr/OutputEditorHOCR.cc:310
@@ -1010,7 +1008,7 @@ msgstr "Gráfico"
 #: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:951
 #: ../qt/src/OutputEditorText.cc:271
 msgid "output"
-msgstr "Saída"
+msgstr "saída"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:54
 msgid "OpenDocument Text Documents"
@@ -1018,19 +1016,19 @@ msgstr "Documentos de texto OpenDocument"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:54
 msgid "Save ODT Output..."
-msgstr "Gravar saída ODT ..."
+msgstr "Guardar como ODT ..."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:617
 #: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCROdtExporter.cc:61
 #: ../qt/src/hocr/HOCRPdfExporter.cc:601 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
-msgstr "Exportação falhada"
+msgstr "Falha ao exportar"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
-msgstr "A exportação ODT falhou: não é possível gravar o ficheiro de saída."
+msgstr "A exportação ODT falhou: não foi possível guardar o ficheiro."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:335 ../qt/src/hocr/HOCROdtExporter.cc:254
 msgid "Exporting to ODT..."
@@ -1050,7 +1048,7 @@ msgstr "cm"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:356
 msgid "in"
-msgstr "em"
+msgstr "in"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:346
 msgid "Monochrome"
@@ -1082,7 +1080,7 @@ msgstr "Ficheiros PDF"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:494 ../qt/src/hocr/HOCRPdfExporter.cc:475
 msgid "Save PDF Output..."
-msgstr "Gravar saída PDF..."
+msgstr "Guardar como PDF..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:481
 msgid "Invalid Output"
@@ -1090,16 +1088,15 @@ msgstr "Saída inválida"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:481
 msgid "Cannot overwrite a file which is a source image of this document."
-msgstr ""
-"Não pode sobrescrever um ficheiro que é uma imagem de origem do documento."
+msgstr "Não pode substituir um ficheiro que é a imagem de origem do documento."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:515 ../qt/src/hocr/HOCRPdfExporter.cc:503
 msgid "Failed to create output"
-msgstr "Falha ao criar a saída"
+msgstr "Falha ao criar o ficheiro"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:515 ../qt/src/hocr/HOCRPdfExporter.cc:503
 msgid "Failed to create output. The returned error was: %1"
-msgstr "Falha ao criar uma saída. O erro retornado foi: %1"
+msgstr "Falha ao criar o ficheiro. O erro devolvido foi: %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:557 ../qt/src/hocr/HOCRPdfExporter.cc:543
 msgid "The operation was cancelled"
@@ -1119,7 +1116,7 @@ msgstr "A exportação PDF falhou: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:671 ../qt/src/hocr/HOCRPdfExporter.cc:654
 msgid "The PDF library could not load the font '%1'."
-msgstr "A biblioteca PDF não pôde carregar a fonte '%1'."
+msgstr "A biblioteca PDF não conseguiu carregar o tipo de letra '%1'."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:273
@@ -1128,12 +1125,11 @@ msgstr "Ficheiros de texto"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:40
 msgid "Save Text Output..."
-msgstr "Gravar saída de texto..."
+msgstr "Guardar como ficheiro de texto..."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
-msgstr ""
-"A exportação de texto falhou: não é possível gravar o ficheiro de saída."
+msgstr "A exportação de texto falhou: não foi possível guardar o ficheiro."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
 #: ../qt/src/hocr/OutputEditorHOCR.cc:311
@@ -1161,13 +1157,13 @@ msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr ""
-"As seguintes páginas não puderam ser processadas:\n"
+"As páginas abaixo não foram processadas:\n"
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:449
 #: ../qt/src/hocr/OutputEditorHOCR.cc:416
 msgid "Recognition errors"
-msgstr "Ocorreram erros de reconhecimento"
+msgstr "Erros de reconhecimento"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:619
 #: ../qt/src/hocr/OutputEditorHOCR.cc:180
@@ -1272,37 +1268,37 @@ msgstr "Não foi possível abrir os ficheiros"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1019
 #: ../qt/src/hocr/OutputEditorHOCR.cc:954
 msgid "Save hOCR Output..."
-msgstr "Gravando saída hOCR..."
+msgstr "Guardar como hOCR..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
 #: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
 msgid "Failed to save output"
-msgstr "Falha ao gravar a saída"
+msgstr "Falha ao guardar o ficheiro"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
 #: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
 msgid "Check that you have writing permissions in the selected folder."
-msgstr "Verifique se você tem permissão de escrita na pasta selecionada."
+msgstr "Verifique se tem permissão de escrita na pasta selecionada."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1023 ../qt/src/OutputEditorText.cc:293
 msgid "Output not saved"
-msgstr "Saída não salva"
+msgstr "Ficheiro não guardado"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1023 ../qt/src/OutputEditorText.cc:293
 msgid "Save output before proceeding?"
-msgstr "Gravar a saída antes de continuar?"
+msgstr "Guardar ficheiro antes de continuar?"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:192
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1121 ../qt/src/OutputEditorText.cc:164
 msgid "Replacing..."
-msgstr "Substituindo..."
+msgstr "A substituir..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1240 ../gtk/src/OutputEditorText.cc:200
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1144 ../qt/src/OutputEditorText.cc:172
 msgid "Applying substitutions..."
-msgstr "Aplicando substituições..."
+msgstr "A aplicar substituições..."
 
 #: ../gtk/src/MainWindow.cc:131 ../qt/src/MainWindow.cc:334
 msgid "Using tesseract"
@@ -1330,11 +1326,11 @@ msgstr "gImageReader %1 está disponível"
 
 #: ../gtk/src/MainWindow.cc:462 ../qt/src/MainWindow.cc:454
 msgid "Download"
-msgstr "Download"
+msgstr "Descarregar"
 
 #: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:455
 msgid "Changelog"
-msgstr "Registro de mudanças"
+msgstr "Registo de alterações"
 
 #: ../gtk/src/MainWindow.cc:464 ../qt/src/MainWindow.cc:456
 msgid "Don't notify again"
@@ -1351,16 +1347,16 @@ msgstr "Instalar"
 
 #: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
 msgid "Spelling dictionary missing"
-msgstr "Dicionário de ortografia faltando"
+msgstr "Dicionário ortográfico em falta"
 
 #: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
 msgid "The spellcheck dictionary for %1 is not installed"
-msgstr "O dicionário de ortografia para %1 no foi instalado"
+msgstr "O dicionário ortográfico para %1 não está instalado"
 
 #: ../gtk/src/MainWindow.cc:513 ../gtk/src/MainWindow.cc:542
 #: ../qt/src/MainWindow.cc:523
 msgid "Installing spelling dictionary for '%1'"
-msgstr "Instalando dicionário de ortografia para '%1'"
+msgstr "A instalar dicionário para '%1'"
 
 #: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:555
 #: ../gtk/src/MainWindow.cc:563 ../gtk/src/MainWindow.cc:611
@@ -1379,7 +1375,7 @@ msgstr "Falha ao instalar dicionário de ortografia: %1"
 
 #: ../gtk/src/MainWindow.cc:555 ../qt/src/MainWindow.cc:555
 msgid "Failed to create directory for spelling dictionaries."
-msgstr "Falha ao criar o diretório de dicionários de ortografia."
+msgstr "Falha ao criar o diretório de dicionários ortográficos."
 
 #: ../gtk/src/MainWindow.cc:563 ../qt/src/MainWindow.cc:564
 msgid "Could not read %1: %2."
@@ -1387,7 +1383,7 @@ msgstr "Não foi possível ler %1: %2."
 
 #: ../gtk/src/MainWindow.cc:590 ../qt/src/MainWindow.cc:588
 msgid "Downloading '%1'..."
-msgstr "Baixando '%1'..."
+msgstr "A descarregar '%1'..."
 
 #: ../gtk/src/MainWindow.cc:611 ../qt/src/MainWindow.cc:608
 msgid ""
@@ -1398,12 +1394,12 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Os seguintes dicionários não podem ser baixados:\n"
+"Não foi possível descarregar os dicionários abaixo indicados:\n"
 "%1\n"
 "\n"
-"Verifique as permissões de conectividade e diretório.\n"
-"Dica: Se não tem permissões de gravação em pastas do sistema, pode alternar "
-"para caminhos de utilizador na caixa de diálogo Configurações."
+"Verifique as permissões de conectividade e do diretório.\n"
+"Dica: se não tem permissões de escrita em pastas do sistema, pode alternar "
+"para caminhos de utilizador nas definições."
 
 #: ../gtk/src/MainWindow.cc:614 ../qt/src/MainWindow.cc:611
 msgid "Dictionaries installed"
