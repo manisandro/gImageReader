@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Portuguese (Brazil) (gImageReader)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
-"PO-Revision-Date: 2020-05-02 18:11+0000\n"
+"PO-Revision-Date: 2020-07-20 15:41+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pt/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -296,7 +296,7 @@ msgstr "Ficheiros"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:9
 msgid "Device:"
-msgstr "Dispositivo:"
+msgstr "Aparelho:"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:55
@@ -881,7 +881,7 @@ msgstr "Iniciando digitalização..."
 
 #: ../gtk/src/Acquirer.cc:163 ../qt/src/Acquirer.cc:149
 msgid "Opening device..."
-msgstr "Abrindo dispositivo..."
+msgstr "Abrindo aparelho..."
 
 #: ../gtk/src/Acquirer.cc:165 ../qt/src/Acquirer.cc:151
 msgid "Setting options..."
@@ -1591,7 +1591,7 @@ msgstr "A operação é cancelada."
 
 #: ../gtk/src/scanner/ScannerSane.cc:805 ../qt/src/scanner/ScannerSane.cc:800
 msgid "Device is busy."
-msgstr "O dispositivo está ocupado."
+msgstr "O aparelho está ocupado."
 
 #: ../gtk/src/scanner/ScannerSane.cc:807 ../qt/src/scanner/ScannerSane.cc:802
 msgid "Cover is opened."
@@ -2175,7 +2175,6 @@ msgstr ""
 "%1\n"
 "\n"
 "Verifique as permissões de conectividade e diretório.\n"
-"\n"
 "Dica: Se não tem permissões de gravação em pastas do sistema, pode alternar "
 "para caminhos de utilizador na caixa de diálogo Configurações."
 
