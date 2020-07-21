@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-04-24 19:11+0000\n"
-"Last-Translator: Artem <KovalevArtem.ru@gmail.com>\n"
+"PO-Revision-Date: 2020-07-22 23:41+0000\n"
+"Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ru/>\n"
 "Language: ru\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.0.2-dev\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -239,9 +239,8 @@ msgid "Best fit"
 msgstr "Наилучшее заполнение"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
-#, fuzzy
 msgid "Rotate page"
-msgstr "Повернуть все страницы"
+msgstr "Повернуть страницу"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
@@ -444,12 +443,11 @@ msgstr "Введите слово:"
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Добавить в конец"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "Повернуть текущую страницу"
+msgstr "Вставить перед текущей страницей"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
@@ -468,14 +466,13 @@ msgstr "Экспорт в ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
-#, fuzzy
 msgid "Append document after last page"
-msgstr "Добавить к текущему тексту"
+msgstr "Добавить в конец"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Insert document before current page"
-msgstr ""
+msgstr "Вставить перед текущей страницей"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
@@ -940,14 +937,12 @@ msgid "There was no unsaved work."
 msgstr "Результаты не изменились с прошлого сохранения."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
-#, fuzzy
 msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "Не удалось произвести обратную трассировку. Установлен ли gdb?"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
-#, fuzzy
 msgid "Page %1"
-msgstr "Страница: %1"
+msgstr "Страница %1"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid "Failed to load image"
@@ -1157,7 +1152,7 @@ msgstr "Блок"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
 #: ../qt/src/hocr/OutputEditorHOCR.cc:313
 msgid "Line"
-msgstr "Линия"
+msgstr "Строка"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:278
 #: ../qt/src/hocr/OutputEditorHOCR.cc:314
@@ -1227,7 +1222,7 @@ msgstr "Добавить абзац"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:857
 #: ../qt/src/hocr/OutputEditorHOCR.cc:812
 msgid "Add line"
-msgstr "Добавить линию"
+msgstr "Добавить строку"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:861
 #: ../qt/src/hocr/OutputEditorHOCR.cc:814
@@ -1261,19 +1256,21 @@ msgstr "Открыть файл hOCR"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:929 ../qt/src/OutputEditorText.cc:256
 #: ../qt/src/SourceManager.cc:156
-#, fuzzy
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "Не удалось открыть следующие файлы:%1"
+msgstr ""
+"Не удалось открыть следующие файлы:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
 #: ../qt/src/hocr/OutputEditorHOCR.cc:932
-#, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "Файл hOCR не содержит правильной HTML-разметки: %1"
+msgstr ""
+"Файлы HTML с неверной разметкой hOCR:\n"
+" %1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:935 ../qt/src/OutputEditorText.cc:257
@@ -1625,19 +1622,18 @@ msgid "Enter password for file '%1':"
 msgstr "Введите пароль для файла «%1»:"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
-#, fuzzy
 msgid "PDF with text"
 msgstr "PDF с текстом"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
-#, fuzzy
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
-"Эти PDF-файлы уже содержат текст:\n"
-"%1"
+"PDF-файл уже содержит текст:\n"
+"%1\n"
+"Все равно открыть?"
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:264
 msgid "Images and PDFs"
@@ -1824,7 +1820,7 @@ msgstr "Да"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "Да для всех"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1832,7 +1828,7 @@ msgstr "Нет"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "Нет для всех"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
@@ -1861,27 +1857,26 @@ msgid "License"
 msgstr "Лицензия"
 
 #: ../qt/data/BatchModeDialog.ui.h:1
-#, fuzzy
 msgid "Batch Mode"
-msgstr "С учётом регистра"
+msgstr "Пакетный режим"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "Добавить к текущему тексту:"
+msgstr "Добавить к тексту номера страниц"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "Существующие результаты:"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"В пакетном режиме каждый источник обрабатывается отдельно и все результаты "
+"сохраняются во входной файл."
 
 #: ../qt/data/BatchModeDialog.ui.h:5
-#, fuzzy
 msgid "Autodetect page layout"
 msgstr "Автоопределение структуры"
 
@@ -1934,7 +1929,7 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Миниатюры"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2024,18 +2019,22 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html><head/><body><ul><li>PoDoFo: больше возможностей для сжатия "
+"изображений, но нет поддержки сложных систем письменности.</li><li>QPrinter: "
+"доступно только сжатие JPEG, но сложные системы письменности "
+"поддерживаются.</li></ul></body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:234
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Сочетания клавиш"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
-msgstr ""
+msgstr "Строк выше:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:260
 msgid "Lines after:"
-msgstr ""
+msgstr "Строк ниже:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:440
 msgid ""
@@ -2055,14 +2054,32 @@ msgid ""
 "td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
 "size</td></tr></table>"
 msgstr ""
+"<table><tr><td>Tab</td><td>Следующее поле</td></tr><tr><td>Shift+Tab</"
+"td><td>Предыдущее поле</td></tr><tr><td>Вниз</td><td>Следующая "
+"строка</td></tr><tr><td>Вверх</td><td>Предыдущая "
+"строка</td></tr><tr><td>Ctrl+Пробел</td><td>Предложения "
+"написания</td></tr><tr><td>Ctrl+Enter</td><td>Добавить слово в "
+"словарь</td></tr><tr><td>Ctrl+B</td><td>Жирный "
+"шрифт</td></tr><tr><td>Ctrl+I</td><td>Курсив</td></tr><tr><td>Ctrl+D</"
+"td><td>Разделить слово в позиции курсора</td></tr><tr><td>Ctrl+M</"
+"td><td>Объединить с предыдущим словом</td></tr><tr><td>Ctrl+Shift+M</"
+"td><td>Объединить со следующим словом</td></tr><tr><td>Ctrl+Delete</"
+"td><td>Удалить слово</td></tr><tr><td>Ctrl+{Влево,Вправо}</"
+"td><td>Корректировка левой "
+"границы</td></tr><tr><td>Ctrl+Shift+{Влево,Вправо}</td><td>Корректировка "
+"правой границы</td></tr><tr><td>Ctrl+{Вверх,Вниз}</td><td>Корректировка "
+"верхней границы</td></tr><tr><td>Ctrl+Shift+{Вверх,Вниз}</"
+"td><td>Корректировка нижней границы</td></tr><tr><td>Ctrl++</"
+"td><td>Увеличить размер шрифта</td></tr><tr><td>Ctrl+-</td><td>Уменьшить "
+"размер шрифта</td></tr></table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Сочетания клавиш"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:476
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Доверие: %1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2075,9 +2092,8 @@ msgid "Find and Replace"
 msgstr "Найти и заменить"
 
 #: ../qt/src/MainWindow.cc:317
-#, fuzzy
 msgid "Multiple sources (%1)"
-msgstr "Несколько источников"
+msgstr "Несколько источников (%1)"
 
 #: ../qt/src/MainWindow.cc:611
 msgid ""
@@ -2088,21 +2104,20 @@ msgstr ""
 "%1"
 
 #: ../qt/src/OutputEditorText.cc:41
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "Страница: %1"
+msgstr "Страница: %1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
-msgstr ""
+msgstr "Пакетный режим..."
 
 #: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "Перезаписать"
 
 #: ../qt/src/Recognizer.cc:87
 msgid "Skip processing source"
-msgstr ""
+msgstr "Пропустить обработку"
 
 #: ../qt/src/Recognizer.cc:234
 msgid "- Page %1: failed to render page"
@@ -2114,56 +2129,48 @@ msgstr "- %1:%2: не удалось отобразить страницу"
 
 #: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "- %1: результат уже существует, пропуск"
 
 #: ../qt/src/Recognizer.cc:363
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "Невозможно получить результат"
+msgstr "- %1: невозможно создать выходной файл"
 
 #: ../qt/src/Recognizer.cc:418
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "Произошли следующие ошибки:%1"
+msgstr "Произошли следующие ошибки:"
 
 #: ../qt/src/SourceManager.cc:248
-#, fuzzy
 msgid "No recent files"
-msgstr "Имя исходного файла"
+msgstr "Нет последних файлов"
 
 #: ../qt/src/SourceManager.cc:275
-#, fuzzy
 msgid "Select folder..."
-msgstr "Выберите файлы"
+msgstr "Выбрать папку..."
 
 #: ../qt/src/SourceManager.cc:374
-#, fuzzy
 msgid "Delete Files"
-msgstr "Удалить файл?"
+msgstr "Удаление файлов"
 
 #: ../qt/src/SourceManager.cc:374
 msgid "Delete the following files?"
-msgstr ""
+msgstr "Удалить следующие файлы?"
 
 #: ../qt/src/SourceManager.cc:459
-#, fuzzy
 msgid "Open output"
-msgstr "Сохранить результаты"
+msgstr "Открыть результаты"
 
 #: ../qt/src/SourceManager.cc:459
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr ""
+msgstr "Найден как текст, так и файл hOCR. Что из них открыть?"
 
 #: ../qt/src/SourceManager.cc:460
-#, fuzzy
 msgid "Text"
-msgstr "Строка"
+msgstr "Текст"
 
 #: ../qt/src/SourceManager.cc:461
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2178,8 +2185,8 @@ msgstr ""
 "%1\n"
 "\n"
 "Проверьте соединение и права доступа к папкам.\n"
-"Подсказка: если у вас нет прав на запись в системные папки, вы можете "
-"сменить пути в диалоге настройки."
+"Совет: если у вас нет прав на запись в системные папки, вы можете сменить "
+"пути в диалоге настройки."
 
 #: ../qt/src/Ui_MainWindow.hh:50
 msgid "Output"
@@ -2191,9 +2198,8 @@ msgstr "Режим распознавания:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:188
-#, fuzzy
 msgid "Add folder"
-msgstr "Добавить слово"
+msgstr "Добавить папку"
 
 #: ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
