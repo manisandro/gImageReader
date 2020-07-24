@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-07-22 23:42+0000\n"
+"PO-Revision-Date: 2020-07-25 07:41+0000\n"
 "Last-Translator: Prasanta-Hembram <Prasantahembram720@gmail.com>\n"
 "Language-Team: Santali <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sat/>\n"
@@ -136,15 +136,15 @@ msgstr "ᱟᱲᱟᱝ ᱩᱱᱩᱨᱩᱢ ᱨᱮᱭᱟᱜ ᱦᱚᱨ:"
 
 #: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
-msgstr ""
+msgstr "ᱵᱟᱱᱟᱱ ᱥᱟᱵᱟᱫ ᱜᱟᱫᱮᱞ ᱦᱚᱨ:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "ᱥᱭᱥᱴᱚᱢᱼᱚᱥᱟᱨ ᱦᱚᱨ"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "ᱵᱮᱵᱟᱨᱤᱭᱟ ᱦᱚᱨ"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
