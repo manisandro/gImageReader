@@ -61,12 +61,16 @@ public:
 	}
 	bool containsSource(const QString& source, int sourcePage) const override;
 
+	HOCRDocument* getDocument() const { return m_document; }
+	DisplayerToolHOCR* getTool() const { return m_tool; }
+	bool open(InsertMode mode, QStringList files = QStringList());
+	bool selectPage(int nr);
+
 public slots:
 	bool open(const QString& filename) override { return open(InsertMode::Replace, {filename}); }
 	bool clear(bool hide = true) override;
 	void setLanguage(const Config::Lang& lang) override;
 	void onVisibilityChanged(bool visible) override;
-	bool open(InsertMode mode, QStringList files = QStringList());
 	bool save(const QString& filename = "") override;
 	bool exportToODT();
 	bool exportToPDF();

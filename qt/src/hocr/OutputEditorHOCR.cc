@@ -44,7 +44,6 @@
 #include "HOCRDocument.hh"
 #include "HOCROdtExporter.hh"
 #include "HOCRPdfExporter.hh"
-#include "HOCRPdfExportDialog.hh"
 #include "HOCRProofReadWidget.hh"
 #include "HOCRSpellChecker.hh"
 #include "HOCRTextExporter.hh"
@@ -948,6 +947,17 @@ bool OutputEditorHOCR::open(InsertMode mode, QStringList files) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), errorMsg.join("\n\n"));
 	}
 	return added > 0;
+}
+
+bool OutputEditorHOCR::selectPage(int nr) {
+	if(!m_document || nr >= m_document->pageCount()) {
+		return false;
+	}
+	QModelIndex index = m_document->indexAtItem(m_document->page(nr));
+	if(index.isValid()) {
+		ui.treeViewHOCR->setCurrentIndex(index);
+	}
+	return index.isValid();
 }
 
 bool OutputEditorHOCR::save(const QString& filename) {

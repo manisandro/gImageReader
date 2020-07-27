@@ -52,6 +52,7 @@
 #include "SourceManager.hh"
 #include "TessdataManager.hh"
 #include "Utils.hh"
+#include "hocr/HOCRBatchExportDialog.hh"
 #include "ui_AboutDialog.h"
 
 
@@ -172,6 +173,7 @@ MainWindow::MainWindow(const QStringList& files)
 	connect(ui.comboBoxOCRMode, qOverload<int>(&QComboBox::currentIndexChanged), this, [this] { setOutputMode(static_cast<OutputMode>(ui.comboBoxOCRMode->currentData().toInt())); });
 	connect(m_recognitionMenu, &RecognitionMenu::languageChanged, this, &MainWindow::languageChanged);
 	connect(ui.actionAutodetectLayout, &QAction::triggered, m_displayer, &Displayer::autodetectOCRAreas);
+	connect(ui.actionactionBatchExport, &QAction::triggered, this, &MainWindow::batchExport);
 
 	ADD_SETTING(VarSetting<QByteArray>("wingeom"));
 	ADD_SETTING(VarSetting<QByteArray>("winstate"));
@@ -615,4 +617,9 @@ void MainWindow::dictionaryAutoinstall() {
 			}
 		}
 	}
+}
+
+void MainWindow::batchExport() {
+	HOCRBatchExportDialog dialog;
+	dialog.exec();
 }
