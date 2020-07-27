@@ -21,12 +21,11 @@
 #define HOCRODTEXPORTER_HH
 
 #include "common.hh"
+#include "HOCRExporter.hh"
 
 #include <QObject>
 #include <QString>
 
-class DisplayerToolHOCR;
-class HOCRDocument;
 class HOCRItem;
 class QImage;
 class QRect;
@@ -34,15 +33,12 @@ class QuaZip;
 class QXmlStreamWriter;
 
 
-class HOCROdtExporter : public QObject {
+class HOCROdtExporter : public HOCRExporter {
 	Q_OBJECT
 public:
-	HOCROdtExporter(DisplayerToolHOCR* displayerTool) : m_displayerTool(displayerTool) {}
-	bool run(const HOCRDocument* hocrdocument, const QString& filebasename);
+	bool run(const HOCRDocument* hocrdocument, const QString& outname, const ExporterSettings* settings = nullptr) override;
 
 private:
-	DisplayerToolHOCR* m_displayerTool;
-
 	void writeImage(QuaZip& zip, QMap<const HOCRItem*, QString>& images, const HOCRItem* item);
 	void writeFontFaceDecls(QSet<QString>& families, const HOCRItem* item, QXmlStreamWriter& writer);
 	void writeFontStyles(QMap<QString, QMap<double, QString> >& styles, const HOCRItem* item, QXmlStreamWriter& writer, int& counter);

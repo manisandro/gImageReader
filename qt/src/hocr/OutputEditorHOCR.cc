@@ -44,6 +44,7 @@
 #include "HOCRDocument.hh"
 #include "HOCROdtExporter.hh"
 #include "HOCRPdfExporter.hh"
+#include "HOCRPdfExportDialog.hh"
 #include "HOCRProofReadWidget.hh"
 #include "HOCRSpellChecker.hh"
 #include "HOCRTextExporter.hh"
@@ -998,9 +999,20 @@ bool OutputEditorHOCR::save(const QString& filename) {
 }
 
 bool OutputEditorHOCR::exportToODT() {
+	QString suggestion = m_filebasename;
+	if(suggestion.isEmpty()) {
+		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+		suggestion = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
+	}
+
+	QString outname = FileDialogs::saveDialog(_("Save ODT Output..."), suggestion + ".odt", "outputdir", QString("%1 (*.odt)").arg(_("OpenDocument Text Documents")));
+	if(outname.isEmpty()) {
+		return false;
+	}
+
 	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
 	MAIN->getDisplayer()->setBlockAutoscale(true);
-	bool success = HOCROdtExporter(m_tool).run(m_document, m_filebasename);
+	bool success = HOCROdtExporter().run(m_document, outname);
 	MAIN->getDisplayer()->setBlockAutoscale(false);
 	return success;
 }
@@ -1012,17 +1024,60 @@ bool OutputEditorHOCR::exportToPDF() {
 	const HOCRItem* item = m_document->itemAtIndex(current);
 	const HOCRPage* page = item ? item->page() : m_document->page(0);
 	bool success = false;
-	if(showPage(page)) {
-		MAIN->getDisplayer()->setBlockAutoscale(true);
-		success = HOCRPdfExporter(m_document, page, m_tool).run(m_filebasename);
-		MAIN->getDisplayer()->setBlockAutoscale(false);
+	if(!showPage(page)) {
+		return false;
 	}
+	HOCRPdfExportDialog dialog(m_tool, m_document, page, MAIN);
+	if(dialog.exec() != QDialog::Accepted) {
+		return false;
+	}
+	HOCRPdfExporter::PDFSettings settings = dialog.getPdfSettings();
+
+	QString suggestion = m_filebasename;
+	if(suggestion.isEmpty()) {
+		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+		suggestion = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
+	}
+
+	QString outname;
+	while(true) {
+		outname = FileDialogs::saveDialog(_("Save PDF Output..."), suggestion + ".pdf", "outputdir", QString("%1 (*.pdf)").arg(_("PDF Files")));
+		if(outname.isEmpty()) {
+			break;
+		}
+		if(m_document->referencesSource(outname)) {
+			QMessageBox::warning(MAIN, _("Invalid Output"), _("Cannot overwrite a file which is a source image of this document."));
+			continue;
+		}
+		break;
+	}
+	if(outname.isEmpty()) {
+		return false;
+	}
+
+	MAIN->getDisplayer()->setBlockAutoscale(true);
+	success = HOCRPdfExporter().run(m_document, outname, &settings);
+	MAIN->getDisplayer()->setBlockAutoscale(false);
 	return success;
 }
 
 bool OutputEditorHOCR::exportToText() {
+	QString suggestion = m_filebasename;
+	if(suggestion.isEmpty()) {
+		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+		suggestion = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
+	}
+
+	QString outname = FileDialogs::saveDialog(_("Save Text Output..."), suggestion + ".txt", "outputdir", QString("%1 (*.txt)").arg(_("Text Files")));
+	if(outname.isEmpty()) {
+		return false;
+	}
+
 	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
-	return HOCRTextExporter().run(m_document, m_filebasename);
+	MAIN->getDisplayer()->setBlockAutoscale(true);
+	bool success = HOCRTextExporter().run(m_document, outname);
+	MAIN->getDisplayer()->setBlockAutoscale(false);
+	return success;
 }
 
 bool OutputEditorHOCR::clear(bool hide) {

@@ -21,8 +21,6 @@
 #include "HOCRDocument.hh"
 #include "HOCRTextExporter.hh"
 #include "MainWindow.hh"
-#include "FileDialogs.hh"
-#include "SourceManager.hh"
 
 #include <QDesktopServices>
 #include <QFileInfo>
@@ -30,18 +28,7 @@
 #include <QTextStream>
 #include <QUrl>
 
-bool HOCRTextExporter::run(const HOCRDocument* hocrdocument, const QString& filebasename) {
-	QString suggestion = filebasename;
-	if(suggestion.isEmpty()) {
-		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-		suggestion = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
-	}
-
-	QString outname = FileDialogs::saveDialog(_("Save Text Output..."), suggestion + ".txt", "outputdir", QString("%1 (*.txt)").arg(_("Text Files")));
-	if(outname.isEmpty()) {
-		return false;
-	}
-
+bool HOCRTextExporter::run(const HOCRDocument* hocrdocument, const QString& outname, const ExporterSettings* /*settings*/) {
 	QFile outputFile(outname);
 	if(!outputFile.open(QIODevice::WriteOnly)) {
 		QMessageBox::warning(MAIN, _("Export failed"), _("The text export failed: unable to write output file."));

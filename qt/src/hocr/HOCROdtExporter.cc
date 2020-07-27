@@ -18,11 +18,10 @@
  */
 
 #include "ConfigSettings.hh"
-#include "DisplayerToolHOCR.hh"
+#include "Displayer.hh"
 #include "HOCRDocument.hh"
 #include "HOCROdtExporter.hh"
 #include "MainWindow.hh"
-#include "FileDialogs.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
 
@@ -44,18 +43,7 @@ static QString drawNS ("urn:oasis:names:tc:opendocument:xmlns:drawing:1.0");
 static QString xlinkNS ("http://www.w3.org/1999/xlink");
 static QString svgNS ("urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0");
 
-bool HOCROdtExporter::run(const HOCRDocument* hocrdocument, const QString& filebasename) {
-	QString suggestion = filebasename;
-	if(suggestion.isEmpty()) {
-		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-		suggestion = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
-	}
-
-	QString outname = FileDialogs::saveDialog(_("Save ODT Output..."), suggestion + ".odt", "outputdir", QString("%1 (*.odt)").arg(_("OpenDocument Text Documents")));
-	if(outname.isEmpty()) {
-		return false;
-	}
-
+bool HOCROdtExporter::run(const HOCRDocument* hocrdocument, const QString& outname, const ExporterSettings* /*settings*/) {
 	QuaZip zip(outname);
 	if(!zip.open( QuaZip::mdCreate )) {
 		QMessageBox::warning(MAIN, _("Export failed"), _("The ODT export failed: unable to write output file."));
@@ -433,5 +421,6 @@ bool HOCROdtExporter::setSource(const QString& sourceFile, int page, int dpi, do
 }
 
 QImage HOCROdtExporter::getSelection(const QRect& bbox) {
-	return m_displayerTool->getSelection(bbox);
+	Displayer* displayer = MAIN->getDisplayer();
+	return displayer->getImage(bbox.translated(displayer->getSceneBoundingRect().toRect().topLeft()));
 }
