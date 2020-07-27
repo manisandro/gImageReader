@@ -86,13 +86,13 @@ SourceManager::~SourceManager() {
 	clearSources();
 }
 
-int SourceManager::addSources(const QStringList& files, bool suppressTextWarning, const QString& parentDir) {
+int SourceManager::addSources(const QStringList& files, bool suppressWarnings, const QString& parentDir) {
 	QStringList failed;
 	QItemSelection sel;
 	QModelIndex index;
 	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList>>("recentitems")->getValue();
 	int added = 0;
-	PdfWithTextAction textAction = suppressTextWarning ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
+	PdfWithTextAction textAction = suppressWarnings ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
 
 	ui.treeViewSources->selectionModel()->blockSignals(true);
 	ui.treeViewSources->setUpdatesEnabled(false);
@@ -152,7 +152,7 @@ int SourceManager::addSources(const QStringList& files, bool suppressTextWarning
 			}
 		}
 	}
-	if(!failed.isEmpty()) {
+	if(!failed.isEmpty() && !suppressWarnings) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:\n%1").arg(failed.join("\n")));
 	}
 	return added;

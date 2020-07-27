@@ -60,11 +60,11 @@ public:
 	QList<Source*> getSelectedSources() const;
 	void addSourceImage(const QImage& image);
 
-	int addSources(const QStringList& files, bool suppressTextWarning = false, const QString& parentDir = QString());
+	int addSources(const QStringList& files, bool suppressWarnings = false, const QString& parentDir = QString());
 
 public slots:
-	bool addSource(const QString& file, bool suppressTextWarning = false) {
-		return addSources(QStringList() << file, suppressTextWarning) == 1;
+	bool addSource(const QString& file, bool suppressWarnings = false) {
+		return addSources(QStringList() << file, suppressWarnings) == 1;
 	}
 
 signals:
