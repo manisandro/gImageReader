@@ -192,7 +192,7 @@ msgid ""
 msgstr ""
 "<b>Tesseract hat abgebrochen</b>\n"
 "\n"
-"Tesseract (die OCR engine) hat abgebrochen während des Erkennen des Textes. "
+"Tesseract (die OCR engine) hat während des Erkennen des Textes abgebrochen. "
 "Dies kann passieren, falls die traineddata Datein korrupt oder mit der "
 "verwendeten Version von Tesseract inkompatibel sind, oder wegen eines "
 "Fehlers in Tesseract.\n"
@@ -449,7 +449,7 @@ msgstr "Ausgabe nach letzter Seite hinzufügen"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
 msgid "Insert new output before current page"
-msgstr "Ausgabe vor aktuelle Setie hinzufügen"
+msgstr "Ausgabe vor aktuelle Seite hinzufügen"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
@@ -590,7 +590,7 @@ msgstr "Leerstellen bereinigen"
 
 #: ../gtk/data/OutputEditorText.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:74
 msgid "Preserve paragraphs"
-msgstr "Absätzen erhalten"
+msgstr "Absätze erhalten"
 
 #: ../gtk/data/OutputEditorText.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:76
 msgid "Visual aids"
@@ -664,7 +664,7 @@ msgstr "Schriftart übersteuern:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
 msgid "Fallback font family:"
-msgstr "Standard Schriftart:"
+msgstr "Standard-Schriftart:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
 msgid "Override font size:"
@@ -688,7 +688,7 @@ msgstr "Zeichen"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Sanitize hyphens before line breaks"
-msgstr "Bindestriche vor Zeilenumbrüche korrigieren"
+msgstr "Bindestriche vor Zeilenumbrüchen korrigieren"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
@@ -1069,7 +1069,7 @@ msgstr "Einfarbig"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:328 ../qt/src/hocr/HOCRPdfExporter.cc:348
 msgid "Threshold (closest color)"
-msgstr "Threshold (nächste Farbe)"
+msgstr "Schwellenwert (nächstliegende Farbe)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:331 ../qt/src/hocr/HOCRPdfExporter.cc:349
 msgid "Diffuse"
@@ -1131,7 +1131,7 @@ msgstr "Der PDF-Export ist fehlgeschlagen: %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:671 ../qt/src/hocr/HOCRPdfExporter.cc:654
 msgid "The PDF library could not load the font '%1'."
-msgstr "Die PDF Bibliothek konnte die Schriftart '%1' nicht laden."
+msgstr "Die PDF-Bibliothek konnte die Schriftart '%1' nicht laden."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:273
@@ -1140,12 +1140,12 @@ msgstr "Textdateien"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:40
 msgid "Save Text Output..."
-msgstr "Text Ausgabe speichern..."
+msgstr "Text-Ausgabe speichern..."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
 msgstr ""
-"Der Text Export schlug fehl: die Ausgabedatei konnte nicht geschrieben "
+"Der Text-Export schlug fehl: die Ausgabedatei konnte nicht geschrieben "
 "werden."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
@@ -1351,7 +1351,7 @@ msgstr "Änderungshistorie"
 
 #: ../gtk/src/MainWindow.cc:464 ../qt/src/MainWindow.cc:456
 msgid "Don't notify again"
-msgstr "Nicht mehr fragen"
+msgstr "Nicht mehr benachrichtigen"
 
 #: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:504
 msgid "Don't show again"
@@ -1490,11 +1490,11 @@ msgstr "Eine einzelne Textspalte annehmen"
 
 #: ../gtk/src/Recognizer.cc:288 ../qt/src/RecognitionMenu.cc:185
 msgid "Assume single block of vertically aligned text"
-msgstr "Ein einzelner Block vertikal ausgerichteter Text annehmen"
+msgstr "Einen einzelnen Block vertikal ausgerichteten Text annehmen"
 
 #: ../gtk/src/Recognizer.cc:289 ../qt/src/RecognitionMenu.cc:186
 msgid "Assume a single uniform block of text"
-msgstr "Ein einzelner einheitlicher Textblock annehmen"
+msgstr "Einen einzelnen einheitlichen Textblock annehmen"
 
 #: ../gtk/src/Recognizer.cc:290 ../qt/src/RecognitionMenu.cc:187
 msgid "Assume a line of text"
@@ -1530,7 +1530,7 @@ msgstr "Sprachen verwalten..."
 
 #: ../gtk/src/Recognizer.cc:381 ../qt/src/Recognizer.cc:133
 msgid "Current selection"
-msgstr "Aktuelle Selektion"
+msgstr "Aktuelle Auswahl"
 
 #: ../gtk/src/Recognizer.cc:472 ../qt/src/Recognizer.cc:228
 #: ../qt/src/Recognizer.cc:340
@@ -1824,7 +1824,7 @@ msgstr "Ja"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr "Ja alle"
+msgstr "Ja, alle"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1832,7 +1832,7 @@ msgstr "Nein"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr "Nein alle"
+msgstr "Nein, alle"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
@@ -1877,7 +1877,7 @@ msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
-"Im Batchmodus wird jede Quelle separat prozessiert und die Ausgabe neben der "
+"Im Batchmodus wird jede Quelle separat verarbeitet und die Ausgabe neben der "
 "Quelldatei gespeichert."
 
 #: ../qt/data/BatchModeDialog.ui.h:5
@@ -1925,7 +1925,7 @@ msgid ""
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract hat "
 "abgebrochen</span></p><p>Tesseract (die OCR engine) hat abgebrochen während "
-"des Erkennen des Textes. Dies kann passieren, falls die traineddata Datein "
+"des Erkennen des Textes. Dies kann passieren, falls die traineddata Dateien "
 "korrupt oder mit der verwendeten Version von Tesseract inkompatibel sind, "
 "oder wegen eines Fehlers in Tesseract.</p><p>Der Stacktrace unten könnte "
 "weitere Informationen zum Ursprung des Fehlers liefern.</p></body></html>"
@@ -2146,7 +2146,7 @@ msgstr "Folgende Fehler sind aufgetreten:"
 
 #: ../qt/src/SourceManager.cc:248
 msgid "No recent files"
-msgstr "Keine zuletzt geöffnete Dateien"
+msgstr "Keine zuletzt geöffneten Dateien"
 
 #: ../qt/src/SourceManager.cc:275
 msgid "Select folder..."
@@ -2331,7 +2331,7 @@ msgstr "Ausgabe löschen"
 #~ msgstr "Skalierung:"
 
 #~ msgid "Document"
-#~ msgstr "Dokumentu"
+#~ msgstr "Dokument"
 
 #~ msgid "Errors occurred"
 #~ msgstr "Erkennungsfehler sind aufgetreten"
