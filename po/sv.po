@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gImageReader-3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-01-13 13:21+0000\n"
-"Last-Translator: Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
+"PO-Revision-Date: 2020-08-20 10:36+0000\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sv/>\n"
 "Language: sv\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.1\n"
+"X-Generator: Weblate 4.2.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -238,9 +238,8 @@ msgid "Best fit"
 msgstr "Bästa passning"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
-#, fuzzy
 msgid "Rotate page"
-msgstr "Rotera alla sidor"
+msgstr "Rotera sida"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
@@ -944,9 +943,8 @@ msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "Det gick inte att erhålla bakåtspårning. Är gdb installerad?"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
-#, fuzzy
 msgid "Page %1"
-msgstr "Sida: %1"
+msgstr "Sida %1"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid "Failed to load image"
@@ -1258,19 +1256,21 @@ msgstr "Öppna hOCR-fil"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:929 ../qt/src/OutputEditorText.cc:256
 #: ../qt/src/SourceManager.cc:156
-#, fuzzy
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "Följande filer kunde inte öppnas:%1"
+msgstr ""
+"Följande filer kunde inte öppnas:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
 #: ../qt/src/hocr/OutputEditorHOCR.cc:932
-#, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "Filen verkar inte innehålla giltig hOCR HTML: %1"
+msgstr ""
+"Filen verkar inte innehålla giltig hOCR HTML:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:935 ../qt/src/OutputEditorText.cc:257
@@ -1623,9 +1623,8 @@ msgid "Enter password for file '%1':"
 msgstr "Ange lösenord för filen \"%1\":"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
-#, fuzzy
 msgid "PDF with text"
-msgstr "PDF:er med text"
+msgstr "PDF med text"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
 #, fuzzy
@@ -1823,7 +1822,7 @@ msgstr "Ja"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "Ja till alla"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1831,7 +1830,7 @@ msgstr "Nej"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "Nej till alla"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
@@ -1932,7 +1931,7 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Tumnaglar"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2028,7 +2027,7 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:234
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Tangentbordsgenvägar"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
@@ -2059,7 +2058,7 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Tangentbordsgenvägar"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:476
 msgid "Confidence: %1"
@@ -2076,9 +2075,8 @@ msgid "Find and Replace"
 msgstr "Sök och ersätt"
 
 #: ../qt/src/MainWindow.cc:317
-#, fuzzy
 msgid "Multiple sources (%1)"
-msgstr "Flera källor"
+msgstr "Flera källor (%1)"
 
 #: ../qt/src/MainWindow.cc:611
 msgid ""
@@ -2089,9 +2087,8 @@ msgstr ""
 "%1"
 
 #: ../qt/src/OutputEditorText.cc:41
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "Sida: %1"
+msgstr "Sida: %1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
@@ -2129,9 +2126,8 @@ msgid "- %1: failed to create output file"
 msgstr "Kunde inte skapa utdata"
 
 #: ../qt/src/Recognizer.cc:418
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "Följande fel har inträffat:%1"
+msgstr "Följande fel har inträffat:"
 
 #: ../qt/src/SourceManager.cc:248
 #, fuzzy
@@ -2139,18 +2135,16 @@ msgid "No recent files"
 msgstr "Källfilnamn"
 
 #: ../qt/src/SourceManager.cc:275
-#, fuzzy
 msgid "Select folder..."
-msgstr "Välj filer"
+msgstr "Välj mapp..."
 
 #: ../qt/src/SourceManager.cc:374
-#, fuzzy
 msgid "Delete Files"
-msgstr "Ta bort fil?"
+msgstr "Ta bort filer"
 
 #: ../qt/src/SourceManager.cc:374
 msgid "Delete the following files?"
-msgstr ""
+msgstr "Ta bort följande filer?"
 
 #: ../qt/src/SourceManager.cc:459
 #, fuzzy
@@ -2163,14 +2157,12 @@ msgid ""
 msgstr ""
 
 #: ../qt/src/SourceManager.cc:460
-#, fuzzy
 msgid "Text"
-msgstr "Textrad"
+msgstr "Text"
 
 #: ../qt/src/SourceManager.cc:461
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2199,9 +2191,8 @@ msgstr "OCR-läge:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:188
-#, fuzzy
 msgid "Add folder"
-msgstr "Lägg till ord"
+msgstr "Lägg till mapp"
 
 #: ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
