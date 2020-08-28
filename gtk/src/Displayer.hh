@@ -56,6 +56,7 @@ public:
 	}
 	std::string getCurrentImage(int& page) const;
 	int getNPages() const;
+	int getNSources() const { return m_sourceRenderers.size(); }
 
 	Cairo::RefPtr<Cairo::ImageSurface> getImage(const Geometry::Rectangle& rect) const;
 	Geometry::Rectangle getSceneBoundingRect() const;

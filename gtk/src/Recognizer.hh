@@ -21,8 +21,10 @@
 #define RECOGNIZER_HH
 
 #include "Config.hh"
+#include "OutputEditor.hh"
 
 #include <cairomm/cairomm.h>
+#include <memory>
 
 namespace Ui {
 class MainWindow;
@@ -35,7 +37,7 @@ public:
 	Recognizer(const Ui::MainWindow& _ui);
 
 	void setRecognizeMode(const Glib::ustring& mode);
-	bool recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
+	void recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
 
 private:
 	class ProgressMonitor;
@@ -44,11 +46,8 @@ private:
 	enum class TaskState { Waiting, Succeeded, Failed };
 	struct PageData {
 		bool success;
-		std::string filename;
-		int page;
-		double angle;
-		int resolution;
 		std::vector<Cairo::RefPtr<Cairo::ImageSurface>> ocrAreas;
+		OutputEditor::PageInfo pageInfo;
 	};
 
 	const Ui::MainWindow& ui;
@@ -58,9 +57,12 @@ private:
 	void recognizeButtonClicked();
 	void recognizeCurrentPage();
 	void recognizeMultiplePages();
+	void recognizeBatch();
+	std::unique_ptr<tesseract::TessBaseAPI> setupTesseract();
 	void recognize(const std::vector<int>& pages, bool autodetectLayout = false);
 	std::vector<int> selectPages(bool& autodetectLayout);
 	PageData setPage(int page, bool autodetectLayout);
+	void showRecognitionErrorsDialog(const std::vector<Glib::ustring>& errors);
 };
 
 #endif // RECOGNIZER_HH

@@ -32,6 +32,15 @@ class SearchReplaceFrame;
 
 class OutputEditorText : public OutputEditor {
 public:
+	class TextBatchProcessor : public BatchProcessor {
+	public:
+		TextBatchProcessor(bool prependPage) : m_prependPage(prependPage) {}
+		std::string fileSuffix() const override { return std::string(".txt"); }
+		void appendOutput(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const override;
+	private:
+		bool m_prependPage = false;
+	};
+
 	OutputEditorText();
 	~OutputEditorText();
 
@@ -44,6 +53,7 @@ public:
 	bool clear(bool hide = true) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
+	BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const override;
 	bool getModified() const override;
 	void onVisibilityChanged(bool visible) override;
 	bool save(const std::string& filename = "") override;

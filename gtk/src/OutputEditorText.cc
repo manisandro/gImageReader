@@ -33,6 +33,16 @@
 #include <fstream>
 
 
+void OutputEditorText::TextBatchProcessor::appendOutput(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const {
+	char* text = tess->GetUTF8Text();
+	if(firstArea && m_prependPage) {
+		dev << Glib::ustring::compose(_("Page: %1\n"), pageInfo.page).raw();
+	}
+	dev << text;
+	dev << "\n";
+	delete[] text;
+}
+
 OutputEditorText::OutputEditorText() {
 	ui.setupUi();
 
@@ -236,10 +246,10 @@ void OutputEditorText::read(tesseract::TessBaseAPI& tess, ReadSessionData* data)
 	if(data->prependFile || data->prependPage) {
 		std::vector<Glib::ustring> prepend;
 		if(data->prependFile) {
-			prepend.push_back(Glib::ustring::compose(_("File: %1"), data->file));
+			prepend.push_back(Glib::ustring::compose(_("File: %1"), data->pageInfo.filename));
 		}
 		if(data->prependPage) {
-			prepend.push_back(Glib::ustring::compose(_("Page: %1"), data->page));
+			prepend.push_back(Glib::ustring::compose(_("Page: %1"), data->pageInfo.page));
 		}
 		text = Glib::ustring::compose("[%1]\n", Utils::string_join(prepend, "; ")) + text;
 	}
@@ -254,6 +264,10 @@ void OutputEditorText::readError(const Glib::ustring& errorMsg, ReadSessionData*
 	bool& insertText = static_cast<TextReadSessionData*>(data)->insertText;
 	Utils::runInMainThreadBlocking([&] { addText(Glib::ustring::compose(_("\n[Failed to recognize page %1]\n"), errorMsg), insertText); });
 	insertText = true;
+}
+
+OutputEditorText::BatchProcessor* OutputEditorText::createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const {
+	return new TextBatchProcessor(Utils::get_default(options, Glib::ustring("prependPage"), Glib::ustring("0")) == "1");
 }
 
 void OutputEditorText::addText(const Glib::ustring& text, bool insert) {

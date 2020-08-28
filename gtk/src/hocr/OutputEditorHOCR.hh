@@ -40,6 +40,14 @@ class SearchReplaceFrame;
 
 class OutputEditorHOCR : public OutputEditor {
 public:
+	class HOCRBatchProcessor : public BatchProcessor {
+	public:
+		std::string fileSuffix() const override { return std::string(".html"); }
+		void writeHeader(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo) const override;
+		void writeFooter(std::ostream& dev) const override;
+		void appendOutput(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfos, bool firstArea) const override;
+	};
+
 	enum class InsertMode { Replace, Append, InsertBefore };
 
 	OutputEditorHOCR(DisplayerToolHOCR* tool);
@@ -52,6 +60,7 @@ public:
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
 	void finalizeRead(ReadSessionData* data) override;
+	BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& /*options*/) const override { return new HOCRBatchProcessor; }
 	bool getModified() const override {
 		return m_modified;
 	}

@@ -209,6 +209,44 @@ private:
 
 ///////////////////////////////////////////////////////////////////////////////
 
+void OutputEditorHOCR::HOCRBatchProcessor::writeHeader(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo) const {
+	Glib::ustring header = Glib::ustring::compose(
+	                           "<!DOCTYPE html>\n"
+	                           "<html>\n"
+	                           "<head>\n"
+	                           " <title>%1</title>\n"
+	                           " <meta charset=\"utf-8\" /> \n"
+	                           " <meta name='ocr-system' content='tesseract %2' />\n"
+	                           " <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
+	                           "</head><body>\n", Glib::path_get_basename(pageInfo.filename), tess->Version());
+	dev << header.raw();
+}
+
+void OutputEditorHOCR::HOCRBatchProcessor::writeFooter(std::ostream& dev) const {
+	dev << "</body></html>\n";
+}
+
+void OutputEditorHOCR::HOCRBatchProcessor::appendOutput(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfos, bool /*firstArea*/) const {
+	char* text = tess->GetHOCRText(pageInfos.page);
+	xmlpp::DomParser parser;
+	parser.parse_memory(text);
+	xmlpp::Document* doc = parser.get_document();
+
+	xmlpp::Element* pageDiv = doc->get_root_node();
+	if(!pageDiv || pageDiv->get_name() != "div") {
+		return;
+	}
+	std::map<Glib::ustring, Glib::ustring> attrs = HOCRItem::deserializeAttrGroup(pageDiv->get_attribute_value("title"));
+	attrs["image"] = Glib::ustring::compose("'%1'", pageInfos.filename);
+	attrs["ppageno"] = Glib::ustring::compose("%1", pageInfos.page);
+	attrs["rot"] = Glib::ustring::compose("%1", pageInfos.angle);
+	attrs["res"] = Glib::ustring::compose("%1", pageInfos.resolution);
+	pageDiv->set_attribute("title", HOCRItem::serializeAttrGroup(attrs));
+	doc->write_to_stream(dev);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
 OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.builder->get_widget_derived("treeviewItems", m_treeView);
 	ui.setupUi();
@@ -431,7 +469,7 @@ OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBas
 
 void OutputEditorHOCR::read(tesseract::TessBaseAPI& tess, ReadSessionData* data) {
 	tess.SetVariable("hocr_font_info", "true");
-	char* text = tess.GetHOCRText(data->page);
+	char* text = tess.GetHOCRText(data->pageInfo.page);
 	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
 	Utils::runInMainThreadBlocking([&] { addPage(text, *hdata); });
 	delete[] text;
@@ -439,7 +477,7 @@ void OutputEditorHOCR::read(tesseract::TessBaseAPI& tess, ReadSessionData* data)
 }
 
 void OutputEditorHOCR::readError(const Glib::ustring& errorMsg, ReadSessionData* data) {
-	static_cast<HOCRReadSessionData*>(data)->errors.push_back(Glib::ustring::compose("%1[%2]: %3", data->file, data->page, errorMsg));
+	static_cast<HOCRReadSessionData*>(data)->errors.push_back(Glib::ustring::compose("%1[%2]: %3", data->pageInfo.filename, data->pageInfo.page, errorMsg));
 }
 
 void OutputEditorHOCR::finalizeRead(ReadSessionData* data) {
@@ -461,10 +499,10 @@ void OutputEditorHOCR::addPage(const Glib::ustring& hocrText, HOCRReadSessionDat
 		return;
 	}
 	std::map<Glib::ustring, Glib::ustring> attrs = HOCRItem::deserializeAttrGroup(pageDiv->get_attribute_value("title"));
-	attrs["image"] = Glib::ustring::compose("'%1'", data.file);
-	attrs["ppageno"] = Glib::ustring::compose("%1", data.page);
-	attrs["rot"] = Glib::ustring::compose("%1", data.angle);
-	attrs["res"] = Glib::ustring::compose("%1", data.resolution);
+	attrs["image"] = Glib::ustring::compose("'%1'", data.pageInfo.filename);
+	attrs["ppageno"] = Glib::ustring::compose("%1", data.pageInfo.page);
+	attrs["rot"] = Glib::ustring::compose("%1", data.pageInfo.angle);
+	attrs["res"] = Glib::ustring::compose("%1", data.pageInfo.resolution);
 	pageDiv->set_attribute("title", HOCRItem::serializeAttrGroup(attrs));
 
 	Gtk::TreeIter index = m_document->insertPage(data.insertIndex, pageDiv, true);

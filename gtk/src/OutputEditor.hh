@@ -20,20 +20,36 @@
 #ifndef OUTPUTEDITOR_HH
 #define OUTPUTEDITOR_HH
 
+#include <gtkmm.h>
+#include <string>
+
+#include "Config.hh"
+
 namespace tesseract {
 class TessBaseAPI;
 }
 
 class OutputEditor {
 public:
+	struct PageInfo {
+		std::string filename;
+		int page;
+		double angle;
+		int resolution;
+	};
 	struct ReadSessionData {
 		virtual ~ReadSessionData() = default;
 		bool prependFile;
 		bool prependPage;
-		int page;
-		std::string file;
-		double angle;
-		int resolution;
+		PageInfo pageInfo;
+	};
+	class BatchProcessor {
+	public:
+		virtual ~BatchProcessor() = default;
+		virtual std::string fileSuffix() const = 0;
+		virtual void writeHeader(std::ostream& /*dev*/, tesseract::TessBaseAPI* /*tess*/, const PageInfo& /*pageInfo*/) const {}
+		virtual void writeFooter(std::ostream& /*dev*/) const {}
+		virtual void appendOutput(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const = 0;
 	};
 
 	OutputEditor() {}
@@ -46,6 +62,7 @@ public:
 	virtual void finalizeRead(ReadSessionData* data) {
 		delete data;
 	}
+	virtual BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const = 0;
 
 	virtual bool getModified() const = 0;
 

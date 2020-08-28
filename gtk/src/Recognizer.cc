@@ -28,6 +28,7 @@
 #include <gtkspellmm.h>
 #include <csignal>
 #include <cstring>
+#include <fstream>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #include <tesseract/strngs.h>
@@ -67,10 +68,14 @@ Recognizer::Recognizer(const Ui::MainWindow& _ui)
 	: ui(_ui) {
 
 	ui.menubuttonLanguages->set_menu(*MAIN->getRecognitionMenu());
+	ui.comboBoxExisting->append("overwrite", _("Overwrite existing output"));
+	ui.comboBoxExisting->append("skip", _("Skip processing source"));
+	ui.comboBoxExisting->set_active(0);
 
 	CONNECT(ui.buttonRecognize, clicked, [this] { recognizeButtonClicked(); });
 	CONNECT(ui.menuitemRecognizeCurrent, activate, [this] { recognizeCurrentPage(); });
-	CONNECT(ui.menuitemRecognizeMultiple, activate, [this] { recognizeMultiplePages();; });
+	CONNECT(ui.menuitemRecognizeMultiple, activate, [this] { recognizeMultiplePages(); });
+	CONNECT(ui.menuitemRecognizeBatch, activate, [this] { recognizeBatch(); });
 	CONNECT(ui.entryPageRange, focus_in_event, [this](GdkEventFocus*) {
 		Utils::clear_error_state(ui.entryPageRange);
 		return false;
@@ -154,6 +159,7 @@ void Recognizer::recognizeButtonClicked() {
 	if(nPages == 1) {
 		recognize({MAIN->getDisplayer()->getCurrentPage()});
 	} else {
+		ui.menuitemRecognizeBatch->set_visible(MAIN->getDisplayer()->getNSources() > 1);
 		auto positioner = sigc::bind(sigc::ptr_fun(Utils::popup_positioner), ui.buttonRecognize, ui.menuRecognizePages, false, true);
 		ui.menuRecognizePages->popup(positioner, 0, gtk_get_current_event_time());
 	}
@@ -169,90 +175,96 @@ void Recognizer::recognizeMultiplePages() {
 	recognize(pages, autodetectLayout);
 }
 
-void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout) {
-	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
-	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
-	bool ok = false;
+std::unique_ptr<tesseract::TessBaseAPI> Recognizer::setupTesseract() {
 	Config::Lang lang = MAIN->getRecognitionMenu()->getRecognitionLanguage();
-	auto tess = Utils::initTesseract(lang.prefix.c_str(), &ok);
-	if(ok) {
-		Glib::ustring failed;
+	auto tess = Utils::initTesseract(lang.prefix.c_str());
+	if(tess) {
 		tess->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
 		tess->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().c_str());
 		tess->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().c_str());
-		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
-		ProgressMonitor monitor(pages.size());
-		MAIN->showProgress(&monitor);
-		MAIN->getDisplayer()->setBlockAutoscale(true);
-		Utils::busyTask([&] {
-			int npages = pages.size();
-			int idx = 0;
-			std::string prevFile;
-			for(int page : pages) {
-				monitor.desc.progress = 0;
-				++idx;
-				Glib::signal_idle().connect_once([ = ] { MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
+	} else {
+		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
+	}
+	return tess;
+}
 
-				PageData pageData;
-				Utils::runInMainThreadBlocking([&] { pageData = setPage(page, autodetectLayout); });
-				if(!pageData.success) {
-					failed.append(Glib::ustring::compose(_("\n- Page %1: failed to render page"), page));
-					MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
-					continue;
-				}
-				readSessionData->file = pageData.filename;
-				readSessionData->page = pageData.page;
-				readSessionData->angle = pageData.angle;
-				readSessionData->resolution = pageData.resolution;
-				bool firstChunk = true;
-				bool newFile = readSessionData->file != prevFile;
-				prevFile = readSessionData->file;
-				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : pageData.ocrAreas) {
-					readSessionData->prependPage = prependPage && firstChunk;
-					readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
-					firstChunk = false;
-					newFile = false;
-					tess->SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
-					tess->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
-					tess->Recognize(&monitor.desc);
-					if(!monitor.cancelled()) {
-						MAIN->getOutputEditor()->read(*tess, readSessionData);
-					}
-				}
+void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout) {
+	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
+	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
+	auto tess = setupTesseract();
+	if(!tess) {
+		return;
+	}
+	std::vector<Glib::ustring> errors;
+	tess->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
+	tess->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().c_str());
+	tess->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().c_str());
+	OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
+	ProgressMonitor monitor(pages.size());
+	MAIN->showProgress(&monitor);
+	MAIN->getDisplayer()->setBlockAutoscale(true);
+	Utils::busyTask([&] {
+		int npages = pages.size();
+		int idx = 0;
+		std::string prevFile;
+		for(int page : pages) {
+			monitor.desc.progress = 0;
+			++idx;
+			Glib::signal_idle().connect_once([ = ] { MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
 
-				Glib::signal_idle().connect_once([] { MAIN->popState(); });
-				monitor.increaseProgress();
-				if(monitor.cancelled()) {
-					break;
+			PageData pageData;
+			Utils::runInMainThreadBlocking([&] { pageData = setPage(page, autodetectLayout); });
+			if(!pageData.success) {
+				errors.push_back(Glib::ustring::compose(_("- Page %1: failed to render page"), page));
+				MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
+				continue;
+			}
+			readSessionData->pageInfo = pageData.pageInfo;
+			bool firstChunk = true;
+			bool newFile = readSessionData->pageInfo.filename != prevFile;
+			prevFile = readSessionData->pageInfo.filename;
+			for(const Cairo::RefPtr<Cairo::ImageSurface>& image : pageData.ocrAreas) {
+				readSessionData->prependPage = prependPage && firstChunk;
+				readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
+				firstChunk = false;
+				newFile = false;
+				tess->SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
+				tess->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
+				tess->Recognize(&monitor.desc);
+				if(!monitor.cancelled()) {
+					MAIN->getOutputEditor()->read(*tess, readSessionData);
 				}
 			}
-			return true;
-		}, _("Recognizing..."));
-		MAIN->getDisplayer()->setBlockAutoscale(false);
-		MAIN->hideProgress();
-		MAIN->getOutputEditor()->finalizeRead(readSessionData);
-		if(!failed.empty()) {
-			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), Glib::ustring::compose(_("The following errors occurred:%1"), failed));
+
+			Glib::signal_idle().connect_once([] { MAIN->popState(); });
+			monitor.increaseProgress();
+			if(monitor.cancelled()) {
+				break;
+			}
 		}
+		return true;
+	}, _("Recognizing..."));
+	MAIN->getDisplayer()->setBlockAutoscale(false);
+	MAIN->hideProgress();
+	MAIN->getOutputEditor()->finalizeRead(readSessionData);
+	if(!errors.empty()) {
+		showRecognitionErrorsDialog(errors);
 	}
 }
 
-bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest) {
-	bool ok = false;
-	Config::Lang lang = MAIN->getRecognitionMenu()->getRecognitionLanguage();
-	auto tess = Utils::initTesseract(lang.prefix.c_str(), &ok);
-	if(!ok) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
-		return false;
+void Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest) {
+	auto tess = setupTesseract();
+	if(!tess) {
+		return;
 	}
 	tess->SetImage(img->get_data(), img->get_width(), img->get_height(), 4, 4 * img->get_width());
 	ProgressMonitor monitor(1);
 	MAIN->showProgress(&monitor);
 	if(dest == OutputDestination::Buffer) {
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
-		readSessionData->file = MAIN->getDisplayer()->getCurrentImage(readSessionData->page);
-		readSessionData->angle = MAIN->getDisplayer()->getCurrentAngle();
-		readSessionData->resolution = MAIN->getDisplayer()->getCurrentResolution();
+		readSessionData->pageInfo.filename = MAIN->getDisplayer()->getCurrentImage(readSessionData->pageInfo.page);
+		readSessionData->pageInfo.angle = MAIN->getDisplayer()->getCurrentAngle();
+		readSessionData->pageInfo.resolution = MAIN->getDisplayer()->getCurrentResolution();
 		Utils::busyTask([&] {
 			tess->Recognize(&monitor.desc);
 			if(!monitor.cancelled()) {
@@ -277,7 +289,100 @@ bool Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, O
 		}
 	}
 	MAIN->hideProgress();
-	return true;
+}
+
+void Recognizer::recognizeBatch() {
+	ui.checkBoxPrependPage->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	ui.checkBoxAutolayout->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
+	int response = ui.dialogBatch->run();
+	ui.dialogBatch->hide();
+	if(response != Gtk::RESPONSE_OK) {
+		return;
+	}
+	Glib::ustring existingBehaviour = ui.comboBoxExisting->get_active_id();
+	bool prependPage = MAIN->getDisplayer()->allowAutodetectOCRAreas() && ui.checkBoxPrependPage->get_active();
+	bool autolayout = MAIN->getDisplayer()->allowAutodetectOCRAreas() && ui.checkBoxAutolayout->get_active();
+	int nPages = MAIN->getDisplayer()->getNPages();
+
+	auto tess = setupTesseract();
+	if(!tess) {
+		return;
+	}
+
+	std::map<Glib::ustring, Glib::ustring> batchOptions;
+	batchOptions["prependPage"] = prependPage ? "1" : "0";
+	OutputEditor::BatchProcessor* batchProcessor = MAIN->getOutputEditor()->createBatchProcessor(batchOptions);
+
+	std::vector<Glib::ustring> errors;
+	ProgressMonitor monitor(nPages);
+	MAIN->showProgress(&monitor);
+	MAIN->getDisplayer()->setBlockAutoscale(true);
+	Utils::busyTask([&] {
+		int idx = 0;
+		std::string currFilename;
+		std::ofstream outputFile;
+		for(int page = 1; page <= nPages; ++page) {
+			monitor.desc.progress = 0;
+			++idx;
+			Glib::signal_idle().connect_once([ = ] { MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, nPages)); });
+
+			PageData pageData;
+			pageData.success = false;
+			Utils::runInMainThreadBlocking([&] { pageData = setPage(page, autolayout); });
+			if(!pageData.success) {
+				errors.push_back(Glib::ustring::compose(_("- %1:%2: failed to render page"), Glib::path_get_basename(pageData.pageInfo.filename), page));
+				continue;
+			}
+			if(pageData.pageInfo.filename != currFilename) {
+				if(outputFile.is_open()) {
+					batchProcessor->writeFooter(outputFile);
+					outputFile.close();
+				}
+				currFilename = pageData.pageInfo.filename;
+				std::string fileName = Utils::split_filename(currFilename).first + batchProcessor->fileSuffix();
+				bool exists = Glib::file_test(fileName, Glib::FILE_TEST_EXISTS);
+				if(exists && existingBehaviour == "skip") {
+					errors.push_back(Glib::ustring::compose(_("- %1: output already exists, skipping"), Glib::path_get_basename(fileName)));
+				} else {
+					outputFile.open(fileName);
+					if(!outputFile.is_open()) {
+						errors.push_back(Glib::ustring::compose(_("- %1: failed to create output file"), Glib::path_get_basename(fileName), page));
+					} else {
+						batchProcessor->writeHeader(outputFile, tess.get(), pageData.pageInfo);
+					}
+				}
+			}
+			if(outputFile.is_open()) {
+				bool firstChunk = true;
+				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : pageData.ocrAreas) {
+					tess->SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
+					tess->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
+					tess->Recognize(&monitor.desc);
+
+					if(!monitor.cancelled()) {
+						batchProcessor->appendOutput(outputFile, tess.get(), pageData.pageInfo, firstChunk);
+					}
+					firstChunk = false;
+				}
+			}
+			Glib::signal_idle().connect_once([] { MAIN->popState(); });
+			monitor.increaseProgress();
+			if(monitor.cancelled()) {
+				break;
+			}
+		}
+		if(outputFile.is_open()) {
+			batchProcessor->writeFooter(outputFile);
+			outputFile.close();
+		}
+		return true;
+	}, _("Recognizing..."));
+	MAIN->getDisplayer()->setBlockAutoscale(false);
+	MAIN->hideProgress();
+	if(!errors.empty()) {
+		showRecognitionErrorsDialog(errors);
+	}
+	delete batchProcessor;
 }
 
 Recognizer::PageData Recognizer::setPage(int page, bool autodetectLayout) {
@@ -287,10 +392,32 @@ Recognizer::PageData Recognizer::setPage(int page, bool autodetectLayout) {
 		if(autodetectLayout) {
 			MAIN->getDisplayer()->autodetectOCRAreas();
 		}
-		pageData.filename = MAIN->getDisplayer()->getCurrentImage(pageData.page);
-		pageData.angle = MAIN->getDisplayer()->getCurrentAngle();
-		pageData.resolution = MAIN->getDisplayer()->getCurrentResolution();
+		pageData.pageInfo.filename = MAIN->getDisplayer()->getCurrentImage(pageData.pageInfo.page);
+		pageData.pageInfo.angle = MAIN->getDisplayer()->getCurrentAngle();
+		pageData.pageInfo.resolution = MAIN->getDisplayer()->getCurrentResolution();
 		pageData.ocrAreas = MAIN->getDisplayer()->getOCRAreas();
 	}
 	return pageData;
+}
+
+void Recognizer::showRecognitionErrorsDialog(const std::vector<Glib::ustring>& errors) {
+	Gtk::Dialog dialog;
+	dialog.set_transient_for(*MAIN->getWindow());
+	dialog.set_title(_("Recognition errors occurred"));
+	dialog.get_content_area()->set_orientation(Gtk::ORIENTATION_VERTICAL);
+	dialog.get_content_area()->set_spacing(2);
+	Gtk::Label label(_("The following errors occurred:"));
+	label.set_xalign(0);
+	dialog.get_content_area()->pack_start(label, false, true);
+	Gtk::TextView textView;
+	textView.set_editable(false);
+	Glib::RefPtr<Gtk::TextBuffer> buffer = Gtk::TextBuffer::create();
+	buffer->set_text(Utils::string_join(errors, "\n"));
+	textView.set_buffer(buffer);
+	dialog.get_content_area()->pack_start(textView, true, true);
+	dialog.add_button(Gtk::StockID("gtk-close"), Gtk::RESPONSE_CLOSE);
+	dialog.show_all();
+	dialog.resize(480, 320);
+	dialog.run();
+	dialog.hide();
 }

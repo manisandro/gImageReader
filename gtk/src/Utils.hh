@@ -115,9 +115,15 @@ rev_iters<It> reverse(const T& t) {
 	return { t.crbegin(), t.crend() };
 }
 
+template <template<class, class, class...> class C, typename K, typename V, typename... Args>
+V get_default(const C<K, V, Args...>& m, K const& key, const V& defval) {
+	typename C<K, V, Args...>::const_iterator it = m.find( key );
+	return it == m.end() ? defval : it->second;
+}
+
 bool busyTask(const std::function<bool()>& f, const Glib::ustring& msg);
 void runInMainThreadBlocking(const std::function<void()>& f);
-std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nullptr, bool* ok = nullptr);
+std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nullptr);
 
 template<typename T, typename S = std::deque<T>>
 class AsyncQueue {
