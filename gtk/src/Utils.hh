@@ -117,6 +117,7 @@ rev_iters<It> reverse(const T& t) {
 
 bool busyTask(const std::function<bool()>& f, const Glib::ustring& msg);
 void runInMainThreadBlocking(const std::function<void()>& f);
+std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nullptr, bool* ok = nullptr);
 
 template<typename T, typename S = std::deque<T>>
 class AsyncQueue {

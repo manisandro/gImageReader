@@ -24,9 +24,6 @@
 
 #include <cairomm/cairomm.h>
 
-namespace tesseract {
-class TessBaseAPI;
-}
 namespace Ui {
 class MainWindow;
 }
@@ -36,21 +33,12 @@ public:
 	enum class OutputDestination { Buffer, Clipboard };
 
 	Recognizer(const Ui::MainWindow& _ui);
-	std::vector<Glib::ustring> getAvailableLanguages() const;
-	const Config::Lang& getSelectedLanguage() const {
-		return m_curLang;
-	}
 
 	void setRecognizeMode(const Glib::ustring& mode);
-	void updateLanguagesMenu();
 	bool recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest);
-	sigc::signal<void, Config::Lang> signal_languageChanged() const {
-		return m_signal_languageChanged;
-	}
 
 private:
 	class ProgressMonitor;
-	class MultilingualMenuItem;
 
 	enum class PageArea { EntirePage, Autodetect };
 	enum class TaskState { Waiting, Succeeded, Failed };
@@ -65,27 +53,14 @@ private:
 
 	const Ui::MainWindow& ui;
 	ClassData m_classdata;
-	Gtk::RadioButtonGroup m_langMenuRadioGroup;
-	Gtk::RadioButtonGroup m_psmRadioGroup;
-	int m_currentPsmMode;
-	std::map<Gtk::CheckMenuItem*, std::pair<Glib::ustring, gint64>> m_langMenuCheckGroup;
-	MultilingualMenuItem* m_multilingualRadio = nullptr;
-	Config::Lang m_curLang;
 
-	sigc::signal<void, Config::Lang> m_signal_languageChanged;
-
-	tesseract::TessBaseAPI initTesseract(const char* language = nullptr, bool* ok = nullptr) const;
-	void manageCharaterLists();
+	void recognitionLanguageChanged(const Config::Lang& lang);
 	void recognizeButtonClicked();
 	void recognizeCurrentPage();
 	void recognizeMultiplePages();
 	void recognize(const std::vector<int>& pages, bool autodetectLayout = false);
 	std::vector<int> selectPages(bool& autodetectLayout);
-	void setLanguage(const Gtk::RadioMenuItem* item, const Config::Lang& lang);
-	void setMultiLanguage();
 	PageData setPage(int page, bool autodetectLayout);
-	bool onMultilingualMenuButtonEvent(GdkEventButton* ev);
-	bool onMultilingualItemButtonEvent(GdkEventButton* ev, Gtk::CheckMenuItem* item);
 };
 
 #endif // RECOGNIZER_HH

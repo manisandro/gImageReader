@@ -32,6 +32,7 @@ class Displayer;
 class DisplayerTool;
 class OutputEditor;
 class Recognizer;
+class RecognitionMenu;
 class Source;
 class SourceManager;
 
@@ -99,6 +100,9 @@ public:
 	SourceManager* getSourceManager() const {
 		return m_sourceManager;
 	}
+	RecognitionMenu* getRecognitionMenu() const {
+		return m_recognitionMenu;
+	}
 	Gtk::Window* getWindow() const {
 		return ui.windowMain;
 	}
@@ -131,6 +135,7 @@ private:
 	Displayer* m_displayer = nullptr;
 	DisplayerTool* m_displayerTool = nullptr;
 	OutputEditor* m_outputEditor = nullptr;
+	RecognitionMenu* m_recognitionMenu = nullptr;
 	Recognizer* m_recognizer = nullptr;
 	SourceManager* m_sourceManager = nullptr;
 

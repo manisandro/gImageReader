@@ -18,7 +18,7 @@
  */
 
 #include "MainWindow.hh"
-#include "Recognizer.hh"
+#include "RecognitionMenu.hh"
 #include "TessdataManager.hh"
 #include "Utils.hh"
 
@@ -198,7 +198,7 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 		return false;
 	}
 
-	std::vector<Glib::ustring> availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
+	std::vector<Glib::ustring> availableLanguages = MAIN->getConfig()->getAvailableLanguages();
 	std::vector<Glib::ustring> languages;
 	for(auto it : m_languageFiles) {
 		languages.push_back(it.first);
@@ -236,7 +236,7 @@ void TessdataManager::applyChanges() {
 	ui.dialogTessdatamanager->set_sensitive(false);
 	ui.dialogTessdatamanager->get_window()->set_cursor(Gdk::Cursor::create(Gdk::WATCH));
 	Glib::ustring errorMsg;
-	std::vector<Glib::ustring> availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
+	std::vector<Glib::ustring> availableLanguages = MAIN->getConfig()->getAvailableLanguages();
 	std::string tessDataPath = MAIN->getConfig()->tessdataLocation();
 #ifdef G_OS_WIN32
 	bool isWindows = true;
@@ -341,8 +341,8 @@ void TessdataManager::applyChanges() {
 }
 
 void TessdataManager::refresh() {
-	MAIN->getRecognizer()->updateLanguagesMenu();
-	std::vector<Glib::ustring> availableLanguages = MAIN->getRecognizer()->getAvailableLanguages();
+	MAIN->getRecognitionMenu()->rebuild();
+	std::vector<Glib::ustring> availableLanguages = MAIN->getConfig()->getAvailableLanguages();
 	for(const Gtk::TreeModel::Row& row : m_languageListStore->children()) {
 		Glib::ustring prefix = row.get_value(m_viewCols.prefix);
 		bool installed = std::find(availableLanguages.begin(), availableLanguages.end(), prefix) != availableLanguages.end();

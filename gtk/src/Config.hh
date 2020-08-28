@@ -48,6 +48,7 @@ public:
 	static void openTessdataDir();
 	static void openSpellingDir();
 	static Glib::ustring lookupLangCode(const Glib::ustring& prefix) { auto it = LANG_LOOKUP.find(prefix); return it != LANG_LOOKUP.end() ? it->second : ""; }
+	static std::vector<Glib::ustring> getAvailableLanguages();
 
 private:
 	enum Location {SystemLocation = 0, UserLocation = 1};

@@ -23,6 +23,7 @@
 #include "SourceManager.hh"
 
 #include <clocale>
+#include <csignal>
 #include <fontconfig/fontconfig.h>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
@@ -489,4 +490,20 @@ void Utils::runInMainThreadBlocking(const std::function<void()>& f) {
 		cond.wait(mutex);
 	}
 	mutex.unlock();
+}
+
+std::unique_ptr<tesseract::TessBaseAPI> Utils::initTesseract(const char* language, bool* ok) {
+	// unfortunately tesseract creates deliberate segfaults when an error occurs
+	std::signal(SIGABRT, MainWindow::tesseractCrash);
+	std::string current = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "C");
+	std::unique_ptr<tesseract::TessBaseAPI> tess(new tesseract::TessBaseAPI());
+	int ret = tess->Init(nullptr, language);
+	std::signal(SIGSEGV, MainWindow::signalHandler);
+	setlocale(LC_ALL, current.c_str());
+
+	if(ok) {
+		*ok = ret != -1;
+	}
+	return tess;
 }

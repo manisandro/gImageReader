@@ -27,6 +27,7 @@
 #include "DisplayerToolSelect.hh"
 #include "OutputEditorHOCR.hh"
 #include "OutputEditorText.hh"
+#include "RecognitionMenu.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
 #include "TessdataManager.hh"
@@ -133,6 +134,7 @@ MainWindow::MainWindow() {
 	m_config = new Config;
 	m_acquirer = new Acquirer(ui);
 	m_displayer = new Displayer(ui);
+	m_recognitionMenu = new RecognitionMenu();
 	m_recognizer = new Recognizer(ui);
 	m_sourceManager = new SourceManager(ui);
 
@@ -160,7 +162,7 @@ MainWindow::MainWindow() {
 	CONNECT(m_sourceManager, sourceChanged, [this] { onSourceChanged(); });
 	CONNECT(ui.buttonOutputpane, toggled, [this] { if(m_outputEditor) m_outputEditor->getUI()->set_visible(ui.buttonOutputpane->get_active()); });
 	m_connection_setOCRMode = CONNECT(ui.comboOcrmode, changed, [this] { setOutputMode(static_cast<OutputMode>(ui.comboOcrmode->get_active_row_number())); });
-	CONNECT(m_recognizer, languageChanged, [this] (const Config::Lang & lang) {
+	CONNECT(m_recognitionMenu, languageChanged, [this] (const Config::Lang & lang) {
 		languageChanged(lang);
 	});
 	CONNECT(ConfigSettings::get<ComboSetting>("outputorient"), changed, [this] {
@@ -173,7 +175,8 @@ MainWindow::MainWindow() {
 	ADD_SETTING(SwitchSettingT<Gtk::ToggleButton>("showcontrols", ui.buttonControls));
 	ADD_SETTING(ComboSetting("outputeditor", ui.comboOcrmode));
 
-	m_recognizer->updateLanguagesMenu();
+	ui.menubuttonLanguages->set_menu(*m_recognitionMenu);
+	m_recognitionMenu->rebuild();
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
@@ -205,6 +208,7 @@ MainWindow::~MainWindow() {
 	delete m_displayer;
 	delete m_recognizer;
 	delete m_config;
+	delete m_recognitionMenu;
 	s_instance = nullptr;
 }
 
@@ -347,7 +351,7 @@ void MainWindow::showHelp(const std::string& chapter) {
 
 void MainWindow::showConfig() {
 	m_config->showDialog();
-	m_recognizer->updateLanguagesMenu();
+	m_recognitionMenu->rebuild();
 }
 
 bool MainWindow::setOutputMode(OutputMode mode) {
@@ -375,7 +379,7 @@ bool MainWindow::setOutputMode(OutputMode mode) {
 		}
 		ui.buttonAutolayout->set_visible(m_displayerTool->allowAutodetectOCRAreas());
 		m_displayer->setTool(m_displayerTool);
-		m_outputEditor->setLanguage(m_recognizer->getSelectedLanguage());
+		m_outputEditor->setLanguage(m_recognitionMenu->getRecognitionLanguage());
 		ui.panedOutput->pack2(*m_outputEditor->getUI(), true, false);
 		m_outputEditor->getUI()->set_visible(ui.buttonOutputpane->get_active());
 		return true;
@@ -383,7 +387,7 @@ bool MainWindow::setOutputMode(OutputMode mode) {
 }
 
 void MainWindow::redetectLanguages() {
-	m_recognizer->updateLanguagesMenu();
+	m_recognitionMenu->rebuild();
 }
 
 void MainWindow::manageLanguages() {
@@ -533,7 +537,7 @@ void MainWindow::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy,
 	} catch (const Glib::Error& e) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Failed to install spelling dictionary: %1"), e.what()));
 	}
-	getRecognizer()->updateLanguagesMenu();
+	m_recognitionMenu->rebuild();
 	popState();
 }
 #endif
@@ -610,7 +614,7 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
 	if(!failed.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("The following dictionaries could not be downloaded:\n%1\n\nCheck the connectivity and directory permissions.\nHint: If you don't have write permissions in system folders, you can switch to user paths in the settings dialog."), Utils::string_join(failed, "\n")));
 	} else if(!downloaded.empty()) {
-		m_recognizer->updateLanguagesMenu();
+		m_recognitionMenu->rebuild();
 		Utils::message_dialog(Gtk::MESSAGE_INFO, _("Dictionaries installed"), Glib::ustring::compose(_("The following dictionaries were installed:\n%1"), Utils::string_join(downloaded, "\n")));
 	} else {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));

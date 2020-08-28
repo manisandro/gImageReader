@@ -26,6 +26,7 @@
 #include <enchant-provider.h>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#include <tesseract/genericvector.h>
 #undef USE_STD_NAMESPACE
 
 const std::vector<Config::Lang> Config::LANGUAGES = LangTables::languages<std::vector<Config::Lang>, Glib::ustring>([](const char* str) { return Glib::ustring(str); });
@@ -143,6 +144,26 @@ std::string Config::tessdataLocation() const {
 
 std::string Config::spellingLocation() const {
 	return ui.entrySpelldir->get_text();
+}
+
+std::vector<Glib::ustring> Config::getAvailableLanguages() {
+	auto tess = Utils::initTesseract();
+	GenericVector<STRING> availLanguages;
+	tess->GetAvailableLanguagesAsVector(&availLanguages);
+	std::vector<Glib::ustring> result;
+	for(int i = 0; i < availLanguages.size(); ++i) {
+		result.push_back(availLanguages[i].string());
+	}
+	std::sort(result.begin(), result.end(), [](const Glib::ustring & s1, const Glib::ustring & s2) {
+		bool s1Script = s1.substr(0, 6) == "script" || s1.substr(0, 1) == s1.substr(0, 1).uppercase();
+		bool s2Script = s2.substr(0, 6) == "script" || s2.substr(0, 1) == s2.substr(0, 1).uppercase();
+		if(s1Script != s2Script) {
+			return !s1Script;
+		} else {
+			return s1 < s2;
+		}
+	});
+	return result;
 }
 
 void Config::showDialog() {
