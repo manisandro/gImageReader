@@ -150,7 +150,6 @@ MainWindow::MainWindow() {
 	m_idlegroup.push_back(ui.spinContrast);
 	m_idlegroup.push_back(ui.spinResolution);
 	m_idlegroup.push_back(ui.buttonAutolayout);
-	m_idlegroup.push_back(ui.menubuttonLanguages);
 
 	CONNECT(ui.windowMain, delete_event, [this](GdkEventAny * ev) {
 		return closeEvent(ev);
