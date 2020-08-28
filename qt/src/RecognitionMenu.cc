@@ -96,7 +96,7 @@ void RecognitionMenu::rebuild() {
 			std::sort(spelldicts.begin(), spelldicts.end());
 		}
 		if(!spelldicts.empty()) {
-			QAction* item = new QAction(lang.name, m_menu);
+			QAction* item = new QAction(lang.name, this);
 			QMenu* submenu = new QMenu();
 			for(const QString& dict : spelldicts) {
 				Config::Lang itemlang = {lang.prefix, dict, lang.name};
@@ -199,7 +199,7 @@ void RecognitionMenu::rebuild() {
 		m_psmCheckGroup->addAction(item);
 	}
 
-	QAction* psmAction = new QAction(_("Page segmentation mode"), m_menu);
+	QAction* psmAction = new QAction(_("Page segmentation mode"), this);
 	psmAction->setMenu(psmMenu);
 	addAction(psmAction);
 	addAction(_("Character whitelist / blacklist..."), m_charListDialog, &QDialog::exec);

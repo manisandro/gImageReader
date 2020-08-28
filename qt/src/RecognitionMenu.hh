@@ -52,7 +52,6 @@ private slots:
 private:
 	Config::Lang m_curLang;
 
-	QMenu* m_menu = nullptr;
 	QMenu* m_menuMultilanguage = nullptr;
 	QActionGroup* m_langMenuRadioGroup = nullptr;
 	QActionGroup* m_langMenuCheckGroup = nullptr;
