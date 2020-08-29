@@ -225,7 +225,7 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 		}
 	}
 	if(contains) {
-		if(QMessageBox::No == QMessageBox::question(MAIN, tr("Source already recognized"), tr("One or more selected sources were aready recognized. Proceed anyway?"))) {
+		if(QMessageBox::No == QMessageBox::question(MAIN, _("Source already recognized"), _("One or more selected sources were aready recognized. Proceed anyway?"))) {
 			return;
 		}
 	}
