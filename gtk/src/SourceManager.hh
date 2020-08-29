@@ -85,6 +85,7 @@ private:
 
 	void clearSources();
 	void fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event, Gtk::TreeIter it);
+	void addFolder();
 	void openSources();
 	void pasteClipboard();
 	bool checkPdfSource(Source* source, PdfWithTextAction& textAction, std::vector<Glib::ustring>& failed) const;

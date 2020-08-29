@@ -66,6 +66,7 @@ std::string make_absolute_path(const std::string& path, const std::string& basep
 std::string make_relative_path(const std::string& path, const std::string& basepath);
 std::string get_documents_dir();
 std::string make_output_filename(const std::string& filename);
+void list_dir(const std::string& path, const std::set<std::string>& filters, std::vector<Glib::RefPtr<Gio::File>>& output);
 
 std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, bool keepEmpty = true);
 Glib::ustring string_join(const std::vector<Glib::ustring>& strings, const Glib::ustring& joiner);

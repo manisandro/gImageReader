@@ -106,6 +106,29 @@ static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustrin
 	return files;
 }
 
+static std::string win32_open_folder_dialog(const Glib::ustring& title, const std::string& initialDirectory, Gtk::Window* parent) {
+	std::wstring winitialDirectory = s2ws(initialDirectory);
+	std::wstring wtitle = s2ws(title);
+
+	BROWSEINFOW binfo = {};
+	binfo.hwndOwner = gdk_win32_window_get_impl_hwnd(parent->get_window()->gobj());
+	binfo.pszDisplayName = NULL;
+	binfo.lpszTitle = wtitle.c_str();
+	binfo.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI | BIF_NONEWFOLDERBUTTON;
+	binfo.lpfn = NULL;
+	binfo.lParam = NULL;
+	binfo.iImage = 0;
+	PIDLIST_ABSOLUTE result = SHBrowseForFolderW(&binfo);
+	if(result == NULL) {
+		return std::string();
+	}
+	wchar_t buffer[MAX_PATH];
+	if(SHGetPathFromIDList(pidl, buffer)) {
+		return ws2s(buffer);
+	}
+	return std::string();
+}
+
 static std::string win32_save_dialog(const Glib::ustring& title, const std::string& suggestedFile, const std::wstring& filter, Gtk::Window* parent) {
 	std::wstring wsuggestedFile = s2ws(suggestedFile);
 	std::wstring wtitle = s2ws(title);
@@ -137,10 +160,10 @@ static std::string win32_save_dialog(const Glib::ustring& title, const std::stri
 Glib::RefPtr<Gtk::FileFilter> FileDialogs::FileFilter::to_gnome_filter() const {
 	Glib::RefPtr<Gtk::FileFilter> filefilter = Gtk::FileFilter::create();
 	filefilter->set_name(name);
-	for(const std::string& mime_type : mime_types) {
+	for(const Glib::ustring& mime_type : mime_types) {
 		filefilter->add_mime_type(mime_type);
 	}
-	for(const std::string& pattern : patterns) {
+	for(const Glib::ustring& pattern : patterns) {
 		filefilter->add_pattern(pattern);
 	}
 	return filefilter;
@@ -159,6 +182,20 @@ static std::vector<Glib::RefPtr<Gio::File>> gnome_open_dialog(const std::string&
 		return dialog.get_files();
 	}
 	return std::vector<Glib::RefPtr<Gio::File>>();
+}
+
+static std::string gnome_open_folder_dialog(const std::string& title, const std::string& initialDirectory, Gtk::Window* parent) {
+	Gtk::FileChooserDialog dialog(*parent, title);
+	dialog.add_button(_("Cancel"), Gtk::RESPONSE_CANCEL);
+	dialog.add_button(_("OK"), Gtk::RESPONSE_OK);
+	dialog.set_action(Gtk::FILE_CHOOSER_ACTION_SELECT_FOLDER);
+	dialog.set_local_only(false);
+	dialog.set_current_folder(initialDirectory);
+
+	if(dialog.run() == Gtk::RESPONSE_OK) {
+		return dialog.get_filename();
+	}
+	return std::string();
 }
 
 static std::string gnome_save_dialog(const Glib::ustring& title, const std::string& suggestedFile, Glib::RefPtr<Gtk::FileFilter> filter, Gtk::Window* parent) {
@@ -209,6 +246,30 @@ static std::vector<Glib::RefPtr<Gio::File>> kde_open_dialog(const Glib::ustring&
 		}
 	}
 	return files;
+}
+
+static std::string kde_open_folder_dialog(const Glib::ustring& title, const std::string& initialDirectory, Gtk::Window* parent) {
+	// Command line
+	std::vector<Glib::ustring> argv = {
+		"/usr/bin/kdialog",
+		"--getexistingdirectory", initialDirectory,
+		"--attach", Glib::ustring::compose("%1", gdk_x11_window_get_xid(parent->get_window()->gobj())),
+		"--title", title/*,
+		"--caption", PACKAGE_NAME*/
+	};
+
+	// Spawn process
+	std::string stdout;
+	int exit_status = -1;
+	Glib::spawn_sync("", argv, /*Glib::SPAWN_DEFAULT*/Glib::SpawnFlags(0), sigc::slot<void>(), &stdout, nullptr, &exit_status);
+	std::vector<Glib::RefPtr<Gio::File>> files;
+	if(exit_status == 0) {
+		std::string folder;
+		std::istringstream iss(stdout);
+		std::getline(iss, folder);
+		return folder;
+	}
+	return std::string();
 }
 
 static std::string kde_save_dialog(const Glib::ustring& title, const std::string& suggestedFile, const Glib::ustring& filter, Gtk::Window* parent) {
@@ -294,6 +355,33 @@ std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring& title, con
 		ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filenames.front()->get_path()));
 	}
 	return filenames;
+}
+
+std::string open_folder_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, Gtk::Window* parent) {
+	std::string folder;
+	parent = parent == nullptr ? MAIN->getWindow() : parent;
+	std::string initDir;
+	if(!initialDirectory.empty()) {
+		initDir = initialDirectory;
+	} else {
+		std::string initDir = ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
+		if(initDir.empty()) {
+			initDir = Utils::get_documents_dir();
+		}
+	}
+#ifdef G_OS_WIN32
+	folder = win32_open_folder_dialog(title, initDir, parent);
+#else
+	if(is_kde()) {
+		folder = kde_open_folder_dialog(title, initDir, parent);
+	} else {
+		folder = gnome_open_folder_dialog(title, initDir, parent);
+	}
+#endif
+	if(!folder.empty()) {
+		ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(folder));
+	}
+	return folder;
 }
 
 std::string save_dialog(const Glib::ustring& title, const std::string& initialFilename, const std::string& initialDirSetting, const FileFilter& filter, bool generateUniqueName, Gtk::Window* parent) {

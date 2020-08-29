@@ -55,6 +55,7 @@ SourceManager::SourceManager(const Ui::MainWindow& _ui)
 	CONNECT(ui.buttonSources, toggled, [this] { ui.notebookSources->set_visible(ui.buttonSources->get_active()); });
 	CONNECT(ui.buttonSourcesAdd, clicked, [this] { openSources(); });
 	CONNECT(ui.menubuttonSourcesAdd, clicked, [this] { ui.menuitemSourcesPaste->set_sensitive(m_clipboard->wait_is_image_available()); });
+	CONNECT(ui.menuitemSourcesAddFolder, activate, [this] { addFolder(); });
 	CONNECT(ui.menuitemSourcesPaste, activate, [this] { pasteClipboard(); });
 	CONNECT(ui.menuitemSourcesScreenshot, activate, [this] { takeScreenshot(); });
 	CONNECT(ui.buttonSourcesRemove, clicked, [this] { removeSource(false); });
@@ -208,6 +209,27 @@ std::vector<Source*> SourceManager::getSelectedSources() const {
 		selectedSources.push_back(ui.treeviewSources->get_model()->get_iter(path)->get_value(m_listViewCols.source));
 	}
 	return selectedSources;
+}
+
+void SourceManager::addFolder() {
+	std::string path = FileDialogs::open_folder_dialog(_("Select folder..."), Utils::get_documents_dir(), "sourcedir");
+	if(path.empty()) {
+		return;
+	}
+	std::set<std::string> filters;
+	for(const Gdk::PixbufFormat& format : Gdk::Pixbuf::get_formats()) {
+		for(const Glib::ustring& extension : format.get_extensions()) {
+			filters.insert(extension);
+		}
+	}
+	filters.insert("pdf");
+	filters.insert("djvu");
+
+	std::vector<Glib::RefPtr<Gio::File>> filenames;
+	Utils::list_dir(path, filters, filenames);
+	if(!filenames.empty()) {
+		addSources(filenames);
+	}
 }
 
 void SourceManager::openSources() {

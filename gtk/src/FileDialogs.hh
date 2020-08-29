@@ -38,6 +38,7 @@ struct FileFilter {
 };
 
 std::vector<Glib::RefPtr<Gio::File> > open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, const FileFilter& filter, bool multiple, Gtk::Window* parent = nullptr);
+std::string open_folder_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, Gtk::Window* parent = nullptr);
 std::string save_dialog(const Glib::ustring& title, const std::string& initialFilename, const std::string& initialDirSetting, const FileFilter& filter, bool generateUniqueName = false, Gtk::Window* parent = nullptr);
 
 

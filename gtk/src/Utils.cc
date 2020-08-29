@@ -183,6 +183,24 @@ std::string Utils::make_output_filename(const std::string& filename) {
 	return newfilename;
 }
 
+void Utils::list_dir(const std::string& path, const std::set<std::string>& filters, std::vector<Glib::RefPtr<Gio::File>>& output) {
+	try {
+		Glib::Dir dir(path);
+		std::vector<Glib::RefPtr<Gio::File>> files;
+		for(const std::string& filename : dir) {
+			std::string subpath = Glib::build_filename(path, filename);
+			if(Glib::file_test(subpath, Glib::FILE_TEST_IS_DIR)) {
+				list_dir(subpath, filters, output);
+			} else {
+				std::pair<std::string, std::string> parts = Utils::split_filename(filename);
+				if(filters.find(parts.second) != filters.end()) {
+					output.push_back(Gio::File::create_for_path(subpath));
+				}
+			}
+		}
+	} catch(const Glib::FileError& e) { }
+}
+
 std::vector<Glib::ustring> Utils::string_split(const Glib::ustring& text, char delim, bool keepEmpty) {
 	std::vector<Glib::ustring> parts;
 	Glib::ustring::size_type startPos = 0, endPos = 0;
@@ -289,7 +307,7 @@ Glib::ustring Utils::string_html_escape(const Glib::ustring& str) {
 }
 
 std::vector<std::pair<Glib::ustring, int>> Utils::string_split_pos(const Glib::ustring& str, const Glib::RefPtr<Glib::Regex>& splitRe) {
-	int strpos = 0;
+	Glib::ustring::size_type strpos = 0;
 	Glib::MatchInfo info;
 	std::vector<std::pair<Glib::ustring, int>> result;
 

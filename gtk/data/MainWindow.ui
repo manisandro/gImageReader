@@ -46,6 +46,12 @@
       <pattern>*.png</pattern>
     </patterns>
   </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">16</property>
+    <property name="icon-name">folder-open</property>
+  </object>
   <object class="GtkImage" id="imageAutolayout">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -164,6 +170,15 @@
   <object class="GtkMenu" id="menuSourcesAdd">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
+    <child>
+      <object class="GtkImageMenuItem" id="menuitemSourcesAddFolder">
+        <property name="label" translatable="yes">Add folder</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="image">image1</property>
+        <property name="use-stock">False</property>
+      </object>
+    </child>
     <child>
       <object class="GtkImageMenuItem" id="menuitemSourcesRecent">
         <property name="label" translatable="yes">Recent</property>
