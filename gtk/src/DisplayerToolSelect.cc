@@ -155,7 +155,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 	Cairo::RefPtr<Cairo::ImageSurface> img = m_displayer->getImage(m_displayer->getSceneBoundingRect());
 
 	// Perform layout analysis
-	Utils::busyTask([this, &nDeskew, &avgDeskew, &rects, &img] {
+	Utils::busyTask([&nDeskew, &avgDeskew, &rects, &img] {
 		std::string current = setlocale(LC_ALL, NULL);
 		setlocale(LC_ALL, "C");
 		tesseract::TessBaseAPI tess;
