@@ -297,6 +297,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	itemViewCol2->set_visible(false);
 	itemViewCol2->set_fixed_width(32);
 
+	m_treeView->set_fixed_height_mode();
+
 	// Navigation target combo box
 	Glib::RefPtr<Gtk::ListStore> navigationComboModel = Gtk::ListStore::create(m_navigationComboCols);
 	ui.comboNavigation->set_model(navigationComboModel);
