@@ -121,11 +121,11 @@ private:
 			return dirs.empty() ? files.empty() ? nullptr : static_cast<Node*>(files[0]) : static_cast<Node*>(dirs[0]);
 		}
 		Node* child(int index) {
-			return index >= dirs.size() ? static_cast<Node*>(files[index - dirs.size()]) : static_cast<Node*>(dirs[index]);
+			return index >= int(dirs.size()) ? static_cast<Node*>(files[index - dirs.size()]) : static_cast<Node*>(dirs[index]);
 		}
 		Node* nextNode(Node* node) const {
 			int index = (dynamic_cast<DirNode*>(node) ? dirs.index(static_cast<DirNode*>(node)) : dirs.size() + files.index(static_cast<FileNode*>(node))) + 1;
-			return index < dirs.size() ? static_cast<Node*>(dirs[index]) : index < childCount() ? static_cast<Node*>(files[index - dirs.size()]) : nullptr;
+			return index < int(dirs.size()) ? static_cast<Node*>(dirs[index]) : index < childCount() ? static_cast<Node*>(files[index - dirs.size()]) : nullptr;
 		}
 	};
 

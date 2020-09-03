@@ -341,7 +341,7 @@ bool HOCRDocument::checkItemSpelling(const Gtk::TreeIter& index, std::vector<Gli
 		return checkSpelling(HOCRItem::trimmedWord(prevText) + trimmed);
 	}
 	Glib::ustring text = item->text();
-	if(idx + 1 == parent->children().size() && parentIdx + 1 < parentSiblings.size() && !text.empty() && text[text.length() - 1] == '-') {
+	if(idx + 1 == int(parent->children().size()) && parentIdx + 1 < int(parentSiblings.size()) && !text.empty() && text[text.length() - 1] == '-') {
 		HOCRItem* parentNextSibling = parentSiblings.at(parentIdx + 1);
 		if(!parentNextSibling) { return false; }
 		std::vector<HOCRItem*> cousins = parentNextSibling->children();
@@ -458,9 +458,9 @@ bool HOCRDocument::iter_next_vfunc(const iterator& iter, iterator& iter_next) co
 	HOCRItem* nextItem = nullptr;
 	if(item) {
 		if(item->parent()) {
-			nextItem = item->index() < item->parent()->children().size() - 1 ? item->parent()->children()[item->index() + 1] : nullptr;
+			nextItem = item->index() < int(item->parent()->children().size()) - 1 ? item->parent()->children()[item->index() + 1] : nullptr;
 		} else {
-			nextItem = item->index() < m_pages.size() - 1 ? m_pages[item->index() + 1] : nullptr;
+			nextItem = item->index() < int(m_pages.size()) - 1 ? m_pages[item->index() + 1] : nullptr;
 		}
 	}
 	iter_next.gobj()->user_data = nextItem;
@@ -478,7 +478,7 @@ bool HOCRDocument::get_iter_vfunc(const Path& path, iterator& iter) const {
 	int idx = 0, size = path.size();
 	HOCRItem* item = m_pages[path[idx++]];
 	while(item && idx < size) {
-		item = path[idx] >= item->children().size() ? nullptr : item->children()[path[idx++]];
+		item = path[idx] >= int(item->children().size()) ? nullptr : item->children()[path[idx++]];
 	}
 	iter.gobj()->user_data = item;
 	iter.set_stamp(iter.gobj()->user_data != nullptr);
@@ -507,7 +507,7 @@ bool HOCRDocument::iter_parent_vfunc(const iterator& child, iterator& iter) cons
 bool HOCRDocument::iter_nth_child_vfunc(const iterator& parent, int n, iterator& iter) const {
 	DEBUG(std::cout << "iter_nth_child_vfunc " << get_path(parent).to_string() << "@" << n << ": ";)
 	HOCRItem* parentItem = mutableItemAtIndex(parent);
-	iter.gobj()->user_data = parentItem && n < parentItem->children().size() ? parentItem->children()[n] : nullptr;
+	iter.gobj()->user_data = parentItem && n < int(parentItem->children().size()) ? parentItem->children()[n] : nullptr;
 	iter.set_stamp(iter.gobj()->user_data != nullptr);
 	DEBUG(std::cout << (iter.gobj()->user_data != nullptr) << std::endl;)
 	return iter.gobj()->user_data != nullptr;
@@ -515,7 +515,7 @@ bool HOCRDocument::iter_nth_child_vfunc(const iterator& parent, int n, iterator&
 
 bool HOCRDocument::iter_nth_root_child_vfunc(int n, iterator& iter) const {
 	DEBUG(std::cout << "iter_nth_root_child_vfunc " << n << ": ";)
-	iter.gobj()->user_data =  n < m_pages.size() ? m_pages[n] : nullptr;
+	iter.gobj()->user_data =  n < int(m_pages.size()) ? m_pages[n] : nullptr;
 	iter.set_stamp(iter.gobj()->user_data != nullptr);
 	DEBUG(std::cout << (iter.gobj()->user_data != nullptr) << std::endl;)
 	return iter.gobj()->user_data != nullptr;
@@ -695,11 +695,11 @@ bool HOCRDocument::checkSpelling(const Glib::ustring& trimmed, std::vector<Glib:
 
 // each suggestion for each word => each word in each suggestion
 void HOCRDocument::generateCombinations(const std::vector<std::vector<Glib::ustring>>& lists, std::vector<std::vector<Glib::ustring>>& results, int depth, const std::vector<Glib::ustring>& c) const {
-	if(depth == lists.size()) {
+	if(depth == int(lists.size())) {
 		results.push_back(c);
 		return;
 	}
-	for(int i = 0; i < lists[depth].size(); ++i) {
+	for(int i = 0, n = int(lists[depth].size()); i < n; ++i) {
 		std::vector<Glib::ustring> newc = c;
 		newc.insert(newc.end(), lists[depth][i]);
 		generateCombinations(lists, results, depth + 1, newc);
