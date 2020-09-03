@@ -42,39 +42,43 @@ QModelIndex FileTreeModel::insertFile(QString filePath, DataObject* data, const 
 #endif
 	QString fileName = finfo.fileName();
 
-	if(fileDir.startsWith(QDir::tempPath())) {
+	if(fileDir.startsWith(tempPath)) {
+		int rootRow = (m_root ? 1 : 0);
 		if(!m_tmpdir) {
-			m_tmpdir = new DirNode(QFileInfo(tempPath).fileName(), tempPath, nullptr);
+			beginInsertRows(QModelIndex(), rootRow, rootRow);
+			m_tmpdir = new DirNode(QFileInfo(tempPath).fileName(), tempPath, nullptr, _("Temporary files"));
+			endInsertRows();
 		}
+		QModelIndex idx = index(rootRow, 0);
 		int pos = m_tmpdir->files.insIndex(fileName);
-		int row = (m_root ? m_root->childCount() : 0) + pos;
-		beginInsertRows(QModelIndex(), row, row);
-		m_tmpdir->files.add(new FileNode(fileName, filePath, m_tmpdir, data, displayName));
+		int row = m_tmpdir->dirs.size() + pos;
+		beginInsertRows(idx, row, row);
+		m_tmpdir->files.add(new FileNode(fileName, filePath, m_tmpdir, data, displayName), pos);
 		endInsertRows();
-		return index(row, 0, QModelIndex());
+		return index(row, 0, idx);
 	} else if(!m_root) {
 		// Set initial root
 		m_root = new DirNode(QFileInfo(fileDir).fileName(), fileDir, nullptr);
 		beginInsertRows(QModelIndex(), 0, 0);
 		m_root->files.add(new FileNode(fileName, filePath, m_root, data, displayName));
 		endInsertRows();
-		return index(0, 0, QModelIndex());
+		return index(0, 0, index(0, 0));
 	} else if(m_root->path == fileDir) {
 		// Add to current root
 		int pos = m_root->files.insIndex(fileName);
 		int row = m_root->dirs.size() + pos;
-		beginInsertRows(QModelIndex(), row, row);
+		beginInsertRows(index(0, 0), row, row);
 		m_root->files.add(new FileNode(fileName, filePath, m_root, data, displayName), pos);
 		endInsertRows();
-		return index(row, 0, QModelIndex());
+		return index(row, 0, index(0, 0));
 	} else if(m_root->path.startsWith(fileDir)) {
 		// Root below new path, replace root
 		QStringList path = m_root->path.mid(fileDir.length()).split("/", QString::SkipEmptyParts);
-		beginRemoveRows(QModelIndex(), 0, m_root->childCount() - 1);
+		beginRemoveRows(QModelIndex(), 0, 0);
 		DirNode* oldroot = m_root;
 		m_root = nullptr;
 		endRemoveRows();
-		beginInsertRows(QModelIndex(), 0, 1);
+		beginInsertRows(QModelIndex(), 0, 0);
 		m_root = new DirNode(QFileInfo(fileDir).fileName(), fileDir, nullptr);
 		DirNode* cur = m_root;
 		for(int i = 0, n = path.length() - 1; i < n; ++i) {
@@ -84,12 +88,12 @@ QModelIndex FileTreeModel::insertFile(QString filePath, DataObject* data, const 
 		oldroot->parent = cur;
 		m_root->files.add(new FileNode(fileName, filePath, m_root, data, displayName));
 		endInsertRows();
-		return index(1, 0, QModelIndex());
+		return index(1, 0, index(0, 0));
 	} else if(fileDir.startsWith(m_root->path)) {
 		// New path below root, append to subtree
 		QStringList path = fileDir.mid(m_root->path.length()).split("/", QString::SkipEmptyParts);
 		DirNode* cur = m_root;
-		QModelIndex idx = QModelIndex();
+		QModelIndex idx = index(0, 0);
 		for(const QString& part : path) {
 			auto it = cur->dirs.find(part);
 			int row = 0;
@@ -121,13 +125,13 @@ QModelIndex FileTreeModel::insertFile(QString filePath, DataObject* data, const 
 			}
 		}
 		QString newRoot = "/" + rootPath.mid(0, pos).join("/");
-		beginRemoveRows(QModelIndex(), 0, m_root->childCount() - 1);
+		beginRemoveRows(QModelIndex(), 0, 0);
 		DirNode* oldroot = m_root;
 		m_root = nullptr;
 		endRemoveRows();
 		m_root = new DirNode(QFileInfo(newRoot).fileName(), newRoot, nullptr);
 		// Insert old root and new branch
-		beginInsertRows(QModelIndex(), 0, 1);
+		beginInsertRows(QModelIndex(), 0, 0);
 		// - Old root
 		DirNode* cur = m_root;
 		QStringList path = rootPath.mid(pos);
@@ -139,7 +143,7 @@ QModelIndex FileTreeModel::insertFile(QString filePath, DataObject* data, const 
 		// - New branch
 		cur = m_root;
 		path = newPath.mid(pos);
-		QModelIndex idx = QModelIndex();
+		QModelIndex idx = index(0, 0);
 		for(int i = 0, n = path.length(); i < n; ++i) {
 			int pos = cur->dirs.insIndex(path[i]);
 			cur = cur->dirs.add(new DirNode(path[i], cur->path + "/" + path[i], cur), pos);
@@ -152,32 +156,45 @@ QModelIndex FileTreeModel::insertFile(QString filePath, DataObject* data, const 
 }
 
 QModelIndex FileTreeModel::findFile(const QString& filePath, bool isFile) const {
-	if(!m_root) {
+	if(!m_root && !m_tmpdir) {
 		return QModelIndex();
 	}
 
 	QFileInfo finfo(filePath);
 #ifdef Q_OS_WIN32
+	QString prefix = "/";
 	QString fileDir = "/" + finfo.absolutePath().replace("\\", "/");
 	QString tempPath = "/" + QDir::tempPath();
 #else
+	QString prefix = "";
 	QString fileDir = finfo.absolutePath();
 	QString tempPath = QDir::tempPath();
 #endif
 	QString fileName = finfo.fileName();
 
-	if(m_tmpdir && fileDir.startsWith(m_tmpdir->path)) {
-		auto it = m_tmpdir->files.find(fileName);
-		int row = m_tmpdir->files.index(*it) + (m_root ? m_root->childCount() : 0);
-		return it != m_tmpdir->files.end() ? index(row, 0, QModelIndex()) : QModelIndex();
+	// Path is root dir
+	if(!isFile && m_root && prefix + filePath == m_root->path) {
+		return index(0, 0);
 	}
-	if(!fileDir.startsWith(m_root->path)) {
+	// Path is temp dir
+	else if(!isFile && m_tmpdir && prefix + filePath == m_tmpdir->path) {
+		return index(m_root ? 1 : 0, 0);
+	}
+	// Path is below root or tempdir
+	DirNode* cur = nullptr;
+	QModelIndex idx;
+	if(m_tmpdir && fileDir.startsWith(m_tmpdir->path)) {
+		cur = m_tmpdir;
+		idx = index(m_root ? 1 : 0, 0);
+	} else if (m_root && fileDir.startsWith(m_root->path)) {
+		cur = m_root;
+		idx = index(0, 0);
+	}
+	if(!idx.isValid()) {
 		return QModelIndex();
 	}
 	QString relPath = fileDir.mid(m_root->path.length());
 	QStringList parts = relPath.split("/", QString::SkipEmptyParts);
-	DirNode* cur = m_root;
-	QModelIndex idx;
 	for(const QString& part : parts) {
 		auto it = cur->dirs.find(part);
 		if(it == cur->dirs.end()) {
@@ -215,7 +232,7 @@ bool FileTreeModel::removeIndex(const QModelIndex& index) {
 		m_root = nullptr;
 		endRemoveRows();
 	} else if(deleteNode == m_tmpdir) {
-		int row = (m_root ? m_root->childCount() : 0) + m_tmpdir->childCount() - 1;
+		int row = (m_root ? 1 : 0);
 		beginRemoveRows(QModelIndex(), row, row);
 		delete m_tmpdir;
 		m_tmpdir = nullptr;
@@ -234,7 +251,7 @@ bool FileTreeModel::removeIndex(const QModelIndex& index) {
 
 void FileTreeModel::clear() {
 	if(m_root || m_tmpdir) {
-		beginRemoveRows(QModelIndex(), 0, (m_root ? m_root->childCount() : 0) + (m_tmpdir ? m_tmpdir->childCount() : 0) - 1);
+		beginRemoveRows(QModelIndex(), 0, (m_root != 0) + (m_tmpdir != 0));
 		delete m_root;
 		m_root = nullptr;
 		delete m_tmpdir;
@@ -306,37 +323,41 @@ Qt::ItemFlags FileTreeModel::flags(const QModelIndex& /*index*/) const {
 }
 
 QModelIndex FileTreeModel::index(int row, int column, const QModelIndex& parent) const {
-	Node* parentNode = nullptr;
-	if(parent.isValid()) {
-		parentNode = static_cast<Node*>(parent.internalPointer());
-	} else {
-		parentNode = m_root && row < m_root->childCount() ? m_root : m_tmpdir ? m_tmpdir : nullptr;
+	if (!hasIndex(row, column, parent)) {
+		return QModelIndex();
 	}
-	if(dynamic_cast<DirNode*>(parentNode)) {
-		DirNode* dirNode = static_cast<DirNode*>(parentNode);
-		int index = row;
-		if(dirNode == m_tmpdir && m_root) {
-			index -= m_root->childCount();
-		}
+	if(parent.isValid()) {
+		Node* node = static_cast<Node*>(parent.internalPointer());
+		DirNode* dirNode = dynamic_cast<DirNode*>(node);
 		int nDirs = dirNode->dirs.size();
-		if(index >= nDirs) {
-			return createIndex(row, column, dirNode->files[index - nDirs]);
+		if(row >= nDirs) {
+			return createIndex(row, column, dirNode->files[row - nDirs]);
 		} else {
-			return createIndex(row, column, dirNode->dirs[index]);
+			return createIndex(row, column, dirNode->dirs[row]);
 		}
+	} else if(row == 1) {
+		return m_root && m_tmpdir ? createIndex(row, column, m_tmpdir) : QModelIndex();
+	} else if(row == 0) {
+		return m_root ? createIndex(row, column, m_root) : m_tmpdir ? createIndex(row, column, m_tmpdir) : QModelIndex();
 	}
 	return QModelIndex();
 }
 
 QModelIndex FileTreeModel::parent(const QModelIndex& child) const {
 	Node* node = static_cast<Node*>(child.internalPointer());
-	if(!node->parent || node->parent == m_root || node->parent == m_tmpdir) {
+	if(!node->parent) {
 		return QModelIndex();
 	} else {
 		DirNode* parentNode = static_cast<DirNode*>(node->parent);
-		int row = parentNode->parent->dirs.index(parentNode);
-		if(parentNode == m_tmpdir && m_root) {
-			row += m_root->childCount();
+		int row = 0;
+		if(parentNode->parent) {
+			row = parentNode->parent->dirs.index(parentNode);
+		} else if(parentNode == m_tmpdir) {
+			row = (m_root ? 1 : 0);
+		} else if(parentNode == m_root) {
+			row = 0;
+		} else {
+			return QModelIndex();
 		}
 		return createIndex(row, 0, parentNode);
 	}
@@ -344,10 +365,13 @@ QModelIndex FileTreeModel::parent(const QModelIndex& child) const {
 
 int FileTreeModel::rowCount(const QModelIndex& parent) const {
 	if(!parent.isValid()) {
-		return (m_root ? m_root->childCount() : 0) + (m_tmpdir ? m_tmpdir->childCount() : 0);
+		return (m_root ? 1 : 0) + (m_tmpdir ? 1 : 0);
 	}
-	DirNode* node = dynamic_cast<DirNode*>(static_cast<Node*>(parent.internalPointer()));
-	return node ? node->childCount() : 0;
+	Node* node = static_cast<Node*>(parent.internalPointer());
+	if(dynamic_cast<DirNode*>(node)) {
+		return static_cast<DirNode*>(node)->childCount();
+	}
+	return 0;
 }
 
 int FileTreeModel::columnCount(const QModelIndex& /*parent*/) const {

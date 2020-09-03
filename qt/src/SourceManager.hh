@@ -60,7 +60,7 @@ public:
 	QList<Source*> getSelectedSources() const;
 	void addSourceImage(const QImage& image);
 
-	int addSources(const QStringList& files, bool suppressWarnings = false, const QString& parentDir = QString());
+	int addSources(const QStringList& files, bool suppressWarnings = false);
 
 public slots:
 	bool addSource(const QString& file, bool suppressWarnings = false) {

@@ -78,6 +78,8 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	connect(&m_fsWatcher, &QFileSystemWatcher::fileChanged, this, &SourceManager::fileChanged);
 	connect(&m_fsWatcher, &QFileSystemWatcher::directoryChanged, this, &SourceManager::directoryChanged);
 	connect(QApplication::clipboard(), &QClipboard::dataChanged, this, [this] { ui.actionSourcePaste->setEnabled(!QApplication::clipboard()->pixmap().isNull()); });
+	connect(m_fileTreeModel, &FileTreeModel::rowsInserted, [this] { ui.actionSourceClear->setEnabled(m_fileTreeModel->rowCount() > 0); });
+	connect(m_fileTreeModel, &FileTreeModel::rowsRemoved, [this] { ui.actionSourceClear->setEnabled(m_fileTreeModel->rowCount() > 0); });
 
 	ADD_SETTING(VarSetting<QStringList>("recentitems"));
 }
@@ -86,12 +88,11 @@ SourceManager::~SourceManager() {
 	clearSources();
 }
 
-int SourceManager::addSources(const QStringList& files, bool suppressWarnings, const QString& parentDir) {
+int SourceManager::addSources(const QStringList& files, bool suppressWarnings) {
 	QStringList failed;
 	QItemSelection sel;
 	QModelIndex index;
 	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList>>("recentitems")->getValue();
-	int added = 0;
 	PdfWithTextAction textAction = suppressWarnings ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
 
 	ui.treeViewSources->selectionModel()->blockSignals(true);
@@ -104,7 +105,6 @@ int SourceManager::addSources(const QStringList& files, bool suppressWarnings, c
 		index = m_fileTreeModel->findFile(filename);
 		if(index.isValid()) {
 			sel.select(index, index);
-			++added;
 			continue;
 		}
 		QFileInfo finfo(filename);
@@ -128,34 +128,25 @@ int SourceManager::addSources(const QStringList& files, bool suppressWarnings, c
 		m_fsWatcher.addPath(filename);
 		recentItems.removeAll(filename);
 		recentItems.prepend(filename);
-		++added;
 	}
 	ConfigSettings::get<VarSetting<QStringList>>("recentitems")->setValue(recentItems.mid(0, sMaxNumRecent));
+	ui.treeViewSources->selectionModel()->blockSignals(true);
+	ui.treeViewSources->setUpdatesEnabled(false);
+	if(!sel.isEmpty()) {
+		ui.treeViewSources->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Select | QItemSelectionModel::Rows);
+		QModelIndex parent = sel.indexes().front().parent();
+		while(parent.isValid()) {
+			ui.treeViewSources->expand(parent);
+			parent = parent.parent();
+		}
+		ui.treeViewSources->setCurrentIndex(sel.indexes().front());
+	}
 	ui.treeViewSources->selectionModel()->blockSignals(false);
 	ui.treeViewSources->setUpdatesEnabled(true);
-	if(added > 0) {
-		if(parentDir.isEmpty()) {
-			ui.treeViewSources->selectionModel()->select(sel, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Select | QItemSelectionModel::Rows);
-			QModelIndex parent = index.parent();
-			while(parent.isValid()) {
-				ui.treeViewSources->expand(parent);
-				parent = parent.parent();
-			}
-		} else if(added > 0) {
-			QModelIndex idx = m_fileTreeModel->findFile(parentDir, false);
-			if(idx.isValid()) {
-				ui.treeViewSources->setCurrentIndex(idx);
-				ui.treeViewSources->expand(idx);
-			} else {
-				// If sources were added and the dir was not found as a child, it means that the dir is the root
-				ui.treeViewSources->selectAll();
-			}
-		}
-	}
 	if(!failed.isEmpty() && !suppressWarnings) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:\n%1").arg(failed.join("\n")));
 	}
-	return added;
+	return !sel.isEmpty();
 }
 
 bool SourceManager::checkPdfSource(Source* source, PdfWithTextAction& textAction, QStringList& failed) const {
@@ -292,7 +283,7 @@ void SourceManager::addFolder() {
 		filenames.append(it.next());
 	}
 	if(!filenames.isEmpty()) {
-		addSources(filenames, false, dir);
+		addSources(filenames);
 	}
 }
 
@@ -450,7 +441,6 @@ void SourceManager::currentSourceChanged(const QItemSelection& /*selected*/, con
 	bool enabled = !ui.treeViewSources->selectionModel()->selectedRows().isEmpty();
 	ui.actionSourceRemove->setEnabled(enabled);
 	ui.actionSourceDelete->setEnabled(enabled);
-	ui.actionSourceClear->setEnabled(enabled);
 
 	emit sourceChanged();
 	m_inCurrentSourceChanged = false;
