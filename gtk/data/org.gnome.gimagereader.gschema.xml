@@ -307,5 +307,10 @@
             <summary>OCR character whitelist</summary>
             <description>OCR character whitelist.</description>
         </key>
+        <key type="b" name="thumbnails">
+            <default>true</default>
+            <summary>Show thumbnails</summary>
+            <description>Show thumbnails</description>
+        </key>
     </schema>
 </schemalist>

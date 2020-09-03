@@ -122,6 +122,8 @@ private:
 	bool scrollEvent(GdkEventScroll* ev);
 
 	void setZoom(Zoom zoom);
+	void generateThumbnails();
+	void thumbnailsToggled();
 
 	bool renderImage();
 	void drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx);

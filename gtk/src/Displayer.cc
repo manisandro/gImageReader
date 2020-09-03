@@ -18,6 +18,7 @@
  */
 
 #include "MainWindow.hh"
+#include "ConfigSettings.hh"
 #include "Displayer.hh"
 #include "DisplayRenderer.hh"
 #include "Recognizer.hh"
@@ -47,6 +48,7 @@ Displayer::Displayer(const Ui::MainWindow& _ui)
 
 	CONNECT(ui.menuitemDisplayRotateCurrent, activate, [this] { setRotateMode(RotateMode::CurrentPage, "rotate_page.png"); });
 	CONNECT(ui.menuitemDisplayRotateAll, activate, [this] { setRotateMode(RotateMode::AllPages, "rotate_pages.png"); });
+	CONNECT(ui.checkBoxThumbnails, toggled, [this] { thumbnailsToggled(); });
 	m_connection_rotSpinChanged = CONNECT(ui.spinRotate, value_changed, [this] { setAngle(ui.spinRotate->get_value()); });
 	m_connection_pageSpinChanged = CONNECT(ui.spinPage, value_changed, [this] { queueRenderImage(); });
 	m_connection_briSpinChanged = CONNECT(ui.spinBrightness, value_changed, [this] { queueRenderImage(); });
@@ -97,6 +99,10 @@ Displayer::Displayer(const Ui::MainWindow& _ui)
 		ui.iconviewThumbnails->scroll_to_path(path, false, 0., 0.);
 		m_connection_thumbClicked.block(false);
 	});
+
+	ADD_SETTING(SwitchSettingT<Gtk::ToggleButton>("thumbnails", ui.checkBoxThumbnails));
+	// Adjust paned position as soon as window is visible
+	Glib::signal_idle().connect_once([this] { thumbnailsToggled(); });
 }
 
 void Displayer::drawCanvas(const Cairo::RefPtr<Cairo::Context>& ctx) {
@@ -160,6 +166,9 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	waitForThread(m_thumbThread, m_thumbThreadCanceled, m_thumbThreadIdleJobsCount);
 	m_scale = 1.0;
 	m_scrollPos[0] = m_scrollPos[1] = 0.5;
+	ui.iconviewThumbnails->set_model(Gtk::ListStore::create(m_thumbListViewCols));
+	ui.iconviewThumbnails->set_pixbuf_column(0);
+	ui.iconviewThumbnails->set_text_column(1);
 	if(m_tool) {
 		m_tool->reset();
 	}
@@ -189,9 +198,6 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	ui.buttonZoomin->set_sensitive(true);
 	ui.buttonZoomout->set_sensitive(true);
 	if(ui.viewportDisplay->get_window()) { ui.viewportDisplay->get_window()->set_cursor(); }
-	ui.iconviewThumbnails->set_model(Gtk::ListStore::create(m_thumbListViewCols));
-	ui.iconviewThumbnails->set_pixbuf_column(0);
-	ui.iconviewThumbnails->set_text_column(1);
 
 	m_sources = sources;
 	if(sources.empty()) {
@@ -199,7 +205,6 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 	}
 
 	int page = 0;
-	Glib::RefPtr<Gtk::ListStore> thumbnailStore = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.iconviewThumbnails->get_model());
 	for(Source* source : m_sources) {
 		DisplayRenderer* renderer = nullptr;
 		std::string filename = source->file->get_path();
@@ -227,17 +232,13 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 		m_sourceRenderers[source] = renderer;
 		for(int iPage = 1, nPages = renderer->getNPages(); iPage <= nPages; ++iPage) {
 			m_pageMap.insert(std::make_pair(++page, std::make_pair(source, iPage)));
-
-			Gtk::TreeIter it = thumbnailStore->append();
-			it->set_value(m_thumbListViewCols.pixbuf, Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/thumbnail.png"));
-			it->set_value(m_thumbListViewCols.label, Glib::ustring::compose(_("Page %1"), page));
 		}
 	}
 	if(page == 0) {
 		return setSources(std::vector<Source*>()); // cleanup
 	}
 
-	m_thumbThread = new std::thread(&Displayer::thumbnailThread, this);
+	generateThumbnails();
 
 	m_connection_pageSpinChanged.block();
 	ui.spinPage->get_adjustment()->set_upper(page);
@@ -712,6 +713,33 @@ void Displayer::scaleImage() {
 			m_scaleThreadIdleJobsCount -= 1;
 		});
 	});
+}
+
+
+void Displayer::thumbnailsToggled() {
+	bool active = ui.checkBoxThumbnails->get_active();
+	ui.scrollwinThumbnails->set_visible(active);
+	ui.panedSource->set_position(active ? 0.5 * ui.panedSource->get_height() : (ui.panedSource->get_height() - ui.checkBoxThumbnails->get_height()));
+	if(active) {
+		generateThumbnails();
+	} else {
+		waitForThread(m_thumbThread, m_thumbThreadCanceled, m_thumbThreadIdleJobsCount);
+		ui.iconviewThumbnails->set_model(Gtk::ListStore::create(m_thumbListViewCols));
+		ui.iconviewThumbnails->set_pixbuf_column(0);
+		ui.iconviewThumbnails->set_text_column(1);
+	}
+}
+
+void Displayer::generateThumbnails() {
+	if(ui.checkBoxThumbnails->get_active()) {
+		Glib::RefPtr<Gtk::ListStore> thumbnailStore = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.iconviewThumbnails->get_model());
+		for(const auto& pair : m_pageMap) {
+			Gtk::TreeIter it = thumbnailStore->append();
+			it->set_value(m_thumbListViewCols.pixbuf, Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/thumbnail.png"));
+			it->set_value(m_thumbListViewCols.label, Glib::ustring::compose(_("Page %1"), pair.first));
+		}
+		m_thumbThread = new std::thread(&Displayer::thumbnailThread, this);
+	}
 }
 
 void Displayer::thumbnailThread() {
