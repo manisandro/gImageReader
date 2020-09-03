@@ -18,6 +18,7 @@
  */
 
 #include "FileDialogs.hh"
+#include "FileTreeModel.hh"
 #include "MainWindow.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
@@ -28,12 +29,36 @@
 
 SourceManager::SourceManager(const Ui::MainWindow& _ui)
 	: ui(_ui) {
-	ui.treeviewSources->set_model(Gtk::ListStore::create(m_listViewCols));
-	ui.treeviewSources->append_column("", m_listViewCols.filename);
-	Gtk::TreeViewColumn* col = ui.treeviewSources->get_column(0);
-	col->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
-	Gtk::CellRendererText* cell = static_cast<Gtk::CellRendererText*>(col->get_cells().front());
-	cell->property_ellipsize() = Pango::ELLIPSIZE_END;
+
+	// Document tree view
+	m_fileTreeModel = Glib::RefPtr<FileTreeModel>(new FileTreeModel());
+
+	ui.treeviewSources->set_model(m_fileTreeModel);
+	ui.treeviewSources->get_selection()->set_mode(Gtk::SELECTION_MULTIPLE);
+	ui.treeviewSources->set_tooltip_column(FileTreeModel::COLUMN_TOOLTIP);
+	// First column: [icon][text]
+	Gtk::TreeViewColumn* itemViewCol1 = Gtk::manage(new Gtk::TreeViewColumn(""));
+	Gtk::CellRendererPixbuf& iconRenderer = *Gtk::manage(new Gtk::CellRendererPixbuf);
+	Gtk::CellRendererText& textRenderer = *Gtk::manage(new Gtk::CellRendererText);
+	textRenderer.property_ellipsize() = Pango::ELLIPSIZE_END;
+	itemViewCol1->pack_start(iconRenderer, false);
+	itemViewCol1->pack_start(textRenderer, true);
+	itemViewCol1->add_attribute(iconRenderer, "pixbuf", FileTreeModel::COLUMN_ICON);
+	itemViewCol1->add_attribute(textRenderer, "text", FileTreeModel::COLUMN_TEXT);
+	itemViewCol1->add_attribute(textRenderer, "style", FileTreeModel::COLUMN_TEXTSTYLE);
+	ui.treeviewSources->append_column(*itemViewCol1);
+	ui.treeviewSources->set_expander_column(*itemViewCol1);
+	itemViewCol1->set_expand(true);
+	itemViewCol1->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
+	// Second column: editable icon
+	Gtk::TreeViewColumn* itemViewCol2 = Gtk::manage(new Gtk::TreeViewColumn(""));
+	Gtk::CellRendererPixbuf& editiconRenderer = *Gtk::manage(new Gtk::CellRendererPixbuf);
+	itemViewCol2->pack_start(editiconRenderer, true);
+	itemViewCol2->add_attribute(editiconRenderer, "pixbuf", FileTreeModel::COLUMN_EDITICON);
+	ui.treeviewSources->append_column(*itemViewCol2);
+	itemViewCol2->set_fixed_width(32);
+	itemViewCol2->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
+
 	ui.treeviewSources->set_fixed_height_mode();
 
 	Glib::RefPtr<Gtk::RecentFilter> recentFilter = Gtk::RecentFilter::create();
@@ -63,6 +88,8 @@ SourceManager::SourceManager(const Ui::MainWindow& _ui)
 	CONNECT(ui.buttonSourcesClear, clicked, [this] { clearSources(); });
 	m_connectionSelectionChanged = CONNECT(ui.treeviewSources->get_selection(), changed, [this] { selectionChanged(); });
 	CONNECT(recentChooser, item_activated, [this, recentChooser] { addSources({Gio::File::create_for_uri(recentChooser->get_current_uri())}); });
+	CONNECT(m_fileTreeModel, row_inserted, [this] (const Gtk::TreePath&, const Gtk::TreeIter&) { ui.buttonSourcesClear->set_sensitive(!m_fileTreeModel->empty()); });
+	CONNECT(m_fileTreeModel, row_deleted, [this] (const Gtk::TreePath&) { ui.buttonSourcesClear->set_sensitive(!m_fileTreeModel->empty()); });
 
 	// Handle drops on the scrolled window
 	ui.scrollwinSources->drag_dest_set({Gtk::TargetEntry("text/uri-list")}, Gtk::DEST_DEFAULT_MOTION | Gtk::DEST_DEFAULT_DROP, Gdk::ACTION_COPY | Gdk::ACTION_MOVE);
@@ -75,30 +102,24 @@ SourceManager::~SourceManager() {
 
 int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files, bool suppressTextWarning) {
 	std::vector<Glib::ustring> failed;
-	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewSources->get_model());
-	Gtk::TreeIter it = store->children().end();
 	int added = 0;
 	PdfWithTextAction textAction = suppressTextWarning ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
 
+	std::vector<Gtk::TreeIter> selectIters;
+
 	for(Glib::RefPtr<Gio::File> file : files) {
+		std::string filename = file->get_path();
 		if(!file->query_exists()) {
-			failed.push_back(file->get_path());
+			failed.push_back(filename);
 			continue;
 		}
-		bool contains = false;
-		for(const Gtk::TreeModel::Row& row : store->children()) {
-			if(row.get_value(m_listViewCols.source)->file->get_uri() == file->get_uri()) {
-				contains = true;
-				it = row;
-				break;
-			}
-		}
-		if(contains) {
+		Gtk::TreeIter index = m_fileTreeModel->findFile(filename);
+		if(index) {
+			selectIters.push_back(index);
 			++added;
 			continue;
 		}
 		Source* source = new Source(file, file->get_basename(), file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false);
-		std::string filename = file->get_path();
 #ifdef G_OS_WIN32
 		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf" && !checkPdfSource(source, textAction, failed)) {
 #else
@@ -107,21 +128,32 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files,
 			delete source;
 			continue;
 		}
-		it = store->append();
-		it->set_value(m_listViewCols.filename, file->get_basename());
-		it->set_value(m_listViewCols.source, source);
-		it->set_value(m_listViewCols.path, file->get_path());
-		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
+		index = m_fileTreeModel->insertFile(filename, source);
+		selectIters.push_back(index);
+		CONNECT(source->monitor, changed, sigc::mem_fun(*this, &SourceManager::fileChanged));
 
 		Gtk::RecentManager::get_default()->add_item(file->get_uri());
 		++added;
 	}
-	m_connectionSelectionChanged.block(true);
-	ui.treeviewSources->get_selection()->unselect_all();
-	m_connectionSelectionChanged.block(false);
-	if(it) {
-		ui.treeviewSources->get_selection()->select(it);
+	if(added > 0) {
+		ui.treeviewSources->get_selection()->unselect_all();
 	}
+	m_connectionSelectionChanged.block(true);
+	if(added > 0) {
+		Glib::RefPtr<Gtk::TreeSelection> selection = ui.treeviewSources->get_selection();
+		bool scrolled = false;
+		for(const Gtk::TreeIter& it : selectIters) {
+			Gtk::TreePath path = m_fileTreeModel->get_path(it);
+			ui.treeviewSources->expand_to_path(path);
+			if(!scrolled) {
+				ui.treeviewSources->scroll_to_row(path);
+				scrolled = true;
+			}
+			selection->select(it);
+		}
+	}
+	m_connectionSelectionChanged.block(false);
+	selectionChanged();
 	if(!failed.empty()) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Unable to open files"), Glib::ustring::compose(_("The following files could not be opened:\n%1"), Utils::string_join(failed, "\n")));
 	}
@@ -206,7 +238,10 @@ bool SourceManager::checkPdfSource(Source* source, PdfWithTextAction& textAction
 std::vector<Source*> SourceManager::getSelectedSources() const {
 	std::vector<Source*> selectedSources;
 	for(const Gtk::TreeModel::Path& path : ui.treeviewSources->get_selection()->get_selected_rows()) {
-		selectedSources.push_back(ui.treeviewSources->get_model()->get_iter(path)->get_value(m_listViewCols.source));
+		Source* source = m_fileTreeModel->fileData<Source*>(m_fileTreeModel->get_iter(path));
+		if(source) {
+			selectedSources.push_back(source);
+		}
 	}
 	return selectedSources;
 }
@@ -284,101 +319,116 @@ void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const st
 		return;
 	}
 	MAIN->popState();
-	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewSources->get_model());
 	Glib::RefPtr<Gio::File> file = Gio::File::create_for_path(filename);
 	Source* source = new Source(file, displayname, file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), true);
-	Gtk::TreeIter it = store->append();
-	it->set_value(m_listViewCols.filename, displayname);
-	it->set_value(m_listViewCols.path, filename);
-	it->set_value(m_listViewCols.source, source);
-	CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
+	Gtk::TreeIter it = m_fileTreeModel->insertFile(filename, source, displayname);
+	CONNECT(source->monitor, changed, sigc::mem_fun(*this, &SourceManager::fileChanged));
 	m_connectionSelectionChanged.block(true);
 	ui.treeviewSources->get_selection()->unselect_all();
 	m_connectionSelectionChanged.block(false);
+	Gtk::TreePath path = m_fileTreeModel->get_path(it);
+	ui.treeviewSources->expand_to_path(path);
 	ui.treeviewSources->get_selection()->select(it);
+	ui.treeviewSources->scroll_to_row(path);
 }
 
 void SourceManager::removeSource(bool deleteFile) {
-	std::string paths;
+	std::vector<Glib::ustring> paths;
+	std::vector<Gtk::TreePath> treePaths;
 	for(const Gtk::TreeModel::Path& path : ui.treeviewSources->get_selection()->get_selected_rows()) {
-		paths += std::string("\n") + ui.treeviewSources->get_model()->get_iter(path)->get_value(m_listViewCols.source)->file->get_path();
+		Source* source = m_fileTreeModel->fileData<Source*>(m_fileTreeModel->get_iter(path));
+		if(source) {
+			paths.push_back(source->file->get_path());
+			treePaths.push_back(path);
+		}
 	}
 	if(paths.empty()) {
 		return;
 	}
-	if(deleteFile && Utils::Button::Yes != Utils::question_dialog(_("Delete File?"), Glib::ustring::compose(_("The following files will be deleted:%1"), paths), Utils::Button::Yes | Utils::Button::No)) {
+	if(deleteFile && Utils::Button::Yes != Utils::question_dialog(_("Delete File?"), Glib::ustring::compose(_("The following files will be deleted:\n%1"), Utils::string_join(paths, "\n")), Utils::Button::Yes | Utils::Button::No)) {
 		return;
 	}
+
 	// Avoid multiple sourceChanged emissions when removing items
 	m_connectionSelectionChanged.block(true);
-	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewSources->get_model());
-	Gtk::TreeIter it;
-	std::vector<Gtk::TreeModel::Path> selected = ui.treeviewSources->get_selection()->get_selected_rows();
-	while(!selected.empty()) {
-		it = ui.treeviewSources->get_model()->get_iter(selected.back());
-		selected.pop_back();
-		Source* source = it->get_value(m_listViewCols.source);
-		if(deleteFile || source->isTemp) {
+	// Selection returns ordered tree paths - remove them in reverse order so that the previous ones stay valid
+	for(Gtk::TreePath treePath : Utils::reverse(treePaths)) {
+		Gtk::TreeIter index = m_fileTreeModel->get_iter(treePath);
+		Source* source = m_fileTreeModel->fileData<Source*>(index);
+		if(source && deleteFile) {
 			source->file->remove();
 		}
-		delete source;
-		it = store->erase(it);
-	}
-	if(!it && store->children().size() > 0) {
-		it = --store->children().end();
-	}
-	if(it) {
-		ui.treeviewSources->get_selection()->select(it);
+		m_fileTreeModel->removeIndex(index);
 	}
 	m_connectionSelectionChanged.block(false);
 	selectionChanged();
 }
 
 void SourceManager::clearSources() {
-	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewSources->get_model());
-	for(const Gtk::TreeModel::Row& row : store->children()) {
-		Source* source = row.get_value(m_listViewCols.source);
-		if(source->isTemp) {
-			source->file->remove();
-		}
-		delete source;
-	}
-	m_connectionSelectionChanged.block(true);
-	store->clear();
-	m_connectionSelectionChanged.block(false);
+	m_fileTreeModel->clear();
 	selectionChanged();
 }
 
+void SourceManager::selectRecursive(const Gtk::TreeIter& iter, std::vector<Gtk::TreeIter>& selection) const {
+	for(const Gtk::TreeIter& child : iter->children()) {
+		selection.push_back(child);
+		selectRecursive(child, selection);
+	}
+}
+
 void SourceManager::selectionChanged() {
+	if(m_inSelectionChanged) {
+		return;
+	}
+	m_inSelectionChanged = true;
+
+	// Merge selection of all children of selected items
+	std::vector<Gtk::TreeIter> selection;
+	for(const Gtk::TreePath& path : ui.treeviewSources->get_selection()->get_selected_rows()) {
+		selectRecursive(m_fileTreeModel->get_iter(path), selection);
+	}
+	for(const Gtk::TreeIter& iter : selection) {
+		ui.treeviewSources->expand_to_path(m_fileTreeModel->get_path(iter));
+		ui.treeviewSources->get_selection()->select(iter);
+	}
+
 	bool enabled = !ui.treeviewSources->get_selection()->get_selected_rows().empty();
 	ui.buttonSourcesRemove->set_sensitive(enabled);
 	ui.buttonSourcesDelete->set_sensitive(enabled);
-	ui.buttonSourcesClear->set_sensitive(enabled);
 	m_signal_sourceChanged.emit();
+	m_inSelectionChanged = false;
 }
 
-void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event, Gtk::TreeIter it) {
-	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewSources->get_model());
-	Source* source = it->get_value(m_listViewCols.source);
+void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event) {
+	Gtk::TreeIter it = m_fileTreeModel->findFile(file->get_path());
+	if(!it) {
+		return;
+	}
 	if(event == Gio::FILE_MONITOR_EVENT_MOVED) {
-		source->file = otherFile;
-		source->displayname = otherFile->get_basename();
-		source->monitor = otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED);
-		it->set_value(m_listViewCols.filename, otherFile->get_basename());
-		it->set_value(m_listViewCols.path, otherFile->get_path());
-		CONNECT(source->monitor, changed, sigc::bind(sigc::mem_fun(*this, &SourceManager::fileChanged), it));
-		if(ui.treeviewSources->get_selection()->is_selected(it)) {
-			m_signal_sourceChanged.emit();
+		bool wasSelected = ui.treeviewSources->get_selection()->is_selected(it);
+		if(wasSelected) {
+			ui.treeviewSources->get_selection()->unselect(it);
+		}
+		m_fileTreeModel->removeIndex(it);
+		Source* newSource = new Source(otherFile, otherFile->get_basename(), otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED));
+		CONNECT(newSource->monitor, changed, sigc::mem_fun(*this, &SourceManager::fileChanged));
+		it = m_fileTreeModel->insertFile(otherFile->get_path(), newSource);
+		if(wasSelected) {
+			ui.treeviewSources->get_selection()->select(it);
 		}
 	} else if(event == Gio::FILE_MONITOR_EVENT_DELETED) {
 		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Missing File"), Glib::ustring::compose(_("The following file has been deleted or moved:\n%1"), file->get_path()));
-		delete source;
-		it = store->erase(it);
-		if(!it) {
-			it = store->children().begin();
+		m_fileTreeModel->removeIndex(it);
+		// Get any random item to select
+		m_connectionSelectionChanged.block(true);
+		Glib::RefPtr<Gtk::TreeSelection> selection = ui.treeviewSources->get_selection();
+		selection->select_all();
+		if(selection->count_selected_rows() > 0) {
+			Gtk::TreePath path = selection->get_selected_rows().front();
+			selection->unselect_all();
+			selection->select(path);
 		}
-		if(it) {
-			ui.treeviewSources->get_selection()->select(it);
-		}
+		m_connectionSelectionChanged.block(false);
+		selectionChanged();
 	}
 }

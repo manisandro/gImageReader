@@ -26,10 +26,16 @@ namespace Ui {
 class MainWindow;
 }
 class DisplayRenderer;
+class FileTreeModel;
 
-struct Source {
+struct Source : public DataObject {
 	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
 		: file(_file), displayname(_displayname), monitor(_monitor), isTemp(_isTemp) {}
+	~Source() {
+		if(isTemp) {
+			file->remove();
+		}
+	}
 	Glib::RefPtr<Gio::File> file;
 	std::string displayname;
 	Glib::ustring password;
@@ -62,29 +68,19 @@ public:
 	}
 
 private:
-	class ListViewColumns : public Gtk::TreeModel::ColumnRecord {
-	public:
-		Gtk::TreeModelColumn<std::string> filename;
-		Gtk::TreeModelColumn<Source*> source;
-		Gtk::TreeModelColumn<std::string> path;
-		ListViewColumns() {
-			add(filename);
-			add(source);
-			add(path);
-		}
-	} m_listViewCols;
-
 	enum class PdfWithTextAction {Ask, Add, Skip};
 	const Ui::MainWindow& ui;
 	ClassData m_classdata;
+	Glib::RefPtr<FileTreeModel> m_fileTreeModel;
 	Glib::RefPtr<Gtk::Clipboard> m_clipboard;
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;
 	sigc::signal<void> m_signal_sourceChanged;
 	sigc::connection m_connectionSelectionChanged;
+	bool m_inSelectionChanged = false;
 
 	void clearSources();
-	void fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event, Gtk::TreeIter it);
+	void fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event);
 	void addFolder();
 	void openSources();
 	void pasteClipboard();
@@ -92,6 +88,7 @@ private:
 	void removeSource(bool deleteFile);
 	void savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const std::string& displayname);
 	void selectionChanged();
+	void selectRecursive(const Gtk::TreeIter& iter, std::vector<Gtk::TreeIter>& selection) const;
 	void takeScreenshot();
 };
 

@@ -51,6 +51,11 @@ private:
 	std::vector<ClassDataItem*> m_items;
 };
 
+class DataObject {
+public:
+	virtual ~DataObject() = default;
+};
+
 #define CONNECT(src, signal, ...) m_classdata.addConn((src)->signal_##signal().connect(__VA_ARGS__))
 #define CONNECTP(src, property, ...) m_classdata.addConn((src)->property_##property().signal_changed().connect(__VA_ARGS__))
 #define CONNECTX(src, signal, ...) (src)->signal_##signal().connect(__VA_ARGS__)

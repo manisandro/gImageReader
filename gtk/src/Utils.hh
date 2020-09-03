@@ -106,6 +106,13 @@ struct rev_iters {
 	}
 };
 
+template<class T>
+std::vector<T> vector_slice(const std::vector<T>& vector, int start, int count = -1) {
+	std::vector<T> result;
+	result.insert(result.end(), vector.begin() + start, count >= 0 ? vector.begin() + start + count : vector.end());
+	return result;
+}
+
 template<class T, class It = std::reverse_iterator<typename T::iterator>>
 rev_iters<It> reverse(T& t) {
 	return { t.rbegin(), t.rend() };

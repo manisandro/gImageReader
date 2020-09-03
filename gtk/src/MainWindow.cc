@@ -310,7 +310,7 @@ bool MainWindow::closeEvent(GdkEventAny*) {
 void MainWindow::onSourceChanged() {
 	std::vector<Source*> sources = m_sourceManager->getSelectedSources();
 	if(m_displayer->setSources(sources)) {
-		ui.headerbar->set_subtitle(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources"));
+		ui.headerbar->set_subtitle(sources.size() == 1 ? Glib::ustring(sources.front()->displayname) : Glib::ustring::compose(_("Multiple sources (%1)"), sources.size()));
 		if(m_stateStack.back() == State::Idle) {
 			pushState(State::Normal, _("Ready"));
 		}

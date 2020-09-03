@@ -205,6 +205,12 @@ std::vector<Glib::ustring> Utils::string_split(const Glib::ustring& text, char d
 	std::vector<Glib::ustring> parts;
 	Glib::ustring::size_type startPos = 0, endPos = 0;
 	Glib::ustring::size_type npos = Glib::ustring::npos;
+	if(text.empty()) {
+		if(keepEmpty) {
+			parts.push_back("");
+		}
+		return parts;
+	}
 	while(true) {
 		startPos = endPos;
 		endPos = text.find(delim, startPos);
