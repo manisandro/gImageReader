@@ -72,7 +72,7 @@ void SubstitutionsManager::openList() {
 	if(!files.empty()) {
 		std::ifstream file(files.front()->get_path());
 		if(!file.is_open()) {
-			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error Reading File"), Glib::ustring::compose(_("Unable to read '%1'."), files.front()->get_path()));
+			Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error Reading File"), Glib::ustring::compose(_("Unable to read '%1'."), files.front()->get_path()));
 			return;
 		}
 		m_currentFile = files.front()->get_path();
@@ -94,7 +94,7 @@ void SubstitutionsManager::openList() {
 			(*it)[m_viewCols.replace] = fields[1];
 		}
 		if(errors) {
-			Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Errors Occurred Reading File"), _("Some entries of the substitutions list could not be read."));
+			Utils::messageBox(Gtk::MESSAGE_WARNING, _("Errors Occurred Reading File"), _("Some entries of the substitutions list could not be read."));
 		}
 	}
 }
@@ -107,7 +107,7 @@ bool SubstitutionsManager::saveList() {
 	}
 	std::ofstream file(filename);
 	if(!file.is_open()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error Saving File"), Glib::ustring::compose(_("Unable to write to '%1'."), filename));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error Saving File"), Glib::ustring::compose(_("Unable to write to '%1'."), filename));
 		return false;
 	}
 	m_currentFile = filename;
@@ -124,7 +124,7 @@ bool SubstitutionsManager::saveList() {
 
 bool SubstitutionsManager::clearList() {
 	if(m_listStore->children().size() > 0) {
-		int response = Utils::question_dialog(_("Save List?"), _("Do you want to save the current list?"), Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel, ui.windowSubstitutions);
+		int response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Save List?"), _("Do you want to save the current list?"), "", Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel, ui.windowSubstitutions);
 		if(response == Utils::Button::Save) {
 			if(!saveList()) {
 				return false;

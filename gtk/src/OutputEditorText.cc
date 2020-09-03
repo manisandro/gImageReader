@@ -301,7 +301,7 @@ bool OutputEditorText::save(const std::string& filename) {
 	}
 	std::ofstream file(outname);
 	if(!file.is_open()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
 	Glib::ustring txt = m_textBuffer->get_text(false);
@@ -315,7 +315,7 @@ bool OutputEditorText::clear(bool hide) {
 		return true;
 	}
 	if(getModified()) {
-		int response = Utils::question_dialog(_("Output not saved"), _("Save output before proceeding?"), Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel);
+		int response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Output not saved"), _("Save output before proceeding?"), "", Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel);
 		if(response == Utils::Button::Save) {
 			if(!save()) {
 				return false;

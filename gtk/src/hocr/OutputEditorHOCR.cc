@@ -484,7 +484,7 @@ void OutputEditorHOCR::finalizeRead(ReadSessionData* data) {
 	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
 	if(!hdata->errors.empty()) {
 		Glib::ustring message = Glib::ustring::compose(_("The following pages could not be processed:\n%1"), Utils::string_join(hdata->errors, "\n"));
-		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Recognition errors"), message);
+		Utils::messageBox(Gtk::MESSAGE_WARNING, _("Recognition errors"), message);
 	}
 	OutputEditor::finalizeRead(data);
 }
@@ -1041,7 +1041,7 @@ void OutputEditorHOCR::open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File>
 		errorMsg.push_back(Glib::ustring::compose(_("The following files are not valid hOCR HTML:\n%1"), Utils::string_join(invalid, "\n")));
 	}
 	if(!errorMsg.empty()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Unable to open files"), Utils::string_join(errorMsg, "\n\n"));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Unable to open files"), Utils::string_join(errorMsg, "\n\n"));
 	}
 }
 
@@ -1061,7 +1061,7 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 	}
 	std::ofstream file(outname);
 	if(!file.is_open()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
 	std::string current = setlocale(LC_ALL, NULL);
@@ -1129,7 +1129,7 @@ bool OutputEditorHOCR::clear(bool hide) {
 		return true;
 	}
 	if(getModified()) {
-		int response = Utils::question_dialog(_("Output not saved"), _("Save output before proceeding?"), Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel);
+		int response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Output not saved"), _("Save output before proceeding?"), "", Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel);
 		if(response == Utils::Button::Save) {
 			if(!save()) {
 				return false;

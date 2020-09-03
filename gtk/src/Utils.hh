@@ -40,8 +40,6 @@ class TessBaseAPI;
 namespace Utils {
 void popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gtk::Menu* menu, bool alignRight, bool alignBottom);
 
-void message_dialog(Gtk::MessageType message, const Glib::ustring& title, const Glib::ustring& text, Gtk::Window* parent = 0);
-
 struct Button {
 	enum Type {
 		Ok = 1,
@@ -54,7 +52,7 @@ struct Button {
 		NoAll = 128
 	};
 };
-Button::Type question_dialog(const Glib::ustring& title, const Glib::ustring& text, int buttons, Gtk::Window* parent = 0);
+Button::Type messageBox(Gtk::MessageType type, const Glib::ustring& title, const Glib::ustring& text, const Glib::ustring& body = "", int buttons = Button::Ok, Gtk::Window* parent = nullptr);
 
 void set_spin_blocked(Gtk::SpinButton* spin, double value, sigc::connection& conn);
 void set_error_state(Gtk::Entry* entry);

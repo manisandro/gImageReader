@@ -43,21 +43,67 @@ void Utils::popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gt
 	push_in = true;
 }
 
-void Utils::message_dialog(Gtk::MessageType message, const Glib::ustring& title, const Glib::ustring& text, Gtk::Window* parent) {
+Utils::Button::Type Utils::messageBox(Gtk::MessageType type, const Glib::ustring& title, const Glib::ustring& text, const Glib::ustring& body, int buttons, Gtk::Window* parent) {
 	if(!parent) {
 		parent = MAIN->getWindow();
 	}
-	Gtk::MessageDialog dialog(*parent, title, false, message, Gtk::BUTTONS_OK, true);
-	dialog.set_secondary_text(text);
-	dialog.run();
-}
 
-Utils::Button::Type Utils::question_dialog(const Glib::ustring& title, const Glib::ustring& text, int buttons, Gtk::Window* parent) {
-	if(!parent) {
-		parent = MAIN->getWindow();
+	Gtk::Dialog dialog;
+	dialog.set_transient_for(*parent);
+	dialog.set_title(title);
+	dialog.get_content_area()->set_orientation(Gtk::ORIENTATION_VERTICAL);
+	dialog.get_content_area()->set_spacing(6);
+	dialog.get_content_area()->set_margin_left(6);
+	dialog.get_content_area()->set_margin_right(6);
+	dialog.get_content_area()->set_margin_top(6);
+	dialog.get_content_area()->set_margin_bottom(6);
+
+	Gtk::Grid grid;
+	dialog.get_content_area()->pack_start(grid, true, true);
+
+	Glib::ustring iconName;
+	switch (type) {
+	case Gtk::MESSAGE_INFO:
+		iconName = "dialog-information-symbolic";
+		break;
+	case Gtk::MESSAGE_WARNING:
+		iconName = "dialog-warning-symbolic";
+		break;
+	case Gtk::MESSAGE_QUESTION:
+		iconName = "dialog-question-symbolic";
+		break;
+	case Gtk::MESSAGE_ERROR:
+		iconName = "dialog-error-symbolic";
+		break;
+	case Gtk::MESSAGE_OTHER:
+		break;
 	}
-	Gtk::MessageDialog dialog(*parent, title, false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_NONE, true);
-	dialog.set_position(Gtk::WIN_POS_CENTER_ON_PARENT);
+	Gtk::Image icon(iconName, Gtk::ICON_SIZE_DIALOG);
+	grid.attach(icon, 0, 0, 1, body.empty() ? 1 : 2);
+
+
+	Gtk::Label label(text);
+	label.set_xalign(0);
+	grid.attach(label, 1, 0);
+	grid.set_column_spacing(6);
+	grid.set_row_spacing(6);
+
+	Gtk::ScrolledWindow scrollArea;
+	Gtk::TextView textView;
+	scrollArea.add(textView);
+	if(!body.empty()) {
+		textView.set_editable(false);
+		Glib::RefPtr<Gtk::TextBuffer> buffer = Gtk::TextBuffer::create();
+		buffer->set_text(body);
+		textView.set_buffer(buffer);
+		scrollArea.set_hexpand(true);
+		scrollArea.set_vexpand(true);
+		scrollArea.set_shadow_type(Gtk::SHADOW_IN);
+		scrollArea.set_min_content_width(320);
+		scrollArea.set_min_content_height(160);
+		grid.attach(scrollArea, 1, 1);
+	}
+
 	if((buttons & Button::Ok) != 0) {
 		dialog.add_button(_("OK"), Button::Type::Ok);
 	}
@@ -82,7 +128,8 @@ Utils::Button::Type Utils::question_dialog(const Glib::ustring& title, const Gli
 	if((buttons & Button::Discard) != 0) {
 		dialog.add_button(_("Discard"), Button::Type::Discard);
 	}
-	dialog.set_secondary_text(text);
+
+	dialog.show_all();
 	return static_cast<Button::Type>(dialog.run());
 }
 

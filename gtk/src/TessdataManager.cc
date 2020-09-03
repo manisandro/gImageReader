@@ -57,7 +57,7 @@ void TessdataManager::run() {
 		} catch(...) {
 		}
 		if(service_owner.empty()) {
-			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), _("A session connection to the PackageKit backend is required for managing system-wide tesseract language packs, but it was not found. This service is usually provided by a software-management application such as Gnome Software. Please install software which provides the necessary PackageKit interface, use other system package management software to manage the tesseract language packs directly, or switch to using the user tessdata path in the configuration dialog."));
+			Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error"), _("A session connection to the PackageKit backend is required for managing system-wide tesseract language packs, but it was not found. This service is usually provided by a software-management application such as Gnome Software. Please install software which provides the necessary PackageKit interface, use other system package management software to manage the tesseract language packs directly, or switch to using the user tessdata path in the configuration dialog."));
 			return;
 		}
 	}
@@ -67,7 +67,7 @@ void TessdataManager::run() {
 	bool success = fetchLanguageList(messages);
 	MAIN->popState();
 	if(!success) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Failed to fetch list of available languages: %1"), messages));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Failed to fetch list of available languages: %1"), messages));
 		return;
 	}
 	while(true) {
@@ -336,7 +336,7 @@ void TessdataManager::applyChanges() {
 	MAIN->popState();
 	refresh();
 	if(!errorMsg.empty()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), errorMsg, ui.dialogTessdatamanager);
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error"), errorMsg, "", Utils::Button::Ok, ui.dialogTessdatamanager);
 	}
 }
 

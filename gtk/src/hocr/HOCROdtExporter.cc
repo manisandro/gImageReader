@@ -73,7 +73,7 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, const 
 
 	zip* fzip = zip_open(outname.c_str(), ZIP_CREATE | ZIP_TRUNCATE, nullptr);
 	if(!fzip) {
-		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Export failed"), _("The ODT export failed: unable to write output file."));
+		Utils::messageBox(Gtk::MESSAGE_WARNING, _("Export failed"), _("The ODT export failed: unable to write output file."));
 		return false;
 	}
 	int pageCount = hocrdocument->pageCount();
@@ -338,7 +338,7 @@ bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, const 
 	zip_close(fzip);
 	bool openAfterExport = ConfigSettings::get<SwitchSettingT<Gtk::CheckButton>>("openafterexport")->getValue();
 	if(!success) {
-		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Export failed"), _("The ODT export failed: unable to write output file."));
+		Utils::messageBox(Gtk::MESSAGE_WARNING, _("Export failed"), _("The ODT export failed: unable to write output file."));
 	} else if(openAfterExport) {
 		Utils::openUri(Glib::filename_to_uri(outname));
 	}

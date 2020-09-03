@@ -97,7 +97,7 @@ void RecognitionMenu::rebuild() {
 	std::vector<Glib::ustring> availLanguages = Config::getAvailableLanguages();
 
 	if(availLanguages.empty()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("No languages available"), _("No tesseract languages are available for use. Recognition will not work."));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("No languages available"), _("No tesseract languages are available for use. Recognition will not work."));
 	}
 
 	// Add menu items for languages, with spelling submenu if available

@@ -497,7 +497,7 @@ bool HOCRPdfExporter::run(const std::string& filebasename) {
 				break;
 			}
 			if(m_hocrdocument->referencesSource(outname)) {
-				Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Invalid Output"), _("Cannot overwrite a file which is a source image of this document."));
+				Utils::messageBox(Gtk::MESSAGE_ERROR, _("Invalid Output"), _("Cannot overwrite a file which is a source image of this document."));
 				continue;
 			}
 			break;
@@ -512,7 +512,7 @@ bool HOCRPdfExporter::run(const std::string& filebasename) {
 		Glib::ustring errMsg;
 		painter = createPoDoFoPrinter(outname, defaultFont, defaultFontSize, errMsg);
 		if(!painter) {
-			Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to create output"), Glib::ustring::compose(_("Failed to create output. The returned error was: %1"), errMsg));
+			Utils::messageBox(Gtk::MESSAGE_ERROR, _("Failed to create output"), Glib::ustring::compose(_("Failed to create output. The returned error was: %1"), errMsg));
 			continue;
 		}
 
@@ -614,7 +614,7 @@ bool HOCRPdfExporter::run(const std::string& filebasename) {
 
 	bool openAfterExport = ConfigSettings::get<SwitchSettingT<Gtk::CheckButton>>("openafterexport")->getValue();
 	if(!success) {
-		Utils::message_dialog(Gtk::MESSAGE_WARNING, _("Export failed"), Glib::ustring::compose(_("The PDF export failed: %1."), errMsg));
+		Utils::messageBox(Gtk::MESSAGE_WARNING, _("Export failed"), Glib::ustring::compose(_("The PDF export failed: %1."), errMsg));
 	} else if(openAfterExport) {
 		Utils::openUri(Glib::filename_to_uri(outname));
 	}

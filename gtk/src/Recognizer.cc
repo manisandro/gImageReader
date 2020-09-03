@@ -183,7 +183,7 @@ std::unique_ptr<tesseract::TessBaseAPI> Recognizer::setupTesseract() {
 		tess->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().c_str());
 		tess->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().c_str());
 	} else {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 	}
 	return tess;
 }
@@ -401,23 +401,5 @@ Recognizer::PageData Recognizer::setPage(int page, bool autodetectLayout) {
 }
 
 void Recognizer::showRecognitionErrorsDialog(const std::vector<Glib::ustring>& errors) {
-	Gtk::Dialog dialog;
-	dialog.set_transient_for(*MAIN->getWindow());
-	dialog.set_title(_("Recognition errors occurred"));
-	dialog.get_content_area()->set_orientation(Gtk::ORIENTATION_VERTICAL);
-	dialog.get_content_area()->set_spacing(2);
-	Gtk::Label label(_("The following errors occurred:"));
-	label.set_xalign(0);
-	dialog.get_content_area()->pack_start(label, false, true);
-	Gtk::TextView textView;
-	textView.set_editable(false);
-	Glib::RefPtr<Gtk::TextBuffer> buffer = Gtk::TextBuffer::create();
-	buffer->set_text(Utils::string_join(errors, "\n"));
-	textView.set_buffer(buffer);
-	dialog.get_content_area()->pack_start(textView, true, true);
-	dialog.add_button(Gtk::StockID("gtk-close"), Gtk::RESPONSE_CLOSE);
-	dialog.show_all();
-	dialog.resize(480, 320);
-	dialog.run();
-	dialog.hide();
+	Utils::messageBox(Gtk::MESSAGE_WARNING, _("Recognition errors occurred"), _("The following errors occurred:"), Utils::string_join(errors, "\n"));
 }

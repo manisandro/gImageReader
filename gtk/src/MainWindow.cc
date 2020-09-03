@@ -534,7 +534,7 @@ void MainWindow::dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy,
 	try {
 		proxy->call_finish(result);
 	} catch (const Glib::Error& e) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Failed to install spelling dictionary: %1"), e.what()));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Failed to install spelling dictionary: %1"), e.what()));
 	}
 	m_recognitionMenu->rebuild();
 	popState();
@@ -555,7 +555,7 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
 	}
 	if(!dirExists) {
 		popState();
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), _("Failed to create directory for spelling dictionaries."));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error"), _("Failed to create directory for spelling dictionaries."));
 		return;
 	}
 
@@ -563,7 +563,7 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
 	Glib::RefPtr<Glib::ByteArray> htmlData = Utils::download(url, messages);
 	if(!htmlData) {
 		popState();
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1: %2."), url, messages));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("Could not read %1: %2."), url, messages));
 		return;
 	}
 	Glib::ustring html(reinterpret_cast<const char*>(htmlData->get_data()), htmlData->size());
@@ -611,11 +611,11 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
 
 	popState();
 	if(!failed.empty()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("The following dictionaries could not be downloaded:\n%1\n\nCheck the connectivity and directory permissions.\nHint: If you don't have write permissions in system folders, you can switch to user paths in the settings dialog."), Utils::string_join(failed, "\n")));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("The following dictionaries could not be downloaded:\n%1\n\nCheck the connectivity and directory permissions.\nHint: If you don't have write permissions in system folders, you can switch to user paths in the settings dialog."), Utils::string_join(failed, "\n")));
 	} else if(!downloaded.empty()) {
 		m_recognitionMenu->rebuild();
-		Utils::message_dialog(Gtk::MESSAGE_INFO, _("Dictionaries installed"), Glib::ustring::compose(_("The following dictionaries were installed:\n%1"), Utils::string_join(downloaded, "\n")));
+		Utils::messageBox(Gtk::MESSAGE_INFO, _("Dictionaries installed"), Glib::ustring::compose(_("The following dictionaries were installed:\n%1"), Utils::string_join(downloaded, "\n")));
 	} else {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error"), Glib::ustring::compose(_("No spelling dictionaries found for '%1'."), code));
 	}
 }

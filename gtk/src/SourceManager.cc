@@ -155,7 +155,7 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files,
 	m_connectionSelectionChanged.block(false);
 	selectionChanged();
 	if(!failed.empty()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Unable to open files"), Glib::ustring::compose(_("The following files could not be opened:\n%1"), Utils::string_join(failed, "\n")));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Unable to open files"), Glib::ustring::compose(_("The following files could not be opened:\n%1"), Utils::string_join(failed, "\n")));
 	}
 	return added;
 }
@@ -212,7 +212,7 @@ bool SourceManager::checkPdfSource(Source* source, PdfWithTextAction& textAction
 		if(haveText && textAction == PdfWithTextAction::Skip) {
 			return false;
 		}
-		int response = Utils::question_dialog(_("PDF with text"), Glib::ustring::compose(_("The PDF file already contains text:\n%1\nOpen it regardless?"), filename), Utils::Button::Yes | Utils::Button::YesAll | Utils::Button::No | Utils::Button::NoAll);
+		int response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("PDF with text"), Glib::ustring::compose(_("The PDF file already contains text:\n%1\nOpen it regardless?"), filename), "", Utils::Button::Yes | Utils::Button::YesAll | Utils::Button::No | Utils::Button::NoAll);
 		if(response == Utils::Button::No) {
 			return false;
 		} else if(response == Utils::Button::NoAll) {
@@ -282,7 +282,7 @@ void SourceManager::openSources() {
 void SourceManager::pasteClipboard() {
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf = m_clipboard->wait_for_image();
 	if(!pixbuf) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Clipboard Error"),  _("Failed to read the clipboard."));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Clipboard Error"),  _("Failed to read the clipboard."));
 		return;
 	}
 	++m_pasteCount;
@@ -298,7 +298,7 @@ void SourceManager::takeScreenshot() {
 	h = root->get_height();
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(root, x, y, w, h);
 	if(!pixbuf) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Screenshot Error"),  _("Failed to take screenshot."));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Screenshot Error"),  _("Failed to take screenshot."));
 		return;
 	}
 	++m_screenshotCount;
@@ -314,7 +314,7 @@ void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const st
 		close(fd);
 		pixbuf->save(filename, "png");
 	} catch(Glib::FileError&) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Cannot Write File"),  Glib::ustring::compose(_("Could not write to %1."), filename));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Cannot Write File"),  Glib::ustring::compose(_("Could not write to %1."), filename));
 		MAIN->popState();
 		return;
 	}
@@ -345,7 +345,7 @@ void SourceManager::removeSource(bool deleteFile) {
 	if(paths.empty()) {
 		return;
 	}
-	if(deleteFile && Utils::Button::Yes != Utils::question_dialog(_("Delete File?"), Glib::ustring::compose(_("The following files will be deleted:\n%1"), Utils::string_join(paths, "\n")), Utils::Button::Yes | Utils::Button::No)) {
+	if(deleteFile && Utils::Button::Yes != Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Delete File?"), _("Delete the following files?"), Utils::string_join(paths, "\n"), Utils::Button::Yes | Utils::Button::No)) {
 		return;
 	}
 
@@ -417,7 +417,7 @@ void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib:
 			ui.treeviewSources->get_selection()->select(it);
 		}
 	} else if(event == Gio::FILE_MONITOR_EVENT_DELETED) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Missing File"), Glib::ustring::compose(_("The following file has been deleted or moved:\n%1"), file->get_path()));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Missing File"), Glib::ustring::compose(_("The following file has been deleted or moved:\n%1"), file->get_path()));
 		m_fileTreeModel->removeIndex(it);
 		// Get any random item to select
 		m_connectionSelectionChanged.block(true);

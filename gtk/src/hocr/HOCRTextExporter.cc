@@ -42,7 +42,7 @@ bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, const
 
 	std::ofstream file(outname);
 	if(!file.is_open()) {
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Export failed"), _("The text export failed: unable to write output file."));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Export failed"), _("The text export failed: unable to write output file."));
 		return false;
 	}
 

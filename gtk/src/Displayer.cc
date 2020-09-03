@@ -249,7 +249,7 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 
 	if(!renderImage()) {
 		g_assert_nonnull(m_currentSource);
-		Utils::message_dialog(Gtk::MESSAGE_ERROR, _("Failed to load image"), Glib::ustring::compose(_("The file might not be an image or be corrupt:\n%1"), m_currentSource->displayname));
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Failed to load image"), Glib::ustring::compose(_("The file might not be an image or be corrupt:\n%1"), m_currentSource->displayname));
 		setSources(std::vector<Source*>());
 		return false;
 	}
