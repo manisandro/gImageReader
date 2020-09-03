@@ -721,7 +721,7 @@ void Displayer::thumbnailThread() {
 			continue;
 		}
 		Cairo::RefPtr<Cairo::ImageSurface> thumb = renderer->renderThumbnail(pair.second.second);
-		Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(thumb, 0, 0, thumb->get_width(), thumb->get_height());
+		Glib::RefPtr<Gdk::Pixbuf> pixbuf = thumb ? Gdk::Pixbuf::create(thumb, 0, 0, thumb->get_width(), thumb->get_height()) : Glib::RefPtr<Gdk::Pixbuf>(0);
 		m_thumbThreadIdleJobsCount += 1;
 		Glib::signal_idle().connect_once([ = ] {
 			Glib::RefPtr<Gtk::ListStore> thumbnailStore = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.iconviewThumbnails->get_model());
