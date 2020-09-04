@@ -554,19 +554,8 @@ void OutputEditorHOCR::navigateNextPrev(bool next) {
 		misspelled = true;
 	}
 	Gtk::TreeIter start = m_treeView->currentIndex();
-	if(!start) {
-		start = m_document->get_iter("0");
-	}
-	Gtk::TreeIter curr = next ? m_document->nextIndex(start) : m_document->prevIndex(start);
-	while(curr != start) {
-		const HOCRItem* item = m_document->itemAtIndex(curr);
-		if(item && item->itemClass() == target && (!misspelled || m_document->indexIsMisspelledWord(curr))) {
-			break;
-		}
-		curr = next ? m_document->nextIndex(curr) : m_document->prevIndex(curr);
-	};
 	// Sets current index
-	showItemProperties(curr);
+	showItemProperties(m_document->prevOrNextIndex(next, start, target, misspelled));
 }
 
 void OutputEditorHOCR::expandCollapseChildren(const Gtk::TreeIter& index, bool expand) const {

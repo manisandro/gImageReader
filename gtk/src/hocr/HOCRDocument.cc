@@ -349,6 +349,22 @@ Gtk::TreeIter HOCRDocument::prevIndex(const Gtk::TreeIter& current) const {
 	return iter;
 }
 
+Gtk::TreeIter HOCRDocument::prevOrNextIndex(bool next, const Gtk::TreeIter& current, const Glib::ustring& ocrClass, bool misspelled) const {
+	Gtk::TreeIter start = current;
+	if(!start) {
+		start = get_iter(get_root_path(0));
+	}
+	Gtk::TreeIter curr = next ? nextIndex(start) : prevIndex(start);
+	while(curr != start) {
+		const HOCRItem* item = itemAtIndex(curr);
+		if(item && item->itemClass() == ocrClass && (!misspelled || indexIsMisspelledWord(curr))) {
+			break;
+		}
+		curr = next ? nextIndex(curr) : prevIndex(curr);
+	};
+	return curr;
+}
+
 bool HOCRDocument::indexIsMisspelledWord(const Gtk::TreeIter& index) const {
 	const HOCRItem* item = itemAtIndex(index);
 	if(item->isMisspelled() == -1) {
