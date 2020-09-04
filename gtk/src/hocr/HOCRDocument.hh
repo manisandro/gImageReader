@@ -63,6 +63,7 @@ public:
 	const HOCRItem* itemAtIndex(const Gtk::TreeIter& index) const {
 		return static_cast<HOCRItem*>(index.gobj()->user_data);
 	}
+	Gtk::TreeIter indexAtItem(const HOCRItem* item) const;
 	bool editItemAttribute(const Gtk::TreeIter& index, const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass = Glib::ustring());
 	bool editItemText(const Gtk::TreeIter& index, const Glib::ustring& text);
 	Gtk::TreeIter moveItem(const Gtk::TreeIter& itemIndex, const Gtk::TreeIter& newParent, int row);

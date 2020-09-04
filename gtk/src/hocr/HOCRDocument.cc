@@ -71,6 +71,16 @@ Gtk::TreeIter HOCRDocument::insertPage(int beforeIdx, const xmlpp::Element* page
 	return iter;
 }
 
+Gtk::TreeIter HOCRDocument::indexAtItem(const HOCRItem* item) const {
+	Gtk::TreePath path;
+	const HOCRItem* cur = item;
+	while(cur) {
+		path.push_front(cur->index());
+		cur = cur->parent();
+	}
+	return get_iter(path);
+}
+
 bool HOCRDocument::editItemAttribute(const Gtk::TreeIter& index, const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass) {
 	HOCRItem* item = mutableItemAtIndex(index);
 	if(!item) {
