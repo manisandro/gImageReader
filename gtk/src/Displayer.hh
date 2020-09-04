@@ -75,7 +75,7 @@ public:
 	void removeItem(DisplayerItem* item);
 	void invalidateRect(const Geometry::Rectangle& rect);
 	void resortItems();
-	void setBlockAutoscale(bool block) { m_autoScaleBlocked = block; }
+	void setBlockAutoscale(bool block);
 
 
 private:

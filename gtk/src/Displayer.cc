@@ -684,6 +684,13 @@ Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle
 	return surf;
 }
 
+void Displayer::setBlockAutoscale(bool block) {
+	m_autoScaleBlocked = block;
+	if(!block) {
+		m_scaleTimer = Glib::signal_timeout().connect([this] { scaleImage(); return false; }, 100);
+	}
+}
+
 void Displayer::scaleImage() {
 	if(m_autoScaleBlocked) {
 		return;
