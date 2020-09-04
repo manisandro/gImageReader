@@ -271,6 +271,7 @@ void FileTreeModel::setFileEditable(const QModelIndex& index, bool editable) {
 	Node* node = static_cast<Node*>(index.internalPointer());
 	if(dynamic_cast<FileNode*>(node)) {
 		static_cast<FileNode*>(node)->editable = editable;
+		emit dataChanged(index.sibling(index.row(), 1), index.sibling(index.row(), 1), {Qt::DisplayRole});
 	}
 }
 

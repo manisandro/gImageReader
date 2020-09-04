@@ -305,6 +305,7 @@ void FileTreeModel::setFileEditable(const Gtk::TreeIter& index, bool editable) {
 	Node* node = static_cast<Node*>(index.gobj()->user_data);
 	if(dynamic_cast<FileNode*>(node)) {
 		static_cast<FileNode*>(node)->editable = editable;
+		row_changed(get_path(index), index);
 	}
 }
 
