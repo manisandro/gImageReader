@@ -63,7 +63,10 @@ bool HOCRSpellChecker::checkSpelling(const Glib::ustring& word, std::vector<Glib
 				originalWord++;
 			}
 			s.append(word.substr(last));
-			suggestions->push_back(s);
+			// Don't list the exact input word
+			if(s != word) {
+				suggestions->push_back(s);
+			}
 		}
 	}
 	return valid;
