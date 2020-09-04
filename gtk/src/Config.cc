@@ -148,6 +148,9 @@ std::string Config::spellingLocation() const {
 
 std::vector<Glib::ustring> Config::getAvailableLanguages() {
 	auto tess = Utils::initTesseract();
+	if(!tess) {
+		return std::vector<Glib::ustring>();
+	}
 	GenericVector<STRING> availLanguages;
 	tess->GetAvailableLanguagesAsVector(&availLanguages);
 	std::vector<Glib::ustring> result;
