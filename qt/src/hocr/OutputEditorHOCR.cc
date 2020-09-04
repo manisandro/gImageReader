@@ -30,6 +30,7 @@
 #include <QPointer>
 #include <QStandardItemModel>
 #include <QSyntaxHighlighter>
+#include <QtSpell.hpp>
 #include <algorithm>
 #include <cmath>
 #include <cstring>
@@ -45,7 +46,6 @@
 #include "HOCROdtExporter.hh"
 #include "HOCRPdfExporter.hh"
 #include "HOCRProofReadWidget.hh"
-#include "HOCRSpellChecker.hh"
 #include "HOCRTextExporter.hh"
 #include "MainWindow.hh"
 #include "OutputEditorHOCR.hh"

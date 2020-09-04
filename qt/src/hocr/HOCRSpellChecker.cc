@@ -71,7 +71,7 @@ bool HOCRSpellChecker::checkSpelling(const QString& word, QStringList* suggestio
 }
 
 // each suggestion for each word => each word in each suggestion
-void HOCRSpellChecker::generateCombinations(const QList<QList<QString>>& lists, QList<QList<QString>>& results, int depth, const QList<QString> c) const {
+void HOCRSpellChecker::generateCombinations(const QList<QList<QString>>& lists, QList<QList<QString>>& results, int depth, const QList<QString>& c) const {
 	if(depth == lists.size()) {
 		results.append(c);
 		return;
