@@ -213,19 +213,6 @@ public:
 		return m_italic;
 	}
 
-	void addChild(HOCRItem* child);
-	void insertChild(HOCRItem* child, int index);
-	void removeChild(HOCRItem* child);
-	void takeChild(HOCRItem* child);
-	std::vector<HOCRItem*> takeChildren();
-	void setEnabled(bool enabled) {
-		m_enabled = enabled;
-	}
-	void setText(const Glib::ustring& newText) {
-		m_text = newText;
-	}
-	void setAttribute(const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass = Glib::ustring());
-
 	static std::map<Glib::ustring, Glib::ustring> deserializeAttrGroup(const Glib::ustring& string);
 	static Glib::ustring serializeAttrGroup(const std::map<Glib::ustring, Glib::ustring>& attrs);
 	static Glib::ustring trimmedWord(const Glib::ustring& word, Glib::ustring* prefix = nullptr, Glib::ustring* suffix = nullptr);
@@ -251,12 +238,25 @@ protected:
 
 	Geometry::Rectangle m_bbox;
 
+	// All mutations must be done through methods of HOCRDocument
+	void addChild(HOCRItem* child);
+	void insertChild(HOCRItem* child, int index);
+	void removeChild(HOCRItem* child);
+	void takeChild(HOCRItem* child);
+	std::vector<HOCRItem*> takeChildren();
+	void setEnabled(bool enabled) {
+		m_enabled = enabled;
+	}
+	void setText(const Glib::ustring& newText) {
+		m_text = newText;
+	}
 	void setMisspelled(int misspelled) {
 		m_misspelled = misspelled;
 	}
 	int isMisspelled() const {
 		return m_misspelled;
 	}
+	void setAttribute(const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass = Glib::ustring());
 	bool parseChildren(const xmlpp::Element* element, Glib::ustring language);
 };
 
