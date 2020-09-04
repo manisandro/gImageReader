@@ -115,6 +115,7 @@ public:
 	void addNotification(const Glib::ustring& title, const Glib::ustring& message, const std::vector<NotificationAction>& actions, Notification* handle = nullptr);
 	void hideNotification(Notification handle);
 	void openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files);
+	void openOutput(const std::string& filename);
 	bool setOutputMode(OutputMode mode);
 	void setOutputPaneVisible(bool visible);
 	void pushState(State state, const Glib::ustring& msg);

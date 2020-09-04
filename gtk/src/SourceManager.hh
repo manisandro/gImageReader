@@ -22,6 +22,8 @@
 
 #include "common.hh"
 
+#include <map>
+
 namespace Ui {
 class MainWindow;
 }
@@ -72,6 +74,7 @@ private:
 	const Ui::MainWindow& ui;
 	ClassData m_classdata;
 	Glib::RefPtr<FileTreeModel> m_fileTreeModel;
+	std::map<std::string, std::pair<int, Glib::RefPtr<Gio::FileMonitor>>> m_watchedDirectories;
 	Glib::RefPtr<Gtk::Clipboard> m_clipboard;
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;
@@ -80,7 +83,9 @@ private:
 	bool m_inSelectionChanged = false;
 
 	void clearSources();
+	void indexClicked(const Gtk::TreePath& path, Gtk::TreeViewColumn* col);
 	void fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event);
+	void dirChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event);
 	void addFolder();
 	void openSources();
 	void pasteClipboard();

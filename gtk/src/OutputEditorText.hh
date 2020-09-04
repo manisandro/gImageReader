@@ -56,6 +56,7 @@ public:
 	BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const override;
 	bool getModified() const override;
 	void onVisibilityChanged(bool visible) override;
+	bool open(const std::string& file) override;
 	bool save(const std::string& filename = "") override;
 	void setLanguage(const Config::Lang& lang) override;
 

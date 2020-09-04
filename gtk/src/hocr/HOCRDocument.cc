@@ -414,14 +414,14 @@ std::vector<Gtk::TreeIter> HOCRDocument::recheckItemSpelling(const Gtk::TreeIter
 		HOCRItem* prevWord = prevLine->children().back();
 		if(!prevWord || prevWord->itemClass() != "ocrx_word") { return {index}; }
 		Glib::ustring prevText = prevWord->text();
-		if(Utils::string_endswith(prevText, '-')) { return {index}; }
+		if(Utils::string_endswith(prevText, "-")) { return {index}; }
 
 		// don't bother with (reassembled) suggestions for broken words since we can't re-break them
 		bool valid = m_spell->checkSpelling(HOCRItem::trimmedWord(prevText) + trimmed);
 		item->setMisspelled(!valid);
 		prevWord->setMisspelled(!valid);
 		return {index, indexAtItem(prevWord)};
-	} else if(item == line->children().back() && lineIdx + 1 < int(paragraphLines.size()) && Utils::string_endswith(item->text(), '-')) {
+	} else if(item == line->children().back() && lineIdx + 1 < int(paragraphLines.size()) && Utils::string_endswith(item->text(), "-")) {
 		HOCRItem* nextLine = paragraphLines.at(lineIdx + 1);
 		if(!nextLine || nextLine->children().empty()) { return {index}; }
 		HOCRItem* nextWord = nextLine->children().front();

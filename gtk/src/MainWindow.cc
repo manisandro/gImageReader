@@ -236,6 +236,18 @@ void MainWindow::openFiles(const std::vector<Glib::RefPtr<Gio::File>>& files) {
 	}
 }
 
+void MainWindow::openOutput(const std::string& filename) {
+	if(Utils::string_endswith(Glib::ustring(filename).lowercase(), ".txt")) {
+		if(setOutputMode(OutputModeText)) {
+			m_outputEditor->open(filename);
+		}
+	} else if(Utils::string_endswith(Glib::ustring(filename).lowercase(), ".html")) {
+		if(setOutputMode(OutputModeHOCR)) {
+			m_outputEditor->open(filename);
+		}
+	}
+}
+
 void MainWindow::setOutputPaneVisible(bool visible) {
 	ui.buttonOutputpane->set_active(visible);
 }

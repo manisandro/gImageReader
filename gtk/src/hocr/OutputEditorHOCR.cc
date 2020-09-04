@@ -942,16 +942,16 @@ void OutputEditorHOCR::pickItem(const Geometry::Point& point) {
 	m_treeView->grab_focus();
 }
 
-void OutputEditorHOCR::open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File>> files) {
+bool OutputEditorHOCR::open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File>> files) {
 	if(mode == InsertMode::Replace && !clear(false)) {
-		return;
+		return false;
 	}
 	if(files.empty()) {
 		FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html", "text/xml", "text/plain"}, {"*.html"}};
 		files = FileDialogs::open_dialog(_("Open hOCR File"), "", "outputdir", filter, true);
 	}
 	if(files.empty()) {
-		return;
+		return false;
 	}
 	std::vector<Glib::ustring> failed;
 	std::vector<Glib::ustring> invalid;
@@ -992,6 +992,7 @@ void OutputEditorHOCR::open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File>
 		if(mode == InsertMode::Replace && m_filebasename.empty()) {
 			m_filebasename = Utils::split_filename(files.front()->get_path()).first;
 		}
+		MAIN->setOutputPaneVisible(true);
 	}
 	std::vector<Glib::ustring> errorMsg;
 	if(!failed.empty()) {
@@ -1003,6 +1004,7 @@ void OutputEditorHOCR::open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File>
 	if(!errorMsg.empty()) {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Unable to open files"), Utils::string_join(errorMsg, "\n\n"));
 	}
+	return added > 0;
 }
 
 bool OutputEditorHOCR::save(const std::string& filename) {

@@ -287,6 +287,21 @@ void OutputEditorText::addText(const Glib::ustring& text, bool insert) {
 	MAIN->setOutputPaneVisible(true);
 }
 
+bool OutputEditorText::open(const std::string& file) {
+	if(!clear(false)) {
+		return false;
+	}
+	try {
+		m_textBuffer->set_text(Glib::file_get_contents(file));
+		MAIN->setOutputPaneVisible(true);
+		return true;
+	} catch(const Glib::Error&) {
+		Glib::ustring errorMsg = Glib::ustring::compose(_("The following files could not be opened:\n%1"), file);
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Unable to open files"), errorMsg);
+		return false;
+	}
+}
+
 bool OutputEditorText::save(const std::string& filename) {
 	std::string outname = filename;
 	if(outname.empty()) {

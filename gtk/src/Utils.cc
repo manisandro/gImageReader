@@ -128,6 +128,12 @@ Utils::Button::Type Utils::messageBox(Gtk::MessageType type, const Glib::ustring
 	if((buttons & Button::Discard) != 0) {
 		dialog.add_button(_("Discard"), Button::Type::Discard);
 	}
+	if((buttons & Button::Text) != 0) {
+		dialog.add_button(_("Text"), Button::Type::Text);
+	}
+	if((buttons & Button::HOCR) != 0) {
+		dialog.add_button(_("hOCR"), Button::Type::HOCR);
+	}
 
 	dialog.show_all();
 	return static_cast<Button::Type>(dialog.run());
@@ -296,8 +302,10 @@ bool Utils::strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, 
 	return matchCase ? (str1 == str2) : (str1.casefold() == str2.casefold());
 }
 
-bool Utils::string_endswith(const Glib::ustring& str, gunichar c) {
-	return !str.empty() && str[str.length() - 1] == c;
+bool Utils::string_endswith(const Glib::ustring& str, const Glib::ustring& what) {
+	int n = str.length();
+	int m = what.length();
+	return n >= m && str.substr(n - m) == what;
 }
 
 std::size_t Utils::string_firstIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase) {

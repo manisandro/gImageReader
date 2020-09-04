@@ -66,7 +66,9 @@ public:
 
 	virtual bool getModified() const = 0;
 
+
 	virtual void onVisibilityChanged(bool /*visible*/) {}
+	virtual bool open(const std::string& filename) = 0;
 	virtual bool clear(bool hide = true) = 0;
 	virtual bool save(const std::string& filename = "") = 0;
 	virtual void setLanguage(const Config::Lang& /*lang*/) {}
