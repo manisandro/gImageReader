@@ -70,6 +70,7 @@ std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, b
 Glib::ustring string_join(const std::vector<Glib::ustring>& strings, const Glib::ustring& joiner);
 Glib::ustring string_trim(const Glib::ustring& str, const Glib::ustring& what = " \t\n\r");
 bool strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, bool matchCase);
+bool string_endswith(const Glib::ustring& str, gunichar c);
 std::size_t string_firstIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
 std::size_t string_lastIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
 int string_replace(Glib::ustring& str, const Glib::ustring& search, const Glib::ustring& replace, bool matchCase);

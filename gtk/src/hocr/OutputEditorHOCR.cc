@@ -258,7 +258,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 
 	m_tool = tool;
 
-	m_document = Glib::RefPtr<HOCRDocument>(new HOCRDocument(&m_spell));
+	m_document = Glib::RefPtr<HOCRDocument>(new HOCRDocument);
 
 	// HOCR tree view
 	m_treeView->set_model(m_document);
@@ -787,7 +787,7 @@ void OutputEditorHOCR::bboxDrawn(const Geometry::Rectangle& bbox, int action) {
 		newElement->set_attribute("class", "ocrx_word");
 		std::map<Glib::ustring, std::set<Glib::ustring>> propWord = propAttrs["ocrx_word"];
 
-		newElement->set_attribute("lang", propWord["lang"].size() == 1 ? *propWord["lang"].begin() : m_spell.get_language());
+		newElement->set_attribute("lang", propWord["lang"].size() == 1 ? *propWord["lang"].begin() : m_document->defaultLanguage());
 		std::map<Glib::ustring, Glib::ustring> titleAttrs;
 		titleAttrs["bbox"] = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
 		titleAttrs["x_font"] = propWord["title:x_font"].size() == 1 ? *propWord["title:x_font"].begin() : "sans";
@@ -902,38 +902,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 		menu.append(*addWordItem);
 		CONNECT(addWordItem, activate, [this] { m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_WORD_RECT); });
 	} else if(itemClass == "ocrx_word") {
-		Glib::ustring prefix, suffix, trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
-		std::vector<Glib::ustring> suggestions;
-		bool valid = m_document->checkItemSpelling(index, &suggestions, 16);
-		for(const Glib::ustring& suggestion : suggestions) {
-			Glib::ustring replacement = prefix + suggestion + suffix;
-			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(replacement));
-			CONNECT(item, activate, [this, replacement, index] { m_document->editItemText(index, replacement); });
-			menu.append(*item);
-		}
-
-		if(!trimmedWord.empty()) {
-			if(menu.get_children().empty()) {
-				Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("No suggestions")));
-				item->set_sensitive(false);
-				menu.append(*item);
-			}
-			if(!valid) {
-				menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
-				Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
-				CONNECT(additem, activate, [this, index, trimmedWord] {
-					m_spell.add_to_dictionary(trimmedWord);
-					m_document->recheckSpelling();
-				});
-				menu.append(*additem);
-				Gtk::MenuItem* ignoreitem = Gtk::manage(new Gtk::MenuItem(_("Ignore word")));
-				CONNECT(ignoreitem, activate, [this, index, trimmedWord] {
-					m_spell.ignore_word(trimmedWord);
-					m_document->recheckSpelling();
-				});
-				menu.append(*ignoreitem);
-			}
-		}
+		m_document->addSpellingActions(&menu, index);
 	}
 	if(!menu.get_children().empty()) {
 		menu.append(*Gtk::manage(new Gtk::SeparatorMenuItem));
@@ -1140,7 +1109,7 @@ bool OutputEditorHOCR::clear(bool hide) {
 			return false;
 		}
 	}
-	m_document = Glib::RefPtr<HOCRDocument>(new HOCRDocument(&m_spell));
+	m_document = Glib::RefPtr<HOCRDocument>(new HOCRDocument());
 	CONNECTX(m_document, row_inserted, [this](const Gtk::TreePath&, const Gtk::TreeIter&) {
 		setModified();
 	});

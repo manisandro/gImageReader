@@ -21,7 +21,6 @@
 #define OUTPUTEDITORHOCR_HH
 
 #include <gtksourceviewmm.h>
-#include <gtkspellmm.h>
 
 #include "Config.hh"
 #include "Geometry.hh"
@@ -34,8 +33,8 @@ namespace Geometry {
 class Rectangle;
 }
 class HOCRDocument;
-class HOCRPage;
 class HOCRItem;
+class HOCRPage;
 class SearchReplaceFrame;
 
 class OutputEditorHOCR : public OutputEditor {
@@ -127,7 +126,6 @@ private:
 	Glib::RefPtr<Gtk::TreeStore> m_propStore;
 	SearchReplaceFrame* m_searchFrame;
 	DisplayerToolHOCR* m_tool;
-	GtkSpell::Checker m_spell;
 	bool m_modified = false;
 	std::string m_filebasename;
 	InsertMode m_insertMode = InsertMode::Append;

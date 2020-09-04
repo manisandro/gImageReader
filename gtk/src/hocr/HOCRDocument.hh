@@ -27,28 +27,29 @@
 #include <set>
 #include <utility>
 
-namespace GtkSpell {
-class Checker;
-}
 namespace xmlpp {
 class Element;
 }
 
 class HOCRItem;
 class HOCRPage;
+class HOCRSpellChecker;
 
 
 class HOCRDocument : public Gtk::TreeModel, public Glib::Object {
 public:
 	enum Columns { COLUMN_EDITABLE, COLUMN_CHECKED, COLUMN_ICON, COLUMN_TEXT, COLUMN_TEXT_COLOR, COLUMN_WCONF, NUM_COLUMNS};
 
-	HOCRDocument(GtkSpell::Checker* spell);
+	HOCRDocument();
 	~HOCRDocument();
 
 	void setDefaultLanguage(const Glib::ustring& language) {
 		m_defaultLanguage = language;
 	}
-	void recheckSpelling();
+	const Glib::ustring& defaultLanguage() const {
+		return m_defaultLanguage;
+	}
+	void addSpellingActions(Gtk::Menu* menu, const Gtk::TreeIter& index);
 
 	Glib::ustring toHTML();
 
@@ -76,7 +77,7 @@ public:
 	Gtk::TreeIter nextIndex(const Gtk::TreeIter& current) const;
 	Gtk::TreeIter prevIndex(const Gtk::TreeIter& current) const;
 	bool indexIsMisspelledWord(const Gtk::TreeIter& index) const;
-	bool checkItemSpelling(const Gtk::TreeIter& index, std::vector<Glib::ustring>* suggestions = nullptr, int limit = -1) const;
+	bool getItemSpellingSuggestions(const Gtk::TreeIter& index, Glib::ustring& trimmedWord, std::vector<Glib::ustring>& suggestions, int limit) const;
 
 	bool referencesSource(const Glib::ustring& filename) const;
 	Gtk::TreeIter searchPage(const Glib::ustring& filename, int pageNr) const;
@@ -101,9 +102,10 @@ public:
 	}
 
 private:
+	ClassData m_classdata;
 	int m_pageIdCounter = 0;
 	Glib::ustring m_defaultLanguage = "en_US";
-	GtkSpell::Checker* m_spell;
+	HOCRSpellChecker* m_spell;
 
 	std::vector<HOCRPage*> m_pages;
 
@@ -131,11 +133,11 @@ private:
 	Glib::ustring displayRoleForItem(const HOCRItem* item) const;
 	Glib::RefPtr<Gdk::Pixbuf> decorationRoleForItem(const HOCRItem* item) const;
 
-	bool checkSpelling(const Glib::ustring& trimmed, std::vector<Glib::ustring>* suggestions = nullptr, int limit = -1) const;
-	void generateCombinations(const std::vector<std::vector<Glib::ustring>>& lists, std::vector<std::vector<Glib::ustring>>& results, int depth, const std::vector<Glib::ustring>& c) const;
 	void insertItem(HOCRItem* parent, HOCRItem* item, int i);
 	void deleteItem(HOCRItem* item);
 	void takeItem(HOCRItem* item);
+	void resetMisspelled(const Gtk::TreeIter& index);
+	std::vector<Gtk::TreeIter> recheckItemSpelling(const Gtk::TreeIter& index) const;
 	void recursiveDataChanged(const Gtk::TreeIter& index, const std::vector<Glib::ustring>& itemClasses = {});
 	void recursiveRowInserted(const Gtk::TreeIter& index);
 	void recomputeBBoxes(HOCRItem* item);
@@ -228,11 +230,13 @@ public:
 	static Glib::ustring trimmedWord(const Glib::ustring& word, Glib::ustring* prefix = nullptr, Glib::ustring* suffix = nullptr);
 
 protected:
+	friend class HOCRDocument;
 	friend class HOCRPage;
 
 	static std::map<Glib::ustring, Glib::ustring> s_langCache;
 
 	Glib::ustring m_text;
+	int m_misspelled = -1;
 	bool m_bold;
 	bool m_italic;
 
@@ -246,6 +250,12 @@ protected:
 
 	Geometry::Rectangle m_bbox;
 
+	void setMisspelled(int misspelled) {
+		m_misspelled = misspelled;
+	}
+	int isMisspelled() const {
+		return m_misspelled;
+	}
 	bool parseChildren(const xmlpp::Element* element, Glib::ustring language);
 };
 

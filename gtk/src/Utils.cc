@@ -296,6 +296,10 @@ bool Utils::strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, 
 	return matchCase ? (str1 == str2) : (str1.casefold() == str2.casefold());
 }
 
+bool Utils::string_endswith(const Glib::ustring& str, gunichar c) {
+	return !str.empty() && str[str.length() - 1] == c;
+}
+
 std::size_t Utils::string_firstIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase) {
 	std::size_t res = Glib::ustring::npos;
 	if(matchCase) {

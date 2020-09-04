@@ -19,6 +19,7 @@
 
 #include "common.hh"
 #include "HOCRDocument.hh"
+#include "HOCRSpellChecker.hh"
 #include "XmlUtils.hh"
 #include "Utils.hh"
 
@@ -28,20 +29,61 @@
 
 #define DEBUG(...) //__VA_ARGS__
 
-HOCRDocument::HOCRDocument(GtkSpell::Checker* spell)
-	: Glib::ObjectBase("HOCRDocument")
-	, m_spell(spell) {
+HOCRDocument::HOCRDocument()
+	: Glib::ObjectBase("HOCRDocument") {
+	m_spell = new HOCRSpellChecker();
 }
 
 HOCRDocument::~HOCRDocument() {
 	for(HOCRPage* page : m_pages) {
 		delete page;
 	}
+	delete m_spell;
 }
 
-void HOCRDocument::recheckSpelling() {
-	for(HOCRPage* page : m_pages) {
-		recursiveDataChanged(get_iter(get_root_path(page->index())), {"ocrx_word"});
+void HOCRDocument::resetMisspelled(const Gtk::TreeIter& index) {
+	if(!index->children().empty()) {
+		for(const Gtk::TreeIter& child : index->children()) {
+			resetMisspelled(child);
+		}
+	} else {
+		mutableItemAtIndex(index)->setMisspelled(-1);
+		row_changed(get_path(index), index);
+	}
+}
+
+void HOCRDocument::addSpellingActions(Gtk::Menu* menu, const Gtk::TreeIter& index) {
+	std::vector<Glib::ustring> suggestions;
+	Glib::ustring trimmedWord;
+	bool valid = getItemSpellingSuggestions(index, trimmedWord, suggestions, 16);
+	for(const Glib::ustring& suggestion : suggestions) {
+		Glib::ustring replacement = suggestion;
+		Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(suggestion));
+		CONNECT(item, activate, [this, replacement, index] { editItemText(index, replacement); });
+		menu->append(*item);
+	}
+
+	if(!trimmedWord.empty()) {
+		if(suggestions.empty()) {
+			Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("No suggestions")));
+			item->set_sensitive(false);
+			menu->append(*item);
+		}
+		if(!valid) {
+			menu->append(*Gtk::manage(new Gtk::SeparatorMenuItem));
+			Gtk::MenuItem* additem = Gtk::manage(new Gtk::MenuItem(_("Add to dictionary")));
+			CONNECT(additem, activate, [this, index, trimmedWord] {
+				m_spell->add_to_dictionary(trimmedWord);
+				resetMisspelled(index);
+			});
+			menu->append(*additem);
+			Gtk::MenuItem* ignoreitem = Gtk::manage(new Gtk::MenuItem(_("Ignore word")));
+			CONNECT(ignoreitem, activate, [this, index, trimmedWord] {
+				m_spell->ignore_word(trimmedWord);
+				resetMisspelled(index);
+			});
+			menu->append(*ignoreitem);
+		}
 	}
 }
 
@@ -90,7 +132,7 @@ bool HOCRDocument::editItemAttribute(const Gtk::TreeIter& index, const Glib::ust
 	item->setAttribute(name, value, attrItemClass);
 	row_changed(get_path(index), index);
 	if(name == "lang") {
-		recursiveDataChanged(index, {"ocrx_word"});
+		resetMisspelled(index);
 	}
 	m_signal_item_attribute_changed.emit(index, name, value);
 	if(name == "title:bbox") {
@@ -169,7 +211,9 @@ Gtk::TreeIter HOCRDocument::mergeItems(const Gtk::TreeIter& parent, int startRow
 			row_deleted(childPath);
 		}
 		targetItem->setText(text);
-		row_changed(get_path(targetIndex), targetIndex);
+		for(const Gtk::TreeIter& changedIndex : recheckItemSpelling(targetIndex)) {
+			row_changed(get_path(changedIndex), changedIndex);
+		}
 	} else {
 		// Merge other items: merge dom trees and bounding boxes
 		std::vector<HOCRItem*> moveChilds;
@@ -306,15 +350,84 @@ Gtk::TreeIter HOCRDocument::prevIndex(const Gtk::TreeIter& current) const {
 }
 
 bool HOCRDocument::indexIsMisspelledWord(const Gtk::TreeIter& index) const {
-	return !checkItemSpelling(index);
+	const HOCRItem* item = itemAtIndex(index);
+	if(item->isMisspelled() == -1) {
+		recheckItemSpelling(index);
+	}
+	return item->isMisspelled() == 1;
 }
 
-bool HOCRDocument::checkItemSpelling(const Gtk::TreeIter& index, std::vector<Glib::ustring>* suggestions, int limit) const {
+std::vector<Gtk::TreeIter> HOCRDocument::recheckItemSpelling(const Gtk::TreeIter& index) const {
+	HOCRItem* item = mutableItemAtIndex(index);
+	if(item->itemClass() != "ocrx_word") { return {}; }
+
+	Glib::ustring prefix, suffix, trimmed = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
+	if(trimmed.empty()) {
+		item->setMisspelled(false);
+		return {index};
+	}
+	Glib::ustring lang = item->spellingLang();
+	if(m_spell->get_language() != lang) {
+		try {
+			m_spell->set_language(lang);
+		} catch(const GtkSpell::Error& /*e*/) {
+			item->setMisspelled(false);
+			return {index};
+		}
+	}
+
+	// check word, including (if requested) setting suggestions; handle hyphenated phrases correctly
+	if(m_spell->checkSpelling(trimmed)) {
+		item->setMisspelled(false);
+		return {index};
+	}
+	item->setMisspelled(true);
+
+	// handle some hyphenated words
+	// don't bother with words not broken over sibling text lines (ie interrupted by other blocks), it's human hard
+	// don't bother with words broken over three or more lines, it's implausible and this treatment is ^ necessarily incomplete
+	HOCRItem* line = item->parent();
+	if(!line) { return {index}; }
+	HOCRItem* paragraph = line->parent();
+	if(!paragraph) { return {index}; }
+	int lineIdx = item->index();
+	std::vector<HOCRItem*> paragraphLines = paragraph->children();
+	if(item == line->children().front() && lineIdx > 0) {
+		HOCRItem* prevLine = paragraphLines.at(lineIdx - 1);
+		if(!prevLine || prevLine->children().empty()) { return {index}; }
+		HOCRItem* prevWord = prevLine->children().back();
+		if(!prevWord || prevWord->itemClass() != "ocrx_word") { return {index}; }
+		Glib::ustring prevText = prevWord->text();
+		if(Utils::string_endswith(prevText, '-')) { return {index}; }
+
+		// don't bother with (reassembled) suggestions for broken words since we can't re-break them
+		bool valid = m_spell->checkSpelling(HOCRItem::trimmedWord(prevText) + trimmed);
+		item->setMisspelled(!valid);
+		prevWord->setMisspelled(!valid);
+		return {index, indexAtItem(prevWord)};
+	} else if(item == line->children().back() && lineIdx + 1 < int(paragraphLines.size()) && Utils::string_endswith(item->text(), '-')) {
+		HOCRItem* nextLine = paragraphLines.at(lineIdx + 1);
+		if(!nextLine || nextLine->children().empty()) { return {index}; }
+		HOCRItem* nextWord = nextLine->children().front();
+		if(!nextWord || nextWord->itemClass() != "ocrx_word") { return {index}; }
+
+		bool valid = m_spell->checkSpelling(trimmed + HOCRItem::trimmedWord(nextWord->text()));
+		item->setMisspelled(!valid);
+		nextWord->setMisspelled(!valid);
+		return {index, indexAtItem(nextWord)};
+	}
+	return {index};
+}
+
+bool HOCRDocument::getItemSpellingSuggestions(const Gtk::TreeIter& index, Glib::ustring& trimmedWord, std::vector<Glib::ustring>& suggestions, int limit) const {
 	const HOCRItem* item = itemAtIndex(index);
 	if(item->itemClass() != "ocrx_word") { return true; }
 
-	Glib::ustring prefix, suffix, trimmed = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
-	if(trimmed.empty()) { return true; }
+	Glib::ustring prefix, suffix;
+	trimmedWord = HOCRItem::trimmedWord(item->text(), &prefix, &suffix);
+	if(trimmedWord.empty()) {
+		return true;
+	}
 	Glib::ustring lang = item->spellingLang();
 	if(m_spell->get_language() != lang) {
 		try {
@@ -324,44 +437,11 @@ bool HOCRDocument::checkItemSpelling(const Gtk::TreeIter& index, std::vector<Gli
 		}
 	}
 
-	// check word, including (if requested) setting suggestions; handle hyphenated phrases correctly
-	if(checkSpelling(trimmed, suggestions, limit)) { return true; }
-
-	// handle some hyphenated words
-	// don't bother with words not broken over sibling text lines (ie interrupted by other blocks), it's human hard
-	// don't bother with words broken over three or more lines, it's implausible and this treatment is ^ necessarily incomplete
-	HOCRItem* parent = item->parent();
-	if(!parent) { return false; }
-	HOCRItem* grandparent = parent->parent();
-	if(!grandparent) { return false; }
-	int idx = item->index();
-	int parentIdx = parent->index();
-	std::vector<HOCRItem*> parentSiblings = grandparent->children();
-	if(idx == 0 && parentIdx > 0) {
-		HOCRItem* parentPrevSibling = parentSiblings.at(parentIdx - 1);
-		if(!parentPrevSibling) { return false; }
-		std::vector<HOCRItem*> cousins = parentPrevSibling->children();
-		if(cousins.size() < 1) { return false; }
-		HOCRItem* prevCousin = cousins.back();
-		if(!prevCousin || prevCousin->itemClass() != "ocrx_word") { return false; }
-		Glib::ustring prevText = prevCousin->text();
-		if(prevText.empty() || prevText[prevText.length() - 1] != '-') { return false; }
-
-		// don't bother with (reassembled) suggestions for broken words since we can't re-break them
-		return checkSpelling(HOCRItem::trimmedWord(prevText) + trimmed);
+	bool valid = m_spell->checkSpelling(trimmedWord, &suggestions, limit);
+	for(int i = 0, n = suggestions.size(); i < n; ++i) {
+		suggestions[i] = prefix + suggestions[i] + suffix;
 	}
-	Glib::ustring text = item->text();
-	if(idx + 1 == int(parent->children().size()) && parentIdx + 1 < int(parentSiblings.size()) && !text.empty() && text[text.length() - 1] == '-') {
-		HOCRItem* parentNextSibling = parentSiblings.at(parentIdx + 1);
-		if(!parentNextSibling) { return false; }
-		std::vector<HOCRItem*> cousins = parentNextSibling->children();
-		if(cousins.size() < 1) { return false; }
-		HOCRItem* nextCousin = cousins.front();
-		if(!nextCousin || nextCousin->itemClass() != "ocrx_word") { return false; }
-
-		return checkSpelling(trimmed + HOCRItem::trimmedWord(nextCousin->text()));
-	}
-	return false;
+	return valid;
 }
 
 bool HOCRDocument::referencesSource(const Glib::ustring& filename) const {
@@ -590,9 +670,9 @@ void HOCRDocument::get_value_vfunc(const iterator& iter, int column, Glib::Value
 		}
 		Glib::ustring color;
 		if(enabled) {
-			color = checkItemSpelling(iter) ? "#000" : "#F00";
+			color = indexIsMisspelledWord(iter) ? "#000" : "#F00";
 		} else {
-			color = checkItemSpelling(iter) ? "#a0a0a4" : "#d05052";
+			color = indexIsMisspelledWord(iter) ? "#a0a0a4" : "#d05052";
 		}
 		setValue(value, color);
 	} else if(column == COLUMN_WCONF) {
@@ -606,7 +686,9 @@ void HOCRDocument::set_value_impl(const iterator& row, int column, const Glib::V
 		return;
 	} else if(column == COLUMN_TEXT) {
 		item->setText(static_cast<const Glib::Value<Glib::ustring>&>(value).get());
-		row_changed(get_path(row), row);
+		for(const Gtk::TreeIter& changedIndex : recheckItemSpelling(row)) {
+			row_changed(get_path(changedIndex), changedIndex);
+		}
 	} else if(column == COLUMN_CHECKED) {
 		item->setEnabled(static_cast<const Glib::Value<bool>&>(value).get());
 		Gtk::TreePath path = get_path(row);
@@ -654,66 +736,6 @@ Glib::RefPtr<Gdk::Pixbuf> HOCRDocument::decorationRoleForItem(const HOCRItem* it
 		return Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/item_halftone.png");
 	}
 	return Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, false, 8, 0, 0);
-}
-
-bool HOCRDocument::checkSpelling(const Glib::ustring& trimmed, std::vector<Glib::ustring>* suggestions, int limit) const {
-	static const Glib::RefPtr<Glib::Regex> splitRe = Glib::Regex::create("[\u2013\u2014]+");
-	std::vector<std::pair<Glib::ustring, int>> words = Utils::string_split_pos(trimmed, splitRe);
-
-	std::size_t perWordLimit = 0;
-	// s = p^w => w = log_p(c) = log(c)/log(p) => p = 10^(log(c)/w)
-	if(limit > 0) { perWordLimit = std::size_t(std::pow(10, std::log10(limit) / words.size())); }
-	std::vector<std::vector<Glib::ustring>> wordSuggestions;
-	bool valid = true;
-	bool multipleWords = words.size() > 1;
-	for(const std::pair<Glib::ustring, int>& word : words) {
-		bool wordValid = m_spell->check_word(word.first);
-		valid &= wordValid;
-		if(suggestions) {
-			std::vector<Glib::ustring> ws = m_spell->get_suggestions(word.first);
-			if(wordValid && multipleWords) { ws.insert(ws.begin(), word.first); }
-			if(limit == -1) {
-				wordSuggestions.push_back(ws);
-			} else if(limit > 0) {
-				ws.resize(std::min(ws.size(), perWordLimit));
-				wordSuggestions.push_back(ws);
-			}
-		}
-	}
-	if(suggestions) {
-		suggestions->clear();
-		std::vector<std::vector<Glib::ustring>> suggestionCombinations;
-		generateCombinations(wordSuggestions, suggestionCombinations, 0, std::vector<Glib::ustring>());
-		for(const std::vector<Glib::ustring>& combination : suggestionCombinations) {
-			Glib::ustring s = "";
-			auto originalWord = words.begin();
-			int last = 0;
-			int next;
-			for(const Glib::ustring& suggestedWord : combination) {
-				next = originalWord->second;
-				s.append(trimmed.substr(last, next - last));
-				s.append(suggestedWord);
-				last = next + originalWord->first.length();
-				originalWord++;
-			}
-			s.append(trimmed.substr(last));
-			suggestions->push_back(s);
-		}
-	}
-	return valid;
-}
-
-// each suggestion for each word => each word in each suggestion
-void HOCRDocument::generateCombinations(const std::vector<std::vector<Glib::ustring>>& lists, std::vector<std::vector<Glib::ustring>>& results, int depth, const std::vector<Glib::ustring>& c) const {
-	if(depth == int(lists.size())) {
-		results.push_back(c);
-		return;
-	}
-	for(int i = 0, n = int(lists[depth].size()); i < n; ++i) {
-		std::vector<Glib::ustring> newc = c;
-		newc.insert(newc.end(), lists[depth][i]);
-		generateCombinations(lists, results, depth + 1, newc);
-	}
 }
 
 void HOCRDocument::insertItem(HOCRItem* parent, HOCRItem* item, int i) {
