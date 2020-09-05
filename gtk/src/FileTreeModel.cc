@@ -492,7 +492,7 @@ void FileTreeModel::get_value_vfunc(const iterator& iter, int column, Glib::Valu
 		setValue(value, m_tmpdir && node->parent == m_tmpdir ? Pango::STYLE_NORMAL : Pango::STYLE_NORMAL);
 	} else if(column == COLUMN_EDITICON) {
 		bool editable = dynamic_cast<FileNode*>(node) && static_cast<FileNode*>(node)->editable;
-		Glib::RefPtr<Gdk::Pixbuf> icon = editable ? Gtk::IconTheme::get_default()->load_icon("document-edit", 16) : Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, false, 8, 0, 0);
+		Glib::RefPtr<Gdk::Pixbuf> icon = editable ? Gtk::IconTheme::get_default()->load_icon("document-edit", 16) : Glib::RefPtr<Gdk::Pixbuf>(nullptr);
 		setValue(value, icon);
 	}
 }
