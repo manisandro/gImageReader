@@ -149,11 +149,9 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files,
 		Gtk::RecentManager::get_default()->add_item(file->get_uri());
 		++added;
 	}
-	if(added > 0) {
-		ui.treeviewSources->get_selection()->unselect_all();
-	}
 	m_connectionSelectionChanged.block(true);
 	if(added > 0) {
+		ui.treeviewSources->get_selection()->unselect_all();
 		Glib::RefPtr<Gtk::TreeSelection> selection = ui.treeviewSources->get_selection();
 		bool scrolled = false;
 		for(const Gtk::TreeIter& it : selectIters) {
