@@ -73,7 +73,7 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	connect(ui.actionSourceRemove, &QAction::triggered, this, &SourceManager::removeSource);
 	connect(ui.actionSourceDelete, &QAction::triggered, this, &SourceManager::deleteSource);
 	connect(ui.actionSourceClear, &QAction::triggered, this, &SourceManager::clearSources);
-	connect(ui.treeViewSources->selectionModel(), &QItemSelectionModel::selectionChanged, this, &SourceManager::currentSourceChanged);
+	connect(ui.treeViewSources->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this](const QItemSelection&, const QItemSelection&) { currentSourceChanged(); });
 	connect(ui.treeViewSources, &QTreeView::clicked, this, &SourceManager::indexClicked);
 	connect(&m_fsWatcher, &QFileSystemWatcher::fileChanged, this, &SourceManager::fileChanged);
 	connect(&m_fsWatcher, &QFileSystemWatcher::directoryChanged, this, &SourceManager::directoryChanged);
@@ -143,6 +143,7 @@ int SourceManager::addSources(const QStringList& files, bool suppressWarnings) {
 	}
 	ui.treeViewSources->selectionModel()->blockSignals(false);
 	ui.treeViewSources->setUpdatesEnabled(true);
+	currentSourceChanged();
 	if(!failed.isEmpty() && !suppressWarnings) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:\n%1").arg(failed.join("\n")));
 	}
@@ -402,7 +403,7 @@ void SourceManager::removeSource(bool deleteFile) {
 	ui.treeViewSources->selectionModel()->select(ui.treeViewSources->currentIndex(), QItemSelectionModel::Select);
 	ui.treeViewSources->selectionModel()->blockSignals(false);
 	ui.treeViewSources->setUpdatesEnabled(true);
-	currentSourceChanged(QItemSelection(ui.treeViewSources->currentIndex(), ui.treeViewSources->currentIndex()), QItemSelection());
+	currentSourceChanged();
 }
 
 
@@ -416,18 +417,11 @@ void SourceManager::clearSources() {
 	m_fileTreeModel->clear();
 }
 
-void SourceManager::currentSourceChanged(const QItemSelection& /*selected*/, const QItemSelection& deselected) {
+void SourceManager::currentSourceChanged() {
 	if(m_inCurrentSourceChanged) {
 		return;
 	}
 	m_inCurrentSourceChanged = true;
-
-	// Recursively deselect deselected items
-	QItemSelection deselect;
-	for(const QModelIndex& index : deselected.indexes()) {
-		selectRecursive(deselect, index);
-	}
-	ui.treeViewSources->selectionModel()->select(deselect, QItemSelectionModel::Deselect | QItemSelectionModel::Rows);
 
 	// Merge selection of all children of selected items
 	QItemSelection selection = ui.treeViewSources->selectionModel()->selection();

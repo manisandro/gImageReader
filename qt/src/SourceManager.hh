@@ -91,7 +91,7 @@ private:
 
 private slots:
 	void clearSources();
-	void currentSourceChanged(const QItemSelection&, const QItemSelection& deselected);
+	void currentSourceChanged();
 	void indexClicked(const QModelIndex& index);
 	void deleteSource() {
 		removeSource(true);
