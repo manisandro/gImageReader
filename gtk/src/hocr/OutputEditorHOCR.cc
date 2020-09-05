@@ -274,6 +274,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	Gtk::TreeViewColumn* itemViewCol1 = Gtk::manage(new Gtk::TreeViewColumn(""));
 	Gtk::CellRendererToggle& checkRenderer = *Gtk::manage(new Gtk::CellRendererToggle);
 	Gtk::CellRendererPixbuf& iconRenderer = *Gtk::manage(new Gtk::CellRendererPixbuf);
+	iconRenderer.set_fixed_size(22, 22);
 	Gtk::CellRendererText& textRenderer = *m_treeViewTextCell;
 	itemViewCol1->pack_start(checkRenderer, false);
 	itemViewCol1->pack_start(iconRenderer, false);
@@ -283,6 +284,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	itemViewCol1->add_attribute(textRenderer, "text", HOCRDocument::COLUMN_TEXT);
 	itemViewCol1->add_attribute(textRenderer, "editable", HOCRDocument::COLUMN_EDITABLE);
 	itemViewCol1->add_attribute(textRenderer, "foreground", HOCRDocument::COLUMN_TEXT_COLOR);
+	itemViewCol1->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
+	itemViewCol1->set_expand(true);
 	CONNECT(&checkRenderer, toggled, [this](const Glib::ustring & path) {
 		Gtk::TreeIter it = m_document->get_iter(path);
 		bool prev;
@@ -302,6 +305,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	m_treeView->append_column(*itemViewCol2);
 	itemViewCol2->set_visible(false);
 	itemViewCol2->set_fixed_width(32);
+	itemViewCol2->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
 
 	m_treeView->set_fixed_height_mode();
 
