@@ -140,6 +140,12 @@ public:
 			m_currentIndex = currentIndex();
 			m_signal_current_index_changed(m_currentIndex, oldIndex);
 		});
+		CONNECT(this, button_press_event, [this](GdkEventButton * ev) {
+			return button_press_event(ev);
+		}, false);
+		CONNECT(this, key_press_event, [this](GdkEventKey * ev) {
+			return key_press_event(ev);
+		}, false);
 	}
 	sigc::signal<void, Gtk::TreeIter, Gtk::TreeIter> signal_current_index_changed() {
 		return m_signal_current_index_changed;
@@ -170,7 +176,7 @@ public:
 	}
 
 protected:
-	bool on_button_press_event(GdkEventButton* button_event) {
+	bool button_press_event(GdkEventButton* button_event) {
 		bool rightclick = (button_event->type == GDK_BUTTON_PRESS && button_event->button == 3);
 
 		Gtk::TreePath path;
@@ -191,7 +197,7 @@ protected:
 		}
 		return true;
 	}
-	bool on_key_press_event(GdkEventKey* key_event) {
+	bool key_press_event(GdkEventKey* key_event) {
 		if(key_event->keyval == GDK_KEY_Delete) {
 			m_signal_delete.emit();
 			return true;
