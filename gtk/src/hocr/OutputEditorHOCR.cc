@@ -421,6 +421,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 		setModified();
 		updateSourceText();
 	});
+	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter & itemIndex, const Glib::ustring & name, const Glib::ustring & value) { itemAttributeChanged(itemIndex, name, value); });
 	CONNECTX(m_document, item_attribute_changed, [this](const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&) {
 		setModified();
 	});
@@ -731,6 +732,22 @@ void OutputEditorHOCR::updateSourceText() {
 		if(currentItem) {
 			ui.textviewSource->get_buffer()->set_text(currentItem->toHtml());
 		}
+	}
+}
+
+void OutputEditorHOCR::itemAttributeChanged(const Gtk::TreeIter& itemIndex, const Glib::ustring& name, const Glib::ustring& /*value*/) {
+	const HOCRItem* currentItem = m_document->itemAtIndex(itemIndex);
+	if(name == "title:bbox" && currentItem) {
+		// Minimum bounding box
+		Geometry::Rectangle minBBox;
+		if(currentItem->itemClass() == "ocr_page") {
+			minBBox = currentItem->bbox();
+		} else {
+			for(const HOCRItem* child : currentItem->children()) {
+				minBBox = minBBox.unite(child->bbox());
+			}
+		}
+		m_tool->setSelection(currentItem->bbox(), minBBox);
 	}
 }
 

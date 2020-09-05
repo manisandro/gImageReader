@@ -156,6 +156,7 @@ private:
 	void setModified();
 	void showItemProperties(const Gtk::TreeIter& index, const Gtk::TreeIter& prev = Gtk::TreeIter());
 	void showTreeWidgetContextMenu(GdkEventButton* ev);
+	void itemAttributeChanged(const Gtk::TreeIter& itemIndex, const Glib::ustring& name, const Glib::ustring& value);
 	void updateSourceText();
 	void updateAttributes(const Gtk::TreeIter& it, const Glib::ustring& attr, const Glib::ustring& value);
 	void updateCurrentItemBBox(const Geometry::Rectangle& bbox);
