@@ -497,7 +497,7 @@ void MainWindow::languageChanged(const Config::Lang& lang) {
 		checker.set_language(code);
 	} catch(const GtkSpell::Error& /*e*/) {
 		if(ConfigSettings::get<SwitchSetting>("dictinstall")->getValue()) {
-			NotificationAction actionDontShowAgain = {_("Don't show again"), [this]{ ConfigSettings::get<SwitchSetting>("dictinstall")->setValue(false); return true; }};
+			NotificationAction actionDontShowAgain = {_("Don't show again"), []{ ConfigSettings::get<SwitchSetting>("dictinstall")->setValue(false); return true; }};
 			NotificationAction actionInstall = NotificationAction{_("Install"), [this, lang]{ dictionaryAutoinstall(lang.code); return false; }};
 #ifdef G_OS_UNIX
 			if(getConfig()->useSystemDataLocations()) {
