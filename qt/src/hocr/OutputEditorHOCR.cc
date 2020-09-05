@@ -590,7 +590,7 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModel
 				minBBox = minBBox.united(child->bbox());
 			}
 		}
-		m_tool->setSelection(currentItem->bbox(), minBBox, currentItem->itemClass() == "ocrx_word" ? currentItem->parent()->bbox() : currentItem->bbox());
+		m_tool->setSelection(currentItem->bbox(), minBBox);
 	}
 }
 
@@ -650,7 +650,7 @@ void OutputEditorHOCR::updateSourceText() {
 	}
 }
 
-void OutputEditorHOCR::itemAttributeChanged(const QModelIndex& itemIndex, const QString& name, const QString& value) {
+void OutputEditorHOCR::itemAttributeChanged(const QModelIndex& itemIndex, const QString& name, const QString& /*value*/) {
 	const HOCRItem* currentItem = m_document->itemAtIndex(itemIndex);
 	if(name == "title:bbox" && currentItem) {
 		// Minimum bounding box
@@ -662,7 +662,7 @@ void OutputEditorHOCR::itemAttributeChanged(const QModelIndex& itemIndex, const 
 				minBBox = minBBox.united(child->bbox());
 			}
 		}
-		m_tool->setSelection(currentItem->bbox(), minBBox, currentItem->itemClass() == "ocrx_word" ? currentItem->parent()->bbox() : currentItem->bbox());
+		m_tool->setSelection(currentItem->bbox(), minBBox);
 	}
 }
 

@@ -95,7 +95,7 @@ void DisplayerToolHOCR::setAction(Action action, bool clearSel) {
 	}
 }
 
-void DisplayerToolHOCR::setSelection(const QRect& rect, const QRect& minRect, const QRect& fitRect) {
+void DisplayerToolHOCR::setSelection(const QRect& rect, const QRect& minRect) {
 	setAction(ACTION_NONE, false);
 	QRect r = rect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft());
 	QRect mr = minRect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft());
@@ -106,14 +106,7 @@ void DisplayerToolHOCR::setSelection(const QRect& rect, const QRect& minRect, co
 	}
 	m_selection->setAnchorAndPoint(r.topLeft(), r.bottomRight());
 	m_selection->setMinimumRect(mr);
-
-	// Compute margins in such way that ideally fitRect is centered
-	QRect fr = fitRect.translated(m_displayer->getSceneBoundingRect().toRect().topLeft());
-	QPoint viewTopLeft = m_displayer->mapFromScene(fr.topLeft());
-	QPoint viewBottomRight = m_displayer->mapFromScene(fr.bottomRight());
-	int xmargin = (m_displayer->size().width() - (viewBottomRight.x() - viewTopLeft.x())) / 3;
-	int ymargin = (m_displayer->size().height() - (viewBottomRight.y() - viewTopLeft.y())) / 3;
-	m_displayer->ensureVisible(fr, xmargin, ymargin);
+	m_displayer->ensureVisible(m_selection);
 }
 
 QImage DisplayerToolHOCR::getSelection(const QRect& rect) const {
