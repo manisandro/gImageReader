@@ -476,7 +476,7 @@ void MainWindow::checkVersion(const Glib::ustring& newver) {
 		addNotification(_("New version"), Glib::ustring::compose(_("gImageReader %1 is available"), newver), {
 			{_("Download"), [ = ]{ Utils::openUri(DOWNLOADURL); return false; }},
 			{_("Changelog"), [ = ]{ Utils::openUri(CHANGELOGURL); return false; }},
-			{_("Don't notify again"), [this]{ ConfigSettings::get<SwitchSetting>("updatecheck")->setValue(false); return true; }}
+			{_("Don't notify again"), []{ ConfigSettings::get<SwitchSetting>("updatecheck")->setValue(false); return true; }}
 		});
 	}
 }
