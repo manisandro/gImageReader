@@ -304,6 +304,7 @@ QModelIndex HOCRDocument::splitItemText(const QModelIndex& itemIndex, int pos) {
 	QMap<QString, QString> attrs = item->getTitleAttributes();
 	attrs["bbox"] = QString("%1 %2 %3 %4").arg(rightBBox.left()).arg(rightBBox.top()).arg(rightBBox.right()).arg(rightBBox.bottom());
 	newElement.setAttribute("title", HOCRItem::serializeAttrGroup(attrs));
+	newElement.setAttribute("lang", item->lang());
 	HOCRItem* newItem = new HOCRItem(newElement, item->page(), item->parent(), item->index() + 1);
 	beginInsertRows(itemIndex.parent(), item->index() + 1, item->index() + 1);
 	insertItem(item->parent(), newItem, item->index() + 1);
