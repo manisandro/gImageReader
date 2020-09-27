@@ -173,7 +173,7 @@ void OutputEditorText::applySubstitutions(const QMap<QString, QString>& substitu
 	QTextCursor cursor = ui.plainTextEditOutput->regionBounds();
 	int end = cursor.position();
 	cursor.setPosition(cursor.anchor());
-	QTextDocument::FindFlags flags = 0;
+	QTextDocument::FindFlags flags;
 	if(matchCase) {
 		flags = QTextDocument::FindCaseSensitively;
 	}

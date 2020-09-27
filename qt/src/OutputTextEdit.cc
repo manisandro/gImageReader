@@ -88,7 +88,7 @@ bool OutputTextEdit::findReplace(bool backwards, bool replace, bool matchCase, c
 		return false;
 	}
 
-	QTextDocument::FindFlags flags = 0;
+	QTextDocument::FindFlags flags;
 	Qt::CaseSensitivity cs = Qt::CaseInsensitive;
 	if(backwards) {
 		flags |= QTextDocument::FindBackward;
@@ -147,7 +147,7 @@ bool OutputTextEdit::replaceAll(const QString& searchstr, const QString& replace
 	} else {
 		cursor.setPosition(std::min(cursor.anchor(), cursor.position()));
 	}
-	QTextDocument::FindFlags flags = 0;
+	QTextDocument::FindFlags flags;
 	if(matchCase) {
 		flags = QTextDocument::FindCaseSensitively;
 	}
@@ -175,7 +175,7 @@ void OutputTextEdit::setDrawWhitespace(bool drawWhitespace) {
 	if(drawWhitespace) {
 		textOption.setFlags(QTextOption::ShowTabsAndSpaces | QTextOption::AddSpaceForLineAndParagraphSeparators);
 	} else {
-		textOption.setFlags(0);
+		textOption.setFlags(QTextOption::Flags());
 	}
 	document()->setDefaultTextOption(textOption);
 }

@@ -484,11 +484,11 @@ void Displayer::mouseReleaseEvent(QMouseEvent* event) {
 
 void Displayer::wheelEvent(QWheelEvent* event) {
 	if(event->modifiers() & Qt::ControlModifier) {
-		setZoom(event->delta() > 0 ? Zoom::In : Zoom::Out, QGraphicsView::AnchorUnderMouse);
+		setZoom(event->angleDelta().y() > 0 ? Zoom::In : Zoom::Out, QGraphicsView::AnchorUnderMouse);
 		event->accept();
 	} else if(event->modifiers() & Qt::ShiftModifier) {
 		QScrollBar* hscroll = horizontalScrollBar();
-		if(event->delta() < 0) {
+		if(event->angleDelta().y() < 0) {
 			hscroll->setValue(hscroll->value() + hscroll->singleStep());
 		} else {
 			hscroll->setValue(hscroll->value() - hscroll->singleStep());
