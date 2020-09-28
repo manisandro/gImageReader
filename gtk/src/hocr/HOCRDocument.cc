@@ -686,9 +686,9 @@ void HOCRDocument::get_value_vfunc(const iterator& iter, int column, Glib::Value
 		}
 		Glib::ustring color;
 		if(enabled) {
-			color = indexIsMisspelledWord(iter) ? "#000" : "#F00";
+			color = indexIsMisspelledWord(iter) ? "#F00" : "#000";
 		} else {
-			color = indexIsMisspelledWord(iter) ? "#a0a0a4" : "#d05052";
+			color = indexIsMisspelledWord(iter) ? "#d05052" : "#a0a0a4";
 		}
 		setValue(value, color);
 	} else if(column == COLUMN_WCONF) {
