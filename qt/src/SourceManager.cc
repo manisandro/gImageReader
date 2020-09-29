@@ -94,7 +94,6 @@ int SourceManager::addSources(const QStringList& files, bool suppressWarnings) {
 	QModelIndex index;
 	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList>>("recentitems")->getValue();
 	PdfWithTextAction textAction = suppressWarnings ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
-	bool selectionChanged = false;
 
 	ui.treeViewSources->selectionModel()->blockSignals(true);
 	ui.treeViewSources->setUpdatesEnabled(false);
@@ -105,10 +104,7 @@ int SourceManager::addSources(const QStringList& files, bool suppressWarnings) {
 		}
 		index = m_fileTreeModel->findFile(filename);
 		if(index.isValid()) {
-			if(!ui.treeViewSources->selectionModel()->isSelected(index)) {
-				sel.select(index, index);
-				selectionChanged = true;
-			}
+			sel.select(index, index);
 			continue;
 		}
 		QFileInfo finfo(filename);
@@ -129,7 +125,6 @@ int SourceManager::addSources(const QStringList& files, bool suppressWarnings) {
 			m_fileTreeModel->setFileEditable(index, true);
 		}
 		sel.select(index, index);
-		selectionChanged = true;
 		m_fsWatcher.addPath(filename);
 		recentItems.removeAll(filename);
 		recentItems.prepend(filename);
@@ -148,9 +143,7 @@ int SourceManager::addSources(const QStringList& files, bool suppressWarnings) {
 	}
 	ui.treeViewSources->selectionModel()->blockSignals(false);
 	ui.treeViewSources->setUpdatesEnabled(true);
-	if(selectionChanged) {
-		currentSourceChanged();
-	}
+	currentSourceChanged();
 	if(!failed.isEmpty() && !suppressWarnings) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:\n%1").arg(failed.join("\n")));
 	}
