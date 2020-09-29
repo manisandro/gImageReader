@@ -94,6 +94,7 @@ private:
 	UI_OutputEditorHOCR ui;
 	HTMLHighlighter* m_highlighter;
 	bool m_modified = false;
+	bool m_blockSourceChanged = false;
 	QString m_filebasename;
 	InsertMode m_insertMode = InsertMode::Append;
 

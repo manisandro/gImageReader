@@ -263,7 +263,6 @@ bool Displayer::renderImage() {
 	if(m_tool) {
 		if(m_currentSource != oldSource || m_currentSource->page != oldPage) {
 			m_tool->pageChanged();
-			emit imageChanged();
 		}
 		if(oldResolution != m_currentSource->resolution) {
 			double factor = double(m_currentSource->resolution) / double(oldResolution);
@@ -294,6 +293,7 @@ bool Displayer::renderImage() {
 	if(m_scale < 1.0) {
 		m_scaleTimer.start(100);
 	}
+	emit imageChanged();
 	return true;
 }
 

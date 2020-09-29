@@ -502,7 +502,13 @@ void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool exp
 }
 
 bool OutputEditorHOCR::showPage(const HOCRPage* page) {
-	return page && MAIN->getSourceManager()->addSource(page->sourceFile(), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
+	m_blockSourceChanged = true;
+	bool success = page && MAIN->getSourceManager()->addSource(page->sourceFile(), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
+	m_blockSourceChanged = false;
+	if(success) {
+		sourceChanged();
+	}
+	return success;
 }
 
 int OutputEditorHOCR::currentPage() {
@@ -1242,14 +1248,24 @@ void OutputEditorHOCR::removeItem() {
 }
 
 void OutputEditorHOCR::sourceChanged() {
+	if(m_blockSourceChanged) {
+		return;
+	}
 	int page;
 	QString path = MAIN->getDisplayer()->getCurrentImage(page);
 	// Check if source is in document tree
-	QModelIndex index = m_document->searchPage(path, page);
-	if(!index.isValid()) {
+	QModelIndex pageIndex = m_document->searchPage(path, page);
+	if(!pageIndex.isValid()) {
 		ui.actionPreview->setChecked(false);
+		ui.treeViewHOCR->setCurrentIndex(QModelIndex());
 	} else {
-		ui.treeViewHOCR->setCurrentIndex(index);
+		QModelIndex curIndex = ui.treeViewHOCR->currentIndex();
+		while(curIndex != pageIndex && curIndex.parent().isValid()) {
+			curIndex = curIndex.parent();
+		}
+		if(curIndex != pageIndex) {
+			ui.treeViewHOCR->setCurrentIndex(pageIndex);
+		}
 	}
 }
 
