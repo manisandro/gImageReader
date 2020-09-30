@@ -23,7 +23,6 @@
 #include <QMenu>
 #include <QIcon>
 #include <QSet>
-#include <QTextStream>
 #include <cmath>
 
 #include "common.hh"
@@ -440,7 +439,7 @@ QList<QModelIndex> HOCRDocument::recheckItemSpelling(const QModelIndex& index) c
 		return {index};
 	}
 	QString lang = item->spellingLang();
-	if(m_spell->getLanguage() != lang && !(m_spell->setLanguage(lang))) {
+	if(lang.isEmpty() || (m_spell->getLanguage() != lang && !(m_spell->setLanguage(lang)))) {
 		item->setMisspelled(false);
 		return {index};
 	}
@@ -826,6 +825,9 @@ HOCRItem::HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem* parent,
 	} else if(itemClass() == "ocr_line") {
 		// Depending on the locale, tesseract can use a comma instead of a dot as decimal separator in the baseline...
 		m_titleAttrs["baseline"] = m_titleAttrs["baseline"].replace(",", ".");
+		m_misspelled = false;
+	} else {
+		m_misspelled = false;
 	}
 }
 
