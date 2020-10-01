@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-07-25 07:41+0000\n"
+"PO-Revision-Date: 2020-10-02 12:41+0000\n"
 "Last-Translator: Prasanta-Hembram <Prasantahembram720@gmail.com>\n"
 "Language-Team: Santali <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sat/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -148,11 +148,11 @@ msgstr "ᱵᱮᱵᱟᱨᱤᱭᱟ ᱦᱚᱨ"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr ""
+msgstr "ᱵᱷᱤᱡᱟ ᱟᱠᱟᱱᱟ ᱰᱚᱠᱭᱩᱢᱮᱸᱴ ᱠᱚ ᱫᱚ ᱟᱡ ᱛᱮᱜᱮ ᱢᱩᱞ ᱮᱯᱯᱞᱤᱠᱮᱥᱚᱱ ᱛᱮ ᱠᱷᱩᱞᱟᱹᱜᱼᱟ"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
-msgstr ""
+msgstr "ᱵᱮᱠᱴᱨᱮᱥ ᱫᱩᱦᱲᱟᱹᱛᱮᱭᱟᱨ ᱢᱮ"
 
 #: ../gtk/data/CrashHandler.ui.h:3
 #, no-c-format
