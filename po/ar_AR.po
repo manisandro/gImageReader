@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2018-03-16 12:34+0000\n"
-"Last-Translator: Alaa Sayed <bmwmy@hotmail.com>\n"
+"PO-Revision-Date: 2020-10-05 19:26+0000\n"
+"Last-Translator: Riyadh Talal <riyadhtalal@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gimagereader/"
-"translations/ar_AR/>\n"
+"translations/ar/>\n"
 "Language: ar_AR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 2.20-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -156,7 +156,7 @@ msgid "Regenerate backtrace"
 msgstr "إعادة إنشاء سجلات الأخطاء"
 
 #: ../gtk/data/CrashHandler.ui.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -166,10 +166,12 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"عذرا لهذا الإزعاج. لتطوير البرنامج، فضلا قم بإخبار مبرمج البرنامج عن هذا "
-"الخطأ<a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\"> "
-"1manisandro@gmail.com</a>. ووضح ما كنت تفعله قبل حدوث هذا الخطأ المفاجئ، "
-"أيضا أرفق هذه البيانات بالأسفل، شكرا لك."
+"<b>لقد انهار التطبيق</b>\n"
+"\n"
+"عذرا لهذا الإزعاج. للمساعدة في تحسين التطبيق، فضلا ضغ في اعتبارك الإبلاغ عن "
+"المشكلة إلى <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%"
+"20Crash\">manisandro@gmail.com</a>. لطفا حاول وصف ما كنت تفعله قبل انهيار "
+"التطبيق، أيضا أرفق هذه البيانات بالأسفل، شكرا لك."
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -224,9 +226,8 @@ msgid "Best fit"
 msgstr "أفضل تلاؤم"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
-#, fuzzy
 msgid "Rotate page"
-msgstr "تدوير اتجاه كل الصفحات"
+msgstr "تدوير الصفحة"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
@@ -239,9 +240,8 @@ msgid "Select insert mode"
 msgstr "اختر وضعية الإدخال"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:102
-#, fuzzy
 msgid "Select page"
-msgstr "اختر اللغة"
+msgstr "اختر الصفحة"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
