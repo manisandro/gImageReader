@@ -257,13 +257,13 @@ protected:
 		return m_misspelled;
 	}
 	void setAttribute(const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass = Glib::ustring());
-	bool parseChildren(const xmlpp::Element* element, Glib::ustring language);
+	bool parseChildren(const xmlpp::Element* element, Glib::ustring language, const Glib::ustring& defaultLanguage);
 };
 
 
 class HOCRPage : public HOCRItem {
 public:
-	HOCRPage(const xmlpp::Element* element, int pageId, const Glib::ustring& language, bool cleanGraphics, int index);
+	HOCRPage(const xmlpp::Element* element, int pageId, const Glib::ustring& defaultLanguage, bool cleanGraphics, int index);
 
 	const Glib::ustring& sourceFile() const {
 		return m_sourceFile;

@@ -315,6 +315,12 @@ bool Utils::string_endswith(const Glib::ustring& str, const Glib::ustring& what)
 	return n >= m && str.substr(n - m) == what;
 }
 
+bool Utils::string_startswith(const Glib::ustring& str, const Glib::ustring& what) {
+	int n = str.length();
+	int m = what.length();
+	return n >= m && str.substr(0, m) == what;
+}
+
 std::size_t Utils::string_firstIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase) {
 	std::size_t res = Glib::ustring::npos;
 	if(matchCase) {
@@ -483,16 +489,30 @@ Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string& url, Glib::ustr
 }
 
 
-Glib::ustring Utils::getSpellingLanguage(const Glib::ustring& lang) {
+Glib::ustring Utils::getSpellingLanguage(const Glib::ustring& lang, const Glib::ustring& defaultLanguage) {
 	// If it is already a valid code, return it
-	static Glib::RefPtr<Glib::Regex> langPattern = Glib::Regex::create("^[a-z]{2,}(_[A-Z]{2,})?$");
+	static Glib::RefPtr<Glib::Regex> langPattern = Glib::Regex::create("^[a-z]{2}(_[A-Z]{2})?$");
 	if(langPattern->match(lang)) {
 		return lang;
 	}
 	// Treat the language as a tesseract lang spec and try to find a matching code
-	Config::Lang langspec = {lang};
+	Config::Lang langspec = {lang, "", ""};
 	if(!lang.empty() && MAIN->getConfig()->searchLangSpec(langspec)) {
+		// If default language starts with the returned code, return default language
+		if(!defaultLanguage.empty() && Utils::string_startswith(defaultLanguage, langspec.code)) {
+			return defaultLanguage;
+		}
+		// Return any one language culture code
+		std::vector<Glib::ustring> langCultures = MAIN->getConfig()->searchLangCultures(langspec.code);
+		if(!langCultures.empty()) {
+			return langCultures.front();
+		}
+		// Return incomplete code (only country)
 		return langspec.code;
+	}
+	// Return default language if specified
+	if(!defaultLanguage.empty()) {
+		return defaultLanguage;
 	}
 	// Use the application locale, if specified, otherwise fall back to en
 	Glib::ustring syslocale = Glib::getenv("LANG");

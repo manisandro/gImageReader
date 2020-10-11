@@ -74,6 +74,7 @@ Glib::ustring string_join(const std::vector<Glib::ustring>& strings, const Glib:
 Glib::ustring string_trim(const Glib::ustring& str, const Glib::ustring& what = " \t\n\r");
 bool strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, bool matchCase);
 bool string_endswith(const Glib::ustring& str, const Glib::ustring& what);
+bool string_startswith(const Glib::ustring& str, const Glib::ustring& what);
 std::size_t string_firstIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
 std::size_t string_lastIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
 int string_replace(Glib::ustring& str, const Glib::ustring& search, const Glib::ustring& replace, bool matchCase);
@@ -86,7 +87,7 @@ void handle_drag_drop(const Glib::RefPtr<Gdk::DragContext>& context, int x, int 
 
 Glib::RefPtr<Glib::ByteArray> download(const std::string& url, Glib::ustring& messages, unsigned timeout = 60000);
 
-Glib::ustring getSpellingLanguage(const Glib::ustring& lang = Glib::ustring());
+Glib::ustring getSpellingLanguage(const Glib::ustring& lang = Glib::ustring(), const Glib::ustring& defaultLanguage = Glib::ustring());
 
 Glib::ustring resolveFontName(const Glib::ustring& family);
 
