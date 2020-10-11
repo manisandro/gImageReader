@@ -374,6 +374,6 @@ void OutputEditorText::onVisibilityChanged(bool /*visible*/) {
 
 void OutputEditorText::setLanguage(const Config::Lang& lang) {
 	try {
-		m_spell.set_language(lang.code.empty() ? Utils::getSpellingLanguage() : lang.code);
+		m_spell.set_language(lang.code.empty() ? Utils::getSpellingLanguage(lang.prefix) : lang.code);
 	} catch(const GtkSpell::Error& /*e*/) {}
 }
