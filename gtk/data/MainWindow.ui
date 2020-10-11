@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.37.0 -->
+<!-- Generated with glade 3.38.1 -->
 <interface>
-  <requires lib="gtk+" version="3.12"/>
+  <requires lib="gtk+" version="3.16"/>
   <object class="GtkAdjustment" id="adjustmentAngle">
     <property name="lower">-10</property>
     <property name="upper">10</property>
@@ -45,12 +45,6 @@
     <patterns>
       <pattern>*.png</pattern>
     </patterns>
-  </object>
-  <object class="GtkImage" id="image1">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="pixel-size">16</property>
-    <property name="icon-name">folder-open</property>
   </object>
   <object class="GtkImage" id="imageAutolayout">
     <property name="visible">True</property>
@@ -130,11 +124,20 @@
       </object>
     </child>
   </object>
-  <object class="GtkImage" id="imageScreenshot">
+  <object class="GtkImage" id="imageSourceFolder">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixel-size">16</property>
-    <property name="icon-name">camera-photo</property>
+    <property name="icon-name">folder-open-symbolic</property>
+  </object>
+  <object class="GtkImage" id="imageSourcePaste">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">edit-paste-symbolic</property>
+  </object>
+  <object class="GtkImage" id="imageSourceScreenshot">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">camera-photo-symbolic</property>
   </object>
   <object class="GtkImage" id="imageSources">
     <property name="visible">True</property>
@@ -155,63 +158,6 @@
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="icon-name">user-trash-symbolic</property>
-  </object>
-  <object class="GtkImage" id="imageSourcesPaste">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">edit-paste</property>
-  </object>
-  <object class="GtkImage" id="imageSourcesRecent">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="pixel-size">16</property>
-    <property name="icon-name">document-open-recent</property>
-  </object>
-  <object class="GtkMenu" id="menuSourcesAdd">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <child>
-      <object class="GtkImageMenuItem" id="menuitemSourcesAddFolder">
-        <property name="label" translatable="yes">Add folder</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="image">image1</property>
-        <property name="use-stock">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkImageMenuItem" id="menuitemSourcesRecent">
-        <property name="label" translatable="yes">Recent</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="image">imageSourcesRecent</property>
-        <property name="use-stock">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem" id="menuitemSourcesSep">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkImageMenuItem" id="menuitemSourcesPaste">
-        <property name="label" translatable="yes">Paste</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="image">imageSourcesPaste</property>
-        <property name="use-stock">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkImageMenuItem" id="menuitemSourcesScreenshot">
-        <property name="label" translatable="yes">Take Screenshot</property>
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="image">imageScreenshot</property>
-        <property name="use-stock">False</property>
-      </object>
-    </child>
   </object>
   <object class="GtkImage" id="imageSourcesRemove">
     <property name="visible">True</property>
@@ -317,7 +263,6 @@
                                     <property name="can-focus">True</property>
                                     <property name="receives-default">False</property>
                                     <property name="tooltip-text" translatable="yes">Add Images</property>
-                                    <property name="popup">menuSourcesAdd</property>
                                     <property name="use-popover">False</property>
                                     <child>
                                       <object class="GtkArrow" id="arrowSourcesAdd">
@@ -349,6 +294,60 @@
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkButton" id="buttonSourceFolder">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <property name="image">imageSourceFolder</property>
+                                <property name="relief">none</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="buttonSourcePaste">
+                                <property name="visible">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <property name="image">imageSourcePaste</property>
+                                <property name="relief">none</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="buttonSourceScreenshot">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <property name="image">imageSourceScreenshot</property>
+                                <property name="relief">none</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSeparator">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">4</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkButton" id="buttonSourcesRemove">
                                 <property name="visible">True</property>
                                 <property name="sensitive">False</property>
@@ -361,7 +360,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="position">5</property>
                               </packing>
                             </child>
                             <child>
@@ -377,7 +376,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">2</property>
+                                <property name="position">6</property>
                               </packing>
                             </child>
                             <child>
@@ -393,7 +392,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">3</property>
+                                <property name="position">7</property>
                               </packing>
                             </child>
                           </object>
@@ -503,6 +502,7 @@
                       </packing>
                     </child>
                     <child>
+                      <!-- n-columns=3 n-rows=7 -->
                       <object class="GtkGrid" id="gridAcquire">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
@@ -765,6 +765,27 @@
                             <property name="left-attach">1</property>
                             <property name="top-attach">4</property>
                           </packing>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
                         </child>
                       </object>
                       <packing>
@@ -1288,6 +1309,7 @@
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <child>
+                  <!-- n-columns=3 n-rows=3 -->
                   <object class="GtkGrid" id="gridRecognize">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -1329,6 +1351,21 @@
                         <property name="top-attach">0</property>
                         <property name="height">2</property>
                       </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
                     </child>
                   </object>
                 </child>
@@ -1675,6 +1712,7 @@
           </packing>
         </child>
         <child>
+          <!-- n-columns=3 n-rows=3 -->
           <object class="GtkGrid" id="gridPageRange">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
@@ -1756,6 +1794,15 @@
                 <property name="left-attach">0</property>
                 <property name="top-attach">1</property>
               </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
             </child>
           </object>
           <packing>

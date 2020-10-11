@@ -74,16 +74,16 @@ SourceManager::SourceManager(const Ui::MainWindow& _ui)
 	recentChooser->set_show_not_found(false);
 	recentChooser->set_show_tips(true);
 	recentChooser->set_sort_type(Gtk::RECENT_SORT_MRU);
-	ui.menuitemSourcesRecent->set_submenu(*recentChooser);
+	ui.menubuttonSourcesAdd->set_menu(*recentChooser);
 
 	m_clipboard = Gtk::Clipboard::get_for_display(Gdk::Display::get_default());
 
 	CONNECT(ui.buttonSources, toggled, [this] { ui.notebookSources->set_visible(ui.buttonSources->get_active()); });
 	CONNECT(ui.buttonSourcesAdd, clicked, [this] { openSources(); });
-	CONNECT(ui.menubuttonSourcesAdd, clicked, [this] { ui.menuitemSourcesPaste->set_sensitive(m_clipboard->wait_is_image_available()); });
-	CONNECT(ui.menuitemSourcesAddFolder, activate, [this] { addFolder(); });
-	CONNECT(ui.menuitemSourcesPaste, activate, [this] { pasteClipboard(); });
-	CONNECT(ui.menuitemSourcesScreenshot, activate, [this] { takeScreenshot(); });
+	CONNECT(m_clipboard, owner_change, [this](GdkEventOwnerChange*) { ui.buttonSourcePaste->set_sensitive(m_clipboard->wait_is_image_available()); });
+	CONNECT(ui.buttonSourceFolder, clicked, [this] { addFolder(); });
+	CONNECT(ui.buttonSourcePaste, clicked, [this] { pasteClipboard(); });
+	CONNECT(ui.buttonSourceScreenshot, clicked, [this] { takeScreenshot(); });
 	CONNECT(ui.buttonSourcesRemove, clicked, [this] { removeSource(false); });
 	CONNECT(ui.buttonSourcesDelete, clicked, [this] { removeSource(true); });
 	CONNECT(ui.buttonSourcesClear, clicked, [this] { clearSources(); });
