@@ -46,19 +46,25 @@ Config::Config() {
 	ui.setupUi();
 	ui.dialogConfig->set_transient_for(*MAIN->getWindow());
 
-	for(Gtk::TreeView* view : {
-	            ui.treeviewLangsPredef, ui.treeviewLangsCustom
-	        }) {
-		view->set_model(Gtk::ListStore::create(m_langViewCols));
-		view->append_column_editable(_("Filename prefix"), m_langViewCols.prefix);
-		view->append_column_editable(_("Code"), m_langViewCols.code);
-		view->append_column_editable(_("Native name"), m_langViewCols.name);
-		for(int i = 0; i < 3; ++i) {
-			view->get_column(i)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
-			view->get_column(i)->set_expand(true);
-		}
-		view->set_fixed_height_mode(true);
+	ui.treeviewLangsPredef->set_model(Gtk::ListStore::create(m_langViewCols));
+	ui.treeviewLangsPredef->append_column(_("Filename prefix"), m_langViewCols.prefix);
+	ui.treeviewLangsPredef->append_column(_("Code"), m_langViewCols.code);
+	ui.treeviewLangsPredef->append_column(_("Native name"), m_langViewCols.name);
+	for(int i = 0; i < 3; ++i) {
+		ui.treeviewLangsPredef->get_column(i)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
+		ui.treeviewLangsPredef->get_column(i)->set_expand(true);
 	}
+	ui.treeviewLangsPredef->set_fixed_height_mode(true);
+
+	ui.treeviewLangsCustom->set_model(Gtk::ListStore::create(m_langViewCols));
+	ui.treeviewLangsCustom->append_column_editable(_("Filename prefix"), m_langViewCols.prefix);
+	ui.treeviewLangsCustom->append_column_editable(_("Code"), m_langViewCols.code);
+	ui.treeviewLangsCustom->append_column_editable(_("Native name"), m_langViewCols.name);
+	for(int i = 0; i < 3; ++i) {
+		ui.treeviewLangsCustom->get_column(i)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
+		ui.treeviewLangsCustom->get_column(i)->set_expand(true);
+	}
+	ui.treeviewLangsCustom->set_fixed_height_mode(true);
 
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsPredef->get_model());
 	for(const auto& lang : LANGUAGES) {
