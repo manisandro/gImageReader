@@ -309,19 +309,26 @@ void SourceManager::pasteClipboard() {
 }
 
 void SourceManager::takeScreenshot() {
-	Glib::RefPtr<Gdk::Window> root = Gdk::Window::get_default_root_window();
-	int x, y, w, h;
-	root->get_origin(x, y);
-	w = root->get_width();
-	h = root->get_height();
-	Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(root, x, y, w, h);
-	if(!pixbuf) {
-		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Screenshot Error"),  _("Failed to take screenshot."));
-		return;
+	MAIN->getWindow()->iconify();
+	while(Gtk::Main::events_pending()) {
+		Gtk::Main::iteration();
 	}
-	++m_screenshotCount;
-	std::string displayname = Glib::ustring::compose(_("Screenshot %1"), m_screenshotCount);
-	savePixbuf(pixbuf, displayname);
+	Glib::signal_timeout().connect_once([this] {
+		Glib::RefPtr<Gdk::Window> root = Gdk::Window::get_default_root_window();
+		int x, y, w, h;
+		root->get_origin(x, y);
+		w = root->get_width();
+		h = root->get_height();
+		Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(root, x, y, w, h);
+		MAIN->getWindow()->deiconify();
+		if(!pixbuf) {
+			Utils::messageBox(Gtk::MESSAGE_ERROR, _("Screenshot Error"),  _("Failed to take screenshot."));
+			return;
+		}
+		++m_screenshotCount;
+		std::string displayname = Glib::ustring::compose(_("Screenshot %1"), m_screenshotCount);
+		savePixbuf(pixbuf, displayname);
+	}, 250);
 }
 
 void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const std::string& displayname) {
