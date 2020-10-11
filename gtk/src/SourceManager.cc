@@ -259,7 +259,13 @@ std::vector<Source*> SourceManager::getSelectedSources() const {
 }
 
 void SourceManager::addFolder() {
-	std::string path = FileDialogs::open_folder_dialog(_("Select folder..."), Utils::get_documents_dir(), "sourcedir");
+	std::vector<Source*> current = getSelectedSources();
+	std::string initialFolder = Utils::get_documents_dir();
+	if(!current.empty() && !current.front()->isTemp) {
+		initialFolder = current.front()->file->get_parent()->get_path();
+	}
+
+	std::string path = FileDialogs::open_folder_dialog(_("Select folder..."), initialFolder, "sourcedir");
 	if(path.empty()) {
 		return;
 	}
@@ -281,7 +287,7 @@ void SourceManager::addFolder() {
 
 void SourceManager::openSources() {
 	std::vector<Source*> curSrc = getSelectedSources();
-	std::string initialFolder = !curSrc.empty() ? Glib::path_get_dirname(curSrc.front()->file->get_path()) : "";
+	std::string initialFolder = !curSrc.empty() ? Glib::path_get_dirname(curSrc.front()->file->get_path()) : Utils::get_documents_dir();
 	FileDialogs::FileFilter filter = FileDialogs::FileFilter::pixbuf_formats();
 	filter.name = _("Images and PDFs");
 	filter.mime_types.push_back("application/pdf");
