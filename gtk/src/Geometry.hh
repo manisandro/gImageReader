@@ -108,6 +108,42 @@ public:
 	bool isEmpty() const {
 		return width < 0. || height < 0.;
 	}
+	Point topLeft() const {
+		return Point(x, y);
+	}
+	Point topRight() const {
+		return Point(x + width, y);
+	}
+	Point bottomLeft() const {
+		return Point(x, y + height);
+	}
+	Point bottomRight() const {
+		return Point(x + width, y + height);
+	}
+	double left() const { return x; }
+	double right() const { return x + width; }
+	double top() const { return y; }
+	double bottom() const { return y + height; }
+	void setTop(double y1) {
+		double y2 = y + height;
+		y = std::min(y1, y2);
+		height = std::abs(y2 - y1);
+	}
+	void setBottom(double y2) {
+		double y1 = y;
+		y = std::min(y1, y2);
+		height = std::abs(y2 - y1);
+	}
+	void setLeft(double x1) {
+		double x2 = x + width;
+		x = std::min(x1, x2);
+		width = std::abs(x2 - x1);
+	}
+	void setRight(double x2) {
+		double x1 = x;
+		x = std::min(x1, x2);
+		width = std::abs(x2 - x1);
+	}
 };
 
 }
