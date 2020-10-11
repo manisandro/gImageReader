@@ -321,7 +321,12 @@ bool OutputEditorText::save(const std::string& filename) {
 	std::string outname = filename;
 	if(outname.empty()) {
 		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-		std::string suggestion = !sources.empty() ? Utils::split_filename(sources.front()->displayname).first : _("output");
+		std::string suggestion;
+		if(!sources.empty()) {
+			suggestion = Utils::split_filename(sources.front()->file->get_path()).first;
+		} else {
+			suggestion = _("output");
+		}
 
 		FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
 		outname = FileDialogs::save_dialog(_("Save Output..."), suggestion + ".txt", "outputdir", filter);

@@ -1057,7 +1057,11 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 		Glib::ustring suggestion = m_filebasename;
 		if(suggestion.empty()) {
 			std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-			suggestion = !sources.empty() ? Utils::split_filename(sources.front()->displayname).first : _("output");
+			if(!sources.empty()) {
+				suggestion = Utils::split_filename(sources.front()->file->get_path()).first;
+			} else {
+				suggestion = _("output");
+			}
 		}
 		FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html"}, {"*.html"}};
 		outname = FileDialogs::save_dialog(_("Save hOCR Output..."), suggestion + ".html", "outputdir", filter);
