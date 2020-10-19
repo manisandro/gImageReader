@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-10-19 12:22+0000\n"
+"PO-Revision-Date: 2020-10-20 03:44+0000\n"
 "Last-Translator: Prasanta-Hembram <Prasantahembram720@gmail.com>\n"
 "Language-Team: Santali <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sat/>\n"
@@ -204,73 +204,74 @@ msgstr "ᱥᱠᱨᱤᱱᱥᱚᱴ ᱤᱫᱤ ᱢᱮ"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:24
 msgid "Zoom in"
-msgstr ""
+msgstr "ᱡᱩᱩᱢ ᱤᱱ"
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/data/MainWindow.ui.h:26
 msgid "Zoom out"
-msgstr ""
+msgstr "ᱡᱩᱩᱢ ᱟᱩᱴ"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/data/MainWindow.ui.h:28
 msgid "Normal size"
-msgstr ""
+msgstr "ᱢᱩᱞ ᱢᱟᱯ"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:30
 msgid "Best fit"
-msgstr ""
+msgstr "ᱢᱷᱤᱠ ᱯᱷᱤᱴ"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
 msgid "Rotate page"
-msgstr ""
+msgstr "ᱥᱟᱦᱴᱟ ᱟᱹᱪᱩᱨ"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
-msgstr ""
+msgstr "ᱟᱹᱪᱩᱨ ᱢᱳᱰ ᱪᱚᱭᱚᱱ ᱢᱮ"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../gtk/data/OutputEditorHOCR.ui.h:12
 #: ../gtk/data/OutputEditorText.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:71 ../qt/src/Ui_OutputEditorText.hh:95
 msgid "Select insert mode"
-msgstr ""
+msgstr "ᱤᱱᱥᱟᱹᱨᱴ ᱢᱳᱰ ᱪᱚᱭᱚᱱ ᱢᱮ"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:102
 msgid "Select page"
-msgstr ""
+msgstr "ᱥᱟᱦᱴᱟ ᱪᱚᱭᱚᱱ ᱢᱮ"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
-msgstr ""
+msgstr "ᱪᱤᱛᱟᱹᱨ ᱠᱟᱹᱱᱴᱨᱚᱞᱠᱚ"
 
 #: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:159
 msgid "Plain text"
-msgstr ""
+msgstr "ᱥᱟᱫᱟ ᱚᱞ"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../qt/src/MainWindow.cc:160
+#, fuzzy
 msgid "hOCR, PDF"
-msgstr ""
+msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:38
 msgid "Autodetect layout"
-msgstr ""
+msgstr "ᱚᱴᱚᱰᱤᱴᱮᱼᱠᱴ ᱞᱮᱭᱟᱩᱴ"
 
 #: ../gtk/data/MainWindow.ui.h:19
 msgid "<small>Recognize all</small>"
-msgstr ""
+msgstr "<small>ᱡᱷᱚᱛᱚ ᱪᱤᱱᱦᱟᱹᱣ ᱢᱮ</small>"
 
 #: ../gtk/data/MainWindow.ui.h:20
 msgid "Select language"
-msgstr ""
+msgstr "ᱯᱟᱹᱨᱥᱤ ᱪᱚᱭᱚᱱ ᱢᱮ"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:196
 msgid "Add images"
-msgstr ""
+msgstr "ᱪᱤᱛᱟᱹᱨ ᱥᱮᱞᱮᱫ ᱢᱮ"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:195
 msgid "Add Images"
-msgstr ""
+msgstr "ᱪᱤᱛᱟᱹᱨ ᱠᱚ ᱥᱮᱞᱮᱫ ᱢᱮ"
 
 #: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:200
 msgid "Remove image from list"
-msgstr ""
+msgstr "ᱞᱤᱥᱴᱭ ᱠᱷᱚᱱ ᱪᱤᱛᱹᱨ ᱚᱪᱚᱜ ᱢᱮ"
 
 #: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:203
 msgid "Delete image"
