@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-10-02 12:41+0000\n"
+"PO-Revision-Date: 2020-10-19 12:22+0000\n"
 "Last-Translator: Prasanta-Hembram <Prasantahembram720@gmail.com>\n"
 "Language-Team: Santali <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sat/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.3.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -180,27 +180,27 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
-msgstr ""
+msgstr "ᱟᱩᱴᱯᱩᱴ ᱯᱮᱱ ᱴᱚᱜᱜᱞ ᱢᱮ"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
-msgstr ""
+msgstr "ᱱᱚᱶᱟ ᱥᱟᱦᱴᱟ ᱟᱹᱪᱩᱨ ᱢᱮ"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
-msgstr ""
+msgstr "ᱡᱷᱚᱛᱚ ᱥᱟᱦᱴᱟ ᱠᱚ ᱟᱹᱪᱩᱨ ᱢᱮ"
 
 #: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:189
 msgid "Recent"
-msgstr ""
+msgstr "ᱱᱤᱛᱚᱜᱼᱟᱜ"
 
 #: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:190
 msgid "Paste"
-msgstr ""
+msgstr "ᱞᱟᱴᱷᱟ"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:191
 msgid "Take Screenshot"
-msgstr ""
+msgstr "ᱥᱠᱨᱤᱱᱥᱚᱴ ᱤᱫᱤ ᱢᱮ"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:24
 msgid "Zoom in"
