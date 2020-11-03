@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2018-05-29 20:09+0100\n"
-"Last-Translator: Sandro Mani <manisandro@gmail.com>\n"
-"Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2020-11-04 01:26+0000\n"
+"Last-Translator: Eric <spice2wolf@gmail.com>\n"
+"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
+"gimagereader/translations/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -155,7 +156,7 @@ msgid "Regenerate backtrace"
 msgstr "重建 backtrace"
 
 #: ../gtk/data/CrashHandler.ui.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -165,10 +166,11 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"我们为带来的不便而道歉。如你有意改善此程序，请考虑将问题汇报给<a href="
-"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>。请尝试描述你在程序终止前所做的事情。另外，请一并"
-"附上下列数据。谢谢。"
+"<b>应用程序已崩溃</b>\n"
+"\n"
+"给您带来的不便深表歉意。为了帮助改善应用程序，请考虑发邮件将这个问题报告给<a href=\"mailto:manisandro@gmail."
+"com?subject=gImageReader%20Crash\">manisandro@gmail."
+"com</a>。请试着描述在应用程序崩溃之前你在做什么。同时，包括下面的信息。谢谢你。"
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -181,6 +183,12 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occurred.\n"
 msgstr ""
+"<b>Tesseract 中止</b>\n"
+"\n"
+"识别文本时Tesseract "
+"(OCR引擎)中止。发生这种情况可能是因为训练数据损坏或不兼容使用中的tesseract版本，或由于tesseract的错误。\n"
+"\n"
+"下面的堆栈踪迹可能提供关于崩溃在何处发生的附加信息。\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
@@ -223,9 +231,8 @@ msgid "Best fit"
 msgstr "最佳尺寸"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
-#, fuzzy
 msgid "Rotate page"
-msgstr "旋转所有页面"
+msgstr "旋转页面"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
@@ -238,9 +245,8 @@ msgid "Select insert mode"
 msgstr "选用插入模式"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:102
-#, fuzzy
 msgid "Select page"
-msgstr "选择语言"
+msgstr "选择页面"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
@@ -355,20 +361,19 @@ msgstr "tesseract-ocr 的图像界面"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr ""
+msgstr "字符白名单/黑名单"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "不识别这些字符(黑名单):"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:3
-#, fuzzy
 msgid "Enter a string of characters..."
-msgstr "获取参数……"
+msgstr "输入一串字符…"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
+msgstr "只允许下列字符被识别 (白名单):"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -425,17 +430,16 @@ msgstr "新增字词"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:695
 msgid "Enter word:"
-msgstr "输入字词"
+msgstr "输入字词："
 
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "在最后一页后面追加新的输出"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "旋转现有文字"
+msgstr "在当前页面之前插入新的输出"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
@@ -454,14 +458,13 @@ msgstr "输出至 ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
-#, fuzzy
 msgid "Append document after last page"
-msgstr "附加到现有文字"
+msgstr "在最后一页之后追加文件"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Insert document before current page"
-msgstr ""
+msgstr "在当前页之前插入文档"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
@@ -663,7 +666,7 @@ msgstr "字体缩放："
 
 #: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
 msgid "pt"
-msgstr ""
+msgstr "葡萄牙语"
 
 #: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
 msgid "Preserve spaces wider than:"
@@ -675,7 +678,7 @@ msgstr "字符"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
 msgid "Sanitize hyphens before line breaks"
-msgstr ""
+msgstr "清洁换行前的连字符"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 msgid "Text settings:"
@@ -695,7 +698,7 @@ msgstr "高度"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
 msgid "Treat image sources as having true DPI:"
-msgstr ""
+msgstr "将图像源视为具有真DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
 msgid "Basic"
@@ -849,7 +852,7 @@ msgstr "管理已安装的语言："
 
 #: ../gtk/src/Acquirer.cc:79 ../qt/src/Acquirer.cc:70
 msgid "scan.png"
-msgstr ""
+msgstr "扫描.png"
 
 #: ../gtk/src/Acquirer.cc:91 ../qt/src/Acquirer.cc:85
 msgid "Images"
@@ -926,14 +929,12 @@ msgid "There was no unsaved work."
 msgstr "没有未存储的工作。"
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
-#, fuzzy
 msgid "Failed to obtain backtrace. Is GDB installed?"
-msgstr "不能取得 backtrace。已安装 gdb 吗？"
+msgstr "获取回溯失败。 是否安装了GDB？"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
-#, fuzzy
 msgid "Page %1"
-msgstr "页面：%1"
+msgstr "页面 %1"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid "Failed to load image"
@@ -957,7 +958,7 @@ msgstr "存储选择图像"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "selection.png"
-msgstr ""
+msgstr "选择.png"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize all"
@@ -1045,7 +1046,7 @@ msgstr "自定"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:355
 msgid "cm"
-msgstr ""
+msgstr "厘米"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:356
 msgid "in"
@@ -1244,19 +1245,21 @@ msgstr "打开 hOCR 档"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:929 ../qt/src/OutputEditorText.cc:256
 #: ../qt/src/SourceManager.cc:156
-#, fuzzy
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "不能打开下列文件：%1"
+msgstr ""
+"无法打开下列文件：\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
 #: ../qt/src/hocr/OutputEditorHOCR.cc:932
-#, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "此文件似乎并不包含有效的 hOCR HTML：%1"
+msgstr ""
+"下列文件不是有效的 hOCR HTML：\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:935 ../qt/src/OutputEditorText.cc:257
@@ -1272,7 +1275,7 @@ msgstr "存储 hOCR 输出……"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
 #: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
 msgid "Failed to save output"
-msgstr "不能存储输出……"
+msgstr "保存输出失败"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
 #: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
@@ -1503,7 +1506,7 @@ msgstr "分割页面模式"
 
 #: ../gtk/src/Recognizer.cc:313 ../qt/src/RecognitionMenu.cc:205
 msgid "Character whitelist / blacklist..."
-msgstr ""
+msgstr "字符白名单/黑名单..."
 
 #: ../gtk/src/Recognizer.cc:319 ../qt/src/RecognitionMenu.cc:210
 msgid "Manage languages..."
@@ -1606,19 +1609,18 @@ msgid "Enter password for file '%1':"
 msgstr "请为 '%1' 档输入口令："
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
-#, fuzzy
 msgid "PDF with text"
 msgstr "含文字的 PDF"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
-#, fuzzy
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
-"这些 PDF 档已包含文字：\n"
-"%1"
+"该 PDF 档已包含文字：\n"
+"%1\n"
+"不论如何都要打开它？"
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:264
 msgid "Images and PDFs"
@@ -1739,7 +1741,6 @@ msgid "Do you want to save the current list?"
 msgstr "是否需要存储现有清单？"
 
 #: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:70
-#, fuzzy
 msgid ""
 "A session connection to the PackageKit backend is required for managing "
 "system-wide tesseract language packs, but it was not found. This service is "
@@ -1749,8 +1750,9 @@ msgid ""
 "tesseract language packs directly, or switch to using the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"管理 tesseract 的系统语言包须要 PackageKit，但它并不存在。请利用系统的组件管"
-"理软件来管理 tesseract 的语言包，或改用设置页面内的 tessdata 用户路径。"
+"需要一个到PackageKit后端的会话连接来管理系统范围的tesseract语言包，但是没有找到这个连接。这个服务通常由软件管理应用程序如Gnome S"
+"oftware提供。请安装提供必要PackageKit接口的软件，使用其他系统包管理软件直接管理tesseract语言包，或在配置对话框中切换到使用用户t"
+"essdata路径。"
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:75
 msgid "Fetching available languages"
@@ -1801,7 +1803,7 @@ msgstr "是"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "全部同意"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1809,7 +1811,7 @@ msgstr "否"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "全部不同意"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
@@ -1838,29 +1840,26 @@ msgid "License"
 msgstr "条款"
 
 #: ../qt/data/BatchModeDialog.ui.h:1
-#, fuzzy
 msgid "Batch Mode"
-msgstr "尺寸写吻合"
+msgstr "批量模式"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "預先輸出文字："
+msgstr "在输出文本前附加页码"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "现有的输出："
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
-msgstr ""
+msgstr "批处理模式下，将分别处理每个输入源，并将输出并排保存到输入文件中。"
 
 #: ../qt/data/BatchModeDialog.ui.h:5
-#, fuzzy
 msgid "Autodetect page layout"
-msgstr "自动检测布局"
+msgstr "自动检测页面布局"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -1868,7 +1867,7 @@ msgstr "系统编码"
 
 #: ../qt/data/ConfigDialog.ui.h:15
 msgid "UTF-8"
-msgstr ""
+msgstr "UTF-8"
 
 #: ../qt/data/ConfigDialog.ui.h:19
 msgid "Text file encoding:"
@@ -1899,10 +1898,13 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract已中止</span></"
+"p><p>识别文本时Tesseract (OCR引擎)中止。发生这种情况可能是因为所用的训练数据损坏或不兼容使用中的tesseract版本，或是由于 "
+"tesseract本身的错误。</p><p>下面的堆栈跟踪可能提供关于崩溃发生于何处的附加信息。</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "缩略图"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -1992,10 +1994,12 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html><head/><body><ul><li>PoDoFo: 提供更多的图像压缩选项，但不处理复杂的脚本。</li><li>QPrinter: "
+"只支持JPEG压缩存储图像，但支持复杂的脚本。</li></ul></body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:234
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "键盘快捷键"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
@@ -2026,11 +2030,11 @@ msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "键盘快捷键"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:476
 msgid "Confidence: %1"
-msgstr ""
+msgstr "置信度：%1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2043,100 +2047,85 @@ msgid "Find and Replace"
 msgstr "寻找及取代"
 
 #: ../qt/src/MainWindow.cc:317
-#, fuzzy
 msgid "Multiple sources (%1)"
-msgstr "多个来源"
+msgstr "多个来源 (%1)"
 
 #: ../qt/src/MainWindow.cc:611
-#, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
-msgstr "已安装下列词典档：%1"
+msgstr ""
+"已安装下列词典文件：\n"
+"%1"
 
 #: ../qt/src/OutputEditorText.cc:41
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "页面：%1"
+msgstr "页面：%1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
-msgstr ""
+msgstr "批量模式..."
 
 #: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "覆盖现有的输出"
 
 #: ../qt/src/Recognizer.cc:87
 msgid "Skip processing source"
-msgstr ""
+msgstr "跳过处理源"
 
 #: ../qt/src/Recognizer.cc:234
-#, fuzzy
 msgid "- Page %1: failed to render page"
-msgstr ""
-"\n"
-"- 第 %1 页：不能绘画页面"
+msgstr "- 第 %1 页：未能渲染页面"
 
 #: ../qt/src/Recognizer.cc:346
-#, fuzzy
 msgid "- %1:%2: failed to render page"
-msgstr ""
-"\n"
-"- 第 %1 页：不能绘画页面"
+msgstr "- %1:%2: 未能渲染页面"
 
 #: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "- %1: 输出已经存在，正在跳过"
 
 #: ../qt/src/Recognizer.cc:363
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "不能创建输出"
+msgstr "- %1: 未能创建输出文件"
 
 #: ../qt/src/Recognizer.cc:418
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "出现下列错误：%1"
+msgstr "出现下列错误："
 
 #: ../qt/src/SourceManager.cc:248
-#, fuzzy
 msgid "No recent files"
-msgstr "源文件名"
+msgstr "无最近文件"
 
 #: ../qt/src/SourceManager.cc:275
-#, fuzzy
 msgid "Select folder..."
-msgstr "选择文件"
+msgstr "选择文件夹…"
 
 #: ../qt/src/SourceManager.cc:374
-#, fuzzy
 msgid "Delete Files"
-msgstr "删除文件？"
+msgstr "删除文件"
 
 #: ../qt/src/SourceManager.cc:374
 msgid "Delete the following files?"
-msgstr ""
+msgstr "删除以下文件?"
 
 #: ../qt/src/SourceManager.cc:459
-#, fuzzy
 msgid "Open output"
-msgstr "存储输出"
+msgstr "打开输出"
 
 #: ../qt/src/SourceManager.cc:459
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr ""
+msgstr "同时找到了文本和hOCR输出。你想开哪一个?"
 
 #: ../qt/src/SourceManager.cc:460
-#, fuzzy
 msgid "Text"
-msgstr "文字"
+msgstr "文本"
 
 #: ../qt/src/SourceManager.cc:461
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR、PDF"
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2155,7 +2144,7 @@ msgstr ""
 
 #: ../qt/src/Ui_MainWindow.hh:50
 msgid "Output"
-msgstr "输出："
+msgstr "输出"
 
 #: ../qt/src/Ui_MainWindow.hh:135
 msgid "OCR mode:"
@@ -2163,9 +2152,8 @@ msgstr "OCR 模式："
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:188
-#, fuzzy
 msgid "Add folder"
-msgstr "新增字词"
+msgstr "添加文件夹"
 
 #: ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
