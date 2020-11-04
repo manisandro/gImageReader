@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-10-20 03:44+0000\n"
+"PO-Revision-Date: 2020-11-05 03:26+0000\n"
 "Last-Translator: Prasanta-Hembram <Prasantahembram720@gmail.com>\n"
 "Language-Team: Santali <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sat/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.1-dev\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -2093,7 +2093,7 @@ msgstr ""
 
 #: ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
-msgstr ""
+msgstr "ᱪᱤᱛᱟᱹᱨ ᱚᱪᱚᱜᱽ ᱢᱮᱸ"
 
 #: ../qt/src/Ui_MainWindow.hh:202
 msgid "Delete Image"
