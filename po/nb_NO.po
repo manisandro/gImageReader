@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-06-18 11:41+0000\n"
+"PO-Revision-Date: 2020-11-16 13:28+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -157,7 +157,7 @@ msgid "Regenerate backtrace"
 msgstr "Gjenskap tilbakesporing"
 
 #: ../gtk/data/CrashHandler.ui.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -167,13 +167,14 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"Innrapporter problemet til <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a> for å forbedre "
-"programmet. Beskriv hva du gjorde før det kræsjet sammen med informasjonen "
+"<b>Programmet har krasjet</b>\n"
+"\n"
+"Innrapporter problemet til <a href=\"mailto:manisandro@gmail."
+"com?subject=gImageReader%20Crash\">manisandro@gmail.com</a> for å forbedre "
+"programmet. Beskriv hva du gjorde før det krasjet sammen med informasjonen "
 "nedenfor. Takk."
 
 #: ../gtk/data/CrashHandler.ui.h:6
-#, fuzzy
 msgid ""
 "<b>Tesseract has aborted</b>\n"
 "\n"
@@ -190,8 +191,8 @@ msgstr ""
 "skje hvis brukt treningsdata er skadet eller ukompatible med versjonen av "
 "Tesseract i bruk, eller som følge av feil i det.\n"
 "\n"
-"Tilbakesporingen nedenfor kan gi ytterligere info om hvordan kræsjet "
-"oppstod.\n"
+"Tilbakesporingen nedenfor kan gi ytterligere info om hvordan krasjet oppstod."
+"\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
@@ -936,7 +937,7 @@ msgstr "Skript"
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:41
 #: ../qt/src/CrashHandler.cc:36
 msgid "Crash Handler"
-msgstr "Kræsj-håndterer"
+msgstr "Krasj-håndterer"
 
 #: ../gtk/src/CrashHandler.cc:43 ../qt/src/CrashHandler.cc:31
 msgid "Your work has been saved under <b>%1</b>."
@@ -1947,14 +1948,13 @@ msgid ""
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Programmet har "
-"kræsjet</span></p><p>Beklager bryderiet. For å forbedre programmet, overvei "
-"å innrapportere problemet til <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Prøv å beskrive hva "
-"du gjorde før programmet kræsjet. Inkluder også informasjonen nedenfor. Takk."
-"</p></body></html>"
+"krasjet</span></p><p>Beklager bryderiet. For å forbedre programmet, overvei "
+"å innrapportere problemet til <a href=\"mailto:manisandro@gmail."
+"com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Prøv å beskrive "
+"hva du gjorde før programmet krasjet. Inkluder også informasjonen nedenfor. "
+"Takk.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
 "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
@@ -1968,7 +1968,7 @@ msgstr ""
 "Tesseract (OCR-motoren) har avsluttet under fortolkning av tekst. Dette kan "
 "skje hvis brukt treningsdata er skadet eller ukompatible med versjonen av "
 "Tesseract i bruk, eller som følge av feil i det.\n"
-"</p><p>Tilbakesporingen nedenfor kan gi ytterligere info om hvordan kræsjet "
+"</p><p>Tilbakesporingen nedenfor kan gi ytterligere info om hvordan krasjet "
 "oppstod.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:6
