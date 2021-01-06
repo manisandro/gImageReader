@@ -43,7 +43,11 @@
 
 class Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
 public:
+#if TESSERACT_MAJOR_VERSION < 5
 	ETEXT_DESC desc;
+#else
+	tesseract::ETEXT_DESC desc;
+#endif
 
 	ProgressMonitor(int nPages) : MainWindow::ProgressMonitor(nPages) {
 		desc.progress = 0;

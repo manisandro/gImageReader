@@ -26,7 +26,9 @@
 #include <enchant-provider.h>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
+#if TESSERACT_MAJOR_VERSION < 5
 #include <tesseract/genericvector.h>
+#endif
 #undef USE_STD_NAMESPACE
 
 const std::vector<Config::Lang> Config::LANGUAGES = LangTables::languages<std::vector<Config::Lang>, Glib::ustring>([](const char* str) { return Glib::ustring(str); });
@@ -151,7 +153,11 @@ std::vector<Glib::ustring> Config::getAvailableLanguages() {
 	if(!tess) {
 		return std::vector<Glib::ustring>();
 	}
+#if TESSERACT_MAJOR_VERSION < 5
 	GenericVector<STRING> availLanguages;
+#else
+	std::vector<std::string> availLanguages;
+#endif
 	tess->GetAvailableLanguagesAsVector(&availLanguages);
 	std::vector<Glib::ustring> result;
 	for(int i = 0; i < availLanguages.size(); ++i) {

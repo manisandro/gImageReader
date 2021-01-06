@@ -31,8 +31,9 @@
 #include <fstream>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
-#include <tesseract/strngs.h>
+#if TESSERACT_MAJOR_VERSION < 5
 #include <tesseract/genericvector.h>
+#endif
 #include <tesseract/ocrclass.h>
 #undef USE_STD_NAMESPACE
 #include <unistd.h>
@@ -46,7 +47,11 @@
 
 class Recognizer::ProgressMonitor : public MainWindow::ProgressMonitor {
 public:
+#if TESSERACT_MAJOR_VERSION < 5
 	ETEXT_DESC desc;
+#else
+	tesseract::ETEXT_DESC desc;
+#endif
 
 	ProgressMonitor(int nPages) : MainWindow::ProgressMonitor(nPages) {
 		desc.progress = 0;
