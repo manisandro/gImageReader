@@ -31,10 +31,9 @@
 #include <enchant-provider.h>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
-#if TESSERACT_MAJOR_VERSION >= 5
-#include <tesseract/strngs.h>
-#endif
+#if TESSERACT_MAJOR_VERSION < 5
 #include <tesseract/genericvector.h>
+#endif
 #undef USE_STD_NAMESPACE
 
 const QList<Config::Lang> Config::LANGUAGES = LangTables::languages<QList<Config::Lang>, QString>([](const char* str) { return QString::fromUtf8(str); });
@@ -147,7 +146,11 @@ QStringList Config::getAvailableLanguages() {
 	if(!tess) {
 		return QStringList();
 	}
+#if TESSERACT_MAJOR_VERSION < 5
 	GenericVector<STRING> availLanguages;
+#else
+	std::vector<std::string> availLanguages;
+#endif
 	tess->GetAvailableLanguagesAsVector(&availLanguages);
 	QStringList result;
 	for(int i = 0; i < availLanguages.size(); ++i) {
