@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-11-16 13:28+0000\n"
+"PO-Revision-Date: 2021-01-13 15:03+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -445,7 +445,7 @@ msgstr "Skriv inn ord:"
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Legg til ny utdata etter siste side"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
 #, fuzzy
@@ -1912,13 +1912,16 @@ msgstr "Legg til før utdatatekst:"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "Eksisterende utdata:"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
+#, fuzzy
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"I modus for satsvis behandling, vil hver inndatakilde behandles for seg, og "
+"utdata lagret side-ved-side med inndatafilen."
 
 #: ../qt/data/BatchModeDialog.ui.h:5
 #, fuzzy
@@ -2065,6 +2068,10 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html><head/><body><ul><li>PoDoFo: Tilbyr flere bildekompersjonsvalg, men "
+"håndterer ikke komplekse skript.</li><li>QPrinter: Støtter kun JPEG-"
+"komprimering for lagring av bilder, men støtter komplekse "
+"skript.</li></ul></body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:234
 msgid "Keyboard shortcuts"
@@ -2079,6 +2086,7 @@ msgid "Lines after:"
 msgstr ""
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:440
+#, fuzzy
 msgid ""
 "<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
 "td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
@@ -2096,14 +2104,32 @@ msgid ""
 "td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
 "size</td></tr></table>"
 msgstr ""
+"<table><tr><td>Tab</td><td>Neste felt</td></tr><tr><td>Shift+Tab</"
+"td><td>Forrige felt</td></tr><tr><td>Nedover</td><td>Neste "
+"linje</td></tr><tr><td>Oppover</td><td>Forrige linje</td></tr><tr><td>Ctrl+Me"
+"llomrom</td><td>Staveforslag</td></tr><tr><td>Ctrl+Enter</td><td>Legg til "
+"ord i ordbok</td></tr><tr><td>Ctrl+B</td><td>Veksle fet "
+"skrift</td></tr><tr><td>Ctrl+I</td><td>Veksle kursiv "
+"skrift</td></tr><tr><td>Ctrl+D</td><td>Del ord på "
+"pekerposisjon</td></tr><tr><td>Ctrl+M</td><td>Flett med forrige "
+"ord</td></tr><tr><td>Ctrl+Shift+M</td><td>Flett med neste "
+"ord</td></tr><tr><td>Ctrl+Delete</td><td>Slett "
+"ord</td></tr><tr><td>Ctrl+{Venstre,Høyre}</td><td>Juster venstre "
+"innholdskant</td></tr><tr><td>Ctrl+Shift+{Venstre,Høyre}</td><td>Juster "
+"venstre innholdskant</td></tr><tr><td>Ctrl+{Up,Down}</td><td>Juster "
+"innholdskant i topp</td></tr><tr><td>Ctrl+Shift+{Up,Down}</td><td>Juster "
+"innholdskant i bunn</td></tr><tr><td>Ctrl++</td><td>Øk "
+"skriftstørrelse</td></tr><tr><td>Ctrl+-</td><td>Forminsk "
+"skriftstørrelse</td></tr></table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
 msgstr "Tastatursnarveier"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:476
+#, fuzzy
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Tillitsnivå: %1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2133,16 +2159,17 @@ msgid "Page: %1\n"
 msgstr "Side: %1"
 
 #: ../qt/src/Recognizer.cc:73
+#, fuzzy
 msgid "Batch mode..."
-msgstr ""
+msgstr "Modus for satsvis behandling …"
 
 #: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "Overskriv eksisterende utdata"
 
 #: ../qt/src/Recognizer.cc:87
 msgid "Skip processing source"
-msgstr ""
+msgstr "Hopp over behandling av kilde"
 
 #: ../qt/src/Recognizer.cc:234
 msgid "- Page %1: failed to render page"
@@ -2154,7 +2181,7 @@ msgstr "- %1:%2: Klarte ikke å tegne siden"
 
 #: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "- %1: utdata finnes allerede, hopper over"
 
 #: ../qt/src/Recognizer.cc:363
 #, fuzzy
@@ -2193,7 +2220,7 @@ msgstr "Lagre utdata"
 #: ../qt/src/SourceManager.cc:459
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr ""
+msgstr "Både tekst og hOCR-utdata ble funnet. Hvilken av dem ønsker du å åpne?"
 
 #: ../qt/src/SourceManager.cc:460
 #, fuzzy
