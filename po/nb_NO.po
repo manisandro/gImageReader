@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-11-16 13:28+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2021-01-13 15:03+0000\n"
+"Last-Translator: ovl-1 <ovl-002@mailinator.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -120,9 +120,8 @@ msgid "Cancel"
 msgstr "Avbryt"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
-#, fuzzy
 msgid "Output pane font:"
-msgstr "Skrift for utdatavindu:"
+msgstr "Skrift for utdatapanel:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
@@ -196,7 +195,7 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
-msgstr "Veksle utdatafeltet"
+msgstr "Vis/skjul utdatapanel"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
@@ -235,9 +234,8 @@ msgid "Best fit"
 msgstr "Beste passform"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
-#, fuzzy
 msgid "Rotate page"
-msgstr "Roter alle sider"
+msgstr "Roter side"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
@@ -246,14 +244,12 @@ msgstr "Velg rotasjonsmodus"
 #: ../gtk/data/MainWindow.ui.h:13 ../gtk/data/OutputEditorHOCR.ui.h:12
 #: ../gtk/data/OutputEditorText.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:71 ../qt/src/Ui_OutputEditorText.hh:95
-#, fuzzy
 msgid "Select insert mode"
-msgstr "Velg innlimingsmodus"
+msgstr "Velg innsettingsmodus"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:102
-#, fuzzy
 msgid "Select page"
-msgstr "Velg språk"
+msgstr "Velg side"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
@@ -261,16 +257,15 @@ msgstr "Bildetilpasning"
 
 #: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:159
 msgid "Plain text"
-msgstr "Klartekst"
+msgstr "Ren tekst"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../qt/src/MainWindow.cc:160
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:38
-#, fuzzy
 msgid "Autodetect layout"
-msgstr "Oppdag sideretning automatisk"
+msgstr "Auto-detekter layout"
 
 #: ../gtk/data/MainWindow.ui.h:19
 msgid "<small>Recognize all</small>"
@@ -377,9 +372,8 @@ msgid "Exclude these characters from being recognized (blacklist):"
 msgstr "Utelukk disse tegnene fra gjenkjennelse (svarteliste):"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:3
-#, fuzzy
 msgid "Enter a string of characters..."
-msgstr "Henter parameter…"
+msgstr "Angi en streng med tegn…"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
@@ -399,7 +393,7 @@ msgstr "<small><b>Eksempel:</b> 1-10, 13, 14-18</small>"
 
 #: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
-msgstr "Oppdagelsesområde:"
+msgstr "Gjenkjennelsesområde:"
 
 #: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:381
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:133
@@ -445,17 +439,16 @@ msgstr "Skriv inn ord:"
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Legg til ny utdata etter siste side"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "Roter gjeldende side"
+msgstr "Sett inn ny utdata før gjeldende side"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
 msgid "Export to plain text"
-msgstr "Eksporter til klartekst"
+msgstr "Eksporter til ren tekst"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:96
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:97
@@ -469,14 +462,13 @@ msgstr "Eksporter til ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
-#, fuzzy
 msgid "Append document after last page"
-msgstr "Anfør til aktuell tekst"
+msgstr "Legg ved dokument etter siste side"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Insert document before current page"
-msgstr ""
+msgstr "Sett inn dokument før gjeldende side"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
@@ -517,9 +509,8 @@ msgstr "Vis trygghetsnivåer"
 #: ../gtk/data/OutputEditorHOCR.ui.h:19 ../gtk/data/PdfExportDialog.ui.h:41
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:117
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
-#, fuzzy
 msgid "Show preview"
-msgstr "Forhåndsvis"
+msgstr "Vis forhåndsvisning"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:20
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:155
@@ -555,9 +546,8 @@ msgstr "Kilde"
 
 #. Output insert mode
 #: ../gtk/data/OutputEditorText.ui.h:1 ../qt/src/Ui_OutputEditorText.hh:52
-#, fuzzy
 msgid "Append to current text"
-msgstr "Anfør til aktuell tekst"
+msgstr "Legg ved gjeldende tekst"
 
 #: ../gtk/data/OutputEditorText.ui.h:2 ../qt/src/Ui_OutputEditorText.hh:53
 msgid "Insert at cursor"
@@ -565,21 +555,20 @@ msgstr "Sett inn ved peker"
 
 #: ../gtk/data/OutputEditorText.ui.h:3 ../qt/src/Ui_OutputEditorText.hh:54
 msgid "Replace current text"
-msgstr "Erstatt nåværende tekst"
+msgstr "Erstatt gjeldende tekst"
 
 #. Output postprocessing
 #: ../gtk/data/OutputEditorText.ui.h:4 ../qt/src/Ui_OutputEditorText.hh:62
-#, fuzzy
 msgid "Keep line break if..."
-msgstr "Behold linjeskift hvis…"
+msgstr "Behold linjeskift hvis..."
 
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:64
 msgid "Preceded by end mark (.?!)"
-msgstr "Foregås av sluttegn (.?!)"
+msgstr "Setningsendetegn står foran (.?!)"
 
 #: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:66
 msgid "Preceded or succeeded by quote"
-msgstr "Foregås eller etterfulgt av sittattegn"
+msgstr "Anførselstegn står foran eller bak"
 
 #: ../gtk/data/OutputEditorText.ui.h:7 ../qt/src/Ui_OutputEditorText.hh:68
 msgid "Other options"
@@ -587,7 +576,7 @@ msgstr "Andre valg"
 
 #: ../gtk/data/OutputEditorText.ui.h:8 ../qt/src/Ui_OutputEditorText.hh:70
 msgid "Join hyphenated words"
-msgstr "Bind sammen ord med bindestrek"
+msgstr "Fjern linjeendebindestrek"
 
 #: ../gtk/data/OutputEditorText.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:72
 #, fuzzy
@@ -600,7 +589,7 @@ msgstr "Bevar avsnitt"
 
 #: ../gtk/data/OutputEditorText.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:76
 msgid "Visual aids"
-msgstr "Visuelle hjelpemiddel"
+msgstr "Visuelle hjelpemidler"
 
 #: ../gtk/data/OutputEditorText.ui.h:12 ../qt/src/Ui_OutputEditorText.hh:78
 msgid "Draw whitespace"
@@ -653,9 +642,8 @@ msgid "DPI:"
 msgstr "DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
-#, fuzzy
 msgid "Dithering algorithm:"
-msgstr "Fargesjatteringsutjevningsalgoritme:"
+msgstr "Dithering-algoritme:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
@@ -794,9 +782,8 @@ msgid "Find next"
 msgstr "Finn neste"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:6 ../qt/data/SearchReplaceFrame.ui.h:7
-#, fuzzy
 msgid "Match case"
-msgstr "Jamfør versalhøyde"
+msgstr "Skill mellom store/små bokstaver"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:7
 #: ../gtk/data/SubstitutionsManager.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:1
@@ -953,9 +940,8 @@ msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "Klarte ikke å hente tilbakesporing. Er GDB installert?"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
-#, fuzzy
 msgid "Page %1"
-msgstr "Side: %1"
+msgstr "Side %1"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid "Failed to load image"
@@ -992,9 +978,8 @@ msgid "Recognize selection"
 msgstr "Gjenkjenn utvalg"
 
 #: ../gtk/src/DisplayerToolSelect.cc:186 ../qt/src/DisplayerToolSelect.cc:182
-#, fuzzy
 msgid "Performing layout analysis"
-msgstr "Utfører visningsanalyse"
+msgstr "Utfører layout-analyse"
 
 #: ../gtk/src/FileDialogs.cc:235
 msgid ""
@@ -1089,9 +1074,8 @@ msgid "Threshold (closest color)"
 msgstr "Terskel (nærmeste farge)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:331 ../qt/src/hocr/HOCRPdfExporter.cc:349
-#, fuzzy
 msgid "Diffuse"
-msgstr "Diffuser"
+msgstr "Diffus"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:340 ../qt/src/hocr/HOCRPdfExporter.cc:350
 #, fuzzy
@@ -1141,7 +1125,6 @@ msgid "Failed to render page %1"
 msgstr "Klarte ikke å tegne side %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:612 ../qt/src/hocr/HOCRPdfExporter.cc:596
-#, fuzzy
 msgid "Exporting to PDF..."
 msgstr "Eksporterer til PDF…"
 
@@ -1226,9 +1209,8 @@ msgstr "Del opp fra opphav"
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:822
 #: ../qt/src/hocr/OutputEditorHOCR.cc:762
-#, fuzzy
 msgid "Swap"
-msgstr "Veksle"
+msgstr "Bytte"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:846
 #: ../qt/src/hocr/OutputEditorHOCR.cc:807
@@ -1317,9 +1299,8 @@ msgstr "Klarte ikke å lagre utdata"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
 #: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
-#, fuzzy
 msgid "Check that you have writing permissions in the selected folder."
-msgstr "Sjekk at du har skrivetilgang til valgt mappe."
+msgstr "Sjekk at du har skrivetillatelse i den valgte mappen."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1023 ../qt/src/OutputEditorText.cc:293
@@ -1329,7 +1310,7 @@ msgstr "Utdata ikke lagret"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1023 ../qt/src/OutputEditorText.cc:293
 msgid "Save output before proceeding?"
-msgstr "Lagre utdata før behandling?"
+msgstr "Lagre utdata før du fortsetter?"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:192
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1121 ../qt/src/OutputEditorText.cc:164
@@ -1339,18 +1320,16 @@ msgstr "Erstatter…"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1240 ../gtk/src/OutputEditorText.cc:200
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1144 ../qt/src/OutputEditorText.cc:172
-#, fuzzy
 msgid "Applying substitutions..."
-msgstr "Legger til erstatninger…"
+msgstr "Erstatninger blir gjennomført..."
 
 #: ../gtk/src/MainWindow.cc:131 ../qt/src/MainWindow.cc:334
 msgid "Using tesseract"
 msgstr "Bruker tesseract"
 
 #: ../gtk/src/MainWindow.cc:178 ../qt/src/MainWindow.cc:201
-#, fuzzy
 msgid "Select an image to begin..."
-msgstr "Velg et bilde for å begynne…"
+msgstr "Velg et bilde for å begynne..."
 
 #: ../gtk/src/MainWindow.cc:310
 msgid "Multiple sources"
@@ -1399,9 +1378,8 @@ msgstr "Stavingsordbok for %1 er ikke installert"
 
 #: ../gtk/src/MainWindow.cc:513 ../gtk/src/MainWindow.cc:542
 #: ../qt/src/MainWindow.cc:523
-#, fuzzy
 msgid "Installing spelling dictionary for '%1'"
-msgstr "Installerer stavingsordbok for \"%1\"."
+msgstr "Installerer staveordbok for '%1'"
 
 #: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:555
 #: ../gtk/src/MainWindow.cc:563 ../gtk/src/MainWindow.cc:611
@@ -1459,9 +1437,8 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/MainWindow.cc:616 ../qt/src/MainWindow.cc:613
-#, fuzzy
 msgid "No spelling dictionaries found for '%1'."
-msgstr "Ingen stavingsordbøker funnet for \"%1\"."
+msgstr "Ingen staveordbøker funnet for '%1'."
 
 #: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:149
 msgid "Stripping line breaks..."
@@ -1660,9 +1637,8 @@ msgid "Enter password for file '%1':"
 msgstr "Skriv inn passordet for filen \"%1\":"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
-#, fuzzy
 msgid "PDF with text"
-msgstr "PDF-filer med tekst"
+msgstr "PDF med tekst"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
 msgid ""
@@ -1696,9 +1672,8 @@ msgid "Pasted %1"
 msgstr "Limte inn %1"
 
 #: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
-#, fuzzy
 msgid "Screenshot Error"
-msgstr "Skjemavbildningsfeil"
+msgstr "Skjermbildefeil"
 
 #: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
 msgid "Failed to take screenshot."
@@ -1709,9 +1684,8 @@ msgid "Screenshot %1"
 msgstr "Skjermavbildning %1"
 
 #: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:333
-#, fuzzy
 msgid "Saving image..."
-msgstr "Lagrer bilde…"
+msgstr "Lagrer bilde..."
 
 #: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:346
 #, fuzzy
@@ -1797,7 +1771,6 @@ msgid "Do you want to save the current list?"
 msgstr "Ønsker du å lagre nåværende liste?"
 
 #: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:70
-#, fuzzy
 msgid ""
 "A session connection to the PackageKit backend is required for managing "
 "system-wide tesseract language packs, but it was not found. This service is "
@@ -1807,10 +1780,13 @@ msgid ""
 "tesseract language packs directly, or switch to using the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"PackageKit kreves for å håndtere Tesseract-språkfiler for hele systemet, men "
-"det ble ikke funnet. Bruk systemets pakkebehandlingsprogramvare for å "
-"håndtere Tesseract-språkpakker, eller bytt for å bruker brukerens tessdata-"
-"sti i oppsettsdialogen."
+"En øktforbindelse til PackageKit-backend kreves for å håndtere Tesseract-"
+"språkpakker for hele systemet, men ble ikke funnet. Denne tjenesten leveres "
+"vanligvis av et programvareadministrasjonsprogram som Gnome Software. "
+"Installer programvare som gir det nødvendige PackageKit-grensesnittet , bruk "
+"annen systempakkehåndteringsprogramvare for å administrere Tesseract-"
+"språkpakker direkte, eller bytt til å bruke bruker-tessdatabane i "
+"oppsettsdialogen."
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:75
 msgid "Fetching available languages"
@@ -1901,29 +1877,29 @@ msgid "License"
 msgstr "Lisens"
 
 #: ../qt/data/BatchModeDialog.ui.h:1
-#, fuzzy
 msgid "Batch Mode"
-msgstr "Jamfør versalhøyde"
+msgstr "Batch-modus"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "Legg til før utdatatekst:"
+msgstr "Legg til sidenummer før utdatatekst"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "Eksisterende utdata:"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
+#, fuzzy
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"I modus for satsvis behandling, vil hver inndatakilde behandles for seg, og "
+"utdata lagret side-ved-side med inndatafilen."
 
 #: ../qt/data/BatchModeDialog.ui.h:5
-#, fuzzy
 msgid "Autodetect page layout"
-msgstr "Oppdag sideretning automatisk"
+msgstr "Auto-detekter sidelayout"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -2038,9 +2014,8 @@ msgid "Autodetect Layout"
 msgstr "Oppdag sideretning automatisk"
 
 #: ../qt/data/MainWindow.ui.h:39
-#, fuzzy
 msgid "Toggle Output Pane"
-msgstr "Veksle utdatafelt"
+msgstr "Vis/skjul utdatapanel"
 
 #: ../qt/data/PdfExportDialog.ui.h:5
 msgid "Backend:"
@@ -2065,6 +2040,10 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html><head/><body><ul><li>PoDoFo: Tilbyr flere "
+"bildekomprimeringsalternativer, men håndterer ikke komplekse "
+"skript.</li><li>QPrinter: Støtter kun JPEG-komprimering for lagring av "
+"bilder, men støtter komplekse skript.</li></ul></body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:234
 msgid "Keyboard shortcuts"
@@ -2072,13 +2051,14 @@ msgstr "Tastatursnarveier"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
-msgstr ""
+msgstr "Linjer før:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:260
 msgid "Lines after:"
-msgstr ""
+msgstr "Linjer etter:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:440
+#, fuzzy
 msgid ""
 "<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
 "td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
@@ -2096,14 +2076,32 @@ msgid ""
 "td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
 "size</td></tr></table>"
 msgstr ""
+"<table><tr><td>Tab</td><td>Neste felt</td></tr><tr><td>Shift+Tab</"
+"td><td>Forrige felt</td></tr><tr><td>Nedover</td><td>Neste "
+"linje</td></tr><tr><td>Oppover</td><td>Forrige linje</td></tr><tr><td>Ctrl+Me"
+"llomrom</td><td>Staveforslag</td></tr><tr><td>Ctrl+Enter</td><td>Legg til "
+"ord i ordbok</td></tr><tr><td>Ctrl+B</td><td>Veksle fet "
+"skrift</td></tr><tr><td>Ctrl+I</td><td>Veksle kursiv "
+"skrift</td></tr><tr><td>Ctrl+D</td><td>Del ord på "
+"pekerposisjon</td></tr><tr><td>Ctrl+M</td><td>Flett med forrige "
+"ord</td></tr><tr><td>Ctrl+Shift+M</td><td>Flett med neste "
+"ord</td></tr><tr><td>Ctrl+Delete</td><td>Slett "
+"ord</td></tr><tr><td>Ctrl+{Venstre,Høyre}</td><td>Juster venstre "
+"innholdskant</td></tr><tr><td>Ctrl+Shift+{Venstre,Høyre}</td><td>Juster "
+"venstre innholdskant</td></tr><tr><td>Ctrl+{Up,Down}</td><td>Juster "
+"innholdskant i topp</td></tr><tr><td>Ctrl+Shift+{Up,Down}</td><td>Juster "
+"innholdskant i bunn</td></tr><tr><td>Ctrl++</td><td>Øk "
+"skriftstørrelse</td></tr><tr><td>Ctrl+-</td><td>Forminsk "
+"skriftstørrelse</td></tr></table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
 msgstr "Tastatursnarveier"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:476
+#, fuzzy
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Tillitsnivå: %1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2116,33 +2114,33 @@ msgid "Find and Replace"
 msgstr "Finn og erstatt"
 
 #: ../qt/src/MainWindow.cc:317
-#, fuzzy
 msgid "Multiple sources (%1)"
-msgstr "Flerfoldige kilder"
+msgstr "Flere kilder (%1)"
 
 #: ../qt/src/MainWindow.cc:611
-#, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
-msgstr "Følgende ordbøker ble installert: %1"
+msgstr ""
+"Følgende ordbøker ble installert:\n"
+"%1"
 
 #: ../qt/src/OutputEditorText.cc:41
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "Side: %1"
+msgstr "Side: %1\n"
 
 #: ../qt/src/Recognizer.cc:73
+#, fuzzy
 msgid "Batch mode..."
-msgstr ""
+msgstr "Modus for satsvis behandling …"
 
 #: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "Overskriv eksisterende utdata"
 
 #: ../qt/src/Recognizer.cc:87
 msgid "Skip processing source"
-msgstr ""
+msgstr "Hopp over behandling av kilde"
 
 #: ../qt/src/Recognizer.cc:234
 msgid "- Page %1: failed to render page"
@@ -2154,56 +2152,48 @@ msgstr "- %1:%2: Klarte ikke å tegne siden"
 
 #: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "- %1: utdata finnes allerede, hopper over"
 
 #: ../qt/src/Recognizer.cc:363
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "Klarte ikke å opprette utdata"
+msgstr "- %1: Klarte ikke å opprette utdatafil"
 
 #: ../qt/src/Recognizer.cc:418
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "Følgende feil inntraff: %1"
+msgstr "Følgende feil oppstod:"
 
 #: ../qt/src/SourceManager.cc:248
-#, fuzzy
 msgid "No recent files"
-msgstr "Kilde-filnavn"
+msgstr "Ingen nylige filer"
 
 #: ../qt/src/SourceManager.cc:275
-#, fuzzy
 msgid "Select folder..."
-msgstr "Velg filer"
+msgstr "Velg mappe..."
 
 #: ../qt/src/SourceManager.cc:374
-#, fuzzy
 msgid "Delete Files"
-msgstr "Slett fil?"
+msgstr "Slett filer"
 
 #: ../qt/src/SourceManager.cc:374
 msgid "Delete the following files?"
 msgstr "Slett følgende filer?"
 
 #: ../qt/src/SourceManager.cc:459
-#, fuzzy
 msgid "Open output"
-msgstr "Lagre utdata"
+msgstr "Åpne utdata"
 
 #: ../qt/src/SourceManager.cc:459
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr ""
+msgstr "Både tekst og hOCR-utdata ble funnet. Hvilken av dem ønsker du å åpne?"
 
 #: ../qt/src/SourceManager.cc:460
-#, fuzzy
 msgid "Text"
-msgstr "Tekstrad"
+msgstr "Tekst"
 
 #: ../qt/src/SourceManager.cc:461
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2231,9 +2221,8 @@ msgstr "OCR-modus:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:188
-#, fuzzy
 msgid "Add folder"
-msgstr "Legg til ord"
+msgstr "Legg til mappe"
 
 #: ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
