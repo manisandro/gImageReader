@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2021-01-14 09:24+0000\n"
-"Last-Translator: ovl-1 <ovl-002@mailinator.com>\n"
+"PO-Revision-Date: 2021-01-17 11:01+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.1-dev\n"
+"X-Generator: Weblate 4.5-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -186,12 +186,11 @@ msgid ""
 msgstr ""
 "<b>Tesseract har avsluttet</b>\n"
 "\n"
-"Tesseract (OCR-motoren) har avsluttet under fortolkning av tekst. Dette kan "
-"skje hvis brukt treningsdata er skadet eller ukompatible med versjonen av "
-"Tesseract i bruk, eller som følge av feil i det.\n"
+"Tesseract (OCR-motoren) har avsluttet under gjenkjennelse av tekst. Dette "
+"kan skje hvis traineddata-filene som brukes er skadet eller inkompatible med "
+"versjonen av Tesseract som er i bruk, eller pga. av en feil i Tesseract.\n"
 "\n"
-"Tilbakesporingen nedenfor kan gi ytterligere info om hvordan krasjet oppstod."
-"\n"
+"Stabelspor nedenfor kan gi ytterligere info om hvor krasjet oppstod.\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
@@ -231,7 +230,7 @@ msgstr "Normal størrelse"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:30
 msgid "Best fit"
-msgstr "Beste passform"
+msgstr "Tilpass til side"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
 msgid "Rotate page"
@@ -806,7 +805,7 @@ msgstr "Gjenkjenn"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:241
 msgid "Recognize to clipboard"
-msgstr "Fortolk til utklippstavle"
+msgstr "Kopier gjenkjennelse til utklippstavle"
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:242
 msgid "Save as image"
@@ -894,7 +893,7 @@ msgstr "Setter valg…"
 
 #: ../gtk/src/Acquirer.cc:169 ../qt/src/Acquirer.cc:155
 msgid "Getting parameters..."
-msgstr "Henter parameter…"
+msgstr "Henter parametere..."
 
 #: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:157
 msgid "Transferring data..."
@@ -1239,7 +1238,7 @@ msgstr "Legg til ord"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:877 ../qt/src/hocr/HOCRDocument.cc:72
 msgid "No suggestions"
-msgstr "Ingen anbefalinger"
+msgstr "Ingen forslag"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:883 ../qt/src/hocr/HOCRDocument.cc:76
 msgid "Add to dictionary"
@@ -1477,8 +1476,8 @@ msgstr "Ingen språk tilgjengelig"
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
-"Ingen Tesseract-språkfiler er tilgjengelige for bruk. Tolkning vil ikke "
-"fungere."
+"Ingen Tesseract-språkfiler er tilgjengelige for bruk. Tekstgjenkjennelse vil "
+"ikke fungere."
 
 #: ../gtk/src/Recognizer.cc:233 ../qt/src/RecognitionMenu.cc:134
 msgid "Multilingual"
@@ -1829,10 +1828,10 @@ msgstr ""
 "Følgende filer kunne ikke lastes ned eller fjernes:\n"
 "%1\n"
 "\n"
-"Sjekk tilkobling- og mappe-tilganger.\n"
+"Sjekk nettforbindelsen og mappetillatelsene.\n"
 "\n"
-"Hint: Hvis du ikke har skrivetilganger i systemmapper, kan du bytte til "
-"brukerstier i innstillingsdialogen."
+"Hint: Hvis du ikke har skriverettigheter til systemmapper, kan du bytte til "
+"en brukerprofilmappe i innstillingsdialogen."
 
 #: ../gtk/src/Utils.cc:64
 msgid "Yes"
@@ -1940,12 +1939,11 @@ msgid ""
 "about where the crash occurred.</p></body></html>"
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract har "
-"avsluttet</span></p><p>\n"
-"Tesseract (OCR-motoren) har avsluttet under fortolkning av tekst. Dette kan "
-"skje hvis brukt treningsdata er skadet eller ukompatible med versjonen av "
-"Tesseract i bruk, eller som følge av feil i det.\n"
-"</p><p>Tilbakesporingen nedenfor kan gi ytterligere info om hvordan krasjet "
-"oppstod.</p></body></html>"
+"avsluttet</span></p><p>Tesseract (OCR-motoren) har avsluttet under "
+"gjenkjennelse av tekst. Dette kan skje hvis traineddata-filene som brukes er "
+"skadet eller inkompatible med versjonen av Tesseract som er i bruk, eller "
+"pga. av en feil i Tesseract.</p><p>Stabelsporet nedenfor kan gi ytterligere "
+"info om hvor krasjet oppstod.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
@@ -2203,12 +2201,12 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Følgende filer kunne ikke lastes ned:\n"
+"Følgende filer kunne ikke lastes ned eller fjernes:\n"
 "%1\n"
 "\n"
-"Sjekk tilkobling- og mappetilganger.\n"
-"Hint: Hvis du ikke har skrivetilganger i systemmapper, kan du bytte til "
-"brukerstier i innstillingsdialogen."
+"Sjekk nettforbindelsen og mappetillatelsene.\n"
+"Hint: Hvis du ikke har skriverettigheter til systemmapper, kan du bytte til "
+"en brukerprofilmappe i innstillingsdialogen."
 
 #: ../qt/src/Ui_MainWindow.hh:50
 msgid "Output"
