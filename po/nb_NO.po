@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2021-01-17 11:01+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2021-01-19 15:32+0000\n"
+"Last-Translator: ovl-1 <ovl-002@mailinator.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -340,7 +340,7 @@ msgstr "Kilde:"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
-msgstr "Hent"
+msgstr "Skanning"
 
 #: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
@@ -606,7 +606,7 @@ msgstr "Angre"
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:112
 #: ../qt/src/Ui_OutputEditorText.hh:113
 msgid "Redo"
-msgstr "Gjenta"
+msgstr "Gjør om"
 
 #: ../gtk/data/PdfExportDialog.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
@@ -1564,7 +1564,7 @@ msgstr "Tolker…"
 #: ../gtk/src/Recognizer.cc:513 ../gtk/src/Recognizer.cc:522
 #: ../qt/src/Recognizer.cc:204 ../qt/src/Recognizer.cc:418
 msgid "Recognition errors occurred"
-msgstr "Tolkningsfeil inntraff"
+msgstr "Gjenkjennelsesfeil oppstod"
 
 #: ../gtk/src/Recognizer.cc:513
 #, fuzzy
@@ -1609,7 +1609,7 @@ msgstr "Klarte ikke å lagre bilde"
 
 #: ../gtk/src/scanner/ScannerSane.cc:803 ../qt/src/scanner/ScannerSane.cc:798
 msgid "Operation is cancelled."
-msgstr "Operasjonen har blitt avbrutt"
+msgstr "Operasjonen er avbrutt."
 
 #: ../gtk/src/scanner/ScannerSane.cc:805 ../qt/src/scanner/ScannerSane.cc:800
 msgid "Device is busy."
@@ -1676,7 +1676,7 @@ msgstr "Skjermbildefeil"
 
 #: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
 msgid "Failed to take screenshot."
-msgstr "Klarte ikke å utføre skjermavbildning"
+msgstr "Kunne ikke ta skjermbilde."
 
 #: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:328
 msgid "Screenshot %1"
