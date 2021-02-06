@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-05-31 02:41+0000\n"
+"PO-Revision-Date: 2021-02-07 07:50+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.5-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -89,7 +89,7 @@ msgstr "Definiciones de idioma adicionales:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr "Prefijo para el fichero de datos de idioma de tesseract"
+msgstr "El prefijo del archivo de datos de idioma de tesseract"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
@@ -199,11 +199,11 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
-msgstr "Mostrar/ocultar el panel de salida"
+msgstr "Mostrar/ocultar panel de salida"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
-msgstr "Girar la página actual"
+msgstr "Girar página actual"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
@@ -301,7 +301,7 @@ msgstr "Borrar lista"
 
 #: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
-msgstr "Ficheros"
+msgstr "Archivos"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:9
 msgid "Device:"
@@ -478,7 +478,7 @@ msgstr "Insertar documento antes de la página actual"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
 msgid "Open hOCR file"
-msgstr "Abrir fichero hOCR"
+msgstr "Abrir archivo hOCR"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/Ui_OutputEditorText.hh:116
@@ -868,7 +868,7 @@ msgstr "Imágenes"
 
 #: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:86
 msgid "Choose Output Filename..."
-msgstr "Escoja el nombre del fichero de salida..."
+msgstr "Escoja el nombre del archivo de salida…"
 
 #: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
 msgid "Failed to initialize the scanning backend."
@@ -909,7 +909,7 @@ msgstr "Cancelando el escaneo..."
 
 #: ../gtk/src/Config.cc:49 ../qt/data/ConfigDialog.ui.h:7
 msgid "Filename prefix"
-msgstr "Prefijo del nombre de fichero"
+msgstr "Prefijo del nombre de archivo"
 
 #: ../gtk/src/Config.cc:50 ../qt/data/ConfigDialog.ui.h:8
 msgid "Code"
@@ -953,7 +953,7 @@ msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
-"Puede que el fichero no sea una imagen o esté corrupto:\n"
+"Puede que el archivo no sea una imagen o esté dañado:\n"
 "%1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
@@ -966,7 +966,7 @@ msgstr "Guardar imagen de la selección"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "selection.png"
-msgstr "seleccion.png"
+msgstr "selección.png"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize all"
@@ -983,12 +983,11 @@ msgstr "Analizando la estructura"
 #: ../gtk/src/FileDialogs.cc:235
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-msgstr ""
-"Ya existe un fichero llamado «%1». ¿Confirma que quiere sobrescribirlo?"
+msgstr "Ya existe un archivo llamado «%1». ¿Confirma que quiere sobrescribirlo?"
 
 #: ../gtk/src/FileDialogs.cc:237
 msgid "Overwrite File?"
-msgstr "¿Quiere sobrescribir el fichero?"
+msgstr "¿Quiere sobrescribir el archivo?"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:616 ../gtk/src/hocr/OutputEditorHOCR.cc:266
 #: ../qt/src/hocr/HOCRDocument.cc:686 ../qt/src/hocr/OutputEditorHOCR.cc:310
@@ -1040,7 +1039,7 @@ msgstr "La exportación ha fallado"
 #: ../qt/src/hocr/HOCROdtExporter.cc:61
 msgid "The ODT export failed: unable to write output file."
 msgstr ""
-"La exportación a ODT ha fallado: no se puede escribir el fichero de salida."
+"La exportación a ODT ha fallado: no se puede escribir el archivo de salida."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:335 ../qt/src/hocr/HOCROdtExporter.cc:254
 msgid "Exporting to ODT..."
@@ -1088,7 +1087,7 @@ msgstr "Jpeg (con pérdida)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:493 ../qt/src/hocr/HOCRPdfExporter.cc:475
 msgid "PDF Files"
-msgstr "Ficheros PDF"
+msgstr "Archivos PDF"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:494 ../qt/src/hocr/HOCRPdfExporter.cc:475
 msgid "Save PDF Output..."
@@ -1101,7 +1100,7 @@ msgstr "Salida no válida"
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:481
 msgid "Cannot overwrite a file which is a source image of this document."
 msgstr ""
-"No se puede sobrescribir un fichero que sea una imagen original de este "
+"No se puede sobrescribir un archivo que sea una imagen original de este "
 "documento."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:515 ../qt/src/hocr/HOCRPdfExporter.cc:503
@@ -1135,7 +1134,7 @@ msgstr "La biblioteca para PDF no puede cargar el tipo de letra «%1»."
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:282
 #: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:273
 msgid "Text Files"
-msgstr "Ficheros de texto"
+msgstr "Archivos de texto"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:40
 msgid "Save Text Output..."
@@ -1144,7 +1143,7 @@ msgstr "Guardar el texto de salida..."
 #: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "The text export failed: unable to write output file."
 msgstr ""
-"La exportación a texto ha fallado: no se puede escribir el fichero de salida."
+"La exportación a texto ha fallado: no se puede escribir el archivo de salida."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
 #: ../qt/src/hocr/OutputEditorHOCR.cc:311
@@ -1248,12 +1247,12 @@ msgstr "Ignorar palabra"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:889
 #: ../qt/src/hocr/OutputEditorHOCR.cc:954
 msgid "hOCR HTML Files"
-msgstr "Ficheros HTML de hOCR"
+msgstr "Archivos HTML de hOCR"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:953
 #: ../qt/src/hocr/OutputEditorHOCR.cc:889
 msgid "Open hOCR File"
-msgstr "Abrir fichero hOCR"
+msgstr "Abrir archivo hOCR"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:929 ../qt/src/OutputEditorText.cc:256
@@ -1278,7 +1277,7 @@ msgstr ""
 #: ../qt/src/hocr/OutputEditorHOCR.cc:935 ../qt/src/OutputEditorText.cc:257
 #: ../qt/src/SourceManager.cc:156
 msgid "Unable to open files"
-msgstr "No se puede abrir los ficheros"
+msgstr "No se puede abrir los archivos"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1019
 #: ../qt/src/hocr/OutputEditorHOCR.cc:954
@@ -1443,7 +1442,7 @@ msgstr "Comprobando la ortografía"
 
 #: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
-msgstr "Fichero: %1"
+msgstr "Archivo: %1"
 
 #: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:211
 msgid "Page: %1"
@@ -1642,11 +1641,11 @@ msgstr ""
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:264
 msgid "Images and PDFs"
-msgstr "Imágenes y ficheros PDF"
+msgstr "Imágenes y archivos PDF"
 
 #: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:265
 msgid "Select Files"
-msgstr "Seleccionar ficheros"
+msgstr "Seleccionar archivos"
 
 #: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:307
 msgid "Clipboard Error"
@@ -1679,7 +1678,7 @@ msgstr "Guardando imagen..."
 
 #: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:346
 msgid "Cannot Write File"
-msgstr "No se puede escribir el fichero"
+msgstr "No se puede escribir el archivo"
 
 #: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:346
 msgid "Could not write to %1."
@@ -1687,22 +1686,22 @@ msgstr "No se puede escribir en %1."
 
 #: ../gtk/src/SourceManager.cc:287
 msgid "Delete File?"
-msgstr "¿Quiere eliminar el fichero?"
+msgstr "¿Quiere eliminar el archivo?"
 
 #: ../gtk/src/SourceManager.cc:287
 msgid "The following files will be deleted:%1"
-msgstr "Los siguientes ficheros serán borrados:%1"
+msgstr "Se eliminarán los archivos siguientes:%1"
 
 #: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:487
 msgid "Missing File"
-msgstr "Falta el fichero"
+msgstr "Falta el archivo"
 
 #: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:487
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
 msgstr ""
-"El siguiente fichero ha sido borrado o movido:\n"
+"Se ha eliminado o desplazado el archivo siguiente:\n"
 "%1"
 
 #: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:69
@@ -1724,7 +1723,7 @@ msgstr "Abrir la lista de sustituciones"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:108
 msgid "Error Reading File"
-msgstr "Error al leer el fichero"
+msgstr "Error al leer el archivo"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:108
 msgid "Unable to read '%1'."
@@ -1732,7 +1731,7 @@ msgstr "No se puede leer «%1»."
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:133
 msgid "Errors Occurred Reading File"
-msgstr "Ocurrieron errores al leer fichero"
+msgstr "Ocurrieron errores al leer el archivo"
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:133
 msgid "Some entries of the substitutions list could not be read."
@@ -1744,7 +1743,7 @@ msgstr "Guardar la lista de sustituciones"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Error Saving File"
-msgstr "Error al guardar el fichero"
+msgstr "Error al guardar el archivo"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Unable to write to '%1'."
@@ -1796,7 +1795,7 @@ msgstr "Aplicando cambios..."
 
 #: ../gtk/src/TessdataManager.cc:297 ../qt/src/TessdataManager.cc:250
 msgid "Failed to create directory for tessdata files."
-msgstr "Fallo al crear directorio para los ficheros tessdata."
+msgstr "Fallo al crear directorio para los archivos tessdata."
 
 #: ../gtk/src/TessdataManager.cc:306 ../qt/src/TessdataManager.cc:259
 msgid "Downloading %1..."
@@ -1812,12 +1811,12 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Los siguientes ficheros no pudieron ser descargados o eliminados:\n"
+"Los archivos siguientes no pudieron descargarse o eliminarse:\n"
 "%1\n"
 "\n"
 "Compruebe la conexión y los permisos de directorio.\n"
 "\n"
-"Nota: Si no tiene permiso de escritura en carpetas del sistema, puede "
+"Nota: si no tiene permiso de escritura en carpetas del sistema, puede "
 "cambiarla a rutas del usuario en el diálogo de configuración."
 
 #: ../gtk/src/Utils.cc:64
@@ -1896,7 +1895,7 @@ msgstr "UTF-8"
 
 #: ../qt/data/ConfigDialog.ui.h:19
 msgid "Text file encoding:"
-msgstr "Codificación del fichero de texto:"
+msgstr "Codificación del archivo de texto:"
 
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
@@ -2189,11 +2188,11 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Los siguientes ficheros no pudieron ser descargados o eliminados:\n"
+"Los archivos siguientes no pudieron descargarse o eliminarse:\n"
 "%1\n"
 "\n"
 "Compruebe la conexión y los permisos de directorio.\n"
-"Nota: Si no tiene permiso de escritura en carpetas del sistema, puede "
+"Nota: si no tiene permiso de escritura en carpetas del sistema, puede "
 "cambiarla a rutas del usuario en el diálogo de configuración."
 
 #: ../qt/src/Ui_MainWindow.hh:50
