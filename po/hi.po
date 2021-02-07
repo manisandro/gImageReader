@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2021-02-07 07:50+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2021-02-07 16:38+0000\n"
+"Last-Translator: Shreeshrii <shreeshrii@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/gimagereader/"
 "translations/hi/>\n"
 "Language: hi\n"
@@ -96,7 +96,7 @@ msgstr "प्रिफिक्स"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr "ISO 639-1 भाषा कोड  के बाद देश कोड"
+msgstr "ISO 639-1 भाषा कोड के बाद देश कोड"
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
@@ -148,7 +148,7 @@ msgstr "उपयोगकर्ता पथ"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr "निर्यात किए गए दस्तावेज़  को डिफ़ॉल्ट अनुप्रयोग द्वारा अपने आप खोलें"
+msgstr "निर्यात किए गए दस्तावेज़ को डिफ़ॉल्ट अनुप्रयोग द्वारा अपने आप खोलें"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -184,6 +184,14 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occurred.\n"
 msgstr ""
+"<b>टेसरैक्ट निरस्त हो गया है</b>\n"
+"\n"
+"पाठ को पहचानते समय टेसरैक्ट (OCR इंजन) निरस्त हो गया है। यह तब हो सकता है जब "
+"उपयोग किए गए ट्रेन्डडेटा भ्रष्ट अथवा उपयोग किये टेसरैक्ट संस्करण से बेमेल हों"
+", या टेसेरैक्ट में बग हो।\n"
+"\n"
+"नीचे दिए गए स्टैकट्रेस अतिरिक्त जानकारी प्रदान कर सकते हैं कि क्रैश कहाँ हुआ।"
+"\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
@@ -425,7 +433,7 @@ msgstr "शब्द जोड़ें"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:695
 msgid "Enter word:"
-msgstr "शब्द भरें:"
+msgstr "शब्द डालें:"
 
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
@@ -925,11 +933,11 @@ msgstr "कोई बिना सहेजा काम नहीं था."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
 msgid "Failed to obtain backtrace. Is GDB installed?"
-msgstr ""
+msgstr "बैकट्रेस पाने में अक्षम. क्या जीडीबी इन्स्टाल्ड है?"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
 msgid "Page %1"
-msgstr ""
+msgstr "पृष्ठ %1"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid "Failed to load image"
@@ -971,7 +979,7 @@ msgstr "आकार प्रकार का पता लगा रहा ह
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr ""
-"फ़ाइल नाम \"%1\"  पहले से ही मौजूद है. क्या आप इसके ऊपर मिटाकर लिखना चाहेंगे?"
+"फ़ाइल नाम \"%1\" पहले से ही मौजूद है. क्या आप इसके ऊपर मिटाकर लिखना चाहेंगे?"
 
 #: ../gtk/src/FileDialogs.cc:237
 msgid "Overwrite File?"
@@ -1245,6 +1253,8 @@ msgid ""
 "The following files could not be opened:\n"
 "%1"
 msgstr ""
+"निम्नलिखित फाइलें नहीं खुलीं:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
 #: ../qt/src/hocr/OutputEditorHOCR.cc:932
@@ -1252,6 +1262,8 @@ msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
 msgstr ""
+"निम्नलिखित फाइलें सही एचओसीआर एचटीएमएल नहीं हैं:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:935 ../qt/src/OutputEditorText.cc:257
@@ -1600,7 +1612,7 @@ msgstr "स्कैनर पर पंहुच अस्वीकृत."
 
 #: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:171
 msgid "Enter password for file '%1':"
-msgstr "फ़ाइल  '%1' के लिए पासवर्ड भरें:"
+msgstr "फ़ाइल '%1' के लिए पासवर्ड भरें:"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
 msgid "PDF with text"
@@ -1612,6 +1624,9 @@ msgid ""
 "%1\n"
 "Open it regardless?"
 msgstr ""
+"पीडीएफ़ फाइल में पहले से ही टेक्स्ट है:\n"
+"%1\n"
+"फिर भी उसे खोलें?"
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:264
 msgid "Images and PDFs"
@@ -1788,7 +1803,8 @@ msgstr ""
 "निम्न फ़ाइलों को डाउनलोड अथवा हटाया नहीं जा सका:\n"
 "%1\n"
 "\n"
-"कनेक्शन स्थिति और डिरेक्ट्री अनुमतियाँ जाँच लें.\n"
+"कनेक्शन स्थिति और डायरेक्टरीअनुमतियाँ जाँच लें.\n"
+"\n"
 "संकेत: यदि आपके पास सिस्टम फ़ोल्डर में लिखने की अनुमति नहीं है, तो सेटिंग "
 "संवाद में इसे बदल कर आप उपयोगकर्ता पथ चुन सकते हैं."
 
@@ -1798,7 +1814,7 @@ msgstr "हां"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "सभी को हाँ"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1806,7 +1822,7 @@ msgstr "नहीं"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "सभी को नहीं"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
@@ -1836,25 +1852,27 @@ msgstr "लाइसेंस"
 
 #: ../qt/data/BatchModeDialog.ui.h:1
 msgid "Batch Mode"
-msgstr ""
+msgstr "बैच मोड"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
 msgid "Prepend page numbers to output text"
-msgstr ""
+msgstr "पेज नंबर को टेक्स्ट आउटपुट के पहले लगायें"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "मौजूदा आउटपुट:"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"बैच मोड में, प्रत्येक इनपुट स्रोत को अलग से संसाधित किया जाता है और आउटपुट "
+"इनपुट फ़ाइल में साइड-बाय-साइड सेव होता है।"
 
 #: ../qt/data/BatchModeDialog.ui.h:5
 msgid "Autodetect page layout"
-msgstr ""
+msgstr "पेज लेआउट को स्वतः पहचाने"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -1880,7 +1898,7 @@ msgid ""
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">ऐप्लिकेशन क्रैश हो "
 "गया है</span></p><p>असुविधा के लिए क्षमा चाहते हैं. इस ऐप्लिकेशन में सुधार के"
-" लिए, समस्या की रिपोर्ट यहाँ करें -  <a href=\"mailto:manisandro@gmail."
+" लिए, समस्या की रिपोर्ट यहाँ करें - <a href=\"mailto:manisandro@gmail."
 "com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. कृपया बताएँ कि "
 "जब ऐप्लिकेशन क्रैश हुआ तो उस समय आप सिस्टम पर क्या काम कर रहे थे. साथ ही नीचे"
 " दी गई जानकारी भी शामिल करें. धन्यवाद.</p></body></html>"
@@ -1894,10 +1912,16 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
+"<html> <head/> <body> <p> <span style=\" font-weight:600;\"> Tesseract एबोर्"
+"ट हो गया है </span></p><p> Tesseract (ओसीआर इंजन) पाठ को पहचानने के दौरान "
+"एबोर्ट हो गया है । यह तब हो सकता है जब उपयोग किए गए ट्रेन्डडेटा भ्रष्ट या "
+"उपयोग किये टेसेरेक्ट संस्करण से असंगत हों या टेसेरेक्ट में बग हो । </p> <p> "
+"नीचे दिए गए स्टैक ट्रेस इस बारे में अतिरिक्त जानकारी प्रदान कर सकते हैं कि "
+"क्रैश कहाँ हुआ । </p> </body> </html>"
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "थम्बनेल्स"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -1987,18 +2011,22 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html> <head/> <body> <ul> <li> PoDoFo: छवि कम्प्रेशन के लिये अधिक विकल्प "
+"प्रदान करता है, लेकिन कोम्प्लेक्स स्क्रिप्ट को संभाल नहीं करता है। </li> "
+"<li> QPrinter: छवियों के भंडारण के लिए केवल JPEG कम्प्रेशन का समर्थन करता है"
+", लेकिन कोम्प्लेक्स स्क्रिप्टस का समर्थन करता है। </li> </ul> </body> </html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:234
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "कीबोर्ड शॉर्टकट"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
-msgstr ""
+msgstr "इससे पहले की लाइनें:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:260
 msgid "Lines after:"
-msgstr ""
+msgstr "इसके बाद की लाइनें:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:440
 msgid ""
@@ -2018,14 +2046,33 @@ msgid ""
 "td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
 "size</td></tr></table>"
 msgstr ""
+"<table><tr><td>टैब </td><td>अगला क्षेत्र</td></tr><tr><td>शिफ्ट+टैब "
+"</td><td>पिछला क्षेत्र</td></tr><tr><td>नीचे </td><td>अगली पंक्ति</td></"
+"tr><tr><td>ऊपर </td><td>पिछली "
+"पंक्ति</td></tr><tr><td>कन्ट्रोल+स्पेस</td><td>वर्तनी "
+"सुझाव</td></tr><tr><td>कन्ट्रोल+एन्टर</td><td>शब्दकोश में शब्द "
+"जोड़ें</td></tr><tr><td>कन्ट्रोल+B</td><td>टॉगल "
+"बोल्ड</td></tr><tr><td>कन्ट्रोल+I</td><td>टॉगल "
+"आइटालिक</td></tr><tr><td>कन्ट्रोल+D</td><td>कर्सर स्थिति पर शब्द विभाजित "
+"करें</td></tr><tr><td>कन्ट्रोल+M</td><td>पिछले शब्द के साथ विलय "
+"</td></tr><tr><td>कन्ट्रोल+शिफ्ट+M</td><td>अगले शब्द के साथ विलय "
+"</td></tr><tr><td>कन्ट्रोल+डिलीट</td><td>शब्द डिलीट "
+"करें</td></tr><tr><td>कन्ट्रोल+{बाएं,दाएं}</td><td>बाउंडिंग बॉक्स का बायां "
+"सिरा एडजस्ट करें</td></tr><tr><td>कन्ट्रोल+शिफ्ट+{बाएं,दाएं}</td><td>बाउंडिं"
+"ग बॉक्स का दाहिना सिरा एडजस्ट "
+"करें</td></tr><tr><td>कन्ट्रोल+{ऊपर,नीचे}</td><td>बाउंडिंग बॉक्स का ऊपरी सिरा"
+" एडजस्ट करें</td></tr><tr><td>कन्ट्रोल+शिफ्ट+{ऊपर,नीचे}</td><td>बाउंडिंग बॉक्"
+"स का निचला सिरा एडजस्ट करें</td></tr><tr><td>कन्ट्रोल++</td><td>फ़ॉन्ट आकार "
+"बढ़ाएं </td></tr><tr><td>कन्ट्रोल+-</td><td>फ़ॉन्ट आकार कम "
+"करें</td></tr></table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "कीबोर्ड शॉर्टकट"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:476
 msgid "Confidence: %1"
-msgstr ""
+msgstr "विश्वास: %1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2039,7 +2086,7 @@ msgstr "ढूंढें तथा बदलें"
 
 #: ../qt/src/MainWindow.cc:317
 msgid "Multiple sources (%1)"
-msgstr ""
+msgstr "कई स्रोत (% 1)"
 
 #: ../qt/src/MainWindow.cc:611
 msgid ""
@@ -2051,47 +2098,47 @@ msgstr ""
 
 #: ../qt/src/OutputEditorText.cc:41
 msgid "Page: %1\n"
-msgstr ""
+msgstr "पृष्ठ : %1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
-msgstr ""
+msgstr "बैच मोड..."
 
 #: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "मौजूदा आउटपुट को अधिलेखित करें"
 
 #: ../qt/src/Recognizer.cc:87
 msgid "Skip processing source"
-msgstr ""
+msgstr "प्रोसेसिंग सोर्स छोड़ें"
 
 #: ../qt/src/Recognizer.cc:234
 msgid "- Page %1: failed to render page"
-msgstr ""
+msgstr "- पेज % 1: पेज प्रस्तुत करने में विफल रहा"
 
 #: ../qt/src/Recognizer.cc:346
 msgid "- %1:%2: failed to render page"
-msgstr ""
+msgstr "- %1:%2: पृष्ठ प्रस्तुत करने में विफल रहा"
 
 #: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "- %1: आउटपुट पहले से मौजूद है, छोड़ दें"
 
 #: ../qt/src/Recognizer.cc:363
 msgid "- %1: failed to create output file"
-msgstr ""
+msgstr "- %1: आउटपुट फ़ाइल बनाने में विफल रहा"
 
 #: ../qt/src/Recognizer.cc:418
 msgid "The following errors occurred:"
-msgstr ""
+msgstr "निम्नलिखित त्रुटियां हुईं:"
 
 #: ../qt/src/SourceManager.cc:248
 msgid "No recent files"
-msgstr ""
+msgstr "हाल की कोई फाइल नहीं"
 
 #: ../qt/src/SourceManager.cc:275
 msgid "Select folder..."
-msgstr ""
+msgstr "फोल्डर का चयन करें..."
 
 #: ../qt/src/SourceManager.cc:374
 msgid "Delete Files"
@@ -2099,7 +2146,7 @@ msgstr "फ़ाइलें हटाएँ"
 
 #: ../qt/src/SourceManager.cc:374
 msgid "Delete the following files?"
-msgstr ""
+msgstr "निम्न फ़ाइलें हटाएं?"
 
 #: ../qt/src/SourceManager.cc:459
 msgid "Open output"
@@ -2108,11 +2155,11 @@ msgstr "आउटपुट खोलें"
 #: ../qt/src/SourceManager.cc:459
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr ""
+msgstr "टेक्स्ट और एचओसीआर आउटपुट दोनों पाए गए । आप किसे खोलना चाहते हैं?"
 
 #: ../qt/src/SourceManager.cc:460
 msgid "Text"
-msgstr ""
+msgstr "टेक्स्ट"
 
 #: ../qt/src/SourceManager.cc:461
 msgid "hOCR"
@@ -2145,7 +2192,7 @@ msgstr "ओसीआर मोड:"
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:188
 msgid "Add folder"
-msgstr ""
+msgstr "फ़ोल्डर जोड़ें"
 
 #: ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
