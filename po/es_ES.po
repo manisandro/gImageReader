@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2021-02-07 07:50+0000\n"
+"PO-Revision-Date: 2021-02-09 16:50+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/es/>\n"
@@ -1434,11 +1434,11 @@ msgstr "No se han encontrado diccionarios ortográficos para «%1»."
 
 #: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:149
 msgid "Stripping line breaks..."
-msgstr "Quitando los saltos de línea..."
+msgstr "Quitando saltos de renglón…"
 
 #: ../gtk/src/OutputEditorText.cc:170
 msgid "Check spelling"
-msgstr "Comprobando la ortografía"
+msgstr "Comprobar ortografía"
 
 #: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
@@ -1459,26 +1459,25 @@ msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
-msgstr "Guardar la salida..."
+msgstr "Guardar salida…"
 
 #: ../gtk/src/Recognizer.cc:179 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
-msgstr "No hay idiomas disponibles"
+msgstr "No hay ningún idioma disponible"
 
 #: ../gtk/src/Recognizer.cc:179 ../qt/src/RecognitionMenu.cc:76
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
-"No se han encontrado idiomas para tesseract. El reconocimiento no puede "
-"funcionar."
+"No se han encontrado idiomas para tesseract. El reconocimiento no funcionará."
 
 #: ../gtk/src/Recognizer.cc:233 ../qt/src/RecognitionMenu.cc:134
 msgid "Multilingual"
-msgstr "Multilenguaje"
+msgstr "Plurilingüe"
 
 #: ../gtk/src/Recognizer.cc:285 ../qt/src/RecognitionMenu.cc:182
 msgid "Automatic page segmentation"
-msgstr "Segmentación automática de página"
+msgstr "Segmentación automática de páginas"
 
 #: ../gtk/src/Recognizer.cc:286 ../qt/src/RecognitionMenu.cc:183
 msgid "Page segmentation with orientation and script detection"
