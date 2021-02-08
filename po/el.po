@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gImageReader 3.1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2021-02-05 23:41+0000\n"
+"PO-Revision-Date: 2021-02-09 16:50+0000\n"
 "Last-Translator: Michalis <michalisntovas@yahoo.gr>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/gimagereader/"
 "translations/el/>\n"
@@ -116,7 +116,7 @@ msgstr "Όνομα"
 #: ../gtk/src/Utils.cc:76 ../qt/data/ConfigDialog.ui.h:27
 #: ../qt/data/MainWindow.ui.h:13
 msgid "Cancel"
-msgstr "Ακύρωση"
+msgstr "Άκυρο"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
@@ -1355,7 +1355,7 @@ msgstr "Ο gImageReader %1 είναι διαθέσιμος"
 
 #: ../gtk/src/MainWindow.cc:462 ../qt/src/MainWindow.cc:454
 msgid "Download"
-msgstr "Μεταφόρτωση"
+msgstr "Λήψη"
 
 #: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:455
 msgid "Changelog"
