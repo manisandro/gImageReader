@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-12-01 10:29+0000\n"
+"PO-Revision-Date: 2021-03-07 04:28+0000\n"
 "Last-Translator: Eric <spice2wolf@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gimagereader/translations/zh_Hans/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.5.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -2003,11 +2003,11 @@ msgstr "键盘快捷键"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
-msgstr ""
+msgstr "冒号内容之前的行："
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:260
 msgid "Lines after:"
-msgstr ""
+msgstr "冒号内容之后的行："
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:440
 msgid ""
