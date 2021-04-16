@@ -1,0 +1,51 @@
+site_name: gimagereader
+theme:
+  name: material
+  logo: img/gimagereader.png
+  favicon: img/gimagereader.png
+  
+
+repo_url: https://github.com/manisandro/gImageReader
+site_author: Miharix
+copyright: Copyright ©2009-2020 Sandro Mani
+
+#if servin on server change to true
+use_directory_urls: false
+
+plugins:
+  - search
+  - i18n:
+      default_language: en
+      languages:
+       # en: English
+        sl: Slovenščina  
+
+
+  - redirects:
+      redirect_maps:
+       '7_Translate.md': 'https://hosted.weblate.org/projects/gimagereader/translations/'
+       'sl/7_Translate.md': 'https://hosted.weblate.org/projects/gimagereader/translations/'
+       '8_Issue_tracker.md': 'https://github.com/manisandro/gImageReader/issues'
+       'sl/8_Issue_tracker.md': 'https://github.com/manisandro/gImageReader/issues'
+       'News.md': 'https://github.com/manisandro/gImageReader/commits/master'
+       'sl/News.md': 'https://github.com/manisandro/gImageReader/commits/master'  
+       'FAQ.md': 'https://github.com/manisandro/gImageReader/wiki/FAQ'
+       'sl/FAQ.md': 'https://github.com/manisandro/gImageReader/wiki/FAQ'       
+  
+extra:
+   social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/manisandro/gImageReader
+ 
+   alternate:
+
+    # Switch to English
+    - name: English
+      link: 'en\index.html' #if serving on server change to "en\" 
+      lang: en
+
+
+    # Switch to Slo
+    - name: Slovenščina
+      link: 'sl\index.html' #if serving on server change to "sl\"
+      lang: sl
