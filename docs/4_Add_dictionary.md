@@ -1,0 +1,4 @@
+# Install Spelling dictionaries
+
+- On **Linux**, if your distribution supports PackageKit, the  program will offer to automatically install missing dictionaries when  necessary. If automatic installation does not work for some reason, you  can install the spelling dictionaries from the package management  application (the packages may be called something like *hunspell-<lang>*).
+- On **Windows**, the program will attempt to automatically download the desired spelling dictionary from [http://cgit.freedesktop.org/libreoffice/dictionaries/tree](https://cgit.freedesktop.org/libreoffice/dictionaries/tree). Dictionaries can also be installed manually: for a desired language (i.e. `it_IT`), download the ***.dic and \*.aff** files and place them in `Start→All Programs→gImageReader→Spelling dictionaries`.
