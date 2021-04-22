@@ -8,11 +8,10 @@
 
 ## Kaj vam program omogoča
 
-- Import PDF documents and images from disk, scanning devices, clipboard and screenshots
-- Process multiple images and documents in one go
-- Manual or automatic recognition area definition
-- Recognize to plain text or to hOCR documents
-- Recognized text displayed directly next to the image
-- Post-process the recognized text, including spellchecking
-- Generate PDF documents from hOCR documents
-
+- Uvoz PDF dokumentov ter slik iz diska, optičnega bralnika, odložišča ter zajema zaslona
+- Obdelava več slik ali dokumentov na enkrat
+- Ročna ali samodejna določitev območja prepoznave
+- Prepoznava v golo besedilo ali v zapis hOCR
+- Prepoznano besedilo prikazano takoj ob sliki
+- Nadaljna obdelava prepoznanega besedila, vkjučno s črkovalnikom slovarja
+- Izdelava PDF ter ODT dokumentov iz hOCR
