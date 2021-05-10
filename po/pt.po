@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Portuguese (Brazil) (gImageReader)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-13 02:35+0200\n"
-"PO-Revision-Date: 2020-09-30 19:41+0000\n"
+"PO-Revision-Date: 2021-05-10 06:25+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pt/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1491,7 +1491,7 @@ msgstr "Assumir uma única palavra"
 
 #: ../gtk/src/Recognizer.cc:292 ../qt/src/RecognitionMenu.cc:189
 msgid "Assume a single word in a circle"
-msgstr "Assumir uma única palavra em um círculo"
+msgstr "Assumir uma única palavra num círculo"
 
 #: ../gtk/src/Recognizer.cc:293 ../qt/src/RecognitionMenu.cc:190
 msgid "Sparse text in no particular order"
