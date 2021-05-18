@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gImageReader 3.1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2021-05-18 17:33+0000\n"
+"PO-Revision-Date: 2021-05-19 18:33+0000\n"
 "Last-Translator: Eugenia Russell <eugenia.russell2019@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/gimagereader/"
 "translations/el/>\n"
@@ -357,7 +357,7 @@ msgstr "Μια γραφική διεπαφή χρήστη στο tesseract-ocr"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr ""
+msgstr "Λευκή / μαύρη λίστα χαρακτήρων"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
