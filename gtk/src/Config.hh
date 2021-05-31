@@ -44,6 +44,7 @@ public:
 	bool useSystemDataLocations() const;
 	std::string tessdataLocation() const;
 	std::string spellingLocation() const;
+	std::string highlightMode() const;
 
 	static void openTessdataDir();
 	static void openSpellingDir();

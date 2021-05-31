@@ -17,7 +17,9 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "MainWindow.hh"
 #include "OutputBuffer.hh"
+#include <gtksourceviewmm/languagemanager.h>
 
 OutputBuffer::OutputBuffer()
 	: Gsv::Buffer() {
@@ -26,6 +28,12 @@ OutputBuffer::OutputBuffer()
 	add_mark(m_regionBeginMark, begin());
 	add_mark(m_regionEndMark, end());
 	set_highlight_matching_brackets(false);
+
+	// Enable syntax highlighting
+	set_highlight_syntax(true);
+	Glib::RefPtr<Gsv::LanguageManager> language_manager = Gsv::LanguageManager::get_default();
+	Glib::RefPtr<Gsv::Language> language = language_manager->get_language(MAIN->getConfig()->highlightMode());
+	set_language(language);
 
 	m_regionTag = create_tag("selection");
 	Gtk::Label label;

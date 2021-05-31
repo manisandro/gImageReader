@@ -286,7 +286,6 @@
             <summary>PDF export version</summary>
             <description>PDF export version.</description>
         </key>
-
         <key type="b" name="ocrblacklistenabled">
             <default>true</default>
             <summary>OCR character blacklist enabled</summary>
@@ -311,6 +310,11 @@
             <default>true</default>
             <summary>Show thumbnails</summary>
             <description>Show thumbnails</description>
+        </key>
+        <key type="s" name="highlightmode">
+            <default>"plain text"</default>
+            <summary>Syntax highlight mode</summary>
+            <description>Syntax highlight mode.</description>
         </key>
     </schema>
 </schemalist>

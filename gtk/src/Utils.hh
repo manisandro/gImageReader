@@ -24,6 +24,7 @@
 #include <condition_variable>
 #include <iterator>
 #include <queue>
+#include <set>
 #include <type_traits>
 #include <utility>
 
