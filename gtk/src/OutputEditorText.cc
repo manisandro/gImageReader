@@ -57,6 +57,7 @@ OutputEditorText::OutputEditorText() {
 	ui.buttonRedo->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK | Gdk::SHIFT_MASK, Gtk::AccelFlags(0));
 	ui.buttonFindreplace->add_accelerator("clicked", group, GDK_KEY_F, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 	ui.buttonSave->add_accelerator("clicked", group, GDK_KEY_S, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
+	ui.buttonOpen->add_accelerator("clicked", group, GDK_KEY_O, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
 
 	m_insertMode = InsertMode::Append;
 
@@ -71,6 +72,7 @@ OutputEditorText::OutputEditorText() {
 	CONNECT(ui.buttonUndo, clicked, [this] { m_textBuffer->undo(); scrollCursorIntoView(); });
 	CONNECT(ui.buttonRedo, clicked, [this] { m_textBuffer->redo(); scrollCursorIntoView(); });
 	CONNECT(ui.buttonSave, clicked, [this] { save(); });
+	CONNECT(ui.buttonOpen, clicked, [this] { open(); });
 	CONNECT(ui.buttonClear, clicked, [this] { clear(); });
 	CONNECTP(m_textBuffer, can_undo, [this] { ui.buttonUndo->set_sensitive(m_textBuffer->can_undo()); });
 	CONNECTP(m_textBuffer, can_redo, [this] { ui.buttonRedo->set_sensitive(m_textBuffer->can_redo()); });
@@ -78,6 +80,7 @@ OutputEditorText::OutputEditorText() {
 	CONNECT(m_searchFrame, replace_all, sigc::mem_fun(this, &OutputEditorText::replaceAll));
 	CONNECT(m_searchFrame, apply_substitutions, sigc::mem_fun(this, &OutputEditorText::applySubstitutions));
 	CONNECT(ConfigSettings::get<FontSetting>("customoutputfont"), changed, [this] { setFont(); });
+	CONNECT(ConfigSettings::get<EntrySetting>("highlightmode"), changed, [this] { activateHighlightMode(); });
 	CONNECT(ConfigSettings::get<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(); });
 	CONNECT(ui.textview, populate_popup, [this](Gtk::Menu * menu) {
 		completeTextViewMenu(menu);
@@ -287,12 +290,24 @@ void OutputEditorText::addText(const Glib::ustring& text, bool insert) {
 	MAIN->setOutputPaneVisible(true);
 }
 
+void OutputEditorText::activateHighlightMode() {
+	Glib::RefPtr<Gsv::LanguageManager> language_manager = Gsv::LanguageManager::get_default();
+	Glib::RefPtr<Gsv::Language> language = language_manager->get_language(MAIN->getConfig()->highlightMode());
+	m_textBuffer->set_language(language);
+}
+
 bool OutputEditorText::open(const std::string& file) {
 	if(!clear(false)) {
 		return false;
 	}
 	try {
-		m_textBuffer->set_text(Glib::file_get_contents(file));
+		if (file.empty()) {
+			FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
+			std::vector<Glib::RefPtr<Gio::File> > files = FileDialogs::open_dialog(_("Select Files"), "", "outputdir", filter, true);
+			// TODO: for now open only the first file. Once multi-tab UI is implemented - open each file in a separate tab.
+			m_textBuffer->set_text(Glib::file_get_contents(files[0]->get_path()));
+		} else
+			m_textBuffer->set_text(Glib::file_get_contents(file));
 		MAIN->setOutputPaneVisible(true);
 		return true;
 	} catch(const Glib::Error&) {

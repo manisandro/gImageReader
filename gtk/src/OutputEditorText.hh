@@ -56,7 +56,7 @@ public:
 	BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const override;
 	bool getModified() const override;
 	void onVisibilityChanged(bool visible) override;
-	bool open(const std::string& file) override;
+	bool open(const std::string& file = "") override;
 	bool save(const std::string& filename = "") override;
 	void setLanguage(const Config::Lang& lang) override;
 
@@ -77,6 +77,7 @@ private:
 	GtkSpell::Checker m_spell;
 
 	void addText(const Glib::ustring& text, bool insert);
+	void activateHighlightMode();
 	void completeTextViewMenu(Gtk::Menu* menu);
 	void filterBuffer();
 	void findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace);
