@@ -1,7 +1,27 @@
 FROM fedora:rawhide
 
 MAINTAINER Sandro Mani <manisandro@gmail.com>
+########## SYSTEM SETUP ##########
+RUN dnf -y update; dnf clean all
+# fundamental packages 
+RUN dnf -y install file gcc make man sudo tar; dnf clean all
 
+
+########## MINGW & BUILD DEPENDENCIES ##########
+USER root
+RUN dnf -y install mingw64-gcc
+RUN dnf -y install mingw64-freetype freetype freetype-devel
+RUN dnf -y install mingw64-cairo mingw64-cairo-static cairo cairo-devel
+RUN dnf -y install mingw64-harfbuzz harfbuzz harfbuzz-devel
+RUN dnf -y install mingw64-pango pango pango-devel
+RUN dnf -y install mingw64-poppler poppler poppler-devel
+RUN dnf -y install mingw64-gtk3 gtk3 gtk3-devel
+RUN dnf -y install mingw64-glib2-static glib2 glib2-devel
+RUN dnf -y install atk atk-devel 
+RUN dnf -y install mingw64-winpthreads mingw64-winpthreads-static
+
+
+# gImageReader
 RUN \
 echo all > /etc/rpm/macros.image-language-conf && \
 dnf install -y \
@@ -49,7 +69,24 @@ dnf install -y \
   mingw64-qtspell-qt5 \
   mingw64-tesseract \
   mingw64-twaindsm \
-  mingw64-quazip-qt5
+  mingw64-quazip-qt5 \
+  \
+  mingw64-libzip \
+  \
+  mingw64-gtkmm30 \
+  mingw64-gtkspell3 \
+  mingw64-gtkspellmm30 \
+  mingw64-gtksourceviewmm3 \
+  mingw64-cairomm \
+  mingw64-poppler \
+  mingw64-poppler-glib \
+  mingw64-json-glib \
+  mingw64-libxml++
+
+
+########## CONFIG ##########
+ENV PKG_CONFIG_ALLOW_CROSS=1
+ENV PKG_CONFIG_PATH=/usr/i686-w64-mingw32/lib/pkgconfig
 
 WORKDIR /workspace
 VOLUME ["/workspace"]
