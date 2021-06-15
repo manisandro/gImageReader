@@ -46,7 +46,7 @@ void FileTreeModel::recursive_row_inserted(const Gtk::TreeIter& index) {
 
 Gtk::TreeIter FileTreeModel::insertFile(std::string filePath, DataObject* data, const Glib::ustring& displayName) {
 #ifdef G_OS_WIN32
-	std::string fileDir = std::string("/") + Glib::path_get_dirname(filePath);
+	Glib::ustring fileDir = std::string("/") + Glib::path_get_dirname(filePath);
 	Utils::string_replace(fileDir, "\\", "/", true);
 	filePath = std::string("/") + filePath;
 	std::string tempPath = std::string("/") + Glib::get_tmp_dir();
@@ -182,7 +182,7 @@ Gtk::TreeIter FileTreeModel::findFile(const std::string& filePath, bool isFile) 
 
 #ifdef G_OS_WIN32
 	std::string prefix = "/";
-	std::string fileDir = std::string("/") + Glib::path_get_dirname(filePath);
+	Glib::ustring fileDir = std::string("/") + Glib::path_get_dirname(filePath);
 	Utils::string_replace(fileDir, "\\", "/", true);
 	std::string tempPath = std::string("/") + Glib::get_tmp_dir();
 #else
