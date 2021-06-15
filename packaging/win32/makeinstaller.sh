@@ -17,7 +17,7 @@ iface=${2:-qt5}
 MINGWROOT=/usr/$arch-w64-mingw32/sys-root/mingw
 
 export PKG_CONFIG_ALLOW_CROSS=1
-export PKG_CONFIG_PATH="$MINGWROOT/lib/pkgconfig"
+export PKG_CONFIG_PATH="$MINGWROOT/lib/pkgconfig:$MINGWROOT/"
 
 optflags="-g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions --param=ssp-buffer-size=4 -fno-omit-frame-pointer"
 
