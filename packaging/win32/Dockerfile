@@ -36,6 +36,7 @@ dnf install -y \
   tesseract \
   mingw32-nsis \
   zip \
+  python3-gobject \
   \
   mingw32-gdb \
   mingw32-gcc-c++ \
