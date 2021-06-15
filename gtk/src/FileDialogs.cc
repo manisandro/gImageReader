@@ -27,7 +27,7 @@
 #include <gdk/gdkwin32.h>
 #include <windows.h>
 #include <locale>
-#include <shlobj_core.h>
+#include <shlobj.h>
 #else
 #include <gdk/gdkx.h>
 #endif
