@@ -84,9 +84,5 @@ dnf install -y \
   mingw64-libxml++
 
 
-########## CONFIG ##########
-ENV PKG_CONFIG_ALLOW_CROSS=1
-ENV PKG_CONFIG_PATH=/usr/i686-w64-mingw32/lib/pkgconfig
-
 WORKDIR /workspace
 VOLUME ["/workspace"]
