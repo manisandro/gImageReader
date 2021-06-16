@@ -125,7 +125,7 @@ static std::string win32_open_folder_dialog(const Glib::ustring& title, const st
 	}
 	wchar_t buffer[MAX_PATH];
 	if(SHGetPathFromIDList(result, buffer)) {
-		return ws2s(buffer);
+		return std::string(buffer);
 	}
 	return std::string();
 }
