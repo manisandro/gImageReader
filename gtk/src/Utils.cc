@@ -25,6 +25,11 @@
 #include <clocale>
 #include <csignal>
 #include <fontconfig/fontconfig.h>
+
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
