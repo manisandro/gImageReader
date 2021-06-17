@@ -261,7 +261,6 @@ void HOCRPdfExportWidget::updatePreview() {
 	}
 	// Units of QPainter on pixel based devices is pixels, so px2pu = 1.
 	printer.printChildren(page, pdfSettings, 1.);
-	image.save("/home/sandro/Desktop/a.png");
 	m_preview->setPixmap(QPixmap::fromImage(image));
 	m_preview->setPos(-0.5 * bbox.width(), -0.5 * bbox.height());
 }
