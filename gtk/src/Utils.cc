@@ -197,9 +197,11 @@ std::string Utils::make_absolute_path(const std::string& path, const std::string
 		return path;
 	}
 	std::string abspath = Glib::build_filename(basepath, path);
+#ifdef G_OS_UNIX
 	char* realabspath = realpath(abspath.c_str(), nullptr);
 	abspath = std::string(realabspath);
 	free(realabspath);
+#endif
 	return abspath;
 }
 
