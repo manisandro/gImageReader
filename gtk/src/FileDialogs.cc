@@ -124,7 +124,7 @@ static std::string win32_open_folder_dialog(const Glib::ustring& title, const st
 		// ToDo: shouldn't we release the memory hold by "result"?...
 		return std::string();
 	}
-	wchar_t buffer[MAX_PATH];
+	TCHAR buffer[MAX_PATH];
 	if(SHGetPathFromIDList(result, buffer)) {
 	    // ToDo: shouldn't we release the memory hold by "result"?...
 		return std::string(buffer);
