@@ -1,27 +1,9 @@
 FROM fedora:rawhide
 
 MAINTAINER Sandro Mani <manisandro@gmail.com>
-########## SYSTEM SETUP ##########
+
 RUN dnf -y update; dnf clean all
-# fundamental packages 
-RUN dnf -y install file gcc make man sudo tar; dnf clean all
 
-
-########## MINGW & BUILD DEPENDENCIES ##########
-USER root
-RUN dnf -y install mingw64-gcc
-RUN dnf -y install mingw64-freetype freetype freetype-devel
-RUN dnf -y install mingw64-cairo mingw64-cairo-static cairo cairo-devel
-RUN dnf -y install mingw64-harfbuzz harfbuzz harfbuzz-devel
-RUN dnf -y install mingw64-pango pango pango-devel
-RUN dnf -y install mingw64-poppler poppler poppler-devel
-RUN dnf -y install mingw64-gtk3 gtk3 gtk3-devel
-RUN dnf -y install mingw64-glib2-static glib2 glib2-devel
-RUN dnf -y install atk atk-devel 
-RUN dnf -y install mingw64-winpthreads mingw64-winpthreads-static
-
-
-# gImageReader
 RUN \
 echo all > /etc/rpm/macros.image-language-conf && \
 dnf install -y \
@@ -55,6 +37,19 @@ dnf install -y \
   mingw32-twaindsm \
   mingw32-quazip-qt5 \
   \
+  mingw32-libzip \
+  mingw32-gtk3 gtk3 gtk3-devel \
+  mingw32-glib2-static glib2 glib2-devel \
+  mingw32-gtkmm30 \
+  mingw32-gtkspell3 \
+  mingw32-gtkspellmm30 \
+  mingw32-gtksourceviewmm3 \
+  mingw32-cairomm \
+  mingw32-poppler \
+  mingw32-poppler-glib \
+  mingw32-json-glib \
+  mingw32-libxml++ \
+  \
   mingw64-gdb \
   mingw64-gcc-c++ \
   mingw64-dlfcn \
@@ -73,7 +68,8 @@ dnf install -y \
   mingw64-quazip-qt5 \
   \
   mingw64-libzip \
-  \
+  mingw64-gtk3 gtk3 gtk3-devel \
+  mingw64-glib2-static glib2 glib2-devel \
   mingw64-gtkmm30 \
   mingw64-gtkspell3 \
   mingw64-gtkspellmm30 \
