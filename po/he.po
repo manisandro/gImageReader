@@ -990,7 +990,7 @@ msgstr "עמוד"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:688
 msgid "Text block"
-msgstr "חסימת טקסט"
+msgstr "בלוק טקסט"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:620 ../gtk/src/hocr/OutputEditorHOCR.cc:272
 #: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:312
@@ -1138,7 +1138,7 @@ msgstr "ייצוא הטקסט נכשל: לא ניתן לכתוב קובץ פלט
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:269
 #: ../qt/src/hocr/OutputEditorHOCR.cc:311
 msgid "Block"
-msgstr "חסום"
+msgstr "בלוק"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:275
 #: ../qt/src/hocr/OutputEditorHOCR.cc:313
@@ -1487,7 +1487,7 @@ msgstr "הנח שמדובר בבלוק יחיד של טקסט מיושר אנכ�
 
 #: ../gtk/src/Recognizer.cc:289 ../qt/src/RecognitionMenu.cc:186
 msgid "Assume a single uniform block of text"
-msgstr "הנח שמדובר בגוש טקסט יחיד"
+msgstr "הנח שמדובר בבלוק טקסט יחיד"
 
 #: ../gtk/src/Recognizer.cc:290 ../qt/src/RecognitionMenu.cc:187
 msgid "Assume a line of text"
