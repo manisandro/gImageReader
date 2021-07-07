@@ -31,6 +31,7 @@
 #include "CrashHandler.hh"
 
 int main (int argc, char* argv[]) {
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 	QApplication app(argc, argv);
 
 	QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
