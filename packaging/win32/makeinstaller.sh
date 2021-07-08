@@ -204,6 +204,10 @@ if [ $withdebug ]; then
     variant="_debug"
 fi
 
+if [ ! -z $4 ]; then
+    progVersion="$4"
+fi
+
 # Build portable zip
 pushd $builddir
 ln -s root ${progName}_${progVersion}_${iface}

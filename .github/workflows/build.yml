@@ -16,14 +16,12 @@ jobs:
             VERSION=$(basename ${{ github.ref }})
           else
             VERSION=ci-latest-$(basename ${{ github.ref }})
-            PREV_RELEASE=$(curl -s https://api.github.com/repos/$GITHUB_REPOSITORY/releases/tags/$VERSION | jq -r .url)
           fi
-          PACKAGE_VERSION=$(grep -oP 'SET\(PACKAGE_VERSION \K([\d\.]+)(?=\))' CMakeLists.txt)
           echo "##[set-output name=version;]$VERSION"
-          echo "##[set-output name=prev_release;]${PREV_RELEASE/null/}"
-          echo "##[set-output name=pkg_version;]$PACKAGE_VERSION"
       - name: Build application
-        run: docker run -v $PWD:/workspace gimagereader-mingw-buildenv ./packaging/win32/makeinstaller.sh x86_64
+        run: |
+          docker run -v $PWD:/workspace gimagereader-mingw-buildenv ./packaging/win32/makeinstaller.sh x86_64 qt5 nodebug ${{ steps.version_number.outputs.version }}
+          docker run -v $PWD:/workspace gimagereader-mingw-buildenv ./packaging/win32/makeinstaller.sh x86_64 gtk nodebug ${{ steps.version_number.outputs.version }}
       - name: Reset ci-latest tag
         run: |
           VERSION=${{ steps.version_number.outputs.version }}
@@ -48,21 +46,39 @@ jobs:
           release_name: CI Build
           draft: false
           prerelease: ${{ !startsWith(github.ref, 'refs/tags/') }}
-      - name: Upload portable zip release asset
+      - name: Upload qt5 portable zip release asset
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.pkg_version }}_qt5_x86_64.zip
+          asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_x86_64.zip
           asset_name: gImageReader_latest_qt5_x86_64.zip
           asset_content_type: application/zip
-      - name: Upload installer release asset
+      - name: Upload qt5 installer release asset
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.pkg_version }}_qt5_x86_64.exe
+          asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_x86_64.exe
           asset_name: gImageReader_latest_qt5_x86_64.exe
+          asset_content_type: application/x-dosexec
+      - name: Upload gtk portable zip release asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/mingw64-gtk/gImageReader_${{ steps.version_number.outputs.version }}_gtk_x86_64.zip
+          asset_name: gImageReader_latest_gtk_x86_64.zip
+          asset_content_type: application/zip
+      - name: Upload gtk installer release asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/mingw64-gtk/gImageReader_${{ steps.version_number.outputs.version }}_gtk_x86_64.exe
+          asset_name: gImageReader_latest_gtk_x86_64.exe
           asset_content_type: application/x-dosexec
