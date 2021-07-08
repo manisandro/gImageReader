@@ -29,7 +29,7 @@
 #include <cstring>
 #include <iomanip>
 #include <libxml++/libxml++.h>
-#include <uuid/uuid.h>
+#include <glib/guuid.h>
 #include <zip.h>
 
 static Glib::ustring manifestNS_URI("urn:oasis:names:tc:opendocument:xmlns:manifest:1.0");
@@ -352,18 +352,12 @@ void HOCROdtExporter::writeImage(zip* fzip, std::map<const HOCRItem*, Glib::ustr
 	if(item->itemClass() == "ocr_graphic") {
 		Cairo::RefPtr<Cairo::ImageSurface> selection;
 		Utils::runInMainThreadBlocking([&] { selection = getSelection(item->bbox()); });
-//#if GLIB_CHECK_VERSION(2, 52, 0)
-//		gchar* guuid = g_uuid_string_random();
-//		Glib::ustring uuid(guuid);
-//		g_free(guuid);
-//		uuid = uuid.substr(1, uuid.length() - 2); // Remove {}
-//#else
-		uuid_t uuidGenerated;
-		uuid_generate_random(uuidGenerated);
-		char uuidBuff[36];
-		uuid_unparse(uuidGenerated, uuidBuff);
-		Glib::ustring uuid(uuidBuff);
-//#endif
+
+		gchar* guuid = g_uuid_string_random();
+		Glib::ustring uuid(guuid);
+		g_free(guuid);
+		uuid = uuid.substr(1, uuid.length() - 2); // Remove {}
+
 		Glib::ustring filename = Glib::ustring::compose("Pictures/%1.png", uuid);
 
 		Glib::RefPtr<Glib::ByteArray> pngbytes = Glib::ByteArray::create();

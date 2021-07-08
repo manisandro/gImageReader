@@ -27,6 +27,7 @@
 #include <gdk/gdkwin32.h>
 #include <windows.h>
 #include <locale>
+#include <shlobj.h>
 #else
 #include <gdk/gdkx.h>
 #endif
@@ -120,12 +121,15 @@ static std::string win32_open_folder_dialog(const Glib::ustring& title, const st
 	binfo.iImage = 0;
 	PIDLIST_ABSOLUTE result = SHBrowseForFolderW(&binfo);
 	if(result == NULL) {
+		// ToDo: shouldn't we release the memory hold by "result"?...
 		return std::string();
 	}
-	wchar_t buffer[MAX_PATH];
-	if(SHGetPathFromIDList(pidl, buffer)) {
-		return ws2s(buffer);
+	TCHAR buffer[MAX_PATH];
+	if(SHGetPathFromIDList(result, buffer)) {
+	    // ToDo: shouldn't we release the memory hold by "result"?...
+		return std::string(buffer);
 	}
+	// ToDo: shouldn't we release the memory hold by "result"?...
 	return std::string();
 }
 

@@ -239,7 +239,7 @@ std::string Config::tessdataLocation(Location location) {
 	if(location == SystemLocation) {
 #ifdef G_OS_WIN32
 		std::string dataDir = Glib::build_filename(pkgDir, "share");
-		Glib::setenv("TESSDATA_PREFIX",  Glib::build_filename(dataDir, "tessdata");
+		Glib::setenv("TESSDATA_PREFIX",  Glib::build_filename(dataDir, "tessdata"));
 #else
 		Glib::unsetenv("TESSDATA_PREFIX");
 #endif

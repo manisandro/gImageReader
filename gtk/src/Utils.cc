@@ -25,6 +25,11 @@
 #include <clocale>
 #include <csignal>
 #include <fontconfig/fontconfig.h>
+
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #undef USE_STD_NAMESPACE
@@ -192,9 +197,11 @@ std::string Utils::make_absolute_path(const std::string& path, const std::string
 		return path;
 	}
 	std::string abspath = Glib::build_filename(basepath, path);
+#ifdef G_OS_UNIX
 	char* realabspath = realpath(abspath.c_str(), nullptr);
 	abspath = std::string(realabspath);
 	free(realabspath);
+#endif
 	return abspath;
 }
 
