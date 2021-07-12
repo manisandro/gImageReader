@@ -1042,13 +1042,13 @@ std::pair<double, double> HOCRItem::baseLine() const {
 	return std::make_pair(0.0, 0.0);
 }
 
-bool HOCRItem::parseChildren(const xmlpp::Element* element, Glib::ustring language) {
+bool HOCRItem::parseChildren(const xmlpp::Element* element, Glib::ustring language, const Glib::ustring& defaultLanguage) {
 	// Determine item language (inherit from parent if not specified)
 	Glib::ustring elemLang = getAttribute("lang");
 	if(!elemLang.empty()) {
 		auto it = s_langCache.find(elemLang);
 		if(it == s_langCache.end()) {
-			it = s_langCache.insert(std::make_pair(elemLang, Utils::getSpellingLanguage(elemLang))).first;
+			it = s_langCache.insert(std::make_pair(elemLang, Utils::getSpellingLanguage(elemLang, defaultLanguage))).first;
 		}
 		m_attrs.erase(m_attrs.find("lang"));
 		language = it->second;
@@ -1062,7 +1062,7 @@ bool HOCRItem::parseChildren(const xmlpp::Element* element, Glib::ustring langua
 	const xmlpp::Element* childElement = XmlUtils::firstChildElement(element);
 	while(childElement) {
 		m_childItems.push_back(new HOCRItem(childElement, m_pageItem, this, m_childItems.size()));
-		haveWords |= m_childItems.back()->parseChildren(childElement, language);
+		haveWords |= m_childItems.back()->parseChildren(childElement, language, defaultLanguage);
 		childElement = XmlUtils::nextSiblingElement(childElement);
 	}
 	return haveWords;
@@ -1080,7 +1080,7 @@ Glib::ustring HOCRItem::getTitleAttribute(const Glib::ustring& key) const {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-HOCRPage::HOCRPage(const xmlpp::Element* element, int pageId, const Glib::ustring& language, bool cleanGraphics, int index)
+HOCRPage::HOCRPage(const xmlpp::Element* element, int pageId, const Glib::ustring& defaultLanguage, bool cleanGraphics, int index)
 	: HOCRItem(element, this, nullptr, index), m_pageId(pageId) {
 	m_attrs["id"] = Glib::ustring::compose("page_%1", pageId);
 
@@ -1104,7 +1104,7 @@ HOCRPage::HOCRPage(const xmlpp::Element* element, int pageId, const Glib::ustrin
 		const xmlpp::Element* nextSibling = XmlUtils::nextSiblingElement(childElement);
 		HOCRItem* item = new HOCRItem(childElement, this, this, m_childItems.size());
 		m_childItems.push_back(item);
-		if(!item->parseChildren(childElement, language)) {
+		if(!item->parseChildren(childElement, defaultLanguage, defaultLanguage)) {
 			// No word children -> treat as graphic
 			if(cleanGraphics && (item->bbox().width < 10 || item->bbox().height < 10)) {
 				// Ignore graphics which are less than 10 x 10

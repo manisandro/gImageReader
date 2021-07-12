@@ -879,7 +879,10 @@ bool DisplayerSelection::mousePressEvent(GdkEventButton* event) {
 }
 
 bool DisplayerSelection::mouseReleaseEvent(GdkEventButton* /*event*/) {
-	m_resizeHandlers.clear();
+	if(!m_resizeHandlers.empty()) {
+		m_signalGeometryChanged.emit(rect());
+		m_resizeHandlers.clear();
+	}
 	return false;
 }
 
@@ -915,7 +918,6 @@ bool DisplayerSelection::mouseMoveEvent(GdkEventMotion* event) {
 		}
 		Geometry::Rectangle newRect = Geometry::Rectangle(m_anchor, m_point).unite(m_minRect);
 		setRect(newRect);
-		m_signalGeometryChanged.emit(rect());
 		displayer()->ensureVisible(event->x, event->y);
 		return true;
 	}

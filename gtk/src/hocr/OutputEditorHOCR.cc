@@ -25,6 +25,7 @@
 #include <tesseract/ocrclass.h>
 #undef USE_STD_NAMESPACE
 #include <libxml++/libxml++.h>
+#include <gtkspellmm.h>
 
 #include "ConfigSettings.hh"
 #include "DisplayerToolHOCR.hh"
@@ -105,6 +106,22 @@ protected:
 			Gtk::ComboBoxText* combo = new Gtk::ComboBoxText();
 			combo->insert(0, "no", "no");
 			combo->insert(1, "yes", "yes");
+			if((*it)[m_cols.multiple] == true) {
+				combo->set_active(-1);
+			} else {
+				combo->set_active_id((*it)[m_cols.value]);
+			}
+			combo->signal_editing_done().connect([ = ] {
+				edited(path, combo->get_active_id());
+			});
+			combo->show();
+			return Gtk::manage(combo);
+		} else if(it && (*it)[m_cols.attr] == "lang") {
+			Gtk::ComboBoxText* combo = new Gtk::ComboBoxText();
+			for(const Glib::ustring& code : GtkSpell::Checker::get_language_list()) {
+				Glib::ustring text = GtkSpell::Checker::decode_language_code(code);
+				combo->append(code, text);
+			}
 			if((*it)[m_cols.multiple] == true) {
 				combo->set_active(-1);
 			} else {
@@ -1040,7 +1057,11 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 		Glib::ustring suggestion = m_filebasename;
 		if(suggestion.empty()) {
 			std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-			suggestion = !sources.empty() ? Utils::split_filename(sources.front()->displayname).first : _("output");
+			if(!sources.empty()) {
+				suggestion = Utils::split_filename(sources.front()->file->get_path()).first;
+			} else {
+				suggestion = _("output");
+			}
 		}
 		FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html"}, {"*.html"}};
 		outname = FileDialogs::save_dialog(_("Save hOCR Output..."), suggestion + ".html", "outputdir", filter);

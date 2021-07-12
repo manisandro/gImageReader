@@ -74,16 +74,16 @@ SourceManager::SourceManager(const Ui::MainWindow& _ui)
 	recentChooser->set_show_not_found(false);
 	recentChooser->set_show_tips(true);
 	recentChooser->set_sort_type(Gtk::RECENT_SORT_MRU);
-	ui.menuitemSourcesRecent->set_submenu(*recentChooser);
+	ui.menubuttonSourcesAdd->set_menu(*recentChooser);
 
 	m_clipboard = Gtk::Clipboard::get_for_display(Gdk::Display::get_default());
 
 	CONNECT(ui.buttonSources, toggled, [this] { ui.notebookSources->set_visible(ui.buttonSources->get_active()); });
 	CONNECT(ui.buttonSourcesAdd, clicked, [this] { openSources(); });
-	CONNECT(ui.menubuttonSourcesAdd, clicked, [this] { ui.menuitemSourcesPaste->set_sensitive(m_clipboard->wait_is_image_available()); });
-	CONNECT(ui.menuitemSourcesAddFolder, activate, [this] { addFolder(); });
-	CONNECT(ui.menuitemSourcesPaste, activate, [this] { pasteClipboard(); });
-	CONNECT(ui.menuitemSourcesScreenshot, activate, [this] { takeScreenshot(); });
+	CONNECT(m_clipboard, owner_change, [this](GdkEventOwnerChange*) { ui.buttonSourcePaste->set_sensitive(m_clipboard->wait_is_image_available()); });
+	CONNECT(ui.buttonSourceFolder, clicked, [this] { addFolder(); });
+	CONNECT(ui.buttonSourcePaste, clicked, [this] { pasteClipboard(); });
+	CONNECT(ui.buttonSourceScreenshot, clicked, [this] { takeScreenshot(); });
 	CONNECT(ui.buttonSourcesRemove, clicked, [this] { removeSource(false); });
 	CONNECT(ui.buttonSourcesDelete, clicked, [this] { removeSource(true); });
 	CONNECT(ui.buttonSourcesClear, clicked, [this] { clearSources(); });
@@ -259,7 +259,13 @@ std::vector<Source*> SourceManager::getSelectedSources() const {
 }
 
 void SourceManager::addFolder() {
-	std::string path = FileDialogs::open_folder_dialog(_("Select folder..."), Utils::get_documents_dir(), "sourcedir");
+	std::vector<Source*> current = getSelectedSources();
+	std::string initialFolder = Utils::get_documents_dir();
+	if(!current.empty() && !current.front()->isTemp) {
+		initialFolder = current.front()->file->get_parent()->get_path();
+	}
+
+	std::string path = FileDialogs::open_folder_dialog(_("Select folder..."), initialFolder, "sourcedir");
 	if(path.empty()) {
 		return;
 	}
@@ -281,7 +287,7 @@ void SourceManager::addFolder() {
 
 void SourceManager::openSources() {
 	std::vector<Source*> curSrc = getSelectedSources();
-	std::string initialFolder = !curSrc.empty() ? Glib::path_get_dirname(curSrc.front()->file->get_path()) : "";
+	std::string initialFolder = !curSrc.empty() ? Glib::path_get_dirname(curSrc.front()->file->get_path()) : Utils::get_documents_dir();
 	FileDialogs::FileFilter filter = FileDialogs::FileFilter::pixbuf_formats();
 	filter.name = _("Images and PDFs");
 	filter.mime_types.push_back("application/pdf");
@@ -303,19 +309,26 @@ void SourceManager::pasteClipboard() {
 }
 
 void SourceManager::takeScreenshot() {
-	Glib::RefPtr<Gdk::Window> root = Gdk::Window::get_default_root_window();
-	int x, y, w, h;
-	root->get_origin(x, y);
-	w = root->get_width();
-	h = root->get_height();
-	Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(root, x, y, w, h);
-	if(!pixbuf) {
-		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Screenshot Error"),  _("Failed to take screenshot."));
-		return;
+	MAIN->getWindow()->iconify();
+	while(Gtk::Main::events_pending()) {
+		Gtk::Main::iteration();
 	}
-	++m_screenshotCount;
-	std::string displayname = Glib::ustring::compose(_("Screenshot %1"), m_screenshotCount);
-	savePixbuf(pixbuf, displayname);
+	Glib::signal_timeout().connect_once([this] {
+		Glib::RefPtr<Gdk::Window> root = Gdk::Window::get_default_root_window();
+		int x, y, w, h;
+		root->get_origin(x, y);
+		w = root->get_width();
+		h = root->get_height();
+		Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(root, x, y, w, h);
+		MAIN->getWindow()->deiconify();
+		if(!pixbuf) {
+			Utils::messageBox(Gtk::MESSAGE_ERROR, _("Screenshot Error"),  _("Failed to take screenshot."));
+			return;
+		}
+		++m_screenshotCount;
+		std::string displayname = Glib::ustring::compose(_("Screenshot %1"), m_screenshotCount);
+		savePixbuf(pixbuf, displayname);
+	}, 250);
 }
 
 void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const std::string& displayname) {
