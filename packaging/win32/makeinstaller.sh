@@ -94,6 +94,8 @@ else
     linkDep lib/enchant/libenchant_myspell.dll
 fi
 
+cp -R $win32dir/skel/* $installroot
+
 if [ "$iface" == "gtk" ]; then
 
     linkDep bin/gspawn-win$bits-helper-console.exe
@@ -155,8 +157,6 @@ elif [ "$iface" == "qt5" ]; then
     rm -f $installroot/share/qt5/translations/qt_help_*.qm
 
 fi
-
-cp -R $win32dir/skel/* $installroot
 
 # Add english language data, poppler-data and spelling dictionaries
 install -Dpm 0644 /usr/share/tesseract/tessdata/eng.traineddata $installroot/share/tessdata/eng.traineddata
