@@ -12,10 +12,6 @@
 
     - If using tesseract 3.x or older, go to https://github.com/tesseract-ocr/tessdata.
 
-      Then, in the branch selection button, under tags, select the version which is less or equal
-
-     the tesseract version in use. Then download the desired language  definitions (*.traineddata along with any supplementary files which  certain languages need) and save them to 
-
-    Start→All Programs→gImageReader→Tesseract language definitions.
+    - Then, in the branch selection button, under tags, select the version which is less or equal the tesseract version in use. Then download the desired language  definitions (*.traineddata along with any supplementary files which  certain languages need) and save them to Start→All Programs→gImageReader→Tesseract language definitions.
 
 - To re-detect the available languages, one can restart the program, or select *Redetect Languages* from the *application menu*.

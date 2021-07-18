@@ -18,7 +18,7 @@ and
 
 Folder: `/docs`
 
-in to the same location *(\*don't put mkdocs.yml in /doc folder!)*
+in to the same location *(\*don't put mkdocs.yml in /docs folder!)*
 
 ## 3. Edit mkdocs.yml
 
@@ -40,12 +40,12 @@ example for German: Clone `index.md` -> `index.de.md`
 
 in your console go to the folder of mkdocs.yml then run
 
-`mkdocs server`
+`mkdocs serve`
 
 Open your web-browser and go to http://127.0.0.1:8000
 
-## 5. Compile 
+## 5. Build 
 
-`mkdocs compile`
+`mkdocs build`
 
 compiled site is in folder `\site` that is in same folder where the  `mydocs.yml` is

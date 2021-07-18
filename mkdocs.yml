@@ -18,19 +18,25 @@ plugins:
       default_language: en
       languages:
        # en: English
-        sl: Slovenščina  
+        sl: Slovenščina
+        he: עברית
 
 
   - redirects:
       redirect_maps:
        '7_Translate.md': 'https://hosted.weblate.org/projects/gimagereader/translations/'
        'sl/7_Translate.md': 'https://hosted.weblate.org/projects/gimagereader/translations/'
+       'he/7_Translate.md': 'https://hosted.weblate.org/projects/gimagereader/translations/'
        '8_Issue_tracker.md': 'https://github.com/manisandro/gImageReader/issues'
        'sl/8_Issue_tracker.md': 'https://github.com/manisandro/gImageReader/issues'
+       'he/8_Issue_tracker.md': 'https://github.com/manisandro/gImageReader/issues'
        'News.md': 'https://github.com/manisandro/gImageReader/commits/master'
-       'sl/News.md': 'https://github.com/manisandro/gImageReader/commits/master'  
+       'sl/News.md': 'https://github.com/manisandro/gImageReader/commits/master'
+       'he/News.md': 'https://github.com/manisandro/gImageReader/commits/master'
        'FAQ.md': 'https://github.com/manisandro/gImageReader/wiki/FAQ'
-       'sl/FAQ.md': 'https://github.com/manisandro/gImageReader/wiki/FAQ'       
+       'sl/FAQ.md': 'https://github.com/manisandro/gImageReader/wiki/FAQ'
+       'he/FAQ.md': 'https://github.com/manisandro/gImageReader/wiki/FAQ'
+
   
 extra:
    social:
@@ -49,3 +55,10 @@ extra:
     - name: Slovenščina
       link: 'sl\index.html' #if serving on server change to "sl\"
       lang: sl
+
+
+    # Switch to Hebrew
+    - name: עברית
+      link: 'he\index.html' #if serving on server change to "he\"
+      lang: he
+
