@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: gImageReader 3.3.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2021-06-28 14:34+0300\n"
-"Last-Translator: Binyamin Pekar <binyamin.pekar@gmail.com>\n"
-"Language-Team: Hebrew <binyamin.pekar@gmail.com>\n"
+"PO-Revision-Date: 2021-08-16 12:02+0000\n"
+"Last-Translator: aharon don <aronrefael@gmail.com>\n"
+"Language-Team: Hebrew <https://hosted.weblate.org/projects/gimagereader/"
+"translations/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 3.30.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -59,7 +60,7 @@ msgstr "אישור"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
-msgstr "כיוון חלונית הפלט"
+msgstr "כיוון חלונית הפלט:"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
@@ -186,11 +187,13 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occurred.\n"
 msgstr ""
-"<b>ה- Tesseract בוטל</b>\n"
-"ה- Tesseract (מנוע ה- OCR) בוטל בזמן זיהוי הטקסט. זה עלול להתרחש אם הנתונים "
-"הושחתו או שאינם תואמים את הגרסה של ה- tesseract, או עקב באג ב- tesseract.\n"
+"<b>פעולת ה- Tesseract הופסקה</b>\n"
 "\n"
-"ה- stacktrace למטה עשוי לספק מידע על מיקום הקריסה.\n"
+"פעולה ה- Tesseract (מנוע ה- OCR) הופסקה בתהליך זיהוי הטקסט. הדבר עלול להתרחש "
+"אם קבצי התרגום פגומים או שאינם תואם עם גירסת ה- tesseract שבשימוש, או בגלל "
+"שגיאה ב- tesseract.\n"
+"\n"
+"דוח רישום ומעקב התהליכים שלמטה עשוי לספק מידע אודות גורם הקריסה.\n"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
@@ -640,11 +643,11 @@ msgstr "DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
 msgid "Dithering algorithm:"
-msgstr "אלגוריתם למיזוג צבעים"
+msgstr "אלגוריתם למיזוג צבעים:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
 msgid "Image settings:"
-msgstr "הגדרות תמונה"
+msgstr "הגדרות תמונה:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
 msgid "Uniformize line and word spacing"
@@ -664,7 +667,7 @@ msgstr "התעלם מגודל הגופן:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
 msgid "Font scaling:"
-msgstr "הגדלת גופן"
+msgstr "קנה מידה של גופנים:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
 msgid "pt"
@@ -720,7 +723,7 @@ msgstr "אשר סיסמא:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:32
 msgid "Encryption (optional):"
-msgstr "הצפנה (לא חובה)"
+msgstr "הצפנה (לא חובה):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:36
 msgid "Author:"
@@ -1072,7 +1075,7 @@ msgstr "Zip (ללא הפסד)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:344 ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "CCITT Group 4 (lossless)"
-msgstr "CCITT קבוצה 4  (ללא הפסד)"
+msgstr "CCITT קבוצה 4 (ללא הפסד)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:348 ../qt/src/hocr/HOCRPdfExporter.cc:352
 msgid "Jpeg (lossy)"
@@ -1408,8 +1411,8 @@ msgstr ""
 "%1\n"
 "\n"
 "בדוק את הרשאות הקישוריות והתיקיות.\n"
-"רמז: אם אין לך הרשאות כתיבה בקבצי מערכת, תוכל\n"
-"לעבור לנתיבי משתמש בתיבת הדו-שיח של ההגדרות."
+"רמז: אם אין לך הרשאות כתיבה בקבצי מערכת, תוכל לעבור לנתיבי משתמש בתיבת הדו-"
+"שיח של ההגדרות."
 
 #: ../gtk/src/MainWindow.cc:614 ../qt/src/MainWindow.cc:611
 msgid "Dictionaries installed"
@@ -1741,7 +1744,7 @@ msgstr "שגיאה בשמירת קובץ"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Unable to write to '%1'."
-msgstr "לא ניתן לכתוב אל '%1'"
+msgstr "לא ניתן לכתוב אל '%1'."
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:158
 msgid "Save List?"
@@ -1761,12 +1764,12 @@ msgid ""
 "tesseract language packs directly, or switch to using the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"נדרש חיבור ל- PackageKit backend בכדי לנהל חבילות שפת ה- tesseract בכל "
-"המערכת, אך זה לא נמצא.\n"
-"שירות זה ניתן בדרך כלל על ידי יישום לניהול תוכנה כגון  Gnome.\n"
-"אנא התקן תוכנה המספקת את ממשק ה- PackageKit הדרוש, השתמש ישירות בתוכנות "
-"אחרות לניהול חבילות מערכת כדיל לנהל את חבילות השפה של tesseract, או עבור "
-"לשימוש בנתיב tessdata של המשתמש בתיבת הדו-שיח של התצורה."
+"נדרשת הרשאת לניהול חבילות מערכת בכדי לנהל חבילות שפת ה- tesseract עבור כל "
+"משמשי המערכת, אך לא נמצא. השירות הזה מסופק בדרך כלל באמצעות היישום לניהול "
+"חבילות, כגון ניהול היישומים של Gnome. אנא התקן תוכנה המספקת את הממשק לניהול "
+"חבילת התקנה הדרוש, השתמש ישירות ביישום אחר לניהול חבילות מערכת כדי לנהל את "
+"חבילות השפה של tesseract באופן ישיר, או לחילופין הגדר בתיבת הדו-שיח של "
+"התצורה את נתיב ה-tessdata בתיקיית המשתמש."
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:75
 msgid "Fetching available languages"
@@ -2182,7 +2185,7 @@ msgstr "פלט"
 
 #: ../qt/src/Ui_MainWindow.hh:135
 msgid "OCR mode:"
-msgstr "מצב זיהוי תווים אופטי"
+msgstr "מצב זיהוי תווים אופטי:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:188
