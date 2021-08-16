@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gImageReader 3.3.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2021-08-16 12:02+0000\n"
+"PO-Revision-Date: 2021-08-17 15:35+0000\n"
 "Last-Translator: aharon don <aronrefael@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/gimagereader/"
 "translations/he/>\n"
@@ -45,7 +45,7 @@ msgstr "עזרה"
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:177
 msgid "About"
-msgstr "על אודות"
+msgstr "אודות"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
