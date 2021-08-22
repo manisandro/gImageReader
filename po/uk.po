@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2021-08-15 23:32+0000\n"
+"PO-Revision-Date: 2021-08-23 21:34+0000\n"
 "Last-Translator: Tymofii Lytvynenko <till.svit@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/uk/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -236,9 +236,8 @@ msgid "Best fit"
 msgstr "Оптимальне заповнення"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
-#, fuzzy
 msgid "Rotate page"
-msgstr "Обернути усі сторінки"
+msgstr "Повернути сторінку"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
@@ -441,12 +440,11 @@ msgstr "Введіть слово:"
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Додати в кінець"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "Обернути поточну сторінку"
+msgstr "Вставити перед поточною сторінкою"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
@@ -465,14 +463,13 @@ msgstr "Експорт у ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
-#, fuzzy
 msgid "Append document after last page"
-msgstr "Додати до поточного тексту"
+msgstr "Додати в кінець"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Insert document before current page"
-msgstr ""
+msgstr "Вставити перед поточною сторінкою"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
@@ -937,14 +934,12 @@ msgid "There was no unsaved work."
 msgstr "Незбережена робота відсутня."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
-#, fuzzy
 msgid "Failed to obtain backtrace. Is GDB installed?"
-msgstr "Зворотнє трасування не вдалося. Чи встановлено gdb?"
+msgstr "Зворотне трасування не вдалося. Чи встановлено gdb?"
 
 #: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
-#, fuzzy
 msgid "Page %1"
-msgstr "Сторінка: %1"
+msgstr "Сторінка %1"
 
 #: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid "Failed to load image"
@@ -1256,19 +1251,21 @@ msgstr "Відкрити файл hORC"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:929 ../qt/src/OutputEditorText.cc:256
 #: ../qt/src/SourceManager.cc:156
-#, fuzzy
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "Неможливо відкрити такі файли:%1"
+msgstr ""
+"Неможливо відкрити такі файли:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
 #: ../qt/src/hocr/OutputEditorHOCR.cc:932
-#, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "Файл не містить коректного вмісту hORC HTML: %1"
+msgstr ""
+"Файл не містить коректного вмісту hORC HTML:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
 #: ../qt/src/hocr/OutputEditorHOCR.cc:935 ../qt/src/OutputEditorText.cc:257
@@ -1620,19 +1617,18 @@ msgid "Enter password for file '%1':"
 msgstr "Введіть пароль для файлу '%1':"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
-#, fuzzy
 msgid "PDF with text"
 msgstr "PDF-файли з текстом"
 
 #: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
-#, fuzzy
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
 "Ці PDF-файли вже містять текст:\n"
-"%1"
+"%1\n"
+"Однаково відкрити?"
 
 #: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:264
 msgid "Images and PDFs"
@@ -1762,6 +1758,13 @@ msgid ""
 "tesseract language packs directly, or switch to using the user tessdata path "
 "in the configuration dialog."
 msgstr ""
+"Для управління загальносистемними мовними пакетами tesseract потрібен "
+"PackageKit, однак він не був знайдений. PackageKit можна встановити за "
+"допомогою GNOME Software - засобу для встановлення застосунків і оновлень. "
+"Будь ласка, або встановіть необхідний інтерфейс PackageKit, або "
+"використовуйте системний пакетний менеджер для управління мовними пакетами "
+"tesseract, або перейдіть на призначений для користувача шлях до tessdata в "
+"діалозі конфігурації."
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:75
 msgid "Fetching available languages"
@@ -1813,7 +1816,7 @@ msgstr "Так"
 
 #: ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr ""
+msgstr "Так, для всіх"
 
 #: ../gtk/src/Utils.cc:70
 msgid "No"
@@ -1821,7 +1824,7 @@ msgstr "Ні"
 
 #: ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr ""
+msgstr "Ні, для всіх"
 
 #: ../gtk/src/Utils.cc:82
 msgid "Discard"
@@ -1850,27 +1853,26 @@ msgid "License"
 msgstr "Ліцензія"
 
 #: ../qt/data/BatchModeDialog.ui.h:1
-#, fuzzy
 msgid "Batch Mode"
-msgstr "Враховувати регістр"
+msgstr "Пакетний режим"
 
 #: ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "Додати перед текстом, що виводиться:"
+msgstr "Додати до тексту номера сторінок"
 
 #: ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "Наявні результати:"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"У пакетному режимі кожне джерело обробляється окремо і всі результати "
+"зберігаються у вхідний файл."
 
 #: ../qt/data/BatchModeDialog.ui.h:5
-#, fuzzy
 msgid "Autodetect page layout"
 msgstr "Автовизначення макету сторінки"
 
@@ -1913,10 +1915,17 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Роботу tesseract "
+"перервано</span></p><p>Робота tesseract (модуль розпізнавання тексту) була "
+"перервана під час розпізнавання тексту. Це могло статися через використання "
+"навчених наборів даних, пошкоджених або несумісних з використовуваною "
+"версією tesseract, або через внутрішню помилку tesseract.</p><p>У наведеному "
+"нижче трасуванні стека можуть бути додаткові відомості про причини "
+"збою.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Мініатюри"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2006,18 +2015,22 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
+"<html><head/><body><ul><li>PoDoFo: більше можливостей для стиснення "
+"зображень, але немає підтримки складних систем писемності.</li><li>QPrinter: "
+"доступне тільки стиснення JPEG, але складні системи писемності "
+"підтримуються.</li></ul></body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:234
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Сполучення клавіш"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
-msgstr ""
+msgstr "Рядки перед:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:260
 msgid "Lines after:"
-msgstr ""
+msgstr "Рядки після:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:440
 msgid ""
@@ -2037,14 +2050,32 @@ msgid ""
 "td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
 "size</td></tr></table>"
 msgstr ""
+"<table><tr><td>Tab</td><td>Наступне поле</td></tr><tr><td>Shift+Tab</"
+"td><td>Попереднє поле</td></tr><tr><td>Униз</td><td>Наступний "
+"рядок</td></tr><tr><td>Вверх</td><td>Попередній "
+"рядок</td></tr><tr><td>Ctrl+Пробіл</td><td>Пропозиції "
+"написання</td></tr><tr><td>Ctrl+Enter</td><td>Додати слово в "
+"словник</td></tr><tr><td>Ctrl+B</td><td>Жирний "
+"шрифт</td></tr><tr><td>Ctrl+I</td><td>Курсив</td></tr><tr><td>Ctrl+D</"
+"td><td>Розділити слово в позиції вказівника</td></tr><tr><td>Ctrl+M</"
+"td><td>Об'єднати з попереднім словом</td></tr><tr><td>Ctrl+Shift+M</"
+"td><td>Об'єднати з наступним словом</td></tr><tr><td>Ctrl+Delete</"
+"td><td>Видалити слово</td></tr><tr><td>Ctrl+{Ліворуч,Праворуч}</"
+"td><td>Коригування лівої "
+"межі</td></tr><tr><td>Ctrl+Shift+{Ліворуч,Праворуч}</td><td>Коригування "
+"правої межі</td></tr><tr><td>Ctrl+{Угору,Униз}</td><td>Коригування верхньої "
+"межі</td></tr><tr><td>Ctrl+Shift+{Угору,Униз}</td><td>Коригування нижньої "
+"межі</td></tr><tr><td>Ctrl++</td><td>Збільшити розмір "
+"шрифту</td></tr><tr><td>Ctrl+-</td><td>Зменшити розмір "
+"шрифту</td></tr></table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Сполучення клавіш"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:476
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Довіра: %1"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
@@ -2057,9 +2088,8 @@ msgid "Find and Replace"
 msgstr "Знайти і замінити"
 
 #: ../qt/src/MainWindow.cc:317
-#, fuzzy
 msgid "Multiple sources (%1)"
-msgstr "Кілька джерел"
+msgstr "Кілька джерел (%1)"
 
 #: ../qt/src/MainWindow.cc:611
 msgid ""
@@ -2070,88 +2100,74 @@ msgstr ""
 "%1"
 
 #: ../qt/src/OutputEditorText.cc:41
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "Сторінка: %1"
+msgstr "Сторінка: %1\n"
 
 #: ../qt/src/Recognizer.cc:73
 msgid "Batch mode..."
-msgstr ""
+msgstr "Пакетний режим..."
 
 #: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "Перезаписати"
 
 #: ../qt/src/Recognizer.cc:87
 msgid "Skip processing source"
-msgstr ""
+msgstr "Пропустити обробку"
 
 #: ../qt/src/Recognizer.cc:234
-#, fuzzy
 msgid "- Page %1: failed to render page"
-msgstr ""
-"\n"
-"- Сторінка %1: не вдалося візуалізувати сторінку"
+msgstr "- Сторінка %1: не вдалося відмалювати сторінку"
 
 #: ../qt/src/Recognizer.cc:346
-#, fuzzy
 msgid "- %1:%2: failed to render page"
-msgstr ""
-"\n"
-"- Сторінка %1: не вдалося візуалізувати сторінку"
+msgstr "- Сторінка %1: не вдалося візуалізувати сторінку"
 
 #: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "- %1: результат уже існує, пропуск"
 
 #: ../qt/src/Recognizer.cc:363
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "Не вдалося створити результат"
+msgstr "- %1: неможливо створити вихідний файл"
 
 #: ../qt/src/Recognizer.cc:418
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "Сталися наступні помилки:%1"
+msgstr "Відбулися такі помилки:"
 
 #: ../qt/src/SourceManager.cc:248
-#, fuzzy
 msgid "No recent files"
-msgstr "Ім'я вихідного файлу"
+msgstr "Немає останніх файлів"
 
 #: ../qt/src/SourceManager.cc:275
-#, fuzzy
 msgid "Select folder..."
-msgstr "Виберіть файли"
+msgstr "Вибрати каталог..."
 
 #: ../qt/src/SourceManager.cc:374
-#, fuzzy
 msgid "Delete Files"
-msgstr "Видалити файл?"
+msgstr "Видалити файли"
 
 #: ../qt/src/SourceManager.cc:374
 msgid "Delete the following files?"
-msgstr ""
+msgstr "Видалити такі файли?"
 
 #: ../qt/src/SourceManager.cc:459
-#, fuzzy
 msgid "Open output"
-msgstr "Зберегти результати"
+msgstr "Відкрити результати"
 
 #: ../qt/src/SourceManager.cc:459
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
 msgstr ""
+"Були знайдені як текст, так і вивід hOCR. Який з них ви хочете відкрити?"
 
 #: ../qt/src/SourceManager.cc:460
-#, fuzzy
 msgid "Text"
-msgstr "Рядок тексту"
+msgstr "Текст"
 
 #: ../qt/src/SourceManager.cc:461
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2179,9 +2195,8 @@ msgstr "Режим розпізнавання OCR:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:188
-#, fuzzy
 msgid "Add folder"
-msgstr "Додати слово"
+msgstr "Додати каталог"
 
 #: ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
