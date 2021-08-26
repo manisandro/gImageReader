@@ -77,6 +77,7 @@ Container languages(const std::function<String(const char*)>& utf8str) {
 		{"guj",      "gu", utf8str("\u0A97\u0AC1\u0A9C\u0AB0\u0ABE\u0AA4\u0AC0")}, // Gujarati
 		{"hat",      "ht", utf8str("Krey\u00F2l Ayisyen")}, // Haitian
 		{"heb",      "he", utf8str("\u05E2\u05D1\u05E8\u05D9\u05EA\u202C")}, // Hebrew
+		{"heb_rashi", "he", utf8str("\u05E2\u05D1\u05E8\u05D9\u05EA (\u05E8\u05E9\u05F4\u05D9)\u202C")}, // Hebrew (Rashi)
 		{"hin",      "hi", utf8str("\u0939\u093F\u0928\u094D\u0926\u0940")}, // Hindi
 		{"hrv",      "hr", utf8str("Hrvatski")}, // Croatian
 		{"hun",      "hu", utf8str("Magyar")}, // Hungarian
@@ -248,6 +249,7 @@ Container languageCultures() {
 		{"gl", "gl_ES"},
 		{"gu", "gu_IN"},
 		{"he", "he_IL"},
+		{"he", "he_TORANIT"},
 		{"hi", "hi_IN"},
 		{"hr", "hr_HR"},
 		{"hu", "hu_HU"},
