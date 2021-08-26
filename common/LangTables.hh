@@ -310,7 +310,6 @@ Container languageCultures() {
 		{"uk", "uk_UA"},
 		{"ur", "ur_PK"},
 		{"uz", "uz_UZ"},
-		{"uz", "uz_UZ"},
 		{"vi", "vi_VN"},
 		{"yo", "yo_NR"},
 		{"zh", "zh_CHS"},
