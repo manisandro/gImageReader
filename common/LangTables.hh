@@ -94,8 +94,8 @@ Container languages(const std::function<String(const char*)>& utf8str) {
 		{"ita",      "it", utf8str("Italiano")}, // Italian
 		{"ita_old",  "it", utf8str("Italiano (Antico)")}, // Italian (Old)
 		{"jav",      "jv", utf8str("Basa jawa")}, // Javanese
-		{"jpn",      "ja", utf8str("\uA9A7\uA9B1\uA997\uA9AE")}, // Japanese
-		{"jpn_vert", "ja", utf8str("\uA9A7\uA9B1\uA997\uA9AE \u5782\u76F4")}, // Japanese (Vertical)
+		{"jpn",      "ja", utf8str("\u65E5\u672C\u8A9E")}, // Japanese
+		{"jpn_vert", "ja", utf8str("\u65E5\u672C\u8A9E \u7E26\u66F8\u304D")}, // Japanese (Vertical)
 		{"kan",      "kn", utf8str("\u0C95\u0CA8\u0CCD\u0CA8\u0CA1")}, // Kannada
 		{"kat",      "ka", utf8str("\u10E5\u10D0\u10E0\u10D7\u10E3\u10DA\u10D8")}, // Georgian
 		{"kat_old",  "ka", utf8str("\u10d4\u10dc\u10d0\u10f2 \u10e5\u10d0\u10e0\u10d7\u10e3\u10da\u10d8")}, // Georgian (Old)
