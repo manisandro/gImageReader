@@ -27,6 +27,11 @@ Container languages(const std::function<String(const char*)>& utf8str) {
 	return Container {
 		// See https://en.wikipedia.org/wiki/List_of_language_names
 		// {ISO 639-2, ISO 639-1, name}
+		//
+		// An easy way to generate the strings below:
+		// echo "עברית (רש״י)" | uni2ascii -a U -q
+		// Verify:
+		// echo "\u05E2\u05D1\u05E8\u05D9\u05EA (\u05E8\u05E9\u05F4\u05D9)" | ascii2uni  -a U -q
 		{"afr",      "af", utf8str("Afrikaans")}, // Afrikaans
 		{"amh",      "am", utf8str("\u12A3\u121B\u122D\u129B")}, // Amharic
 		{"ara",      "ar", utf8str("\u0627\u0644\u0644\u063A\u0629 \u0627\u0644\u0639\u0631\u0628\u064A\u0629")}, // Arabic
@@ -77,7 +82,8 @@ Container languages(const std::function<String(const char*)>& utf8str) {
 		{"guj",      "gu", utf8str("\u0A97\u0AC1\u0A9C\u0AB0\u0ABE\u0AA4\u0AC0")}, // Gujarati
 		{"hat",      "ht", utf8str("Krey\u00F2l Ayisyen")}, // Haitian
 		{"heb",      "he", utf8str("\u05E2\u05D1\u05E8\u05D9\u05EA\u202C")}, // Hebrew
-		{"heb_rashi", "he", utf8str("\u05E2\u05D1\u05E8\u05D9\u05EA (\u05E8\u05E9\u05F4\u05D9)\u202C")}, // Hebrew (Rashi)
+		{"heb_rashi", "he", utf8str("\u05E2\u05D1\u05E8\u05D9\u05EA (\u05E8\u05E9\u05F4\u05D9)")}, // Hebrew (Rashi)
+		{"heb_toranit", "he", utf8str("\u05E2\u05D1\u05E8\u05D9\u05EA (\u05EA\u05D5\u05E8\u05E0\u05D9\u05EA)")}, // Hebrew (Toranit)
 		{"hin",      "hi", utf8str("\u0939\u093F\u0928\u094D\u0926\u0940")}, // Hindi
 		{"hrv",      "hr", utf8str("Hrvatski")}, // Croatian
 		{"hun",      "hu", utf8str("Magyar")}, // Hungarian
