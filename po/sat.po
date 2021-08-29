@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2020-11-20 07:28+0000\n"
+"PO-Revision-Date: 2021-08-30 08:35+0000\n"
 "Last-Translator: Prasanta-Hembram <Prasantahembram720@gmail.com>\n"
 "Language-Team: Santali <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sat/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -148,7 +148,7 @@ msgstr "ᱵᱮᱵᱟᱨᱤᱭᱟ ᱦᱚᱨ"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr "ᱵᱷᱤᱡᱟ ᱟᱠᱟᱱᱟ ᱰᱚᱠᱭᱩᱢᱮᱸᱴ ᱠᱚ ᱫᱚ ᱟᱡ ᱛᱮᱜᱮ ᱢᱩᱞ ᱮᱯᱯᱞᱤᱠᱮᱥᱚᱱ ᱛᱮ ᱠᱷᱩᱞᱟᱹᱜᱼᱟ"
+msgstr "ᱵᱷᱤᱡᱟ ᱟᱠᱟᱱᱟ ᱰᱚᱠᱭᱩᱢᱮᱱᱴ ᱠᱚ ᱫᱚ ᱟᱡ ᱛᱮᱜᱮ ᱢᱩᱞ ᱮᱯᱯᱞᱤᱠᱮᱥᱚᱱ ᱛᱮ ᱠᱷᱩᱞᱟᱹᱜᱼᱟ"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -2037,36 +2037,37 @@ msgstr ""
 
 #: ../qt/src/SourceManager.cc:248
 msgid "No recent files"
-msgstr ""
+msgstr "ᱱᱤᱛᱚᱜᱟᱜ ᱨᱮᱫ ᱠᱚ ᱵᱟᱹᱱᱩᱜᱼᱟ"
 
 #: ../qt/src/SourceManager.cc:275
 msgid "Select folder..."
-msgstr ""
+msgstr "ᱯᱚᱴᱚᱢ ᱵᱟᱪᱷᱟᱣ ᱢᱮ ..."
 
 #: ../qt/src/SourceManager.cc:374
 msgid "Delete Files"
-msgstr ""
+msgstr "ᱨᱮᱫ ᱢᱮᱴᱟᱣ ᱢᱮ"
 
 #: ../qt/src/SourceManager.cc:374
 msgid "Delete the following files?"
-msgstr ""
+msgstr "ᱱᱚᱶᱟ ᱠᱚ ᱨᱮᱫ ᱢᱮᱴᱟᱣᱟ ᱥᱮ?"
 
 #: ../qt/src/SourceManager.cc:459
 msgid "Open output"
-msgstr ""
+msgstr "ᱟᱩᱴᱯᱩᱴ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ"
 
 #: ../qt/src/SourceManager.cc:459
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr ""
+msgstr "ᱚᱞ ᱟᱨ hOCR ᱟᱩᱴᱯᱩᱴ ᱵᱟᱨᱭᱟ ᱧᱟᱢ ᱮᱱᱟ ᱾ ᱟᱢ ᱚᱠᱟ ᱢᱟᱲᱟᱝ ᱠᱷᱩᱞᱟᱹ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ?"
 
 #: ../qt/src/SourceManager.cc:460
 msgid "Text"
-msgstr ""
+msgstr "ᱚᱞ"
 
 #: ../qt/src/SourceManager.cc:461
+#, fuzzy
 msgid "hOCR"
-msgstr ""
+msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2084,24 +2085,24 @@ msgstr ""
 
 #: ../qt/src/Ui_MainWindow.hh:135
 msgid "OCR mode:"
-msgstr ""
+msgstr "OCR ᱢᱳᱰ:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:188
 msgid "Add folder"
-msgstr ""
+msgstr "ᱯᱚᱴᱚᱢ ᱥᱮᱞᱮᱫ ᱢᱮ"
 
 #: ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
-msgstr "ᱪᱤᱛᱟᱹᱨ ᱚᱪᱚᱜᱽ ᱢᱮᱸ"
+msgstr "ᱪᱤᱛᱟᱹᱨ ᱚᱪᱚᱜᱽ ᱢᱮ"
 
 #: ../qt/src/Ui_MainWindow.hh:202
 msgid "Delete Image"
-msgstr "ᱪᱤᱛᱟᱹᱨ ᱢᱮᱴᱟᱣ ᱢᱮᱸ"
+msgstr "ᱪᱤᱛᱟᱹᱨ ᱢᱮᱴᱟᱣ ᱢᱮ"
 
 #: ../qt/src/Ui_MainWindow.hh:205
 msgid "Clear List"
-msgstr "ᱞᱤᱥᱴ ᱢᱮᱴᱟᱣ ᱢᱮᱸ"
+msgstr "ᱞᱤᱥᱴ ᱢᱮᱴᱟᱣ ᱢᱮ"
 
 #: ../qt/src/Ui_OutputEditorText.hh:101
 msgid "Strip Line Breaks"
@@ -2113,4 +2114,4 @@ msgstr "ᱟᱩᱴᱯᱩᱴ ᱥᱟᱺᱪᱟᱣ"
 
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
-msgstr "ᱟᱩᱴᱯᱩᱴ ᱢᱮᱴᱟᱣ ᱢᱮᱸ"
+msgstr "ᱟᱩᱴᱯᱩᱴ ᱢᱮᱴᱟᱣ ᱢᱮ"
