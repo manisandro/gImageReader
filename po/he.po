@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gImageReader 3.3.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-29 00:32+0200\n"
-"PO-Revision-Date: 2021-08-17 15:35+0000\n"
+"PO-Revision-Date: 2021-09-01 07:32+0000\n"
 "Last-Translator: aharon don <aronrefael@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/gimagereader/"
 "translations/he/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -353,8 +353,9 @@ msgid "Contrast"
 msgstr "ניגודיות"
 
 #: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:3
+#, fuzzy
 msgid "Resolution"
-msgstr "רולוציה"
+msgstr "רזולוציה"
 
 #: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
