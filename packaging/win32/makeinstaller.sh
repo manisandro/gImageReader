@@ -69,7 +69,8 @@ function linkDep {
     ln -sf "$MINGWROOT/$1" "$destdir/$name" || return 1
     autoLinkDeps $destdir/$name || return 1
     if [ $withdebug ]; then
-        [ -e "$MINGWROOT/$1.debug" ] && ln -sf "$MINGWROOT/$1.debug" "$destdir/$name.debug" || echo "Warning: missing $name.debug"
+        [ -e "/usr/lib/debug${MINGWROOT}/$1.debug" ] && lnk "/usr/lib/debug${MINGWROOT}/$1.debug" "$destdir/$name.debug" || :
+        [ -e "$MINGWROOT/$1.debug" ] && lnk "$MINGWROOT/$1.debug" "$destdir/$name.debug" || :
     fi
     return 0
 }
