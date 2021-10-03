@@ -34,7 +34,7 @@ struct Source : public DataObject {
 	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
 		: file(_file), displayname(_displayname), monitor(_monitor), isTemp(_isTemp) {}
 	~Source() {
-		if(isTemp) {
+		if(isTemp && file) {
 			file->remove();
 		}
 	}
