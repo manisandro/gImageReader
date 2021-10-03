@@ -5,10 +5,18 @@ jobs:
   build:
     name: MinGW build
     runs-on: ubuntu-latest
+    container:
+      image: fedora:rawhide
+      options: --security-opt seccomp=unconfined
     steps:
       - uses: actions/checkout@v1
-      - name: Build gimagereader-mingw-buildenv
-        run: docker build -t gimagereader-mingw-buildenv packaging/win32/
+
+      - name: Update system
+        run: dnf -y update
+
+      - name: Install build dependencies
+        run: ./packaging/win32/mingwdeps.sh
+
       - name: Version number
         id: version_number
         run: |
@@ -18,10 +26,12 @@ jobs:
             VERSION=ci-latest-$(basename ${{ github.ref }})
           fi
           echo "##[set-output name=version;]$VERSION"
+
       - name: Build application
         run: |
-          docker run -v $PWD:/workspace gimagereader-mingw-buildenv ./packaging/win32/makeinstaller.sh x86_64 qt5 nodebug ${{ steps.version_number.outputs.version }}
-          docker run -v $PWD:/workspace gimagereader-mingw-buildenv ./packaging/win32/makeinstaller.sh x86_64 gtk nodebug ${{ steps.version_number.outputs.version }}
+          ./packaging/win32/makeinstaller.sh x86_64 qt5 nodebug ${{ steps.version_number.outputs.version }}
+          ./packaging/win32/makeinstaller.sh x86_64 gtk nodebug ${{ steps.version_number.outputs.version }}
+
       - name: Reset ci-latest tag
         run: |
           VERSION=${{ steps.version_number.outputs.version }}
@@ -36,6 +46,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: startsWith(steps.version_number.outputs.version, 'ci-latest-')
+
       - name: Create release
         id: create_release
         uses: actions/create-release@v1.0.0
@@ -46,6 +57,7 @@ jobs:
           release_name: CI Build
           draft: false
           prerelease: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
       - name: Upload qt5 portable zip release asset
         uses: actions/upload-release-asset@v1.0.1
         env:
@@ -55,6 +67,7 @@ jobs:
           asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_x86_64.zip
           asset_name: gImageReader_latest_qt5_x86_64.zip
           asset_content_type: application/zip
+
       - name: Upload qt5 installer release asset
         uses: actions/upload-release-asset@v1.0.1
         env:
@@ -64,6 +77,7 @@ jobs:
           asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_x86_64.exe
           asset_name: gImageReader_latest_qt5_x86_64.exe
           asset_content_type: application/x-dosexec
+
       - name: Upload gtk portable zip release asset
         uses: actions/upload-release-asset@v1.0.1
         env:
@@ -73,6 +87,7 @@ jobs:
           asset_path: ./build/mingw64-gtk/gImageReader_${{ steps.version_number.outputs.version }}_gtk_x86_64.zip
           asset_name: gImageReader_latest_gtk_x86_64.zip
           asset_content_type: application/zip
+
       - name: Upload gtk installer release asset
         uses: actions/upload-release-asset@v1.0.1
         env:
