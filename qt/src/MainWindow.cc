@@ -86,7 +86,11 @@ void MainWindow::signalHandlerExec(int signal, bool tesseractCrash) {
 	process.start(QApplication::applicationFilePath(), QStringList() << "crashhandle" << QString::number(QApplication::applicationPid()) << QString::number(tesseractCrash) << filename);
 #ifdef Q_OS_LINUX
 	// Allow crash handler spawned debugger to attach to the crashed process
+#if QT_VERSION_CHECK(5, 15, 0)
+	prctl(PR_SET_PTRACER, process.processId(), 0, 0, 0);
+#else
 	prctl(PR_SET_PTRACER, process.pid(), 0, 0, 0);
+#endif
 #endif
 	process.waitForFinished(-1);
 	std::raise(signal);
