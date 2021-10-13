@@ -416,9 +416,9 @@ std::string save_dialog(const Glib::ustring& title, const std::string& initialFi
 	if(!filename.empty()) {
 		std::pair<std::string, std::string> sparts = Utils::split_filename(suggestedFile);
 		std::pair<std::string, std::string> parts = Utils::split_filename(filename);
-		if(parts.second.empty()) {
-			filename = parts.first + "." + sparts.second;
-		}
+//		if(parts.second.empty()) {
+//			filename = parts.first + "." + sparts.second;
+//		}
 		ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filename));
 	}
 	return filename;
