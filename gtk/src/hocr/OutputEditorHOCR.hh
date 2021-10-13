@@ -60,16 +60,16 @@ public:
 	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
 	void finalizeRead(ReadSessionData* data) override;
 	BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& /*options*/) const override { return new HOCRBatchProcessor; }
-	bool getModified() const override {
+	bool getModified(Gtk::Widget* widget = nullptr) const override {
 		return m_modified;
 	}
 	void onVisibilityChanged(bool /*visible*/) override;
 
-	bool clear(bool hide = true) override;
+	bool clear(bool hide = true, Gtk::Widget* widget = nullptr) override;
 	void setLanguage(const Config::Lang& lang) override;
 	bool open(const std::string& file) override { return open(InsertMode::Replace, {Gio::File::create_for_path(file)}); }
 	bool open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File>> files = std::vector<Glib::RefPtr<Gio::File>>());
-	bool save(const std::string& filename = "") override;
+	bool save(const std::string& filename = "", Gtk::Widget* widget = nullptr) override;
 	void savePDF();
 	bool exportToPDF();
 	bool exportToText();

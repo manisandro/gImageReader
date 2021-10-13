@@ -81,8 +81,8 @@ Container languages(const std::function<String(const char*)>& utf8str) {
 		{"grc",      "el", utf8str("\u1f19\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ae")}, // Ancient Greek
 		{"guj",      "gu", utf8str("\u0A97\u0AC1\u0A9C\u0AB0\u0ABE\u0AA4\u0AC0")}, // Gujarati
 		{"hat",      "ht", utf8str("Krey\u00F2l Ayisyen")}, // Haitian
-		{"heb",      "he", utf8str("\u05E2\u05D1\u05E8\u05D9\u05EA\u202C")}, // Hebrew
-		{"heb_rashi", "he", utf8str("\u05E2\u05D1\u05E8\u05D9\u05EA (\u05E8\u05E9\u05F4\u05D9)")}, // Hebrew (Rashi)
+		{"heb",      "he", utf8str("\u05E2\u05D1\u05E8\u05D9\u05EA")}, // Hebrew
+		{"heb_rashi", "he", utf8str("\u05E2\u05D1\u05E8\u05D9\u05EA (\u05E8\u05E9\u05F4\u05D9)")}, // Hebrew (Toranit, Rashi Script)
 		{"heb_toranit", "he", utf8str("\u05E2\u05D1\u05E8\u05D9\u05EA (\u05EA\u05D5\u05E8\u05E0\u05D9\u05EA)")}, // Hebrew (Toranit)
 		{"hin",      "hi", utf8str("\u0939\u093F\u0928\u094D\u0926\u0940")}, // Hindi
 		{"hrv",      "hr", utf8str("Hrvatski")}, // Croatian

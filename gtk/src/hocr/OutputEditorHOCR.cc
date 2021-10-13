@@ -1051,7 +1051,7 @@ bool OutputEditorHOCR::open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File>
 	return added > 0;
 }
 
-bool OutputEditorHOCR::save(const std::string& filename) {
+bool OutputEditorHOCR::save(const std::string& filename, Gtk::Widget* widget) {
 	Glib::ustring outname = filename;
 	if(outname.empty()) {
 		Glib::ustring suggestion = m_filebasename;
@@ -1132,7 +1132,7 @@ bool OutputEditorHOCR::exportToText() {
 	return HOCRTextExporter().run(m_document, m_filebasename);
 }
 
-bool OutputEditorHOCR::clear(bool hide) {
+bool OutputEditorHOCR::clear(bool hide, Gtk::Widget* widget) {
 	m_connectionPreviewTimer.disconnect();
 	m_preview->setVisible(false);
 	if(!ui.boxEditorHOCR->get_visible()) {

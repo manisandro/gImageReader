@@ -50,15 +50,16 @@ public:
 	ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
 		return new TextReadSessionData;
 	}
-	bool clear(bool hide = true) override;
+	bool clear(bool hide = true, Gtk::Widget* page = nullptr) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
 	BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const override;
-	bool getModified() const override;
+	bool getModified(Gtk::Widget* page = nullptr) const override;
 	void onVisibilityChanged(bool visible) override;
 	bool open(const std::string& file = "") override;
-	bool save(const std::string& filename = "") override;
+	bool save(const std::string& filename = "", Gtk::Widget* page = nullptr) override;
 	void setLanguage(const Config::Lang& lang) override;
+	void addDocument(const std::string& file = "");
 
 private:
 	struct TextReadSessionData : ReadSessionData {
@@ -84,8 +85,21 @@ private:
 	void replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
 	void applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase);
 	void scrollCursorIntoView();
-	void setFont();
+	void setFont(Gsv::View *view);
 	void setInsertMode(InsertMode mode, const std::string& iconName);
+
+	// get OutputBuffer at page; by default returns buffer at current page
+	Glib::RefPtr<OutputBuffer> getBuffer(Gtk::Widget* page = nullptr) const;
+	// get GtkSourceView at page; by default returns view at current page
+	Gsv::View* getView(Gtk::Widget* page = nullptr) const;
+	// creates Notebook tab widget: label + close button
+	Gtk::Widget* tabWidget(std::string tabLabel, Gtk::Widget* page);
+	std::string getTabLabel(Gtk::Widget* page = nullptr);
+	// updates tab label, including buffer modified status; uses current label if no one is provided
+	void setTabLabel(Gtk::Widget* page, std::string tabLabel = "");
+	void on_close_button_clicked(Gtk::Widget* page);
+	void on_buffer_modified_changed(Gtk::Widget* page);
+	void prepareCurView();
 };
 
 #endif // OUTPUTEDITORTEXT_HH
