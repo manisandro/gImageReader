@@ -322,7 +322,7 @@ bool MainWindow::closeEvent(GdkEventAny*) {
 void MainWindow::onSourceChanged() {
 	std::vector<Source*> sources = m_sourceManager->getSelectedSources();
 	if(m_displayer->setSources(sources) && !sources.empty()) {
-		ui.headerbar->set_subtitle(sources.size() == 1 ? Glib::ustring(sources.front()->displayname) : Glib::ustring::compose(_("Multiple sources (%1)"), sources.size()));
+		// ui.headerbar->set_subtitle(sources.size() == 1 ? Glib::ustring(sources.front()->displayname) : Glib::ustring::compose(_("Multiple sources (%1)"), sources.size()));
 		if(m_stateStack.back() == State::Idle) {
 			pushState(State::Normal, _("Ready"));
 		}
@@ -330,7 +330,7 @@ void MainWindow::onSourceChanged() {
 		if(m_stateStack.back() == State::Normal) {
 			popState();
 		}
-		ui.headerbar->set_subtitle("");
+		// ui.headerbar->set_subtitle("");
 	}
 }
 
@@ -392,6 +392,8 @@ bool MainWindow::setOutputMode(OutputMode mode) {
 		m_displayer->setTool(m_displayerTool);
 		m_outputEditor->setLanguage(m_recognitionMenu->getRecognitionLanguage());
 		ui.panedOutput->pack2(*m_outputEditor->getUI(), true, false);
+		// set default width of the left child (panedSources) to 1300px
+		ui.panedOutput->set_position(1300);
 		m_outputEditor->getUI()->set_visible(ui.buttonOutputpane->get_active());
 		return true;
 	}

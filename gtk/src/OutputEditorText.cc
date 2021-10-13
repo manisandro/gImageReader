@@ -31,8 +31,8 @@
 #include "Utils.hh"
 
 #include <fstream>
-
-
+#include <gtkmm/scrolledwindow.h>
+#include <iostream>
 void OutputEditorText::TextBatchProcessor::appendOutput(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const {
 	char* text = tess->GetUTF8Text();
 	if(firstArea && m_prependPage) {
@@ -49,8 +49,12 @@ OutputEditorText::OutputEditorText() {
 	m_searchFrame = new SearchReplaceFrame();
 	ui.boxSearch->pack_start(*Gtk::manage(m_searchFrame->getWidget()));
 	m_searchFrame->getWidget()->set_visible(false);
-	m_textBuffer = OutputBuffer::create();
-	ui.textview->set_source_buffer(m_textBuffer);
+	m_spell.property_decode_language_codes() = true;
+
+	addDocument();
+	prepareCurView();
+
+	CONNECT(ui.notebook, switch_page, [this](Gtk::Widget* page, guint page_number) { prepareCurView(); });
 
 	Glib::RefPtr<Gtk::AccelGroup> group = MAIN->getWindow()->get_accel_group();
 	ui.buttonUndo->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
@@ -61,45 +65,37 @@ OutputEditorText::OutputEditorText() {
 
 	m_insertMode = InsertMode::Append;
 
-	m_spell.attach(*ui.textview);
-	m_spell.property_decode_language_codes() = true;
-
 	CONNECT(ui.menuitemInsertAppend, activate, [this] { setInsertMode(InsertMode::Append, "ins_append.png"); });
 	CONNECT(ui.menuitemInsertCursor, activate, [this] { setInsertMode(InsertMode::Cursor, "ins_cursor.png"); });
 	CONNECT(ui.menuitemInsertReplace, activate, [this] { setInsertMode(InsertMode::Replace, "ins_replace.png"); });
 	CONNECT(ui.buttonStripcrlf, clicked, [this] { filterBuffer(); });
-	CONNECT(ui.buttonFindreplace, toggled, [this] { m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(ui.buttonFindreplace->get_active()); });
-	CONNECT(ui.buttonUndo, clicked, [this] { m_textBuffer->undo(); scrollCursorIntoView(); });
-	CONNECT(ui.buttonRedo, clicked, [this] { m_textBuffer->redo(); scrollCursorIntoView(); });
+	CONNECT(ui.buttonFindreplace, toggled, [this] { MAIN->popState(); m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(ui.buttonFindreplace->get_active()); });
+	CONNECT(ui.buttonUndo, clicked, [this] { getBuffer()->undo(); scrollCursorIntoView(); });
+	CONNECT(ui.buttonRedo, clicked, [this] { getBuffer()->redo(); scrollCursorIntoView(); });
 	CONNECT(ui.buttonSave, clicked, [this] { save(); });
 	CONNECT(ui.buttonOpen, clicked, [this] { open(); });
+	CONNECT(ui.buttonAddTab, clicked, [this] { addDocument(); });
 	CONNECT(ui.buttonClear, clicked, [this] { clear(); });
-	CONNECTP(m_textBuffer, can_undo, [this] { ui.buttonUndo->set_sensitive(m_textBuffer->can_undo()); });
-	CONNECTP(m_textBuffer, can_redo, [this] { ui.buttonRedo->set_sensitive(m_textBuffer->can_redo()); });
+
+
 	CONNECT(m_searchFrame, find_replace, sigc::mem_fun(this, &OutputEditorText::findReplace));
 	CONNECT(m_searchFrame, replace_all, sigc::mem_fun(this, &OutputEditorText::replaceAll));
 	CONNECT(m_searchFrame, apply_substitutions, sigc::mem_fun(this, &OutputEditorText::applySubstitutions));
-	CONNECT(ConfigSettings::get<FontSetting>("customoutputfont"), changed, [this] { setFont(); });
+	CONNECT(ConfigSettings::get<FontSetting>("customoutputfont"), changed, [this] { setFont(getView()); });
 	CONNECT(ConfigSettings::get<EntrySetting>("highlightmode"), changed, [this] { activateHighlightMode(); });
-	CONNECT(ConfigSettings::get<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(); });
-	CONNECT(ui.textview, populate_popup, [this](Gtk::Menu * menu) {
-		completeTextViewMenu(menu);
-	});
+	CONNECT(ConfigSettings::get<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(getView()); });
+
 #if GTK_SOURCE_MAJOR_VERSION >= 4
 	CONNECT(ui.menuitemStripcrlfDrawwhitespace, toggled, [this] {
-		GtkSourceSpaceDrawer* space_drawer = gtk_source_view_get_space_drawer(ui.textview->gobj());
+		GtkSourceSpaceDrawer* space_drawer = gtk_source_view_get_space_drawer(getView()->gobj());
 		gtk_source_space_drawer_set_types_for_locations (space_drawer, GTK_SOURCE_SPACE_LOCATION_ALL, GTK_SOURCE_SPACE_TYPE_ALL);
 		gtk_source_space_drawer_set_enable_matrix (space_drawer, ui.menuitemStripcrlfDrawwhitespace->get_active() ? TRUE : FALSE);
 	});
 #else
 	CONNECT(ui.menuitemStripcrlfDrawwhitespace, toggled, [this] {
-		ui.textview->set_draw_spaces(ui.menuitemStripcrlfDrawwhitespace->get_active() ? (Gsv::DRAW_SPACES_NEWLINE | Gsv::DRAW_SPACES_TAB | Gsv::DRAW_SPACES_SPACE) : Gsv::DrawSpacesFlags(0));
+		getView()->set_draw_spaces(ui.menuitemStripcrlfDrawwhitespace->get_active() ? (Gsv::DRAW_SPACES_NEWLINE | Gsv::DRAW_SPACES_TAB | Gsv::DRAW_SPACES_SPACE) : Gsv::DrawSpacesFlags(0));
 	});
 #endif
-
-	// If the insert or selection mark change save the bounds either if the view is focused or the selection is non-empty
-	CONNECTP(m_textBuffer, cursor_position, [this] { m_textBuffer->save_region_bounds(ui.textview->is_focus()); });
-	CONNECTP(m_textBuffer, has_selection, [this] { m_textBuffer->save_region_bounds(ui.textview->is_focus()); });
 
 	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("keepdot", ui.menuitemStripcrlfKeependmark));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("keepquote", ui.menuitemStripcrlfKeepquote));
@@ -108,25 +104,97 @@ OutputEditorText::OutputEditorText() {
 	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("keepparagraphs", ui.menuitemStripcrlfKeepparagraphs));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("drawwhitespace", ui.menuitemStripcrlfDrawwhitespace));
 
-	setFont();
 }
 
 OutputEditorText::~OutputEditorText() {
 	delete m_searchFrame;
 }
 
-void OutputEditorText::setFont() {
+void OutputEditorText::prepareCurView() {
+	m_spell.detach();
+	m_spell.attach(*getView());
+
+	MAIN->getHeaderBar()->set_title(getTabLabel());
+	MAIN->getHeaderBar()->set_subtitle(getTabLabel());
+
+	ui.buttonUndo->set_sensitive(getBuffer()->can_undo());
+	ui.buttonRedo->set_sensitive(getBuffer()->can_redo());
+
+	CONNECTP(getBuffer(), can_undo, [this] { ui.buttonUndo->set_sensitive(getBuffer()->can_undo()); });
+	CONNECTP(getBuffer(), can_redo, [this] { ui.buttonRedo->set_sensitive(getBuffer()->can_redo()); });
+
+	// If the insert or selection mark change save the bounds either if the view is focused or the selection is non-empty
+	CONNECTP(getBuffer(), cursor_position, [this] { getBuffer()->save_region_bounds(getView()->is_focus()); });
+	CONNECTP(getBuffer(), has_selection, [this] { getBuffer()->save_region_bounds(getView()->is_focus()); });
+}
+
+Gsv::View* OutputEditorText::getView(Gtk::Widget* page) const {
+	if (!page)
+		return dynamic_cast <Gsv::View *>((dynamic_cast <Gtk::ScrolledWindow *>(ui.notebook->get_nth_page(ui.notebook->get_current_page())))->get_child());
+	else
+		return dynamic_cast <Gsv::View *>((dynamic_cast <Gtk::ScrolledWindow *>(ui.notebook->get_nth_page(ui.notebook->page_num(*page))))->get_child());
+}
+
+Glib::RefPtr<OutputBuffer> OutputEditorText::getBuffer(Gtk::Widget* page) const {
+	return Glib::RefPtr<OutputBuffer>::cast_dynamic(getView(page)->get_source_buffer());
+}
+
+std::string OutputEditorText::getTabLabel(Gtk::Widget* page) {
+	std:: string label;
+	Gtk::Widget* p = page;
+
+	// if page == nullptr use current page
+	if (!page)
+		p = ui.notebook->get_nth_page(ui.notebook->get_current_page());
+
+	label = (dynamic_cast<Gtk::Label *>((dynamic_cast<Gtk::HBox *>(ui.notebook->get_tab_label(*p)))->get_children()[0])->get_text());
+
+	// ignore buffer modification indicator
+	if ((label[0] == ' ') || (label[0] == '*'))
+		return label.substr(1, label.size() - 1);
+	else
+		return label;
+}
+
+void OutputEditorText::setTabLabel(Gtk::Widget* page, std::string tabLabel) {
+
+	std::string label(tabLabel);
+	Gtk::Widget* p = page;
+
+	// if page == nullptr use current page
+	if (!page)
+		p = ui.notebook->get_nth_page(ui.notebook->get_current_page());
+
+	// reuse current label if nothing was provided
+	if (tabLabel == "")
+		label = getTabLabel(p);
+
+	// prepend space to be used as place holder for buffer modification indicator `*` if not done yet
+	if ((label[0] != '*') && (label[0] != ' '))
+		label = " " + label;
+
+	if (getBuffer(p)->get_modified()) {
+		label[0] = '*';
+	} else {
+		label[0] = ' ';
+	}
+
+	dynamic_cast<Gtk::Label *>((dynamic_cast<Gtk::HBox *>(ui.notebook->get_tab_label(*p)))->get_children()[0])->set_text(label);
+	dynamic_cast<Gtk::Label *>((dynamic_cast<Gtk::HBox *>(ui.notebook->get_tab_label(*p)))->get_children()[0])->show();
+}
+
+void OutputEditorText::setFont(Gsv::View *view) {
 	if(ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
-		ui.textview->unset_font();
+		view->unset_font();
 	} else {
 		Glib::ustring fontName = ConfigSettings::get<FontSetting>("customoutputfont")->getValue();
-		ui.textview->override_font(Pango::FontDescription(fontName));
+		view->override_font(Pango::FontDescription(fontName));
 	}
 }
 
 void OutputEditorText::scrollCursorIntoView() {
-	ui.textview->scroll_to(ui.textview->get_buffer()->get_insert());
-	ui.textview->grab_focus();
+	getView()->scroll_to(getView()->get_buffer()->get_insert());
+	getView()->grab_focus();
 }
 
 void OutputEditorText::setInsertMode(InsertMode mode, const std::string& iconName) {
@@ -136,8 +204,8 @@ void OutputEditorText::setInsertMode(InsertMode mode, const std::string& iconNam
 
 void OutputEditorText::filterBuffer() {
 	Gtk::TextIter start, end;
-	m_textBuffer->get_region_bounds(start, end);
-	Glib::ustring txt = m_textBuffer->get_text(start, end);
+	getBuffer()->get_region_bounds(start, end);
+	Glib::ustring txt = getBuffer()->get_text(start, end);
 
 	Utils::busyTask([this, &txt] {
 		// Always remove trailing whitespace
@@ -174,17 +242,17 @@ void OutputEditorText::filterBuffer() {
 		return true;
 	}, _("Stripping line breaks..."));
 
-	start = end = m_textBuffer->insert(m_textBuffer->erase(start, end), txt);
+	start = end = getBuffer()->insert(getBuffer()->erase(start, end), txt);
 	start.backward_chars(txt.size());
-	m_textBuffer->select_range(start, end);
+	getBuffer()->select_range(start, end);
 }
 
 void OutputEditorText::completeTextViewMenu(Gtk::Menu* menu) {
 	Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(_("Check spelling")));
-	item->set_active(bool(GtkSpell::Checker::get_from_text_view(*ui.textview)));
+	item->set_active(bool(GtkSpell::Checker::get_from_text_view(*getView())));
 	CONNECT(item, toggled, [this, item] {
 		if(item->get_active()) {
-			m_spell.attach(*ui.textview);
+			m_spell.attach(*getView());
 		} else {
 			m_spell.detach();
 		}
@@ -196,23 +264,25 @@ void OutputEditorText::completeTextViewMenu(Gtk::Menu* menu) {
 
 void OutputEditorText::findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace) {
 	m_searchFrame->clearErrorState();
-	if(!m_textBuffer->findReplace(backwards, replace, matchCase, searchstr, replacestr, ui.textview)) {
+	if(!getBuffer()->findReplace(backwards, replace, matchCase, searchstr, replacestr, getView())) {
 		m_searchFrame->setErrorState();
 	}
 }
 
 void OutputEditorText::replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
-	if(!m_textBuffer->replaceAll(searchstr, replacestr, matchCase)) {
+	unsigned int count(getBuffer()->replaceAll(searchstr, replacestr, matchCase));
+	if(!count) {
 		m_searchFrame->setErrorState();
 	}
 	MAIN->popState();
+	MAIN->pushState(MainWindow::State::Normal, Glib::ustring::compose(_("Found and replaced %1 occurrences"), count));
 }
 
 void OutputEditorText::applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
 	Gtk::TextIter start, end;
-	m_textBuffer->get_region_bounds(start, end);
+	getBuffer()->get_region_bounds(start, end);
 	int startpos = start.get_offset();
 	int endpos = end.get_offset();
 	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY | Gtk::TEXT_SEARCH_TEXT_ONLY;
@@ -223,20 +293,20 @@ void OutputEditorText::applySubstitutions(const std::map<Glib::ustring, Glib::us
 		Glib::ustring search = sit->first;
 		Glib::ustring replace = sit->second;
 		int diff = replace.length() - search.length();
-		Gtk::TextIter it = m_textBuffer->get_iter_at_offset(startpos);
+		Gtk::TextIter it = getBuffer()->get_iter_at_offset(startpos);
 		while(true) {
 			Gtk::TextIter matchStart, matchEnd;
 			if(!it.forward_search(search, flags, matchStart, matchEnd) || matchEnd.get_offset() > endpos) {
 				break;
 			}
-			it = m_textBuffer->insert(m_textBuffer->erase(matchStart, matchEnd), replace);
+			it = getBuffer()->insert(getBuffer()->erase(matchStart, matchEnd), replace);
 			endpos += diff;
 		}
 		while(Gtk::Main::events_pending()) {
 			Gtk::Main::iteration();
 		}
 	}
-	m_textBuffer->select_range(m_textBuffer->get_iter_at_offset(startpos), m_textBuffer->get_iter_at_offset(endpos));
+	getBuffer()->select_range(getBuffer()->get_iter_at_offset(startpos), getBuffer()->get_iter_at_offset(endpos));
 	MAIN->popState();
 }
 
@@ -275,16 +345,16 @@ OutputEditorText::BatchProcessor* OutputEditorText::createBatchProcessor(const s
 
 void OutputEditorText::addText(const Glib::ustring& text, bool insert) {
 	if(insert) {
-		m_textBuffer->insert_at_cursor(text);
+		getBuffer()->insert_at_cursor(text);
 	} else {
 		if(m_insertMode == InsertMode::Append) {
-			m_textBuffer->place_cursor(m_textBuffer->insert(m_textBuffer->end(), text));
+			getBuffer()->place_cursor(getBuffer()->insert(getBuffer()->end(), text));
 		} else if(m_insertMode == InsertMode::Cursor) {
 			Gtk::TextIter start, end;
-			m_textBuffer->get_region_bounds(start, end);
-			m_textBuffer->place_cursor(m_textBuffer->insert(m_textBuffer->erase(start, end), text));
+			getBuffer()->get_region_bounds(start, end);
+			getBuffer()->place_cursor(getBuffer()->insert(getBuffer()->erase(start, end), text));
 		} else if(m_insertMode == InsertMode::Replace) {
-			m_textBuffer->place_cursor(m_textBuffer->insert(m_textBuffer->erase(m_textBuffer->begin(), m_textBuffer->end()), text));
+			getBuffer()->place_cursor(getBuffer()->insert(getBuffer()->erase(getBuffer()->begin(), getBuffer()->end()), text));
 		}
 	}
 	MAIN->setOutputPaneVisible(true);
@@ -293,7 +363,7 @@ void OutputEditorText::addText(const Glib::ustring& text, bool insert) {
 void OutputEditorText::activateHighlightMode() {
 	Glib::RefPtr<Gsv::LanguageManager> language_manager = Gsv::LanguageManager::get_default();
 	Glib::RefPtr<Gsv::Language> language = language_manager->get_language(MAIN->getConfig()->highlightMode());
-	m_textBuffer->set_language(language);
+	getBuffer()->set_language(language);
 }
 
 bool OutputEditorText::open(const std::string& file) {
@@ -304,10 +374,21 @@ bool OutputEditorText::open(const std::string& file) {
 		if (file.empty()) {
 			FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
 			std::vector<Glib::RefPtr<Gio::File> > files = FileDialogs::open_dialog(_("Select Files"), "", "outputdir", filter, true);
-			// TODO: for now open only the first file. Once multi-tab UI is implemented - open each file in a separate tab.
-			m_textBuffer->set_text(Glib::file_get_contents(files[0]->get_path()));
-		} else
-			m_textBuffer->set_text(Glib::file_get_contents(file));
+			if (!files.empty()) {
+				getBuffer()->begin_not_undoable_action();
+				getBuffer()->set_text(Glib::file_get_contents(files[0]->get_path()));
+				getBuffer()->end_not_undoable_action();
+				getBuffer()->set_modified(false);
+				setTabLabel(ui.notebook->get_nth_page(ui.notebook->get_current_page()), Glib::path_get_basename(files[0]->get_path()));
+				// ToDo: add the files 1..n as new docs
+			}
+		} else {
+			getBuffer()->begin_not_undoable_action();
+			getBuffer()->set_text(Glib::file_get_contents(file));
+			getBuffer()->end_not_undoable_action();
+			getBuffer()->set_modified(false);
+			setTabLabel(ui.notebook->get_nth_page(ui.notebook->get_current_page()), Glib::path_get_basename(file));
+		}
 		MAIN->setOutputPaneVisible(true);
 		return true;
 	} catch(const Glib::Error&) {
@@ -317,7 +398,68 @@ bool OutputEditorText::open(const std::string& file) {
 	}
 }
 
-bool OutputEditorText::save(const std::string& filename) {
+void OutputEditorText::on_close_button_clicked(Gtk::Widget* page) {
+	if (clear(false, page))
+		ui.notebook->remove_page(*page);
+	if (ui.notebook->get_n_pages() < 2) ui.notebook->set_show_tabs(false);
+}
+
+void OutputEditorText::on_buffer_modified_changed(Gtk::Widget* page) {
+	setTabLabel(page);
+}
+
+Gtk::Widget* OutputEditorText::tabWidget(std::string tabLabel, Gtk::Widget* page) {
+	Gtk::Button* button = Gtk::make_managed<Gtk::Button>();
+	button->set_image_from_icon_name("window-close-symbolic", (Gtk::BuiltinIconSize) GTK_ICON_SIZE_MENU);
+	button->set_tooltip_text (_("Close document"));
+	button->set_relief((Gtk::ReliefStyle) GTK_RELIEF_NONE);
+	button->set_focus_on_click(false);
+
+	button->signal_clicked().connect( sigc::bind<Gtk::Widget*>( sigc::mem_fun(*this, &OutputEditorText::on_close_button_clicked), page) );
+
+	Gtk::Label* label = Gtk::make_managed<Gtk::Label>(tabLabel);
+	label->set_markup(tabLabel);
+	label->set_use_underline(false);
+
+	Gtk::HBox* hbox = Gtk::make_managed<Gtk::HBox>(false, 0);
+	hbox->set_spacing(0);
+	hbox->pack_start(*label);
+	hbox->pack_end(*button, false, false, 0);
+	hbox->show_all();
+
+	return hbox;
+}
+
+void OutputEditorText::addDocument(const std::string& file) {
+	Glib::RefPtr<OutputBuffer> textBuffer;
+	textBuffer = OutputBuffer::create();
+
+	std::string tabLabel;
+
+	if (file == "")
+		tabLabel = Glib::ustring::compose(_("New document %1"), std::to_string(ui.notebook->get_n_pages() + 1));
+	else {
+		tabLabel = Glib::path_get_basename(file);
+	}
+
+	Gsv::View* textView = Gtk::make_managed<Gsv::View>(textBuffer);
+	setFont(textView);
+
+	Gtk::ScrolledWindow* scrWindow = Gtk::make_managed<Gtk::ScrolledWindow>();
+	scrWindow->add(*textView);
+
+	CONNECT(textView, populate_popup, [this](Gtk::Menu * menu) {
+		completeTextViewMenu(menu);
+	});
+
+	textBuffer->signal_modified_changed().connect( sigc::bind<Gtk::Widget*>( sigc::mem_fun(*this, &OutputEditorText::on_buffer_modified_changed), scrWindow) );
+
+	ui.notebook->append_page(*scrWindow, *tabWidget(tabLabel, scrWindow));
+	if (ui.notebook->get_n_pages() > 1) ui.notebook->set_show_tabs(true);
+	ui.notebook->show_all();
+}
+
+bool OutputEditorText::save(const std::string& filename, Gtk::Widget* page) {
 	std::string outname = filename;
 	if(outname.empty()) {
 		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
@@ -325,11 +467,11 @@ bool OutputEditorText::save(const std::string& filename) {
 		if(!sources.empty()) {
 			suggestion = Utils::split_filename(sources.front()->file->get_path()).first;
 		} else {
-			suggestion = _("output");
+			suggestion = getTabLabel(page);
 		}
 
 		FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
-		outname = FileDialogs::save_dialog(_("Save Output..."), suggestion + ".txt", "outputdir", filter);
+		outname = FileDialogs::save_dialog(_("Save Output..."), suggestion, "outputdir", filter);
 		if(outname.empty()) {
 			return false;
 		}
@@ -339,38 +481,39 @@ bool OutputEditorText::save(const std::string& filename) {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
-	Glib::ustring txt = m_textBuffer->get_text(false);
+	Glib::ustring txt = getBuffer(page)->get_text(false);
 	file.write(txt.data(), txt.bytes());
-	m_textBuffer->set_modified(false);
+	getBuffer(page)->set_modified(false);
+	setTabLabel(page, Glib::path_get_basename(outname));
 	return true;
 }
 
-bool OutputEditorText::clear(bool hide) {
+bool OutputEditorText::clear(bool hide, Gtk::Widget* page) {
 	if(!ui.boxEditorText->get_visible()) {
 		return true;
 	}
-	if(getModified()) {
+	if(getModified(page)) {
 		int response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Output not saved"), _("Save output before proceeding?"), "", Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel);
 		if(response == Utils::Button::Save) {
-			if(!save()) {
+			if(!save("", page)) {
 				return false;
 			}
 		} else if(response != Utils::Button::Discard) {
 			return false;
 		}
 	}
-	m_textBuffer->begin_not_undoable_action();
-	m_textBuffer->set_text("");
-	m_textBuffer->end_not_undoable_action();
-	m_textBuffer->set_modified(false);
+	getBuffer()->begin_not_undoable_action();
+	getBuffer()->set_text("");
+	getBuffer()->end_not_undoable_action();
+	getBuffer()->set_modified(false);
 	if(hide) {
 		MAIN->setOutputPaneVisible(false);
 	}
 	return true;
 }
 
-bool OutputEditorText::getModified() const {
-	return m_textBuffer->get_modified();
+bool OutputEditorText::getModified(Gtk::Widget* page) const {
+	return getBuffer(page)->get_modified();
 }
 
 void OutputEditorText::onVisibilityChanged(bool /*visible*/) {

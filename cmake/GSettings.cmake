@@ -34,7 +34,7 @@ macro(add_schema SCHEMA_NAME)
       message (SEND_ERROR "Schema validation error: ${_schemas_invalid}")
     endif (_schemas_invalid)
 
-    # Actually install and recomple schemas
+    # Actually install and recompile schemas
     message (STATUS "GSettings schemas will be installed into ${GSETTINGS_DIR}")
     install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/${SCHEMA_NAME} DESTINATION ${GSETTINGS_DIR} OPTIONAL)
 
