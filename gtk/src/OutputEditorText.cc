@@ -403,6 +403,11 @@ bool OutputEditorText::open(const std::string& file) {
 				outputSession[getPage()].file = files[0]->get_path();
 				setTabLabel(getPage(), Glib::path_get_basename(files[0]->get_path()));
 				// ToDo: add the files 1..n as new docs
+				if (files.size() > 1) {
+					for (int i = 1; i < files.size(); ++i)
+						addDocument(files[i]->get_path());
+				}
+
 			}
 		} else {
 			getBuffer()->begin_not_undoable_action();
@@ -453,17 +458,9 @@ Gtk::Widget* OutputEditorText::tabWidget(std::string tabLabel, Gtk::Widget* page
 	return hbox;
 }
 
-void OutputEditorText::addDocument(const std::string& file) {
+Gtk::Widget* OutputEditorText::addDocument(const std::string& file) {
 	Glib::RefPtr<OutputBuffer> textBuffer;
 	textBuffer = OutputBuffer::create();
-
-	std::string tabLabel;
-
-	if (file == "")
-		tabLabel = Glib::ustring::compose(_("New document %1"), std::to_string(ui.notebook->get_n_pages() + 1));
-	else {
-		tabLabel = Glib::path_get_basename(file);
-	}
 
 	Gsv::View* textView = Gtk::make_managed<Gsv::View>(textBuffer);
 	setFont(textView);
@@ -475,12 +472,33 @@ void OutputEditorText::addDocument(const std::string& file) {
 		completeTextViewMenu(menu);
 	});
 
-	textBuffer->signal_modified_changed().connect( sigc::bind<Gtk::Widget*>( sigc::mem_fun(*this, &OutputEditorText::on_buffer_modified_changed), scrWindow) );
+	std::string tabLabel;
+	if (file == "")
+		tabLabel = Glib::ustring::compose(_("New document %1"), std::to_string(ui.notebook->get_n_pages() + 1));
+	else {
+		try {
+			textBuffer->begin_not_undoable_action();
+			textBuffer->set_text(Glib::file_get_contents(file));
+			textBuffer->end_not_undoable_action();
+			textBuffer->set_modified(false);
+		} catch(const Glib::Error&) {
+			Glib::ustring errorMsg = Glib::ustring::compose(_("The following files could not be opened:\n%1"), file);
+			Utils::messageBox(Gtk::MESSAGE_ERROR, _("Unable to open files"), errorMsg);
+			return nullptr;
+		}
+		outputSession[scrWindow].file = file;
+		tabLabel = Glib::path_get_basename(file);
+	}
 
 	ui.notebook->append_page(*scrWindow, *tabWidget(tabLabel, scrWindow));
+
+	textBuffer->signal_modified_changed().connect( sigc::bind<Gtk::Widget*>( sigc::mem_fun(*this, &OutputEditorText::on_buffer_modified_changed), scrWindow) );
+
 	if (ui.notebook->get_n_pages() > 1)
 		ui.notebook->set_show_tabs(true);
 	ui.notebook->show_all();
+
+	return scrWindow;
 }
 
 bool OutputEditorText::save(const std::string& filename, Gtk::Widget* page) {
