@@ -65,7 +65,8 @@ public:
 	bool open(const std::string& file = "") override;
 	bool save(const std::string& filename = "", Gtk::Widget* page = nullptr) override;
 	void setLanguage(const Config::Lang& lang) override;
-	void addDocument(const std::string& file = "");
+	// creates new notebook tab, with file content (if provided) and returns pointer on the created page
+	Gtk::Widget* addDocument(const std::string& file = "");
 
 private:
 	struct TextReadSessionData : ReadSessionData {
