@@ -30,6 +30,12 @@
 
 class SearchReplaceFrame;
 
+class OutputSession {
+	public:
+		std::string file;
+};
+
+
 class OutputEditorText : public OutputEditor {
 public:
 	class TextBatchProcessor : public BatchProcessor {
@@ -72,10 +78,11 @@ private:
 	Ui::OutputEditorText ui;
 	ClassData m_classdata;
 	SearchReplaceFrame* m_searchFrame;
-	Glib::RefPtr<OutputBuffer> m_textBuffer;
 
 	InsertMode m_insertMode;
 	GtkSpell::Checker m_spell;
+
+	std::map<Gtk::Widget*, OutputSession> outputSession;
 
 	void addText(const Glib::ustring& text, bool insert);
 	void activateHighlightMode();
@@ -92,6 +99,8 @@ private:
 	Glib::RefPtr<OutputBuffer> getBuffer(Gtk::Widget* page = nullptr) const;
 	// get GtkSourceView at page; by default returns view at current page
 	Gsv::View* getView(Gtk::Widget* page = nullptr) const;
+	// get Gtk::Widget* page at tab position pageNum; by default returns page at current position
+	Gtk::Widget* getPage(short int pageNum = -1) const;
 	// creates Notebook tab widget: label + close button
 	Gtk::Widget* tabWidget(std::string tabLabel, Gtk::Widget* page);
 	std::string getTabLabel(Gtk::Widget* page = nullptr);
