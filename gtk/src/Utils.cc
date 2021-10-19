@@ -48,7 +48,13 @@ void Utils::popup_positioner(int& x, int& y, bool& push_in, Gtk::Widget* ref, Gt
 	push_in = true;
 }
 
-Utils::Button::Type Utils::messageBox(Gtk::MessageType type, const Glib::ustring& title, const Glib::ustring& text, const Glib::ustring& body, int buttons, Gtk::Window* parent) {
+Utils::Button::Type Utils::messageBox(Gtk::MessageType type,
+                                      const Glib::ustring& title,
+                                      const Glib::ustring& text,
+                                      const Glib::ustring& body,
+                                      int buttons,
+                                      Gtk::Window* parent,
+                                      Gtk::Widget* bodyWidget) {
 	if(!parent) {
 		parent = MAIN->getWindow();
 	}
@@ -94,19 +100,26 @@ Utils::Button::Type Utils::messageBox(Gtk::MessageType type, const Glib::ustring
 	grid.set_row_spacing(6);
 
 	Gtk::ScrolledWindow scrollArea;
+	scrollArea.set_hexpand(true);
+	scrollArea.set_vexpand(true);
+	scrollArea.set_shadow_type(Gtk::SHADOW_IN);
+	scrollArea.set_min_content_width(320);
+	scrollArea.set_min_content_height(160);
+
 	Gtk::TextView textView;
-	scrollArea.add(textView);
 	if(!body.empty()) {
 		textView.set_editable(false);
+		textView.set_cursor_visible(false);
 		Glib::RefPtr<Gtk::TextBuffer> buffer = Gtk::TextBuffer::create();
 		buffer->set_text(body);
 		textView.set_buffer(buffer);
-		scrollArea.set_hexpand(true);
-		scrollArea.set_vexpand(true);
-		scrollArea.set_shadow_type(Gtk::SHADOW_IN);
-		scrollArea.set_min_content_width(320);
-		scrollArea.set_min_content_height(160);
+		scrollArea.add(textView);
 		grid.attach(scrollArea, 1, 1);
+	} else {
+		if (bodyWidget) {
+			scrollArea.add(*bodyWidget);
+			grid.attach(scrollArea, 1, 1);
+		}
 	}
 
 	if((buttons & Button::Ok) != 0) {

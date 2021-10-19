@@ -55,7 +55,13 @@ struct Button {
 		HOCR = 512
 	};
 };
-Button::Type messageBox(Gtk::MessageType type, const Glib::ustring& title, const Glib::ustring& text, const Glib::ustring& body = "", int buttons = Button::Ok, Gtk::Window* parent = nullptr);
+Button::Type messageBox(Gtk::MessageType type,
+                        const Glib::ustring& title,
+                        const Glib::ustring& text,
+                        const Glib::ustring& body = "",
+                        int buttons = Button::Ok,
+                        Gtk::Window* parent = nullptr,
+                        Gtk::Widget* bodyWidget = nullptr);
 
 void set_spin_blocked(Gtk::SpinButton* spin, double value, sigc::connection& conn);
 void set_error_state(Gtk::Entry* entry);

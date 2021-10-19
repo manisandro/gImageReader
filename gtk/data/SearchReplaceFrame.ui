@@ -20,6 +20,10 @@
             <property name="width_request">10</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="margin_left">4</property>
+            <property name="margin_right">2</property>
+            <property name="margin_top">4</property>
+            <property name="margin_bottom">4</property>
             <property name="hexpand">True</property>
             <property name="invisible_char">●</property>
             <property name="width_chars">2</property>
@@ -35,6 +39,10 @@
             <property name="width_request">10</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="margin_left">4</property>
+            <property name="margin_right">2</property>
+            <property name="margin_top">2</property>
+            <property name="margin_bottom">4</property>
             <property name="hexpand">True</property>
             <property name="invisible_char">●</property>
             <property name="width_chars">2</property>
@@ -51,6 +59,10 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="tooltip_text" translatable="yes">Replace</property>
+            <property name="margin_left">2</property>
+            <property name="margin_right">2</property>
+            <property name="margin_top">2</property>
+            <property name="margin_bottom">4</property>
             <child>
               <object class="GtkImage" id="imageReplace">
                 <property name="visible">True</property>
@@ -71,6 +83,10 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="tooltip_text" translatable="yes">Replace all</property>
+            <property name="margin_left">2</property>
+            <property name="margin_right">4</property>
+            <property name="margin_top">2</property>
+            <property name="margin_bottom">4</property>
             <child>
               <object class="GtkImage" id="imageReplaceall">
                 <property name="visible">True</property>
@@ -91,6 +107,10 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="tooltip_text" translatable="yes">Find previous</property>
+            <property name="margin_left">2</property>
+            <property name="margin_right">4</property>
+            <property name="margin_top">4</property>
+            <property name="margin_bottom">4</property>
             <child>
               <object class="GtkImage" id="imageSearchprev">
                 <property name="visible">True</property>
@@ -111,6 +131,10 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="tooltip_text" translatable="yes">Find next</property>
+            <property name="margin_left">2</property>
+            <property name="margin_right">2</property>
+            <property name="margin_top">4</property>
+            <property name="margin_bottom">4</property>
             <child>
               <object class="GtkImage" id="imageSearchnext">
                 <property name="visible">True</property>
@@ -138,6 +162,8 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">False</property>
+        <property name="margin_left">5</property>
+        <property name="margin_right">5</property>
         <property name="xalign">0</property>
         <property name="draw_indicator">True</property>
       </object>
@@ -153,6 +179,10 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">True</property>
+        <property name="margin_left">4</property>
+        <property name="margin_right">4</property>
+        <property name="margin_top">4</property>
+        <property name="margin_bottom">4</property>
         <property name="image">imageSubstitutions</property>
       </object>
       <packing>
