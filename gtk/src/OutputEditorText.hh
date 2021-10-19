@@ -65,8 +65,10 @@ public:
 	bool open(const std::string& file = "") override;
 	bool save(const std::string& filename = "", Gtk::Widget* page = nullptr) override;
 	void setLanguage(const Config::Lang& lang) override;
-	// creates new notebook tab, with file content (if provided) and returns pointer on the created page
-	Gtk::Widget* addDocument(const std::string& file = "");
+	Gtk::Notebook* getNotebook() const { return ui.notebook; };
+	// get OutputBuffer at page; by default returns buffer at current page
+	Glib::RefPtr<OutputBuffer> getBuffer(Gtk::Widget* page = nullptr) const;
+	std::string getTabLabel(Gtk::Widget* page = nullptr);
 
 private:
 	struct TextReadSessionData : ReadSessionData {
@@ -96,17 +98,16 @@ private:
 	void setFont(Gsv::View *view);
 	void setInsertMode(InsertMode mode, const std::string& iconName);
 
-	// get OutputBuffer at page; by default returns buffer at current page
-	Glib::RefPtr<OutputBuffer> getBuffer(Gtk::Widget* page = nullptr) const;
 	// get GtkSourceView at page; by default returns view at current page
 	Gsv::View* getView(Gtk::Widget* page = nullptr) const;
 	// get Gtk::Widget* page at tab position pageNum; by default returns page at current position
 	Gtk::Widget* getPage(short int pageNum = -1) const;
 	// creates Notebook tab widget: label + close button
 	Gtk::Widget* tabWidget(std::string tabLabel, Gtk::Widget* page);
-	std::string getTabLabel(Gtk::Widget* page = nullptr);
 	// updates tab label, including buffer modified status; uses current label if no one is provided
 	void setTabLabel(Gtk::Widget* page, std::string tabLabel = "");
+	// creates new notebook tab, with file content (if provided) and returns pointer on the created page
+	Gtk::Widget* addDocument(const std::string& file = "");
 	void on_close_button_clicked(Gtk::Widget* page);
 	void on_buffer_modified_changed(Gtk::Widget* page);
 	void prepareCurView();

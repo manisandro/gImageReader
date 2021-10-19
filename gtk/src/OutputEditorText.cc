@@ -69,7 +69,7 @@ OutputEditorText::OutputEditorText() {
 	CONNECT(ui.menuitemInsertCursor, activate, [this] { setInsertMode(InsertMode::Cursor, "ins_cursor.png"); });
 	CONNECT(ui.menuitemInsertReplace, activate, [this] { setInsertMode(InsertMode::Replace, "ins_replace.png"); });
 	CONNECT(ui.buttonStripcrlf, clicked, [this] { filterBuffer(); });
-	CONNECT(ui.buttonFindreplace, toggled, [this] { MAIN->popState(); m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(ui.buttonFindreplace->get_active()); });
+	CONNECT(ui.buttonFindreplace, toggled, [this] { m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(ui.buttonFindreplace->get_active()); });
 	CONNECT(ui.buttonUndo, clicked, [this] { getBuffer()->undo(); scrollCursorIntoView(); });
 	CONNECT(ui.buttonRedo, clicked, [this] { getBuffer()->redo(); scrollCursorIntoView(); });
 	CONNECT(ui.buttonSave, clicked, [this] { save(); });
@@ -297,7 +297,7 @@ void OutputEditorText::replaceAll(const Glib::ustring& searchstr, const Glib::us
 		m_searchFrame->setErrorState();
 	}
 	MAIN->popState();
-	MAIN->pushState(MainWindow::State::Idle, Glib::ustring::compose(_("Found and replaced %1 occurrences"), count));
+	MAIN->pushState(MainWindow::State::Idle, Glib::ustring::compose(_("Amount of occurrences replaced: %1"), count));
 }
 
 void OutputEditorText::applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase) {
@@ -402,7 +402,6 @@ bool OutputEditorText::open(const std::string& file) {
 				getBuffer()->set_modified(false);
 				outputSession[getPage()].file = files[0]->get_path();
 				setTabLabel(getPage(), Glib::path_get_basename(files[0]->get_path()));
-				// ToDo: add the files 1..n as new docs
 				if (files.size() > 1) {
 					for (int i = 1; i < files.size(); ++i)
 						addDocument(files[i]->get_path());
@@ -506,9 +505,9 @@ bool OutputEditorText::save(const std::string& filename, Gtk::Widget* page) {
 
 	if(outname.empty()) {
 		std::map<Gtk::Widget*, OutputSession>::iterator it(outputSession.find(page == nullptr ? getPage() : page));
-		if (it != outputSession.end())
+		if (it != outputSession.end()) {
 			outname = it->second.file;
-		else {
+		} else {
 			std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
 			std::string suggestion;
 			if(!sources.empty()) {
@@ -532,7 +531,7 @@ bool OutputEditorText::save(const std::string& filename, Gtk::Widget* page) {
 	Glib::ustring txt = getBuffer(page)->get_text(false);
 	file.write(txt.data(), txt.bytes());
 	getBuffer(page)->set_modified(false);
-	outputSession[getPage()].file = outname;
+	outputSession[page == nullptr ? getPage() : page].file = outname;
 	setTabLabel(page, Glib::path_get_basename(outname));
 	return true;
 }

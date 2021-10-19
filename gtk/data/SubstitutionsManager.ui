@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.20.2 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkImage" id="imageApply">
@@ -18,6 +18,9 @@
     <property name="default_width">320</property>
     <property name="default_height">240</property>
     <property name="icon_name">document-properties</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkBox" id="box">
         <property name="visible">True</property>
@@ -155,6 +158,10 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="margin_left">4</property>
+                <property name="margin_right">2</property>
+                <property name="margin_top">4</property>
+                <property name="margin_bottom">4</property>
                 <property name="image">imageApply</property>
               </object>
               <packing>
@@ -169,6 +176,10 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="margin_left">2</property>
+                <property name="margin_right">4</property>
+                <property name="margin_top">4</property>
+                <property name="margin_bottom">4</property>
                 <property name="image">imageClose</property>
               </object>
               <packing>
@@ -185,9 +196,6 @@
           </packing>
         </child>
       </object>
-    </child>
-    <child type="titlebar">
-      <placeholder/>
     </child>
   </object>
 </interface>
