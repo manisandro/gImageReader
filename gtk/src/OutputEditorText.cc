@@ -51,6 +51,18 @@ OutputEditorText::OutputEditorText() {
 	m_searchFrame->getWidget()->set_visible(false);
 	m_spell.property_decode_language_codes() = true;
 
+
+	Glib::RefPtr<Gtk::RecentFilter> recentFilter = Gtk::RecentFilter::create();
+	recentFilter->add_mime_type("text/plain");
+	recentFilter->add_application("gImageReader");
+	Gtk::RecentChooserMenu* recentChooser = Gtk::manage(new Gtk::RecentChooserMenu());
+	recentChooser->set_filter(recentFilter);
+	recentChooser->set_local_only(true);
+	recentChooser->set_show_not_found(false);
+	recentChooser->set_show_tips(true);
+	recentChooser->set_sort_type(Gtk::RECENT_SORT_MRU);
+	ui.menuButtonOpenRecent->set_menu(*recentChooser);
+
 	addDocument();
 	prepareCurView();
 
@@ -65,6 +77,7 @@ OutputEditorText::OutputEditorText() {
 
 	m_insertMode = InsertMode::Append;
 
+	CONNECT(recentChooser, item_activated, [this, recentChooser] { open(Glib::filename_from_uri(recentChooser->get_current_uri())); });
 	CONNECT(ui.menuitemInsertAppend, activate, [this] { setInsertMode(InsertMode::Append, "ins_append.png"); });
 	CONNECT(ui.menuitemInsertCursor, activate, [this] { setInsertMode(InsertMode::Cursor, "ins_cursor.png"); });
 	CONNECT(ui.menuitemInsertReplace, activate, [this] { setInsertMode(InsertMode::Replace, "ins_replace.png"); });
@@ -172,7 +185,6 @@ std::string OutputEditorText::getTabLabel(Gtk::Widget* page) {
 void OutputEditorText::setTabLabel(Gtk::Widget* page, std::string tabLabel) {
 
 	std::string label(tabLabel);
-	std::map<Gtk::Widget*, OutputSession>::iterator it;
 	Gtk::Widget* p = page;
 
 	// if page == nullptr use current page
@@ -194,6 +206,7 @@ void OutputEditorText::setTabLabel(Gtk::Widget* page, std::string tabLabel) {
 	}
 
 	MAIN->getHeaderBar()->set_title(label);
+	std::map<Gtk::Widget*, OutputSession>::iterator it;
 	it = outputSession.find(p);
 	if (it != outputSession.end())
 		MAIN->getHeaderBar()->set_subtitle(Glib::path_get_dirname(it->second.file));
@@ -388,8 +401,12 @@ void OutputEditorText::activateHighlightMode() {
 }
 
 bool OutputEditorText::open(const std::string& file) {
-	if(!clear(false)) {
+/*	if(!clear(false)) {
 		return false;
+	}*/
+	if (hasSession() || (getModified())) {
+		addDocument(file);
+		ui.notebook->set_current_page(ui.notebook->get_n_pages() - 1);
 	}
 	try {
 		if (file.empty()) {
@@ -406,7 +423,6 @@ bool OutputEditorText::open(const std::string& file) {
 					for (int i = 1; i < files.size(); ++i)
 						addDocument(files[i]->get_path());
 				}
-
 			}
 		} else {
 			getBuffer()->begin_not_undoable_action();
@@ -550,13 +566,16 @@ bool OutputEditorText::clear(bool hide, Gtk::Widget* page) {
 			return false;
 		}
 	}
-	getBuffer()->begin_not_undoable_action();
+	if (!hasSession()) getBuffer()->begin_not_undoable_action();
 	getBuffer()->set_text("");
-	getBuffer()->end_not_undoable_action();
-	getBuffer()->set_modified(false);
-	if(hide) {
-		MAIN->setOutputPaneVisible(false);
+	if (!hasSession()) {
+		getBuffer()->end_not_undoable_action();
+		getBuffer()->set_modified(false);
 	}
+	getView()->grab_focus();
+/*	if(hide) {
+		MAIN->setOutputPaneVisible(false);
+	}*/
 	return true;
 }
 
@@ -572,4 +591,10 @@ void OutputEditorText::setLanguage(const Config::Lang& lang) {
 	try {
 		m_spell.set_language(lang.code.empty() ? Utils::getSpellingLanguage(lang.prefix) : lang.code);
 	} catch(const GtkSpell::Error& /*e*/) {}
+}
+
+bool OutputEditorText::hasSession(Gtk::Widget* page) {
+	std::map<Gtk::Widget*, OutputSession>::iterator it;
+	it = outputSession.find(page == nullptr ? getPage() : page);
+	return it != outputSession.end();
 }
