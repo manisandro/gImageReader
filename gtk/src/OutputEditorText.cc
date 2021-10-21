@@ -404,40 +404,39 @@ bool OutputEditorText::open(const std::string& file) {
 /*	if(!clear(false)) {
 		return false;
 	}*/
-	for (auto it = outputSession.begin(); it != outputSession.end(); ++it)
-		if (it->second.file == file) {
-		    ui.notebook->set_current_page(ui.notebook->page_num(*(it->first)));
-		    return true;
-		}
-
-	if (hasSession() || (getModified())) {
-		addDocument(file);
-		ui.notebook->set_current_page(ui.notebook->get_n_pages() - 1);
-	}
 	try {
+		std::string inputname(file);
+		std::vector<Glib::RefPtr<Gio::File> > files;
 		if (file.empty()) {
 			FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
-			std::vector<Glib::RefPtr<Gio::File> > files = FileDialogs::open_dialog(_("Select Files"), "", "outputdir", filter, true);
+			files = FileDialogs::open_dialog(_("Select Files"), "", "outputdir", filter, true);
 			if (!files.empty()) {
-				getBuffer()->begin_not_undoable_action();
-				getBuffer()->set_text(Glib::file_get_contents(files[0]->get_path()));
-				getBuffer()->end_not_undoable_action();
-				getBuffer()->set_modified(false);
-				outputSession[getPage()].file = files[0]->get_path();
-				setTabLabel(getPage(), Glib::path_get_basename(files[0]->get_path()));
-				if (files.size() > 1) {
-					for (int i = 1; i < files.size(); ++i)
-						addDocument(files[i]->get_path());
-				}
+				inputname = files[0]->get_path();
 			}
-		} else {
-			getBuffer()->begin_not_undoable_action();
-			getBuffer()->set_text(Glib::file_get_contents(file));
-			getBuffer()->end_not_undoable_action();
-			getBuffer()->set_modified(false);
-			outputSession[getPage()].file = file;
-			setTabLabel(getPage(), Glib::path_get_basename(file));
 		}
+
+		for (auto it = outputSession.begin(); it != outputSession.end(); ++it)
+			if (it->second.file == inputname) {
+				ui.notebook->set_current_page(ui.notebook->page_num(*(it->first)));
+				return true;
+			}
+
+		if (hasSession() || (getModified())) {
+			ui.notebook->set_current_page(ui.notebook->page_num(*addDocument(inputname)));
+		}
+
+		getBuffer()->begin_not_undoable_action();
+		getBuffer()->set_text(Glib::file_get_contents(inputname));
+		getBuffer()->end_not_undoable_action();
+		getBuffer()->set_modified(false);
+		outputSession[getPage()].file = inputname;
+		setTabLabel(getPage(), Glib::path_get_basename(inputname));
+
+		if (files.size() > 1) {
+			for (int i = 1; i < files.size(); ++i)
+				addDocument(files[i]->get_path());
+		}
+
 		MAIN->setOutputPaneVisible(true);
 		return true;
 	} catch(const Glib::Error&) {
@@ -480,6 +479,13 @@ Gtk::Widget* OutputEditorText::tabWidget(std::string tabLabel, Gtk::Widget* page
 }
 
 Gtk::Widget* OutputEditorText::addDocument(const std::string& file) {
+	// if the file is already opened somewhere - switch to that tab
+	for (auto it = outputSession.begin(); it != outputSession.end(); ++it)
+		if (it->second.file == file) {
+		    ui.notebook->set_current_page(ui.notebook->page_num(*(it->first)));
+		    return it->first;
+		}
+
 	Glib::RefPtr<OutputBuffer> textBuffer;
 	textBuffer = OutputBuffer::create();
 
