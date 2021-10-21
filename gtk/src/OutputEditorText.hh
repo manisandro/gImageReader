@@ -61,6 +61,7 @@ public:
 	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
 	BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const override;
 	bool getModified(Gtk::Widget* page = nullptr) const override;
+	// checks whether notebook's page has a session (e.g. file) asociated with it; if no page is provided - current page is assumed
 	bool hasSession(Gtk::Widget* page = nullptr);
 	void onVisibilityChanged(bool visible) override;
 	bool open(const std::string& file = "") override;

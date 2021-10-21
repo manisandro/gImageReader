@@ -404,6 +404,12 @@ bool OutputEditorText::open(const std::string& file) {
 /*	if(!clear(false)) {
 		return false;
 	}*/
+	for (auto it = outputSession.begin(); it != outputSession.end(); ++it)
+		if (it->second.file == file) {
+		    ui.notebook->set_current_page(ui.notebook->page_num(*(it->first)));
+		    return true;
+		}
+
 	if (hasSession() || (getModified())) {
 		addDocument(file);
 		ui.notebook->set_current_page(ui.notebook->get_n_pages() - 1);
