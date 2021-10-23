@@ -2450,3 +2450,4 @@ msgstr "Cancella output"
 #~ "L'applicazione deve essere terminata. Non vi è lavoro non salvato.\n"
 #~ "\n"
 #~ "Per favore segnalare questo problema."
+

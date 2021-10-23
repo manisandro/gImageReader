@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-29 00:32+0200\n"
+"POT-Creation-Date: 2021-10-23 23:44+0300\n"
 "PO-Revision-Date: 2020-05-27 08:41+0000\n"
 "Last-Translator: Fisnik Shabani <fisnik.shabani@intecsystem.com>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/gimagereader/"
@@ -23,27 +23,27 @@ msgstr ""
 msgid "OCR application"
 msgstr "OCR aplikacion"
 
-#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:163
+#: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:170
 msgid "Redetect Languages"
 msgstr "Ridetekto Gjuhët"
 
-#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:166
+#: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:173
 msgid "Manage Languages"
 msgstr "Menaxhoni gjuhët"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
-#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:169
+#: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:176
 msgid "Preferences"
 msgstr "Preferencat"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
-#: ../gtk/src/MainWindow.cc:501 ../qt/src/MainWindow.cc:511
-#: ../qt/src/Ui_MainWindow.hh:174
+#: ../gtk/src/MainWindow.cc:554 ../qt/src/MainWindow.cc:517
+#: ../qt/src/Ui_MainWindow.hh:181
 msgid "Help"
 msgstr "Ndihmë"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:177
+#: ../qt/src/Ui_MainWindow.hh:184
 msgid "About"
 msgstr "Rreth"
 
@@ -51,10 +51,26 @@ msgstr "Rreth"
 msgid "Quit"
 msgstr "Dil"
 
+#: ../gtk/data/CharacterListDialog.ui.h:1 ../qt/data/CharacterListDialog.ui.h:1
+msgid "Character whitelist / blacklist"
+msgstr "Lista e bardhë / lista e zezë e karakterëve"
+
+#: ../gtk/data/CharacterListDialog.ui.h:2 ../qt/data/CharacterListDialog.ui.h:2
+msgid "Exclude these characters from being recognized (blacklist):"
+msgstr "Përjashtoni këto karaktere që të njihen (lista e zezë):"
+
+#: ../gtk/data/CharacterListDialog.ui.h:3 ../qt/data/CharacterListDialog.ui.h:3
+msgid "Enter a string of characters..."
+msgstr "Vendosni një varg karakteresh..."
+
+#: ../gtk/data/CharacterListDialog.ui.h:4 ../qt/data/CharacterListDialog.ui.h:4
+msgid "Only allow the following characters to be recognized (whitelist):"
+msgstr "Lejoni vetëm karakterët e mëposhtëm që të njihen (lista e bardhë):"
+
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:48
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
-#: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
-#: ../qt/data/ConfigDialog.ui.h:26
+#: ../gtk/src/FileDialogs.cc:179 ../gtk/src/FileDialogs.cc:194
+#: ../gtk/src/Utils.cc:126 ../qt/data/ConfigDialog.ui.h:26
 msgid "OK"
 msgstr "OK"
 
@@ -112,9 +128,9 @@ msgstr "Emri"
 
 #: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:47
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
-#: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:151
-#: ../gtk/src/Utils.cc:76 ../qt/data/ConfigDialog.ui.h:27
-#: ../qt/data/MainWindow.ui.h:13
+#: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:178
+#: ../gtk/src/FileDialogs.cc:193 ../gtk/src/Utils.cc:141
+#: ../qt/data/ConfigDialog.ui.h:27 ../qt/data/MainWindow.ui.h:13
 msgid "Cancel"
 msgstr "Anulo"
 
@@ -150,6 +166,15 @@ msgstr "Shtigjet e përdoruesit"
 msgid "Automatically open exported documents with default application"
 msgstr ""
 "Automatikisht hapni dokumentet e eksportuara me aplikacionin e paracaktuar"
+
+#: ../gtk/data/ConfigDialog.ui.h:26
+msgid "Syntax highlight mode:"
+msgstr ""
+
+#: ../gtk/data/ConfigDialog.ui.h:27
+#, fuzzy
+msgid "plain text"
+msgstr "Teksti i thjeshtë"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -200,186 +225,194 @@ msgstr ""
 msgid "Toggle output pane"
 msgstr "Përfshini panelin dalës"
 
-#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
+#: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate current page"
 msgstr "Rrotullo faqen aktuale"
 
-#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
+#: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:68
 msgid "Rotate all pages"
 msgstr "Rrotullo të gjitha faqet"
 
-#: ../gtk/data/MainWindow.ui.h:4 ../qt/src/Ui_MainWindow.hh:189
-msgid "Recent"
-msgstr "Të fundit"
+#. Remove & from some labels which designer insists in adding
+#: ../gtk/data/MainWindow.ui.h:4 ../qt/data/MainWindow.ui.h:22
+#: ../qt/src/Ui_MainWindow.hh:50
+msgid "Sources"
+msgstr "Burimet"
 
-#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:190
-msgid "Paste"
-msgstr "Ngjit"
-
-#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:191
-msgid "Take Screenshot"
-msgstr "Merrni pamjen e ekranit"
-
-#: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:24
+#: ../gtk/data/MainWindow.ui.h:5 ../qt/data/MainWindow.ui.h:24
 msgid "Zoom in"
 msgstr "Zmadhoje"
 
-#: ../gtk/data/MainWindow.ui.h:8 ../qt/data/MainWindow.ui.h:26
+#: ../gtk/data/MainWindow.ui.h:6 ../qt/data/MainWindow.ui.h:26
 msgid "Zoom out"
 msgstr "Zvogëloje"
 
-#: ../gtk/data/MainWindow.ui.h:9 ../qt/data/MainWindow.ui.h:28
+#: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:28
 msgid "Normal size"
 msgstr "Madhësia normale"
 
-#: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:30
+#: ../gtk/data/MainWindow.ui.h:8 ../qt/data/MainWindow.ui.h:30
 msgid "Best fit"
 msgstr "Përshtatja më e mirë"
 
-#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
+#: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:61
 msgid "Rotate page"
 msgstr "Rrotullo faqen"
 
-#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:75
+#: ../gtk/data/MainWindow.ui.h:10 ../qt/src/Ui_MainWindow.hh:76
 msgid "Select rotation mode"
 msgstr "Zgjidhni mënyrën e rrotullimit"
 
-#: ../gtk/data/MainWindow.ui.h:13 ../gtk/data/OutputEditorHOCR.ui.h:12
-#: ../gtk/data/OutputEditorText.ui.h:13
+#: ../gtk/data/MainWindow.ui.h:11 ../gtk/data/OutputEditorHOCR.ui.h:12
+#: ../gtk/data/OutputEditorText.ui.h:16
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:71 ../qt/src/Ui_OutputEditorText.hh:95
 msgid "Select insert mode"
 msgstr "Zgjidhni modalitetin e vendosjes"
 
-#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:102
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:103
 msgid "Select page"
 msgstr "Zgjedhni faqen"
 
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:36
+#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
 msgstr "Kontrollet e imazhit"
 
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/src/MainWindow.cc:159
+#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRBatchExportDialog.cc:42
+#: ../qt/src/MainWindow.cc:164
 msgid "Plain text"
 msgstr "Teksti i thjeshtë"
 
-#: ../gtk/data/MainWindow.ui.h:17 ../qt/src/MainWindow.cc:160
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/src/MainWindow.cc:165
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
-#: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:38
+#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:38
 msgid "Autodetect layout"
 msgstr "Detektimi automatik i orarit"
 
-#: ../gtk/data/MainWindow.ui.h:19
+#: ../gtk/data/MainWindow.ui.h:17
 msgid "<small>Recognize all</small>"
 msgstr "<small>Njihni të gjithë</small>"
 
-#: ../gtk/data/MainWindow.ui.h:20
+#: ../gtk/data/MainWindow.ui.h:18
 msgid "Select language"
 msgstr "Zgjedh gjuhën"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:196
+#: ../gtk/data/MainWindow.ui.h:19 ../qt/src/Ui_MainWindow.hh:203
 msgid "Add images"
 msgstr "Shto imazhe"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:195
+#: ../gtk/data/MainWindow.ui.h:20 ../qt/src/Ui_MainWindow.hh:202
 msgid "Add Images"
 msgstr "Shto imazhe"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:200
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:207
 msgid "Remove image from list"
 msgstr "Largo imazhin nga lista"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:210
 msgid "Delete image"
 msgstr "Fshije imazhin"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:206
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:213
 msgid "Clear list"
 msgstr "Pastro listën"
 
-#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:6
+msgid "Thumbnails"
+msgstr "Fotografi"
+
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
 msgstr "Skedarët"
 
-#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:9
 msgid "Device:"
 msgstr "Pajisje:"
 
-#: ../gtk/data/MainWindow.ui.h:28 ../gtk/data/TessdataManager.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:27 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:55
 msgid "Refresh"
 msgstr "Rifresko"
 
-#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:10
 msgid "Output:"
 msgstr "Dalje:"
 
-#: ../gtk/data/MainWindow.ui.h:30 ../qt/data/MainWindow.ui.h:14
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:14
 msgid "Mode:"
 msgstr "Modaliteti:"
 
-#: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:313
-#: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExporter.cc:344
+#: ../gtk/data/MainWindow.ui.h:30 ../gtk/src/hocr/HOCRPdfExporter.cc:313
+#: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExportWidget.cc:60
 msgid "Color"
 msgstr "Ngjyra"
 
-#: ../gtk/data/MainWindow.ui.h:32 ../gtk/src/hocr/HOCRPdfExporter.cc:316
-#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExporter.cc:345
+#: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:316
+#: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExportWidget.cc:61
 msgid "Grayscale"
 msgstr "Shkalla gri"
 
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:32 ../qt/data/MainWindow.ui.h:11
 msgid "Resolution:"
 msgstr "Rezolucioni:"
 
-#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:12
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:12
 msgid "Scan"
 msgstr "Skano"
 
-#: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:17
+#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:17
 msgid "Source:"
 msgstr "Burimi:"
 
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
 msgstr "Skano"
 
-#: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
 msgstr "Shkëlqimi"
 
-#: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
 msgstr "Kontrasti"
 
-#: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
 msgstr "Rezolucioni"
 
-#: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
 msgstr "Ngjyra të kundërta"
 
-#: ../gtk/data/MainWindow.ui.h:41
+#: ../gtk/data/MainWindow.ui.h:40
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "Fronti grafik për tesseract-ocr"
 
-#: ../gtk/data/MainWindow.ui.h:42 ../qt/data/CharacterListDialog.ui.h:1
-msgid "Character whitelist / blacklist"
-msgstr "Lista e bardhë / lista e zezë e karakterëve"
+#: ../gtk/data/MainWindow.ui.h:41 ../qt/data/BatchModeDialog.ui.h:1
+msgid "Batch Mode"
+msgstr "Modaliteti i serisë"
 
-#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/CharacterListDialog.ui.h:2
-msgid "Exclude these characters from being recognized (blacklist):"
-msgstr "Përjashtoni këto karaktere që të njihen (lista e zezë):"
+#: ../gtk/data/MainWindow.ui.h:42
+#, fuzzy
+msgid ""
+"<i>In batch mode, each input source is processed separately and the output "
+"saved side-by-side to the input file.</i>"
+msgstr ""
+"Në modalitetin e serisë, secili burim i hyrjes përpunohet veçmas dhe dalja "
+"ruhet krah për krah në skedarin e hyrjes."
 
-#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/CharacterListDialog.ui.h:3
-msgid "Enter a string of characters..."
-msgstr "Vendosni një varg karakteresh..."
+#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
+msgid "Existing output:"
+msgstr "Dalja ekzistuese:"
 
-#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/CharacterListDialog.ui.h:4
-msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr "Lejoni vetëm karakterët e mëposhtëm që të njihen (lista e bardhë):"
+#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/BatchModeDialog.ui.h:2
+msgid "Prepend page numbers to output text"
+msgstr "Shtoni numrat e faqeve në tekstin dalës"
+
+#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/BatchModeDialog.ui.h:5
+msgid "Autodetect page layout"
+msgstr "Gjeje në mënyrë automatike pamjen e faqes"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -389,7 +422,7 @@ msgstr "Gama e faqes"
 msgid "Page range:"
 msgstr "Gama e faqes:"
 
-#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:50
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Shembull:</b> 1-10, 13, 14-18</small>"
 
@@ -397,8 +430,8 @@ msgstr "<small><b>Shembull:</b> 1-10, 13, 14-18</small>"
 msgid "Recognition area:"
 msgstr "Hapësira njohëse:"
 
-#: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:381
-#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:133
+#: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:121
+#: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:137
 msgid "Entire page"
 msgstr "Faqja e tërë"
 
@@ -418,23 +451,27 @@ msgstr "Emri i skedarit burimorë"
 msgid "Source page"
 msgstr "Faqja burimore"
 
-#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:174
+#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:166
 msgid "Protected PDF"
 msgstr "PDF i mbrojtur"
 
-#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:67
+#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:71
 msgid "Current Page"
 msgstr "Faqja aktuale"
 
-#: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:70
+#: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:74
 msgid "Multiple Pages..."
 msgstr "Më shumë faqe..."
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:695
+#: ../gtk/data/MainWindow.ui.h:60 ../qt/src/Recognizer.cc:77
+msgid "Batch mode..."
+msgstr "Modaliteti i serisë..."
+
+#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:713
 msgid "Add Word"
 msgstr "Shto fjalë"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:695
+#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:713
 msgid "Enter word:"
 msgstr "Shkruaj fjalë:"
 
@@ -478,7 +515,7 @@ msgstr "Vendosni dokumentin para faqes aktuale"
 msgid "Open hOCR file"
 msgstr "Hapni hOCR skedarin"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/OutputEditorText.ui.h:18
+#: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/OutputEditorText.ui.h:15
 #: ../qt/src/Ui_OutputEditorText.hh:116
 msgid "Save output"
 msgstr "Ruani daljen"
@@ -489,14 +526,14 @@ msgstr "Ruani daljen"
 msgid "Export"
 msgstr "Eksporto"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:16 ../gtk/data/OutputEditorText.ui.h:19
+#: ../gtk/data/OutputEditorHOCR.ui.h:16 ../gtk/data/OutputEditorText.ui.h:21
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:109
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:110
 #: ../qt/src/Ui_OutputEditorText.hh:118
 msgid "Clear output"
 msgstr "Pastro daljen"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/data/OutputEditorText.ui.h:15
+#: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:112
 #: ../qt/src/Ui_OutputEditorText.hh:107
 msgid "Find and replace"
@@ -509,7 +546,8 @@ msgid "Show confidence values"
 msgstr "Trego vlerat e besimit"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:19 ../gtk/data/PdfExportDialog.ui.h:41
-#: ../qt/data/PdfExportDialog.ui.h:2 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:117
+#: ../qt/data/PdfExportDialog.ui.h:2 ../qt/data/PdfExportWidget.ui.h:2
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:117
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 msgid "Show preview"
 msgstr "Shfaq parashikimin"
@@ -524,14 +562,14 @@ msgstr "Ardhshëm (F3)"
 msgid "Previous (Shift+F3)"
 msgstr "Mëparshëm (Shift+F3)"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:915
-#: ../qt/src/hocr/OutputEditorHOCR.cc:827
+#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:957
+#: ../qt/src/hocr/OutputEditorHOCR.cc:845
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Expand all"
 msgstr "Zgjero të gjitha"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:918
-#: ../qt/src/hocr/OutputEditorHOCR.cc:828
+#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:960
+#: ../qt/src/hocr/OutputEditorHOCR.cc:846
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Collapse all"
 msgstr "Fshihe"
@@ -596,16 +634,25 @@ msgstr "Ndihma vizuele"
 msgid "Draw whitespace"
 msgstr "Vizato hapësirën e bardhë"
 
-#: ../gtk/data/OutputEditorText.ui.h:14 ../qt/src/Ui_OutputEditorText.hh:102
+#: ../gtk/data/OutputEditorText.ui.h:13
+#, fuzzy
+msgid "Open file"
+msgstr "Hapni hOCR skedarin"
+
+#: ../gtk/data/OutputEditorText.ui.h:14
+msgid "New tab"
+msgstr ""
+
+#: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
 msgstr "Largo ndarjet e rreshtit në tekstin e selektuar"
 
-#: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:109
+#: ../gtk/data/OutputEditorText.ui.h:19 ../qt/src/Ui_OutputEditorText.hh:109
 #: ../qt/src/Ui_OutputEditorText.hh:110
 msgid "Undo"
 msgstr "Zhbëj"
 
-#: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:112
+#: ../gtk/data/OutputEditorText.ui.h:20 ../qt/src/Ui_OutputEditorText.hh:112
 #: ../qt/src/Ui_OutputEditorText.hh:113
 msgid "Redo"
 msgstr "Ribëj"
@@ -615,150 +662,187 @@ msgid "PDF Export"
 msgstr "PDF eksport"
 
 #: ../gtk/data/PdfExportDialog.ui.h:4 ../qt/data/PdfExportDialog.ui.h:4
+#: ../qt/data/PdfExportWidget.ui.h:4
 msgid "Output mode:"
 msgstr "Modaliteti i daljes:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportDialog.ui.h:6
+#: ../qt/data/PdfExportWidget.ui.h:6 ../qt/src/hocr/HOCRBatchExportDialog.cc:40
 msgid "PDF"
 msgstr "PDF"
 
 #: ../gtk/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportDialog.ui.h:7
+#: ../qt/data/PdfExportWidget.ui.h:7
 msgid "PDF with invisible text overlay"
 msgstr "PDF me mbivendosje të tekstit të padukshëm"
 
-#: ../gtk/data/PdfExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
+#: ../gtk/data/PdfExportDialog.ui.h:7 ../qt/data/HOCRBatchExportDialog.ui.h:7
+#: ../qt/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportWidget.ui.h:16
 msgid "Format:"
 msgstr "Formati:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
+#: ../qt/data/PdfExportWidget.ui.h:17
 msgid "Compression:"
 msgstr "Kompresioni:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportDialog.ui.h:14
+#: ../qt/data/PdfExportWidget.ui.h:14
 msgid "Compression quality:"
 msgstr "Kualiteti i kompresimit:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
+#: ../qt/data/PdfExportWidget.ui.h:15
 msgid "DPI:"
 msgstr "DPI:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
+#: ../qt/data/PdfExportWidget.ui.h:18
 msgid "Dithering algorithm:"
 msgstr "Algoritëm për dithering:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
+#: ../qt/data/PdfExportWidget.ui.h:13
 msgid "Image settings:"
 msgstr "Parametrat e imazhit:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
+#: ../qt/data/PdfExportWidget.ui.h:25
 msgid "Uniformize line and word spacing"
 msgstr "Uniformizoni ndarjen e vijës dhe fjalëve"
 
 #: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
+#: ../qt/data/PdfExportWidget.ui.h:21
 msgid "Override font family:"
 msgstr "Mbingarko familjen e fontit:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
+#: ../qt/data/PdfExportWidget.ui.h:27
 msgid "Fallback font family:"
 msgstr "Tërhiq familjen e fontit:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
+#: ../qt/data/PdfExportWidget.ui.h:20
 msgid "Override font size:"
 msgstr "Mbingarko madhësinë e fontit:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
+#: ../qt/data/PdfExportWidget.ui.h:23
 msgid "Font scaling:"
 msgstr "Shkallëzimi i fontit:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
+#: ../qt/data/PdfExportWidget.ui.h:26
 msgid "pt"
 msgstr "pt"
 
 #: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
+#: ../qt/data/PdfExportWidget.ui.h:22
 msgid "Preserve spaces wider than:"
 msgstr "Ruani hapësirat më të gjera se:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:20 ../qt/data/PdfExportDialog.ui.h:24
+#: ../qt/data/PdfExportWidget.ui.h:24
 msgid "characters"
 msgstr "karaktere"
 
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
+#: ../qt/data/PdfExportWidget.ui.h:28
 msgid "Sanitize hyphens before line breaks"
 msgstr "Pastro vijat para rreshtit të ri"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
+#: ../qt/data/PdfExportWidget.ui.h:19
 msgid "Text settings:"
 msgstr "Cilësimet e tekstit:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:23 ../qt/data/PdfExportDialog.ui.h:10
+#: ../qt/data/PdfExportWidget.ui.h:10
 msgid "Paper size:"
 msgstr "Madhësia e letrës:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:24 ../qt/data/PdfExportDialog.ui.h:11
+#: ../qt/data/PdfExportWidget.ui.h:11
 msgid "Width"
 msgstr "Gjerësia"
 
 #: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:12
+#: ../qt/data/PdfExportWidget.ui.h:12
 msgid "Height"
 msgstr "Lartësia"
 
 #: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
+#: ../qt/data/PdfExportWidget.ui.h:29
 msgid "Treat image sources as having true DPI:"
 msgstr "Trajtoni burimet e imazhit si DPI të vërtetë:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
+#: ../qt/data/PdfExportWidget.ui.h:3
 msgid "Basic"
 msgstr "Themelor"
 
 #: ../gtk/data/PdfExportDialog.ui.h:28 ../qt/data/PdfExportDialog.ui.h:31
+#: ../qt/data/PdfExportWidget.ui.h:31
 msgid "PDF version:"
 msgstr "PDF version:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:33
+#: ../qt/data/PdfExportWidget.ui.h:33
 msgid "Password:"
 msgstr "Fjalëkalimi:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:34
+#: ../qt/data/PdfExportWidget.ui.h:34
 msgid "Confirm password:"
 msgstr "Konfirmoni fjalëkalimin:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:32
+#: ../qt/data/PdfExportWidget.ui.h:32
 msgid "Encryption (optional):"
 msgstr "Enkriptim (opsionale):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:36
+#: ../qt/data/PdfExportWidget.ui.h:36
 msgid "Author:"
 msgstr "Autori:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:38
+#: ../qt/data/PdfExportWidget.ui.h:38
 msgid "Title:"
 msgstr "Titulli:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:40
+#: ../qt/data/PdfExportWidget.ui.h:40
 msgid "Subject:"
 msgstr "Subjekti:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:37
+#: ../qt/data/PdfExportWidget.ui.h:37
 msgid "Creator:"
 msgstr "Krijuesi:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:39
+#: ../qt/data/PdfExportWidget.ui.h:39
 msgid "Producer:"
 msgstr "Prodhues:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:41
+#: ../qt/data/PdfExportWidget.ui.h:41
 msgid "Keywords:"
 msgstr "Fjalët kyçe:"
 
 #: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:35
+#: ../qt/data/PdfExportWidget.ui.h:35
 msgid "Additional information (optional):"
 msgstr "Informacion shtesë (opsionale):"
 
 #: ../gtk/data/PdfExportDialog.ui.h:39 ../qt/data/PdfExportDialog.ui.h:42
+#: ../qt/data/PdfExportWidget.ui.h:42
 msgid "Import from current source"
 msgstr "Importo nga burimi aktual"
 
 #: ../gtk/data/PdfExportDialog.ui.h:40 ../qt/data/PdfExportDialog.ui.h:30
+#: ../qt/data/PdfExportWidget.ui.h:30
 msgid "Advanced"
 msgstr "Përparuar"
 
@@ -818,7 +902,7 @@ msgstr "Ruaje si imazh"
 msgid "Open"
 msgstr "Hape"
 
-#: ../gtk/data/SubstitutionsManager.ui.h:3 ../gtk/src/Utils.cc:79
+#: ../gtk/data/SubstitutionsManager.ui.h:3 ../gtk/src/Utils.cc:144
 #: ../qt/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:42
 msgid "Save"
 msgstr "Ruaje"
@@ -834,8 +918,8 @@ msgid "Add"
 msgstr "Shto"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:911 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:824 ../qt/src/SubstitutionsManager.cc:50
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:953 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/hocr/OutputEditorHOCR.cc:842 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
 msgstr "Fshije"
@@ -905,19 +989,22 @@ msgstr "Transferimi i të dhënave ..."
 msgid "Canceling scan..."
 msgstr "Duke anuluar skanimin..."
 
-#: ../gtk/src/Config.cc:49 ../qt/data/ConfigDialog.ui.h:7
+#: ../gtk/src/Config.cc:50 ../gtk/src/Config.cc:60
+#: ../qt/data/ConfigDialog.ui.h:7
 msgid "Filename prefix"
 msgstr "Prefiksi i emrit të skedarit"
 
-#: ../gtk/src/Config.cc:50 ../qt/data/ConfigDialog.ui.h:8
+#: ../gtk/src/Config.cc:51 ../gtk/src/Config.cc:61
+#: ../qt/data/ConfigDialog.ui.h:8
 msgid "Code"
 msgstr "Kodi"
 
-#: ../gtk/src/Config.cc:51 ../qt/data/ConfigDialog.ui.h:9
+#: ../gtk/src/Config.cc:52 ../gtk/src/Config.cc:62
+#: ../qt/data/ConfigDialog.ui.h:9
 msgid "Native name"
 msgstr "Emri amë"
 
-#: ../gtk/src/Config.cc:109 ../qt/src/Config.cc:102
+#: ../gtk/src/Config.cc:120 ../qt/src/Config.cc:104
 msgid "Script"
 msgstr "Skriptë"
 
@@ -938,21 +1025,21 @@ msgstr "Nuk kishte punë të paruajtur."
 msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "Nuk arriti të merrte backtrace. A është i instaluar GDB?"
 
-#: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
-msgid "Page %1"
-msgstr "Faqja %1"
-
-#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
+#: ../gtk/src/Displayer.cc:253 ../qt/src/Displayer.cc:196
 msgid "Failed to load image"
 msgstr "Dështoi në ngarkimin e imazhit"
 
-#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
+#: ../gtk/src/Displayer.cc:253 ../qt/src/Displayer.cc:196
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
 "Skedari mund të mos jetë një imazh ose të jetë i korruptuar:\n"
 "%1"
+
+#: ../gtk/src/Displayer.cc:746 ../qt/src/Displayer.cc:595
+msgid "Page %1"
+msgstr "Faqja %1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
 msgid "PNG Images"
@@ -978,194 +1065,229 @@ msgstr "Njihni përzgjedhjen"
 msgid "Performing layout analysis"
 msgstr "Duke kryer analizën e orarit"
 
-#: ../gtk/src/FileDialogs.cc:235
+#: ../gtk/src/FileDialogs.cc:300
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr ""
 "Një skedar i quajtur \"% 1\" ekziston tashmë. A jeni i sigurtë që doni ta "
 "rishkruani atë?"
 
-#: ../gtk/src/FileDialogs.cc:237
+#: ../gtk/src/FileDialogs.cc:302
 msgid "Overwrite File?"
 msgstr "Rishkruani skedarin?"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:616 ../gtk/src/hocr/OutputEditorHOCR.cc:266
-#: ../qt/src/hocr/HOCRDocument.cc:686 ../qt/src/hocr/OutputEditorHOCR.cc:310
+#: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
+msgid "Temporary files"
+msgstr ""
+
+#: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
+msgid "No suggestions"
+msgstr "Asnjë sugjerim"
+
+#: ../gtk/src/hocr/HOCRDocument.cc:74 ../qt/src/hocr/HOCRDocument.cc:75
+msgid "Add to dictionary"
+msgstr "Shtoni në fjalor"
+
+#: ../gtk/src/hocr/HOCRDocument.cc:80 ../qt/src/hocr/HOCRDocument.cc:79
+msgid "Ignore word"
+msgstr "Injoroni fjalë"
+
+#: ../gtk/src/hocr/HOCRDocument.cc:724 ../gtk/src/hocr/OutputEditorHOCR.cc:333
+#: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:311
 msgid "Page"
 msgstr "Faqja"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:688
+#: ../gtk/src/hocr/HOCRDocument.cc:726 ../qt/src/hocr/HOCRDocument.cc:692
 msgid "Text block"
 msgstr "Blloku i tekstit"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:620 ../gtk/src/hocr/OutputEditorHOCR.cc:272
-#: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:312
+#: ../gtk/src/hocr/HOCRDocument.cc:728 ../gtk/src/hocr/OutputEditorHOCR.cc:339
+#: ../qt/src/hocr/HOCRDocument.cc:694 ../qt/src/hocr/OutputEditorHOCR.cc:313
 msgid "Paragraph"
 msgstr "Paragraf"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:692
+#: ../gtk/src/hocr/HOCRDocument.cc:730 ../qt/src/hocr/HOCRDocument.cc:696
 msgid "Textline"
 msgstr "Linja e tekstit"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:696
+#: ../gtk/src/hocr/HOCRDocument.cc:734 ../qt/src/hocr/HOCRDocument.cc:700
 msgid "Graphic"
 msgstr "Grafike"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:65 ../gtk/src/hocr/HOCRPdfExporter.cc:489
 #: ../gtk/src/hocr/HOCRTextExporter.cc:34
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1016 ../gtk/src/OutputEditorText.cc:280
-#: ../qt/src/hocr/HOCROdtExporter.cc:51 ../qt/src/hocr/HOCRPdfExporter.cc:471
-#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:951
-#: ../qt/src/OutputEditorText.cc:271
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1063
+#: ../qt/src/hocr/OutputEditorHOCR.cc:980
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1021
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1055
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1084 ../qt/src/OutputEditorText.cc:271
 msgid "output"
 msgstr "dalja"
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:68 ../qt/src/hocr/HOCROdtExporter.cc:54
+#: ../gtk/src/hocr/HOCROdtExporter.cc:68
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1024
 msgid "OpenDocument Text Documents"
 msgstr "OpenDocument Tekst Dokumente"
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:69 ../qt/src/hocr/HOCROdtExporter.cc:54
+#: ../gtk/src/hocr/HOCROdtExporter.cc:69
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1024
 msgid "Save ODT Output..."
 msgstr "Ruaje ODT daljen..."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:617
-#: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCROdtExporter.cc:61
-#: ../qt/src/hocr/HOCRPdfExporter.cc:601 ../qt/src/hocr/HOCRTextExporter.cc:47
+#: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCROdtExporter.cc:49
+#: ../qt/src/hocr/HOCRPdfExporter.cc:134 ../qt/src/hocr/HOCRTextExporter.cc:34
 msgid "Export failed"
 msgstr "Eksportimi dështoi"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
-#: ../qt/src/hocr/HOCROdtExporter.cc:61
+#: ../qt/src/hocr/HOCROdtExporter.cc:49
 msgid "The ODT export failed: unable to write output file."
 msgstr "Eksporti ODT dështoi: në pamundësi për të shkruar skedarin e daljes."
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:335 ../qt/src/hocr/HOCROdtExporter.cc:254
+#: ../gtk/src/hocr/HOCROdtExporter.cc:335 ../qt/src/hocr/HOCROdtExporter.cc:242
 msgid "Exporting to ODT..."
 msgstr "Duke e eksportuar në ODT..."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:283 ../qt/src/hocr/HOCRPdfExporter.cc:358
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:283
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:74
 msgid "Same as source"
 msgstr "Njejtë sikur burimi"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:286 ../qt/src/hocr/HOCRPdfExporter.cc:359
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:286
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:75
 msgid "Custom"
 msgstr "Përshtatshme"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:300 ../qt/src/hocr/HOCRPdfExporter.cc:355
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:300
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:71
 msgid "cm"
 msgstr "cm"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:356
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:303
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:72
 msgid "in"
 msgstr "in"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:319 ../qt/src/hocr/HOCRPdfExporter.cc:346
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:319
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:62
 msgid "Monochrome"
 msgstr "Monokrom"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:328 ../qt/src/hocr/HOCRPdfExporter.cc:348
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:328
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:64
 msgid "Threshold (closest color)"
 msgstr "Pragu (ngjyra më e afërt)"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:331 ../qt/src/hocr/HOCRPdfExporter.cc:349
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:331
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:65
 msgid "Diffuse"
 msgstr "Difuze"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:340 ../qt/src/hocr/HOCRPdfExporter.cc:350
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:340
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:66
 msgid "Zip (lossless)"
 msgstr "Zip (pa humbje)"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:344 ../qt/src/hocr/HOCRPdfExporter.cc:351
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:344
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:67
 msgid "CCITT Group 4 (lossless)"
 msgstr "CCITT Group 4 (pa humbje)"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:348 ../qt/src/hocr/HOCRPdfExporter.cc:352
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:348
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:68
 msgid "Jpeg (lossy)"
 msgstr "Jpeg (me humbje)"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:493 ../qt/src/hocr/HOCRPdfExporter.cc:475
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:493
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1060
 msgid "PDF Files"
 msgstr "PDF Skedarë"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:494 ../qt/src/hocr/HOCRPdfExporter.cc:475
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:494
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1060
 msgid "Save PDF Output..."
 msgstr "Ruani PDF daljen..."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:481
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:500
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1065
 msgid "Invalid Output"
 msgstr "Dalje e pavlefshme"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:500 ../qt/src/hocr/HOCRPdfExporter.cc:481
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:500
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1065
 msgid "Cannot overwrite a file which is a source image of this document."
 msgstr ""
 "Nuk mund të mbivendoset një skedar i cili është një imazh burimi i këtij "
 "dokumenti."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:515 ../qt/src/hocr/HOCRPdfExporter.cc:503
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:515
 msgid "Failed to create output"
 msgstr "Dështoi të krijojë dalje"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:515 ../qt/src/hocr/HOCRPdfExporter.cc:503
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:515
 msgid "Failed to create output. The returned error was: %1"
 msgstr "Dështoi të krijojë dalje. Gabimi kthyes ishte: %1"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:557 ../qt/src/hocr/HOCRPdfExporter.cc:543
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:557 ../qt/src/hocr/HOCRPdfExporter.cc:77
 msgid "The operation was cancelled"
 msgstr "Operacioni u anulua"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:605 ../qt/src/hocr/HOCRPdfExporter.cc:589
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:605 ../qt/src/hocr/HOCRPdfExporter.cc:123
 msgid "Failed to render page %1"
 msgstr "Dështoi të jepte faqen% 1"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:612 ../qt/src/hocr/HOCRPdfExporter.cc:596
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:612 ../qt/src/hocr/HOCRPdfExporter.cc:130
 msgid "Exporting to PDF..."
 msgstr "Duke eksportuar në PDF..."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:617 ../qt/src/hocr/HOCRPdfExporter.cc:601
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:617 ../qt/src/hocr/HOCRPdfExporter.cc:134
 msgid "The PDF export failed: %1."
 msgstr "Eksportimi në PDF dështoi: %1."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:671 ../qt/src/hocr/HOCRPdfExporter.cc:654
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:671 ../qt/src/hocr/HOCRPdfExporter.cc:420
 msgid "The PDF library could not load the font '%1'."
 msgstr "Biblioteka PDF nuk mund të ngarkonte fontin '% 1'."
 
-#: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:282
-#: ../qt/src/hocr/HOCRTextExporter.cc:40 ../qt/src/OutputEditorText.cc:273
+#: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:416
+#: ../gtk/src/OutputEditorText.cc:550 ../qt/src/hocr/OutputEditorHOCR.cc:1087
+#: ../qt/src/OutputEditorText.cc:273
 msgid "Text Files"
 msgstr "Skedarët e tekstit"
 
-#: ../gtk/src/hocr/HOCRTextExporter.cc:38 ../qt/src/hocr/HOCRTextExporter.cc:40
+#: ../gtk/src/hocr/HOCRTextExporter.cc:38
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1087
 msgid "Save Text Output..."
 msgstr "Ruani daljen e tekstit..."
 
-#: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCRTextExporter.cc:47
+#: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCRTextExporter.cc:34
 msgid "The text export failed: unable to write output file."
 msgstr ""
 "Eksporti i tekstit dështoi: në pamundësi për të shkruar skedarin e daljes."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:269
-#: ../qt/src/hocr/OutputEditorHOCR.cc:311
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:336
+#: ../qt/src/hocr/OutputEditorHOCR.cc:312
 msgid "Block"
 msgstr "Bllok"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:275
-#: ../qt/src/hocr/OutputEditorHOCR.cc:313
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:342
+#: ../qt/src/hocr/OutputEditorHOCR.cc:314
 msgid "Line"
 msgstr "Rresht"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:278
-#: ../qt/src/hocr/OutputEditorHOCR.cc:314
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:345
+#: ../qt/src/hocr/OutputEditorHOCR.cc:315
 msgid "Word"
 msgstr "Fjalë"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:281
-#: ../qt/src/hocr/OutputEditorHOCR.cc:315
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:348
+#: ../qt/src/hocr/OutputEditorHOCR.cc:316
 msgid "Misspelled word"
 msgstr "Fjalë e gabuar"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:448
-#: ../qt/src/hocr/OutputEditorHOCR.cc:415
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:516
+#: ../qt/src/hocr/OutputEditorHOCR.cc:417
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -1173,89 +1295,78 @@ msgstr ""
 "Faqet e mëposhtme nuk mund të përpunohen:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:449
-#: ../qt/src/hocr/OutputEditorHOCR.cc:416
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:517
+#: ../qt/src/hocr/OutputEditorHOCR.cc:418
 msgid "Recognition errors"
 msgstr "Gabimet e njohjes"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:619
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:676
 #: ../qt/src/hocr/OutputEditorHOCR.cc:180
-#: ../qt/src/hocr/OutputEditorHOCR.cc:596
-#: ../qt/src/hocr/OutputEditorHOCR.cc:608
+#: ../qt/src/hocr/OutputEditorHOCR.cc:614
+#: ../qt/src/hocr/OutputEditorHOCR.cc:626
 msgid "Multiple values"
 msgstr "Vlera të shumëfishta"
 
 #. Merging allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:803
-#: ../qt/src/hocr/OutputEditorHOCR.cc:756
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:876
+#: ../qt/src/hocr/OutputEditorHOCR.cc:774
 msgid "Merge"
 msgstr "Bashkim"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:811
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:902
-#: ../qt/src/hocr/OutputEditorHOCR.cc:758
-#: ../qt/src/hocr/OutputEditorHOCR.cc:822
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:884
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
+#: ../qt/src/hocr/OutputEditorHOCR.cc:776
+#: ../qt/src/hocr/OutputEditorHOCR.cc:840
 msgid "Split from parent"
 msgstr "Ndaje nga prindi"
 
 #. Swapping allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:822
-#: ../qt/src/hocr/OutputEditorHOCR.cc:762
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:895
+#: ../qt/src/hocr/OutputEditorHOCR.cc:780
 msgid "Swap"
 msgstr "Shkëmbim"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:846
-#: ../qt/src/hocr/OutputEditorHOCR.cc:807
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:919
+#: ../qt/src/hocr/OutputEditorHOCR.cc:825
 msgid "Add graphic region"
 msgstr "Shtoni regjionin grafik"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:849
-#: ../qt/src/hocr/OutputEditorHOCR.cc:808
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:922
+#: ../qt/src/hocr/OutputEditorHOCR.cc:826
 msgid "Add text block"
 msgstr "Shtoni bllokun e tekstit"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:853
-#: ../qt/src/hocr/OutputEditorHOCR.cc:810
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:926
+#: ../qt/src/hocr/OutputEditorHOCR.cc:828
 msgid "Add paragraph"
 msgstr "Shtoni paragraf"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:857
-#: ../qt/src/hocr/OutputEditorHOCR.cc:812
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:930
+#: ../qt/src/hocr/OutputEditorHOCR.cc:830
 msgid "Add line"
 msgstr "Shtoni linjë"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:861
-#: ../qt/src/hocr/OutputEditorHOCR.cc:814
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:934
+#: ../qt/src/hocr/OutputEditorHOCR.cc:832
 msgid "Add word"
 msgstr "Shtoni fjalë"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:877 ../qt/src/hocr/HOCRDocument.cc:72
-msgid "No suggestions"
-msgstr "Asnjë sugjerim"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:883 ../qt/src/hocr/HOCRDocument.cc:76
-msgid "Add to dictionary"
-msgstr "Shtoni në fjalor"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:889 ../qt/src/hocr/HOCRDocument.cc:80
-msgid "Ignore word"
-msgstr "Injoroni fjalë"
-
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:952
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1018
-#: ../qt/src/hocr/OutputEditorHOCR.cc:889
-#: ../qt/src/hocr/OutputEditorHOCR.cc:954
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:994
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1066
+#: ../qt/src/hocr/OutputEditorHOCR.cc:907
+#: ../qt/src/hocr/OutputEditorHOCR.cc:983
 msgid "hOCR HTML Files"
 msgstr "hOCR HTML skedarë"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:953
-#: ../qt/src/hocr/OutputEditorHOCR.cc:889
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:995
+#: ../qt/src/hocr/OutputEditorHOCR.cc:907
 msgid "Open hOCR File"
 msgstr "Hapni skedarin hOCR"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1000 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:929 ../qt/src/OutputEditorText.cc:256
-#: ../qt/src/SourceManager.cc:156
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1043 ../gtk/src/OutputEditorText.cc:447
+#: ../gtk/src/OutputEditorText.cc:515 ../gtk/src/SourceManager.cc:170
+#: ../qt/src/hocr/OutputEditorHOCR.cc:947 ../qt/src/OutputEditorText.cc:256
+#: ../qt/src/SourceManager.cc:148
 msgid ""
 "The following files could not be opened:\n"
 "%1"
@@ -1263,8 +1374,8 @@ msgstr ""
 "Skedarët e mëposhtëm nuk mund të hapen:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
-#: ../qt/src/hocr/OutputEditorHOCR.cc:932
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1046
+#: ../qt/src/hocr/OutputEditorHOCR.cc:950
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
@@ -1272,133 +1383,141 @@ msgstr ""
 "Skedarët e mëposhtëm nuk janë hOCR HTML të vlefshëm:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1006 ../gtk/src/SourceManager.cc:125
-#: ../qt/src/hocr/OutputEditorHOCR.cc:935 ../qt/src/OutputEditorText.cc:257
-#: ../qt/src/SourceManager.cc:156
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1049 ../gtk/src/OutputEditorText.cc:448
+#: ../gtk/src/OutputEditorText.cc:516 ../gtk/src/SourceManager.cc:170
+#: ../qt/src/hocr/OutputEditorHOCR.cc:953 ../qt/src/OutputEditorText.cc:257
+#: ../qt/src/SourceManager.cc:148
 msgid "Unable to open files"
 msgstr "Në pamundësi për të hapur skedarë"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1019
-#: ../qt/src/hocr/OutputEditorHOCR.cc:954
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1067
+#: ../qt/src/hocr/OutputEditorHOCR.cc:983
 msgid "Save hOCR Output..."
 msgstr "Ruani hOCR daljen..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:559
+#: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
 msgid "Failed to save output"
 msgstr "Dështoi të ruaj daljen"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
-#: ../qt/src/hocr/OutputEditorHOCR.cc:961 ../qt/src/OutputEditorText.cc:280
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:559
+#: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Kontrolloni nëse keni leje shkrimi në dosjen e zgjedhur."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1023 ../qt/src/OutputEditorText.cc:293
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:575
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorText.cc:293
 msgid "Output not saved"
 msgstr "Dalja nuk është ruajtur"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1023 ../qt/src/OutputEditorText.cc:293
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:575
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorText.cc:293
 msgid "Save output before proceeding?"
 msgstr "Ruani daljen para se të vazhdoni?"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:192
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1121 ../qt/src/OutputEditorText.cc:164
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1263 ../gtk/src/OutputEditorText.cc:315
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1204 ../qt/src/OutputEditorText.cc:164
 msgid "Replacing..."
 msgstr "Duke zëvendësuar..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1240 ../gtk/src/OutputEditorText.cc:200
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1144 ../qt/src/OutputEditorText.cc:172
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1288 ../gtk/src/OutputEditorText.cc:325
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1227 ../qt/src/OutputEditorText.cc:172
 msgid "Applying substitutions..."
 msgstr "Duke aplikuar zëvendësimet..."
 
-#: ../gtk/src/MainWindow.cc:131 ../qt/src/MainWindow.cc:334
+#: ../gtk/src/MainWindow.cc:132 ../qt/src/MainWindow.cc:340
 msgid "Using tesseract"
 msgstr "Duke përdorur tesseract"
 
-#: ../gtk/src/MainWindow.cc:178 ../qt/src/MainWindow.cc:201
+#: ../gtk/src/MainWindow.cc:180 ../qt/src/MainWindow.cc:207
 msgid "Select an image to begin..."
 msgstr "Zgjedhni një imazh pët të filluar..."
 
-#: ../gtk/src/MainWindow.cc:310
-msgid "Multiple sources"
-msgstr "Burime të shumta"
+#: ../gtk/src/MainWindow.cc:327
+msgid "There are %1 documents with unsaved changes"
+msgstr ""
 
-#: ../gtk/src/MainWindow.cc:312 ../qt/src/MainWindow.cc:319
+#: ../gtk/src/MainWindow.cc:328
+msgid ""
+"Save changes before closing? If you don't save, all your changes will be "
+"permanently lost.\n"
+"Select the documents you want to save:"
+msgstr ""
+
+#: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
 msgid "Ready"
 msgstr "Gati"
 
-#: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:453
+#: ../gtk/src/MainWindow.cc:514 ../qt/src/MainWindow.cc:459
 msgid "New version"
 msgstr "Version i ri"
 
-#: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:453
+#: ../gtk/src/MainWindow.cc:514 ../qt/src/MainWindow.cc:459
 msgid "gImageReader %1 is available"
 msgstr "gImageReader% 1 është në dispozicion"
 
-#: ../gtk/src/MainWindow.cc:462 ../qt/src/MainWindow.cc:454
+#: ../gtk/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:460
 msgid "Download"
 msgstr "Shkarko"
 
-#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:455
+#: ../gtk/src/MainWindow.cc:516 ../qt/src/MainWindow.cc:461
 msgid "Changelog"
 msgstr "Ditari i ndryshimeve"
 
-#: ../gtk/src/MainWindow.cc:464 ../qt/src/MainWindow.cc:456
+#: ../gtk/src/MainWindow.cc:517 ../qt/src/MainWindow.cc:462
 msgid "Don't notify again"
 msgstr "Mos njofto përsëri"
 
-#: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:504
+#: ../gtk/src/MainWindow.cc:538 ../qt/src/MainWindow.cc:510
 msgid "Don't show again"
 msgstr "Mos u shfaq përsëri"
 
-#: ../gtk/src/MainWindow.cc:486 ../gtk/src/MainWindow.cc:499
-#: ../qt/src/MainWindow.cc:505
+#: ../gtk/src/MainWindow.cc:539 ../gtk/src/MainWindow.cc:552
+#: ../qt/src/MainWindow.cc:511
 msgid "Install"
 msgstr "Instalo"
 
-#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
+#: ../gtk/src/MainWindow.cc:559 ../qt/src/MainWindow.cc:523
 msgid "Spelling dictionary missing"
 msgstr "Fjalori drejtshkrimor mungon"
 
-#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
+#: ../gtk/src/MainWindow.cc:559 ../qt/src/MainWindow.cc:523
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Fjalori i drejtshkrimit për % 1 nuk është i instaluar"
 
-#: ../gtk/src/MainWindow.cc:513 ../gtk/src/MainWindow.cc:542
-#: ../qt/src/MainWindow.cc:523
+#: ../gtk/src/MainWindow.cc:566 ../gtk/src/MainWindow.cc:595
+#: ../qt/src/MainWindow.cc:529
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Instalimi i fjalorit drejtshkrimor për '% 1'"
 
-#: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:555
-#: ../gtk/src/MainWindow.cc:563 ../gtk/src/MainWindow.cc:611
-#: ../gtk/src/MainWindow.cc:616 ../gtk/src/TessdataManager.cc:60
+#: ../gtk/src/MainWindow.cc:587 ../gtk/src/MainWindow.cc:608
+#: ../gtk/src/MainWindow.cc:616 ../gtk/src/MainWindow.cc:664
+#: ../gtk/src/MainWindow.cc:669 ../gtk/src/TessdataManager.cc:60
 #: ../gtk/src/TessdataManager.cc:70 ../gtk/src/TessdataManager.cc:339
-#: ../qt/src/MainWindow.cc:542 ../qt/src/MainWindow.cc:555
-#: ../qt/src/MainWindow.cc:564 ../qt/src/MainWindow.cc:608
-#: ../qt/src/MainWindow.cc:613 ../qt/src/TessdataManager.cc:70
+#: ../qt/src/MainWindow.cc:548 ../qt/src/MainWindow.cc:561
+#: ../qt/src/MainWindow.cc:570 ../qt/src/MainWindow.cc:614
+#: ../qt/src/MainWindow.cc:619 ../qt/src/TessdataManager.cc:70
 #: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:287
 msgid "Error"
 msgstr "Gabim"
 
-#: ../gtk/src/MainWindow.cc:534 ../qt/src/MainWindow.cc:542
+#: ../gtk/src/MainWindow.cc:587 ../qt/src/MainWindow.cc:548
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Dështoi në instalimin e fjalorit drejtshkrimor:% 1"
 
-#: ../gtk/src/MainWindow.cc:555 ../qt/src/MainWindow.cc:555
+#: ../gtk/src/MainWindow.cc:608 ../qt/src/MainWindow.cc:561
 msgid "Failed to create directory for spelling dictionaries."
 msgstr "Dështoi për të krijuar direktorium për fjalorët drejtshkrues."
 
-#: ../gtk/src/MainWindow.cc:563 ../qt/src/MainWindow.cc:564
+#: ../gtk/src/MainWindow.cc:616 ../qt/src/MainWindow.cc:570
 msgid "Could not read %1: %2."
 msgstr "Nuk mund të lexohet %1: %2."
 
-#: ../gtk/src/MainWindow.cc:590 ../qt/src/MainWindow.cc:588
+#: ../gtk/src/MainWindow.cc:643 ../qt/src/MainWindow.cc:594
 msgid "Downloading '%1'..."
 msgstr "Duke shkarkuar '%1'..."
 
-#: ../gtk/src/MainWindow.cc:611 ../qt/src/MainWindow.cc:608
+#: ../gtk/src/MainWindow.cc:664 ../qt/src/MainWindow.cc:614
 msgid ""
 "The following dictionaries could not be downloaded:\n"
 "%1\n"
@@ -1414,11 +1533,11 @@ msgstr ""
 "Këshillë: Nëse nuk keni leje shkrimi në dosjet e sistemit, mund të kaloni në "
 "shtigjet e përdoruesve në dialogun e cilësimeve."
 
-#: ../gtk/src/MainWindow.cc:614 ../qt/src/MainWindow.cc:611
+#: ../gtk/src/MainWindow.cc:667 ../qt/src/MainWindow.cc:617
 msgid "Dictionaries installed"
 msgstr "Fjalorët u instaluan"
 
-#: ../gtk/src/MainWindow.cc:614
+#: ../gtk/src/MainWindow.cc:667
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
@@ -1426,28 +1545,36 @@ msgstr ""
 "Fjalorët e mëposhtëm u instaluan:\n"
 "%1"
 
-#: ../gtk/src/MainWindow.cc:616 ../qt/src/MainWindow.cc:613
+#: ../gtk/src/MainWindow.cc:669 ../qt/src/MainWindow.cc:619
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Asnjë fjalor drejtshkrimor nuk u gjet për '% 1'."
 
-#: ../gtk/src/OutputEditorText.cc:162 ../qt/src/OutputEditorText.cc:149
+#: ../gtk/src/OutputEditorText.cc:39 ../qt/src/OutputEditorText.cc:41
+msgid "Page: %1\n"
+msgstr "Faqja: %1\n"
+
+#: ../gtk/src/OutputEditorText.cc:285 ../qt/src/OutputEditorText.cc:149
 msgid "Stripping line breaks..."
 msgstr "Duke larguar ndarjet e rreshtit..."
 
-#: ../gtk/src/OutputEditorText.cc:170
+#: ../gtk/src/OutputEditorText.cc:293
 msgid "Check spelling"
 msgstr "Kontrolloni drejtshkrimin"
 
-#: ../gtk/src/OutputEditorText.cc:239 ../qt/src/OutputEditorText.cc:208
+#: ../gtk/src/OutputEditorText.cc:321
+msgid "Amount of occurrences replaced: %1"
+msgstr ""
+
+#: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
 msgstr "Skedari: %1"
 
-#: ../gtk/src/OutputEditorText.cc:242 ../qt/src/OutputEditorText.cc:211
+#: ../gtk/src/OutputEditorText.cc:367 ../qt/src/OutputEditorText.cc:211
 msgid "Page: %1"
 msgstr "Faqja: %1"
 
-#: ../gtk/src/OutputEditorText.cc:255 ../gtk/src/Recognizer.cc:478
-#: ../qt/src/Recognizer.cc:235
+#: ../gtk/src/OutputEditorText.cc:380 ../gtk/src/Recognizer.cc:224
+#: ../qt/src/Recognizer.cc:258
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -1455,113 +1582,142 @@ msgstr ""
 "\n"
 "[Dështoi të njohë faqen% 1]\n"
 
-#: ../gtk/src/OutputEditorText.cc:283 ../qt/src/OutputEditorText.cc:273
+#: ../gtk/src/OutputEditorText.cc:417 ../gtk/src/SourceManager.cc:297
+#: ../qt/src/SourceManager.cc:257
+msgid "Select Files"
+msgstr "Zgjidhni skedarët"
+
+#: ../gtk/src/OutputEditorText.cc:466
+msgid "Close document"
+msgstr ""
+
+#: ../gtk/src/OutputEditorText.cc:507
+msgid "New document %1"
+msgstr ""
+
+#: ../gtk/src/OutputEditorText.cc:551 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
 msgstr "Ruaje daljen..."
 
-#: ../gtk/src/Recognizer.cc:179 ../qt/src/RecognitionMenu.cc:76
+#: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
 msgstr "Asnjë gjuhë në dispozicion"
 
-#: ../gtk/src/Recognizer.cc:179 ../qt/src/RecognitionMenu.cc:76
+#: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
 "Asnjë gjuhë tesseract nuk është në dispozicion për t'u përdorur. Njohja nuk "
 "do të funksionojë."
 
-#: ../gtk/src/Recognizer.cc:233 ../qt/src/RecognitionMenu.cc:134
+#: ../gtk/src/RecognitionMenu.cc:153 ../qt/src/RecognitionMenu.cc:134
 msgid "Multilingual"
 msgstr "Shumëgjuhësor"
 
-#: ../gtk/src/Recognizer.cc:285 ../qt/src/RecognitionMenu.cc:182
+#: ../gtk/src/RecognitionMenu.cc:205 ../qt/src/RecognitionMenu.cc:182
 msgid "Automatic page segmentation"
 msgstr "Segmentimi automatik i faqeve"
 
-#: ../gtk/src/Recognizer.cc:286 ../qt/src/RecognitionMenu.cc:183
+#: ../gtk/src/RecognitionMenu.cc:206 ../qt/src/RecognitionMenu.cc:183
 msgid "Page segmentation with orientation and script detection"
 msgstr "Segmentimi i faqes me orientim dhe detektim të skriptës"
 
-#: ../gtk/src/Recognizer.cc:287 ../qt/src/RecognitionMenu.cc:184
+#: ../gtk/src/RecognitionMenu.cc:207 ../qt/src/RecognitionMenu.cc:184
 msgid "Assume single column of text"
 msgstr "Supozoni kolonën e vetme të tekstit"
 
-#: ../gtk/src/Recognizer.cc:288 ../qt/src/RecognitionMenu.cc:185
+#: ../gtk/src/RecognitionMenu.cc:208 ../qt/src/RecognitionMenu.cc:185
 msgid "Assume single block of vertically aligned text"
 msgstr "Supozoni një bllok të vetëm të tekstit të përafruar vertikalisht"
 
-#: ../gtk/src/Recognizer.cc:289 ../qt/src/RecognitionMenu.cc:186
+#: ../gtk/src/RecognitionMenu.cc:209 ../qt/src/RecognitionMenu.cc:186
 msgid "Assume a single uniform block of text"
 msgstr "Supozoni një bllok të vetëm unik të tekstit"
 
-#: ../gtk/src/Recognizer.cc:290 ../qt/src/RecognitionMenu.cc:187
+#: ../gtk/src/RecognitionMenu.cc:210 ../qt/src/RecognitionMenu.cc:187
 msgid "Assume a line of text"
 msgstr "Supozoni një rresht teksti"
 
-#: ../gtk/src/Recognizer.cc:291 ../qt/src/RecognitionMenu.cc:188
+#: ../gtk/src/RecognitionMenu.cc:211 ../qt/src/RecognitionMenu.cc:188
 msgid "Assume a single word"
 msgstr "Supozoni një fjalë të vetme"
 
-#: ../gtk/src/Recognizer.cc:292 ../qt/src/RecognitionMenu.cc:189
+#: ../gtk/src/RecognitionMenu.cc:212 ../qt/src/RecognitionMenu.cc:189
 msgid "Assume a single word in a circle"
 msgstr "Supozoni një fjalë të vetme në një rreth"
 
-#: ../gtk/src/Recognizer.cc:293 ../qt/src/RecognitionMenu.cc:190
+#: ../gtk/src/RecognitionMenu.cc:213 ../qt/src/RecognitionMenu.cc:190
 msgid "Sparse text in no particular order"
 msgstr "Tekst i rrallë në asnjë rend të veçantë"
 
-#: ../gtk/src/Recognizer.cc:294 ../qt/src/RecognitionMenu.cc:191
+#: ../gtk/src/RecognitionMenu.cc:214 ../qt/src/RecognitionMenu.cc:191
 msgid "Sparse text with orientation and script detection"
 msgstr "Rralli tekstin me orientim dhe detektim të skriptës"
 
-#: ../gtk/src/Recognizer.cc:309 ../qt/src/RecognitionMenu.cc:202
+#: ../gtk/src/RecognitionMenu.cc:228 ../qt/src/RecognitionMenu.cc:202
 msgid "Page segmentation mode"
 msgstr "Modaliteti i segmentimit të faqes"
 
-#: ../gtk/src/Recognizer.cc:313 ../qt/src/RecognitionMenu.cc:205
+#: ../gtk/src/RecognitionMenu.cc:232 ../qt/src/RecognitionMenu.cc:205
 msgid "Character whitelist / blacklist..."
 msgstr "Lista e bardhë / zezë e karaktereve..."
 
-#: ../gtk/src/Recognizer.cc:319 ../qt/src/RecognitionMenu.cc:210
+#: ../gtk/src/RecognitionMenu.cc:238 ../qt/src/RecognitionMenu.cc:210
 msgid "Manage languages..."
 msgstr "Menaxhoni gjuhët ..."
 
-#: ../gtk/src/Recognizer.cc:381 ../qt/src/Recognizer.cc:133
+#: ../gtk/src/Recognizer.cc:76 ../qt/src/Recognizer.cc:90
+msgid "Overwrite existing output"
+msgstr "Rishkruani daljen ekzistuese"
+
+#: ../gtk/src/Recognizer.cc:77 ../qt/src/Recognizer.cc:91
+msgid "Skip processing source"
+msgstr "Anashkaloni burimin e përpunimit"
+
+#: ../gtk/src/Recognizer.cc:121 ../qt/src/Recognizer.cc:137
 msgid "Current selection"
 msgstr "Zgjedhja aktuale"
 
-#: ../gtk/src/Recognizer.cc:472 ../qt/src/Recognizer.cc:228
-#: ../qt/src/Recognizer.cc:340
-msgid "Recognizing page %1 (%2 of %3)"
-msgstr "Njohja e faqes% 1 (% 2 nga % 3)"
-
-#: ../gtk/src/Recognizer.cc:477
-msgid ""
-"\n"
-"- Page %1: failed to render page"
-msgstr ""
-"\n"
-"-Faqja % 1: dështoi të jepte faqe"
-
-#: ../gtk/src/Recognizer.cc:508 ../gtk/src/Recognizer.cc:539
-#: ../gtk/src/Recognizer.cc:552 ../qt/src/Recognizer.cc:261
-#: ../qt/src/Recognizer.cc:289 ../qt/src/Recognizer.cc:302
-#: ../qt/src/Recognizer.cc:393
-msgid "Recognizing..."
-msgstr "Duke e njohur..."
-
-#: ../gtk/src/Recognizer.cc:513 ../gtk/src/Recognizer.cc:522
-#: ../qt/src/Recognizer.cc:204 ../qt/src/Recognizer.cc:418
+#: ../gtk/src/Recognizer.cc:191 ../gtk/src/Recognizer.cc:409
+#: ../qt/src/Recognizer.cc:211 ../qt/src/Recognizer.cc:441
 msgid "Recognition errors occurred"
 msgstr "Kanë ndodhur gabime të njohjes"
 
-#: ../gtk/src/Recognizer.cc:513
-msgid "The following errors occurred:%1"
-msgstr "Ndodhën gabimet e mëposhtme:% 1"
-
-#: ../gtk/src/Recognizer.cc:522 ../qt/src/Recognizer.cc:204
+#: ../gtk/src/Recognizer.cc:191 ../qt/src/Recognizer.cc:211
 msgid "Failed to initialize tesseract"
 msgstr "Dështoi për të inicializuar tesseract"
+
+#: ../gtk/src/Recognizer.cc:218 ../gtk/src/Recognizer.cc:332
+#: ../qt/src/Recognizer.cc:251 ../qt/src/Recognizer.cc:363
+msgid "Recognizing page %1 (%2 of %3)"
+msgstr "Njohja e faqes% 1 (% 2 nga % 3)"
+
+#: ../gtk/src/Recognizer.cc:223 ../qt/src/Recognizer.cc:257
+msgid "- Page %1: failed to render page"
+msgstr "- Faqja% 1: dështoi të renderojë faqen"
+
+#: ../gtk/src/Recognizer.cc:251 ../gtk/src/Recognizer.cc:279
+#: ../gtk/src/Recognizer.cc:292 ../gtk/src/Recognizer.cc:384
+#: ../qt/src/Recognizer.cc:284 ../qt/src/Recognizer.cc:312
+#: ../qt/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:416
+msgid "Recognizing..."
+msgstr "Duke e njohur..."
+
+#: ../gtk/src/Recognizer.cc:338 ../qt/src/Recognizer.cc:369
+msgid "- %1:%2: failed to render page"
+msgstr "-% 1:% 2: dështoi të renderojë faqen"
+
+#: ../gtk/src/Recognizer.cc:350 ../qt/src/Recognizer.cc:382
+msgid "- %1: output already exists, skipping"
+msgstr "-% 1: dalja tashmë ekziston, po e anashkalojmë"
+
+#: ../gtk/src/Recognizer.cc:354 ../qt/src/Recognizer.cc:386
+msgid "- %1: failed to create output file"
+msgstr "-% 1: nuk arriti të krijojë skedarin e daljes"
+
+#: ../gtk/src/Recognizer.cc:409 ../qt/src/Recognizer.cc:441
+msgid "The following errors occurred:"
+msgstr "Gabimet e mëposhtme kanë ndodhur:"
 
 #: ../gtk/src/scanner/ScannerSane.cc:86 ../gtk/src/scanner/ScannerTwain.cc:287
 #: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
@@ -1618,15 +1774,15 @@ msgstr "Prurësi i dokumenteve nuk ka dokumente."
 msgid "Access to scanner is denied."
 msgstr "Qasja në skaner është refuzuar."
 
-#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:171
+#: ../gtk/src/SourceManager.cc:184 ../qt/src/SourceManager.cc:163
 msgid "Enter password for file '%1':"
 msgstr "Shkruani fjalëkalimin për skedarin '%1':"
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
+#: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:190
 msgid "PDF with text"
 msgstr "PDF me tekst"
 
-#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
+#: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:190
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
@@ -1636,64 +1792,76 @@ msgstr ""
 "% 1\n"
 "Hapni atë pavarësisht?"
 
-#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:264
+#: ../gtk/src/SourceManager.cc:268 ../qt/src/hocr/HOCRBatchExportDialog.cc:73
+#: ../qt/src/SourceManager.cc:267
+msgid "Select folder..."
+msgstr "Zgjidhni skedarin..."
+
+#: ../gtk/src/SourceManager.cc:292 ../qt/src/SourceManager.cc:256
 msgid "Images and PDFs"
 msgstr "Imazhe dhe PDF"
 
-#: ../gtk/src/SourceManager.cc:222 ../qt/src/SourceManager.cc:265
-msgid "Select Files"
-msgstr "Zgjidhni skedarët"
-
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:307
+#: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:299
 msgid "Clipboard Error"
 msgstr "Gabim në klipboard"
 
-#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:307
+#: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:299
 msgid "Failed to read the clipboard."
 msgstr "Nuk arriti të lexojë clipboard-in."
 
-#: ../gtk/src/SourceManager.cc:232 ../qt/src/SourceManager.cc:311
-#: ../qt/src/SourceManager.cc:317
+#: ../gtk/src/SourceManager.cc:307 ../qt/src/SourceManager.cc:303
+#: ../qt/src/SourceManager.cc:309
 msgid "Pasted %1"
 msgstr "Ngjitur % 1"
 
-#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
+#: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:322
 msgid "Screenshot Error"
 msgstr "Gabim gjatë fotografimit të ekranit"
 
-#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
+#: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:322
 msgid "Failed to take screenshot."
 msgstr "Nuk arriti të merrte pamjen e ekranit."
 
-#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:328
+#: ../gtk/src/SourceManager.cc:329 ../qt/src/SourceManager.cc:326
 msgid "Screenshot %1"
 msgstr "Pamja e ekranit %1"
 
-#: ../gtk/src/SourceManager.cc:253 ../qt/src/SourceManager.cc:333
+#: ../gtk/src/SourceManager.cc:335 ../qt/src/SourceManager.cc:333
 msgid "Saving image..."
 msgstr "Duke e ruajtur imazhin..."
 
-#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:346
+#: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:346
 msgid "Cannot Write File"
 msgstr "Nuk mund të shkruaj skedarin"
 
-#: ../gtk/src/SourceManager.cc:260 ../qt/src/SourceManager.cc:346
+#: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:346
 msgid "Could not write to %1."
 msgstr "Nuk mund të shkruaj në % 1."
 
-#: ../gtk/src/SourceManager.cc:287
+#: ../gtk/src/SourceManager.cc:381
 msgid "Delete File?"
 msgstr "Fshini skedarin?"
 
-#: ../gtk/src/SourceManager.cc:287
-msgid "The following files will be deleted:%1"
-msgstr "Skedarët e mëposhtëm do të fshihen:% 1"
+#: ../gtk/src/SourceManager.cc:381 ../qt/src/SourceManager.cc:374
+msgid "Delete the following files?"
+msgstr "Fshini skedarët e mëposhtëm?"
 
-#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:487
+#: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:451
+msgid "Open output"
+msgstr "Hapni daljen"
+
+#: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:451
+msgid ""
+"Both a text and a hOCR output were found. Which one do you want to open?"
+msgstr ""
+"Që të dyja, dalja e tekstit dhe hOCR dalja janë gjetur. Cilën dëshironi ta "
+"hapni?"
+
+#: ../gtk/src/SourceManager.cc:504 ../qt/src/SourceManager.cc:479
 msgid "Missing File"
 msgstr "Skedari që mungon"
 
-#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:487
+#: ../gtk/src/SourceManager.cc:504 ../qt/src/SourceManager.cc:479
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
@@ -1816,35 +1984,45 @@ msgstr ""
 "Këshillë: Nëse nuk keni leje shkrimi në dosjet e sistemit, mund të kaloni në "
 "shtigjet e përdoruesve në dialogun e cilësimeve."
 
-#: ../gtk/src/Utils.cc:64
+#: ../gtk/src/Utils.cc:129
 msgid "Yes"
 msgstr "Po"
 
-#: ../gtk/src/Utils.cc:67
+#: ../gtk/src/Utils.cc:132
 msgid "Yes to all"
 msgstr "Po për të gjithë"
 
-#: ../gtk/src/Utils.cc:70
+#: ../gtk/src/Utils.cc:135
 msgid "No"
 msgstr "Jo"
 
-#: ../gtk/src/Utils.cc:73
+#: ../gtk/src/Utils.cc:138
 msgid "No to all"
 msgstr "Jo për të gjithë"
 
-#: ../gtk/src/Utils.cc:82
+#: ../gtk/src/Utils.cc:147
 msgid "Discard"
 msgstr "Mos e merr parasysh"
+
+#: ../gtk/src/Utils.cc:150 ../qt/src/SourceManager.cc:452
+msgid "Text"
+msgstr "Tekst"
+
+#: ../gtk/src/Utils.cc:153 ../qt/src/SourceManager.cc:453
+msgid "hOCR"
+msgstr "hOCR"
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
 msgstr "Rreth gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
+#, fuzzy
 msgid ""
-"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
-"p><p>&nbsp;</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
+"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
+"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
+"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Frontend grafik për tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Uebfaqja</a></"
@@ -1858,18 +2036,6 @@ msgstr "Kredite"
 msgid "License"
 msgstr "Liçensa"
 
-#: ../qt/data/BatchModeDialog.ui.h:1
-msgid "Batch Mode"
-msgstr "Modaliteti i serisë"
-
-#: ../qt/data/BatchModeDialog.ui.h:2
-msgid "Prepend page numbers to output text"
-msgstr "Shtoni numrat e faqeve në tekstin dalës"
-
-#: ../qt/data/BatchModeDialog.ui.h:3
-msgid "Existing output:"
-msgstr "Dalja ekzistuese:"
-
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
@@ -1877,10 +2043,6 @@ msgid ""
 msgstr ""
 "Në modalitetin e serisë, secili burim i hyrjes përpunohet veçmas dhe dalja "
 "ruhet krah për krah në skedarin e hyrjes."
-
-#: ../qt/data/BatchModeDialog.ui.h:5
-msgid "Autodetect page layout"
-msgstr "Gjeje në mënyrë automatike pamjen e faqes"
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
@@ -1895,14 +2057,16 @@ msgid "Text file encoding:"
 msgstr "Enkodimi i skedarit të tekstit:"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, no-c-format
+#, fuzzy, no-c-format
 msgid ""
-"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
-"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
-"application, please consider reporting the issue to <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Please try to describe what you were doing before the application "
-"crashed. Also, include the information below. Thank you.</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
+"p&gt;Apologies for the inconvenience. To help improve the application, "
+"please consider reporting the issue to &lt;a href=&quot;mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
+"com&lt;/a&gt;. Please try to describe what you were doing before the "
+"application crashed. Also, include the information below. Thank you.&lt;/"
+"p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Aplikacioni ka rënë</"
 "span></p><p>Ju kërkojmë falje për shqetësimin. Për të ndihmuar në "
@@ -1913,13 +2077,15 @@ msgstr ""
 "informacionin më poshtë. Ju faleminderit.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
+#, fuzzy
 msgid ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
-"aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
-"recognizing text. This may occur if the used traineddatas are corrupt or "
-"incomplatible with the version of tesseract in use, or due to a bug in "
-"tesseract.</p><p>The stacktrace below may provide additional information "
-"about where the crash occurred.</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
+"Tesseract (the OCR engine) has aborted while recognizing text. This may "
+"occur if the used traineddatas are corrupt or incomplatible with the version "
+"of tesseract in use, or due to a bug in tesseract.&lt;/p&gt;&lt;p&gt;The "
+"stacktrace below may provide additional information about where the crash "
+"occurred.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract ka "
 "abortuar</span></p><p>Tesseract (motori OCR) ka abortuar gjatë njohjes së "
@@ -1928,9 +2094,38 @@ msgstr ""
 "shkak të një gabimi në tesseract.</p><p>Stacktrace më poshtë mund të "
 "sigurojë informacione shtesë se ku ndodhi aksidenti.</p></body></html>"
 
-#: ../qt/data/MainWindow.ui.h:6
-msgid "Thumbnails"
-msgstr "Fotografi"
+#: ../qt/data/HOCRBatchExportDialog.ui.h:1
+msgid "HOCR Batch Export"
+msgstr ""
+
+#: ../qt/data/HOCRBatchExportDialog.ui.h:2
+#, fuzzy
+msgid "Input files"
+msgstr "Nuk ka skedarë të fundit"
+
+#: ../qt/data/HOCRBatchExportDialog.ui.h:3
+#, fuzzy
+msgid "Input:"
+msgstr "Dalje:"
+
+#: ../qt/data/HOCRBatchExportDialog.ui.h:4
+#, fuzzy
+msgid "Output preview:"
+msgstr "Modaliteti i daljes:"
+
+#: ../qt/data/HOCRBatchExportDialog.ui.h:5
+msgid "Group outputs at level:"
+msgstr ""
+
+#: ../qt/data/HOCRBatchExportDialog.ui.h:6
+#, fuzzy
+msgid "Select source folder:"
+msgstr "Zgjidhni skedarin..."
+
+#: ../qt/data/HOCRBatchExportDialog.ui.h:8
+#, fuzzy
+msgid "Export options"
+msgstr "Opsione të tjera"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -1947,11 +2142,6 @@ msgstr "ADF Prapa"
 #: ../qt/data/MainWindow.ui.h:21
 msgid "ADF Duplex"
 msgstr "ADF Dupleks"
-
-#. Remove & from some labels which designer insists in adding
-#: ../qt/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:49
-msgid "Sources"
-msgstr "Burimet"
 
 #: ../qt/data/MainWindow.ui.h:23
 msgid "Zoom In"
@@ -1997,23 +2187,46 @@ msgstr "Detekto orarin në mënyrë automatike"
 msgid "Toggle Output Pane"
 msgstr "Ndrysho panelin dalës"
 
-#: ../qt/data/PdfExportDialog.ui.h:5
+#: ../qt/data/MainWindow.ui.h:41
+msgid "actionBatchExport"
+msgstr ""
+
+#: ../qt/data/MainWindow.ui.h:42
+#, fuzzy
+msgid "Batch Export"
+msgstr "Eksporto"
+
+#: ../qt/data/PageRangeDialog.ui.h:3
+#, fuzzy
+msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+msgstr "<small><b>Shembull:</b> 1-10, 13, 14-18</small>"
+
+#: ../qt/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportWidget.ui.h:5
 msgid "Backend:"
 msgstr "Backend:"
 
-#: ../qt/data/PdfExportDialog.ui.h:8
+#: ../qt/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportWidget.ui.h:8
 msgid "Portrait"
 msgstr "Portret"
 
-#: ../qt/data/PdfExportDialog.ui.h:9
+#: ../qt/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportWidget.ui.h:9
 msgid "Landscape"
 msgstr "Peizazh"
 
-#: ../qt/src/hocr/HOCRPdfExporter.cc:139
+#: ../qt/data/PdfExportWidget.ui.h:1
+#, fuzzy
+msgid "Form"
+msgstr "Formati:"
+
+#: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
+msgid "ODT"
+msgstr ""
+
+#: ../qt/src/hocr/HOCRPdfExporter.cc:303
 msgid "Failed to write to file"
 msgstr "Dështoi të shkruaj në skedar"
 
-#: ../qt/src/hocr/HOCRPdfExporter.cc:830
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:296
 msgid ""
 "<html><head/><body><ul><li>PoDoFo: offers more image compression options, "
 "but does not handle complex scripts.</li><li>QPrinter: only supports JPEG "
@@ -2025,19 +2238,19 @@ msgstr ""
 "mbështet vetëm kompresimin JPEG për ruajtjen e imazheve, por mbështet "
 "skriptet komplekse. </li> </ul> </body> </html>"
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:234
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:230
 msgid "Keyboard shortcuts"
 msgstr "Shkurtesat e tastierës"
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:246
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:242
 msgid "Lines before:"
 msgstr "Linjat para:"
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:260
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:256
 msgid "Lines after:"
 msgstr "Linjat pas:"
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:440
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:448
 msgid ""
 "<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
 "td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
@@ -2066,8 +2279,8 @@ msgstr ""
 "Bashkimi me fjalën e mëparshme </td> </tr> <tr> <td> Ctrl + Shift + M </td> "
 "<td> Bashkimi me fjalën tjetër </td> </tr> <tr> <td> Ctrl + Delete </td> "
 "<td> Fshij fjalën </td> </tr> <tr> <td> Ctrl + {Majtas, Djathtas} </td> "
-"<td>Rregulloni skajin e majtë të kutisë lidhëse </td> </ tr> <tr> <td> Ctrl +"
-" Shift + {Majtas, Djathtas td </td> <td> Rregulloni skajin e djathtë të "
+"<td>Rregulloni skajin e majtë të kutisë lidhëse </td> </ tr> <tr> <td> Ctrl "
+"+ Shift + {Majtas, Djathtas td </td> <td> Rregulloni skajin e djathtë të "
 "kutisë lidhëse </td> </tr> <tr> <td> Ctrl + {Lart, Poshtë} </ td> <td> "
 "Rregulloni skajin e sipërm të kutisë lidhëse </td> </tr> <tr> <td> Ctrl + "
 "Shift + {Up, Down Down </td> <td> Rregulloni skajin e poshtëm të kutisë "
@@ -2075,11 +2288,11 @@ msgstr ""
 "fontit </td> </tr> <tr> <td> Ctrl + - </td> <td>Zvogëlimi i madhësisë së "
 "fontit </ td> </ tr> </ table>"
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:461
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:469
 msgid "Keyboard Shortcuts"
 msgstr "Shkurtoret e tastierës"
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:476
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:484
 msgid "Confidence: %1"
 msgstr "Besim: %1"
 
@@ -2093,11 +2306,11 @@ msgstr "Ruaje si hOCR tekst"
 msgid "Find and Replace"
 msgstr "Gjeni dhe zëvendësoni"
 
-#: ../qt/src/MainWindow.cc:317
+#: ../qt/src/MainWindow.cc:323
 msgid "Multiple sources (%1)"
 msgstr "Burime të shumëfishta (%1)"
 
-#: ../qt/src/MainWindow.cc:611
+#: ../qt/src/MainWindow.cc:617
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
@@ -2105,76 +2318,21 @@ msgstr ""
 "Skedarët e mëposhtëm të fjalorit u instaluan:\n"
 "% 1"
 
-#: ../qt/src/OutputEditorText.cc:41
-msgid "Page: %1\n"
-msgstr "Faqja: %1\n"
+#: ../qt/src/Recognizer.cc:235
+msgid "Source already recognized"
+msgstr ""
 
-#: ../qt/src/Recognizer.cc:73
-msgid "Batch mode..."
-msgstr "Modaliteti i serisë..."
+#: ../qt/src/Recognizer.cc:235
+msgid "One or more selected sources were aready recognized. Proceed anyway?"
+msgstr ""
 
-#: ../qt/src/Recognizer.cc:86
-msgid "Overwrite existing output"
-msgstr "Rishkruani daljen ekzistuese"
-
-#: ../qt/src/Recognizer.cc:87
-msgid "Skip processing source"
-msgstr "Anashkaloni burimin e përpunimit"
-
-#: ../qt/src/Recognizer.cc:234
-msgid "- Page %1: failed to render page"
-msgstr "- Faqja% 1: dështoi të renderojë faqen"
-
-#: ../qt/src/Recognizer.cc:346
-msgid "- %1:%2: failed to render page"
-msgstr "-% 1:% 2: dështoi të renderojë faqen"
-
-#: ../qt/src/Recognizer.cc:359
-msgid "- %1: output already exists, skipping"
-msgstr "-% 1: dalja tashmë ekziston, po e anashkalojmë"
-
-#: ../qt/src/Recognizer.cc:363
-msgid "- %1: failed to create output file"
-msgstr "-% 1: nuk arriti të krijojë skedarin e daljes"
-
-#: ../qt/src/Recognizer.cc:418
-msgid "The following errors occurred:"
-msgstr "Gabimet e mëposhtme kanë ndodhur:"
-
-#: ../qt/src/SourceManager.cc:248
+#: ../qt/src/SourceManager.cc:240
 msgid "No recent files"
 msgstr "Nuk ka skedarë të fundit"
-
-#: ../qt/src/SourceManager.cc:275
-msgid "Select folder..."
-msgstr "Zgjidhni skedarin..."
 
 #: ../qt/src/SourceManager.cc:374
 msgid "Delete Files"
 msgstr "Fshi skedarët"
-
-#: ../qt/src/SourceManager.cc:374
-msgid "Delete the following files?"
-msgstr "Fshini skedarët e mëposhtëm?"
-
-#: ../qt/src/SourceManager.cc:459
-msgid "Open output"
-msgstr "Hapni daljen"
-
-#: ../qt/src/SourceManager.cc:459
-msgid ""
-"Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr ""
-"Që të dyja, dalja e tekstit dhe hOCR dalja janë gjetur. Cilën dëshironi ta "
-"hapni?"
-
-#: ../qt/src/SourceManager.cc:460
-msgid "Text"
-msgstr "Tekst"
-
-#: ../qt/src/SourceManager.cc:461
-msgid "hOCR"
-msgstr "hOCR"
 
 #: ../qt/src/TessdataManager.cc:280
 msgid ""
@@ -2192,28 +2350,40 @@ msgstr ""
 "Këshillë: Nëse nuk keni leje shkrimi në dosjet e sistemit, mund të kaloni në "
 "shtigjet e përdoruesve në dialogun e cilësimeve."
 
-#: ../qt/src/Ui_MainWindow.hh:50
+#: ../qt/src/Ui_MainWindow.hh:51
 msgid "Output"
 msgstr "Dalja"
 
-#: ../qt/src/Ui_MainWindow.hh:135
+#: ../qt/src/Ui_MainWindow.hh:136
 msgid "OCR mode:"
 msgstr "Modaliteti OCR:"
 
 #. Sources toolbar
-#: ../qt/src/Ui_MainWindow.hh:188
+#: ../qt/src/Ui_MainWindow.hh:195
 msgid "Add folder"
 msgstr "Shto direktorium"
 
-#: ../qt/src/Ui_MainWindow.hh:199
+#: ../qt/src/Ui_MainWindow.hh:196
+msgid "Recent"
+msgstr "Të fundit"
+
+#: ../qt/src/Ui_MainWindow.hh:197
+msgid "Paste"
+msgstr "Ngjit"
+
+#: ../qt/src/Ui_MainWindow.hh:198
+msgid "Take Screenshot"
+msgstr "Merrni pamjen e ekranit"
+
+#: ../qt/src/Ui_MainWindow.hh:206
 msgid "Remove Image"
 msgstr "Largoje imazhin"
 
-#: ../qt/src/Ui_MainWindow.hh:202
+#: ../qt/src/Ui_MainWindow.hh:209
 msgid "Delete Image"
 msgstr "Fshije imazhin"
 
-#: ../qt/src/Ui_MainWindow.hh:205
+#: ../qt/src/Ui_MainWindow.hh:212
 msgid "Clear List"
 msgstr "Pastro listën"
 
@@ -2228,3 +2398,19 @@ msgstr "Ruaje dalejn"
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
 msgstr "Pastroje daljen"
+
+#~ msgid "Multiple sources"
+#~ msgstr "Burime të shumta"
+
+#~ msgid ""
+#~ "\n"
+#~ "- Page %1: failed to render page"
+#~ msgstr ""
+#~ "\n"
+#~ "-Faqja % 1: dështoi të jepte faqe"
+
+#~ msgid "The following errors occurred:%1"
+#~ msgstr "Ndodhën gabimet e mëposhtme:% 1"
+
+#~ msgid "The following files will be deleted:%1"
+#~ msgstr "Skedarët e mëposhtëm do të fshihen:% 1"
