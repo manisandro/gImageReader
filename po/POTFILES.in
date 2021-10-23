@@ -2,6 +2,7 @@
 
 data/gimagereader.desktop.in
 [type: gettext/glade]gtk/data/appmenu.ui
+[type: gettext/glade]gtk/data/CharacterListDialog.ui
 [type: gettext/glade]gtk/data/ConfigDialog.ui
 [type: gettext/glade]gtk/data/CrashHandler.ui
 [type: gettext/glade]gtk/data/MainWindow.ui
@@ -32,6 +33,8 @@ gtk/src/DjVuDocument.cc
 gtk/src/DjVuDocument.hh
 gtk/src/FileDialogs.cc
 gtk/src/FileDialogs.hh
+gtk/src/FileTreeModel.cc
+gtk/src/FileTreeModel.hh
 gtk/src/FontComboBox.cc
 gtk/src/FontComboBox.hh
 gtk/src/Geometry.hh
@@ -43,6 +46,8 @@ gtk/src/hocr/HOCROdtExporter.cc
 gtk/src/hocr/HOCROdtExporter.hh
 gtk/src/hocr/HOCRPdfExporter.cc
 gtk/src/hocr/HOCRPdfExporter.hh
+gtk/src/hocr/HOCRSpellChecker.cc
+gtk/src/hocr/HOCRSpellChecker.hh
 gtk/src/hocr/HOCRTextExporter.cc
 gtk/src/hocr/HOCRTextExporter.hh
 gtk/src/hocr/OutputEditorHOCR.cc
@@ -59,6 +64,8 @@ gtk/src/OutputBuffer.hh
 gtk/src/OutputEditor.hh
 gtk/src/OutputEditorText.cc
 gtk/src/OutputEditorText.hh
+gtk/src/RecognitionMenu.cc
+gtk/src/RecognitionMenu.hh
 gtk/src/Recognizer.cc
 gtk/src/Recognizer.hh
 gtk/src/Scanner.hh
@@ -81,9 +88,11 @@ gtk/src/Utils.hh
 [type: gettext/qtdesigner]qt/data/CharacterListDialog.ui
 [type: gettext/qtdesigner]qt/data/ConfigDialog.ui
 [type: gettext/qtdesigner]qt/data/CrashHandler.ui
+[type: gettext/qtdesigner]qt/data/HOCRBatchExportDialog.ui
 [type: gettext/qtdesigner]qt/data/MainWindow.ui
 [type: gettext/qtdesigner]qt/data/PageRangeDialog.ui
 [type: gettext/qtdesigner]qt/data/PdfExportDialog.ui
+[type: gettext/qtdesigner]qt/data/PdfExportWidget.ui
 [type: gettext/qtdesigner]qt/data/SearchReplaceFrame.ui
 qt/src/Acquirer.cc
 qt/src/Acquirer.hh
@@ -108,12 +117,17 @@ qt/src/FileTreeModel.cc
 qt/src/FileTreeModel.hh
 qt/src/hocr/DisplayerToolHOCR.cc
 qt/src/hocr/DisplayerToolHOCR.hh
+qt/src/hocr/HOCRBatchExportDialog.cc
+qt/src/hocr/HOCRBatchExportDialog.hh
 qt/src/hocr/HOCRDocument.cc
 qt/src/hocr/HOCRDocument.hh
+qt/src/hocr/HOCRExporter.hh
 qt/src/hocr/HOCROdtExporter.cc
 qt/src/hocr/HOCROdtExporter.hh
 qt/src/hocr/HOCRPdfExporter.cc
 qt/src/hocr/HOCRPdfExporter.hh
+qt/src/hocr/HOCRPdfExportWidget.cc
+qt/src/hocr/HOCRPdfExportWidget.hh
 qt/src/hocr/HOCRProofReadWidget.cc
 qt/src/hocr/HOCRProofReadWidget.hh
 qt/src/hocr/HOCRSpellChecker.cc

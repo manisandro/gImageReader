@@ -2375,3 +2375,4 @@ msgstr "Limpar saída"
 
 #~ msgid "Save the current list?"
 #~ msgstr "Salva a lista atual?"
+
