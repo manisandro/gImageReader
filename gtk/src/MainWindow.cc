@@ -308,7 +308,7 @@ void MainWindow::progressUpdate() {
 bool MainWindow::closeEvent(GdkEventAny*) {
 	OutputEditorText* editor = dynamic_cast<OutputEditorText*>(m_outputEditor);
 	std::vector<Gtk::Widget*> notSavedPages(editor->getNotebook()->get_children());
-	// wd do not use make_managed because we will pack it inside dialog
+	// we do not use make_managed because we will pack it inside dialog
 	// and don't want it to be destroyed automatically
 	Gtk::ListBox* listDocuments = new Gtk::ListBox();
 	for (std::vector<Gtk::Widget*>::iterator it = notSavedPages.begin() ; it != notSavedPages.end();) {
@@ -330,7 +330,6 @@ bool MainWindow::closeEvent(GdkEventAny*) {
 		                                 Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel,
 		                                 nullptr, listDocuments);
 		if(response == Utils::Button::Save) {
-			//std::vector<Gtk::Widget*> checkButtonsSaving(listDocuments->get_children());
 			// listDocuments.size() should be equal to notSavedPages.size()
 			for (int i = 0; i < notSavedPages.size(); ++i) {
 				if (dynamic_cast <Gtk::CheckButton*>(listDocuments->get_row_at_index(i)->get_child())->get_active()) {
