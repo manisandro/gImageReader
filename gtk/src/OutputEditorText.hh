@@ -104,6 +104,8 @@ private:
 	Gsv::View* getView(Gtk::Widget* page = nullptr) const;
 	// get Gtk::Widget* page at tab position pageNum; by default returns page at current position
 	Gtk::Widget* getPage(short int pageNum = -1) const;
+	// returns the page containing `filename` or nullptr if such doesn't exist
+	Gtk::Widget* getPageByFilename(std::string filename) const;
 	// creates Notebook tab widget: label + close button
 	Gtk::Widget* tabWidget(std::string tabLabel, Gtk::Widget* page);
 	// updates tab label, including buffer modified status; uses current label if no one is provided
@@ -112,6 +114,7 @@ private:
 	Gtk::Widget* addDocument(const std::string& file = "");
 	void on_close_button_clicked(Gtk::Widget* page);
 	void on_buffer_modified_changed(Gtk::Widget* page);
+	bool view_focused_in(GdkEventFocus* focus_event, Gtk::Widget* page);
 	void prepareCurView();
 };
 

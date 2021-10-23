@@ -32,7 +32,7 @@
 
 #include <fstream>
 #include <gtkmm/scrolledwindow.h>
-#include <iostream>
+
 void OutputEditorText::TextBatchProcessor::appendOutput(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const {
 	char* text = tess->GetUTF8Text();
 	if(firstArea && m_prependPage) {
@@ -87,7 +87,7 @@ OutputEditorText::OutputEditorText() {
 	CONNECT(ui.buttonRedo, clicked, [this] { getBuffer()->redo(); scrollCursorIntoView(); });
 	CONNECT(ui.buttonSave, clicked, [this] { save(); });
 	CONNECT(ui.buttonOpen, clicked, [this] { open(); });
-	CONNECT(ui.buttonAddTab, clicked, [this] { addDocument(); ui.notebook->set_current_page(ui.notebook->get_n_pages() - 1); });
+	CONNECT(ui.buttonAddTab, clicked, [this] { ui.notebook->set_current_page(ui.notebook->page_num(*addDocument())); });
 	CONNECT(ui.buttonClear, clicked, [this] { clear(); });
 
 
@@ -163,6 +163,14 @@ Gtk::Widget* OutputEditorText::getPage(short int pageNum) const {
 		return ui.notebook->get_nth_page(ui.notebook->get_current_page());
 	else
 		return ui.notebook->get_nth_page(pageNum);
+}
+
+Gtk::Widget* OutputEditorText::getPageByFilename(std::string filename) const {
+	for (auto it = outputSession.begin(); it != outputSession.end(); ++it)
+		if (it->second.file == filename) {
+			return it->first;
+		}
+	return nullptr;
 }
 
 std::string OutputEditorText::getTabLabel(Gtk::Widget* page) {
@@ -401,9 +409,6 @@ void OutputEditorText::activateHighlightMode() {
 }
 
 bool OutputEditorText::open(const std::string& file) {
-/*	if(!clear(false)) {
-		return false;
-	}*/
 	try {
 		std::string inputname(file);
 		std::vector<Glib::RefPtr<Gio::File> > files;
@@ -415,11 +420,10 @@ bool OutputEditorText::open(const std::string& file) {
 			}
 		}
 
-		for (auto it = outputSession.begin(); it != outputSession.end(); ++it)
-			if (it->second.file == inputname) {
-				ui.notebook->set_current_page(ui.notebook->page_num(*(it->first)));
-				return true;
-			}
+		if (getPageByFilename(inputname)) {
+			ui.notebook->set_current_page(ui.notebook->page_num(*getPageByFilename(inputname)));
+			return true;
+		}
 
 		if (hasSession() || (getModified())) {
 			ui.notebook->set_current_page(ui.notebook->page_num(*addDocument(inputname)));
@@ -479,12 +483,9 @@ Gtk::Widget* OutputEditorText::tabWidget(std::string tabLabel, Gtk::Widget* page
 }
 
 Gtk::Widget* OutputEditorText::addDocument(const std::string& file) {
-	// if the file is already opened somewhere - switch to that tab
-	for (auto it = outputSession.begin(); it != outputSession.end(); ++it)
-		if (it->second.file == file) {
-		    ui.notebook->set_current_page(ui.notebook->page_num(*(it->first)));
-		    return it->first;
-		}
+	// if the file is already opened somewhere - return that page
+	if (getPageByFilename(file))
+		return getPageByFilename(file);
 
 	Glib::RefPtr<OutputBuffer> textBuffer;
 	textBuffer = OutputBuffer::create();
@@ -498,6 +499,8 @@ Gtk::Widget* OutputEditorText::addDocument(const std::string& file) {
 	CONNECT(textView, populate_popup, [this](Gtk::Menu * menu) {
 		completeTextViewMenu(menu);
 	});
+
+	textView->signal_focus_in_event().connect( sigc::bind<Gtk::Widget*>( sigc::mem_fun(*this, &OutputEditorText::view_focused_in), scrWindow) );
 
 	std::string tabLabel;
 	if (file == "")
@@ -578,16 +581,13 @@ bool OutputEditorText::clear(bool hide, Gtk::Widget* page) {
 			return false;
 		}
 	}
-	if (!hasSession()) getBuffer()->begin_not_undoable_action();
-	getBuffer()->set_text("");
-	if (!hasSession()) {
-		getBuffer()->end_not_undoable_action();
-		getBuffer()->set_modified(false);
+	if (!hasSession(page)) getBuffer(page)->begin_not_undoable_action();
+	getBuffer(page)->set_text("");
+	if (!hasSession(page)) {
+		getBuffer(page)->end_not_undoable_action();
+		getBuffer(page)->set_modified(false);
 	}
-	getView()->grab_focus();
-/*	if(hide) {
-		MAIN->setOutputPaneVisible(false);
-	}*/
+	getView(page)->grab_focus();
 	return true;
 }
 
@@ -609,4 +609,23 @@ bool OutputEditorText::hasSession(Gtk::Widget* page) {
 	std::map<Gtk::Widget*, OutputSession>::iterator it;
 	it = outputSession.find(page == nullptr ? getPage() : page);
 	return it != outputSession.end();
+}
+
+bool OutputEditorText::view_focused_in(GdkEventFocus* focus_event, Gtk::Widget* page) {
+
+/* Todo: start using GtkSourceFile in OutputSession.file
+
+	GtkSourceFile *file;
+
+//  obtain *file from session
+
+	gtk_source_file_check_file_on_disk (file);
+
+	if (gtk_source_file_is_externally_modified (file))
+	{
+//		display_externally_modified_notification (page);
+	}
+
+*/
+	return true;
 }
