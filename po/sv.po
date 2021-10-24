@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gImageReader-3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-23 23:44+0300\n"
+"POT-Creation-Date: 2021-10-24 09:01+0300\n"
 "PO-Revision-Date: 2020-08-20 10:36+0000\n"
 "Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/gimagereader/"
@@ -174,11 +174,6 @@ msgstr "Öppna automatiskt exporterade dokument med standardprogrammet"
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
 msgstr ""
-
-#: ../gtk/data/ConfigDialog.ui.h:27
-#, fuzzy
-msgid "plain text"
-msgstr "Oformaterad text"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -2386,6 +2381,10 @@ msgstr "Spara utdata"
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
 msgstr "Rensa utdata"
+
+#, fuzzy
+#~ msgid "plain text"
+#~ msgstr "Oformaterad text"
 
 #~ msgid "Multiple sources"
 #~ msgstr "Flera källor"

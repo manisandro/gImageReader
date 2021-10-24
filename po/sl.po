@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-23 23:44+0300\n"
+"POT-Creation-Date: 2021-10-24 09:01+0300\n"
 "PO-Revision-Date: 2021-03-27 21:29+0000\n"
 "Last-Translator: Miharix <miharix@gmail.com>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/gimagereader/"
@@ -170,11 +170,6 @@ msgstr "Izvožene datoteke samodejno odpri s privzetim programom"
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
 msgstr ""
-
-#: ../gtk/data/ConfigDialog.ui.h:27
-#, fuzzy
-msgid "plain text"
-msgstr "Neoblikovano besedilo"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -2388,6 +2383,10 @@ msgstr "Shrani rezultat"
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
 msgstr "Počisti rezultat"
+
+#, fuzzy
+#~ msgid "plain text"
+#~ msgstr "Neoblikovano besedilo"
 
 #~ msgid "Multiple sources"
 #~ msgstr "Več virov"
