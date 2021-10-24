@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-23 23:44+0300\n"
+"POT-Creation-Date: 2021-10-24 09:01+0300\n"
 "PO-Revision-Date: 2020-06-07 02:15+0000\n"
 "Last-Translator: WaldiS <sto@tutanota.de>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gimagereader/"
@@ -172,11 +172,6 @@ msgstr "Automatycznie otwieraj eksportowane dokumenty z domyślną aplikacją"
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
 msgstr ""
-
-#: ../gtk/data/ConfigDialog.ui.h:27
-#, fuzzy
-msgid "plain text"
-msgstr "Zwykły tekst"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -2387,6 +2382,10 @@ msgstr "Zapisz wynik"
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
 msgstr "Wyczyść wynik"
+
+#, fuzzy
+#~ msgid "plain text"
+#~ msgstr "Zwykły tekst"
 
 #~ msgid "Multiple sources"
 #~ msgstr "Wiele źródeł"

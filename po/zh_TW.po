@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-23 23:44+0300\n"
+"POT-Creation-Date: 2021-10-24 09:01+0300\n"
 "PO-Revision-Date: 2018-07-17 13:15+0000\n"
 "Last-Translator: ezjerry liao <ezjerry@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -171,11 +171,6 @@ msgstr "自動以預設應用程式開啟匯出的文件"
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
 msgstr ""
-
-#: ../gtk/data/ConfigDialog.ui.h:27
-#, fuzzy
-msgid "plain text"
-msgstr "純文字"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -2360,6 +2355,10 @@ msgstr "儲存輸出"
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
 msgstr "清除輸出"
+
+#, fuzzy
+#~ msgid "plain text"
+#~ msgstr "純文字"
 
 #~ msgid "Multiple sources"
 #~ msgstr "多個來源"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-23 23:44+0300\n"
+"POT-Creation-Date: 2021-10-24 09:01+0300\n"
 "PO-Revision-Date: 2021-03-10 17:03+0000\n"
 "Last-Translator: phlostically <phlostically@mailinator.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/gimagereader/"
@@ -169,11 +169,6 @@ msgstr "Aŭtomate malfermi elportitajn dokumentojn per implicita aplikaĵo"
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
 msgstr ""
-
-#: ../gtk/data/ConfigDialog.ui.h:27
-#, fuzzy
-msgid "plain text"
-msgstr "Plata teksto"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -2383,6 +2378,10 @@ msgstr "Konservi Eligon"
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
 msgstr "Forviŝi Eligon"
+
+#, fuzzy
+#~ msgid "plain text"
+#~ msgstr "Plata teksto"
 
 #~ msgid "Multiple sources"
 #~ msgstr "Pluraj fontoj"

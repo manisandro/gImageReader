@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-23 23:44+0300\n"
+"POT-Creation-Date: 2021-10-24 09:01+0300\n"
 "PO-Revision-Date: 2020-07-25 07:42+0000\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingua <https://hosted.weblate.org/projects/gimagereader/"
@@ -169,11 +169,6 @@ msgstr ""
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
 msgstr ""
-
-#: ../gtk/data/ConfigDialog.ui.h:27
-#, fuzzy
-msgid "plain text"
-msgstr "Texto simple"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -2282,6 +2277,10 @@ msgstr ""
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
 msgstr ""
+
+#, fuzzy
+#~ msgid "plain text"
+#~ msgstr "Texto simple"
 
 #~ msgid "Multiple sources"
 #~ msgstr "Plure fontes"
