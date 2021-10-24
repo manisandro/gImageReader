@@ -2,22 +2,22 @@
 # Copyright (C) 2021
 # This file is distributed under the same license as the PACKAGE package.
 # Binyamin Pekar <binyamin.pekar@gmail.com>, 2021.
+# Zeev <zeev@dummy.com>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gImageReader 3.3.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-24 09:01+0300\n"
-"PO-Revision-Date: 2021-09-03 14:32+0000\n"
-"Last-Translator: aharon don <aronrefael@gmail.com>\n"
-"Language-Team: Hebrew <https://hosted.weblate.org/projects/gimagereader/"
-"translations/he/>\n"
+"PO-Revision-Date: 2021-10-24 09:59+0300\n"
+"Last-Translator: Zeev <zeev@dummy.com>\n"
+"Language-Team: Hebrew <team@dummy.com>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Gtranslator 3.30.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -170,7 +170,7 @@ msgstr "פתח אוטומטית מסמכים המיוצאים באמצעות י�
 
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
-msgstr ""
+msgstr "מצב הדגשת תחביר:"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -388,11 +388,11 @@ msgid "Batch Mode"
 msgstr "מצב קבוצה"
 
 #: ../gtk/data/MainWindow.ui.h:42
-#, fuzzy
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
-msgstr "במצב אצווה, כל מקור קלט מעובד בנפרד, והפלט נשמר זה לצד זה בקובץ הקלט."
+msgstr ""
+"<i>במצב אצווה, כל מקור קלט מעובד בנפרד, והפלט נשמר זה לצד זה בקובץ הקלט.</i>"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
@@ -627,13 +627,12 @@ msgid "Draw whitespace"
 msgstr "צייר רווח"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "פתח קובץ hOCR"
+msgstr "פתח קובץ"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
-msgstr ""
+msgstr "כרטיסייה חדשה"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
@@ -1068,7 +1067,7 @@ msgstr "להחליף קובץ?"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "קבצים זמניים"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
@@ -1428,7 +1427,7 @@ msgstr "בחר תמונה כדי להתחיל..."
 
 #: ../gtk/src/MainWindow.cc:327
 msgid "There are %1 documents with unsaved changes"
-msgstr ""
+msgstr "יש %1 מסמכים עם שינויים לא שמורים"
 
 #: ../gtk/src/MainWindow.cc:328
 msgid ""
@@ -1436,6 +1435,8 @@ msgid ""
 "permanently lost.\n"
 "Select the documents you want to save:"
 msgstr ""
+"לשמור שינויים לפני הסגירה? אם לא תשמור, כל השינויים יאבדו לצמיתות.\n"
+"בחר את המסמכים שברצונך לשמור:"
 
 #: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
 msgid "Ready"
@@ -1556,7 +1557,7 @@ msgstr "בדוק איות"
 
 #: ../gtk/src/OutputEditorText.cc:321
 msgid "Amount of occurrences replaced: %1"
-msgstr ""
+msgstr "כמות ההחלפות שהתרחשו: %1"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
@@ -1582,11 +1583,11 @@ msgstr "בחר קבצים"
 
 #: ../gtk/src/OutputEditorText.cc:466
 msgid "Close document"
-msgstr ""
+msgstr "סגור מסמך"
 
 #: ../gtk/src/OutputEditorText.cc:507
 msgid "New document %1"
-msgstr ""
+msgstr "מסמך חדש %1"
 
 #: ../gtk/src/OutputEditorText.cc:551 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
@@ -2009,7 +2010,6 @@ msgid "About gImageReader"
 msgstr "אודות gImageReder"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
 "graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
@@ -2047,7 +2047,7 @@ msgid "Text file encoding:"
 msgstr "קידוד קובץ טקסט:"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
@@ -2065,7 +2065,6 @@ msgstr ""
 "כלול גם את המידע להלן. תודה.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
@@ -2076,43 +2075,38 @@ msgid ""
 "occurred.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">ה Tesseract בוטל</"
-"span></p><p>ה Tesseract (מנוע החיפוש של OCR) בוטל בזמן זיהוי טקסט. זה עלול "
-"להתרחש אם הנתונים הושחתו או שאינם תואמים לגירסת ה tesseract הנמצאת בשימוש, "
-"או עקב באג ב tesseract.</p><p>ה Stacktrace למטה עשוי לסמפק מידע על מקום "
-"הקריסה.</p></body></html>"
+"span></p><p>ה Tesseract (המנוע של OCR) בוטל בזמן זיהוי טקסט. זה עלול להתרחש "
+"אם הנתונים הושחתו או שאינם תואמים לגירסת ה tesseract הנמצאת בשימוש, או עקב "
+"באג ב tesseract.</p><p>ה Stacktrace למטה עשוי לספק מידע על מקום הקריסה.</p></"
+"body></html>"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "ייצוא HOCR מרובה"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "אין קבצים אחרונים"
+msgstr "קבצי קלט"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "פלט:"
+msgstr "קלט:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "מצב פלט:"
+msgstr "תצוגה מקדימה של הפלט:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs at level:"
-msgstr ""
+msgstr "פלטים קבוצתיים בדרגה:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "בחר תיקייה..."
+msgstr "בחר תיקיית מקור..."
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "אפשרויות אחרות"
+msgstr "אפשרויות ייצוא"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2176,15 +2170,13 @@ msgstr "החלף חלונית פלט"
 
 #: ../qt/data/MainWindow.ui.h:41
 msgid "actionBatchExport"
-msgstr ""
+msgstr "actionBatchExport"
 
 #: ../qt/data/MainWindow.ui.h:42
-#, fuzzy
 msgid "Batch Export"
-msgstr "ייצא"
+msgstr "ייצא מרובה"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
-#, fuzzy
 msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
 msgstr "<small><b>דוגמא:</b> 1-10, 13, 14-18</small>"
 
@@ -2201,13 +2193,12 @@ msgid "Landscape"
 msgstr "נוף"
 
 #: ../qt/data/PdfExportWidget.ui.h:1
-#, fuzzy
 msgid "Form"
-msgstr "תבנית:"
+msgstr "טופס:"
 
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:303
 msgid "Failed to write to file"
@@ -2301,11 +2292,11 @@ msgstr ""
 
 #: ../qt/src/Recognizer.cc:235
 msgid "Source already recognized"
-msgstr ""
+msgstr "המקור כבר זוהה"
 
 #: ../qt/src/Recognizer.cc:235
 msgid "One or more selected sources were aready recognized. Proceed anyway?"
-msgstr ""
+msgstr "מקור אחד או יותר שנבחרו כבר זוהו. להמשיך בכל זאת?"
 
 #: ../qt/src/SourceManager.cc:240
 msgid "No recent files"
