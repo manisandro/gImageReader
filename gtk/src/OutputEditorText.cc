@@ -409,32 +409,33 @@ void OutputEditorText::activateHighlightMode() {
 }
 
 bool OutputEditorText::open(const std::string& file) {
+	std::string inputname(file);
 	try {
-		std::string inputname(file);
 		std::vector<Glib::RefPtr<Gio::File> > files;
 		if (file.empty()) {
 			FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
 			files = FileDialogs::open_dialog(_("Select Files"), "", "outputdir", filter, true);
 			if (!files.empty()) {
 				inputname = files[0]->get_path();
+			} else {
+				return false;
 			}
 		}
 
 		if (getPageByFilename(inputname)) {
 			ui.notebook->set_current_page(ui.notebook->page_num(*getPageByFilename(inputname)));
-			return true;
+		} else {
+			if (hasSession() || (getModified())) {
+				ui.notebook->set_current_page(ui.notebook->page_num(*addDocument(inputname)));
+			} else {
+				getBuffer()->begin_not_undoable_action();
+				getBuffer()->set_text(Glib::file_get_contents(inputname));
+				getBuffer()->end_not_undoable_action();
+				getBuffer()->set_modified(false);
+				outputSession[getPage()].file = inputname;
+				setTabLabel(getPage(), Glib::path_get_basename(inputname));
+			}
 		}
-
-		if (hasSession() || (getModified())) {
-			ui.notebook->set_current_page(ui.notebook->page_num(*addDocument(inputname)));
-		}
-
-		getBuffer()->begin_not_undoable_action();
-		getBuffer()->set_text(Glib::file_get_contents(inputname));
-		getBuffer()->end_not_undoable_action();
-		getBuffer()->set_modified(false);
-		outputSession[getPage()].file = inputname;
-		setTabLabel(getPage(), Glib::path_get_basename(inputname));
 
 		if (files.size() > 1) {
 			for (int i = 1; i < files.size(); ++i)
@@ -444,8 +445,10 @@ bool OutputEditorText::open(const std::string& file) {
 		MAIN->setOutputPaneVisible(true);
 		return true;
 	} catch(const Glib::Error&) {
-		Glib::ustring errorMsg = Glib::ustring::compose(_("The following files could not be opened:\n%1"), file);
-		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Unable to open files"), errorMsg);
+		if (!inputname.empty()) {
+			Glib::ustring errorMsg = Glib::ustring::compose(_("The following files could not be opened:\n%1"), file);
+			Utils::messageBox(Gtk::MESSAGE_ERROR, _("Unable to open files"), errorMsg);
+		}
 		return false;
 	}
 }
