@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-24 09:01+0300\n"
+"POT-Creation-Date: 2021-11-08 22:06+0200\n"
 "PO-Revision-Date: 2020-12-19 22:23+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gimagereader/"
@@ -1238,7 +1238,7 @@ msgid "The PDF library could not load the font '%1'."
 msgstr "PDF kütüphanesi '%1' yazı tipini yükleyemedi."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:416
-#: ../gtk/src/OutputEditorText.cc:550 ../qt/src/hocr/OutputEditorHOCR.cc:1087
+#: ../gtk/src/OutputEditorText.cc:553 ../qt/src/hocr/OutputEditorHOCR.cc:1087
 #: ../qt/src/OutputEditorText.cc:273
 msgid "Text Files"
 msgstr "Metin Dosyaları"
@@ -1349,8 +1349,8 @@ msgstr "hOCR HTML Dosyaları"
 msgid "Open hOCR File"
 msgstr "hOCR Dosyasını Aç"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1043 ../gtk/src/OutputEditorText.cc:447
-#: ../gtk/src/OutputEditorText.cc:515 ../gtk/src/SourceManager.cc:170
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1043 ../gtk/src/OutputEditorText.cc:449
+#: ../gtk/src/OutputEditorText.cc:518 ../gtk/src/SourceManager.cc:170
 #: ../qt/src/hocr/OutputEditorHOCR.cc:947 ../qt/src/OutputEditorText.cc:256
 #: ../qt/src/SourceManager.cc:148
 msgid ""
@@ -1369,8 +1369,8 @@ msgstr ""
 "Aşağıdaki dosyalar geçerli hOCR HTML değil:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1049 ../gtk/src/OutputEditorText.cc:448
-#: ../gtk/src/OutputEditorText.cc:516 ../gtk/src/SourceManager.cc:170
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1049 ../gtk/src/OutputEditorText.cc:450
+#: ../gtk/src/OutputEditorText.cc:519 ../gtk/src/SourceManager.cc:170
 #: ../qt/src/hocr/OutputEditorHOCR.cc:953 ../qt/src/OutputEditorText.cc:257
 #: ../qt/src/SourceManager.cc:148
 msgid "Unable to open files"
@@ -1381,22 +1381,22 @@ msgstr "Dosyalar açılamadı"
 msgid "Save hOCR Output..."
 msgstr "oOCR Çıktısını Kaydet..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:559
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:562
 #: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
 msgid "Failed to save output"
 msgstr "Çıktının kaydedilmesi başarısız oldu"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:559
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:562
 #: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Seçilen klasöre yazma hakkınız olduğundan emin olun."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:575
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:578
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorText.cc:293
 msgid "Output not saved"
 msgstr "Çıktı kaydedilmedi"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:575
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:578
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorText.cc:293
 msgid "Save output before proceeding?"
 msgstr "Devam etmeden çıktı kaydedilsin mi?"
@@ -1573,17 +1573,17 @@ msgstr ""
 msgid "Select Files"
 msgstr "Dosyaları Seçin"
 
-#: ../gtk/src/OutputEditorText.cc:466
+#: ../gtk/src/OutputEditorText.cc:469
 #, fuzzy
 msgid "Close document"
 msgstr "Belge"
 
-#: ../gtk/src/OutputEditorText.cc:507
+#: ../gtk/src/OutputEditorText.cc:510
 #, fuzzy
 msgid "New document %1"
 msgstr "Belge"
 
-#: ../gtk/src/OutputEditorText.cc:551 ../qt/src/OutputEditorText.cc:273
+#: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
 msgstr "Çıktıyı Kaydet..."
 
