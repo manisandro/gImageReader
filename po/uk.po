@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-24 09:01+0300\n"
+"POT-Creation-Date: 2021-11-08 22:06+0200\n"
 "PO-Revision-Date: 2021-08-23 21:34+0000\n"
 "Last-Translator: Tymofii Lytvynenko <till.svit@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gimagereader/"
@@ -1242,7 +1242,7 @@ msgid "The PDF library could not load the font '%1'."
 msgstr "Бібліотека PDF не може завантажити шрифт '%1'."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:416
-#: ../gtk/src/OutputEditorText.cc:550 ../qt/src/hocr/OutputEditorHOCR.cc:1087
+#: ../gtk/src/OutputEditorText.cc:553 ../qt/src/hocr/OutputEditorHOCR.cc:1087
 #: ../qt/src/OutputEditorText.cc:273
 msgid "Text Files"
 msgstr "Текстові файли"
@@ -1353,8 +1353,8 @@ msgstr "Файли hOCR HTML"
 msgid "Open hOCR File"
 msgstr "Відкрити файл hORC"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1043 ../gtk/src/OutputEditorText.cc:447
-#: ../gtk/src/OutputEditorText.cc:515 ../gtk/src/SourceManager.cc:170
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1043 ../gtk/src/OutputEditorText.cc:449
+#: ../gtk/src/OutputEditorText.cc:518 ../gtk/src/SourceManager.cc:170
 #: ../qt/src/hocr/OutputEditorHOCR.cc:947 ../qt/src/OutputEditorText.cc:256
 #: ../qt/src/SourceManager.cc:148
 msgid ""
@@ -1373,8 +1373,8 @@ msgstr ""
 "Файл не містить коректного вмісту hORC HTML:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1049 ../gtk/src/OutputEditorText.cc:448
-#: ../gtk/src/OutputEditorText.cc:516 ../gtk/src/SourceManager.cc:170
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1049 ../gtk/src/OutputEditorText.cc:450
+#: ../gtk/src/OutputEditorText.cc:519 ../gtk/src/SourceManager.cc:170
 #: ../qt/src/hocr/OutputEditorHOCR.cc:953 ../qt/src/OutputEditorText.cc:257
 #: ../qt/src/SourceManager.cc:148
 msgid "Unable to open files"
@@ -1385,22 +1385,22 @@ msgstr "Неможливо відкрити файли"
 msgid "Save hOCR Output..."
 msgstr "Зберегти результати в hOCR..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:559
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:562
 #: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
 msgid "Failed to save output"
 msgstr "Зберегти результати не вдалося"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:559
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:562
 #: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Переконайтеся, що у вас є дозвіл на запис в обрану теку."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:575
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:578
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorText.cc:293
 msgid "Output not saved"
 msgstr "Результати не збережено"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:575
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:578
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorText.cc:293
 msgid "Save output before proceeding?"
 msgstr "Зберегти результати, перш ніж продовжити?"
@@ -1577,17 +1577,17 @@ msgstr ""
 msgid "Select Files"
 msgstr "Виберіть файли"
 
-#: ../gtk/src/OutputEditorText.cc:466
+#: ../gtk/src/OutputEditorText.cc:469
 #, fuzzy
 msgid "Close document"
 msgstr "Шрифт документа:"
 
-#: ../gtk/src/OutputEditorText.cc:507
+#: ../gtk/src/OutputEditorText.cc:510
 #, fuzzy
 msgid "New document %1"
 msgstr "Шрифт документа:"
 
-#: ../gtk/src/OutputEditorText.cc:551 ../qt/src/OutputEditorText.cc:273
+#: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
 msgstr "Зберегти результати..."
 
