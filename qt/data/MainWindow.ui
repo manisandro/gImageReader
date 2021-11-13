@@ -782,8 +782,9 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="document-edit">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset theme="document-edit" resource="gimagereader.qrc">
+     <normaloff>:/extra-theme-icons/document-edit.png</normaloff>
+     <normalon>:/extra-theme-icons/text-plain.png</normalon>:/extra-theme-icons/document-edit.png</iconset>
    </property>
    <property name="text">
     <string>Toggle Output Pane</string>
@@ -794,7 +795,8 @@
   </action>
   <action name="actionactionBatchExport">
    <property name="icon">
-    <iconset theme="document-export"/>
+    <iconset theme="document-export">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>actionBatchExport</string>
