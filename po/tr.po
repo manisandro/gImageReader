@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:06+0200\n"
-"PO-Revision-Date: 2020-12-19 22:23+0000\n"
+"PO-Revision-Date: 2021-11-28 09:14+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/tr/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 "X-POOTLE-MTIME: 1441292742.000000\n"
 
 #: ../data/gimagereader.desktop.in.h:1
@@ -165,7 +165,7 @@ msgstr "Dışa aktarılan belgeleri öntanımlı uygulamayla otomatik olarak aç
 
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
-msgstr ""
+msgstr "Söz dizimi vurgulama modu:"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -383,13 +383,12 @@ msgid "Batch Mode"
 msgstr "Toplu İşlem Modu"
 
 #: ../gtk/data/MainWindow.ui.h:42
-#, fuzzy
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
-"Toplu işlem modunda, her giriş kaynağı ayrı olarak işlenir ve çıktı, giriş "
-"dosyasına yan yana kaydedilir."
+"<i>Toplu işlem modunda, her girdi kaynağı ayrı olarak işlenir ve çıktı, "
+"girdi dosyasına yan yana kaydedilir.</i>"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
@@ -624,13 +623,12 @@ msgid "Draw whitespace"
 msgstr "Boşluk çiz"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "hOCR dosyasını aç"
+msgstr "Dosya aç"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
-msgstr ""
+msgstr "Yeni sekme"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
@@ -1067,7 +1065,7 @@ msgstr "Dosyanın Üstüne Yazılsın mı?"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "Geçici dosyalar"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
@@ -1421,7 +1419,7 @@ msgstr "Başlamak için bir resim seçin..."
 
 #: ../gtk/src/MainWindow.cc:327
 msgid "There are %1 documents with unsaved changes"
-msgstr ""
+msgstr "Kaydedilmemiş değişikliklere sahip %1 belge var"
 
 #: ../gtk/src/MainWindow.cc:328
 msgid ""
@@ -1429,6 +1427,9 @@ msgid ""
 "permanently lost.\n"
 "Select the documents you want to save:"
 msgstr ""
+"Kapatmadan önce değişiklikler kaydedilsin mi? Kaydetmezseniz, tüm "
+"değişiklikleriniz kalıcı olarak kaybolacak.\n"
+"Kaydetmek istediğiniz belgeleri seçin:"
 
 #: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
 msgid "Ready"
@@ -1549,7 +1550,7 @@ msgstr "Yazım denetimi yap"
 
 #: ../gtk/src/OutputEditorText.cc:321
 msgid "Amount of occurrences replaced: %1"
-msgstr ""
+msgstr "Değiştirilenlerin sayısı: %1"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
@@ -1574,14 +1575,12 @@ msgid "Select Files"
 msgstr "Dosyaları Seçin"
 
 #: ../gtk/src/OutputEditorText.cc:469
-#, fuzzy
 msgid "Close document"
-msgstr "Belge"
+msgstr "Belgeyi kapat"
 
 #: ../gtk/src/OutputEditorText.cc:510
-#, fuzzy
 msgid "New document %1"
-msgstr "Belge"
+msgstr "Yeni belge %1"
 
 #: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
@@ -2002,16 +2001,16 @@ msgid "About gImageReader"
 msgstr "gImageReader Hakkında"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
 "graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
 "https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
 "p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr için grafiksel bir arayüz</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
-"p><p>&nbsp;</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt"
+";tesseract-ocr için grafiksel bir arayüz&lt;/p&gt;&lt;p&gt;&lt;a "
+"href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Web sitesi&lt"
+";/a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2026,7 +2025,7 @@ msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
-"Toplu işlem modunda, her giriş kaynağı ayrı olarak işlenir ve çıktı, giriş "
+"Toplu işlem modunda, her girdi kaynağı ayrı olarak işlenir ve çıktı, girdi "
 "dosyasına yan yana kaydedilir."
 
 #: ../qt/data/ConfigDialog.ui.h:14
@@ -2042,7 +2041,7 @@ msgid "Text file encoding:"
 msgstr "Metin dosyası kodlaması:"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
@@ -2053,15 +2052,16 @@ msgid ""
 "application crashed. Also, include the information below. Thank you.&lt;/"
 "p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Uygulama çöktü.</"
-"span></p><p>Anlayışınız için teşekkür ederiz. Uygulamanın gelişimine katkıda "
-"bulunmak için lütfen bu hatayı <a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a> adresine bildirin. "
-"Lütfen çökme olmadan ne yaptığınızı ayrıntılı olarak tanımlayın. Aşağıdaki "
-"bilgiyi de ekleyin. Teşekkür ederiz.</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;Uygulama çöktü&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
+"Anlayışınız için teşekkür ederiz. Uygulamanın gelişimine katkıda bulunmak "
+"için lütfen bu hatayı &lt;a href=&quot;mailto:manisandro@gmail."
+"com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail.com&lt;/a&gt; "
+"adresine bildirin. Lütfen uygulama çökmeden önce ne yaptığınızı açıklamaya "
+"çalışın. Aşağıdaki bilgileri de ekleyin. Teşekkür "
+"ederiz.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
@@ -2071,45 +2071,41 @@ msgid ""
 "stacktrace below may provide additional information about where the crash "
 "occurred.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract iptal "
-"edildi</span></p><p>Tesseract (OCR motoru), metni tanıma sırasında "
-"durduruldu. Bu, kullanılan traineddata'lar bozuksa, kullanımdaki tesseract "
-"sürümüyle uyumsuzsa veya tesseract'taki bir hata nedeniyle meydana gelebilir."
-"</p><p>Aşağıdaki yığın izleme, çökmenin nerede meydana geldiği hakkında ek "
-"bilgi sağlayabilir.</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;Tesseract iptal edildi&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
+"Tesseract (OCR motoru), metni tanıma sırasında durduruldu. Bu, kullanılan "
+"traineddata'lar bozuksa, kullanımdaki tesseract sürümüyle uyumsuzsa veya "
+"tesseract'taki bir hata nedeniyle meydana gelebilir.&lt;/p&gt;&lt;p&gt;"
+"Aşağıdaki yığın izleme, çökmenin nerede meydana geldiği hakkında ek bilgi "
+"sağlayabilir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "HOCR Toplu Dışa Aktar"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "Son dosya yok"
+msgstr "Girdi dosyaları"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "Çıktı:"
+msgstr "Girdi:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "Çıktı kipi:"
+msgstr "Çıktı ön izleme:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs at level:"
-msgstr ""
+msgstr "Çıktıları gruplandırma düzeyi:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "Klasör seç..."
+msgstr "Kaynak klasörü seç:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "Diğer seçenekler"
+msgstr "Dışa aktarma seçenekleri"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2173,17 +2169,15 @@ msgstr "Çıktı Bölmesini Değiştir"
 
 #: ../qt/data/MainWindow.ui.h:41
 msgid "actionBatchExport"
-msgstr ""
+msgstr "actionBatchExport"
 
 #: ../qt/data/MainWindow.ui.h:42
-#, fuzzy
 msgid "Batch Export"
-msgstr "Dışa aktar"
+msgstr "Toplu Dışa Aktar"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
-#, fuzzy
 msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>Örnek:</b> 1-10, 13, 14-18</small>"
+msgstr "&lt;small&gt;&lt;b&gt;Örnek:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
 
 #: ../qt/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportWidget.ui.h:5
 msgid "Backend:"
@@ -2198,13 +2192,12 @@ msgid "Landscape"
 msgstr "Yatay"
 
 #: ../qt/data/PdfExportWidget.ui.h:1
-#, fuzzy
 msgid "Form"
-msgstr "Biçim:"
+msgstr "Biçim"
 
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:303
 msgid "Failed to write to file"
@@ -2301,11 +2294,12 @@ msgstr ""
 
 #: ../qt/src/Recognizer.cc:235
 msgid "Source already recognized"
-msgstr ""
+msgstr "Kaynak zaten tanındı"
 
 #: ../qt/src/Recognizer.cc:235
 msgid "One or more selected sources were aready recognized. Proceed anyway?"
 msgstr ""
+"Seçilen bir veya daha fazla kaynak zaten tanındı. Yine de devam edilsin mi?"
 
 #: ../qt/src/SourceManager.cc:240
 msgid "No recent files"
