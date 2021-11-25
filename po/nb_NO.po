@@ -24,26 +24,30 @@ msgid "OCR application"
 msgstr "Tekstgjenkjenningsprogram"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:170
+#: ../qt/src/Ui_MainWindow.hh:163
 msgid "Redetect Languages"
 msgstr "Oppdag språk på nytt"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:173
+#: ../qt/src/Ui_MainWindow.hh:166
 msgid "Manage Languages"
 msgstr "Behandle språk"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:176
+#: ../qt/src/Ui_MainWindow.hh:169
 msgid "Preferences"
 msgstr "Innstillinger"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:554 ../qt/src/MainWindow.cc:517
-#: ../qt/src/Ui_MainWindow.hh:181
+#: ../qt/src/Ui_MainWindow.hh:181 ../gtk/src/MainWindow.cc:501
+#: ../qt/src/MainWindow.cc:511 ../qt/src/Ui_MainWindow.hh:174
 msgid "Help"
 msgstr "Hjelp"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
-#: ../qt/src/Ui_MainWindow.hh:184
+#: ../qt/src/Ui_MainWindow.hh:184 ../qt/src/Ui_MainWindow.hh:177
 msgid "About"
 msgstr "Om"
 
@@ -52,18 +56,22 @@ msgid "Quit"
 msgstr "Avslutt"
 
 #: ../gtk/data/CharacterListDialog.ui.h:1 ../qt/data/CharacterListDialog.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:42
 msgid "Character whitelist / blacklist"
 msgstr "Svarteliste / hvitliste for tegn"
 
 #: ../gtk/data/CharacterListDialog.ui.h:2 ../qt/data/CharacterListDialog.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:43
 msgid "Exclude these characters from being recognized (blacklist):"
 msgstr "Utelukk disse tegnene fra gjenkjennelse (svarteliste):"
 
 #: ../gtk/data/CharacterListDialog.ui.h:3 ../qt/data/CharacterListDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:44
 msgid "Enter a string of characters..."
 msgstr "Angi en streng med tegn…"
 
 #: ../gtk/data/CharacterListDialog.ui.h:4 ../qt/data/CharacterListDialog.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:45
 msgid "Only allow the following characters to be recognized (whitelist):"
 msgstr "Kun tillat disse tegnene fra gjenkjennelse (hvitliste):"
 
@@ -71,6 +79,7 @@ msgstr "Kun tillat disse tegnene fra gjenkjennelse (hvitliste):"
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
 #: ../gtk/src/FileDialogs.cc:179 ../gtk/src/FileDialogs.cc:194
 #: ../gtk/src/Utils.cc:126 ../qt/data/ConfigDialog.ui.h:26
+#: ../gtk/src/FileDialogs.cc:152 ../gtk/src/Utils.cc:61
 msgid "OK"
 msgstr "OK"
 
@@ -132,6 +141,7 @@ msgstr "Navn"
 #: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:178
 #: ../gtk/src/FileDialogs.cc:193 ../gtk/src/Utils.cc:141
 #: ../qt/data/ConfigDialog.ui.h:27 ../qt/data/MainWindow.ui.h:13
+#: ../gtk/src/FileDialogs.cc:151 ../gtk/src/Utils.cc:76
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -165,7 +175,7 @@ msgstr "Brukerstier"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr "Åpne eksporterte dokumenter automatisk med forvalgt program"
+msgstr "Åpne eksporterte dokumenter automatisk med standardprogram"
 
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
@@ -217,95 +227,114 @@ msgid "Toggle output pane"
 msgstr "Vis/skjul utdatapanel"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:67
+#: ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
 msgstr "Roter gjeldende side"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:68
+#: ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
 msgstr "Roter alle sider"
 
 #. Remove & from some labels which designer insists in adding
 #: ../gtk/data/MainWindow.ui.h:4 ../qt/data/MainWindow.ui.h:22
-#: ../qt/src/Ui_MainWindow.hh:50
+#: ../qt/src/Ui_MainWindow.hh:50 ../qt/src/Ui_MainWindow.hh:49
 msgid "Sources"
 msgstr "Kilder"
 
 #: ../gtk/data/MainWindow.ui.h:5 ../qt/data/MainWindow.ui.h:24
+#: ../gtk/data/MainWindow.ui.h:7
 msgid "Zoom in"
 msgstr "Forstørr"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/data/MainWindow.ui.h:26
+#: ../gtk/data/MainWindow.ui.h:8
 msgid "Zoom out"
 msgstr "Forminsk"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:28
+#: ../gtk/data/MainWindow.ui.h:9
 msgid "Normal size"
 msgstr "Normal størrelse"
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/data/MainWindow.ui.h:30
+#: ../gtk/data/MainWindow.ui.h:10
 msgid "Best fit"
 msgstr "Tilpass til side"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:61
+#: ../gtk/data/MainWindow.ui.h:11 ../qt/src/Ui_MainWindow.hh:60
 msgid "Rotate page"
 msgstr "Roter side"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/src/Ui_MainWindow.hh:76
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
 msgstr "Velg rotasjonsmodus"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../gtk/data/OutputEditorHOCR.ui.h:12
 #: ../gtk/data/OutputEditorText.ui.h:16
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:71 ../qt/src/Ui_OutputEditorText.hh:95
+#: ../gtk/data/MainWindow.ui.h:13 ../gtk/data/OutputEditorText.ui.h:13
 msgid "Select insert mode"
 msgstr "Velg innsettingsmodus"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:103
+#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/Ui_MainWindow.hh:102
 msgid "Select page"
 msgstr "Velg side"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:36
+#: ../gtk/data/MainWindow.ui.h:15
 msgid "Image controls"
 msgstr "Bildetilpasning"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRBatchExportDialog.cc:42
-#: ../qt/src/MainWindow.cc:164
+#: ../qt/src/MainWindow.cc:164 ../gtk/data/MainWindow.ui.h:16
+#: ../qt/src/MainWindow.cc:159
 msgid "Plain text"
 msgstr "Ren tekst"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/src/MainWindow.cc:165
+#: ../gtk/data/MainWindow.ui.h:17 ../qt/src/MainWindow.cc:160
 msgid "hOCR, PDF"
 msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:38
+#: ../gtk/data/MainWindow.ui.h:18
 msgid "Autodetect layout"
 msgstr "Auto-detekter layout"
 
-#: ../gtk/data/MainWindow.ui.h:17
+#: ../gtk/data/MainWindow.ui.h:17 ../gtk/data/MainWindow.ui.h:19
 msgid "<small>Recognize all</small>"
 msgstr "<small>Gjenkjenn alle</small>"
 
-#: ../gtk/data/MainWindow.ui.h:18
+#: ../gtk/data/MainWindow.ui.h:18 ../gtk/data/MainWindow.ui.h:20
 msgid "Select language"
 msgstr "Velg språk"
 
 #: ../gtk/data/MainWindow.ui.h:19 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:196
 msgid "Add images"
 msgstr "Legg til bilder"
 
 #: ../gtk/data/MainWindow.ui.h:20 ../qt/src/Ui_MainWindow.hh:202
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:195
 msgid "Add Images"
 msgstr "Legg til bilder"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:207
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:200
 msgid "Remove image from list"
 msgstr "Fjern bilde fra liste"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:210
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/src/Ui_MainWindow.hh:203
 msgid "Delete image"
 msgstr "Slett bilde"
 
 #: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:213
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/src/Ui_MainWindow.hh:206
 msgid "Clear list"
 msgstr "Tøm liste"
 
@@ -314,70 +343,85 @@ msgid "Thumbnails"
 msgstr "Miniatyrbilder"
 
 #: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:26
 msgid "Files"
 msgstr "Filer"
 
 #: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:27
 msgid "Device:"
 msgstr "Enhet:"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:55
+#: ../gtk/data/MainWindow.ui.h:28
 msgid "Refresh"
 msgstr "Gjenoppfrisk"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:29
 #, fuzzy
 msgid "Output:"
 msgstr "Utdata:"
 
 #: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:14
+#: ../gtk/data/MainWindow.ui.h:30
 msgid "Mode:"
 msgstr "Modus:"
 
 #: ../gtk/data/MainWindow.ui.h:30 ../gtk/src/hocr/HOCRPdfExporter.cc:313
 #: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExportWidget.cc:60
+#: ../gtk/data/MainWindow.ui.h:31 ../qt/src/hocr/HOCRPdfExporter.cc:344
 msgid "Color"
 msgstr "Farge"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:316
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExportWidget.cc:61
+#: ../gtk/data/MainWindow.ui.h:32 ../qt/src/hocr/HOCRPdfExporter.cc:345
 msgid "Grayscale"
 msgstr "Gråskala"
 
 #: ../gtk/data/MainWindow.ui.h:32 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:33
 msgid "Resolution:"
 msgstr "Oppløsning:"
 
 #: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:12
+#: ../gtk/data/MainWindow.ui.h:34
 msgid "Scan"
 msgstr "Skann"
 
 #: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:17
+#: ../gtk/data/MainWindow.ui.h:35
 msgid "Source:"
 msgstr "Kilde:"
 
 #: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:36
 msgid "Acquire"
 msgstr "Skanning"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:37
 msgid "Brightness"
 msgstr "Lysstyrke"
 
 #: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:38
 msgid "Contrast"
 msgstr "Kontrast"
 
 #: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:39
 msgid "Resolution"
 msgstr "Oppløsning"
 
 #: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:40
 msgid "Invert colors"
 msgstr "Inverter farger"
 
-#: ../gtk/data/MainWindow.ui.h:40
+#: ../gtk/data/MainWindow.ui.h:40 ../gtk/data/MainWindow.ui.h:41
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "En grafisk grenseflate for tesseract-ocr"
 
@@ -414,7 +458,7 @@ msgstr "Sidetallfølge"
 msgid "Page range:"
 msgstr "Sidetallfølge:"
 
-#: ../gtk/data/MainWindow.ui.h:50
+#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Eksempel:</b> 1-10, 13, 14-18</small>"
 
@@ -424,6 +468,7 @@ msgstr "Gjenkjennelsesområde:"
 
 #: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:121
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:137
+#: ../gtk/src/Recognizer.cc:381 ../qt/src/Recognizer.cc:133
 msgid "Entire page"
 msgstr "Hele siden"
 
@@ -444,27 +489,33 @@ msgid "Source page"
 msgstr "Kildeside"
 
 #: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:166
+#: ../qt/src/SourceManager.cc:174
 msgid "Protected PDF"
 msgstr "Beskyttet PDF"
 
 #: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:71
+#: ../qt/src/Recognizer.cc:67
 msgid "Current Page"
 msgstr "Nåværende side"
 
 #: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:74
+#: ../qt/src/Recognizer.cc:70
 msgid "Multiple Pages..."
 msgstr "Flere sider…"
 
 #: ../gtk/data/MainWindow.ui.h:60 ../qt/src/Recognizer.cc:77
+#: ../qt/src/Recognizer.cc:73
 #, fuzzy
 msgid "Batch mode..."
 msgstr "Modus for satsvis behandling …"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:713
+#: ../qt/src/hocr/OutputEditorHOCR.cc:695
 msgid "Add Word"
 msgstr "Legg til ord"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:713
+#: ../qt/src/hocr/OutputEditorHOCR.cc:695
 msgid "Enter word:"
 msgstr "Skriv inn ord:"
 
@@ -509,7 +560,7 @@ msgid "Open hOCR file"
 msgstr "Åpne hOCR-fil"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/OutputEditorText.ui.h:15
-#: ../qt/src/Ui_OutputEditorText.hh:116
+#: ../qt/src/Ui_OutputEditorText.hh:116 ../gtk/data/OutputEditorText.ui.h:18
 msgid "Save output"
 msgstr "Lagre utdata"
 
@@ -522,13 +573,13 @@ msgstr "Eksporter"
 #: ../gtk/data/OutputEditorHOCR.ui.h:16 ../gtk/data/OutputEditorText.ui.h:21
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:109
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:110
-#: ../qt/src/Ui_OutputEditorText.hh:118
+#: ../qt/src/Ui_OutputEditorText.hh:118 ../gtk/data/OutputEditorText.ui.h:19
 msgid "Clear output"
 msgstr "Tøm utdata"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/data/OutputEditorText.ui.h:18
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:112
-#: ../qt/src/Ui_OutputEditorText.hh:107
+#: ../qt/src/Ui_OutputEditorText.hh:107 ../gtk/data/OutputEditorText.ui.h:15
 msgid "Find and replace"
 msgstr "Søk og erstatt"
 
@@ -558,12 +609,16 @@ msgstr "Forrige (Shift+F3)"
 #: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:957
 #: ../qt/src/hocr/OutputEditorHOCR.cc:845
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:915
+#: ../qt/src/hocr/OutputEditorHOCR.cc:827
 msgid "Expand all"
 msgstr "Utvid alle"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:960
 #: ../qt/src/hocr/OutputEditorHOCR.cc:846
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:918
+#: ../qt/src/hocr/OutputEditorHOCR.cc:828
 msgid "Collapse all"
 msgstr "Fold sammen alle"
 
@@ -584,7 +639,7 @@ msgstr "Legg ved gjeldende tekst"
 
 #: ../gtk/data/OutputEditorText.ui.h:2 ../qt/src/Ui_OutputEditorText.hh:53
 msgid "Insert at cursor"
-msgstr "Sett inn ved peker"
+msgstr "Sett inn ved markør"
 
 #: ../gtk/data/OutputEditorText.ui.h:3 ../qt/src/Ui_OutputEditorText.hh:54
 msgid "Replace current text"
@@ -638,16 +693,17 @@ msgid "New tab"
 msgstr ""
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
+#: ../gtk/data/OutputEditorText.ui.h:14
 msgid "Strip line breaks on selected text"
 msgstr "Fjern linjeskift i markert tekst"
 
 #: ../gtk/data/OutputEditorText.ui.h:19 ../qt/src/Ui_OutputEditorText.hh:109
-#: ../qt/src/Ui_OutputEditorText.hh:110
+#: ../qt/src/Ui_OutputEditorText.hh:110 ../gtk/data/OutputEditorText.ui.h:16
 msgid "Undo"
 msgstr "Angre"
 
 #: ../gtk/data/OutputEditorText.ui.h:20 ../qt/src/Ui_OutputEditorText.hh:112
-#: ../qt/src/Ui_OutputEditorText.hh:113
+#: ../qt/src/Ui_OutputEditorText.hh:113 ../gtk/data/OutputEditorText.ui.h:17
 msgid "Redo"
 msgstr "Gjør om"
 
@@ -703,7 +759,7 @@ msgstr "Bildeinnstillinger:"
 #: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
 #: ../qt/data/PdfExportWidget.ui.h:25
 msgid "Uniformize line and word spacing"
-msgstr "Enhetlig linje ord ordavstand"
+msgstr "Ensartet linje- og ordavstand"
 
 #: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
 #: ../qt/data/PdfExportWidget.ui.h:21
@@ -898,6 +954,7 @@ msgstr "Åpne"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:3 ../gtk/src/Utils.cc:144
 #: ../qt/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:42
+#: ../gtk/src/Utils.cc:79
 msgid "Save"
 msgstr "Lagre"
 
@@ -914,7 +971,8 @@ msgstr "Legg til"
 #: ../gtk/data/SubstitutionsManager.ui.h:6
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:953 ../qt/data/ConfigDialog.ui.h:17
 #: ../qt/src/hocr/OutputEditorHOCR.cc:842 ../qt/src/SubstitutionsManager.cc:50
-#: ../qt/src/SubstitutionsManager.cc:51
+#: ../qt/src/SubstitutionsManager.cc:51 ../gtk/src/hocr/OutputEditorHOCR.cc:911
+#: ../qt/src/hocr/OutputEditorHOCR.cc:824
 msgid "Remove"
 msgstr "Fjern"
 
@@ -948,7 +1006,7 @@ msgstr "Velg utdatafilnavn…"
 
 #: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
 msgid "Failed to initialize the scanning backend."
-msgstr "Klarte ikke å igangsette skanningsbakenden."
+msgstr "Klarte ikke å igangsette skanning-backend."
 
 #: ../gtk/src/Acquirer.cc:115 ../qt/src/Acquirer.cc:106
 msgid "Scan failed"
@@ -984,21 +1042,22 @@ msgid "Canceling scan..."
 msgstr "Avbryter skanning…"
 
 #: ../gtk/src/Config.cc:50 ../gtk/src/Config.cc:60
-#: ../qt/data/ConfigDialog.ui.h:7
+#: ../qt/data/ConfigDialog.ui.h:7 ../gtk/src/Config.cc:49
 msgid "Filename prefix"
 msgstr "Filnavnsforstavelse"
 
 #: ../gtk/src/Config.cc:51 ../gtk/src/Config.cc:61
-#: ../qt/data/ConfigDialog.ui.h:8
+#: ../qt/data/ConfigDialog.ui.h:8 ../gtk/src/Config.cc:50
 msgid "Code"
 msgstr "Kode"
 
 #: ../gtk/src/Config.cc:52 ../gtk/src/Config.cc:62
-#: ../qt/data/ConfigDialog.ui.h:9
+#: ../qt/data/ConfigDialog.ui.h:9 ../gtk/src/Config.cc:51
 msgid "Native name"
 msgstr "Opprinnelig navn"
 
-#: ../gtk/src/Config.cc:120 ../qt/src/Config.cc:104
+#: ../gtk/src/Config.cc:120 ../qt/src/Config.cc:104 ../gtk/src/Config.cc:109
+#: ../qt/src/Config.cc:102
 #, fuzzy
 msgid "Script"
 msgstr "Skript"
@@ -1022,10 +1081,12 @@ msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "Klarte ikke å hente tilbakesporing. Er GDB installert?"
 
 #: ../gtk/src/Displayer.cc:253 ../qt/src/Displayer.cc:196
+#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid "Failed to load image"
 msgstr "Klarte ikke å laste bilde"
 
 #: ../gtk/src/Displayer.cc:253 ../qt/src/Displayer.cc:196
+#: ../gtk/src/Displayer.cc:252 ../qt/src/Displayer.cc:193
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -1034,6 +1095,7 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/Displayer.cc:746 ../qt/src/Displayer.cc:595
+#: ../gtk/src/Displayer.cc:233 ../qt/src/Displayer.cc:581
 msgid "Page %1"
 msgstr "Side %1"
 
@@ -1063,14 +1125,14 @@ msgstr "Gjenkjenn utvalg"
 msgid "Performing layout analysis"
 msgstr "Utfører layout-analyse"
 
-#: ../gtk/src/FileDialogs.cc:300
+#: ../gtk/src/FileDialogs.cc:300 ../gtk/src/FileDialogs.cc:235
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr ""
 "Fil ved navn \"%1\" finnes allerede. Er du sikker på at du vil overskrive "
 "den?"
 
-#: ../gtk/src/FileDialogs.cc:302
+#: ../gtk/src/FileDialogs.cc:302 ../gtk/src/FileDialogs.cc:237
 msgid "Overwrite File?"
 msgstr "Overskriv fil?"
 
@@ -1079,36 +1141,46 @@ msgid "Temporary files"
 msgstr ""
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:877 ../qt/src/hocr/HOCRDocument.cc:72
 msgid "No suggestions"
 msgstr "Ingen forslag"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:74 ../qt/src/hocr/HOCRDocument.cc:75
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:883 ../qt/src/hocr/HOCRDocument.cc:76
 msgid "Add to dictionary"
 msgstr "Legg til i ordbok"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:80 ../qt/src/hocr/HOCRDocument.cc:79
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:889 ../qt/src/hocr/HOCRDocument.cc:80
 msgid "Ignore word"
 msgstr "Ignorer ord"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:724 ../gtk/src/hocr/OutputEditorHOCR.cc:333
 #: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:311
+#: ../gtk/src/hocr/HOCRDocument.cc:616 ../gtk/src/hocr/OutputEditorHOCR.cc:266
+#: ../qt/src/hocr/HOCRDocument.cc:686 ../qt/src/hocr/OutputEditorHOCR.cc:310
 msgid "Page"
 msgstr "Side"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:726 ../qt/src/hocr/HOCRDocument.cc:692
+#: ../gtk/src/hocr/HOCRDocument.cc:618 ../qt/src/hocr/HOCRDocument.cc:688
 msgid "Text block"
 msgstr "Tekstblokk"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:728 ../gtk/src/hocr/OutputEditorHOCR.cc:339
 #: ../qt/src/hocr/HOCRDocument.cc:694 ../qt/src/hocr/OutputEditorHOCR.cc:313
+#: ../gtk/src/hocr/HOCRDocument.cc:620 ../gtk/src/hocr/OutputEditorHOCR.cc:272
+#: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:312
 msgid "Paragraph"
 msgstr "Avsnitt"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:730 ../qt/src/hocr/HOCRDocument.cc:696
+#: ../gtk/src/hocr/HOCRDocument.cc:622 ../qt/src/hocr/HOCRDocument.cc:692
 msgid "Textline"
 msgstr "Tekstrad"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:734 ../qt/src/hocr/HOCRDocument.cc:700
+#: ../gtk/src/hocr/HOCRDocument.cc:626 ../qt/src/hocr/HOCRDocument.cc:696
 msgid "Graphic"
 msgstr "Grafisk"
 
@@ -1119,16 +1191,19 @@ msgstr "Grafisk"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1021
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1055
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1084 ../qt/src/OutputEditorText.cc:271
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1016 ../gtk/src/OutputEditorText.cc:280
+#: ../qt/src/hocr/HOCROdtExporter.cc:51 ../qt/src/hocr/HOCRPdfExporter.cc:471
+#: ../qt/src/hocr/HOCRTextExporter.cc:37 ../qt/src/hocr/OutputEditorHOCR.cc:951
 msgid "output"
 msgstr "utdata"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:68
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1024
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1024 ../qt/src/hocr/HOCROdtExporter.cc:54
 msgid "OpenDocument Text Documents"
 msgstr "OpenDocument-Tekstdokumenter"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:69
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1024
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1024 ../qt/src/hocr/HOCROdtExporter.cc:54
 #, fuzzy
 msgid "Save ODT Output..."
 msgstr "Lagre ODT-utdata…"
@@ -1137,160 +1212,195 @@ msgstr "Lagre ODT-utdata…"
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:617
 #: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCROdtExporter.cc:49
 #: ../qt/src/hocr/HOCRPdfExporter.cc:134 ../qt/src/hocr/HOCRTextExporter.cc:34
+#: ../qt/src/hocr/HOCROdtExporter.cc:61 ../qt/src/hocr/HOCRPdfExporter.cc:601
+#: ../qt/src/hocr/HOCRTextExporter.cc:47
 msgid "Export failed"
 msgstr "Eksport mislyktes"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
-#: ../qt/src/hocr/HOCROdtExporter.cc:49
+#: ../qt/src/hocr/HOCROdtExporter.cc:49 ../qt/src/hocr/HOCROdtExporter.cc:61
 #, fuzzy
 msgid "The ODT export failed: unable to write output file."
 msgstr "ODT-eksport mislyktes: Kunne ikke skrive utdatafil."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:335 ../qt/src/hocr/HOCROdtExporter.cc:242
+#: ../qt/src/hocr/HOCROdtExporter.cc:254
 msgid "Exporting to ODT..."
 msgstr "Eksporterer til ODT…"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:74
+#: ../qt/src/hocr/HOCRPdfExporter.cc:358
 msgid "Same as source"
 msgstr "Samme som kilde"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:286
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:75
+#: ../qt/src/hocr/HOCRPdfExporter.cc:359
 msgid "Custom"
 msgstr "Egendefinert"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:300
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:71
+#: ../qt/src/hocr/HOCRPdfExporter.cc:355
 msgid "cm"
 msgstr "cm"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:303
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:72
+#: ../qt/src/hocr/HOCRPdfExporter.cc:356
 msgid "in"
 msgstr "tommer"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:319
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:62
+#: ../qt/src/hocr/HOCRPdfExporter.cc:346
 msgid "Monochrome"
 msgstr "Ensfarget"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:328
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:64
+#: ../qt/src/hocr/HOCRPdfExporter.cc:348
 msgid "Threshold (closest color)"
 msgstr "Terskel (nærmeste farge)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:331
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:65
+#: ../qt/src/hocr/HOCRPdfExporter.cc:349
 msgid "Diffuse"
 msgstr "Diffus"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:340
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:66
+#: ../qt/src/hocr/HOCRPdfExporter.cc:350
 #, fuzzy
 msgid "Zip (lossless)"
 msgstr "ZIP (tapsfri)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:344
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:67
+#: ../qt/src/hocr/HOCRPdfExporter.cc:351
 msgid "CCITT Group 4 (lossless)"
 msgstr "CCITT Gruppe 4 (tapsfri)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:348
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:68
+#: ../qt/src/hocr/HOCRPdfExporter.cc:352
 #, fuzzy
 msgid "Jpeg (lossy)"
 msgstr "JPEG (tapsbasert)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:493
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1060
+#: ../qt/src/hocr/HOCRPdfExporter.cc:475
 msgid "PDF Files"
 msgstr "PDF-filer"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:494
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1060
+#: ../qt/src/hocr/HOCRPdfExporter.cc:475
 #, fuzzy
 msgid "Save PDF Output..."
 msgstr "Lagre PDF-utdata…"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1065
+#: ../qt/src/hocr/HOCRPdfExporter.cc:481
 msgid "Invalid Output"
 msgstr "Ugyldig utdata"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1065
+#: ../qt/src/hocr/HOCRPdfExporter.cc:481
 msgid "Cannot overwrite a file which is a source image of this document."
 msgstr "Kan ikke overskrive en fil som er et kildebilde i dette dokumentet."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:515
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:515 ../qt/src/hocr/HOCRPdfExporter.cc:503
 msgid "Failed to create output"
 msgstr "Klarte ikke å opprette utdata"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:515
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:515 ../qt/src/hocr/HOCRPdfExporter.cc:503
 msgid "Failed to create output. The returned error was: %1"
 msgstr "Klarte ikke å opprette utdata. Feilmeldingen er: %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:557 ../qt/src/hocr/HOCRPdfExporter.cc:77
+#: ../qt/src/hocr/HOCRPdfExporter.cc:543
 msgid "The operation was cancelled"
 msgstr "Operasjonen ble avbrutt"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:605 ../qt/src/hocr/HOCRPdfExporter.cc:123
+#: ../qt/src/hocr/HOCRPdfExporter.cc:589
 msgid "Failed to render page %1"
 msgstr "Klarte ikke å tegne side %1"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:612 ../qt/src/hocr/HOCRPdfExporter.cc:130
+#: ../qt/src/hocr/HOCRPdfExporter.cc:596
 msgid "Exporting to PDF..."
 msgstr "Eksporterer til PDF…"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:617 ../qt/src/hocr/HOCRPdfExporter.cc:134
+#: ../qt/src/hocr/HOCRPdfExporter.cc:601
 msgid "The PDF export failed: %1."
 msgstr "PDF-eksport mislyktes: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:671 ../qt/src/hocr/HOCRPdfExporter.cc:420
+#: ../qt/src/hocr/HOCRPdfExporter.cc:654
 #, fuzzy
 msgid "The PDF library could not load the font '%1'."
 msgstr "PDF-biblioteket kunne ikke laste skriften \"%1\"."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:416
 #: ../gtk/src/OutputEditorText.cc:553 ../qt/src/hocr/OutputEditorHOCR.cc:1087
-#: ../qt/src/OutputEditorText.cc:273
+#: ../qt/src/OutputEditorText.cc:273 ../gtk/src/OutputEditorText.cc:282
+#: ../qt/src/hocr/HOCRTextExporter.cc:40
 msgid "Text Files"
 msgstr "Tekstfiler"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1087
+#: ../qt/src/hocr/HOCRTextExporter.cc:40
 #, fuzzy
 msgid "Save Text Output..."
 msgstr "Lagre tekstutdata…"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCRTextExporter.cc:34
+#: ../qt/src/hocr/HOCRTextExporter.cc:47
 #, fuzzy
 msgid "The text export failed: unable to write output file."
 msgstr "Teksteksport mislyktes: Kunne ikke skrive utdatafil."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:336
 #: ../qt/src/hocr/OutputEditorHOCR.cc:312
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:269
+#: ../qt/src/hocr/OutputEditorHOCR.cc:311
 msgid "Block"
 msgstr "Blokk"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:342
 #: ../qt/src/hocr/OutputEditorHOCR.cc:314
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:275
+#: ../qt/src/hocr/OutputEditorHOCR.cc:313
 msgid "Line"
 msgstr "Linje"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:345
 #: ../qt/src/hocr/OutputEditorHOCR.cc:315
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:278
+#: ../qt/src/hocr/OutputEditorHOCR.cc:314
 msgid "Word"
 msgstr "Ord"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:348
 #: ../qt/src/hocr/OutputEditorHOCR.cc:316
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:281
+#: ../qt/src/hocr/OutputEditorHOCR.cc:315
 msgid "Misspelled word"
 msgstr "Feilstavet ord"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:516
 #: ../qt/src/hocr/OutputEditorHOCR.cc:417
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:448
+#: ../qt/src/hocr/OutputEditorHOCR.cc:415
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -1300,6 +1410,8 @@ msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:517
 #: ../qt/src/hocr/OutputEditorHOCR.cc:418
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:449
+#: ../qt/src/hocr/OutputEditorHOCR.cc:416
 msgid "Recognition errors"
 msgstr "Gjenkjennelsesfeil"
 
@@ -1307,12 +1419,17 @@ msgstr "Gjenkjennelsesfeil"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:180
 #: ../qt/src/hocr/OutputEditorHOCR.cc:614
 #: ../qt/src/hocr/OutputEditorHOCR.cc:626
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:619
+#: ../qt/src/hocr/OutputEditorHOCR.cc:596
+#: ../qt/src/hocr/OutputEditorHOCR.cc:608
 msgid "Multiple values"
 msgstr "Flerfoldige verdier"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:876
 #: ../qt/src/hocr/OutputEditorHOCR.cc:774
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:803
+#: ../qt/src/hocr/OutputEditorHOCR.cc:756
 msgid "Merge"
 msgstr "Flett"
 
@@ -1320,37 +1437,53 @@ msgstr "Flett"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:944
 #: ../qt/src/hocr/OutputEditorHOCR.cc:776
 #: ../qt/src/hocr/OutputEditorHOCR.cc:840
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:811
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:902
+#: ../qt/src/hocr/OutputEditorHOCR.cc:758
+#: ../qt/src/hocr/OutputEditorHOCR.cc:822
 msgid "Split from parent"
 msgstr "Del opp fra opphav"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:895
 #: ../qt/src/hocr/OutputEditorHOCR.cc:780
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:822
+#: ../qt/src/hocr/OutputEditorHOCR.cc:762
 msgid "Swap"
 msgstr "Bytte"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:919
 #: ../qt/src/hocr/OutputEditorHOCR.cc:825
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:846
+#: ../qt/src/hocr/OutputEditorHOCR.cc:807
 msgid "Add graphic region"
 msgstr "Legg til grafisk region"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:922
 #: ../qt/src/hocr/OutputEditorHOCR.cc:826
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:849
+#: ../qt/src/hocr/OutputEditorHOCR.cc:808
 msgid "Add text block"
 msgstr "Legg til tekstblokk"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:926
 #: ../qt/src/hocr/OutputEditorHOCR.cc:828
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:853
+#: ../qt/src/hocr/OutputEditorHOCR.cc:810
 msgid "Add paragraph"
 msgstr "Legg til avsnitt"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:930
 #: ../qt/src/hocr/OutputEditorHOCR.cc:830
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:857
+#: ../qt/src/hocr/OutputEditorHOCR.cc:812
 msgid "Add line"
 msgstr "Legg til rad"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:934
 #: ../qt/src/hocr/OutputEditorHOCR.cc:832
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:861
+#: ../qt/src/hocr/OutputEditorHOCR.cc:814
 msgid "Add word"
 msgstr "Legg til ord"
 
@@ -1358,18 +1491,26 @@ msgstr "Legg til ord"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1066
 #: ../qt/src/hocr/OutputEditorHOCR.cc:907
 #: ../qt/src/hocr/OutputEditorHOCR.cc:983
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:952
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1018
+#: ../qt/src/hocr/OutputEditorHOCR.cc:889
+#: ../qt/src/hocr/OutputEditorHOCR.cc:954
 msgid "hOCR HTML Files"
 msgstr "hOCD-HTML-filer"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:995
 #: ../qt/src/hocr/OutputEditorHOCR.cc:907
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:953
+#: ../qt/src/hocr/OutputEditorHOCR.cc:889
 msgid "Open hOCR File"
 msgstr "Åpne hOCR-fil"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1043 ../gtk/src/OutputEditorText.cc:449
 #: ../gtk/src/OutputEditorText.cc:518 ../gtk/src/SourceManager.cc:170
 #: ../qt/src/hocr/OutputEditorHOCR.cc:947 ../qt/src/OutputEditorText.cc:256
-#: ../qt/src/SourceManager.cc:148
+#: ../qt/src/SourceManager.cc:148 ../gtk/src/hocr/OutputEditorHOCR.cc:1000
+#: ../gtk/src/SourceManager.cc:125 ../qt/src/hocr/OutputEditorHOCR.cc:929
+#: ../qt/src/SourceManager.cc:156
 msgid ""
 "The following files could not be opened:\n"
 "%1"
@@ -1379,6 +1520,8 @@ msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1046
 #: ../qt/src/hocr/OutputEditorHOCR.cc:950
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1003
+#: ../qt/src/hocr/OutputEditorHOCR.cc:932
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
@@ -1389,52 +1532,70 @@ msgstr ""
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1049 ../gtk/src/OutputEditorText.cc:450
 #: ../gtk/src/OutputEditorText.cc:519 ../gtk/src/SourceManager.cc:170
 #: ../qt/src/hocr/OutputEditorHOCR.cc:953 ../qt/src/OutputEditorText.cc:257
-#: ../qt/src/SourceManager.cc:148
+#: ../qt/src/SourceManager.cc:148 ../gtk/src/hocr/OutputEditorHOCR.cc:1006
+#: ../gtk/src/SourceManager.cc:125 ../qt/src/hocr/OutputEditorHOCR.cc:935
+#: ../qt/src/SourceManager.cc:156
 msgid "Unable to open files"
 msgstr "Kunne ikke åpne filer"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1067
 #: ../qt/src/hocr/OutputEditorHOCR.cc:983
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1019
+#: ../qt/src/hocr/OutputEditorHOCR.cc:954
 #, fuzzy
 msgid "Save hOCR Output..."
 msgstr "Lagre hOCR-utdata…"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:562
 #: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
+#: ../qt/src/hocr/OutputEditorHOCR.cc:961
 msgid "Failed to save output"
 msgstr "Klarte ikke å lagre utdata"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:562
 #: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1026 ../gtk/src/OutputEditorText.cc:290
+#: ../qt/src/hocr/OutputEditorHOCR.cc:961
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Sjekk at du har skrivetillatelse i den valgte mappen."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:578
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorText.cc:293
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1023
 msgid "Output not saved"
 msgstr "Utdata ikke lagret"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:578
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorText.cc:293
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1094 ../gtk/src/OutputEditorText.cc:304
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1023
 msgid "Save output before proceeding?"
 msgstr "Lagre utdata før du fortsetter?"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1263 ../gtk/src/OutputEditorText.cc:315
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1204 ../qt/src/OutputEditorText.cc:164
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:192
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1121
 #, fuzzy
 msgid "Replacing..."
 msgstr "Erstatter…"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1288 ../gtk/src/OutputEditorText.cc:325
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1227 ../qt/src/OutputEditorText.cc:172
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1240 ../gtk/src/OutputEditorText.cc:200
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1144
 msgid "Applying substitutions..."
 msgstr "Erstatninger blir gjennomført..."
 
 #: ../gtk/src/MainWindow.cc:132 ../qt/src/MainWindow.cc:340
+#: ../gtk/src/MainWindow.cc:131 ../qt/src/MainWindow.cc:334
 msgid "Using tesseract"
 msgstr "Bruker tesseract"
 
 #: ../gtk/src/MainWindow.cc:180 ../qt/src/MainWindow.cc:207
+#: ../gtk/src/MainWindow.cc:178 ../qt/src/MainWindow.cc:201
 msgid "Select an image to begin..."
 msgstr "Velg et bilde for å begynne..."
 
@@ -1450,48 +1611,59 @@ msgid ""
 msgstr ""
 
 #: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
+#: ../gtk/src/MainWindow.cc:312 ../qt/src/MainWindow.cc:319
 msgid "Ready"
 msgstr "Klar"
 
 #: ../gtk/src/MainWindow.cc:514 ../qt/src/MainWindow.cc:459
+#: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:453
 msgid "New version"
 msgstr "Ny versjon"
 
 #: ../gtk/src/MainWindow.cc:514 ../qt/src/MainWindow.cc:459
+#: ../gtk/src/MainWindow.cc:461 ../qt/src/MainWindow.cc:453
 msgid "gImageReader %1 is available"
 msgstr "gImageReader %1 er tilgjengelig"
 
 #: ../gtk/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:460
+#: ../gtk/src/MainWindow.cc:462 ../qt/src/MainWindow.cc:454
 msgid "Download"
 msgstr "Last ned"
 
 #: ../gtk/src/MainWindow.cc:516 ../qt/src/MainWindow.cc:461
+#: ../gtk/src/MainWindow.cc:463 ../qt/src/MainWindow.cc:455
 msgid "Changelog"
 msgstr "Endringslogg"
 
 #: ../gtk/src/MainWindow.cc:517 ../qt/src/MainWindow.cc:462
+#: ../gtk/src/MainWindow.cc:464 ../qt/src/MainWindow.cc:456
 msgid "Don't notify again"
 msgstr "Ikke gi beskjed igjen"
 
 #: ../gtk/src/MainWindow.cc:538 ../qt/src/MainWindow.cc:510
+#: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:504
 msgid "Don't show again"
 msgstr "Ikke vis igjen"
 
 #: ../gtk/src/MainWindow.cc:539 ../gtk/src/MainWindow.cc:552
-#: ../qt/src/MainWindow.cc:511
+#: ../qt/src/MainWindow.cc:511 ../gtk/src/MainWindow.cc:486
+#: ../gtk/src/MainWindow.cc:499 ../qt/src/MainWindow.cc:505
 msgid "Install"
 msgstr "Installer"
 
 #: ../gtk/src/MainWindow.cc:559 ../qt/src/MainWindow.cc:523
+#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
 msgid "Spelling dictionary missing"
 msgstr "Stavingsordbok mangler"
 
 #: ../gtk/src/MainWindow.cc:559 ../qt/src/MainWindow.cc:523
+#: ../gtk/src/MainWindow.cc:506 ../qt/src/MainWindow.cc:517
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Stavingsordbok for %1 er ikke installert"
 
 #: ../gtk/src/MainWindow.cc:566 ../gtk/src/MainWindow.cc:595
-#: ../qt/src/MainWindow.cc:529
+#: ../qt/src/MainWindow.cc:529 ../gtk/src/MainWindow.cc:513
+#: ../gtk/src/MainWindow.cc:542 ../qt/src/MainWindow.cc:523
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Installerer staveordbok for '%1'"
 
@@ -1503,26 +1675,36 @@ msgstr "Installerer staveordbok for '%1'"
 #: ../qt/src/MainWindow.cc:570 ../qt/src/MainWindow.cc:614
 #: ../qt/src/MainWindow.cc:619 ../qt/src/TessdataManager.cc:70
 #: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:287
+#: ../gtk/src/MainWindow.cc:534 ../gtk/src/MainWindow.cc:555
+#: ../gtk/src/MainWindow.cc:563 ../gtk/src/MainWindow.cc:611
+#: ../qt/src/MainWindow.cc:542 ../qt/src/MainWindow.cc:555
+#: ../qt/src/MainWindow.cc:564 ../qt/src/MainWindow.cc:608
+#: ../qt/src/MainWindow.cc:613
 msgid "Error"
 msgstr "Feil"
 
 #: ../gtk/src/MainWindow.cc:587 ../qt/src/MainWindow.cc:548
+#: ../gtk/src/MainWindow.cc:534 ../qt/src/MainWindow.cc:542
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Klarte ikke å installere stavingsordbok: %1"
 
 #: ../gtk/src/MainWindow.cc:608 ../qt/src/MainWindow.cc:561
+#: ../gtk/src/MainWindow.cc:555 ../qt/src/MainWindow.cc:555
 msgid "Failed to create directory for spelling dictionaries."
 msgstr "Klarte ikke å opprette mappe for stavingsordbøker."
 
 #: ../gtk/src/MainWindow.cc:616 ../qt/src/MainWindow.cc:570
+#: ../gtk/src/MainWindow.cc:563 ../qt/src/MainWindow.cc:564
 msgid "Could not read %1: %2."
 msgstr "Kunne ikke lese %1: %2."
 
 #: ../gtk/src/MainWindow.cc:643 ../qt/src/MainWindow.cc:594
+#: ../gtk/src/MainWindow.cc:590 ../qt/src/MainWindow.cc:588
 msgid "Downloading '%1'..."
 msgstr "Laster ned \"%1\"…"
 
 #: ../gtk/src/MainWindow.cc:664 ../qt/src/MainWindow.cc:614
+#: ../gtk/src/MainWindow.cc:611 ../qt/src/MainWindow.cc:608
 msgid ""
 "The following dictionaries could not be downloaded:\n"
 "%1\n"
@@ -1539,10 +1721,11 @@ msgstr ""
 "brukerstier i innstillingsdialogen."
 
 #: ../gtk/src/MainWindow.cc:667 ../qt/src/MainWindow.cc:617
+#: ../gtk/src/MainWindow.cc:614 ../qt/src/MainWindow.cc:611
 msgid "Dictionaries installed"
 msgstr "Ordbøker installert"
 
-#: ../gtk/src/MainWindow.cc:667
+#: ../gtk/src/MainWindow.cc:667 ../gtk/src/MainWindow.cc:614
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
@@ -1551,6 +1734,7 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/MainWindow.cc:669 ../qt/src/MainWindow.cc:619
+#: ../gtk/src/MainWindow.cc:616 ../qt/src/MainWindow.cc:613
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Ingen staveordbøker funnet for '%1'."
 
@@ -1559,10 +1743,11 @@ msgid "Page: %1\n"
 msgstr "Side: %1\n"
 
 #: ../gtk/src/OutputEditorText.cc:285 ../qt/src/OutputEditorText.cc:149
+#: ../gtk/src/OutputEditorText.cc:162
 msgid "Stripping line breaks..."
 msgstr "Fjerner linjeskift…"
 
-#: ../gtk/src/OutputEditorText.cc:293
+#: ../gtk/src/OutputEditorText.cc:293 ../gtk/src/OutputEditorText.cc:170
 msgid "Check spelling"
 msgstr "Stavekontroll"
 
@@ -1571,15 +1756,18 @@ msgid "Amount of occurrences replaced: %1"
 msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
+#: ../gtk/src/OutputEditorText.cc:239
 msgid "File: %1"
 msgstr "Fil: %1"
 
 #: ../gtk/src/OutputEditorText.cc:367 ../qt/src/OutputEditorText.cc:211
+#: ../gtk/src/OutputEditorText.cc:242
 msgid "Page: %1"
 msgstr "Side: %1"
 
 #: ../gtk/src/OutputEditorText.cc:380 ../gtk/src/Recognizer.cc:224
-#: ../qt/src/Recognizer.cc:258
+#: ../qt/src/Recognizer.cc:258 ../gtk/src/OutputEditorText.cc:255
+#: ../gtk/src/Recognizer.cc:478 ../qt/src/Recognizer.cc:235
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -1588,7 +1776,8 @@ msgstr ""
 "[Kunne ikke tolke siden %1]\n"
 
 #: ../gtk/src/OutputEditorText.cc:417 ../gtk/src/SourceManager.cc:297
-#: ../qt/src/SourceManager.cc:257
+#: ../qt/src/SourceManager.cc:257 ../gtk/src/SourceManager.cc:222
+#: ../qt/src/SourceManager.cc:265
 msgid "Select Files"
 msgstr "Velg filer"
 
@@ -1601,14 +1790,17 @@ msgid "New document %1"
 msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
+#: ../gtk/src/OutputEditorText.cc:283
 msgid "Save Output..."
 msgstr "Lagre utdata…"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
+#: ../gtk/src/Recognizer.cc:179
 msgid "No languages available"
 msgstr "Ingen språk tilgjengelig"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
+#: ../gtk/src/Recognizer.cc:179
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
 msgstr ""
@@ -1616,91 +1808,114 @@ msgstr ""
 "ikke fungere."
 
 #: ../gtk/src/RecognitionMenu.cc:153 ../qt/src/RecognitionMenu.cc:134
+#: ../gtk/src/Recognizer.cc:233
 msgid "Multilingual"
 msgstr "Flerspråklig"
 
 #: ../gtk/src/RecognitionMenu.cc:205 ../qt/src/RecognitionMenu.cc:182
+#: ../gtk/src/Recognizer.cc:285
 msgid "Automatic page segmentation"
 msgstr "Automatisk sideinndeling"
 
 #: ../gtk/src/RecognitionMenu.cc:206 ../qt/src/RecognitionMenu.cc:183
+#: ../gtk/src/Recognizer.cc:286
 msgid "Page segmentation with orientation and script detection"
 msgstr "Sideinndeling med sidreretning og skript-oppdagelse"
 
 #: ../gtk/src/RecognitionMenu.cc:207 ../qt/src/RecognitionMenu.cc:184
+#: ../gtk/src/Recognizer.cc:287
 msgid "Assume single column of text"
 msgstr "Anta én tekstkolonne"
 
 #: ../gtk/src/RecognitionMenu.cc:208 ../qt/src/RecognitionMenu.cc:185
+#: ../gtk/src/Recognizer.cc:288
 msgid "Assume single block of vertically aligned text"
 msgstr "Anta én blokk med vannrett-anordnet tekst"
 
 #: ../gtk/src/RecognitionMenu.cc:209 ../qt/src/RecognitionMenu.cc:186
+#: ../gtk/src/Recognizer.cc:289
 msgid "Assume a single uniform block of text"
 msgstr "Anta én helhetlig blokk med tekst"
 
 #: ../gtk/src/RecognitionMenu.cc:210 ../qt/src/RecognitionMenu.cc:187
+#: ../gtk/src/Recognizer.cc:290
 msgid "Assume a line of text"
 msgstr "Anta én linje med tekst"
 
 #: ../gtk/src/RecognitionMenu.cc:211 ../qt/src/RecognitionMenu.cc:188
+#: ../gtk/src/Recognizer.cc:291
 msgid "Assume a single word"
 msgstr "Anta ett ord"
 
 #: ../gtk/src/RecognitionMenu.cc:212 ../qt/src/RecognitionMenu.cc:189
+#: ../gtk/src/Recognizer.cc:292
 msgid "Assume a single word in a circle"
 msgstr "Anta ett ord i en sirkel"
 
 #: ../gtk/src/RecognitionMenu.cc:213 ../qt/src/RecognitionMenu.cc:190
+#: ../gtk/src/Recognizer.cc:293
 msgid "Sparse text in no particular order"
 msgstr "Tolk tekst i vilkårlig rekkefølge"
 
 #: ../gtk/src/RecognitionMenu.cc:214 ../qt/src/RecognitionMenu.cc:191
+#: ../gtk/src/Recognizer.cc:294
 msgid "Sparse text with orientation and script detection"
 msgstr "Tolk tekst med sideretning- og skriptoppdagelse"
 
 #: ../gtk/src/RecognitionMenu.cc:228 ../qt/src/RecognitionMenu.cc:202
+#: ../gtk/src/Recognizer.cc:309
 msgid "Page segmentation mode"
 msgstr "Sideinndelingsmodus"
 
 #: ../gtk/src/RecognitionMenu.cc:232 ../qt/src/RecognitionMenu.cc:205
+#: ../gtk/src/Recognizer.cc:313
 #, fuzzy
 msgid "Character whitelist / blacklist..."
 msgstr "Svarteliste / hvitliste for tegn…"
 
 #: ../gtk/src/RecognitionMenu.cc:238 ../qt/src/RecognitionMenu.cc:210
+#: ../gtk/src/Recognizer.cc:319
 #, fuzzy
 msgid "Manage languages..."
 msgstr "Håndter språk…"
 
 #: ../gtk/src/Recognizer.cc:76 ../qt/src/Recognizer.cc:90
+#: ../qt/src/Recognizer.cc:86
 msgid "Overwrite existing output"
 msgstr "Overskriv eksisterende utdata"
 
 #: ../gtk/src/Recognizer.cc:77 ../qt/src/Recognizer.cc:91
+#: ../qt/src/Recognizer.cc:87
 msgid "Skip processing source"
 msgstr "Hopp over behandling av kilde"
 
 #: ../gtk/src/Recognizer.cc:121 ../qt/src/Recognizer.cc:137
+#: ../gtk/src/Recognizer.cc:381 ../qt/src/Recognizer.cc:133
 msgid "Current selection"
 msgstr "Nåværende utvalg"
 
 #: ../gtk/src/Recognizer.cc:191 ../gtk/src/Recognizer.cc:409
 #: ../qt/src/Recognizer.cc:211 ../qt/src/Recognizer.cc:441
+#: ../gtk/src/Recognizer.cc:513 ../gtk/src/Recognizer.cc:522
+#: ../qt/src/Recognizer.cc:204 ../qt/src/Recognizer.cc:418
 msgid "Recognition errors occurred"
 msgstr "Gjenkjennelsesfeil oppstod"
 
 #: ../gtk/src/Recognizer.cc:191 ../qt/src/Recognizer.cc:211
+#: ../gtk/src/Recognizer.cc:522 ../qt/src/Recognizer.cc:204
 #, fuzzy
 msgid "Failed to initialize tesseract"
 msgstr "Klarte ikke å igangsette Tesseract"
 
 #: ../gtk/src/Recognizer.cc:218 ../gtk/src/Recognizer.cc:332
 #: ../qt/src/Recognizer.cc:251 ../qt/src/Recognizer.cc:363
+#: ../gtk/src/Recognizer.cc:472 ../qt/src/Recognizer.cc:228
+#: ../qt/src/Recognizer.cc:340
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Tolker side %1 (%1 av %3)"
 
 #: ../gtk/src/Recognizer.cc:223 ../qt/src/Recognizer.cc:257
+#: ../qt/src/Recognizer.cc:234
 msgid "- Page %1: failed to render page"
 msgstr "- Side %1: Klarte ikke å tegne siden"
 
@@ -1708,22 +1923,30 @@ msgstr "- Side %1: Klarte ikke å tegne siden"
 #: ../gtk/src/Recognizer.cc:292 ../gtk/src/Recognizer.cc:384
 #: ../qt/src/Recognizer.cc:284 ../qt/src/Recognizer.cc:312
 #: ../qt/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:416
+#: ../gtk/src/Recognizer.cc:508 ../gtk/src/Recognizer.cc:539
+#: ../gtk/src/Recognizer.cc:552 ../qt/src/Recognizer.cc:261
+#: ../qt/src/Recognizer.cc:289 ../qt/src/Recognizer.cc:302
+#: ../qt/src/Recognizer.cc:393
 msgid "Recognizing..."
 msgstr "Tolker…"
 
 #: ../gtk/src/Recognizer.cc:338 ../qt/src/Recognizer.cc:369
+#: ../qt/src/Recognizer.cc:346
 msgid "- %1:%2: failed to render page"
 msgstr "- %1:%2: Klarte ikke å tegne siden"
 
 #: ../gtk/src/Recognizer.cc:350 ../qt/src/Recognizer.cc:382
+#: ../qt/src/Recognizer.cc:359
 msgid "- %1: output already exists, skipping"
 msgstr "- %1: utdata finnes allerede, hopper over"
 
 #: ../gtk/src/Recognizer.cc:354 ../qt/src/Recognizer.cc:386
+#: ../qt/src/Recognizer.cc:363
 msgid "- %1: failed to create output file"
 msgstr "- %1: Klarte ikke å opprette utdatafil"
 
 #: ../gtk/src/Recognizer.cc:409 ../qt/src/Recognizer.cc:441
+#: ../qt/src/Recognizer.cc:418
 msgid "The following errors occurred:"
 msgstr "Følgende feil oppstod:"
 
@@ -1783,14 +2006,17 @@ msgid "Access to scanner is denied."
 msgstr "Tilgang til skriver nektet."
 
 #: ../gtk/src/SourceManager.cc:184 ../qt/src/SourceManager.cc:163
+#: ../gtk/src/SourceManager.cc:139 ../qt/src/SourceManager.cc:171
 msgid "Enter password for file '%1':"
 msgstr "Skriv inn passordet for filen \"%1\":"
 
 #: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:190
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
 msgid "PDF with text"
 msgstr "PDF med tekst"
 
 #: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:190
+#: ../gtk/src/SourceManager.cc:182 ../qt/src/SourceManager.cc:198
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
@@ -1801,53 +2027,63 @@ msgstr ""
 "Åpne uansett?"
 
 #: ../gtk/src/SourceManager.cc:268 ../qt/src/hocr/HOCRBatchExportDialog.cc:73
-#: ../qt/src/SourceManager.cc:267
+#: ../qt/src/SourceManager.cc:267 ../qt/src/SourceManager.cc:275
 msgid "Select folder..."
 msgstr "Velg mappe..."
 
 #: ../gtk/src/SourceManager.cc:292 ../qt/src/SourceManager.cc:256
+#: ../gtk/src/SourceManager.cc:217 ../qt/src/SourceManager.cc:264
 msgid "Images and PDFs"
 msgstr "Bilder og PDF-er"
 
 #: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:299
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:307
 msgid "Clipboard Error"
 msgstr "Utklippstavlefeil"
 
 #: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:299
+#: ../gtk/src/SourceManager.cc:228 ../qt/src/SourceManager.cc:307
 msgid "Failed to read the clipboard."
 msgstr "Klarte ikke å lese utklippstavlen."
 
 #: ../gtk/src/SourceManager.cc:307 ../qt/src/SourceManager.cc:303
-#: ../qt/src/SourceManager.cc:309
+#: ../qt/src/SourceManager.cc:309 ../gtk/src/SourceManager.cc:232
+#: ../qt/src/SourceManager.cc:311 ../qt/src/SourceManager.cc:317
 msgid "Pasted %1"
 msgstr "Limte inn %1"
 
 #: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:322
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
 msgid "Screenshot Error"
 msgstr "Skjermbildefeil"
 
 #: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:322
+#: ../gtk/src/SourceManager.cc:244 ../qt/src/SourceManager.cc:324
 msgid "Failed to take screenshot."
 msgstr "Kunne ikke ta skjermbilde."
 
 #: ../gtk/src/SourceManager.cc:329 ../qt/src/SourceManager.cc:326
+#: ../gtk/src/SourceManager.cc:248 ../qt/src/SourceManager.cc:328
 msgid "Screenshot %1"
-msgstr "Skjermavbildning %1"
+msgstr "Skjermbilde %1"
 
 #: ../gtk/src/SourceManager.cc:335 ../qt/src/SourceManager.cc:333
+#: ../gtk/src/SourceManager.cc:253
 msgid "Saving image..."
 msgstr "Lagrer bilde..."
 
 #: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:346
+#: ../gtk/src/SourceManager.cc:260
 #, fuzzy
 msgid "Cannot Write File"
 msgstr "Kan ikke skrive fil"
 
 #: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:346
+#: ../gtk/src/SourceManager.cc:260
 msgid "Could not write to %1."
 msgstr "Kunne ikke skrive til %1."
 
-#: ../gtk/src/SourceManager.cc:381
+#: ../gtk/src/SourceManager.cc:381 ../gtk/src/SourceManager.cc:287
 msgid "Delete File?"
 msgstr "Slett fil?"
 
@@ -1856,19 +2092,23 @@ msgid "Delete the following files?"
 msgstr "Slett følgende filer?"
 
 #: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:451
+#: ../qt/src/SourceManager.cc:459
 msgid "Open output"
 msgstr "Åpne utdata"
 
 #: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:451
+#: ../qt/src/SourceManager.cc:459
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
 msgstr "Både tekst og hOCR-utdata ble funnet. Hvilken av dem ønsker du å åpne?"
 
 #: ../gtk/src/SourceManager.cc:504 ../qt/src/SourceManager.cc:479
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:487
 msgid "Missing File"
 msgstr "Manglende fil"
 
 #: ../gtk/src/SourceManager.cc:504 ../qt/src/SourceManager.cc:479
+#: ../gtk/src/SourceManager.cc:352 ../qt/src/SourceManager.cc:487
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
@@ -1993,31 +2233,33 @@ msgstr ""
 "Hint: Hvis du ikke har skriverettigheter til systemmapper, kan du bytte til "
 "en brukerprofilmappe i innstillingsdialogen."
 
-#: ../gtk/src/Utils.cc:129
+#: ../gtk/src/Utils.cc:129 ../gtk/src/Utils.cc:64
 msgid "Yes"
 msgstr "Ja"
 
-#: ../gtk/src/Utils.cc:132
+#: ../gtk/src/Utils.cc:132 ../gtk/src/Utils.cc:67
 msgid "Yes to all"
 msgstr "Ja til alt"
 
-#: ../gtk/src/Utils.cc:135
+#: ../gtk/src/Utils.cc:135 ../gtk/src/Utils.cc:70
 msgid "No"
 msgstr "Nei"
 
-#: ../gtk/src/Utils.cc:138
+#: ../gtk/src/Utils.cc:138 ../gtk/src/Utils.cc:73
 msgid "No to all"
 msgstr "Nei til alt"
 
-#: ../gtk/src/Utils.cc:147
+#: ../gtk/src/Utils.cc:147 ../gtk/src/Utils.cc:82
 msgid "Discard"
 msgstr "Forkast"
 
 #: ../gtk/src/Utils.cc:150 ../qt/src/SourceManager.cc:452
+#: ../qt/src/SourceManager.cc:460
 msgid "Text"
 msgstr "Tekst"
 
 #: ../gtk/src/Utils.cc:153 ../qt/src/SourceManager.cc:453
+#: ../qt/src/SourceManager.cc:461
 msgid "hOCR"
 msgstr "hOCR"
 
@@ -2213,7 +2455,7 @@ msgstr "<small><b>Eksempel:</b> 1-10, 13, 14-18</small>"
 
 #: ../qt/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportWidget.ui.h:5
 msgid "Backend:"
-msgstr "Bakende:"
+msgstr "Backend:"
 
 #: ../qt/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportWidget.ui.h:8
 msgid "Portrait"
@@ -2232,11 +2474,12 @@ msgstr "Format:"
 msgid "ODT"
 msgstr ""
 
-#: ../qt/src/hocr/HOCRPdfExporter.cc:303
+#: ../qt/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:139
 msgid "Failed to write to file"
 msgstr "Klarte ikke å skrive til fil"
 
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:296
+#: ../qt/src/hocr/HOCRPdfExporter.cc:830
 msgid ""
 "<html><head/><body><ul><li>PoDoFo: offers more image compression options, "
 "but does not handle complex scripts.</li><li>QPrinter: only supports JPEG "
@@ -2249,18 +2492,22 @@ msgstr ""
 "støtter komplekse skript.</li></ul></body></html>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:230
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:234
 msgid "Keyboard shortcuts"
 msgstr "Tastatursnarveier"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:242
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:246
 msgid "Lines before:"
 msgstr "Linjer før:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:256
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:260
 msgid "Lines after:"
 msgstr "Linjer etter:"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:448
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:440
 msgid ""
 "<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
 "td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
@@ -2295,10 +2542,12 @@ msgstr ""
 "skriftstørrelse</td></tr></table>"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:469
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:461
 msgid "Keyboard Shortcuts"
 msgstr "Tastatursnarveier"
 
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:484
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:476
 #, fuzzy
 msgid "Confidence: %1"
 msgstr "Tillitsnivå: %1"
@@ -2313,11 +2562,11 @@ msgstr "Lagre som hOCR-tekst"
 msgid "Find and Replace"
 msgstr "Finn og erstatt"
 
-#: ../qt/src/MainWindow.cc:323
+#: ../qt/src/MainWindow.cc:323 ../qt/src/MainWindow.cc:317
 msgid "Multiple sources (%1)"
 msgstr "Flere kilder (%1)"
 
-#: ../qt/src/MainWindow.cc:617
+#: ../qt/src/MainWindow.cc:617 ../qt/src/MainWindow.cc:611
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
@@ -2333,7 +2582,7 @@ msgstr ""
 msgid "One or more selected sources were aready recognized. Proceed anyway?"
 msgstr ""
 
-#: ../qt/src/SourceManager.cc:240
+#: ../qt/src/SourceManager.cc:240 ../qt/src/SourceManager.cc:248
 msgid "No recent files"
 msgstr "Ingen nylige filer"
 
@@ -2357,40 +2606,43 @@ msgstr ""
 "Hint: Hvis du ikke har skriverettigheter til systemmapper, kan du bytte til "
 "en brukerprofilmappe i innstillingsdialogen."
 
-#: ../qt/src/Ui_MainWindow.hh:51
+#: ../qt/src/Ui_MainWindow.hh:51 ../qt/src/Ui_MainWindow.hh:50
 msgid "Output"
 msgstr "Utdata"
 
-#: ../qt/src/Ui_MainWindow.hh:136
+#: ../qt/src/Ui_MainWindow.hh:136 ../qt/src/Ui_MainWindow.hh:135
 msgid "OCR mode:"
 msgstr "OCR-modus:"
 
 #. Sources toolbar
-#: ../qt/src/Ui_MainWindow.hh:195
+#: ../qt/src/Ui_MainWindow.hh:195 ../qt/src/Ui_MainWindow.hh:188
 msgid "Add folder"
 msgstr "Legg til mappe"
 
-#: ../qt/src/Ui_MainWindow.hh:196
+#: ../qt/src/Ui_MainWindow.hh:196 ../gtk/data/MainWindow.ui.h:4
+#: ../qt/src/Ui_MainWindow.hh:189
 msgid "Recent"
 msgstr "Nylig åpnet"
 
-#: ../qt/src/Ui_MainWindow.hh:197
+#: ../qt/src/Ui_MainWindow.hh:197 ../gtk/data/MainWindow.ui.h:5
+#: ../qt/src/Ui_MainWindow.hh:190
 msgid "Paste"
 msgstr "Lim inn"
 
-#: ../qt/src/Ui_MainWindow.hh:198
+#: ../qt/src/Ui_MainWindow.hh:198 ../gtk/data/MainWindow.ui.h:6
+#: ../qt/src/Ui_MainWindow.hh:191
 msgid "Take Screenshot"
-msgstr "Skjermavbildning"
+msgstr "Ta skjermbilde"
 
-#: ../qt/src/Ui_MainWindow.hh:206
+#: ../qt/src/Ui_MainWindow.hh:206 ../qt/src/Ui_MainWindow.hh:199
 msgid "Remove Image"
 msgstr "Fjern bilde"
 
-#: ../qt/src/Ui_MainWindow.hh:209
+#: ../qt/src/Ui_MainWindow.hh:209 ../qt/src/Ui_MainWindow.hh:202
 msgid "Delete Image"
 msgstr "Slett bilde"
 
-#: ../qt/src/Ui_MainWindow.hh:212
+#: ../qt/src/Ui_MainWindow.hh:212 ../qt/src/Ui_MainWindow.hh:205
 msgid "Clear List"
 msgstr "Tøm liste"
 
@@ -2406,27 +2658,74 @@ msgstr "Lagre utdata"
 msgid "Clear Output"
 msgstr "Tøm utdata"
 
+#: ../gtk/src/MainWindow.cc:310
+msgid "Multiple sources"
+msgstr "Flerfoldige kilder"
+
+#: ../gtk/src/Recognizer.cc:477
+msgid ""
+"\n"
+"- Page %1: failed to render page"
+msgstr ""
+"\n"
+"- Side %1: Klarte ikke å tegne siden"
+
+#: ../gtk/src/Recognizer.cc:513
+#, fuzzy
+msgid "The following errors occurred:%1"
+msgstr "Følgende feil inntraff: %1"
+
+#: ../gtk/src/SourceManager.cc:287
+#, fuzzy
+msgid "The following files will be deleted:%1"
+msgstr "Følgende filer vil bli slettet: %1"
+
+#: ../qt/data/AboutDialog.ui.h:3
+msgid ""
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
+msgstr ""
+"<html><head/><body><p>&nbsp;</p><p>Grafisk grenseflate for tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Nettside</a></"
+"p><p>&nbsp;</p></body></html>"
+
+#: ../qt/data/CrashHandler.ui.h:2
+#, no-c-format
+msgid ""
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
+msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Programmet har "
+"krasjet</span></p><p>Beklager bryderiet. For å forbedre programmet, overvei "
+"å innrapportere problemet til <a href=\"mailto:manisandro@gmail.com?"
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Prøv å beskrive hva "
+"du gjorde før programmet krasjet. Inkluder også informasjonen nedenfor. Takk."
+"</p></body></html>"
+
+#: ../qt/data/CrashHandler.ui.h:3
+msgid ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
+"aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
+"recognizing text. This may occur if the used traineddatas are corrupt or "
+"incomplatible with the version of tesseract in use, or due to a bug in "
+"tesseract.</p><p>The stacktrace below may provide additional information "
+"about where the crash occurred.</p></body></html>"
+msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract har "
+"avsluttet</span></p><p>Tesseract (OCR-motoren) har avsluttet under "
+"gjenkjennelse av tekst. Dette kan skje hvis traineddata-filene som brukes er "
+"skadet eller inkompatible med versjonen av Tesseract som er i bruk, eller "
+"pga. av en feil i Tesseract.</p><p>Stabelsporet nedenfor kan gi ytterligere "
+"info om hvor krasjet oppstod.</p></body></html>"
+
 #, fuzzy
 #~ msgid "plain text"
 #~ msgstr "Ren tekst"
-
-#~ msgid "Multiple sources"
-#~ msgstr "Flerfoldige kilder"
-
-#~ msgid ""
-#~ "\n"
-#~ "- Page %1: failed to render page"
-#~ msgstr ""
-#~ "\n"
-#~ "- Side %1: Klarte ikke å tegne siden"
-
-#, fuzzy
-#~ msgid "The following errors occurred:%1"
-#~ msgstr "Følgende feil inntraff: %1"
-
-#, fuzzy
-#~ msgid "The following files will be deleted:%1"
-#~ msgstr "Følgende filer vil bli slettet: %1"
 
 #~ msgid "Failed to open file"
 #~ msgstr "Klarte ikke å åpne fil"
