@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:06+0200\n"
-"PO-Revision-Date: 2021-08-23 21:34+0000\n"
+"PO-Revision-Date: 2021-11-28 09:14+0000\n"
 "Last-Translator: Tymofii Lytvynenko <till.svit@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/uk/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -171,7 +171,7 @@ msgstr "Автоматично відкривати експортовані д�
 
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
-msgstr ""
+msgstr "Режим підсвічування синтаксису:"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -388,13 +388,12 @@ msgid "Batch Mode"
 msgstr "Пакетний режим"
 
 #: ../gtk/data/MainWindow.ui.h:42
-#, fuzzy
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
-"У пакетному режимі кожне джерело обробляється окремо і всі результати "
-"зберігаються у вхідний файл."
+"<i>У пакетному режимі кожне джерело введення обробляється окремо, а вихідні "
+"дані зберігаються поряд у вхідному файлі.</i>"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
@@ -629,13 +628,12 @@ msgid "Draw whitespace"
 msgstr "Відобразити пробіли"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "Відкрити файл hORC"
+msgstr "Відкрити файл"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
-msgstr ""
+msgstr "Нова вкладка"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
@@ -1071,7 +1069,7 @@ msgstr "Перезаписати файл?"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "Тимчасові файли"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
@@ -1425,7 +1423,7 @@ msgstr "Щоб розпочати, виберіть зображення..."
 
 #: ../gtk/src/MainWindow.cc:327
 msgid "There are %1 documents with unsaved changes"
-msgstr ""
+msgstr "Наявно %1 документів із незбереженими змінами"
 
 #: ../gtk/src/MainWindow.cc:328
 msgid ""
@@ -1433,6 +1431,9 @@ msgid ""
 "permanently lost.\n"
 "Select the documents you want to save:"
 msgstr ""
+"Зберегти зміни перед закриттям? Якщо ви не збережете, усі ваші зміни буде "
+"втрачено назавжди.\n"
+"Виберіть документи, які потрібно зберегти:"
 
 #: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
 msgid "Ready"
@@ -1553,7 +1554,7 @@ msgstr "Перевірити орфографію"
 
 #: ../gtk/src/OutputEditorText.cc:321
 msgid "Amount of occurrences replaced: %1"
-msgstr ""
+msgstr "Кількість випадків заміни: %1"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
@@ -1578,14 +1579,12 @@ msgid "Select Files"
 msgstr "Виберіть файли"
 
 #: ../gtk/src/OutputEditorText.cc:469
-#, fuzzy
 msgid "Close document"
-msgstr "Шрифт документа:"
+msgstr "Закритий документ"
 
 #: ../gtk/src/OutputEditorText.cc:510
-#, fuzzy
 msgid "New document %1"
-msgstr "Шрифт документа:"
+msgstr "Новий документ %1"
 
 #: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
@@ -2007,16 +2006,16 @@ msgid "About gImageReader"
 msgstr "Про програму gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
 "graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
 "https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
 "p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Графічний інтерфейс для tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Сайт</a></"
-"p><p>&nbsp;</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt; "
+"Графічний інтерфейс для tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a "
+"href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a"
+"&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2068,7 +2067,6 @@ msgstr ""
 "&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
@@ -2083,41 +2081,36 @@ msgstr ""
 "перервана під час розпізнавання тексту. Це могло статися через використання "
 "навчених наборів даних, пошкоджених або несумісних з використовуваною "
 "версією tesseract, або через внутрішню помилку tesseract.</p><p>У наведеному "
-"нижче трасуванні стека можуть бути додаткові відомості про причини збою.</"
-"p></body></html>"
+"нижче трасуванні стека можуть бути додаткові відомості про причини "
+"збою.</p></body></html>"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "Пакетний експорт HOCR"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "Немає останніх файлів"
+msgstr "Вхідні файли"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "Сканувати до теки:"
+msgstr "Вхід:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "Режим виводу:"
+msgstr "Передогляд виводу:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs at level:"
-msgstr ""
+msgstr "Виведення груп на рівні:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "Вибрати каталог..."
+msgstr "Вибрати вихідний каталог..."
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "Інші опції"
+msgstr "Опції експорту"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2181,12 +2174,11 @@ msgstr "Показати/приховати панель результатів"
 
 #: ../qt/data/MainWindow.ui.h:41
 msgid "actionBatchExport"
-msgstr ""
+msgstr "actionBatchExport"
 
 #: ../qt/data/MainWindow.ui.h:42
-#, fuzzy
 msgid "Batch Export"
-msgstr "Експорт"
+msgstr "Пакетний експорт"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
 msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
@@ -2205,13 +2197,12 @@ msgid "Landscape"
 msgstr "Альбомний"
 
 #: ../qt/data/PdfExportWidget.ui.h:1
-#, fuzzy
 msgid "Form"
-msgstr "Формат:"
+msgstr "Форма"
 
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:303
 msgid "Failed to write to file"
@@ -2307,11 +2298,12 @@ msgstr ""
 
 #: ../qt/src/Recognizer.cc:235
 msgid "Source already recognized"
-msgstr ""
+msgstr "Джерело вже розпізнано"
 
 #: ../qt/src/Recognizer.cc:235
 msgid "One or more selected sources were aready recognized. Proceed anyway?"
 msgstr ""
+"Одне чи кілька вибраних джерел уже було розпізнано. Все одно продовжити?"
 
 #: ../qt/src/SourceManager.cc:240
 msgid "No recent files"
