@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:06+0200\n"
-"PO-Revision-Date: 2021-01-19 15:32+0000\n"
+"PO-Revision-Date: 2021-11-27 22:42+0000\n"
 "Last-Translator: ovl-1 <ovl-002@mailinator.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -31,7 +31,7 @@ msgstr "Oppdag språk på nytt"
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:173
 #: ../qt/src/Ui_MainWindow.hh:166
 msgid "Manage Languages"
-msgstr "Behandle språk"
+msgstr "Håndter språk"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:176
@@ -73,7 +73,7 @@ msgstr "Angi en streng med tegn…"
 #: ../gtk/data/CharacterListDialog.ui.h:4 ../qt/data/CharacterListDialog.ui.h:4
 #: ../gtk/data/MainWindow.ui.h:45
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr "Kun tillat disse tegnene fra gjenkjennelse (hvitliste):"
+msgstr "Kun tillat de følgende tegnene å bli gjenkjent (hviteliste):"
 
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:48
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
@@ -151,7 +151,7 @@ msgstr "Skrift for utdatapanel:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
-msgstr "Forvalg"
+msgstr "Standard"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
@@ -179,7 +179,7 @@ msgstr "Åpne eksporterte dokumenter automatisk med standardprogram"
 
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
-msgstr ""
+msgstr "Syntaksfremhevingsmodus:"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -307,7 +307,7 @@ msgstr "Auto-detekter layout"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../gtk/data/MainWindow.ui.h:19
 msgid "<small>Recognize all</small>"
-msgstr "<small>Gjenkjenn alle</small>"
+msgstr "<small>Gjenkjenn alt</small>"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../gtk/data/MainWindow.ui.h:20
 msgid "Select language"
@@ -360,7 +360,6 @@ msgstr "Gjenoppfrisk"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:10
 #: ../gtk/data/MainWindow.ui.h:29
-#, fuzzy
 msgid "Output:"
 msgstr "Utdata:"
 
@@ -452,11 +451,11 @@ msgstr "Auto-detekter sidelayout"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
-msgstr "Sidetallfølge"
+msgstr "Sideområde"
 
 #: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
-msgstr "Sidetallfølge:"
+msgstr "Sider:"
 
 #: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
@@ -684,13 +683,12 @@ msgid "Draw whitespace"
 msgstr "Tegn blanktegn"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "Åpne hOCR-fil"
+msgstr "Åpne fil"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
-msgstr ""
+msgstr "Ny fane"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
 #: ../gtk/data/OutputEditorText.ui.h:14
@@ -990,7 +988,7 @@ msgstr "Tessdata-behandler"
 
 #: ../gtk/data/TessdataManager.ui.h:5 ../qt/src/TessdataManager.cc:47
 msgid "Manage installed languages:"
-msgstr "Behandle installerte språk:"
+msgstr "Håndter installerte språk:"
 
 #: ../gtk/src/Acquirer.cc:79 ../qt/src/Acquirer.cc:70
 msgid "scan.png"
@@ -1113,7 +1111,6 @@ msgid "selection.png"
 msgstr "utvalg.png"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
-#, fuzzy
 msgid "Recognize all"
 msgstr "Gjenkjenn alt"
 
@@ -1138,7 +1135,7 @@ msgstr "Overskriv fil?"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "Midlertidige filer"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:877 ../qt/src/hocr/HOCRDocument.cc:72
@@ -1273,9 +1270,8 @@ msgstr "Diffus"
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:340
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:66
 #: ../qt/src/hocr/HOCRPdfExporter.cc:350
-#, fuzzy
 msgid "Zip (lossless)"
-msgstr "ZIP (tapsfri)"
+msgstr "Zip (tapsfri)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:344
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:67
@@ -1286,9 +1282,8 @@ msgstr "CCITT Gruppe 4 (tapsfri)"
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:348
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:68
 #: ../qt/src/hocr/HOCRPdfExporter.cc:352
-#, fuzzy
 msgid "Jpeg (lossy)"
-msgstr "JPEG (tapsbasert)"
+msgstr "Jpeg (kvalitetstap)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:493
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1060
@@ -1601,7 +1596,7 @@ msgstr "Velg et bilde for å begynne..."
 
 #: ../gtk/src/MainWindow.cc:327
 msgid "There are %1 documents with unsaved changes"
-msgstr ""
+msgstr "Det er %1 dokumenter med ulagrede endringer"
 
 #: ../gtk/src/MainWindow.cc:328
 msgid ""
@@ -1609,6 +1604,9 @@ msgid ""
 "permanently lost.\n"
 "Select the documents you want to save:"
 msgstr ""
+"Lagre endringer før lukking? Hvis du ikke lagrer vil alle endringene dine "
+"bli tapt permanent.\n"
+"Velg dokumentene du vil lagre:"
 
 #: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
 #: ../gtk/src/MainWindow.cc:312 ../qt/src/MainWindow.cc:319
@@ -1753,7 +1751,7 @@ msgstr "Stavekontroll"
 
 #: ../gtk/src/OutputEditorText.cc:321
 msgid "Amount of occurrences replaced: %1"
-msgstr ""
+msgstr "Antall forekomster erstattet: %1"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
 #: ../gtk/src/OutputEditorText.cc:239
@@ -1783,11 +1781,11 @@ msgstr "Velg filer"
 
 #: ../gtk/src/OutputEditorText.cc:469
 msgid "Close document"
-msgstr ""
+msgstr "Lukk dokument"
 
 #: ../gtk/src/OutputEditorText.cc:510
 msgid "New document %1"
-msgstr ""
+msgstr "Nytt dokument %1"
 
 #: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
 #: ../gtk/src/OutputEditorText.cc:283
@@ -1875,7 +1873,6 @@ msgstr "Svarteliste / hvitliste for tegn…"
 
 #: ../gtk/src/RecognitionMenu.cc:238 ../qt/src/RecognitionMenu.cc:210
 #: ../gtk/src/Recognizer.cc:319
-#, fuzzy
 msgid "Manage languages..."
 msgstr "Håndter språk…"
 
@@ -2074,7 +2071,6 @@ msgstr "Lagrer bilde..."
 
 #: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:346
 #: ../gtk/src/SourceManager.cc:260
-#, fuzzy
 msgid "Cannot Write File"
 msgstr "Kan ikke skrive fil"
 
@@ -2211,9 +2207,8 @@ msgid "Failed to create directory for tessdata files."
 msgstr "Klarte ikke å opprette mappe for tessdata-filer."
 
 #: ../gtk/src/TessdataManager.cc:306 ../qt/src/TessdataManager.cc:259
-#, fuzzy
 msgid "Downloading %1..."
-msgstr "Laster ned %1…"
+msgstr "Laster ned %1..."
 
 #: ../gtk/src/TessdataManager.cc:330
 msgid ""
@@ -2350,33 +2345,28 @@ msgid "HOCR Batch Export"
 msgstr ""
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "Ingen nylige filer"
+msgstr "Inndatafiler"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "Utdata:"
+msgstr "Inndata:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "Utdatamodus:"
+msgstr "Utdata-forhåndsvisning:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs at level:"
 msgstr ""
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "Velg mappe..."
+msgstr "Velg kildemappe:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "Andre valg"
+msgstr "Eksportalternativer"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2444,9 +2434,8 @@ msgid "actionBatchExport"
 msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:42
-#, fuzzy
 msgid "Batch Export"
-msgstr "Eksporter"
+msgstr "Batch-eksport"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
 #, fuzzy
@@ -2472,7 +2461,7 @@ msgstr "Format:"
 
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:303 ../qt/src/hocr/HOCRPdfExporter.cc:139
 msgid "Failed to write to file"
@@ -2576,11 +2565,11 @@ msgstr ""
 
 #: ../qt/src/Recognizer.cc:235
 msgid "Source already recognized"
-msgstr ""
+msgstr "Kilden er allerede gjenkjent"
 
 #: ../qt/src/Recognizer.cc:235
 msgid "One or more selected sources were aready recognized. Proceed anyway?"
-msgstr ""
+msgstr "En eller flere valgte kilder er allerede gjenkjent. Fortsette uansett?"
 
 #: ../qt/src/SourceManager.cc:240 ../qt/src/SourceManager.cc:248
 msgid "No recent files"
