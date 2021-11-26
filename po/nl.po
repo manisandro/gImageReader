@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:06+0200\n"
-"PO-Revision-Date: 2020-05-02 18:11+0000\n"
-"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"PO-Revision-Date: 2021-11-28 09:14+0000\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gimagereader/"
 "translations/nl/>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -61,7 +61,7 @@ msgstr "Herken deze tekens niet (zwarte lijst):"
 
 #: ../gtk/data/CharacterListDialog.ui.h:3 ../qt/data/CharacterListDialog.ui.h:3
 msgid "Enter a string of characters..."
-msgstr "Voer een tekenreeks in..."
+msgstr "Voer een tekenreeks in…"
 
 #: ../gtk/data/CharacterListDialog.ui.h:4 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
@@ -104,11 +104,11 @@ msgstr "Extra taaldefinities:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr "De extensie van het tesseract-taalgegevensbestand"
+msgstr "Het voorvoegsel van het tesseract-taalgegevensbestand"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
-msgstr "Extensie"
+msgstr "Voorvoegsel"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
@@ -148,19 +148,19 @@ msgstr "Taalgegevens-locaties:"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
-msgstr "Taaldefinities-pad:"
+msgstr "Locatie van taaldefinities:"
 
 #: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
-msgstr "Spellingcontrole-woordenboekenpad:"
+msgstr "Spellingcontrole-woordenboeklocatie:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr "Systeembrede paden"
+msgstr "Systeembrede locaties"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr "Gebruikerspaden"
+msgstr "Gebruikerslocaties"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
@@ -168,7 +168,7 @@ msgstr "Geëxporteerde documenten automatisch openen met standaardtoepassing"
 
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
-msgstr ""
+msgstr "Syntaxis-markeermodus:"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -216,7 +216,7 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
-msgstr "Uitvoerpaneel weergeven/verbergen"
+msgstr "Uitvoerpaneel tonen/verbergen"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate current page"
@@ -387,13 +387,12 @@ msgid "Batch Mode"
 msgstr "Seriemodus"
 
 #: ../gtk/data/MainWindow.ui.h:42
-#, fuzzy
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
-"In seriemodus wordt elke invoerbron apart verwerkt en de uitvoer opgeslagen "
-"naast het invoerbestand."
+"<i>In de seriemodus wordt elke invoerbron apart verwerkt en de uitvoer "
+"opgeslagen naast het invoerbestand.</i>"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
@@ -446,7 +445,7 @@ msgstr "Bronpagina"
 
 #: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:166
 msgid "Protected PDF"
-msgstr "Beveiligd PDF-bestand"
+msgstr "Beveiligd pdf-bestand"
 
 #: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:71
 msgid "Current Page"
@@ -454,11 +453,11 @@ msgstr "Huidige pagina"
 
 #: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:74
 msgid "Multiple Pages..."
-msgstr "Meerdere pagina's..."
+msgstr "Meerdere pagina's…"
 
 #: ../gtk/data/MainWindow.ui.h:60 ../qt/src/Recognizer.cc:77
 msgid "Batch mode..."
-msgstr "Seriemodus..."
+msgstr "Seriemodus…"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:713
 msgid "Add Word"
@@ -485,12 +484,12 @@ msgstr "Exporteren naar platte tekst"
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:96
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:97
 msgid "Export to PDF"
-msgstr "Exporteren naar PDF"
+msgstr "Exporteren naar pdf"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:99
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:100
 msgid "Export to ODT"
-msgstr "Exporteren naar ODT"
+msgstr "Exporteren naar odt"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
@@ -536,14 +535,14 @@ msgstr "Zoeken en vervangen"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:114
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:115
 msgid "Show confidence values"
-msgstr "Vertrouwenswaarden weergeven"
+msgstr "Vertrouwenswaarden tonen"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:19 ../gtk/data/PdfExportDialog.ui.h:41
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/data/PdfExportWidget.ui.h:2
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:117
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 msgid "Show preview"
-msgstr "Voorbeeld weergeven"
+msgstr "Voorvertonen"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:20
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:155
@@ -593,7 +592,7 @@ msgstr "Huidige tekst vervangen"
 #. Output postprocessing
 #: ../gtk/data/OutputEditorText.ui.h:4 ../qt/src/Ui_OutputEditorText.hh:62
 msgid "Keep line break if..."
-msgstr "Regelafbreking behouden als..."
+msgstr "Regelafbreking behouden als…"
 
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:64
 msgid "Preceded by end mark (.?!)"
@@ -628,13 +627,12 @@ msgid "Draw whitespace"
 msgstr "Witruimte intekenen"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "hOCR-bestand openen"
+msgstr "Bestand openen"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
-msgstr ""
+msgstr "Nieuw tabblad"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
@@ -652,7 +650,7 @@ msgstr "Opnieuw"
 
 #: ../gtk/data/PdfExportDialog.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
-msgstr "PDF-exportering"
+msgstr "PDF-export"
 
 #: ../gtk/data/PdfExportDialog.ui.h:4 ../qt/data/PdfExportDialog.ui.h:4
 #: ../qt/data/PdfExportWidget.ui.h:4
@@ -742,7 +740,7 @@ msgstr "tekens"
 #: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
 #: ../qt/data/PdfExportWidget.ui.h:28
 msgid "Sanitize hyphens before line breaks"
-msgstr "Streepjes verwijderen voor regelafbrekingen"
+msgstr "Streepjes voorafgaand aan regelafbrekingen verwijderen"
 
 #: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
 #: ../qt/data/PdfExportWidget.ui.h:19
@@ -943,7 +941,7 @@ msgstr "Afbeeldingen"
 
 #: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:86
 msgid "Choose Output Filename..."
-msgstr "Kies uitvoerbestandsnaam..."
+msgstr "Kies uitvoerbestandsnaam…"
 
 #: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
 msgid "Failed to initialize the scanning backend."
@@ -960,27 +958,27 @@ msgstr "Er zijn geen scanners gevonden."
 #: ../gtk/src/Acquirer.cc:150 ../gtk/src/Acquirer.cc:167
 #: ../qt/src/Acquirer.cc:136 ../qt/src/Acquirer.cc:153
 msgid "Starting scan..."
-msgstr "Bezig met starten van scan..."
+msgstr "Bezig met starten van scan…"
 
 #: ../gtk/src/Acquirer.cc:163 ../qt/src/Acquirer.cc:149
 msgid "Opening device..."
-msgstr "Bezig met openen van apparaat..."
+msgstr "Bezig met openen van apparaat…"
 
 #: ../gtk/src/Acquirer.cc:165 ../qt/src/Acquirer.cc:151
 msgid "Setting options..."
-msgstr "Bezig met instellen van opties..."
+msgstr "Bezig met instellen van opties…"
 
 #: ../gtk/src/Acquirer.cc:169 ../qt/src/Acquirer.cc:155
 msgid "Getting parameters..."
-msgstr "Bezig met verkrijgen van parameters..."
+msgstr "Bezig met verkrijgen van aanvullende opties…"
 
 #: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:157
 msgid "Transferring data..."
-msgstr "Bezig met overdragen van gegevens..."
+msgstr "Bezig met overdragen van gegevens…"
 
 #: ../gtk/src/Acquirer.cc:178 ../qt/src/Acquirer.cc:164
 msgid "Canceling scan..."
-msgstr "Bezig met afbreken van scan..."
+msgstr "Bezig met afbreken van scan…"
 
 #: ../gtk/src/Config.cc:50 ../gtk/src/Config.cc:60
 #: ../qt/data/ConfigDialog.ui.h:7
@@ -1071,7 +1069,7 @@ msgstr "Bestand overschrijven?"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "Tijdelijke bestanden"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
@@ -1125,7 +1123,7 @@ msgstr "OpenDocument-tekstdocumenten"
 #: ../gtk/src/hocr/HOCROdtExporter.cc:69
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1024
 msgid "Save ODT Output..."
-msgstr "ODT-uitvoer opslaan..."
+msgstr "ODT-uitvoer opslaan…"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:617
@@ -1138,12 +1136,12 @@ msgstr "Exporteren is mislukt"
 #: ../qt/src/hocr/HOCROdtExporter.cc:49
 msgid "The ODT export failed: unable to write output file."
 msgstr ""
-"De ODT-exportering is mislukt: het is niet mogelijk om te schrijven naar het "
+"De odt-export is mislukt: het is niet mogelijk om te schrijven naar het "
 "uitvoerbestand."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:335 ../qt/src/hocr/HOCROdtExporter.cc:242
 msgid "Exporting to ODT..."
-msgstr "Bezig met exporteren naar ODT..."
+msgstr "Bezig met exporteren naar odt…"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:283
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:74
@@ -1203,7 +1201,7 @@ msgstr "PDF-bestanden"
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:494
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1060
 msgid "Save PDF Output..."
-msgstr "PDF-uitvoer opslaan..."
+msgstr "PDF-uitvoer opslaan…"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:500
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1065
@@ -1234,15 +1232,15 @@ msgstr "Renderen van pagina %1 is mislukt"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:612 ../qt/src/hocr/HOCRPdfExporter.cc:130
 msgid "Exporting to PDF..."
-msgstr "Bezig met exporteren naar PDF..."
+msgstr "Bezig met exporteren naar pdf…"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:617 ../qt/src/hocr/HOCRPdfExporter.cc:134
 msgid "The PDF export failed: %1."
-msgstr "De PDF-export is mislukt: %1."
+msgstr "De pdf-export is mislukt: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:671 ../qt/src/hocr/HOCRPdfExporter.cc:420
 msgid "The PDF library could not load the font '%1'."
-msgstr "De PDF-bibliotheek kan het lettertype '%1' niet laden."
+msgstr "De pdf-bibliotheek kan het lettertype ‘%1’ niet laden."
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:416
 #: ../gtk/src/OutputEditorText.cc:553 ../qt/src/hocr/OutputEditorHOCR.cc:1087
@@ -1253,7 +1251,7 @@ msgstr "Tekstbestanden"
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1087
 msgid "Save Text Output..."
-msgstr "Tekstuitvoer opslaan..."
+msgstr "Tekstuitvoer opslaan…"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCRTextExporter.cc:34
 msgid "The text export failed: unable to write output file."
@@ -1388,7 +1386,7 @@ msgstr "Openen van bestanden mislukt"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1067
 #: ../qt/src/hocr/OutputEditorHOCR.cc:983
 msgid "Save hOCR Output..."
-msgstr "hOCR-uitvoer opslaan..."
+msgstr "hOCR-uitvoer opslaan…"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:562
 #: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
@@ -1413,12 +1411,12 @@ msgstr "Wilt u de uitvoer opslaan alvorens door te gaan?"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1263 ../gtk/src/OutputEditorText.cc:315
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1204 ../qt/src/OutputEditorText.cc:164
 msgid "Replacing..."
-msgstr "Bezig met vervangen..."
+msgstr "Bezig met vervangen…"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1288 ../gtk/src/OutputEditorText.cc:325
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1227 ../qt/src/OutputEditorText.cc:172
 msgid "Applying substitutions..."
-msgstr "Bezig met toepassen van vervangingen..."
+msgstr "Bezig met toepassen van vervangingen…"
 
 #: ../gtk/src/MainWindow.cc:132 ../qt/src/MainWindow.cc:340
 msgid "Using tesseract"
@@ -1426,11 +1424,11 @@ msgstr "Gebruikmakend van tesseract"
 
 #: ../gtk/src/MainWindow.cc:180 ../qt/src/MainWindow.cc:207
 msgid "Select an image to begin..."
-msgstr "Selecteer een afbeelding..."
+msgstr "Kies een afbeelding…"
 
 #: ../gtk/src/MainWindow.cc:327
 msgid "There are %1 documents with unsaved changes"
-msgstr ""
+msgstr "Er zijn %1 documenten met niet-opgeslagen wijzigingen"
 
 #: ../gtk/src/MainWindow.cc:328
 msgid ""
@@ -1438,6 +1436,9 @@ msgid ""
 "permanently lost.\n"
 "Select the documents you want to save:"
 msgstr ""
+"Wilt u de wijzigingen opslaan? Als u dat niet doet, dan gaan ze permanent "
+"verloren.\n"
+"Selecteer de te bewaren documenten:"
 
 #: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
 msgid "Ready"
@@ -1465,7 +1466,7 @@ msgstr "Niet meer melden"
 
 #: ../gtk/src/MainWindow.cc:538 ../qt/src/MainWindow.cc:510
 msgid "Don't show again"
-msgstr "Niet meer weergeven"
+msgstr "Niet meer tonen"
 
 #: ../gtk/src/MainWindow.cc:539 ../gtk/src/MainWindow.cc:552
 #: ../qt/src/MainWindow.cc:511
@@ -1485,7 +1486,7 @@ msgstr ""
 #: ../gtk/src/MainWindow.cc:566 ../gtk/src/MainWindow.cc:595
 #: ../qt/src/MainWindow.cc:529
 msgid "Installing spelling dictionary for '%1'"
-msgstr "Bezig met installeren van woordenboek voor '%1'"
+msgstr "Bezig met installeren van woordenboek voor ‘%1’"
 
 #: ../gtk/src/MainWindow.cc:587 ../gtk/src/MainWindow.cc:608
 #: ../gtk/src/MainWindow.cc:616 ../gtk/src/MainWindow.cc:664
@@ -1512,7 +1513,7 @@ msgstr "%1 kan niet worden gelezen: %2."
 
 #: ../gtk/src/MainWindow.cc:643 ../qt/src/MainWindow.cc:594
 msgid "Downloading '%1'..."
-msgstr "Bezig met downloaden van '%1'..."
+msgstr "Bezig met downloaden van ‘%1’…"
 
 #: ../gtk/src/MainWindow.cc:664 ../qt/src/MainWindow.cc:614
 msgid ""
@@ -1544,7 +1545,7 @@ msgstr ""
 
 #: ../gtk/src/MainWindow.cc:669 ../qt/src/MainWindow.cc:619
 msgid "No spelling dictionaries found for '%1'."
-msgstr "Geen woordenboeken gevonden voor '%1'."
+msgstr "Geen woordenboeken gevonden voor ‘%1’."
 
 #: ../gtk/src/OutputEditorText.cc:39 ../qt/src/OutputEditorText.cc:41
 msgid "Page: %1\n"
@@ -1552,7 +1553,7 @@ msgstr "Pagina: %1\n"
 
 #: ../gtk/src/OutputEditorText.cc:285 ../qt/src/OutputEditorText.cc:149
 msgid "Stripping line breaks..."
-msgstr "Bezig met verwijderen van regeleindes..."
+msgstr "Bezig met verwijderen van regeleindes…"
 
 #: ../gtk/src/OutputEditorText.cc:293
 msgid "Check spelling"
@@ -1560,7 +1561,7 @@ msgstr "Spelling controleren"
 
 #: ../gtk/src/OutputEditorText.cc:321
 msgid "Amount of occurrences replaced: %1"
-msgstr ""
+msgstr "Aantal vervangingen: %1"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
@@ -1586,15 +1587,15 @@ msgstr "Bestanden selecteren"
 
 #: ../gtk/src/OutputEditorText.cc:469
 msgid "Close document"
-msgstr ""
+msgstr "Document sluiten"
 
 #: ../gtk/src/OutputEditorText.cc:510
 msgid "New document %1"
-msgstr ""
+msgstr "Nieuw document %1"
 
 #: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
-msgstr "Uitvoer opslaan..."
+msgstr "Uitvoer opslaan…"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
@@ -1657,11 +1658,11 @@ msgstr "Paginasegmentatiemodus"
 
 #: ../gtk/src/RecognitionMenu.cc:232 ../qt/src/RecognitionMenu.cc:205
 msgid "Character whitelist / blacklist..."
-msgstr "Witte en zwarte lijst met tekens..."
+msgstr "Witte en zwarte lijst met tekens…"
 
 #: ../gtk/src/RecognitionMenu.cc:238 ../qt/src/RecognitionMenu.cc:210
 msgid "Manage languages..."
-msgstr "Talen beheren..."
+msgstr "Talen beheren…"
 
 #: ../gtk/src/Recognizer.cc:76 ../qt/src/Recognizer.cc:90
 msgid "Overwrite existing output"
@@ -1698,7 +1699,7 @@ msgstr "-Pagina %1: het renderen van de pagina is mislukt"
 #: ../qt/src/Recognizer.cc:284 ../qt/src/Recognizer.cc:312
 #: ../qt/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:416
 msgid "Recognizing..."
-msgstr "Bezig met herkennen..."
+msgstr "Bezig met herkennen…"
 
 #: ../gtk/src/Recognizer.cc:338 ../qt/src/Recognizer.cc:369
 msgid "- %1:%2: failed to render page"
@@ -1773,7 +1774,7 @@ msgstr "Scannertoegang is geweigerd."
 
 #: ../gtk/src/SourceManager.cc:184 ../qt/src/SourceManager.cc:163
 msgid "Enter password for file '%1':"
-msgstr "Voer het wachtwoord in voor het bestand '%1':"
+msgstr "Voer het wachtwoord in voor ‘%1’:"
 
 #: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:190
 msgid "PDF with text"
@@ -1785,18 +1786,18 @@ msgid ""
 "%1\n"
 "Open it regardless?"
 msgstr ""
-"Deze PDF-bestanden bevatten al tekst:\n"
+"Deze pdf-bestanden bevatten al tekst:\n"
 "%1\n"
-"Wil je ze toch openen?"
+"Wilt u ze tóch openen?"
 
 #: ../gtk/src/SourceManager.cc:268 ../qt/src/hocr/HOCRBatchExportDialog.cc:73
 #: ../qt/src/SourceManager.cc:267
 msgid "Select folder..."
-msgstr "Map kiezen..."
+msgstr "Kies een map…"
 
 #: ../gtk/src/SourceManager.cc:292 ../qt/src/SourceManager.cc:256
 msgid "Images and PDFs"
-msgstr "Afbeeldingen en PDF-bestanden"
+msgstr "Afbeeldingen en pdf-bestanden"
 
 #: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:299
 msgid "Clipboard Error"
@@ -1825,7 +1826,7 @@ msgstr "Schermfoto %1"
 
 #: ../gtk/src/SourceManager.cc:335 ../qt/src/SourceManager.cc:333
 msgid "Saving image..."
-msgstr "Bezig met opslaan van afbeelding..."
+msgstr "Bezig met opslaan van afbeelding…"
 
 #: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:346
 msgid "Cannot Write File"
@@ -1887,7 +1888,7 @@ msgstr "Fout tijdens lezen van bestand"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:108
 msgid "Unable to read '%1'."
-msgstr "'%1' kan niet worden gelezen."
+msgstr "‘%1’ kan niet worden uitgelezen."
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:133
 msgid "Errors Occurred Reading File"
@@ -1907,7 +1908,7 @@ msgstr "Fout bij opslaan van bestand"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Unable to write to '%1'."
-msgstr "Er kan niet worden geschreven naar '%1'."
+msgstr "Er kan niet worden geschreven naar ‘%1’."
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:158
 msgid "Save List?"
@@ -1930,7 +1931,7 @@ msgstr ""
 "PackageKit is vereist voor het beheren van systeembreed geïnstalleerde "
 "tesseract-taalpakketten, maar is niet gevonden. Gebruik het pakketbeheer van "
 "uw systeem om de tesseract-taalpakketten te beheren of schakel over naar een "
-"gebruikerspad op het configuratiescherm."
+"gebruikerslocatie op het configuratiescherm."
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:75
 msgid "Fetching available languages"
@@ -1948,7 +1949,7 @@ msgstr "Verwerkingsfout: %1"
 
 #: ../gtk/src/TessdataManager.cc:235 ../qt/src/TessdataManager.cc:204
 msgid "Applying changes..."
-msgstr "Bezig met toepassen van wijzigingen..."
+msgstr "Bezig met toepassen van wijzigingen…"
 
 #: ../gtk/src/TessdataManager.cc:297 ../qt/src/TessdataManager.cc:250
 msgid "Failed to create directory for tessdata files."
@@ -1956,7 +1957,7 @@ msgstr "Het creëren van een map voor de tessdata-bestanden is mislukt."
 
 #: ../gtk/src/TessdataManager.cc:306 ../qt/src/TessdataManager.cc:259
 msgid "Downloading %1..."
-msgstr "Bezig met downloaden van %1..."
+msgstr "Bezig met downloaden van ‘%1’…"
 
 #: ../gtk/src/TessdataManager.cc:330
 msgid ""
@@ -1973,7 +1974,7 @@ msgstr ""
 "\n"
 "Controleer uw internetverbinding en maprechten.\n"
 "\n"
-"Tip: als u geen schrijfrechten hebt in systeemmappen, dan kunt u het pad "
+"Tip: als u geen schrijfrechten heeft in systeemmappen, dan kunt u locatie "
 "wijzigen in de instellingen."
 
 #: ../gtk/src/Utils.cc:129
@@ -2009,16 +2010,16 @@ msgid "About gImageReader"
 msgstr "Over gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
 "graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
 "https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
 "p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Een grafisch front-end voor tesseract-"
-"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</"
-"a></p><p>&nbsp;</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;"
+"Een grafisch front-end voor tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a "
+"href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a"
+"&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2049,7 +2050,7 @@ msgid "Text file encoding:"
 msgstr "Tekstbestand-tekencodering:"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
@@ -2061,15 +2062,14 @@ msgid ""
 "p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">De toepassing is "
-"gecrasht</span></p><p>Excuses voor het ongemak. Als je wilt helpen om de "
+"gecrasht</span></p><p>Excuses voor het ongemak. Als u wilt helpen om de "
 "toepassing te verbeteren, overweeg dan om het probleem te melden via <a href="
-"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>. Probeer te omschrijven wat je aan het doen was "
-"voordat de toepassing crashte. Voeg ook onderstaande informatie bij. Bedankt."
-"</p></body></html>"
+"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail"
+".com</a>. Probeer te omschrijven wat u aan het doen was voordat de "
+"toepassing crashte. Voeg ook onderstaande informatie bij. "
+"Bedankt.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
@@ -2089,36 +2089,31 @@ msgstr ""
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "HOCR-serie-export"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "Geen recente bestanden"
+msgstr "Invoerbestanden"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "Uitvoer:"
+msgstr "Invoer:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "Uitvoermodus:"
+msgstr "Uitvoervoorvertoning:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs at level:"
-msgstr ""
+msgstr "Uitvoerbestanden groeperen op niveau:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "Map kiezen..."
+msgstr "Kies de bronmap:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "Andere opties"
+msgstr "Exportopties"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2178,21 +2173,20 @@ msgstr "Indeling automatisch detecteren"
 
 #: ../qt/data/MainWindow.ui.h:39
 msgid "Toggle Output Pane"
-msgstr "Uitvoerpaneel weergeven/verbergen"
+msgstr "Uitvoerpaneel tonen/verbergen"
 
 #: ../qt/data/MainWindow.ui.h:41
 msgid "actionBatchExport"
-msgstr ""
+msgstr "actionBatchExport"
 
 #: ../qt/data/MainWindow.ui.h:42
-#, fuzzy
 msgid "Batch Export"
-msgstr "Exporteren"
+msgstr "Serie exporteren"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
-#, fuzzy
 msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>Bijvoorbeeld:</b> 1-10, 13, 14-18</small>"
+msgstr ""
+"&lt;small&gt;&lt;b&gt;Voorbeeld:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
 
 #: ../qt/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportWidget.ui.h:5
 msgid "Backend:"
@@ -2207,13 +2201,12 @@ msgid "Landscape"
 msgstr "Landschap"
 
 #: ../qt/data/PdfExportWidget.ui.h:1
-#, fuzzy
 msgid "Form"
-msgstr "Formaat:"
+msgstr "Formulier"
 
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:303
 msgid "Failed to write to file"
@@ -2306,11 +2299,11 @@ msgstr ""
 
 #: ../qt/src/Recognizer.cc:235
 msgid "Source already recognized"
-msgstr ""
+msgstr "De bron is al herkend"
 
 #: ../qt/src/Recognizer.cc:235
 msgid "One or more selected sources were aready recognized. Proceed anyway?"
-msgstr ""
+msgstr "Eén of meerdere bronnen zijn al herkend. Wilt u tóch doorgaan?"
 
 #: ../qt/src/SourceManager.cc:240
 msgid "No recent files"
@@ -2333,8 +2326,7 @@ msgstr ""
 "%1\n"
 "\n"
 "Controleer uw internetverbinding en maprechten.\n"
-"\n"
-"Tip: als u geen schrijfrechten hebt in systeemmappen, dan kunt u het pad "
+"Tip: als u geen schrijfrechten heeft in systeemmappen, dan kunt u de locatie "
 "wijzigen in de instellingen."
 
 #: ../qt/src/Ui_MainWindow.hh:51
