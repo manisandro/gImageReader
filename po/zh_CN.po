@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:07+0200\n"
-"PO-Revision-Date: 2021-04-13 07:27+0000\n"
+"PO-Revision-Date: 2021-11-28 09:14+0000\n"
 "Last-Translator: Eric <spice2wolf@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gimagereader/translations/zh_Hans/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.6-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -169,7 +169,7 @@ msgstr "自动以缺省应用程序打开输出的文件"
 
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
-msgstr ""
+msgstr "语法高亮模式："
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -384,11 +384,10 @@ msgid "Batch Mode"
 msgstr "批量模式"
 
 #: ../gtk/data/MainWindow.ui.h:42
-#, fuzzy
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
-msgstr "批处理模式下，将分别处理每个输入源，并将输出并排保存到输入文件中。"
+msgstr "<i>批处理模式下，将分别处理每个输入源，并将输出并排保存到输入文件中。</i>"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
@@ -623,13 +622,12 @@ msgid "Draw whitespace"
 msgstr "绘画空格"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "打开 hOCR 档"
+msgstr "打开文件"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
-msgstr ""
+msgstr "新标签"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
@@ -1064,7 +1062,7 @@ msgstr "改写文件？"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "临时文件"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
@@ -1418,7 +1416,7 @@ msgstr "请选择图像作为开始……"
 
 #: ../gtk/src/MainWindow.cc:327
 msgid "There are %1 documents with unsaved changes"
-msgstr ""
+msgstr "%1 个文档有未保存的更改"
 
 #: ../gtk/src/MainWindow.cc:328
 msgid ""
@@ -1426,6 +1424,8 @@ msgid ""
 "permanently lost.\n"
 "Select the documents you want to save:"
 msgstr ""
+"关闭前保存更改？ 如果您不保存，您的所有更改都将永久丢失。\n"
+"选择要保存的文档："
 
 #: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
 msgid "Ready"
@@ -1545,7 +1545,7 @@ msgstr "检查拼写"
 
 #: ../gtk/src/OutputEditorText.cc:321
 msgid "Amount of occurrences replaced: %1"
-msgstr ""
+msgstr "替换数：%1"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
@@ -1571,11 +1571,11 @@ msgstr "选择文件"
 
 #: ../gtk/src/OutputEditorText.cc:469
 msgid "Close document"
-msgstr ""
+msgstr "关闭文档"
 
 #: ../gtk/src/OutputEditorText.cc:510
 msgid "New document %1"
-msgstr ""
+msgstr "新文档 %1"
 
 #: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
@@ -1991,16 +1991,16 @@ msgid "About gImageReader"
 msgstr "有关 gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
 "graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
 "https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
 "p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr 的图像界面</p><p><a href="
-"\"https://github.com/manisandro/gImageReader/\">网站</a></p><p>&nbsp;</p></"
-"body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt"
+";tesseract-ocr 图形前端&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/"
+"manisandro/gImageReader/&quot;&gt;网站&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&l"
+"t;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2029,7 +2029,7 @@ msgid "Text file encoding:"
 msgstr "文本编码："
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
@@ -2040,14 +2040,13 @@ msgid ""
 "application crashed. Also, include the information below. Thank you.&lt;/"
 "p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">此应用程序已异常终止"
-"</span></p><p>我们为带来的不便而道歉。如你有意改善此程序，请考虑将问题汇报给 "
-"<a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>。请尝试描述你在程序终止前所做的事情。另外，请一并"
-"附上下列数据。谢谢。</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;应用程序崩溃了&lt;/span&gt;&lt;/p&gt;&lt;p&gt;不便之处敬请原谅。 "
+"为了帮助改进应用程序，请考虑将问题报告给 &lt;a href=&quot;mailto:manisandro@gmail."
+"com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail.com&lt;/a&gt;. "
+"请尝试描述在应用程序崩溃之前您在做什么。 此外，请包括以下信息。 谢谢你。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
@@ -2057,43 +2056,39 @@ msgid ""
 "stacktrace below may provide additional information about where the crash "
 "occurred.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract已中止</"
-"span></p><p>识别文本时Tesseract (OCR引擎)中止。发生这种情况可能是因为所用的训"
-"练数据损坏或不兼容使用中的tesseract版本，或是由于 tesseract本身的错误。</"
-"p><p>下面的堆栈跟踪可能提供关于崩溃发生于何处的附加信息。</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;Tesseract 已中止&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tesseract（"
+"OCR 引擎）在识别文本时中止。 发生这种情况的原因可能是训练数据损坏或与使用的 tesseract 版本不兼容，或者由于 tesseract 中的错误。"
+"&lt;/p&gt;&lt;p&gt;下面的堆栈跟踪可能会提供有关崩溃发生位置的其他信息。&lt;/p&gt;&lt;/body&gt;&lt;/html"
+"&gt;"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "HOCR 批量导出"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "无最近文件"
+msgstr "输入文件"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "输出："
+msgstr "输入："
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "输出模式："
+msgstr "输出预览："
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs at level:"
-msgstr ""
+msgstr "在下列级别上分组输出："
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "选择文件夹…"
+msgstr "选择源文件夹："
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "其它选项"
+msgstr "导出选项"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2157,17 +2152,15 @@ msgstr "切换输出面板"
 
 #: ../qt/data/MainWindow.ui.h:41
 msgid "actionBatchExport"
-msgstr ""
+msgstr "批量导出操作"
 
 #: ../qt/data/MainWindow.ui.h:42
-#, fuzzy
 msgid "Batch Export"
-msgstr "输出"
+msgstr "批量导出"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
-#, fuzzy
 msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>例如：</b> 1-10, 13, 14-18</small>"
+msgstr "&lt;small&gt;&lt;b&gt;示例:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
 
 #: ../qt/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportWidget.ui.h:5
 msgid "Backend:"
@@ -2182,13 +2175,12 @@ msgid "Landscape"
 msgstr "横向"
 
 #: ../qt/data/PdfExportWidget.ui.h:1
-#, fuzzy
 msgid "Form"
-msgstr "格式："
+msgstr "格式"
 
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:303
 msgid "Failed to write to file"
@@ -2280,11 +2272,11 @@ msgstr ""
 
 #: ../qt/src/Recognizer.cc:235
 msgid "Source already recognized"
-msgstr ""
+msgstr "已识别源"
 
 #: ../qt/src/Recognizer.cc:235
 msgid "One or more selected sources were aready recognized. Proceed anyway?"
-msgstr ""
+msgstr "一个或多个选定的源已被识别。 仍要继续？"
 
 #: ../qt/src/SourceManager.cc:240
 msgid "No recent files"
