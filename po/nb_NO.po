@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:06+0200\n"
-"PO-Revision-Date: 2021-11-27 22:42+0000\n"
-"Last-Translator: ovl-1 <ovl-002@mailinator.com>\n"
+"PO-Revision-Date: 2021-11-28 09:14+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -151,7 +151,7 @@ msgstr "Skrift for utdatapanel:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
-msgstr "Standard"
+msgstr "Forvalg"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
@@ -451,11 +451,11 @@ msgstr "Auto-detekter sidelayout"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
-msgstr "Sideområde"
+msgstr "Sidetallfølge"
 
 #: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
-msgstr "Sider:"
+msgstr "Sidetallfølge:"
 
 #: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
@@ -1271,7 +1271,7 @@ msgstr "Diffus"
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:66
 #: ../qt/src/hocr/HOCRPdfExporter.cc:350
 msgid "Zip (lossless)"
-msgstr "Zip (tapsfri)"
+msgstr "ZIP (tapsfri)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:344
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:67
@@ -1283,7 +1283,7 @@ msgstr "CCITT Gruppe 4 (tapsfri)"
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:68
 #: ../qt/src/hocr/HOCRPdfExporter.cc:352
 msgid "Jpeg (lossy)"
-msgstr "Jpeg (kvalitetstap)"
+msgstr "JPEG (tapsbasert)"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:493
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1060
@@ -1874,7 +1874,7 @@ msgstr "Svarteliste / hvitliste for tegn…"
 #: ../gtk/src/RecognitionMenu.cc:238 ../qt/src/RecognitionMenu.cc:210
 #: ../gtk/src/Recognizer.cc:319
 msgid "Manage languages..."
-msgstr "Håndter språk…"
+msgstr "Håndter språk …"
 
 #: ../gtk/src/Recognizer.cc:76 ../qt/src/Recognizer.cc:90
 #: ../qt/src/Recognizer.cc:86
@@ -2208,7 +2208,7 @@ msgstr "Klarte ikke å opprette mappe for tessdata-filer."
 
 #: ../gtk/src/TessdataManager.cc:306 ../qt/src/TessdataManager.cc:259
 msgid "Downloading %1..."
-msgstr "Laster ned %1..."
+msgstr "Laster ned %1 …"
 
 #: ../gtk/src/TessdataManager.cc:330
 msgid ""
