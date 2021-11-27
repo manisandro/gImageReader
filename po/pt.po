@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Portuguese (Brazil) (gImageReader)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:07+0200\n"
-"PO-Revision-Date: 2021-05-10 06:25+0000\n"
+"PO-Revision-Date: 2021-11-28 09:14+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pt/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -163,7 +163,7 @@ msgstr "Abrir automaticamente documentos exportados com a aplicação padrão"
 
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
-msgstr ""
+msgstr "Modo de destaque da sintaxe:"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -381,13 +381,12 @@ msgid "Batch Mode"
 msgstr "Modo de Lote"
 
 #: ../gtk/data/MainWindow.ui.h:42
-#, fuzzy
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
-"No modo de lote, cada fonte de entrada é processada separadamente e a saída "
-"gravada lado a lado ao ficheiro de entrada."
+"<i>No modo de lote, cada fonte de entrada é processada separadamente e a "
+"saída gravada lado a lado ao ficheiro de entrada.</i>"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
@@ -622,13 +621,12 @@ msgid "Draw whitespace"
 msgstr "Desenhar espaços"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "Abrir ficheiro hOCR"
+msgstr "Abrir ficheiro"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
-msgstr ""
+msgstr "Nova guia"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
@@ -1063,7 +1061,7 @@ msgstr "Substituir ficheiro?"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "Ficheiros temporários"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
@@ -1417,7 +1415,7 @@ msgstr "Selecione uma imagem para começar..."
 
 #: ../gtk/src/MainWindow.cc:327
 msgid "There are %1 documents with unsaved changes"
-msgstr ""
+msgstr "Existem %1 documentos com alterações não gravadas"
 
 #: ../gtk/src/MainWindow.cc:328
 msgid ""
@@ -1425,6 +1423,9 @@ msgid ""
 "permanently lost.\n"
 "Select the documents you want to save:"
 msgstr ""
+"Gravar mudanças antes de fechar? Se não gravar, todas as suas alterações "
+"serão perdidas permanentemente.\n"
+"Selecione os documentos que deseja gravar:"
 
 #: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
 msgid "Ready"
@@ -1545,7 +1546,7 @@ msgstr "Verificar ortografia"
 
 #: ../gtk/src/OutputEditorText.cc:321
 msgid "Amount of occurrences replaced: %1"
-msgstr ""
+msgstr "Quantidade de ocorrencias substituídas: %1"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
@@ -1571,11 +1572,11 @@ msgstr "Selecione os ficheiros"
 
 #: ../gtk/src/OutputEditorText.cc:469
 msgid "Close document"
-msgstr ""
+msgstr "Fechar documento"
 
 #: ../gtk/src/OutputEditorText.cc:510
 msgid "New document %1"
-msgstr ""
+msgstr "Novo documento %1"
 
 #: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
@@ -2005,9 +2006,11 @@ msgid ""
 "https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
 "p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Uma interface gráfica para o tesseract-"
-"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Site</a></"
-"p><p>&nbsp;</p></body></html>"
+"&lt;html&gt;&lt;head/"
+"&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;p&gt;Uma interface "
+"gráfica para tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github."
+"com/manisandro/gImageReader/&quot;&gt;&gt;Website&lt;/a&gt;&lt;/p&gt;&lt;p&gt"
+";&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2049,13 +2052,14 @@ msgid ""
 "application crashed. Also, include the information below. Thank you.&lt;/"
 "p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">A aplicação parou de "
-"funcionar</span></p><p>Pedimos desculpas pela inconveniência. Para ajudar a "
-"melhorar esta aplicação, por favor envie um relatório de erro para <a href="
-"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>. Tente descrever o que você estava fazendo antes "
-"da aplicação parar. Inclua também a informação abaixo. Obrigado.</p></body></"
-"html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;&gt;A aplicação falhou&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
+"Desculpe pelo inconveniente. Para ajudar a melhorar a aplicação, considere "
+"reportar o problema a &lt;a href=&quot;mailto:manisandro@gmail."
+"com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail.com&lt;/a&gt;. "
+"Por favor, tente descrever o que estava a fazer antes de a aplicação ter "
+"falhado. Além disso, inclua as informações abaixo. "
+"Obrigado.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/CrashHandler.ui.h:3
 #, fuzzy
@@ -2077,7 +2081,7 @@ msgstr ""
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "Exportação de lotes HOCR"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
 #, fuzzy
@@ -2096,12 +2100,11 @@ msgstr "Modo de saída:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs at level:"
-msgstr ""
+msgstr "Agrupar saídas ao nível:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "Selecionar pasta..."
+msgstr "Selecione a pasta de origem:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
 #, fuzzy
@@ -2169,8 +2172,9 @@ msgid "Toggle Output Pane"
 msgstr "Alternar Exibição do Painel de Saída"
 
 #: ../qt/data/MainWindow.ui.h:41
+#, fuzzy
 msgid "actionBatchExport"
-msgstr ""
+msgstr "actionBatchExport"
 
 #: ../qt/data/MainWindow.ui.h:42
 #, fuzzy
@@ -2201,7 +2205,7 @@ msgstr "Formato:"
 
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:303
 msgid "Failed to write to file"
@@ -2296,11 +2300,12 @@ msgstr ""
 
 #: ../qt/src/Recognizer.cc:235
 msgid "Source already recognized"
-msgstr ""
+msgstr "Fonte já reconhecida"
 
 #: ../qt/src/Recognizer.cc:235
 msgid "One or more selected sources were aready recognized. Proceed anyway?"
 msgstr ""
+"Uma ou mais fontes selecionadas já foram reconhecidas. Continuar mesmo assim?"
 
 #: ../qt/src/SourceManager.cc:240
 msgid "No recent files"
