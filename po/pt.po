@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Portuguese (Brazil) (gImageReader)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:07+0200\n"
-"PO-Revision-Date: 2021-11-28 09:14+0000\n"
+"PO-Revision-Date: 2021-12-02 12:51+0000\n"
 "Last-Translator: ssantos <ssantos@web.de>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pt/>\n"
@@ -2084,19 +2084,16 @@ msgid "HOCR Batch Export"
 msgstr "Exportação de lotes HOCR"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "Nenhum ficheiro recente"
+msgstr "Ficheiros de entrada"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "Saída:"
+msgstr "Entrada:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "Modo de saída:"
+msgstr "Pré-visualização de saída:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs at level:"
@@ -2107,9 +2104,8 @@ msgid "Select source folder:"
 msgstr "Selecione a pasta de origem:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "Outras opções"
+msgstr "Opções de exportação"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2182,9 +2178,8 @@ msgid "Batch Export"
 msgstr "Exportar"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
-#, fuzzy
 msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>Exemplo:</b> 1-10, 13, 14-18</small>"
+msgstr "&lt;small&gt;&lt;b&gt;Exemplo:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
 
 #: ../qt/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportWidget.ui.h:5
 msgid "Backend:"
@@ -2201,7 +2196,7 @@ msgstr "Paisagem"
 #: ../qt/data/PdfExportWidget.ui.h:1
 #, fuzzy
 msgid "Form"
-msgstr "Formato:"
+msgstr "Formulário"
 
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
