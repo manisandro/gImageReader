@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:06+0200\n"
-"PO-Revision-Date: 2021-11-03 18:26+0000\n"
-"Last-Translator: The Cats <philosoph@snopyta.org>\n"
+"PO-Revision-Date: 2021-12-02 12:51+0000\n"
+"Last-Translator: Rodrigo Zimmermann <rodrigo.zimmermann23@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gimagereader/translations/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -170,7 +170,7 @@ msgstr "Abrir automaticamente documentos exportados com o aplicativo padrão"
 
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
-msgstr ""
+msgstr "Modo de destaque de sintaxe:"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -388,13 +388,12 @@ msgid "Batch Mode"
 msgstr "Modo de Lote"
 
 #: ../gtk/data/MainWindow.ui.h:42
-#, fuzzy
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
-"No modo de lote, cada fonte de entrada é processada separadamente e o "
-"resultado gravado lado a lado ao arquivo de entrada."
+"<i>No modo de lote, cada fonte de entrada é processada separadamente e o "
+"resultado gravado lado a lado ao arquivo de entrada.</i>"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
@@ -629,13 +628,12 @@ msgid "Draw whitespace"
 msgstr "Desenhar espaços"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "Abrir ficheiro hOCR"
+msgstr "Abrir arquivo"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
-msgstr ""
+msgstr "Nova aba"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
@@ -1070,7 +1068,7 @@ msgstr "Sobrescrever ficheiro?"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "Arquivos temporários"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
@@ -1426,7 +1424,7 @@ msgstr "Selecione uma imagem para começar..."
 
 #: ../gtk/src/MainWindow.cc:327
 msgid "There are %1 documents with unsaved changes"
-msgstr ""
+msgstr "Existem %1 documentos com alterações não salvas"
 
 #: ../gtk/src/MainWindow.cc:328
 msgid ""
@@ -1434,6 +1432,8 @@ msgid ""
 "permanently lost.\n"
 "Select the documents you want to save:"
 msgstr ""
+"Salvar mudanças antes de fechar? Se você não salvar, todas as suas mudanças "
+"serão perdidas permanentemente. Selecione os documentos que você quer salvar:"
 
 #: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
 msgid "Ready"
@@ -1554,7 +1554,7 @@ msgstr "Verificar ortografia"
 
 #: ../gtk/src/OutputEditorText.cc:321
 msgid "Amount of occurrences replaced: %1"
-msgstr ""
+msgstr "Quantidade de ocorrências substituídas: %1"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
