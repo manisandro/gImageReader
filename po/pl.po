@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:06+0200\n"
-"PO-Revision-Date: 2020-06-07 02:15+0000\n"
+"PO-Revision-Date: 2021-12-03 15:50+0000\n"
 "Last-Translator: WaldiS <sto@tutanota.de>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pl/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -171,7 +171,7 @@ msgstr "Automatycznie otwieraj eksportowane dokumenty z domyślną aplikacją"
 
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
-msgstr ""
+msgstr "Tryb wyróżniania składni:"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -635,7 +635,7 @@ msgstr "Otwórz plik hOCR"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
-msgstr ""
+msgstr "Nowa karta"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
@@ -1070,7 +1070,7 @@ msgstr "Zastąpić plik?"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "Pliki tymczasowe"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
@@ -1552,7 +1552,7 @@ msgstr "Sprawdź pisownię"
 
 #: ../gtk/src/OutputEditorText.cc:321
 msgid "Amount of occurrences replaced: %1"
-msgstr ""
+msgstr "Liczba zastąpionych wystąpień: % 1"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
@@ -1577,14 +1577,12 @@ msgid "Select Files"
 msgstr "Wybierz pliki"
 
 #: ../gtk/src/OutputEditorText.cc:469
-#, fuzzy
 msgid "Close document"
-msgstr "Dokument"
+msgstr "Zamknij dokument"
 
 #: ../gtk/src/OutputEditorText.cc:510
-#, fuzzy
 msgid "New document %1"
-msgstr "Dokument"
+msgstr "Nowy dokument % 1"
 
 #: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
@@ -2086,33 +2084,30 @@ msgid "HOCR Batch Export"
 msgstr ""
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "Brak ostatnich plików"
+msgstr "Pliki wejściowe"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "Zapisz:"
+msgstr "Wejście:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "Zapisz:"
+msgstr "Podgląd wyjścia:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
+#, fuzzy
 msgid "Group outputs at level:"
-msgstr ""
+msgstr "Wyjście grupy na poziomie:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "Wybierz folder..."
+msgstr "Wybierz folder źródłowy:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
 #, fuzzy
 msgid "Export options"
-msgstr "Inne opcje"
+msgstr "Opcje eksportu"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2201,13 +2196,12 @@ msgid "Landscape"
 msgstr "Krajobraz"
 
 #: ../qt/data/PdfExportWidget.ui.h:1
-#, fuzzy
 msgid "Form"
-msgstr "Format:"
+msgstr "Formularz"
 
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:303
 msgid "Failed to write to file"
@@ -2304,11 +2298,13 @@ msgstr ""
 
 #: ../qt/src/Recognizer.cc:235
 msgid "Source already recognized"
-msgstr ""
+msgstr "Źródło zostało już rozpoznane"
 
 #: ../qt/src/Recognizer.cc:235
 msgid "One or more selected sources were aready recognized. Proceed anyway?"
 msgstr ""
+"Jedno lub więcej wybranych źródeł zostało już rozpoznanych. Kontynuować mimo "
+"to?"
 
 #: ../qt/src/SourceManager.cc:240
 msgid "No recent files"
