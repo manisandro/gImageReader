@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:06+0200\n"
-"PO-Revision-Date: 2020-09-12 00:07+0000\n"
-"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"PO-Revision-Date: 2021-12-04 19:53+0000\n"
+"Last-Translator: nautilusx <translate@disroot.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gimagereader/"
 "translations/de/>\n"
 "Language: de\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -393,13 +393,12 @@ msgid "Batch Mode"
 msgstr "Batchmodus"
 
 #: ../gtk/data/MainWindow.ui.h:42
-#, fuzzy
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
-"Im Batchmodus wird jede Quelle separat verarbeitet und die Ausgabe neben der "
-"Quelldatei gespeichert."
+"<i>Im Batchmodus wird jede Quelle separat verarbeitet und die Ausgabe neben "
+"der Quelldatei gespeichert.</i>"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
@@ -634,9 +633,8 @@ msgid "Draw whitespace"
 msgstr "Leerstellen zeichnen"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "hOCR-Datei öffnen"
+msgstr "Datei öffnen"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
@@ -1075,7 +1073,7 @@ msgstr "Datei ersetzen?"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "Temporäre Dateien"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
@@ -1434,7 +1432,7 @@ msgstr "Zum Starten ein Bild wählen..."
 
 #: ../gtk/src/MainWindow.cc:327
 msgid "There are %1 documents with unsaved changes"
-msgstr ""
+msgstr "Es gibt %1 Dokumente mit nicht gespeicherten Änderungen"
 
 #: ../gtk/src/MainWindow.cc:328
 msgid ""
@@ -1442,6 +1440,9 @@ msgid ""
 "permanently lost.\n"
 "Select the documents you want to save:"
 msgstr ""
+"Änderungen vor dem Schließen speichern? Wenn Sie nicht speichern, gehen alle "
+"Ihre Änderungen dauerhaft verloren.\n"
+"Wählen Sie die Dokumente aus, die Sie speichern möchten:"
 
 #: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
 msgid "Ready"
@@ -1587,14 +1588,12 @@ msgid "Select Files"
 msgstr "Dateien auswählen"
 
 #: ../gtk/src/OutputEditorText.cc:469
-#, fuzzy
 msgid "Close document"
-msgstr "Dokument"
+msgstr "Dokument schließen"
 
 #: ../gtk/src/OutputEditorText.cc:510
-#, fuzzy
 msgid "New document %1"
-msgstr "Dokument"
+msgstr "Neues Dokument %1"
 
 #: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
@@ -2096,36 +2095,31 @@ msgstr ""
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "HOCR-Batch-Export"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "Keine zuletzt geöffneten Dateien"
+msgstr "Eingabedateien"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "Ausgabebild:"
+msgstr "Eingabe:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "Ausgabemodus:"
+msgstr "Ausgabevorschau:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs at level:"
 msgstr ""
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "Ordner auswählen..."
+msgstr "Quellordner auswählen:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "Weitere Optionen"
+msgstr "Exportoptionen"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2192,9 +2186,8 @@ msgid "actionBatchExport"
 msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:42
-#, fuzzy
 msgid "Batch Export"
-msgstr "Export"
+msgstr "Batch-Export"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
 msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
@@ -2219,7 +2212,7 @@ msgstr "Format:"
 
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:303
 msgid "Failed to write to file"
@@ -2316,11 +2309,13 @@ msgstr ""
 
 #: ../qt/src/Recognizer.cc:235
 msgid "Source already recognized"
-msgstr ""
+msgstr "Quelle bereits erkannt"
 
 #: ../qt/src/Recognizer.cc:235
 msgid "One or more selected sources were aready recognized. Proceed anyway?"
 msgstr ""
+"Eine oder mehrere ausgewählte Quellen wurden bereits erkannt. Trotzdem "
+"weitermachen?"
 
 #: ../qt/src/SourceManager.cc:240
 msgid "No recent files"
