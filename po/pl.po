@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:06+0200\n"
-"PO-Revision-Date: 2021-12-03 15:50+0000\n"
+"PO-Revision-Date: 2021-12-11 16:51+0000\n"
 "Last-Translator: WaldiS <sto@tutanota.de>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/pl/>\n"
@@ -388,13 +388,12 @@ msgid "Batch Mode"
 msgstr "Tryb wsadowy"
 
 #: ../gtk/data/MainWindow.ui.h:42
-#, fuzzy
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
-"W trybie wsadowym każde źródło wejściowe jest przetwarzane oddzielnie, a "
-"dane wyjściowe zapisywane obok siebie w pliku wejściowym."
+"<i>W trybie wsadowym każde źródło wejściowe jest przetwarzane oddzielnie, a "
+"dane wyjściowe zapisywane obok siebie w pliku wejściowym.</i>"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
@@ -629,9 +628,8 @@ msgid "Draw whitespace"
 msgstr "Pokaż białe znaki"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "Otwórz plik hOCR"
+msgstr "Otwórz plik"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
@@ -2004,16 +2002,16 @@ msgid "About gImageReader"
 msgstr "O programie gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
 "graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
 "https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
 "p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Interfejs graficzny dla tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
-"p><p>&nbsp;</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&nbsp;&lt;/p&gt;&lt;p&gt;"
+"Nakładka graficzna do tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href "
+"=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Witryna&lt;/a&gt;"
+"&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/ html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
