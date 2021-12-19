@@ -8,24 +8,24 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:06+0200\n"
-"PO-Revision-Date: 2021-02-09 16:50+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2021-12-19 17:37+0000\n"
+"Last-Translator: Toni Estévez <toni.estevez@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/es/>\n"
-"Language: es_ES\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Weblate 4.10\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr "Aplicación para OCR"
+msgstr "Aplicación de OCR"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:170
 msgid "Redetect Languages"
-msgstr "Volver a detectar idiomas"
+msgstr "Volver a detectar los idiomas"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:173
 msgid "Manage Languages"
@@ -34,7 +34,7 @@ msgstr "Gestionar los idiomas"
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:176
 msgid "Preferences"
-msgstr "Ajustes"
+msgstr "Preferencias"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:554 ../qt/src/MainWindow.cc:517
@@ -61,12 +61,11 @@ msgstr "Excluir estos caracteres del reconocimiento (lista negra):"
 
 #: ../gtk/data/CharacterListDialog.ui.h:3 ../qt/data/CharacterListDialog.ui.h:3
 msgid "Enter a string of characters..."
-msgstr "Proporcione una cadena de caracteres…"
+msgstr "Escriba una cadena de caracteres…"
 
 #: ../gtk/data/CharacterListDialog.ui.h:4 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
-"Permitir únicamente el reconocimiento de estos caracteres (lista blanca):"
+msgstr "Permitir solo el reconocimiento de estos caracteres (lista blanca):"
 
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:48
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
@@ -172,7 +171,7 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:26
 msgid "Syntax highlight mode:"
-msgstr ""
+msgstr "Modo de resaltar la sintaxis:"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -391,13 +390,12 @@ msgid "Batch Mode"
 msgstr "Modo por lotes"
 
 #: ../gtk/data/MainWindow.ui.h:42
-#, fuzzy
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
-"En el modo por lotes, cada fuente de entrada se procesa separadamente y la "
-"salida se guarda junto con el archivo de entrada."
+"<i>En el modo por lotes, cada fuente de entrada se procesa separadamente y "
+"la salida se guarda junto con el archivo de entrada.</i>"
 
 #: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
@@ -632,13 +630,12 @@ msgid "Draw whitespace"
 msgstr "Mostrar los espacios en blanco"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "Abrir archivo hOCR"
+msgstr "Abrir un archivo"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
-msgstr ""
+msgstr "Pestaña nueva"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
@@ -1074,7 +1071,7 @@ msgstr "¿Quiere sobrescribir el archivo?"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "Archivos temporales"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
@@ -1433,7 +1430,7 @@ msgstr "Seleccione una imagen para comenzar..."
 
 #: ../gtk/src/MainWindow.cc:327
 msgid "There are %1 documents with unsaved changes"
-msgstr ""
+msgstr "Hay %1 documentos con cambios sin guardar"
 
 #: ../gtk/src/MainWindow.cc:328
 msgid ""
@@ -1441,6 +1438,9 @@ msgid ""
 "permanently lost.\n"
 "Select the documents you want to save:"
 msgstr ""
+"¿Guardar los cambios antes de cerrar? Si no se guardan, todos los cambios se "
+"perderán para siempre.\n"
+"Seleccione los documentos que quiere guardar:"
 
 #: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
 msgid "Ready"
@@ -1561,7 +1561,7 @@ msgstr "Comprobar ortografía"
 
 #: ../gtk/src/OutputEditorText.cc:321
 msgid "Amount of occurrences replaced: %1"
-msgstr ""
+msgstr "Número de coincidencias reemplazadas: %1"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
@@ -1586,14 +1586,12 @@ msgid "Select Files"
 msgstr "Seleccionar archivos"
 
 #: ../gtk/src/OutputEditorText.cc:469
-#, fuzzy
 msgid "Close document"
-msgstr "Documento"
+msgstr "Cerrar el documento"
 
 #: ../gtk/src/OutputEditorText.cc:510
-#, fuzzy
 msgid "New document %1"
-msgstr "Documento"
+msgstr "Documento nuevo %1"
 
 #: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
@@ -2016,16 +2014,16 @@ msgid "About gImageReader"
 msgstr "Acerca de gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
 "graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
 "https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
 "p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>Interfaz gráfica para tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Sitio web</a></"
-"p><p>&nbsp;</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;"
+"Una interfaz gráfica para tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a "
+"href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a"
+"&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2077,7 +2075,6 @@ msgstr ""
 "body&gt;&lt;/html&gt;"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
 "weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
@@ -2087,46 +2084,42 @@ msgid ""
 "stacktrace below may provide additional information about where the crash "
 "occurred.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract se "
-"interrumpió</span></p><p>Tesseract (el motor de OCR) se interrumpió mientras "
-"se reconocía el texto. Esto puede ocurrir si los datos de entrenamiento "
-"están dañados o son incompatibles con la versión utilizada de tesseract, o "
-"tal vez como resultado de un defecto en tesseract.</p><p>Este seguimiento de "
-"pila puede brindar más información sobre la ubicación donde se produjo el "
-"fallo.</p></body></html>"
+"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+"weight:600;&quot;&gt;Se ha interrumpido "
+"Tesseract&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Tesseract (el motor de OCR) ha "
+"interrumpido el reconocimiento del texto. Esto puede ocurrir si los datos "
+"usados están corruptos o son incompatibles con la versión de tesseract en "
+"uso o a causa de un error en tesseract.&lt;/p&gt;&lt;p&gt;El rastreo de la "
+"pila que se muestra a continuación puede proporcionar información adicional "
+"sobre dónde se ha producido el fall.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "Exportación de lotes HOCR"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "No hay archivos recientes"
+msgstr "Archivos de entrada"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "Salida:"
+msgstr "Entrada:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "Modo de salida:"
+msgstr "Vista previa de la salida:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs at level:"
-msgstr ""
+msgstr "Agrupar salidas al nivel:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "Seleccionar carpeta…"
+msgstr "Seleccionar la carpeta de origen:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "Otras opciones"
+msgstr "Opciones de exportación"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2190,12 +2183,11 @@ msgstr "Mostrar/ocultar el panel de salida"
 
 #: ../qt/data/MainWindow.ui.h:41
 msgid "actionBatchExport"
-msgstr ""
+msgstr "actionBatchExport"
 
 #: ../qt/data/MainWindow.ui.h:42
-#, fuzzy
 msgid "Batch Export"
-msgstr "Exportar"
+msgstr "Exportación por lotes"
 
 #: ../qt/data/PageRangeDialog.ui.h:3
 msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
@@ -2214,13 +2206,12 @@ msgid "Landscape"
 msgstr "Horizontal"
 
 #: ../qt/data/PdfExportWidget.ui.h:1
-#, fuzzy
 msgid "Form"
-msgstr "Formato:"
+msgstr "Formato"
 
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:303
 msgid "Failed to write to file"
@@ -2318,11 +2309,13 @@ msgstr ""
 
 #: ../qt/src/Recognizer.cc:235
 msgid "Source already recognized"
-msgstr ""
+msgstr "Fuente ya reconocida"
 
 #: ../qt/src/Recognizer.cc:235
 msgid "One or more selected sources were aready recognized. Proceed anyway?"
 msgstr ""
+"Una o más fuentes seleccionadas ya han sido reconocidas. ¿Proceder de todos "
+"modos?"
 
 #: ../qt/src/SourceManager.cc:240
 msgid "No recent files"
