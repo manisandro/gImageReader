@@ -132,6 +132,11 @@ bool HOCRPdfExporter::run(const HOCRDocument* hocrdocument, const QString& outna
 	MAIN->hideProgress();
 	if(!success) {
 		QMessageBox::warning(MAIN, _("Export failed"), _("The PDF export failed: %1.").arg(errMsg));
+	} else {
+		bool openAfterExport = ConfigSettings::get<SwitchSetting>("openafterexport")->getValue();
+		if(openAfterExport) {
+			QDesktopServices::openUrl(QUrl::fromLocalFile(outname));
+		}
 	}
 	return success;
 }
