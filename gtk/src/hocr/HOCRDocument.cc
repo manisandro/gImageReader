@@ -291,6 +291,10 @@ Gtk::TreeIter HOCRDocument::splitItemText(const Gtk::TreeIter& itemIndex, int po
 	if(!item || item->itemClass() != "ocrx_word") {
 		return Gtk::TreeIter();
 	}
+	// Don't split if it would create empty words
+	if(pos == 0 || pos == int(item->text().length())) {
+		return itemIndex;
+	}
 	// Compute new bounding box using font metrics with default font
 	Glib::RefPtr<Pango::Layout> layout = Pango::Layout::create(pangoContext);
 	layout->set_text(item->text().substr(0, pos));
