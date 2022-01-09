@@ -173,7 +173,11 @@ std::vector<Glib::ustring> Config::getAvailableLanguages() {
 	tess->GetAvailableLanguagesAsVector(&availLanguages);
 	std::vector<Glib::ustring> result;
 	for(int i = 0; i < availLanguages.size(); ++i) {
+#if TESSERACT_MAJOR_VERSION < 5
 		result.push_back(availLanguages[i].string());
+#else
+		result.push_back(availLanguages[i]);
+#endif
 	}
 	std::sort(result.begin(), result.end(), [](const Glib::ustring & s1, const Glib::ustring & s2) {
 		bool s1Script = s1.substr(0, 6) == "script" || s1.substr(0, 1) == s1.substr(0, 1).uppercase();
