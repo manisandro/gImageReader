@@ -487,7 +487,11 @@ void FileTreeModel::get_value_vfunc(const iterator& iter, int column, Glib::Valu
 	} else if(column == COLUMN_TEXT) {
 		setValue(value, !node->displayName.empty() ? node->displayName : node->fileName);
 	} else if(column == COLUMN_TOOLTIP) {
+#ifdef G_OS_WIN32
+		setValue(value, node->path.substr(1));
+#else
 		setValue(value, node->path);
+#endif
 	} else if(column == COLUMN_TEXTSTYLE) {
 		setValue(value, m_tmpdir && node->parent == m_tmpdir ? Pango::STYLE_NORMAL : Pango::STYLE_NORMAL);
 	} else if(column == COLUMN_EDITICON) {
