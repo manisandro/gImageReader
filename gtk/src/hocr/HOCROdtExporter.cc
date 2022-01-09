@@ -18,11 +18,10 @@
  */
 
 #include "ConfigSettings.hh"
-#include "DisplayerToolHOCR.hh"
+#include "Displayer.hh"
 #include "HOCRDocument.hh"
 #include "HOCROdtExporter.hh"
 #include "MainWindow.hh"
-#include "FileDialogs.hh"
 #include "SourceManager.hh"
 #include "Utils.hh"
 
@@ -58,19 +57,7 @@ static zip_source* zip_source_buffer_from_data(zip* fzip, const char_t* data, st
 	return zip_source_buffer(fzip, copy, len, 1);
 }
 
-bool HOCROdtExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, const std::string& filebasename) {
-	Glib::ustring suggestion = filebasename;
-	if(suggestion.empty()) {
-		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-		suggestion = !sources.empty() ? Utils::split_filename(sources.front()->displayname).first : _("output");
-	}
-
-	FileDialogs::FileFilter filter = {_("OpenDocument Text Documents"), {"application/vnd.oasis.opendocument.text"}, {"*.odt"}};
-	std::string outname = FileDialogs::save_dialog(_("Save ODT Output..."), suggestion + ".odt", "outputdir", filter);
-	if(outname.empty()) {
-		return false;
-	}
-
+bool HOCROdtExporter::run(const HOCRDocument* hocrdocument, const std::string& outname, const ExporterSettings* /*settings*/) {
 	zip* fzip = zip_open(outname.c_str(), ZIP_CREATE | ZIP_TRUNCATE, nullptr);
 	if(!fzip) {
 		Utils::messageBox(Gtk::MESSAGE_WARNING, _("Export failed"), _("The ODT export failed: unable to write output file."));
@@ -559,5 +546,7 @@ bool HOCROdtExporter::setSource(const Glib::ustring& sourceFile, int page, int d
 }
 
 Cairo::RefPtr<Cairo::ImageSurface> HOCROdtExporter::getSelection(const Geometry::Rectangle& bbox) {
-	return m_displayerTool->getSelection(bbox);
+	Displayer* displayer = MAIN->getDisplayer();
+	Geometry::Rectangle sceneRect = displayer->getSceneBoundingRect();
+	return displayer->getImage(bbox.translate(sceneRect.x, sceneRect.y));
 }

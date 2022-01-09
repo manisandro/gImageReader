@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
- * HOCRTextExporter.hh
+ * HOCRExporter.hh
  * Copyright (C) 2013-2020 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
@@ -17,21 +17,21 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef HOCRTEXTEXPORTER_HH
-#define HOCRTEXTEXPORTER_HH
+#ifndef HOCREXPORTER_HH
+#define HOCREXPORTER_HH
 
-#include "common.hh"
-#include "HOCRExporter.hh"
+#include <string>
 
-class HOCRItem;
+class HOCRDocument;
 
-
-class HOCRTextExporter : public HOCRExporter {
+class HOCRExporter {
 public:
-	bool run(const HOCRDocument* hocrdocument, const std::string& outname, const ExporterSettings* settings = nullptr) override;
+	struct ExporterSettings {
+		virtual ~ExporterSettings() = default;
+	};
 
-private:
-	void printItem(std::ofstream& outputStream, const HOCRItem* item, bool lastChild = false);
+	virtual ~HOCRExporter() = default;
+	virtual bool run(const HOCRDocument* hocrdocument, const std::string& outputname, const ExporterSettings* settings = nullptr) = 0;
 };
 
-#endif // HOCRTEXTEXPORTER_HH
+#endif // HOCREXPORTER_HH

@@ -182,7 +182,7 @@ public:
 		return Gtk::TreeIter();
 	}
 	void setCurrentIndex(const Gtk::TreeIter& index) {
-		if (index == m_currentIndex) {
+		if (index && m_currentIndex && index == m_currentIndex) {
 			return;
 		}
 		m_connectionSelectionChanged.block();
@@ -1112,11 +1112,21 @@ bool OutputEditorHOCR::save(const std::string& filename, Gtk::Widget* widget) {
 }
 
 bool OutputEditorHOCR::exportToODT() {
-	if(m_document->pageCount() == 0) {
+	std::string suggestion = m_filebasename;
+	if(suggestion.empty()) {
+		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+		suggestion = !sources.empty() ? Glib::path_get_basename(sources.front()->displayname) : _("output");
+	}
+
+	FileDialogs::FileFilter filter = {_("OpenDocument Text Documents"), {"application/vnd.oasis.opendocument.text"}, {"*.odt"}};
+	std::string outname = FileDialogs::save_dialog(_("Save ODT Output..."), suggestion + ".odt", "outputdir", filter);
+	if(outname.empty()) {
 		return false;
 	}
+
+	m_treeView->grab_focus(); // Ensure any item editor loses focus and commits its changes
 	MAIN->getDisplayer()->setBlockAutoscale(true);
-	bool success = HOCROdtExporter(m_tool).run(m_document, m_filebasename);
+	bool success = HOCROdtExporter().run(m_document.get(), m_filebasename);
 	MAIN->getDisplayer()->setBlockAutoscale(false);
 	return success;
 }
@@ -1129,19 +1139,59 @@ bool OutputEditorHOCR::exportToPDF() {
 	const HOCRItem* item = m_document->itemAtIndex(m_treeView->currentIndex());
 	const HOCRPage* page = item ? item->page() : m_document->page(0);
 	bool success = false;
-	if(showPage(page)) {
-		MAIN->getDisplayer()->setBlockAutoscale(true);
-		success = HOCRPdfExporter(m_document, page, m_tool).run(m_filebasename);
-		MAIN->getDisplayer()->setBlockAutoscale(false);
+	if(!showPage(page)) {
+		return false;
 	}
+	HOCRPdfExportDialog dialog(m_tool, m_document.get(), page, MAIN->getWindow());
+	if(dialog.run() != Gtk::RESPONSE_OK) {
+		return false;
+	}
+	HOCRPdfExporter::PDFSettings settings = dialog.getPdfSettings();
+
+	std::string suggestion = m_filebasename;
+	if(suggestion.empty()) {
+		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+		suggestion = !sources.empty() ? Glib::path_get_basename(sources.front()->displayname) : _("output");
+	}
+
+	std::string outname;
+	while(true) {
+		FileDialogs::FileFilter filter = {_("PDF Files"), {"application/pdf"}, {"*.pdf"}};
+		outname = FileDialogs::save_dialog(_("Save PDF Output..."), suggestion + ".pdf", "outputdir", filter);
+		if(outname.empty()) {
+			break;
+		}
+		if(m_document->referencesSource(outname)) {
+			Utils::messageBox(Gtk::MESSAGE_ERROR, _("Invalid Output"), _("Cannot overwrite a file which is a source image of this document."));
+			continue;
+		}
+		break;
+	}
+	if(outname.empty()) {
+		return false;
+	}
+
+	MAIN->getDisplayer()->setBlockAutoscale(true);
+	success = HOCRPdfExporter().run(m_document.get(), outname, &settings);
+	MAIN->getDisplayer()->setBlockAutoscale(false);
 	return success;
 }
 
 bool OutputEditorHOCR::exportToText() {
-	if(m_document->pageCount() == 0) {
+	std::string suggestion = m_filebasename;
+	if(suggestion.empty()) {
+		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
+		suggestion = !sources.empty() ? Glib::path_get_basename(sources.front()->displayname) : _("output");
+	}
+
+	FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
+	std::string outname = FileDialogs::save_dialog(_("Save Text Output..."), suggestion + ".txt", "outputdir", filter);
+	if(outname.empty()) {
 		return false;
 	}
-	return HOCRTextExporter().run(m_document, m_filebasename);
+
+	m_treeView->grab_focus(); // Ensure any item editor loses focus and commits its changes
+	return HOCRTextExporter().run(m_document.get(), m_filebasename);
 }
 
 bool OutputEditorHOCR::clear(bool hide, Gtk::Widget* widget) {

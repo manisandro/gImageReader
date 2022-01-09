@@ -8,7 +8,7 @@
 		<file preprocess="xml-stripblanks" compressed="true">TessdataManager.ui</file>
 		<file preprocess="xml-stripblanks" compressed="true">OutputEditorText.ui</file>
 		<file preprocess="xml-stripblanks" compressed="true">OutputEditorHOCR.ui</file>
-		<file preprocess="xml-stripblanks" compressed="true">PdfExportDialog.ui</file>
+		<file preprocess="xml-stripblanks" compressed="true">PdfExportWidget.ui</file>
 		<file preprocess="xml-stripblanks" compressed="true">SearchReplaceFrame.ui</file>
 		<file preprocess="xml-stripblanks" compressed="true">SubstitutionsManager.ui</file>
 		<file preprocess="xml-stripblanks" compressed="true">SelectionMenu.ui</file>

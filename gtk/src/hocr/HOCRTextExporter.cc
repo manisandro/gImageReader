@@ -21,25 +21,11 @@
 #include "HOCRDocument.hh"
 #include "HOCRTextExporter.hh"
 #include "MainWindow.hh"
-#include "FileDialogs.hh"
-#include "SourceManager.hh"
 #include "Utils.hh"
 
 #include <fstream>
 
-bool HOCRTextExporter::run(const Glib::RefPtr<HOCRDocument>& hocrdocument, const std::string& filebasename) {
-	std::string suggestion = filebasename;
-	if(suggestion.empty()) {
-		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-		suggestion = !sources.empty() ? Utils::split_filename(sources.front()->displayname).first : _("output");
-	}
-
-	FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
-	std::string outname = FileDialogs::save_dialog(_("Save Text Output..."), suggestion + ".txt", "outputdir", filter);
-	if(outname.empty()) {
-		return false;
-	}
-
+bool HOCRTextExporter::run(const HOCRDocument* hocrdocument, const std::string& outname, const ExporterSettings* /*settings*/) {
 	std::ofstream file(outname);
 	if(!file.is_open()) {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Export failed"), _("The text export failed: unable to write output file."));

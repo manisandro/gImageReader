@@ -22,7 +22,7 @@
 
 #include "common.hh"
 #include "Image.hh"
-#include "ui_PdfExportDialog.hh"
+#include "HOCRExporter.hh"
 
 class DisplayerImageItem;
 class DisplayerToolHOCR;
@@ -33,126 +33,141 @@ class Rectangle;
 class HOCRDocument;
 class HOCRPage;
 class HOCRItem;
+class HOCRPdfExportWidget;
+namespace PoDoFo {
+class PdfEncoding;
+class PdfFont;
+class PdfPainter;
+class PdfStreamedDocument;
+}
 
 
-class HOCRPdfExporter {
+class HOCRPdfExporter : public HOCRExporter {
 public:
-	HOCRPdfExporter(const Glib::RefPtr<HOCRDocument>& hocrdocument, const HOCRPage* previewPage, DisplayerToolHOCR* displayerTool);
-	bool run(const std::string& filebasename);
-
-private:
-	struct PDFSettings {
+	struct PDFSettings : ExporterSettings {
 		Image::Format colorFormat;
 		Image::ConversionFlags conversionFlags;
 		enum Compression { CompressZip, CompressFax4, CompressJpeg } compression;
 		int compressionQuality;
 		Glib::ustring fontFamily;
 		int fontSize;
+		Glib::ustring fallbackFontFamily;
+		int fallbackFontSize;
 		bool uniformizeLineSpacing;
 		int preserveSpaceWidth;
 		bool overlay;
 		double detectedFontScaling;
 		bool sanitizeHyphens;
+		int assumedImageDpi;
+		int outputDpi;
+		Glib::ustring paperSize;
+		bool paperSizeLandscape;
+		double paperWidthIn;
+		double paperHeightIn;
+		enum Version {
+			PdfVersion_1_0 = 0,
+			PdfVersion_1_1,
+			PdfVersion_1_2,
+			PdfVersion_1_3,
+			PdfVersion_1_4,
+			PdfVersion_1_5,
+			PdfVersion_1_6,
+			PdfVersion_1_7
+		} version;
+		Glib::ustring password;
+		Glib::ustring producer;
+		Glib::ustring creator;
+		Glib::ustring title;
+		Glib::ustring subject;
+		Glib::ustring keywords;
+		Glib::ustring author;
 	};
 
-	class PDFPainter {
-	public:
-		virtual ~PDFPainter() {}
-		virtual void setFontFamily(const Glib::ustring& family, bool bold, bool italic) = 0;
-		virtual void setFontSize(double pointSize) = 0;
-		virtual void drawText(double x, double y, const Glib::ustring& text) = 0;
-		virtual void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const PDFSettings& settings) = 0;
-		virtual double getAverageCharWidth() const = 0;
-		virtual double getTextWidth(const Glib::ustring& text) const = 0;
-		virtual bool createPage(double /*width*/, double /*height*/, double /*offsetX*/, double /*offsetY*/, Glib::ustring& /*errMsg*/) { return true; }
-		virtual void finishPage() {}
-		virtual bool finishDocument(Glib::ustring& /*errMsg*/) { return true; }
-	};
-	class PoDoFoPDFPainter;
-	class CairoPDFPainter;
+	bool run(const HOCRDocument* hocrdocument, const std::string& outname, const ExporterSettings* settings = nullptr) override;
 
-	struct PaperFormatComboColums : public Gtk::TreeModel::ColumnRecord {
-		Gtk::TreeModelColumn<Glib::ustring> label;
-		Gtk::TreeModelColumn<std::string> format;
-		PaperFormatComboColums() {
-			add(label);
-			add(format);
-		}
-	} m_paperFormatComboCols;
-
-	struct SizeUnitComboColums : public Gtk::TreeModel::ColumnRecord {
-		Gtk::TreeModelColumn<Glib::ustring> label;
-		Gtk::TreeModelColumn<int> unit;
-		SizeUnitComboColums() {
-			add(label);
-			add(unit);
-		}
-	} m_sizeUnitComboCols;
-
-	struct FormatComboColums : public Gtk::TreeModel::ColumnRecord {
-		Gtk::TreeModelColumn<Image::Format> format;
-		Gtk::TreeModelColumn<Glib::ustring> label;
-		FormatComboColums() {
-			add(format);
-			add(label);
-		}
-	} m_formatComboCols;
-
-	struct DitheringComboColums : public Gtk::TreeModel::ColumnRecord {
-		Gtk::TreeModelColumn<Image::ConversionFlags> conversionFlags;
-		Gtk::TreeModelColumn<Glib::ustring> label;
-		DitheringComboColums() {
-			add(conversionFlags);
-			add(label);
-		}
-	} m_ditheringComboCols;
-
-	struct CompressionComboColums : public Gtk::TreeModel::ColumnRecord {
-		Gtk::TreeModelColumn<PDFSettings::Compression> mode;
-		Gtk::TreeModelColumn<Glib::ustring> label;
-		Gtk::TreeModelColumn<bool> sensitive;
-		CompressionComboColums() {
-			add(mode);
-			add(label);
-			add(sensitive);
-		}
-	} m_compressionComboCols;
-
-	struct PdfVersionComboCols : public Gtk::TreeModel::ColumnRecord {
-		Gtk::TreeModelColumn<Glib::ustring> label;
-		Gtk::TreeModelColumn<int> version;
-		PdfVersionComboCols() {
-			add(label);
-			add(version);
-		}
-	} m_pdfVersionComboCols;
-
-	Ui::PdfExportDialog ui;
-	ClassData m_classdata;
-
-	FontComboBox* m_comboOverrideFont;
-	FontComboBox* m_comboFallbackFont;
-	DisplayerImageItem* m_preview = nullptr;
-	Glib::RefPtr<HOCRDocument> m_hocrdocument;
-	const HOCRPage* m_previewPage;
-	DisplayerToolHOCR* m_displayerTool;
-	std::vector<Glib::ustring> m_fontFamilies;
-	sigc::connection m_connPortrait;
-	sigc::connection m_connLandscape;
-
-	PDFSettings getPdfSettings() const;
-	PDFPainter* createPoDoFoPrinter(const std::string& filename, const Glib::ustring& defaultFont, double defaultFontSize, Glib::ustring& errMsg);
-	void printChildren(PDFPainter& painter, const HOCRItem* item, const PDFSettings& pdfSettings, double px2pu, double imgScale = 1., double fontScale = 1., bool inThread = false);
-
-	void importMetadataFromSource();
-	void imageFormatChanged();
-	void imageCompressionChanged();
-	void paperOrientationChanged(bool landscape);
-	void paperSizeChanged();
-	void updatePreview();
-	void updateValid();
+private:
 	bool setSource(const Glib::ustring& sourceFile, int page, int dpi, double angle);
+};
+
+class HOCRPdfPrinter {
+public:
+	HOCRPdfPrinter();
+	virtual ~HOCRPdfPrinter() = default;
+	virtual void setFontFamily(const Glib::ustring& family, bool bold, bool italic) = 0;
+	virtual void setFontSize(double pointSize) = 0;
+	virtual void drawText(double x, double y, const Glib::ustring& text) = 0;
+	virtual void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const HOCRPdfExporter::PDFSettings& settings) = 0;
+	virtual double getAverageCharWidth() const = 0;
+	virtual double getTextWidth(const Glib::ustring& text) const = 0;
+	virtual bool createPage(double /*width*/, double /*height*/, double /*offsetX*/, double /*offsetY*/, Glib::ustring& /*errMsg*/) { return true; }
+	virtual void finishPage() {}
+	virtual bool finishDocument(Glib::ustring& /*errMsg*/) { return true; }
+
+	void printChildren(const HOCRItem* item, const HOCRPdfExporter::PDFSettings& pdfSettings, double px2pu, double imgScale = 1., double fontScale = 1., bool inThread = false);
+
 	Cairo::RefPtr<Cairo::ImageSurface> getSelection(const Geometry::Rectangle& bbox);
+
+protected:
+	std::vector<Glib::ustring> m_fontFamilies;
+};
+
+class HOCRPoDoFoPdfPrinter : public HOCRPdfPrinter {
+public:
+	static HOCRPoDoFoPdfPrinter* create(const std::string& filename, const HOCRPdfExporter::PDFSettings& settings, const Glib::ustring& defaultFont, int defaultFontSize, Glib::ustring& errMsg);
+
+	HOCRPoDoFoPdfPrinter(PoDoFo::PdfStreamedDocument* document, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const Glib::ustring& defaultFontFamily, double defaultFontSize);
+	~HOCRPoDoFoPdfPrinter();
+	bool createPage(double width, double height, double offsetX, double offsetY, Glib::ustring& /*errMsg*/) override;
+	void finishPage() override;
+	bool finishDocument(Glib::ustring& errMsg) override;
+	void setFontFamily(const Glib::ustring& family, bool bold, bool italic) override;
+	void setFontSize(double pointSize) override;
+	void drawText(double x, double y, const Glib::ustring& text) override;
+	void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const HOCRPdfExporter::PDFSettings& settings) override;
+	double getAverageCharWidth() const override;
+	double getTextWidth(const Glib::ustring& text) const override;
+
+private:
+	std::map<Glib::ustring, PoDoFo::PdfFont*> m_fontCache;
+	PoDoFo::PdfStreamedDocument* m_document = nullptr;
+	PoDoFo::PdfPainter* m_painter = nullptr;
+	const PoDoFo::PdfEncoding* m_pdfFontEncoding;
+	PoDoFo::PdfFont* m_defaultFont;
+	Glib::ustring m_defaultFontFamily;
+	double m_defaultFontSize = -1.0;
+	double m_pageHeight = 0.0;
+	double m_offsetX = 0.0;
+	double m_offsetY = 0.0;
+
+	PoDoFo::PdfFont* getFont(Glib::ustring family, bool bold, bool italic);
+};
+
+
+class HOCRCairoPdfPrinter : public HOCRPdfPrinter {
+public:
+	HOCRCairoPdfPrinter(Cairo::RefPtr<Cairo::Context> context, const Glib::ustring& defaultFont);
+	void setFontFamily(const Glib::ustring& family, bool bold, bool italic) override;
+	void setFontSize(double pointSize) override;
+	void drawText(double x, double y, const Glib::ustring& text) override;
+	void drawImage(const Geometry::Rectangle& bbox, const Cairo::RefPtr<Cairo::ImageSurface>& image, const HOCRPdfExporter::PDFSettings& settings) override;
+	double getAverageCharWidth() const override;
+	double getTextWidth(const Glib::ustring& text) const override;
+
+private:
+	Cairo::RefPtr<Cairo::Context> m_context;
+	Glib::ustring m_curFont;
+	Glib::ustring m_defaultFont;
+};
+
+class HOCRPdfExportDialog : public Gtk::Dialog {
+public:
+	HOCRPdfExportDialog(DisplayerToolHOCR* displayerTool, const HOCRDocument* hocrdocument, const HOCRPage* hocrpage, Gtk::Window* parent = nullptr);
+	~HOCRPdfExportDialog();
+
+	HOCRPdfExporter::PDFSettings getPdfSettings() const;
+
+private:
+	HOCRPdfExportWidget* m_widget = nullptr;
 };
 
 #endif // HOCRPDFEXPORTER_HH

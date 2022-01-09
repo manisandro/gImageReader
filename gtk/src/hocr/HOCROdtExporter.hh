@@ -22,10 +22,9 @@
 
 #include "common.hh"
 #include "Geometry.hh"
+#include "HOCRExporter.hh"
 
 
-class DisplayerToolHOCR;
-class HOCRDocument;
 class HOCRItem;
 namespace xmlpp {
 class Element;
@@ -33,13 +32,11 @@ class Element;
 struct zip;
 
 
-class HOCROdtExporter {
+class HOCROdtExporter : public HOCRExporter {
 public:
-	HOCROdtExporter(DisplayerToolHOCR* displayerTool) : m_displayerTool(displayerTool) {}
-	bool run(const Glib::RefPtr<HOCRDocument>& hocrdocument, const std::string& filebasename);
+	bool run(const HOCRDocument* hocrdocument, const std::string& outname, const ExporterSettings* settings = nullptr) override;
 
 private:
-	DisplayerToolHOCR* m_displayerTool;
 
 	void writeImage(zip* fzip, std::map<const HOCRItem*, Glib::ustring>& images, const HOCRItem* item);
 	void writeFontFaceDecls(std::set<Glib::ustring>& families, const HOCRItem* item, xmlpp::Element* parentEl);
