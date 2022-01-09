@@ -318,7 +318,7 @@ bool MainWindow::closeEvent(GdkEventAny*) {
 			Gtk::CheckButton* checkButton = Gtk::make_managed<Gtk::CheckButton>(editor->getTabLabel(*it));
 			checkButton->set_active(true);
 			listDocuments->append(*checkButton);
-			 ++it;
+			++it;
 		}
 	}
 

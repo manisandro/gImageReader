@@ -66,7 +66,7 @@ OutputEditorText::OutputEditorText() {
 	addDocument();
 	prepareCurView();
 
-	CONNECT(ui.notebook, switch_page, [this](Gtk::Widget* page, guint page_number) { prepareCurView(); });
+	CONNECT(ui.notebook, switch_page, [this](Gtk::Widget * page, guint page_number) { prepareCurView(); });
 
 	Glib::RefPtr<Gtk::AccelGroup> group = MAIN->getWindow()->get_accel_group();
 	ui.buttonUndo->add_accelerator("clicked", group, GDK_KEY_Z, Gdk::CONTROL_MASK, Gtk::AccelFlags(0));
@@ -131,10 +131,11 @@ void OutputEditorText::prepareCurView() {
 	MAIN->getHeaderBar()->set_title(getTabLabel());
 
 	std::map<Gtk::Widget*, OutputSession>::iterator it(outputSession.find(getPage()));
-	if (it != outputSession.end())
+	if (it != outputSession.end()) {
 		MAIN->getHeaderBar()->set_subtitle(Glib::path_get_dirname(it->second.file));
-	else
+	} else {
 		MAIN->getHeaderBar()->set_subtitle("");
+	}
 
 	ui.buttonUndo->set_sensitive(getBuffer()->can_undo());
 	ui.buttonRedo->set_sensitive(getBuffer()->can_redo());
@@ -148,10 +149,11 @@ void OutputEditorText::prepareCurView() {
 }
 
 Gsv::View* OutputEditorText::getView(Gtk::Widget* page) const {
-	if (!page)
-		return dynamic_cast <Gsv::View *>((dynamic_cast <Gtk::ScrolledWindow *>(getPage()))->get_child());
-	else
-		return dynamic_cast <Gsv::View *>((dynamic_cast <Gtk::ScrolledWindow *>(ui.notebook->get_nth_page(ui.notebook->page_num(*page))))->get_child());
+	if (!page) {
+		return dynamic_cast <Gsv::View*>((dynamic_cast <Gtk::ScrolledWindow*>(getPage()))->get_child());
+	} else {
+		return dynamic_cast <Gsv::View*>((dynamic_cast <Gtk::ScrolledWindow*>(ui.notebook->get_nth_page(ui.notebook->page_num(*page))))->get_child());
+	}
 }
 
 Glib::RefPtr<OutputBuffer> OutputEditorText::getBuffer(Gtk::Widget* page) const {
@@ -159,10 +161,11 @@ Glib::RefPtr<OutputBuffer> OutputEditorText::getBuffer(Gtk::Widget* page) const 
 }
 
 Gtk::Widget* OutputEditorText::getPage(short int pageNum) const {
-	if (pageNum = -1)
+	if (pageNum = -1) {
 		return ui.notebook->get_nth_page(ui.notebook->get_current_page());
-	else
+	} else {
 		return ui.notebook->get_nth_page(pageNum);
+	}
 }
 
 Gtk::Widget* OutputEditorText::getPageByFilename(std::string filename) const {
@@ -178,16 +181,18 @@ std::string OutputEditorText::getTabLabel(Gtk::Widget* page) {
 	Gtk::Widget* p = page;
 
 	// if page == nullptr use current page
-	if (!page)
+	if (!page) {
 		p = getPage();
+	}
 
-	label = (dynamic_cast<Gtk::Label *>((dynamic_cast<Gtk::HBox *>(ui.notebook->get_tab_label(*p)))->get_children()[0])->get_text());
+	label = (dynamic_cast<Gtk::Label*>((dynamic_cast<Gtk::HBox*>(ui.notebook->get_tab_label(*p)))->get_children()[0])->get_text());
 
 	// ignore buffer modification indicator
-	if ((label[0] == ' ') || (label[0] == '*'))
+	if ((label[0] == ' ') || (label[0] == '*')) {
 		return label.substr(1, label.size() - 1);
-	else
+	} else {
 		return label;
+	}
 }
 
 void OutputEditorText::setTabLabel(Gtk::Widget* page, std::string tabLabel) {
@@ -196,16 +201,19 @@ void OutputEditorText::setTabLabel(Gtk::Widget* page, std::string tabLabel) {
 	Gtk::Widget* p = page;
 
 	// if page == nullptr use current page
-	if (!page)
+	if (!page) {
 		p = getPage();
+	}
 
 	// reuse current label if nothing was provided
-	if (tabLabel == "")
+	if (tabLabel == "") {
 		label = getTabLabel(p);
+	}
 
 	// prepend space to be used as place holder for buffer modification indicator `*` if not done yet
-	if ((label[0] != '*') && (label[0] != ' '))
+	if ((label[0] != '*') && (label[0] != ' ')) {
 		label = " " + label;
+	}
 
 	if (getBuffer(p)->get_modified()) {
 		label[0] = '*';
@@ -216,16 +224,17 @@ void OutputEditorText::setTabLabel(Gtk::Widget* page, std::string tabLabel) {
 	MAIN->getHeaderBar()->set_title(label);
 	std::map<Gtk::Widget*, OutputSession>::iterator it;
 	it = outputSession.find(p);
-	if (it != outputSession.end())
+	if (it != outputSession.end()) {
 		MAIN->getHeaderBar()->set_subtitle(Glib::path_get_dirname(it->second.file));
-	else
+	} else {
 		MAIN->getHeaderBar()->set_subtitle("");
+	}
 
-	dynamic_cast<Gtk::Label *>((dynamic_cast<Gtk::HBox *>(ui.notebook->get_tab_label(*p)))->get_children()[0])->set_text(label);
-	dynamic_cast<Gtk::Label *>((dynamic_cast<Gtk::HBox *>(ui.notebook->get_tab_label(*p)))->get_children()[0])->show();
+	dynamic_cast<Gtk::Label*>((dynamic_cast<Gtk::HBox*>(ui.notebook->get_tab_label(*p)))->get_children()[0])->set_text(label);
+	dynamic_cast<Gtk::Label*>((dynamic_cast<Gtk::HBox*>(ui.notebook->get_tab_label(*p)))->get_children()[0])->show();
 }
 
-void OutputEditorText::setFont(Gsv::View *view) {
+void OutputEditorText::setFont(Gsv::View* view) {
 	if(ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
 		view->unset_font();
 	} else {
@@ -438,8 +447,9 @@ bool OutputEditorText::open(const std::string& file) {
 		}
 
 		if (files.size() > 1) {
-			for (int i = 1; i < files.size(); ++i)
+			for (int i = 1; i < files.size(); ++i) {
 				addDocument(files[i]->get_path());
+			}
 		}
 
 		MAIN->setOutputPaneVisible(true);
@@ -454,9 +464,10 @@ bool OutputEditorText::open(const std::string& file) {
 }
 
 void OutputEditorText::on_close_button_clicked(Gtk::Widget* page) {
-	if (clear(false, page))
+	if (clear(false, page)) {
 		ui.notebook->remove_page(*page);
-	if (ui.notebook->get_n_pages() < 2) ui.notebook->set_show_tabs(false);
+	}
+	if (ui.notebook->get_n_pages() < 2) { ui.notebook->set_show_tabs(false); }
 }
 
 void OutputEditorText::on_buffer_modified_changed(Gtk::Widget* page) {
@@ -487,8 +498,9 @@ Gtk::Widget* OutputEditorText::tabWidget(std::string tabLabel, Gtk::Widget* page
 
 Gtk::Widget* OutputEditorText::addDocument(const std::string& file) {
 	// if the file is already opened somewhere - return that page
-	if (getPageByFilename(file))
+	if (getPageByFilename(file)) {
 		return getPageByFilename(file);
+	}
 
 	Glib::RefPtr<OutputBuffer> textBuffer;
 	textBuffer = OutputBuffer::create();
@@ -506,9 +518,9 @@ Gtk::Widget* OutputEditorText::addDocument(const std::string& file) {
 	textView->signal_focus_in_event().connect( sigc::bind<Gtk::Widget*>( sigc::mem_fun(*this, &OutputEditorText::view_focused_in), scrWindow) );
 
 	std::string tabLabel;
-	if (file == "")
+	if (file == "") {
 		tabLabel = Glib::ustring::compose(_("New document %1"), std::to_string(ui.notebook->get_n_pages() + 1));
-	else {
+	} else {
 		try {
 			textBuffer->begin_not_undoable_action();
 			textBuffer->set_text(Glib::file_get_contents(file));
@@ -527,8 +539,9 @@ Gtk::Widget* OutputEditorText::addDocument(const std::string& file) {
 
 	textBuffer->signal_modified_changed().connect( sigc::bind<Gtk::Widget*>( sigc::mem_fun(*this, &OutputEditorText::on_buffer_modified_changed), scrWindow) );
 
-	if (ui.notebook->get_n_pages() > 1)
+	if (ui.notebook->get_n_pages() > 1) {
 		ui.notebook->set_show_tabs(true);
+	}
 	ui.notebook->show_all();
 
 	return scrWindow;
@@ -584,7 +597,7 @@ bool OutputEditorText::clear(bool hide, Gtk::Widget* page) {
 			return false;
 		}
 	}
-	if (!hasSession(page)) getBuffer(page)->begin_not_undoable_action();
+	if (!hasSession(page)) { getBuffer(page)->begin_not_undoable_action(); }
 	getBuffer(page)->set_text("");
 	if (!hasSession(page)) {
 		getBuffer(page)->end_not_undoable_action();
@@ -616,19 +629,19 @@ bool OutputEditorText::hasSession(Gtk::Widget* page) {
 
 bool OutputEditorText::view_focused_in(GdkEventFocus* focus_event, Gtk::Widget* page) {
 
-/* Todo: start using GtkSourceFile in OutputSession.file
+	/* Todo: start using GtkSourceFile in OutputSession.file
 
-	GtkSourceFile *file;
+		GtkSourceFile *file;
 
-//  obtain *file from session
+	//  obtain *file from session
 
-	gtk_source_file_check_file_on_disk (file);
+		gtk_source_file_check_file_on_disk (file);
 
-	if (gtk_source_file_is_externally_modified (file))
-	{
-//		display_externally_modified_notification (page);
-	}
+		if (gtk_source_file_is_externally_modified (file))
+		{
+	//		display_externally_modified_notification (page);
+		}
 
-*/
+	*/
 	return true;
 }

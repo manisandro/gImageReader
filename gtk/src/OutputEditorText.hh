@@ -31,8 +31,8 @@
 class SearchReplaceFrame;
 
 class OutputSession {
-	public:
-		std::string file;
+public:
+	std::string file;
 };
 
 
@@ -97,7 +97,7 @@ private:
 	void replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
 	void applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase);
 	void scrollCursorIntoView();
-	void setFont(Gsv::View *view);
+	void setFont(Gsv::View* view);
 	void setInsertMode(InsertMode mode, const std::string& iconName);
 
 	// get GtkSourceView at page; by default returns view at current page
