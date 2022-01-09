@@ -424,6 +424,16 @@ void Displayer::setAngle(double angle) {
 	}
 }
 
+bool Displayer::resolvePage(int page, std::string& source, int& sourcePage) const {
+	auto it = m_pageMap.find(page);
+	if(it == m_pageMap.end()) {
+		return false;
+	}
+	source = it->second.first->file->get_path();
+	sourcePage = it->second.second;
+	return true;
+}
+
 bool Displayer::hasMultipleOCRAreas() {
 	return m_tool->hasMultipleOCRAreas();
 }

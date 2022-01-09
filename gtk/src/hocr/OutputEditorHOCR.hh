@@ -63,6 +63,7 @@ public:
 	bool getModified(Gtk::Widget* widget = nullptr) const override {
 		return m_modified;
 	}
+	bool containsSource(const std::string& source, int sourcePage) const override;
 	void onVisibilityChanged(bool /*visible*/) override;
 
 	bool clear(bool hide = true, Gtk::Widget* widget = nullptr) override;

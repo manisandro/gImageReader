@@ -54,6 +54,7 @@ public:
 	double getCurrentScale() const {
 		return m_scale;
 	}
+	bool resolvePage(int page, std::string& source, int& sourcePage) const;
 	std::string getCurrentImage(int& page) const;
 	int getNPages() const;
 	int getNSources() const { return m_sourceRenderers.size(); }

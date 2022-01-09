@@ -65,6 +65,7 @@ public:
 	virtual BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const = 0;
 
 	virtual bool getModified(Gtk::Widget* widget = nullptr) const = 0;
+	virtual bool containsSource(const std::string& source, int sourcePage) const { return false; }
 
 
 	virtual void onVisibilityChanged(bool /*visible*/) {}

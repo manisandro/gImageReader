@@ -200,6 +200,22 @@ void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout)
 	if(!tess) {
 		return;
 	}
+	bool contains = false;
+	for(int page : pages) {
+		std::string source;
+		int sourcePage;
+		if(MAIN->getDisplayer()->resolvePage(page, source, sourcePage)) {
+			if(MAIN->getOutputEditor()->containsSource(source, sourcePage)) {
+				contains = true;
+				break;
+			}
+		}
+	}
+	if(contains) {
+		if(Utils::Button::No == Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Source already recognized"), _("One or more selected sources were aready recognized. Proceed anyway?"), "", Utils::Button::Yes | Utils::Button::No)) {
+			return;
+		}
+	}
 	std::vector<Glib::ustring> errors;
 	tess->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
 	tess->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().c_str());

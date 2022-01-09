@@ -560,6 +560,16 @@ void OutputEditorHOCR::addPage(const Glib::ustring& hocrText, HOCRReadSessionDat
 	m_modified = true;
 }
 
+bool OutputEditorHOCR::containsSource(const std::string& source, int sourcePage) const {
+	for(int i = 0, n = m_document->pageCount(); i < n; ++i) {
+		const HOCRPage* page = m_document->page(i);
+		if(page->pageNr() == sourcePage && page->sourceFile() == source) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void OutputEditorHOCR::navigateTargetChanged() {
 	Glib::ustring target = (*ui.comboNavigation->get_active())[m_navigationComboCols.itemClass];
 	bool allowExpandCollapse = target.substr(0, 9) != "ocrx_word";
