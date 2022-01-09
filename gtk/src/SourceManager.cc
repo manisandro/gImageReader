@@ -102,10 +102,10 @@ SourceManager::~SourceManager() {
 	clearSources();
 }
 
-int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files, bool suppressTextWarning) {
+int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files, bool suppressWarnings) {
 	std::vector<Glib::ustring> failed;
 	int added = 0;
-	PdfWithTextAction textAction = suppressTextWarning ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
+	PdfWithTextAction textAction = suppressWarnings ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
 
 	std::vector<Gtk::TreeIter> selectIters;
 
@@ -166,7 +166,7 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files,
 	}
 	m_connectionSelectionChanged.block(false);
 	selectionChanged();
-	if(!failed.empty()) {
+	if(!failed.empty() && !suppressWarnings) {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Unable to open files"), Glib::ustring::compose(_("The following files could not be opened:\n%1"), Utils::string_join(failed, "\n")));
 	}
 	return added;

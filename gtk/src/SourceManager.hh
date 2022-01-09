@@ -60,9 +60,9 @@ public:
 	SourceManager(const Ui::MainWindow& _ui);
 	~SourceManager();
 
-	int addSources(const std::vector<Glib::RefPtr<Gio::File>>& files, bool suppressTextWarning = false);
-	bool addSource(Glib::RefPtr<Gio::File> file, bool suppressTextWarning) {
-		return addSources({file}, suppressTextWarning) == 1;
+	int addSources(const std::vector<Glib::RefPtr<Gio::File>>& files, bool suppressWarnings = false);
+	bool addSource(Glib::RefPtr<Gio::File> file, bool suppressWarnings) {
+		return addSources({file}, suppressWarnings) == 1;
 	}
 	std::vector<Source*> getSelectedSources() const;
 	sigc::signal<void> signal_sourceChanged() {
