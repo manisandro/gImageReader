@@ -20,47 +20,46 @@
 #ifndef HOCRPROOFREADWIDGET_HH
 #define HOCRPROOFREADWIDGET_HH
 
-#include <QMap>
-#include <QFrame>
+#include <gtkmm.h>
+#include "common.hh"
 
-class QLabel;
-class QSpinBox;
-class QTreeView;
-class QVBoxLayout;
 class HOCRItem;
 
-class HOCRProofReadWidget : public QFrame {
-	Q_OBJECT
+
+class HOCRProofReadWidget : public Gtk::Window {
 public:
-	HOCRProofReadWidget(QTreeView* treeView, QWidget* parent = nullptr);
+	HOCRProofReadWidget(Gtk::TreeView* treeView);
+	~HOCRProofReadWidget();
 	void clear();
-	QTreeView* documentTree() const { return m_treeView; }
+	Gtk::TreeView* documentTree() const { return m_treeView; }
 	void setConfidenceLabel(int wconf);
-	QString confidenceStyle(int wconf) const;
+	Glib::ustring confidenceStyle(int wconf) const;
 	void adjustFontSize(int diff);
 
 private:
 	class LineEdit;
+	ClassData m_classdata;
 
-	QTreeView* m_treeView = nullptr;
-	QVBoxLayout* m_linesLayout = nullptr;
+	Gtk::Box* m_mainLayout = nullptr;
+	Gtk::TreeView* m_treeView = nullptr;
+	Gtk::Box* m_linesLayout = nullptr;
 	const HOCRItem* m_currentLine = nullptr;
-	QWidget* m_controlsWidget = nullptr;
-	QLabel* m_confidenceLabel = nullptr;
-	QMap<const HOCRItem*, QWidget*> m_currentLines;
-	QSpinBox* m_spinLinesBefore = nullptr;
-	QSpinBox* m_spinLinesAfter = nullptr;
+	Gtk::Box* m_controlsWidget = nullptr;
+	Gtk::Label* m_confidenceLabel = nullptr;
+	std::map<const HOCRItem*, Gtk::Box*> m_currentLines;
+	Gtk::Window* m_settingsMenu = nullptr;
+	Gtk::SpinButton* m_spinLinesBefore = nullptr;
+	Gtk::SpinButton* m_spinLinesAfter = nullptr;
+	Gtk::Button* m_settingsButton = nullptr;
 	int m_fontSizeDiff = 0;
 
-	// Disable auto tab handling
-	bool focusNextPrevChild(bool) override { return false; }
+	// TODO: Disable auto tab handling
+//	bool focusNextPrevChild(bool) override { return false; }
 
+	void showSettingsMenu();
 	void repositionWidget();
-
-private slots:
 	void updateWidget(bool force = false);
 	void showShortcutsDialog();
 };
-
 
 #endif // HOCRPROOFREADWIDGET_HH

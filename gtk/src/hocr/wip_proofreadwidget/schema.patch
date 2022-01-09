@@ -1,0 +1,20 @@
+diff --git a/gtk/data/org.gnome.gimagereader.gschema.xml b/gtk/data/org.gnome.gimagereader.gschema.xml
+index 92b34868..4df03249 100644
+--- a/gtk/data/org.gnome.gimagereader.gschema.xml
++++ b/gtk/data/org.gnome.gimagereader.gschema.xml
+@@ -316,5 +316,15 @@
+             <summary>Syntax highlight mode</summary>
+             <description>Syntax highlight mode.</description>
+         </key>
++        <key type="i" name="proofreadlinesbefore">
++            <default>0</default>
++            <summary>Number of lines to show before current line</summary>
++            <description>Number of lines to show before current line</description>
++        </key>
++        <key type="i" name="proofreadlinesafter">
++            <default>3</default>
++            <summary>Number of lines to show before current line</summary>
++            <description>Number of lines to show before current line</description>
++        </key>
+     </schema>
+ </schemalist>

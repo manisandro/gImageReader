@@ -1,0 +1,68 @@
+diff --git a/gtk/src/Displayer.cc b/gtk/src/Displayer.cc
+index e466e70f..c07e2280 100644
+--- a/gtk/src/Displayer.cc
++++ b/gtk/src/Displayer.cc
+@@ -99,6 +99,10 @@ Displayer::Displayer(const Ui::MainWindow& _ui)
+ 		ui.iconviewThumbnails->scroll_to_path(path, false, 0., 0.);
+ 		m_connection_thumbClicked.block(false);
+ 	});
++	CONNECT(m_hadj, changed, [this] { m_signalViewportChanged.emit(); });
++	CONNECT(m_hadj, value_changed, [this] { m_signalViewportChanged.emit(); });
++	CONNECT(m_vadj, changed, [this] { m_signalViewportChanged.emit(); });
++	CONNECT(m_vadj, value_changed, [this] { m_signalViewportChanged.emit(); });
+ 
+ 	ADD_SETTING(SwitchSettingT<Gtk::ToggleButton>("thumbnails", ui.checkBoxThumbnails));
+ 	// Adjust paned position as soon as window is visible
+@@ -387,6 +391,7 @@ void Displayer::setZoom(Zoom zoom) {
+ 
+ 	m_connection_zoomfitClicked.block(false);
+ 	m_connection_zoomoneClicked.block(false);
++	m_signalViewportChanged.emit();
+ }
+ 
+ void Displayer::setRotateMode(RotateMode mode, const std::string& iconName) {
+@@ -671,6 +676,14 @@ Geometry::Point Displayer::mapToView(const Geometry::Point& p) const {
+ 	                       alloc.get_y() + 0.5 * alloc.get_height() + p.y * m_scale);
+ }
+ 
++void Displayer::mapViewToRoot(int x_view, int y_view, int& x_root, int& y_root) const {
++	ui.viewportDisplay->translate_coordinates(*ui.viewportDisplay->get_toplevel(), x_view, y_view, x_root, y_root);
++	int win_x, win_y;
++	MAIN->getWindow()->get_window()->get_origin(win_x, win_y);
++	x_root += win_x - m_hadj->get_value();
++	y_root += win_y - m_vadj->get_value();
++}
++
+ Cairo::RefPtr<Cairo::ImageSurface> Displayer::getImage(const Geometry::Rectangle& rect) const {
+ 	Cairo::RefPtr<Cairo::ImageSurface> surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, std::ceil(rect.width), std::ceil(rect.height));
+ 	Cairo::RefPtr<Cairo::Context> ctx = Cairo::Context::create(surf);
+diff --git a/gtk/src/Displayer.hh b/gtk/src/Displayer.hh
+index ae6d1012..80e80deb 100644
+--- a/gtk/src/Displayer.hh
++++ b/gtk/src/Displayer.hh
+@@ -62,6 +62,7 @@ public:
+ 	Geometry::Rectangle getSceneBoundingRect() const;
+ 	Geometry::Point mapToSceneClamped(const Geometry::Point& p) const;
+ 	Geometry::Point mapToView(const Geometry::Point& p) const;
++	void mapViewToRoot(int x_view, int y_view, int& x_root, int& y_root) const;
+ 	bool hasMultipleOCRAreas();
+ 	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
+ 	bool allowAutodetectOCRAreas() const;
+@@ -77,6 +78,8 @@ public:
+ 	void resortItems();
+ 	void setBlockAutoscale(bool block);
+ 
++	sigc::signal<void> signal_viewportChanged() const { return m_signalViewportChanged; }
++
+ 
+ private:
+ 	enum class Zoom { In, Out, Fit, One };
+@@ -102,6 +105,8 @@ private:
+ 	double m_panPos[2] = {0., 0.};
+ 	Glib::RefPtr<Gdk::Cursor> m_defaultCursor;
+ 
++	sigc::signal<void> m_signalViewportChanged;
++
+ 	sigc::connection m_renderTimer;
+ 	sigc::connection m_connection_pageSpinChanged;
+ 	sigc::connection m_connection_rotSpinChanged;
