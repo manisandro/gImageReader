@@ -17,6 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ConfigSettings.hh"
 #include "Displayer.hh"
 #include "common.hh"
 #include "CCITTFax4Encoder.hh"
@@ -39,8 +40,10 @@
 #include <podofo/doc/PdfPainter.h>
 #include <podofo/doc/PdfStreamedDocument.h>
 #include <QBuffer>
+#include <QDesktopServices>
 #include <QPainter>
 #include <QThread>
+#include <QUrl>
 
 
 bool HOCRPdfExporter::run(const HOCRDocument* hocrdocument, const QString& outname, const ExporterSettings* settings) {
