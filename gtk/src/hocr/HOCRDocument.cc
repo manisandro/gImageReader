@@ -87,6 +87,15 @@ void HOCRDocument::addSpellingActions(Gtk::Menu* menu, const Gtk::TreeIter& inde
 	}
 }
 
+void HOCRDocument::addWordToDictionary(const Gtk::TreeIter& index) {
+	const HOCRItem* item = itemAtIndex(index);
+	if(item && item->isMisspelled()) {
+		Glib::ustring trimmedWord = HOCRItem::trimmedWord(item->text());
+		m_spell->add_to_dictionary(trimmedWord);
+		resetMisspelled(index);
+	}
+}
+
 Glib::ustring HOCRDocument::toHTML() {
 	Glib::ustring html = "<body>\n";
 	for(const HOCRPage* page : m_pages) {
@@ -275,6 +284,64 @@ Gtk::TreeIter HOCRDocument::splitItem(const Gtk::TreeIter& index, int startRow, 
 	}
 
 	return newIndex;
+}
+
+Gtk::TreeIter HOCRDocument::splitItemText(const Gtk::TreeIter& itemIndex, int pos, const Glib::RefPtr<Pango::Context>& pangoContext) {
+	HOCRItem* item = mutableItemAtIndex(itemIndex);
+	if(!item || item->itemClass() != "ocrx_word") {
+		return Gtk::TreeIter();
+	}
+	// Compute new bounding box using font metrics with default font
+	Glib::RefPtr<Pango::Layout> layout = Pango::Layout::create(pangoContext);
+	layout->set_text(item->text().substr(0, pos));
+	int substrWidth = layout->get_width() * Pango::SCALE;
+	layout->set_text(item->text());
+	int fullWidth = layout->get_width() * Pango::SCALE;
+	double fraction = substrWidth / double(fullWidth);
+	Geometry::Rectangle bbox = item->bbox();
+	Geometry::Rectangle leftBBox = bbox;
+	leftBBox.width = bbox.width * fraction;
+	Geometry::Rectangle rightBBox = bbox;
+	rightBBox.setLeft(bbox.x + bbox.width * fraction);
+
+	xmlpp::Document doc;
+	xmlpp::Element* newElement = doc.create_root_node("span");
+	newElement->add_child_text(item->text().substr(pos));
+	newElement->set_attribute("class", "ocrx_word");
+	std::map<Glib::ustring, Glib::ustring> attrs = item->getTitleAttributes();
+	attrs["bbox"] = Glib::ustring::compose("%1 %2 %3 %4", rightBBox.left(), rightBBox.top(), rightBBox.right(), rightBBox.bottom());
+	newElement->set_attribute("title", HOCRItem::serializeAttrGroup(attrs));
+	HOCRItem* newItem = new HOCRItem(newElement, item->page(), item->parent(), item->index() + 1);
+	Gtk::TreePath insertPath = get_path(itemIndex);
+	insertPath.back() += 1;
+	insertItem(item->parent(), newItem, item->index() + 1);
+	row_inserted(insertPath, get_iter(insertPath));
+	item->setText(item->text().substr(0, pos));
+	editItemAttribute(itemIndex, "title:bbox", Glib::ustring::compose("%1 %2 %3 %4", leftBBox.left(), leftBBox.top(), leftBBox.right(), leftBBox.bottom()));
+	row_changed(get_path(itemIndex), itemIndex);
+	return get_iter(insertPath);
+}
+
+Gtk::TreeIter HOCRDocument::mergeItemText(const Gtk::TreeIter& itemIndex, bool mergeNext) {
+	HOCRItem* item = mutableItemAtIndex(itemIndex);
+	if(!item || item->itemClass() != "ocrx_word") {
+		return Gtk::TreeIter();
+	}
+	if((!mergeNext && item->index() == 0) || (mergeNext && item->index() == int(item->parent()->children().size()) - 1)) {
+		return Gtk::TreeIter();
+	}
+	int offset = mergeNext ? 1 : -1;
+	HOCRItem* otherItem = item->parent()->children()[item->index() + offset];
+	Glib::ustring newText = mergeNext ? item->text() + otherItem->text() : otherItem->text() + item->text();
+	Geometry::Rectangle newBbox = item->bbox().unite(otherItem->bbox());
+	item->setText(newText);
+	row_changed(get_path(itemIndex), itemIndex);
+	editItemAttribute(itemIndex, "title:bbox", Glib::ustring::compose("%1 %2 %3 %4", newBbox.left(), newBbox.top(), newBbox.right(), newBbox.bottom()));
+	Gtk::TreePath deletePath = get_path(itemIndex);
+	deletePath.back() += offset;
+	deleteItem(otherItem);
+	row_deleted(deletePath);
+	return itemIndex;
 }
 
 Gtk::TreeIter HOCRDocument::addItem(const Gtk::TreeIter& parent, const xmlpp::Element* element) {

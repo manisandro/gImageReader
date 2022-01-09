@@ -50,6 +50,7 @@ public:
 		return m_defaultLanguage;
 	}
 	void addSpellingActions(Gtk::Menu* menu, const Gtk::TreeIter& index);
+	void addWordToDictionary(const Gtk::TreeIter& index);
 
 	Glib::ustring toHTML();
 
@@ -71,6 +72,8 @@ public:
 	Gtk::TreeIter swapItems(const Gtk::TreeIter& parent, int startRow, int endRow);
 	Gtk::TreeIter mergeItems(const Gtk::TreeIter& parent, int startRow, int endRow);
 	Gtk::TreeIter splitItem(const Gtk::TreeIter& item, int startRow, int endRow);
+	Gtk::TreeIter splitItemText(const Gtk::TreeIter& itemIndex, int pos, const Glib::RefPtr<Pango::Context>& pangoContext);
+	Gtk::TreeIter mergeItemText(const Gtk::TreeIter& itemIndex, bool mergeNext);
 	Gtk::TreeIter addItem(const Gtk::TreeIter& parent, const xmlpp::Element* element);
 	bool removeItem(const Gtk::TreeIter& index);
 
