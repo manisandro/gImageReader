@@ -135,6 +135,7 @@ private:
 
 	sigc::connection m_connectionCustomFont;
 	sigc::connection m_connectionDefaultFont;
+	sigc::connection m_connectionSourceChanged;
 
 	Glib::RefPtr<Glib::Regex> attributeValidator(const Glib::ustring& attribName) const;
 	bool attributeEditable(const Glib::ustring& attribName) const;
@@ -162,6 +163,8 @@ private:
 	void findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace);
 	void replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
 	void applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase);
+	void sourceChanged();
+	void previewToggled();
 	void updatePreview();
 	void drawPreview(Cairo::RefPtr<Cairo::Context> context, const HOCRItem* item);
 };

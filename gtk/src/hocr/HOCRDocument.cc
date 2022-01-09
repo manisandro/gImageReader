@@ -810,7 +810,9 @@ Glib::RefPtr<Gdk::Pixbuf> HOCRDocument::decorationRoleForItem(const HOCRItem* it
 	} else if(itemClass == "ocr_graphic") {
 		return Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/item_halftone.png");
 	}
-	return Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, false, 8, 0, 0);
+	auto pixbuf = Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, false, 8, 16, 16);
+	pixbuf->fill(255);
+	return pixbuf;
 }
 
 void HOCRDocument::insertItem(HOCRItem* parent, HOCRItem* item, int i) {

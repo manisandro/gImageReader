@@ -77,6 +77,8 @@ public:
 	void resortItems();
 	void setBlockAutoscale(bool block);
 
+	sigc::signal<void> signal_imageChanged() const { return m_signalImageChanged; }
+
 
 private:
 	enum class Zoom { In, Out, Fit, One };
@@ -113,6 +115,8 @@ private:
 	sigc::connection m_connection_zoomoneClicked;
 	sigc::connection m_connection_setScaledImage;
 	sigc::connection m_connection_thumbClicked;
+
+	sigc::signal<void> m_signalImageChanged;
 
 	void resizeEvent();
 	bool keyPressEvent(GdkEventKey* ev);

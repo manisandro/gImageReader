@@ -201,6 +201,7 @@ bool Displayer::setSources(std::vector<Source*> sources) {
 
 	m_sources = sources;
 	if(sources.empty()) {
+		m_signalImageChanged.emit();
 		return false;
 	}
 
@@ -319,6 +320,7 @@ bool Displayer::renderImage() {
 	if(m_tool) {
 		if(m_currentSource != oldSource || m_currentSource->page != oldPage) {
 			m_tool->pageChanged();
+			m_signalImageChanged.emit();
 		}
 		if(oldResolution != m_currentSource->resolution) {
 			double factor = double(m_currentSource->resolution) / double(oldResolution);

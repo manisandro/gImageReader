@@ -428,7 +428,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	CONNECT(ui.buttonClear, clicked, [this] { clear(); });
 	CONNECT(ui.buttonFindreplace, toggled, [this] { m_searchFrame->clear(); m_searchFrame->getWidget()->set_visible(ui.buttonFindreplace->get_active()); });
 	CONNECT(ui.buttonWconf, toggled, [this] { m_treeView->get_column(1)->set_visible(ui.buttonWconf->get_active());});
-	CONNECT(ui.buttonPreview, toggled, [this] { updatePreview(); });
+	CONNECT(ui.buttonPreview, toggled, [this] { previewToggled(); });
 	CONNECT(m_treeView, context_menu, [this](GdkEventButton * ev) {
 		showTreeWidgetContextMenu(ev);
 	});
@@ -470,6 +470,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	CONNECT(ui.buttonNavigationPrev, clicked, [this] { navigateNextPrev(false); });
 	CONNECT(ui.buttonExpandAll, clicked, [this] { expandCollapseItemClass(true); });
 	CONNECT(ui.buttonCollapseAll, clicked, [this] { expandCollapseItemClass(false); });
+	m_connectionSourceChanged = CONNECT(MAIN->getDisplayer(), imageChanged, [this] { sourceChanged(); });
 
 	setFont();
 }
@@ -611,7 +612,13 @@ void OutputEditorHOCR::expandCollapseChildren(const Gtk::TreeIter& index, bool e
 }
 
 bool OutputEditorHOCR::showPage(const HOCRPage* page) {
-	return page && MAIN->getSourceManager()->addSource(Gio::File::create_for_path(page->sourceFile()), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
+	m_connectionSourceChanged.block();
+	bool success = page && MAIN->getSourceManager()->addSource(Gio::File::create_for_path(page->sourceFile()), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
+	m_connectionSourceChanged.unblock();
+	if(success) {
+		sourceChanged();
+	}
+	return success;
 }
 
 int OutputEditorHOCR::currentPage() {
@@ -1299,6 +1306,29 @@ void OutputEditorHOCR::applySubstitutions(const std::map<Glib::ustring, Glib::us
 		} while(curr != start);
 	}
 	MAIN->popState();
+}
+
+void OutputEditorHOCR::sourceChanged() {
+	int page;
+	std::string path = MAIN->getDisplayer()->getCurrentImage(page);
+	// Check if source is in document tree
+	Gtk::TreeIter pageIndex = m_document->searchPage(path, page);
+	if(!pageIndex) {
+		ui.buttonPreview->set_active(false);
+		m_treeView->setCurrentIndex(Gtk::TreeIter());
+	} else {
+		const HOCRItem* item = m_document->itemAtIndex(pageIndex);
+		m_treeView->setCurrentIndex(pageIndex);
+	}
+}
+
+void OutputEditorHOCR::previewToggled() {
+	Gtk::TreeIter index = m_treeView->currentIndex();
+	if(ui.buttonPreview->get_active() && !index && m_document->pageCount() > 0) {
+		m_treeView->setCurrentIndex(m_document->indexAtItem(m_document->page(0)));
+	} else {
+		updatePreview();
+	}
 }
 
 void OutputEditorHOCR::updatePreview() {
