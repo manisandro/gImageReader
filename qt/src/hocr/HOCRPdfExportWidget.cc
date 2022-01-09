@@ -389,7 +389,6 @@ void HOCRPdfExportWidget::updateValid() {
 		}
 	}
 	emit validChanged(valid);
-//	ui.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
 void HOCRPdfExportWidget::importMetadataFromSource() {
