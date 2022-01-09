@@ -275,7 +275,8 @@ void OutputEditorHOCR::HOCRBatchProcessor::appendOutput(std::ostream& dev, tesse
 		return;
 	}
 	std::map<Glib::ustring, Glib::ustring> attrs = HOCRItem::deserializeAttrGroup(pageDiv->get_attribute_value("title"));
-	attrs["image"] = Glib::ustring::compose("'%1'", pageInfos.filename);
+	// This works because in batch mode the output is created next to the source image
+	attrs["image"] = Glib::ustring::compose("'%1'", Glib::path_get_basename(pageInfos.filename));
 	attrs["ppageno"] = Glib::ustring::compose("%1", pageInfos.page);
 	attrs["rot"] = Glib::ustring::compose("%1", pageInfos.angle);
 	attrs["res"] = Glib::ustring::compose("%1", pageInfos.resolution);
