@@ -168,8 +168,8 @@ public:
 private:
 	QFontDatabase m_fontDatabase;
 	QMap<QString, PoDoFo::PdfFont*> m_fontCache;
-	PoDoFo::PdfPainter* m_painter;
-	PoDoFo::PdfStreamedDocument* m_document;
+	PoDoFo::PdfPainter* m_painter = nullptr;
+	PoDoFo::PdfStreamedDocument* m_document = nullptr;
 	const PoDoFo::PdfEncoding* m_pdfFontEncoding;
 	PoDoFo::PdfFont* m_defaultFont;
 	QString m_defaultFontFamily;
