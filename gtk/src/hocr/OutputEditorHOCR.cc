@@ -152,7 +152,7 @@ class OutputEditorHOCR::HOCRTreeView : public Gtk::TreeView {
 public:
 	HOCRTreeView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& /*builder*/)
 		: Gtk::TreeView(cobject) {
-		CONNECT(get_selection(), changed, [this] {
+		m_connectionSelectionChanged = CONNECT(get_selection(), changed, [this] {
 			Gtk::TreeIter oldIndex = m_currentIndex;
 			m_currentIndex = currentIndex();
 			m_signal_current_index_changed(m_currentIndex, oldIndex);
@@ -180,6 +180,20 @@ public:
 			return get_model()->get_iter(items[0]);
 		}
 		return Gtk::TreeIter();
+	}
+	void setCurrentIndex(const Gtk::TreeIter& index) {
+		if (index == m_currentIndex) {
+			return;
+		}
+		m_connectionSelectionChanged.block();
+		get_selection()->unselect_all();
+		m_connectionSelectionChanged.unblock();
+		if(index) {
+			expand_to_path(get_model()->get_path(index));
+			get_selection()->select(index);
+			set_cursor(get_model()->get_path(index));
+			scroll_to_row(get_model()->get_path(index));
+		}
 	}
 	Gtk::TreeIter indexAtPos(int evx, int evy) {
 		Gtk::TreePath path;
@@ -228,6 +242,7 @@ private:
 	sigc::signal<void, Gtk::TreeIter, Gtk::TreeIter> m_signal_current_index_changed;
 	sigc::signal<void, GdkEventButton*> m_signal_context_menu;
 	sigc::signal<void> m_signal_delete;
+	sigc::connection m_connectionSelectionChanged;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -425,7 +440,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	CONNECT(m_searchFrame, apply_substitutions, sigc::mem_fun(this, &OutputEditorHOCR::applySubstitutions));
 	m_connectionCustomFont = CONNECT(ConfigSettings::get<FontSetting>("customoutputfont"), changed, [this] { setFont(); });
 	m_connectionDefaultFont = CONNECT(ConfigSettings::get<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(); });
-	m_connectionSelectionChanged = CONNECT(m_treeView, current_index_changed, sigc::mem_fun(this, &OutputEditorHOCR::showItemProperties));
+	CONNECT(m_treeView, current_index_changed, sigc::mem_fun(this, &OutputEditorHOCR::showItemProperties));
 	CONNECT(ui.notebook, switch_page, [this](Gtk::Widget*, guint) {
 		updateSourceText();
 	});
@@ -614,18 +629,6 @@ int OutputEditorHOCR::currentPage() {
 void OutputEditorHOCR::showItemProperties(const Gtk::TreeIter& index, const Gtk::TreeIter& prev) {
 	m_tool->setAction(DisplayerToolHOCR::ACTION_NONE);
 	const HOCRItem* prevItem = m_document->itemAtIndex(prev);
-	Gtk::TreeIter current = m_treeView->currentIndex();
-	if(!current || current != index) {
-		m_connectionSelectionChanged.block(true);
-		m_treeView->get_selection()->unselect_all();
-		if(index) {
-			m_treeView->expand_to_path(m_document->get_path(index));
-			m_treeView->get_selection()->select(index);
-			m_treeView->set_cursor(m_document->get_path(index));
-			m_treeView->scroll_to_row(m_document->get_path(index));
-		}
-		m_connectionSelectionChanged.block(false);
-	}
 	m_propStore->clear();
 	ui.textviewSource->get_buffer()->set_text("");
 
@@ -834,13 +837,8 @@ void OutputEditorHOCR::bboxDrawn(const Geometry::Rectangle& bbox, int action) {
 		return;
 	}
 	Gtk::TreeIter index = m_document->addItem(current, newElement);
-	if(index) {
-		m_connectionSelectionChanged.block(true);
-		m_treeView->get_selection()->unselect_all();
-		m_connectionSelectionChanged.block(false);
-		m_treeView->expand_to_path(m_document->get_path(index));
-		m_treeView->get_selection()->select(index);
-		m_treeView->scroll_to_row(m_document->get_path(index));
+	if (index) {
+		m_treeView->setCurrentIndex(index);
 	}
 }
 
@@ -877,16 +875,14 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 			menu.append(*mergeItem);
 			CONNECT(mergeItem, activate, [&] {
 				Gtk::TreeIter newIndex = m_document->mergeItems(m_document->get_iter(paths.front())->parent(), rows.front(), rows.back());
-				m_treeView->get_selection()->unselect_all();
-				m_treeView->get_selection()->select(newIndex);
+				m_treeView->setCurrentIndex(newIndex);
 			});
 			if(firstItem->itemClass() != "ocr_carea") {
 				Gtk::MenuItem* splitItem = Gtk::manage(new Gtk::MenuItem(_("Split from parent")));
 				menu.append(*splitItem);
 				CONNECT(splitItem, activate, [&] {
 					Gtk::TreeIter newIndex = m_document->splitItem(m_document->get_iter(paths.front())->parent(), rows.front(), rows.back());
-					m_treeView->get_selection()->unselect_all();
-					m_treeView->get_selection()->select(newIndex);
+					m_treeView->setCurrentIndex(newIndex);
 					expandCollapseChildren(newIndex, true);
 				});
 			}
@@ -896,8 +892,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 			menu.append(*swapItem);
 			CONNECT(swapItem, activate, [&] {
 				Gtk::TreeIter newIndex = m_document->swapItems(m_document->get_iter(paths.front())->parent(), rows.front(), rows.back());
-				m_treeView->get_selection()->unselect_all();
-				m_treeView->get_selection()->select(newIndex);
+				m_treeView->setCurrentIndex(newIndex);
 			});
 		}
 		CONNECT(&menu, hide, [&] { loop->quit(); });
@@ -944,8 +939,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 		Gtk::MenuItem* splitItem = Gtk::manage(new Gtk::MenuItem(_("Split from parent")));
 		CONNECT(splitItem, activate, [this, index, item] {
 			Gtk::TreeIter newIndex = m_document->splitItem(index->parent(), item->index(), item->index());
-			m_treeView->get_selection()->unselect_all();
-			m_treeView->get_selection()->select(newIndex);
+			m_treeView->setCurrentIndex(newIndex);
 			expandCollapseChildren(newIndex, true);
 		});
 		menu.append(*splitItem);
@@ -982,7 +976,7 @@ void OutputEditorHOCR::pickItem(const Geometry::Point& point) {
 	double scale = double(page->resolution()) / double(MAIN->getDisplayer()->getCurrentResolution());
 	Geometry::Point newPoint( scale * (point.x * std::cos(alpha) - point.y * std::sin(alpha)) + 0.5 * page->bbox().width,
 	                          scale * (point.x * std::sin(alpha) + point.y * std::cos(alpha)) + 0.5 * page->bbox().height);
-	showItemProperties(m_document->searchAtCanvasPos(pageIndex, newPoint));
+	m_treeView->setCurrentIndex(m_document->searchAtCanvasPos(pageIndex, newPoint));
 	m_treeView->grab_focus();
 }
 
@@ -1229,8 +1223,7 @@ bool OutputEditorHOCR::findReplaceInItem(const Gtk::TreeIter& index, const Glib:
 		if(m_treeViewTextCell->get_entry()) {
 			m_treeViewTextCell->get_entry()->editing_done(); // Commit previous changes
 		}
-		m_treeView->get_selection()->unselect_all();
-		m_treeView->get_selection()->select(path);
+		m_treeView->setCurrentIndex(m_document->get_iter(path));
 		m_treeView->set_cursor(path, *m_treeView->get_column(0), *m_treeViewTextCell, true);
 		g_assert(m_treeViewTextCell->get_current_path() == path.to_string() && m_treeViewTextCell->get_entry());
 		m_treeViewTextCell->get_entry()->select_region(pos, pos + searchstr.length());

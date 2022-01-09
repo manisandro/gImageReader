@@ -135,7 +135,6 @@ private:
 
 	sigc::connection m_connectionCustomFont;
 	sigc::connection m_connectionDefaultFont;
-	sigc::connection m_connectionSelectionChanged;
 
 	Glib::RefPtr<Glib::Regex> attributeValidator(const Glib::ustring& attribName) const;
 	bool attributeEditable(const Glib::ustring& attribName) const;
