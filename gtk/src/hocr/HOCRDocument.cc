@@ -567,18 +567,6 @@ void HOCRDocument::convertSourcePaths(const std::string& basepath, bool absolute
 	}
 }
 
-void HOCRDocument::recursiveDataChanged(const Gtk::TreeIter& index, const std::vector<Glib::ustring>& itemClasses) {
-	if(index && !index->children().empty()) {
-		bool emitChanged = (itemClasses.empty() || std::find(itemClasses.begin(), itemClasses.end(), itemAtIndex(index)->itemClass()) != itemClasses.end());
-		for(const Gtk::TreeIter& childIndex : index->children()) {
-			if(emitChanged) {
-				row_changed(get_path(childIndex), childIndex);
-			}
-			recursiveDataChanged(childIndex);
-		}
-	}
-}
-
 void HOCRDocument::recursiveRowInserted(const Gtk::TreeIter& index) {
 	DEBUG(std::cout << "Inserted: " << get_path(index).to_string() << std::endl;)
 	row_inserted(get_path(index), index);
@@ -774,9 +762,13 @@ void HOCRDocument::set_value_impl(const iterator& row, int column, const Glib::V
 		}
 	} else if(column == COLUMN_CHECKED) {
 		item->setEnabled(static_cast<const Glib::Value<bool>&>(value).get());
-		Gtk::TreePath path = get_path(row);
-		row_changed(path, row);
-		recursiveDataChanged(row);
+		// Get leaf
+		Gtk::TreeIter leaf = row;
+		while(!leaf->children().empty()) {
+			leaf = leaf->children()[leaf->children().size() - 1];
+		}
+		Gtk::TreePath path = get_path(leaf);
+		row_changed(path, leaf);
 	}
 }
 

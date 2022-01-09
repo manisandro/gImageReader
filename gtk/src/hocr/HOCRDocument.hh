@@ -142,7 +142,6 @@ private:
 	void takeItem(HOCRItem* item);
 	void resetMisspelled(const Gtk::TreeIter& index);
 	std::vector<Gtk::TreeIter> recheckItemSpelling(const Gtk::TreeIter& index) const;
-	void recursiveDataChanged(const Gtk::TreeIter& index, const std::vector<Glib::ustring>& itemClasses = {});
 	void recursiveRowInserted(const Gtk::TreeIter& index);
 	void recomputeBBoxes(HOCRItem* item);
 
