@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRBatchExportDialog.cc
- * Copyright (C) 2022 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2020-2022 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -48,11 +48,11 @@ HOCRBatchExportDialog::HOCRBatchExportDialog(QWidget* parent)
 	ui.treeViewInput->setModel(m_sourceTreeModel);
 	ui.treeViewOutput->setModel(m_outputTreeModel);
 
-	ui.treeViewInput->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-	ui.treeViewOutput->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+	ui.treeViewInput->header()->hideSection(1);
+	ui.treeViewOutput->header()->hideSection(1);
 
 	ui.progressBar->hide();
-	ui.tabOptions->setEnabled(false);
+	ui.tabWidget->setTabEnabled(1, false);
 
 	m_previewTimer.setSingleShot(true);
 
@@ -95,10 +95,11 @@ void HOCRBatchExportDialog::setExportFormat() {
 			m_pdfExportWidget = new HOCRPdfExportWidget(editor->getTool());
 			ui.tabOptions->layout()->addWidget(m_pdfExportWidget);
 		}
-		ui.tabOptions->setEnabled(true);
+		ui.tabWidget->setTabEnabled(1, true);
 	} else {
 		delete m_pdfExportWidget;
-		ui.tabOptions->setEnabled(false);
+		m_pdfExportWidget = nullptr;
+		ui.tabWidget->setTabEnabled(1, false);
 	}
 }
 
@@ -108,7 +109,7 @@ void HOCRBatchExportDialog::updateOutputTree() {
 
 	m_outputMap.clear();
 
-	int level = ui.spinBoxExportLevel->value();
+	int exportLevel = ui.spinBoxExportLevel->value();
 
 	QString dir = ui.lineEditSourceFolder->text();
 	if(dir.isEmpty()) {
@@ -129,12 +130,20 @@ void HOCRBatchExportDialog::updateOutputTree() {
 		break;
 	}
 
+	QStringList filenames;
 	QDirIterator it(dir, QStringList() << "*.html", QDir::Files, QDirIterator::Subdirectories);
+	int deepestlevel = 0;
 	while(it.hasNext()) {
 		QString filename = it.next();
+		filenames.append(filename);
+		deepestlevel = std::max(QDir::cleanPath(QDir(dir).relativeFilePath(filename)).count('/'), deepestlevel);
+	}
+	int groupAboveDepth = std::max(0, deepestlevel - exportLevel);
+	for (const QString& filename : filenames) {
+		int level = QDir::cleanPath(QDir(dir).relativeFilePath(filename)).count('/');
 		QFileInfo finfo(filename);
 		QString output = finfo.dir().absoluteFilePath(finfo.completeBaseName()) + exportSuffix;
-		for(int i = 0; i < level; ++i) {
+		for (int i = level; i >= groupAboveDepth; --i) {
 			output = QFileInfo(output).path() + exportSuffix;
 		}
 		m_outputMap[output].append(filename);

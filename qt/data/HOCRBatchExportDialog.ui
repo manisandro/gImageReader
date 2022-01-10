@@ -50,7 +50,7 @@
              <bool>false</bool>
             </attribute>
             <attribute name="headerStretchLastSection">
-             <bool>false</bool>
+             <bool>true</bool>
             </attribute>
            </widget>
           </item>
@@ -60,7 +60,7 @@
              <bool>false</bool>
             </attribute>
             <attribute name="headerStretchLastSection">
-             <bool>false</bool>
+             <bool>true</bool>
             </attribute>
            </widget>
           </item>
@@ -84,7 +84,7 @@
        <item row="2" column="0">
         <widget class="QLabel" name="labelExportLevel">
          <property name="text">
-          <string>Group outputs at level:</string>
+          <string>Group outputs of N lowest levels:</string>
          </property>
         </widget>
        </item>
