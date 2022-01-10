@@ -5,10 +5,11 @@ data/gimagereader.desktop.in
 [type: gettext/glade]gtk/data/CharacterListDialog.ui
 [type: gettext/glade]gtk/data/ConfigDialog.ui
 [type: gettext/glade]gtk/data/CrashHandler.ui
+[type: gettext/glade]gtk/data/HOCRBatchExportDialog.ui
 [type: gettext/glade]gtk/data/MainWindow.ui
 [type: gettext/glade]gtk/data/OutputEditorHOCR.ui
 [type: gettext/glade]gtk/data/OutputEditorText.ui
-[type: gettext/glade]gtk/data/PdfExportDialog.ui
+[type: gettext/glade]gtk/data/PdfExportWidget.ui
 [type: gettext/glade]gtk/data/SearchReplaceFrame.ui
 [type: gettext/glade]gtk/data/SelectionMenu.ui
 [type: gettext/glade]gtk/data/SubstitutionsManager.ui
@@ -40,18 +41,25 @@ gtk/src/FontComboBox.hh
 gtk/src/Geometry.hh
 gtk/src/hocr/DisplayerToolHOCR.cc
 gtk/src/hocr/DisplayerToolHOCR.hh
+gtk/src/hocr/HOCRBatchExportDialog.cc
+gtk/src/hocr/HOCRBatchExportDialog.hh
 gtk/src/hocr/HOCRDocument.cc
 gtk/src/hocr/HOCRDocument.hh
+gtk/src/hocr/HOCRExporter.hh
 gtk/src/hocr/HOCROdtExporter.cc
 gtk/src/hocr/HOCROdtExporter.hh
 gtk/src/hocr/HOCRPdfExporter.cc
 gtk/src/hocr/HOCRPdfExporter.hh
+gtk/src/hocr/HOCRPdfExportWidget.cc
+gtk/src/hocr/HOCRPdfExportWidget.hh
 gtk/src/hocr/HOCRSpellChecker.cc
 gtk/src/hocr/HOCRSpellChecker.hh
 gtk/src/hocr/HOCRTextExporter.cc
 gtk/src/hocr/HOCRTextExporter.hh
 gtk/src/hocr/OutputEditorHOCR.cc
 gtk/src/hocr/OutputEditorHOCR.hh
+gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc
+gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.hh
 gtk/src/hocr/XmlUtils.cc
 gtk/src/hocr/XmlUtils.hh
 gtk/src/Image.cc

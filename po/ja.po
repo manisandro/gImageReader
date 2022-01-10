@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 22:07+0200\n"
+"POT-Creation-Date: 2022-01-11 00:20+0100\n"
 "PO-Revision-Date: 2021-04-14 15:27+0000\n"
 "Last-Translator: Tadahito Yao <eighttails@nifty.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/gimagereader/"
@@ -37,7 +37,7 @@ msgid "Preferences"
 msgstr "設定"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
-#: ../gtk/src/MainWindow.cc:554 ../qt/src/MainWindow.cc:517
+#: ../gtk/src/MainWindow.cc:556 ../qt/src/MainWindow.cc:517
 #: ../qt/src/Ui_MainWindow.hh:181
 msgid "Help"
 msgstr "ヘルプ"
@@ -67,9 +67,9 @@ msgstr "文字列を入力してください…"
 msgid "Only allow the following characters to be recognized (whitelist):"
 msgstr "次の文字のみが読み取られるようにする (ホワイトリスト):"
 
-#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:48
-#: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
-#: ../gtk/src/FileDialogs.cc:179 ../gtk/src/FileDialogs.cc:194
+#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:49
+#: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/src/FileDialogs.cc:179
+#: ../gtk/src/FileDialogs.cc:194 ../gtk/src/hocr/HOCRPdfExporter.cc:547
 #: ../gtk/src/Utils.cc:126 ../qt/data/ConfigDialog.ui.h:26
 msgid "OK"
 msgstr "OK"
@@ -126,10 +126,10 @@ msgstr "言語の名前"
 msgid "Name"
 msgstr "名称"
 
-#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:47
-#: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
-#: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:178
-#: ../gtk/src/FileDialogs.cc:193 ../gtk/src/Utils.cc:141
+#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:48
+#: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/src/Acquirer.cc:34
+#: ../gtk/src/FileDialogs.cc:178 ../gtk/src/FileDialogs.cc:193
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:548 ../gtk/src/Utils.cc:141
 #: ../qt/data/ConfigDialog.ui.h:27 ../qt/data/MainWindow.ui.h:13
 msgid "Cancel"
 msgstr "中止"
@@ -165,10 +165,6 @@ msgstr "ユーザーのパス"
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
 msgstr "エクスポートした文書を既定のアプリケーションで自動的に開く"
-
-#: ../gtk/data/ConfigDialog.ui.h:26
-msgid "Syntax highlight mode:"
-msgstr ""
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -213,6 +209,62 @@ msgstr ""
 "下記のスタックトレースは、どの箇所でクラッシュが発生したかにかんする追加の情"
 "報を提供するかもしれません。\n"
 
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:1
+#: ../qt/data/HOCRBatchExportDialog.ui.h:1
+msgid "HOCR Batch Export"
+msgstr ""
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:2
+#: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
+msgid "Apply"
+msgstr "適用"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:3
+#: ../gtk/data/SubstitutionsManager.ui.h:8 ../gtk/data/TessdataManager.ui.h:3
+msgid "Close"
+msgstr "閉じる"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:4
+#: ../qt/data/HOCRBatchExportDialog.ui.h:6
+#, fuzzy
+msgid "Select source folder:"
+msgstr "挿入モードを選択"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
+#: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
+#: ../qt/data/PdfExportWidget.ui.h:16
+msgid "Format:"
+msgstr "フォーマット:"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:6
+#: ../qt/data/HOCRBatchExportDialog.ui.h:5
+msgid "Group outputs of N lowest levels:"
+msgstr ""
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:7
+#: ../qt/data/HOCRBatchExportDialog.ui.h:3
+#, fuzzy
+msgid "Input:"
+msgstr "出力先:"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:8
+#: ../qt/data/HOCRBatchExportDialog.ui.h:4
+#, fuzzy
+msgid "Output preview:"
+msgstr "出力モード:"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:9
+#: ../qt/data/HOCRBatchExportDialog.ui.h:2
+#, fuzzy
+msgid "Input files"
+msgstr "ソースのファイル名"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:10
+#: ../qt/data/HOCRBatchExportDialog.ui.h:8
+#, fuzzy
+msgid "Export options"
+msgstr "その他のオプション"
+
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
 msgstr "出力枠の表示を切り替える"
@@ -231,279 +283,285 @@ msgstr "全てのページを回転"
 msgid "Sources"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:5 ../qt/data/MainWindow.ui.h:24
-msgid "Zoom in"
-msgstr "拡大"
-
-#: ../gtk/data/MainWindow.ui.h:6 ../qt/data/MainWindow.ui.h:26
-msgid "Zoom out"
-msgstr "縮小"
-
-#: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:28
-msgid "Normal size"
-msgstr "元の縮尺"
-
-#: ../gtk/data/MainWindow.ui.h:8 ../qt/data/MainWindow.ui.h:30
-msgid "Best fit"
-msgstr "画面に合わせる"
-
-#: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:61
-msgid "Rotate page"
-msgstr "ページを回転"
-
-#: ../gtk/data/MainWindow.ui.h:10 ../qt/src/Ui_MainWindow.hh:76
-msgid "Select rotation mode"
-msgstr "回転のモードを選択"
-
-#: ../gtk/data/MainWindow.ui.h:11 ../gtk/data/OutputEditorHOCR.ui.h:12
-#: ../gtk/data/OutputEditorText.ui.h:16
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:71 ../qt/src/Ui_OutputEditorText.hh:95
-msgid "Select insert mode"
-msgstr "挿入モードを選択"
-
-#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:103
-msgid "Select page"
-msgstr "ページを選択"
-
-#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:36
-msgid "Image controls"
-msgstr "画像コントロール"
-
-#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRBatchExportDialog.cc:42
-#: ../qt/src/MainWindow.cc:164
-msgid "Plain text"
-msgstr "プレーンテキスト"
-
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/src/MainWindow.cc:165
-msgid "hOCR, PDF"
-msgstr "hOCR, PDF"
-
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:38
-msgid "Autodetect layout"
-msgstr "レイアウトを自動検出"
-
-#: ../gtk/data/MainWindow.ui.h:17
-msgid "<small>Recognize all</small>"
-msgstr "<small>全て読み取り</small>"
-
-#: ../gtk/data/MainWindow.ui.h:18
-msgid "Select language"
-msgstr "言語を選択"
-
-#: ../gtk/data/MainWindow.ui.h:19 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:203
 msgid "Add images"
 msgstr "画像を追加"
 
-#: ../gtk/data/MainWindow.ui.h:20 ../qt/src/Ui_MainWindow.hh:202
+#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:202
 msgid "Add Images"
 msgstr "画像を追加"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:207
+#: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:207
 msgid "Remove image from list"
 msgstr "一覧から画像を除去"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:210
+#: ../gtk/data/MainWindow.ui.h:8 ../qt/src/Ui_MainWindow.hh:210
 msgid "Delete image"
 msgstr "画像を削除"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:213
+#: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:213
 msgid "Clear list"
 msgstr "一覧をクリア"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:11 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
 msgstr "ファイル"
 
-#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:9
 msgid "Device:"
 msgstr "デバイス:"
 
-#: ../gtk/data/MainWindow.ui.h:27 ../gtk/data/TessdataManager.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:13 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:55
 msgid "Refresh"
 msgstr "更新"
 
-#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:10
 msgid "Output:"
 msgstr "出力先:"
 
-#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:14
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:14
 msgid "Mode:"
 msgstr "モード:"
 
-#: ../gtk/data/MainWindow.ui.h:30 ../gtk/src/hocr/HOCRPdfExporter.cc:313
+#: ../gtk/data/MainWindow.ui.h:16 ../gtk/src/hocr/HOCRPdfExportWidget.cc:49
 #: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExportWidget.cc:60
 msgid "Color"
 msgstr "色"
 
-#: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:316
+#: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExportWidget.cc:52
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExportWidget.cc:61
 msgid "Grayscale"
 msgstr "グレースケール"
 
-#: ../gtk/data/MainWindow.ui.h:32 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:11
 msgid "Resolution:"
 msgstr "解像度:"
 
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:12
+#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:12
 msgid "Scan"
 msgstr "スキャン"
 
-#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:17
+#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:17
 msgid "Source:"
 msgstr "ソース:"
 
-#: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
 msgstr "取得"
 
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
 msgstr "明るい"
 
-#: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
 msgstr "コントラスト"
 
-#: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
 msgstr "解像度"
 
-#: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
 msgstr "色を反転"
 
-#: ../gtk/data/MainWindow.ui.h:40
+#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:24
+msgid "Zoom in"
+msgstr "拡大"
+
+#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:26
+msgid "Zoom out"
+msgstr "縮小"
+
+#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:28
+msgid "Normal size"
+msgstr "元の縮尺"
+
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:30
+msgid "Best fit"
+msgstr "画面に合わせる"
+
+#: ../gtk/data/MainWindow.ui.h:30 ../qt/src/Ui_MainWindow.hh:61
+msgid "Rotate page"
+msgstr "ページを回転"
+
+#: ../gtk/data/MainWindow.ui.h:31 ../qt/src/Ui_MainWindow.hh:76
+msgid "Select rotation mode"
+msgstr "回転のモードを選択"
+
+#: ../gtk/data/MainWindow.ui.h:32 ../gtk/data/OutputEditorHOCR.ui.h:12
+#: ../gtk/data/OutputEditorText.ui.h:16
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72 ../qt/src/Ui_OutputEditorText.hh:95
+msgid "Select insert mode"
+msgstr "挿入モードを選択"
+
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/src/Ui_MainWindow.hh:103
+msgid "Select page"
+msgstr "ページを選択"
+
+#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:36
+msgid "Image controls"
+msgstr "画像コントロール"
+
+#: ../gtk/data/MainWindow.ui.h:35 ../gtk/src/hocr/HOCRBatchExportDialog.cc:51
+#: ../qt/src/hocr/HOCRBatchExportDialog.cc:42 ../qt/src/MainWindow.cc:164
+msgid "Plain text"
+msgstr "プレーンテキスト"
+
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/src/MainWindow.cc:165
+msgid "hOCR, PDF"
+msgstr "hOCR, PDF"
+
+#: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:38
+msgid "Autodetect layout"
+msgstr "レイアウトを自動検出"
+
+#: ../gtk/data/MainWindow.ui.h:38
+msgid "<small>Recognize all</small>"
+msgstr "<small>全て読み取り</small>"
+
+#: ../gtk/data/MainWindow.ui.h:39
+msgid "Select language"
+msgstr "言語を選択"
+
+#: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:42
+#, fuzzy
+msgid "Batch Export"
+msgstr "エクスポート"
+
+#: ../gtk/data/MainWindow.ui.h:41
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "tesseract-ocr の GUI フロントエンド"
 
-#: ../gtk/data/MainWindow.ui.h:41 ../qt/data/BatchModeDialog.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:42 ../qt/data/BatchModeDialog.ui.h:1
 #, fuzzy
 msgid "Batch Mode"
 msgstr "大文字・小文字を区別"
 
-#: ../gtk/data/MainWindow.ui.h:42
+#: ../gtk/data/MainWindow.ui.h:43
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
 msgstr ""
 
-#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/BatchModeDialog.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/BatchModeDialog.ui.h:2
 #, fuzzy
 msgid "Prepend page numbers to output text"
 msgstr "出力テキストの前に追加:"
 
-#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/BatchModeDialog.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:46 ../qt/data/BatchModeDialog.ui.h:5
 #, fuzzy
 msgid "Autodetect page layout"
 msgstr "レイアウトを自動検出"
 
-#: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:47 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
 msgstr "ページの範囲"
 
-#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
 msgstr "ページの範囲:"
 
-#: ../gtk/data/MainWindow.ui.h:50
+#: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>例:</b> 1-10, 13, 14-18</small>"
 
-#: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:52 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
 msgstr "読み取り領域:"
 
-#: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:121
+#: ../gtk/data/MainWindow.ui.h:53 ../gtk/src/Recognizer.cc:121
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:137
 msgid "Entire page"
 msgstr "ページ全体"
 
-#: ../gtk/data/MainWindow.ui.h:53 ../qt/data/PageRangeDialog.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
 msgstr "自動検出"
 
-#: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
 msgstr "出力テキストの前に追加:"
 
-#: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:8
+#: ../gtk/data/MainWindow.ui.h:56 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
 msgstr "ソースのファイル名"
 
-#: ../gtk/data/MainWindow.ui.h:56 ../qt/data/PageRangeDialog.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:57 ../qt/data/PageRangeDialog.ui.h:9
 msgid "Source page"
 msgstr "ソースのページ"
 
-#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:166
+#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/SourceManager.cc:166
 msgid "Protected PDF"
 msgstr "保護された PDF"
 
-#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:71
+#: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:71
 msgid "Current Page"
 msgstr "現在のページ"
 
-#: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:74
+#: ../gtk/data/MainWindow.ui.h:60 ../qt/src/Recognizer.cc:74
 msgid "Multiple Pages..."
 msgstr "複数のページ…"
 
-#: ../gtk/data/MainWindow.ui.h:60 ../qt/src/Recognizer.cc:77
+#: ../gtk/data/MainWindow.ui.h:61 ../qt/src/Recognizer.cc:77
 msgid "Batch mode..."
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:713
+#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:715
 msgid "Add Word"
 msgstr "単語を追加"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:713
+#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:715
 msgid "Enter word:"
 msgstr "単語を入力:"
 
 #. Output toolbar
-#: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
+#: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
 msgid "Append new output after last page"
 msgstr "新しい出力を最後のページの後ろに追加する"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
+#: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
 msgid "Insert new output before current page"
 msgstr "新しい出力を最後のページの前に追加する"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
+#: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:95
 msgid "Export to plain text"
 msgstr "プレーンテキストへエクスポート"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:8 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:96
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:97
+#: ../gtk/data/OutputEditorHOCR.ui.h:8 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:97
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:98
 msgid "Export to PDF"
 msgstr "PDF へエクスポート"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:99
+#: ../gtk/data/OutputEditorHOCR.ui.h:9
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:100
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:101
 msgid "Export to ODT"
 msgstr "ODT へエクスポート"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Append document after last page"
 msgstr "文書を最後のページの後に追加する"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
 msgid "Insert document before current page"
 msgstr "文書を現在のページの前に挿入する"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:86
 msgid "Open hOCR file"
 msgstr "hOCR ファイルを開く"
 
@@ -513,66 +571,66 @@ msgid "Save output"
 msgstr "出力結果を保存"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:15
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:104
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:105
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:106
 msgid "Export"
 msgstr "エクスポート"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:16 ../gtk/data/OutputEditorText.ui.h:21
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:109
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:110
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:111
 #: ../qt/src/Ui_OutputEditorText.hh:118
 msgid "Clear output"
 msgstr "出力結果をクリア"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/data/OutputEditorText.ui.h:18
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:112
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:113
 #: ../qt/src/Ui_OutputEditorText.hh:107
 msgid "Find and replace"
 msgstr "検索と置換"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:18
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:114
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:115
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:116
 msgid "Show confidence values"
 msgstr "信頼度を表示"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:19 ../gtk/data/PdfExportDialog.ui.h:41
+#: ../gtk/data/OutputEditorHOCR.ui.h:19 ../gtk/data/PdfExportWidget.ui.h:1
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/data/PdfExportWidget.ui.h:2
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:117
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
 msgid "Show preview"
 msgstr "プレビューを表示"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:20
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:155
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Next (F3)"
 msgstr "次へ (F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:21
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:156
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Previous (Shift+F3)"
 msgstr "前へ (Shift+F3)"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:957
-#: ../qt/src/hocr/OutputEditorHOCR.cc:845
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
+#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:969
+#: ../qt/src/hocr/OutputEditorHOCR.cc:847
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:165
 msgid "Expand all"
 msgstr "全て展開"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:960
-#: ../qt/src/hocr/OutputEditorHOCR.cc:846
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
+#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:972
+#: ../qt/src/hocr/OutputEditorHOCR.cc:848
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:166
 msgid "Collapse all"
 msgstr "全て折り畳む"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:24
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:182
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:187
 msgid "Properties"
 msgstr "プロパティ"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:25
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:186
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:191
 msgid "Source"
 msgstr "ソース"
 
@@ -649,191 +707,184 @@ msgstr "元に戻す"
 msgid "Redo"
 msgstr "やり直す"
 
-#: ../gtk/data/PdfExportDialog.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
-msgid "PDF Export"
-msgstr "PDF エクスポート"
-
-#: ../gtk/data/PdfExportDialog.ui.h:4 ../qt/data/PdfExportDialog.ui.h:4
+#: ../gtk/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportDialog.ui.h:4
 #: ../qt/data/PdfExportWidget.ui.h:4
 msgid "Output mode:"
 msgstr "出力モード:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportDialog.ui.h:6
-#: ../qt/data/PdfExportWidget.ui.h:6 ../qt/src/hocr/HOCRBatchExportDialog.cc:40
+#: ../gtk/data/PdfExportWidget.ui.h:3
+#: ../gtk/src/hocr/HOCRBatchExportDialog.cc:45
+#: ../qt/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportWidget.ui.h:6
+#: ../qt/src/hocr/HOCRBatchExportDialog.cc:40
 msgid "PDF"
 msgstr "PDF"
 
-#: ../gtk/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportDialog.ui.h:7
+#: ../gtk/data/PdfExportWidget.ui.h:4 ../qt/data/PdfExportDialog.ui.h:7
 #: ../qt/data/PdfExportWidget.ui.h:7
 msgid "PDF with invisible text overlay"
 msgstr "透過テキスト付き PDF"
 
-#: ../gtk/data/PdfExportDialog.ui.h:7 ../qt/data/HOCRBatchExportDialog.ui.h:7
-#: ../qt/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportWidget.ui.h:16
-msgid "Format:"
-msgstr "フォーマット:"
-
-#: ../gtk/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
+#: ../gtk/data/PdfExportWidget.ui.h:6 ../qt/data/PdfExportDialog.ui.h:17
 #: ../qt/data/PdfExportWidget.ui.h:17
 msgid "Compression:"
 msgstr "圧縮:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportDialog.ui.h:14
+#: ../gtk/data/PdfExportWidget.ui.h:7 ../qt/data/PdfExportDialog.ui.h:14
 #: ../qt/data/PdfExportWidget.ui.h:14
 msgid "Compression quality:"
 msgstr "圧縮品質:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
+#: ../gtk/data/PdfExportWidget.ui.h:8 ../qt/data/PdfExportDialog.ui.h:15
 #: ../qt/data/PdfExportWidget.ui.h:15
 msgid "DPI:"
 msgstr "DPI:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
+#: ../gtk/data/PdfExportWidget.ui.h:9 ../qt/data/PdfExportDialog.ui.h:18
 #: ../qt/data/PdfExportWidget.ui.h:18
 msgid "Dithering algorithm:"
 msgstr "ディザリングアルゴリズム:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
+#: ../gtk/data/PdfExportWidget.ui.h:10 ../qt/data/PdfExportDialog.ui.h:13
 #: ../qt/data/PdfExportWidget.ui.h:13
 msgid "Image settings:"
 msgstr "画像の設定:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
+#: ../gtk/data/PdfExportWidget.ui.h:11 ../qt/data/PdfExportDialog.ui.h:25
 #: ../qt/data/PdfExportWidget.ui.h:25
 msgid "Uniformize line and word spacing"
 msgstr "行と単語の間隔を均等化"
 
-#: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
+#: ../gtk/data/PdfExportWidget.ui.h:12 ../qt/data/PdfExportDialog.ui.h:21
 #: ../qt/data/PdfExportWidget.ui.h:21
 msgid "Override font family:"
 msgstr "書き込むフォント:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
+#: ../gtk/data/PdfExportWidget.ui.h:13 ../qt/data/PdfExportDialog.ui.h:27
 #: ../qt/data/PdfExportWidget.ui.h:27
 msgid "Fallback font family:"
 msgstr "代替のフォント:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
+#: ../gtk/data/PdfExportWidget.ui.h:14 ../qt/data/PdfExportDialog.ui.h:20
 #: ../qt/data/PdfExportWidget.ui.h:20
 msgid "Override font size:"
 msgstr "書き込むフォントの大きさ:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
+#: ../gtk/data/PdfExportWidget.ui.h:15 ../qt/data/PdfExportDialog.ui.h:23
 #: ../qt/data/PdfExportWidget.ui.h:23
 msgid "Font scaling:"
 msgstr "フォントの拡大縮小:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
+#: ../gtk/data/PdfExportWidget.ui.h:16 ../qt/data/PdfExportDialog.ui.h:26
 #: ../qt/data/PdfExportWidget.ui.h:26
 msgid "pt"
 msgstr "pt"
 
-#: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
+#: ../gtk/data/PdfExportWidget.ui.h:17 ../qt/data/PdfExportDialog.ui.h:22
 #: ../qt/data/PdfExportWidget.ui.h:22
 msgid "Preserve spaces wider than:"
 msgstr "次の値より広い間隔を保持:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:20 ../qt/data/PdfExportDialog.ui.h:24
+#: ../gtk/data/PdfExportWidget.ui.h:18 ../qt/data/PdfExportDialog.ui.h:24
 #: ../qt/data/PdfExportWidget.ui.h:24
 msgid "characters"
 msgstr "文字"
 
-#: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
+#: ../gtk/data/PdfExportWidget.ui.h:19 ../qt/data/PdfExportDialog.ui.h:28
 #: ../qt/data/PdfExportWidget.ui.h:28
 msgid "Sanitize hyphens before line breaks"
 msgstr "改行の前のハイフンを削除"
 
-#: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
+#: ../gtk/data/PdfExportWidget.ui.h:20 ../qt/data/PdfExportDialog.ui.h:19
 #: ../qt/data/PdfExportWidget.ui.h:19
 msgid "Text settings:"
 msgstr "テキストの設定:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:23 ../qt/data/PdfExportDialog.ui.h:10
+#: ../gtk/data/PdfExportWidget.ui.h:21 ../qt/data/PdfExportDialog.ui.h:10
 #: ../qt/data/PdfExportWidget.ui.h:10
 msgid "Paper size:"
 msgstr "用紙の大きさ:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:24 ../qt/data/PdfExportDialog.ui.h:11
+#: ../gtk/data/PdfExportWidget.ui.h:22 ../qt/data/PdfExportDialog.ui.h:11
 #: ../qt/data/PdfExportWidget.ui.h:11
 msgid "Width"
 msgstr "幅"
 
-#: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:12
+#: ../gtk/data/PdfExportWidget.ui.h:23 ../qt/data/PdfExportDialog.ui.h:12
 #: ../qt/data/PdfExportWidget.ui.h:12
 msgid "Height"
 msgstr "高さ"
 
-#: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
+#: ../gtk/data/PdfExportWidget.ui.h:24 ../qt/data/PdfExportDialog.ui.h:29
 #: ../qt/data/PdfExportWidget.ui.h:29
 msgid "Treat image sources as having true DPI:"
 msgstr "ソース画像の DPI を次の値とみなす:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
+#: ../gtk/data/PdfExportWidget.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
 #: ../qt/data/PdfExportWidget.ui.h:3
 msgid "Basic"
 msgstr "基本"
 
-#: ../gtk/data/PdfExportDialog.ui.h:28 ../qt/data/PdfExportDialog.ui.h:31
+#: ../gtk/data/PdfExportWidget.ui.h:26 ../qt/data/PdfExportDialog.ui.h:31
 #: ../qt/data/PdfExportWidget.ui.h:31
 msgid "PDF version:"
 msgstr "PDF のバージョン:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:33
+#: ../gtk/data/PdfExportWidget.ui.h:27 ../qt/data/PdfExportDialog.ui.h:33
 #: ../qt/data/PdfExportWidget.ui.h:33
 msgid "Password:"
 msgstr "パスワード:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:34
+#: ../gtk/data/PdfExportWidget.ui.h:28 ../qt/data/PdfExportDialog.ui.h:34
 #: ../qt/data/PdfExportWidget.ui.h:34
 msgid "Confirm password:"
 msgstr "パスワードを確認:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:32
+#: ../gtk/data/PdfExportWidget.ui.h:29 ../qt/data/PdfExportDialog.ui.h:32
 #: ../qt/data/PdfExportWidget.ui.h:32
 msgid "Encryption (optional):"
 msgstr "暗号化 (オプション):"
 
-#: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:36
+#: ../gtk/data/PdfExportWidget.ui.h:30 ../qt/data/PdfExportDialog.ui.h:36
 #: ../qt/data/PdfExportWidget.ui.h:36
 msgid "Author:"
 msgstr "作成者:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:38
+#: ../gtk/data/PdfExportWidget.ui.h:31 ../qt/data/PdfExportDialog.ui.h:38
 #: ../qt/data/PdfExportWidget.ui.h:38
 msgid "Title:"
 msgstr "タイトル:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:40
+#: ../gtk/data/PdfExportWidget.ui.h:32 ../qt/data/PdfExportDialog.ui.h:40
 #: ../qt/data/PdfExportWidget.ui.h:40
 msgid "Subject:"
 msgstr "サブタイトル:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:37
+#: ../gtk/data/PdfExportWidget.ui.h:33 ../qt/data/PdfExportDialog.ui.h:37
 #: ../qt/data/PdfExportWidget.ui.h:37
 msgid "Creator:"
 msgstr "アプリケーション:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:39
+#: ../gtk/data/PdfExportWidget.ui.h:34 ../qt/data/PdfExportDialog.ui.h:39
 #: ../qt/data/PdfExportWidget.ui.h:39
 msgid "Producer:"
 msgstr "PDF 変換:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:41
+#: ../gtk/data/PdfExportWidget.ui.h:35 ../qt/data/PdfExportDialog.ui.h:41
 #: ../qt/data/PdfExportWidget.ui.h:41
 msgid "Keywords:"
 msgstr "キーワード:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:35
+#: ../gtk/data/PdfExportWidget.ui.h:36 ../qt/data/PdfExportDialog.ui.h:35
 #: ../qt/data/PdfExportWidget.ui.h:35
 msgid "Additional information (optional):"
 msgstr "追加の情報 (オプション):"
 
-#: ../gtk/data/PdfExportDialog.ui.h:39 ../qt/data/PdfExportDialog.ui.h:42
+#: ../gtk/data/PdfExportWidget.ui.h:37 ../qt/data/PdfExportDialog.ui.h:42
 #: ../qt/data/PdfExportWidget.ui.h:42
 msgid "Import from current source"
 msgstr "現在のソースからインポート"
 
-#: ../gtk/data/PdfExportDialog.ui.h:40 ../qt/data/PdfExportDialog.ui.h:30
+#: ../gtk/data/PdfExportWidget.ui.h:38 ../qt/data/PdfExportDialog.ui.h:30
 #: ../qt/data/PdfExportWidget.ui.h:30
 msgid "Advanced"
 msgstr "拡張"
@@ -910,19 +961,11 @@ msgid "Add"
 msgstr "追加"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:953 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:842 ../qt/src/SubstitutionsManager.cc:50
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:965 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/hocr/OutputEditorHOCR.cc:844 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
 msgstr "除去"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
-msgid "Apply"
-msgstr "適用"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:8 ../gtk/data/TessdataManager.ui.h:3
-msgid "Close"
-msgstr "閉じる"
 
 #: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:45
 msgid "Tessdata Manager"
@@ -996,7 +1039,7 @@ msgstr "コード"
 msgid "Native name"
 msgstr ""
 
-#: ../gtk/src/Config.cc:120 ../qt/src/Config.cc:104
+#: ../gtk/src/Config.cc:119 ../qt/src/Config.cc:104
 msgid "Script"
 msgstr "スクリプト"
 
@@ -1017,11 +1060,11 @@ msgstr "未保存の作業はありません。"
 msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "バックトレースの取得に失敗しました。GDBはインストールされていますか？"
 
-#: ../gtk/src/Displayer.cc:253 ../qt/src/Displayer.cc:196
+#: ../gtk/src/Displayer.cc:254 ../qt/src/Displayer.cc:196
 msgid "Failed to load image"
 msgstr "画像の読込みに失敗しました"
 
-#: ../gtk/src/Displayer.cc:253 ../qt/src/Displayer.cc:196
+#: ../gtk/src/Displayer.cc:254 ../qt/src/Displayer.cc:196
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -1029,7 +1072,7 @@ msgstr ""
 "ファイルが画像でないか、破損している可能性があります:\n"
 "%1"
 
-#: ../gtk/src/Displayer.cc:746 ../qt/src/Displayer.cc:595
+#: ../gtk/src/Displayer.cc:758 ../qt/src/Displayer.cc:595
 msgid "Page %1"
 msgstr "%1 頁"
 
@@ -1070,6 +1113,16 @@ msgstr "ファイルを上書きしますか？"
 msgid "Temporary files"
 msgstr ""
 
+#: ../gtk/src/hocr/HOCRBatchExportDialog.cc:48
+#: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
+msgid "ODT"
+msgstr ""
+
+#: ../gtk/src/hocr/HOCRBatchExportDialog.cc:106 ../gtk/src/SourceManager.cc:268
+#: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:267
+msgid "Select folder..."
+msgstr ""
+
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
 msgstr ""
@@ -1082,200 +1135,141 @@ msgstr ""
 msgid "Ignore word"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRDocument.cc:724 ../gtk/src/hocr/OutputEditorHOCR.cc:333
-#: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:311
+#: ../gtk/src/hocr/HOCRDocument.cc:792 ../gtk/src/hocr/OutputEditorHOCR.cc:349
+#: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:312
 msgid "Page"
 msgstr "ページ"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:726 ../qt/src/hocr/HOCRDocument.cc:692
+#: ../gtk/src/hocr/HOCRDocument.cc:794 ../qt/src/hocr/HOCRDocument.cc:692
 msgid "Text block"
 msgstr "テキストブロック"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:728 ../gtk/src/hocr/OutputEditorHOCR.cc:339
-#: ../qt/src/hocr/HOCRDocument.cc:694 ../qt/src/hocr/OutputEditorHOCR.cc:313
+#: ../gtk/src/hocr/HOCRDocument.cc:796 ../gtk/src/hocr/OutputEditorHOCR.cc:355
+#: ../qt/src/hocr/HOCRDocument.cc:694 ../qt/src/hocr/OutputEditorHOCR.cc:314
 msgid "Paragraph"
 msgstr "段落"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:730 ../qt/src/hocr/HOCRDocument.cc:696
+#: ../gtk/src/hocr/HOCRDocument.cc:798 ../qt/src/hocr/HOCRDocument.cc:696
 msgid "Textline"
 msgstr "行"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:734 ../qt/src/hocr/HOCRDocument.cc:700
+#: ../gtk/src/hocr/HOCRDocument.cc:802 ../qt/src/hocr/HOCRDocument.cc:700
 msgid "Graphic"
 msgstr "図画"
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:65 ../gtk/src/hocr/HOCRPdfExporter.cc:489
-#: ../gtk/src/hocr/HOCRTextExporter.cc:34
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1063
-#: ../qt/src/hocr/OutputEditorHOCR.cc:980
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1021
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1055
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1084 ../qt/src/OutputEditorText.cc:271
-msgid "output"
-msgstr "出力"
-
-#: ../gtk/src/hocr/HOCROdtExporter.cc:68
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1024
-msgid "OpenDocument Text Documents"
-msgstr "OpenDocument テキスト文書"
-
-#: ../gtk/src/hocr/HOCROdtExporter.cc:69
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1024
-msgid "Save ODT Output..."
-msgstr "ODT の出力結果を保存..."
-
-#: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:617
-#: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCROdtExporter.cc:49
-#: ../qt/src/hocr/HOCRPdfExporter.cc:134 ../qt/src/hocr/HOCRTextExporter.cc:34
+#: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:129
+#: ../gtk/src/hocr/HOCRTextExporter.cc:31 ../qt/src/hocr/HOCROdtExporter.cc:49
+#: ../qt/src/hocr/HOCRPdfExporter.cc:137 ../qt/src/hocr/HOCRTextExporter.cc:34
 msgid "Export failed"
 msgstr "エクスポートに失敗しました"
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
+#: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../qt/src/hocr/HOCROdtExporter.cc:49
 msgid "The ODT export failed: unable to write output file."
 msgstr "ODT の出力に失敗しました: 出力ファイルの書込みができません。"
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:335 ../qt/src/hocr/HOCROdtExporter.cc:242
+#: ../gtk/src/hocr/HOCROdtExporter.cc:322 ../qt/src/hocr/HOCROdtExporter.cc:242
 msgid "Exporting to ODT..."
 msgstr "ODT へエクスポート中..."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:283
-#: ../qt/src/hocr/HOCRPdfExportWidget.cc:74
-msgid "Same as source"
-msgstr "ソースと同じ"
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:70 ../qt/src/hocr/HOCRPdfExporter.cc:80
+msgid "The operation was cancelled"
+msgstr "操作は中止されました"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:286
-#: ../qt/src/hocr/HOCRPdfExportWidget.cc:75
-msgid "Custom"
-msgstr "カスタム"
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:117 ../qt/src/hocr/HOCRPdfExporter.cc:126
+msgid "Failed to render page %1"
+msgstr "%1 頁のレンダリングに失敗しました"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:300
-#: ../qt/src/hocr/HOCRPdfExportWidget.cc:71
-msgid "cm"
-msgstr "cm"
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:124 ../qt/src/hocr/HOCRPdfExporter.cc:133
+msgid "Exporting to PDF..."
+msgstr "PDFへエクスポート中…"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:303
-#: ../qt/src/hocr/HOCRPdfExportWidget.cc:72
-msgid "in"
-msgstr "in"
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:129 ../qt/src/hocr/HOCRPdfExporter.cc:137
+msgid "The PDF export failed: %1."
+msgstr "PDF のエクスポートに失敗しました: %1。"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:319
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:397 ../qt/src/hocr/HOCRPdfExporter.cc:428
+msgid "The PDF library could not load the font '%1'."
+msgstr "PDF ライブラリにおいてフォント '%1' を読み込めませんでした。"
+
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:55
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:62
 msgid "Monochrome"
 msgstr "白黒"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:328
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:64
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:64
 msgid "Threshold (closest color)"
 msgstr "しきい値（最も近い色）"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:331
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:67
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:65
 msgid "Diffuse"
 msgstr ""
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:340
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:76
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:66
 msgid "Zip (lossless)"
 msgstr "Zip （可逆圧縮）"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:344
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:80
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:67
 msgid "CCITT Group 4 (lossless)"
 msgstr "CCITT Group 4 （可逆圧縮）"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:348
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:84
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:68
 msgid "Jpeg (lossy)"
 msgstr "Jpeg （不可逆圧縮）"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:493
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1060
-msgid "PDF Files"
-msgstr "PDF ファイル"
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:97
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:74
+msgid "Same as source"
+msgstr "ソースと同じ"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:494
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1060
-msgid "Save PDF Output..."
-msgstr "PDF の出力結果を保存…"
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:100
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:75
+msgid "Custom"
+msgstr "カスタム"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:500
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1065
-msgid "Invalid Output"
-msgstr "無効な出力"
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:114
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:71
+msgid "cm"
+msgstr "cm"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:500
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1065
-msgid "Cannot overwrite a file which is a source image of this document."
-msgstr "このドキュメントのソース画像のファイルを上書きすることはできません。"
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:117
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:72
+msgid "in"
+msgstr "in"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:515
-msgid "Failed to create output"
-msgstr "出力結果の生成に失敗しました"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:515
-msgid "Failed to create output. The returned error was: %1"
-msgstr "出力結果の生成に失敗しました。エラー: %1"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:557 ../qt/src/hocr/HOCRPdfExporter.cc:77
-msgid "The operation was cancelled"
-msgstr "操作は中止されました"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:605 ../qt/src/hocr/HOCRPdfExporter.cc:123
-msgid "Failed to render page %1"
-msgstr "%1 頁のレンダリングに失敗しました"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:612 ../qt/src/hocr/HOCRPdfExporter.cc:130
-msgid "Exporting to PDF..."
-msgstr "PDFへエクスポート中…"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:617 ../qt/src/hocr/HOCRPdfExporter.cc:134
-msgid "The PDF export failed: %1."
-msgstr "PDF のエクスポートに失敗しました: %1。"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:671 ../qt/src/hocr/HOCRPdfExporter.cc:420
-msgid "The PDF library could not load the font '%1'."
-msgstr "PDF ライブラリにおいてフォント '%1' を読み込めませんでした。"
-
-#: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:416
-#: ../gtk/src/OutputEditorText.cc:553 ../qt/src/hocr/OutputEditorHOCR.cc:1087
-#: ../qt/src/OutputEditorText.cc:273
-msgid "Text Files"
-msgstr "テキストファイル"
-
-#: ../gtk/src/hocr/HOCRTextExporter.cc:38
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1087
-msgid "Save Text Output..."
-msgstr "テキストの出力結果を保存…"
-
-#: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCRTextExporter.cc:34
+#: ../gtk/src/hocr/HOCRTextExporter.cc:31 ../qt/src/hocr/HOCRTextExporter.cc:34
 msgid "The text export failed: unable to write output file."
 msgstr ""
 "テキストのエクスポートに失敗しました: 出力ファイルの書込みができません。"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:336
-#: ../qt/src/hocr/OutputEditorHOCR.cc:312
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:352
+#: ../qt/src/hocr/OutputEditorHOCR.cc:313
 msgid "Block"
 msgstr "ブロック"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:342
-#: ../qt/src/hocr/OutputEditorHOCR.cc:314
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:358
+#: ../qt/src/hocr/OutputEditorHOCR.cc:315
 msgid "Line"
 msgstr "行"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:345
-#: ../qt/src/hocr/OutputEditorHOCR.cc:315
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:361
+#: ../qt/src/hocr/OutputEditorHOCR.cc:316
 msgid "Word"
 msgstr "単語"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:348
-#: ../qt/src/hocr/OutputEditorHOCR.cc:316
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:364
+#: ../qt/src/hocr/OutputEditorHOCR.cc:317
 msgid "Misspelled word"
 msgstr "スペルミスのある単語"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:516
-#: ../qt/src/hocr/OutputEditorHOCR.cc:417
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:533
+#: ../qt/src/hocr/OutputEditorHOCR.cc:419
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -1283,200 +1277,297 @@ msgstr ""
 "次のページを処理できませんでした:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:517
-#: ../qt/src/hocr/OutputEditorHOCR.cc:418
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:534
+#: ../qt/src/hocr/OutputEditorHOCR.cc:420
 msgid "Recognition errors"
 msgstr "読込みエラー"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:676
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:697
 #: ../qt/src/hocr/OutputEditorHOCR.cc:180
-#: ../qt/src/hocr/OutputEditorHOCR.cc:614
-#: ../qt/src/hocr/OutputEditorHOCR.cc:626
+#: ../qt/src/hocr/OutputEditorHOCR.cc:616
+#: ../qt/src/hocr/OutputEditorHOCR.cc:628
 msgid "Multiple values"
 msgstr "複数の値"
 
 #. Merging allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:876
-#: ../qt/src/hocr/OutputEditorHOCR.cc:774
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:892
+#: ../qt/src/hocr/OutputEditorHOCR.cc:776
 msgid "Merge"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:884
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
-#: ../qt/src/hocr/OutputEditorHOCR.cc:776
-#: ../qt/src/hocr/OutputEditorHOCR.cc:840
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:899
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:957
+#: ../qt/src/hocr/OutputEditorHOCR.cc:778
+#: ../qt/src/hocr/OutputEditorHOCR.cc:842
 msgid "Split from parent"
 msgstr ""
 
 #. Swapping allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:895
-#: ../qt/src/hocr/OutputEditorHOCR.cc:780
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:909
+#: ../qt/src/hocr/OutputEditorHOCR.cc:782
 msgid "Swap"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:919
-#: ../qt/src/hocr/OutputEditorHOCR.cc:825
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:932
+#: ../qt/src/hocr/OutputEditorHOCR.cc:827
 msgid "Add graphic region"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:922
-#: ../qt/src/hocr/OutputEditorHOCR.cc:826
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:935
+#: ../qt/src/hocr/OutputEditorHOCR.cc:828
 msgid "Add text block"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:926
-#: ../qt/src/hocr/OutputEditorHOCR.cc:828
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:939
+#: ../qt/src/hocr/OutputEditorHOCR.cc:830
 msgid "Add paragraph"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:930
-#: ../qt/src/hocr/OutputEditorHOCR.cc:830
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:943
+#: ../qt/src/hocr/OutputEditorHOCR.cc:832
 msgid "Add line"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:934
-#: ../qt/src/hocr/OutputEditorHOCR.cc:832
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:947
+#: ../qt/src/hocr/OutputEditorHOCR.cc:834
 msgid "Add word"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:994
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1066
-#: ../qt/src/hocr/OutputEditorHOCR.cc:907
-#: ../qt/src/hocr/OutputEditorHOCR.cc:983
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1006
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1089
+#: ../qt/src/hocr/OutputEditorHOCR.cc:909
+#: ../qt/src/hocr/OutputEditorHOCR.cc:985
 msgid "hOCR HTML Files"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:995
-#: ../qt/src/hocr/OutputEditorHOCR.cc:907
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1007
+#: ../qt/src/hocr/OutputEditorHOCR.cc:909
 msgid "Open hOCR File"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1043 ../gtk/src/OutputEditorText.cc:449
-#: ../gtk/src/OutputEditorText.cc:518 ../gtk/src/SourceManager.cc:170
-#: ../qt/src/hocr/OutputEditorHOCR.cc:947 ../qt/src/OutputEditorText.cc:256
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1055 ../gtk/src/OutputEditorText.cc:493
+#: ../gtk/src/OutputEditorText.cc:564 ../gtk/src/SourceManager.cc:170
+#: ../qt/src/hocr/OutputEditorHOCR.cc:949 ../qt/src/OutputEditorText.cc:256
 #: ../qt/src/SourceManager.cc:148
 msgid ""
 "The following files could not be opened:\n"
 "%1"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1046
-#: ../qt/src/hocr/OutputEditorHOCR.cc:950
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1058
+#: ../qt/src/hocr/OutputEditorHOCR.cc:952
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1049 ../gtk/src/OutputEditorText.cc:450
-#: ../gtk/src/OutputEditorText.cc:519 ../gtk/src/SourceManager.cc:170
-#: ../qt/src/hocr/OutputEditorHOCR.cc:953 ../qt/src/OutputEditorText.cc:257
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1061 ../gtk/src/OutputEditorText.cc:494
+#: ../gtk/src/OutputEditorText.cc:565 ../gtk/src/SourceManager.cc:170
+#: ../qt/src/hocr/OutputEditorHOCR.cc:955 ../qt/src/OutputEditorText.cc:257
 #: ../qt/src/SourceManager.cc:148
 msgid "Unable to open files"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1067
-#: ../qt/src/hocr/OutputEditorHOCR.cc:983
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1086
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1129
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1165
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1195
+#: ../qt/src/hocr/OutputEditorHOCR.cc:982
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1023
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1057
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1086 ../qt/src/OutputEditorText.cc:271
+msgid "output"
+msgstr "出力"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1090
+#: ../qt/src/hocr/OutputEditorHOCR.cc:985
 msgid "Save hOCR Output..."
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:562
-#: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1097 ../gtk/src/OutputEditorText.cc:609
+#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:280
 msgid "Failed to save output"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:562
-#: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1097 ../gtk/src/OutputEditorText.cc:609
+#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:280
 msgid "Check that you have writing permissions in the selected folder."
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:578
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorText.cc:293
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1132
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1026
+msgid "OpenDocument Text Documents"
+msgstr "OpenDocument テキスト文書"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1133
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1026
+msgid "Save ODT Output..."
+msgstr "ODT の出力結果を保存..."
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1170
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1062
+msgid "PDF Files"
+msgstr "PDF ファイル"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1171
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1062
+msgid "Save PDF Output..."
+msgstr "PDF の出力結果を保存…"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1176
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1067
+msgid "Invalid Output"
+msgstr "無効な出力"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1176
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1067
+msgid "Cannot overwrite a file which is a source image of this document."
+msgstr "このドキュメントのソース画像のファイルを上書きすることはできません。"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1198 ../gtk/src/OutputEditorText.cc:459
+#: ../gtk/src/OutputEditorText.cc:600 ../qt/src/hocr/OutputEditorHOCR.cc:1089
+#: ../qt/src/OutputEditorText.cc:273
+msgid "Text Files"
+msgstr "テキストファイル"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1199
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1089
+msgid "Save Text Output..."
+msgstr "テキストの出力結果を保存…"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:625
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1108 ../qt/src/OutputEditorText.cc:293
 msgid "Output not saved"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:578
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorText.cc:293
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:625
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1108 ../qt/src/OutputEditorText.cc:293
 msgid "Save output before proceeding?"
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1263 ../gtk/src/OutputEditorText.cc:315
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1204 ../qt/src/OutputEditorText.cc:164
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1335 ../gtk/src/OutputEditorText.cc:364
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1206 ../qt/src/OutputEditorText.cc:164
 msgid "Replacing..."
 msgstr ""
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1288 ../gtk/src/OutputEditorText.cc:325
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1227 ../qt/src/OutputEditorText.cc:172
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1360 ../gtk/src/OutputEditorText.cc:374
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1229 ../qt/src/OutputEditorText.cc:172
 msgid "Applying substitutions..."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:132 ../qt/src/MainWindow.cc:340
+#: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:243
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:230
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:264
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:242
+msgid "Lines before:"
+msgstr ""
+
+#: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:272
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:256
+msgid "Lines after:"
+msgstr ""
+
+#: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:529
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:457
+msgid ""
+"<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
+"td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
+"tr><tr><td>Up</td><td>Previous line</td></tr><tr><td>Ctrl+Space</"
+"td><td>Spelling suggestions</td></tr><tr><td>Ctrl+Enter</td><td>Add word to "
+"dictionary</td></tr><tr><td>Ctrl+B</td><td>Toggle bold</td></tr><tr><td>Ctrl"
+"+I</td><td>Toggle italic</td></tr><tr><td>Ctrl+D</td><td>Divide word at "
+"cursor position</td></tr><tr><td>Ctrl+M</td><td>Merge with previous word</"
+"td></tr><tr><td>Ctrl+Shift+M</td><td>Merge with next word</td></"
+"tr><tr><td>Ctrl+Delete</td><td>Delete word</td></tr><tr><td>Ctrl+{Left,Right}"
+"</td><td>Adjust left bounding box edge</td></tr><tr><td>Ctrl+Shift+{Left,"
+"Right}</td><td>Adjust right bounding box edge</td></tr><tr><td>Ctrl+{Up,Down}"
+"</td><td>Adjust top bounding box edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</"
+"td><td>Adjust bottom bounding box edge</td></tr><tr><td>Ctrl++</"
+"td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
+"size</td></tr></table>"
+msgstr ""
+
+#: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:556
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:478
+msgid "Keyboard Shortcuts"
+msgstr ""
+
+#: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:571
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:493
+msgid "Confidence: %1"
+msgstr ""
+
+#: ../gtk/src/MainWindow.cc:133 ../qt/src/MainWindow.cc:340
 msgid "Using tesseract"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:180 ../qt/src/MainWindow.cc:207
+#: ../gtk/src/MainWindow.cc:182 ../qt/src/MainWindow.cc:207
 msgid "Select an image to begin..."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:327
+#: ../gtk/src/MainWindow.cc:329
 msgid "There are %1 documents with unsaved changes"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:328
+#: ../gtk/src/MainWindow.cc:330
 msgid ""
 "Save changes before closing? If you don't save, all your changes will be "
 "permanently lost.\n"
 "Select the documents you want to save:"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
+#: ../gtk/src/MainWindow.cc:366 ../qt/src/MainWindow.cc:325
 msgid "Ready"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:514 ../qt/src/MainWindow.cc:459
+#: ../gtk/src/MainWindow.cc:516 ../qt/src/MainWindow.cc:459
 msgid "New version"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:514 ../qt/src/MainWindow.cc:459
+#: ../gtk/src/MainWindow.cc:516 ../qt/src/MainWindow.cc:459
 msgid "gImageReader %1 is available"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:460
+#: ../gtk/src/MainWindow.cc:517 ../qt/src/MainWindow.cc:460
 msgid "Download"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:516 ../qt/src/MainWindow.cc:461
+#: ../gtk/src/MainWindow.cc:518 ../qt/src/MainWindow.cc:461
 msgid "Changelog"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:517 ../qt/src/MainWindow.cc:462
+#: ../gtk/src/MainWindow.cc:519 ../qt/src/MainWindow.cc:462
 msgid "Don't notify again"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:538 ../qt/src/MainWindow.cc:510
+#: ../gtk/src/MainWindow.cc:540 ../qt/src/MainWindow.cc:510
 msgid "Don't show again"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:539 ../gtk/src/MainWindow.cc:552
+#: ../gtk/src/MainWindow.cc:541 ../gtk/src/MainWindow.cc:554
 #: ../qt/src/MainWindow.cc:511
 msgid "Install"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:559 ../qt/src/MainWindow.cc:523
+#: ../gtk/src/MainWindow.cc:561 ../qt/src/MainWindow.cc:523
 msgid "Spelling dictionary missing"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:559 ../qt/src/MainWindow.cc:523
+#: ../gtk/src/MainWindow.cc:561 ../qt/src/MainWindow.cc:523
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:566 ../gtk/src/MainWindow.cc:595
+#: ../gtk/src/MainWindow.cc:568 ../gtk/src/MainWindow.cc:597
 #: ../qt/src/MainWindow.cc:529
 msgid "Installing spelling dictionary for '%1'"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:587 ../gtk/src/MainWindow.cc:608
-#: ../gtk/src/MainWindow.cc:616 ../gtk/src/MainWindow.cc:664
-#: ../gtk/src/MainWindow.cc:669 ../gtk/src/TessdataManager.cc:60
+#: ../gtk/src/MainWindow.cc:589 ../gtk/src/MainWindow.cc:610
+#: ../gtk/src/MainWindow.cc:618 ../gtk/src/MainWindow.cc:666
+#: ../gtk/src/MainWindow.cc:671 ../gtk/src/TessdataManager.cc:60
 #: ../gtk/src/TessdataManager.cc:70 ../gtk/src/TessdataManager.cc:339
 #: ../qt/src/MainWindow.cc:548 ../qt/src/MainWindow.cc:561
 #: ../qt/src/MainWindow.cc:570 ../qt/src/MainWindow.cc:614
@@ -1485,23 +1576,23 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:587 ../qt/src/MainWindow.cc:548
+#: ../gtk/src/MainWindow.cc:589 ../qt/src/MainWindow.cc:548
 msgid "Failed to install spelling dictionary: %1"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:608 ../qt/src/MainWindow.cc:561
+#: ../gtk/src/MainWindow.cc:610 ../qt/src/MainWindow.cc:561
 msgid "Failed to create directory for spelling dictionaries."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:616 ../qt/src/MainWindow.cc:570
+#: ../gtk/src/MainWindow.cc:618 ../qt/src/MainWindow.cc:570
 msgid "Could not read %1: %2."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:643 ../qt/src/MainWindow.cc:594
+#: ../gtk/src/MainWindow.cc:645 ../qt/src/MainWindow.cc:594
 msgid "Downloading '%1'..."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:664 ../qt/src/MainWindow.cc:614
+#: ../gtk/src/MainWindow.cc:666 ../qt/src/MainWindow.cc:614
 msgid ""
 "The following dictionaries could not be downloaded:\n"
 "%1\n"
@@ -1511,17 +1602,17 @@ msgid ""
 "to user paths in the settings dialog."
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:667 ../qt/src/MainWindow.cc:617
+#: ../gtk/src/MainWindow.cc:669 ../qt/src/MainWindow.cc:617
 msgid "Dictionaries installed"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:667
+#: ../gtk/src/MainWindow.cc:669
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
 msgstr ""
 
-#: ../gtk/src/MainWindow.cc:669 ../qt/src/MainWindow.cc:619
+#: ../gtk/src/MainWindow.cc:671 ../qt/src/MainWindow.cc:619
 msgid "No spelling dictionaries found for '%1'."
 msgstr ""
 
@@ -1529,47 +1620,55 @@ msgstr ""
 msgid "Page: %1\n"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:285 ../qt/src/OutputEditorText.cc:149
+#: ../gtk/src/OutputEditorText.cc:307 ../qt/src/OutputEditorText.cc:149
 msgid "Stripping line breaks..."
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:293
+#: ../gtk/src/OutputEditorText.cc:316
+msgid "No highlight"
+msgstr ""
+
+#: ../gtk/src/OutputEditorText.cc:336
+msgid "Highlight mode"
+msgstr ""
+
+#: ../gtk/src/OutputEditorText.cc:341
 msgid "Check spelling"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:321
+#: ../gtk/src/OutputEditorText.cc:370
 msgid "Amount of occurrences replaced: %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
+#: ../gtk/src/OutputEditorText.cc:413 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:367 ../qt/src/OutputEditorText.cc:211
+#: ../gtk/src/OutputEditorText.cc:416 ../qt/src/OutputEditorText.cc:211
 msgid "Page: %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:380 ../gtk/src/Recognizer.cc:224
+#: ../gtk/src/OutputEditorText.cc:429 ../gtk/src/Recognizer.cc:243
 #: ../qt/src/Recognizer.cc:258
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:417 ../gtk/src/SourceManager.cc:297
+#: ../gtk/src/OutputEditorText.cc:460 ../gtk/src/SourceManager.cc:297
 #: ../qt/src/SourceManager.cc:257
 msgid "Select Files"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:469
+#: ../gtk/src/OutputEditorText.cc:514
 msgid "Close document"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:510
+#: ../gtk/src/OutputEditorText.cc:556
 msgid "New document %1"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
+#: ../gtk/src/OutputEditorText.cc:601 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
 msgstr ""
 
@@ -1650,44 +1749,52 @@ msgstr ""
 msgid "Current selection"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:191 ../gtk/src/Recognizer.cc:409
+#: ../gtk/src/Recognizer.cc:194 ../gtk/src/Recognizer.cc:428
 #: ../qt/src/Recognizer.cc:211 ../qt/src/Recognizer.cc:441
 msgid "Recognition errors occurred"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:191 ../qt/src/Recognizer.cc:211
+#: ../gtk/src/Recognizer.cc:194 ../qt/src/Recognizer.cc:211
 msgid "Failed to initialize tesseract"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:218 ../gtk/src/Recognizer.cc:332
+#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:235
+msgid "Source already recognized"
+msgstr ""
+
+#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:235
+msgid "One or more selected sources were aready recognized. Proceed anyway?"
+msgstr ""
+
+#: ../gtk/src/Recognizer.cc:237 ../gtk/src/Recognizer.cc:351
 #: ../qt/src/Recognizer.cc:251 ../qt/src/Recognizer.cc:363
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:223 ../qt/src/Recognizer.cc:257
+#: ../gtk/src/Recognizer.cc:242 ../qt/src/Recognizer.cc:257
 msgid "- Page %1: failed to render page"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:251 ../gtk/src/Recognizer.cc:279
-#: ../gtk/src/Recognizer.cc:292 ../gtk/src/Recognizer.cc:384
+#: ../gtk/src/Recognizer.cc:270 ../gtk/src/Recognizer.cc:298
+#: ../gtk/src/Recognizer.cc:311 ../gtk/src/Recognizer.cc:403
 #: ../qt/src/Recognizer.cc:284 ../qt/src/Recognizer.cc:312
 #: ../qt/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:416
 msgid "Recognizing..."
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:338 ../qt/src/Recognizer.cc:369
+#: ../gtk/src/Recognizer.cc:357 ../qt/src/Recognizer.cc:369
 msgid "- %1:%2: failed to render page"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:350 ../qt/src/Recognizer.cc:382
+#: ../gtk/src/Recognizer.cc:369 ../qt/src/Recognizer.cc:382
 msgid "- %1: output already exists, skipping"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:354 ../qt/src/Recognizer.cc:386
+#: ../gtk/src/Recognizer.cc:373 ../qt/src/Recognizer.cc:386
 msgid "- %1: failed to create output file"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:409 ../qt/src/Recognizer.cc:441
+#: ../gtk/src/Recognizer.cc:428 ../qt/src/Recognizer.cc:441
 msgid "The following errors occurred:"
 msgstr ""
 
@@ -1760,11 +1867,6 @@ msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
-msgstr ""
-
-#: ../gtk/src/SourceManager.cc:268 ../qt/src/hocr/HOCRBatchExportDialog.cc:73
-#: ../qt/src/SourceManager.cc:267
-msgid "Select folder..."
 msgstr ""
 
 #: ../gtk/src/SourceManager.cc:292 ../qt/src/SourceManager.cc:256
@@ -1972,10 +2074,9 @@ msgstr ""
 
 #: ../qt/data/AboutDialog.ui.h:3
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
-"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
 msgstr ""
 
 #: ../qt/data/AboutDialog.ui.h:4
@@ -2007,14 +2108,12 @@ msgstr ""
 #: ../qt/data/CrashHandler.ui.h:2
 #, fuzzy, no-c-format
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
-"p&gt;Apologies for the inconvenience. To help improve the application, "
-"please consider reporting the issue to &lt;a href=&quot;mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
-"com&lt;/a&gt;. Please try to describe what you were doing before the "
-"application crashed. Also, include the information below. Thank you.&lt;/"
-"p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
 "<b>アプリケーションがクラッシュしました</b>\n"
 "\n"
@@ -2027,13 +2126,12 @@ msgstr ""
 #: ../qt/data/CrashHandler.ui.h:3
 #, fuzzy
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
-"Tesseract (the OCR engine) has aborted while recognizing text. This may "
-"occur if the used traineddatas are corrupt or incomplatible with the version "
-"of tesseract in use, or due to a bug in tesseract.&lt;/p&gt;&lt;p&gt;The "
-"stacktrace below may provide additional information about where the crash "
-"occurred.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
+"aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
+"recognizing text. This may occur if the used traineddatas are corrupt or "
+"incomplatible with the version of tesseract in use, or due to a bug in "
+"tesseract.</p><p>The stacktrace below may provide additional information "
+"about where the crash occurred.</p></body></html>"
 msgstr ""
 "<b>Tesseract が中止されました</b>\n"
 "\n"
@@ -2043,39 +2141,6 @@ msgstr ""
 "\n"
 "下記のスタックトレースは、どの箇所でクラッシュが発生したかにかんする追加の情"
 "報を提供するかもしれません。\n"
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:1
-msgid "HOCR Batch Export"
-msgstr ""
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
-msgid "Input files"
-msgstr "ソースのファイル名"
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
-msgid "Input:"
-msgstr "出力先:"
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
-msgid "Output preview:"
-msgstr "出力モード:"
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:5
-msgid "Group outputs at level:"
-msgstr ""
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
-msgid "Select source folder:"
-msgstr "挿入モードを選択"
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
-msgid "Export options"
-msgstr "その他のオプション"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2141,15 +2206,9 @@ msgstr ""
 msgid "actionBatchExport"
 msgstr ""
 
-#: ../qt/data/MainWindow.ui.h:42
-#, fuzzy
-msgid "Batch Export"
-msgstr "エクスポート"
-
-#: ../qt/data/PageRangeDialog.ui.h:3
-#, fuzzy
-msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "<small><b>例:</b> 1-10, 13, 14-18</small>"
+#: ../qt/data/PdfExportDialog.ui.h:1
+msgid "PDF Export"
+msgstr "PDF エクスポート"
 
 #: ../qt/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportWidget.ui.h:5
 msgid "Backend:"
@@ -2168,11 +2227,7 @@ msgstr ""
 msgid "Form"
 msgstr "フォーマット:"
 
-#: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
-msgid "ODT"
-msgstr ""
-
-#: ../qt/src/hocr/HOCRPdfExporter.cc:303
+#: ../qt/src/hocr/HOCRPdfExporter.cc:311
 msgid "Failed to write to file"
 msgstr ""
 
@@ -2184,54 +2239,21 @@ msgid ""
 "body></html>"
 msgstr ""
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:230
-msgid "Keyboard shortcuts"
-msgstr ""
-
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:242
-msgid "Lines before:"
-msgstr ""
-
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:256
-msgid "Lines after:"
-msgstr ""
-
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:448
-msgid ""
-"<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
-"td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
-"tr><tr><td>Up</td><td>Previous line</td></tr><tr><td>Ctrl+Space</"
-"td><td>Spelling suggestions</td></tr><tr><td>Ctrl+Enter</td><td>Add word to "
-"dictionary</td></tr><tr><td>Ctrl+B</td><td>Toggle bold</td></tr><tr><td>Ctrl"
-"+I</td><td>Toggle italic</td></tr><tr><td>Ctrl+D</td><td>Divide word at "
-"cursor position</td></tr><tr><td>Ctrl+M</td><td>Merge with previous word</"
-"td></tr><tr><td>Ctrl+Shift+M</td><td>Merge with next word</td></"
-"tr><tr><td>Ctrl+Delete</td><td>Delete word</td></tr><tr><td>Ctrl+{Left,Right}"
-"</td><td>Adjust left bounding box edge</td></tr><tr><td>Ctrl+Shift+{Left,"
-"Right}</td><td>Adjust right bounding box edge</td></tr><tr><td>Ctrl+{Up,Down}"
-"</td><td>Adjust top bounding box edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</"
-"td><td>Adjust bottom bounding box edge</td></tr><tr><td>Ctrl++</"
-"td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
-"size</td></tr></table>"
-msgstr ""
-
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:469
-msgid "Keyboard Shortcuts"
-msgstr ""
-
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:484
-msgid "Confidence: %1"
-msgstr ""
-
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:91
 msgid "Save as hOCR text"
 msgstr ""
 
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:111
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:112
 #: ../qt/src/Ui_OutputEditorText.hh:106
 msgid "Find and Replace"
 msgstr ""
+
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
+#, fuzzy
+msgid "Show proofread widget"
+msgstr "プレビューを表示"
 
 #: ../qt/src/MainWindow.cc:323
 msgid "Multiple sources (%1)"
@@ -2241,14 +2263,6 @@ msgstr ""
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
-msgstr ""
-
-#: ../qt/src/Recognizer.cc:235
-msgid "Source already recognized"
-msgstr ""
-
-#: ../qt/src/Recognizer.cc:235
-msgid "One or more selected sources were aready recognized. Proceed anyway?"
 msgstr ""
 
 #: ../qt/src/SourceManager.cc:240
@@ -2320,6 +2334,55 @@ msgstr ""
 #: ../qt/src/Ui_OutputEditorText.hh:117
 msgid "Clear Output"
 msgstr ""
+
+#~ msgid "Failed to create output"
+#~ msgstr "出力結果の生成に失敗しました"
+
+#~ msgid "Failed to create output. The returned error was: %1"
+#~ msgstr "出力結果の生成に失敗しました。エラー: %1"
+
+#, fuzzy, no-c-format
+#~ msgid ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
+#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
+#~ "application, please consider reporting the issue to &lt;a href=&quot;"
+#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
+#~ "doing before the application crashed. Also, include the information "
+#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+#~ msgstr ""
+#~ "<b>アプリケーションがクラッシュしました</b>\n"
+#~ "\n"
+#~ "ご不便をお掛けして申し訳ございません。アプリケーションの改善に役立てるた"
+#~ "め、<a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+#~ "\">manisandro@gmail.com</a> へ問題を報告することをご検討ください。アプリ"
+#~ "ケーションがクラッシュする前に何をしていたか、下記の情報とともにご説明くだ"
+#~ "さい。よろしくお願いします。"
+
+#, fuzzy
+#~ msgid ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
+#~ "Tesseract (the OCR engine) has aborted while recognizing text. This may "
+#~ "occur if the used traineddatas are corrupt or incomplatible with the "
+#~ "version of tesseract in use, or due to a bug in tesseract.&lt;/p&gt;&lt;"
+#~ "p&gt;The stacktrace below may provide additional information about where "
+#~ "the crash occurred.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+#~ msgstr ""
+#~ "<b>Tesseract が中止されました</b>\n"
+#~ "\n"
+#~ "Tesseract (OCR エンジン) がテキストの読み取り中に中止されました。 これは、"
+#~ "使用した学習データが破損しているか、使用中のTesseract のバージョンと互換性"
+#~ "がないとき、またはTesseract のバグが原因で発生する場合があります。\n"
+#~ "\n"
+#~ "下記のスタックトレースは、どの箇所でクラッシュが発生したかにかんする追加の"
+#~ "情報を提供するかもしれません。\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ msgstr "<small><b>例:</b> 1-10, 13, 14-18</small>"
 
 #, fuzzy
 #~ msgid "plain text"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 22:06+0200\n"
+"POT-Creation-Date: 2022-01-11 00:19+0100\n"
 "PO-Revision-Date: 2021-11-28 09:14+0000\n"
 "Last-Translator: Tymofii Lytvynenko <till.svit@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gimagereader/"
@@ -40,7 +40,7 @@ msgid "Preferences"
 msgstr "Налаштування"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
-#: ../gtk/src/MainWindow.cc:554 ../qt/src/MainWindow.cc:517
+#: ../gtk/src/MainWindow.cc:556 ../qt/src/MainWindow.cc:517
 #: ../qt/src/Ui_MainWindow.hh:181
 msgid "Help"
 msgstr "Допомога"
@@ -70,9 +70,9 @@ msgstr "Введіть рядок символів..."
 msgid "Only allow the following characters to be recognized (whitelist):"
 msgstr "Дозволити розпізнавання тільки наступних символів (білий список):"
 
-#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:48
-#: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/data/PdfExportDialog.ui.h:3
-#: ../gtk/src/FileDialogs.cc:179 ../gtk/src/FileDialogs.cc:194
+#: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:49
+#: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/src/FileDialogs.cc:179
+#: ../gtk/src/FileDialogs.cc:194 ../gtk/src/hocr/HOCRPdfExporter.cc:547
 #: ../gtk/src/Utils.cc:126 ../qt/data/ConfigDialog.ui.h:26
 msgid "OK"
 msgstr "Гаразд"
@@ -129,10 +129,10 @@ msgstr "Назва мови"
 msgid "Name"
 msgstr "Назва"
 
-#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:47
-#: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/data/PdfExportDialog.ui.h:2
-#: ../gtk/src/Acquirer.cc:34 ../gtk/src/FileDialogs.cc:178
-#: ../gtk/src/FileDialogs.cc:193 ../gtk/src/Utils.cc:141
+#: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:48
+#: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/src/Acquirer.cc:34
+#: ../gtk/src/FileDialogs.cc:178 ../gtk/src/FileDialogs.cc:193
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:548 ../gtk/src/Utils.cc:141
 #: ../qt/data/ConfigDialog.ui.h:27 ../qt/data/MainWindow.ui.h:13
 msgid "Cancel"
 msgstr "Скасувати"
@@ -168,10 +168,6 @@ msgstr "Користувацькі шляхи"
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
 msgstr "Автоматично відкривати експортовані документи у типовому додатку"
-
-#: ../gtk/data/ConfigDialog.ui.h:26
-msgid "Syntax highlight mode:"
-msgstr "Режим підсвічування синтаксису:"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -215,6 +211,58 @@ msgstr ""
 "\n"
 "Стек-трейс нижче може містити додаткову інформацію про те, де стався збій.\n"
 
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:1
+#: ../qt/data/HOCRBatchExportDialog.ui.h:1
+msgid "HOCR Batch Export"
+msgstr "Пакетний експорт HOCR"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:2
+#: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
+msgid "Apply"
+msgstr "Застосувати"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:3
+#: ../gtk/data/SubstitutionsManager.ui.h:8 ../gtk/data/TessdataManager.ui.h:3
+msgid "Close"
+msgstr "Закрити"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:4
+#: ../qt/data/HOCRBatchExportDialog.ui.h:6
+msgid "Select source folder:"
+msgstr "Вибрати вихідний каталог..."
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
+#: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
+#: ../qt/data/PdfExportWidget.ui.h:16
+msgid "Format:"
+msgstr "Формат:"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:6
+#: ../qt/data/HOCRBatchExportDialog.ui.h:5
+#, fuzzy
+msgid "Group outputs of N lowest levels:"
+msgstr "Виведення груп на рівні:"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:7
+#: ../qt/data/HOCRBatchExportDialog.ui.h:3
+msgid "Input:"
+msgstr "Вхід:"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:8
+#: ../qt/data/HOCRBatchExportDialog.ui.h:4
+msgid "Output preview:"
+msgstr "Передогляд виводу:"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:9
+#: ../qt/data/HOCRBatchExportDialog.ui.h:2
+msgid "Input files"
+msgstr "Вхідні файли"
+
+#: ../gtk/data/HOCRBatchExportDialog.ui.h:10
+#: ../qt/data/HOCRBatchExportDialog.ui.h:8
+msgid "Export options"
+msgstr "Опції експорту"
+
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
 msgstr "Показати/приховати панель результатів"
@@ -233,161 +281,165 @@ msgstr "Обернути усі сторінки"
 msgid "Sources"
 msgstr "Джерела"
 
-#: ../gtk/data/MainWindow.ui.h:5 ../qt/data/MainWindow.ui.h:24
-msgid "Zoom in"
-msgstr "Збільшити"
-
-#: ../gtk/data/MainWindow.ui.h:6 ../qt/data/MainWindow.ui.h:26
-msgid "Zoom out"
-msgstr "Зменшити"
-
-#: ../gtk/data/MainWindow.ui.h:7 ../qt/data/MainWindow.ui.h:28
-msgid "Normal size"
-msgstr "Звичайний розмір"
-
-#: ../gtk/data/MainWindow.ui.h:8 ../qt/data/MainWindow.ui.h:30
-msgid "Best fit"
-msgstr "Оптимальне заповнення"
-
-#: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:61
-msgid "Rotate page"
-msgstr "Повернути сторінку"
-
-#: ../gtk/data/MainWindow.ui.h:10 ../qt/src/Ui_MainWindow.hh:76
-msgid "Select rotation mode"
-msgstr "Обрати режим обертання"
-
-#: ../gtk/data/MainWindow.ui.h:11 ../gtk/data/OutputEditorHOCR.ui.h:12
-#: ../gtk/data/OutputEditorText.ui.h:16
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:71 ../qt/src/Ui_OutputEditorText.hh:95
-msgid "Select insert mode"
-msgstr "Обрати режим вставки"
-
-#: ../gtk/data/MainWindow.ui.h:12 ../qt/src/Ui_MainWindow.hh:103
-msgid "Select page"
-msgstr "Обрати сторінку"
-
-#: ../gtk/data/MainWindow.ui.h:13 ../qt/data/MainWindow.ui.h:36
-msgid "Image controls"
-msgstr "Керування зображенням"
-
-#: ../gtk/data/MainWindow.ui.h:14 ../qt/src/hocr/HOCRBatchExportDialog.cc:42
-#: ../qt/src/MainWindow.cc:164
-msgid "Plain text"
-msgstr "Звичайний текст"
-
-#: ../gtk/data/MainWindow.ui.h:15 ../qt/src/MainWindow.cc:165
-msgid "hOCR, PDF"
-msgstr "hOCR, PDF"
-
-#: ../gtk/data/MainWindow.ui.h:16 ../qt/data/MainWindow.ui.h:38
-msgid "Autodetect layout"
-msgstr "Автовизначення макету сторінки"
-
-#: ../gtk/data/MainWindow.ui.h:17
-msgid "<small>Recognize all</small>"
-msgstr "<small>Розпізнати все</small>"
-
-#: ../gtk/data/MainWindow.ui.h:18
-msgid "Select language"
-msgstr "Обрати мову"
-
-#: ../gtk/data/MainWindow.ui.h:19 ../qt/src/Ui_MainWindow.hh:203
+#: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:203
 msgid "Add images"
 msgstr "Додати зображення"
 
-#: ../gtk/data/MainWindow.ui.h:20 ../qt/src/Ui_MainWindow.hh:202
+#: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:202
 msgid "Add Images"
 msgstr "Додати зображення"
 
-#: ../gtk/data/MainWindow.ui.h:21 ../qt/src/Ui_MainWindow.hh:207
+#: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:207
 msgid "Remove image from list"
 msgstr "Видалити зображення зі списку"
 
-#: ../gtk/data/MainWindow.ui.h:22 ../qt/src/Ui_MainWindow.hh:210
+#: ../gtk/data/MainWindow.ui.h:8 ../qt/src/Ui_MainWindow.hh:210
 msgid "Delete image"
 msgstr "Видалити зображення"
 
-#: ../gtk/data/MainWindow.ui.h:23 ../qt/src/Ui_MainWindow.hh:213
+#: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:213
 msgid "Clear list"
 msgstr "Очистити список"
 
-#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
 msgstr "Мініатюри"
 
-#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:11 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
 msgstr "Файли"
 
-#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:9
 msgid "Device:"
 msgstr "Пристрій:"
 
-#: ../gtk/data/MainWindow.ui.h:27 ../gtk/data/TessdataManager.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:13 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:55
 msgid "Refresh"
 msgstr "Оновити"
 
-#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:10
+#: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:10
 msgid "Output:"
 msgstr "Сканувати до теки:"
 
-#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:14
+#: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:14
 msgid "Mode:"
 msgstr "Режим:"
 
-#: ../gtk/data/MainWindow.ui.h:30 ../gtk/src/hocr/HOCRPdfExporter.cc:313
+#: ../gtk/data/MainWindow.ui.h:16 ../gtk/src/hocr/HOCRPdfExportWidget.cc:49
 #: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExportWidget.cc:60
 msgid "Color"
 msgstr "Кольоровий"
 
-#: ../gtk/data/MainWindow.ui.h:31 ../gtk/src/hocr/HOCRPdfExporter.cc:316
+#: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExportWidget.cc:52
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExportWidget.cc:61
 msgid "Grayscale"
 msgstr "Відтінки сірого"
 
-#: ../gtk/data/MainWindow.ui.h:32 ../qt/data/MainWindow.ui.h:11
+#: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:11
 msgid "Resolution:"
 msgstr "Роздільна здатність:"
 
-#: ../gtk/data/MainWindow.ui.h:33 ../qt/data/MainWindow.ui.h:12
+#: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:12
 msgid "Scan"
 msgstr "Сканувати"
 
-#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:17
+#: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:17
 msgid "Source:"
 msgstr "Джерело:"
 
-#: ../gtk/data/MainWindow.ui.h:35 ../qt/data/MainWindow.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
 msgstr "Сканування"
 
-#: ../gtk/data/MainWindow.ui.h:36 ../qt/data/MainWindow.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
 msgstr "Яскравість"
 
-#: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
 msgstr "Контраст"
 
-#: ../gtk/data/MainWindow.ui.h:38 ../qt/data/MainWindow.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
 msgstr "Роздільна здатність"
 
-#: ../gtk/data/MainWindow.ui.h:39 ../qt/data/MainWindow.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
 msgstr "Інверсія кольору"
 
-#: ../gtk/data/MainWindow.ui.h:40
+#: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:24
+msgid "Zoom in"
+msgstr "Збільшити"
+
+#: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:26
+msgid "Zoom out"
+msgstr "Зменшити"
+
+#: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:28
+msgid "Normal size"
+msgstr "Звичайний розмір"
+
+#: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:30
+msgid "Best fit"
+msgstr "Оптимальне заповнення"
+
+#: ../gtk/data/MainWindow.ui.h:30 ../qt/src/Ui_MainWindow.hh:61
+msgid "Rotate page"
+msgstr "Повернути сторінку"
+
+#: ../gtk/data/MainWindow.ui.h:31 ../qt/src/Ui_MainWindow.hh:76
+msgid "Select rotation mode"
+msgstr "Обрати режим обертання"
+
+#: ../gtk/data/MainWindow.ui.h:32 ../gtk/data/OutputEditorHOCR.ui.h:12
+#: ../gtk/data/OutputEditorText.ui.h:16
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72 ../qt/src/Ui_OutputEditorText.hh:95
+msgid "Select insert mode"
+msgstr "Обрати режим вставки"
+
+#: ../gtk/data/MainWindow.ui.h:33 ../qt/src/Ui_MainWindow.hh:103
+msgid "Select page"
+msgstr "Обрати сторінку"
+
+#: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:36
+msgid "Image controls"
+msgstr "Керування зображенням"
+
+#: ../gtk/data/MainWindow.ui.h:35 ../gtk/src/hocr/HOCRBatchExportDialog.cc:51
+#: ../qt/src/hocr/HOCRBatchExportDialog.cc:42 ../qt/src/MainWindow.cc:164
+msgid "Plain text"
+msgstr "Звичайний текст"
+
+#: ../gtk/data/MainWindow.ui.h:36 ../qt/src/MainWindow.cc:165
+msgid "hOCR, PDF"
+msgstr "hOCR, PDF"
+
+#: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:38
+msgid "Autodetect layout"
+msgstr "Автовизначення макету сторінки"
+
+#: ../gtk/data/MainWindow.ui.h:38
+msgid "<small>Recognize all</small>"
+msgstr "<small>Розпізнати все</small>"
+
+#: ../gtk/data/MainWindow.ui.h:39
+msgid "Select language"
+msgstr "Обрати мову"
+
+#: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:42
+msgid "Batch Export"
+msgstr "Пакетний експорт"
+
+#: ../gtk/data/MainWindow.ui.h:41
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "Графічний інтерфейс для tesseract-ocr"
 
-#: ../gtk/data/MainWindow.ui.h:41 ../qt/data/BatchModeDialog.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:42 ../qt/data/BatchModeDialog.ui.h:1
 msgid "Batch Mode"
 msgstr "Пакетний режим"
 
-#: ../gtk/data/MainWindow.ui.h:42
+#: ../gtk/data/MainWindow.ui.h:43
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
@@ -395,116 +447,117 @@ msgstr ""
 "<i>У пакетному режимі кожне джерело введення обробляється окремо, а вихідні "
 "дані зберігаються поряд у вхідному файлі.</i>"
 
-#: ../gtk/data/MainWindow.ui.h:43 ../qt/data/BatchModeDialog.ui.h:3
+#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
 msgstr "Наявні результати:"
 
-#: ../gtk/data/MainWindow.ui.h:44 ../qt/data/BatchModeDialog.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/BatchModeDialog.ui.h:2
 msgid "Prepend page numbers to output text"
 msgstr "Додати до тексту номера сторінок"
 
-#: ../gtk/data/MainWindow.ui.h:45 ../qt/data/BatchModeDialog.ui.h:5
+#: ../gtk/data/MainWindow.ui.h:46 ../qt/data/BatchModeDialog.ui.h:5
 msgid "Autodetect page layout"
 msgstr "Автовизначення макету сторінки"
 
-#: ../gtk/data/MainWindow.ui.h:46 ../qt/data/PageRangeDialog.ui.h:1
+#: ../gtk/data/MainWindow.ui.h:47 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
 msgstr "Діапазон сторінок"
 
-#: ../gtk/data/MainWindow.ui.h:49 ../qt/data/PageRangeDialog.ui.h:2
+#: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
 msgstr "Діапазон сторінок:"
 
-#: ../gtk/data/MainWindow.ui.h:50
+#: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
 msgstr "<small><b>Приклад:</b> 1-10, 13, 14-18</small>"
 
-#: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:4
+#: ../gtk/data/MainWindow.ui.h:52 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
 msgstr "Область розпізнавання:"
 
-#: ../gtk/data/MainWindow.ui.h:52 ../gtk/src/Recognizer.cc:121
+#: ../gtk/data/MainWindow.ui.h:53 ../gtk/src/Recognizer.cc:121
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:137
 msgid "Entire page"
 msgstr "Вся сторінка"
 
-#: ../gtk/data/MainWindow.ui.h:53 ../qt/data/PageRangeDialog.ui.h:6
+#: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
 msgstr "Автовизначення"
 
-#: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:7
+#: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
 msgstr "Додати перед текстом, що виводиться:"
 
-#: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:8
+#: ../gtk/data/MainWindow.ui.h:56 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
 msgstr "Ім'я вихідного файлу"
 
-#: ../gtk/data/MainWindow.ui.h:56 ../qt/data/PageRangeDialog.ui.h:9
+#: ../gtk/data/MainWindow.ui.h:57 ../qt/data/PageRangeDialog.ui.h:9
 msgid "Source page"
 msgstr "Вихідна сторінка"
 
-#: ../gtk/data/MainWindow.ui.h:57 ../qt/src/SourceManager.cc:166
+#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/SourceManager.cc:166
 msgid "Protected PDF"
 msgstr "Захищений PDF"
 
-#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/Recognizer.cc:71
+#: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:71
 msgid "Current Page"
 msgstr "Поточна сторінка"
 
-#: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:74
+#: ../gtk/data/MainWindow.ui.h:60 ../qt/src/Recognizer.cc:74
 msgid "Multiple Pages..."
 msgstr "Кілька сторінок..."
 
-#: ../gtk/data/MainWindow.ui.h:60 ../qt/src/Recognizer.cc:77
+#: ../gtk/data/MainWindow.ui.h:61 ../qt/src/Recognizer.cc:77
 msgid "Batch mode..."
 msgstr "Пакетний режим..."
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:713
+#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:715
 msgid "Add Word"
 msgstr "Додати слово"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:713
+#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:715
 msgid "Enter word:"
 msgstr "Введіть слово:"
 
 #. Output toolbar
-#: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:62
+#: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
 msgid "Append new output after last page"
 msgstr "Додати в кінець"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
+#: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
 msgid "Insert new output before current page"
 msgstr "Вставити перед поточною сторінкою"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:93
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
+#: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:95
 msgid "Export to plain text"
 msgstr "Експорт у простий текст"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:8 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:96
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:97
+#: ../gtk/data/OutputEditorHOCR.ui.h:8 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:97
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:98
 msgid "Export to PDF"
 msgstr "Експорт у PDF"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:9 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:99
+#: ../gtk/data/OutputEditorHOCR.ui.h:9
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:100
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:101
 msgid "Export to ODT"
 msgstr "Експорт у ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:75
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Append document after last page"
 msgstr "Додати в кінець"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
 msgid "Insert document before current page"
 msgstr "Вставити перед поточною сторінкою"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:84
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:86
 msgid "Open hOCR file"
 msgstr "Відкрити файл hORC"
 
@@ -514,66 +567,66 @@ msgid "Save output"
 msgstr "Зберегти результати"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:15
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:104
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:105
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:106
 msgid "Export"
 msgstr "Експорт"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:16 ../gtk/data/OutputEditorText.ui.h:21
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:109
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:110
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:111
 #: ../qt/src/Ui_OutputEditorText.hh:118
 msgid "Clear output"
 msgstr "Очистити результати"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/data/OutputEditorText.ui.h:18
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:112
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:113
 #: ../qt/src/Ui_OutputEditorText.hh:107
 msgid "Find and replace"
 msgstr "Знайти і замінити"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:18
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:114
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:115
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:116
 msgid "Show confidence values"
 msgstr "Відображати величини достовірності"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:19 ../gtk/data/PdfExportDialog.ui.h:41
+#: ../gtk/data/OutputEditorHOCR.ui.h:19 ../gtk/data/PdfExportWidget.ui.h:1
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/data/PdfExportWidget.ui.h:2
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:117
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
 msgid "Show preview"
 msgstr "Відображати попередній перегляд"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:20
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:155
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Next (F3)"
 msgstr "Наступний (F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:21
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:156
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Previous (Shift+F3)"
 msgstr "Попередній (Shift+F3)"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:957
-#: ../qt/src/hocr/OutputEditorHOCR.cc:845
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
+#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:969
+#: ../qt/src/hocr/OutputEditorHOCR.cc:847
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:165
 msgid "Expand all"
 msgstr "Розгорнути усе"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:960
-#: ../qt/src/hocr/OutputEditorHOCR.cc:846
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
+#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:972
+#: ../qt/src/hocr/OutputEditorHOCR.cc:848
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:166
 msgid "Collapse all"
 msgstr "Згорнути усе"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:24
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:182
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:187
 msgid "Properties"
 msgstr "Властивості"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:25
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:186
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:191
 msgid "Source"
 msgstr "Джерело"
 
@@ -649,191 +702,184 @@ msgstr "Скасувати"
 msgid "Redo"
 msgstr "Повторити"
 
-#: ../gtk/data/PdfExportDialog.ui.h:1 ../qt/data/PdfExportDialog.ui.h:1
-msgid "PDF Export"
-msgstr "Експорт у PDF"
-
-#: ../gtk/data/PdfExportDialog.ui.h:4 ../qt/data/PdfExportDialog.ui.h:4
+#: ../gtk/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportDialog.ui.h:4
 #: ../qt/data/PdfExportWidget.ui.h:4
 msgid "Output mode:"
 msgstr "Режим виводу:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportDialog.ui.h:6
-#: ../qt/data/PdfExportWidget.ui.h:6 ../qt/src/hocr/HOCRBatchExportDialog.cc:40
+#: ../gtk/data/PdfExportWidget.ui.h:3
+#: ../gtk/src/hocr/HOCRBatchExportDialog.cc:45
+#: ../qt/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportWidget.ui.h:6
+#: ../qt/src/hocr/HOCRBatchExportDialog.cc:40
 msgid "PDF"
 msgstr "PDF"
 
-#: ../gtk/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportDialog.ui.h:7
+#: ../gtk/data/PdfExportWidget.ui.h:4 ../qt/data/PdfExportDialog.ui.h:7
 #: ../qt/data/PdfExportWidget.ui.h:7
 msgid "PDF with invisible text overlay"
 msgstr "PDF з невидимим текстовим шаром"
 
-#: ../gtk/data/PdfExportDialog.ui.h:7 ../qt/data/HOCRBatchExportDialog.ui.h:7
-#: ../qt/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportWidget.ui.h:16
-msgid "Format:"
-msgstr "Формат:"
-
-#: ../gtk/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportDialog.ui.h:17
+#: ../gtk/data/PdfExportWidget.ui.h:6 ../qt/data/PdfExportDialog.ui.h:17
 #: ../qt/data/PdfExportWidget.ui.h:17
 msgid "Compression:"
 msgstr "Стиснення:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportDialog.ui.h:14
+#: ../gtk/data/PdfExportWidget.ui.h:7 ../qt/data/PdfExportDialog.ui.h:14
 #: ../qt/data/PdfExportWidget.ui.h:14
 msgid "Compression quality:"
 msgstr "Якість стиснення:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:10 ../qt/data/PdfExportDialog.ui.h:15
+#: ../gtk/data/PdfExportWidget.ui.h:8 ../qt/data/PdfExportDialog.ui.h:15
 #: ../qt/data/PdfExportWidget.ui.h:15
 msgid "DPI:"
 msgstr "DPI (точок на дюйм):"
 
-#: ../gtk/data/PdfExportDialog.ui.h:11 ../qt/data/PdfExportDialog.ui.h:18
+#: ../gtk/data/PdfExportWidget.ui.h:9 ../qt/data/PdfExportDialog.ui.h:18
 #: ../qt/data/PdfExportWidget.ui.h:18
 msgid "Dithering algorithm:"
 msgstr "Алгоритм згладжування:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:12 ../qt/data/PdfExportDialog.ui.h:13
+#: ../gtk/data/PdfExportWidget.ui.h:10 ../qt/data/PdfExportDialog.ui.h:13
 #: ../qt/data/PdfExportWidget.ui.h:13
 msgid "Image settings:"
 msgstr "Налаштування зображення:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:13 ../qt/data/PdfExportDialog.ui.h:25
+#: ../gtk/data/PdfExportWidget.ui.h:11 ../qt/data/PdfExportDialog.ui.h:25
 #: ../qt/data/PdfExportWidget.ui.h:25
 msgid "Uniformize line and word spacing"
 msgstr "Вирівняти інтервали між рядками і словами"
 
-#: ../gtk/data/PdfExportDialog.ui.h:14 ../qt/data/PdfExportDialog.ui.h:21
+#: ../gtk/data/PdfExportWidget.ui.h:12 ../qt/data/PdfExportDialog.ui.h:21
 #: ../qt/data/PdfExportWidget.ui.h:21
 msgid "Override font family:"
 msgstr "Примусово використовувати сімейство шрифтів:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:15 ../qt/data/PdfExportDialog.ui.h:27
+#: ../gtk/data/PdfExportWidget.ui.h:13 ../qt/data/PdfExportDialog.ui.h:27
 #: ../qt/data/PdfExportWidget.ui.h:27
 msgid "Fallback font family:"
 msgstr "Запасне сімейство шрифтів:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:16 ../qt/data/PdfExportDialog.ui.h:20
+#: ../gtk/data/PdfExportWidget.ui.h:14 ../qt/data/PdfExportDialog.ui.h:20
 #: ../qt/data/PdfExportWidget.ui.h:20
 msgid "Override font size:"
 msgstr "Примусово використовувати розмір шрифту:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:17 ../qt/data/PdfExportDialog.ui.h:23
+#: ../gtk/data/PdfExportWidget.ui.h:15 ../qt/data/PdfExportDialog.ui.h:23
 #: ../qt/data/PdfExportWidget.ui.h:23
 msgid "Font scaling:"
 msgstr "Масштабування шрифту:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:18 ../qt/data/PdfExportDialog.ui.h:26
+#: ../gtk/data/PdfExportWidget.ui.h:16 ../qt/data/PdfExportDialog.ui.h:26
 #: ../qt/data/PdfExportWidget.ui.h:26
 msgid "pt"
 msgstr "pt (точок)"
 
-#: ../gtk/data/PdfExportDialog.ui.h:19 ../qt/data/PdfExportDialog.ui.h:22
+#: ../gtk/data/PdfExportWidget.ui.h:17 ../qt/data/PdfExportDialog.ui.h:22
 #: ../qt/data/PdfExportWidget.ui.h:22
 msgid "Preserve spaces wider than:"
 msgstr "Зберігати пробіли, ширші за:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:20 ../qt/data/PdfExportDialog.ui.h:24
+#: ../gtk/data/PdfExportWidget.ui.h:18 ../qt/data/PdfExportDialog.ui.h:24
 #: ../qt/data/PdfExportWidget.ui.h:24
 msgid "characters"
 msgstr "символів"
 
-#: ../gtk/data/PdfExportDialog.ui.h:21 ../qt/data/PdfExportDialog.ui.h:28
+#: ../gtk/data/PdfExportWidget.ui.h:19 ../qt/data/PdfExportDialog.ui.h:28
 #: ../qt/data/PdfExportWidget.ui.h:28
 msgid "Sanitize hyphens before line breaks"
 msgstr "Видалити символи переносу перед розривами рядка"
 
-#: ../gtk/data/PdfExportDialog.ui.h:22 ../qt/data/PdfExportDialog.ui.h:19
+#: ../gtk/data/PdfExportWidget.ui.h:20 ../qt/data/PdfExportDialog.ui.h:19
 #: ../qt/data/PdfExportWidget.ui.h:19
 msgid "Text settings:"
 msgstr "Налаштування тексту:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:23 ../qt/data/PdfExportDialog.ui.h:10
+#: ../gtk/data/PdfExportWidget.ui.h:21 ../qt/data/PdfExportDialog.ui.h:10
 #: ../qt/data/PdfExportWidget.ui.h:10
 msgid "Paper size:"
 msgstr "Розмір сторінки:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:24 ../qt/data/PdfExportDialog.ui.h:11
+#: ../gtk/data/PdfExportWidget.ui.h:22 ../qt/data/PdfExportDialog.ui.h:11
 #: ../qt/data/PdfExportWidget.ui.h:11
 msgid "Width"
 msgstr "Ширина"
 
-#: ../gtk/data/PdfExportDialog.ui.h:25 ../qt/data/PdfExportDialog.ui.h:12
+#: ../gtk/data/PdfExportWidget.ui.h:23 ../qt/data/PdfExportDialog.ui.h:12
 #: ../qt/data/PdfExportWidget.ui.h:12
 msgid "Height"
 msgstr "Висота"
 
-#: ../gtk/data/PdfExportDialog.ui.h:26 ../qt/data/PdfExportDialog.ui.h:29
+#: ../gtk/data/PdfExportWidget.ui.h:24 ../qt/data/PdfExportDialog.ui.h:29
 #: ../qt/data/PdfExportWidget.ui.h:29
 msgid "Treat image sources as having true DPI:"
 msgstr "Вважати, що вихідні зображення мають справжній DPI:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:27 ../qt/data/PdfExportDialog.ui.h:3
+#: ../gtk/data/PdfExportWidget.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
 #: ../qt/data/PdfExportWidget.ui.h:3
 msgid "Basic"
 msgstr "Базовий"
 
-#: ../gtk/data/PdfExportDialog.ui.h:28 ../qt/data/PdfExportDialog.ui.h:31
+#: ../gtk/data/PdfExportWidget.ui.h:26 ../qt/data/PdfExportDialog.ui.h:31
 #: ../qt/data/PdfExportWidget.ui.h:31
 msgid "PDF version:"
 msgstr "PDF-версія:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:29 ../qt/data/PdfExportDialog.ui.h:33
+#: ../gtk/data/PdfExportWidget.ui.h:27 ../qt/data/PdfExportDialog.ui.h:33
 #: ../qt/data/PdfExportWidget.ui.h:33
 msgid "Password:"
 msgstr "Пароль:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:30 ../qt/data/PdfExportDialog.ui.h:34
+#: ../gtk/data/PdfExportWidget.ui.h:28 ../qt/data/PdfExportDialog.ui.h:34
 #: ../qt/data/PdfExportWidget.ui.h:34
 msgid "Confirm password:"
 msgstr "Підтвердіть пароль:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:31 ../qt/data/PdfExportDialog.ui.h:32
+#: ../gtk/data/PdfExportWidget.ui.h:29 ../qt/data/PdfExportDialog.ui.h:32
 #: ../qt/data/PdfExportWidget.ui.h:32
 msgid "Encryption (optional):"
 msgstr "Шифрування (необов'язково):"
 
-#: ../gtk/data/PdfExportDialog.ui.h:32 ../qt/data/PdfExportDialog.ui.h:36
+#: ../gtk/data/PdfExportWidget.ui.h:30 ../qt/data/PdfExportDialog.ui.h:36
 #: ../qt/data/PdfExportWidget.ui.h:36
 msgid "Author:"
 msgstr "Автор:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:33 ../qt/data/PdfExportDialog.ui.h:38
+#: ../gtk/data/PdfExportWidget.ui.h:31 ../qt/data/PdfExportDialog.ui.h:38
 #: ../qt/data/PdfExportWidget.ui.h:38
 msgid "Title:"
 msgstr "Заголовок:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:34 ../qt/data/PdfExportDialog.ui.h:40
+#: ../gtk/data/PdfExportWidget.ui.h:32 ../qt/data/PdfExportDialog.ui.h:40
 #: ../qt/data/PdfExportWidget.ui.h:40
 msgid "Subject:"
 msgstr "Тема:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:35 ../qt/data/PdfExportDialog.ui.h:37
+#: ../gtk/data/PdfExportWidget.ui.h:33 ../qt/data/PdfExportDialog.ui.h:37
 #: ../qt/data/PdfExportWidget.ui.h:37
 msgid "Creator:"
 msgstr "Творець:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:36 ../qt/data/PdfExportDialog.ui.h:39
+#: ../gtk/data/PdfExportWidget.ui.h:34 ../qt/data/PdfExportDialog.ui.h:39
 #: ../qt/data/PdfExportWidget.ui.h:39
 msgid "Producer:"
 msgstr "Виробник:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:37 ../qt/data/PdfExportDialog.ui.h:41
+#: ../gtk/data/PdfExportWidget.ui.h:35 ../qt/data/PdfExportDialog.ui.h:41
 #: ../qt/data/PdfExportWidget.ui.h:41
 msgid "Keywords:"
 msgstr "Ключові слова:"
 
-#: ../gtk/data/PdfExportDialog.ui.h:38 ../qt/data/PdfExportDialog.ui.h:35
+#: ../gtk/data/PdfExportWidget.ui.h:36 ../qt/data/PdfExportDialog.ui.h:35
 #: ../qt/data/PdfExportWidget.ui.h:35
 msgid "Additional information (optional):"
 msgstr "Додаткова інформація (необов'язково):"
 
-#: ../gtk/data/PdfExportDialog.ui.h:39 ../qt/data/PdfExportDialog.ui.h:42
+#: ../gtk/data/PdfExportWidget.ui.h:37 ../qt/data/PdfExportDialog.ui.h:42
 #: ../qt/data/PdfExportWidget.ui.h:42
 msgid "Import from current source"
 msgstr "Імпортувати з поточного джерела"
 
-#: ../gtk/data/PdfExportDialog.ui.h:40 ../qt/data/PdfExportDialog.ui.h:30
+#: ../gtk/data/PdfExportWidget.ui.h:38 ../qt/data/PdfExportDialog.ui.h:30
 #: ../qt/data/PdfExportWidget.ui.h:30
 msgid "Advanced"
 msgstr "Розширені"
@@ -910,19 +956,11 @@ msgid "Add"
 msgstr "Додати"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:953 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:842 ../qt/src/SubstitutionsManager.cc:50
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:965 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/hocr/OutputEditorHOCR.cc:844 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
 msgstr "Видалити"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
-msgid "Apply"
-msgstr "Застосувати"
-
-#: ../gtk/data/SubstitutionsManager.ui.h:8 ../gtk/data/TessdataManager.ui.h:3
-msgid "Close"
-msgstr "Закрити"
 
 #: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:45
 msgid "Tessdata Manager"
@@ -996,7 +1034,7 @@ msgstr "Код"
 msgid "Native name"
 msgstr "Рідна назва"
 
-#: ../gtk/src/Config.cc:120 ../qt/src/Config.cc:104
+#: ../gtk/src/Config.cc:119 ../qt/src/Config.cc:104
 msgid "Script"
 msgstr "Шрифт"
 
@@ -1017,11 +1055,11 @@ msgstr "Незбережена робота відсутня."
 msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "Зворотне трасування не вдалося. Чи встановлено gdb?"
 
-#: ../gtk/src/Displayer.cc:253 ../qt/src/Displayer.cc:196
+#: ../gtk/src/Displayer.cc:254 ../qt/src/Displayer.cc:196
 msgid "Failed to load image"
 msgstr "Не вдалося завантажити зображення"
 
-#: ../gtk/src/Displayer.cc:253 ../qt/src/Displayer.cc:196
+#: ../gtk/src/Displayer.cc:254 ../qt/src/Displayer.cc:196
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
@@ -1029,7 +1067,7 @@ msgstr ""
 "Файл, можливо, не є зображенням або він пошкоджений:\n"
 "%1"
 
-#: ../gtk/src/Displayer.cc:746 ../qt/src/Displayer.cc:595
+#: ../gtk/src/Displayer.cc:758 ../qt/src/Displayer.cc:595
 msgid "Page %1"
 msgstr "Сторінка %1"
 
@@ -1071,6 +1109,16 @@ msgstr "Перезаписати файл?"
 msgid "Temporary files"
 msgstr "Тимчасові файли"
 
+#: ../gtk/src/hocr/HOCRBatchExportDialog.cc:48
+#: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
+msgid "ODT"
+msgstr "ODT"
+
+#: ../gtk/src/hocr/HOCRBatchExportDialog.cc:106 ../gtk/src/SourceManager.cc:268
+#: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:267
+msgid "Select folder..."
+msgstr "Вибрати каталог..."
+
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
 msgstr "Немає пропозицій"
@@ -1083,199 +1131,140 @@ msgstr "Додати у словник"
 msgid "Ignore word"
 msgstr "Ігнорувати слово"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:724 ../gtk/src/hocr/OutputEditorHOCR.cc:333
-#: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:311
+#: ../gtk/src/hocr/HOCRDocument.cc:792 ../gtk/src/hocr/OutputEditorHOCR.cc:349
+#: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:312
 msgid "Page"
 msgstr "Сторінка"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:726 ../qt/src/hocr/HOCRDocument.cc:692
+#: ../gtk/src/hocr/HOCRDocument.cc:794 ../qt/src/hocr/HOCRDocument.cc:692
 msgid "Text block"
 msgstr "Блок тексту"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:728 ../gtk/src/hocr/OutputEditorHOCR.cc:339
-#: ../qt/src/hocr/HOCRDocument.cc:694 ../qt/src/hocr/OutputEditorHOCR.cc:313
+#: ../gtk/src/hocr/HOCRDocument.cc:796 ../gtk/src/hocr/OutputEditorHOCR.cc:355
+#: ../qt/src/hocr/HOCRDocument.cc:694 ../qt/src/hocr/OutputEditorHOCR.cc:314
 msgid "Paragraph"
 msgstr "Абзац"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:730 ../qt/src/hocr/HOCRDocument.cc:696
+#: ../gtk/src/hocr/HOCRDocument.cc:798 ../qt/src/hocr/HOCRDocument.cc:696
 msgid "Textline"
 msgstr "Рядок тексту"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:734 ../qt/src/hocr/HOCRDocument.cc:700
+#: ../gtk/src/hocr/HOCRDocument.cc:802 ../qt/src/hocr/HOCRDocument.cc:700
 msgid "Graphic"
 msgstr "Графіка"
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:65 ../gtk/src/hocr/HOCRPdfExporter.cc:489
-#: ../gtk/src/hocr/HOCRTextExporter.cc:34
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1063
-#: ../qt/src/hocr/OutputEditorHOCR.cc:980
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1021
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1055
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1084 ../qt/src/OutputEditorText.cc:271
-msgid "output"
-msgstr "результати"
-
-#: ../gtk/src/hocr/HOCROdtExporter.cc:68
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1024
-msgid "OpenDocument Text Documents"
-msgstr "Текстові документи OpenDocument"
-
-#: ../gtk/src/hocr/HOCROdtExporter.cc:69
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1024
-msgid "Save ODT Output..."
-msgstr "Зберегти результати в ODT..."
-
-#: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:617
-#: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCROdtExporter.cc:49
-#: ../qt/src/hocr/HOCRPdfExporter.cc:134 ../qt/src/hocr/HOCRTextExporter.cc:34
+#: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:129
+#: ../gtk/src/hocr/HOCRTextExporter.cc:31 ../qt/src/hocr/HOCROdtExporter.cc:49
+#: ../qt/src/hocr/HOCRPdfExporter.cc:137 ../qt/src/hocr/HOCRTextExporter.cc:34
 msgid "Export failed"
 msgstr "Не вдалося експортувати"
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:76 ../gtk/src/hocr/HOCROdtExporter.cc:341
+#: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../qt/src/hocr/HOCROdtExporter.cc:49
 msgid "The ODT export failed: unable to write output file."
 msgstr "Не вдалося експортувати ODT: неможливо записати цільовий файл."
 
-#: ../gtk/src/hocr/HOCROdtExporter.cc:335 ../qt/src/hocr/HOCROdtExporter.cc:242
+#: ../gtk/src/hocr/HOCROdtExporter.cc:322 ../qt/src/hocr/HOCROdtExporter.cc:242
 msgid "Exporting to ODT..."
 msgstr "Експорт у ODT..."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:283
-#: ../qt/src/hocr/HOCRPdfExportWidget.cc:74
-msgid "Same as source"
-msgstr "Як джерело"
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:70 ../qt/src/hocr/HOCRPdfExporter.cc:80
+msgid "The operation was cancelled"
+msgstr "Операцію було скасовано"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:286
-#: ../qt/src/hocr/HOCRPdfExportWidget.cc:75
-msgid "Custom"
-msgstr "Користувацький"
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:117 ../qt/src/hocr/HOCRPdfExporter.cc:126
+msgid "Failed to render page %1"
+msgstr "Не вдалося візуалізувати сторінку %1"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:300
-#: ../qt/src/hocr/HOCRPdfExportWidget.cc:71
-msgid "cm"
-msgstr "см"
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:124 ../qt/src/hocr/HOCRPdfExporter.cc:133
+msgid "Exporting to PDF..."
+msgstr "Експортую у PDF..."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:303
-#: ../qt/src/hocr/HOCRPdfExportWidget.cc:72
-msgid "in"
-msgstr "дюйм"
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:129 ../qt/src/hocr/HOCRPdfExporter.cc:137
+msgid "The PDF export failed: %1."
+msgstr "Не вдалося експортувати у PDF: %1."
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:319
+#: ../gtk/src/hocr/HOCRPdfExporter.cc:397 ../qt/src/hocr/HOCRPdfExporter.cc:428
+msgid "The PDF library could not load the font '%1'."
+msgstr "Бібліотека PDF не може завантажити шрифт '%1'."
+
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:55
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:62
 msgid "Monochrome"
 msgstr "Монохромний"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:328
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:64
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:64
 msgid "Threshold (closest color)"
 msgstr "Поріг (найближчий колір)"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:331
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:67
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:65
 msgid "Diffuse"
 msgstr "Розсіяний"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:340
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:76
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:66
 msgid "Zip (lossless)"
 msgstr "Zip (без втрат)"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:344
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:80
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:67
 msgid "CCITT Group 4 (lossless)"
 msgstr "CCITT Group 4 (без втрат)"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:348
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:84
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:68
 msgid "Jpeg (lossy)"
 msgstr "Jpeg (з втратами)"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:493
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1060
-msgid "PDF Files"
-msgstr "PDF-файли"
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:97
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:74
+msgid "Same as source"
+msgstr "Як джерело"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:494
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1060
-msgid "Save PDF Output..."
-msgstr "Зберегти результати в PDF..."
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:100
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:75
+msgid "Custom"
+msgstr "Користувацький"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:500
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1065
-msgid "Invalid Output"
-msgstr "Неприпустимий результат"
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:114
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:71
+msgid "cm"
+msgstr "см"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:500
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1065
-msgid "Cannot overwrite a file which is a source image of this document."
-msgstr "Неможливо перезаписати файл, який є вихідним для цього документу."
+#: ../gtk/src/hocr/HOCRPdfExportWidget.cc:117
+#: ../qt/src/hocr/HOCRPdfExportWidget.cc:72
+msgid "in"
+msgstr "дюйм"
 
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:515
-msgid "Failed to create output"
-msgstr "Не вдалося створити результат"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:515
-msgid "Failed to create output. The returned error was: %1"
-msgstr "Не вдалося створити результат. Помилка: %1"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:557 ../qt/src/hocr/HOCRPdfExporter.cc:77
-msgid "The operation was cancelled"
-msgstr "Операцію було скасовано"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:605 ../qt/src/hocr/HOCRPdfExporter.cc:123
-msgid "Failed to render page %1"
-msgstr "Не вдалося візуалізувати сторінку %1"
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:612 ../qt/src/hocr/HOCRPdfExporter.cc:130
-msgid "Exporting to PDF..."
-msgstr "Експортую у PDF..."
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:617 ../qt/src/hocr/HOCRPdfExporter.cc:134
-msgid "The PDF export failed: %1."
-msgstr "Не вдалося експортувати у PDF: %1."
-
-#: ../gtk/src/hocr/HOCRPdfExporter.cc:671 ../qt/src/hocr/HOCRPdfExporter.cc:420
-msgid "The PDF library could not load the font '%1'."
-msgstr "Бібліотека PDF не може завантажити шрифт '%1'."
-
-#: ../gtk/src/hocr/HOCRTextExporter.cc:37 ../gtk/src/OutputEditorText.cc:416
-#: ../gtk/src/OutputEditorText.cc:553 ../qt/src/hocr/OutputEditorHOCR.cc:1087
-#: ../qt/src/OutputEditorText.cc:273
-msgid "Text Files"
-msgstr "Текстові файли"
-
-#: ../gtk/src/hocr/HOCRTextExporter.cc:38
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1087
-msgid "Save Text Output..."
-msgstr "Зберегти результати як текст..."
-
-#: ../gtk/src/hocr/HOCRTextExporter.cc:45 ../qt/src/hocr/HOCRTextExporter.cc:34
+#: ../gtk/src/hocr/HOCRTextExporter.cc:31 ../qt/src/hocr/HOCRTextExporter.cc:34
 msgid "The text export failed: unable to write output file."
 msgstr "Не вдалося експортувати текст: неможливо записати цільовий файл."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:336
-#: ../qt/src/hocr/OutputEditorHOCR.cc:312
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:352
+#: ../qt/src/hocr/OutputEditorHOCR.cc:313
 msgid "Block"
 msgstr "Блок"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:342
-#: ../qt/src/hocr/OutputEditorHOCR.cc:314
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:358
+#: ../qt/src/hocr/OutputEditorHOCR.cc:315
 msgid "Line"
 msgstr "Рядок"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:345
-#: ../qt/src/hocr/OutputEditorHOCR.cc:315
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:361
+#: ../qt/src/hocr/OutputEditorHOCR.cc:316
 msgid "Word"
 msgstr "Слово"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:348
-#: ../qt/src/hocr/OutputEditorHOCR.cc:316
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:364
+#: ../qt/src/hocr/OutputEditorHOCR.cc:317
 msgid "Misspelled word"
 msgstr "Слово з помилкою"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:516
-#: ../qt/src/hocr/OutputEditorHOCR.cc:417
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:533
+#: ../qt/src/hocr/OutputEditorHOCR.cc:419
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -1283,77 +1272,77 @@ msgstr ""
 "Неможливо опрацювати наступні сторінки:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:517
-#: ../qt/src/hocr/OutputEditorHOCR.cc:418
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:534
+#: ../qt/src/hocr/OutputEditorHOCR.cc:420
 msgid "Recognition errors"
 msgstr "Помилки розпізнавання"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:676
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:697
 #: ../qt/src/hocr/OutputEditorHOCR.cc:180
-#: ../qt/src/hocr/OutputEditorHOCR.cc:614
-#: ../qt/src/hocr/OutputEditorHOCR.cc:626
+#: ../qt/src/hocr/OutputEditorHOCR.cc:616
+#: ../qt/src/hocr/OutputEditorHOCR.cc:628
 msgid "Multiple values"
 msgstr "Кілька значень"
 
 #. Merging allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:876
-#: ../qt/src/hocr/OutputEditorHOCR.cc:774
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:892
+#: ../qt/src/hocr/OutputEditorHOCR.cc:776
 msgid "Merge"
 msgstr "Об'єднати"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:884
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
-#: ../qt/src/hocr/OutputEditorHOCR.cc:776
-#: ../qt/src/hocr/OutputEditorHOCR.cc:840
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:899
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:957
+#: ../qt/src/hocr/OutputEditorHOCR.cc:778
+#: ../qt/src/hocr/OutputEditorHOCR.cc:842
 msgid "Split from parent"
 msgstr "Виокремити з батьківського об'єкту"
 
 #. Swapping allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:895
-#: ../qt/src/hocr/OutputEditorHOCR.cc:780
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:909
+#: ../qt/src/hocr/OutputEditorHOCR.cc:782
 msgid "Swap"
 msgstr "Обміняти"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:919
-#: ../qt/src/hocr/OutputEditorHOCR.cc:825
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:932
+#: ../qt/src/hocr/OutputEditorHOCR.cc:827
 msgid "Add graphic region"
 msgstr "Додати область графіки"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:922
-#: ../qt/src/hocr/OutputEditorHOCR.cc:826
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:935
+#: ../qt/src/hocr/OutputEditorHOCR.cc:828
 msgid "Add text block"
 msgstr "Додати текстовий блок"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:926
-#: ../qt/src/hocr/OutputEditorHOCR.cc:828
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:939
+#: ../qt/src/hocr/OutputEditorHOCR.cc:830
 msgid "Add paragraph"
 msgstr "Додати абзац"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:930
-#: ../qt/src/hocr/OutputEditorHOCR.cc:830
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:943
+#: ../qt/src/hocr/OutputEditorHOCR.cc:832
 msgid "Add line"
 msgstr "Додати рядок"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:934
-#: ../qt/src/hocr/OutputEditorHOCR.cc:832
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:947
+#: ../qt/src/hocr/OutputEditorHOCR.cc:834
 msgid "Add word"
 msgstr "Додати слово"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:994
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1066
-#: ../qt/src/hocr/OutputEditorHOCR.cc:907
-#: ../qt/src/hocr/OutputEditorHOCR.cc:983
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1006
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1089
+#: ../qt/src/hocr/OutputEditorHOCR.cc:909
+#: ../qt/src/hocr/OutputEditorHOCR.cc:985
 msgid "hOCR HTML Files"
 msgstr "Файли hOCR HTML"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:995
-#: ../qt/src/hocr/OutputEditorHOCR.cc:907
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1007
+#: ../qt/src/hocr/OutputEditorHOCR.cc:909
 msgid "Open hOCR File"
 msgstr "Відкрити файл hORC"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1043 ../gtk/src/OutputEditorText.cc:449
-#: ../gtk/src/OutputEditorText.cc:518 ../gtk/src/SourceManager.cc:170
-#: ../qt/src/hocr/OutputEditorHOCR.cc:947 ../qt/src/OutputEditorText.cc:256
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1055 ../gtk/src/OutputEditorText.cc:493
+#: ../gtk/src/OutputEditorText.cc:564 ../gtk/src/SourceManager.cc:170
+#: ../qt/src/hocr/OutputEditorHOCR.cc:949 ../qt/src/OutputEditorText.cc:256
 #: ../qt/src/SourceManager.cc:148
 msgid ""
 "The following files could not be opened:\n"
@@ -1362,8 +1351,8 @@ msgstr ""
 "Неможливо відкрити такі файли:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1046
-#: ../qt/src/hocr/OutputEditorHOCR.cc:950
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1058
+#: ../qt/src/hocr/OutputEditorHOCR.cc:952
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
@@ -1371,61 +1360,173 @@ msgstr ""
 "Файл не містить коректного вмісту hORC HTML:\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1049 ../gtk/src/OutputEditorText.cc:450
-#: ../gtk/src/OutputEditorText.cc:519 ../gtk/src/SourceManager.cc:170
-#: ../qt/src/hocr/OutputEditorHOCR.cc:953 ../qt/src/OutputEditorText.cc:257
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1061 ../gtk/src/OutputEditorText.cc:494
+#: ../gtk/src/OutputEditorText.cc:565 ../gtk/src/SourceManager.cc:170
+#: ../qt/src/hocr/OutputEditorHOCR.cc:955 ../qt/src/OutputEditorText.cc:257
 #: ../qt/src/SourceManager.cc:148
 msgid "Unable to open files"
 msgstr "Неможливо відкрити файли"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1067
-#: ../qt/src/hocr/OutputEditorHOCR.cc:983
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1086
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1129
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1165
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1195
+#: ../qt/src/hocr/OutputEditorHOCR.cc:982
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1023
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1057
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1086 ../qt/src/OutputEditorText.cc:271
+msgid "output"
+msgstr "результати"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1090
+#: ../qt/src/hocr/OutputEditorHOCR.cc:985
 msgid "Save hOCR Output..."
 msgstr "Зберегти результати в hOCR..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:562
-#: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1097 ../gtk/src/OutputEditorText.cc:609
+#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:280
 msgid "Failed to save output"
 msgstr "Зберегти результати не вдалося"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1074 ../gtk/src/OutputEditorText.cc:562
-#: ../qt/src/hocr/OutputEditorHOCR.cc:990 ../qt/src/OutputEditorText.cc:280
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1097 ../gtk/src/OutputEditorText.cc:609
+#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:280
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "Переконайтеся, що у вас є дозвіл на запис в обрану теку."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:578
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorText.cc:293
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1132
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1026
+msgid "OpenDocument Text Documents"
+msgstr "Текстові документи OpenDocument"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1133
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1026
+msgid "Save ODT Output..."
+msgstr "Зберегти результати в ODT..."
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1170
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1062
+msgid "PDF Files"
+msgstr "PDF-файли"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1171
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1062
+msgid "Save PDF Output..."
+msgstr "Зберегти результати в PDF..."
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1176
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1067
+msgid "Invalid Output"
+msgstr "Неприпустимий результат"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1176
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1067
+msgid "Cannot overwrite a file which is a source image of this document."
+msgstr "Неможливо перезаписати файл, який є вихідним для цього документу."
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1198 ../gtk/src/OutputEditorText.cc:459
+#: ../gtk/src/OutputEditorText.cc:600 ../qt/src/hocr/OutputEditorHOCR.cc:1089
+#: ../qt/src/OutputEditorText.cc:273
+msgid "Text Files"
+msgstr "Текстові файли"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1199
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1089
+msgid "Save Text Output..."
+msgstr "Зберегти результати як текст..."
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:625
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1108 ../qt/src/OutputEditorText.cc:293
 msgid "Output not saved"
 msgstr "Результати не збережено"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1142 ../gtk/src/OutputEditorText.cc:578
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1106 ../qt/src/OutputEditorText.cc:293
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:625
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1108 ../qt/src/OutputEditorText.cc:293
 msgid "Save output before proceeding?"
 msgstr "Зберегти результати, перш ніж продовжити?"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1263 ../gtk/src/OutputEditorText.cc:315
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1204 ../qt/src/OutputEditorText.cc:164
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1335 ../gtk/src/OutputEditorText.cc:364
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1206 ../qt/src/OutputEditorText.cc:164
 msgid "Replacing..."
 msgstr "Заміна..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1288 ../gtk/src/OutputEditorText.cc:325
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1227 ../qt/src/OutputEditorText.cc:172
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1360 ../gtk/src/OutputEditorText.cc:374
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1229 ../qt/src/OutputEditorText.cc:172
 msgid "Applying substitutions..."
 msgstr "Застосування підстановок..."
 
-#: ../gtk/src/MainWindow.cc:132 ../qt/src/MainWindow.cc:340
+#: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:243
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:230
+msgid "Keyboard shortcuts"
+msgstr "Сполучення клавіш"
+
+#: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:264
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:242
+msgid "Lines before:"
+msgstr "Рядки перед:"
+
+#: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:272
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:256
+msgid "Lines after:"
+msgstr "Рядки після:"
+
+#: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:529
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:457
+msgid ""
+"<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
+"td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
+"tr><tr><td>Up</td><td>Previous line</td></tr><tr><td>Ctrl+Space</"
+"td><td>Spelling suggestions</td></tr><tr><td>Ctrl+Enter</td><td>Add word to "
+"dictionary</td></tr><tr><td>Ctrl+B</td><td>Toggle bold</td></tr><tr><td>Ctrl"
+"+I</td><td>Toggle italic</td></tr><tr><td>Ctrl+D</td><td>Divide word at "
+"cursor position</td></tr><tr><td>Ctrl+M</td><td>Merge with previous word</"
+"td></tr><tr><td>Ctrl+Shift+M</td><td>Merge with next word</td></"
+"tr><tr><td>Ctrl+Delete</td><td>Delete word</td></tr><tr><td>Ctrl+{Left,Right}"
+"</td><td>Adjust left bounding box edge</td></tr><tr><td>Ctrl+Shift+{Left,"
+"Right}</td><td>Adjust right bounding box edge</td></tr><tr><td>Ctrl+{Up,Down}"
+"</td><td>Adjust top bounding box edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</"
+"td><td>Adjust bottom bounding box edge</td></tr><tr><td>Ctrl++</"
+"td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
+"size</td></tr></table>"
+msgstr ""
+"<table><tr><td>Tab</td><td>Наступне поле</td></tr><tr><td>Shift+Tab</"
+"td><td>Попереднє поле</td></tr><tr><td>Униз</td><td>Наступний рядок</td></"
+"tr><tr><td>Вверх</td><td>Попередній рядок</td></tr><tr><td>Ctrl+Пробіл</"
+"td><td>Пропозиції написання</td></tr><tr><td>Ctrl+Enter</td><td>Додати слово "
+"в словник</td></tr><tr><td>Ctrl+B</td><td>Жирний шрифт</td></tr><tr><td>Ctrl"
+"+I</td><td>Курсив</td></tr><tr><td>Ctrl+D</td><td>Розділити слово в позиції "
+"вказівника</td></tr><tr><td>Ctrl+M</td><td>Об'єднати з попереднім словом</"
+"td></tr><tr><td>Ctrl+Shift+M</td><td>Об'єднати з наступним словом</td></"
+"tr><tr><td>Ctrl+Delete</td><td>Видалити слово</td></tr><tr><td>Ctrl+{Ліворуч,"
+"Праворуч}</td><td>Коригування лівої межі</td></tr><tr><td>Ctrl+Shift"
+"+{Ліворуч,Праворуч}</td><td>Коригування правої межі</td></tr><tr><td>Ctrl"
+"+{Угору,Униз}</td><td>Коригування верхньої межі</td></tr><tr><td>Ctrl+Shift"
+"+{Угору,Униз}</td><td>Коригування нижньої межі</td></tr><tr><td>Ctrl++</"
+"td><td>Збільшити розмір шрифту</td></tr><tr><td>Ctrl+-</td><td>Зменшити "
+"розмір шрифту</td></tr></table>"
+
+#: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:556
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:478
+msgid "Keyboard Shortcuts"
+msgstr "Сполучення клавіш"
+
+#: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:571
+#: ../qt/src/hocr/HOCRProofReadWidget.cc:493
+msgid "Confidence: %1"
+msgstr "Довіра: %1"
+
+#: ../gtk/src/MainWindow.cc:133 ../qt/src/MainWindow.cc:340
 msgid "Using tesseract"
 msgstr "З використанням tesseract"
 
-#: ../gtk/src/MainWindow.cc:180 ../qt/src/MainWindow.cc:207
+#: ../gtk/src/MainWindow.cc:182 ../qt/src/MainWindow.cc:207
 msgid "Select an image to begin..."
 msgstr "Щоб розпочати, виберіть зображення..."
 
-#: ../gtk/src/MainWindow.cc:327
+#: ../gtk/src/MainWindow.cc:329
 msgid "There are %1 documents with unsaved changes"
 msgstr "Наявно %1 документів із незбереженими змінами"
 
-#: ../gtk/src/MainWindow.cc:328
+#: ../gtk/src/MainWindow.cc:330
 msgid ""
 "Save changes before closing? If you don't save, all your changes will be "
 "permanently lost.\n"
@@ -1435,55 +1536,55 @@ msgstr ""
 "втрачено назавжди.\n"
 "Виберіть документи, які потрібно зберегти:"
 
-#: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
+#: ../gtk/src/MainWindow.cc:366 ../qt/src/MainWindow.cc:325
 msgid "Ready"
 msgstr "Готовий"
 
-#: ../gtk/src/MainWindow.cc:514 ../qt/src/MainWindow.cc:459
+#: ../gtk/src/MainWindow.cc:516 ../qt/src/MainWindow.cc:459
 msgid "New version"
 msgstr "Нова версія"
 
-#: ../gtk/src/MainWindow.cc:514 ../qt/src/MainWindow.cc:459
+#: ../gtk/src/MainWindow.cc:516 ../qt/src/MainWindow.cc:459
 msgid "gImageReader %1 is available"
 msgstr "Доступний gImageReader %1"
 
-#: ../gtk/src/MainWindow.cc:515 ../qt/src/MainWindow.cc:460
+#: ../gtk/src/MainWindow.cc:517 ../qt/src/MainWindow.cc:460
 msgid "Download"
 msgstr "Завантажити"
 
-#: ../gtk/src/MainWindow.cc:516 ../qt/src/MainWindow.cc:461
+#: ../gtk/src/MainWindow.cc:518 ../qt/src/MainWindow.cc:461
 msgid "Changelog"
 msgstr "Список змін"
 
-#: ../gtk/src/MainWindow.cc:517 ../qt/src/MainWindow.cc:462
+#: ../gtk/src/MainWindow.cc:519 ../qt/src/MainWindow.cc:462
 msgid "Don't notify again"
 msgstr "Більше не сповіщувати"
 
-#: ../gtk/src/MainWindow.cc:538 ../qt/src/MainWindow.cc:510
+#: ../gtk/src/MainWindow.cc:540 ../qt/src/MainWindow.cc:510
 msgid "Don't show again"
 msgstr "Більше не показувати"
 
-#: ../gtk/src/MainWindow.cc:539 ../gtk/src/MainWindow.cc:552
+#: ../gtk/src/MainWindow.cc:541 ../gtk/src/MainWindow.cc:554
 #: ../qt/src/MainWindow.cc:511
 msgid "Install"
 msgstr "Встановити"
 
-#: ../gtk/src/MainWindow.cc:559 ../qt/src/MainWindow.cc:523
+#: ../gtk/src/MainWindow.cc:561 ../qt/src/MainWindow.cc:523
 msgid "Spelling dictionary missing"
 msgstr "Орфографічний словник відсутній"
 
-#: ../gtk/src/MainWindow.cc:559 ../qt/src/MainWindow.cc:523
+#: ../gtk/src/MainWindow.cc:561 ../qt/src/MainWindow.cc:523
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "Орфографічний словник для %1 не встановлено"
 
-#: ../gtk/src/MainWindow.cc:566 ../gtk/src/MainWindow.cc:595
+#: ../gtk/src/MainWindow.cc:568 ../gtk/src/MainWindow.cc:597
 #: ../qt/src/MainWindow.cc:529
 msgid "Installing spelling dictionary for '%1'"
 msgstr "Встановлюється орфографічний словник для '%1'"
 
-#: ../gtk/src/MainWindow.cc:587 ../gtk/src/MainWindow.cc:608
-#: ../gtk/src/MainWindow.cc:616 ../gtk/src/MainWindow.cc:664
-#: ../gtk/src/MainWindow.cc:669 ../gtk/src/TessdataManager.cc:60
+#: ../gtk/src/MainWindow.cc:589 ../gtk/src/MainWindow.cc:610
+#: ../gtk/src/MainWindow.cc:618 ../gtk/src/MainWindow.cc:666
+#: ../gtk/src/MainWindow.cc:671 ../gtk/src/TessdataManager.cc:60
 #: ../gtk/src/TessdataManager.cc:70 ../gtk/src/TessdataManager.cc:339
 #: ../qt/src/MainWindow.cc:548 ../qt/src/MainWindow.cc:561
 #: ../qt/src/MainWindow.cc:570 ../qt/src/MainWindow.cc:614
@@ -1492,23 +1593,23 @@ msgstr "Встановлюється орфографічний словник �
 msgid "Error"
 msgstr "Помилка"
 
-#: ../gtk/src/MainWindow.cc:587 ../qt/src/MainWindow.cc:548
+#: ../gtk/src/MainWindow.cc:589 ../qt/src/MainWindow.cc:548
 msgid "Failed to install spelling dictionary: %1"
 msgstr "Не вдалося встановити орфографічний словник: %1"
 
-#: ../gtk/src/MainWindow.cc:608 ../qt/src/MainWindow.cc:561
+#: ../gtk/src/MainWindow.cc:610 ../qt/src/MainWindow.cc:561
 msgid "Failed to create directory for spelling dictionaries."
 msgstr "Не вдалося створити теку для орфографічних словників."
 
-#: ../gtk/src/MainWindow.cc:616 ../qt/src/MainWindow.cc:570
+#: ../gtk/src/MainWindow.cc:618 ../qt/src/MainWindow.cc:570
 msgid "Could not read %1: %2."
 msgstr "Неможливо прочитати %1: %2."
 
-#: ../gtk/src/MainWindow.cc:643 ../qt/src/MainWindow.cc:594
+#: ../gtk/src/MainWindow.cc:645 ../qt/src/MainWindow.cc:594
 msgid "Downloading '%1'..."
 msgstr "Завантажується '%1'..."
 
-#: ../gtk/src/MainWindow.cc:664 ../qt/src/MainWindow.cc:614
+#: ../gtk/src/MainWindow.cc:666 ../qt/src/MainWindow.cc:614
 msgid ""
 "The following dictionaries could not be downloaded:\n"
 "%1\n"
@@ -1524,11 +1625,11 @@ msgstr ""
 "Порада: Якщо ви не маєте дозволу на запис у системні теки, ви можете "
 "перемкнутися на користувацькі шляхи у Налаштуваннях."
 
-#: ../gtk/src/MainWindow.cc:667 ../qt/src/MainWindow.cc:617
+#: ../gtk/src/MainWindow.cc:669 ../qt/src/MainWindow.cc:617
 msgid "Dictionaries installed"
 msgstr "Словники встановлено"
 
-#: ../gtk/src/MainWindow.cc:667
+#: ../gtk/src/MainWindow.cc:669
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
@@ -1536,7 +1637,7 @@ msgstr ""
 "Було встановлено наступні словники:\n"
 "%1"
 
-#: ../gtk/src/MainWindow.cc:669 ../qt/src/MainWindow.cc:619
+#: ../gtk/src/MainWindow.cc:671 ../qt/src/MainWindow.cc:619
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Орфографічні словники для '%1' не знайдено."
 
@@ -1544,27 +1645,36 @@ msgstr "Орфографічні словники для '%1' не знайде�
 msgid "Page: %1\n"
 msgstr "Сторінка: %1\n"
 
-#: ../gtk/src/OutputEditorText.cc:285 ../qt/src/OutputEditorText.cc:149
+#: ../gtk/src/OutputEditorText.cc:307 ../qt/src/OutputEditorText.cc:149
 msgid "Stripping line breaks..."
 msgstr "Видалення розривів рядків..."
 
-#: ../gtk/src/OutputEditorText.cc:293
+#: ../gtk/src/OutputEditorText.cc:316
+msgid "No highlight"
+msgstr ""
+
+#: ../gtk/src/OutputEditorText.cc:336
+#, fuzzy
+msgid "Highlight mode"
+msgstr "Режим підсвічування синтаксису:"
+
+#: ../gtk/src/OutputEditorText.cc:341
 msgid "Check spelling"
 msgstr "Перевірити орфографію"
 
-#: ../gtk/src/OutputEditorText.cc:321
+#: ../gtk/src/OutputEditorText.cc:370
 msgid "Amount of occurrences replaced: %1"
 msgstr "Кількість випадків заміни: %1"
 
-#: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
+#: ../gtk/src/OutputEditorText.cc:413 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
 msgstr "Файл: %1"
 
-#: ../gtk/src/OutputEditorText.cc:367 ../qt/src/OutputEditorText.cc:211
+#: ../gtk/src/OutputEditorText.cc:416 ../qt/src/OutputEditorText.cc:211
 msgid "Page: %1"
 msgstr "Сторінка: %1"
 
-#: ../gtk/src/OutputEditorText.cc:380 ../gtk/src/Recognizer.cc:224
+#: ../gtk/src/OutputEditorText.cc:429 ../gtk/src/Recognizer.cc:243
 #: ../qt/src/Recognizer.cc:258
 msgid ""
 "\n"
@@ -1573,20 +1683,20 @@ msgstr ""
 "\n"
 "[Не вдалося розпізнати сторінку %1]\n"
 
-#: ../gtk/src/OutputEditorText.cc:417 ../gtk/src/SourceManager.cc:297
+#: ../gtk/src/OutputEditorText.cc:460 ../gtk/src/SourceManager.cc:297
 #: ../qt/src/SourceManager.cc:257
 msgid "Select Files"
 msgstr "Виберіть файли"
 
-#: ../gtk/src/OutputEditorText.cc:469
+#: ../gtk/src/OutputEditorText.cc:514
 msgid "Close document"
 msgstr "Закритий документ"
 
-#: ../gtk/src/OutputEditorText.cc:510
+#: ../gtk/src/OutputEditorText.cc:556
 msgid "New document %1"
 msgstr "Новий документ %1"
 
-#: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
+#: ../gtk/src/OutputEditorText.cc:601 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
 msgstr "Зберегти результати..."
 
@@ -1668,44 +1778,53 @@ msgstr "Пропустити обробку"
 msgid "Current selection"
 msgstr "Поточне виділення"
 
-#: ../gtk/src/Recognizer.cc:191 ../gtk/src/Recognizer.cc:409
+#: ../gtk/src/Recognizer.cc:194 ../gtk/src/Recognizer.cc:428
 #: ../qt/src/Recognizer.cc:211 ../qt/src/Recognizer.cc:441
 msgid "Recognition errors occurred"
 msgstr "Сталися помилки при розпізнаванні"
 
-#: ../gtk/src/Recognizer.cc:191 ../qt/src/Recognizer.cc:211
+#: ../gtk/src/Recognizer.cc:194 ../qt/src/Recognizer.cc:211
 msgid "Failed to initialize tesseract"
 msgstr "Помилка ініціалізації tesseract"
 
-#: ../gtk/src/Recognizer.cc:218 ../gtk/src/Recognizer.cc:332
+#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:235
+msgid "Source already recognized"
+msgstr "Джерело вже розпізнано"
+
+#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:235
+msgid "One or more selected sources were aready recognized. Proceed anyway?"
+msgstr ""
+"Одне чи кілька вибраних джерел уже було розпізнано. Все одно продовжити?"
+
+#: ../gtk/src/Recognizer.cc:237 ../gtk/src/Recognizer.cc:351
 #: ../qt/src/Recognizer.cc:251 ../qt/src/Recognizer.cc:363
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "Розпізнавання сторінки %1 (%2 із %3)"
 
-#: ../gtk/src/Recognizer.cc:223 ../qt/src/Recognizer.cc:257
+#: ../gtk/src/Recognizer.cc:242 ../qt/src/Recognizer.cc:257
 msgid "- Page %1: failed to render page"
 msgstr "- Сторінка %1: не вдалося відмалювати сторінку"
 
-#: ../gtk/src/Recognizer.cc:251 ../gtk/src/Recognizer.cc:279
-#: ../gtk/src/Recognizer.cc:292 ../gtk/src/Recognizer.cc:384
+#: ../gtk/src/Recognizer.cc:270 ../gtk/src/Recognizer.cc:298
+#: ../gtk/src/Recognizer.cc:311 ../gtk/src/Recognizer.cc:403
 #: ../qt/src/Recognizer.cc:284 ../qt/src/Recognizer.cc:312
 #: ../qt/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:416
 msgid "Recognizing..."
 msgstr "Триває розпізнавання..."
 
-#: ../gtk/src/Recognizer.cc:338 ../qt/src/Recognizer.cc:369
+#: ../gtk/src/Recognizer.cc:357 ../qt/src/Recognizer.cc:369
 msgid "- %1:%2: failed to render page"
 msgstr "- Сторінка %1: не вдалося візуалізувати сторінку"
 
-#: ../gtk/src/Recognizer.cc:350 ../qt/src/Recognizer.cc:382
+#: ../gtk/src/Recognizer.cc:369 ../qt/src/Recognizer.cc:382
 msgid "- %1: output already exists, skipping"
 msgstr "- %1: результат уже існує, пропуск"
 
-#: ../gtk/src/Recognizer.cc:354 ../qt/src/Recognizer.cc:386
+#: ../gtk/src/Recognizer.cc:373 ../qt/src/Recognizer.cc:386
 msgid "- %1: failed to create output file"
 msgstr "- %1: неможливо створити вихідний файл"
 
-#: ../gtk/src/Recognizer.cc:409 ../qt/src/Recognizer.cc:441
+#: ../gtk/src/Recognizer.cc:428 ../qt/src/Recognizer.cc:441
 msgid "The following errors occurred:"
 msgstr "Відбулися такі помилки:"
 
@@ -1781,11 +1900,6 @@ msgstr ""
 "Ці PDF-файли вже містять текст:\n"
 "%1\n"
 "Однаково відкрити?"
-
-#: ../gtk/src/SourceManager.cc:268 ../qt/src/hocr/HOCRBatchExportDialog.cc:73
-#: ../qt/src/SourceManager.cc:267
-msgid "Select folder..."
-msgstr "Вибрати каталог..."
 
 #: ../gtk/src/SourceManager.cc:292 ../qt/src/SourceManager.cc:256
 msgid "Images and PDFs"
@@ -2006,16 +2120,16 @@ msgid "About gImageReader"
 msgstr "Про програму gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
+#, fuzzy
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A "
-"graphical frontend to tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
+"p><p>&nbsp;</p></body></html>"
 msgstr ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt; "
-"Графічний інтерфейс для tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a "
-"href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a"
-"&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"Графічний інтерфейс для tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
+"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
+"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2048,69 +2162,38 @@ msgstr "Кодування текстового файлу:"
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;&lt;"
-"p&gt;Apologies for the inconvenience. To help improve the application, "
-"please consider reporting the issue to &lt;a href=&quot;mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
-"com&lt;/a&gt;. Please try to describe what you were doing before the "
-"application crashed. Also, include the information below. Thank you.&lt;/"
-"p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">The application has "
+"crashed</span></p><p>Apologies for the inconvenience. To help improve the "
+"application, please consider reporting the issue to <a href=\"mailto:"
+"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Please try to describe what you were doing before the application "
+"crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;Програма зазнала аварії&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
-"Прошу вибачення за незручності. Для оптимізації роботи програми будь ласка "
-"напишіть про проблему на електронну пошту &lt;a href=&quot;mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;manisandro@gmail."
-"com&lt;/a&gt;. Намагайтеся описати, які дії ви виконували перед тим як "
-"програма зазнала аварії. Також додайте інформацію, розміщену нижче. Дякую."
-"&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">Програма зазнала "
+"аварії</span></p><p>Приносимо вибачення за незручності. Для допомоги у "
+"покращенні додатку, будь ласка, напишіть про проблему на електронну пошту <a "
+"href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
+"\">manisandro@gmail.com</a>. Намагайтеся описати, які дії ви виконували "
+"перед тим, як додаток аварійно завершився. Також додайте інформацію, "
+"розміщену нижче. Дякуємо.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
+#, fuzzy
 msgid ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
-"weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
-"Tesseract (the OCR engine) has aborted while recognizing text. This may "
-"occur if the used traineddatas are corrupt or incomplatible with the version "
-"of tesseract in use, or due to a bug in tesseract.&lt;/p&gt;&lt;p&gt;The "
-"stacktrace below may provide additional information about where the crash "
-"occurred.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
+"aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
+"recognizing text. This may occur if the used traineddatas are corrupt or "
+"incomplatible with the version of tesseract in use, or due to a bug in "
+"tesseract.</p><p>The stacktrace below may provide additional information "
+"about where the crash occurred.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Роботу tesseract "
-"перервано</span></p><p>Робота tesseract (модуль розпізнавання тексту) була "
-"перервана під час розпізнавання тексту. Це могло статися через використання "
-"навчених наборів даних, пошкоджених або несумісних з використовуваною "
-"версією tesseract, або через внутрішню помилку tesseract.</p><p>У наведеному "
-"нижче трасуванні стека можуть бути додаткові відомості про причини "
-"збою.</p></body></html>"
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:1
-msgid "HOCR Batch Export"
-msgstr "Пакетний експорт HOCR"
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:2
-msgid "Input files"
-msgstr "Вхідні файли"
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:3
-msgid "Input:"
-msgstr "Вхід:"
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:4
-msgid "Output preview:"
-msgstr "Передогляд виводу:"
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:5
-msgid "Group outputs at level:"
-msgstr "Виведення груп на рівні:"
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:6
-msgid "Select source folder:"
-msgstr "Вибрати вихідний каталог..."
-
-#: ../qt/data/HOCRBatchExportDialog.ui.h:8
-msgid "Export options"
-msgstr "Опції експорту"
+"<b>Tesseract зупинився</b>\n"
+"\n"
+"Tesseract (OCR-рушій) зупинився під час розпізнавання тексту. це може "
+"траплятися, якщо використовувані файли traineddata пошкоджені або несумісні "
+"з цією версією tesseract, або через помилку у tesseract.\n"
+"\n"
+"Стек-трейс нижче може містити додаткову інформацію про те, де стався збій.\n"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2176,13 +2259,9 @@ msgstr "Показати/приховати панель результатів"
 msgid "actionBatchExport"
 msgstr "actionBatchExport"
 
-#: ../qt/data/MainWindow.ui.h:42
-msgid "Batch Export"
-msgstr "Пакетний експорт"
-
-#: ../qt/data/PageRangeDialog.ui.h:3
-msgid "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
-msgstr "&lt;small&gt;&lt;b&gt;Пример:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#: ../qt/data/PdfExportDialog.ui.h:1
+msgid "PDF Export"
+msgstr "Експорт у PDF"
 
 #: ../qt/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportWidget.ui.h:5
 msgid "Backend:"
@@ -2200,11 +2279,7 @@ msgstr "Альбомний"
 msgid "Form"
 msgstr "Форма"
 
-#: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
-msgid "ODT"
-msgstr "ODT"
-
-#: ../qt/src/hocr/HOCRPdfExporter.cc:303
+#: ../qt/src/hocr/HOCRPdfExporter.cc:311
 msgid "Failed to write to file"
 msgstr "Не вдалося записати у файл"
 
@@ -2220,69 +2295,21 @@ msgstr ""
 "доступне тільки стиснення JPEG, але складні системи писемності підтримуються."
 "</li></ul></body></html>"
 
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:230
-msgid "Keyboard shortcuts"
-msgstr "Сполучення клавіш"
-
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:242
-msgid "Lines before:"
-msgstr "Рядки перед:"
-
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:256
-msgid "Lines after:"
-msgstr "Рядки після:"
-
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:448
-msgid ""
-"<table><tr><td>Tab</td><td>Next field</td></tr><tr><td>Shift+Tab</"
-"td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
-"tr><tr><td>Up</td><td>Previous line</td></tr><tr><td>Ctrl+Space</"
-"td><td>Spelling suggestions</td></tr><tr><td>Ctrl+Enter</td><td>Add word to "
-"dictionary</td></tr><tr><td>Ctrl+B</td><td>Toggle bold</td></tr><tr><td>Ctrl"
-"+I</td><td>Toggle italic</td></tr><tr><td>Ctrl+D</td><td>Divide word at "
-"cursor position</td></tr><tr><td>Ctrl+M</td><td>Merge with previous word</"
-"td></tr><tr><td>Ctrl+Shift+M</td><td>Merge with next word</td></"
-"tr><tr><td>Ctrl+Delete</td><td>Delete word</td></tr><tr><td>Ctrl+{Left,Right}"
-"</td><td>Adjust left bounding box edge</td></tr><tr><td>Ctrl+Shift+{Left,"
-"Right}</td><td>Adjust right bounding box edge</td></tr><tr><td>Ctrl+{Up,Down}"
-"</td><td>Adjust top bounding box edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</"
-"td><td>Adjust bottom bounding box edge</td></tr><tr><td>Ctrl++</"
-"td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
-"size</td></tr></table>"
-msgstr ""
-"<table><tr><td>Tab</td><td>Наступне поле</td></tr><tr><td>Shift+Tab</"
-"td><td>Попереднє поле</td></tr><tr><td>Униз</td><td>Наступний рядок</td></"
-"tr><tr><td>Вверх</td><td>Попередній рядок</td></tr><tr><td>Ctrl+Пробіл</"
-"td><td>Пропозиції написання</td></tr><tr><td>Ctrl+Enter</td><td>Додати слово "
-"в словник</td></tr><tr><td>Ctrl+B</td><td>Жирний шрифт</td></tr><tr><td>Ctrl"
-"+I</td><td>Курсив</td></tr><tr><td>Ctrl+D</td><td>Розділити слово в позиції "
-"вказівника</td></tr><tr><td>Ctrl+M</td><td>Об'єднати з попереднім словом</"
-"td></tr><tr><td>Ctrl+Shift+M</td><td>Об'єднати з наступним словом</td></"
-"tr><tr><td>Ctrl+Delete</td><td>Видалити слово</td></tr><tr><td>Ctrl+{Ліворуч,"
-"Праворуч}</td><td>Коригування лівої межі</td></tr><tr><td>Ctrl+Shift"
-"+{Ліворуч,Праворуч}</td><td>Коригування правої межі</td></tr><tr><td>Ctrl"
-"+{Угору,Униз}</td><td>Коригування верхньої межі</td></tr><tr><td>Ctrl+Shift"
-"+{Угору,Униз}</td><td>Коригування нижньої межі</td></tr><tr><td>Ctrl++</"
-"td><td>Збільшити розмір шрифту</td></tr><tr><td>Ctrl+-</td><td>Зменшити "
-"розмір шрифту</td></tr></table>"
-
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:469
-msgid "Keyboard Shortcuts"
-msgstr "Сполучення клавіш"
-
-#: ../qt/src/hocr/HOCRProofReadWidget.cc:484
-msgid "Confidence: %1"
-msgstr "Довіра: %1"
-
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:89
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:91
 msgid "Save as hOCR text"
 msgstr "Зберегти як текст hOCR"
 
-#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:111
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:112
 #: ../qt/src/Ui_OutputEditorText.hh:106
 msgid "Find and Replace"
 msgstr "Знайти і замінити"
+
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
+#: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
+#, fuzzy
+msgid "Show proofread widget"
+msgstr "Відображати попередній перегляд"
 
 #: ../qt/src/MainWindow.cc:323
 msgid "Multiple sources (%1)"
@@ -2295,15 +2322,6 @@ msgid ""
 msgstr ""
 "Було встановлено наступні файли словників:\n"
 "%1"
-
-#: ../qt/src/Recognizer.cc:235
-msgid "Source already recognized"
-msgstr "Джерело вже розпізнано"
-
-#: ../qt/src/Recognizer.cc:235
-msgid "One or more selected sources were aready recognized. Proceed anyway?"
-msgstr ""
-"Одне чи кілька вибраних джерел уже було розпізнано. Все одно продовжити?"
 
 #: ../qt/src/SourceManager.cc:240
 msgid "No recent files"
@@ -2378,6 +2396,54 @@ msgstr "Зберегти результати"
 msgid "Clear Output"
 msgstr "Очистити результати"
 
+#~ msgid "Failed to create output"
+#~ msgstr "Не вдалося створити результат"
+
+#~ msgid "Failed to create output. The returned error was: %1"
+#~ msgstr "Не вдалося створити результат. Помилка: %1"
+
+#, no-c-format
+#~ msgid ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;The application has crashed&lt;/span&gt;&lt;/p&gt;"
+#~ "&lt;p&gt;Apologies for the inconvenience. To help improve the "
+#~ "application, please consider reporting the issue to &lt;a href=&quot;"
+#~ "mailto:manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Please try to describe what you were "
+#~ "doing before the application crashed. Also, include the information "
+#~ "below. Thank you.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+#~ msgstr ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;Програма зазнала аварії&lt;/span&gt;&lt;/p&gt;&lt;"
+#~ "p&gt;Прошу вибачення за незручності. Для оптимізації роботи програми будь "
+#~ "ласка напишіть про проблему на електронну пошту &lt;a href=&quot;mailto:"
+#~ "manisandro@gmail.com?subject=gImageReader%20Crash&quot;&gt;"
+#~ "manisandro@gmail.com&lt;/a&gt;. Намагайтеся описати, які дії ви "
+#~ "виконували перед тим як програма зазнала аварії. Також додайте "
+#~ "інформацію, розміщену нижче. Дякую.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+
+#~ msgid ""
+#~ "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-"
+#~ "weight:600;&quot;&gt;Tesseract has aborted&lt;/span&gt;&lt;/p&gt;&lt;p&gt;"
+#~ "Tesseract (the OCR engine) has aborted while recognizing text. This may "
+#~ "occur if the used traineddatas are corrupt or incomplatible with the "
+#~ "version of tesseract in use, or due to a bug in tesseract.&lt;/p&gt;&lt;"
+#~ "p&gt;The stacktrace below may provide additional information about where "
+#~ "the crash occurred.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+#~ msgstr ""
+#~ "<html><head/><body><p><span style=\" font-weight:600;\">Роботу tesseract "
+#~ "перервано</span></p><p>Робота tesseract (модуль розпізнавання тексту) "
+#~ "була перервана під час розпізнавання тексту. Це могло статися через "
+#~ "використання навчених наборів даних, пошкоджених або несумісних з "
+#~ "використовуваною версією tesseract, або через внутрішню помилку tesseract."
+#~ "</p><p>У наведеному нижче трасуванні стека можуть бути додаткові "
+#~ "відомості про причини збою.</p></body></html>"
+
+#~ msgid ""
+#~ "&lt;small&gt;&lt;b&gt;Example:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+#~ msgstr ""
+#~ "&lt;small&gt;&lt;b&gt;Пример:&lt;/b&gt; 1-10, 13, 14-18&lt;/small&gt;"
+
 #, fuzzy
 #~ msgid "plain text"
 #~ msgstr "Звичайний текст"
@@ -2397,22 +2463,6 @@ msgstr "Очистити результати"
 
 #~ msgid "The following files will be deleted:%1"
 #~ msgstr "Буде видалено наступні файли:%1"
-
-#~ msgid ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">The application "
-#~ "has crashed</span></p><p>Apologies for the inconvenience. To help improve "
-#~ "the application, please consider reporting the issue to <a href=\"mailto:"
-#~ "manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-#~ "a>. Please try to describe what you were doing before the application "
-#~ "crashed. Also, include the information below. Thank you.</p></body></html>"
-#~ msgstr ""
-#~ "<html><head/><body><p><span style=\" font-weight:600;\">Програма зазнала "
-#~ "аварії</span></p><p>Приносимо вибачення за незручності. Для допомоги у "
-#~ "покращенні додатку, будь ласка, напишіть про проблему на електронну пошту "
-#~ "<a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-#~ "\">manisandro@gmail.com</a>. Намагайтеся описати, які дії ви виконували "
-#~ "перед тим, як додаток аварійно завершився. Також додайте інформацію, "
-#~ "розміщену нижче. Дякуємо.</p></body></html>"
 
 #~ msgid "Failed to open file"
 #~ msgstr "Не вдалося відкрити файл"
