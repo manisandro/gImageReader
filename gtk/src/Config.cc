@@ -98,7 +98,6 @@ Config::Config() {
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("dictinstall", ui.checkDictinstall));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("openafterexport", ui.checkOpenExported));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("updatecheck", ui.checkUpdate));
-	ADD_SETTING(EntrySetting("highlightmode", ui.entryHighlightMode));
 	ADD_SETTING(ListStoreSetting("customlangs", Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsCustom->get_model())));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("systemoutputfont", ui.checkbuttonDefaultoutputfont));
 	ADD_SETTING(FontSetting("customoutputfont", ui.fontbuttonCustomoutputfont));
@@ -154,10 +153,6 @@ std::string Config::tessdataLocation() const {
 
 std::string Config::spellingLocation() const {
 	return ui.entrySpelldir->get_text();
-}
-
-std::string Config::highlightMode() const {
-	return ui.entryHighlightMode->get_text();
 }
 
 std::vector<Glib::ustring> Config::getAvailableLanguages() {

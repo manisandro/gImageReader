@@ -54,10 +54,10 @@ OutputEditorText::OutputEditorText() {
 
 	Glib::RefPtr<Gtk::RecentFilter> recentFilter = Gtk::RecentFilter::create();
 	recentFilter->add_mime_type("text/plain");
-	recentFilter->add_application("gImageReader");
+	recentFilter->add_pattern("*.txt");
 	Gtk::RecentChooserMenu* recentChooser = Gtk::manage(new Gtk::RecentChooserMenu());
 	recentChooser->set_filter(recentFilter);
-	recentChooser->set_local_only(true);
+	recentChooser->set_local_only(false);
 	recentChooser->set_show_not_found(false);
 	recentChooser->set_show_tips(true);
 	recentChooser->set_sort_type(Gtk::RECENT_SORT_MRU);
@@ -95,7 +95,6 @@ OutputEditorText::OutputEditorText() {
 	CONNECT(m_searchFrame, replace_all, sigc::mem_fun(this, &OutputEditorText::replaceAll));
 	CONNECT(m_searchFrame, apply_substitutions, sigc::mem_fun(this, &OutputEditorText::applySubstitutions));
 	CONNECT(ConfigSettings::get<FontSetting>("customoutputfont"), changed, [this] { setFont(getView()); });
-	CONNECT(ConfigSettings::get<EntrySetting>("highlightmode"), changed, [this] { activateHighlightMode(); });
 	CONNECT(ConfigSettings::get<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(getView()); });
 
 #if GTK_SOURCE_MAJOR_VERSION >= 4
@@ -116,7 +115,9 @@ OutputEditorText::OutputEditorText() {
 	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("joinspace", ui.menuitemStripcrlfJoinspace));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("keepparagraphs", ui.menuitemStripcrlfKeepparagraphs));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("drawwhitespace", ui.menuitemStripcrlfDrawwhitespace));
+	ADD_SETTING(VarSetting<std::string>("highlightmode"));
 
+	setHightlightLanguage(ConfigSettings::get<VarSetting<std::string>>("highlightmode")->getValue());
 }
 
 OutputEditorText::~OutputEditorText() {
@@ -253,6 +254,18 @@ void OutputEditorText::setInsertMode(InsertMode mode, const std::string& iconNam
 	ui.imageInsert->set(Gdk::Pixbuf::create_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/%1", iconName)));
 }
 
+void OutputEditorText::setHightlightLanguage(const std::string& lang_id) {
+	Glib::RefPtr<Gsv::LanguageManager> language_manager = Gsv::LanguageManager::get_default();
+	auto highlight_lang = language_manager->get_language(lang_id);
+	if (!highlight_lang) {
+		getBuffer()->set_highlight_syntax(false);
+	} else {
+		getBuffer()->set_highlight_syntax(true);
+		getBuffer()->set_language(highlight_lang);
+	}
+	ConfigSettings::get<VarSetting<Glib::ustring>>("highlightmode")->setValue(lang_id);
+}
+
 void OutputEditorText::filterBuffer() {
 	Gtk::TextIter start, end;
 	getBuffer()->get_region_bounds(start, end);
@@ -299,6 +312,32 @@ void OutputEditorText::filterBuffer() {
 }
 
 void OutputEditorText::completeTextViewMenu(Gtk::Menu* menu) {
+	Gtk::Menu* highlightmenu = Gtk::manage(new Gtk::Menu);
+	Gtk::RadioMenuItem* nolangitem = Gtk::manage(new Gtk::RadioMenuItem(_("No highlight")));
+	CONNECT(nolangitem, toggled, [this, nolangitem] {
+		if (nolangitem->get_active()) {
+			setHightlightLanguage("");
+		}
+	});
+	nolangitem->set_active(!getBuffer()->get_highlight_syntax());
+	highlightmenu->append(*nolangitem);
+	highlightmenu->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+	Glib::RefPtr<Gsv::LanguageManager> language_manager = Gsv::LanguageManager::get_default();
+	for(const std::string& lang_id : language_manager->get_language_ids()) {
+		Gtk::RadioMenuItem* langitem = Gtk::manage(new Gtk::RadioMenuItem(lang_id));
+		CONNECT(langitem, toggled, [this, langitem, lang_id] {
+			if (langitem->get_active()) {
+				setHightlightLanguage(lang_id);
+			}
+		});
+		langitem->set_active(getBuffer()->get_highlight_syntax() && getBuffer()->get_language() && (getBuffer()->get_language()->get_id() == lang_id));
+		highlightmenu->append(*langitem);
+	}
+	Gtk::MenuItem* highlightitem = Gtk::manage(new Gtk::MenuItem(_("Highlight mode")));
+	highlightitem->set_submenu(*highlightmenu);
+	menu->prepend(*Gtk::manage(new Gtk::SeparatorMenuItem()));
+	menu->prepend(*highlightitem);
+
 	Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(_("Check spelling")));
 	item->set_active(bool(GtkSpell::Checker::get_from_text_view(*getView())));
 	CONNECT(item, toggled, [this, item] {
@@ -310,6 +349,7 @@ void OutputEditorText::completeTextViewMenu(Gtk::Menu* menu) {
 	});
 	menu->prepend(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 	menu->prepend(*item);
+
 	menu->show_all();
 }
 
@@ -409,12 +449,6 @@ void OutputEditorText::addText(const Glib::ustring& text, bool insert) {
 		}
 	}
 	MAIN->setOutputPaneVisible(true);
-}
-
-void OutputEditorText::activateHighlightMode() {
-	Glib::RefPtr<Gsv::LanguageManager> language_manager = Gsv::LanguageManager::get_default();
-	Glib::RefPtr<Gsv::Language> language = language_manager->get_language(MAIN->getConfig()->highlightMode());
-	getBuffer()->set_language(language);
 }
 
 bool OutputEditorText::open(const std::string& file) {

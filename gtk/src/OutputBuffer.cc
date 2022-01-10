@@ -29,12 +29,6 @@ OutputBuffer::OutputBuffer()
 	add_mark(m_regionEndMark, end());
 	set_highlight_matching_brackets(false);
 
-	// Enable syntax highlighting
-	set_highlight_syntax(true);
-	Glib::RefPtr<Gsv::LanguageManager> language_manager = Gsv::LanguageManager::get_default();
-	Glib::RefPtr<Gsv::Language> language = language_manager->get_language(MAIN->getConfig()->highlightMode());
-	set_language(language);
-
 	m_regionTag = create_tag("selection");
 	Gtk::Label label;
 	Glib::RefPtr<Gtk::StyleContext> styleContext = label.get_style_context();
