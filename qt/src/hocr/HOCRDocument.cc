@@ -799,8 +799,8 @@ HOCRItem::HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem* parent,
 			m_attrs[attrName] = attributes.item(i).nodeValue();
 		}
 	}
-	// Map ocr_header/ocr_caption to ocr_line
-	if(m_attrs["class"] == "ocr_header" || m_attrs["class"] == "ocr_caption") {
+	// Map ocr_header/ocr_caption/ocr_textfloat to ocr_line
+	if(m_attrs["class"] == "ocr_header" || m_attrs["class"] == "ocr_caption" || m_attrs["class"] == "ocr_textfloat") {
 		m_attrs["class"] = "ocr_line";
 	}
 	// Adjust item id based on pageId
