@@ -315,6 +315,7 @@ Gtk::TreeIter HOCRDocument::splitItemText(const Gtk::TreeIter& itemIndex, int po
 	std::map<Glib::ustring, Glib::ustring> attrs = item->getTitleAttributes();
 	attrs["bbox"] = Glib::ustring::compose("%1 %2 %3 %4", rightBBox.left(), rightBBox.top(), rightBBox.right(), rightBBox.bottom());
 	newElement->set_attribute("title", HOCRItem::serializeAttrGroup(attrs));
+	newElement->set_attribute("lang", item->lang());
 	HOCRItem* newItem = new HOCRItem(newElement, item->page(), item->parent(), item->index() + 1);
 	Gtk::TreePath insertPath = get_path(itemIndex);
 	insertPath.back() += 1;
