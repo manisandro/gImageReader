@@ -455,6 +455,10 @@ std::vector<Gtk::TreeIter> HOCRDocument::recheckItemSpelling(const Gtk::TreeIter
 		return {index};
 	}
 	Glib::ustring lang = item->spellingLang();
+	if(lang.empty()) {
+		item->setMisspelled(false);
+		return {index};
+	}
 	if(m_spell->get_language() != lang) {
 		try {
 			m_spell->set_language(lang);
@@ -927,6 +931,9 @@ HOCRItem::HOCRItem(const xmlpp::Element* element, HOCRPage* page, HOCRItem* pare
 	} else if(itemClass() == "ocr_line") {
 		// Depending on the locale, tesseract can use a comma instead of a dot as decimal separator in the baseline...
 		Utils::string_replace(m_titleAttrs["baseline"], ",", ".", true);
+		m_misspelled = false;
+	} else {
+		m_misspelled = false;
 	}
 }
 
