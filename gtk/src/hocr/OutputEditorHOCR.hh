@@ -75,6 +75,9 @@ public:
 	bool exportToPDF();
 	bool exportToText();
 	bool exportToODT();
+	HOCRDocument* getDocument() const { return m_document.get(); }
+	DisplayerToolHOCR* getTool() const { return m_tool; }
+	bool selectPage(int nr);
 
 private:
 	class HOCRTreeView;

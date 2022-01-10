@@ -27,6 +27,7 @@
 #include "DisplayerToolSelect.hh"
 #include "OutputEditorHOCR.hh"
 #include "OutputEditorText.hh"
+#include "HOCRBatchExportDialog.hh"
 #include "RecognitionMenu.hh"
 #include "Recognizer.hh"
 #include "SourceManager.hh"
@@ -169,6 +170,7 @@ MainWindow::MainWindow() {
 	});
 	CONNECT(ui.buttonProgressCancel, clicked, [this] { progressCancel(); });
 	CONNECT(ui.buttonAutolayout, clicked, [this] { m_displayer->autodetectOCRAreas(); });
+	CONNECT(ui.buttonBatchExport, clicked, [this] { batchExport(); });
 
 	ADD_SETTING(VarSetting<std::vector<int>>("wingeom"));
 	ADD_SETTING(SwitchSettingT<Gtk::ToggleButton>("showcontrols", ui.buttonControls));
@@ -307,7 +309,7 @@ void MainWindow::progressUpdate() {
 
 bool MainWindow::closeEvent(GdkEventAny*) {
 	OutputEditorText* editor = dynamic_cast<OutputEditorText*>(m_outputEditor);
-	std::vector<Gtk::Widget*> notSavedPages(editor->getNotebook()->get_children());
+	std::vector<Gtk::Widget*> notSavedPages(editor ? editor->getNotebook()->get_children() : std::vector<Gtk::Widget*>());
 	// we do not use make_managed because we will pack it inside dialog
 	// and don't want it to be destroyed automatically
 	Gtk::ListBox* listDocuments = new Gtk::ListBox();
@@ -670,3 +672,7 @@ void MainWindow::dictionaryAutoinstall(Glib::ustring code) {
 	}
 }
 
+void MainWindow::batchExport() {
+	HOCRBatchExportDialog dialog;
+	dialog.run();
+}

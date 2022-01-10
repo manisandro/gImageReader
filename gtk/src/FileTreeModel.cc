@@ -481,9 +481,13 @@ void FileTreeModel::get_value_vfunc(const iterator& iter, int column, Glib::Valu
 		return;
 	} else if(column == COLUMN_ICON) {
 		Glib::RefPtr<Gtk::IconTheme> iconTheme = Gtk::IconTheme::get_default();
-		Glib::RefPtr<Gio::FileInfo> fileInfo = Gio::File::create_for_path(node->path)->query_info("standard::icon", Gio::FILE_QUERY_INFO_NONE);
-		Glib::RefPtr<Gio::ThemedIcon> themedIcon = Glib::RefPtr<Gio::ThemedIcon>::cast_dynamic(fileInfo->get_icon());
-		setValue(value, iconTheme->choose_icon(themedIcon->get_names(), 16).load_icon());
+		bool uncertain = false;
+		Glib::ustring contentType = dynamic_cast<DirNode*>(node) ? "inode/directory" : Gio::content_type_guess(node->path, nullptr, 0, uncertain);
+		Glib::RefPtr<Gio::Icon> icon = Gio::content_type_get_icon(contentType);
+		Glib::RefPtr<Gio::ThemedIcon> themedIcon = Glib::RefPtr<Gio::ThemedIcon>::cast_dynamic(icon);
+		if (themedIcon) {
+			setValue(value, iconTheme->choose_icon(themedIcon->get_names(), 16).load_icon());
+		}
 	} else if(column == COLUMN_TEXT) {
 		setValue(value, !node->displayName.empty() ? node->displayName : node->fileName);
 	} else if(column == COLUMN_TOOLTIP) {

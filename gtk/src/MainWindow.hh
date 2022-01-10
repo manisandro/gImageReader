@@ -169,6 +169,7 @@ private:
 	void dictionaryAutoinstallDone(Glib::RefPtr<Gio::DBus::Proxy> proxy, Glib::RefPtr<Gio::AsyncResult>& result);
 #endif
 	void dictionaryAutoinstall(Glib::ustring lang);
+	void batchExport();
 };
 
 #endif

@@ -1063,6 +1063,17 @@ bool OutputEditorHOCR::open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File>
 	return added > 0;
 }
 
+bool OutputEditorHOCR::selectPage(int nr) {
+	if(!m_document || nr >= m_document->pageCount()) {
+		return false;
+	}
+	Gtk::TreeIter index = m_document->indexAtItem(m_document->page(nr));
+	if(index) {
+		m_treeView->setCurrentIndex(index);
+	}
+	return index;
+}
+
 bool OutputEditorHOCR::save(const std::string& filename, Gtk::Widget* widget) {
 	Glib::ustring outname = filename;
 	if(outname.empty()) {

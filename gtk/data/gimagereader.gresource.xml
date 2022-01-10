@@ -13,6 +13,7 @@
 		<file preprocess="xml-stripblanks" compressed="true">SubstitutionsManager.ui</file>
 		<file preprocess="xml-stripblanks" compressed="true">SelectionMenu.ui</file>
                 <file preprocess="xml-stripblanks" compressed="true">CharacterListDialog.ui</file>
+                <file preprocess="xml-stripblanks" compressed="true">HOCRBatchExportDialog.ui</file>
 		<file alias="angle.png">../../data/icons/angle.png</file>
 		<file alias="autolayout.png">../../data/icons/autolayout.png</file>
 		<file alias="brightness.png">../../data/icons/brightness.png</file>

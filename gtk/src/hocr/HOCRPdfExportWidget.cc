@@ -288,7 +288,7 @@ void HOCRPdfExportWidget::updatePreview() {
 		return;
 	}
 	m_preview->setVisible(ui.checkboxPreview->get_active());
-	if(m_document->pageCount() == 0 || !ui.checkboxPreview->get_active()) {
+	if(!m_document || m_document->pageCount() == 0 || !ui.checkboxPreview->get_active()) {
 		return;
 	}
 
