@@ -8,41 +8,45 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:07+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-01-10 19:56+0000\n"
+"Last-Translator: George <mymail.2093@gmail.com>\n"
+"Language-Team: Romanian <https://hosted.weblate.org/projects/gimagereader/"
+"translations/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr ""
+msgstr "Aplicație OCR"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:170
 msgid "Redetect Languages"
-msgstr ""
+msgstr "Redetectare limbi"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:173
 msgid "Manage Languages"
-msgstr ""
+msgstr "Administrare limbi"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:176
 msgid "Preferences"
-msgstr ""
+msgstr "Preferințe"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:554 ../qt/src/MainWindow.cc:517
 #: ../qt/src/Ui_MainWindow.hh:181
 msgid "Help"
-msgstr ""
+msgstr "Ajutor"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:184
 msgid "About"
-msgstr ""
+msgstr "Despre"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
