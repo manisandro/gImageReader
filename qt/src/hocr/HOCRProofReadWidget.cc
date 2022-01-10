@@ -299,6 +299,15 @@ HOCRProofReadWidget::HOCRProofReadWidget(QTreeView* treeView, QWidget* parent)
 	hide();
 }
 
+void HOCRProofReadWidget::setProofreadEnabled(bool enabled) {
+	m_enabled = enabled;
+	if (enabled) {
+		repositionWidget();
+	} else {
+		hide();
+	}
+}
+
 void HOCRProofReadWidget::clear() {
 	qDeleteAll(m_currentLines);
 	m_currentLines.clear();
@@ -367,7 +376,7 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 
 void HOCRProofReadWidget::repositionWidget() {
 
-	if(m_currentLines.isEmpty()) {
+	if(m_currentLines.isEmpty() || !m_enabled) {
 		return;
 	}
 

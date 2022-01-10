@@ -307,6 +307,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.treeViewHOCR->setItemDelegateForColumn(0, new HOCRTextDelegate(ui.treeViewHOCR));
 
 	m_proofReadWidget = new HOCRProofReadWidget(ui.treeViewHOCR, MAIN->getDisplayer());
+	m_proofReadWidget->hide();
 
 	ui.comboBoxNavigate->addItem(_("Page"), "ocr_page");
 	ui.comboBoxNavigate->addItem(_("Block"), "ocr_carea");
@@ -334,6 +335,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.actionOutputReplace, &QAction::triggered, ui.searchFrame, &SearchReplaceFrame::clear);
 	connect(ui.actionToggleWConf, &QAction::triggered, this, &OutputEditorHOCR::toggleWConfColumn);
 	connect(ui.actionPreview, &QAction::toggled, this, &OutputEditorHOCR::previewToggled);
+	connect(ui.actionProofread, &QAction::toggled, m_proofReadWidget, &HOCRProofReadWidget::setProofreadEnabled);
 	connect(&m_previewTimer, &QTimer::timeout, this, &OutputEditorHOCR::updatePreview);
 	connect(ui.searchFrame, &SearchReplaceFrame::findReplace, this, &OutputEditorHOCR::findReplace);
 	connect(ui.searchFrame, &SearchReplaceFrame::replaceAll, this, &OutputEditorHOCR::replaceAll);

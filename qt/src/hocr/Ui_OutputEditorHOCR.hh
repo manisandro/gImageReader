@@ -37,6 +37,7 @@ public:
 	QAction* actionOutputReplace;
 	QAction* actionToggleWConf;
 	QAction* actionPreview;
+	QAction* actionProofread;
 	QAction* actionNavigateNext;
 	QAction* actionNavigatePrev;
 	QAction* actionExpandAll;
@@ -114,6 +115,9 @@ public:
 		actionToggleWConf = new QAction(QIcon(":/icons/wconf"), gettext("Show confidence values"), widget);
 		actionToggleWConf->setToolTip(gettext("Show confidence values"));
 		actionToggleWConf->setCheckable(true);
+		actionProofread = new QAction(QIcon(":/icons/proofread"), gettext("Show proofread widget"), widget);
+		actionProofread->setToolTip(gettext("Show proofread widget"));
+		actionProofread->setCheckable(true);
 		actionPreview = new QAction(QIcon::fromTheme("document-preview"), gettext("Show preview"), widget);
 		actionPreview->setToolTip(gettext("Show preview"));
 		actionPreview->setCheckable(true);
@@ -130,6 +134,7 @@ public:
 		toolBarOutput->addSeparator();
 		toolBarOutput->addAction(actionOutputReplace);
 		toolBarOutput->addAction(actionToggleWConf);
+		toolBarOutput->addAction(actionProofread);
 		toolBarOutput->addAction(actionPreview);
 
 		widget->layout()->addWidget(toolBarOutput);

@@ -33,6 +33,7 @@ class HOCRProofReadWidget : public QFrame {
 	Q_OBJECT
 public:
 	HOCRProofReadWidget(QTreeView* treeView, QWidget* parent = nullptr);
+	void setProofreadEnabled(bool enabled);
 	void clear();
 	QTreeView* documentTree() const { return m_treeView; }
 	void setConfidenceLabel(int wconf);
@@ -51,6 +52,7 @@ private:
 	QSpinBox* m_spinLinesBefore = nullptr;
 	QSpinBox* m_spinLinesAfter = nullptr;
 	int m_fontSizeDiff = 0;
+	bool m_enabled = false;
 
 	// Disable auto tab handling
 	bool focusNextPrevChild(bool) override { return false; }

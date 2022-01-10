@@ -33,6 +33,7 @@
         <file alias="collapse">../../data/icons/collapse.png</file>
         <file alias="expand">../../data/icons/expand.png</file>
         <file alias="thumbnail">../../data/icons/thumbnail.png</file>
+        <file alias="proofread">../../data/icons/proofread.png</file>
     </qresource>
     <qresource prefix="/">
         <file>extra-theme-icons/application-pdf.png</file>
