@@ -187,6 +187,9 @@ std::unique_ptr<tesseract::TessBaseAPI> Recognizer::setupTesseract() {
 		tess->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
 		tess->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().c_str());
 		tess->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().c_str());
+#if TESSERACT_VERSION >= TESSERACT_MAKE_VERSION(5, 0, 0)
+		tess->SetVariable("thresholding_method", "1");
+#endif
 	} else {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
 	}
