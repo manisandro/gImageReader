@@ -17,9 +17,12 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <gtksourceviewmm/languagemanager.h>
+
+#include "ConfigSettings.hh"
 #include "MainWindow.hh"
 #include "OutputBuffer.hh"
-#include <gtksourceviewmm/languagemanager.h>
+
 
 OutputBuffer::OutputBuffer()
 	: Gsv::Buffer() {
@@ -38,6 +41,8 @@ OutputBuffer::OutputBuffer()
 	selColor.set_green(std::min(1.0, selColor.get_green() * 1.6));
 	selColor.set_blue(std::min(1.0, selColor.get_blue() * 1.6));
 	m_regionTag->property_background_rgba() = selColor;
+
+	setHightlightLanguage(ConfigSettings::get<VarSetting<std::string>>("highlightmode")->getValue());
 }
 
 void OutputBuffer::save_region_bounds(bool viewSelected) {
@@ -156,4 +161,16 @@ unsigned int OutputBuffer::replaceAll(const Glib::ustring& searchstr, const Glib
 		return count;
 	}
 	return count;
+}
+
+void OutputBuffer::setHightlightLanguage(const std::string& lang_id) {
+	Glib::RefPtr<Gsv::LanguageManager> language_manager = Gsv::LanguageManager::get_default();
+	auto highlight_lang = language_manager->get_language(lang_id);
+	if (!highlight_lang) {
+		set_highlight_syntax(false);
+	} else {
+		set_highlight_syntax(true);
+		set_language(highlight_lang);
+	}
+	ConfigSettings::get<VarSetting<Glib::ustring>>("highlightmode")->setValue(lang_id);
 }

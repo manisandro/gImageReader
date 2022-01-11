@@ -98,7 +98,6 @@ private:
 	void scrollCursorIntoView();
 	void setFont(Gsv::View* view);
 	void setInsertMode(InsertMode mode, const std::string& iconName);
-	void setHightlightLanguage(const std::string& lang_id);
 
 	// get GtkSourceView at page; by default returns view at current page
 	Gsv::View* getView(Gtk::Widget* page = nullptr) const;

@@ -63,6 +63,7 @@ OutputEditorText::OutputEditorText() {
 	recentChooser->set_sort_type(Gtk::RECENT_SORT_MRU);
 	ui.menuButtonOpenRecent->set_menu(*recentChooser);
 
+	ADD_SETTING(VarSetting<std::string>("highlightmode"));
 	addDocument();
 	prepareCurView();
 
@@ -115,9 +116,6 @@ OutputEditorText::OutputEditorText() {
 	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("joinspace", ui.menuitemStripcrlfJoinspace));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("keepparagraphs", ui.menuitemStripcrlfKeepparagraphs));
 	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("drawwhitespace", ui.menuitemStripcrlfDrawwhitespace));
-	ADD_SETTING(VarSetting<std::string>("highlightmode"));
-
-	setHightlightLanguage(ConfigSettings::get<VarSetting<std::string>>("highlightmode")->getValue());
 }
 
 OutputEditorText::~OutputEditorText() {
@@ -254,18 +252,6 @@ void OutputEditorText::setInsertMode(InsertMode mode, const std::string& iconNam
 	ui.imageInsert->set(Gdk::Pixbuf::create_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/%1", iconName)));
 }
 
-void OutputEditorText::setHightlightLanguage(const std::string& lang_id) {
-	Glib::RefPtr<Gsv::LanguageManager> language_manager = Gsv::LanguageManager::get_default();
-	auto highlight_lang = language_manager->get_language(lang_id);
-	if (!highlight_lang) {
-		getBuffer()->set_highlight_syntax(false);
-	} else {
-		getBuffer()->set_highlight_syntax(true);
-		getBuffer()->set_language(highlight_lang);
-	}
-	ConfigSettings::get<VarSetting<Glib::ustring>>("highlightmode")->setValue(lang_id);
-}
-
 void OutputEditorText::filterBuffer() {
 	Gtk::TextIter start, end;
 	getBuffer()->get_region_bounds(start, end);
@@ -316,7 +302,7 @@ void OutputEditorText::completeTextViewMenu(Gtk::Menu* menu) {
 	Gtk::RadioMenuItem* nolangitem = Gtk::manage(new Gtk::RadioMenuItem(_("No highlight")));
 	CONNECT(nolangitem, toggled, [this, nolangitem] {
 		if (nolangitem->get_active()) {
-			setHightlightLanguage("");
+			getBuffer()->setHightlightLanguage("");
 		}
 	});
 	nolangitem->set_active(!getBuffer()->get_highlight_syntax());
@@ -327,7 +313,7 @@ void OutputEditorText::completeTextViewMenu(Gtk::Menu* menu) {
 		Gtk::RadioMenuItem* langitem = Gtk::manage(new Gtk::RadioMenuItem(lang_id));
 		CONNECT(langitem, toggled, [this, langitem, lang_id] {
 			if (langitem->get_active()) {
-				setHightlightLanguage(lang_id);
+				getBuffer()->setHightlightLanguage(lang_id);
 			}
 		});
 		langitem->set_active(getBuffer()->get_highlight_syntax() && getBuffer()->get_language() && (getBuffer()->get_language()->get_id() == lang_id));

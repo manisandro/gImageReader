@@ -31,10 +31,12 @@ public:
 	bool findReplace(bool backwards, bool replace, bool matchCase, const Glib::ustring& searchstr, const Glib::ustring& replacestr, Gtk::TextView* view);
 	// returns amount of replaced strings
 	unsigned int replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
+	void setHightlightLanguage(const std::string& lang_id);
 
 	static Glib::RefPtr<OutputBuffer> create() {
 		return Glib::RefPtr<OutputBuffer>(new OutputBuffer());
 	}
+
 
 private:
 	OutputBuffer();
