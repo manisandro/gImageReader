@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:06+0200\n"
-"PO-Revision-Date: 2021-11-29 18:52+0000\n"
+"PO-Revision-Date: 2022-01-13 08:53+0000\n"
 "Last-Translator: ovl-1 <ovl-002@mailinator.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -651,7 +651,7 @@ msgstr "Behold linjeskift hvis..."
 
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:64
 msgid "Preceded by end mark (.?!)"
-msgstr "Setningsendetegn står foran (.?!)"
+msgstr "Setningsendetegn (.?!) står foran"
 
 #: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:66
 msgid "Preceded or succeeded by quote"
@@ -663,7 +663,7 @@ msgstr "Andre valg"
 
 #: ../gtk/data/OutputEditorText.ui.h:8 ../qt/src/Ui_OutputEditorText.hh:70
 msgid "Join hyphenated words"
-msgstr "Fjern linjeendebindestrek"
+msgstr "Slå sammen ord med bindestrek"
 
 #: ../gtk/data/OutputEditorText.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:72
 #, fuzzy
@@ -1867,9 +1867,8 @@ msgstr "Sideinndelingsmodus"
 
 #: ../gtk/src/RecognitionMenu.cc:232 ../qt/src/RecognitionMenu.cc:205
 #: ../gtk/src/Recognizer.cc:313
-#, fuzzy
 msgid "Character whitelist / blacklist..."
-msgstr "Svarteliste / hvitliste for tegn…"
+msgstr "Svarteliste / hviteliste for tegn…"
 
 #: ../gtk/src/RecognitionMenu.cc:238 ../qt/src/RecognitionMenu.cc:210
 #: ../gtk/src/Recognizer.cc:319
@@ -2019,7 +2018,7 @@ msgid ""
 "%1\n"
 "Open it regardless?"
 msgstr ""
-"Disse PDF-filene inneholder allerede tekst:\n"
+"PDF-filen inneholder allerede tekst:\n"
 "%1\n"
 "Åpne uansett?"
 
@@ -2234,7 +2233,7 @@ msgstr "Ja"
 
 #: ../gtk/src/Utils.cc:132 ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr "Ja til alt"
+msgstr "Ja til alle"
 
 #: ../gtk/src/Utils.cc:135 ../gtk/src/Utils.cc:70
 msgid "No"
@@ -2242,7 +2241,7 @@ msgstr "Nei"
 
 #: ../gtk/src/Utils.cc:138 ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr "Nei til alt"
+msgstr "Nei til alle"
 
 #: ../gtk/src/Utils.cc:147 ../gtk/src/Utils.cc:82
 msgid "Discard"
