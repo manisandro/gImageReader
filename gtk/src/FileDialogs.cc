@@ -294,19 +294,6 @@ static std::string kde_save_dialog(const Glib::ustring& title, const std::string
 		}
 		std::istringstream iss(stdout);
 		std::getline(iss, filename);
-		if(Glib::file_test(filename, Glib::FILE_TEST_EXISTS)) {
-			std::vector<Glib::ustring> argv = {
-				"/usr/bin/kdialog",
-				"--yesno", Glib::ustring::compose(_("A file named \"%1\" already exists. Are you sure you want to overwrite it?"), Glib::path_get_basename(filename)),
-				"--attach", Glib::ustring::compose("%1", gdk_x11_window_get_xid(parent->get_window()->gobj())),
-				"--title", _("Overwrite File?")/*,
-				"--caption", PACKAGE_NAME*/
-			};
-			Glib::spawn_sync("", argv, /*Glib::SPAWN_DEFAULT*/Glib::SpawnFlags(0), sigc::slot<void>(), nullptr, nullptr, &exit_status);
-			if(exit_status != 0) {
-				continue;
-			}
-		}
 		return filename;
 	} while(true);
 	return std::string();
@@ -416,9 +403,9 @@ std::string save_dialog(const Glib::ustring& title, const std::string& initialFi
 	if(!filename.empty()) {
 		std::pair<std::string, std::string> sparts = Utils::split_filename(suggestedFile);
 		std::pair<std::string, std::string> parts = Utils::split_filename(filename);
-//		if(parts.second.empty()) {
-//			filename = parts.first + "." + sparts.second;
-//		}
+		if(parts.second.empty()) {
+			filename = parts.first + "." + sparts.second;
+		}
 		ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filename));
 	}
 	return filename;
