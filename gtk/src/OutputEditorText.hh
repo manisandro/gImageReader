@@ -91,6 +91,7 @@ private:
 	void scrollCursorIntoView();
 	void setFont();
 	void setInsertMode(InsertMode mode, const std::string& iconName);
+	void setDrawWhitspace(bool enable);
 };
 
 #endif // OUTPUTEDITORTEXT_HH

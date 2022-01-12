@@ -97,18 +97,7 @@ OutputEditorText::OutputEditorText() {
 	CONNECT(m_searchFrame, apply_substitutions, sigc::mem_fun(this, &OutputEditorText::applySubstitutions));
 	CONNECT(ConfigSettings::get<FontSetting>("customoutputfont"), changed, [this] { setFont(); });
 	CONNECT(ConfigSettings::get<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(); });
-
-#if GTK_SOURCE_MAJOR_VERSION >= 4
-	CONNECT(ui.menuitemStripcrlfDrawwhitespace, toggled, [this] {
-		GtkSourceSpaceDrawer* space_drawer = gtk_source_view_get_space_drawer(getView()->gobj());
-		gtk_source_space_drawer_set_types_for_locations (space_drawer, GTK_SOURCE_SPACE_LOCATION_ALL, GTK_SOURCE_SPACE_TYPE_ALL);
-		gtk_source_space_drawer_set_enable_matrix (space_drawer, ui.menuitemStripcrlfDrawwhitespace->get_active() ? TRUE : FALSE);
-	});
-#else
-	CONNECT(ui.menuitemStripcrlfDrawwhitespace, toggled, [this] {
-		textView()->set_draw_spaces(ui.menuitemStripcrlfDrawwhitespace->get_active() ? (Gsv::DRAW_SPACES_NEWLINE | Gsv::DRAW_SPACES_TAB | Gsv::DRAW_SPACES_SPACE) : Gsv::DrawSpacesFlags(0));
-	});
-#endif
+	CONNECT(ui.menuitemStripcrlfDrawwhitespace, toggled, [this] { setDrawWhitspace(ui.menuitemStripcrlfDrawwhitespace->get_active()); });
 
 	ui.notebook->set_current_page(addTab());
 }
@@ -178,6 +167,7 @@ void OutputEditorText::tabChanged() {
 	OutputBuffer* buffer = textBuffer();
 	ui.buttonUndo->set_sensitive(buffer->can_undo());
 	ui.buttonRedo->set_sensitive(buffer->can_redo());
+	setDrawWhitspace(ui.menuitemStripcrlfDrawwhitespace->get_active());
 	Gsv::View* view = textView();
 	view->grab_focus();
 }
@@ -241,6 +231,16 @@ void OutputEditorText::scrollCursorIntoView() {
 void OutputEditorText::setInsertMode(InsertMode mode, const std::string& iconName) {
 	m_insertMode = mode;
 	ui.imageInsert->set(Gdk::Pixbuf::create_from_resource(Glib::ustring::compose("/org/gnome/gimagereader/%1", iconName)));
+}
+
+void OutputEditorText::setDrawWhitspace(bool enable) {
+#if GTK_SOURCE_MAJOR_VERSION >= 4
+	GtkSourceSpaceDrawer* space_drawer = gtk_source_view_get_space_drawer(getView()->gobj());
+	gtk_source_space_drawer_set_types_for_locations (space_drawer, GTK_SOURCE_SPACE_LOCATION_ALL, GTK_SOURCE_SPACE_TYPE_ALL);
+	gtk_source_space_drawer_set_enable_matrix (space_drawer, enable ? TRUE : FALSE);
+#else
+	textView()->set_draw_spaces(enable ? (Gsv::DRAW_SPACES_NEWLINE | Gsv::DRAW_SPACES_TAB | Gsv::DRAW_SPACES_SPACE) : Gsv::DrawSpacesFlags(0));
+#endif
 }
 
 void OutputEditorText::filterBuffer() {
