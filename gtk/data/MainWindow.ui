@@ -1315,7 +1315,7 @@
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <child>
-                  <!-- n-columns=3 n-rows=3 -->
+                  <!-- n-columns=2 n-rows=2 -->
                   <object class="GtkGrid" id="gridRecognize">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -1357,21 +1357,6 @@
                         <property name="top-attach">0</property>
                         <property name="height">2</property>
                       </packing>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
                     </child>
                   </object>
                 </child>
@@ -1632,6 +1617,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
+                <property name="xalign">0</property>
                 <property name="draw-indicator">True</property>
               </object>
               <packing>
@@ -1646,6 +1632,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
+                <property name="xalign">0</property>
                 <property name="draw-indicator">True</property>
               </object>
               <packing>
@@ -1731,7 +1718,7 @@
           </packing>
         </child>
         <child>
-          <!-- n-columns=3 n-rows=3 -->
+          <!-- n-columns=2 n-rows=3 -->
           <object class="GtkGrid" id="gridPageRange">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
@@ -1814,15 +1801,6 @@
                 <property name="top-attach">1</property>
               </packing>
             </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -1854,6 +1832,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
+                <property name="xalign">0</property>
                 <property name="draw-indicator">True</property>
               </object>
               <packing>
@@ -1868,6 +1847,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
+                <property name="xalign">0</property>
                 <property name="draw-indicator">True</property>
               </object>
               <packing>
