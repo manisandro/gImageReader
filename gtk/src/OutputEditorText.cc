@@ -603,6 +603,19 @@ bool OutputEditorText::save(const std::string& filename, Gtk::Widget* page) {
 	return true;
 }
 
+bool OutputEditorText::crashSave(const std::string& filename) const {
+	std::ofstream file(filename);
+	if(file.is_open()) {
+		for(int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
+			Glib::ustring txt = textBuffer(i)->get_text(false);
+			file.write(txt.data(), txt.bytes());
+			file.write("\n\n", 2);
+		}
+		return  true;
+	}
+	return false;
+}
+
 bool OutputEditorText::clear(bool hide, Gtk::Widget* page) {
 	if(!ui.boxEditorText->get_visible()) {
 		return true;

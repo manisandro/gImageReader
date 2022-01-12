@@ -1074,7 +1074,7 @@ bool OutputEditorHOCR::selectPage(int nr) {
 	return index;
 }
 
-bool OutputEditorHOCR::save(const std::string& filename, Gtk::Widget* widget) {
+bool OutputEditorHOCR::save(const std::string& filename) {
 	Glib::ustring outname = filename;
 	if(outname.empty()) {
 		Glib::ustring suggestion = m_filebasename;
@@ -1120,6 +1120,29 @@ bool OutputEditorHOCR::save(const std::string& filename, Gtk::Widget* widget) {
 	m_modified = false;
 	m_filebasename = Utils::split_filename(filename).first;
 	return true;
+}
+
+bool OutputEditorHOCR::crashSave(const std::string& filename) const {
+	std::ofstream file(filename);
+	if(file.is_open()) {
+		Glib::ustring header = Glib::ustring::compose(
+		                           "<!DOCTYPE html>\n"
+		                           "<html>\n"
+		                           "<head>\n"
+		                           " <title>%1</title>\n"
+		                           " <meta charset=\"utf-8\" /> \n"
+		                           " <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
+		                           "</head>\n", Glib::path_get_basename(filename));
+		m_document->convertSourcePaths(Glib::path_get_dirname(filename), false);
+		Glib::ustring body = m_document->toHTML();
+		m_document->convertSourcePaths(Glib::path_get_dirname(filename), true);
+		Glib::ustring footer = "</html>\n";
+		file.write(header.data(), header.bytes());
+		file.write(body.data(), body.bytes());
+		file.write(footer.data(), footer.bytes());
+		return true;
+	}
+	return false;
 }
 
 bool OutputEditorHOCR::exportToODT() {
@@ -1205,13 +1228,13 @@ bool OutputEditorHOCR::exportToText() {
 	return HOCRTextExporter().run(m_document.get(), m_filebasename);
 }
 
-bool OutputEditorHOCR::clear(bool hide, Gtk::Widget* widget) {
+bool OutputEditorHOCR::clear(bool hide) {
 	m_connectionPreviewTimer.disconnect();
 	m_preview->setVisible(false);
 	if(!ui.boxEditorHOCR->get_visible()) {
 		return true;
 	}
-	if(getModified()) {
+	if(m_modified) {
 		int response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Output not saved"), _("Save output before proceeding?"), "", Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel);
 		if(response == Utils::Button::Save) {
 			if(!save()) {

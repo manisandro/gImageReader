@@ -71,6 +71,7 @@ public:
 	// get OutputBuffer at page; by default returns buffer at current page
 	Glib::RefPtr<OutputBuffer> getBuffer(Gtk::Widget* page = nullptr) const;
 	std::string getTabLabel(Gtk::Widget* page = nullptr);
+	bool crashSave(const std::string& filename) const override;
 
 private:
 	struct TextReadSessionData : ReadSessionData {

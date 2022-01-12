@@ -64,15 +64,12 @@ public:
 	}
 	virtual BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const = 0;
 
-	virtual bool getModified(Gtk::Widget* widget = nullptr) const = 0;
-	virtual bool containsSource(const std::string& source, int sourcePage) const { return false; }
-
-
 	virtual void onVisibilityChanged(bool /*visible*/) {}
 	virtual bool open(const std::string& filename) = 0;
-	virtual bool clear(bool hide = true, Gtk::Widget* widget = nullptr) = 0;
-	virtual bool save(const std::string& filename = "", Gtk::Widget* widget = nullptr) = 0;
+	virtual bool clear(bool hide = true) = 0;
+	virtual bool crashSave(const std::string& filename) const = 0;
 	virtual void setLanguage(const Config::Lang& /*lang*/) {}
+	virtual bool containsSource(const std::string& source, int sourcePage) const { return false; }
 };
 
 #endif // OUTPUTEDITOR_HH
