@@ -12,16 +12,17 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-08 22:06+0200\n"
-"PO-Revision-Date: 2021-09-08 22:10+0300\n"
-"Last-Translator: Victor Ryzhykh <victorr2007@yandex.ru>\n"
-"Language-Team: ru\n"
+"PO-Revision-Date: 2022-01-13 08:53+0000\n"
+"Last-Translator: Olesya_Gerasimenko <gammaray@basealt.ru>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/gimagereader/"
+"translations/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 21.08.1\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -636,7 +637,7 @@ msgstr "Открыть файл"
 
 #: ../gtk/data/OutputEditorText.ui.h:14
 msgid "New tab"
-msgstr ""
+msgstr "Новая вкладка"
 
 #: ../gtk/data/OutputEditorText.ui.h:17 ../qt/src/Ui_OutputEditorText.hh:102
 msgid "Strip line breaks on selected text"
@@ -1428,7 +1429,7 @@ msgstr "Выберите изображение для начала работы
 
 #: ../gtk/src/MainWindow.cc:327
 msgid "There are %1 documents with unsaved changes"
-msgstr ""
+msgstr "Документов с несохранёнными изменениями: %1"
 
 #: ../gtk/src/MainWindow.cc:328
 msgid ""
@@ -1436,6 +1437,9 @@ msgid ""
 "permanently lost.\n"
 "Select the documents you want to save:"
 msgstr ""
+"Сохранить изменения перед закрытием? Если не выполнить сохранение, все "
+"изменения будут утрачены навсегда.\n"
+"Выберите документы, которые следует сохранить:"
 
 #: ../gtk/src/MainWindow.cc:364 ../qt/src/MainWindow.cc:325
 msgid "Ready"
@@ -1556,7 +1560,7 @@ msgstr "Проверить орфографию"
 
 #: ../gtk/src/OutputEditorText.cc:321
 msgid "Amount of occurrences replaced: %1"
-msgstr ""
+msgstr "Количество заменённых вхождений: %1"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:208
 msgid "File: %1"
@@ -1581,14 +1585,12 @@ msgid "Select Files"
 msgstr "Выберите файлы"
 
 #: ../gtk/src/OutputEditorText.cc:469
-#, fuzzy
 msgid "Close document"
-msgstr "Документ"
+msgstr "Закрыть документ"
 
 #: ../gtk/src/OutputEditorText.cc:510
-#, fuzzy
 msgid "New document %1"
-msgstr "Документ"
+msgstr "Новый документ %1"
 
 #: ../gtk/src/OutputEditorText.cc:554 ../qt/src/OutputEditorText.cc:273
 msgid "Save Output..."
@@ -2087,9 +2089,8 @@ msgstr ""
 "информацию о том, где произошел сбой.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
-#, fuzzy
 msgid "HOCR Batch Export"
-msgstr "Пакетный экспорт"
+msgstr "Пакетный экспорт HOCR"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
 msgid "Input files"
@@ -2105,7 +2106,7 @@ msgstr "Предварительный просмотр вывода:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs at level:"
-msgstr ""
+msgstr "Группировать результаты на уровне:"
 
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
 msgid "Select source folder:"
@@ -2177,7 +2178,7 @@ msgstr "Показать/скрыть панель результатов"
 
 #: ../qt/data/MainWindow.ui.h:41
 msgid "actionBatchExport"
-msgstr ""
+msgstr "actionBatchExport"
 
 #: ../qt/data/MainWindow.ui.h:42
 msgid "Batch Export"
@@ -2205,7 +2206,7 @@ msgstr "Форма"
 
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:303
 msgid "Failed to write to file"
