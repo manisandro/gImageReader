@@ -318,6 +318,15 @@ Glib::ustring Utils::string_trim(const Glib::ustring& str, const Glib::ustring& 
 	return ret;
 }
 
+Glib::ustring Utils::string_rstrip(const Glib::ustring& str, const Glib::ustring& what) {
+	Glib::ustring ret = str;
+	std::size_t rpos = ret.find_last_not_of(what);
+	if(rpos != Glib::ustring::npos) {
+		ret.erase(rpos + 1);
+	}
+	return ret;
+}
+
 bool Utils::strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, bool matchCase) {
 	return matchCase ? (str1 == str2) : (str1.casefold() == str2.casefold());
 }

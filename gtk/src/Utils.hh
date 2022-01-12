@@ -78,6 +78,7 @@ void list_dir(const std::string& path, const std::set<std::string>& filters, std
 std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, bool keepEmpty = true);
 Glib::ustring string_join(const std::vector<Glib::ustring>& strings, const Glib::ustring& joiner);
 Glib::ustring string_trim(const Glib::ustring& str, const Glib::ustring& what = " \t\n\r");
+Glib::ustring string_rstrip(const Glib::ustring& str, const Glib::ustring& what = " \t\n\r");
 bool strings_equal(const Glib::ustring& str1, const Glib::ustring& str2, bool matchCase);
 bool string_endswith(const Glib::ustring& str, const Glib::ustring& what);
 bool string_startswith(const Glib::ustring& str, const Glib::ustring& what);
