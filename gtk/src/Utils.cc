@@ -115,11 +115,9 @@ Utils::Button::Type Utils::messageBox(Gtk::MessageType type,
 		textView.set_buffer(buffer);
 		scrollArea.add(textView);
 		grid.attach(scrollArea, 1, 1);
-	} else {
-		if (bodyWidget) {
-			scrollArea.add(*bodyWidget);
-			grid.attach(scrollArea, 1, 1);
-		}
+	} else if (bodyWidget) {
+		scrollArea.add(*bodyWidget);
+		grid.attach(scrollArea, 1, 1);
 	}
 
 	if((buttons & Button::Ok) != 0) {
@@ -131,26 +129,29 @@ Utils::Button::Type Utils::messageBox(Gtk::MessageType type,
 	if((buttons & Button::YesAll) != 0) {
 		dialog.add_button(_("Yes to all"), Button::Type::YesAll);
 	}
+	if((buttons & Button::Save) != 0) {
+		dialog.add_button(_("Save"), Button::Type::Save);
+	}
 	if((buttons & Button::No) != 0) {
 		dialog.add_button(_("No"), Button::Type::No);
 	}
 	if((buttons & Button::NoAll) != 0) {
 		dialog.add_button(_("No to all"), Button::Type::NoAll);
 	}
-	if((buttons & Button::Cancel) != 0) {
-		dialog.add_button(_("Cancel"), Button::Type::Cancel);
-	}
-	if((buttons & Button::Save) != 0) {
-		dialog.add_button(_("Save"), Button::Type::Save);
-	}
 	if((buttons & Button::Discard) != 0) {
 		dialog.add_button(_("Discard"), Button::Type::Discard);
+	}
+	if((buttons & Button::DiscardAll) != 0) {
+		dialog.add_button(_("Discard all"), Button::Type::DiscardAll);
 	}
 	if((buttons & Button::Text) != 0) {
 		dialog.add_button(_("Text"), Button::Type::Text);
 	}
 	if((buttons & Button::HOCR) != 0) {
 		dialog.add_button(_("hOCR"), Button::Type::HOCR);
+	}
+	if((buttons & Button::Cancel) != 0) {
+		dialog.add_button(_("Cancel"), Button::Type::Cancel);
 	}
 
 	dialog.show_all();

@@ -45,14 +45,15 @@ struct Button {
 	enum Type {
 		Ok = 1,
 		Yes = 2,
-		No = 4,
-		Cancel = 8,
-		Save = 16,
-		Discard = 32,
-		YesAll = 64,
-		NoAll = 128,
+		YesAll = 4,
+		Save = 8,
+		No = 16,
+		NoAll = 32,
+		Discard = 64,
+		DiscardAll = 128,
 		Text = 256,
-		HOCR = 512
+		HOCR = 512,
+		Cancel = 1024
 	};
 };
 Button::Type messageBox(Gtk::MessageType type,
