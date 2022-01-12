@@ -118,6 +118,7 @@ int OutputEditorText::addTab(const Glib::ustring& title) {
 		Glib::ustring fontName = ConfigSettings::get<FontSetting>("customoutputfont")->getValue();
 		textView->override_font(Pango::FontDescription(fontName));
 	}
+	textView->set_wrap_mode(Gtk::WRAP_WORD);
 
 	Gtk::ScrolledWindow* scrollWin = Gtk::make_managed<Gtk::ScrolledWindow>();
 	scrollWin->add(*textView);
