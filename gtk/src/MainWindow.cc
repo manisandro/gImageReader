@@ -308,48 +308,10 @@ void MainWindow::progressUpdate() {
 	}
 }
 
-
 bool MainWindow::closeEvent(GdkEventAny*) {
-	OutputEditorText* editor = dynamic_cast<OutputEditorText*>(m_outputEditor);
-	std::vector<Gtk::Widget*> notSavedPages(editor ? editor->getNotebook()->get_children() : std::vector<Gtk::Widget*>());
-	// we do not use make_managed because we will pack it inside dialog
-	// and don't want it to be destroyed automatically
-	Gtk::ListBox* listDocuments = new Gtk::ListBox();
-	for (std::vector<Gtk::Widget*>::iterator it = notSavedPages.begin() ; it != notSavedPages.end();) {
-		if (!editor->getBuffer(*it)->get_modified()) {
-			notSavedPages.erase(it);
-		} else {
-			Gtk::CheckButton* checkButton = Gtk::make_managed<Gtk::CheckButton>(editor->getTabLabel(*it));
-			checkButton->set_active(true);
-			listDocuments->append(*checkButton);
-			++it;
-		}
+	if(!m_outputEditor->clear()) {
+		return true;
 	}
-
-	if (notSavedPages.size() > 0) {
-		int response = Utils::messageBox(Gtk::MESSAGE_QUESTION,
-		                                 Glib::ustring::compose(_("There are %1 documents with unsaved changes"), notSavedPages.size()),
-		                                 _("Save changes before closing? If you don't save, all your changes will be permanently lost.\nSelect the documents you want to save:"),
-		                                 "",
-		                                 Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel,
-		                                 nullptr, listDocuments);
-		if(response == Utils::Button::Save) {
-			// listDocuments.size() should be equal to notSavedPages.size()
-			for (int i = 0; i < notSavedPages.size(); ++i) {
-				if (dynamic_cast <Gtk::CheckButton*>(listDocuments->get_row_at_index(i)->get_child())->get_active()) {
-					if(!editor->save("", notSavedPages[i])) {
-						delete listDocuments;
-						return true;
-					}
-				}
-			}
-		} else if(response != Utils::Button::Discard) {
-			delete listDocuments;
-			return true;
-		}
-	}
-
-	delete listDocuments;
 
 	if((ui.windowMain->get_window()->get_state() & Gdk::WINDOW_STATE_MAXIMIZED) == 0) {
 		std::vector<int> geom(4);
@@ -364,6 +326,7 @@ bool MainWindow::closeEvent(GdkEventAny*) {
 void MainWindow::onSourceChanged() {
 	std::vector<Source*> sources = m_sourceManager->getSelectedSources();
 	if(m_displayer->setSources(sources) && !sources.empty()) {
+		ui.headerbar->set_subtitle(sources.size() == 1 ? Glib::ustring(sources.front()->displayname) : Glib::ustring::compose(_("Multiple sources (%1)"), sources.size()));
 		if(m_stateStack.back() == State::Idle) {
 			pushState(State::Normal, _("Ready"));
 		}
@@ -371,6 +334,7 @@ void MainWindow::onSourceChanged() {
 		if(m_stateStack.back() == State::Normal) {
 			popState();
 		}
+		ui.headerbar->set_subtitle("");
 	}
 }
 
@@ -432,8 +396,6 @@ bool MainWindow::setOutputMode(OutputMode mode) {
 		m_displayer->setTool(m_displayerTool);
 		m_outputEditor->setLanguage(m_recognitionMenu->getRecognitionLanguage());
 		ui.panedOutput->pack2(*m_outputEditor->getUI(), true, false);
-		// set default width of the left child (panedSources) to 1300px
-		ui.panedOutput->set_position(1300);
 		m_outputEditor->getUI()->set_visible(ui.buttonOutputpane->get_active());
 		return true;
 	}

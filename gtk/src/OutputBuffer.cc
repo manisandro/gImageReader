@@ -133,7 +133,7 @@ bool OutputBuffer::findReplace(bool backwards, bool replace, bool matchCase, con
 	return true;
 }
 
-unsigned int OutputBuffer::replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase) {
+int OutputBuffer::replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase) {
 	Gtk::TextIter start, end;
 	get_region_bounds(start, end);
 	int startpos = start.get_offset();

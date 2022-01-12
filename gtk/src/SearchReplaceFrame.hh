@@ -33,6 +33,9 @@ public:
 	Gtk::Box* getWidget() const {
 		return ui.boxSearchreplace;
 	}
+	Gtk::Button* replaceAllButton() const {
+		return ui.buttonReplaceall;
+	}
 	void clear();
 	void clearErrorState();
 	void setErrorState();

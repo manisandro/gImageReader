@@ -106,9 +106,6 @@ public:
 	Gtk::Window* getWindow() const {
 		return ui.windowMain;
 	}
-	Gtk::HeaderBar* getHeaderBar() const {
-		return ui.headerbar;
-	}
 	void setMenuModel(const Glib::RefPtr<Gio::MenuModel>& menuModel);
 	void redetectLanguages();
 	void manageLanguages();

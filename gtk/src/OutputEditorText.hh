@@ -30,12 +30,6 @@
 
 class SearchReplaceFrame;
 
-class OutputSession {
-public:
-	std::string file;
-};
-
-
 class OutputEditorText : public OutputEditor {
 public:
 	class TextBatchProcessor : public BatchProcessor {
@@ -56,22 +50,15 @@ public:
 	ReadSessionData* initRead(tesseract::TessBaseAPI& /*tess*/) override {
 		return new TextReadSessionData;
 	}
-	bool clear(bool hide = true, Gtk::Widget* page = nullptr) override;
+	bool clear(bool hide = true) override;
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const Glib::ustring& errorMsg, ReadSessionData* data) override;
 	BatchProcessor* createBatchProcessor(const std::map<Glib::ustring, Glib::ustring>& options) const override;
-	bool getModified(Gtk::Widget* page = nullptr) const override;
-	// checks whether notebook's page has a session (e.g. file) asociated with it; if no page is provided - current page is assumed
-	bool hasSession(Gtk::Widget* page = nullptr);
 	void onVisibilityChanged(bool visible) override;
-	bool open(const std::string& file = "") override;
-	bool save(const std::string& filename = "", Gtk::Widget* page = nullptr) override;
 	void setLanguage(const Config::Lang& lang) override;
-	Gtk::Notebook* getNotebook() const { return ui.notebook; };
-	// get OutputBuffer at page; by default returns buffer at current page
-	Glib::RefPtr<OutputBuffer> getBuffer(Gtk::Widget* page = nullptr) const;
-	std::string getTabLabel(Gtk::Widget* page = nullptr);
+	bool open(const std::string& filename = "") override;
 	bool crashSave(const std::string& filename) const override;
+	bool save(int page = -1, const std::string& filename = "");
 
 private:
 	struct TextReadSessionData : ReadSessionData {
@@ -80,15 +67,20 @@ private:
 
 	enum class InsertMode { Append, Cursor, Replace };
 
-
 	Ui::OutputEditorText ui;
 	ClassData m_classdata;
 	SearchReplaceFrame* m_searchFrame;
-
 	InsertMode m_insertMode;
 	GtkSpell::Checker m_spell;
+	int m_tabCounter = 0;
 
-	std::map<Gtk::Widget*, OutputSession> outputSession;
+	int addTab(const Glib::ustring& title = Glib::ustring());
+	void tabChanged();
+	void closeTab(int page);
+	Glib::ustring tabName(int page) const;
+	void setTabName(int page, const Glib::ustring& title);
+	Gsv::View* textView(int page = -1) const;
+	OutputBuffer* textBuffer(int page = -1) const;
 
 	void addText(const Glib::ustring& text, bool insert);
 	void completeTextViewMenu(Gtk::Menu* menu);
@@ -97,25 +89,8 @@ private:
 	void replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase);
 	void applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase);
 	void scrollCursorIntoView();
-	void setFont(Gsv::View* view);
+	void setFont();
 	void setInsertMode(InsertMode mode, const std::string& iconName);
-
-	// get GtkSourceView at page; by default returns view at current page
-	Gsv::View* getView(Gtk::Widget* page = nullptr) const;
-	// get Gtk::Widget* page at tab position pageNum; by default returns page at current position
-	Gtk::Widget* getPage(short int pageNum = -1) const;
-	// returns the page containing `filename` or nullptr if such doesn't exist
-	Gtk::Widget* getPageByFilename(std::string filename) const;
-	// creates Notebook tab widget: label + close button
-	Gtk::Widget* tabWidget(std::string tabLabel, Gtk::Widget* page);
-	// updates tab label, including buffer modified status; uses current label if no one is provided
-	void setTabLabel(Gtk::Widget* page, std::string tabLabel = "");
-	// creates new notebook tab, with file content (if provided) and returns pointer on the created page
-	Gtk::Widget* addDocument(const std::string& file = "");
-	void on_close_button_clicked(Gtk::Widget* page);
-	void on_buffer_modified_changed(Gtk::Widget* page);
-	bool view_focused_in(GdkEventFocus* focus_event, Gtk::Widget* page);
-	void prepareCurView();
 };
 
 #endif // OUTPUTEDITORTEXT_HH
