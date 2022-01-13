@@ -72,14 +72,16 @@ void MainWindow::signalHandlerExec(int signal, bool tesseractCrash) {
 	std::signal(signal, nullptr);
 
 	QString filename;
-	if(MAIN->getOutputEditor() && MAIN->getOutputEditor()->getModified()) {
+	if(MAIN->getOutputEditor()) {
 		filename = QDir(Utils::documentsFolder()).absoluteFilePath(QString("%1_crash-save.txt").arg(PACKAGE_NAME));
 		int i = 0;
 		while(QFile(filename).exists()) {
 			++i;
 			filename = QDir(Utils::documentsFolder()).absoluteFilePath(QString("%1_crash-save_%2.txt").arg(PACKAGE_NAME).arg(i));
 		}
-		MAIN->getOutputEditor()->save(filename);
+		if(!MAIN->getOutputEditor()->crashSave(filename)) {
+			filename.clear();
+		}
 	}
 
 	QProcess process;

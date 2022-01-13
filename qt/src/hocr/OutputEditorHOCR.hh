@@ -56,10 +56,8 @@ public:
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
 	void finalizeRead(ReadSessionData* data) override;
 	BatchProcessor* createBatchProcessor(const QMap<QString, QVariant>& /*options*/) const override { return new HOCRBatchProcessor; }
-	bool getModified() const override {
-		return m_modified;
-	}
 	bool containsSource(const QString& source, int sourcePage) const override;
+	bool crashSave(const QString& filename) const override;
 
 	HOCRDocument* getDocument() const { return m_document; }
 	DisplayerToolHOCR* getTool() const { return m_tool; }
@@ -71,7 +69,7 @@ public slots:
 	bool clear(bool hide = true) override;
 	void setLanguage(const Config::Lang& lang) override;
 	void onVisibilityChanged(bool visible) override;
-	bool save(const QString& filename = "") override;
+	bool save(const QString& filename = "");
 	bool exportToODT();
 	bool exportToPDF();
 	bool exportToText();

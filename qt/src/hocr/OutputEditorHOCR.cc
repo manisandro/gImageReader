@@ -1016,6 +1016,27 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	return true;
 }
 
+bool OutputEditorHOCR::crashSave(const QString& filename) const {
+	QFile file(filename);
+	if(file.open(QIODevice::WriteOnly)) {
+		QString header = QString(
+		                     "<!DOCTYPE html>\n"
+		                     "<html>\n"
+		                     "<head>\n"
+		                     " <title>%1</title>\n"
+		                     " <meta charset=\"utf-8\" /> \n"
+		                     " <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word'/>\n"
+		                     "</head>\n").arg(QFileInfo(filename).fileName());
+		file.write(header.toUtf8());
+		m_document->convertSourcePaths(QFileInfo(filename).absolutePath(), false);
+		file.write(m_document->toHTML().toUtf8());
+		m_document->convertSourcePaths(QFileInfo(filename).absolutePath(), true);
+		file.write("</html>\n");
+		return true;
+	}
+	return false;
+}
+
 bool OutputEditorHOCR::exportToODT() {
 	QString suggestion = m_filebasename;
 	if(suggestion.isEmpty()) {
@@ -1104,7 +1125,7 @@ bool OutputEditorHOCR::clear(bool hide) {
 	if(!m_widget->isVisible()) {
 		return true;
 	}
-	if(getModified()) {
+	if(m_modified) {
 		int response = QMessageBox::question(MAIN, _("Output not saved"), _("Save output before proceeding?"), QMessageBox::Save, QMessageBox::Discard, QMessageBox::Cancel);
 		if(response == QMessageBox::Save) {
 			if(!save()) {

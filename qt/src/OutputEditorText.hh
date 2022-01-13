@@ -51,13 +51,13 @@ public:
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
 	BatchProcessor* createBatchProcessor(const QMap<QString, QVariant>& options) const override { return new TextBatchProcessor(options["prependPage"].toBool()); }
-	bool getModified() const override;
+	bool crashSave(const QString& filename) const override;
 
 public slots:
 	bool open(const QString& filename) override;
 	void onVisibilityChanged(bool visible) override;
 	bool clear(bool hide = true) override;
-	bool save(const QString& filename = "") override;
+	bool save(const QString& filename = "");
 	void setLanguage(const Config::Lang& lang) override;
 
 private:

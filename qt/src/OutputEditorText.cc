@@ -285,11 +285,20 @@ bool OutputEditorText::save(const QString& filename) {
 	return true;
 }
 
+bool OutputEditorText::crashSave(const QString& filename) const {
+	QFile file(filename);
+	if(file.open(QIODevice::WriteOnly)) {
+		file.write(MAIN->getConfig()->useUtf8() ? ui.plainTextEditOutput->toPlainText().toUtf8() : ui.plainTextEditOutput->toPlainText().toLocal8Bit());
+		return true;
+	}
+	return false;
+}
+
 bool OutputEditorText::clear(bool hide) {
 	if(!m_widget->isVisible()) {
 		return true;
 	}
-	if(getModified()) {
+	if(ui.plainTextEditOutput->document()->isModified()) {
 		int response = QMessageBox::question(MAIN, _("Output not saved"), _("Save output before proceeding?"), QMessageBox::Save, QMessageBox::Discard, QMessageBox::Cancel);
 		if(response == QMessageBox::Save) {
 			if(!save()) {
@@ -306,10 +315,6 @@ bool OutputEditorText::clear(bool hide) {
 		MAIN->setOutputPaneVisible(false);
 	}
 	return true;
-}
-
-bool OutputEditorText::getModified() const {
-	return ui.plainTextEditOutput->document()->isModified();
 }
 
 void OutputEditorText::onVisibilityChanged(bool /*visible*/) {
