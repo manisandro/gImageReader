@@ -10,6 +10,7 @@
 #include <QLineEdit>
 #include <QMenu>
 #include <QPushButton>
+#include <QTabWidget>
 #include <QToolBar>
 #include <QToolButton>
 #include <QVBoxLayout>
@@ -36,17 +37,25 @@ public:
 	QAction* actionOutputUndo;
 	QMenu* menuOutputMode;
 	QMenu* menuOutputPostproc;
+	QTabWidget* tabWidget;
 	QToolBar* toolBarOutput;
+	QToolButton* toolButtonOpen;
 	QToolButton* toolButtonOutputMode;
 	QToolButton* toolButtonOutputPostproc;
+	QToolButton* toolButtonAddTab;
 
-	OutputTextEdit* plainTextEditOutput;
 	SearchReplaceFrame* searchFrame;
 
 	void setupUi(QWidget* widget) {
 		widget->setLayout(new QVBoxLayout());
 		widget->layout()->setContentsMargins(0, 0, 0, 0);
 		widget->layout()->setSpacing(0);
+
+		// Open
+		toolButtonOpen = new QToolButton(widget);
+		toolButtonOpen->setIcon(QIcon::fromTheme("document-open"));
+		toolButtonOpen->setToolTip(gettext("Open"));
+		toolButtonOpen->setPopupMode(QToolButton::MenuButtonPopup);
 
 		// Output insert mode
 		actionOutputModeAppend = new QAction(QIcon(":/icons/ins_append"), gettext("Append to current text"), widget);
@@ -120,12 +129,13 @@ public:
 		toolBarOutput = new QToolBar(widget);
 		toolBarOutput->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		toolBarOutput->setIconSize(QSize(1, 1) * toolBarOutput->style()->pixelMetric(QStyle::PM_SmallIconSize));
+		toolBarOutput->addWidget(toolButtonOpen);
+		toolBarOutput->addAction(actionOutputSave);
 		toolBarOutput->addWidget(toolButtonOutputMode);
 		toolBarOutput->addWidget(toolButtonOutputPostproc);
 		toolBarOutput->addAction(actionOutputReplace);
 		toolBarOutput->addAction(actionOutputUndo);
 		toolBarOutput->addAction(actionOutputRedo);
-		toolBarOutput->addAction(actionOutputSave);
 		toolBarOutput->addAction(actionOutputClear);
 
 		widget->layout()->addWidget(toolBarOutput);
@@ -134,8 +144,15 @@ public:
 		searchFrame->setVisible(false);
 		widget->layout()->addWidget(searchFrame);
 
-		plainTextEditOutput = new OutputTextEdit(widget);
-		widget->layout()->addWidget(plainTextEditOutput);
+		toolButtonAddTab = new QToolButton();
+		toolButtonAddTab->setIcon(QIcon::fromTheme("list-add"));
+		toolButtonAddTab->setToolTip(gettext("Add tab"));
+		toolButtonAddTab->setAutoRaise(true);
+
+		tabWidget = new QTabWidget(widget);
+		tabWidget->setTabsClosable(true);
+		tabWidget->setCornerWidget(toolButtonAddTab);
+		widget->layout()->addWidget(tabWidget);
 	}
 };
 

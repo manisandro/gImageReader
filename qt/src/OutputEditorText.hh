@@ -54,10 +54,10 @@ public:
 	bool crashSave(const QString& filename) const override;
 
 public slots:
-	bool open(const QString& filename) override;
+	bool open(const QString& filename = QString()) override;
 	void onVisibilityChanged(bool visible) override;
 	bool clear(bool hide = true) override;
-	bool save(const QString& filename = "");
+	bool save(int page = -1, const QString& filename = "");
 	void setLanguage(const Config::Lang& lang) override;
 
 private:
@@ -67,11 +67,19 @@ private:
 
 	enum class InsertMode { Append, Cursor, Replace };
 
-	QWidget* m_widget;
-	UI_OutputEditorText ui;
+	static constexpr int sMaxNumRecent = 15;
 
+	QWidget* m_widget = nullptr;
+	QMenu* m_recentMenu = nullptr;
+	UI_OutputEditorText ui;
 	InsertMode m_insertMode;
 	QtSpell::TextEditChecker m_spell;
+	int m_tabCounter = 0;
+
+	int addTab(const QString& title = QString());
+	QString tabName(int page) const;
+	void setTabName(int page, const QString& title);
+	OutputTextEdit* textEdit(int page = -1) const;
 
 private slots:
 	void addText(const QString& text, bool insert);
@@ -81,6 +89,9 @@ private slots:
 	void applySubstitutions(const QMap<QString, QString>& substitutions, bool matchCase);
 	void setFont();
 	void setInsertMode(QAction* action);
+	void tabChanged(int);
+	void closeTab(int);
+	void prepareRecentMenu();
 };
 
 #endif // OUTPUTEDITORTEXT_HH

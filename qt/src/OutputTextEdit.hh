@@ -31,6 +31,8 @@ public:
 	QTextCursor regionBounds() const;
 	bool findReplace(bool backwards, bool replace, bool matchCase, const QString& searchstr, const QString& replacestr);
 	bool replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase);
+	void setFilename(const QString& filename) { m_filename = filename; }
+	const QString& filename() const { return m_filename; }
 
 public slots:
 	void setDrawWhitespace(bool drawWhitespace);
@@ -44,6 +46,7 @@ private:
 	bool m_drawWhitespace = false;
 	QTextCursor m_regionCursor;
 	bool m_entireRegion;
+	QString m_filename;
 
 private slots:
 	void saveRegionBounds();

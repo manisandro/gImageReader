@@ -20,7 +20,6 @@ public:
 	QAction* actionSourceDelete;
 	QAction* actionSourcePaste;
 	QAction* actionSourceFolder;
-	QAction* actionSourceRecent;
 	QAction* actionSourceRemove;
 	QAction* actionSourceScreenshot;
 	QComboBox* comboBoxOCRMode;
@@ -193,7 +192,6 @@ public:
 
 		// Sources toolbar
 		actionSourceFolder = new QAction(QIcon::fromTheme("folder-open"), gettext("Add folder"), MainWindow);
-		actionSourceRecent = new QAction(QIcon::fromTheme("document-open-recent"), gettext("Recent"), MainWindow);
 		actionSourcePaste = new QAction(QIcon::fromTheme("edit-paste"), gettext("Paste"), MainWindow);
 		actionSourceScreenshot = new QAction(QIcon::fromTheme("camera-photo"), gettext("Take Screenshot"), MainWindow);
 
