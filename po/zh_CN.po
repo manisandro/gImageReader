@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-11 00:19+0100\n"
-"PO-Revision-Date: 2021-11-28 09:14+0000\n"
-"Last-Translator: Eric <spice2wolf@gmail.com>\n"
+"PO-Revision-Date: 2022-01-14 16:52+0000\n"
+"Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gimagereader/translations/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -235,9 +235,8 @@ msgstr "格式："
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
-#, fuzzy
 msgid "Group outputs of N lowest levels:"
-msgstr "在下列级别上分组输出："
+msgstr "对 N 最低级别的输出进行分组："
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
@@ -1640,12 +1639,11 @@ msgstr "去除换行符号……"
 
 #: ../gtk/src/OutputEditorText.cc:316
 msgid "No highlight"
-msgstr ""
+msgstr "无高亮"
 
 #: ../gtk/src/OutputEditorText.cc:336
-#, fuzzy
 msgid "Highlight mode"
-msgstr "语法高亮模式："
+msgstr "高亮模式"
 
 #: ../gtk/src/OutputEditorText.cc:341
 msgid "Check spelling"
@@ -2102,16 +2100,14 @@ msgid "About gImageReader"
 msgstr "有关 gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;"
-"tesseract-ocr 图形前端&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/"
-"manisandro/gImageReader/&quot;&gt;网站&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;"
-"&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr 的图形前端</p><p><a href=\"https"
+"://github.com/manisandro/gImageReader/\""
+">网站</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2140,7 +2136,7 @@ msgid "Text file encoding:"
 msgstr "文本编码："
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
@@ -2149,15 +2145,12 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<b>应用程序已崩溃</b>\n"
-"\n"
-"给您带来的不便深表歉意。为了帮助改善应用程序，请考虑发邮件将这个问题报告给<a "
-"href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>。请试着描述在应用程序崩溃之前你在做什么。同时，包"
-"括下面的信息。谢谢你。"
+"<html><head/><body><p><span style=\" font-weight:600;\""
+">程序崩溃了</span></p><p>不便之处，敬请原谅。为了帮助改进程序，请考虑将问题报告给 <a href=\"mailto"
+":manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail."
+"com</a>。请描述一下在程序崩溃之前你在做什么。此外，还应包括以下信息。谢谢你！</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
 "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
@@ -2166,12 +2159,10 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
-"<b>Tesseract 中止</b>\n"
-"\n"
-"识别文本时Tesseract (OCR引擎)中止。发生这种情况可能是因为训练数据损坏或不兼容"
-"使用中的tesseract版本，或由于tesseract的错误。\n"
-"\n"
-"下面的堆栈踪迹可能提供关于崩溃在何处发生的附加信息。\n"
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract "
+"中止运行</span></p><p>Tesseract (OCR 引擎) 在识别文本时中止。如果使用的训练数据已损坏或与正在使用的 tesseract "
+"版本不兼容，或由于 tesseract "
+"中的错误，就可能出现这种情况。</p><p>下面的堆栈跟踪可以提供关于崩溃发生位置的额外信息。</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2284,9 +2275,8 @@ msgstr "寻找及取代"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
-msgstr "显示预览"
+msgstr "显示校对小部件"
 
 #: ../qt/src/MainWindow.cc:323
 msgid "Multiple sources (%1)"
