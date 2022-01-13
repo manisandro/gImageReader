@@ -128,7 +128,7 @@ int OutputEditorText::addTab(const Glib::ustring& title) {
 	button->set_image_from_icon_name("window-close-symbolic", (Gtk::BuiltinIconSize) GTK_ICON_SIZE_MENU);
 	button->set_tooltip_text (_("Close document"));
 	button->set_relief((Gtk::ReliefStyle) GTK_RELIEF_NONE);
-	CONNECT(button, clicked, [page, this] { closeTab(page); });
+	CONNECT(button, clicked, [this, scrollWin] { closeTab(scrollWin); });
 
 	Gtk::Label* tabLabel = Gtk::make_managed<Gtk::Label>(title.empty() ? Glib::ustring::compose(_("Untitled %1"), ++m_tabCounter) :  title);
 
@@ -144,12 +144,10 @@ int OutputEditorText::addTab(const Glib::ustring& title) {
 	});
 	CONNECT(textBuffer, modified_changed, [tabLabel, textBuffer] {
 		Glib::ustring tabText = tabLabel->get_text();
-		if (!tabText.empty()) {
-			if (textBuffer->get_modified()) {
-				tabLabel->set_text(Utils::string_rstrip(tabText, "*") + "*");
-			} else if (!textBuffer->get_modified()) {
-				tabLabel->set_text(Utils::string_rstrip(tabText, "*"));
-			}
+		if (textBuffer->get_modified()) {
+			tabLabel->set_text(Utils::string_rstrip(tabText, "*") + "*");
+		} else {
+			tabLabel->set_text(Utils::string_rstrip(tabText, "*"));
 		}
 	});
 	// If the insert or selection mark change save the bounds either if the view is focused or the selection is non-empty
@@ -173,7 +171,17 @@ void OutputEditorText::tabChanged() {
 	view->grab_focus();
 }
 
-void OutputEditorText::closeTab(int page) {
+void OutputEditorText::closeTab(Gtk::Widget* pageWidget) {
+	int page = -1;
+	for(int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
+		if (ui.notebook->get_nth_page(i) == pageWidget) {
+			page = i;
+			break;
+		}
+	}
+	if (page == -1) {
+		return;
+	}
 	if(textBuffer(page)->get_modified()) {
 		int response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Document not saved"), _("Save document before proceeding?"), "", Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel);
 		if (response == Utils::Button::Cancel) {
@@ -217,8 +225,9 @@ void OutputEditorText::setFont() {
 		}
 	} else {
 		Glib::ustring fontName = ConfigSettings::get<FontSetting>("customoutputfont")->getValue();
+		const Pango::FontDescription& desc = Pango::FontDescription(fontName);
 		for(int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
-			textView(i)->override_font(Pango::FontDescription(fontName));
+			textView(i)->override_font(desc);
 		}
 	}
 }
@@ -459,7 +468,16 @@ bool OutputEditorText::open(const std::string& filename) {
 	}
 
 	int currentPage = -1;
-	for(auto file : files) {
+	std::vector<Glib::ustring> failed;
+	for(const auto& file : files) {
+		Glib::ustring contents;
+		try {
+			contents = Glib::file_get_contents(file->get_path());
+		} catch(const Glib::Error&) {
+			failed.push_back(file->get_path());
+			continue;
+		}
+		Gtk::RecentManager::get_default()->add_item(file->get_uri());
 		// Look if document already opened, if so, switch to that tab
 		bool alreadyOpen = false;
 		for(int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
@@ -468,30 +486,37 @@ bool OutputEditorText::open(const std::string& filename) {
 				alreadyOpen = true;
 				break;
 			}
-			if (!alreadyOpen) {
-				OutputBuffer* buffer = textBuffer();
-				int page = ui.notebook->get_current_page();
-				// Only add new tab if current tab is not empty
-				if (buffer->get_modified() == true || !buffer->getFilename().empty()) {
-					page = addTab(Glib::path_get_basename(file->get_path()));
-					buffer = textBuffer(page);
-				} else {
-					setTabName(page, Glib::path_get_basename(file->get_path()));
-				}
-				buffer->begin_not_undoable_action();
-				buffer->set_text(Glib::file_get_contents(file->get_path()));
-				buffer->end_not_undoable_action();
-				buffer->set_modified(false);
-				buffer->setFilename(file->get_path());
-				currentPage = page;
+		}
+		if (!alreadyOpen) {
+			OutputBuffer* buffer = textBuffer();
+			int page = ui.notebook->get_current_page();
+			// Only add new tab if current tab is not empty
+			if (buffer->get_modified() == true || !buffer->getFilename().empty()) {
+				page = addTab(Glib::path_get_basename(file->get_path()));
+				buffer = textBuffer(page);
+			} else {
+				setTabName(page, Glib::path_get_basename(file->get_path()));
 			}
+			buffer->begin_not_undoable_action();
+			buffer->set_text(contents);
+			buffer->end_not_undoable_action();
+			buffer->set_modified(false);
+			buffer->setFilename(file->get_path());
+			currentPage = page;
 		}
 	}
 
-	ui.notebook->set_current_page(currentPage);
+	if (currentPage >= 0) {
+		ui.notebook->set_current_page(currentPage);
+	}
+	if (!failed.empty()) {
+		Glib::ustring filenames = Utils::string_join(failed, "\n");
+		Glib::ustring errorMsg = Glib::ustring::compose(_("The following files could not be opened:\n%1"), filenames);
+		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Unable to open files"), errorMsg);
+	}
 
 	MAIN->setOutputPaneVisible(true);
-	return true;
+	return failed.empty();
 }
 
 bool OutputEditorText::save(int page, const std::string& filename) {
@@ -517,6 +542,7 @@ bool OutputEditorText::save(int page, const std::string& filename) {
 	file.write(txt.data(), txt.bytes());
 	buffer->set_modified(false);
 	buffer->setFilename(outname);
+	Gtk::RecentManager::get_default()->add_item(Gio::File::create_for_path(outname)->get_uri());
 	setTabName(page, Glib::path_get_basename(outname));
 	return true;
 }

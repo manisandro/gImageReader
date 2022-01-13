@@ -76,7 +76,7 @@ private:
 
 	int addTab(const Glib::ustring& title = Glib::ustring());
 	void tabChanged();
-	void closeTab(int page);
+	void closeTab(Gtk::Widget* pageWidget);
 	Glib::ustring tabName(int page) const;
 	void setTabName(int page, const Glib::ustring& title);
 	Gsv::View* textView(int page = -1) const;
