@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-11 00:19+0100\n"
-"PO-Revision-Date: 2021-11-28 09:14+0000\n"
+"PO-Revision-Date: 2022-01-14 16:52+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gimagereader/"
 "translations/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -238,9 +238,8 @@ msgstr "Formaat:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
-#, fuzzy
 msgid "Group outputs of N lowest levels:"
-msgstr "Uitvoerbestanden groeperen op niveau:"
+msgstr "Uitvoerbestanden groeperen op aantal laagste niveaus:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
@@ -1656,12 +1655,11 @@ msgstr "Bezig met verwijderen van regeleindes…"
 
 #: ../gtk/src/OutputEditorText.cc:316
 msgid "No highlight"
-msgstr ""
+msgstr "Niets markeren"
 
 #: ../gtk/src/OutputEditorText.cc:336
-#, fuzzy
 msgid "Highlight mode"
-msgstr "Syntaxis-markeermodus:"
+msgstr "Markeermodus"
 
 #: ../gtk/src/OutputEditorText.cc:341
 msgid "Check spelling"
@@ -2121,16 +2119,14 @@ msgid "About gImageReader"
 msgstr "Over gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;"
-"Een grafisch front-end voor tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>Een grafisch front-end voor tesseract-"
+"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Website</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2161,7 +2157,7 @@ msgid "Text file encoding:"
 msgstr "Tekstbestand-tekencodering:"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
@@ -2170,16 +2166,15 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<b>De toepassing is gecrasht.</b>\n"
-"\n"
-"Excuses voor het ongemak. Als u wilt helpen om de toepassing te verbeteren, "
-"overweeg dan om het probleem te melden aan <a href=\"mailto:manisandro@gmail."
-"com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Omschrijf wat u "
-"aan het doen was voordat de toepassing crashte. Vermeld tevens onderstaande "
-"informatie. Bij voorbaat dank."
+"<html><head/><body><p><span style=\" font-weight:600;\">De toepassing is "
+"gecrasht.</span></p><p> Onze excuses voor het ongemak. Als u wilt helpen om "
+"de toepassing te verbeteren, overweeg dan om het probleem te melden aan <a "
+"href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Omschrijf wat u aan het doen was voordat de "
+"toepassing crashte en vermeld onderstaande informatie. Bij voorbaat "
+"dank.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
 "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
@@ -2188,15 +2183,12 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
-"<b>Tesseract is onverwachts beëindigd</b>\n"
-"\n"
-"Tesseract (de OCR-aandrijving) is onverwachts afgebroken tijdens het "
-"herkennen van tekst. Dit kan gebeuren als de trainingsdata beschadigd is of "
-"incompatibel met de gebruikte versie van tesseract, of door een bug in "
-"tesseract.\n"
-"\n"
-"Onderstaande stacktrace bevat mogelijk aanvullende informatie over de "
-"crash.\n"
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract is "
+"onverwachts afgesloten.</span></p><p> Tesseract (de OCR-aandrijving) is "
+"onverwachts afgesloten tijdens het herkennen van tekst. Dit kan gebeuren als "
+"de trainingsdata beschadigd is of incompatibel met de gebruikte versie van "
+"tesseract, of door een bug in tesseract.</p></p>Onderstaande stacktrace "
+"bevat mogelijk aanvullende informatie over de crash.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2309,9 +2301,8 @@ msgstr "Zoeken en vervangen"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
-msgstr "Voorvertonen"
+msgstr "Proefleeswidget tonen"
 
 #: ../qt/src/MainWindow.cc:323
 msgid "Multiple sources (%1)"
