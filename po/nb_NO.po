@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-11 00:19+0100\n"
-"PO-Revision-Date: 2021-11-29 18:52+0000\n"
+"PO-Revision-Date: 2022-01-14 16:52+0000\n"
 "Last-Translator: ovl-1 <ovl-002@mailinator.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1665,7 +1665,6 @@ msgstr "utdata"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:983
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1019
 #: ../qt/src/hocr/OutputEditorHOCR.cc:954
-#, fuzzy
 msgid "Save hOCR Output..."
 msgstr "Lagre hOCR-utdata…"
 
@@ -1698,7 +1697,6 @@ msgstr "OpenDocument-Tekstdokumenter"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1026
 #: ../gtk/src/hocr/HOCROdtExporter.cc:69
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1024 ../qt/src/hocr/HOCROdtExporter.cc:54
-#, fuzzy
 msgid "Save ODT Output..."
 msgstr "Lagre ODT-utdata…"
 
@@ -1715,7 +1713,6 @@ msgstr "PDF-filer"
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:494
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1060
 #: ../qt/src/hocr/HOCRPdfExporter.cc:475
-#, fuzzy
 msgid "Save PDF Output..."
 msgstr "Lagre PDF-utdata…"
 
@@ -1749,7 +1746,6 @@ msgstr "Tekstfiler"
 #: ../gtk/src/hocr/HOCRTextExporter.cc:38
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1087
 #: ../qt/src/hocr/HOCRTextExporter.cc:40
-#, fuzzy
 msgid "Save Text Output..."
 msgstr "Lagre tekstutdata…"
 
@@ -1777,7 +1773,6 @@ msgstr "Lagre utdata før du fortsetter?"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1204
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1215 ../gtk/src/OutputEditorText.cc:192
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1121
-#, fuzzy
 msgid "Replacing..."
 msgstr "Erstatter…"
 
@@ -2046,12 +2041,11 @@ msgstr "Fjerner linjeskift…"
 
 #: ../gtk/src/OutputEditorText.cc:316
 msgid "No highlight"
-msgstr ""
+msgstr "Ingen fremheving"
 
 #: ../gtk/src/OutputEditorText.cc:336
-#, fuzzy
 msgid "Highlight mode"
-msgstr "Syntaksfremhevingsmodus:"
+msgstr "Fremhevingsmodus"
 
 #: ../gtk/src/OutputEditorText.cc:341 ../gtk/src/OutputEditorText.cc:293
 #: ../gtk/src/OutputEditorText.cc:170
