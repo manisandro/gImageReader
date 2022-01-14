@@ -31,6 +31,7 @@ class SearchReplaceFrame : public QFrame {
 	Q_OBJECT
 public:
 	explicit SearchReplaceFrame(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
+	QToolButton* buttonReplaceAll() const { return ui.toolButtonReplaceAll; }
 
 public slots:
 	void clear();

@@ -22,6 +22,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QToolTip>
 #include <QUrl>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
@@ -250,7 +251,11 @@ void OutputEditorText::findReplace(const QString& searchstr, const QString& repl
 
 void OutputEditorText::replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
-	if(!textEdit()->replaceAll(searchstr, replacestr, matchCase)) {
+	int count = textEdit()->replaceAll(searchstr, replacestr, matchCase);
+	QPoint popupPos = ui.searchFrame->buttonReplaceAll()->parentWidget()->mapToGlobal(ui.searchFrame->buttonReplaceAll()->pos());
+	QToolTip::showText(popupPos, _("%1 occurrences replaces").arg(count), nullptr, {}, 4000);
+	QTextStream(stdout) << popupPos.x() << " " << popupPos.y() << Qt::endl;
+	if(count == 0) {
 		ui.searchFrame->setErrorState();
 	}
 	MAIN->popState();

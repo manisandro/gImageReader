@@ -30,7 +30,7 @@ public:
 
 	QTextCursor regionBounds() const;
 	bool findReplace(bool backwards, bool replace, bool matchCase, const QString& searchstr, const QString& replacestr);
-	bool replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase);
+	int replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase);
 	void setFilename(const QString& filename) { m_filename = filename; }
 	const QString& filename() const { return m_filename; }
 

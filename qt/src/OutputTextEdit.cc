@@ -134,7 +134,7 @@ bool OutputTextEdit::findReplace(bool backwards, bool replace, bool matchCase, c
 	return true;
 }
 
-bool OutputTextEdit::replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase) {
+int OutputTextEdit::replaceAll(const QString& searchstr, const QString& replacestr, bool matchCase) {
 	QTextCursor cursor =  regionBounds();
 	int end = cursor.position();
 	QString cursel = cursor.selectedText();
@@ -164,10 +164,7 @@ bool OutputTextEdit::replaceAll(const QString& searchstr, const QString& replace
 		++count;
 		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 	}
-	if(count == 0) {
-		return false;
-	}
-	return true;
+	return count;
 }
 
 void OutputTextEdit::setDrawWhitespace(bool drawWhitespace) {
