@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-14 01:17+0100\n"
-"PO-Revision-Date: 2021-11-28 09:14+0000\n"
+"PO-Revision-Date: 2022-01-16 18:52+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/tr/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 "X-POOTLE-MTIME: 1441292742.000000\n"
 
 #: ../data/gimagereader.desktop.in.h:1
@@ -200,7 +200,7 @@ msgstr ""
 "<b>Tesseract iptal edildi</b>\n"
 "\n"
 "Tesseract (OCR motoru), metni tanıma sırasında durduruldu. Bu, kullanılan "
-"traineddata'lar bozuksa, kullanımdaki tesseract sürümüyle uyumsuzsa veya "
+"öğrenme verileri bozuksa, kullanımdaki tesseract sürümüyle uyumsuzsa veya "
 "tesseract'taki bir hata nedeniyle meydana gelebilir.\n"
 "\n"
 "Aşağıdaki yığın izleme, çökmenin nerede meydana geldiği hakkında ek bilgi "
@@ -234,9 +234,8 @@ msgstr "Biçim:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
-#, fuzzy
 msgid "Group outputs of N lowest levels:"
-msgstr "Çıktıları gruplandırma düzeyi:"
+msgstr "N en düşük seviyenin çıktılarını gruplandır:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
@@ -1627,19 +1626,16 @@ msgid "Close document"
 msgstr "Belgeyi kapat"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "%1 Yapıştırıldı"
+msgstr "Başlıksız %1"
 
 #: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:155
-#, fuzzy
 msgid "Document not saved"
-msgstr "Çıktı kaydedilmedi"
+msgstr "Belge kaydedilmedi"
 
 #: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:155
-#, fuzzy
 msgid "Save document before proceeding?"
-msgstr "Devam etmeden çıktı kaydedilsin mi?"
+msgstr "Devam etmeden önce belge kaydedilsin mi?"
 
 #: ../gtk/src/OutputEditorText.cc:296 ../qt/src/OutputEditorText.cc:237
 msgid "Stripping line breaks..."
@@ -1647,21 +1643,19 @@ msgstr "Satır sonları çıkartılıyor..."
 
 #: ../gtk/src/OutputEditorText.cc:307
 msgid "No highlight"
-msgstr ""
+msgstr "Vurgulama yok"
 
 #: ../gtk/src/OutputEditorText.cc:327
-#, fuzzy
 msgid "Highlight mode"
-msgstr "Söz dizimi vurgulama modu:"
+msgstr "Vurgulama modu"
 
 #: ../gtk/src/OutputEditorText.cc:332
 msgid "Check spelling"
 msgstr "Yazım denetimi yap"
 
 #: ../gtk/src/OutputEditorText.cc:362
-#, fuzzy
 msgid "%1 occurrences replaced"
-msgstr "Değiştirilenlerin sayısı: %1"
+msgstr "%1 örnek değiştirildi"
 
 #: ../gtk/src/OutputEditorText.cc:410 ../qt/src/OutputEditorText.cc:296
 msgid "File: %1"
@@ -1690,15 +1684,16 @@ msgid "Save Output..."
 msgstr "Çıktıyı Kaydet..."
 
 #: ../gtk/src/OutputEditorText.cc:582
-#, fuzzy
 msgid "Unsaved documents"
-msgstr "Belgeyi kapat"
+msgstr "Kaydedilmeyen belgeler"
 
 #: ../gtk/src/OutputEditorText.cc:583 ../qt/src/OutputEditorText.cc:457
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
 msgstr ""
+"Aşağıdaki belgelerde kaydedilmeyen değişiklikler var. Devam etmeden önce "
+"hangi belgeleri kaydetmek istiyorsunuz?"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
@@ -2107,9 +2102,8 @@ msgid "Discard"
 msgstr "Vazgeç"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "Vazgeç"
+msgstr "Hepsini at"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:452
 msgid "Text"
@@ -2124,16 +2118,14 @@ msgid "About gImageReader"
 msgstr "gImageReader Hakkında"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;"
-"tesseract-ocr için grafiksel bir arayüz&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"https://github.com/manisandro/gImageReader/&quot;&gt;Web sitesi&lt;/a&gt;"
-"&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr için grafiksel bir arayüz</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Web "
+"sitesi</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2181,7 +2173,6 @@ msgstr ""
 "bilgiyi de ekleyin. Teşekkür ederiz.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
 "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
@@ -2190,14 +2181,12 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
-"<b>Tesseract iptal edildi</b>\n"
-"\n"
-"Tesseract (OCR motoru), metni tanıma sırasında durduruldu. Bu, kullanılan "
-"traineddata'lar bozuksa, kullanımdaki tesseract sürümüyle uyumsuzsa veya "
-"tesseract'taki bir hata nedeniyle meydana gelebilir.\n"
-"\n"
-"Aşağıdaki yığın izleme, çökmenin nerede meydana geldiği hakkında ek bilgi "
-"sağlayabilir.\n"
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract iptal "
+"edildi</span></p><p>Tesseract (OCR motoru), metni tanıma sırasında "
+"durduruldu. Bu, kullanılan öğrenme verileri bozuksa, kullanımdaki tesseract "
+"sürümüyle uyumsuzsa veya tesseract'taki bir hata nedeniyle meydana "
+"gelebilir.</p><p>Aşağıdaki yığın izleme, çökmenin nerede meydana geldiği "
+"hakkında ek bilgi sağlayabilir.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2311,9 +2300,8 @@ msgstr "Bul ve Değiştir"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
-msgstr "Ön izlemeyi göster"
+msgstr "Düzeltme widget'ını göster"
 
 #: ../qt/src/MainWindow.cc:619
 msgid ""
@@ -2394,7 +2382,7 @@ msgstr "Çıktıyı Temizle"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "Sekme ekle"
 
 #~ msgid ""
 #~ "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
