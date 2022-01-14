@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-14 01:17+0100\n"
+"POT-Creation-Date: 2022-01-14 22:25+0100\n"
 "PO-Revision-Date: 2020-10-05 19:26+0000\n"
 "Last-Translator: Riyadh Talal <riyadhtalal@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gimagereader/"
@@ -38,7 +38,7 @@ msgid "Preferences"
 msgstr "خيارات"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
-#: ../gtk/src/MainWindow.cc:520 ../qt/src/MainWindow.cc:519
+#: ../gtk/src/MainWindow.cc:523 ../qt/src/MainWindow.cc:522
 #: ../qt/src/Ui_MainWindow.hh:180
 msgid "Help"
 msgstr "مساعدة"
@@ -225,7 +225,7 @@ msgstr "اختر ملفات"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
 #: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
-#: ../qt/data/PdfExportWidget.ui.h:16
+#: ../qt/data/PdfExportWidget.ui.h:15
 msgid "Format:"
 msgstr "النسق:"
 
@@ -423,7 +423,7 @@ msgstr "<small>التعرف الضوئي للكل</small>"
 msgid "Select language"
 msgstr "اختر اللغة"
 
-#: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:42
+#: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:41
 #, fuzzy
 msgid "Batch Export"
 msgstr "تصدير"
@@ -494,7 +494,7 @@ msgstr "اسم الملف المصور"
 msgid "Source page"
 msgstr "مصدر المصورات"
 
-#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/SourceManager.cc:166
+#: ../gtk/data/MainWindow.ui.h:58 ../qt/src/SourceManager.cc:172
 msgid "Protected PDF"
 msgstr "PDF محمي بكلمة سر"
 
@@ -592,7 +592,7 @@ msgid "Show confidence values"
 msgstr "عرض قيم الثقة للتعرف الضوئي"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:19 ../gtk/data/PdfExportWidget.ui.h:1
-#: ../qt/data/PdfExportDialog.ui.h:2 ../qt/data/PdfExportWidget.ui.h:2
+#: ../qt/data/PdfExportDialog.ui.h:2 ../qt/data/PdfExportWidget.ui.h:1
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
 msgid "Show preview"
@@ -704,184 +704,184 @@ msgid "New tab"
 msgstr ""
 
 #: ../gtk/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportDialog.ui.h:4
-#: ../qt/data/PdfExportWidget.ui.h:4
+#: ../qt/data/PdfExportWidget.ui.h:3
 msgid "Output mode:"
 msgstr "صيغة المخرجات:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:3
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:45
-#: ../qt/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportWidget.ui.h:6
+#: ../qt/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportWidget.ui.h:5
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:40
 msgid "PDF"
 msgstr "PDF"
 
 #: ../gtk/data/PdfExportWidget.ui.h:4 ../qt/data/PdfExportDialog.ui.h:7
-#: ../qt/data/PdfExportWidget.ui.h:7
+#: ../qt/data/PdfExportWidget.ui.h:6
 msgid "PDF with invisible text overlay"
 msgstr "PDF المصور الأصلي مع وجود نص بالخلفية"
 
 #: ../gtk/data/PdfExportWidget.ui.h:6 ../qt/data/PdfExportDialog.ui.h:17
-#: ../qt/data/PdfExportWidget.ui.h:17
+#: ../qt/data/PdfExportWidget.ui.h:16
 msgid "Compression:"
 msgstr "الضغط:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:7 ../qt/data/PdfExportDialog.ui.h:14
-#: ../qt/data/PdfExportWidget.ui.h:14
+#: ../qt/data/PdfExportWidget.ui.h:13
 msgid "Compression quality:"
 msgstr "مقدار الضغط:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:8 ../qt/data/PdfExportDialog.ui.h:15
-#: ../qt/data/PdfExportWidget.ui.h:15
+#: ../qt/data/PdfExportWidget.ui.h:14
 msgid "DPI:"
 msgstr "الدقة النقطية:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:9 ../qt/data/PdfExportDialog.ui.h:18
-#: ../qt/data/PdfExportWidget.ui.h:18
+#: ../qt/data/PdfExportWidget.ui.h:17
 msgid "Dithering algorithm:"
 msgstr "خوارزمية التحويل لأسود وأبيض:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:10 ../qt/data/PdfExportDialog.ui.h:13
-#: ../qt/data/PdfExportWidget.ui.h:13
+#: ../qt/data/PdfExportWidget.ui.h:12
 msgid "Image settings:"
 msgstr "إعدادات الصورة:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:11 ../qt/data/PdfExportDialog.ui.h:25
-#: ../qt/data/PdfExportWidget.ui.h:25
+#: ../qt/data/PdfExportWidget.ui.h:24
 msgid "Uniformize line and word spacing"
 msgstr "وحد السطر مع مسافة الكلمة"
 
 #: ../gtk/data/PdfExportWidget.ui.h:12 ../qt/data/PdfExportDialog.ui.h:21
-#: ../qt/data/PdfExportWidget.ui.h:21
+#: ../qt/data/PdfExportWidget.ui.h:20
 msgid "Override font family:"
 msgstr "حدد خطا مختلفا:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:13 ../qt/data/PdfExportDialog.ui.h:27
-#: ../qt/data/PdfExportWidget.ui.h:27
+#: ../qt/data/PdfExportWidget.ui.h:26
 msgid "Fallback font family:"
 msgstr "في حال عدم توفر الخط:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:14 ../qt/data/PdfExportDialog.ui.h:20
-#: ../qt/data/PdfExportWidget.ui.h:20
+#: ../qt/data/PdfExportWidget.ui.h:19
 msgid "Override font size:"
 msgstr "تحديد حجم الخط:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:15 ../qt/data/PdfExportDialog.ui.h:23
-#: ../qt/data/PdfExportWidget.ui.h:23
+#: ../qt/data/PdfExportWidget.ui.h:22
 msgid "Font scaling:"
 msgstr "مقياس الخط:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:16 ../qt/data/PdfExportDialog.ui.h:26
-#: ../qt/data/PdfExportWidget.ui.h:26
+#: ../qt/data/PdfExportWidget.ui.h:25
 msgid "pt"
 msgstr "نقطة"
 
 #: ../gtk/data/PdfExportWidget.ui.h:17 ../qt/data/PdfExportDialog.ui.h:22
-#: ../qt/data/PdfExportWidget.ui.h:22
+#: ../qt/data/PdfExportWidget.ui.h:21
 msgid "Preserve spaces wider than:"
 msgstr "احتفظ بالمسافات الأكبر من:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:18 ../qt/data/PdfExportDialog.ui.h:24
-#: ../qt/data/PdfExportWidget.ui.h:24
+#: ../qt/data/PdfExportWidget.ui.h:23
 msgid "characters"
 msgstr "الحروف"
 
 #: ../gtk/data/PdfExportWidget.ui.h:19 ../qt/data/PdfExportDialog.ui.h:28
-#: ../qt/data/PdfExportWidget.ui.h:28
+#: ../qt/data/PdfExportWidget.ui.h:27
 msgid "Sanitize hyphens before line breaks"
 msgstr ""
 
 #: ../gtk/data/PdfExportWidget.ui.h:20 ../qt/data/PdfExportDialog.ui.h:19
-#: ../qt/data/PdfExportWidget.ui.h:19
+#: ../qt/data/PdfExportWidget.ui.h:18
 msgid "Text settings:"
 msgstr "إعدادات النص:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:21 ../qt/data/PdfExportDialog.ui.h:10
-#: ../qt/data/PdfExportWidget.ui.h:10
+#: ../qt/data/PdfExportWidget.ui.h:9
 msgid "Paper size:"
 msgstr "مقاس الصفحة:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:22 ../qt/data/PdfExportDialog.ui.h:11
-#: ../qt/data/PdfExportWidget.ui.h:11
+#: ../qt/data/PdfExportWidget.ui.h:10
 msgid "Width"
 msgstr "العرض"
 
 #: ../gtk/data/PdfExportWidget.ui.h:23 ../qt/data/PdfExportDialog.ui.h:12
-#: ../qt/data/PdfExportWidget.ui.h:12
+#: ../qt/data/PdfExportWidget.ui.h:11
 msgid "Height"
 msgstr "الطول"
 
 #: ../gtk/data/PdfExportWidget.ui.h:24 ../qt/data/PdfExportDialog.ui.h:29
-#: ../qt/data/PdfExportWidget.ui.h:29
+#: ../qt/data/PdfExportWidget.ui.h:28
 msgid "Treat image sources as having true DPI:"
 msgstr ""
 
 #: ../gtk/data/PdfExportWidget.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
-#: ../qt/data/PdfExportWidget.ui.h:3
+#: ../qt/data/PdfExportWidget.ui.h:2
 msgid "Basic"
 msgstr "الأساسي"
 
 #: ../gtk/data/PdfExportWidget.ui.h:26 ../qt/data/PdfExportDialog.ui.h:31
-#: ../qt/data/PdfExportWidget.ui.h:31
+#: ../qt/data/PdfExportWidget.ui.h:30
 msgid "PDF version:"
 msgstr "النسخة الرقمية للـ PDF:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:27 ../qt/data/PdfExportDialog.ui.h:33
-#: ../qt/data/PdfExportWidget.ui.h:33
+#: ../qt/data/PdfExportWidget.ui.h:32
 msgid "Password:"
 msgstr "كلمة السر:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:28 ../qt/data/PdfExportDialog.ui.h:34
-#: ../qt/data/PdfExportWidget.ui.h:34
+#: ../qt/data/PdfExportWidget.ui.h:33
 msgid "Confirm password:"
 msgstr "تأكيد كلمة السر:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:29 ../qt/data/PdfExportDialog.ui.h:32
-#: ../qt/data/PdfExportWidget.ui.h:32
+#: ../qt/data/PdfExportWidget.ui.h:31
 msgid "Encryption (optional):"
 msgstr "التشفير (اختياري):"
 
 #: ../gtk/data/PdfExportWidget.ui.h:30 ../qt/data/PdfExportDialog.ui.h:36
-#: ../qt/data/PdfExportWidget.ui.h:36
+#: ../qt/data/PdfExportWidget.ui.h:35
 msgid "Author:"
 msgstr "المؤلف:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:31 ../qt/data/PdfExportDialog.ui.h:38
-#: ../qt/data/PdfExportWidget.ui.h:38
+#: ../qt/data/PdfExportWidget.ui.h:37
 msgid "Title:"
 msgstr "العنوان:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:32 ../qt/data/PdfExportDialog.ui.h:40
-#: ../qt/data/PdfExportWidget.ui.h:40
+#: ../qt/data/PdfExportWidget.ui.h:39
 msgid "Subject:"
 msgstr "الموضوع:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:33 ../qt/data/PdfExportDialog.ui.h:37
-#: ../qt/data/PdfExportWidget.ui.h:37
+#: ../qt/data/PdfExportWidget.ui.h:36
 msgid "Creator:"
 msgstr "صانع الملف:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:34 ../qt/data/PdfExportDialog.ui.h:39
-#: ../qt/data/PdfExportWidget.ui.h:39
+#: ../qt/data/PdfExportWidget.ui.h:38
 msgid "Producer:"
 msgstr "منتج الملف:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:35 ../qt/data/PdfExportDialog.ui.h:41
-#: ../qt/data/PdfExportWidget.ui.h:41
+#: ../qt/data/PdfExportWidget.ui.h:40
 msgid "Keywords:"
 msgstr "الكلمات المفتاحية:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:36 ../qt/data/PdfExportDialog.ui.h:35
-#: ../qt/data/PdfExportWidget.ui.h:35
+#: ../qt/data/PdfExportWidget.ui.h:34
 msgid "Additional information (optional):"
 msgstr "معلومات أخرى(اختياري):"
 
 #: ../gtk/data/PdfExportWidget.ui.h:37 ../qt/data/PdfExportDialog.ui.h:42
-#: ../qt/data/PdfExportWidget.ui.h:42
+#: ../qt/data/PdfExportWidget.ui.h:41
 msgid "Import from current source"
 msgstr "استخرج من المصدر الحالي"
 
 #: ../gtk/data/PdfExportWidget.ui.h:38 ../qt/data/PdfExportDialog.ui.h:30
-#: ../qt/data/PdfExportWidget.ui.h:30
+#: ../qt/data/PdfExportWidget.ui.h:29
 msgid "Advanced"
 msgstr "متقدم"
 
@@ -1108,7 +1108,7 @@ msgid "ODT"
 msgstr ""
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:106 ../gtk/src/SourceManager.cc:268
-#: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:267
+#: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:279
 #, fuzzy
 msgid "Select folder..."
 msgstr "اختر ملفات"
@@ -1336,8 +1336,8 @@ msgstr "فتح ملف hOCR"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1055 ../gtk/src/OutputEditorText.cc:464
 #: ../gtk/src/OutputEditorText.cc:514 ../gtk/src/SourceManager.cc:170
-#: ../qt/src/hocr/OutputEditorHOCR.cc:949 ../qt/src/OutputEditorText.cc:389
-#: ../qt/src/SourceManager.cc:148
+#: ../qt/src/hocr/OutputEditorHOCR.cc:949 ../qt/src/OutputEditorText.cc:394
+#: ../qt/src/SourceManager.cc:154
 #, fuzzy
 msgid ""
 "The following files could not be opened:\n"
@@ -1354,8 +1354,8 @@ msgstr "هذا الملف لا يبدو أنه يحتوي على hOCR HTML صا�
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1061 ../gtk/src/OutputEditorText.cc:465
 #: ../gtk/src/OutputEditorText.cc:515 ../gtk/src/SourceManager.cc:170
-#: ../qt/src/hocr/OutputEditorHOCR.cc:955 ../qt/src/OutputEditorText.cc:389
-#: ../qt/src/SourceManager.cc:148
+#: ../qt/src/hocr/OutputEditorHOCR.cc:955 ../qt/src/OutputEditorText.cc:394
+#: ../qt/src/SourceManager.cc:154
 msgid "Unable to open files"
 msgstr "لا يمكن فتح الملفات"
 
@@ -1376,12 +1376,12 @@ msgid "Save hOCR Output..."
 msgstr "احفظ مخرج hOCR..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1097 ../gtk/src/OutputEditorText.cc:537
-#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:412
+#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:417
 msgid "Failed to save output"
 msgstr "فشلت عملية حفظ المخرج"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1097 ../gtk/src/OutputEditorText.cc:537
-#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:412
+#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:417
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "قم بالتأكد أنك تملك صلاحية كتابة الملفات في المجلد المحدد."
 
@@ -1417,7 +1417,7 @@ msgstr "لا يمكن استبدال الملف المصدر لهذا المست
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1221 ../gtk/src/OutputEditorText.cc:455
 #: ../gtk/src/OutputEditorText.cc:529 ../qt/src/hocr/OutputEditorHOCR.cc:1110
-#: ../qt/src/OutputEditorText.cc:337 ../qt/src/OutputEditorText.cc:405
+#: ../qt/src/OutputEditorText.cc:342 ../qt/src/OutputEditorText.cc:410
 msgid "Text Files"
 msgstr "ملفات نصية txt"
 
@@ -1437,12 +1437,12 @@ msgid "Save output before proceeding?"
 msgstr "حفظ المخرج قبل المتابعة؟"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1358 ../gtk/src/OutputEditorText.cc:355
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1227 ../qt/src/OutputEditorText.cc:252
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1227 ../qt/src/OutputEditorText.cc:253
 msgid "Replacing..."
 msgstr "جار الاستبدال..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1383 ../gtk/src/OutputEditorText.cc:371
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1250 ../qt/src/OutputEditorText.cc:260
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1250 ../qt/src/OutputEditorText.cc:265
 msgid "Applying substitutions..."
 msgstr "جار تطبيق الاستبدالات..."
 
@@ -1508,76 +1508,76 @@ msgstr "مصادر متعددة"
 msgid "Ready"
 msgstr "مستعد"
 
-#: ../gtk/src/MainWindow.cc:480 ../qt/src/MainWindow.cc:461
+#: ../gtk/src/MainWindow.cc:483 ../qt/src/MainWindow.cc:464
 msgid "New version"
 msgstr "نسخة جديدة"
 
-#: ../gtk/src/MainWindow.cc:480 ../qt/src/MainWindow.cc:461
+#: ../gtk/src/MainWindow.cc:483 ../qt/src/MainWindow.cc:464
 msgid "gImageReader %1 is available"
 msgstr "البرنامج gImageReader  %1 متوفر"
 
-#: ../gtk/src/MainWindow.cc:481 ../qt/src/MainWindow.cc:462
+#: ../gtk/src/MainWindow.cc:484 ../qt/src/MainWindow.cc:465
 msgid "Download"
 msgstr "تنزيل"
 
-#: ../gtk/src/MainWindow.cc:482 ../qt/src/MainWindow.cc:463
+#: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:466
 msgid "Changelog"
 msgstr "سجل التغييرات"
 
-#: ../gtk/src/MainWindow.cc:483 ../qt/src/MainWindow.cc:464
+#: ../gtk/src/MainWindow.cc:486 ../qt/src/MainWindow.cc:467
 msgid "Don't notify again"
 msgstr "لا تقم بإعلامي مرة أخرى"
 
-#: ../gtk/src/MainWindow.cc:504 ../qt/src/MainWindow.cc:512
+#: ../gtk/src/MainWindow.cc:507 ../qt/src/MainWindow.cc:515
 msgid "Don't show again"
 msgstr "لا تعرض هذا مرة أخرى"
 
-#: ../gtk/src/MainWindow.cc:505 ../gtk/src/MainWindow.cc:518
-#: ../qt/src/MainWindow.cc:513
+#: ../gtk/src/MainWindow.cc:508 ../gtk/src/MainWindow.cc:521
+#: ../qt/src/MainWindow.cc:516
 msgid "Install"
 msgstr "تثبيت"
 
-#: ../gtk/src/MainWindow.cc:525 ../qt/src/MainWindow.cc:525
+#: ../gtk/src/MainWindow.cc:528 ../qt/src/MainWindow.cc:528
 msgid "Spelling dictionary missing"
 msgstr "قاموس التدقيق الإملائي غير موجود"
 
-#: ../gtk/src/MainWindow.cc:525 ../qt/src/MainWindow.cc:525
+#: ../gtk/src/MainWindow.cc:528 ../qt/src/MainWindow.cc:528
 msgid "The spellcheck dictionary for %1 is not installed"
 msgstr "قاموس التدقيق الإملائي لـ %1 غير مثبت"
 
-#: ../gtk/src/MainWindow.cc:532 ../gtk/src/MainWindow.cc:561
-#: ../qt/src/MainWindow.cc:531
+#: ../gtk/src/MainWindow.cc:535 ../gtk/src/MainWindow.cc:564
+#: ../qt/src/MainWindow.cc:534
 msgid "Installing spelling dictionary for '%1'"
 msgstr "جار تثبيت قاموس التدقيق الإملائي لـ '%1'"
 
-#: ../gtk/src/MainWindow.cc:553 ../gtk/src/MainWindow.cc:574
-#: ../gtk/src/MainWindow.cc:582 ../gtk/src/MainWindow.cc:630
-#: ../gtk/src/MainWindow.cc:635 ../gtk/src/TessdataManager.cc:60
+#: ../gtk/src/MainWindow.cc:556 ../gtk/src/MainWindow.cc:577
+#: ../gtk/src/MainWindow.cc:585 ../gtk/src/MainWindow.cc:633
+#: ../gtk/src/MainWindow.cc:638 ../gtk/src/TessdataManager.cc:60
 #: ../gtk/src/TessdataManager.cc:70 ../gtk/src/TessdataManager.cc:339
-#: ../qt/src/MainWindow.cc:550 ../qt/src/MainWindow.cc:563
-#: ../qt/src/MainWindow.cc:572 ../qt/src/MainWindow.cc:616
-#: ../qt/src/MainWindow.cc:621 ../qt/src/TessdataManager.cc:70
-#: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:287
+#: ../qt/src/MainWindow.cc:553 ../qt/src/MainWindow.cc:566
+#: ../qt/src/MainWindow.cc:575 ../qt/src/MainWindow.cc:621
+#: ../qt/src/MainWindow.cc:626 ../qt/src/TessdataManager.cc:70
+#: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:288
 msgid "Error"
 msgstr "خطأ"
 
-#: ../gtk/src/MainWindow.cc:553 ../qt/src/MainWindow.cc:550
+#: ../gtk/src/MainWindow.cc:556 ../qt/src/MainWindow.cc:553
 msgid "Failed to install spelling dictionary: %1"
 msgstr "فشل في تثبيت قاموس التدقيق الإملائي: %1"
 
-#: ../gtk/src/MainWindow.cc:574 ../qt/src/MainWindow.cc:563
+#: ../gtk/src/MainWindow.cc:577 ../qt/src/MainWindow.cc:566
 msgid "Failed to create directory for spelling dictionaries."
 msgstr "فشل في إنشاء مجلد قواميس التدقيق الإملائي."
 
-#: ../gtk/src/MainWindow.cc:582 ../qt/src/MainWindow.cc:572
+#: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:575
 msgid "Could not read %1: %2."
 msgstr "لا يمكن قراءة %1: %2."
 
-#: ../gtk/src/MainWindow.cc:609 ../qt/src/MainWindow.cc:596
+#: ../gtk/src/MainWindow.cc:612 ../qt/src/MainWindow.cc:601
 msgid "Downloading '%1'..."
 msgstr "جار التنزيل '%1'..."
 
-#: ../gtk/src/MainWindow.cc:630 ../qt/src/MainWindow.cc:616
+#: ../gtk/src/MainWindow.cc:633 ../qt/src/MainWindow.cc:621
 msgid ""
 "The following dictionaries could not be downloaded:\n"
 "%1\n"
@@ -1593,11 +1593,11 @@ msgstr ""
 "تلميح: إذا كان لا يمكنك الكتابة في مجلدات النظام، يمكنك أن تتحول إلى مسار "
 "المستخدمين في الإعدادت."
 
-#: ../gtk/src/MainWindow.cc:633 ../qt/src/MainWindow.cc:619
+#: ../gtk/src/MainWindow.cc:636 ../qt/src/MainWindow.cc:624
 msgid "Dictionaries installed"
 msgstr "القواميس تم تثبيتها"
 
-#: ../gtk/src/MainWindow.cc:633
+#: ../gtk/src/MainWindow.cc:636
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
@@ -1605,11 +1605,11 @@ msgstr ""
 "هذه القواميس تم تثبيتها:\n"
 "%1"
 
-#: ../gtk/src/MainWindow.cc:635 ../qt/src/MainWindow.cc:621
+#: ../gtk/src/MainWindow.cc:638 ../qt/src/MainWindow.cc:626
 msgid "No spelling dictionaries found for '%1'."
 msgstr "لا يتم العثور على قواميس تدقيق إملائي لـ '%1'."
 
-#: ../gtk/src/OutputEditorText.cc:38 ../qt/src/OutputEditorText.cc:41
+#: ../gtk/src/OutputEditorText.cc:38 ../qt/src/OutputEditorText.cc:42
 #, fuzzy
 msgid "Page: %1\n"
 msgstr "صفحة: %1"
@@ -1623,17 +1623,17 @@ msgstr ""
 msgid "Untitled %1"
 msgstr "تم لصق %1"
 
-#: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:155
+#: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:156
 #, fuzzy
 msgid "Document not saved"
 msgstr "المخرج لم يتم حفظه"
 
-#: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:155
+#: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:156
 #, fuzzy
 msgid "Save document before proceeding?"
 msgstr "حفظ المخرج قبل المتابعة؟"
 
-#: ../gtk/src/OutputEditorText.cc:296 ../qt/src/OutputEditorText.cc:237
+#: ../gtk/src/OutputEditorText.cc:296 ../qt/src/OutputEditorText.cc:238
 msgid "Stripping line breaks..."
 msgstr "إزالة كسر السطور..."
 
@@ -1649,20 +1649,20 @@ msgstr ""
 msgid "Check spelling"
 msgstr "افحص إملائيا"
 
-#: ../gtk/src/OutputEditorText.cc:362
+#: ../gtk/src/OutputEditorText.cc:362 ../qt/src/OutputEditorText.cc:256
 msgid "%1 occurrences replaced"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:410 ../qt/src/OutputEditorText.cc:296
+#: ../gtk/src/OutputEditorText.cc:410 ../qt/src/OutputEditorText.cc:301
 msgid "File: %1"
 msgstr "ملف: %1"
 
-#: ../gtk/src/OutputEditorText.cc:413 ../qt/src/OutputEditorText.cc:299
+#: ../gtk/src/OutputEditorText.cc:413 ../qt/src/OutputEditorText.cc:304
 msgid "Page: %1"
 msgstr "صفحة: %1"
 
 #: ../gtk/src/OutputEditorText.cc:426 ../gtk/src/Recognizer.cc:243
-#: ../qt/src/Recognizer.cc:258
+#: ../qt/src/Recognizer.cc:259
 msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
@@ -1671,11 +1671,11 @@ msgstr ""
 "[خطأ في التعرف الضوئي للصفحة %1]\n"
 
 #: ../gtk/src/OutputEditorText.cc:456 ../gtk/src/SourceManager.cc:297
-#: ../qt/src/OutputEditorText.cc:337 ../qt/src/SourceManager.cc:257
+#: ../qt/src/OutputEditorText.cc:342 ../qt/src/SourceManager.cc:269
 msgid "Select Files"
 msgstr "اختر ملفات"
 
-#: ../gtk/src/OutputEditorText.cc:530 ../qt/src/OutputEditorText.cc:405
+#: ../gtk/src/OutputEditorText.cc:530 ../qt/src/OutputEditorText.cc:410
 msgid "Save Output..."
 msgstr "حفظ المخرج..."
 
@@ -1683,7 +1683,7 @@ msgstr "حفظ المخرج..."
 msgid "Unsaved documents"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:583 ../qt/src/OutputEditorText.cc:457
+#: ../gtk/src/OutputEditorText.cc:583 ../qt/src/OutputEditorText.cc:462
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
@@ -1767,28 +1767,28 @@ msgid "Current selection"
 msgstr "التحديد الحالي"
 
 #: ../gtk/src/Recognizer.cc:194 ../gtk/src/Recognizer.cc:428
-#: ../qt/src/Recognizer.cc:211 ../qt/src/Recognizer.cc:441
+#: ../qt/src/Recognizer.cc:212 ../qt/src/Recognizer.cc:442
 msgid "Recognition errors occurred"
 msgstr "حدثت أخطاء في التعرف الضوئي"
 
-#: ../gtk/src/Recognizer.cc:194 ../qt/src/Recognizer.cc:211
+#: ../gtk/src/Recognizer.cc:194 ../qt/src/Recognizer.cc:212
 msgid "Failed to initialize tesseract"
 msgstr "فشل في تهيئة محرك التعرف الضوئي tesseract"
 
-#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:235
+#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
 msgid "Source already recognized"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:235
-msgid "One or more selected sources were aready recognized. Proceed anyway?"
+#: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
+msgid "One or more selected sources were already recognized. Proceed anyway?"
 msgstr ""
 
 #: ../gtk/src/Recognizer.cc:237 ../gtk/src/Recognizer.cc:351
-#: ../qt/src/Recognizer.cc:251 ../qt/src/Recognizer.cc:363
+#: ../qt/src/Recognizer.cc:252 ../qt/src/Recognizer.cc:364
 msgid "Recognizing page %1 (%2 of %3)"
 msgstr "جار التعرف الضوئي على الصفحة %1 (%2 من %3)"
 
-#: ../gtk/src/Recognizer.cc:242 ../qt/src/Recognizer.cc:257
+#: ../gtk/src/Recognizer.cc:242 ../qt/src/Recognizer.cc:258
 #, fuzzy
 msgid "- Page %1: failed to render page"
 msgstr ""
@@ -1797,28 +1797,28 @@ msgstr ""
 
 #: ../gtk/src/Recognizer.cc:270 ../gtk/src/Recognizer.cc:298
 #: ../gtk/src/Recognizer.cc:311 ../gtk/src/Recognizer.cc:403
-#: ../qt/src/Recognizer.cc:284 ../qt/src/Recognizer.cc:312
-#: ../qt/src/Recognizer.cc:325 ../qt/src/Recognizer.cc:416
+#: ../qt/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:313
+#: ../qt/src/Recognizer.cc:326 ../qt/src/Recognizer.cc:417
 msgid "Recognizing..."
 msgstr "جار التعرف الضوئي.."
 
-#: ../gtk/src/Recognizer.cc:357 ../qt/src/Recognizer.cc:369
+#: ../gtk/src/Recognizer.cc:357 ../qt/src/Recognizer.cc:370
 #, fuzzy
 msgid "- %1:%2: failed to render page"
 msgstr ""
 "\n"
 "- الصفحة %1: لا يمكن رسم الصفحة"
 
-#: ../gtk/src/Recognizer.cc:369 ../qt/src/Recognizer.cc:382
+#: ../gtk/src/Recognizer.cc:369 ../qt/src/Recognizer.cc:383
 msgid "- %1: output already exists, skipping"
 msgstr ""
 
-#: ../gtk/src/Recognizer.cc:373 ../qt/src/Recognizer.cc:386
+#: ../gtk/src/Recognizer.cc:373 ../qt/src/Recognizer.cc:387
 #, fuzzy
 msgid "- %1: failed to create output file"
 msgstr "فشل في إنشاء المخرج"
 
-#: ../gtk/src/Recognizer.cc:428 ../qt/src/Recognizer.cc:441
+#: ../gtk/src/Recognizer.cc:428 ../qt/src/Recognizer.cc:442
 #, fuzzy
 msgid "The following errors occurred:"
 msgstr "حدثت الأخطاء التالية: %1"
@@ -1878,16 +1878,16 @@ msgstr "علبة تغذية المستندات فارغة."
 msgid "Access to scanner is denied."
 msgstr "تم منع الوصول إلى الماسح الضوئي."
 
-#: ../gtk/src/SourceManager.cc:184 ../qt/src/SourceManager.cc:163
+#: ../gtk/src/SourceManager.cc:184 ../qt/src/SourceManager.cc:169
 msgid "Enter password for file '%1':"
 msgstr "أدخل كلمة السر للملف '%1':"
 
-#: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:190
+#: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:196
 #, fuzzy
 msgid "PDF with text"
 msgstr "ملفات PDF مع نص"
 
-#: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:190
+#: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:196
 #, fuzzy
 msgid ""
 "The PDF file already contains text:\n"
@@ -1897,44 +1897,44 @@ msgstr ""
 "هذه PDF تحتوي على نصوص بالفعل:\n"
 "%1"
 
-#: ../gtk/src/SourceManager.cc:292 ../qt/src/SourceManager.cc:256
+#: ../gtk/src/SourceManager.cc:292 ../qt/src/SourceManager.cc:268
 msgid "Images and PDFs"
 msgstr "صور وملفات PDF"
 
-#: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:299
+#: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:311
 msgid "Clipboard Error"
 msgstr "خطأ في الحافظة"
 
-#: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:299
+#: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:311
 msgid "Failed to read the clipboard."
 msgstr "خطأ أثناء القراءة من الحافظة."
 
-#: ../gtk/src/SourceManager.cc:307 ../qt/src/SourceManager.cc:303
-#: ../qt/src/SourceManager.cc:309
+#: ../gtk/src/SourceManager.cc:307 ../qt/src/SourceManager.cc:315
+#: ../qt/src/SourceManager.cc:321
 msgid "Pasted %1"
 msgstr "تم لصق %1"
 
-#: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:322
+#: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:339
 msgid "Screenshot Error"
 msgstr "خطأ في لقطة الشاشة"
 
-#: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:322
+#: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:339
 msgid "Failed to take screenshot."
 msgstr "خطأ أثناء التقاط الشاشة."
 
-#: ../gtk/src/SourceManager.cc:329 ../qt/src/SourceManager.cc:326
+#: ../gtk/src/SourceManager.cc:329 ../qt/src/SourceManager.cc:343
 msgid "Screenshot %1"
 msgstr "لطقة شاشة %1"
 
-#: ../gtk/src/SourceManager.cc:335 ../qt/src/SourceManager.cc:333
+#: ../gtk/src/SourceManager.cc:335 ../qt/src/SourceManager.cc:350
 msgid "Saving image..."
 msgstr "جار حفظ الصورة..."
 
-#: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:346
+#: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:363
 msgid "Cannot Write File"
 msgstr "لا يمكن كتابة الملف"
 
-#: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:346
+#: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:363
 msgid "Could not write to %1."
 msgstr "لا يمكن الكتابة في %1."
 
@@ -1942,25 +1942,25 @@ msgstr "لا يمكن الكتابة في %1."
 msgid "Delete File?"
 msgstr "حذف الملف؟"
 
-#: ../gtk/src/SourceManager.cc:381 ../qt/src/SourceManager.cc:374
+#: ../gtk/src/SourceManager.cc:381 ../qt/src/SourceManager.cc:391
 msgid "Delete the following files?"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:451
+#: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:468
 #, fuzzy
 msgid "Open output"
 msgstr "احفظ النص المخرج"
 
-#: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:451
+#: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:468
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
 msgstr ""
 
-#: ../gtk/src/SourceManager.cc:504 ../qt/src/SourceManager.cc:479
+#: ../gtk/src/SourceManager.cc:504 ../qt/src/SourceManager.cc:496
 msgid "Missing File"
 msgstr "ملف ناقص"
 
-#: ../gtk/src/SourceManager.cc:504 ../qt/src/SourceManager.cc:479
+#: ../gtk/src/SourceManager.cc:504 ../qt/src/SourceManager.cc:496
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
@@ -2039,7 +2039,7 @@ msgstr "جار تغذية الملفات الموجودة"
 
 #: ../gtk/src/TessdataManager.cc:70 ../gtk/src/TessdataManager.cc:96
 #: ../gtk/src/TessdataManager.cc:197 ../qt/src/TessdataManager.cc:80
-#: ../qt/src/TessdataManager.cc:97 ../qt/src/TessdataManager.cc:169
+#: ../qt/src/TessdataManager.cc:97 ../qt/src/TessdataManager.cc:170
 msgid "Failed to fetch list of available languages: %1"
 msgstr "خطأ أثناء تغذية قائمة اللغات المتاحة: %1"
 
@@ -2047,15 +2047,15 @@ msgstr "خطأ أثناء تغذية قائمة اللغات المتاحة: %1"
 msgid "Parsing error: %1"
 msgstr "خطأ أثناء التمرير: %1"
 
-#: ../gtk/src/TessdataManager.cc:235 ../qt/src/TessdataManager.cc:204
+#: ../gtk/src/TessdataManager.cc:235 ../qt/src/TessdataManager.cc:205
 msgid "Applying changes..."
 msgstr "جار تطبيق التغييرات..."
 
-#: ../gtk/src/TessdataManager.cc:297 ../qt/src/TessdataManager.cc:250
+#: ../gtk/src/TessdataManager.cc:297 ../qt/src/TessdataManager.cc:251
 msgid "Failed to create directory for tessdata files."
 msgstr "فشل أثناء إنشاء مجلد ملفات لغات التعرف الضوئي tessdata."
 
-#: ../gtk/src/TessdataManager.cc:306 ../qt/src/TessdataManager.cc:259
+#: ../gtk/src/TessdataManager.cc:306 ../qt/src/TessdataManager.cc:260
 msgid "Downloading %1..."
 msgstr "جار التنزيل %1..."
 
@@ -2101,12 +2101,12 @@ msgstr "تجاوز"
 msgid "Discard all"
 msgstr "تجاوز"
 
-#: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:452
+#: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
 #, fuzzy
 msgid "Text"
 msgstr "السطر"
 
-#: ../gtk/src/Utils.cc:151 ../qt/src/SourceManager.cc:453
+#: ../gtk/src/Utils.cc:151 ../qt/src/SourceManager.cc:470
 #, fuzzy
 msgid "hOCR"
 msgstr "صيغة PDF"
@@ -2239,30 +2239,21 @@ msgstr "تعرف تلقائي على التخطيط"
 msgid "Toggle Output Pane"
 msgstr "تبديل شاشة المخرجات"
 
-#: ../qt/data/MainWindow.ui.h:41
-msgid "actionBatchExport"
-msgstr ""
-
 #: ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
 msgstr "تصدير PDF"
 
-#: ../qt/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportWidget.ui.h:5
+#: ../qt/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportWidget.ui.h:4
 msgid "Backend:"
 msgstr "محرك كتابة PDF:"
 
-#: ../qt/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportWidget.ui.h:8
+#: ../qt/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportWidget.ui.h:7
 msgid "Portrait"
 msgstr "بالطول"
 
-#: ../qt/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportWidget.ui.h:9
+#: ../qt/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportWidget.ui.h:8
 msgid "Landscape"
 msgstr "بالعرض"
-
-#: ../qt/data/PdfExportWidget.ui.h:1
-#, fuzzy
-msgid "Form"
-msgstr "النسق:"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:311
 msgid "Failed to write to file"
@@ -2292,24 +2283,24 @@ msgstr "بحث واستبدال"
 msgid "Show proofread widget"
 msgstr "عرض كمثال"
 
-#: ../qt/src/MainWindow.cc:619
+#: ../qt/src/MainWindow.cc:624
 #, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
 msgstr "القاموس التالي غير مثبت:%1"
 
-#: ../qt/src/OutputEditorText.cc:515 ../qt/src/SourceManager.cc:240
+#: ../qt/src/OutputEditorText.cc:520 ../qt/src/SourceManager.cc:252
 #, fuzzy
 msgid "No recent files"
 msgstr "اسم الملف المصور"
 
-#: ../qt/src/SourceManager.cc:374
+#: ../qt/src/SourceManager.cc:391
 #, fuzzy
 msgid "Delete Files"
 msgstr "حذف الملف؟"
 
-#: ../qt/src/TessdataManager.cc:280
+#: ../qt/src/TessdataManager.cc:281
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -2373,6 +2364,10 @@ msgstr "امسح المخرج"
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "النسق:"
 
 #~ msgid ""
 #~ "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
