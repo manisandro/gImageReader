@@ -363,7 +363,7 @@ void OutputEditorText::replaceAll(const Glib::ustring& searchstr, const Glib::us
 	popover->set_relative_to(*m_searchFrame->replaceAllButton());
 	popover->set_modal(false);
 	popover->show_all();
-	Glib::signal_timeout().connect_once([popover] { popover->popdown(); delete popover; }, 2000);
+	Glib::signal_timeout().connect_once([popover] { popover->popdown(); delete popover; }, 4000);
 }
 
 void OutputEditorText::applySubstitutions(const std::map<Glib::ustring, Glib::ustring>& substitutions, bool matchCase) {
