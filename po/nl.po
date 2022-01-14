@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-14 01:17+0100\n"
-"PO-Revision-Date: 2021-11-28 09:14+0000\n"
+"PO-Revision-Date: 2022-01-16 18:52+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gimagereader/"
 "translations/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1737,19 +1737,16 @@ msgid "Close document"
 msgstr "Document sluiten"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "%1 geplakt"
+msgstr "Naamloos %1"
 
 #: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:155
-#, fuzzy
 msgid "Document not saved"
-msgstr "Uitvoer is niet opgeslagen"
+msgstr "Het document is niet opgeslagen"
 
 #: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:155
-#, fuzzy
 msgid "Save document before proceeding?"
-msgstr "Wilt u de uitvoer opslaan alvorens door te gaan?"
+msgstr "Wilt u het document opslaan alvorens door te gaan?"
 
 #: ../gtk/src/OutputEditorText.cc:296 ../qt/src/OutputEditorText.cc:237
 #: ../gtk/src/OutputEditorText.cc:307 ../qt/src/OutputEditorText.cc:149
@@ -1769,7 +1766,6 @@ msgid "Check spelling"
 msgstr "Spelling controleren"
 
 #: ../gtk/src/OutputEditorText.cc:362
-#, fuzzy
 msgid "%1 occurrences replaced"
 msgstr "Aantal vervangingen: %1"
 
@@ -1804,15 +1800,16 @@ msgid "Save Output..."
 msgstr "Uitvoer opslaan…"
 
 #: ../gtk/src/OutputEditorText.cc:582
-#, fuzzy
 msgid "Unsaved documents"
-msgstr "Document sluiten"
+msgstr "Niet-opgeslagen documenten"
 
 #: ../gtk/src/OutputEditorText.cc:583 ../qt/src/OutputEditorText.cc:457
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
 msgstr ""
+"De volgende documenten zijn niet opgeslagen. Welke wilt u opslaan alvorens "
+"door te gaan?"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
@@ -2218,9 +2215,8 @@ msgid "Discard"
 msgstr "Verwerpen"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "Verwerpen"
+msgstr "Alles verwerpen"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:452
 #: ../gtk/src/Utils.cc:150
@@ -2501,7 +2497,7 @@ msgstr "Uitvoer wissen"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "Nieuw tabblad"
 
 #: ../gtk/src/FileDialogs.cc:300
 msgid ""
