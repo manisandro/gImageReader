@@ -401,6 +401,9 @@ bool MainWindow::setOutputMode(OutputMode mode) {
 		m_outputEditor->setLanguage(m_recognitionMenu->getRecognitionLanguage());
 		connect(ui.actionToggleOutputPane, &QAction::toggled, m_outputEditor, &OutputEditor::onVisibilityChanged);
 		ui.dockWidgetOutput->setWidget(m_outputEditor->getUI());
+		ui.comboBoxOCRMode->blockSignals(true);
+		ui.comboBoxOCRMode->setCurrentIndex(ui.comboBoxOCRMode->findData(mode));
+		ui.comboBoxOCRMode->blockSignals(false);
 		return true;
 	}
 }

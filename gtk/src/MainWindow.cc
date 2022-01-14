@@ -397,6 +397,9 @@ bool MainWindow::setOutputMode(OutputMode mode) {
 		m_outputEditor->setLanguage(m_recognitionMenu->getRecognitionLanguage());
 		ui.panedOutput->pack2(*m_outputEditor->getUI(), true, false);
 		m_outputEditor->getUI()->set_visible(ui.buttonOutputpane->get_active());
+		m_connection_setOCRMode.block(true);
+		ui.comboOcrmode->set_active(mode);
+		m_connection_setOCRMode.block(false);
 		return true;
 	}
 }
