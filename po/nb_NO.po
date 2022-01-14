@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-14 01:17+0100\n"
-"PO-Revision-Date: 2021-11-29 18:52+0000\n"
-"Last-Translator: ovl-1 <ovl-002@mailinator.com>\n"
+"PO-Revision-Date: 2022-01-16 18:52+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -2187,6 +2187,8 @@ msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
 msgstr ""
+"Følgende dokumenter har ulagrede endringer. Hvilke av dem vil du lagre før "
+"du fortsetter?"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 #: ../gtk/src/Recognizer.cc:179
@@ -2951,7 +2953,7 @@ msgstr "Tøm utdata"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "Legg til fane"
 
 #: ../gtk/src/FileDialogs.cc:300 ../gtk/src/FileDialogs.cc:235
 msgid ""
