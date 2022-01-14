@@ -794,10 +794,11 @@
   </action>
   <action name="actionBatchExport">
    <property name="icon">
-    <iconset theme="document-export"/>
+    <iconset theme="document-export">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>actionBatchExport</string>
+    <string>Batch Export</string>
    </property>
    <property name="toolTip">
     <string>Batch Export</string>

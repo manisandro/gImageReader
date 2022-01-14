@@ -215,7 +215,7 @@ void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout)
 		}
 	}
 	if(contains) {
-		if(Utils::Button::No == Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Source already recognized"), _("One or more selected sources were aready recognized. Proceed anyway?"), "", Utils::Button::Yes | Utils::Button::No)) {
+		if(Utils::Button::No == Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Source already recognized"), _("One or more selected sources were already recognized. Proceed anyway?"), "", Utils::Button::Yes | Utils::Button::No)) {
 			return;
 		}
 	}
