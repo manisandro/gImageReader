@@ -88,7 +88,7 @@ Displayer::Displayer(const Ui::MainWindow& _ui)
 
 	CONNECT(ui.scrollwinDisplay, drag_data_received, sigc::ptr_fun(Utils::handle_drag_drop));
 	m_connection_thumbClicked = CONNECT(ui.iconviewThumbnails, selection_changed, [this] {
-		if(!ui.iconviewThumbnails->get_selected_items().empty()) {
+		if(ui.checkBoxThumbnails->get_active() && !ui.iconviewThumbnails->get_selected_items().empty()) {
 			ui.spinPage->set_value(1 + ui.iconviewThumbnails->get_selected_items().front().front());
 		}
 	});
@@ -263,6 +263,11 @@ bool Displayer::setup(const int* page, const int* resolution, const double* angl
 	if(page) {
 		changed |= *page != ui.spinPage->get_value_as_int();
 		Utils::set_spin_blocked(ui.spinPage, *page, m_connection_pageSpinChanged);
+		m_connection_thumbClicked.block();
+		Gtk::TreePath path(1u, ui.spinPage->get_value_as_int() - 1);
+		ui.iconviewThumbnails->select_path(path);
+		ui.iconviewThumbnails->scroll_to_path(path, false, 0., 0.);
+		m_connection_thumbClicked.unblock();
 	}
 	if(resolution) {
 		changed |= *resolution != ui.spinResolution->get_value();
@@ -740,7 +745,14 @@ void Displayer::thumbnailsToggled() {
 	ui.scrollwinThumbnails->set_visible(active);
 	ui.panedSource->set_position(active ? 0.5 * ui.panedSource->get_height() : (ui.panedSource->get_height() - ui.checkBoxThumbnails->get_height()));
 	if(active) {
-		generateThumbnails();
+		if (!m_pageMap.empty()) {
+			generateThumbnails();
+			m_connection_thumbClicked.block();
+			Gtk::TreePath path(1u, ui.spinPage->get_value_as_int() - 1);
+			ui.iconviewThumbnails->select_path(path);
+			ui.iconviewThumbnails->scroll_to_path(path, false, 0., 0.);
+			m_connection_thumbClicked.unblock();
+		}
 	} else {
 		waitForThread(m_thumbThread, m_thumbThreadCanceled, m_thumbThreadIdleJobsCount);
 		ui.iconviewThumbnails->set_model(Gtk::ListStore::create(m_thumbListViewCols));

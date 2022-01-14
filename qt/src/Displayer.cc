@@ -87,7 +87,11 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	connect(&m_scaleTimer, &QTimer::timeout, this, &Displayer::scaleImage);
 	connect(&m_scaleWatcher, &QFutureWatcher<QImage>::finished, this, [this] { setScaledImage(m_scaleWatcher.future().result()); });
 	connect(&m_thumbnailWatcher, &QFutureWatcher<QImage>::resultReadyAt, this, &Displayer::setThumbnail);
-	connect(ui.listWidgetThumbnails, &QListWidget::currentRowChanged, [this](int idx) { ui.spinBoxPage->setValue(idx + 1); });
+	connect(ui.listWidgetThumbnails, &QListWidget::currentRowChanged, [this](int idx) {
+		if(ui.checkBoxThumbnails->isChecked()) {
+			ui.spinBoxPage->setValue(idx + 1);
+		}
+	});
 	connect(ui.checkBoxThumbnails, &QCheckBox::toggled, this, &Displayer::thumbnailsToggled);
 	connect(ui.spinBoxPage, qOverload<int>(&QSpinBox::valueChanged), this, [this](int page) {
 		QSignalBlocker blocker(ui.listWidgetThumbnails);
@@ -205,6 +209,8 @@ bool Displayer::setup(const int* page, const int* resolution, const double* angl
 	if(page) {
 		changed |= *page != ui.spinBoxPage->value();
 		Utils::setSpinBlocked(ui.spinBoxPage, *page);
+		QSignalBlocker blocker(ui.listWidgetThumbnails);
+		ui.listWidgetThumbnails->setCurrentRow(*page - 1);
 	}
 	if(resolution) {
 		changed |= *resolution != ui.spinBoxResolution->value();
@@ -578,7 +584,11 @@ void Displayer::thumbnailsToggled(bool active) {
 	ui.listWidgetThumbnails->setVisible(active);
 	ui.splitter->setSizes(active ? QList<int>() << 50 << 50 : QList<int>() << ui.tabSources->height() << 1);
 	if(active) {
-		generateThumbnails();
+		if (!m_pageMap.isEmpty()) {
+			generateThumbnails();
+			QSignalBlocker blocker(ui.listWidgetThumbnails);
+			ui.listWidgetThumbnails->setCurrentRow(ui.spinBoxPage->value() - 1);
+		}
 	} else {
 		m_thumbnailWatcher.cancel();
 		m_thumbnailWatcher.waitForFinished();
