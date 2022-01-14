@@ -22,6 +22,7 @@
 #include <QApplication>
 #include <QEventLoop>
 #include <QPainter>
+#include <QRegularExpression>
 #include <QSyntaxHighlighter>
 
 
@@ -34,12 +35,12 @@ private:
 		QTextCharFormat fmt;
 		fmt.setForeground(Qt::gray);
 
-		QRegExp expression("\\s");
-		int index = text.indexOf(expression);
-		while (index >= 0) {
-			int length = expression.matchedLength();
-			setFormat(index, length, fmt);
-			index = text.indexOf(expression, index + length);
+		QRegularExpression expression("\\s");
+		QRegularExpressionMatch match;
+		int offset = 0;
+		while ((match = expression.match(text, offset)).hasMatch()) {
+			offset = match.capturedEnd();
+			setFormat(match.capturedStart(), match.capturedLength(), fmt);
 		}
 	}
 };
@@ -283,7 +284,7 @@ void OutputTextEdit::saveRegionBounds() {
 			viewport()->repaint();
 		}
 		// If only one word is selected, don't treat it as a region
-		if(!m_regionCursor.selectedText().contains(QRegExp("\\s"))) {
+		if(!m_regionCursor.selectedText().contains(QRegularExpression("\\s"))) {
 			m_regionCursor.clearSelection();
 		}
 	}

@@ -189,7 +189,7 @@ void HOCRPdfPrinter::printChildren(const HOCRItem* item, const HOCRPdfExporter::
 				prevWordRight = wordRect.right();
 				QString text = wordItem->text();
 				if(iWord == nWords - 1 && pdfSettings.sanitizeHyphens) {
-					text.replace(QRegExp("[-\u2014]\\s*$"), "-");
+					text.replace(QRegularExpression("[-\u2014]\\s*$"), "-");
 				}
 				double wordBaseline = (x - itemRect.x()) * baseline.first + baseline.second;
 				drawText(x * px2pu, (y + wordBaseline) * px2pu, text);
@@ -211,7 +211,7 @@ void HOCRPdfPrinter::printChildren(const HOCRItem* item, const HOCRPdfExporter::
 			double y = itemRect.bottom() + (wordRect.center().x() - itemRect.x()) * baseline.first + baseline.second;
 			QString text = wordItem->text();
 			if(iWord == nWords - 1 && pdfSettings.sanitizeHyphens) {
-				text.replace(QRegExp("[-\u2014]\\s*$"), "-");
+				text.replace(QRegularExpression("[-\u2014]\\s*$"), "-");
 			}
 			drawText(wordRect.x() * px2pu, y * px2pu, text);
 		}

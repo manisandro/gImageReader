@@ -31,6 +31,7 @@
 #include <QMimeData>
 #include <QPlainTextEdit>
 #include <QSpinBox>
+#include <QStandardPaths>
 #include <QDoubleSpinBox>
 #include <QSslConfiguration>
 #include <QThread>
@@ -60,7 +61,7 @@ QString Utils::makeOutputFilename(const QString& filename) {
 	}
 	// Generate non-existing file
 	QString ext = finfo.completeSuffix();
-	QString base = finfo.baseName().replace(QRegExp(QString("_[0-9]+.%1$").arg(ext)), "");
+	QString base = finfo.baseName().replace(QRegularExpression(QString("_[0-9]+.%1$").arg(ext)), "");
 	QString newfilename = dir.absoluteFilePath(base + "." + ext);
 	for(int i = 1; QFile(newfilename).exists(); ++i) {
 		newfilename = dir.absoluteFilePath(QString("%1_%2.%3").arg(base).arg(i).arg(ext));
@@ -88,7 +89,11 @@ public:
 	bool eventFilter(QObject* /*obj*/, QEvent* ev) {
 		if(dynamic_cast<QMouseEvent*>(ev)) {
 			QMouseEvent* mev = static_cast<QMouseEvent*>(ev);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+			QPoint evp = MAIN->m_progressCancelButton->mapFromGlobal(mev->globalPosition()).toPoint();
+#else
 			QPoint evp = MAIN->m_progressCancelButton->mapFromGlobal(mev->globalPos());
+#endif
 			return !QRect(QPoint(0, 0), MAIN->m_progressCancelButton->size()).contains(evp);
 		}
 		return dynamic_cast<QInputEvent*>(ev);
@@ -206,7 +211,7 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout) {
 
 QString Utils::getSpellingLanguage(const QString& lang, const QString& defaultLanguage) {
 	// If it is already a valid code, return it
-	if(QRegExp("[a-z]{2}(_[A-Z]{2})?").exactMatch(lang)) {
+	if(QRegularExpression("^[a-z]{2}(_[A-Z]{2})?$").match(lang).hasMatch()) {
 		return lang;
 	}
 	// Treat the language as a tesseract lang spec and try to find a matching code

@@ -100,7 +100,7 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 
 	QString tessdataVer;
 	int bestMatchDist = std::numeric_limits<int>::max();
-	static const QRegExp verRegEx("^[vV]?(\\d+).(\\d+).(\\d+)-?(\\w?.*)$");
+	static const QRegularExpression verRegEx("^[vV]?(\\d+).(\\d+).(\\d+)-?(\\w?.*)$");
 	QJsonParseError err;
 	QJsonDocument json = QJsonDocument::fromJson(data, &err);
 	if(json.isNull()) {
@@ -109,8 +109,9 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 	}
 	for(const QJsonValue& value : json.array()) {
 		QString tag = value.toObject().value("name").toString();
-		if(verRegEx.indexIn(tag) != -1) {
-			int tagVer = TESSERACT_MAKE_VERSION(verRegEx.cap(1).toInt(), verRegEx.cap(2).toInt(), verRegEx.cap(3).toInt());
+		QRegularExpressionMatch match;
+		if((match = verRegEx.match(tag)).hasMatch()) {
+			int tagVer = TESSERACT_MAKE_VERSION(match.captured(1).toInt(), match.captured(2).toInt(), match.captured(3).toInt());
 			int dist = TESSERACT_VERSION - tagVer;
 			if(dist >= 0 && dist < bestMatchDist) {
 				bestMatchDist = dist;

@@ -757,8 +757,8 @@ QMap<QString, QString> HOCRItem::s_langCache = QMap<QString, QString>();
 
 QMap<QString, QString> HOCRItem::deserializeAttrGroup(const QString& string) {
 	QMap<QString, QString> attrs;
-	for(const QString& attr : string.split(QRegExp("\\s*;\\s*"))) {
-		int splitPos = attr.indexOf(QRegExp("\\s+"));
+	for(const QString& attr : string.split(QRegularExpression("\\s*;\\s*"))) {
+		int splitPos = attr.indexOf(QRegularExpression("\\s+"));
 		attrs.insert(attr.left(splitPos), splitPos > 0 ? attr.mid(splitPos + 1) : "");
 	}
 	return attrs;
@@ -774,15 +774,16 @@ QString HOCRItem::serializeAttrGroup(const QMap<QString, QString>& attrs) {
 
 QString HOCRItem::trimmedWord(const QString& word, QString* prefix, QString* suffix) {
 	// correctly trim words with apostrophes or hyphens within them, phrases with dashes, initialisms/acronyms, and numeric citations
-	QRegExp wordRe("^(\\W*)(\\w?|\\w(\\w|[-\\x2013\\x2014'’])*\\w|(\\w+\\.){2,})([\\W\\x00b2\\x00b3\\x00b9\\x2070-\\x207e]*)$");
-	if(wordRe.indexIn(word) != -1) {
+	QRegularExpression wordRe("^(\\W*)(\\w?|\\w(\\w|[-\\x2013\\x2014'’])*\\w|(\\w+\\.){2,})([\\W\\x00b2\\x00b3\\x00b9\\x2070-\\x207e]*)$");
+	QRegularExpressionMatch match;
+	if((match = wordRe.match(word)).hasMatch()) {
 		if(prefix) {
-			*prefix = wordRe.cap(1);
+			*prefix = match.captured(1);
 		}
 		if(suffix) {
-			*suffix = wordRe.cap(5);
+			*suffix = match.captured(5);
 		}
-		return wordRe.cap(2);
+		return match.captured(2);
 	}
 	return word;
 }
@@ -813,7 +814,7 @@ HOCRItem::HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem* parent,
 	}
 
 	// Parse item bbox
-	QStringList bbox = m_titleAttrs["bbox"].split(QRegExp("\\s+"));
+	QStringList bbox = m_titleAttrs["bbox"].split(QRegularExpression("\\s+"));
 	if(bbox.size() == 4) {
 		m_bbox.setCoords(bbox[0].toInt(), bbox[1].toInt(), bbox[2].toInt(), bbox[3].toInt());
 	}
@@ -952,7 +953,7 @@ void HOCRItem::setAttribute(const QString& name, const QString& value, const QSt
 		Q_ASSERT(parts[0] == "title");
 		m_titleAttrs[parts[1]] = value;
 		if(name == "title:bbox") {
-			QStringList bbox = value.split(QRegExp("\\s+"));
+			QStringList bbox = value.split(QRegularExpression("\\s+"));
 			Q_ASSERT(bbox.size() == 4);
 			m_bbox.setCoords(bbox[0].toInt(), bbox[1].toInt(), bbox[2].toInt(), bbox[3].toInt());
 		}
@@ -1001,9 +1002,10 @@ QString HOCRItem::toHtml(int indent) const {
 }
 
 QPair<double, double> HOCRItem::baseLine() const {
-	static const QRegExp baseLineRx = QRegExp("([+-]?\\d+\\.?\\d*)\\s+([+-]?\\d+\\.?\\d*)");
-	if(baseLineRx.indexIn(m_titleAttrs["baseline"]) != -1) {
-		return qMakePair(baseLineRx.cap(1).toDouble(), baseLineRx.cap(2).toDouble());
+	static const QRegularExpression baseLineRx = QRegularExpression("([+-]?\\d+\\.?\\d*)\\s+([+-]?\\d+\\.?\\d*)");
+	QRegularExpressionMatch match;
+	if((match = baseLineRx.match(m_titleAttrs["baseline"])).hasMatch()) {
+		return qMakePair(match.captured(1).toDouble(), match.captured(2).toDouble());
 	}
 	return qMakePair(0.0, 0.0);
 }
@@ -1040,7 +1042,7 @@ HOCRPage::HOCRPage(const QDomElement& element, int pageId, const QString& defaul
 	: HOCRItem(element, this, nullptr, index), m_pageId(pageId) {
 	m_attrs["id"] = QString("page_%1").arg(pageId);
 
-	m_sourceFile = m_titleAttrs["image"].replace(QRegExp("^['\"]"), "").replace(QRegExp("['\"]$"), "");
+	m_sourceFile = m_titleAttrs["image"].replace(QRegularExpression("^['\"]"), "").replace(QRegularExpression("['\"]$"), "");
 	m_pageNr = m_titleAttrs["ppageno"].toInt();
 	// Code to handle pageno -> ppageno typo in previous versions of gImageReader
 	if(m_pageNr == 0) {

@@ -18,9 +18,15 @@
  */
 
 #include <QImageReader>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <poppler-qt6.h>
+#else
 #include <poppler-qt5.h>
+#endif
 
 #include <cmath>
+#include <memory>
+
 #include "DjVuDocument.hh"
 #include "DisplayRenderer.hh"
 #include "Utils.hh"
@@ -88,7 +94,11 @@ QImage ImageRenderer::renderThumbnail(int page) const {
 }
 
 PDFRenderer::PDFRenderer(const QString& filename, const QByteArray& password) : DisplayRenderer(filename) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	m_document = Poppler::Document::load(filename);
+#else
+	m_document = std::unique_ptr<Poppler::Document>(Poppler::Document::load(filename));
+#endif
 	if(m_document) {
 		if(m_document->isLocked()) {
 			m_document->unlock(password, password);
@@ -99,19 +109,14 @@ PDFRenderer::PDFRenderer(const QString& filename, const QByteArray& password) : 
 	}
 }
 
-PDFRenderer::~PDFRenderer() {
-	delete m_document;
-}
-
 QImage PDFRenderer::render(int page, double resolution) const {
 	if(!m_document) {
 		return QImage();
 	}
 	m_mutex.lock();
-	Poppler::Page* poppage = m_document->page(page - 1);
+	std::unique_ptr<Poppler::Page> poppage(m_document->page(page - 1));
 	m_mutex.unlock();
 	QImage image = poppage->renderToImage(resolution, resolution);
-	delete poppage;
 	return image.convertToFormat(QImage::Format_RGB32);
 }
 
@@ -120,14 +125,13 @@ QImage PDFRenderer::renderThumbnail(int page) const {
 		return QImage();
 	}
 	m_mutex.lock();
-	Poppler::Page* poppage = m_document->page(page - 1);
+	std::unique_ptr<Poppler::Page> poppage(m_document->page(page - 1));
 	m_mutex.unlock();
 	// Resolution such that largest dimension is 64px
 	// [points] / 72 * resolution = 64 => resolution = 64 * 72 / points
 	QSizeF size = poppage->pageSizeF();
 	double resolution = 64. * 72. / qMax(size.width(), size.height());
 	QImage image = poppage->renderToImage(resolution, resolution);
-	delete poppage;
 	return image.convertToFormat(QImage::Format_RGB32);
 }
 

@@ -71,7 +71,7 @@ SubstitutionsManager::SubstitutionsManager(QWidget* parent)
 	QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Apply | QDialogButtonBox::Close);
 
 	QVBoxLayout* layout = new QVBoxLayout(this);
-	layout->setMargin(4);
+	layout->setContentsMargins(4, 4, 4, 4);
 	layout->addWidget(toolbar);
 	layout->addWidget(m_tableWidget);
 	layout->addWidget(buttonBox);
@@ -155,7 +155,7 @@ bool SubstitutionsManager::saveList() {
 
 bool SubstitutionsManager::clearList() {
 	if(m_tableWidget->rowCount() > 0) {
-		int response = QMessageBox::question(this, _("Save List?"), _("Do you want to save the current list?"), QMessageBox::Save, QMessageBox::Discard, QMessageBox::Cancel);
+		int response = QMessageBox::question(this, _("Save List?"), _("Do you want to save the current list?"), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 		if(response == QMessageBox::Save) {
 			if(!saveList()) {
 				return false;

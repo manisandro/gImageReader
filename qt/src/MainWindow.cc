@@ -88,7 +88,7 @@ void MainWindow::signalHandlerExec(int signal, bool tesseractCrash) {
 	process.start(QApplication::applicationFilePath(), QStringList() << "crashhandle" << QString::number(QApplication::applicationPid()) << QString::number(tesseractCrash) << filename);
 #ifdef Q_OS_LINUX
 	// Allow crash handler spawned debugger to attach to the crashed process
-#if QT_VERSION_CHECK(5, 15, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
 	prctl(PR_SET_PTRACER, process.processId(), 0, 0, 0);
 #else
 	prctl(PR_SET_PTRACER, process.pid(), 0, 0, 0);
@@ -219,9 +219,9 @@ MainWindow::MainWindow(const QStringList& files)
 		QFuture<QString> future = QtConcurrent::run([ = ] {
 			QString messages;
 			QString newver = Utils::download(QUrl(CHECKURL), messages, 5000);
-			newver.replace(QRegExp("\\s+"), "");
-			QRegExp pat(R"(^[\d+\.]+\d+$)");
-			return pat.exactMatch(newver) ? newver : QString();
+			newver.replace(QRegularExpression("\\s+"), "");
+			QRegularExpression pat(R"(^[\d+\.]+\d+$)");
+			return pat.match(newver).hasMatch() ? newver : QString();
 		});
 		connect(&m_versionWatcher, &QFutureWatcher<QString>::finished, this, [ = ] { checkVersion(m_versionWatcher.future().result()); });
 		m_versionWatcher.setFuture(future);
@@ -574,16 +574,17 @@ void MainWindow::dictionaryAutoinstall() {
 			}
 			return;
 		}
-		int pos = 0;
 		QString langCode = code.left(code.indexOf('_'));
-		QRegExp langPat(QString(">(%1_?[A-Z]*)<").arg(langCode));
-		QRegExp dictPat(QString(">(%1_?[\\w_]*\\.(dic|aff))<").arg(langCode));
+		QRegularExpression langPat(QString(">(%1_?[A-Z]*)<").arg(langCode));
+		QRegularExpression dictPat(QString(">(%1_?[\\w_]*\\.(dic|aff))<").arg(langCode));
 		QStringList downloaded;
 		QStringList failed;
+		int pos = 0;
+		QRegularExpressionMatch match;
 
-		while((pos = langPat.indexIn(html, pos)) != -1) {
-			QString lang = langPat.cap(1);
-			pos += langPat.matchedLength();
+		while((match = langPat.match(html, pos)).hasMatch()) {
+			QString lang = match.captured(1);
+			pos = match.capturedEnd();
 
 			QString dictHtml = QString(Utils::download(url + lang + "/", messages));
 			if(dictHtml.isEmpty()) {
@@ -591,8 +592,9 @@ void MainWindow::dictionaryAutoinstall() {
 			}
 
 			int dictPos = 0;
-			while((dictPos = dictHtml.indexOf(dictPat, dictPos)) != -1) {
-				QString filename = dictPat.cap(1);
+			QRegularExpressionMatch dictMatch;
+			while((dictMatch = dictPat.match(dictHtml, dictPos)).hasMatch()) {
+				QString filename = dictMatch.captured(1);
 				pushState(State::Busy, _("Downloading '%1'...").arg(filename));
 				QByteArray data = Utils::download(plainurl + lang + "/" + filename, messages);
 				if(!data.isNull()) {
@@ -607,7 +609,7 @@ void MainWindow::dictionaryAutoinstall() {
 					failed.append(filename);
 				}
 				popState();
-				dictPos += dictPat.matchedLength();
+				dictPos += dictMatch.capturedEnd();
 			}
 		}
 

@@ -63,20 +63,20 @@ public:
 		mFormatMap[InAttrValue].setForeground(QColor(255, 75, 75));
 		mFormatMap[InAttrValueDblQuote].setForeground(QColor(255, 75, 75));
 
-		mStateMap[NormalState].append({QRegExp("<"), InTag, false});
-		mStateMap[InTag].append({QRegExp(">"), NormalState, true});
-		mStateMap[InTag].append({QRegExp("\\w+="), InAttrKey, false});
-		mStateMap[InAttrKey].append({QRegExp("'"), InAttrValue, false});
-		mStateMap[InAttrKey].append({QRegExp("\""), InAttrValueDblQuote, false});
-		mStateMap[InAttrKey].append({QRegExp("\\s"), NormalState, false});
-		mStateMap[InAttrValue].append({QRegExp("'[^']*'"), InTag, true});
-		mStateMap[InAttrValueDblQuote].append({QRegExp("\"[^\"]*\""), InTag, true});
+		mStateMap[NormalState].append({QRegularExpression("<"), InTag, false});
+		mStateMap[InTag].append({QRegularExpression(">"), NormalState, true});
+		mStateMap[InTag].append({QRegularExpression("\\w+="), InAttrKey, false});
+		mStateMap[InAttrKey].append({QRegularExpression("'"), InAttrValue, false});
+		mStateMap[InAttrKey].append({QRegularExpression("\""), InAttrValueDblQuote, false});
+		mStateMap[InAttrKey].append({QRegularExpression("\\s"), NormalState, false});
+		mStateMap[InAttrValue].append({QRegularExpression("'[^']*'"), InTag, true});
+		mStateMap[InAttrValueDblQuote].append({QRegularExpression("\"[^\"]*\""), InTag, true});
 	}
 
 private:
 	enum State { NormalState = -1, InComment, InTag, InAttrKey, InAttrValue, InAttrValueDblQuote };
 	struct Rule {
-		QRegExp pattern;
+		QRegularExpression pattern;
 		State nextState;
 		bool addMatched; // add matched length to pos
 	};
@@ -92,9 +92,9 @@ private:
 			State minState = state;
 			int minPos = -1;
 			for(const Rule& rule : mStateMap.value(state)) {
-				int matchPos = rule.pattern.indexIn(text, pos);
-				if(matchPos != -1 && (minPos < 0 || matchPos < minPos)) {
-					minPos = matchPos + (rule.addMatched ? rule.pattern.matchedLength() : 0);
+				QRegularExpressionMatch match = rule.pattern.match(text, pos);
+				if(match.hasMatch() && (minPos < 0 || match.capturedStart() < minPos)) {
+					minPos = match.capturedStart() + (rule.addMatched ? match.capturedLength() : 0);
 					minState = rule.nextState;
 				}
 			}
@@ -292,10 +292,10 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	MAIN->getDisplayer()->scene()->addItem(m_preview);
 	m_previewTimer.setSingleShot(true);
 
-	ui.actionOutputReplace->setShortcut(Qt::CTRL + Qt::Key_F);
-	ui.actionOutputSaveHOCR->setShortcut(Qt::CTRL + Qt::Key_S);
+	ui.actionOutputReplace->setShortcut(Qt::CTRL | Qt::Key_F);
+	ui.actionOutputSaveHOCR->setShortcut(Qt::CTRL | Qt::Key_S);
 	ui.actionNavigateNext->setShortcut(Qt::Key_F3);
-	ui.actionNavigatePrev->setShortcut(Qt::SHIFT + Qt::Key_F3);
+	ui.actionNavigatePrev->setShortcut(Qt::SHIFT | Qt::Key_F3);
 
 	m_document = new HOCRDocument(ui.treeViewHOCR);
 	ui.treeViewHOCR->setModel(m_document);
@@ -611,7 +611,7 @@ QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const 
 	auto it = attrLineEdits.find(attrName);
 	if(it != attrLineEdits.end()) {
 		QLineEdit* lineEdit = new HOCRAttributeEditor(attrValue, m_document, itemIndex, attrName, attrItemClass);
-		lineEdit->setValidator(new QRegExpValidator(QRegExp(it.value())));
+		lineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression(it.value())));
 		if(multiple) {
 			lineEdit->setPlaceholderText(_("Multiple values"));
 		}
@@ -1126,7 +1126,7 @@ bool OutputEditorHOCR::clear(bool hide) {
 		return true;
 	}
 	if(m_modified) {
-		int response = QMessageBox::question(MAIN, _("Output not saved"), _("Save output before proceeding?"), QMessageBox::Save, QMessageBox::Discard, QMessageBox::Cancel);
+		int response = QMessageBox::question(MAIN, _("Output not saved"), _("Save output before proceeding?"), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 		if(response == QMessageBox::Save) {
 			if(!save()) {
 				return false;

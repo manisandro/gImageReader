@@ -19,8 +19,10 @@
 
 #include <memory>
 #include <QClipboard>
-#include <QDesktopWidget>
 #include <QDesktopServices>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#include <QDesktopWidget>
+#endif
 #include <QDir>
 #include <QDirIterator>
 #include <QDragEnterEvent>
@@ -33,7 +35,11 @@
 #include <QScreen>
 #include <QString>
 #include <QTemporaryFile>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <poppler-qt6.h>
+#else
 #include <poppler-qt5.h>
+#endif
 
 #include "ConfigSettings.hh"
 #include "FileDialogs.hh"
@@ -205,7 +211,13 @@ bool SourceManager::checkPdfSource(Source* source, PdfWithTextAction& textAction
 	source->producer = document->producer();
 	source->title = document->title();
 	source->subject = document->subject();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	Poppler::Document::PdfVersion pdfVersion = document->getPdfVersion();
+	source->pdfVersionMajor = pdfVersion.major;
+	source->pdfVersionMinor = pdfVersion.minor;
+#else
 	document->getPdfVersion(&source->pdfVersionMajor, &source->pdfVersionMinor);
+#endif
 
 	return true;
 }
@@ -316,7 +328,12 @@ void SourceManager::takeScreenshot() {
 	QTimer* timer = new QTimer();
 	connect(timer, &QTimer::timeout, [this, timer] {
 		timer->deleteLater();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		QScreen* screen = QGuiApplication::primaryScreen();
+		QPixmap pixmap = screen ? screen->grabWindow() : QPixmap();
+#else
 		QPixmap pixmap = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
+#endif
 		MAIN->show();
 		if(pixmap.isNull()) {
 			QMessageBox::critical(MAIN, _("Screenshot Error"),  _("Failed to take screenshot."));

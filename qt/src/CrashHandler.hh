@@ -21,6 +21,8 @@
 #define CRASHHANDLER_HH
 
 #include "ui_CrashHandler.h"
+
+#include <QDialog>
 #include <QProcess>
 
 class CrashHandler : public QDialog {

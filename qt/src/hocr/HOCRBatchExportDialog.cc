@@ -136,7 +136,7 @@ void HOCRBatchExportDialog::updateOutputTree() {
 	while(it.hasNext()) {
 		QString filename = it.next();
 		filenames.append(filename);
-		deepestlevel = std::max(QDir::cleanPath(QDir(dir).relativeFilePath(filename)).count('/'), deepestlevel);
+		deepestlevel = std::max(int(QDir::cleanPath(QDir(dir).relativeFilePath(filename)).count('/')), deepestlevel);
 	}
 	int groupAboveDepth = std::max(0, deepestlevel - exportLevel);
 	for (const QString& filename : filenames) {

@@ -136,13 +136,14 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout) {
 
 	m_pagesDialogUi.comboBoxRecognitionArea->setItemText(0, MAIN->getDisplayer()->hasMultipleOCRAreas() ? _("Current selection") : _("Entire page"));
 
-	QRegExp validateRegEx("^[\\d,\\-\\s]+$");
+	QRegularExpression validateRegEx("^[\\d,\\-\\s]+$");
+	QRegularExpressionMatch match;
 	QList<int> pages;
 	while(m_pagesDialog->exec() == QDialog::Accepted) {
 		pages.clear();
 		QString text = m_pagesDialogUi.lineEditPageRange->text();
-		if(validateRegEx.indexIn(text) != -1) {
-			text.replace(QRegExp("\\s+"), "");
+		if((match = validateRegEx.match(text)).hasMatch()) {
+			text.replace(QRegularExpression("\\s+"), "");
 			for(const QString& block : text.split(',', Qt::SkipEmptyParts)) {
 				QStringList ranges = block.split('-', Qt::SkipEmptyParts);
 				if(ranges.size() == 1) {

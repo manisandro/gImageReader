@@ -59,8 +59,8 @@ OutputEditorText::OutputEditorText() {
 	ui.actionOutputModeCursor->setData(static_cast<int>(InsertMode::Cursor));
 	ui.actionOutputModeReplace->setData(static_cast<int>(InsertMode::Replace));
 
-	ui.actionOutputReplace->setShortcut(Qt::CTRL + Qt::Key_F);
-	ui.actionOutputSave->setShortcut(Qt::CTRL + Qt::Key_S);
+	ui.actionOutputReplace->setShortcut(Qt::CTRL | Qt::Key_F);
+	ui.actionOutputSave->setShortcut(Qt::CTRL | Qt::Key_S);
 
 	m_spell.setDecodeLanguageCodes(true);
 	m_spell.setShowCheckSpellingCheckbox(true);
@@ -202,10 +202,10 @@ void OutputEditorText::filterBuffer() {
 
 	Utils::busyTask([this, &txt] {
 		// Always remove trailing whitespace
-		txt.replace(QRegExp("\\s+$"), "");
+		txt.replace(QRegularExpression("\\s+$"), "");
 
 		if(ui.actionOutputPostprocJoinHyphen->isChecked()) {
-			txt.replace(QRegExp("[-\u2014]\\s*\u2029\\s*"), "");
+			txt.replace(QRegularExpression("[-\u2014]\\s*\u2029\\s*"), "");
 		}
 		QString preChars, sucChars;
 		if(ui.actionOutputPostprocKeepParagraphs->isChecked()) {
@@ -228,10 +228,10 @@ void OutputEditorText::filterBuffer() {
 			sucChars = "(?![" + sucChars + "])";
 		}
 		QString expr = preChars + "\u2029" + sucChars;
-		txt.replace(QRegExp(expr), preChars.isEmpty() ? " " : "\\1 ");
+		txt.replace(QRegularExpression(expr), preChars.isEmpty() ? " " : "\\1 ");
 
 		if(ui.actionOutputPostprocCollapseSpaces->isChecked()) {
-			txt.replace(QRegExp("[ \t]+"), " ");
+			txt.replace(QRegularExpression("[ \t]+"), " ");
 		}
 		return true;
 	}, _("Stripping line breaks..."));

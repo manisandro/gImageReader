@@ -60,13 +60,12 @@ private:
 class PDFRenderer : public DisplayRenderer {
 public:
 	PDFRenderer(const QString& filename, const QByteArray& password);
-	~PDFRenderer();
 	QImage render(int page, double resolution) const override;
 	QImage renderThumbnail(int page) const override;
 	int getNPages() const override;
 
 private:
-	Poppler::Document* m_document;
+	std::unique_ptr<Poppler::Document> m_document;
 	mutable QMutex m_mutex;
 };
 

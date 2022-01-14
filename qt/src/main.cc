@@ -31,7 +31,6 @@
 #include "CrashHandler.hh"
 
 int main (int argc, char* argv[]) {
-	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 	QApplication app(argc, argv);
 
 	QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
@@ -50,12 +49,21 @@ int main (int argc, char* argv[]) {
 #endif
 
 	QTranslator qtTranslator;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	QString translationsPath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
+#else
 	QString translationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+#endif
 #ifdef Q_OS_WIN
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	translationsPath = packageDir.absolutePath() + translationsPath.mid(QLibraryInfo::path(QLibraryInfo::PrefixPath).length());
+#else
 	translationsPath = packageDir.absolutePath() + translationsPath.mid(QLibraryInfo::location(QLibraryInfo::PrefixPath).length());
 #endif
-	qtTranslator.load("qt_" + QLocale::system().name(), translationsPath);
-	qtTranslator.load("qtbase_" + QLocale::system().name(), translationsPath);
+#endif
+	bool success = false;
+	success = qtTranslator.load("qt_" + QLocale::system().name(), translationsPath);
+	success = qtTranslator.load("qtbase_" + QLocale::system().name(), translationsPath);
 	QApplication::instance()->installTranslator(&qtTranslator);
 
 	bindtextdomain(GETTEXT_PACKAGE, dataDir.absoluteFilePath("locale").toLocal8Bit().data());

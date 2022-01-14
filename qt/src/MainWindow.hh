@@ -20,6 +20,7 @@
 #ifndef MAINWINDOW_HH
 #define MAINWINDOW_HH
 
+#include <QActionGroup>
 #include <QFutureWatcher>
 #include <QList>
 #include <QMainWindow>
