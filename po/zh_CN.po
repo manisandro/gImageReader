@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-14 01:17+0100\n"
-"PO-Revision-Date: 2021-11-28 09:14+0000\n"
-"Last-Translator: Eric <spice2wolf@gmail.com>\n"
+"PO-Revision-Date: 2022-01-16 18:52+0000\n"
+"Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gimagereader/translations/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1724,19 +1724,16 @@ msgid "Close document"
 msgstr "关闭文档"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "已贴上 %1"
+msgstr "无标题 %1"
 
 #: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:155
-#, fuzzy
 msgid "Document not saved"
-msgstr "未存储输出"
+msgstr "文档未保存"
 
 #: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:155
-#, fuzzy
 msgid "Save document before proceeding?"
-msgstr "先存储输出再继续？"
+msgstr "先保存文档再继续？"
 
 #: ../gtk/src/OutputEditorText.cc:296 ../qt/src/OutputEditorText.cc:237
 #: ../gtk/src/OutputEditorText.cc:307 ../qt/src/OutputEditorText.cc:149
@@ -1756,7 +1753,6 @@ msgid "Check spelling"
 msgstr "检查拼写"
 
 #: ../gtk/src/OutputEditorText.cc:362
-#, fuzzy
 msgid "%1 occurrences replaced"
 msgstr "替换数：%1"
 
@@ -1791,15 +1787,14 @@ msgid "Save Output..."
 msgstr "存储输出……"
 
 #: ../gtk/src/OutputEditorText.cc:582
-#, fuzzy
 msgid "Unsaved documents"
-msgstr "关闭文档"
+msgstr "未保存的文档"
 
 #: ../gtk/src/OutputEditorText.cc:583 ../qt/src/OutputEditorText.cc:457
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
-msgstr ""
+msgstr "以下文档有未保存的更改。继续之前，你希望保存哪些文档？"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
@@ -2202,9 +2197,8 @@ msgid "Discard"
 msgstr "弃置"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "弃置"
+msgstr "放弃所有"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:452
 #: ../gtk/src/Utils.cc:150
@@ -2479,7 +2473,7 @@ msgstr "清除输出"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "添加标签"
 
 #: ../gtk/src/FileDialogs.cc:300
 msgid ""
