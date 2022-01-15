@@ -102,6 +102,7 @@ private:
 
 	QString displayRoleForItem(const HOCRItem* item) const;
 	QIcon decorationRoleForItem(const HOCRItem* item) const;
+	QString tooltipRoleForItem(const HOCRItem* item) const;
 
 	void insertItem(HOCRItem* parent, HOCRItem* item, int i);
 	void deleteItem(HOCRItem* item);

@@ -38,7 +38,7 @@ class HOCRSpellChecker;
 
 class HOCRDocument : public Gtk::TreeModel, public Glib::Object {
 public:
-	enum Columns { COLUMN_EDITABLE, COLUMN_CHECKED, COLUMN_ICON, COLUMN_TEXT, COLUMN_TEXT_COLOR, COLUMN_WCONF, NUM_COLUMNS};
+	enum Columns { COLUMN_EDITABLE, COLUMN_CHECKED, COLUMN_ICON, COLUMN_TEXT, COLUMN_TOOLTIP, COLUMN_TEXT_COLOR, COLUMN_WCONF, NUM_COLUMNS};
 
 	HOCRDocument();
 	~HOCRDocument();
@@ -136,6 +136,7 @@ private:
 
 	Glib::ustring displayRoleForItem(const HOCRItem* item) const;
 	Glib::RefPtr<Gdk::Pixbuf> decorationRoleForItem(const HOCRItem* item) const;
+	Glib::ustring tooltipRoleForItem(const HOCRItem* item) const;
 
 	void insertItem(HOCRItem* parent, HOCRItem* item, int i);
 	void deleteItem(HOCRItem* item);

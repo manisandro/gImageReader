@@ -570,6 +570,8 @@ QVariant HOCRDocument::data(const QModelIndex& index, int role) const {
 			return displayRoleForItem(item);
 		case Qt::DecorationRole:
 			return decorationRoleForItem(item);
+		case Qt::ToolTipRole:
+			return tooltipRoleForItem(item);
 		case Qt::ForegroundRole: {
 			bool enabled = item->isEnabled();
 			const HOCRItem* parent = item->parent();
@@ -718,6 +720,15 @@ QIcon HOCRDocument::decorationRoleForItem(const HOCRItem* item) const {
 		return QIcon(":/icons/item_halftone");
 	}
 	return QIcon();
+}
+
+QString HOCRDocument::tooltipRoleForItem(const HOCRItem* item) const {
+	QString itemClass = item->itemClass();
+	if(itemClass == "ocr_page") {
+		const HOCRPage* page = static_cast<const HOCRPage*>(item);
+		return QString("%1 (%2 %3/%4)").arg(page->title()).arg(_("Page")).arg(item->index() + 1).arg(m_pages.size());
+	}
+	return QString();
 }
 
 void HOCRDocument::insertItem(HOCRItem* parent, HOCRItem* item, int i) {

@@ -302,6 +302,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	// HOCR tree view
 	m_treeView->set_model(m_document);
 	m_treeView->get_selection()->set_mode(Gtk::SELECTION_MULTIPLE);
+	m_treeView->set_tooltip_column(HOCRDocument::COLUMN_TOOLTIP);
 	// First column: [checkbox][icon][text]
 	m_treeViewTextCell = Gtk::manage(new HOCRCellRendererText);
 	Gtk::TreeViewColumn* itemViewCol1 = Gtk::manage(new Gtk::TreeViewColumn(""));
@@ -309,6 +310,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	Gtk::CellRendererPixbuf& iconRenderer = *Gtk::manage(new Gtk::CellRendererPixbuf);
 	iconRenderer.set_fixed_size(22, 22);
 	Gtk::CellRendererText& textRenderer = *m_treeViewTextCell;
+	textRenderer.property_ellipsize().set_value(Pango::ELLIPSIZE_MIDDLE);
 	itemViewCol1->pack_start(checkRenderer, false);
 	itemViewCol1->pack_start(iconRenderer, false);
 	itemViewCol1->pack_start(textRenderer, true);

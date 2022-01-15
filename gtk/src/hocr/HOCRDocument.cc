@@ -610,6 +610,8 @@ GType HOCRDocument::get_column_type_vfunc(int index) const {
 		return Glib::Value<Glib::RefPtr<Gdk::Pixbuf>>::value_type();
 	} else if(index == COLUMN_TEXT) {
 		return Glib::Value<Glib::ustring>::value_type();
+	} else if(index == COLUMN_TOOLTIP) {
+		return Glib::Value<Glib::ustring>::value_type();
 	} else if(index == COLUMN_TEXT_COLOR) {
 		return Glib::Value<Glib::ustring>::value_type();
 	} else if(index == COLUMN_WCONF) {
@@ -741,6 +743,8 @@ void HOCRDocument::get_value_vfunc(const iterator& iter, int column, Glib::Value
 		setValue(value, decorationRoleForItem(item));
 	} else if(column == COLUMN_TEXT) {
 		setValue(value, displayRoleForItem(item));
+	} else if(column == COLUMN_TOOLTIP) {
+		setValue(value, tooltipRoleForItem(item));
 	} else if(column == COLUMN_TEXT_COLOR) {
 		bool enabled = item->isEnabled();
 		const HOCRItem* parent = item->parent();
@@ -801,7 +805,7 @@ Glib::ustring HOCRDocument::displayRoleForItem(const HOCRItem* item) const {
 	} else if(itemClass == "ocr_graphic") {
 		return _("Graphic");
 	}
-	return "";
+	return Glib::ustring();
 }
 
 Glib::RefPtr<Gdk::Pixbuf> HOCRDocument::decorationRoleForItem(const HOCRItem* item) const {
@@ -822,6 +826,15 @@ Glib::RefPtr<Gdk::Pixbuf> HOCRDocument::decorationRoleForItem(const HOCRItem* it
 	auto pixbuf = Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, false, 8, 16, 16);
 	pixbuf->fill(255);
 	return pixbuf;
+}
+
+Glib::ustring HOCRDocument::tooltipRoleForItem(const HOCRItem* item) const {
+	Glib::ustring itemClass = item->itemClass();
+	if(itemClass == "ocr_page") {
+		const HOCRPage* page = static_cast<const HOCRPage*>(item);
+		return Glib::ustring::compose("%1 (%2 %3/%4)", page->title(), _("Page"), page->index() + 1, m_pages.size());
+	}
+	return Glib::ustring();
 }
 
 void HOCRDocument::insertItem(HOCRItem* parent, HOCRItem* item, int i) {
