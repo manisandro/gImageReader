@@ -657,7 +657,7 @@ void DisplayerSelection::hoverMoveEvent(QGraphicsSceneHoverEvent* event) {
 	} else if(left || right) {
 		setCursor(Qt::SizeHorCursor);
 	} else {
-		unsetCursor();
+		setCursor(Qt::SizeAllCursor);
 	}
 }
 
@@ -665,22 +665,26 @@ void DisplayerSelection::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 	QPointF p = event->pos();
 	double tol = 10.0 / m_tool->getDisplayer()->getCurrentScale();
 	m_resizeHandlers.clear();
-	m_resizeOffset = QPointF(0.0, 0.0);
+	m_mouseMoveOffset = QPointF(0.0, 0.0);
 	if(std::abs(m_point.x() - p.x()) < tol) { // pointx
 		m_resizeHandlers.append(resizePointX);
-		m_resizeOffset.setX(event->pos().x() - m_point.x());
+		m_mouseMoveOffset.setX(event->pos().x() - m_point.x());
 	} else if(std::abs(m_anchor.x() - p.x()) < tol) { // anchorx
 		m_resizeHandlers.append(resizeAnchorX);
-		m_resizeOffset.setX(event->pos().x() - m_anchor.x());
+		m_mouseMoveOffset.setX(event->pos().x() - m_anchor.x());
 	}
 	if(std::abs(m_point.y() - p.y()) < tol) { // pointy
 		m_resizeHandlers.append(resizePointY);
-		m_resizeOffset.setY(event->pos().y() - m_point.y());
+		m_mouseMoveOffset.setY(event->pos().y() - m_point.y());
 	} else if(std::abs(m_anchor.y() - p.y()) < tol) { // anchory
 		m_resizeHandlers.append(resizeAnchorY);
-		m_resizeOffset.setY(event->pos().y() - m_anchor.y());
+		m_mouseMoveOffset.setY(event->pos().y() - m_anchor.y());
 	}
 	if(!m_resizeHandlers.empty()) {
+		event->accept();
+	} else if (event->button() == Qt::LeftButton) {
+		m_translating = true;
+		m_mouseMoveOffset = QPointF(p.x(), p.y());
 		event->accept();
 	} else {
 		event->ignore();
@@ -688,16 +692,27 @@ void DisplayerSelection::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 }
 
 void DisplayerSelection::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
-	QPointF p = event->pos() - m_resizeOffset;
-	QRectF bb = m_tool->getDisplayer()->getSceneBoundingRect();
-	p.rx() = std::min(std::max(bb.x(), p.x()), bb.x() + bb.width());
-	p.ry() = std::min(std::max(bb.y(), p.y()), bb.y() + bb.height());
 	if(!m_resizeHandlers.isEmpty()) {
+		QPointF p = event->pos() - m_mouseMoveOffset;
+		QRectF bb = m_tool->getDisplayer()->getSceneBoundingRect();
+		p.rx() = std::min(std::max(bb.x(), p.x()), bb.x() + bb.width());
+		p.ry() = std::min(std::max(bb.y(), p.y()), bb.y() + bb.height());
 		for(const ResizeHandler& handler : m_resizeHandlers) {
 			handler(p, m_anchor, m_point);
 		}
 		QRectF newRect = QRectF(m_anchor, m_point).normalized().united(m_minRect);
 		setRect(newRect);
+		event->accept();
+	} else if(m_translating) {
+		QPointF delta = event->pos() - m_mouseMoveOffset;
+		m_mouseMoveOffset = event->pos();
+		QRectF bb = m_tool->getDisplayer()->getSceneBoundingRect();
+		// Constraint movement to scene bounding rect
+		delta.rx() -= std::max(0., std::max(m_anchor.x(), m_point.x()) + delta.x() - bb.right()) + std::min(0., std::min(m_anchor.x(), m_point.x()) + delta.x() - bb.left());
+		delta.ry() -= std::max(0., std::max(m_anchor.y(), m_point.y()) + delta.y() - bb.bottom()) + std::min(0., std::min(m_anchor.y(), m_point.y()) + delta.y() - bb.top());
+		m_anchor += delta;
+		m_point += delta;
+		setRect(QRectF(m_anchor, m_point).normalized());
 		event->accept();
 	} else {
 		event->ignore();
@@ -708,5 +723,8 @@ void DisplayerSelection::mouseReleaseEvent(QGraphicsSceneMouseEvent* /*event*/) 
 	if(!m_resizeHandlers.isEmpty()) {
 		emit geometryChanged(rect());
 		m_resizeHandlers.clear();
+	} else if(m_translating) {
+		emit geometryChanged(rect());
+		m_translating = false;
 	}
 }

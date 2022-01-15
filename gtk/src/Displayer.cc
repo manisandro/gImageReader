@@ -880,22 +880,30 @@ bool DisplayerSelection::mousePressEvent(GdkEventButton* event) {
 	if(event->button == 1) {
 		Geometry::Point p = displayer()->mapToSceneClamped(Geometry::Point(event->x, event->y));
 		double tol = 10.0 / displayer()->getCurrentScale();
-		m_resizeOffset = Geometry::Point(0., 0.);
+		m_mouseMoveOffset = Geometry::Point(0., 0.);
 		if(std::abs(m_point.x - p.x) < tol) { // pointx
 			m_resizeHandlers.push_back(resizePointX);
-			m_resizeOffset.x = p.x - m_point.x;
+			m_mouseMoveOffset.x = p.x - m_point.x;
 		} else if(std::abs(m_anchor.x - p.x) < tol) { // anchorx
 			m_resizeHandlers.push_back(resizeAnchorX);
-			m_resizeOffset.x = p.x - m_anchor.x;
+			m_mouseMoveOffset.x = p.x - m_anchor.x;
 		}
 		if(std::abs(m_point.y - p.y) < tol) { // pointy
 			m_resizeHandlers.push_back(resizePointY);
-			m_resizeOffset.y = p.y - m_point.y;
+			m_mouseMoveOffset.y = p.y - m_point.y;
 		} else if(std::abs(m_anchor.y - p.y) < tol) { // anchory
 			m_resizeHandlers.push_back(resizeAnchorY);
-			m_resizeOffset.y = p.y - m_anchor.y;
+			m_mouseMoveOffset.y = p.y - m_anchor.y;
 		}
-		return !m_resizeHandlers.empty();
+		if (!m_resizeHandlers.empty()) {
+			return true;
+		} else if(rect().contains(p)) {
+			m_translating = true;
+			m_mouseMoveOffset = p;
+			return true;
+		} else {
+			return false;
+		}
 	} else if(event->button == 3) {
 		showContextMenu(event);
 	}
@@ -906,6 +914,9 @@ bool DisplayerSelection::mouseReleaseEvent(GdkEventButton* /*event*/) {
 	if(!m_resizeHandlers.empty()) {
 		m_signalGeometryChanged.emit(rect());
 		m_resizeHandlers.clear();
+	} else if(m_translating) {
+		m_signalGeometryChanged.emit(rect());
+		m_translating = false;
 	}
 	return false;
 }
@@ -928,21 +939,36 @@ bool DisplayerSelection::mouseMoveEvent(GdkEventMotion* event) {
 			displayer()->setCursor(Gdk::Cursor::create(MAIN->getWindow()->get_display(), "ns-resize"));
 		} else if(left || right) {
 			displayer()->setCursor(Gdk::Cursor::create(MAIN->getWindow()->get_display(), "ew-resize"));
+		} else if(rect().contains(p)) {
+			displayer()->setCursor(Gdk::Cursor::create(MAIN->getWindow()->get_display(), "move"));
 		} else {
 			displayer()->setCursor(Glib::RefPtr<Gdk::Cursor>(0));
 		}
 	}
-	Geometry::Point movePos(p.x - m_resizeOffset.x, p.y - m_resizeOffset.y);
-	Geometry::Rectangle bb = displayer()->getSceneBoundingRect();
-	movePos.x = std::min(std::max(bb.x, movePos.x), bb.x + bb.width);
-	movePos.y = std::min(std::max(bb.y, movePos.y), bb.y + bb.height);
 	if(!m_resizeHandlers.empty()) {
+		Geometry::Point movePos(p.x - m_mouseMoveOffset.x, p.y - m_mouseMoveOffset.y);
+		Geometry::Rectangle bb = displayer()->getSceneBoundingRect();
+		movePos.x = std::min(std::max(bb.x, movePos.x), bb.x + bb.width);
+		movePos.y = std::min(std::max(bb.y, movePos.y), bb.y + bb.height);
 		for(const ResizeHandler& handler : m_resizeHandlers) {
 			handler(movePos, m_anchor, m_point);
 		}
 		Geometry::Rectangle newRect = Geometry::Rectangle(m_anchor, m_point).unite(m_minRect);
 		setRect(newRect);
 		displayer()->ensureVisible(event->x, event->y);
+		return true;
+	} else if(m_translating) {
+		Geometry::Point delta(p.x - m_mouseMoveOffset.x, p.y - m_mouseMoveOffset.y);
+		m_mouseMoveOffset = p;
+		Geometry::Rectangle bb = displayer()->getSceneBoundingRect();
+		// Constraint movement to scene bounding rect
+		delta.x -= std::max(0., std::max(m_anchor.x, m_point.x) + delta.x - bb.right()) + std::min(0., std::min(m_anchor.x, m_point.x) + delta.x - bb.left());
+		delta.y -= std::max(0., std::max(m_anchor.y, m_point.y) + delta.y - bb.bottom()) + std::min(0., std::min(m_anchor.y, m_point.y) + delta.y - bb.top());
+		m_anchor.x += delta.x;
+		m_anchor.y += delta.y;
+		m_point.x += delta.x;
+		m_point.y += delta.y;
+		setRect(Geometry::Rectangle(m_anchor, m_point));
 		return true;
 	}
 	return false;

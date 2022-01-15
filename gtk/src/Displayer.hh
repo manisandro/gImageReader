@@ -271,7 +271,8 @@ private:
 	Geometry::Point m_point;
 	Geometry::Rectangle m_minRect;
 	std::vector<ResizeHandler> m_resizeHandlers;
-	Geometry::Point m_resizeOffset;
+	Geometry::Point m_mouseMoveOffset;
+	bool m_translating = false;
 	sigc::signal<void, Geometry::Rectangle> m_signalGeometryChanged;
 
 	static void resizeAnchorX(const Geometry::Point& pos, Geometry::Point& anchor, Geometry::Point& /*point*/) {

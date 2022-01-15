@@ -207,7 +207,8 @@ private:
 	QPointF m_point;
 	QRectF m_minRect;
 	QVector<ResizeHandler> m_resizeHandlers;
-	QPointF m_resizeOffset;
+	QPointF m_mouseMoveOffset;
+	bool m_translating = false;
 
 	void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
 	void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
