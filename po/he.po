@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: gImageReader 3.3.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-14 01:17+0100\n"
-"PO-Revision-Date: 2021-10-24 09:59+0300\n"
-"Last-Translator: Zeev <zeev@dummy.com>\n"
-"Language-Team: Hebrew <team@dummy.com>\n"
+"PO-Revision-Date: 2022-01-16 18:52+0000\n"
+"Last-Translator: aharon don <aronrefael@gmail.com>\n"
+"Language-Team: Hebrew <https://hosted.weblate.org/projects/gimagereader/"
+"translations/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 3.30.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -229,7 +230,7 @@ msgstr "סגור"
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:4
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
 msgid "Select source folder:"
-msgstr "בחר תיקיית מקור..."
+msgstr "בחר תיקיית מקור:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
 #: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
@@ -239,9 +240,8 @@ msgstr "תבנית:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
-#, fuzzy
 msgid "Group outputs of N lowest levels:"
-msgstr "פלטים קבוצתיים בדרגה:"
+msgstr "אחד קבצי הפלט בקבוצות מתחת לרמות של - N:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
@@ -1635,19 +1635,16 @@ msgid "Close document"
 msgstr "סגור מסמך"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "%1 הודבק"
+msgstr "ללא כותרת %1"
 
 #: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:155
-#, fuzzy
 msgid "Document not saved"
-msgstr "הפלט לא נשמר"
+msgstr "המסמך לא נשמר"
 
 #: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:155
-#, fuzzy
 msgid "Save document before proceeding?"
-msgstr "לשמור את הפלט לפני שתמשיך?"
+msgstr "לשמור את המסמך לפני שתמשיך?"
 
 #: ../gtk/src/OutputEditorText.cc:296 ../qt/src/OutputEditorText.cc:237
 msgid "Stripping line breaks..."
@@ -1655,21 +1652,19 @@ msgstr "חושף שורות שבורות..."
 
 #: ../gtk/src/OutputEditorText.cc:307
 msgid "No highlight"
-msgstr ""
+msgstr "ללא הדגשה"
 
 #: ../gtk/src/OutputEditorText.cc:327
-#, fuzzy
 msgid "Highlight mode"
-msgstr "מצב הדגשת תחביר:"
+msgstr "מצב הדגשת תחביר"
 
 #: ../gtk/src/OutputEditorText.cc:332
 msgid "Check spelling"
 msgstr "בדוק איות"
 
 #: ../gtk/src/OutputEditorText.cc:362
-#, fuzzy
 msgid "%1 occurrences replaced"
-msgstr "כמות ההחלפות שהתרחשו: %1"
+msgstr "מספר המופעים התואמים שהוחלפו: %1"
 
 #: ../gtk/src/OutputEditorText.cc:410 ../qt/src/OutputEditorText.cc:296
 msgid "File: %1"
@@ -1698,15 +1693,15 @@ msgid "Save Output..."
 msgstr "שומר פלט..."
 
 #: ../gtk/src/OutputEditorText.cc:582
-#, fuzzy
 msgid "Unsaved documents"
-msgstr "סגור מסמך"
+msgstr "מסמכים שלא נשמרו"
 
 #: ../gtk/src/OutputEditorText.cc:583 ../qt/src/OutputEditorText.cc:457
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
 msgstr ""
+"במסמכים הבאים יש שינויים שלא נשמרו. אילו מסמכים ברצונך לשמור לפני שתמשיך?"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
@@ -2116,9 +2111,8 @@ msgid "Discard"
 msgstr "מחק"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "מחק"
+msgstr "בטל טעינת הכל"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:452
 msgid "Text"
@@ -2133,15 +2127,14 @@ msgid "About gImageReader"
 msgstr "אודות gImageReder"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>ממשק גרפי ל- tesseract-ocr</p><p><a href="
-"\"https://github.com/manisandro/gImageReader/\">אתר אינטרנט</a></p><p>&nbsp;"
-"</p></body></html>"
+"\"https://github.com/manisandro/gImageReader/\">אתר "
+"אינטרנט</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2170,7 +2163,7 @@ msgid "Text file encoding:"
 msgstr "קידוד קובץ טקסט:"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
@@ -2179,17 +2172,15 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<b>היישום קרס</b>\n"
-"\n"
-"אנו מצטערים על אי הנוחות. כדי לעזור בשיפור האפליקציה, אנא שקול לדווח על "
-"הבעיה ל- <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>. נסה לתאר מה עשית לפני שהאפליקציה קרסה. כמו כן, "
-"כלול את המידע להלן. תודה."
+"<html><head/><body><p><span style=\" font-weight:600;\">היישום קרס</span></"
+"p><p>אנו מצטערים על אי הנוחות. כדי לעזור בשיפור האפליקציה, אנא שקול לדווח על "
+"הבעיה ל- <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. נסה לתאר מה עשית לפני שהאפליקציה קרסה. כמו כן, "
+"כלול את המידע להלן. תודה.</p></body></html>"
 
 # Notes:
 # Add Note
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
 "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
@@ -2198,17 +2189,15 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
-"<b>פעולת ה- Tesseract הופסקה</b>\n"
-"\n"
-"פעולה ה- Tesseract (מנוע ה- OCR) הופסקה בתהליך זיהוי הטקסט. הדבר עלול להתרחש "
-"אם קבצי התרגום פגומים או שאינם תואם עם גירסת ה- tesseract שבשימוש, או בגלל "
-"שגיאה ב- tesseract.\n"
-"\n"
-"דוח רישום ומעקב התהליכים שלמטה עשוי לספק מידע אודות גורם הקריסה.\n"
+"<html><head/><body><p><span style=\" font-weight:600;\">פעולת ה- Tesseract "
+"הופסקה</span></p><p>פעולה ה- Tesseract (מנוע ה- OCR) הופסקה בתהליך זיהוי "
+"הטקסט. הדבר עלול להתרחש אם קבצי התרגום פגומים או שאינם תואם עם גירסת ה- "
+"tesseract שבשימוש, או בגלל שגיאה ב- tesseract.</p><p>דוח רישום ומעקב "
+"התהליכים שלמטה עשוי לספק מידע אודות גורם הקריסה.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
-msgstr "Flatbed"
+msgstr "משטח סריקה"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Front"
@@ -2268,7 +2257,7 @@ msgstr "החלף חלונית פלט"
 
 #: ../qt/data/MainWindow.ui.h:41
 msgid "actionBatchExport"
-msgstr "actionBatchExport"
+msgstr "פעולת ייצוא אצווה"
 
 #: ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
@@ -2288,7 +2277,7 @@ msgstr "נוף"
 
 #: ../qt/data/PdfExportWidget.ui.h:1
 msgid "Form"
-msgstr "טופס:"
+msgstr "טופס"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:311
 msgid "Failed to write to file"
@@ -2317,9 +2306,8 @@ msgstr "חיפוש והחלפה"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
-msgstr "תצוגה מקדימה"
+msgstr "הצג ווידג'ט צף להגהה"
 
 #: ../qt/src/MainWindow.cc:619
 msgid ""
@@ -2399,7 +2387,7 @@ msgstr "נקה פלט"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "הוסף לשונית"
 
 #~ msgid ""
 #~ "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
