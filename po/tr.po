@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-14 22:24+0100\n"
-"PO-Revision-Date: 2021-11-28 09:14+0000\n"
+"PO-Revision-Date: 2022-01-18 02:54+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/tr/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 "X-POOTLE-MTIME: 1441292742.000000\n"
 
 #: ../data/gimagereader.desktop.in.h:1
@@ -1828,7 +1828,6 @@ msgid "Source already recognized"
 msgstr "Kaynak zaten tanındı"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
-#, fuzzy
 msgid "One or more selected sources were already recognized. Proceed anyway?"
 msgstr ""
 "Seçilen bir veya daha fazla kaynak zaten tanındı. Yine de devam edilsin mi?"
