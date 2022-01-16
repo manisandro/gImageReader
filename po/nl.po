@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-14 22:24+0100\n"
-"PO-Revision-Date: 2021-11-28 09:14+0000\n"
+"PO-Revision-Date: 2022-01-18 02:54+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gimagereader/"
 "translations/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1949,7 +1949,6 @@ msgid "Source already recognized"
 msgstr "De bron is al herkend"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
-#, fuzzy
 msgid "One or more selected sources were already recognized. Proceed anyway?"
 msgstr "Eén of meerdere bronnen zijn al herkend. Wilt u tóch doorgaan?"
 
