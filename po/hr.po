@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-14 22:25+0100\n"
-"PO-Revision-Date: 2021-11-29 18:52+0000\n"
+"PO-Revision-Date: 2022-01-18 02:54+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/hr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -236,9 +236,8 @@ msgstr "Format:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
-#, fuzzy
 msgid "Group outputs of N lowest levels:"
-msgstr "Grupiraj rezultate na razini:"
+msgstr "Grupiraj rezultate najniže N-razine:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
@@ -1628,19 +1627,16 @@ msgid "Close document"
 msgstr "Zatvori dokument"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "Umetnuto %1"
+msgstr "Bez naslova %1"
 
 #: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Document not saved"
-msgstr "Rezultat nije spremljen"
+msgstr "Dokument nije spremljen"
 
 #: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Save document before proceeding?"
-msgstr "Spremiti rezultat prije nastavljanja?"
+msgstr "Spremiti dokument prije nastavljanja?"
 
 #: ../gtk/src/OutputEditorText.cc:296 ../qt/src/OutputEditorText.cc:238
 msgid "Stripping line breaks..."
@@ -1648,19 +1644,17 @@ msgstr "Uklanjanje prekida redaka …"
 
 #: ../gtk/src/OutputEditorText.cc:307
 msgid "No highlight"
-msgstr ""
+msgstr "Bez isticanja"
 
 #: ../gtk/src/OutputEditorText.cc:327
-#, fuzzy
 msgid "Highlight mode"
-msgstr "Način isticanja sintakse:"
+msgstr "Modus isticanja"
 
 #: ../gtk/src/OutputEditorText.cc:332
 msgid "Check spelling"
 msgstr "Provjeri pravopis"
 
 #: ../gtk/src/OutputEditorText.cc:362 ../qt/src/OutputEditorText.cc:256
-#, fuzzy
 msgid "%1 occurrences replaced"
 msgstr "Broj zamijenjenih pojavljivanja: %1"
 
@@ -1691,15 +1685,16 @@ msgid "Save Output..."
 msgstr "Spremi rezultat …"
 
 #: ../gtk/src/OutputEditorText.cc:582
-#, fuzzy
 msgid "Unsaved documents"
-msgstr "Zatvori dokument"
+msgstr "Nespremljeni dokumenti"
 
 #: ../gtk/src/OutputEditorText.cc:583 ../qt/src/OutputEditorText.cc:462
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
 msgstr ""
+"Sljedeći dokumenti imaju nespremljene promjene. Koje dokumente želiš "
+"spremiti prije nego što nastaviš?"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
@@ -1792,7 +1787,6 @@ msgid "Source already recognized"
 msgstr "Izvor je već prepoznat"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
-#, fuzzy
 msgid "One or more selected sources were already recognized. Proceed anyway?"
 msgstr "Jedan ili više odabranih izvora već su prepoznati. Svejedno nastaviti?"
 
@@ -2107,9 +2101,8 @@ msgid "Discard"
 msgstr "Odbaci"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "Odbaci"
+msgstr "Odbaci sve"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
 msgid "Text"
@@ -2124,16 +2117,14 @@ msgid "About gImageReader"
 msgstr "Informacije o gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;"
-"Grafičko sučelje za tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://"
-"github.com/manisandro/gImageReader/&quot;&gt;Web-stranica&lt;/a&gt;&lt;/p&gt;"
-"&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>Grafičko sučelje za tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">web-"
+"stranicu</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2164,7 +2155,7 @@ msgid "Text file encoding:"
 msgstr "Kodiranje tekstualne datoteke:"
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
@@ -2173,15 +2164,13 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<b>Program se urušio</b>\n"
-"\n"
-"Žao nam ne. Pomogni poboljšati program. Prijavi problem na <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Opiši radnje prije nego što se program urušio. Također uključi donje "
-"podatke. Hvala."
+"<html><head/><body><p><span style=\" font-weight:600;\">Program se "
+"urušio</span></p><p>Žao nam ne. Pomogni poboljšati program. Prijavi problem "
+"na <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>. Opiši radnje prije nego što se program urušio. "
+"Također uključi donje podatke. Hvala.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
 "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
@@ -2190,13 +2179,12 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
-"<b>Tesseract je prekinuo rad</b>\n"
-"\n"
-"Tesseract (OCR mehanizam) je prekinuo prepoznavanje teksta. To se može "
-"dogoditi, ako su korišteni naučeni podaci oštećeni ili nespojivi s "
-"korištenom verzijom Tesseracta ili zbog greške u Tesseractu.\n"
-"\n"
-"Slijedeći podaci mogu pružiti dodatne informacije o mjestu rušenja.\n"
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract je "
+"prekinuo rad</span></p><p>Tesseract (OCR mehanizam) je prekinuo "
+"prepoznavanje teksta. To se može dogoditi, ako su korišteni naučeni podaci "
+"oštećeni ili nespojivi s korištenom verzijom Tesseracta ili zbog greške u "
+"Tesseractu.</p><p>Slijedeći donji podaci mogu pružiti dodatne informacije o "
+"mjestu rušenja.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2302,9 +2290,8 @@ msgstr "Nađi i zamijeni"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
-msgstr "Prikaži pretprikaz"
+msgstr "Prikaži čarobnjaka za lektoriranje"
 
 #: ../qt/src/MainWindow.cc:624
 msgid ""
@@ -2385,7 +2372,7 @@ msgstr "Isprazni rezultat"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "Dodaj karticu"
 
 #~ msgid "actionBatchExport"
 #~ msgstr "actionBatchExport"
