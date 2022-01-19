@@ -62,6 +62,8 @@ std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nul
 
 QDialogButtonBox::StandardButton messageBox(QWidget* parent, const QString& title, const QString& text, const QString& body, QMessageBox::Icon icon, QDialogButtonBox::StandardButtons buttons);
 
+QString removeDiacritics(const QString& string);
+
 template<typename T>
 class AsyncQueue {
 public:

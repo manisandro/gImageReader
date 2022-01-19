@@ -784,17 +784,18 @@ QString HOCRItem::serializeAttrGroup(const QMap<QString, QString>& attrs) {
 }
 
 QString HOCRItem::trimmedWord(const QString& word, QString* prefix, QString* suffix) {
+	QString noaccentWord = Utils::removeDiacritics(word);
 	// correctly trim words with apostrophes or hyphens within them, phrases with dashes, initialisms/acronyms, and numeric citations
-	QRegularExpression wordRe("^(\\W*)(\\w?|\\w(\\w|[-\\x2013\\x2014'’])*\\w|(\\w+\\.){2,})([\\W\\x00b2\\x00b3\\x00b9\\x2070\\-\\x207e]*)$");
+	QRegularExpression wordRe("^(\\W*)(\\w?|\\w(\\w|[-\u2013\u2014'’])*\\w|(\\w+\\.){2,})([\\W\u00b2\u00b3\u00b9\u2070\\-\u207e]*)$");
 	QRegularExpressionMatch match;
-	if((match = wordRe.match(word)).hasMatch()) {
+	if((match = wordRe.match(noaccentWord)).hasMatch()) {
 		if(prefix) {
 			*prefix = match.captured(1);
 		}
 		if(suffix) {
 			*suffix = match.captured(5);
 		}
-		return match.captured(2);
+		return word.mid(match.captured(1).length(), word.length() - match.captured(1).length() - match.captured(5).length());
 	}
 	return word;
 }
