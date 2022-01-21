@@ -1414,8 +1414,13 @@ void OutputEditorHOCR::sourceChanged() {
 		ui.buttonPreview->set_active(false);
 		m_treeView->setCurrentIndex(Gtk::TreeIter());
 	} else {
-		const HOCRItem* item = m_document->itemAtIndex(pageIndex);
-		m_treeView->setCurrentIndex(pageIndex);
+		Gtk::TreeIter curIndex = m_treeView->currentIndex();
+		while(curIndex != pageIndex && curIndex->parent()) {
+			curIndex = curIndex->parent();
+		}
+		if(curIndex != pageIndex) {
+			m_treeView->setCurrentIndex(pageIndex);
+		}
 	}
 }
 
