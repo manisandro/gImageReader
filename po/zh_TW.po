@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-14 22:24+0100\n"
+"POT-Creation-Date: 2022-01-24 23:16+0100\n"
 "PO-Revision-Date: 2018-07-17 13:15+0000\n"
 "Last-Translator: ezjerry liao <ezjerry@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -183,10 +183,10 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給<a href="
-"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>。請嘗試描述你在程式終止前所做的事情。另外，請一併"
-"附上下列資料。謝謝。"
+"我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給<a "
+"href=\"mailto:manisandro@gmail.com?"
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>。請嘗試描述你在程式終"
+"止前所做的事情。另外，請一併附上下列資料。謝謝。"
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -510,11 +510,11 @@ msgstr "多頁……"
 msgid "Batch mode..."
 msgstr ""
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:715
+#: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:720
 msgid "Add Word"
 msgstr "新增字詞"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:715
+#: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:720
 msgid "Enter word:"
 msgstr "輸入字詞："
 
@@ -608,14 +608,14 @@ msgstr "下一個（F3）"
 msgid "Previous (Shift+F3)"
 msgstr "上一個（Shift+F3）"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:969
-#: ../qt/src/hocr/OutputEditorHOCR.cc:847
+#: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:978
+#: ../qt/src/hocr/OutputEditorHOCR.cc:852
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:165
 msgid "Expand all"
 msgstr "遞迴展開"
 
-#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:972
-#: ../qt/src/hocr/OutputEditorHOCR.cc:848
+#: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:981
+#: ../qt/src/hocr/OutputEditorHOCR.cc:853
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:166
 msgid "Collapse all"
 msgstr "遞迴折疊"
@@ -957,8 +957,8 @@ msgid "Add"
 msgstr "新增"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:965 ../qt/data/ConfigDialog.ui.h:17
-#: ../qt/src/hocr/OutputEditorHOCR.cc:844 ../qt/src/SubstitutionsManager.cc:50
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:974 ../qt/data/ConfigDialog.ui.h:17
+#: ../qt/src/hocr/OutputEditorHOCR.cc:849 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
 msgstr "刪除"
@@ -1125,25 +1125,26 @@ msgstr "新增至詞典"
 msgid "Ignore word"
 msgstr "忽略字詞"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:792 ../gtk/src/hocr/OutputEditorHOCR.cc:349
-#: ../qt/src/hocr/HOCRDocument.cc:690 ../qt/src/hocr/OutputEditorHOCR.cc:312
+#: ../gtk/src/hocr/HOCRDocument.cc:800 ../gtk/src/hocr/HOCRDocument.cc:839
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:351 ../qt/src/hocr/HOCRDocument.cc:692
+#: ../qt/src/hocr/HOCRDocument.cc:729 ../qt/src/hocr/OutputEditorHOCR.cc:312
 msgid "Page"
 msgstr "頁面"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:794 ../qt/src/hocr/HOCRDocument.cc:692
+#: ../gtk/src/hocr/HOCRDocument.cc:802 ../qt/src/hocr/HOCRDocument.cc:694
 msgid "Text block"
 msgstr "文字區塊"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:796 ../gtk/src/hocr/OutputEditorHOCR.cc:355
-#: ../qt/src/hocr/HOCRDocument.cc:694 ../qt/src/hocr/OutputEditorHOCR.cc:314
+#: ../gtk/src/hocr/HOCRDocument.cc:804 ../gtk/src/hocr/OutputEditorHOCR.cc:357
+#: ../qt/src/hocr/HOCRDocument.cc:696 ../qt/src/hocr/OutputEditorHOCR.cc:314
 msgid "Paragraph"
 msgstr "段落"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:798 ../qt/src/hocr/HOCRDocument.cc:696
+#: ../gtk/src/hocr/HOCRDocument.cc:806 ../qt/src/hocr/HOCRDocument.cc:698
 msgid "Textline"
 msgstr "文字"
 
-#: ../gtk/src/hocr/HOCRDocument.cc:802 ../qt/src/hocr/HOCRDocument.cc:700
+#: ../gtk/src/hocr/HOCRDocument.cc:810 ../qt/src/hocr/HOCRDocument.cc:702
 msgid "Graphic"
 msgstr "圖像"
 
@@ -1237,28 +1238,34 @@ msgstr "在"
 msgid "The text export failed: unable to write output file."
 msgstr "無法匯出文字檔：無法建立輸出檔。"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:352
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:354
 #: ../qt/src/hocr/OutputEditorHOCR.cc:313
 msgid "Block"
 msgstr "區塊"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:358
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:360
 #: ../qt/src/hocr/OutputEditorHOCR.cc:315
 msgid "Line"
 msgstr "線條"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:361
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:363
 #: ../qt/src/hocr/OutputEditorHOCR.cc:316
 msgid "Word"
 msgstr "單字"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:364
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:366
 #: ../qt/src/hocr/OutputEditorHOCR.cc:317
 msgid "Misspelled word"
 msgstr "錯拼字詞"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:533
-#: ../qt/src/hocr/OutputEditorHOCR.cc:419
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:369
+#: ../qt/src/hocr/OutputEditorHOCR.cc:318
+#, fuzzy
+msgid "Low confidence word"
+msgstr "顯示可信度"
+
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:538
+#: ../qt/src/hocr/OutputEditorHOCR.cc:420
 msgid ""
 "The following pages could not be processed:\n"
 "%1"
@@ -1266,77 +1273,77 @@ msgstr ""
 "無法處理下列頁面：\n"
 "%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:534
-#: ../qt/src/hocr/OutputEditorHOCR.cc:420
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:539
+#: ../qt/src/hocr/OutputEditorHOCR.cc:421
 msgid "Recognition errors"
 msgstr "辨認時出現錯誤"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:697
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:706
 #: ../qt/src/hocr/OutputEditorHOCR.cc:180
-#: ../qt/src/hocr/OutputEditorHOCR.cc:616
-#: ../qt/src/hocr/OutputEditorHOCR.cc:628
+#: ../qt/src/hocr/OutputEditorHOCR.cc:621
+#: ../qt/src/hocr/OutputEditorHOCR.cc:633
 msgid "Multiple values"
 msgstr "多個數值"
 
 #. Merging allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:892
-#: ../qt/src/hocr/OutputEditorHOCR.cc:776
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:901
+#: ../qt/src/hocr/OutputEditorHOCR.cc:781
 msgid "Merge"
 msgstr "合併"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:899
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:957
-#: ../qt/src/hocr/OutputEditorHOCR.cc:778
-#: ../qt/src/hocr/OutputEditorHOCR.cc:842
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:908
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:966
+#: ../qt/src/hocr/OutputEditorHOCR.cc:783
+#: ../qt/src/hocr/OutputEditorHOCR.cc:847
 msgid "Split from parent"
 msgstr "從上層分拆出來"
 
 #. Swapping allowed
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:909
-#: ../qt/src/hocr/OutputEditorHOCR.cc:782
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:918
+#: ../qt/src/hocr/OutputEditorHOCR.cc:787
 msgid "Swap"
 msgstr "對換"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:932
-#: ../qt/src/hocr/OutputEditorHOCR.cc:827
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:941
+#: ../qt/src/hocr/OutputEditorHOCR.cc:832
 msgid "Add graphic region"
 msgstr "新增圖像區域"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:935
-#: ../qt/src/hocr/OutputEditorHOCR.cc:828
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:944
+#: ../qt/src/hocr/OutputEditorHOCR.cc:833
 msgid "Add text block"
 msgstr "新增文字區塊"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:939
-#: ../qt/src/hocr/OutputEditorHOCR.cc:830
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:948
+#: ../qt/src/hocr/OutputEditorHOCR.cc:835
 msgid "Add paragraph"
 msgstr "新增段落"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:943
-#: ../qt/src/hocr/OutputEditorHOCR.cc:832
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:952
+#: ../qt/src/hocr/OutputEditorHOCR.cc:837
 msgid "Add line"
 msgstr "新增線條"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:947
-#: ../qt/src/hocr/OutputEditorHOCR.cc:834
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:956
+#: ../qt/src/hocr/OutputEditorHOCR.cc:839
 msgid "Add word"
 msgstr "新增字詞"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1006
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1089
-#: ../qt/src/hocr/OutputEditorHOCR.cc:909
-#: ../qt/src/hocr/OutputEditorHOCR.cc:985
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1015
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1098
+#: ../qt/src/hocr/OutputEditorHOCR.cc:914
+#: ../qt/src/hocr/OutputEditorHOCR.cc:990
 msgid "hOCR HTML Files"
 msgstr "hOCR HTML 檔"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1007
-#: ../qt/src/hocr/OutputEditorHOCR.cc:909
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1016
+#: ../qt/src/hocr/OutputEditorHOCR.cc:914
 msgid "Open hOCR File"
 msgstr "開啟 hOCR 檔"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1055 ../gtk/src/OutputEditorText.cc:464
-#: ../gtk/src/OutputEditorText.cc:514 ../gtk/src/SourceManager.cc:170
-#: ../qt/src/hocr/OutputEditorHOCR.cc:949 ../qt/src/OutputEditorText.cc:394
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1064 ../gtk/src/OutputEditorText.cc:466
+#: ../gtk/src/OutputEditorText.cc:516 ../gtk/src/SourceManager.cc:170
+#: ../qt/src/hocr/OutputEditorHOCR.cc:954 ../qt/src/OutputEditorText.cc:394
 #: ../qt/src/SourceManager.cc:154
 #, fuzzy
 msgid ""
@@ -1344,105 +1351,105 @@ msgid ""
 "%1"
 msgstr "無法開啟下列檔案：%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1058
-#: ../qt/src/hocr/OutputEditorHOCR.cc:952
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1067
+#: ../qt/src/hocr/OutputEditorHOCR.cc:957
 #, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
 msgstr "此檔案似乎並不包含有效的 hOCR HTML：%1"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1061 ../gtk/src/OutputEditorText.cc:465
-#: ../gtk/src/OutputEditorText.cc:515 ../gtk/src/SourceManager.cc:170
-#: ../qt/src/hocr/OutputEditorHOCR.cc:955 ../qt/src/OutputEditorText.cc:394
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1070 ../gtk/src/OutputEditorText.cc:467
+#: ../gtk/src/OutputEditorText.cc:517 ../gtk/src/SourceManager.cc:170
+#: ../qt/src/hocr/OutputEditorHOCR.cc:960 ../qt/src/OutputEditorText.cc:394
 #: ../qt/src/SourceManager.cc:154
 msgid "Unable to open files"
 msgstr "無法開啟檔案"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1086
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1152
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1188
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1218
-#: ../qt/src/hocr/OutputEditorHOCR.cc:982
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1044
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1078
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1107
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1095
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1161
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1197
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1227
+#: ../qt/src/hocr/OutputEditorHOCR.cc:987
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1049
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1083
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1112
 msgid "output"
 msgstr "輸出"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1090
-#: ../qt/src/hocr/OutputEditorHOCR.cc:985
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1099
+#: ../qt/src/hocr/OutputEditorHOCR.cc:990
 msgid "Save hOCR Output..."
 msgstr "儲存 hOCR 輸出……"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1097 ../gtk/src/OutputEditorText.cc:537
-#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:417
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1106 ../gtk/src/OutputEditorText.cc:539
+#: ../qt/src/hocr/OutputEditorHOCR.cc:997 ../qt/src/OutputEditorText.cc:417
 msgid "Failed to save output"
 msgstr "無法儲存輸出"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1097 ../gtk/src/OutputEditorText.cc:537
-#: ../qt/src/hocr/OutputEditorHOCR.cc:992 ../qt/src/OutputEditorText.cc:417
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1106 ../gtk/src/OutputEditorText.cc:539
+#: ../qt/src/hocr/OutputEditorHOCR.cc:997 ../qt/src/OutputEditorText.cc:417
 msgid "Check that you have writing permissions in the selected folder."
 msgstr "請檢查你在所選取資料夾擁有寫入權限。"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1155
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1047
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1164
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1052
 msgid "OpenDocument Text Documents"
 msgstr "OpenDocument 文件檔"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1156
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1047
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1165
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1052
 msgid "Save ODT Output..."
 msgstr "儲存 ODT 輸出..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1193
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1083
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1202
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1088
 msgid "PDF Files"
 msgstr "PDF 檔"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1194
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1083
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1203
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1088
 msgid "Save PDF Output..."
 msgstr "儲存 PDF 輸出……"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1199
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1088
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1208
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1093
 msgid "Invalid Output"
 msgstr "無效輸出"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1199
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1088
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1208
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1093
 msgid "Cannot overwrite a file which is a source image of this document."
 msgstr "無法改寫此文件的來源圖像檔。"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1221 ../gtk/src/OutputEditorText.cc:455
-#: ../gtk/src/OutputEditorText.cc:529 ../qt/src/hocr/OutputEditorHOCR.cc:1110
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1230 ../gtk/src/OutputEditorText.cc:457
+#: ../gtk/src/OutputEditorText.cc:531 ../qt/src/hocr/OutputEditorHOCR.cc:1115
 #: ../qt/src/OutputEditorText.cc:342 ../qt/src/OutputEditorText.cc:410
 msgid "Text Files"
 msgstr "文字檔"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1222
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1110
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1231
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1115
 msgid "Save Text Output..."
 msgstr "儲存文字輸出..."
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1238
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1129
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1247
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1134
 msgid "Output not saved"
 msgstr "未儲存輸出"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1238
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1129
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1247
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1134
 msgid "Save output before proceeding?"
 msgstr "先儲存輸出再繼續？"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1358 ../gtk/src/OutputEditorText.cc:355
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1227 ../qt/src/OutputEditorText.cc:253
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1367 ../gtk/src/OutputEditorText.cc:357
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1232 ../qt/src/OutputEditorText.cc:253
 msgid "Replacing..."
 msgstr "取代中……"
 
-#: ../gtk/src/hocr/OutputEditorHOCR.cc:1383 ../gtk/src/OutputEditorText.cc:371
-#: ../qt/src/hocr/OutputEditorHOCR.cc:1250 ../qt/src/OutputEditorText.cc:265
+#: ../gtk/src/hocr/OutputEditorHOCR.cc:1392 ../gtk/src/OutputEditorText.cc:373
+#: ../qt/src/hocr/OutputEditorHOCR.cc:1255 ../qt/src/OutputEditorText.cc:265
 msgid "Applying substitutions..."
 msgstr "正在套用替換值……"
 
@@ -1468,17 +1475,17 @@ msgid ""
 "td><td>Previous field</td></tr><tr><td>Down</td><td>Next line</td></"
 "tr><tr><td>Up</td><td>Previous line</td></tr><tr><td>Ctrl+Space</"
 "td><td>Spelling suggestions</td></tr><tr><td>Ctrl+Enter</td><td>Add word to "
-"dictionary</td></tr><tr><td>Ctrl+B</td><td>Toggle bold</td></tr><tr><td>Ctrl"
-"+I</td><td>Toggle italic</td></tr><tr><td>Ctrl+D</td><td>Divide word at "
-"cursor position</td></tr><tr><td>Ctrl+M</td><td>Merge with previous word</"
-"td></tr><tr><td>Ctrl+Shift+M</td><td>Merge with next word</td></"
-"tr><tr><td>Ctrl+Delete</td><td>Delete word</td></tr><tr><td>Ctrl+{Left,Right}"
-"</td><td>Adjust left bounding box edge</td></tr><tr><td>Ctrl+Shift+{Left,"
-"Right}</td><td>Adjust right bounding box edge</td></tr><tr><td>Ctrl+{Up,Down}"
-"</td><td>Adjust top bounding box edge</td></tr><tr><td>Ctrl+Shift+{Up,Down}</"
-"td><td>Adjust bottom bounding box edge</td></tr><tr><td>Ctrl++</"
-"td><td>Increase font size</td></tr><tr><td>Ctrl+-</td><td>Decrease font "
-"size</td></tr></table>"
+"dictionary</td></tr><tr><td>Ctrl+B</td><td>Toggle bold</td></"
+"tr><tr><td>Ctrl+I</td><td>Toggle italic</td></tr><tr><td>Ctrl+D</"
+"td><td>Divide word at cursor position</td></tr><tr><td>Ctrl+M</td><td>Merge "
+"with previous word</td></tr><tr><td>Ctrl+Shift+M</td><td>Merge with next "
+"word</td></tr><tr><td>Ctrl+Delete</td><td>Delete word</td></"
+"tr><tr><td>Ctrl+{Left,Right}</td><td>Adjust left bounding box edge</td></"
+"tr><tr><td>Ctrl+Shift+{Left,Right}</td><td>Adjust right bounding box edge</"
+"td></tr><tr><td>Ctrl+{Up,Down}</td><td>Adjust top bounding box edge</td></"
+"tr><tr><td>Ctrl+Shift+{Up,Down}</td><td>Adjust bottom bounding box edge</"
+"td></tr><tr><td>Ctrl++</td><td>Increase font size</td></tr><tr><td>Ctrl+-</"
+"td><td>Decrease font size</td></tr></table>"
 msgstr ""
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:556
@@ -1623,45 +1630,45 @@ msgstr ""
 msgid "Untitled %1"
 msgstr "已貼上 %1"
 
-#: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:156
+#: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
 #, fuzzy
 msgid "Document not saved"
 msgstr "未儲存輸出"
 
-#: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:156
+#: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
 #, fuzzy
 msgid "Save document before proceeding?"
 msgstr "先儲存輸出再繼續？"
 
-#: ../gtk/src/OutputEditorText.cc:296 ../qt/src/OutputEditorText.cc:238
+#: ../gtk/src/OutputEditorText.cc:298 ../qt/src/OutputEditorText.cc:238
 msgid "Stripping line breaks..."
 msgstr "去除換行符號……"
 
-#: ../gtk/src/OutputEditorText.cc:307
+#: ../gtk/src/OutputEditorText.cc:309
 msgid "No highlight"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:327
+#: ../gtk/src/OutputEditorText.cc:329
 msgid "Highlight mode"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:332
+#: ../gtk/src/OutputEditorText.cc:334
 msgid "Check spelling"
 msgstr "檢查拼字"
 
-#: ../gtk/src/OutputEditorText.cc:362 ../qt/src/OutputEditorText.cc:256
+#: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:256
 msgid "%1 occurrences replaced"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:410 ../qt/src/OutputEditorText.cc:301
+#: ../gtk/src/OutputEditorText.cc:412 ../qt/src/OutputEditorText.cc:301
 msgid "File: %1"
 msgstr "檔案：%1"
 
-#: ../gtk/src/OutputEditorText.cc:413 ../qt/src/OutputEditorText.cc:304
+#: ../gtk/src/OutputEditorText.cc:415 ../qt/src/OutputEditorText.cc:304
 msgid "Page: %1"
 msgstr "頁面：%1"
 
-#: ../gtk/src/OutputEditorText.cc:426 ../gtk/src/Recognizer.cc:243
+#: ../gtk/src/OutputEditorText.cc:428 ../gtk/src/Recognizer.cc:243
 #: ../qt/src/Recognizer.cc:259
 msgid ""
 "\n"
@@ -1670,20 +1677,20 @@ msgstr ""
 "\n"
 "[無法辨認第 %1 頁]\n"
 
-#: ../gtk/src/OutputEditorText.cc:456 ../gtk/src/SourceManager.cc:297
+#: ../gtk/src/OutputEditorText.cc:458 ../gtk/src/SourceManager.cc:297
 #: ../qt/src/OutputEditorText.cc:342 ../qt/src/SourceManager.cc:269
 msgid "Select Files"
 msgstr "選取檔案"
 
-#: ../gtk/src/OutputEditorText.cc:530 ../qt/src/OutputEditorText.cc:410
+#: ../gtk/src/OutputEditorText.cc:532 ../qt/src/OutputEditorText.cc:410
 msgid "Save Output..."
 msgstr "儲存輸出……"
 
-#: ../gtk/src/OutputEditorText.cc:582
+#: ../gtk/src/OutputEditorText.cc:584
 msgid "Unsaved documents"
 msgstr ""
 
-#: ../gtk/src/OutputEditorText.cc:583 ../qt/src/OutputEditorText.cc:462
+#: ../gtk/src/OutputEditorText.cc:585 ../qt/src/OutputEditorText.cc:462
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
@@ -2125,9 +2132,9 @@ msgid ""
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr 的圖像介面</p><p><a href="
-"\"https://github.com/manisandro/gImageReader/\">網站</a></p><p>&nbsp;</p></"
-"body></html>"
+"<html><head/><body><p>&nbsp;</p><p>tesseract-ocr 的圖像介面</p><p><a "
+"href=\"https://github.com/manisandro/gImageReader/\">網站</a></p><p>&nbsp;</"
+"p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2165,10 +2172,10 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給<a href="
-"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-"\">manisandro@gmail.com</a>。請嘗試描述你在程式終止前所做的事情。另外，請一併"
-"附上下列資料。謝謝。"
+"我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給<a "
+"href=\"mailto:manisandro@gmail.com?"
+"subject=gImageReader%20Crash\">manisandro@gmail.com</a>。請嘗試描述你在程式終"
+"止前所做的事情。另外，請一併附上下列資料。謝謝。"
 
 #: ../qt/data/CrashHandler.ui.h:3
 msgid ""
@@ -2400,9 +2407,9 @@ msgstr ""
 #~ msgstr ""
 #~ "<html><head/><body><p><span style=\" font-weight:600;\">此應用程式已異常終"
 #~ "止</span></p><p>我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯"
-#~ "報給 <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash"
-#~ "\">manisandro@gmail.com</a>。請嘗試描述你在程式終止前所做的事情。另外，請"
-#~ "一併附上下列資料。謝謝。</p></body></html>"
+#~ "報給 <a href=\"mailto:manisandro@gmail.com?"
+#~ "subject=gImageReader%20Crash\">manisandro@gmail.com</a>。請嘗試描述你在程"
+#~ "式終止前所做的事情。另外，請一併附上下列資料。謝謝。</p></body></html>"
 
 #, fuzzy
 #~ msgid ""
