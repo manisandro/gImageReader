@@ -198,15 +198,15 @@ void Recognizer::recognizeMultiplePages() {
 	recognize(pages, autodetectLayout);
 }
 
-std::unique_ptr<tesseract::TessBaseAPI> Recognizer::setupTesseract() {
+std::unique_ptr<Utils::TesseractHandle> Recognizer::setupTesseract() {
 	Config::Lang lang = MAIN->getRecognitionMenu()->getRecognitionLanguage();
-	auto tess = Utils::initTesseract(lang.prefix.toLocal8Bit().constData());
-	if(tess) {
-		tess->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
-		tess->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().toLocal8Bit());
-		tess->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().toLocal8Bit());
+	auto tess = std::unique_ptr<Utils::TesseractHandle>(new Utils::TesseractHandle(lang.prefix.toLocal8Bit().constData()));
+	if(tess->get()) {
+		tess->get()->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
+		tess->get()->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().toLocal8Bit());
+		tess->get()->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().toLocal8Bit());
 #if TESSERACT_VERSION >= TESSERACT_MAKE_VERSION(5, 0, 0)
-		tess->SetVariable("thresholding_method", "1");
+		tess->get()->SetVariable("thresholding_method", "1");
 #endif
 	} else {
 		QMessageBox::critical(MAIN, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
@@ -218,7 +218,7 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
 	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
 	auto tess = setupTesseract();
-	if(!tess) {
+	if(!tess->get()) {
 		return;
 	}
 	bool contains = false;
@@ -238,7 +238,7 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 		}
 	}
 	QStringList errors;
-	OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
+	OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess->get());
 	ProgressMonitor monitor(pages.size());
 	MAIN->showProgress(&monitor);
 	MAIN->getDisplayer()->setBlockAutoscale(true);
@@ -268,11 +268,11 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 				readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
 				firstChunk = false;
 				newFile = false;
-				tess->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
-				tess->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
-				tess->Recognize(&monitor.desc);
+				tess->get()->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
+				tess->get()->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
+				tess->get()->Recognize(&monitor.desc);
 				if(!monitor.cancelled()) {
-					MAIN->getOutputEditor()->read(*tess, readSessionData);
+					MAIN->getOutputEditor()->read(*tess->get(), readSessionData);
 				}
 			}
 			QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
@@ -293,21 +293,21 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 
 void Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 	auto tess = setupTesseract();
-	if(!tess) {
+	if(!tess->get()) {
 		return;
 	}
-	tess->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
+	tess->get()->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 	ProgressMonitor monitor(1);
 	MAIN->showProgress(&monitor);
 	if(dest == OutputDestination::Buffer) {
-		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
+		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess->get());
 		readSessionData->pageInfo.filename = MAIN->getDisplayer()->getCurrentImage(readSessionData->pageInfo.page);
 		readSessionData->pageInfo.angle = MAIN->getDisplayer()->getCurrentAngle();
 		readSessionData->pageInfo.resolution = MAIN->getDisplayer()->getCurrentResolution();
 		Utils::busyTask([&] {
-			tess->Recognize(&monitor.desc);
+			tess->get()->Recognize(&monitor.desc);
 			if(!monitor.cancelled()) {
-				MAIN->getOutputEditor()->read(*tess, readSessionData);
+				MAIN->getOutputEditor()->read(*tess->get(), readSessionData);
 			}
 			return true;
 		}, _("Recognizing..."));
@@ -315,9 +315,9 @@ void Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 	} else if(dest == OutputDestination::Clipboard) {
 		QString output;
 		if(Utils::busyTask([&] {
-		tess->Recognize(&monitor.desc);
+		tess->get()->Recognize(&monitor.desc);
 			if(!monitor.cancelled()) {
-				char* text = tess->GetUTF8Text();
+				char* text = tess->get()->GetUTF8Text();
 				output = QString::fromUtf8(text);
 				delete[] text;
 				return true;
@@ -342,7 +342,7 @@ void Recognizer::recognizeBatch() {
 	int nPages = MAIN->getDisplayer()->getNPages();
 
 	auto tess = setupTesseract();
-	if(!tess) {
+	if(!tess->get()) {
 		return;
 	}
 
@@ -386,19 +386,19 @@ void Recognizer::recognizeBatch() {
 					if(!outputFile.open(QIODevice::WriteOnly)) {
 						errors.append(_("- %1: failed to create output file").arg(finfo.fileName()).arg(page));
 					} else {
-						batchProcessor->writeHeader(&outputFile, tess.get(), pageData.pageInfo);
+						batchProcessor->writeHeader(&outputFile, tess->get(), pageData.pageInfo);
 					}
 				}
 			}
 			if(outputFile.isOpen()) {
 				bool firstChunk = true;
 				for(const QImage& image : pageData.ocrAreas) {
-					tess->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
-					tess->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
-					tess->Recognize(&monitor.desc);
+					tess->get()->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
+					tess->get()->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
+					tess->get()->Recognize(&monitor.desc);
 
 					if(!monitor.cancelled()) {
-						batchProcessor->appendOutput(&outputFile, tess.get(), pageData.pageInfo, firstChunk);
+						batchProcessor->appendOutput(&outputFile, tess->get(), pageData.pageInfo, firstChunk);
 					}
 					firstChunk = false;
 				}

@@ -156,8 +156,8 @@ std::string Config::spellingLocation() const {
 }
 
 std::vector<Glib::ustring> Config::getAvailableLanguages() {
-	auto tess = Utils::initTesseract();
-	if(!tess) {
+	Utils::TesseractHandle tess;
+	if(!tess.get()) {
 		return std::vector<Glib::ustring>();
 	}
 #if TESSERACT_MAJOR_VERSION < 5
@@ -165,7 +165,7 @@ std::vector<Glib::ustring> Config::getAvailableLanguages() {
 #else
 	std::vector<std::string> availLanguages;
 #endif
-	tess->GetAvailableLanguagesAsVector(&availLanguages);
+	tess.get()->GetAvailableLanguagesAsVector(&availLanguages);
 	std::vector<Glib::ustring> result;
 	for(int i = 0; i < availLanguages.size(); ++i) {
 #if TESSERACT_MAJOR_VERSION < 5

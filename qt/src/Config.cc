@@ -142,8 +142,8 @@ QString Config::spellingLocation() const {
 }
 
 QStringList Config::getAvailableLanguages() {
-	auto tess = Utils::initTesseract();
-	if(!tess) {
+	Utils::TesseractHandle tess;
+	if(!tess.get()) {
 		return QStringList();
 	}
 #if TESSERACT_MAJOR_VERSION < 5
@@ -151,7 +151,7 @@ QStringList Config::getAvailableLanguages() {
 #else
 	std::vector<std::string> availLanguages;
 #endif
-	tess->GetAvailableLanguagesAsVector(&availLanguages);
+	tess.get()->GetAvailableLanguagesAsVector(&availLanguages);
 	QStringList result;
 	for(int i = 0; i < availLanguages.size(); ++i) {
 		result.append(availLanguages[i].c_str());

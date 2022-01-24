@@ -142,7 +142,15 @@ V get_default(const C<K, V, Args...>& m, K const& key, const V& defval) {
 
 bool busyTask(const std::function<bool()>& f, const Glib::ustring& msg);
 void runInMainThreadBlocking(const std::function<void()>& f);
-std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nullptr);
+
+class TesseractHandle {
+public:
+	TesseractHandle(const char* language = nullptr);
+	~TesseractHandle();
+	tesseract::TessBaseAPI* get() const { return m_tess; }
+private:
+	tesseract::TessBaseAPI* m_tess;
+};
 
 template<typename T, typename S = std::deque<T>>
 class AsyncQueue {

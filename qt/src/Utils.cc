@@ -241,20 +241,27 @@ QString Utils::getSpellingLanguage(const QString& lang, const QString& defaultLa
 	return syslang;
 }
 
-std::unique_ptr<tesseract::TessBaseAPI> Utils::initTesseract(const char* language) {
+
+Utils::TesseractHandle::TesseractHandle(const char* language) {
 	// unfortunately tesseract creates deliberate aborts when an error occurs
 	std::signal(SIGABRT, MainWindow::tesseractCrash);
 	QByteArray current = setlocale(LC_ALL, NULL);
 	setlocale(LC_ALL, "C");
-	std::unique_ptr<tesseract::TessBaseAPI> tess(new tesseract::TessBaseAPI());
-	int ret = tess->Init(nullptr, language);
-	setlocale(LC_NUMERIC, current.constData());
+	m_tess = new tesseract::TessBaseAPI();
+	int ret = m_tess->Init(nullptr, language);
+	setlocale(LC_ALL, current.constData());
 
 	if(ret == -1) {
-		return nullptr;
+		delete m_tess;
+		m_tess = nullptr;
 	}
-	return tess;
 }
+
+Utils::TesseractHandle::~TesseractHandle() {
+	delete m_tess;
+	std::signal(SIGABRT, MainWindow::signalHandler);
+}
+
 
 QDialogButtonBox::StandardButton Utils::messageBox(QWidget* parent, const QString& title, const QString& text, const QString& body, QMessageBox::Icon icon, QDialogButtonBox::StandardButtons buttons) {
 	QDialog dialog(parent);

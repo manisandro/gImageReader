@@ -30,6 +30,7 @@
 
 class QActionGroup;
 class UI_MainWindow;
+namespace Utils { class TesseractHandle; }
 
 class Recognizer : public QObject {
 	Q_OBJECT
@@ -64,7 +65,7 @@ private:
 	QString m_langLabel;
 
 	QList<int> selectPages(bool& autodetectLayout);
-	std::unique_ptr<tesseract::TessBaseAPI> setupTesseract();
+	std::unique_ptr<Utils::TesseractHandle> setupTesseract();
 	void recognize(const QList<int>& pages, bool autodetectLayout = false);
 	void showRecognitionErrorsDialog(const QStringList& errors);
 

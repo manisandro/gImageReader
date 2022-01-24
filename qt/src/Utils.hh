@@ -58,7 +58,14 @@ QByteArray download(QUrl url, QString& messages, int timeout = 60000);
 
 QString getSpellingLanguage(const QString& lang = QString(), const QString& defaultLanguage = QString());
 
-std::unique_ptr<tesseract::TessBaseAPI> initTesseract(const char* language = nullptr);
+class TesseractHandle {
+public:
+	TesseractHandle(const char* language = nullptr);
+	~TesseractHandle();
+	tesseract::TessBaseAPI* get() const { return m_tess; }
+private:
+	tesseract::TessBaseAPI* m_tess;
+};
 
 QDialogButtonBox::StandardButton messageBox(QWidget* parent, const QString& title, const QString& text, const QString& body, QMessageBox::Icon icon, QDialogButtonBox::StandardButtons buttons);
 

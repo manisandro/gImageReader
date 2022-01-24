@@ -625,18 +625,23 @@ void Utils::runInMainThreadBlocking(const std::function<void()>& f) {
 	mutex.unlock();
 }
 
-std::unique_ptr<tesseract::TessBaseAPI> Utils::initTesseract(const char* language) {
-	// unfortunately tesseract creates deliberate segfaults when an error occurs
+Utils::TesseractHandle::TesseractHandle(const char* language) {
+	// unfortunately tesseract creates deliberate aborts when an error occurs
 	std::signal(SIGABRT, MainWindow::tesseractCrash);
 	std::string current = setlocale(LC_ALL, NULL);
 	setlocale(LC_ALL, "C");
-	std::unique_ptr<tesseract::TessBaseAPI> tess(new tesseract::TessBaseAPI());
-	int ret = tess->Init(nullptr, language);
-	std::signal(SIGSEGV, MainWindow::signalHandler);
+	m_tess = new tesseract::TessBaseAPI();
+	int ret = m_tess->Init(nullptr, language);
 	setlocale(LC_ALL, current.c_str());
 
 	if(ret == -1) {
-		return nullptr;
+		delete m_tess;
+		m_tess = nullptr;
 	}
-	return tess;
 }
+
+Utils::TesseractHandle::~TesseractHandle() {
+	delete m_tess;
+	std::signal(SIGABRT, MainWindow::signalHandler);
+}
+

@@ -29,6 +29,7 @@
 namespace Ui {
 class MainWindow;
 }
+namespace Utils { class TesseractHandle; }
 
 class Recognizer {
 public:
@@ -58,7 +59,7 @@ private:
 	void recognizeCurrentPage();
 	void recognizeMultiplePages();
 	void recognizeBatch();
-	std::unique_ptr<tesseract::TessBaseAPI> setupTesseract();
+	std::unique_ptr<Utils::TesseractHandle> setupTesseract();
 	void recognize(const std::vector<int>& pages, bool autodetectLayout = false);
 	std::vector<int> selectPages(bool& autodetectLayout);
 	PageData setPage(int page, bool autodetectLayout);

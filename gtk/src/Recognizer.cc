@@ -180,15 +180,15 @@ void Recognizer::recognizeMultiplePages() {
 	recognize(pages, autodetectLayout);
 }
 
-std::unique_ptr<tesseract::TessBaseAPI> Recognizer::setupTesseract() {
+std::unique_ptr<Utils::TesseractHandle> Recognizer::setupTesseract() {
 	Config::Lang lang = MAIN->getRecognitionMenu()->getRecognitionLanguage();
-	auto tess = Utils::initTesseract(lang.prefix.c_str());
-	if(tess) {
-		tess->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
-		tess->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().c_str());
-		tess->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().c_str());
+	auto tess = std::unique_ptr<Utils::TesseractHandle>(new Utils::TesseractHandle(lang.prefix.c_str()));
+	if(tess->get()) {
+		tess->get()->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
+		tess->get()->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().c_str());
+		tess->get()->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().c_str());
 #if TESSERACT_VERSION >= TESSERACT_MAKE_VERSION(5, 0, 0)
-		tess->SetVariable("thresholding_method", "1");
+		tess->get()->SetVariable("thresholding_method", "1");
 #endif
 	} else {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Recognition errors occurred"), _("Failed to initialize tesseract"));
@@ -200,7 +200,7 @@ void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout)
 	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
 	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
 	auto tess = setupTesseract();
-	if(!tess) {
+	if(!tess->get()) {
 		return;
 	}
 	bool contains = false;
@@ -220,10 +220,10 @@ void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout)
 		}
 	}
 	std::vector<Glib::ustring> errors;
-	tess->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
-	tess->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().c_str());
-	tess->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().c_str());
-	OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
+	tess->get()->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
+	tess->get()->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().c_str());
+	tess->get()->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().c_str());
+	OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess->get());
 	ProgressMonitor monitor(pages.size());
 	MAIN->showProgress(&monitor);
 	MAIN->getDisplayer()->setBlockAutoscale(true);
@@ -252,11 +252,11 @@ void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout)
 				readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
 				firstChunk = false;
 				newFile = false;
-				tess->SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
-				tess->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
-				tess->Recognize(&monitor.desc);
+				tess->get()->SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
+				tess->get()->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
+				tess->get()->Recognize(&monitor.desc);
 				if(!monitor.cancelled()) {
-					MAIN->getOutputEditor()->read(*tess, readSessionData);
+					MAIN->getOutputEditor()->read(*tess->get(), readSessionData);
 				}
 			}
 
@@ -278,21 +278,21 @@ void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout)
 
 void Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest) {
 	auto tess = setupTesseract();
-	if(!tess) {
+	if(!tess->get()) {
 		return;
 	}
-	tess->SetImage(img->get_data(), img->get_width(), img->get_height(), 4, 4 * img->get_width());
+	tess->get()->SetImage(img->get_data(), img->get_width(), img->get_height(), 4, 4 * img->get_width());
 	ProgressMonitor monitor(1);
 	MAIN->showProgress(&monitor);
 	if(dest == OutputDestination::Buffer) {
-		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess);
+		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess->get());
 		readSessionData->pageInfo.filename = MAIN->getDisplayer()->getCurrentImage(readSessionData->pageInfo.page);
 		readSessionData->pageInfo.angle = MAIN->getDisplayer()->getCurrentAngle();
 		readSessionData->pageInfo.resolution = MAIN->getDisplayer()->getCurrentResolution();
 		Utils::busyTask([&] {
-			tess->Recognize(&monitor.desc);
+			tess->get()->Recognize(&monitor.desc);
 			if(!monitor.cancelled()) {
-				MAIN->getOutputEditor()->read(*tess, readSessionData);
+				MAIN->getOutputEditor()->read(*tess->get(), readSessionData);
 			}
 			return true;
 		}, _("Recognizing..."));
@@ -300,9 +300,9 @@ void Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, O
 	} else if(dest == OutputDestination::Clipboard) {
 		Glib::ustring output;
 		if(Utils::busyTask([&] {
-		tess->Recognize(&monitor.desc);
+		tess->get()->Recognize(&monitor.desc);
 			if(!monitor.cancelled()) {
-				char* text = tess->GetUTF8Text();
+				char* text = tess->get()->GetUTF8Text();
 				output = text;
 				delete[] text;
 				return true;
@@ -329,7 +329,7 @@ void Recognizer::recognizeBatch() {
 	int nPages = MAIN->getDisplayer()->getNPages();
 
 	auto tess = setupTesseract();
-	if(!tess) {
+	if(!tess->get()) {
 		return;
 	}
 
@@ -372,19 +372,19 @@ void Recognizer::recognizeBatch() {
 					if(!outputFile.is_open()) {
 						errors.push_back(Glib::ustring::compose(_("- %1: failed to create output file"), Glib::path_get_basename(fileName), page));
 					} else {
-						batchProcessor->writeHeader(outputFile, tess.get(), pageData.pageInfo);
+						batchProcessor->writeHeader(outputFile, tess->get(), pageData.pageInfo);
 					}
 				}
 			}
 			if(outputFile.is_open()) {
 				bool firstChunk = true;
 				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : pageData.ocrAreas) {
-					tess->SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
-					tess->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
-					tess->Recognize(&monitor.desc);
+					tess->get()->SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
+					tess->get()->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
+					tess->get()->Recognize(&monitor.desc);
 
 					if(!monitor.cancelled()) {
-						batchProcessor->appendOutput(outputFile, tess.get(), pageData.pageInfo, firstChunk);
+						batchProcessor->appendOutput(outputFile, tess->get(), pageData.pageInfo, firstChunk);
 					}
 					firstChunk = false;
 				}
