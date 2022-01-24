@@ -1414,10 +1414,10 @@ void OutputEditorHOCR::sourceChanged() {
 		m_treeView->setCurrentIndex(Gtk::TreeIter());
 	} else {
 		Gtk::TreeIter curIndex = m_treeView->currentIndex();
-		while(curIndex != pageIndex && curIndex->parent()) {
+		while(curIndex && curIndex != pageIndex && curIndex->parent()) {
 			curIndex = curIndex->parent();
 		}
-		if(curIndex != pageIndex) {
+		if(curIndex && curIndex != pageIndex) {
 			m_treeView->setCurrentIndex(pageIndex);
 		}
 	}
