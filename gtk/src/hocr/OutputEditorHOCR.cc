@@ -611,8 +611,7 @@ void OutputEditorHOCR::navigateNextPrev(bool next) {
 		misspelled = true;
 	}
 	Gtk::TreeIter start = m_treeView->currentIndex();
-	// Sets current index
-	showItemProperties(m_document->prevOrNextIndex(next, start, target, misspelled));
+	m_treeView->setCurrentIndex(m_document->prevOrNextIndex(next, start, target, misspelled, lowconf));
 }
 
 void OutputEditorHOCR::expandCollapseChildren(const Gtk::TreeIter& index, bool expand) const {
