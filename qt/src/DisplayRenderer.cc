@@ -21,7 +21,10 @@
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <poppler-qt6.h>
 #else
+#pragma GCC push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include <poppler-qt5.h>
+#pragma GCC pop
 #endif
 
 #include <cmath>
