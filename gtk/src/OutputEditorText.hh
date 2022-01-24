@@ -72,6 +72,7 @@ private:
 	SearchReplaceFrame* m_searchFrame;
 	InsertMode m_insertMode;
 	GtkSpell::Checker m_spell;
+	bool m_spellHaveLang = false;
 	int m_tabCounter = 0;
 
 	int addTab(const Glib::ustring& title = Glib::ustring());

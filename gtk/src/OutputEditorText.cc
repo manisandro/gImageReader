@@ -161,8 +161,10 @@ int OutputEditorText::addTab(const Glib::ustring& title) {
 }
 
 void OutputEditorText::tabChanged() {
-	m_spell.detach();
-	m_spell.attach(*textView());
+	if (m_spellHaveLang) {
+		m_spell.detach();
+		m_spell.attach(*textView());
+	}
 	OutputBuffer* buffer = textBuffer();
 	ui.buttonUndo->set_sensitive(buffer->can_undo());
 	ui.buttonRedo->set_sensitive(buffer->can_redo());
@@ -613,5 +615,10 @@ void OutputEditorText::onVisibilityChanged(bool /*visible*/) {
 void OutputEditorText::setLanguage(const Config::Lang& lang) {
 	try {
 		m_spell.set_language(lang.code.empty() ? Utils::getSpellingLanguage(lang.prefix) : lang.code);
-	} catch(const GtkSpell::Error& /*e*/) {}
+		m_spell.detach();
+		m_spell.attach(*textView());
+		m_spellHaveLang = true;
+	} catch(const GtkSpell::Error& /*e*/) {
+		m_spellHaveLang = false;
+	}
 }
