@@ -404,7 +404,11 @@ Gtk::TreeIter HOCRDocument::prevIndex(const Gtk::TreeIter& current) const {
 	Gtk::TreeIter iter = current;
 	// If the current index is invalid return last index
 	if(!iter) {
-		return get_iter(get_root_path(m_pages.size() - 1));
+		if(m_pages.empty()) {
+			return Gtk::TreeIter();
+		} else {
+			return get_iter(get_root_path(m_pages.size() - 1));
+		}
 	}
 	// Return last possible leaf of previous sibling, if any, or parent
 	Gtk::TreeIter parent = iter->parent();
