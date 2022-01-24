@@ -425,15 +425,15 @@ Gtk::TreeIter HOCRDocument::prevIndex(const Gtk::TreeIter& current) const {
 	return iter;
 }
 
-Gtk::TreeIter HOCRDocument::prevOrNextIndex(bool next, const Gtk::TreeIter& current, const Glib::ustring& ocrClass, bool misspelled) const {
+Gtk::TreeIter HOCRDocument::prevOrNextIndex(bool next, const Gtk::TreeIter& current, const Glib::ustring& ocrClass, bool misspelled, bool lowconf) const {
 	Gtk::TreeIter start = current;
 	if(!start) {
 		start = get_iter(get_root_path(0));
 	}
 	Gtk::TreeIter curr = next ? nextIndex(start) : prevIndex(start);
-	while(curr != start) {
+	while(curr && curr != start) {
 		const HOCRItem* item = itemAtIndex(curr);
-		if(item && item->itemClass() == ocrClass && (!misspelled || indexIsMisspelledWord(curr))) {
+		if(item && item->itemClass() == ocrClass && (!misspelled || indexIsMisspelledWord(curr)) && (!lowconf || std::atoi(item->getTitleAttribute("x_wconf").c_str()) < 90)) {
 			break;
 		}
 		curr = next ? nextIndex(curr) : prevIndex(curr);

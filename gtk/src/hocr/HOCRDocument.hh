@@ -79,7 +79,7 @@ public:
 
 	Gtk::TreeIter nextIndex(const Gtk::TreeIter& current) const;
 	Gtk::TreeIter prevIndex(const Gtk::TreeIter& current) const;
-	Gtk::TreeIter prevOrNextIndex(bool next, const Gtk::TreeIter& current, const Glib::ustring& ocrClass, bool misspelled = false) const;
+	Gtk::TreeIter prevOrNextIndex(bool next, const Gtk::TreeIter& current, const Glib::ustring& ocrClass, bool misspelled = false, bool lowconf = false) const;
 	bool indexIsMisspelledWord(const Gtk::TreeIter& index) const;
 	bool getItemSpellingSuggestions(const Gtk::TreeIter& index, Glib::ustring& trimmedWord, std::vector<Glib::ustring>& suggestions, int limit) const;
 

@@ -365,6 +365,9 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	row = *(navigationComboModel->append());
 	row[m_navigationComboCols.label] = _("Misspelled word");
 	row[m_navigationComboCols.itemClass] = "ocrx_word_bad";
+	row = *(navigationComboModel->append());
+	row[m_navigationComboCols.label] = _("Low confidence word");
+	row[m_navigationComboCols.itemClass] = "ocrx_word_lowconf";
 	ui.comboNavigation->pack_start(m_navigationComboCols.label);
 	ui.comboNavigation->set_active(0);
 
@@ -606,10 +609,15 @@ void OutputEditorHOCR::expandCollapseItemClass(bool expand) {
 void OutputEditorHOCR::navigateNextPrev(bool next) {
 	Glib::ustring target = (*ui.comboNavigation->get_active())[m_navigationComboCols.itemClass];
 	bool misspelled = false;
+	bool lowconf = false;
 	if(target == "ocrx_word_bad") {
 		target = "ocrx_word";
 		misspelled = true;
+	} else if(target == "ocrx_word_lowconf") {
+		target = "ocrx_word";
+		lowconf = true;
 	}
+
 	Gtk::TreeIter start = m_treeView->currentIndex();
 	m_treeView->setCurrentIndex(m_document->prevOrNextIndex(next, start, target, misspelled, lowconf));
 }

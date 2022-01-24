@@ -405,7 +405,7 @@ QModelIndex HOCRDocument::prevIndex(const QModelIndex& current) const {
 	return idx;
 }
 
-QModelIndex HOCRDocument::prevOrNextIndex(bool next, const QModelIndex& current, const QString& ocrClass, bool misspelled) const {
+QModelIndex HOCRDocument::prevOrNextIndex(bool next, const QModelIndex& current, const QString& ocrClass, bool misspelled, bool lowconf) const {
 	QModelIndex start = current;
 	if(!start.isValid()) {
 		start = index(0, 0);
@@ -413,7 +413,7 @@ QModelIndex HOCRDocument::prevOrNextIndex(bool next, const QModelIndex& current,
 	QModelIndex curr = next ? nextIndex(start) : prevIndex(start);
 	while(curr != start) {
 		const HOCRItem* item = itemAtIndex(curr);
-		if(item && item->itemClass() == ocrClass && (!misspelled || indexIsMisspelledWord(curr))) {
+		if(item && item->itemClass() == ocrClass && (!misspelled || indexIsMisspelledWord(curr)) && (!lowconf || item->getTitleAttributes()["x_wconf"].toInt() < 90)) {
 			break;
 		}
 		curr = next ? nextIndex(curr) : prevIndex(curr);

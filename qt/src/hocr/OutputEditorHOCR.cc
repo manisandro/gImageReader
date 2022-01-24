@@ -315,6 +315,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.comboBoxNavigate->addItem(_("Line"), "ocr_line");
 	ui.comboBoxNavigate->addItem(_("Word"), "ocrx_word");
 	ui.comboBoxNavigate->addItem(_("Misspelled word"), "ocrx_word_bad");
+	ui.comboBoxNavigate->addItem(_("Low confidence word"), "ocrx_word_lowconf");
 
 	QShortcut* shortcut = new QShortcut(QKeySequence(Qt::Key_Delete), m_widget);
 	QObject::connect(shortcut, &QShortcut::activated, this, &OutputEditorHOCR::removeItem);
@@ -485,12 +486,16 @@ void OutputEditorHOCR::expandCollapseItemClass(bool expand) {
 void OutputEditorHOCR::navigateNextPrev(bool next) {
 	QString target = ui.comboBoxNavigate->itemData(ui.comboBoxNavigate->currentIndex()).toString();
 	bool misspelled = false;
+	bool lowconf = false;
 	if(target == "ocrx_word_bad") {
 		target = "ocrx_word";
 		misspelled = true;
+	} else if(target == "ocrx_word_lowconf") {
+		target = "ocrx_word";
+		lowconf = true;
 	}
 	QModelIndex start = ui.treeViewHOCR->currentIndex();
-	ui.treeViewHOCR->setCurrentIndex(m_document->prevOrNextIndex(next, start, target, misspelled));
+	ui.treeViewHOCR->setCurrentIndex(m_document->prevOrNextIndex(next, start, target, misspelled, lowconf));
 }
 
 void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool expand) const {
