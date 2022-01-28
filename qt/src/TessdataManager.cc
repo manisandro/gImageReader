@@ -94,7 +94,6 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 #endif
 	QByteArray data = Utils::download(url, messages);
 	if(data.isEmpty()) {
-		messages = _("Failed to fetch list of available languages: %1").arg(messages);
 		return false;
 	}
 
@@ -167,7 +166,6 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 	}
 
 	if(m_languageFiles.isEmpty()) {
-		messages = _("Failed to fetch list of available languages: %1").arg(messages);
 		return false;
 	}
 

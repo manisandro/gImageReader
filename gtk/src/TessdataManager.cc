@@ -93,7 +93,6 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 #endif
 	Glib::RefPtr<Glib::ByteArray> data = Utils::download(url, messages);
 	if(!data) {
-		messages = Glib::ustring::compose(_("Failed to fetch list of available languages: %1"), messages);
 		return false;
 	}
 
@@ -194,7 +193,6 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 	}
 
 	if(m_languageFiles.empty()) {
-		messages = Glib::ustring::compose(_("Failed to fetch list of available languages: %1"), messages);
 		return false;
 	}
 
