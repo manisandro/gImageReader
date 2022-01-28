@@ -463,7 +463,8 @@ Glib::RefPtr<Glib::ByteArray> Utils::download(const std::string& url, Glib::ustr
 			try {
 				stream = file->read_finish(asyncResult);
 				status = stream ? Ready : Failed;
-			} catch(Glib::Error&) {
+			} catch(Glib::Error& e) {
+				messages = e.what();
 				status = Failed;
 			}
 		}, cancellable);
