@@ -161,8 +161,8 @@ fi
 
 # Add english language data, poppler-data and spelling dictionaries
 install -Dpm 0644 /usr/share/tesseract/tessdata/eng.traineddata $installroot/share/tessdata/eng.traineddata
-install -Dpm 0644 /usr/share/myspell/en_US.dic $installroot/share/myspell/en_US.dic
-install -Dpm 0644 /usr/share/myspell/en_US.aff $installroot/share/myspell/en_US.aff
+install -Dpm 0644 /usr/share/hunspell/en_US.dic $installroot/share/myspell/en_US.dic
+install -Dpm 0644 /usr/share/hunspell/en_US.aff $installroot/share/myspell/en_US.aff
 cp -r "/usr/share/poppler/" "$installroot/share/"
 
 # Copy isocodes
@@ -212,7 +212,7 @@ fi
 # Build portable zip
 pushd $builddir
 ln -s root ${progName}_${progVersion}_${iface}
-zip -r "${progName}_${progVersion}_${iface}_${arch}.zip" ${progName}_${progVersion}_${iface}
+zip -r "${progName}_${progVersion}_${iface}_${arch}_portable.zip" ${progName}_${progVersion}_${iface}
 rm ${progName}_${progVersion}_${iface}
 popd
 
