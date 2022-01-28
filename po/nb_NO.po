@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-14 22:24+0100\n"
-"PO-Revision-Date: 2022-01-19 18:53+0000\n"
+"PO-Revision-Date: 2022-01-29 10:55+0000\n"
 "Last-Translator: ovl-1 <ovl-002@mailinator.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "gimagereader/translations/nb_NO/>\n"
@@ -91,7 +91,7 @@ msgstr "OK"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
-msgstr "Sideretning for utdatatekst:"
+msgstr "Sideretning for utdatapanel:"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
@@ -781,7 +781,7 @@ msgstr "Behold linjeskift hvis..."
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:73
 #: ../qt/src/Ui_OutputEditorText.hh:64
 msgid "Preceded by end mark (.?!)"
-msgstr "Setningsendetegn står foran (.?!)"
+msgstr "Setningsendetegn (.?!) står foran"
 
 #: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:75
 #: ../qt/src/Ui_OutputEditorText.hh:66
@@ -796,7 +796,7 @@ msgstr "Andre valg"
 #: ../gtk/data/OutputEditorText.ui.h:8 ../qt/src/Ui_OutputEditorText.hh:79
 #: ../qt/src/Ui_OutputEditorText.hh:70
 msgid "Join hyphenated words"
-msgstr "Fjern linjeendebindestrek"
+msgstr "Slå sammen ord med bindestrek"
 
 #: ../gtk/data/OutputEditorText.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:81
 #: ../qt/src/Ui_OutputEditorText.hh:72
@@ -979,7 +979,7 @@ msgstr "Høyde"
 #: ../qt/data/PdfExportWidget.ui.h:28 ../qt/data/PdfExportWidget.ui.h:29
 #: ../gtk/data/PdfExportDialog.ui.h:26
 msgid "Treat image sources as having true DPI:"
-msgstr "Håndter bildekilder som om de har fastsatt DPI:"
+msgstr "Behandle bildekilder som å ha ekte DPI:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
 #: ../qt/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportWidget.ui.h:3
@@ -1349,7 +1349,7 @@ msgstr "Avsnitt"
 #: ../gtk/src/hocr/HOCRDocument.cc:730 ../gtk/src/hocr/HOCRDocument.cc:622
 #: ../qt/src/hocr/HOCRDocument.cc:692
 msgid "Textline"
-msgstr "Tekstrad"
+msgstr "Tekstlinje"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:802 ../qt/src/hocr/HOCRDocument.cc:700
 #: ../gtk/src/hocr/HOCRDocument.cc:734 ../gtk/src/hocr/HOCRDocument.cc:626
@@ -1618,7 +1618,7 @@ msgstr "Legg til avsnitt"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:857
 #: ../qt/src/hocr/OutputEditorHOCR.cc:812
 msgid "Add line"
-msgstr "Legg til rad"
+msgstr "Legg til linje"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:947
 #: ../qt/src/hocr/OutputEditorHOCR.cc:834
@@ -2174,21 +2174,18 @@ msgid "Close document"
 msgstr "Lukk dokument"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "Limte inn %1"
+msgstr "Uten tittel %1"
 
 #: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:156
 #: ../qt/src/OutputEditorText.cc:155
-#, fuzzy
 msgid "Document not saved"
-msgstr "Utdata ikke lagret"
+msgstr "Dokument ikke lagret"
 
 #: ../gtk/src/OutputEditorText.cc:186 ../qt/src/OutputEditorText.cc:156
 #: ../qt/src/OutputEditorText.cc:155
-#, fuzzy
 msgid "Save document before proceeding?"
-msgstr "Lagre utdata før du fortsetter?"
+msgstr "Lagre dokument før du fortsetter?"
 
 #: ../gtk/src/OutputEditorText.cc:296 ../qt/src/OutputEditorText.cc:238
 #: ../qt/src/OutputEditorText.cc:237 ../gtk/src/OutputEditorText.cc:307
@@ -2256,9 +2253,8 @@ msgid "Save Output..."
 msgstr "Lagre utdata…"
 
 #: ../gtk/src/OutputEditorText.cc:582
-#, fuzzy
 msgid "Unsaved documents"
-msgstr "Lukk dokument"
+msgstr "Ulagrede dokumenter"
 
 #: ../gtk/src/OutputEditorText.cc:583 ../qt/src/OutputEditorText.cc:457
 msgid ""
@@ -2304,7 +2300,7 @@ msgstr "Anta én tekstkolonne"
 #: ../gtk/src/RecognitionMenu.cc:208 ../qt/src/RecognitionMenu.cc:185
 #: ../gtk/src/Recognizer.cc:288
 msgid "Assume single block of vertically aligned text"
-msgstr "Anta én blokk med vannrett-anordnet tekst"
+msgstr "Anta en enkelt blokk med vertikalt justert tekst"
 
 #: ../gtk/src/RecognitionMenu.cc:209 ../qt/src/RecognitionMenu.cc:186
 #: ../gtk/src/Recognizer.cc:289
@@ -2388,7 +2384,6 @@ msgid "Source already recognized"
 msgstr "Kilden er allerede gjenkjent"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
-#, fuzzy
 msgid "One or more selected sources were already recognized. Proceed anyway?"
 msgstr "En eller flere valgte kilder er allerede gjenkjent. Fortsette uansett?"
 
@@ -2521,7 +2516,7 @@ msgid ""
 "%1\n"
 "Open it regardless?"
 msgstr ""
-"Disse PDF-filene inneholder allerede tekst:\n"
+"PDF-filen inneholder allerede tekst:\n"
 "%1\n"
 "Åpne uansett?"
 
@@ -2745,7 +2740,7 @@ msgstr "Ja"
 
 #: ../gtk/src/Utils.cc:130 ../gtk/src/Utils.cc:132 ../gtk/src/Utils.cc:67
 msgid "Yes to all"
-msgstr "Ja til alt"
+msgstr "Ja til alle"
 
 #: ../gtk/src/Utils.cc:136 ../gtk/src/Utils.cc:135 ../gtk/src/Utils.cc:70
 msgid "No"
@@ -2753,16 +2748,15 @@ msgstr "Nei"
 
 #: ../gtk/src/Utils.cc:139 ../gtk/src/Utils.cc:138 ../gtk/src/Utils.cc:73
 msgid "No to all"
-msgstr "Nei til alt"
+msgstr "Nei til alle"
 
 #: ../gtk/src/Utils.cc:142 ../gtk/src/Utils.cc:147 ../gtk/src/Utils.cc:82
 msgid "Discard"
 msgstr "Forkast"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "Forkast"
+msgstr "Forkast alle"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
 #: ../qt/src/SourceManager.cc:452 ../gtk/src/Utils.cc:150
