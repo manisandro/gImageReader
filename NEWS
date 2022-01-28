@@ -1,3 +1,18 @@
+gImageReader 3.4.0 (Jan 28 2022):
+* Add support for tesseract 5.0
+* Add Qt6 support
+* Add thumbail view for source documents
+* Add batch mode for recognizing multiple documents
+* Display sources in a tree
+* Allow opening output files directly from the source tree if they exist next to the source with the same basename
+* Allow moving image selection boxes
+* Text: Add multi-tab support
+* HOCR: Allow specifying whether new output is inserted/appended
+* HOCR: Allow opening multiple files at once, also from command line
+* HOCR: Add proof-reading widget (Qt interface only)
+* HOCR: New batch export dialog
+* HOCR: Add quick navigation for low confidence words
+
 gImageReader 3.3.1 (Jul 28 2019):
 * HOCR: propagate attributes to manually added elements (@foghawk)
 * HOCR: improve spelling of hyphenated words (@foghawk)
