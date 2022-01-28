@@ -1126,7 +1126,7 @@ bool OutputEditorHOCR::exportToText() {
 
 bool OutputEditorHOCR::clear(bool hide) {
 	m_previewTimer.stop();
-	m_preview->setVisible(false);
+	ui.actionPreview->setChecked(false);
 	if(!m_widget->isVisible()) {
 		return true;
 	}

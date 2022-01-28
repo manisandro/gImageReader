@@ -1239,7 +1239,7 @@ bool OutputEditorHOCR::exportToText() {
 
 bool OutputEditorHOCR::clear(bool hide) {
 	m_connectionPreviewTimer.disconnect();
-	m_preview->setVisible(false);
+	ui.buttonPreview->set_active(false);
 	if(!ui.boxEditorHOCR->get_visible()) {
 		return true;
 	}
