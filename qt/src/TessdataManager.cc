@@ -171,29 +171,31 @@ bool TessdataManager::fetchLanguageList(QString& messages) {
 
 	QStringList availableLanguages = MAIN->getConfig()->getAvailableLanguages();
 
-	QStringList languages = QStringList(m_languageFiles.keys());
-	std::sort(languages.begin(), languages.end(), [](const QString & s1, const QString & s2) {
-		bool s1Script = s1.startsWith("script") || s1.left(1) == s1.left(1).toUpper();
-		bool s2Script = s2.startsWith("script") || s2.left(1) == s2.left(1).toUpper();
-		if(s1Script != s2Script) {
-			return !s1Script;
+	typedef QPair<QString, QString> string_pair_t;
+	QList<string_pair_t> languages;
+	for(const QString& prefix : m_languageFiles.keys()) {
+		Config::Lang lang;
+		lang.prefix = prefix;
+		if(MAIN->getConfig()->searchLangSpec(lang)) {
+			languages.push_back(qMakePair(lang.prefix, lang.name));
 		} else {
-			return s1 < s2;
+			languages.push_back(qMakePair(lang.prefix, lang.prefix));
+		}
+	}
+	std::sort(languages.begin(), languages.end(), [](const string_pair_t& p1, const string_pair_t& p2) {
+		bool p1Script = p1.first.startsWith("script") || p1.first.left(1) == p1.first.left(1).toUpper();
+		bool p2Script = p2.first.startsWith("script") || p2.first.left(1) == p2.first.left(1).toUpper();
+		if(p1Script != p2Script) {
+			return !p1Script;
+		} else {
+			return p1.second.toLower() < p2.second.toLower();
 		}
 	});
 
-	for(const QString& prefix : languages) {
-		Config::Lang lang;
-		lang.prefix = prefix;
-		QString label;
-		if(MAIN->getConfig()->searchLangSpec(lang)) {
-			label = lang.name;
-		} else {
-			label = lang.prefix;
-		}
-		QListWidgetItem* item = new QListWidgetItem(label);
-		item->setData(Qt::UserRole, lang.prefix);
-		item->setCheckState(availableLanguages.contains(lang.prefix) ? Qt::Checked : Qt::Unchecked);
+	for(const string_pair_t& entry : languages) {
+		QListWidgetItem* item = new QListWidgetItem(entry.second);
+		item->setData(Qt::UserRole, entry.first);
+		item->setCheckState(availableLanguages.contains(entry.first) ? Qt::Checked : Qt::Unchecked);
 		m_languageList->addItem(item);
 	}
 	return true;

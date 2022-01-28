@@ -197,34 +197,33 @@ bool TessdataManager::fetchLanguageList(Glib::ustring& messages) {
 	}
 
 	std::vector<Glib::ustring> availableLanguages = MAIN->getConfig()->getAvailableLanguages();
-	std::vector<Glib::ustring> languages;
+	typedef std::pair<Glib::ustring, Glib::ustring> string_pair_t;
+	std::vector<string_pair_t> languages;
 	for(auto it : m_languageFiles) {
-		languages.push_back(it.first);
-	}
-	std::sort(languages.begin(), languages.end(), [](const Glib::ustring & s1, const Glib::ustring & s2) {
-		bool s1Script = s1.substr(0, 6) == "script" || s1.substr(0, 1) == s1.substr(0, 1).uppercase();
-		bool s2Script = s2.substr(0, 6) == "script" || s2.substr(0, 1) == s2.substr(0, 1).uppercase();
-		if(s1Script != s2Script) {
-			return !s1Script;
+		Config::Lang lang;
+		lang.prefix = it.first;
+		if(MAIN->getConfig()->searchLangSpec(lang)) {
+			languages.push_back(std::make_pair(lang.prefix, lang.name));
 		} else {
-			return s1 < s2;
+			languages.push_back(std::make_pair(lang.prefix, lang.prefix));
+		}
+	}
+	std::sort(languages.begin(), languages.end(), [](const string_pair_t& p1, const string_pair_t& p2) {
+		bool p1Script = p1.first.substr(0, 6) == "script" || p1.first.substr(0, 1) == p1.first.substr(0, 1).uppercase();
+		bool p2Script = p2.first.substr(0, 6) == "script" || p2.first.substr(0, 1) == p2.first.substr(0, 1).uppercase();
+		if(p1Script != p2Script) {
+			return !p1Script;
+		} else {
+			return p1.second.lowercase() < p2.second.lowercase();
 		}
 	});
 
-	for(const Glib::ustring& prefix : languages) {
-		Config::Lang lang;
-		lang.prefix = prefix;
-		Glib::ustring label;
-		if(MAIN->getConfig()->searchLangSpec(lang)) {
-			label = lang.name;
-		} else {
-			label = lang.prefix;
-		}
+	for(const string_pair_t& entry : languages) {
 		Gtk::TreeIter it = m_languageListStore->append();
-		bool installed = std::find(availableLanguages.begin(), availableLanguages.end(), lang.prefix) != availableLanguages.end();
+		bool installed = std::find(availableLanguages.begin(), availableLanguages.end(), entry.first) != availableLanguages.end();
 		(*it)[m_viewCols.selected] = installed;
-		(*it)[m_viewCols.label] = label;
-		(*it)[m_viewCols.prefix] = lang.prefix;
+		(*it)[m_viewCols.label] = entry.second;
+		(*it)[m_viewCols.prefix] = entry.first;
 	}
 	return true;
 }
