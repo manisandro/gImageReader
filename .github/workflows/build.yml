@@ -64,8 +64,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_x86_64.zip
-          asset_name: gImageReader_latest_qt5_x86_64.zip
+          asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_x86_64_portable.zip
+          asset_name: gImageReader_latest_qt5_x86_64_portable.zip
           asset_content_type: application/zip
 
       - name: Upload qt5 installer release asset
@@ -84,8 +84,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/mingw64-gtk/gImageReader_${{ steps.version_number.outputs.version }}_gtk_x86_64.zip
-          asset_name: gImageReader_latest_gtk_x86_64.zip
+          asset_path: ./build/mingw64-gtk/gImageReader_${{ steps.version_number.outputs.version }}_gtk_x86_64_portable.zip
+          asset_name: gImageReader_latest_gtk_x86_64_portable.zip
           asset_content_type: application/zip
 
       - name: Upload gtk installer release asset
