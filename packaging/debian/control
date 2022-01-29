@@ -22,7 +22,6 @@ Build-Depends: debhelper (>= 9),
  libxml++2.6-dev,
  libpodofo-dev,
  libquazip5-dev,
- libquazip5-headers,
  libzip-dev,
  python3-gi,
  uuid-dev
