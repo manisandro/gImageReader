@@ -254,7 +254,6 @@ void OutputEditorText::replaceAll(const QString& searchstr, const QString& repla
 	int count = textEdit()->replaceAll(searchstr, replacestr, matchCase);
 	QPoint popupPos = ui.searchFrame->buttonReplaceAll()->parentWidget()->mapToGlobal(ui.searchFrame->buttonReplaceAll()->pos());
 	QToolTip::showText(popupPos, _("%1 occurrences replaced").arg(count), nullptr, {}, 4000);
-	QTextStream(stdout) << popupPos.x() << " " << popupPos.y() << Qt::endl;
 	if(count == 0) {
 		ui.searchFrame->setErrorState();
 	}
