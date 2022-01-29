@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2022-01-18 02:54+0000\n"
+"PO-Revision-Date: 2022-01-30 16:54+0000\n"
 "Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gimagereader/translations/zh_Hans/>\n"
@@ -1251,9 +1251,8 @@ msgstr "错拼字词"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:369
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
-#, fuzzy
 msgid "Low confidence word"
-msgstr "显示可信度"
+msgstr "低可信度单词"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:420
