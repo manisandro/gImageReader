@@ -247,7 +247,7 @@ void OutputEditorText::setInsertMode(InsertMode mode, const std::string& iconNam
 
 void OutputEditorText::setDrawWhitspace(bool enable) {
 #if GTK_SOURCE_MAJOR_VERSION >= 4
-	GtkSourceSpaceDrawer* space_drawer = gtk_source_view_get_space_drawer(getView()->gobj());
+	GtkSourceSpaceDrawer* space_drawer = gtk_source_view_get_space_drawer(textView()->gobj());
 	gtk_source_space_drawer_set_types_for_locations (space_drawer, GTK_SOURCE_SPACE_LOCATION_ALL, GTK_SOURCE_SPACE_TYPE_ALL);
 	gtk_source_space_drawer_set_enable_matrix (space_drawer, enable ? TRUE : FALSE);
 #else
