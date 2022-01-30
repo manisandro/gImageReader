@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2022-01-18 02:54+0000\n"
+"PO-Revision-Date: 2022-01-30 16:54+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/tr/>\n"
@@ -85,7 +85,7 @@ msgstr "Dikey"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr "Eksik imla denetimi sözlüklerini yüklemek için sorgu"
+msgstr "Eksik yazım denetimi sözlüklerini kurmak için sorgu"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
@@ -101,7 +101,7 @@ msgstr "Ek dil tanımlamaları:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr "tesseract dil veri dosyasının ön eki"
+msgstr "Tesseract dil veri dosyasının ön eki"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
@@ -137,7 +137,7 @@ msgstr "Çıktı bölmesi yazı tipi:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
-msgstr "Varsayılan"
+msgstr "Öntanımlı"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
@@ -197,9 +197,9 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occurred.\n"
 msgstr ""
-"<b>Tesseract iptal edildi</b>\n"
+"<b>Tesseract sonlandırıldı</b>\n"
 "\n"
-"Tesseract (OCR motoru), metni tanıma sırasında durduruldu. Bu, kullanılan "
+"Tesseract (OCR motoru), metni tanıma sırasında sonlandırıldı. Bu, kullanılan "
 "öğrenme verileri bozuksa, kullanımdaki tesseract sürümüyle uyumsuzsa veya "
 "tesseract'taki bir hata nedeniyle meydana gelebilir.\n"
 "\n"
@@ -263,7 +263,7 @@ msgstr "Çıktı bölmesini değiştir"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
-msgstr "Mevcut sayfayı döndür"
+msgstr "Geçerli sayfayı döndür"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
@@ -310,7 +310,7 @@ msgstr "Aygıt:"
 #: ../gtk/data/MainWindow.ui.h:13 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:55
 msgid "Refresh"
-msgstr "Tazele"
+msgstr "Yenile"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:10
 msgid "Output:"
@@ -607,13 +607,13 @@ msgstr "Önceki (Shift+F3)"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:852
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:165
 msgid "Expand all"
-msgstr "Genişlet"
+msgstr "Tümünü genişlet"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:981
 #: ../qt/src/hocr/OutputEditorHOCR.cc:853
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:166
 msgid "Collapse all"
-msgstr "Daralt"
+msgstr "Tümünü daralt"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:24
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:187
@@ -628,7 +628,7 @@ msgstr "Kaynak"
 #. Output insert mode
 #: ../gtk/data/OutputEditorText.ui.h:1 ../qt/src/Ui_OutputEditorText.hh:61
 msgid "Append to current text"
-msgstr "Mevcut metne ekle"
+msgstr "Geçerli metne ekle"
 
 #: ../gtk/data/OutputEditorText.ui.h:2 ../qt/src/Ui_OutputEditorText.hh:62
 msgid "Insert at cursor"
@@ -636,7 +636,7 @@ msgstr "İmleç konumuna ekle"
 
 #: ../gtk/data/OutputEditorText.ui.h:3 ../qt/src/Ui_OutputEditorText.hh:63
 msgid "Replace current text"
-msgstr "Mevcut metni değiştir"
+msgstr "Geçerli metni değiştir"
 
 #. Output postprocessing
 #: ../gtk/data/OutputEditorText.ui.h:4 ../qt/src/Ui_OutputEditorText.hh:71
@@ -645,7 +645,7 @@ msgstr "Satır sonlarını koru..."
 
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:73
 msgid "Preceded by end mark (.?!)"
-msgstr "Nokta öncesinde gelen (.?!)"
+msgstr "Bitiş karakteri (.?!) öncesinde ise"
 
 #: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:75
 msgid "Preceded or succeeded by quote"
@@ -777,7 +777,7 @@ msgstr "Bundan geniş aralıkları koru:"
 #: ../gtk/data/PdfExportWidget.ui.h:18 ../qt/data/PdfExportDialog.ui.h:24
 #: ../qt/data/PdfExportWidget.ui.h:23
 msgid "characters"
-msgstr "Karakterler"
+msgstr "karakter"
 
 #: ../gtk/data/PdfExportWidget.ui.h:19 ../qt/data/PdfExportDialog.ui.h:28
 #: ../qt/data/PdfExportWidget.ui.h:27
@@ -901,13 +901,13 @@ msgstr "Sonrakini bul"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:6 ../qt/data/SearchReplaceFrame.ui.h:7
 msgid "Match case"
-msgstr "Büyük Küçük Harf eşleştir"
+msgstr "Büyük/küçük harf eşleştir"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:7
 #: ../gtk/data/SubstitutionsManager.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:1
 #: ../qt/src/SubstitutionsManager.cc:36
 msgid "Substitutions"
-msgstr "Yerine Koyma"
+msgstr "Değiştirmeler"
 
 #: ../gtk/data/SelectionMenu.ui.h:1 ../qt/src/DisplayerToolSelect.cc:239
 msgid "Delete"
@@ -924,7 +924,7 @@ msgstr "Tanı"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:241
 msgid "Recognize to clipboard"
-msgstr "Taşıma panosuna tanıt"
+msgstr "Panoya tanı"
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:242
 msgid "Save as image"
@@ -1110,7 +1110,7 @@ msgstr "Öneri yok"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:74 ../qt/src/hocr/HOCRDocument.cc:75
 msgid "Add to dictionary"
-msgstr "Sözlük ekle"
+msgstr "Sözlüğe ekle"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:80 ../qt/src/hocr/HOCRDocument.cc:79
 msgid "Ignore word"
@@ -1251,9 +1251,8 @@ msgstr "Yanlış yazılmış sözcük"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:369
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
-#, fuzzy
 msgid "Low confidence word"
-msgstr "Güven değerlerini göster"
+msgstr "Düşük güven sözcüğü"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:420
@@ -1602,7 +1601,7 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Aşağıdaki sözlükler indirilemedi veya kaldırılamadı:\n"
+"Aşağıdaki sözlükler indirilemedi:\n"
 "%1\n"
 "\n"
 "Bağlantı ve dizin izinlerini gözden geçirin.\n"
@@ -1714,7 +1713,7 @@ msgstr "Kullanılacak hiç tesseract dili yok. Tanıma çalışmayacak."
 
 #: ../gtk/src/RecognitionMenu.cc:153 ../qt/src/RecognitionMenu.cc:134
 msgid "Multilingual"
-msgstr "Çokdilli"
+msgstr "Çok dilli"
 
 #: ../gtk/src/RecognitionMenu.cc:205 ../qt/src/RecognitionMenu.cc:182
 msgid "Automatic page segmentation"
@@ -1778,7 +1777,7 @@ msgstr "Kaynağı işlemeyi atla"
 
 #: ../gtk/src/Recognizer.cc:121 ../qt/src/Recognizer.cc:137
 msgid "Current selection"
-msgstr "Mevcut seçim"
+msgstr "Geçerli seçim"
 
 #: ../gtk/src/Recognizer.cc:194 ../gtk/src/Recognizer.cc:428
 #: ../qt/src/Recognizer.cc:212 ../qt/src/Recognizer.cc:442
@@ -1787,7 +1786,7 @@ msgstr "Tanıma hataları oluştu"
 
 #: ../gtk/src/Recognizer.cc:194 ../qt/src/Recognizer.cc:212
 msgid "Failed to initialize tesseract"
-msgstr "tesseract başlatılamadı"
+msgstr "Tesseract başlatılamadı"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
 msgid "Source already recognized"
@@ -1909,16 +1908,16 @@ msgstr "Resimler ve PDF dosyaları"
 
 #: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:311
 msgid "Clipboard Error"
-msgstr "Geçici Taşıma Panosu Hatası"
+msgstr "Pano Hatası"
 
 #: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:311
 msgid "Failed to read the clipboard."
-msgstr "Taşıma panosu okunamadı."
+msgstr "Pano okunamadı."
 
 #: ../gtk/src/SourceManager.cc:307 ../qt/src/SourceManager.cc:315
 #: ../qt/src/SourceManager.cc:321
 msgid "Pasted %1"
-msgstr "%1 Yapıştırıldı"
+msgstr "%1 yapıştırıldı"
 
 #: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:339
 msgid "Screenshot Error"
@@ -1993,7 +1992,7 @@ msgstr "Değiştirme Listesini Aç"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:108
 msgid "Error Reading File"
-msgstr "Dosya Okunurken Hata"
+msgstr "Dosya Okuma Hatası"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:108
 msgid "Unable to read '%1'."
@@ -2025,7 +2024,7 @@ msgstr "Liste Kaydedilsin mi?"
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:158
 msgid "Do you want to save the current list?"
-msgstr "Mevcut listeyi kaydetmek istiyor musunuz?"
+msgstr "Geçerli listeyi kaydetmek istiyor musunuz?"
 
 #: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:70
 msgid ""
@@ -2173,12 +2172,13 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Uygulama çöktü</"
-"span></p><p>Anlayışınız için teşekkür ederiz. Uygulamanın gelişimine katkıda "
-"bulunmak için lütfen bu hatayı<a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a> adresine bildirin. "
-"Lütfen çökme olmadan ne yaptığınızı ayrıntılı olarak tanımlayın. Aşağıdaki "
-"bilgiyi de ekleyin. Teşekkür ederiz.</p></body></html>"
+"<html><head/><body><p><span style=\" font-weight:600;\">Uygulama "
+"çöktü</span></p><p>Anlayışınız için teşekkür ederiz. Uygulamanın gelişimine "
+"katkıda bulunmak için lütfen bu hatayı<a href=\"mailto:manisandro@gmail."
+"com?subject=gImageReader%20Crash\">manisandro@gmail.com</a> adresine "
+"bildirin. Lütfen çökme olmadan önce ne yaptığınızı ayrıntılı olarak "
+"açıklamaya çalışın. Aşağıdaki bilgileri de ekleyin. Teşekkür "
+"ederiz.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
 msgid ""
@@ -2189,12 +2189,12 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
-"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract iptal "
-"edildi</span></p><p>Tesseract (OCR motoru), metni tanıma sırasında "
-"durduruldu. Bu, kullanılan öğrenme verileri bozuksa, kullanımdaki tesseract "
-"sürümüyle uyumsuzsa veya tesseract'taki bir hata nedeniyle meydana gelebilir."
-"</p><p>Aşağıdaki yığın izleme, çökmenin nerede meydana geldiği hakkında ek "
-"bilgi sağlayabilir.</p></body></html>"
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract "
+"sonlandırıldı</span></p><p>Tesseract (OCR motoru), metni tanıma sırasında "
+"sonlandırıldı. Bu, kullanılan öğrenme verileri bozuksa, kullanımdaki "
+"tesseract sürümüyle uyumsuzsa veya tesseract'taki bir hata nedeniyle meydana "
+"gelebilir.</p><p>Aşağıdaki yığın izleme, çökmenin nerede meydana geldiği "
+"hakkında ek bilgi sağlayabilir.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
