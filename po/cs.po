@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:15+0100\n"
-"PO-Revision-Date: 2020-05-02 18:11+0000\n"
+"PO-Revision-Date: 2022-02-01 13:55+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gimagereader/"
 "translations/cs/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -215,7 +215,7 @@ msgstr ""
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:1
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "Dávkový export HOCR"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:2
 #: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
@@ -229,9 +229,8 @@ msgstr "Zavřít"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:4
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "Vybrat složku..."
+msgstr "Vyberte zdrojovou složku:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
 #: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
@@ -242,31 +241,27 @@ msgstr "Formát:"
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs of N lowest levels:"
-msgstr ""
+msgstr "Skupina výstupů N nejnižších úrovní:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "Výstup:"
+msgstr "Vstup:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:8
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "Výstupní režim:"
+msgstr "Náhled výstupu:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:9
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "Žádné nedávné soubory"
+msgstr "Vstupní soubory"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:10
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "Další možnosti"
+msgstr "Možnosti exportu"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
@@ -434,9 +429,8 @@ msgid "Select language"
 msgstr "Vyberte jazyk"
 
 #: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:41
-#, fuzzy
 msgid "Batch Export"
-msgstr "Export"
+msgstr "Dávkový export"
 
 #: ../gtk/data/MainWindow.ui.h:41
 msgid "A graphical frontend to tesseract-ocr"
@@ -447,13 +441,12 @@ msgid "Batch Mode"
 msgstr "Dávkový režim"
 
 #: ../gtk/data/MainWindow.ui.h:43
-#, fuzzy
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
-"V dávkovém režimu je každý ze vstupních zdrojů zpracován zvlášť a výstup je "
-"uložen ve vstupním souboru vedle sebe."
+"<i>V dávkovém režimu je každý ze vstupních zdrojů zpracován zvlášť a výstup "
+"je uložen ve vstupním souboru vedle sebe.</i>"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
@@ -689,9 +682,8 @@ msgid "Draw whitespace"
 msgstr "Zvýraznit prázdné znaky"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "Otevřít soubor formátu hOCR"
+msgstr "Otevřít soubor"
 
 #: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:111
 msgid "Strip line breaks on selected text"
@@ -709,7 +701,7 @@ msgstr "Znovu"
 
 #: ../gtk/data/OutputEditorText.ui.h:21
 msgid "New tab"
-msgstr ""
+msgstr "Nový panel"
 
 #: ../gtk/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportDialog.ui.h:4
 #: ../qt/data/PdfExportWidget.ui.h:3
@@ -1108,12 +1100,12 @@ msgstr "Analyzuje se rozvržení stránky"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "Dočasné soubory"
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:48
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:106 ../gtk/src/SourceManager.cc:268
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:279
@@ -1269,9 +1261,8 @@ msgstr "Zkomolené slovo"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:369
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
-#, fuzzy
 msgid "Low confidence word"
-msgstr "Zobrazit hodnoty jistoty"
+msgstr "Slovo které pravděpodobně není správně"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:420
@@ -1645,22 +1636,18 @@ msgid "Page: %1\n"
 msgstr "Strana: %1\n"
 
 #: ../gtk/src/OutputEditorText.cc:129
-#, fuzzy
 msgid "Close document"
-msgstr "Dokument"
+msgstr "Zavřít dokument"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "Vloženo %1"
+msgstr "Bez názvu %1"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Document not saved"
-msgstr "Výstup nebyl uložen"
+msgstr "Dokument nebyl uložen"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Save document before proceeding?"
 msgstr "Před pokračováním – uložit výstup?"
 
@@ -1670,11 +1657,11 @@ msgstr "Odebírání konců řádků…"
 
 #: ../gtk/src/OutputEditorText.cc:309
 msgid "No highlight"
-msgstr ""
+msgstr "Žádné zvýraznění"
 
 #: ../gtk/src/OutputEditorText.cc:329
 msgid "Highlight mode"
-msgstr ""
+msgstr "Režim zvýrazňování"
 
 #: ../gtk/src/OutputEditorText.cc:334
 msgid "Check spelling"
@@ -1682,7 +1669,7 @@ msgstr "Zkontrolovat text na překlepy"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:256
 msgid "%1 occurrences replaced"
-msgstr ""
+msgstr "Nahrazeno %1 výskytů"
 
 #: ../gtk/src/OutputEditorText.cc:412 ../qt/src/OutputEditorText.cc:301
 msgid "File: %1"
@@ -1711,15 +1698,16 @@ msgid "Save Output..."
 msgstr "Uložit výstup…"
 
 #: ../gtk/src/OutputEditorText.cc:584
-#, fuzzy
 msgid "Unsaved documents"
-msgstr "Dokument"
+msgstr "Neuložené dokumenty"
 
 #: ../gtk/src/OutputEditorText.cc:585 ../qt/src/OutputEditorText.cc:462
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
 msgstr ""
+"V následujících dokumentech jsou neuložené změny. Které z dokumentů chcete "
+"před pokračováním uložit?"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
@@ -1811,11 +1799,12 @@ msgstr "Nepodařilo se inicializovat engine tesseract"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
 msgid "Source already recognized"
-msgstr ""
+msgstr "Zdroj už rozpoznán"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
 msgid "One or more selected sources were already recognized. Proceed anyway?"
 msgstr ""
+"Jeden nebo více z označených zdrojů už byly rozpoznány. Pokračovat i tak?"
 
 #: ../gtk/src/Recognizer.cc:237 ../gtk/src/Recognizer.cc:351
 #: ../qt/src/Recognizer.cc:252 ../qt/src/Recognizer.cc:364
@@ -2130,9 +2119,8 @@ msgid "Discard"
 msgstr "Zahodit"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "Zahodit"
+msgstr "Zahodit vše"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
 msgid "Text"
@@ -2147,15 +2135,14 @@ msgid "About gImageReader"
 msgstr "O aplikaci gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Grafická nadstavba pro tesseract-ocr</"
-"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Webové stránky</"
-"a></p><p>&nbsp;</p></body></html>"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\">Webové "
+"stránky</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2203,7 +2190,6 @@ msgstr ""
 "přiložte níže uvedené informace. Děkujeme.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
 "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
@@ -2212,15 +2198,13 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
-"<b>Tesseract přerušen</b>\n"
-"\n"
-"Tesseract (součást vykonávající optické rozpoznávání znaků) přerušena při "
-"rozpoznávání z textu. K tomu může dojít pokud jsou použitá nacvičená data "
-"poškozená nebo nekompatibilní s verzí s použitou verzí tesseract, nebo vinou "
-"chyby v něm.\n"
-"\n"
-"Níže uvedený výpis zásobníku může poskytnout další informace o tom, kde "
-"došlo k pádu.\n"
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract byl "
+"přerušen</span></p><p>Tesseract (součást, vykonávající optické rozpoznávání "
+"znaků) byl přerušen v průběhu rozpoznávání textu. K tomu může dojít pokud "
+"jsou pokud jsou použitá nacvičená data poškozená nebo nekompatibilní s "
+"použitou verzí tesseract, nebo vinou chyby v něm.</p><p>Níže uvedený výpis "
+"zásobníku může poskytnout další informace o tom, kde došlo k "
+"pádu.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2326,9 +2310,8 @@ msgstr "Najít a nahradit"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
-msgstr "Zobrazit náhled"
+msgstr "Zobrazit ovládací prvek pro korektury"
 
 #: ../qt/src/MainWindow.cc:624
 msgid ""
@@ -2410,7 +2393,7 @@ msgstr "Vyčistit výstup"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "Přidat panel"
 
 #, fuzzy
 #~ msgid "Form"
