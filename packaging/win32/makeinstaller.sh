@@ -120,22 +120,6 @@ if [ "$iface" == "gtk" ]; then
     install -Dpm 0644 /usr/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml $installroot/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
     glib-compile-schemas $installroot/share/glib-2.0/schemas
 
-elif [ "$iface" == "qt4" ]; then
-
-    linkDep $(ls $MINGWROOT/bin/libssl-*.dll | sed "s|^$MINGWROOT/||")
-    linkDep $(ls $MINGWROOT/bin/libcrypto-*.dll | sed "s|^$MINGWROOT/||")
-    linkDep lib/qt4/plugins/imageformats/qgif4.dll  bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qico4.dll  bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qmng4.dll  bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qtga4.dll  bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qsvg4.dll  bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qtiff4.dll bin/imageformats
-    linkDep lib/qt4/plugins/imageformats/qjpeg4.dll bin/imageformats
-    
-    # Install locale files
-    mkdir -p $installroot/share/qt4/translations/
-    cp -a $MINGWROOT/share/qt4/translations/{qt_*.qm,QtSpell_*.qm}  $installroot/share/qt4/translations
-
 elif [ "$iface" == "qt5" ]; then
 
     linkDep $(ls $MINGWROOT/bin/libssl-*.dll | sed "s|^$MINGWROOT/||")
