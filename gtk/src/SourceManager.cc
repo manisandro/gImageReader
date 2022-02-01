@@ -221,17 +221,19 @@ bool SourceManager::checkPdfSource(Source* source, PdfWithTextAction& textAction
 				break;
 			}
 		}
-		if(haveText && textAction == PdfWithTextAction::Skip) {
-			return false;
-		}
-		int response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("PDF with text"), Glib::ustring::compose(_("The PDF file already contains text:\n%1\nOpen it regardless?"), filename), "", Utils::Button::Yes | Utils::Button::YesAll | Utils::Button::No | Utils::Button::NoAll);
-		if(response == Utils::Button::No) {
-			return false;
-		} else if(response == Utils::Button::NoAll) {
-			textAction = PdfWithTextAction::Skip;
-			return false;
-		} else if(response == Utils::Button::YesAll) {
-			textAction = PdfWithTextAction::Add;
+		if(haveText) {
+			if(textAction == PdfWithTextAction::Skip) {
+				return false;
+			}
+			int response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("PDF with text"), Glib::ustring::compose(_("The PDF file already contains text:\n%1\nOpen it regardless?"), filename), "", Utils::Button::Yes | Utils::Button::YesAll | Utils::Button::No | Utils::Button::NoAll);
+			if(response == Utils::Button::No) {
+				return false;
+			} else if(response == Utils::Button::NoAll) {
+				textAction = PdfWithTextAction::Skip;
+				return false;
+			} else if(response == Utils::Button::YesAll) {
+				textAction = PdfWithTextAction::Add;
+			}
 		}
 	}
 

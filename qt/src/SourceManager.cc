@@ -193,17 +193,19 @@ bool SourceManager::checkPdfSource(Source* source, PdfWithTextAction& textAction
 				break;
 			}
 		}
-		if(haveText && textAction == PdfWithTextAction::Skip) {
-			return false;
-		}
-		int response = QMessageBox::question(MAIN->getInstance(), _("PDF with text"), _("The PDF file already contains text:\n%1\nOpen it regardless?").arg(source->path), QMessageBox::Yes | QMessageBox::YesAll | QMessageBox::No | QMessageBox::NoAll);
-		if(response == QMessageBox::No) {
-			return false;
-		} else if(response == QMessageBox::NoAll) {
-			textAction = PdfWithTextAction::Skip;
-			return false;
-		} else if(response == QMessageBox::YesAll) {
-			textAction = PdfWithTextAction::Add;
+		if(haveText) {
+			if (textAction == PdfWithTextAction::Skip) {
+				return false;
+			}
+			int response = QMessageBox::question(MAIN->getInstance(), _("PDF with text"), _("The PDF file already contains text:\n%1\nOpen it regardless?").arg(source->path), QMessageBox::Yes | QMessageBox::YesAll | QMessageBox::No | QMessageBox::NoAll);
+			if(response == QMessageBox::No) {
+				return false;
+			} else if(response == QMessageBox::NoAll) {
+				textAction = PdfWithTextAction::Skip;
+				return false;
+			} else if(response == QMessageBox::YesAll) {
+				textAction = PdfWithTextAction::Add;
+			}
 		}
 	}
 
