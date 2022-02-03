@@ -145,8 +145,8 @@ fi
 
 # Add english language data, poppler-data and spelling dictionaries
 install -Dpm 0644 /usr/share/tesseract/tessdata/eng.traineddata $installroot/share/tessdata/eng.traineddata
-install -Dpm 0644 /usr/share/hunspell/en_US.dic $installroot/share/myspell/en_US.dic
-install -Dpm 0644 /usr/share/hunspell/en_US.aff $installroot/share/myspell/en_US.aff
+install -Dpm 0644 /usr/share/hunspell/en_US.dic $installroot/share/hunspell/en_US.dic
+install -Dpm 0644 /usr/share/hunspell/en_US.aff $installroot/share/hunspell/en_US.aff
 cp -r "/usr/share/poppler/" "$installroot/share/"
 
 # Copy isocodes
@@ -169,12 +169,14 @@ rm -rf $installroot/share/appdata
     find -type f -or -type l | sed 's|/|\\|g' | sed -E 's|^\.(.*)$|Delete "\$INSTDIR\1"|g' > $builddir/unfiles.nsi
 
     # Ensure custom tessdata and spelling files are deleted
-    echo 'Delete "$INSTDIR\share\myspell\*"' >> $builddir/unfiles.nsi
+    echo 'Delete "$INSTDIR\share\hunspell\*"' >> $builddir/unfiles.nsi
     echo 'Delete "$INSTDIR\share\tessdata\*"' >> $builddir/unfiles.nsi
 
     # Ensure legacy spelling dictionaries location is cleaned up
     echo 'Delete "$INSTDIR\share\myspell\dicts\*"' >> $builddir/unfiles.nsi
     echo 'RMDir "$INSTDIR\share\myspell\dicts"' >> $builddir/unfiles.nsi
+    echo 'Delete "$INSTDIR\share\myspell\*"' >> $builddir/unfiles.nsi
+    echo 'RMDir "$INSTDIR\share\myspell"' >> $builddir/unfiles.nsi
 
     # Ensure potential log files are deleted
     echo 'Delete "$INSTDIR\gimagereader.log"' >> $builddir/unfiles.nsi
