@@ -185,7 +185,7 @@ OutputTextEdit* OutputEditorText::textEdit(int page) const {
 void OutputEditorText::setFont() {
 	QFont font;
 	if(!ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
-		QFont font = ConfigSettings::get<FontSetting>("customoutputfont")->getValue();
+		font = ConfigSettings::get<FontSetting>("customoutputfont")->getValue();
 	}
 	for(int i = 0, n = ui.tabWidget->count(); i < n; ++i) {
 		textEdit(i)->setFont(font);
