@@ -328,6 +328,11 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 		clear();
 		return;
 	}
+	int page = -1;
+	if (item->page()->sourceFile() != MAIN->getDisplayer()->getCurrentImage(page) || page != item->page()->pageNr()) {
+		clear();
+		return;
+	}
 	const HOCRItem* lineItem = nullptr;
 	const HOCRItem* wordItem = nullptr;
 	if(item->itemClass() == "ocrx_word") {
