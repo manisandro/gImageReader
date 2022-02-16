@@ -246,6 +246,9 @@ void HOCRBatchExportDialog::apply() {
 }
 
 bool HOCRBatchExportDialog::updateExportPreview() {
+	if (m_outputMap.empty()) {
+		return false;
+	}
 	OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*>(MAIN->getOutputEditor());
 	editor->open(OutputEditorHOCR::InsertMode::Replace, m_outputMap.begin()->second);
 	HOCRDocument* document = editor->getDocument();
