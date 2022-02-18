@@ -17,6 +17,9 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <vector>  // for std::vector
+#include <utility>  // for std::pair
+
 #include <QKeyEvent>
 #include <QLineEdit>
 #include <QMessageBox>
@@ -458,29 +461,45 @@ void HOCRProofReadWidget::repositionWidget() {
 }
 
 void HOCRProofReadWidget::showShortcutsDialog() {
-	QString text = QString(_(
-	                           "<table>"
-	                           "<tr><td>Tab</td><td>Next field</td></tr>"
-	                           "<tr><td>Shift+Tab</td><td>Previous field</td></tr>"
-	                           "<tr><td>Down</td><td>Next line</td></tr>"
-	                           "<tr><td>Up</td><td>Previous line</td></tr>"
-	                           "<tr><td>Ctrl+Space</td><td>Spelling suggestions</td></tr>"
-	                           "<tr><td>Ctrl+Enter</td><td>Add word to dictionary</td></tr>"
-	                           "<tr><td>Ctrl+B</td><td>Toggle bold</td></tr>"
-	                           "<tr><td>Ctrl+I</td><td>Toggle italic</td></tr>"
-	                           "<tr><td>Ctrl+D</td><td>Divide word at cursor position</td></tr>"
-	                           "<tr><td>Ctrl+M</td><td>Merge with previous word</td></tr>"
-	                           "<tr><td>Ctrl+Shift+M</td><td>Merge with next word</td></tr>"
-	                           "<tr><td>Ctrl+Delete</td><td>Delete word</td></tr>"
-	                           "<tr><td>Ctrl+{Left,Right}</td><td>Adjust left bounding box edge</td></tr>"
-	                           "<tr><td>Ctrl+Shift+{Left,Right}</td><td>Adjust right bounding box edge</td></tr>"
-	                           "<tr><td>Ctrl+{Up,Down}</td><td>Adjust top bounding box edge</td></tr>"
-	                           "<tr><td>Ctrl+Shift+{Up,Down}</td><td>Adjust bottom bounding box edge</td></tr>"
-	                           "<tr><td>Ctrl++</td><td>Increase font size</td></tr>"
-	                           "<tr><td>Ctrl+-</td><td>Decrease font size</td></tr>"
-	                           "</table>"
-	                       ));
-	QMessageBox(QMessageBox::NoIcon, _("Keyboard Shortcuts"), text, QMessageBox::Close, MAIN).exec();
+	std::vector<std::pair<QKeySequence, QString>> shortcuts {
+		{QKeySequence("Tab"), _("Next field")},
+		{QKeySequence("Shift+Tab"), _("Previous field")},
+		{QKeySequence("Down"), _("Next line")},
+		{QKeySequence("Up"), _("Previous line")},
+		{QKeySequence("Ctrl+Space"), _("Spelling suggestions")},
+		{QKeySequence("Ctrl+Enter"), _("Add word to dictionary")},
+		{QKeySequence("Ctrl+B"), _("Toggle bold")},
+		{QKeySequence("Ctrl+I"), _("Toggle italic")},
+		{QKeySequence("Ctrl+D"), _("Divide word at cursor position")},
+		{QKeySequence("Ctrl+M"), _("Merge with previous word")},
+		{QKeySequence("Ctrl+Shift+M"), _("Merge with next word")},
+		{QKeySequence("Ctrl+Delete"), _("Delete word")},
+		{QKeySequence("Ctrl+Left"), _("Adjust left bounding box edge")},
+		{QKeySequence("Ctrl+Right"), _("Adjust left bounding box edge")},
+		{QKeySequence("Ctrl+Shift+Left"), _("Adjust right bounding box edge")},
+		{QKeySequence("Ctrl+Shift+Right"), _("Adjust right bounding box edge")},
+		{QKeySequence("Ctrl+Up"), _("Adjust top bounding box edge")},
+		{QKeySequence("Ctrl+Down"), _("Adjust top bounding box edge")},
+		{QKeySequence("Ctrl+Shift+Up"), _("Adjust bottom bounding box edge")},
+		{QKeySequence("Ctrl+Shift+Down"), _("Adjust bottom bounding box edge")},
+		{QKeySequence("Ctrl++"), _("Increase font size")},
+		{QKeySequence("Ctrl+-"), _("Decrease font size")}
+	};
+
+	auto* d = new QDialog(this);
+	d->setWindowTitle(_("Keyboard Shortcuts"));
+	auto* l = new QFormLayout();
+	d->setLayout(l);
+	for (const auto& shortcut: shortcuts) {
+		l->addRow(
+		    shortcut.first.toString(QKeySequence::NativeText),
+		    new QLabel(shortcut.second));
+	}
+	auto* buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok);
+	l->addRow(buttonBox);
+	connect(buttonBox, &QDialogButtonBox::accepted, d, &QDialog::accept);
+	connect(d, &QDialog::accepted, d, &QWidget::deleteLater);
+	d->open();
 }
 
 QString HOCRProofReadWidget::confidenceStyle(int wconf) const {
