@@ -112,6 +112,8 @@ private:
 	void keyPressEvent(QKeyEvent* ev) override {
 		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
 
+		#define KEY_IS_ARROW(a) (a == Qt::Key_Up || a == Qt::Key_Down || a == Qt::Key_Left || a == Qt::Key_Right)
+
 		bool nextLine = (ev->modifiers() == Qt::NoModifier && ev->key() == Qt::Key_Down) || (ev->key() == Qt::Key_Tab && m_wordItem == m_wordItem->parent()->children().last());
 		bool prevLine = (ev->modifiers() == Qt::NoModifier && ev->key() == Qt::Key_Up) || (ev->key() == Qt::Key_Backtab && m_wordItem == m_wordItem->parent()->children().first());
 		if(nextLine || prevLine) {
@@ -147,25 +149,30 @@ private:
 			// Italic
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			document->editItemAttribute(index, "italic", m_wordItem->fontItalic() ? "0" : "1");
-		} else if((ev->key() == Qt::Key_Up || ev->key() == Qt::Key_Down) && ev->modifiers() & Qt::ControlModifier) {
-			// Adjust bbox top/bottom
+		} else if(KEY_IS_ARROW(ev->key()) && ev->modifiers() & Qt::ControlModifier) {
+			// Adjust bbox
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			QRect bbox = m_wordItem->bbox();
 			if(ev->modifiers() & Qt::ShiftModifier) {
-				bbox.setBottom(bbox.bottom() + (ev->key() == Qt::Key_Up ? -1 : 1));
+				if (ev->key() == Qt::Key_Up || ev->key() == Qt::Key_Down) {
+					bbox.setHeight(bbox.height() + (ev->key() == Qt::Key_Up ? -1 : 1));
+				} else {
+					bbox.setWidth(bbox.width() + (ev->key() == Qt::Key_Left ? -1 : 1));
+				}
 			} else {
-				bbox.setTop(bbox.top() + (ev->key() == Qt::Key_Up ? -1 : 1));
-			}
-			QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
-			document->editItemAttribute(index, "title:bbox", bboxstr);
-		} else if((ev->key() == Qt::Key_Left || ev->key() == Qt::Key_Right) && ev->modifiers() & Qt::ControlModifier) {
-			// Adjust bbox left/right
-			QModelIndex index = document->indexAtItem(m_wordItem);
-			QRect bbox = m_wordItem->bbox();
-			if(ev->modifiers() & Qt::ShiftModifier) {
-				bbox.setRight(bbox.right() + (ev->key() == Qt::Key_Left ? -1 : 1));
-			} else {
-				bbox.setLeft(bbox.left() + (ev->key() == Qt::Key_Left ? -1 : 1));
+				int dx = 0, dy = 0;
+				switch(ev->key()) {
+				case Qt::Key_Up:
+					dy = -1; break;
+				case Qt::Key_Down:
+					dy = 1; break;
+				case Qt::Key_Left:
+					dx = -1; break;
+				case Qt::Key_Right:
+					dx = 1; break;
+				default: break;
+				}
+				bbox.translate(dx, dy);
 			}
 			QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
 			document->editItemAttribute(index, "title:bbox", bboxstr);
@@ -474,14 +481,14 @@ void HOCRProofReadWidget::showShortcutsDialog() {
 		{QKeySequence("Ctrl+M"), _("Merge with previous word")},
 		{QKeySequence("Ctrl+Shift+M"), _("Merge with next word")},
 		{QKeySequence("Ctrl+Delete"), _("Delete word")},
-		{QKeySequence("Ctrl+Left"), _("Adjust left bounding box edge")},
-		{QKeySequence("Ctrl+Right"), _("Adjust left bounding box edge")},
-		{QKeySequence("Ctrl+Shift+Left"), _("Adjust right bounding box edge")},
-		{QKeySequence("Ctrl+Shift+Right"), _("Adjust right bounding box edge")},
-		{QKeySequence("Ctrl+Up"), _("Adjust top bounding box edge")},
-		{QKeySequence("Ctrl+Down"), _("Adjust top bounding box edge")},
-		{QKeySequence("Ctrl+Shift+Up"), _("Adjust bottom bounding box edge")},
-		{QKeySequence("Ctrl+Shift+Down"), _("Adjust bottom bounding box edge")},
+		{QKeySequence("Ctrl+Up"), _("Move the bounding box up")},
+		{QKeySequence("Ctrl+Down"), _("Move the bounding box down")},
+		{QKeySequence("Ctrl+Left"), _("Move the bounding box left")},
+		{QKeySequence("Ctrl+Right"), _("Move the bounding box right")},
+		{QKeySequence("Ctrl+Shift+Up"), _("Shrink the bounding box vertically")},
+		{QKeySequence("Ctrl+Shift+Down"), _("Enlarge the bounding box vertically")},
+		{QKeySequence("Ctrl+Shift+Left"), _("Shrink the bounding box horizontally")},
+		{QKeySequence("Ctrl+Shift+Right"), _("Enlarge the bounding box horizontally")},
 		{QKeySequence("Ctrl++"), _("Increase font size")},
 		{QKeySequence("Ctrl+-"), _("Decrease font size")}
 	};
