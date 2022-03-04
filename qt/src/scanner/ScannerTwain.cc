@@ -364,7 +364,9 @@ void ScannerTwain::close() {
 }
 
 #ifdef Q_OS_WIN32
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+bool ScannerTwain::NativeEventFilter::nativeEventFilter(const QByteArray& /*eventType*/, void* message, qintptr* /*result*/)
+#elif QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
 bool ScannerTwain::eventFilter(void* message)
 #else
 bool ScannerTwain::NativeEventFilter::nativeEventFilter(const QByteArray& /*eventType*/, void* message, long* /*result*/)

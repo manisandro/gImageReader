@@ -95,7 +95,11 @@ private:
 	bool saveDIB(TW_MEMREF hImg, const QString& filename);
 	class NativeEventFilter : public QAbstractNativeEventFilter {
 	public:
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		bool nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result) override;
+#else
 		bool nativeEventFilter(const QByteArray& eventType, void* message, long* result);
+#endif
 	};
 	NativeEventFilter m_eventFilter;
 #endif
