@@ -112,7 +112,7 @@ private:
 	void keyPressEvent(QKeyEvent* ev) override {
 		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
 
-		#define KEY_IS_ARROW(a) (a == Qt::Key_Up || a == Qt::Key_Down || a == Qt::Key_Left || a == Qt::Key_Right)
+#define KEY_IS_ARROW(a) (a == Qt::Key_Up || a == Qt::Key_Down || a == Qt::Key_Left || a == Qt::Key_Right)
 
 		bool nextLine = (ev->modifiers() == Qt::NoModifier && ev->key() == Qt::Key_Down) || (ev->key() == Qt::Key_Tab && m_wordItem == m_wordItem->parent()->children().last());
 		bool prevLine = (ev->modifiers() == Qt::NoModifier && ev->key() == Qt::Key_Up) || (ev->key() == Qt::Key_Backtab && m_wordItem == m_wordItem->parent()->children().first());
@@ -163,14 +163,19 @@ private:
 				int dx = 0, dy = 0;
 				switch(ev->key()) {
 				case Qt::Key_Up:
-					dy = -1; break;
+					dy = -1;
+					break;
 				case Qt::Key_Down:
-					dy = 1; break;
+					dy = 1;
+					break;
 				case Qt::Key_Left:
-					dx = -1; break;
+					dx = -1;
+					break;
 				case Qt::Key_Right:
-					dx = 1; break;
-				default: break;
+					dx = 1;
+					break;
+				default:
+					break;
 				}
 				bbox.translate(dx, dy);
 			}
@@ -497,7 +502,7 @@ void HOCRProofReadWidget::showShortcutsDialog() {
 	d->setWindowTitle(_("Keyboard Shortcuts"));
 	auto* l = new QFormLayout();
 	d->setLayout(l);
-	for (const auto& shortcut: shortcuts) {
+	for (const auto& shortcut : shortcuts) {
 		l->addRow(
 		    shortcut.first.toString(QKeySequence::NativeText),
 		    new QLabel(shortcut.second));
