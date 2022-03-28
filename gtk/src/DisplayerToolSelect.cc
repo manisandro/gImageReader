@@ -176,8 +176,9 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 				avgDeskew += deskew;
 				++nDeskew;
 				float width = x2 - x1, height = y2 - y1;
+				float margin = 2;
 				if(width > 10 && height > 10) {
-					rects.push_back(Geometry::Rectangle(x1 - 0.5 * img->get_width(), y1 - 0.5 * img->get_height(), width, height));
+					rects.push_back(Geometry::Rectangle(x1 - 0.5 * img->get_width() - margin, y1 - 0.5 * img->get_height() - margin, width + 2 * margin, height + 2 * margin));
 				}
 			} while(it->Next(tesseract::RIL_BLOCK));
 		}
