@@ -73,7 +73,7 @@ QModelIndex FileTreeModel::insertFile(QString filePath, DataObject* data, const 
 		return index(row, 0, index(0, 0));
 	} else if(m_root->path.startsWith(fileDir)) {
 		// Root below new path, replace root
-		QStringList path = m_root->path.mid(fileDir.length()).split("/", Qt::SkipEmptyParts);
+		QStringList path = m_root->path.mid(fileDir.length()).split("/", QString::SplitBehavior::SkipEmptyParts);
 		beginRemoveRows(QModelIndex(), 0, 0);
 		DirNode* oldroot = m_root;
 		m_root = nullptr;
@@ -91,7 +91,7 @@ QModelIndex FileTreeModel::insertFile(QString filePath, DataObject* data, const 
 		return index(1, 0, index(0, 0));
 	} else if(fileDir.startsWith(m_root->path)) {
 		// New path below root, append to subtree
-		QStringList path = fileDir.mid(m_root->path.length()).split("/", Qt::SkipEmptyParts);
+		QStringList path = fileDir.mid(m_root->path.length()).split("/", QString::SplitBehavior::SkipEmptyParts);
 		DirNode* cur = m_root;
 		QModelIndex idx = index(0, 0);
 		for(const QString& part : path) {
@@ -116,8 +116,8 @@ QModelIndex FileTreeModel::insertFile(QString filePath, DataObject* data, const 
 		return index(row, 0, idx);
 	} else {
 		// Unrelated trees, find common ancestor
-		QStringList rootPath = m_root->path.split("/", Qt::SkipEmptyParts);
-		QStringList newPath = fileDir.split("/", Qt::SkipEmptyParts);
+		QStringList rootPath = m_root->path.split("/", QString::SplitBehavior::SkipEmptyParts);
+		QStringList newPath = fileDir.split("/", QString::SplitBehavior::SkipEmptyParts);
 		int pos = 0;
 		for(int n = qMin(rootPath.length(), newPath.length()); pos < n; ++pos) {
 			if(rootPath[pos] != newPath[pos]) {
@@ -194,7 +194,7 @@ QModelIndex FileTreeModel::findFile(const QString& filePath, bool isFile) const 
 		return QModelIndex();
 	}
 	QString relPath = fileDir.mid(m_root->path.length());
-	QStringList parts = relPath.split("/", Qt::SkipEmptyParts);
+	QStringList parts = relPath.split("/", QString::SplitBehavior::SkipEmptyParts);
 	for(const QString& part : parts) {
 		auto it = cur->dirs.find(part);
 		if(it == cur->dirs.end()) {

@@ -144,8 +144,8 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout) {
 		QString text = m_pagesDialogUi.lineEditPageRange->text();
 		if((match = validateRegEx.match(text)).hasMatch()) {
 			text.replace(QRegularExpression("\\s+"), "");
-			for(const QString& block : text.split(',', Qt::SkipEmptyParts)) {
-				QStringList ranges = block.split('-', Qt::SkipEmptyParts);
+			for(const QString& block : text.split(',', QString::SplitBehavior::SkipEmptyParts)) {
+				QStringList ranges = block.split('-', QString::SplitBehavior::SkipEmptyParts);
 				if(ranges.size() == 1) {
 					int page = ranges[0].toInt();
 					if(page > 0 && page <= nPages) {

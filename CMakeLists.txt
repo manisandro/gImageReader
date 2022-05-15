@@ -259,7 +259,7 @@ IF("${srcdir}" STREQUAL "gtk")
     ENDFOREACH()
 
 ELSEIF("${srcdir}" STREQUAL "qt")
-    QT_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
+    QT5_ADD_RESOURCES(gimagereader_RESOURCES_RCC ${gimagereader_RESOURCES})
     SET(UIC_EXECUTABLE Qt${QT_VER}::uic)
 
     # Custom WRAP_UI which also gettext-izes the result

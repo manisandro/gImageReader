@@ -41,7 +41,7 @@ TableSetting::TableSetting(const QString& key, QTableWidget* table)
 	m_table->setRowCount(0);
 	int nCols = m_table->columnCount();
 
-	for(const QString& row : str.split(';', Qt::SkipEmptyParts)) {
+	for(const QString& row : str.split(';', QString::SplitBehavior::SkipEmptyParts)) {
 		int colidx = 0;
 		QStringList cols = row.split(',');
 		if(cols.size() != nCols) {
