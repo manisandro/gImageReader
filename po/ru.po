@@ -12,16 +12,17 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2021-09-08 22:10+0300\n"
-"Last-Translator: Victor Ryzhykh <victorr2007@yandex.ru>\n"
-"Language-Team: ru\n"
+"PO-Revision-Date: 2022-06-18 17:01+0000\n"
+"Last-Translator: Сергей <asvmail.as@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/gimagereader/"
+"translations/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 21.08.1\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -216,9 +217,8 @@ msgstr ""
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:1
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
-#, fuzzy
 msgid "HOCR Batch Export"
-msgstr "Пакетный экспорт"
+msgstr "Пакетный экспорт HOCR"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:2
 #: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
@@ -244,7 +244,7 @@ msgstr "Формат:"
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs of N lowest levels:"
-msgstr ""
+msgstr "Группировка выходов из N нижних уровней:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
@@ -704,7 +704,7 @@ msgstr "Вернуть"
 
 #: ../gtk/data/OutputEditorText.ui.h:21
 msgid "New tab"
-msgstr ""
+msgstr "Новая вкладка"
 
 #: ../gtk/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportDialog.ui.h:4
 #: ../qt/data/PdfExportWidget.ui.h:3
@@ -766,7 +766,7 @@ msgstr "Резервная гарнитура:"
 #: ../gtk/data/PdfExportWidget.ui.h:14 ../qt/data/PdfExportDialog.ui.h:20
 #: ../qt/data/PdfExportWidget.ui.h:19
 msgid "Override font size:"
-msgstr "Переопределить размер шрифта:"
+msgstr "Указать размер шрифта:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:15 ../qt/data/PdfExportDialog.ui.h:23
 #: ../qt/data/PdfExportWidget.ui.h:22
@@ -1040,7 +1040,7 @@ msgstr "Самоназвание языка"
 
 #: ../gtk/src/Config.cc:119 ../qt/src/Config.cc:104
 msgid "Script"
-msgstr "Письмо"
+msgstr "Сценарий"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:41
 #: ../qt/src/CrashHandler.cc:36
@@ -1106,7 +1106,7 @@ msgstr "Временные файлы"
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:48
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:106 ../gtk/src/SourceManager.cc:268
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:279
@@ -1260,9 +1260,8 @@ msgstr "Слово с ошибкой"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:369
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
-#, fuzzy
 msgid "Low confidence word"
-msgstr "Показать вероятности"
+msgstr "Слово с низким уровнем достоверности"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:420
@@ -1296,7 +1295,7 @@ msgstr "Объединить"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:783
 #: ../qt/src/hocr/OutputEditorHOCR.cc:847
 msgid "Split from parent"
-msgstr "Отделить от родителя"
+msgstr "Отделить от исходного"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:918
@@ -1639,24 +1638,20 @@ msgid "Page: %1\n"
 msgstr "Страница: %1\n"
 
 #: ../gtk/src/OutputEditorText.cc:129
-#, fuzzy
 msgid "Close document"
-msgstr "Документ"
+msgstr "Закрыть документ"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "Буфер обмена %1"
+msgstr "Без названия %1"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Document not saved"
-msgstr "Результаты не сохранены"
+msgstr "Документ не сохранён"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Save document before proceeding?"
-msgstr "Сохранить результаты, прежде чем продолжить?"
+msgstr "Сохранить документ, прежде чем продолжить?"
 
 #: ../gtk/src/OutputEditorText.cc:298 ../qt/src/OutputEditorText.cc:238
 msgid "Stripping line breaks..."
@@ -1664,12 +1659,11 @@ msgstr "Удаление разрывов строк..."
 
 #: ../gtk/src/OutputEditorText.cc:309
 msgid "No highlight"
-msgstr ""
+msgstr "Без подсветки синтаксиса"
 
 #: ../gtk/src/OutputEditorText.cc:329
-#, fuzzy
 msgid "Highlight mode"
-msgstr "Режим подсветки синтаксиса:"
+msgstr "Режим подсветки синтаксиса"
 
 #: ../gtk/src/OutputEditorText.cc:334
 msgid "Check spelling"
@@ -1677,7 +1671,7 @@ msgstr "Проверить орфографию"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:256
 msgid "%1 occurrences replaced"
-msgstr ""
+msgstr "Заменено %1 вхождений"
 
 #: ../gtk/src/OutputEditorText.cc:412 ../qt/src/OutputEditorText.cc:301
 msgid "File: %1"
@@ -1706,15 +1700,16 @@ msgid "Save Output..."
 msgstr "Сохранить результаты..."
 
 #: ../gtk/src/OutputEditorText.cc:584
-#, fuzzy
 msgid "Unsaved documents"
-msgstr "Документ"
+msgstr "Несохранённые документы"
 
 #: ../gtk/src/OutputEditorText.cc:585 ../qt/src/OutputEditorText.cc:462
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
 msgstr ""
+"В следующих документах имеются несохранённые изменения. Какие документы вы "
+"хотите сохранить, прежде чем продолжить?"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
@@ -1808,10 +1803,9 @@ msgid "Source already recognized"
 msgstr "Источник уже распознан"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
-#, fuzzy
 msgid "One or more selected sources were already recognized. Proceed anyway?"
 msgstr ""
-"Один или несколько выбранных источников уже были распознаны. Все равно "
+"Один или несколько выбранных источников уже были распознаны. Всё равно "
 "продолжить?"
 
 #: ../gtk/src/Recognizer.cc:237 ../gtk/src/Recognizer.cc:351
@@ -2124,9 +2118,8 @@ msgid "Discard"
 msgstr "Сброс"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "Сброс"
+msgstr "Сбросить всё"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
 msgid "Text"
@@ -2317,9 +2310,8 @@ msgstr "Найти и заменить"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
-msgstr "Показать предпросмотр"
+msgstr "Показать виджет корректуры"
 
 #: ../qt/src/MainWindow.cc:624
 msgid ""
@@ -2349,9 +2341,9 @@ msgstr ""
 "Следующие файлы не могут быть загружены или удалены:\n"
 "%1\n"
 "\n"
-"Проверьте соединение и права доступа к папкам.\n"
-"Совет: если у вас нет прав на запись в системные папки, вы можете сменить "
-"пути в диалоге настройки."
+"Проверьте доступность и наличие прав доступа к файлам и папкам.\n"
+"Совет: Если у вас нет прав на запись в системные папки, то в настройках вы "
+"можете переключиться на использование пользовательских папок."
 
 #: ../qt/src/Ui_MainWindow.hh:50
 msgid "Output"
@@ -2400,7 +2392,7 @@ msgstr "Очистить результаты"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "Новая вкладка"
 
 #~ msgid "Form"
 #~ msgstr "Форма"
