@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2022-06-19 18:14+0000\n"
+"PO-Revision-Date: 2022-06-21 20:18+0000\n"
 "Last-Translator: eevan78 <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian (cyrillic) <https://hosted.weblate.org/projects/"
 "gimagereader/translations/sr_Cyrl/>\n"
@@ -46,7 +46,7 @@ msgstr "Помоћ"
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:183
 msgid "About"
-msgstr "О"
+msgstr "О програму"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
@@ -184,7 +184,7 @@ msgid ""
 msgstr ""
 "<b>Апликације се срушила</b>\n"
 "\n"
-"Извињавамо се због непријаности. Ако желите помоћи да се апликација "
+"Извињавамо се због непријатности. Ако желите помоћи да се апликација "
 "унапреди, молимо вас да пријавите проблем на <a href=\"mailto"
 ":manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
 "a>. Покушајте да опишете шта се радили пре него што се апликација срушила. "
@@ -365,7 +365,7 @@ msgstr "Резолуција"
 
 #: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
-msgstr "Интертуј боје"
+msgstr "Обрни боје"
 
 #: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:24
 msgid "Zoom in"
@@ -453,7 +453,7 @@ msgstr "Постојећи излаз:"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/BatchModeDialog.ui.h:2
 msgid "Prepend page numbers to output text"
-msgstr "Надовежи бројеве страница излазном тексту"
+msgstr "Постави бројеве страница испред излазног текста"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/BatchModeDialog.ui.h:5
 msgid "Autodetect page layout"
@@ -486,7 +486,7 @@ msgstr "Аутоматска детекција"
 
 #: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
-msgstr "Надове#и испред излазног текста:"
+msgstr "Постави испред излазног текста:"
 
 #: ../gtk/data/MainWindow.ui.h:56 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
@@ -548,7 +548,7 @@ msgstr "Извези као ODT"
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Append document after last page"
-msgstr "Надовежи документ након последње странице"
+msgstr "Надовежи на документ након последње странице"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
@@ -717,7 +717,7 @@ msgstr "PDF"
 #: ../gtk/data/PdfExportWidget.ui.h:4 ../qt/data/PdfExportDialog.ui.h:7
 #: ../qt/data/PdfExportWidget.ui.h:6
 msgid "PDF with invisible text overlay"
-msgstr "PDF са невидњивим текст слојем"
+msgstr "PDF са невидљивим текст слојем"
 
 #: ../gtk/data/PdfExportWidget.ui.h:6 ../qt/data/PdfExportDialog.ui.h:17
 #: ../qt/data/PdfExportWidget.ui.h:16
@@ -929,7 +929,7 @@ msgstr "Препознај"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:241
 msgid "Recognize to clipboard"
-msgstr "Препознај у клиборд"
+msgstr "Препознај у клипборд"
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:242
 msgid "Save as image"
@@ -980,7 +980,7 @@ msgstr "Слике"
 
 #: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:86
 msgid "Choose Output Filename..."
-msgstr "ИЗаберите име излазног фајла..."
+msgstr "Изаберите име излазног фајла..."
 
 #: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
 msgid "Failed to initialize the scanning backend."
@@ -1032,11 +1032,11 @@ msgstr "Кôд"
 #: ../gtk/src/Config.cc:52 ../gtk/src/Config.cc:62
 #: ../qt/data/ConfigDialog.ui.h:9
 msgid "Native name"
-msgstr "Урођено име"
+msgstr "Назив језика"
 
 #: ../gtk/src/Config.cc:119 ../qt/src/Config.cc:104
 msgid "Script"
-msgstr "Скрипта"
+msgstr "Писмо"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:41
 #: ../qt/src/CrashHandler.cc:36
@@ -1045,7 +1045,7 @@ msgstr "Опслуживање краха"
 
 #: ../gtk/src/CrashHandler.cc:43 ../qt/src/CrashHandler.cc:31
 msgid "Your work has been saved under <b>%1</b>."
-msgstr "Ваш рад је сашуван као <b>%1</b>."
+msgstr "Ваш рад је сачуван као <b>%1</b>."
 
 #: ../gtk/src/CrashHandler.cc:45 ../qt/src/CrashHandler.cc:33
 msgid "There was no unsaved work."
@@ -1119,7 +1119,7 @@ msgstr "Додај у речник"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:80 ../qt/src/hocr/HOCRDocument.cc:79
 msgid "Ignore word"
-msgstr "Игноричи реч"
+msgstr "Игнориши реч"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:800 ../gtk/src/hocr/HOCRDocument.cc:839
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:351 ../qt/src/hocr/HOCRDocument.cc:692
@@ -1265,7 +1265,7 @@ msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr ""
-"Следеће странице ниду могле да се обраде:\n"
+"Следеће странице нису могле да се обраде:\n"
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:539
@@ -1291,7 +1291,7 @@ msgstr "Споји"
 #: ../qt/src/hocr/OutputEditorHOCR.cc:783
 #: ../qt/src/hocr/OutputEditorHOCR.cc:847
 msgid "Split from parent"
-msgstr "Разсвој од родитеља"
+msgstr "Раздвој од родитеља"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:918
@@ -1496,7 +1496,7 @@ msgstr ""
 "речи</td></tr><tr><td>Ctrl+Shift+M</td><td>Споји са наредном "
 "речи</td></tr><tr><td>Ctrl+Delete</td><td>Обриши "
 "реч</td></tr><tr><td>Ctrl+{Лево,Десно}</td><td>Подеси леву ивицу граничне "
-"кутије</td></tr><tr><td>Ctrl+Shift+{Лево,Десно}</td><td>Подесни десну ивицу "
+"кутије</td></tr><tr><td>Ctrl+Shift+{Лево,Десно}</td><td>Подеси десну ивицу "
 "граничне кутије</td></tr><tr><td>Ctrl+{Горе,Доле}</td><td>Подеси горњу ивицу "
 "граничне кутије</td></tr><tr><td>Ctrl+Shift+{Горе,Доле}</td><td>Подеси доњу "
 "ивицу граничне кутије</td></tr><tr><td>Ctrl++</td><td>Увећај величину "
@@ -1610,8 +1610,8 @@ msgstr ""
 "%1\n"
 "\n"
 "Проверите мрежну везу и дозволе директоријума.\n"
-"Сацет: ако немата право уписа у системске фолдере, можете да промените на "
-"корисничке путање у дијалогу подешавања."
+"Савет: ако немате право уписа у системске директоријуме, у дијалогу "
+"подешавања можете да пређете на корисничке путање."
 
 #: ../gtk/src/MainWindow.cc:636 ../qt/src/MainWindow.cc:624
 msgid "Dictionaries installed"
@@ -1622,7 +1622,7 @@ msgid ""
 "The following dictionaries were installed:\n"
 "%1"
 msgstr ""
-"Инсталирани су следећи директоријуми:\n"
+"Инсталирани су следећи речници:\n"
 "%1"
 
 #: ../gtk/src/MainWindow.cc:638 ../qt/src/MainWindow.cc:626
@@ -1667,7 +1667,7 @@ msgstr "Провера правописа"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:256
 msgid "%1 occurrences replaced"
-msgstr "Замњењно је %1 појављивања"
+msgstr "Замењено је %1 појављивања"
 
 #: ../gtk/src/OutputEditorText.cc:412 ../qt/src/OutputEditorText.cc:301
 msgid "File: %1"
@@ -1720,7 +1720,7 @@ msgstr ""
 
 #: ../gtk/src/RecognitionMenu.cc:153 ../qt/src/RecognitionMenu.cc:134
 msgid "Multilingual"
-msgstr "Вишејезичко"
+msgstr "Вишејезичко препознавање"
 
 #: ../gtk/src/RecognitionMenu.cc:205 ../qt/src/RecognitionMenu.cc:182
 msgid "Automatic page segmentation"
@@ -1736,7 +1736,7 @@ msgstr "Претпостави једну колону текста"
 
 #: ../gtk/src/RecognitionMenu.cc:208 ../qt/src/RecognitionMenu.cc:185
 msgid "Assume single block of vertically aligned text"
-msgstr "Претпостави један блок вертикално поранватог текста"
+msgstr "Претпостави један блок вертикално поравнатог текста"
 
 #: ../gtk/src/RecognitionMenu.cc:209 ../qt/src/RecognitionMenu.cc:186
 msgid "Assume a single uniform block of text"
@@ -1894,7 +1894,7 @@ msgstr "Забрањен је приступ скенеру."
 
 #: ../gtk/src/SourceManager.cc:184 ../qt/src/SourceManager.cc:169
 msgid "Enter password for file '%1':"
-msgstr "Унесите лозинју за фајл ’%1’:"
+msgstr "Унесите лозинку за фајл ’%1’:"
 
 #: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:196
 msgid "PDF with text"
@@ -2088,7 +2088,7 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Следећи фајлови нису могли д асе преузму или су уклоњени:\n"
+"Следећи фајлови нису могли да се преузму или су уклоњени:\n"
 "%1\n"
 "\n"
 "Проверите мрежну везу и дозволе за директоријум.\n"
@@ -2182,7 +2182,7 @@ msgid ""
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Апликација се "
 "срушила</span></p><p>Извињавамо се због непријатности. Да бисте помогли да "
-"се паликација унапреди, молимо вас да пријавите проблем на <a href=\"mailto"
+"се апликација унапреди, молимо вас да пријавите проблем на <a href=\"mailto"
 ":manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
 "a>. Покушајте да опишете шта се радили пре него што се апликација срушила. "
 "Такође, приложите информације које следе. Хвала.</p></body></html>"
@@ -2200,7 +2200,7 @@ msgstr ""
 "извршавање</span></p><p>Тесеракт (OCR машина) је прекинуо извршавање током "
 "препознавања текста. Ово може да се догоди ако су подаци отренирању "
 "покварени или нису компатибилни са тесеракт верзијом која се користи, или "
-"услед бага у самом програму тесеракт.</p><p>Следећи Стектрејс може пружити "
+"услед бага у самом програму тесеракт.</p><p>Следећи стек трејс може пружити "
 "додатне информације у вези са местом на којем је дошло до "
 "рушења.</p></body></html>"
 
@@ -2291,10 +2291,10 @@ msgid ""
 "compression for storing images, but supports complex scripts.</li></ul></"
 "body></html>"
 msgstr ""
-"<html><head/><body><ul><li>PoDoFo: ниди више опција за компресију слика, али "
-"не може да обради сложене скрипте.</li><li>QPrinter: подржава само JPEG "
-"компресију за складиштење слика, али подржава комплексне "
-"скрипте.</li></ul></body></html>"
+"<html><head/><body><ul><li>PoDoFo: нуди више опција за компресију слика, али "
+"не може да обради сложена писма.</li><li>QPrinter: подржава само JPEG "
+"компресију за складиштење слика, али подржава комплексна "
+"писма.</li></ul></body></html>"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:90
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:91
@@ -2321,7 +2321,7 @@ msgstr ""
 
 #: ../qt/src/OutputEditorText.cc:520 ../qt/src/SourceManager.cc:252
 msgid "No recent files"
-msgstr "Нема скориашњих фајлова"
+msgstr "Нема скорашњих фајлова"
 
 #: ../qt/src/SourceManager.cc:391
 msgid "Delete Files"
@@ -2339,7 +2339,7 @@ msgstr ""
 "Није успело преузимање следећих фајлова, или су уклоњени:\n"
 "%1\n"
 "\n"
-"Проверите мрежну везу и дозворе за директоријум..\n"
+"Проверите мрежну везу и дозволе за директоријум.\n"
 "Савет: ако немате право уписа у системске директоријуме, у дијалогу "
 "подешавања можете да пређете на корисничке путање."
 
