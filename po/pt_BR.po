@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2022-06-29 17:20+0000\n"
+"PO-Revision-Date: 2022-07-02 14:20+0000\n"
 "Last-Translator: m_s_ <m_s_@fastmy.info>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gimagereader/translations/pt_BR/>\n"
@@ -240,7 +240,7 @@ msgstr "Formato:"
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs of N lowest levels:"
-msgstr "Agrupar resultado a nível:"
+msgstr "Agrupar resultados a nível:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
@@ -264,7 +264,7 @@ msgstr "Exportar opções"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
-msgstr "Alternar exibição do painel de resultado"
+msgstr "Mostrar/ocultar painel de resultado"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
@@ -1378,7 +1378,7 @@ msgstr "resultado"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1099
 #: ../qt/src/hocr/OutputEditorHOCR.cc:990
 msgid "Save hOCR Output..."
-msgstr "Salvando resultado hOCR..."
+msgstr "Salvar resultado do hOCR..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1106 ../gtk/src/OutputEditorText.cc:539
 #: ../qt/src/hocr/OutputEditorHOCR.cc:997 ../qt/src/OutputEditorText.cc:417
@@ -1398,7 +1398,7 @@ msgstr "Documentos de texto OpenDocument"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1165
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1052
 msgid "Save ODT Output..."
-msgstr "Salvar resultado ODT..."
+msgstr "Salvar resultado do ODT..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1202
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1088
@@ -2264,7 +2264,7 @@ msgstr "Detectar layout automaticamente"
 
 #: ../qt/data/MainWindow.ui.h:39
 msgid "Toggle Output Pane"
-msgstr "Alternar exibição do painel de resultado"
+msgstr "Mostrar/ocultar painel de resultado"
 
 #: ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
