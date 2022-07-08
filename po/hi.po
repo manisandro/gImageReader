@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2021-02-07 16:38+0000\n"
-"Last-Translator: Shreeshrii <shreeshrii@gmail.com>\n"
+"PO-Revision-Date: 2022-07-09 16:18+0000\n"
+"Last-Translator: Hemant More <hemantrmore@tutanota.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/gimagereader/"
 "translations/hi/>\n"
 "Language: hi\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -210,7 +210,7 @@ msgstr ""
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:1
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "एचओसीआर सामूहिक निर्यात"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:2
 #: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
@@ -224,9 +224,8 @@ msgstr "बंद करें"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:4
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "फोल्डर का चयन करें..."
+msgstr "स्त्रोत फोल्डर चुनें :"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
 #: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
@@ -237,31 +236,27 @@ msgstr "फॉर्मेट:"
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs of N lowest levels:"
-msgstr ""
+msgstr "समूह उत्पादन के एन न्यूनतम स्तर:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "आउटपुट:"
+msgstr "निवेश:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:8
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "आउटपुट मोड:"
+msgstr "उत्पाद पूर्वावलोकन:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:9
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "हाल की कोई फाइल नहीं"
+msgstr "निवेश फ़ाइलें"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:10
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "अन्य विकल्प"
+msgstr "निर्यात विकल्प"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
@@ -429,9 +424,8 @@ msgid "Select language"
 msgstr "भाषा चुनें"
 
 #: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:41
-#, fuzzy
 msgid "Batch Export"
-msgstr "निर्यात करें"
+msgstr "सामूहिक निर्यात"
 
 #: ../gtk/data/MainWindow.ui.h:41
 msgid "A graphical frontend to tesseract-ocr"
@@ -439,20 +433,19 @@ msgstr "टेसेरेक्ट-ओसीआर के लिए एक ग�
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/BatchModeDialog.ui.h:1
 msgid "Batch Mode"
-msgstr "बैच मोड"
+msgstr "सामूहिक प्रकार"
 
 #: ../gtk/data/MainWindow.ui.h:43
-#, fuzzy
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
-"बैच मोड में, प्रत्येक इनपुट स्रोत को अलग से संसाधित किया जाता है और आउटपुट इनपुट फ़ाइल में "
-"साइड-बाय-साइड सेव होता है।"
+"<i>सामूहिक प्रकार में, प्रत्येक निवेश स्रोत को अलग से संसाधित किया गया है और "
+"उत्पाद को निवेश फ़ाइल के साथ सहेजा गया है।<i>"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr "मौजूदा आउटपुट:"
+msgstr "मौजूदा उत्पाद :"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/BatchModeDialog.ui.h:2
 msgid "Prepend page numbers to output text"
@@ -684,9 +677,8 @@ msgid "Draw whitespace"
 msgstr "व्हाइट-स्पेस बनाएँ"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "hOCR फ़ाइल खोलें"
+msgstr "फ़ाइल खोलें"
 
 #: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:111
 msgid "Strip line breaks on selected text"
@@ -704,7 +696,7 @@ msgstr "दोहराएँ"
 
 #: ../gtk/data/OutputEditorText.ui.h:21
 msgid "New tab"
-msgstr ""
+msgstr "नया टैब"
 
 #: ../gtk/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportDialog.ui.h:4
 #: ../qt/data/PdfExportWidget.ui.h:3
@@ -1101,12 +1093,12 @@ msgstr "आकार प्रकार का पता लगा रहा ह
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "अस्थायी फाइल"
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:48
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ओडीटी"
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:106 ../gtk/src/SourceManager.cc:268
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:279
@@ -1260,9 +1252,8 @@ msgstr "गलत वर्तनी शब्द"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:369
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
-#, fuzzy
 msgid "Low confidence word"
-msgstr "कॉन्फिडेंस मूल्य दिखाएँ"
+msgstr "कम भरोसेमंद शब्द"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:420
@@ -1638,22 +1629,19 @@ msgstr "पृष्ठ : %1\n"
 
 #: ../gtk/src/OutputEditorText.cc:129
 msgid "Close document"
-msgstr ""
+msgstr "दस्तावेज़ बंद करें"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "चिपकाया %1"
+msgstr "शीर्षकहीन %1"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Document not saved"
-msgstr "आउटपुट सहेजा नहीं गया"
+msgstr "दस्तावेज़ सहेजा नहीं गया"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Save document before proceeding?"
-msgstr "आगे बढ़ने से पहले आउटपुट सहेजें?"
+msgstr "क्या आगे बढ़ने से पहले दस्तावेज़ सहेजा जाना चाहिएँ?"
 
 #: ../gtk/src/OutputEditorText.cc:298 ../qt/src/OutputEditorText.cc:238
 msgid "Stripping line breaks..."
@@ -1661,11 +1649,11 @@ msgstr "लाइन ब्रेक को हटाया जा रहा ह
 
 #: ../gtk/src/OutputEditorText.cc:309
 msgid "No highlight"
-msgstr ""
+msgstr "चिह्नित नहीं"
 
 #: ../gtk/src/OutputEditorText.cc:329
 msgid "Highlight mode"
-msgstr ""
+msgstr "चिह्नित प्रकार"
 
 #: ../gtk/src/OutputEditorText.cc:334
 msgid "Check spelling"
@@ -1673,7 +1661,7 @@ msgstr "वर्तनी जांचें"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:256
 msgid "%1 occurrences replaced"
-msgstr ""
+msgstr "%1 घटनाओं को बदला गया"
 
 #: ../gtk/src/OutputEditorText.cc:412 ../qt/src/OutputEditorText.cc:301
 msgid "File: %1"
@@ -1703,7 +1691,7 @@ msgstr "आउटपुट सहेजें..."
 
 #: ../gtk/src/OutputEditorText.cc:584
 msgid "Unsaved documents"
-msgstr ""
+msgstr "न सहेजे गए दस्तावेज़"
 
 #: ../gtk/src/OutputEditorText.cc:585 ../qt/src/OutputEditorText.cc:462
 msgid ""
@@ -2115,13 +2103,12 @@ msgid "Discard"
 msgstr "खारिज करें"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "खारिज करें"
+msgstr "सभी खारिज करें"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
 msgid "Text"
-msgstr "टेक्स्ट"
+msgstr "लेख"
 
 #: ../gtk/src/Utils.cc:151 ../qt/src/SourceManager.cc:470
 msgid "hOCR"
@@ -2189,7 +2176,6 @@ msgstr ""
 "जानकारी भी शामिल करें. धन्यवाद."
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
 "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
@@ -2198,12 +2184,12 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
-"<b>टेसरैक्ट निरस्त हो गया है</b>\n"
-"\n"
-"पाठ को पहचानते समय टेसरैक्ट (OCR इंजन) निरस्त हो गया है। यह तब हो सकता है जब उपयोग "
-"किए गए ट्रेन्डडेटा भ्रष्ट अथवा उपयोग किये टेसरैक्ट संस्करण से बेमेल हों, या टेसेरैक्ट में बग हो।\n"
-"\n"
-"नीचे दिए गए स्टैकट्रेस अतिरिक्त जानकारी प्रदान कर सकते हैं कि क्रैश कहाँ हुआ।\n"
+"<html><head/><body><p><span style=\" font-weight:600;\">टेसरैक्ट निरस्त हो "
+"गया है</span></p><p>दस्तावेज़ पहचानते समय टेसरैक्ट (ओसीआर इंजन) निरस्त हो "
+"गया। यह तब हो सकता है जब उपयोग की गई आधार-सामग्री दूषित है, या टेसरैक्ट के "
+"संस्करण के साथ असंगत है, या फिर टेसरैक्ट में कोई दोष है।</p><p>नीचे दर्शाई वि"
+"वरण सूची विफलता कहा हुई इस की अतिरिक्त जानकारी प्रदान कर सकती "
+"है।</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
