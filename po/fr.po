@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:15+0100\n"
-"PO-Revision-Date: 2022-07-08 06:17+0000\n"
+"PO-Revision-Date: 2022-07-10 23:15+0000\n"
 "Last-Translator: Maxime Leroy <lisacintosh@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gimagereader/"
 "translations/fr/>\n"
@@ -183,12 +183,12 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"<b>L'application a cessé de fonctionner</b>\n"
+"<b>L'application a planté</b>\n"
 "\n"
-"Désolé pour le désagrément. Pour aider à améliorer l'application, s'il vous "
-"plait, signalez le problème à <a href=\"mailto:manisandro@gmail.com? "
-"subject=gImageReader% 20Crash\"> manisandro@gmail.com </a>. Essayez de "
-"décrire ce que vous faisiez avant le problème. Inclure aussi les "
+"Désolé pour le désagrément. Pour aider l'amélioration de l'application, s'il "
+"vous plait, signalez le problème à <a href=\"mailto:manisandro@gmail."
+"com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Essayez de "
+"décrire ce que vous faisiez avant le problème. Veuillez aussi inclure les "
 "informations ci-dessous. Merci."
 
 #: ../gtk/data/CrashHandler.ui.h:6
@@ -241,7 +241,7 @@ msgstr "Format :"
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs of N lowest levels:"
-msgstr ""
+msgstr "Grouper les sorties avec les N plus bas niveaux :"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
@@ -1065,7 +1065,7 @@ msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
-"Le fichier pourrait ne pas être une image ou être corrompu:\n"
+"Le fichier pourrait ne pas être une image ou être corrompu :\n"
 "%1"
 
 #: ../gtk/src/Displayer.cc:770 ../qt/src/Displayer.cc:605
@@ -1234,7 +1234,7 @@ msgstr "dans"
 #: ../gtk/src/hocr/HOCRTextExporter.cc:31 ../qt/src/hocr/HOCRTextExporter.cc:34
 msgid "The text export failed: unable to write output file."
 msgstr ""
-"L'exportation de texte a échoué: impossible d'écrire le fichier de sortie."
+"L'exportation de texte a échoué : impossible d'écrire le fichier de sortie."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:354
 #: ../qt/src/hocr/OutputEditorHOCR.cc:313
@@ -1258,9 +1258,8 @@ msgstr "Mot mal orthographié"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:369
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
-#, fuzzy
 msgid "Low confidence word"
-msgstr "Montrer les valeurs de confiance"
+msgstr "Mot de faible fiabilité"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:420
@@ -1268,7 +1267,7 @@ msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr ""
-"Les pages suivants n'ont pas pu être processées:\n"
+"Les pages suivants n'ont pas pu être traitées :\n"
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:539
@@ -1489,23 +1488,80 @@ msgid ""
 "td></tr><tr><td>Ctrl++</td><td>Increase font size</td></tr><tr><td>Ctrl+-</"
 "td><td>Decrease font size</td></tr></table>"
 msgstr ""
-"<table> <tr> <td> Tab</td><td>Champ suivant</td></tr><tr><td>Maj+Tab</"
-"td><td>Champ précédent</td></tr><tr><td>Down</td><td>Ligne suivante</td></"
-"tr><tr><td>Up</td><td>Ligne précédente</td></tr><tr>[X18 3X]Ctrl+Espace</"
-"td><td>Suggestions d’orthographe</td></tr><tr><td>Ctrl+Entrée</"
-"td><td>Ajouter un mot au dictionnaire</td></tr><tr><td>Ctrl+B</td><td>Gras</"
-"td></tr><tr><td>Ctrl+I</td><td>Italique</td></tr><tr><td>Ctrl+D</"
-"td><td>Diviser le mot à la position du curseur</td></tr><tr><td>Ctrl+M</"
-"td><td>Fusionner avec le mot précédent</td></tr><tr><td>Ctrl+Maj+M</"
-"td><td>Fusionner avec le mot suivant</td></tr><tr><td>Ctrl+Suppr</"
-"td><td>Supprimer le mot</td></tr><tr><td>Ctrl+{Gauche,Droite}</"
-"td><td>Ajuster le bord du cadre de sélection gauche</td></"
-"tr><tr><td>Ctrl+Maj+{Gauche, Droite}</td><td>Ajuster le bord du cadre de "
-"sélection droit</td></tr><tr><td>Ctrl+{Haut,Bas}</td><td>Ajuster le bord du "
-"cadre de sélection supérieur</td></tr><tr><td>Ctrl+Maj+{Haut,Bas}</"
-"td><td>Ajuster le bord du cadre de sélection inférieur</td></tr><tr><td>Ctrl+"
-"+</td><td>Augmenter la taille de la police</td></tr><tr><td>Ctrl+-</"
-"td><td>Diminuer la taille de la police</td></tr></table>"
+"<table>\n"
+"\t<tr>\n"
+"\t\t<td>Tab</td>\n"
+"\t\t<td>Champ suivant</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Maj+Tab</td>\n"
+"\t\t<td>Champ précédent</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Down</td>\n"
+"\t\t<td>Ligne suivante</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Up</td>\n"
+"\t\t<td>Ligne précédente</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>[X18 3X]Ctrl+Espace</td>\n"
+"\t\t<td>Suggestions d’orthographe</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl+Entrée</td>\n"
+"\t\t<td>Ajouter un mot au dictionnaire</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl+B</td>\n"
+"\t\t<td>Gras</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl+I</td>\n"
+"\t\t<td>Italique</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl+D</td>\n"
+"\t\t<td>Diviser le mot à la position du curseur</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl+M</td>\n"
+"\t\t<td>Fusionner avec le mot précédent</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl+Maj+M</td>\n"
+"\t\t<td>Fusionner avec le mot suivant</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl+Suppr</td>\n"
+"\t\t<td>Supprimer le mot</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl+{Gauche,Droite}</td>\n"
+"\t\t<td>Ajuster le bord du cadre de sélection gauche</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl+Maj+{Gauche, Droite}</td>\n"
+"\t\t<td>Ajuster le bord du cadre de sélection droit</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl+{Haut,Bas}</td>\n"
+"\t\t<td>Ajuster le bord du cadre de sélection supérieur</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl+Maj+{Haut,Bas}</td>\n"
+"\t\t<td>Ajuster le bord du cadre de sélection inférieur</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl++</td>\n"
+"\t\t<td>Augmenter la taille de la police</td>\n"
+"\t</tr>\n"
+"\t<tr>\n"
+"\t\t<td>Ctrl+-</td>\n"
+"\t\t<td>Diminuer la taille de la police</td>\n"
+"\t</tr>\n"
+"</table>"
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:556
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:478
@@ -1590,7 +1646,7 @@ msgstr "Erreur"
 #: ../gtk/src/MainWindow.cc:556 ../qt/src/MainWindow.cc:553
 msgid "Failed to install spelling dictionary: %1"
 msgstr ""
-"Impossible d'installer le dictionnaire de vérification orthographique: %1"
+"Impossible d'installer le dictionnaire de vérification orthographique : %1"
 
 #: ../gtk/src/MainWindow.cc:577 ../qt/src/MainWindow.cc:566
 msgid "Failed to create directory for spelling dictionaries."
@@ -1599,7 +1655,7 @@ msgstr ""
 
 #: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:575
 msgid "Could not read %1: %2."
-msgstr "Impossible lire %1: %2."
+msgstr "Impossible de lire %1 : %2."
 
 #: ../gtk/src/MainWindow.cc:612 ../qt/src/MainWindow.cc:601
 msgid "Downloading '%1'..."
@@ -1614,13 +1670,13 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Les fichiers suivants ne peuvent pas être téléchargés ou supprimés:\n"
+"Les dictionnaires suivants ne peuvent pas être téléchargés :\n"
 "%1\n"
 "\n"
-"Vérifiez la connexion et les autorisations de dossier.\n"
+"Vérifiez votre connexion et les autorisations de dossier.\n"
 "\n"
-"Remarque: Si vous n'avez pas les droits d'écriture dans les dossiers "
-"système, vous pouvez passer aux chemins du utilisateur dans le dialogue des "
+"Remarque : Si vous n'avez pas les droits d'écriture dans les dossiers "
+"système, vous pouvez utiliser des chemins utilisateurs dans le dialogue des "
 "préférences."
 
 #: ../gtk/src/MainWindow.cc:636 ../qt/src/MainWindow.cc:624
@@ -1632,7 +1688,7 @@ msgid ""
 "The following dictionaries were installed:\n"
 "%1"
 msgstr ""
-"Les dictionnaires suivants ont été installés:\n"
+"Les dictionnaires suivants ont été installés :\n"
 "%1"
 
 #: ../gtk/src/MainWindow.cc:638 ../qt/src/MainWindow.cc:626
@@ -1681,11 +1737,11 @@ msgstr "%1 occurrences remplacés"
 
 #: ../gtk/src/OutputEditorText.cc:412 ../qt/src/OutputEditorText.cc:301
 msgid "File: %1"
-msgstr "Fichier: %1"
+msgstr "Fichier : %1"
 
 #: ../gtk/src/OutputEditorText.cc:415 ../qt/src/OutputEditorText.cc:304
 msgid "Page: %1"
-msgstr "Page: %1"
+msgstr "Page : %1"
 
 #: ../gtk/src/OutputEditorText.cc:428 ../gtk/src/Recognizer.cc:243
 #: ../qt/src/Recognizer.cc:259
@@ -1987,7 +2043,7 @@ msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
 msgstr ""
-"Le fichier suivant a été supprimé ou déplacé:\n"
+"Le fichier suivant a été supprimé ou déplacé :\n"
 "%1"
 
 #: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:69
@@ -2071,11 +2127,11 @@ msgstr "Téléchargement de la liste des langues disponibles"
 #: ../gtk/src/TessdataManager.cc:197 ../qt/src/TessdataManager.cc:80
 #: ../qt/src/TessdataManager.cc:97 ../qt/src/TessdataManager.cc:170
 msgid "Failed to fetch list of available languages: %1"
-msgstr "Impossible de télécharger la liste des langues disponibles: %1"
+msgstr "Impossible de télécharger la liste des langues disponibles : %1"
 
 #: ../gtk/src/TessdataManager.cc:104 ../qt/src/TessdataManager.cc:107
 msgid "Parsing error: %1"
-msgstr "Erreur syntaxique: %1"
+msgstr "Erreur syntaxique : %1"
 
 #: ../gtk/src/TessdataManager.cc:235 ../qt/src/TessdataManager.cc:205
 msgid "Applying changes..."
@@ -2099,13 +2155,13 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Les fichiers suivants ne peuvent pas être téléchargés ou supprimés:\n"
+"Les fichiers suivants ne peuvent pas être téléchargés ou supprimés :\n"
 "%1\n"
 "\n"
-"Vérifiez la connexion et les autorisations de dossier.\n"
+"Vérifiez votre connexion et les autorisations de dossier.\n"
 "\n"
 "Remarque: Si vous n'avez pas les droits d'écriture dans les dossiers "
-"système, vous pouvez passer aux chemins du utilisateur dans le dialogue des "
+"système, vous pouvez spécifier des chemins utilisateur dans le dialogue des "
 "préférences."
 
 #: ../gtk/src/Utils.cc:127
@@ -2145,15 +2201,14 @@ msgid "About gImageReader"
 msgstr "À propos de gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Une interface graphique pour tesseract-"
-"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</"
-"a></p><p>&nbsp;</p></body></html>"
+"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Website</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2201,7 +2256,6 @@ msgstr ""
 "problème. Inclure aussi les informations ci-dessous. Merci.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
 "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
@@ -2210,15 +2264,13 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
-"<b>Tesseract a avorté</b>\n"
-"\n"
-"Tesseract (le moteur d'OCR) a avorté pendant la reconnaissance de texte. "
-"Cela peut se produire si les données traineddata utilisées sont corrompues "
-"ou incompatibles avec la version de tesseract utilisée, ou en raison d'un "
-"bug dans tesseract.\n"
-"\n"
-"Le stacktrace ci-dessous peut fournir des informations supplémentaires sur "
-"l'endroit où le crash s'est produit.\n"
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract a "
+"quitté</span></p><p>Tesseract (le moteur d'OCR) a quitté pendant la "
+"reconnaissance de texte. Cela peut se produire si les données d'entrainement "
+"utilisées sont corrompues ou incompatibles avec la version de tesseract "
+"utilisée, ou en raison d'un bug dans le moteur.</p><p>Les détails ci-dessous "
+"peuvent fournir des informations supplémentaires sur la cause du "
+"plantage.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2324,16 +2376,15 @@ msgstr "Trouver et remplacer"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
-msgstr "Montrer aperçu"
+msgstr "Afficher le gadget de relecture"
 
 #: ../qt/src/MainWindow.cc:624
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
 msgstr ""
-"Les dictionnaires suivants ont été installés:\n"
+"Les dictionnaires suivants ont été installés :\n"
 "%1"
 
 #: ../qt/src/OutputEditorText.cc:520 ../qt/src/SourceManager.cc:252
