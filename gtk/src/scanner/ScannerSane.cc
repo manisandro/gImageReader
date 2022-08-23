@@ -266,14 +266,16 @@ void ScannerSane::doSetOptions() {
 		std::vector<std::string> color_scan_modes = {
 			SANE_VALUE_SCAN_MODE_COLOR,
 			"Color",
-			"24bit Color" /* Seen in the proprietary brother3 driver */
+			"24bit Color", /* Seen in the proprietary brother3 driver */
+			"24-bit Color" /* Seen in the proprietary f+ imaging/Lexmark driver */
 		};
 		std::vector<std::string> gray_scan_modes = {
 			SANE_VALUE_SCAN_MODE_GRAY,
 			"Gray",
 			"Grayscale",
 			SANE_I18N("Grayscale"),
-			"True Gray" /* Seen in the proprietary brother3 driver */
+			"True Gray", /* Seen in the proprietary brother3 driver */
+			"8-bit Grayscale" /* Seen in the proprietary f+ imaging/Lexmark driver */
 		};
 		std::vector<std::string> lineart_scan_modes = {
 			SANE_VALUE_SCAN_MODE_LINEART,
@@ -289,7 +291,8 @@ void ScannerSane::doSetOptions() {
 			"Gray",
 			"Grayscale",
 			SANE_I18N("Grayscale"),
-			"True Gray" /* Seen in the proprietary brother3 driver */
+			"True Gray", /* Seen in the proprietary brother3 driver */
+			"1-bit Black & White" /* Seen in the proprietary f+ imaging/Lexmark driver */
 		};
 
 		switch(m_job->params.scan_mode) {
