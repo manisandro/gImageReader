@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2021-11-28 09:14+0000\n"
+"PO-Revision-Date: 2022-08-29 09:20+0000\n"
 "Last-Translator: Tymofii Lytvynenko <till.svit@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/uk/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -239,9 +239,8 @@ msgstr "Формат:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
-#, fuzzy
 msgid "Group outputs of N lowest levels:"
-msgstr "Виведення груп на рівні:"
+msgstr "Групування виходів з N нижніх рівнів:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
@@ -1257,9 +1256,8 @@ msgstr "Слово з помилкою"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:369
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
-#, fuzzy
 msgid "Low confidence word"
-msgstr "Відображати величини достовірності"
+msgstr "Слово з низьким рівнем розпізнаності"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:420
@@ -1638,19 +1636,16 @@ msgid "Close document"
 msgstr "Закритий документ"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "Вставлено %1"
+msgstr "Без назви %1"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Document not saved"
-msgstr "Результати не збережено"
+msgstr "Документ не збережено"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Save document before proceeding?"
-msgstr "Зберегти результати, перш ніж продовжити?"
+msgstr "Зберегти документ перед продовженням?"
 
 #: ../gtk/src/OutputEditorText.cc:298 ../qt/src/OutputEditorText.cc:238
 msgid "Stripping line breaks..."
@@ -1658,19 +1653,17 @@ msgstr "Видалення розривів рядків..."
 
 #: ../gtk/src/OutputEditorText.cc:309
 msgid "No highlight"
-msgstr ""
+msgstr "Без підсвічування синтаксису"
 
 #: ../gtk/src/OutputEditorText.cc:329
-#, fuzzy
 msgid "Highlight mode"
-msgstr "Режим підсвічування синтаксису:"
+msgstr "Режим підсвічування синтаксису"
 
 #: ../gtk/src/OutputEditorText.cc:334
 msgid "Check spelling"
 msgstr "Перевірити орфографію"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:256
-#, fuzzy
 msgid "%1 occurrences replaced"
 msgstr "Кількість випадків заміни: %1"
 
@@ -1701,15 +1694,16 @@ msgid "Save Output..."
 msgstr "Зберегти результати..."
 
 #: ../gtk/src/OutputEditorText.cc:584
-#, fuzzy
 msgid "Unsaved documents"
-msgstr "Закритий документ"
+msgstr "Незбережені документи"
 
 #: ../gtk/src/OutputEditorText.cc:585 ../qt/src/OutputEditorText.cc:462
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
 msgstr ""
+"Наступні документи мають незбережені зміни. Які документи ви хочете "
+"зберегти, перш ніж продовжити?"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
@@ -1803,10 +1797,8 @@ msgid "Source already recognized"
 msgstr "Джерело вже розпізнано"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
-#, fuzzy
 msgid "One or more selected sources were already recognized. Proceed anyway?"
-msgstr ""
-"Одне чи кілька вибраних джерел уже було розпізнано. Все одно продовжити?"
+msgstr "Одне чи декілька вибраних джерел уже розпізнано. Все одно продовжити?"
 
 #: ../gtk/src/Recognizer.cc:237 ../gtk/src/Recognizer.cc:351
 #: ../qt/src/Recognizer.cc:252 ../qt/src/Recognizer.cc:364
@@ -2120,9 +2112,8 @@ msgid "Discard"
 msgstr "Відхилити"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "Відхилити"
+msgstr "Відхилити все"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
 msgid "Text"
@@ -2137,16 +2128,14 @@ msgid "About gImageReader"
 msgstr "Про програму gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
-"&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt; "
-"Графічний інтерфейс для tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"<html><head/><body><p>&nbsp;</p><p>Графічний інтерфейс для tesseract-ocr</"
+"p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Сайт</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2195,7 +2184,6 @@ msgstr ""
 "Також додайте інформацію, розміщену нижче. Дякуємо.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
 "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
@@ -2204,13 +2192,13 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
-"<b>Tesseract зупинився</b>\n"
-"\n"
-"Tesseract (OCR-рушій) зупинився під час розпізнавання тексту. це може "
-"траплятися, якщо використовувані файли traineddata пошкоджені або несумісні "
-"з цією версією tesseract, або через помилку у tesseract.\n"
-"\n"
-"Стек-трейс нижче може містити додаткову інформацію про те, де стався збій.\n"
+"<html><head/><body><p><span style=\" font-weight:600;\">Робота tesseract "
+"перервана</span></p><p>Робота tesseract (модуль розпізнавання тексту) була "
+"перервана під час розпізнавання тексту. Це могло статися через використання "
+"навчених наборів даних, пошкоджених або несумісних з версією tesseract, що "
+"використовується, або через внутрішню помилки tesseract.</p><p>У наведеному "
+"нижче трасуванні стека можуть бути додаткові відомості про причину "
+"збою.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2316,9 +2304,8 @@ msgstr "Знайти і замінити"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
-msgstr "Відображати попередній перегляд"
+msgstr "Показати віджет вичитування"
 
 #: ../qt/src/MainWindow.cc:624
 msgid ""
@@ -2399,7 +2386,7 @@ msgstr "Очистити результати"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "Додати вкладку"
 
 #~ msgid "actionBatchExport"
 #~ msgstr "actionBatchExport"
