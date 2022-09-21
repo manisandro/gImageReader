@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:15+0100\n"
-"PO-Revision-Date: 2021-12-19 17:37+0000\n"
-"Last-Translator: Toni Estévez <toni.estevez@gmail.com>\n"
+"PO-Revision-Date: 2022-09-22 15:18+0000\n"
+"Last-Translator: Eduardo Malaspina <vaio0@swismail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/es/>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1667,7 +1667,7 @@ msgstr "Quitando saltos de renglón…"
 
 #: ../gtk/src/OutputEditorText.cc:309
 msgid "No highlight"
-msgstr ""
+msgstr "Sin destacar"
 
 #: ../gtk/src/OutputEditorText.cc:329
 #, fuzzy
@@ -1719,6 +1719,8 @@ msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
 msgstr ""
+"Los siguientes documentos contienen cambios sin guardar. ¿Qué documentos "
+"deseas guardar antes de continuar?"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
@@ -2412,7 +2414,7 @@ msgstr "Limpiar la salida"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "Agregar pestaña"
 
 #~ msgid "actionBatchExport"
 #~ msgstr "actionBatchExport"
