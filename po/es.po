@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:15+0100\n"
-"PO-Revision-Date: 2022-09-22 15:18+0000\n"
-"Last-Translator: Eduardo Malaspina <vaio0@swismail.com>\n"
+"PO-Revision-Date: 2022-10-01 02:17+0000\n"
+"Last-Translator: Toni Estévez <toni.estevez@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gimagereader/"
 "translations/es/>\n"
 "Language: es\n"
@@ -88,16 +88,15 @@ msgstr "Vertical"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr ""
-"Solicitar la instalación de los diccionarios para autocorrección que falten"
+msgstr "Solicitar la instalación de los diccionarios que faltan"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr "Comprobar automáticamente nuevas versiones del programa"
+msgstr "Comprobar automáticamente si hay una nueva versión disponible"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr "Definiciones de idioma preconfiguradas:"
+msgstr "Definiciones de idioma predefinidas:"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
@@ -105,7 +104,7 @@ msgstr "Definiciones de idioma adicionales:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr "El prefijo del archivo de datos de idioma de tesseract"
+msgstr "El prefijo del archivo de datos de idioma de Tesseract"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
@@ -113,7 +112,7 @@ msgstr "Prefijo"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr "Código de idioma ISO-639-1 seguido del código de país"
+msgstr "Código de idioma ISO-639-1 seguido del código del país"
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
@@ -145,15 +144,15 @@ msgstr "Predeterminado"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr "Ubicación de datos de idioma:"
+msgstr "Ubicaciones de los datos de idioma:"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
-msgstr "Ruta para definiciones de idioma:"
+msgstr "Ruta de las definiciones de idioma:"
 
 #: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
-msgstr "Ruta para diccionarios:"
+msgstr "Ruta de los diccionarios de ortografía:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
@@ -161,7 +160,7 @@ msgstr "Rutas del sistema"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr "Rutas de usuario"
+msgstr "Rutas del usuario"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
@@ -171,7 +170,7 @@ msgstr ""
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
-msgstr "Regenerar traza inversa"
+msgstr "Regenerar el trazado de pila"
 
 #: ../gtk/data/CrashHandler.ui.h:3
 #, no-c-format
@@ -241,9 +240,8 @@ msgstr "Formato:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
-#, fuzzy
 msgid "Group outputs of N lowest levels:"
-msgstr "Agrupar salidas al nivel:"
+msgstr "Agrupar las salidas con los N niveles más bajos:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
@@ -1261,9 +1259,8 @@ msgstr "Palabra mal escrita"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:369
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
-#, fuzzy
 msgid "Low confidence word"
-msgstr "Mostrar los valores de confianza"
+msgstr "Palabra poco fiable"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:420
@@ -1647,19 +1644,16 @@ msgid "Close document"
 msgstr "Cerrar el documento"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "Pegado %1"
+msgstr "Sin título %1"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Document not saved"
-msgstr "Salida no guardada"
+msgstr "Documento no guardado"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Save document before proceeding?"
-msgstr "¿Quiere guardar antes de comenzar?"
+msgstr "¿Guardar el documento antes de continuar?"
 
 #: ../gtk/src/OutputEditorText.cc:298 ../qt/src/OutputEditorText.cc:238
 msgid "Stripping line breaks..."
@@ -1670,18 +1664,16 @@ msgid "No highlight"
 msgstr "Sin destacar"
 
 #: ../gtk/src/OutputEditorText.cc:329
-#, fuzzy
 msgid "Highlight mode"
-msgstr "Modo de resaltar la sintaxis:"
+msgstr "Modo de resaltado"
 
 #: ../gtk/src/OutputEditorText.cc:334
 msgid "Check spelling"
 msgstr "Comprobar ortografía"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:256
-#, fuzzy
 msgid "%1 occurrences replaced"
-msgstr "Número de coincidencias reemplazadas: %1"
+msgstr "%1 coincidencias reemplazadas"
 
 #: ../gtk/src/OutputEditorText.cc:412 ../qt/src/OutputEditorText.cc:301
 msgid "File: %1"
@@ -1710,9 +1702,8 @@ msgid "Save Output..."
 msgstr "Guardar salida…"
 
 #: ../gtk/src/OutputEditorText.cc:584
-#, fuzzy
 msgid "Unsaved documents"
-msgstr "Cerrar el documento"
+msgstr "Documentos no guardados"
 
 #: ../gtk/src/OutputEditorText.cc:585 ../qt/src/OutputEditorText.cc:462
 msgid ""
@@ -1815,10 +1806,9 @@ msgid "Source already recognized"
 msgstr "Fuente ya reconocida"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
-#, fuzzy
 msgid "One or more selected sources were already recognized. Proceed anyway?"
 msgstr ""
-"Una o más fuentes seleccionadas ya han sido reconocidas. ¿Proceder de todos "
+"Ya se han reconocido una o más fuentes seleccionadas. ¿Proceder de todos "
 "modos?"
 
 #: ../gtk/src/Recognizer.cc:237 ../gtk/src/Recognizer.cc:351
@@ -2133,9 +2123,8 @@ msgid "Discard"
 msgstr "Descartar"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "Descartar"
+msgstr "Descartar todo"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
 msgid "Text"
@@ -2150,16 +2139,15 @@ msgid "About gImageReader"
 msgstr "Acerca de gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
 "&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;"
-"Una interfaz gráfica para tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;"
-"https://github.com/manisandro/gImageReader/&quot;&gt;Website&lt;/a&gt;&lt;/"
-"p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+"Una interfaz gráfica para tesseract-ocr&lt;/p&gt;&lt;p&gt;&lt;a "
+"href=&quot;https://github.com/manisandro/gImageReader/&quot;&gt;Web&lt;/a&gt;"
+"&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2208,7 +2196,6 @@ msgstr ""
 "body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract has "
 "aborted</span></p><p>Tesseract (the OCR engine) has aborted while "
@@ -2217,15 +2204,13 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
-"<b>Tesseract se interrumpió</b>\n"
-"\n"
-"Tesseract (el motor de OCR) se interrumpió mientras se reconocía el texto. "
-"Esto puede ocurrir si los datos de entrenamiento están dañados o son "
-"incompatibles con la versión utilizada de tesseract, o tal vez como "
-"resultado de un defecto en tesseract.\n"
-"\n"
-"Este seguimiento de pila puede brindar más información sobre la ubicación "
-"donde se produjo el fallo.\n"
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseract se ha "
+"detenido</span></p><p>Tesseract (el motor de OCR) se ha detenido durante el "
+"reconocimiento del texto. Esto puede ocurrir si los datos de entrenamiento "
+"usados están corruptos o son incompatibles con la versión de Tesseract en "
+"uso o debido a un error en Tesseract..</p><p>Los detalles que se indican a "
+"continuación pueden proporcionar información adicional sobre la causa del "
+"fallo.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
@@ -2331,7 +2316,6 @@ msgstr "Buscar y reemplazar"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
 msgstr "Mostrar la vista previa"
 
