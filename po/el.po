@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gImageReader 3.1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:15+0100\n"
-"PO-Revision-Date: 2022-06-21 20:18+0000\n"
+"PO-Revision-Date: 2022-11-19 16:47+0000\n"
 "Last-Translator: Ichnilatis <z8g1r3d2u5d0u3b5@simon13.slack.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/gimagereader/"
 "translations/el/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.15-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../data/gimagereader.desktop.in.h:1
@@ -60,9 +60,8 @@ msgid "Exclude these characters from being recognized (blacklist):"
 msgstr "Εξαίρεση αυτών των χαρακτήρων από την αναγνώριση (μαύρη λίστα):"
 
 #: ../gtk/data/CharacterListDialog.ui.h:3 ../qt/data/CharacterListDialog.ui.h:3
-#, fuzzy
 msgid "Enter a string of characters..."
-msgstr "Λήψη παραμέτρων..."
+msgstr "Εισαγάγετε μια σειρά χαρακτήρων..."
 
 #: ../gtk/data/CharacterListDialog.ui.h:4 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
@@ -173,7 +172,7 @@ msgid "Regenerate backtrace"
 msgstr "Επαναδημιουργία οπισθοανίχνευσης"
 
 #: ../gtk/data/CrashHandler.ui.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -183,11 +182,14 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"Συγνώμη για το πρόβλημα. Για να βοηθήσετε στην βελτίωση της εφαρμογής, "
-"παρακαλούμε να στείλετε μια αναφορά του προβλήματος στο <a href=\"mailto:"
-"manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
-"a>. Παρακαλούμε, προσπαθήστε να περιγράψετε τι κάνατε πριν να καταρρεύσει η "
-"εφαρμογή. Επίσης, να συμπεριλάβετε την παρακάτω πληροφορία. Σας ευχαριστούμε."
+"<b>Η εφαρμογή κατέρρευσε</b>\n"
+"\n"
+"Ζητούμε συγγνώμη για την ταλαιπωρία. Για να βοηθήσετε στη βελτίωση της "
+"εφαρμογής, παρακαλούμε να αναφέρετε το πρόβλημα στο <a href=\"mailto"
+":manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>. Παρακαλούμε, προσπαθήστε να περιγράψετε τι κάνατε πριν από τη κατάρρευση "
+"της εφαρμογής. Επίσης, συμπεριλάβετε τις παρακάτω πληροφορίες. Σας "
+"ευχαριστούμε."
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -200,11 +202,20 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occurred.\n"
 msgstr ""
+"<b>Το Tesseract έχει διακοπεί</b>\n"
+"\n"
+"Το Tesseract (η μηχανή Οπτικής Αναγνώρισης Χαρακτήρων) έχει διακοπεί κατά "
+"την αναγνώριση κειμένου. Αυτό μπορεί να συμβεί εάν τα traineddatas που "
+"χρησιμοποιήθηκαν είναι κατεστραμμένα ή μη συμβατά με την έκδοση του "
+"tesseract που χρησιμοποιείται, ή λόγω σφάλματος στο tesseract.\n"
+"\n"
+"Το παρακάτω stacktrace μπορεί να παράσχει πρόσθετες πληροφορίες σχετικά με "
+"το πού συνέβη η κατάρρευση.\n"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:1
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "Μαζική Εξαγωγή HOCR"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:2
 #: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
@@ -218,9 +229,8 @@ msgstr "Κλείσιμο"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:4
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "Επιλογή αρχείων"
+msgstr "Επιλέξτε φάκελο προέλευσης:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
 #: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
@@ -231,30 +241,27 @@ msgstr "Μορφή:"
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs of N lowest levels:"
-msgstr ""
+msgstr "Ομαδικές έξοδοι των Ν χαμηλότερων επιπέδων:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "Έξοδος:"
+msgstr "Εισαγωγή:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:8
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "Κατάσταση εξόδου:"
+msgstr "Προεπισκόπηση εξόδου:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:9
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
 msgid "Input files"
-msgstr ""
+msgstr "Αρχεία εισόδου"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:10
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "Άλλες επιλογές"
+msgstr "Επιλογές εξαγωγής"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
@@ -296,7 +303,7 @@ msgstr "Καθαρισμός λίστας"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Μικρογραφίες"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
@@ -338,9 +345,8 @@ msgid "Scan"
 msgstr "Σάρωση"
 
 #: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:17
-#, fuzzy
 msgid "Source:"
-msgstr "Προέλευση"
+msgstr "Προέλευση:"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
@@ -499,7 +505,7 @@ msgstr "Προέλευση"
 
 #: ../gtk/data/MainWindow.ui.h:58 ../qt/src/SourceManager.cc:172
 msgid "Protected PDF"
-msgstr ""
+msgstr "Προστατευμένο PDF"
 
 #: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:71
 msgid "Current Page"
@@ -511,32 +517,29 @@ msgstr "Πολλαπλές σελίδες..."
 
 #: ../gtk/data/MainWindow.ui.h:61 ../qt/src/Recognizer.cc:77
 msgid "Batch mode..."
-msgstr ""
+msgstr "Λειτουργία μαζικής επεξεργασίας..."
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:720
 msgid "Add Word"
-msgstr ""
+msgstr "Προσθέστε λέξη"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:720
-#, fuzzy
 msgid "Enter word:"
-msgstr "Παράβλεψη λέξης"
+msgstr "Εισαγάγετε λέξη:"
 
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Προσθήκη νέας εξόδου μετά την τελευταία σελίδα"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "Περιστροφή τρέχουσας σελίδας"
+msgstr "Εισαγωγή νέας εξόδου πριν από την τρέχουσα σελίδα"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:95
-#, fuzzy
 msgid "Export to plain text"
-msgstr "Εξαγωγή σε PDF"
+msgstr "Εξαγωγή σε απλό κείμενο"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:97
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:98
@@ -546,20 +549,18 @@ msgstr "Εξαγωγή σε PDF"
 #: ../gtk/data/OutputEditorHOCR.ui.h:9
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:100
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:101
-#, fuzzy
 msgid "Export to ODT"
-msgstr "Εξαγωγή σε PDF"
+msgstr "Εξαγωγή σε ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
-#, fuzzy
 msgid "Append document after last page"
-msgstr "Προσάρτηση στο υφιστάμενο κείμενο"
+msgstr "Προσθήκη εγγράφου μετά την τελευταία σελίδα"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
 msgid "Insert document before current page"
-msgstr ""
+msgstr "Εισαγωγή εγγράφου πριν από την τρέχουσα σελίδα"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
@@ -575,9 +576,8 @@ msgstr "Αποθήκευση εξόδου"
 #: ../gtk/data/OutputEditorHOCR.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:105
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:106
-#, fuzzy
 msgid "Export"
-msgstr "Εξαγωγή ως PDF"
+msgstr "Εξαγωγή"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:16 ../gtk/data/OutputEditorText.ui.h:20
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:110
@@ -596,7 +596,7 @@ msgstr "Εύρεση και αντικατάσταση"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:115
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:116
 msgid "Show confidence values"
-msgstr ""
+msgstr "Εμφάνιση τιμών εμπιστοσύνης"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:19 ../gtk/data/PdfExportWidget.ui.h:1
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/data/PdfExportWidget.ui.h:1
@@ -608,12 +608,12 @@ msgstr "Εμφάνιση προεπισκόπησης"
 #: ../gtk/data/OutputEditorHOCR.ui.h:20
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Next (F3)"
-msgstr ""
+msgstr "Επόμενο (F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:21
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Previous (Shift+F3)"
-msgstr ""
+msgstr "Προηγούμενο (Shift+F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:978
 #: ../qt/src/hocr/OutputEditorHOCR.cc:852
@@ -688,9 +688,8 @@ msgid "Draw whitespace"
 msgstr "Χάραξη κενού διαστήματος"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "Άνοιγμα αρχείου hOCR"
+msgstr "Άνοιγμα αρχείου"
 
 #: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:111
 msgid "Strip line breaks on selected text"
@@ -708,7 +707,7 @@ msgstr "Ακύρωση αναίρεσης"
 
 #: ../gtk/data/OutputEditorText.ui.h:21
 msgid "New tab"
-msgstr ""
+msgstr "Νέα καρτέλα"
 
 #: ../gtk/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportDialog.ui.h:4
 #: ../qt/data/PdfExportWidget.ui.h:3
@@ -760,28 +759,27 @@ msgstr "Ομογενοποίηση γραμμής και απόστασης λέ
 #: ../gtk/data/PdfExportWidget.ui.h:12 ../qt/data/PdfExportDialog.ui.h:21
 #: ../qt/data/PdfExportWidget.ui.h:20
 msgid "Override font family:"
-msgstr ""
+msgstr "Παράκαμψη οικογένειας γραμματοσειράς:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:13 ../qt/data/PdfExportDialog.ui.h:27
 #: ../qt/data/PdfExportWidget.ui.h:26
 msgid "Fallback font family:"
-msgstr ""
+msgstr "Εναλλακτική οικογένεια γραμματοσειράς:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:14 ../qt/data/PdfExportDialog.ui.h:20
 #: ../qt/data/PdfExportWidget.ui.h:19
-#, fuzzy
 msgid "Override font size:"
-msgstr "Χρήση των μεγεθών γραμματοσειράς που ανιχνεύτηκαν"
+msgstr "Παράκαμψη μεγέθους γραμματοσειράς:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:15 ../qt/data/PdfExportDialog.ui.h:23
 #: ../qt/data/PdfExportWidget.ui.h:22
 msgid "Font scaling:"
-msgstr ""
+msgstr "Κλιμάκωση γραμματοσειράς:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:16 ../qt/data/PdfExportDialog.ui.h:26
 #: ../qt/data/PdfExportWidget.ui.h:25
 msgid "pt"
-msgstr ""
+msgstr "pt"
 
 #: ../gtk/data/PdfExportWidget.ui.h:17 ../qt/data/PdfExportDialog.ui.h:22
 #: ../qt/data/PdfExportWidget.ui.h:21
