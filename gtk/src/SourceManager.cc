@@ -25,6 +25,9 @@
 
 #include <pangomm.h>
 #include <poppler-document.h>
+#ifdef G_OS_UNIX
+#include <gdk/gdkx.h>
+#endif
 
 
 SourceManager::SourceManager(const Ui::MainWindow& _ui)
@@ -83,7 +86,11 @@ SourceManager::SourceManager(const Ui::MainWindow& _ui)
 	CONNECT(m_clipboard, owner_change, [this](GdkEventOwnerChange*) { ui.buttonSourcePaste->set_sensitive(m_clipboard->wait_is_image_available()); });
 	CONNECT(ui.buttonSourceFolder, clicked, [this] { addFolder(); });
 	CONNECT(ui.buttonSourcePaste, clicked, [this] { pasteClipboard(); });
-	CONNECT(ui.buttonSourceScreenshot, clicked, [this] { takeScreenshot(); });
+	if (GDK_IS_X11_WINDOW(MAIN->getWindow()->gobj())) {
+		CONNECT(ui.buttonSourceScreenshot, clicked, [this] { takeScreenshot(); });
+	} else {
+		ui.buttonSourceScreenshot->hide();
+	}
 	CONNECT(ui.buttonSourcesRemove, clicked, [this] { removeSource(false); });
 	CONNECT(ui.buttonSourcesDelete, clicked, [this] { removeSource(true); });
 	CONNECT(ui.buttonSourcesClear, clicked, [this] { clearSources(); });

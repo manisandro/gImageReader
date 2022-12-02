@@ -78,7 +78,11 @@ SourceManager::SourceManager(const UI_MainWindow& _ui)
 	connect(m_recentMenu, &QMenu::aboutToShow, this, &SourceManager::prepareRecentMenu);
 	connect(ui.actionSourceFolder, &QAction::triggered, this, &SourceManager::addFolder);
 	connect(ui.actionSourcePaste, &QAction::triggered, this, &SourceManager::pasteClipboard);
-	connect(ui.actionSourceScreenshot, &QAction::triggered, this, &SourceManager::takeScreenshot);
+	if (QGuiApplication::platformName() != "wayland") {
+		connect(ui.actionSourceScreenshot, &QAction::triggered, this, &SourceManager::takeScreenshot);
+	} else {
+		ui.actionSourceScreenshot->setVisible(false);
+	}
 	connect(ui.actionSourceRemove, &QAction::triggered, this, &SourceManager::removeSource);
 	connect(ui.actionSourceDelete, &QAction::triggered, this, &SourceManager::deleteSource);
 	connect(ui.actionSourceClear, &QAction::triggered, this, &SourceManager::clearSources);
