@@ -38,6 +38,7 @@ jobs:
           VERSION=${{ steps.version_number.outputs.version }}
           git config --global user.email "ci@github.com"
           git config --global user.name "Github CI"
+          git config --global --add safe.directory /__w/gImageReader/gImageReader
           # Workaround for "could not read Username for 'https://github.com': No such device or address"
           git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git
           git tag -d $VERSION || true
