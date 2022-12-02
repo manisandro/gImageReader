@@ -549,17 +549,17 @@ bool OutputEditorText::save(int page, const std::string& filename) {
 	return true;
 }
 
-bool OutputEditorText::crashSave(const std::string& filename) const {
-	std::ofstream file(filename);
+std::string OutputEditorText::crashSave(const std::string& filename) const {
+	std::ofstream file(filename + ".txt");
 	if(file.is_open()) {
 		for(int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
 			Glib::ustring txt = textBuffer(i)->get_text(false);
 			file.write(txt.data(), txt.bytes());
 			file.write("\n\n", 2);
 		}
-		return  true;
+		return filename + ".txt";
 	}
-	return false;
+	return "";
 }
 
 bool OutputEditorText::clear(bool hide) {

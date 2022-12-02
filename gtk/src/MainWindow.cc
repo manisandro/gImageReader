@@ -77,15 +77,13 @@ void MainWindow::signalHandlerExec(int sig, bool tesseractCrash) {
 	std::signal(sig, nullptr);
 	std::string filename;
 	if(MAIN->getOutputEditor()) {
-		filename = Glib::build_filename(g_get_home_dir(), Glib::ustring::compose("%1_crash-save.txt", PACKAGE_NAME));
+		filename = Glib::build_filename(g_get_home_dir(), Glib::ustring::compose("%1_crash-save", PACKAGE_NAME));
 		int i = 0;
 		while(Glib::file_test(filename, Glib::FILE_TEST_EXISTS)) {
 			++i;
-			filename = Glib::build_filename(g_get_home_dir(), Glib::ustring::compose("%1_crash-save_%2.txt", PACKAGE_NAME, i));
+			filename = Glib::build_filename(g_get_home_dir(), Glib::ustring::compose("%1_crash-save_%2", PACKAGE_NAME, i));
 		}
-		if(!MAIN->getOutputEditor()->crashSave(filename)) {
-			filename.clear();
-		}
+		filename = MAIN->getOutputEditor()->crashSave(filename);
 	}
 	Glib::Pid pid;
 	Glib::spawn_async("", std::vector<std::string> {pkgExePath, "crashhandle", Glib::ustring::compose("%1", getpid()), Glib::ustring::compose("%1", tesseractCrash), filename}, Glib::SPAWN_DO_NOT_REAP_CHILD, sigc::slot<void>(), &pid);

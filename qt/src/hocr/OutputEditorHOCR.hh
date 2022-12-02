@@ -57,7 +57,7 @@ public:
 	void finalizeRead(ReadSessionData* data) override;
 	BatchProcessor* createBatchProcessor(const QMap<QString, QVariant>& /*options*/) const override { return new HOCRBatchProcessor; }
 	bool containsSource(const QString& source, int sourcePage) const override;
-	bool crashSave(const QString& filename) const override;
+	QString crashSave(const QString& filename) const override;
 
 	HOCRDocument* getDocument() const { return m_document; }
 	DisplayerToolHOCR* getTool() const { return m_tool; }

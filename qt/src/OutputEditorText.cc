@@ -427,13 +427,13 @@ bool OutputEditorText::save(int page, const QString& filename) {
 	return true;
 }
 
-bool OutputEditorText::crashSave(const QString& filename) const {
-	QFile file(filename);
+QString OutputEditorText::crashSave(const QString& filename) const {
+	QFile file(filename + ".txt");
 	if(file.open(QIODevice::WriteOnly)) {
 		file.write(MAIN->getConfig()->useUtf8() ? textEdit()->toPlainText().toUtf8() : textEdit()->toPlainText().toLocal8Bit());
-		return true;
+		return filename + ".txt";
 	}
-	return false;
+	return "";
 }
 
 bool OutputEditorText::clear(bool hide) {

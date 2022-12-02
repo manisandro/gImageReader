@@ -51,7 +51,7 @@ public:
 	void read(tesseract::TessBaseAPI& tess, ReadSessionData* data) override;
 	void readError(const QString& errorMsg, ReadSessionData* data) override;
 	BatchProcessor* createBatchProcessor(const QMap<QString, QVariant>& options) const override { return new TextBatchProcessor(options["prependPage"].toBool()); }
-	bool crashSave(const QString& filename) const override;
+	QString crashSave(const QString& filename) const override;
 
 public slots:
 	bool open(const QString& filename = QString()) override;

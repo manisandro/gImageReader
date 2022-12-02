@@ -57,7 +57,7 @@ public:
 	void onVisibilityChanged(bool visible) override;
 	void setLanguage(const Config::Lang& lang) override;
 	bool open(const std::string& filename = "") override;
-	bool crashSave(const std::string& filename) const override;
+	std::string crashSave(const std::string& filename) const override;
 	bool save(int page = -1, const std::string& filename = "");
 
 private:

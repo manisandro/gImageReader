@@ -1131,8 +1131,8 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 	return true;
 }
 
-bool OutputEditorHOCR::crashSave(const std::string& filename) const {
-	std::ofstream file(filename);
+std::string OutputEditorHOCR::crashSave(const std::string& filename) const {
+	std::ofstream file(filename + ".html");
 	if(file.is_open()) {
 		Glib::ustring header = Glib::ustring::compose(
 		                           "<!DOCTYPE html>\n"
@@ -1149,9 +1149,9 @@ bool OutputEditorHOCR::crashSave(const std::string& filename) const {
 		file.write(header.data(), header.bytes());
 		file.write(body.data(), body.bytes());
 		file.write(footer.data(), footer.bytes());
-		return true;
+		return filename + ".html";
 	}
-	return false;
+	return "";
 }
 
 bool OutputEditorHOCR::exportToODT() {

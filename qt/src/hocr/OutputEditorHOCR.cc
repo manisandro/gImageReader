@@ -1021,8 +1021,8 @@ bool OutputEditorHOCR::save(const QString& filename) {
 	return true;
 }
 
-bool OutputEditorHOCR::crashSave(const QString& filename) const {
-	QFile file(filename);
+QString OutputEditorHOCR::crashSave(const QString& filename) const {
+	QFile file(filename + ".html");
 	if(file.open(QIODevice::WriteOnly)) {
 		QString header = QString(
 		                     "<!DOCTYPE html>\n"
@@ -1037,9 +1037,9 @@ bool OutputEditorHOCR::crashSave(const QString& filename) const {
 		file.write(m_document->toHTML().toUtf8());
 		m_document->convertSourcePaths(QFileInfo(filename).absolutePath(), true);
 		file.write("</html>\n");
-		return true;
+		return filename + ".html";
 	}
-	return false;
+	return "";
 }
 
 bool OutputEditorHOCR::exportToODT() {

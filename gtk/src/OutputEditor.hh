@@ -67,7 +67,7 @@ public:
 	virtual void onVisibilityChanged(bool /*visible*/) {}
 	virtual bool open(const std::string& filename) = 0;
 	virtual bool clear(bool hide = true) = 0;
-	virtual bool crashSave(const std::string& filename) const = 0;
+	virtual std::string crashSave(const std::string& filename) const = 0;
 	virtual void setLanguage(const Config::Lang& /*lang*/) {}
 	virtual bool containsSource(const std::string& source, int sourcePage) const { return false; }
 };
