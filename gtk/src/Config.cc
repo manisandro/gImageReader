@@ -279,7 +279,7 @@ void Config::toggleAddLanguage(bool forceHide) {
 
 void Config::addLanguage() {
 	bool invalid = false;
-	if(!Glib::Regex::create("^\\w+$")->match(ui.entryLangsAddPrefix->get_text())) {
+	if(!Glib::Regex::create("^[\\w/]+$")->match(ui.entryLangsAddPrefix->get_text())) {
 		invalid = true;
 		Utils::set_error_state(ui.entryLangsAddPrefix);
 	}
@@ -287,7 +287,7 @@ void Config::addLanguage() {
 		invalid = true;
 		Utils::set_error_state(ui.entryLangsAddName);
 	}
-	if(!Glib::Regex::create("^[a-z]{2,}(_[A-Z]{2,})?$")->match(ui.entryLangsAddCode->get_text())) {
+	if(!ui.entryLangsAddCode->get_text().empty() && !Glib::Regex::create("^[a-z]{2,}(_[A-Z]{2,})?$")->match(ui.entryLangsAddCode->get_text())) {
 		invalid = true;
 		Utils::set_error_state(ui.entryLangsAddCode);
 	}

@@ -263,7 +263,7 @@ void Config::toggleAddLanguage(bool forceHide) {
 void Config::addLanguage() {
 	QString errorStyle = "background: #FF7777; color: #FFFFFF;";
 	bool invalid = false;
-	if(!QRegularExpression("^\\w+$").match(ui.lineEditLangPrefix->text()).hasMatch()) {
+	if(!QRegularExpression("^[\\w/]+$").match(ui.lineEditLangPrefix->text()).hasMatch()) {
 		invalid = true;
 		ui.lineEditLangPrefix->setStyleSheet(errorStyle);
 	}
@@ -271,7 +271,7 @@ void Config::addLanguage() {
 		invalid = true;
 		ui.lineEditLangName->setStyleSheet(errorStyle);
 	}
-	if(!QRegularExpression("^[a-z]{2,}(_[A-Z]{2,})?$").match(ui.lineEditLangCode->text()).hasMatch()) {
+	if(!ui.lineEditLangCode->text().isEmpty() && !QRegularExpression("^[a-z]{2,}(_[A-Z]{2,})?$").match(ui.lineEditLangCode->text()).hasMatch()) {
 		invalid = true;
 		ui.lineEditLangCode->setStyleSheet(errorStyle);
 	}
