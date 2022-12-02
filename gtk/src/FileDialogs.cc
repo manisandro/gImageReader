@@ -301,6 +301,7 @@ static std::string kde_save_dialog(const Glib::ustring& title, const std::string
 
 static bool is_kde() {
 	static bool is_kde =
+	    Glib::ustring(Glib::getenv("WAYLAND_DISPLAY")).empty() &&
 	    Glib::ustring(Glib::getenv("XDG_CURRENT_DESKTOP")).lowercase() == "kde" &&
 	    Glib::file_test("/usr/bin/kdialog", Glib::FILE_TEST_EXISTS);
 	return is_kde;

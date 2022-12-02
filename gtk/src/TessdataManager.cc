@@ -255,7 +255,10 @@ void TessdataManager::applyChanges() {
 				removeFiles.push_back(Glib::build_filename(tessDataPath, prefix + ".traineddata"));
 			}
 		}
-		std::uint32_t xid = gdk_x11_window_get_xid(ui.dialogTessdatamanager->get_window()->gobj());
+		std::uint32_t xid = 0;
+		if GDK_IS_X11_WINDOW(ui.dialogTessdatamanager->get_window()->gobj()) {
+			xid = gdk_x11_window_get_xid(ui.dialogTessdatamanager->get_window()->gobj());
+		}
 
 		if(!installFiles.empty()) {
 			std::vector<Glib::VariantBase> params = { Glib::Variant<std::uint32_t>::create(xid),
