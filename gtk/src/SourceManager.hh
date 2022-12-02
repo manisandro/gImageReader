@@ -35,7 +35,11 @@ struct Source : public DataObject {
 		: file(_file), displayname(_displayname), monitor(_monitor), isTemp(_isTemp) {}
 	~Source() {
 		if(isTemp && file) {
-			file->remove();
+			try {
+				file->remove();
+			} catch(const Glib::Error&) {
+				/* pass */
+			}
 		}
 	}
 	Glib::RefPtr<Gio::File> file;
