@@ -1169,7 +1169,7 @@ bool OutputEditorHOCR::exportToODT() {
 
 	m_treeView->grab_focus(); // Ensure any item editor loses focus and commits its changes
 	MAIN->getDisplayer()->setBlockAutoscale(true);
-	bool success = HOCROdtExporter().run(m_document.get(), m_filebasename);
+	bool success = HOCROdtExporter().run(m_document.get(), outname);
 	MAIN->getDisplayer()->setBlockAutoscale(false);
 	return success;
 }
@@ -1234,7 +1234,7 @@ bool OutputEditorHOCR::exportToText() {
 	}
 
 	m_treeView->grab_focus(); // Ensure any item editor loses focus and commits its changes
-	return HOCRTextExporter().run(m_document.get(), m_filebasename);
+	return HOCRTextExporter().run(m_document.get(), outname);
 }
 
 bool OutputEditorHOCR::clear(bool hide) {
