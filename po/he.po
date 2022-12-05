@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gImageReader 3.3.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2022-01-18 02:54+0000\n"
+"PO-Revision-Date: 2022-12-06 20:48+0000\n"
 "Last-Translator: aharon don <aronrefael@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/gimagereader/"
 "translations/he/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -1256,9 +1256,8 @@ msgstr "מילה שגויה"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:369
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
-#, fuzzy
 msgid "Low confidence word"
-msgstr "הצג ערכי אמינות"
+msgstr "ערכי אמינות נמוכים"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:420
@@ -1803,9 +1802,8 @@ msgid "Source already recognized"
 msgstr "המקור כבר זוהה"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
-#, fuzzy
 msgid "One or more selected sources were already recognized. Proceed anyway?"
-msgstr "מקור אחד או יותר שנבחרו כבר זוהו. להמשיך בכל זאת?"
+msgstr "בחרת מקור אחד או כמה שכבר עברו פיענוח. להמשיך בכל זאת?"
 
 #: ../gtk/src/Recognizer.cc:237 ../gtk/src/Recognizer.cc:351
 #: ../qt/src/Recognizer.cc:252 ../qt/src/Recognizer.cc:364
