@@ -334,7 +334,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.actionOutputClear, &QAction::triggered, this, &OutputEditorHOCR::clear);
 	connect(ui.actionOutputReplace, &QAction::triggered, ui.searchFrame, &SearchReplaceFrame::setVisible);
 	connect(ui.actionOutputReplace, &QAction::triggered, ui.searchFrame, &SearchReplaceFrame::clear);
-	connect(ui.actionToggleWConf, &QAction::triggered, this, &OutputEditorHOCR::toggleWConfColumn);
+	connect(ui.actionToggleWConf, &QAction::toggled, this, &OutputEditorHOCR::toggleWConfColumn);
 	connect(ui.actionPreview, &QAction::toggled, this, &OutputEditorHOCR::previewToggled);
 	connect(ui.actionProofread, &QAction::toggled, m_proofReadWidget, &HOCRProofReadWidget::setProofreadEnabled);
 	connect(&m_previewTimer, &QTimer::timeout, this, &OutputEditorHOCR::updatePreview);
@@ -361,6 +361,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.actionExpandAll, &QAction::triggered, this, &OutputEditorHOCR::expandItemClass);
 	connect(ui.actionCollapseAll, &QAction::triggered, this, &OutputEditorHOCR::collapseItemClass);
 	connect(MAIN->getDisplayer(), &Displayer::imageChanged, this, &OutputEditorHOCR::sourceChanged);
+
+	ADD_SETTING(ActionSetting("displayconfidence", ui.actionToggleWConf, false));
 
 	setFont();
 }

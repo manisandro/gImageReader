@@ -321,5 +321,10 @@
             <summary>Batch export format</summary>
             <description>Batch export format.</description>
         </key>
+        <key type="b" name="displayconfidence">
+          <default>false</default>
+          <summary>Whether to display confidence values in hOCR tree</summary>
+          <description>Whether to display confidence values in hOCR tree.</description>
+      </key>
     </schema>
 </schemalist>

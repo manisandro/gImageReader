@@ -478,6 +478,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	CONNECT(ui.buttonCollapseAll, clicked, [this] { expandCollapseItemClass(false); });
 	m_connectionSourceChanged = CONNECT(MAIN->getDisplayer(), imageChanged, [this] { sourceChanged(); });
 
+	ADD_SETTING(SwitchSettingT<Gtk::ToggleButton>("displayconfidence", ui.buttonWconf));
+
 	setFont();
 }
 
