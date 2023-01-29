@@ -20,6 +20,7 @@
 #ifndef IMAGE_HH
 #define IMAGE_HH
 
+#include <cstdint>
 #include <cairomm/cairomm.h>
 
 class Image {
