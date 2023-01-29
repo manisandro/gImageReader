@@ -1,3 +1,20 @@
+gImageReader 3.4.1 (Jan 29 2023):
+* Bugfixes:
+ - Fix warning about text in pdf incorrectly shown even if PDF has no text
+ - Adapt for enchant2 dictionary location change
+ - [Qt] Fix setting custom font for text editor
+ - Fix crash in batch export dialog when selecting folder with no hocr html files
+ - Assorted Wayland fixes
+ - [Gtk] Fix incorrectly passing export filename to hOCR text and ODT export
+ - [Gtk] Rework Utils::string_html_escape to fix possible unicode string corruption
+* Enhancements:
+ - Add 2px margin to autodetected areas
+ - Allow specifying custom script tessdatas by prepending prefix with script/ and leaving empty lang code
+ - Use correct file extensions in crash save files
+ - Make WConf visibility persistent
+* Updated translations
+* See https://github.com/manisandro/gImageReader/compare/v3.4.0...v3.4.1 for details
+
 gImageReader 3.4.0 (Jan 28 2022):
 * Add support for tesseract 5.0
 * Add Qt6 support
