@@ -380,27 +380,28 @@ int Utils::string_replace(Glib::ustring& str, const Glib::ustring& search, const
 }
 
 Glib::ustring Utils::string_html_escape(const Glib::ustring& str) {
-	std::string result;
+	Glib::ustring result;
 	result.reserve(str.bytes());
-	for(size_t pos = 0; pos != str.bytes(); ++pos) {
-		switch(str[pos]) {
+	for (Glib::ustring::const_iterator it = str.cbegin(), itEnd = str.cend(); it != itEnd; ++it) {
+		gunichar ch = *it;
+		switch(ch) {
 		case '&':
-			result.append("&amp;");
+			result += "&amp;";
 			break;
 		case '"':
-			result.append("&quot;");
+			result += "&quot;";
 			break;
 		case '\'':
-			result.append("&apos;");
+			result += "&apos;";
 			break;
 		case '<':
-			result.append("&lt;");
+			result += "&lt;";
 			break;
 		case '>':
-			result.append("&gt;");
+			result += "&gt;";
 			break;
 		default:
-			result.append(str.data() + pos, 1);
+			result += ch;
 			break;
 		}
 	}
