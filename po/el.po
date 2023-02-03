@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gImageReader 3.1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:15+0100\n"
-"PO-Revision-Date: 2023-02-03 09:53+0000\n"
+"PO-Revision-Date: 2023-02-03 10:58+0000\n"
 "Last-Translator: Vasilis K. <skyhirules@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/gimagereader/"
 "translations/el/>\n"
@@ -1053,9 +1053,8 @@ msgid "There was no unsaved work."
 msgstr "Δεν υπάρχει καμία μη αποθηκευμένη εργασία."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
-#, fuzzy
 msgid "Failed to obtain backtrace. Is GDB installed?"
-msgstr "Αποτυχία λήψης οπισθοανίχνευσης. Είναι εγκατεστημένο το gdb;"
+msgstr "Αποτυχία λήψης οπισθοανίχνευσης. Είναι εγκατεστημένο το GDB;"
 
 #: ../gtk/src/Displayer.cc:254 ../qt/src/Displayer.cc:200
 msgid "Failed to load image"
@@ -1458,17 +1457,17 @@ msgstr "Εφαρμόζονται υποκαταστάσεις..."
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:243
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:230
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Συντομεύσεις πληκτρολογίου"
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:264
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:242
 msgid "Lines before:"
-msgstr ""
+msgstr "Γραμμές πριν:"
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:272
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:256
 msgid "Lines after:"
-msgstr ""
+msgstr "Γραμμές μετά:"
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:529
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:457
@@ -1493,12 +1492,12 @@ msgstr ""
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:556
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:478
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Συντομεύσεις πληκτρολογίου"
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:571
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:493
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Εμπιστοσύνη: %1"
 
 #: ../gtk/src/MainWindow.cc:135 ../qt/src/MainWindow.cc:342
 msgid "Using tesseract"
@@ -1509,9 +1508,8 @@ msgid "Select an image to begin..."
 msgstr "Επιλογή εικόνας για έναρξη..."
 
 #: ../gtk/src/MainWindow.cc:329 ../qt/src/MainWindow.cc:325
-#, fuzzy
 msgid "Multiple sources (%1)"
-msgstr "Πολλαπλές προελεύσεις"
+msgstr "Πολλαπλές πηγές (% 1)"
 
 #: ../gtk/src/MainWindow.cc:331 ../qt/src/MainWindow.cc:327
 msgid "Ready"
@@ -1595,46 +1593,48 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"Δεν ήταν δυνατή η λήψη των παρακάτω λεξικών:\n"
+"%1\n"
+"\n"
+"Ελέγξτε τα δικαιώματα συνδεσιμότητας και καταλόγου.\n"
+"Συμβουλή: Εάν δεν έχετε δικαιώματα εγγραφής σε φακέλους συστήματος, μπορείτε "
+"να μεταβείτε στις διαδρομές χρήστη στο παράθυρο διαλόγου ρυθμίσεων."
 
 #: ../gtk/src/MainWindow.cc:636 ../qt/src/MainWindow.cc:624
 msgid "Dictionaries installed"
 msgstr "Εγκατεστημένα λεξικά"
 
 #: ../gtk/src/MainWindow.cc:636
-#, fuzzy
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
-msgstr "Τα παρακάτω λεξικά εγκαταστάθηκαν: %1"
+msgstr ""
+"Τα παρακάτω λεξικά εγκαταστάθηκαν:\n"
+"%1"
 
 #: ../gtk/src/MainWindow.cc:638 ../qt/src/MainWindow.cc:626
 msgid "No spelling dictionaries found for '%1'."
 msgstr "Δεν βρέθηκαν ορθογραφικά λεξικά για το '%1'."
 
 #: ../gtk/src/OutputEditorText.cc:38 ../qt/src/OutputEditorText.cc:42
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "Ανάλυση του σφάλματος: %1"
+msgstr "Σελίδα: %1\n"
 
 #: ../gtk/src/OutputEditorText.cc:129
-#, fuzzy
 msgid "Close document"
-msgstr "Εγγραφο"
+msgstr "Κλείσιμο εγγράφου"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "Επικολλήθηκε το %1"
+msgstr "Χωρίς τίτλο %1"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Document not saved"
-msgstr "Η έξοδος δεν αποθηκεύτηκε"
+msgstr "Το έγγραφο δεν αποθηκεύτηκε"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
-#, fuzzy
 msgid "Save document before proceeding?"
-msgstr "Αποθήκευση της εξόδου πριν την συνέχεια;"
+msgstr "Αποθήκευση εγγράφου πριν συνεχίσετε;"
 
 #: ../gtk/src/OutputEditorText.cc:298 ../qt/src/OutputEditorText.cc:238
 msgid "Stripping line breaks..."
@@ -1642,11 +1642,11 @@ msgstr "Αφαίρεση αλλαγών γραμμών..."
 
 #: ../gtk/src/OutputEditorText.cc:309
 msgid "No highlight"
-msgstr ""
+msgstr "Χωρίς επισήμανση"
 
 #: ../gtk/src/OutputEditorText.cc:329
 msgid "Highlight mode"
-msgstr ""
+msgstr "Λειτουργία επισήμανσης"
 
 #: ../gtk/src/OutputEditorText.cc:334
 msgid "Check spelling"
@@ -1654,17 +1654,15 @@ msgstr "Ορθογραφικός έλεγχος"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:256
 msgid "%1 occurrences replaced"
-msgstr ""
+msgstr "Αντικαταστάθηκαν %1 εμφανίσεις"
 
 #: ../gtk/src/OutputEditorText.cc:412 ../qt/src/OutputEditorText.cc:301
-#, fuzzy
 msgid "File: %1"
-msgstr "Αρχεία"
+msgstr "Αρχείο: %1"
 
 #: ../gtk/src/OutputEditorText.cc:415 ../qt/src/OutputEditorText.cc:304
-#, fuzzy
 msgid "Page: %1"
-msgstr "Ανάλυση του σφάλματος: %1"
+msgstr "Σελίδα: %1"
 
 #: ../gtk/src/OutputEditorText.cc:428 ../gtk/src/Recognizer.cc:243
 #: ../qt/src/Recognizer.cc:259
@@ -1685,15 +1683,16 @@ msgid "Save Output..."
 msgstr "Αποθήκευση εξόδου..."
 
 #: ../gtk/src/OutputEditorText.cc:584
-#, fuzzy
 msgid "Unsaved documents"
-msgstr "Εγγραφο"
+msgstr "Μη αποθηκευμένα έγγραφα"
 
 #: ../gtk/src/OutputEditorText.cc:585 ../qt/src/OutputEditorText.cc:462
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
 msgstr ""
+"Τα ακόλουθα έγγραφα έχουν μη αποθηκευμένες αλλαγές. Ποια έγγραφα θέλετε να "
+"αποθηκεύσετε πριν συνεχίσετε;"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
@@ -1756,7 +1755,7 @@ msgstr "Κατάσταση τεμαχισμού σελίδας"
 
 #: ../gtk/src/RecognitionMenu.cc:232 ../qt/src/RecognitionMenu.cc:205
 msgid "Character whitelist / blacklist..."
-msgstr ""
+msgstr "Whitelist / blacklist χαρακτήρων..."
 
 #: ../gtk/src/RecognitionMenu.cc:238 ../qt/src/RecognitionMenu.cc:210
 msgid "Manage languages..."
@@ -1764,11 +1763,11 @@ msgstr "Διαχείριση γλωσσών..."
 
 #: ../gtk/src/Recognizer.cc:76 ../qt/src/Recognizer.cc:90
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "Αντικατάσταση της υπάρχουσας εξόδου"
 
 #: ../gtk/src/Recognizer.cc:77 ../qt/src/Recognizer.cc:91
 msgid "Skip processing source"
-msgstr ""
+msgstr "Παράβλεψη επεξεργασίας πηγής"
 
 #: ../gtk/src/Recognizer.cc:121 ../qt/src/Recognizer.cc:137
 msgid "Current selection"
@@ -1785,11 +1784,13 @@ msgstr "Αποτυχία προετοιμασίας του tesseract"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
 msgid "Source already recognized"
-msgstr ""
+msgstr "Η πηγή έχει ήδη αναγνωριστεί"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
 msgid "One or more selected sources were already recognized. Proceed anyway?"
 msgstr ""
+"Μία ή περισσότερες επιλεγμένες πηγές ήταν ήδη αναγνωρισμένες. Συνέχεια "
+"πάραυτα;"
 
 #: ../gtk/src/Recognizer.cc:237 ../gtk/src/Recognizer.cc:351
 #: ../qt/src/Recognizer.cc:252 ../qt/src/Recognizer.cc:364
@@ -1813,17 +1814,15 @@ msgstr "- Σελίδα %1: αποτυχία απόδοσης της σελίδα
 
 #: ../gtk/src/Recognizer.cc:369 ../qt/src/Recognizer.cc:383
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "- %1: η έξοδος υπάρχει ήδη, παρακάμπτεται"
 
 #: ../gtk/src/Recognizer.cc:373 ../qt/src/Recognizer.cc:387
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "Αποτυχία αποθήκευσης εξόδου"
+msgstr "- %1: απέτυχε η δημιουργία αρχείου εξόδου"
 
 #: ../gtk/src/Recognizer.cc:428 ../qt/src/Recognizer.cc:442
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "Τα παρακάτω σφάλματα συνέβησαν:%1"
+msgstr "Τα παρακάτω σφάλματα συνέβησαν:"
 
 #: ../gtk/src/scanner/ScannerSane.cc:86 ../gtk/src/scanner/ScannerTwain.cc:287
 #: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
@@ -1857,39 +1856,36 @@ msgid "Failed to save image"
 msgstr "Αποτυχία αποθήκευσης της εικόνας"
 
 #: ../gtk/src/scanner/ScannerSane.cc:803 ../qt/src/scanner/ScannerSane.cc:798
-#, fuzzy
 msgid "Operation is cancelled."
-msgstr "Ακυρώθηκε η σάρωση"
+msgstr "Η λειτουργία ακυρώθηκε."
 
 #: ../gtk/src/scanner/ScannerSane.cc:805 ../qt/src/scanner/ScannerSane.cc:800
 msgid "Device is busy."
-msgstr ""
+msgstr "Η συσκευή είναι απασχολημένη."
 
 #: ../gtk/src/scanner/ScannerSane.cc:807 ../qt/src/scanner/ScannerSane.cc:802
 msgid "Cover is opened."
-msgstr ""
+msgstr "Το κάλυμμα είναι ανοικτό."
 
 #: ../gtk/src/scanner/ScannerSane.cc:809 ../qt/src/scanner/ScannerSane.cc:804
 msgid "Document feeder jammed."
-msgstr ""
+msgstr "Εμπλοκή στον τροφοδότη εγγράφων ."
 
 #: ../gtk/src/scanner/ScannerSane.cc:811 ../qt/src/scanner/ScannerSane.cc:806
 msgid "Document feeder out of documents."
-msgstr ""
+msgstr "Ο τροφοδότης εγγράφων δεν έχει έγγραφα."
 
 #: ../gtk/src/scanner/ScannerSane.cc:813 ../qt/src/scanner/ScannerSane.cc:808
-#, fuzzy
 msgid "Access to scanner is denied."
-msgstr "Δεν ορίστηκε σαρωτής"
+msgstr "Δεν επιτρέπεται η πρόσβαση στον σαρωτή."
 
 #: ../gtk/src/SourceManager.cc:184 ../qt/src/SourceManager.cc:169
 msgid "Enter password for file '%1':"
-msgstr ""
+msgstr "Εισάγετε τον κωδικό πρόσβασης για το αρχείο '% 1':"
 
 #: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:196
-#, fuzzy
 msgid "PDF with text"
-msgstr "Απλό κείμενο"
+msgstr "PDF με κείμενο"
 
 #: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:196
 msgid ""
@@ -1897,6 +1893,9 @@ msgid ""
 "%1\n"
 "Open it regardless?"
 msgstr ""
+"Το αρχείο PDF περιέχει ήδη κείμενο:\n"
+"% 1\n"
+"Άνοιγμα πάραυτα;"
 
 #: ../gtk/src/SourceManager.cc:292 ../qt/src/SourceManager.cc:268
 msgid "Images and PDFs"
@@ -1945,12 +1944,11 @@ msgstr "Να διαγραφεί το αρχείο;"
 
 #: ../gtk/src/SourceManager.cc:381 ../qt/src/SourceManager.cc:391
 msgid "Delete the following files?"
-msgstr ""
+msgstr "Διαγραφή των παρακάτω αρχείων;"
 
 #: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:468
-#, fuzzy
 msgid "Open output"
-msgstr "Αποθήκευση εξόδου"
+msgstr "Άνοιγμα εξόδου"
 
 #: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:468
 msgid ""
