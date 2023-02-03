@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gImageReader 3.1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:15+0100\n"
-"PO-Revision-Date: 2023-02-03 10:58+0000\n"
+"PO-Revision-Date: 2023-02-04 09:16+0000\n"
 "Last-Translator: Vasilis K. <skyhirules@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/gimagereader/"
 "translations/el/>\n"
@@ -1953,7 +1953,7 @@ msgstr "Άνοιγμα εξόδου"
 #: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:468
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr ""
+msgstr "Βρέθηκαν ένα κείμενο και μια έξοδος hOCR. Ποιο θέλετε να ανοίξετε;"
 
 #: ../gtk/src/SourceManager.cc:504 ../qt/src/SourceManager.cc:496
 msgid "Missing File"
@@ -2022,7 +2022,6 @@ msgid "Do you want to save the current list?"
 msgstr "Θέλετε να αποθηκευτεί η τρέχουσα λίστα;"
 
 #: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:70
-#, fuzzy
 msgid ""
 "A session connection to the PackageKit backend is required for managing "
 "system-wide tesseract language packs, but it was not found. This service is "
@@ -2032,11 +2031,14 @@ msgid ""
 "tesseract language packs directly, or switch to using the user tessdata path "
 "in the configuration dialog."
 msgstr ""
-"Το PackageKit απαιτείται για τη διαχείριση των γλωσσικών πακέτων tesseract "
-"για ολόκληρο το σύστημα, αλλά δεν βρέθηκε. Παρακαλούμε, χρησιμοποιήστε το "
-"λογισμικό διαχείρισης πακέτων του συστήματος για να διαχειριστείτε τα "
-"γλωσσικά πακέτα του tesseract ή αλλάξτε για να χρησιμοποιήσετε τη διαδρομή "
-"tessdata του χρήστη στον διάλογο ρύθμισης."
+"Απαιτείται μια σύνδεση περιόδου λειτουργίας με το backend του PackageKit για "
+"τη διαχείριση πακέτων γλωσσών tesseract σε όλο το σύστημα, αλλά δεν βρέθηκε. "
+"Αυτή η υπηρεσία παρέχεται συνήθως από μια εφαρμογή διαχείρισης λογισμικού "
+"όπως το λογισμικό Gnome. Εγκαταστήστε λογισμικό που παρέχει την απαραίτητη "
+"διεπαφή PackageKit, χρησιμοποιήστε άλλο λογισμικό διαχείρισης πακέτων "
+"συστήματος για να διαχειριστείτε απευθείας τα πακέτα γλωσσών tesseract ή "
+"μεταβείτε στη χρήση της διαδρομής tessdata χρήστη στο παράθυρο διαλόγου "
+"διαμόρφωσης."
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:75
 msgid "Fetching available languages"
@@ -2065,7 +2067,6 @@ msgid "Downloading %1..."
 msgstr "Μεταφορτώνεται το %1..."
 
 #: ../gtk/src/TessdataManager.cc:330
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -2075,10 +2076,13 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
-"Τα παρακάτω αρχεία δεν μπόρεσαν να μεταφορτωθούν ή να αφαιρεθούν:\n"
-"%1\n"
+"Δεν ήταν δυνατή η λήψη ή η κατάργηση των ακόλουθων αρχείων:\n"
+"% 1\n"
 "\n"
-"Ελέγξτε τη σύνδεση και τα δικαιώματα του καταλόγου."
+"Ελέγξτε τα δικαιώματα συνδεσιμότητας και καταλόγου.\n"
+"\n"
+"Συμβουλή: Εάν δεν έχετε δικαιώματα εγγραφής σε φακέλους συστήματος, μπορείτε "
+"να μεταβείτε στις διαδρομές χρήστη στο παράθυρο διαλόγου ρυθμίσεων."
 
 #: ../gtk/src/Utils.cc:127
 msgid "Yes"
@@ -2086,7 +2090,7 @@ msgstr "Ναι"
 
 #: ../gtk/src/Utils.cc:130
 msgid "Yes to all"
-msgstr ""
+msgstr "Ναι σε όλα"
 
 #: ../gtk/src/Utils.cc:136
 msgid "No"
@@ -2094,41 +2098,37 @@ msgstr "Όχι"
 
 #: ../gtk/src/Utils.cc:139
 msgid "No to all"
-msgstr ""
+msgstr "Όχι σε όλα"
 
 #: ../gtk/src/Utils.cc:142
 msgid "Discard"
 msgstr "Απόρριψη"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "Απόρριψη"
+msgstr "Απόρριψη όλων"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
-#, fuzzy
 msgid "Text"
-msgstr "Γραμμή κειμένου"
+msgstr "Κείμενο"
 
 #: ../gtk/src/Utils.cc:151 ../qt/src/SourceManager.cc:470
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
 msgstr "Περί του gImageReader"
 
 #: ../qt/data/AboutDialog.ui.h:3
-#, fuzzy
 msgid ""
 "<html><head/><body><p>&nbsp;</p><p>A graphical frontend to tesseract-ocr</"
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
 "<html><head/><body><p>&nbsp;</p><p>Μια γραφική διεπαφή χρήστη στο tesseract-"
-"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\">Ιστότοπος</"
-"a></p><p>&nbsp;</p></body></html>"
+"ocr</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Ιστότοπος</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
@@ -2143,6 +2143,8 @@ msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"Στη λειτουργία δέσμης, κάθε πηγή εισόδου υποβάλλεται σε επεξεργασία "
+"ξεχωριστά και η έξοδος αποθηκεύεται δίπλα-δίπλα στο αρχείο εισόδου."
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
