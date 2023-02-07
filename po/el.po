@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gImageReader 3.1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:15+0100\n"
-"PO-Revision-Date: 2023-02-04 09:16+0000\n"
+"PO-Revision-Date: 2023-02-07 10:40+0000\n"
 "Last-Translator: Vasilis K. <skyhirules@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/gimagereader/"
 "translations/el/>\n"
@@ -985,7 +985,7 @@ msgstr "Επιλογή ονόματος αρχείου εξόδου..."
 
 #: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
 msgid "Failed to initialize the scanning backend."
-msgstr "Αποτυχία αρχικοποίησης της παρασκηνιακής σάρωσης"
+msgstr "Αποτυχία αρχικοποίησης της παρασκηνιακής σάρωσης."
 
 #: ../gtk/src/Acquirer.cc:115 ../qt/src/Acquirer.cc:106
 msgid "Scan failed"
@@ -1907,7 +1907,7 @@ msgstr "Σφάλμα προχείρου"
 
 #: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:311
 msgid "Failed to read the clipboard."
-msgstr "Αποτυχία ανάγνωσης του προχείρου"
+msgstr "Αποτυχία ανάγνωσης του προχείρου."
 
 #: ../gtk/src/SourceManager.cc:307 ../qt/src/SourceManager.cc:315
 #: ../qt/src/SourceManager.cc:321
@@ -1920,7 +1920,7 @@ msgstr "Σφάλμα στιγμιοτύπου"
 
 #: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:339
 msgid "Failed to take screenshot."
-msgstr "Αποτυχία λήψης στιγμιοτύπου"
+msgstr "Αποτυχία λήψης στιγμιότυπου."
 
 #: ../gtk/src/SourceManager.cc:329 ../qt/src/SourceManager.cc:343
 msgid "Screenshot %1"
@@ -2265,16 +2265,15 @@ msgstr ""
 
 #: ../qt/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportWidget.ui.h:7
 msgid "Portrait"
-msgstr ""
+msgstr "Πορτρέτο"
 
 #: ../qt/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportWidget.ui.h:8
 msgid "Landscape"
-msgstr ""
+msgstr "Τοπίο"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:311
-#, fuzzy
 msgid "Failed to write to file"
-msgstr "Αποτυχία ανοίγματος του αρχείου"
+msgstr "Αποτυχία εγγραφής στο αρχείο"
 
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:296
 msgid ""
@@ -2296,28 +2295,26 @@ msgstr "Εύρεση και αντικατάσταση"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
-msgstr "Εμφάνιση προεπισκόπησης"
+msgstr "Εμφάνιση διορθωμένου γραφικού στοιχείου"
 
 #: ../qt/src/MainWindow.cc:624
-#, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
-msgstr "Τα παρακάτω αρχεία λεξικών εγκαταστάθηκαν:%1"
+msgstr ""
+"Τα παρακάτω αρχεία λεξικών εγκαταστάθηκαν:\n"
+"%1"
 
 #: ../qt/src/OutputEditorText.cc:520 ../qt/src/SourceManager.cc:252
 msgid "No recent files"
-msgstr ""
+msgstr "Δεν υπάρχουν πρόσφατα αρχεία"
 
 #: ../qt/src/SourceManager.cc:391
-#, fuzzy
 msgid "Delete Files"
-msgstr "Να διαγραφεί το αρχείο;"
+msgstr "Διαγραφή αρχείων"
 
 #: ../qt/src/TessdataManager.cc:281
-#, fuzzy
 msgid ""
 "The following files could not be downloaded or removed:\n"
 "%1\n"
@@ -2329,7 +2326,9 @@ msgstr ""
 "Τα παρακάτω αρχεία δεν μπόρεσαν να μεταφορτωθούν ή να αφαιρεθούν:\n"
 "%1\n"
 "\n"
-"Ελέγξτε τη σύνδεση και τα δικαιώματα του καταλόγου."
+"Ελέγξτε τη σύνδεση και τα δικαιώματα του καταλόγου.\n"
+"Συμβουλή: Εάν δεν έχετε δικαιώματα εγγραφής σε φακέλους συστήματος, μπορείτε "
+"να μεταβείτε στις διαδρομές χρήστη στο παράθυρο διαλόγου ρυθμίσεων."
 
 #: ../qt/src/Ui_MainWindow.hh:50
 msgid "Output"
@@ -2341,9 +2340,8 @@ msgstr "Κατάσταση OCR:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:194
-#, fuzzy
 msgid "Add folder"
-msgstr "Προσθήκη εικόνων"
+msgstr "Προσθήκη φακέλου"
 
 #: ../qt/src/Ui_MainWindow.hh:195
 msgid "Paste"
@@ -2379,7 +2377,7 @@ msgstr "Καθαρισμός εξόδου"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "Προσθήκη καρτέλας"
 
 #, fuzzy
 #~ msgid "Form"
