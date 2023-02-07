@@ -9,7 +9,12 @@ jobs:
       image: fedora:rawhide
       options: --security-opt seccomp=unconfined
     steps:
-      - uses: actions/checkout@v1
+      - name: Set safe directory
+        run: |
+          dnf install -y git
+          git config --global --add safe.directory ${GITHUB_WORKSPACE}
+
+      - uses: actions/checkout@v3.3.0
 
       - name: Update system
         run: dnf -y update
@@ -25,7 +30,7 @@ jobs:
           else
             VERSION=ci-latest-$(basename ${{ github.ref }})
           fi
-          echo "##[set-output name=version;]$VERSION"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
 
       - name: Build application
         run: |
@@ -38,7 +43,6 @@ jobs:
           VERSION=${{ steps.version_number.outputs.version }}
           git config --global user.email "ci@github.com"
           git config --global user.name "Github CI"
-          git config --global --add safe.directory /__w/gImageReader/gImageReader
           # Workaround for "could not read Username for 'https://github.com': No such device or address"
           git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git
           git tag -d $VERSION || true
@@ -51,7 +55,7 @@ jobs:
 
       - name: Create release
         id: create_release
-        uses: actions/create-release@v1.0.0
+        uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -61,7 +65,7 @@ jobs:
           prerelease: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
       - name: Upload qt5 i686 portable zip release asset
-        uses: actions/upload-release-asset@v1.0.1
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -71,7 +75,7 @@ jobs:
           asset_content_type: application/zip
 
       - name: Upload qt5 i686 installer release asset
-        uses: actions/upload-release-asset@v1.0.1
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -81,7 +85,7 @@ jobs:
           asset_content_type: application/x-dosexec
 
       - name: Upload qt5 x86_64 portable zip release asset
-        uses: actions/upload-release-asset@v1.0.1
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -101,7 +105,7 @@ jobs:
           asset_content_type: application/x-dosexec
 
       - name: Upload gtk x86_64 portable zip release asset
-        uses: actions/upload-release-asset@v1.0.1
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -111,7 +115,7 @@ jobs:
           asset_content_type: application/zip
 
       - name: Upload gtk x86_64 installer release asset
-        uses: actions/upload-release-asset@v1.0.1
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
