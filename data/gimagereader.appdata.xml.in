@@ -6,6 +6,7 @@
  <project_license>GPL-3.0+</project_license>
  <name>gImageReader</name>
  <name xml:lang="cs_CZ">gImageReader</name>
+ <developer_name>Sandro Mani</developer_name>
  <summary>A graphical (@INTERFACE_TYPE@) frontend to tesseract-ocr</summary>
  <summary xml:lang="cs_CZ">Grafická (@INTERFACE_TYPE@) nadstavba pro engine tesseract-ocr</summary>
  <keywords>
@@ -52,7 +53,7 @@
  <url type="bugtracker">https://github.com/manisandro/gImageReader/issues</url>
  <url type="faq">https://github.com/manisandro/gImageReader/wiki/FAQ</url>
  <url type="homepage">https://github.com/manisandro/gImageReader</url>
- <url type="translate">https://github.com/manisandro/gImageReader/blob/master/README.md</url>
+ <url type="translate">https://hosted.weblate.org/engage/gimagereader/</url>
  <update_contact>manisandro@gmail.com</update_contact>
  <translation type="gettext">gimagereader</translation>
  <provides>
