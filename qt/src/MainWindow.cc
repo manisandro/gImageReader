@@ -209,6 +209,7 @@ MainWindow::MainWindow(const QStringList& files)
 	restoreGeometry(ConfigSettings::get<VarSetting<QByteArray>>("wingeom")->getValue());
 	restoreState(ConfigSettings::get<VarSetting<QByteArray>>("winstate")->getValue());
 	ui.dockWidgetOutput->setVisible(false);
+	ui.toolBarMain->setVisible(true);
 
 	ui.actionSources->trigger();
 
