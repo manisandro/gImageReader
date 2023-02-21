@@ -8,17 +8,20 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-02-22 13:37+0000\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <https://hosted.weblate.org/projects/gimagereader/"
+"translations/ka/>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr ""
+msgstr "OCR აპლიკაცია"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:169
 msgid "Redetect Languages"
@@ -26,27 +29,27 @@ msgstr ""
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:172
 msgid "Manage Languages"
-msgstr ""
+msgstr "ენების მართვა"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:175
 msgid "Preferences"
-msgstr ""
+msgstr "მორგება"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:523 ../qt/src/MainWindow.cc:522
 #: ../qt/src/Ui_MainWindow.hh:180
 msgid "Help"
-msgstr ""
+msgstr "დახმარება"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:183
 msgid "About"
-msgstr ""
+msgstr "პროგრამის შესახებ"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
-msgstr ""
+msgstr "გამორთვა"
 
 #: ../gtk/data/CharacterListDialog.ui.h:1 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
@@ -69,7 +72,7 @@ msgstr ""
 #: ../gtk/src/FileDialogs.cc:194 ../gtk/src/hocr/HOCRPdfExporter.cc:547
 #: ../gtk/src/Utils.cc:124 ../qt/data/ConfigDialog.ui.h:26
 msgid "OK"
-msgstr ""
+msgstr "დიახ"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
@@ -77,11 +80,11 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
-msgstr ""
+msgstr "ჰორიზონტალური"
 
 #: ../gtk/data/ConfigDialog.ui.h:6
 msgid "Vertical"
-msgstr ""
+msgstr "ვერტიკალური"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
@@ -105,7 +108,7 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
-msgstr ""
+msgstr "პრეფიქსი"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
@@ -113,15 +116,15 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
-msgstr ""
+msgstr "ISO კოდი"
 
 #: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:24
 msgid "The name of the language"
-msgstr ""
+msgstr "ენის სახელი"
 
 #: ../gtk/data/ConfigDialog.ui.h:16 ../qt/data/ConfigDialog.ui.h:25
 msgid "Name"
-msgstr ""
+msgstr "სახელი"
 
 #: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:48
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/src/Acquirer.cc:34
@@ -129,7 +132,7 @@ msgstr ""
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:548 ../gtk/src/Utils.cc:154
 #: ../qt/data/ConfigDialog.ui.h:27 ../qt/data/MainWindow.ui.h:13
 msgid "Cancel"
-msgstr ""
+msgstr "შეწყვეტა"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
@@ -137,7 +140,7 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
-msgstr ""
+msgstr "ნაგულისხმები"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
@@ -199,23 +202,23 @@ msgstr ""
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:2
 #: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
 msgid "Apply"
-msgstr ""
+msgstr "დართვა"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:3
 #: ../gtk/data/SubstitutionsManager.ui.h:8 ../gtk/data/TessdataManager.ui.h:3
 msgid "Close"
-msgstr ""
+msgstr "დახურვა"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:4
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
 msgid "Select source folder:"
-msgstr ""
+msgstr "აირჩიეთ წყაროს საქაღალდე:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
 #: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
 #: ../qt/data/PdfExportWidget.ui.h:15
 msgid "Format:"
-msgstr ""
+msgstr "ფორმატი:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
@@ -225,22 +228,22 @@ msgstr ""
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
 msgid "Input:"
-msgstr ""
+msgstr "შეყვანა:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:8
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
 msgid "Output preview:"
-msgstr ""
+msgstr "გამომავალი გადახედვა:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:9
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
 msgid "Input files"
-msgstr ""
+msgstr "შეყვანის ფაილები"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:10
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
 msgid "Export options"
-msgstr ""
+msgstr "გატანის მორგება"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
@@ -258,15 +261,15 @@ msgstr ""
 #: ../gtk/data/MainWindow.ui.h:4 ../qt/data/MainWindow.ui.h:22
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Sources"
-msgstr ""
+msgstr "წყაროები"
 
 #: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:201
 msgid "Add images"
-msgstr ""
+msgstr "გამოსახულებების დამატება"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:200
 msgid "Add Images"
-msgstr ""
+msgstr "სურათების დამატება"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:205
 msgid "Remove image from list"
@@ -274,126 +277,126 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/src/Ui_MainWindow.hh:208
 msgid "Delete image"
-msgstr ""
+msgstr "გამოსახულების წაშლა"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:211
 msgid "Clear list"
-msgstr ""
+msgstr "სიის გასუფთავება"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "ესკიზები"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
-msgstr ""
+msgstr "ფაილები"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:9
 msgid "Device:"
-msgstr ""
+msgstr "მოწყობილობა:"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:55
 msgid "Refresh"
-msgstr ""
+msgstr "განახლება"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:10
 msgid "Output:"
-msgstr ""
+msgstr "გამოტანა:"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:14
 msgid "Mode:"
-msgstr ""
+msgstr "რეჟიმი:"
 
 #: ../gtk/data/MainWindow.ui.h:16 ../gtk/src/hocr/HOCRPdfExportWidget.cc:49
 #: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExportWidget.cc:60
 msgid "Color"
-msgstr ""
+msgstr "ფერი"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExportWidget.cc:52
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExportWidget.cc:61
 msgid "Grayscale"
-msgstr ""
+msgstr "ნაცრისფერი"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:11
 msgid "Resolution:"
-msgstr ""
+msgstr "გარჩევადობა:"
 
 #: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:12
 msgid "Scan"
-msgstr ""
+msgstr "სკანირება"
 
 #: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:17
 msgid "Source:"
-msgstr ""
+msgstr "წყარო:"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
-msgstr ""
+msgstr "მიღება"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
-msgstr ""
+msgstr "სიკაშკაშე"
 
 #: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
-msgstr ""
+msgstr "კონტრასტი"
 
 #: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
-msgstr ""
+msgstr "გარჩევადობა"
 
 #: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
-msgstr ""
+msgstr "ფერების ინვერსია"
 
 #: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:24
 msgid "Zoom in"
-msgstr ""
+msgstr "გადიდება"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:26
 msgid "Zoom out"
-msgstr ""
+msgstr "დაპატარავება"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:28
 msgid "Normal size"
-msgstr ""
+msgstr "ნორმალური ზომა"
 
 #: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:30
 msgid "Best fit"
-msgstr ""
+msgstr "საუკეთესოდ ჩატევა"
 
 #: ../gtk/data/MainWindow.ui.h:30 ../qt/src/Ui_MainWindow.hh:60
 msgid "Rotate page"
-msgstr ""
+msgstr "გვერდის მობრუნება"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
-msgstr ""
+msgstr "აირჩიეთ მობრუნების რეჟიმი"
 
 #: ../gtk/data/MainWindow.ui.h:32 ../gtk/data/OutputEditorHOCR.ui.h:12
 #: ../gtk/data/OutputEditorText.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
 #: ../qt/src/Ui_OutputEditorText.hh:104
 msgid "Select insert mode"
-msgstr ""
+msgstr "აირჩიეთ ჩასმის რეჟიმი"
 
 #: ../gtk/data/MainWindow.ui.h:33 ../qt/src/Ui_MainWindow.hh:102
 msgid "Select page"
-msgstr ""
+msgstr "აირჩიეთ გვერდი"
 
 #: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
-msgstr ""
+msgstr "სურათის კონტროლი"
 
 #: ../gtk/data/MainWindow.ui.h:35 ../gtk/src/hocr/HOCRBatchExportDialog.cc:51
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:42 ../qt/src/MainWindow.cc:166
 msgid "Plain text"
-msgstr ""
+msgstr "ტექსტი"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/src/MainWindow.cc:167
 msgid "hOCR, PDF"
-msgstr ""
+msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:38
 msgid "Autodetect layout"
@@ -405,7 +408,7 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:39
 msgid "Select language"
-msgstr ""
+msgstr "ენის არჩევა"
 
 #: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:41
 msgid "Batch Export"
@@ -456,11 +459,11 @@ msgstr ""
 #: ../gtk/data/MainWindow.ui.h:53 ../gtk/src/Recognizer.cc:121
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:137
 msgid "Entire page"
-msgstr ""
+msgstr "მთელი გვერდი"
 
 #: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
-msgstr ""
+msgstr "ავტოამოცნობა"
 
 #: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
@@ -480,7 +483,7 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:71
 msgid "Current Page"
-msgstr ""
+msgstr "მიმდინარე გვერდი"
 
 #: ../gtk/data/MainWindow.ui.h:60 ../qt/src/Recognizer.cc:74
 msgid "Multiple Pages..."
@@ -492,11 +495,11 @@ msgstr ""
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:720
 msgid "Add Word"
-msgstr ""
+msgstr "სიტყვის დამატება"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:720
 msgid "Enter word:"
-msgstr ""
+msgstr "შეიყვანეთ სიტყვა:"
 
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
@@ -510,12 +513,12 @@ msgstr ""
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:95
 msgid "Export to plain text"
-msgstr ""
+msgstr "უბრალო ტექსტის სახით გატანა"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:97
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:98
 msgid "Export to PDF"
-msgstr ""
+msgstr "PDF-ად გატანა"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:100
@@ -542,26 +545,26 @@ msgstr ""
 #: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/OutputEditorText.ui.h:14
 #: ../qt/src/Ui_OutputEditorText.hh:125
 msgid "Save output"
-msgstr ""
+msgstr "გამომავალი შენახვა"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:105
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:106
 msgid "Export"
-msgstr ""
+msgstr "გატანა"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:16 ../gtk/data/OutputEditorText.ui.h:20
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:110
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:111
 #: ../qt/src/Ui_OutputEditorText.hh:127
 msgid "Clear output"
-msgstr ""
+msgstr "გამოტანის გასუფთავება"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/data/OutputEditorText.ui.h:17
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:113
 #: ../qt/src/Ui_OutputEditorText.hh:116
 msgid "Find and replace"
-msgstr ""
+msgstr "ძებნა და ჩანაცვლება"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:18
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:115
@@ -574,39 +577,39 @@ msgstr ""
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
 msgid "Show preview"
-msgstr ""
+msgstr "გადახედვის ჩვენება"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:20
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Next (F3)"
-msgstr ""
+msgstr "შემდეგი (F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:21
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Previous (Shift+F3)"
-msgstr ""
+msgstr "წინა (Shift+F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:978
 #: ../qt/src/hocr/OutputEditorHOCR.cc:852
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:165
 msgid "Expand all"
-msgstr ""
+msgstr "ყველას გაშლა"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:981
 #: ../qt/src/hocr/OutputEditorHOCR.cc:853
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:166
 msgid "Collapse all"
-msgstr ""
+msgstr "ყველას ჩაკეცვა"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:24
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:187
 msgid "Properties"
-msgstr ""
+msgstr "_თვისებები"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:25
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:191
 msgid "Source"
-msgstr ""
+msgstr "წყარო"
 
 #. Output insert mode
 #: ../gtk/data/OutputEditorText.ui.h:1 ../qt/src/Ui_OutputEditorText.hh:61
@@ -636,7 +639,7 @@ msgstr ""
 
 #: ../gtk/data/OutputEditorText.ui.h:7 ../qt/src/Ui_OutputEditorText.hh:77
 msgid "Other options"
-msgstr ""
+msgstr "სხვა პარამეტრები"
 
 #: ../gtk/data/OutputEditorText.ui.h:8 ../qt/src/Ui_OutputEditorText.hh:79
 msgid "Join hyphenated words"
@@ -660,7 +663,7 @@ msgstr ""
 
 #: ../gtk/data/OutputEditorText.ui.h:13
 msgid "Open file"
-msgstr ""
+msgstr "ფაილის გახსნა"
 
 #: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:111
 msgid "Strip line breaks on selected text"
@@ -669,28 +672,28 @@ msgstr ""
 #: ../gtk/data/OutputEditorText.ui.h:18 ../qt/src/Ui_OutputEditorText.hh:118
 #: ../qt/src/Ui_OutputEditorText.hh:119
 msgid "Undo"
-msgstr ""
+msgstr "დაბრუნება"
 
 #: ../gtk/data/OutputEditorText.ui.h:19 ../qt/src/Ui_OutputEditorText.hh:121
 #: ../qt/src/Ui_OutputEditorText.hh:122
 msgid "Redo"
-msgstr ""
+msgstr "გამეორება"
 
 #: ../gtk/data/OutputEditorText.ui.h:21
 msgid "New tab"
-msgstr ""
+msgstr "ახალი ჩანართი"
 
 #: ../gtk/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportDialog.ui.h:4
 #: ../qt/data/PdfExportWidget.ui.h:3
 msgid "Output mode:"
-msgstr ""
+msgstr "გამოტანის რეჟიმი:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:3
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:45
 #: ../qt/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportWidget.ui.h:5
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:40
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: ../gtk/data/PdfExportWidget.ui.h:4 ../qt/data/PdfExportDialog.ui.h:7
 #: ../qt/data/PdfExportWidget.ui.h:6
@@ -700,27 +703,27 @@ msgstr ""
 #: ../gtk/data/PdfExportWidget.ui.h:6 ../qt/data/PdfExportDialog.ui.h:17
 #: ../qt/data/PdfExportWidget.ui.h:16
 msgid "Compression:"
-msgstr ""
+msgstr "შეკუმშვა:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:7 ../qt/data/PdfExportDialog.ui.h:14
 #: ../qt/data/PdfExportWidget.ui.h:13
 msgid "Compression quality:"
-msgstr ""
+msgstr "შეკუმშვის ხარისხი:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:8 ../qt/data/PdfExportDialog.ui.h:15
 #: ../qt/data/PdfExportWidget.ui.h:14
 msgid "DPI:"
-msgstr ""
+msgstr "DPI:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:9 ../qt/data/PdfExportDialog.ui.h:18
 #: ../qt/data/PdfExportWidget.ui.h:17
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "დიზერინგის ალგორითმი"
 
 #: ../gtk/data/PdfExportWidget.ui.h:10 ../qt/data/PdfExportDialog.ui.h:13
 #: ../qt/data/PdfExportWidget.ui.h:12
 msgid "Image settings:"
-msgstr ""
+msgstr "გამოსახულების პარამეტრები:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:11 ../qt/data/PdfExportDialog.ui.h:25
 #: ../qt/data/PdfExportWidget.ui.h:24
@@ -750,7 +753,7 @@ msgstr ""
 #: ../gtk/data/PdfExportWidget.ui.h:16 ../qt/data/PdfExportDialog.ui.h:26
 #: ../qt/data/PdfExportWidget.ui.h:25
 msgid "pt"
-msgstr ""
+msgstr "წრტ"
 
 #: ../gtk/data/PdfExportWidget.ui.h:17 ../qt/data/PdfExportDialog.ui.h:22
 #: ../qt/data/PdfExportWidget.ui.h:21
@@ -760,7 +763,7 @@ msgstr ""
 #: ../gtk/data/PdfExportWidget.ui.h:18 ../qt/data/PdfExportDialog.ui.h:24
 #: ../qt/data/PdfExportWidget.ui.h:23
 msgid "characters"
-msgstr ""
+msgstr "სიმბოლოები"
 
 #: ../gtk/data/PdfExportWidget.ui.h:19 ../qt/data/PdfExportDialog.ui.h:28
 #: ../qt/data/PdfExportWidget.ui.h:27
@@ -770,22 +773,22 @@ msgstr ""
 #: ../gtk/data/PdfExportWidget.ui.h:20 ../qt/data/PdfExportDialog.ui.h:19
 #: ../qt/data/PdfExportWidget.ui.h:18
 msgid "Text settings:"
-msgstr ""
+msgstr "ტექსტის მორგება:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:21 ../qt/data/PdfExportDialog.ui.h:10
 #: ../qt/data/PdfExportWidget.ui.h:9
 msgid "Paper size:"
-msgstr ""
+msgstr "ფურცლის ზომა:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:22 ../qt/data/PdfExportDialog.ui.h:11
 #: ../qt/data/PdfExportWidget.ui.h:10
 msgid "Width"
-msgstr ""
+msgstr "სიგანე"
 
 #: ../gtk/data/PdfExportWidget.ui.h:23 ../qt/data/PdfExportDialog.ui.h:12
 #: ../qt/data/PdfExportWidget.ui.h:11
 msgid "Height"
-msgstr ""
+msgstr "სიმაღლე"
 
 #: ../gtk/data/PdfExportWidget.ui.h:24 ../qt/data/PdfExportDialog.ui.h:29
 #: ../qt/data/PdfExportWidget.ui.h:28
@@ -795,57 +798,57 @@ msgstr ""
 #: ../gtk/data/PdfExportWidget.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
 #: ../qt/data/PdfExportWidget.ui.h:2
 msgid "Basic"
-msgstr ""
+msgstr "ძირითადი"
 
 #: ../gtk/data/PdfExportWidget.ui.h:26 ../qt/data/PdfExportDialog.ui.h:31
 #: ../qt/data/PdfExportWidget.ui.h:30
 msgid "PDF version:"
-msgstr ""
+msgstr "PDF-ის ვერსია:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:27 ../qt/data/PdfExportDialog.ui.h:33
 #: ../qt/data/PdfExportWidget.ui.h:32
 msgid "Password:"
-msgstr ""
+msgstr "პაროლი:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:28 ../qt/data/PdfExportDialog.ui.h:34
 #: ../qt/data/PdfExportWidget.ui.h:33
 msgid "Confirm password:"
-msgstr ""
+msgstr "პაროლის დადასტურება:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:29 ../qt/data/PdfExportDialog.ui.h:32
 #: ../qt/data/PdfExportWidget.ui.h:31
 msgid "Encryption (optional):"
-msgstr ""
+msgstr "დაშიფვრა (სურვილისამებრ):"
 
 #: ../gtk/data/PdfExportWidget.ui.h:30 ../qt/data/PdfExportDialog.ui.h:36
 #: ../qt/data/PdfExportWidget.ui.h:35
 msgid "Author:"
-msgstr ""
+msgstr "ავტორი:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:31 ../qt/data/PdfExportDialog.ui.h:38
 #: ../qt/data/PdfExportWidget.ui.h:37
 msgid "Title:"
-msgstr ""
+msgstr "სათაური:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:32 ../qt/data/PdfExportDialog.ui.h:40
 #: ../qt/data/PdfExportWidget.ui.h:39
 msgid "Subject:"
-msgstr ""
+msgstr "თემა:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:33 ../qt/data/PdfExportDialog.ui.h:37
 #: ../qt/data/PdfExportWidget.ui.h:36
 msgid "Creator:"
-msgstr ""
+msgstr "შემქმნელი:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:34 ../qt/data/PdfExportDialog.ui.h:39
 #: ../qt/data/PdfExportWidget.ui.h:38
 msgid "Producer:"
-msgstr ""
+msgstr "პროდუსერი:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:35 ../qt/data/PdfExportDialog.ui.h:41
 #: ../qt/data/PdfExportWidget.ui.h:40
 msgid "Keywords:"
-msgstr ""
+msgstr "საკვანძო სიტყვები:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:36 ../qt/data/PdfExportDialog.ui.h:35
 #: ../qt/data/PdfExportWidget.ui.h:34
@@ -860,50 +863,50 @@ msgstr ""
 #: ../gtk/data/PdfExportWidget.ui.h:38 ../qt/data/PdfExportDialog.ui.h:30
 #: ../qt/data/PdfExportWidget.ui.h:29
 msgid "Advanced"
-msgstr ""
+msgstr "დაწინაურებული"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:4
 msgid "Find"
-msgstr ""
+msgstr "მოძებნა"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:2 ../qt/data/SearchReplaceFrame.ui.h:2
 msgid "Replace"
-msgstr ""
+msgstr "ჩანაცვლება"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:3 ../qt/data/SearchReplaceFrame.ui.h:3
 msgid "Replace all"
-msgstr ""
+msgstr "ყველას ჩანაცვლება"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:4 ../qt/data/SearchReplaceFrame.ui.h:5
 msgid "Find previous"
-msgstr ""
+msgstr "წინანდელის ძიება"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:5 ../qt/data/SearchReplaceFrame.ui.h:6
 msgid "Find next"
-msgstr ""
+msgstr "მომდევნოს მოძებნა"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:6 ../qt/data/SearchReplaceFrame.ui.h:7
 msgid "Match case"
-msgstr ""
+msgstr "დიდი და პატარა ასოების სხვაობა"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:7
 #: ../gtk/data/SubstitutionsManager.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:1
 #: ../qt/src/SubstitutionsManager.cc:36
 msgid "Substitutions"
-msgstr ""
+msgstr "შენაცვლებები"
 
 #: ../gtk/data/SelectionMenu.ui.h:1 ../qt/src/DisplayerToolSelect.cc:239
 msgid "Delete"
-msgstr ""
+msgstr "წაშლა"
 
 #: ../gtk/data/SelectionMenu.ui.h:2 ../qt/src/DisplayerToolSelect.cc:225
 msgid "Order:"
-msgstr ""
+msgstr "მიმდევრობა:"
 
 #: ../gtk/data/SelectionMenu.ui.h:3 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
 #: ../qt/src/DisplayerToolSelect.cc:240 ../qt/src/hocr/DisplayerToolHOCR.cc:31
 msgid "Recognize"
-msgstr ""
+msgstr "ამოცნობა"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:241
 msgid "Recognize to clipboard"
@@ -911,34 +914,34 @@ msgstr ""
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:242
 msgid "Save as image"
-msgstr ""
+msgstr "გამოსახულების სახით შენახვა"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:2 ../qt/src/SubstitutionsManager.cc:38
 #: ../qt/src/SubstitutionsManager.cc:39 ../qt/src/Ui_OutputEditorText.hh:57
 msgid "Open"
-msgstr ""
+msgstr "გახსნა"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:3 ../gtk/src/Utils.cc:133
 #: ../qt/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:42
 msgid "Save"
-msgstr ""
+msgstr "შენახვა"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:4 ../qt/src/SubstitutionsManager.cc:44
 #: ../qt/src/SubstitutionsManager.cc:45
 msgid "Clear"
-msgstr ""
+msgstr "გაწმენდა"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:5 ../qt/data/ConfigDialog.ui.h:16
 #: ../qt/src/SubstitutionsManager.cc:47 ../qt/src/SubstitutionsManager.cc:48
 msgid "Add"
-msgstr ""
+msgstr "დამატება"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:974 ../qt/data/ConfigDialog.ui.h:17
 #: ../qt/src/hocr/OutputEditorHOCR.cc:849 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
-msgstr ""
+msgstr "წაშლა"
 
 #: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:45
 msgid "Tessdata Manager"
@@ -950,11 +953,11 @@ msgstr ""
 
 #: ../gtk/src/Acquirer.cc:79 ../qt/src/Acquirer.cc:70
 msgid "scan.png"
-msgstr ""
+msgstr "scan.png"
 
 #: ../gtk/src/Acquirer.cc:91 ../qt/src/Acquirer.cc:85
 msgid "Images"
-msgstr ""
+msgstr "ასლები"
 
 #: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:86
 msgid "Choose Output Filename..."
@@ -966,7 +969,7 @@ msgstr ""
 
 #: ../gtk/src/Acquirer.cc:115 ../qt/src/Acquirer.cc:106
 msgid "Scan failed"
-msgstr ""
+msgstr "სკანირების შეცდომა"
 
 #: ../gtk/src/Acquirer.cc:133 ../qt/src/Acquirer.cc:122
 msgid "No scanners were detected."
@@ -975,37 +978,37 @@ msgstr ""
 #: ../gtk/src/Acquirer.cc:150 ../gtk/src/Acquirer.cc:167
 #: ../qt/src/Acquirer.cc:136 ../qt/src/Acquirer.cc:153
 msgid "Starting scan..."
-msgstr ""
+msgstr "სკანირების დაწყება..."
 
 #: ../gtk/src/Acquirer.cc:163 ../qt/src/Acquirer.cc:149
 msgid "Opening device..."
-msgstr ""
+msgstr "მოწყობილობის გახსნა…"
 
 #: ../gtk/src/Acquirer.cc:165 ../qt/src/Acquirer.cc:151
 msgid "Setting options..."
-msgstr ""
+msgstr "პარამეტრების დაყენება..."
 
 #: ../gtk/src/Acquirer.cc:169 ../qt/src/Acquirer.cc:155
 msgid "Getting parameters..."
-msgstr ""
+msgstr "პარამეტრების მიღება..."
 
 #: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:157
 msgid "Transferring data..."
-msgstr ""
+msgstr "მონაცემების გადაცემა..."
 
 #: ../gtk/src/Acquirer.cc:178 ../qt/src/Acquirer.cc:164
 msgid "Canceling scan..."
-msgstr ""
+msgstr "სკანირების გაუქმება..."
 
 #: ../gtk/src/Config.cc:50 ../gtk/src/Config.cc:60
 #: ../qt/data/ConfigDialog.ui.h:7
 msgid "Filename prefix"
-msgstr ""
+msgstr "ფაილის სახელის პრეფიქსი"
 
 #: ../gtk/src/Config.cc:51 ../gtk/src/Config.cc:61
 #: ../qt/data/ConfigDialog.ui.h:8
 msgid "Code"
-msgstr ""
+msgstr "კოდი"
 
 #: ../gtk/src/Config.cc:52 ../gtk/src/Config.cc:62
 #: ../qt/data/ConfigDialog.ui.h:9
@@ -1014,7 +1017,7 @@ msgstr ""
 
 #: ../gtk/src/Config.cc:119 ../qt/src/Config.cc:104
 msgid "Script"
-msgstr ""
+msgstr "სკრიპტი"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:41
 #: ../qt/src/CrashHandler.cc:36
@@ -1035,7 +1038,7 @@ msgstr ""
 
 #: ../gtk/src/Displayer.cc:254 ../qt/src/Displayer.cc:200
 msgid "Failed to load image"
-msgstr ""
+msgstr "გამოსახულების ჩატვირთვის შეცდომა"
 
 #: ../gtk/src/Displayer.cc:254 ../qt/src/Displayer.cc:200
 msgid ""
@@ -1045,11 +1048,11 @@ msgstr ""
 
 #: ../gtk/src/Displayer.cc:770 ../qt/src/Displayer.cc:605
 msgid "Page %1"
-msgstr ""
+msgstr "გვერდი %1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
 msgid "PNG Images"
-msgstr ""
+msgstr "PNG გამოსახულებები"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "Save Selection Image"
@@ -1057,7 +1060,7 @@ msgstr ""
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "selection.png"
-msgstr ""
+msgstr "selection.png"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize all"
@@ -1073,25 +1076,25 @@ msgstr ""
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "დროებითი ფაილები"
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:48
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:106 ../gtk/src/SourceManager.cc:268
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:279
 msgid "Select folder..."
-msgstr ""
+msgstr "აირჩიეთ საქაღალდე..."
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
-msgstr ""
+msgstr "რჩევების გარეშე"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:74 ../qt/src/hocr/HOCRDocument.cc:75
 msgid "Add to dictionary"
-msgstr ""
+msgstr "ლექსიკონში ჩამატება"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:80 ../qt/src/hocr/HOCRDocument.cc:79
 msgid "Ignore word"
@@ -1101,7 +1104,7 @@ msgstr ""
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:351 ../qt/src/hocr/HOCRDocument.cc:692
 #: ../qt/src/hocr/HOCRDocument.cc:729 ../qt/src/hocr/OutputEditorHOCR.cc:312
 msgid "Page"
-msgstr ""
+msgstr "გვერდი"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:802 ../qt/src/hocr/HOCRDocument.cc:694
 msgid "Text block"
@@ -1110,7 +1113,7 @@ msgstr ""
 #: ../gtk/src/hocr/HOCRDocument.cc:804 ../gtk/src/hocr/OutputEditorHOCR.cc:357
 #: ../qt/src/hocr/HOCRDocument.cc:696 ../qt/src/hocr/OutputEditorHOCR.cc:314
 msgid "Paragraph"
-msgstr ""
+msgstr "პარაგრაფი"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:806 ../qt/src/hocr/HOCRDocument.cc:698
 msgid "Textline"
@@ -1118,14 +1121,14 @@ msgstr ""
 
 #: ../gtk/src/hocr/HOCRDocument.cc:810 ../qt/src/hocr/HOCRDocument.cc:702
 msgid "Graphic"
-msgstr ""
+msgstr "გრაფიკა"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:129
 #: ../gtk/src/hocr/HOCRTextExporter.cc:31 ../qt/src/hocr/HOCROdtExporter.cc:49
 #: ../qt/src/hocr/HOCRPdfExporter.cc:137 ../qt/src/hocr/HOCRTextExporter.cc:34
 msgid "Export failed"
-msgstr ""
+msgstr "გატანის შეცდომა"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../qt/src/hocr/HOCROdtExporter.cc:49
@@ -1138,7 +1141,7 @@ msgstr ""
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:70 ../qt/src/hocr/HOCRPdfExporter.cc:80
 msgid "The operation was cancelled"
-msgstr ""
+msgstr "ოპერაცია შეწყვეტილ იქნა"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:117 ../qt/src/hocr/HOCRPdfExporter.cc:126
 msgid "Failed to render page %1"
@@ -1159,7 +1162,7 @@ msgstr ""
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:55
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:62
 msgid "Monochrome"
-msgstr ""
+msgstr "შავთეთრი"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:64
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:64
@@ -1189,17 +1192,17 @@ msgstr ""
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:97
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:74
 msgid "Same as source"
-msgstr ""
+msgstr "იგივე, რაც წყარო"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:100
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:75
 msgid "Custom"
-msgstr ""
+msgstr "ხელით მითითება"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:114
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:71
 msgid "cm"
-msgstr ""
+msgstr "სმ"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:117
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:72
@@ -1213,22 +1216,22 @@ msgstr ""
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:354
 #: ../qt/src/hocr/OutputEditorHOCR.cc:313
 msgid "Block"
-msgstr ""
+msgstr "დაბლოკვა"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:360
 #: ../qt/src/hocr/OutputEditorHOCR.cc:315
 msgid "Line"
-msgstr ""
+msgstr "ხაზი"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:363
 #: ../qt/src/hocr/OutputEditorHOCR.cc:316
 msgid "Word"
-msgstr ""
+msgstr "სიტყვა"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:366
 #: ../qt/src/hocr/OutputEditorHOCR.cc:317
 msgid "Misspelled word"
-msgstr ""
+msgstr "არასწორად დაწერილი სიტყვა"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:369
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
@@ -1258,7 +1261,7 @@ msgstr ""
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:901
 #: ../qt/src/hocr/OutputEditorHOCR.cc:781
 msgid "Merge"
-msgstr ""
+msgstr "გაერთიანება"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:908
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:966
@@ -1271,7 +1274,7 @@ msgstr ""
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:918
 #: ../qt/src/hocr/OutputEditorHOCR.cc:787
 msgid "Swap"
-msgstr ""
+msgstr "სვაპი"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:941
 #: ../qt/src/hocr/OutputEditorHOCR.cc:832
@@ -1281,7 +1284,7 @@ msgstr ""
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:944
 #: ../qt/src/hocr/OutputEditorHOCR.cc:833
 msgid "Add text block"
-msgstr ""
+msgstr "ტექსტის ბლოკის დამატება"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:948
 #: ../qt/src/hocr/OutputEditorHOCR.cc:835
@@ -1291,12 +1294,12 @@ msgstr ""
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:952
 #: ../qt/src/hocr/OutputEditorHOCR.cc:837
 msgid "Add line"
-msgstr ""
+msgstr "ხაზის დამატება"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:956
 #: ../qt/src/hocr/OutputEditorHOCR.cc:839
 msgid "Add word"
-msgstr ""
+msgstr "სიტყვის დამატება"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1015
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1098
@@ -1342,7 +1345,7 @@ msgstr ""
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1083
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1112
 msgid "output"
-msgstr ""
+msgstr "გამოტანა"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1099
 #: ../qt/src/hocr/OutputEditorHOCR.cc:990
@@ -1372,7 +1375,7 @@ msgstr ""
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1202
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1088
 msgid "PDF Files"
-msgstr ""
+msgstr "PDF ფაილები"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1203
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1088
@@ -1393,7 +1396,7 @@ msgstr ""
 #: ../gtk/src/OutputEditorText.cc:531 ../qt/src/hocr/OutputEditorHOCR.cc:1115
 #: ../qt/src/OutputEditorText.cc:342 ../qt/src/OutputEditorText.cc:410
 msgid "Text Files"
-msgstr ""
+msgstr "ტექსტური ფაილები"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1231
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1115
@@ -1413,7 +1416,7 @@ msgstr ""
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1367 ../gtk/src/OutputEditorText.cc:357
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1232 ../qt/src/OutputEditorText.cc:253
 msgid "Replacing..."
-msgstr ""
+msgstr "ჩანაცვლება..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1392 ../gtk/src/OutputEditorText.cc:373
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1255 ../qt/src/OutputEditorText.cc:265
@@ -1423,7 +1426,7 @@ msgstr ""
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:243
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:230
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "კლავიატურის მალსახმობები"
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:264
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:242
@@ -1479,11 +1482,11 @@ msgstr ""
 
 #: ../gtk/src/MainWindow.cc:331 ../qt/src/MainWindow.cc:327
 msgid "Ready"
-msgstr ""
+msgstr "მზადაა"
 
 #: ../gtk/src/MainWindow.cc:483 ../qt/src/MainWindow.cc:464
 msgid "New version"
-msgstr ""
+msgstr "ახალი ვერსია"
 
 #: ../gtk/src/MainWindow.cc:483 ../qt/src/MainWindow.cc:464
 msgid "gImageReader %1 is available"
@@ -1491,24 +1494,24 @@ msgstr ""
 
 #: ../gtk/src/MainWindow.cc:484 ../qt/src/MainWindow.cc:465
 msgid "Download"
-msgstr ""
+msgstr "გადმოწერა"
 
 #: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:466
 msgid "Changelog"
-msgstr ""
+msgstr "ცვლილებები"
 
 #: ../gtk/src/MainWindow.cc:486 ../qt/src/MainWindow.cc:467
 msgid "Don't notify again"
-msgstr ""
+msgstr "აღარ მკითხო"
 
 #: ../gtk/src/MainWindow.cc:507 ../qt/src/MainWindow.cc:515
 msgid "Don't show again"
-msgstr ""
+msgstr "მეორედ არ მაჩვენო"
 
 #: ../gtk/src/MainWindow.cc:508 ../gtk/src/MainWindow.cc:521
 #: ../qt/src/MainWindow.cc:516
 msgid "Install"
-msgstr ""
+msgstr "ჩადგმა"
 
 #: ../gtk/src/MainWindow.cc:528 ../qt/src/MainWindow.cc:528
 msgid "Spelling dictionary missing"
@@ -1532,7 +1535,7 @@ msgstr ""
 #: ../qt/src/MainWindow.cc:626 ../qt/src/TessdataManager.cc:70
 #: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:288
 msgid "Error"
-msgstr ""
+msgstr "შეცდომა"
 
 #: ../gtk/src/MainWindow.cc:556 ../qt/src/MainWindow.cc:553
 msgid "Failed to install spelling dictionary: %1"
@@ -1544,11 +1547,11 @@ msgstr ""
 
 #: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:575
 msgid "Could not read %1: %2."
-msgstr ""
+msgstr "%1-ის წაკითხვის შეცდომა: %2."
 
 #: ../gtk/src/MainWindow.cc:612 ../qt/src/MainWindow.cc:601
 msgid "Downloading '%1'..."
-msgstr ""
+msgstr "%1-ის გადმოწერა..."
 
 #: ../gtk/src/MainWindow.cc:633 ../qt/src/MainWindow.cc:621
 msgid ""
@@ -1562,7 +1565,7 @@ msgstr ""
 
 #: ../gtk/src/MainWindow.cc:636 ../qt/src/MainWindow.cc:624
 msgid "Dictionaries installed"
-msgstr ""
+msgstr "ლექსიკონები დაყენებულია"
 
 #: ../gtk/src/MainWindow.cc:636
 msgid ""
@@ -1576,19 +1579,19 @@ msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:38 ../qt/src/OutputEditorText.cc:42
 msgid "Page: %1\n"
-msgstr ""
+msgstr "გვერდი: %1\n"
 
 #: ../gtk/src/OutputEditorText.cc:129
 msgid "Close document"
-msgstr ""
+msgstr "დოკუმენტის დახურვა"
 
 #: ../gtk/src/OutputEditorText.cc:133
 msgid "Untitled %1"
-msgstr ""
+msgstr "უსახელო %1"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
 msgid "Document not saved"
-msgstr ""
+msgstr "დოკუმენტი არ არის შენახული"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
 msgid "Save document before proceeding?"
@@ -1600,15 +1603,15 @@ msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:309
 msgid "No highlight"
-msgstr ""
+msgstr "გამოკვეთის გარეშე"
 
 #: ../gtk/src/OutputEditorText.cc:329
 msgid "Highlight mode"
-msgstr ""
+msgstr "გამოკვეთის რეჟიმი"
 
 #: ../gtk/src/OutputEditorText.cc:334
 msgid "Check spelling"
-msgstr ""
+msgstr "მართლწერის შემოწმება"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:256
 msgid "%1 occurrences replaced"
@@ -1616,11 +1619,11 @@ msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:412 ../qt/src/OutputEditorText.cc:301
 msgid "File: %1"
-msgstr ""
+msgstr "ფაილი: %1"
 
 #: ../gtk/src/OutputEditorText.cc:415 ../qt/src/OutputEditorText.cc:304
 msgid "Page: %1"
-msgstr ""
+msgstr "გვერდი: %1"
 
 #: ../gtk/src/OutputEditorText.cc:428 ../gtk/src/Recognizer.cc:243
 #: ../qt/src/Recognizer.cc:259
@@ -1632,7 +1635,7 @@ msgstr ""
 #: ../gtk/src/OutputEditorText.cc:458 ../gtk/src/SourceManager.cc:297
 #: ../qt/src/OutputEditorText.cc:342 ../qt/src/SourceManager.cc:269
 msgid "Select Files"
-msgstr ""
+msgstr "მონიშნეთ ფაილები"
 
 #: ../gtk/src/OutputEditorText.cc:532 ../qt/src/OutputEditorText.cc:410
 msgid "Save Output..."
@@ -1640,7 +1643,7 @@ msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:584
 msgid "Unsaved documents"
-msgstr ""
+msgstr "შეუნახავი დოკუმენტები"
 
 #: ../gtk/src/OutputEditorText.cc:585 ../qt/src/OutputEditorText.cc:462
 msgid ""
@@ -1650,7 +1653,7 @@ msgstr ""
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
-msgstr ""
+msgstr "ენები ხელმისაწვდომი არაა"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid ""
@@ -1659,7 +1662,7 @@ msgstr ""
 
 #: ../gtk/src/RecognitionMenu.cc:153 ../qt/src/RecognitionMenu.cc:134
 msgid "Multilingual"
-msgstr ""
+msgstr "მრავალენოვანი"
 
 #: ../gtk/src/RecognitionMenu.cc:205 ../qt/src/RecognitionMenu.cc:182
 msgid "Automatic page segmentation"
@@ -1723,7 +1726,7 @@ msgstr ""
 
 #: ../gtk/src/Recognizer.cc:121 ../qt/src/Recognizer.cc:137
 msgid "Current selection"
-msgstr ""
+msgstr "მიმდინარე მონიშნული"
 
 #: ../gtk/src/Recognizer.cc:194 ../gtk/src/Recognizer.cc:428
 #: ../qt/src/Recognizer.cc:212 ../qt/src/Recognizer.cc:442
@@ -1756,7 +1759,7 @@ msgstr ""
 #: ../qt/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:313
 #: ../qt/src/Recognizer.cc:326 ../qt/src/Recognizer.cc:417
 msgid "Recognizing..."
-msgstr ""
+msgstr "ამოცნობა..."
 
 #: ../gtk/src/Recognizer.cc:357 ../qt/src/Recognizer.cc:370
 msgid "- %1:%2: failed to render page"
@@ -1772,28 +1775,28 @@ msgstr ""
 
 #: ../gtk/src/Recognizer.cc:428 ../qt/src/Recognizer.cc:442
 msgid "The following errors occurred:"
-msgstr ""
+msgstr "აღმოჩენილია შემდეგი შეცდომები:"
 
 #: ../gtk/src/scanner/ScannerSane.cc:86 ../gtk/src/scanner/ScannerTwain.cc:287
 #: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
 msgid "Scan canceled"
-msgstr ""
+msgstr "სკანირება გაუქმებულია"
 
 #: ../gtk/src/scanner/ScannerSane.cc:161 ../gtk/src/scanner/ScannerTwain.cc:186
 #: ../qt/src/scanner/ScannerSane.cc:159 ../qt/src/scanner/ScannerTwain.cc:178
 msgid "No scanner specified"
-msgstr ""
+msgstr "სკანერი მითითებული არაა"
 
 #: ../gtk/src/scanner/ScannerSane.cc:170 ../gtk/src/scanner/ScannerTwain.cc:195
 #: ../qt/src/scanner/ScannerSane.cc:168 ../qt/src/scanner/ScannerTwain.cc:187
 msgid "Unable to connect to scanner"
-msgstr ""
+msgstr "სკანერთან მიერთების შეცდომა"
 
 #: ../gtk/src/scanner/ScannerSane.cc:405 ../gtk/src/scanner/ScannerTwain.cc:266
 #: ../gtk/src/scanner/ScannerTwain.cc:291 ../qt/src/scanner/ScannerSane.cc:403
 #: ../qt/src/scanner/ScannerTwain.cc:258 ../qt/src/scanner/ScannerTwain.cc:290
 msgid "Unable to start scan"
-msgstr ""
+msgstr "სკანირების დაწყების შეცდომა"
 
 #: ../gtk/src/scanner/ScannerSane.cc:413 ../gtk/src/scanner/ScannerSane.cc:463
 #: ../gtk/src/scanner/ScannerTwain.cc:317 ../qt/src/scanner/ScannerSane.cc:411
@@ -1803,19 +1806,19 @@ msgstr ""
 
 #: ../gtk/src/scanner/ScannerSane.cc:523 ../qt/src/scanner/ScannerSane.cc:518
 msgid "Failed to save image"
-msgstr ""
+msgstr "ფაილის შენახვის შეცდომა"
 
 #: ../gtk/src/scanner/ScannerSane.cc:803 ../qt/src/scanner/ScannerSane.cc:798
 msgid "Operation is cancelled."
-msgstr ""
+msgstr "ოპერაცია გაუქმდა."
 
 #: ../gtk/src/scanner/ScannerSane.cc:805 ../qt/src/scanner/ScannerSane.cc:800
 msgid "Device is busy."
-msgstr ""
+msgstr "მოწყობილობა დაკავებულია."
 
 #: ../gtk/src/scanner/ScannerSane.cc:807 ../qt/src/scanner/ScannerSane.cc:802
 msgid "Cover is opened."
-msgstr ""
+msgstr "სახურავი ღიაა."
 
 #: ../gtk/src/scanner/ScannerSane.cc:809 ../qt/src/scanner/ScannerSane.cc:804
 msgid "Document feeder jammed."
@@ -1859,7 +1862,7 @@ msgstr ""
 #: ../gtk/src/SourceManager.cc:307 ../qt/src/SourceManager.cc:315
 #: ../qt/src/SourceManager.cc:321
 msgid "Pasted %1"
-msgstr ""
+msgstr "%1 ჩასმულია"
 
 #: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:339
 msgid "Screenshot Error"
@@ -1883,7 +1886,7 @@ msgstr ""
 
 #: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:363
 msgid "Could not write to %1."
-msgstr ""
+msgstr "%1-ში ჩაწერის შეცდომა."
 
 #: ../gtk/src/SourceManager.cc:381
 msgid "Delete File?"
@@ -1914,11 +1917,11 @@ msgstr ""
 
 #: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:69
 msgid "Search for"
-msgstr ""
+msgstr "მოძებნა"
 
 #: ../gtk/src/SubstitutionsManager.cc:34 ../qt/src/SubstitutionsManager.cc:69
 msgid "Replace with"
-msgstr ""
+msgstr "_ჩანაცვლება"
 
 #: ../gtk/src/SubstitutionsManager.cc:69 ../gtk/src/SubstitutionsManager.cc:103
 #: ../qt/src/SubstitutionsManager.cc:102 ../qt/src/SubstitutionsManager.cc:139
@@ -1951,7 +1954,7 @@ msgstr ""
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Error Saving File"
-msgstr ""
+msgstr "ფაილის შენახვის შეცდომა"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Unable to write to '%1'."
@@ -2000,7 +2003,7 @@ msgstr ""
 
 #: ../gtk/src/TessdataManager.cc:306 ../qt/src/TessdataManager.cc:260
 msgid "Downloading %1..."
-msgstr ""
+msgstr "%1-ის გადმოწერა..."
 
 #: ../gtk/src/TessdataManager.cc:330
 msgid ""
@@ -2015,39 +2018,39 @@ msgstr ""
 
 #: ../gtk/src/Utils.cc:127
 msgid "Yes"
-msgstr ""
+msgstr "დიახ"
 
 #: ../gtk/src/Utils.cc:130
 msgid "Yes to all"
-msgstr ""
+msgstr "დიახ ყველაფერზე"
 
 #: ../gtk/src/Utils.cc:136
 msgid "No"
-msgstr ""
+msgstr "არა"
 
 #: ../gtk/src/Utils.cc:139
 msgid "No to all"
-msgstr ""
+msgstr "არა ყველაფერზე"
 
 #: ../gtk/src/Utils.cc:142
 msgid "Discard"
-msgstr ""
+msgstr "გაუქმება"
 
 #: ../gtk/src/Utils.cc:145
 msgid "Discard all"
-msgstr ""
+msgstr "ყველაფრის მოცილება"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
 msgid "Text"
-msgstr ""
+msgstr "ტექსტი"
 
 #: ../gtk/src/Utils.cc:151 ../qt/src/SourceManager.cc:470
 msgid "hOCR"
-msgstr ""
+msgstr "hOCR"
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
-msgstr ""
+msgstr "GImageReader-ის შესახებ"
 
 #: ../qt/data/AboutDialog.ui.h:3
 msgid ""
@@ -2058,11 +2061,11 @@ msgstr ""
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
-msgstr ""
+msgstr "კრედიტები"
 
 #: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
-msgstr ""
+msgstr "ლიცენზია"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
@@ -2076,7 +2079,7 @@ msgstr ""
 
 #: ../qt/data/ConfigDialog.ui.h:15
 msgid "UTF-8"
-msgstr ""
+msgstr "UTF-8"
 
 #: ../qt/data/ConfigDialog.ui.h:19
 msgid "Text file encoding:"
@@ -2105,55 +2108,55 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
-msgstr ""
+msgstr "Flatbed"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Front"
-msgstr ""
+msgstr "წინა დამ-ი"
 
 #: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Back"
-msgstr ""
+msgstr "უკანა დამ-ი"
 
 #: ../qt/data/MainWindow.ui.h:21
 msgid "ADF Duplex"
-msgstr ""
+msgstr "დუპლექსური დამ-ი"
 
 #: ../qt/data/MainWindow.ui.h:23
 msgid "Zoom In"
-msgstr ""
+msgstr "გადიდება"
 
 #: ../qt/data/MainWindow.ui.h:25
 msgid "Zoom Out"
-msgstr ""
+msgstr "დაპატარავება"
 
 #: ../qt/data/MainWindow.ui.h:27
 msgid "Normal Size"
-msgstr ""
+msgstr "ნორმალური ზომა"
 
 #: ../qt/data/MainWindow.ui.h:29
 msgid "Best Fit"
-msgstr ""
+msgstr "საუკეთესოდ ჩატევა"
 
 #: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate Left"
-msgstr ""
+msgstr "მარცხნივ შებრუნება"
 
 #: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate left"
-msgstr ""
+msgstr "მარცხნივ მოტრიალება"
 
 #: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate Right"
-msgstr ""
+msgstr "მარჯვნივ შებრუნება"
 
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Rotate right"
-msgstr ""
+msgstr "მარჯვნივ მოტრიალება"
 
 #: ../qt/data/MainWindow.ui.h:35
 msgid "Image Controls"
-msgstr ""
+msgstr "სურათის კონტროლი"
 
 #: ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect Layout"
@@ -2165,19 +2168,19 @@ msgstr ""
 
 #: ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
-msgstr ""
+msgstr "PDF-ად გატანა"
 
 #: ../qt/data/PdfExportDialog.ui.h:5 ../qt/data/PdfExportWidget.ui.h:4
 msgid "Backend:"
-msgstr ""
+msgstr "უკანბოლო:"
 
 #: ../qt/data/PdfExportDialog.ui.h:8 ../qt/data/PdfExportWidget.ui.h:7
 msgid "Portrait"
-msgstr ""
+msgstr "პორტრეტი"
 
 #: ../qt/data/PdfExportDialog.ui.h:9 ../qt/data/PdfExportWidget.ui.h:8
 msgid "Landscape"
-msgstr ""
+msgstr "ლანდშაფტი"
 
 #: ../qt/src/hocr/HOCRPdfExporter.cc:311
 msgid "Failed to write to file"
@@ -2199,7 +2202,7 @@ msgstr ""
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:112
 #: ../qt/src/Ui_OutputEditorText.hh:115
 msgid "Find and Replace"
-msgstr ""
+msgstr "ძებნა და ჩანაცვლება"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
@@ -2214,11 +2217,11 @@ msgstr ""
 
 #: ../qt/src/OutputEditorText.cc:520 ../qt/src/SourceManager.cc:252
 msgid "No recent files"
-msgstr ""
+msgstr "ახლახანს გასნილი დოკუმენტების გარეშე"
 
 #: ../qt/src/SourceManager.cc:391
 msgid "Delete Files"
-msgstr ""
+msgstr "ფაილების წაშლა"
 
 #: ../qt/src/TessdataManager.cc:281
 msgid ""
@@ -2232,36 +2235,36 @@ msgstr ""
 
 #: ../qt/src/Ui_MainWindow.hh:50
 msgid "Output"
-msgstr ""
+msgstr "გამოტანა"
 
 #: ../qt/src/Ui_MainWindow.hh:135
 msgid "OCR mode:"
-msgstr ""
+msgstr "OCR-ის რეჟიმი:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:194
 msgid "Add folder"
-msgstr ""
+msgstr "საქაღალდის დამატება"
 
 #: ../qt/src/Ui_MainWindow.hh:195
 msgid "Paste"
-msgstr ""
+msgstr "ჩასმა"
 
 #: ../qt/src/Ui_MainWindow.hh:196
 msgid "Take Screenshot"
-msgstr ""
+msgstr "ეკრანის ანაბეჭდის გადაღება"
 
 #: ../qt/src/Ui_MainWindow.hh:204
 msgid "Remove Image"
-msgstr ""
+msgstr "სურათის წაშლა"
 
 #: ../qt/src/Ui_MainWindow.hh:207
 msgid "Delete Image"
-msgstr ""
+msgstr "გამოსახულების წაშლა"
 
 #: ../qt/src/Ui_MainWindow.hh:210
 msgid "Clear List"
-msgstr ""
+msgstr "სიის გასუფთავება"
 
 #: ../qt/src/Ui_OutputEditorText.hh:110
 msgid "Strip Line Breaks"
@@ -2269,12 +2272,12 @@ msgstr ""
 
 #: ../qt/src/Ui_OutputEditorText.hh:124
 msgid "Save Output"
-msgstr ""
+msgstr "გამოტანის შენახვა"
 
 #: ../qt/src/Ui_OutputEditorText.hh:126
 msgid "Clear Output"
-msgstr ""
+msgstr "გამოტანის გასუფთავება"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "ჩანართის დამატება"
