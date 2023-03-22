@@ -1063,7 +1063,7 @@ HOCRPage::HOCRPage(const QDomElement& element, int pageId, const QString& defaul
 		m_titleAttrs.remove("pageno");
 	}
 	m_angle = m_titleAttrs["rot"].toDouble();
-	m_resolution = m_titleAttrs.value("res", "100").toInt();
+	m_resolution = m_titleAttrs.value("scan_res", "100").toInt();
 
 	QDomElement childElement = element.firstChildElement("div");
 	while(!childElement.isNull()) {

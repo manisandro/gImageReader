@@ -279,7 +279,7 @@ void OutputEditorHOCR::HOCRBatchProcessor::appendOutput(std::ostream& dev, tesse
 	attrs["image"] = Glib::ustring::compose("'%1'", Glib::path_get_basename(pageInfos.filename));
 	attrs["ppageno"] = Glib::ustring::compose("%1", pageInfos.page);
 	attrs["rot"] = Glib::ustring::compose("%1", pageInfos.angle);
-	attrs["res"] = Glib::ustring::compose("%1", pageInfos.resolution);
+	attrs["scan_res"] = Glib::ustring::compose("%1", pageInfos.resolution);
 	pageDiv->set_attribute("title", HOCRItem::serializeAttrGroup(attrs));
 	doc->write_to_stream(dev);
 }
@@ -556,7 +556,7 @@ void OutputEditorHOCR::addPage(const Glib::ustring& hocrText, HOCRReadSessionDat
 	attrs["image"] = Glib::ustring::compose("'%1'", data.pageInfo.filename);
 	attrs["ppageno"] = Glib::ustring::compose("%1", data.pageInfo.page);
 	attrs["rot"] = Glib::ustring::compose("%1", data.pageInfo.angle);
-	attrs["res"] = Glib::ustring::compose("%1", data.pageInfo.resolution);
+	attrs["scan_res"] = Glib::ustring::compose("%1", data.pageInfo.resolution);
 	pageDiv->set_attribute("title", HOCRItem::serializeAttrGroup(attrs));
 
 	Gtk::TreeIter index = m_document->insertPage(data.insertIndex, pageDiv, true);
