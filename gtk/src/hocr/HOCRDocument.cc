@@ -1187,7 +1187,7 @@ HOCRPage::HOCRPage(const xmlpp::Element* element, int pageId, const Glib::ustrin
 		m_titleAttrs.erase(m_titleAttrs.find("pageno"));
 	}
 	m_angle = std::atof(m_titleAttrs["rot"].c_str());
-	m_resolution = std::atoi(m_titleAttrs["res"].c_str());
+	m_resolution = std::atoi(m_titleAttrs["scan_res"].c_str());
 	if(m_resolution == 0) {
 		m_resolution = 100;
 	}

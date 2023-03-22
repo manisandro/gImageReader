@@ -265,7 +265,7 @@ void OutputEditorHOCR::HOCRBatchProcessor::appendOutput(QIODevice* dev, tesserac
 	attrs["image"] = QString("'./%1'").arg(QFileInfo(pageInfos.filename).fileName());
 	attrs["ppageno"] = QString::number(pageInfos.page);
 	attrs["rot"] = QString::number(pageInfos.angle);
-	attrs["res"] = QString::number(pageInfos.resolution);
+	attrs["scan_res"] = QString::number(pageInfos.resolution);
 	pageDiv.setAttribute("title", HOCRItem::serializeAttrGroup(attrs));
 	dev->write(doc.toByteArray());
 }
@@ -434,7 +434,7 @@ void OutputEditorHOCR::addPage(const QString& hocrText, HOCRReadSessionData data
 	attrs["image"] = QString("'%1'").arg(data.pageInfo.filename);
 	attrs["ppageno"] = QString::number(data.pageInfo.page);
 	attrs["rot"] = QString::number(data.pageInfo.angle);
-	attrs["res"] = QString::number(data.pageInfo.resolution);
+	attrs["scan_res"] = QString::number(data.pageInfo.resolution);
 	pageDiv.setAttribute("title", HOCRItem::serializeAttrGroup(attrs));
 
 	QModelIndex index = m_document->insertPage(data.insertIndex, pageDiv, true);
