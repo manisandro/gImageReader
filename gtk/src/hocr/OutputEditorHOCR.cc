@@ -856,6 +856,7 @@ void OutputEditorHOCR::bboxDrawn(const Geometry::Rectangle& bbox, int action) {
 		std::map<Glib::ustring, Glib::ustring> titleAttrs;
 		titleAttrs["bbox"] = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
 		titleAttrs["x_font"] = propWord["title:x_font"].size() == 1 ? *propWord["title:x_font"].begin() : "sans";
+		titleAttrs["x_font"] = Glib::ustring::compose("\"%1\"", propWord["title:x_font"].size() == 1 ? *propWord["title:x_font"].begin() : "sans");
 		titleAttrs["x_fsize"] = propWord["title:x_fsize"].size() == 1 ? *propWord["title:x_fsize"].begin() : Glib::ustring::compose("%1", std::round(bbox.height * 72. / currentItem->page()->resolution()));
 		titleAttrs["x_wconf"] = "100";
 		newElement->set_attribute("title", HOCRItem::serializeAttrGroup(titleAttrs));

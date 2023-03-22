@@ -731,8 +731,8 @@ void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 		QMap<QString, QString> titleAttrs;
 		titleAttrs["bbox"] = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
 		titleAttrs["x_wconf"] = "100";
-		titleAttrs["x_font"] = propWord["title:x_font"].size() == 1 ?
-		                       *propWord["title:x_font"].begin() : QFont().family();
+		titleAttrs["x_font"] = QString("\"%1\"").arg(propWord["title:x_font"].size() == 1 ?
+		                       *propWord["title:x_font"].begin() : QFont().family());
 		titleAttrs["x_fsize"] = propWord["title:x_fsize"].size() == 1 ?
 		                        *propWord["title:x_fsize"].begin() : QString("%1").arg(qRound(bbox.height() * 72. / currentItem->page()->resolution()));
 		newElement.setAttribute("title", HOCRItem::serializeAttrGroup(titleAttrs));
