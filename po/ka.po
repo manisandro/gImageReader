@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2023-02-22 13:37+0000\n"
+"PO-Revision-Date: 2023-04-12 04:48+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ka/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16-dev\n"
+"X-Generator: Weblate 4.17-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -49,7 +49,7 @@ msgstr "პროგრამის შესახებ"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
-msgstr "გამორთვა"
+msgstr "გასვლა"
 
 #: ../gtk/data/CharacterListDialog.ui.h:1 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
@@ -57,15 +57,15 @@ msgstr ""
 
 #: ../gtk/data/CharacterListDialog.ui.h:2 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "გამოტოვე ეს სიმბოლოები ამოცნობის დროს (შავი სია):"
 
 #: ../gtk/data/CharacterListDialog.ui.h:3 ../qt/data/CharacterListDialog.ui.h:3
 msgid "Enter a string of characters..."
-msgstr ""
+msgstr "შეიყვანეთ სიმბოლოები..."
 
 #: ../gtk/data/CharacterListDialog.ui.h:4 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
+msgstr "მხოლოდ მოცემული სიმბოლოების ამოცნობა (თეთრი სია):"
 
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:49
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/src/FileDialogs.cc:179
@@ -92,19 +92,19 @@ msgstr ""
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr ""
+msgstr "პროგრამის განახლებების ავტომატური შემოწმება"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr ""
+msgstr "წინასწარ განსაზღვრული ენები:"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
-msgstr ""
+msgstr "დამატებითი ენები:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr ""
+msgstr "tesseract language data ფაილების პრეფიქსი"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
@@ -112,7 +112,7 @@ msgstr "პრეფიქსი"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr ""
+msgstr "ენის ISO 639-1 კოდი რომელსაც მოჰყვება ქვეყნის კოდი"
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
@@ -132,11 +132,11 @@ msgstr "სახელი"
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:548 ../gtk/src/Utils.cc:154
 #: ../qt/data/ConfigDialog.ui.h:27 ../qt/data/MainWindow.ui.h:13
 msgid "Cancel"
-msgstr "შეწყვეტა"
+msgstr "გაუქმება"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
-msgstr ""
+msgstr "გამოტანის პანელის ფონტი:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
@@ -144,27 +144,27 @@ msgstr "ნაგულისხმები"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "ენების მონაცემთა ადგილმდებარეობა:"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
-msgstr ""
+msgstr "ენების განსაზღვრებების მისამართი:"
 
 #: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
-msgstr ""
+msgstr "მართლწერის ლექსიკონების მისამართი:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "სისტემური მისამართები"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "მომხმარებლის მისამართები"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr ""
+msgstr "ექსპორტირებული დოკუმენტის ავტომატური გახსნა სტანდარტული პროგრამით"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
@@ -718,7 +718,7 @@ msgstr "DPI:"
 #: ../gtk/data/PdfExportWidget.ui.h:9 ../qt/data/PdfExportDialog.ui.h:18
 #: ../qt/data/PdfExportWidget.ui.h:17
 msgid "Dithering algorithm:"
-msgstr "დიზერინგის ალგორითმი"
+msgstr "დიზერინგის ალგორითმი:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:10 ../qt/data/PdfExportDialog.ui.h:13
 #: ../qt/data/PdfExportWidget.ui.h:12
