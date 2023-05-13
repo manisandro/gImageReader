@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2018-06-21 22:22+0000\n"
-"Last-Translator: peinilla <peinilla1569@gmail.com>\n"
+"PO-Revision-Date: 2023-05-14 15:50+0000\n"
+"Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ko/>\n"
 "Language: ko\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.1-dev\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -60,9 +60,8 @@ msgid "Exclude these characters from being recognized (blacklist):"
 msgstr ""
 
 #: ../gtk/data/CharacterListDialog.ui.h:3 ../qt/data/CharacterListDialog.ui.h:3
-#, fuzzy
 msgid "Enter a string of characters..."
-msgstr "인자 가져오기..."
+msgstr "문자열을 입력하세요..."
 
 #: ../gtk/data/CharacterListDialog.ui.h:4 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
@@ -77,7 +76,7 @@ msgstr "확인"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
-msgstr "출력창 방향 :"
+msgstr "출력 창 방향:"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
@@ -89,7 +88,7 @@ msgstr "세로"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr "누락된 맞춤법 사전 설치창 표시"
+msgstr "누락된 맞춤법 검사 사전을 설치하기 위한 쿼리"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
@@ -97,7 +96,7 @@ msgstr "자동으로 새 버전 확인"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr "등록된 언어 :"
+msgstr "미리 정의된 언어 정의:"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
@@ -105,15 +104,15 @@ msgstr "추가된 언어 :"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr "언어 접두사"
+msgstr "테서랙트 언어 데이터 파일의 접두어"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
-msgstr "접두사"
+msgstr "접두어"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr "언어코드 뒤에 국가코드"
+msgstr "ISO 639-1 언어 코드와 국가 코드가 뒤따릅니다"
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
@@ -121,7 +120,7 @@ msgstr "ISO 코드"
 
 #: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:24
 msgid "The name of the language"
-msgstr "언어"
+msgstr "언어의 이름"
 
 #: ../gtk/data/ConfigDialog.ui.h:16 ../qt/data/ConfigDialog.ui.h:25
 msgid "Name"
@@ -137,7 +136,7 @@ msgstr "취소"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
-msgstr "출력 폰트:"
+msgstr "출력 창 글꼴:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
@@ -145,19 +144,19 @@ msgstr "기본값"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr "언어파일 위치:"
+msgstr "언어 데이터 위치:"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
-msgstr "언어 정의 위치:"
+msgstr "언어 정의 경로:"
 
 #: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
-msgstr "맞춤법 사전 위치:"
+msgstr "철자 사전 경로:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr "시스템 경로"
+msgstr "시스템 전체 경로"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
@@ -165,14 +164,14 @@ msgstr "사용자 경로"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr "기본 응용 프로그램으로 문서 실행"
+msgstr "내보낸 문서를 기본 응용 프로그램으로 자동 열기"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
 msgstr "역추적 재생성"
 
 #: ../gtk/data/CrashHandler.ui.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -182,12 +181,12 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"불편을 끼쳐 드려 죄송합니다. 애플리케이션의 개선을 위해 문제에 대한 보고서를 "
-"전송해주십시오. \n"
-"<a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>.\n"
-"가능하다면, 어떤 작업을 하는 동안 문제가 발생했는지 설명해 주십시오. 아래의 "
-"정보를 포함하면 좋습니다. 감사합니다."
+"<b>애플리케이션이 충돌했습니다</b>\n"
+"\n"
+"불편을 드려 죄송합니다. 애플리케이션을 개선할 수 있도록 <a href=\"mailto"
+":manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail.com</"
+"a>으로 문제를 신고해 주세요. 애플리케이션이 충돌하기 전에 무엇을 하고 "
+"있었는지 설명해 주세요. 또한 아래 정보를 포함하세요. 감사합니다."
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -218,9 +217,8 @@ msgstr "닫기"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:4
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "입력모드"
+msgstr "원본 폴더 선택:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
 #: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
@@ -235,31 +233,27 @@ msgstr ""
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "출력 경로:"
+msgstr "입력:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:8
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "출력 모드:"
+msgstr "출력 미리보기:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:9
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "소스 파일"
+msgstr "입력 파일"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:10
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "기타옵션"
+msgstr "내보내기 옵션"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
-msgstr "출력창 표시"
+msgstr "출력 창 전환"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
@@ -277,23 +271,23 @@ msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:201
 msgid "Add images"
-msgstr "이미지 추가"
+msgstr "이미지 추가하기"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:200
 msgid "Add Images"
-msgstr "이미지 추가"
+msgstr "이미지 추가하기"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:205
 msgid "Remove image from list"
-msgstr "제거"
+msgstr "목록에서 이미지 제거하기"
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/src/Ui_MainWindow.hh:208
 msgid "Delete image"
-msgstr "이미지 삭제"
+msgstr "이미지 삭제하기"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:211
 msgid "Clear list"
-msgstr "전부 지우기"
+msgstr "목록 지우기"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
@@ -314,7 +308,7 @@ msgstr "새로고침"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:10
 msgid "Output:"
-msgstr "출력 경로:"
+msgstr "출력:"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:14
 msgid "Mode:"
@@ -323,12 +317,12 @@ msgstr "모드:"
 #: ../gtk/data/MainWindow.ui.h:16 ../gtk/src/hocr/HOCRPdfExportWidget.cc:49
 #: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExportWidget.cc:60
 msgid "Color"
-msgstr "컬러"
+msgstr "색상"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExportWidget.cc:52
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExportWidget.cc:61
 msgid "Grayscale"
-msgstr "흑백"
+msgstr "그레이스케일"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:11
 msgid "Resolution:"
@@ -344,7 +338,7 @@ msgstr "소스:"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
-msgstr "가져오기"
+msgstr "획득하기"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
@@ -379,9 +373,8 @@ msgid "Best fit"
 msgstr "화면에 맞추기"
 
 #: ../gtk/data/MainWindow.ui.h:30 ../qt/src/Ui_MainWindow.hh:60
-#, fuzzy
 msgid "Rotate page"
-msgstr "모든 창 회전하기"
+msgstr "페이지 회전"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
@@ -395,9 +388,8 @@ msgid "Select insert mode"
 msgstr "입력모드"
 
 #: ../gtk/data/MainWindow.ui.h:33 ../qt/src/Ui_MainWindow.hh:102
-#, fuzzy
 msgid "Select page"
-msgstr "언어 선택"
+msgstr "페이지 선택"
 
 #: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
@@ -425,18 +417,16 @@ msgid "Select language"
 msgstr "언어 선택"
 
 #: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:41
-#, fuzzy
 msgid "Batch Export"
-msgstr "내보내기"
+msgstr "일괄 내보내기"
 
 #: ../gtk/data/MainWindow.ui.h:41
 msgid "A graphical frontend to tesseract-ocr"
 msgstr "Tesseract-ocr 을 이용한 프론트엔드"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/BatchModeDialog.ui.h:1
-#, fuzzy
 msgid "Batch Mode"
-msgstr "대/소문자 구분"
+msgstr "일괄 모드"
 
 #: ../gtk/data/MainWindow.ui.h:43
 msgid ""
@@ -449,14 +439,12 @@ msgid "Existing output:"
 msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "출력 텍스트 앞에 추가 :"
+msgstr "텍스트를 출력할 페이지 번호 준비"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/BatchModeDialog.ui.h:5
-#, fuzzy
 msgid "Autodetect page layout"
-msgstr "자동감지"
+msgstr "페이지 레이아웃 자동 감지"
 
 #: ../gtk/data/MainWindow.ui.h:47 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
@@ -496,9 +484,8 @@ msgid "Source page"
 msgstr "소스 페이지"
 
 #: ../gtk/data/MainWindow.ui.h:58 ../qt/src/SourceManager.cc:172
-#, fuzzy
 msgid "Protected PDF"
-msgstr "Protected PDF"
+msgstr "보호된 PDF"
 
 #: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:71
 msgid "Current Page"
@@ -526,9 +513,8 @@ msgid "Append new output after last page"
 msgstr ""
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
-#, fuzzy
 msgid "Insert new output before current page"
-msgstr "현재 창 회전하기"
+msgstr "현재 페이지 앞에 새 출력 삽입"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:95
@@ -548,9 +534,8 @@ msgstr "ODT로 내보내기"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
-#, fuzzy
 msgid "Append document after last page"
-msgstr "현재 텍스트에 추가"
+msgstr "마지막 페이지 뒤에 문서 추가"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
@@ -683,9 +668,8 @@ msgid "Draw whitespace"
 msgstr "공백 추가"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "hOCR 열기"
+msgstr "파일 열기"
 
 #: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:111
 msgid "Strip line breaks on selected text"
@@ -1055,7 +1039,6 @@ msgid "There was no unsaved work."
 msgstr "저장하지 않은 작업물입니다."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
-#, fuzzy
 msgid "Failed to obtain backtrace. Is GDB installed?"
 msgstr "역 추적을 가져오지 못했습니다. gdb가 설치되어 있습니까?"
 
@@ -1072,9 +1055,8 @@ msgstr ""
 "%1"
 
 #: ../gtk/src/Displayer.cc:770 ../qt/src/Displayer.cc:605
-#, fuzzy
 msgid "Page %1"
-msgstr "페이지: %1"
+msgstr "페이지 %1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
 msgid "PNG Images"
@@ -1167,23 +1149,23 @@ msgstr "ODT로 내보내기..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:70 ../qt/src/hocr/HOCRPdfExporter.cc:80
 msgid "The operation was cancelled"
-msgstr ""
+msgstr "작업이 취소되었습니다"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:117 ../qt/src/hocr/HOCRPdfExporter.cc:126
 msgid "Failed to render page %1"
-msgstr ""
+msgstr "%1 페이지를 렌더링하지 못했습니다"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:124 ../qt/src/hocr/HOCRPdfExporter.cc:133
 msgid "Exporting to PDF..."
-msgstr ""
+msgstr "PDF로 내보내는 중..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:129 ../qt/src/hocr/HOCRPdfExporter.cc:137
 msgid "The PDF export failed: %1."
-msgstr ""
+msgstr "PDF 내보내기 실패: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:397 ../qt/src/hocr/HOCRPdfExporter.cc:428
 msgid "The PDF library could not load the font '%1'."
-msgstr ""
+msgstr "PDF 라이브러리에서 '%1' 글꼴을 불러오지 못했습니다."
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:55
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:62
@@ -1261,9 +1243,8 @@ msgstr ""
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:369
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
-#, fuzzy
 msgid "Low confidence word"
-msgstr "신뢰도 표시"
+msgstr "신뢰도가 낮은 단어"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:420
@@ -1344,21 +1325,21 @@ msgstr ""
 #: ../gtk/src/OutputEditorText.cc:516 ../gtk/src/SourceManager.cc:170
 #: ../qt/src/hocr/OutputEditorHOCR.cc:954 ../qt/src/OutputEditorText.cc:394
 #: ../qt/src/SourceManager.cc:154
-#, fuzzy
 msgid ""
 "The following files could not be opened:\n"
 "%1"
 msgstr ""
-"다음 사전파일이 설치되었습니다:\n"
+"다음 파일을 열 수 없습니다:\n"
 "%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1067
 #: ../qt/src/hocr/OutputEditorHOCR.cc:957
-#, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "다음 사전 파일이 설치되었습니다 : %1"
+msgstr ""
+"다음 파일은 올바른 hOCR HTML이 아닙니다:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1070 ../gtk/src/OutputEditorText.cc:467
 #: ../gtk/src/OutputEditorText.cc:517 ../gtk/src/SourceManager.cc:170
@@ -1427,7 +1408,7 @@ msgstr "이 문서의 원본 이미지 파일을 덮어 쓸 수 없습니다."
 #: ../gtk/src/OutputEditorText.cc:531 ../qt/src/hocr/OutputEditorHOCR.cc:1115
 #: ../qt/src/OutputEditorText.cc:342 ../qt/src/OutputEditorText.cc:410
 msgid "Text Files"
-msgstr ""
+msgstr "텍스트 파일"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1231
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1115
@@ -1611,9 +1592,8 @@ msgid "No spelling dictionaries found for '%1'."
 msgstr ""
 
 #: ../gtk/src/OutputEditorText.cc:38 ../qt/src/OutputEditorText.cc:42
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "페이지: %1"
+msgstr "페이지: %1\n"
 
 #: ../gtk/src/OutputEditorText.cc:129
 msgid "Close document"
@@ -1787,9 +1767,8 @@ msgid "Recognizing page %1 (%2 of %3)"
 msgstr ""
 
 #: ../gtk/src/Recognizer.cc:242 ../qt/src/Recognizer.cc:258
-#, fuzzy
 msgid "- Page %1: failed to render page"
-msgstr "출력을 생성하지 못했습니다"
+msgstr "- 페이지 %1: 페이지를 렌더링하지 못했습니다"
 
 #: ../gtk/src/Recognizer.cc:270 ../gtk/src/Recognizer.cc:298
 #: ../gtk/src/Recognizer.cc:311 ../gtk/src/Recognizer.cc:403
@@ -1807,16 +1786,12 @@ msgid "- %1: output already exists, skipping"
 msgstr ""
 
 #: ../gtk/src/Recognizer.cc:373 ../qt/src/Recognizer.cc:387
-#, fuzzy
 msgid "- %1: failed to create output file"
-msgstr "출력을 생성하지 못했습니다"
+msgstr "- 1: 출력 파일을 만들지 못했습니다"
 
 #: ../gtk/src/Recognizer.cc:428 ../qt/src/Recognizer.cc:442
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr ""
-"다음 사전파일이 설치되었습니다:\n"
-"%1"
+msgstr "다음 오류가 발생했습니다:"
 
 #: ../gtk/src/scanner/ScannerSane.cc:86 ../gtk/src/scanner/ScannerTwain.cc:287
 #: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
@@ -1878,9 +1853,8 @@ msgid "Enter password for file '%1':"
 msgstr ""
 
 #: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:196
-#, fuzzy
 msgid "PDF with text"
-msgstr "텍스트"
+msgstr "텍스트가 포함된 PDF"
 
 #: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:196
 msgid ""
@@ -1939,9 +1913,8 @@ msgid "Delete the following files?"
 msgstr ""
 
 #: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:468
-#, fuzzy
 msgid "Open output"
-msgstr "저장"
+msgstr "출력 열기"
 
 #: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:468
 msgid ""
@@ -2084,14 +2057,12 @@ msgid "Discard all"
 msgstr ""
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
-#, fuzzy
 msgid "Text"
-msgstr "텍스트라인"
+msgstr "텍스트"
 
 #: ../gtk/src/Utils.cc:151 ../qt/src/SourceManager.cc:470
-#, fuzzy
 msgid "hOCR"
-msgstr "hOCR, PDF"
+msgstr "hOCR"
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
@@ -2131,7 +2102,7 @@ msgid "Text file encoding:"
 msgstr ""
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
@@ -2140,12 +2111,12 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"불편을 끼쳐 드려 죄송합니다. 애플리케이션의 개선을 위해 문제에 대한 보고서를 "
-"전송해주십시오. \n"
-"<a href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>.\n"
-"가능하다면, 어떤 작업을 하는 동안 문제가 발생했는지 설명해 주십시오. 아래의 "
-"정보를 포함하면 좋습니다. 감사합니다."
+"<html><head/><body><p><span style=\" font-weight:600;\">애플리케이션이 "
+"충돌했습니다.</span></p><p>불편을 드려 죄송합니다. 애플리케이션을 개선할 수 "
+"있도록 <a href=\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\""
+">manisandro@gmail.com</a>으로 문제를 신고해 주세요. 애플리케이션이 충돌하기 "
+"전에 무엇을 하고 계셨는지 설명해 주세요. 또한 아래 정보를 포함하세요. "
+"감사합니다.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
 msgid ""
@@ -2215,7 +2186,7 @@ msgstr ""
 
 #: ../qt/data/MainWindow.ui.h:39
 msgid "Toggle Output Pane"
-msgstr ""
+msgstr "출력 창 전환"
 
 #: ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
@@ -2257,26 +2228,24 @@ msgstr "찾기 및 바꾸기"
 
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
-#, fuzzy
 msgid "Show proofread widget"
-msgstr "미리보기"
+msgstr "교정 위젯 표시하기"
 
 #: ../qt/src/MainWindow.cc:624
-#, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
-msgstr "다음 사전 파일이 설치되었습니다 : %1"
+msgstr ""
+"다음 사전 파일을 설치했습니다:\n"
+"%1"
 
 #: ../qt/src/OutputEditorText.cc:520 ../qt/src/SourceManager.cc:252
-#, fuzzy
 msgid "No recent files"
-msgstr "소스 파일"
+msgstr "최근 파일 없음"
 
 #: ../qt/src/SourceManager.cc:391
-#, fuzzy
 msgid "Delete Files"
-msgstr "이미지 삭제"
+msgstr "파일 삭제하기"
 
 #: ../qt/src/TessdataManager.cc:281
 msgid ""
@@ -2298,9 +2267,8 @@ msgstr "OCR 모드:"
 
 #. Sources toolbar
 #: ../qt/src/Ui_MainWindow.hh:194
-#, fuzzy
 msgid "Add folder"
-msgstr "추가"
+msgstr "폴더 추가하기"
 
 #: ../qt/src/Ui_MainWindow.hh:195
 msgid "Paste"
