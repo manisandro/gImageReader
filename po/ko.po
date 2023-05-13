@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
 "PO-Revision-Date: 2023-05-14 15:50+0000\n"
-"Last-Translator: 이정희 <daemul72@gmail.com>\n"
+"Last-Translator: peinilla <peinilla1569@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ko/>\n"
 "Language: ko\n"
@@ -34,7 +34,7 @@ msgstr "언어 관리"
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:175
 msgid "Preferences"
-msgstr "설정"
+msgstr "환결설정"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:523 ../qt/src/MainWindow.cc:522
