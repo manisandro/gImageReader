@@ -17,6 +17,7 @@ gImageReader is a simple Gtk/Qt front-end to [tesseract-ocr](https://github.com/
 - Recognized text displayed directly next to the image
 - Post-process the recognized text, including spellchecking
 - Generate PDF documents from hOCR documents
+- International language support: [Weblate](https://hosted.weblate.org/projects/gimagereader/), [Desktop entry](./data/gimagereader.appdata.xml.in)
 
 ## Installation
 - ![Source](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/source.png) **Source**: Download from the [releases page](https://github.com/manisandro/gImageReader/releases)
@@ -37,4 +38,4 @@ If you encounter issues, please file a ticket in the [issue tracker](https://git
 Contributions are always welcome, ideally in the form of pull-requests.
 
 ## Translating
-International language support: [Weblate](https://hosted.weblate.org/projects/gimagereader/), [Desktop entry](./data/gimagereader.appdata.xml.in).
+International language support contributions at [Weblate](https://hosted.weblate.org/projects/gimagereader/) and [Desktop entry](./data/gimagereader.appdata.xml.in).
