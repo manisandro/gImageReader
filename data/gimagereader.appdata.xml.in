@@ -4,51 +4,84 @@
  <id>gimagereader-@INTERFACE_TYPE@.desktop</id>
  <metadata_license>CC0-1.0</metadata_license>
  <project_license>GPL-3.0+</project_license>
+ <developer_name>Sandro Mani</developer_name>
+ 
  <name>gImageReader</name>
  <name xml:lang="cs_CZ">gImageReader</name>
- <developer_name>Sandro Mani</developer_name>
+ <name xml:lang="hu">gKépolvasó</name>
+ 
+ <comment>Optical character recognition using Tesseract</comment>
+ <comment xml:lang="cs_CZ">Optické rozpoznávání znaků pomocí Tesseract</comment>
+ <comment xml:lang="hu">Optikai karakterfelismerés a Tesseact segítségével</comment>
+ 
  <summary>A graphical (@INTERFACE_TYPE@) frontend to tesseract-ocr</summary>
  <summary xml:lang="cs_CZ">Grafická (@INTERFACE_TYPE@) nadstavba pro engine tesseract-ocr</summary>
+ <summary xml:lang="hu">Grafikus (@INTERFACE_TYPE@) előtérbeli tesseract-ocr alkalmazáshoz</summary>
+ 
  <keywords>
- <keyword>ocr</keyword>
- <keyword>optical</keyword>
- <keyword>recognition</keyword>
- <keyword>tesseract</keyword>
- <keyword>pdf</keyword>
- <keyword>@INTERFACE_TYPE@</keyword>
+  <keyword>ocr</keyword>
+  <keyword>optical</keyword>
+  <keyword>recognition</keyword>
+  <keyword>tesseract</keyword>
+  <keyword>pdf</keyword>
+  <keyword>@INTERFACE_TYPE@</keyword>
+ 
+  <keyword xml:lang="cs_CZ">ocr</keyword>
+  <keyword xml:lang="cs_CZ">optické</keyword>
+  <keyword xml:lang="cs_CZ">rozpoznávání</keyword>
+  <keyword xml:lang="cs_CZ">tesseract</keyword>
+  <keyword xml:lang="cs_CZ">pdf</keyword>
+  
+  <keyword xml:lang="hu">optikai</keyword>
+  <keyword xml:lang="hu">karakterfelismerés</keyword>
+  <keyword xml:lang="hu">felismerés</keyword>
+  <keyword xml:lang="hu">tesseract</keyword>
+  <keyword xml:lang="hu">pdf</keyword>
+  
  </keywords>
- <keywords xml:lang="cs_CZ">
- <keyword xml:lang="cs_CZ">ocr</keyword>
- <keyword xml:lang="cs_CZ">optické</keyword>
- <keyword xml:lang="cs_CZ">rozpoznávání</keyword>
- <keyword xml:lang="cs_CZ">tesseract</keyword>
- <keyword xml:lang="cs_CZ">pdf</keyword>
- </keywords>
+ 
  <description>
- <p>gImageReader is a simple optical character recognition (OCR) application which acts as a frontend to the tesseract OCR engine. Features include:</p>
- <p xml:lang="cs_CZ">gImageReader je jednoduše použitelná aplikace pro rozpoznávání textu z obrázků, využívající OCR engine tesseract. Mezi funkce patří:</p>
- <ul>
-  <li>Import PDF documents and images from disk, scanning devices, clipboard and screenshots</li>
-  <li xml:lang="cs_CZ">Import PDF dokumentů a obrázků z počítače, skenovacích zařízení, schránky a snímků obrazovky</li>
-  <li>Process multiple images and documents in one go</li>
-  <li xml:lang="cs_CZ">Zpracování vícero obrázků a dokumentů naráz</li>
-  <li>Manual or automatic recognition area definition</li>
-  <li xml:lang="cs_CZ">Ruční nebo automatická definice oblasti k rozpoznávání</li>
-  <li>Recognize to plain text or to hOCR documents</li>
-  <li xml:lang="cs_CZ">Rozpoznání do holého textu nebo hOCR dokumentů</li>
-  <li>Recognized text displayed directly next to the image</li>
-  <li xml:lang="cs_CZ">Rozpoznaný text je zobrazen hned vedle zdrojového obrázku</li>
-  <li>Post-process the recognized text, including spellchecking</li>
-  <li xml:lang="cs_CZ">Následné zpracování rozpoznaného textu včetně kontroly překlepů</li>
-  <li>Generate PDF/ODT documents from hOCR documents</li>
-  <li xml:lang="cs_CZ">Vytváření PDF/ODT dokumentů z hOCR dokumentů</li>
- </ul>
+  <p>gImageReader is a simple optical character recognition (OCR) application which acts as a frontend to the tesseract OCR engine. Features include:</p>
+  <ul>
+   <li>Import PDF documents and images from disk, scanning devices, clipboard and screenshots</li>
+   <li>Process multiple images and documents in one go</li>
+   <li>Define, manually or automatically, the recognition area</li>
+   <li>Recognize and export as plain text or as hOCR documents</li>
+   <li>Recognize text next to images</li>
+   <li>Post-processing recognized text, including spell checking</li>
+   <li>Generate PDF/ODT documents from hOCR documents</li>
+  </ul>
+ 
+  <p xml:lang="cs_CZ">gImageReader je jednoduše použitelná aplikace pro rozpoznávání textu z obrázků, využívající OCR engine tesseract. Mezi funkce patří:</p>
+  <ul>
+   <li xml:lang="cs_CZ">Import PDF dokumentů a obrázků z počítače, skenovacích zařízení, schránky a snímků obrazovky</li>
+   <li xml:lang="cs_CZ">Zpracování vícero obrázků a dokumentů naráz</li>
+   <li xml:lang="cs_CZ">Ruční nebo automatická definice oblasti k rozpoznávání</li>
+   <li xml:lang="cs_CZ">Rozpoznání do holého textu nebo hOCR dokumentů</li>
+   <li xml:lang="cs_CZ">Rozpoznaný text je zobrazen hned vedle zdrojového obrázku</li>
+   <li xml:lang="cs_CZ">Následné zpracování rozpoznaného textu včetně kontroly překlepů</li>
+   <li xml:lang="cs_CZ">Vytváření PDF/ODT dokumentů z hOCR dokumentů</li>
+  </ul>
+ 
+  <p xml:lang="hu">A gKépolvasó egy egyszerű OCR (optical character recognition – optikai karakterfelismerő) alkalmazás, amely előtérbeliként működik a Tesseract OCR motorhoz. Jellemzők:</p>
+  <ul>
+   <li xml:lang="hu">Importáljon PDF dokumentumokat és képeket a következőkről: lemez, beolvasók, vágólap és képernyőképek</li>
+   <li xml:lang="hu">Több kép és dokumentum feldolgozása egy menetben</li>
+   <li xml:lang="hu">Határozza meg kézzel vagy automatikusan a felismerési területet</li>
+   <li xml:lang="hu">Felismerése és exportálása egyszerű szövegként vagy hOCR-dokumentumként</li>
+   <li xml:lang="hu">Szöveg felismerése a képek mellett</li>
+   <li xml:lang="hu">A felismert szöveg utófeldolgozása, beleértve a helyesírás-ellenőrzést</li>
+   <li xml:lang="hu">PDF/ODT dokumentumok létrehozása hOCR dokumentumokból</li>
+  </ul>
+ 
  </description>
+ 
  <screenshots>
- <screenshot type="default">
-  <image>https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/gimagereader-@INTERFACE_TYPE@.jpg</image>
-  <caption>gImageReader-@INTERFACE_TYPE@</caption>
- </screenshot>
+  <screenshot type="default">
+   <image>https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/gimagereader-@INTERFACE_TYPE@.jpg</image>
+   <caption>gImageReader-@INTERFACE_TYPE@</caption>
+   <caption xml:lang="hu">gKépolvasó-@INTERFACE_TYPE@</caption>
+  </screenshot>
  </screenshots>
  <url type="bugtracker">https://github.com/manisandro/gImageReader/issues</url>
  <url type="faq">https://github.com/manisandro/gImageReader/wiki/FAQ</url>
