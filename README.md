@@ -37,4 +37,4 @@ If you encounter issues, please file a ticket in the [issue tracker](https://git
 Contributions are always welcome, ideally in the form of pull-requests.
 
 ## Translating
-gImageReader translations are hosted on [Weblate](https://hosted.weblate.org/projects/gimagereader/) and are periodically merged into master.
+International language support: [Weblate](https://hosted.weblate.org/projects/gimagereader/), [Desktop entry](./data/gimagereader.appdata.xml.in).
