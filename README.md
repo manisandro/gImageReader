@@ -39,3 +39,7 @@ Contributions are always welcome, ideally in the form of pull-requests.
 
 ## Translating
 International language support contributions at [Weblate](https://hosted.weblate.org/projects/gimagereader/) and [Desktop entry](./data/gimagereader.appdata.xml.in).
+
+<a href="https://hosted.weblate.org/engage/gimagereader/">
+<img src="https://hosted.weblate.org/widgets/gimagereader/-/glossary/multi-auto.svg" alt="Translation status" />
+</a>
