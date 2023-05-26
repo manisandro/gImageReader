@@ -193,7 +193,7 @@ QModelIndex FileTreeModel::findFile(const QString& filePath, bool isFile) const 
 	if(!idx.isValid()) {
 		return QModelIndex();
 	}
-	QString relPath = fileDir.mid(m_root->path.length());
+	QString relPath = fileDir.mid(cur->path.length());
 	QStringList parts = relPath.split("/", Qt::SkipEmptyParts);
 	for(const QString& part : parts) {
 		auto it = cur->dirs.find(part);
