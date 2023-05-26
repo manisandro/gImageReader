@@ -105,6 +105,10 @@ Function .onInit
     CopyFiles "$1\share\myspell\dicts\*.aff" "$PLUGINSDIR\dicts\"
     CopyFiles "$1\share\myspell\*.dic" "$PLUGINSDIR\dicts\"
     CopyFiles "$1\share\myspell\*.aff" "$PLUGINSDIR\dicts\"
+    CopyFiles "$1\share\hunspell\dicts\*.dic" "$PLUGINSDIR\dicts\"
+    CopyFiles "$1\share\hunspell\dicts\*.aff" "$PLUGINSDIR\dicts\"
+    CopyFiles "$1\share\hunspell\*.dic" "$PLUGINSDIR\dicts\"
+    CopyFiles "$1\share\hunspell\*.aff" "$PLUGINSDIR\dicts\"
     CopyFiles "$1\share\tessdata\*" "$PLUGINSDIR\tessdata\"
 
     ClearErrors
@@ -124,7 +128,7 @@ Function .onInstSuccess
   ; Restore dictionaries and language definitions
   IfFileExists "$PLUGINSDIR\dicts" backupExists
   backupExists:
-    CopyFiles "$PLUGINSDIR\dicts\*" "$INSTDIR\share\myspell\"
+    CopyFiles "$PLUGINSDIR\dicts\*" "$INSTDIR\share\hunspell\"
     CopyFiles "$PLUGINSDIR\tessdata\*" "$INSTDIR\share\tessdata\"
 FunctionEnd
 
