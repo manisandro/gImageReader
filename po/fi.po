@@ -8,120 +8,124 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:17+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-05-30 14:36+0000\n"
+"Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gimagereader/"
+"translations/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr ""
+msgstr "Tekstintunnistussovellus"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:169
 msgid "Redetect Languages"
-msgstr ""
+msgstr "Tunnista kielet uudelleen"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:172
 msgid "Manage Languages"
-msgstr ""
+msgstr "Hallinnoi kieliä"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:175
 msgid "Preferences"
-msgstr ""
+msgstr "Asetukset"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:523 ../qt/src/MainWindow.cc:522
 #: ../qt/src/Ui_MainWindow.hh:180
 msgid "Help"
-msgstr ""
+msgstr "Ohje"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:183
 msgid "About"
-msgstr ""
+msgstr "Tietoa"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
-msgstr ""
+msgstr "Lopeta"
 
 #: ../gtk/data/CharacterListDialog.ui.h:1 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr ""
+msgstr "Merkkien valkoinen/musta lista"
 
 #: ../gtk/data/CharacterListDialog.ui.h:2 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "Älä tunnista näitä merkkejä (musta lista):"
 
 #: ../gtk/data/CharacterListDialog.ui.h:3 ../qt/data/CharacterListDialog.ui.h:3
 msgid "Enter a string of characters..."
-msgstr ""
+msgstr "Kirjoita merkit..."
 
 #: ../gtk/data/CharacterListDialog.ui.h:4 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
+msgstr "Tunnista vain seuraavat merkit (valkoinen lista):"
 
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:49
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/src/FileDialogs.cc:179
 #: ../gtk/src/FileDialogs.cc:194 ../gtk/src/hocr/HOCRPdfExporter.cc:547
 #: ../gtk/src/Utils.cc:124 ../qt/data/ConfigDialog.ui.h:26
+#, fuzzy
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
-msgstr ""
+msgstr "Tulostusruudun suunta:"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
-msgstr ""
+msgstr "Vaaka"
 
 #: ../gtk/data/ConfigDialog.ui.h:6
 msgid "Vertical"
-msgstr ""
+msgstr "Pysty"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr ""
+msgstr "Kysy puuttuvien oikolukusanastojen asennusta"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr ""
+msgstr "Tarkista automaattisesti uusien ohjelmaversioiden saatavuus"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr ""
+msgstr "Esimääritellyt kielet:"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
-msgstr ""
+msgstr "Lisäkielimääritykset:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr ""
+msgstr "Tesseractin kielidatatiedoston etuliite"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
-msgstr ""
+msgstr "Etuliite"
 
 #: ../gtk/data/ConfigDialog.ui.h:13 ../qt/data/ConfigDialog.ui.h:22
 msgid "The ISO 639-1 language code followed by the country code"
-msgstr ""
+msgstr "ISO 639-1 -kielikoodi ja sen jäljessä maakoodi"
 
 #: ../gtk/data/ConfigDialog.ui.h:14 ../qt/data/ConfigDialog.ui.h:23
 msgid "ISO Code"
-msgstr ""
+msgstr "ISO-koodi"
 
 #: ../gtk/data/ConfigDialog.ui.h:15 ../qt/data/ConfigDialog.ui.h:24
 msgid "The name of the language"
-msgstr ""
+msgstr "Kielen nimi"
 
 #: ../gtk/data/ConfigDialog.ui.h:16 ../qt/data/ConfigDialog.ui.h:25
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: ../gtk/data/ConfigDialog.ui.h:17 ../gtk/data/MainWindow.ui.h:48
 #: ../gtk/data/OutputEditorHOCR.ui.h:2 ../gtk/src/Acquirer.cc:34
@@ -129,43 +133,43 @@ msgstr ""
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:548 ../gtk/src/Utils.cc:154
 #: ../qt/data/ConfigDialog.ui.h:27 ../qt/data/MainWindow.ui.h:13
 msgid "Cancel"
-msgstr ""
+msgstr "Peruuta"
 
 #: ../gtk/data/ConfigDialog.ui.h:18 ../qt/data/ConfigDialog.ui.h:5
 msgid "Output pane font:"
-msgstr ""
+msgstr "Tulostusruudun fontti:"
 
 #: ../gtk/data/ConfigDialog.ui.h:19 ../qt/data/ConfigDialog.ui.h:2
 msgid "Default"
-msgstr ""
+msgstr "Oletus"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr ""
+msgstr "Kielidatan sijainnit:"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
-msgstr ""
+msgstr "Kielimääritysten hakemistopolku:"
 
 #: ../gtk/data/ConfigDialog.ui.h:22 ../qt/data/ConfigDialog.ui.h:28
 msgid "Spelling dictionaries path:"
-msgstr ""
+msgstr "Oikolukusanastojen hakemistopolku:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "Järjestelmänlaajuiset hakemistopolut"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "Käyttäjän hakemistopolut"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr ""
+msgstr "Avaa viedyt asiakirjat automaattisesti oletussovelluksessa"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
-msgstr ""
+msgstr "Luo virheenjäljitystiedot uudelleen"
 
 #: ../gtk/data/CrashHandler.ui.h:3
 #, no-c-format
@@ -178,6 +182,13 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
+"<b>Sovellus on kaatunut</b>\n"
+"\n"
+"Pahoittelut häiriöstä. Voit auttaa sovelluksen parantamisessa ilmoittamalla "
+"ongelmasta sähköpostitse osoitteeseen <a href=\"mailto:manisandro@gmail."
+"com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. Yritä kuvailla, "
+"mitä teit ennen sovelluksen kaatumista. Liitä mukaan myös alla olevat "
+"tiedot. Kiitos."
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -190,1050 +201,1067 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occurred.\n"
 msgstr ""
+"<b>Tesseractin suoritus on keskeytynyt </b>\n"
+"\n"
+"Tesseract-tekstintunnistusmoottorin suoritus keskeytyi tekstiä "
+"tunnistettaessa. Tätä saattaa tapahtua, jos käytetyt kielidatatiedostot ovat "
+"vahingoittuneita tai yhteensopimattomia käytettävän Tesseract-version "
+"kanssa, tai Tesseractissa olevan bugin vuoksi.\n"
+"\n"
+"Alla oleva pinolistaus saattaa antaa lisätietoja siitä, mikä kaatumisen "
+"aiheutti.\n"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:1
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
 msgid "HOCR Batch Export"
-msgstr ""
+msgstr "HOCR-eräajovienti"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:2
 #: ../gtk/data/SubstitutionsManager.ui.h:7 ../gtk/data/TessdataManager.ui.h:2
 msgid "Apply"
-msgstr ""
+msgstr "Käytä"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:3
 #: ../gtk/data/SubstitutionsManager.ui.h:8 ../gtk/data/TessdataManager.ui.h:3
 msgid "Close"
-msgstr ""
+msgstr "Sulje"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:4
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
 msgid "Select source folder:"
-msgstr ""
+msgstr "Valitse lähdekansio:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
 #: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
 #: ../qt/data/PdfExportWidget.ui.h:15
 msgid "Format:"
-msgstr ""
+msgstr "Formaatti:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:6
 #: ../qt/data/HOCRBatchExportDialog.ui.h:5
 msgid "Group outputs of N lowest levels:"
-msgstr ""
+msgstr "Alimpien N tason ryhmätulosteet:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
 msgid "Input:"
-msgstr ""
+msgstr "Syöttö:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:8
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
 msgid "Output preview:"
-msgstr ""
+msgstr "Tulostuksen esikatselu:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:9
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
 msgid "Input files"
-msgstr ""
+msgstr "Syötetiedostot"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:10
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
 msgid "Export options"
-msgstr ""
+msgstr "Viennin asetukset"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
-msgstr ""
+msgstr "Näytä/piilota tulosteruutu"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
-msgstr ""
+msgstr "Kierrä nykyistä sivua"
 
 #: ../gtk/data/MainWindow.ui.h:3 ../qt/src/Ui_MainWindow.hh:67
 msgid "Rotate all pages"
-msgstr ""
+msgstr "Kierrä kaikkia sivuja"
 
 #. Remove & from some labels which designer insists in adding
 #: ../gtk/data/MainWindow.ui.h:4 ../qt/data/MainWindow.ui.h:22
 #: ../qt/src/Ui_MainWindow.hh:49
 msgid "Sources"
-msgstr ""
+msgstr "Lähteet"
 
 #: ../gtk/data/MainWindow.ui.h:5 ../qt/src/Ui_MainWindow.hh:201
 msgid "Add images"
-msgstr ""
+msgstr "Lisää kuvia"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:200
 msgid "Add Images"
-msgstr ""
+msgstr "Lisää kuvia"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:205
 msgid "Remove image from list"
-msgstr ""
+msgstr "Poista kuva listalta"
 
 #: ../gtk/data/MainWindow.ui.h:8 ../qt/src/Ui_MainWindow.hh:208
 msgid "Delete image"
-msgstr ""
+msgstr "Poista kuva"
 
 #: ../gtk/data/MainWindow.ui.h:9 ../qt/src/Ui_MainWindow.hh:211
 msgid "Clear list"
-msgstr ""
+msgstr "Tyhjennä lista"
 
 #: ../gtk/data/MainWindow.ui.h:10 ../qt/data/MainWindow.ui.h:6
 msgid "Thumbnails"
-msgstr ""
+msgstr "Pikkukuvat"
 
 #: ../gtk/data/MainWindow.ui.h:11 ../qt/data/MainWindow.ui.h:5
 msgid "Files"
-msgstr ""
+msgstr "Tiedostot"
 
 #: ../gtk/data/MainWindow.ui.h:12 ../qt/data/MainWindow.ui.h:9
 msgid "Device:"
-msgstr ""
+msgstr "Laite:"
 
 #: ../gtk/data/MainWindow.ui.h:13 ../gtk/data/TessdataManager.ui.h:4
 #: ../qt/data/MainWindow.ui.h:8 ../qt/src/TessdataManager.cc:55
 msgid "Refresh"
-msgstr ""
+msgstr "Päivitä"
 
 #: ../gtk/data/MainWindow.ui.h:14 ../qt/data/MainWindow.ui.h:10
 msgid "Output:"
-msgstr ""
+msgstr "Tulostus:"
 
 #: ../gtk/data/MainWindow.ui.h:15 ../qt/data/MainWindow.ui.h:14
 msgid "Mode:"
-msgstr ""
+msgstr "Tila:"
 
 #: ../gtk/data/MainWindow.ui.h:16 ../gtk/src/hocr/HOCRPdfExportWidget.cc:49
 #: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExportWidget.cc:60
 msgid "Color"
-msgstr ""
+msgstr "Väri"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExportWidget.cc:52
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExportWidget.cc:61
 msgid "Grayscale"
-msgstr ""
+msgstr "Harmaasävy"
 
 #: ../gtk/data/MainWindow.ui.h:18 ../qt/data/MainWindow.ui.h:11
 msgid "Resolution:"
-msgstr ""
+msgstr "Tarkkuus:"
 
 #: ../gtk/data/MainWindow.ui.h:19 ../qt/data/MainWindow.ui.h:12
 msgid "Scan"
-msgstr ""
+msgstr "Skannaa"
 
 #: ../gtk/data/MainWindow.ui.h:20 ../qt/data/MainWindow.ui.h:17
 msgid "Source:"
-msgstr ""
+msgstr "Lähde:"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
-msgstr ""
+msgstr "Skannaa"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
-msgstr ""
+msgstr "Kirkkaus"
 
 #: ../gtk/data/MainWindow.ui.h:23 ../qt/data/MainWindow.ui.h:2
 msgid "Contrast"
-msgstr ""
+msgstr "Kontrasti"
 
 #: ../gtk/data/MainWindow.ui.h:24 ../qt/data/MainWindow.ui.h:3
 msgid "Resolution"
-msgstr ""
+msgstr "Tarkkuus"
 
 #: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
-msgstr ""
+msgstr "Käänteiset värit"
 
 #: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:24
 msgid "Zoom in"
-msgstr ""
+msgstr "Lähennä"
 
 #: ../gtk/data/MainWindow.ui.h:27 ../qt/data/MainWindow.ui.h:26
 msgid "Zoom out"
-msgstr ""
+msgstr "Loitonna"
 
 #: ../gtk/data/MainWindow.ui.h:28 ../qt/data/MainWindow.ui.h:28
 msgid "Normal size"
-msgstr ""
+msgstr "Normaali koko"
 
 #: ../gtk/data/MainWindow.ui.h:29 ../qt/data/MainWindow.ui.h:30
 msgid "Best fit"
-msgstr ""
+msgstr "Paras koko"
 
 #: ../gtk/data/MainWindow.ui.h:30 ../qt/src/Ui_MainWindow.hh:60
 msgid "Rotate page"
-msgstr ""
+msgstr "Kierrä sivua"
 
 #: ../gtk/data/MainWindow.ui.h:31 ../qt/src/Ui_MainWindow.hh:75
 msgid "Select rotation mode"
-msgstr ""
+msgstr "Valitse kierron tila"
 
 #: ../gtk/data/MainWindow.ui.h:32 ../gtk/data/OutputEditorHOCR.ui.h:12
 #: ../gtk/data/OutputEditorText.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:72
 #: ../qt/src/Ui_OutputEditorText.hh:104
 msgid "Select insert mode"
-msgstr ""
+msgstr "Valitse lisäystila"
 
 #: ../gtk/data/MainWindow.ui.h:33 ../qt/src/Ui_MainWindow.hh:102
 msgid "Select page"
-msgstr ""
+msgstr "Valitse sivu"
 
 #: ../gtk/data/MainWindow.ui.h:34 ../qt/data/MainWindow.ui.h:36
 msgid "Image controls"
-msgstr ""
+msgstr "Kuvasäätimet"
 
 #: ../gtk/data/MainWindow.ui.h:35 ../gtk/src/hocr/HOCRBatchExportDialog.cc:51
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:42 ../qt/src/MainWindow.cc:166
 msgid "Plain text"
-msgstr ""
+msgstr "Pelkkä teksti"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/src/MainWindow.cc:167
+#, fuzzy
 msgid "hOCR, PDF"
-msgstr ""
+msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:38
 msgid "Autodetect layout"
-msgstr ""
+msgstr "Asettelun automaattinen tunnistus"
 
 #: ../gtk/data/MainWindow.ui.h:38
 msgid "<small>Recognize all</small>"
-msgstr ""
+msgstr "<small>Tunnista kaikki</small>"
 
 #: ../gtk/data/MainWindow.ui.h:39
 msgid "Select language"
-msgstr ""
+msgstr "Valitse kieli"
 
 #: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:41
 msgid "Batch Export"
-msgstr ""
+msgstr "Eräajovienti"
 
 #: ../gtk/data/MainWindow.ui.h:41
 msgid "A graphical frontend to tesseract-ocr"
-msgstr ""
+msgstr "Tesseract-ocr:n graafinen edusta"
 
 #: ../gtk/data/MainWindow.ui.h:42 ../qt/data/BatchModeDialog.ui.h:1
 msgid "Batch Mode"
-msgstr ""
+msgstr "Eräajotila"
 
 #: ../gtk/data/MainWindow.ui.h:43
 msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
+"<i>Eräajotilassa jokainen syöttölähde käsitellään erikseen ja tulos "
+"tallennetaan rinnakkain lähdetiedostoon.</i>"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/BatchModeDialog.ui.h:3
 msgid "Existing output:"
-msgstr ""
+msgstr "Olemassa oleva kohde:"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/BatchModeDialog.ui.h:2
 msgid "Prepend page numbers to output text"
-msgstr ""
+msgstr "Lisää sivunumerot tulostekstin alkuun"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/BatchModeDialog.ui.h:5
 msgid "Autodetect page layout"
-msgstr ""
+msgstr "Sivun asettelun automaattinen tunnistus"
 
 #: ../gtk/data/MainWindow.ui.h:47 ../qt/data/PageRangeDialog.ui.h:1
 msgid "Page Range"
-msgstr ""
+msgstr "Sivualue"
 
 #: ../gtk/data/MainWindow.ui.h:50 ../qt/data/PageRangeDialog.ui.h:2
 msgid "Page range:"
-msgstr ""
+msgstr "Sivualue:"
 
 #: ../gtk/data/MainWindow.ui.h:51 ../qt/data/PageRangeDialog.ui.h:3
 msgid "<small><b>Example:</b> 1-10, 13, 14-18</small>"
-msgstr ""
+msgstr "<small><b>Esimerkki:</b> 1-10, 13, 14-18</small>"
 
 #: ../gtk/data/MainWindow.ui.h:52 ../qt/data/PageRangeDialog.ui.h:4
 msgid "Recognition area:"
-msgstr ""
+msgstr "Tunnistusalue:"
 
 #: ../gtk/data/MainWindow.ui.h:53 ../gtk/src/Recognizer.cc:121
 #: ../qt/data/PageRangeDialog.ui.h:5 ../qt/src/Recognizer.cc:137
 msgid "Entire page"
-msgstr ""
+msgstr "Koko sivu"
 
 #: ../gtk/data/MainWindow.ui.h:54 ../qt/data/PageRangeDialog.ui.h:6
 msgid "Autodetect"
-msgstr ""
+msgstr "Tunnista automaattisesti"
 
 #: ../gtk/data/MainWindow.ui.h:55 ../qt/data/PageRangeDialog.ui.h:7
 msgid "Prepend to output text:"
-msgstr ""
+msgstr "Lisää tulostekstin alkuun:"
 
 #: ../gtk/data/MainWindow.ui.h:56 ../qt/data/PageRangeDialog.ui.h:8
 msgid "Source filename"
-msgstr ""
+msgstr "Lähdetiedoston nimi"
 
 #: ../gtk/data/MainWindow.ui.h:57 ../qt/data/PageRangeDialog.ui.h:9
 msgid "Source page"
-msgstr ""
+msgstr "Lähdesivu"
 
 #: ../gtk/data/MainWindow.ui.h:58 ../qt/src/SourceManager.cc:172
 msgid "Protected PDF"
-msgstr ""
+msgstr "Suojattu PDF"
 
 #: ../gtk/data/MainWindow.ui.h:59 ../qt/src/Recognizer.cc:71
 msgid "Current Page"
-msgstr ""
+msgstr "Nykyinen sivu"
 
 #: ../gtk/data/MainWindow.ui.h:60 ../qt/src/Recognizer.cc:74
 msgid "Multiple Pages..."
-msgstr ""
+msgstr "Useita sivuja..."
 
 #: ../gtk/data/MainWindow.ui.h:61 ../qt/src/Recognizer.cc:77
 msgid "Batch mode..."
-msgstr ""
+msgstr "Eräajotila..."
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:1 ../qt/src/hocr/OutputEditorHOCR.cc:720
 msgid "Add Word"
-msgstr ""
+msgstr "Lisää sana"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:720
 msgid "Enter word:"
-msgstr ""
+msgstr "Kirjoita sana:"
 
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
 msgid "Append new output after last page"
-msgstr ""
+msgstr "Lisää uusi tulosteksti viimeisen sivun jälkeen"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
 msgid "Insert new output before current page"
-msgstr ""
+msgstr "Lisää uusi tulosteksti nykyisen sivun eteen"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:7 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:94
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:95
 msgid "Export to plain text"
-msgstr ""
+msgstr "Vie pelkäksi tekstiksi"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:97
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:98
 msgid "Export to PDF"
-msgstr ""
+msgstr "Vie PDF-muotoon"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:100
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:101
 msgid "Export to ODT"
-msgstr ""
+msgstr "Vie ODT-muotoon"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
 msgid "Append document after last page"
-msgstr ""
+msgstr "Lisää asiakirja viimeisen sivun jälkeen"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:11
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:77
 msgid "Insert document before current page"
-msgstr ""
+msgstr "Lisää asiakirja nykyisen sivun eteen"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:13
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:85
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:86
 msgid "Open hOCR file"
-msgstr ""
+msgstr "Avaa hOCR-tiedosto"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:14 ../gtk/data/OutputEditorText.ui.h:14
 #: ../qt/src/Ui_OutputEditorText.hh:125
 msgid "Save output"
-msgstr ""
+msgstr "Tallenna tulos"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:15
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:105
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:106
 msgid "Export"
-msgstr ""
+msgstr "Vie"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:16 ../gtk/data/OutputEditorText.ui.h:20
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:110
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:111
 #: ../qt/src/Ui_OutputEditorText.hh:127
 msgid "Clear output"
-msgstr ""
+msgstr "Tyhjennä tunnistuksen tulokset"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:17 ../gtk/data/OutputEditorText.ui.h:17
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:113
 #: ../qt/src/Ui_OutputEditorText.hh:116
 msgid "Find and replace"
-msgstr ""
+msgstr "Etsi ja korvaa"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:18
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:115
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:116
 msgid "Show confidence values"
-msgstr ""
+msgstr "Näytä luotettavuusarvot"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:19 ../gtk/data/PdfExportWidget.ui.h:1
 #: ../qt/data/PdfExportDialog.ui.h:2 ../qt/data/PdfExportWidget.ui.h:1
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:121
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:122
 msgid "Show preview"
-msgstr ""
+msgstr "Näytä esikatselu"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:20
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:160
 msgid "Next (F3)"
-msgstr ""
+msgstr "Seuraava (F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:21
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:161
 msgid "Previous (Shift+F3)"
-msgstr ""
+msgstr "Edellinen (Vaihto+F3)"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:22 ../gtk/src/hocr/OutputEditorHOCR.cc:978
 #: ../qt/src/hocr/OutputEditorHOCR.cc:852
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:165
 msgid "Expand all"
-msgstr ""
+msgstr "Laajenna kaikki"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:23 ../gtk/src/hocr/OutputEditorHOCR.cc:981
 #: ../qt/src/hocr/OutputEditorHOCR.cc:853
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:166
 msgid "Collapse all"
-msgstr ""
+msgstr "Kutista kaikki"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:24
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:187
 msgid "Properties"
-msgstr ""
+msgstr "Ominaisuudet"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:25
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:191
 msgid "Source"
-msgstr ""
+msgstr "Lähde"
 
 #. Output insert mode
 #: ../gtk/data/OutputEditorText.ui.h:1 ../qt/src/Ui_OutputEditorText.hh:61
 msgid "Append to current text"
-msgstr ""
+msgstr "Lisää nykyisen tekstin loppuun"
 
 #: ../gtk/data/OutputEditorText.ui.h:2 ../qt/src/Ui_OutputEditorText.hh:62
 msgid "Insert at cursor"
-msgstr ""
+msgstr "Lisää kohdistimen sijaintiin"
 
 #: ../gtk/data/OutputEditorText.ui.h:3 ../qt/src/Ui_OutputEditorText.hh:63
 msgid "Replace current text"
-msgstr ""
+msgstr "Korvaa nykyinen teksti"
 
 #. Output postprocessing
 #: ../gtk/data/OutputEditorText.ui.h:4 ../qt/src/Ui_OutputEditorText.hh:71
 msgid "Keep line break if..."
-msgstr ""
+msgstr "Säilytä rivinvaihto, mikäli sitä..."
 
 #: ../gtk/data/OutputEditorText.ui.h:5 ../qt/src/Ui_OutputEditorText.hh:73
 msgid "Preceded by end mark (.?!)"
-msgstr ""
+msgstr "Edeltää loppumerkki (.?!)"
 
 #: ../gtk/data/OutputEditorText.ui.h:6 ../qt/src/Ui_OutputEditorText.hh:75
 msgid "Preceded or succeeded by quote"
-msgstr ""
+msgstr "Edeltää tai seuraa lainausmerkki"
 
 #: ../gtk/data/OutputEditorText.ui.h:7 ../qt/src/Ui_OutputEditorText.hh:77
 msgid "Other options"
-msgstr ""
+msgstr "Muut asetukset"
 
 #: ../gtk/data/OutputEditorText.ui.h:8 ../qt/src/Ui_OutputEditorText.hh:79
 msgid "Join hyphenated words"
-msgstr ""
+msgstr "Yhdistä tavuviivalla jaetut sanat"
 
 #: ../gtk/data/OutputEditorText.ui.h:9 ../qt/src/Ui_OutputEditorText.hh:81
 msgid "Collapse whitespace"
-msgstr ""
+msgstr "Tiivistä välilyönnit"
 
 #: ../gtk/data/OutputEditorText.ui.h:10 ../qt/src/Ui_OutputEditorText.hh:83
 msgid "Preserve paragraphs"
-msgstr ""
+msgstr "Säilytä kappaleet"
 
 #: ../gtk/data/OutputEditorText.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:85
 msgid "Visual aids"
-msgstr ""
+msgstr "Visuaaliset apuvälineet"
 
 #: ../gtk/data/OutputEditorText.ui.h:12 ../qt/src/Ui_OutputEditorText.hh:87
 msgid "Draw whitespace"
-msgstr ""
+msgstr "Piirrä välilyönnit"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
 msgid "Open file"
-msgstr ""
+msgstr "Avaa tiedosto"
 
 #: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:111
 msgid "Strip line breaks on selected text"
-msgstr ""
+msgstr "Poista rivinvaihdot valitusta tekstistä"
 
 #: ../gtk/data/OutputEditorText.ui.h:18 ../qt/src/Ui_OutputEditorText.hh:118
 #: ../qt/src/Ui_OutputEditorText.hh:119
 msgid "Undo"
-msgstr ""
+msgstr "Kumoa"
 
 #: ../gtk/data/OutputEditorText.ui.h:19 ../qt/src/Ui_OutputEditorText.hh:121
 #: ../qt/src/Ui_OutputEditorText.hh:122
 msgid "Redo"
-msgstr ""
+msgstr "Tee uudelleen"
 
 #: ../gtk/data/OutputEditorText.ui.h:21
 msgid "New tab"
-msgstr ""
+msgstr "Uusi välilehti"
 
 #: ../gtk/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportDialog.ui.h:4
 #: ../qt/data/PdfExportWidget.ui.h:3
 msgid "Output mode:"
-msgstr ""
+msgstr "Tulostustila:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:3
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:45
 #: ../qt/data/PdfExportDialog.ui.h:6 ../qt/data/PdfExportWidget.ui.h:5
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:40
+#, fuzzy
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: ../gtk/data/PdfExportWidget.ui.h:4 ../qt/data/PdfExportDialog.ui.h:7
 #: ../qt/data/PdfExportWidget.ui.h:6
 msgid "PDF with invisible text overlay"
-msgstr ""
+msgstr "PDF näkymättömällä tekstikerroksella"
 
 #: ../gtk/data/PdfExportWidget.ui.h:6 ../qt/data/PdfExportDialog.ui.h:17
 #: ../qt/data/PdfExportWidget.ui.h:16
 msgid "Compression:"
-msgstr ""
+msgstr "Pakkaus:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:7 ../qt/data/PdfExportDialog.ui.h:14
 #: ../qt/data/PdfExportWidget.ui.h:13
 msgid "Compression quality:"
-msgstr ""
+msgstr "Pakkauslaatu:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:8 ../qt/data/PdfExportDialog.ui.h:15
 #: ../qt/data/PdfExportWidget.ui.h:14
 msgid "DPI:"
-msgstr ""
+msgstr "Pistettä tuumalla:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:9 ../qt/data/PdfExportDialog.ui.h:18
 #: ../qt/data/PdfExportWidget.ui.h:17
 msgid "Dithering algorithm:"
-msgstr ""
+msgstr "Sekoitussävytysalgoritmi:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:10 ../qt/data/PdfExportDialog.ui.h:13
 #: ../qt/data/PdfExportWidget.ui.h:12
 msgid "Image settings:"
-msgstr ""
+msgstr "Kuvan asetukset:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:11 ../qt/data/PdfExportDialog.ui.h:25
 #: ../qt/data/PdfExportWidget.ui.h:24
 msgid "Uniformize line and word spacing"
-msgstr ""
+msgstr "Yhdenmukaista rivi- ja sanavälit"
 
 #: ../gtk/data/PdfExportWidget.ui.h:12 ../qt/data/PdfExportDialog.ui.h:21
 #: ../qt/data/PdfExportWidget.ui.h:20
 msgid "Override font family:"
-msgstr ""
+msgstr "Ohita fonttiperhe:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:13 ../qt/data/PdfExportDialog.ui.h:27
 #: ../qt/data/PdfExportWidget.ui.h:26
 msgid "Fallback font family:"
-msgstr ""
+msgstr "Vaihtoehtoinen fonttiperhe:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:14 ../qt/data/PdfExportDialog.ui.h:20
 #: ../qt/data/PdfExportWidget.ui.h:19
 msgid "Override font size:"
-msgstr ""
+msgstr "Ohita fonttikoko:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:15 ../qt/data/PdfExportDialog.ui.h:23
 #: ../qt/data/PdfExportWidget.ui.h:22
 msgid "Font scaling:"
-msgstr ""
+msgstr "Fontin skaalaus:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:16 ../qt/data/PdfExportDialog.ui.h:26
 #: ../qt/data/PdfExportWidget.ui.h:25
 msgid "pt"
-msgstr ""
+msgstr "pistettä"
 
 #: ../gtk/data/PdfExportWidget.ui.h:17 ../qt/data/PdfExportDialog.ui.h:22
 #: ../qt/data/PdfExportWidget.ui.h:21
 msgid "Preserve spaces wider than:"
-msgstr ""
+msgstr "Säilytä välilyönnit, joiden leveys on suurempi kuin::"
 
 #: ../gtk/data/PdfExportWidget.ui.h:18 ../qt/data/PdfExportDialog.ui.h:24
 #: ../qt/data/PdfExportWidget.ui.h:23
 msgid "characters"
-msgstr ""
+msgstr "merkit"
 
 #: ../gtk/data/PdfExportWidget.ui.h:19 ../qt/data/PdfExportDialog.ui.h:28
 #: ../qt/data/PdfExportWidget.ui.h:27
 msgid "Sanitize hyphens before line breaks"
-msgstr ""
+msgstr "Poista ennen rivinvaihtoja olevat tavuviivat"
 
 #: ../gtk/data/PdfExportWidget.ui.h:20 ../qt/data/PdfExportDialog.ui.h:19
 #: ../qt/data/PdfExportWidget.ui.h:18
 msgid "Text settings:"
-msgstr ""
+msgstr "Tekstin asetukset:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:21 ../qt/data/PdfExportDialog.ui.h:10
 #: ../qt/data/PdfExportWidget.ui.h:9
 msgid "Paper size:"
-msgstr ""
+msgstr "Paperikoko:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:22 ../qt/data/PdfExportDialog.ui.h:11
 #: ../qt/data/PdfExportWidget.ui.h:10
 msgid "Width"
-msgstr ""
+msgstr "Leveys"
 
 #: ../gtk/data/PdfExportWidget.ui.h:23 ../qt/data/PdfExportDialog.ui.h:12
 #: ../qt/data/PdfExportWidget.ui.h:11
 msgid "Height"
-msgstr ""
+msgstr "Korkeus"
 
 #: ../gtk/data/PdfExportWidget.ui.h:24 ../qt/data/PdfExportDialog.ui.h:29
 #: ../qt/data/PdfExportWidget.ui.h:28
 msgid "Treat image sources as having true DPI:"
-msgstr ""
+msgstr "Käsittele kuvien lähteitä todellisella pistettä tuumalla -arvolla:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
 #: ../qt/data/PdfExportWidget.ui.h:2
 msgid "Basic"
-msgstr ""
+msgstr "Perus"
 
 #: ../gtk/data/PdfExportWidget.ui.h:26 ../qt/data/PdfExportDialog.ui.h:31
 #: ../qt/data/PdfExportWidget.ui.h:30
 msgid "PDF version:"
-msgstr ""
+msgstr "PDF-versio:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:27 ../qt/data/PdfExportDialog.ui.h:33
 #: ../qt/data/PdfExportWidget.ui.h:32
 msgid "Password:"
-msgstr ""
+msgstr "Salasana:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:28 ../qt/data/PdfExportDialog.ui.h:34
 #: ../qt/data/PdfExportWidget.ui.h:33
 msgid "Confirm password:"
-msgstr ""
+msgstr "Vahvista salasana:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:29 ../qt/data/PdfExportDialog.ui.h:32
 #: ../qt/data/PdfExportWidget.ui.h:31
 msgid "Encryption (optional):"
-msgstr ""
+msgstr "Salaus (valinnainen):"
 
 #: ../gtk/data/PdfExportWidget.ui.h:30 ../qt/data/PdfExportDialog.ui.h:36
 #: ../qt/data/PdfExportWidget.ui.h:35
 msgid "Author:"
-msgstr ""
+msgstr "Tekijä:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:31 ../qt/data/PdfExportDialog.ui.h:38
 #: ../qt/data/PdfExportWidget.ui.h:37
 msgid "Title:"
-msgstr ""
+msgstr "Otsikko:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:32 ../qt/data/PdfExportDialog.ui.h:40
 #: ../qt/data/PdfExportWidget.ui.h:39
 msgid "Subject:"
-msgstr ""
+msgstr "Aihe:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:33 ../qt/data/PdfExportDialog.ui.h:37
 #: ../qt/data/PdfExportWidget.ui.h:36
 msgid "Creator:"
-msgstr ""
+msgstr "Luoja:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:34 ../qt/data/PdfExportDialog.ui.h:39
 #: ../qt/data/PdfExportWidget.ui.h:38
 msgid "Producer:"
-msgstr ""
+msgstr "Tuottaja:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:35 ../qt/data/PdfExportDialog.ui.h:41
 #: ../qt/data/PdfExportWidget.ui.h:40
 msgid "Keywords:"
-msgstr ""
+msgstr "Avainsanat:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:36 ../qt/data/PdfExportDialog.ui.h:35
 #: ../qt/data/PdfExportWidget.ui.h:34
 msgid "Additional information (optional):"
-msgstr ""
+msgstr "Lisätiedot (valinnainen):"
 
 #: ../gtk/data/PdfExportWidget.ui.h:37 ../qt/data/PdfExportDialog.ui.h:42
 #: ../qt/data/PdfExportWidget.ui.h:41
 msgid "Import from current source"
-msgstr ""
+msgstr "Tuo nykyisestä lähteestä"
 
 #: ../gtk/data/PdfExportWidget.ui.h:38 ../qt/data/PdfExportDialog.ui.h:30
 #: ../qt/data/PdfExportWidget.ui.h:29
 msgid "Advanced"
-msgstr ""
+msgstr "Lisäasetukset"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:4
 msgid "Find"
-msgstr ""
+msgstr "Etsi"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:2 ../qt/data/SearchReplaceFrame.ui.h:2
 msgid "Replace"
-msgstr ""
+msgstr "Korvaa"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:3 ../qt/data/SearchReplaceFrame.ui.h:3
 msgid "Replace all"
-msgstr ""
+msgstr "Korvaa kaikki"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:4 ../qt/data/SearchReplaceFrame.ui.h:5
 msgid "Find previous"
-msgstr ""
+msgstr "Etsi edellinen"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:5 ../qt/data/SearchReplaceFrame.ui.h:6
 msgid "Find next"
-msgstr ""
+msgstr "Etsi seuraava"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:6 ../qt/data/SearchReplaceFrame.ui.h:7
 msgid "Match case"
-msgstr ""
+msgstr "Sama kirjainkoko"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:7
 #: ../gtk/data/SubstitutionsManager.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:1
 #: ../qt/src/SubstitutionsManager.cc:36
 msgid "Substitutions"
-msgstr ""
+msgstr "Korvaukset"
 
 #: ../gtk/data/SelectionMenu.ui.h:1 ../qt/src/DisplayerToolSelect.cc:239
 msgid "Delete"
-msgstr ""
+msgstr "Poista"
 
 #: ../gtk/data/SelectionMenu.ui.h:2 ../qt/src/DisplayerToolSelect.cc:225
 msgid "Order:"
-msgstr ""
+msgstr "Järjestys:"
 
 #: ../gtk/data/SelectionMenu.ui.h:3 ../gtk/src/hocr/DisplayerToolHOCR.cc:29
 #: ../qt/src/DisplayerToolSelect.cc:240 ../qt/src/hocr/DisplayerToolHOCR.cc:31
 msgid "Recognize"
-msgstr ""
+msgstr "Tunnista"
 
 #: ../gtk/data/SelectionMenu.ui.h:4 ../qt/src/DisplayerToolSelect.cc:241
 msgid "Recognize to clipboard"
-msgstr ""
+msgstr "Tunnista leikepöydälle"
 
 #: ../gtk/data/SelectionMenu.ui.h:5 ../qt/src/DisplayerToolSelect.cc:242
 msgid "Save as image"
-msgstr ""
+msgstr "Tallenna kuvana"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:2 ../qt/src/SubstitutionsManager.cc:38
 #: ../qt/src/SubstitutionsManager.cc:39 ../qt/src/Ui_OutputEditorText.hh:57
 msgid "Open"
-msgstr ""
+msgstr "Avaa"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:3 ../gtk/src/Utils.cc:133
 #: ../qt/src/SubstitutionsManager.cc:41 ../qt/src/SubstitutionsManager.cc:42
 msgid "Save"
-msgstr ""
+msgstr "Tallenna"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:4 ../qt/src/SubstitutionsManager.cc:44
 #: ../qt/src/SubstitutionsManager.cc:45
 msgid "Clear"
-msgstr ""
+msgstr "Tyhjennä"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:5 ../qt/data/ConfigDialog.ui.h:16
 #: ../qt/src/SubstitutionsManager.cc:47 ../qt/src/SubstitutionsManager.cc:48
 msgid "Add"
-msgstr ""
+msgstr "Lisää"
 
 #: ../gtk/data/SubstitutionsManager.ui.h:6
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:974 ../qt/data/ConfigDialog.ui.h:17
 #: ../qt/src/hocr/OutputEditorHOCR.cc:849 ../qt/src/SubstitutionsManager.cc:50
 #: ../qt/src/SubstitutionsManager.cc:51
 msgid "Remove"
-msgstr ""
+msgstr "Poista"
 
 #: ../gtk/data/TessdataManager.ui.h:1 ../qt/src/TessdataManager.cc:45
 msgid "Tessdata Manager"
-msgstr ""
+msgstr "Tessdatan hallinta"
 
 #: ../gtk/data/TessdataManager.ui.h:5 ../qt/src/TessdataManager.cc:47
 msgid "Manage installed languages:"
-msgstr ""
+msgstr "Hallinta asensi kielet:"
 
 #: ../gtk/src/Acquirer.cc:79 ../qt/src/Acquirer.cc:70
 msgid "scan.png"
-msgstr ""
+msgstr "skannaus.png"
 
 #: ../gtk/src/Acquirer.cc:91 ../qt/src/Acquirer.cc:85
 msgid "Images"
-msgstr ""
+msgstr "Kuvat"
 
 #: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:86
 msgid "Choose Output Filename..."
-msgstr ""
+msgstr "Valitse kohdetiedoston nimi..."
 
 #: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
 msgid "Failed to initialize the scanning backend."
-msgstr ""
+msgstr "Skannausohjelman käynnistys epäonnistui."
 
 #: ../gtk/src/Acquirer.cc:115 ../qt/src/Acquirer.cc:106
 msgid "Scan failed"
-msgstr ""
+msgstr "Skannaus epäonnistui"
 
 #: ../gtk/src/Acquirer.cc:133 ../qt/src/Acquirer.cc:122
 msgid "No scanners were detected."
-msgstr ""
+msgstr "Skannereita ei tunnistettu."
 
 #: ../gtk/src/Acquirer.cc:150 ../gtk/src/Acquirer.cc:167
 #: ../qt/src/Acquirer.cc:136 ../qt/src/Acquirer.cc:153
 msgid "Starting scan..."
-msgstr ""
+msgstr "Aloitetaan skannaus..."
 
 #: ../gtk/src/Acquirer.cc:163 ../qt/src/Acquirer.cc:149
 msgid "Opening device..."
-msgstr ""
+msgstr "Avataan laitetta..."
 
 #: ../gtk/src/Acquirer.cc:165 ../qt/src/Acquirer.cc:151
 msgid "Setting options..."
-msgstr ""
+msgstr "Määritetään asetuksia..."
 
 #: ../gtk/src/Acquirer.cc:169 ../qt/src/Acquirer.cc:155
 msgid "Getting parameters..."
-msgstr ""
+msgstr "Haetaan parametreja..."
 
 #: ../gtk/src/Acquirer.cc:171 ../qt/src/Acquirer.cc:157
 msgid "Transferring data..."
-msgstr ""
+msgstr "Siirretään tietoja..."
 
 #: ../gtk/src/Acquirer.cc:178 ../qt/src/Acquirer.cc:164
 msgid "Canceling scan..."
-msgstr ""
+msgstr "Peruutetaan skannausta..."
 
 #: ../gtk/src/Config.cc:50 ../gtk/src/Config.cc:60
 #: ../qt/data/ConfigDialog.ui.h:7
 msgid "Filename prefix"
-msgstr ""
+msgstr "Tiedostonimen etuliite"
 
 #: ../gtk/src/Config.cc:51 ../gtk/src/Config.cc:61
 #: ../qt/data/ConfigDialog.ui.h:8
 msgid "Code"
-msgstr ""
+msgstr "Koodi"
 
 #: ../gtk/src/Config.cc:52 ../gtk/src/Config.cc:62
 #: ../qt/data/ConfigDialog.ui.h:9
 msgid "Native name"
-msgstr ""
+msgstr "Alkuperäinen nimi"
 
 #: ../gtk/src/Config.cc:119 ../qt/src/Config.cc:104
 msgid "Script"
-msgstr ""
+msgstr "Skripti"
 
 #: ../gtk/src/CrashHandler.cc:25 ../gtk/src/CrashHandler.cc:41
 #: ../qt/src/CrashHandler.cc:36
 msgid "Crash Handler"
-msgstr ""
+msgstr "Kaatumisen käsittelijä"
 
 #: ../gtk/src/CrashHandler.cc:43 ../qt/src/CrashHandler.cc:31
 msgid "Your work has been saved under <b>%1</b>."
-msgstr ""
+msgstr "Työsi on tallennettu nimellä <b>%1</b>."
 
 #: ../gtk/src/CrashHandler.cc:45 ../qt/src/CrashHandler.cc:33
 msgid "There was no unsaved work."
-msgstr ""
+msgstr "Tallentamattomia muutoksia ei ollut."
 
 #: ../gtk/src/CrashHandler.cc:106 ../qt/src/CrashHandler.cc:62
 msgid "Failed to obtain backtrace. Is GDB installed?"
-msgstr ""
+msgstr "Virheenjäljitystietojen hankkiminen epäonnistui. Onko GDB asennettuna?"
 
 #: ../gtk/src/Displayer.cc:254 ../qt/src/Displayer.cc:200
 msgid "Failed to load image"
-msgstr ""
+msgstr "Kuvan lataaminen epäonnistui"
 
 #: ../gtk/src/Displayer.cc:254 ../qt/src/Displayer.cc:200
 msgid ""
 "The file might not be an image or be corrupt:\n"
 "%1"
 msgstr ""
+"Tiedosto saattaa olla vahingoittunut tai se ei ehkä ole kuvatiedosto:\n"
+"%1"
 
 #: ../gtk/src/Displayer.cc:770 ../qt/src/Displayer.cc:605
 msgid "Page %1"
-msgstr ""
+msgstr "Sivu %1"
 
 #: ../gtk/src/DisplayerToolSelect.cc:138 ../qt/src/DisplayerToolSelect.cc:135
 msgid "PNG Images"
-msgstr ""
+msgstr "PNG-kuvat"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "Save Selection Image"
-msgstr ""
+msgstr "Tallenna valinta kuvana"
 
 #: ../gtk/src/DisplayerToolSelect.cc:139 ../qt/src/DisplayerToolSelect.cc:135
 msgid "selection.png"
-msgstr ""
+msgstr "valinta.png"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize all"
-msgstr ""
+msgstr "Tunnista kaikki"
 
 #: ../gtk/src/DisplayerToolSelect.cc:146 ../qt/src/DisplayerToolSelect.cc:142
 msgid "Recognize selection"
-msgstr ""
+msgstr "Tunnista valinta"
 
 #: ../gtk/src/DisplayerToolSelect.cc:186 ../qt/src/DisplayerToolSelect.cc:182
 msgid "Performing layout analysis"
-msgstr ""
+msgstr "Suoritetaan sivun asettelun analysointia"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "Väliaikaistiedostot"
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:48
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
+#, fuzzy
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:106 ../gtk/src/SourceManager.cc:268
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:279
 msgid "Select folder..."
-msgstr ""
+msgstr "Valitse kansio..."
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
-msgstr ""
+msgstr "Ei ehdotuksia"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:74 ../qt/src/hocr/HOCRDocument.cc:75
 msgid "Add to dictionary"
-msgstr ""
+msgstr "Lisää sanastoon"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:80 ../qt/src/hocr/HOCRDocument.cc:79
 msgid "Ignore word"
-msgstr ""
+msgstr "Ohita sana"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:800 ../gtk/src/hocr/HOCRDocument.cc:839
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:351 ../qt/src/hocr/HOCRDocument.cc:692
 #: ../qt/src/hocr/HOCRDocument.cc:729 ../qt/src/hocr/OutputEditorHOCR.cc:312
 msgid "Page"
-msgstr ""
+msgstr "Sivu"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:802 ../qt/src/hocr/HOCRDocument.cc:694
 msgid "Text block"
-msgstr ""
+msgstr "Tekstilohko"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:804 ../gtk/src/hocr/OutputEditorHOCR.cc:357
 #: ../qt/src/hocr/HOCRDocument.cc:696 ../qt/src/hocr/OutputEditorHOCR.cc:314
 msgid "Paragraph"
-msgstr ""
+msgstr "Kappale"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:806 ../qt/src/hocr/HOCRDocument.cc:698
 msgid "Textline"
-msgstr ""
+msgstr "Tekstirivi"
 
 #: ../gtk/src/hocr/HOCRDocument.cc:810 ../qt/src/hocr/HOCRDocument.cc:702
 msgid "Graphic"
-msgstr ""
+msgstr "Grafiikka"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:129
 #: ../gtk/src/hocr/HOCRTextExporter.cc:31 ../qt/src/hocr/HOCROdtExporter.cc:49
 #: ../qt/src/hocr/HOCRPdfExporter.cc:137 ../qt/src/hocr/HOCRTextExporter.cc:34
 msgid "Export failed"
-msgstr ""
+msgstr "Vienti epäonnistui"
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:63 ../gtk/src/hocr/HOCROdtExporter.cc:328
 #: ../qt/src/hocr/HOCROdtExporter.cc:49
 msgid "The ODT export failed: unable to write output file."
-msgstr ""
+msgstr "ODT-vienti epäonnistui: kohdetiedostoon ei voi kirjoittaa."
 
 #: ../gtk/src/hocr/HOCROdtExporter.cc:322 ../qt/src/hocr/HOCROdtExporter.cc:242
 msgid "Exporting to ODT..."
-msgstr ""
+msgstr "Viedään ODT-muotoon..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:70 ../qt/src/hocr/HOCRPdfExporter.cc:80
 msgid "The operation was cancelled"
-msgstr ""
+msgstr "Toiminto peruutettiin"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:117 ../qt/src/hocr/HOCRPdfExporter.cc:126
 msgid "Failed to render page %1"
-msgstr ""
+msgstr "Sivun %1 näyttäminen epäonnistui"
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:124 ../qt/src/hocr/HOCRPdfExporter.cc:133
 msgid "Exporting to PDF..."
-msgstr ""
+msgstr "Viedään PDF-muotoon..."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:129 ../qt/src/hocr/HOCRPdfExporter.cc:137
 msgid "The PDF export failed: %1."
-msgstr ""
+msgstr "PDF-vienti epäonnistui: %1."
 
 #: ../gtk/src/hocr/HOCRPdfExporter.cc:397 ../qt/src/hocr/HOCRPdfExporter.cc:428
 msgid "The PDF library could not load the font '%1'."
-msgstr ""
+msgstr "PDF-kirjasto ei voinut ladata fonttia '%1'."
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:55
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:62
 msgid "Monochrome"
-msgstr ""
+msgstr "Mustavalkoinen"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:64
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:64
 msgid "Threshold (closest color)"
-msgstr ""
+msgstr "Kynnysarvo (lähin väri)"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:67
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:65
 msgid "Diffuse"
-msgstr ""
+msgstr "Hajota"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:76
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:66
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Zip (häviämätön)"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:80
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:67
 msgid "CCITT Group 4 (lossless)"
-msgstr ""
+msgstr "CCITT Group 4 (häviämätön)"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:84
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:68
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "JPEG (häviöllinen)"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:97
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:74
 msgid "Same as source"
-msgstr ""
+msgstr "Sama kuin lähde"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:100
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:75
 msgid "Custom"
-msgstr ""
+msgstr "Mukautettu"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:114
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:71
+#, fuzzy
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:117
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:72
 msgid "in"
-msgstr ""
+msgstr "tuumaa"
 
 #: ../gtk/src/hocr/HOCRTextExporter.cc:31 ../qt/src/hocr/HOCRTextExporter.cc:34
 msgid "The text export failed: unable to write output file."
-msgstr ""
+msgstr "Tekstin vienti epäonnistui: kohdetiedostoon ei voi kirjoittaa."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:354
 #: ../qt/src/hocr/OutputEditorHOCR.cc:313
 msgid "Block"
-msgstr ""
+msgstr "Lohko"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:360
 #: ../qt/src/hocr/OutputEditorHOCR.cc:315
 msgid "Line"
-msgstr ""
+msgstr "Rivi"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:363
 #: ../qt/src/hocr/OutputEditorHOCR.cc:316
 msgid "Word"
-msgstr ""
+msgstr "Sana"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:366
 #: ../qt/src/hocr/OutputEditorHOCR.cc:317
 msgid "Misspelled word"
-msgstr ""
+msgstr "Väärin kirjoitettu sana"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:369
 #: ../qt/src/hocr/OutputEditorHOCR.cc:318
 msgid "Low confidence word"
-msgstr ""
+msgstr "Epävarma sana"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:538
 #: ../qt/src/hocr/OutputEditorHOCR.cc:420
@@ -1241,74 +1269,76 @@ msgid ""
 "The following pages could not be processed:\n"
 "%1"
 msgstr ""
+"Seuraavia sivuja ei voitu käsitellä:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:539
 #: ../qt/src/hocr/OutputEditorHOCR.cc:421
 msgid "Recognition errors"
-msgstr ""
+msgstr "Tunnistusvirheet"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:706
 #: ../qt/src/hocr/OutputEditorHOCR.cc:180
 #: ../qt/src/hocr/OutputEditorHOCR.cc:621
 #: ../qt/src/hocr/OutputEditorHOCR.cc:633
 msgid "Multiple values"
-msgstr ""
+msgstr "Useita arvoja"
 
 #. Merging allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:901
 #: ../qt/src/hocr/OutputEditorHOCR.cc:781
 msgid "Merge"
-msgstr ""
+msgstr "Yhdistä"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:908
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:966
 #: ../qt/src/hocr/OutputEditorHOCR.cc:783
 #: ../qt/src/hocr/OutputEditorHOCR.cc:847
 msgid "Split from parent"
-msgstr ""
+msgstr "Irrota ylemmästä"
 
 #. Swapping allowed
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:918
 #: ../qt/src/hocr/OutputEditorHOCR.cc:787
 msgid "Swap"
-msgstr ""
+msgstr "Vaihda paikkaa"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:941
 #: ../qt/src/hocr/OutputEditorHOCR.cc:832
 msgid "Add graphic region"
-msgstr ""
+msgstr "Lisää grafiikka-alue"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:944
 #: ../qt/src/hocr/OutputEditorHOCR.cc:833
 msgid "Add text block"
-msgstr ""
+msgstr "Lisää tekstilohko"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:948
 #: ../qt/src/hocr/OutputEditorHOCR.cc:835
 msgid "Add paragraph"
-msgstr ""
+msgstr "Lisää kappale"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:952
 #: ../qt/src/hocr/OutputEditorHOCR.cc:837
 msgid "Add line"
-msgstr ""
+msgstr "Lisää rivi"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:956
 #: ../qt/src/hocr/OutputEditorHOCR.cc:839
 msgid "Add word"
-msgstr ""
+msgstr "Lisää sana"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1015
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1098
 #: ../qt/src/hocr/OutputEditorHOCR.cc:914
 #: ../qt/src/hocr/OutputEditorHOCR.cc:990
 msgid "hOCR HTML Files"
-msgstr ""
+msgstr "hOCR-HTML-tiedostot"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1016
 #: ../qt/src/hocr/OutputEditorHOCR.cc:914
 msgid "Open hOCR File"
-msgstr ""
+msgstr "Avaa hOCR-tiedosto"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1064 ../gtk/src/OutputEditorText.cc:466
 #: ../gtk/src/OutputEditorText.cc:516 ../gtk/src/SourceManager.cc:170
@@ -1318,6 +1348,8 @@ msgid ""
 "The following files could not be opened:\n"
 "%1"
 msgstr ""
+"Seuraavia tiedostoja ei voitu avata:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1067
 #: ../qt/src/hocr/OutputEditorHOCR.cc:957
@@ -1325,13 +1357,15 @@ msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
 msgstr ""
+"Seuraavat eivät ole kelvollisia hOCR-HTML-tiedostoja:\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1070 ../gtk/src/OutputEditorText.cc:467
 #: ../gtk/src/OutputEditorText.cc:517 ../gtk/src/SourceManager.cc:170
 #: ../qt/src/hocr/OutputEditorHOCR.cc:960 ../qt/src/OutputEditorText.cc:394
 #: ../qt/src/SourceManager.cc:154
 msgid "Unable to open files"
-msgstr ""
+msgstr "Tiedostoja ei voi avata"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1095
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1161
@@ -1342,98 +1376,98 @@ msgstr ""
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1083
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1112
 msgid "output"
-msgstr ""
+msgstr "kohde"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1099
 #: ../qt/src/hocr/OutputEditorHOCR.cc:990
 msgid "Save hOCR Output..."
-msgstr ""
+msgstr "Tallenna hOCR-tuloste..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1106 ../gtk/src/OutputEditorText.cc:539
 #: ../qt/src/hocr/OutputEditorHOCR.cc:997 ../qt/src/OutputEditorText.cc:417
 msgid "Failed to save output"
-msgstr ""
+msgstr "Kohdetiedoston tallennus epäonnistui"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1106 ../gtk/src/OutputEditorText.cc:539
 #: ../qt/src/hocr/OutputEditorHOCR.cc:997 ../qt/src/OutputEditorText.cc:417
 msgid "Check that you have writing permissions in the selected folder."
-msgstr ""
+msgstr "Tarkista, että sinulla on kirjoitusoikeudet valittuun kansioon."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1164
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1052
 msgid "OpenDocument Text Documents"
-msgstr ""
+msgstr "OpenDocument-tekstiasiakirjat"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1165
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1052
 msgid "Save ODT Output..."
-msgstr ""
+msgstr "Tallenna ODT-muodossa..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1202
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1088
 msgid "PDF Files"
-msgstr ""
+msgstr "PDF-tiedostot"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1203
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1088
 msgid "Save PDF Output..."
-msgstr ""
+msgstr "Tallenna PDF-muodossa..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1208
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1093
 msgid "Invalid Output"
-msgstr ""
+msgstr "Virheellinen tuloste"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1208
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1093
 msgid "Cannot overwrite a file which is a source image of this document."
-msgstr ""
+msgstr "Ei voi korvata tiedostoa, joka on tämän asiakirjan lähdekuva."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1230 ../gtk/src/OutputEditorText.cc:457
 #: ../gtk/src/OutputEditorText.cc:531 ../qt/src/hocr/OutputEditorHOCR.cc:1115
 #: ../qt/src/OutputEditorText.cc:342 ../qt/src/OutputEditorText.cc:410
 msgid "Text Files"
-msgstr ""
+msgstr "Tekstitiedostot"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1231
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1115
 msgid "Save Text Output..."
-msgstr ""
+msgstr "Tallenna tekstimuodossa..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1247
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1134
 msgid "Output not saved"
-msgstr ""
+msgstr "Kohdetiedostoa ei tallennettu"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1247
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1134
 msgid "Save output before proceeding?"
-msgstr ""
+msgstr "Haluatko tallentaa kohdetiedoston ennen jatkamista?"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1367 ../gtk/src/OutputEditorText.cc:357
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1232 ../qt/src/OutputEditorText.cc:253
 msgid "Replacing..."
-msgstr ""
+msgstr "Korvataan..."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1392 ../gtk/src/OutputEditorText.cc:373
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1255 ../qt/src/OutputEditorText.cc:265
 msgid "Applying substitutions..."
-msgstr ""
+msgstr "Suoritetaan korvauksia..."
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:243
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:230
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "Näppäinkomennot"
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:264
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:242
 msgid "Lines before:"
-msgstr ""
+msgstr "Rivit ennen:"
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:272
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:256
 msgid "Lines after:"
-msgstr ""
+msgstr "Rivit jälkeen:"
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:529
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:457
@@ -1454,74 +1488,92 @@ msgid ""
 "td></tr><tr><td>Ctrl++</td><td>Increase font size</td></tr><tr><td>Ctrl+-</"
 "td><td>Decrease font size</td></tr></table>"
 msgstr ""
+"<table><tr><td>Sarkain</td><td>Seuraava "
+"muokkauskenttä</td></tr><tr><td>Vaihto+Sarkain</td><td>Edellinen "
+"muokkauskenttä</td></tr><tr><td>Alas</td><td>Seuraava "
+"rivi</td></tr><tr><td>Ylös</td><td>Edellinen "
+"rivi</td></tr><tr><td>Ctrl+Väli</td><td>Oikeinkirjoituksen "
+"ehdotukset</td></tr><tr><td>Ctrl+Enter</td><td>Lisää sana sanastoon</td></tr>"
+"<tr><td>Ctrl+B</td><td>Lihavointi</td></tr><tr><td>Ctrl+I</td><td>kursiivi</t"
+"d></tr><tr><td>Ctrl+D</td><td>Jaa sana kohdistimen "
+"kohdalta</td></tr><tr><td>Ctrl+M</td><td>Yhdistä edelliseen "
+"sanaan</td></tr><tr><td>Ctrl+Vaihto+M</td><td>Yhdistä seuraavaan "
+"sanaan</td></tr><tr><td>Ctrl+Delete</td><td>Poista "
+"sana</td></tr><tr><td>Ctrl+{Vasen, Oikea}</td><td>Säädä rajauskehyksen "
+"vasenta reunaa</td></tr><tr><td>Ctrl+Vaihto+{Vasen, Oikea}</td><td>Säädä "
+"rajauskehyksen oikeaa reunaa</td></tr><tr><td>Ctrl+{Ylös, Alas}</"
+"td><td>Säädä rajauskehyksen yläreunaa</td></tr><tr><td>Ctrl+Vaihto+{Ylös, "
+"Alas}</td><td>Säädä rajauskehyksen alareunaa</td></tr><tr><td>Ctrl++</"
+"td><td>Suurenna fonttikokoa</td></tr><tr><td>Ctrl+-</td><td>Pienennä "
+"fonttikokoa</td></tr></table>"
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:556
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:478
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Näppäinkomennot"
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:571
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:493
 msgid "Confidence: %1"
-msgstr ""
+msgstr "Varmuus: %1"
 
 #: ../gtk/src/MainWindow.cc:135 ../qt/src/MainWindow.cc:342
 msgid "Using tesseract"
-msgstr ""
+msgstr "Käytetään tesseractia"
 
 #: ../gtk/src/MainWindow.cc:184 ../qt/src/MainWindow.cc:209
 msgid "Select an image to begin..."
-msgstr ""
+msgstr "Aloita valitsemalla kuva..."
 
 #: ../gtk/src/MainWindow.cc:329 ../qt/src/MainWindow.cc:325
 msgid "Multiple sources (%1)"
-msgstr ""
+msgstr "Useita lähteitä (%1)"
 
 #: ../gtk/src/MainWindow.cc:331 ../qt/src/MainWindow.cc:327
 msgid "Ready"
-msgstr ""
+msgstr "Valmis"
 
 #: ../gtk/src/MainWindow.cc:483 ../qt/src/MainWindow.cc:464
 msgid "New version"
-msgstr ""
+msgstr "Uusi versio"
 
 #: ../gtk/src/MainWindow.cc:483 ../qt/src/MainWindow.cc:464
 msgid "gImageReader %1 is available"
-msgstr ""
+msgstr "gImageReader %1 on saatavilla"
 
 #: ../gtk/src/MainWindow.cc:484 ../qt/src/MainWindow.cc:465
 msgid "Download"
-msgstr ""
+msgstr "Lataa"
 
 #: ../gtk/src/MainWindow.cc:485 ../qt/src/MainWindow.cc:466
 msgid "Changelog"
-msgstr ""
+msgstr "Muutosloki"
 
 #: ../gtk/src/MainWindow.cc:486 ../qt/src/MainWindow.cc:467
 msgid "Don't notify again"
-msgstr ""
+msgstr "Älä ilmoita uudelleen"
 
 #: ../gtk/src/MainWindow.cc:507 ../qt/src/MainWindow.cc:515
 msgid "Don't show again"
-msgstr ""
+msgstr "Älä näytä uudelleen"
 
 #: ../gtk/src/MainWindow.cc:508 ../gtk/src/MainWindow.cc:521
 #: ../qt/src/MainWindow.cc:516
 msgid "Install"
-msgstr ""
+msgstr "Asenna"
 
 #: ../gtk/src/MainWindow.cc:528 ../qt/src/MainWindow.cc:528
 msgid "Spelling dictionary missing"
-msgstr ""
+msgstr "Oikeinkirjoitussanastoa ei löydy"
 
 #: ../gtk/src/MainWindow.cc:528 ../qt/src/MainWindow.cc:528
 msgid "The spellcheck dictionary for %1 is not installed"
-msgstr ""
+msgstr "Oikeinkirjoitussanastoa kielelle %1 ei ole asennettu"
 
 #: ../gtk/src/MainWindow.cc:535 ../gtk/src/MainWindow.cc:564
 #: ../qt/src/MainWindow.cc:534
 msgid "Installing spelling dictionary for '%1'"
-msgstr ""
+msgstr "Asennetaan oikeinkirjoitussanastoa kielelle '%1'"
 
 #: ../gtk/src/MainWindow.cc:556 ../gtk/src/MainWindow.cc:577
 #: ../gtk/src/MainWindow.cc:585 ../gtk/src/MainWindow.cc:633
@@ -1532,23 +1584,23 @@ msgstr ""
 #: ../qt/src/MainWindow.cc:626 ../qt/src/TessdataManager.cc:70
 #: ../qt/src/TessdataManager.cc:80 ../qt/src/TessdataManager.cc:288
 msgid "Error"
-msgstr ""
+msgstr "Virhe"
 
 #: ../gtk/src/MainWindow.cc:556 ../qt/src/MainWindow.cc:553
 msgid "Failed to install spelling dictionary: %1"
-msgstr ""
+msgstr "Oikeinkirjoitussanaston asennus epäonnistui: %1"
 
 #: ../gtk/src/MainWindow.cc:577 ../qt/src/MainWindow.cc:566
 msgid "Failed to create directory for spelling dictionaries."
-msgstr ""
+msgstr "Oikeinkirjoitussanastohakemiston luonti epäonnistui."
 
 #: ../gtk/src/MainWindow.cc:585 ../qt/src/MainWindow.cc:575
 msgid "Could not read %1: %2."
-msgstr ""
+msgstr "Ei voitu lukea tiedostoa %1: %2."
 
 #: ../gtk/src/MainWindow.cc:612 ../qt/src/MainWindow.cc:601
 msgid "Downloading '%1'..."
-msgstr ""
+msgstr "Ladataan '%1'..."
 
 #: ../gtk/src/MainWindow.cc:633 ../qt/src/MainWindow.cc:621
 msgid ""
@@ -1559,68 +1611,76 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"Seuraavia sanastoja ei voitu ladata:\n"
+"%1\n"
+"\n"
+"Tarkista yhteyden toimivuus ja hakemiston käyttöoikeudet.\n"
+"Vinkki: Jos sinulla ei ole kirjoitusoikeuksia järjestelmähakemistoihin, voit "
+"vaihtaa asetusvalintaikkunassa käyttäjän hakemistopolkuihin."
 
 #: ../gtk/src/MainWindow.cc:636 ../qt/src/MainWindow.cc:624
 msgid "Dictionaries installed"
-msgstr ""
+msgstr "Sanastot asennettu"
 
 #: ../gtk/src/MainWindow.cc:636
 msgid ""
 "The following dictionaries were installed:\n"
 "%1"
 msgstr ""
+"Seuraavat sanastot asennettiin:\n"
+"%1"
 
 #: ../gtk/src/MainWindow.cc:638 ../qt/src/MainWindow.cc:626
 msgid "No spelling dictionaries found for '%1'."
-msgstr ""
+msgstr "Kielelle '%1' ei löydy oikeinkirjoitussanastoja."
 
 #: ../gtk/src/OutputEditorText.cc:38 ../qt/src/OutputEditorText.cc:42
 msgid "Page: %1\n"
-msgstr ""
+msgstr "Sivu: %1\n"
 
 #: ../gtk/src/OutputEditorText.cc:129
 msgid "Close document"
-msgstr ""
+msgstr "Sulje asiakirja"
 
 #: ../gtk/src/OutputEditorText.cc:133
 msgid "Untitled %1"
-msgstr ""
+msgstr "Nimetön %1"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
 msgid "Document not saved"
-msgstr ""
+msgstr "Asiakirjaa ei tallennettu"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
 msgid "Save document before proceeding?"
-msgstr ""
+msgstr "Haluatko tallentaa asiakirjan ennen jatkamista?"
 
 #: ../gtk/src/OutputEditorText.cc:298 ../qt/src/OutputEditorText.cc:238
 msgid "Stripping line breaks..."
-msgstr ""
+msgstr "Poistetaan rivinvaihtoja..."
 
 #: ../gtk/src/OutputEditorText.cc:309
 msgid "No highlight"
-msgstr ""
+msgstr "Ei korostusta"
 
 #: ../gtk/src/OutputEditorText.cc:329
 msgid "Highlight mode"
-msgstr ""
+msgstr "Korostustila"
 
 #: ../gtk/src/OutputEditorText.cc:334
 msgid "Check spelling"
-msgstr ""
+msgstr "Tarkista oikeinkirjoitus"
 
 #: ../gtk/src/OutputEditorText.cc:364 ../qt/src/OutputEditorText.cc:256
 msgid "%1 occurrences replaced"
-msgstr ""
+msgstr "%1 esiintymää korvattu"
 
 #: ../gtk/src/OutputEditorText.cc:412 ../qt/src/OutputEditorText.cc:301
 msgid "File: %1"
-msgstr ""
+msgstr "Tiedosto: %1"
 
 #: ../gtk/src/OutputEditorText.cc:415 ../qt/src/OutputEditorText.cc:304
 msgid "Page: %1"
-msgstr ""
+msgstr "Sivu: %1"
 
 #: ../gtk/src/OutputEditorText.cc:428 ../gtk/src/Recognizer.cc:243
 #: ../qt/src/Recognizer.cc:259
@@ -1628,214 +1688,219 @@ msgid ""
 "\n"
 "[Failed to recognize page %1]\n"
 msgstr ""
+"\n"
+"[Sivun %1 tunnistus epäonnistui]\n"
 
 #: ../gtk/src/OutputEditorText.cc:458 ../gtk/src/SourceManager.cc:297
 #: ../qt/src/OutputEditorText.cc:342 ../qt/src/SourceManager.cc:269
 msgid "Select Files"
-msgstr ""
+msgstr "Valitse tiedostot"
 
 #: ../gtk/src/OutputEditorText.cc:532 ../qt/src/OutputEditorText.cc:410
 msgid "Save Output..."
-msgstr ""
+msgstr "Tallenna tuloste..."
 
 #: ../gtk/src/OutputEditorText.cc:584
 msgid "Unsaved documents"
-msgstr ""
+msgstr "Tallentamattomat asiakirjat"
 
 #: ../gtk/src/OutputEditorText.cc:585 ../qt/src/OutputEditorText.cc:462
 msgid ""
 "The following documents have unsaved changes. Which documents do you want to "
 "save before proceeding?"
 msgstr ""
+"Seuraavissa asiakirjoissa on tallentamattomia muutoksia. Mitkä asiakirjat "
+"haluat tallentaa ennen jatkamista?"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid "No languages available"
-msgstr ""
+msgstr "Kieliä ei ole käytettävissä"
 
 #: ../gtk/src/RecognitionMenu.cc:100 ../qt/src/RecognitionMenu.cc:76
 msgid ""
 "No tesseract languages are available for use. Recognition will not work."
-msgstr ""
+msgstr "Tesseract-kieliä ei ole käytettävissä. Tekstintunnistus ei toimi."
 
 #: ../gtk/src/RecognitionMenu.cc:153 ../qt/src/RecognitionMenu.cc:134
 msgid "Multilingual"
-msgstr ""
+msgstr "Monikielinen"
 
 #: ../gtk/src/RecognitionMenu.cc:205 ../qt/src/RecognitionMenu.cc:182
 msgid "Automatic page segmentation"
-msgstr ""
+msgstr "Sivun automaattinen segmentointi"
 
 #: ../gtk/src/RecognitionMenu.cc:206 ../qt/src/RecognitionMenu.cc:183
 msgid "Page segmentation with orientation and script detection"
-msgstr ""
+msgstr "Sivun segmentointi suunnan ja kirjoitusjärjestelmän tunnistuksella"
 
 #: ../gtk/src/RecognitionMenu.cc:207 ../qt/src/RecognitionMenu.cc:184
 msgid "Assume single column of text"
-msgstr ""
+msgstr "Tekstissä on yksi palsta"
 
 #: ../gtk/src/RecognitionMenu.cc:208 ../qt/src/RecognitionMenu.cc:185
 msgid "Assume single block of vertically aligned text"
-msgstr ""
+msgstr "Pystysuunnassa tasattu tekstilohko"
 
 #: ../gtk/src/RecognitionMenu.cc:209 ../qt/src/RecognitionMenu.cc:186
 msgid "Assume a single uniform block of text"
-msgstr ""
+msgstr "Yksi yhtenäinen tekstilohko"
 
 #: ../gtk/src/RecognitionMenu.cc:210 ../qt/src/RecognitionMenu.cc:187
 msgid "Assume a line of text"
-msgstr ""
+msgstr "Tekstirivi"
 
 #: ../gtk/src/RecognitionMenu.cc:211 ../qt/src/RecognitionMenu.cc:188
 msgid "Assume a single word"
-msgstr ""
+msgstr "Yksi sana"
 
 #: ../gtk/src/RecognitionMenu.cc:212 ../qt/src/RecognitionMenu.cc:189
 msgid "Assume a single word in a circle"
-msgstr ""
+msgstr "Yksi sana ympyrässä"
 
 #: ../gtk/src/RecognitionMenu.cc:213 ../qt/src/RecognitionMenu.cc:190
 msgid "Sparse text in no particular order"
-msgstr ""
+msgstr "Harva teksti ilman erityistä järjestystä"
 
 #: ../gtk/src/RecognitionMenu.cc:214 ../qt/src/RecognitionMenu.cc:191
 msgid "Sparse text with orientation and script detection"
-msgstr ""
+msgstr "Harva teksti suunnan ja kirjoitusjärjestelmän tunnistuksella"
 
 #: ../gtk/src/RecognitionMenu.cc:228 ../qt/src/RecognitionMenu.cc:202
 msgid "Page segmentation mode"
-msgstr ""
+msgstr "Sivun segmentointitila"
 
 #: ../gtk/src/RecognitionMenu.cc:232 ../qt/src/RecognitionMenu.cc:205
 msgid "Character whitelist / blacklist..."
-msgstr ""
+msgstr "Sallittujen ja estettyjen merkkien lista..."
 
 #: ../gtk/src/RecognitionMenu.cc:238 ../qt/src/RecognitionMenu.cc:210
 msgid "Manage languages..."
-msgstr ""
+msgstr "Hallinnoi kieliä..."
 
 #: ../gtk/src/Recognizer.cc:76 ../qt/src/Recognizer.cc:90
 msgid "Overwrite existing output"
-msgstr ""
+msgstr "Korvaa olemassa oleva kohdetiedosto"
 
 #: ../gtk/src/Recognizer.cc:77 ../qt/src/Recognizer.cc:91
 msgid "Skip processing source"
-msgstr ""
+msgstr "Ohita lähteen käsittely"
 
 #: ../gtk/src/Recognizer.cc:121 ../qt/src/Recognizer.cc:137
 msgid "Current selection"
-msgstr ""
+msgstr "Nykyinen valinta"
 
 #: ../gtk/src/Recognizer.cc:194 ../gtk/src/Recognizer.cc:428
 #: ../qt/src/Recognizer.cc:212 ../qt/src/Recognizer.cc:442
 msgid "Recognition errors occurred"
-msgstr ""
+msgstr "Tunnistusvirheitä ilmeni"
 
 #: ../gtk/src/Recognizer.cc:194 ../qt/src/Recognizer.cc:212
 msgid "Failed to initialize tesseract"
-msgstr ""
+msgstr "Tesseractin alustus epäonnistui"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
 msgid "Source already recognized"
-msgstr ""
+msgstr "Lähde on jo tunnistettu"
 
 #: ../gtk/src/Recognizer.cc:218 ../qt/src/Recognizer.cc:236
 msgid "One or more selected sources were already recognized. Proceed anyway?"
 msgstr ""
+"Yksi tai useampi valittu lähde on jo tunnistettu. Haluatko silti jatkaa?"
 
 #: ../gtk/src/Recognizer.cc:237 ../gtk/src/Recognizer.cc:351
 #: ../qt/src/Recognizer.cc:252 ../qt/src/Recognizer.cc:364
 msgid "Recognizing page %1 (%2 of %3)"
-msgstr ""
+msgstr "Tunnistetaan sivua %1 (%2 / %3)"
 
 #: ../gtk/src/Recognizer.cc:242 ../qt/src/Recognizer.cc:258
 msgid "- Page %1: failed to render page"
-msgstr ""
+msgstr "- Sivu %1: renderöinti epäonnistui"
 
 #: ../gtk/src/Recognizer.cc:270 ../gtk/src/Recognizer.cc:298
 #: ../gtk/src/Recognizer.cc:311 ../gtk/src/Recognizer.cc:403
 #: ../qt/src/Recognizer.cc:285 ../qt/src/Recognizer.cc:313
 #: ../qt/src/Recognizer.cc:326 ../qt/src/Recognizer.cc:417
 msgid "Recognizing..."
-msgstr ""
+msgstr "Tunnistetaan..."
 
 #: ../gtk/src/Recognizer.cc:357 ../qt/src/Recognizer.cc:370
 msgid "- %1:%2: failed to render page"
-msgstr ""
+msgstr "- %1:%2: sivun renderöinti epäonnistui"
 
 #: ../gtk/src/Recognizer.cc:369 ../qt/src/Recognizer.cc:383
 msgid "- %1: output already exists, skipping"
-msgstr ""
+msgstr "- %1: kohdetiedosto on jo olemassa, ohitetaan"
 
 #: ../gtk/src/Recognizer.cc:373 ../qt/src/Recognizer.cc:387
 msgid "- %1: failed to create output file"
-msgstr ""
+msgstr "- %1: kohdetiedoston luonti epäonnistui"
 
 #: ../gtk/src/Recognizer.cc:428 ../qt/src/Recognizer.cc:442
 msgid "The following errors occurred:"
-msgstr ""
+msgstr "Seuraavat virheet ilmenivät:"
 
 #: ../gtk/src/scanner/ScannerSane.cc:86 ../gtk/src/scanner/ScannerTwain.cc:287
 #: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
 msgid "Scan canceled"
-msgstr ""
+msgstr "Skannaus peruutettu"
 
 #: ../gtk/src/scanner/ScannerSane.cc:161 ../gtk/src/scanner/ScannerTwain.cc:186
 #: ../qt/src/scanner/ScannerSane.cc:159 ../qt/src/scanner/ScannerTwain.cc:178
 msgid "No scanner specified"
-msgstr ""
+msgstr "Skanneria ei ole määritetty"
 
 #: ../gtk/src/scanner/ScannerSane.cc:170 ../gtk/src/scanner/ScannerTwain.cc:195
 #: ../qt/src/scanner/ScannerSane.cc:168 ../qt/src/scanner/ScannerTwain.cc:187
 msgid "Unable to connect to scanner"
-msgstr ""
+msgstr "Yhteyttä skanneriin ei voida muodostaa"
 
 #: ../gtk/src/scanner/ScannerSane.cc:405 ../gtk/src/scanner/ScannerTwain.cc:266
 #: ../gtk/src/scanner/ScannerTwain.cc:291 ../qt/src/scanner/ScannerSane.cc:403
 #: ../qt/src/scanner/ScannerTwain.cc:258 ../qt/src/scanner/ScannerTwain.cc:290
 msgid "Unable to start scan"
-msgstr ""
+msgstr "Skannausta ei voi aloittaa"
 
 #: ../gtk/src/scanner/ScannerSane.cc:413 ../gtk/src/scanner/ScannerSane.cc:463
 #: ../gtk/src/scanner/ScannerTwain.cc:317 ../qt/src/scanner/ScannerSane.cc:411
 #: ../qt/src/scanner/ScannerSane.cc:461 ../qt/src/scanner/ScannerTwain.cc:316
 msgid "Error communicating with scanner"
-msgstr ""
+msgstr "Virhe kommunikoitaessa skannerin kanssa"
 
 #: ../gtk/src/scanner/ScannerSane.cc:523 ../qt/src/scanner/ScannerSane.cc:518
 msgid "Failed to save image"
-msgstr ""
+msgstr "Kuvan tallennus epäonnistui"
 
 #: ../gtk/src/scanner/ScannerSane.cc:803 ../qt/src/scanner/ScannerSane.cc:798
 msgid "Operation is cancelled."
-msgstr ""
+msgstr "Toiminto on peruutettu."
 
 #: ../gtk/src/scanner/ScannerSane.cc:805 ../qt/src/scanner/ScannerSane.cc:800
 msgid "Device is busy."
-msgstr ""
+msgstr "Laite on varattu."
 
 #: ../gtk/src/scanner/ScannerSane.cc:807 ../qt/src/scanner/ScannerSane.cc:802
 msgid "Cover is opened."
-msgstr ""
+msgstr "Kansi on avoinna."
 
 #: ../gtk/src/scanner/ScannerSane.cc:809 ../qt/src/scanner/ScannerSane.cc:804
 msgid "Document feeder jammed."
-msgstr ""
+msgstr "Arkinsyöttölaite on jumissa."
 
 #: ../gtk/src/scanner/ScannerSane.cc:811 ../qt/src/scanner/ScannerSane.cc:806
 msgid "Document feeder out of documents."
-msgstr ""
+msgstr "Arkinsyöttölaitteessa ei ole asiakirjoja."
 
 #: ../gtk/src/scanner/ScannerSane.cc:813 ../qt/src/scanner/ScannerSane.cc:808
 msgid "Access to scanner is denied."
-msgstr ""
+msgstr "Skannerin käyttö on estetty."
 
 #: ../gtk/src/SourceManager.cc:184 ../qt/src/SourceManager.cc:169
 msgid "Enter password for file '%1':"
-msgstr ""
+msgstr "Kirjoita salasana tiedostolle '%1':"
 
 #: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:196
 msgid "PDF with text"
-msgstr ""
+msgstr "PDF tekstillä"
 
 #: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:196
 msgid ""
@@ -1843,127 +1908,132 @@ msgid ""
 "%1\n"
 "Open it regardless?"
 msgstr ""
+"PDF-tiedostossa on jo tekstiä:\n"
+"%1\n"
+"Haluatko silti avata sen?"
 
 #: ../gtk/src/SourceManager.cc:292 ../qt/src/SourceManager.cc:268
 msgid "Images and PDFs"
-msgstr ""
+msgstr "Kuva- ja PDF-tiedostot"
 
 #: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:311
 msgid "Clipboard Error"
-msgstr ""
+msgstr "Leikepöydän virhe"
 
 #: ../gtk/src/SourceManager.cc:303 ../qt/src/SourceManager.cc:311
 msgid "Failed to read the clipboard."
-msgstr ""
+msgstr "Leikepöydän lukeminen epäonnistui."
 
 #: ../gtk/src/SourceManager.cc:307 ../qt/src/SourceManager.cc:315
 #: ../qt/src/SourceManager.cc:321
 msgid "Pasted %1"
-msgstr ""
+msgstr "Liitetty %1"
 
 #: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:339
 msgid "Screenshot Error"
-msgstr ""
+msgstr "Kuvakaappauksen virhe"
 
 #: ../gtk/src/SourceManager.cc:325 ../qt/src/SourceManager.cc:339
 msgid "Failed to take screenshot."
-msgstr ""
+msgstr "Kuvakaappauksen ottaminen epäonnistui."
 
 #: ../gtk/src/SourceManager.cc:329 ../qt/src/SourceManager.cc:343
 msgid "Screenshot %1"
-msgstr ""
+msgstr "Kuvakaappaus %1"
 
 #: ../gtk/src/SourceManager.cc:335 ../qt/src/SourceManager.cc:350
 msgid "Saving image..."
-msgstr ""
+msgstr "Tallennetaan kuvaa..."
 
 #: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:363
 msgid "Cannot Write File"
-msgstr ""
+msgstr "Tiedostoa ei voi kirjoittaa"
 
 #: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:363
 msgid "Could not write to %1."
-msgstr ""
+msgstr "Tiedostoon %1 ei voitu kirjoittaa."
 
 #: ../gtk/src/SourceManager.cc:381
 msgid "Delete File?"
-msgstr ""
+msgstr "Haluatko poistaa tiedoston?"
 
 #: ../gtk/src/SourceManager.cc:381 ../qt/src/SourceManager.cc:391
 msgid "Delete the following files?"
-msgstr ""
+msgstr "Haluatko poistaa seuraavat tiedostot?"
 
 #: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:468
 msgid "Open output"
-msgstr ""
+msgstr "Avaa kohdetiedosto"
 
 #: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:468
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr ""
+msgstr "Löytyi sekä teksti- että hOCR-tiedosto. Kumman haluat avata?"
 
 #: ../gtk/src/SourceManager.cc:504 ../qt/src/SourceManager.cc:496
 msgid "Missing File"
-msgstr ""
+msgstr "Tiedostoa ei löydy"
 
 #: ../gtk/src/SourceManager.cc:504 ../qt/src/SourceManager.cc:496
 msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
 msgstr ""
+"Seuraava tiedosto on poistettu tai siirretty:\n"
+"%1"
 
 #: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:69
 msgid "Search for"
-msgstr ""
+msgstr "Etsi tekstiä"
 
 #: ../gtk/src/SubstitutionsManager.cc:34 ../qt/src/SubstitutionsManager.cc:69
 msgid "Replace with"
-msgstr ""
+msgstr "Korvaa tekstillä"
 
 #: ../gtk/src/SubstitutionsManager.cc:69 ../gtk/src/SubstitutionsManager.cc:103
 #: ../qt/src/SubstitutionsManager.cc:102 ../qt/src/SubstitutionsManager.cc:139
 msgid "Substitutions List"
-msgstr ""
+msgstr "Korvauslista"
 
 #: ../gtk/src/SubstitutionsManager.cc:70 ../qt/src/SubstitutionsManager.cc:102
 msgid "Open Substitutions List"
-msgstr ""
+msgstr "Avaa korvauslista"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:108
 msgid "Error Reading File"
-msgstr ""
+msgstr "Virhe luettaessa tiedostoa"
 
 #: ../gtk/src/SubstitutionsManager.cc:75 ../qt/src/SubstitutionsManager.cc:108
 msgid "Unable to read '%1'."
-msgstr ""
+msgstr "Tiedostoa '%1' ei voi lukea."
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:133
 msgid "Errors Occurred Reading File"
-msgstr ""
+msgstr "Tiedostoa luettaessa ilmeni virheitä"
 
 #: ../gtk/src/SubstitutionsManager.cc:97 ../qt/src/SubstitutionsManager.cc:133
 msgid "Some entries of the substitutions list could not be read."
-msgstr ""
+msgstr "Osaa korvauslistan kohteista ei voitu lukea."
 
 #: ../gtk/src/SubstitutionsManager.cc:104 ../qt/src/SubstitutionsManager.cc:139
 msgid "Save Substitutions List"
-msgstr ""
+msgstr "Tallenna korvauslista"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Error Saving File"
-msgstr ""
+msgstr "Virhe tallennettaessa tiedostoa"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Unable to write to '%1'."
-msgstr ""
+msgstr "Tiedostoon '%1' ei voi kirjoittaa."
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:158
 msgid "Save List?"
-msgstr ""
+msgstr "Tallennetaanko lista?"
 
 #: ../gtk/src/SubstitutionsManager.cc:127 ../qt/src/SubstitutionsManager.cc:158
 msgid "Do you want to save the current list?"
-msgstr ""
+msgstr "Haluatko tallentaa nykyisen listan?"
 
 #: ../gtk/src/TessdataManager.cc:60 ../qt/src/TessdataManager.cc:70
 msgid ""
@@ -1975,32 +2045,39 @@ msgid ""
 "tesseract language packs directly, or switch to using the user tessdata path "
 "in the configuration dialog."
 msgstr ""
+"Järjestelmänlaajuisten tesseract-kielipakettien hallitsemiseen tarvitaan "
+"istuntoliitäntä PackageKit-taustapalveluun, mutta sitä ei löytynyt. Tämä "
+"palvelu tulee yleensä pakettienhallintasovelluksen, kuten Gnome Software, "
+"mukana. Asenna ohjelmisto, joka tarjoaa tarvittavan PackageKit-liitännän, "
+"käytä muita järjestelmän paketinhallintaohjelmistoja tesseract-"
+"kielipakettien suoraan hallitsemiseen tai ota asetusvalintaikkunassa "
+"käyttöön käyttäjän tessdata-kansiopolku."
 
 #: ../gtk/src/TessdataManager.cc:65 ../qt/src/TessdataManager.cc:75
 msgid "Fetching available languages"
-msgstr ""
+msgstr "Noudetaan käytettävissä olevia kieliä"
 
 #: ../gtk/src/TessdataManager.cc:70 ../gtk/src/TessdataManager.cc:96
 #: ../gtk/src/TessdataManager.cc:197 ../qt/src/TessdataManager.cc:80
 #: ../qt/src/TessdataManager.cc:97 ../qt/src/TessdataManager.cc:170
 msgid "Failed to fetch list of available languages: %1"
-msgstr ""
+msgstr "Käytettävissä olevien kielten listaa ei voitu noutaa: %1"
 
 #: ../gtk/src/TessdataManager.cc:104 ../qt/src/TessdataManager.cc:107
 msgid "Parsing error: %1"
-msgstr ""
+msgstr "Jäsennysvirhe: %1"
 
 #: ../gtk/src/TessdataManager.cc:235 ../qt/src/TessdataManager.cc:205
 msgid "Applying changes..."
-msgstr ""
+msgstr "Otetaan muutoksia käyttöön..."
 
 #: ../gtk/src/TessdataManager.cc:297 ../qt/src/TessdataManager.cc:251
 msgid "Failed to create directory for tessdata files."
-msgstr ""
+msgstr "Tessdata-tiedostojen hakemiston luonti epäonnistui."
 
 #: ../gtk/src/TessdataManager.cc:306 ../qt/src/TessdataManager.cc:260
 msgid "Downloading %1..."
-msgstr ""
+msgstr "Ladataan %1..."
 
 #: ../gtk/src/TessdataManager.cc:330
 msgid ""
@@ -2012,42 +2089,50 @@ msgid ""
 "Hint: If you don't have write permissions in system folders, you can switch "
 "to user paths in the settings dialog."
 msgstr ""
+"Seuraavia tiedostoja ei voitu ladata tai poistaa:\n"
+"%1\n"
+"\n"
+"Tarkista Internet-yhteyden toimivuus ja hakemiston käyttöoikeudet.\n"
+"\n"
+"Vinkki: Jos sinulla ei ole kirjoitusoikeuksia järjestelmähakemistoihin, voit "
+"vaihtaa asetusvalintaikkunassa käyttäjän hakemistopolkuihin."
 
 #: ../gtk/src/Utils.cc:127
 msgid "Yes"
-msgstr ""
+msgstr "Kyllä"
 
 #: ../gtk/src/Utils.cc:130
 msgid "Yes to all"
-msgstr ""
+msgstr "Kyllä kaikkiin"
 
 #: ../gtk/src/Utils.cc:136
 msgid "No"
-msgstr ""
+msgstr "Ei"
 
 #: ../gtk/src/Utils.cc:139
 msgid "No to all"
-msgstr ""
+msgstr "Ei kaikkiin"
 
 #: ../gtk/src/Utils.cc:142
 msgid "Discard"
-msgstr ""
+msgstr "Hylkää"
 
 #: ../gtk/src/Utils.cc:145
 msgid "Discard all"
-msgstr ""
+msgstr "Hylkää kaikki"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
 msgid "Text"
-msgstr ""
+msgstr "Teksti"
 
 #: ../gtk/src/Utils.cc:151 ../qt/src/SourceManager.cc:470
+#, fuzzy
 msgid "hOCR"
-msgstr ""
+msgstr "hOCR"
 
 #: ../qt/data/AboutDialog.ui.h:1
 msgid "About gImageReader"
-msgstr ""
+msgstr "Tietoja gImageReaderista"
 
 #: ../qt/data/AboutDialog.ui.h:3
 msgid ""
@@ -2055,32 +2140,38 @@ msgid ""
 "p><p><a href=\"https://github.com/manisandro/gImageReader/\">Website</a></"
 "p><p>&nbsp;</p></body></html>"
 msgstr ""
+"<html><head/><body><p>&nbsp;</p><p>Graafinen käyttöliittymä tesseract-"
+"ocr:lle</p><p><a href=\"https://github.com/manisandro/gImageReader/\""
+">Verkkosivu</a></p><p>&nbsp;</p></body></html>"
 
 #: ../qt/data/AboutDialog.ui.h:4
 msgid "Credits"
-msgstr ""
+msgstr "Kiitokset"
 
 #: ../qt/data/AboutDialog.ui.h:5
 msgid "License"
-msgstr ""
+msgstr "Käyttöoikeussopimus"
 
 #: ../qt/data/BatchModeDialog.ui.h:4
 msgid ""
 "In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file."
 msgstr ""
+"Eräajotilassa jokainen syötelähde käsitellään erikseen ja tulos tallennetaan "
+"syötetiedoston kansioon."
 
 #: ../qt/data/ConfigDialog.ui.h:14
 msgid "System encoding"
-msgstr ""
+msgstr "Järjestelmän koodaus"
 
 #: ../qt/data/ConfigDialog.ui.h:15
+#, fuzzy
 msgid "UTF-8"
-msgstr ""
+msgstr "UTF-8"
 
 #: ../qt/data/ConfigDialog.ui.h:19
 msgid "Text file encoding:"
-msgstr ""
+msgstr "Tekstitiedoston koodaus:"
 
 #: ../qt/data/CrashHandler.ui.h:2
 #, no-c-format
@@ -2092,6 +2183,12 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Sovellus on "
+"kaatunut</span></p><p>Pahoittelut häiriöstä. Voit auttaa sovelluksen "
+"parantamisessa ilmoittamalla ongelmasta sähköpostitse osoitteeseen <a href="
+"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail"
+".com</a>. Yritä kuvailla, mitä teit ennen sovelluksen kaatumista. Liitä "
+"mukaan myös alla olevat tiedot. Kiitos.</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
 msgid ""
@@ -2102,62 +2199,69 @@ msgid ""
 "tesseract.</p><p>The stacktrace below may provide additional information "
 "about where the crash occurred.</p></body></html>"
 msgstr ""
+"<html><head/><body><p><span style=\" font-weight:600;\">Tesseractin suoritus "
+"on keskeytynyt</span></p><p>Tesseract-tekstintunnistusmoottorin suoritus "
+"keskeytyi tekstintunnistuksen aikana. Tätä saattaa tapahtua, jos käytettävät "
+"kielidatatiedostot ovat vahingoittuneet tai yhteensopimattomia käytettävän "
+"tesseract-version kanssa tai siinä on virhe.</p><p>Alla oleva pinolistaus "
+"saattaa tarjota lisätietoja siitä, mikä kaatumisen "
+"aiheutti.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
-msgstr ""
+msgstr "Tasoskanneri"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Front"
-msgstr ""
+msgstr "Automaattinen arkinsyöttölaite edessä"
 
 #: ../qt/data/MainWindow.ui.h:20
 msgid "ADF Back"
-msgstr ""
+msgstr "Automaattinen arkinsyöttölaite takana"
 
 #: ../qt/data/MainWindow.ui.h:21
 msgid "ADF Duplex"
-msgstr ""
+msgstr "Automaattinen arkinsyöttölaite (kaksipuolinen)"
 
 #: ../qt/data/MainWindow.ui.h:23
 msgid "Zoom In"
-msgstr ""
+msgstr "Lähennä"
 
 #: ../qt/data/MainWindow.ui.h:25
 msgid "Zoom Out"
-msgstr ""
+msgstr "Loitonna"
 
 #: ../qt/data/MainWindow.ui.h:27
 msgid "Normal Size"
-msgstr ""
+msgstr "Normaali koko"
 
 #: ../qt/data/MainWindow.ui.h:29
 msgid "Best Fit"
-msgstr ""
+msgstr "Parhaiten sopiva"
 
 #: ../qt/data/MainWindow.ui.h:31
 msgid "Rotate Left"
-msgstr ""
+msgstr "Kierrä vasemmalle"
 
 #: ../qt/data/MainWindow.ui.h:32
 msgid "Rotate left"
-msgstr ""
+msgstr "Kierrä vasemmalle"
 
 #: ../qt/data/MainWindow.ui.h:33
 msgid "Rotate Right"
-msgstr ""
+msgstr "Kierrä oikealle"
 
 #: ../qt/data/MainWindow.ui.h:34
 msgid "Rotate right"
-msgstr ""
+msgstr "Kierrä oikealle"
 
 #: ../qt/data/MainWindow.ui.h:35
 msgid "Image Controls"
-msgstr ""
+msgstr "Kuvasäätimet"
 
 #: ../qt/data/MainWindow.ui.h:37
 msgid "Autodetect Layout"
-msgstr ""
+msgstr "Automaattinen asetteluntunnistus"
 
 #: ../qt/data/MainWindow.ui.h:39
 msgid "Toggle Output Pane"
