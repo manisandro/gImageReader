@@ -38,7 +38,7 @@ namespace PoDoFo {
 class PdfEncoding;
 class PdfFont;
 class PdfPainter;
-class PdfStreamedDocument;
+class PdfDocument;
 }
 
 
@@ -115,7 +115,7 @@ class HOCRPoDoFoPdfPrinter : public HOCRPdfPrinter {
 public:
 	static HOCRPoDoFoPdfPrinter* create(const std::string& filename, const HOCRPdfExporter::PDFSettings& settings, const Glib::ustring& defaultFont, int defaultFontSize, Glib::ustring& errMsg);
 
-	HOCRPoDoFoPdfPrinter(PoDoFo::PdfStreamedDocument* document, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const Glib::ustring& defaultFontFamily, double defaultFontSize);
+	HOCRPoDoFoPdfPrinter(PoDoFo::PdfDocument* document, const std::string& filename, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const Glib::ustring& defaultFontFamily, double defaultFontSize);
 	~HOCRPoDoFoPdfPrinter();
 	bool createPage(double width, double height, double offsetX, double offsetY, Glib::ustring& /*errMsg*/) override;
 	void finishPage() override;
@@ -129,7 +129,8 @@ public:
 
 private:
 	std::map<Glib::ustring, PoDoFo::PdfFont*> m_fontCache;
-	PoDoFo::PdfStreamedDocument* m_document = nullptr;
+	PoDoFo::PdfDocument* m_document = nullptr;
+	std::string m_filename;
 	PoDoFo::PdfPainter* m_painter = nullptr;
 	const PoDoFo::PdfEncoding* m_pdfFontEncoding;
 	PoDoFo::PdfFont* m_defaultFont;
