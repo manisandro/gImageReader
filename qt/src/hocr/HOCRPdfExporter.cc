@@ -333,31 +333,6 @@ void HOCRQPrinterPdfPrinter::drawImage(const QRect& bbox, const QImage& image, c
 }
 
 
-#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
-namespace PoDoFo {
-class PdfImageCompat : public PoDoFo::PdfImage {
-	using PdfImage::PdfImage;
-public:
-	void SetImageDataRaw( unsigned int nWidth, unsigned int nHeight,
-	                      unsigned int nBitsPerComponent, PdfInputStream* pStream ) {
-		m_rRect.SetWidth( nWidth );
-		m_rRect.SetHeight( nHeight );
-
-		this->GetObject()->GetDictionary().AddKey( "Width",  PdfVariant( static_cast<pdf_int64>(nWidth) ) );
-		this->GetObject()->GetDictionary().AddKey( "Height", PdfVariant( static_cast<pdf_int64>(nHeight) ) );
-		this->GetObject()->GetDictionary().AddKey( "BitsPerComponent", PdfVariant( static_cast<pdf_int64>(nBitsPerComponent) ) );
-
-		PdfVariant var;
-		m_rRect.ToVariant( var );
-		this->GetObject()->GetDictionary().AddKey( "BBox", var );
-
-		this->GetObject()->GetStream()->SetRawData( pStream, -1 );
-	}
-};
-}
-#endif
-
-
 HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const QString& filename, const HOCRPdfExporter::PDFSettings& settings, const QFont& defaultFont, QString& errMsg) {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
 	PoDoFo::PdfMemDocument* document = nullptr;
@@ -367,10 +342,8 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const QString& filename, cons
 	PoDoFo::PdfFont* defaultPdfFont = nullptr;
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
 	PoDoFo::PdfEncoding* pdfFontEncoding = nullptr;
-#elif PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
 #else
-	PoDoFo::PdfEncoding* pdfFontEncoding = new PoDoFo::PdfIdentityEncoding;
+	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
 #endif
 
 	try {
@@ -495,10 +468,8 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const QString& filename, cons
 	try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
 		defaultPdfFont = document->GetFonts().SearchFont(finfo.family().toStdString());
-#elif PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-		defaultPdfFont = document->CreateFontSubset(finfo.family().toLocal8Bit().data(), false, false, false, pdfFontEncoding);
 #else
-		defaultPdfFont = document->CreateFontSubset(finfo.family().toLocal8Bit().data(), false, false, pdfFontEncoding);
+		defaultPdfFont = document->CreateFontSubset(finfo.family().toLocal8Bit().data(), false, false, false, pdfFontEncoding);
 #endif
 	} catch(PoDoFo::PdfError&) {
 	}
@@ -516,9 +487,6 @@ HOCRPoDoFoPdfPrinter::HOCRPoDoFoPdfPrinter(PoDoFo::PdfDocument* document, const 
 }
 
 HOCRPoDoFoPdfPrinter::~HOCRPoDoFoPdfPrinter() {
-#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
-	delete m_pdfFontEncoding;
-#endif
 	delete m_document;
 	delete m_painter;
 	// Fonts are deleted by the internal PoDoFo font cache of the document
@@ -601,10 +569,8 @@ void HOCRPoDoFoPdfPrinter::drawImage(const QRect& bbox, const QImage& image, con
 	}
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
 	std::unique_ptr<PoDoFo::PdfImage> pdfImage = m_document->CreateImage();
-#elif PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	PoDoFo::PdfImage pdfImage(m_document);
 #else
-	PoDoFo::PdfImageCompat pdfImage(m_document);
+	PoDoFo::PdfImage pdfImage(m_document);
 #endif
 	int width = img.width();
 	int height = img.height();
@@ -719,10 +685,8 @@ PoDoFo::PdfFont* HOCRPoDoFoPdfPrinter::getFont(QString family, bool bold, bool i
 				*params.Style |= PoDoFo::PdfFontStyle::Italic;
 			}
 			font = m_document->GetFonts().SearchFont(family.toLocal8Bit().data(), params);
-#elif PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-			font = m_document->CreateFontSubset(family.toLocal8Bit().data(), bold, italic, false, m_pdfFontEncoding);
 #else
-			font = m_document->CreateFontSubset(family.toLocal8Bit().data(), bold, italic, m_pdfFontEncoding);
+			font = m_document->CreateFontSubset(family.toLocal8Bit().data(), bold, italic, false, m_pdfFontEncoding);
 #endif
 			it = m_fontCache.insert(key, font);
 		} catch(PoDoFo::PdfError& /*err*/) {
