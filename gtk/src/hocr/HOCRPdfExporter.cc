@@ -302,31 +302,6 @@ double HOCRCairoPdfPrinter::getTextWidth(const Glib::ustring& text) const {
 }
 
 
-#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
-namespace PoDoFo {
-class PdfImageCompat : public PoDoFo::PdfImage {
-	using PdfImage::PdfImage;
-public:
-	void SetImageDataRaw( unsigned int nWidth, unsigned int nHeight,
-	                      unsigned int nBitsPerComponent, PdfInputStream* pStream ) {
-		m_rRect.SetWidth( nWidth );
-		m_rRect.SetHeight( nHeight );
-
-		this->GetObject()->GetDictionary().AddKey( "Width",  PdfVariant( static_cast<pdf_int64>(nWidth) ) );
-		this->GetObject()->GetDictionary().AddKey( "Height", PdfVariant( static_cast<pdf_int64>(nHeight) ) );
-		this->GetObject()->GetDictionary().AddKey( "BitsPerComponent", PdfVariant( static_cast<pdf_int64>(nBitsPerComponent) ) );
-
-		PdfVariant var;
-		m_rRect.ToVariant( var );
-		this->GetObject()->GetDictionary().AddKey( "BBox", var );
-
-		this->GetObject()->GetStream()->SetRawData( pStream, -1 );
-	}
-};
-}
-#endif
-
-
 HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const std::string& filename, const HOCRPdfExporter::PDFSettings& settings, const Glib::ustring& defaultFont, int defaultFontSize, Glib::ustring& errMsg) {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
 	PoDoFo::PdfMemDocument* document = nullptr;
@@ -336,10 +311,8 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const std::string& filename, 
 	PoDoFo::PdfFont* defaultPdfFont = nullptr;
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
 	PoDoFo::PdfEncoding* pdfFontEncoding = nullptr;
-#elif PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
 #else
-	PoDoFo::PdfEncoding* pdfFontEncoding = new PoDoFo::PdfIdentityEncoding;
+	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
 #endif
 
 	try {
@@ -464,10 +437,8 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const std::string& filename, 
 	try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
 		defaultPdfFont = document->GetFonts().SearchFont(Utils::resolveFontName(fontDesc.get_family()).raw());
-#elif PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-		defaultPdfFont = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), false, false, false, pdfFontEncoding);
 #else
-		defaultPdfFont = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), false, false, pdfFontEncoding);
+		defaultPdfFont = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), false, false, false, pdfFontEncoding);
 #endif
 	} catch(PoDoFo::PdfError&) {
 	}
@@ -485,9 +456,6 @@ HOCRPoDoFoPdfPrinter::HOCRPoDoFoPdfPrinter(PoDoFo::PdfDocument* document, const 
 }
 
 HOCRPoDoFoPdfPrinter::~HOCRPoDoFoPdfPrinter() {
-#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0,9,3)
-	delete m_pdfFontEncoding;
-#endif
 	delete m_document;
 	delete m_painter;
 	// Fonts are deleted by the internal PoDoFo font cache of the document
@@ -567,10 +535,8 @@ void HOCRPoDoFoPdfPrinter::drawImage(const Geometry::Rectangle& bbox, const Cair
 	Image img(image, settings.colorFormat, settings.conversionFlags);
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
 	std::unique_ptr<PoDoFo::PdfImage> pdfImage = m_document->CreateImage();
-#elif PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-	PoDoFo::PdfImage pdfImage(m_document);
 #else
-	PoDoFo::PdfImageCompat pdfImage(m_document);
+	PoDoFo::PdfImage pdfImage(m_document);
 #endif
 #if PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 10, 0)
 	pdfImage.SetImageColorSpace(settings.colorFormat == Image::Format_RGB24 ? PoDoFo::ePdfColorSpace_DeviceRGB : PoDoFo::ePdfColorSpace_DeviceGray);
@@ -676,10 +642,8 @@ PoDoFo::PdfFont* HOCRPoDoFoPdfPrinter::getFont(Glib::ustring family, bool bold, 
 				*params.Style |= PoDoFo::PdfFontStyle::Italic;
 			}
 			font = m_document->GetFonts().SearchFont(Utils::resolveFontName(family).raw(), params);
-#elif PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
-			font = m_document->CreateFontSubset(Utils::resolveFontName(family).c_str(), bold, italic, false, m_pdfFontEncoding);
 #else
-			font = document->CreateFontSubset(Utils::resolveFontName(family).c_str(), bold, italic, m_pdfFontEncoding);
+			font = m_document->CreateFontSubset(Utils::resolveFontName(family).c_str(), bold, italic, false, m_pdfFontEncoding);
 #endif
 			it = m_fontCache.insert(std::make_pair(key, font)).first;
 		} catch(PoDoFo::PdfError& /*err*/) {
