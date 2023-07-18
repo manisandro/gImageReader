@@ -1160,7 +1160,7 @@ bool OutputEditorHOCR::exportToODT() {
 	std::string suggestion = m_filebasename;
 	if(suggestion.empty()) {
 		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-		suggestion = !sources.empty() ? Glib::path_get_basename(sources.front()->displayname) : _("output");
+		suggestion = !sources.empty() ? Utils::split_filename(Glib::path_get_basename(sources.front()->displayname)).first : _("output");
 	}
 
 	FileDialogs::FileFilter filter = {_("OpenDocument Text Documents"), {"application/vnd.oasis.opendocument.text"}, {"*.odt"}};
@@ -1196,7 +1196,7 @@ bool OutputEditorHOCR::exportToPDF() {
 	std::string suggestion = m_filebasename;
 	if(suggestion.empty()) {
 		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-		suggestion = !sources.empty() ? Glib::path_get_basename(sources.front()->displayname) : _("output");
+		suggestion = !sources.empty() ? Utils::split_filename(Glib::path_get_basename(sources.front()->displayname)).first : _("output");
 	}
 
 	std::string outname;
@@ -1226,7 +1226,7 @@ bool OutputEditorHOCR::exportToText() {
 	std::string suggestion = m_filebasename;
 	if(suggestion.empty()) {
 		std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-		suggestion = !sources.empty() ? Glib::path_get_basename(sources.front()->displayname) : _("output");
+		suggestion = !sources.empty() ? Utils::split_filename(Glib::path_get_basename(sources.front()->displayname)).first : _("output");
 	}
 
 	FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
