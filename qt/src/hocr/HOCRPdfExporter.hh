@@ -37,7 +37,7 @@ namespace PoDoFo {
 class PdfEncoding;
 class PdfFont;
 class PdfPainter;
-class PdfStreamedDocument;
+class PdfDocument;
 }
 
 class HOCRPdfExporter : public HOCRExporter {
@@ -153,7 +153,7 @@ class HOCRPoDoFoPdfPrinter : public HOCRPdfPrinter {
 public:
 	static HOCRPoDoFoPdfPrinter* create(const QString& filename, const HOCRPdfExporter::PDFSettings& settings, const QFont& defaultFont, QString& errMsg);
 
-	HOCRPoDoFoPdfPrinter(PoDoFo::PdfStreamedDocument* document, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const QString& defaultFontFamily, double defaultFontSize);
+	HOCRPoDoFoPdfPrinter(PoDoFo::PdfDocument* document, const std::string& filename, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const QString& defaultFontFamily, double defaultFontSize);
 	~HOCRPoDoFoPdfPrinter();
 	bool createPage(double width, double height, double offsetX, double offsetY, QString& /*errMsg*/) override;
 	void finishPage() override;
@@ -169,7 +169,8 @@ private:
 	QFontDatabase m_fontDatabase;
 	QMap<QString, PoDoFo::PdfFont*> m_fontCache;
 	PoDoFo::PdfPainter* m_painter = nullptr;
-	PoDoFo::PdfStreamedDocument* m_document = nullptr;
+	PoDoFo::PdfDocument* m_document = nullptr;
+	std::string m_filename;
 	const PoDoFo::PdfEncoding* m_pdfFontEncoding;
 	PoDoFo::PdfFont* m_defaultFont;
 	QString m_defaultFontFamily;

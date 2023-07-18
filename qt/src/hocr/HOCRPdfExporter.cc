@@ -30,6 +30,8 @@
 #include "Utils.hh"
 
 #include <cstring>
+#include <podofo.h>
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 10, 0)
 #include <podofo/base/PdfDictionary.h>
 #include <podofo/base/PdfFilter.h>
 #include <podofo/base/PdfStream.h>
@@ -39,6 +41,7 @@
 #include <podofo/doc/PdfPage.h>
 #include <podofo/doc/PdfPainter.h>
 #include <podofo/doc/PdfStreamedDocument.h>
+#endif
 #include <QBuffer>
 #include <QDesktopServices>
 #include <QPainter>
@@ -356,9 +359,15 @@ public:
 
 
 HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const QString& filename, const HOCRPdfExporter::PDFSettings& settings, const QFont& defaultFont, QString& errMsg) {
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
+	PoDoFo::PdfMemDocument* document = nullptr;
+#else
 	PoDoFo::PdfStreamedDocument* document = nullptr;
+#endif
 	PoDoFo::PdfFont* defaultPdfFont = nullptr;
-#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
+	PoDoFo::PdfEncoding* pdfFontEncoding = nullptr;
+#elif PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 	const PoDoFo::PdfEncoding* pdfFontEncoding = PoDoFo::PdfEncodingFactory::GlobalIdentityEncodingInstance();
 #else
 	PoDoFo::PdfEncoding* pdfFontEncoding = new PoDoFo::PdfIdentityEncoding;
@@ -366,7 +375,12 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const QString& filename, cons
 
 	try {
 		const std::string password = settings.password.toStdString();
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 10, 0)
 		PoDoFo::PdfEncrypt* encrypt = nullptr;
+#else
+		std::unique_ptr<PoDoFo::PdfEncrypt> encrypt;
+#endif
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 10, 0)
 		if(!password.empty()) {
 			encrypt = PoDoFo::PdfEncrypt::CreatePdfEncrypt(password,
 			          password,
@@ -408,6 +422,68 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const QString& filename, cons
 			break;
 		}
 		document = new PoDoFo::PdfStreamedDocument(filename.toLocal8Bit().data(), pdfVersion, encrypt);
+
+		// Set PDF info
+		PoDoFo::PdfInfo* pdfInfo = document->GetInfo();
+		pdfInfo->SetProducer(settings.producer.toStdString());
+		pdfInfo->SetCreator(settings.creator.toStdString());
+		pdfInfo->SetTitle(settings.title.toStdString());
+		pdfInfo->SetSubject(settings.subject.toStdString());
+		pdfInfo->SetKeywords(settings.keywords.toStdString());
+		pdfInfo->SetAuthor(settings.author.toStdString());
+#else
+		if(!password.empty()) {
+			encrypt = PoDoFo::PdfEncrypt::Create(password,
+			                                     password,
+			                                     PoDoFo::PdfPermissions::Print |
+			                                     PoDoFo::PdfPermissions::Edit |
+			                                     PoDoFo::PdfPermissions::Copy |
+			                                     PoDoFo::PdfPermissions::EditNotes |
+			                                     PoDoFo::PdfPermissions::FillAndSign |
+			                                     PoDoFo::PdfPermissions::Accessible |
+			                                     PoDoFo::PdfPermissions::DocAssembly |
+			                                     PoDoFo::PdfPermissions::HighPrint,
+			                                     PoDoFo::PdfEncryptAlgorithm::RC4V2);
+		}
+		PoDoFo::PdfVersion pdfVersion = PoDoFo::PdfVersionDefault;
+		switch(settings.version) {
+		case HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_0:
+			pdfVersion = PoDoFo::PdfVersion::V1_0;
+			break;
+		case HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_1:
+			pdfVersion = PoDoFo::PdfVersion::V1_1;
+			break;
+		case HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_2:
+			pdfVersion = PoDoFo::PdfVersion::V1_2;
+			break;
+		case HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_3:
+			pdfVersion = PoDoFo::PdfVersion::V1_3;
+			break;
+		case HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_4:
+			pdfVersion = PoDoFo::PdfVersion::V1_4;
+			break;
+		case HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_5:
+			pdfVersion = PoDoFo::PdfVersion::V1_5;
+			break;
+		case HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_6:
+			pdfVersion = PoDoFo::PdfVersion::V1_6;
+			break;
+		case HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_7:
+			pdfVersion = PoDoFo::PdfVersion::V1_7;
+			break;
+		}
+		document = new PoDoFo::PdfMemDocument();
+		document->SetEncrypt(std::move(encrypt));
+
+		// Set PDF info
+		document->GetMetadata().SetProducer(PoDoFo::PdfString(settings.producer.toStdString()));
+		document->GetMetadata().SetCreator(PoDoFo::PdfString(settings.creator.toStdString()));
+		document->GetMetadata().SetTitle(PoDoFo::PdfString(settings.title.toStdString()));
+		document->GetMetadata().SetSubject(PoDoFo::PdfString(settings.subject.toStdString()));
+		document->GetMetadata().SetKeywords(std::vector<std::string> {settings.keywords.toStdString()});
+		document->GetMetadata().SetAuthor(PoDoFo::PdfString(settings.author.toStdString()));
+		document->GetMetadata().SetPdfVersion(pdfVersion);
+#endif
 	} catch(PoDoFo::PdfError& err) {
 		errMsg = err.what();
 		return nullptr;
@@ -417,7 +493,9 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const QString& filename, cons
 
 	// Attempt to load the default/fallback font to ensure it is valid
 	try {
-#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
+		defaultPdfFont = document->GetFonts().SearchFont(finfo.family().toStdString());
+#elif PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 		defaultPdfFont = document->CreateFontSubset(finfo.family().toLocal8Bit().data(), false, false, false, pdfFontEncoding);
 #else
 		defaultPdfFont = document->CreateFontSubset(finfo.family().toLocal8Bit().data(), false, false, pdfFontEncoding);
@@ -429,20 +507,11 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const QString& filename, cons
 		return nullptr;
 	}
 
-	// Set PDF info
-	PoDoFo::PdfInfo* pdfInfo = document->GetInfo();
-	pdfInfo->SetProducer(settings.producer.toStdString());
-	pdfInfo->SetCreator(settings.creator.toStdString());
-	pdfInfo->SetTitle(settings.title.toStdString());
-	pdfInfo->SetSubject(settings.subject.toStdString());
-	pdfInfo->SetKeywords(settings.keywords.toStdString());
-	pdfInfo->SetAuthor(settings.author.toStdString());
-
-	return new HOCRPoDoFoPdfPrinter(document, pdfFontEncoding, defaultPdfFont, defaultFont.family(), defaultFont.pointSize());
+	return new HOCRPoDoFoPdfPrinter(document, filename.toStdString(), pdfFontEncoding, defaultPdfFont, defaultFont.family(), defaultFont.pointSize());
 }
 
-HOCRPoDoFoPdfPrinter::HOCRPoDoFoPdfPrinter(PoDoFo::PdfStreamedDocument* document, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const QString& defaultFontFamily, double defaultFontSize)
-	: m_document(document), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontFamily(defaultFontFamily), m_defaultFontSize(defaultFontSize) {
+HOCRPoDoFoPdfPrinter::HOCRPoDoFoPdfPrinter(PoDoFo::PdfDocument* document, const std::string& filename, const PoDoFo::PdfEncoding* fontEncoding, PoDoFo::PdfFont* defaultFont, const QString& defaultFontFamily, double defaultFontSize)
+	: m_document(document), m_filename(filename), m_pdfFontEncoding(fontEncoding), m_defaultFont(defaultFont), m_defaultFontFamily(defaultFontFamily), m_defaultFontSize(defaultFontSize) {
 	m_painter = new PoDoFo::PdfPainter();
 }
 
@@ -456,6 +525,12 @@ HOCRPoDoFoPdfPrinter::~HOCRPoDoFoPdfPrinter() {
 }
 
 bool HOCRPoDoFoPdfPrinter::createPage(double width, double height, double offsetX, double offsetY, QString& /*errMsg*/) {
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
+	PoDoFo::PdfPage& pdfpage = m_document->GetPages().CreatePage(PoDoFo::Rect(0, 0, width, height));
+	m_painter->SetCanvas(pdfpage);
+	m_pageHeight = height;
+	m_painter->TextState.SetFont(*m_defaultFont, m_defaultFontSize);
+#else
 	PoDoFo::PdfPage* pdfpage = m_document->CreatePage(PoDoFo::PdfRect(0, 0, width, height));
 	m_painter->SetPage(pdfpage);
 	m_pageHeight = m_painter->GetPage()->GetPageSize().GetHeight();
@@ -463,18 +538,27 @@ bool HOCRPoDoFoPdfPrinter::createPage(double width, double height, double offset
 	if(m_defaultFontSize > 0) {
 		m_painter->GetFont()->SetFontSize(m_defaultFontSize);
 	}
+#endif
 	m_offsetX = offsetX;
 	m_offsetY = offsetY;
 	return true;
 }
 
 void HOCRPoDoFoPdfPrinter::finishPage() {
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
+	m_painter->FinishDrawing();
+#else
 	m_painter->FinishPage();
+#endif
 }
 
 bool HOCRPoDoFoPdfPrinter::finishDocument(QString& errMsg) {
 	try {
-		m_document->Close();
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
+		static_cast<PoDoFo::PdfMemDocument*>(m_document)->Save(m_filename);
+#else
+		static_cast<PoDoFo::PdfStreamedDocument*>(m_document)->Close();
+#endif
 	} catch(PoDoFo::PdfError& e) {
 		errMsg = e.what();
 		return false;
@@ -483,18 +567,31 @@ bool HOCRPoDoFoPdfPrinter::finishDocument(QString& errMsg) {
 }
 
 void HOCRPoDoFoPdfPrinter::setFontFamily(const QString& family, bool bold, bool italic) {
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
+	float curSize = m_painter->TextState.GetFontSize();
+	m_painter->TextState.SetFont(*getFont(family, bold, italic), curSize);
+#else
 	float curSize = m_painter->GetFont()->GetFontSize();
 	m_painter->SetFont(getFont(family, bold, italic));
 	m_painter->GetFont()->SetFontSize(curSize);
+#endif
 }
 
 void HOCRPoDoFoPdfPrinter::setFontSize(double pointSize) {
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
+	m_painter->TextState.SetFont(*m_painter->TextState.GetFont(), pointSize);
+#else
 	m_painter->GetFont()->SetFontSize(pointSize);
+#endif
 }
 
 void HOCRPoDoFoPdfPrinter::drawText(double x, double y, const QString& text) {
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
+	m_painter->DrawText(text.toStdString(), m_offsetX + x, m_pageHeight - m_offsetY - y);
+#else
 	PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.toUtf8().data()));
 	m_painter->DrawText(m_offsetX + x, m_pageHeight - m_offsetY - y, pdfString);
+#endif
 }
 
 void HOCRPoDoFoPdfPrinter::drawImage(const QRect& bbox, const QImage& image, const HOCRPdfExporter::PDFSettings& settings) {
@@ -502,15 +599,19 @@ void HOCRPoDoFoPdfPrinter::drawImage(const QRect& bbox, const QImage& image, con
 	if(settings.colorFormat == QImage::Format_Mono) {
 		img.invertPixels();
 	}
-#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
+	std::unique_ptr<PoDoFo::PdfImage> pdfImage = m_document->CreateImage();
+#elif PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 	PoDoFo::PdfImage pdfImage(m_document);
 #else
 	PoDoFo::PdfImageCompat pdfImage(m_document);
 #endif
-	pdfImage.SetImageColorSpace(img.format() == QImage::Format_RGB888 ? PoDoFo::ePdfColorSpace_DeviceRGB : PoDoFo::ePdfColorSpace_DeviceGray);
 	int width = img.width();
 	int height = img.height();
 	int sampleSize = settings.colorFormat == QImage::Format_Mono ? 1 : 8;
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 10, 0)
+	pdfImage.SetImageColorSpace(img.format() == QImage::Format_RGB888 ? PoDoFo::ePdfColorSpace_DeviceRGB : PoDoFo::ePdfColorSpace_DeviceGray);
+#endif
 	if(settings.compression == HOCRPdfExporter::PDFSettings::CompressZip) {
 		// QImage has 32-bit aligned scanLines, but we need a continuous buffer
 		int numComponents = settings.colorFormat == QImage::Format_RGB888 ? 3 : 1;
@@ -519,17 +620,35 @@ void HOCRPoDoFoPdfPrinter::drawImage(const QRect& bbox, const QImage& image, con
 		for(int y = 0; y < height; ++y) {
 			std::memcpy(buf.data() + y * bytesPerLine, img.scanLine(y), bytesPerLine);
 		}
-		PoDoFo::PdfMemoryInputStream is(buf.data(), bytesPerLine * height);
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 10, 0)
+		PoDoFo::PdfMemoryInputStream is(buf.data(), buf.size());
 		pdfImage.SetImageData(width, height, sampleSize, &is, {PoDoFo::ePdfFilter_FlateDecode});
+#else
+		PoDoFo::PdfColorSpace colorSpace = img.format() == QImage::Format_RGB888 ? PoDoFo::PdfColorSpace::DeviceRGB : PoDoFo::PdfColorSpace::DeviceGray;
+		PoDoFo::PdfImageInfo info;
+		info.Width = width;
+		info.Height = height;
+		info.ColorSpace = colorSpace;
+		info.BitsPerComponent = sampleSize;
+		pdfImage->SetDataRaw(PoDoFo::bufferview(buf.data(), buf.size()), info);
+#endif
 	} else if(settings.compression == HOCRPdfExporter::PDFSettings::CompressJpeg) {
-		PoDoFo::PdfName dctFilterName(PoDoFo::PdfFilterFactory::FilterTypeToName(PoDoFo::ePdfFilter_DCTDecode));
-		pdfImage.GetObject()->GetDictionary().AddKey(PoDoFo::PdfName::KeyFilter, dctFilterName);
 		QByteArray data;
 		QBuffer buffer(&data);
 		img.save(&buffer, "jpg", settings.compressionQuality);
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 10, 0)
+		PoDoFo::PdfName dctFilterName(PoDoFo::PdfFilterFactory::FilterTypeToName(PoDoFo::ePdfFilter_DCTDecode));
+		pdfImage.GetObject()->GetDictionary().AddKey(PoDoFo::PdfName::KeyFilter, dctFilterName);
 		PoDoFo::PdfMemoryInputStream is(data.data(), data.size());
 		pdfImage.SetImageDataRaw(width, height, sampleSize, &is);
+#else
+		pdfImage->LoadFromBuffer(PoDoFo::bufferview(data.data(), data.size()));
+#endif
 	} else if(settings.compression == HOCRPdfExporter::PDFSettings::CompressFax4) {
+		CCITTFax4Encoder encoder;
+		uint32_t encodedLen = 0;
+		uint8_t* encoded = encoder.encode(img.constBits(), img.width(), img.height(), img.bytesPerLine(), encodedLen);
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 10, 0)
 		PoDoFo::PdfName faxFilterName(PoDoFo::PdfFilterFactory::FilterTypeToName(PoDoFo::ePdfFilter_CCITTFaxDecode));
 		pdfImage.GetObject()->GetDictionary().AddKey(PoDoFo::PdfName::KeyFilter, faxFilterName);
 		PoDoFo::PdfDictionary decodeParams;
@@ -537,22 +656,47 @@ void HOCRPoDoFoPdfPrinter::drawImage(const QRect& bbox, const QImage& image, con
 		decodeParams.AddKey("Rows", PoDoFo::PdfObject(PoDoFo::pdf_int64(img.height())));
 		decodeParams.AddKey("K", PoDoFo::PdfObject(PoDoFo::pdf_int64(-1))); // K < 0 --- Pure two-dimensional encoding (Group 4)
 		pdfImage.GetObject()->GetDictionary().AddKey("DecodeParms", PoDoFo::PdfObject(decodeParams));
-		CCITTFax4Encoder encoder;
-		uint32_t encodedLen = 0;
-		uint8_t* encoded = encoder.encode(img.constBits(), img.width(), img.height(), img.bytesPerLine(), encodedLen);
 		PoDoFo::PdfMemoryInputStream is(reinterpret_cast<char*>(encoded), encodedLen);
 		pdfImage.SetImageDataRaw(img.width(), img.height(), sampleSize, &is);
+#else
+		PoDoFo::PdfColorSpace colorSpace = PoDoFo::PdfColorSpace::DeviceGray;
+		PoDoFo::PdfImageInfo info;
+		info.Width = width;
+		info.Height = height;
+		info.ColorSpace = colorSpace;
+		info.BitsPerComponent = sampleSize;
+		info.Filters = {PoDoFo::PdfFilterType::CCITTFaxDecode};
+		PoDoFo::PdfDictionary decodeParams;
+		decodeParams.AddKey("Columns", PoDoFo::PdfObject(int64_t(img.width())));
+		decodeParams.AddKey("Rows", PoDoFo::PdfObject(int64_t(img.height())));
+		decodeParams.AddKey("K", PoDoFo::PdfObject(int64_t(-1))); // K < 0 --- Pure two-dimensional encoding (Group 4)
+		pdfImage->GetDictionary().AddKey("DecodeParms", PoDoFo::PdfObject(decodeParams));
+		pdfImage->SetDataRaw(PoDoFo::bufferview(reinterpret_cast<const char*>(encoded), encodedLen), info);
+#endif
 	}
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 10, 0)
 	m_painter->DrawImage(m_offsetX + bbox.x(), m_pageHeight - m_offsetY - (bbox.y() + bbox.height()),
 	                     &pdfImage, bbox.width() / double(image.width()), bbox.height() / double(image.height()));
+#else
+	m_painter->DrawImage(*pdfImage, m_offsetX + bbox.x(), m_pageHeight - m_offsetY - (bbox.y() + bbox.height()),
+	                     bbox.width() / double(image.width()), bbox.height() / double(image.height()));
+#endif
 }
 
 double HOCRPoDoFoPdfPrinter::getAverageCharWidth() const {
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 10, 0)
 	return m_painter->GetFont()->GetFontMetrics()->CharWidth(static_cast<unsigned char>('x'));
+#else
+	return m_painter->TextState.GetFont()->GetStringLength("x", m_painter->TextState);
+#endif
 }
 double HOCRPoDoFoPdfPrinter::getTextWidth(const QString& text) const {
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 10, 0)
 	PoDoFo::PdfString pdfString(reinterpret_cast<const PoDoFo::pdf_utf8*>(text.toUtf8().data()));
 	return m_painter->GetFont()->GetFontMetrics()->StringWidth(pdfString);
+#else
+	return m_painter->TextState.GetFont()->GetStringLength(text.toStdString(), m_painter->TextState);
+#endif
 }
 
 
@@ -565,7 +709,17 @@ PoDoFo::PdfFont* HOCRPoDoFoPdfPrinter::getFont(QString family, bool bold, bool i
 		}
 		PoDoFo::PdfFont* font = nullptr;
 		try {
-#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
+#if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
+			PoDoFo::PdfFontSearchParams params;
+			params.Style = PoDoFo::PdfFontStyle::Regular;
+			if (bold) {
+				*params.Style |= PoDoFo::PdfFontStyle::Bold;
+			}
+			if (italic) {
+				*params.Style |= PoDoFo::PdfFontStyle::Italic;
+			}
+			font = m_document->GetFonts().SearchFont(family.toLocal8Bit().data(), params);
+#elif PODOFO_VERSION >= PODOFO_MAKE_VERSION(0,9,3)
 			font = m_document->CreateFontSubset(family.toLocal8Bit().data(), bold, italic, false, m_pdfFontEncoding);
 #else
 			font = m_document->CreateFontSubset(family.toLocal8Bit().data(), bold, italic, m_pdfFontEncoding);
