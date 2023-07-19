@@ -65,61 +65,55 @@ jobs:
           prerelease: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
       - name: Upload qt5 i686 portable zip release asset
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/mingw32-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_i686_portable.zip
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: ./build/mingw32-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_i686_portable.zip
           asset_name: gImageReader_latest_qt5_i686_portable.zip
-          asset_content_type: application/zip
+          overwrite: true
 
       - name: Upload qt5 i686 installer release asset
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/mingw32-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_i686.exe
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: ./build/mingw32-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_i686.exe
           asset_name: gImageReader_latest_qt5_i686.exe
-          asset_content_type: application/x-dosexec
+          overwrite: true
 
       - name: Upload qt5 x86_64 portable zip release asset
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_x86_64_portable.zip
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_x86_64_portable.zip
           asset_name: gImageReader_latest_qt5_x86_64_portable.zip
-          asset_content_type: application/zip
+          overwrite: true
 
       - name: Upload qt5 x86_64 installer release asset
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_x86_64.exe
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_x86_64.exe
           asset_name: gImageReader_latest_qt5_x86_64.exe
-          asset_content_type: application/x-dosexec
+          overwrite: true
 
       - name: Upload gtk x86_64 portable zip release asset
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/mingw64-gtk/gImageReader_${{ steps.version_number.outputs.version }}_gtk_x86_64_portable.zip
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: ./build/mingw64-gtk/gImageReader_${{ steps.version_number.outputs.version }}_gtk_x86_64_portable.zip
           asset_name: gImageReader_latest_gtk_x86_64_portable.zip
-          asset_content_type: application/zip
+          overwrite: true
 
       - name: Upload gtk x86_64 installer release asset
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/mingw64-gtk/gImageReader_${{ steps.version_number.outputs.version }}_gtk_x86_64.exe
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: ./build/mingw64-gtk/gImageReader_${{ steps.version_number.outputs.version }}_gtk_x86_64.exe
           asset_name: gImageReader_latest_gtk_x86_64.exe
-          asset_content_type: application/x-dosexec
+          overwrite: true
