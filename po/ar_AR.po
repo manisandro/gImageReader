@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2023-07-27 04:03+0000\n"
+"PO-Revision-Date: 2023-07-28 05:05+0000\n"
 "Last-Translator: \"Mr.k\" <mineshtine28546271@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ar/>\n"
@@ -326,7 +326,7 @@ msgstr "الوضع:"
 #: ../gtk/data/MainWindow.ui.h:16 ../gtk/src/hocr/HOCRPdfExportWidget.cc:49
 #: ../qt/data/MainWindow.ui.h:16 ../qt/src/hocr/HOCRPdfExportWidget.cc:60
 msgid "Color"
-msgstr "اللون"
+msgstr "ملون"
 
 #: ../gtk/data/MainWindow.ui.h:17 ../gtk/src/hocr/HOCRPdfExportWidget.cc:52
 #: ../qt/data/MainWindow.ui.h:15 ../qt/src/hocr/HOCRPdfExportWidget.cc:61
