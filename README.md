@@ -26,7 +26,7 @@ gImageReader is a simple Gtk/Qt front-end to [tesseract-ocr](https://github.com/
 - ![Debian](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/debian.png) **Debian**: Available from the [official repositories](https://packages.debian.org/unstable/main/gimagereader)
 - ![Ubuntu](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/ubuntu.png) **Ubuntu**: Available from [ppa:sandromani/gimagereader](https://launchpad.net/~sandromani/+archive/ubuntu/gimagereader)
 - ![OpenSUSE](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/opensuse.png) **OpenSUSE**: Available from [OpenSUSE Build Service](https://build.opensuse.org/project/show/home:sandromani)
-- ![ArchLinux](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/arch.png) **ArchLinux**: Available from the [community repositories](https://www.archlinux.org/packages/community/x86_64/gimagereader/)
+- ![ArchLinux](https://raw.githubusercontent.com/manisandro/gImageReader/gh-pages/icons/arch.png) **ArchLinux**: Available from the extra repositories: [gimagereader-gtk](https://archlinux.org/packages/extra/x86_64/gimagereader-gtk) and [gimagereader-qt](https://archlinux.org/packages/extra/x86_64/gimagereader-qt)
 
 ## Compilation
 The steps for compiling gImageReader from source are documented in the [wiki](https://github.com/manisandro/gImageReader/wiki/Compiling-gImageReader).
