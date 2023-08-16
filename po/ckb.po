@@ -8,96 +8,99 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:17+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-08-16 22:28+0000\n"
+"Last-Translator: Hemn Karimi <devhemn@gmail.com>\n"
+"Language-Team: Kurdish (Central) <https://hosted.weblate.org/projects/"
+"gimagereader/translations/ckb/>\n"
 "Language: ckb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
-msgstr ""
+msgstr "بەرنامەی OCR"
 
 #: ../gtk/data/appmenu.ui.h:1 ../qt/src/Ui_MainWindow.hh:169
 msgid "Redetect Languages"
-msgstr ""
+msgstr "زمانەکان دووبارە بدۆزەرەوە"
 
 #: ../gtk/data/appmenu.ui.h:2 ../qt/src/Ui_MainWindow.hh:172
 msgid "Manage Languages"
-msgstr ""
+msgstr "بەڕێوەبەرایەتی زمانەکان"
 
 #: ../gtk/data/appmenu.ui.h:3 ../gtk/data/ConfigDialog.ui.h:1
 #: ../qt/data/ConfigDialog.ui.h:1 ../qt/src/Ui_MainWindow.hh:175
 msgid "Preferences"
-msgstr ""
+msgstr "هەڵبژاردنەکان"
 
 #: ../gtk/data/appmenu.ui.h:4 ../gtk/data/ConfigDialog.ui.h:2
 #: ../gtk/src/MainWindow.cc:523 ../qt/src/MainWindow.cc:522
 #: ../qt/src/Ui_MainWindow.hh:180
 msgid "Help"
-msgstr ""
+msgstr "یارمەتی"
 
 #: ../gtk/data/appmenu.ui.h:5 ../qt/data/AboutDialog.ui.h:2
 #: ../qt/src/Ui_MainWindow.hh:183
 msgid "About"
-msgstr ""
+msgstr "دەربارە"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
-msgstr ""
+msgstr "وازهێنان"
 
 #: ../gtk/data/CharacterListDialog.ui.h:1 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
-msgstr ""
+msgstr "لیستی سپی / لیستی ڕەشی کارەکتەرەکان"
 
 #: ../gtk/data/CharacterListDialog.ui.h:2 ../qt/data/CharacterListDialog.ui.h:2
 msgid "Exclude these characters from being recognized (blacklist):"
-msgstr ""
+msgstr "ئەم کارەکتەرانە لە ناسینەوە دوور بخەرەوە (لیستی ڕەش):"
 
 #: ../gtk/data/CharacterListDialog.ui.h:3 ../qt/data/CharacterListDialog.ui.h:3
 msgid "Enter a string of characters..."
-msgstr ""
+msgstr "ڕیزێک لە پیتەکان دابنێ..."
 
 #: ../gtk/data/CharacterListDialog.ui.h:4 ../qt/data/CharacterListDialog.ui.h:4
 msgid "Only allow the following characters to be recognized (whitelist):"
-msgstr ""
+msgstr "تەنها ڕێگە بدە ئەم پیتانەی خوارەوە بناسرێنەوە (لیستی سپی):"
 
 #: ../gtk/data/ConfigDialog.ui.h:3 ../gtk/data/MainWindow.ui.h:49
 #: ../gtk/data/OutputEditorHOCR.ui.h:3 ../gtk/src/FileDialogs.cc:179
 #: ../gtk/src/FileDialogs.cc:194 ../gtk/src/hocr/HOCRPdfExporter.cc:547
 #: ../gtk/src/Utils.cc:124 ../qt/data/ConfigDialog.ui.h:26
 msgid "OK"
-msgstr ""
+msgstr "باشە"
 
 #: ../gtk/data/ConfigDialog.ui.h:4
 msgid "Output pane orientation:"
-msgstr ""
+msgstr "ئاراستەی پەنجەرەی دەرچوون:"
 
 #: ../gtk/data/ConfigDialog.ui.h:5
 msgid "Horizontal"
-msgstr ""
+msgstr "ئاسۆیی"
 
 #: ../gtk/data/ConfigDialog.ui.h:6
 msgid "Vertical"
-msgstr ""
+msgstr "ڕاست"
 
 #: ../gtk/data/ConfigDialog.ui.h:7 ../qt/data/ConfigDialog.ui.h:18
 msgid "Query to install missing spellcheck dictionaries"
-msgstr ""
+msgstr "پرسیار بکە بۆ دامەزراندنی فەرهەنگەکانی پشکنینی ڕێنووسی ونبوو"
 
 #: ../gtk/data/ConfigDialog.ui.h:8 ../qt/data/ConfigDialog.ui.h:4
 msgid "Automatically check for new program versions"
-msgstr ""
+msgstr "بە شێوەیەکی ئۆتۆماتیکی پشکنین بۆ وەشانی نوێی بەرنامەکان بکە"
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr ""
+msgstr "پێناسەی زمانە پێشوەختە دیاریکراوەکان:"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
-msgstr ""
+msgstr "پێناسەی زمانە زیادەکان:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
