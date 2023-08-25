@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2023-08-24 15:24+0000\n"
+"PO-Revision-Date: 2023-08-26 11:53+0000\n"
 "Last-Translator: eevan78 <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -97,7 +97,7 @@ msgstr "Аутоматски проверавај доступност нове 
 
 #: ../gtk/data/ConfigDialog.ui.h:9 ../qt/data/ConfigDialog.ui.h:3
 msgid "Predefined language definitions:"
-msgstr "Предефинисане језичке дефиниције:"
+msgstr "Предефинисане дефиниције језика:"
 
 #: ../gtk/data/ConfigDialog.ui.h:10 ../qt/data/ConfigDialog.ui.h:12
 msgid "Additional language definitions:"
@@ -105,7 +105,7 @@ msgstr "Додатне дефиниције језика:"
 
 #: ../gtk/data/ConfigDialog.ui.h:11 ../qt/data/ConfigDialog.ui.h:20
 msgid "The prefix of the tesseract language data file"
-msgstr "Префикс фајла tesseract језичких података"
+msgstr "Префикс tesseract фајла са подацима о језику"
 
 #: ../gtk/data/ConfigDialog.ui.h:12 ../qt/data/ConfigDialog.ui.h:21
 msgid "Prefix"
@@ -145,7 +145,7 @@ msgstr "Подразумевани"
 
 #: ../gtk/data/ConfigDialog.ui.h:20 ../qt/data/ConfigDialog.ui.h:6
 msgid "Language data locations:"
-msgstr "Локације језичких података:"
+msgstr "Локације података о језицима:"
 
 #: ../gtk/data/ConfigDialog.ui.h:21 ../qt/data/ConfigDialog.ui.h:13
 msgid "Language definitions path:"
@@ -169,7 +169,7 @@ msgstr "Аутоматски отварај извезене документе 
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
-msgstr "Регенериши траг за отклањање грешака"
+msgstr "Поново генериши траг за отклањање грешака"
 
 #: ../gtk/data/CrashHandler.ui.h:3
 #, no-c-format
@@ -203,9 +203,9 @@ msgid ""
 msgstr ""
 "<b>Tesseract је прекинуо извршавање</b>\n"
 "\n"
-"Tesseract (OCR механизам) прекинуо извршавање током препознавања текста. То "
-"може да се догоди ако су коришћени подаци тренирања покварени или нису "
-"компатибилни са tesseract верзијом која се користи, или услед бага у самом "
+"Tesseract (OCR машина) је прекинуо извршавање током препознавања текста. То "
+"може да се догоди ако су коришћени подаци тренирања оштећени или нису "
+"компатибилни са tesseract верзијом која се извршава, или услед бага у самом "
 "програму tesseract.\n"
 "\n"
 "Траг стека испод може да пружи додатне информације у вези са местом на којем "
@@ -264,7 +264,7 @@ msgstr "Опције извоза"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
-msgstr "Укљ./Искљ. панел излаза"
+msgstr "Преклопник панела излаза"
 
 #: ../gtk/data/MainWindow.ui.h:2 ../qt/src/Ui_MainWindow.hh:66
 msgid "Rotate current page"
@@ -286,7 +286,7 @@ msgstr "Додај слике"
 
 #: ../gtk/data/MainWindow.ui.h:6 ../qt/src/Ui_MainWindow.hh:200
 msgid "Add Images"
-msgstr "Додавање слика"
+msgstr "Додај слике"
 
 #: ../gtk/data/MainWindow.ui.h:7 ../qt/src/Ui_MainWindow.hh:205
 msgid "Remove image from list"
@@ -349,7 +349,7 @@ msgstr "Извор:"
 
 #: ../gtk/data/MainWindow.ui.h:21 ../qt/data/MainWindow.ui.h:7
 msgid "Acquire"
-msgstr "Прихвати"
+msgstr "Скенирање"
 
 #: ../gtk/data/MainWindow.ui.h:22 ../qt/data/MainWindow.ui.h:1
 msgid "Brightness"
@@ -365,7 +365,7 @@ msgstr "Резолуција"
 
 #: ../gtk/data/MainWindow.ui.h:25 ../qt/data/MainWindow.ui.h:4
 msgid "Invert colors"
-msgstr "Инвертуј боје"
+msgstr "Обрни боје"
 
 #: ../gtk/data/MainWindow.ui.h:26 ../qt/data/MainWindow.ui.h:24
 msgid "Zoom in"
@@ -417,7 +417,7 @@ msgstr "hOCR, PDF"
 
 #: ../gtk/data/MainWindow.ui.h:37 ../qt/data/MainWindow.ui.h:38
 msgid "Autodetect layout"
-msgstr "Аутоматски откриј распоред"
+msgstr "Аутоматски детектуј распоред"
 
 #: ../gtk/data/MainWindow.ui.h:38
 msgid "<small>Recognize all</small>"
@@ -444,7 +444,7 @@ msgid ""
 "<i>In batch mode, each input source is processed separately and the output "
 "saved side-by-side to the input file.</i>"
 msgstr ""
-"<i>У пакетном режиму се сваки улазни извор одвојено обрађује и излаз обраде "
+"<i>У пакетном режиму се сваки улазни извор посебно обрађује, а излаз обраде "
 "се чува поред улазног фајла.</i>"
 
 #: ../gtk/data/MainWindow.ui.h:44 ../qt/data/BatchModeDialog.ui.h:3
@@ -453,7 +453,7 @@ msgstr "Постојећи излаз:"
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/BatchModeDialog.ui.h:2
 msgid "Prepend page numbers to output text"
-msgstr "Постави бројеве страница на почетак излазног текста"
+msgstr "Постави бројеве страница испред излазног текста"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/BatchModeDialog.ui.h:5
 msgid "Autodetect page layout"
@@ -494,7 +494,7 @@ msgstr "Име изворног фајла"
 
 #: ../gtk/data/MainWindow.ui.h:57 ../qt/data/PageRangeDialog.ui.h:9
 msgid "Source page"
-msgstr "Изворну страницу"
+msgstr "Страница извора"
 
 #: ../gtk/data/MainWindow.ui.h:58 ../qt/src/SourceManager.cc:172
 msgid "Protected PDF"
@@ -506,7 +506,7 @@ msgstr "Текућа страница"
 
 #: ../gtk/data/MainWindow.ui.h:60 ../qt/src/Recognizer.cc:74
 msgid "Multiple Pages..."
-msgstr "Вишеструке странице..."
+msgstr "Више страница..."
 
 #: ../gtk/data/MainWindow.ui.h:61 ../qt/src/Recognizer.cc:77
 msgid "Batch mode..."
@@ -523,7 +523,7 @@ msgstr "Унесите реч:"
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
 msgid "Append new output after last page"
-msgstr "Надовежи нови излаз на крај странице"
+msgstr "Додај нови излаз након последње странице"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:6 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:64
 msgid "Insert new output before current page"
@@ -537,13 +537,13 @@ msgstr "Извези у чисти текст"
 #: ../gtk/data/OutputEditorHOCR.ui.h:8 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:97
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:98
 msgid "Export to PDF"
-msgstr "Извоз у PDF"
+msgstr "Извези у PDF"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:9
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:100
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:101
 msgid "Export to ODT"
-msgstr "Извоз у ODT"
+msgstr "Извези у ODT"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:10
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:76
@@ -674,11 +674,11 @@ msgstr "Очувај пасусе"
 
 #: ../gtk/data/OutputEditorText.ui.h:11 ../qt/src/Ui_OutputEditorText.hh:85
 msgid "Visual aids"
-msgstr "Визуелни помагачи"
+msgstr "Визуелна помагала"
 
 #: ../gtk/data/OutputEditorText.ui.h:12 ../qt/src/Ui_OutputEditorText.hh:87
 msgid "Draw whitespace"
-msgstr "Цртај празан простор"
+msgstr "Прикажи празан простор"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
 msgid "Open file"
@@ -752,12 +752,12 @@ msgstr "Уједначи размаке између линија и речи"
 #: ../gtk/data/PdfExportWidget.ui.h:12 ../qt/data/PdfExportDialog.ui.h:21
 #: ../qt/data/PdfExportWidget.ui.h:20
 msgid "Override font family:"
-msgstr "Преиначи породицу фонта:"
+msgstr "Преиначи фамилију фонта:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:13 ../qt/data/PdfExportDialog.ui.h:27
 #: ../qt/data/PdfExportWidget.ui.h:26
 msgid "Fallback font family:"
-msgstr "Породица фонтова у крајњем случају:"
+msgstr "Фамилија фонтова у крајњем случају:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:14 ../qt/data/PdfExportDialog.ui.h:20
 #: ../qt/data/PdfExportWidget.ui.h:19
@@ -787,7 +787,7 @@ msgstr "карактера"
 #: ../gtk/data/PdfExportWidget.ui.h:19 ../qt/data/PdfExportDialog.ui.h:28
 #: ../qt/data/PdfExportWidget.ui.h:27
 msgid "Sanitize hyphens before line breaks"
-msgstr "Исправи цртице испред прелома линија"
+msgstr "Пречисти цртице испред прелома линија"
 
 #: ../gtk/data/PdfExportWidget.ui.h:20 ../qt/data/PdfExportDialog.ui.h:19
 #: ../qt/data/PdfExportWidget.ui.h:18
@@ -812,7 +812,7 @@ msgstr "Висина"
 #: ../gtk/data/PdfExportWidget.ui.h:24 ../qt/data/PdfExportDialog.ui.h:29
 #: ../qt/data/PdfExportWidget.ui.h:28
 msgid "Treat image sources as having true DPI:"
-msgstr "Третирај изворе слике као да имају истинити DPI:"
+msgstr "Сматрај да извори слике имају истинити DPI:"
 
 #: ../gtk/data/PdfExportWidget.ui.h:25 ../qt/data/PdfExportDialog.ui.h:3
 #: ../qt/data/PdfExportWidget.ui.h:2
@@ -980,11 +980,11 @@ msgstr "Слике"
 
 #: ../gtk/src/Acquirer.cc:92 ../qt/src/Acquirer.cc:86
 msgid "Choose Output Filename..."
-msgstr "Изаберите име фајла излаза..."
+msgstr "Изаберите име излазног фајла..."
 
 #: ../gtk/src/Acquirer.cc:106 ../qt/src/Acquirer.cc:100
 msgid "Failed to initialize the scanning backend."
-msgstr "Позадински механизам скенирања није могао да се иницијализује."
+msgstr "Није успела иницијализација позадинског механизма скенирања."
 
 #: ../gtk/src/Acquirer.cc:115 ../qt/src/Acquirer.cc:106
 msgid "Scan failed"
@@ -1214,12 +1214,12 @@ msgstr "Jpeg (са губицима)"
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:97
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:74
 msgid "Same as source"
-msgstr "Исто као извор"
+msgstr "Иста као извор"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:100
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:75
 msgid "Custom"
-msgstr "Произвољно"
+msgstr "Произвољна"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:114
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:71
@@ -1285,7 +1285,7 @@ msgstr "Вишеструке вредности"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:901
 #: ../qt/src/hocr/OutputEditorHOCR.cc:781
 msgid "Merge"
-msgstr "Спајање"
+msgstr "Споји"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:908
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:966
@@ -1418,7 +1418,7 @@ msgstr "Неисправан излаз"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1208
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1093
 msgid "Cannot overwrite a file which is a source image of this document."
-msgstr "Фајл који је улазна слика овог документа не може да се препише."
+msgstr "Не може да се препише фајл који је улазна слика овог документа."
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1230 ../gtk/src/OutputEditorText.cc:457
 #: ../gtk/src/OutputEditorText.cc:531 ../qt/src/hocr/OutputEditorHOCR.cc:1115
@@ -1439,7 +1439,7 @@ msgstr "Излаз није сачуван"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1247
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1134
 msgid "Save output before proceeding?"
-msgstr "Да ли да сачувам излаз пре него што се настави?"
+msgstr "Да ли да сачувам излаз пре него што наставим?"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1367 ../gtk/src/OutputEditorText.cc:357
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1232 ../qt/src/OutputEditorText.cc:253
@@ -1490,18 +1490,19 @@ msgstr ""
 "линија</td></tr><tr><td>Горе</td><td>Претходна "
 "линија</td></tr><tr><td>Ctrl+Space</td><td>Правописни "
 "предлози</td></tr><tr><td>Ctrl+Ентер</td><td>Додај реч у "
-"речник</td></tr><tr><td>Ctrl+B</td><td>Укљ./Искљ. "
-"подебљано</td></tr><tr><td>Ctrl+I</td><td>Укљ./Искљ. "
-"курзив</td></tr><tr><td>Ctrl+D</td><td>Подели реч на позицији "
+"речник</td></tr><tr><td>Ctrl+B</td><td>Преклапање црног "
+"слога</td></tr><tr><td>Ctrl+I</td><td>Преклапање "
+"курзива</td></tr><tr><td>Ctrl+D</td><td>Подели реч на позицији "
 "курсора</td></tr><tr><td>Ctrl+M</td><td>Споји са претходном "
 "речи</td></tr><tr><td>Ctrl+Shift+M</td><td>Споји са наредном "
 "речи</td></tr><tr><td>Ctrl+Delete</td><td>Обриши "
-"реч</td></tr><tr><td>Ctrl+{Лево,Десно}</td><td>Подеси леву ивицу кутије "
-"границе</td></tr><tr><td>Ctrl+Shift+{Лево,Десно}</td><td>Подеси десну ивицу "
-"кутије границе</td></tr><tr><td>Ctrl+{Горе,Доле}</td><td>Подеси горњу ивицу "
-"кутије границе</td></tr><tr><td>Ctrl+Shift+{Горе,Доле}</td><td>Подеси доњу "
-"ивицу кутије границе</td></tr><tr><td>Ctrl++</td><td>Повећај величину "
-"фонта</td></tr><tr><td>Ctrl+-</td><td>Умањи величину фонта</td></tr></table>"
+"реч</td></tr><tr><td>Ctrl+{Лево,Десно}</td><td>Подеси леву ивицу граничне "
+"кутије </td></tr><tr><td>Ctrl+Shift+{Лево,Десно}</td><td>Подеси десну ивицу "
+"граничне кутије</td></tr><tr><td>Ctrl+{Горе,Доле}</td><td>Подеси горњу ивицу "
+"граничне кутије границе</td></tr><tr><td>Ctrl+Shift+{Горе,Доле}</"
+"td><td>Подеси доњз ивицу граничне кутије</td></tr><tr><td>Ctrl++</"
+"td><td>Увећај величину фонта</td></tr><tr><td>Ctrl+-</td><td>Умањи величину "
+"фонта</td></tr></table>"
 
 #: ../gtk/src/hocr/wip_proofreadwidget/HOCRProofReadWidget.cc:556
 #: ../qt/src/hocr/HOCRProofReadWidget.cc:478
@@ -1535,7 +1536,7 @@ msgstr "Нова верзија"
 
 #: ../gtk/src/MainWindow.cc:483 ../qt/src/MainWindow.cc:464
 msgid "gImageReader %1 is available"
-msgstr "gImageReader %1 је доступан"
+msgstr "Доступан је gImageReader %1"
 
 #: ../gtk/src/MainWindow.cc:484 ../qt/src/MainWindow.cc:465
 msgid "Download"
@@ -1547,11 +1548,11 @@ msgstr "Дневник измена"
 
 #: ../gtk/src/MainWindow.cc:486 ../qt/src/MainWindow.cc:467
 msgid "Don't notify again"
-msgstr "Не обавештавај поново"
+msgstr "Не обавештавај ме поново"
 
 #: ../gtk/src/MainWindow.cc:507 ../qt/src/MainWindow.cc:515
 msgid "Don't show again"
-msgstr "Не приказује поново"
+msgstr "Не приказуј поново"
 
 #: ../gtk/src/MainWindow.cc:508 ../gtk/src/MainWindow.cc:521
 #: ../qt/src/MainWindow.cc:516
@@ -1612,11 +1613,11 @@ msgstr ""
 "\n"
 "Проверите везу и дозволе за директоријум.\n"
 "Савет: ако немате права уписа у системске фолдере, у дијалогу подешавања "
-"можете да се пребаците на корисничке путање."
+"можете да пређете на корисничке путање."
 
 #: ../gtk/src/MainWindow.cc:636 ../qt/src/MainWindow.cc:624
 msgid "Dictionaries installed"
-msgstr "Инсталирани су речници"
+msgstr "Речници су инсталирани"
 
 #: ../gtk/src/MainWindow.cc:636
 msgid ""
@@ -1690,7 +1691,7 @@ msgstr ""
 #: ../gtk/src/OutputEditorText.cc:458 ../gtk/src/SourceManager.cc:297
 #: ../qt/src/OutputEditorText.cc:342 ../qt/src/SourceManager.cc:269
 msgid "Select Files"
-msgstr "Избор фајлова"
+msgstr "Изаберите фајлове"
 
 #: ../gtk/src/OutputEditorText.cc:532 ../qt/src/OutputEditorText.cc:410
 msgid "Save Output..."
@@ -1724,11 +1725,11 @@ msgstr "Вишејезичко"
 
 #: ../gtk/src/RecognitionMenu.cc:205 ../qt/src/RecognitionMenu.cc:182
 msgid "Automatic page segmentation"
-msgstr "Аутоматска подела страница"
+msgstr "Аутоматско раздвајање страница"
 
 #: ../gtk/src/RecognitionMenu.cc:206 ../qt/src/RecognitionMenu.cc:183
 msgid "Page segmentation with orientation and script detection"
-msgstr "Подела страница са оријентацијом и детекцијом писма"
+msgstr "Раздвајање страница са детекцијом оријентације и писма"
 
 #: ../gtk/src/RecognitionMenu.cc:207 ../qt/src/RecognitionMenu.cc:184
 msgid "Assume single column of text"
@@ -1740,7 +1741,7 @@ msgstr "Претпостави један блок вертикално пора
 
 #: ../gtk/src/RecognitionMenu.cc:209 ../qt/src/RecognitionMenu.cc:186
 msgid "Assume a single uniform block of text"
-msgstr "Претпостави један униформни блок текста"
+msgstr "Претпостави један јединствени блок текста"
 
 #: ../gtk/src/RecognitionMenu.cc:210 ../qt/src/RecognitionMenu.cc:187
 msgid "Assume a line of text"
@@ -1756,15 +1757,15 @@ msgstr "Претпостави једну реч у кругу"
 
 #: ../gtk/src/RecognitionMenu.cc:213 ../qt/src/RecognitionMenu.cc:190
 msgid "Sparse text in no particular order"
-msgstr "Редак текст који није у неком посебном редоследу"
+msgstr "Редак текст без посебног редоследа"
 
 #: ../gtk/src/RecognitionMenu.cc:214 ../qt/src/RecognitionMenu.cc:191
 msgid "Sparse text with orientation and script detection"
-msgstr "Редак текст са оријентацијом и детекцијом писма"
+msgstr "Редак текст са детекцијом оријентације и писма"
 
 #: ../gtk/src/RecognitionMenu.cc:228 ../qt/src/RecognitionMenu.cc:202
 msgid "Page segmentation mode"
-msgstr "Режим поделе странице"
+msgstr "Режим раздвајања странице"
 
 #: ../gtk/src/RecognitionMenu.cc:232 ../qt/src/RecognitionMenu.cc:205
 msgid "Character whitelist / blacklist..."
@@ -1880,11 +1881,11 @@ msgstr "Поклопац је отворен."
 
 #: ../gtk/src/scanner/ScannerSane.cc:809 ../qt/src/scanner/ScannerSane.cc:804
 msgid "Document feeder jammed."
-msgstr "Убацивач документа се заглавио."
+msgstr "Уређај за увлачење документа се заглавио."
 
 #: ../gtk/src/scanner/ScannerSane.cc:811 ../qt/src/scanner/ScannerSane.cc:806
 msgid "Document feeder out of documents."
-msgstr "Убацивач документа је остао без докумената."
+msgstr "Уређај за увлачење документа је остао без докумената."
 
 #: ../gtk/src/scanner/ScannerSane.cc:813 ../qt/src/scanner/ScannerSane.cc:808
 msgid "Access to scanner is denied."
@@ -1939,15 +1940,15 @@ msgstr "Слика екрана %1"
 
 #: ../gtk/src/SourceManager.cc:335 ../qt/src/SourceManager.cc:350
 msgid "Saving image..."
-msgstr "Чува се слика..."
+msgstr "Слика се чува..."
 
 #: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:363
 msgid "Cannot Write File"
-msgstr "Не може да се упише фајл"
+msgstr "Фајл не може да се упише"
 
 #: ../gtk/src/SourceManager.cc:342 ../qt/src/SourceManager.cc:363
 msgid "Could not write to %1."
-msgstr "Фајл није могао да се упише у %1."
+msgstr "Не може да се упише у %1."
 
 #: ../gtk/src/SourceManager.cc:381
 msgid "Delete File?"
@@ -1964,7 +1965,7 @@ msgstr "Отвори излаз"
 #: ../gtk/src/SourceManager.cc:423 ../qt/src/SourceManager.cc:468
 msgid ""
 "Both a text and a hOCR output were found. Which one do you want to open?"
-msgstr "Пронађени су и текст и hOCR излаз. Који желите да се отвори?"
+msgstr "Пронађени су и текст и hOCR излаз. Шта желите да отворите?"
 
 #: ../gtk/src/SourceManager.cc:504 ../qt/src/SourceManager.cc:496
 msgid "Missing File"
@@ -1975,7 +1976,7 @@ msgid ""
 "The following file has been deleted or moved:\n"
 "%1"
 msgstr ""
-"Следећи фајлови су обрисани или премештени:\n"
+"Следећи фајл је обрисан или премештен:\n"
 "%1"
 
 #: ../gtk/src/SubstitutionsManager.cc:33 ../qt/src/SubstitutionsManager.cc:69
@@ -2013,7 +2014,7 @@ msgstr "Неке ставке листе замена нису могле да �
 
 #: ../gtk/src/SubstitutionsManager.cc:104 ../qt/src/SubstitutionsManager.cc:139
 msgid "Save Substitutions List"
-msgstr "Сачувај листу замена"
+msgstr "Чување листе замена"
 
 #: ../gtk/src/SubstitutionsManager.cc:110 ../qt/src/SubstitutionsManager.cc:145
 msgid "Error Saving File"
@@ -2195,16 +2196,16 @@ msgid ""
 "about where the crash occurred.</p></body></html>"
 msgstr ""
 "<html><head/><body><p><span style=\" font-weight:600;\">Tesseract је "
-"прекинуо извршавање</span></p><p>Tesseract (OCR механизам) прекинуо "
-"извршавање током препознавања текста. То може да се догоди ако су коришћени "
-"подаци тренирања покварени или нису компатибилни са tesseract верзијом која "
-"се користи, или услед бага у самом програму tesseract.</p><p>Траг стека "
-"испод може да пружи додатне информације у вези са местом на којем је дошло "
-"до краха.</p></body></html>"
+"прекинуо извршавање</span></p><p>Tesseract (OCR машина) прекинуо извршавање "
+"током препознавања текста. То може да се догоди ако су коришћени подаци "
+"тренирања покварени или нису компатибилни са tesseract верзијом која се "
+"користи, или услед бага у самом програму tesseract.</p><p>Траг стека испод "
+"може да пружи додатне информације у вези са местом на којем је дошло до "
+"краха.</p></body></html>"
 
 #: ../qt/data/MainWindow.ui.h:18
 msgid "Flatbed"
-msgstr "Равни"
+msgstr "Стони"
 
 #: ../qt/data/MainWindow.ui.h:19
 msgid "ADF Front"
@@ -2260,7 +2261,7 @@ msgstr "Аутоматска детекција распореда"
 
 #: ../qt/data/MainWindow.ui.h:39
 msgid "Toggle Output Pane"
-msgstr "Укљ./Искљ. панел излаза"
+msgstr "Преклопник за приказ панела излаза"
 
 #: ../qt/data/PdfExportDialog.ui.h:1
 msgid "PDF Export"
@@ -2307,7 +2308,7 @@ msgstr "Пронађи и замени"
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:118
 #: ../qt/src/hocr/Ui_OutputEditorHOCR.hh:119
 msgid "Show proofread widget"
-msgstr "Прикажи виџет за лекторисање"
+msgstr "Прикажи виџет за коректуру"
 
 #: ../qt/src/MainWindow.cc:624
 msgid ""
@@ -2323,7 +2324,7 @@ msgstr "Нема скорашњих фајлова"
 
 #: ../qt/src/SourceManager.cc:391
 msgid "Delete Files"
-msgstr "Обриши фајлове"
+msgstr "Брисање фајлова"
 
 #: ../qt/src/TessdataManager.cc:281
 msgid ""
