@@ -536,6 +536,8 @@ void ScannerSane::doCompletePage() {
 void ScannerSane::doStop() {
 	if(m_job != nullptr) {
 		if(m_job->handle != nullptr) {
+			qDebug("sane_cancel()");
+			sane_cancel(m_job->handle);
 			qDebug("sane_close()");
 			sane_close(m_job->handle);
 		}
