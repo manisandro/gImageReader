@@ -95,6 +95,8 @@ else
     linkDep lib/enchant/libenchant_myspell.dll
 fi
 
+linkDep lib/ossl-modules/legacy.dll
+
 cp -R $win32dir/skel/* $installroot
 
 if [ "$iface" == "gtk" ]; then
