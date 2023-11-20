@@ -153,7 +153,7 @@ QStringList Config::getAvailableLanguages() {
 #endif
 	tess.get()->GetAvailableLanguagesAsVector(&availLanguages);
 	QStringList result;
-	for(int i = 0; i < availLanguages.size(); ++i) {
+	for(std::size_t i = 0; i < availLanguages.size(); ++i) {
 		result.append(availLanguages[i].c_str());
 	}
 	std::sort(result.begin(), result.end(), [](const QString & s1, const QString & s2) {
