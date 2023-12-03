@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2023-04-12 04:48+0000\n"
+"PO-Revision-Date: 2023-12-03 14:57+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ka/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17-dev\n"
+"X-Generator: Weblate 5.3-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -392,7 +392,7 @@ msgstr "სურათის კონტროლი"
 #: ../gtk/data/MainWindow.ui.h:35 ../gtk/src/hocr/HOCRBatchExportDialog.cc:51
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:42 ../qt/src/MainWindow.cc:166
 msgid "Plain text"
-msgstr "ტექსტი"
+msgstr "უბრალო ტექსტი"
 
 #: ../gtk/data/MainWindow.ui.h:36 ../qt/src/MainWindow.cc:167
 msgid "hOCR, PDF"
@@ -867,7 +867,7 @@ msgstr "დაწინაურებული"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:1 ../qt/data/SearchReplaceFrame.ui.h:4
 msgid "Find"
-msgstr "მოძებნა"
+msgstr "ძებნა"
 
 #: ../gtk/data/SearchReplaceFrame.ui.h:2 ../qt/data/SearchReplaceFrame.ui.h:2
 msgid "Replace"
@@ -2034,7 +2034,7 @@ msgstr "არა ყველაფერზე"
 
 #: ../gtk/src/Utils.cc:142
 msgid "Discard"
-msgstr "გაუქმება"
+msgstr "მოცილება"
 
 #: ../gtk/src/Utils.cc:145
 msgid "Discard all"
