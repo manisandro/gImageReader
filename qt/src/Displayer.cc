@@ -75,10 +75,10 @@ Displayer::Displayer(const UI_MainWindow& _ui, QWidget* parent)
 	connect(ui.actionRotateRight, &QAction::triggered, this, &Displayer::rotate90);
 	connect(ui.spinBoxRotation, qOverload<double>(&QDoubleSpinBox::valueChanged), this, &Displayer::setAngle);
 	connect(ui.spinBoxPage, qOverload<int>(&QSpinBox::valueChanged), this, &Displayer::queueRenderImage);
-	connect(ui.spinBoxBrightness, qOverload<int>(&QSpinBox::valueChanged), this, &Displayer::queueRenderImage);
-	connect(ui.spinBoxContrast, qOverload<int>(&QSpinBox::valueChanged), this, &Displayer::queueRenderImage);
-	connect(ui.spinBoxResolution, qOverload<int>(&QSpinBox::valueChanged), this, &Displayer::queueRenderImage);
-	connect(ui.checkBoxInvertColors, &QCheckBox::toggled, this, &Displayer::queueRenderImage);
+	connect(ui.spinBoxBrightness, qOverload<int>(&QSpinBox::valueChanged), this, &Displayer::adjustBrightness);
+	connect(ui.spinBoxContrast, qOverload<int>(&QSpinBox::valueChanged), this, &Displayer::adjustContrast);
+	connect(ui.spinBoxResolution, qOverload<int>(&QSpinBox::valueChanged), this, &Displayer::adjustResolution);
+	connect(ui.checkBoxInvertColors, &QCheckBox::toggled, this, &Displayer::setInvertColors);
 	connect(ui.actionZoomIn, &QAction::triggered, this, &Displayer::zoomIn);
 	connect(ui.actionZoomOut, &QAction::triggered, this, &Displayer::zoomOut);
 	connect(ui.actionBestFit, &QAction::triggered, this, &Displayer::zoomFit);
@@ -260,10 +260,6 @@ bool Displayer::renderImage() {
 
 	// Update source struct
 	m_currentSource->page = m_pageMap[ui.spinBoxPage->value()].second;
-	m_currentSource->brightness = ui.spinBoxBrightness->value();
-	m_currentSource->contrast = ui.spinBoxContrast->value();
-	m_currentSource->resolution = ui.spinBoxResolution->value();
-	m_currentSource->invert = ui.checkBoxInvertColors->isChecked();
 
 	// Notify tools about changes
 	if(m_tool) {
@@ -348,6 +344,38 @@ bool Displayer::allowAutodetectOCRAreas() const {
 
 void Displayer::autodetectOCRAreas() {
 	m_tool->autodetectOCRAreas();
+}
+
+void Displayer::adjustBrightness() {
+	int brightness = ui.spinBoxBrightness->value();
+	for(Source* source : m_sources) {
+		source->brightness = brightness;
+	}
+	queueRenderImage();
+}
+
+void Displayer::adjustContrast() {
+	int contrast = ui.spinBoxContrast->value();
+	for(Source* source : m_sources) {
+		source->contrast = contrast;
+	}
+	queueRenderImage();
+}
+
+void Displayer::adjustResolution() {
+	int resolution = ui.spinBoxResolution->value();
+	for(Source* source : m_sources) {
+		source->resolution = resolution;
+	}
+	queueRenderImage();
+}
+
+void Displayer::setInvertColors() {
+	bool invert = ui.checkBoxInvertColors->isChecked();
+	for(Source* source : m_sources) {
+		source->invert = invert;
+	}
+	queueRenderImage();
 }
 
 void Displayer::checkViewportChanged() {

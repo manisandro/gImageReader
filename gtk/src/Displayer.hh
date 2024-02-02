@@ -138,6 +138,10 @@ private:
 	void setRotateMode(RotateMode mode, const std::string& iconName);
 	std::pair<int, int> getPointVisible(const Geometry::Point& p) const;
 	void waitForThread(std::thread*& thread, std::atomic<bool>& cancelFlag, std::atomic<int>& idleJobCount, sigc::connection* conn = nullptr);
+	void adjustBrightness();
+	void adjustContrast();
+	void adjustResolution();
+	void setInvertColors();
 
 	bool m_autoScaleBlocked = false;
 	sigc::connection m_scaleTimer;

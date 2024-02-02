@@ -51,10 +51,10 @@ Displayer::Displayer(const Ui::MainWindow& _ui)
 	CONNECT(ui.checkBoxThumbnails, toggled, [this] { thumbnailsToggled(); });
 	m_connection_rotSpinChanged = CONNECT(ui.spinRotate, value_changed, [this] { setAngle(ui.spinRotate->get_value()); });
 	m_connection_pageSpinChanged = CONNECT(ui.spinPage, value_changed, [this] { queueRenderImage(); });
-	m_connection_briSpinChanged = CONNECT(ui.spinBrightness, value_changed, [this] { queueRenderImage(); });
-	m_connection_conSpinChanged = CONNECT(ui.spinContrast, value_changed, [this] { queueRenderImage(); });
-	m_connection_resSpinChanged = CONNECT(ui.spinResolution, value_changed, [this] { queueRenderImage(); });
-	m_connection_invcheckToggled = CONNECT(ui.checkInvert, toggled, [this] { queueRenderImage(); });
+	m_connection_briSpinChanged = CONNECT(ui.spinBrightness, value_changed, [this] { adjustBrightness(); });
+	m_connection_conSpinChanged = CONNECT(ui.spinContrast, value_changed, [this] { adjustContrast(); });
+	m_connection_resSpinChanged = CONNECT(ui.spinResolution, value_changed, [this] { adjustResolution(); });
+	m_connection_invcheckToggled = CONNECT(ui.checkInvert, toggled, [this] { setInvertColors(); });
 	CONNECT(ui.viewportDisplay, size_allocate, [this](Gdk::Rectangle&) {
 		resizeEvent();
 	});
@@ -316,10 +316,6 @@ bool Displayer::renderImage() {
 
 	// Update source struct
 	m_currentSource->page = m_pageMap[ui.spinPage->get_value_as_int()].second;
-	m_currentSource->brightness = ui.spinBrightness->get_value_as_int();
-	m_currentSource->contrast = ui.spinContrast->get_value_as_int();
-	m_currentSource->resolution = ui.spinResolution->get_value_as_int();
-	m_currentSource->invert = ui.checkInvert->get_active();
 
 	// Notify tools about changes
 	if(m_tool) {
@@ -353,6 +349,38 @@ bool Displayer::renderImage() {
 		m_scaleTimer = Glib::signal_timeout().connect([this] { scaleImage(); return false; }, 100);
 	}
 	return true;
+}
+
+void Displayer::adjustBrightness() {
+	int brightness = ui.spinBrightness->get_value_as_int();
+	for(Source* source : m_sources) {
+		source->brightness = brightness;
+	}
+	queueRenderImage();
+}
+
+void Displayer::adjustContrast() {
+	int contrast = ui.spinContrast->get_value_as_int();
+	for(Source* source : m_sources) {
+		source->contrast = contrast;
+	}
+	queueRenderImage();
+}
+
+void Displayer::adjustResolution() {
+	int resolution = ui.spinResolution->get_value_as_int();
+	for(Source* source : m_sources) {
+		source->resolution = resolution;
+	}
+	queueRenderImage();
+}
+
+void Displayer::setInvertColors() {
+	bool invert = ui.checkInvert->get_active();
+	for(Source* source : m_sources) {
+		source->invert = invert;
+	}
+	queueRenderImage();
 }
 
 void Displayer::setZoom(Zoom zoom) {

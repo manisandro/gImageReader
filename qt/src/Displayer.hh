@@ -109,6 +109,10 @@ private:
 	QFutureWatcher<QImage> m_thumbnailWatcher;
 
 private slots:
+	void adjustBrightness();
+	void adjustContrast();
+	void adjustResolution();
+	void setInvertColors();
 	void checkViewportChanged();
 	void scaleImage();
 	void queueRenderImage();
