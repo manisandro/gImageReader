@@ -244,7 +244,7 @@ HOCRQPainterPdfPrinter::HOCRQPainterPdfPrinter(QPainter* painter, const QFont& d
 
 void HOCRQPainterPdfPrinter::setFontFamily(const QString& family, bool bold, bool italic) {
 	float curSize = m_curFont.pointSize();
-	if(m_fontDatabase.hasFamily(family)) {
+	if(m_fontDatabase.families().contains(family)) {
 		m_curFont.setFamily(family);
 	}  else {
 		m_curFont = m_defaultFont;
@@ -670,7 +670,7 @@ PoDoFo::PdfFont* HOCRPoDoFoPdfPrinter::getFont(QString family, bool bold, bool i
 	QString key = family + (bold ? "@bold" : "") + (italic ? "@italic" : "");
 	auto it = m_fontCache.find(key);
 	if(it == m_fontCache.end()) {
-		if(family.isEmpty() || !m_fontDatabase.hasFamily(family)) {
+		if(family.isEmpty() || !m_fontDatabase.families().contains(family)) {
 			family = m_defaultFontFamily;
 		}
 		PoDoFo::PdfFont* font = nullptr;
