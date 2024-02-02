@@ -926,7 +926,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 		}
 		CONNECT(&menu, hide, [&] { loop->quit(); });
 		menu.show_all();
-		menu.popup(ev->button, ev->time);
+		menu.popup_at_pointer((GdkEvent*)ev);
 		loop->run();
 		// Nothing else is allowed with multiple items selected
 		return;
@@ -987,7 +987,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(GdkEventButton* ev) {
 	Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
 	CONNECT(&menu, hide, [&] { loop->quit(); });
 	menu.show_all();
-	menu.popup(ev->button, ev->time);
+	menu.popup_at_pointer((GdkEvent*)ev);
 	loop->run();
 }
 

@@ -165,8 +165,7 @@ void Recognizer::recognizeButtonClicked() {
 		recognize({MAIN->getDisplayer()->getCurrentPage()});
 	} else {
 		ui.menuitemRecognizeBatch->set_visible(MAIN->getDisplayer()->getNSources() > 1);
-		auto positioner = sigc::bind(sigc::ptr_fun(Utils::popup_positioner), ui.buttonRecognize, ui.menuRecognizePages, false, true);
-		ui.menuRecognizePages->popup(positioner, 0, gtk_get_current_event_time());
+		ui.menuRecognizePages->popup_at_widget(ui.buttonRecognize, Gdk::GRAVITY_SOUTH_WEST, Gdk::GRAVITY_NORTH_WEST, nullptr);
 	}
 }
 
