@@ -770,7 +770,12 @@ QMap<QString, QString> HOCRItem::deserializeAttrGroup(const QString& string) {
 	QMap<QString, QString> attrs;
 	for(const QString& attr : string.split(QRegularExpression("\\s*;\\s*"))) {
 		int splitPos = attr.indexOf(QRegularExpression("\\s+"));
-		attrs.insert(attr.left(splitPos), splitPos > 0 ? attr.mid(splitPos + 1) : "");
+		QString key = attr.left(splitPos);
+		QString value = splitPos > 0 ? attr.mid(splitPos + 1) : "";
+		if (key == "x_font" && value.length() >= 2 && value.startsWith('\'') && value.endsWith('\'')) {
+			value = value.mid(1, value.length() - 2);
+		}
+		attrs.insert(key, value);
 	}
 	return attrs;
 }
@@ -778,7 +783,11 @@ QMap<QString, QString> HOCRItem::deserializeAttrGroup(const QString& string) {
 QString HOCRItem::serializeAttrGroup(const QMap<QString, QString>& attrs) {
 	QStringList list;
 	for(auto it = attrs.begin(), itEnd = attrs.end(); it != itEnd; ++it) {
-		list.append(QString("%1 %2").arg(it.key(), it.value()));
+		QString value = it.value();
+		if (it.key() == "x_font" && !value.isEmpty()) {
+			value = QString("'%1'").arg(value);
+		}
+		list.append(QString("%1 %2").arg(it.key(), value));
 	}
 	return list.join("; ");
 }

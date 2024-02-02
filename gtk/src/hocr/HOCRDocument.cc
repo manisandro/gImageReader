@@ -885,7 +885,12 @@ std::map<Glib::ustring, Glib::ustring> HOCRItem::deserializeAttrGroup(const Glib
 	for(const Glib::ustring& attr : Utils::string_split(string, ';', false)) {
 		Glib::ustring trimmed = Utils::string_trim(attr);
 		int splitPos = trimmed.find_first_of(' ');
-		attrs.insert(std::make_pair(trimmed.substr(0, splitPos), splitPos > 0 ? Utils::string_trim(trimmed.substr(splitPos + 1)) : ""));
+		Glib::ustring key = trimmed.substr(0, splitPos);
+		Glib::ustring value = splitPos > 0 ? Utils::string_trim(trimmed.substr(splitPos + 1)) : "";
+		if (key == "x_font" && value.length() >= 2 && Utils::string_startswith(value, "'") && Utils::string_endswith(value, "'")) {
+			value = value.substr(1, value.length() - 2);
+		}
+		attrs.insert(std::make_pair(key, value));
 	}
 	return attrs;
 }
@@ -893,7 +898,11 @@ std::map<Glib::ustring, Glib::ustring> HOCRItem::deserializeAttrGroup(const Glib
 Glib::ustring HOCRItem::serializeAttrGroup(const std::map<Glib::ustring, Glib::ustring>& attrs) {
 	std::vector<Glib::ustring> list;
 	for(auto it = attrs.begin(), itEnd = attrs.end(); it != itEnd; ++it) {
-		list.push_back(Glib::ustring::compose("%1 %2", it->first, it->second));
+		Glib::ustring value = it->second;
+		if (it->first == "x_font" && !value.empty()) {
+			value = Glib::ustring::compose("'%1'", value);
+		}
+		list.push_back(Glib::ustring::compose("%1 %2", it->first, value));
 	}
 	return Utils::string_join(list, "; ");
 }
