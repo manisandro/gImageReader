@@ -332,6 +332,11 @@ void SourceManager::takeScreenshot() {
 		root->get_origin(x, y);
 		w = root->get_width();
 		h = root->get_height();
+		if (w == 0 || h == 0) {
+			MAIN->getWindow()->deiconify();
+			Utils::messageBox(Gtk::MESSAGE_ERROR, _("Screenshot Error"),  _("Failed to take screenshot."));
+			return;
+		}
 		Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(root, x, y, w, h);
 		MAIN->getWindow()->deiconify();
 		if(!pixbuf) {
