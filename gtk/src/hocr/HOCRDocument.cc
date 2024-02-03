@@ -240,7 +240,7 @@ Gtk::TreeIter HOCRDocument::mergeItems(const Gtk::TreeIter& parent, int startRow
 		for(HOCRItem* child : moveChilds) {
 			targetItem->addChild(child);
 			Gtk::TreeIter newIndex = targetIndex->children()[child->index()];
-			row_inserted(get_path(newIndex), newIndex);
+			recursiveRowInserted(newIndex);
 		}
 	}
 	Glib::ustring bboxstr = Glib::ustring::compose("%1 %2 %3 %4", bbox.x, bbox.y, bbox.x + bbox.width, bbox.y + bbox.height);
