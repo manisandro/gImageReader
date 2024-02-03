@@ -139,7 +139,7 @@ bool CrashHandler::handle_stdout(Glib::IOCondition cond, Glib::RefPtr<Glib::IOCh
 
 void CrashHandler::handle_child_exit(GPid pid, gint status, void* data) {
 	CrashHandler* instance = reinterpret_cast<CrashHandler*>(data);
-	bool success = g_spawn_check_exit_status(status, nullptr);
+	bool success = g_spawn_check_wait_status(status, nullptr);
 	instance->generate_backtrace_end(success);
 	Glib::spawn_close_pid(pid);
 }
