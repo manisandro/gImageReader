@@ -107,7 +107,7 @@ Container languages(const std::function<String(const char*)>& utf8str) {
 		{"kur",      "ku", utf8str("Kurd\u00ED")}, // Kurdish
 		{"kur_ara",  "ku", utf8str("\u06A9\u0648\u0631\u062F\u06CC")}, // Kurdish (Arabic)
 		{"lao",      "lo", utf8str("\u0E9E\u0EB2\u0EAA\u0EB2\u0EA5\u0EB2\u0EA7")}, // Lao
-		{"lat",      "la", utf8str("Latina")}, // Latin
+		{"lat",        "", utf8str("Latina")}, // Latin
 		{"lav",      "lv", utf8str("Latvie\u0161u")}, // Latvian
 		{"lit",      "lt", utf8str("Lietuvi\u0173")}, // Lithuanian
 		{"ltz",      "lb", utf8str("L\u00EBtzebuergesch")}, // Luxembourgish
