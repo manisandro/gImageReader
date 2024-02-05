@@ -1,3 +1,16 @@
+gImageReader 3.4.2 (Feb 05 2024):
+* Bufgixes:
+ - [Qt] Fix crash in FileTreeModel::findFile with temporary file
+ - [Gtk] Correctly notify hOCR tree updates when merging items
+ - [Win32] Fix dictionary installation directory
+ - Quote x_font property in hOCR documents
+ - Assorted Wayland fixes
+* Enhancements:
+- Add support for PoDoFo 0.10.x
+- Apply brightness/contrast/resolution/invert to all selected images
+* Updated translations
+* See https://github.com/manisandro/gImageReader/compare/v3.4.1...v3.4.2 for details
+
 gImageReader 3.4.1 (Jan 29 2023):
 * Bugfixes:
  - Fix warning about text in pdf incorrectly shown even if PDF has no text
