@@ -29,7 +29,7 @@ public:
 	template<typename T>
 	struct Size {
 		Size(T width_ = 0, T height_ = 0) : width(width_), height(height_) {}
-		bool operator<(const Size &val);
+		bool operator<(const Size& val);
 
 		T width, height;
 	};

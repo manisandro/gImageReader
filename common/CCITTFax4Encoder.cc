@@ -295,7 +295,7 @@ CCITTFax4Encoder::~CCITTFax4Encoder() {
 	delete m_state;
 }
 
-uint8_t* CCITTFax4Encoder::encode(const uint8_t *buffer, uint32_t width, uint32_t height, uint32_t rowbytes, uint32_t &outputSize) {
+uint8_t* CCITTFax4Encoder::encode(const uint8_t* buffer, uint32_t width, uint32_t height, uint32_t rowbytes, uint32_t& outputSize) {
 	m_state->buf.resize(0);
 	m_state->data = 0;
 	m_state->bit = 8;
@@ -320,13 +320,13 @@ uint8_t* CCITTFax4Encoder::encode(const uint8_t *buffer, uint32_t width, uint32_
 
 void CCITTFax4Encoder::putspan(int32_t span, const TableEntry* tab) {
 	while (span >= 2624) {
-		const TableEntry& te = tab[63 + (2560>>6)];
+		const TableEntry& te = tab[63 + (2560 >> 6)];
 		putbits(te.code, te.length);
 		span -= te.runlen;
 	}
 	if (span >= 64) {
-		const TableEntry& te = tab[63 + (span>>6)];
-		assert(te.runlen == 64*(span>>6));
+		const TableEntry& te = tab[63 + (span >> 6)];
+		assert(te.runlen == 64 * (span >> 6));
 		putbits(te.code, te.length);
 		span -= te.runlen;
 	}
@@ -357,7 +357,7 @@ void CCITTFax4Encoder::flushbits() {
 }
 
 static inline uint8_t pixel(const uint8_t* line, uint32_t i) {
-	return !(((line[i>>3]) >> (7 - (i&7))) & 1);
+	return !(((line[i >> 3]) >> (7 - (i & 7))) & 1);
 }
 
 static inline uint32_t findpixel(const uint8_t* line, uint32_t start, uint32_t length, uint8_t color) {
@@ -384,24 +384,25 @@ void CCITTFax4Encoder::encode2DRow(const uint8_t* codeline, const uint8_t* refli
 			int32_t d = b1 - a1;
 			if (-3 <= d && d <= 3) {
 				/* vertical mode */
-				putbits(vcodes[d+3].code, vcodes[d+3].length);
+				putbits(vcodes[d + 3].code, vcodes[d + 3].length);
 				a0 = a1;
 			} else {
 				/* horizontal mode */
 				uint32_t a2 = findpixel(codeline, a1 + 1, linebits, !pixel(codeline, a1));
 				putbits(horizcode.code, horizcode.length);
-				if (a0+a1 == 0 || pixel(codeline, a0) == 0) {
-					putspan(a1-a0, whiteCodes);
-					putspan(a2-a1, blackCodes);
+				if (a0 + a1 == 0 || pixel(codeline, a0) == 0) {
+					putspan(a1 - a0, whiteCodes);
+					putspan(a2 - a1, blackCodes);
 				} else {
-					putspan(a1-a0, blackCodes);
-					putspan(a2-a1, whiteCodes);
+					putspan(a1 - a0, blackCodes);
+					putspan(a2 - a1, whiteCodes);
 				}
 				a0 = a2;
 			}
 		}
-		if (a0 >= linebits)
+		if (a0 >= linebits) {
 			break;
+		}
 		// Next changing pixel on codeline right of a0
 		a1 = findpixel(codeline, a0 + 1, linebits, !pixel(codeline, a0));
 		// Next changing pixel on refline right of a0 and of opposite color than a0
