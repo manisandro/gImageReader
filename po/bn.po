@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:17+0100\n"
-"PO-Revision-Date: 2024-03-29 04:38+0000\n"
+"PO-Revision-Date: 2024-03-30 05:02+0000\n"
 "Last-Translator: Purbayan Chowdhury <pur.cho.99@gmail.com>\n"
 "Language-Team: Bengali <https://hosted.weblate.org/projects/gimagereader/"
 "translations/bn/>\n"
@@ -156,19 +156,19 @@ msgstr "বানান অভিধান পথ:"
 
 #: ../gtk/data/ConfigDialog.ui.h:23 ../qt/data/ConfigDialog.ui.h:10
 msgid "System-wide paths"
-msgstr ""
+msgstr "সিস্টেম বিস্তারিত পথ"
 
 #: ../gtk/data/ConfigDialog.ui.h:24 ../qt/data/ConfigDialog.ui.h:11
 msgid "User paths"
-msgstr ""
+msgstr "ব্যবহারকারীর পথ"
 
 #: ../gtk/data/ConfigDialog.ui.h:25 ../qt/data/ConfigDialog.ui.h:29
 msgid "Automatically open exported documents with default application"
-msgstr ""
+msgstr "পূর্বনির্ধারিত অ্যাপ্লিকেশন সহ রপ্তানিকৃত নথি স্বয়ংক্রিয়ভাবে খুলুন"
 
 #: ../gtk/data/CrashHandler.ui.h:1 ../qt/src/CrashHandler.cc:38
 msgid "Regenerate backtrace"
-msgstr ""
+msgstr "ব্যাকট্রেস পুনরায় করুন"
 
 #: ../gtk/data/CrashHandler.ui.h:3
 #, no-c-format
@@ -181,6 +181,13 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
+"<b>অ্যাপ্লিকেশন ক্র্যাশ হয়েছে</b>\n"
+"\n"
+"অসুবিধার জন্য ক্ষমা প্রার্থনা করি। অ্যাপ্লিকেশন উন্নতিকরণে সাহায্য করতে, "
+"সমস্যা রিপোর্ট বিবেচনা করুন <a href=\"mailto:manisandro@gmail."
+"com?subject=gImageReader%20Crash\">manisandro@gmail.com</a>. অ্যাপ্লিকেশন "
+"ক্র্যাশ হওয়ার আগে আপনি কী করছেন তা বর্ণনা করার চেষ্টা করুন। এছাড়াও, নীচে "
+"তথ্য অন্তর্ভুক্ত করুন। ধন্যবাদ।"
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -193,6 +200,14 @@ msgid ""
 "The stacktrace below may provide additional information about where the "
 "crash occurred.\n"
 msgstr ""
+"<b>টেসারেক্ট বাতিল করা হয়েছে</b>\n"
+"\n"
+"টেসারেক্ট (ওসিআর ইঞ্জিন) বাতিল হয়ে গেছে পাঠ্য শনাক্ত করার সময়। এটা ঘটতে "
+"পারে যদি ব্যবহৃত প্রশিক্ষিত ডেটা দূষিত হয় বা ব্যবহৃত টেসারেক্ট সংস্করণের "
+"সাথে বেমানান হয়, অথবা টেসারেক্টে একটি বাগের কারণে।\n"
+"\n"
+"নিচের স্ট্যাকট্রেসটি কোথায় ক্র্যাশ হয়েছে সে সম্পর্কে অতিরিক্ত তথ্য প্রদান "
+"করতে পারে।\n"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:1
 #: ../qt/data/HOCRBatchExportDialog.ui.h:1
