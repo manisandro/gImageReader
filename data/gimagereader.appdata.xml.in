@@ -10,10 +10,6 @@
  <name xml:lang="cs_CZ">gImageReader</name>
  <name xml:lang="hu">gKépolvasó</name>
  
- <comment>Optical character recognition using Tesseract</comment>
- <comment xml:lang="cs_CZ">Optické rozpoznávání znaků pomocí Tesseract</comment>
- <comment xml:lang="hu">Optikai karakterfelismerés a Tesseact segítségével</comment>
- 
  <summary>A graphical (@INTERFACE_TYPE@) frontend to tesseract-ocr</summary>
  <summary xml:lang="cs_CZ">Grafická (@INTERFACE_TYPE@) nadstavba pro engine tesseract-ocr</summary>
  <summary xml:lang="hu">Grafikus (@INTERFACE_TYPE@) előtérbeli tesseract-ocr alkalmazáshoz</summary>
