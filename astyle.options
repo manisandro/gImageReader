@@ -1,5 +1,4 @@
 --preserve-date
---indent-preprocessor
 --style=java
 --indent=tab#4
 --suffix=none
