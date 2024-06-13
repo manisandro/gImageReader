@@ -25,10 +25,10 @@
 
 #include <QDesktopServices>
 #include <QDir>
+#include <QLibraryInfo>
 #include <QMultiMap>
 #include <QStandardPaths>
 #include <QUrl>
-#include <enchant-provider.h>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #if TESSERACT_MAJOR_VERSION < 5
@@ -200,9 +200,11 @@ QString Config::spellingLocation(Location location) {
 #ifdef Q_OS_WIN
 		QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
 #else
-		char* prefix = enchant_get_prefix_dir();
-		QDir dataDir(QDir(prefix).absoluteFilePath("share"));
-		free(prefix);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		QDir dataDir = QDir(QString("%1/share/").arg(QLibraryInfo::path(QLibraryInfo::PrefixPath)));
+#else
+		QDir dataDir = QDir(QString("%1/share/").arg(QLibraryInfo::location(QLibraryInfo::PrefixPath)));
+#endif
 #endif
 #if HAVE_ENCHANT2
 		if(QDir(dataDir.absoluteFilePath("myspell")).exists()) {

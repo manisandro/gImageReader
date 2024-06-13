@@ -24,7 +24,6 @@
 #include "Utils.hh"
 #include "OutputEditorText.hh"
 
-#include <enchant-provider.h>
 #define USE_STD_NAMESPACE
 #include <tesseract/baseapi.h>
 #if TESSERACT_MAJOR_VERSION < 5
@@ -214,13 +213,7 @@ void Config::openSpellingDir() {
 
 std::string Config::spellingLocation(Location location) {
 	if(location == SystemLocation) {
-#ifdef G_OS_WIN32
 		std::string dataDir = Glib::build_filename(pkgDir, "share");
-#else
-		char* prefix = enchant_get_prefix_dir();
-		std::string dataDir = Glib::build_filename(prefix, "share");
-		free(prefix);
-#endif
 #if HAVE_ENCHANT2
 		if(Gio::File::create_for_path(Glib::build_filename(dataDir, "myspell"))->query_exists()) {
 			return Glib::build_filename(dataDir, "myspell");
