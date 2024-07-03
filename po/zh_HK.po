@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2024-05-29 05:09+0000\n"
-"Last-Translator: hugoalh <hugoalh@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2024-07-04 04:48+0000\n"
+"Last-Translator: Ricky From Hong Kong <lamricky11@hotmail.com>\n"
 "Language-Team: Chinese (Traditional, Hong Kong) <https://hosted.weblate.org/"
 "projects/gimagereader/translations/zh_Hant_HK/>\n"
 "Language: zh_HK\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -173,7 +173,7 @@ msgid "Regenerate backtrace"
 msgstr "重建 backtrace"
 
 #: ../gtk/data/CrashHandler.ui.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<b>The application has crashed</b>\n"
 "\n"
@@ -183,10 +183,12 @@ msgid ""
 "describe what you were doing before the application crashed. Also, include "
 "the information below. Thank you."
 msgstr ""
-"我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給<a "
-"href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>。請嘗試描述你在程式終"
-"止前所做的事情。另外，請一併附上下列資料。謝謝。"
+"<b>應用程式不明地停止運作</b>\n"
+"\n"
+"我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給<a href="
+"\"mailto:manisandro@gmail.com?subject=gImageReader%20Crash\">manisandro@gmail"
+"."
+"com</a>。請嘗試描述你在程式終止前所做的事情。另外，請一併附上下列資料。謝謝。"
 
 #: ../gtk/data/CrashHandler.ui.h:6
 msgid ""
@@ -217,9 +219,8 @@ msgstr "關閉"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:4
 #: ../qt/data/HOCRBatchExportDialog.ui.h:6
-#, fuzzy
 msgid "Select source folder:"
-msgstr "選取檔案"
+msgstr "選取來源文件夾："
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:5 ../gtk/data/PdfExportWidget.ui.h:5
 #: ../qt/data/HOCRBatchExportDialog.ui.h:7 ../qt/data/PdfExportDialog.ui.h:16
@@ -448,9 +449,8 @@ msgid "Existing output:"
 msgstr ""
 
 #: ../gtk/data/MainWindow.ui.h:45 ../qt/data/BatchModeDialog.ui.h:2
-#, fuzzy
 msgid "Prepend page numbers to output text"
-msgstr "預先輸出文字："
+msgstr "在文字前附加頁碼"
 
 #: ../gtk/data/MainWindow.ui.h:46 ../qt/data/BatchModeDialog.ui.h:5
 #, fuzzy
@@ -516,7 +516,7 @@ msgstr "新增字詞"
 
 #: ../gtk/data/OutputEditorHOCR.ui.h:4 ../qt/src/hocr/OutputEditorHOCR.cc:720
 msgid "Enter word:"
-msgstr "輸入字詞"
+msgstr "輸入字詞："
 
 #. Output toolbar
 #: ../gtk/data/OutputEditorHOCR.ui.h:5 ../qt/src/hocr/Ui_OutputEditorHOCR.hh:63
@@ -1109,9 +1109,8 @@ msgstr ""
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:106 ../gtk/src/SourceManager.cc:268
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:279
-#, fuzzy
 msgid "Select folder..."
-msgstr "選取檔案"
+msgstr "選取文件夾..."
 
 #: ../gtk/src/hocr/HOCRDocument.cc:68 ../qt/src/hocr/HOCRDocument.cc:71
 msgid "No suggestions"
@@ -1345,19 +1344,21 @@ msgstr "開啟 hOCR 檔"
 #: ../gtk/src/OutputEditorText.cc:516 ../gtk/src/SourceManager.cc:170
 #: ../qt/src/hocr/OutputEditorHOCR.cc:954 ../qt/src/OutputEditorText.cc:394
 #: ../qt/src/SourceManager.cc:154
-#, fuzzy
 msgid ""
 "The following files could not be opened:\n"
 "%1"
-msgstr "無法開啟下列檔案：%1"
+msgstr ""
+"無法開啟下列檔案：\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1067
 #: ../qt/src/hocr/OutputEditorHOCR.cc:957
-#, fuzzy
 msgid ""
 "The following files are not valid hOCR HTML:\n"
 "%1"
-msgstr "此檔案似乎並不包含有效的 hOCR HTML：%1"
+msgstr ""
+"此檔案似乎並不包含有效的 hOCR HTML：\n"
+"%1"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1070 ../gtk/src/OutputEditorText.cc:467
 #: ../gtk/src/OutputEditorText.cc:517 ../gtk/src/SourceManager.cc:170
@@ -1385,7 +1386,7 @@ msgstr "儲存 hOCR 輸出……"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1106 ../gtk/src/OutputEditorText.cc:539
 #: ../qt/src/hocr/OutputEditorHOCR.cc:997 ../qt/src/OutputEditorText.cc:417
 msgid "Failed to save output"
-msgstr "無法儲存輸出……"
+msgstr "無法儲存輸出"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1106 ../gtk/src/OutputEditorText.cc:539
 #: ../qt/src/hocr/OutputEditorHOCR.cc:997 ../qt/src/OutputEditorText.cc:417
@@ -1617,9 +1618,8 @@ msgid "No spelling dictionaries found for '%1'."
 msgstr "找不到 '%1' 的拼字詞典。"
 
 #: ../gtk/src/OutputEditorText.cc:38 ../qt/src/OutputEditorText.cc:42
-#, fuzzy
 msgid "Page: %1\n"
-msgstr "頁面：%1"
+msgstr "頁面：%1\n"
 
 #: ../gtk/src/OutputEditorText.cc:129
 msgid "Close document"
@@ -1820,9 +1820,8 @@ msgid "- %1: failed to create output file"
 msgstr "無法建立輸出"
 
 #: ../gtk/src/Recognizer.cc:428 ../qt/src/Recognizer.cc:442
-#, fuzzy
 msgid "The following errors occurred:"
-msgstr "出現下列錯誤：%1"
+msgstr "出現下列錯誤："
 
 #: ../gtk/src/scanner/ScannerSane.cc:86 ../gtk/src/scanner/ScannerTwain.cc:287
 #: ../qt/src/scanner/ScannerSane.cc:85 ../qt/src/scanner/ScannerTwain.cc:286
@@ -1889,14 +1888,14 @@ msgid "PDF with text"
 msgstr "含文字的 PDF"
 
 #: ../gtk/src/SourceManager.cc:227 ../qt/src/SourceManager.cc:196
-#, fuzzy
 msgid ""
 "The PDF file already contains text:\n"
 "%1\n"
 "Open it regardless?"
 msgstr ""
 "這些 PDF 檔已包含文字：\n"
-"%1"
+"%1\n"
+"照樣打開它？"
 
 #: ../gtk/src/SourceManager.cc:292 ../qt/src/SourceManager.cc:268
 msgid "Images and PDFs"
@@ -2157,7 +2156,7 @@ msgid "Text file encoding:"
 msgstr "文字檔編碼："
 
 #: ../qt/data/CrashHandler.ui.h:2
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "<html><head/><body><p><span style=\" font-weight:600;\">The application has "
 "crashed</span></p><p>Apologies for the inconvenience. To help improve the "
@@ -2166,10 +2165,11 @@ msgid ""
 "a>. Please try to describe what you were doing before the application "
 "crashed. Also, include the information below. Thank you.</p></body></html>"
 msgstr ""
-"我們為帶來的不便而道歉。如你有意改善此程式，請考慮將問題匯報給<a "
-"href=\"mailto:manisandro@gmail.com?"
-"subject=gImageReader%20Crash\">manisandro@gmail.com</a>。請嘗試描述你在程式終"
-"止前所做的事情。另外，請一併附上下列資料。謝謝。"
+"<html><head/><body><p><span style=\" font-weight:600;\">應用程式不明地停止運"
+"作</span></p><p>我們為帶來的不便而道歉。如你有意改善此程式，"
+"請考慮將問題匯報給<a href=\"mailto:manisandro@gmail.com?subject=gImageReader%"
+"20Crash\">manisandro@gmail.com</a>。請嘗試描述你在程式終止前所做的事情。另外"
+"，請一併附上下列資料。謝謝。</p></body></html>"
 
 #: ../qt/data/CrashHandler.ui.h:3
 msgid ""
@@ -2286,11 +2286,12 @@ msgid "Show proofread widget"
 msgstr "顯示預覽"
 
 #: ../qt/src/MainWindow.cc:624
-#, fuzzy
 msgid ""
 "The following dictionary files were installed:\n"
 "%1"
-msgstr "已安裝下列詞典檔：%1"
+msgstr ""
+"已安裝下列詞典檔：\n"
+"%1"
 
 #: ../qt/src/OutputEditorText.cc:520 ../qt/src/SourceManager.cc:252
 #, fuzzy
@@ -2298,9 +2299,8 @@ msgid "No recent files"
 msgstr "來源檔名"
 
 #: ../qt/src/SourceManager.cc:391
-#, fuzzy
 msgid "Delete Files"
-msgstr "刪除檔案？"
+msgstr "刪除檔案"
 
 #: ../qt/src/TessdataManager.cc:281
 msgid ""
@@ -2320,7 +2320,7 @@ msgstr ""
 
 #: ../qt/src/Ui_MainWindow.hh:50
 msgid "Output"
-msgstr "輸出："
+msgstr "輸出"
 
 #: ../qt/src/Ui_MainWindow.hh:135
 msgid "OCR mode:"
