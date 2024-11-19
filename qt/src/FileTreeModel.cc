@@ -73,7 +73,11 @@ QModelIndex FileTreeModel::insertFile(QString filePath, DataObject* data, const 
 		return index(row, 0, index(0, 0));
 	} else if(m_root->path.startsWith(fileDir)) {
 		// Root below new path, replace root
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+		QStringList path = m_root->path.mid(fileDir.length()).split("/", QString::SkipEmptyParts);
+#else
 		QStringList path = m_root->path.mid(fileDir.length()).split("/", Qt::SkipEmptyParts);
+#endif
 		beginRemoveRows(QModelIndex(), 0, 0);
 		DirNode* oldroot = m_root;
 		m_root = nullptr;
@@ -91,7 +95,11 @@ QModelIndex FileTreeModel::insertFile(QString filePath, DataObject* data, const 
 		return index(1, 0, index(0, 0));
 	} else if(fileDir.startsWith(m_root->path)) {
 		// New path below root, append to subtree
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+		QStringList path = fileDir.mid(m_root->path.length()).split("/", QString::SkipEmptyParts);
+#else
 		QStringList path = fileDir.mid(m_root->path.length()).split("/", Qt::SkipEmptyParts);
+#endif
 		DirNode* cur = m_root;
 		QModelIndex idx = index(0, 0);
 		for(const QString& part : path) {
@@ -116,8 +124,13 @@ QModelIndex FileTreeModel::insertFile(QString filePath, DataObject* data, const 
 		return index(row, 0, idx);
 	} else {
 		// Unrelated trees, find common ancestor
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+		QStringList rootPath = m_root->path.split("/", QString::SkipEmptyParts);
+		QStringList newPath = fileDir.split("/", QString::SkipEmptyParts);
+#else
 		QStringList rootPath = m_root->path.split("/", Qt::SkipEmptyParts);
 		QStringList newPath = fileDir.split("/", Qt::SkipEmptyParts);
+#endif
 		int pos = 0;
 		for(int n = qMin(rootPath.length(), newPath.length()); pos < n; ++pos) {
 			if(rootPath[pos] != newPath[pos]) {
@@ -194,7 +207,11 @@ QModelIndex FileTreeModel::findFile(const QString& filePath, bool isFile) const 
 		return QModelIndex();
 	}
 	QString relPath = fileDir.mid(cur->path.length());
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+	QStringList parts = relPath.split("/", QString::SkipEmptyParts);
+#else
 	QStringList parts = relPath.split("/", Qt::SkipEmptyParts);
+#endif
 	for(const QString& part : parts) {
 		auto it = cur->dirs.find(part);
 		if(it == cur->dirs.end()) {

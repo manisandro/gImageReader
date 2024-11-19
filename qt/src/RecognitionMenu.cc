@@ -135,7 +135,11 @@ void RecognitionMenu::rebuild() {
 		m_multilingualAction->setCheckable(true);
 		m_menuMultilanguage = new QMenu();
 		isMultilingual = curlang.prefix.contains('+');
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+		QStringList sellangs = curlang.prefix.split('+', QString::SkipEmptyParts);
+#else
 		QStringList sellangs = curlang.prefix.split('+', Qt::SkipEmptyParts);
+#endif
 		for(const QString& langprefix : availLanguages) {
 			if(langprefix == "osd") {
 				continue;

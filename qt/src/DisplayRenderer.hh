@@ -23,6 +23,7 @@
 #include <QByteArray>
 #include <QString>
 #include <QMutex>
+#include <memory>
 
 class DjVuDocument;
 
