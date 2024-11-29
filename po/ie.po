@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2020-07-22 11:19+0000\n"
+"PO-Revision-Date: 2024-11-30 10:00+0000\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Occidental <https://hosted.weblate.org/projects/gimagereader/"
 "translations/ie/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -228,27 +228,23 @@ msgstr ""
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:7
 #: ../qt/data/HOCRBatchExportDialog.ui.h:3
-#, fuzzy
 msgid "Input:"
-msgstr "Production:"
+msgstr "Intrada:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:8
 #: ../qt/data/HOCRBatchExportDialog.ui.h:4
-#, fuzzy
 msgid "Output preview:"
-msgstr "Mode de production:"
+msgstr "Prevision de production:"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:9
 #: ../qt/data/HOCRBatchExportDialog.ui.h:2
-#, fuzzy
 msgid "Input files"
-msgstr "Null recent files"
+msgstr "Files de intrada"
 
 #: ../gtk/data/HOCRBatchExportDialog.ui.h:10
 #: ../qt/data/HOCRBatchExportDialog.ui.h:8
-#, fuzzy
 msgid "Export options"
-msgstr "Altri optiones"
+msgstr "Optiones de exportation"
 
 #: ../gtk/data/MainWindow.ui.h:1 ../qt/data/MainWindow.ui.h:40
 msgid "Toggle output pane"
@@ -416,9 +412,8 @@ msgid "Select language"
 msgstr "Selecter un lingue"
 
 #: ../gtk/data/MainWindow.ui.h:40 ../qt/data/MainWindow.ui.h:41
-#, fuzzy
 msgid "Batch Export"
-msgstr "Exportar"
+msgstr "Exportar in masse"
 
 #: ../gtk/data/MainWindow.ui.h:41
 msgid "A graphical frontend to tesseract-ocr"
@@ -668,9 +663,8 @@ msgid "Draw whitespace"
 msgstr "Monstrar spacies"
 
 #: ../gtk/data/OutputEditorText.ui.h:13
-#, fuzzy
 msgid "Open file"
-msgstr "Aperter un file hOCR"
+msgstr "Aperter un file"
 
 #: ../gtk/data/OutputEditorText.ui.h:16 ../qt/src/Ui_OutputEditorText.hh:111
 msgid "Strip line breaks on selected text"
@@ -688,7 +682,7 @@ msgstr "Refar"
 
 #: ../gtk/data/OutputEditorText.ui.h:21
 msgid "New tab"
-msgstr ""
+msgstr "Nov carte"
 
 #: ../gtk/data/PdfExportWidget.ui.h:2 ../qt/data/PdfExportDialog.ui.h:4
 #: ../qt/data/PdfExportWidget.ui.h:3
@@ -1085,12 +1079,12 @@ msgstr "Analisante li arangeament de págine"
 
 #: ../gtk/src/FileTreeModel.cc:62 ../qt/src/FileTreeModel.cc:49
 msgid "Temporary files"
-msgstr ""
+msgstr "Temporari files"
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:48
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:41
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #: ../gtk/src/hocr/HOCRBatchExportDialog.cc:106 ../gtk/src/SourceManager.cc:268
 #: ../qt/src/hocr/HOCRBatchExportDialog.cc:73 ../qt/src/SourceManager.cc:279
@@ -1186,7 +1180,7 @@ msgstr "Difusion"
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:76
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:66
 msgid "Zip (lossless)"
-msgstr ""
+msgstr "Zip (sin perde)"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:80
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:67
@@ -1196,7 +1190,7 @@ msgstr ""
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:84
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:68
 msgid "Jpeg (lossy)"
-msgstr ""
+msgstr "Jpeg (con perde)"
 
 #: ../gtk/src/hocr/HOCRPdfExportWidget.cc:97
 #: ../qt/src/hocr/HOCRPdfExportWidget.cc:74
@@ -1401,7 +1395,7 @@ msgstr "Gardar li resultate quam PDF…"
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1208
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1093
 msgid "Invalid Output"
-msgstr ""
+msgstr "Li production es ínvalid"
 
 #: ../gtk/src/hocr/OutputEditorHOCR.cc:1208
 #: ../qt/src/hocr/OutputEditorHOCR.cc:1093
@@ -1622,12 +1616,11 @@ msgstr "Págine: %1\n"
 
 #: ../gtk/src/OutputEditorText.cc:129
 msgid "Close document"
-msgstr ""
+msgstr "Cluder li document"
 
 #: ../gtk/src/OutputEditorText.cc:133
-#, fuzzy
 msgid "Untitled %1"
-msgstr "Collat %1"
+msgstr "Sin nómine %1"
 
 #: ../gtk/src/OutputEditorText.cc:188 ../qt/src/OutputEditorText.cc:156
 #, fuzzy
@@ -2087,9 +2080,8 @@ msgid "Discard"
 msgstr "Rejecter"
 
 #: ../gtk/src/Utils.cc:145
-#, fuzzy
 msgid "Discard all"
-msgstr "Rejecter"
+msgstr "Rejecter omni"
 
 #: ../gtk/src/Utils.cc:148 ../qt/src/SourceManager.cc:469
 msgid "Text"
@@ -2342,7 +2334,7 @@ msgstr "Vacuar li resultate"
 
 #: ../qt/src/Ui_OutputEditorText.hh:149
 msgid "Add tab"
-msgstr ""
+msgstr "Adjunter un carte"
 
 #, fuzzy
 #~ msgid "Form"
