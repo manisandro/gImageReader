@@ -126,6 +126,7 @@ bool Displayer::setSources(QList<Source*> sources) {
 	m_renderTimer.stop();
 	if(m_imageItem) {
 		m_scene->removeItem(m_imageItem);
+		delete m_imageItem;
 	}
 	m_currentSource = nullptr;
 	qDeleteAll(m_sourceRenderers);
