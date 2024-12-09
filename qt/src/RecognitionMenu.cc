@@ -170,7 +170,7 @@ void RecognitionMenu::rebuild() {
 
 	// Add PSM items
 	addSeparator();
-	QMenu* psmMenu = new QMenu();
+	QMenu* psmMenu = new QMenu(this);
 	int activePsm = ConfigSettings::get<VarSetting<int>>("psm")->getValue();
 
 	struct PsmEntry {
