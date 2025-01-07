@@ -1,3 +1,7 @@
 *~
 build
 .vscode
+
+# QtCreater CMake
+CMakeLists.txt.user
+*.autosave
