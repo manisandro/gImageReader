@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo all > /etc/rpm/macros.image-language-conf
-dnf4 install -y \
+dnf install -y \
   cmake \
   poppler-data \
   make \
