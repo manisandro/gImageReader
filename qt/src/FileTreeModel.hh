@@ -47,8 +47,6 @@ public:
 	int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 	int columnCount(const QModelIndex& parent = QModelIndex()) const override;
 
-	static constexpr int OutputFileRole = Qt::UserRole;
-
 private:
 	template<class T>
 	class NodeList : public std::vector<T> {

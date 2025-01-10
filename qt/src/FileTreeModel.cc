@@ -145,7 +145,7 @@ QModelIndex FileTreeModel::insertFile(QString filePath, DataObject* data, const 
 		path = newPath.mid(pos);
 		QModelIndex idx = index(0, 0);
 		for(int i = 0, n = path.length(); i < n; ++i) {
-			int pos = cur->dirs.insIndex(path[i]);
+            pos = cur->dirs.insIndex(path[i]);
 			cur = cur->dirs.add(new DirNode(path[i], cur->path + "/" + path[i], cur), pos);
 			idx = index(pos, 0, idx);
 		}
@@ -164,11 +164,9 @@ QModelIndex FileTreeModel::findFile(const QString& filePath, bool isFile) const 
 #ifdef Q_OS_WIN32
 	QString prefix = "/";
 	QString fileDir = "/" + finfo.absolutePath().replace("\\", "/");
-	QString tempPath = "/" + QDir::tempPath();
 #else
 	QString prefix = "";
 	QString fileDir = finfo.absolutePath();
-	QString tempPath = QDir::tempPath();
 #endif
 	QString fileName = finfo.fileName();
 
