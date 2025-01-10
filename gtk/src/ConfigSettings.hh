@@ -36,7 +36,7 @@ public:
 	template<class T>
 	static T* get(const Glib::ustring& key) {
 		auto it = s_settings.find(key);
-		return it == s_settings.end() ? nullptr : static_cast<T*>(it->second);
+		return it == s_settings.end() ? nullptr : static_cast<T*> (it->second);
 	}
 
 private:

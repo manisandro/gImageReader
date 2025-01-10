@@ -303,14 +303,14 @@ uint8_t* CCITTFax4Encoder::encode(const uint8_t* buffer, uint32_t width, uint32_
 	std::vector<uint8_t> whiteline(rowbytes, 0);
 
 	const uint8_t* refline = whiteline.data();
-	for(uint32_t y = 0; y < height; ++y) {
+	for (uint32_t y = 0; y < height; ++y) {
 		encode2DRow(buffer, refline, width);
 		refline = buffer;
 		buffer += rowbytes;
 	}
 	putbits(EOL, 12);
 	putbits(EOL, 12);
-	if(m_state->bit != 8) {
+	if (m_state->bit != 8) {
 		flushbits();
 	}
 
@@ -361,8 +361,8 @@ static inline uint8_t pixel(const uint8_t* line, uint32_t i) {
 }
 
 static inline uint32_t findpixel(const uint8_t* line, uint32_t start, uint32_t length, uint8_t color) {
-	for(uint32_t pos = start; pos < length; ++pos) {
-		if(pixel(line, pos) == color) {
+	for (uint32_t pos = start; pos < length; ++pos) {
+		if (pixel(line, pos) == color) {
 			return pos;
 		}
 	}
@@ -375,7 +375,7 @@ void CCITTFax4Encoder::encode2DRow(const uint8_t* codeline, const uint8_t* refli
 	uint32_t b1 = findpixel(refline, 0, linebits, 1);
 	uint32_t b2 = findpixel(refline, b1 + 1, linebits, !pixel(refline, b1));
 
-	while(true) {
+	while (true) {
 		if (b2 < a1) {
 			/* pass mode */
 			putbits(passcode.code, passcode.length);
@@ -407,7 +407,7 @@ void CCITTFax4Encoder::encode2DRow(const uint8_t* codeline, const uint8_t* refli
 		a1 = findpixel(codeline, a0 + 1, linebits, !pixel(codeline, a0));
 		// Next changing pixel on refline right of a0 and of opposite color than a0
 		b1 = findpixel(refline, a0 + 1, linebits, !pixel(refline, a0));
-		if(pixel(refline, b1) == pixel(codeline, a0)) {
+		if (pixel(refline, b1) == pixel(codeline, a0)) {
 			b1 = findpixel(refline, b1 + 1, linebits, !pixel(codeline, a0));
 		}
 		// Next changing pixel on refline right of b1

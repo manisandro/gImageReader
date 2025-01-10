@@ -40,8 +40,8 @@ private:
 
 	void writeImage(zip* fzip, std::map<const HOCRItem*, Glib::ustring>& images, const HOCRItem* item);
 	void writeFontFaceDecls(std::set<Glib::ustring>& families, const HOCRItem* item, xmlpp::Element* parentEl);
-	void writeFontStyles(std::map<Glib::ustring, std::map<double, Glib::ustring> >& styles, const HOCRItem* item, xmlpp::Element* parentEl, int& counter);
-	void printItem(xmlpp::Element* parentEl, const HOCRItem* item, int pageNr, int dpi, std::map<Glib::ustring, std::map<double, Glib::ustring> >& fontStyleNames, std::map<const HOCRItem*, Glib::ustring>& images);
+	void writeFontStyles(std::map<Glib::ustring, std::map<double, Glib::ustring >> & styles, const HOCRItem* item, xmlpp::Element* parentEl, int& counter);
+	void printItem(xmlpp::Element* parentEl, const HOCRItem* item, int pageNr, int dpi, std::map<Glib::ustring, std::map<double, Glib::ustring >>& fontStyleNames, std::map<const HOCRItem*, Glib::ustring>& images);
 
 	bool setSource(const Glib::ustring& sourceFile, int page, int dpi, double angle);
 	Cairo::RefPtr<Cairo::ImageSurface> getSelection(const Geometry::Rectangle& bbox);

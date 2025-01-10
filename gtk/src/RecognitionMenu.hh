@@ -51,7 +51,7 @@ private:
 	Gtk::Menu* m_menuMultilanguage = nullptr;
 	Gtk::RadioButtonGroup m_langMenuRadioGroup;
 	Gtk::RadioButtonGroup m_psmRadioGroup;
-	std::map<Gtk::CheckMenuItem*, std::pair<Glib::ustring, gint64>> m_langMenuCheckGroup;
+	std::map<Gtk::CheckMenuItem*, std::pair<Glib::ustring, gint64 >> m_langMenuCheckGroup;
 	MultilingualMenuItem* m_multilingualRadio = nullptr;
 	Ui::CharacterListDialog m_charListDialogUi;
 

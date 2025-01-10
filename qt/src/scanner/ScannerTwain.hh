@@ -72,7 +72,7 @@ private:
 		CapOneVal(TW_UINT16 _type, TW_FIX32 _fix32) : type(_type) {
 			data.fix32 = _fix32;
 		}
-		CapOneVal(TW_UINT16 _type, TW_FIX32(&_frame)[4]) : type(_type) {
+		CapOneVal(TW_UINT16 _type, TW_FIX32(&_frame) [4]) : type(_type) {
 			std::memcpy(&data.frame[0], &_frame[0], sizeof(data.frame));
 		}
 		CapOneVal(TW_UINT16 _type, const char* _string) : type(_type) {

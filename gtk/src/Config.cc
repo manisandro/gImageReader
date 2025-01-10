@@ -31,15 +31,15 @@
 #endif
 #undef USE_STD_NAMESPACE
 
-const std::vector<Config::Lang> Config::LANGUAGES = LangTables::languages<std::vector<Config::Lang>, Glib::ustring>([](const char* str) { return Glib::ustring(str); });
+const std::vector<Config::Lang> Config::LANGUAGES = LangTables::languages<std::vector<Config::Lang>, Glib::ustring> ([](const char* str) { return Glib::ustring(str); });
 const std::map<Glib::ustring, Glib::ustring> Config::LANG_LOOKUP = [] {
 	std::map<Glib::ustring, Glib::ustring> lookup;
-	for(const Config::Lang& lang : LANGUAGES) {
+	for (const Config::Lang& lang : LANGUAGES) {
 		lookup.insert(std::make_pair(lang.prefix, lang.code));
 	}
 	return lookup;
 }();
-const std::multimap<Glib::ustring, Glib::ustring> Config::LANGUAGE_CULTURES = LangTables::languageCultures<std::multimap<Glib::ustring, Glib::ustring>>();
+const std::multimap<Glib::ustring, Glib::ustring> Config::LANGUAGE_CULTURES = LangTables::languageCultures<std::multimap<Glib::ustring, Glib::ustring >> ();
 
 Config::Config() {
 	ui.setupUi();
@@ -49,7 +49,7 @@ Config::Config() {
 	ui.treeviewLangsPredef->append_column(_("Filename prefix"), m_langViewCols.prefix);
 	ui.treeviewLangsPredef->append_column(_("Code"), m_langViewCols.code);
 	ui.treeviewLangsPredef->append_column(_("Native name"), m_langViewCols.name);
-	for(int i = 0; i < 3; ++i) {
+	for (int i = 0; i < 3; ++i) {
 		ui.treeviewLangsPredef->get_column(i)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
 		ui.treeviewLangsPredef->get_column(i)->set_expand(true);
 	}
@@ -59,18 +59,18 @@ Config::Config() {
 	ui.treeviewLangsCustom->append_column_editable(_("Filename prefix"), m_langViewCols.prefix);
 	ui.treeviewLangsCustom->append_column_editable(_("Code"), m_langViewCols.code);
 	ui.treeviewLangsCustom->append_column_editable(_("Native name"), m_langViewCols.name);
-	for(int i = 0; i < 3; ++i) {
+	for (int i = 0; i < 3; ++i) {
 		ui.treeviewLangsCustom->get_column(i)->set_sizing(Gtk::TREE_VIEW_COLUMN_FIXED);
 		ui.treeviewLangsCustom->get_column(i)->set_expand(true);
 	}
 	ui.treeviewLangsCustom->set_fixed_height_mode(true);
 
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsPredef->get_model());
-	for(const auto& lang : LANGUAGES) {
+	for (const auto& lang : LANGUAGES) {
 		Gtk::TreeIter it = store->append();
-		(*it)[m_langViewCols.prefix] = lang.prefix;
-		(*it)[m_langViewCols.code] = lang.code;
-		(*it)[m_langViewCols.name] = lang.name;
+		(*it) [m_langViewCols.prefix] = lang.prefix;
+		(*it) [m_langViewCols.code] = lang.code;
+		(*it) [m_langViewCols.name] = lang.name;
 	}
 
 	CONNECT(ui.checkbuttonDefaultoutputfont, toggled, [this] { ui.fontbuttonCustomoutputfont->set_sensitive(!ui.checkbuttonDefaultoutputfont->get_active()); });
@@ -94,17 +94,17 @@ Config::Config() {
 	});
 	CONNECT(ui.comboDatadirs, changed, [this] { setDataLocations(ui.comboDatadirs->get_active_row_number()); });
 
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("dictinstall", ui.checkDictinstall));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("openafterexport", ui.checkOpenExported));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("updatecheck", ui.checkUpdate));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("dictinstall", ui.checkDictinstall));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("openafterexport", ui.checkOpenExported));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("updatecheck", ui.checkUpdate));
 	ADD_SETTING(ListStoreSetting("customlangs", Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsCustom->get_model())));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("systemoutputfont", ui.checkbuttonDefaultoutputfont));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("systemoutputfont", ui.checkbuttonDefaultoutputfont));
 	ADD_SETTING(FontSetting("customoutputfont", ui.fontbuttonCustomoutputfont));
 	ADD_SETTING(ComboSetting("outputorient", ui.comboPaneorient));
 	ADD_SETTING(ComboSetting("datadirs", ui.comboDatadirs));
-	ADD_SETTING(VarSetting<Glib::ustring>("sourcedir"));
-	ADD_SETTING(VarSetting<Glib::ustring>("outputdir"));
-	ADD_SETTING(VarSetting<Glib::ustring>("auxdir"));
+	ADD_SETTING(VarSetting<Glib::ustring> ("sourcedir"));
+	ADD_SETTING(VarSetting<Glib::ustring> ("outputdir"));
+	ADD_SETTING(VarSetting<Glib::ustring> ("auxdir"));
 
 #if !ENABLE_VERSIONCHECK
 	ui.checkUpdate->hide();
@@ -113,20 +113,20 @@ Config::Config() {
 
 bool Config::searchLangSpec(Lang& lang) const {
 	// Tesseract 4.x up to beta.1 had script tessdatas on same level as language tessdatas, but they are distinguishable in that they begin with an upper case character
-	if(lang.prefix.substr(0, 6).lowercase() == "script" || lang.prefix.substr(0, 1).uppercase() == lang.prefix.substr(0, 1)) {
+	if (lang.prefix.substr(0, 6).lowercase() == "script" || lang.prefix.substr(0, 1).uppercase() == lang.prefix.substr(0, 1)) {
 		Glib::ustring name = lang.prefix.substr(0, 6).lowercase() == "script" ? lang.prefix.substr(7) : lang.prefix;
 		lang.name = Glib::ustring::compose("%1 [%2]", name, _("Script"));
 		return true;
 	}
-	for(const Glib::RefPtr<Gtk::TreeModel>& model : {
+	for (const Glib::RefPtr<Gtk::TreeModel>& model : {
 	            ui.treeviewLangsPredef->get_model(), ui.treeviewLangsCustom->get_model()
 	        }) {
 		Gtk::TreeIter it = std::find_if(model->children().begin(), model->children().end(),
 		[this, &lang](const Gtk::TreeRow & row) {
 			return row[m_langViewCols.prefix] == lang.prefix;
 		});
-		if(it) {
-			lang = {lang.prefix, (*it)[m_langViewCols.code], Glib::ustring::compose("%1 [%2]", (*it)[m_langViewCols.name], lang.prefix)};
+		if (it) {
+			lang = {lang.prefix, (*it) [m_langViewCols.code], Glib::ustring::compose("%1 [%2]", (*it) [m_langViewCols.name], lang.prefix) };
 			return true;
 		}
 	}
@@ -136,7 +136,7 @@ bool Config::searchLangSpec(Lang& lang) const {
 std::vector<Glib::ustring> Config::searchLangCultures(const Glib::ustring& code) const {
 	std::vector<Glib::ustring> result;
 	auto ii = LANGUAGE_CULTURES.equal_range(code);
-	for(auto it = ii.first; it != ii.second; ++it) {
+	for (auto it = ii.first; it != ii.second; ++it) {
 		result.push_back(it->second);
 	}
 	return result;
@@ -156,7 +156,7 @@ std::string Config::spellingLocation() const {
 
 std::vector<Glib::ustring> Config::getAvailableLanguages() {
 	Utils::TesseractHandle tess;
-	if(!tess.get()) {
+	if (!tess.get()) {
 		return std::vector<Glib::ustring>();
 	}
 #if TESSERACT_MAJOR_VERSION < 5
@@ -166,7 +166,7 @@ std::vector<Glib::ustring> Config::getAvailableLanguages() {
 #endif
 	tess.get()->GetAvailableLanguagesAsVector(&availLanguages);
 	std::vector<Glib::ustring> result;
-	for(std::size_t i = 0; i < availLanguages.size(); ++i) {
+	for (std::size_t i = 0; i < availLanguages.size(); ++i) {
 #if TESSERACT_MAJOR_VERSION < 5
 		result.push_back(availLanguages[i].string());
 #else
@@ -176,7 +176,7 @@ std::vector<Glib::ustring> Config::getAvailableLanguages() {
 	std::sort(result.begin(), result.end(), [](const Glib::ustring & s1, const Glib::ustring & s2) {
 		bool s1Script = s1.substr(0, 6) == "script" || s1.substr(0, 1) == s1.substr(0, 1).uppercase();
 		bool s2Script = s2.substr(0, 6) == "script" || s2.substr(0, 1) == s2.substr(0, 1).uppercase();
-		if(s1Script != s2Script) {
+		if (s1Script != s2Script) {
 			return !s1Script;
 		} else {
 			return s1 < s2;
@@ -187,35 +187,35 @@ std::vector<Glib::ustring> Config::getAvailableLanguages() {
 
 void Config::showDialog() {
 	toggleAddLanguage(true);
-	while(ui.dialogConfig->run() == Gtk::RESPONSE_HELP);
-	ConfigSettings::get<ListStoreSetting>("customlangs")->serialize();
+	while (ui.dialogConfig->run() == Gtk::RESPONSE_HELP);
+	ConfigSettings::get<ListStoreSetting> ("customlangs")->serialize();
 	ui.dialogConfig->hide();
 }
 
 void Config::setDataLocations(int idx) {
-	ui.entrySpelldir->set_text(spellingLocation(static_cast<Location>(idx)));
-	ui.entryTessdatadir->set_text(tessdataLocation(static_cast<Location>(idx)));
+	ui.entrySpelldir->set_text(spellingLocation(static_cast<Location> (idx)));
+	ui.entryTessdatadir->set_text(tessdataLocation(static_cast<Location> (idx)));
 }
 
 void Config::openTessdataDir() {
 	int idx = Gio::Settings::create(APPLICATION_ID)->get_int("datadirs");
-	std::string tessdataDir = tessdataLocation(static_cast<Location>(idx));
+	std::string tessdataDir = tessdataLocation(static_cast<Location> (idx));
 	Gio::File::create_for_path(tessdataDir)->make_directory_with_parents();
 	Utils::openUri(tessdataDir);
 }
 
 void Config::openSpellingDir() {
 	int idx = Gio::Settings::create(APPLICATION_ID)->get_int("datadirs");
-	std::string spellingDir = spellingLocation(static_cast<Location>(idx));
+	std::string spellingDir = spellingLocation(static_cast<Location> (idx));
 	Gio::File::create_for_path(spellingDir)->make_directory_with_parents();
 	Utils::openUri(spellingDir);
 }
 
 std::string Config::spellingLocation(Location location) {
-	if(location == SystemLocation) {
+	if (location == SystemLocation) {
 		std::string dataDir = Glib::build_filename(pkgDir, "share");
 #if HAVE_ENCHANT2
-		if(Gio::File::create_for_path(Glib::build_filename(dataDir, "myspell"))->query_exists()) {
+		if (Gio::File::create_for_path(Glib::build_filename(dataDir, "myspell"))->query_exists()) {
 			return Glib::build_filename(dataDir, "myspell");
 		} else {
 			return Glib::build_filename(dataDir, "hunspell");
@@ -234,7 +234,7 @@ std::string Config::spellingLocation(Location location) {
 }
 
 std::string Config::tessdataLocation(Location location) {
-	if(location == SystemLocation) {
+	if (location == SystemLocation) {
 #ifdef G_OS_WIN32
 		std::string dataDir = Glib::build_filename(pkgDir, "share");
 		Glib::setenv("TESSDATA_PREFIX",  Glib::build_filename(dataDir, "tessdata"));
@@ -257,7 +257,7 @@ void Config::toggleAddLanguage(bool forceHide) {
 	bool addVisible = forceHide ? true : ui.boxLangsAdd->get_visible();
 	ui.boxLangsAdd->set_visible(!addVisible);
 	ui.buttonboxLangsEdit->set_visible(addVisible);
-	if(addVisible) {
+	if (addVisible) {
 		ui.buttonLangsEditAdd->grab_focus();
 	} else {
 		ui.buttonLangsAddOk->grab_focus();
@@ -272,24 +272,24 @@ void Config::toggleAddLanguage(bool forceHide) {
 
 void Config::addLanguage() {
 	bool invalid = false;
-	if(!Glib::Regex::create("^[\\w/]+$")->match(ui.entryLangsAddPrefix->get_text())) {
+	if (!Glib::Regex::create("^[\\w/]+$")->match(ui.entryLangsAddPrefix->get_text())) {
 		invalid = true;
 		Utils::set_error_state(ui.entryLangsAddPrefix);
 	}
-	if(!Glib::Regex::create("^.+$")->match(ui.entryLangsAddName->get_text())) {
+	if (!Glib::Regex::create("^.+$")->match(ui.entryLangsAddName->get_text())) {
 		invalid = true;
 		Utils::set_error_state(ui.entryLangsAddName);
 	}
-	if(!ui.entryLangsAddCode->get_text().empty() && !Glib::Regex::create("^[a-z]{2,}(_[A-Z]{2,})?$")->match(ui.entryLangsAddCode->get_text())) {
+	if (!ui.entryLangsAddCode->get_text().empty() && !Glib::Regex::create("^[a-z]{2,}(_[A-Z]{2,})?$")->match(ui.entryLangsAddCode->get_text())) {
 		invalid = true;
 		Utils::set_error_state(ui.entryLangsAddCode);
 	}
-	if(!invalid) {
+	if (!invalid) {
 		Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsCustom->get_model());
 		Gtk::TreeIter it = store->append();
-		(*it)[m_langViewCols.prefix] = ui.entryLangsAddPrefix->get_text();
-		(*it)[m_langViewCols.code] = ui.entryLangsAddCode->get_text();
-		(*it)[m_langViewCols.name] = ui.entryLangsAddName->get_text();
+		(*it) [m_langViewCols.prefix] = ui.entryLangsAddPrefix->get_text();
+		(*it) [m_langViewCols.code] = ui.entryLangsAddCode->get_text();
+		(*it) [m_langViewCols.name] = ui.entryLangsAddName->get_text();
 		ui.entryLangsAddPrefix->set_text("");
 		ui.entryLangsAddCode->set_text("");
 		ui.entryLangsAddName->set_text("");
@@ -298,7 +298,7 @@ void Config::addLanguage() {
 }
 
 void Config::removeLanguage() {
-	if(ui.treeviewLangsCustom->get_selection()->count_selected_rows() != 0) {
+	if (ui.treeviewLangsCustom->get_selection()->count_selected_rows() != 0) {
 		Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.treeviewLangsCustom->get_model());
 		store->erase(ui.treeviewLangsCustom->get_selection()->get_selected());
 	}

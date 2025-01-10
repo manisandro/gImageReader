@@ -47,7 +47,7 @@ private:
 
 	Ui::TessdataManager ui;
 	Glib::RefPtr<Gtk::ListStore> m_languageListStore;
-	std::map<Glib::ustring, std::vector<LangFile>> m_languageFiles;
+	std::map<Glib::ustring, std::vector<LangFile >> m_languageFiles;
 	Glib::RefPtr<Gio::DBus::Proxy> m_dbusProxy;
 
 	bool fetchLanguageList(Glib::ustring& messages);

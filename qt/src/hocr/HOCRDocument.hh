@@ -58,7 +58,7 @@ public:
 	}
 
 	const HOCRItem* itemAtIndex(const QModelIndex& index) const {
-		return index.isValid() ? static_cast<HOCRItem*>(index.internalPointer()) : nullptr;
+		return index.isValid() ? static_cast<HOCRItem*> (index.internalPointer()) : nullptr;
 	}
 	QModelIndex indexAtItem(const HOCRItem* item) const;
 	bool editItemAttribute(const QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass = QString());
@@ -111,7 +111,7 @@ private:
 	QList<QModelIndex> recheckItemSpelling(const QModelIndex& index) const;
 	void recomputeBBoxes(HOCRItem* item);
 	HOCRItem* mutableItemAtIndex(const QModelIndex& index) const {
-		return index.isValid() ? static_cast<HOCRItem*>(index.internalPointer()) : nullptr;
+		return index.isValid() ? static_cast<HOCRItem*> (index.internalPointer()) : nullptr;
 	}
 };
 
@@ -119,7 +119,7 @@ private:
 class HOCRItem {
 public:
 	// attrname : attrvalue : occurrences
-	typedef QMap<QString, QMap<QString, int>> AttrOccurenceMap_t;
+	typedef QMap<QString, QMap<QString, int >> AttrOccurenceMap_t;
 
 	HOCRItem(const QDomElement& element, HOCRPage* page, HOCRItem* parent, int index = -1);
 	virtual ~HOCRItem();
@@ -165,7 +165,7 @@ public:
 	}
 	QMap<QString, QString> getAllAttributes() const;
 	QMap<QString, QString> getAttributes(const QList<QString>& names) const;
-	void getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString> > >& occurrences) const;
+	void getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QString >>> & occurrences) const;
 	QString toHtml(int indent = 0) const;
 	QPair<double, double> baseLine() const;
 	QString fontFamily() const {

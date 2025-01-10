@@ -68,12 +68,12 @@ HOCRPdfExportWidget::HOCRPdfExportWidget(DisplayerToolHOCR* displayerTool, const
 	ui.comboBoxImageCompression->addItem(_("Jpeg (lossy)"), HOCRPdfExporter::PDFSettings::CompressJpeg);
 	ui.comboBoxImageCompression->setCurrentIndex(-1);
 
-	ui.comboBoxPaperSizeUnit->addItem(_("cm"), static_cast<int>(PaperSize::cm));
-	ui.comboBoxPaperSizeUnit->addItem(_("in"), static_cast<int>(PaperSize::inch));
+	ui.comboBoxPaperSizeUnit->addItem(_("cm"), static_cast<int> (PaperSize::cm));
+	ui.comboBoxPaperSizeUnit->addItem(_("in"), static_cast<int> (PaperSize::inch));
 
 	ui.comboBoxPaperSize->addItem(_("Same as source"), "source");
 	ui.comboBoxPaperSize->addItem(_("Custom"), "custom");
-	for(const auto& size : PaperSize::paperSizes) {
+	for (const auto& size : PaperSize::paperSizes) {
 		ui.comboBoxPaperSize->addItem(size.first.c_str(), size.first.c_str());
 	}
 	ui.comboBoxPaperSize->setCurrentIndex(-1);
@@ -93,14 +93,14 @@ HOCRPdfExportWidget::HOCRPdfExportWidget(DisplayerToolHOCR* displayerTool, const
 
 	ui.comboBoxPdfVersion->setCurrentIndex(-1);
 
-	connect(ui.comboBoxBackend, qOverload<int>(&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::backendChanged);
+	connect(ui.comboBoxBackend, qOverload<int> (&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::backendChanged);
 	connect(ui.toolButtonBackendHint, &QToolButton::clicked, this, &HOCRPdfExportWidget::toggleBackendHint);
-	connect(ui.comboBoxOutputMode, qOverload<int>(&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::updatePreview);
-	connect(ui.comboBoxImageFormat, qOverload<int>(&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::updatePreview);
-	connect(ui.comboBoxImageFormat, qOverload<int>(&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::imageFormatChanged);
-	connect(ui.comboBoxDithering, qOverload<int>(&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::updatePreview);
-	connect(ui.comboBoxImageCompression, qOverload<int>(&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::imageCompressionChanged);
-	connect(ui.spinBoxCompressionQuality, qOverload<int>(&QSpinBox::valueChanged), this, &HOCRPdfExportWidget::updatePreview);
+	connect(ui.comboBoxOutputMode, qOverload<int> (&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::updatePreview);
+	connect(ui.comboBoxImageFormat, qOverload<int> (&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::updatePreview);
+	connect(ui.comboBoxImageFormat, qOverload<int> (&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::imageFormatChanged);
+	connect(ui.comboBoxDithering, qOverload<int> (&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::updatePreview);
+	connect(ui.comboBoxImageCompression, qOverload<int> (&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::imageCompressionChanged);
+	connect(ui.spinBoxCompressionQuality, qOverload<int> (&QSpinBox::valueChanged), this, &HOCRPdfExportWidget::updatePreview);
 	connect(ui.checkBoxFontFamily, &QCheckBox::toggled, ui.comboBoxFontFamily, &QComboBox::setEnabled);
 	connect(ui.checkBoxFontFamily, &QCheckBox::toggled, this, &HOCRPdfExportWidget::updatePreview);
 	connect(ui.checkBoxFontFamily, &QCheckBox::toggled, ui.labelFallbackFontFamily, &QLabel::setDisabled);
@@ -111,18 +111,18 @@ HOCRPdfExportWidget::HOCRPdfExportWidget(DisplayerToolHOCR* displayerTool, const
 	connect(ui.checkBoxFontSize, &QCheckBox::toggled, this, &HOCRPdfExportWidget::updatePreview);
 	connect(ui.checkBoxFontSize, &QCheckBox::toggled, ui.labelFontScaling, &HOCRPdfExportWidget::setDisabled);
 	connect(ui.checkBoxFontSize, &QCheckBox::toggled, ui.spinFontScaling, &HOCRPdfExportWidget::setDisabled);
-	connect(ui.spinBoxFontSize, qOverload<int>(&QSpinBox::valueChanged), this, &HOCRPdfExportWidget::updatePreview);
-	connect(ui.spinFontScaling, qOverload<int>(&QSpinBox::valueChanged), this, &HOCRPdfExportWidget::updatePreview);
+	connect(ui.spinBoxFontSize, qOverload<int> (&QSpinBox::valueChanged), this, &HOCRPdfExportWidget::updatePreview);
+	connect(ui.spinFontScaling, qOverload<int> (&QSpinBox::valueChanged), this, &HOCRPdfExportWidget::updatePreview);
 	connect(ui.checkBoxUniformizeSpacing, &QCheckBox::toggled, this, &HOCRPdfExportWidget::updatePreview);
-	connect(ui.spinBoxPreserve, qOverload<int>(&QSpinBox::valueChanged), this, &HOCRPdfExportWidget::updatePreview);
+	connect(ui.spinBoxPreserve, qOverload<int> (&QSpinBox::valueChanged), this, &HOCRPdfExportWidget::updatePreview);
 	connect(ui.checkBoxUniformizeSpacing, &QCheckBox::toggled, ui.labelPreserve, &QLabel::setEnabled);
 	connect(ui.checkBoxUniformizeSpacing, &QCheckBox::toggled, ui.labelPreserveCharacters, &QLabel::setEnabled);
 	connect(ui.checkBoxUniformizeSpacing, &QCheckBox::toggled, ui.spinBoxPreserve, &QSpinBox::setEnabled);
 	connect(ui.lineEditPasswordOpen, &QLineEdit::textChanged, this, &HOCRPdfExportWidget::updateValid);
 	connect(ui.lineEditConfirmPasswordOpen, &QLineEdit::textChanged, this, &HOCRPdfExportWidget::updateValid);
 	connect(ui.checkBoxPreview, &QCheckBox::toggled, this, &HOCRPdfExportWidget::updatePreview);
-	connect(ui.comboBoxPaperSize, qOverload<int>(&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::paperSizeChanged);
-	connect(ui.comboBoxPaperSizeUnit, qOverload<int>(&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::paperSizeChanged);
+	connect(ui.comboBoxPaperSize, qOverload<int> (&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::paperSizeChanged);
+	connect(ui.comboBoxPaperSizeUnit, qOverload<int> (&QComboBox::currentIndexChanged), this, &HOCRPdfExportWidget::paperSizeChanged);
 	connect(ui.toolButtonLandscape, &QToolButton::clicked, this, &HOCRPdfExportWidget::paperSizeChanged);
 	connect(ui.lineEditPaperWidth, &QLineEdit::textChanged, this, &HOCRPdfExportWidget::updateValid);
 	connect(ui.lineEditPaperHeight, &QLineEdit::textChanged, this, &HOCRPdfExportWidget::updateValid);
@@ -182,9 +182,9 @@ void HOCRPdfExportWidget::setPreviewPage(const HOCRDocument* hocrdocument, const
 
 HOCRPdfExporter::PDFSettings HOCRPdfExportWidget::getPdfSettings() const {
 	HOCRPdfExporter::PDFSettings pdfSettings;
-	pdfSettings.colorFormat = static_cast<QImage::Format>(ui.comboBoxImageFormat->itemData(ui.comboBoxImageFormat->currentIndex()).toInt());
-	pdfSettings.conversionFlags = pdfSettings.colorFormat == QImage::Format_Mono ? static_cast<Qt::ImageConversionFlags>(ui.comboBoxDithering->itemData(ui.comboBoxDithering->currentIndex()).toInt()) : Qt::AutoColor;
-	pdfSettings.compression = static_cast<HOCRPdfExporter::PDFSettings::Compression>(ui.comboBoxImageCompression->itemData(ui.comboBoxImageCompression->currentIndex()).toInt());
+	pdfSettings.colorFormat = static_cast<QImage::Format> (ui.comboBoxImageFormat->itemData(ui.comboBoxImageFormat->currentIndex()).toInt());
+	pdfSettings.conversionFlags = pdfSettings.colorFormat == QImage::Format_Mono ? static_cast<Qt::ImageConversionFlags> (ui.comboBoxDithering->itemData(ui.comboBoxDithering->currentIndex()).toInt()) : Qt::AutoColor;
+	pdfSettings.compression = static_cast<HOCRPdfExporter::PDFSettings::Compression> (ui.comboBoxImageCompression->itemData(ui.comboBoxImageCompression->currentIndex()).toInt());
 	pdfSettings.compressionQuality = ui.spinBoxCompressionQuality->value();
 	pdfSettings.fontFamily = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont().family() : "";
 	pdfSettings.fontSize = ui.checkBoxFontSize->isChecked() ? ui.spinBoxFontSize->value() : -1;
@@ -202,15 +202,15 @@ HOCRPdfExporter::PDFSettings HOCRPdfExportWidget::getPdfSettings() const {
 	pdfSettings.paperWidthIn = ui.lineEditPaperWidth->text().toDouble();
 	pdfSettings.paperHeightIn = ui.lineEditPaperHeight->text().toDouble();
 
-	PaperSize::Unit unit = static_cast<PaperSize::Unit>(ui.comboBoxPaperSizeUnit->itemData(ui.comboBoxPaperSizeUnit->currentIndex()).toInt());
-	if(unit == PaperSize::cm) {
+	PaperSize::Unit unit = static_cast<PaperSize::Unit> (ui.comboBoxPaperSizeUnit->itemData(ui.comboBoxPaperSizeUnit->currentIndex()).toInt());
+	if (unit == PaperSize::cm) {
 		pdfSettings.paperWidthIn /= PaperSize::CMtoInch;
 		pdfSettings.paperHeightIn /= PaperSize::CMtoInch;
 	}
 
-	pdfSettings.backend = static_cast<HOCRPdfExporter::PDFSettings::PDFBackend>(ui.comboBoxBackend->currentData().toInt());
+	pdfSettings.backend = static_cast<HOCRPdfExporter::PDFSettings::PDFBackend> (ui.comboBoxBackend->currentData().toInt());
 
-	pdfSettings.version = static_cast<HOCRPdfExporter::PDFSettings::Version>(ui.comboBoxPdfVersion->currentData().toInt());
+	pdfSettings.version = static_cast<HOCRPdfExporter::PDFSettings::Version> (ui.comboBoxPdfVersion->currentData().toInt());
 	pdfSettings.password = ui.lineEditPasswordOpen->text();
 	pdfSettings.producer = ui.lineEditProducer->text();
 	pdfSettings.creator = ui.lineEditCreator->text();
@@ -224,11 +224,11 @@ HOCRPdfExporter::PDFSettings HOCRPdfExportWidget::getPdfSettings() const {
 
 
 void HOCRPdfExportWidget::updatePreview() {
-	if(!m_preview) {
+	if (!m_preview) {
 		return;
 	}
 	m_preview->setVisible(ui.checkBoxPreview->isChecked());
-	if(!m_document || m_document->pageCount() == 0 || !m_previewPage || !ui.checkBoxPreview->isChecked()) {
+	if (!m_document || m_document->pageCount() == 0 || !m_previewPage || !ui.checkBoxPreview->isChecked()) {
 		return;
 	}
 
@@ -241,19 +241,19 @@ void HOCRPdfExportWidget::updatePreview() {
 	QFont defaultFont = ui.checkBoxFontFamily->isChecked() ? ui.comboBoxFontFamily->currentFont() : ui.comboBoxFallbackFontFamily->currentFont();
 
 	QImage image(bbox.size(), QImage::Format_ARGB32);
-	image.setDotsPerMeterX(pageDpi / 0.0254); // 1 in = 0.0254 m
+	image.setDotsPerMeterX(pageDpi / 0.0254);  // 1 in = 0.0254 m
 	image.setDotsPerMeterY(pageDpi / 0.0254);
 	QPainter painter(&image);
 	painter.setRenderHint(QPainter::Antialiasing);
 	HOCRQPainterPdfPrinter printer(&painter, defaultFont);
-	if(!pdfSettings.fontFamily.isEmpty()) {
+	if (!pdfSettings.fontFamily.isEmpty()) {
 		printer.setFontFamily(pdfSettings.fontFamily, false, false);
 	}
-	if(pdfSettings.fontSize != -1) {
+	if (pdfSettings.fontSize != -1) {
 		printer.setFontSize(pdfSettings.fontSize);
 	}
 
-	if(pdfSettings.overlay) {
+	if (pdfSettings.overlay) {
 		printer.drawImage(bbox, m_displayerTool->getSelection(bbox), pdfSettings);
 		painter.fillRect(0, 0, bbox.width(), bbox.height(), QColor(255, 255, 255, 127));
 	} else {
@@ -271,7 +271,7 @@ void HOCRPdfExportWidget::backendChanged() {
 	ui.groupBoxEncryption->setEnabled(podofoBackend);
 	ui.labelImageCompression->setEnabled(podofoBackend);
 	ui.comboBoxImageCompression->setEnabled(podofoBackend);
-	if(!podofoBackend) {
+	if (!podofoBackend) {
 		// QPainter compresses images in PDFs to JPEG at 94% quality
 		ui.comboBoxImageCompression->setCurrentIndex(jpegIdx);
 		ui.spinBoxCompressionQuality->setValue(94);
@@ -299,16 +299,16 @@ void HOCRPdfExportWidget::toggleBackendHint() {
 }
 
 void HOCRPdfExportWidget::imageFormatChanged() {
-	QImage::Format format = static_cast<QImage::Format>(ui.comboBoxImageFormat->itemData(ui.comboBoxImageFormat->currentIndex()).toInt());
-	QStandardItemModel* model = static_cast<QStandardItemModel*>(ui.comboBoxImageCompression->model());
+	QImage::Format format = static_cast<QImage::Format> (ui.comboBoxImageFormat->itemData(ui.comboBoxImageFormat->currentIndex()).toInt());
+	QStandardItemModel* model = static_cast<QStandardItemModel*> (ui.comboBoxImageCompression->model());
 	int zipIdx = ui.comboBoxImageCompression->findData(HOCRPdfExporter::PDFSettings::CompressZip);
 	int ccittIdx = ui.comboBoxImageCompression->findData(HOCRPdfExporter::PDFSettings::CompressFax4);
 	int jpegIdx = ui.comboBoxImageCompression->findData(HOCRPdfExporter::PDFSettings::CompressJpeg);
 	QStandardItem* ccittItem = model->item(ccittIdx);
 	QStandardItem* jpegItem = model->item(jpegIdx);
-	if(format == QImage::Format_Mono) {
+	if (format == QImage::Format_Mono) {
 		// for monochrome images, allow zip and ccitt4 (but not jpeg, unless QPrinter is forcing us)
-		if(ui.comboBoxImageCompression->currentIndex() == jpegIdx && ui.comboBoxBackend->itemData(ui.comboBoxBackend->currentIndex()).toInt() != HOCRPdfExporter::PDFSettings::BackendQPrinter) {
+		if (ui.comboBoxImageCompression->currentIndex() == jpegIdx && ui.comboBoxBackend->itemData(ui.comboBoxBackend->currentIndex()).toInt() != HOCRPdfExporter::PDFSettings::BackendQPrinter) {
 			ui.comboBoxImageCompression->setCurrentIndex(zipIdx);
 		}
 		ccittItem->setFlags(ccittItem->flags() | Qt::ItemIsSelectable | Qt::ItemIsEnabled);
@@ -317,7 +317,7 @@ void HOCRPdfExportWidget::imageFormatChanged() {
 		ui.comboBoxDithering->setEnabled(true);
 	} else {
 		// for color and grayscale images, allow jpeg and zip (but not ccitt4)
-		if(ui.comboBoxImageCompression->currentIndex() == ccittIdx) {
+		if (ui.comboBoxImageCompression->currentIndex() == ccittIdx) {
 			ui.comboBoxImageCompression->setCurrentIndex(zipIdx);
 		}
 		ccittItem->setFlags(ccittItem->flags() & ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled));
@@ -328,7 +328,7 @@ void HOCRPdfExportWidget::imageFormatChanged() {
 }
 
 void HOCRPdfExportWidget::imageCompressionChanged() {
-	HOCRPdfExporter::PDFSettings::Compression compression = static_cast<HOCRPdfExporter::PDFSettings::Compression>(ui.comboBoxImageCompression->itemData(ui.comboBoxImageCompression->currentIndex()).toInt());
+	HOCRPdfExporter::PDFSettings::Compression compression = static_cast<HOCRPdfExporter::PDFSettings::Compression> (ui.comboBoxImageCompression->itemData(ui.comboBoxImageCompression->currentIndex()).toInt());
 	bool jpegCompression = compression == HOCRPdfExporter::PDFSettings::CompressJpeg;
 	ui.spinBoxCompressionQuality->setEnabled(jpegCompression);
 	ui.labelCompressionQuality->setEnabled(jpegCompression);
@@ -336,13 +336,13 @@ void HOCRPdfExportWidget::imageCompressionChanged() {
 
 void HOCRPdfExportWidget::paperSizeChanged() {
 	QString paperSize = ui.comboBoxPaperSize->itemData(ui.comboBoxPaperSize->currentIndex()).toString();
-	if(paperSize == "custom") {
+	if (paperSize == "custom") {
 		ui.lineEditPaperWidth->setEnabled(true);
 		ui.lineEditPaperHeight->setEnabled(true);
 		ui.widgetPaperSize->setVisible(true);
 		ui.widgetPaperOrientation->setVisible(false);
 		ui.widgetPaperSizeDpi->setVisible(false);
-	} else if(paperSize == "source") {
+	} else if (paperSize == "source") {
 		ui.lineEditPaperWidth->setEnabled(true);
 		ui.lineEditPaperHeight->setEnabled(true);
 		ui.widgetPaperSize->setVisible(false);
@@ -354,7 +354,7 @@ void HOCRPdfExportWidget::paperSizeChanged() {
 		ui.widgetPaperSizeDpi->setVisible(false);
 		ui.lineEditPaperWidth->setDisabled(true);
 		ui.lineEditPaperHeight->setDisabled(true);
-		PaperSize::Unit unit = static_cast<PaperSize::Unit>(ui.comboBoxPaperSizeUnit->itemData(ui.comboBoxPaperSizeUnit->currentIndex()).toInt());
+		PaperSize::Unit unit = static_cast<PaperSize::Unit> (ui.comboBoxPaperSizeUnit->itemData(ui.comboBoxPaperSizeUnit->currentIndex()).toInt());
 		auto outputPaperSize = PaperSize::getSize(unit, paperSize.toStdString(), ui.toolButtonLandscape->isChecked());
 		QLocale locale;
 		ui.lineEditPaperWidth->setText(locale.toString(outputPaperSize.width, 'f', 1));
@@ -367,7 +367,7 @@ void HOCRPdfExportWidget::updateValid() {
 	bool valid = true;
 
 	// Passwords must match
-	if(ui.lineEditPasswordOpen->text() == ui.lineEditConfirmPasswordOpen->text()) {
+	if (ui.lineEditPasswordOpen->text() == ui.lineEditConfirmPasswordOpen->text()) {
 		ui.lineEditConfirmPasswordOpen->setStyleSheet(QStringLiteral(""));
 	} else {
 		ui.lineEditConfirmPasswordOpen->setStyleSheet("background: #FF7777; color: #FFFFFF;");
@@ -378,12 +378,12 @@ void HOCRPdfExportWidget::updateValid() {
 	QString paperSize = ui.comboBoxPaperSize->itemData(ui.comboBoxPaperSize->currentIndex()).toString();
 	ui.lineEditPaperWidth->setStyleSheet(QStringLiteral(""));
 	ui.lineEditPaperHeight->setStyleSheet(QStringLiteral(""));
-	if(paperSize == "custom") {
-		if(ui.lineEditPaperWidth->text().isEmpty()) {
+	if (paperSize == "custom") {
+		if (ui.lineEditPaperWidth->text().isEmpty()) {
 			ui.lineEditPaperWidth->setStyleSheet("background: #FF7777; color: #FFFFFF;");
 			valid = false;
 		}
-		if(ui.lineEditPaperHeight->text().isEmpty()) {
+		if (ui.lineEditPaperHeight->text().isEmpty()) {
 			ui.lineEditPaperHeight->setStyleSheet("background: #FF7777; color: #FFFFFF;");
 			valid = false;
 		}
@@ -393,7 +393,7 @@ void HOCRPdfExportWidget::updateValid() {
 
 void HOCRPdfExportWidget::importMetadataFromSource() {
 	QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-	if(!sources.isEmpty()) {
+	if (!sources.isEmpty()) {
 		Source* source = sources.first();
 		ui.lineEditAuthor->setText(source->author);
 		ui.lineEditCreator->setText(source->creator);
@@ -403,8 +403,8 @@ void HOCRPdfExportWidget::importMetadataFromSource() {
 		ui.lineEditProducer->setText(source->producer);
 
 		HOCRPdfExporter::PDFSettings::Version sourcePdfVersion = HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_7;
-		if(source->pdfVersionMajor == 1 && source->pdfVersionMinor >= 0 && source->pdfVersionMinor <= 7) {
-			sourcePdfVersion = static_cast<HOCRPdfExporter::PDFSettings::Version>(HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_0 + source->pdfVersionMinor);
+		if (source->pdfVersionMajor == 1 && source->pdfVersionMinor >= 0 && source->pdfVersionMinor <= 7) {
+			sourcePdfVersion = static_cast<HOCRPdfExporter::PDFSettings::Version> (HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_0 + source->pdfVersionMinor);
 		}
 		ui.comboBoxPdfVersion->setCurrentIndex(ui.comboBoxPdfVersion->findData(sourcePdfVersion));
 	}

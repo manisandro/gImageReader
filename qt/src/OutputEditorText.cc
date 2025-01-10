@@ -38,7 +38,7 @@
 
 void OutputEditorText::TextBatchProcessor::appendOutput(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const {
 	char* text = tess->GetUTF8Text();
-	if(firstArea && m_prependPage) {
+	if (firstArea && m_prependPage) {
 		dev->write(_("Page: %1\n").arg(pageInfo.page).toUtf8());
 	}
 	dev->write(text);
@@ -56,9 +56,9 @@ OutputEditorText::OutputEditorText() {
 	m_recentMenu = new QMenu();
 	ui.toolButtonOpen->setMenu(m_recentMenu);
 
-	ui.actionOutputModeAppend->setData(static_cast<int>(InsertMode::Append));
-	ui.actionOutputModeCursor->setData(static_cast<int>(InsertMode::Cursor));
-	ui.actionOutputModeReplace->setData(static_cast<int>(InsertMode::Replace));
+	ui.actionOutputModeAppend->setData(static_cast<int> (InsertMode::Append));
+	ui.actionOutputModeCursor->setData(static_cast<int> (InsertMode::Cursor));
+	ui.actionOutputModeReplace->setData(static_cast<int> (InsertMode::Replace));
 
 	ui.actionOutputReplace->setShortcut(Qt::CTRL | Qt::Key_F);
 	ui.actionOutputSave->setShortcut(Qt::CTRL | Qt::Key_S);
@@ -82,9 +82,9 @@ OutputEditorText::OutputEditorText() {
 	connect(ui.searchFrame, &SearchReplaceFrame::applySubstitutions, this, &OutputEditorText::applySubstitutions);
 	connect(&m_spell, &QtSpell::TextEditChecker::undoAvailable, ui.actionOutputUndo, &QAction::setEnabled);
 	connect(&m_spell, &QtSpell::TextEditChecker::redoAvailable, ui.actionOutputRedo, &QAction::setEnabled);
-	connect(ConfigSettings::get<FontSetting>("customoutputfont"), &FontSetting::changed, this, &OutputEditorText::setFont);
-	connect(ConfigSettings::get<SwitchSetting>("systemoutputfont"), &SwitchSetting::changed, this, &OutputEditorText::setFont);
-	connect(ui.actionOutputPostprocDrawWhitespace, &QAction::toggled, [this] (bool active) { textEdit()->setDrawWhitespace(active); });
+	connect(ConfigSettings::get<FontSetting> ("customoutputfont"), &FontSetting::changed, this, &OutputEditorText::setFont);
+	connect(ConfigSettings::get<SwitchSetting> ("systemoutputfont"), &SwitchSetting::changed, this, &OutputEditorText::setFont);
+	connect(ui.actionOutputPostprocDrawWhitespace, &QAction::toggled, [this](bool active) { textEdit()->setDrawWhitespace(active); });
 	connect(ui.tabWidget, &QTabWidget::currentChanged, this, &OutputEditorText::tabChanged);
 	connect(ui.tabWidget, &QTabWidget::tabCloseRequested, this, &OutputEditorText::closeTab);
 	connect(ui.toolButtonAddTab, &QToolButton::clicked, this, [this] { addTab(); });
@@ -97,7 +97,7 @@ OutputEditorText::OutputEditorText() {
 	ADD_SETTING(ActionSetting("joinspace", ui.actionOutputPostprocCollapseSpaces, true));
 	ADD_SETTING(ActionSetting("keepparagraphs", ui.actionOutputPostprocKeepParagraphs, true));
 	ADD_SETTING(ActionSetting("drawwhitespace", ui.actionOutputPostprocDrawWhitespace));
-	ADD_SETTING(VarSetting<QStringList>("recenttxtitems"));
+	ADD_SETTING(VarSetting<QStringList> ("recenttxtitems"));
 
 	setFont();
 }
@@ -109,10 +109,10 @@ OutputEditorText::~OutputEditorText() {
 int OutputEditorText::addTab(const QString& title) {
 	OutputTextEdit* textEdit = new OutputTextEdit;
 
-	if(ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
+	if (ConfigSettings::get<SwitchSetting> ("systemoutputfont")->getValue()) {
 		textEdit->setFont(QFont());
 	} else {
-		textEdit->setFont(ConfigSettings::get<FontSetting>("customoutputfont")->getValue());
+		textEdit->setFont(ConfigSettings::get<FontSetting> ("customoutputfont")->getValue());
 	}
 	textEdit->setWordWrapMode(QTextOption::WordWrap);
 
@@ -152,7 +152,7 @@ void OutputEditorText::tabChanged(int) {
 }
 
 void OutputEditorText::closeTab(int page) {
-	if(textEdit(page)->document()->isModified()) {
+	if (textEdit(page)->document()->isModified()) {
 		int response = QMessageBox::question(MAIN, _("Document not saved"), _("Save document before proceeding?"), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 		if (response == QMessageBox::Cancel) {
 			return;
@@ -179,21 +179,21 @@ void OutputEditorText::setTabName(int page, const QString& title) {
 
 OutputTextEdit* OutputEditorText::textEdit(int page) const {
 	page = page == -1 ? ui.tabWidget->currentIndex() : page;
-	return qobject_cast<OutputTextEdit*>(ui.tabWidget->widget(page));
+	return qobject_cast<OutputTextEdit*> (ui.tabWidget->widget(page));
 }
 
 void OutputEditorText::setFont() {
 	QFont font;
-	if(!ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
-		font = ConfigSettings::get<FontSetting>("customoutputfont")->getValue();
+	if (!ConfigSettings::get<SwitchSetting> ("systemoutputfont")->getValue()) {
+		font = ConfigSettings::get<FontSetting> ("customoutputfont")->getValue();
 	}
-	for(int i = 0, n = ui.tabWidget->count(); i < n; ++i) {
+	for (int i = 0, n = ui.tabWidget->count(); i < n; ++i) {
 		textEdit(i)->setFont(font);
 	}
 }
 
 void OutputEditorText::setInsertMode(QAction* action) {
-	m_insertMode = static_cast<InsertMode>(action->data().value<int>());
+	m_insertMode = static_cast<InsertMode> (action->data().value<int>());
 	ui.toolButtonOutputMode->setIcon(action->icon());
 }
 
@@ -205,33 +205,33 @@ void OutputEditorText::filterBuffer() {
 		// Always remove trailing whitespace
 		txt.replace(QRegularExpression("\\s+$"), "");
 
-		if(ui.actionOutputPostprocJoinHyphen->isChecked()) {
+		if (ui.actionOutputPostprocJoinHyphen->isChecked()) {
 			txt.replace(QRegularExpression("[-\u2014]\\s*\u2029\\s*"), "");
 		}
 		QString preChars, sucChars;
-		if(ui.actionOutputPostprocKeepParagraphs->isChecked()) {
+		if (ui.actionOutputPostprocKeepParagraphs->isChecked()) {
 			preChars += "\u2029"; // Keep if preceded by line break
 		}
-		if(ui.actionOutputPostprocKeepEndMark->isChecked()) {
+		if (ui.actionOutputPostprocKeepEndMark->isChecked()) {
 			preChars += "\\.\\?!"; // Keep if preceded by end mark (.?!)
 		}
-		if(ui.actionOutputPostprocKeepQuote->isChecked()) {
+		if (ui.actionOutputPostprocKeepQuote->isChecked()) {
 			preChars += "'\"\u00BB\u00AB"; // Keep if preceded by quote
 			sucChars += "'\"\u00AB\u00BB"; // Keep if succeeded by quote
 		}
-		if(ui.actionOutputPostprocKeepParagraphs->isChecked()) {
+		if (ui.actionOutputPostprocKeepParagraphs->isChecked()) {
 			sucChars += "\u2029"; // Keep if succeeded by line break
 		}
-		if(!preChars.isEmpty()) {
+		if (!preChars.isEmpty()) {
 			preChars = "([^" + preChars + "])";
 		}
-		if(!sucChars.isEmpty()) {
+		if (!sucChars.isEmpty()) {
 			sucChars = "(?![" + sucChars + "])";
 		}
 		QString expr = preChars + "\u2029" + sucChars;
 		txt.replace(QRegularExpression(expr), preChars.isEmpty() ? " " : "\\1 ");
 
-		if(ui.actionOutputPostprocCollapseSpaces->isChecked()) {
+		if (ui.actionOutputPostprocCollapseSpaces->isChecked()) {
 			txt.replace(QRegularExpression("[ \t]+"), " ");
 		}
 		return true;
@@ -244,7 +244,7 @@ void OutputEditorText::filterBuffer() {
 
 void OutputEditorText::findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace) {
 	ui.searchFrame->clearErrorState();
-	if(!textEdit()->findReplace(backwards, replace, matchCase, searchstr, replacestr)) {
+	if (!textEdit()->findReplace(backwards, replace, matchCase, searchstr, replacestr)) {
 		ui.searchFrame->setErrorState();
 	}
 }
@@ -254,7 +254,7 @@ void OutputEditorText::replaceAll(const QString& searchstr, const QString& repla
 	int count = textEdit()->replaceAll(searchstr, replacestr, matchCase);
 	QPoint popupPos = ui.searchFrame->buttonReplaceAll()->parentWidget()->mapToGlobal(ui.searchFrame->buttonReplaceAll()->pos());
 	QToolTip::showText(popupPos, _("%1 occurrences replaced").arg(count), nullptr, {}, 4000);
-	if(count == 0) {
+	if (count == 0) {
 		ui.searchFrame->setErrorState();
 	}
 	MAIN->popState();
@@ -266,18 +266,18 @@ void OutputEditorText::applySubstitutions(const QMap<QString, QString>& substitu
 	int end = cursor.position();
 	cursor.setPosition(cursor.anchor());
 	QTextDocument::FindFlags flags;
-	if(matchCase) {
+	if (matchCase) {
 		flags = QTextDocument::FindCaseSensitively;
 	}
 	int start = cursor.position();
-	for(auto it = substitutions.begin(), itEnd = substitutions.end(); it != itEnd; ++it) {
+	for (auto it = substitutions.begin(), itEnd = substitutions.end(); it != itEnd; ++it) {
 		QString search = it.key();
 		QString replace = it.value();
 		int diff = replace.length() - search.length();
 		cursor.setPosition(start);
-		while(true) {
+		while (true) {
 			cursor = textEdit()->document()->find(search, cursor, flags);
-			if(cursor.isNull() || std::max(cursor.anchor(), cursor.position()) > end) {
+			if (cursor.isNull() || std::max(cursor.anchor(), cursor.position()) > end) {
 				break;
 			}
 			cursor.insertText(replace);
@@ -291,41 +291,41 @@ void OutputEditorText::applySubstitutions(const QMap<QString, QString>& substitu
 void OutputEditorText::read(tesseract::TessBaseAPI& tess, ReadSessionData* data) {
 	char* textbuf = tess.GetUTF8Text();
 	QString text = QString::fromUtf8(textbuf);
-	if(!text.endsWith('\n')) {
+	if (!text.endsWith('\n')) {
 		text.append('\n');
 	}
-	if(data->prependFile || data->prependPage) {
+	if (data->prependFile || data->prependPage) {
 		QStringList prepend;
-		if(data->prependFile) {
+		if (data->prependFile) {
 			prepend.append(_("File: %1").arg(data->pageInfo.filename));
 		}
-		if(data->prependPage) {
+		if (data->prependPage) {
 			prepend.append(_("Page: %1").arg(data->pageInfo.page));
 		}
 		text.prepend(QString("[%1]\n").arg(prepend.join("; ")));
 	}
-	bool& insertText = static_cast<TextReadSessionData*>(data)->insertText;
+	bool& insertText = static_cast<TextReadSessionData*> (data)->insertText;
 	QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, text), Q_ARG(bool, insertText));
 	delete[] textbuf;
 	insertText = true;
 }
 
 void OutputEditorText::readError(const QString& errorMsg, ReadSessionData* data) {
-	bool& insertText = static_cast<TextReadSessionData*>(data)->insertText;
+	bool& insertText = static_cast<TextReadSessionData*> (data)->insertText;
 	QMetaObject::invokeMethod(this, "addText", Qt::QueuedConnection, Q_ARG(QString, errorMsg), Q_ARG(bool, insertText));
 	insertText = true;
 }
 
 void OutputEditorText::addText(const QString& text, bool insert) {
-	if(insert) {
+	if (insert) {
 		textEdit()->textCursor().insertText(text);
 	} else {
 		QTextCursor cursor = textEdit()->textCursor();
-		if(m_insertMode == InsertMode::Append) {
+		if (m_insertMode == InsertMode::Append) {
 			cursor.movePosition(QTextCursor::End);
-		} else if(m_insertMode == InsertMode::Cursor) {
+		} else if (m_insertMode == InsertMode::Cursor) {
 			// pass
-		} else if(m_insertMode == InsertMode::Replace) {
+		} else if (m_insertMode == InsertMode::Replace) {
 			cursor.movePosition(QTextCursor::Start);
 			cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
 		}
@@ -348,10 +348,10 @@ bool OutputEditorText::open(const QString& filename) {
 
 	int currentPage = -1;
 	QStringList failed;
-	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList>>("recenttxtitems")->getValue();
-	for(const QString& file : files) {
+	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList >> ("recenttxtitems")->getValue();
+	for (const QString& file : files) {
 		QFile fh(file);
-		if(!fh.open(QIODevice::ReadOnly)) {
+		if (!fh.open(QIODevice::ReadOnly)) {
 			failed.append(file);
 			continue;
 		}
@@ -359,7 +359,7 @@ bool OutputEditorText::open(const QString& filename) {
 		recentItems.prepend(file);
 		// Look if document already opened, if so, switch to that tab
 		bool alreadyOpen = false;
-		for(int i = 0, n = ui.tabWidget->count(); i < n; ++i) {
+		for (int i = 0, n = ui.tabWidget->count(); i < n; ++i) {
 			if (textEdit(i)->filename() == file) {
 				currentPage = i;
 				alreadyOpen = true;
@@ -373,7 +373,8 @@ bool OutputEditorText::open(const QString& filename) {
 			if (edit->document()->isModified() == true || !edit->filename().isEmpty()) {
 				page = addTab(QFileInfo(file).fileName());
 				edit = textEdit(page);
-			} else {
+			}
+			else {
 				setTabName(page, QFileInfo(file).fileName());
 			}
 			edit->setPlainText(fh.readAll());
@@ -392,7 +393,7 @@ bool OutputEditorText::open(const QString& filename) {
 	if (!failed.empty()) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), _("The following files could not be opened:\n%1").arg(failed.join("\n")));
 	}
-	ConfigSettings::get<VarSetting<QStringList>>("recenttxtitems")->setValue(recentItems.mid(0, sMaxNumRecent));
+	ConfigSettings::get<VarSetting<QStringList >> ("recenttxtitems")->setValue(recentItems.mid(0, sMaxNumRecent));
 
 	MAIN->setOutputPaneVisible(true);
 	return failed.empty();
@@ -403,16 +404,16 @@ bool OutputEditorText::save(int page, const QString& filename) {
 	page = page == -1 ? ui.tabWidget->currentIndex() : page;
 	OutputTextEdit* edit = textEdit(page);
 
-	if(outname.isEmpty()) {
+	if (outname.isEmpty()) {
 		QString suggestion = edit->filename();
 		suggestion = suggestion.isEmpty() ? tabName(page) + ".txt" : suggestion;
 		outname = FileDialogs::saveDialog(_("Save Output..."), suggestion, "outputdir", QString("%1 (*.txt)").arg(_("Text Files")));
-		if(outname.isEmpty()) {
+		if (outname.isEmpty()) {
 			return false;
 		}
 	}
 	QFile file(outname);
-	if(!file.open(QIODevice::WriteOnly)) {
+	if (!file.open(QIODevice::WriteOnly)) {
 		QMessageBox::critical(MAIN, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
@@ -420,16 +421,16 @@ bool OutputEditorText::save(int page, const QString& filename) {
 	edit->document()->setModified(false);
 	edit->setFilename(outname);
 	setTabName(page, QFileInfo(outname).fileName());
-	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList>>("recenttxtitems")->getValue();
+	QStringList recentItems = ConfigSettings::get<VarSetting<QStringList >> ("recenttxtitems")->getValue();
 	recentItems.removeAll(outname);
 	recentItems.prepend(outname);
-	ConfigSettings::get<VarSetting<QStringList>>("recenttxtitems")->setValue(recentItems.mid(0, sMaxNumRecent));
+	ConfigSettings::get<VarSetting<QStringList >> ("recenttxtitems")->setValue(recentItems.mid(0, sMaxNumRecent));
 	return true;
 }
 
 QString OutputEditorText::crashSave(const QString& filename) const {
 	QFile file(filename + ".txt");
-	if(file.open(QIODevice::WriteOnly)) {
+	if (file.open(QIODevice::WriteOnly)) {
 		file.write(MAIN->getConfig()->useUtf8() ? textEdit()->toPlainText().toUtf8() : textEdit()->toPlainText().toLocal8Bit());
 		return filename + ".txt";
 	}
@@ -437,19 +438,19 @@ QString OutputEditorText::crashSave(const QString& filename) const {
 }
 
 bool OutputEditorText::clear(bool hide) {
-	if(!m_widget->isVisible()) {
+	if (!m_widget->isVisible()) {
 		return true;
 	}
 	QMap<int, bool> changed;
-	for(int i = 0, n = ui.tabWidget->count(); i < n; ++i) {
+	for (int i = 0, n = ui.tabWidget->count(); i < n; ++i) {
 		if (textEdit(i)->document()->isModified()) {
 			changed.insert(i, true);
 		}
 	}
 
-	if(!changed.isEmpty()) {
+	if (!changed.isEmpty()) {
 		QListWidget* list = new QListWidget();;
-		for(auto it = changed.begin(), itEnd = changed.end(); it != itEnd; ++it) {
+		for (auto it = changed.begin(), itEnd = changed.end(); it != itEnd; ++it) {
 			QListWidgetItem* item = new QListWidgetItem(tabName(it.key()));
 			item->setCheckState(Qt::Checked);
 			item->setData(Qt::UserRole, it.key());
@@ -474,19 +475,19 @@ bool OutputEditorText::clear(bool hide) {
 			return false;
 		}
 		if (response == QDialogButtonBox::Save) {
-			for(auto it = changed.begin(), itEnd = changed.end(); it != itEnd; ++it) {
-				if(it.value() && !save(it.key(), textEdit(it.key())->filename())) {
+			for (auto it = changed.begin(), itEnd = changed.end(); it != itEnd; ++it) {
+				if (it.value() && !save(it.key(), textEdit(it.key())->filename())) {
 					return false;
 				}
 			}
 		}
 	}
-	for(int i = ui.tabWidget->count(); i >= 0; --i) {
+	for (int i = ui.tabWidget->count(); i >= 0; --i) {
 		ui.tabWidget->removeTab(i);
 	}
 	m_tabCounter = 0;
 	addTab(); // Add one empty tab
-	if(hide) {
+	if (hide) {
 		MAIN->setOutputPaneVisible(false);
 	}
 	return true;
@@ -504,18 +505,18 @@ void OutputEditorText::prepareRecentMenu() {
 	// Build recent menu
 	m_recentMenu->clear();
 	int count = 0;
-	for(const QString& filename : ConfigSettings::get<VarSetting<QStringList>>("recenttxtitems")->getValue()) {
-		if(QFile(filename).exists()) {
+	for (const QString& filename : ConfigSettings::get<VarSetting<QStringList >> ("recenttxtitems")->getValue()) {
+		if (QFile(filename).exists()) {
 			QAction* action = new QAction(QFileInfo(filename).fileName(), m_recentMenu);
 			action->setToolTip(filename);
 			connect(action, &QAction::triggered, this, [this, action] { open(action->toolTip()); });
 			m_recentMenu->addAction(action);
-			if(++count >= sMaxNumRecent) {
+			if (++count >= sMaxNumRecent) {
 				break;
 			}
 		}
 	}
-	if(m_recentMenu->isEmpty()) {
+	if (m_recentMenu->isEmpty()) {
 		m_recentMenu->addAction(_("No recent files"))->setEnabled(false);
 	}
 }

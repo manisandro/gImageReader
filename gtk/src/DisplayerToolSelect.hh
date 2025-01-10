@@ -34,7 +34,7 @@ public:
 	void resolutionChanged(double factor) override;
 	void rotationChanged(double delta) override;
 
-	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas() override;
+	std::vector<Cairo::RefPtr<Cairo::ImageSurface >> getOCRAreas() override;
 	bool hasMultipleOCRAreas() const override {
 		return !m_selections.empty();
 	}

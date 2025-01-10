@@ -29,7 +29,7 @@ void ConfigSettings::add(AbstractSetting* setting) {
 
 void ConfigSettings::remove(const Glib::ustring& key) {
 	auto it = s_settings.find(key);
-	if(it != s_settings.end()) {
+	if (it != s_settings.end()) {
 		s_settings.erase(it);
 	}
 }
@@ -46,14 +46,14 @@ ListStoreSetting::ListStoreSetting(const Glib::ustring& key, Glib::RefPtr<Gtk::L
 	m_liststore->clear();
 	std::size_t nCols = m_liststore->get_n_columns();
 
-	for(const Glib::ustring& row : Utils::string_split(str, ';', false)) {
+	for (const Glib::ustring& row : Utils::string_split(str, ';', false)) {
 		int colidx = 0;
 		std::vector<Glib::ustring> cols = Utils::string_split(row, ',', true);
-		if(cols.size() != nCols) {
+		if (cols.size() != nCols) {
 			continue;
 		}
-		Gtk::TreeModel::Row treerow = *(m_liststore->append());
-		for(const Glib::ustring& col : cols) {
+		Gtk::TreeModel::Row treerow = * (m_liststore->append());
+		for (const Glib::ustring& col : cols) {
 			treerow.set_value(colidx++, col);
 		}
 	}
@@ -63,8 +63,8 @@ void ListStoreSetting::serialize() {
 	// Serialized string has format a11,a12,a13;a21,a22,a23;...
 	Glib::ustring str;
 	int nCols = m_liststore->get_n_columns();
-	for(const Gtk::TreeModel::Row& row : m_liststore->children()) {
-		for(int col = 0; col < nCols; ++col) {
+	for (const Gtk::TreeModel::Row& row : m_liststore->children()) {
+		for (int col = 0; col < nCols; ++col) {
 			Glib::ustring field;
 			row.get_value(col, field);
 			str += field + (col == nCols - 1 ? ";" : ",");

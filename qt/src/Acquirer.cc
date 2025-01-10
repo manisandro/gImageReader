@@ -43,14 +43,14 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 
 	m_scanner = new ScannerImpl;
 
-	qRegisterMetaType<QList<Scanner::Device>>();
+	qRegisterMetaType<QList<Scanner::Device >> ();
 	qRegisterMetaType<Scanner::State>();
 
 	connect(ui.toolButtonScanDevicesRefresh, &QToolButton::clicked, this, &Acquirer::startDetectDevices);
 	connect(ui.pushButtonScan, &QPushButton::clicked, this, &Acquirer::startScan);
 	connect(ui.pushButtonScanCancel, &QPushButton::clicked, this, &Acquirer::cancelScan);
 	connect(ui.toolButtonScanOutput, &QToolButton::clicked, this, &Acquirer::selectOutputPath);
-	connect(ui.comboBoxScanDevice, qOverload<int>(&QComboBox::currentIndexChanged), this, &Acquirer::setDeviceComboTooltip);
+	connect(ui.comboBoxScanDevice, qOverload<int> (&QComboBox::currentIndexChanged), this, &Acquirer::setDeviceComboTooltip);
 	connect(m_scanner, &Scanner::initFailed, this, &Acquirer::scanInitFailed);
 	connect(m_scanner, &Scanner::devicesDetected, this, &Acquirer::doneDetectDevices);
 	connect(m_scanner, &Scanner::scanFailed, this, &Acquirer::scanFailed);
@@ -66,7 +66,7 @@ Acquirer::Acquirer(const UI_MainWindow& _ui)
 	ui.comboBoxScanSource->setVisible(false);
 #endif
 
-	QString sourcedir = ConfigSettings::get<VarSetting<QString>>("sourcedir")->getValue();
+	QString sourcedir = ConfigSettings::get<VarSetting<QString >> ("sourcedir")->getValue();
 	m_outputPath = QDir(sourcedir.isEmpty() ? Utils::documentsFolder() : sourcedir).absoluteFilePath(_("scan.png"));
 	genOutputPath();
 	m_scanner->init();
@@ -79,12 +79,12 @@ Acquirer::~Acquirer() {
 
 void Acquirer::selectOutputPath() {
 	QSet<QString> formats;
-	for(const QByteArray& format : QImageReader::supportedImageFormats()) {
+	for (const QByteArray& format : QImageReader::supportedImageFormats()) {
 		formats.insert(QString("*.%1").arg(QString(format).toLower()));
 	}
 	QString filter = QString("%1 (%2)").arg(_("Images")).arg(QStringList(formats.values()).join(" "));
 	QString filename = FileDialogs::saveDialog(_("Choose Output Filename..."), m_outputPath, "sourcedir", filter);
-	if(!filename.isEmpty()) {
+	if (!filename.isEmpty()) {
 		m_outputPath = filename;
 		genOutputPath();
 	}
@@ -118,10 +118,10 @@ void Acquirer::startDetectDevices() {
 void Acquirer::doneDetectDevices(QList<Scanner::Device> devices) {
 	ui.comboBoxScanDevice->unsetCursor();
 	ui.toolButtonScanDevicesRefresh->setEnabled(true);
-	if(devices.isEmpty()) {
+	if (devices.isEmpty()) {
 		ui.labelScanMessage->setText(QString("<span style=\"color:#FF0000;\">%1</span>").arg(_("No scanners were detected.")));
 	} else {
-		for(const Scanner::Device& device : devices) {
+		for (const Scanner::Device& device : devices) {
 			ui.comboBoxScanDevice->addItem(device.label, device.name);
 		}
 		ui.comboBoxScanDevice->setCurrentIndex(0);
@@ -145,17 +145,17 @@ void Acquirer::startScan() {
 }
 
 void Acquirer::setScanState(Scanner::State state) {
-	if(state == Scanner::State::OPEN) {
+	if (state == Scanner::State::OPEN) {
 		ui.labelScanMessage->setText(_("Opening device..."));
-	} else if(state == Scanner::State::SET_OPTIONS) {
+	} else if (state == Scanner::State::SET_OPTIONS) {
 		ui.labelScanMessage->setText(_("Setting options..."));
-	} else if(state == Scanner::State::START) {
+	} else if (state == Scanner::State::START) {
 		ui.labelScanMessage->setText(_("Starting scan..."));
-	} else if(state == Scanner::State::GET_PARAMETERS) {
+	} else if (state == Scanner::State::GET_PARAMETERS) {
 		ui.labelScanMessage->setText(_("Getting parameters..."));
-	} else if(state == Scanner::State::READ) {
+	} else if (state == Scanner::State::READ) {
 		ui.labelScanMessage->setText(_("Transferring data..."));
-	} else if(state == Scanner::State::IDLE) {
+	} else if (state == Scanner::State::IDLE) {
 		doneScan();
 	}
 }

@@ -38,7 +38,7 @@ private:
 	};
 
 	QListWidget* m_languageList;
-	QMap<QString, QList<LangFile>> m_languageFiles;
+	QMap<QString, QList<LangFile >> m_languageFiles;
 
 	bool fetchLanguageList(QString& messages);
 

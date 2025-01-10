@@ -41,7 +41,7 @@ private:
 	ClassData m_classdata;
 	Glib::RefPtr<FileTreeModel> m_sourceTreeModel;
 	Glib::RefPtr<FileTreeModel> m_outputTreeModel;
-	std::map<std::string, std::vector<Glib::RefPtr<Gio::File>>> m_outputMap;
+	std::map<std::string, std::vector<Glib::RefPtr<Gio::File >>> m_outputMap;
 	HOCRPdfExportWidget* m_pdfExportWidget = nullptr;
 	sigc::connection m_connectionPreviewTimeout;
 

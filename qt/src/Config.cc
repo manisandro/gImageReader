@@ -36,16 +36,16 @@
 #endif
 #undef USE_STD_NAMESPACE
 
-const QList<Config::Lang> Config::LANGUAGES = LangTables::languages<QList<Config::Lang>, QString>([](const char* str) { return QString::fromUtf8(str); });
+const QList<Config::Lang> Config::LANGUAGES = LangTables::languages<QList<Config::Lang>, QString> ([](const char* str) { return QString::fromUtf8(str); });
 const QMap<QString, QString> Config::LANG_LOOKUP = [] {
 	QMap<QString, QString> lookup;
-	for(const Config::Lang& lang : LANGUAGES) {
+	for (const Config::Lang& lang : LANGUAGES) {
 		lookup.insert(lang.prefix, lang.code);
 	}
 	return lookup;
 }();
 
-const QMultiMap<QString, QString> Config::LANGUAGE_CULTURES = LangTables::languageCultures<QMultiMap<QString, QString>>();
+const QMultiMap<QString, QString> Config::LANGUAGE_CULTURES = LangTables::languageCultures<QMultiMap<QString, QString >> ();
 
 
 Config::Config(QWidget* parent)
@@ -60,7 +60,7 @@ Config::Config(QWidget* parent)
 	ui.checkBoxUpdateCheck->setVisible(false);
 #endif
 
-	for(const Lang& lang : LANGUAGES) {
+	for (const Lang& lang : LANGUAGES) {
 		int row = ui.tableWidgetPredefLang->rowCount();
 		ui.tableWidgetPredefLang->insertRow(row);
 		ui.tableWidgetPredefLang->setItem(row, 0, new QTableWidgetItem(lang.prefix));
@@ -80,7 +80,7 @@ Config::Config(QWidget* parent)
 	connect(ui.lineEditLangPrefix, &QLineEdit::textChanged, this, &Config::clearLineEditErrorState);
 	connect(ui.lineEditLangName, &QLineEdit::textChanged, this, &Config::clearLineEditErrorState);
 	connect(ui.lineEditLangCode, &QLineEdit::textChanged, this, &Config::clearLineEditErrorState);
-	connect(ui.comboBoxDataLocation, qOverload<int>(&QComboBox::currentIndexChanged), this, &Config::setDataLocations);
+	connect(ui.comboBoxDataLocation, qOverload<int> (&QComboBox::currentIndexChanged), this, &Config::setDataLocations);
 
 	ADD_SETTING(SwitchSetting("dictinstall", ui.checkBoxDictInstall, true));
 	ADD_SETTING(SwitchSetting("updatecheck", ui.checkBoxUpdateCheck, true));
@@ -90,24 +90,24 @@ Config::Config(QWidget* parent)
 	ADD_SETTING(FontSetting("customoutputfont", &m_fontDialog, QFont().toString()));
 	ADD_SETTING(ComboSetting("textencoding", ui.comboBoxEncoding, 0));
 	ADD_SETTING(ComboSetting("datadirs", ui.comboBoxDataLocation, 0));
-	ADD_SETTING(VarSetting<QString>("sourcedir", Utils::documentsFolder()));
-	ADD_SETTING(VarSetting<QString>("outputdir", Utils::documentsFolder()));
-	ADD_SETTING(VarSetting<QString>("auxdir", Utils::documentsFolder()));
+	ADD_SETTING(VarSetting<QString> ("sourcedir", Utils::documentsFolder()));
+	ADD_SETTING(VarSetting<QString> ("outputdir", Utils::documentsFolder()));
+	ADD_SETTING(VarSetting<QString> ("auxdir", Utils::documentsFolder()));
 
 	updateFontButton(m_fontDialog.currentFont());
 }
 
 bool Config::searchLangSpec(Lang& lang) const {
 	// Tesseract 4.x up to beta.1 had script tessdatas on same level as language tessdatas, but they are distinguishable in that they begin with an upper case character
-	if(lang.prefix.startsWith("script", Qt::CaseInsensitive) || lang.prefix.left(1).toUpper() == lang.prefix.left(1)) {
+	if (lang.prefix.startsWith("script", Qt::CaseInsensitive) || lang.prefix.left(1).toUpper() == lang.prefix.left(1)) {
 		QString name = lang.prefix.startsWith("script", Qt::CaseInsensitive) ? lang.prefix.mid(7) : lang.prefix;
 		lang.name = QString("%1 [%2]").arg(name).arg(_("Script"));
 		return true;
 	}
-	for(const QTableWidget* table : QList<QTableWidget*> {ui.tableWidgetPredefLang, ui.tableWidgetAdditionalLang}) {
-		for(int row = 0, nRows = table->rowCount(); row < nRows; ++row) {
-			if(table->item(row, 0)->text() == lang.prefix) {
-				lang = {lang.prefix, table->item(row, 1)->text(), QString("%1 [%2]").arg(table->item(row, 2)->text(), lang.prefix)};
+	for (const QTableWidget* table : QList<QTableWidget*> {ui.tableWidgetPredefLang, ui.tableWidgetAdditionalLang}) {
+		for (int row = 0, nRows = table->rowCount(); row < nRows; ++row) {
+			if (table->item(row, 0)->text() == lang.prefix) {
+				lang = {lang.prefix, table->item(row, 1)->text(), QString("%1 [%2]").arg(table->item(row, 2)->text(), lang.prefix) };
 				return true;
 			}
 		}
@@ -122,7 +122,7 @@ QStringList Config::searchLangCultures(const QString& code) const {
 void Config::showDialog() {
 	toggleAddLanguage(true);
 	exec();
-	ConfigSettings::get<TableSetting>("customlangs")->serialize();
+	ConfigSettings::get<TableSetting> ("customlangs")->serialize();
 }
 
 bool Config::useUtf8() const {
@@ -143,7 +143,7 @@ QString Config::spellingLocation() const {
 
 QStringList Config::getAvailableLanguages() {
 	Utils::TesseractHandle tess;
-	if(!tess.get()) {
+	if (!tess.get()) {
 		return QStringList();
 	}
 #if TESSERACT_MAJOR_VERSION < 5
@@ -153,13 +153,13 @@ QStringList Config::getAvailableLanguages() {
 #endif
 	tess.get()->GetAvailableLanguagesAsVector(&availLanguages);
 	QStringList result;
-	for(std::size_t i = 0; i < availLanguages.size(); ++i) {
+	for (std::size_t i = 0; i < availLanguages.size(); ++i) {
 		result.append(availLanguages[i].c_str());
 	}
 	std::sort(result.begin(), result.end(), [](const QString & s1, const QString & s2) {
 		bool s1Script = s1.startsWith("script") || s1.left(1) == s1.left(1).toUpper();
 		bool s2Script = s2.startsWith("script") || s2.left(1) == s2.left(1).toUpper();
-		if(s1Script != s2Script) {
+		if (s1Script != s2Script) {
 			return !s1Script;
 		} else {
 			return s1 < s2;
@@ -169,34 +169,34 @@ QStringList Config::getAvailableLanguages() {
 }
 
 void Config::disableDictInstall() {
-	ConfigSettings::get<SwitchSetting>("dictinstall")->setValue(false);
+	ConfigSettings::get<SwitchSetting> ("dictinstall")->setValue(false);
 }
 
 void Config::disableUpdateCheck() {
-	ConfigSettings::get<SwitchSetting>("updatecheck")->setValue(false);
+	ConfigSettings::get<SwitchSetting> ("updatecheck")->setValue(false);
 }
 
 void Config::setDataLocations(int idx) {
-	ui.lineEditSpellLocation->setText(spellingLocation(static_cast<Location>(idx)));
-	ui.lineEditTessdataLocation->setText(tessdataLocation(static_cast<Location>(idx)));
+	ui.lineEditSpellLocation->setText(spellingLocation(static_cast<Location> (idx)));
+	ui.lineEditTessdataLocation->setText(tessdataLocation(static_cast<Location> (idx)));
 }
 
 void Config::openTessdataDir() {
 	int idx = QSettings().value("datadirs").toInt();
-	QString tessdataDir = tessdataLocation(static_cast<Location>(idx));
+	QString tessdataDir = tessdataLocation(static_cast<Location> (idx));
 	QDir().mkpath(tessdataDir);
 	QDesktopServices::openUrl(QUrl::fromLocalFile(tessdataDir));
 }
 
 void Config::openSpellingDir() {
 	int idx = QSettings().value("datadirs").toInt();
-	QString spellingDir = spellingLocation(static_cast<Location>(idx));
+	QString spellingDir = spellingLocation(static_cast<Location> (idx));
 	QDir().mkpath(spellingDir);
 	QDesktopServices::openUrl(QUrl::fromLocalFile(spellingDir));
 }
 
 QString Config::spellingLocation(Location location) {
-	if(location == SystemLocation) {
+	if (location == SystemLocation) {
 #ifdef Q_OS_WIN
 		QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
 #else
@@ -207,7 +207,7 @@ QString Config::spellingLocation(Location location) {
 #endif
 #endif
 #if HAVE_ENCHANT2
-		if(QDir(dataDir.absoluteFilePath("myspell")).exists()) {
+		if (QDir(dataDir.absoluteFilePath("myspell")).exists()) {
 			return dataDir.absoluteFilePath("myspell");
 		} else {
 			return dataDir.absoluteFilePath("hunspell");
@@ -226,7 +226,7 @@ QString Config::spellingLocation(Location location) {
 }
 
 QString Config::tessdataLocation(Location location) {
-	if(location == SystemLocation) {
+	if (location == SystemLocation) {
 #ifdef Q_OS_WIN
 		QDir dataDir = QDir(QString("%1/../share/").arg(QApplication::applicationDirPath()));
 		qputenv("TESSDATA_PREFIX", dataDir.absoluteFilePath("tessdata").toLocal8Bit());
@@ -249,7 +249,7 @@ void Config::toggleAddLanguage(bool forceHide) {
 	bool addVisible = forceHide ? true : ui.widgetAddLang->isVisible();
 	ui.widgetAddLang->setVisible(!addVisible);
 	ui.widgetAddRemoveLang->setVisible(addVisible);
-	if(addVisible) {
+	if (addVisible) {
 		ui.pushButtonAddLang->setFocus();
 	} else {
 		ui.pushButtonAddLangOk->setFocus();
@@ -265,19 +265,19 @@ void Config::toggleAddLanguage(bool forceHide) {
 void Config::addLanguage() {
 	QString errorStyle = "background: #FF7777; color: #FFFFFF;";
 	bool invalid = false;
-	if(!QRegularExpression("^[\\w/]+$").match(ui.lineEditLangPrefix->text()).hasMatch()) {
+	if (!QRegularExpression("^[\\w/]+$").match(ui.lineEditLangPrefix->text()).hasMatch()) {
 		invalid = true;
 		ui.lineEditLangPrefix->setStyleSheet(errorStyle);
 	}
-	if(!QRegularExpression("^.+$").match(ui.lineEditLangName->text()).hasMatch()) {
+	if (!QRegularExpression("^.+$").match(ui.lineEditLangName->text()).hasMatch()) {
 		invalid = true;
 		ui.lineEditLangName->setStyleSheet(errorStyle);
 	}
-	if(!ui.lineEditLangCode->text().isEmpty() && !QRegularExpression("^[a-z]{2,}(_[A-Z]{2,})?$").match(ui.lineEditLangCode->text()).hasMatch()) {
+	if (!ui.lineEditLangCode->text().isEmpty() && !QRegularExpression("^[a-z]{2,}(_[A-Z]{2,})?$").match(ui.lineEditLangCode->text()).hasMatch()) {
 		invalid = true;
 		ui.lineEditLangCode->setStyleSheet(errorStyle);
 	}
-	if(!invalid) {
+	if (!invalid) {
 		int row = ui.tableWidgetAdditionalLang->rowCount();
 		ui.tableWidgetAdditionalLang->insertRow(row);
 		ui.tableWidgetAdditionalLang->setItem(row, 0, new QTableWidgetItem(ui.lineEditLangPrefix->text()));
@@ -291,7 +291,7 @@ void Config::addLanguage() {
 }
 
 void Config::removeLanguage() {
-	for(const QModelIndex& index : ui.tableWidgetAdditionalLang->selectionModel()->selectedRows()) {
+	for (const QModelIndex& index : ui.tableWidgetAdditionalLang->selectionModel()->selectedRows()) {
 		ui.tableWidgetAdditionalLang->removeRow(index.row());
 	}
 }
@@ -305,5 +305,5 @@ void Config::langTableSelectionChanged(const QItemSelection& selected, const QIt
 }
 
 void Config::clearLineEditErrorState() {
-	static_cast<QLineEdit*>(QObject::sender())->setStyleSheet("");
+	static_cast<QLineEdit*> (QObject::sender())->setStyleSheet("");
 }

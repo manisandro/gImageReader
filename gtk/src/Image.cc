@@ -43,60 +43,60 @@ Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat, Conver
 	format = targetFormat;
 	int stride = src->get_stride();
 
-	if(format == Format_RGB24) {
+	if (format == Format_RGB24) {
 		sampleSize = 8;
 		bytesPerLine = 3 * width;
 		data = new uint8_t[width * height * 3];
 		#pragma omp parallel for schedule(static)
-		for(int y = 0; y < height; ++y) {
-			for(int x = 0; x < width; ++x) {
-				uint8_t* srcpx = &src->get_data()[y * stride + 4 * x];
+		for (int y = 0; y < height; ++y) {
+			for (int x = 0; x < width; ++x) {
+				uint8_t* srcpx = &src->get_data() [y * stride + 4 * x];
 				uint8_t* dstpx = &data[y * bytesPerLine + 3 * x];
 				dstpx[0] = PIXEL_R(srcpx);
 				dstpx[1] = PIXEL_G(srcpx);
 				dstpx[2] = PIXEL_B(srcpx);
 			}
 		}
-	} else if(format == Format_Gray8 || format == Format_Mono) {
+	} else if (format == Format_Gray8 || format == Format_Mono) {
 		sampleSize = 8;
 		bytesPerLine = width;
 		data = new uint8_t[width * height];
 		#pragma omp parallel for schedule(static)
-		for(int y = 0; y < height; ++y) {
-			for(int x = 0; x < width; ++x) {
-				uint8_t* srcpx = &src->get_data()[y * stride + 4 * x];
+		for (int y = 0; y < height; ++y) {
+			for (int x = 0; x < width; ++x) {
+				uint8_t* srcpx = &src->get_data() [y * stride + 4 * x];
 				data[y * bytesPerLine + x] = 0.21 * PIXEL_R(srcpx) + 0.72 * PIXEL_G(srcpx) + 0.07 * PIXEL_B(srcpx);
 			}
 		}
-		if(format == Format_Mono) {
+		if (format == Format_Mono) {
 			sampleSize = 1;
 			bytesPerLine = width / 8 + (width % 8 != 0);
 			uint8_t* newdata = new uint8_t[height * bytesPerLine];
-			std::memset(newdata, 0, std::size_t(height) * bytesPerLine);
+			std::memset(newdata, 0, std::size_t (height) * bytesPerLine);
 			// Dithering: https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering
-			for(int y = 0; y < height; ++y) {
-				for(int x = 0; x < width; ++x) {
+			for (int y = 0; y < height; ++y) {
+				for (int x = 0; x < width; ++x) {
 					uint8_t oldpixel = data[y * width + x];
 					uint8_t newpixel = oldpixel > 127 ? 255 : 0;
-					int err = int(oldpixel) - int(newpixel);
-					if(newpixel == 255) {
+					int err = int (oldpixel) - int (newpixel);
+					if (newpixel == 255) {
 						newdata[y * bytesPerLine + x / 8] |= 0x80 >> x % 8;
 					}
-					if(flags == DiffuseDithering) {
-						if(x + 1 < width) { // right neighbor
+					if (flags == DiffuseDithering) {
+						if (x + 1 < width) { // right neighbor
 							uint8_t& pxr = data[y * width + (x + 1)];
 							pxr = clamp(pxr + ((err * 7) >> 4));
 						}
-						if(y + 1 == height) {
+						if (y + 1 == height) {
 							continue; // last line
 						}
-						if(x > 0) { // bottom left and bottom neighbor
+						if (x > 0) { // bottom left and bottom neighbor
 							uint8_t& pxbl = data[(y + 1) * width + (x - 1)];
 							pxbl = clamp(pxbl + ((err * 3) >> 4));
 							uint8_t& pxb = data[(y + 1) * width + x];
 							pxb = clamp(pxb + ((err * 5) >> 4));
 						}
-						if(x + 1 < width) { // bottom right neighbor
+						if (x + 1 < width) { // bottom right neighbor
 							uint8_t& pxbr = data[(y + 1) * width + (x + 1)];
 							pxbr = clamp(pxbr + ((err * 1) >> 4));
 						}
@@ -112,7 +112,7 @@ Image::Image(Cairo::RefPtr<Cairo::ImageSurface> src, Format targetFormat, Conver
 void Image::writeJpeg(int quality, uint8_t*& buf, unsigned long& bufLen) {
 	buf = nullptr;
 	bufLen = 0;
-	if(format == Format_Mono) {
+	if (format == Format_Mono) {
 		return; // not supported by jpeg
 	}
 
@@ -143,15 +143,15 @@ Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::Im
 	int imgh = src->get_height();
 	int stride = src->get_stride();
 
-	if(format == Format_Gray8 || format == Format_Mono) {
+	if (format == Format_Gray8 || format == Format_Mono) {
 		Cairo::RefPtr<Cairo::ImageSurface> dst = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, imgw, imgh);
 		dst->flush();
 		#pragma omp parallel for schedule(static)
-		for(int y = 0; y < imgh; ++y) {
-			for(int x = 0; x < imgw; ++x) {
+		for (int y = 0; y < imgh; ++y) {
+			for (int x = 0; x < imgw; ++x) {
 				int offset = y * stride + 4 * x;
-				uint8_t* srcpx = &src->get_data()[offset];
-				uint8_t* dstpx = &dst->get_data()[offset];
+				uint8_t* srcpx = &src->get_data() [offset];
+				uint8_t* dstpx = &dst->get_data() [offset];
 				uint8_t gray = 0.21 * PIXEL_R(srcpx) + 0.72 * PIXEL_G(srcpx) + 0.07 * PIXEL_B(srcpx);
 				PIXEL_A(dstpx) = 255;
 				PIXEL_R(dstpx) = gray;
@@ -159,30 +159,30 @@ Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::Im
 				PIXEL_B(dstpx) = gray;
 			}
 		}
-		if(format == Format_Mono) {
+		if (format == Format_Mono) {
 			// Dithering: https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering
-			for(int y = 0; y < imgh; ++y) {
-				for(int x = 0; x < imgw; ++x) {
-					uint8_t* px = &dst->get_data()[y * stride + 4 * x];
+			for (int y = 0; y < imgh; ++y) {
+				for (int x = 0; x < imgw; ++x) {
+					uint8_t* px = &dst->get_data() [y * stride + 4 * x];
 					uint8_t newpixel = PIXEL_R(px) > 127 ? 255 : 0;
-					int err = int(PIXEL_R(px)) - int(newpixel);
+					int err = int (PIXEL_R(px)) - int (newpixel);
 					PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = newpixel;
-					if(flags == DiffuseDithering) {
-						if(x + 1 < imgw) { // right neighbor
-							px = &dst->get_data()[y * stride + 4 * (x + 1)];
+					if (flags == DiffuseDithering) {
+						if (x + 1 < imgw) { // right neighbor
+							px = &dst->get_data() [y * stride + 4 * (x + 1)];
 							PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 7) >> 4));
 						}
-						if(y + 1 == imgh) {
+						if (y + 1 == imgh) {
 							continue; // last line
 						}
-						if(x > 0) { // bottom left and bottom neighbor
-							px = &dst->get_data()[(y + 1) * stride + 4 * (x - 1)];
+						if (x > 0) { // bottom left and bottom neighbor
+							px = &dst->get_data() [(y + 1) * stride + 4 * (x - 1)];
 							PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 3) >> 4));
-							px = &dst->get_data()[(y + 1) * stride + 4 * x];
+							px = &dst->get_data() [(y + 1) * stride + 4 * x];
 							PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 5) >> 4));
 						}
-						if(x + 1 < imgw) { // bottom right neighbor
-							px = &dst->get_data()[(y + 1) * stride + 4 * (x + 1)];
+						if (x + 1 < imgw) { // bottom right neighbor
+							px = &dst->get_data() [(y + 1) * stride + 4 * (x + 1)];
 							PIXEL_R(px) = PIXEL_G(px) = PIXEL_B(px) = clamp(PIXEL_R(px) + ((err * 1) >> 4));
 						}
 					}
@@ -196,7 +196,7 @@ Cairo::RefPtr<Cairo::ImageSurface> Image::simulateFormat(Cairo::RefPtr<Cairo::Im
 }
 
 Cairo::RefPtr<Cairo::ImageSurface> Image::scale(Cairo::RefPtr<Cairo::ImageSurface> src, double scaleFactor) {
-	if(scaleFactor == 1.0) {
+	if (scaleFactor == 1.0) {
 		return src;
 	}
 	Cairo::RefPtr<Cairo::ImageSurface> dst = Cairo::ImageSurface::create(src->get_format(), std::ceil(src->get_width() * scaleFactor), std::ceil(src->get_height() * scaleFactor));

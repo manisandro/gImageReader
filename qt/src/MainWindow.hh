@@ -53,7 +53,7 @@ public:
 
 	struct NotificationAction {
 		QString text;
-		std::function<void()> slot;
+		std::function<void() > slot;
 		bool close;
 	};
 
@@ -149,7 +149,7 @@ private:
 
 	QActionGroup m_idleActions;
 	QList<QWidget*> m_idleWidgets;
-	QStack<QPair<State, QString>> m_stateStack;
+	QStack<QPair<State, QString >> m_stateStack;
 
 	MainWindow::Notification m_notifierHandle = nullptr;
 

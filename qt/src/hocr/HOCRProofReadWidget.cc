@@ -41,12 +41,12 @@ public:
 		QLineEdit(wordItem->text(), parent), m_proofReadWidget(proofReadWidget), m_wordItem(wordItem) {
 		connect(this, &LineEdit::textChanged, this, &LineEdit::onTextChanged);
 
-		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
+		HOCRDocument* document = static_cast<HOCRDocument*> (m_proofReadWidget->documentTree()->model());
 		connect(document, &HOCRDocument::dataChanged, this, &LineEdit::onModelDataChanged);
 		connect(document, &HOCRDocument::itemAttributeChanged, this, &LineEdit::onAttributeChanged);
 
 		QModelIndex index = document->indexAtItem(m_wordItem);
-		setStyleSheet( getStyle( document->indexIsMisspelledWord(index) ) );
+		setStyleSheet(getStyle(document->indexIsMisspelledWord(index)));
 
 		QFont ft = font();
 		ft.setBold(m_wordItem->fontBold());
@@ -62,14 +62,14 @@ private:
 
 	QString getStyle(bool misspelled) const {
 		QStringList styles;
-		if(misspelled) {
-			styles.append( "color: red;" );
+		if (misspelled) {
+			styles.append("color: red;");
 		}
 		return styles.isEmpty() ? "" : QString("QLineEdit {%1}").arg(styles.join(" "));
 	}
 
 	void onTextChanged() {
-		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
+		HOCRDocument* document = static_cast<HOCRDocument*> (m_proofReadWidget->documentTree()->model());
 
 		// Update data in document
 		QModelIndex index = document->indexAtItem(m_wordItem);
@@ -78,82 +78,82 @@ private:
 		m_blockSetText = false;
 	}
 	void onModelDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int>& roles) {
-		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
+		HOCRDocument* document = static_cast<HOCRDocument*> (m_proofReadWidget->documentTree()->model());
 		QItemSelectionRange range(topLeft, bottomRight);
 		QModelIndex index = document->indexAtItem(m_wordItem);
-		if(range.contains(index)) {
-			if(roles.contains(Qt::DisplayRole) && !m_blockSetText) {
+		if (range.contains(index)) {
+			if (roles.contains(Qt::DisplayRole) && !m_blockSetText) {
 				setText(m_wordItem->text());
 			}
-			if(roles.contains(Qt::ForegroundRole)) {
-				setStyleSheet( getStyle( document->indexIsMisspelledWord(index) ) );
+			if (roles.contains(Qt::ForegroundRole)) {
+				setStyleSheet(getStyle(document->indexIsMisspelledWord(index)));
 			}
 		}
 	}
 	void onAttributeChanged(const QModelIndex& index, const QString& name, const QString& /*value*/) {
-		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
-		if(document->itemAtIndex(index) == m_wordItem) {
-			if(name == "bold" || name == "italic") {
+		HOCRDocument* document = static_cast<HOCRDocument*> (m_proofReadWidget->documentTree()->model());
+		if (document->itemAtIndex(index) == m_wordItem) {
+			if (name == "bold" || name == "italic") {
 				QFont ft = font();
 				ft.setBold(m_wordItem->fontBold());
 				ft.setItalic(m_wordItem->fontItalic());
 				setFont(ft);
-			} else if(name == "title:bbox") {
+			} else if (name == "title:bbox") {
 				QPoint sceneCorner = MAIN->getDisplayer()->getSceneBoundingRect().toRect().topLeft();
 				QRect sceneBBox = m_wordItem->bbox().translated(sceneCorner);
 				QPoint bottomLeft = MAIN->getDisplayer()->mapFromScene(sceneBBox.bottomLeft());
 				QPoint bottomRight = MAIN->getDisplayer()->mapFromScene(sceneBBox.bottomRight());
 				int frameX = parentWidget()->parentWidget()->parentWidget()->pos().x();
 				move(bottomLeft.x() - frameX, 0);
-				setFixedWidth(bottomRight.x() - bottomLeft.x() + 8); // 8: border + padding
+				setFixedWidth(bottomRight.x() - bottomLeft.x() + 8);  // 8: border + padding
 			}
 		}
 	}
 	void keyPressEvent(QKeyEvent* ev) override {
-		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
+		HOCRDocument* document = static_cast<HOCRDocument*> (m_proofReadWidget->documentTree()->model());
 
 #define KEY_IS_ARROW(a) (a == Qt::Key_Up || a == Qt::Key_Down || a == Qt::Key_Left || a == Qt::Key_Right)
 
 		bool nextLine = (ev->modifiers() == Qt::NoModifier && ev->key() == Qt::Key_Down) || (ev->key() == Qt::Key_Tab && m_wordItem == m_wordItem->parent()->children().last());
 		bool prevLine = (ev->modifiers() == Qt::NoModifier && ev->key() == Qt::Key_Up) || (ev->key() == Qt::Key_Backtab && m_wordItem == m_wordItem->parent()->children().first());
-		if(nextLine || prevLine) {
+		if (nextLine || prevLine) {
 			bool next = false;
 			QModelIndex index;
-			if(nextLine) {
+			if (nextLine) {
 				next = true;
 				index = document->indexAtItem(m_wordItem);
 				// Move to first word of next line
 				index = document->prevOrNextIndex(next, index, "ocr_line");
 				index = document->prevOrNextIndex(true, index, "ocrx_word");
-			} else if(prevLine) {
+			} else if (prevLine) {
 				index = document->indexAtItem(m_wordItem);
 				// Move to last word of prev line
 				index = document->prevOrNextIndex(false, index, "ocr_line");
 				index = document->prevOrNextIndex(false, index, "ocrx_word");
 			}
 			m_proofReadWidget->documentTree()->setCurrentIndex(index);
-		} else if(ev->key() == Qt::Key_Space && ev->modifiers() == Qt::ControlModifier) {
+		} else if (ev->key() == Qt::Key_Space && ev->modifiers() == Qt::ControlModifier) {
 			// Spelling menu
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			QMenu menu;
 			document->addSpellingActions(&menu, index);
 			menu.exec(mapToGlobal(QPoint(0, -menu.sizeHint().height())));
-		} else if((ev->key() == Qt::Key_Enter || ev->key() == Qt::Key_Return) && ev->modifiers() & Qt::ControlModifier) {
+		} else if ((ev->key() == Qt::Key_Enter || ev->key() == Qt::Key_Return) && ev->modifiers() & Qt::ControlModifier) {
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			document->addWordToDictionary(index);
-		} else if(ev->key() == Qt::Key_B && ev->modifiers() == Qt::ControlModifier) {
+		} else if (ev->key() == Qt::Key_B && ev->modifiers() == Qt::ControlModifier) {
 			// Bold
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			document->editItemAttribute(index, "bold", m_wordItem->fontBold() ? "0" : "1");
-		} else if(ev->key() == Qt::Key_I && ev->modifiers() == Qt::ControlModifier) {
+		} else if (ev->key() == Qt::Key_I && ev->modifiers() == Qt::ControlModifier) {
 			// Italic
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			document->editItemAttribute(index, "italic", m_wordItem->fontItalic() ? "0" : "1");
-		} else if(KEY_IS_ARROW(ev->key()) && ev->modifiers() & Qt::ControlModifier) {
+		} else if (KEY_IS_ARROW(ev->key()) && ev->modifiers() & Qt::ControlModifier) {
 			// Adjust bbox
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			QRect bbox = m_wordItem->bbox();
-			if(ev->modifiers() & Qt::ShiftModifier) {
+			if (ev->modifiers() & Qt::ShiftModifier) {
 				if (ev->key() == Qt::Key_Up || ev->key() == Qt::Key_Down) {
 					bbox.setHeight(bbox.height() + (ev->key() == Qt::Key_Up ? -1 : 1));
 				} else {
@@ -161,7 +161,7 @@ private:
 				}
 			} else {
 				int dx = 0, dy = 0;
-				switch(ev->key()) {
+				switch (ev->key()) {
 				case Qt::Key_Up:
 					dy = -1;
 					break;
@@ -181,31 +181,31 @@ private:
 			}
 			QString bboxstr = QString("%1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom());
 			document->editItemAttribute(index, "title:bbox", bboxstr);
-		} else if(ev->key() == Qt::Key_D && ev->modifiers() == Qt::ControlModifier) {
+		} else if (ev->key() == Qt::Key_D && ev->modifiers() == Qt::ControlModifier) {
 			// Divide
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			document->splitItemText(index, cursorPosition());
-		} else if(ev->key() == Qt::Key_M && ev->modifiers() & Qt::ControlModifier) {
+		} else if (ev->key() == Qt::Key_M && ev->modifiers() & Qt::ControlModifier) {
 			// Merge
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			document->mergeItemText(index, (ev->modifiers() & Qt::ShiftModifier) != 0);
-		} else if(ev->key() == Qt::Key_Delete && ev->modifiers() == Qt::ControlModifier) {
+		} else if (ev->key() == Qt::Key_Delete && ev->modifiers() == Qt::ControlModifier) {
 			QModelIndex index = document->indexAtItem(m_wordItem);
 			document-> removeItem(index);
-		} else if(ev->key() == Qt::Key_Plus && ev->modifiers() & Qt::ControlModifier) {
+		} else if (ev->key() == Qt::Key_Plus && ev->modifiers() & Qt::ControlModifier) {
 			m_proofReadWidget->adjustFontSize(+1);
-		} else if((ev->key() == Qt::Key_Minus || ev->key() == Qt::Key_Underscore) && ev->modifiers() & Qt::ControlModifier) {
+		} else if ((ev->key() == Qt::Key_Minus || ev->key() == Qt::Key_Underscore) && ev->modifiers() & Qt::ControlModifier) {
 			m_proofReadWidget->adjustFontSize(-1);
 		} else {
 			QLineEdit::keyPressEvent(ev);
 		}
 	}
 	void focusInEvent(QFocusEvent* ev) override {
-		HOCRDocument* document = static_cast<HOCRDocument*>(m_proofReadWidget->documentTree()->model());
+		HOCRDocument* document = static_cast<HOCRDocument*> (m_proofReadWidget->documentTree()->model());
 		m_proofReadWidget->documentTree()->setCurrentIndex(document->indexAtItem(m_wordItem));
-		m_proofReadWidget->setConfidenceLabel(m_wordItem->getTitleAttributes()["x_wconf"].toInt());
+		m_proofReadWidget->setConfidenceLabel(m_wordItem->getTitleAttributes() ["x_wconf"].toInt());
 		QLineEdit::focusInEvent(ev);
-		if(ev->reason() != Qt::MouseFocusReason) {
+		if (ev->reason() != Qt::MouseFocusReason) {
 			deselect();
 			setCursorPosition(0);
 		}
@@ -293,7 +293,7 @@ HOCRProofReadWidget::HOCRProofReadWidget(QTreeView* treeView, QWidget* parent)
 
 	connect(m_treeView->selectionModel(), &QItemSelectionModel::currentRowChanged, this, [this] { updateWidget(); });
 
-	HOCRDocument* document = static_cast<HOCRDocument*>(m_treeView->model());
+	HOCRDocument* document = static_cast<HOCRDocument*> (m_treeView->model());
 
 	// Clear for rebuild if structure changes
 	connect(document, &HOCRDocument::rowsAboutToBeRemoved, this, &HOCRProofReadWidget::clear);
@@ -304,8 +304,8 @@ HOCRProofReadWidget::HOCRProofReadWidget(QTreeView* treeView, QWidget* parent)
 	connect(document, &HOCRDocument::rowsMoved, this, [this] { updateWidget(); });
 	connect(MAIN->getDisplayer(), &Displayer::imageChanged, this, [this] { updateWidget(true); });
 	connect(MAIN->getDisplayer(), &Displayer::viewportChanged, this, &HOCRProofReadWidget::repositionWidget);
-	connect(m_spinLinesBefore, qOverload<int>(&QSpinBox::valueChanged), this, [this] { updateWidget(true); });
-	connect(m_spinLinesAfter, qOverload<int>(&QSpinBox::valueChanged), this, [this] { updateWidget(true); });
+	connect(m_spinLinesBefore, qOverload<int> (&QSpinBox::valueChanged), this, [this] { updateWidget(true); });
+	connect(m_spinLinesAfter, qOverload<int> (&QSpinBox::valueChanged), this, [this] { updateWidget(true); });
 
 	ADD_SETTING(SpinSetting("proofReadLinesBefore", m_spinLinesBefore, 1));
 	ADD_SETTING(SpinSetting("proofReadLinesAfter", m_spinLinesAfter, 1));
@@ -337,9 +337,9 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 	int nrLinesBefore = m_spinLinesBefore->value();
 	int nrLinesAfter = m_spinLinesAfter->value();
 
-	HOCRDocument* document = static_cast<HOCRDocument*>(m_treeView->model());
+	HOCRDocument* document = static_cast<HOCRDocument*> (m_treeView->model());
 	const HOCRItem* item = document->itemAtIndex(current);
-	if(!item) {
+	if (!item) {
 		clear();
 		return;
 	}
@@ -350,10 +350,10 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 	}
 	const HOCRItem* lineItem = nullptr;
 	const HOCRItem* wordItem = nullptr;
-	if(item->itemClass() == "ocrx_word") {
+	if (item->itemClass() == "ocrx_word") {
 		lineItem = item->parent();
 		wordItem = item;
-	} else if(item->itemClass() == "ocr_line") {
+	} else if (item->itemClass() == "ocr_line") {
 		lineItem = item;
 	} else {
 		clear();
@@ -362,19 +362,19 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 
 	const QVector<HOCRItem*>& siblings = lineItem->parent()->children();
 	int targetLine = lineItem->index();
-	if(lineItem != m_currentLine || force) {
+	if (lineItem != m_currentLine || force) {
 		// Rebuild widget
 		QMap<const HOCRItem*, QWidget*> newLines;
 		int insPos = 0;
-		for(int i = qMax(0, targetLine - nrLinesBefore), j = qMin(siblings.size() - 1, targetLine + nrLinesAfter); i <= j; ++i) {
+		for (int i = qMax(0, targetLine - nrLinesBefore), j = qMin(siblings.size() - 1, targetLine + nrLinesAfter); i <= j; ++i) {
 			HOCRItem* linei = siblings[i];
-			if(m_currentLines.contains(linei)) {
+			if (m_currentLines.contains(linei)) {
 				newLines[linei] = m_currentLines.take(linei);
 				insPos = m_linesLayout->indexOf(newLines[linei]) + 1;
 			} else {
 				QWidget* lineWidget = new QWidget();
-				for(HOCRItem* word : siblings[i]->children()) {
-					new LineEdit(this, word, lineWidget); // Add as child to lineWidget
+				for (HOCRItem* word : siblings[i]->children()) {
+					new LineEdit(this, word, lineWidget);  // Add as child to lineWidget
 				}
 				m_linesLayout->insertWidget(insPos++, lineWidget);
 				newLines.insert(linei, lineWidget);
@@ -387,8 +387,8 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 	}
 
 	// Select selected word or first item of middle line
-	LineEdit* focusLineEdit = static_cast<LineEdit*>(m_currentLines[lineItem]->children()[wordItem ? wordItem->index() : 0]);
-	if(focusLineEdit && !m_treeView->hasFocus()) {
+	LineEdit* focusLineEdit = static_cast<LineEdit*> (m_currentLines[lineItem]->children() [wordItem ? wordItem->index() : 0]);
+	if (focusLineEdit && !m_treeView->hasFocus()) {
 		focusLineEdit->setFocus();
 	}
 
@@ -396,7 +396,7 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 
 void HOCRProofReadWidget::repositionWidget() {
 
-	if(m_currentLines.isEmpty() || !m_enabled) {
+	if (m_currentLines.isEmpty() || !m_enabled) {
 		return;
 	}
 
@@ -405,12 +405,12 @@ void HOCRProofReadWidget::repositionWidget() {
 	int frameXmin = std::numeric_limits<int>::max();
 	int frameXmax = 0;
 	QPoint sceneCorner = displayer->getSceneBoundingRect().toRect().topLeft();
-	for(QWidget* lineWidget : m_currentLines) {
-		if(lineWidget->children().isEmpty()) {
+	for (QWidget* lineWidget : m_currentLines) {
+		if (lineWidget->children().isEmpty()) {
 			continue;
 		}
 		// First word
-		LineEdit* lineEdit = static_cast<LineEdit*>(lineWidget->children()[0]);
+		LineEdit* lineEdit = static_cast<LineEdit*> (lineWidget->children() [0]);
 		QPoint bottomLeft = displayer->mapFromScene(lineEdit->item()->bbox().translated(sceneCorner).bottomLeft());
 		frameXmin = std::min(frameXmin, bottomLeft.x());
 	}
@@ -424,18 +424,18 @@ void HOCRProofReadWidget::repositionWidget() {
 	double avgFactor = 0.0;
 	int nFactors = 0;
 	// First pass: min scaling factor, move to correct location
-	for(QWidget* lineWidget : m_currentLines) {
-		for(int i = 0, n = lineWidget->children().count(); i < n; ++i) {
-			LineEdit* lineEdit = static_cast<LineEdit*>(lineWidget->children()[i]);
+	for (QWidget* lineWidget : m_currentLines) {
+		for (int i = 0, n = lineWidget->children().count(); i < n; ++i) {
+			LineEdit* lineEdit = static_cast<LineEdit*> (lineWidget->children() [i]);
 			QRect sceneBBox = lineEdit->item()->bbox().translated(sceneCorner);
 			QPoint bottomLeft = displayer->mapFromScene(sceneBBox.bottomLeft());
 			QPoint bottomRight = displayer->mapFromScene(sceneBBox.bottomRight());
 			// Factor weighed by length
-			double factor = (bottomRight.x() - bottomLeft.x()) / double(fm.horizontalAdvance(lineEdit->text()));
+			double factor = (bottomRight.x() - bottomLeft.x()) / double (fm.horizontalAdvance(lineEdit->text()));
 			avgFactor += lineEdit->text().length() * factor;
 			nFactors += lineEdit->text().length();
 			lineEdit->move(bottomLeft.x() - frameXmin, 0);
-			lineEdit->setFixedWidth(bottomRight.x() - bottomLeft.x() + 8); // 8: border + padding
+			lineEdit->setFixedWidth(bottomRight.x() - bottomLeft.x() + 8);  // 8: border + padding
 			frameXmax = std::max(frameXmax, bottomRight.x() + 8);
 		}
 	}
@@ -444,9 +444,9 @@ void HOCRProofReadWidget::repositionWidget() {
 	// Second pass: apply font sizes, set line heights
 	ft.setPointSizeF(ft.pointSizeF() * avgFactor);
 	fm = QFontMetrics(ft);
-	for(QWidget* lineWidget : m_currentLines) {
-		for(int i = 0, n = lineWidget->children().count(); i < n; ++i) {
-			LineEdit* lineEdit = static_cast<LineEdit*>(lineWidget->children()[i]);
+	for (QWidget* lineWidget : m_currentLines) {
+		for (int i = 0, n = lineWidget->children().count(); i < n; ++i) {
+			LineEdit* lineEdit = static_cast<LineEdit*> (lineWidget->children() [i]);
 			QFont lineEditFont = lineEdit->font();
 			lineEditFont.setPointSizeF(ft.pointSizeF() + m_fontSizeDiff);
 			lineEdit->setFont(lineEditFont);
@@ -460,11 +460,11 @@ void HOCRProofReadWidget::repositionWidget() {
 
 	// Place widget above line if it overflows page
 	QModelIndex current = m_treeView->currentIndex();
-	HOCRDocument* document = static_cast<HOCRDocument*>(m_treeView->model());
+	HOCRDocument* document = static_cast<HOCRDocument*> (m_treeView->model());
 	const HOCRItem* item = document->itemAtIndex(current);
 	QRect sceneBBox = item->page()->bbox().translated(sceneCorner);
 	double maxy = displayer->mapFromScene(sceneBBox.bottomLeft()).y();
-	if(frameY + height() - maxy > 0) {
+	if (frameY + height() - maxy > 0) {
 		frameY = topLeft.y() - height();
 	}
 
@@ -473,29 +473,29 @@ void HOCRProofReadWidget::repositionWidget() {
 }
 
 void HOCRProofReadWidget::showShortcutsDialog() {
-	std::vector<std::pair<QKeySequence, QString>> shortcuts {
-		{QKeySequence("Tab"), _("Next field")},
-		{QKeySequence("Shift+Tab"), _("Previous field")},
-		{QKeySequence("Down"), _("Next line")},
-		{QKeySequence("Up"), _("Previous line")},
-		{QKeySequence("Ctrl+Space"), _("Spelling suggestions")},
-		{QKeySequence("Ctrl+Enter"), _("Add word to dictionary")},
-		{QKeySequence("Ctrl+B"), _("Toggle bold")},
-		{QKeySequence("Ctrl+I"), _("Toggle italic")},
-		{QKeySequence("Ctrl+D"), _("Divide word at cursor position")},
-		{QKeySequence("Ctrl+M"), _("Merge with previous word")},
-		{QKeySequence("Ctrl+Shift+M"), _("Merge with next word")},
-		{QKeySequence("Ctrl+Delete"), _("Delete word")},
-		{QKeySequence("Ctrl+Up"), _("Move the bounding box up")},
-		{QKeySequence("Ctrl+Down"), _("Move the bounding box down")},
-		{QKeySequence("Ctrl+Left"), _("Move the bounding box left")},
-		{QKeySequence("Ctrl+Right"), _("Move the bounding box right")},
-		{QKeySequence("Ctrl+Shift+Up"), _("Shrink the bounding box vertically")},
-		{QKeySequence("Ctrl+Shift+Down"), _("Enlarge the bounding box vertically")},
-		{QKeySequence("Ctrl+Shift+Left"), _("Shrink the bounding box horizontally")},
-		{QKeySequence("Ctrl+Shift+Right"), _("Enlarge the bounding box horizontally")},
-		{QKeySequence("Ctrl++"), _("Increase font size")},
-		{QKeySequence("Ctrl+-"), _("Decrease font size")}
+	std::vector<std::pair<QKeySequence, QString >> shortcuts {
+		{QKeySequence("Tab"), _("Next field") },
+		{QKeySequence("Shift+Tab"), _("Previous field") },
+		{QKeySequence("Down"), _("Next line") },
+		{QKeySequence("Up"), _("Previous line") },
+		{QKeySequence("Ctrl+Space"), _("Spelling suggestions") },
+		{QKeySequence("Ctrl+Enter"), _("Add word to dictionary") },
+		{QKeySequence("Ctrl+B"), _("Toggle bold") },
+		{QKeySequence("Ctrl+I"), _("Toggle italic") },
+		{QKeySequence("Ctrl+D"), _("Divide word at cursor position") },
+		{QKeySequence("Ctrl+M"), _("Merge with previous word") },
+		{QKeySequence("Ctrl+Shift+M"), _("Merge with next word") },
+		{QKeySequence("Ctrl+Delete"), _("Delete word") },
+		{QKeySequence("Ctrl+Up"), _("Move the bounding box up") },
+		{QKeySequence("Ctrl+Down"), _("Move the bounding box down") },
+		{QKeySequence("Ctrl+Left"), _("Move the bounding box left") },
+		{QKeySequence("Ctrl+Right"), _("Move the bounding box right") },
+		{QKeySequence("Ctrl+Shift+Up"), _("Shrink the bounding box vertically") },
+		{QKeySequence("Ctrl+Shift+Down"), _("Enlarge the bounding box vertically") },
+		{QKeySequence("Ctrl+Shift+Left"), _("Shrink the bounding box horizontally") },
+		{QKeySequence("Ctrl+Shift+Right"), _("Enlarge the bounding box horizontally") },
+		{QKeySequence("Ctrl++"), _("Increase font size") },
+		{QKeySequence("Ctrl+-"), _("Decrease font size") }
 	};
 
 	auto* d = new QDialog(this);
@@ -515,11 +515,13 @@ void HOCRProofReadWidget::showShortcutsDialog() {
 }
 
 QString HOCRProofReadWidget::confidenceStyle(int wconf) const {
-	if(wconf < 70) {
+	if (wconf < 70) {
 		return "background: #ffb2b2;";
-	} else if(wconf < 80) {
+	}
+	else if (wconf < 80) {
 		return "background: #ffdab0;";
-	} else if(wconf < 90) {
+	}
+	else if (wconf < 90) {
 		return "background: #fffdb4;";
 	}
 	return QString();

@@ -31,7 +31,7 @@ public:
 		int dpi;
 	};
 
-	bool openFile( const QString& fileName );
+	bool openFile(const QString& fileName);
 	void closeFile();
 	QImage image(int pageno, int resolution);
 	int pageCount() const {

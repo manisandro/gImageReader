@@ -27,7 +27,7 @@ public:
 	bool checkSpelling(const Glib::ustring& word, std::vector<Glib::ustring>* suggestions = nullptr, int limit = -1);
 
 private:
-	void generateCombinations(const std::vector<std::vector<Glib::ustring>>& lists, std::vector<std::vector<Glib::ustring>>& results, int depth, const std::vector<Glib::ustring>& c) const;
+	void generateCombinations(const std::vector<std::vector<Glib::ustring >> & lists, std::vector<std::vector<Glib::ustring >>& results, int depth, const std::vector<Glib::ustring>& c) const;
 };
 
 #endif // HOCRSPELLCHECKER_HH

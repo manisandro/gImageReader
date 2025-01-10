@@ -36,7 +36,7 @@ public:
 	bool isAttached() const override { return true; }
 
 private:
-	void generateCombinations(const QList<QList<QString>>& lists, QList<QList<QString>>& results, int depth, const QList<QString>& c) const;
+	void generateCombinations(const QList<QList<QString >> & lists, QList<QList<QString >>& results, int depth, const QList<QString>& c) const;
 };
 
 #endif // HOCRSPELLCHECKER_HH

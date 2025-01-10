@@ -74,7 +74,7 @@ std::string make_absolute_path(const std::string& path, const std::string& basep
 std::string make_relative_path(const std::string& path, const std::string& basepath);
 std::string get_documents_dir();
 std::string make_output_filename(const std::string& filename);
-void list_dir(const std::string& path, const std::set<std::string>& filters, std::vector<Glib::RefPtr<Gio::File>>& output);
+void list_dir(const std::string& path, const std::set<std::string>& filters, std::vector<Glib::RefPtr<Gio::File >> & output);
 
 std::vector<Glib::ustring> string_split(const Glib::ustring& text, char delim, bool keepEmpty = true);
 Glib::ustring string_join(const std::vector<Glib::ustring>& strings, const Glib::ustring& joiner);
@@ -87,7 +87,7 @@ std::size_t string_firstIndex(const Glib::ustring& str, const Glib::ustring& sea
 std::size_t string_lastIndex(const Glib::ustring& str, const Glib::ustring& search, int pos, bool matchCase);
 int string_replace(Glib::ustring& str, const Glib::ustring& search, const Glib::ustring& replace, bool matchCase);
 Glib::ustring string_html_escape(const Glib::ustring& str);
-std::vector<std::pair<Glib::ustring, int>> string_split_pos(const Glib::ustring& str, const Glib::RefPtr<Glib::Regex>& splitRe);
+std::vector<std::pair<Glib::ustring, int >> string_split_pos(const Glib::ustring& str, const Glib::RefPtr<Glib::Regex>& splitRe);
 
 int parseInt(const Glib::ustring& str, bool* ok = nullptr);
 
@@ -124,35 +124,35 @@ std::vector<T> vector_slice(const std::vector<T>& vector, int start, int count =
 	return result;
 }
 
-template<class T, class It = std::reverse_iterator<typename T::iterator>>
+template<class T, class It = std::reverse_iterator<typename T::iterator >>
 rev_iters<It> reverse(T& t) {
 	return { t.rbegin(), t.rend() };
 }
 
-template<class T, class It = std::reverse_iterator<typename T::const_iterator>>
+template<class T, class It = std::reverse_iterator<typename T::const_iterator >>
 rev_iters<It> reverse(const T& t) {
 	return { t.crbegin(), t.crend() };
 }
 
 template <template<class, class, class...> class C, typename K, typename V, typename... Args>
 V get_default(const C<K, V, Args...>& m, K const& key, const V& defval) {
-	typename C<K, V, Args...>::const_iterator it = m.find( key );
+	typename C<K, V, Args...>::const_iterator it = m.find(key);
 	return it == m.end() ? defval : it->second;
 }
 
-bool busyTask(const std::function<bool()>& f, const Glib::ustring& msg);
-void runInMainThreadBlocking(const std::function<void()>& f);
+bool busyTask(const std::function<bool() >& f, const Glib::ustring& msg);
+void runInMainThreadBlocking(const std::function<void() >& f);
 
 class TesseractHandle {
 public:
 	TesseractHandle(const char* language = nullptr);
 	~TesseractHandle();
-	tesseract::TessBaseAPI* get() const { return m_tess; }
+	tesseract::TessBaseAPI * get() const { return m_tess; }
 private:
 	tesseract::TessBaseAPI* m_tess;
 };
 
-template<typename T, typename S = std::deque<T>>
+template<typename T, typename S = std::deque<T >>
 class AsyncQueue {
 	std::queue<T, S> m_queue;
 	std::mutex m_mutex;
@@ -162,7 +162,7 @@ public:
 		std::unique_lock<std::mutex> lock(m_mutex);
 		return m_queue.empty();
 	}
-	void enqueue(const T& item) {
+	void enqueue(const T & item) {
 		std::unique_lock<std::mutex> lock(m_mutex);
 		m_queue.push(item);
 		lock.unlock();
@@ -170,7 +170,7 @@ public:
 	}
 	T dequeue() {
 		std::unique_lock<std::mutex> lock(m_mutex);
-		while ( m_queue.empty() ) {
+		while (m_queue.empty()) {
 			m_cond.wait(lock);
 		}
 		T result(m_queue.front());

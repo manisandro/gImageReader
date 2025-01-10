@@ -59,8 +59,8 @@ HOCRBatchExportDialog::HOCRBatchExportDialog(QWidget* parent)
 	MAIN->setOutputMode(MainWindow::OutputModeHOCR);
 
 	connect(ui.toolButtonSourceFolder, &QToolButton::clicked, this, &HOCRBatchExportDialog::setSourceFolder);
-	connect(ui.comboBoxFormat, qOverload<int>(&QComboBox::currentIndexChanged), this, &HOCRBatchExportDialog::setExportFormat);
-	connect(ui.spinBoxExportLevel, qOverload<int>(&QSpinBox::valueChanged), this, &HOCRBatchExportDialog::updateOutputTree);
+	connect(ui.comboBoxFormat, qOverload<int> (&QComboBox::currentIndexChanged), this, &HOCRBatchExportDialog::setExportFormat);
+	connect(ui.spinBoxExportLevel, qOverload<int> (&QSpinBox::valueChanged), this, &HOCRBatchExportDialog::updateOutputTree);
 	connect(ui.buttonBox->button(QDialogButtonBox::Apply), &QAbstractButton::clicked, this, &HOCRBatchExportDialog::apply);
 	connect(ui.buttonBox, &QDialogButtonBox::rejected, this, &HOCRBatchExportDialog::reject);
 	connect(&m_previewTimer, &QTimer::timeout, this, &HOCRBatchExportDialog::updateExportPreview);
@@ -71,14 +71,14 @@ HOCRBatchExportDialog::HOCRBatchExportDialog(QWidget* parent)
 void HOCRBatchExportDialog::setSourceFolder() {
 	QString initialFolder = Utils::documentsFolder();
 	QString dir = QFileDialog::getExistingDirectory(MAIN, _("Select folder..."), initialFolder);
-	if(dir.isEmpty()) {
+	if (dir.isEmpty()) {
 		return;
 	}
 	ui.lineEditSourceFolder->setText(dir);
 	m_sourceTreeModel->clear();
 
 	QDirIterator it(dir, QStringList() << "*.html", QDir::Files, QDirIterator::Subdirectories);
-	while(it.hasNext()) {
+	while (it.hasNext()) {
 		QString filename = it.next();
 		m_sourceTreeModel->insertFile(filename, nullptr);
 	}
@@ -88,10 +88,10 @@ void HOCRBatchExportDialog::setSourceFolder() {
 
 void HOCRBatchExportDialog::setExportFormat() {
 	updateOutputTree();
-	ExportMode mode = static_cast<ExportMode>(ui.comboBoxFormat->currentData().toInt());
-	if(mode == ExportPdf) {
-		if(!m_pdfExportWidget) {
-			OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*>(MAIN->getOutputEditor());
+	ExportMode mode = static_cast<ExportMode> (ui.comboBoxFormat->currentData().toInt());
+	if (mode == ExportPdf) {
+		if (!m_pdfExportWidget) {
+			OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*> (MAIN->getOutputEditor());
 			m_pdfExportWidget = new HOCRPdfExportWidget(editor->getTool());
 			ui.tabOptions->layout()->addWidget(m_pdfExportWidget);
 		}
@@ -112,13 +112,13 @@ void HOCRBatchExportDialog::updateOutputTree() {
 	int exportLevel = ui.spinBoxExportLevel->value();
 
 	QString dir = ui.lineEditSourceFolder->text();
-	if(dir.isEmpty()) {
+	if (dir.isEmpty()) {
 		return;
 	}
 
 	QString exportSuffix;
-	ExportMode mode = static_cast<ExportMode>(ui.comboBoxFormat->currentData().toInt());
-	switch(mode) {
+	ExportMode mode = static_cast<ExportMode> (ui.comboBoxFormat->currentData().toInt());
+	switch (mode) {
 	case ExportPdf:
 		exportSuffix = ".pdf";
 		break;
@@ -133,10 +133,10 @@ void HOCRBatchExportDialog::updateOutputTree() {
 	QStringList filenames;
 	QDirIterator it(dir, QStringList() << "*.html", QDir::Files, QDirIterator::Subdirectories);
 	int deepestlevel = 0;
-	while(it.hasNext()) {
+	while (it.hasNext()) {
 		QString filename = it.next();
 		filenames.append(filename);
-		deepestlevel = std::max(int(QDir::cleanPath(QDir(dir).relativeFilePath(filename)).count('/')), deepestlevel);
+		deepestlevel = std::max(int (QDir::cleanPath(QDir(dir).relativeFilePath(filename)).count('/')), deepestlevel);
 	}
 	int groupAboveDepth = std::max(0, deepestlevel - exportLevel);
 	for (const QString& filename : filenames) {
@@ -148,12 +148,12 @@ void HOCRBatchExportDialog::updateOutputTree() {
 		}
 		m_outputMap[output].append(filename);
 	}
-	for(const QString& output : m_outputMap.keys()) {
+	for (const QString& output : m_outputMap.keys()) {
 		m_outputTreeModel->insertFile(output, nullptr);
 	}
 	ui.treeViewOutput->expandAll();
 
-	if(m_pdfExportWidget) {
+	if (m_pdfExportWidget) {
 		m_previewTimer.start(250);
 	}
 }
@@ -167,8 +167,8 @@ void HOCRBatchExportDialog::apply() {
 	HOCRExporter* exporter = nullptr;
 	HOCRPdfExporter::PDFSettings settings;
 
-	ExportMode mode = static_cast<ExportMode>(ui.comboBoxFormat->currentData().toInt());
-	switch(mode) {
+	ExportMode mode = static_cast<ExportMode> (ui.comboBoxFormat->currentData().toInt());
+	switch (mode) {
 	case ExportPdf:
 		exporter = new HOCRPdfExporter();
 		settings = m_pdfExportWidget->getPdfSettings();
@@ -181,9 +181,9 @@ void HOCRBatchExportDialog::apply() {
 		break;
 	}
 
-	OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*>(MAIN->getOutputEditor());
+	OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*> (MAIN->getOutputEditor());
 
-	for(auto it = m_outputMap.begin(), itEnd = m_outputMap.end(); it != itEnd; ++it) {
+	for (auto it = m_outputMap.begin(), itEnd = m_outputMap.end(); it != itEnd; ++it) {
 		editor->open(OutputEditorHOCR::InsertMode::Replace, it.value());
 		exporter->run(editor->getDocument(), it.key(), &settings);
 		ui.progressBar->setValue(ui.progressBar->value() + 1);
@@ -198,7 +198,7 @@ void HOCRBatchExportDialog::updateExportPreview() {
 	if (m_outputMap.isEmpty()) {
 		return;
 	}
-	OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*>(MAIN->getOutputEditor());
+	OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*> (MAIN->getOutputEditor());
 	editor->open(OutputEditorHOCR::InsertMode::Replace, m_outputMap.first());
 	HOCRDocument* document = editor->getDocument();
 	editor->selectPage(0);

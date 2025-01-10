@@ -55,7 +55,7 @@ public:
 	sigc::signal<void> signal_initFailed() const {
 		return m_signal_initFailed;
 	}
-	sigc::signal<void, std::vector<Scanner::Device>> signal_devicesDetected() const {
+	sigc::signal<void, std::vector<Scanner::Device >> signal_devicesDetected() const {
 		return m_signal_devicesDetected;
 	}
 	sigc::signal<void, Glib::ustring> signal_scanFailed() const {
@@ -70,7 +70,7 @@ public:
 
 protected:
 	sigc::signal<void> m_signal_initFailed;
-	sigc::signal<void, std::vector<Scanner::Device>> m_signal_devicesDetected;
+	sigc::signal<void, std::vector<Scanner::Device >> m_signal_devicesDetected;
 	sigc::signal<void, Glib::ustring> m_signal_scanFailed;
 	sigc::signal<void, Scanner::State> m_signal_scanStateChanged;
 	sigc::signal<void, std::string> m_signal_pageAvailable;

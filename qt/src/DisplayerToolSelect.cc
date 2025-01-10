@@ -46,8 +46,8 @@ DisplayerToolSelect::~DisplayerToolSelect() {
 }
 
 void DisplayerToolSelect::mousePressEvent(QMouseEvent* event) {
-	if(event->button() == Qt::LeftButton &&  m_curSel == nullptr) {
-		if((event->modifiers() & Qt::ControlModifier) == 0) {
+	if (event->button() == Qt::LeftButton &&  m_curSel == nullptr) {
+		if ((event->modifiers() & Qt::ControlModifier) == 0) {
 			clearSelections();
 		}
 		m_curSel = new NumberedDisplayerSelection(this, 1 + m_selections.size(), m_displayer->mapToSceneClamped(event->pos()));
@@ -58,7 +58,7 @@ void DisplayerToolSelect::mousePressEvent(QMouseEvent* event) {
 }
 
 void DisplayerToolSelect::mouseMoveEvent(QMouseEvent* event) {
-	if(m_curSel) {
+	if (m_curSel) {
 		QPointF p = m_displayer->mapToSceneClamped(event->pos());
 		m_curSel->setPoint(p);
 		m_displayer->ensureVisible(QRectF(p, p));
@@ -67,8 +67,8 @@ void DisplayerToolSelect::mouseMoveEvent(QMouseEvent* event) {
 }
 
 void DisplayerToolSelect::mouseReleaseEvent(QMouseEvent* event) {
-	if(m_curSel) {
-		if(m_curSel->rect().width() < 5.0 || m_curSel->rect().height() < 5.0) {
+	if (m_curSel) {
+		if (m_curSel->rect().width() < 5.0 || m_curSel->rect().height() < 5.0) {
 			delete m_curSel;
 		} else {
 			m_selections.append(m_curSel);
@@ -80,7 +80,7 @@ void DisplayerToolSelect::mouseReleaseEvent(QMouseEvent* event) {
 }
 
 void DisplayerToolSelect::resolutionChanged(double factor) {
-	for(NumberedDisplayerSelection* sel : m_selections) {
+	for (NumberedDisplayerSelection* sel : m_selections) {
 		sel->scale(factor);
 	}
 }
@@ -88,17 +88,17 @@ void DisplayerToolSelect::resolutionChanged(double factor) {
 void DisplayerToolSelect::rotationChanged(double delta) {
 	QTransform t;
 	t.rotate(delta);
-	for(NumberedDisplayerSelection* sel : m_selections) {
+	for (NumberedDisplayerSelection* sel : m_selections) {
 		sel->rotate(t);
 	}
 }
 
 QList<QImage> DisplayerToolSelect::getOCRAreas() {
 	QList<QImage> images;
-	if(m_selections.empty()) {
+	if (m_selections.empty()) {
 		images.append(m_displayer->getImage(m_displayer->getSceneBoundingRect()));
 	} else {
-		for(const NumberedDisplayerSelection* sel : m_selections) {
+		for (const NumberedDisplayerSelection* sel : m_selections) {
 			images.append(m_displayer->getImage(sel->rect()));
 		}
 	}
@@ -114,7 +114,7 @@ void DisplayerToolSelect::clearSelections() {
 void DisplayerToolSelect::removeSelection(int num) {
 	delete m_selections[num - 1];
 	m_selections.removeAt(num - 1);
-	for(int i = 0, n = m_selections.size(); i < n; ++i) {
+	for (int i = 0, n = m_selections.size(); i < n; ++i) {
 		m_selections[i]->setNumber(1 + i);
 		m_selections[i]->setZValue(1 + i);
 	}
@@ -124,7 +124,7 @@ void DisplayerToolSelect::reorderSelection(int oldNum, int newNum) {
 	NumberedDisplayerSelection* sel = m_selections[oldNum - 1];
 	m_selections.removeAt(oldNum - 1);
 	m_selections.insert(newNum - 1, sel);
-	for(int i = 0, n = m_selections.size(); i < n; ++i) {
+	for (int i = 0, n = m_selections.size(); i < n; ++i) {
 		m_selections[i]->setNumber(1 + i);
 		m_selections[i]->setZValue(1 + i);
 	}
@@ -133,7 +133,7 @@ void DisplayerToolSelect::reorderSelection(int oldNum, int newNum) {
 void DisplayerToolSelect::saveSelection(NumberedDisplayerSelection* selection) {
 	QImage img = m_displayer->getImage(selection->rect());
 	QString filename = FileDialogs::saveDialog(_("Save Selection Image"), _("selection.png"), "outputdir", QString("%1 (*.png)").arg(_("PNG Images")), true);
-	if(!filename.isEmpty()) {
+	if (!filename.isEmpty()) {
 		img.save(filename);
 	}
 }
@@ -160,7 +160,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 		tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
 		tess.SetImage(img.bits(), img.width(), img.height(), 4, img.bytesPerLine());
 		tesseract::PageIterator* it = tess.AnalyseLayout();
-		if(it && !it->Empty(tesseract::RIL_BLOCK)) {
+		if (it && !it->Empty(tesseract::RIL_BLOCK)) {
 			do {
 				int x1, y1, x2, y2;
 				tesseract::Orientation orient;
@@ -173,10 +173,10 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 				++nDeskew;
 				float width = x2 - x1, height = y2 - y1;
 				float margin = 2;
-				if(width > 10 && height > 10) {
+				if (width > 10 && height > 10) {
 					rects.append(QRectF(x1 - 0.5 * img.width() - margin, y1 - 0.5 * img.height() - margin, width + 2 * margin, height + 2 * margin));
 				}
-			} while(it->Next(tesseract::RIL_BLOCK));
+			} while (it->Next(tesseract::RIL_BLOCK));
 		}
 		delete it;
 		return true;
@@ -185,22 +185,22 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 	// If a somewhat large deskew angle is detected, automatically rotate image and redetect layout,
 	// unless we already attempted to rotate (to prevent endless loops)
 	avgDeskew = qRound(((avgDeskew / nDeskew) / M_PI * 180.0) * 10.0) / 10.0;
-	if(std::abs(avgDeskew) > 0.1 && !noDeskew) {
+	if (std::abs(avgDeskew) > 0.1 && !noDeskew) {
 		double newangle = m_displayer->getCurrentAngle() - avgDeskew;
 		m_displayer->setup(nullptr, nullptr, &newangle);
 		autodetectLayout(true);
 	} else {
 		// Merge overlapping rectangles
-		for(int i = rects.size(); i-- > 1;) {
-			for(int j = i; j-- > 0;) {
-				if(rects[j].intersects(rects[i])) {
+		for (int i = rects.size(); i-- > 1;) {
+			for (int j = i; j-- > 0;) {
+				if (rects[j].intersects(rects[i])) {
 					rects[j] = rects[j].united(rects[i]);
 					rects.removeAt(i);
 					break;
 				}
 			}
 		}
-		for(int i = 0, n = rects.size(); i < n; ++i) {
+		for (int i = 0, n = rects.size(); i < n; ++i) {
 			m_selections.append(new NumberedDisplayerSelection(this, 1 + i, rects[i].topLeft()));
 			m_selections.back()->setPoint(rects[i].bottomRight());
 			m_displayer->scene()->addItem(m_selections.back());
@@ -228,10 +228,10 @@ void NumberedDisplayerSelection::contextMenuEvent(QGraphicsSceneContextMenuEvent
 	layout->addWidget(orderLabel);
 
 	QSpinBox* orderSpin = new QSpinBox();
-	orderSpin->setRange(1, static_cast<DisplayerToolSelect*>(m_tool)->m_selections.size());
+	orderSpin->setRange(1, static_cast<DisplayerToolSelect*> (m_tool)->m_selections.size());
 	orderSpin->setValue(m_number);
 	orderSpin->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	connect(orderSpin, qOverload<int>(&QSpinBox::valueChanged), this, &NumberedDisplayerSelection::reorderSelection);
+	connect(orderSpin, qOverload<int> (&QSpinBox::valueChanged), this, &NumberedDisplayerSelection::reorderSelection);
 	layout->addWidget(orderSpin);
 
 	QWidgetAction* spinAction = new QWidgetAction(&menu);
@@ -243,19 +243,19 @@ void NumberedDisplayerSelection::contextMenuEvent(QGraphicsSceneContextMenuEvent
 	QAction* saveAction = new QAction(QIcon::fromTheme("document-save-as"), _("Save as image"), &menu);
 	menu.addActions(QList<QAction*>() << spinAction << deleteAction << ocrAction << ocrClipboardAction << saveAction);
 	QAction* selected = menu.exec(event->screenPos());
-	if(selected == deleteAction) {
-		static_cast<DisplayerToolSelect*>(m_tool)->removeSelection(m_number);
-	} else if(selected == ocrAction) {
+	if (selected == deleteAction) {
+		static_cast<DisplayerToolSelect*> (m_tool)->removeSelection(m_number);
+	} else if (selected == ocrAction) {
 		MAIN->getRecognizer()->recognizeImage(m_tool->getDisplayer()->getImage(rect()), Recognizer::OutputDestination::Buffer);
-	} else if(selected == ocrClipboardAction) {
+	} else if (selected == ocrClipboardAction) {
 		MAIN->getRecognizer()->recognizeImage(m_tool->getDisplayer()->getImage(rect()), Recognizer::OutputDestination::Clipboard);
-	} else if(selected == saveAction) {
-		static_cast<DisplayerToolSelect*>(m_tool)->saveSelection(this);
+	} else if (selected == saveAction) {
+		static_cast<DisplayerToolSelect*> (m_tool)->saveSelection(this);
 	}
 }
 
 void NumberedDisplayerSelection::reorderSelection(int newNumber) {
-	static_cast<DisplayerToolSelect*>(m_tool)->reorderSelection(m_number, newNumber);
+	static_cast<DisplayerToolSelect*> (m_tool)->reorderSelection(m_number, newNumber);
 }
 
 void NumberedDisplayerSelection::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
@@ -270,7 +270,7 @@ void NumberedDisplayerSelection::paint(QPainter* painter, const QStyleOptionGrap
 	painter->drawRect(box);
 	painter->setRenderHint(QPainter::Antialiasing, true);
 
-	if(w > 1.25) {
+	if (w > 1.25) {
 		QFont font;
 		font.setPixelSize(0.8 * w);
 		font.setBold(true);

@@ -72,10 +72,10 @@ void MainWindow::signalHandlerExec(int signal, bool tesseractCrash) {
 	std::signal(signal, nullptr);
 
 	QString filename;
-	if(MAIN->getOutputEditor()) {
+	if (MAIN->getOutputEditor()) {
 		filename = QDir(Utils::documentsFolder()).absoluteFilePath(QString("%1_crash-save").arg(PACKAGE_NAME));
 		int i = 0;
-		while(QFile(filename).exists()) {
+		while (QFile(filename).exists()) {
 			++i;
 			filename = QDir(Utils::documentsFolder()).absoluteFilePath(QString("%1_crash-save_%2").arg(PACKAGE_NAME).arg(i));
 		}
@@ -174,13 +174,13 @@ MainWindow::MainWindow(const QStringList& files)
 	connect(m_acquirer, &Acquirer::scanPageAvailable, m_sourceManager, [this](const QString & source) { m_sourceManager->addSource(source); });
 	connect(m_sourceManager, &SourceManager::sourceChanged, this, &MainWindow::onSourceChanged);
 	connect(ui.actionToggleOutputPane, &QAction::toggled, ui.dockWidgetOutput, &QDockWidget::setVisible);
-	connect(ui.comboBoxOCRMode, qOverload<int>(&QComboBox::currentIndexChanged), this, [this] { setOutputMode(static_cast<OutputMode>(ui.comboBoxOCRMode->currentData().toInt())); });
+	connect(ui.comboBoxOCRMode, qOverload<int> (&QComboBox::currentIndexChanged), this, [this] { setOutputMode(static_cast<OutputMode> (ui.comboBoxOCRMode->currentData().toInt())); });
 	connect(m_recognitionMenu, &RecognitionMenu::languageChanged, this, &MainWindow::languageChanged);
 	connect(ui.actionAutodetectLayout, &QAction::triggered, m_displayer, &Displayer::autodetectOCRAreas);
 	connect(ui.actionBatchExport, &QAction::triggered, this, &MainWindow::batchExport);
 
-	ADD_SETTING(VarSetting<QByteArray>("wingeom"));
-	ADD_SETTING(VarSetting<QByteArray>("winstate"));
+	ADD_SETTING(VarSetting<QByteArray> ("wingeom"));
+	ADD_SETTING(VarSetting<QByteArray> ("winstate"));
 	ADD_SETTING(ActionSetting("showcontrols", ui.actionImageControls));
 	ADD_SETTING(ComboSetting("outputeditor", ui.comboBoxOCRMode, OutputModeText));
 
@@ -206,15 +206,15 @@ MainWindow::MainWindow(const QStringList& files)
 
 	pushState(State::Idle, _("Select an image to begin..."));
 
-	restoreGeometry(ConfigSettings::get<VarSetting<QByteArray>>("wingeom")->getValue());
-	restoreState(ConfigSettings::get<VarSetting<QByteArray>>("winstate")->getValue());
+	restoreGeometry(ConfigSettings::get<VarSetting<QByteArray >> ("wingeom")->getValue());
+	restoreState(ConfigSettings::get<VarSetting<QByteArray >> ("winstate")->getValue());
 	ui.dockWidgetOutput->setVisible(false);
 	ui.toolBarMain->setVisible(true);
 
 	ui.actionSources->trigger();
 
 #if ENABLE_VERSIONCHECK
-	if(ConfigSettings::get<SwitchSetting>("updatecheck")->getValue()) {
+	if (ConfigSettings::get<SwitchSetting> ("updatecheck")->getValue()) {
 		QFuture<QString> future = QtConcurrent::run([ = ] {
 			QString messages;
 			QString newver = Utils::download(QUrl(CHECKURL), messages, 5000);
@@ -229,17 +229,17 @@ MainWindow::MainWindow(const QStringList& files)
 
 	QStringList hocrFiles;
 	QStringList otherFiles;
-	for(const QString& file : files) {
-		if(file.endsWith(".html", Qt::CaseInsensitive)) {
+	for (const QString& file : files) {
+		if (file.endsWith(".html", Qt::CaseInsensitive)) {
 			hocrFiles.append(file);
 		} else {
 			otherFiles.append(file);
 		}
 	}
 	m_sourceManager->addSources(otherFiles);
-	if(!hocrFiles.isEmpty()) {
-		if(setOutputMode(OutputModeHOCR)) {
-			static_cast<OutputEditorHOCR*>(m_outputEditor)->open(OutputEditorHOCR::InsertMode::Append, hocrFiles);
+	if (!hocrFiles.isEmpty()) {
+		if (setOutputMode(OutputModeHOCR)) {
+			static_cast<OutputEditorHOCR*> (m_outputEditor)->open(OutputEditorHOCR::InsertMode::Append, hocrFiles);
 			ui.dockWidgetOutput->setVisible(true);
 		}
 	}
@@ -263,12 +263,12 @@ void MainWindow::openFiles(const QStringList& files) {
 }
 
 void MainWindow::openOutput(const QString& filename) {
-	if(filename.endsWith(".txt", Qt::CaseInsensitive)) {
-		if(setOutputMode(OutputModeText)) {
+	if (filename.endsWith(".txt", Qt::CaseInsensitive)) {
+		if (setOutputMode(OutputModeText)) {
 			m_outputEditor->open(filename);
 		}
-	} else if(filename.endsWith(".html", Qt::CaseInsensitive)) {
-		if(setOutputMode(OutputModeHOCR)) {
+	} else if (filename.endsWith(".html", Qt::CaseInsensitive)) {
+		if (setOutputMode(OutputModeHOCR)) {
 			m_outputEditor->open(filename);
 		}
 	}
@@ -279,16 +279,16 @@ void MainWindow::setOutputPaneVisible(bool visible) {
 }
 
 void MainWindow::pushState(MainWindow::State state, const QString& msg) {
-	m_stateStack.push(QPair<State, QString>(state, msg));
+	m_stateStack.push(QPair<State, QString> (state, msg));
 	ui.statusbar->showMessage(msg);
 	setState(state);
-	if(state == State::Busy) {
+	if (state == State::Busy) {
 		QApplication::setOverrideCursor(Qt::WaitCursor);
 	}
 }
 
 void MainWindow::popState() {
-	if(m_stateStack.top().first == State::Busy) {
+	if (m_stateStack.top().first == State::Busy) {
 		QApplication::restoreOverrideCursor();
 	}
 	m_stateStack.pop();
@@ -300,33 +300,33 @@ void MainWindow::popState() {
 void MainWindow::setState(State state) {
 	bool isIdle = state == State::Idle;
 	m_idleActions.setEnabled(!isIdle);
-	for(QWidget* widget : m_idleWidgets) {
+	for (QWidget* widget : m_idleWidgets) {
 		widget->setEnabled(!isIdle);
 	}
 }
 
 void MainWindow::closeEvent(QCloseEvent* ev) {
-	if(m_stateStack.top().first == State::Busy) {
+	if (m_stateStack.top().first == State::Busy) {
 		ev->ignore();
-	} else if(!m_outputEditor->clear()) {
+	} else if (!m_outputEditor->clear()) {
 		ev->ignore();
 	} else {
-		if(!isMaximized()) {
-			ConfigSettings::get<VarSetting<QByteArray>>("wingeom")->setValue(saveGeometry());
+		if (!isMaximized()) {
+			ConfigSettings::get<VarSetting<QByteArray >> ("wingeom")->setValue(saveGeometry());
 		}
-		ConfigSettings::get<VarSetting<QByteArray>>("winstate")->setValue(saveState());
+		ConfigSettings::get<VarSetting<QByteArray >> ("winstate")->setValue(saveState());
 	}
 }
 
 void MainWindow::onSourceChanged() {
 	QList<Source*> sources = m_sourceManager->getSelectedSources();
-	if(m_displayer->setSources(sources) && !sources.empty()) {
+	if (m_displayer->setSources(sources) && !sources.empty()) {
 		setWindowTitle(QString("%1 - %2").arg(sources.size() == 1 ? sources.front()->displayname : _("Multiple sources (%1)").arg(sources.size())).arg(PACKAGE_NAME));
-		if(m_stateStack.top().first == State::Idle) {
+		if (m_stateStack.top().first == State::Idle) {
 			pushState(State::Normal, _("Ready"));
 		}
 	} else {
-		if(m_stateStack.top().first == State::Normal) {
+		if (m_stateStack.top().first == State::Normal) {
 			popState();
 		}
 		setWindowTitle(PACKAGE_NAME);
@@ -349,13 +349,13 @@ void MainWindow::showHelp(const QString& chapter) {
 #else
 	QString manualDirPath(MANUAL_DIR);
 #endif
-	if(manualDirPath.isEmpty()) {
+	if (manualDirPath.isEmpty()) {
 		manualDirPath = QString("%1/../share/doc/gimagereader").arg(QApplication::applicationDirPath());
 	}
 	QDir manualDir(manualDirPath);
 	QString language = QLocale::system().name().left(2);
 	QString manualFile = manualDir.absoluteFilePath(QString("manual-%1.html").arg(language));
-	if(!QFile(manualFile).exists()) {
+	if (!QFile(manualFile).exists()) {
 		manualFile = manualDir.absoluteFilePath("manual.html");
 	}
 	QUrl manualUrl = QUrl::fromLocalFile(manualFile);
@@ -365,7 +365,7 @@ void MainWindow::showHelp(const QString& chapter) {
 
 void MainWindow::manageLanguages() {
 	TessdataManager manager(MAIN);
-	if(manager.setup()) {
+	if (manager.setup()) {
 		manager.exec();
 	}
 }
@@ -376,9 +376,9 @@ void MainWindow::showConfig() {
 }
 
 bool MainWindow::setOutputMode(OutputMode mode) {
-	if(m_outputEditor && !m_outputEditor->clear()) {
+	if (m_outputEditor && !m_outputEditor->clear()) {
 		ui.comboBoxOCRMode->blockSignals(true);
-		if(dynamic_cast<OutputEditorText*>(m_outputEditor)) {
+		if (dynamic_cast<OutputEditorText*> (m_outputEditor)) {
 			ui.comboBoxOCRMode->setCurrentIndex(ui.comboBoxOCRMode->findData(OutputModeText));
 		} else { /*if(dynamic_cast<OutputEditorHOCR*>(m_outputEditor))*/
 			ui.comboBoxOCRMode->setCurrentIndex(ui.comboBoxOCRMode->findData(OutputModeHOCR));
@@ -388,12 +388,12 @@ bool MainWindow::setOutputMode(OutputMode mode) {
 	} else {
 		delete m_displayerTool;
 		delete m_outputEditor;
-		if(mode == OutputModeText) {
+		if (mode == OutputModeText) {
 			m_displayerTool = new DisplayerToolSelect(m_displayer);
 			m_outputEditor = new OutputEditorText();
 		} else { /*if(mode == OutputModeHOCR)*/
 			m_displayerTool = new DisplayerToolHOCR(m_displayer);
-			m_outputEditor = new OutputEditorHOCR(static_cast<DisplayerToolHOCR*>(m_displayerTool));
+			m_outputEditor = new OutputEditorHOCR(static_cast<DisplayerToolHOCR*> (m_displayerTool));
 		}
 		ui.actionAutodetectLayout->setVisible(m_displayerTool->allowAutodetectOCRAreas());
 		m_displayer->setTool(m_displayerTool);
@@ -416,50 +416,50 @@ void MainWindow::addNotification(const QString& title, const QString& message, c
 	QLabel* msgLabel = new QLabel(message, frame);
 	msgLabel->setWordWrap(true);
 	layout->addWidget(msgLabel, 1);
-	for(const NotificationAction& action : actions) {
+	for (const NotificationAction& action : actions) {
 		QToolButton* btn = new QToolButton(frame);
 		btn->setText(action.text);
 		connect(btn, &QToolButton::clicked, action.slot);
-		if(action.close) {
-			btn->setProperty("handle", QVariant::fromValue(reinterpret_cast<void*>(handle)));
-			btn->setProperty("frame", QVariant::fromValue(reinterpret_cast<void*>(frame)));
+		if (action.close) {
+			btn->setProperty("handle", QVariant::fromValue(reinterpret_cast<void*> (handle)));
+			btn->setProperty("frame", QVariant::fromValue(reinterpret_cast<void*> (frame)));
 			connect(btn, &QToolButton::clicked, this, [this] { hideNotification(); });
 		}
 		layout->addWidget(btn);
 	}
 	QToolButton* closeBtn = new QToolButton();
 	closeBtn->setIcon(QIcon::fromTheme("dialog-close"));
-	closeBtn->setProperty("handle", QVariant::fromValue(reinterpret_cast<void*>(handle)));
-	closeBtn->setProperty("frame", QVariant::fromValue(reinterpret_cast<void*>(frame)));
+	closeBtn->setProperty("handle", QVariant::fromValue(reinterpret_cast<void*> (handle)));
+	closeBtn->setProperty("frame", QVariant::fromValue(reinterpret_cast<void*> (frame)));
 	connect(closeBtn, &QToolButton::clicked, this, [this] { hideNotification(); });
 	layout->addWidget(closeBtn);
 	ui.centralwidget->layout()->addWidget(frame);
-	if(handle) {
+	if (handle) {
 		*handle = frame;
 	}
 }
 
 void MainWindow::hideNotification(Notification handle) {
-	if(!handle && QObject::sender()) {
-		handle = static_cast<QFrame*>(static_cast<QToolButton*>(QObject::sender())->property("frame").value<void*>());
-		Notification* h = reinterpret_cast<void**>(static_cast<QToolButton*>(QObject::sender())->property("handle").value<void*>());
-		if(h) {
+	if (!handle && QObject::sender()) {
+		handle = static_cast<QFrame*> (static_cast<QToolButton*> (QObject::sender())->property("frame").value<void*>());
+		Notification* h = reinterpret_cast<void**> (static_cast<QToolButton*> (QObject::sender())->property("handle").value<void*>());
+		if (h) {
 			*h = nullptr;
 		}
 	}
-	if(handle) {
-		static_cast<QFrame*>(handle)->deleteLater();
+	if (handle) {
+		static_cast<QFrame*> (handle)->deleteLater();
 	}
 }
 
 void MainWindow::checkVersion(const QString& newver) {
 	qDebug("Newest version is: %s", qPrintable(newver));
-	if(newver.isEmpty()) {
+	if (newver.isEmpty()) {
 		return;
 	}
 	QString curver = PACKAGE_VERSION;
 
-	if(newver.compare(curver) > 0) {
+	if (newver.compare(curver) > 0) {
 		addNotification(_("New version"), _("gImageReader %1 is available").arg(newver), {
 			{_("Download"), [this]{ openDownloadUrl(); }, false},
 			{_("Changelog"), [this]{ openChangeLogUrl(); }, false},
@@ -491,34 +491,34 @@ void MainWindow::hideProgress() {
 }
 
 void MainWindow::progressCancel() {
-	if(m_progressMonitor) {
+	if (m_progressMonitor) {
 		m_progressCancelButton->setEnabled(false);
 		m_progressMonitor->cancel();
 	}
 }
 
 void MainWindow::progressUpdate() {
-	if(m_progressMonitor) {
+	if (m_progressMonitor) {
 		m_progressBar->setValue(m_progressMonitor->getProgress());
 	}
 }
 
 void MainWindow::languageChanged(const Config::Lang& lang) {
-	if(m_outputEditor) {
+	if (m_outputEditor) {
 		m_outputEditor->setLanguage(lang);
 	}
 	hideNotification(m_notifierHandle);
 	m_notifierHandle = nullptr;
 	const QString& code = lang.code;
-	if(!code.isEmpty() && !QtSpell::checkLanguageInstalled(code) && ConfigSettings::get<SwitchSetting>("dictinstall")->getValue()) {
+	if (!code.isEmpty() && !QtSpell::checkLanguageInstalled(code) && ConfigSettings::get<SwitchSetting> ("dictinstall")->getValue()) {
 		NotificationAction actionDontShowAgain = {_("Don't show again"), [this]{ m_config->disableDictInstall(); }, true};
 		NotificationAction actionInstall = {_("Install"), [this]{ dictionaryAutoinstall(); }, false};
 #ifdef Q_OS_LINUX
-		if(getConfig()->useSystemDataLocations()) {
+		if (getConfig()->useSystemDataLocations()) {
 			QDBusConnectionInterface* iface = QDBusConnection::sessionBus().interface();
 			iface->startService("org.freedesktop.PackageKit");
-			if(!iface->isServiceRegistered("org.freedesktop.PackageKit").value()) {
-				actionInstall = {_("Help"), [this]{ showHelp(); }, false}; // TODO #InstallSpelling
+			if (!iface->isServiceRegistered("org.freedesktop.PackageKit").value()) {
+				actionInstall = {_("Help"), [this]{ showHelp(); }, false};  // TODO #InstallSpelling
 				qWarning("Could not find PackageKit on DBus, dictionary autoinstallation will not work");
 			}
 		}
@@ -537,19 +537,19 @@ void MainWindow::dictionaryAutoinstall() {
 	bool isWindows = false;
 #endif
 
-	if(!isWindows && MAIN->getConfig()->useSystemDataLocations()) {
+	if (!isWindows && MAIN->getConfig()->useSystemDataLocations()) {
 		// Place this in a ifdef since DBus stuff cannot be compiled on Windows
 #ifdef Q_OS_LINUX
 		QStringList files;
-		for(const QString& langCulture : m_config->searchLangCultures(code)) {
+		for (const QString& langCulture : m_config->searchLangCultures(code)) {
 			files.append("/usr/share/myspell/" + langCulture + ".dic");
 			files.append("/usr/share/hunspell/" + langCulture + ".dic");
 		}
 		QDBusMessage req = QDBusMessage::createMethodCall("org.freedesktop.PackageKit", "/org/freedesktop/PackageKit", "org.freedesktop.PackageKit.Modify", "InstallProvideFiles");
-		req.setArguments(QList<QVariant>() << QVariant::fromValue((quint32)winId()) << QVariant::fromValue(files) << QVariant::fromValue(QString("always")));
+		req.setArguments(QList<QVariant>() << QVariant::fromValue((quint32) winId()) << QVariant::fromValue(files) << QVariant::fromValue(QString("always")));
 		QDBusMessage reply = QDBusConnection::sessionBus().call(req, QDBus::BlockWithGui, 3600000);
-		if(reply.type() == QDBusMessage::ErrorMessage) {
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to install spelling dictionary: %1").arg(reply.errorMessage()), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
+		if (reply.type() == QDBusMessage::ErrorMessage) {
+			if (QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to install spelling dictionary: %1").arg(reply.errorMessage()), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 		}
@@ -560,18 +560,18 @@ void MainWindow::dictionaryAutoinstall() {
 		QString url = "https://cgit.freedesktop.org/libreoffice/dictionaries/tree/";
 		QString plainurl = "https://cgit.freedesktop.org/libreoffice/dictionaries/plain/";
 		QDir spellingDir(getConfig()->spellingLocation());
-		if(!QDir().mkpath(spellingDir.absolutePath())) {
+		if (!QDir().mkpath(spellingDir.absolutePath())) {
 			popState();
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to create directory for spelling dictionaries."), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
+			if (QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Failed to create directory for spelling dictionaries."), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 			return;
 		}
 		QString messages;
 		QString html = QString(Utils::download(url, messages));
-		if(html.isEmpty()) {
+		if (html.isEmpty()) {
 			popState();
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2.").arg(url).arg(messages), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
+			if (QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("Could not read %1: %2.").arg(url).arg(messages), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 			return;
@@ -584,24 +584,24 @@ void MainWindow::dictionaryAutoinstall() {
 		int pos = 0;
 		QRegularExpressionMatch match;
 
-		while((match = langPat.match(html, pos)).hasMatch()) {
+		while ((match = langPat.match(html, pos)).hasMatch()) {
 			QString lang = match.captured(1);
 			pos = match.capturedEnd();
 
 			QString dictHtml = QString(Utils::download(url + lang + "/", messages));
-			if(dictHtml.isEmpty()) {
+			if (dictHtml.isEmpty()) {
 				continue;
 			}
 
 			int dictPos = 0;
 			QRegularExpressionMatch dictMatch;
-			while((dictMatch = dictPat.match(dictHtml, dictPos)).hasMatch()) {
+			while ((dictMatch = dictPat.match(dictHtml, dictPos)).hasMatch()) {
 				QString filename = dictMatch.captured(1);
 				pushState(State::Busy, _("Downloading '%1'...").arg(filename));
 				QByteArray data = Utils::download(plainurl + lang + "/" + filename, messages);
-				if(!data.isNull()) {
+				if (!data.isNull()) {
 					QFile file(spellingDir.absoluteFilePath(filename));
-					if(file.open(QIODevice::WriteOnly)) {
+					if (file.open(QIODevice::WriteOnly)) {
 						file.write(data);
 						downloaded.append(filename);
 					} else {
@@ -616,13 +616,13 @@ void MainWindow::dictionaryAutoinstall() {
 		}
 
 		popState();
-		if(!failed.isEmpty()) {
+		if (!failed.isEmpty()) {
 			QMessageBox::critical(this, _("Error"), _("The following dictionaries could not be downloaded:\n%1\n\nCheck the connectivity and directory permissions.\nHint: If you don't have write permissions in system folders, you can switch to user paths in the settings dialog.").arg(failed.join("\n")));
-		} else if(!downloaded.isEmpty()) {
+		} else if (!downloaded.isEmpty()) {
 			m_recognitionMenu->rebuild();
 			QMessageBox::information(this, _("Dictionaries installed"), _("The following dictionary files were installed:\n%1").arg(downloaded.join("\n")));
 		} else {
-			if(QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
+			if (QMessageBox::Help == QMessageBox::critical(this, _("Error"), _("No spelling dictionaries found for '%1'.").arg(code), QMessageBox::Ok | QMessageBox::Help, QMessageBox::Ok)) {
 				showHelp("#InstallSpelling");
 			}
 		}

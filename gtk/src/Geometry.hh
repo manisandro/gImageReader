@@ -77,23 +77,23 @@ public:
 		height = std::abs(y2 - y1);
 	}
 	bool contains(const Point& p) const {
-		if(isEmpty()) {
+		if (isEmpty()) {
 			return false;
 		}
 		return p.x >= x && p.x <= x + width && p.y >= y && p.y <= y + height;
 	}
 	bool overlaps(const Rectangle& r) const {
-		if(isEmpty() || r.isEmpty()) {
+		if (isEmpty() || r.isEmpty()) {
 			return false;
 		}
 		return x < r.x + r.width && x + width > r.x && y < r.y + r.height && y + height > r.y;
 	}
 	Rectangle unite(const Rectangle& r) const {
-		if(isEmpty() && r.isEmpty()) {
+		if (isEmpty() && r.isEmpty()) {
 			return Rectangle();
-		} else if(isEmpty()) {
+		} else if (isEmpty()) {
 			return r;
-		} else if(r.isEmpty()) {
+		} else if (r.isEmpty()) {
 			return *this;
 		}
 		double _x = std::min(x, r.x);

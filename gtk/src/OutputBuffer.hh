@@ -35,7 +35,7 @@ public:
 	void setFilename(const std::string& filename) { m_filename = filename; }
 
 	static Glib::RefPtr<OutputBuffer> create() {
-		return Glib::RefPtr<OutputBuffer>(new OutputBuffer());
+		return Glib::RefPtr<OutputBuffer> (new OutputBuffer());
 	}
 
 

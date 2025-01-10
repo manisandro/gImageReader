@@ -47,8 +47,8 @@ static std::string get_application_dir(char* argv0) {
 	char* path = g_file_read_link(exe.c_str(), &err);
 	std::string pathstr = Glib::build_filename(Glib::path_get_dirname(path), "..");
 	g_free(path);
-	if(err) {
-		if(Glib::path_is_absolute(argv0)) {
+	if (err) {
+		if (Glib::path_is_absolute(argv0)) {
 			pathstr = Glib::build_filename(Glib::path_get_dirname(argv0), "..");
 		} else {
 			pathstr = Glib::build_filename(Glib::get_current_dir(), Glib::path_get_dirname(argv0), "..");
@@ -72,8 +72,8 @@ static std::string get_application_exec_path(char* argv0) {
 	g_free(path);
 	bool success = err == nullptr;
 #endif
-	if(!success) {
-		if(Glib::path_is_absolute(argv0)) {
+	if (!success) {
+		if (Glib::path_is_absolute(argv0)) {
 			pathstr = Glib::path_get_dirname(argv0);
 		} else {
 			pathstr = Glib::build_filename(Glib::get_current_dir(), argv0);
@@ -82,12 +82,12 @@ static std::string get_application_exec_path(char* argv0) {
 	return pathstr;
 }
 
-int main (int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
 	pkgDir = get_application_dir(argv[0]);
 	pkgExePath = get_application_exec_path(argv[0]);
 
 #ifdef G_OS_WIN32
-	if(Glib::getenv("LANG").empty()) {
+	if (Glib::getenv("LANG").empty()) {
 		gchar* locale = g_win32_getlocale();
 		Glib::setenv("LANG", locale);
 		g_free(locale);
@@ -100,14 +100,14 @@ int main (int argc, char* argv[]) {
 	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 	textdomain(GETTEXT_PACKAGE);
 
-	if(argc > 2 && std::strcmp("crashhandle", argv[1]) == 0) {
+	if (argc > 2 && std::strcmp("crashhandle", argv[1]) == 0) {
 		// Run the crash handler
 		CrashHandler app(argc, argv);
 		return app.run();
-	} else if(argc >= 2 && std::strcmp("tessdatadir", argv[1]) == 0) {
+	} else if (argc >= 2 && std::strcmp("tessdatadir", argv[1]) == 0) {
 		Config::openTessdataDir();
 		return 0;
-	} else if(argc >= 2 && std::strcmp("spellingdir", argv[1]) == 0) {
+	} else if (argc >= 2 && std::strcmp("spellingdir", argv[1]) == 0) {
 		Config::openSpellingDir();
 		return 0;
 	} else {

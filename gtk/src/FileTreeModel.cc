@@ -39,7 +39,7 @@ Gtk::TreePath FileTreeModel::get_root_path(int idx) const {
 void FileTreeModel::recursive_row_inserted(const Gtk::TreeIter& index) {
 	DEBUG(std::cout << "Inserted: " << get_path(index).to_string() << std::endl;)
 	row_inserted(get_path(index), index);
-	for(const Gtk::TreeIter& childIndex : index->children()) {
+	for (const Gtk::TreeIter& childIndex : index->children()) {
 		recursive_row_inserted(childIndex);
 	}
 }
@@ -56,9 +56,9 @@ Gtk::TreeIter FileTreeModel::insertFile(std::string filePath, DataObject* data, 
 #endif
 	std::string fileName = Glib::path_get_basename(filePath);
 
-	if(fileDir.substr(0, tempPath.length()) == tempPath) {
+	if (fileDir.substr(0, tempPath.length()) == tempPath) {
 		Gtk::TreePath treePath = get_root_path(m_root ? 1 : 0);
-		if(!m_tmpdir) {
+		if (!m_tmpdir) {
 			m_tmpdir = new DirNode(Glib::path_get_basename(tempPath), tempPath, nullptr, _("Temporary files"));
 			row_inserted(treePath, get_iter(treePath));
 		}
@@ -68,7 +68,7 @@ Gtk::TreeIter FileTreeModel::insertFile(std::string filePath, DataObject* data, 
 		Gtk::TreeIter iter = get_iter(treePath);
 		row_inserted(treePath, iter);
 		return iter;
-	} else if(!m_root) {
+	} else if (!m_root) {
 		// Set initial root
 		Gtk::TreePath treePath = get_root_path(0);
 		m_root = new DirNode(Glib::path_get_basename(fileDir), fileDir, nullptr);
@@ -79,7 +79,7 @@ Gtk::TreeIter FileTreeModel::insertFile(std::string filePath, DataObject* data, 
 		Gtk::TreeIter iter = get_iter(treePath);
 		row_inserted(treePath, iter);
 		return iter;
-	} else if(m_root->path == fileDir) {
+	} else if (m_root->path == fileDir) {
 		// Add to current root
 		Gtk::TreePath treePath = get_root_path(0);
 		int pos = m_root->files.insIndex(fileName);
@@ -89,7 +89,7 @@ Gtk::TreeIter FileTreeModel::insertFile(std::string filePath, DataObject* data, 
 		Gtk::TreeIter iter = get_iter(treePath);
 		row_inserted(treePath, iter);
 		return iter;
-	} else if(m_root->path.substr(0, fileDir.length()) == fileDir) {
+	} else if (m_root->path.substr(0, fileDir.length()) == fileDir) {
 		// Root below new path, replace root
 		std::vector<Glib::ustring> path = Utils::string_split(m_root->path.substr(fileDir.length()), '/', false);
 		DirNode* oldroot = m_root;
@@ -98,7 +98,7 @@ Gtk::TreeIter FileTreeModel::insertFile(std::string filePath, DataObject* data, 
 
 		m_root = new DirNode(Glib::path_get_basename(fileDir), fileDir, nullptr);
 		DirNode* cur = m_root;
-		for(int i = 0, n = path.size() - 1; i < n; ++i) {
+		for (int i = 0, n = path.size() - 1; i < n; ++i) {
 			cur = cur->dirs.add(new DirNode(path[i], cur->path + "/" + path[i], cur));
 		}
 		cur->dirs.add(oldroot);
@@ -110,15 +110,15 @@ Gtk::TreeIter FileTreeModel::insertFile(std::string filePath, DataObject* data, 
 		recursive_row_inserted(get_iter(treePath));
 		treePath.push_back(row);
 		return get_iter(treePath);
-	} else if(fileDir.substr(0, m_root->path.length()) == m_root->path) {
+	} else if (fileDir.substr(0, m_root->path.length()) == m_root->path) {
 		// New path below root, append to subtree
 		std::vector<Glib::ustring> path = Utils::string_split(fileDir.substr(m_root->path.length()), '/', false);
 		DirNode* cur = m_root;
 		Gtk::TreePath treePath = get_root_path(0);
-		for(const Glib::ustring& part : path) {
+		for (const Glib::ustring& part : path) {
 			auto it = cur->dirs.find(part);
 			int row = 0;
-			if(it == cur->dirs.end()) {
+			if (it == cur->dirs.end()) {
 				row = cur->dirs.insIndex(part);
 				cur = cur->dirs.add(new DirNode(part, cur->path + "/" + part, cur), row);
 				treePath.push_back(row);
@@ -139,8 +139,8 @@ Gtk::TreeIter FileTreeModel::insertFile(std::string filePath, DataObject* data, 
 		std::vector<Glib::ustring> rootPath = Utils::string_split(m_root->path, '/', false);
 		std::vector<Glib::ustring> newPath = Utils::string_split(fileDir, '/', false);
 		int pos = 0;
-		for(int n = std::min(rootPath.size(), newPath.size()); pos < n; ++pos) {
-			if(rootPath[pos] != newPath[pos]) {
+		for (int n = std::min(rootPath.size(), newPath.size()); pos < n; ++pos) {
+			if (rootPath[pos] != newPath[pos]) {
 				break;
 			}
 		}
@@ -154,7 +154,7 @@ Gtk::TreeIter FileTreeModel::insertFile(std::string filePath, DataObject* data, 
 		// - Old root
 		DirNode* cur = m_root;
 		std::vector<Glib::ustring> path = Utils::vector_slice(rootPath, pos);
-		for(int i = 0, n = path.size() - 1; i < n; ++i) {
+		for (int i = 0, n = path.size() - 1; i < n; ++i) {
 			cur = cur->dirs.add(new DirNode(path[i], cur->path + "/" + path[i], cur));
 		}
 		cur->dirs.add(oldroot);
@@ -163,7 +163,7 @@ Gtk::TreeIter FileTreeModel::insertFile(std::string filePath, DataObject* data, 
 		cur = m_root;
 		path = Utils::vector_slice(newPath, pos);
 		Gtk::TreePath treePath = get_root_path(0);
-		for(int i = 0, n = path.size(); i < n; ++i) {
+		for (int i = 0, n = path.size(); i < n; ++i) {
 			int pos = cur->dirs.insIndex(path[i]);
 			cur = cur->dirs.add(new DirNode(path[i], cur->path + "/" + path[i], cur), pos);
 			treePath.push_back(pos);
@@ -176,7 +176,7 @@ Gtk::TreeIter FileTreeModel::insertFile(std::string filePath, DataObject* data, 
 }
 
 Gtk::TreeIter FileTreeModel::findFile(const std::string& filePath, bool isFile) const {
-	if(!m_root && !m_tmpdir) {
+	if (!m_root && !m_tmpdir) {
 		return Gtk::TreeIter();
 	}
 
@@ -193,50 +193,50 @@ Gtk::TreeIter FileTreeModel::findFile(const std::string& filePath, bool isFile) 
 	std::string fileName = Glib::path_get_basename(filePath);
 
 	// Path is root dir
-	if(!isFile && m_root && prefix + filePath == m_root->path) {
-		return const_cast<FileTreeModel*>(this)->get_iter(get_root_path(0));
+	if (!isFile && m_root && prefix + filePath == m_root->path) {
+		return const_cast<FileTreeModel*> (this)->get_iter(get_root_path(0));
 	}
 	// Path is temp dir
-	else if(!isFile && m_tmpdir && prefix + filePath == m_tmpdir->path) {
-		return const_cast<FileTreeModel*>(this)->get_iter(get_root_path(m_root ? 1 : 0));
+	else if (!isFile && m_tmpdir && prefix + filePath == m_tmpdir->path) {
+		return const_cast<FileTreeModel*> (this)->get_iter(get_root_path(m_root ? 1 : 0));
 	}
 	// Path is below root or tempdir
 	DirNode* cur = nullptr;
 	Gtk::TreePath treePath;
-	if(m_tmpdir && fileDir.substr(0, m_tmpdir->path.length()) == m_tmpdir->path) {
+	if (m_tmpdir && fileDir.substr(0, m_tmpdir->path.length()) == m_tmpdir->path) {
 		cur = m_tmpdir;
 		treePath = get_root_path(m_root ? 1 : 0);
-	} else if(m_root && fileDir.substr(0, m_root->path.length()) == m_root->path) {
+	} else if (m_root && fileDir.substr(0, m_root->path.length()) == m_root->path) {
 		cur = m_root;
 		treePath = get_root_path(0);
 	}
-	if(!cur) {
+	if (!cur) {
 		return Gtk::TreeIter();
 	}
 
 	std::string relPath = fileDir.substr(cur->path.length());
 	std::vector<Glib::ustring> parts = Utils::string_split(relPath, '/', false);
-	for(const Glib::ustring& part : parts) {
+	for (const Glib::ustring& part : parts) {
 		auto it = cur->dirs.find(part);
-		if(it == cur->dirs.end()) {
+		if (it == cur->dirs.end()) {
 			return Gtk::TreeIter();
 		}
 		treePath.push_back(cur->dirs.index(*it));
 		cur = *it;
 	}
-	if(isFile) {
+	if (isFile) {
 		auto it = cur->files.find(fileName);
-		if(it != cur->files.end()) {
+		if (it != cur->files.end()) {
 			treePath.push_back(cur->dirs.size() + cur->files.index(*it));
-			return const_cast<FileTreeModel*>(this)->get_iter(treePath);
+			return const_cast<FileTreeModel*> (this)->get_iter(treePath);
 		} else {
 			return Gtk::TreeIter();
 		}
 	} else {
 		auto it = cur->dirs.find(fileName);
-		if(it != cur->dirs.end()) {
+		if (it != cur->dirs.end()) {
 			treePath.push_back(cur->dirs.index(*it));
-			return const_cast<FileTreeModel*>(this)->get_iter(treePath);
+			return const_cast<FileTreeModel*> (this)->get_iter(treePath);
 		} else {
 			return Gtk::TreeIter();
 		}
@@ -244,31 +244,31 @@ Gtk::TreeIter FileTreeModel::findFile(const std::string& filePath, bool isFile) 
 }
 
 bool FileTreeModel::removeIndex(const Gtk::TreeIter& index) {
-	if(!index) {
+	if (!index) {
 		return false;
 	}
-	Node* node = static_cast<Node*>(index.gobj()->user_data);
+	Node* node = static_cast<Node*> (index.gobj()->user_data);
 	// Remove entire branch
-	bool isFile = dynamic_cast<FileNode*>(node);
+	bool isFile = dynamic_cast<FileNode*> (node);
 	Node* deleteNode = node;
 	Gtk::TreeIter deleteIndex = index;
-	while(deleteNode->parent && deleteNode->parent->childCount() == 1) {
+	while (deleteNode->parent && deleteNode->parent->childCount() == 1) {
 		isFile = false;
 		deleteNode = deleteNode->parent;
 		deleteIndex = deleteIndex->parent();
 	}
 	Gtk::TreePath deletePath = get_path(deleteIndex);
-	if(deleteNode == m_root) {
+	if (deleteNode == m_root) {
 		delete m_root;
 		m_root = nullptr;
-	} else if(deleteNode == m_tmpdir) {
+	} else if (deleteNode == m_tmpdir) {
 		delete m_tmpdir;
 		m_tmpdir = nullptr;
 	} else {
-		if(isFile) {
-			delete deleteNode->parent->files.take(static_cast<FileNode*>(deleteNode));
+		if (isFile) {
+			delete deleteNode->parent->files.take(static_cast<FileNode*> (deleteNode));
 		} else {
-			delete deleteNode->parent->dirs.take(static_cast<DirNode*>(deleteNode));
+			delete deleteNode->parent->dirs.take(static_cast<DirNode*> (deleteNode));
 		}
 	}
 	row_deleted(deletePath);
@@ -276,46 +276,46 @@ bool FileTreeModel::removeIndex(const Gtk::TreeIter& index) {
 }
 
 void FileTreeModel::clear() {
-	if(m_root || m_tmpdir) {
+	if (m_root || m_tmpdir) {
 		std::vector<Gtk::TreePath> delPaths;
-		if(m_root) {
+		if (m_root) {
 			delPaths.push_back(get_root_path(0));
 		}
-		if(m_tmpdir) {
+		if (m_tmpdir) {
 			delPaths.push_back(get_root_path(m_root ? 1 : 0));
 		}
 		delete m_root;
 		m_root = nullptr;
 		delete m_tmpdir;
 		m_tmpdir = nullptr;
-		for(const Gtk::TreePath& path : delPaths) {
+		for (const Gtk::TreePath& path : delPaths) {
 			row_deleted(path);
 		}
 	}
 }
 
 bool FileTreeModel::isDir(const Gtk::TreeIter& index) const {
-	if(!index) {
+	if (!index) {
 		return false;
 	}
-	return dynamic_cast<DirNode*>(static_cast<Node*>(index.gobj()->user_data)) != nullptr;
+	return dynamic_cast<DirNode*> (static_cast<Node*> (index.gobj()->user_data)) != nullptr;
 }
 
 void FileTreeModel::setFileEditable(const Gtk::TreeIter& index, bool editable) {
-	Node* node = static_cast<Node*>(index.gobj()->user_data);
-	if(dynamic_cast<FileNode*>(node)) {
-		static_cast<FileNode*>(node)->editable = editable;
+	Node* node = static_cast<Node*> (index.gobj()->user_data);
+	if (dynamic_cast<FileNode*> (node)) {
+		static_cast<FileNode*> (node)->editable = editable;
 		row_changed(get_path(index), index);
 	}
 }
 
 bool FileTreeModel::isFileEditable(const Gtk::TreeIter& index) const {
-	Node* node = static_cast<Node*>(index.gobj()->user_data);
-	return dynamic_cast<FileNode*>(node) && static_cast<FileNode*>(node)->editable;
+	Node* node = static_cast<Node*> (index.gobj()->user_data);
+	return dynamic_cast<FileNode*> (node) && static_cast<FileNode*> (node)->editable;
 }
 
 DataObject* FileTreeModel::fileData(const Gtk::TreeIter& index) const {
-	FileNode* node = dynamic_cast<FileNode*>(static_cast<Node*>(index.gobj()->user_data));
+	FileNode* node = dynamic_cast<FileNode*> (static_cast<Node*> (index.gobj()->user_data));
 	return node ? node->data : nullptr;
 }
 
@@ -324,16 +324,17 @@ Gtk::TreeModelFlags FileTreeModel::get_flags_vfunc() const {
 }
 
 GType FileTreeModel::get_column_type_vfunc(int index) const {
-	if(index == COLUMN_ICON) {
-		return Glib::Value<Glib::RefPtr<Gdk::Pixbuf>>::value_type();
-	} else if(index == COLUMN_TEXT) {
+	if (index == COLUMN_ICON) {
+		return Glib::Value<Glib::RefPtr<Gdk::Pixbuf >>::value_type();
+	}
+	else if (index == COLUMN_TEXT) {
 		return Glib::Value<Glib::ustring>::value_type();
-	} else if(index == COLUMN_TOOLTIP) {
+	} else if (index == COLUMN_TOOLTIP) {
 		return Glib::Value<Glib::ustring>::value_type();
-	} else if(index == COLUMN_TEXTSTYLE) {
+	} else if (index == COLUMN_TEXTSTYLE) {
 		return Glib::Value<Pango::Style>::value_type();
-	} else if(index == COLUMN_EDITICON) {
-		return Glib::Value<Glib::RefPtr<Gdk::Pixbuf>>::value_type();
+	} else if (index == COLUMN_EDITICON) {
+		return Glib::Value<Glib::RefPtr<Gdk::Pixbuf >>::value_type();
 	}
 	return G_TYPE_INVALID;
 }
@@ -344,18 +345,18 @@ int FileTreeModel::get_n_columns_vfunc() const {
 
 bool FileTreeModel::iter_next_vfunc(const iterator& iter, iterator& iter_next) const {
 	DEBUG(std::cout << "iter_next_vfunc " << get_path(iter).to_string() << ": ";)
-	if(!iter) {
+	if (!iter) {
 		return false;
 	}
-	Node* node = static_cast<Node*>(iter.gobj()->user_data);
+	Node* node = static_cast<Node*> (iter.gobj()->user_data);
 	Node* nextItem = nullptr;
 	// Tempdir follows root
-	if(node->parent) {
+	if (node->parent) {
 		nextItem = node->parent->nextNode(node);
-		if(!nextItem && node->parent == m_root && m_tmpdir) {
+		if (!nextItem && node->parent == m_root && m_tmpdir) {
 			nextItem = m_tmpdir->firstNode();
 		}
-	} else if(node == m_root && m_tmpdir) {
+	} else if (node == m_root && m_tmpdir) {
 		nextItem = m_tmpdir;
 	}
 	iter_next.gobj()->user_data = nextItem;
@@ -366,14 +367,14 @@ bool FileTreeModel::iter_next_vfunc(const iterator& iter, iterator& iter_next) c
 
 bool FileTreeModel::get_iter_vfunc(const Path& path, iterator& iter) const {
 	DEBUG(std::cout << "get_iter_vfunc " << path.to_string() << ": ";)
-	if(path.empty() || (!m_root && !m_tmpdir)) {
+	if (path.empty() || (!m_root && !m_tmpdir)) {
 		DEBUG(std::cout << "0" << std::endl;)
 		return false;
 	}
 	int idx = 0, size = path.size();
 	Node* item = path[idx++] == 0 ? m_root ? m_root : m_tmpdir : m_tmpdir;
-	while(item && idx < size) {
-		item = static_cast<DirNode*>(item)->child(path[idx++]);
+	while (item && idx < size) {
+		item = static_cast<DirNode*> (item)->child(path[idx++]);
 	}
 	iter.gobj()->user_data = item;
 	iter.set_stamp(iter.gobj()->user_data != nullptr);
@@ -383,7 +384,7 @@ bool FileTreeModel::get_iter_vfunc(const Path& path, iterator& iter) const {
 
 bool FileTreeModel::iter_children_vfunc(const iterator& parent, iterator& iter) const {
 	DEBUG(std::cout << "iter_children_vfunc " << get_path(parent).to_string() << ": ";)
-	DirNode* parentNode = dynamic_cast<DirNode*>(static_cast<Node*>(parent.gobj()->user_data));
+	DirNode* parentNode = dynamic_cast<DirNode*> (static_cast<Node*> (parent.gobj()->user_data));
 	iter.gobj()->user_data = parentNode ? parentNode->firstNode() : nullptr;
 	iter.set_stamp(iter.gobj()->user_data != nullptr);
 	DEBUG(std::cout << (iter.gobj()->user_data != nullptr) << std::endl;)
@@ -392,7 +393,7 @@ bool FileTreeModel::iter_children_vfunc(const iterator& parent, iterator& iter) 
 
 bool FileTreeModel::iter_parent_vfunc(const iterator& child, iterator& iter) const {
 	DEBUG(std::cout << "iter_parent_vfunc " << get_path(child).to_string() << ": ";)
-	Node* childNode = static_cast<Node*>(child.gobj()->user_data);
+	Node* childNode = static_cast<Node*> (child.gobj()->user_data);
 	iter.gobj()->user_data = childNode ? childNode->parent : nullptr;
 	iter.set_stamp(iter.gobj()->user_data != nullptr);
 	DEBUG(std::cout << (iter.gobj()->user_data != nullptr) << std::endl;)
@@ -401,7 +402,7 @@ bool FileTreeModel::iter_parent_vfunc(const iterator& child, iterator& iter) con
 
 bool FileTreeModel::iter_nth_child_vfunc(const iterator& parent, int n, iterator& iter) const {
 	DEBUG(std::cout << "iter_nth_child_vfunc " << get_path(parent).to_string() << "@" << n << ": ";)
-	DirNode* parentNode = static_cast<DirNode*>(parent.gobj()->user_data);
+	DirNode* parentNode = static_cast<DirNode*> (parent.gobj()->user_data);
 	iter.gobj()->user_data = parentNode ? parentNode->child(n) : nullptr;
 	iter.set_stamp(iter.gobj()->user_data != nullptr);
 	DEBUG(std::cout << (iter.gobj()->user_data != nullptr) << std::endl;)
@@ -411,11 +412,11 @@ bool FileTreeModel::iter_nth_child_vfunc(const iterator& parent, int n, iterator
 bool FileTreeModel::iter_nth_root_child_vfunc(int n, iterator& iter) const {
 	DEBUG(std::cout << "iter_nth_root_child_vfunc " << n << ": ";)
 	Node* childNode = nullptr;
-	if(m_root && m_tmpdir) {
+	if (m_root && m_tmpdir) {
 		childNode = n == 0 ? m_root : n == 1 ? m_tmpdir : nullptr;
-	} else if(m_root) {
+	} else if (m_root) {
 		childNode = n == 0 ? m_root : nullptr;
-	} else if(m_tmpdir) {
+	} else if (m_tmpdir) {
 		childNode = n == 0 ? m_tmpdir : nullptr;
 	}
 	iter.gobj()->user_data =  childNode;
@@ -426,16 +427,16 @@ bool FileTreeModel::iter_nth_root_child_vfunc(int n, iterator& iter) const {
 
 bool FileTreeModel::iter_has_child_vfunc(const iterator& iter) const {
 	DEBUG(std::cout << "iter_parent_vfunc " << get_path(iter).to_string() << ": ";)
-	Node* node = static_cast<Node*>(iter.gobj()->user_data);
-	bool haveChild = dynamic_cast<DirNode*>(node) && static_cast<DirNode*>(node)->childCount() > 0;
+	Node* node = static_cast<Node*> (iter.gobj()->user_data);
+	bool haveChild = dynamic_cast<DirNode*> (node) && static_cast<DirNode*> (node)->childCount() > 0;
 	DEBUG(std::cout << haveChild << std::endl;)
 	return haveChild;
 }
 
 int FileTreeModel::iter_n_children_vfunc(const iterator& iter) const {
 	DEBUG(std::cout << "iter_n_children_vfunc " << get_path(iter).to_string() << ": ";)
-	Node* node = static_cast<Node*>(iter.gobj()->user_data);
-	int numChild = dynamic_cast<DirNode*>(node) ? static_cast<DirNode*>(node)->childCount() : 0;
+	Node* node = static_cast<Node*> (iter.gobj()->user_data);
+	int numChild = dynamic_cast<DirNode*> (node) ? static_cast<DirNode*> (node)->childCount() : 0;
 	DEBUG(std::cout << numChild << std::endl;)
 	return numChild;
 }
@@ -448,15 +449,15 @@ int FileTreeModel::iter_n_root_children_vfunc() const {
 
 Gtk::TreeModel::Path FileTreeModel::get_path_vfunc(const iterator& iter) const {
 	Gtk::TreeModel::Path path;
-	Node* node = static_cast<Node*>(iter.gobj()->user_data);
-	while(node) {
+	Node* node = static_cast<Node*> (iter.gobj()->user_data);
+	while (node) {
 		int index = -1;
-		if(node->parent) {
+		if (node->parent) {
 			index = node->parent->childIndex(node);
 		} else {
-			if(node == m_root) {
+			if (node == m_root) {
 				index = 0;
-			} else if(node == m_tmpdir) {
+			} else if (node == m_tmpdir) {
 				index = m_root ? 1 : 0;
 			}
 		}
@@ -476,31 +477,31 @@ static void setValue(Glib::ValueBase& gvalue, const T& value) {
 
 void FileTreeModel::get_value_vfunc(const iterator& iter, int column, Glib::ValueBase& value) const {
 	DEBUG(std::cout << "get_value_vfunc Column " << column << " at path " << get_path(iter).to_string() << std::endl);
-	Node* node = static_cast<Node*>(iter.gobj()->user_data);
-	if(!node) {
+	Node* node = static_cast<Node*> (iter.gobj()->user_data);
+	if (!node) {
 		return;
-	} else if(column == COLUMN_ICON) {
+	} else if (column == COLUMN_ICON) {
 		Glib::RefPtr<Gtk::IconTheme> iconTheme = Gtk::IconTheme::get_default();
 		bool uncertain = false;
-		Glib::ustring contentType = dynamic_cast<DirNode*>(node) ? "inode/directory" : Gio::content_type_guess(node->path, nullptr, 0, uncertain);
+		Glib::ustring contentType = dynamic_cast<DirNode*> (node) ? "inode/directory" : Gio::content_type_guess(node->path, nullptr, 0, uncertain);
 		Glib::RefPtr<Gio::Icon> icon = Gio::content_type_get_icon(contentType);
 		Glib::RefPtr<Gio::ThemedIcon> themedIcon = Glib::RefPtr<Gio::ThemedIcon>::cast_dynamic(icon);
 		if (themedIcon) {
 			setValue(value, iconTheme->choose_icon(themedIcon->get_names(), 16).load_icon());
 		}
-	} else if(column == COLUMN_TEXT) {
+	} else if (column == COLUMN_TEXT) {
 		setValue(value, !node->displayName.empty() ? node->displayName : node->fileName);
-	} else if(column == COLUMN_TOOLTIP) {
+	} else if (column == COLUMN_TOOLTIP) {
 #ifdef G_OS_WIN32
 		setValue(value, node->path.substr(1));
 #else
 		setValue(value, node->path);
 #endif
-	} else if(column == COLUMN_TEXTSTYLE) {
+	} else if (column == COLUMN_TEXTSTYLE) {
 		setValue(value, m_tmpdir && node->parent == m_tmpdir ? Pango::STYLE_NORMAL : Pango::STYLE_NORMAL);
-	} else if(column == COLUMN_EDITICON) {
-		bool editable = dynamic_cast<FileNode*>(node) && static_cast<FileNode*>(node)->editable;
-		Glib::RefPtr<Gdk::Pixbuf> icon = editable ? Gtk::IconTheme::get_default()->load_icon("document-edit", 16) : Glib::RefPtr<Gdk::Pixbuf>(nullptr);
+	} else if (column == COLUMN_EDITICON) {
+		bool editable = dynamic_cast<FileNode*> (node) && static_cast<FileNode*> (node)->editable;
+		Glib::RefPtr<Gdk::Pixbuf> icon = editable ? Gtk::IconTheme::get_default()->load_icon("document-edit", 16) : Glib::RefPtr<Gdk::Pixbuf> (nullptr);
 		setValue(value, icon);
 	}
 }
@@ -532,7 +533,7 @@ T FileTreeModel::NodeList<T>::add(T node, int pos) {
 template<class T>
 T FileTreeModel::NodeList<T>::take(T node) {
 	auto it = find(node->fileName);
-	if(it != this->end()) {
+	if (it != this->end()) {
 		this->erase(it);
 		return node;
 	}

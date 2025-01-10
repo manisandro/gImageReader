@@ -74,7 +74,7 @@ OutputTextEdit::~OutputTextEdit() {
 
 QTextCursor OutputTextEdit::regionBounds() const {
 	QTextCursor c = m_regionCursor;
-	if(c.anchor() > c.position()) {
+	if (c.anchor() > c.position()) {
 		int pos = c.anchor();
 		int anchor = c.position();
 		c.setPosition(anchor);
@@ -85,16 +85,16 @@ QTextCursor OutputTextEdit::regionBounds() const {
 
 bool OutputTextEdit::findReplace(bool backwards, bool replace, bool matchCase, const QString& searchstr, const QString& replacestr) {
 	clearFocus();
-	if(searchstr.isEmpty()) {
+	if (searchstr.isEmpty()) {
 		return false;
 	}
 
 	QTextDocument::FindFlags flags;
 	Qt::CaseSensitivity cs = Qt::CaseInsensitive;
-	if(backwards) {
+	if (backwards) {
 		flags |= QTextDocument::FindBackward;
 	}
-	if(matchCase) {
+	if (matchCase) {
 		flags |= QTextDocument::FindCaseSensitively;
 		cs = Qt::CaseSensitive;
 	}
@@ -102,15 +102,15 @@ bool OutputTextEdit::findReplace(bool backwards, bool replace, bool matchCase, c
 	QTextCursor regionCursor = regionBounds();
 
 	QTextCursor selCursor = textCursor();
-	if(selCursor.selectedText().compare(searchstr, cs) == 0) {
-		if(replace) {
+	if (selCursor.selectedText().compare(searchstr, cs) == 0) {
+		if (replace) {
 			selCursor.insertText(replacestr);
 			selCursor.movePosition(QTextCursor::PreviousCharacter, QTextCursor::KeepAnchor, replacestr.length());
 			setTextCursor(selCursor);
 			ensureCursorVisible();
 			return true;
 		}
-		if(backwards) {
+		if (backwards) {
 			selCursor.setPosition(std::min(selCursor.position(), selCursor.anchor()));
 		} else {
 			selCursor.setPosition(std::max(selCursor.position(), selCursor.anchor()));
@@ -118,14 +118,14 @@ bool OutputTextEdit::findReplace(bool backwards, bool replace, bool matchCase, c
 	}
 
 	QTextCursor findcursor = document()->find(searchstr, selCursor, flags);
-	if(findcursor.isNull() || !(findcursor.anchor() >= regionCursor.anchor() && findcursor.position() <= regionCursor.position())) {
-		if(backwards) {
+	if (findcursor.isNull() || !(findcursor.anchor() >= regionCursor.anchor() && findcursor.position() <= regionCursor.position())) {
+		if (backwards) {
 			selCursor.setPosition(regionCursor.position());
 		} else {
 			selCursor.setPosition(regionCursor.anchor());
 		}
 		findcursor = document()->find(searchstr, selCursor, flags);
-		if(findcursor.isNull() || !(findcursor.anchor() >= regionCursor.anchor() && findcursor.position() <= regionCursor.position())) {
+		if (findcursor.isNull() || !(findcursor.anchor() >= regionCursor.anchor() && findcursor.position() <= regionCursor.position())) {
 			return false;
 		}
 	}
@@ -138,7 +138,7 @@ int OutputTextEdit::replaceAll(const QString& searchstr, const QString& replaces
 	QTextCursor cursor =  regionBounds();
 	int end = cursor.position();
 	QString cursel = cursor.selectedText();
-	if(cursor.anchor() == cursor.position() ||
+	if (cursor.anchor() == cursor.position() ||
 	        cursel == searchstr ||
 	        cursel == replacestr) {
 		cursor.movePosition(QTextCursor::Start);
@@ -149,14 +149,14 @@ int OutputTextEdit::replaceAll(const QString& searchstr, const QString& replaces
 		cursor.setPosition(std::min(cursor.anchor(), cursor.position()));
 	}
 	QTextDocument::FindFlags flags;
-	if(matchCase) {
+	if (matchCase) {
 		flags = QTextDocument::FindCaseSensitively;
 	}
 	int diff = replacestr.length() - searchstr.length();
 	int count = 0;
-	while(true) {
+	while (true) {
 		cursor = document()->find(searchstr, cursor, flags);
-		if(cursor.isNull() || cursor.position() > end) {
+		if (cursor.isNull() || cursor.position() > end) {
 			break;
 		}
 		cursor.insertText(replacestr);
@@ -170,7 +170,7 @@ int OutputTextEdit::replaceAll(const QString& searchstr, const QString& replaces
 void OutputTextEdit::setDrawWhitespace(bool drawWhitespace) {
 	m_drawWhitespace = drawWhitespace;
 	QTextOption textOption = document()->defaultTextOption();
-	if(drawWhitespace) {
+	if (drawWhitespace) {
 		textOption.setFlags(QTextOption::ShowTabsAndSpaces | QTextOption::AddSpaceForLineAndParagraphSeparators);
 	} else {
 		textOption.setFlags(QTextOption::Flags());
@@ -181,7 +181,7 @@ void OutputTextEdit::setDrawWhitespace(bool drawWhitespace) {
 void OutputTextEdit::paintEvent(QPaintEvent* e) {
 	QPointF offset = contentOffset();
 
-	if(!m_entireRegion) {
+	if (!m_entireRegion) {
 		QPainter painter(viewport());
 		painter.setBrush(palette().color(QPalette::Highlight).lighter(160));
 		painter.setPen(Qt::NoPen);
@@ -202,7 +202,7 @@ void OutputTextEdit::paintEvent(QPaintEvent* e) {
 		// Draw selection
 		qreal top;
 		QRectF rect;
-		if(startBlock.blockNumber() == endBlock.blockNumber() && startLine.lineNumber() == endLine.lineNumber()) {
+		if (startBlock.blockNumber() == endBlock.blockNumber() && startLine.lineNumber() == endLine.lineNumber()) {
 			top = blockBoundingGeometry(startBlock).translated(offset).top();
 			rect = startLine.naturalTextRect().translated(offset.x() - 0.5, top);
 			rect.setLeft(startLine.cursorToX(startLinePos) - 0.5);
@@ -218,12 +218,12 @@ void OutputTextEdit::paintEvent(QPaintEvent* e) {
 			// Draw selections in between
 			QTextBlock block = startBlock;
 			int lineNo = startLine.lineNumber() + 1;
-			while(!(block.blockNumber() == endBlock.blockNumber() && lineNo == endLine.lineNumber())) {
-				if(block.isValid() && lineNo < block.lineCount()) {
+			while (!(block.blockNumber() == endBlock.blockNumber() && lineNo == endLine.lineNumber())) {
+				if (block.isValid() && lineNo < block.lineCount()) {
 					painter.drawRect(block.layout()->lineAt(lineNo).naturalTextRect().translated(offset.x() - 0.5, top));
 				}
 				++lineNo;
-				if(lineNo >= block.lineCount()) {
+				if (lineNo >= block.lineCount()) {
 					block = block.next();
 					top = blockBoundingGeometry(block).translated(offset).top();
 					lineNo = 0;
@@ -240,24 +240,24 @@ void OutputTextEdit::paintEvent(QPaintEvent* e) {
 
 	QPlainTextEdit::paintEvent(e);
 
-	if(m_drawWhitespace) {
+	if (m_drawWhitespace) {
 		QTextBlock block = firstVisibleBlock();
 		qreal top = blockBoundingGeometry(block).translated(offset).top();
 		qreal bottom = top + blockBoundingRect(block).height();
 
 		QPainter painter(viewport());
 		painter.setPen(Qt::gray);
-		QChar visualArrow((ushort)0x21b5);
-		QChar paragraph((ushort)0x00b6);
+		QChar visualArrow((ushort) 0x21b5);
+		QChar paragraph((ushort) 0x00b6);
 
 		// block.next().isValid(): don't draw line break on last block
-		while(block.isValid() && block.next().isValid() && top <= e->rect().bottom()) {
-			if(block.isVisible() && bottom >= e->rect().top()) {
+		while (block.isValid() && block.next().isValid() && top <= e->rect().bottom()) {
+			if (block.isVisible() && bottom >= e->rect().top()) {
 				QTextLayout* layout = block.layout();
 				// Draw hard line breaks (i.e. those not due to word wrapping)
 				QTextLine line = layout->lineAt(layout->lineCount() - 1);
 				QRectF lineRect = line.naturalTextRect().translated(offset.x(), top);
-				if(line.textLength() == 0) {
+				if (line.textLength() == 0) {
 					painter.drawText(QPointF(lineRect.right(), lineRect.top() + line.ascent()), paragraph);
 				} else {
 					painter.drawText(QPointF(lineRect.right(), lineRect.top() + line.ascent()), visualArrow);
@@ -272,23 +272,23 @@ void OutputTextEdit::paintEvent(QPaintEvent* e) {
 
 void OutputTextEdit::saveRegionBounds() {
 	QTextCursor c = textCursor();
-	if(hasFocus()) {
+	if (hasFocus()) {
 		bool dorepaint = m_regionCursor.hasSelection() &&
 		                 !((m_regionCursor.anchor() == c.anchor() && m_regionCursor.position() == c.position()) ||
 		                   (m_regionCursor.anchor() == c.position() && m_regionCursor.position() == c.anchor()));
 		m_regionCursor = c;
-		if(dorepaint) {
+		if (dorepaint) {
 			viewport()->repaint();
 		}
 		// If only one word is selected, don't treat it as a region
-		if(!m_regionCursor.selectedText().contains(QRegularExpression("\\s"))) {
+		if (!m_regionCursor.selectedText().contains(QRegularExpression("\\s"))) {
 			m_regionCursor.clearSelection();
 		}
 	}
 	c.movePosition(QTextCursor::Start);
 	c.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
 	// If nothing is selected, set the region to the entire contents
-	if(!m_regionCursor.hasSelection()) {
+	if (!m_regionCursor.hasSelection()) {
 		m_regionCursor.setPosition(c.anchor());
 		m_regionCursor.setPosition(c.position(), QTextCursor::KeepAnchor);
 	}

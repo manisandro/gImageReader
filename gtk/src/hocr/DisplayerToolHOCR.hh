@@ -33,7 +33,7 @@ public:
 	DisplayerToolHOCR(Displayer* displayer);
 	~DisplayerToolHOCR();
 
-	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas() override;
+	std::vector<Cairo::RefPtr<Cairo::ImageSurface >> getOCRAreas() override;
 	void pageChanged() override {
 		m_signal_displayed_source_changed.emit();
 		reset();

@@ -47,7 +47,7 @@ private:
 	enum class TaskState { Waiting, Succeeded, Failed };
 	struct PageData {
 		bool success;
-		std::vector<Cairo::RefPtr<Cairo::ImageSurface>> ocrAreas;
+		std::vector<Cairo::RefPtr<Cairo::ImageSurface >> ocrAreas;
 		OutputEditor::PageInfo pageInfo;
 	};
 

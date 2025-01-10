@@ -42,8 +42,8 @@ DisplayerToolSelect::~DisplayerToolSelect() {
 }
 
 bool DisplayerToolSelect::mousePressEvent(GdkEventButton* event) {
-	if(event->button == 1 &&  m_curSel == nullptr) {
-		if((event->state & Gdk::CONTROL_MASK) == 0) {
+	if (event->button == 1 &&  m_curSel == nullptr) {
+		if ((event->state & Gdk::CONTROL_MASK) == 0) {
 			clearSelections();
 		}
 		m_curSel = new NumberedDisplayerSelection(this, 1 + m_selections.size(), m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y)));
@@ -55,7 +55,7 @@ bool DisplayerToolSelect::mousePressEvent(GdkEventButton* event) {
 }
 
 bool DisplayerToolSelect::mouseMoveEvent(GdkEventMotion* event) {
-	if(m_curSel) {
+	if (m_curSel) {
 		Geometry::Point p = m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y));
 		m_curSel->setPoint(p);
 		m_displayer->ensureVisible(event->x, event->y);
@@ -65,8 +65,8 @@ bool DisplayerToolSelect::mouseMoveEvent(GdkEventMotion* event) {
 }
 
 bool DisplayerToolSelect::mouseReleaseEvent(GdkEventButton* /*event*/) {
-	if(m_curSel) {
-		if(m_curSel->rect().width < 5. || m_curSel->rect().height < 5.) {
+	if (m_curSel) {
+		if (m_curSel->rect().width < 5. || m_curSel->rect().height < 5.) {
 			m_displayer->removeItem(m_curSel);
 			delete m_curSel;
 		} else {
@@ -80,24 +80,24 @@ bool DisplayerToolSelect::mouseReleaseEvent(GdkEventButton* /*event*/) {
 }
 
 void DisplayerToolSelect::resolutionChanged(double factor) {
-	for(NumberedDisplayerSelection* sel : m_selections) {
+	for (NumberedDisplayerSelection* sel : m_selections) {
 		sel->scale(factor);
 	}
 }
 
 void DisplayerToolSelect::rotationChanged(double delta) {
 	Geometry::Rotation R(delta);
-	for(NumberedDisplayerSelection* sel : m_selections) {
+	for (NumberedDisplayerSelection* sel : m_selections) {
 		sel->rotate(R);
 	}
 }
 
-std::vector<Cairo::RefPtr<Cairo::ImageSurface>> DisplayerToolSelect::getOCRAreas() {
-	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> images;
-	if(m_selections.empty()) {
+std::vector<Cairo::RefPtr<Cairo::ImageSurface >> DisplayerToolSelect::getOCRAreas() {
+	std::vector<Cairo::RefPtr<Cairo::ImageSurface >> images;
+	if (m_selections.empty()) {
 		images.push_back(m_displayer->getImage(m_displayer->getSceneBoundingRect()));
 	} else {
-		for(const NumberedDisplayerSelection* sel : m_selections) {
+		for (const NumberedDisplayerSelection* sel : m_selections) {
 			images.push_back(m_displayer->getImage(sel->rect()));
 		}
 	}
@@ -105,7 +105,7 @@ std::vector<Cairo::RefPtr<Cairo::ImageSurface>> DisplayerToolSelect::getOCRAreas
 }
 
 void DisplayerToolSelect::clearSelections() {
-	for(NumberedDisplayerSelection* sel : m_selections) {
+	for (NumberedDisplayerSelection* sel : m_selections) {
 		m_displayer->removeItem(sel);
 		delete sel;
 	}
@@ -117,7 +117,7 @@ void DisplayerToolSelect::removeSelection(int num) {
 	m_displayer->removeItem(m_selections[num - 1]);
 	delete m_selections[num - 1];
 	m_selections.erase(m_selections.begin() + num - 1);
-	for(int i = 0, n = m_selections.size(); i < n; ++i) {
+	for (int i = 0, n = m_selections.size(); i < n; ++i) {
 		m_selections[i]->setNumber(1 + i);
 		m_selections[i]->setZIndex(1 + i);
 	}
@@ -127,7 +127,7 @@ void DisplayerToolSelect::reorderSelection(int oldNum, int newNum) {
 	NumberedDisplayerSelection* sel = m_selections[oldNum - 1];
 	m_selections.erase(m_selections.begin() + oldNum - 1);
 	m_selections.insert(m_selections.begin() + newNum - 1, sel);
-	for(int i = 0, n = m_selections.size(); i < n; ++i) {
+	for (int i = 0, n = m_selections.size(); i < n; ++i) {
 		m_selections[i]->setNumber(1 + i);
 		m_selections[i]->setZIndex(1 + i);
 	}
@@ -137,7 +137,7 @@ void DisplayerToolSelect::saveSelection(NumberedDisplayerSelection* selection) {
 	Cairo::RefPtr<Cairo::ImageSurface> img = m_displayer->getImage(selection->rect());
 	FileDialogs::FileFilter filter = {_("PNG Images"), {"image/png"}, {"*.png"}};
 	std::string filename = FileDialogs::save_dialog(_("Save Selection Image"), _("selection.png"), "outputdir", filter, true);
-	if(!filename.empty()) {
+	if (!filename.empty()) {
 		img->write_to_png(filename);
 	}
 }
@@ -164,7 +164,7 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 		tess.SetPageSegMode(tesseract::PSM_AUTO_ONLY);
 		tess.SetImage(img->get_data(), img->get_width(), img->get_height(), 4, 4 * img->get_width());
 		tesseract::PageIterator* it = tess.AnalyseLayout();
-		if(it && !it->Empty(tesseract::RIL_BLOCK)) {
+		if (it && !it->Empty(tesseract::RIL_BLOCK)) {
 			do {
 				int x1, y1, x2, y2;
 				tesseract::Orientation orient;
@@ -177,10 +177,10 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 				++nDeskew;
 				float width = x2 - x1, height = y2 - y1;
 				float margin = 2;
-				if(width > 10 && height > 10) {
+				if (width > 10 && height > 10) {
 					rects.push_back(Geometry::Rectangle(x1 - 0.5 * img->get_width() - margin, y1 - 0.5 * img->get_height() - margin, width + 2 * margin, height + 2 * margin));
 				}
-			} while(it->Next(tesseract::RIL_BLOCK));
+			} while (it->Next(tesseract::RIL_BLOCK));
 		}
 		delete it;
 		return true;
@@ -189,22 +189,22 @@ void DisplayerToolSelect::autodetectLayout(bool noDeskew) {
 	// If a somewhat large deskew angle is detected, automatically rotate image and redetect layout,
 	// unless we already attempted to rotate (to prevent endless loops)
 	avgDeskew = Utils::round(((avgDeskew / nDeskew) / M_PI * 180.) * 10.) / 10.;
-	if(std::abs(avgDeskew) > .1 && !noDeskew) {
+	if (std::abs(avgDeskew) > .1 && !noDeskew) {
 		double newangle = m_displayer->getCurrentAngle() - avgDeskew;
 		m_displayer->setup(nullptr, nullptr, &newangle);
 		autodetectLayout(true);
 	} else {
 		// Merge overlapping rectangles
-		for(int i = rects.size(); i-- > 1;) {
-			for(int j = i; j-- > 0;) {
-				if(rects[j].overlaps(rects[i])) {
+		for (int i = rects.size(); i-- > 1;) {
+			for (int j = i; j-- > 0;) {
+				if (rects[j].overlaps(rects[i])) {
 					rects[j] = rects[j].unite(rects[i]);
 					rects.erase(rects.begin() + i);
 					break;
 				}
 			}
 		}
-		for(int i = 0, n = rects.size(); i < n; ++i) {
+		for (int i = 0, n = rects.size(); i < n; ++i) {
 			m_selections.push_back(new NumberedDisplayerSelection(this, 1 + i, Geometry::Point(rects[i].x, rects[i].y)));
 			m_selections.back()->setPoint(Geometry::Point(rects[i].x + rects[i].width, rects[i].y + rects[i].height));
 			m_displayer->addItem(m_selections.back());
@@ -220,7 +220,7 @@ void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
 	ClassData m_classdata;
 	ui.setupUi();
 	ui.windowSelection->set_attached_to(*MAIN->getWindow());
-	ui.spinSelectionOrder->get_adjustment()->set_upper(static_cast<DisplayerToolSelect*>(m_tool)->m_selections.size());
+	ui.spinSelectionOrder->get_adjustment()->set_upper(static_cast<DisplayerToolSelect*> (m_tool)->m_selections.size());
 	ui.spinSelectionOrder->get_adjustment()->set_value(m_number);
 
 	Glib::RefPtr<Glib::MainLoop> loop = Glib::MainLoop::create();
@@ -228,7 +228,7 @@ void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
 		CONNECT(ui.spinSelectionOrder, value_changed, [&]{ reorderSelection(ui.spinSelectionOrder->get_value()); }),
 		CONNECT(ui.buttonSelectionDelete, clicked, [&]{
 			loop->quit();
-			static_cast<DisplayerToolSelect*>(m_tool)->removeSelection(m_number);
+			static_cast<DisplayerToolSelect*> (m_tool)->removeSelection(m_number);
 		}),
 		CONNECT(ui.buttonSelectionRecognize, clicked, [&]{
 			loop->quit();
@@ -242,20 +242,20 @@ void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
 			loop->quit();
 			// Explicitly hide (and wait for hide event to be processed) to avoid key/mouse-grab conflicts with file dialog which pops up
 			ui.windowSelection->hide();
-			while(Gtk::Main::events_pending()) {
+			while (Gtk::Main::events_pending()) {
 				Gtk::Main::iteration(false);
 			}
-			static_cast<DisplayerToolSelect*>(m_tool)->saveSelection(this);
+			static_cast<DisplayerToolSelect*> (m_tool)->saveSelection(this);
 		}),
 		CONNECT(ui.windowSelection, button_press_event, [&](GdkEventButton * ev) {
 			Gtk::Allocation a = ui.windowSelection->get_allocation();
-			if(ev->x < a.get_x() || ev->x > a.get_x() + a.get_width() || ev->y < a.get_y() || ev->y > a.get_y() + a.get_height()) {
+			if (ev->x < a.get_x() || ev->x > a.get_x() + a.get_width() || ev->y < a.get_y() || ev->y > a.get_y() + a.get_height()) {
 				loop->quit();
 			}
 			return true;
 		}),
 		CONNECT(ui.windowSelection, key_press_event, [&](GdkEventKey * ev) {
-			if(ev->keyval == GDK_KEY_Escape) { loop->quit(); }
+			if (ev->keyval == GDK_KEY_Escape) { loop->quit(); }
 			return true;
 		})
 	};
@@ -265,8 +265,8 @@ void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
 	int w, h, trash;
 	ui.windowSelection->get_preferred_width(trash, w);
 	ui.windowSelection->get_preferred_height(trash, h);
-	int x = std::min(std::max(int(event->x_root), rect.get_x()), rect.get_x() + rect.get_width() - w);
-	int y = std::min(std::max(int(event->y_root), rect.get_y()), rect.get_y() + rect.get_height() - h);
+	int x = std::min(std::max(int (event->x_root), rect.get_x()), rect.get_x() + rect.get_width() - w);
+	int y = std::min(std::max(int (event->y_root), rect.get_y()), rect.get_y() + rect.get_height() - h);
 	ui.windowSelection->move(x, y);
 	GdkWindow* gdkwin = ui.windowSelection->get_window()->gobj();
 #if GTK_CHECK_VERSION(3,20,0)
@@ -278,7 +278,7 @@ void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
 	loop->run();
 
 	ui.windowSelection->hide();
-	for(sigc::connection& conn : selmenuConnections) {
+	for (sigc::connection& conn : selmenuConnections) {
 		conn.disconnect();
 	}
 #if GTK_CHECK_VERSION(3,20,0)
@@ -289,7 +289,7 @@ void NumberedDisplayerSelection::showContextMenu(GdkEventButton* event) {
 }
 
 void NumberedDisplayerSelection::reorderSelection(int newNumber) {
-	static_cast<DisplayerToolSelect*>(m_tool)->reorderSelection(m_number, newNumber);
+	static_cast<DisplayerToolSelect*> (m_tool)->reorderSelection(m_number, newNumber);
 }
 
 void NumberedDisplayerSelection::draw(Cairo::RefPtr<Cairo::Context> ctx) const {

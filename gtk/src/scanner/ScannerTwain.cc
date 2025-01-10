@@ -25,17 +25,17 @@
 
 #ifdef G_OS_WIN32
 bool ScannerTwain::saveDIB(TW_MEMREF hImg, const std::string& filename) {
-	PBITMAPINFOHEADER pDIB = reinterpret_cast<PBITMAPINFOHEADER>(m_entryPoint.DSM_MemLock(hImg));
-	if(pDIB == nullptr) {
+	PBITMAPINFOHEADER pDIB = reinterpret_cast<PBITMAPINFOHEADER> (m_entryPoint.DSM_MemLock(hImg));
+	if (pDIB == nullptr) {
 		return false;
 	}
 
 	DWORD paletteSize = 0;
-	if(pDIB->biBitCount == 1) {
+	if (pDIB->biBitCount == 1) {
 		paletteSize = 2;
-	} else if(pDIB->biBitCount == 8) {
+	} else if (pDIB->biBitCount == 8) {
 		paletteSize = 256;
-	} else if(pDIB->biBitCount == 24) {
+	} else if (pDIB->biBitCount == 24) {
 		paletteSize = 0;
 	} else {
 		// Unsupported
@@ -46,7 +46,7 @@ bool ScannerTwain::saveDIB(TW_MEMREF hImg, const std::string& filename) {
 
 	// If the driver did not fill in the biSizeImage field, then compute it.
 	// Each scan line of the image is aligned on a DWORD (32bit) boundary.
-	if( pDIB->biSizeImage == 0 ) {
+	if (pDIB->biSizeImage == 0) {
 		pDIB->biSizeImage = ((((pDIB->biWidth * pDIB->biBitCount) + 31) & ~31) / 8) * pDIB->biHeight;
 		// If a compression scheme is used the result may be larger: increase size.
 		if (pDIB->biCompression != 0) {
@@ -57,7 +57,7 @@ bool ScannerTwain::saveDIB(TW_MEMREF hImg, const std::string& filename) {
 	std::uint64_t imageSize = pDIB->biSizeImage + sizeof(RGBQUAD) * paletteSize + sizeof(BITMAPINFOHEADER);
 
 	BITMAPFILEHEADER bmpFIH = {0};
-	bmpFIH.bfType = ( (WORD) ('M' << 8) | 'B');
+	bmpFIH.bfType = ((WORD)('M' << 8) | 'B');
 	bmpFIH.bfSize = imageSize + sizeof(BITMAPFILEHEADER);
 	bmpFIH.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + (sizeof(RGBQUAD) * paletteSize);
 
@@ -69,11 +69,11 @@ bool ScannerTwain::saveDIB(TW_MEMREF hImg, const std::string& filename) {
 	Glib::RefPtr<Gio::MemoryInputStream> stream = Gio::MemoryInputStream::create();
 	stream->add_data(bmpData, sizeof(BITMAPFILEHEADER) + imageSize);
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf(Gdk::Pixbuf::create_from_stream(stream));
-	if(pixbuf) {
+	if (pixbuf) {
 		try {
 			pixbuf->save(filename, "png");
 			success = true;
-		} catch(...) {
+		} catch (...) {
 			success = false;
 		}
 	}
@@ -89,7 +89,7 @@ bool ScannerTwain::saveDIB(TW_MEMREF hImg, const std::string& filename) {
 ScannerTwain* ScannerTwain::s_instance = nullptr;
 
 void ScannerTwain::init() {
-	if(m_dsmLib != nullptr) {
+	if (m_dsmLib != nullptr) {
 		g_critical("Init already called!");
 		m_signal_initFailed.emit();
 		return;
@@ -103,15 +103,15 @@ void ScannerTwain::init() {
 
 	// State 1 to 2
 	m_dsmLib = dlopen(twaindsm.c_str(), RTLD_LAZY);
-	if(m_dsmLib == nullptr) {
+	if (m_dsmLib == nullptr) {
 		g_critical("LoadLibrary failed on %s", twaindsm.c_str());
 		m_signal_initFailed.emit();
 		close();
 		return;
 	}
 
-	m_dsmEntry = (DSMENTRYPROC)dlsym(m_dsmLib, "DSM_Entry");
-	if(m_dsmEntry == nullptr) {
+	m_dsmEntry = (DSMENTRYPROC) dlsym(m_dsmLib, "DSM_Entry");
+	if (m_dsmEntry == nullptr) {
 		g_critical("GetProcAddress failed on %s::DSM_Entry", twaindsm.c_str());
 		m_signal_initFailed.emit();
 		close();
@@ -140,12 +140,12 @@ void ScannerTwain::init() {
 //    HWND hwnd = gdk_win32_window_get_impl_hwnd(MAIN->getWindow()->get_window()->gobj());
 //    phwnd = &hwnd;
 #endif
-	if(call(nullptr, DG_CONTROL, DAT_PARENT, MSG_OPENDSM, phwnd) != TWRC_SUCCESS) {
+	if (call(nullptr, DG_CONTROL, DAT_PARENT, MSG_OPENDSM, phwnd) != TWRC_SUCCESS) {
 		m_signal_initFailed.emit();
 		close();
 		return;
 	}
-	if((m_appID.SupportedGroups & DF_DSM2) == 0) {
+	if ((m_appID.SupportedGroups & DF_DSM2) == 0) {
 		g_critical("Twain 2.x interface is not supported");
 		m_signal_initFailed.emit();
 		close();
@@ -154,7 +154,7 @@ void ScannerTwain::init() {
 
 	// Get entry point of memory management functions
 	m_entryPoint.Size = sizeof(TW_ENTRYPOINT);
-	if(call(nullptr, DG_CONTROL, DAT_ENTRYPOINT, MSG_GET, &m_entryPoint) != TWRC_SUCCESS) {
+	if (call(nullptr, DG_CONTROL, DAT_ENTRYPOINT, MSG_GET, &m_entryPoint) != TWRC_SUCCESS) {
 		m_signal_initFailed.emit();
 		close();
 		return;
@@ -182,7 +182,7 @@ void ScannerTwain::redetect() {
 }
 
 void ScannerTwain::scan(const Params& params) {
-	if(params.device.empty()) {
+	if (params.device.empty()) {
 		failScan(_("No scanner specified"));
 		return;
 	}
@@ -191,7 +191,7 @@ void ScannerTwain::scan(const Params& params) {
 
 	std::strncpy(m_srcID.ProductName, params.device.c_str(), sizeof(m_srcID.ProductName));
 	// State 3 to 4
-	if(call(nullptr, DG_CONTROL, DAT_IDENTITY, MSG_OPENDS, &m_srcID) != TWRC_SUCCESS) {
+	if (call(nullptr, DG_CONTROL, DAT_IDENTITY, MSG_OPENDS, &m_srcID) != TWRC_SUCCESS) {
 		failScan(_("Unable to connect to scanner"));
 		return;
 	}
@@ -199,8 +199,8 @@ void ScannerTwain::scan(const Params& params) {
 
 	// Register callback
 	TW_CALLBACK cb = {};
-	cb.CallBackProc = reinterpret_cast<TW_MEMREF>(callback);
-	if(TWRC_SUCCESS == call(&m_srcID, DG_CONTROL, DAT_CALLBACK, MSG_REGISTER_CALLBACK, &cb)) {
+	cb.CallBackProc = reinterpret_cast<TW_MEMREF> (callback);
+	if (TWRC_SUCCESS == call(&m_srcID, DG_CONTROL, DAT_CALLBACK, MSG_REGISTER_CALLBACK, &cb)) {
 		m_useCallback = true;
 	} else {
 		m_useCallback = false;
@@ -216,13 +216,13 @@ void ScannerTwain::scan(const Params& params) {
 	xferFile.Format = TWFF_PNG;
 	xferFile.VRefNum = TWON_DONTCARE16;
 
-	if(call(&m_srcID, DG_CONTROL, DAT_SETUPFILEXFER, MSG_SET, &xferFile) != TWRC_SUCCESS) {
+	if (call(&m_srcID, DG_CONTROL, DAT_SETUPFILEXFER, MSG_SET, &xferFile) != TWRC_SUCCESS) {
 		// Possibly unsupported file format. Get the default format, and try again with that one
 		call(&m_srcID, DG_CONTROL, DAT_SETUPFILEXFER, MSG_GET, &xferFile);
 		std::string defaultfile = xferFile.FileName;
 		params.filename = params.filename.substr(0, params.filename.rfind('.')) + defaultfile.substr(defaultfile.rfind('.'));
 		std::strncpy(xferFile.FileName, params.filename.c_str(), sizeof(xferFile.FileName));
-		if(call(&m_srcID, DG_CONTROL, DAT_SETUPFILEXFER, MSG_SET, &xferFile) != TWRC_SUCCESS) {
+		if (call(&m_srcID, DG_CONTROL, DAT_SETUPFILEXFER, MSG_SET, &xferFile) != TWRC_SUCCESS) {
 			// If we failed again, just return the default file...
 			params.filename = defaultfile;
 		}
@@ -233,15 +233,15 @@ void ScannerTwain::scan(const Params& params) {
 	setCapability(CAP_XFERCOUNT, CapOneVal(TWTY_INT16, 1));
 	setCapability(ICAP_XRESOLUTION, CapOneVal(TWTY_FIX32, floatToFix32(params.dpi)));
 	setCapability(ICAP_YRESOLUTION, CapOneVal(TWTY_FIX32, floatToFix32(params.dpi)));
-	setCapability(ICAP_SUPPORTEDSIZES, CapOneVal(TWTY_UINT16, TWSS_NONE)); // Maximum scan area
+	setCapability(ICAP_SUPPORTEDSIZES, CapOneVal(TWTY_UINT16, TWSS_NONE));    // Maximum scan area
 	setCapability(ICAP_BITDEPTH, CapOneVal(TWTY_UINT16, params.depth));
 
-	if(params.scan_mode != ScanMode::DEFAULT) {
-		if(params.scan_mode == ScanMode::COLOR) {
+	if (params.scan_mode != ScanMode::DEFAULT) {
+		if (params.scan_mode == ScanMode::COLOR) {
 			setCapability(ICAP_PIXELTYPE, CapOneVal(TWTY_UINT16, TWPT_RGB));
-		} else if(params.scan_mode == ScanMode::GRAY) {
+		} else if (params.scan_mode == ScanMode::GRAY) {
 			setCapability(ICAP_PIXELTYPE, CapOneVal(TWTY_UINT16, TWPT_GRAY));
-		} else if(params.scan_mode == ScanMode::LINEART) {
+		} else if (params.scan_mode == ScanMode::LINEART) {
 			setCapability(ICAP_PIXELTYPE, CapOneVal(TWTY_UINT16, TWPT_BW));
 		}
 	}
@@ -262,7 +262,7 @@ void ScannerTwain::scan(const Params& params) {
 #endif
 
 	// State 4 to 5
-	if(call(&m_srcID, DG_CONTROL, DAT_USERINTERFACE, MSG_ENABLEDS, &m_ui) != TWRC_SUCCESS) {
+	if (call(&m_srcID, DG_CONTROL, DAT_USERINTERFACE, MSG_ENABLEDS, &m_ui) != TWRC_SUCCESS) {
 		failScan(_("Unable to start scan"));
 		return;
 	}
@@ -271,23 +271,23 @@ void ScannerTwain::scan(const Params& params) {
 	m_cancel = false;
 #ifdef G_OS_WIN32
 	MAIN->getWindow()->get_window()->add_filter(eventFilter, nullptr);
-	while(m_dsMsg == 0 && !m_dsQuit && !m_cancel) {
-		while(Gtk::Main::instance()->events_pending()) {
+	while (m_dsMsg == 0 && !m_dsQuit && !m_cancel) {
+		while (Gtk::Main::instance()->events_pending()) {
 			Gtk::Main::instance()->iteration();
 		}
 	}
 	MAIN->getWindow()->get_window()->remove_filter(eventFilter, nullptr);
 #else
 	std::unique_lock<std::mutex> lock(m_mutex);
-	while(m_dsMsg == MSG_NULL) {
+	while (m_dsMsg == MSG_NULL) {
 		m_cond.wait(lock);
 	}
 #endif
-	if(m_cancel) {
+	if (m_cancel) {
 		failScan(_("Scan canceled"));
 	}
 
-	if(m_dsMsg != MSG_XFERREADY) {
+	if (m_dsMsg != MSG_XFERREADY) {
 		failScan(_("Unable to start scan"));
 		return;
 	}
@@ -299,8 +299,8 @@ void ScannerTwain::scan(const Params& params) {
 	bool saveOk = true;
 #ifdef G_OS_WIN32
 	TW_MEMREF hImg = nullptr;
-	TW_UINT16 twRC = call(&m_srcID, DG_IMAGE, DAT_IMAGENATIVEXFER, MSG_GET, (TW_MEMREF)&hImg);
-	if(twRC == TWRC_XFERDONE) {
+	TW_UINT16 twRC = call(&m_srcID, DG_IMAGE, DAT_IMAGENATIVEXFER, MSG_GET, (TW_MEMREF) &hImg);
+	if (twRC == TWRC_XFERDONE) {
 		saveOk = saveDIB(hImg, params.filename);
 	}
 #else
@@ -308,12 +308,12 @@ void ScannerTwain::scan(const Params& params) {
 #endif
 	TW_PENDINGXFERS twPendingXFers = {};
 	call(&m_srcID, DG_CONTROL, DAT_PENDINGXFERS, MSG_ENDXFER, &twPendingXFers);
-	if(twPendingXFers.Count != 0) {
+	if (twPendingXFers.Count != 0) {
 		// Discard any additional pending transfers
 		std::memset(&twPendingXFers, 0, sizeof(twPendingXFers));
 		call(&m_srcID, DG_CONTROL, DAT_PENDINGXFERS, MSG_RESET, &twPendingXFers);
 	}
-	if(twRC != TWRC_XFERDONE || !saveOk) {
+	if (twRC != TWRC_XFERDONE || !saveOk) {
 		failScan(_("Error communicating with scanner"));
 		return;
 	}
@@ -325,18 +325,18 @@ void ScannerTwain::scan(const Params& params) {
 }
 
 void ScannerTwain::doStop() {
-	if(m_state == 6) {
+	if (m_state == 6) {
 		TW_PENDINGXFERS twPendingXFers = {};
 		// State 7/6 to 5
 		call(&m_srcID, DG_CONTROL, DAT_PENDINGXFERS, MSG_RESET, &twPendingXFers);
 		m_state = 5;
 	}
-	if(m_state == 5) {
+	if (m_state == 5) {
 		//	State 5 to 4
 		call(&m_srcID, DG_CONTROL, DAT_USERINTERFACE, MSG_DISABLEDS, &m_ui);
 		m_state = 4;
 	}
-	if(m_state == 4) {
+	if (m_state == 4) {
 		//	State 4 to 3
 		call(nullptr, DG_CONTROL, DAT_IDENTITY, MSG_CLOSEDS, &m_srcID);
 		m_srcID = {};
@@ -352,12 +352,12 @@ void ScannerTwain::failScan(const Glib::ustring& errorString) {
 
 void ScannerTwain::close() {
 	doStop();
-	if(m_state == 3) {
+	if (m_state == 3) {
 		// State 3 to 2
 		call(nullptr, DG_CONTROL, DAT_PARENT, MSG_CLOSEDSM, nullptr);
 		m_state = 2;
 	}
-	if(m_state == 2) {
+	if (m_state == 2) {
 		dlclose(m_dsmLib);
 		m_dsmLib = nullptr;
 	}
@@ -367,19 +367,19 @@ void ScannerTwain::close() {
 
 #ifdef G_OS_WIN32
 GdkFilterReturn ScannerTwain::eventFilter(GdkXEvent* xevent, GdkEvent* event, gpointer data) {
-	LPMSG msg = static_cast<LPMSG>(xevent);
+	LPMSG msg = static_cast<LPMSG> (xevent);
 
-	if(msg->message == WM_CLOSE) {
+	if (msg->message == WM_CLOSE) {
 		s_instance->m_dsQuit = true;
 		return GDK_FILTER_REMOVE;
 	}
 	TW_EVENT twEvent = {0};
-	twEvent.pEvent = (TW_MEMREF)msg;
+	twEvent.pEvent = (TW_MEMREF) msg;
 	twEvent.TWMessage = MSG_NULL;
-	TW_UINT16 twRC = s_instance->m_dsmEntry(&s_instance->m_appID, &s_instance->m_srcID, DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT, (TW_MEMREF)&twEvent);
+	TW_UINT16 twRC = s_instance->m_dsmEntry(&s_instance->m_appID, &s_instance->m_srcID, DG_CONTROL, DAT_EVENT, MSG_PROCESSEVENT, (TW_MEMREF) &twEvent);
 
-	if(!s_instance->m_useCallback && twRC == TWRC_DSEVENT) {
-		if(twEvent.TWMessage == MSG_XFERREADY || twEvent.TWMessage == MSG_CLOSEDSREQ || twEvent.TWMessage == MSG_CLOSEDSOK || twEvent.TWMessage == MSG_NULL) {
+	if (!s_instance->m_useCallback && twRC == TWRC_DSEVENT) {
+		if (twEvent.TWMessage == MSG_XFERREADY || twEvent.TWMessage == MSG_CLOSEDSREQ || twEvent.TWMessage == MSG_CLOSEDSOK || twEvent.TWMessage == MSG_NULL) {
 			s_instance->m_dsMsg = twEvent.TWMessage;
 		}
 		return GDK_FILTER_REMOVE;
@@ -391,7 +391,7 @@ GdkFilterReturn ScannerTwain::eventFilter(GdkXEvent* xevent, GdkEvent* event, gp
 /*********************** ScannerTwain internal methods ***********************/
 TW_UINT16 ScannerTwain::call(TW_IDENTITY* idDS, TW_UINT32 dataGroup, TW_UINT16 dataType, TW_UINT16 msg, TW_MEMREF data) {
 	TW_UINT16 rc = m_dsmEntry(&m_appID, idDS, dataGroup, dataType, msg, data);
-	if(rc == TWRC_FAILURE) {
+	if (rc == TWRC_FAILURE) {
 		TW_STATUS status = {};
 		rc = m_dsmEntry(&m_appID, idDS, DG_CONTROL, DAT_STATUS, MSG_GET, &status);
 		TW_UINT16 cc = rc == TWRC_SUCCESS ? status.ConditionCode : TWCC_BUMMER;
@@ -408,12 +408,12 @@ void ScannerTwain::setCapability(TW_UINT16 capCode, const CapOneVal& cap) {
 	TW_CAPABILITY twCapability = {capCode, TWON_DONTCARE16, nullptr};
 	TW_UINT16 rc = call(&m_srcID, DG_CONTROL, DAT_CAPABILITY, MSG_GETCURRENT, &twCapability);
 	// Unsupported capability
-	if(rc != TWRC_SUCCESS) {
+	if (rc != TWRC_SUCCESS) {
 		return;
 	}
 	g_assert(twCapability.ConType == TWON_ONEVALUE);
 
-	pTW_ONEVALUE val = static_cast<pTW_ONEVALUE>(m_entryPoint.DSM_MemLock(twCapability.hContainer));
+	pTW_ONEVALUE val = static_cast<pTW_ONEVALUE> (m_entryPoint.DSM_MemLock(twCapability.hContainer));
 	g_assert(val->ItemType == cap.type && val->ItemType <= TWTY_STR255);
 	// This works because the DSM should return a TW_ONEVALUE container allocated sufficiently large to hold
 	// the value of type ItemType.
@@ -425,10 +425,10 @@ void ScannerTwain::setCapability(TW_UINT16 capCode, const CapOneVal& cap) {
 }
 
 TW_UINT16 ScannerTwain::callback(TW_IDENTITY* origin, TW_IDENTITY* /*dest*/, TW_UINT32 /*DG*/, TW_UINT16 /*DAT*/, TW_UINT16 MSG, TW_MEMREF /*data*/) {
-	if(origin == nullptr || origin->Id != s_instance->m_srcID.Id) {
+	if (origin == nullptr || origin->Id != s_instance->m_srcID.Id) {
 		return TWRC_FAILURE;
 	}
-	if(MSG == MSG_XFERREADY || MSG == MSG_CLOSEDSREQ || MSG == MSG_CLOSEDSOK || MSG == MSG_NULL) {
+	if (MSG == MSG_XFERREADY || MSG == MSG_CLOSEDSREQ || MSG == MSG_CLOSEDSOK || MSG == MSG_NULL) {
 #ifndef G_OS_WIN32
 		m_mutex.lock();
 #endif
@@ -451,5 +451,5 @@ inline TW_FIX32 ScannerTwain::floatToFix32(float float32) {
 }
 
 inline float ScannerTwain::fix32ToFloat(TW_FIX32 fix32) {
-	return float(fix32.Whole) + float(fix32.Frac) / (1 << 16);
+	return float (fix32.Whole) + float (fix32.Frac) / (1 << 16);
 }

@@ -59,7 +59,7 @@ public:
 		return 100.0 * ((mProgress + desc.progress / 100.0) / mTotal);
 	}
 	static bool cancelCallback(void* instance, int /*words*/) {
-		ProgressMonitor* monitor = reinterpret_cast<ProgressMonitor*>(instance);
+		ProgressMonitor* monitor = reinterpret_cast<ProgressMonitor*> (instance);
 		QMutexLocker locker(&monitor->mMutex);
 		return monitor->mCancelled;
 	}
@@ -69,13 +69,13 @@ public:
 Recognizer::Recognizer(const UI_MainWindow& _ui) :
 	ui(_ui) {
 	QAction* currentPageAction = new QAction(_("Current Page"), this);
-	currentPageAction->setData(static_cast<int>(PageSelection::Current));
+	currentPageAction->setData(static_cast<int> (PageSelection::Current));
 
 	QAction* multiplePagesAction = new QAction(_("Multiple Pages..."), this);
-	multiplePagesAction->setData(static_cast<int>(PageSelection::Multiple));
+	multiplePagesAction->setData(static_cast<int> (PageSelection::Multiple));
 
 	m_actionBatchMode = new QAction(_("Batch mode..."), this);
-	m_actionBatchMode->setData(static_cast<int>(PageSelection::Batch));
+	m_actionBatchMode->setData(static_cast<int> (PageSelection::Batch));
 
 	m_menuPages = new QMenu(ui.toolButtonRecognize);
 	m_menuPages->addAction(currentPageAction);
@@ -111,9 +111,9 @@ void Recognizer::setRecognizeMode(const QString& mode) {
 }
 
 void Recognizer::recognitionLanguageChanged(const Config::Lang& lang) {
-	if(!lang.code.isEmpty()) {
+	if (!lang.code.isEmpty()) {
 		m_langLabel = QString("%1 (%2)").arg(lang.name, lang.code);
-	} else if(lang.name == "Multilingual") {
+	} else if (lang.name == "Multilingual") {
 		m_langLabel = QString("%1").arg(lang.prefix);
 	} else {
 		m_langLabel = QString("%1").arg(lang.name);
@@ -122,7 +122,7 @@ void Recognizer::recognitionLanguageChanged(const Config::Lang& lang) {
 }
 
 void Recognizer::clearLineEditPageRangeStyle() {
-	qobject_cast<QLineEdit*>(QObject::sender())->setStyleSheet("");
+	qobject_cast<QLineEdit*> (QObject::sender())->setStyleSheet("");
 }
 
 QList<int> Recognizer::selectPages(bool& autodetectLayout) {
@@ -139,22 +139,22 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout) {
 	QRegularExpression validateRegEx("^[\\d,\\-\\s]+$");
 	QRegularExpressionMatch match;
 	QList<int> pages;
-	while(m_pagesDialog->exec() == QDialog::Accepted) {
+	while (m_pagesDialog->exec() == QDialog::Accepted) {
 		pages.clear();
 		QString text = m_pagesDialogUi.lineEditPageRange->text();
-		if((match = validateRegEx.match(text)).hasMatch()) {
+		if ((match = validateRegEx.match(text)).hasMatch()) {
 			text.replace(QRegularExpression("\\s+"), "");
-			for(const QString& block : text.split(',', Qt::SkipEmptyParts)) {
+			for (const QString& block : text.split(',', Qt::SkipEmptyParts)) {
 				QStringList ranges = block.split('-', Qt::SkipEmptyParts);
-				if(ranges.size() == 1) {
+				if (ranges.size() == 1) {
 					int page = ranges[0].toInt();
-					if(page > 0 && page <= nPages) {
+					if (page > 0 && page <= nPages) {
 						pages.append(page);
 					}
-				} else if(ranges.size() == 2) {
+				} else if (ranges.size() == 2) {
 					int start = std::max(1, ranges[0].toInt());
 					int end = std::min(nPages, ranges[1].toInt());
-					for(int page = start; page <= end; ++page) {
+					for (int page = start; page <= end; ++page) {
 						pages.append(page);
 					}
 				} else {
@@ -163,7 +163,7 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout) {
 				}
 			}
 		}
-		if(pages.empty()) {
+		if (pages.empty()) {
 			m_pagesDialogUi.lineEditPageRange->setStyleSheet("background: #FF7777; color: #FFFFFF;");
 		} else {
 			break;
@@ -176,8 +176,8 @@ QList<int> Recognizer::selectPages(bool& autodetectLayout) {
 
 void Recognizer::recognizeButtonClicked() {
 	int nPages = MAIN->getDisplayer()->getNPages();
-	if(nPages == 1) {
-		recognize({MAIN->getDisplayer()->getCurrentPage()});
+	if (nPages == 1) {
+		recognize({MAIN->getDisplayer()->getCurrentPage() });
 	} else {
 		m_actionBatchMode->setVisible(MAIN->getDisplayer()->getNSources() > 1);
 		ui.toolButtonRecognize->setCheckable(true);
@@ -189,7 +189,7 @@ void Recognizer::recognizeButtonClicked() {
 }
 
 void Recognizer::recognizeCurrentPage() {
-	recognize({MAIN->getDisplayer()->getCurrentPage()});
+	recognize({MAIN->getDisplayer()->getCurrentPage() });
 }
 
 void Recognizer::recognizeMultiplePages() {
@@ -200,8 +200,8 @@ void Recognizer::recognizeMultiplePages() {
 
 std::unique_ptr<Utils::TesseractHandle> Recognizer::setupTesseract() {
 	Config::Lang lang = MAIN->getRecognitionMenu()->getRecognitionLanguage();
-	auto tess = std::unique_ptr<Utils::TesseractHandle>(new Utils::TesseractHandle(lang.prefix.toLocal8Bit().constData()));
-	if(tess->get()) {
+	auto tess = std::unique_ptr<Utils::TesseractHandle> (new Utils::TesseractHandle(lang.prefix.toLocal8Bit().constData()));
+	if (tess->get()) {
 		tess->get()->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
 		tess->get()->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().toLocal8Bit());
 		tess->get()->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().toLocal8Bit());
@@ -215,25 +215,25 @@ std::unique_ptr<Utils::TesseractHandle> Recognizer::setupTesseract() {
 }
 
 void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
-	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
-	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
+	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting> ("ocraddsourcefilename")->getValue();
+	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting> ("ocraddsourcepage")->getValue();
 	auto tess = setupTesseract();
-	if(!tess->get()) {
+	if (!tess->get()) {
 		return;
 	}
 	bool contains = false;
-	for(int page : pages) {
+	for (int page : pages) {
 		QString source;
 		int sourcePage;
-		if(MAIN->getDisplayer()->resolvePage(page, source, sourcePage)) {
-			if(MAIN->getOutputEditor()->containsSource(source, sourcePage)) {
+		if (MAIN->getDisplayer()->resolvePage(page, source, sourcePage)) {
+			if (MAIN->getOutputEditor()->containsSource(source, sourcePage)) {
 				contains = true;
 				break;
 			}
 		}
 	}
-	if(contains) {
-		if(QMessageBox::No == QMessageBox::question(MAIN, _("Source already recognized"), _("One or more selected sources were already recognized. Proceed anyway?"))) {
+	if (contains) {
+		if (QMessageBox::No == QMessageBox::question(MAIN, _("Source already recognized"), _("One or more selected sources were already recognized. Proceed anyway?"))) {
 			return;
 		}
 	}
@@ -246,7 +246,7 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 		int npages = pages.size();
 		int idx = 0;
 		QString prevFile;
-		for(int page : pages) {
+		for (int page : pages) {
 			monitor.desc.progress = 0;
 			++idx;
 			QMetaObject::invokeMethod(MAIN, "pushState", Qt::QueuedConnection, Q_ARG(MainWindow::State, MainWindow::State::Busy), Q_ARG(QString, _("Recognizing page %1 (%2 of %3)").arg(page).arg(idx).arg(npages)));
@@ -254,7 +254,7 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 			PageData pageData;
 			pageData.success = false;
 			QMetaObject::invokeMethod(this, "setPage", Qt::BlockingQueuedConnection, Q_RETURN_ARG(PageData, pageData), Q_ARG(int, page), Q_ARG(bool, autodetectLayout));
-			if(!pageData.success) {
+			if (!pageData.success) {
 				errors.append(_("- Page %1: failed to render page").arg(page));
 				MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
 				continue;
@@ -263,7 +263,7 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 			bool firstChunk = true;
 			bool newFile = readSessionData->pageInfo.filename != prevFile;
 			prevFile = readSessionData->pageInfo.filename;
-			for(const QImage& image : pageData.ocrAreas) {
+			for (const QImage& image : pageData.ocrAreas) {
 				readSessionData->prependPage = prependPage && firstChunk;
 				readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
 				firstChunk = false;
@@ -271,13 +271,13 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 				tess->get()->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 				tess->get()->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 				tess->get()->Recognize(&monitor.desc);
-				if(!monitor.cancelled()) {
+				if (!monitor.cancelled()) {
 					MAIN->getOutputEditor()->read(*tess->get(), readSessionData);
 				}
 			}
 			QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
 			monitor.increaseProgress();
-			if(monitor.cancelled()) {
+			if (monitor.cancelled()) {
 				break;
 			}
 		}
@@ -286,37 +286,37 @@ void Recognizer::recognize(const QList<int>& pages, bool autodetectLayout) {
 	MAIN->getDisplayer()->setBlockAutoscale(false);
 	MAIN->hideProgress();
 	MAIN->getOutputEditor()->finalizeRead(readSessionData);
-	if(!errors.isEmpty()) {
+	if (!errors.isEmpty()) {
 		showRecognitionErrorsDialog(errors);
 	}
 }
 
 void Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 	auto tess = setupTesseract();
-	if(!tess->get()) {
+	if (!tess->get()) {
 		return;
 	}
 	tess->get()->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 	ProgressMonitor monitor(1);
 	MAIN->showProgress(&monitor);
-	if(dest == OutputDestination::Buffer) {
+	if (dest == OutputDestination::Buffer) {
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess->get());
 		readSessionData->pageInfo.filename = MAIN->getDisplayer()->getCurrentImage(readSessionData->pageInfo.page);
 		readSessionData->pageInfo.angle = MAIN->getDisplayer()->getCurrentAngle();
 		readSessionData->pageInfo.resolution = MAIN->getDisplayer()->getCurrentResolution();
 		Utils::busyTask([&] {
 			tess->get()->Recognize(&monitor.desc);
-			if(!monitor.cancelled()) {
+			if (!monitor.cancelled()) {
 				MAIN->getOutputEditor()->read(*tess->get(), readSessionData);
 			}
 			return true;
 		}, _("Recognizing..."));
 		MAIN->getOutputEditor()->finalizeRead(readSessionData);
-	} else if(dest == OutputDestination::Clipboard) {
+	} else if (dest == OutputDestination::Clipboard) {
 		QString output;
-		if(Utils::busyTask([&] {
+		if (Utils::busyTask([&] {
 		tess->get()->Recognize(&monitor.desc);
-			if(!monitor.cancelled()) {
+			if (!monitor.cancelled()) {
 				char* text = tess->get()->GetUTF8Text();
 				output = QString::fromUtf8(text);
 				delete[] text;
@@ -333,16 +333,16 @@ void Recognizer::recognizeImage(const QImage& image, OutputDestination dest) {
 void Recognizer::recognizeBatch() {
 	m_batchDialogUi.checkBoxPrependPage->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
 	m_batchDialogUi.checkBoxAutolayout->setVisible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
-	if(m_batchDialog->exec() != QDialog::Accepted) {
+	if (m_batchDialog->exec() != QDialog::Accepted) {
 		return;
 	}
-	BatchExistingBehaviour existingBehaviour = static_cast<BatchExistingBehaviour>(m_batchDialogUi.comboBoxExisting->currentData().toInt());
+	BatchExistingBehaviour existingBehaviour = static_cast<BatchExistingBehaviour> (m_batchDialogUi.comboBoxExisting->currentData().toInt());
 	bool prependPage = MAIN->getDisplayer()->allowAutodetectOCRAreas() && m_batchDialogUi.checkBoxPrependPage->isChecked();
 	bool autolayout = MAIN->getDisplayer()->allowAutodetectOCRAreas() && m_batchDialogUi.checkBoxAutolayout->isChecked();
 	int nPages = MAIN->getDisplayer()->getNPages();
 
 	auto tess = setupTesseract();
-	if(!tess->get()) {
+	if (!tess->get()) {
 		return;
 	}
 
@@ -358,7 +358,7 @@ void Recognizer::recognizeBatch() {
 		int idx = 0;
 		QString currFilename;
 		QFile outputFile;
-		for(int page = 1; page <= nPages; ++page) {
+		for (int page = 1; page <= nPages; ++page) {
 			monitor.desc.progress = 0;
 			++idx;
 			QMetaObject::invokeMethod(MAIN, "pushState", Qt::QueuedConnection, Q_ARG(MainWindow::State, MainWindow::State::Busy), Q_ARG(QString, _("Recognizing page %1 (%2 of %3)").arg(page).arg(idx).arg(nPages)));
@@ -366,12 +366,12 @@ void Recognizer::recognizeBatch() {
 			PageData pageData;
 			pageData.success = false;
 			QMetaObject::invokeMethod(this, "setPage", Qt::BlockingQueuedConnection, Q_RETURN_ARG(PageData, pageData), Q_ARG(int, page), Q_ARG(bool, autolayout));
-			if(!pageData.success) {
+			if (!pageData.success) {
 				errors.append(_("- %1:%2: failed to render page").arg(QFileInfo(pageData.pageInfo.filename).fileName()).arg(page));
 				continue;
 			}
-			if(pageData.pageInfo.filename != currFilename) {
-				if(outputFile.isOpen()) {
+			if (pageData.pageInfo.filename != currFilename) {
+				if (outputFile.isOpen()) {
 					batchProcessor->writeFooter(&outputFile);
 					outputFile.close();
 				}
@@ -379,25 +379,25 @@ void Recognizer::recognizeBatch() {
 				QFileInfo finfo(pageData.pageInfo.filename);
 				QString fileName = QDir(finfo.absolutePath()).absoluteFilePath(finfo.baseName() + batchProcessor->fileSuffix());
 				bool exists = QFileInfo(fileName).exists();
-				if(exists && existingBehaviour == BatchSkipSource) {
+				if (exists && existingBehaviour == BatchSkipSource) {
 					errors.append(_("- %1: output already exists, skipping").arg(finfo.fileName()));
 				} else {
 					outputFile.setFileName(fileName);
-					if(!outputFile.open(QIODevice::WriteOnly)) {
+					if (!outputFile.open(QIODevice::WriteOnly)) {
 						errors.append(_("- %1: failed to create output file").arg(finfo.fileName()).arg(page));
 					} else {
 						batchProcessor->writeHeader(&outputFile, tess->get(), pageData.pageInfo);
 					}
 				}
 			}
-			if(outputFile.isOpen()) {
+			if (outputFile.isOpen()) {
 				bool firstChunk = true;
-				for(const QImage& image : pageData.ocrAreas) {
+				for (const QImage& image : pageData.ocrAreas) {
 					tess->get()->SetImage(image.bits(), image.width(), image.height(), 4, image.bytesPerLine());
 					tess->get()->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 					tess->get()->Recognize(&monitor.desc);
 
-					if(!monitor.cancelled()) {
+					if (!monitor.cancelled()) {
 						batchProcessor->appendOutput(&outputFile, tess->get(), pageData.pageInfo, firstChunk);
 					}
 					firstChunk = false;
@@ -405,11 +405,11 @@ void Recognizer::recognizeBatch() {
 			}
 			QMetaObject::invokeMethod(MAIN, "popState", Qt::QueuedConnection);
 			monitor.increaseProgress();
-			if(monitor.cancelled()) {
+			if (monitor.cancelled()) {
 				break;
 			}
 		}
-		if(outputFile.isOpen()) {
+		if (outputFile.isOpen()) {
 			batchProcessor->writeFooter(&outputFile);
 			outputFile.close();
 		}
@@ -417,7 +417,7 @@ void Recognizer::recognizeBatch() {
 	}, _("Recognizing..."));
 	MAIN->getDisplayer()->setBlockAutoscale(false);
 	MAIN->hideProgress();
-	if(!errors.isEmpty()) {
+	if (!errors.isEmpty()) {
 		showRecognitionErrorsDialog(errors);
 	}
 	delete batchProcessor;
@@ -426,8 +426,8 @@ void Recognizer::recognizeBatch() {
 Recognizer::PageData Recognizer::setPage(int page, bool autodetectLayout) {
 	PageData pageData;
 	pageData.success = MAIN->getDisplayer()->setup(&page);
-	if(pageData.success) {
-		if(autodetectLayout) {
+	if (pageData.success) {
+		if (autodetectLayout) {
 			MAIN->getDisplayer()->autodetectOCRAreas();
 		}
 		pageData.pageInfo.filename = MAIN->getDisplayer()->getCurrentImage(pageData.pageInfo.page);

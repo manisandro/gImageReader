@@ -40,20 +40,20 @@ HOCRBatchExportDialog::HOCRBatchExportDialog(Gtk::Window* parent) {
 
 	Glib::RefPtr<Gtk::ListStore> formatComboModel = Gtk::ListStore::create(m_formatComboCols);
 	ui.comboBoxFormat->set_model(formatComboModel);
-	Gtk::TreeModel::Row row = *(formatComboModel->append());
+	Gtk::TreeModel::Row row = * (formatComboModel->append());
 	row[m_formatComboCols.format] = ExportPdf;
 	row[m_formatComboCols.label] = _("PDF");
-	row = *(formatComboModel->append());
+	row = * (formatComboModel->append());
 	row[m_formatComboCols.format] = ExportOdt;
 	row[m_formatComboCols.label] = _("ODT");
-	row = *(formatComboModel->append());
+	row = * (formatComboModel->append());
 	row[m_formatComboCols.format] = ExportTxt;
 	row[m_formatComboCols.label] = _("Plain text");
 	ui.comboBoxFormat->pack_start(m_formatComboCols.label);
 	ui.comboBoxFormat->set_active(-1);
 
-	m_sourceTreeModel = Glib::RefPtr<FileTreeModel>(new FileTreeModel());
-	m_outputTreeModel = Glib::RefPtr<FileTreeModel>(new FileTreeModel());
+	m_sourceTreeModel = Glib::RefPtr<FileTreeModel> (new FileTreeModel());
+	m_outputTreeModel = Glib::RefPtr<FileTreeModel> (new FileTreeModel());
 
 	ui.treeViewInput->set_model(m_sourceTreeModel);
 	setupFileTreeView(ui.treeViewInput);
@@ -78,7 +78,7 @@ HOCRBatchExportDialog::~HOCRBatchExportDialog() {
 }
 
 void HOCRBatchExportDialog::run() {
-	while(ui.BatchExportDialog->run() == Gtk::RESPONSE_APPLY) {
+	while (ui.BatchExportDialog->run() == Gtk::RESPONSE_APPLY) {
 		apply();
 	}
 }
@@ -104,7 +104,7 @@ void HOCRBatchExportDialog::setupFileTreeView(Gtk::TreeView* treeView) {
 void HOCRBatchExportDialog::setSourceFolder() {
 	std::string initialFolder = Utils::get_documents_dir();
 	std::string dir = FileDialogs::open_folder_dialog(_("Select folder..."), initialFolder, "outputdir");
-	if(dir.empty()) {
+	if (dir.empty()) {
 		return;
 	}
 	ui.lineEditSourceFolder->set_text(dir);
@@ -112,7 +112,7 @@ void HOCRBatchExportDialog::setSourceFolder() {
 
 	std::vector<std::string> htmlFiles;
 	scanSourceDir(dir, htmlFiles);
-	for(const std::string& filename : htmlFiles) {
+	for (const std::string& filename : htmlFiles) {
 		m_sourceTreeModel->insertFile(filename, nullptr);
 	}
 
@@ -122,10 +122,10 @@ void HOCRBatchExportDialog::setSourceFolder() {
 
 void HOCRBatchExportDialog::scanSourceDir(const std::string& dir, std::vector<std::string>& files) {
 	Glib::RefPtr<Gio::FileEnumerator> it = Gio::File::create_for_path(dir)->enumerate_children();
-	while(Glib::RefPtr<Gio::FileInfo> file = it->next_file()) {
-		if(file->get_file_type() == Gio::FILE_TYPE_DIRECTORY) {
+	while (Glib::RefPtr<Gio::FileInfo> file = it->next_file()) {
+		if (file->get_file_type() == Gio::FILE_TYPE_DIRECTORY) {
 			scanSourceDir(Glib::build_filename(dir, file->get_name()), files);
-		} else if(Utils::string_endswith(file->get_name(), ".html")) {
+		} else if (Utils::string_endswith(file->get_name(), ".html")) {
 			files.push_back(Glib::build_filename(dir, file->get_name()));
 		}
 	}
@@ -133,10 +133,10 @@ void HOCRBatchExportDialog::scanSourceDir(const std::string& dir, std::vector<st
 
 void HOCRBatchExportDialog::setExportFormat() {
 	updateOutputTree();
-	ExportMode mode = (*ui.comboBoxFormat->get_active())[m_formatComboCols.format];
-	if(mode == ExportPdf) {
-		if(!m_pdfExportWidget) {
-			OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*>(MAIN->getOutputEditor());
+	ExportMode mode = (*ui.comboBoxFormat->get_active()) [m_formatComboCols.format];
+	if (mode == ExportPdf) {
+		if (!m_pdfExportWidget) {
+			OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*> (MAIN->getOutputEditor());
 			m_pdfExportWidget = new HOCRPdfExportWidget(editor->getTool());
 			ui.boxExportOptions->pack_start(*m_pdfExportWidget->getWidget(), true, true);
 		}
@@ -160,13 +160,13 @@ void HOCRBatchExportDialog::updateOutputTree() {
 	int exportLevel = ui.spinBoxExportLevel->get_value_as_int();
 
 	std::string dir = ui.lineEditSourceFolder->get_text();
-	if(dir.empty()) {
+	if (dir.empty()) {
 		return;
 	}
 
 	std::string exportSuffix;
-	ExportMode mode = (*ui.comboBoxFormat->get_active())[m_formatComboCols.format];
-	switch(mode) {
+	ExportMode mode = (*ui.comboBoxFormat->get_active()) [m_formatComboCols.format];
+	switch (mode) {
 	case ExportPdf:
 		exportSuffix = ".pdf";
 		break;
@@ -182,11 +182,11 @@ void HOCRBatchExportDialog::updateOutputTree() {
 	scanSourceDir(dir, htmlFiles);
 	int deepestlevel = 0;
 	int toplevel = std::count(dir.begin(), dir.end(), '/');
-	for(const std::string& filename : htmlFiles) {
-		deepestlevel = std::max(int(std::count(filename.begin(), filename.end(), '/')) - toplevel, deepestlevel);
+	for (const std::string& filename : htmlFiles) {
+		deepestlevel = std::max(int (std::count(filename.begin(), filename.end(), '/')) - toplevel, deepestlevel);
 	}
 	int groupAboveDepth = std::max(0, deepestlevel - exportLevel);
-	for(const std::string& filename : htmlFiles) {
+	for (const std::string& filename : htmlFiles) {
 		int level = std::count(filename.begin(), filename.end(), '/') - toplevel;
 		std::string output = filename.substr(0, filename.rfind(".")) + exportSuffix;
 		for (int i = level; i >= groupAboveDepth; --i) {
@@ -194,17 +194,17 @@ void HOCRBatchExportDialog::updateOutputTree() {
 		}
 		auto it = m_outputMap.find(output);
 		if (it == m_outputMap.end()) {
-			it = m_outputMap.insert(std::make_pair(output, std::vector<Glib::RefPtr<Gio::File>>())).first;
+			it = m_outputMap.insert(std::make_pair(output, std::vector<Glib::RefPtr<Gio::File >> ())).first;
 		}
 		it->second.push_back(Gio::File::create_for_path(filename));
 	}
 
-	for(auto it = m_outputMap.begin(), itEnd = m_outputMap.end(); it != itEnd; ++it) {
+	for (auto it = m_outputMap.begin(), itEnd = m_outputMap.end(); it != itEnd; ++it) {
 		m_outputTreeModel->insertFile(it->first, nullptr);
 	}
 	ui.treeViewOutput->expand_all();
 
-	if(m_pdfExportWidget) {
+	if (m_pdfExportWidget) {
 		m_connectionPreviewTimeout = Glib::signal_timeout().connect([this] { return updateExportPreview(); }, 250);
 	}
 }
@@ -217,8 +217,8 @@ void HOCRBatchExportDialog::apply() {
 	HOCRExporter* exporter = nullptr;
 	HOCRPdfExporter::PDFSettings settings;
 
-	ExportMode mode = (*ui.comboBoxFormat->get_active())[m_formatComboCols.format];
-	switch(mode) {
+	ExportMode mode = (*ui.comboBoxFormat->get_active()) [m_formatComboCols.format];
+	switch (mode) {
 	case ExportPdf:
 		exporter = new HOCRPdfExporter();
 		settings = m_pdfExportWidget->getPdfSettings();
@@ -231,13 +231,13 @@ void HOCRBatchExportDialog::apply() {
 		break;
 	}
 
-	OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*>(MAIN->getOutputEditor());
+	OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*> (MAIN->getOutputEditor());
 
 	int count = 0;
-	for(auto it = m_outputMap.begin(), itEnd = m_outputMap.end(); it != itEnd; ++it) {
+	for (auto it = m_outputMap.begin(), itEnd = m_outputMap.end(); it != itEnd; ++it) {
 		editor->open(OutputEditorHOCR::InsertMode::Replace, it->second);
 		exporter->run(editor->getDocument(), it->first, &settings);
-		ui.progressBar->set_fraction(double(++count) / m_outputMap.size());
+		ui.progressBar->set_fraction(double (++count) / m_outputMap.size());
 	}
 
 	delete exporter;
@@ -249,7 +249,7 @@ bool HOCRBatchExportDialog::updateExportPreview() {
 	if (m_outputMap.empty()) {
 		return false;
 	}
-	OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*>(MAIN->getOutputEditor());
+	OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*> (MAIN->getOutputEditor());
 	editor->open(OutputEditorHOCR::InsertMode::Replace, m_outputMap.begin()->second);
 	HOCRDocument* document = editor->getDocument();
 	editor->selectPage(0);

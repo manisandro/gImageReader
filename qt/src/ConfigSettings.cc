@@ -29,7 +29,7 @@ void ConfigSettings::add(AbstractSetting* setting) {
 
 void ConfigSettings::remove(const QString& key) {
 	auto it = s_settings.find(key);
-	if(it != s_settings.end()) {
+	if (it != s_settings.end()) {
 		s_settings.erase(it);
 	}
 }
@@ -41,15 +41,15 @@ TableSetting::TableSetting(const QString& key, QTableWidget* table)
 	m_table->setRowCount(0);
 	int nCols = m_table->columnCount();
 
-	for(const QString& row : str.split(';', Qt::SkipEmptyParts)) {
+	for (const QString& row : str.split(';', Qt::SkipEmptyParts)) {
 		int colidx = 0;
 		QStringList cols = row.split(',');
-		if(cols.size() != nCols) {
+		if (cols.size() != nCols) {
 			continue;
 		}
 		int rowidx = m_table->rowCount();
 		m_table->insertRow(rowidx);
-		for(const QString& col : cols) {
+		for (const QString& col : cols) {
 			m_table->setItem(rowidx, colidx++, new QTableWidgetItem(col));
 		}
 	}
@@ -59,9 +59,9 @@ void TableSetting::serialize() {
 	// Serialized string has format a11,a12,a13;a21,a22,a23;...
 	QStringList rows;
 	int nCols = m_table->columnCount();
-	for(int row = 0, nRows = m_table->rowCount(); row < nRows; ++row) {
+	for (int row = 0, nRows = m_table->rowCount(); row < nRows; ++row) {
 		QStringList cols;
-		for(int col = 0; col < nCols; ++col) {
+		for (int col = 0; col < nCols; ++col) {
 			QTableWidgetItem* item = m_table->item(row, col);
 			cols.append(item ? item->text() : QString());
 		}

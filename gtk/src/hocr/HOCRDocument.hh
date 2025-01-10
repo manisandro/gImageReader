@@ -63,7 +63,7 @@ public:
 	}
 
 	const HOCRItem* itemAtIndex(const Gtk::TreeIter& index) const {
-		return static_cast<HOCRItem*>(index.gobj()->user_data);
+		return static_cast<HOCRItem*> (index.gobj()->user_data);
 	}
 	Gtk::TreeIter indexAtItem(const HOCRItem* item) const;
 	bool editItemAttribute(const Gtk::TreeIter& index, const Glib::ustring& name, const Glib::ustring& value, const Glib::ustring& attrItemClass = Glib::ustring());
@@ -95,10 +95,10 @@ public:
 	}
 	// Upstream forgot the consts...
 	Gtk::TreeIter get_iter(const Gtk::TreePath& path) const {
-		return static_cast<Gtk::TreeModel*>(const_cast<HOCRDocument*>(this))->get_iter(path);
+		return static_cast<Gtk::TreeModel*> (const_cast<HOCRDocument*> (this))->get_iter(path);
 	}
 	Gtk::TreeIter get_iter(const Glib::ustring& path) const {
-		return static_cast<Gtk::TreeModel*>(const_cast<HOCRDocument*>(this))->get_iter(path);
+		return static_cast<Gtk::TreeModel*> (const_cast<HOCRDocument*> (this))->get_iter(path);
 	}
 
 	sigc::signal<void, const Gtk::TreeIter&, const Glib::ustring&, const Glib::ustring&> signal_item_attribute_changed() {
@@ -147,7 +147,7 @@ private:
 	void recomputeBBoxes(HOCRItem* item);
 
 	HOCRItem* mutableItemAtIndex(const Gtk::TreeIter& index) const {
-		return static_cast<HOCRItem*>(index.gobj()->user_data);
+		return static_cast<HOCRItem*> (index.gobj()->user_data);
 	}
 };
 
@@ -155,7 +155,7 @@ private:
 class HOCRItem {
 public:
 	// attrname : attrvalue : occurrences
-	typedef std::map<Glib::ustring, std::map<Glib::ustring, int>> AttrOccurenceMap_t;
+	typedef std::map<Glib::ustring, std::map<Glib::ustring, int >> AttrOccurenceMap_t;
 
 	HOCRItem(const xmlpp::Element* element, HOCRPage* page, HOCRItem* parent, int index = -1);
 	virtual ~HOCRItem();
@@ -200,7 +200,7 @@ public:
 	Glib::ustring getTitleAttribute(const Glib::ustring& key) const;
 	std::map<Glib::ustring, Glib::ustring> getAllAttributes() const;
 	std::map<Glib::ustring, Glib::ustring> getAttributes(const std::vector<Glib::ustring>& names) const;
-	void getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring> > >& occurrences) const;
+	void getPropagatableAttributes(std::map<Glib::ustring, std::map<Glib::ustring, std::set<Glib::ustring >>> & occurrences) const;
 	Glib::ustring toHtml(int indent = 0) const;
 	std::pair<double, double> baseLine() const;
 	Glib::ustring fontFamily() const {

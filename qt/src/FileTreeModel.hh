@@ -37,7 +37,7 @@ public:
 	bool isFileEditable(const QModelIndex& index) const;
 
 	template<class T>
-	T fileData(const QModelIndex& index) const { return static_cast<T>(fileData(index)); }
+	T fileData(const QModelIndex& index) const { return static_cast<T> (fileData(index)); }
 	DataObject* fileData(const QModelIndex& index) const;
 
 	QVariant data(const QModelIndex& index, int role) const override;

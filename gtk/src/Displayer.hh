@@ -64,7 +64,7 @@ public:
 	Geometry::Point mapToSceneClamped(const Geometry::Point& p) const;
 	Geometry::Point mapToView(const Geometry::Point& p) const;
 	bool hasMultipleOCRAreas();
-	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas();
+	std::vector<Cairo::RefPtr<Cairo::ImageSurface >> getOCRAreas();
 	bool allowAutodetectOCRAreas() const;
 	void autodetectOCRAreas();
 	void setDefaultCursor(Glib::RefPtr<Gdk::Cursor> cursor);
@@ -93,7 +93,7 @@ private:
 
 	std::vector<Source*> m_sources;
 	std::map<Source*, DisplayRenderer*> m_sourceRenderers;
-	std::map<int, std::pair<Source*, int>> m_pageMap;
+	std::map<int, std::pair<Source*, int >> m_pageMap;
 	Source* m_currentSource = nullptr;
 	Cairo::RefPtr<Cairo::ImageSurface> m_image;
 	double m_scale = 1.0;
@@ -152,7 +152,7 @@ private:
 
 	class ThumbListViewColumns : public Gtk::TreeModel::ColumnRecord {
 	public:
-		Gtk::TreeModelColumn<Glib::RefPtr<Gdk::Pixbuf>> pixbuf;
+		Gtk::TreeModelColumn<Glib::RefPtr<Gdk::Pixbuf >> pixbuf;
 		Gtk::TreeModelColumn<Glib::ustring> label;
 		ThumbListViewColumns() {
 			add(pixbuf);
@@ -269,7 +269,7 @@ protected:
 	virtual void showContextMenu(GdkEventButton* /*event*/) {}
 
 private:
-	typedef void(*ResizeHandler)(const Geometry::Point&, Geometry::Point&, Geometry::Point&);
+	typedef void (*ResizeHandler)(const Geometry::Point&, Geometry::Point&, Geometry::Point&);
 
 	Geometry::Point m_anchor;
 	Geometry::Point m_point;
@@ -310,7 +310,7 @@ public:
 	virtual void pageChanged() {}
 	virtual void resolutionChanged(double /*factor*/) {}
 	virtual void rotationChanged(double /*delta*/) {}
-	virtual std::vector<Cairo::RefPtr<Cairo::ImageSurface>> getOCRAreas() = 0;
+	virtual std::vector<Cairo::RefPtr<Cairo::ImageSurface >> getOCRAreas() = 0;
 	virtual bool hasMultipleOCRAreas() const {
 		return false;
 	}

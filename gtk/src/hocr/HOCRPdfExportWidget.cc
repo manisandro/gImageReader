@@ -44,13 +44,13 @@ HOCRPdfExportWidget::HOCRPdfExportWidget(DisplayerToolHOCR* displayerTool, const
 	// Image format combo
 	Glib::RefPtr<Gtk::ListStore> formatComboModel = Gtk::ListStore::create(m_formatComboCols);
 	ui.comboImageformat->set_model(formatComboModel);
-	Gtk::TreeModel::Row row = *(formatComboModel->append());
+	Gtk::TreeModel::Row row = * (formatComboModel->append());
 	row[m_formatComboCols.format] = Image::Format_RGB24;
 	row[m_formatComboCols.label] = _("Color");
-	row = *(formatComboModel->append());
+	row = * (formatComboModel->append());
 	row[m_formatComboCols.format] = Image::Format_Gray8;
 	row[m_formatComboCols.label] = _("Grayscale");
-	row = *(formatComboModel->append());
+	row = * (formatComboModel->append());
 	row[m_formatComboCols.format] = Image::Format_Mono;
 	row[m_formatComboCols.label] = _("Monochrome");
 	ui.comboImageformat->pack_start(m_formatComboCols.label);
@@ -59,10 +59,10 @@ HOCRPdfExportWidget::HOCRPdfExportWidget(DisplayerToolHOCR* displayerTool, const
 	// Dithering algorithm combo
 	Glib::RefPtr<Gtk::ListStore> ditheringComboModel = Gtk::ListStore::create(m_ditheringComboCols);
 	ui.comboDithering->set_model(ditheringComboModel);
-	row = *(ditheringComboModel->append());
+	row = * (ditheringComboModel->append());
 	row[m_ditheringComboCols.conversionFlags] = Image::ThresholdDithering;
 	row[m_ditheringComboCols.label] = _("Threshold (closest color)");
-	row = *(ditheringComboModel->append());
+	row = * (ditheringComboModel->append());
 	row[m_ditheringComboCols.conversionFlags] = Image::DiffuseDithering;
 	row[m_ditheringComboCols.label] = _("Diffuse");
 	ui.comboDithering->pack_start(m_ditheringComboCols.label);
@@ -71,36 +71,36 @@ HOCRPdfExportWidget::HOCRPdfExportWidget(DisplayerToolHOCR* displayerTool, const
 	// Image compression combo
 	Glib::RefPtr<Gtk::ListStore> compressionModel = Gtk::ListStore::create(m_compressionComboCols);
 	ui.comboCompression->set_model(compressionModel);
-	row = *(compressionModel->append());
+	row = * (compressionModel->append());
 	row[m_compressionComboCols.mode] = HOCRPdfExporter::PDFSettings::CompressZip;
 	row[m_compressionComboCols.label] = _("Zip (lossless)");
 	row[m_compressionComboCols.sensitive] = true;
-	row = *(compressionModel->append());
+	row = * (compressionModel->append());
 	row[m_compressionComboCols.mode] = HOCRPdfExporter::PDFSettings::CompressFax4;
 	row[m_compressionComboCols.label] = _("CCITT Group 4 (lossless)");
 	row[m_compressionComboCols.sensitive] = true;
-	row = *(compressionModel->append());
+	row = * (compressionModel->append());
 	row[m_compressionComboCols.mode] = HOCRPdfExporter::PDFSettings::CompressJpeg;
 	row[m_compressionComboCols.label] = _("Jpeg (lossy)");
 	row[m_compressionComboCols.sensitive] = true;
 	ui.comboCompression->pack_start(m_compressionComboCols.label);
 	ui.comboCompression->set_active(-1);
-	Gtk::CellRendererText* compressionTextRenderer = dynamic_cast<Gtk::CellRendererText*>(ui.comboCompression->get_cells()[0]);
-	if(compressionTextRenderer) {
+	Gtk::CellRendererText* compressionTextRenderer = dynamic_cast<Gtk::CellRendererText*> (ui.comboCompression->get_cells() [0]);
+	if (compressionTextRenderer) {
 		ui.comboCompression->add_attribute(compressionTextRenderer->property_sensitive(), m_compressionComboCols.sensitive);
 	}
 
 	// Paper format combo
 	Glib::RefPtr<Gtk::ListStore> paperFormatComboModel = Gtk::ListStore::create(m_paperFormatComboCols);
 	ui.comboPaperFormat->set_model(paperFormatComboModel);
-	row = *(paperFormatComboModel->append());
+	row = * (paperFormatComboModel->append());
 	row[m_paperFormatComboCols.label] = _("Same as source");
 	row[m_paperFormatComboCols.format] = "source";
-	row = *(paperFormatComboModel->append());
+	row = * (paperFormatComboModel->append());
 	row[m_paperFormatComboCols.label] = _("Custom");
 	row[m_paperFormatComboCols.format] = "custom";
-	for(const auto& size : PaperSize::paperSizes) {
-		row = *(paperFormatComboModel->append());
+	for (const auto& size : PaperSize::paperSizes) {
+		row = * (paperFormatComboModel->append());
 		row[m_paperFormatComboCols.label] = size.first;
 		row[m_paperFormatComboCols.format] = size.first;
 	}
@@ -110,39 +110,39 @@ HOCRPdfExportWidget::HOCRPdfExportWidget(DisplayerToolHOCR* displayerTool, const
 	// Paper size combo
 	Glib::RefPtr<Gtk::ListStore> sizeUnitComboModel = Gtk::ListStore::create(m_sizeUnitComboCols);
 	ui.comboPaperSizeUnit->set_model(sizeUnitComboModel);
-	row = *(sizeUnitComboModel->append());
+	row = * (sizeUnitComboModel->append());
 	row[m_sizeUnitComboCols.label] = _("cm");
-	row[m_sizeUnitComboCols.unit] = static_cast<int>(PaperSize::cm);
-	row = *(sizeUnitComboModel->append());
+	row[m_sizeUnitComboCols.unit] = static_cast<int> (PaperSize::cm);
+	row = * (sizeUnitComboModel->append());
 	row[m_sizeUnitComboCols.label] = _("in");
-	row[m_sizeUnitComboCols.unit] = static_cast<int>(PaperSize::inch);
+	row[m_sizeUnitComboCols.unit] = static_cast<int> (PaperSize::inch);
 	ui.comboPaperSizeUnit->pack_start(m_sizeUnitComboCols.label);
 	ui.comboPaperSizeUnit->set_active(0);
 
 	Glib::RefPtr<Gtk::ListStore> pdfVersionModel = Gtk::ListStore::create(m_pdfVersionComboCols);
 	ui.comboPdfVersion->set_model(pdfVersionModel);
-	row = *(pdfVersionModel->append());
+	row = * (pdfVersionModel->append());
 	row[m_pdfVersionComboCols.label] = "1.0";
 	row[m_pdfVersionComboCols.version] = HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_0;
-	row = *(pdfVersionModel->append());
+	row = * (pdfVersionModel->append());
 	row[m_pdfVersionComboCols.label] = "1.1";
 	row[m_pdfVersionComboCols.version] = HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_1;
-	row = *(pdfVersionModel->append());
+	row = * (pdfVersionModel->append());
 	row[m_pdfVersionComboCols.label] = "1.2";
 	row[m_pdfVersionComboCols.version] = HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_2;
-	row = *(pdfVersionModel->append());
+	row = * (pdfVersionModel->append());
 	row[m_pdfVersionComboCols.label] = "1.3";
 	row[m_pdfVersionComboCols.version] = HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_3;
-	row = *(pdfVersionModel->append());
+	row = * (pdfVersionModel->append());
 	row[m_pdfVersionComboCols.label] = "1.4";
 	row[m_pdfVersionComboCols.version] = HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_4;
-	row = *(pdfVersionModel->append());
+	row = * (pdfVersionModel->append());
 	row[m_pdfVersionComboCols.label] = "1.5";
 	row[m_pdfVersionComboCols.version] = HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_5;
-	row = *(pdfVersionModel->append());
+	row = * (pdfVersionModel->append());
 	row[m_pdfVersionComboCols.label] = "1.6";
 	row[m_pdfVersionComboCols.version] = HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_6;
-	row = *(pdfVersionModel->append());
+	row = * (pdfVersionModel->append());
 	row[m_pdfVersionComboCols.label] = "1.7";
 	row[m_pdfVersionComboCols.version] = HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_7;
 	ui.comboPdfVersion->pack_start(m_pdfVersionComboCols.label);
@@ -197,21 +197,21 @@ HOCRPdfExportWidget::HOCRPdfExportWidget(DisplayerToolHOCR* displayerTool, const
 	ADD_SETTING(ComboSetting("pdfimageformat", ui.comboImageformat));
 	ADD_SETTING(ComboSetting("pdfimagedithering", ui.comboDithering));
 	ADD_SETTING(SpinSetting("pdfimagedpi", ui.spinDpi));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfoverridefontfamily", ui.checkboxOverridefontfamily));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("pdfoverridefontfamily", ui.checkboxOverridefontfamily));
 	ADD_SETTING(FontComboSetting("pdffontfamily", m_comboOverrideFont));
 	ADD_SETTING(FontComboSetting("pdffallbackfontfamily", m_comboFallbackFont));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfoverridefontsizes", ui.checkboxOverridefontsize));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("pdfoverridefontsizes", ui.checkboxOverridefontsize));
 	ADD_SETTING(SpinSetting("pdffontsize", ui.spinOverridefontsize));
 	ADD_SETTING(SpinSetting("pdffontscale", ui.spinFontscale));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfuniformizelinespacing", ui.checkboxUniformlinespacing));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfsanitizehyphens", ui.checkboxSanitizeHyphens));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("pdfuniformizelinespacing", ui.checkboxUniformlinespacing));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("pdfsanitizehyphens", ui.checkboxSanitizeHyphens));
 	ADD_SETTING(SpinSetting("pdfpreservespaces", ui.spinPreserve));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("pdfpreview", ui.checkboxPreview));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("pdfpreview", ui.checkboxPreview));
 	ADD_SETTING(ComboSetting("pdfexportpapersize", ui.comboPaperFormat));
 	ADD_SETTING(EntrySetting("pdfexportpaperwidth", ui.entryPaperWidth));
 	ADD_SETTING(EntrySetting("pdfexportpaperheight", ui.entryPaperHeight));
 	ADD_SETTING(ComboSetting("pdfexportpapersizeunit", ui.comboPaperSizeUnit));
-	ADD_SETTING(SwitchSettingT<Gtk::ToggleButton>("pdfexportpaperlandscape", ui.buttonLandscape));
+	ADD_SETTING(SwitchSettingT<Gtk::ToggleButton> ("pdfexportpaperlandscape", ui.buttonLandscape));
 	ADD_SETTING(EntrySetting("pdfexportinfoauthor", ui.entryMetadataAuthor));
 	ADD_SETTING(EntrySetting("pdfexportinfoproducer", ui.entryMetadataProducer));
 	ADD_SETTING(EntrySetting("pdfexportinfocreator", ui.entryMetadataCreator));
@@ -243,9 +243,9 @@ void HOCRPdfExportWidget::setPreviewPage(const HOCRDocument* hocrdocument, const
 
 HOCRPdfExporter::PDFSettings HOCRPdfExportWidget::getPdfSettings() const {
 	HOCRPdfExporter::PDFSettings pdfSettings;
-	pdfSettings.colorFormat = (*ui.comboImageformat->get_active())[m_formatComboCols.format];
-	pdfSettings.conversionFlags = pdfSettings.colorFormat == Image::Format_Mono ? (*ui.comboDithering->get_active())[m_ditheringComboCols.conversionFlags] : Image::AutoColor;
-	pdfSettings.compression = (*ui.comboCompression->get_active())[m_compressionComboCols.mode];
+	pdfSettings.colorFormat = (*ui.comboImageformat->get_active()) [m_formatComboCols.format];
+	pdfSettings.conversionFlags = pdfSettings.colorFormat == Image::Format_Mono ? (*ui.comboDithering->get_active()) [m_ditheringComboCols.conversionFlags] : Image::AutoColor;
+	pdfSettings.compression = (*ui.comboCompression->get_active()) [m_compressionComboCols.mode];
 	pdfSettings.compressionQuality = ui.spinQuality->get_value();
 	pdfSettings.fontFamily = ui.checkboxOverridefontfamily->get_active() ? m_comboOverrideFont->get_active_font() : "";
 	pdfSettings.fontSize = ui.checkboxOverridefontfamily->get_active() ? ui.spinOverridefontsize->get_value() : -1;
@@ -259,18 +259,18 @@ HOCRPdfExporter::PDFSettings HOCRPdfExportWidget::getPdfSettings() const {
 
 	pdfSettings.assumedImageDpi = ui.spinBoxPaperSizeDpi->get_value_as_int();
 	pdfSettings.outputDpi = ui.spinDpi->get_value_as_int();
-	pdfSettings.paperSize = (*ui.comboPaperFormat->get_active())[m_paperFormatComboCols.format];
+	pdfSettings.paperSize = (*ui.comboPaperFormat->get_active()) [m_paperFormatComboCols.format];
 	pdfSettings.paperSizeLandscape = ui.buttonLandscape->get_active();
 	pdfSettings.paperWidthIn = std::atof(ui.entryPaperWidth->get_text().c_str());
 	pdfSettings.paperHeightIn = std::atof(ui.entryPaperHeight->get_text().c_str());
 
-	PaperSize::Unit unit = static_cast<PaperSize::Unit>(static_cast<int>((*ui.comboPaperSizeUnit->get_active())[m_sizeUnitComboCols.unit]));
-	if(unit == PaperSize::cm) {
+	PaperSize::Unit unit = static_cast<PaperSize::Unit> (static_cast<int> ((*ui.comboPaperSizeUnit->get_active()) [m_sizeUnitComboCols.unit]));
+	if (unit == PaperSize::cm) {
 		pdfSettings.paperWidthIn /= PaperSize::CMtoInch;
 		pdfSettings.paperHeightIn /= PaperSize::CMtoInch;
 	}
 
-	pdfSettings.version = static_cast<HOCRPdfExporter::PDFSettings::Version>(static_cast<int>((*ui.comboPdfVersion->get_active())[m_pdfVersionComboCols.version]));
+	pdfSettings.version = static_cast<HOCRPdfExporter::PDFSettings::Version> (static_cast<int> ((*ui.comboPdfVersion->get_active()) [m_pdfVersionComboCols.version]));
 	pdfSettings.password = ui.entryEncryptionPassword->get_text();
 	pdfSettings.producer = ui.entryMetadataProducer->get_text().c_str();
 	pdfSettings.creator = ui.entryMetadataCreator->get_text().c_str();
@@ -284,11 +284,11 @@ HOCRPdfExporter::PDFSettings HOCRPdfExportWidget::getPdfSettings() const {
 
 
 void HOCRPdfExportWidget::updatePreview() {
-	if(!m_preview) {
+	if (!m_preview) {
 		return;
 	}
 	m_preview->setVisible(ui.checkboxPreview->get_active());
-	if(!m_document || m_document->pageCount() == 0 || !ui.checkboxPreview->get_active()) {
+	if (!m_document || m_document->pageCount() == 0 || !ui.checkboxPreview->get_active()) {
 		return;
 	}
 
@@ -306,14 +306,14 @@ void HOCRPdfExportWidget::updatePreview() {
 	Cairo::RefPtr<Cairo::Context> context = Cairo::Context::create(image);
 
 	HOCRCairoPdfPrinter pdfPrinter(context, defaultFont);
-	if(!pdfSettings.fontFamily.empty()) {
+	if (!pdfSettings.fontFamily.empty()) {
 		pdfPrinter.setFontFamily(pdfSettings.fontFamily, false, false);
 	}
-	if(pdfSettings.fontSize != -1) {
+	if (pdfSettings.fontSize != -1) {
 		pdfPrinter.setFontSize(pdfSettings.fontSize * pageDpi / 72.);
 	}
 
-	if(pdfSettings.overlay) {
+	if (pdfSettings.overlay) {
 		pdfPrinter.drawImage(bbox, m_displayerTool->getSelection(bbox), pdfSettings);
 		context->save();
 		context->rectangle(0, 0, image->get_width(), image->get_height());
@@ -333,22 +333,22 @@ void HOCRPdfExportWidget::updatePreview() {
 }
 
 void HOCRPdfExportWidget::imageFormatChanged() {
-	Image::Format format = (*ui.comboImageformat->get_active())[m_formatComboCols.format];
-	Glib::RefPtr<Gtk::ListStore> compressionStore = Glib::RefPtr<Gtk::ListStore>::cast_static<Gtk::TreeModel>(ui.comboCompression->get_model());
+	Image::Format format = (*ui.comboImageformat->get_active()) [m_formatComboCols.format];
+	Glib::RefPtr<Gtk::ListStore> compressionStore = Glib::RefPtr<Gtk::ListStore>::cast_static<Gtk::TreeModel> (ui.comboCompression->get_model());
 	bool isMono = format == Image::Format_Mono;
-	if(isMono && (*ui.comboCompression->get_active())[m_compressionComboCols.mode] == HOCRPdfExporter::PDFSettings::CompressJpeg) {
+	if (isMono && (*ui.comboCompression->get_active()) [m_compressionComboCols.mode] == HOCRPdfExporter::PDFSettings::CompressJpeg) {
 		ui.comboCompression->set_active(HOCRPdfExporter::PDFSettings::CompressZip);
-	} else if(!isMono && (*ui.comboCompression->get_active())[m_compressionComboCols.mode] == HOCRPdfExporter::PDFSettings::CompressFax4) {
+	} else if (!isMono && (*ui.comboCompression->get_active()) [m_compressionComboCols.mode] == HOCRPdfExporter::PDFSettings::CompressFax4) {
 		ui.comboCompression->set_active(HOCRPdfExporter::PDFSettings::CompressZip);
 	}
-	(*compressionStore->children()[HOCRPdfExporter::PDFSettings::CompressFax4])[m_compressionComboCols.sensitive] = isMono;
-	(*compressionStore->children()[HOCRPdfExporter::PDFSettings::CompressJpeg])[m_compressionComboCols.sensitive] = !isMono;
+	(*compressionStore->children() [HOCRPdfExporter::PDFSettings::CompressFax4]) [m_compressionComboCols.sensitive] = isMono;
+	(*compressionStore->children() [HOCRPdfExporter::PDFSettings::CompressJpeg]) [m_compressionComboCols.sensitive] = !isMono;
 	ui.labelDithering->set_sensitive(isMono);
 	ui.comboDithering->set_sensitive(isMono);
 }
 
 void HOCRPdfExportWidget::imageCompressionChanged() {
-	HOCRPdfExporter::PDFSettings::Compression compression = (*ui.comboCompression->get_active())[m_compressionComboCols.mode];
+	HOCRPdfExporter::PDFSettings::Compression compression = (*ui.comboCompression->get_active()) [m_compressionComboCols.mode];
 	bool jpegCompression = compression == HOCRPdfExporter::PDFSettings::CompressJpeg;
 	ui.spinQuality->set_sensitive(jpegCompression);
 	ui.labelQuality->set_sensitive(jpegCompression);
@@ -365,14 +365,14 @@ void HOCRPdfExportWidget::paperOrientationChanged(bool landscape) {
 }
 
 void HOCRPdfExportWidget::paperSizeChanged() {
-	std::string paperSize = (*ui.comboPaperFormat->get_active())[m_paperFormatComboCols.format];
-	if(paperSize == "custom") {
+	std::string paperSize = (*ui.comboPaperFormat->get_active()) [m_paperFormatComboCols.format];
+	if (paperSize == "custom") {
 		ui.entryPaperWidth->set_sensitive(true);
 		ui.entryPaperHeight->set_sensitive(true);
 		ui.boxPaperSize->set_visible(true);
 		ui.boxPaperOrientation->set_visible(false);
 		ui.boxPaperSizeDpi->set_visible(false);
-	} else if(paperSize == "source") {
+	} else if (paperSize == "source") {
 		ui.entryPaperWidth->set_sensitive(true);
 		ui.entryPaperHeight->set_sensitive(true);
 		ui.boxPaperSize->set_visible(false);
@@ -384,7 +384,7 @@ void HOCRPdfExportWidget::paperSizeChanged() {
 		ui.boxPaperSizeDpi->set_visible(false);
 		ui.entryPaperWidth->set_sensitive(false);
 		ui.entryPaperHeight->set_sensitive(false);
-		PaperSize::Unit unit = static_cast<PaperSize::Unit>(static_cast<int>((*ui.comboPaperSizeUnit->get_active())[m_sizeUnitComboCols.unit]));
+		PaperSize::Unit unit = static_cast<PaperSize::Unit> (static_cast<int> ((*ui.comboPaperSizeUnit->get_active()) [m_sizeUnitComboCols.unit]));
 		auto outputPaperSize = PaperSize::getSize(unit, paperSize, ui.buttonLandscape->get_active());
 		ui.entryPaperWidth->set_text(Glib::ustring::format(std::fixed, std::setprecision(1), outputPaperSize.width));
 		ui.entryPaperHeight->set_text(Glib::ustring::format(std::fixed, std::setprecision(1), outputPaperSize.height));
@@ -396,7 +396,7 @@ void HOCRPdfExportWidget::updateValid() {
 	bool valid = true;
 
 	// Passwords must match
-	if(ui.entryEncryptionPassword->get_text() == ui.entryEncryptionConfirm->get_text()) {
+	if (ui.entryEncryptionPassword->get_text() == ui.entryEncryptionConfirm->get_text()) {
 		Utils::clear_error_state(ui.entryEncryptionConfirm);
 	} else {
 		Utils::set_error_state(ui.entryEncryptionConfirm);
@@ -404,15 +404,15 @@ void HOCRPdfExportWidget::updateValid() {
 	}
 
 	// In custom paper size mode, size must be specified
-	std::string paperSize = (*ui.comboPaperFormat->get_active())[m_paperFormatComboCols.format];
+	std::string paperSize = (*ui.comboPaperFormat->get_active()) [m_paperFormatComboCols.format];
 	Utils::clear_error_state(ui.entryPaperWidth);
 	Utils::clear_error_state(ui.entryPaperHeight);
-	if(paperSize == "custom") {
-		if(ui.entryPaperWidth->get_text().empty()) {
+	if (paperSize == "custom") {
+		if (ui.entryPaperWidth->get_text().empty()) {
 			Utils::set_error_state(ui.entryPaperWidth);
 			valid = false;
 		}
-		if(ui.entryPaperHeight->get_text().empty()) {
+		if (ui.entryPaperHeight->get_text().empty()) {
 			Utils::set_error_state(ui.entryPaperHeight);
 			valid = false;
 		}
@@ -422,7 +422,7 @@ void HOCRPdfExportWidget::updateValid() {
 
 void HOCRPdfExportWidget::importMetadataFromSource() {
 	std::vector<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-	if(!sources.empty()) {
+	if (!sources.empty()) {
 		Source* source = sources.front();
 		ui.entryMetadataAuthor->set_text(source->author);
 		ui.entryMetadataCreator->set_text(source->creator);
@@ -432,8 +432,8 @@ void HOCRPdfExportWidget::importMetadataFromSource() {
 		ui.entryMetadataProducer->set_text(source->producer);
 
 		HOCRPdfExporter::PDFSettings::Version sourcePdfVersion = HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_7;
-		if(source->pdfVersionMajor == 1 && source->pdfVersionMinor <= 7) {
-			sourcePdfVersion = static_cast<HOCRPdfExporter::PDFSettings::Version>(HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_0 + source->pdfVersionMinor);
+		if (source->pdfVersionMajor == 1 && source->pdfVersionMinor <= 7) {
+			sourcePdfVersion = static_cast<HOCRPdfExporter::PDFSettings::Version> (HOCRPdfExporter::PDFSettings::Version::PdfVersion_1_0 + source->pdfVersionMinor);
 		}
 		ui.comboPdfVersion->set_active(sourcePdfVersion);
 	}

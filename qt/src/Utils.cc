@@ -56,14 +56,14 @@ QString Utils::makeOutputFilename(const QString& filename) {
 	// Ensure directory exists
 	QFileInfo finfo(filename);
 	QDir dir = finfo.absoluteDir();
-	if(!dir.exists()) {
+	if (!dir.exists()) {
 		dir = QDir(Utils::documentsFolder());
 	}
 	// Generate non-existing file
 	QString ext = finfo.completeSuffix();
 	QString base = finfo.baseName().replace(QRegularExpression(QString("_[0-9]+.%1$").arg(ext)), "");
 	QString newfilename = dir.absoluteFilePath(base + "." + ext);
-	for(int i = 1; QFile(newfilename).exists(); ++i) {
+	for (int i = 1; QFile(newfilename).exists(); ++i) {
 		newfilename = dir.absoluteFilePath(QString("%1_%2.%3").arg(base).arg(i).arg(ext));
 	}
 	return newfilename;
@@ -71,12 +71,12 @@ QString Utils::makeOutputFilename(const QString& filename) {
 
 class BusyTaskThread : public QThread {
 public:
-	BusyTaskThread(const std::function<bool()>& f) : m_f(f), m_result(false) {}
+	BusyTaskThread(const std::function<bool() >& f) : m_f(f), m_result(false) {}
 	bool getResult() const {
 		return m_result;
 	}
 private:
-	std::function<bool()> m_f;
+	std::function<bool() > m_f;
 	bool m_result;
 
 	void run() {
@@ -87,8 +87,8 @@ private:
 class BusyEventFilter : public QObject {
 public:
 	bool eventFilter(QObject* /*obj*/, QEvent* ev) {
-		if(dynamic_cast<QMouseEvent*>(ev)) {
-			QMouseEvent* mev = static_cast<QMouseEvent*>(ev);
+		if (dynamic_cast<QMouseEvent*> (ev)) {
+			QMouseEvent* mev = static_cast<QMouseEvent*> (ev);
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 			QPoint evp = MAIN->m_progressCancelButton->mapFromGlobal(mev->globalPosition()).toPoint();
 #else
@@ -96,11 +96,11 @@ public:
 #endif
 			return !QRect(QPoint(0, 0), MAIN->m_progressCancelButton->size()).contains(evp);
 		}
-		return dynamic_cast<QInputEvent*>(ev);
+		return dynamic_cast<QInputEvent*> (ev);
 	}
 };
 
-bool Utils::busyTask(const std::function<bool()>& f, const QString& msg) {
+bool Utils::busyTask(const std::function<bool() >& f, const QString& msg) {
 	MAIN->pushState(MainWindow::State::Busy, msg);
 	QEventLoop evLoop;
 	BusyTaskThread thread(f);
@@ -128,18 +128,18 @@ void Utils::setSpinBlocked(QDoubleSpinBox* spin, double value) {
 }
 
 bool Utils::handleSourceDragEvent(const QMimeData* mimeData) {
-	if(mimeData->hasImage()) {
+	if (mimeData->hasImage()) {
 		return true;
 	}
 	QList<QByteArray> formats = QImageReader::supportedImageFormats();
 	formats.append("pdf");
-	for(const QUrl& url : mimeData->urls()) {
+	for (const QUrl& url : mimeData->urls()) {
 		QFile file(url.toLocalFile());
-		if(!file.exists()) {
+		if (!file.exists()) {
 			continue;
 		}
-		for(const QByteArray& format : formats) {
-			if(file.fileName().endsWith(format, Qt::CaseInsensitive)) {
+		for (const QByteArray& format : formats) {
+			if (file.fileName().endsWith(format, Qt::CaseInsensitive)) {
 				return true;
 			}
 		}
@@ -148,20 +148,20 @@ bool Utils::handleSourceDragEvent(const QMimeData* mimeData) {
 }
 
 void Utils::handleSourceDropEvent(const QMimeData* mimeData) {
-	if(mimeData->hasImage()) {
-		MAIN->getSourceManager()->addSourceImage(qvariant_cast<QImage>(mimeData->imageData()));
+	if (mimeData->hasImage()) {
+		MAIN->getSourceManager()->addSourceImage(qvariant_cast<QImage> (mimeData->imageData()));
 		return;
 	}
 	QList<QByteArray> formats = QImageReader::supportedImageFormats();
 	formats.append("pdf");
 	formats.append("djvu");
-	for(const QUrl& url : mimeData->urls()) {
+	for (const QUrl& url : mimeData->urls()) {
 		QFile file(url.toLocalFile());
-		if(!file.exists()) {
+		if (!file.exists()) {
 			continue;
 		}
-		for(const QByteArray& format : formats) {
-			if(file.fileName().endsWith(format, Qt::CaseInsensitive)) {
+		for (const QByteArray& format : formats) {
+			if (file.fileName().endsWith(format, Qt::CaseInsensitive)) {
 				MAIN->getSourceManager()->addSource(file.fileName());
 				break;
 			}
@@ -173,7 +173,7 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout) {
 	QNetworkAccessManager networkMgr;
 	QNetworkReply* reply = nullptr;
 
-	while(true) {
+	while (true) {
 		QNetworkRequest req(url);
 		req.setRawHeader("User-Agent", "Wget/1.13.4");
 		QSslConfiguration conf = req.sslConfiguration();
@@ -187,7 +187,7 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout) {
 		timer.setSingleShot(true);
 		timer.start(timeout);
 		loop.exec();
-		if(reply->isRunning()) {
+		if (reply->isRunning()) {
 			// Timeout
 			reply->close();
 			delete reply;
@@ -195,7 +195,7 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout) {
 		}
 
 		QUrl redirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
-		if(redirectUrl.isValid() && url != redirectUrl) {
+		if (redirectUrl.isValid() && url != redirectUrl) {
 			delete reply;
 			url = redirectUrl;
 		} else {
@@ -211,31 +211,31 @@ QByteArray Utils::download(QUrl url, QString& messages, int timeout) {
 
 QString Utils::getSpellingLanguage(const QString& lang, const QString& defaultLanguage) {
 	// If it is already a valid code, return it
-	if(QRegularExpression("^[a-z]{2}(_[A-Z]{2})?$").match(lang).hasMatch()) {
+	if (QRegularExpression("^[a-z]{2}(_[A-Z]{2})?$").match(lang).hasMatch()) {
 		return lang;
 	}
 	// Treat the language as a tesseract lang spec and try to find a matching code
 	Config::Lang langspec = {lang, "", ""};
-	if(!lang.isEmpty() && MAIN->getConfig()->searchLangSpec(langspec)) {
+	if (!lang.isEmpty() && MAIN->getConfig()->searchLangSpec(langspec)) {
 		// If default language starts with the returned code, return default language
-		if(!defaultLanguage.isEmpty() && defaultLanguage.startsWith(langspec.code)) {
+		if (!defaultLanguage.isEmpty() && defaultLanguage.startsWith(langspec.code)) {
 			return defaultLanguage;
 		}
 		// Return any one language culture code
 		QStringList langCultures = MAIN->getConfig()->searchLangCultures(langspec.code);
-		if(!langCultures.isEmpty()) {
+		if (!langCultures.isEmpty()) {
 			return langCultures.front();
 		}
 		// Return incomplete code (only country)
 		return langspec.code;
 	}
 	// Return default language if specified
-	if(!defaultLanguage.isEmpty()) {
+	if (!defaultLanguage.isEmpty()) {
 		return defaultLanguage;
 	}
 	// Use the application locale, if specified, otherwise fall back to en
 	QString syslang = QLocale::system().name();
-	if(syslang.toLower() == "c" || syslang.isEmpty()) {
+	if (syslang.toLower() == "c" || syslang.isEmpty()) {
 		return "en_US";
 	}
 	return syslang;
@@ -251,7 +251,7 @@ Utils::TesseractHandle::TesseractHandle(const char* language) {
 	int ret = m_tess->Init(nullptr, language);
 	setlocale(LC_ALL, current.constData());
 
-	if(ret == -1) {
+	if (ret == -1) {
 		delete m_tess;
 		m_tess = nullptr;
 	}

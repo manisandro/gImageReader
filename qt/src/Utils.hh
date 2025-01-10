@@ -46,7 +46,7 @@ namespace Utils {
 QString documentsFolder();
 QString makeOutputFilename(const QString& filename);
 
-bool busyTask(const std::function<bool()>& f, const QString& msg);
+bool busyTask(const std::function<bool() >& f, const QString& msg);
 
 void setSpinBlocked(QSpinBox* spin, int value);
 void setSpinBlocked(QDoubleSpinBox* spin, double value);
@@ -85,8 +85,8 @@ public:
 	}
 	T dequeue() {
 		QMutexLocker locker(&m_mutex);
-		if(m_queue.isEmpty()) {
-			while(m_queue.isEmpty()) {
+		if (m_queue.isEmpty()) {
+			while (m_queue.isEmpty()) {
 				m_cond.wait(&m_mutex);
 			}
 		}

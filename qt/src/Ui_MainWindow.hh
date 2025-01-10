@@ -222,7 +222,7 @@ public:
 		toolBarSources->addAction(actionSourceRemove);
 		toolBarSources->addAction(actionSourceDelete);
 		toolBarSources->addAction(actionSourceClear);
-		static_cast<QVBoxLayout*>(tabSources->layout())->insertWidget(0, toolBarSources);
+		static_cast<QVBoxLayout*> (tabSources->layout())->insertWidget(0, toolBarSources);
 	}
 };
 

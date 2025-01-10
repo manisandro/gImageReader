@@ -52,18 +52,18 @@ void FontComboBox::set_active_font(const Glib::ustring& font) {
 
 Glib::RefPtr<Gtk::ListStore> FontComboBox::getModel() {
 	static Glib::RefPtr<Gtk::ListStore> fontComboModel;
-	if(!fontComboModel) {
+	if (!fontComboModel) {
 		std::vector<Glib::ustring> fontFamilies;
 		Glib::RefPtr<Pango::FontMap> fontMap = Glib::wrap(pango_cairo_font_map_get_default(),  true);
-		for(const Glib::RefPtr<Pango::FontFamily>& family : fontMap->list_families()) {
+		for (const Glib::RefPtr<Pango::FontFamily>& family : fontMap->list_families()) {
 			fontFamilies.push_back(family->get_name());
 		}
 		std::sort(fontFamilies.begin(), fontFamilies.end(), [](const Glib::ustring & a, const Glib::ustring & b) {
 			return a.casefold().compare(b.casefold()) < 0;
 		});
 		fontComboModel = Gtk::ListStore::create(s_fontComboCols);
-		for(const Glib::ustring& family : fontFamilies) {
-			(*fontComboModel->append())[s_fontComboCols.fontFamily] = family;
+		for (const Glib::ustring& family : fontFamilies) {
+			(*fontComboModel->append()) [s_fontComboCols.fontFamily] = family;
 		}
 	}
 	return fontComboModel;

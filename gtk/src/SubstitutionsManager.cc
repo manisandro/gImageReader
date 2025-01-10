@@ -51,27 +51,27 @@ SubstitutionsManager::SubstitutionsManager() {
 }
 
 SubstitutionsManager::~SubstitutionsManager() {
-	ConfigSettings::get<ListStoreSetting>("replacelist")->serialize();
+	ConfigSettings::get<ListStoreSetting> ("replacelist")->serialize();
 }
 
 void SubstitutionsManager::set_visible(bool visible) {
 	ui.windowSubstitutions->set_visible(visible);
-	if(visible) {
+	if (visible) {
 		ui.windowSubstitutions->raise();
 	}
 }
 
 void SubstitutionsManager::openList() {
-	if(!clearList()) {
+	if (!clearList()) {
 		return;
 	}
 	std::string dir = !m_currentFile.empty() ? Glib::path_get_dirname(m_currentFile) : "";
 	FileDialogs::FileFilter filter = { _("Substitutions List"), {"text/plain"}, {"*.txt"}};
-	std::vector<Glib::RefPtr<Gio::File>> files = FileDialogs::open_dialog(_("Open Substitutions List"), dir, "auxdir", filter, false, ui.windowSubstitutions);
+	std::vector<Glib::RefPtr<Gio::File >> files = FileDialogs::open_dialog(_("Open Substitutions List"), dir, "auxdir", filter, false, ui.windowSubstitutions);
 
-	if(!files.empty()) {
+	if (!files.empty()) {
 		std::ifstream file(files.front()->get_path());
-		if(!file.is_open()) {
+		if (!file.is_open()) {
 			Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error Reading File"), Glib::ustring::compose(_("Unable to read '%1'."), files.front()->get_path()));
 			return;
 		}
@@ -79,21 +79,21 @@ void SubstitutionsManager::openList() {
 
 		std::string line;
 		bool errors = false;
-		while(std::getline(file, line)) {
+		while (std::getline(file, line)) {
 			Glib::ustring text = line.data();
-			if(text.empty()) {
+			if (text.empty()) {
 				continue;
 			}
 			std::vector<Glib::ustring> fields = Utils::string_split(text, '\t', true);
-			if(fields.size() < 2) {
+			if (fields.size() < 2) {
 				errors = true;
 				continue;
 			}
 			Gtk::TreeIter it = m_listStore->append();
-			(*it)[m_viewCols.search] = fields[0];
-			(*it)[m_viewCols.replace] = fields[1];
+			(*it) [m_viewCols.search] = fields[0];
+			(*it) [m_viewCols.replace] = fields[1];
 		}
-		if(errors) {
+		if (errors) {
 			Utils::messageBox(Gtk::MESSAGE_WARNING, _("Errors Occurred Reading File"), _("Some entries of the substitutions list could not be read."));
 		}
 	}
@@ -102,17 +102,17 @@ void SubstitutionsManager::openList() {
 bool SubstitutionsManager::saveList() {
 	FileDialogs::FileFilter filter = { _("Substitutions List"), {"text/plain"}, {"*.txt"} };
 	std::string filename = FileDialogs::save_dialog(_("Save Substitutions List"), m_currentFile, "auxdir", filter, false, ui.windowSubstitutions);
-	if(filename.empty()) {
+	if (filename.empty()) {
 		return false;
 	}
 	std::ofstream file(filename);
-	if(!file.is_open()) {
+	if (!file.is_open()) {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Error Saving File"), Glib::ustring::compose(_("Unable to write to '%1'."), filename));
 		return false;
 	}
 	m_currentFile = filename;
 	Glib::ustring str;
-	for(const Gtk::TreeModel::Row& row : m_listStore->children()) {
+	for (const Gtk::TreeModel::Row& row : m_listStore->children()) {
 		Glib::ustring search, replace;
 		row.get_value(0, search);
 		row.get_value(1, replace);
@@ -123,13 +123,13 @@ bool SubstitutionsManager::saveList() {
 }
 
 bool SubstitutionsManager::clearList() {
-	if(m_listStore->children().size() > 0) {
+	if (m_listStore->children().size() > 0) {
 		int response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Save List?"), _("Do you want to save the current list?"), "", Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel, ui.windowSubstitutions);
-		if(response == Utils::Button::Save) {
-			if(!saveList()) {
+		if (response == Utils::Button::Save) {
+			if (!saveList()) {
 				return false;
 			}
-		} else if(response != Utils::Button::Discard) {
+		} else if (response != Utils::Button::Discard) {
 			return false;
 		}
 	}
@@ -143,12 +143,12 @@ void SubstitutionsManager::addRow() {
 }
 
 void SubstitutionsManager::removeRows() {
-	if(ui.treeview->get_selection()->count_selected_rows() != 0) {
+	if (ui.treeview->get_selection()->count_selected_rows() != 0) {
 		std::vector<Gtk::ListStore::RowReference> rows;
-		for(const Gtk::ListStore::TreeModel::Path& path : ui.treeview->get_selection()->get_selected_rows()) {
+		for (const Gtk::ListStore::TreeModel::Path& path : ui.treeview->get_selection()->get_selected_rows()) {
 			rows.push_back(Gtk::ListStore::RowReference(m_listStore, path));
 		}
-		for(const Gtk::ListStore::RowReference& row : rows) {
+		for (const Gtk::ListStore::RowReference& row : rows) {
 			m_listStore->erase(m_listStore->get_iter(row.get_path()));
 		}
 	}
@@ -156,7 +156,7 @@ void SubstitutionsManager::removeRows() {
 
 void SubstitutionsManager::applySubstitutions() {
 	std::map<Glib::ustring, Glib::ustring> substitutions;
-	for(const Gtk::TreeModel::Row& row : m_listStore->children()) {
+	for (const Gtk::TreeModel::Row& row : m_listStore->children()) {
 		Glib::ustring search, replace;
 		row.get_value(0, search);
 		row.get_value(1, replace);

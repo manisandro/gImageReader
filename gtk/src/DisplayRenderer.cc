@@ -25,7 +25,7 @@
 #include <poppler-page.h>
 
 void DisplayRenderer::adjustImage(const Cairo::RefPtr<Cairo::ImageSurface>& surf, int brightness, int contrast, bool invert) const {
-	if(brightness == 0 && contrast == 0 && !invert) {
+	if (brightness == 0 && contrast == 0 && !invert) {
 		return;
 	}
 
@@ -39,7 +39,7 @@ void DisplayRenderer::adjustImage(const Cairo::RefPtr<Cairo::ImageSurface>& surf
 	int n = surf->get_height() * surf->get_width();
 	uint8_t* data = surf->get_data();
 	#pragma omp parallel for schedule(static)
-	for(int i = 0; i < n; ++i) {
+	for (int i = 0; i < n; ++i) {
 		uint8_t& r = data[4 * i + 2];
 		uint8_t& g = data[4 * i + 1];
 		uint8_t& b = data[4 * i + 0];
@@ -52,7 +52,7 @@ void DisplayRenderer::adjustImage(const Cairo::RefPtr<Cairo::ImageSurface>& surf
 		g = std::max(0.f, std::min(FCn * (g - 128.f) + 128.f, 255.f));
 		b = std::max(0.f, std::min(FCn * (b - 128.f) + 128.f, 255.f));
 		// Invert
-		if(invert) {
+		if (invert) {
 			r = 255 - r;
 			g = 255 - g;
 			b = 255 - b;
@@ -64,7 +64,7 @@ Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::render(int /*page*/, double re
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf;
 	try {
 		pixbuf = Gdk::Pixbuf::create_from_file(m_filename);
-	} catch(const Glib::Error&) {
+	} catch (const Glib::Error&) {
 		return Cairo::RefPtr<Cairo::ImageSurface>();
 	}
 
@@ -74,18 +74,18 @@ Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::render(int /*page*/, double re
 	Cairo::RefPtr<Cairo::ImageSurface> surf;
 	try {
 		surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, w, h);
-	} catch(const std::exception&) {
+	} catch (const std::exception&) {
 		return Cairo::RefPtr<Cairo::ImageSurface>();
 	}
 	Cairo::RefPtr<Cairo::Context> ctx = Cairo::Context::create(surf);
-	if(pixbuf->get_has_alpha()) {
+	if (pixbuf->get_has_alpha()) {
 		ctx->set_source_rgba(1., 1., 1., 1.);
 		ctx->paint();
 	}
 	ctx->scale(scale, scale);
 	try {
 		Gdk::Cairo::set_source_pixbuf(ctx, pixbuf);
-	} catch(const std::exception&) {
+	} catch (const std::exception&) {
 		return Cairo::RefPtr<Cairo::ImageSurface>();
 	}
 
@@ -97,7 +97,7 @@ Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::renderThumbnail(int /*page*/) 
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf;
 	try {
 		pixbuf = Gdk::Pixbuf::create_from_file(m_filename);
-	} catch(const Glib::Error&) {
+	} catch (const Glib::Error&) {
 		return Cairo::RefPtr<Cairo::ImageSurface>();
 	}
 
@@ -107,18 +107,18 @@ Cairo::RefPtr<Cairo::ImageSurface> ImageRenderer::renderThumbnail(int /*page*/) 
 	Cairo::RefPtr<Cairo::ImageSurface> surf;
 	try {
 		surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, w, h);
-	} catch(const std::exception&) {
+	} catch (const std::exception&) {
 		return Cairo::RefPtr<Cairo::ImageSurface>();
 	}
 	Cairo::RefPtr<Cairo::Context> ctx = Cairo::Context::create(surf);
-	if(pixbuf->get_has_alpha()) {
+	if (pixbuf->get_has_alpha()) {
 		ctx->set_source_rgba(1., 1., 1., 1.);
 		ctx->paint();
 	}
 	ctx->scale(scale, scale);
 	try {
 		Gdk::Cairo::set_source_pixbuf(ctx, pixbuf);
-	} catch(const std::exception&) {
+	} catch (const std::exception&) {
 		return Cairo::RefPtr<Cairo::ImageSurface>();
 	}
 
@@ -131,13 +131,13 @@ PDFRenderer::PDFRenderer(const std::string& filename, const Glib::ustring& passw
 }
 
 PDFRenderer::~PDFRenderer() {
-	if(m_document) {
+	if (m_document) {
 		g_object_unref(m_document);
 	}
 }
 
 Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::render(int page, double resolution) const {
-	if(!m_document) {
+	if (!m_document) {
 		return Cairo::RefPtr<Cairo::ImageSurface>();
 	}
 	m_mutex.lock();
@@ -150,7 +150,7 @@ Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::render(int page, double resoluti
 	Cairo::RefPtr<Cairo::ImageSurface> surf;
 	try {
 		surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, w, h);
-	} catch(const std::exception&) {
+	} catch (const std::exception&) {
 		m_mutex.unlock();
 		return Cairo::RefPtr<Cairo::ImageSurface>();
 	}
@@ -165,7 +165,7 @@ Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::render(int page, double resoluti
 }
 
 Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::renderThumbnail(int page) const {
-	if(!m_document) {
+	if (!m_document) {
 		return Cairo::RefPtr<Cairo::ImageSurface>();
 	}
 	m_mutex.lock();
@@ -179,7 +179,7 @@ Cairo::RefPtr<Cairo::ImageSurface> PDFRenderer::renderThumbnail(int page) const 
 	Cairo::RefPtr<Cairo::ImageSurface> surf;
 	try {
 		surf = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, w, h);
-	} catch(const std::exception&) {
+	} catch (const std::exception&) {
 		m_mutex.unlock();
 		return Cairo::RefPtr<Cairo::ImageSurface>();
 	}

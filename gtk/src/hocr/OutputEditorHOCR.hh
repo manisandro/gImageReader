@@ -65,9 +65,9 @@ public:
 
 	bool clear(bool hide = true) override;
 	void setLanguage(const Config::Lang& lang) override;
-	bool open(const std::string& file) override { return open(InsertMode::Replace, {Gio::File::create_for_path(file)}); }
+	bool open(const std::string& file) override { return open(InsertMode::Replace, {Gio::File::create_for_path(file) }); }
 	std::string crashSave(const std::string& filename) const override;
-	bool open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File>> files = std::vector<Glib::RefPtr<Gio::File>>());
+	bool open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File >> files = std::vector<Glib::RefPtr<Gio::File >> ());
 	bool save(const std::string& filename = "");
 	bool exportToPDF();
 	bool exportToText();

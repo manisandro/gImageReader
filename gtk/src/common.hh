@@ -34,7 +34,7 @@ public:
 		std::for_each(m_connections.begin(), m_connections.end(), [](sigc::connection conn) {
 			conn.disconnect();
 		});
-		for(ClassDataItem* item : m_items) {
+		for (ClassDataItem* item : m_items) {
 			delete item;
 		}
 	}

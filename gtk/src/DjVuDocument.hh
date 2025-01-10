@@ -31,7 +31,7 @@ public:
 		int dpi;
 	};
 
-	bool openFile( const std::string& fileName );
+	bool openFile(const std::string& fileName);
 	void closeFile();
 	Cairo::RefPtr<Cairo::ImageSurface> image(int pageno, int resolution);
 	int pageCount() const {

@@ -91,20 +91,20 @@ SubstitutionsManager::SubstitutionsManager(QWidget* parent)
 }
 
 SubstitutionsManager::~SubstitutionsManager() {
-	ConfigSettings::get<TableSetting>("substitutionslist")->serialize();
+	ConfigSettings::get<TableSetting> ("substitutionslist")->serialize();
 }
 
 void SubstitutionsManager::openList() {
-	if(!clearList()) {
+	if (!clearList()) {
 		return;
 	}
 	QString dir = !m_currentFile.isEmpty() ? QFileInfo(m_currentFile).absolutePath() : "";
 	QStringList files = FileDialogs::openDialog(_("Open Substitutions List"), dir, "auxdir", QString("%1 (*.txt)").arg(_("Substitutions List")), false, this);
 
-	if(!files.isEmpty()) {
+	if (!files.isEmpty()) {
 		QString filename = files.front();
 		QFile file(filename);
-		if(!file.open(QIODevice::ReadOnly)) {
+		if (!file.open(QIODevice::ReadOnly)) {
 			QMessageBox::critical(this, _("Error Reading File"), _("Unable to read '%1'.").arg(filename));
 			return;
 		}
@@ -112,14 +112,14 @@ void SubstitutionsManager::openList() {
 
 		bool errors = false;
 		m_tableWidget->blockSignals(true);
-		while(!file.atEnd()) {
+		while (!file.atEnd()) {
 			QString line = MAIN->getConfig()->useUtf8() ? QString::fromUtf8(file.readLine()) : QString::fromLocal8Bit(file.readLine());
 			line.chop(1);
-			if(line.isEmpty()) {
+			if (line.isEmpty()) {
 				continue;
 			}
 			QList<QString> fields = line.split('\t');
-			if(fields.size() < 2) {
+			if (fields.size() < 2) {
 				errors = true;
 				continue;
 			}
@@ -129,7 +129,7 @@ void SubstitutionsManager::openList() {
 			m_tableWidget->setItem(row, 1, new QTableWidgetItem(fields[1]));
 		}
 		m_tableWidget->blockSignals(false);
-		if(errors) {
+		if (errors) {
 			QMessageBox::warning(this, _("Errors Occurred Reading File"), _("Some entries of the substitutions list could not be read."));
 		}
 	}
@@ -137,16 +137,16 @@ void SubstitutionsManager::openList() {
 
 bool SubstitutionsManager::saveList() {
 	QString filename = FileDialogs::saveDialog(_("Save Substitutions List"), m_currentFile, "auxdir", QString("%1 (*.txt)").arg(_("Substitutions List")), false, this);
-	if(filename.isEmpty()) {
+	if (filename.isEmpty()) {
 		return false;
 	}
 	QFile file(filename);
-	if(!file.open(QIODevice::WriteOnly)) {
+	if (!file.open(QIODevice::WriteOnly)) {
 		QMessageBox::critical(this, _("Error Saving File"), _("Unable to write to '%1'.").arg(filename));
 		return false;
 	}
 	m_currentFile = filename;
-	for(int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row) {
+	for (int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row) {
 		QString line = QString("%1\t%2\n").arg(m_tableWidget->item(row, 0)->text()).arg(m_tableWidget->item(row, 1)->text());
 		file.write(MAIN->getConfig()->useUtf8() ? line.toUtf8() : line.toLocal8Bit());
 	}
@@ -154,13 +154,13 @@ bool SubstitutionsManager::saveList() {
 }
 
 bool SubstitutionsManager::clearList() {
-	if(m_tableWidget->rowCount() > 0) {
+	if (m_tableWidget->rowCount() > 0) {
 		int response = QMessageBox::question(this, _("Save List?"), _("Do you want to save the current list?"), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-		if(response == QMessageBox::Save) {
-			if(!saveList()) {
+		if (response == QMessageBox::Save) {
+			if (!saveList()) {
 				return false;
 			}
-		} else if(response != QMessageBox::Discard) {
+		} else if (response != QMessageBox::Discard) {
 			return false;
 		}
 		m_tableWidget->setRowCount(0);
@@ -178,7 +178,7 @@ void SubstitutionsManager::addRow() {
 
 void SubstitutionsManager::removeRows() {
 	m_tableWidget->blockSignals(true);
-	for(const QModelIndex& index : m_tableWidget->selectionModel()->selectedRows()) {
+	for (const QModelIndex& index : m_tableWidget->selectionModel()->selectedRows()) {
 		m_tableWidget->removeRow(index.row());
 	}
 	m_tableWidget->blockSignals(false);
@@ -190,7 +190,7 @@ void SubstitutionsManager::onTableSelectionChanged(const QItemSelection& selecte
 
 void SubstitutionsManager::emitApplySubstitutions() {
 	QMap<QString, QString> substitutions;
-	for(int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row) {
+	for (int row = 0, nRows = m_tableWidget->rowCount(); row < nRows; ++row) {
 		substitutions.insert(m_tableWidget->item(row, 0)->text(), m_tableWidget->item(row, 1)->text());
 	}
 	emit applySubstitutions(substitutions);

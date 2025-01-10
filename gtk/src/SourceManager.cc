@@ -34,7 +34,7 @@ SourceManager::SourceManager(const Ui::MainWindow& _ui)
 	: ui(_ui) {
 
 	// Document tree view
-	m_fileTreeModel = Glib::RefPtr<FileTreeModel>(new FileTreeModel());
+	m_fileTreeModel = Glib::RefPtr<FileTreeModel> (new FileTreeModel());
 
 	ui.treeviewSources->set_model(m_fileTreeModel);
 	ui.treeviewSources->get_selection()->set_mode(Gtk::SELECTION_MULTIPLE);
@@ -99,13 +99,13 @@ SourceManager::SourceManager(const Ui::MainWindow& _ui)
 	CONNECT(ui.buttonSourcesDelete, clicked, [this] { removeSource(true); });
 	CONNECT(ui.buttonSourcesClear, clicked, [this] { clearSources(); });
 	m_connectionSelectionChanged = CONNECT(ui.treeviewSources->get_selection(), changed, [this] { selectionChanged(); });
-	CONNECT(ui.treeviewSources, row_activated, [this] (const Gtk::TreePath & path, Gtk::TreeViewColumn * col) { indexClicked(path, col); });
-	CONNECT(recentChooser, item_activated, [this, recentChooser] { addSources({Gio::File::create_for_uri(recentChooser->get_current_uri())}); });
-	CONNECT(m_fileTreeModel, row_inserted, [this] (const Gtk::TreePath&, const Gtk::TreeIter&) { ui.buttonSourcesClear->set_sensitive(!m_fileTreeModel->empty()); });
-	CONNECT(m_fileTreeModel, row_deleted, [this] (const Gtk::TreePath&) { ui.buttonSourcesClear->set_sensitive(!m_fileTreeModel->empty()); });
+	CONNECT(ui.treeviewSources, row_activated, [this](const Gtk::TreePath & path, Gtk::TreeViewColumn * col) { indexClicked(path, col); });
+	CONNECT(recentChooser, item_activated, [this, recentChooser] { addSources({Gio::File::create_for_uri(recentChooser->get_current_uri()) }); });
+	CONNECT(m_fileTreeModel, row_inserted, [this](const Gtk::TreePath&, const Gtk::TreeIter&) { ui.buttonSourcesClear->set_sensitive(!m_fileTreeModel->empty()); });
+	CONNECT(m_fileTreeModel, row_deleted, [this](const Gtk::TreePath&) { ui.buttonSourcesClear->set_sensitive(!m_fileTreeModel->empty()); });
 
 	// Handle drops on the scrolled window
-	ui.scrollwinSources->drag_dest_set({Gtk::TargetEntry("text/uri-list")}, Gtk::DEST_DEFAULT_MOTION | Gtk::DEST_DEFAULT_DROP, Gdk::ACTION_COPY | Gdk::ACTION_MOVE);
+	ui.scrollwinSources->drag_dest_set({Gtk::TargetEntry("text/uri-list") }, Gtk::DEST_DEFAULT_MOTION | Gtk::DEST_DEFAULT_DROP, Gdk::ACTION_COPY | Gdk::ACTION_MOVE);
 	CONNECT(ui.scrollwinSources, drag_data_received, sigc::ptr_fun(Utils::handle_drag_drop));
 }
 
@@ -113,37 +113,37 @@ SourceManager::~SourceManager() {
 	clearSources();
 }
 
-int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files, bool suppressWarnings) {
+int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File >> & files, bool suppressWarnings) {
 	std::vector<Glib::ustring> failed;
 	int added = 0;
 	PdfWithTextAction textAction = suppressWarnings ? PdfWithTextAction::Add : PdfWithTextAction::Ask;
 
 	std::vector<Gtk::TreeIter> selectIters;
 
-	for(Glib::RefPtr<Gio::File> file : files) {
+	for (Glib::RefPtr<Gio::File> file : files) {
 		std::string filename = file->get_path();
-		if(!file->query_exists()) {
+		if (!file->query_exists()) {
 			failed.push_back(filename);
 			continue;
 		}
 		Gtk::TreeIter index = m_fileTreeModel->findFile(filename);
-		if(index) {
+		if (index) {
 			selectIters.push_back(index);
 			++added;
 			continue;
 		}
 		Source* source = new Source(file, file->get_basename(), file->monitor_file(Gio::FILE_MONITOR_SEND_MOVED), false);
 #ifdef G_OS_WIN32
-		if(Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf" && !checkPdfSource(source, textAction, failed)) {
+		if (Glib::ustring(filename.substr(filename.length() - 4)).lowercase() == ".pdf" && !checkPdfSource(source, textAction, failed)) {
 #else
-		if(Utils::get_content_type(filename) == "application/pdf" && !checkPdfSource(source, textAction, failed)) {
+		if (Utils::get_content_type(filename) == "application/pdf" && !checkPdfSource(source, textAction, failed)) {
 #endif
 			delete source;
 			continue;
 		}
 		index = m_fileTreeModel->insertFile(filename, source);
 		std::string dir = Glib::path_get_dirname(filename);
-		if(m_watchedDirectories.find(dir) == m_watchedDirectories.end()) {
+		if (m_watchedDirectories.find(dir) == m_watchedDirectories.end()) {
 			Glib::RefPtr<Gio::FileMonitor> dirmonitor = Gio::File::create_for_path(dir)->monitor_directory(Gio::FILE_MONITOR_SEND_MOVED);
 			CONNECT(dirmonitor, changed, sigc::mem_fun(*this, &SourceManager::dirChanged));
 			m_watchedDirectories.insert(std::make_pair(dir, std::make_pair(1, dirmonitor)));
@@ -151,7 +151,7 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files,
 			m_watchedDirectories[dir].first += 1;
 		}
 		std::string base = Utils::split_filename(filename).first;
-		if(Glib::file_test(base + ".txt", Glib::FILE_TEST_EXISTS) || Glib::file_test(base + ".html", Glib::FILE_TEST_EXISTS)) {
+		if (Glib::file_test(base + ".txt", Glib::FILE_TEST_EXISTS) || Glib::file_test(base + ".html", Glib::FILE_TEST_EXISTS)) {
 			m_fileTreeModel->setFileEditable(index, true);
 		}
 		selectIters.push_back(index);
@@ -161,14 +161,14 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files,
 		++added;
 	}
 	m_connectionSelectionChanged.block(true);
-	if(added > 0) {
+	if (added > 0) {
 		ui.treeviewSources->get_selection()->unselect_all();
 		Glib::RefPtr<Gtk::TreeSelection> selection = ui.treeviewSources->get_selection();
 		bool scrolled = false;
-		for(const Gtk::TreeIter& it : selectIters) {
+		for (const Gtk::TreeIter& it : selectIters) {
 			Gtk::TreePath path = m_fileTreeModel->get_path(it);
 			ui.treeviewSources->expand_to_path(path);
-			if(!scrolled) {
+			if (!scrolled) {
 				ui.treeviewSources->scroll_to_row(path);
 				scrolled = true;
 			}
@@ -177,7 +177,7 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File>>& files,
 	}
 	m_connectionSelectionChanged.block(false);
 	selectionChanged();
-	if(!failed.empty() && !suppressWarnings) {
+	if (!failed.empty() && !suppressWarnings) {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Unable to open files"), Glib::ustring::compose(_("The following files could not be opened:\n%1"), Utils::string_join(failed, "\n")));
 	}
 	return added;
@@ -189,60 +189,60 @@ bool SourceManager::checkPdfSource(Source* source, PdfWithTextAction& textAction
 	PopplerDocument* document = poppler_document_new_from_file(Glib::filename_to_uri(filename).c_str(), 0, &err);
 
 	// Unlock if necessary
-	if(err && g_error_matches (err, POPPLER_ERROR, POPPLER_ERROR_ENCRYPTED)) {
+	if (err && g_error_matches(err, POPPLER_ERROR, POPPLER_ERROR_ENCRYPTED)) {
 		g_error_free(err);
 		err = nullptr;
 		ui.labelPdfpassword->set_text(Glib::ustring::compose(_("Enter password for file '%1':"), source->file->get_basename()));
 		ui.entryPdfpassword->set_text("");
-		while(true) {
+		while (true) {
 			ui.entryPdfpassword->select_region(0, -1);
 			ui.entryPdfpassword->grab_focus();
 			int response = ui.dialogPdfpassword->run();
 			ui.dialogPdfpassword->hide();
-			if(response != Gtk::RESPONSE_OK) {
+			if (response != Gtk::RESPONSE_OK) {
 				return false;
 			}
 			Glib::ustring pass = ui.entryPdfpassword->get_text();
 			document = poppler_document_new_from_file(Glib::filename_to_uri(filename).c_str(), pass.c_str(), &err);
-			if(!err) {
+			if (!err) {
 				source->password = pass;
 				break;
-			} else if(!g_error_matches (err, POPPLER_ERROR, POPPLER_ERROR_ENCRYPTED)) {
+			} else if (!g_error_matches(err, POPPLER_ERROR, POPPLER_ERROR_ENCRYPTED)) {
 				break;
 			}
 			g_error_free(err);
 			err = nullptr;
 		}
 	}
-	if(err) {
+	if (err) {
 		g_error_free(err);
 		err = nullptr;
 		failed.push_back(filename);
 	}
 
 	// Check whether the PDF already contains text
-	if(textAction != PdfWithTextAction::Add) {
+	if (textAction != PdfWithTextAction::Add) {
 		bool haveText = false;
 		for (int i = 0, n = poppler_document_get_n_pages(document); i < n; ++i) {
 			PopplerPage* poppage = poppler_document_get_page(document, i);
 			bool hasText = poppler_page_get_text(poppage) != nullptr;
 			g_object_unref(poppage);
-			if(hasText) {
+			if (hasText) {
 				haveText = true;
 				break;
 			}
 		}
-		if(haveText) {
-			if(textAction == PdfWithTextAction::Skip) {
+		if (haveText) {
+			if (textAction == PdfWithTextAction::Skip) {
 				return false;
 			}
 			int response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("PDF with text"), Glib::ustring::compose(_("The PDF file already contains text:\n%1\nOpen it regardless?"), filename), "", Utils::Button::Yes | Utils::Button::YesAll | Utils::Button::No | Utils::Button::NoAll);
-			if(response == Utils::Button::No) {
+			if (response == Utils::Button::No) {
 				return false;
-			} else if(response == Utils::Button::NoAll) {
+			} else if (response == Utils::Button::NoAll) {
 				textAction = PdfWithTextAction::Skip;
 				return false;
-			} else if(response == Utils::Button::YesAll) {
+			} else if (response == Utils::Button::YesAll) {
 				textAction = PdfWithTextAction::Add;
 			}
 		}
@@ -262,9 +262,9 @@ bool SourceManager::checkPdfSource(Source* source, PdfWithTextAction& textAction
 
 std::vector<Source*> SourceManager::getSelectedSources() const {
 	std::vector<Source*> selectedSources;
-	for(const Gtk::TreeModel::Path& path : ui.treeviewSources->get_selection()->get_selected_rows()) {
-		Source* source = m_fileTreeModel->fileData<Source*>(m_fileTreeModel->get_iter(path));
-		if(source) {
+	for (const Gtk::TreeModel::Path& path : ui.treeviewSources->get_selection()->get_selected_rows()) {
+		Source* source = m_fileTreeModel->fileData<Source*> (m_fileTreeModel->get_iter(path));
+		if (source) {
 			selectedSources.push_back(source);
 		}
 	}
@@ -274,26 +274,26 @@ std::vector<Source*> SourceManager::getSelectedSources() const {
 void SourceManager::addFolder() {
 	std::vector<Source*> current = getSelectedSources();
 	std::string initialFolder = Utils::get_documents_dir();
-	if(!current.empty() && !current.front()->isTemp) {
+	if (!current.empty() && !current.front()->isTemp) {
 		initialFolder = current.front()->file->get_parent()->get_path();
 	}
 
 	std::string path = FileDialogs::open_folder_dialog(_("Select folder..."), initialFolder, "sourcedir");
-	if(path.empty()) {
+	if (path.empty()) {
 		return;
 	}
 	std::set<std::string> filters;
-	for(const Gdk::PixbufFormat& format : Gdk::Pixbuf::get_formats()) {
-		for(const Glib::ustring& extension : format.get_extensions()) {
+	for (const Gdk::PixbufFormat& format : Gdk::Pixbuf::get_formats()) {
+		for (const Glib::ustring& extension : format.get_extensions()) {
 			filters.insert(extension);
 		}
 	}
 	filters.insert("pdf");
 	filters.insert("djvu");
 
-	std::vector<Glib::RefPtr<Gio::File>> filenames;
+	std::vector<Glib::RefPtr<Gio::File >> filenames;
 	Utils::list_dir(path, filters, filenames);
-	if(!filenames.empty()) {
+	if (!filenames.empty()) {
 		addSources(filenames);
 	}
 }
@@ -312,7 +312,7 @@ void SourceManager::openSources() {
 
 void SourceManager::pasteClipboard() {
 	Glib::RefPtr<Gdk::Pixbuf> pixbuf = m_clipboard->wait_for_image();
-	if(!pixbuf) {
+	if (!pixbuf) {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Clipboard Error"),  _("Failed to read the clipboard."));
 		return;
 	}
@@ -323,7 +323,7 @@ void SourceManager::pasteClipboard() {
 
 void SourceManager::takeScreenshot() {
 	MAIN->getWindow()->iconify();
-	while(Gtk::Main::events_pending()) {
+	while (Gtk::Main::events_pending()) {
 		Gtk::Main::iteration();
 	}
 	Glib::signal_timeout().connect_once([this] {
@@ -339,7 +339,7 @@ void SourceManager::takeScreenshot() {
 		}
 		Glib::RefPtr<Gdk::Pixbuf> pixbuf = Gdk::Pixbuf::create(root, x, y, w, h);
 		MAIN->getWindow()->deiconify();
-		if(!pixbuf) {
+		if (!pixbuf) {
 			Utils::messageBox(Gtk::MESSAGE_ERROR, _("Screenshot Error"),  _("Failed to take screenshot."));
 			return;
 		}
@@ -356,7 +356,7 @@ void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const st
 		int fd = Glib::file_open_tmp(filename, PACKAGE_NAME);
 		close(fd);
 		pixbuf->save(filename, "png");
-	} catch(Glib::FileError&) {
+	} catch (Glib::FileError&) {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Cannot Write File"),  Glib::ustring::compose(_("Could not write to %1."), filename));
 		MAIN->popState();
 		return;
@@ -367,7 +367,7 @@ void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const st
 	Gtk::TreeIter it = m_fileTreeModel->insertFile(filename, source, displayname);
 	CONNECT(source->monitor, changed, sigc::mem_fun(*this, &SourceManager::fileChanged));
 	std::string dir = Glib::path_get_dirname(filename);
-	if(m_watchedDirectories.find(dir) == m_watchedDirectories.end()) {
+	if (m_watchedDirectories.find(dir) == m_watchedDirectories.end()) {
 		Glib::RefPtr<Gio::FileMonitor> dirmonitor = Gio::File::create_for_path(dir)->monitor_directory(Gio::FILE_MONITOR_SEND_MOVED);
 		CONNECT(dirmonitor, changed, sigc::mem_fun(*this, &SourceManager::dirChanged));
 		m_watchedDirectories.insert(std::make_pair(dir, std::make_pair(1, dirmonitor)));
@@ -386,32 +386,32 @@ void SourceManager::savePixbuf(const Glib::RefPtr<Gdk::Pixbuf>& pixbuf, const st
 void SourceManager::removeSource(bool deleteFile) {
 	std::vector<Glib::ustring> paths;
 	std::vector<Gtk::TreePath> treePaths;
-	for(const Gtk::TreeModel::Path& path : ui.treeviewSources->get_selection()->get_selected_rows()) {
-		Source* source = m_fileTreeModel->fileData<Source*>(m_fileTreeModel->get_iter(path));
-		if(source) {
+	for (const Gtk::TreeModel::Path& path : ui.treeviewSources->get_selection()->get_selected_rows()) {
+		Source* source = m_fileTreeModel->fileData<Source*> (m_fileTreeModel->get_iter(path));
+		if (source) {
 			paths.push_back(source->file->get_path());
 			treePaths.push_back(path);
 		}
 	}
-	if(paths.empty()) {
+	if (paths.empty()) {
 		return;
 	}
-	if(deleteFile && Utils::Button::Yes != Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Delete File?"), _("Delete the following files?"), Utils::string_join(paths, "\n"), Utils::Button::Yes | Utils::Button::No)) {
+	if (deleteFile && Utils::Button::Yes != Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Delete File?"), _("Delete the following files?"), Utils::string_join(paths, "\n"), Utils::Button::Yes | Utils::Button::No)) {
 		return;
 	}
 
 	// Avoid multiple sourceChanged emissions when removing items
 	m_connectionSelectionChanged.block(true);
 	// Selection returns ordered tree paths - remove them in reverse order so that the previous ones stay valid
-	for(Gtk::TreePath treePath : Utils::reverse(treePaths)) {
+	for (Gtk::TreePath treePath : Utils::reverse(treePaths)) {
 		Gtk::TreeIter index = m_fileTreeModel->get_iter(treePath);
-		Source* source = m_fileTreeModel->fileData<Source*>(index);
-		if(source && deleteFile) {
+		Source* source = m_fileTreeModel->fileData<Source*> (index);
+		if (source && deleteFile) {
 			source->file->remove();
 			std::string dir = Glib::path_get_dirname(source->file->get_path());
 			auto it = m_watchedDirectories.find(dir);
-			if(it != m_watchedDirectories.end()) {
-				if(it->second.first == 1) {
+			if (it != m_watchedDirectories.end()) {
+				if (it->second.first == 1) {
 					m_watchedDirectories.erase(it);
 				} else {
 					it->second.first -= 1;
@@ -432,45 +432,45 @@ void SourceManager::clearSources() {
 
 void SourceManager::indexClicked(const Gtk::TreePath& path, Gtk::TreeViewColumn* col) {
 	Gtk::TreeIter index = m_fileTreeModel->get_iter(path);
-	Source* source = m_fileTreeModel->fileData<Source*>(index);
-	if(col == ui.treeviewSources->get_column(1) && source && m_fileTreeModel->isFileEditable(index)) {
+	Source* source = m_fileTreeModel->fileData<Source*> (index);
+	if (col == ui.treeviewSources->get_column(1) && source && m_fileTreeModel->isFileEditable(index)) {
 		std::string base = Utils::split_filename(source->file->get_path()).first;
 		bool hasTxt = Glib::file_test(base + ".txt", Glib::FILE_TEST_EXISTS);
 		bool hasHtml = Glib::file_test(base + ".html", Glib::FILE_TEST_EXISTS);
-		if(hasTxt && hasHtml) {
+		if (hasTxt && hasHtml) {
 			Utils::Button::Type response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Open output"), _("Both a text and a hOCR output were found. Which one do you want to open?"), "", Utils::Button::Text | Utils::Button::HOCR | Utils::Button::Cancel);
-			if(response == Utils::Button::Text) {
+			if (response == Utils::Button::Text) {
 				MAIN->openOutput(base + ".txt");
-			} else if(response == Utils::Button::HOCR) {
+			} else if (response == Utils::Button::HOCR) {
 				MAIN->openOutput(base + ".html");
 			}
-		} else if(hasTxt) {
+		} else if (hasTxt) {
 			MAIN->openOutput(base + ".txt");
-		} else if(hasHtml) {
+		} else if (hasHtml) {
 			MAIN->openOutput(base + ".html");
 		}
 	}
 }
 
 void SourceManager::selectRecursive(const Gtk::TreeIter& iter, std::vector<Gtk::TreeIter>& selection) const {
-	for(const Gtk::TreeIter& child : iter->children()) {
+	for (const Gtk::TreeIter& child : iter->children()) {
 		selection.push_back(child);
 		selectRecursive(child, selection);
 	}
 }
 
 void SourceManager::selectionChanged() {
-	if(m_inSelectionChanged) {
+	if (m_inSelectionChanged) {
 		return;
 	}
 	m_inSelectionChanged = true;
 
 	// Merge selection of all children of selected items
 	std::vector<Gtk::TreeIter> selection;
-	for(const Gtk::TreePath& path : ui.treeviewSources->get_selection()->get_selected_rows()) {
+	for (const Gtk::TreePath& path : ui.treeviewSources->get_selection()->get_selected_rows()) {
 		selectRecursive(m_fileTreeModel->get_iter(path), selection);
 	}
-	for(const Gtk::TreeIter& iter : selection) {
+	for (const Gtk::TreeIter& iter : selection) {
 		ui.treeviewSources->expand_to_path(m_fileTreeModel->get_path(iter));
 		ui.treeviewSources->get_selection()->select(iter);
 	}
@@ -484,19 +484,19 @@ void SourceManager::selectionChanged() {
 
 void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& otherFile, Gio::FileMonitorEvent event) {
 	Gtk::TreeIter it = m_fileTreeModel->findFile(file->get_path());
-	if(!it) {
+	if (!it) {
 		return;
 	}
-	if(event == Gio::FILE_MONITOR_EVENT_MOVED) {
+	if (event == Gio::FILE_MONITOR_EVENT_MOVED) {
 		bool wasSelected = ui.treeviewSources->get_selection()->is_selected(it);
-		if(wasSelected) {
+		if (wasSelected) {
 			ui.treeviewSources->get_selection()->unselect(it);
 		}
 		m_fileTreeModel->removeIndex(it);
 		std::string dir = Glib::path_get_dirname(file->get_path());
 		auto watchIt = m_watchedDirectories.find(dir);
-		if(watchIt != m_watchedDirectories.end()) {
-			if(watchIt->second.first == 1) {
+		if (watchIt != m_watchedDirectories.end()) {
+			if (watchIt->second.first == 1) {
 				m_watchedDirectories.erase(watchIt);
 			} else {
 				watchIt->second.first -= 1;
@@ -505,11 +505,11 @@ void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib:
 		Source* newSource = new Source(otherFile, otherFile->get_basename(), otherFile->monitor_file(Gio::FILE_MONITOR_SEND_MOVED));
 		CONNECT(newSource->monitor, changed, sigc::mem_fun(*this, &SourceManager::fileChanged));
 		it = m_fileTreeModel->insertFile(otherFile->get_path(), newSource);
-		if(wasSelected) {
+		if (wasSelected) {
 			ui.treeviewSources->get_selection()->select(it);
 		}
 		dir = Glib::path_get_dirname(otherFile->get_path());
-		if(m_watchedDirectories.find(dir) == m_watchedDirectories.end()) {
+		if (m_watchedDirectories.find(dir) == m_watchedDirectories.end()) {
 			Glib::RefPtr<Gio::FileMonitor> dirmonitor = Gio::File::create_for_path(dir)->monitor_directory(Gio::FILE_MONITOR_SEND_MOVED);
 			CONNECT(dirmonitor, changed, sigc::mem_fun(*this, &SourceManager::dirChanged));
 			m_watchedDirectories.insert(std::make_pair(dir, std::make_pair(1, dirmonitor)));
@@ -518,14 +518,14 @@ void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib:
 		}
 		std::string base = Utils::split_filename(otherFile->get_path()).first;
 		m_fileTreeModel->setFileEditable(it, Glib::file_test(base + ".txt", Glib::FILE_TEST_EXISTS) || Glib::file_test(base + ".html", Glib::FILE_TEST_EXISTS));
-	} else if(event == Gio::FILE_MONITOR_EVENT_DELETED) {
+	} else if (event == Gio::FILE_MONITOR_EVENT_DELETED) {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Missing File"), Glib::ustring::compose(_("The following file has been deleted or moved:\n%1"), file->get_path()));
 		m_fileTreeModel->removeIndex(it);
 
 		std::string dir = Glib::path_get_dirname(file->get_path());
 		auto watchIt = m_watchedDirectories.find(dir);
-		if(watchIt != m_watchedDirectories.end()) {
-			if(watchIt->second.first == 1) {
+		if (watchIt != m_watchedDirectories.end()) {
+			if (watchIt->second.first == 1) {
 				m_watchedDirectories.erase(watchIt);
 			} else {
 				watchIt->second.first -= 1;
@@ -535,14 +535,14 @@ void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib:
 }
 
 void SourceManager::dirChanged(const Glib::RefPtr<Gio::File>& file, const Glib::RefPtr<Gio::File>& /*otherFile*/, Gio::FileMonitorEvent event) {
-	if(event == Gio::FILE_MONITOR_EVENT_CREATED || event == Gio::FILE_MONITOR_EVENT_DELETED) {
+	if (event == Gio::FILE_MONITOR_EVENT_CREATED || event == Gio::FILE_MONITOR_EVENT_DELETED) {
 		std::string dir = Glib::path_get_dirname(file->get_path());
 		// Update editable status of files in directory
 		Gtk::TreeIter index = m_fileTreeModel->findFile(dir, false);
-		if(index) {
-			for(const Gtk::TreeIter& child : index->children()) {
-				Source* source = m_fileTreeModel->fileData<Source*>(child);
-				if(source) {
+		if (index) {
+			for (const Gtk::TreeIter& child : index->children()) {
+				Source* source = m_fileTreeModel->fileData<Source*> (child);
+				if (source) {
 					std::string base = Utils::split_filename(source->file->get_path()).first;
 					m_fileTreeModel->setFileEditable(child, Glib::file_test(base + ".txt", Glib::FILE_TEST_EXISTS) || Glib::file_test(base + ".html", Glib::FILE_TEST_EXISTS));
 				}
