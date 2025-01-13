@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * ConfigSettings.hh
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -40,7 +40,7 @@ public:
 	template<class T>
 	static T* get(const QString& key) {
 		auto it = s_settings.find(key);
-		return it == s_settings.end() ? nullptr : static_cast<T*>(it.value());
+		return it == s_settings.end() ? nullptr : static_cast<T*> (it.value());
 	}
 
 private:
@@ -100,7 +100,7 @@ public:
 	FontSetting(const QString& key, QFontDialog* dialog, const QString& defaultValue)
 		: AbstractSetting(key), m_dialog(dialog) {
 		QFont font;
-		if(font.fromString(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toString())) {
+		if (font.fromString(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toString())) {
 			m_dialog->setCurrentFont(font);
 		}
 		connect(dialog, &QFontDialog::fontSelected, this, &FontSetting::serialize);
@@ -175,7 +175,7 @@ public:
 	ComboSetting(const QString& key, QComboBox* combo, int defaultIndex = 0)
 		: AbstractSetting(key), m_combo(combo) {
 		combo->setCurrentIndex(QSettings().value(m_key, QVariant::fromValue(defaultIndex)).toInt());
-		connect(combo, qOverload<int>(&QComboBox::currentIndexChanged), this, &ComboSetting::serialize);
+		connect(combo, qOverload<int> (&QComboBox::currentIndexChanged), this, &ComboSetting::serialize);
 	}
 
 public slots:
@@ -213,7 +213,7 @@ public:
 	SpinSetting(const QString& key, QSpinBox* spin, int defaultValue = 0)
 		: AbstractSetting(key), m_spin(spin) {
 		spin->setValue(QSettings().value(m_key, QVariant::fromValue(defaultValue)).toInt());
-		connect(spin, qOverload<int>(&QSpinBox::valueChanged), this, &SpinSetting::serialize);
+		connect(spin, qOverload<int> (&QSpinBox::valueChanged), this, &SpinSetting::serialize);
 	}
 
 public slots:

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRSpellChecker.cc
- * Copyright (C) 2022-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2022-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -25,11 +25,11 @@
 
 
 bool HOCRSpellChecker::checkSpelling(const QString& word, QStringList* suggestions, int limit) const {
-	QList<QPair<QString, int>> words;
+	QList<QPair<QString, int >> words;
 	QRegularExpression dashRe("[\\x2013\\x2014]+");
 	QRegularExpressionMatch match;
 	int pos = 0;
-	while((match = dashRe.match(word, pos)).hasMatch()) {
+	while ((match = dashRe.match(word, pos)).hasMatch()) {
 		words.append(qMakePair(word.mid(pos, match.capturedStart() - pos), pos));
 		pos = match.capturedEnd();
 	}
@@ -37,34 +37,34 @@ bool HOCRSpellChecker::checkSpelling(const QString& word, QStringList* suggestio
 
 	int perWordLimit = 0;
 	// s = p^w => w = log_p(c) = log(c)/log(p) => p = 10^(log(c)/w)
-	if(limit > 0) { perWordLimit = int(std::pow(10, std::log10(limit) / words.size())); }
-	QList<QList<QString>> wordSuggestions;
+	if (limit > 0) { perWordLimit = int (std::pow(10, std::log10(limit) / words.size())); }
+	QList<QList<QString >> wordSuggestions;
 	bool valid = true;
 	bool multipleWords = words.size() > 1;
-	for(const auto& pair : words) {
+	for (const auto& pair : words) {
 		QString wordString = pair.first;
 		bool wordValid = checkWord(wordString);
 		valid &= wordValid;
-		if(suggestions) {
+		if (suggestions) {
 			QList<QString> ws = getSpellingSuggestions(wordString);
-			if(wordValid && multipleWords) { ws.prepend(wordString); }
-			if(limit == -1) {
+			if (wordValid && multipleWords) { ws.prepend(wordString); }
+			if (limit == -1) {
 				wordSuggestions.append(ws);
-			} else if(limit > 0) {
+			} else if (limit > 0) {
 				wordSuggestions.append(ws.mid(0, perWordLimit));
 			}
 		}
 	}
-	if(suggestions) {
+	if (suggestions) {
 		suggestions->clear();
-		QList<QList<QString>> suggestionCombinations;
+		QList<QList<QString >> suggestionCombinations;
 		generateCombinations(wordSuggestions, suggestionCombinations, 0, QList<QString>());
-		for(const QList<QString>& combination : suggestionCombinations) {
+		for (const QList<QString>& combination : suggestionCombinations) {
 			QString s = "";
 			auto originalWord = words.begin();
 			int last = 0;
 			int next;
-			for(const QString& suggestedWord : combination) {
+			for (const QString& suggestedWord : combination) {
 				next = originalWord->second;
 				s.append(word.mid(last, next - last));
 				s.append(suggestedWord);
@@ -81,12 +81,12 @@ bool HOCRSpellChecker::checkSpelling(const QString& word, QStringList* suggestio
 }
 
 // each suggestion for each word => each word in each suggestion
-void HOCRSpellChecker::generateCombinations(const QList<QList<QString>>& lists, QList<QList<QString>>& results, int depth, const QList<QString>& c) const {
-	if(depth == lists.size()) {
+void HOCRSpellChecker::generateCombinations(const QList<QList<QString >> & lists, QList<QList<QString >>& results, int depth, const QList<QString>& c) const {
+	if (depth == lists.size()) {
 		results.append(c);
 		return;
 	}
-	for(int i = 0; i < lists[depth].size(); ++i) {
-		generateCombinations(lists, results, depth + 1, c + QList<QString>({lists[depth][i]}));
+	for (int i = 0; i < lists[depth].size(); ++i) {
+		generateCombinations(lists, results, depth + 1, c + QList<QString> ({lists[depth][i]}));
 	}
 }

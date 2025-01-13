@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * FileDialogs.hh
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -37,7 +37,7 @@ struct FileFilter {
 	static FileFilter pixbuf_formats();
 };
 
-std::vector<Glib::RefPtr<Gio::File> > open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, const FileFilter& filter, bool multiple, Gtk::Window* parent = nullptr);
+std::vector<Glib::RefPtr<Gio::File >> open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, const FileFilter& filter, bool multiple, Gtk::Window* parent = nullptr);
 std::string open_folder_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, Gtk::Window* parent = nullptr);
 std::string save_dialog(const Glib::ustring& title, const std::string& initialFilename, const std::string& initialDirSetting, const FileFilter& filter, bool generateUniqueName = false, Gtk::Window* parent = nullptr);
 

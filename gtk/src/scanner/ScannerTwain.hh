@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * ScannerTwain.hh
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -69,7 +69,7 @@ private:
 		CapOneVal(TW_UINT16 _type, TW_FIX32 _fix32) : type(_type) {
 			data.fix32 = _fix32;
 		}
-		CapOneVal(TW_UINT16 _type, TW_FIX32(&_frame)[4]) : type(_type) {
+		CapOneVal(TW_UINT16 _type, TW_FIX32(&_frame) [4]) : type(_type) {
 			std::memcpy(&data.frame[0], &_frame[0], sizeof(data.frame));
 		}
 		CapOneVal(TW_UINT16 _type, const char* _string) : type(_type) {

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * RecognitionMenu.hh
- * Copyright (C) 2022-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2022-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -51,7 +51,7 @@ private:
 	Gtk::Menu* m_menuMultilanguage = nullptr;
 	Gtk::RadioButtonGroup m_langMenuRadioGroup;
 	Gtk::RadioButtonGroup m_psmRadioGroup;
-	std::map<Gtk::CheckMenuItem*, std::pair<Glib::ustring, gint64>> m_langMenuCheckGroup;
+	std::map<Gtk::CheckMenuItem*, std::pair<Glib::ustring, gint64 >> m_langMenuCheckGroup;
 	MultilingualMenuItem* m_multilingualRadio = nullptr;
 	Ui::CharacterListDialog m_charListDialogUi;
 

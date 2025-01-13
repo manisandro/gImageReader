@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRPdfExportWidget.hh
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -37,7 +37,7 @@ public:
 	HOCRPdfExporter::PDFSettings getPdfSettings() const;
 	Gtk::Widget* getWidget() const { return ui.pdfExportWidget; }
 
-	sigc::signal<void(bool)> signal_validChanged() const { return m_signal_valid_changed; }
+	sigc::signal<void (bool) > signal_validChanged() const { return m_signal_valid_changed; }
 
 private:
 	ClassData m_classdata;
@@ -52,7 +52,7 @@ private:
 	FontComboBox* m_comboFallbackFont;
 	sigc::connection m_connPortrait;
 	sigc::connection m_connLandscape;
-	sigc::signal<void(bool)> m_signal_valid_changed;
+	sigc::signal<void (bool) > m_signal_valid_changed;
 
 	struct PaperFormatComboColums : public Gtk::TreeModel::ColumnRecord {
 		Gtk::TreeModelColumn<Glib::ustring> label;

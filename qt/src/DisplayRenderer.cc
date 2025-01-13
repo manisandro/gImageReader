@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * DisplayRenderer.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -35,7 +35,7 @@
 #include "Utils.hh"
 
 void DisplayRenderer::adjustImage(QImage& image, int brightness, int contrast, bool invert) const {
-	if(brightness == 0 && contrast == 0 && !invert) {
+	if (brightness == 0 && contrast == 0 && !invert) {
 		return;
 	}
 
@@ -48,9 +48,9 @@ void DisplayRenderer::adjustImage(QImage& image, int brightness, int contrast, b
 	int nLinePixels = image.bytesPerLine() / 4;
 	int nLines = image.height();
 	#pragma omp parallel for
-	for(int line = 0; line < nLines; ++line) {
-		QRgb* rgb = reinterpret_cast<QRgb*>(image.scanLine(line));
-		for(int i = 0; i < nLinePixels; ++i) {
+	for (int line = 0; line < nLines; ++line) {
+		QRgb* rgb = reinterpret_cast<QRgb*> (image.scanLine(line));
+		for (int i = 0; i < nLinePixels; ++i) {
 			int red = qRed(rgb[i]);
 			int green = qGreen(rgb[i]);
 			int blue = qBlue(rgb[i]);
@@ -63,7 +63,7 @@ void DisplayRenderer::adjustImage(QImage& image, int brightness, int contrast, b
 			green = std::max(0.0, std::min(FCn * (green - 128.0) + 128.0, 255.0));
 			blue = std::max(0.0, std::min(FCn * (blue - 128.0) + 128.0, 255.0));
 			// Invert
-			if(invert) {
+			if (invert) {
 				red = 255 - red;
 				green = 255 - green;
 				blue = 255 - blue;
@@ -100,10 +100,10 @@ PDFRenderer::PDFRenderer(const QString& filename, const QByteArray& password) : 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	m_document = Poppler::Document::load(filename);
 #else
-	m_document = std::unique_ptr<Poppler::Document>(Poppler::Document::load(filename));
+	m_document = std::unique_ptr<Poppler::Document> (Poppler::Document::load(filename));
 #endif
-	if(m_document) {
-		if(m_document->isLocked()) {
+	if (m_document) {
+		if (m_document->isLocked()) {
 			m_document->unlock(password, password);
 		}
 
@@ -113,7 +113,7 @@ PDFRenderer::PDFRenderer(const QString& filename, const QByteArray& password) : 
 }
 
 QImage PDFRenderer::render(int page, double resolution) const {
-	if(!m_document) {
+	if (!m_document) {
 		return QImage();
 	}
 	m_mutex.lock();
@@ -124,7 +124,7 @@ QImage PDFRenderer::render(int page, double resolution) const {
 }
 
 QImage PDFRenderer::renderThumbnail(int page) const {
-	if(!m_document) {
+	if (!m_document) {
 		return QImage();
 	}
 	m_mutex.lock();

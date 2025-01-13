@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * CrashHandler.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -24,13 +24,13 @@ CrashHandler::CrashHandler(int argc, char* argv[])
 	: Gtk::Application(argc, argv, APPLICATION_ID ".crashhandler", Gio::APPLICATION_HANDLES_COMMAND_LINE) {
 	Glib::set_application_name(Glib::ustring::compose("%1 - %2", PACKAGE_NAME, _("Crash Handler")));
 
-	if(argc > 2) {
+	if (argc > 2) {
 		m_pid = std::atoi(argv[2]);
 	}
-	if(argc > 3) {
+	if (argc > 3) {
 		m_tesseractCrash = std::atoi(argv[3]);
 	}
-	if(argc > 4) {
+	if (argc > 4) {
 		m_saveFile = argv[4];
 	}
 }
@@ -39,7 +39,7 @@ void CrashHandler::on_startup() {
 	Gtk::Application::on_startup();
 	ui.setupUi();
 	ui.dialogCrashhandler->set_title(Glib::ustring::compose("%1 %2", PACKAGE_NAME, _("Crash Handler")));
-	if(!m_saveFile.empty()) {
+	if (!m_saveFile.empty()) {
 		ui.labelAutosave->set_markup(Glib::ustring::compose(_("Your work has been saved under <b>%1</b>."), m_saveFile));
 	} else {
 		ui.labelAutosave->set_text(_("There was no unsaved work."));
@@ -75,8 +75,8 @@ void CrashHandler::generate_backtrace() {
 	int child_stdin;
 	int child_stdout;
 	try {
-		Glib::spawn_async_with_pipes("", std::vector<std::string> {"gdb", "-q", "-p", Glib::ustring::compose("%1", m_pid)}, Glib::SPAWN_DO_NOT_REAP_CHILD | Glib::SPAWN_SEARCH_PATH | Glib::SPAWN_STDERR_TO_DEV_NULL, sigc::slot<void>(), &child_pid, &child_stdin, &child_stdout);
-	} catch(Glib::Error&) {
+		Glib::spawn_async_with_pipes("", std::vector<std::string> {"gdb", "-q", "-p", Glib::ustring::compose("%1", m_pid) }, Glib::SPAWN_DO_NOT_REAP_CHILD | Glib::SPAWN_SEARCH_PATH | Glib::SPAWN_STDERR_TO_DEV_NULL, sigc::slot<void>(), &child_pid, &child_stdin, &child_stdout);
+	} catch (Glib::Error&) {
 		generate_backtrace_end(false);
 		return;
 	}
@@ -102,15 +102,15 @@ void CrashHandler::generate_backtrace_end(bool success) {
 	ui.progressbar->hide();
 	ui.textview->set_sensitive(true);
 	ui.buttonRegenerate->set_sensitive(true);
-	if(!success) {
+	if (!success) {
 		ui.textview->get_buffer()->set_text(_("Failed to obtain backtrace. Is GDB installed?"));
 	} else {
 		std::vector<Glib::ustring> lines = Utils::string_split(ui.textview->get_buffer()->get_text(false), '\n', false);
 		Glib::ustring text = Glib::ustring::compose("%1\n\n", lines[0]);
-		for(int i = 1, n = lines.size(); i < n; ++i) {
-			if(lines[i].substr(0, 6) == "Thread") {
+		for (int i = 1, n = lines.size(); i < n; ++i) {
+			if (lines[i].substr(0, 6) == "Thread") {
 				text += Glib::ustring::compose("\n%1\n", lines[i]);
-			} else if(lines[i].substr(0, 1) == "#") {
+			} else if (lines[i].substr(0, 1) == "#") {
 				text += Glib::ustring::compose("%1\n", lines[i]);
 			}
 		}
@@ -126,7 +126,7 @@ bool CrashHandler::pulse_progress() {
 }
 
 bool CrashHandler::handle_stdout(Glib::IOCondition cond, Glib::RefPtr<Glib::IOChannel> ch) {
-	if(cond == Glib::IO_HUP) {
+	if (cond == Glib::IO_HUP) {
 		return false;
 	}
 	Glib::ustring text;
@@ -138,7 +138,7 @@ bool CrashHandler::handle_stdout(Glib::IOCondition cond, Glib::RefPtr<Glib::IOCh
 }
 
 void CrashHandler::handle_child_exit(GPid pid, gint status, void* data) {
-	CrashHandler* instance = reinterpret_cast<CrashHandler*>(data);
+	CrashHandler* instance = reinterpret_cast<CrashHandler*> (data);
 	bool success = g_spawn_check_wait_status(status, nullptr);
 	instance->generate_backtrace_end(success);
 	Glib::spawn_close_pid(pid);

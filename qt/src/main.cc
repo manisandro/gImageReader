@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * main.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -30,7 +30,7 @@
 #include "Config.hh"
 #include "CrashHandler.hh"
 
-int main (int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
@@ -43,10 +43,10 @@ int main (int argc, char* argv[]) {
 	QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":/extra-theme-icons");
 
 #ifdef Q_OS_WIN
-	QIcon::setThemeSearchPaths({dataDir.absoluteFilePath("icons")});
+	QIcon::setThemeSearchPaths({dataDir.absoluteFilePath("icons") });
 	QIcon::setThemeName("hicolor");
 	QDir packageDir = QDir(QString("%1/../").arg(QApplication::applicationDirPath()));
-	if(qgetenv("LANG").isEmpty()) {
+	if (qgetenv("LANG").isEmpty()) {
 		qputenv("LANG", QLocale::system().name().toLocal8Bit());
 	}
 #endif
@@ -73,15 +73,15 @@ int main (int argc, char* argv[]) {
 	textdomain(GETTEXT_PACKAGE);
 
 	QWidget* window;
-	if(argc >= 3 && std::strcmp("crashhandle", argv[1]) == 0) {
+	if (argc >= 3 && std::strcmp("crashhandle", argv[1]) == 0) {
 		int pid = std::atoi(argv[2]);
 		int tesseractCrash = std::atoi(argv[3]);
 		QString savefile = argc >= 5 ? argv[4] : "";
 		window = new CrashHandler(pid, tesseractCrash, savefile);
-	} else if(argc >= 2 && std::strcmp("tessdatadir", argv[1]) == 0) {
+	} else if (argc >= 2 && std::strcmp("tessdatadir", argv[1]) == 0) {
 		Config::openTessdataDir();
 		return 0;
-	} else if(argc >= 2 && std::strcmp("spellingdir", argv[1]) == 0) {
+	} else if (argc >= 2 && std::strcmp("spellingdir", argv[1]) == 0) {
 		Config::openSpellingDir();
 		return 0;
 	} else {
@@ -90,8 +90,8 @@ int main (int argc, char* argv[]) {
 		std::freopen(packageDir.absoluteFilePath("gimagereader.log").toLocal8Bit().data(), "w", stderr);
 #endif
 		QStringList files;
-		for(int i = 1; i < argc; ++i) {
-			if(QFile(argv[i]).exists()) {
+		for (int i = 1; i < argc; ++i) {
+			if (QFile(argv[i]).exists()) {
 				files.append(argv[i]);
 			}
 		}

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Acquirer.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -41,8 +41,8 @@ Acquirer::Acquirer(const Ui::MainWindow& _ui)
 	ui.comboAcquireDevice->pack_start(*cell, true);
 	ui.comboAcquireDevice->add_attribute(*cell, "text", 0);
 
-	if(ui.comboAcquireResolution->get_active_row_number() == -1) { ui.comboAcquireResolution->set_active(2); }
-	if(ui.comboAcquireMode->get_active_row_number() == -1) { ui.comboAcquireMode->set_active(0); }
+	if (ui.comboAcquireResolution->get_active_row_number() == -1) { ui.comboAcquireResolution->set_active(2); }
+	if (ui.comboAcquireMode->get_active_row_number() == -1) { ui.comboAcquireMode->set_active(0); }
 
 	m_scanner = new ScannerImpl;
 
@@ -75,7 +75,7 @@ Acquirer::Acquirer(const Ui::MainWindow& _ui)
 	ui.comboAcquireSource->set_visible(false);
 #endif
 
-	std::string sourcedir = ConfigSettings::get<VarSetting<Glib::ustring>>("sourcedir")->getValue();
+	std::string sourcedir = ConfigSettings::get<VarSetting<Glib::ustring >> ("sourcedir")->getValue();
 	m_outputPath = Glib::build_filename(sourcedir.empty() ? Utils::get_documents_dir() : sourcedir, _("scan.png"));
 	genOutputPath();
 	m_scanner->init();
@@ -90,7 +90,7 @@ void Acquirer::selectOutputPath() {
 	FileDialogs::FileFilter filter = FileDialogs::FileFilter::pixbuf_formats();
 	filter.name = _("Images");
 	std::string filename = FileDialogs::save_dialog(_("Choose Output Filename..."), m_outputPath, "sourcedir", filter);
-	if(!filename.empty()) {
+	if (!filename.empty()) {
 		m_outputPath = filename;
 		genOutputPath();
 	}
@@ -129,11 +129,11 @@ void Acquirer::doneDetectDevices(const std::vector<Scanner::Device>& devices) {
 	ui.buttonAcquireRefresh->show();
 	ui.spinnerAcquire->hide();
 	ui.spinnerAcquire->stop();
-	if(devices.empty()) {
+	if (devices.empty()) {
 		ui.labelAcquireMessage->set_markup(Glib::ustring::compose("<span color='red'>%1</span>", _("No scanners were detected.")));
 	} else {
 		Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.comboAcquireDevice->get_model());
-		for(const Scanner::Device& device : devices) {
+		for (const Scanner::Device& device : devices) {
 			Gtk::TreeIter it = store->append();
 			it->set_value(m_devComboCols.label, device.label);
 			it->set_value(m_devComboCols.name, device.name);
@@ -153,23 +153,23 @@ void Acquirer::startScan() {
 	Scanner::ScanMode modes[] = {Scanner::ScanMode::COLOR, Scanner::ScanMode::GRAY};
 	Scanner::ScanType types[] = {Scanner::ScanType::SINGLE, Scanner::ScanType::ADF_FRONT, Scanner::ScanType::ADF_BACK, Scanner::ScanType::ADF_BOTH};
 	genOutputPath();
-	std::string device = (*ui.comboAcquireDevice->get_active())[m_devComboCols.name];
+	std::string device = (*ui.comboAcquireDevice->get_active()) [m_devComboCols.name];
 	Scanner::Params params = {device, m_outputPath, res[ui.comboAcquireResolution->get_active_row_number()], modes[ui.comboAcquireMode->get_active_row_number()], 8, types[ui.comboAcquireSource->get_active_row_number()], 0, 0};
 	m_scanner->scan(params);
 }
 
 void Acquirer::setScanState(Scanner::State state) {
-	if(state == Scanner::State::OPEN) {
+	if (state == Scanner::State::OPEN) {
 		ui.labelAcquireMessage->set_text(_("Opening device..."));
-	} else if(state == Scanner::State::SET_OPTIONS) {
+	} else if (state == Scanner::State::SET_OPTIONS) {
 		ui.labelAcquireMessage->set_text(_("Setting options..."));
-	} else if(state == Scanner::State::START) {
+	} else if (state == Scanner::State::START) {
 		ui.labelAcquireMessage->set_text(_("Starting scan..."));
-	} else if(state == Scanner::State::GET_PARAMETERS) {
+	} else if (state == Scanner::State::GET_PARAMETERS) {
 		ui.labelAcquireMessage->set_text(_("Getting parameters..."));
-	} else if(state == Scanner::State::READ) {
+	} else if (state == Scanner::State::READ) {
 		ui.labelAcquireMessage->set_text(_("Transferring data..."));
-	} else if(state == Scanner::State::IDLE) {
+	} else if (state == Scanner::State::IDLE) {
 		doneScan();
 	}
 }
@@ -189,5 +189,5 @@ void Acquirer::doneScan() {
 
 void Acquirer::setDeviceComboTooltip() {
 	auto it = ui.comboAcquireDevice->get_active();
-	ui.comboAcquireDevice->set_tooltip_text(it ? static_cast<std::string>((*it)[m_devComboCols.label]) : "");
+	ui.comboAcquireDevice->set_tooltip_text(it ? static_cast<std::string> ((*it) [m_devComboCols.label]) : "");
 }

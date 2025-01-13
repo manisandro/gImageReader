@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * FontComboBox.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -52,18 +52,18 @@ void FontComboBox::set_active_font(const Glib::ustring& font) {
 
 Glib::RefPtr<Gtk::ListStore> FontComboBox::getModel() {
 	static Glib::RefPtr<Gtk::ListStore> fontComboModel;
-	if(!fontComboModel) {
+	if (!fontComboModel) {
 		std::vector<Glib::ustring> fontFamilies;
 		Glib::RefPtr<Pango::FontMap> fontMap = Glib::wrap(pango_cairo_font_map_get_default(),  true);
-		for(const Glib::RefPtr<Pango::FontFamily>& family : fontMap->list_families()) {
+		for (const Glib::RefPtr<Pango::FontFamily>& family : fontMap->list_families()) {
 			fontFamilies.push_back(family->get_name());
 		}
 		std::sort(fontFamilies.begin(), fontFamilies.end(), [](const Glib::ustring & a, const Glib::ustring & b) {
 			return a.casefold().compare(b.casefold()) < 0;
 		});
 		fontComboModel = Gtk::ListStore::create(s_fontComboCols);
-		for(const Glib::ustring& family : fontFamilies) {
-			(*fontComboModel->append())[s_fontComboCols.fontFamily] = family;
+		for (const Glib::ustring& family : fontFamilies) {
+			(*fontComboModel->append()) [s_fontComboCols.fontFamily] = family;
 		}
 	}
 	return fontComboModel;

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * DisplayerToolHOCR.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -33,15 +33,15 @@ DisplayerToolHOCR::~DisplayerToolHOCR() {
 	clearSelection();
 }
 
-std::vector<Cairo::RefPtr<Cairo::ImageSurface>> DisplayerToolHOCR::getOCRAreas() {
-	std::vector<Cairo::RefPtr<Cairo::ImageSurface>> surfaces;
+std::vector<Cairo::RefPtr<Cairo::ImageSurface >> DisplayerToolHOCR::getOCRAreas() {
+	std::vector<Cairo::RefPtr<Cairo::ImageSurface >> surfaces;
 	surfaces.push_back(m_displayer->getImage(m_displayer->getSceneBoundingRect()));
 	return surfaces;
 }
 
 bool DisplayerToolHOCR::mousePressEvent(GdkEventButton* event) {
 	m_pressed = true;
-	if(event->button == 1 && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
+	if (event->button == 1 && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
 		clearSelection();
 		m_selection = new DisplayerSelection(this, m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y)));
 		CONNECT(m_selection, geometry_changed, sigc::mem_fun(this, &DisplayerToolHOCR::selectionChanged));
@@ -52,7 +52,7 @@ bool DisplayerToolHOCR::mousePressEvent(GdkEventButton* event) {
 }
 
 bool DisplayerToolHOCR::mouseMoveEvent(GdkEventMotion* event) {
-	if(m_selection && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
+	if (m_selection && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
 		Geometry::Point p = m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y));
 		m_selection->setPoint(p);
 		m_displayer->ensureVisible(event->x, event->y);
@@ -63,17 +63,17 @@ bool DisplayerToolHOCR::mouseMoveEvent(GdkEventMotion* event) {
 
 bool DisplayerToolHOCR::mouseReleaseEvent(GdkEventButton* event) {
 	// Don't do anything if the release event does not follow a press event...
-	if(!m_pressed) {
+	if (!m_pressed) {
 		return false;
 	}
 	m_pressed = false;
-	if(m_selection && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
-		if(m_selection->rect().width < 5. || m_selection->rect().height < 5.) {
+	if (m_selection && m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
+		if (m_selection->rect().width < 5. || m_selection->rect().height < 5.) {
 			clearSelection();
 		} else {
 			Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
 			Geometry::Rectangle r = m_selection->rect().translate(-sceneRect.x, -sceneRect.y);
-			m_signal_bbox_drawn.emit(Geometry::Rectangle(int(r.x), int(r.y), int(r.width), int(r.height)), m_currentAction);
+			m_signal_bbox_drawn.emit(Geometry::Rectangle(int (r.x), int (r.y), int (r.width), int (r.height)), m_currentAction);
 		}
 	} else {
 		Geometry::Point p = m_displayer->mapToSceneClamped(Geometry::Point(event->x, event->y));
@@ -84,14 +84,14 @@ bool DisplayerToolHOCR::mouseReleaseEvent(GdkEventButton* event) {
 }
 
 void DisplayerToolHOCR::setAction(Action action, bool clearSel) {
-	if(action != m_currentAction) {
+	if (action != m_currentAction) {
 		m_signal_action_changed.emit(action);
 	}
-	if(clearSel) {
+	if (clearSel) {
 		clearSelection();
 	}
 	m_currentAction = action;
-	if(m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
+	if (m_currentAction >= ACTION_DRAW_GRAPHIC_RECT && m_currentAction <= ACTION_DRAW_WORD_RECT) {
 		m_displayer->setDefaultCursor(Gdk::Cursor::create(Gdk::TCROSS));
 	} else {
 		m_displayer->setDefaultCursor(Gdk::Cursor::create(Gdk::ARROW));
@@ -103,7 +103,7 @@ void DisplayerToolHOCR::setSelection(const Geometry::Rectangle& rect, const Geom
 	Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
 	Geometry::Rectangle r = rect.translate(sceneRect.x, sceneRect.y);
 	Geometry::Rectangle mr = minRect.translate(sceneRect.x, sceneRect.y);
-	if(!m_selection) {
+	if (!m_selection) {
 		m_selection = new DisplayerSelection(this, Geometry::Point(r.x, r.y));
 		CONNECT(m_selection, geometry_changed, sigc::mem_fun(this, &DisplayerToolHOCR::selectionChanged));
 		m_displayer->addItem(m_selection);
@@ -119,7 +119,7 @@ Cairo::RefPtr<Cairo::ImageSurface> DisplayerToolHOCR::getSelection(const Geometr
 }
 
 void DisplayerToolHOCR::clearSelection() {
-	if(m_selection) {
+	if (m_selection) {
 		m_displayer->removeItem(m_selection);
 		delete m_selection;
 		m_selection = nullptr;
@@ -129,5 +129,5 @@ void DisplayerToolHOCR::clearSelection() {
 void DisplayerToolHOCR::selectionChanged(const Geometry::Rectangle& rect) {
 	Geometry::Rectangle sceneRect = m_displayer->getSceneBoundingRect();
 	Geometry::Rectangle r = rect.translate(-sceneRect.x, -sceneRect.y);
-	m_signal_bbox_changed.emit(Geometry::Rectangle(int(r.x), int(r.y), int(r.width), int(r.height)));
+	m_signal_bbox_changed.emit(Geometry::Rectangle(int (r.x), int (r.y), int (r.width), int (r.height)));
 }

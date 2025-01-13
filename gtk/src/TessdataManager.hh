@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * TessdataManager.hh
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -47,7 +47,7 @@ private:
 
 	Ui::TessdataManager ui;
 	Glib::RefPtr<Gtk::ListStore> m_languageListStore;
-	std::map<Glib::ustring, std::vector<LangFile>> m_languageFiles;
+	std::map<Glib::ustring, std::vector<LangFile >> m_languageFiles;
 	Glib::RefPtr<Gio::DBus::Proxy> m_dbusProxy;
 
 	bool fetchLanguageList(Glib::ustring& messages);

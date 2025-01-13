@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * FileDialogs.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -37,7 +37,7 @@
 static std::wstring s2ws(const std::string& s) {
 	g_assert(sizeof(wchar_t) == sizeof(gunichar2));
 	const char* in = s.c_str();
-	wchar_t* buf = reinterpret_cast<wchar_t*>(g_utf8_to_utf16(in, -1, nullptr, nullptr, nullptr));
+	wchar_t* buf = reinterpret_cast<wchar_t*> (g_utf8_to_utf16(in, -1, nullptr, nullptr, nullptr));
 	std::wstring out(buf);
 	g_free(buf);
 	return out;
@@ -45,7 +45,7 @@ static std::wstring s2ws(const std::string& s) {
 
 static std::string ws2s(const std::wstring& s) {
 	g_assert(sizeof(wchar_t) == sizeof(gunichar2));
-	const gunichar2* in = reinterpret_cast<const gunichar2*>(s.c_str());
+	const gunichar2* in = reinterpret_cast<const gunichar2*> (s.c_str());
 	char* buf = g_utf16_to_utf8(in, -1, nullptr, nullptr, nullptr);
 	std::string out(buf);
 	g_free(buf);
@@ -56,16 +56,16 @@ static std::string ws2s(const std::wstring& s) {
 std::wstring FileDialogs::FileFilter::to_win32_filter() const {
 	std::wstring filterstr = s2ws(name);
 	filterstr += L'\0';
-	for(const std::string& pattern : patterns) {
+	for (const std::string& pattern : patterns) {
 		filterstr += s2ws(pattern) + L';';
 	}
-	if(filterstr.back() == L';') {
+	if (filterstr.back() == L';') {
 		filterstr.back() = L'\0';
 	}
 	return filterstr;
 }
 
-static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::wstring& filter, bool multiple, Gtk::Window* parent) {
+static std::vector<Glib::RefPtr<Gio::File >> win32_open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::wstring& filter, bool multiple, Gtk::Window* parent) {
 	wchar_t wfile[1024] = {};
 	std::wstring winitialDirectory = s2ws(initialDirectory);
 	std::wstring wtitle = s2ws(title);
@@ -80,21 +80,21 @@ static std::vector<Glib::RefPtr<Gio::File>> win32_open_dialog(const Glib::ustrin
 	ofn.lpstrInitialDir = winitialDirectory.c_str();
 	ofn.lpstrTitle = wtitle.c_str();
 	ofn.Flags = OFN_NONETWORKBUTTON | OFN_EXPLORER;
-	if(multiple) { ofn.Flags |= OFN_ALLOWMULTISELECT; }
+	if (multiple) { ofn.Flags |= OFN_ALLOWMULTISELECT; }
 	bool ok = GetOpenFileNameW(&ofn);
 
-	std::vector<Glib::RefPtr<Gio::File>> files;
-	if(ok) {
-		if(ofn.nFileOffset == 0) {
+	std::vector<Glib::RefPtr<Gio::File >> files;
+	if (ok) {
+		if (ofn.nFileOffset == 0) {
 			// One file only
 			std::string filename = ws2s(ofn.lpstrFile);
 			files.push_back(Gio::File::create_for_path(filename));
 		} else {
 			std::string directory = ws2s(ofn.lpstrFile);
 			size_t offset = ofn.nFileOffset;
-			while(true) {
+			while (true) {
 				size_t len = wcslen(ofn.lpstrFile + offset);
-				if(len == 0) {
+				if (len == 0) {
 					break;
 				} else {
 					std::string filename = ws2s(ofn.lpstrFile + offset);
@@ -120,12 +120,12 @@ static std::string win32_open_folder_dialog(const Glib::ustring& title, const st
 	binfo.lParam = NULL;
 	binfo.iImage = 0;
 	PIDLIST_ABSOLUTE result = SHBrowseForFolderW(&binfo);
-	if(result == NULL) {
+	if (result == NULL) {
 		// ToDo: shouldn't we release the memory hold by "result"?...
 		return std::string();
 	}
 	TCHAR buffer[MAX_PATH];
-	if(SHGetPathFromIDList(result, buffer)) {
+	if (SHGetPathFromIDList(result, buffer)) {
 		// ToDo: shouldn't we release the memory hold by "result"?...
 		return std::string(buffer);
 	}
@@ -153,7 +153,7 @@ static std::string win32_save_dialog(const Glib::ustring& title, const std::stri
 	bool ok = GetSaveFileNameW(&ofn);
 
 	std::string filename;
-	if(ok) {
+	if (ok) {
 		filename = ws2s(ofn.lpstrFile);
 	}
 	return filename;
@@ -164,16 +164,16 @@ static std::string win32_save_dialog(const Glib::ustring& title, const std::stri
 Glib::RefPtr<Gtk::FileFilter> FileDialogs::FileFilter::to_gnome_filter() const {
 	Glib::RefPtr<Gtk::FileFilter> filefilter = Gtk::FileFilter::create();
 	filefilter->set_name(name);
-	for(const Glib::ustring& mime_type : mime_types) {
+	for (const Glib::ustring& mime_type : mime_types) {
 		filefilter->add_mime_type(mime_type);
 	}
-	for(const Glib::ustring& pattern : patterns) {
+	for (const Glib::ustring& pattern : patterns) {
 		filefilter->add_pattern(pattern);
 	}
 	return filefilter;
 }
 
-static std::vector<Glib::RefPtr<Gio::File>> gnome_open_dialog(const std::string& title, const std::string& initialDirectory, Glib::RefPtr<Gtk::FileFilter> filter, bool multiple, Gtk::Window* parent) {
+static std::vector<Glib::RefPtr<Gio::File >> gnome_open_dialog(const std::string& title, const std::string& initialDirectory, Glib::RefPtr<Gtk::FileFilter> filter, bool multiple, Gtk::Window* parent) {
 	Gtk::FileChooserDialog dialog(*parent, title);
 	dialog.add_button(_("Cancel"), Gtk::RESPONSE_CANCEL);
 	dialog.add_button(_("OK"), Gtk::RESPONSE_OK);
@@ -182,10 +182,10 @@ static std::vector<Glib::RefPtr<Gio::File>> gnome_open_dialog(const std::string&
 	dialog.set_filter(filter);
 	dialog.set_current_folder(initialDirectory);
 
-	if(dialog.run() == Gtk::RESPONSE_OK) {
+	if (dialog.run() == Gtk::RESPONSE_OK) {
 		return dialog.get_files();
 	}
-	return std::vector<Glib::RefPtr<Gio::File>>();
+	return std::vector<Glib::RefPtr<Gio::File >> ();
 }
 
 static std::string gnome_open_folder_dialog(const std::string& title, const std::string& initialDirectory, Gtk::Window* parent) {
@@ -196,7 +196,7 @@ static std::string gnome_open_folder_dialog(const std::string& title, const std:
 	dialog.set_local_only(false);
 	dialog.set_current_folder(initialDirectory);
 
-	if(dialog.run() == Gtk::RESPONSE_OK) {
+	if (dialog.run() == Gtk::RESPONSE_OK) {
 		return dialog.get_filename();
 	}
 	return std::string();
@@ -215,7 +215,7 @@ static std::string gnome_save_dialog(const Glib::ustring& title, const std::stri
 
 	dialog.set_filter(filter);
 
-	if(dialog.run() == Gtk::RESPONSE_OK) {
+	if (dialog.run() == Gtk::RESPONSE_OK) {
 		return dialog.get_filename();
 	}
 	return "";
@@ -226,7 +226,7 @@ Glib::ustring FileDialogs::FileFilter::to_kde_filter() const {
 	return filter;
 }
 
-static std::vector<Glib::RefPtr<Gio::File>> kde_open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const Glib::ustring& filter, bool multiple, Gtk::Window* parent) {
+static std::vector<Glib::RefPtr<Gio::File >> kde_open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const Glib::ustring& filter, bool multiple, Gtk::Window* parent) {
 	// Command line
 	std::vector<Glib::ustring> argv = {
 		"/usr/bin/kdialog",
@@ -241,11 +241,11 @@ static std::vector<Glib::RefPtr<Gio::File>> kde_open_dialog(const Glib::ustring&
 	std::string stdout;
 	int exit_status = -1;
 	Glib::spawn_sync("", argv, /*Glib::SPAWN_DEFAULT*/Glib::SpawnFlags(0), sigc::slot<void>(), &stdout, nullptr, &exit_status);
-	std::vector<Glib::RefPtr<Gio::File>> files;
-	if(exit_status == 0) {
+	std::vector<Glib::RefPtr<Gio::File >> files;
+	if (exit_status == 0) {
 		std::istringstream iss(stdout);
 		std::string filename;
-		while(std::getline(iss, filename)) {
+		while (std::getline(iss, filename)) {
 			files.push_back(Gio::File::create_for_path(filename));
 		}
 	}
@@ -266,8 +266,8 @@ static std::string kde_open_folder_dialog(const Glib::ustring& title, const std:
 	std::string stdout;
 	int exit_status = -1;
 	Glib::spawn_sync("", argv, /*Glib::SPAWN_DEFAULT*/Glib::SpawnFlags(0), sigc::slot<void>(), &stdout, nullptr, &exit_status);
-	std::vector<Glib::RefPtr<Gio::File>> files;
-	if(exit_status == 0) {
+	std::vector<Glib::RefPtr<Gio::File >> files;
+	if (exit_status == 0) {
 		std::string folder;
 		std::istringstream iss(stdout);
 		std::getline(iss, folder);
@@ -289,13 +289,13 @@ static std::string kde_save_dialog(const Glib::ustring& title, const std::string
 		int exit_status = -1;
 		std::string stdout;
 		Glib::spawn_sync("", argv, /*Glib::SPAWN_DEFAULT*/Glib::SpawnFlags(0), sigc::slot<void>(), &stdout, nullptr, &exit_status);
-		if(exit_status != 0) {
+		if (exit_status != 0) {
 			break;
 		}
 		std::istringstream iss(stdout);
 		std::getline(iss, filename);
 		return filename;
-	} while(true);
+	} while (true);
 	return std::string();
 }
 
@@ -311,11 +311,11 @@ static bool is_kde() {
 
 FileDialogs::FileFilter FileDialogs::FileFilter::pixbuf_formats() {
 	FileFilter filter;
-	for(const Gdk::PixbufFormat& format : Gdk::Pixbuf::get_formats()) {
-		for(const Glib::ustring& mime : format.get_mime_types()) {
+	for (const Gdk::PixbufFormat& format : Gdk::Pixbuf::get_formats()) {
+		for (const Glib::ustring& mime : format.get_mime_types()) {
 			filter.mime_types.push_back(mime);
 		}
-		for(const Glib::ustring& extension : format.get_extensions()) {
+		for (const Glib::ustring& extension : format.get_extensions()) {
 			filter.patterns.push_back(Glib::ustring::compose("*.%1", extension));
 		}
 	}
@@ -324,90 +324,93 @@ FileDialogs::FileFilter FileDialogs::FileFilter::pixbuf_formats() {
 
 namespace FileDialogs {
 
-std::vector<Glib::RefPtr<Gio::File>> open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, const FileFilter& filter, bool multiple, Gtk::Window* parent) {
-	std::vector<Glib::RefPtr<Gio::File>> filenames;
+std::vector<Glib::RefPtr<Gio::File >> open_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, const FileFilter& filter, bool multiple, Gtk::Window* parent) {
+	std::vector<Glib::RefPtr<Gio::File >> filenames;
 	parent = parent == nullptr ? MAIN->getWindow() : parent;
 	std::string initialDir = initialDirectory;
-	if(initialDir.empty()) {
-		initialDir = ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
-		if(initialDir.empty()) {
+	if (initialDir.empty()) {
+		initialDir = ConfigSettings::get<VarSetting<Glib::ustring >> (initialDirSetting)->getValue();
+		if (initialDir.empty()) {
 			initialDir = Utils::get_documents_dir();
 		}
 	}
 #ifdef G_OS_WIN32
 	filenames = win32_open_dialog(title, initialDir, filter.to_win32_filter(), multiple, parent);
 #else
-	if(is_kde()) {
+	if (is_kde()) {
 		filenames = kde_open_dialog(title, initialDir, filter.to_kde_filter(), multiple, parent);
-	} else {
+	}
+	else {
 		filenames = gnome_open_dialog(title, initialDir, filter.to_gnome_filter(), multiple, parent);
 	}
 #endif
-	if(!filenames.empty()) {
-		ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filenames.front()->get_path()));
+	if (!filenames.empty()) {
+		ConfigSettings::get<VarSetting<Glib::ustring >> (initialDirSetting)->setValue(Glib::path_get_dirname(filenames.front()->get_path()));
 	}
 	return filenames;
 }
 
-std::string open_folder_dialog(const Glib::ustring& title, const std::string& initialDirectory, const std::string& initialDirSetting, Gtk::Window* parent) {
+std::string open_folder_dialog(const Glib::ustring & title, const std::string & initialDirectory, const std::string & initialDirSetting, Gtk::Window * parent) {
 	std::string folder;
 	parent = parent == nullptr ? MAIN->getWindow() : parent;
 	std::string initDir;
-	if(!initialDirectory.empty()) {
+	if (!initialDirectory.empty()) {
 		initDir = initialDirectory;
 	} else {
-		std::string initDir = ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
-		if(initDir.empty()) {
+		std::string initDir = ConfigSettings::get<VarSetting<Glib::ustring >> (initialDirSetting)->getValue();
+		if (initDir.empty()) {
 			initDir = Utils::get_documents_dir();
 		}
 	}
 #ifdef G_OS_WIN32
 	folder = win32_open_folder_dialog(title, initDir, parent);
 #else
-	if(is_kde()) {
+	if (is_kde()) {
 		folder = kde_open_folder_dialog(title, initDir, parent);
-	} else {
+	}
+	else {
 		folder = gnome_open_folder_dialog(title, initDir, parent);
 	}
 #endif
-	if(!folder.empty()) {
-		ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(folder));
+	if (!folder.empty()) {
+		ConfigSettings::get<VarSetting<Glib::ustring >> (initialDirSetting)->setValue(Glib::path_get_dirname(folder));
 	}
 	return folder;
 }
 
-std::string save_dialog(const Glib::ustring& title, const std::string& initialFilename, const std::string& initialDirSetting, const FileFilter& filter, bool generateUniqueName, Gtk::Window* parent) {
+std::string save_dialog(const Glib::ustring & title, const std::string & initialFilename, const std::string & initialDirSetting, const FileFilter & filter, bool generateUniqueName, Gtk::Window * parent) {
 	std::string filename;
 	parent = parent == nullptr ? MAIN->getWindow() : parent;
 	std::string suggestedFile;
-	if(!initialFilename.empty() && Glib::path_is_absolute(initialFilename)) {
+	if (!initialFilename.empty() && Glib::path_is_absolute(initialFilename)) {
 		suggestedFile = initialFilename;
 	} else {
-		std::string initialDir = ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->getValue();
-		if(initialDir.empty()) {
+		std::string initialDir = ConfigSettings::get<VarSetting<Glib::ustring >> (initialDirSetting)->getValue();
+		if (initialDir.empty()) {
 			initialDir = Utils::get_documents_dir();
 		}
 		suggestedFile = Glib::build_filename(initialDir, initialFilename);
-		if(generateUniqueName) {
+		if (generateUniqueName) {
 			suggestedFile = Utils::make_output_filename(suggestedFile);
 		}
 	}
 #ifdef G_OS_WIN32
 	filename = win32_save_dialog(title, suggestedFile, filter.to_win32_filter(), parent);
 #else
-	if(is_kde()) {
+	if (is_kde()) {
 		filename = kde_save_dialog(title, suggestedFile, filter.to_kde_filter(), parent);
-	} else {
+	}
+	else {
 		filename = gnome_save_dialog(title, suggestedFile, filter.to_gnome_filter(), parent);
 	}
 #endif
-	if(!filename.empty()) {
+	if (!filename.empty()) {
 		std::pair<std::string, std::string> sparts = Utils::split_filename(suggestedFile);
 		std::pair<std::string, std::string> parts = Utils::split_filename(filename);
-		if(parts.second.empty()) {
+		if (parts.second.empty()) {
 			filename = parts.first + "." + sparts.second;
 		}
-		ConfigSettings::get<VarSetting<Glib::ustring>>(initialDirSetting)->setValue(Glib::path_get_dirname(filename));
+		ConfigSettings::get<VarSetting<Glib::ustring >> (initialDirSetting)->setValue(Glib::path_get_dirname(filename));
 	}
 	return filename;
 }

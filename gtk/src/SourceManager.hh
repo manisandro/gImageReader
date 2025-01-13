@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * SourceManager.hh
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -34,10 +34,10 @@ struct Source : public DataObject {
 	Source(const Glib::RefPtr<Gio::File>& _file, const std::string& _displayname, const Glib::RefPtr<Gio::FileMonitor>& _monitor, bool _isTemp = false)
 		: file(_file), displayname(_displayname), monitor(_monitor), isTemp(_isTemp) {}
 	~Source() {
-		if(isTemp && file) {
+		if (isTemp && file) {
 			try {
 				file->remove();
-			} catch(const Glib::Error&) {
+			} catch (const Glib::Error&) {
 				/* pass */
 			}
 		}
@@ -64,7 +64,7 @@ public:
 	SourceManager(const Ui::MainWindow& _ui);
 	~SourceManager();
 
-	int addSources(const std::vector<Glib::RefPtr<Gio::File>>& files, bool suppressWarnings = false);
+	int addSources(const std::vector<Glib::RefPtr<Gio::File >> & files, bool suppressWarnings = false);
 	bool addSource(Glib::RefPtr<Gio::File> file, bool suppressWarnings) {
 		return addSources({file}, suppressWarnings) == 1;
 	}
@@ -78,7 +78,7 @@ private:
 	const Ui::MainWindow& ui;
 	ClassData m_classdata;
 	Glib::RefPtr<FileTreeModel> m_fileTreeModel;
-	std::map<std::string, std::pair<int, Glib::RefPtr<Gio::FileMonitor>>> m_watchedDirectories;
+	std::map<std::string, std::pair<int, Glib::RefPtr<Gio::FileMonitor >>> m_watchedDirectories;
 	Glib::RefPtr<Gtk::Clipboard> m_clipboard;
 	int m_screenshotCount = 0;
 	int m_pasteCount = 0;

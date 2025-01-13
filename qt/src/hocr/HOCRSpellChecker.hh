@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRSpellChecker.hh
- * Copyright (C) 2022-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2022-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -36,7 +36,7 @@ public:
 	bool isAttached() const override { return true; }
 
 private:
-	void generateCombinations(const QList<QList<QString>>& lists, QList<QList<QString>>& results, int depth, const QList<QString>& c) const;
+	void generateCombinations(const QList<QList<QString >> & lists, QList<QList<QString >>& results, int depth, const QList<QString>& c) const;
 };
 
 #endif // HOCRSPELLCHECKER_HH

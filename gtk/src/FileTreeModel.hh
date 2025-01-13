@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * FileTreeModel.hh
- * Copyright (C) 2022-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2022-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -39,7 +39,7 @@ public:
 	bool isFileEditable(const Gtk::TreeIter& index) const;
 
 	template<class T>
-	T fileData(const Gtk::TreeIter& index) const { return static_cast<T>(fileData(index)); }
+	T fileData(const Gtk::TreeIter& index) const { return static_cast<T> (fileData(index)); }
 	DataObject* fileData(const Gtk::TreeIter& index) const;
 
 	bool empty() const { return m_root == nullptr && m_tmpdir == nullptr; }
@@ -103,10 +103,10 @@ private:
 	struct DirNode : Node {
 		using Node::Node;
 		~DirNode() {
-			for(DirNode* dir : dirs) {
+			for (DirNode* dir : dirs) {
 				delete dir;
 			}
-			for(FileNode* file : files) {
+			for (FileNode* file : files) {
 				delete file;
 			}
 		}
@@ -114,18 +114,18 @@ private:
 		NodeList<FileNode*> files;
 		int childCount() const { return dirs.size() + files.size(); }
 		int childIndex(Node* node) const {
-			bool isDir = dynamic_cast<DirNode*>(node);
-			return isDir ? dirs.index(static_cast<DirNode*>(node)) : (dirs.size() + files.index(static_cast<FileNode*>(node)));
+			bool isDir = dynamic_cast<DirNode*> (node);
+			return isDir ? dirs.index(static_cast<DirNode*> (node)) : (dirs.size() + files.index(static_cast<FileNode*> (node)));
 		}
 		Node* firstNode() const {
-			return dirs.empty() ? files.empty() ? nullptr : static_cast<Node*>(files[0]) : static_cast<Node*>(dirs[0]);
+			return dirs.empty() ? files.empty() ? nullptr : static_cast<Node*> (files[0]) : static_cast<Node*> (dirs[0]);
 		}
 		Node* child(int index) {
-			return index >= int(dirs.size()) ? static_cast<Node*>(files[index - dirs.size()]) : static_cast<Node*>(dirs[index]);
+			return index >= int (dirs.size()) ? static_cast<Node*> (files[index - dirs.size()]) : static_cast<Node*> (dirs[index]);
 		}
 		Node* nextNode(Node* node) const {
-			int index = (dynamic_cast<DirNode*>(node) ? dirs.index(static_cast<DirNode*>(node)) : dirs.size() + files.index(static_cast<FileNode*>(node))) + 1;
-			return index < int(dirs.size()) ? static_cast<Node*>(dirs[index]) : index < childCount() ? static_cast<Node*>(files[index - dirs.size()]) : nullptr;
+			int index = (dynamic_cast<DirNode*> (node) ? dirs.index(static_cast<DirNode*> (node)) : dirs.size() + files.index(static_cast<FileNode*> (node))) + 1;
+			return index < int (dirs.size()) ? static_cast<Node*> (dirs[index]) : index < childCount() ? static_cast<Node*> (files[index - dirs.size()]) : nullptr;
 		}
 	};
 

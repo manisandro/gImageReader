@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRBatchExportDialog.hh
- * Copyright (C) 2020-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2020-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -41,7 +41,7 @@ private:
 	ClassData m_classdata;
 	Glib::RefPtr<FileTreeModel> m_sourceTreeModel;
 	Glib::RefPtr<FileTreeModel> m_outputTreeModel;
-	std::map<std::string, std::vector<Glib::RefPtr<Gio::File>>> m_outputMap;
+	std::map<std::string, std::vector<Glib::RefPtr<Gio::File >>> m_outputMap;
 	HOCRPdfExportWidget* m_pdfExportWidget = nullptr;
 	sigc::connection m_connectionPreviewTimeout;
 

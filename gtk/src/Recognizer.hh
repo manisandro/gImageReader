@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Recognizer.hh
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -47,7 +47,7 @@ private:
 	enum class TaskState { Waiting, Succeeded, Failed };
 	struct PageData {
 		bool success;
-		std::vector<Cairo::RefPtr<Cairo::ImageSurface>> ocrAreas;
+		std::vector<Cairo::RefPtr<Cairo::ImageSurface >> ocrAreas;
 		OutputEditor::PageInfo pageInfo;
 	};
 

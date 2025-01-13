@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * CrashHandler.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -21,19 +21,19 @@
 #include "CrashHandler.hh"
 #include <QPushButton>
 
-CrashHandler::CrashHandler(int pid, int tesseractCrash, const QString& savefile, QWidget* parent):
+CrashHandler::CrashHandler(int pid, int tesseractCrash, const QString& savefile, QWidget* parent) :
 	QDialog(parent), m_pid(pid) {
 	ui.setupUi(this);
 	ui.labelIntroTesseract->setVisible(tesseractCrash);
 	ui.labelIntro->setVisible(!tesseractCrash);
 
-	if(!savefile.isEmpty()) {
+	if (!savefile.isEmpty()) {
 		ui.labelAutosave->setText(_("Your work has been saved under <b>%1</b>.").arg(savefile));
 	} else {
 		ui.labelAutosave->setText(_("There was no unsaved work."));
 	}
 
-	setWindowTitle(QString("%1 - %2").arg(PACKAGE_NAME).arg( _("Crash Handler")));
+	setWindowTitle(QString("%1 - %2").arg(PACKAGE_NAME).arg(_("Crash Handler")));
 
 	m_refreshButton = new QPushButton(QIcon::fromTheme("view-refresh"), _("Regenerate backtrace"));
 	m_refreshButton->setEnabled(false);
@@ -42,7 +42,7 @@ CrashHandler::CrashHandler(int pid, int tesseractCrash, const QString& savefile,
 
 	m_gdbProcess.setProcessChannelMode(QProcess::SeparateChannels);
 	connect(&m_gdbProcess, &QProcess::readyReadStandardOutput, this, &CrashHandler::appendGdbOutput);
-	connect(&m_gdbProcess, qOverload<int, QProcess::ExitStatus>(&QProcess::finished), this, &CrashHandler::handleGdbFinished);
+	connect(&m_gdbProcess, qOverload<int, QProcess::ExitStatus> (&QProcess::finished), this, &CrashHandler::handleGdbFinished);
 
 	regenerateBacktrace();
 }
@@ -58,17 +58,17 @@ void CrashHandler::appendGdbOutput() {
 void CrashHandler::handleGdbFinished(int exitCode, QProcess::ExitStatus exitStatus) {
 	ui.progressBarBacktrace->setVisible(false);
 	m_refreshButton->setEnabled(true);
-	if(exitCode != 0 || exitStatus != QProcess::NormalExit) {
+	if (exitCode != 0 || exitStatus != QProcess::NormalExit) {
 		ui.plainTextEditBacktrace->appendPlainText(_("Failed to obtain backtrace. Is GDB installed?"));
 	} else {
 		QStringList lines = ui.plainTextEditBacktrace->toPlainText().split("\n", Qt::SkipEmptyParts);
 		ui.plainTextEditBacktrace->setPlainText(lines[0]);
 		ui.plainTextEditBacktrace->appendPlainText("\n");
-		for(int i = 1, n = lines.length(); i < n; ++i) {
-			if(lines[i].startsWith("Thread")) {
+		for (int i = 1, n = lines.length(); i < n; ++i) {
+			if (lines[i].startsWith("Thread")) {
 				ui.plainTextEditBacktrace->appendPlainText("\n");
 				ui.plainTextEditBacktrace->appendPlainText(lines[i]);
-			} else if(lines[i].startsWith('#')) {
+			} else if (lines[i].startsWith('#')) {
 				ui.plainTextEditBacktrace->appendPlainText(lines[i]);
 			}
 		}

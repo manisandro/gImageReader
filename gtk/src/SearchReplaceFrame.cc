@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * SearchReplaceFrame.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -36,11 +36,11 @@ SearchReplaceFrame::SearchReplaceFrame() {
 	CONNECT(ui.buttonReplace, clicked, [this] { replaceNext(); });
 	CONNECT(ui.buttonReplaceall, clicked, [this] { emitReplaceAll(); });
 	CONNECT(ui.buttonSubstitutions, clicked, [this] { m_substitutionsManager->set_visible(true); });
-	CONNECT(m_substitutionsManager, apply_substitutions, [this]( const std::map<Glib::ustring, Glib::ustring>& substitutions) {
+	CONNECT(m_substitutionsManager, apply_substitutions, [this](const std::map<Glib::ustring, Glib::ustring>& substitutions) {
 		emitApplySubstitutions(substitutions);
 	});
 
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("searchmatchcase", ui.checkbuttonMatchcase));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("searchmatchcase", ui.checkbuttonMatchcase));
 }
 
 SearchReplaceFrame::~SearchReplaceFrame() {
