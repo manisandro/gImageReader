@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * ConfigSettings.hh
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -36,7 +36,7 @@ public:
 	template<class T>
 	static T* get(const Glib::ustring& key) {
 		auto it = s_settings.find(key);
-		return it == s_settings.end() ? nullptr : static_cast<T*>(it->second);
+		return it == s_settings.end() ? nullptr : static_cast<T*> (it->second);
 	}
 
 private:

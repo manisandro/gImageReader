@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditorHOCR.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -82,23 +82,23 @@ private:
 	};
 
 	QMap<State, QTextCharFormat> mFormatMap;
-	QMap<State, QList<Rule>> mStateMap;
+	QMap<State, QList<Rule >> mStateMap;
 
 	void highlightBlock(const QString& text) override {
 		int pos = 0;
 		int len = text.length();
-		State state = static_cast<State>(previousBlockState());
-		while(pos < len) {
+		State state = static_cast<State> (previousBlockState());
+		while (pos < len) {
 			State minState = state;
 			int minPos = -1;
-			for(const Rule& rule : mStateMap.value(state)) {
+			for (const Rule& rule : mStateMap.value(state)) {
 				QRegularExpressionMatch match = rule.pattern.match(text, pos);
-				if(match.hasMatch() && (minPos < 0 || match.capturedStart() < minPos)) {
+				if (match.hasMatch() && (minPos < 0 || match.capturedStart() < minPos)) {
 					minPos = match.capturedStart() + (rule.addMatched ? match.capturedLength() : 0);
 					minState = rule.nextState;
 				}
 			}
-			if(minPos == -1) {
+			if (minPos == -1) {
 				setFormat(pos, len - pos, mFormatMap[state]);
 				pos = len;
 			} else {
@@ -127,7 +127,7 @@ void HOCRAttributeEditor::focusOutEvent(QFocusEvent* ev) {
 }
 
 void HOCRAttributeEditor::updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value) {
-	if(itemIndex == m_itemIndex && name == m_attrName) {
+	if (itemIndex == m_itemIndex && name == m_attrName) {
 		blockSignals(true);
 		setText(value);
 		blockSignals(false);
@@ -135,13 +135,13 @@ void HOCRAttributeEditor::updateValue(const QModelIndex& itemIndex, const QStrin
 }
 
 void HOCRAttributeEditor::validateChanges(bool force) {
-	if(!hasFocus() || force) {
+	if (!hasFocus() || force) {
 		int pos;
 		QString newValue = text();
-		if(newValue == m_origValue) {
+		if (newValue == m_origValue) {
 			return;
 		}
-		if(validator() && validator()->validate(newValue, pos) != QValidator::Acceptable) {
+		if (validator() && validator()->validate(newValue, pos) != QValidator::Acceptable) {
 			setText(m_origValue);
 		} else {
 			m_doc->editItemAttribute(m_itemIndex, m_attrName, newValue, m_attrItemClass);
@@ -160,7 +160,7 @@ HOCRAttributeCheckbox::HOCRAttributeCheckbox(Qt::CheckState value, HOCRDocument*
 }
 
 void HOCRAttributeCheckbox::updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value) {
-	if(itemIndex == m_itemIndex && name == m_attrName) {
+	if (itemIndex == m_itemIndex && name == m_attrName) {
 		blockSignals(true);
 		setChecked(value == "1");
 		blockSignals(false);
@@ -176,25 +176,25 @@ void HOCRAttributeCheckbox::valueChanged() {
 
 HOCRAttributeLangCombo::HOCRAttributeLangCombo(const QString& value, bool multiple, HOCRDocument* doc, const QModelIndex& itemIndex, const QString& attrName, const QString& attrItemClass)
 	: m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_attrItemClass(attrItemClass) {
-	if(multiple) {
+	if (multiple) {
 		addItem(_("Multiple values"));
 		setCurrentIndex(0);
-		QStandardItemModel* itemModel = qobject_cast<QStandardItemModel*>(model());
+		QStandardItemModel* itemModel = qobject_cast<QStandardItemModel*> (model());
 		itemModel->item(0)->setFlags(itemModel->item(0)->flags() & ~Qt::ItemIsEnabled);
 	}
-	for(const QString& code : QtSpell::Checker::getLanguageList()) {
+	for (const QString& code : QtSpell::Checker::getLanguageList()) {
 		QString text = QtSpell::Checker::decodeLanguageCode(code);
 		addItem(text, code);
 	}
-	if(!multiple) {
+	if (!multiple) {
 		setCurrentIndex(findData(value));
 	}
 	connect(m_doc, &HOCRDocument::itemAttributeChanged, this, &HOCRAttributeLangCombo::updateValue);
-	connect(this, qOverload<int>(&HOCRAttributeLangCombo::currentIndexChanged), this, &HOCRAttributeLangCombo::valueChanged);
+	connect(this, qOverload<int> (&HOCRAttributeLangCombo::currentIndexChanged), this, &HOCRAttributeLangCombo::valueChanged);
 }
 
 void HOCRAttributeLangCombo::updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value) {
-	if(itemIndex == m_itemIndex && name == m_attrName) {
+	if (itemIndex == m_itemIndex && name == m_attrName) {
 		blockSignals(true);
 		setCurrentIndex(findData(value));
 		blockSignals(false);
@@ -216,11 +216,11 @@ public:
 	}
 	void setEditorData(QWidget* editor, const QModelIndex& index) const {
 		m_currentIndex = index;
-		m_currentEditor = static_cast<QLineEdit*>(editor);
-		static_cast<QLineEdit*>(editor)->setText(index.model()->data(index, Qt::EditRole).toString());
+		m_currentEditor = static_cast<QLineEdit*> (editor);
+		static_cast<QLineEdit*> (editor)->setText(index.model()->data(index, Qt::EditRole).toString());
 	}
 	void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const {
-		model->setData(index, static_cast<QLineEdit*>(editor)->text(), Qt::EditRole);
+		model->setData(index, static_cast<QLineEdit*> (editor)->text(), Qt::EditRole);
 	}
 	const QModelIndex& getCurrentIndex() const {
 		return m_currentIndex;
@@ -275,10 +275,10 @@ void OutputEditorHOCR::HOCRBatchProcessor::appendOutput(QIODevice* dev, tesserac
 Q_DECLARE_METATYPE(OutputEditorHOCR::HOCRReadSessionData)
 
 OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
-	static int reg = qRegisterMetaType<QList<QRect>>("QList<QRect>");
+	static int reg = qRegisterMetaType<QList<QRect >> ("QList<QRect>");
 	Q_UNUSED(reg);
 
-	static int reg2 = qRegisterMetaType<HOCRReadSessionData>("HOCRReadSessionData");
+	static int reg2 = qRegisterMetaType<HOCRReadSessionData> ("HOCRReadSessionData");
 	Q_UNUSED(reg2);
 
 	m_tool = tool;
@@ -320,8 +320,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	QShortcut* shortcut = new QShortcut(QKeySequence(Qt::Key_Delete), m_widget);
 	QObject::connect(shortcut, &QShortcut::activated, this, &OutputEditorHOCR::removeItem);
 
-	ui.actionInsertModeAppend->setData(static_cast<int>(InsertMode::Append));
-	ui.actionInsertModeBefore->setData(static_cast<int>(InsertMode::InsertBefore));
+	ui.actionInsertModeAppend->setData(static_cast<int> (InsertMode::Append));
+	ui.actionInsertModeBefore->setData(static_cast<int> (InsertMode::InsertBefore));
 
 	connect(ui.menuInsertMode, &QMenu::triggered, this, &OutputEditorHOCR::setInsertMode);
 	connect(ui.toolButtonOpen, &QToolButton::clicked, this, [this] { open(InsertMode::Replace); });
@@ -341,8 +341,8 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(ui.searchFrame, &SearchReplaceFrame::findReplace, this, &OutputEditorHOCR::findReplace);
 	connect(ui.searchFrame, &SearchReplaceFrame::replaceAll, this, &OutputEditorHOCR::replaceAll);
 	connect(ui.searchFrame, &SearchReplaceFrame::applySubstitutions, this, &OutputEditorHOCR::applySubstitutions);
-	connect(ConfigSettings::get<FontSetting>("customoutputfont"), &FontSetting::changed, this, &OutputEditorHOCR::setFont);
-	connect(ConfigSettings::get<SwitchSetting>("systemoutputfont"), &FontSetting::changed, this, &OutputEditorHOCR::setFont);
+	connect(ConfigSettings::get<FontSetting> ("customoutputfont"), &FontSetting::changed, this, &OutputEditorHOCR::setFont);
+	connect(ConfigSettings::get<SwitchSetting> ("systemoutputfont"), &FontSetting::changed, this, &OutputEditorHOCR::setFont);
 	connect(ui.treeViewHOCR->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &OutputEditorHOCR::showItemProperties);
 	connect(ui.treeViewHOCR, &QTreeView::customContextMenuRequested, this, &OutputEditorHOCR::showTreeWidgetContextMenu);
 	connect(ui.tabWidgetProps, &QTabWidget::currentChanged, this, &OutputEditorHOCR::updateSourceText);
@@ -355,7 +355,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	connect(m_document, &HOCRDocument::itemAttributeChanged, this, &OutputEditorHOCR::setModified);
 	connect(m_document, &HOCRDocument::itemAttributeChanged, this, &OutputEditorHOCR::updateSourceText);
 	connect(m_document, &HOCRDocument::itemAttributeChanged, this, &OutputEditorHOCR::itemAttributeChanged);
-	connect(ui.comboBoxNavigate, qOverload<int>(&QComboBox::currentIndexChanged), this, &OutputEditorHOCR::navigateTargetChanged);
+	connect(ui.comboBoxNavigate, qOverload<int> (&QComboBox::currentIndexChanged), this, &OutputEditorHOCR::navigateTargetChanged);
 	connect(ui.actionNavigateNext, &QAction::triggered, this, &OutputEditorHOCR::navigateNext);
 	connect(ui.actionNavigatePrev, &QAction::triggered, this, &OutputEditorHOCR::navigatePrev);
 	connect(ui.actionExpandAll, &QAction::triggered, this, &OutputEditorHOCR::expandItemClass);
@@ -375,15 +375,15 @@ OutputEditorHOCR::~OutputEditorHOCR() {
 }
 
 void OutputEditorHOCR::setFont() {
-	if(ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
+	if (ConfigSettings::get<SwitchSetting> ("systemoutputfont")->getValue()) {
 		ui.plainTextEditOutput->setFont(QFont());
 	} else {
-		ui.plainTextEditOutput->setFont(ConfigSettings::get<FontSetting>("customoutputfont")->getValue());
+		ui.plainTextEditOutput->setFont(ConfigSettings::get<FontSetting> ("customoutputfont")->getValue());
 	}
 }
 
 void OutputEditorHOCR::setInsertMode(QAction* action) {
-	m_insertMode = static_cast<InsertMode>(action->data().value<int>());
+	m_insertMode = static_cast<InsertMode> (action->data().value<int>());
 	ui.toolButtonInsertMode->setIcon(action->icon());
 }
 
@@ -392,7 +392,7 @@ void OutputEditorHOCR::setModified() {
 	ui.toolButtonOutputExport->setEnabled(m_document->pageCount() > 0);
 	ui.toolBarNavigate->setEnabled(m_document->pageCount() > 0);
 	m_preview->setVisible(false);
-	m_previewTimer.start(100); // Use a timer because setModified is potentially called a large number of times when the HOCR tree changes
+	m_previewTimer.start(100);  // Use a timer because setModified is potentially called a large number of times when the HOCR tree changes
 	m_modified = true;
 }
 
@@ -406,19 +406,19 @@ OutputEditorHOCR::ReadSessionData* OutputEditorHOCR::initRead(tesseract::TessBas
 void OutputEditorHOCR::read(tesseract::TessBaseAPI& tess, ReadSessionData* data) {
 	tess.SetVariable("hocr_font_info", "true");
 	char* text = tess.GetHOCRText(data->pageInfo.page);
-	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
+	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*> (data);
 	QMetaObject::invokeMethod(this, "addPage", Qt::QueuedConnection, Q_ARG(QString, QString::fromUtf8(text)), Q_ARG(HOCRReadSessionData, *hdata));
 	delete[] text;
 	++hdata->insertIndex;
 }
 
 void OutputEditorHOCR::readError(const QString& errorMsg, ReadSessionData* data) {
-	static_cast<HOCRReadSessionData*>(data)->errors.append(QString("%1[%2]: %3").arg(data->pageInfo.filename).arg(data->pageInfo.page).arg(errorMsg));
+	static_cast<HOCRReadSessionData*> (data)->errors.append(QString("%1[%2]: %3").arg(data->pageInfo.filename).arg(data->pageInfo.page).arg(errorMsg));
 }
 
 void OutputEditorHOCR::finalizeRead(ReadSessionData* data) {
-	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*>(data);
-	if(!hdata->errors.isEmpty()) {
+	HOCRReadSessionData* hdata = static_cast<HOCRReadSessionData*> (data);
+	if (!hdata->errors.isEmpty()) {
 		QString message = QString(_("The following pages could not be processed:\n%1").arg(hdata->errors.join("\n")));
 		QMessageBox::warning(MAIN, _("Recognition errors"), message);
 	}
@@ -445,9 +445,9 @@ void OutputEditorHOCR::addPage(const QString& hocrText, HOCRReadSessionData data
 }
 
 bool OutputEditorHOCR::containsSource(const QString& source, int sourcePage) const {
-	for(int i = 0, n = m_document->pageCount(); i < n; ++i) {
+	for (int i = 0, n = m_document->pageCount(); i < n; ++i) {
 		const HOCRPage* page = m_document->page(i);
-		if(page->pageNr() == sourcePage && page->sourceFile() == source) {
+		if (page->pageNr() == sourcePage && page->sourceFile() == source) {
 			return true;
 		}
 	}
@@ -467,13 +467,13 @@ void OutputEditorHOCR::expandCollapseItemClass(bool expand) {
 	QModelIndex next = start;
 	do {
 		const HOCRItem* item = m_document->itemAtIndex(next);
-		if(item && item->itemClass() == target) {
-			if(expand) {
+		if (item && item->itemClass() == target) {
+			if (expand) {
 				ui.treeViewHOCR->setExpanded(next, expand);
-				for(QModelIndex parent = next.parent(); parent.isValid(); parent = parent.parent()) {
+				for (QModelIndex parent = next.parent(); parent.isValid(); parent = parent.parent()) {
 					ui.treeViewHOCR->setExpanded(parent, true);
 				}
-				for(QModelIndex child = m_document->index(0, 0, next); child.isValid(); child = child.sibling(child.row() + 1, 0)) {
+				for (QModelIndex child = m_document->index(0, 0, next); child.isValid(); child = child.sibling(child.row() + 1, 0)) {
 					expandCollapseChildren(child, false);
 				}
 			} else {
@@ -481,7 +481,7 @@ void OutputEditorHOCR::expandCollapseItemClass(bool expand) {
 			}
 		}
 		next = m_document->nextIndex(next);
-	} while(next != start);
+	} while (next != start);
 	ui.treeViewHOCR->scrollTo(ui.treeViewHOCR->currentIndex());
 }
 
@@ -489,10 +489,10 @@ void OutputEditorHOCR::navigateNextPrev(bool next) {
 	QString target = ui.comboBoxNavigate->itemData(ui.comboBoxNavigate->currentIndex()).toString();
 	bool misspelled = false;
 	bool lowconf = false;
-	if(target == "ocrx_word_bad") {
+	if (target == "ocrx_word_bad") {
 		target = "ocrx_word";
 		misspelled = true;
-	} else if(target == "ocrx_word_lowconf") {
+	} else if (target == "ocrx_word_lowconf") {
 		target = "ocrx_word";
 		lowconf = true;
 	}
@@ -502,9 +502,9 @@ void OutputEditorHOCR::navigateNextPrev(bool next) {
 
 void OutputEditorHOCR::expandCollapseChildren(const QModelIndex& index, bool expand) const {
 	int nChildren = m_document->rowCount(index);
-	if(nChildren > 0) {
+	if (nChildren > 0) {
 		ui.treeViewHOCR->setExpanded(index, expand);
-		for(int i = 0; i < nChildren; ++i) {
+		for (int i = 0; i < nChildren; ++i) {
 			expandCollapseChildren(m_document->index(i, 0, index), expand);
 		}
 	}
@@ -514,7 +514,7 @@ bool OutputEditorHOCR::showPage(const HOCRPage* page) {
 	m_blockSourceChanged = true;
 	bool success = page && MAIN->getSourceManager()->addSource(page->sourceFile(), true) && MAIN->getDisplayer()->setup(&page->pageNr(), &page->resolution(), &page->angle());
 	m_blockSourceChanged = false;
-	if(success) {
+	if (success) {
 		sourceChanged();
 	}
 	return success;
@@ -522,14 +522,14 @@ bool OutputEditorHOCR::showPage(const HOCRPage* page) {
 
 int OutputEditorHOCR::currentPage() {
 	QModelIndexList selected = ui.treeViewHOCR->selectionModel()->selectedIndexes();
-	if(selected.isEmpty()) {
+	if (selected.isEmpty()) {
 		return m_document->pageCount();
 	}
 	QModelIndex index = selected.front();
-	if(!index.isValid()) {
+	if (!index.isValid()) {
 		return m_document->pageCount();
 	}
-	while(index.parent().isValid()) {
+	while (index.parent().isValid()) {
 		index = index.parent();
 	}
 	return index.row();
@@ -542,7 +542,7 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModel
 	ui.plainTextEditOutput->setPlainText("");
 
 	const HOCRItem* currentItem = m_document->itemAtIndex(index);
-	if(!currentItem) {
+	if (!currentItem) {
 		m_tool->clearSelection();
 		return;
 	}
@@ -550,9 +550,9 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModel
 
 	int row = -1;
 	QMap<QString, QString> attrs = currentItem->getAllAttributes();
-	for(auto it = attrs.begin(), itEnd = attrs.end(); it != itEnd; ++it) {
+	for (auto it = attrs.begin(), itEnd = attrs.end(); it != itEnd; ++it) {
 		QString attrName = it.key();
-		if(attrName == "class" || attrName == "id") {
+		if (attrName == "class" || attrName == "id") {
 			continue;
 		}
 		QStringList parts = attrName.split(":");
@@ -564,9 +564,9 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModel
 	}
 
 	// ocr_class:attr_key:attr_values
-	QMap<QString, QMap<QString, QSet<QString>>> occurrences;
+	QMap<QString, QMap<QString, QSet<QString >>> occurrences;
 	currentItem->getPropagatableAttributes(occurrences);
-	for(auto it = occurrences.begin(), itEnd = occurrences.end(); it != itEnd; ++it) {
+	for (auto it = occurrences.begin(), itEnd = occurrences.end(); it != itEnd; ++it) {
 		ui.tableWidgetProperties->insertRow(++row);
 		QTableWidgetItem* sectionItem = new QTableWidgetItem(it.key());
 		sectionItem->setFlags(sectionItem->flags() & ~(Qt::ItemIsEditable | Qt::ItemIsSelectable));
@@ -576,7 +576,7 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModel
 		sectionItem->setFont(sectionFont);
 		ui.tableWidgetProperties->setItem(row, 0, sectionItem);
 		ui.tableWidgetProperties->setSpan(row, 0, 1, 2);
-		for(auto attrIt = it.value().begin(), attrItEnd = it.value().end(); attrIt != attrItEnd; ++attrIt) {
+		for (auto attrIt = it.value().begin(), attrItEnd = it.value().end(); attrIt != attrItEnd; ++attrIt) {
 			const QString& attrName = attrIt.key();
 			const QSet<QString>& attrValues = attrIt.value();
 			int attrValueCount = attrValues.size();
@@ -591,17 +591,17 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModel
 
 	ui.plainTextEditOutput->setPlainText(currentItem->toHtml());
 
-	if(showPage(page)) {
+	if (showPage(page)) {
 		// Update preview if necessary
-		if(!prevItem || prevItem->page() != page) {
+		if (!prevItem || prevItem->page() != page) {
 			updatePreview();
 		}
 		// Minimum bounding box
 		QRect minBBox;
-		if(currentItem->itemClass() == "ocr_page") {
+		if (currentItem->itemClass() == "ocr_page") {
 			minBBox = currentItem->bbox();
 		} else {
-			for(const HOCRItem* child : currentItem->children()) {
+			for (const HOCRItem* child : currentItem->children()) {
 				minBBox = minBBox.united(child->bbox());
 			}
 		}
@@ -616,29 +616,29 @@ QWidget* OutputEditorHOCR::createAttrWidget(const QModelIndex& itemIndex, const 
 		{"title:baseline", "[-+]?\\d+\\.?\\d*\\s[-+]?\\d+\\.?\\d*"}
 	};
 	auto it = attrLineEdits.find(attrName);
-	if(it != attrLineEdits.end()) {
+	if (it != attrLineEdits.end()) {
 		QLineEdit* lineEdit = new HOCRAttributeEditor(attrValue, m_document, itemIndex, attrName, attrItemClass);
 		lineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression(it.value())));
-		if(multiple) {
+		if (multiple) {
 			lineEdit->setPlaceholderText(_("Multiple values"));
 		}
 		return lineEdit;
-	} else if(attrName == "title:x_font") {
+	} else if (attrName == "title:x_font") {
 		QFontComboBox* combo = new QFontComboBox();
 		combo->setCurrentIndex(-1);
 		QLineEdit* edit = new HOCRAttributeEditor(attrValue, m_document, itemIndex, attrName, attrItemClass);
-		edit->blockSignals(true); // Because the combobox alters the text as soon as setLineEdit is called...
+		edit->blockSignals(true);  // Because the combobox alters the text as soon as setLineEdit is called...
 		combo->setLineEdit(edit);
 		edit->setText(attrValue);
 		edit->blockSignals(false);
-		if(multiple) {
+		if (multiple) {
 			combo->lineEdit()->setPlaceholderText(_("Multiple values"));
 		}
 		return combo;
-	} else if(attrName == "lang") {
+	} else if (attrName == "lang") {
 		HOCRAttributeLangCombo* combo = new HOCRAttributeLangCombo(attrValue, multiple, m_document, itemIndex, attrName, attrItemClass);
 		return combo;
-	} else if(attrName == "bold" || attrName == "italic") {
+	} else if (attrName == "bold" || attrName == "italic") {
 		Qt::CheckState value = multiple ? Qt::PartiallyChecked : attrValue == "1" ? Qt::Checked : Qt::Unchecked;
 		return new HOCRAttributeCheckbox(value, m_document, itemIndex, attrName, attrItemClass);
 	} else {
@@ -656,10 +656,10 @@ void OutputEditorHOCR::updateCurrentItemBBox(QRect bbox) {
 }
 
 void OutputEditorHOCR::updateSourceText() {
-	if(ui.tabWidgetProps->currentWidget() == ui.plainTextEditOutput) {
+	if (ui.tabWidgetProps->currentWidget() == ui.plainTextEditOutput) {
 		QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
 		const HOCRItem* currentItem = m_document->itemAtIndex(current);
-		if(currentItem) {
+		if (currentItem) {
 			ui.plainTextEditOutput->setPlainText(currentItem->toHtml());
 		}
 	}
@@ -667,13 +667,13 @@ void OutputEditorHOCR::updateSourceText() {
 
 void OutputEditorHOCR::itemAttributeChanged(const QModelIndex& itemIndex, const QString& name, const QString& /*value*/) {
 	const HOCRItem* currentItem = m_document->itemAtIndex(itemIndex);
-	if(name == "title:bbox" && currentItem) {
+	if (name == "title:bbox" && currentItem) {
 		// Minimum bounding box
 		QRect minBBox;
-		if(currentItem->itemClass() == "ocr_page") {
+		if (currentItem->itemClass() == "ocr_page") {
 			minBBox = currentItem->bbox();
 		} else {
-			for(const HOCRItem* child : currentItem->children()) {
+			for (const HOCRItem* child : currentItem->children()) {
 				minBBox = minBBox.united(child->bbox());
 			}
 		}
@@ -685,25 +685,28 @@ void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 	QDomDocument doc;
 	QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
 	const HOCRItem* currentItem = m_document->itemAtIndex(current);
-	if(!currentItem) {
+	if (!currentItem) {
 		return;
 	}
-	QMap<QString, QMap<QString, QSet<QString>>> propAttrs;
+	QMap<QString, QMap<QString, QSet<QString >>> propAttrs;
 	currentItem->getPropagatableAttributes(propAttrs);
 	QDomElement newElement;
-	if(action == DisplayerToolHOCR::ACTION_DRAW_GRAPHIC_RECT) {
+	if (action == DisplayerToolHOCR::ACTION_DRAW_GRAPHIC_RECT) {
 		newElement = doc.createElement("div");
 		newElement.setAttribute("class", "ocr_graphic");
 		newElement.setAttribute("title", QString("bbox %1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom()));
-	} else if(action == DisplayerToolHOCR::ACTION_DRAW_CAREA_RECT) {
+	}
+	else if (action == DisplayerToolHOCR::ACTION_DRAW_CAREA_RECT) {
 		newElement = doc.createElement("div");
 		newElement.setAttribute("class", "ocr_carea");
 		newElement.setAttribute("title", QString("bbox %1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom()));
-	} else if(action == DisplayerToolHOCR::ACTION_DRAW_PAR_RECT) {
+	}
+	else if (action == DisplayerToolHOCR::ACTION_DRAW_PAR_RECT) {
 		newElement = doc.createElement("p");
 		newElement.setAttribute("class", "ocr_par");
 		newElement.setAttribute("title", QString("bbox %1 %2 %3 %4").arg(bbox.left()).arg(bbox.top()).arg(bbox.right()).arg(bbox.bottom()));
-	} else if(action == DisplayerToolHOCR::ACTION_DRAW_LINE_RECT) {
+	}
+	else if (action == DisplayerToolHOCR::ACTION_DRAW_LINE_RECT) {
 		newElement = doc.createElement("span");
 		newElement.setAttribute("class", "ocr_line");
 		QSet<QString> propLineBaseline = propAttrs["ocrx_line"]["baseline"];
@@ -718,14 +721,14 @@ void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 		titleAttrs["x_size"] = QString("%1").arg(bbox.height());
 		titleAttrs["baseline"] = propLineBaseline.size() == 1 ? *propLineBaseline.begin() : QString("0 0");
 		newElement.setAttribute("title", HOCRItem::serializeAttrGroup(titleAttrs));
-	} else if(action == DisplayerToolHOCR::ACTION_DRAW_WORD_RECT) {
+	} else if (action == DisplayerToolHOCR::ACTION_DRAW_WORD_RECT) {
 		QString text = QInputDialog::getText(m_widget, _("Add Word"), _("Enter word:"));
-		if(text.isEmpty()) {
+		if (text.isEmpty()) {
 			return;
 		}
 		newElement = doc.createElement("span");
 		newElement.setAttribute("class", "ocrx_word");
-		QMap<QString, QSet<QString>> propWord = propAttrs["ocrx_word"];
+		QMap<QString, QSet<QString >> propWord = propAttrs["ocrx_word"];
 
 		newElement.setAttribute("lang", propWord["lang"].size() == 1 ? *propWord["lang"].begin() : m_document->defaultLanguage());
 		QMap<QString, QString> titleAttrs;
@@ -743,7 +746,7 @@ void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 		return;
 	}
 	QModelIndex index = m_document->addItem(current, newElement);
-	if(index.isValid()) {
+	if (index.isValid()) {
 		ui.treeViewHOCR->selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 	}
 }
@@ -751,18 +754,18 @@ void OutputEditorHOCR::bboxDrawn(const QRect& bbox, int action) {
 void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 	QModelIndexList indices = ui.treeViewHOCR->selectionModel()->selectedRows();
 	int nIndices = indices.size();
-	if(nIndices > 1) {
+	if (nIndices > 1) {
 		// Check if merging or swapping is allowed (items are valid siblings)
 		const HOCRItem* firstItem = m_document->itemAtIndex(indices.first());
-		if(!firstItem) {
+		if (!firstItem) {
 			return;
 		}
 		QSet<QString> classes;
 		classes.insert(firstItem->itemClass());
-		QVector<int> rows = {indices.first().row()};
-		for(int i = 1; i < nIndices; ++i) {
+		QVector<int> rows = {indices.first().row() };
+		for (int i = 1; i < nIndices; ++i) {
 			const HOCRItem* item = m_document->itemAtIndex(indices[i]);
-			if(!item || item->parent() != firstItem->parent()) {
+			if (!item || item->parent() != firstItem->parent()) {
 				return;
 			}
 			classes.insert(item->itemClass());
@@ -779,31 +782,31 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 		QAction* actionMerge = nullptr;
 		QAction* actionSplit = nullptr;
 		QAction* actionSwap = nullptr;
-		if(consecutive && !graphics && !pages && sameClass) { // Merging allowed
+		if (consecutive && !graphics && !pages && sameClass) { // Merging allowed
 			actionMerge = menu.addAction(_("Merge"));
-			if(firstItem->itemClass() != "ocr_carea") {
+			if (firstItem->itemClass() != "ocr_carea") {
 				actionSplit = menu.addAction(_("Split from parent"));
 			}
 		}
-		if(nIndices == 2) { // Swapping allowed
+		if (nIndices == 2) { // Swapping allowed
 			actionSwap = menu.addAction(_("Swap"));
 		}
 
 		QAction* clickedAction = menu.exec(ui.treeViewHOCR->mapToGlobal(point));
-		if(!clickedAction) {
+		if (!clickedAction) {
 			return;
 		}
 		ui.treeViewHOCR->selectionModel()->blockSignals(true);
 		QModelIndex newIndex;
-		if(clickedAction == actionMerge) {
+		if (clickedAction == actionMerge) {
 			newIndex = m_document->mergeItems(indices.first().parent(), rows.first(), rows.last());
-		} else if(clickedAction == actionSplit) {
+		} else if (clickedAction == actionSplit) {
 			newIndex = m_document->splitItem(indices.first().parent(), rows.first(), rows.last());
 			expandCollapseChildren(newIndex, true);
-		} else if(clickedAction == actionSwap) {
+		} else if (clickedAction == actionSwap) {
 			newIndex = m_document->swapItems(indices.first().parent(), rows.first(), rows.last());
 		}
-		if(newIndex.isValid()) {
+		if (newIndex.isValid()) {
 			ui.treeViewHOCR->selectionModel()->blockSignals(true);
 			ui.treeViewHOCR->selectionModel()->clear();
 			ui.treeViewHOCR->selectionModel()->blockSignals(false);
@@ -815,7 +818,7 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 	}
 	QModelIndex index = ui.treeViewHOCR->indexAt(point);
 	const HOCRItem* item = m_document->itemAtIndex(index);
-	if(!item) {
+	if (!item) {
 		return;
 	}
 
@@ -830,54 +833,54 @@ void OutputEditorHOCR::showTreeWidgetContextMenu(const QPoint& point) {
 	QAction* actionExpand = nullptr;
 	QAction* actionCollapse = nullptr;
 	QString itemClass = item->itemClass();
-	if(itemClass == "ocr_page") {
+	if (itemClass == "ocr_page") {
 		actionAddGraphic = menu.addAction(_("Add graphic region"));
 		actionAddCArea = menu.addAction(_("Add text block"));
-	} else if(itemClass == "ocr_carea") {
+	} else if (itemClass == "ocr_carea") {
 		actionAddPar = menu.addAction(_("Add paragraph"));
-	} else if(itemClass == "ocr_par") {
+	} else if (itemClass == "ocr_par") {
 		actionAddLine = menu.addAction(_("Add line"));
-	} else if(itemClass == "ocr_line") {
+	} else if (itemClass == "ocr_line") {
 		actionAddWord = menu.addAction(_("Add word"));
-	} else if(itemClass == "ocrx_word") {
+	} else if (itemClass == "ocrx_word") {
 		m_document->addSpellingActions(&menu, index);
 	}
-	if(!menu.actions().isEmpty()) {
+	if (!menu.actions().isEmpty()) {
 		menu.addSeparator();
 	}
-	if(itemClass == "ocr_par" || itemClass == "ocr_line" || itemClass == "ocrx_word") {
+	if (itemClass == "ocr_par" || itemClass == "ocr_line" || itemClass == "ocrx_word") {
 		actionSplit = menu.addAction(_("Split from parent"));
 	}
 	actionRemove = menu.addAction(_("Remove"));
 	actionRemove->setShortcut(QKeySequence(Qt::Key_Delete));
-	if(m_document->rowCount(index) > 0) {
+	if (m_document->rowCount(index) > 0) {
 		actionExpand = menu.addAction(_("Expand all"));
 		actionCollapse = menu.addAction(_("Collapse all"));
 	}
 
 	QAction* clickedAction = menu.exec(ui.treeViewHOCR->mapToGlobal(point));
-	if(!clickedAction) {
+	if (!clickedAction) {
 		return;
 	}
-	if(clickedAction == actionAddGraphic) {
+	if (clickedAction == actionAddGraphic) {
 		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_GRAPHIC_RECT);
-	} else if(clickedAction == actionAddCArea) {
+	} else if (clickedAction == actionAddCArea) {
 		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_CAREA_RECT);
-	} else if(clickedAction == actionAddPar) {
+	} else if (clickedAction == actionAddPar) {
 		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_PAR_RECT);
-	} else if(clickedAction == actionAddLine) {
+	} else if (clickedAction == actionAddLine) {
 		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_LINE_RECT);
-	} else if(clickedAction == actionAddWord) {
+	} else if (clickedAction == actionAddWord) {
 		m_tool->setAction(DisplayerToolHOCR::ACTION_DRAW_WORD_RECT);
-	} else if(clickedAction == actionSplit) {
+	} else if (clickedAction == actionSplit) {
 		QModelIndex newIndex = m_document->splitItem(index.parent(), index.row(), index.row());
 		ui.treeViewHOCR->selectionModel()->setCurrentIndex(newIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 		expandCollapseChildren(newIndex, true);
-	} else if(clickedAction == actionRemove) {
+	} else if (clickedAction == actionRemove) {
 		m_document->removeItem(ui.treeViewHOCR->selectionModel()->currentIndex());
-	} else if(clickedAction == actionExpand) {
+	} else if (clickedAction == actionExpand) {
 		expandCollapseChildren(index, true);
-	} else if(clickedAction == actionCollapse) {
+	} else if (clickedAction == actionCollapse) {
 		expandCollapseChildren(index, false);
 	}
 }
@@ -887,19 +890,19 @@ void OutputEditorHOCR::pickItem(const QPoint& point) {
 	QString filename = MAIN->getDisplayer()->getCurrentImage(pageNr);
 	QModelIndex pageIndex = m_document->searchPage(filename, pageNr);
 	const HOCRItem* pageItem = m_document->itemAtIndex(pageIndex);
-	if(!pageItem) {
+	if (!pageItem) {
 		return;
 	}
 	const HOCRPage* page = pageItem->page();
 	// Transform point in coordinate space used when page was OCRed
 	double alpha = (page->angle() - MAIN->getDisplayer()->getCurrentAngle()) / 180. * M_PI;
-	double scale = double(page->resolution()) / double(MAIN->getDisplayer()->getCurrentResolution());
-	QPoint newPoint( scale * (point.x() * std::cos(alpha) - point.y() * std::sin(alpha)) + 0.5 * page->bbox().width(),
-	                 scale * (point.x() * std::sin(alpha) + point.y() * std::cos(alpha)) + 0.5 * page->bbox().height());
+	double scale = double (page->resolution()) / double (MAIN->getDisplayer()->getCurrentResolution());
+	QPoint newPoint(scale * (point.x() * std::cos(alpha) - point.y() * std::sin(alpha)) + 0.5 * page->bbox().width(),
+	                scale * (point.x() * std::sin(alpha) + point.y() * std::cos(alpha)) + 0.5 * page->bbox().height());
 	QModelIndex index = m_document->searchAtCanvasPos(pageIndex, newPoint);
 	ui.treeViewHOCR->setCurrentIndex(index);
 	const HOCRItem* item = m_document->itemAtIndex(index);
-	if(item->itemClass() != "ocrx_word" && item->itemClass() != "ocr_line") {
+	if (item->itemClass() != "ocrx_word" && item->itemClass() != "ocr_line") {
 		ui.treeViewHOCR->setFocus();
 	}
 }
@@ -909,33 +912,33 @@ void OutputEditorHOCR::toggleWConfColumn(bool active) {
 }
 
 bool OutputEditorHOCR::open(InsertMode mode, QStringList files) {
-	if(mode == InsertMode::Replace && !clear(false)) {
+	if (mode == InsertMode::Replace && !clear(false)) {
 		return false;
 	}
-	if(files.isEmpty()) {
+	if (files.isEmpty()) {
 		files = FileDialogs::openDialog(_("Open hOCR File"), "", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")), true);
 	}
-	if(files.isEmpty()) {
+	if (files.isEmpty()) {
 		return false;
 	}
 	int pos = mode == InsertMode::InsertBefore ? currentPage() : m_document->pageCount();
 	QStringList failed;
 	QStringList invalid;
 	int added = 0;
-	for(const QString& filename : files) {
+	for (const QString& filename : files) {
 		QFile file(filename);
-		if(!file.open(QIODevice::ReadOnly)) {
+		if (!file.open(QIODevice::ReadOnly)) {
 			failed.append(filename);
 			continue;
 		}
 		QDomDocument doc;
 		doc.setContent(&file);
 		QDomElement div = doc.firstChildElement("html").firstChildElement("body").firstChildElement("div");
-		if(div.isNull() || div.attribute("class") != "ocr_page") {
+		if (div.isNull() || div.attribute("class") != "ocr_page") {
 			invalid.append(filename);
 			continue;
 		}
-		while(!div.isNull()) {
+		while (!div.isNull()) {
 			// Need to query next before adding page since the element is reparented
 			QDomElement nextDiv = div.nextSiblingElement("div");
 			m_document->insertPage(pos++, div, false, QFileInfo(filename).absolutePath());
@@ -943,33 +946,33 @@ bool OutputEditorHOCR::open(InsertMode mode, QStringList files) {
 			++added;
 		}
 	}
-	if(added > 0) {
+	if (added > 0) {
 		m_modified = mode != InsertMode::Replace;
-		if(mode == InsertMode::Replace && m_filebasename.isEmpty()) {
+		if (mode == InsertMode::Replace && m_filebasename.isEmpty()) {
 			QFileInfo finfo(files.front());
 			m_filebasename = finfo.absoluteDir().absoluteFilePath(finfo.completeBaseName());
 		}
 		MAIN->setOutputPaneVisible(true);
 	}
 	QStringList errorMsg;
-	if(!failed.isEmpty()) {
+	if (!failed.isEmpty()) {
 		errorMsg.append(_("The following files could not be opened:\n%1").arg(failed.join("\n")));
 	}
-	if(!invalid.isEmpty()) {
+	if (!invalid.isEmpty()) {
 		errorMsg.append(_("The following files are not valid hOCR HTML:\n%1").arg(invalid.join("\n")));
 	}
-	if(!errorMsg.isEmpty()) {
+	if (!errorMsg.isEmpty()) {
 		QMessageBox::critical(MAIN, _("Unable to open files"), errorMsg.join("\n\n"));
 	}
 	return added > 0;
 }
 
 bool OutputEditorHOCR::selectPage(int nr) {
-	if(!m_document || nr >= m_document->pageCount()) {
+	if (!m_document || nr >= m_document->pageCount()) {
 		return false;
 	}
 	QModelIndex index = m_document->indexAtItem(m_document->page(nr));
-	if(index.isValid()) {
+	if (index.isValid()) {
 		ui.treeViewHOCR->setCurrentIndex(index);
 	}
 	return index.isValid();
@@ -978,11 +981,11 @@ bool OutputEditorHOCR::selectPage(int nr) {
 bool OutputEditorHOCR::save(const QString& filename) {
 	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
 	QString outname = filename;
-	if(outname.isEmpty()) {
+	if (outname.isEmpty()) {
 		QString suggestion = m_filebasename;
-		if(suggestion.isEmpty()) {
+		if (suggestion.isEmpty()) {
 			QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
-			if(!sources.isEmpty()) {
+			if (!sources.isEmpty()) {
 				QFileInfo finfo(sources.first()->path);
 				suggestion = finfo.absoluteDir().absoluteFilePath(finfo.completeBaseName());
 			} else {
@@ -990,12 +993,12 @@ bool OutputEditorHOCR::save(const QString& filename) {
 			}
 		}
 		outname = FileDialogs::saveDialog(_("Save hOCR Output..."), suggestion + ".html", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")));
-		if(outname.isEmpty()) {
+		if (outname.isEmpty()) {
 			return false;
 		}
 	}
 	QFile file(outname);
-	if(!file.open(QIODevice::WriteOnly)) {
+	if (!file.open(QIODevice::WriteOnly)) {
 		QMessageBox::critical(MAIN, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
@@ -1025,7 +1028,7 @@ bool OutputEditorHOCR::save(const QString& filename) {
 
 QString OutputEditorHOCR::crashSave(const QString& filename) const {
 	QFile file(filename + ".html");
-	if(file.open(QIODevice::WriteOnly)) {
+	if (file.open(QIODevice::WriteOnly)) {
 		QString header = QString(
 		                     "<!DOCTYPE html>\n"
 		                     "<html>\n"
@@ -1046,13 +1049,13 @@ QString OutputEditorHOCR::crashSave(const QString& filename) const {
 
 bool OutputEditorHOCR::exportToODT() {
 	QString suggestion = m_filebasename;
-	if(suggestion.isEmpty()) {
+	if (suggestion.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
 		suggestion = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
 	}
 
 	QString outname = FileDialogs::saveDialog(_("Save ODT Output..."), suggestion + ".odt", "outputdir", QString("%1 (*.odt)").arg(_("OpenDocument Text Documents")));
-	if(outname.isEmpty()) {
+	if (outname.isEmpty()) {
 		return false;
 	}
 
@@ -1065,39 +1068,39 @@ bool OutputEditorHOCR::exportToODT() {
 
 bool OutputEditorHOCR::exportToPDF() {
 	ui.treeViewHOCR->setFocus(); // Ensure any item editor loses focus and commits its changes
-	ui.actionPreview->setChecked(false); // Disable preview because if conflicts with preview from PDF dialog
+	ui.actionPreview->setChecked(false);  // Disable preview because if conflicts with preview from PDF dialog
 	QModelIndex current = ui.treeViewHOCR->selectionModel()->currentIndex();
 	const HOCRItem* item = m_document->itemAtIndex(current);
 	const HOCRPage* page = item ? item->page() : m_document->page(0);
 	bool success = false;
-	if(!showPage(page)) {
+	if (!showPage(page)) {
 		return false;
 	}
 	HOCRPdfExportDialog dialog(m_tool, m_document, page, MAIN);
-	if(dialog.exec() != QDialog::Accepted) {
+	if (dialog.exec() != QDialog::Accepted) {
 		return false;
 	}
 	HOCRPdfExporter::PDFSettings settings = dialog.getPdfSettings();
 
 	QString suggestion = m_filebasename;
-	if(suggestion.isEmpty()) {
+	if (suggestion.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
 		suggestion = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
 	}
 
 	QString outname;
-	while(true) {
+	while (true) {
 		outname = FileDialogs::saveDialog(_("Save PDF Output..."), suggestion + ".pdf", "outputdir", QString("%1 (*.pdf)").arg(_("PDF Files")));
-		if(outname.isEmpty()) {
+		if (outname.isEmpty()) {
 			break;
 		}
-		if(m_document->referencesSource(outname)) {
+		if (m_document->referencesSource(outname)) {
 			QMessageBox::warning(MAIN, _("Invalid Output"), _("Cannot overwrite a file which is a source image of this document."));
 			continue;
 		}
 		break;
 	}
-	if(outname.isEmpty()) {
+	if (outname.isEmpty()) {
 		return false;
 	}
 
@@ -1109,13 +1112,13 @@ bool OutputEditorHOCR::exportToPDF() {
 
 bool OutputEditorHOCR::exportToText() {
 	QString suggestion = m_filebasename;
-	if(suggestion.isEmpty()) {
+	if (suggestion.isEmpty()) {
 		QList<Source*> sources = MAIN->getSourceManager()->getSelectedSources();
 		suggestion = !sources.isEmpty() ? QFileInfo(sources.first()->displayname).baseName() : _("output");
 	}
 
 	QString outname = FileDialogs::saveDialog(_("Save Text Output..."), suggestion + ".txt", "outputdir", QString("%1 (*.txt)").arg(_("Text Files")));
-	if(outname.isEmpty()) {
+	if (outname.isEmpty()) {
 		return false;
 	}
 
@@ -1129,16 +1132,16 @@ bool OutputEditorHOCR::exportToText() {
 bool OutputEditorHOCR::clear(bool hide) {
 	m_previewTimer.stop();
 	ui.actionPreview->setChecked(false);
-	if(!m_widget->isVisible()) {
+	if (!m_widget->isVisible()) {
 		return true;
 	}
-	if(m_modified) {
+	if (m_modified) {
 		int response = QMessageBox::question(MAIN, _("Output not saved"), _("Save output before proceeding?"), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-		if(response == QMessageBox::Save) {
-			if(!save()) {
+		if (response == QMessageBox::Save) {
+			if (!save()) {
 				return false;
 			}
-		} else if(response != QMessageBox::Discard) {
+		} else if (response != QMessageBox::Discard) {
 			return false;
 		}
 	}
@@ -1149,7 +1152,7 @@ bool OutputEditorHOCR::clear(bool hide) {
 	m_tool->clearSelection();
 	m_modified = false;
 	m_filebasename.clear();
-	if(hide) {
+	if (hide) {
 		MAIN->setOutputPaneVisible(false);
 	}
 	return true;
@@ -1166,17 +1169,17 @@ void OutputEditorHOCR::onVisibilityChanged(bool /*visible*/) {
 bool OutputEditorHOCR::findReplaceInItem(const QModelIndex& index, const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace, bool& currentSelectionMatchesSearch) {
 	// Check that the item is a word
 	const HOCRItem* item = m_document->itemAtIndex(index);
-	if(!item || item->itemClass() != "ocrx_word") {
+	if (!item || item->itemClass() != "ocrx_word") {
 		return false;
 	}
 	Qt::CaseSensitivity cs = matchCase ? Qt::CaseSensitive : Qt::CaseInsensitive;
-	HOCRTextDelegate* delegate = static_cast<HOCRTextDelegate*>(ui.treeViewHOCR->itemDelegateForColumn(0));
+	HOCRTextDelegate* delegate = static_cast<HOCRTextDelegate*> (ui.treeViewHOCR->itemDelegateForColumn(0));
 	// If the item is already in edit mode, continue searching inside the text
-	if(delegate->getCurrentIndex() == index && delegate->getCurrentEditor()) {
+	if (delegate->getCurrentIndex() == index && delegate->getCurrentEditor()) {
 		QLineEdit* editor = delegate->getCurrentEditor();
 		bool matchesSearch = editor->selectedText().compare(searchstr, cs) == 0;
 		int selStart = editor->selectionStart();
-		if(matchesSearch && replace) {
+		if (matchesSearch && replace) {
 			QString oldText = editor->text();
 			editor->setText(oldText.left(selStart) + replacestr + oldText.mid(selStart + searchstr.length()));
 			editor->setSelection(selStart, replacestr.length());
@@ -1184,14 +1187,14 @@ bool OutputEditorHOCR::findReplaceInItem(const QModelIndex& index, const QString
 		}
 		bool matchesReplace = editor->selectedText().compare(replacestr, cs) == 0;
 		int pos = -1;
-		if(backwards) {
+		if (backwards) {
 			pos = selStart - 1;
 			pos = pos < 0 ? -1 : editor->text().lastIndexOf(searchstr, pos, cs);
 		} else {
 			pos = matchesSearch ? selStart + searchstr.length() : matchesReplace ? selStart + replacestr.length() : selStart;
 			pos = editor->text().indexOf(searchstr, pos, cs);
 		}
-		if(pos != -1) {
+		if (pos != -1) {
 			editor->setSelection(pos, searchstr.length());
 			return true;
 		}
@@ -1200,7 +1203,7 @@ bool OutputEditorHOCR::findReplaceInItem(const QModelIndex& index, const QString
 	}
 	// Otherwise, if item contains text, set it in edit mode
 	int pos = backwards ? item->text().lastIndexOf(searchstr, -1, cs) : item->text().indexOf(searchstr, 0, cs);
-	if(pos != -1) {
+	if (pos != -1) {
 		ui.treeViewHOCR->setCurrentIndex(index);
 		ui.treeViewHOCR->edit(index);
 		Q_ASSERT(delegate->getCurrentIndex() == index && delegate->getCurrentEditor());
@@ -1213,16 +1216,16 @@ bool OutputEditorHOCR::findReplaceInItem(const QModelIndex& index, const QString
 void OutputEditorHOCR::findReplace(const QString& searchstr, const QString& replacestr, bool matchCase, bool backwards, bool replace) {
 	ui.searchFrame->clearErrorState();
 	QModelIndex current = ui.treeViewHOCR->currentIndex();
-	if(!current.isValid()) {
+	if (!current.isValid()) {
 		current = m_document->index(backwards ? (m_document->rowCount() - 1) : 0, 0);
 	}
 	QModelIndex neww = current;
 	bool currentSelectionMatchesSearch = false;
-	while(!findReplaceInItem(neww, searchstr, replacestr, matchCase, backwards, replace, currentSelectionMatchesSearch)) {
+	while (!findReplaceInItem(neww, searchstr, replacestr, matchCase, backwards, replace, currentSelectionMatchesSearch)) {
 		neww = backwards ? m_document->prevIndex(neww) : m_document->nextIndex(neww);
-		if(!neww.isValid() || neww == current) {
+		if (!neww.isValid() || neww == current) {
 			// Break endless loop
-			if(!currentSelectionMatchesSearch) {
+			if (!currentSelectionMatchesSearch) {
 				ui.searchFrame->setErrorState();
 			}
 			return;
@@ -1238,16 +1241,16 @@ void OutputEditorHOCR::replaceAll(const QString& searchstr, const QString& repla
 	int count = 0;
 	do {
 		const HOCRItem* item = m_document->itemAtIndex(curr);
-		if(item && item->itemClass() == "ocrx_word") {
-			if(item->text().contains(searchstr, cs)) {
+		if (item && item->itemClass() == "ocrx_word") {
+			if (item->text().contains(searchstr, cs)) {
 				++count;
 				m_document->setData(curr, item->text().replace(searchstr, replacestr, cs), Qt::EditRole);
 			}
 		}
 		curr = m_document->nextIndex(curr);
 		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
-	} while(curr != start);
-	if(count == 0) {
+	} while (curr != start);
+	if (count == 0) {
 		ui.searchFrame->setErrorState();
 	}
 	MAIN->popState();
@@ -1257,18 +1260,18 @@ void OutputEditorHOCR::applySubstitutions(const QMap<QString, QString>& substitu
 	MAIN->pushState(MainWindow::State::Busy, _("Applying substitutions..."));
 	QModelIndex start = m_document->index(0, 0);
 	Qt::CaseSensitivity cs = matchCase ? Qt::CaseSensitive : Qt::CaseInsensitive;
-	for(auto it = substitutions.begin(), itEnd = substitutions.end(); it != itEnd; ++it) {
+	for (auto it = substitutions.begin(), itEnd = substitutions.end(); it != itEnd; ++it) {
 		QString search = it.key();
 		QString replace = it.value();
 		QModelIndex curr = start;
 		do {
 			const HOCRItem* item = m_document->itemAtIndex(curr);
-			if(item && item->itemClass() == "ocrx_word") {
+			if (item && item->itemClass() == "ocrx_word") {
 				m_document->setData(curr, item->text().replace(search, replace, cs), Qt::EditRole);
 			}
 			curr = m_document->nextIndex(curr);
 			QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
-		} while(curr != start);
+		} while (curr != start);
 	}
 	MAIN->popState();
 }
@@ -1278,22 +1281,22 @@ void OutputEditorHOCR::removeItem() {
 }
 
 void OutputEditorHOCR::sourceChanged() {
-	if(m_blockSourceChanged) {
+	if (m_blockSourceChanged) {
 		return;
 	}
 	int page;
 	QString path = MAIN->getDisplayer()->getCurrentImage(page);
 	// Check if source is in document tree
 	QModelIndex pageIndex = m_document->searchPage(path, page);
-	if(!pageIndex.isValid()) {
+	if (!pageIndex.isValid()) {
 		ui.actionPreview->setChecked(false);
 		ui.treeViewHOCR->setCurrentIndex(QModelIndex());
 	} else {
 		QModelIndex curIndex = ui.treeViewHOCR->currentIndex();
-		while(curIndex != pageIndex && curIndex.parent().isValid()) {
+		while (curIndex != pageIndex && curIndex.parent().isValid()) {
 			curIndex = curIndex.parent();
 		}
-		if(curIndex != pageIndex) {
+		if (curIndex != pageIndex) {
 			ui.treeViewHOCR->setCurrentIndex(pageIndex);
 		}
 	}
@@ -1301,7 +1304,7 @@ void OutputEditorHOCR::sourceChanged() {
 
 void OutputEditorHOCR::previewToggled(bool active) {
 	QModelIndex index = ui.treeViewHOCR->currentIndex();
-	if(active && !index.isValid() && m_document->pageCount() > 0) {
+	if (active && !index.isValid() && m_document->pageCount() > 0) {
 		ui.treeViewHOCR->setCurrentIndex(m_document->indexAtItem(m_document->page(0)));
 	} else {
 		updatePreview();
@@ -1310,7 +1313,7 @@ void OutputEditorHOCR::previewToggled(bool active) {
 
 void OutputEditorHOCR::updatePreview() {
 	const HOCRItem* item = m_document->itemAtIndex(ui.treeViewHOCR->currentIndex());
-	if(!ui.actionPreview->isChecked() || !item) {
+	if (!ui.actionPreview->isChecked() || !item) {
 		m_preview->setVisible(false);
 		return;
 	}
@@ -1321,7 +1324,7 @@ void OutputEditorHOCR::updatePreview() {
 
 	QImage image(bbox.size(), QImage::Format_ARGB32);
 	image.fill(QColor(255, 255, 255, 127));
-	image.setDotsPerMeterX(pageDpi / 0.0254); // 1 in = 0.0254 m
+	image.setDotsPerMeterX(pageDpi / 0.0254);  // 1 in = 0.0254 m
 	image.setDotsPerMeterY(pageDpi / 0.0254);
 	QPainter painter(&image);
 	painter.setRenderHint(QPainter::Antialiasing);
@@ -1334,20 +1337,20 @@ void OutputEditorHOCR::updatePreview() {
 }
 
 void OutputEditorHOCR::drawPreview(QPainter& painter, const HOCRItem* item) {
-	if(!item->isEnabled()) {
+	if (!item->isEnabled()) {
 		return;
 	}
 	QString itemClass = item->itemClass();
-	if(itemClass == "ocr_line") {
+	if (itemClass == "ocr_line") {
 		QPair<double, double> baseline = item->baseLine();
 		const QRect& lineRect = item->bbox();
-		for(HOCRItem* wordItem : item->children()) {
-			if(!wordItem->isEnabled()) {
+		for (HOCRItem* wordItem : item->children()) {
+			if (!wordItem->isEnabled()) {
 				continue;
 			}
 			const QRect& wordRect = wordItem->bbox();
 			QFont font;
-			if(!wordItem->fontFamily().isEmpty()) {
+			if (!wordItem->fontFamily().isEmpty()) {
 				font.setFamily(wordItem->fontFamily());
 			}
 			font.setBold(wordItem->fontBold());
@@ -1358,10 +1361,10 @@ void OutputEditorHOCR::drawPreview(QPainter& painter, const HOCRItem* item) {
 			double y = lineRect.bottom() + (wordRect.center().x() - lineRect.x()) * baseline.first + baseline.second;
 			painter.drawText(wordRect.x(), y, wordItem->text());
 		}
-	} else if(itemClass == "ocr_graphic") {
+	} else if (itemClass == "ocr_graphic") {
 		painter.drawImage(item->bbox(), m_tool->getSelection(item->bbox()));
 	} else {
-		for(HOCRItem* childItem : item->children()) {
+		for (HOCRItem* childItem : item->children()) {
 			drawPreview(painter, childItem);;
 		}
 	}

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Displayer.hh
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -82,7 +82,7 @@ private:
 	GraphicsScene* m_scene;
 	QList<Source*> m_sources;
 	QMap<Source*, DisplayRenderer*> m_sourceRenderers;
-	QMap<int, QPair<Source*, int>> m_pageMap;
+	QMap<int, QPair<Source*, int >> m_pageMap;
 	Source* m_currentSource = nullptr;
 	QPixmap m_pixmap;
 	QGraphicsPixmapItem* m_imageItem = nullptr;
@@ -205,7 +205,7 @@ signals:
 	void geometryChanged(QRectF rect);
 
 private:
-	typedef void(*ResizeHandler)(const QPointF&, QPointF&, QPointF&);
+	typedef void (*ResizeHandler)(const QPointF&, QPointF&, QPointF&);
 
 	QPointF m_anchor;
 	QPointF m_point;

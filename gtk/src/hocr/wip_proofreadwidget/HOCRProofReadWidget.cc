@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRProofReadWidget.cc
- * Copyright (C) 2022-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2022-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -43,7 +43,7 @@ public:
 		CONNECT(this, focus_in_event, [this](GdkEventFocus * ev) { return focus_in_event(ev); }, false);
 
 		Gtk::TreeIter index = document->indexAtItem(m_wordItem);
-		if(document->indexIsMisspelledWord(index)) {
+		if (document->indexIsMisspelledWord(index)) {
 			Utils::set_error_state(this);
 		}
 
@@ -87,9 +87,9 @@ private:
 	void onModelDataChanged(const Gtk::TreePath& /*path*/, const Gtk::TreeIter& iter) {
 		Glib::RefPtr<HOCRDocument> document = Glib::RefPtr<HOCRDocument>::cast_static(m_proofReadWidget->documentTree()->get_model());
 		Gtk::TreeIter index = document->indexAtItem(m_wordItem);
-		if(iter == index) {
+		if (iter == index) {
 			set_text(m_wordItem->text());
-			if(document->indexIsMisspelledWord(index)) {
+			if (document->indexIsMisspelledWord(index)) {
 				Utils::set_error_state(this);
 			} else {
 				Utils::clear_error_state(this);
@@ -98,13 +98,13 @@ private:
 	}
 	void onAttributeChanged(const Gtk::TreeIter& iter, const Glib::ustring& name, const Glib::ustring& /*value*/) {
 		Glib::RefPtr<HOCRDocument> document = Glib::RefPtr<HOCRDocument>::cast_static(m_proofReadWidget->documentTree()->get_model());
-		if(document->itemAtIndex(iter) == m_wordItem) {
-			if(name == "bold" || name == "italic") {
+		if (document->itemAtIndex(iter) == m_wordItem) {
+			if (name == "bold" || name == "italic") {
 				Pango::FontDescription font;
 				font.set_weight(m_wordItem->fontBold() ? Pango::WEIGHT_BOLD : Pango::WEIGHT_NORMAL);
 				font.set_style(m_wordItem->fontItalic() ? Pango::STYLE_ITALIC : Pango::STYLE_NORMAL);
 				override_font(font);
-			} else if(name == "title:bbox") {
+			} else if (name == "title:bbox") {
 				Geometry::Point sceneCorner = MAIN->getDisplayer()->getSceneBoundingRect().topLeft();
 				Geometry::Rectangle sceneBBox = m_wordItem->bbox().translate(sceneCorner.x, sceneCorner.y);
 				Geometry::Point bottomLeft = MAIN->getDisplayer()->mapToView(sceneBBox.bottomLeft());
@@ -114,7 +114,7 @@ private:
 //				move(bottomLeft.x - frameX, 0);
 				int min_height, nat_height;
 				get_preferred_height(min_height, nat_height);
-				set_size_request(bottomRight.x - bottomLeft.x + 8, nat_height); // 8: border + padding
+				set_size_request(bottomRight.x - bottomLeft.x + 8, nat_height);  // 8: border + padding
 			}
 		}
 	}
@@ -123,16 +123,16 @@ private:
 
 		bool nextLine = (ev->state == 0 && ev->keyval == GDK_KEY_Down) || (ev->keyval == GDK_KEY_Tab && m_wordItem == m_wordItem->parent()->children().back());
 		bool prevLine = (ev->state == 0 && ev->keyval == GDK_KEY_Up) || (ev->state == GdkModifierType::GDK_SHIFT_MASK && ev->keyval == GDK_KEY_Tab && m_wordItem == m_wordItem->parent()->children().front());
-		if(nextLine || prevLine) {
+		if (nextLine || prevLine) {
 			bool next = false;
 			Gtk::TreeIter index;
-			if(nextLine) {
+			if (nextLine) {
 				next = true;
 				index = document->indexAtItem(m_wordItem);
 				// Move to first word of next line
 				index = document->prevOrNextIndex(next, index, "ocr_line");
 				index = document->prevOrNextIndex(true, index, "ocrx_word");
-			} else if(prevLine) {
+			} else if (prevLine) {
 				index = document->indexAtItem(m_wordItem);
 				// Move to last word of prev line
 				index = document->prevOrNextIndex(false, index, "ocr_line");
@@ -140,60 +140,60 @@ private:
 			}
 			m_proofReadWidget->documentTree()->get_selection()->unselect_all();
 			m_proofReadWidget->documentTree()->get_selection()->select(index);
-		} else if(ev->keyval == GDK_KEY_space && ev->state == GdkModifierType::GDK_CONTROL_MASK) {
+		} else if (ev->keyval == GDK_KEY_space && ev->state == GdkModifierType::GDK_CONTROL_MASK) {
 			// Spelling menu
 			Gtk::TreeIter index = document->indexAtItem(m_wordItem);
 			Gtk::Menu menu;
 			document->addSpellingActions(&menu, index);
 			auto positioner = sigc::bind(sigc::ptr_fun(Utils::popup_positioner), this, &menu, false, true);
 			menu.popup(positioner, 0, gtk_get_current_event_time());
-		} else if((ev->keyval == GDK_KEY_Return || ev->keyval == GDK_KEY_KP_Enter) && ev->state == GdkModifierType::GDK_CONTROL_MASK) {
+		} else if ((ev->keyval == GDK_KEY_Return || ev->keyval == GDK_KEY_KP_Enter) && ev->state == GdkModifierType::GDK_CONTROL_MASK) {
 			Gtk::TreeIter index = document->indexAtItem(m_wordItem);
 			document->addWordToDictionary(index);
-		} else if(ev->keyval == GDK_KEY_b && ev->state == GdkModifierType::GDK_CONTROL_MASK) {
+		} else if (ev->keyval == GDK_KEY_b && ev->state == GdkModifierType::GDK_CONTROL_MASK) {
 			// Bold
 			Gtk::TreeIter index = document->indexAtItem(m_wordItem);
 			document->editItemAttribute(index, "bold", m_wordItem->fontBold() ? "0" : "1");
-		} else if(ev->keyval == GDK_KEY_i && ev->state == GdkModifierType::GDK_CONTROL_MASK) {
+		} else if (ev->keyval == GDK_KEY_i && ev->state == GdkModifierType::GDK_CONTROL_MASK) {
 			// Italic
 			Gtk::TreeIter index = document->indexAtItem(m_wordItem);
 			document->editItemAttribute(index, "italic", m_wordItem->fontItalic() ? "0" : "1");
-		} else if((ev->keyval == GDK_KEY_Up || ev->keyval == GDK_KEY_Down) && ev->state & GdkModifierType::GDK_CONTROL_MASK) {
+		} else if ((ev->keyval == GDK_KEY_Up || ev->keyval == GDK_KEY_Down) && ev->state & GdkModifierType::GDK_CONTROL_MASK) {
 			// Adjust bbox top/bottom
 			Gtk::TreeIter index = document->indexAtItem(m_wordItem);
 			Geometry::Rectangle bbox = m_wordItem->bbox();
-			if(ev->state & GdkModifierType::GDK_SHIFT_MASK) {
+			if (ev->state & GdkModifierType::GDK_SHIFT_MASK) {
 				bbox.setBottom(bbox.bottom() + (ev->keyval == GDK_KEY_Up ? -1 : 1));
 			} else {
 				bbox.setTop(bbox.top() + (ev->keyval == GDK_KEY_Up ? -1 : 1));
 			}
 			Glib::ustring bboxstr = Glib::ustring::compose("%1 %2 %3 %4", bbox.left(), bbox.top(), bbox.right(), bbox.bottom());
 			document->editItemAttribute(index, "title:bbox", bboxstr);
-		} else if((ev->keyval == GDK_KEY_Left || ev->keyval == GDK_KEY_Right) && ev->state & GdkModifierType::GDK_CONTROL_MASK) {
+		} else if ((ev->keyval == GDK_KEY_Left || ev->keyval == GDK_KEY_Right) && ev->state & GdkModifierType::GDK_CONTROL_MASK) {
 			// Adjust bbox left/right
 			Gtk::TreeIter index = document->indexAtItem(m_wordItem);
 			Geometry::Rectangle bbox = m_wordItem->bbox();
-			if(ev->state & GdkModifierType::GDK_SHIFT_MASK) {
+			if (ev->state & GdkModifierType::GDK_SHIFT_MASK) {
 				bbox.setRight(bbox.right() + (ev->keyval == GDK_KEY_Left ? -1 : 1));
 			} else {
 				bbox.setLeft(bbox.left() + (ev->keyval == GDK_KEY_Left ? -1 : 1));
 			}
 			Glib::ustring bboxstr = Glib::ustring::compose("%1 %2 %3 %4", bbox.left(), bbox.top(), bbox.right(), bbox.bottom());
 			document->editItemAttribute(index, "title:bbox", bboxstr);
-		} else if(ev->keyval == GDK_KEY_D && ev->state == GdkModifierType::GDK_CONTROL_MASK) {
+		} else if (ev->keyval == GDK_KEY_D && ev->state == GdkModifierType::GDK_CONTROL_MASK) {
 			// Divide
 			Gtk::TreeIter index = document->indexAtItem(m_wordItem);
 			document->splitItemText(index, property_cursor_position(), get_pango_context());
-		} else if(ev->keyval == GDK_KEY_M && ev->state & GdkModifierType::GDK_CONTROL_MASK) {
+		} else if (ev->keyval == GDK_KEY_M && ev->state & GdkModifierType::GDK_CONTROL_MASK) {
 			// Merge
 			Gtk::TreeIter index = document->indexAtItem(m_wordItem);
 			document->mergeItemText(index, (ev->state & GdkModifierType::GDK_SHIFT_MASK) != 0);
-		} else if(ev->keyval == GDK_KEY_Delete && ev->state == GdkModifierType::GDK_CONTROL_MASK) {
+		} else if (ev->keyval == GDK_KEY_Delete && ev->state == GdkModifierType::GDK_CONTROL_MASK) {
 			Gtk::TreeIter index = document->indexAtItem(m_wordItem);
 			document-> removeItem(index);
-		} else if(ev->keyval == GDK_KEY_plus && ev->state & GdkModifierType::GDK_CONTROL_MASK) {
+		} else if (ev->keyval == GDK_KEY_plus && ev->state & GdkModifierType::GDK_CONTROL_MASK) {
 			m_proofReadWidget->adjustFontSize(+1);
-		} else if((ev->keyval == GDK_KEY_minus || ev->keyval == GDK_KEY_underscore) && ev->state & GdkModifierType::GDK_CONTROL_MASK) {
+		} else if ((ev->keyval == GDK_KEY_minus || ev->keyval == GDK_KEY_underscore) && ev->state & GdkModifierType::GDK_CONTROL_MASK) {
 			m_proofReadWidget->adjustFontSize(-1);
 		} else {
 			return false;
@@ -328,8 +328,8 @@ void HOCRProofReadWidget::showSettingsMenu() {
 	int w, h, trash;
 	m_settingsMenu->get_preferred_width(trash, w);
 	m_settingsMenu->get_preferred_height(trash, h);
-	int x = std::min(std::max(int(x_root), rect.get_x()), rect.get_x() + rect.get_width() - w);
-	int y = std::min(std::max(int(y_root), rect.get_y()), rect.get_y() + rect.get_height() - h);
+	int x = std::min(std::max(int (x_root), rect.get_x()), rect.get_x() + rect.get_width() - w);
+	int y = std::min(std::max(int (y_root), rect.get_y()), rect.get_y() + rect.get_height() - h);
 	m_settingsMenu->move(x, y);
 	m_settingsMenu->show();
 	GdkWindow* gdkwin = m_settingsMenu->get_window()->gobj();
@@ -350,13 +350,13 @@ void HOCRProofReadWidget::showSettingsMenu() {
 }
 
 void HOCRProofReadWidget::clear() {
-	for(auto it = m_currentLines.begin(), itEnd = m_currentLines.end(); it != itEnd; ++it) {
+	for (auto it = m_currentLines.begin(), itEnd = m_currentLines.end(); it != itEnd; ++it) {
 		delete it->second;
 	}
 	m_currentLines.clear();
 	m_currentLine = nullptr;
 	m_confidenceLabel->set_text("");
-	for(const Glib::ustring& className : m_confidenceLabel->get_style_context()->list_classes()) {
+	for (const Glib::ustring& className : m_confidenceLabel->get_style_context()->list_classes()) {
 		m_confidenceLabel->get_style_context()->remove_class(className);
 	}
 	hide();
@@ -371,16 +371,16 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 	int nrLinesAfter = m_spinLinesAfter->get_value_as_int();
 
 	const HOCRItem* item = document->itemAtIndex(current);
-	if(!item) {
+	if (!item) {
 		clear();
 		return;
 	}
 	const HOCRItem* lineItem = nullptr;
 	const HOCRItem* wordItem = nullptr;
-	if(item->itemClass() == "ocrx_word") {
+	if (item->itemClass() == "ocrx_word") {
 		lineItem = item->parent();
 		wordItem = item;
-	} else if(item->itemClass() == "ocr_line") {
+	} else if (item->itemClass() == "ocr_line") {
 		lineItem = item;
 	} else {
 		clear();
@@ -389,20 +389,20 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 
 	const std::vector<HOCRItem*>& siblings = lineItem->parent()->children();
 	int targetLine = lineItem->index();
-	if(lineItem != m_currentLine || force) {
+	if (lineItem != m_currentLine || force) {
 		// Rebuild widget
 		std::map<const HOCRItem*, Gtk::Box*> newLines;
 		int insPos = 0;
-		for(int i = std::max(0, targetLine - nrLinesBefore), j = std::min(int(siblings.size()) - 1, targetLine + nrLinesAfter); i <= j; ++i) {
+		for (int i = std::max(0, targetLine - nrLinesBefore), j = std::min(int (siblings.size()) - 1, targetLine + nrLinesAfter); i <= j; ++i) {
 			HOCRItem* linei = siblings[i];
 			auto it = m_currentLines.find(linei);
-			if(it != m_currentLines.end()) {
+			if (it != m_currentLines.end()) {
 				newLines[linei] = it->second;
 				m_currentLines.erase(it);
-				insPos = Utils::vector_index_of(m_linesLayout->get_children(), static_cast<Gtk::Widget*>(newLines[linei])) + 1;
+				insPos = Utils::vector_index_of(m_linesLayout->get_children(), static_cast<Gtk::Widget*> (newLines[linei])) + 1;
 			} else {
 				Gtk::Box* lineWidget = Gtk::manage(new Gtk::Box);
-				for(HOCRItem* word : siblings[i]->children()) {
+				for (HOCRItem* word : siblings[i]->children()) {
 					lineWidget->pack_start(*Gtk::manage(new LineEdit(this, word)), false, true);
 				}
 				m_linesLayout->pack_start(*lineWidget, false, true);
@@ -410,7 +410,7 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 				newLines.insert(std::make_pair(linei, lineWidget));
 			}
 		}
-		for(auto it = m_currentLines.begin(), itEnd = m_currentLines.end(); it != itEnd; ++it) {
+		for (auto it = m_currentLines.begin(), itEnd = m_currentLines.end(); it != itEnd; ++it) {
 			delete it->second;
 		}
 		m_currentLines.clear();
@@ -420,8 +420,8 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 	}
 
 	// Select selected word or first item of middle line
-	LineEdit* focusLineEdit = static_cast<LineEdit*>(m_currentLines[lineItem]->get_children()[wordItem ? wordItem->index() : 0]);
-	if(focusLineEdit && !m_treeView->has_focus()) {
+	LineEdit* focusLineEdit = static_cast<LineEdit*> (m_currentLines[lineItem]->get_children() [wordItem ? wordItem->index() : 0]);
+	if (focusLineEdit && !m_treeView->has_focus()) {
 		focusLineEdit->grab_focus();
 	}
 
@@ -429,7 +429,7 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 
 void HOCRProofReadWidget::repositionWidget() {
 
-	if(m_currentLines.empty()) {
+	if (m_currentLines.empty()) {
 		return;
 	}
 
@@ -438,15 +438,15 @@ void HOCRProofReadWidget::repositionWidget() {
 	int frameXmin = std::numeric_limits<int>::max();
 	int frameXmax = 0;
 	Geometry::Point sceneCorner = displayer->getSceneBoundingRect().topLeft();
-	for(auto pair : m_currentLines) {
+	for (auto pair : m_currentLines) {
 		Gtk::Box* lineWidget = pair.second;
-		if(lineWidget->get_children().empty()) {
+		if (lineWidget->get_children().empty()) {
 			continue;
 		}
 		// First word
-		LineEdit* lineEdit = static_cast<LineEdit*>(lineWidget->get_children()[0]);
+		LineEdit* lineEdit = static_cast<LineEdit*> (lineWidget->get_children() [0]);
 		Geometry::Point bottomLeft = displayer->mapToView(lineEdit->item()->bbox().translate(sceneCorner.x, sceneCorner.y).bottomLeft());
-		frameXmin = std::min(frameXmin, int(bottomLeft.x));
+		frameXmin = std::min(frameXmin, int (bottomLeft.x));
 	}
 	Geometry::Point bottomLeft = displayer->mapToView(m_currentLine->bbox().translate(sceneCorner.x, sceneCorner.y).bottomLeft());
 	Geometry::Point topLeft = displayer->mapToView(m_currentLine->bbox().translate(sceneCorner.x, sceneCorner.y).topLeft());
@@ -458,11 +458,11 @@ void HOCRProofReadWidget::repositionWidget() {
 	double avgFactor = 0.0;
 	int nFactors = 0;
 	// First pass: min scaling factor, move to correct location
-	for(auto pair : m_currentLines) {
+	for (auto pair : m_currentLines) {
 		Gtk::Box* lineWidget = pair.second;
 		int prevRight = frameXmin;
-		for(int i = 0, n = lineWidget->get_children().size(); i < n; ++i) {
-			LineEdit* lineEdit = static_cast<LineEdit*>(lineWidget->get_children()[i]);
+		for (int i = 0, n = lineWidget->get_children().size(); i < n; ++i) {
+			LineEdit* lineEdit = static_cast<LineEdit*> (lineWidget->get_children() [i]);
 			Geometry::Rectangle sceneBBox = lineEdit->item()->bbox().translate(sceneCorner.x, sceneCorner.y);
 			Geometry::Point bottomLeft = displayer->mapToView(sceneBBox.bottomLeft());
 			Geometry::Point bottomRight = displayer->mapToView(sceneBBox.bottomRight());
@@ -470,15 +470,15 @@ void HOCRProofReadWidget::repositionWidget() {
 			layout->set_text(lineEdit->get_text());
 			int width, height;
 			layout->get_pixel_size(width, height);
-			double factor = (bottomRight.x - bottomLeft.x) / double(width);
+			double factor = (bottomRight.x - bottomLeft.x) / double (width);
 			avgFactor += lineEdit->get_text().length() * factor;
 			nFactors += lineEdit->get_text().length();
-			lineEdit->set_margin_left(bottomLeft.x - prevRight - 6); // 4: border + padding
+			lineEdit->set_margin_left(bottomLeft.x - prevRight - 6);  // 4: border + padding
 			prevRight = bottomRight.x;
 			int min_height, nat_height;
 			lineEdit->get_preferred_height(min_height, nat_height);
-			lineEdit->set_size_request(bottomRight.x - bottomLeft.x + 8, nat_height); // 8: border + padding
-			frameXmax = std::max(frameXmax, int(bottomRight.x) + 8);
+			lineEdit->set_size_request(bottomRight.x - bottomLeft.x + 8, nat_height);  // 8: border + padding
+			frameXmax = std::max(frameXmax, int (bottomRight.x) + 8);
 		}
 	}
 	avgFactor = avgFactor > 0 ? avgFactor / nFactors : 1.;
@@ -488,10 +488,10 @@ void HOCRProofReadWidget::repositionWidget() {
 	layout->set_font_description(font);
 	int fontWidth, fontHeight;
 	layout->get_pixel_size(fontWidth, fontHeight);
-	for(auto pair : m_currentLines) {
+	for (auto pair : m_currentLines) {
 		Gtk::Box* lineWidget = pair.second;
-		for(int i = 0, n = lineWidget->get_children().size(); i < n; ++i) {
-			LineEdit* lineEdit = static_cast<LineEdit*>(lineWidget->get_children()[i]);
+		for (int i = 0, n = lineWidget->get_children().size(); i < n; ++i) {
+			LineEdit* lineEdit = static_cast<LineEdit*> (lineWidget->get_children() [i]);
 
 			Pango::FontDescription lineEditFont = lineEdit->get_style_context()->get_font();
 			lineEditFont.set_size(font.get_size() + m_fontSizeDiff);
@@ -514,7 +514,7 @@ void HOCRProofReadWidget::repositionWidget() {
 	const HOCRItem* item = document->itemAtIndex(current);
 	Geometry::Rectangle sceneBBox = item->page()->bbox().translate(sceneCorner.x, sceneCorner.y);
 	double maxy = displayer->mapToView(sceneBBox.bottomLeft()).y;
-	if(frameY + get_allocated_height() - maxy > 0) {
+	if (frameY + get_allocated_height() - maxy > 0) {
 		frameY = topLeft.y - get_allocated_height();
 	}
 
@@ -557,11 +557,11 @@ void HOCRProofReadWidget::showShortcutsDialog() {
 }
 
 Glib::ustring HOCRProofReadWidget::confidenceStyle(int wconf) const {
-	if(wconf < 70) {
+	if (wconf < 70) {
 		return "wconfLt70";
-	} else if(wconf < 80) {
+	} else if (wconf < 80) {
 		return "wconfLt80";
-	} else if(wconf < 90) {
+	} else if (wconf < 90) {
 		return "wconfLt90;";
 	}
 	return Glib::ustring();
@@ -570,8 +570,8 @@ Glib::ustring HOCRProofReadWidget::confidenceStyle(int wconf) const {
 void HOCRProofReadWidget::setConfidenceLabel(int wconf) {
 	m_confidenceLabel->set_text(Glib::ustring::compose(_("Confidence: %1"), wconf));
 	Glib::ustring style = confidenceStyle(wconf);
-	if(style.empty()) {
-		while(!m_currentLines.empty()) {
+	if (style.empty()) {
+		while (!m_currentLines.empty()) {
 			delete m_currentLines.begin()->second;
 		}
 	} else {

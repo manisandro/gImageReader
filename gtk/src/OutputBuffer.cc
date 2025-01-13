@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputBuffer.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -42,19 +42,19 @@ OutputBuffer::OutputBuffer()
 	selColor.set_blue(std::min(1.0, selColor.get_blue() * 1.6));
 	m_regionTag->property_background_rgba() = selColor;
 
-	setHightlightLanguage(ConfigSettings::get<VarSetting<std::string>>("highlightmode")->getValue());
+	setHightlightLanguage(ConfigSettings::get<VarSetting<std::string >> ("highlightmode")->getValue());
 }
 
 void OutputBuffer::save_region_bounds(bool viewSelected) {
 	Gtk::TextIter start = get_iter_at_mark(get_insert());
 	Gtk::TextIter stop = get_iter_at_mark(get_selection_bound());
-	if(viewSelected) {
+	if (viewSelected) {
 		bool entireRegion = false;
-		if(start.get_offset() > stop.get_offset()) {
+		if (start.get_offset() > stop.get_offset()) {
 			std::swap(start, stop);
 		}
 		// If nothing or only one word is selected, set region to entire document
-		if(start.get_offset() == stop.get_offset() || !Glib::Regex::create("\\s")->match(get_text(start, stop))) {
+		if (start.get_offset() == stop.get_offset() || !Glib::Regex::create("\\s")->match(get_text(start, stop))) {
 			start = begin();
 			stop = end();
 			entireRegion = true;
@@ -62,7 +62,7 @@ void OutputBuffer::save_region_bounds(bool viewSelected) {
 		remove_tag(m_regionTag, get_iter_at_mark(m_regionBeginMark), get_iter_at_mark(m_regionEndMark));
 		move_mark(m_regionBeginMark, start);
 		move_mark(m_regionEndMark, stop);
-		if(!entireRegion) {
+		if (!entireRegion) {
 			apply_tag(m_regionTag, start, stop);
 		}
 	}
@@ -78,7 +78,7 @@ Gtk::TextIter OutputBuffer::replace_range(const Glib::ustring& text, const Gtk::
 }
 
 bool OutputBuffer::findReplace(bool backwards, bool replace, bool matchCase, const Glib::ustring& searchstr, const Glib::ustring& replacestr, Gtk::TextView* view) {
-	if(searchstr.empty()) {
+	if (searchstr.empty()) {
 		return false;
 	}
 	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY | Gtk::TEXT_SEARCH_TEXT_ONLY;
@@ -90,7 +90,7 @@ bool OutputBuffer::findReplace(bool backwards, bool replace, bool matchCase, con
 	[](const Glib::ustring & s1, const Glib::ustring & s2) {
 		return s1.lowercase() == s2.lowercase();
 	};
-	if(!matchCase) {
+	if (!matchCase) {
 		flags |= Gtk::TEXT_SEARCH_CASE_INSENSITIVE;
 	}
 
@@ -99,28 +99,28 @@ bool OutputBuffer::findReplace(bool backwards, bool replace, bool matchCase, con
 
 	Gtk::TextIter start, end;
 	get_selection_bounds(start, end);
-	if(comparator(get_text(start, end, false), searchstr)) {
-		if(replace) {
+	if (comparator(get_text(start, end, false), searchstr)) {
+		if (replace) {
 			start = end = insert(erase(start, end), replacestr);
 			start.backward_chars(replacestr.length());
 			select_range(start, end);
 			view->scroll_to(end);
 			return true;
 		}
-		if(backwards) {
+		if (backwards) {
 			end.backward_char();
 		} else {
 			start.forward_char();
 		}
 	}
 	Gtk::TextIter matchStart, matchEnd;
-	if(backwards) {
-		if(!end.backward_search(searchstr, flags, matchStart, matchEnd, rstart) &&
+	if (backwards) {
+		if (!end.backward_search(searchstr, flags, matchStart, matchEnd, rstart) &&
 		        !rend.backward_search(searchstr, flags, matchStart, matchEnd, rstart)) {
 			return false;
 		}
 	} else {
-		if(!start.forward_search(searchstr, flags, matchStart, matchEnd, rend) &&
+		if (!start.forward_search(searchstr, flags, matchStart, matchEnd, rend) &&
 		        !rstart.forward_search(searchstr, flags, matchStart, matchEnd, rend)) {
 			return false;
 		}
@@ -139,25 +139,25 @@ int OutputBuffer::replaceAll(const Glib::ustring& searchstr, const Glib::ustring
 	int startpos = start.get_offset();
 	int endpos = end.get_offset();
 	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY | Gtk::TEXT_SEARCH_TEXT_ONLY;
-	if(!matchCase) {
+	if (!matchCase) {
 		flags |= Gtk::TEXT_SEARCH_CASE_INSENSITIVE;
 	}
 	int diff = replacestr.length() - searchstr.length();
 	int count = 0;
 	Gtk::TextIter it = get_iter_at_offset(startpos);
-	while(true) {
+	while (true) {
 		Gtk::TextIter matchStart, matchEnd;
-		if(!it.forward_search(searchstr, flags, matchStart, matchEnd) || matchEnd.get_offset() > endpos) {
+		if (!it.forward_search(searchstr, flags, matchStart, matchEnd) || matchEnd.get_offset() > endpos) {
 			break;
 		}
 		it = insert(erase(matchStart, matchEnd), replacestr);
 		endpos += diff;
 		++count;
-		while(Gtk::Main::events_pending()) {
+		while (Gtk::Main::events_pending()) {
 			Gtk::Main::iteration();
 		}
 	}
-	if(count == 0) {
+	if (count == 0) {
 		return count;
 	}
 	return count;
@@ -172,5 +172,5 @@ void OutputBuffer::setHightlightLanguage(const std::string& lang_id) {
 		set_highlight_syntax(true);
 		set_language(highlight_lang);
 	}
-	ConfigSettings::get<VarSetting<Glib::ustring>>("highlightmode")->setValue(lang_id);
+	ConfigSettings::get<VarSetting<Glib::ustring >> ("highlightmode")->setValue(lang_id);
 }

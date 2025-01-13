@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Utils.hh
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -46,7 +46,7 @@ namespace Utils {
 QString documentsFolder();
 QString makeOutputFilename(const QString& filename);
 
-bool busyTask(const std::function<bool()>& f, const QString& msg);
+bool busyTask(const std::function<bool() >& f, const QString& msg);
 
 void setSpinBlocked(QSpinBox* spin, int value);
 void setSpinBlocked(QDoubleSpinBox* spin, double value);
@@ -85,8 +85,8 @@ public:
 	}
 	T dequeue() {
 		QMutexLocker locker(&m_mutex);
-		if(m_queue.isEmpty()) {
-			while(m_queue.isEmpty()) {
+		if (m_queue.isEmpty()) {
+			while (m_queue.isEmpty()) {
 				m_cond.wait(&m_mutex);
 			}
 		}

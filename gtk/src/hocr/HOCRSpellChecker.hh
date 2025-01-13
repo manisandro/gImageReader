@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRSpellChecker.hh
- * Copyright (C) 2022-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2022-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -27,7 +27,7 @@ public:
 	bool checkSpelling(const Glib::ustring& word, std::vector<Glib::ustring>* suggestions = nullptr, int limit = -1);
 
 private:
-	void generateCombinations(const std::vector<std::vector<Glib::ustring>>& lists, std::vector<std::vector<Glib::ustring>>& results, int depth, const std::vector<Glib::ustring>& c) const;
+	void generateCombinations(const std::vector<std::vector<Glib::ustring >> & lists, std::vector<std::vector<Glib::ustring >>& results, int depth, const std::vector<Glib::ustring>& c) const;
 };
 
 #endif // HOCRSPELLCHECKER_HH

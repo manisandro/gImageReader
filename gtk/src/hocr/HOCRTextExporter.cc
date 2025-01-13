@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * HOCRTextExporter.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -27,42 +27,43 @@
 
 bool HOCRTextExporter::run(const HOCRDocument* hocrdocument, const std::string& outname, const ExporterSettings* /*settings*/) {
 	std::ofstream file(outname);
-	if(!file.is_open()) {
+	if (!file.is_open()) {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Export failed"), _("The text export failed: unable to write output file."));
 		return false;
 	}
 
-	for(int i = 0, n = hocrdocument->pageCount(); i < n; ++i) {
+	for (int i = 0, n = hocrdocument->pageCount(); i < n; ++i) {
 		const HOCRPage* page = hocrdocument->page(i);
-		if(!page->isEnabled()) {
+		if (!page->isEnabled()) {
 			continue;
 		}
 		printItem(file, page);
 	}
 	file.close();
-	bool openAfterExport = ConfigSettings::get<SwitchSettingT<Gtk::CheckButton>>("openafterexport")->getValue();
-	if(openAfterExport) {
+	bool openAfterExport = ConfigSettings::get<SwitchSettingT<Gtk::CheckButton >> ("openafterexport")->getValue();
+	if (openAfterExport) {
 		Utils::openUri(Glib::filename_to_uri(outname));
 	}
 	return true;
 }
 
 void HOCRTextExporter::printItem(std::ofstream& outputStream, const HOCRItem* item, bool lastChild) {
-	if(!item->isEnabled()) {
+	if (!item->isEnabled()) {
 		return;
 	}
 	Glib::ustring itemClass = item->itemClass();
-	if(itemClass == "ocrx_word") {
+	if (itemClass == "ocrx_word") {
 		outputStream << item->text();
-		if(!lastChild) {
+		if (!lastChild) {
 			outputStream << " ";
 		}
-	} else {
-		for(int i = 0, n = item->children().size(); i < n; ++i) {
-			printItem(outputStream, item->children()[i], i == n - 1);
+	}
+	else {
+		for (int i = 0, n = item->children().size(); i < n; ++i) {
+			printItem(outputStream, item->children() [i], i == n - 1);
 		}
 	}
-	if(itemClass == "ocr_line" || itemClass == "ocr_par") {
+	if (itemClass == "ocr_line" || itemClass == "ocr_par") {
 		outputStream << "\n";
 	}
 }

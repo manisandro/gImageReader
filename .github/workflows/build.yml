@@ -34,8 +34,8 @@ jobs:
 
       - name: Build application
         run: |
-          ./packaging/win32/makeinstaller.sh i686 qt5 nodebug ${{ steps.version_number.outputs.version }}
-          ./packaging/win32/makeinstaller.sh x86_64 qt5 nodebug ${{ steps.version_number.outputs.version }}
+          ./packaging/win32/makeinstaller.sh i686 qt6 nodebug ${{ steps.version_number.outputs.version }}
+          ./packaging/win32/makeinstaller.sh x86_64 qt6 nodebug ${{ steps.version_number.outputs.version }}
           ./packaging/win32/makeinstaller.sh x86_64 gtk nodebug ${{ steps.version_number.outputs.version }}
 
       - name: Reset ci-latest tag
@@ -64,40 +64,40 @@ jobs:
           draft: false
           prerelease: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
-      - name: Upload qt5 i686 portable zip release asset
+      - name: Upload qt6 i686 portable zip release asset
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
-          file: ./build/mingw32-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_i686_portable.zip
-          asset_name: gImageReader_latest_qt5_i686_portable.zip
+          file: ./build/mingw32-qt6/gImageReader_${{ steps.version_number.outputs.version }}_qt6_i686_portable.zip
+          asset_name: gImageReader_latest_qt6_i686_portable.zip
           overwrite: true
 
-      - name: Upload qt5 i686 installer release asset
+      - name: Upload qt6 i686 installer release asset
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
-          file: ./build/mingw32-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_i686.exe
-          asset_name: gImageReader_latest_qt5_i686.exe
+          file: ./build/mingw32-qt6/gImageReader_${{ steps.version_number.outputs.version }}_qt6_i686.exe
+          asset_name: gImageReader_latest_qt6_i686.exe
           overwrite: true
 
-      - name: Upload qt5 x86_64 portable zip release asset
+      - name: Upload qt6 x86_64 portable zip release asset
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
-          file: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_x86_64_portable.zip
-          asset_name: gImageReader_latest_qt5_x86_64_portable.zip
+          file: ./build/mingw64-qt6/gImageReader_${{ steps.version_number.outputs.version }}_qt6_x86_64_portable.zip
+          asset_name: gImageReader_latest_qt6_x86_64_portable.zip
           overwrite: true
 
-      - name: Upload qt5 x86_64 installer release asset
+      - name: Upload qt6 x86_64 installer release asset
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
-          file: ./build/mingw64-qt5/gImageReader_${{ steps.version_number.outputs.version }}_qt5_x86_64.exe
-          asset_name: gImageReader_latest_qt5_x86_64.exe
+          file: ./build/mingw64-qt6/gImageReader_${{ steps.version_number.outputs.version }}_qt6_x86_64.exe
+          asset_name: gImageReader_latest_qt6_x86_64.exe
           overwrite: true
 
       - name: Upload gtk x86_64 portable zip release asset

@@ -11,7 +11,7 @@ else
     exit 1
 fi
 
-iface=${2:-qt5}
+iface=${2:-qt6}
 
 # Note: This script is written to be used with the Fedora mingw environment
 MINGWROOT=/usr/$arch-w64-mingw32/sys-root/mingw
@@ -50,14 +50,6 @@ cp $win32dir/gimagereader-icon.rc $builddir
 cp $win32dir/gimagereader.ico $builddir
 cp $win32dir/installer.nsi $builddir
 
-# Collect dependencies
-function isnativedll {
-    # If the import library exists but not the dynamic library, the dll ist most likely a native one
-    local lower=${1,,}
-    [ ! -e $MINGWROOT/bin/$1 ] && [ -f $MINGWROOT/lib/lib${lower/%.*/.a} ] && return 0;
-    return 1;
-}
-
 function linkDep {
 # Link the specified binary dependency and it's dependencies
     local destdir="$installroot/${2:-$(dirname $1)}"
@@ -78,7 +70,7 @@ function linkDep {
 function autoLinkDeps {
 # Collects and links the dependencies of the specified binary
     for dep in $(mingw-objdump -p "$1" | grep "DLL Name" | awk '{print $3}'); do
-        if ! isnativedll "$dep"; then
+        if [ -e $MINGWROOT/bin/$dep ]; then
             linkDep bin/$dep || return 1
         fi
     done
@@ -89,12 +81,7 @@ autoLinkDeps $installroot/bin/gimagereader-$iface.exe
 linkDep bin/gdb.exe
 
 linkDep bin/twaindsm.dll
-if [ -e "$installroot/bin/libenchant-2.dll" ]; then
-    linkDep lib/enchant-2/enchant_hunspell.dll
-else
-    linkDep lib/enchant/libenchant_myspell.dll
-fi
-
+linkDep lib/enchant-2/enchant_hunspell.dll
 linkDep lib/ossl-modules/legacy.dll
 
 cp -R $win32dir/skel/* $installroot
@@ -122,26 +109,30 @@ if [ "$iface" == "gtk" ]; then
     install -Dpm 0644 /usr/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml $installroot/share/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
     glib-compile-schemas $installroot/share/glib-2.0/schemas
 
-elif [ "$iface" == "qt5" ]; then
+elif [ "$iface" == "qt5" ] || [ "$iface" == "qt6" ]; then
 
     linkDep $(ls $MINGWROOT/bin/libssl-*.dll | sed "s|^$MINGWROOT/||")
     linkDep $(ls $MINGWROOT/bin/libcrypto-*.dll | sed "s|^$MINGWROOT/||")
-    linkDep lib/qt5/plugins/imageformats/qgif.dll  bin/imageformats
-    linkDep lib/qt5/plugins/imageformats/qicns.dll bin/imageformats
-    linkDep lib/qt5/plugins/imageformats/qico.dll  bin/imageformats
-    linkDep lib/qt5/plugins/imageformats/qjp2.dll  bin/imageformats
-    linkDep lib/qt5/plugins/imageformats/qjpeg.dll bin/imageformats
-    linkDep lib/qt5/plugins/imageformats/qtga.dll  bin/imageformats
-    linkDep lib/qt5/plugins/imageformats/qtiff.dll bin/imageformats
-    linkDep lib/qt5/plugins/imageformats/qwbmp.dll bin/imageformats
-    linkDep lib/qt5/plugins/imageformats/qwebp.dll bin/imageformats
-    linkDep lib/qt5/plugins/platforms/qwindows.dll bin/platforms
-    linkDep lib/qt5/plugins/styles/qwindowsvistastyle.dll bin/styles
+    linkDep lib/$iface/plugins/imageformats/qgif.dll  bin/imageformats
+    linkDep lib/$iface/plugins/imageformats/qicns.dll bin/imageformats
+    linkDep lib/$iface/plugins/imageformats/qico.dll  bin/imageformats
+    linkDep lib/$iface/plugins/imageformats/qjp2.dll  bin/imageformats
+    linkDep lib/$iface/plugins/imageformats/qjpeg.dll bin/imageformats
+    linkDep lib/$iface/plugins/imageformats/qtga.dll  bin/imageformats
+    linkDep lib/$iface/plugins/imageformats/qtiff.dll bin/imageformats
+    linkDep lib/$iface/plugins/imageformats/qwbmp.dll bin/imageformats
+    linkDep lib/$iface/plugins/imageformats/qwebp.dll bin/imageformats
+    linkDep lib/$iface/plugins/platforms/qwindows.dll bin/platforms
+    if [ "$iface" == "qt5" ]; then
+        linkDep lib/$iface/plugins/styles/qwindowsvistastyle.dll bin/styles
+    elif [ "$iface" == "qt6" ]; then
+        linkDep lib/$iface/plugins/styles/qmodernwindowsstyle.dll bin/styles
+    fi
 
     # Install locale files
-    mkdir -p $installroot/share/qt5/translations/
-    cp -a $MINGWROOT/share/qt5/translations/{qt_*.qm,qtbase_*.qm,QtSpell_*.qm}  $installroot/share/qt5/translations
-    rm -f $installroot/share/qt5/translations/qt_help_*.qm
+    mkdir -p $installroot/share/$iface/translations/
+    cp -a $MINGWROOT/share/$iface/translations/{qt_*.qm,qtbase_*.qm,QtSpell_*.qm}  $installroot/share/$iface/translations
+    rm -f $installroot/share/$iface/translations/qt_help_*.qm
 
 fi
 

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Recognizer.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -63,7 +63,7 @@ public:
 		return 100.0 * ((m_progress + desc.progress / 100.0) / m_total);
 	}
 	static bool cancelCallback(void* instance, int /*words*/) {
-		ProgressMonitor* monitor = reinterpret_cast<ProgressMonitor*>(instance);
+		ProgressMonitor* monitor = reinterpret_cast<ProgressMonitor*> (instance);
 		std::lock_guard<std::mutex> lock(monitor->m_mutex);
 		return monitor->m_cancelled;
 	}
@@ -88,8 +88,8 @@ Recognizer::Recognizer(const Ui::MainWindow& _ui)
 	CONNECT(MAIN->getRecognitionMenu(), languageChanged, [this](const Config::Lang & lang) { recognitionLanguageChanged(lang); });
 
 	ADD_SETTING(ComboSetting("ocrregionstrategy", ui.comboPageRangeRegions));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("ocraddsourcefilename", ui.checkPageRangePrependFile));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckButton>("ocraddsourcepage", ui.checkPageRangePrependPage));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("ocraddsourcefilename", ui.checkPageRangePrependFile));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckButton> ("ocraddsourcepage", ui.checkPageRangePrependPage));
 }
 
 void Recognizer::setRecognizeMode(const Glib::ustring& mode) {
@@ -98,9 +98,9 @@ void Recognizer::setRecognizeMode(const Glib::ustring& mode) {
 
 void Recognizer::recognitionLanguageChanged(const Config::Lang& lang) {
 	Glib::ustring langLabel;
-	if(!lang.code.empty()) {
+	if (!lang.code.empty()) {
 		langLabel = Glib::ustring::compose("%1 (%2)", lang.name, lang.code);
-	} else if(lang.name == "Multilingual") {
+	} else if (lang.name == "Multilingual") {
 		langLabel = lang.prefix;
 	} else {
 		langLabel = lang.name;
@@ -118,27 +118,27 @@ std::vector<int> Recognizer::selectPages(bool& autodetectLayout) {
 	ui.boxPageRangePrepend->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
 	Glib::RefPtr<Gtk::ListStore> store = Glib::RefPtr<Gtk::ListStore>::cast_static(ui.comboPageRangeRegions->get_model());
 	int col = ui.comboPageRangeRegions->get_entry_text_column();
-	store->children()[0]->set_value<Glib::ustring>(col, MAIN->getDisplayer()->hasMultipleOCRAreas() ? _("Current selection") : _("Entire page"));
+	store->children() [0]->set_value<Glib::ustring> (col, MAIN->getDisplayer()->hasMultipleOCRAreas() ? _("Current selection") : _("Entire page"));
 
 	static Glib::RefPtr<Glib::Regex> validateRegEx = Glib::Regex::create("^[\\d,\\-\\s]+$");
 	std::vector<int> pages;
-	while(ui.dialogPageRange->run() == Gtk::RESPONSE_OK) {
+	while (ui.dialogPageRange->run() == Gtk::RESPONSE_OK) {
 		pages.clear();
 		Glib::ustring text = ui.entryPageRange->get_text();
-		if(validateRegEx->match(text)) {
-			text = Glib::Regex::create("\\s+")->replace(text, 0, "", static_cast<Glib::RegexMatchFlags>(0));
+		if (validateRegEx->match(text)) {
+			text = Glib::Regex::create("\\s+")->replace(text, 0, "", static_cast<Glib::RegexMatchFlags> (0));
 			std::vector<Glib::ustring> blocks = Utils::string_split(text, ',', false);
-			for(const Glib::ustring& block : blocks) {
+			for (const Glib::ustring& block : blocks) {
 				std::vector<Glib::ustring> ranges = Utils::string_split(block, '-', false);
-				if(ranges.size() == 1) {
+				if (ranges.size() == 1) {
 					int page = Utils::parseInt(ranges[0]);
-					if(page > 0 && page <= nPages) {
+					if (page > 0 && page <= nPages) {
 						pages.push_back(page);
 					}
-				} else if(ranges.size() == 2) {
+				} else if (ranges.size() == 2) {
 					int start = std::max(1, Utils::parseInt(ranges[0]));
 					int end = std::min(nPages, Utils::parseInt(ranges[1]));
-					for(int page = start; page <= end; ++page) {
+					for (int page = start; page <= end; ++page) {
 						pages.push_back(page);
 					}
 				} else {
@@ -147,7 +147,7 @@ std::vector<int> Recognizer::selectPages(bool& autodetectLayout) {
 				}
 			}
 		}
-		if(pages.empty()) {
+		if (pages.empty()) {
 			Utils::set_error_state(ui.entryPageRange);
 		} else {
 			break;
@@ -161,8 +161,8 @@ std::vector<int> Recognizer::selectPages(bool& autodetectLayout) {
 
 void Recognizer::recognizeButtonClicked() {
 	int nPages = MAIN->getDisplayer()->getNPages();
-	if(nPages == 1) {
-		recognize({MAIN->getDisplayer()->getCurrentPage()});
+	if (nPages == 1) {
+		recognize({MAIN->getDisplayer()->getCurrentPage() });
 	} else {
 		ui.menuitemRecognizeBatch->set_visible(MAIN->getDisplayer()->getNSources() > 1);
 		ui.menuRecognizePages->popup_at_widget(ui.buttonRecognize, Gdk::GRAVITY_SOUTH_WEST, Gdk::GRAVITY_NORTH_WEST, nullptr);
@@ -170,7 +170,7 @@ void Recognizer::recognizeButtonClicked() {
 }
 
 void Recognizer::recognizeCurrentPage() {
-	recognize({MAIN->getDisplayer()->getCurrentPage()});
+	recognize({MAIN->getDisplayer()->getCurrentPage() });
 }
 
 void Recognizer::recognizeMultiplePages() {
@@ -181,8 +181,8 @@ void Recognizer::recognizeMultiplePages() {
 
 std::unique_ptr<Utils::TesseractHandle> Recognizer::setupTesseract() {
 	Config::Lang lang = MAIN->getRecognitionMenu()->getRecognitionLanguage();
-	auto tess = std::unique_ptr<Utils::TesseractHandle>(new Utils::TesseractHandle(lang.prefix.c_str()));
-	if(tess->get()) {
+	auto tess = std::unique_ptr<Utils::TesseractHandle> (new Utils::TesseractHandle(lang.prefix.c_str()));
+	if (tess->get()) {
 		tess->get()->SetPageSegMode(MAIN->getRecognitionMenu()->getPageSegmentationMode());
 		tess->get()->SetVariable("tessedit_char_whitelist", MAIN->getRecognitionMenu()->getCharacterWhitelist().c_str());
 		tess->get()->SetVariable("tessedit_char_blacklist", MAIN->getRecognitionMenu()->getCharacterBlacklist().c_str());
@@ -196,25 +196,25 @@ std::unique_ptr<Utils::TesseractHandle> Recognizer::setupTesseract() {
 }
 
 void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout) {
-	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcefilename")->getValue();
-	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting>("ocraddsourcepage")->getValue();
+	bool prependFile = pages.size() > 1 && ConfigSettings::get<SwitchSetting> ("ocraddsourcefilename")->getValue();
+	bool prependPage = pages.size() > 1 && ConfigSettings::get<SwitchSetting> ("ocraddsourcepage")->getValue();
 	auto tess = setupTesseract();
-	if(!tess->get()) {
+	if (!tess->get()) {
 		return;
 	}
 	bool contains = false;
-	for(int page : pages) {
+	for (int page : pages) {
 		std::string source;
 		int sourcePage;
-		if(MAIN->getDisplayer()->resolvePage(page, source, sourcePage)) {
-			if(MAIN->getOutputEditor()->containsSource(source, sourcePage)) {
+		if (MAIN->getDisplayer()->resolvePage(page, source, sourcePage)) {
+			if (MAIN->getOutputEditor()->containsSource(source, sourcePage)) {
 				contains = true;
 				break;
 			}
 		}
 	}
-	if(contains) {
-		if(Utils::Button::No == Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Source already recognized"), _("One or more selected sources were already recognized. Proceed anyway?"), "", Utils::Button::Yes | Utils::Button::No)) {
+	if (contains) {
+		if (Utils::Button::No == Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Source already recognized"), _("One or more selected sources were already recognized. Proceed anyway?"), "", Utils::Button::Yes | Utils::Button::No)) {
 			return;
 		}
 	}
@@ -230,14 +230,14 @@ void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout)
 		int npages = pages.size();
 		int idx = 0;
 		std::string prevFile;
-		for(int page : pages) {
+		for (int page : pages) {
 			monitor.desc.progress = 0;
 			++idx;
 			Glib::signal_idle().connect_once([ = ] { MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, npages)); });
 
 			PageData pageData;
 			Utils::runInMainThreadBlocking([&] { pageData = setPage(page, autodetectLayout); });
-			if(!pageData.success) {
+			if (!pageData.success) {
 				errors.push_back(Glib::ustring::compose(_("- Page %1: failed to render page"), page));
 				MAIN->getOutputEditor()->readError(_("\n[Failed to recognize page %1]\n"), readSessionData);
 				continue;
@@ -246,7 +246,7 @@ void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout)
 			bool firstChunk = true;
 			bool newFile = readSessionData->pageInfo.filename != prevFile;
 			prevFile = readSessionData->pageInfo.filename;
-			for(const Cairo::RefPtr<Cairo::ImageSurface>& image : pageData.ocrAreas) {
+			for (const Cairo::RefPtr<Cairo::ImageSurface>& image : pageData.ocrAreas) {
 				readSessionData->prependPage = prependPage && firstChunk;
 				readSessionData->prependFile = prependFile && (readSessionData->prependPage || newFile);
 				firstChunk = false;
@@ -254,14 +254,14 @@ void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout)
 				tess->get()->SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
 				tess->get()->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 				tess->get()->Recognize(&monitor.desc);
-				if(!monitor.cancelled()) {
+				if (!monitor.cancelled()) {
 					MAIN->getOutputEditor()->read(*tess->get(), readSessionData);
 				}
 			}
 
 			Glib::signal_idle().connect_once([] { MAIN->popState(); });
 			monitor.increaseProgress();
-			if(monitor.cancelled()) {
+			if (monitor.cancelled()) {
 				break;
 			}
 		}
@@ -270,37 +270,37 @@ void Recognizer::recognize(const std::vector<int>& pages, bool autodetectLayout)
 	MAIN->getDisplayer()->setBlockAutoscale(false);
 	MAIN->hideProgress();
 	MAIN->getOutputEditor()->finalizeRead(readSessionData);
-	if(!errors.empty()) {
+	if (!errors.empty()) {
 		showRecognitionErrorsDialog(errors);
 	}
 }
 
 void Recognizer::recognizeImage(const Cairo::RefPtr<Cairo::ImageSurface>& img, OutputDestination dest) {
 	auto tess = setupTesseract();
-	if(!tess->get()) {
+	if (!tess->get()) {
 		return;
 	}
 	tess->get()->SetImage(img->get_data(), img->get_width(), img->get_height(), 4, 4 * img->get_width());
 	ProgressMonitor monitor(1);
 	MAIN->showProgress(&monitor);
-	if(dest == OutputDestination::Buffer) {
+	if (dest == OutputDestination::Buffer) {
 		OutputEditor::ReadSessionData* readSessionData = MAIN->getOutputEditor()->initRead(*tess->get());
 		readSessionData->pageInfo.filename = MAIN->getDisplayer()->getCurrentImage(readSessionData->pageInfo.page);
 		readSessionData->pageInfo.angle = MAIN->getDisplayer()->getCurrentAngle();
 		readSessionData->pageInfo.resolution = MAIN->getDisplayer()->getCurrentResolution();
 		Utils::busyTask([&] {
 			tess->get()->Recognize(&monitor.desc);
-			if(!monitor.cancelled()) {
+			if (!monitor.cancelled()) {
 				MAIN->getOutputEditor()->read(*tess->get(), readSessionData);
 			}
 			return true;
 		}, _("Recognizing..."));
 		MAIN->getOutputEditor()->finalizeRead(readSessionData);
-	} else if(dest == OutputDestination::Clipboard) {
+	} else if (dest == OutputDestination::Clipboard) {
 		Glib::ustring output;
-		if(Utils::busyTask([&] {
+		if (Utils::busyTask([&] {
 		tess->get()->Recognize(&monitor.desc);
-			if(!monitor.cancelled()) {
+			if (!monitor.cancelled()) {
 				char* text = tess->get()->GetUTF8Text();
 				output = text;
 				delete[] text;
@@ -319,7 +319,7 @@ void Recognizer::recognizeBatch() {
 	ui.checkBoxAutolayout->set_visible(MAIN->getDisplayer()->allowAutodetectOCRAreas());
 	int response = ui.dialogBatch->run();
 	ui.dialogBatch->hide();
-	if(response != Gtk::RESPONSE_OK) {
+	if (response != Gtk::RESPONSE_OK) {
 		return;
 	}
 	Glib::ustring existingBehaviour = ui.comboBoxExisting->get_active_id();
@@ -328,7 +328,7 @@ void Recognizer::recognizeBatch() {
 	int nPages = MAIN->getDisplayer()->getNPages();
 
 	auto tess = setupTesseract();
-	if(!tess->get()) {
+	if (!tess->get()) {
 		return;
 	}
 
@@ -344,7 +344,7 @@ void Recognizer::recognizeBatch() {
 		int idx = 0;
 		std::string currFilename;
 		std::ofstream outputFile;
-		for(int page = 1; page <= nPages; ++page) {
+		for (int page = 1; page <= nPages; ++page) {
 			monitor.desc.progress = 0;
 			++idx;
 			Glib::signal_idle().connect_once([ = ] { MAIN->pushState(MainWindow::State::Busy, Glib::ustring::compose(_("Recognizing page %1 (%2 of %3)"), page, idx, nPages)); });
@@ -352,37 +352,37 @@ void Recognizer::recognizeBatch() {
 			PageData pageData;
 			pageData.success = false;
 			Utils::runInMainThreadBlocking([&] { pageData = setPage(page, autolayout); });
-			if(!pageData.success) {
+			if (!pageData.success) {
 				errors.push_back(Glib::ustring::compose(_("- %1:%2: failed to render page"), Glib::path_get_basename(pageData.pageInfo.filename), page));
 				continue;
 			}
-			if(pageData.pageInfo.filename != currFilename) {
-				if(outputFile.is_open()) {
+			if (pageData.pageInfo.filename != currFilename) {
+				if (outputFile.is_open()) {
 					batchProcessor->writeFooter(outputFile);
 					outputFile.close();
 				}
 				currFilename = pageData.pageInfo.filename;
 				std::string fileName = Utils::split_filename(currFilename).first + batchProcessor->fileSuffix();
 				bool exists = Glib::file_test(fileName, Glib::FILE_TEST_EXISTS);
-				if(exists && existingBehaviour == "skip") {
+				if (exists && existingBehaviour == "skip") {
 					errors.push_back(Glib::ustring::compose(_("- %1: output already exists, skipping"), Glib::path_get_basename(fileName)));
 				} else {
 					outputFile.open(fileName);
-					if(!outputFile.is_open()) {
+					if (!outputFile.is_open()) {
 						errors.push_back(Glib::ustring::compose(_("- %1: failed to create output file"), Glib::path_get_basename(fileName), page));
 					} else {
 						batchProcessor->writeHeader(outputFile, tess->get(), pageData.pageInfo);
 					}
 				}
 			}
-			if(outputFile.is_open()) {
+			if (outputFile.is_open()) {
 				bool firstChunk = true;
-				for(const Cairo::RefPtr<Cairo::ImageSurface>& image : pageData.ocrAreas) {
+				for (const Cairo::RefPtr<Cairo::ImageSurface>& image : pageData.ocrAreas) {
 					tess->get()->SetImage(image->get_data(), image->get_width(), image->get_height(), 4, image->get_stride());
 					tess->get()->SetSourceResolution(MAIN->getDisplayer()->getCurrentResolution());
 					tess->get()->Recognize(&monitor.desc);
 
-					if(!monitor.cancelled()) {
+					if (!monitor.cancelled()) {
 						batchProcessor->appendOutput(outputFile, tess->get(), pageData.pageInfo, firstChunk);
 					}
 					firstChunk = false;
@@ -390,11 +390,11 @@ void Recognizer::recognizeBatch() {
 			}
 			Glib::signal_idle().connect_once([] { MAIN->popState(); });
 			monitor.increaseProgress();
-			if(monitor.cancelled()) {
+			if (monitor.cancelled()) {
 				break;
 			}
 		}
-		if(outputFile.is_open()) {
+		if (outputFile.is_open()) {
 			batchProcessor->writeFooter(outputFile);
 			outputFile.close();
 		}
@@ -402,7 +402,7 @@ void Recognizer::recognizeBatch() {
 	}, _("Recognizing..."));
 	MAIN->getDisplayer()->setBlockAutoscale(false);
 	MAIN->hideProgress();
-	if(!errors.empty()) {
+	if (!errors.empty()) {
 		showRecognitionErrorsDialog(errors);
 	}
 	delete batchProcessor;
@@ -411,8 +411,8 @@ void Recognizer::recognizeBatch() {
 Recognizer::PageData Recognizer::setPage(int page, bool autodetectLayout) {
 	PageData pageData;
 	pageData.success = MAIN->getDisplayer()->setup(&page);
-	if(pageData.success) {
-		if(autodetectLayout) {
+	if (pageData.success) {
+		if (autodetectLayout) {
 			MAIN->getDisplayer()->autodetectOCRAreas();
 		}
 		pageData.pageInfo.filename = MAIN->getDisplayer()->getCurrentImage(pageData.pageInfo.page);

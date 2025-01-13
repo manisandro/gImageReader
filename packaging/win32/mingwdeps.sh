@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo all > /etc/rpm/macros.image-language-conf
-dnf4 install -y \
+dnf install -y \
   cmake \
   poppler-data \
   make \
@@ -23,15 +23,15 @@ dnf4 install -y \
   mingw32-libgomp \
   mingw32-libjpeg-turbo \
   mingw32-podofo \
-  mingw32-poppler-qt5 \
-  mingw32-qt5-qtbase \
-  mingw32-qt5-qtimageformats \
-  mingw32-qt5-qttools \
-  mingw32-qt5-qttranslations \
-  mingw32-qtspell-qt5 \
+  mingw32-poppler-qt6 \
+  mingw32-qt6-qtbase \
+  mingw32-qt6-qtimageformats \
+  mingw32-qt6-qttools \
+  mingw32-qt6-qttranslations \
+  mingw32-qtspell-qt6 \
   mingw32-tesseract \
   mingw32-twaindsm \
-  mingw32-quazip-qt5 \
+  mingw32-quazip-qt6 \
   \
   mingw32-libzip \
   mingw32-gtk3 gtk3 gtk3-devel \
@@ -53,15 +53,15 @@ dnf4 install -y \
   mingw64-libgomp \
   mingw64-libjpeg-turbo \
   mingw64-podofo \
-  mingw64-poppler-qt5 \
-  mingw64-qt5-qtbase \
-  mingw64-qt5-qtimageformats \
-  mingw64-qt5-qttools \
-  mingw64-qt5-qttranslations \
-  mingw64-qtspell-qt5 \
+  mingw64-poppler-qt6 \
+  mingw64-qt6-qtbase \
+  mingw64-qt6-qtimageformats \
+  mingw64-qt6-qttools \
+  mingw64-qt6-qttranslations \
+  mingw64-qtspell-qt6 \
   mingw64-tesseract \
   mingw64-twaindsm \
-  mingw64-quazip-qt5 \
+  mingw64-quazip-qt6 \
   \
   mingw64-libzip \
   mingw64-gtk3 gtk3 gtk3-devel \

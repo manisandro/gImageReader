@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * MainWindow.hh
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -53,7 +53,7 @@ public:
 
 	struct NotificationAction {
 		QString text;
-		std::function<void()> slot;
+		std::function<void() > slot;
 		bool close;
 	};
 
@@ -149,7 +149,7 @@ private:
 
 	QActionGroup m_idleActions;
 	QList<QWidget*> m_idleWidgets;
-	QStack<QPair<State, QString>> m_stateStack;
+	QStack<QPair<State, QString >> m_stateStack;
 
 	MainWindow::Notification m_notifierHandle = nullptr;
 

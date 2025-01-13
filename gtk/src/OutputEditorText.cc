@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * OutputEditorText.cc
- * Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ * Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -34,7 +34,7 @@
 
 void OutputEditorText::TextBatchProcessor::appendOutput(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo, bool firstArea) const {
 	char* text = tess->GetUTF8Text();
-	if(firstArea && m_prependPage) {
+	if (firstArea && m_prependPage) {
 		dev << Glib::ustring::compose(_("Page: %1\n"), pageInfo.page).raw();
 	}
 	dev << text;
@@ -71,13 +71,13 @@ OutputEditorText::OutputEditorText() {
 
 	m_insertMode = InsertMode::Append;
 
-	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("keepdot", ui.menuitemStripcrlfKeependmark));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("keepquote", ui.menuitemStripcrlfKeepquote));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("joinhyphen", ui.menuitemStripcrlfJoinhyphen));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("joinspace", ui.menuitemStripcrlfJoinspace));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("keepparagraphs", ui.menuitemStripcrlfKeepparagraphs));
-	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem>("drawwhitespace", ui.menuitemStripcrlfDrawwhitespace));
-	ADD_SETTING(VarSetting<std::string>("highlightmode"));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem> ("keepdot", ui.menuitemStripcrlfKeependmark));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem> ("keepquote", ui.menuitemStripcrlfKeepquote));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem> ("joinhyphen", ui.menuitemStripcrlfJoinhyphen));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem> ("joinspace", ui.menuitemStripcrlfJoinspace));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem> ("keepparagraphs", ui.menuitemStripcrlfKeepparagraphs));
+	ADD_SETTING(SwitchSettingT<Gtk::CheckMenuItem> ("drawwhitespace", ui.menuitemStripcrlfDrawwhitespace));
+	ADD_SETTING(VarSetting<std::string> ("highlightmode"));
 
 	CONNECT(recentChooser, item_activated, [this, recentChooser] { open(Glib::filename_from_uri(recentChooser->get_current_uri())); });
 	CONNECT(ui.menuitemInsertAppend, activate, [this] { setInsertMode(InsertMode::Append, "ins_append.png"); });
@@ -95,8 +95,8 @@ OutputEditorText::OutputEditorText() {
 	CONNECT(m_searchFrame, find_replace, sigc::mem_fun(this, &OutputEditorText::findReplace));
 	CONNECT(m_searchFrame, replace_all, sigc::mem_fun(this, &OutputEditorText::replaceAll));
 	CONNECT(m_searchFrame, apply_substitutions, sigc::mem_fun(this, &OutputEditorText::applySubstitutions));
-	CONNECT(ConfigSettings::get<FontSetting>("customoutputfont"), changed, [this] { setFont(); });
-	CONNECT(ConfigSettings::get<SwitchSetting>("systemoutputfont"), changed, [this] { setFont(); });
+	CONNECT(ConfigSettings::get<FontSetting> ("customoutputfont"), changed, [this] { setFont(); });
+	CONNECT(ConfigSettings::get<SwitchSetting> ("systemoutputfont"), changed, [this] { setFont(); });
 	CONNECT(ui.menuitemStripcrlfDrawwhitespace, toggled, [this] { setDrawWhitspace(ui.menuitemStripcrlfDrawwhitespace->get_active()); });
 
 	ui.notebook->set_current_page(addTab());
@@ -111,11 +111,11 @@ int OutputEditorText::addTab(const Glib::ustring& title) {
 
 	Glib::RefPtr<OutputBuffer> textBuffer = OutputBuffer::create();
 
-	Gsv::View* textView = Gtk::make_managed<Gsv::View>(textBuffer);
-	if(ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
+	Gsv::View* textView = Gtk::make_managed<Gsv::View> (textBuffer);
+	if (ConfigSettings::get<SwitchSetting> ("systemoutputfont")->getValue()) {
 		textView->unset_font();
 	} else {
-		Glib::ustring fontName = ConfigSettings::get<FontSetting>("customoutputfont")->getValue();
+		Glib::ustring fontName = ConfigSettings::get<FontSetting> ("customoutputfont")->getValue();
 		textView->override_font(Pango::FontDescription(fontName));
 	}
 	textView->set_wrap_mode(Gtk::WRAP_WORD);
@@ -126,13 +126,13 @@ int OutputEditorText::addTab(const Glib::ustring& title) {
 
 	Gtk::Button* button = Gtk::make_managed<Gtk::Button>();
 	button->set_image_from_icon_name("window-close-symbolic", (Gtk::BuiltinIconSize) GTK_ICON_SIZE_MENU);
-	button->set_tooltip_text (_("Close document"));
+	button->set_tooltip_text(_("Close document"));
 	button->set_relief((Gtk::ReliefStyle) GTK_RELIEF_NONE);
 	CONNECT(button, clicked, [this, scrollWin] { closeTab(scrollWin); });
 
-	Gtk::Label* tabLabel = Gtk::make_managed<Gtk::Label>(title.empty() ? Glib::ustring::compose(_("Untitled %1"), ++m_tabCounter) :  title);
+	Gtk::Label* tabLabel = Gtk::make_managed<Gtk::Label> (title.empty() ? Glib::ustring::compose(_("Untitled %1"), ++m_tabCounter) :  title);
 
-	Gtk::HBox* hbox = Gtk::make_managed<Gtk::HBox>(false, 0);
+	Gtk::HBox* hbox = Gtk::make_managed<Gtk::HBox> (false, 0);
 	hbox->pack_start(*tabLabel);
 	hbox->pack_end(*button, false, false, 0);
 	hbox->show_all();
@@ -175,7 +175,7 @@ void OutputEditorText::tabChanged() {
 
 void OutputEditorText::closeTab(Gtk::Widget* pageWidget) {
 	int page = -1;
-	for(int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
+	for (int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
 		if (ui.notebook->get_nth_page(i) == pageWidget) {
 			page = i;
 			break;
@@ -184,7 +184,7 @@ void OutputEditorText::closeTab(Gtk::Widget* pageWidget) {
 	if (page == -1) {
 		return;
 	}
-	if(textBuffer(page)->get_modified()) {
+	if (textBuffer(page)->get_modified()) {
 		int response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Document not saved"), _("Save document before proceeding?"), "", Utils::Button::Save | Utils::Button::Discard | Utils::Button::Cancel);
 		if (response == Utils::Button::Cancel) {
 			return;
@@ -201,34 +201,34 @@ void OutputEditorText::closeTab(Gtk::Widget* pageWidget) {
 }
 
 Glib::ustring OutputEditorText::tabName(int page) const {
-	Gtk::Label* label = static_cast<Gtk::Label*>(static_cast<Gtk::HBox*>(ui.notebook->get_tab_label(*ui.notebook->get_nth_page(page)))->get_children()[0]);
+	Gtk::Label* label = static_cast<Gtk::Label*> (static_cast<Gtk::HBox*> (ui.notebook->get_tab_label(*ui.notebook->get_nth_page(page)))->get_children() [0]);
 	return Utils::string_rstrip(label->get_text(), "*");
 }
 
 void OutputEditorText::setTabName(int page, const Glib::ustring& title) {
-	Gtk::Label* label = static_cast<Gtk::Label*>(static_cast<Gtk::HBox*>(ui.notebook->get_tab_label(*ui.notebook->get_nth_page(page)))->get_children()[0]);
+	Gtk::Label* label = static_cast<Gtk::Label*> (static_cast<Gtk::HBox*> (ui.notebook->get_tab_label(*ui.notebook->get_nth_page(page)))->get_children() [0]);
 	label->set_text(title);
 }
 
 Gsv::View* OutputEditorText::textView(int page) const {
 	page = page == -1 ? ui.notebook->get_current_page() : page;
-	return static_cast<Gsv::View*>((static_cast <Gtk::ScrolledWindow*>(ui.notebook->get_nth_page(page)))->get_child());
+	return static_cast<Gsv::View*> ((static_cast <Gtk::ScrolledWindow*> (ui.notebook->get_nth_page(page)))->get_child());
 }
 
 OutputBuffer* OutputEditorText::textBuffer(int page) const {
 	page = page == -1 ? ui.notebook->get_current_page() : page;
-	return static_cast<OutputBuffer*>(textView(page)->get_buffer().get());
+	return static_cast<OutputBuffer*> (textView(page)->get_buffer().get());
 }
 
 void OutputEditorText::setFont() {
-	if(ConfigSettings::get<SwitchSetting>("systemoutputfont")->getValue()) {
-		for(int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
+	if (ConfigSettings::get<SwitchSetting> ("systemoutputfont")->getValue()) {
+		for (int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
 			textView(i)->unset_font();
 		}
 	} else {
-		Glib::ustring fontName = ConfigSettings::get<FontSetting>("customoutputfont")->getValue();
+		Glib::ustring fontName = ConfigSettings::get<FontSetting> ("customoutputfont")->getValue();
 		const Pango::FontDescription& desc = Pango::FontDescription(fontName);
-		for(int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
+		for (int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
 			textView(i)->override_font(desc);
 		}
 	}
@@ -248,8 +248,8 @@ void OutputEditorText::setInsertMode(InsertMode mode, const std::string& iconNam
 void OutputEditorText::setDrawWhitspace(bool enable) {
 #if GTK_SOURCE_MAJOR_VERSION >= 4
 	GtkSourceSpaceDrawer* space_drawer = gtk_source_view_get_space_drawer(textView()->gobj());
-	gtk_source_space_drawer_set_types_for_locations (space_drawer, GTK_SOURCE_SPACE_LOCATION_ALL, GTK_SOURCE_SPACE_TYPE_ALL);
-	gtk_source_space_drawer_set_enable_matrix (space_drawer, enable ? TRUE : FALSE);
+	gtk_source_space_drawer_set_types_for_locations(space_drawer, GTK_SOURCE_SPACE_LOCATION_ALL, GTK_SOURCE_SPACE_TYPE_ALL);
+	gtk_source_space_drawer_set_enable_matrix(space_drawer, enable ? TRUE : FALSE);
 #else
 	textView()->set_draw_spaces(enable ? (Gsv::DRAW_SPACES_NEWLINE | Gsv::DRAW_SPACES_TAB | Gsv::DRAW_SPACES_SPACE) : Gsv::DrawSpacesFlags(0));
 #endif
@@ -264,35 +264,35 @@ void OutputEditorText::filterBuffer() {
 
 	Utils::busyTask([this, &txt] {
 		// Always remove trailing whitespace
-		txt = Glib::Regex::create("\\s+$")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags>(0));
-		if(ui.menuitemStripcrlfJoinhyphen->get_active()) {
-			txt = Glib::Regex::create("[-\u2014]\\s*\\n\\s*")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags>(0));
+		txt = Glib::Regex::create("\\s+$")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags> (0));
+		if (ui.menuitemStripcrlfJoinhyphen->get_active()) {
+			txt = Glib::Regex::create("[-\u2014]\\s*\\n\\s*")->replace(txt, 0, "", static_cast<Glib::RegexMatchFlags> (0));
 		}
 		Glib::ustring preChars, sucChars;
-		if(ui.menuitemStripcrlfKeepparagraphs->get_active()) {
+		if (ui.menuitemStripcrlfKeepparagraphs->get_active()) {
 			preChars += "\\n"; // Keep if preceded by line break
 		}
-		if(ui.menuitemStripcrlfKeependmark->get_active()) {
+		if (ui.menuitemStripcrlfKeependmark->get_active()) {
 			preChars += "\\.\\?!"; // Keep if preceded by end mark (.?!)
 		}
-		if(ui.menuitemStripcrlfKeepquote->get_active()) {
+		if (ui.menuitemStripcrlfKeepquote->get_active()) {
 			preChars += "'\"\u00BB\u00AB"; // Keep if preceded by quote
 			sucChars += "'\"\u00AB\u00BB"; // Keep if succeeded by quote
 		}
-		if(ui.menuitemStripcrlfKeepparagraphs->get_active()) {
+		if (ui.menuitemStripcrlfKeepparagraphs->get_active()) {
 			sucChars += "\\n"; // Keep if succeeded by line break
 		}
-		if(!preChars.empty()) {
+		if (!preChars.empty()) {
 			preChars = "([^" + preChars + "])";
 		}
-		if(!sucChars.empty()) {
+		if (!sucChars.empty()) {
 			sucChars = "(?![" + sucChars + "])";
 		}
 		Glib::ustring expr = preChars + "\\n" + sucChars;
-		txt = Glib::Regex::create(expr)->replace(txt, 0, preChars.empty() ? " " : "\\1 ", static_cast<Glib::RegexMatchFlags>(0));
+		txt = Glib::Regex::create(expr)->replace(txt, 0, preChars.empty() ? " " : "\\1 ", static_cast<Glib::RegexMatchFlags> (0));
 
-		if(ui.menuitemStripcrlfJoinspace->get_active()) {
-			txt = Glib::Regex::create("[ \t]+")->replace(txt, 0, " ", static_cast<Glib::RegexMatchFlags>(0));
+		if (ui.menuitemStripcrlfJoinspace->get_active()) {
+			txt = Glib::Regex::create("[ \t]+")->replace(txt, 0, " ", static_cast<Glib::RegexMatchFlags> (0));
 		}
 		return true;
 	}, _("Stripping line breaks..."));
@@ -316,7 +316,7 @@ void OutputEditorText::completeTextViewMenu(Gtk::Menu* menu) {
 	highlightmenu->append(*nolangitem);
 	highlightmenu->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
 	Glib::RefPtr<Gsv::LanguageManager> language_manager = Gsv::LanguageManager::get_default();
-	for(const std::string& lang_id : language_manager->get_language_ids()) {
+	for (const std::string& lang_id : language_manager->get_language_ids()) {
 		Gtk::RadioMenuItem* langitem = Gtk::manage(new Gtk::RadioMenuItem(lang_id));
 		CONNECT(langitem, toggled, [buffer, langitem, lang_id] {
 			if (langitem->get_active()) {
@@ -332,9 +332,9 @@ void OutputEditorText::completeTextViewMenu(Gtk::Menu* menu) {
 	menu->prepend(*highlightitem);
 
 	Gtk::CheckMenuItem* item = Gtk::manage(new Gtk::CheckMenuItem(_("Check spelling")));
-	item->set_active(bool(GtkSpell::Checker::get_from_text_view(*textView())));
+	item->set_active(bool (GtkSpell::Checker::get_from_text_view(*textView())));
 	CONNECT(item, toggled, [this, item] {
-		if(item->get_active()) {
+		if (item->get_active()) {
 			m_spell.attach(*textView());
 		} else {
 			m_spell.detach();
@@ -348,7 +348,7 @@ void OutputEditorText::completeTextViewMenu(Gtk::Menu* menu) {
 
 void OutputEditorText::findReplace(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase, bool backwards, bool replace) {
 	m_searchFrame->clearErrorState();
-	if(!textBuffer()->findReplace(backwards, replace, matchCase, searchstr, replacestr, textView())) {
+	if (!textBuffer()->findReplace(backwards, replace, matchCase, searchstr, replacestr, textView())) {
 		m_searchFrame->setErrorState();
 	}
 }
@@ -356,7 +356,7 @@ void OutputEditorText::findReplace(const Glib::ustring& searchstr, const Glib::u
 void OutputEditorText::replaceAll(const Glib::ustring& searchstr, const Glib::ustring& replacestr, bool matchCase) {
 	MAIN->pushState(MainWindow::State::Busy, _("Replacing..."));
 	int count(textBuffer()->replaceAll(searchstr, replacestr, matchCase));
-	if(!count) {
+	if (!count) {
 		m_searchFrame->setErrorState();
 	}
 	MAIN->popState();
@@ -376,23 +376,23 @@ void OutputEditorText::applySubstitutions(const std::map<Glib::ustring, Glib::us
 	int startpos = start.get_offset();
 	int endpos = end.get_offset();
 	Gtk::TextSearchFlags flags = Gtk::TEXT_SEARCH_VISIBLE_ONLY | Gtk::TEXT_SEARCH_TEXT_ONLY;
-	if(!matchCase) {
+	if (!matchCase) {
 		flags |= Gtk::TEXT_SEARCH_CASE_INSENSITIVE;
 	}
-	for(auto sit = substitutions.begin(), sitEnd = substitutions.end(); sit != sitEnd; ++sit) {
+	for (auto sit = substitutions.begin(), sitEnd = substitutions.end(); sit != sitEnd; ++sit) {
 		Glib::ustring search = sit->first;
 		Glib::ustring replace = sit->second;
 		int diff = replace.length() - search.length();
 		Gtk::TextIter it = buffer->get_iter_at_offset(startpos);
-		while(true) {
+		while (true) {
 			Gtk::TextIter matchStart, matchEnd;
-			if(!it.forward_search(search, flags, matchStart, matchEnd) || matchEnd.get_offset() > endpos) {
+			if (!it.forward_search(search, flags, matchStart, matchEnd) || matchEnd.get_offset() > endpos) {
 				break;
 			}
 			it = buffer->insert(buffer->erase(matchStart, matchEnd), replace);
 			endpos += diff;
 		}
-		while(Gtk::Main::events_pending()) {
+		while (Gtk::Main::events_pending()) {
 			Gtk::Main::iteration();
 		}
 	}
@@ -403,28 +403,28 @@ void OutputEditorText::applySubstitutions(const std::map<Glib::ustring, Glib::us
 void OutputEditorText::read(tesseract::TessBaseAPI& tess, ReadSessionData* data) {
 	char* textbuf = tess.GetUTF8Text();
 	Glib::ustring text = Glib::ustring(textbuf);
-	if(!text.empty() && *--text.end() != '\n') {
+	if (!text.empty() && *--text.end() != '\n') {
 		text.append("\n");
 	}
-	if(data->prependFile || data->prependPage) {
+	if (data->prependFile || data->prependPage) {
 		std::vector<Glib::ustring> prepend;
-		if(data->prependFile) {
+		if (data->prependFile) {
 			prepend.push_back(Glib::ustring::compose(_("File: %1"), data->pageInfo.filename));
 		}
-		if(data->prependPage) {
+		if (data->prependPage) {
 			prepend.push_back(Glib::ustring::compose(_("Page: %1"), data->pageInfo.page));
 		}
 		text = Glib::ustring::compose("[%1]\n", Utils::string_join(prepend, "; ")) + text;
 	}
 
-	bool& insertText = static_cast<TextReadSessionData*>(data)->insertText;
+	bool& insertText = static_cast<TextReadSessionData*> (data)->insertText;
 	Utils::runInMainThreadBlocking([&] { addText(text, insertText); });
 	delete[] textbuf;
 	insertText = true;
 }
 
 void OutputEditorText::readError(const Glib::ustring& errorMsg, ReadSessionData* data) {
-	bool& insertText = static_cast<TextReadSessionData*>(data)->insertText;
+	bool& insertText = static_cast<TextReadSessionData*> (data)->insertText;
 	Utils::runInMainThreadBlocking([&] { addText(Glib::ustring::compose(_("\n[Failed to recognize page %1]\n"), errorMsg), insertText); });
 	insertText = true;
 }
@@ -435,16 +435,16 @@ OutputEditorText::BatchProcessor* OutputEditorText::createBatchProcessor(const s
 
 void OutputEditorText::addText(const Glib::ustring& text, bool insert) {
 	OutputBuffer* buffer = textBuffer();
-	if(insert) {
+	if (insert) {
 		buffer->insert_at_cursor(text);
 	} else {
-		if(m_insertMode == InsertMode::Append) {
+		if (m_insertMode == InsertMode::Append) {
 			buffer->place_cursor(buffer->insert(buffer->end(), text));
-		} else if(m_insertMode == InsertMode::Cursor) {
+		} else if (m_insertMode == InsertMode::Cursor) {
 			Gtk::TextIter start, end;
 			buffer->get_region_bounds(start, end);
 			buffer->place_cursor(buffer->insert(buffer->erase(start, end), text));
-		} else if(m_insertMode == InsertMode::Replace) {
+		} else if (m_insertMode == InsertMode::Replace) {
 			buffer->place_cursor(buffer->insert(buffer->erase(buffer->begin(), buffer->end()), text));
 		}
 	}
@@ -452,17 +452,18 @@ void OutputEditorText::addText(const Glib::ustring& text, bool insert) {
 }
 
 bool OutputEditorText::open(const std::string& filename) {
-	std::vector<Glib::RefPtr<Gio::File> > files;
+	std::vector<Glib::RefPtr<Gio::File >> files;
 	if (filename.empty()) {
 		FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
 		files = FileDialogs::open_dialog(_("Select Files"), "", "outputdir", filter, true);
 		if (files.empty()) {
 			return false;
 		}
-	} else {
+	}
+	else {
 		try {
 			files.push_back(Gio::File::create_for_path(filename));
-		} catch(const Glib::Error&) {
+		} catch (const Glib::Error&) {
 			Glib::ustring errorMsg = Glib::ustring::compose(_("The following files could not be opened:\n%1"), filename);
 			Utils::messageBox(Gtk::MESSAGE_ERROR, _("Unable to open files"), errorMsg);
 			return false;
@@ -471,18 +472,18 @@ bool OutputEditorText::open(const std::string& filename) {
 
 	int currentPage = -1;
 	std::vector<Glib::ustring> failed;
-	for(const auto& file : files) {
+	for (const auto& file : files) {
 		Glib::ustring contents;
 		try {
 			contents = Glib::file_get_contents(file->get_path());
-		} catch(const Glib::Error&) {
+		} catch (const Glib::Error&) {
 			failed.push_back(file->get_path());
 			continue;
 		}
 		Gtk::RecentManager::get_default()->add_item(file->get_uri());
 		// Look if document already opened, if so, switch to that tab
 		bool alreadyOpen = false;
-		for(int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
+		for (int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
 			if (textBuffer(i)->getFilename() == file->get_path()) {
 				currentPage = i;
 				alreadyOpen = true;
@@ -525,17 +526,17 @@ bool OutputEditorText::save(int page, const std::string& filename) {
 	std::string outname = filename;
 	page = page == -1 ? ui.notebook->get_current_page() : page;
 
-	if(outname.empty()) {
+	if (outname.empty()) {
 		Glib::ustring suggestion = textBuffer(page)->getFilename();
 		suggestion = suggestion.empty() ? tabName(page) + ".txt" : suggestion;
 		FileDialogs::FileFilter filter = {_("Text Files"), {"text/plain"}, {"*.txt"}};
 		outname = FileDialogs::save_dialog(_("Save Output..."), suggestion, "outputdir", filter);
-		if(outname.empty()) {
+		if (outname.empty()) {
 			return false;
 		}
 	}
 	std::ofstream file(outname);
-	if(!file.is_open()) {
+	if (!file.is_open()) {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Failed to save output"), _("Check that you have writing permissions in the selected folder."));
 		return false;
 	}
@@ -551,8 +552,8 @@ bool OutputEditorText::save(int page, const std::string& filename) {
 
 std::string OutputEditorText::crashSave(const std::string& filename) const {
 	std::ofstream file(filename + ".txt");
-	if(file.is_open()) {
-		for(int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
+	if (file.is_open()) {
+		for (int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
 			Glib::ustring txt = textBuffer(i)->get_text(false);
 			file.write(txt.data(), txt.bytes());
 			file.write("\n\n", 2);
@@ -563,20 +564,20 @@ std::string OutputEditorText::crashSave(const std::string& filename) const {
 }
 
 bool OutputEditorText::clear(bool hide) {
-	if(!ui.boxEditorText->get_visible()) {
+	if (!ui.boxEditorText->get_visible()) {
 		return true;
 	}
 	std::map<int, bool> changed;
-	for(int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
+	for (int i = 0, n = ui.notebook->get_n_pages(); i < n; ++i) {
 		if (textBuffer(i)->get_modified()) {
 			changed.insert(std::make_pair(i, true));
 		}
 	}
 
-	if(!changed.empty()) {
+	if (!changed.empty()) {
 		Gtk::ListBox listDocuments;
-		for(auto it = changed.begin(), itEnd = changed.end(); it != itEnd; ++it) {
-			Gtk::CheckButton* checkButton = Gtk::make_managed<Gtk::CheckButton>(tabName(it->first));
+		for (auto it = changed.begin(), itEnd = changed.end(); it != itEnd; ++it) {
+			Gtk::CheckButton* checkButton = Gtk::make_managed<Gtk::CheckButton> (tabName(it->first));
 			checkButton->set_active(true);
 			CONNECT(checkButton, toggled, [it, &changed, checkButton] { changed[it->first] = checkButton->get_active(); });
 			listDocuments.append(*checkButton);
@@ -590,19 +591,19 @@ bool OutputEditorText::clear(bool hide) {
 			return false;
 		}
 		if (response == Utils::Button::Save) {
-			for(auto it = changed.begin(), itEnd = changed.end(); it != itEnd; ++it) {
-				if(it->second && !save(it->first, textBuffer(it->first)->getFilename())) {
+			for (auto it = changed.begin(), itEnd = changed.end(); it != itEnd; ++it) {
+				if (it->second && !save(it->first, textBuffer(it->first)->getFilename())) {
 					return false;
 				}
 			}
 		}
 	}
-	for(int i = ui.notebook->get_n_pages(); i >= 0; --i) {
+	for (int i = ui.notebook->get_n_pages(); i >= 0; --i) {
 		ui.notebook->remove_page(i);
 	}
 	m_tabCounter = 0;
 	addTab(); // Add one empty tab
-	if(hide) {
+	if (hide) {
 		MAIN->setOutputPaneVisible(false);
 	}
 	return true;
@@ -618,7 +619,7 @@ void OutputEditorText::setLanguage(const Config::Lang& lang) {
 		m_spell.detach();
 		m_spell.attach(*textView());
 		m_spellHaveLang = true;
-	} catch(const GtkSpell::Error& /*e*/) {
+	} catch (const GtkSpell::Error& /*e*/) {
 		m_spellHaveLang = false;
 	}
 }

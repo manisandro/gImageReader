@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*-  */
 /*
  * Scanner.hh
- *   Copyright (C) 2013-2024 Sandro Mani <manisandro@gmail.com>
+ *   Copyright (C) 2013-2025 Sandro Mani <manisandro@gmail.com>
  *
  * gImageReader is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -55,7 +55,7 @@ public:
 	sigc::signal<void> signal_initFailed() const {
 		return m_signal_initFailed;
 	}
-	sigc::signal<void, std::vector<Scanner::Device>> signal_devicesDetected() const {
+	sigc::signal<void, std::vector<Scanner::Device >> signal_devicesDetected() const {
 		return m_signal_devicesDetected;
 	}
 	sigc::signal<void, Glib::ustring> signal_scanFailed() const {
@@ -70,7 +70,7 @@ public:
 
 protected:
 	sigc::signal<void> m_signal_initFailed;
-	sigc::signal<void, std::vector<Scanner::Device>> m_signal_devicesDetected;
+	sigc::signal<void, std::vector<Scanner::Device >> m_signal_devicesDetected;
 	sigc::signal<void, Glib::ustring> m_signal_scanFailed;
 	sigc::signal<void, Scanner::State> m_signal_scanStateChanged;
 	sigc::signal<void, std::string> m_signal_pageAvailable;

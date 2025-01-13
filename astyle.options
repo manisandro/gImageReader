@@ -7,3 +7,7 @@
 --align-reference=type
 --add-braces
 --keep-one-line-blocks
+--unpad-paren
+--pad-header
+
+
