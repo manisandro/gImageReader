@@ -62,8 +62,8 @@ public:
 	}
 	QModelIndex indexAtItem(const HOCRItem* item) const;
 	bool editItemAttribute(const QModelIndex& index, const QString& name, const QString& value, const QString& attrItemClass = QString());
-	QModelIndex moveItem(const QModelIndex& itemIndex, const QModelIndex& newParent, int row);
-	QModelIndex swapItems(const QModelIndex& parent, int startRow, int endRow);
+	QModelIndex moveItem(const QModelIndex& itemIndex, const QModelIndex& newParent, int newRow);
+	QModelIndex swapItems(const QModelIndex& parent, int firstRow, int secondRow);
 	QModelIndex mergeItems(const QModelIndex& parent, int startRow, int endRow);
 	QModelIndex splitItem(const QModelIndex& itemIndex, int startRow, int endRow);
 	QModelIndex splitItemText(const QModelIndex& itemIndex, int pos);
@@ -208,7 +208,7 @@ protected:
 
 	// All mutations must be done through methods of HOCRDocument
 	void addChild(HOCRItem* child);
-	void insertChild(HOCRItem* child, int index);
+	void insertChild(HOCRItem* child, int i);
 	void removeChild(HOCRItem* child);
 	void takeChild(HOCRItem* child);
 	QVector<HOCRItem*> takeChildren();

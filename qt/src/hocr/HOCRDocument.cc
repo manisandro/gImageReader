@@ -125,7 +125,7 @@ QModelIndex HOCRDocument::indexAtItem(const HOCRItem* item) const {
 		parent = parent->parent();
 	}
 	QModelIndex idx;
-	for (HOCRItem* parent : parents) {
+	for(const HOCRItem* parent : parents) {
 		idx = index(parent->index(), 0, idx);
 	}
 	return index(item->index(), 0, idx);
@@ -941,16 +941,16 @@ void HOCRItem::getPropagatableAttributes(QMap<QString, QMap<QString, QSet<QStrin
 
 	QString childClass = m_childItems.isEmpty() ? "" : m_childItems.front()->itemClass();
 	auto it = s_propagatableAttributes.find(childClass);
-	if (it != s_propagatableAttributes.end()) {
-		for (HOCRItem* child : m_childItems) {
+	if(it != s_propagatableAttributes.end()) {
+		for(const HOCRItem* child : m_childItems) {
 			QMap<QString, QString> attrs = child->getAttributes(it.value());
 			for (auto attrIt = attrs.begin(), attrItEnd = attrs.end(); attrIt != attrItEnd; ++attrIt) {
 				occurrences[childClass][attrIt.key()].insert(attrIt.value());
 			}
 		}
 	}
-	if (childClass != "ocrx_word") {
-		for (HOCRItem* child : m_childItems) {
+	if(childClass != "ocrx_word") {
+		for(const HOCRItem* child : m_childItems) {
 			child->getPropagatableAttributes(occurrences);
 		}
 	}
