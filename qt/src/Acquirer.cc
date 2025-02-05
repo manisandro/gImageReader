@@ -135,9 +135,9 @@ void Acquirer::startScan() {
 	ui.pushButtonScanCancel->setVisible(true);
 	ui.labelScanMessage->setText(_("Starting scan..."));
 
-	double dpi[] = {75.0, 100.0, 200.0, 300.0, 600.0, 1200.0};
-	Scanner::ScanMode modes[] = {Scanner::ScanMode::GRAY, Scanner::ScanMode::COLOR};
-	Scanner::ScanType types[] = {Scanner::ScanType::SINGLE, Scanner::ScanType::ADF_FRONT, Scanner::ScanType::ADF_BACK, Scanner::ScanType::ADF_BOTH};
+	const double dpi[] = {75.0, 100.0, 200.0, 300.0, 600.0, 1200.0};
+	const Scanner::ScanMode modes[] = {Scanner::ScanMode::GRAY, Scanner::ScanMode::COLOR};
+	const Scanner::ScanType types[] = {Scanner::ScanType::SINGLE, Scanner::ScanType::ADF_FRONT, Scanner::ScanType::ADF_BACK, Scanner::ScanType::ADF_BOTH};
 	genOutputPath();
 	QString device = ui.comboBoxScanDevice->itemData(ui.comboBoxScanDevice->currentIndex()).toString();
 	Scanner::Params params = {device, m_outputPath, dpi[ui.comboBoxScanResolution->currentIndex()], modes[ui.comboBoxScanMode->currentIndex()], 8, types[ui.comboBoxScanSource->currentIndex()], 0, 0};

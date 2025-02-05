@@ -281,7 +281,7 @@ bool Displayer::renderImage() {
 		return false;
 	}
 	QImage image = renderer->render(m_currentSource->page, m_currentSource->resolution);
-	if (image.isNull()) {
+	if (image.isNull() || !m_imageItem) {
 		return false;
 	}
 	renderer->adjustImage(image, m_currentSource->brightness, m_currentSource->contrast, m_currentSource->invert);
@@ -536,6 +536,8 @@ void Displayer::wheelEvent(QWheelEvent* event) {
 
 QPointF Displayer::mapToSceneClamped(const QPoint& p) const {
 	QPointF q = mapToScene(p);
+	if (!m_imageItem)
+		return q;
 	QRectF bb = m_imageItem->sceneBoundingRect();
 	q.rx() = std::min(std::max(bb.x(), q.x()), bb.x() + bb.width());
 	q.ry() = std::min(std::max(bb.y(), q.y()), bb.y() + bb.height());
