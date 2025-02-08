@@ -128,6 +128,7 @@ void SubstitutionsManager::openList() {
 			m_tableWidget->setItem(row, 0, new QTableWidgetItem(fields[0]));
 			m_tableWidget->setItem(row, 1, new QTableWidgetItem(fields[1]));
 		}
+		file.close();
 		m_tableWidget->blockSignals(false);
 		if (errors) {
 			QMessageBox::warning(this, _("Errors Occurred Reading File"), _("Some entries of the substitutions list could not be read."));
@@ -150,6 +151,7 @@ bool SubstitutionsManager::saveList() {
 		QString line = QString("%1\t%2\n").arg(m_tableWidget->item(row, 0)->text()).arg(m_tableWidget->item(row, 1)->text());
 		file.write(MAIN->getConfig()->useUtf8() ? line.toUtf8() : line.toLocal8Bit());
 	}
+	file.close();
 	return true;
 }
 
