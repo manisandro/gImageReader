@@ -152,7 +152,7 @@ int SourceManager::addSources(const QStringList& files, bool suppressWarnings) {
 			ui.treeViewSources->expand(parent);
 			parent = parent.parent();
 		}
-		ui.treeViewSources->setCurrentIndex(sel.indexes().front());
+		ui.treeViewSources->selectionModel()->setCurrentIndex(sel.indexes().front(), QItemSelectionModel::Select);
 	}
 	ui.treeViewSources->selectionModel()->blockSignals(false);
 	ui.treeViewSources->setUpdatesEnabled(true);
