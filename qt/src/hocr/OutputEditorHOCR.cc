@@ -156,7 +156,7 @@ HOCRAttributeCheckbox::HOCRAttributeCheckbox(Qt::CheckState value, HOCRDocument*
 	: m_doc(doc), m_itemIndex(itemIndex), m_attrName(attrName), m_attrItemClass(attrItemClass) {
 	setCheckState(value);
 	connect(m_doc, &HOCRDocument::itemAttributeChanged, this, &HOCRAttributeCheckbox::updateValue);
-	connect(this, &HOCRAttributeCheckbox::stateChanged, this, &HOCRAttributeCheckbox::valueChanged);
+	connect(this, &HOCRAttributeCheckbox::checkStateChanged, this, &HOCRAttributeCheckbox::valueChanged);
 }
 
 void HOCRAttributeCheckbox::updateValue(const QModelIndex& itemIndex, const QString& name, const QString& value) {
