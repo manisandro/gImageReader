@@ -156,6 +156,10 @@ IF("${INTERFACE_TYPE}" STREQUAL "gtk")
         ${LIBZIP_LDFLAGS}
     )
     SET(srcdir "gtk")
+    # Fix symbol collision
+    IF(MINGW)
+        ADD_DEFINITIONS(-DNODRAWTEXT)
+    ENDIF(MINGW)
 ELSEIF("${INTERFACE_TYPE}" STREQUAL "qt5" OR "${INTERFACE_TYPE}" STREQUAL "qt6")
     STRING(REGEX REPLACE "^qt" "" QT_VER "${INTERFACE_TYPE}")
 
