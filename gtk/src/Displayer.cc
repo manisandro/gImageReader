@@ -431,7 +431,7 @@ void Displayer::setRotateMode(RotateMode mode, const std::string& iconName) {
 
 void Displayer::setAngle(double angle) {
 	if (m_image) {
-		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle,
+		angle = angle < 0 ? angle + 360. : angle >= 360 ? angle - 360 : angle;
 		Utils::set_spin_blocked(ui.spinRotate, angle, m_connection_rotSpinChanged);
 		int sourcePage = m_pageMap[getCurrentPage()].second;
 		double delta = angle - m_currentSource->angle[sourcePage - 1];
@@ -441,7 +441,7 @@ void Displayer::setAngle(double angle) {
 			for (const auto& keyval  : m_pageMap) {
 				auto pair = keyval.second;
 				double newangle = pair.first->angle[pair.second - 1] + delta;
-				newangle = newangle < 0.0 ? newangle + 360.0 : newangle >= 360.0 ? newangle - 360.0 : newangle,
+				newangle = newangle < 0.0 ? newangle + 360.0 : newangle >= 360.0 ? newangle - 360.0 : newangle;
 				pair.first->angle[pair.second - 1] = newangle;
 			}
 		}
