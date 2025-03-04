@@ -536,8 +536,9 @@ void Displayer::wheelEvent(QWheelEvent* event) {
 
 QPointF Displayer::mapToSceneClamped(const QPoint& p) const {
 	QPointF q = mapToScene(p);
-	if (!m_imageItem)
+	if (!m_imageItem) {
 		return q;
+	}
 	QRectF bb = m_imageItem->sceneBoundingRect();
 	q.rx() = std::min(std::max(bb.x(), q.x()), bb.x() + bb.width());
 	q.ry() = std::min(std::max(bb.y(), q.y()), bb.y() + bb.height());
