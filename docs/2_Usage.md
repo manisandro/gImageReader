@@ -18,7 +18,7 @@
   as well as rotate the image by an arbitrary angle![](https://raw.githubusercontent.com/manisandro/gImageReader/master/packaging/win32/skel/share/icons/hicolor/22x22/actions/object-rotate-left.png)![](https://raw.githubusercontent.com/manisandro/gImageReader/master/packaging/win32/skel/share/icons/hicolor/22x22/actions/object-rotate-right.png)![](https://raw.githubusercontent.com/manisandro/gImageReader/master/data/icons/rotate_page.svg).
    Zooming can also be  performed by scrolling on the image with the CTRL key pressed.
 - Basic image manipulation tools are provided in the *image controls toolbar*, which is activated by clicking on the *image controls button* ![](https://raw.githubusercontent.com/manisandro/gImageReader/master/data/icons/controls.png) in the *main toolbar*. The provided tools currently allow brightness![](https://raw.githubusercontent.com/manisandro/gImageReader/master/data/icons/brightness.png) and contrast ![](https://raw.githubusercontent.com/manisandro/gImageReader/master/data/icons/contrast.png) adjustments  as well as adjusting the image resolution ![](https://raw.githubusercontent.com/manisandro/gImageReader/master/data/icons/resolution.png) (through interpolation).
-- Multiple images can be selected, which allowes the user to process multiple images in one go (see below).
+- Multiple images can be selected, which allows the user to process multiple images in one go (see below).
 
 ## Preparing for recognition
 

@@ -67,7 +67,7 @@ gImageReader 3.4.1 (Jan 29 2023):
 gImageReader 3.4.0 (Jan 28 2022):
 * Add support for tesseract 5.0
 * Add Qt6 support
-* Add thumbail view for source documents
+* Add thumbnail view for source documents
 * Add batch mode for recognizing multiple documents
 * Display sources in a tree
 * Allow opening output files directly from the source tree if they exist next to the source with the same basename
@@ -188,7 +188,7 @@ gImageReader 3.1.91 (May 03 2016):
  * gImageReader 3.2 beta 2
  * Fix crash when editing items in the hOCR editor
  * Fix build with Ubuntu 14.04
- * Updated czech translation
+ * Updated Czech translation
  * Fix some string typos
  * Full details in commit log: https://github.com/manisandro/gImageReader/commits/master
 
@@ -212,7 +212,7 @@ gImageReader 3.1.2 (Jun 30 2015):
 gImageReader 3.1.1 (Jun 11 2015):
  * Fix titlebar now shown when window maximized in Gnome 3
  * New translations: Chinese (Hong Kong), Chinese (Taiwan)
- * Updated translations: Russian, Portoguese
+ * Updated translations: Russian, Portuguese
 
 gImageReader 3.1 (May 1 2015):
  * Add option to draw whitespace
@@ -296,7 +296,7 @@ gImageReader 2.90 (Feb 11 2014):
 <ul>
     <li>Use the buttons in the <i>main toolbar</i> to zoom in and out as well as rotate the image by an arbitrary angle. Zooming can also be performed by scrolling on the image with the CTRL key pressed.</li>
     <li>Basic image manipulation tools are provided in the <i>image controls toolbar</i>, which is activated by clicking on the <i>image controls button</i> in the <i>main toolbar</i>. The provided tools currently allow brightness and contrast adjustments as well as adjusting the image resolution (through interpolation).</li>
-    <li>Multiple images can be selected, which allowes the user to process multiple images in one go (see below).</li>
+    <li>Multiple images can be selected, which allows the user to process multiple images in one go (see below).</li>
 </ul>
 <h3><a name="Usage_Recognition">Preparing for recognition</a></h3>
 <ul>
@@ -350,7 +350,7 @@ gImageReader 2.90 (Feb 11 2014):
     </li>
     <li>When exporting to PDF, the user is prompted for the font family to use, whether to honour the font sizes detected by the OCR engine, and whether to attempt to homogenize the text line spacing. Also, the user can select the color format, resolution and compression method to use for images in the PDF document to control the size of the generated output.</li>
     <li>Besides PDF, the hOCR document can also be exported to plain text and ODT.</li>
-    <li>The <i>HOCR Batch Export</i> button in the main toolbar allows batch-exporting a collection of hOCR HTML files to PDF/ODT/Text. All hOCR HTML files below the selected source folder are processed and corresponding PDF/ODT/Text files are written next to the HTML files. The <i>Group outputs of N lowest levels</i> option allows specifing that the HTML files of the N lowest hierarchy levels of the source tree are stored into a single exported PDF/ODT/Text file N folder levels above the lowest level.</li>
+    <li>The <i>HOCR Batch Export</i> button in the main toolbar allows batch-exporting a collection of hOCR HTML files to PDF/ODT/Text. All hOCR HTML files below the selected source folder are processed and corresponding PDF/ODT/Text files are written next to the HTML files. The <i>Group outputs of N lowest levels</i> option allows specifying that the HTML files of the N lowest hierarchy levels of the source tree are stored into a single exported PDF/ODT/Text file N folder levels above the lowest level.</li>
 </ul>
 <h3><a name="Usage_Options">Program options</a></h3>
 <ul>
