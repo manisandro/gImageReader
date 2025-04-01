@@ -54,7 +54,7 @@ void DisplayRenderer::adjustImage(QImage& image, int brightness, int contrast, b
 			int red = qRed(rgb[i]);
 			int green = qGreen(rgb[i]);
 			int blue = qBlue(rgb[i]);
-			// Brighntess
+			// Brightness
 			red = dBr * (1.0 - kBr) + red * kBr;
 			green = dBr * (1.0 - kBr) + green * kBr;
 			blue = dBr * (1.0 - kBr) + blue * kBr;
