@@ -15,7 +15,7 @@ SET(PACKAGE_LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/share/locale")
 
 
 # Variables
-SET(INTERFACE_TYPE "qt5" CACHE STRING "Select interface type: qt5/qt6/gtk")
+SET(INTERFACE_TYPE "qt6" CACHE STRING "Select interface type: qt5/qt6/gtk")
 MESSAGE(STATUS "${INTERFACE_TYPE} interface will be built")
 SET(MANUAL_DIR "share/doc/gimagereader" CACHE PATH "Path where manual will be installed")
 SET(ENABLE_VERSIONCHECK 1 CACHE BOOL "Enable version check")
