@@ -210,7 +210,7 @@ protected:
 	void addChild(HOCRItem* child);
 	void insertChild(HOCRItem* child, int i);
 	void removeChild(HOCRItem* child);
-	void takeChild(HOCRItem* child);
+	void takeChild(const HOCRItem* child);
 	QVector<HOCRItem*> takeChildren();
 	void setEnabled(bool enabled) {
 		m_enabled = enabled;
