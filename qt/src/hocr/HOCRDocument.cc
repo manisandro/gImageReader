@@ -119,7 +119,7 @@ QModelIndex HOCRDocument::insertPage(int beforeIdx, const QDomElement& pageEleme
 
 QModelIndex HOCRDocument::indexAtItem(const HOCRItem* item) const {
 	QList<HOCRItem*> parents;
-	HOCRItem* parent = item->parent();
+	const HOCRItem* parent = item->parent();
 	while (parent) {
 		parents.prepend(parent);
 		parent = parent->parent();
@@ -245,7 +245,7 @@ QModelIndex HOCRDocument::splitItem(const QModelIndex& itemIndex, int startRow, 
 	if (endRow - startRow < 0) {
 		return QModelIndex();
 	}
-	HOCRItem* item = mutableItemAtIndex(itemIndex);
+	const HOCRItem* item = mutableItemAtIndex(itemIndex);
 	if (!item) {
 		return QModelIndex();
 	}
@@ -279,7 +279,7 @@ QModelIndex HOCRDocument::splitItem(const QModelIndex& itemIndex, int startRow, 
 }
 
 QModelIndex HOCRDocument::splitItemText(const QModelIndex& itemIndex, int pos) {
-	HOCRItem* item = mutableItemAtIndex(itemIndex);
+	const HOCRItem* item = mutableItemAtIndex(itemIndex);
 	if (!item || item->itemClass() != "ocrx_word") {
 		return QModelIndex();
 	}
@@ -454,14 +454,14 @@ QList<QModelIndex> HOCRDocument::recheckItemSpelling(const QModelIndex& index) c
 	// handle some hyphenated words
 	// don't bother with words not broken over sibling text lines (ie interrupted by other blocks), it's human hard
 	// don't bother with words broken over three or more lines, it's implausible and this treatment is ^ necessarily incomplete
-	HOCRItem* line = item->parent();
+	const HOCRItem* line = item->parent();
 	if (!line) { return {index}; }
-	HOCRItem* paragraph = line->parent();
+	const HOCRItem* paragraph = line->parent();
 	if (!paragraph) { return {index}; }
 	int lineIdx = line->index();
 	const QVector<HOCRItem*>& paragraphLines = paragraph->children();
 	if (item == line->children().front() && lineIdx > 0) {
-		HOCRItem* prevLine = paragraphLines.at(lineIdx - 1);
+		const HOCRItem* prevLine = paragraphLines.at(lineIdx - 1);
 		if (!prevLine || prevLine->children().isEmpty()) { return {index}; }
 		HOCRItem* prevWord = prevLine->children().back();
 		if (!prevWord || prevWord->itemClass() != "ocrx_word") { return {index}; }
@@ -474,7 +474,7 @@ QList<QModelIndex> HOCRDocument::recheckItemSpelling(const QModelIndex& index) c
 		prevWord->setMisspelled(!valid);
 		return {index, indexAtItem(prevWord) };
 	} else if (item == line->children().back() && lineIdx + 1 < paragraphLines.size() && item->text().endsWith("-")) {
-		HOCRItem* nextLine = paragraphLines.at(lineIdx + 1);
+		const HOCRItem* nextLine = paragraphLines.at(lineIdx + 1);
 		if (!nextLine || nextLine->children().isEmpty()) { return {index}; }
 		HOCRItem* nextWord = nextLine->children().front();
 		if (!nextWord || nextWord->itemClass() != "ocrx_word") { return {index}; }
@@ -561,7 +561,7 @@ QVariant HOCRDocument::data(const QModelIndex& index, int role) const {
 		return QVariant();
 	}
 
-	HOCRItem* item = mutableItemAtIndex(index);
+	const HOCRItem* item = mutableItemAtIndex(index);
 
 	if (index.column() == 0) {
 		switch (role) {
@@ -642,7 +642,7 @@ Qt::ItemFlags HOCRDocument::flags(const QModelIndex& index) const {
 		return Qt::ItemFlags();
 	}
 
-	HOCRItem* item = mutableItemAtIndex(index);
+	const HOCRItem* item = mutableItemAtIndex(index);
 	return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | (item->itemClass() == "ocrx_word" && index.column() == 0 ? Qt::ItemIsEditable : Qt::NoItemFlags);
 }
 
@@ -655,7 +655,7 @@ QModelIndex HOCRDocument::index(int row, int column, const QModelIndex& parent) 
 	if (!parent.isValid()) {
 		childItem = m_pages.value(row);
 	} else {
-		HOCRItem* parentItem = mutableItemAtIndex(parent);
+		const HOCRItem* parentItem = mutableItemAtIndex(parent);
 		childItem = parentItem->children().value(row);
 	}
 	return childItem ? createIndex(row, column, childItem) : QModelIndex();
@@ -752,7 +752,7 @@ void HOCRDocument::deleteItem(HOCRItem* item) {
 void HOCRDocument::takeItem(HOCRItem* item) {
 	if (item->parent()) {
 		item->parent()->takeChild(item);
-	} else if (HOCRPage* page = dynamic_cast<HOCRPage*> (item)) {
+	} else if (const HOCRPage* page = dynamic_cast<HOCRPage*> (item)) {
 		int i = page->index();
 		m_pages.remove(i);
 		for (int n = m_pages.size(); i < n; ++i) {
@@ -879,7 +879,7 @@ void HOCRItem::removeChild(HOCRItem* child) {
 	delete child;
 }
 
-void HOCRItem::takeChild(HOCRItem* child) {
+void HOCRItem::takeChild(const HOCRItem* child) {
 	if (this != child->parent()) {
 		return;
 	}

@@ -361,11 +361,11 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 	}
 
 	const QVector<HOCRItem*>& siblings = lineItem->parent()->children();
-	int targetLine = lineItem->index();
 	if (lineItem != m_currentLine || force) {
 		// Rebuild widget
 		QMap<const HOCRItem*, QWidget*> newLines;
 		int insPos = 0;
+		int targetLine = lineItem->index();
 		for (int i = qMax(0, targetLine - nrLinesBefore), j = qMin(siblings.size() - 1, targetLine + nrLinesAfter); i <= j; ++i) {
 			HOCRItem* linei = siblings[i];
 			if (m_currentLines.contains(linei)) {
@@ -414,9 +414,9 @@ void HOCRProofReadWidget::repositionWidget() {
 		QPoint bottomLeft = displayer->mapFromScene(lineEdit->item()->bbox().translated(sceneCorner).bottomLeft());
 		frameXmin = std::min(frameXmin, bottomLeft.x());
 	}
-	QPoint bottomLeft = displayer->mapFromScene(m_currentLine->bbox().translated(sceneCorner).bottomLeft());
+	QPoint bottomLeftTmp = displayer->mapFromScene(m_currentLine->bbox().translated(sceneCorner).bottomLeft());
 	QPoint topLeft = displayer->mapFromScene(m_currentLine->bbox().translated(sceneCorner).topLeft());
-	int frameY = bottomLeft.y();
+	int frameY = bottomLeftTmp.y();
 
 	// Recompute font sizes so that text matches original as closely as possible
 	QFont ft = font();

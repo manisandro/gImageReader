@@ -91,7 +91,7 @@ void HOCRBatchExportDialog::setExportFormat() {
 	ExportMode mode = static_cast<ExportMode> (ui.comboBoxFormat->currentData().toInt());
 	if (mode == ExportPdf) {
 		if (!m_pdfExportWidget) {
-			OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*> (MAIN->getOutputEditor());
+			const OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*> (MAIN->getOutputEditor());
 			m_pdfExportWidget = new HOCRPdfExportWidget(editor->getTool());
 			ui.tabOptions->layout()->addWidget(m_pdfExportWidget);
 		}
@@ -200,7 +200,7 @@ void HOCRBatchExportDialog::updateExportPreview() {
 	}
 	OutputEditorHOCR* editor = static_cast<OutputEditorHOCR*> (MAIN->getOutputEditor());
 	editor->open(OutputEditorHOCR::InsertMode::Replace, m_outputMap.first());
-	HOCRDocument* document = editor->getDocument();
+	const HOCRDocument* document = editor->getDocument();
 	editor->selectPage(0);
 	m_pdfExportWidget->setPreviewPage(document->pageCount() > 0 ? document : nullptr, document->pageCount() > 0 ? document->page(0) : nullptr);
 }
