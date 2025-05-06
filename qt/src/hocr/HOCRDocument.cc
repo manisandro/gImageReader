@@ -118,7 +118,7 @@ QModelIndex HOCRDocument::insertPage(int beforeIdx, const QDomElement& pageEleme
 }
 
 QModelIndex HOCRDocument::indexAtItem(const HOCRItem* item) const {
-	QList<HOCRItem*> parents;
+	QList<const HOCRItem*> parents;
 	const HOCRItem* parent = item->parent();
 	while (parent) {
 		parents.prepend(parent);
