@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 23:16+0100\n"
-"PO-Revision-Date: 2023-08-26 11:53+0000\n"
+"PO-Revision-Date: 2025-05-28 06:29+0000\n"
 "Last-Translator: eevan78 <ivan.pesic@gmail.com>\n"
 "Language-Team: Serbian <https://hosted.weblate.org/projects/gimagereader/"
 "translations/sr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: ../data/gimagereader.desktop.in.h:1
 msgid "OCR application"
@@ -50,7 +50,7 @@ msgstr "О програму"
 
 #: ../gtk/data/appmenu.ui.h:6
 msgid "Quit"
-msgstr "Излаз"
+msgstr "Изађи"
 
 #: ../gtk/data/CharacterListDialog.ui.h:1 ../qt/data/CharacterListDialog.ui.h:1
 msgid "Character whitelist / blacklist"
