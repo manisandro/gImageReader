@@ -18,6 +18,7 @@ dnf install -y \
   \
   mingw32-gdb \
   mingw32-gcc-c++ \
+  mingw32-bzip2 \
   mingw32-dlfcn \
   mingw32-djvulibre \
   mingw32-libgomp \
@@ -48,6 +49,7 @@ dnf install -y \
   \
   mingw64-gdb \
   mingw64-gcc-c++ \
+  mingw64-bzip2 \
   mingw64-dlfcn \
   mingw64-djvulibre \
   mingw64-libgomp \
