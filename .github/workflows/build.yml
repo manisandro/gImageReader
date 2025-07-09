@@ -34,9 +34,9 @@ jobs:
 
       - name: Build application
         run: |
-          ./packaging/win32/makeinstaller.sh i686 qt6 nodebug ${{ steps.version_number.outputs.version }}
-          ./packaging/win32/makeinstaller.sh x86_64 qt6 nodebug ${{ steps.version_number.outputs.version }}
-          ./packaging/win32/makeinstaller.sh x86_64 gtk nodebug ${{ steps.version_number.outputs.version }}
+          PATH=/usr/bin ./packaging/win32/makeinstaller.sh i686 qt6 nodebug ${{ steps.version_number.outputs.version }}
+          PATH=/usr/bin ./packaging/win32/makeinstaller.sh x86_64 qt6 nodebug ${{ steps.version_number.outputs.version }}
+          PATH=/usr/bin ./packaging/win32/makeinstaller.sh x86_64 gtk nodebug ${{ steps.version_number.outputs.version }}
 
       - name: Reset ci-latest tag
         run: |
