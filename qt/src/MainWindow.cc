@@ -146,6 +146,14 @@ MainWindow::MainWindow(const QStringList& files)
 	ui.centralwidget->layout()->addWidget(m_displayer);
 	ui.toolBarMain->setLayoutDirection(Qt::LeftToRight);
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	QAction* quitAction = addAction(tr("Quit"), QKeySequence(Qt::CTRL | Qt::Key_Q));
+#else
+	QAction* quitAction = addAction(tr("Quit"), QKeySequence(Qt::CTRL + Qt::Key_Q));
+#endif
+	quitAction->setShortcutContext(Qt::ApplicationShortcut);
+	connect(quitAction, &QAction::triggered, [this] { close(); });
+
 	m_idleActions.setExclusive(false);
 	m_idleActions.addAction(ui.actionZoomIn);
 	m_idleActions.addAction(ui.actionZoomOut);
