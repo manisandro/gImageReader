@@ -416,7 +416,11 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const QString& filename, cons
 			                                     PoDoFo::PdfPermissions::Accessible |
 			                                     PoDoFo::PdfPermissions::DocAssembly |
 			                                     PoDoFo::PdfPermissions::HighPrint,
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(1, 0, 0)
 			                                     PoDoFo::PdfEncryptAlgorithm::RC4V2);
+#else
+			                                     PoDoFo::PdfEncryptionAlgorithm::RC4V2);
+#endif
 		}
 		PoDoFo::PdfVersion pdfVersion = PoDoFo::PdfVersionDefault;
 		switch (settings.version) {
@@ -590,7 +594,11 @@ void HOCRPoDoFoPdfPrinter::drawImage(const QRect& bbox, const QImage& image, con
 		PoDoFo::PdfMemoryInputStream is(buf.data(), buf.size());
 		pdfImage.SetImageData(width, height, sampleSize, &is, {PoDoFo::ePdfFilter_FlateDecode});
 #else
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(1, 0, 0)
 		PoDoFo::PdfColorSpace colorSpace = img.format() == QImage::Format_RGB888 ? PoDoFo::PdfColorSpace::DeviceRGB : PoDoFo::PdfColorSpace::DeviceGray;
+#else
+		PoDoFo::PdfColorSpaceType colorSpace = img.format() == QImage::Format_RGB888 ? PoDoFo::PdfColorSpaceType::DeviceRGB : PoDoFo::PdfColorSpaceType::DeviceGray;
+#endif
 		PoDoFo::PdfImageInfo info;
 		info.Width = width;
 		info.Height = height;
@@ -625,7 +633,11 @@ void HOCRPoDoFoPdfPrinter::drawImage(const QRect& bbox, const QImage& image, con
 		PoDoFo::PdfMemoryInputStream is(reinterpret_cast<char*> (encoded), encodedLen);
 		pdfImage.SetImageDataRaw(img.width(), img.height(), sampleSize, &is);
 #else
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(1, 0, 0)
 		PoDoFo::PdfColorSpace colorSpace = PoDoFo::PdfColorSpace::DeviceGray;
+#else
+		PoDoFo::PdfColorSpaceType colorSpace = PoDoFo::PdfColorSpaceType::DeviceGray;
+#endif
 		PoDoFo::PdfImageInfo info;
 		info.Width = width;
 		info.Height = height;
@@ -677,13 +689,14 @@ PoDoFo::PdfFont* HOCRPoDoFoPdfPrinter::getFont(QString family, bool bold, bool i
 		try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
 			PoDoFo::PdfFontSearchParams params;
-			params.Style = PoDoFo::PdfFontStyle::Regular;
+			PoDoFo::PdfFontStyle style = PoDoFo::PdfFontStyle::Regular;
 			if (bold) {
-				*params.Style |= PoDoFo::PdfFontStyle::Bold;
+				style |= PoDoFo::PdfFontStyle::Bold;
 			}
 			if (italic) {
-				*params.Style |= PoDoFo::PdfFontStyle::Italic;
+				style |= PoDoFo::PdfFontStyle::Italic;
 			}
+			params.Style = style;
 			font = m_document->GetFonts().SearchFont(family.toLocal8Bit().data(), params);
 #else
 			font = m_document->CreateFontSubset(family.toLocal8Bit().data(), bold, italic, false, m_pdfFontEncoding);

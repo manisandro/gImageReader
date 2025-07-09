@@ -385,7 +385,11 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const std::string& filename, 
 			                                     PoDoFo::PdfPermissions::Accessible |
 			                                     PoDoFo::PdfPermissions::DocAssembly |
 			                                     PoDoFo::PdfPermissions::HighPrint,
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(1, 0, 0)
 			                                     PoDoFo::PdfEncryptAlgorithm::RC4V2);
+#else
+			                                     PoDoFo::PdfEncryptionAlgorithm::RC4V2);
+#endif
 		}
 		PoDoFo::PdfVersion pdfVersion = PoDoFo::PdfVersionDefault;
 		switch (settings.version) {
@@ -546,7 +550,11 @@ void HOCRPoDoFoPdfPrinter::drawImage(const Geometry::Rectangle& bbox, const Cair
 		PoDoFo::PdfMemoryInputStream is(reinterpret_cast<const char*> (img.data), PoDoFo::pdf_long(img.bytesPerLine) * img.height);
 		pdfImage.SetImageData(img.width, img.height, img.sampleSize, &is, {PoDoFo::ePdfFilter_FlateDecode});
 #else
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(1, 0, 0)
 		PoDoFo::PdfColorSpace colorSpace = settings.colorFormat == Image::Format_RGB24 ? PoDoFo::PdfColorSpace::DeviceRGB : PoDoFo::PdfColorSpace::DeviceGray;
+#else
+		PoDoFo::PdfColorSpaceType colorSpace = settings.colorFormat == Image::Format_RGB24 ? PoDoFo::PdfColorSpaceType::DeviceRGB : PoDoFo::PdfColorSpaceType::DeviceGray;
+#endif
 		PoDoFo::PdfImageInfo info;
 		info.Width = img.width;
 		info.Height = img.height;
@@ -582,7 +590,11 @@ void HOCRPoDoFoPdfPrinter::drawImage(const Geometry::Rectangle& bbox, const Cair
 		PoDoFo::PdfMemoryInputStream is(reinterpret_cast<char*> (encoded), encodedLen);
 		pdfImage.SetImageDataRaw(img.width, img.height, img.sampleSize, &is);
 #else
+#if PODOFO_VERSION < PODOFO_MAKE_VERSION(1, 0, 0)
 		PoDoFo::PdfColorSpace colorSpace = PoDoFo::PdfColorSpace::DeviceGray;
+#else
+		PoDoFo::PdfColorSpaceType colorSpace = PoDoFo::PdfColorSpaceType::DeviceGray;
+#endif
 		PoDoFo::PdfImageInfo info;
 		info.Width = img.width;
 		info.Height = img.height;
@@ -634,13 +646,14 @@ PoDoFo::PdfFont* HOCRPoDoFoPdfPrinter::getFont(Glib::ustring family, bool bold, 
 		try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
 			PoDoFo::PdfFontSearchParams params;
-			params.Style = PoDoFo::PdfFontStyle::Regular;
+			PoDoFo::PdfFontStyle style = PoDoFo::PdfFontStyle::Regular;
 			if (bold) {
-				*params.Style |= PoDoFo::PdfFontStyle::Bold;
+				style |= PoDoFo::PdfFontStyle::Bold;
 			}
 			if (italic) {
-				*params.Style |= PoDoFo::PdfFontStyle::Italic;
+				style |= PoDoFo::PdfFontStyle::Italic;
 			}
+			params.Style = style;
 			font = m_document->GetFonts().SearchFont(Utils::resolveFontName(family).raw(), params);
 #else
 			font = m_document->CreateFontSubset(Utils::resolveFontName(family).c_str(), bold, italic, false, m_pdfFontEncoding);
