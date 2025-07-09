@@ -387,9 +387,12 @@ void HOCRProofReadWidget::updateWidget(bool force) {
 	}
 
 	// Select selected word or first item of middle line
-	LineEdit* focusLineEdit = static_cast<LineEdit*> (m_currentLines[lineItem]->children() [wordItem ? wordItem->index() : 0]);
-	if (focusLineEdit && !m_treeView->hasFocus()) {
-		focusLineEdit->setFocus();
+	QObjectList lineChildren = m_currentLines[lineItem]->children();
+	if (!lineChildren.empty()) {
+		LineEdit* focusLineEdit = static_cast<LineEdit*>(lineChildren[wordItem ? wordItem->index() : 0]);
+		if (focusLineEdit && !m_treeView->hasFocus()) {
+			focusLineEdit->setFocus();
+		}
 	}
 
 }
