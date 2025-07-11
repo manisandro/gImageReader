@@ -94,6 +94,8 @@ Utils::Button::Type Utils::messageBox(Gtk::MessageType type,
 
 
 	Gtk::Label label(text);
+	label.set_line_wrap(true);
+	label.set_max_width_chars(80);
 	label.set_xalign(0);
 	grid.attach(label, 1, 0);
 	grid.set_column_spacing(6);
@@ -110,6 +112,7 @@ Utils::Button::Type Utils::messageBox(Gtk::MessageType type,
 	if (!body.empty()) {
 		textView.set_editable(false);
 		textView.set_cursor_visible(false);
+		textView.set_wrap_mode(Gtk::WRAP_WORD);
 		Glib::RefPtr<Gtk::TextBuffer> buffer = Gtk::TextBuffer::create();
 		buffer->set_text(body);
 		textView.set_buffer(buffer);
