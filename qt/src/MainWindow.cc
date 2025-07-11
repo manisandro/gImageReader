@@ -149,7 +149,9 @@ MainWindow::MainWindow(const QStringList& files)
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 	QAction* quitAction = addAction(tr("Quit"), QKeySequence(Qt::CTRL | Qt::Key_Q));
 #else
-	QAction* quitAction = addAction(tr("Quit"), QKeySequence(Qt::CTRL + Qt::Key_Q));
+	QAction* quitAction = new QAction(tr("Quit"));
+	addAction(quitAction);
+	quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
 #endif
 	quitAction->setShortcutContext(Qt::ApplicationShortcut);
 	connect(quitAction, &QAction::triggered, [this] { close(); });
