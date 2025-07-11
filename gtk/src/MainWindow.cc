@@ -307,7 +307,7 @@ void MainWindow::progressUpdate() {
 }
 
 bool MainWindow::closeEvent(GdkEventAny*) {
-	if (!m_outputEditor->clear()) {
+	if (!canClose()) {
 		return true;
 	}
 
@@ -319,6 +319,10 @@ bool MainWindow::closeEvent(GdkEventAny*) {
 	}
 	ui.windowMain->hide();
 	return false;
+}
+
+bool MainWindow::canClose() {
+	return m_outputEditor->clear();
 }
 
 void MainWindow::onSourceChanged() {

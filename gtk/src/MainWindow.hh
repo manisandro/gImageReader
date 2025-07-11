@@ -122,6 +122,7 @@ public:
 	void popState();
 	void showProgress(ProgressMonitor* monitor, int updateInterval = 500);
 	void hideProgress();
+	bool canClose();
 
 private:
 	static void signalHandlerExec(int signal, bool tesseractCrash);

@@ -47,6 +47,8 @@ private:
 		add_action("about", [this] { m_mainWindow->showAbout(); });
 		add_action("quit", [this] { on_quit(); });
 
+		set_accel_for_action("app.quit", "<Primary>q");
+
 		Glib::RefPtr<Gtk::Builder> appMenuBuilder = Gtk::Builder::create_from_resource("/org/gnome/gimagereader/appmenu.ui");
 		Glib::RefPtr<Gio::MenuModel> menuModel = Glib::RefPtr<Gio::MenuModel>::cast_static(appMenuBuilder->get_object("appmenu"));
 
@@ -75,6 +77,9 @@ private:
 
 	void on_quit() {
 		if (m_mainWindow) {
+			if (!m_mainWindow->canClose()) {
+				return;
+			}
 			remove_window(*m_mainWindow->getWindow());
 			delete m_mainWindow;
 			m_mainWindow = nullptr;
