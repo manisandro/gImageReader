@@ -106,7 +106,12 @@ bool HOCRPdfExporter::run(const HOCRDocument* hocrdocument, const std::string& o
 					if (!painter->createPage(pageWidth, pageHeight, offsetX, offsetY, errMsg)) {
 						return false;
 					}
-					painter->printChildren(page, *pdfSettings, px2pt, imgScale, double (sourceScale) / sourceDpi, true);
+					try {
+						painter->printChildren(page, *pdfSettings, px2pt, imgScale, double (sourceScale) / sourceDpi, true);
+					} catch (const std::exception& e) {
+						errMsg = e.what();
+						return false;
+					}
 					if (pdfSettings->overlay) {
 						Geometry::Rectangle scaledRect(imgScale * bbox.x, imgScale * bbox.y, imgScale * bbox.width, imgScale * bbox.height);
 						Geometry::Rectangle printRect(bbox.x * px2pt, bbox.y * px2pt, bbox.width * px2pt, bbox.height * px2pt);

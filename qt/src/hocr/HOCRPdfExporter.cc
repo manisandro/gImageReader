@@ -114,7 +114,13 @@ bool HOCRPdfExporter::run(const HOCRDocument* hocrdocument, const QString& outna
 					if (!painter->createPage(pageWidth, pageHeight, offsetX, offsetY, errMsg)) {
 						return false;
 					}
-					painter->printChildren(page, *pdfSettings, px2pt, imgScale, double (sourceScale) / sourceDpi);
+					try {
+						painter->printChildren(page, *pdfSettings, px2pt, imgScale, double (sourceScale) / sourceDpi);
+					} catch (const std::exception& e) {
+						errMsg = e.what();
+						return false;
+					}
+
 					if (pdfSettings->overlay) {
 						QRect scaledRect(imgScale * bbox.left(), imgScale * bbox.top(), imgScale * bbox.width(), imgScale * bbox.height());
 						QRect printRect(bbox.left() * px2pt, bbox.top() * px2pt, bbox.width() * px2pt, bbox.height() * px2pt);
