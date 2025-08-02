@@ -70,14 +70,13 @@ bool HOCRPdfExporter::run(const HOCRDocument* hocrdocument, const QString& outna
 
 	QFont defaultFont(pdfSettings->fallbackFontFamily, pdfSettings->fallbackFontSize);
 
-	HOCRPdfPrinter* painter = nullptr;
-	if (pdfSettings->backend == PDFSettings::BackendPoDoFo) {
-		painter = HOCRPoDoFoPdfPrinter::create(outname, *pdfSettings, defaultFont, errMsg);
-	} else if (pdfSettings->backend == PDFSettings::BackendQPrinter) {
-		painter = new HOCRQPrinterPdfPrinter(outname, pdfSettings->creator, defaultFont);
-	}
-
 	bool success = Utils::busyTask([&] {
+		HOCRPdfPrinter* painter = nullptr;
+		if (pdfSettings->backend == PDFSettings::BackendPoDoFo) {
+			painter = HOCRPoDoFoPdfPrinter::create(outname, *pdfSettings, defaultFont, errMsg);
+		} else if (pdfSettings->backend == PDFSettings::BackendQPrinter) {
+			painter = new HOCRQPrinterPdfPrinter(outname, pdfSettings->creator, defaultFont);
+		}
 		for (int i = 0; i < pageCount; ++i) {
 			if (monitor.cancelled()) {
 				errMsg = _("The operation was cancelled");
@@ -132,9 +131,10 @@ bool HOCRPdfExporter::run(const HOCRDocument* hocrdocument, const QString& outna
 			}
 			monitor.increaseProgress();
 		}
-		return painter->finishDocument(errMsg);
+		bool success = painter->finishDocument(errMsg);
+		delete painter;
+		return success;
 	}, _("Exporting to PDF..."));
-	delete painter;
 	MAIN->hideProgress();
 	if (!success) {
 		QMessageBox::warning(MAIN, _("Export failed"), _("The PDF export failed: %1.").arg(errMsg));

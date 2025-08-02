@@ -65,9 +65,9 @@ bool HOCRPdfExporter::run(const HOCRDocument* hocrdocument, const std::string& o
 		pageHeight = inchSize.height * 72.0;
 	}
 
-	HOCRPdfPrinter* painter = HOCRPoDoFoPdfPrinter::create(outname, *pdfSettings, pdfSettings->fallbackFontFamily, pdfSettings->fallbackFontSize, errMsg);
 
 	bool success = Utils::busyTask([&] {
+		HOCRPdfPrinter* painter = HOCRPoDoFoPdfPrinter::create(outname, *pdfSettings, pdfSettings->fallbackFontFamily, pdfSettings->fallbackFontSize, errMsg);
 		for (int i = 0; i < pageCount; ++i) {
 			if (monitor.cancelled()) {
 				errMsg = _("The operation was cancelled");
@@ -123,9 +123,10 @@ bool HOCRPdfExporter::run(const HOCRDocument* hocrdocument, const std::string& o
 			}
 			monitor.increaseProgress();
 		}
-		return painter->finishDocument(errMsg);
+		bool success = painter->finishDocument(errMsg);
+		delete painter;
+		return success;
 	}, _("Exporting to PDF..."));
-	delete painter;
 	MAIN->hideProgress();
 
 	if (!success) {
