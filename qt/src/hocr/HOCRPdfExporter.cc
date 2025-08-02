@@ -472,14 +472,12 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const QString& filename, cons
 		return nullptr;
 	}
 
-	QFontInfo finfo(defaultFont);
-
 	// Attempt to load the default/fallback font to ensure it is valid
 	try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
-		defaultPdfFont = document->GetFonts().SearchFont(finfo.family().toStdString());
+		defaultPdfFont = document->GetFonts().SearchFont(defaultFont.family().toStdString());
 #else
-		defaultPdfFont = document->CreateFontSubset(finfo.family().toLocal8Bit().data(), false, false, false, pdfFontEncoding);
+		defaultPdfFont = document->CreateFontSubset(defaultFont.family().toLocal8Bit().data(), false, false, false, pdfFontEncoding);
 #endif
 	} catch (PoDoFo::PdfError&) {
 	}
