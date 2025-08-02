@@ -441,14 +441,12 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const std::string& filename, 
 		return nullptr;
 	}
 
-	Pango::FontDescription fontDesc = Pango::FontDescription(defaultFont);
-
 	// Attempt to load the default/fallback font to ensure it is valid
 	try {
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
-		defaultPdfFont = document->GetFonts().SearchFont(Utils::resolveFontName(fontDesc.get_family()).raw());
+		defaultPdfFont = document->GetFonts().SearchFont(defaultFont.raw());
 #else
-		defaultPdfFont = document->CreateFontSubset(Utils::resolveFontName(fontDesc.get_family()).c_str(), false, false, false, pdfFontEncoding);
+		defaultPdfFont = document->CreateFontSubset(defaultFont.raw(), false, false, false, pdfFontEncoding);
 #endif
 	} catch (PoDoFo::PdfError&) {
 	}
@@ -660,9 +658,9 @@ PoDoFo::PdfFont* HOCRPoDoFoPdfPrinter::getFont(Glib::ustring family, bool bold, 
 				style |= PoDoFo::PdfFontStyle::Italic;
 			}
 			params.Style = style;
-			font = m_document->GetFonts().SearchFont(Utils::resolveFontName(family).raw(), params);
+			font = m_document->GetFonts().SearchFont(family.raw(), params);
 #else
-			font = m_document->CreateFontSubset(Utils::resolveFontName(family).c_str(), bold, italic, false, m_pdfFontEncoding);
+			font = m_document->CreateFontSubset(family.raw(), bold, italic, false, m_pdfFontEncoding);
 #endif
 			it = m_fontCache.insert(std::make_pair(key, font)).first;
 		} catch (PoDoFo::PdfError& /*err*/) {
