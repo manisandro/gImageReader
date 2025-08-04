@@ -176,7 +176,7 @@ rm -rf $installroot/share/appdata
     echo 'Delete "$INSTDIR\gimagereader.log"' >> $builddir/unfiles.nsi
     echo 'Delete "$INSTDIR\twain.log"' >> $builddir/unfiles.nsi
 
-    find -type d -depth | sed 's|/|\\|g' | sed -E 's|^\.(.*)$|RMDir "\$INSTDIR\1"|g' >> $builddir/unfiles.nsi
+    find -depth -type d | sed 's|/|\\|g' | sed -E 's|^\.(.*)$|RMDir "\$INSTDIR\1"|g' >> $builddir/unfiles.nsi
 )
 
 progName=$(grep -oP 'SET\(PACKAGE_NAME \K(\w+)(?=\))' $srcdir/CMakeLists.txt)
