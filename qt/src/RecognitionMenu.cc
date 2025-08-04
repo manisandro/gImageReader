@@ -102,8 +102,7 @@ void RecognitionMenu::rebuild() {
 				Config::Lang itemlang = {lang.prefix, dict, lang.name};
 				curitem = new QAction(QtSpell::Checker::decodeLanguageCode(dict), m_langMenuRadioGroup);
 				curitem->setCheckable(true);
-				curitem->setData(QVariant::fromValue(itemlang));
-				connect(curitem, &QAction::triggered, this, &RecognitionMenu::setLanguage);
+				connect(curitem, &QAction::triggered, this, [ = ] { setLanguage(itemlang); });
 				if (curlang.prefix == lang.prefix && (
 				            curlang.code == dict ||
 				            (!activeitem && (curlang.code == dict.left(2) || curlang.code.isEmpty())))) {
@@ -117,8 +116,7 @@ void RecognitionMenu::rebuild() {
 		} else {
 			curitem = new QAction(lang.name, m_langMenuRadioGroup);
 			curitem->setCheckable(true);
-			curitem->setData(QVariant::fromValue(lang));
-			connect(curitem, &QAction::triggered, this, &RecognitionMenu::setLanguage);
+			connect(curitem, &QAction::triggered, this, [ = ] { setLanguage(lang); });
 			if (curlang.prefix == lang.prefix) {
 				curlang = lang;
 				activeitem = curitem;
@@ -226,10 +224,10 @@ void RecognitionMenu::psmSelected(QAction* action) {
 	ConfigSettings::get<VarSetting<int >> ("psm")->setValue(action->data().toInt());
 }
 
-void RecognitionMenu::setLanguage() {
+void RecognitionMenu::setLanguage(Config::Lang lang) {
 	QAction* item = qobject_cast<QAction*> (QObject::sender());
 	if (item->isChecked()) {
-		m_curLang = item->data().value<Config::Lang>();
+		m_curLang = lang;
 		ConfigSettings::get<VarSetting<QString >> ("language")->setValue(m_curLang.prefix + ":" + m_curLang.code);
 		emit languageChanged(m_curLang);
 	}

@@ -46,7 +46,7 @@ signals:
 
 private slots:
 	void psmSelected(QAction* action);
-	void setLanguage();
+	void setLanguage(Config::Lang lang);
 	void setMultiLanguage();
 
 private:
