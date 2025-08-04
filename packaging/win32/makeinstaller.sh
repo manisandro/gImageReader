@@ -127,6 +127,7 @@ elif [ "$iface" == "qt5" ] || [ "$iface" == "qt6" ]; then
         linkDep lib/$iface/plugins/styles/qwindowsvistastyle.dll bin/styles
     elif [ "$iface" == "qt6" ]; then
         linkDep lib/$iface/plugins/styles/qmodernwindowsstyle.dll bin/styles
+        linkDep lib/$iface/plugins/tls/qopensslbackend.dll bin/tls
     fi
 
     # Install locale files
