@@ -30,7 +30,7 @@
 #include "Utils.hh"
 
 #include <cstring>
-#include <podofo.h>
+#include <podofo/podofo.h>
 #if PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 10, 0)
 #include <podofo/base/PdfDictionary.h>
 #include <podofo/base/PdfFilter.h>
