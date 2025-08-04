@@ -1,3 +1,15 @@
+gImageReader 3.4.3 (Aug 04 2025):
+* Bugfixes
+ - Fix incorrect dictionary mapping for latin
+ - Gracefully catch PoDoFo exceptions when printing document
+ - [Qt] Fix control modifier causing page blank during mouse select
+ - [Qt] Fix crash when adding new line to HOCR tree
+* Enhancements:
+ - Add support for PoDoF 1.0.x
+ - Switch windows builds to qt6
+* Updated translations
+* See https://github.com/manisandro/gImageReader/compare/v3.4.2...v3.4.3 for details
+
 gImageReader 3.4.2 (Feb 05 2024):
 * Bugfixes:
  - [Qt] Fix crash in FileTreeModel::findFile with temporary file
