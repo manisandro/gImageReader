@@ -198,8 +198,8 @@ Section "intl" IntlSection
 
   SetOutPath "$INSTDIR\share\"
   File /r "root\share\locale"
-  SetOutPath "$INSTDIR\share\qt5\"
-  File /nonfatal /r "root\share\qt5\translations"
+  SetOutPath "$INSTDIR\share\${IFACE}\"
+  File /nonfatal /r "root\share\${IFACE}\translations"
 SectionEnd
 
 ; Installation section language strings
