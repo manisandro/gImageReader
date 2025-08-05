@@ -164,7 +164,11 @@ std::vector<Glib::ustring> Config::getAvailableLanguages() {
 #else
 	std::vector<std::string> availLanguages;
 #endif
-	tess.get()->GetAvailableLanguagesAsVector(&availLanguages);
+	try {
+		tess.get()->GetAvailableLanguagesAsVector(&availLanguages);
+	} catch (const std::exception&) {
+		// Pass
+	}
 	std::vector<Glib::ustring> result;
 	for (std::size_t i = 0; i < availLanguages.size(); ++i) {
 #if TESSERACT_MAJOR_VERSION < 5

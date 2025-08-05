@@ -151,7 +151,11 @@ QStringList Config::getAvailableLanguages() {
 #else
 	std::vector<std::string> availLanguages;
 #endif
-	tess.get()->GetAvailableLanguagesAsVector(&availLanguages);
+	try {
+		tess.get()->GetAvailableLanguagesAsVector(&availLanguages);
+	} catch (const std::exception&) {
+		// Pass
+	}
 	QStringList result;
 	for (std::size_t i = 0; i < availLanguages.size(); ++i) {
 		result.append(availLanguages[i].c_str());
