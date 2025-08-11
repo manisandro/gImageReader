@@ -621,7 +621,7 @@ void MainWindow::dictionaryAutoinstall() {
 					failed.append(filename);
 				}
 				popState();
-				dictPos += dictMatch.capturedEnd();
+				dictPos = dictMatch.capturedEnd();
 			}
 		}
 
