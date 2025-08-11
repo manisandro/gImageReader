@@ -446,7 +446,7 @@ HOCRPoDoFoPdfPrinter* HOCRPoDoFoPdfPrinter::create(const std::string& filename, 
 #if PODOFO_VERSION >= PODOFO_MAKE_VERSION(0, 10, 0)
 		defaultPdfFont = document->GetFonts().SearchFont(defaultFont.raw());
 #else
-		defaultPdfFont = document->CreateFontSubset(defaultFont.raw(), false, false, false, pdfFontEncoding);
+		defaultPdfFont = document->CreateFontSubset(defaultFont.raw().c_str(), false, false, false, pdfFontEncoding);
 #endif
 	} catch (PoDoFo::PdfError&) {
 	}
@@ -660,7 +660,7 @@ PoDoFo::PdfFont* HOCRPoDoFoPdfPrinter::getFont(Glib::ustring family, bool bold, 
 			params.Style = style;
 			font = m_document->GetFonts().SearchFont(family.raw(), params);
 #else
-			font = m_document->CreateFontSubset(family.raw(), bold, italic, false, m_pdfFontEncoding);
+			font = m_document->CreateFontSubset(family.raw().c_str(), bold, italic, false, m_pdfFontEncoding);
 #endif
 			it = m_fontCache.insert(std::make_pair(key, font)).first;
 		} catch (PoDoFo::PdfError& /*err*/) {
