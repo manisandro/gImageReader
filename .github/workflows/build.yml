@@ -20,23 +20,13 @@ jobs:
         run: dnf -y update
 
       - name: Install build dependencies
-        run: ./packaging/win32/mingwdeps.sh ;
-             sudo apt install cmake debhelper-compat intltool libcairomm-1.0-dev libdjvulibre-dev libenchant-2-dev libgtkmm-3.0-dev libgtksourceviewmm-3.0-dev libgtkspellmm-3.0-dev libjpeg-dev libjson-glib-dev libpangomm-1.4-dev libpodofo-dev libpoppler-glib-dev libpoppler-qt6-dev libqtspell-qt6-dev libquazip1-qt6-dev libsane-dev libtesseract-dev libxml++2.6-dev libzip-dev python3-gi qt6-base-dev uuid-dev
+        run: ./packaging/win32/mingwdeps.sh
 
       - name: Build application
         run: |
           PATH=/usr/bin ./packaging/win32/makeinstaller.sh i686 qt6 nodebug ${{ steps.version_number.outputs.version }}
           PATH=/usr/bin ./packaging/win32/makeinstaller.sh x86_64 qt6 nodebug ${{ steps.version_number.outputs.version }}
           PATH=/usr/bin ./packaging/win32/makeinstaller.sh x86_64 gtk nodebug ${{ steps.version_number.outputs.version }}
-          mkdir -p build
-          cd build
-          cmake -DINTERFACE_TYPE=gtk ..
-          make
-
-      - name: Build AppImage
-        run: |
-          cd build
-          ../packaging/AppImage/makePkg.sh -y Linux 64
 
       - name: Reset ci-latest tag
         run: |
@@ -69,6 +59,4 @@ jobs:
             ./build/mingw64-qt6/gImageReader_*_qt6_x86_64.exe,
             ./build/mingw64-gtk/gImageReader_*_gtk_x86_64_portable.zip,
             ./build/mingw64-gtk/gImageReader_*_gtk_x86_64.exe
-            ./packaging/gImageReader_*_Linux_x86_64_64bit.tgz
-            ./packaging/gImageReader_*_Linux_x86_64_64bit.AppImage
           "
