@@ -27,10 +27,15 @@ jobs:
 
       - name: Build Packages
         run: |
-          pwd
           cd build
           ../packaging/AppImage/makePkg.sh -y Linux 64
-          ls -l ../packaging
+
+      - name: Show packges
+        run: |
+          pwd
+          ls -l
+          echo "list packaging ..."
+          ls -l packaging
 
       - name: Reset ci-latest tag
         env:
@@ -43,7 +48,6 @@ jobs:
           git push origin :ci-latest || true
           git tag -m ci-latest ci-latest
           git push --tags
-          pwd
 
       - name: Create release
         id: create_release
