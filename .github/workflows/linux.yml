@@ -1,4 +1,4 @@
-name: CI Build
+name: CI Build Linux
 on: [push]
 
 jobs:
@@ -8,15 +8,14 @@ jobs:
     permissions:
       contents: write
     steps:
-
       # - name: Update distro
       #   run: sudo apt update
       # - name: Upgrade distro
       #   run: sudo apt upgrade
 
       - name: Install build dependencies
-        run: sudo apt install cmake debhelper-compat intltool libcairomm-1.0-dev libdjvulibre-dev libenchant-2-dev libgtkmm-3.0-dev libgtksourceviewmm-3.0-dev libgtkspellmm-3.0-dev libjpeg-dev libjson-glib-dev libpangomm-1.4-dev libpodofo-dev libpoppler-glib-dev libpoppler-qt6-dev libqtspell-qt6-dev libquazip1-qt6-dev libsane-dev libtesseract-dev libxml++2.6-dev libzip-dev python3-gi qt6-base-dev uuid-dev
-
+      # run: sudo apt install cmake debhelper-compat intltool libcairomm-1.0-dev libdjvulibre-dev libenchant-2-dev libgtkmm-3.0-dev libgtksourceviewmm-3.0-dev libgtkspellmm-3.0-dev libjpeg-dev libjson-glib-dev libpangomm-1.4-dev libpodofo-dev libpoppler-glib-dev libpoppler-qt6-dev libqtspell-qt6-dev libquazip1-qt6-dev libsane-dev libtesseract-dev libxml++2.6-dev libzip-dev python3-gi qt6-base-dev uuid-dev
+        run: sudo apt install debhelper cmake intltool libdjvulibre-dev libgtkspellmm-3.0-dev libgtkmm-3.0-dev libgtksourceviewmm-3.0-dev libcairomm-1.0-dev libpoppler-glib-dev libtesseract-dev libsane-dev qtbase5-dev qttools5-dev qttools5-dev-tools libqtspell-qt5-dev libpoppler-qt5-dev libjson-glib-dev libxml++2.6-dev libpodofo-dev libquazip5-dev libzip-dev python3-gi uuid-dev
       - uses: actions/checkout@v4.2.2
 
       - name: Build application
