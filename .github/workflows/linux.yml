@@ -30,9 +30,11 @@ jobs:
           pwd
           cd build
           ../packaging/AppImage/makePkg.sh -y Linux 64
-          ls -l ../packaging/*
+          ls -l ../packaging
 
       - name: Reset ci-latest tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERSION=${{ steps.version_number.outputs.version }}
           git config --global user.email "ci@github.com"
@@ -41,8 +43,7 @@ jobs:
           git push origin :ci-latest || true
           git tag -m ci-latest ci-latest
           git push --tags
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          pwd
 
       - name: Create release
         id: create_release
