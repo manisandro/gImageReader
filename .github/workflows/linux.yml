@@ -1,0 +1,64 @@
+name: CI Build
+on: [push]
+
+jobs:
+  build:
+    name: Linux build
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:rawhide
+      options: --security-opt seccomp=unconfined
+    steps:
+      - name: Set safe directory
+        run: |
+          dnf install -y git
+          git config --global --add safe.directory ${GITHUB_WORKSPACE}
+
+      - uses: actions/checkout@v4.2.2
+
+      - name: Update system
+        run: dnf -y update
+
+      - name: Install build dependencies
+        run: sudo apt install cmake debhelper-compat intltool libcairomm-1.0-dev libdjvulibre-dev libenchant-2-dev libgtkmm-3.0-dev libgtksourceviewmm-3.0-dev libgtkspellmm-3.0-dev libjpeg-dev libjson-glib-dev libpangomm-1.4-dev libpodofo-dev libpoppler-glib-dev libpoppler-qt6-dev libqtspell-qt6-dev libquazip1-qt6-dev libsane-dev libtesseract-dev libxml++2.6-dev libzip-dev python3-gi qt6-base-dev uuid-dev
+
+      - name: Build application
+        run: |
+          mkdir -p build
+          cd build
+          cmake -DINTERFACE_TYPE=gtk ..
+          make
+
+      - name: Build AppImage
+        run: |
+          cd build
+          ../packaging/AppImage/makePkg.sh -y Linux 64
+
+      - name: Reset ci-latest tag
+        run: |
+          VERSION=${{ steps.version_number.outputs.version }}
+          git config --global user.email "ci@github.com"
+          git config --global user.name "Github CI"
+          git tag -d ci-latest || true
+          git push origin :ci-latest || true
+          git tag -m ci-latest ci-latest
+          git push --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create release
+        id: create_release
+        uses: ncipollo/release-action@v1.18.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          allowUpdates: true
+          tag: ci-latest
+          name: CI Build
+          draft: false
+          prerelease: true
+          replacesArtifacts: true
+          artifacts: "
+            ./packaging/gImageReader_*_Linux_x86_64_64bit.tgz
+            ./packaging/gImageReader_*_Linux_x86_64_64bit.AppImage
+          "
