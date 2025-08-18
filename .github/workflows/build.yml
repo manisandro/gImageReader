@@ -69,6 +69,6 @@ jobs:
             ./build/mingw64-qt6/gImageReader_*_qt6_x86_64.exe,
             ./build/mingw64-gtk/gImageReader_*_gtk_x86_64_portable.zip,
             ./build/mingw64-gtk/gImageReader_*_gtk_x86_64.exe
-            packaging/gImageReader_*_Linux_x86_64_64bit.tgz
-            packaging/gImageReader_*_Linux_x86_64_64bit.AppImage
+            ./packaging/gImageReader_*_Linux_x86_64_64bit.tgz
+            ./packaging/gImageReader_*_Linux_x86_64_64bit.AppImage
           "
