@@ -62,6 +62,6 @@ jobs:
           prerelease: true
           replacesArtifacts: true
           artifacts: "
-            ./packaging/gImageReader_*_Linux_x86_64_64bit.tgz
+            ./packaging/gImageReader_*_Linux_x86_64_64bit.tgz,
             ./packaging/gImageReader_*_Linux_x86_64_64bit.AppImage
           "
