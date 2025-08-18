@@ -25,10 +25,12 @@ jobs:
           cmake -DINTERFACE_TYPE=gtk ..
           make
 
-      - name: Build AppImage
+      - name: Build Packages
         run: |
+          pwd
           cd build
           ../packaging/AppImage/makePkg.sh -y Linux 64
+          ls -l ../packaging/*
 
       - name: Reset ci-latest tag
         run: |
