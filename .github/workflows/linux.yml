@@ -33,8 +33,7 @@ jobs:
       - name: Show packges
         run: |
           pwd
-          ls -l
-          echo "list packaging ..."
+          echo "list packaging/ ..."
           ls -l packaging
 
       - name: Reset ci-latest tag
