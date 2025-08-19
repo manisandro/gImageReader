@@ -23,9 +23,9 @@
 # AppImage packages: AppDir/   usr/bin
 # macOS    packages: DiskImage/$AppName.app/Contents/MacOS/
 #
-# Syntax: $ makePkg.sh [-y] Linux|WinMxe|WinMgw|Osx [32|64]
+# Syntax: $ makePkg.sh [-y] Linux|WinMxe|WinMgw|Osx [32|64] [trail]
 
-makePkgVer=2025-08-18
+makePkgVer=2025-08-19
 
 APP="gImageReader"     # app name
 BINRAD="gimagereader" # binary radix
@@ -61,8 +61,9 @@ if (test "$1" = "-y") then
 fi
 if [[ "$1" = "" || "$1" != "Linux" && "$1" != "WinMxe" && "$1" != "WinMgw" && "$1" != "Osx" ]]; then
    echo "ERROR: makePkg.sh unsupported/miss target:'$1' platform to create package"
-   echo "Syntax: $ makePkg.sh [-y] Linux|WinMxe|WinMgw|Osx [32|64]"
+   echo "Syntax: $ makePkg.sh [-y] Linux|WinMxe|WinMgw|Osx [32|64] [trail]"
    echo "          -y for batch execution without confirmations"
+   echo "          trail is the GUI binary trailer. eg. Gui, -gtk, -qt5, -qt6"
    exit
 fi
 
@@ -81,12 +82,22 @@ PKG="$1"
 CPU=`uname -m` # i686 or x86_64
 if (test "" = "$2") then
    BIT=$(getconf LONG_BIT)
-else
-   BIT="$2"
+else # at least 2
+   if [[ "$2" = "32" || "$2" = "64" ]]; then
+      BIT="$2"
+      if [[ "" != "$3" ]]; then
+         TRAIL="$3"
+      fi
+   else
+      TRAIL="$2"
+   fi
+fi
+if [[ "$TRAIL" = "" ]]; then
+   TRAIL="Gui"
 fi
 
 BINCLI=""
-BINGUI="${BINRAD}-gtk"
+BINGUI="${BINRAD}${TRAIL}"
 BINPATH=`realpath "$BINPATH"`
 SRCPATH=`realpath "$SRCPATH"`
 RESPATH=`realpath "$RESPATH"`
@@ -162,7 +173,7 @@ fi
 if (test "$PKG" = "WinMxe" || test "$PKG" = "WinMgw") then
    EXT=".exe"
 fi
-PKGNAME="${APP}_${VER}_${DATE}_${TGT}_${CPU}_${BIT}bit"
+PKGNAME="${APP}${TRAIL}_${VER}_${DATE}_${TGT}_${CPU}_${BIT}bit"
 echo "DATE   : $DATE"    # today
 echo "HOSTOS : $OS"      # current OS
 echo "APP    : $APP"     # app name
@@ -279,8 +290,8 @@ echo "Copying assets ..."
 #cp -a $RESPATH/*.ini      $TMPPATH/$APP/   # if needed
 if (test "$TGT" = "Linux") then
 #cp -a $RESPATH/*.ini   $TMPPATH/AppDir/$TMPBINP   # if needed
-cp -a $RESPATH/$APP.desktop $TMPPATH/$APP/
-cp -a $RESPATH/$APP.desktop $TMPPATH/AppDir/
+cp -a $RESPATH/$APP$TRAIL.desktop $TMPPATH/$APP/
+cp -a $RESPATH/$APP$TRAIL.desktop $TMPPATH/AppDir/
 cp -a $RESPATH/$APP.png     $TMPPATH/$APP/
 cp -a $RESPATH/$APP.png     $TMPPATH/AppDir/
 cp -a $RESPATH/makePkg.sh   $TMPPATH/$APP/
@@ -390,30 +401,49 @@ echo "Release file: '$DSTPATH/$file'"
 
 # make AppImage
 if [[ ("$TGT" = "Linux") && ("$CPU" = "x86_64" || "$CPU" = "i686")]]; then # skip on ARM & RISC-V
-   echo "Generating the AppDir (about 3'50\") ..."
    if (test -f logWget$DATE.txt) then { rm logWget$DATE.txt ; } fi
    if (test "$BIT" = "64") then
+      echo "Generating the AppDir (about 3'50\") ..."
       if (! test -x linuxdeploy-x86_64.AppImage) then
          echo "Downloading linuxdeploy ..."
          wget -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" 2>> logWget$DATE.txt
          chmod +x linuxdeploy-x86_64.AppImage
       fi
-      if (! test -x linuxdeploy-plugin-gtk.sh) then
-         wget -nv "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh" 2>> logWget$DATE.txt
-         chmod +x linuxdeploy-plugin-gtk.sh
+      if (test "$TRAIL" = "-gtk") then
+         if (! test -x linuxdeploy-plugin-gtk.sh) then
+            echo "Downloading linuxdeploy GTK plugin ..."
+            wget -nv "https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh" 2>> logWget$DATE.txt
+            chmod +x linuxdeploy-plugin-gtk.sh
+         fi
+        #./linuxdeploy-x86_64.AppImage -e $TMPPATH/AppDir/$TMPBINP/$BINGUI --appdir AppDir -p gtk -i $TMPPATH/AppDir/$APP.png -d $TMPPATH/AppDir/$APP$TRAIL.desktop --output appimage"
+         ./linuxdeploy-x86_64.AppImage -e $TMPPATH/AppDir/$TMPBINP/$BINGUI --appdir AppDir -p gtk -i $TMPPATH/AppDir/$APP.png -d $TMPPATH/AppDir/$APP$TRAIL.desktop > logLinuxdeploy$DATE.txt
+         cp -a $BINPATH/glib-2.0/schemas/org.gnome.gimagereader.gschema.xml $TMPPATH/AppDir/usr/share/glib-2.0/schemas/
+         mv $TMPPATH/AppDir/usr/share/glib-2.0/schemas/gschemas.compiled    $TMPPATH/AppDir/usr/share/glib-2.0/schemas/gschemas.compiled.orig
+         cp -a $BINPATH/glib-2.0/schemas/gschemas.compiled                  $TMPPATH/AppDir/usr/share/glib-2.0/schemas/
       fi
-     #./linuxdeploy-x86_64.AppImage -e $TMPPATH/AppDir/$TMPBINP/$BINGUI --appdir AppDir -p gtk -i $TMPPATH/AppDir/$APP.png -d $TMPPATH/AppDir/$APP.desktop --output appimage"
-      ./linuxdeploy-x86_64.AppImage -e $TMPPATH/AppDir/$TMPBINP/$BINGUI --appdir AppDir -p gtk -i $TMPPATH/AppDir/$APP.png -d $TMPPATH/AppDir/$APP.desktop > logLinuxdeploy$DATE.txt
-      cp -a $BINPATH/glib-2.0/schemas/org.gnome.gimagereader.gschema.xml $TMPPATH/AppDir/usr/share/glib-2.0/schemas/
-      mv $TMPPATH/AppDir/usr/share/glib-2.0/schemas/gschemas.compiled    $TMPPATH/AppDir/usr/share/glib-2.0/schemas/gschemas.compiled.orig
-      cp -a $BINPATH/glib-2.0/schemas/gschemas.compiled                  $TMPPATH/AppDir/usr/share/glib-2.0/schemas/
+      if [[ "$TRAIL" = "-qt5" || "$TRAIL" = "-qt6" ]]; then
+         if (! test -x linuxdeploy-plugin-qt-x86_64.AppImage) then
+            echo "Downloading linuxdeploy QT plugin ..."
+            wget -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" 2>> logWget$DATE.txt
+            chmod +x linuxdeploy-plugin-qt-x86_64.AppImage
+         fi
+        #./linuxdeploy-x86_64.AppImage -e $TMPPATH/AppDir/$TMPBINP/$BINGUI --appdir AppDir -p qt -i $TMPPATH/AppDir/$APP.png -d $TMPPATH/AppDir/$APP$TRAIL.desktop --output appimage"
+         ./linuxdeploy-x86_64.AppImage -e $TMPPATH/AppDir/$TMPBINP/$BINGUI --appdir AppDir -p qt -i $TMPPATH/AppDir/$APP.png -d $TMPPATH/AppDir/$APP$TRAIL.desktop > logLinuxdeploy$DATE.txt
+         #cp -a $BINPATH/glib-2.0/schemas/org.gnome.gimagereader.gschema.xml $TMPPATH/AppDir/usr/share/glib-2.0/schemas/
+         #mv $TMPPATH/AppDir/usr/share/glib-2.0/schemas/gschemas.compiled    $TMPPATH/AppDir/usr/share/glib-2.0/schemas/gschemas.compiled.orig
+         #cp -a $BINPATH/glib-2.0/schemas/gschemas.compiled                  $TMPPATH/AppDir/usr/share/glib-2.0/schemas/
+      fi
       echo "Generating the AppImage (about 3'10\") ..."
       ./linuxdeploy-x86_64.AppImage --appdir AppDir --output appimage >> logLinuxdeploy$DATE.txt
       ret=$?
       file="$PKGNAME.AppImage"
       if (test "$ret" = "0") then
          echo "AppImage created: $DSTPATH/$file"
-         mv ${APP}-x86_64.AppImage $DSTPATH/$file
+         if [[ "$TRAIL" = "-qt5" || "$TRAIL" = "-qt6" ]]; then
+            mv ${APP}${TRAIL}-x86_64.AppImage $DSTPATH/$file
+         else
+            mv ${APP}-x86_64.AppImage $DSTPATH/$file
+         fi
       else
          echo "AppImage failed: $file"
       fi
