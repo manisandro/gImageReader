@@ -17,7 +17,6 @@ jobs:
       # run: sudo apt install cmake debhelper-compat intltool libcairomm-1.0-dev libdjvulibre-dev libenchant-2-dev libgtkmm-3.0-dev libgtksourceviewmm-3.0-dev libgtkspellmm-3.0-dev libjpeg-dev libjson-glib-dev libpangomm-1.4-dev libpodofo-dev libpoppler-glib-dev libpoppler-qt6-dev libqtspell-qt6-dev libquazip1-qt6-dev libsane-dev libtesseract-dev libxml++2.6-dev libzip-dev python3-gi qt6-base-dev                                uuid-dev
         run: sudo apt install cmake debhelper        intltool libcairomm-1.0-dev libdjvulibre-dev                  libgtkmm-3.0-dev libgtksourceviewmm-3.0-dev libgtkspellmm-3.0-dev             libjson-glib-dev                    libpodofo-dev libpoppler-glib-dev libpoppler-qt5-dev libqtspell-qt5-dev libquazip5-dev     libsane-dev libtesseract-dev libxml++2.6-dev libzip-dev python3-gi qtbase5-dev qttools5-dev qttools5-dev-tools uuid-dev
 
-      - name: Check out code
       - uses: actions/checkout@v4.2.2
 
       - name: Build application GTK
@@ -68,7 +67,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          VERSION=${{ steps.version_number.outputs.version }}
           git config --global user.email "ci@github.com"
           git config --global user.name "Github CI"
           git tag -d ci-latest || true
