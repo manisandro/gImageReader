@@ -439,11 +439,7 @@ if [[ ("$TGT" = "Linux") && ("$CPU" = "x86_64" || "$CPU" = "i686")]]; then # ski
       file="$PKGNAME.AppImage"
       if (test "$ret" = "0") then
          echo "AppImage created: $DSTPATH/$file"
-         if [[ "$TRAIL" = "-qt5" || "$TRAIL" = "-qt6" ]]; then
-            mv ${APP}${TRAIL}-x86_64.AppImage $DSTPATH/$file
-         else
-            mv ${APP}-x86_64.AppImage $DSTPATH/$file
-         fi
+         mv ${APP}${TRAIL}-x86_64.AppImage $DSTPATH/$file
       else
          echo "AppImage failed: $file"
       fi
