@@ -267,7 +267,7 @@ void OutputEditorHOCR::HOCRBatchProcessor::appendOutput(QIODevice* dev, tesserac
 	QMap<QString, QString> attrs = HOCRItem::deserializeAttrGroup(pageDiv.attribute("title"));
 	// This works because in batch mode the output is created next to the source image
 	attrs["image"] = QString("'./%1'").arg(QFileInfo(pageInfos.filename).fileName());
-	attrs["ppageno"] = QString::number(pageInfos.page);
+	attrs["ppageno"] = QString::number(pageInfos.page - 1);
 	attrs["rot"] = QString::number(pageInfos.angle);
 	attrs["scan_res"] = QString::number(pageInfos.resolution);
 	pageDiv.setAttribute("title", HOCRItem::serializeAttrGroup(attrs));
@@ -436,7 +436,7 @@ void OutputEditorHOCR::addPage(const QString& hocrText, HOCRReadSessionData data
 	QDomElement pageDiv = doc.firstChildElement("div");
 	QMap<QString, QString> attrs = HOCRItem::deserializeAttrGroup(pageDiv.attribute("title"));
 	attrs["image"] = QString("'%1'").arg(data.pageInfo.filename);
-	attrs["ppageno"] = QString::number(data.pageInfo.page);
+	attrs["ppageno"] = QString::number(data.pageInfo.page - 1);
 	attrs["rot"] = QString::number(data.pageInfo.angle);
 	attrs["scan_res"] = QString::number(data.pageInfo.resolution);
 	pageDiv.setAttribute("title", HOCRItem::serializeAttrGroup(attrs));

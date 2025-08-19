@@ -277,7 +277,7 @@ void OutputEditorHOCR::HOCRBatchProcessor::appendOutput(std::ostream& dev, tesse
 	std::map<Glib::ustring, Glib::ustring> attrs = HOCRItem::deserializeAttrGroup(pageDiv->get_attribute_value("title"));
 	// This works because in batch mode the output is created next to the source image
 	attrs["image"] = Glib::ustring::compose("'%1'", Glib::path_get_basename(pageInfos.filename));
-	attrs["ppageno"] = Glib::ustring::compose("%1", pageInfos.page);
+	attrs["ppageno"] = Glib::ustring::compose("%1", pageInfos.page - 1);
 	attrs["rot"] = Glib::ustring::compose("%1", pageInfos.angle);
 	attrs["scan_res"] = Glib::ustring::compose("%1", pageInfos.resolution);
 	pageDiv->set_attribute("title", HOCRItem::serializeAttrGroup(attrs));
@@ -554,7 +554,7 @@ void OutputEditorHOCR::addPage(const Glib::ustring& hocrText, HOCRReadSessionDat
 	}
 	std::map<Glib::ustring, Glib::ustring> attrs = HOCRItem::deserializeAttrGroup(pageDiv->get_attribute_value("title"));
 	attrs["image"] = Glib::ustring::compose("'%1'", data.pageInfo.filename);
-	attrs["ppageno"] = Glib::ustring::compose("%1", data.pageInfo.page);
+	attrs["ppageno"] = Glib::ustring::compose("%1", data.pageInfo.page - 1);
 	attrs["rot"] = Glib::ustring::compose("%1", data.pageInfo.angle);
 	attrs["scan_res"] = Glib::ustring::compose("%1", data.pageInfo.resolution);
 	pageDiv->set_attribute("title", HOCRItem::serializeAttrGroup(attrs));

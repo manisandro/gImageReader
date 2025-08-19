@@ -1064,12 +1064,18 @@ HOCRPage::HOCRPage(const QDomElement& element, int pageId, const QString& defaul
 	m_attrs["id"] = QString("page_%1").arg(pageId);
 
 	m_sourceFile = m_titleAttrs["image"].replace(QRegularExpression("^['\"]"), "").replace(QRegularExpression("['\"]$"), "");
-	m_pageNr = m_titleAttrs["ppageno"].toInt();
+	bool ok = false;
+	m_pageNr = m_titleAttrs["ppageno"].toInt(&ok);
 	// Code to handle pageno -> ppageno typo in previous versions of gImageReader
-	if (m_pageNr == 0) {
+	if (ok == false) {
 		m_pageNr = m_titleAttrs["pageno"].toInt();
 		m_titleAttrs["ppageno"] = m_titleAttrs["pageno"];
 		m_titleAttrs.remove("pageno");
+	}
+	m_pageNr += 1;
+	// Hacky fix, at least for non-pdf sources, for older gImageReader versions which incorrectly stored one-based ppageno
+	if (!m_sourceFile.endsWith(".pdf", Qt::CaseInsensitive) && m_pageNr != 1) {
+		m_pageNr = 1;
 	}
 	m_angle = m_titleAttrs["rot"].toDouble();
 	m_resolution = m_titleAttrs.value("scan_res", "100").toInt();

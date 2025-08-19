@@ -1196,6 +1196,12 @@ HOCRPage::HOCRPage(const xmlpp::Element* element, int pageId, const Glib::ustrin
 		m_titleAttrs["ppageno"] = m_titleAttrs["pageno"];
 		m_titleAttrs.erase(m_titleAttrs.find("pageno"));
 	}
+	m_pageNr += 1;
+	// Hacky fix, at least for non-pdf sources, for older gImageReader versions which incorrectly stored one-based ppageno
+	if (!Utils::string_endswith(m_sourceFile.lowercase(), ".pdf") && m_pageNr != 1) {
+		m_pageNr = 1;
+	}
+
 	m_angle = std::atof(m_titleAttrs["rot"].c_str());
 	m_resolution = std::atoi(m_titleAttrs["scan_res"].c_str());
 	if (m_resolution == 0) {
