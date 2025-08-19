@@ -25,6 +25,7 @@
         <file alias="item_par">../../data/icons/item_par.png</file>
         <file alias="item_word">../../data/icons/item_word.png</file>
         <file alias="item_halftone">../../data/icons/item_halftone.png</file>
+        <file alias="item_separator">../../data/icons/item_separator.png</file>
         <file alias="rotate_page">../../data/icons/rotate_page.png</file>
         <file alias="rotate_pages">../../data/icons/rotate_pages.png</file>
         <file alias="wconf">../../data/icons/wconf.png</file>

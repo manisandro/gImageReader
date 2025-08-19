@@ -28,6 +28,7 @@
 		<file alias="stripcrlf.png">../../data/icons/stripcrlf.png</file>
 		<file alias="item_block.png">../../data/icons/item_block.png</file>
 		<file alias="item_halftone.png">../../data/icons/item_halftone.png</file>
+		<file alias="item_separator.png">../../data/icons/item_separator.png</file>
 		<file alias="item_line.png">../../data/icons/item_line.png</file>
 		<file alias="item_page.png">../../data/icons/item_page.png</file>
 		<file alias="item_par.png">../../data/icons/item_par.png</file>

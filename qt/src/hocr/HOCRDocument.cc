@@ -698,8 +698,10 @@ QString HOCRDocument::displayRoleForItem(const HOCRItem* item) const {
 		return _("Textline");
 	} else if (itemClass == "ocrx_word") {
 		return item->text();
-	} else if (itemClass == "ocr_graphic") {
+	} else if (itemClass == "ocr_graphic" || itemClass == "ocr_photo") {
 		return _("Graphic");
+	} else if (itemClass == "ocr_separator") {
+		return _("Separator");
 	}
 	return "";
 }
@@ -716,8 +718,10 @@ QIcon HOCRDocument::decorationRoleForItem(const HOCRItem* item) const {
 		return QIcon(":/icons/item_line");
 	} else if (itemClass == "ocrx_word") {
 		return QIcon(":/icons/item_word");
-	} else if (itemClass == "ocr_graphic") {
+	} else if (itemClass == "ocr_graphic" || itemClass == "ocr_photo") {
 		return QIcon(":/icons/item_halftone");
+	} else if (itemClass == "ocr_separator") {
+		return QIcon(":/icons/item_separator");
 	}
 	return QIcon();
 }
@@ -984,7 +988,7 @@ void HOCRItem::setAttribute(const QString& name, const QString& value, const QSt
 QString HOCRItem::toHtml(int indent) const {
 	QString cls = itemClass();
 	QString tag;
-	if (cls == "ocr_page" || cls == "ocr_carea" || cls == "ocr_graphic") {
+	if (cls == "ocr_page" || cls == "ocr_carea" || cls == "ocr_graphic" || cls == "ocr_photo" || cls == "ocr_separator") {
 		tag = "div";
 	} else if (cls == "ocr_par") {
 		tag = "p";
@@ -1090,7 +1094,10 @@ HOCRPage::HOCRPage(const QDomElement& element, int pageId, const QString& defaul
 				// Ignore graphics which are less than 10 x 10
 				delete m_childItems.takeLast();
 			} else {
-				item->setAttribute("class", "ocr_graphic");
+				QString itemClass = item->itemClass();
+				if (itemClass != "ocr_graphic" && itemClass != "ocr_photo" && itemClass != "ocr_separator") {
+					item->setAttribute("class", "ocr_graphic");
+				}
 				qDeleteAll(item->m_childItems);
 				item->m_childItems.clear();
 			}

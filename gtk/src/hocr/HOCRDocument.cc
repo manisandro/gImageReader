@@ -807,8 +807,10 @@ Glib::ustring HOCRDocument::displayRoleForItem(const HOCRItem* item) const {
 		return _("Textline");
 	} else if (itemClass == "ocrx_word") {
 		return item->text();
-	} else if (itemClass == "ocr_graphic") {
+	} else if (itemClass == "ocr_graphic" || itemClass == "ocr_photo") {
 		return _("Graphic");
+	} else if (itemClass == "ocr_separator") {
+		return _("Separator");
 	}
 	return Glib::ustring();
 }
@@ -825,8 +827,10 @@ Glib::RefPtr<Gdk::Pixbuf> HOCRDocument::decorationRoleForItem(const HOCRItem* it
 		return Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/item_line.png");
 	} else if (itemClass == "ocrx_word") {
 		return Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/item_word.png");
-	} else if (itemClass == "ocr_graphic") {
+	} else if (itemClass == "ocr_graphic" || itemClass == "ocr_photo") {
 		return Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/item_halftone.png");
+	} else if (itemClass == "ocr_separator") {
+		return Gdk::Pixbuf::create_from_resource("/org/gnome/gimagereader/item_separator.png");
 	}
 	auto pixbuf = Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, false, 8, 16, 16);
 	pixbuf->fill(255);
@@ -1097,7 +1101,7 @@ void HOCRItem::setAttribute(const Glib::ustring& name, const Glib::ustring& valu
 Glib::ustring HOCRItem::toHtml(int indent) const {
 	Glib::ustring cls = itemClass();
 	Glib::ustring tag;
-	if (cls == "ocr_page" || cls == "ocr_carea" || cls == "ocr_graphic") {
+	if (cls == "ocr_page" || cls == "ocr_carea" || cls == "ocr_graphic" || cls == "ocr_photo" || cls == "ocr_separator") {
 		tag = "div";
 	} else if (cls == "ocr_par") {
 		tag = "p";
@@ -1221,7 +1225,10 @@ HOCRPage::HOCRPage(const xmlpp::Element* element, int pageId, const Glib::ustrin
 				delete m_childItems.back();
 				m_childItems.pop_back();
 			} else {
-				item->setAttribute("itemClass", "ocr_graphic");
+				Glib::ustring itemClass = item->itemClass();
+				if (itemClass != "ocr_graphic" && itemClass != "ocr_photo" && itemClass != "ocr_separator") {
+					item->setAttribute("itemClass", "ocr_graphic");
+				}
 				std::for_each(item->m_childItems.begin(), item->m_childItems.end(), [](HOCRItem * item) {
 					delete item;
 				});
