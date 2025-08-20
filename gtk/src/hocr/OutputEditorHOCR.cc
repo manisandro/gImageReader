@@ -1017,7 +1017,7 @@ bool OutputEditorHOCR::open(InsertMode mode, std::vector<Glib::RefPtr<Gio::File 
 		return false;
 	}
 	if (files.empty()) {
-		FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html", "text/xml", "text/plain"}, {"*.html"}};
+		FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html", "text/xml", "text/plain"}, {"*.html", "*.hocr"}};
 		files = FileDialogs::open_dialog(_("Open hOCR File"), "", "outputdir", filter, true);
 	}
 	if (files.empty()) {

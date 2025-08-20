@@ -920,7 +920,7 @@ bool OutputEditorHOCR::open(InsertMode mode, QStringList files) {
 		return false;
 	}
 	if (files.isEmpty()) {
-		files = FileDialogs::openDialog(_("Open hOCR File"), "", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")), true);
+		files = FileDialogs::openDialog(_("Open hOCR File"), "", "outputdir", QString("%1 (*.html *.hocr)").arg(_("hOCR HTML Files")), true);
 	}
 	if (files.isEmpty()) {
 		return false;
