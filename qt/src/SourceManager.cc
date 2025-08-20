@@ -134,7 +134,11 @@ int SourceManager::addSources(const QStringList& files, bool suppressWarnings) {
 		if (m_watchedDirectories[finfo.absolutePath()] == 1) {
 			m_fsWatcher.addPath(finfo.absolutePath());
 		}
-		if (QFile(base + ".txt").exists() || QFile(base + ".html").exists()) {
+		if (
+			QFile(base + ".txt").exists() ||
+			QFile(base + ".html").exists() ||
+			QFile(base + ".hocr").exists()
+		) {
 			m_fileTreeModel->setFileEditable(index, true);
 		}
 		sel.select(index, index);
@@ -473,17 +477,22 @@ void SourceManager::indexClicked(const QModelIndex& index) {
 		QString base = finfo.absoluteDir().absoluteFilePath(finfo.baseName());
 		bool hasTxt = QFile(base + ".txt").exists();
 		bool hasHtml = QFile(base + ".html").exists();
+		bool hasHocr = QFile(base + ".hocr").exists();
+		// FIXME handle all cases...
 		if (hasTxt && hasHtml) {
 			QMessageBox box(QMessageBox::Question, _("Open output"), _("Both a text and a hOCR output were found. Which one do you want to open?"), QMessageBox::Cancel);
 			QAbstractButton* textButton = box.addButton(_("Text"), QMessageBox::AcceptRole);
 			QAbstractButton* hocrButton = box.addButton(_("hOCR"), QMessageBox::AcceptRole);
 			connect(textButton, &QAbstractButton::clicked, this, [base] { MAIN->openOutput(base + ".txt"); });
+			// TODO use .hocr by default?
 			connect(hocrButton, &QAbstractButton::clicked, this, [base] { MAIN->openOutput(base + ".html"); });
 			box.exec();
 		} else if (hasTxt) {
 			MAIN->openOutput(base + ".txt");
 		} else if (hasHtml) {
 			MAIN->openOutput(base + ".html");
+		} else if (hasHocr) {
+			MAIN->openOutput(base + ".hocr");
 		}
 	}
 }
@@ -519,7 +528,11 @@ void SourceManager::directoryChanged(const QString& dir) {
 		if (source) {
 			QFileInfo finfo(source->path);
 			QString base = finfo.absoluteDir().absoluteFilePath(finfo.baseName());
-			m_fileTreeModel->setFileEditable(child, QFile(base + ".txt").exists() || QFile(base + ".html").exists());
+			m_fileTreeModel->setFileEditable(child, (
+				QFile(base + ".txt").exists() ||
+				QFile(base + ".html").exists() ||
+				QFile(base + ".hocr").exists()
+			));
 		}
 	}
 }

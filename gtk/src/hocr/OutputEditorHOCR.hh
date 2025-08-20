@@ -41,6 +41,7 @@ class OutputEditorHOCR : public OutputEditor {
 public:
 	class HOCRBatchProcessor : public BatchProcessor {
 	public:
+		// TODO use .hocr by default?
 		std::string fileSuffix() const override { return std::string(".html"); }
 		void writeHeader(std::ostream& dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo) const override;
 		void writeFooter(std::ostream& dev) const override;

@@ -920,7 +920,7 @@ bool OutputEditorHOCR::open(InsertMode mode, QStringList files) {
 		return false;
 	}
 	if (files.isEmpty()) {
-		files = FileDialogs::openDialog(_("Open hOCR File"), "", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")), true);
+		files = FileDialogs::openDialog(_("Open hOCR File"), "", "outputdir", QString("%1 (*.html *.hocr)").arg(_("hOCR HTML Files")), true);
 	}
 	if (files.isEmpty()) {
 		return false;
@@ -996,6 +996,7 @@ bool OutputEditorHOCR::save(const QString& filename) {
 				suggestion = _("output");
 			}
 		}
+		// TODO use .hocr by default?
 		outname = FileDialogs::saveDialog(_("Save hOCR Output..."), suggestion + ".html", "outputdir", QString("%1 (*.html)").arg(_("hOCR HTML Files")));
 		if (outname.isEmpty()) {
 			return false;
@@ -1031,6 +1032,7 @@ bool OutputEditorHOCR::save(const QString& filename) {
 }
 
 QString OutputEditorHOCR::crashSave(const QString& filename) const {
+	// TODO use .hocr by default?
 	QFile file(filename + ".html");
 	if (file.open(QIODevice::WriteOnly)) {
 		QString header = QString(
@@ -1046,6 +1048,7 @@ QString OutputEditorHOCR::crashSave(const QString& filename) const {
 		file.write(m_document->toHTML().toUtf8());
 		m_document->convertSourcePaths(QFileInfo(filename).absolutePath(), true);
 		file.write("</html>\n");
+		// TODO use .hocr by default?
 		return filename + ".html";
 	}
 	return "";
