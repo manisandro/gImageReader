@@ -240,7 +240,10 @@ MainWindow::MainWindow(const QStringList& files)
 	QStringList hocrFiles;
 	QStringList otherFiles;
 	for (const QString& file : files) {
-		if (file.endsWith(".html", Qt::CaseInsensitive)) {
+		if (
+			file.endsWith(".html", Qt::CaseInsensitive) ||
+			file.endsWith(".hocr", Qt::CaseInsensitive)
+		) {
 			hocrFiles.append(file);
 		} else {
 			otherFiles.append(file);
