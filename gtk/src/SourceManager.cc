@@ -151,7 +151,11 @@ int SourceManager::addSources(const std::vector<Glib::RefPtr<Gio::File >> & file
 			m_watchedDirectories[dir].first += 1;
 		}
 		std::string base = Utils::split_filename(filename).first;
-		if (Glib::file_test(base + ".txt", Glib::FILE_TEST_EXISTS) || Glib::file_test(base + ".html", Glib::FILE_TEST_EXISTS)) {
+		if (
+			Glib::file_test(base + ".txt", Glib::FILE_TEST_EXISTS) ||
+			Glib::file_test(base + ".html", Glib::FILE_TEST_EXISTS) ||
+			Glib::file_test(base + ".hocr", Glib::FILE_TEST_EXISTS)
+		) {
 			m_fileTreeModel->setFileEditable(index, true);
 		}
 		selectIters.push_back(index);
@@ -437,6 +441,8 @@ void SourceManager::indexClicked(const Gtk::TreePath& path, Gtk::TreeViewColumn*
 		std::string base = Utils::split_filename(source->file->get_path()).first;
 		bool hasTxt = Glib::file_test(base + ".txt", Glib::FILE_TEST_EXISTS);
 		bool hasHtml = Glib::file_test(base + ".html", Glib::FILE_TEST_EXISTS);
+		bool hasHocr = Glib::file_test(base + ".hocr", Glib::FILE_TEST_EXISTS);
+		// FIXME handle all cases...
 		if (hasTxt && hasHtml) {
 			Utils::Button::Type response = Utils::messageBox(Gtk::MESSAGE_QUESTION, _("Open output"), _("Both a text and a hOCR output were found. Which one do you want to open?"), "", Utils::Button::Text | Utils::Button::HOCR | Utils::Button::Cancel);
 			if (response == Utils::Button::Text) {
@@ -448,6 +454,8 @@ void SourceManager::indexClicked(const Gtk::TreePath& path, Gtk::TreeViewColumn*
 			MAIN->openOutput(base + ".txt");
 		} else if (hasHtml) {
 			MAIN->openOutput(base + ".html");
+		} else if (hasHocr) {
+			MAIN->openOutput(base + ".hocr");
 		}
 	}
 }
@@ -517,7 +525,11 @@ void SourceManager::fileChanged(const Glib::RefPtr<Gio::File>& file, const Glib:
 			m_watchedDirectories[dir].first += 1;
 		}
 		std::string base = Utils::split_filename(otherFile->get_path()).first;
-		m_fileTreeModel->setFileEditable(it, Glib::file_test(base + ".txt", Glib::FILE_TEST_EXISTS) || Glib::file_test(base + ".html", Glib::FILE_TEST_EXISTS));
+		m_fileTreeModel->setFileEditable(it, (
+			Glib::file_test(base + ".txt", Glib::FILE_TEST_EXISTS) ||
+			Glib::file_test(base + ".html", Glib::FILE_TEST_EXISTS ||
+			Glib::file_test(base + ".hocr", Glib::FILE_TEST_EXISTS
+		)));
 	} else if (event == Gio::FILE_MONITOR_EVENT_DELETED) {
 		Utils::messageBox(Gtk::MESSAGE_ERROR, _("Missing File"), Glib::ustring::compose(_("The following file has been deleted or moved:\n%1"), file->get_path()));
 		m_fileTreeModel->removeIndex(it);
@@ -544,7 +556,11 @@ void SourceManager::dirChanged(const Glib::RefPtr<Gio::File>& file, const Glib::
 				Source* source = m_fileTreeModel->fileData<Source*> (child);
 				if (source) {
 					std::string base = Utils::split_filename(source->file->get_path()).first;
-					m_fileTreeModel->setFileEditable(child, Glib::file_test(base + ".txt", Glib::FILE_TEST_EXISTS) || Glib::file_test(base + ".html", Glib::FILE_TEST_EXISTS));
+					m_fileTreeModel->setFileEditable(child, (
+						Glib::file_test(base + ".txt", Glib::FILE_TEST_EXISTS) ||
+						Glib::file_test(base + ".html", Glib::FILE_TEST_EXISTS) ||
+						Glib::file_test(base + ".hocr", Glib::FILE_TEST_EXISTS)
+					));
 				}
 			}
 		}

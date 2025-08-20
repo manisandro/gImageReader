@@ -1100,7 +1100,8 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 				suggestion = _("output");
 			}
 		}
-		FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html"}, {"*.html"}};
+		FileDialogs::FileFilter filter = {_("hOCR HTML Files"), {"text/html"}, {"*.html", "*.hocr"}};
+		// TODO use .hocr by default?
 		outname = FileDialogs::save_dialog(_("Save hOCR Output..."), suggestion + ".html", "outputdir", filter);
 		if (outname.empty()) {
 			return false;
@@ -1137,6 +1138,7 @@ bool OutputEditorHOCR::save(const std::string& filename) {
 }
 
 std::string OutputEditorHOCR::crashSave(const std::string& filename) const {
+	// TODO use .hocr by default?
 	std::ofstream file(filename + ".html");
 	if (file.is_open()) {
 		Glib::ustring header = Glib::ustring::compose(
@@ -1154,6 +1156,7 @@ std::string OutputEditorHOCR::crashSave(const std::string& filename) const {
 		file.write(header.data(), header.bytes());
 		file.write(body.data(), body.bytes());
 		file.write(footer.data(), footer.bytes());
+		// TODO use .hocr by default?
 		return filename + ".html";
 	}
 	return "";
