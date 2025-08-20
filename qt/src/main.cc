@@ -23,6 +23,7 @@
 #include <QLocale>
 #include <QTextCodec>
 #include <QTranslator>
+#include <QCommandLineParser>
 #include <libintl.h>
 #include <cstring>
 
@@ -40,6 +41,8 @@ int main(int argc, char* argv[]) {
 
 	QApplication::setOrganizationName(PACKAGE_NAME);
 	QApplication::setApplicationName(PACKAGE_NAME);
+	QApplication::setApplicationVersion(QString("%1 (%2)").arg(PACKAGE_VERSION, QString(PACKAGE_REVISION).left(6)));
+
 	QIcon::setFallbackSearchPaths(QIcon::fallbackSearchPaths() << ":/extra-theme-icons");
 
 #ifdef Q_OS_WIN
@@ -89,12 +92,37 @@ int main(int argc, char* argv[]) {
 		qputenv("TWAINDSM_LOG", packageDir.absoluteFilePath("twain.log").toLocal8Bit());
 		std::freopen(packageDir.absoluteFilePath("gimagereader.log").toLocal8Bit().data(), "w", stderr);
 #endif
+
+		QCommandLineParser parser;
+		parser.setApplicationDescription(PACKAGE_DESCRIPTION);
+		parser.addHelpOption();
+		parser.addVersionOption();
+
+		parser.addPositionalArgument(
+			"files",
+			QCoreApplication::translate(
+				"main",
+				"Files to open, optionally."
+				" These can be image files or hocr files."
+				" Every image file is seen as one page."
+				// TODO verify: these image paths are relative to the hocr dirname
+				" Hocr files can reference image files for pages or graphics."
+			),
+			"[files...]"
+		);
+		parser.process(app);
+
 		QStringList files;
-		for (int i = 1; i < argc; ++i) {
-			if (QFile(argv[i]).exists()) {
-				files.append(argv[i]);
+		for (const QString arg : parser.positionalArguments()) {
+			if (QFile(arg).exists()) {
+				qDebug("adding file: %s", arg.toUtf8().data());
+				files.append(arg);
+			}
+			else {
+				qInfo("ignoring non-file argument: %s", arg.toUtf8().data());
 			}
 		}
+
 		window = new MainWindow(files);
 	}
 	window->show();
