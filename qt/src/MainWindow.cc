@@ -280,7 +280,10 @@ void MainWindow::openOutput(const QString& filename) {
 		if (setOutputMode(OutputModeText)) {
 			m_outputEditor->open(filename);
 		}
-	} else if (filename.endsWith(".html", Qt::CaseInsensitive)) {
+	} else if (
+		filename.endsWith(".html", Qt::CaseInsensitive) ||
+		filename.endsWith(".hocr", Qt::CaseInsensitive)
+	) {
 		if (setOutputMode(OutputModeHOCR)) {
 			m_outputEditor->open(filename);
 		}
