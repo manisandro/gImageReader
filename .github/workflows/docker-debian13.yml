@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: debian:trixie
-      options: --cap-add SYS_ADMIN --device /dev/fuse -v /usr/lib/modules/6.11.0-1018-azure:/lib/modules/6.11.0-1018-azure:shared
+      options: --privileged --device /dev/fuse -v /usr/lib/modules/6.11.0-1018-azure:/lib/modules/6.11.0-1018-azure:shared
     permissions:
       contents: write
     steps:
