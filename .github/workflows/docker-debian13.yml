@@ -58,18 +58,18 @@ jobs:
           cd build
           ../packaging/AppImage/makePkg.sh -y Linux 64 -gtk
 
-      - name: Build application QT5
-        run: |
-          mkdir -p build
-          cd build
-          rm -rf * 2> /dev/null
-          cmake -DINTERFACE_TYPE=qt5 ..
-          make
+      # - name: Build application QT5
+      #   run: |
+      #     mkdir -p build
+      #     cd build
+      #     rm -rf * 2> /dev/null
+      #     cmake -DINTERFACE_TYPE=qt5 ..
+      #     make
 
-      - name: Build Packages QT5
-        run: |
-          cd build
-          ../packaging/AppImage/makePkg.sh -y Linux 64 -qt5
+      # - name: Build Packages QT5
+      #   run: |
+      #     cd build
+      #     ../packaging/AppImage/makePkg.sh -y Linux 64 -qt5
 
       - name: Build application QT6
         run: |
