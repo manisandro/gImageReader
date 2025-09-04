@@ -22,12 +22,6 @@ jobs:
         run: |
           sed -i 's/Types: deb /Types: deb deb-src/g' /etc/apt/sources.list.d/debian.sources
           sed -i 's/Components: main/Components: main contrib non-free non-free-firmware/g' /etc/apt/sources.list.d/debian.sources
-          echo " \
-Types: deb deb-src \
-URIs: http://deb.debian.org/debian \
-Suites: trixie-backports \
-Components: main contrib non-free non-free-firmware \
-Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg" >> /etc/apt/sources.list.d/debian.sources
           cat /etc/apt/sources.list.d/debian.sources
 
       - name: Update distro
