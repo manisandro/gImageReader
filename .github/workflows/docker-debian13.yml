@@ -18,8 +18,8 @@ jobs:
 
       - name: Show Distro sources
         run: |
-          cat /etc/apt/sources.list
-          cat /etc/apt/sources.list.d/trixie.sources
+          cat /etc/apt/sources.list 2> /dev/null
+          cat /etc/apt/sources.list.d/trixie.sources 2> /dev/null
 
       - name: Install build dependencies
         run: apt -y install git cmake debhelper debhelper-compat intltool libcairomm-1.0-dev libdjvulibre-dev libenchant-2-dev libgtkmm-3.0-dev libgtksourceviewmm-3.0-dev libgtkspellmm-3.0-dev libjpeg-dev libjson-glib-dev libpangomm-1.4-dev libpodofo-dev libpoppler-glib-dev libpoppler-qt5-dev libpoppler-qt6-dev libqtspell-qt5-dev libqtspell-qt6-dev libquazip5-dev libquazip1-qt6-dev libsane-dev libtesseract-dev libxml++2.6-dev libzip-dev python3-gi qtbase5-dev qttools5-dev qttools5-dev-tools qt6-base-dev uuid-dev
