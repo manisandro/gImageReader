@@ -71,6 +71,9 @@ jobs:
           echo "list packaging/ ..."
           ls -l packaging
 
+      - name: Set safe directory
+        run: git config --global --add safe.directory ${GITHUB_WORKSPACE}
+
       - name: Reset ci-latest tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
