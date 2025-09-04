@@ -18,7 +18,9 @@ jobs:
 
       - name: Show Distro sources
         run: |
-          cat /etc/apt/sources.list 2> /dev/null
+          ls -l /etc/apt/
+          # cat /etc/apt/sources.list
+          ls -l /etc/apt/sources.list.d/
           cat /etc/apt/sources.list.d/trixie.sources 2> /dev/null
 
       - name: Install build dependencies
