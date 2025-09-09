@@ -125,7 +125,10 @@ void HOCRBatchExportDialog::scanSourceDir(const std::string& dir, std::vector<st
 	while (Glib::RefPtr<Gio::FileInfo> file = it->next_file()) {
 		if (file->get_file_type() == Gio::FILE_TYPE_DIRECTORY) {
 			scanSourceDir(Glib::build_filename(dir, file->get_name()), files);
-		} else if (Utils::string_endswith(file->get_name(), ".html")) {
+		} else if (
+			Utils::string_endswith(file->get_name(), ".html") ||
+			Utils::string_endswith(file->get_name(), ".hocr")
+		) {
 			files.push_back(Glib::build_filename(dir, file->get_name()));
 		}
 	}

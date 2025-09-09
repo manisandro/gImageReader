@@ -37,6 +37,7 @@ class OutputEditorHOCR : public OutputEditor {
 public:
 	class HOCRBatchProcessor : public BatchProcessor {
 	public:
+		// TODO use .hocr by default?
 		QString fileSuffix() const override { return QString(".html"); }
 		void writeHeader(QIODevice* dev, tesseract::TessBaseAPI* tess, const PageInfo& pageInfo) const override;
 		void writeFooter(QIODevice* dev) const override;

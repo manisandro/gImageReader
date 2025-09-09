@@ -223,7 +223,10 @@ void MainWindow::openFiles(const std::vector<Glib::RefPtr<Gio::File >> & files) 
 	std::vector<Glib::RefPtr<Gio::File >> otherFiles;
 	for (const Glib::RefPtr<Gio::File>& file : files) {
 		std::string filename = file->get_path();
-		if (Glib::ustring(filename.substr(filename.length() - 5)).lowercase() == ".html") {
+		if (
+			Glib::ustring(filename.substr(filename.length() - 5)).lowercase() == ".html" ||
+			Glib::ustring(filename.substr(filename.length() - 5)).lowercase() == ".hocr"
+		) {
 			hocrFiles.push_back(file);
 		} else {
 			otherFiles.push_back(file);
@@ -243,7 +246,10 @@ void MainWindow::openOutput(const std::string& filename) {
 		if (setOutputMode(OutputModeText)) {
 			m_outputEditor->open(filename);
 		}
-	} else if (Utils::string_endswith(Glib::ustring(filename).lowercase(), ".html")) {
+	} else if (
+		Utils::string_endswith(Glib::ustring(filename).lowercase(), ".html") ||
+		Utils::string_endswith(Glib::ustring(filename).lowercase(), ".hocr")
+	) {
 		if (setOutputMode(OutputModeHOCR)) {
 			m_outputEditor->open(filename);
 		}
