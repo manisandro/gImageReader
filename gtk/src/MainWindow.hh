@@ -23,10 +23,10 @@
 #include "common.hh"
 #include "Config.hh"
 #include "ui_MainWindow.hh"
+#include <thread>
 
 #define MAIN MainWindow::getInstance()
 
-namespace std { class thread; }
 class Acquirer;
 class Displayer;
 class DisplayerTool;

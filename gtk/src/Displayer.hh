@@ -27,7 +27,6 @@
 #include <cstdint>
 #include <thread>
 
-namespace std { class thread; }
 class DisplayerItem;
 class DisplayerImageItem;
 class DisplayerTool;
