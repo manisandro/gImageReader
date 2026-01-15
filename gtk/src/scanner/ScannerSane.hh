@@ -27,8 +27,7 @@
 #include "../Scanner.hh"
 #include "../Utils.hh"
 #include <sane/sane.h>
-
-namespace std { class thread; }
+#include <thread>
 
 class ScannerSane : public Scanner {
 public:
