@@ -604,12 +604,13 @@ void OutputEditorHOCR::showItemProperties(const QModelIndex& index, const QModel
 		QRect minBBox;
 		if (currentItem->itemClass() == "ocr_page") {
 			minBBox = currentItem->bbox();
+			m_tool->clearSelection();
 		} else {
 			for (const HOCRItem* child : currentItem->children()) {
 				minBBox = minBBox.united(child->bbox());
 			}
+			m_tool->setSelection(currentItem->bbox(), minBBox);
 		}
-		m_tool->setSelection(currentItem->bbox(), minBBox);
 	}
 }
 
