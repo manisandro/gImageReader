@@ -19,7 +19,6 @@
 
 #include <gtkmm.h>
 #include <gtkspellmm.h>
-#include <gtksourceviewmm.h>
 #include <iostream>
 #include <cstring>
 
@@ -31,6 +30,7 @@
 #include "Application.hh"
 #include "Config.hh"
 #include "CrashHandler.hh"
+#include "SourceView.hh"
 
 std::string pkgDir;
 std::string pkgExePath;

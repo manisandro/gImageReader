@@ -17,8 +17,6 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <gtksourceviewmm/languagemanager.h>
-
 #include "ConfigSettings.hh"
 #include "MainWindow.hh"
 #include "OutputBuffer.hh"
@@ -164,13 +162,6 @@ int OutputBuffer::replaceAll(const Glib::ustring& searchstr, const Glib::ustring
 }
 
 void OutputBuffer::setHightlightLanguage(const std::string& lang_id) {
-	Glib::RefPtr<Gsv::LanguageManager> language_manager = Gsv::LanguageManager::get_default();
-	auto highlight_lang = language_manager->get_language(lang_id);
-	if (!highlight_lang) {
-		set_highlight_syntax(false);
-	} else {
-		set_highlight_syntax(true);
-		set_language(highlight_lang);
-	}
+	set_language(lang_id);
 	ConfigSettings::get<VarSetting<Glib::ustring >> ("highlightmode")->setValue(lang_id);
 }
