@@ -39,6 +39,7 @@
 #include "Recognizer.hh"
 #include "SearchReplaceFrame.hh"
 #include "SourceManager.hh"
+#include "SourceView.hh"
 #include "Utils.hh"
 #include "XmlUtils.hh"
 
@@ -402,10 +403,7 @@ OutputEditorHOCR::OutputEditorHOCR(DisplayerToolHOCR* tool) {
 	ui.treeviewProperties->append_column(*valueCol);
 
 	// HOCR item source view
-	Glib::RefPtr<Gsv::Buffer> buffer = Gsv::Buffer::create();
-	buffer->set_highlight_syntax(true);
-	buffer->set_language(Gsv::LanguageManager::get_default()->get_language("xml"));
-	ui.textviewSource->set_buffer(buffer);
+	ui.textviewSource->set_buffer(Gsv::Buffer::create("xml"));
 
 	// Search replace frame
 	m_searchFrame = new SearchReplaceFrame();

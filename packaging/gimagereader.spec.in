@@ -24,7 +24,7 @@ BuildRequires: libxml++50-devel
 BuildRequires: libuuid-devel
 BuildRequires: libzip-devel
 BuildRequires: gtkmm30-devel
-BuildRequires: gtksourceviewmm3-devel
+BuildRequires: gtksourceview3-devel
 BuildRequires: gtkspellmm30-devel
 BuildRequires: json-glib-devel
 BuildRequires: poppler-glib-devel

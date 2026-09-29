@@ -40,7 +40,7 @@ dnf install -y \
   mingw32-gtkmm30 \
   mingw32-gtkspell3 \
   mingw32-gtkspellmm30 \
-  mingw32-gtksourceviewmm3 \
+  mingw32-gtksourceview3 \
   mingw32-cairomm \
   mingw32-poppler \
   mingw32-poppler-glib \
@@ -71,7 +71,7 @@ dnf install -y \
   mingw64-gtkmm30 \
   mingw64-gtkspell3 \
   mingw64-gtkspellmm30 \
-  mingw64-gtksourceviewmm3 \
+  mingw64-gtksourceview3 \
   mingw64-cairomm \
   mingw64-poppler \
   mingw64-poppler-glib \

@@ -111,7 +111,7 @@ int OutputEditorText::addTab(const Glib::ustring& title) {
 
 	Glib::RefPtr<OutputBuffer> textBuffer = OutputBuffer::create();
 
-	Gsv::View* textView = Gtk::make_managed<Gsv::View> (textBuffer);
+	Gtk::TextView* textView = Gtk::manage(Gsv::createView(*textBuffer.get()));
 	if (ConfigSettings::get<SwitchSetting> ("systemoutputfont")->getValue()) {
 		textView->unset_font();
 	} else {
@@ -169,7 +169,7 @@ void OutputEditorText::tabChanged() {
 	ui.buttonUndo->set_sensitive(buffer->can_undo());
 	ui.buttonRedo->set_sensitive(buffer->can_redo());
 	setDrawWhitspace(ui.menuitemStripcrlfDrawwhitespace->get_active());
-	Gsv::View* view = textView();
+	Gtk::TextView* view = textView();
 	view->grab_focus();
 }
 
@@ -210,9 +210,9 @@ void OutputEditorText::setTabName(int page, const Glib::ustring& title) {
 	label->set_text(title);
 }
 
-Gsv::View* OutputEditorText::textView(int page) const {
+Gtk::TextView* OutputEditorText::textView(int page) const {
 	page = page == -1 ? ui.notebook->get_current_page() : page;
-	return static_cast<Gsv::View*> ((static_cast <Gtk::ScrolledWindow*> (ui.notebook->get_nth_page(page)))->get_child());
+	return dynamic_cast<Gtk::TextView*> ((static_cast <Gtk::ScrolledWindow*> (ui.notebook->get_nth_page(page)))->get_child());
 }
 
 OutputBuffer* OutputEditorText::textBuffer(int page) const {
@@ -235,7 +235,7 @@ void OutputEditorText::setFont() {
 }
 
 void OutputEditorText::scrollCursorIntoView() {
-	Gsv::View* view = textView();
+	Gtk::TextView* view = textView();
 	view->scroll_to(view->get_buffer()->get_insert());
 	view->grab_focus();
 }
@@ -246,13 +246,7 @@ void OutputEditorText::setInsertMode(InsertMode mode, const std::string& iconNam
 }
 
 void OutputEditorText::setDrawWhitspace(bool enable) {
-#if GTK_SOURCE_MAJOR_VERSION >= 4
-	GtkSourceSpaceDrawer* space_drawer = gtk_source_view_get_space_drawer(textView()->gobj());
-	gtk_source_space_drawer_set_types_for_locations(space_drawer, GTK_SOURCE_SPACE_LOCATION_ALL, GTK_SOURCE_SPACE_TYPE_ALL);
-	gtk_source_space_drawer_set_enable_matrix(space_drawer, enable ? TRUE : FALSE);
-#else
-	textView()->set_draw_spaces(enable ? (Gsv::DRAW_SPACES_NEWLINE | Gsv::DRAW_SPACES_TAB | Gsv::DRAW_SPACES_SPACE) : Gsv::DrawSpacesFlags(0));
-#endif
+	Gsv::setDrawSpaces(*textView(), enable);
 }
 
 void OutputEditorText::filterBuffer() {
@@ -315,15 +309,15 @@ void OutputEditorText::completeTextViewMenu(Gtk::Menu* menu) {
 	nolangitem->set_active(!buffer->get_highlight_syntax());
 	highlightmenu->append(*nolangitem);
 	highlightmenu->append(*Gtk::manage(new Gtk::SeparatorMenuItem()));
-	Glib::RefPtr<Gsv::LanguageManager> language_manager = Gsv::LanguageManager::get_default();
-	for (const std::string& lang_id : language_manager->get_language_ids()) {
+	std::string highlightLangId = buffer->get_highlight_syntax() ? buffer->get_language_id() : std::string();
+	for (const std::string& lang_id : Gsv::languageIds()) {
 		Gtk::RadioMenuItem* langitem = Gtk::manage(new Gtk::RadioMenuItem(lang_id));
 		CONNECT(langitem, toggled, [buffer, langitem, lang_id] {
 			if (langitem->get_active()) {
 				buffer->setHightlightLanguage(lang_id);
 			}
 		});
-		langitem->set_active(buffer->get_highlight_syntax() && buffer->get_language() && (buffer->get_language()->get_id() == lang_id));
+		langitem->set_active(highlightLangId == lang_id);
 		highlightmenu->append(*langitem);
 	}
 	Gtk::MenuItem* highlightitem = Gtk::manage(new Gtk::MenuItem(_("Highlight mode")));

@@ -20,8 +20,6 @@
 #ifndef OUTPUTEDITORHOCR_HH
 #define OUTPUTEDITORHOCR_HH
 
-#include <gtksourceviewmm.h>
-
 #include "Config.hh"
 #include "Geometry.hh"
 #include "OutputEditor.hh"

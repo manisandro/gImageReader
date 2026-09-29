@@ -14,8 +14,7 @@ def extractMemberData(element, extraHeaders):
     className = element.attributes["class"].value
     isWidget = False
     if className == "GtkSourceView":
-        className = "Gsv::View"
-        extraHeaders.add("gtksourceviewmm.h")
+        className = "Gtk::TextView"
         isWidget = True
     else:
         classType = Gtk.__getattr__(re.sub('^Gtk', '', className))

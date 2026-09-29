@@ -21,7 +21,7 @@
 #define OUTPUTBUFFER_HH
 
 #include "common.hh"
-#include <gtksourceviewmm/buffer.h>
+#include "SourceView.hh"
 
 class OutputBuffer : public Gsv::Buffer {
 public:

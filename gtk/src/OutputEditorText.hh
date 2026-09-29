@@ -20,12 +20,12 @@
 #ifndef OUTPUTEDITORTEXT_HH
 #define OUTPUTEDITORTEXT_HH
 
-#include <gtksourceviewmm.h>
 #include <gtkspellmm.h>
 
 #include "MainWindow.hh"
 #include "OutputBuffer.hh"
 #include "OutputEditor.hh"
+#include "SourceView.hh"
 #include "ui_OutputEditorText.hh"
 
 class SearchReplaceFrame;
@@ -80,7 +80,7 @@ private:
 	void closeTab(Gtk::Widget* pageWidget);
 	Glib::ustring tabName(int page) const;
 	void setTabName(int page, const Glib::ustring& title);
-	Gsv::View* textView(int page = -1) const;
+	Gtk::TextView* textView(int page = -1) const;
 	OutputBuffer* textBuffer(int page = -1) const;
 
 	void addText(const Glib::ustring& text, bool insert);
