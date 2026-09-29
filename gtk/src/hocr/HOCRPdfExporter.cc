@@ -68,6 +68,10 @@ bool HOCRPdfExporter::run(const HOCRDocument* hocrdocument, const std::string& o
 
 	bool success = Utils::busyTask([&] {
 		HOCRPdfPrinter* painter = HOCRPoDoFoPdfPrinter::create(outname, *pdfSettings, pdfSettings->fallbackFontFamily, pdfSettings->fallbackFontSize, errMsg);
+		if (!painter) {
+			errMsg = _("Failed to initialize export backend");
+			return false;
+		}
 		for (int i = 0; i < pageCount; ++i) {
 			if (monitor.cancelled()) {
 				errMsg = _("The operation was cancelled");

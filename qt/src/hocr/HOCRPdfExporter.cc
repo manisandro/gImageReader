@@ -77,6 +77,10 @@ bool HOCRPdfExporter::run(const HOCRDocument* hocrdocument, const QString& outna
 		} else if (pdfSettings->backend == PDFSettings::BackendQPrinter) {
 			painter = new HOCRQPrinterPdfPrinter(outname, pdfSettings->creator, defaultFont);
 		}
+		if (!painter) {
+			errMsg = _("Failed to initialize export backend");
+			return false;
+		}
 		for (int i = 0; i < pageCount; ++i) {
 			if (monitor.cancelled()) {
 				errMsg = _("The operation was cancelled");
