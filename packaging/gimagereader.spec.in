@@ -20,7 +20,7 @@ BuildRequires: tesseract-devel
 BuildRequires: cairomm-devel
 BuildRequires: libappstream-glib
 BuildRequires: libjpeg-turbo-devel
-BuildRequires: libxml++30-devel
+BuildRequires: libxml++50-devel
 BuildRequires: libuuid-devel
 BuildRequires: libzip-devel
 BuildRequires: gtkmm30-devel
