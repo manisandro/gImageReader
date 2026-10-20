@@ -242,21 +242,30 @@ void ScannerSane::doSetOptions() {
 			if (!setConstrainedStringOption(m_job->handle, option, index, adf_front_sources, nullptr))
 				if (!setConstrainedStringOption(m_job->handle, option, index, adf_sources, nullptr)) {
 					g_warning("Unable to set front ADF source, please file a bug");
+					failScan(_("The selected scan source is not available on this device"));
+					return;
 				}
 			break;
 		case ScanType::ADF_BACK:
 			if (!setConstrainedStringOption(m_job->handle, option, index, adf_back_sources, nullptr))
 				if (!setConstrainedStringOption(m_job->handle, option, index, adf_sources, nullptr)) {
 					g_warning("Unable to set back ADF source, please file a bug");
+					failScan(_("The selected scan source is not available on this device"));
+					return;
 				}
 			break;
 		case ScanType::ADF_BOTH:
 			if (!setConstrainedStringOption(m_job->handle, option, index, adf_duplex_sources, nullptr))
 				if (!setConstrainedStringOption(m_job->handle, option, index, adf_sources, nullptr)) {
 					g_warning("Unable to set duplex ADF source, please file a bug");
+					failScan(_("The selected scan source is not available on this device"));
+					return;
 				}
 			break;
 		}
+	} else if (m_job->params.type != ScanType::SINGLE) {
+		failScan(_("The selected scan source is not available on this device"));
+		return;
 	}
 
 	/* Scan mode (before resolution as it tends to affect that */
