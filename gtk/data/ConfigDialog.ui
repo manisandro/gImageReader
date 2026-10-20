@@ -250,7 +250,7 @@
                 <property name="layout-style">start</property>
                 <child>
                   <object class="GtkButton" id="buttonLangsEditAdd">
-                    <property name="label">Add</property>
+                    <property name="label" translatable="yes">Add</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -264,7 +264,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="buttonLangsEditRemove">
-                    <property name="label">Remove</property>
+                    <property name="label" translatable="yes">Remove</property>
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can-focus">True</property>
