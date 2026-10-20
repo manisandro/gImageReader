@@ -436,8 +436,11 @@ void OutputEditorText::addText(const Glib::ustring& text, bool insert) {
 			buffer->place_cursor(buffer->insert(buffer->end(), text));
 		} else if (m_insertMode == InsertMode::Cursor) {
 			Gtk::TextIter start, end;
-			buffer->get_region_bounds(start, end);
-			buffer->place_cursor(buffer->insert(buffer->erase(start, end), text));
+			if (buffer->get_selection_bounds(start, end)) {
+				buffer->place_cursor(buffer->insert(buffer->erase(start, end), text));
+			} else {
+				buffer->place_cursor(buffer->insert(buffer->get_iter_at_mark(buffer->get_insert()), text));
+			}
 		} else if (m_insertMode == InsertMode::Replace) {
 			buffer->place_cursor(buffer->insert(buffer->erase(buffer->begin(), buffer->end()), text));
 		}
